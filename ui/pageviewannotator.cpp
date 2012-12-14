@@ -48,7 +48,7 @@ class PickPointEngine : public AnnotatorEngine
         {
             // parse engine specific attributes
             pixmapName = engineElement.attribute( "hoverIcon" );
-            QString stampname = m_annotElement.attribute( "icon" );
+            const QString stampname = m_annotElement.attribute( "icon" );
             if ( m_annotElement.attribute( "type" ) == "Stamp" && !stampname.simplified().isEmpty() )
                 pixmapName = stampname;
             center = QVariant( engineElement.attribute( "center" ) ).toBool();
@@ -115,7 +115,7 @@ class PickPointEngine : public AnnotatorEngine
             QRect boundrect = rect.geometry( (int)xScale, (int)yScale ).adjusted( 0, 0, 1, 1 );
             if ( m_block )
             {
-                Okular::NormalizedRect tmprect( qMin( startpoint.x, point.x ), qMin( startpoint.y, point.y ), qMax( startpoint.x, point.x ), qMax( startpoint.y, point.y ) );
+                const Okular::NormalizedRect tmprect( qMin( startpoint.x, point.x ), qMin( startpoint.y, point.y ), qMax( startpoint.x, point.x ), qMax( startpoint.y, point.y ) );
                 boundrect |= tmprect.geometry( (int)xScale, (int)yScale ).adjusted( 0, 0, 1, 1 );
             }
             return boundrect;
@@ -127,12 +127,12 @@ class PickPointEngine : public AnnotatorEngine
             {
                 if ( m_block )
                 {
-                    QPen origpen = painter->pen();
+                    const QPen origpen = painter->pen();
                     QPen pen = painter->pen();
                     pen.setStyle( Qt::DashLine );
                     painter->setPen( pen );
-                    Okular::NormalizedRect tmprect( qMin( startpoint.x, point.x ), qMin( startpoint.y, point.y ), qMax( startpoint.x, point.x ), qMax( startpoint.y, point.y ) );
-                    QRect realrect = tmprect.geometry( (int)xScale, (int)yScale );
+                    const Okular::NormalizedRect tmprect( qMin( startpoint.x, point.x ), qMin( startpoint.y, point.y ), qMax( startpoint.x, point.x ), qMax( startpoint.y, point.y ) );
+                    const QRect realrect = tmprect.geometry( (int)xScale, (int)yScale );
                     painter->drawRect( realrect );
                     painter->setPen( origpen );
                 }
@@ -151,14 +151,14 @@ class PickPointEngine : public AnnotatorEngine
 
             // find out annotation's type
             Okular::Annotation * ann = 0;
-            QString typeString = m_annotElement.attribute( "type" );
+            const QString typeString = m_annotElement.attribute( "type" );
             // create TextAnnotation from path
             if ( typeString == "FreeText")	//<annotation type="Text"
             {
                 //note dialog
-                QString prompt = i18n( "Text of the new note:" );
+                const QString prompt = i18n( "Text of the new note:" );
                 bool resok;
-                QString note = KInputDialog::getMultiLineText( i18n( "New Text Note" ), prompt, QString(), &resok );
+                const QString note = KInputDialog::getMultiLineText( i18n( "New Text Note" ), prompt, QString(), &resok );
                 if(resok)
                 {
                     //add note
@@ -173,8 +173,8 @@ class PickPointEngine : public AnnotatorEngine
                     rect.bottom = qMax(startpoint.y,point.y);
                     kDebug().nospace() << "xyScale=" << xscale << "," << yscale;
                     static int padding = 2;
-                    QFontMetricsF mf(ta->textFont());
-                    QRectF rcf = mf.boundingRect( Okular::NormalizedRect( rect.left, rect.top, 1.0, 1.0 ).geometry( (int)pagewidth, (int)pageheight ).adjusted( padding, padding, -padding, -padding ),
+                    const QFontMetricsF mf(ta->textFont());
+                    const QRectF rcf = mf.boundingRect( Okular::NormalizedRect( rect.left, rect.top, 1.0, 1.0 ).geometry( (int)pagewidth, (int)pageheight ).adjusted( padding, padding, -padding, -padding ),
                                                   Qt::AlignTop | Qt::AlignLeft | Qt::TextWordWrap, ta->inplaceText() );
                     rect.right = qMax(rect.right, rect.left+(rcf.width()+padding*2)/pagewidth);
                     rect.bottom = qMax(rect.bottom, rect.top+(rcf.height()+padding*2)/pageheight);
@@ -190,7 +190,7 @@ class PickPointEngine : public AnnotatorEngine
                 ta->setTextIcon( "Note" );
                 ta->window().setText( QString() );
                 //ta->window.flags &= ~(Okular::Annotation::Hidden);
-                double iconhei=0.03;
+                const double iconhei=0.03;
                 rect.left = point.x;
                 rect.top = point.y;
                 rect.right=rect.left+iconhei;
@@ -209,12 +209,12 @@ class PickPointEngine : public AnnotatorEngine
                 rect.top = qMin( startpoint.y, point.y );
                 rect.right = qMax( startpoint.x, point.x );
                 rect.bottom = qMax( startpoint.y, point.y );
-                QRectF rcf = rect.geometry( (int)xscale, (int)yscale );
+                const QRectF rcf = rect.geometry( (int)xscale, (int)yscale );
                 const int ml = ( rcf.bottomRight() - rcf.topLeft() ).toPoint().manhattanLength();
                 if ( ml <= QApplication::startDragDistance() )
                 {
-                    double stampxscale = size / xscale;
-                    double stampyscale = size / yscale;
+                    const double stampxscale = size / xscale;
+                    const double stampyscale = size / yscale;
                     if ( center )
                     {
                         rect.left = point.x - stampxscale / 2;
@@ -316,15 +316,13 @@ class PolyLineEngine : public AnnotatorEngine
             {
                 movingpoint.x = nX;
                 movingpoint.y = nY;
-                QRect oldmovingrect = movingrect;
+                const QRect oldmovingrect = movingrect;
                 movingrect = rect | QRect( (int)( movingpoint.x * xScale ), (int)( movingpoint.y * yScale ), 1, 1 );
                 return oldmovingrect | movingrect;
             }
             else if ( type == Release )
             {
-                Okular::NormalizedPoint tmppoint;
-                tmppoint.x = nX;
-                tmppoint.y = nY;
+                const Okular::NormalizedPoint tmppoint(nX, nY);
                 if ( fabs( tmppoint.x - newPoint.x + tmppoint.y - newPoint.y ) > 1e-2 )
                     return rect;
 
@@ -356,8 +354,8 @@ class PolyLineEngine : public AnnotatorEngine
 
             if ( m_block && points.count() == 2 )
             {
-                Okular::NormalizedPoint first = points[0];
-                Okular::NormalizedPoint second = points[1];
+                const Okular::NormalizedPoint first = points[0];
+                const Okular::NormalizedPoint second = points[1];
                 // draw a semitransparent block around the 2 points
                 painter->setPen( m_engineColor );
                 painter->setBrush( QBrush( m_engineColor.light(), Qt::Dense4Pattern ) );
@@ -386,7 +384,7 @@ class PolyLineEngine : public AnnotatorEngine
 
             // find out annotation's type
             Okular::Annotation * ann = 0;
-            QString typeString = m_annotElement.attribute( "type" );
+            const QString typeString = m_annotElement.attribute( "type" );
 
             // create LineAnnotation from path
             if ( typeString == "Line" || typeString == "Polyline" || typeString == "Polygon" )
@@ -462,7 +460,7 @@ class TextSelectorEngine : public AnnotatorEngine
             {
                 lastPoint.x = nX;
                 lastPoint.y = nY;
-                QRect oldrect = rect;
+                const QRect oldrect = rect;
                 rect = QRect();
                 return oldrect;
             }
@@ -470,14 +468,14 @@ class TextSelectorEngine : public AnnotatorEngine
             {
                 if ( item() )
                 {
-                    QPoint start( (int)( lastPoint.x * item()->uncroppedWidth() ), (int)( lastPoint.y * item()->uncroppedHeight() ) );
-                    QPoint end( (int)( nX * item()->uncroppedWidth() ), (int)( nY * item()->uncroppedHeight() ) );
+                    const QPoint start( (int)( lastPoint.x * item()->uncroppedWidth() ), (int)( lastPoint.y * item()->uncroppedHeight() ) );
+                    const QPoint end( (int)( nX * item()->uncroppedWidth() ), (int)( nY * item()->uncroppedHeight() ) );
                     delete selection;
                     selection = 0;
                     Okular::RegularAreaRect * newselection = m_pageView->textSelectionForItem( item(), start, end );
                     if ( !newselection->isEmpty() )
                     {
-                        QList<QRect> geom = newselection->geometry( (int)xScale, (int)yScale );
+                        const QList<QRect> geom = newselection->geometry( (int)xScale, (int)yScale );
                         QRect newrect;
                         Q_FOREACH ( const QRect& r, geom )
                         {
@@ -527,7 +525,7 @@ class TextSelectorEngine : public AnnotatorEngine
 
             // find out annotation's type
             Okular::Annotation * ann = 0;
-            QString typeString = m_annotElement.attribute( "type" );
+            const QString typeString = m_annotElement.attribute( "type" );
 
             Okular::HighlightAnnotation::HighlightType type = Okular::HighlightAnnotation::Highlight;
             bool typevalid = false;
@@ -753,7 +751,7 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
     }
 
     // 2. use engine to perform operations
-    QRect paintRect = m_engine->event( eventType, button, nX, nY, itemRect.width(), itemRect.height(), item->page() );
+    const QRect paintRect = m_engine->event( eventType, button, nX, nY, itemRect.width(), itemRect.height(), item->page() );
 
     // 3. update absolute extents rect and send paint event(s)
     if ( paintRect.isValid() )
@@ -763,7 +761,7 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
         m_lastDrawnRect = paintRect;
         m_lastDrawnRect.translate( itemRect.left(), itemRect.top() );
         // 3.2. decompose paint region in rects and send paint events
-        QVector<QRect> rects = compoundRegion.unite( m_lastDrawnRect ).rects();
+        const QVector<QRect> rects = compoundRegion.unite( m_lastDrawnRect ).rects();
         const QPoint areaPos = m_pageView->contentAreaPosition();
         for ( int i = 0; i < rects.count(); i++ )
             m_pageView->viewport()->update( rects[i].translated( -areaPos ) );
@@ -947,7 +945,7 @@ void PageViewAnnotator::slotToolSelected( int toolID )
             // display the tooltip
             else if ( toolSubElement.tagName() == "tooltip" )
             {
-                QString tip = toolSubElement.text();
+                const QString tip = toolSubElement.text();
                 if ( !tip.isEmpty() )
                     m_pageView->displayMessage( i18nc( "Annotation tool", tip.toUtf8() ), QString(), PageViewMessage::Annotation );
             }

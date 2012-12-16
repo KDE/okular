@@ -733,25 +733,26 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
         return QRect();
     }
 
-    // find out normalized mouse coords inside current item
-    const QRect & itemRect = item->uncroppedGeometry();
-    const QPointF eventPos = m_pageView->contentAreaPoint( pos );
-    double nX = item->absToPageX( eventPos.x() );
-    double nY = item->absToPageY( eventPos.y() );
-
-    QRect modifiedRect;
-
     // 1. lock engine to current item
-    if ( m_lockedItem && item != m_lockedItem )
-        return QRect();
     if ( !m_lockedItem && eventType == AnnotatorEngine::Press )
     {
         m_lockedItem = item;
         m_engine->setItem( m_lockedItem );
     }
+    if ( !m_lockedItem ) {
+        return QRect();
+    }
+
+    // find out normalized mouse coords inside current item
+    const QRect & itemRect = m_lockedItem->uncroppedGeometry();
+    const QPointF eventPos = m_pageView->contentAreaPoint( pos );
+    double nX = m_lockedItem->absToPageX( eventPos.x() );
+    double nY = m_lockedItem->absToPageY( eventPos.y() );
+
+    QRect modifiedRect;
 
     // 2. use engine to perform operations
-    const QRect paintRect = m_engine->event( eventType, button, nX, nY, itemRect.width(), itemRect.height(), item->page() );
+    const QRect paintRect = m_engine->event( eventType, button, nX, nY, itemRect.width(), itemRect.height(), m_lockedItem->page() );
 
     // 3. update absolute extents rect and send paint event(s)
     if ( paintRect.isValid() )
@@ -784,7 +785,7 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
             m_document->addPageAnnotation( m_lockedItem->pageNumber(), annotation );
             
             if ( annotation->openDialogAfterCreation() )
-                m_pageView->openAnnotationWindow( annotation, item->pageNumber() );
+                m_pageView->openAnnotationWindow( annotation, m_lockedItem->pageNumber() );
         }
 
         if ( m_continuousMode )
@@ -798,8 +799,6 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
 
 QRect PageViewAnnotator::routeMouseEvent( QMouseEvent * e, PageViewItem * item )
 {
-    if ( !item ) return QRect();
-
     AnnotatorEngine::EventType eventType;
     AnnotatorEngine::Button button;
 

@@ -370,7 +370,15 @@ Annotation *AnnotationObjectRect::annotation() const
 
 QRect AnnotationObjectRect::boundingRect( double xScale, double yScale ) const
 {
-    return AnnotationUtils::annotationGeometry( m_annotation, xScale, yScale );
+    const QRect annotRect = AnnotationUtils::annotationGeometry( m_annotation, xScale, yScale );
+    const QPoint center = annotRect.center();
+
+    // Make sure that the rectangle has a minimum size, so that it's possible
+    // to click on it
+    const int minSize = 14;
+    const QRect minRect( center.x()-minSize/2, center.y()-minSize/2, minSize, minSize );
+
+    return annotRect | minRect;
 }
 
 bool AnnotationObjectRect::contains( double x, double y, double xScale, double yScale ) const

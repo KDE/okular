@@ -746,8 +746,8 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
     // find out normalized mouse coords inside current item
     const QRect & itemRect = m_lockedItem->uncroppedGeometry();
     const QPointF eventPos = m_pageView->contentAreaPoint( pos );
-    double nX = m_lockedItem->absToPageX( eventPos.x() );
-    double nY = m_lockedItem->absToPageY( eventPos.y() );
+    const double nX = qBound( 0.0, m_lockedItem->absToPageX( eventPos.x() ), 1.0 );
+    const double nY = qBound( 0.0, m_lockedItem->absToPageY( eventPos.y() ), 1.0 );
 
     QRect modifiedRect;
 

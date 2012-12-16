@@ -178,7 +178,6 @@ class PickPointEngine : public AnnotatorEngine
                                                   Qt::AlignTop | Qt::AlignLeft | Qt::TextWordWrap, ta->inplaceText() );
                     rect.right = qMax(rect.right, rect.left+(rcf.width()+padding*2)/pagewidth);
                     rect.bottom = qMax(rect.bottom, rect.top+(rcf.height()+padding*2)/pageheight);
-                    ta->setBoundingRectangle( this->rect );
                     ta->window().setSummary( i18n( "Inline Note" ) );
                 }
             }
@@ -195,7 +194,6 @@ class PickPointEngine : public AnnotatorEngine
                 rect.top = point.y;
                 rect.right=rect.left+iconhei;
                 rect.bottom=rect.top+iconhei*xscale/yscale;
-                ta->setBoundingRectangle( this->rect );
                 ta->window().setSummary( i18n( "Note" ) );
             }
             // create StampAnnotation from path
@@ -228,7 +226,6 @@ class PickPointEngine : public AnnotatorEngine
                     rect.right = rect.left + stampxscale;
                     rect.bottom = rect.top + stampyscale;
                 }
-                sa->setBoundingRectangle( rect );
             }
             // create GeomAnnotation
             else if ( typeString == "GeomSquare" || typeString == "GeomCircle" )
@@ -246,7 +243,6 @@ class PickPointEngine : public AnnotatorEngine
                 rect.top = qMin( startpoint.y, point.y );
                 rect.right = qMax( startpoint.x, point.x );
                 rect.bottom = qMax( startpoint.y, point.y );
-                ga->setBoundingRectangle( rect );
             }
 
             // safety check
@@ -258,6 +254,20 @@ class PickPointEngine : public AnnotatorEngine
                     m_annotElement.attribute( "color" ) : m_engineColor );
             if ( m_annotElement.hasAttribute( "opacity" ) )
                 ann->style().setOpacity( m_annotElement.attribute( "opacity", "1.0" ).toDouble() );
+
+            // set the bounding rectangle, and make sure that the newly created
+            // annotation lies within the page by translating it if necessary
+            if ( rect.right > 1 )
+            {
+                rect.left -= rect.right - 1;
+                rect.right = 1;
+            }
+            if ( rect.bottom > 1 )
+            {
+                rect.top -= rect.bottom - 1;
+                rect.bottom = 1;
+            }
+            ann->setBoundingRectangle( rect );
 
             // return annotation
             return QList< Okular::Annotation* >() << ann;
@@ -746,8 +756,8 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
     // find out normalized mouse coords inside current item
     const QRect & itemRect = m_lockedItem->uncroppedGeometry();
     const QPointF eventPos = m_pageView->contentAreaPoint( pos );
-    double nX = m_lockedItem->absToPageX( eventPos.x() );
-    double nY = m_lockedItem->absToPageY( eventPos.y() );
+    const double nX = qBound( 0.0, m_lockedItem->absToPageX( eventPos.x() ), 1.0 );
+    const double nY = qBound( 0.0, m_lockedItem->absToPageY( eventPos.y() ), 1.0 );
 
     QRect modifiedRect;
 

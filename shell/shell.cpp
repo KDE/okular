@@ -108,6 +108,8 @@ void Shell::init()
     connect( m_part, SIGNAL(enablePrintAction(bool)), m_printAction, SLOT(setEnabled(bool)));
     connect( m_part, SIGNAL(enableCloseAction(bool)), m_closeAction, SLOT(setEnabled(bool)));
 
+    readSettings();
+
     if (m_args && m_args->isSet("unique") && m_args->count() == 1)
     {
         QDBusConnection::sessionBus().registerService("org.kde.okular");

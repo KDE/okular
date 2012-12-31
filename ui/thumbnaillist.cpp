@@ -407,17 +407,12 @@ bool ThumbnailList::canUnloadPixmap( int pageNumber ) const
 
 void ThumbnailList::updateWidgets()
 {
-    // find all widgets that intersects the viewport and update them
+    // Update all visible widgets
     QList<ThumbnailWidget *>::const_iterator vIt = d->m_visibleThumbnails.constBegin(), vEnd = d->m_visibleThumbnails.constEnd();
     for ( ; vIt != vEnd; ++vIt )
     {
         ThumbnailWidget * t = *vIt;
-        const QRect thumbRect = t->rect().translated( widget()->mapToParent( t->pos() ) );
-        // update only the exposed area of the widget (saves pixels..)
-        const QRect relativeRect = thumbRect.intersect( viewport()->rect() );
-        if ( !relativeRect.isValid() )
-            continue;
-        t->update( relativeRect );
+        t->update();
     }
 }
 

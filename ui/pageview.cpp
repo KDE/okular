@@ -728,6 +728,11 @@ void PageView::reparseConfig()
 
     updatePageStep();
 
+    // Something like invert colors may have changed
+    // As we don't have a way to find out the old value
+    // We just update the viewport, this shouldn't be that bad
+    // since it's just a repaint of pixmaps we already have
+    viewport()->update();
 }
 
 KAction *PageView::toggleFormsAction() const

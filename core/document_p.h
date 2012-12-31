@@ -109,6 +109,7 @@ class DocumentPrivate
 
         // private methods
         QString pagesSizeString() const;
+        QString namePaperSize(double inchesWidth, double inchesHeight) const;
         QString localizedSize(const QSizeF &size) const;
         qulonglong calculateMemoryToFree();
         void cleanupPixmapMemory();

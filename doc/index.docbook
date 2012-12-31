@@ -37,8 +37,8 @@ Context menu actions like Rename Bookmarks etc)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2012-09-09</date>
-		<releaseinfo>0.15.70 (&kde; 4.10)</releaseinfo>
+		<date>2012-12-31</date>
+		<releaseinfo>0.16.60 (&kde; 4.11)</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
 			<para>&okular; is a &kde; universal document viewer based on &kpdf; code.</para>
@@ -1678,6 +1678,15 @@ Add a 'Find Previous' entry
 							for every system, but you can prevent &okular; from using more memory than necessary by selecting the Low
 							profile, or let it get the most out of your system using Aggressive. Use Greedy profile to preload all
 							pages without risk of system memory overfull (only 50% of total memory or free memory will be used).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term><guilabel>Rendering</guilabel></term>
+					<listitem>
+						<para>Using this group of options you can improve text and image rendering in &okular;. The result depends on the device to display the document. 
+						 <guilabel>Enable Text Antialias</guilabel> and <guilabel>Enable Graphics Antialias</guilabel> items can be used to switch on and off <ulink url="http://en.wikipedia.org/wiki/Spatial_anti-aliasing">spatial anti-aliasing</ulink> of text and images in document, correspondingly.
+						 <guilabel>Enable Text Hinting</guilabel> item is meant to be a switcher for <ulink url="http://en.wikipedia.org/wiki/Font_hinting">font hinting</ulink>.
+						 Antialiasing and hinting change how the documents are displayed, you may want to tweak them to your preference.</para>
 					</listitem>
 				</varlistentry>
 			</variablelist>

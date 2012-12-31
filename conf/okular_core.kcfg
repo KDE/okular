@@ -21,22 +21,22 @@
   <entry key="TextAntialias" type="Enum" >
    <default>Enabled</default>
    <choices>
-    <choice name="Enabled" />
     <choice name="Disabled" />
+    <choice name="Enabled" />
    </choices>
   </entry>
   <entry key="GraphicsAntialias" type="Enum" >
    <default>Enabled</default>
    <choices>
-    <choice name="Enabled" />
     <choice name="Disabled" />
+    <choice name="Enabled" />
    </choices>
   </entry>
   <entry key="TextHinting" type="Enum" >
    <default>Disabled</default>
    <choices>
-    <choice name="Enabled" />
     <choice name="Disabled" />
+    <choice name="Enabled" />
    </choices>
   </entry>
  </group>

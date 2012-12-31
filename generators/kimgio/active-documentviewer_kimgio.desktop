@@ -1,0 +1,13 @@
+[Desktop Entry]
+MimeType=image/bmp;image/x-dds;image/x-eps;image/x-exr;image/gif;image/x-hdr;image/x-ico;image/jp2;image/jpeg;video/x-mng;image/x-portable-bitmap;image/x-pcx;image/x-portable-graymap;image/png;image/x-portable-pixmap;image/x-psd;image/x-rgb;image/x-tga;image/tiff;image/x-xbitmap;image/x-xcf;image/x-xpixmap;image/x-gzeps;image/x-bzeps;
+Name=Reader
+GenericName=Document viewer
+Comment=Viewer for various types of documents
+
+Exec=active-documentviewer %u
+Terminal=false
+Icon=okular
+Type=Application
+Categories=Qt;KDE;Graphics;Office;Viewer;
+InitialPreference=2
+NoDisplay=true

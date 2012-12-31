@@ -19,6 +19,6 @@ install(TARGETS okularGenerator_xps DESTINATION ${PLUGIN_INSTALL_DIR})
 
 ########### install files ###############
 
-install( FILES libokularGenerator_xps.desktop okularXps.desktop DESTINATION  ${SERVICES_INSTALL_DIR} )
-install( PROGRAMS okularApplication_xps.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
+install( FILES libokularGenerator_xps.desktop okularXps.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
+install( PROGRAMS okularApplication_xps.desktop active-documentviewer_xps.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
 

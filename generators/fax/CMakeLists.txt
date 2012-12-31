@@ -17,4 +17,4 @@ install(TARGETS okularGenerator_fax DESTINATION ${PLUGIN_INSTALL_DIR})
 ########### install files ###############
 
 install( FILES libokularGenerator_fax.desktop okularFax.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
-install( PROGRAMS okularApplication_fax.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
+install( PROGRAMS okularApplication_fax.desktop active-documentviewer_fax.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )

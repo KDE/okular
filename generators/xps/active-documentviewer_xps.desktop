@@ -1,0 +1,14 @@
+[Desktop Entry]
+MimeType=application/oxps;application/vnd.ms-xpsdocument;
+Name=Reader
+GenericName=Document viewer
+Comment=Viewer for various types of documents
+
+Exec=active-documentviewer %u
+Terminal=false
+Icon=okular
+Type=Application
+Categories=Qt;KDE;Graphics;Office;Viewer;
+InitialPreference=2
+NoDisplay=true
+X-KDE-Keywords=XPS

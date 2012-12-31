@@ -22,7 +22,7 @@ install(TARGETS okularGenerator_djvu DESTINATION ${PLUGIN_INSTALL_DIR})
 
 ########### install files ###############
 
-install( FILES libokularGenerator_djvu.desktop okularDjvu.desktop DESTINATION  ${SERVICES_INSTALL_DIR} )
-install( PROGRAMS okularApplication_djvu.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
+install( FILES libokularGenerator_djvu.desktop okularDjvu.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
+install( PROGRAMS okularApplication_djvu.desktop active-documentviewer_djvu.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
 
 

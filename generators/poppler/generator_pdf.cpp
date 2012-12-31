@@ -1291,7 +1291,7 @@ bool PDFGenerator::setDocumentRenderHints()
 #define SET_HINT(hintname, hintdefvalue, hintflag) \
 { \
     bool newhint = documentMetaData(hintname, hintdefvalue).toBool(); \
-    if (newhint != (oldhints & hintflag)) \
+    if (newhint != oldhints.testFlag(hintflag)) \
     { \
         pdfdoc->setRenderHint(hintflag, newhint); \
         changed = true; \

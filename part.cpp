@@ -1559,6 +1559,9 @@ void Part::slotDoFileDirty()
         m_wasSidebarVisible = m_sidebar->isSidebarVisible();
         m_wasSidebarCollapsed = m_sidebar->isCollapsed();
 
+        // preserves the toc state after reload
+        m_toc->prepareForReload();
+
         // store if presentation view was open
         m_wasPresentationOpen = ((PresentationWidget*)m_presentationWidget != 0);
 

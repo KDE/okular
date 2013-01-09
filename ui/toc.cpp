@@ -90,6 +90,32 @@ void TOC::notifyCurrentPageChanged( int, int )
     m_model->setCurrentViewport( m_document->viewport() );
 }
 
+void TOC::prepareForReload()
+{
+    const QVector<QModelIndex> list = expandedNodes();
+    TOCModel *m = m_model;
+    m_model = new TOCModel( m_document, m_treeView );
+    m_model->setOldModelData( m, list );
+    m_treeView->setModel( m_model );
+}
+
+QVector<QModelIndex> TOC::expandedNodes( const QModelIndex &parent ) const
+{
+    QVector<QModelIndex> list;
+    for ( int i = 0; i < m_model->rowCount( parent ); i++ )
+    {
+        const QModelIndex index = m_model->index( i, 0, parent );
+        if ( m_treeView->isExpanded( index ) )
+        {
+            list << index;
+        }
+        if ( m_model->hasChildren( index ) )
+        {
+            list << expandedNodes( index );
+        }
+    }
+    return list;
+}
 
 void TOC::reparseConfig()
 {

@@ -12,6 +12,7 @@
 
 #include <qwidget.h>
 #include "core/observer.h"
+#include <QModelIndex>
 
 class QDomNode;
 class QModelIndex;
@@ -37,6 +38,8 @@ Q_OBJECT
 
         void reparseConfig();
 
+        void prepareForReload();
+
     signals:
         void hasTOC(bool has);
 
@@ -45,6 +48,8 @@ Q_OBJECT
         void saveSearchOptions();
 
     private:
+        QVector<QModelIndex> expandedNodes( const QModelIndex & parent=QModelIndex() ) const;
+
         Okular::Document *m_document;
         QTreeView *m_treeView;
         KTreeViewSearchLine *m_searchLine;

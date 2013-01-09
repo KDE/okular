@@ -54,6 +54,8 @@ public:
     Okular::Document *document;
     QList< TOCItem* > itemsToOpen;
     QList< TOCItem* > currentPage;
+    TOCModel *m_oldModel;
+    QVector<QModelIndex> m_oldTocExpandedIndexes;
 };
 
 
@@ -95,7 +97,7 @@ TOCItem::~TOCItem()
 
 
 TOCModelPrivate::TOCModelPrivate( TOCModel *qq )
-    : q( qq ), root( new TOCItem ), dirty( false )
+    : q( qq ), root( new TOCItem ), dirty( false ), m_oldModel( 0 )
 {
     root->model = this;
 }
@@ -103,6 +105,7 @@ TOCModelPrivate::TOCModelPrivate( TOCModel *qq )
 TOCModelPrivate::~TOCModelPrivate()
 {
     delete root;
+    delete m_oldModel;
 }
 
 void TOCModelPrivate::addChildren( const QDomNode & parentNode, TOCItem * parentItem )
@@ -247,6 +250,20 @@ int TOCModel::rowCount( const QModelIndex &parent ) const
     return item->children.count();
 }
 
+static QModelIndex indexForIndex( const QModelIndex &oldModelIndex, QAbstractItemModel *newModel )
+{
+    QModelIndex newModelIndex;
+    if ( oldModelIndex.parent().isValid() )
+    {
+        newModelIndex = newModel->index( oldModelIndex.row(), oldModelIndex.column(), indexForIndex( oldModelIndex.parent(), newModel ) );
+    }
+    else
+    {
+        newModelIndex = newModel->index( oldModelIndex.row(), oldModelIndex.column() );
+    }
+    return newModelIndex;
+}
+
 void TOCModel::fill( const Okular::DocumentSynopsis *toc )
 {
     if ( !toc )
@@ -257,15 +274,32 @@ void TOCModel::fill( const Okular::DocumentSynopsis *toc )
     d->addChildren( *toc, d->root );
     d->dirty = true;
     emit layoutChanged();
-    foreach ( TOCItem *item, d->itemsToOpen )
+    if ( equals( d->m_oldModel ) )
     {
-        QModelIndex index = d->indexForItem( item );
-        if ( !index.isValid() )
-            continue;
+        foreach( const QModelIndex &oldIndex, d->m_oldTocExpandedIndexes )
+        {
+            const QModelIndex index = indexForIndex( oldIndex, this );
+            if ( !index.isValid() )
+                continue;
 
-        QMetaObject::invokeMethod( QObject::parent(), "expand", Qt::QueuedConnection, Q_ARG( QModelIndex, index ) );
+            QMetaObject::invokeMethod( QObject::parent(), "expand", Qt::QueuedConnection, Q_ARG( QModelIndex, index ) );
+        }
+    }
+    else
+    {
+        foreach ( TOCItem *item, d->itemsToOpen )
+        {
+            const QModelIndex index = d->indexForItem( item );
+            if ( !index.isValid() )
+                continue;
+
+            QMetaObject::invokeMethod( QObject::parent(), "expand", Qt::QueuedConnection, Q_ARG( QModelIndex, index ) );
+        }
     }
     d->itemsToOpen.clear();
+    delete d->m_oldModel;
+    d->m_oldModel = 0;
+    d->m_oldTocExpandedIndexes.clear();
 }
 
 void TOCModel::clear()
@@ -321,6 +355,21 @@ bool TOCModel::isEmpty() const
     return d->root->children.isEmpty();
 }
 
+bool TOCModel::equals( const TOCModel *model ) const
+{
+    if ( model )
+        return checkequality( model );
+    else
+        return false;
+}
+
+void TOCModel::setOldModelData( TOCModel *model, const QVector<QModelIndex> &list )
+{
+    delete d->m_oldModel;
+    d->m_oldModel = model;
+    d->m_oldTocExpandedIndexes = list;
+}
+
 QString TOCModel::externalFileNameForIndex( const QModelIndex &index ) const
 {
     if ( !index.isValid() )
@@ -348,4 +397,27 @@ QString TOCModel::urlForIndex( const QModelIndex &index ) const
     return item->url;
 }
 
+bool TOCModel::checkequality( const TOCModel *model, const QModelIndex & parentA, const QModelIndex & parentB ) const
+{
+    if ( rowCount( parentA ) != model->rowCount( parentB ) )
+        return false;
+    for ( int i = 0; i < rowCount( parentA ); i++ )
+    {
+        QModelIndex indxA = index( i, 0, parentA );
+        QModelIndex indxB = model->index( i, 0, parentB );
+        if ( indxA.data() != indxB.data() )
+        {
+            return false;
+        }
+        if ( hasChildren( indxA ) != model->hasChildren( indxB ) )
+        {
+            return false;
+        }
+        if ( !checkequality( model, indxA, indxB ) )
+        {
+            return false;
+        }
+    }
+    return true;
+}
 #include "tocmodel.moc"

@@ -84,6 +84,9 @@ void TOC::notifyCurrentPageChanged( int, int )
 
 void TOC::prepareForReload()
 {
+    if( m_model->isEmpty() )
+        return;
+
     const QVector<QModelIndex> list = expandedNodes();
     TOCModel *m = m_model;
     m_model = new TOCModel( m_document, m_treeView );

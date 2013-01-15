@@ -73,14 +73,6 @@ void TOC::notifySetup( const QVector< Okular::Page * > & /*pages*/, int setupFla
     // request synopsis description (is a dom tree)
     const Okular::DocumentSynopsis * syn = m_document->documentSynopsis();
 
-    // if not present, disable the contents tab
-    if ( !syn )
-    {
-        emit hasTOC( false );
-        return;
-    }
-
-    // else populate the listview and enable the tab
     m_model->fill( syn );
     emit hasTOC( !m_model->isEmpty() );
 }

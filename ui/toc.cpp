@@ -72,6 +72,16 @@ void TOC::notifySetup( const QVector< Okular::Page * > & /*pages*/, int setupFla
 
     // request synopsis description (is a dom tree)
     const Okular::DocumentSynopsis * syn = m_document->documentSynopsis();
+    if ( !syn )
+    {
+        if ( m_document->isOpened() )
+        {
+            // Make sure we clear the reload old model data
+            m_model->setOldModelData( 0, QVector<QModelIndex>() );
+        }
+        emit hasTOC( false );
+        return;
+    }
 
     m_model->fill( syn );
     emit hasTOC( !m_model->isEmpty() );
@@ -91,6 +101,17 @@ void TOC::prepareForReload()
     TOCModel *m = m_model;
     m_model = new TOCModel( m_document, m_treeView );
     m_model->setOldModelData( m, list );
+}
+
+void TOC::rollbackReload()
+{
+    TOCModel *m = m_model;
+    m_model = m->clearOldModelData();
+    delete m;
+}
+
+void TOC::finishReload()
+{
     m_treeView->setModel( m_model );
 }
 

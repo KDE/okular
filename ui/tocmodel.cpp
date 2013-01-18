@@ -266,12 +266,8 @@ static QModelIndex indexForIndex( const QModelIndex &oldModelIndex, QAbstractIte
 
 void TOCModel::fill( const Okular::DocumentSynopsis *toc )
 {
-    if ( !toc ) {
-        delete d->m_oldModel;
-        d->m_oldModel = 0;
-        d->m_oldTocExpandedIndexes.clear();
+    if ( !toc )
         return;
-    }
 
     clear();
     emit layoutAboutToBeChanged();
@@ -372,6 +368,14 @@ void TOCModel::setOldModelData( TOCModel *model, const QVector<QModelIndex> &lis
     delete d->m_oldModel;
     d->m_oldModel = model;
     d->m_oldTocExpandedIndexes = list;
+}
+
+TOCModel *TOCModel::clearOldModelData() const
+{
+    TOCModel *oldModel = d->m_oldModel;
+    d->m_oldModel = 0;
+    d->m_oldTocExpandedIndexes.clear();
+    return oldModel;
 }
 
 QString TOCModel::externalFileNameForIndex( const QModelIndex &index ) const

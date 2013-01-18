@@ -1545,7 +1545,7 @@ void Part::slotFileDirty( const QString& path )
 
 void Part::slotDoFileDirty()
 {
-    bool prepareTocForReload = false;
+    bool tocReloadPrepared = false;
     
     // do the following the first time the file is reloaded
     if ( m_viewportDirty.pageNumber == -1 )
@@ -1565,7 +1565,8 @@ void Part::slotDoFileDirty()
         m_wasPresentationOpen = ((PresentationWidget*)m_presentationWidget != 0);
         
         // preserves the toc state after reload
-        prepareTocForReload = true;
+        m_toc->prepareForReload();
+        tocReloadPrepared = true;
 
         // store the page rotation
         m_dirtyPageRotation = m_document->rotation();
@@ -1577,10 +1578,16 @@ void Part::slotDoFileDirty()
 
     // close and (try to) reopen the document
     if ( !closeUrl() )
+    {
+        if ( tocReloadPrepared ) 
+        {
+            m_toc->rollbackReload();
+        }
         return;
+    }
     
-    if ( prepareTocForReload )
-        m_toc->prepareForReload();
+    if ( tocReloadPrepared )
+        m_toc->finishReload();
 
     // inform the user about the operation in progress
     m_pageView->displayMessage( i18n("Reloading the document...") );

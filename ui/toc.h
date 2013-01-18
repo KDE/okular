@@ -39,6 +39,8 @@ Q_OBJECT
         void reparseConfig();
 
         void prepareForReload();
+        void rollbackReload();
+        void finishReload();
 
     signals:
         void hasTOC(bool has);

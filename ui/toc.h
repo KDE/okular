@@ -14,6 +14,8 @@
 #include "core/observer.h"
 #include <QModelIndex>
 
+#include "okular_part_export.h"
+
 class QDomNode;
 class QModelIndex;
 class QTreeView;
@@ -22,11 +24,14 @@ class TOCModel;
 
 namespace Okular {
 class Document;
+class PartTest;
 }
 
-class TOC : public QWidget, public Okular::DocumentObserver
+class OKULAR_PART_EXPORT TOC : public QWidget, public Okular::DocumentObserver
 {
 Q_OBJECT
+    friend class Okular::PartTest;
+    
     public:
         TOC(QWidget *parent, Okular::Document *document);
         ~TOC();

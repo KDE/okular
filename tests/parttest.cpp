@@ -22,8 +22,18 @@ class PartTest
     Q_OBJECT
 
     private slots:
+        void testReload();
         void testTOCReload();
 };
+
+void PartTest::testReload()
+{
+    QVariantList dummyArgs;
+    Okular::Part part(NULL, NULL, dummyArgs, KGlobal::mainComponent());
+    part.openDocument(KDESRCDIR "data/file1.pdf");
+    part.reload();
+    qApp->processEvents();
+}
 
 void PartTest::testTOCReload()
 {

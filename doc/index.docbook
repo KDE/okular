@@ -11,10 +11,10 @@
 <!-- TODO
 add chapter about navigation panel
 Show/Hide Contens/Thumbnails/Reviews/Bookmarks bar to save screen space
-Use Small Icons and deselct Show Text to minimize the navigation panel
+Use Small Icons and deselect Show Text to minimize the navigation panel
 Describe all actions only possible in the navigation bars:
 Switching between documents using bookmarks
-Context menu actions like Rename Bookmarks etc)
+Context menu actions like Rename Bookmarks etc.)
  -->
 <book id="okular" lang="&language;">
 	<bookinfo>
@@ -24,7 +24,7 @@ Context menu actions like Rename Bookmarks etc)
 				<firstname>Albert</firstname>
 				<surname>Astals Cid</surname>
 				<affiliation>
-					<address><email>aacid@kde.org</email></address>
+					<address>&Albert.Astals.Cid.mail;</address>
 				</affiliation>
 			</author>
 			<author>
@@ -68,7 +68,7 @@ Context menu actions like Rename Bookmarks etc)
 			improved presentation support and annotation support.
 		</para>
 		<para>
-			&okular; supports a lot of different formats like PDF, Postscript, Tiff, CHM, DjVU, Images (png, jpg, &etc;)
+			&okular; supports a lot of different formats like &PDF;, Postscript, Tiff, CHM, DjVU, Images (png, jpg, &etc;)
 			XPS, Open Document (ODT), Fiction Books, Comic Book, Plucker, EPub and Fax.
 			For all supported formats and their features see <ulink url="http://okular.kde.org/formats.php">
 			&okular; Document Format Handlers</ulink>.
@@ -84,14 +84,6 @@ Context menu actions like Rename Bookmarks etc)
 		</textobject>
 		</mediaobject>
 		</screenshot>
-<!--
-		<para>
-			The PDF format is widely used for publishing documents that are
-			mostly not meant to be edited again. &okular; is only a viewer
-			for these files and therefore it doesn't provide any functionality
-			to edit or create PDF documents.
-		</para>
--->
 	</chapter>
 	<chapter id="use">
 		<title>Basic Usage</title>
@@ -106,7 +98,7 @@ Context menu actions like Rename Bookmarks etc)
 				If you have already opened files in &okular; before, you can quickly access them by selecting them in
 				the <menuchoice><guimenu>File</guimenu><guisubmenu>Open Recent</guisubmenu></menuchoice> menu.
 			</para>
-			<para>&okular; is the default &kde; application for PDF and Postscript files, launched when you click with the
+			<para>&okular; is the default &kde; application for &PDF; and Postscript files, launched when you click with the
 			 &LMB; on such a file type in the filemanager. If you want to open any file whose format is supported by &okular;
 			 use <menuchoice><guimenu>Open with...</guimenu><guimenuitem>&okular;</guimenuitem> </menuchoice> from context
 			 menu in the filemanager.
@@ -400,15 +392,15 @@ Add a 'Find Previous' entry
 			</screenshot>
 			<para>&okular; has two different kind of annotations:</para>
 			<para>Text annotations like <guilabel>Yellow Highlighter</guilabel> and <guilabel>Black Underlining</guilabel>
-			for files with text like &eg; PDF.</para>
+			for files with text like &eg; &PDF;.</para>
 			<para>Graphic annotations like <guilabel>Note</guilabel>, <guilabel>Inline Note</guilabel>, <guilabel>Green Freehand Line</guilabel>, <guilabel>Straight Yellow Line</guilabel>, <guilabel>Blue Polygon</guilabel>, <guilabel>Stamp</guilabel> and <guilabel>Cyan Ellipse</guilabel> for all formats supported by &okular;.</para>
 			<para>Using the context menu either in the <guilabel>Reviews</guilabel> view of the navigation panel or in the main window you can open a <guilabel>Pop up Note</guilabel> for any kind of annotation and add or edit comments.</para>
-			<para>Annotations are not only limited to PDF files, they can be used for any format &okular; supports.</para>
+			<para>Annotations are not only limited to &PDF; files, they can be used for any format &okular; supports.</para>
 			<para>
 				Since &kde; 4.2, &okular; has the "document archiving" feature. This is an &okular;-specific format for carrying the document plus various metadata related to it (currently only annotations). You can save a "document archive" from the open document by choosing <menuchoice><guimenu>File</guimenu><guisubmenu>Export As</guisubmenu><guimenuitem>Document Archive</guimenuitem></menuchoice>. To open an &okular; document archive, just open it with &okular; as it would be &eg; a &PDF; document.
 			</para>
 			<para>
-			  Since &okular; 0.15 you can <emphasis>also</emphasis> save annotations directly into PDF files. This feature is only available if &okular; has been built with version 0.20 or later of <ulink url="http://poppler.freedesktop.org/">Poppler rendering library</ulink>. You can use <menuchoice><guimenu>File</guimenu> <guimenuitem>Save As...</guimenuitem></menuchoice> to save the copy of &PDF; file with annotations.
+			  Since &okular; 0.15 you can <emphasis>also</emphasis> save annotations directly into &PDF; files. This feature is only available if &okular; has been built with version 0.20 or later of <ulink url="http://poppler.freedesktop.org/">Poppler rendering library</ulink>. You can use <menuchoice><guimenu>File</guimenu> <guimenuitem>Save As...</guimenuitem></menuchoice> to save the copy of &PDF; file with annotations.
 			</para>
 				<note>
 					<para>
@@ -1335,7 +1327,7 @@ Add a 'Find Previous' entry
 						</menuchoice>
 					</term>
 					<listitem>
-						<para>These items allow you to speak the whole document or just the current page and stop speaking using the &kde; Text-to-Speech system <application>Jovie</application>.</para>
+						<para>These items allow you to speak the whole document or just the current page and stop speaking using the &kde; Text-to-Speech system &jovie;.</para>
 						<para>The <guilabel>Speak ...</guilabel> actions are enabled only if &jovie; is available in the system.</para>
 					</listitem>
 				</varlistentry>
@@ -1540,9 +1532,9 @@ Add a 'Find Previous' entry
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term><guilabel>Display document title in title bar if available</guilabel></term>
+					<term><guilabel>Display document title in titlebar if available</guilabel></term>
 					<listitem>
-						<para>Whether to show the current document title in the title bar of &okular; window. If no metadata for title
+						<para>Whether to show the current document title in the titlebar of &okular; window. If no metadata for title
 						found in the document or this item is unchecked &okular; shows filename of the document.
 						</para>
 					</listitem>
@@ -1579,13 +1571,6 @@ Add a 'Find Previous' entry
 							use the backend with the highest priority.</para>
 					</listitem>
 				</varlistentry>
-				<!--varlistentry>
-					<term><guilabel>Center first page</guilabel></term>
-					<listitem>
-						<para>Whether the first page should be centered or aligned to the left when
-							displaying the pages in facing and overview mode.</para>
-					</listitem>
-				</varlistentry-->
 				<varlistentry>
 					<term><guilabel>Overview columns</guilabel></term>
 					<listitem>
@@ -1740,7 +1725,7 @@ Add a 'Find Previous' entry
 				<varlistentry>
 					<term><guilabel>Enable transitions</guilabel></term>
 					<listitem>
-						<para>Use this checkbox to enable or disable transition effects between pages.</para>
+						<para>Use this check box to enable or disable transition effects between pages.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -1783,7 +1768,7 @@ Add a 'Find Previous' entry
 						This is the case when the document has references to the various points (usually row and column number) of sources it was generated from. The &DVI; format supports natively the addition of the information about the sources the LaTeX document was generated from. A similar system exists for &PDF; documents, called <acronym>pdfsync</acronym>, which stores these extra information in an external file named after the &PDF; file itself (for example <filename>mydocument.pdfsync</filename> for <filename>mydocument.pdf</filename>).
 						</para>
 						<para>
-						  &okular; ships with preconfigured settings for the following editors: <ulink url="http://kate-editor.org/">&kate;</ulink>, <ulink url="http://kile.sourceforge.net/">Kile</ulink>, <ulink url="http://www.scintilla.org/SciTE.html">SciTE</ulink>, <ulink url="http://www.gnu.org/software/emacs/">Emacs client</ulink>, and <ulink url="http://www.lyx.org/">LyX client</ulink>.
+						  &okular; ships with preconfigured settings for the following editors: <ulink url="http://kate-editor.org/">&kate;</ulink>, <ulink url="http://kile.sourceforge.net/">Kile</ulink>, <ulink url="http://www.scintilla.org/SciTE.html">SciTE</ulink>, <ulink url="http://www.gnu.org/software/emacs/">&Emacs; client</ulink>, and <ulink url="http://www.lyx.org/">LyX client</ulink>.
 						</para>
 						<note>
 						  <para>
@@ -1796,7 +1781,7 @@ Add a 'Find Previous' entry
 					<term><guilabel>Command</guilabel></term>
 					<listitem>
 						<para>This is the command and its parameters to invoke the selected editor with the source file of the actual document.</para>
-						<para>This field will be filled automatically if you use one of the preconfigured editors. Otherwise, please choose <guimenuitem>Custom Text Editor</guimenuitem> in <guilabel>Editor</guilabel> drop-down list and refer to the documentation on your favorite editor to find the proper command.
+						<para>This field will be filled automatically if you use one of the preconfigured editors. Otherwise, please choose <guimenuitem>Custom Text Editor</guimenuitem> in <guilabel>Editor</guilabel> drop down box and refer to the documentation on your favorite editor to find the proper command.
 					        </para>
 						<para>You can use the following placeholders:</para>
 						<itemizedlist>
@@ -1821,14 +1806,14 @@ Add a 'Find Previous' entry
 
 		<itemizedlist>
 			<title>Program Copyright:</title>
-			<listitem><para>Albert Astals Cid <email>aacid@kde.org</email> Current maintainer</para></listitem>
+			<listitem><para>&Albert.Astals.Cid; &Albert.Astals.Cid.mail; Current maintainer</para></listitem>
 			<listitem><para>Pino Toscano <email>pino@kde.org</email></para></listitem>
 			<listitem><para>Enrico Ros <email>eros.kde@email.it</email> &kpdf; developer</para></listitem>
 		</itemizedlist>
 
 		<itemizedlist>
 			<title>Documentation Copyright:</title>
-			<listitem><para>Albert Astals Cid <email>aacid@kde.org</email> Author</para></listitem>
+			<listitem><para>&Albert.Astals.Cid; &Albert.Astals.Cid.mail; Author</para></listitem>
 			<listitem><para>Titus Laska <email>titus.laska@gmx.de</email> Some updates and additions</para></listitem>
 			<listitem><para>Pino Toscano <email>pino@kde.org</email></para></listitem>
 		</itemizedlist>

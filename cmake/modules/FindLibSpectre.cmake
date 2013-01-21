@@ -34,7 +34,9 @@ if(NOT WIN32)
      EXEC_PROGRAM(${PKGCONFIG_EXECUTABLE} ARGS --atleast-version=${LIBSPECTRE_MINIMUM_VERSION} libspectre RETURN_VALUE _return_VALUE OUTPUT_VARIABLE _pkgconfigDevNull )
 MESSAGE("THIS IS EXTRA DEBUG ${PKGCONFIG_EXECUTABLE}#${LIBSPECTRE_MINIMUM_VERSION}#${_return_VALUE}#${_pkgconfigDevNull}")
      if(_return_VALUE STREQUAL "0")
+MESSAGE("_return_VALUE is 0")
         set(LIBSPECTRE_FOUND TRUE)
+MESSAGE("LIBSPECTRE_FOUND ${LIBSPECTRE_FOUND}")
      endif(_return_VALUE STREQUAL "0")
    endif(_SpectreLinkFlags)
 else(NOT WIN32)
@@ -46,6 +48,7 @@ else(NOT WIN32)
     set(LIBSPECTRE_FOUND TRUE)
 endif(NOT WIN32)
 
+MESSAGE("2LIBSPECTRE_FOUND ${LIBSPECTRE_FOUND}")
 if (LIBSPECTRE_FOUND)
   set(LIBSPECTRE_LIBRARY ${_SpectreLinkFlags})
 
@@ -59,6 +62,7 @@ if (LIBSPECTRE_FOUND)
 endif (LIBSPECTRE_FOUND)
 
 include(FindPackageHandleStandardArgs)
+MESSAGE("find_package_handle_standard_args ${LIBSPECTRE_LIBRARY} ${LIBSPECTRE_FOUND}")
 find_package_handle_standard_args(LibSpectre DEFAULT_MSG LIBSPECTRE_LIBRARY LIBSPECTRE_FOUND)
 
 # ensure that they are cached

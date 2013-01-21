@@ -6,6 +6,7 @@ macro_optional_find_package(Poppler)
 macro_log_feature(HAVE_POPPLER_0_12_1 "Poppler-Qt4" "A PDF rendering library" "http://poppler.freedesktop.org" FALSE "0.12.1" "Support for PDF files in okular.")
 
 macro_optional_find_package(LibSpectre)
+MESSAGE("4LIBSPECTRE_FOUND ${LIBSPECTRE_FOUND}")
 macro_log_feature(LIBSPECTRE_FOUND "libspectre" "A PostScript rendering library" "http://libspectre.freedesktop.org/wiki/" FALSE "${LIBSPECTRE_MINIMUM_VERSION}" "Support for PS files in okular.")
 
 macro_optional_find_package(CHM)

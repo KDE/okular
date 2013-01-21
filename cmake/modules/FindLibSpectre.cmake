@@ -32,6 +32,7 @@ if(NOT WIN32)
 
      # query pkg-config asking for a libspectre >= LIBSPECTRE_MINIMUM_VERSION
      EXEC_PROGRAM(${PKGCONFIG_EXECUTABLE} ARGS --atleast-version=${LIBSPECTRE_MINIMUM_VERSION} libspectre RETURN_VALUE _return_VALUE OUTPUT_VARIABLE _pkgconfigDevNull )
+MESSAGE("THIS IS EXTRA DEBUG ${PKGCONFIG_EXECUTABLE}#${LIBSPECTRE_MINIMUM_VERSION}#${_return_VALUE}#${_pkgconfigDevNull}")
      if(_return_VALUE STREQUAL "0")
         set(LIBSPECTRE_FOUND TRUE)
      endif(_return_VALUE STREQUAL "0")

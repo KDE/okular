@@ -98,6 +98,7 @@ void PartTest::testFowardPDF_data()
 int main(int argc, char *argv[])
 {
     // This is QTEST_KDEMAIN withouth the LC_ALL set
+    setenv("LC_ALL", "en_US.UTF-8", 1);
     assert( !QDir::homePath().isEmpty() );
     setenv("KDEHOME", QFile::encodeName( QDir::homePath() + QString::fromLatin1("/.kde-unit-test") ), 1);
     setenv("XDG_DATA_HOME", QFile::encodeName( QDir::homePath() + QString::fromLatin1("/.kde-unit-test/xdg/local") ), 1);

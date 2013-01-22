@@ -1806,7 +1806,7 @@ void PDFGenerator::fillViewportFromSourceReference( Okular::DocumentViewport & v
     if (!ok) line = -1;
 
     // Use column == -1 for now.
-    if( synctex_display_query( synctex_scanner, name.toLatin1(), line, -1 ) > 0 )
+    if( synctex_display_query( synctex_scanner, QFile::encodeName(name), line, -1 ) > 0 )
     {
         synctex_node_t node;
         // For now use the first hit. Could possibly be made smarter

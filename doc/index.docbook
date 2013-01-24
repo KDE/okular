@@ -305,6 +305,9 @@ Add a 'Find Previous' entry
 		<itemizedlist>
 			<listitem><para>The source file has been compiled successfully.</para></listitem>
 			<listitem><para>&okular; knows which editor you would like to use.</para></listitem>
+			<listitem><para>The Browse Tool has to be enabled, which you can select by choosing 
+				<menuchoice><guimenu>Tools</guimenu><guimenuitem>Browse Tool
+				</guimenuitem></menuchoice>.</para></listitem>
 		</itemizedlist>
 
 		<para>With this feature of &okular;, a left mouse click while pressing &Shift; in the &DVI; or &PDF; document will
@@ -1144,7 +1147,7 @@ Add a 'Find Previous' entry
 						<menuchoice>
 							<shortcut><keycombo action="simul">&Alt;&Shift;<keysym>Left</keysym></keycombo></shortcut>
 							<guimenu>Go</guimenu>
-							<guimenuitem>Back in the Document</guimenuitem>
+							<guimenuitem>Back</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
@@ -1156,7 +1159,7 @@ Add a 'Find Previous' entry
 						<menuchoice>
 							<shortcut><keycombo action="simul">&Alt;&Shift;<keysym 	>Right</keysym></keycombo></shortcut>
 							<guimenu>Go</guimenu>
-							<guimenuitem>Forward in the Document</guimenuitem>
+							<guimenuitem>Forward</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
@@ -1299,6 +1302,19 @@ Add a 'Find Previous' entry
 						<para>The mouse will work as a text selection tool. In that mode clicking &LMB; and
 							dragging will give the option of selecting the text of the document. Then, just
 							click with the &RMB; to copy to the clipboard or speak the current selection.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<shortcut><keycombo action="simul">&Ctrl;<keycap>5</keycap></keycombo></shortcut>
+							<guimenu>Tools</guimenu>
+							<guimenuitem>Table Selection Tool</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para>Draw a rectangle around the text for the table, then use the click with the &LMB;
+						  to divide the text block into rows and columns. A &LMB; click on a existing line removes it and merges the adjacent rows or columns.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>

@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=Document viewer
 Name[ca]=Visualitzador de documents
+Name[ca@valencia]=Visualitzador de documents
 Name[cs]=Prohlížeč dokumentů
 Name[da]=Dokumentfremviser
 Name[de]=Dokumentenbetrachter
@@ -15,6 +16,7 @@ Name[it]=Visore di documenti
 Name[kk]=Құжатты қарау құралы
 Name[ko]=문서 뷰어
 Name[lt]=Dokumentų žiūryklė
+Name[mr]=दस्तऐवज प्रदर्शक
 Name[nb]=Dokumentviser
 Name[nl]=Documentenviewer
 Name[pa]=ਡੌਕੂਮੈਂਟ ਦਰਸ਼ਕ

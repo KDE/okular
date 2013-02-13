@@ -46,7 +46,6 @@ class PagesEdit : public KLineEdit
     private:
         MiniBar * m_miniBar;
         bool m_eatClick;
-        bool m_focus;
 };
 
 class PageNumberEdit : public PagesEdit

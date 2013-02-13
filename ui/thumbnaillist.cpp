@@ -209,19 +209,13 @@ ThumbnailList::ThumbnailList( QWidget *parent, Okular::Document *document )
 
     setAcceptDrops( true );
 
-    QPalette pal = palette();
-    // set contents background to the 'base' color
-    QPalette viewportPal = viewport()->palette();
-    viewportPal.setColor( viewport()->backgroundRole(), pal.color( QPalette::Base ) );
-    viewport()->setPalette( viewportPal );
+    viewport()->setBackgroundRole( QPalette::Base );
 
     setWidget( d );
     // widget setup: can be focused by mouse click (not wheel nor tab)
     widget()->setFocusPolicy( Qt::ClickFocus );
     widget()->show();
-    QPalette widgetPal = widget()->palette();
-    widgetPal.setColor( widget()->backgroundRole(), pal.color( QPalette::Base ) );
-    widget()->setPalette( widgetPal );
+    widget()->setBackgroundRole( QPalette::Base );
 
     connect( verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(slotRequestVisiblePixmaps(int)) );
 }

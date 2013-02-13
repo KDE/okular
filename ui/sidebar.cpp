@@ -29,6 +29,7 @@
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kmenu.h>
+#include <kcolorscheme.h>
 
 #include "settings.h"
 
@@ -107,27 +108,32 @@ void SidebarDelegate::paint( QPainter *painter, const QStyleOptionViewItem &opti
     QColor foreColor;
     bool disabled = false;
     bool hover = false;
+
     if ( !( option.state & QStyle::State_Enabled ) )
     {
-        backBrush = option.palette.brush( QPalette::Disabled, QPalette::Base );
-        foreColor = option.palette.color( QPalette::Disabled, QPalette::Text );
+        KColorScheme colorScheme( QPalette::Disabled, KColorScheme::Window );
+        backBrush = colorScheme.background();
+        foreColor = colorScheme.foreground().color();
         disabled = true;
     }
     else if ( option.state & ( QStyle::State_HasFocus | QStyle::State_Selected ) )
     {
-        backBrush = option.palette.brush( QPalette::Highlight );
-        foreColor = option.palette.color( QPalette::HighlightedText );
+        KColorScheme colorScheme( option.palette.currentColorGroup(), KColorScheme::Selection );
+        backBrush = colorScheme.background();
+        foreColor = colorScheme.foreground().color();
     }
     else if ( option.state & QStyle::State_MouseOver )
     {
-        backBrush = option.palette.color( QPalette::Highlight ).light( 115 );
-        foreColor = option.palette.color( QPalette::HighlightedText );
+        KColorScheme colorScheme( option.palette.currentColorGroup(), KColorScheme::Selection );
+        backBrush = colorScheme.background().color().light( 115 );
+        foreColor = colorScheme.foreground().color();
         hover = true;
     }
     else /*if ( option.state & QStyle::State_Enabled )*/
     {
-        backBrush = option.palette.brush( QPalette::Base );
-        foreColor = option.palette.color( QPalette::Text );
+        KColorScheme colorScheme( option.palette.currentColorGroup(), KColorScheme::Window );
+        backBrush = colorScheme.background();
+        foreColor = colorScheme.foreground().color();
     }
     QStyle *style = QApplication::style();
     QStyleOptionViewItemV4 opt( option );

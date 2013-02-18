@@ -19,7 +19,7 @@
 
 using namespace Txt;
 
-Document::Document( QString fileName )
+Document::Document( const QString &fileName )
 {
 #ifdef TXT_DEBUG
     kDebug() << "Opening file" << fileName;
@@ -32,7 +32,7 @@ Document::Document( QString fileName )
         return;
     }
 
-    QByteArray buffer = plainFile.readAll();
+    const QByteArray buffer = plainFile.readAll();
     setPlainText( toUnicode(buffer) );
 }
 
@@ -59,7 +59,7 @@ QByteArray Document::detectEncoding( const QByteArray &array )
 
 QString Document::toUnicode( const QByteArray &array )
 {
-    QByteArray encoding = detectEncoding( array );
+    const QByteArray encoding = detectEncoding( array );
     if ( encoding.isEmpty() )
     {
         return QString();

@@ -15,7 +15,7 @@ namespace Txt
     class Document : public QTextDocument
     {
         public:
-            Document( QString fileName );
+            Document( const QString &fileName );
             ~Document();
 
         private:

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Service
+Name=txt
+Comment=Txt backend for Okular
+X-KDE-ServiceTypes=okular/Generator
+MimeType=text/plain;
+X-KDE-Library=okularGenerator_txt
+X-KDE-Priority=2
+X-KDE-okularAPIVersion=1
+X-KDE-okularHasInternalSettings=false

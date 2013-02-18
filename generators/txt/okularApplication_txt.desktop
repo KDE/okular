@@ -1,0 +1,12 @@
+[Desktop Entry]
+MimeType=text/plain;
+Terminal=false
+Name=Okular
+GenericName=Document Viewer
+Exec=okular %U %i -caption "%c"
+Icon=okular
+Type=Application
+InitialPreference=3
+Categories=Qt;KDE;Graphics;Viewer;
+NoDisplay=true
+X-KDE-Keywords=txt

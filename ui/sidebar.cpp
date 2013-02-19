@@ -75,17 +75,26 @@ class SidebarDelegate : public QAbstractItemDelegate
         void setShowText( bool show );
         bool isTextShown() const;
 
+        void updateBrushCache();
+
         // from QAbstractItemDelegate
         void paint( QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index ) const;
         QSize sizeHint( const QStyleOptionViewItem &option, const QModelIndex &index ) const;
 
     private:
         bool m_showText;
+        QScopedPointer<KStatefulBrush> m_windowBackground;
+        QScopedPointer<KStatefulBrush> m_windowForeground;
+        QScopedPointer<KStatefulBrush> m_selectionBackground;
+        QScopedPointer<KStatefulBrush> m_selectionForeground;
 };
 
 SidebarDelegate::SidebarDelegate( QObject *parent )
-    : QAbstractItemDelegate( parent ), m_showText( true )
+    : QAbstractItemDelegate( parent ), m_showText( true ),
+    m_windowBackground( 0 ), m_windowForeground( 0 ),
+    m_selectionBackground( 0 ), m_selectionForeground( 0 )
 {
+    updateBrushCache();
 }
 
 SidebarDelegate::~SidebarDelegate()
@@ -102,6 +111,14 @@ bool SidebarDelegate::isTextShown() const
     return m_showText;
 }
 
+void SidebarDelegate::updateBrushCache()
+{
+    m_windowBackground.reset(new KStatefulBrush(KColorScheme::Window, KColorScheme::NormalBackground));
+    m_windowForeground.reset(new KStatefulBrush(KColorScheme::Window, KColorScheme::NormalText));
+    m_selectionBackground.reset(new KStatefulBrush(KColorScheme::Selection, KColorScheme::NormalBackground));
+    m_selectionForeground.reset(new KStatefulBrush(KColorScheme::Selection, KColorScheme::NormalText));
+}
+
 void SidebarDelegate::paint( QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index ) const
 {
     QBrush backBrush;
@@ -111,29 +128,25 @@ void SidebarDelegate::paint( QPainter *painter, const QStyleOptionViewItem &opti
 
     if ( !( option.state & QStyle::State_Enabled ) )
     {
-        KColorScheme colorScheme( QPalette::Disabled, KColorScheme::Window );
-        backBrush = colorScheme.background();
-        foreColor = colorScheme.foreground().color();
+        backBrush = m_windowBackground->brush(QPalette::Disabled);
+        foreColor = m_windowForeground->brush(QPalette::Disabled).color();
         disabled = true;
     }
     else if ( option.state & ( QStyle::State_HasFocus | QStyle::State_Selected ) )
     {
-        KColorScheme colorScheme( option.palette.currentColorGroup(), KColorScheme::Selection );
-        backBrush = colorScheme.background();
-        foreColor = colorScheme.foreground().color();
+        backBrush = m_selectionBackground->brush(option.palette);
+        foreColor = m_selectionForeground->brush(option.palette).color();
     }
     else if ( option.state & QStyle::State_MouseOver )
     {
-        KColorScheme colorScheme( option.palette.currentColorGroup(), KColorScheme::Selection );
-        backBrush = colorScheme.background().color().light( 115 );
-        foreColor = colorScheme.foreground().color();
+        backBrush = m_selectionBackground->brush(option.palette).color().light( 115 );
+        foreColor = m_selectionForeground->brush(option.palette).color();
         hover = true;
     }
     else /*if ( option.state & QStyle::State_Enabled )*/
     {
-        KColorScheme colorScheme( option.palette.currentColorGroup(), KColorScheme::Window );
-        backBrush = colorScheme.background();
-        foreColor = colorScheme.foreground().color();
+        backBrush = m_windowBackground->brush(option.palette);
+        foreColor = m_windowForeground->brush(option.palette).color();
     }
     QStyle *style = QApplication::style();
     QStyleOptionViewItemV4 opt( option );
@@ -479,7 +492,9 @@ Sidebar::Sidebar( QWidget *parent )
     connect( d->list, SIGNAL(customContextMenuRequested(QPoint)),
              this, SLOT(listContextMenu(QPoint)) );
     connect( d->splitter, SIGNAL(splitterMoved(int,int)), this, SLOT(splitterMoved(int,int)) );
-    
+
+    connect( KGlobalSettings::self(), SIGNAL(appearanceChanged()), this, SLOT(appearanceChanged()) );
+
     setCollapsed( true );
     setFocusProxy( d->list );
 }
@@ -723,6 +738,11 @@ void Sidebar::iconSizeChanged( QAction *action )
     d->list->update();
     Okular::Settings::setSidebarIconSize( size );
     Okular::Settings::self()->writeConfig();
+}
+
+void Sidebar::appearanceChanged()
+{
+    d->sideDelegate->updateBrushCache();
 }
 
 #include "sidebar.moc"

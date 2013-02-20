@@ -4,6 +4,7 @@ Name=Reader
 GenericName=Document viewer
 Comment=Viewer for various types of documents
 
+TryExec=active-documentviewer
 Exec=active-documentviewer %u
 Terminal=false
 Icon=okular

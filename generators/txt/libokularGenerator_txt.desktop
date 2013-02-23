@@ -1,7 +1,15 @@
 [Desktop Entry]
 Type=Service
 Name=txt
+Name[pt_BR]=txt
+Name[sk]=txt
+Name[uk]=txt
+Name[x-test]=xxtxtxx
 Comment=Txt backend for Okular
+Comment[pt_BR]=Infraestrutura txt para o Okular
+Comment[sk]=Txt backend pre Okular
+Comment[uk]=Додаток текстових файлів для Okular
+Comment[x-test]=xxTxt backend for Okularxx
 X-KDE-ServiceTypes=okular/Generator
 MimeType=text/plain;
 X-KDE-Library=okularGenerator_txt

@@ -126,3 +126,7 @@ Categories=Qt;KDE;Graphics;Office;Viewer;
 InitialPreference=2
 NoDisplay=true
 X-KDE-Keywords=txt
+X-KDE-Keywords[pt_BR]=txt
+X-KDE-Keywords[sk]=txt
+X-KDE-Keywords[uk]=txt
+X-KDE-Keywords[x-test]=xxtxtxx

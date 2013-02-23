@@ -124,4 +124,4 @@ MimeType=application/x-pdf;application/pdf;application/x-wwf;
 X-KDE-Library=okularGenerator_poppler
 X-KDE-Priority=1
 X-KDE-okularAPIVersion=1
-X-KDE-okularHasInternalSettings=false
+X-KDE-okularHasInternalSettings=true

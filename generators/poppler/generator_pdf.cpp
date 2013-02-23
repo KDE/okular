@@ -25,6 +25,7 @@
 #include <QtGui/QPainter>
 
 #include <kaboutdata.h>
+#include <kconfigdialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kpassworddialog.h>
@@ -43,6 +44,9 @@
 #include <core/textpage.h>
 #include <core/fileprinter.h>
 #include <core/utils.h>
+
+#include "ui_pdfsettingswidget.h"
+#include "pdfsettings.h"
 
 #include <config-okular-poppler.h>
 
@@ -1280,8 +1284,14 @@ bool PDFGenerator::reparseConfig()
     return somethingchanged;
 }
 
-void PDFGenerator::addPages( KConfigDialog * )
+void PDFGenerator::addPages( KConfigDialog *dlg )
 {
+#ifdef HAVE_POPPLER_0_24
+    Ui_PDFSettingsWidget pdfsw;
+    QWidget* w = new QWidget(dlg);
+    pdfsw.setupUi(w);
+    dlg->addPage(w, PDFSettings::self(), i18n("PDF"), "application-pdf", i18n("PDF Backend Configuration") );
+#endif
 }
 
 bool PDFGenerator::setDocumentRenderHints()
@@ -1303,6 +1313,22 @@ bool PDFGenerator::setDocumentRenderHints()
     SET_HINT("TextHinting", false, Poppler::Document::TextHinting)
 #endif
 #undef SET_HINT
+#ifdef HAVE_POPPLER_0_24
+    // load thin line mode
+    const int thinLineMode = PDFSettings::enhanceThinLines();
+    const bool enableThinLineSolid = thinLineMode == PDFSettings::EnumEnhanceThinLines::Solid;
+    const bool enableShapeLineSolid = thinLineMode == PDFSettings::EnumEnhanceThinLines::Shape;
+    const bool thinLineSolidWasEnabled = (oldhints & Poppler::Document::ThinLineSolid) == Poppler::Document::ThinLineSolid;
+    const bool thinLineShapeWasEnabled = (oldhints & Poppler::Document::ThinLineShape) == Poppler::Document::ThinLineShape;
+    if (enableThinLineSolid != thinLineSolidWasEnabled) {
+      pdfdoc->setRenderHint(Poppler::Document::ThinLineSolid, enableThinLineSolid);
+      changed = true;
+    }
+    if (enableShapeLineSolid != thinLineShapeWasEnabled) {
+      pdfdoc->setRenderHint(Poppler::Document::ThinLineShape, enableShapeLineSolid);
+      changed = true;
+    }
+#endif
     return changed;
 }
 

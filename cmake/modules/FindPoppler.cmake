@@ -116,9 +116,20 @@ int main()
 }
 " HAVE_POPPLER_0_22)
 
+check_cxx_source_compiles("
+#include <poppler-qt4.h>
+int main()
+{
+  Poppler::Document::RenderHint hint = Poppler::Document::ThinLineSolid;
+  return 0;
+}
+" HAVE_POPPLER_0_24)
+
   set(CMAKE_REQUIRED_INCLUDES)
   set(CMAKE_REQUIRED_LIBRARIES)
-  if (HAVE_POPPLER_0_22)
+  if (HAVE_POPPLER_0_24)
+    set(popplerVersionMessage "0.24")
+  elseif (HAVE_POPPLER_0_22)
     set(popplerVersionMessage "0.22")
   elseif (HAVE_POPPLER_0_20)
     set(popplerVersionMessage "0.20")

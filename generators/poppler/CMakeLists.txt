@@ -1,3 +1,4 @@
+add_subdirectory( conf )
 
 set(CMAKE_REQUIRED_INCLUDES ${POPPLER_INCLUDE_DIR} ${QT_INCLUDE_DIR})
 set(CMAKE_REQUIRED_LIBRARIES ${POPPLER_LIBRARY} ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTXML_LIBRARY})
@@ -34,6 +35,12 @@ set(okularGenerator_poppler_PART_SRCS
    synctex/synctex_parser.c
    synctex/synctex_parser_utils.c
 )
+
+kde4_add_ui_files(okularGenerator_poppler_PART_SRCS
+   conf/pdfsettingswidget.ui
+)
+
+kde4_add_kcfg_files(okularGenerator_poppler_PART_SRCS conf/pdfsettings.kcfgc )
 
 kde4_add_plugin(okularGenerator_poppler ${okularGenerator_poppler_PART_SRCS})
 

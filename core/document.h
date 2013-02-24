@@ -30,6 +30,7 @@ class KBookmark;
 class KConfigDialog;
 class KXMLGUIClient;
 class KUrl;
+class DocumentItem;
 
 namespace Okular {
 
@@ -181,7 +182,7 @@ class OKULAR_EXPORT Document : public QObject
          * Sets the list of visible page rectangles.
          * @see VisiblePageRect
          */
-        void setVisiblePageRects( const QVector< VisiblePageRect * > & visiblePageRects, int excludeId = -1 );
+        void setVisiblePageRects( const QVector< VisiblePageRect * > & visiblePageRects, DocumentObserver *excludeObserver = 0 );
 
         /**
          * Returns the list of visible page rectangles.
@@ -295,18 +296,18 @@ class OKULAR_EXPORT Document : public QObject
         /**
          * Sets the current document viewport to the given @p page.
          *
-         * @param excludeId The observer ids which shouldn't be effected by this change.
+         * @param excludeObserver The observer ids which shouldn't be effected by this change.
          * @param smoothMove Whether the move shall be animated smoothly.
          */
-        void setViewportPage( int page, int excludeId = -1, bool smoothMove = false );
+        void setViewportPage( int page, DocumentObserver *excludeObserver = 0, bool smoothMove = false );
 
         /**
          * Sets the current document viewport to the given @p viewport.
          *
-         * @param excludeId The observer ids which shouldn't be effected by this change.
+         * @param excludeObserver The observer which shouldn't be effected by this change.
          * @param smoothMove Whether the move shall be animated smoothly.
          */
-        void setViewport( const DocumentViewport &viewport, int excludeId = -1, bool smoothMove = false );
+        void setViewport( const DocumentViewport &viewport, DocumentObserver *excludeObserver = 0, bool smoothMove = false );
 
         /**
          * Sets the current document viewport to the next viewport in the
@@ -334,10 +335,8 @@ class OKULAR_EXPORT Document : public QObject
 
         /**
          * Sets the zoom for the current document.
-         *
-         * @param excludeId The observer ids which shouldn't be effected by this change.
          */
-        void setZoom( int factor, int excludeId = -1 );
+        void setZoom( int factor, DocumentObserver *excludeObserver = 0 );
 
         /**
          * Describes the possible options for the pixmap requests.
@@ -819,6 +818,8 @@ class OKULAR_EXPORT Document : public QObject
     private:
         /// @cond PRIVATE
         friend class DocumentPrivate;
+        friend class Part;
+        friend class ::DocumentItem;
         /// @endcond
         DocumentPrivate *const d;
 

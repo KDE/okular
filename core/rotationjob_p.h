@@ -20,6 +20,7 @@
 
 namespace Okular {
 
+class DocumentObserver;
 class PagePrivate;
 
 class RotationJob : public ThreadWeaver::Job
@@ -27,14 +28,14 @@ class RotationJob : public ThreadWeaver::Job
     Q_OBJECT
 
     public:
-        RotationJob( const QImage &image, Rotation oldRotation, Rotation newRotation, int id );
+        RotationJob( const QImage &image, Rotation oldRotation, Rotation newRotation, DocumentObserver *observer );
 
         void setPage( PagePrivate * pd );
         void setRect( const NormalizedRect &rect );
 
         QImage image() const;
         Rotation rotation() const;
-        int id() const;
+        DocumentObserver *observer() const;
         PagePrivate * page() const;
         NormalizedRect rect() const;
 
@@ -47,7 +48,7 @@ class RotationJob : public ThreadWeaver::Job
         const QImage mImage;
         Rotation mOldRotation;
         Rotation mNewRotation;
-        int mId;
+        DocumentObserver *mObserver;
         QImage mRotatedImage;
         PagePrivate * m_pd;
         NormalizedRect mRect;

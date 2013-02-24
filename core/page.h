@@ -25,6 +25,7 @@ namespace Okular {
 
 class Annotation;
 class Document;
+class DocumentObserver;
 class DocumentPrivate;
 class FormField;
 class PagePrivate;
@@ -138,9 +139,9 @@ class OKULAR_EXPORT Page
 
         /**
          * Returns whether the page of size @p width x @p height has a @p pixmap 
-         * in the region given by @rect for the observer with given @p id.
+         * in the region given by @p rect for the given @p observer
          */
-        bool hasPixmap( int id, int width = -1, int height = -1, const NormalizedRect &rect = NormalizedRect() ) const;
+        bool hasPixmap( DocumentObserver *observer, int width = -1, int height = -1, const NormalizedRect &rect = NormalizedRect() ) const;
 
         /**
          * Returns whether the page provides a text page (@ref TextPage).
@@ -260,12 +261,12 @@ class OKULAR_EXPORT Page
         QLinkedList< FormField * > formFields() const;
 
         /**
-         * Sets the region described by @p rect with @p pixmap for the observer
-         * with the given @p id.
+         * Sets the region described by @p rect with @p pixmap for the
+         * given @p observer.
          * If @p rect is not set (default) the @p pixmap is set to the entire
          * page.
          */
-        void setPixmap( int id, QPixmap *pixmap, const NormalizedRect &rect = NormalizedRect() );
+        void setPixmap( DocumentObserver *observer, QPixmap *pixmap, const NormalizedRect &rect = NormalizedRect() );
 
         /**
          * Sets the @p text page.
@@ -343,9 +344,9 @@ class OKULAR_EXPORT Page
         void setFormFields( const QLinkedList< FormField * >& fields );
 
         /**
-         * Deletes the pixmap for the observer with the given @p id.
+         * Deletes the pixmap for the given @p observer
          */
-        void deletePixmap( int id );
+        void deletePixmap( DocumentObserver *observer );
 
         /**
          * Deletes all pixmaps of the page.
@@ -368,7 +369,7 @@ class OKULAR_EXPORT Page
         void deleteAnnotations();
 
         /**
-         * Returns whether pixmaps for the PAGEVIEW_ID observer are handled by a
+         * Returns whether pixmaps for the tiled observer are handled by a
          * tile manager.
          *
          * @since 0.16 (KDE 4.10)
@@ -398,7 +399,7 @@ class OKULAR_EXPORT Page
         friend class ::PagePainter;
         /// @endcond
 
-        const QPixmap * _o_nearestPixmap( int, int, int ) const;
+        const QPixmap * _o_nearestPixmap( DocumentObserver *, int, int ) const;
 
         QLinkedList< ObjectRect* > m_rects;
         QLinkedList< HighlightAreaRect* > m_highlights;

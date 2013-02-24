@@ -35,7 +35,6 @@ class BookmarkList : public QWidget, public Okular::DocumentObserver
         ~BookmarkList();
 
         // inherited from DocumentObserver
-        uint observerId() const;
         void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags );
 
     private slots:

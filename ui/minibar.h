@@ -93,7 +93,6 @@ class MiniBarLogic : public QObject, public Okular::DocumentObserver
         int currentPage() const;
         
         // [INHERITED] from DocumentObserver
-        uint observerId() const { return MINIBAR_ID; }
         void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags );
         void notifyCurrentPageChanged( int previous, int current );
         
@@ -150,7 +149,6 @@ class ProgressWidget : public QWidget, public Okular::DocumentObserver
         ~ProgressWidget();
 
         // [INHERITED] from DocumentObserver
-        uint observerId() const { return PROGRESSWIDGET_ID; }
         void notifyCurrentPageChanged( int previous, int current );
 
         void slotGotoNormalizedPage( float index );

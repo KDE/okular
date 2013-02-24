@@ -64,12 +64,13 @@
 #include "guiutils.h"
 #include "annotationpopup.h"
 #include "pageviewannotator.h"
+#include "priorities.h"
 #include "toolaction.h"
 #include "tts.h"
 #include "videowidget.h"
 #include "core/action.h"
 #include "core/area.h"
-#include "core/document.h"
+#include "core/document_p.h"
 #include "core/form.h"
 #include "core/page.h"
 #include "core/misc.h"
@@ -2319,7 +2320,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                     {
                         // if not on a rect, the click selects the page
                         // if ( pageItem->pageNumber() != (int)d->document->currentPage() )
-                        d->document->setViewportPage( pageItem->pageNumber(), PAGEVIEW_ID );
+                        d->document->setViewportPage( pageItem->pageNumber(), this );
                     }*/
 #endif
                 }
@@ -3214,7 +3215,7 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
             }
             QRect pixmapRect = contentsRect.intersect( itemGeometry );
             pixmapRect.translate( -item->croppedGeometry().topLeft() );
-            PagePainter::paintCroppedPageOnPainter( p, item->page(), PAGEVIEW_ID, pageflags,
+            PagePainter::paintCroppedPageOnPainter( p, item->page(), this, pageflags,
                 item->uncroppedWidth(), item->uncroppedHeight(), pixmapRect,
                 item->crop(), viewPortPoint );
         }
@@ -4018,7 +4019,7 @@ void PageView::delayedResizeEvent()
     slotRequestVisiblePixmaps();
 }
 
-static void slotRequestPreloadPixmap( const PageViewItem * i, const QRect &expandedViewportRect, QLinkedList< Okular::PixmapRequest * > *requestedPixmaps )
+static void slotRequestPreloadPixmap( Okular::DocumentObserver * observer, const PageViewItem * i, const QRect &expandedViewportRect, QLinkedList< Okular::PixmapRequest * > *requestedPixmaps )
 {
     Okular::NormalizedRect preRenderRegion;
     const QRect intersectionRect = expandedViewportRect.intersect( i->croppedGeometry() );
@@ -4026,12 +4027,14 @@ static void slotRequestPreloadPixmap( const PageViewItem * i, const QRect &expan
         preRenderRegion = Okular::NormalizedRect( intersectionRect.translated( -i->uncroppedGeometry().topLeft() ), i->uncroppedWidth(), i->uncroppedHeight() );
 
     // request the pixmap if not already present
-    if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->uncroppedWidth(), i->uncroppedHeight(), preRenderRegion ) && i->uncroppedWidth() > 0 )
+    if ( !i->page()->hasPixmap( observer, i->uncroppedWidth(), i->uncroppedHeight(), preRenderRegion ) && i->uncroppedWidth() > 0 )
     {
+        Okular::PixmapRequest::PixmapRequestFeatures requestFeatures = Okular::PixmapRequest::Preload;
+        requestFeatures |= Okular::PixmapRequest::Asynchronous;
         const bool pageHasTilesManager = i->page()->hasTilesManager();
         if ( pageHasTilesManager && !preRenderRegion.isNull() )
         {
-            Okular::PixmapRequest * p = new Okular::PixmapRequest( PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, true );
+            Okular::PixmapRequest * p = new Okular::PixmapRequest( observer, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, requestFeatures );
             requestedPixmaps->push_back( p );
 
             p->setNormalizedRect( preRenderRegion );
@@ -4039,7 +4042,7 @@ static void slotRequestPreloadPixmap( const PageViewItem * i, const QRect &expan
         }
         else if ( !pageHasTilesManager )
         {
-            Okular::PixmapRequest * p = new Okular::PixmapRequest( PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, true );
+            Okular::PixmapRequest * p = new Okular::PixmapRequest( observer, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, requestFeatures );
             requestedPixmaps->push_back( p );
             p->setNormalizedRect( preRenderRegion );
         }
@@ -4116,7 +4119,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
         Okular::VisiblePageRect * vItem = new Okular::VisiblePageRect( i->pageNumber(), Okular::NormalizedRect( intersectionRect.translated( -i->uncroppedGeometry().topLeft() ), i->uncroppedWidth(), i->uncroppedHeight() ) );
         visibleRects.push_back( vItem );
 #ifdef PAGEVIEW_DEBUG
-        kWarning() << "checking for pixmap for page" << i->pageNumber() << "=" << i->page()->hasPixmap( PAGEVIEW_ID, i->uncroppedWidth(), i->uncroppedHeight() );
+        kWarning() << "checking for pixmap for page" << i->pageNumber() << "=" << i->page()->hasPixmap( Document::OBS_PAGEVIEW, i->uncroppedWidth(), i->uncroppedHeight() );
         kWarning() << "checking for text for page" << i->pageNumber() << "=" << i->page()->hasTextPage();
 #endif
 
@@ -4131,13 +4134,12 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
         }
 
         // if the item has not the right pixmap, add a request for it
-        if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->uncroppedWidth(), i->uncroppedHeight(), expandedVisibleRect ) )
+        if ( !i->page()->hasPixmap( this, i->uncroppedWidth(), i->uncroppedHeight(), expandedVisibleRect ) )
         {
 #ifdef PAGEVIEW_DEBUG
             kWarning() << "rerequesting visible pixmaps for page" << i->pageNumber() << "!";
 #endif
-            Okular::PixmapRequest * p = new Okular::PixmapRequest(
-                    PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRIO, true );
+            Okular::PixmapRequest * p = new Okular::PixmapRequest( this, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRIO, Okular::PixmapRequest::Asynchronous );
             requestedPixmaps.push_back( p );
 
             if ( i->page()->hasTilesManager() )
@@ -4190,14 +4192,14 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
             const int tailRequest = d->visibleItems.last()->pageNumber() + j;
             if ( tailRequest < (int)d->items.count() )
             {
-                slotRequestPreloadPixmap( d->items[ tailRequest ], expandedViewportRect, &requestedPixmaps );
+                slotRequestPreloadPixmap( this, d->items[ tailRequest ], expandedViewportRect, &requestedPixmaps );
             }
 
             // add the page before the 'visible series' in preload
             const int headRequest = d->visibleItems.first()->pageNumber() - j;
             if ( headRequest >= 0 )
             {
-                slotRequestPreloadPixmap( d->items[ headRequest ], expandedViewportRect, &requestedPixmaps );
+                slotRequestPreloadPixmap( this, d->items[ headRequest ], expandedViewportRect, &requestedPixmaps );
             }
 
             // stop if we've already reached both ends of the document
@@ -4220,9 +4222,9 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
         newViewport.rePos.normalizedX = focusedX;
         newViewport.rePos.normalizedY = focusedY;
         // set the viewport to other observers
-        d->document->setViewport( newViewport , PAGEVIEW_ID);
+        d->document->setViewport( newViewport , this );
     }
-    d->document->setVisiblePageRects( visibleRects, PAGEVIEW_ID );
+    d->document->setVisiblePageRects( visibleRects, this );
 }
 
 void PageView::slotMoveViewport()

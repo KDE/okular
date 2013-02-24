@@ -166,11 +166,6 @@ BookmarkList::~BookmarkList()
     m_document->removeObserver( this );
 }
 
-uint BookmarkList::observerId() const
-{
-    return BOOKMARKLIST_ID;
-}
-
 void BookmarkList::notifySetup( const QVector< Okular::Page * > & pages, int setupFlags )
 {
     Q_UNUSED( pages );

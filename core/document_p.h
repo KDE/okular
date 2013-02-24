@@ -114,7 +114,7 @@ class DocumentPrivate
         qulonglong calculateMemoryToFree();
         void cleanupPixmapMemory();
         void cleanupPixmapMemory( qulonglong memoryToFree );
-        AllocatedPixmap * searchLowestPriorityPixmap( bool unloadableOnly = false, bool thenRemoveIt = false, int observerId = -1 /* any */ );
+        AllocatedPixmap * searchLowestPriorityPixmap( bool unloadableOnly = false, bool thenRemoveIt = false, DocumentObserver *observer = 0 /* any */ );
         void calculateMaxTextPages();
         qulonglong getTotalMemory();
         qulonglong getFreeMemory( qulonglong *freeSwap = 0 );
@@ -200,7 +200,10 @@ class DocumentPrivate
         QString m_nextDocumentDestination;
 
         // observers / requests / allocator stuff
-        QMap< int, DocumentObserver * > m_observers;
+        QSet< DocumentObserver * > m_observers;
+        // FIXME This is a hack, we need to support
+        // multiple tiled observers, but for the moment we only support one
+        DocumentObserver *m_tiledObserver;
         QLinkedList< PixmapRequest * > m_pixmapRequestsStack;
         QLinkedList< PixmapRequest * > m_executingPixmapRequests;
         QMutex m_pixmapRequestsMutex;

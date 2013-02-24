@@ -32,6 +32,7 @@
 #include "core/generator.h"
 #include "core/page.h"
 #include "settings.h"
+#include "priorities.h"
 
 class ThumbnailWidget;
 
@@ -637,10 +638,9 @@ void ThumbnailListPrivate::slotRequestVisiblePixmaps( int /*newContentsY*/ )
         // add ThumbnailWidget to visible list
         m_visibleThumbnails.push_back( t );
         // if pixmap not present add it to requests
-        if ( !t->page()->hasPixmap( THUMBNAILS_ID, t->pixmapWidth(), t->pixmapHeight() ) )
+        if ( !t->page()->hasPixmap( q, t->pixmapWidth(), t->pixmapHeight() ) )
         {
-            Okular::PixmapRequest * p = new Okular::PixmapRequest(
-                    THUMBNAILS_ID, t->pageNumber(), t->pixmapWidth(), t->pixmapHeight(), THUMBNAILS_PRIO, true );
+            Okular::PixmapRequest * p = new Okular::PixmapRequest( q, t->pageNumber(), t->pixmapWidth(), t->pixmapHeight(), THUMBNAILS_PRIO, Okular::PixmapRequest::Asynchronous );
             requestedPixmaps.push_back( p );
         }
     }
@@ -961,8 +961,7 @@ void ThumbnailWidget::paint( QPainter &p, const QRect &_clipRect )
         {
             int flags = PagePainter::Accessibility | PagePainter::Highlights |
                         PagePainter::Annotations;
-            PagePainter::paintPageOnPainter( &p, m_page, THUMBNAILS_ID, flags,
-                                             m_pixmapWidth, m_pixmapHeight, clipRect );
+            PagePainter::paintPageOnPainter( &p, m_page, m_parent->q, flags, m_pixmapWidth, m_pixmapHeight, clipRect );
         }
 
         if ( !m_visibleRect.isNull() )

@@ -89,6 +89,7 @@
 #include "core/annotations.h"
 #include "core/bookmarkmanager.h"
 #include "core/document.h"
+#include "core/document_p.h"
 #include "core/generator.h"
 #include "core/page.h"
 #include "core/fileprinter.h"
@@ -417,6 +418,7 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     m_formsMessage = new PageViewTopMessage( rightContainer );
     rightLayout->addWidget( m_formsMessage );
     m_pageView = new PageView( rightContainer, m_document );
+    m_document->d->m_tiledObserver = m_pageView;
     QMetaObject::invokeMethod( m_pageView, "setFocus", Qt::QueuedConnection );      //usability setting
 //    m_splitter->setFocusProxy(m_pageView);
     connect( m_pageView, SIGNAL(urlDropped(KUrl)), SLOT(openUrlFromDocument(KUrl)));

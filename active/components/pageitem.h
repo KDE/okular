@@ -136,9 +136,6 @@ public:
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
-    // inherited from View
-    uint viewId() const { return m_observerId; }
-
     void geometryChanged(const QRectF &newGeometry,
                          const QRectF &oldGeometry);
 
@@ -166,9 +163,9 @@ private:
     bool m_smooth;
     bool m_intentionalDraw;
     bool m_bookmarked;
+    bool m_isThumbnail;
     QWeakPointer<DocumentItem> m_documentItem;
     QTimer *m_redrawTimer;
-    int m_observerId;
     QWeakPointer <QDeclarativeItem> m_flickable;
     Okular::DocumentViewport m_viewPort;
 };

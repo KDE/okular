@@ -21,6 +21,7 @@ class QMutex;
 
 namespace Okular {
 
+class DocumentObserver;
 class DocumentPrivate;
 class FontInfo;
 class Generator;
@@ -70,14 +71,13 @@ class PixmapRequestPrivate
 {
     public:
         void swap();
-        bool isPreload() const;
 
-        int mId;
+        DocumentObserver *mObserver;
         int mPageNumber;
         int mWidth;
         int mHeight;
         int mPriority;
-        bool mAsynchronous : 1;
+        int mFeatures;
         bool mForce : 1;
         bool mTile : 1;
         Page *mPage;

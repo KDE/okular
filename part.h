@@ -115,7 +115,6 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         ~Part();
 
         // inherited from DocumentObserver
-        uint observerId() const { return PART_ID; }
         void notifySetup( const QVector< Okular::Page * > &pages, int setupFlags );
         void notifyViewportChanged( bool smoothMove );
         void notifyPageChanged( int page, int flags );

@@ -17,30 +17,6 @@
 
 namespace Okular {
 
-/** IDs for observers. Globally defined here. **/
-#define PRESENTATION_ID 1
-#define PART_ID 2
-#define PAGEVIEW_ID 3
-#define THUMBNAILS_ID 4
-#define TOC_ID 5
-#define MINIBAR_ID 6
-#define REVIEWS_ID 7
-#define PROGRESSWIDGET_ID 8
-#define PAGESIZELABEL_ID 9
-#define BOOKMARKLIST_ID 10
-#define ANNOTATIONMODEL_ID 11
-
-// the biggest id, useful for ignoring wrong id request
-#define MAX_OBSERVER_ID 12
-
-/** PRIORITIES for requests. Globally defined here. **/
-#define PAGEVIEW_PRIO 1
-#define PAGEVIEW_PRELOAD_PRIO 4
-#define THUMBNAILS_PRIO 2
-#define THUMBNAILS_PRELOAD_PRIO 5
-#define PRESENTATION_PRIO 0
-#define PRESENTATION_PRELOAD_PRIO 3
-
 class Page;
 
 /**
@@ -57,11 +33,6 @@ class OKULAR_EXPORT DocumentObserver
          * Destroys the document observer.
          */
         virtual ~DocumentObserver();
-
-        /**
-         * Must return an unique ID for each observer (used for notifications).
-         */
-        virtual uint observerId() const = 0;
 
         /**
          * Flags that can be sent from the document to all observers to

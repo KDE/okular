@@ -57,11 +57,6 @@ TOC::~TOC()
     m_document->removeObserver( this );
 }
 
-uint TOC::observerId() const
-{
-    return TOC_ID;
-}
-
 void TOC::notifySetup( const QVector< Okular::Page * > & /*pages*/, int setupFlags )
 {
     if ( !( setupFlags & Okular::DocumentObserver::DocumentChanged ) )

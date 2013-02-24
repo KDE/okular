@@ -42,6 +42,7 @@ namespace Okular {
 class Document;
 class DocumentFonts;
 class DocumentInfo;
+class DocumentObserver;
 class DocumentSynopsis;
 class EmbeddedFile;
 class ExportFormatPrivate;
@@ -523,17 +524,25 @@ class OKULAR_EXPORT PixmapRequest
     friend class DocumentPrivate;
 
     public:
+        enum PixmapRequestFeature
+        {
+            NoFeature = 0,
+            Asynchronous = 1,
+            Preload = 2
+        };
+        Q_DECLARE_FLAGS( PixmapRequestFeatures, PixmapRequestFeature )
+
         /**
          * Creates a new pixmap request.
          *
-         * @param id The observer id.
+         * @param observer The observer.
          * @param pageNumber The page number.
          * @param width The width of the page.
          * @param height The height of the page.
          * @param priority The priority of the request.
-         * @param asynchronous The mode of generation.
+         * @param features The features of generation.
          */
-        PixmapRequest( int id, int pageNumber, int width, int height, int priority, bool asynchronous );
+        PixmapRequest( DocumentObserver *observer, int pageNumber, int width, int height, int priority, PixmapRequestFeatures features );
 
         /**
          * Destroys the pixmap request.
@@ -541,9 +550,9 @@ class OKULAR_EXPORT PixmapRequest
         ~PixmapRequest();
 
         /**
-         * Returns the observer id of the request.
+         * Returns the observer of the request.
          */
-        int id() const;
+        DocumentObserver *observer() const;
 
         /**
          * Returns the page number of the request.
@@ -574,6 +583,12 @@ class OKULAR_EXPORT PixmapRequest
          * is notified when the job is done.
          */
         bool asynchronous() const;
+
+        /**
+         * Returns whether the generation request is for a page that is not important
+         * i.e. it's just for speeding up future rendering
+         */
+        bool preload() const;
 
         /**
          * Returns a pointer to the page where the pixmap shall be generated for.

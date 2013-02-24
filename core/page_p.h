@@ -28,6 +28,7 @@ namespace Okular {
 
 class Action;
 class Annotation;
+class DocumentObserver;
 class DocumentPrivate;
 class FormField;
 class HighlightAreaRect;
@@ -104,7 +105,7 @@ class PagePrivate
         void deleteTextSelections();
 
         /**
-         * Get/set the tiles manager for the PAGEVIEW_ID observer
+         * Get/set the tiles manager for the tiled observer
          */
         TilesManager *tilesManager() const;
         void setTilesManager( TilesManager *tm );
@@ -115,7 +116,7 @@ class PagePrivate
                 QPixmap *m_pixmap;
                 Rotation m_rotation;
         };
-        QMap< int, PixmapObject > m_pixmaps;
+        QMap< DocumentObserver*, PixmapObject > m_pixmaps;
         TilesManager* m_tilesManager;
 
         Page *m_page;

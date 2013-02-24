@@ -91,11 +91,11 @@ using namespace Okular;
 struct AllocatedPixmap
 {
     // owner of the page
-    int id;
+    DocumentObserver *observer;
     int page;
     qulonglong memory;
     // public constructor: initialize data
-    AllocatedPixmap( int i, int p, qulonglong m ) : id( i ), page( p ), memory( m ) {}
+    AllocatedPixmap( DocumentObserver *o, int p, qulonglong m ) : observer( o ), page( p ), memory( m ) {}
 };
 
 struct ArchiveData
@@ -126,11 +126,11 @@ struct RunningSearch
 };
 
 #define foreachObserver( cmd ) {\
-    QMap< int, DocumentObserver * >::const_iterator it=d->m_observers.constBegin(), end=d->m_observers.constEnd();\
+    QSet< DocumentObserver * >::const_iterator it=d->m_observers.constBegin(), end=d->m_observers.constEnd();\
     for ( ; it != end ; ++ it ) { (*it)-> cmd ; } }
 
 #define foreachObserverD( cmd ) {\
-    QMap< int, DocumentObserver * >::const_iterator it = m_observers.constBegin(), end = m_observers.constEnd();\
+    QSet< DocumentObserver * >::const_iterator it = m_observers.constBegin(), end = m_observers.constEnd();\
     for ( ; it != end ; ++ it ) { (*it)-> cmd ; } }
 
 #define OKULAR_HISTORY_MAXSTEPS 100
@@ -345,7 +345,7 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong memoryToFree )
             if ( !p ) // No pixmap to remove
                 break;
 
-            kDebug().nospace() << "Evicting cache pixmap id=" << p->id << " page=" << p->page;
+            kDebug().nospace() << "Evicting cache pixmap observer=" << p->observer << " page=" << p->page;
 
             // m_allocatedPixmapsTotalMemory can't underflow because we always add or remove
             // the memory used by the AllocatedPixmap so at most it can reach zero
@@ -357,7 +357,7 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong memoryToFree )
                 memoryToFree -= p->memory;
             pagesFreed++;
             // delete pixmap
-            m_pagesVector.at( p->page )->deletePixmap( p->id );
+            m_pagesVector.at( p->page )->deletePixmap( p->observer );
             // delete allocation descriptor
             delete p;
         }
@@ -368,7 +368,7 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong memoryToFree )
         QLinkedList< AllocatedPixmap * > pixmapsToKeep;
         while ( memoryToFree > 0 )
         {
-            AllocatedPixmap * p = searchLowestPriorityPixmap( false, true, PAGEVIEW_ID );
+            AllocatedPixmap * p = searchLowestPriorityPixmap( false, true, m_tiledObserver );
             if ( !p ) // No pixmap to remove
                 break;
 
@@ -407,7 +407,7 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong memoryToFree )
  * thenRemoveIt is set, the pixmap is removed from m_allocatedPixmaps before
  * returning it
  */
-AllocatedPixmap * DocumentPrivate::searchLowestPriorityPixmap( bool unloadableOnly, bool thenRemoveIt, int observerId )
+AllocatedPixmap * DocumentPrivate::searchLowestPriorityPixmap( bool unloadableOnly, bool thenRemoveIt, DocumentObserver *observer )
 {
     QLinkedList< AllocatedPixmap * >::iterator pIt = m_allocatedPixmaps.begin();
     QLinkedList< AllocatedPixmap * >::iterator pEnd = m_allocatedPixmaps.end();
@@ -420,10 +420,10 @@ AllocatedPixmap * DocumentPrivate::searchLowestPriorityPixmap( bool unloadableOn
     {
         const AllocatedPixmap * p = *pIt;
         // Filter by observer
-        if ( observerId == -1 || p->id == observerId )
+        if ( observer == 0 || p->observer == observer )
         {
             const int distance = qAbs( p->page - currentViewportPage );
-            if ( maxDistance < distance && ( !unloadableOnly || m_observers.value( p->id )->canUnloadPixmap( p->page ) ) )
+            if ( maxDistance < distance && ( !unloadableOnly || p->observer->canUnloadPixmap( p->page ) ) )
             {
                 maxDistance = distance;
                 farthestPixmap = pIt;
@@ -1155,15 +1155,15 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
         }
 
         QRect requestRect = r->isTile() ? r->normalizedRect().geometry( r->width(), r->height() ) : QRect( 0, 0, r->width(), r->height() );
-        TilesManager *tilesManager = ( r->id() == PAGEVIEW_ID ) ? r->page()->d->tilesManager() : 0;
+        TilesManager *tilesManager = ( r->observer() == m_tiledObserver ) ? r->page()->d->tilesManager() : 0;
 
-        // request only if page isn't already present or request has invalid id
-        if ( ( !r->d->mForce && r->page()->hasPixmap( r->id(), r->width(), r->height(), r->normalizedRect() ) ) || r->id() <= 0 || r->id() >= MAX_OBSERVER_ID )
+        // request only if page isn't already present and request has valid id
+        if ( ( !r->d->mForce && r->page()->hasPixmap( r->observer(), r->width(), r->height(), r->normalizedRect() ) ) || !m_observers.contains(r->observer()) )
         {
             m_pixmapRequestsStack.pop_back();
             delete r;
         }
-        else if ( !r->d->mForce && r->d->isPreload() && qAbs( r->pageNumber() - currentViewportPage ) >= maxDistance )
+        else if ( !r->d->mForce && r->preload() && qAbs( r->pageNumber() - currentViewportPage ) >= maxDistance )
         {
             m_pixmapRequestsStack.pop_back();
             //kDebug() << "Ignoring request that doesn't fit in cache";
@@ -1176,14 +1176,14 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
             delete r;
         }
         // If the requested area is above 8000000 pixels, switch on the tile manager
-        else if ( !tilesManager && r->id() == PAGEVIEW_ID && m_generator->hasFeature( Generator::TiledRendering ) && (long)r->width() * (long)r->height() > 8000000L )
+        else if ( !tilesManager && r->observer() == m_tiledObserver && m_generator->hasFeature( Generator::TiledRendering ) && (long)r->width() * (long)r->height() > 8000000L )
         {
             // if the image is too big. start using tiles
             kDebug(OkularDebug).nospace() << "Start using tiles on page " << r->pageNumber()
                 << " (" << r->width() << "x" << r->height() << " px);";
 
             // fill the tiles manager with the last rendered pixmap
-            const QPixmap *pixmap = r->page()->_o_nearestPixmap( r->id(), r->width(), r->height() );
+            const QPixmap *pixmap = r->page()->_o_nearestPixmap( r->observer(), r->width(), r->height() );
             if ( pixmap )
             {
                 tilesManager = new TilesManager( r->pageNumber(), pixmap->width(), pixmap->height(), r->page()->rotation() );
@@ -1196,7 +1196,7 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
                 tilesManager = new TilesManager( r->pageNumber(), r->width(), r->height(), r->page()->rotation() );
             }
             tilesManager->setRequest( r->normalizedRect(), r->width(), r->height() );
-            r->page()->deletePixmap( r->id() );
+            r->page()->deletePixmap( r->observer() );
             r->page()->d->setTilesManager( tilesManager );
             r->setTile( true );
 
@@ -1238,7 +1238,7 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
                 << " (" << r->width() << "x" << r->height() << " px);";
 
             // page is too small. stop using tiles.
-            r->page()->deletePixmap( r->id() );
+            r->page()->deletePixmap( r->observer() );
             r->setTile( false );
 
             request = r;
@@ -1270,7 +1270,7 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
 
     // [MEM] preventive memory freeing
     qulonglong pixmapBytes = 0;
-    TilesManager * tm = ( request->id() == PAGEVIEW_ID ) ? request->page()->d->tilesManager() : 0;
+    TilesManager * tm = ( request->observer() == m_tiledObserver ) ? request->page()->d->tilesManager() : 0;
     if ( tm )
         pixmapBytes = tm->totalMemory();
     else
@@ -1283,7 +1283,7 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
     if ( m_generator->canGeneratePixmap() )
     {
         QRect requestRect = !request->isTile() ? QRect(0, 0, request->width(), request->height() ) : request->normalizedRect().geometry( request->width(), request->height() );
-        kDebug(OkularDebug).nospace() << "sending request id=" << request->id() << " " <<requestRect.width() << "x" << requestRect.height() << "@" << request->pageNumber() << " async == " << request->asynchronous() << " isTile == " << request->isTile();
+        kDebug(OkularDebug).nospace() << "sending request observer=" << request->observer() << " " <<requestRect.width() << "x" << requestRect.height() << "@" << request->pageNumber() << " async == " << request->asynchronous() << " isTile == " << request->isTile();
         m_pixmapRequestsStack.removeAll ( request );
 
         if ( tm )
@@ -1317,10 +1317,8 @@ void DocumentPrivate::rotationFinished( int page, Okular::Page *okularPage )
     if ( !wantedPage || wantedPage != okularPage )
         return;
 
-    QMap< int, DocumentObserver * >::const_iterator it = m_observers.constBegin(), end = m_observers.constEnd();
-    for ( ; it != end ; ++ it ) {
-        (*it)->notifyPageChanged( page, DocumentObserver::Pixmap | DocumentObserver::Annotations );
-    }
+    foreach(DocumentObserver *o, m_observers)
+        o->notifyPageChanged( page, DocumentObserver::Pixmap | DocumentObserver::Annotations );
 }
 
 void DocumentPrivate::fontReadingProgress( int page )
@@ -1391,13 +1389,13 @@ void DocumentPrivate::refreshPixmaps( int pageNumber )
         return;
 
     QLinkedList< Okular::PixmapRequest * > requestedPixmaps;
-    QMap< int, PagePrivate::PixmapObject >::ConstIterator it = page->d->m_pixmaps.constBegin(), itEnd = page->d->m_pixmaps.constEnd();
+    QMap< DocumentObserver*, PagePrivate::PixmapObject >::ConstIterator it = page->d->m_pixmaps.constBegin(), itEnd = page->d->m_pixmaps.constEnd();
     for ( ; it != itEnd; ++it )
     {
         QSize size = (*it).m_pixmap->size();
         if ( (*it).m_rotation % 2 )
             size.transpose();
-        PixmapRequest * p = new PixmapRequest( it.key(), pageNumber, size.width(), size.height(), 1, true );
+        PixmapRequest * p = new PixmapRequest( it.key(), pageNumber, size.width(), size.height(), 1, PixmapRequest::Asynchronous );
         p->d->mForce = true;
         requestedPixmaps.push_back( p );
     }
@@ -1407,7 +1405,7 @@ void DocumentPrivate::refreshPixmaps( int pageNumber )
     {
         tilesManager->markDirty();
 
-        PixmapRequest * p = new PixmapRequest( PAGEVIEW_ID, pageNumber, tilesManager->width(), tilesManager->height(), 1, true );
+        PixmapRequest * p = new PixmapRequest( m_tiledObserver, pageNumber, tilesManager->width(), tilesManager->height(), 1, PixmapRequest::Asynchronous );
 
         NormalizedRect tilesRect;
 
@@ -1554,7 +1552,7 @@ void DocumentPrivate::doProcessSearchMatch( RegularAreaRect *match, RunningSearc
             searchViewport.rePos.enabled = true;
             searchViewport.rePos.normalizedX = (match->first().left + match->first().right) / 2.0;
             searchViewport.rePos.normalizedY = (match->first().top + match->first().bottom) / 2.0;
-            m_parent->setViewport( searchViewport, -1, true );
+            m_parent->setViewport( searchViewport, 0, true );
         }
         delete match;
     }
@@ -1854,6 +1852,7 @@ Document::Document( QWidget *widget )
     d->m_widget = widget;
     d->m_bookmarkManager = new BookmarkManager( d );
     d->m_viewportIterator = d->m_viewportHistory.insert( d->m_viewportHistory.end(), DocumentViewport() );
+    d->m_tiledObserver = 0;
 
     connect( PageController::self(), SIGNAL(rotationFinished(int,Okular::Page*)),
              this, SLOT(rotationFinished(int,Okular::Page*)) );
@@ -2245,8 +2244,8 @@ void Document::closeDocument()
 
 void Document::addObserver( DocumentObserver * pObserver )
 {
-    // keep the pointer to the observer in a map
-    d->m_observers.insert( pObserver->observerId(), pObserver );
+    Q_ASSERT( !d->m_observers.contains( pObserver ) );
+    d->m_observers << pObserver;
 
     // if the observer is added while a document is already opened, tell it
     if ( !d->m_pagesVector.isEmpty() )
@@ -2259,13 +2258,12 @@ void Document::addObserver( DocumentObserver * pObserver )
 void Document::removeObserver( DocumentObserver * pObserver )
 {
     // remove observer from the map. it won't receive notifications anymore
-    if ( d->m_observers.contains( pObserver->observerId() ) )
+    if ( d->m_observers.contains( pObserver ) )
     {
         // free observer's pixmap data
-        int observerId = pObserver->observerId();
         QVector<Page*>::const_iterator it = d->m_pagesVector.constBegin(), end = d->m_pagesVector.constEnd();
         for ( ; it != end; ++it )
-            (*it)->deletePixmap( observerId );
+            (*it)->deletePixmap( pObserver );
 
         // [MEM] free observer's allocation descriptors
         QLinkedList< AllocatedPixmap * >::iterator aIt = d->m_allocatedPixmaps.begin();
@@ -2273,7 +2271,7 @@ void Document::removeObserver( DocumentObserver * pObserver )
         while ( aIt != aEnd )
         {
             AllocatedPixmap * p = *aIt;
-            if ( p->id == observerId )
+            if ( p->observer == pObserver )
             {
                 aIt = d->m_allocatedPixmaps.erase( aIt );
                 delete p;
@@ -2283,7 +2281,7 @@ void Document::removeObserver( DocumentObserver * pObserver )
         }
 
         // delete observer entry from the map
-        d->m_observers.remove( observerId );
+        d->m_observers.remove( pObserver );
     }
 }
 
@@ -2447,7 +2445,7 @@ const QVector< VisiblePageRect * > & Document::visiblePageRects() const
     return d->m_pageRects;
 }
 
-void Document::setVisiblePageRects( const QVector< VisiblePageRect * > & visiblePageRects, int excludeId )
+void Document::setVisiblePageRects( const QVector< VisiblePageRect * > & visiblePageRects, DocumentObserver *excludeObserver )
 {
     QVector< VisiblePageRect * >::const_iterator vIt = d->m_pageRects.constBegin();
     QVector< VisiblePageRect * >::const_iterator vEnd = d->m_pageRects.constEnd();
@@ -2455,10 +2453,9 @@ void Document::setVisiblePageRects( const QVector< VisiblePageRect * > & visible
         delete *vIt;
     d->m_pageRects = visiblePageRects;
     // notify change to all other (different from id) observers
-    QMap< int, DocumentObserver * >::const_iterator it = d->m_observers.constBegin(), end = d->m_observers.constEnd();
-    for ( ; it != end ; ++ it )
-        if ( it.key() != excludeId )
-            (*it)->notifyVisibleRectsChanged();
+    foreach(DocumentObserver *o, d->m_observers)
+        if ( o != excludeObserver )
+            o->notifyVisibleRectsChanged();
 }
 
 uint Document::currentPage() const
@@ -2621,7 +2618,8 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests, 
     }
 
     // 1. [CLEAN STACK] remove previous requests of requesterID
-    int requesterID = requests.first()->id();
+    // FIXME This asumes all requests come from the same observer, that is true atm but not enforced anywhere
+    DocumentObserver *requesterObserver = requests.first()->observer();
     QSet< int > requestedPages;
     {
         QLinkedList< PixmapRequest * >::const_iterator rIt = requests.constBegin(), rEnd = requests.constEnd();
@@ -2633,7 +2631,7 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests, 
     QLinkedList< PixmapRequest * >::iterator sIt = d->m_pixmapRequestsStack.begin(), sEnd = d->m_pixmapRequestsStack.end();
     while ( sIt != sEnd )
     {
-        if ( (*sIt)->id() == requesterID
+        if ( (*sIt)->observer() == requesterObserver
              && ( removeAllPrevious || requestedPages.contains( (*sIt)->pageNumber() ) ) )
         {
             // delete request and remove it from stack
@@ -2650,7 +2648,7 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests, 
     {
         // set the 'page field' (see PixmapRequest) and check if it is valid
         PixmapRequest * request = *rIt;
-        kDebug(OkularDebug).nospace() << "request id=" << request->id() << " " <<request->width() << "x" << request->height() << "@" << request->pageNumber();
+        kDebug(OkularDebug).nospace() << "request observer=" << request->observer() << " " <<request->width() << "x" << request->height() << "@" << request->pageNumber();
         if ( d->m_pagesVector.value( request->pageNumber() ) == 0 )
         {
             // skip requests referencing an invalid page (must not happen)
@@ -3009,7 +3007,7 @@ void Document::setPrevPage()
         setViewport( DocumentViewport( (*d->m_viewportIterator).pageNumber - 1 ) );
 }
 */
-void Document::setViewportPage( int page, int excludeId, bool smoothMove )
+void Document::setViewportPage( int page, DocumentObserver *excludeObserver, bool smoothMove )
 {
     // clamp page in range [0 ... numPages-1]
     if ( page < 0 )
@@ -3018,10 +3016,10 @@ void Document::setViewportPage( int page, int excludeId, bool smoothMove )
         page = d->m_pagesVector.count() - 1;
 
     // make a viewport from the page and broadcast it
-    setViewport( DocumentViewport( page ), excludeId, smoothMove );
+    setViewport( DocumentViewport( page ), excludeObserver, smoothMove );
 }
 
-void Document::setViewport( const DocumentViewport & viewport, int excludeId, bool smoothMove )
+void Document::setViewport( const DocumentViewport & viewport, DocumentObserver *excludeObserver, bool smoothMove )
 {
     if ( !viewport.isValid() )
     {
@@ -3066,24 +3064,22 @@ void Document::setViewport( const DocumentViewport & viewport, int excludeId, bo
     const bool currentPageChanged = (oldPageNumber != currentViewportPage);
 
     // notify change to all other (different from id) observers
-    QMap< int, DocumentObserver * >::const_iterator it = d->m_observers.constBegin(), end = d->m_observers.constEnd();
-    for ( ; it != end ; ++ it )
+    foreach(DocumentObserver *o, d->m_observers)
     {
-        if ( it.key() != excludeId )
-            (*it)->notifyViewportChanged( smoothMove );
+        if ( o != excludeObserver )
+            o->notifyViewportChanged( smoothMove );
 
         if ( currentPageChanged )
-            (*it)->notifyCurrentPageChanged( oldPageNumber, currentViewportPage );
+            o->notifyCurrentPageChanged( oldPageNumber, currentViewportPage );
     }
 }
 
-void Document::setZoom(int factor, int excludeId)
+void Document::setZoom(int factor, DocumentObserver *excludeObserver)
 {
     // notify change to all other (different from id) observers
-    QMap< int, DocumentObserver * >::const_iterator it = d->m_observers.constBegin(), end = d->m_observers.constEnd();
-    for ( ; it != end ; ++ it )
-        if ( it.key() != excludeId )
-            (*it)->notifyZoom( factor );
+    foreach(DocumentObserver *o, d->m_observers)
+        if (o != excludeObserver)
+            o->notifyZoom( factor );
 }
 
 void Document::setPrevViewport()
@@ -3414,7 +3410,7 @@ void Document::processAction( const Action * action )
                 if ( !nextViewport.isValid() )
                     return;
 
-                setViewport( nextViewport, -1, true );
+                setViewport( nextViewport, 0, true );
                 d->m_nextDocumentViewport = DocumentViewport();
                 d->m_nextDocumentDestination = QString();
             }
@@ -4140,7 +4136,7 @@ void DocumentPrivate::requestDone( PixmapRequest * req )
     QLinkedList< AllocatedPixmap * >::iterator aIt = m_allocatedPixmaps.begin();
     QLinkedList< AllocatedPixmap * >::iterator aEnd = m_allocatedPixmaps.end();
     for ( ; aIt != aEnd; ++aIt )
-        if ( (*aIt)->page == req->pageNumber() && (*aIt)->id == req->id() )
+        if ( (*aIt)->page == req->pageNumber() && (*aIt)->observer == req->observer() )
         {
             AllocatedPixmap * p = *aIt;
             m_allocatedPixmaps.erase( aIt );
@@ -4149,27 +4145,27 @@ void DocumentPrivate::requestDone( PixmapRequest * req )
             break;
         }
 
-    QMap< int, DocumentObserver * >::const_iterator itObserver = m_observers.constFind( req->id() );
-    if ( itObserver != m_observers.constEnd() )
+    DocumentObserver *observer = req->observer();
+    if ( m_observers.contains(observer) )
     {
         // [MEM] 1.2 append memory allocation descriptor to the FIFO
         qulonglong memoryBytes = 0;
-        const TilesManager *tm = ( req->id() == PAGEVIEW_ID ) ? req->page()->d->tilesManager() : 0;
+        const TilesManager *tm = ( req->observer() == m_tiledObserver ) ? req->page()->d->tilesManager() : 0;
         if ( tm )
             memoryBytes = tm->totalMemory();
         else
             memoryBytes = 4 * req->width() * req->height();
 
-        AllocatedPixmap * memoryPage = new AllocatedPixmap( req->id(), req->pageNumber(), memoryBytes );
+        AllocatedPixmap * memoryPage = new AllocatedPixmap( req->observer(), req->pageNumber(), memoryBytes );
         m_allocatedPixmaps.append( memoryPage );
         m_allocatedPixmapsTotalMemory += memoryBytes;
 
         // 2. notify an observer that its pixmap changed
-        itObserver.value()->notifyPageChanged( req->pageNumber(), DocumentObserver::Pixmap );
+        observer->notifyPageChanged( req->pageNumber(), DocumentObserver::Pixmap );
     }
 #ifndef NDEBUG
     else
-        kWarning(OkularDebug) << "Receiving a done request for the defunct observer" << req->id();
+        kWarning(OkularDebug) << "Receiving a done request for the defunct observer" << observer;
 #endif
 
     // 3. delete request

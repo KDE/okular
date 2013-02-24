@@ -90,7 +90,7 @@ PagePrivate::~PagePrivate()
 
 void PagePrivate::imageRotationDone( RotationJob * job )
 {
-    TilesManager *tm = ( job->id() == PAGEVIEW_ID ) ? m_tilesManager : 0;
+    TilesManager *tm = ( job->observer() == m_doc->m_tiledObserver ) ? m_tilesManager : 0;
     if ( tm )
     {
         QPixmap *pixmap = new QPixmap( QPixmap::fromImage( job->image() ) );
@@ -99,7 +99,7 @@ void PagePrivate::imageRotationDone( RotationJob * job )
         return;
     }
 
-    QMap< int, PixmapObject >::iterator it = m_pixmaps.find( job->id() );
+    QMap< DocumentObserver*, PixmapObject >::iterator it = m_pixmaps.find( job->observer() );
     if ( it != m_pixmaps.end() )
     {
         PixmapObject &object = it.value();
@@ -110,7 +110,7 @@ void PagePrivate::imageRotationDone( RotationJob * job )
         object.m_pixmap = new QPixmap( QPixmap::fromImage( job->image() ) );
         object.m_rotation = job->rotation();
 
-        m_pixmaps.insert( job->id(), object );
+        m_pixmaps.insert( job->observer(), object );
     }
 }
 
@@ -213,9 +213,9 @@ void Page::setBoundingBox( const NormalizedRect& bbox )
     d->m_isBoundingBoxKnown = true;
 }
 
-bool Page::hasPixmap( int id, int width, int height, const NormalizedRect &rect ) const
+bool Page::hasPixmap( DocumentObserver *observer, int width, int height, const NormalizedRect &rect ) const
 {
-    TilesManager *tm = ( id == PAGEVIEW_ID ) ? d->m_tilesManager : 0;
+    TilesManager *tm = ( observer == d->m_doc->m_tiledObserver ) ? d->m_tilesManager : 0;
     if ( tm )
     {
         if ( width != tm->width() || height != tm->height() )
@@ -227,7 +227,7 @@ bool Page::hasPixmap( int id, int width, int height, const NormalizedRect &rect 
         return tm->hasPixmap( rect );
     }
 
-    QMap< int, PagePrivate::PixmapObject >::const_iterator it = d->m_pixmaps.constFind( id );
+    QMap< DocumentObserver*, PagePrivate::PixmapObject >::const_iterator it = d->m_pixmaps.constFind( observer );
     if ( it == d->m_pixmaps.constEnd() )
         return false;
 
@@ -379,7 +379,7 @@ void PagePrivate::rotateAt( Rotation orientation )
     /**
      * Rotate the images of the page.
      */
-    QMapIterator< int, PagePrivate::PixmapObject > it( m_pixmaps );
+    QMapIterator< DocumentObserver*, PagePrivate::PixmapObject > it( m_pixmaps );
     while ( it.hasNext() ) {
         it.next();
 
@@ -502,10 +502,10 @@ QLinkedList< FormField * > Page::formFields() const
     return d->formfields;
 }
 
-void Page::setPixmap( int id, QPixmap *pixmap, const NormalizedRect &rect )
+void Page::setPixmap( DocumentObserver *observer, QPixmap *pixmap, const NormalizedRect &rect )
 {
     if ( d->m_rotation == Rotation0 ) {
-        TilesManager *tm = ( id == PAGEVIEW_ID ) ? d->m_tilesManager : 0;
+        TilesManager *tm = ( observer == d->m_doc->m_tiledObserver ) ? d->m_tilesManager : 0;
         if ( tm )
         {
             tm->setPixmap( pixmap, rect );
@@ -513,19 +513,19 @@ void Page::setPixmap( int id, QPixmap *pixmap, const NormalizedRect &rect )
             return;
         }
 
-        QMap< int, PagePrivate::PixmapObject >::iterator it = d->m_pixmaps.find( id );
+        QMap< DocumentObserver*, PagePrivate::PixmapObject >::iterator it = d->m_pixmaps.find( observer );
         if ( it != d->m_pixmaps.end() )
         {
             delete it.value().m_pixmap;
         }
         else
         {
-            it = d->m_pixmaps.insert( id, PagePrivate::PixmapObject() );
+            it = d->m_pixmaps.insert( observer, PagePrivate::PixmapObject() );
         }
         it.value().m_pixmap = pixmap;
         it.value().m_rotation = d->m_rotation;
     } else {
-        RotationJob *job = new RotationJob( pixmap->toImage(), Rotation0, d->m_rotation, id );
+        RotationJob *job = new RotationJob( pixmap->toImage(), Rotation0, d->m_rotation, observer );
         job->setPage( d );
         job->setRect( TilesManager::toRotatedRect( rect, d->m_rotation ) );
         PageController::self()->addRotationJob(job);
@@ -708,23 +708,23 @@ void Page::setFormFields( const QLinkedList< FormField * >& fields )
     }
 }
 
-void Page::deletePixmap( int id )
+void Page::deletePixmap( DocumentObserver *observer )
 {
-    if ( id == PAGEVIEW_ID && d->m_tilesManager )
+    if ( observer == d->m_doc->m_tiledObserver && d->m_tilesManager )
     {
         delete d->m_tilesManager;
         d->m_tilesManager = 0;
     }
     else
     {
-        PagePrivate::PixmapObject object = d->m_pixmaps.take( id );
+        PagePrivate::PixmapObject object = d->m_pixmaps.take( observer );
         delete object.m_pixmap;
     }
 }
 
 void Page::deletePixmaps()
 {
-    QMapIterator< int, PagePrivate::PixmapObject > it( d->m_pixmaps );
+    QMapIterator< DocumentObserver*, PagePrivate::PixmapObject > it( d->m_pixmaps );
     while ( it.hasNext() ) {
         it.next();
         delete it.value().m_pixmap;
@@ -957,21 +957,21 @@ void PagePrivate::saveLocalContents( QDomNode & parentNode, QDomDocument & docum
         parentNode.appendChild( pageElement );
 }
 
-const QPixmap * Page::_o_nearestPixmap( int pixID, int w, int h ) const
+const QPixmap * Page::_o_nearestPixmap( DocumentObserver *observer, int w, int h ) const
 {
     Q_UNUSED( h )
 
     const QPixmap * pixmap = 0;
 
     // if a pixmap is present for given id, use it
-    QMap< int, PagePrivate::PixmapObject >::const_iterator itPixmap = d->m_pixmaps.constFind( pixID );
+    QMap< DocumentObserver*, PagePrivate::PixmapObject >::const_iterator itPixmap = d->m_pixmaps.constFind( observer );
     if ( itPixmap != d->m_pixmaps.constEnd() )
         pixmap = itPixmap.value().m_pixmap;
     // else find the closest match using pixmaps of other IDs (great optim!)
     else if ( !d->m_pixmaps.isEmpty() )
     {
         int minDistance = -1;
-        QMap< int, PagePrivate::PixmapObject >::const_iterator it = d->m_pixmaps.constBegin(), end = d->m_pixmaps.constEnd();
+        QMap< DocumentObserver*, PagePrivate::PixmapObject >::const_iterator it = d->m_pixmaps.constBegin(), end = d->m_pixmaps.constEnd();
         for ( ; it != end; ++it )
         {
             int pixWidth = (*it).m_pixmap->width(),

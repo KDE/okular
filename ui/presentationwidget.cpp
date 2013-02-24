@@ -52,6 +52,7 @@
 #include "guiutils.h"
 #include "pagepainter.h"
 #include "presentationsearchbar.h"
+#include "priorities.h"
 #include "videowidget.h"
 #include "core/action.h"
 #include "core/annotations.h"
@@ -424,7 +425,7 @@ void PresentationWidget::notifyCurrentPageChanged( int previousPage, int current
 
         // if pixmap not inside the Okular::Page we request it and wait for
         // notifyPixmapChanged call or else we can proceed to pixmap generation
-        if ( !frame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
+        if ( !frame->page->hasPixmap( this, pixW, pixH ) )
         {
             requestPixmaps();
         }
@@ -909,7 +910,7 @@ void PresentationWidget::changePage( int newPage )
         return;
 
     // switch to newPage
-    m_document->setViewportPage( newPage, PRESENTATION_ID );
+    m_document->setViewportPage( newPage, this );
 
     if ( (Okular::Settings::slidesShowSummary() && !m_showSummaryView) || m_frameIndex == -1 )
         notifyCurrentPageChanged( -1, newPage );
@@ -1027,7 +1028,7 @@ void PresentationWidget::generateContentsPage( int pageNum, QPainter & p )
 
     // draw the page using the shared PagePainter class
     int flags = PagePainter::Accessibility | PagePainter::Highlights | PagePainter::Annotations;
-    PagePainter::paintPageOnPainter( &p, frame->page, PRESENTATION_ID, flags,
+    PagePainter::paintPageOnPainter( &p, frame->page, this, flags,
                                      geom.width(), geom.height(), geom );
 
     // restore painter
@@ -1245,7 +1246,7 @@ void PresentationWidget::requestPixmaps()
     QApplication::setOverrideCursor( QCursor( Qt::BusyCursor ) );
     // request the pixmap
     QLinkedList< Okular::PixmapRequest * > requests;
-    requests.push_back( new Okular::PixmapRequest( PRESENTATION_ID, m_frameIndex, pixW, pixH, PRESENTATION_PRIO, false ) );
+    requests.push_back( new Okular::PixmapRequest( this, m_frameIndex, pixW, pixH, PRESENTATION_PRIO, Okular::PixmapRequest::NoFeature ) );
     // restore cursor
     QApplication::restoreOverrideCursor();
     // ask for next and previous page if not in low memory usage setting
@@ -1257,6 +1258,9 @@ void PresentationWidget::requestPixmaps()
         if (Okular::SettingsCore::memoryLevel() == Okular::SettingsCore::EnumMemoryLevel::Greedy)
             pagesToPreload = (int)m_document->pages();
 
+        Okular::PixmapRequest::PixmapRequestFeatures requestFeatures = Okular::PixmapRequest::Preload;
+        requestFeatures |= Okular::PixmapRequest::Asynchronous;
+
         for( int j = 1; j <= pagesToPreload; j++ )
         {
             int tailRequest = m_frameIndex + j;
@@ -1265,8 +1269,8 @@ void PresentationWidget::requestPixmaps()
                 PresentationFrame *nextFrame = m_frames[ tailRequest ];
                 pixW = nextFrame->geometry.width();
                 pixH = nextFrame->geometry.height();
-                if ( !nextFrame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
-                    requests.push_back( new Okular::PixmapRequest( PRESENTATION_ID, tailRequest, pixW, pixH, PRESENTATION_PRELOAD_PRIO, true ) );
+                if ( !nextFrame->page->hasPixmap( this, pixW, pixH ) )
+                    requests.push_back( new Okular::PixmapRequest( this, tailRequest, pixW, pixH, PRESENTATION_PRELOAD_PRIO, requestFeatures ) );
             }
 
             int headRequest = m_frameIndex - j;
@@ -1275,8 +1279,8 @@ void PresentationWidget::requestPixmaps()
                 PresentationFrame *prevFrame = m_frames[ headRequest ];
                 pixW = prevFrame->geometry.width();
                 pixH = prevFrame->geometry.height();
-                if ( !prevFrame->page->hasPixmap( PRESENTATION_ID, pixW, pixH ) )
-                    requests.push_back( new Okular::PixmapRequest( PRESENTATION_ID, headRequest, pixW, pixH, PRESENTATION_PRELOAD_PRIO, true ) );
+                if ( !prevFrame->page->hasPixmap( this, pixW, pixH ) )
+                    requests.push_back( new Okular::PixmapRequest( this, headRequest, pixW, pixH, PRESENTATION_PRELOAD_PRIO, requestFeatures ) );
             }
 
             // stop if we've already reached both ends of the document
@@ -1505,7 +1509,7 @@ void PresentationWidget::applyNewScreenSize( const QSize & oldSize )
     if ( m_frameIndex != -1 )
     {
     // ugliness alarm!
-    const_cast< Okular::Page * >( m_frames[ m_frameIndex ]->page )->deletePixmap( PRESENTATION_ID );
+    const_cast< Okular::Page * >( m_frames[ m_frameIndex ]->page )->deletePixmap( this );
     // force the regeneration of the pixmap
     m_lastRenderedPixmap = QPixmap();
     m_blockNotifications = true;

@@ -66,6 +66,7 @@ class CHMGenerator : public Okular::Generator
         int m_pixmapRequestZoom;
         Okular::DocumentInfo* m_docInfo;
         QBitArray m_textpageAddedList;
+        QBitArray m_rectsGenerated;
 };
 
 #endif

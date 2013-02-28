@@ -40,29 +40,32 @@ Document::~Document()
 {
 }
 
-QByteArray Document::detectEncoding( const QByteArray &array )
-{
-    // TODO: see to "katetextloader.h"
-    KEncodingProber prober(KEncodingProber::Universal);
-    prober.feed(array);
-    if (!prober.confidence() > 0.5)
-    {
-        kDebug() << "Can't detect charset";
-        return QByteArray();
-    }
-
-#ifdef TXT_DEBUG
-    kDebug() << "Detected" << prober.encoding() << "encoding";
-#endif
-    return prober.encoding();
-}
-
 QString Document::toUnicode( const QByteArray &array )
 {
-    const QByteArray encoding = detectEncoding( array );
+    QByteArray encoding;
+    KEncodingProber prober(KEncodingProber::Universal);
+    int charsFeeded = 0;
+    int chunkSize = 3000; // ~= number of symbols in page.
+
+    // Try to detect encoding.
+    while ( encoding.isEmpty() && charsFeeded < array.size() )
+    {
+        prober.feed( array.mid( charsFeeded, chunkSize ) );
+        charsFeeded += chunkSize;
+
+        if (prober.confidence() >= 0.5)
+        {
+            encoding = prober.encoding();
+            break;
+        }
+    }
+
     if ( encoding.isEmpty() )
     {
         return QString();
     }
+
+    kDebug() << "Detected" << prober.encoding() << "encoding"
+             << "based on" << charsFeeded << "chars";
     return QTextCodec::codecForName( encoding )->toUnicode( array );
 }

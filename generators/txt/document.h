@@ -19,8 +19,6 @@ namespace Txt
             ~Document();
 
         private:
-            // TODO: write a better detecter, based on some number of chunks
-            QByteArray detectEncoding( const QByteArray &array );
             QString toUnicode( const QByteArray &array );
     };
 }

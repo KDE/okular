@@ -37,7 +37,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2012-12-31</date>
+		<date>2012-03-02</date>
 		<releaseinfo>0.16.60 (&kde; 4.11)</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
@@ -1451,7 +1451,7 @@ Add a 'Find Previous' entry
 						</menuchoice>
 					</term>
 					<listitem>
-						<para>Opens the <link linkend="configure">Backend Configuration</link>
+						<para>Opens the <link linkend="configure-backends">Backend Configuration</link>
 							window.</para>
 					</listitem>
 				</varlistentry>
@@ -1475,6 +1475,78 @@ Add a 'Find Previous' entry
 			&help.menu.documentation;
 		</sect1>
 
+	</chapter>
+	<chapter id="configure-backends">
+	  <title>Configuring &okular; Backends</title>
+	  <para>
+	    You can configure &okular; backends by choosing <menuchoice>
+	      <guimenu>Settings</guimenu>
+	      <guimenuitem>Configure Backends...</guimenuitem>
+	    </menuchoice>.
+	    Currently, configuration options are provided for PostScript and &PDF; backends only.
+	  </para>
+	  <screenshot>
+	    <screeninfo>The backends configuration dialog</screeninfo>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="configure-backends.png" format="PNG" />
+	      </imageobject>
+	      <textobject>
+		<phrase>The backends configuration dialog</phrase>
+	      </textobject>
+	    </mediaobject>
+	  </screenshot>
+	  <sect1 id="config-ghostscript">
+	    <title>PostScript backend configuration</title>
+	    <para>
+	      You can configure &okular; PostScript rendering backend based on <ulink url="http://www.ghostscript.com/">Ghostscript</ulink> by choosing <guilabel>Ghostscript</guilabel> from the list on the left part of the configuration dialog. The only configurable option is as follows.
+	    </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel>Use platform fonts</guilabel>
+		  </term>
+		  <listitem>
+		    <para>This option determines whether Ghostscript should be allowed to use platform fonts, if unchecked only usage of fonts embedded in the document will be allowed. This option is checked by default.
+		    </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect1>
+	  <sect1 id="config-pdf">
+	    <title>&PDF; backend configuration</title>
+	    <para>
+	      You can configure &okular; &PDF; rendering backend based on <ulink url="http://poppler.freedesktop.org/">Poppler</ulink> by choosing <guilabel>&PDF;</guilabel> from the list on the left part of the configuration dialog. The only configurable option is as follows.
+	    </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel>Enhance thin lines</guilabel>
+		  </term>
+		  <listitem>
+		    <para>
+		      Drawing lines in &okular; is implemented in two steps: generation of the clipping path and filling this clipping path. When the line in the original document is less than one pixel this two step implementation could cause problems. For those lines, the clipping path is filled with the filling color that depends on the thickness of the line part inside the clipping area. If the part of the line inside the clipping area gets very small the contrast between the shape and the background color can become too low for the line to be recognizable. The grids of such lines then looks very unpretty.
+		    </para>
+		    <para>
+		      To enhance the look of the thin lines &okular; implements two options.
+		    </para>
+		    <para>
+		      The first option is <guimenuitem>Solid</guimenuitem>. With this option &okular; adjusts clipping path and line position so that clipping path and line are on the same pixel boundary, &ie; &okular; enlarges the thin lines to one pixel on the output device. This mode is similar to the <guilabel>Enhance thin lines</guilabel> in <trademark class="registered">Adobe</trademark> <trademark class="registered">Reader</trademark>. If this option is chosen, the thin lines are always enlarged.
+		    </para>
+		    <para>
+		      The second option is <guimenuitem>Shape</guimenuitem>. With this option the clipping path and line are adjusted to pixel boundary as well, but the line intensity is corrected according to its width.
+		    </para>
+		    <para>
+		      The thin lines are not enhanced by default (option <guimenuitem>No</guimenuitem>).
+		    </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect1>
 	</chapter>
 	<chapter id="configure">
 		<title>Configuring &okular;</title>

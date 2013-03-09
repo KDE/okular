@@ -123,6 +123,11 @@ void Shell::init()
             KMessageBox::information(this, i18n("There is already a unique Okular instance running. This instance won't be the unique one."));
     }
     
+    if (m_args && !m_args->isSet("raise"))
+    {
+        setAttribute(Qt::WA_ShowWithoutActivating);
+    }
+    
     QDBusConnection::sessionBus().registerObject("/okularshell", this, QDBusConnection::ExportScriptableSlots);
 
     if (m_openUrl.isValid()) QTimer::singleShot(0, this, SLOT(delayedOpen()));

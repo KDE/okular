@@ -10,7 +10,7 @@
 <author><firstname>Yuri</firstname><surname>Chornoivan</surname>
 <contrib>Okular man page.</contrib>
 <email>yurchor@ukr.net</email></author>
-<date>2012-11-20</date>
+<date>2013-03-09</date>
 <productname>K Desktop Environment</productname>
 </refentryinfo>
 
@@ -111,6 +111,12 @@ is aimed to show documents in different formats.</para>
     <term><option>--unique</option></term>
   <listitem>
 <para>Unique instance control.</para>
+  </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><option>--noraise</option></term>
+  <listitem>
+<para>Allows to prevent Okular window raising after the start.</para>
   </listitem>
   </varlistentry>
 </variablelist>

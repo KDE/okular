@@ -628,6 +628,11 @@ Add a 'Find Previous' entry
 			    </varlistentry>
 			    <varlistentry>
 				<term><userinput><command>okular</command>
+				<option>--noraise</option></userinput></term>
+				<listitem><para>Allows to prevent &okular; window raising after the start.</para></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term><userinput><command>okular</command>
 				<option>--</option></userinput></term>
 				<listitem><para>End of options.</para></listitem>
 			    </varlistentry>

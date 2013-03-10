@@ -225,6 +225,28 @@ Add a 'Find Previous' entry
 						</menuchoice> in the menubar.
 					</para>
 				</listitem>
+				<listitem>
+					<para>
+						You can go back to the positions in the document where you came from in a chronological order.
+						Consider &eg; reading the phrase <quote>As shown in [15], …</quote>, and you want
+						to know quickly lookup reference [15]. So you click on it, and &okular; will jump to the list
+						of references. Using <keycombo>&Alt;&Shift;<keysym>Left</keysym></keycombo> or
+						<menuchoice>
+							<guimenu>Go</guimenu>
+							<guimenuitem>Back</guimenuitem>
+						</menuchoice> in the menubar will bring you back to exactly the position where you came from.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						You can go forward in the document after the jumping back as described above using
+						<keycombo>&Alt;&Shift;<keysym>Right</keysym></keycombo> or
+						<menuchoice>
+							<guimenu>Go</guimenu>
+							<guimenuitem>Forward</guimenuitem>
+						</menuchoice> in the menubar.
+					</para>
+				</listitem>
 			</itemizedlist>
 		</sect1>
 		<sect1 id="presentationMode">

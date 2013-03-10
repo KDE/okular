@@ -1535,14 +1535,87 @@ Add a 'Find Previous' entry
 		    <para>
 		      Drawing lines in &okular; is implemented in two steps: generation of the clipping path and filling this clipping path. When the line in the original document is less than one pixel this two step implementation could cause problems. For those lines, the clipping path is filled with the filling color that depends on the thickness of the line part inside the clipping area. If the part of the line inside the clipping area gets very small the contrast between the shape and the background color can become too low for the line to be recognizable. The grids of such lines then looks very unpretty.
 		    </para>
+		    <informaltable>
+		      <tgroup cols="2">
+			<tbody>
+			  <row>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <screeninfo>
+				  </screeninfo>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-thinline.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <screeninfo>
+				  </screeninfo>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-lowcontrast.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			  </row>
+			  <row>
+			    <entry>Thin line (red), its clipping path (dashed line) and pixel boundaries (black solid lines)</entry>
+			    <entry>Thin line shown at a low contrast</entry>
+			  </row>
+			</tbody>
+		      </tgroup>
+		    </informaltable>
 		    <para>
 		      To enhance the look of the thin lines &okular; implements two options.
 		    </para>
 		    <para>
-		      The first option is <guimenuitem>Solid</guimenuitem>. With this option &okular; adjusts clipping path and line position so that clipping path and line are on the same pixel boundary, &ie; &okular; enlarges the thin lines to one pixel on the output device. This mode is similar to the <guilabel>Enhance thin lines</guilabel> in <trademark class="registered">Adobe</trademark> <trademark class="registered">Reader</trademark>. If this option is chosen, the thin lines are always enlarged.
+		      The first option is <guimenuitem>Solid</guimenuitem>. With this option &okular; adjusts clipping path and line position so that clipping path and line are on the same pixel boundary, &ie; &okular; enlarges the thin lines to one pixel on the output device. This mode is similar to the <guilabel>Enhance thin lines</guilabel> in <trademark class="registered">Adobe</trademark>
+		      <trademark class="registered">Reader</trademark>. If this option is chosen, the thin lines are always enlarged.
+		    </para>
+		    <para>
+		      <screenshot>
+			<screeninfo>
+			</screeninfo>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-solid.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase>Thin line with <guimenuitem>Solid</guimenuitem> enhancement</phrase>
+			  </textobject>
+			  <caption>
+			    <para>Thin line with <guimenuitem>Solid</guimenuitem> enhancement</para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
 		    </para>
 		    <para>
 		      The second option is <guimenuitem>Shape</guimenuitem>. With this option the clipping path and line are adjusted to pixel boundary as well, but the line intensity is corrected according to its width.
+		    </para>
+		    <para>
+		      <screenshot>
+			<screeninfo>
+			</screeninfo>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-shape.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase>Thin line with <guimenuitem>Shape</guimenuitem> enhancement</phrase>
+			  </textobject>
+			  <caption>
+			    <para>Thin line with <guimenuitem>Shape</guimenuitem> enhancement</para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
 		    </para>
 		    <para>
 		      The thin lines are not enhanced by default (option <guimenuitem>No</guimenuitem>).
@@ -1551,6 +1624,7 @@ Add a 'Find Previous' entry
 		</varlistentry>
 	      </variablelist>
 	    </para>
+	  </sect1>
 	  </sect1>
 	</chapter>
 	<chapter id="configure">

@@ -68,7 +68,7 @@ Context menu actions like Rename Bookmarks etc.)
 			improved presentation support and annotation support.
 		</para>
 		<para>
-			&okular; supports a lot of different formats like &PDF;, Postscript, Tiff, CHM, DjVU, Images (png, jpg, &etc;)
+			&okular; supports a lot of different formats like &PDF;, &PostScript;, Tiff, CHM, DjVU, Images (png, jpg, &etc;)
 			XPS, Open Document (ODT), Fiction Books, Comic Book, Plucker, EPub and Fax.
 			For all supported formats and their features see <ulink url="http://okular.kde.org/formats.php">
 			&okular; Document Format Handlers</ulink>.
@@ -98,7 +98,7 @@ Context menu actions like Rename Bookmarks etc.)
 				If you have already opened files in &okular; before, you can quickly access them by selecting them in
 				the <menuchoice><guimenu>File</guimenu><guisubmenu>Open Recent</guisubmenu></menuchoice> menu.
 			</para>
-			<para>&okular; is the default &kde; application for &PDF; and Postscript files, launched when you click with the
+			<para>&okular; is the default &kde; application for &PDF; and &PostScript; files, launched when you click with the
 			 &LMB; on such a file type in the filemanager. If you want to open any file whose format is supported by &okular;
 			 use <menuchoice><guimenu>Open with...</guimenu><guimenuitem>&okular;</guimenuitem> </menuchoice> from context
 			 menu in the filemanager.
@@ -725,7 +725,7 @@ Add a 'Find Previous' entry
 					</term>
 					<listitem>
 						<para>
-							<action>Open</action> a PostScript file and convert it to &PDF;.
+							<action>Open</action> a &PostScript; file and convert it to &PDF;.
 						</para>
 					</listitem>
 				</varlistentry>
@@ -1510,7 +1510,7 @@ Add a 'Find Previous' entry
 	      <guimenu>Settings</guimenu>
 	      <guimenuitem>Configure Backends...</guimenuitem>
 	    </menuchoice>.
-	    Currently, configuration options are provided for PostScript and &PDF; backends only.
+	    Currently, configuration options are provided for &PostScript; and &PDF; backends only.
 	  </para>
 	  <screenshot>
 	    <screeninfo>The backends configuration dialog</screeninfo>
@@ -1524,9 +1524,9 @@ Add a 'Find Previous' entry
 	    </mediaobject>
 	  </screenshot>
 	  <sect1 id="config-ghostscript">
-	    <title>PostScript backend configuration</title>
+	    <title>&PostScript; backend configuration</title>
 	    <para>
-	      You can configure &okular; PostScript rendering backend based on <ulink url="http://www.ghostscript.com/">Ghostscript</ulink> by choosing <guilabel>Ghostscript</guilabel> from the list on the left part of the configuration dialog. The only configurable option is as follows.
+	      You can configure &okular; &PostScript; rendering backend based on <ulink url="http://www.ghostscript.com/">Ghostscript</ulink> by choosing <guilabel>Ghostscript</guilabel> from the list on the left part of the configuration dialog. The only configurable option is as follows.
 	    </para>
 	    <para>
 	      <variablelist>

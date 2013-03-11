@@ -179,8 +179,12 @@ void Shell::openUrl( const KUrl & url )
         }
         else
         {
-            if ( m_doc && m_args && m_args->isSet( "presentation" ) )
-                m_doc->startPresentation();
+            if ( m_args ){
+                if ( m_doc && m_args->isSet( "presentation" ) )
+                    m_doc->startPresentation();
+                if ( m_args->isSet( "print" ) )
+                    QMetaObject::invokeMethod( m_part, "enableStartWithPrint" );
+            }
             bool openOk = m_part->openUrl( url );
             const bool isstdin = url.fileName( KUrl::ObeyTrailingSlash ) == QLatin1String( "-" );
             if ( !isstdin )

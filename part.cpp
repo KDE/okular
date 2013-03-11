@@ -289,7 +289,7 @@ const QVariantList &args,
 KComponentData componentData )
 : KParts::ReadWritePart(parent),
 m_tempfile( 0 ), m_fileWasRemoved( false ), m_showMenuBarAction( 0 ), m_showFullScreenAction( 0 ), m_actionsSearched( false ),
-m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args)), m_generatorGuiClient(0), m_keeper( 0 )
+m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentWidget, parent, args)), m_generatorGuiClient(0), m_keeper( 0 )
 {
     // first, we check if a config file name has been specified
     QString configFileName = detectConfigFileName( args );
@@ -982,6 +982,7 @@ void Part::slotJobFinished(KJob *job)
 void Part::loadCancelled(const QString &reason)
 {
     emit setWindowCaption( QString() );
+    resetStartArguments();
 
     // when m_viewportDirty.pageNumber != -1 we come from slotDoFileDirty
     // so we don't want to show an ugly messagebox just because the document is
@@ -1312,6 +1313,11 @@ bool Part::openFile()
     m_generatorGuiClient = factory() ? m_document->guiClient() : 0;
     if ( m_generatorGuiClient )
         factory()->addClient( m_generatorGuiClient );
+    if ( m_cliPrint )
+    {
+        m_cliPrint = false;
+        slotPrint();
+    }
     return true;
 }
 
@@ -1354,6 +1360,7 @@ bool Part::openUrl(const KUrl &_url)
     }
     else
     {
+        resetStartArguments();
         KMessageBox::error( widget(), i18n("Could not open %1", url.pathOrUrl() ) );
     }
 
@@ -2376,6 +2383,10 @@ void Part::reload()
     }
 }
 
+void Part::enableStartWithPrint()
+{
+    m_cliPrint = true;
+}
 
 void Part::slotAboutBackend()
 {
@@ -2754,6 +2765,11 @@ void Part::updateAboutBackendAction()
     {
         m_aboutBackend->setEnabled( false );
     }
+}
+
+void Part::resetStartArguments()
+{
+    m_cliPrint = false;
 }
 
 void Part::setReadWrite(bool readwrite)

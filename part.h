@@ -148,6 +148,7 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         Q_SCRIPTABLE void slotGotoLast();
         Q_SCRIPTABLE void slotTogglePresentation();
         Q_SCRIPTABLE Q_NOREPLY void reload();
+        Q_SCRIPTABLE Q_NOREPLY void enableStartWithPrint();
 
     signals:
         void enablePrintAction(bool enable);
@@ -234,6 +235,7 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         void updateAboutBackendAction();
         void unsetDummyMode();
         void slotRenameBookmark( const DocumentViewport &viewport );
+        void resetStartArguments();
         
         static int numberOfParts;
 
@@ -319,6 +321,7 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         QList<Okular::ExportFormat> m_exportFormats;
         QList<QAction*> m_bookmarkActions;
         bool m_cliPresentation;
+        bool m_cliPrint;
         QString m_addBookmarkText;
         QIcon m_addBookmarkIcon;
 

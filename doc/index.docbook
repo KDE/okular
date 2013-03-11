@@ -1564,8 +1564,6 @@ Add a 'Find Previous' entry
 			    <entry>
 			      <para>
 				<screenshot>
-				  <screeninfo>
-				  </screeninfo>
 				  <mediaobject>
 				    <imageobject>
 				      <imagedata fileref="enhance-thinline.png" format="PNG"/>
@@ -1577,8 +1575,6 @@ Add a 'Find Previous' entry
 			    <entry>
 			      <para>
 				<screenshot>
-				  <screeninfo>
-				  </screeninfo>
 				  <mediaobject>
 				    <imageobject>
 				      <imagedata fileref="enhance-lowcontrast.png" format="PNG"/>
@@ -1604,8 +1600,6 @@ Add a 'Find Previous' entry
 		    </para>
 		    <para>
 		      <screenshot>
-			<screeninfo>
-			</screeninfo>
 			<mediaobject>
 			  <imageobject>
 			    <imagedata fileref="enhance-solid.png" format="PNG"/>
@@ -1624,8 +1618,6 @@ Add a 'Find Previous' entry
 		    </para>
 		    <para>
 		      <screenshot>
-			<screeninfo>
-			</screeninfo>
 			<mediaobject>
 			  <imageobject>
 			    <imagedata fileref="enhance-shape.png" format="PNG"/>

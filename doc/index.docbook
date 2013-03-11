@@ -124,8 +124,8 @@ Add a 'Find Previous' entry
 			<para>
 				Another way is to hold the &LMB; down at any place on the document while dragging the mouse in the
 				opposite direction of where you want to move. This procedure only works if the Browse Tool is
-				enabled, which you can select by choosing <menuchoice><guimenu>Tools</guimenu><guimenuitem>Browse Tool
-				</guimenuitem></menuchoice>.
+				enabled, which you can select by choosing <menuchoice><guimenu>Tools</guimenu>
+				<guimenuitem>Browse Tool</guimenuitem></menuchoice>.
 			</para>
 			<para>If you want to read a document with several pages use the automatic scrolling feature of &okular;.
 			Start automatic scrolling with <keycombo action="simul">&Shift;<keysym>Down Arrow</keysym></keycombo> or
@@ -642,6 +642,11 @@ Add a 'Find Previous' entry
 				<term><userinput><command>okular</command>
 				<option>--presentation</option></userinput></term>
 				<listitem><para>Start the document in presentation mode.</para></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term><userinput><command>okular</command>
+				<option>--print</option></userinput></term>
+				<listitem><para>Start with print dialog.</para></listitem>
 			    </varlistentry>
 			    <varlistentry>
 				<term><userinput><command>okular</command>

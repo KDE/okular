@@ -108,6 +108,12 @@ is aimed to show documents in different formats.</para>
   </listitem>
   </varlistentry>
   <varlistentry>
+    <term><option>--print</option></term>
+  <listitem>
+<para>Start with print dialog.</para>
+  </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><option>--unique</option></term>
   <listitem>
 <para>Unique instance control.</para>

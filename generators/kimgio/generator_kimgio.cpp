@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Albert Astals Cid <tsdgeos@terra.es>            *
+ *   Copyright (C) 2005 by Albert Astals Cid <aacid@kde.org>               *
  *   Copyright (C) 2006-2007 by Pino Toscano <pino@kde.org>                *
  *   Copyright (C) 2006-2007 by Tobias Koenig <tokoe@kde.org>              *
  *                                                                         *

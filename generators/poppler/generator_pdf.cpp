@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2004-2008 by Albert Astals Cid <tsdgeos@terra.es>       *
+ *   Copyright (C) 2004-2008 by Albert Astals Cid <aacid@kde.org>          *
  *   Copyright (C) 2004 by Enrico Ros <eros.kde@email.it>                  *
  *   Copyright (C) 2012 by Guillermo A. Amaral B. <gamaral@kde.org>        *
  *                                                                         *

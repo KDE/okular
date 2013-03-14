@@ -5,7 +5,7 @@
  *   Copyright (C) 2003-2004 by Christophe Devriese                        *
  *                         <Christophe.Devriese@student.kuleuven.ac.be>    *
  *   Copyright (C) 2003 by Laurent Montel <montel@kde.org>                 *
- *   Copyright (C) 2003-2004 by Albert Astals Cid <tsdgeos@terra.es>       *
+ *   Copyright (C) 2003-2004 by Albert Astals Cid <aacid@kde.org>          *
  *   Copyright (C) 2003 by Luboš Luňák <l.lunak@kde.org>                   *
  *   Copyright (C) 2003 by Malcolm Hunter <malcolm.hunter@gmx.co.uk>       *
  *   Copyright (C) 2004 by Dominique Devriese <devriese@kde.org>           *

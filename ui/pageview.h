@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2004 by Enrico Ros <eros.kde@email.it>                  *
- *   Copyright (C) 2004 by Albert Astals Cid <tsdgeos@terra.es>            *
+ *   Copyright (C) 2004 by Albert Astals Cid <aacid@kde.org>               *
  *                                                                         *
  *   With portions of code from kpdf/kpdf_pagewidget.h by:                 *
  *     Copyright (C) 2002 by Wilco Greven <greven@kde.org>                 *

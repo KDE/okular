@@ -129,6 +129,7 @@ Categories=Qt;KDE;Graphics;Office;Viewer;
 InitialPreference=2
 NoDisplay=true
 X-KDE-Keywords=PS, PostScript
+X-KDE-Keywords[ca]=PS, PostScript
 X-KDE-Keywords[cs]=PS, PostScript
 X-KDE-Keywords[de]=PS, PostScript
 X-KDE-Keywords[es]=PS, PostScript

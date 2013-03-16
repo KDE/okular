@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Service
 Name=txt
+Name[ca]=txt
 Name[cs]=txt
 Name[de]=Text
 Name[es]=txt
@@ -22,6 +23,7 @@ Name[uk]=txt
 Name[x-test]=xxtxtxx
 Name[zh_TW]=txt
 Comment=Txt backend for Okular
+Comment[ca]=Dorsal de txt per a l'Okular
 Comment[cs]= Implementace Txt pro Okular
 Comment[de]=Anzeigemodul für Text in Okular
 Comment[es]=Motor Txt para Okular

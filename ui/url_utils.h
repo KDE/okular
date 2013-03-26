@@ -1,7 +1,8 @@
 #include <QRegExp>
-class UrlUtils {
-public:
-    static QString getUrl( QString txt )
+
+namespace UrlUtils
+{
+    QString getUrl( QString txt )
     {
         // match the url
         QRegExp reg( QString( "\\b((https?|ftp)://(www\\d{0,3}[.])?[\\S]+)|((www\\d{0,3}[.])[\\S]+)" ) );

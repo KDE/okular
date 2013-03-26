@@ -7,6 +7,9 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#ifndef URL_UTILS_H
+#define URL_UTILS_H
+
 #include <QRegExp>
 
 namespace UrlUtils
@@ -30,3 +33,4 @@ namespace UrlUtils
     }
 };
 
+#endif

@@ -50,6 +50,7 @@
 #include <kurifilter.h>
 #include <kstringhandler.h>
 #include <ktoolinvocation.h>
+#include <krun.h>
 
 // system includes
 #include <math.h>
@@ -80,6 +81,7 @@
 #include "core/tile.h"
 #include "settings.h"
 #include "settings_core.h"
+#include "url_utils.h"
 
 static int pageflags = PagePainter::Accessibility | PagePainter::EnhanceLinks |
                        PagePainter::EnhanceImages | PagePainter::Highlights |
@@ -2742,6 +2744,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                         KMenu menu( this );
                         QAction *textToClipboard = menu.addAction( KIcon( "edit-copy" ), i18n( "Copy Text" ) );
                         QAction *speakText = 0;
+                        QAction *httpLink = 0;
                         if ( Okular::Settings::useKTTSD() )
                             speakText = menu.addAction( KIcon( "text-speak" ), i18n( "Speak Text" ) );
                         if ( !d->document->isAllowed( Okular::AllowCopy ) )
@@ -2752,6 +2755,12 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                         else
                         {
                             addWebShortcutsMenu( &menu, d->selectedText() );
+                        }
+                        const QString url = UrlUtils::getUrl( d->selectedText() );
+                        if ( !url.isEmpty() )
+                        {
+                            const QString squeezedText = KStringHandler::rsqueeze( url, 30 );
+                            httpLink = menu.addAction( i18n( "Go to '%1'", squeezedText ) );
                         }
                         QAction *choice = menu.exec( e->globalPos() );
                         // check if the user really selected an action
@@ -2764,6 +2773,8 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                                 const QString text = d->selectedText();
                                 d->tts()->say( text );
                             }
+                            else if ( choice == httpLink )
+                                new KRun( KUrl( url ), this );
                         }
                     }
                 }

@@ -8,3 +8,6 @@ target_link_libraries( parttest ${KDE4_KDECORE_LIBS} ${QT_QTGUI_LIBRARY} ${QT_QT
 
 kde4_add_unit_test( searchtest searchtest.cpp )
 target_link_libraries( searchtest ${KDE4_KDECORE_LIBS} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} okularcore )
+
+kde4_add_unit_test( urldetecttest urldetecttest.cpp )
+target_link_libraries( urldetecttest ${KDE4_KDECORE_LIBS} ${QT_QTTEST_LIBRARY} )

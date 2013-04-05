@@ -23,8 +23,9 @@ namespace GuiUtils {
 class LatexRenderer;
 }
 
-class QTextEdit;
+class KTextEdit;
 class MovableTitle;
+class QMenu;
 
 class AnnotWindow : public QFrame
 {
@@ -34,25 +35,28 @@ class AnnotWindow : public QFrame
         ~AnnotWindow();
 
         void reloadInfo();
-        Okular::Annotation* annotation() const;
-        
+
     private:
         MovableTitle * m_title;
-        QTextEdit *textEdit;
+        KTextEdit *textEdit;
         QColor m_color;
         GuiUtils::LatexRenderer *m_latexRenderer;
         Okular::Annotation* m_annot;
         Okular::Document* m_document;
         int m_page;
+        int m_prevCursorPos;
+        int m_prevAnchorPos;
 
     protected:
         virtual void showEvent( QShowEvent * event );
         virtual bool eventFilter( QObject * obj, QEvent * event );
 
     private slots:
+        void slotUpdateUndoAndRedoInContextMenu(QMenu *menu);
         void slotOptionBtn();
         void slotsaveWindowText();
         void renderLatex( bool render );
+        void slotHandleContentsChangedByUndoRedo( Okular::Annotation* annot, QString contents, int cursorPos, int anchorPos);
 
     signals:
         void containsLatex( bool );

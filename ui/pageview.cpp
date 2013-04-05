@@ -392,7 +392,7 @@ PageView::~PageView()
         d->m_tts->stopAllSpeechs();
 
     // delete the local storage structure
-    
+
     // We need to assign it to a different list otherwise slotAnnotationWindowDestroyed
     // will bite us and clear d->m_annowindows
     QHash< Okular::Annotation *, AnnotWindow * > annowindows = d->m_annowindows;
@@ -618,6 +618,14 @@ void PageView::setupActions( KActionCollection * ac )
     connect( d->aToggleForms, SIGNAL(triggered()), this, SLOT(slotToggleForms()) );
     d->aToggleForms->setEnabled( false );
     toggleFormWidgets( false );
+
+    // Setup undo and redo actions
+    KAction *kundo = KStandardAction::create( KStandardAction::Undo, d->document, SLOT(undo()), ac );
+    KAction *kredo = KStandardAction::create( KStandardAction::Redo, d->document, SLOT(redo()), ac );
+    connect(d->document, SIGNAL(canUndoChanged(bool)), kundo, SLOT(setEnabled(bool)));
+    connect(d->document, SIGNAL(canRedoChanged(bool)), kredo, SLOT(setEnabled(bool)));
+    kundo->setEnabled(false);
+    kredo->setEnabled(false);
 }
 
 bool PageView::canFitPageWidth() const
@@ -1063,7 +1071,7 @@ void PageView::notifyViewportChanged( bool smoothMove )
 {
     QMetaObject::invokeMethod(this, "slotRealNotifyViewportChanged", Qt::QueuedConnection, Q_ARG( bool, smoothMove ));
 }
-    
+
 void PageView::slotRealNotifyViewportChanged( bool smoothMove )
 {
     // if we are the one changing viewport, skip this nofity
@@ -1187,7 +1195,7 @@ void PageView::notifyPageChanged( int pageNumber, int changedFlags )
                 // Need to delete after removing from the list
                 // otherwise deleting will call slotAnnotationWindowDestroyed wich will mess
                 // the list and the iterators
-                delete w; 
+                delete w;
             }
         }
     }
@@ -1868,9 +1876,9 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
                             pf.rx() /= pageItem->uncroppedHeight();
                             pf.ry() /= pageItem->uncroppedWidth();
                         }
-                        d->mouseAnn->translate( Okular::NormalizedPoint( pf.x(), pf.y() ) );
+
+                        d->document->translatePageAnnotation(d->mouseAnnPageNum, d->mouseAnn, Okular::NormalizedPoint( pf.x(), pf.y() ) );
                         d->mouseAnnPos = newpos;
-                        d->document->modifyPageAnnotation( d->mouseAnnPageNum, d->mouseAnn );
                     }
                 }
                 // drag page
@@ -2037,7 +2045,6 @@ void PageView::mousePressEvent( QMouseEvent * e )
                 {
                     d->mouseAnn->setFlags( d->mouseAnn->flags() | Okular::Annotation::BeingMoved );
                     d->mouseAnnPageNum = pageItem->pageNumber();
-                    d->document->modifyPageAnnotation( d->mouseAnnPageNum, d->mouseAnn );
                 }
                 else
                 {
@@ -2227,7 +2234,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
     {
         // Just finished to move the annotation
         d->mouseAnn->setFlags( d->mouseAnn->flags() & ~Okular::Annotation::BeingMoved );
-        d->document->modifyPageAnnotation( d->mouseAnnPageNum, d->mouseAnn );
+        d->document->translatePageAnnotation(d->mouseAnnPageNum, d->mouseAnn, Okular::NormalizedPoint( 0.0, 0.0 ) );
         setCursor( Qt::ArrowCursor );
         d->mouseAnn = 0;
     }
@@ -2907,7 +2914,7 @@ void PageView::mouseDoubleClickEvent( QMouseEvent * e )
 
             if ( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::TextSelect ) {
                 textSelectionClear();
-                
+
                 Okular::RegularAreaRect *wordRect = pageItem->page()->wordAt( Okular::NormalizedPoint( nX, nY ) );
                 if ( wordRect )
                 {
@@ -2927,7 +2934,7 @@ void PageView::mouseDoubleClickEvent( QMouseEvent * e )
                     return;
                 }
             }
-            
+
             const QRect & itemRect = pageItem->uncroppedGeometry();
             Okular::Annotation * ann = 0;
             const Okular::ObjectRect * orect = pageItem->page()->objectRect( Okular::ObjectRect::OAnnotation, nX, nY, itemRect.width(), itemRect.height() );
@@ -4105,7 +4112,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
             vw->move(
                 qRound( i->uncroppedGeometry().left() + i->uncroppedWidth() * r.left ) + 1 - viewportRect.left(),
                 qRound( i->uncroppedGeometry().top() + i->uncroppedHeight() * r.top ) + 1 - viewportRect.top() );
-            
+
             if ( vw->isPlaying() && viewportRectAtZeroZero.intersect( vw->geometry() ).isEmpty() ) {
                 vw->stop();
                 vw->pageLeft();

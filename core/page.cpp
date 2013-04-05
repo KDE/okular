@@ -249,7 +249,7 @@ RegularAreaRect * Page::wordAt( const NormalizedPoint &p, QString *word ) const
     if ( d->m_text )
         return d->m_text->wordAt( p, word );
 
-    return 0;    
+    return 0;
 }
 
 RegularAreaRect * Page::textArea ( TextSelection * selection ) const
@@ -667,7 +667,7 @@ bool Page::removeAnnotation( Annotation * annotation )
                     rectfound = true;
                 }
             kDebug(OkularDebug) << "removed annotation:" << annotation->uniqueName();
-            delete *aIt;
+            annotation->d_ptr->m_page = 0;
             m_annotations.erase( aIt );
             break;
         }
@@ -816,7 +816,7 @@ void PagePrivate::restoreLocalContents( const QDomNode & pageNode )
                 // append annotation to the list or show warning
                 if ( annotation )
                 {
-                    m_doc->m_parent->addPageAnnotation(m_number, annotation);
+                    m_doc->performAddPageAnnotation(m_number, annotation);
                     kDebug(OkularDebug) << "restored annot:" << annotation->uniqueName();
                 }
                 else

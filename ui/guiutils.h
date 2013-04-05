@@ -32,7 +32,6 @@ namespace GuiUtils
     QString captionForAnnotation( const Okular::Annotation * annotation );
     QString authorForAnnotation( const Okular::Annotation * annotation );
 
-    QString contents( const Okular::Annotation * annotation );
     QString contentsHtml( const Okular::Annotation * annotation );
 
     QString prettyToolTip( const Okular::Annotation * annotation );

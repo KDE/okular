@@ -92,6 +92,7 @@ class OKULAR_EXPORT Annotation
     /// @cond PRIVATE
     friend class AnnotationObjectRect;
     friend class Document;
+    friend class DocumentPrivate;
     friend class Page;
     friend class PagePrivate;
     /// @endcond
@@ -657,6 +658,16 @@ class OKULAR_EXPORT Annotation
          */
         virtual void store( QDomNode & node, QDomDocument & document ) const;
 
+        /**
+        * Retrieve the QDomNode representing this annotation's properties
+        */
+        QDomNode getAnnotationPropertiesDomNode();
+
+        /**
+        * Sets annotations internal properties according to the contents of @p node
+        */
+        void setAnnotationProperties(const QDomNode & node);
+
     protected:
         /// @cond PRIVATE
         Annotation( AnnotationPrivate &dd );
@@ -706,7 +717,7 @@ class OKULAR_EXPORT AnnotationProxy
 
         /**
          * Called after an existing @p annotation at a given @p page is modified.
-         * 
+         *
          * Generator can call @p annotation getters to get the new values.
          * @p appearanceChanged tells if a non-visible property was modifed
          *

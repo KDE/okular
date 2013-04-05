@@ -28,6 +28,9 @@
 #include <klocale.h>
 #include <ktextedit.h>
 #include <kdebug.h>
+#include <kaction.h>
+#include <kstandardaction.h>
+#include <qmenu.h>
 
 // local includes
 #include "core/annotations.h"
@@ -194,10 +197,21 @@ AnnotWindow::AnnotWindow( QWidget * parent, Okular::Annotation * annot, Okular::
 
     textEdit = new KTextEdit( this );
     textEdit->setAcceptRichText( false );
-    textEdit->setPlainText( GuiUtils::contents( m_annot ) );
+    textEdit->setPlainText( m_annot->contents() );
     textEdit->installEventFilter( this );
-    connect(textEdit,SIGNAL(textChanged()),
+    textEdit->setUndoRedoEnabled( false );
+
+    m_prevCursorPos = textEdit->textCursor().position();
+    m_prevAnchorPos = textEdit->textCursor().anchor();
+
+    connect(textEdit, SIGNAL(textChanged()),
             this,SLOT(slotsaveWindowText()));
+    connect(textEdit, SIGNAL(cursorPositionChanged()),
+            this,SLOT(slotsaveWindowText()));
+    connect(textEdit, SIGNAL(aboutToShowContextMenu(QMenu*)),
+            this,SLOT(slotUpdateUndoAndRedoInContextMenu(QMenu*)));
+    connect(m_document, SIGNAL(annotationContentsChangedByUndoRedo(Okular::Annotation*,QString,int,int)),
+            this, SLOT(slotHandleContentsChangedByUndoRedo(Okular::Annotation*,QString,int,int)));
 
     if (!canEditAnnotation)
         textEdit->setReadOnly(true);
@@ -215,7 +229,7 @@ AnnotWindow::AnnotWindow( QWidget * parent, Okular::Annotation * annot, Okular::
     lowerlay->addWidget( sb );
 
     m_latexRenderer = new GuiUtils::LatexRenderer();
-    emit containsLatex( GuiUtils::LatexRenderer::mightContainLatex( GuiUtils::contents( m_annot ) ) );
+    emit containsLatex( GuiUtils::LatexRenderer::mightContainLatex( m_annot->contents() ) );
 
     m_title->setTitle( m_annot->window().summary() );
     m_title->connectOptionButton( this, SLOT(slotOptionBtn()) );
@@ -245,11 +259,6 @@ void AnnotWindow::reloadInfo()
     m_title->setDate( m_annot->modificationDate() );
 }
 
-Okular::Annotation* AnnotWindow::annotation() const
-{
-    return m_annot;
-}
-
 void AnnotWindow::showEvent( QShowEvent * event )
 {
     QFrame::showEvent( event );
@@ -269,7 +278,46 @@ bool AnnotWindow::eventFilter(QObject *, QEvent *e)
             return true;
         }
     }
+    else if (e->type() == QEvent::KeyPress)
+    {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent*>(e);
+        if (keyEvent == QKeySequence::Undo)
+        {
+            m_document->undo();
+            return true;
+        }
+        else if (keyEvent == QKeySequence::Redo)
+        {
+            m_document->redo();
+            return true;
+        }
+    }
     return false;
+}
+
+void AnnotWindow::slotUpdateUndoAndRedoInContextMenu(QMenu* menu)
+{
+    if (!menu) return;
+
+    QList<QAction *> actionList = menu->actions();
+    enum { UndoAct, RedoAct, CutAct, CopyAct, PasteAct, ClearAct, SelectAllAct, NCountActs };
+
+    KAction *kundo = KStandardAction::create( KStandardAction::Undo, m_document, SLOT(undo()), menu);
+    KAction *kredo = KStandardAction::create( KStandardAction::Redo, m_document, SLOT(redo()), menu);
+    connect(m_document, SIGNAL(canUndoChanged(bool)), kundo, SLOT(setEnabled(bool)));
+    connect(m_document, SIGNAL(canRedoChanged(bool)), kredo, SLOT(setEnabled(bool)));
+    kundo->setEnabled(m_document->canUndo());
+    kredo->setEnabled(m_document->canRedo());
+
+    QAction *oldUndo, *oldRedo;
+    oldUndo = actionList[UndoAct];
+    oldRedo = actionList[RedoAct];
+
+    menu->insertAction(oldUndo, kundo);
+    menu->insertAction(oldRedo, kredo);
+
+    menu->removeAction(oldUndo);
+    menu->removeAction(oldRedo);
 }
 
 void AnnotWindow::slotOptionBtn()
@@ -280,49 +328,15 @@ void AnnotWindow::slotOptionBtn()
 
 void AnnotWindow::slotsaveWindowText()
 {
-    const QString newText = textEdit->toPlainText();
-    bool appearanceChanged = false;
-
-    // Set window text
-    if ( !m_annot->window().text().isEmpty() )
+    QString contents = textEdit->toPlainText();
+    int cursorPos = textEdit->textCursor().position();
+    if (contents != m_annot->contents())
     {
-        m_annot->window().setText( newText );
-        return;
+        m_document->editPageAnnotationContents( m_page, m_annot, contents, cursorPos, m_prevCursorPos, m_prevAnchorPos);
+        emit containsLatex( GuiUtils::LatexRenderer::mightContainLatex( textEdit->toPlainText() ) );
     }
-
-    // Handle special cases
-    switch ( m_annot->subType() )
-    {
-        // If it's an in-place TextAnnotation, set the inplace text
-        case Okular::Annotation::AText:
-        {
-            Okular::TextAnnotation * txtann = static_cast< Okular::TextAnnotation * >( m_annot );
-            if ( txtann->textType() == Okular::TextAnnotation::InPlace )
-            {
-                txtann->setInplaceText( newText );
-                appearanceChanged = true;
-            }
-            break;
-        }
-        // If it's a LineAnnotation, check if caption text is visible
-        case Okular::Annotation::ALine:
-        {
-            Okular::LineAnnotation * lineann = static_cast< Okular::LineAnnotation * >( m_annot );
-            if ( lineann->showCaption() )
-                appearanceChanged = true;
-            break;
-        }
-        default:
-            break;
-    }
-
-    // Set contents
-    m_annot->setContents( newText );
-
-    // Tell the document
-    m_document->modifyPageAnnotation( m_page, m_annot, appearanceChanged );
-
-    emit containsLatex( GuiUtils::LatexRenderer::mightContainLatex( newText ) );
+    m_prevCursorPos = cursorPos;
+    m_prevAnchorPos = textEdit->textCursor().anchor();
 }
 
 void AnnotWindow::renderLatex( bool render )
@@ -332,7 +346,7 @@ void AnnotWindow::renderLatex( bool render )
         textEdit->setReadOnly( true );
         disconnect(textEdit, SIGNAL(textChanged()), this,SLOT(slotsaveWindowText()));
         textEdit->setAcceptRichText( true );
-        QString contents =  GuiUtils::contents( m_annot );
+        QString contents = m_annot->contents();
         contents = Qt::convertFromPlainText( contents );
         QColor fontColor = textEdit->textColor();
         int fontSize = textEdit->fontPointSize();
@@ -369,10 +383,28 @@ void AnnotWindow::renderLatex( bool render )
     else
     {
         textEdit->setAcceptRichText( false );
-        textEdit->setPlainText( GuiUtils::contents( m_annot ) );
+        textEdit->setPlainText( m_annot->contents() );
         connect(textEdit, SIGNAL(textChanged()), this,SLOT(slotsaveWindowText()));
         textEdit->setReadOnly( false );
     }
+}
+
+void AnnotWindow::slotHandleContentsChangedByUndoRedo(Okular::Annotation* annot, QString contents, int cursorPos, int anchorPos)
+{
+    if ( annot != m_annot )
+    {
+        return;
+    }
+
+    textEdit->setPlainText(contents);
+    QTextCursor c = textEdit->textCursor();
+    c.setPosition(anchorPos);
+    c.setPosition(cursorPos,QTextCursor::KeepAnchor);
+    m_prevCursorPos = cursorPos;
+    m_prevAnchorPos = anchorPos;
+    textEdit->setTextCursor(c);
+    textEdit->setFocus();
+    emit containsLatex( GuiUtils::LatexRenderer::mightContainLatex( m_annot->contents() ) );
 }
 
 #include "annotwindow.moc"

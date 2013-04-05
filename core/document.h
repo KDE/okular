@@ -20,6 +20,7 @@
 #include <QtCore/QStringList>
 #include <QtCore/QVector>
 #include <QtGui/QPrinter>
+#include <QUndoCommand>
 #include <QtXml/QDomDocument>
 
 #include <kmimetype.h>
@@ -382,23 +383,46 @@ class OKULAR_EXPORT Document : public QObject
         bool canModifyPageAnnotation( const Annotation * annotation ) const;
 
         /**
-         * Modifies the given @p annotation on the given @p page.
+         *  Prepares to modify the properties of the given @p annotation.
+         *  Must be called before the annotation's properties are modified
          *
-         * Same as calling modifyPageAnnotation(int,Annotation*,bool) with
-         * appearanceChanged = true
+         * @since 0.17 (KDE 4.11)
          */
-        void modifyPageAnnotation( int page, Annotation *annotation );
+        void prepareToModifyAnnotationProperties( Annotation * annotation );
 
         /**
          * Modifies the given @p annotation on the given @p page.
+         * Must be preceded by a call to prepareToModifyAnnotationProperties before
+         * the annotation's properties are modified
          *
-         * The caller can set @p appearanceChanged to false if it didn't change
-         * the annotation appearance (because it only changed non-visible data
-         * such as timestamps or author name).
-         *
-         * @since 0.15 (KDE 4.9)
+         * @since 0.17 (KDE 4.11)
          */
-        void modifyPageAnnotation( int page, Annotation *annotation, bool appearanceChanged );
+        void modifyPageAnnotationProperties( int page, Annotation * annotation );
+
+        /**
+         * Translates the position of the given @p annotation on the given @p page by a distance @p delta in normalized coordinates.
+         *
+         * Consecutive translations applied to the same @p annotation are merged together on the undo stack if the
+         * BeingMoved flag is set on the @P annotation
+         *
+         * @since 0.17 (KDE 4.11)
+         */
+        void translatePageAnnotation( int page, Annotation *annotation, const Okular::NormalizedPoint & delta );
+
+
+        /**
+         * Edits the plain text contents of the given @p annotation on the given @p page.
+         *
+         * The contents are set to @p newContents with cursor position @p newCursorPos.
+         * The previous cursor position @p prevCursorPos and previous anchor position @p prevAnchorPos
+         * must also be supplied so that they can be restored if the edit action is undone.
+         *
+         * The Annotation's internal contents should not be modified prior to calling this method.
+         *
+         * @since 0.17 (KDE 4.11)
+         */
+        void editPageAnnotationContents( int page, Annotation* annotation, const QString & newContents,
+                                         int newCursorPos, int prevCursorPos, int prevAnchorPos );
 
         /**
          * Tests if the @p annotation can be removed
@@ -424,6 +448,18 @@ class OKULAR_EXPORT Document : public QObject
          * @param color The color of the selection.
          */
         void setPageTextSelection( int page, RegularAreaRect * rect, const QColor & color );
+
+        /**
+         * Returns true if there is an undo command available; otherwise returns false.
+         * @since 0.17 (KDE 4.11)
+         */
+        bool canUndo() const;
+
+        /**
+         * Returns true if there is a redo command available; otherwise returns false.
+         * @since 0.17 (KDE 4.11)
+         */
+        bool canRedo() const;
 
         /**
          * Describes the possible search types.
@@ -534,7 +570,7 @@ class OKULAR_EXPORT Document : public QObject
          * Prints the document to the given @p printer.
          */
         bool print( QPrinter &printer );
-        
+
         /**
          * Returns the last print error in case print() failed
          * @since 0.11 (KDE 4.5)
@@ -681,7 +717,6 @@ class OKULAR_EXPORT Document : public QObject
         */
         void setAnnotationEditingEnabled( bool enable );
 
-
     public Q_SLOTS:
         /**
          * This slot is called whenever the user changes the @p rotation of
@@ -700,6 +735,17 @@ class OKULAR_EXPORT Document : public QObject
          */
         void cancelSearch();
 
+        /**
+         * Undo last edit command
+         * @since 0.17 (KDE 4.11)
+         */
+        void undo();
+
+        /**
+         * Redo last undone edit command
+         * @since 0.17 (KDE 4.11)
+         */
+        void redo();
 
     Q_SIGNALS:
         /**
@@ -809,17 +855,40 @@ class OKULAR_EXPORT Document : public QObject
         void processMovieAction( const Okular::MovieAction *action );
 
         /**
+         * This signal is emmitted whenever the availability of the undo function changes
+         * @since 0.17 (KDE 4.11)
+         */
+        void canUndoChanged( bool undoAvailable );
+
+        /**
+         * This signal is emmitted whenever the availability of the redo function changes
+         * @since 0.17 (KDE 4.11)
+         */
+        void canRedoChanged( bool redoAvailable );
+
+        /**
          * This signal is emitted whenever an rendition action is triggered and the UI should process it.
          *
          * @since 0.16 (KDE 4.10)
          */
         void processRenditionAction( const Okular::RenditionAction *action );
 
+        /**
+         * This signal is emmitted whenever the contents of the given @p annotation are changed by an undo
+         * or redo action.
+         *
+         * The new contents (@p contents), cursor position (@p cursorPos), and anchor position (@p anchorPos) are
+         * included
+         * @since 0.17 (KDE 4.11)
+         */
+        void annotationContentsChangedByUndoRedo( Okular::Annotation* annotation, const QString & contents, int cursorPos, int anchorPos );
+
     private:
         /// @cond PRIVATE
         friend class DocumentPrivate;
         friend class Part;
         friend class ::DocumentItem;
+        friend class EditAnnotationContentsCommand;
         /// @endcond
         DocumentPrivate *const d;
 

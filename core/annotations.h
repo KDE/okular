@@ -659,14 +659,18 @@ class OKULAR_EXPORT Annotation
         virtual void store( QDomNode & node, QDomDocument & document ) const;
 
         /**
-        * Retrieve the QDomNode representing this annotation's properties
-        */
-        QDomNode getAnnotationPropertiesDomNode();
+         * Retrieve the QDomNode representing this annotation's properties
+         
+         * @since 0.17 (KDE 4.11)
+         */
+        QDomNode getAnnotationPropertiesDomNode() const;
 
         /**
-        * Sets annotations internal properties according to the contents of @p node
-        */
-        void setAnnotationProperties(const QDomNode & node);
+         * Sets annotations internal properties according to the contents of @p node
+         *
+         * @since 0.17 (KDE 4.11)
+         */
+        void setAnnotationProperties( const QDomNode & node );
 
     protected:
         /// @cond PRIVATE

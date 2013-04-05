@@ -752,7 +752,7 @@ void Annotation::store( QDomNode & annNode, QDomDocument & document ) const
     }
 }
 
-QDomNode Annotation::getAnnotationPropertiesDomNode()
+QDomNode Annotation::getAnnotationPropertiesDomNode() const
 {
     QDomDocument doc( "documentInfo" );
     QDomElement node = doc.createElement( "annotation" );

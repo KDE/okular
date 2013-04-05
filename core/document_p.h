@@ -19,6 +19,7 @@
 #include <QtCore/QMap>
 #include <QtCore/QMutex>
 #include <QtCore/QPointer>
+#include <QtGui/QUndoCommand>
 
 #include <kcomponentdata.h>
 #include <kservicetypetrader.h>

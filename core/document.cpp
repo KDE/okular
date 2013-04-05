@@ -2007,13 +2007,13 @@ QVariant DocumentPrivate::documentMetaData( const QString &key, const QVariant &
 };
 
 AddAnnotationCommand::AddAnnotationCommand( Okular::DocumentPrivate * docPriv,  Okular::Annotation* annotation, int pageNumber )
-    : m_docPriv( docPriv ),
-    m_annotation( annotation ),
-    m_pageNumber( pageNumber ),
-    m_done( false )
-    {
-        setText( i18nc ("Add an annotation to the page", "add annotation" ) );
-    }
+ : m_docPriv( docPriv ),
+   m_annotation( annotation ),
+   m_pageNumber( pageNumber ),
+   m_done( false )
+{
+    setText( i18nc ("Add an annotation to the page", "add annotation" ) );
+}
 
 AddAnnotationCommand::~AddAnnotationCommand()
 {
@@ -2037,15 +2037,16 @@ void AddAnnotationCommand::redo()
 
 
 RemoveAnnotationCommand::RemoveAnnotationCommand(Okular::DocumentPrivate * doc,  Okular::Annotation* annotation, int pageNumber)
-    : m_doc( doc ),
-    m_annotation( annotation ),
-    m_pageNumber( pageNumber ),
-    m_done( false )
-    {
-        setText( i18nc( "Remove an annotation from the page", "remove annotation" ) );
-    }
+ : m_doc( doc ),
+   m_annotation( annotation ),
+   m_pageNumber( pageNumber ),
+   m_done( false )
+{
+    setText( i18nc( "Remove an annotation from the page", "remove annotation" ) );
+}
 
-RemoveAnnotationCommand::~RemoveAnnotationCommand(){
+RemoveAnnotationCommand::~RemoveAnnotationCommand()
+{
     if ( m_done )
     {
         delete m_annotation;
@@ -2069,14 +2070,14 @@ ModifyAnnotationPropertiesCommand::ModifyAnnotationPropertiesCommand( DocumentPr
                                                                       int pageNumber,
                                                                       QDomNode oldProperties,
                                                                       QDomNode newProperties )
-    : m_docPriv( docPriv ),
-    m_annotation( annotation ),
-    m_pageNumber( pageNumber ),
-    m_prevProperties( oldProperties ),
-    m_newProperties( newProperties )
-    {
-        setText(i18nc("Modify an annotation's internal properties (Color, line-width, etc.)", "modify annotation properties"));
-    }
+ : m_docPriv( docPriv ),
+   m_annotation( annotation ),
+   m_pageNumber( pageNumber ),
+   m_prevProperties( oldProperties ),
+   m_newProperties( newProperties )
+{
+    setText(i18nc("Modify an annotation's internal properties (Color, line-width, etc.)", "modify annotation properties"));
+}
 
 void ModifyAnnotationPropertiesCommand::undo()
 {
@@ -2095,14 +2096,14 @@ TranslateAnnotationCommand::TranslateAnnotationCommand( DocumentPrivate* docPriv
                                                         int pageNumber,
                                                         const Okular::NormalizedPoint & delta,
                                                         bool completeDrag )
-    : m_docPriv( docPriv ),
-    m_annotation( annotation ),
-    m_pageNumber( pageNumber ),
-    m_delta( delta ),
-    m_completeDrag( completeDrag )
-    {
-        setText( i18nc( "Translate an annotation's position on the page", "translate annotation" ) );
-    }
+ : m_docPriv( docPriv ),
+   m_annotation( annotation ),
+   m_pageNumber( pageNumber ),
+   m_delta( delta ),
+   m_completeDrag( completeDrag )
+{
+    setText( i18nc( "Translate an annotation's position on the page", "translate annotation" ) );
+}
 
 void TranslateAnnotationCommand::undo()
 {
@@ -2148,11 +2149,11 @@ EditTextCommand::EditTextCommand( const QString & newContents,
                                   const QString & prevContents,
                                   int prevCursorPos,
                                   int prevAnchorPos )
-: m_newContents( newContents ),
-m_newCursorPos( newCursorPos ),
-m_prevContents( prevContents ),
-m_prevCursorPos( prevCursorPos ),
-m_prevAnchorPos( prevAnchorPos )
+ : m_newContents( newContents ),
+   m_newCursorPos( newCursorPos ),
+   m_prevContents( prevContents ),
+   m_prevCursorPos( prevCursorPos ),
+   m_prevAnchorPos( prevAnchorPos )
 {
     setText( i18nc( "Generic text edit command", "edit text" ) );
 
@@ -3196,10 +3197,10 @@ bool Document::canModifyPageAnnotation( const Annotation * annotation ) const
 
 void Document::prepareToModifyAnnotationProperties( Annotation * annotation )
 {
+    Q_ASSERT(d->m_prevPropsOfAnnotBeingModified.isNull());
     if (!d->m_prevPropsOfAnnotBeingModified.isNull())
     {
         kError(OkularDebug) << "Error: Document::prepareToModifyAnnotationProperties has already been called since last call to Document::modifyPageAnnotationProperties";
-        Q_ASSERT(d->m_prevPropsOfAnnotBeingModified.isNull());
         return;
     }
     d->m_prevPropsOfAnnotBeingModified = annotation->getAnnotationPropertiesDomNode();
@@ -3207,10 +3208,10 @@ void Document::prepareToModifyAnnotationProperties( Annotation * annotation )
 
 void Document::modifyPageAnnotationProperties( int page, Annotation * annotation )
 {
+    Q_ASSERT(!d->m_prevPropsOfAnnotBeingModified.isNull());
     if (d->m_prevPropsOfAnnotBeingModified.isNull())
     {
         kError(OkularDebug) << "Error: Document::prepareToModifyAnnotationProperties must be called before Annotation is modified";
-        Q_ASSERT(!d->m_prevPropsOfAnnotBeingModified.isNull());
         return;
     }
     QDomNode prevProps = d->m_prevPropsOfAnnotBeingModified;

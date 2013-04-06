@@ -37,7 +37,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2013-03-02</date>
+		<date>2013-04-06</date>
 		<releaseinfo>0.16.60 (&kde; 4.11)</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
@@ -443,6 +443,11 @@ Add a 'Find Previous' entry
 						Due to DRM limitations (typically with &PDF; documents), adding, editing some properties
 						or removing annotations could not be possible.
 					</para>
+				</note>
+				<note>
+				  <para>
+				    Any action on annotations (creation and removal of annotations, editing arbitrary annotation properties, relocating annotations with &Ctrl;+drag, and editing the text contents of an annotation) can be <link linkend="edit-undo">undone</link> or <link linkend="edit-redo">redone</link> using the corresponding item from the <guimenu>Edit</guimenu> menu. It is also possible to undo the action by pressing <keycombo>&Ctrl;<keycap>Z</keycap></keycombo> and redo the undone action by pressing <keycombo>&Ctrl;&Shift;<keycap>Z</keycap></keycombo>.
+				  </para>
 				</note>
 			<sect2 id="annotations-add">
 				<title>Adding annotations</title>
@@ -862,6 +867,35 @@ Add a 'Find Previous' entry
 
 		<sect1 id="menuedit">
 			<title>The Edit Menu</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+					  <anchor id="edit-undo"/>
+						<menuchoice>
+							<shortcut><keycombo action="simul">&Ctrl;<keycap>Z</keycap></keycombo></shortcut>
+							<guimenu>Edit</guimenu>
+							<guimenuitem>Undo</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para><action>Undo</action> the last annotation editing command (creation and removal of annotations, editing arbitrary annotation properties, relocating annotations with &Ctrl;+drag, and editing the text contents of an annotation).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+					  <anchor id="edit-redo"/>
+						<menuchoice>
+							<shortcut><keycombo action="simul">&Ctrl;&Shift;<keycap>Z</keycap></keycombo></shortcut>
+							<guimenu>Edit</guimenu>
+							<guimenuitem>Redo</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+					  <para><action>Redo</action> the last undo step when editing annotations.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
 			<variablelist>
 				<varlistentry>
 					<term>

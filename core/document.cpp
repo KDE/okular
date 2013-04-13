@@ -2404,6 +2404,8 @@ void Document::closeDocument()
     d->m_documentInfo = 0;
 
     AudioPlayer::instance()->d->m_currentDocument = KUrl();
+
+    d->m_undoStack->clear();
 }
 
 void Document::addObserver( DocumentObserver * pObserver )
@@ -2896,6 +2898,10 @@ void DocumentPrivate::notifyAnnotationChanges( int page )
 
 void Document::addPageAnnotation( int page, Annotation * annotation )
 {
+    // Transform annotation's base boundary rectangle into unrotated coordinates
+    Page *p = d->m_pagesVector[page];
+    QTransform t = p->d->rotationMatrix();
+    annotation->d_ptr->baseTransform(t.inverted());
     QUndoCommand *uc = new AddAnnotationCommand(this->d, annotation, page);
     d->m_undoStack->push(uc);
 }

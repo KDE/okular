@@ -641,7 +641,6 @@ void Page::addAnnotation( Annotation * annotation )
 
     // Rotate the annotation on the page.
     const QTransform matrix = d->rotationMatrix();
-    annotation->d_ptr->baseTransform( matrix.inverted() );
     annotation->d_ptr->annotationTransform( matrix );
 
     m_rects.append( rect );

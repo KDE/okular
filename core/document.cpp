@@ -2079,23 +2079,23 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
         d->m_docFileName = docFile;
         if ( url.isLocalFile() && !d->m_archiveData )
         {
-        QString fn = url.fileName();
-        document_size = fileReadTest.size();
-        fn = QString::number( document_size ) + '.' + fn + ".xml";
-        QString newokular = "okular/docdata/" + fn;
-        QString newokularfile = KStandardDirs::locateLocal( "data", newokular );
-        if ( !QFile::exists( newokularfile ) )
-        {
-            QString oldkpdf = "kpdf/" + fn;
-            QString oldkpdffile = KStandardDirs::locateLocal( "data", oldkpdf );
-            if ( QFile::exists( oldkpdffile ) )
+            QString fn = url.fileName();
+            document_size = fileReadTest.size();
+            fn = QString::number( document_size ) + '.' + fn + ".xml";
+            QString newokular = "okular/docdata/" + fn;
+            QString newokularfile = KStandardDirs::locateLocal( "data", newokular );
+            if ( !QFile::exists( newokularfile ) )
             {
-                // ### copy or move?
-                if ( !QFile::copy( oldkpdffile, newokularfile ) )
-                    return false;
+                QString oldkpdf = "kpdf/" + fn;
+                QString oldkpdffile = KStandardDirs::locateLocal( "data", oldkpdf );
+                if ( QFile::exists( oldkpdffile ) )
+                {
+                    // ### copy or move?
+                    if ( !QFile::copy( oldkpdffile, newokularfile ) )
+                        return false;
+                }
             }
-        }
-        d->m_xmlFileName = newokularfile;
+            d->m_xmlFileName = newokularfile;
         }
     }
     else

@@ -1859,6 +1859,18 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
             mime = newmime;
             offers = KMimeTypeTrader::self()->query( mime->name(), "okular/Generator", constraint );
         }
+        if ( offers.isEmpty() )
+        {
+            // There's still no offers, do a final mime search based on the filename
+            // We need this becuase sometimes (e.g. when downloading from a webserver) the mimetype we
+            // use is the one feeded by the server, that may be wrong
+            newmime = KMimeType::findByUrl( docFile );
+            if ( newmime->name() != mime->name() )
+            {
+                mime = newmime;
+                offers = KMimeTypeTrader::self()->query( mime->name(), "okular/Generator", constraint );
+            }
+        }
     }
     if (offers.isEmpty())
     {

@@ -2061,7 +2061,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     QByteArray filedata;
     qint64 document_size = -1;
     bool isstdin = url.fileName( KUrl::ObeyTrailingSlash ) == QLatin1String( "-" );
-    bool loadingMimeByContent = false;
+    bool triedMimeFromFileContent = false;
     if ( !isstdin )
     {
         if ( mime.count() <= 0 )
@@ -2107,21 +2107,33 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
         if ( !mime || mime->name() == QLatin1String( "application/octet-stream" ) )
             return false;
         document_size = filedata.size();
-        loadingMimeByContent = true;
+        triedMimeFromFileContent = true;
     }
 
     // 0. load Generator
     // request only valid non-disabled plugins suitable for the mimetype
     QString constraint("([X-KDE-Priority] > 0) and (exist Library)") ;
     KService::List offers = KMimeTypeTrader::self()->query(mime->name(),"okular/Generator",constraint);
-    if ( offers.isEmpty() && !isstdin )
+    if ( offers.isEmpty() && !triedMimeFromFileContent )
     {
         KMimeType::Ptr newmime = KMimeType::findByFileContent( docFile );
-        loadingMimeByContent = true;
+        triedMimeFromFileContent = true;
         if ( newmime->name() != mime->name() )
         {
             mime = newmime;
             offers = KMimeTypeTrader::self()->query( mime->name(), "okular/Generator", constraint );
+        }
+        if ( offers.isEmpty() )
+        {
+            // There's still no offers, do a final mime search based on the filename
+            // We need this becuase sometimes (e.g. when downloading from a webserver) the mimetype we
+            // use is the one feeded by the server, that may be wrong
+            newmime = KMimeType::findByUrl( docFile );
+            if ( newmime->name() != mime->name() )
+            {
+                mime = newmime;
+                offers = KMimeTypeTrader::self()->query( mime->name(), "okular/Generator", constraint );
+            }
         }
     }
     if (offers.isEmpty())
@@ -2158,10 +2170,10 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     KService::Ptr offer = offers.at( hRank );
     // 1. load Document
     bool openOk = d->openDocumentInternal( offer, isstdin, docFile, filedata );
-    if ( !openOk && !loadingMimeByContent )
+    if ( !openOk && !triedMimeFromFileContent )
     {
         KMimeType::Ptr newmime = KMimeType::findByFileContent( docFile );
-        loadingMimeByContent = true;
+        triedMimeFromFileContent = true;
         if ( newmime->name() != mime->name() )
         {
             mime = newmime;

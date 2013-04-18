@@ -15,7 +15,6 @@ install(FILES
    tool-note-okular-colorizable.png
    tool-note-inline.png
    tool-note-inline-okular-colorizable.png
-   tool-stamp-okular.png
    DESTINATION ${DATA_INSTALL_DIR}/okular/pics)
 # install annotation page images
 install(FILES

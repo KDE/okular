@@ -1085,134 +1085,135 @@ QPixmap PageViewAnnotator::makeToolPixmap( const QDomElement &toolElement )
     QPixmap pixmap( 32, 32 );
     const QString annotType = toolElement.attribute( "type" );
 
-    if ( annotType == "stamp" )
+    // Load base pixmap. We'll draw on top of it
+    pixmap.load( KStandardDirs::locate( "data", "okular/pics/tool-base-okular.png" ) );
+
+    /* Parse color, innerColor and icon (if present) */
+    QColor engineColor, innerColor;
+    QString icon;
+    QDomNodeList engineNodeList = toolElement.elementsByTagName( "engine" );
+    if ( engineNodeList.size() > 0 )
     {
-        // Load static image file
-        pixmap.load( KStandardDirs::locate( "data", "okular/pics/tool-stamp-okular.png" ) );
+        QDomElement engineEl = engineNodeList.item( 0 ).toElement();
+        if ( !engineEl.isNull() && engineEl.hasAttribute( "color" ) )
+            engineColor = QColor( engineEl.attribute( "color" ) );
+    }
+    QDomNodeList annotationNodeList = toolElement.elementsByTagName( "annotation" );
+    if ( annotationNodeList.size() > 0 )
+    {
+        QDomElement annotationEl = annotationNodeList.item( 0 ).toElement();
+        if ( !annotationEl.isNull() && annotationEl.hasAttribute( "innerColor" ) )
+            innerColor = QColor( annotationEl.attribute( "innerColor" ) );
+        if ( !annotationEl.isNull() && annotationEl.hasAttribute( "icon" ) )
+            icon = annotationEl.attribute( "icon" );
+    }
+
+    QPainter p( &pixmap );
+
+    if ( annotType == "ellipse" )
+    {
+        p.setRenderHint( QPainter::Antialiasing );
+        if ( innerColor.isValid() )
+            p.setBrush( innerColor );
+        p.setPen( QPen( engineColor, 2 ) );
+        p.drawEllipse( 2, 7, 21, 14 );
+    }
+    else if ( annotType == "highlight" )
+    {
+        QImage overlay( KStandardDirs::locate( "data", "okular/pics/tool-highlighter-okular-colorizable.png" ) );
+        QImage colorizedOverlay = overlay;
+        GuiUtils::colorizeImage( colorizedOverlay, engineColor );
+
+        p.drawImage( QPoint(0,0), colorizedOverlay ); // Trail
+        p.drawImage( QPoint(0,-32), overlay ); // Text + Shadow (uncolorized)
+        p.drawImage( QPoint(0,-64), colorizedOverlay ); // Pen
+    }
+    else if ( annotType == "ink" )
+    {
+        QImage overlay( KStandardDirs::locate( "data", "okular/pics/tool-ink-okular-colorizable.png" ) );
+        QImage colorizedOverlay = overlay;
+        GuiUtils::colorizeImage( colorizedOverlay, engineColor );
+
+        p.drawImage( QPoint(0,0), colorizedOverlay ); // Trail
+        p.drawImage( QPoint(0,-32), overlay ); // Shadow (uncolorized)
+        p.drawImage( QPoint(0,-64), colorizedOverlay ); // Pen
+    }
+    else if ( annotType == "note-inline" )
+    {
+        QImage overlay( KStandardDirs::locate( "data", "okular/pics/tool-note-inline-okular-colorizable.png" ) );
+        GuiUtils::colorizeImage( overlay, engineColor );
+        p.drawImage( QPoint(0,0), overlay );
+    }
+    else if ( annotType == "note-linked" )
+    {
+        QImage overlay( KStandardDirs::locate( "data", "okular/pics/tool-note-okular-colorizable.png" ) );
+        GuiUtils::colorizeImage( overlay, engineColor );
+        p.drawImage( QPoint(0,0), overlay );
+    }
+    else if ( annotType == "polygon" )
+    {
+        QPainterPath path;
+        path.moveTo( 0, 7 );
+        path.lineTo( 19, 7 );
+        path.lineTo( 19, 14 );
+        path.lineTo( 23, 14 );
+        path.lineTo( 23, 20 );
+        path.lineTo( 0, 20 );
+        if ( innerColor.isValid() )
+            p.setBrush( innerColor );
+        p.setPen( QPen( engineColor, 1 ) );
+        p.drawPath( path );
+    }
+    else if ( annotType == "rectangle" )
+    {
+        p.setRenderHint( QPainter::Antialiasing );
+        if ( innerColor.isValid() )
+            p.setBrush( innerColor );
+        p.setPen( QPen( engineColor, 2 ) );
+        p.drawRect( 2, 7, 21, 14 );
+    }
+    else if ( annotType == "squiggly" )
+    {
+        p.setPen( QPen( engineColor, 1, Qt::DotLine ) );
+        p.drawLine( 1, 13, 16, 13 );
+        p.drawLine( 2, 14, 15, 14 );
+        p.drawLine( 0, 20, 19, 20 );
+        p.drawLine( 1, 21, 18, 21 );
+    }
+    else if ( annotType == "stamp" )
+    {
+        QPixmap stamp = GuiUtils::loadStamp( icon, QSize( 16, 16 ) );
+        p.setRenderHint( QPainter::Antialiasing );
+        p.drawPixmap( 16, 14, stamp );
+    }
+    else if ( annotType == "straight-line" )
+    {
+        QPainterPath path;
+        path.moveTo( 1, 8 );
+        path.lineTo( 20, 8 );
+        path.lineTo( 1, 27 );
+        path.lineTo( 20, 27 );
+        p.setRenderHint( QPainter::Antialiasing );
+        p.setPen( QPen( engineColor, 1 ) );
+        p.drawPath( path ); // TODO To be discussed: This is not a straight line!
+    }
+    else if ( annotType == "strikeout" )
+    {
+        p.setPen( QPen( engineColor, 1 ) );
+        p.drawLine( 1, 10, 16, 10 );
+        p.drawLine( 0, 17, 19, 17 );
+    }
+    else if ( annotType == "underline" )
+    {
+        p.setPen( QPen( engineColor, 1 ) );
+        p.drawLine( 1, 13, 16, 13 );
+        p.drawLine( 0, 20, 19, 20 );
     }
     else
     {
-        // Load base pixmap. We'll draw on top of it
-        pixmap.load( KStandardDirs::locate( "data", "okular/pics/tool-base-okular.png" ) );
-
-        /* Parse the color */
-        QColor engineColor, innerColor;
-        QDomNodeList engineNodeList = toolElement.elementsByTagName( "engine" );
-        if ( engineNodeList.size() > 0 )
-        {
-            QDomElement engineEl = engineNodeList.item( 0 ).toElement();
-            if ( !engineEl.isNull() && engineEl.hasAttribute( "color" ) )
-                engineColor = QColor( engineEl.attribute( "color" ) );
-        }
-        QDomNodeList annotationNodeList = toolElement.elementsByTagName( "annotation" );
-        if ( annotationNodeList.size() > 0 )
-        {
-            QDomElement annotationEl = annotationNodeList.item( 0 ).toElement();
-            if ( !annotationEl.isNull() && annotationEl.hasAttribute( "innerColor" ) )
-                innerColor = QColor( annotationEl.attribute( "innerColor" ) );
-        }
-
-        QPainter p( &pixmap );
-
-        if ( annotType == "ellipse" )
-        {
-            p.setRenderHint( QPainter::Antialiasing );
-            if ( innerColor.isValid() )
-                p.setBrush( innerColor );
-            p.setPen( QPen( engineColor, 2 ) );
-            p.drawEllipse( 2, 7, 21, 14 );
-        }
-        else if ( annotType == "highlight" )
-        {
-            QImage overlay( KStandardDirs::locate( "data", "okular/pics/tool-highlighter-okular-colorizable.png" ) );
-            QImage colorizedOverlay = overlay;
-            GuiUtils::colorizeImage( colorizedOverlay, engineColor );
-
-            p.drawImage( QPoint(0,0), colorizedOverlay ); // Trail
-            p.drawImage( QPoint(0,-32), overlay ); // Text + Shadow (uncolorized)
-            p.drawImage( QPoint(0,-64), colorizedOverlay ); // Pen
-        }
-        else if ( annotType == "ink" )
-        {
-            QImage overlay( KStandardDirs::locate( "data", "okular/pics/tool-ink-okular-colorizable.png" ) );
-            QImage colorizedOverlay = overlay;
-            GuiUtils::colorizeImage( colorizedOverlay, engineColor );
-
-            p.drawImage( QPoint(0,0), colorizedOverlay ); // Trail
-            p.drawImage( QPoint(0,-32), overlay ); // Shadow (uncolorized)
-            p.drawImage( QPoint(0,-64), colorizedOverlay ); // Pen
-        }
-        else if ( annotType == "note-inline" )
-        {
-            QImage overlay( KStandardDirs::locate( "data", "okular/pics/tool-note-inline-okular-colorizable.png" ) );
-            GuiUtils::colorizeImage( overlay, engineColor );
-            p.drawImage( QPoint(0,0), overlay );
-        }
-        else if ( annotType == "note-linked" )
-        {
-            QImage overlay( KStandardDirs::locate( "data", "okular/pics/tool-note-okular-colorizable.png" ) );
-            GuiUtils::colorizeImage( overlay, engineColor );
-            p.drawImage( QPoint(0,0), overlay );
-        }
-        else if ( annotType == "polygon" )
-        {
-            QPainterPath path;
-            path.moveTo( 0, 7 );
-            path.lineTo( 19, 7 );
-            path.lineTo( 19, 14 );
-            path.lineTo( 23, 14 );
-            path.lineTo( 23, 20 );
-            path.lineTo( 0, 20 );
-            if ( innerColor.isValid() )
-                p.setBrush( innerColor );
-            p.setPen( QPen( engineColor, 1 ) );
-            p.drawPath( path );
-        }
-        else if ( annotType == "rectangle" )
-        {
-            p.setRenderHint( QPainter::Antialiasing );
-            if ( innerColor.isValid() )
-                p.setBrush( innerColor );
-            p.setPen( QPen( engineColor, 2 ) );
-            p.drawRect( 2, 7, 21, 14 );
-        }
-        else if ( annotType == "squiggly" )
-        {
-            p.setPen( QPen( engineColor, 1, Qt::DotLine ) );
-            p.drawLine( 1, 13, 16, 13 );
-            p.drawLine( 2, 14, 15, 14 );
-            p.drawLine( 0, 20, 19, 20 );
-            p.drawLine( 1, 21, 18, 21 );
-        }
-        else if ( annotType == "straight-line" )
-        {
-            QPainterPath path;
-            path.moveTo( 1, 8 );
-            path.lineTo( 20, 8 );
-            path.lineTo( 1, 27 );
-            path.lineTo( 20, 27 );
-            p.setRenderHint( QPainter::Antialiasing );
-            p.setPen( QPen( engineColor, 1 ) );
-            p.drawPath( path ); // TODO To be discussed: This is not a straight line!
-        }
-        else if ( annotType == "strikeout" )
-        {
-            p.setPen( QPen( engineColor, 1 ) );
-            p.drawLine( 1, 10, 16, 10 );
-            p.drawLine( 0, 17, 19, 17 );
-        }
-        else if ( annotType == "underline" )
-        {
-            p.setPen( QPen( engineColor, 1 ) );
-            p.drawLine( 1, 13, 16, 13 );
-            p.drawLine( 0, 20, 19, 20 );
-        }
-        else
-        {
-            /* Unrecognized annotation type -- It shouldn't happen */
-            p.setPen( QPen( engineColor ) );
-            p.drawText( QPoint(20, 31), "?" );
-        }
+        /* Unrecognized annotation type -- It shouldn't happen */
+        p.setPen( QPen( engineColor ) );
+        p.drawText( QPoint(20, 31), "?" );
     }
 
     return pixmap;

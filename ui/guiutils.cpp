@@ -119,35 +119,9 @@ QString authorForAnnotation( const Okular::Annotation * ann )
     return !ann->author().isEmpty() ? ann->author() : i18nc( "Unknown author", "Unknown" );
 }
 
-QString contents( const Okular::Annotation * ann )
-{
-    Q_ASSERT( ann );
-
-    // 1. window text
-    QString ret = ann->window().text();
-    if ( !ret.isEmpty() )
-        return ret;
-    // 2. if Text and InPlace, the inplace text
-    if ( ann->subType() == Okular::Annotation::AText )
-    {
-        const Okular::TextAnnotation * txtann = static_cast< const Okular::TextAnnotation * >( ann );
-        if ( txtann->textType() == Okular::TextAnnotation::InPlace )
-        {
-            ret = txtann->inplaceText();
-            if ( !ret.isEmpty() )
-                return ret;
-        }
-    }
-
-    // 3. contents
-    ret = ann->contents();
-
-    return ret;
-}
-
 QString contentsHtml( const Okular::Annotation * ann )
 {
-    QString text = Qt::escape( contents( ann ) );
+    QString text = Qt::escape( ann->contents() );
     text.replace( '\n', "<br>" );
     return text;
 }

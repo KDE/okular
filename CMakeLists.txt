@@ -44,6 +44,7 @@ set(okularcore_SRCS
    core/bookmarkmanager.cpp
    core/chooseenginedialog.cpp
    core/document.cpp
+   core/documentcommands.cpp
    core/fontinfo.cpp
    core/form.cpp
    core/generator.cpp
@@ -97,6 +98,7 @@ install( FILES
            core/utils.h
            core/version.h
            core/fileprinter.h
+           core/observer.h
            ${CMAKE_CURRENT_BINARY_DIR}/settings_core.h
          DESTINATION ${INCLUDE_INSTALL_DIR}/okular/core COMPONENT Devel)
 
@@ -123,7 +125,7 @@ ENDIF(APPLE)
 
 target_link_libraries(okularcore  ${OKULAR_IOKIT} ${KDE4_KIO_LIBS} ${KDE4_PHONON_LIBRARY} ${KDE4_KJSAPI_LIBRARY} ${MATH_LIB} ${KDE4_THREADWEAVER_LIBRARY} )
 
-set_target_properties(okularcore PROPERTIES VERSION 2.0.0 SOVERSION 2 )
+set_target_properties(okularcore PROPERTIES VERSION 3.0.0 SOVERSION 3 )
 
 install(TARGETS okularcore ${INSTALL_TARGETS_DEFAULT_ARGS} )
 

@@ -227,7 +227,7 @@ void Reviews::activated( const QModelIndex &index )
     vp.rePos.normalizedX = ( nr.right + nr.left ) / 2.0;
     vp.rePos.normalizedY = ( nr.bottom + nr.top ) / 2.0;
     // setting the viewport
-    m_document->setViewport( vp, -1, true );
+    m_document->setViewport( vp, 0, true );
 }
 
 QModelIndexList Reviews::retrieveAnnotations(const QModelIndex& idx) const

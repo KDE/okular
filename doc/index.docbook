@@ -11,10 +11,10 @@
 <!-- TODO
 add chapter about navigation panel
 Show/Hide Contens/Thumbnails/Reviews/Bookmarks bar to save screen space
-Use Small Icons and deselct Show Text to minimize the navigation panel
+Use Small Icons and deselect Show Text to minimize the navigation panel
 Describe all actions only possible in the navigation bars:
 Switching between documents using bookmarks
-Context menu actions like Rename Bookmarks etc)
+Context menu actions like Rename Bookmarks etc.)
  -->
 <book id="okular" lang="&language;">
 	<bookinfo>
@@ -24,7 +24,7 @@ Context menu actions like Rename Bookmarks etc)
 				<firstname>Albert</firstname>
 				<surname>Astals Cid</surname>
 				<affiliation>
-					<address><email>aacid@kde.org</email></address>
+					<address>&Albert.Astals.Cid.mail;</address>
 				</affiliation>
 			</author>
 			<author>
@@ -37,8 +37,8 @@ Context menu actions like Rename Bookmarks etc)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2012-09-09</date>
-		<releaseinfo>0.15.70 (&kde; 4.10)</releaseinfo>
+		<date>2013-04-06</date>
+		<releaseinfo>0.16.60 (&kde; 4.11)</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
 			<para>&okular; is a &kde; universal document viewer based on &kpdf; code.</para>
@@ -68,7 +68,7 @@ Context menu actions like Rename Bookmarks etc)
 			improved presentation support and annotation support.
 		</para>
 		<para>
-			&okular; supports a lot of different formats like PDF, Postscript, Tiff, CHM, DjVU, Images (png, jpg, &etc;)
+			&okular; supports a lot of different formats like &PDF;, &PostScript;, Tiff, CHM, DjVU, Images (png, jpg, &etc;)
 			XPS, Open Document (ODT), Fiction Books, Comic Book, Plucker, EPub and Fax.
 			For all supported formats and their features see <ulink url="http://okular.kde.org/formats.php">
 			&okular; Document Format Handlers</ulink>.
@@ -84,14 +84,6 @@ Context menu actions like Rename Bookmarks etc)
 		</textobject>
 		</mediaobject>
 		</screenshot>
-<!--
-		<para>
-			The PDF format is widely used for publishing documents that are
-			mostly not meant to be edited again. &okular; is only a viewer
-			for these files and therefore it doesn't provide any functionality
-			to edit or create PDF documents.
-		</para>
--->
 	</chapter>
 	<chapter id="use">
 		<title>Basic Usage</title>
@@ -106,7 +98,7 @@ Context menu actions like Rename Bookmarks etc)
 				If you have already opened files in &okular; before, you can quickly access them by selecting them in
 				the <menuchoice><guimenu>File</guimenu><guisubmenu>Open Recent</guisubmenu></menuchoice> menu.
 			</para>
-			<para>&okular; is the default &kde; application for PDF and Postscript files, launched when you click with the
+			<para>&okular; is the default &kde; application for &PDF; and &PostScript; files, launched when you click with the
 			 &LMB; on such a file type in the filemanager. If you want to open any file whose format is supported by &okular;
 			 use <menuchoice><guimenu>Open with...</guimenu><guimenuitem>&okular;</guimenuitem> </menuchoice> from context
 			 menu in the filemanager.
@@ -132,8 +124,8 @@ Add a 'Find Previous' entry
 			<para>
 				Another way is to hold the &LMB; down at any place on the document while dragging the mouse in the
 				opposite direction of where you want to move. This procedure only works if the Browse Tool is
-				enabled, which you can select by choosing <menuchoice><guimenu>Tools</guimenu><guimenuitem>Browse Tool
-				</guimenuitem></menuchoice>.
+				enabled, which you can select by choosing <menuchoice><guimenu>Tools</guimenu>
+				<guimenuitem>Browse Tool</guimenuitem></menuchoice>.
 			</para>
 			<para>If you want to read a document with several pages use the automatic scrolling feature of &okular;.
 			Start automatic scrolling with <keycombo action="simul">&Shift;<keysym>Down Arrow</keysym></keycombo> or
@@ -233,6 +225,28 @@ Add a 'Find Previous' entry
 						</menuchoice> in the menubar.
 					</para>
 				</listitem>
+				<listitem>
+					<para>
+						You can go back to the positions in the document where you came from in a chronological order.
+						Consider &eg; reading the phrase <quote>As shown in [15], …</quote>, and you want
+						to know quickly lookup reference [15]. So you click on it, and &okular; will jump to the list
+						of references. Using <keycombo>&Alt;&Shift;<keysym>Left</keysym></keycombo> or
+						<menuchoice>
+							<guimenu>Go</guimenu>
+							<guimenuitem>Back</guimenuitem>
+						</menuchoice> in the menubar will bring you back to exactly the position where you came from.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						You can go forward in the document after the jumping back as described above using
+						<keycombo>&Alt;&Shift;<keysym>Right</keysym></keycombo> or
+						<menuchoice>
+							<guimenu>Go</guimenu>
+							<guimenuitem>Forward</guimenuitem>
+						</menuchoice> in the menubar.
+					</para>
+				</listitem>
 			</itemizedlist>
 		</sect1>
 		<sect1 id="presentationMode">
@@ -305,6 +319,9 @@ Add a 'Find Previous' entry
 		<itemizedlist>
 			<listitem><para>The source file has been compiled successfully.</para></listitem>
 			<listitem><para>&okular; knows which editor you would like to use.</para></listitem>
+			<listitem><para>The Browse Tool has to be enabled, which you can select by choosing 
+				<menuchoice><guimenu>Tools</guimenu><guimenuitem>Browse Tool
+				</guimenuitem></menuchoice>.</para></listitem>
 		</itemizedlist>
 
 		<para>With this feature of &okular;, a left mouse click while pressing &Shift; in the &DVI; or &PDF; document will
@@ -400,15 +417,15 @@ Add a 'Find Previous' entry
 			</screenshot>
 			<para>&okular; has two different kind of annotations:</para>
 			<para>Text annotations like <guilabel>Yellow Highlighter</guilabel> and <guilabel>Black Underlining</guilabel>
-			for files with text like &eg; PDF.</para>
+			for files with text like &eg; &PDF;.</para>
 			<para>Graphic annotations like <guilabel>Note</guilabel>, <guilabel>Inline Note</guilabel>, <guilabel>Green Freehand Line</guilabel>, <guilabel>Straight Yellow Line</guilabel>, <guilabel>Blue Polygon</guilabel>, <guilabel>Stamp</guilabel> and <guilabel>Cyan Ellipse</guilabel> for all formats supported by &okular;.</para>
 			<para>Using the context menu either in the <guilabel>Reviews</guilabel> view of the navigation panel or in the main window you can open a <guilabel>Pop up Note</guilabel> for any kind of annotation and add or edit comments.</para>
-			<para>Annotations are not only limited to PDF files, they can be used for any format &okular; supports.</para>
+			<para>Annotations are not only limited to &PDF; files, they can be used for any format &okular; supports.</para>
 			<para>
 				Since &kde; 4.2, &okular; has the "document archiving" feature. This is an &okular;-specific format for carrying the document plus various metadata related to it (currently only annotations). You can save a "document archive" from the open document by choosing <menuchoice><guimenu>File</guimenu><guisubmenu>Export As</guisubmenu><guimenuitem>Document Archive</guimenuitem></menuchoice>. To open an &okular; document archive, just open it with &okular; as it would be &eg; a &PDF; document.
 			</para>
 			<para>
-			  Since &okular; 0.15 you can <emphasis>also</emphasis> save annotations directly into PDF files. This feature is only available if &okular; has been built with version 0.20 or later of <ulink url="http://poppler.freedesktop.org/">Poppler rendering library</ulink>. You can use <menuchoice><guimenu>File</guimenu> <guimenuitem>Save As...</guimenuitem></menuchoice> to save the copy of &PDF; file with annotations.
+			  Since &okular; 0.15 you can <emphasis>also</emphasis> save annotations directly into &PDF; files. This feature is only available if &okular; has been built with version 0.20 or later of <ulink url="http://poppler.freedesktop.org/">Poppler rendering library</ulink>. You can use <menuchoice><guimenu>File</guimenu> <guimenuitem>Save As...</guimenuitem></menuchoice> to save the copy of &PDF; file with annotations.
 			</para>
 				<note>
 					<para>
@@ -426,6 +443,11 @@ Add a 'Find Previous' entry
 						Due to DRM limitations (typically with &PDF; documents), adding, editing some properties
 						or removing annotations could not be possible.
 					</para>
+				</note>
+				<note>
+				  <para>
+				    Any action on annotations (creation and removal of annotations, editing arbitrary annotation properties, relocating annotations with &Ctrl;+drag, and editing the text contents of an annotation) can be <link linkend="edit-undo">undone</link> or <link linkend="edit-redo">redone</link> using the corresponding item from the <guimenu>Edit</guimenu> menu. It is also possible to undo the action by pressing <keycombo>&Ctrl;<keycap>Z</keycap></keycombo> and redo the undone action by pressing <keycombo>&Ctrl;&Shift;<keycap>Z</keycap></keycombo>.
+				  </para>
 				</note>
 			<sect2 id="annotations-add">
 				<title>Adding annotations</title>
@@ -628,8 +650,18 @@ Add a 'Find Previous' entry
 			    </varlistentry>
 			    <varlistentry>
 				<term><userinput><command>okular</command>
+				<option>--print</option></userinput></term>
+				<listitem><para>Start with print dialog.</para></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term><userinput><command>okular</command>
 				<option>--unique</option></userinput></term>
 				<listitem><para>Unique instance control.</para></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term><userinput><command>okular</command>
+				<option>--noraise</option></userinput></term>
+				<listitem><para>Allows to prevent &okular; window raising after the start.</para></listitem>
 			    </varlistentry>
 			    <varlistentry>
 				<term><userinput><command>okular</command>
@@ -703,7 +735,7 @@ Add a 'Find Previous' entry
 					</term>
 					<listitem>
 						<para>
-							<action>Open</action> a PostScript file and convert it to &PDF;.
+							<action>Open</action> a &PostScript; file and convert it to &PDF;.
 						</para>
 					</listitem>
 				</varlistentry>
@@ -835,6 +867,35 @@ Add a 'Find Previous' entry
 
 		<sect1 id="menuedit">
 			<title>The Edit Menu</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+					  <anchor id="edit-undo"/>
+						<menuchoice>
+							<shortcut><keycombo action="simul">&Ctrl;<keycap>Z</keycap></keycombo></shortcut>
+							<guimenu>Edit</guimenu>
+							<guimenuitem>Undo</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para><action>Undo</action> the last annotation editing command (creation and removal of annotations, editing arbitrary annotation properties, relocating annotations with &Ctrl;+drag, and editing the text contents of an annotation).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+					  <anchor id="edit-redo"/>
+						<menuchoice>
+							<shortcut><keycombo action="simul">&Ctrl;&Shift;<keycap>Z</keycap></keycombo></shortcut>
+							<guimenu>Edit</guimenu>
+							<guimenuitem>Redo</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+					  <para><action>Redo</action> the last undo step when editing annotations.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
 			<variablelist>
 				<varlistentry>
 					<term>
@@ -1144,7 +1205,7 @@ Add a 'Find Previous' entry
 						<menuchoice>
 							<shortcut><keycombo action="simul">&Alt;&Shift;<keysym>Left</keysym></keycombo></shortcut>
 							<guimenu>Go</guimenu>
-							<guimenuitem>Back in the Document</guimenuitem>
+							<guimenuitem>Back</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
@@ -1156,7 +1217,7 @@ Add a 'Find Previous' entry
 						<menuchoice>
 							<shortcut><keycombo action="simul">&Alt;&Shift;<keysym 	>Right</keysym></keycombo></shortcut>
 							<guimenu>Go</guimenu>
-							<guimenuitem>Forward in the Document</guimenuitem>
+							<guimenuitem>Forward</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
@@ -1304,6 +1365,19 @@ Add a 'Find Previous' entry
 				<varlistentry>
 					<term>
 						<menuchoice>
+							<shortcut><keycombo action="simul">&Ctrl;<keycap>5</keycap></keycombo></shortcut>
+							<guimenu>Tools</guimenu>
+							<guimenuitem>Table Selection Tool</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para>Draw a rectangle around the text for the table, then use the click with the &LMB;
+						  to divide the text block into rows and columns. A &LMB; click on a existing line removes it and merges the adjacent rows or columns.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice>
 							<shortcut><keycap>F6</keycap></shortcut>
 							<guimenu>Tools</guimenu>
 							<guimenuitem>Review</guimenuitem>
@@ -1335,7 +1409,7 @@ Add a 'Find Previous' entry
 						</menuchoice>
 					</term>
 					<listitem>
-						<para>These items allow you to speak the whole document or just the current page and stop speaking using the &kde; Text-to-Speech system <application>Jovie</application>.</para>
+						<para>These items allow you to speak the whole document or just the current page and stop speaking using the &kde; Text-to-Speech system &jovie;.</para>
 						<para>The <guilabel>Speak ...</guilabel> actions are enabled only if &jovie; is available in the system.</para>
 					</listitem>
 				</varlistentry>
@@ -1443,7 +1517,7 @@ Add a 'Find Previous' entry
 						</menuchoice>
 					</term>
 					<listitem>
-						<para>Opens the <link linkend="configure">Backend Configuration</link>
+						<para>Opens the <link linkend="configure-backends">Backend Configuration</link>
 							window.</para>
 					</listitem>
 				</varlistentry>
@@ -1467,6 +1541,143 @@ Add a 'Find Previous' entry
 			&help.menu.documentation;
 		</sect1>
 
+	</chapter>
+	<chapter id="configure-backends">
+	  <title>Configuring &okular; Backends</title>
+	  <para>
+	    You can configure &okular; backends by choosing <menuchoice>
+	      <guimenu>Settings</guimenu>
+	      <guimenuitem>Configure Backends...</guimenuitem>
+	    </menuchoice>.
+	    Currently, configuration options are provided for &PostScript; and &PDF; backends only.
+	  </para>
+	  <screenshot>
+	    <screeninfo>The backends configuration dialog</screeninfo>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="configure-backends.png" format="PNG" />
+	      </imageobject>
+	      <textobject>
+		<phrase>The backends configuration dialog</phrase>
+	      </textobject>
+	    </mediaobject>
+	  </screenshot>
+	  <sect1 id="config-ghostscript">
+	    <title>&PostScript; backend configuration</title>
+	    <para>
+	      You can configure &okular; &PostScript; rendering backend based on <ulink url="http://www.ghostscript.com/">Ghostscript</ulink> by choosing <guilabel>Ghostscript</guilabel> from the list on the left part of the configuration dialog. The only configurable option is as follows.
+	    </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel>Use platform fonts</guilabel>
+		  </term>
+		  <listitem>
+		    <para>This option determines whether Ghostscript should be allowed to use platform fonts, if unchecked only usage of fonts embedded in the document will be allowed. This option is checked by default.
+		    </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect1>
+	  <sect1 id="config-pdf">
+	    <title>&PDF; backend configuration</title>
+	    <para>
+	      You can configure &okular; &PDF; rendering backend based on <ulink url="http://poppler.freedesktop.org/">Poppler</ulink> by choosing <guilabel>&PDF;</guilabel> from the list on the left part of the configuration dialog. The only configurable option is as follows.
+	    </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel>Enhance thin lines</guilabel>
+		  </term>
+		  <listitem>
+		    <para>
+		      Drawing lines in &okular; is implemented in two steps: generation of the clipping path and filling this clipping path. When the line in the original document is less than one pixel this two step implementation could cause problems. For those lines, the clipping path is filled with the filling color that depends on the thickness of the line part inside the clipping area. If the part of the line inside the clipping area gets very small the contrast between the shape and the background color can become too low for the line to be recognizable. The grids of such lines then looks very unpretty.
+		    </para>
+		    <informaltable>
+		      <tgroup cols="2">
+			<tbody>
+			  <row>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-thinline.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-lowcontrast.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			  </row>
+			  <row>
+			    <entry>Thin line (red), its clipping path (dashed line) and pixel boundaries (black solid lines)</entry>
+			    <entry>Thin line shown at a low contrast</entry>
+			  </row>
+			</tbody>
+		      </tgroup>
+		    </informaltable>
+		    <para>
+		      To enhance the look of the thin lines &okular; implements two options.
+		    </para>
+		    <para>
+		      The first option is <guimenuitem>Solid</guimenuitem>. With this option &okular; adjusts clipping path and line position so that clipping path and line are on the same pixel boundary, &ie; &okular; enlarges the thin lines to one pixel on the output device. This mode is similar to the <guilabel>Enhance thin lines</guilabel> in <trademark class="registered">Adobe</trademark>
+		      <trademark class="registered">Reader</trademark>. If this option is chosen, the thin lines are always enlarged.
+		    </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-solid.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase>Thin line with <guimenuitem>Solid</guimenuitem> enhancement</phrase>
+			  </textobject>
+			  <caption>
+			    <para>Thin line with <guimenuitem>Solid</guimenuitem> enhancement</para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para>
+		      The second option is <guimenuitem>Shape</guimenuitem>. With this option the clipping path and line are adjusted to pixel boundary as well, but the line intensity is corrected according to its width.
+		    </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-shape.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase>Thin line with <guimenuitem>Shape</guimenuitem> enhancement</phrase>
+			  </textobject>
+			  <caption>
+			    <para>Thin line with <guimenuitem>Shape</guimenuitem> enhancement</para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para>
+		      The thin lines are not enhanced by default (option <guimenuitem>No</guimenuitem>).
+		    </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect1>
 	</chapter>
 	<chapter id="configure">
 		<title>Configuring &okular;</title>
@@ -1540,9 +1751,9 @@ Add a 'Find Previous' entry
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term><guilabel>Display document title in title bar if available</guilabel></term>
+					<term><guilabel>Display document title in titlebar if available</guilabel></term>
 					<listitem>
-						<para>Whether to show the current document title in the title bar of &okular; window. If no metadata for title
+						<para>Whether to show the current document title in the titlebar of &okular; window. If no metadata for title
 						found in the document or this item is unchecked &okular; shows filename of the document.
 						</para>
 					</listitem>
@@ -1579,13 +1790,6 @@ Add a 'Find Previous' entry
 							use the backend with the highest priority.</para>
 					</listitem>
 				</varlistentry>
-				<!--varlistentry>
-					<term><guilabel>Center first page</guilabel></term>
-					<listitem>
-						<para>Whether the first page should be centered or aligned to the left when
-							displaying the pages in facing and overview mode.</para>
-					</listitem>
-				</varlistentry-->
 				<varlistentry>
 					<term><guilabel>Overview columns</guilabel></term>
 					<listitem>
@@ -1680,6 +1884,15 @@ Add a 'Find Previous' entry
 							pages without risk of system memory overfull (only 50% of total memory or free memory will be used).</para>
 					</listitem>
 				</varlistentry>
+				<varlistentry>
+					<term><guilabel>Rendering</guilabel></term>
+					<listitem>
+						<para>Using this group of options you can improve text and image rendering in &okular;. The result depends on the device to display the document. 
+						 <guilabel>Enable Text Antialias</guilabel> and <guilabel>Enable Graphics Antialias</guilabel> items can be used to switch on and off <ulink url="http://en.wikipedia.org/wiki/Spatial_anti-aliasing">spatial anti-aliasing</ulink> of text and images in document, correspondingly.
+						 <guilabel>Enable Text Hinting</guilabel> item is meant to be a switcher for <ulink url="http://en.wikipedia.org/wiki/Font_hinting">font hinting</ulink>.
+						 Antialiasing and hinting change how the documents are displayed, you may want to tweak them to your preference.</para>
+					</listitem>
+				</varlistentry>
 			</variablelist>
 		</sect1>
 		<sect1 id="configpresentation">
@@ -1731,7 +1944,7 @@ Add a 'Find Previous' entry
 				<varlistentry>
 					<term><guilabel>Enable transitions</guilabel></term>
 					<listitem>
-						<para>Use this checkbox to enable or disable transition effects between pages.</para>
+						<para>Use this check box to enable or disable transition effects between pages.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -1774,7 +1987,7 @@ Add a 'Find Previous' entry
 						This is the case when the document has references to the various points (usually row and column number) of sources it was generated from. The &DVI; format supports natively the addition of the information about the sources the LaTeX document was generated from. A similar system exists for &PDF; documents, called <acronym>pdfsync</acronym>, which stores these extra information in an external file named after the &PDF; file itself (for example <filename>mydocument.pdfsync</filename> for <filename>mydocument.pdf</filename>).
 						</para>
 						<para>
-						  &okular; ships with preconfigured settings for the following editors: <ulink url="http://kate-editor.org/">&kate;</ulink>, <ulink url="http://kile.sourceforge.net/">Kile</ulink>, <ulink url="http://www.scintilla.org/SciTE.html">SciTE</ulink>, <ulink url="http://www.gnu.org/software/emacs/">Emacs client</ulink>, and <ulink url="http://www.lyx.org/">LyX client</ulink>.
+						  &okular; ships with preconfigured settings for the following editors: <ulink url="http://kate-editor.org/">&kate;</ulink>, <ulink url="http://kile.sourceforge.net/">Kile</ulink>, <ulink url="http://www.scintilla.org/SciTE.html">SciTE</ulink>, <ulink url="http://www.gnu.org/software/emacs/">&Emacs; client</ulink>, and <ulink url="http://www.lyx.org/">LyX client</ulink>.
 						</para>
 						<note>
 						  <para>
@@ -1787,7 +2000,7 @@ Add a 'Find Previous' entry
 					<term><guilabel>Command</guilabel></term>
 					<listitem>
 						<para>This is the command and its parameters to invoke the selected editor with the source file of the actual document.</para>
-						<para>This field will be filled automatically if you use one of the preconfigured editors. Otherwise, please choose <guimenuitem>Custom Text Editor</guimenuitem> in <guilabel>Editor</guilabel> drop-down list and refer to the documentation on your favorite editor to find the proper command.
+						<para>This field will be filled automatically if you use one of the preconfigured editors. Otherwise, please choose <guimenuitem>Custom Text Editor</guimenuitem> in <guilabel>Editor</guilabel> drop down box and refer to the documentation on your favorite editor to find the proper command.
 					        </para>
 						<para>You can use the following placeholders:</para>
 						<itemizedlist>
@@ -1812,14 +2025,14 @@ Add a 'Find Previous' entry
 
 		<itemizedlist>
 			<title>Program Copyright:</title>
-			<listitem><para>Albert Astals Cid <email>aacid@kde.org</email> Current maintainer</para></listitem>
+			<listitem><para>&Albert.Astals.Cid; &Albert.Astals.Cid.mail; Current maintainer</para></listitem>
 			<listitem><para>Pino Toscano <email>pino@kde.org</email></para></listitem>
 			<listitem><para>Enrico Ros <email>eros.kde@email.it</email> &kpdf; developer</para></listitem>
 		</itemizedlist>
 
 		<itemizedlist>
 			<title>Documentation Copyright:</title>
-			<listitem><para>Albert Astals Cid <email>aacid@kde.org</email> Author</para></listitem>
+			<listitem><para>&Albert.Astals.Cid; &Albert.Astals.Cid.mail; Author</para></listitem>
 			<listitem><para>Titus Laska <email>titus.laska@gmx.de</email> Some updates and additions</para></listitem>
 			<listitem><para>Pino Toscano <email>pino@kde.org</email></para></listitem>
 		</itemizedlist>

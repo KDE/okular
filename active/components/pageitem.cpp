@@ -30,6 +30,7 @@
 #include <core/page.h>
 
 #include "ui/pagepainter.h"
+#include "ui/priorities.h"
 #include "settings.h"
 
 #define REDRAW_TIMEOUT 250
@@ -41,9 +42,8 @@ PageItem::PageItem(QDeclarativeItem *parent)
       m_smooth(false),
       m_intentionalDraw(false),
       m_bookmarked(false),
-      m_observerId(PAGEVIEW_ID)
+      m_isThumbnail(false)
 {
-    m_observerId = PAGEVIEW_ID;
     setFlag(QGraphicsItem::ItemHasNoContents, false);
 
     m_viewPort.rePos.enabled = true;
@@ -111,7 +111,7 @@ void PageItem::setDocument(DocumentItem *doc)
     m_page = 0;
     disconnect(doc, 0, this, 0);
     m_documentItem = doc;
-    Observer *observer = m_documentItem.data()->observerFor(m_observerId);
+    Observer *observer = m_isThumbnail ? m_documentItem.data()->thumbnailObserver() : m_documentItem.data()->pageviewObserver();
     connect(observer, SIGNAL(pageChanged(int, int)), this, SLOT(pageHasChanged(int, int)));
     connect(doc->document()->bookmarkManager(), SIGNAL(bookmarksChanged(KUrl)),
             this, SLOT(checkBookmarksChanged()));
@@ -304,19 +304,18 @@ void PageItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
         painter->setRenderHint(QPainter::Antialiasing, true);
     }
 
-    const int priority = m_observerId == PAGEVIEW_ID ? PAGEVIEW_PRELOAD_PRIO : THUMBNAILS_PRELOAD_PRIO;
+    Observer *observer = m_isThumbnail ? m_documentItem.data()->thumbnailObserver() : m_documentItem.data()->pageviewObserver();
+    const int priority = m_isThumbnail ? THUMBNAILS_PRIO : PAGEVIEW_PRIO;
 
     if (m_intentionalDraw) {
         QLinkedList<Okular::PixmapRequest *> requestedPixmaps;
-        requestedPixmaps.push_back(new Okular::PixmapRequest(m_observerId, m_viewPort.pageNumber, width(), height(), priority, true));
-        const Okular::Document::PixmapRequestFlag prf = (m_observerId == PAGEVIEW_ID) ?
-                                                        Okular::Document::RemoveAllPrevious :
-                                                        Okular::Document::NoOption;
+        requestedPixmaps.push_back(new Okular::PixmapRequest(observer, m_viewPort.pageNumber, width(), height(), priority, Okular::PixmapRequest::Asynchronous));
+        const Okular::Document::PixmapRequestFlag prf = m_isThumbnail ? Okular::Document::NoOption : Okular::Document::RemoveAllPrevious;
         m_documentItem.data()->document()->requestPixmaps(requestedPixmaps, prf);
         m_intentionalDraw = false;
     }
     const int flags = PagePainter::Accessibility | PagePainter::Highlights | PagePainter::Annotations;
-    PagePainter::paintPageOnPainter(painter, m_page, m_observerId, flags, width(), height(), option->exposedRect.toRect());
+    PagePainter::paintPageOnPainter(painter, m_page, observer, flags, width(), height(), option->exposedRect.toRect());
 
     if (setAA) {
         painter->restore();
@@ -383,11 +382,11 @@ void PageItem::contentYChanged()
 
 void PageItem::setIsThumbnail(bool thumbnail)
 {
-    if (thumbnail == (m_observerId == THUMBNAILS_ID)) {
+    if (thumbnail == m_isThumbnail) {
         return;
     }
 
-    m_observerId = thumbnail ? THUMBNAILS_ID : PAGEVIEW_ID;
+    m_isThumbnail = thumbnail;
 
     if (thumbnail) {
         m_smooth = false;

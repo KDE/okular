@@ -466,6 +466,8 @@ PagesEdit::PagesEdit( MiniBar * parent )
     // send a focus out event
     QFocusEvent fe( QEvent::FocusOut );
     QApplication::sendEvent( this, &fe );
+
+    connect( KGlobalSettings::self(), SIGNAL(appearanceChanged()), this, SLOT(updatePalette()) );
 }
 
 void PagesEdit::setText( const QString & newText )
@@ -502,6 +504,18 @@ void PagesEdit::setText( const QString & newText )
     }
 }
 
+void PagesEdit::updatePalette()
+{
+    QPalette pal;
+
+    if ( hasFocus() )
+        pal.setColor( QPalette::Active, QPalette::Base, QApplication::palette().color( QPalette::Active, QPalette::Base ) );
+    else
+        pal.setColor( QPalette::Base, QApplication::palette().color( QPalette::Base ).dark( 102 ) );
+
+    setPalette( pal );
+}
+
 void PagesEdit::focusInEvent( QFocusEvent * e )
 {
     // select all text
@@ -509,9 +523,7 @@ void PagesEdit::focusInEvent( QFocusEvent * e )
     if ( e->reason() == Qt::MouseFocusReason )
         m_eatClick = true;
     // change background color to the default 'edit' color
-    QPalette pal = palette();
-    pal.setColor( QPalette::Active, QPalette::Base, QApplication::palette().color( QPalette::Active, QPalette::Base ) );
-    setPalette( pal );
+    updatePalette();
     // call default handler
     KLineEdit::focusInEvent( e );
 }
@@ -519,9 +531,7 @@ void PagesEdit::focusInEvent( QFocusEvent * e )
 void PagesEdit::focusOutEvent( QFocusEvent * e )
 {
     // change background color to a dark tone
-    QPalette pal = palette();
-    pal.setColor( QPalette::Base, QApplication::palette().color( QPalette::Base ).dark( 102 ) );
-    setPalette( pal );
+    updatePalette();
     // call default handler
     KLineEdit::focusOutEvent( e );
 }

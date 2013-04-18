@@ -309,7 +309,7 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
   if (dvi.numberOfExternalNONPSFiles != 0) {
     KMessageBox::sorry(parent_widget,
                        i18n("<qt><P>This DVI file refers to external graphic files which are not in PostScript format, and cannot be handled by the "
-                            "<strong>dvips</strong> program that Okular uses interally to print or to export to PostScript. The functionality that "
+                            "<strong>dvips</strong> program that Okular uses internally to print or to export to PostScript. The functionality that "
                             "you require is therefore unavailable in this version of Okular.</p>"
                             "<p>As a workaround, you can use the <strong>File/Export As</strong>-Menu to save this file in PDF format, and then use "
                             "a PDF viewer.</p>"

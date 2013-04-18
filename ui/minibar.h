@@ -28,6 +28,8 @@ class QLabel;
 // [private widget] lineEdit for entering/validating page numbers
 class PagesEdit : public KLineEdit
 {
+    Q_OBJECT
+
     public:
         PagesEdit( MiniBar * parent );
         void setText( const QString & );
@@ -37,6 +39,9 @@ class PagesEdit : public KLineEdit
         void focusOutEvent( QFocusEvent * e );
         void mousePressEvent( QMouseEvent * e );
         void wheelEvent( QWheelEvent * e );
+
+    private slots:
+        void updatePalette();
 
     private:
         MiniBar * m_miniBar;
@@ -88,7 +93,6 @@ class MiniBarLogic : public QObject, public Okular::DocumentObserver
         int currentPage() const;
         
         // [INHERITED] from DocumentObserver
-        uint observerId() const { return MINIBAR_ID; }
         void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags );
         void notifyCurrentPageChanged( int previous, int current );
         
@@ -145,7 +149,6 @@ class ProgressWidget : public QWidget, public Okular::DocumentObserver
         ~ProgressWidget();
 
         // [INHERITED] from DocumentObserver
-        uint observerId() const { return PROGRESSWIDGET_ID; }
         void notifyCurrentPageChanged( int previous, int current );
 
         void slotGotoNormalizedPage( float index );

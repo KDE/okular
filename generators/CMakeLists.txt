@@ -72,3 +72,5 @@ if(EPUB_FOUND)
   add_subdirectory(epub)
 endif(EPUB_FOUND)
 
+add_subdirectory(txt)
+

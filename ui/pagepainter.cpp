@@ -26,6 +26,7 @@
 // local includes
 #include "core/area.h"
 #include "core/page.h"
+#include "core/page_p.h"
 #include "core/annotations.h"
 #include "core/utils.h"
 #include "guiutils.h"
@@ -33,6 +34,7 @@
 #include "core/observer.h"
 #include "core/tile.h"
 #include "settings_core.h"
+#include "core/document_p.h"
 
 K_GLOBAL_STATIC_WITH_ARGS( QPixmap, busyPixmap, ( KIconLoader::global()->loadIcon("okular", KIconLoader::NoGroup, 32, KIconLoader::DefaultState, QStringList(), 0, true) ) )
 
@@ -51,14 +53,14 @@ inline QPen buildPen( const Okular::Annotation *ann, double width, const QColor 
 }
 
 void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page * page,
-    int pixID, int flags, int scaledWidth, int scaledHeight, const QRect &limits )
+    Okular::DocumentObserver *observer, int flags, int scaledWidth, int scaledHeight, const QRect &limits )
 {
-        paintCroppedPageOnPainter( destPainter, page, pixID, flags, scaledWidth, scaledHeight, limits,
+        paintCroppedPageOnPainter( destPainter, page, observer, flags, scaledWidth, scaledHeight, limits,
                                    Okular::NormalizedRect( 0, 0, 1, 1 ), 0 );
 }
 
 void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okular::Page * page,
-    int pixID, int flags, int scaledWidth, int scaledHeight, const QRect &limits,
+    Okular::DocumentObserver *observer, int flags, int scaledWidth, int scaledHeight, const QRect &limits,
     const Okular::NormalizedRect &crop, Okular::NormalizedPoint *viewPortPoint )
 {
 	/* Calculate the cropped geometry of the page */
@@ -87,13 +89,13 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     }
     destPainter->fillRect( limits, backgroundColor );
 
-    const bool hasTilesManager = ( pixID == PAGEVIEW_ID && page->hasTilesManager() );
+    const bool hasTilesManager = ( page->d->m_doc->m_tiledObserver == observer && page->hasTilesManager() );
     const QPixmap *pixmap = 0;
 
     if ( !hasTilesManager )
     {
         /** 1 - RETRIEVE THE 'PAGE+ID' PIXMAP OR A SIMILAR 'PAGE' ONE **/
-        pixmap = page->_o_nearestPixmap( pixID, scaledWidth, scaledHeight );
+        pixmap = page->_o_nearestPixmap( observer, scaledWidth, scaledHeight );
 
         /** 1B - IF NO PIXMAP, DRAW EMPTY PAGE **/
         double pixmapRescaleRatio = pixmap ? scaledWidth / (double)pixmap->width() : -1;

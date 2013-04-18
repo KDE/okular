@@ -19,6 +19,7 @@
 class QPainter;
 class QRect;
 namespace Okular {
+    class DocumentObserver;
     class Page;
 }
 
@@ -34,20 +35,20 @@ class PagePainter
                                 EnhanceImages = 4, Highlights = 8,
                                 TextSelection = 16, Annotations = 32 };
 
-        // draw (using painter 'p') the 'page' requested by 'id' using features
+        // draw (using painter 'p') the 'page' requested by 'observer' using features
         // in 'flags'. 'limits' is the bounding rect of the paint operation,
         // 'scaledWidth' and 'scaledHeight' the expected size of page contents
-        static void paintPageOnPainter( QPainter * p, const Okular::Page * page, int pixID,
+        static void paintPageOnPainter( QPainter * p, const Okular::Page * page, Okular::DocumentObserver *observer,
             int flags, int scaledWidth, int scaledHeight, const QRect & pageLimits );
 
-        // draw (using painter 'p') the 'page' requested by 'id' using features
+        // draw (using painter 'p') the 'page' requested by 'observer' using features
         // in 'flags'.
         // 'pageLimits' is the bounding rect of the paint operation relative to the
         // top left of the (cropped) page.
         // 'scaledWidth' and 'scaledHeight' the size of the page pixmap (before cropping).
         // 'crop' is the (normalized) cropped rectangle within the page.
         // The painter's (0,0) is assumed to be top left of the painted ('pageLimits') rect.
-        static void paintCroppedPageOnPainter( QPainter * p, const Okular::Page * page, int pixID,
+        static void paintCroppedPageOnPainter( QPainter * p, const Okular::Page * page, Okular::DocumentObserver *observer,
             int flags, int scaledWidth, int scaledHeight, const QRect & pageLimits,
             const Okular::NormalizedRect & crop, Okular::NormalizedPoint *viewPortPoint );
 

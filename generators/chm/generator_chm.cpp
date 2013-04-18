@@ -25,7 +25,6 @@
 #include <dom/dom_html.h>
 
 #include <core/action.h>
-#include <core/observer.h> //for PAGEVIEW_ID
 #include <core/page.h>
 #include <core/textpage.h>
 #include <core/utils.h>
@@ -140,6 +139,7 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
 
     pagesVector.resize(m_pageUrl.count());
     m_textpageAddedList.fill(false, pagesVector.count());
+    m_rectsGenerated.fill(false, pagesVector.count());
 
     if (!m_syncGen)
     {
@@ -168,6 +168,7 @@ bool CHMGenerator::doCloseDocument()
     delete m_file;
     m_file=0;
     m_textpageAddedList.clear();
+    m_rectsGenerated.clear();
     m_urlPage.clear();
     m_pageUrl.clear();
     m_docSyn.clear();
@@ -229,7 +230,7 @@ void CHMGenerator::slotCompleted()
 
     if ( !req->page()->isBoundingBoxKnown() )
         updatePageBoundingBox( req->page()->number(), Okular::Utils::imageBoundingBox( &image ) );
-    req->page()->setPixmap( req->id(), new QPixmap( QPixmap::fromImage( image ) ) );
+    req->page()->setPixmap( req->observer(), new QPixmap( QPixmap::fromImage( image ) ) );
     signalPixmapRequestDone( req );
 }
 
@@ -347,8 +348,8 @@ void CHMGenerator::recursiveExploreNodes(DOM::Node node,Okular::TextPage *tp)
 void CHMGenerator::additionalRequestData() 
 {
     Okular::Page * page=m_request->page();
-    bool genObjectRects = m_request->id() & (PAGEVIEW_ID | PRESENTATION_ID);
-    bool genTextPage = !m_request->page()->hasTextPage() && genObjectRects;
+    const bool genObjectRects = !m_rectsGenerated.at( m_request->page()->number() );
+    const bool genTextPage = !m_request->page()->hasTextPage() && genObjectRects;
 
     if (genObjectRects || genTextPage )
     {
@@ -416,6 +417,7 @@ void CHMGenerator::additionalRequestData()
                 }
             }
             m_request->page()->setObjectRects( objRects );
+            m_rectsGenerated[ m_request->page()->number() ] = true;
         }
 
         if ( genTextPage )

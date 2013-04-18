@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2004 by Enrico Ros <eros.kde@email.it>                  *
- *   Copyright (C) 2004 by Albert Astals Cid <tsdgeos@terra.es>            *
+ *   Copyright (C) 2004 by Albert Astals Cid <aacid@kde.org>               *
  *                                                                         *
  *   With portions of code from kpdf/kpdf_pagewidget.h by:                 *
  *     Copyright (C) 2002 by Wilco Greven <greven@kde.org>                 *
@@ -76,7 +76,6 @@ Q_OBJECT
         void displayMessage( const QString & message, const QString & details = QString(), PageViewMessage::Icon icon=PageViewMessage::Info, int duration=-1 );
 
         // inherited from DocumentObserver
-        uint observerId() const { return PAGEVIEW_ID; }
         void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags );
         void notifyViewportChanged( bool smoothMove );
         void notifyPageChanged( int pageNumber, int changedFlags );
@@ -86,7 +85,6 @@ Q_OBJECT
         void notifyCurrentPageChanged( int previous, int current );
 
         // inherited from View
-        uint viewId() const { return observerId(); }
         bool supportsCapability( ViewCapability capability ) const;
         CapabilityFlags capabilityFlags( ViewCapability capability ) const;
         QVariant capability( ViewCapability capability ) const;

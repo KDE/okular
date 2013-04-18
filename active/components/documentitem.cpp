@@ -21,6 +21,7 @@
 
 #include <QtDeclarative/qdeclarative.h>
 
+#include <core/document_p.h>
 #include <core/page.h>
 #include <core/bookmarkmanager.h>
 
@@ -28,6 +29,8 @@
 
 DocumentItem::DocumentItem(QObject *parent)
     : QObject(parent),
+      m_thumbnailObserver(0),
+      m_pageviewObserver(0),
       m_searchInProgress(false)
 {
     qmlRegisterUncreatableType<TOCModel>("org.kde.okular", 1, 0, "TOCModel", QLatin1String("Do not create objects of this type."));
@@ -192,13 +195,22 @@ Okular::Document *DocumentItem::document()
     return m_document;
 }
 
-Observer *DocumentItem::observerFor(int id)
+Observer *DocumentItem::thumbnailObserver()
 {
-    if (!m_observers.contains(id)) {
-        m_observers[id] = new Observer(this, id);
+    if (!m_thumbnailObserver)
+        m_thumbnailObserver = new Observer(this);
+
+    return m_thumbnailObserver;
+}
+
+Observer *DocumentItem::pageviewObserver()
+{
+    if (!m_pageviewObserver) {
+        m_pageviewObserver = new Observer(this);
+        m_document->d->m_tiledObserver = m_pageviewObserver;
     }
 
-    return m_observers.value(id);
+    return m_pageviewObserver;
 }
 
 void DocumentItem::searchFinished(int id, Okular::Document::SearchStatus endStatus)
@@ -226,9 +238,8 @@ void DocumentItem::searchFinished(int id, Okular::Document::SearchStatus endStat
 
 //Observer
 
-Observer::Observer(DocumentItem *parent, int id)
+Observer::Observer(DocumentItem *parent)
     : QObject(parent),
-      m_observerId(id),
       m_document(parent)
 {
     parent->document()->addObserver(this);

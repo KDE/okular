@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2004 by Albert Astals Cid <tsdgeos@terra.es>            *
+ *   Copyright (C) 2004 by Albert Astals Cid <aacid@kde.org>               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -36,8 +36,6 @@ Q_OBJECT
         ThumbnailList(QWidget *parent, Okular::Document *document);
         ~ThumbnailList();
 
-        // inherited: return thumbnails observer id
-        uint observerId() const { return THUMBNAILS_ID; }
         // inherited: create thumbnails ( inherited as a DocumentObserver )
         void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags );
         // inherited: hilihght current thumbnail ( inherited as DocumentObserver )

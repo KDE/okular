@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2004-2005 by Enrico Ros <eros.kde@email.it>             *
- *   Copyright (C) 2004-2006 by Albert Astals Cid <tsdgeos@terra.es>       *
+ *   Copyright (C) 2004-2006 by Albert Astals Cid <aacid@kde.org>          *
  *                                                                         *
  *   With portions of code from kpdf/kpdf_pagewidget.cc by:                *
  *     Copyright (C) 2002 by Wilco Greven <greven@kde.org>                 *
@@ -50,6 +50,7 @@
 #include <kurifilter.h>
 #include <kstringhandler.h>
 #include <ktoolinvocation.h>
+#include <krun.h>
 
 // system includes
 #include <math.h>
@@ -64,12 +65,13 @@
 #include "guiutils.h"
 #include "annotationpopup.h"
 #include "pageviewannotator.h"
+#include "priorities.h"
 #include "toolaction.h"
 #include "tts.h"
 #include "videowidget.h"
 #include "core/action.h"
 #include "core/area.h"
-#include "core/document.h"
+#include "core/document_p.h"
 #include "core/form.h"
 #include "core/page.h"
 #include "core/misc.h"
@@ -79,6 +81,7 @@
 #include "core/tile.h"
 #include "settings.h"
 #include "settings_core.h"
+#include "url_utils.h"
 
 static int pageflags = PagePainter::Accessibility | PagePainter::EnhanceLinks |
                        PagePainter::EnhanceImages | PagePainter::Highlights |
@@ -389,7 +392,7 @@ PageView::~PageView()
         d->m_tts->stopAllSpeechs();
 
     // delete the local storage structure
-    
+
     // We need to assign it to a different list otherwise slotAnnotationWindowDestroyed
     // will bite us and clear d->m_annowindows
     QHash< Okular::Annotation *, AnnotWindow * > annowindows = d->m_annowindows;
@@ -615,6 +618,14 @@ void PageView::setupActions( KActionCollection * ac )
     connect( d->aToggleForms, SIGNAL(triggered()), this, SLOT(slotToggleForms()) );
     d->aToggleForms->setEnabled( false );
     toggleFormWidgets( false );
+
+    // Setup undo and redo actions
+    KAction *kundo = KStandardAction::create( KStandardAction::Undo, d->document, SLOT(undo()), ac );
+    KAction *kredo = KStandardAction::create( KStandardAction::Redo, d->document, SLOT(redo()), ac );
+    connect(d->document, SIGNAL(canUndoChanged(bool)), kundo, SLOT(setEnabled(bool)));
+    connect(d->document, SIGNAL(canRedoChanged(bool)), kredo, SLOT(setEnabled(bool)));
+    kundo->setEnabled(false);
+    kredo->setEnabled(false);
 }
 
 bool PageView::canFitPageWidth() const
@@ -735,6 +746,12 @@ void PageView::reparseConfig()
         if ( d->aToggleAnnotator->isChecked() )
             slotToggleAnnotator( true );
     }
+
+    // Something like invert colors may have changed
+    // As we don't have a way to find out the old value
+    // We just update the viewport, this shouldn't be that bad
+    // since it's just a repaint of pixmaps we already have
+    viewport()->update();
 }
 
 KAction *PageView::toggleFormsAction() const
@@ -1062,7 +1079,7 @@ void PageView::notifyViewportChanged( bool smoothMove )
 {
     QMetaObject::invokeMethod(this, "slotRealNotifyViewportChanged", Qt::QueuedConnection, Q_ARG( bool, smoothMove ));
 }
-    
+
 void PageView::slotRealNotifyViewportChanged( bool smoothMove )
 {
     // if we are the one changing viewport, skip this nofity
@@ -1186,7 +1203,7 @@ void PageView::notifyPageChanged( int pageNumber, int changedFlags )
                 // Need to delete after removing from the list
                 // otherwise deleting will call slotAnnotationWindowDestroyed wich will mess
                 // the list and the iterators
-                delete w; 
+                delete w;
             }
         }
     }
@@ -1867,9 +1884,9 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
                             pf.rx() /= pageItem->uncroppedHeight();
                             pf.ry() /= pageItem->uncroppedWidth();
                         }
-                        d->mouseAnn->translate( Okular::NormalizedPoint( pf.x(), pf.y() ) );
+
+                        d->document->translatePageAnnotation(d->mouseAnnPageNum, d->mouseAnn, Okular::NormalizedPoint( pf.x(), pf.y() ) );
                         d->mouseAnnPos = newpos;
-                        d->document->modifyPageAnnotation( d->mouseAnnPageNum, d->mouseAnn );
                     }
                 }
                 // drag page
@@ -2036,7 +2053,6 @@ void PageView::mousePressEvent( QMouseEvent * e )
                 {
                     d->mouseAnn->setFlags( d->mouseAnn->flags() | Okular::Annotation::BeingMoved );
                     d->mouseAnnPageNum = pageItem->pageNumber();
-                    d->document->modifyPageAnnotation( d->mouseAnnPageNum, d->mouseAnn );
                 }
                 else
                 {
@@ -2226,7 +2242,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
     {
         // Just finished to move the annotation
         d->mouseAnn->setFlags( d->mouseAnn->flags() & ~Okular::Annotation::BeingMoved );
-        d->document->modifyPageAnnotation( d->mouseAnnPageNum, d->mouseAnn );
+        d->document->translatePageAnnotation(d->mouseAnnPageNum, d->mouseAnn, Okular::NormalizedPoint( 0.0, 0.0 ) );
         setCursor( Qt::ArrowCursor );
         d->mouseAnn = 0;
     }
@@ -2321,7 +2337,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                     {
                         // if not on a rect, the click selects the page
                         // if ( pageItem->pageNumber() != (int)d->document->currentPage() )
-                        d->document->setViewportPage( pageItem->pageNumber(), PAGEVIEW_ID );
+                        d->document->setViewportPage( pageItem->pageNumber(), this );
                     }*/
 #endif
                 }
@@ -2743,6 +2759,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                         KMenu menu( this );
                         QAction *textToClipboard = menu.addAction( KIcon( "edit-copy" ), i18n( "Copy Text" ) );
                         QAction *speakText = 0;
+                        QAction *httpLink = 0;
                         if ( Okular::Settings::useKTTSD() )
                             speakText = menu.addAction( KIcon( "text-speak" ), i18n( "Speak Text" ) );
                         if ( !d->document->isAllowed( Okular::AllowCopy ) )
@@ -2753,6 +2770,12 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                         else
                         {
                             addWebShortcutsMenu( &menu, d->selectedText() );
+                        }
+                        const QString url = UrlUtils::getUrl( d->selectedText() );
+                        if ( !url.isEmpty() )
+                        {
+                            const QString squeezedText = KStringHandler::rsqueeze( url, 30 );
+                            httpLink = menu.addAction( i18n( "Go to '%1'", squeezedText ) );
                         }
                         QAction *choice = menu.exec( e->globalPos() );
                         // check if the user really selected an action
@@ -2765,6 +2788,8 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                                 const QString text = d->selectedText();
                                 d->tts()->say( text );
                             }
+                            else if ( choice == httpLink )
+                                new KRun( KUrl( url ), this );
                         }
                     }
                 }
@@ -2897,7 +2922,7 @@ void PageView::mouseDoubleClickEvent( QMouseEvent * e )
 
             if ( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::TextSelect ) {
                 textSelectionClear();
-                
+
                 Okular::RegularAreaRect *wordRect = pageItem->page()->wordAt( Okular::NormalizedPoint( nX, nY ) );
                 if ( wordRect )
                 {
@@ -2917,7 +2942,7 @@ void PageView::mouseDoubleClickEvent( QMouseEvent * e )
                     return;
                 }
             }
-            
+
             const QRect & itemRect = pageItem->uncroppedGeometry();
             Okular::Annotation * ann = 0;
             const Okular::ObjectRect * orect = pageItem->page()->objectRect( Okular::ObjectRect::OAnnotation, nX, nY, itemRect.width(), itemRect.height() );
@@ -3216,7 +3241,7 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
             }
             QRect pixmapRect = contentsRect.intersect( itemGeometry );
             pixmapRect.translate( -item->croppedGeometry().topLeft() );
-            PagePainter::paintCroppedPageOnPainter( p, item->page(), PAGEVIEW_ID, pageflags,
+            PagePainter::paintCroppedPageOnPainter( p, item->page(), this, pageflags,
                 item->uncroppedWidth(), item->uncroppedHeight(), pixmapRect,
                 item->crop(), viewPortPoint );
         }
@@ -4020,7 +4045,7 @@ void PageView::delayedResizeEvent()
     slotRequestVisiblePixmaps();
 }
 
-static void slotRequestPreloadPixmap( const PageViewItem * i, const QRect &expandedViewportRect, QLinkedList< Okular::PixmapRequest * > *requestedPixmaps )
+static void slotRequestPreloadPixmap( Okular::DocumentObserver * observer, const PageViewItem * i, const QRect &expandedViewportRect, QLinkedList< Okular::PixmapRequest * > *requestedPixmaps )
 {
     Okular::NormalizedRect preRenderRegion;
     const QRect intersectionRect = expandedViewportRect.intersect( i->croppedGeometry() );
@@ -4028,12 +4053,14 @@ static void slotRequestPreloadPixmap( const PageViewItem * i, const QRect &expan
         preRenderRegion = Okular::NormalizedRect( intersectionRect.translated( -i->uncroppedGeometry().topLeft() ), i->uncroppedWidth(), i->uncroppedHeight() );
 
     // request the pixmap if not already present
-    if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->uncroppedWidth(), i->uncroppedHeight(), preRenderRegion ) && i->uncroppedWidth() > 0 )
+    if ( !i->page()->hasPixmap( observer, i->uncroppedWidth(), i->uncroppedHeight(), preRenderRegion ) && i->uncroppedWidth() > 0 )
     {
+        Okular::PixmapRequest::PixmapRequestFeatures requestFeatures = Okular::PixmapRequest::Preload;
+        requestFeatures |= Okular::PixmapRequest::Asynchronous;
         const bool pageHasTilesManager = i->page()->hasTilesManager();
         if ( pageHasTilesManager && !preRenderRegion.isNull() )
         {
-            Okular::PixmapRequest * p = new Okular::PixmapRequest( PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, true );
+            Okular::PixmapRequest * p = new Okular::PixmapRequest( observer, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, requestFeatures );
             requestedPixmaps->push_back( p );
 
             p->setNormalizedRect( preRenderRegion );
@@ -4041,7 +4068,7 @@ static void slotRequestPreloadPixmap( const PageViewItem * i, const QRect &expan
         }
         else if ( !pageHasTilesManager )
         {
-            Okular::PixmapRequest * p = new Okular::PixmapRequest( PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, true );
+            Okular::PixmapRequest * p = new Okular::PixmapRequest( observer, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, requestFeatures );
             requestedPixmaps->push_back( p );
             p->setNormalizedRect( preRenderRegion );
         }
@@ -4093,7 +4120,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
             vw->move(
                 qRound( i->uncroppedGeometry().left() + i->uncroppedWidth() * r.left ) + 1 - viewportRect.left(),
                 qRound( i->uncroppedGeometry().top() + i->uncroppedHeight() * r.top ) + 1 - viewportRect.top() );
-            
+
             if ( vw->isPlaying() && viewportRectAtZeroZero.intersect( vw->geometry() ).isEmpty() ) {
                 vw->stop();
                 vw->pageLeft();
@@ -4118,7 +4145,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
         Okular::VisiblePageRect * vItem = new Okular::VisiblePageRect( i->pageNumber(), Okular::NormalizedRect( intersectionRect.translated( -i->uncroppedGeometry().topLeft() ), i->uncroppedWidth(), i->uncroppedHeight() ) );
         visibleRects.push_back( vItem );
 #ifdef PAGEVIEW_DEBUG
-        kWarning() << "checking for pixmap for page" << i->pageNumber() << "=" << i->page()->hasPixmap( PAGEVIEW_ID, i->uncroppedWidth(), i->uncroppedHeight() );
+        kWarning() << "checking for pixmap for page" << i->pageNumber() << "=" << i->page()->hasPixmap( Document::OBS_PAGEVIEW, i->uncroppedWidth(), i->uncroppedHeight() );
         kWarning() << "checking for text for page" << i->pageNumber() << "=" << i->page()->hasTextPage();
 #endif
 
@@ -4133,13 +4160,12 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
         }
 
         // if the item has not the right pixmap, add a request for it
-        if ( !i->page()->hasPixmap( PAGEVIEW_ID, i->uncroppedWidth(), i->uncroppedHeight(), expandedVisibleRect ) )
+        if ( !i->page()->hasPixmap( this, i->uncroppedWidth(), i->uncroppedHeight(), expandedVisibleRect ) )
         {
 #ifdef PAGEVIEW_DEBUG
             kWarning() << "rerequesting visible pixmaps for page" << i->pageNumber() << "!";
 #endif
-            Okular::PixmapRequest * p = new Okular::PixmapRequest(
-                    PAGEVIEW_ID, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRIO, true );
+            Okular::PixmapRequest * p = new Okular::PixmapRequest( this, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRIO, Okular::PixmapRequest::Asynchronous );
             requestedPixmaps.push_back( p );
 
             if ( i->page()->hasTilesManager() )
@@ -4192,14 +4218,14 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
             const int tailRequest = d->visibleItems.last()->pageNumber() + j;
             if ( tailRequest < (int)d->items.count() )
             {
-                slotRequestPreloadPixmap( d->items[ tailRequest ], expandedViewportRect, &requestedPixmaps );
+                slotRequestPreloadPixmap( this, d->items[ tailRequest ], expandedViewportRect, &requestedPixmaps );
             }
 
             // add the page before the 'visible series' in preload
             const int headRequest = d->visibleItems.first()->pageNumber() - j;
             if ( headRequest >= 0 )
             {
-                slotRequestPreloadPixmap( d->items[ headRequest ], expandedViewportRect, &requestedPixmaps );
+                slotRequestPreloadPixmap( this, d->items[ headRequest ], expandedViewportRect, &requestedPixmaps );
             }
 
             // stop if we've already reached both ends of the document
@@ -4222,9 +4248,9 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
         newViewport.rePos.normalizedX = focusedX;
         newViewport.rePos.normalizedY = focusedY;
         // set the viewport to other observers
-        d->document->setViewport( newViewport , PAGEVIEW_ID);
+        d->document->setViewport( newViewport , this );
     }
-    d->document->setVisiblePageRects( visibleRects, PAGEVIEW_ID );
+    d->document->setVisiblePageRects( visibleRects, this );
 }
 
 void PageView::slotMoveViewport()

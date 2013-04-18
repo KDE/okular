@@ -57,7 +57,6 @@ public:
     AnnotationModelPrivate( AnnotationModel *qq );
     virtual ~AnnotationModelPrivate();
 
-    virtual uint observerId() const;
     virtual void notifySetup( const QVector< Okular::Page * > &pages, int setupFlags );
     virtual void notifyPageChanged( int page, int flags );
 
@@ -104,11 +103,6 @@ AnnotationModelPrivate::AnnotationModelPrivate( AnnotationModel *qq )
 AnnotationModelPrivate::~AnnotationModelPrivate()
 {
     delete root;
-}
-
-uint AnnotationModelPrivate::observerId() const
-{
-    return ANNOTATIONMODEL_ID;
 }
 
 void AnnotationModelPrivate::notifySetup( const QVector< Okular::Page * > &pages, int setupFlags )

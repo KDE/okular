@@ -966,7 +966,7 @@ void PageViewAnnotator::slotToolSelected( int toolID )
             else if ( toolSubElement.tagName() == "tooltip" )
             {
                 const QString tip = toolSubElement.text();
-                if ( !tip.isEmpty() )
+                if ( !tip.isEmpty() && !m_continuousMode )
                     m_pageView->displayMessage( tip, QString(), PageViewMessage::Annotation );
             }
         }

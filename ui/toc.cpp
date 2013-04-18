@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2004-2006 by Albert Astals Cid <tsdgeos@terra.es>       *
+ *   Copyright (C) 2004-2006 by Albert Astals Cid <aacid@kde.org>          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -57,11 +57,6 @@ TOC::~TOC()
     m_document->removeObserver( this );
 }
 
-uint TOC::observerId() const
-{
-    return TOC_ID;
-}
-
 void TOC::notifySetup( const QVector< Okular::Page * > & /*pages*/, int setupFlags )
 {
     if ( !( setupFlags & Okular::DocumentObserver::DocumentChanged ) )
@@ -72,15 +67,17 @@ void TOC::notifySetup( const QVector< Okular::Page * > & /*pages*/, int setupFla
 
     // request synopsis description (is a dom tree)
     const Okular::DocumentSynopsis * syn = m_document->documentSynopsis();
-
-    // if not present, disable the contents tab
     if ( !syn )
     {
+        if ( m_document->isOpened() )
+        {
+            // Make sure we clear the reload old model data
+            m_model->setOldModelData( 0, QVector<QModelIndex>() );
+        }
         emit hasTOC( false );
         return;
     }
 
-    // else populate the listview and enable the tab
     m_model->fill( syn );
     emit hasTOC( !m_model->isEmpty() );
 }
@@ -90,6 +87,46 @@ void TOC::notifyCurrentPageChanged( int, int )
     m_model->setCurrentViewport( m_document->viewport() );
 }
 
+void TOC::prepareForReload()
+{
+    if( m_model->isEmpty() )
+        return;
+
+    const QVector<QModelIndex> list = expandedNodes();
+    TOCModel *m = m_model;
+    m_model = new TOCModel( m_document, m_treeView );
+    m_model->setOldModelData( m, list );
+}
+
+void TOC::rollbackReload()
+{
+    TOCModel *m = m_model;
+    m_model = m->clearOldModelData();
+    delete m;
+}
+
+void TOC::finishReload()
+{
+    m_treeView->setModel( m_model );
+}
+
+QVector<QModelIndex> TOC::expandedNodes( const QModelIndex &parent ) const
+{
+    QVector<QModelIndex> list;
+    for ( int i = 0; i < m_model->rowCount( parent ); i++ )
+    {
+        const QModelIndex index = m_model->index( i, 0, parent );
+        if ( m_treeView->isExpanded( index ) )
+        {
+            list << index;
+        }
+        if ( m_model->hasChildren( index ) )
+        {
+            list << expandedNodes( index );
+        }
+    }
+    return list;
+}
 
 void TOC::reparseConfig()
 {

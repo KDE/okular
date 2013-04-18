@@ -9,3 +9,6 @@
 
 /* Defined if we have the 0.22 version of the Poppler library */
 #cmakedefine HAVE_POPPLER_0_22 1
+
+/* Defined if we have the 0.24 version of the Poppler library */
+#cmakedefine HAVE_POPPLER_0_24 1

@@ -11,6 +11,7 @@
 #define TOCMODEL_H
 
 #include <qabstractitemmodel.h>
+#include <QVector>
 
 namespace Okular {
 class Document;
@@ -42,6 +43,9 @@ class TOCModel : public QAbstractItemModel
         void setCurrentViewport( const Okular::DocumentViewport &viewport );
 
         bool isEmpty() const;
+        bool equals( const TOCModel *model ) const;
+        void setOldModelData( TOCModel *model, const QVector<QModelIndex> &list );
+        TOCModel *clearOldModelData() const;
 
         QString externalFileNameForIndex( const QModelIndex &index ) const;
         Okular::DocumentViewport viewportForIndex( const QModelIndex &index ) const;
@@ -51,6 +55,7 @@ class TOCModel : public QAbstractItemModel
         // storage
         friend class TOCModelPrivate;
         TOCModelPrivate *const d;
+        bool checkequality( const TOCModel *model, const QModelIndex &parentA = QModelIndex(), const QModelIndex &parentB = QModelIndex() ) const;
 };
 
 #endif

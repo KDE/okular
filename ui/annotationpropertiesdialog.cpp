@@ -56,7 +56,7 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     appearanceWidget->setEnabled( canEditAnnotations );
     addPage( appearanceWidget, i18n( "&Appearance" ) );
     //END tab1
-    
+
     //BEGIN tab 2
     QFrame* page = new QFrame( this );
     addPage( page, i18n( "&General" ) );
@@ -68,12 +68,12 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     tmplabel->setBuddy( AuthorEdit );
     gridlayout->addWidget( tmplabel, 0, 0, Qt::AlignRight );
     gridlayout->addWidget( AuthorEdit, 0, 1 );
-    
+
     tmplabel = new QLabel( page );
     tmplabel->setText( i18n( "Created: %1", KGlobal::locale()->formatDateTime( ann->creationDate(), KLocale::LongDate, true ) ) );
     tmplabel->setTextInteractionFlags( Qt::TextSelectableByMouse );
     gridlayout->addWidget( tmplabel, 1, 0, 1, 2 );
-    
+
     m_modifyDateLabel = new QLabel( page );
     m_modifyDateLabel->setText( i18n( "Modified: %1", KGlobal::locale()->formatDateTime( ann->modificationDate(), KLocale::LongDate, true ) ) );
     m_modifyDateLabel->setTextInteractionFlags( Qt::TextSelectableByMouse );
@@ -164,12 +164,13 @@ void AnnotsPropertiesDialog::slotapply()
     if ( !modified )
         return;
 
+    m_document->prepareToModifyAnnotationProperties( m_annot );
     m_annot->setAuthor( AuthorEdit->text() );
     m_annot->setModificationDate( QDateTime::currentDateTime() );
 
     m_annotWidget->applyChanges();
 
-    m_document->modifyPageAnnotation( m_page, m_annot );
+    m_document->modifyPageAnnotationProperties( m_page, m_annot );
 
     m_modifyDateLabel->setText( i18n( "Modified: %1", KGlobal::locale()->formatDateTime( m_annot->modificationDate(), KLocale::LongDate, true ) ) );
 
@@ -178,4 +179,4 @@ void AnnotsPropertiesDialog::slotapply()
 }
 
 #include "annotationpropertiesdialog.moc"
-    
+

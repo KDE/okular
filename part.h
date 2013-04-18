@@ -27,6 +27,8 @@
 #include "kdocumentviewer.h"
 #include "interfaces/viewerinterface.h"
 
+#include "okular_part_export.h"
+
 #include <QtDBus/QtDBus>
 
 class QAction;
@@ -90,12 +92,14 @@ enum EmbedMode
  * @author Wilco Greven <greven@kde.org>
  * @version 0.2
  */
-class Part : public KParts::ReadWritePart, public Okular::DocumentObserver, public KDocumentViewer, public Okular::ViewerInterface
+class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::DocumentObserver, public KDocumentViewer, public Okular::ViewerInterface
 {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.kde.okular")
     Q_INTERFACES(KDocumentViewer)
     Q_INTERFACES(Okular::ViewerInterface)
+    
+    friend class PartTest;
 
     public:
         // Default constructor
@@ -111,7 +115,6 @@ class Part : public KParts::ReadWritePart, public Okular::DocumentObserver, publ
         ~Part();
 
         // inherited from DocumentObserver
-        uint observerId() const { return PART_ID; }
         void notifySetup( const QVector< Okular::Page * > &pages, int setupFlags );
         void notifyViewportChanged( bool smoothMove );
         void notifyPageChanged( int page, int flags );
@@ -145,6 +148,7 @@ class Part : public KParts::ReadWritePart, public Okular::DocumentObserver, publ
         Q_SCRIPTABLE void slotGotoLast();
         Q_SCRIPTABLE void slotTogglePresentation();
         Q_SCRIPTABLE Q_NOREPLY void reload();
+        Q_SCRIPTABLE Q_NOREPLY void enableStartWithPrint();
 
     signals:
         void enablePrintAction(bool enable);
@@ -231,6 +235,7 @@ class Part : public KParts::ReadWritePart, public Okular::DocumentObserver, publ
         void updateAboutBackendAction();
         void unsetDummyMode();
         void slotRenameBookmark( const DocumentViewport &viewport );
+        void resetStartArguments();
         
         static int numberOfParts;
 
@@ -316,6 +321,7 @@ class Part : public KParts::ReadWritePart, public Okular::DocumentObserver, publ
         QList<Okular::ExportFormat> m_exportFormats;
         QList<QAction*> m_bookmarkActions;
         bool m_cliPresentation;
+        bool m_cliPrint;
         QString m_addBookmarkText;
         QIcon m_addBookmarkIcon;
 

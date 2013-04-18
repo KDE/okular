@@ -31,11 +31,15 @@ static bool attachUniqueInstance(KCmdLineArgs* args)
     if (!iface.isValid() || !iface2.isValid())
         return false;
 
+    if (args->isSet("print"))
+	iface.call("enableStartWithPrint");
     if (args->isSet("page"))
         iface.call("openDocument", ShellUtils::urlFromArg(args->arg(0), ShellUtils::qfileExistFunc(), args->getOption("page")).url());
     else
         iface.call("openDocument", ShellUtils::urlFromArg(args->arg(0), ShellUtils::qfileExistFunc()).url());
-    iface2.call("tryRaise");
+    if (args->isSet("raise")){
+	iface2.call("tryRaise");
+    }
 
     return true;
 }
@@ -50,7 +54,9 @@ int main(int argc, char** argv)
     options.add("p");
     options.add("page <number>", ki18n("Page of the document to be shown"));
     options.add("presentation", ki18n("Start the document in presentation mode"));
+    options.add("print", ki18n("Start with print dialog"));
     options.add("unique", ki18n("\"Unique instance\" control"));
+    options.add("noraise", ki18n("Not raise window"));
     options.add("+[URL]", ki18n("Document to open. Specify '-' to read from stdin."));
     KCmdLineArgs::addCmdLineOptions( options );
     KApplication app;

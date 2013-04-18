@@ -61,7 +61,7 @@
         <item>
          <widget class="QCheckBox" name="kcfg_DisplayDocumentTitle">
           <property name="text">
-           <string>Display document title in title bar if available</string>
+           <string>Display document title in titlebar if available</string>
           </property>
          </widget>
         </item>

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>316</width>
-    <height>289</height>
+    <height>344</height>
    </rect>
   </property>
   <layout class="QVBoxLayout">
@@ -204,6 +204,36 @@
         </property>
         <property name="wordWrap">
          <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>Rendering</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QCheckBox" name="kcfg_TextAntialias">
+        <property name="text">
+         <string>Enable Text Antialias</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="kcfg_GraphicsAntialias">
+        <property name="text">
+         <string>Enable Graphics Antialias</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="kcfg_TextHinting">
+        <property name="text">
+         <string>Enable Text Hinting</string>
         </property>
        </widget>
       </item>

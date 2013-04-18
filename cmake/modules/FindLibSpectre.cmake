@@ -15,7 +15,7 @@
 if(LIBSPECTRE_INCLUDE_DIR AND LIBSPECTRE_LIBRARY)
 
   # in cache already
-  set(LIBSPECTRE_FOUND TRUE)
+  set(LIBSPECTRE_INTERNAL_FOUND TRUE)
 
 else(LIBSPECTRE_INCLUDE_DIR AND LIBSPECTRE_LIBRARY)
 
@@ -33,7 +33,7 @@ if(NOT WIN32)
      # query pkg-config asking for a libspectre >= LIBSPECTRE_MINIMUM_VERSION
      EXEC_PROGRAM(${PKGCONFIG_EXECUTABLE} ARGS --atleast-version=${LIBSPECTRE_MINIMUM_VERSION} libspectre RETURN_VALUE _return_VALUE OUTPUT_VARIABLE _pkgconfigDevNull )
      if(_return_VALUE STREQUAL "0")
-        set(LIBSPECTRE_FOUND TRUE)
+        set(LIBSPECTRE_INTERNAL_FOUND TRUE)
      endif(_return_VALUE STREQUAL "0")
    endif(_SpectreLinkFlags)
 else(NOT WIN32)
@@ -42,10 +42,10 @@ else(NOT WIN32)
     
     find_path(LIBSPECTRE_INCLUDE_DIR spectre.h PATH_SUFFIXES libspectre )
     
-    set(LIBSPECTRE_FOUND TRUE)
+    set(LIBSPECTRE_INTERNAL_FOUND TRUE)
 endif(NOT WIN32)
 
-if (LIBSPECTRE_FOUND)
+if (LIBSPECTRE_INTERNAL_FOUND)
   set(LIBSPECTRE_LIBRARY ${_SpectreLinkFlags})
 
   # the cflags for libspectre can contain more than one include path
@@ -55,10 +55,10 @@ if (LIBSPECTRE_FOUND)
     set(LIBSPECTRE_INCLUDE_DIR ${LIBSPECTRE_INCLUDE_DIR} ${_includedir})
   endforeach(_includedir)
 
-endif (LIBSPECTRE_FOUND)
+endif (LIBSPECTRE_INTERNAL_FOUND)
 
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(LibSpectre DEFAULT_MSG LIBSPECTRE_LIBRARY LIBSPECTRE_FOUND)
+find_package_handle_standard_args(LibSpectre DEFAULT_MSG LIBSPECTRE_LIBRARY LIBSPECTRE_INTERNAL_FOUND)
 
 # ensure that they are cached
 set(LIBSPECTRE_INCLUDE_DIR ${LIBSPECTRE_INCLUDE_DIR} CACHE INTERNAL "The libspectre include path")

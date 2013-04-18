@@ -43,6 +43,8 @@ class AnnotationPrivate
         virtual void resetTransformation();
         virtual void translate( const NormalizedPoint &coord );
         virtual bool openDialogAfterCreation() const;
+        virtual void setAnnotationProperties( const QDomNode& node );
+        virtual AnnotationPrivate* getNewAnnotationPrivate() = 0;
 
         PagePrivate * m_page;
 

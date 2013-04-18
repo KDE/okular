@@ -5,7 +5,7 @@
  *   Copyright (C) 2003-2004 by Christophe Devriese                        *
  *                         <Christophe.Devriese@student.kuleuven.ac.be>    *
  *   Copyright (C) 2003 by Laurent Montel <montel@kde.org>                 *
- *   Copyright (C) 2003-2004 by Albert Astals Cid <tsdgeos@terra.es>       *
+ *   Copyright (C) 2003-2004 by Albert Astals Cid <aacid@kde.org>          *
  *   Copyright (C) 2003 by Luboš Luňák <l.lunak@kde.org>                   *
  *   Copyright (C) 2003 by Malcolm Hunter <malcolm.hunter@gmx.co.uk>       *
  *   Copyright (C) 2004 by Dominique Devriese <devriese@kde.org>           *
@@ -123,6 +123,11 @@ void Shell::init()
             KMessageBox::information(this, i18n("There is already a unique Okular instance running. This instance won't be the unique one."));
     }
     
+    if (m_args && !m_args->isSet("raise"))
+    {
+        setAttribute(Qt::WA_ShowWithoutActivating);
+    }
+    
     QDBusConnection::sessionBus().registerObject("/okularshell", this, QDBusConnection::ExportScriptableSlots);
 
     if (m_openUrl.isValid()) QTimer::singleShot(0, this, SLOT(delayedOpen()));
@@ -174,8 +179,12 @@ void Shell::openUrl( const KUrl & url )
         }
         else
         {
-            if ( m_doc && m_args && m_args->isSet( "presentation" ) )
-                m_doc->startPresentation();
+            if ( m_args ){
+                if ( m_doc && m_args->isSet( "presentation" ) )
+                    m_doc->startPresentation();
+                if ( m_args->isSet( "print" ) )
+                    QMetaObject::invokeMethod( m_part, "enableStartWithPrint" );
+            }
             bool openOk = m_part->openUrl( url );
             const bool isstdin = url.fileName( KUrl::ObeyTrailingSlash ) == QLatin1String( "-" );
             if ( !isstdin )

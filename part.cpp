@@ -89,6 +89,7 @@
 #include "core/annotations.h"
 #include "core/bookmarkmanager.h"
 #include "core/document.h"
+#include "core/document_p.h"
 #include "core/generator.h"
 #include "core/page.h"
 #include "core/fileprinter.h"
@@ -288,7 +289,7 @@ const QVariantList &args,
 KComponentData componentData )
 : KParts::ReadWritePart(parent),
 m_tempfile( 0 ), m_fileWasRemoved( false ), m_showMenuBarAction( 0 ), m_showFullScreenAction( 0 ), m_actionsSearched( false ),
-m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args)), m_generatorGuiClient(0), m_keeper( 0 )
+m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentWidget, parent, args)), m_generatorGuiClient(0), m_keeper( 0 )
 {
     // first, we check if a config file name has been specified
     QString configFileName = detectConfigFileName( args );
@@ -417,6 +418,7 @@ m_cliPresentation(false), m_embedMode(detectEmbedMode(parentWidget, parent, args
     m_formsMessage = new PageViewTopMessage( rightContainer );
     rightLayout->addWidget( m_formsMessage );
     m_pageView = new PageView( rightContainer, m_document );
+    m_document->d->m_tiledObserver = m_pageView;
     QMetaObject::invokeMethod( m_pageView, "setFocus", Qt::QueuedConnection );      //usability setting
 //    m_splitter->setFocusProxy(m_pageView);
     connect( m_pageView, SIGNAL(urlDropped(KUrl)), SLOT(openUrlFromDocument(KUrl)));
@@ -980,6 +982,7 @@ void Part::slotJobFinished(KJob *job)
 void Part::loadCancelled(const QString &reason)
 {
     emit setWindowCaption( QString() );
+    resetStartArguments();
 
     // when m_viewportDirty.pageNumber != -1 we come from slotDoFileDirty
     // so we don't want to show an ugly messagebox just because the document is
@@ -1310,6 +1313,11 @@ bool Part::openFile()
     m_generatorGuiClient = factory() ? m_document->guiClient() : 0;
     if ( m_generatorGuiClient )
         factory()->addClient( m_generatorGuiClient );
+    if ( m_cliPrint )
+    {
+        m_cliPrint = false;
+        slotPrint();
+    }
     return true;
 }
 
@@ -1352,6 +1360,7 @@ bool Part::openUrl(const KUrl &_url)
     }
     else
     {
+        resetStartArguments();
         KMessageBox::error( widget(), i18n("Could not open %1", url.pathOrUrl() ) );
     }
 
@@ -1545,6 +1554,8 @@ void Part::slotFileDirty( const QString& path )
 
 void Part::slotDoFileDirty()
 {
+    bool tocReloadPrepared = false;
+    
     // do the following the first time the file is reloaded
     if ( m_viewportDirty.pageNumber == -1 )
     {
@@ -1561,6 +1572,10 @@ void Part::slotDoFileDirty()
 
         // store if presentation view was open
         m_wasPresentationOpen = ((PresentationWidget*)m_presentationWidget != 0);
+        
+        // preserves the toc state after reload
+        m_toc->prepareForReload();
+        tocReloadPrepared = true;
 
         // store the page rotation
         m_dirtyPageRotation = m_document->rotation();
@@ -1572,7 +1587,16 @@ void Part::slotDoFileDirty()
 
     // close and (try to) reopen the document
     if ( !closeUrl() )
+    {
+        if ( tocReloadPrepared ) 
+        {
+            m_toc->rollbackReload();
+        }
         return;
+    }
+    
+    if ( tocReloadPrepared )
+        m_toc->finishReload();
 
     // inform the user about the operation in progress
     m_pageView->displayMessage( i18n("Reloading the document...") );
@@ -2359,6 +2383,10 @@ void Part::reload()
     }
 }
 
+void Part::enableStartWithPrint()
+{
+    m_cliPrint = true;
+}
 
 void Part::slotAboutBackend()
 {
@@ -2737,6 +2765,11 @@ void Part::updateAboutBackendAction()
     {
         m_aboutBackend->setEnabled( false );
     }
+}
+
+void Part::resetStartArguments()
+{
+    m_cliPrint = false;
 }
 
 void Part::setReadWrite(bool readwrite)

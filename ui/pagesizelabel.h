@@ -32,7 +32,6 @@ class PageSizeLabel : public QLabel, public Okular::DocumentObserver
         QWidget *antiWidget();
 
         // [INHERITED] from DocumentObserver
-        uint observerId() const { return PAGESIZELABEL_ID; }
         void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags );
         void notifyCurrentPageChanged( int previous, int current );
 

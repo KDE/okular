@@ -27,6 +27,7 @@
 #include "fontinfo.h"
 #include "generator.h"
 
+class QUndoStack;
 class QEventLoop;
 class QTimer;
 class KTemporaryFile;
@@ -109,11 +110,12 @@ class DocumentPrivate
 
         // private methods
         QString pagesSizeString() const;
+        QString namePaperSize(double inchesWidth, double inchesHeight) const;
         QString localizedSize(const QSizeF &size) const;
         qulonglong calculateMemoryToFree();
         void cleanupPixmapMemory();
         void cleanupPixmapMemory( qulonglong memoryToFree );
-        AllocatedPixmap * searchLowestPriorityPixmap( bool unloadableOnly = false, bool thenRemoveIt = false, int observerId = -1 /* any */ );
+        AllocatedPixmap * searchLowestPriorityPixmap( bool unloadableOnly = false, bool thenRemoveIt = false, DocumentObserver *observer = 0 /* any */ );
         void calculateMaxTextPages();
         qulonglong getTotalMemory();
         qulonglong getFreeMemory( qulonglong *freeSwap = 0 );
@@ -139,6 +141,12 @@ class DocumentPrivate
         bool canModifyExternalAnnotations() const;
         bool canRemoveExternalAnnotations() const;
         void warnLimitedAnnotSupport();
+
+        // Methods that implement functionality needed by undo commands
+        void performAddPageAnnotation( int page, Annotation *annotation );
+        void performRemovePageAnnotation( int page, Annotation * annotation );
+        void performModifyPageAnnotation( int page, Annotation * annotation, bool appearanceChanged );
+        void performSetAnnotationContents( const QString & newContents, Annotation *annot, int pageNumber );
 
         // private slots
         void saveDocumentInfo() const;
@@ -199,7 +207,10 @@ class DocumentPrivate
         QString m_nextDocumentDestination;
 
         // observers / requests / allocator stuff
-        QMap< int, DocumentObserver * > m_observers;
+        QSet< DocumentObserver * > m_observers;
+        // FIXME This is a hack, we need to support
+        // multiple tiled observers, but for the moment we only support one
+        DocumentObserver *m_tiledObserver;
         QLinkedList< PixmapRequest * > m_pixmapRequestsStack;
         QLinkedList< PixmapRequest * > m_executingPixmapRequests;
         QMutex m_pixmapRequestsMutex;
@@ -257,6 +268,9 @@ class DocumentPrivate
         bool m_annotationsNeedSaveAs;
         bool m_annotationBeingMoved; // is an annotation currently being moved?
         bool m_showWarningLimitedAnnotSupport;
+
+        QUndoStack *m_undoStack;
+        QDomNode m_prevPropsOfAnnotBeingModified;
 };
 
 }

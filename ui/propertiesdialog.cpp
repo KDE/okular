@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2004 by Albert Astals Cid <tsdgeos@terra.es>            *
+ *   Copyright (C) 2004 by Albert Astals Cid <aacid@kde.org>               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -12,6 +12,7 @@
 // qt/kde includes
 #include <qfile.h>
 #include <qlayout.h>
+#include <qformlayout.h>
 #include <qlabel.h>
 #include <qheaderview.h>
 #include <qmenu.h>
@@ -48,16 +49,16 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
   QFrame *page = new QFrame();
   KPageWidgetItem *item = addPage( page, i18n( "&Properties" ) );
   item->setIcon( KIcon( "document-properties" ) );
-  QGridLayout *layout = new QGridLayout( page );
-  layout->setMargin( marginHint() );
-  layout->setSpacing( spacingHint() );
 
   // get document info, if not present display blank data and a warning
   const Okular::DocumentInfo * info = doc->documentInfo();
   if ( !info ) {
-    layout->addWidget( new QLabel( i18n( "No document opened." ), page ), 0, 0 );
+    QVBoxLayout *layout = new QVBoxLayout( page );
+    layout->addWidget( new QLabel( i18n( "No document opened." ), page ) );
     return;
   }
+
+  QFormLayout *layout = new QFormLayout( page );
 
   // mime name based on mimetype id
   QString mimeName = info->get( "mimeType" ).section( '/', -1 ).toUpper();
@@ -65,7 +66,6 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
 
   QDomElement docElement = info->documentElement();
 
-  int row = 0;
   int valMaxWidth = 100;
 
   /* obtains the properties list, conveniently ordered */
@@ -104,12 +104,36 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
             continue;
 
         // create labels and layout them
-        KSqueezedTextLabel *value = new KSqueezedTextLabel( valueString, page );
-        QWidget *key = new QLabel( i18n( "%1:", titleString ), page );
-        value->setTextInteractionFlags( Qt::TextSelectableByMouse );
-        layout->addWidget( key, row, 0, Qt::AlignRight );
-        layout->addWidget( value, row, 1 );
-        row++;
+        QWidget *value = NULL;
+        if ( element.tagName() == Okular::DocumentInfo::getKeyString( Okular::DocumentInfo::MimeType ) ) {
+            /// for mime type fields, show icon as well
+            value = new QWidget( page );
+            /// place icon left of mime type's name
+            QHBoxLayout *hboxLayout = new QHBoxLayout( value );
+            hboxLayout->setMargin( 0 );
+            /// retrieve icon and place it in a QLabel
+            KMimeType::Ptr mimeType = KMimeType::mimeType( valueString );
+            KSqueezedTextLabel *squeezed;
+            if (!mimeType.isNull()) {
+                /// retrieve icon and place it in a QLabel
+                QLabel *pixmapLabel = new QLabel( value );
+                hboxLayout->addWidget( pixmapLabel, 0 );
+                pixmapLabel->setPixmap( KIconLoader::global()->loadMimeTypeIcon( mimeType->iconName(), KIconLoader::Small ) );
+                /// mime type's name and label
+                squeezed = new KSqueezedTextLabel( i18nc( "mimetype information, example: \"PDF Document (application/pdf)\"", "%1 (%2)", mimeType->comment(), valueString ), value );
+            } else {
+                /// only mime type name
+                squeezed = new KSqueezedTextLabel( valueString, value );
+            }
+            squeezed->setTextInteractionFlags( Qt::TextSelectableByMouse );
+            hboxLayout->addWidget( squeezed, 1 );
+        } else {
+            /// default for any other document information
+            KSqueezedTextLabel *label = new KSqueezedTextLabel( valueString, page );
+            label->setTextInteractionFlags( Qt::TextSelectableByMouse );
+            value = label;
+        }
+        layout->addRow( new QLabel( i18n( "%1:", titleString ) ), value);
 
         // refine maximum width of 'value' labels
         valMaxWidth = qMax( valMaxWidth, fontMetrics().width( valueString ) );
@@ -152,8 +176,6 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
     m_fontProgressBar->setValue( 0 );
     m_fontProgressBar->hide();
   }
-
-  layout->setRowStretch(layout->rowCount(), 1);
 
   // current width: left columnt + right column + dialog borders
   int width = layout->minimumSize().width() + valMaxWidth + 2 * marginHint() + spacingHint() + 30;

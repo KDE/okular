@@ -137,7 +137,8 @@ public:
 
     //Internal, not binded to qml
     Okular::Document *document();
-    Observer *observerFor(int id);
+    Observer *pageviewObserver();
+    Observer *thumbnailObserver();
 
 Q_SIGNALS:
     void pathChanged();
@@ -157,7 +158,8 @@ private Q_SLOTS:
 private:
     Okular::Document *m_document;
     TOCModel *m_tocModel;
-    QHash <int, Observer *> m_observers;
+    Observer *m_thumbnailObserver;
+    Observer *m_pageviewObserver;
     QList<int> m_matchingPages;
     bool m_searchInProgress;
 };
@@ -167,18 +169,16 @@ class Observer : public QObject, public Okular::DocumentObserver
     Q_OBJECT
 
 public:
-    Observer(DocumentItem *parent, int observerId);
+    Observer(DocumentItem *parent);
     ~Observer();
 
     // inherited from DocumentObserver
-    uint observerId() const { return m_observerId; }
     void notifyPageChanged(int page, int flags);
 
 Q_SIGNALS:
     void pageChanged(int page, int flags);
 
 private:
-    int m_observerId;
     DocumentItem *m_document;
 };
 

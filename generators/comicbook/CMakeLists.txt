@@ -26,6 +26,6 @@ install(TARGETS okularGenerator_comicbook DESTINATION ${PLUGIN_INSTALL_DIR})
 
 ########### install files ###############
 
-install( FILES libokularGenerator_comicbook.desktop okularComicbook.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
-install( PROGRAMS okularApplication_comicbook.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
+install( FILES libokularGenerator_comicbook.desktop okularComicbook.desktop DESTINATION  ${SERVICES_INSTALL_DIR} )
+install( PROGRAMS okularApplication_comicbook.desktop active-documentviewer_comicbook.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
 

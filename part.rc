@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="okular_part" version="33">
+<kpartgui name="okular_part" version="34">
 <MenuBar>
   <Menu name="file"><text>&amp;File</text>
     <Action name="get_new_stuff" group="file_open"/>
@@ -14,6 +14,9 @@
     <Action name="file_export_as" group="file_print"/>
   </Menu>
   <Menu name="edit"><text>&amp;Edit</text>
+    <Action name="edit_undo"/>
+    <Action name="edit_redo"/>
+    <Separator/>
     <Action name="edit_copy"/>
     <Separator/>
     <Action name="edit_select_all"/>

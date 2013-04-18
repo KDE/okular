@@ -100,7 +100,7 @@ void GeneratorPrivate::pixmapGenerationFinished()
     }
 
     const QImage& img = mPixmapGenerationThread->image();
-    request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( img ) ), request->normalizedRect() );
+    request->page()->setPixmap( request->observer(), new QPixmap( QPixmap::fromImage( img ) ), request->normalizedRect() );
     const int pageNumber = request->page()->number();
 
     if ( mPixmapGenerationThread->calcBoundingBox() )
@@ -238,7 +238,7 @@ void Generator::generatePixmap( PixmapRequest *request )
     }
 
     const QImage& img = image( request );
-    request->page()->setPixmap( request->id(), new QPixmap( QPixmap::fromImage( img ) ), request->normalizedRect() );
+    request->page()->setPixmap( request->observer(), new QPixmap( QPixmap::fromImage( img ) ), request->normalizedRect() );
     const int pageNumber = request->page()->number();
 
     d->mPixmapReady = true;
@@ -422,15 +422,15 @@ const SourceReference * Generator::dynamicSourceReference( int /*pageNr*/, doubl
   return 0;
 }
 
-PixmapRequest::PixmapRequest( int id, int pageNumber, int width, int height, int priority, bool asynchronous )
+PixmapRequest::PixmapRequest( DocumentObserver *observer, int pageNumber, int width, int height, int priority, PixmapRequestFeatures features )
   : d( new PixmapRequestPrivate )
 {
-    d->mId = id;
+    d->mObserver = observer;
     d->mPageNumber = pageNumber;
     d->mWidth = width;
     d->mHeight = height;
     d->mPriority = priority;
-    d->mAsynchronous = asynchronous;
+    d->mFeatures = features;
     d->mForce = false;
     d->mTile = false;
     d->mNormalizedRect = NormalizedRect();
@@ -441,9 +441,9 @@ PixmapRequest::~PixmapRequest()
     delete d;
 }
 
-int PixmapRequest::id() const
+DocumentObserver *PixmapRequest::observer() const
 {
-    return d->mId;
+    return d->mObserver;
 }
 
 int PixmapRequest::pageNumber() const
@@ -468,7 +468,12 @@ int PixmapRequest::priority() const
 
 bool PixmapRequest::asynchronous() const
 {
-    return d->mAsynchronous;
+    return d->mFeatures & Asynchronous;
+}
+
+bool PixmapRequest::preload() const
+{
+    return d->mFeatures & Preload;
 }
 
 Page* PixmapRequest::page() const
@@ -502,19 +507,6 @@ const NormalizedRect& PixmapRequest::normalizedRect() const
 void PixmapRequestPrivate::swap()
 {
     qSwap( mWidth, mHeight );
-}
-
-bool PixmapRequestPrivate::isPreload() const
-{
-    switch ( mPriority )
-    {
-        case PAGEVIEW_PRELOAD_PRIO:
-        case THUMBNAILS_PRELOAD_PRIO:
-        case PRESENTATION_PRELOAD_PRIO:
-            return true;
-        default:
-            return false;
-    }
 }
 
 class Okular::ExportFormatPrivate : public QSharedData
@@ -624,7 +616,7 @@ QDebug operator<<( QDebug str, const Okular::PixmapRequest &req )
 {
     QString s = QString( "PixmapRequest(#%2, %1, %3x%4, page %6, prio %5)" )
         .arg( QString( req.asynchronous() ? "async" : "sync" ) )
-        .arg( req.id() )
+        .arg( (qulonglong)req.observer() )
         .arg( req.width() )
         .arg( req.height() )
         .arg( req.priority() )

@@ -10,6 +10,7 @@
 
 #include "document.h"
 #include "document_p.h"
+#include "documentcommands_p.h"
 
 #include <limits.h>
 #ifdef Q_OS_WIN
@@ -33,6 +34,7 @@
 #include <QtGui/QLabel>
 #include <QtGui/QPrinter>
 #include <QtGui/QPrintDialog>
+#include <QUndoCommand>
 
 #include <kaboutdata.h>
 #include <kauthorized.h>
@@ -85,17 +87,18 @@
 #include <memory>
 
 #include <config-okular.h>
+#include <ui/guiutils.h>
 
 using namespace Okular;
 
 struct AllocatedPixmap
 {
     // owner of the page
-    int id;
+    DocumentObserver *observer;
     int page;
     qulonglong memory;
     // public constructor: initialize data
-    AllocatedPixmap( int i, int p, qulonglong m ) : id( i ), page( p ), memory( m ) {}
+    AllocatedPixmap( DocumentObserver *o, int p, qulonglong m ) : observer( o ), page( p ), memory( m ) {}
 };
 
 struct ArchiveData
@@ -126,11 +129,11 @@ struct RunningSearch
 };
 
 #define foreachObserver( cmd ) {\
-    QMap< int, DocumentObserver * >::const_iterator it=d->m_observers.constBegin(), end=d->m_observers.constEnd();\
+    QSet< DocumentObserver * >::const_iterator it=d->m_observers.constBegin(), end=d->m_observers.constEnd();\
     for ( ; it != end ; ++ it ) { (*it)-> cmd ; } }
 
 #define foreachObserverD( cmd ) {\
-    QMap< int, DocumentObserver * >::const_iterator it = m_observers.constBegin(), end = m_observers.constEnd();\
+    QSet< DocumentObserver * >::const_iterator it = m_observers.constBegin(), end = m_observers.constEnd();\
     for ( ; it != end ; ++ it ) { (*it)-> cmd ; } }
 
 #define OKULAR_HISTORY_MAXSTEPS 100
@@ -153,6 +156,107 @@ QString DocumentPrivate::pagesSizeString() const
     else return QString();
 }
 
+QString DocumentPrivate::namePaperSize(double inchesWidth, double inchesHeight) const
+{
+    // Account for small deviations in paper sizes
+    static const double marginFactor = 0.03;
+    static const double lowerBoundFactor = 1.0 - marginFactor;
+    static const double upperBoundFactor = 1.0 + marginFactor;
+
+    const QPrinter::Orientation orientation = inchesWidth > inchesHeight ? QPrinter::Landscape : QPrinter::Portrait;
+    // enforce portrait mode for further tests
+    if (inchesWidth > inchesHeight)
+        qSwap(inchesWidth, inchesHeight);
+
+    // Use QPrinter to find which of the predefined paper sizes
+    // matches best the given paper width and height
+    QPrinter dummyPrinter;
+    QPrinter::PaperSize paperSize = QPrinter::Custom;
+    for (int i = 0; i < (int)QPrinter::NPaperSize; ++i)
+    {
+        const QPrinter::PaperSize ps = (QPrinter::PaperSize)i;
+        dummyPrinter.setPaperSize(ps);
+        const QSizeF definedPaperSize = dummyPrinter.paperSize(QPrinter::Inch);
+
+        if (inchesWidth > definedPaperSize.width() * lowerBoundFactor && inchesWidth < definedPaperSize.width() * upperBoundFactor
+            && inchesHeight > definedPaperSize.height() * lowerBoundFactor && inchesHeight < definedPaperSize.height() * upperBoundFactor)
+        {
+            paperSize = ps;
+            break;
+        }
+    }
+
+    // Handle all paper sizes defined in QPrinter,
+    // return string depending if paper's orientation is landscape or portrait
+    switch (paperSize) {
+        case QPrinter::A0:
+            return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO A0") : i18nc("paper size", "portrait DIN/ISO A0");
+        case QPrinter::A1:
+            return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO A1") : i18nc("paper size", "portrait DIN/ISO A1");
+        case QPrinter::A2:
+            return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO A2") : i18nc("paper size", "portrait DIN/ISO A2");
+        case QPrinter::A3:
+            return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO A3") : i18nc("paper size", "portrait DIN/ISO A3");
+        case QPrinter::A4:
+            return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO A4") : i18nc("paper size", "portrait DIN/ISO A4");
+        case QPrinter::A5:
+            return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO A5") : i18nc("paper size", "portrait DIN/ISO A5");
+        case QPrinter::A6:
+            return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO A6") : i18nc("paper size", "portrait DIN/ISO A6");
+        case QPrinter::A7:
+            return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO A7") : i18nc("paper size", "portrait DIN/ISO A7");
+        case QPrinter::A8:
+            return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO A8") : i18nc("paper size", "portrait DIN/ISO A8");
+        case QPrinter::A9:
+            return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO A9") : i18nc("paper size", "portrait DIN/ISO A9");
+        case QPrinter::B0:
+            return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO B0") : i18nc("paper size", "portrait DIN/ISO B0");
+        case QPrinter::B1:
+            return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO B1") : i18nc("paper size", "portrait DIN/ISO B1");
+        case QPrinter::B2:
+            return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO B2") : i18nc("paper size", "portrait DIN/ISO B2");
+        case QPrinter::B3:
+            return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO B3") : i18nc("paper size", "portrait DIN/ISO B3");
+        case QPrinter::B4:
+            return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO B4") : i18nc("paper size", "portrait DIN/ISO B4");
+        case QPrinter::B5:
+            return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO B5") : i18nc("paper size", "portrait DIN/ISO B5");
+        case QPrinter::B6:
+            return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO B6") : i18nc("paper size", "portrait DIN/ISO B6");
+        case QPrinter::B7:
+            return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO B7") : i18nc("paper size", "portrait DIN/ISO B7");
+        case QPrinter::B8:
+            return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO B8") : i18nc("paper size", "portrait DIN/ISO B8");
+        case QPrinter::B9:
+            return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO B9") : i18nc("paper size", "portrait DIN/ISO B9");
+        case QPrinter::B10:
+            return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO B10") : i18nc("paper size", "portrait DIN/ISO B10");
+        case QPrinter::Letter:
+            return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape letter") : i18nc("paper size", "portrait letter");
+        case QPrinter::Legal:
+            return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape legal") : i18nc("paper size", "portrait legal");
+        case QPrinter::Executive:
+            return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape executive") : i18nc("paper size", "portrait executive");
+        case QPrinter::C5E:
+            return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape C5E") : i18nc("paper size", "portrait C5E");
+        case QPrinter::Comm10E:
+            return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape Comm10E") : i18nc("paper size", "portrait Comm10E");
+        case QPrinter::DLE:
+            return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DLE") : i18nc("paper size", "portrait DLE");
+        case QPrinter::Folio:
+            return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape folio") : i18nc("paper size", "portrait folio");
+        case QPrinter::Tabloid:
+        case QPrinter::Ledger:
+            /// Ledger and Tabloid are the same, just rotated by 90 degrees
+            return  orientation == QPrinter::Landscape ? i18nc("paper size", "ledger") : i18nc("paper size", "tabloid");
+        case QPrinter::Custom:
+            return orientation == QPrinter::Landscape ? i18nc("paper size", "unknown landscape paper size") : i18nc("paper size", "unknown portrait paper size");
+    }
+
+    kWarning() << "PaperSize" << paperSize << "has not been covered";
+    return QString();
+}
+
 QString DocumentPrivate::localizedSize(const QSizeF &size) const
 {
     double inchesWidth = 0, inchesHeight = 0;
@@ -168,11 +272,11 @@ QString DocumentPrivate::localizedSize(const QSizeF &size) const
     }
     if (KGlobal::locale()->measureSystem() == KLocale::Imperial)
     {
-        return i18n("%1 x %2 in", inchesWidth, inchesHeight);
+        return i18nc("%1 is width, %2 is height, %3 is paper size name", "%1 x %2 in (%3)", inchesWidth, inchesHeight, namePaperSize(inchesWidth, inchesHeight));
     }
     else
     {
-        return i18n("%1 x %2 mm", inchesWidth * 25.4, inchesHeight * 25.4);
+        return i18nc("%1 is width, %2 is height, %3 is paper size name", "%1 x %2 mm (%3)", QString::number(inchesWidth * 25.4, 'd', 0), QString::number(inchesHeight * 25.4, 'd', 0), namePaperSize(inchesWidth, inchesHeight));
     }
 }
 
@@ -244,7 +348,7 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong memoryToFree )
             if ( !p ) // No pixmap to remove
                 break;
 
-            kDebug().nospace() << "Evicting cache pixmap id=" << p->id << " page=" << p->page;
+            kDebug().nospace() << "Evicting cache pixmap observer=" << p->observer << " page=" << p->page;
 
             // m_allocatedPixmapsTotalMemory can't underflow because we always add or remove
             // the memory used by the AllocatedPixmap so at most it can reach zero
@@ -256,7 +360,7 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong memoryToFree )
                 memoryToFree -= p->memory;
             pagesFreed++;
             // delete pixmap
-            m_pagesVector.at( p->page )->deletePixmap( p->id );
+            m_pagesVector.at( p->page )->deletePixmap( p->observer );
             // delete allocation descriptor
             delete p;
         }
@@ -267,7 +371,7 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong memoryToFree )
         QLinkedList< AllocatedPixmap * > pixmapsToKeep;
         while ( memoryToFree > 0 )
         {
-            AllocatedPixmap * p = searchLowestPriorityPixmap( false, true, PAGEVIEW_ID );
+            AllocatedPixmap * p = searchLowestPriorityPixmap( false, true, m_tiledObserver );
             if ( !p ) // No pixmap to remove
                 break;
 
@@ -306,7 +410,7 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong memoryToFree )
  * thenRemoveIt is set, the pixmap is removed from m_allocatedPixmaps before
  * returning it
  */
-AllocatedPixmap * DocumentPrivate::searchLowestPriorityPixmap( bool unloadableOnly, bool thenRemoveIt, int observerId )
+AllocatedPixmap * DocumentPrivate::searchLowestPriorityPixmap( bool unloadableOnly, bool thenRemoveIt, DocumentObserver *observer )
 {
     QLinkedList< AllocatedPixmap * >::iterator pIt = m_allocatedPixmaps.begin();
     QLinkedList< AllocatedPixmap * >::iterator pEnd = m_allocatedPixmaps.end();
@@ -319,10 +423,10 @@ AllocatedPixmap * DocumentPrivate::searchLowestPriorityPixmap( bool unloadableOn
     {
         const AllocatedPixmap * p = *pIt;
         // Filter by observer
-        if ( observerId == -1 || p->id == observerId )
+        if ( observer == 0 || p->observer == observer )
         {
             const int distance = qAbs( p->page - currentViewportPage );
-            if ( maxDistance < distance && ( !unloadableOnly || m_observers.value( p->id )->canUnloadPixmap( p->page ) ) )
+            if ( maxDistance < distance && ( !unloadableOnly || p->observer->canUnloadPixmap( p->page ) ) )
             {
                 maxDistance = distance;
                 farthestPixmap = pIt;
@@ -928,6 +1032,165 @@ void DocumentPrivate::warnLimitedAnnotSupport()
     }
 }
 
+void DocumentPrivate::performAddPageAnnotation( int page, Annotation * annotation )
+{
+    Okular::SaveInterface * iface = qobject_cast< Okular::SaveInterface * >( m_generator );
+    AnnotationProxy *proxy = iface ? iface->annotationProxy() : 0;
+
+    // find out the page to attach annotation
+    Page * kp = m_pagesVector[ page ];
+    if ( !m_generator || !kp )
+        return;
+
+    // the annotation belongs already to a page
+    if ( annotation->d_ptr->m_page )
+        return;
+
+    // add annotation to the page
+    kp->addAnnotation( annotation );
+
+    // tell the annotation proxy
+    if ( proxy && proxy->supports(AnnotationProxy::Addition) )
+        proxy->notifyAddition( annotation, page );
+
+    // notify observers about the change
+    notifyAnnotationChanges( page );
+
+    if ( annotation->flags() & Annotation::ExternallyDrawn )
+    {
+        // Redraw everything, including ExternallyDrawn annotations
+        refreshPixmaps( page );
+    }
+
+    warnLimitedAnnotSupport();
+}
+
+void DocumentPrivate::performRemovePageAnnotation( int page, Annotation * annotation )
+{
+    Okular::SaveInterface * iface = qobject_cast< Okular::SaveInterface * >( m_generator );
+    AnnotationProxy *proxy = iface ? iface->annotationProxy() : 0;
+    bool isExternallyDrawn;
+
+    // find out the page
+    Page * kp = m_pagesVector[ page ];
+    if ( !m_generator || !kp )
+        return;
+
+    if ( annotation->flags() & Annotation::ExternallyDrawn )
+        isExternallyDrawn = true;
+    else
+        isExternallyDrawn = false;
+
+    // try to remove the annotation
+    if ( m_parent->canRemovePageAnnotation( annotation ) )
+    {
+        // tell the annotation proxy
+        if ( proxy && proxy->supports(AnnotationProxy::Removal) )
+            proxy->notifyRemoval( annotation, page );
+
+        kp->removeAnnotation( annotation ); // Also destroys the object
+
+        // in case of success, notify observers about the change
+        notifyAnnotationChanges( page );
+
+        if ( isExternallyDrawn )
+        {
+            // Redraw everything, including ExternallyDrawn annotations
+            refreshPixmaps( page );
+        }
+    }
+
+    warnLimitedAnnotSupport();
+}
+
+void DocumentPrivate::performModifyPageAnnotation( int page, Annotation * annotation, bool appearanceChanged )
+{
+    Okular::SaveInterface * iface = qobject_cast< Okular::SaveInterface * >( m_generator );
+    AnnotationProxy *proxy = iface ? iface->annotationProxy() : 0;
+
+    // find out the page
+    Page * kp = m_pagesVector[ page ];
+    if ( !m_generator || !kp )
+        return;
+
+    // tell the annotation proxy
+    if ( proxy && proxy->supports(AnnotationProxy::Modification) )
+    {
+        proxy->notifyModification( annotation, page, appearanceChanged );
+    }
+
+    // notify observers about the change
+    notifyAnnotationChanges( page );
+    if ( appearanceChanged && (annotation->flags() & Annotation::ExternallyDrawn) )
+    {
+        /* When an annotation is being moved, the generator will not render it.
+         * Therefore there's no need to refresh pixmaps after the first time */
+        if ( annotation->flags() & Annotation::BeingMoved )
+        {
+            if ( m_annotationBeingMoved )
+                return;
+            else // First time: take note
+                m_annotationBeingMoved = true;
+        }
+        else
+        {
+            m_annotationBeingMoved = false;
+        }
+
+        // Redraw everything, including ExternallyDrawn annotations
+        kDebug(OkularDebug) << "Refreshing Pixmaps";
+        refreshPixmaps( page );
+    }
+
+    // If the user is moving the annotation, don't steal the focus
+    if ( (annotation->flags() & Annotation::BeingMoved) == 0 )
+        warnLimitedAnnotSupport();
+}
+
+void DocumentPrivate::performSetAnnotationContents( const QString & newContents, Annotation *annot, int pageNumber )
+{
+    bool appearanceChanged = false;
+
+    // Set window text
+    if ( !annot->window().text().isEmpty() )
+    {
+        annot->window().setText( newContents );
+        return;
+    }
+
+    // Handle special cases
+    switch ( annot->subType() )
+    {
+        // If it's an in-place TextAnnotation, set the inplace text
+        case Okular::Annotation::AText:
+        {
+            Okular::TextAnnotation * txtann = static_cast< Okular::TextAnnotation * >( annot );
+            if ( txtann->textType() == Okular::TextAnnotation::InPlace )
+            {
+                txtann->setInplaceText( newContents );
+                appearanceChanged = true;
+            }
+            break;
+        }
+        // If it's a LineAnnotation, check if caption text is visible
+        case Okular::Annotation::ALine:
+        {
+            Okular::LineAnnotation * lineann = static_cast< Okular::LineAnnotation * >( annot );
+            if ( lineann->showCaption() )
+                appearanceChanged = true;
+            break;
+        }
+        default:
+            break;
+    }
+
+    // Set contents
+    annot->setContents( newContents );
+
+    // Tell the document the annotation has been modified
+    performModifyPageAnnotation( pageNumber,  annot, appearanceChanged );
+}
+
 void DocumentPrivate::saveDocumentInfo() const
 {
     if ( m_xmlFileName.isEmpty() )
@@ -1054,15 +1317,15 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
         }
 
         QRect requestRect = r->isTile() ? r->normalizedRect().geometry( r->width(), r->height() ) : QRect( 0, 0, r->width(), r->height() );
-        TilesManager *tilesManager = ( r->id() == PAGEVIEW_ID ) ? r->page()->d->tilesManager() : 0;
+        TilesManager *tilesManager = ( r->observer() == m_tiledObserver ) ? r->page()->d->tilesManager() : 0;
 
-        // request only if page isn't already present or request has invalid id
-        if ( ( !r->d->mForce && r->page()->hasPixmap( r->id(), r->width(), r->height(), r->normalizedRect() ) ) || r->id() <= 0 || r->id() >= MAX_OBSERVER_ID )
+        // request only if page isn't already present and request has valid id
+        if ( ( !r->d->mForce && r->page()->hasPixmap( r->observer(), r->width(), r->height(), r->normalizedRect() ) ) || !m_observers.contains(r->observer()) )
         {
             m_pixmapRequestsStack.pop_back();
             delete r;
         }
-        else if ( !r->d->mForce && r->d->isPreload() && qAbs( r->pageNumber() - currentViewportPage ) >= maxDistance )
+        else if ( !r->d->mForce && r->preload() && qAbs( r->pageNumber() - currentViewportPage ) >= maxDistance )
         {
             m_pixmapRequestsStack.pop_back();
             //kDebug() << "Ignoring request that doesn't fit in cache";
@@ -1075,14 +1338,14 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
             delete r;
         }
         // If the requested area is above 8000000 pixels, switch on the tile manager
-        else if ( !tilesManager && r->id() == PAGEVIEW_ID && m_generator->hasFeature( Generator::TiledRendering ) && (long)r->width() * (long)r->height() > 8000000L )
+        else if ( !tilesManager && r->observer() == m_tiledObserver && m_generator->hasFeature( Generator::TiledRendering ) && (long)r->width() * (long)r->height() > 8000000L )
         {
             // if the image is too big. start using tiles
             kDebug(OkularDebug).nospace() << "Start using tiles on page " << r->pageNumber()
                 << " (" << r->width() << "x" << r->height() << " px);";
 
             // fill the tiles manager with the last rendered pixmap
-            const QPixmap *pixmap = r->page()->_o_nearestPixmap( r->id(), r->width(), r->height() );
+            const QPixmap *pixmap = r->page()->_o_nearestPixmap( r->observer(), r->width(), r->height() );
             if ( pixmap )
             {
                 tilesManager = new TilesManager( r->pageNumber(), pixmap->width(), pixmap->height(), r->page()->rotation() );
@@ -1095,7 +1358,7 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
                 tilesManager = new TilesManager( r->pageNumber(), r->width(), r->height(), r->page()->rotation() );
             }
             tilesManager->setRequest( r->normalizedRect(), r->width(), r->height() );
-            r->page()->deletePixmap( r->id() );
+            r->page()->deletePixmap( r->observer() );
             r->page()->d->setTilesManager( tilesManager );
             r->setTile( true );
 
@@ -1137,7 +1400,7 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
                 << " (" << r->width() << "x" << r->height() << " px);";
 
             // page is too small. stop using tiles.
-            r->page()->deletePixmap( r->id() );
+            r->page()->deletePixmap( r->observer() );
             r->setTile( false );
 
             request = r;
@@ -1169,7 +1432,7 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
 
     // [MEM] preventive memory freeing
     qulonglong pixmapBytes = 0;
-    TilesManager * tm = ( request->id() == PAGEVIEW_ID ) ? request->page()->d->tilesManager() : 0;
+    TilesManager * tm = ( request->observer() == m_tiledObserver ) ? request->page()->d->tilesManager() : 0;
     if ( tm )
         pixmapBytes = tm->totalMemory();
     else
@@ -1182,7 +1445,7 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
     if ( m_generator->canGeneratePixmap() )
     {
         QRect requestRect = !request->isTile() ? QRect(0, 0, request->width(), request->height() ) : request->normalizedRect().geometry( request->width(), request->height() );
-        kDebug(OkularDebug).nospace() << "sending request id=" << request->id() << " " <<requestRect.width() << "x" << requestRect.height() << "@" << request->pageNumber() << " async == " << request->asynchronous() << " isTile == " << request->isTile();
+        kDebug(OkularDebug).nospace() << "sending request observer=" << request->observer() << " " <<requestRect.width() << "x" << requestRect.height() << "@" << request->pageNumber() << " async == " << request->asynchronous() << " isTile == " << request->isTile();
         m_pixmapRequestsStack.removeAll ( request );
 
         if ( tm )
@@ -1216,10 +1479,8 @@ void DocumentPrivate::rotationFinished( int page, Okular::Page *okularPage )
     if ( !wantedPage || wantedPage != okularPage )
         return;
 
-    QMap< int, DocumentObserver * >::const_iterator it = m_observers.constBegin(), end = m_observers.constEnd();
-    for ( ; it != end ; ++ it ) {
-        (*it)->notifyPageChanged( page, DocumentObserver::Pixmap | DocumentObserver::Annotations );
-    }
+    foreach(DocumentObserver *o, m_observers)
+        o->notifyPageChanged( page, DocumentObserver::Pixmap | DocumentObserver::Annotations );
 }
 
 void DocumentPrivate::fontReadingProgress( int page )
@@ -1290,13 +1551,13 @@ void DocumentPrivate::refreshPixmaps( int pageNumber )
         return;
 
     QLinkedList< Okular::PixmapRequest * > requestedPixmaps;
-    QMap< int, PagePrivate::PixmapObject >::ConstIterator it = page->d->m_pixmaps.constBegin(), itEnd = page->d->m_pixmaps.constEnd();
+    QMap< DocumentObserver*, PagePrivate::PixmapObject >::ConstIterator it = page->d->m_pixmaps.constBegin(), itEnd = page->d->m_pixmaps.constEnd();
     for ( ; it != itEnd; ++it )
     {
         QSize size = (*it).m_pixmap->size();
         if ( (*it).m_rotation % 2 )
             size.transpose();
-        PixmapRequest * p = new PixmapRequest( it.key(), pageNumber, size.width(), size.height(), 1, true );
+        PixmapRequest * p = new PixmapRequest( it.key(), pageNumber, size.width(), size.height(), 1, PixmapRequest::Asynchronous );
         p->d->mForce = true;
         requestedPixmaps.push_back( p );
     }
@@ -1306,7 +1567,7 @@ void DocumentPrivate::refreshPixmaps( int pageNumber )
     {
         tilesManager->markDirty();
 
-        PixmapRequest * p = new PixmapRequest( PAGEVIEW_ID, pageNumber, tilesManager->width(), tilesManager->height(), 1, true );
+        PixmapRequest * p = new PixmapRequest( m_tiledObserver, pageNumber, tilesManager->width(), tilesManager->height(), 1, PixmapRequest::Asynchronous );
 
         NormalizedRect tilesRect;
 
@@ -1412,7 +1673,7 @@ void DocumentPrivate::doContinueDirectionMatchSearch(void *doContinueDirectionMa
         {
             searchStruct->pagesDone = 1;
         }
-        
+
         // Both of the previous if branches need to call doContinueDirectionMatchSearch
         QMetaObject::invokeMethod(m_parent, "doContinueDirectionMatchSearch", Qt::QueuedConnection, Q_ARG(void *, searchStruct));
     }
@@ -1453,7 +1714,7 @@ void DocumentPrivate::doProcessSearchMatch( RegularAreaRect *match, RunningSearc
             searchViewport.rePos.enabled = true;
             searchViewport.rePos.normalizedX = (match->first().left + match->first().right) / 2.0;
             searchViewport.rePos.normalizedY = (match->first().top + match->first().bottom) / 2.0;
-            m_parent->setViewport( searchViewport, -1, true );
+            m_parent->setViewport( searchViewport, 0, true );
         }
         delete match;
     }
@@ -1744,8 +2005,7 @@ QVariant DocumentPrivate::documentMetaData( const QString &key, const QVariant &
         }
     }
     return QVariant();
-}
-
+};
 
 Document::Document( QWidget *widget )
     : QObject( 0 ), d( new DocumentPrivate( this ) )
@@ -1753,10 +2013,14 @@ Document::Document( QWidget *widget )
     d->m_widget = widget;
     d->m_bookmarkManager = new BookmarkManager( d );
     d->m_viewportIterator = d->m_viewportHistory.insert( d->m_viewportHistory.end(), DocumentViewport() );
+    d->m_undoStack = new QUndoStack(this);
+    d->m_tiledObserver = 0;
 
     connect( PageController::self(), SIGNAL(rotationFinished(int,Okular::Page*)),
              this, SLOT(rotationFinished(int,Okular::Page*)) );
     connect( SettingsCore::self(), SIGNAL(configChanged()), this, SLOT(_o_configChanged()) );
+    connect( d->m_undoStack, SIGNAL( canUndoChanged(bool) ), this, SIGNAL( canUndoChanged(bool)));
+    connect( d->m_undoStack, SIGNAL( canRedoChanged(bool) ), this, SIGNAL( canRedoChanged(bool) ) );
 
     qRegisterMetaType<Okular::FontInfo>();
 }
@@ -1797,7 +2061,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     QByteArray filedata;
     qint64 document_size = -1;
     bool isstdin = url.fileName( KUrl::ObeyTrailingSlash ) == QLatin1String( "-" );
-    bool loadingMimeByContent = false;
+    bool triedMimeFromFileContent = false;
     if ( !isstdin )
     {
         if ( mime.count() <= 0 )
@@ -1815,23 +2079,23 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
         d->m_docFileName = docFile;
         if ( url.isLocalFile() && !d->m_archiveData )
         {
-        QString fn = url.fileName();
-        document_size = fileReadTest.size();
-        fn = QString::number( document_size ) + '.' + fn + ".xml";
-        QString newokular = "okular/docdata/" + fn;
-        QString newokularfile = KStandardDirs::locateLocal( "data", newokular );
-        if ( !QFile::exists( newokularfile ) )
-        {
-            QString oldkpdf = "kpdf/" + fn;
-            QString oldkpdffile = KStandardDirs::locateLocal( "data", oldkpdf );
-            if ( QFile::exists( oldkpdffile ) )
+            QString fn = url.fileName();
+            document_size = fileReadTest.size();
+            fn = QString::number( document_size ) + '.' + fn + ".xml";
+            QString newokular = "okular/docdata/" + fn;
+            QString newokularfile = KStandardDirs::locateLocal( "data", newokular );
+            if ( !QFile::exists( newokularfile ) )
             {
-                // ### copy or move?
-                if ( !QFile::copy( oldkpdffile, newokularfile ) )
-                    return false;
+                QString oldkpdf = "kpdf/" + fn;
+                QString oldkpdffile = KStandardDirs::locateLocal( "data", oldkpdf );
+                if ( QFile::exists( oldkpdffile ) )
+                {
+                    // ### copy or move?
+                    if ( !QFile::copy( oldkpdffile, newokularfile ) )
+                        return false;
+                }
             }
-        }
-        d->m_xmlFileName = newokularfile;
+            d->m_xmlFileName = newokularfile;
         }
     }
     else
@@ -1843,21 +2107,33 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
         if ( !mime || mime->name() == QLatin1String( "application/octet-stream" ) )
             return false;
         document_size = filedata.size();
-        loadingMimeByContent = true;
+        triedMimeFromFileContent = true;
     }
 
     // 0. load Generator
     // request only valid non-disabled plugins suitable for the mimetype
     QString constraint("([X-KDE-Priority] > 0) and (exist Library)") ;
     KService::List offers = KMimeTypeTrader::self()->query(mime->name(),"okular/Generator",constraint);
-    if ( offers.isEmpty() && !isstdin )
+    if ( offers.isEmpty() && !triedMimeFromFileContent )
     {
         KMimeType::Ptr newmime = KMimeType::findByFileContent( docFile );
-        loadingMimeByContent = true;
+        triedMimeFromFileContent = true;
         if ( newmime->name() != mime->name() )
         {
             mime = newmime;
             offers = KMimeTypeTrader::self()->query( mime->name(), "okular/Generator", constraint );
+        }
+        if ( offers.isEmpty() )
+        {
+            // There's still no offers, do a final mime search based on the filename
+            // We need this becuase sometimes (e.g. when downloading from a webserver) the mimetype we
+            // use is the one feeded by the server, that may be wrong
+            newmime = KMimeType::findByUrl( docFile );
+            if ( newmime->name() != mime->name() )
+            {
+                mime = newmime;
+                offers = KMimeTypeTrader::self()->query( mime->name(), "okular/Generator", constraint );
+            }
         }
     }
     if (offers.isEmpty())
@@ -1894,10 +2170,10 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     KService::Ptr offer = offers.at( hRank );
     // 1. load Document
     bool openOk = d->openDocumentInternal( offer, isstdin, docFile, filedata );
-    if ( !openOk && !loadingMimeByContent )
+    if ( !openOk && !triedMimeFromFileContent )
     {
         KMimeType::Ptr newmime = KMimeType::findByFileContent( docFile );
-        loadingMimeByContent = true;
+        triedMimeFromFileContent = true;
         if ( newmime->name() != mime->name() )
         {
             mime = newmime;
@@ -2135,17 +2411,19 @@ void Document::closeDocument()
     d->m_allocatedTextPagesFifo.clear();
     d->m_pageSize = PageSize();
     d->m_pageSizes.clear();
-    
+
     delete d->m_documentInfo;
     d->m_documentInfo = 0;
 
     AudioPlayer::instance()->d->m_currentDocument = KUrl();
+
+    d->m_undoStack->clear();
 }
 
 void Document::addObserver( DocumentObserver * pObserver )
 {
-    // keep the pointer to the observer in a map
-    d->m_observers.insert( pObserver->observerId(), pObserver );
+    Q_ASSERT( !d->m_observers.contains( pObserver ) );
+    d->m_observers << pObserver;
 
     // if the observer is added while a document is already opened, tell it
     if ( !d->m_pagesVector.isEmpty() )
@@ -2158,13 +2436,12 @@ void Document::addObserver( DocumentObserver * pObserver )
 void Document::removeObserver( DocumentObserver * pObserver )
 {
     // remove observer from the map. it won't receive notifications anymore
-    if ( d->m_observers.contains( pObserver->observerId() ) )
+    if ( d->m_observers.contains( pObserver ) )
     {
         // free observer's pixmap data
-        int observerId = pObserver->observerId();
         QVector<Page*>::const_iterator it = d->m_pagesVector.constBegin(), end = d->m_pagesVector.constEnd();
         for ( ; it != end; ++it )
-            (*it)->deletePixmap( observerId );
+            (*it)->deletePixmap( pObserver );
 
         // [MEM] free observer's allocation descriptors
         QLinkedList< AllocatedPixmap * >::iterator aIt = d->m_allocatedPixmaps.begin();
@@ -2172,7 +2449,7 @@ void Document::removeObserver( DocumentObserver * pObserver )
         while ( aIt != aEnd )
         {
             AllocatedPixmap * p = *aIt;
-            if ( p->id == observerId )
+            if ( p->observer == pObserver )
             {
                 aIt = d->m_allocatedPixmaps.erase( aIt );
                 delete p;
@@ -2182,7 +2459,7 @@ void Document::removeObserver( DocumentObserver * pObserver )
         }
 
         // delete observer entry from the map
-        d->m_observers.remove( observerId );
+        d->m_observers.remove( pObserver );
     }
 }
 
@@ -2267,9 +2544,9 @@ const DocumentInfo * Document::documentInfo() const
 
         const DocumentInfo::Key keyPages = DocumentInfo::Pages;
         const QString keyString = DocumentInfo::getKeyString( keyPages );
- 
+
         if ( info->get( keyString ).isEmpty() ) {
-            info->set( keyString, QString::number( this->pages() ), 
+            info->set( keyString, QString::number( this->pages() ),
                        DocumentInfo::getKeyTitle( keyPages ) );
         }
 
@@ -2346,7 +2623,7 @@ const QVector< VisiblePageRect * > & Document::visiblePageRects() const
     return d->m_pageRects;
 }
 
-void Document::setVisiblePageRects( const QVector< VisiblePageRect * > & visiblePageRects, int excludeId )
+void Document::setVisiblePageRects( const QVector< VisiblePageRect * > & visiblePageRects, DocumentObserver *excludeObserver )
 {
     QVector< VisiblePageRect * >::const_iterator vIt = d->m_pageRects.constBegin();
     QVector< VisiblePageRect * >::const_iterator vEnd = d->m_pageRects.constEnd();
@@ -2354,10 +2631,9 @@ void Document::setVisiblePageRects( const QVector< VisiblePageRect * > & visible
         delete *vIt;
     d->m_pageRects = visiblePageRects;
     // notify change to all other (different from id) observers
-    QMap< int, DocumentObserver * >::const_iterator it = d->m_observers.constBegin(), end = d->m_observers.constEnd();
-    for ( ; it != end ; ++ it )
-        if ( it.key() != excludeId )
-            (*it)->notifyVisibleRectsChanged();
+    foreach(DocumentObserver *o, d->m_observers)
+        if ( o != excludeObserver )
+            o->notifyVisibleRectsChanged();
 }
 
 uint Document::currentPage() const
@@ -2520,7 +2796,8 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests, 
     }
 
     // 1. [CLEAN STACK] remove previous requests of requesterID
-    int requesterID = requests.first()->id();
+    // FIXME This asumes all requests come from the same observer, that is true atm but not enforced anywhere
+    DocumentObserver *requesterObserver = requests.first()->observer();
     QSet< int > requestedPages;
     {
         QLinkedList< PixmapRequest * >::const_iterator rIt = requests.constBegin(), rEnd = requests.constEnd();
@@ -2532,7 +2809,7 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests, 
     QLinkedList< PixmapRequest * >::iterator sIt = d->m_pixmapRequestsStack.begin(), sEnd = d->m_pixmapRequestsStack.end();
     while ( sIt != sEnd )
     {
-        if ( (*sIt)->id() == requesterID
+        if ( (*sIt)->observer() == requesterObserver
              && ( removeAllPrevious || requestedPages.contains( (*sIt)->pageNumber() ) ) )
         {
             // delete request and remove it from stack
@@ -2549,7 +2826,7 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests, 
     {
         // set the 'page field' (see PixmapRequest) and check if it is valid
         PixmapRequest * request = *rIt;
-        kDebug(OkularDebug).nospace() << "request id=" << request->id() << " " <<request->width() << "x" << request->height() << "@" << request->pageNumber();
+        kDebug(OkularDebug).nospace() << "request observer=" << request->observer() << " " <<request->width() << "x" << request->height() << "@" << request->pageNumber();
         if ( d->m_pagesVector.value( request->pageNumber() ) == 0 )
         {
             // skip requests referencing an invalid page (must not happen)
@@ -2633,35 +2910,12 @@ void DocumentPrivate::notifyAnnotationChanges( int page )
 
 void Document::addPageAnnotation( int page, Annotation * annotation )
 {
-    Okular::SaveInterface * iface = qobject_cast< Okular::SaveInterface * >( d->m_generator );
-    AnnotationProxy *proxy = iface ? iface->annotationProxy() : 0;
-
-    // find out the page to attach annotation
-    Page * kp = d->m_pagesVector[ page ];
-    if ( !d->m_generator || !kp )
-        return;
-
-    // the annotation belongs already to a page
-    if ( annotation->d_ptr->m_page )
-        return;
-
-    // add annotation to the page
-    kp->addAnnotation( annotation );
-
-    // tell the annotation proxy
-    if ( proxy && proxy->supports(AnnotationProxy::Addition) )
-        proxy->notifyAddition( annotation, page );
-
-    // notify observers about the change
-    d->notifyAnnotationChanges( page );
-
-    if ( annotation->flags() & Annotation::ExternallyDrawn )
-    {
-        // Redraw everything, including ExternallyDrawn annotations
-        d->refreshPixmaps( page );
-    }
-
-    d->warnLimitedAnnotSupport();
+    // Transform annotation's base boundary rectangle into unrotated coordinates
+    Page *p = d->m_pagesVector[page];
+    QTransform t = p->d->rotationMatrix();
+    annotation->d_ptr->baseTransform(t.inverted());
+    QUndoCommand *uc = new AddAnnotationCommand(this->d, annotation, page);
+    d->m_undoStack->push(uc);
 }
 
 bool Document::canModifyPageAnnotation( const Annotation * annotation ) const
@@ -2689,51 +2943,53 @@ bool Document::canModifyPageAnnotation( const Annotation * annotation ) const
     }
 }
 
-void Document::modifyPageAnnotation( int page, Annotation * annotation )
+void Document::prepareToModifyAnnotationProperties( Annotation * annotation )
 {
-    modifyPageAnnotation( page, annotation, true );
+    Q_ASSERT(d->m_prevPropsOfAnnotBeingModified.isNull());
+    if (!d->m_prevPropsOfAnnotBeingModified.isNull())
+    {
+        kError(OkularDebug) << "Error: Document::prepareToModifyAnnotationProperties has already been called since last call to Document::modifyPageAnnotationProperties";
+        return;
+    }
+    d->m_prevPropsOfAnnotBeingModified = annotation->getAnnotationPropertiesDomNode();
 }
 
-void Document::modifyPageAnnotation( int page, Annotation * annotation, bool appearanceChanged )
+void Document::modifyPageAnnotationProperties( int page, Annotation * annotation )
 {
-    Okular::SaveInterface * iface = qobject_cast< Okular::SaveInterface * >( d->m_generator );
-    AnnotationProxy *proxy = iface ? iface->annotationProxy() : 0;
-
-    // find out the page
-    Page * kp = d->m_pagesVector[ page ];
-    if ( !d->m_generator || !kp )
-        return;
-
-    // tell the annotation proxy
-    if ( proxy && proxy->supports(AnnotationProxy::Modification) )
-        proxy->notifyModification( annotation, page, appearanceChanged );
-
-    // notify observers about the change
-    d->notifyAnnotationChanges( page );
-
-    if ( appearanceChanged && (annotation->flags() & Annotation::ExternallyDrawn) )
+    Q_ASSERT(!d->m_prevPropsOfAnnotBeingModified.isNull());
+    if (d->m_prevPropsOfAnnotBeingModified.isNull())
     {
-        /* When an annotation is being moved, the generator will not render it.
-         * Therefore there's no need to refresh pixmaps after the first time */
-        if ( annotation->flags() & Annotation::BeingMoved )
-        {
-            if ( d->m_annotationBeingMoved )
-                return;
-            else // First time: take note
-                d->m_annotationBeingMoved = true;
-        }
-        else
-        {
-            d->m_annotationBeingMoved = false;
-        }
-
-        // Redraw everything, including ExternallyDrawn annotations
-        d->refreshPixmaps( page );
+        kError(OkularDebug) << "Error: Document::prepareToModifyAnnotationProperties must be called before Annotation is modified";
+        return;
     }
+    QDomNode prevProps = d->m_prevPropsOfAnnotBeingModified;
+    QUndoCommand *uc = new Okular::ModifyAnnotationPropertiesCommand( d,
+                                                                      annotation,
+                                                                      page,
+                                                                      prevProps,
+                                                                      annotation->getAnnotationPropertiesDomNode() );
+    d->m_undoStack->push( uc );
+    d->m_prevPropsOfAnnotBeingModified.clear();
+}
 
-    // If the user is moving the annotation, don't steal the focus
-    if ( (annotation->flags() & Annotation::BeingMoved) == 0 )
-        d->warnLimitedAnnotSupport();
+void Document::translatePageAnnotation(int page, Annotation* annotation, const NormalizedPoint & delta )
+{
+    int complete = (annotation->flags() & Okular::Annotation::BeingMoved) == 0;
+    QUndoCommand *uc = new Okular::TranslateAnnotationCommand( d, annotation, page, delta, complete );
+    d->m_undoStack->push(uc);
+}
+
+void Document::editPageAnnotationContents( int page, Annotation* annotation,
+                                           const QString & newContents,
+                                           int newCursorPos,
+                                           int prevCursorPos,
+                                           int prevAnchorPos
+                                         )
+{
+    QString prevContents = annotation->contents();
+    QUndoCommand *uc = new EditAnnotationContentsCommand( d, annotation, page, newContents, newCursorPos,
+                                                            prevContents, prevCursorPos, prevAnchorPos );
+    d->m_undoStack->push( uc );
 }
 
 bool Document::canRemovePageAnnotation( const Annotation * annotation ) const
@@ -2760,88 +3016,19 @@ bool Document::canRemovePageAnnotation( const Annotation * annotation ) const
 
 void Document::removePageAnnotation( int page, Annotation * annotation )
 {
-    Okular::SaveInterface * iface = qobject_cast< Okular::SaveInterface * >( d->m_generator );
-    AnnotationProxy *proxy = iface ? iface->annotationProxy() : 0;
-    bool isExternallyDrawn;
-
-    // find out the page
-    Page * kp = d->m_pagesVector[ page ];
-    if ( !d->m_generator || !kp )
-        return;
-
-    if ( annotation->flags() & Annotation::ExternallyDrawn )
-        isExternallyDrawn = true;
-    else
-        isExternallyDrawn = false;
-
-    // try to remove the annotation
-    if ( canRemovePageAnnotation( annotation ) )
-    {
-        // tell the annotation proxy
-        if ( proxy && proxy->supports(AnnotationProxy::Removal) )
-            proxy->notifyRemoval( annotation, page );
-
-        kp->removeAnnotation( annotation ); // Also destroys the object
-
-        // in case of success, notify observers about the change
-        d->notifyAnnotationChanges( page );
-
-        if ( isExternallyDrawn )
-        {
-            // Redraw everything, including ExternallyDrawn annotations
-            d->refreshPixmaps( page );
-        }
-    }
-
-    d->warnLimitedAnnotSupport();
+    QUndoCommand *uc = new RemoveAnnotationCommand(this->d, annotation, page);
+    d->m_undoStack->push(uc);
 }
 
-void Document::removePageAnnotations( int page, const QList< Annotation * > &annotations )
+void Document::removePageAnnotations( int page, const QList<Annotation*> &annotations )
 {
-    Okular::SaveInterface * iface = qobject_cast< Okular::SaveInterface * >( d->m_generator );
-    AnnotationProxy *proxy = iface ? iface->annotationProxy() : 0;
-    bool refreshNeeded = false;
-
-    // find out the page
-    Page * kp = d->m_pagesVector[ page ];
-    if ( !d->m_generator || !kp )
-        return;
-
-    bool changed = false;
-    foreach ( Annotation * annotation, annotations )
+    d->m_undoStack->beginMacro(i18nc("remove a collection of annotations from the page", "remove annotations"));
+    foreach(Annotation* annotation, annotations)
     {
-        bool isExternallyDrawn;
-        if ( annotation->flags() & Annotation::ExternallyDrawn )
-            isExternallyDrawn = true;
-        else
-            isExternallyDrawn = false;
-
-        if ( canRemovePageAnnotation( annotation ) )
-        {
-            if ( isExternallyDrawn )
-                refreshNeeded = true;
-
-            // tell the annotation proxy
-            if ( proxy && proxy->supports(AnnotationProxy::Removal) )
-                proxy->notifyRemoval( annotation, page );
-
-            kp->removeAnnotation( annotation ); // Also destroys the object
-            changed = true;
-        }
+        QUndoCommand *uc = new RemoveAnnotationCommand(this->d, annotation, page);
+        d->m_undoStack->push(uc);
     }
-    if ( changed )
-    {
-        // in case we removed even only one annotation, notify observers about the change
-        d->notifyAnnotationChanges( page );
-
-        if ( refreshNeeded )
-        {
-            // Redraw everything, including ExternallyDrawn annotations
-            d->refreshPixmaps( page );
-        }
-    }
-
-    d->warnLimitedAnnotSupport();
+    d->m_undoStack->endMacro();
 }
 
 bool DocumentPrivate::canAddAnnotationsNatively() const
@@ -2893,6 +3080,16 @@ void Document::setPageTextSelection( int page, RegularAreaRect * rect, const QCo
     foreachObserver( notifyPageChanged( page, DocumentObserver::TextSelection ) );
 }
 
+bool Document::canUndo() const
+{
+    return d->m_undoStack->canUndo();
+}
+
+bool Document::canRedo() const
+{
+    return d->m_undoStack->canRedo();
+}
+
 /* REFERENCE IMPLEMENTATION: better calling setViewport from other code
 void Document::setNextPage()
 {
@@ -2908,7 +3105,7 @@ void Document::setPrevPage()
         setViewport( DocumentViewport( (*d->m_viewportIterator).pageNumber - 1 ) );
 }
 */
-void Document::setViewportPage( int page, int excludeId, bool smoothMove )
+void Document::setViewportPage( int page, DocumentObserver *excludeObserver, bool smoothMove )
 {
     // clamp page in range [0 ... numPages-1]
     if ( page < 0 )
@@ -2917,10 +3114,10 @@ void Document::setViewportPage( int page, int excludeId, bool smoothMove )
         page = d->m_pagesVector.count() - 1;
 
     // make a viewport from the page and broadcast it
-    setViewport( DocumentViewport( page ), excludeId, smoothMove );
+    setViewport( DocumentViewport( page ), excludeObserver, smoothMove );
 }
 
-void Document::setViewport( const DocumentViewport & viewport, int excludeId, bool smoothMove )
+void Document::setViewport( const DocumentViewport & viewport, DocumentObserver *excludeObserver, bool smoothMove )
 {
     if ( !viewport.isValid() )
     {
@@ -2965,24 +3162,22 @@ void Document::setViewport( const DocumentViewport & viewport, int excludeId, bo
     const bool currentPageChanged = (oldPageNumber != currentViewportPage);
 
     // notify change to all other (different from id) observers
-    QMap< int, DocumentObserver * >::const_iterator it = d->m_observers.constBegin(), end = d->m_observers.constEnd();
-    for ( ; it != end ; ++ it )
+    foreach(DocumentObserver *o, d->m_observers)
     {
-        if ( it.key() != excludeId )
-            (*it)->notifyViewportChanged( smoothMove );
+        if ( o != excludeObserver )
+            o->notifyViewportChanged( smoothMove );
 
         if ( currentPageChanged )
-            (*it)->notifyCurrentPageChanged( oldPageNumber, currentViewportPage );
+            o->notifyCurrentPageChanged( oldPageNumber, currentViewportPage );
     }
 }
 
-void Document::setZoom(int factor, int excludeId)
+void Document::setZoom(int factor, DocumentObserver *excludeObserver)
 {
     // notify change to all other (different from id) observers
-    QMap< int, DocumentObserver * >::const_iterator it = d->m_observers.constBegin(), end = d->m_observers.constEnd();
-    for ( ; it != end ; ++ it )
-        if ( it.key() != excludeId )
-            (*it)->notifyZoom( factor );
+    foreach(DocumentObserver *o, d->m_observers)
+        if (o != excludeObserver)
+            o->notifyZoom( factor );
 }
 
 void Document::setPrevViewport()
@@ -3118,7 +3313,7 @@ void Document::searchText( int searchID, const QString & text, bool fromStart, Q
                 pagesDone++;
             }
         }
-        
+
         DoContinueDirectionMatchSearchStruct *searchStruct = new DoContinueDirectionMatchSearchStruct();
         searchStruct->forward = forward;
         searchStruct->pagesToNotify = pagesToNotify;
@@ -3211,6 +3406,16 @@ void Document::resetSearch( int searchID )
 void Document::cancelSearch()
 {
     d->m_searchCancelled = true;
+}
+
+void Document::undo()
+{
+    d->m_undoStack->undo();
+}
+
+void Document::redo()
+{
+    d->m_undoStack->redo();
 }
 
 BookmarkManager * Document::bookmarkManager() const
@@ -3313,7 +3518,7 @@ void Document::processAction( const Action * action )
                 if ( !nextViewport.isValid() )
                     return;
 
-                setViewport( nextViewport, -1, true );
+                setViewport( nextViewport, 0, true );
                 d->m_nextDocumentViewport = DocumentViewport();
                 d->m_nextDocumentDestination = QString();
             }
@@ -3617,7 +3822,7 @@ QString Document::printError() const
         case Generator::UnknownPrintError:
             return QString();
     }
-    
+
     return QString();
 }
 
@@ -3795,12 +4000,12 @@ void Document::unregisterView( View *view )
 QByteArray Document::fontData(const FontInfo &font) const
 {
     QByteArray result;
-    
+
     if (d->m_generator)
     {
         QMetaObject::invokeMethod(d->m_generator, "requestFontData", Qt::DirectConnection, Q_ARG(Okular::FontInfo, font), Q_ARG(QByteArray *, &result));
     }
-    
+
     return result;
 }
 
@@ -4039,7 +4244,7 @@ void DocumentPrivate::requestDone( PixmapRequest * req )
     QLinkedList< AllocatedPixmap * >::iterator aIt = m_allocatedPixmaps.begin();
     QLinkedList< AllocatedPixmap * >::iterator aEnd = m_allocatedPixmaps.end();
     for ( ; aIt != aEnd; ++aIt )
-        if ( (*aIt)->page == req->pageNumber() && (*aIt)->id == req->id() )
+        if ( (*aIt)->page == req->pageNumber() && (*aIt)->observer == req->observer() )
         {
             AllocatedPixmap * p = *aIt;
             m_allocatedPixmaps.erase( aIt );
@@ -4048,27 +4253,27 @@ void DocumentPrivate::requestDone( PixmapRequest * req )
             break;
         }
 
-    QMap< int, DocumentObserver * >::const_iterator itObserver = m_observers.constFind( req->id() );
-    if ( itObserver != m_observers.constEnd() )
+    DocumentObserver *observer = req->observer();
+    if ( m_observers.contains(observer) )
     {
         // [MEM] 1.2 append memory allocation descriptor to the FIFO
         qulonglong memoryBytes = 0;
-        const TilesManager *tm = ( req->id() == PAGEVIEW_ID ) ? req->page()->d->tilesManager() : 0;
+        const TilesManager *tm = ( req->observer() == m_tiledObserver ) ? req->page()->d->tilesManager() : 0;
         if ( tm )
             memoryBytes = tm->totalMemory();
         else
             memoryBytes = 4 * req->width() * req->height();
 
-        AllocatedPixmap * memoryPage = new AllocatedPixmap( req->id(), req->pageNumber(), memoryBytes );
+        AllocatedPixmap * memoryPage = new AllocatedPixmap( req->observer(), req->pageNumber(), memoryBytes );
         m_allocatedPixmaps.append( memoryPage );
         m_allocatedPixmapsTotalMemory += memoryBytes;
 
         // 2. notify an observer that its pixmap changed
-        itObserver.value()->notifyPageChanged( req->pageNumber(), DocumentObserver::Pixmap );
+        observer->notifyPageChanged( req->pageNumber(), DocumentObserver::Pixmap );
     }
 #ifndef NDEBUG
     else
-        kWarning(OkularDebug) << "Receiving a done request for the defunct observer" << req->id();
+        kWarning(OkularDebug) << "Receiving a done request for the defunct observer" << observer;
 #endif
 
     // 3. delete request

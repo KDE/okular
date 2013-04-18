@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2004-2006 by Albert Astals Cid <tsdgeos@terra.es>       *
+ *   Copyright (C) 2004-2006 by Albert Astals Cid <aacid@kde.org>          *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -32,6 +32,7 @@
 #include "core/generator.h"
 #include "core/page.h"
 #include "settings.h"
+#include "priorities.h"
 
 class ThumbnailWidget;
 
@@ -209,19 +210,13 @@ ThumbnailList::ThumbnailList( QWidget *parent, Okular::Document *document )
 
     setAcceptDrops( true );
 
-    QPalette pal = palette();
-    // set contents background to the 'base' color
-    QPalette viewportPal = viewport()->palette();
-    viewportPal.setColor( viewport()->backgroundRole(), pal.color( QPalette::Base ) );
-    viewport()->setPalette( viewportPal );
+    viewport()->setBackgroundRole( QPalette::Base );
 
     setWidget( d );
     // widget setup: can be focused by mouse click (not wheel nor tab)
     widget()->setFocusPolicy( Qt::ClickFocus );
     widget()->show();
-    QPalette widgetPal = widget()->palette();
-    widgetPal.setColor( widget()->backgroundRole(), pal.color( QPalette::Base ) );
-    widget()->setPalette( widgetPal );
+    widget()->setBackgroundRole( QPalette::Base );
 
     connect( verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(slotRequestVisiblePixmaps(int)) );
 }
@@ -407,17 +402,12 @@ bool ThumbnailList::canUnloadPixmap( int pageNumber ) const
 
 void ThumbnailList::updateWidgets()
 {
-    // find all widgets that intersects the viewport and update them
+    // Update all visible widgets
     QList<ThumbnailWidget *>::const_iterator vIt = d->m_visibleThumbnails.constBegin(), vEnd = d->m_visibleThumbnails.constEnd();
     for ( ; vIt != vEnd; ++vIt )
     {
         ThumbnailWidget * t = *vIt;
-        const QRect thumbRect = t->rect().translated( widget()->mapToParent( t->pos() ) );
-        // update only the exposed area of the widget (saves pixels..)
-        const QRect relativeRect = thumbRect.intersect( viewport()->rect() );
-        if ( !relativeRect.isValid() )
-            continue;
-        t->update( relativeRect );
+        t->update();
     }
 }
 
@@ -648,10 +638,9 @@ void ThumbnailListPrivate::slotRequestVisiblePixmaps( int /*newContentsY*/ )
         // add ThumbnailWidget to visible list
         m_visibleThumbnails.push_back( t );
         // if pixmap not present add it to requests
-        if ( !t->page()->hasPixmap( THUMBNAILS_ID, t->pixmapWidth(), t->pixmapHeight() ) )
+        if ( !t->page()->hasPixmap( q, t->pixmapWidth(), t->pixmapHeight() ) )
         {
-            Okular::PixmapRequest * p = new Okular::PixmapRequest(
-                    THUMBNAILS_ID, t->pageNumber(), t->pixmapWidth(), t->pixmapHeight(), THUMBNAILS_PRIO, true );
+            Okular::PixmapRequest * p = new Okular::PixmapRequest( q, t->pageNumber(), t->pixmapWidth(), t->pixmapHeight(), THUMBNAILS_PRIO, Okular::PixmapRequest::Asynchronous );
             requestedPixmaps.push_back( p );
         }
     }
@@ -939,7 +928,7 @@ void ThumbnailWidget::paint( QPainter &p, const QRect &_clipRect )
     const QColor fillColor = m_selected ? pal.color( QPalette::Active, QPalette::Highlight ) : pal.color( QPalette::Active, QPalette::Base );
     p.fillRect( clipRect, fillColor );
     p.setPen( m_selected ? pal.color( QPalette::Active, QPalette::HighlightedText ) : pal.color( QPalette::Active, QPalette::Text ) );
-    p.drawText( 0, m_pixmapHeight + m_margin, width, m_labelHeight, Qt::AlignCenter, QString::number( m_labelNumber ) );
+    p.drawText( 0, m_pixmapHeight + (m_margin - 3), width, m_labelHeight, Qt::AlignCenter, QString::number( m_labelNumber ) );
 
     // draw page outline and pixmap
     if ( clipRect.top() < m_pixmapHeight + m_margin )
@@ -972,8 +961,7 @@ void ThumbnailWidget::paint( QPainter &p, const QRect &_clipRect )
         {
             int flags = PagePainter::Accessibility | PagePainter::Highlights |
                         PagePainter::Annotations;
-            PagePainter::paintPageOnPainter( &p, m_page, THUMBNAILS_ID, flags,
-                                             m_pixmapWidth, m_pixmapHeight, clipRect );
+            PagePainter::paintPageOnPainter( &p, m_page, m_parent->q, flags, m_pixmapWidth, m_pixmapHeight, clipRect );
         }
 
         if ( !m_visibleRect.isNull() )

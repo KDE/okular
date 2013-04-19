@@ -100,7 +100,7 @@ QString captionForAnnotation( const Okular::Annotation * ann )
             ret = i18n( "Stamp" );
             break;
         case Okular::Annotation::AInk:
-            ret = i18n( "Ink" );
+            ret = i18n( "Freehand Line" );
             break;
         case Okular::Annotation::ACaret:
             ret = i18n( "Caret" );

@@ -132,7 +132,7 @@ void AnnotsPropertiesDialog::setCaptionTextbyAnnotType()
             captiontext = i18n( "Stamp Properties" );
             break;
         case Okular::Annotation::AInk:
-            captiontext = i18n( "Ink Properties" );
+            captiontext = i18n( "Freehand Line Properties" );
             break;
         case Okular::Annotation::ACaret:
             captiontext = i18n( "Caret Properties" );

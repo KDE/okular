@@ -120,7 +120,10 @@ void AnnotsPropertiesDialog::setCaptionTextbyAnnotType()
                 captiontext = i18n( "Inline Note Properties" );
             break;
         case Okular::Annotation::ALine:
-            captiontext = i18n( "Line Properties" );
+            if ( ((Okular::LineAnnotation*)m_annot)->linePoints().count() == 2 )
+                captiontext = i18n( "Straight Line Properties" );
+            else
+                captiontext = i18n( "Polygon Properties" );
             break;
         case Okular::Annotation::AGeom:
             captiontext = i18n( "Geometry Properties" );

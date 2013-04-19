@@ -74,7 +74,10 @@ QString captionForAnnotation( const Okular::Annotation * ann )
                 ret = i18n( "Inline Note" );
             break;
         case Okular::Annotation::ALine:
-            ret = i18n( "Line" );
+            if( ( (Okular::LineAnnotation*)ann )->linePoints().count() == 2 )
+                ret = i18n( "Straight Line" );
+            else
+                ret = i18n( "Polygon" );
             break;
         case Okular::Annotation::AGeom:
             ret = i18n( "Geometry" );

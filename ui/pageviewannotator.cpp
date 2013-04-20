@@ -1058,7 +1058,7 @@ QString PageViewAnnotator::defaultToolName( const QDomElement &toolElement )
     else if ( annotType == "rectangle" )
         return i18n( "Rectangle" );
     else if ( annotType == "squiggly" )
-        return i18n( "Squiggly" );
+        return i18n( "Squiggle" );
     else if ( annotType == "stamp" )
         return i18n( "Stamp" );
     else if ( annotType == "straight-line" )

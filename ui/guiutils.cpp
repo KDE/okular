@@ -80,7 +80,21 @@ QString captionForAnnotation( const Okular::Annotation * ann )
             ret = i18n( "Geometry" );
             break;
         case Okular::Annotation::AHighlight:
-            ret = i18n( "Highlight" );
+            switch ( ( (Okular::HighlightAnnotation*)ann )->highlightType() )
+            {
+                case Okular::HighlightAnnotation::Highlight:
+                    ret = i18n( "Highlight" );
+                    break;
+                case Okular::HighlightAnnotation::Squiggly:
+                    ret = i18n( "Squiggle" );
+                    break;
+                case Okular::HighlightAnnotation::Underline:
+                    ret = i18n( "Underline" );
+                    break;
+                case Okular::HighlightAnnotation::StrikeOut:
+                    ret = i18n( "Strike Out" );
+                    break;
+            }
             break;
         case Okular::Annotation::AStamp:
             ret = i18n( "Stamp" );

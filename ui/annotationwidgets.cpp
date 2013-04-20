@@ -525,7 +525,7 @@ QWidget * HighlightAnnotationWidget::createStyleWidget()
     typelay->addWidget( m_typeCombo );
 
     m_typeCombo->addItem( i18n( "Highlight" ) );
-    m_typeCombo->addItem( i18n( "Squiggly" ) );
+    m_typeCombo->addItem( i18n( "Squiggle" ) );
     m_typeCombo->addItem( i18n( "Underline" ) );
     m_typeCombo->addItem( i18n( "Strike out" ) );
     m_typeCombo->setCurrentIndex( m_hlAnn->highlightType() );

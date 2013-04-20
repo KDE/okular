@@ -126,7 +126,7 @@ void AnnotsPropertiesDialog::setCaptionTextbyAnnotType()
             captiontext = i18n( "Geometry Properties" );
             break;
         case Okular::Annotation::AHighlight:
-            captiontext = i18n( "Highlight Properties" );
+            captiontext = i18n( "Text Markup Properties" );
             break;
         case Okular::Annotation::AStamp:
             captiontext = i18n( "Stamp Properties" );

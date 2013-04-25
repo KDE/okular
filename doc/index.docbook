@@ -1747,7 +1747,7 @@ Add a 'Find Previous' entry
 					<term><guilabel>Show hints and info messages</guilabel></term>
 					<listitem>
 						<para>Whether to show some informative messages on startup, file
-							load, &etc;.</para>
+							load, &etc;</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>

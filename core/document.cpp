@@ -1555,8 +1555,6 @@ void DocumentPrivate::refreshPixmaps( int pageNumber )
     for ( ; it != itEnd; ++it )
     {
         QSize size = (*it).m_pixmap->size();
-        if ( (*it).m_rotation % 2 )
-            size.transpose();
         PixmapRequest * p = new PixmapRequest( it.key(), pageNumber, size.width(), size.height(), 1, PixmapRequest::Asynchronous );
         p->d->mForce = true;
         requestedPixmaps.push_back( p );

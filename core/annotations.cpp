@@ -782,6 +782,9 @@ void Annotation::setAnnotationProperties( const QDomNode& node )
     d_ptr->m_nativeId = nativeID;
     d_ptr->m_flags = d_ptr->m_flags | internalFlags;
     d_ptr->m_disposeFunc = disposeFunc;
+
+    // Transform annotation to current page rotation
+    d_ptr->transform( d_ptr->m_page->rotationMatrix() );
 }
 
 void AnnotationPrivate::annotationTransform( const QTransform &matrix )

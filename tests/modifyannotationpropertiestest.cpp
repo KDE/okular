@@ -30,6 +30,7 @@ private slots:
     void cleanup();
     void testModifyAnnotationProperties();
     void testModifyDefaultAnnotationProperties();
+    void testModifyAnnotationPropertiesWithRotation_Bug318828();
 private:
     Okular::Document *m_document;
     Okular::TextAnnotation *m_annot1;
@@ -132,6 +133,35 @@ void ModifyAnnotationPropertiesTest::testModifyDefaultAnnotationProperties()
     m_document->undo();
     QCOMPARE( 1.0, m_annot1->style().opacity() );
     QCOMPARE( origLine1Xml, TestingUtils::getAnnotationXml( m_annot1 ) );
+}
+
+void ModifyAnnotationPropertiesTest::testModifyAnnotationPropertiesWithRotation_Bug318828()
+{
+    Okular::NormalizedRect boundingRect = Okular::NormalizedRect( 0.1, 0.1, 0.15, 0.15 );
+    Okular::NormalizedRect transformedBoundingRect;
+    m_annot1->setBoundingRectangle( boundingRect );
+    m_document->addPageAnnotation( 0, m_annot1 );
+
+    transformedBoundingRect = m_annot1->transformedBoundingRectangle();
+
+    // Before page rotation boundingRect and transformedBoundingRect should be equal
+    QCOMPARE( boundingRect, transformedBoundingRect );
+    m_document->setRotation( 1 );
+
+    // After rotation boundingRect should remain unchanged but
+    // transformedBoundingRect should no longer equal boundingRect
+    QCOMPARE( boundingRect, m_annot1->boundingRectangle() );
+    transformedBoundingRect = m_annot1->transformedBoundingRectangle();
+    QVERIFY( !( boundingRect == transformedBoundingRect ) );
+
+    // Modifying the properties of m_annot1 while page is rotated shouldn't
+    // alter either boundingRect or transformedBoundingRect
+    m_document->prepareToModifyAnnotationProperties( m_annot1 );
+    m_annot1->style().setOpacity( 0.5 );
+    m_document->modifyPageAnnotationProperties( 0, m_annot1 );
+
+    QCOMPARE( boundingRect, m_annot1->boundingRectangle() );
+    QCOMPARE( transformedBoundingRect, m_annot1->transformedBoundingRectangle() );
 }
 
 QTEST_KDEMAIN( ModifyAnnotationPropertiesTest, GUI )

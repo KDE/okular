@@ -1151,14 +1151,7 @@ void DocumentPrivate::performSetAnnotationContents( const QString & newContents,
 {
     bool appearanceChanged = false;
 
-    // Set window text
-    if ( !annot->window().text().isEmpty() )
-    {
-        annot->window().setText( newContents );
-        return;
-    }
-
-    // Handle special cases
+    // Check if appearanceChanged should be true
     switch ( annot->subType() )
     {
         // If it's an in-place TextAnnotation, set the inplace text
@@ -1167,7 +1160,6 @@ void DocumentPrivate::performSetAnnotationContents( const QString & newContents,
             Okular::TextAnnotation * txtann = static_cast< Okular::TextAnnotation * >( annot );
             if ( txtann->textType() == Okular::TextAnnotation::InPlace )
             {
-                txtann->setInplaceText( newContents );
                 appearanceChanged = true;
             }
             break;

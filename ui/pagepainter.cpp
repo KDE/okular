@@ -696,7 +696,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                     painter.scale( 1.0 * scaledWidth / page->width(), 1.0 * scaledHeight / page->height() );
                     painter.drawText( 2, 2, image.width() - 2, image.height() - 2,
                                       Qt::AlignTop | halign | Qt::TextWordWrap,
-                                      text->inplaceText() );
+                                      text->contents() );
                     painter.resetTransform();
                     painter.drawRect( 0, 0, image.width() - 1, image.height() - 1 );
                     painter.end();

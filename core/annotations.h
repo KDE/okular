@@ -512,16 +512,6 @@ class OKULAR_EXPORT Annotation
                  */
                 QString summary() const;
 
-                /**
-                 * Sets the @p text of the window.
-                 */
-                void setText( const QString &text );
-
-                /**
-                 * Returns the text of the window.
-                 */
-                QString text() const;
-
             private:
                 class Private;
                 Private* const d;
@@ -814,16 +804,6 @@ class OKULAR_EXPORT TextAnnotation : public Annotation
          * Returns the inplace alignment of the text annotation.
          */
         int inplaceAlignment() const;
-
-        /**
-         * Sets the inplace @p text of the text annotation.
-         */
-        void setInplaceText( const QString &text );
-
-        /**
-         * Returns the inplace text of the text annotation.
-         */
-        QString inplaceText() const;
 
         /**
          * Sets the inplace callout @p point at @p index.

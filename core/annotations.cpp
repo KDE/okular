@@ -92,13 +92,17 @@ QDomElement AnnotationUtils::findChildElement( const QDomNode & parentNode,
 QRect AnnotationUtils::annotationGeometry( const Annotation * ann,
     double scaledWidth, double scaledHeight )
 {
+    const QRect rect = ann->transformedBoundingRectangle().geometry( (int)scaledWidth, (int)scaledHeight );
     if ( ann->subType() == Annotation::AText && ( ( (TextAnnotation*)ann )->textType() == TextAnnotation::Linked ) )
     {
-        return QRect( (int)( ann->transformedBoundingRectangle().left * scaledWidth ),
-                      (int)( ann->transformedBoundingRectangle().top * scaledHeight ), 24, 24 );
+        // To be honest i have no clue of why the 24,24 is here, maybe to make sure it's not too small?
+        // But why only for linked text?
+        const QRect rect24 = QRect( (int)( ann->transformedBoundingRectangle().left * scaledWidth ),
+                                    (int)( ann->transformedBoundingRectangle().top * scaledHeight ), 24, 24 );
+        return rect24.united(rect);
     }
 
-    return ann->transformedBoundingRectangle().geometry( (int)scaledWidth, (int)scaledHeight );
+    return rect;
 }
 //END AnnotationUtils implementation
 

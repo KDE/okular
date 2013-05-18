@@ -54,7 +54,7 @@ class WidgetAnnotTools : public QWidget
         KPushButton *m_btnMoveDown;
 
     private slots:
-        void slotItemDoubleClicked( QListWidgetItem * );
+        void slotItemActivated( QListWidgetItem * );
         void slotRowChanged( int );
         void slotAdd( bool );
         void slotRemove( bool );

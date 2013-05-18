@@ -63,7 +63,7 @@ WidgetAnnotTools::WidgetAnnotTools( QWidget * parent )
     vBoxLayout->addStretch();
     hBoxLayout->addLayout( vBoxLayout );
 
-    connect( m_list, SIGNAL( itemDoubleClicked(QListWidgetItem*) ), this, SLOT( slotItemDoubleClicked(QListWidgetItem*) ) );
+    connect( m_list, SIGNAL( itemActivated(QListWidgetItem*) ), this, SLOT( slotItemActivated(QListWidgetItem*) ) );
     connect( m_list, SIGNAL( currentRowChanged(int) ), this, SLOT( slotRowChanged(int) ) );
     connect( m_btnAdd, SIGNAL( clicked(bool) ), this, SLOT( slotAdd(bool) ) );
     connect( m_btnRemove, SIGNAL( clicked(bool) ), this, SLOT( slotRemove(bool) ) );
@@ -155,7 +155,7 @@ void WidgetAnnotTools::updateButtons()
     m_btnMoveDown->setEnabled( row != -1 && row != last );
 }
 
-void WidgetAnnotTools::slotItemDoubleClicked( QListWidgetItem *listEntry )
+void WidgetAnnotTools::slotItemActivated( QListWidgetItem *listEntry )
 {
     QDomDocument doc;
     doc.setContent( listEntry->data( ToolXmlRole ).value<QString>() );

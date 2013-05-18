@@ -13,15 +13,16 @@
 
 #include <kaboutdata.h>
 #include <klocale.h>
+#include <kconfigdialog.h>
 
 static KAboutData createAboutData()
 {
     KAboutData aboutData(
          "okular_ooo",
          "okular_ooo",
-         ki18n( "OpenOffice Document Backend" ),
+         ki18n( "OpenDocument Text Backend" ),
          "0.2.3",
-         ki18n( "A renderer for OpenOffice text documents" ),
+         ki18n( "A renderer for OpenDocument Text documents" ),
          KAboutData::License_GPL,
          ki18n( "© 2006-2008 Tobias Koenig" )
     );
@@ -33,6 +34,14 @@ static KAboutData createAboutData()
 OKULAR_EXPORT_PLUGIN( KOOOGenerator, createAboutData() )
 
 KOOOGenerator::KOOOGenerator( QObject *parent, const QVariantList &args )
-  : Okular::TextDocumentGenerator( new OOO::Converter, parent, args )
+  : Okular::TextDocumentGenerator( new OOO::Converter, "okular_ooo_generator_settings", parent, args )
 {
+}
+
+void KOOOGenerator::addPages( KConfigDialog* dlg )
+{
+    Okular::TextDocumentSettingsWidget *widget = generalSettingsWidget();
+    widget->setParent( dlg );
+
+    dlg->addPage( widget, generalSettings(), i18n("OpenDocument Text"), "application-vnd.oasis.opendocument.text", i18n("OpenDocument Text Backend Configuration") );
 }

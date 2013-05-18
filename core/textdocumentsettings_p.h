@@ -8,20 +8,35 @@
  ***************************************************************************/
 
 
-#ifndef _TXT_GENERATOR_H_
-#define _TXT_GENERATOR_H_
+#ifndef _OKULAR_TEXTDOCUMENTSETTINGS_P_H_
+#define _OKULAR_TEXTDOCUMENTSETTINGS_P_H_
 
+class KFontRequester;
+class Ui_TextDocumentSettings;
 
-#include <core/textdocumentgenerator.h>
+namespace Okular {
 
-class TxtGenerator : public Okular::TextDocumentGenerator
+class TextDocumentSettingsWidgetPrivate
 {
     public:
-        TxtGenerator( QObject *parent, const QVariantList &args );
-        ~TxtGenerator() {}
+        /**
+         * @note the private class won't take ownership of the ui, so you
+         *       must delete it yourself
+         */
+        TextDocumentSettingsWidgetPrivate(Ui_TextDocumentSettings *ui)
+            : mUi(ui)
+        {}
 
-        // [INHERITED] reparse configuration
-        void addPages( KConfigDialog* dlg );
+        KFontRequester *mFont;
+        Ui_TextDocumentSettings *mUi;
 };
+
+class TextDocumentSettingsPrivate
+{
+    public:
+        QFont mFont;
+};
+
+}
 
 #endif

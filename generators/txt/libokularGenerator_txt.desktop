@@ -65,4 +65,4 @@ MimeType=text/plain;
 X-KDE-Library=okularGenerator_txt
 X-KDE-Priority=2
 X-KDE-okularAPIVersion=1
-X-KDE-okularHasInternalSettings=false
+X-KDE-okularHasInternalSettings=true

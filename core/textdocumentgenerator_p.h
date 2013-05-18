@@ -114,7 +114,7 @@ class TextDocumentGeneratorPrivate : public GeneratorPrivate
 
     public:
         TextDocumentGeneratorPrivate( TextDocumentConverter *converter )
-            : mConverter( converter ), mDocument( 0 )
+            : mConverter( converter ), mDocument( 0 ), mGeneralSettingsWidget( 0 ), mGeneralSettings( 0 )
         {
         }
 
@@ -122,7 +122,10 @@ class TextDocumentGeneratorPrivate : public GeneratorPrivate
         {
             delete mConverter;
             delete mDocument;
+            delete mGeneralSettingsWidget;
         }
+
+        void initializeGenerator();
 
         Q_DECLARE_PUBLIC( TextDocumentGenerator )
 
@@ -138,6 +141,8 @@ class TextDocumentGeneratorPrivate : public GeneratorPrivate
         void addTitle( int level, const QString &title, const QTextBlock &position );
         void addMetaData( const QString &key, const QString &value, const QString &title );
         void addMetaData( DocumentInfo::Key, const QString &value );
+
+        void generalSettingsWidgetDestroyed();
 
         void generateLinkInfos();
         void generateAnnotationInfos();
@@ -188,6 +193,11 @@ class TextDocumentGeneratorPrivate : public GeneratorPrivate
           Annotation *annotation;
         };
         QList<AnnotationInfo> mAnnotationInfos;
+
+        TextDocumentSettingsWidget *mGeneralSettingsWidget;
+        TextDocumentSettings *mGeneralSettings;
+
+        QFont mFont;
 };
 
 }

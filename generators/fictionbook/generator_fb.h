@@ -16,6 +16,9 @@ class FictionBookGenerator : public Okular::TextDocumentGenerator
 {
     public:
         FictionBookGenerator( QObject *parent, const QVariantList &args );
+
+        // [INHERITED] reparse configuration
+        void addPages( KConfigDialog* dlg );
 };
 
 #endif

@@ -16,6 +16,9 @@ class KOOOGenerator : public Okular::TextDocumentGenerator
 {
   public:
     KOOOGenerator( QObject *parent, const QVariantList &args );
+
+    // [INHERITED] reparse configuration
+    void addPages( KConfigDialog* dlg );
 };
 
 #endif

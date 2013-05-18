@@ -213,36 +213,73 @@ void TextDocumentGeneratorPrivate::generateTitleInfos()
     }
 }
 
+void TextDocumentGeneratorPrivate::initializeGenerator()
+{
+    Q_Q( TextDocumentGenerator );
+
+    mConverter->d_ptr->mParent = q->d_func();
+
+    if ( mGeneralSettings ) {
+        mFont = mGeneralSettings->font();
+    }
+
+    q->setFeature( Generator::TextExtraction );
+    q->setFeature( Generator::PrintNative );
+    q->setFeature( Generator::PrintToFile );
+#ifdef OKULAR_TEXTDOCUMENT_THREADED_RENDERING
+    if ( QFontDatabase::supportsThreadedFontRendering() )
+        q->setFeature( Generator::Threaded );
+#endif
+
+    QObject::connect( mConverter, SIGNAL(addAction(Action*,int,int)),
+                      q, SLOT(addAction(Action*,int,int)) );
+    QObject::connect( mConverter, SIGNAL(addAnnotation(Annotation*,int,int)),
+                      q, SLOT(addAnnotation(Annotation*,int,int)) );
+    QObject::connect( mConverter, SIGNAL(addTitle(int,QString,QTextBlock)),
+                      q, SLOT(addTitle(int,QString,QTextBlock)) );
+    QObject::connect( mConverter, SIGNAL(addMetaData(QString,QString,QString)),
+                      q, SLOT(addMetaData(QString,QString,QString)) );
+    QObject::connect( mConverter, SIGNAL(addMetaData(DocumentInfo::Key,QString)),
+                      q, SLOT(addMetaData(DocumentInfo::Key,QString)) );
+
+    QObject::connect( mConverter, SIGNAL(error(QString,int)),
+                      q, SIGNAL(error(QString,int)) );
+    QObject::connect( mConverter, SIGNAL(warning(QString,int)),
+                      q, SIGNAL(warning(QString,int)) );
+    QObject::connect( mConverter, SIGNAL(notice(QString,int)),
+                      q, SIGNAL(notice(QString,int)) );
+
+    QObject::connect( mGeneralSettingsWidget, SIGNAL(destroyed()),
+                      q, SLOT(generalSettingsWidgetDestroyed()) );
+}
+
+void TextDocumentGeneratorPrivate::generalSettingsWidgetDestroyed()
+{
+    /**
+     * If addPage() is called from generator, it will install parent for this object,
+     * and parent will destroy this object before ~TextDocumentGeneratorPrivate()
+     *
+     * So just reset it.
+     */
+    mGeneralSettingsWidget = 0;
+}
+
+TextDocumentGenerator::TextDocumentGenerator( TextDocumentConverter *converter, const QString& configName, QObject *parent, const QVariantList &args )
+    : Okular::Generator( *new TextDocumentGeneratorPrivate( converter ), parent, args )
+{
+    Q_D( TextDocumentGenerator );
+    d->mGeneralSettingsWidget = new TextDocumentSettingsWidget();
+    d->mGeneralSettings = new TextDocumentSettings( configName, this );
+
+    d->initializeGenerator();
+}
+
 TextDocumentGenerator::TextDocumentGenerator( TextDocumentConverter *converter, QObject *parent, const QVariantList &args )
     : Okular::Generator( *new TextDocumentGeneratorPrivate( converter ), parent, args )
 {
-    converter->d_ptr->mParent = d_func();
+    Q_D( TextDocumentGenerator );
 
-    setFeature( TextExtraction );
-    setFeature( PrintNative );
-    setFeature( PrintToFile );
-#ifdef OKULAR_TEXTDOCUMENT_THREADED_RENDERING
-    if ( QFontDatabase::supportsThreadedFontRendering() )
-        setFeature( Threaded );
-#endif
-
-    connect( converter, SIGNAL(addAction(Action*,int,int)),
-             this, SLOT(addAction(Action*,int,int)) );
-    connect( converter, SIGNAL(addAnnotation(Annotation*,int,int)),
-             this, SLOT(addAnnotation(Annotation*,int,int)) );
-    connect( converter, SIGNAL(addTitle(int,QString,QTextBlock)),
-             this, SLOT(addTitle(int,QString,QTextBlock)) );
-    connect( converter, SIGNAL(addMetaData(QString,QString,QString)),
-             this, SLOT(addMetaData(QString,QString,QString)) );
-    connect( converter, SIGNAL(addMetaData(DocumentInfo::Key,QString)),
-             this, SLOT(addMetaData(DocumentInfo::Key,QString)) );
-
-    connect( converter, SIGNAL(error(QString,int)),
-             this, SIGNAL(error(QString,int)) );
-    connect( converter, SIGNAL(warning(QString,int)),
-             this, SIGNAL(warning(QString,int)) );
-    connect( converter, SIGNAL(notice(QString,int)),
-             this, SIGNAL(notice(QString,int)) );
+    d->initializeGenerator();
 }
 
 TextDocumentGenerator::~TextDocumentGenerator()
@@ -374,6 +411,7 @@ QImage TextDocumentGeneratorPrivate::image( PixmapRequest * request )
 #ifdef OKULAR_TEXTDOCUMENT_THREADED_RENDERING
     q->userMutex()->lock();
 #endif
+    mDocument->setDefaultFont( mFont );
     mDocument->drawContents( &p, rect );
 #ifdef OKULAR_TEXTDOCUMENT_THREADED_RENDERING
     q->userMutex()->unlock();
@@ -482,6 +520,45 @@ bool TextDocumentGenerator::exportTo( const QString &fileName, const Okular::Exp
 #endif
     }
     return false;
+}
+
+bool TextDocumentGenerator::reparseConfig()
+{
+    Q_D( TextDocumentGenerator );
+
+    // don't have settings, just return "no changes".
+    if ( !d->mGeneralSettingsWidget ) {
+        return false;
+    }
+
+    const QFont newFont = d->mGeneralSettingsWidget->font();
+
+    if ( newFont != d->mFont ) {
+        d->mFont = newFont;
+        return true;
+    }
+
+    return false;
+}
+
+void TextDocumentGenerator::addPages( KConfigDialog* /*dlg*/ )
+{
+    kWarning() << "You forgot to reimplement addPages in your TextDocumentGenerator";
+    return;
+}
+
+TextDocumentSettingsWidget* TextDocumentGenerator::generalSettingsWidget()
+{
+    Q_D( TextDocumentGenerator );
+
+    return d->mGeneralSettingsWidget;
+}
+
+TextDocumentSettings* TextDocumentGenerator::generalSettings()
+{
+    Q_D( TextDocumentGenerator );
+
+    return d->mGeneralSettings;
 }
 
 #include "textdocumentgenerator.moc"

@@ -123,4 +123,4 @@ MimeType=application/x-fictionbook+xml;
 X-KDE-Library=okularGenerator_fb
 X-KDE-Priority=1
 X-KDE-okularAPIVersion=1
-X-KDE-okularHasInternalSettings=false
+X-KDE-okularHasInternalSettings=true

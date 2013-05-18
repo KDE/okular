@@ -34,7 +34,7 @@ static KAboutData createAboutData()
 OKULAR_EXPORT_PLUGIN( KOOOGenerator, createAboutData() )
 
 KOOOGenerator::KOOOGenerator( QObject *parent, const QVariantList &args )
-  : Okular::TextDocumentGenerator( new OOO::Converter, "ooo_generator_settings", parent, args )
+  : Okular::TextDocumentGenerator( new OOO::Converter, "okular_ooo_generator_settings", parent, args )
 {
 }
 

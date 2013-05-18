@@ -34,7 +34,7 @@ static KAboutData createAboutData()
 OKULAR_EXPORT_PLUGIN( EPubGenerator, createAboutData() )
 
 EPubGenerator::EPubGenerator( QObject *parent, const QVariantList &args )
-: Okular::TextDocumentGenerator( new Epub::Converter, "epub_generator_settings", parent, args )
+: Okular::TextDocumentGenerator( new Epub::Converter, "okular_epub_generator_settings", parent, args )
 {
 }
 

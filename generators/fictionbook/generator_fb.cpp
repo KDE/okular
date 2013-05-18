@@ -34,7 +34,7 @@ static KAboutData createAboutData()
 OKULAR_EXPORT_PLUGIN( FictionBookGenerator, createAboutData() )
 
 FictionBookGenerator::FictionBookGenerator( QObject *parent, const QVariantList &args )
-    : Okular::TextDocumentGenerator( new FictionBook::Converter, "fictionbook_generator_settings", parent, args )
+    : Okular::TextDocumentGenerator( new FictionBook::Converter, "okular_fictionbook_generator_settings", parent, args )
 {
 }
 

@@ -910,7 +910,7 @@ void PagePainter::scalePixmapOnImage ( QImage & dest, const QPixmap * src,
 
 /** Private Helpers :: Image Drawing **/
 // from Arthur - qt4
-inline int qt_div_255(int x) { return (x + (x>>8) + 0x80) >> 8; }
+static inline int qt_div_255(int x) { return (x + (x>>8) + 0x80) >> 8; }
 
 void PagePainter::changeImageAlpha( QImage & image, unsigned int destAlpha )
 {

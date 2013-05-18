@@ -232,7 +232,7 @@ Okular::Movie* renditionMovieFromScreenAnnotation( const Okular::ScreenAnnotatio
 }
 
 // from Arthur - qt4
-inline int qt_div_255(int x) { return (x + (x>>8) + 0x80) >> 8; }
+static inline int qt_div_255(int x) { return (x + (x>>8) + 0x80) >> 8; }
 
 void colorizeImage( QImage & grayImage, const QColor & color, unsigned int destAlpha )
 {

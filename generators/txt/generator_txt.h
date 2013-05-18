@@ -19,6 +19,9 @@ class TxtGenerator : public Okular::TextDocumentGenerator
     public:
         TxtGenerator( QObject *parent, const QVariantList &args );
         ~TxtGenerator() {}
+
+        // [INHERITED] reparse configuration
+        void addPages( KConfigDialog* dlg );
 };
 
 #endif

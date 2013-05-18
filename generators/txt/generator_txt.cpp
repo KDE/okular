@@ -12,6 +12,7 @@
 #include "converter.h"
 
 #include <kaboutdata.h>
+#include <KConfigDialog>
 
 static KAboutData createAboutData()
 {
@@ -31,6 +32,14 @@ static KAboutData createAboutData()
 OKULAR_EXPORT_PLUGIN( TxtGenerator, createAboutData() )
 
 TxtGenerator::TxtGenerator( QObject *parent, const QVariantList &args )
-    : Okular::TextDocumentGenerator( new Txt::Converter, parent, args )
+    : Okular::TextDocumentGenerator( new Txt::Converter, "txt_generator_settings", parent, args )
 {
+}
+
+void TxtGenerator::addPages( KConfigDialog* dlg )
+{
+    Okular::TextDocumentSettingsWidget *widget = generalSettingsWidget();
+    widget->setParent( dlg );
+
+    dlg->addPage( widget, generalSettings(), i18n("Txt"), "text-plain", i18n("Txt Backend Configuration") );
 }

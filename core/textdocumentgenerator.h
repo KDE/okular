@@ -14,6 +14,8 @@
 
 #include "document.h"
 #include "generator.h"
+#include "textdocumentsettings.h"
+#include "../interfaces/configinterface.h"
 
 class QTextBlock;
 class QTextDocument;
@@ -131,22 +133,35 @@ class OKULAR_EXPORT TextDocumentConverter : public QObject
  * This generator provides a document in the form of a QTextDocument object,
  * parsed using a specialized TextDocumentConverter.
  */
-class OKULAR_EXPORT TextDocumentGenerator : public Generator
+class OKULAR_EXPORT TextDocumentGenerator : public Generator, public Okular::ConfigInterface
 {
     /// @cond PRIVATE
     friend class TextDocumentConverter;
     /// @endcond
 
     Q_OBJECT
+    Q_INTERFACES( Okular::ConfigInterface )
 
     public:
         /**
          * Creates a new generator that uses the specified @p converter.
          *
+         * @param configName - see Okular::TextDocumentSettings
+         *
+         * @note the generator will take ownership of the converter, so you
+         *       don't have to delete it yourself
+         * @since 0.17 (KDE 4.11)
+         */
+        TextDocumentGenerator( TextDocumentConverter *converter, const QString& configName, QObject *parent, const QVariantList &args );
+        /**
+         * Creates a new generator that uses the specified @p converter.
+         *
+         * @deprecated use the one with configName
+         *
          * @note the generator will take ownership of the converter, so you
          *       don't have to delete it yourself
          */
-        TextDocumentGenerator( TextDocumentConverter *converter, QObject *parent, const QVariantList &args );
+        KDE_DEPRECATED TextDocumentGenerator( TextDocumentConverter *converter, QObject *parent, const QVariantList &args );
         virtual ~TextDocumentGenerator();
 
         // [INHERITED] load a document and fill up the pagesVector
@@ -162,6 +177,36 @@ class OKULAR_EXPORT TextDocumentGenerator : public Generator
         // [INHERITED] text exporting
         Okular::ExportFormat::List exportFormats() const;
         bool exportTo( const QString &fileName, const Okular::ExportFormat &format );
+
+        // [INHERITED] config interface
+        /// By default checks if the default font has changed or not
+        bool reparseConfig();
+        /// Does nothing by default. You need to reimplement it in your generator
+        void addPages( KConfigDialog* dlg );
+
+        /**
+         * General settings
+         *
+         * This method return TextDocumentSettingsWidget
+         * that contain default settings for text based documents.
+         *
+         * @see generalSettings()
+         *
+         * @since 0.17 (KDE 4.11)
+         */
+        TextDocumentSettingsWidget* generalSettingsWidget();
+
+        /**
+         * Config skeleton for TextDocumentSettingsWidget
+         *
+         * You must use new construtor to initialize TextDocumentSettings,
+         * that contain @param configName.
+         *
+         * @see generalSettingsWidget()
+         *
+         * @since 0.17 (KDE 4.11)
+         */
+        TextDocumentSettings* generalSettings();
 
         const Okular::DocumentInfo* generateDocumentInfo();
         const Okular::DocumentSynopsis* generateDocumentSynopsis();
@@ -179,6 +224,7 @@ class OKULAR_EXPORT TextDocumentGenerator : public Generator
         Q_PRIVATE_SLOT( d_func(), void addTitle( int, const QString&, const QTextBlock& ) )
         Q_PRIVATE_SLOT( d_func(), void addMetaData( const QString&, const QString&, const QString& ) )
         Q_PRIVATE_SLOT( d_func(), void addMetaData( DocumentInfo::Key, const QString& ) )
+        Q_PRIVATE_SLOT( d_func(), void generalSettingsWidgetDestroyed() )
 };
 
 }

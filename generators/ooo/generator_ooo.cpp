@@ -13,6 +13,7 @@
 
 #include <kaboutdata.h>
 #include <klocale.h>
+#include <kconfigdialog.h>
 
 static KAboutData createAboutData()
 {
@@ -33,6 +34,14 @@ static KAboutData createAboutData()
 OKULAR_EXPORT_PLUGIN( KOOOGenerator, createAboutData() )
 
 KOOOGenerator::KOOOGenerator( QObject *parent, const QVariantList &args )
-  : Okular::TextDocumentGenerator( new OOO::Converter, parent, args )
+  : Okular::TextDocumentGenerator( new OOO::Converter, "ooo_generator_settings", parent, args )
 {
+}
+
+void KOOOGenerator::addPages( KConfigDialog* dlg )
+{
+    Okular::TextDocumentSettingsWidget *widget = generalSettingsWidget();
+    widget->setParent( dlg );
+
+    dlg->addPage( widget, generalSettings(), i18n("OpenDocument Text"), "application-vnd.oasis.opendocument.text", i18n("OpenDocument Text Backend Configuration") );
 }

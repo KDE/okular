@@ -61,6 +61,7 @@ set(okularcore_SRCS
    core/sound.cpp
    core/sourcereference.cpp
    core/textdocumentgenerator.cpp
+   core/textdocumentsettings.cpp
    core/textpage.cpp
    core/tilesmanager.cpp
    core/utils.cpp
@@ -75,6 +76,10 @@ set(okularcore_SRCS
    core/script/kjs_field.cpp
    core/script/kjs_spell.cpp
    core/script/kjs_util.cpp
+)
+
+kde4_add_ui_files(okularcore_SRCS
+   conf/textdocumentsettings.ui
 )
 
 install( FILES
@@ -93,6 +98,7 @@ install( FILES
            core/sound.h
            core/sourcereference.h
            core/textdocumentgenerator.h
+           core/textdocumentsettings.h
            core/textpage.h
            core/tile.h
            core/utils.h

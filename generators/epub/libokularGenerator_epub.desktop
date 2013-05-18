@@ -120,4 +120,4 @@ MimeType=application/epub+zip;
 X-KDE-Library=okularGenerator_epub
 X-KDE-Priority=1
 X-KDE-okularAPIVersion=1
-X-KDE-okularHasInternalSettings=false
+X-KDE-okularHasInternalSettings=true

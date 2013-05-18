@@ -285,14 +285,14 @@ EditAnnotToolDialog::EditAnnotToolDialog( QWidget *parent, const QDomElement &in
     widgetLayout->addWidget( m_appearanceBox, 2, 0, 1, 3 );
 
     // Populate combobox with annotation types
-    m_type->addItem( i18n("Pop-up Note"), QByteArray("note-linked") );
-    m_type->addItem( i18n("Inline Note"), QByteArray("note-inline") );
-    m_type->addItem( i18n("Freehand Line"), QByteArray("ink") );
-    m_type->addItem( i18n("Straight Line"), QByteArray("straight-line") );
-    m_type->addItem( i18n("Polygon"), QByteArray("polygon") );
-    m_type->addItem( i18n("Text markup"), QByteArray("text-markup") );
-    m_type->addItem( i18n("Geometrical shape"), QByteArray("geometrical-shape") );
-    m_type->addItem( i18n("Stamp"), QByteArray("stamp") );
+    m_type->addItem( i18n("Pop-up Note"), qVariantFromValue( ToolNoteLinked ) );
+    m_type->addItem( i18n("Inline Note"), qVariantFromValue( ToolNoteInline ) );
+    m_type->addItem( i18n("Freehand Line"), qVariantFromValue( ToolInk ) );
+    m_type->addItem( i18n("Straight Line"), qVariantFromValue( ToolStraightLine ) );
+    m_type->addItem( i18n("Polygon"), qVariantFromValue( ToolPolygon ) );
+    m_type->addItem( i18n("Text markup"), qVariantFromValue( ToolTextMarkup ) );
+    m_type->addItem( i18n("Geometrical shape"), qVariantFromValue( ToolGeometricalShape ) );
+    m_type->addItem( i18n("Stamp"), qVariantFromValue( ToolStamp ) );
 
     createStubAnnotation();
 
@@ -322,7 +322,7 @@ QString EditAnnotToolDialog::name() const
 
 QDomDocument EditAnnotToolDialog::toolXml() const
 {
-    const QByteArray toolType = m_type->itemData( m_type->currentIndex() ).toByteArray();
+    const ToolType toolType = m_type->itemData( m_type->currentIndex() ).value<ToolType>();
 
     QDomDocument doc;
     QDomElement toolElement = doc.createElement( "tool" );
@@ -336,7 +336,7 @@ QDomDocument EditAnnotToolDialog::toolXml() const
     const double opacity = m_stubann->style().opacity();
     const double width = m_stubann->style().width();
 
-    if ( toolType == "note-linked" )
+    if ( toolType == ToolNoteLinked )
     {
         Okular::TextAnnotation * ta = static_cast<Okular::TextAnnotation*>( m_stubann );
         toolElement.setAttribute( "type", "note-linked" );
@@ -347,7 +347,7 @@ QDomDocument EditAnnotToolDialog::toolXml() const
         annotationElement.setAttribute( "color", color );
         annotationElement.setAttribute( "icon", ta->textIcon() );
     }
-    else if ( toolType == "note-inline" )
+    else if ( toolType == ToolNoteInline )
     {
         Okular::TextAnnotation * ta = static_cast<Okular::TextAnnotation*>( m_stubann );
         toolElement.setAttribute( "type", "note-inline" );
@@ -362,7 +362,7 @@ QDomDocument EditAnnotToolDialog::toolXml() const
         if ( ta->textFont() != QApplication::font() )
             annotationElement.setAttribute( "font", ta->textFont().toString() );
     }
-    else if ( toolType == "ink" )
+    else if ( toolType == ToolInk )
     {
         toolElement.setAttribute( "type", "ink" );
         engineElement.setAttribute( "type", "SmoothLine" );
@@ -371,7 +371,7 @@ QDomDocument EditAnnotToolDialog::toolXml() const
         annotationElement.setAttribute( "color", color );
         annotationElement.setAttribute( "width", width );
     }
-    else if ( toolType == "straight-line" )
+    else if ( toolType == ToolStraightLine )
     {
         Okular::LineAnnotation * la = static_cast<Okular::LineAnnotation*>( m_stubann );
         toolElement.setAttribute( "type", "straight-line" );
@@ -387,7 +387,7 @@ QDomDocument EditAnnotToolDialog::toolXml() const
             annotationElement.setAttribute( "leadBack", la->lineLeadingBackwardPoint() );
         }
     }
-    else if ( toolType == "polygon" )
+    else if ( toolType == ToolPolygon )
     {
         Okular::LineAnnotation * la = static_cast<Okular::LineAnnotation*>( m_stubann );
         toolElement.setAttribute( "type", "polygon" );
@@ -402,7 +402,7 @@ QDomDocument EditAnnotToolDialog::toolXml() const
             annotationElement.setAttribute( "innerColor", la->lineInnerColor().name() );
         }
     }
-    else if ( toolType == "text-markup" )
+    else if ( toolType == ToolTextMarkup )
     {
         Okular::HighlightAnnotation * ha = static_cast<Okular::HighlightAnnotation*>( m_stubann );
 
@@ -430,7 +430,7 @@ QDomDocument EditAnnotToolDialog::toolXml() const
         engineElement.setAttribute( "color", color );
         annotationElement.setAttribute( "color", color );
     }
-    else if ( toolType == "geometrical-shape" )
+    else if ( toolType == ToolGeometricalShape )
     {
         Okular::GeomAnnotation * ga = static_cast<Okular::GeomAnnotation*>( m_stubann );
 
@@ -454,7 +454,7 @@ QDomDocument EditAnnotToolDialog::toolXml() const
         if ( ga->geometricalInnerColor().isValid() )
             annotationElement.setAttribute( "innerColor", ga->geometricalInnerColor().name() );
     }
-    else if ( toolType == "stamp" )
+    else if ( toolType == ToolStamp )
     {
         Okular::StampAnnotation * sa = static_cast<Okular::StampAnnotation*>( m_stubann );
         toolElement.setAttribute( "type", "stamp" );
@@ -474,13 +474,13 @@ QDomDocument EditAnnotToolDialog::toolXml() const
 
 void EditAnnotToolDialog::createStubAnnotation()
 {
-    const QByteArray toolType = m_type->itemData( m_type->currentIndex() ).toByteArray();
+    const ToolType toolType = m_type->itemData( m_type->currentIndex() ).value<ToolType>();
 
     // Delete previous stub annotation, if any
     delete m_stubann;
 
     // Create stub annotation
-    if ( toolType == "note-linked" )
+    if ( toolType == ToolNoteLinked )
     {
         Okular::TextAnnotation * ta = new Okular::TextAnnotation();
         ta->setTextType( Okular::TextAnnotation::Linked );
@@ -488,20 +488,20 @@ void EditAnnotToolDialog::createStubAnnotation()
         ta->style().setColor( Qt::yellow );
         m_stubann = ta;
     }
-    else if ( toolType == "note-inline" )
+    else if ( toolType == ToolNoteInline )
     {
         Okular::TextAnnotation * ta = new Okular::TextAnnotation();
         ta->setTextType( Okular::TextAnnotation::InPlace );
         ta->style().setColor( Qt::yellow );
         m_stubann = ta;
     }
-    else if ( toolType == "ink" )
+    else if ( toolType == ToolInk )
     {
         m_stubann = new Okular::InkAnnotation();
         m_stubann->style().setWidth( 2.0 );
         m_stubann->style().setColor( Qt::green );
     }
-    else if ( toolType == "straight-line" )
+    else if ( toolType == ToolStraightLine )
     {
         Okular::LineAnnotation * la = new Okular::LineAnnotation();
         la->setLinePoints( QLinkedList<Okular::NormalizedPoint>() <<
@@ -510,7 +510,7 @@ void EditAnnotToolDialog::createStubAnnotation()
         la->style().setColor( QColor( 0xff, 0xe0, 0x00 ) );
         m_stubann = la;
     }
-    else if ( toolType == "polygon" )
+    else if ( toolType == ToolPolygon )
     {
         Okular::LineAnnotation * la = new Okular::LineAnnotation();
         la->setLinePoints( QLinkedList<Okular::NormalizedPoint>() <<
@@ -521,12 +521,12 @@ void EditAnnotToolDialog::createStubAnnotation()
         la->style().setColor( QColor( 0x00, 0x7e, 0xee ) );
         m_stubann = la;
     }
-    else if ( toolType == "text-markup" )
+    else if ( toolType == ToolTextMarkup )
     {
         m_stubann = new Okular::HighlightAnnotation();
         m_stubann->style().setColor( Qt::yellow );
     }
-    else if ( toolType == "geometrical-shape" )
+    else if ( toolType == ToolGeometricalShape )
     {
         Okular::GeomAnnotation * ga = new Okular::GeomAnnotation();
         ga->setGeometricalType( Okular::GeomAnnotation::InscribedCircle );
@@ -534,7 +534,7 @@ void EditAnnotToolDialog::createStubAnnotation()
         ga->style().setColor( Qt::cyan );
         m_stubann = ga;
     }
-    else if ( toolType == "stamp" )
+    else if ( toolType == ToolStamp )
     {
         Okular::StampAnnotation * sa = new Okular::StampAnnotation();
         sa->setStampIconName( "okular" );
@@ -565,9 +565,15 @@ void EditAnnotToolDialog::updateDefaultNameAndIcon()
     m_toolIcon->setPixmap( PageViewAnnotator::makeToolPixmap( toolElement ) );
 }
 
-void EditAnnotToolDialog::setToolType( const QByteArray &newType )
+void EditAnnotToolDialog::setToolType( ToolType newType )
 {
-    const int idx = m_type->findData( newType );
+    int idx = -1;
+
+    for ( int i = 0; idx == -1 && i < m_type->count(); ++i )
+    {
+        if ( m_type->itemData( i ).value<ToolType>() == newType )
+            idx = i;
+    }
 
     // The following call also results in createStubAnnotation being called
     m_type->setCurrentIndex( idx );
@@ -581,7 +587,7 @@ void EditAnnotToolDialog::loadTool( const QDomElement &toolElement )
 
     if ( annotType == "ellipse" )
     {
-        setToolType( "geometrical-shape" );
+        setToolType( ToolGeometricalShape );
         Okular::GeomAnnotation * ga = static_cast<Okular::GeomAnnotation*>( m_stubann );
         ga->setGeometricalType( Okular::GeomAnnotation::InscribedCircle );
         if ( annotationElement.hasAttribute( "innerColor" ) )
@@ -589,17 +595,17 @@ void EditAnnotToolDialog::loadTool( const QDomElement &toolElement )
     }
     else if ( annotType == "highlight" )
     {
-        setToolType( "text-markup" );
+        setToolType( ToolTextMarkup );
         Okular::HighlightAnnotation * ha = static_cast<Okular::HighlightAnnotation*>( m_stubann );
         ha->setHighlightType( Okular::HighlightAnnotation::Highlight );
     }
     else if ( annotType == "ink" )
     {
-        setToolType( "ink" );
+        setToolType( ToolInk );
     }
     else if ( annotType == "note-inline" )
     {
-        setToolType( "note-inline" );
+        setToolType( ToolNoteInline );
         Okular::TextAnnotation * ta = static_cast<Okular::TextAnnotation*>( m_stubann );
         if ( annotationElement.hasAttribute( "align" ) )
             ta->setInplaceAlignment( annotationElement.attribute( "align" ).toInt() );
@@ -612,20 +618,20 @@ void EditAnnotToolDialog::loadTool( const QDomElement &toolElement )
     }
     else if ( annotType == "note-linked" )
     {
-        setToolType( "note-linked" );
+        setToolType( ToolNoteLinked );
         Okular::TextAnnotation * ta = static_cast<Okular::TextAnnotation*>( m_stubann );
         ta->setTextIcon( annotationElement.attribute( "icon" ) );
     }
     else if ( annotType == "polygon" )
     {
-        setToolType( "polygon" );
+        setToolType( ToolPolygon );
         Okular::LineAnnotation * la = static_cast<Okular::LineAnnotation*>( m_stubann );
         if ( annotationElement.hasAttribute( "innerColor" ) )
             la->setLineInnerColor( QColor( annotationElement.attribute( "innerColor" ) ) );
     }
     else if ( annotType == "rectangle" )
     {
-        setToolType( "geometrical-shape" );
+        setToolType( ToolGeometricalShape );
         Okular::GeomAnnotation * ga = static_cast<Okular::GeomAnnotation*>( m_stubann );
         ga->setGeometricalType( Okular::GeomAnnotation::InscribedSquare );
         if ( annotationElement.hasAttribute( "innerColor" ) )
@@ -633,19 +639,19 @@ void EditAnnotToolDialog::loadTool( const QDomElement &toolElement )
     }
     else if ( annotType == "squiggly" )
     {
-        setToolType( "text-markup" );
+        setToolType( ToolTextMarkup );
         Okular::HighlightAnnotation * ha = static_cast<Okular::HighlightAnnotation*>( m_stubann );
         ha->setHighlightType( Okular::HighlightAnnotation::Squiggly );
     }
     else if ( annotType == "stamp" )
     {
-        setToolType( "stamp" );
+        setToolType( ToolStamp );
         Okular::StampAnnotation * sa = static_cast<Okular::StampAnnotation*>( m_stubann );
         sa->setStampIconName( annotationElement.attribute( "icon" ) );
     }
     else if ( annotType == "straight-line" )
     {
-        setToolType( "straight-line" );
+        setToolType( ToolStraightLine );
         Okular::LineAnnotation * la = static_cast<Okular::LineAnnotation*>( m_stubann );
         if ( annotationElement.hasAttribute( "leadFwd" ) )
             la->setLineLeadingForwardPoint( annotationElement.attribute( "leadFwd" ).toDouble() );
@@ -654,13 +660,13 @@ void EditAnnotToolDialog::loadTool( const QDomElement &toolElement )
     }
     else if ( annotType == "strikeout" )
     {
-        setToolType( "text-markup" );
+        setToolType( ToolTextMarkup );
         Okular::HighlightAnnotation * ha = static_cast<Okular::HighlightAnnotation*>( m_stubann );
         ha->setHighlightType( Okular::HighlightAnnotation::StrikeOut );
     }
     else if ( annotType == "underline" )
     {
-        setToolType( "text-markup" );
+        setToolType( ToolTextMarkup );
         Okular::HighlightAnnotation * ha = static_cast<Okular::HighlightAnnotation*>( m_stubann );
         ha->setHighlightType( Okular::HighlightAnnotation::Underline );
     }

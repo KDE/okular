@@ -67,6 +67,18 @@ class EditAnnotToolDialog : public KDialog
     Q_OBJECT
 
     public:
+        enum ToolType
+        {
+            ToolNoteLinked,
+            ToolNoteInline,
+            ToolInk,
+            ToolStraightLine,
+            ToolPolygon,
+            ToolTextMarkup,
+            ToolGeometricalShape,
+            ToolStamp
+        };
+
         EditAnnotToolDialog( QWidget *parent = 0, const QDomElement &initialState = QDomElement() );
         ~EditAnnotToolDialog();
         QString name() const;
@@ -76,7 +88,7 @@ class EditAnnotToolDialog : public KDialog
         void createStubAnnotation();
         void rebuildAppearanceBox();
         void updateDefaultNameAndIcon();
-        void setToolType( const QByteArray &newType );
+        void setToolType( ToolType newType );
         void loadTool( const QDomElement &toolElement );
 
         KLineEdit *m_name;
@@ -91,5 +103,7 @@ class EditAnnotToolDialog : public KDialog
         void slotTypeChanged();
         void slotDataChanged();
 };
+
+Q_DECLARE_METATYPE( EditAnnotToolDialog::ToolType )
 
 #endif

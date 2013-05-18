@@ -177,7 +177,7 @@ void WidgetAnnotTools::slotItemActivated( QListWidgetItem *listEntry )
     else
         itemText = PageViewAnnotator::defaultToolName( toolElement );
 
-    // Create list entry and attach XML string as data
+    // Edit list entry and attach XML string as data
     listEntry->setText( itemText );
     listEntry->setData( ToolXmlRole, qVariantFromValue( doc.toString(-1) ) );
     listEntry->setIcon( PageViewAnnotator::makeToolPixmap( toolElement ) );

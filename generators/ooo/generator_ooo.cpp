@@ -20,7 +20,7 @@ static KAboutData createAboutData()
     KAboutData aboutData(
          "okular_ooo",
          "okular_ooo",
-         ki18n( "OpeDocument Text Backend" ),
+         ki18n( "OpenDocument Text Backend" ),
          "0.2.3",
          ki18n( "A renderer for OpenDocument Text documents" ),
          KAboutData::License_GPL,

@@ -697,8 +697,12 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                     painter.setPen( Qt::black );
                     painter.setFont( text->textFont() );
                     Qt::AlignmentFlag halign = ( text->inplaceAlignment() == 1 ? Qt::AlignHCenter : ( text->inplaceAlignment() == 2 ? Qt::AlignRight : Qt::AlignLeft ) );
-                    painter.scale( 1.0 * scaledWidth / page->width(), 1.0 * scaledHeight / page->height() );
-                    painter.drawText( 2, 2, image.width() - 2, image.height() - 2,
+                    const double invXScale = (double)page->width() / scaledWidth;
+                    const double invYScale = (double)page->height() / scaledHeight;
+                    painter.scale( 1 / invXScale, 1 / invYScale );
+                    painter.drawText( 2 * invXScale, 2 * invYScale,
+                                      (image.width() - 2) * invXScale,
+                                      (image.height() - 2) * invYScale,
                                       Qt::AlignTop | halign | Qt::TextWordWrap,
                                       text->contents() );
                     painter.resetTransform();

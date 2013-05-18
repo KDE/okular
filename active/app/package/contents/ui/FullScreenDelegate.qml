@@ -33,6 +33,12 @@ MouseEventListener {
     property int delta
 
 
+    property Item flickable: mainFlickable
+    property bool pageSwitchEnabled: false
+    property alias document: mainPage.document
+    property alias pageNumber: mainPage.pageNumber
+    property Item pageItem: mainPage
+
     onWheelMoved: {
         if (wheel.modifiers == Qt.ControlModifier) {
             var factor = wheel.delta > 0 ? 1.1 : 0.9
@@ -41,16 +47,10 @@ MouseEventListener {
             }
         }
     }
-    property Item flickable: mainFlickable
-    property bool pageSwitchEnabled: false
-    property alias document: mainPage.document
-    property alias pageNumber: mainPage.pageNumber
-    property Item pageItem: mainPage
 
-    function scale(zoom, absolute)
-    {
+    function scale(zoom, absolute) {
         var newScale = absolute ? zoom : (mainPage.width / mainPage.implicitWidth) * zoom;
-        if (newScale < 0.3 || newScale > 2) {
+        if (newScale < 0.3 || newScale > 3) {
             return false
         }
 

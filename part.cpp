@@ -2036,7 +2036,7 @@ void Part::slotSaveFileAs()
         }
     }
 
-    KUrl saveUrl = KFileDialog::getSaveUrl( KUrl("kfiledialog:///okular/" + url().fileName()),
+    KUrl saveUrl = KFileDialog::getSaveUrl( url(),
                                             QString(), widget(), QString(),
                                             KFileDialog::ConfirmOverwrite );
     if ( !saveUrl.isValid() || saveUrl.isEmpty() )

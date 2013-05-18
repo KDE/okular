@@ -92,13 +92,17 @@ QDomElement AnnotationUtils::findChildElement( const QDomNode & parentNode,
 QRect AnnotationUtils::annotationGeometry( const Annotation * ann,
     double scaledWidth, double scaledHeight )
 {
+    const QRect rect = ann->transformedBoundingRectangle().geometry( (int)scaledWidth, (int)scaledHeight );
     if ( ann->subType() == Annotation::AText && ( ( (TextAnnotation*)ann )->textType() == TextAnnotation::Linked ) )
     {
-        return QRect( (int)( ann->transformedBoundingRectangle().left * scaledWidth ),
-                      (int)( ann->transformedBoundingRectangle().top * scaledHeight ), 24, 24 );
+        // To be honest i have no clue of why the 24,24 is here, maybe to make sure it's not too small?
+        // But why only for linked text?
+        const QRect rect24 = QRect( (int)( ann->transformedBoundingRectangle().left * scaledWidth ),
+                                    (int)( ann->transformedBoundingRectangle().top * scaledHeight ), 24, 24 );
+        return rect24.united(rect);
     }
 
-    return ann->transformedBoundingRectangle().geometry( (int)scaledWidth, (int)scaledHeight );
+    return rect;
 }
 //END AnnotationUtils implementation
 
@@ -269,7 +273,6 @@ class Annotation::Window::Private
         int m_height;
         QString m_title;
         QString m_summary;
-        QString m_text;
 };
 
 Annotation::Window::Window()
@@ -355,17 +358,6 @@ QString Annotation::Window::summary() const
 {
     return d->m_summary;
 }
-
-void Annotation::Window::setText( const QString &text )
-{
-    d->m_text = text;
-}
-
-QString Annotation::Window::text() const
-{
-    return d->m_text;
-}
-
 
 class Annotation::Revision::Private
 {
@@ -711,7 +703,7 @@ void Annotation::store( QDomNode & annNode, QDomDocument & document ) const
 
     // Sub-Node-4 - window
     if ( d->m_window.flags() != -1 || !d->m_window.title().isEmpty() ||
-         !d->m_window.summary().isEmpty() || !d->m_window.text().isEmpty() )
+         !d->m_window.summary().isEmpty() )
     {
         QDomElement wE = document.createElement( "window" );
         e.appendChild( wE );
@@ -722,14 +714,6 @@ void Annotation::store( QDomNode & annNode, QDomDocument & document ) const
         wE.setAttribute( "height", d->m_window.height() );
         wE.setAttribute( "title", d->m_window.title() );
         wE.setAttribute( "summary", d->m_window.summary() );
-        // store window.text as a subnode, because we need escaped data
-        if ( !d->m_window.text().isEmpty() )
-        {
-            QDomElement escapedText = document.createElement( "text" );
-            wE.appendChild( escapedText );
-            QDomCDATASection textCData = document.createCDATASection( d->m_window.text() );
-            escapedText.appendChild( textCData );
-        }
     }
 
     // create [revision] element of the annotation node (if any)
@@ -782,6 +766,9 @@ void Annotation::setAnnotationProperties( const QDomNode& node )
     d_ptr->m_nativeId = nativeID;
     d_ptr->m_flags = d_ptr->m_flags | internalFlags;
     d_ptr->m_disposeFunc = disposeFunc;
+
+    // Transform annotation to current page rotation
+    d_ptr->transform( d_ptr->m_page->rotationMatrix() );
 }
 
 void AnnotationPrivate::annotationTransform( const QTransform &matrix )
@@ -887,14 +874,6 @@ void AnnotationPrivate::setAnnotationProperties( const QDomNode& node )
             m_window.setHeight( ee.attribute( "height" ).toInt() );
             m_window.setTitle( ee.attribute( "title" ) );
             m_window.setSummary( ee.attribute( "summary" ) );
-            // parse window subnodes
-            QDomNode winNode = ee.firstChild();
-            for ( ; winNode.isElement(); winNode = winNode.nextSibling() )
-            {
-                QDomElement winElement = winNode.toElement();
-                if ( winElement.tagName() == "text" )
-                    m_window.setText( winElement.firstChild().toCDATASection().data() );
-            }
         }
     }
 
@@ -947,7 +926,6 @@ class Okular::TextAnnotationPrivate : public Okular::AnnotationPrivate
         QString m_textIcon;
         QFont m_textFont;
         int m_inplaceAlign;
-        QString m_inplaceText;
         NormalizedPoint m_inplaceCallout[3];
         NormalizedPoint m_transformedInplaceCallout[3];
         TextAnnotation::InplaceIntent m_inplaceIntent;
@@ -1018,18 +996,6 @@ int TextAnnotation::inplaceAlignment() const
     return d->m_inplaceAlign;
 }
 
-void TextAnnotation::setInplaceText( const QString &text )
-{
-    Q_D( TextAnnotation );
-    d->m_inplaceText = text;
-}
-
-QString TextAnnotation::inplaceText() const
-{
-    Q_D( const TextAnnotation );
-    return d->m_inplaceText;
-}
-
 void TextAnnotation::setInplaceCallout( const NormalizedPoint &point, int index )
 {
     if ( index < 0 || index > 2 )
@@ -1096,16 +1062,7 @@ void TextAnnotation::store( QDomNode & node, QDomDocument & document ) const
     if ( d->m_inplaceIntent != Unknown )
         textElement.setAttribute( "intent", (int)d->m_inplaceIntent );
 
-    // Sub-Node-1 - escapedText
-    if ( !d->m_inplaceText.isEmpty() )
-    {
-        QDomElement escapedText = document.createElement( "escapedText" );
-        textElement.appendChild( escapedText );
-        QDomCDATASection textCData = document.createCDATASection( d->m_inplaceText );
-        escapedText.appendChild( textCData );
-    }
-
-    // Sub-Node-2 - callout
+    // Sub-Node - callout
     if ( d->m_inplaceCallout[0].x != 0.0 )
     {
         QDomElement calloutElement = document.createElement( "callout" );
@@ -1200,7 +1157,7 @@ void TextAnnotationPrivate::setAnnotationProperties( const QDomNode& node )
 
             if ( ee.tagName() == "escapedText" )
             {
-                m_inplaceText = ee.firstChild().toCDATASection().data();
+                m_contents = ee.firstChild().toCDATASection().data();
             }
             else if ( ee.tagName() == "callout" )
             {

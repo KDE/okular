@@ -176,8 +176,6 @@ void PopplerAnnotationProxy::notifyModification( const Okular::Annotation *okl_a
             ppl_txtann->setTextIcon( okl_txtann->textIcon() );
             ppl_txtann->setTextFont( okl_txtann->textFont() );
             ppl_txtann->setInplaceAlign( okl_txtann->inplaceAlignment() );
-            if ( okl_txtann->textType() == Okular::TextAnnotation::InPlace )
-                ppl_txtann->setContents( okl_txtann->inplaceText() ); // overrides contents
             ppl_txtann->setCalloutPoints( QVector<QPointF>() );
             ppl_txtann->setInplaceIntent( (Poppler::TextAnnotation::InplaceIntent)okl_txtann->inplaceIntent() );
             break;
@@ -400,14 +398,7 @@ Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *
         {
             Okular::TextAnnotation * txtann = static_cast<Okular::TextAnnotation*>( annotation );
 
-            if ( txtann->textType() == Okular::TextAnnotation::InPlace )
-            {
-#ifndef HAVE_POPPLER_0_20
-                // Poppler before 0.20 returns the inplaceText in contents
-                txtann->setInplaceText( txtann->contents() );
-#endif
-            }
-            else if ( txtann->textType() == Okular::TextAnnotation::Linked )
+            if ( txtann->textType() == Okular::TextAnnotation::Linked )
             {
                 Poppler::TextAnnotation * ppl_txtann = static_cast<Poppler::TextAnnotation*>( ann );
 

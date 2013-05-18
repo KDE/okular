@@ -424,7 +424,7 @@ Okular::Annotation* DjVuGenerator::convertKDjVuAnnotation( int w, int h, KDjVu::
             newtxtann->setTextType( txtann->inlineText() ? Okular::TextAnnotation::InPlace : Okular::TextAnnotation::Linked );
             newtxtann->style().setOpacity( txtann->color().alphaF() );
             // FIXME remove once the annotation text handling is fixed
-            newtxtann->setInplaceText( ann->comment() );
+            newtxtann->setContents( ann->comment() );
             newann = newtxtann;
             break;
         }

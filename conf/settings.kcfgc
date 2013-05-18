@@ -4,6 +4,6 @@ File=okular.kcfg
 Inherits=SettingsCore
 Mutators=true
 Singleton=true
-IncludeFiles=core/okular_export.h, settings_core.h
+IncludeFiles=settings_core.h
 SourceIncludeFiles=kstandarddirs.h,qdom.h
 MemberVariables=dpointer

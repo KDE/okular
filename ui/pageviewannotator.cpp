@@ -165,7 +165,7 @@ class PickPointEngine : public AnnotatorEngine
                     //add note
                     Okular::TextAnnotation * ta = new Okular::TextAnnotation();
                     ann = ta;
-                    ta->setInplaceText( note );
+                    ta->setContents( note );
                     ta->setTextType( Okular::TextAnnotation::InPlace );
                     //set font
                     if ( m_annotElement.hasAttribute( "font" ) )
@@ -183,7 +183,7 @@ class PickPointEngine : public AnnotatorEngine
                     static int padding = 2;
                     const QFontMetricsF mf(ta->textFont());
                     const QRectF rcf = mf.boundingRect( Okular::NormalizedRect( rect.left, rect.top, 1.0, 1.0 ).geometry( (int)pagewidth, (int)pageheight ).adjusted( padding, padding, -padding, -padding ),
-                                                  Qt::AlignTop | Qt::AlignLeft | Qt::TextWordWrap, ta->inplaceText() );
+                                                  Qt::AlignTop | Qt::AlignLeft | Qt::TextWordWrap, ta->contents() );
                     rect.right = qMax(rect.right, rect.left+(rcf.width()+padding*2)/pagewidth);
                     rect.bottom = qMax(rect.bottom, rect.top+(rcf.height()+padding*2)/pageheight);
                     ta->window().setSummary( i18n( "Inline Note" ) );
@@ -195,7 +195,6 @@ class PickPointEngine : public AnnotatorEngine
                 ann = ta;
                 ta->setTextType( Okular::TextAnnotation::Linked );
                 ta->setTextIcon( iconName );
-                ta->window().setText( QString() );
                 //ta->window.flags &= ~(Okular::Annotation::Hidden);
                 const double iconhei=0.03;
                 rect.left = point.x;

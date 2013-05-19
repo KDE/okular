@@ -1549,7 +1549,7 @@ Add a 'Find Previous' entry
 	      <guimenu>Settings</guimenu>
 	      <guimenuitem>Configure Backends...</guimenuitem>
 	    </menuchoice>.
-	    Currently, configuration options are provided for EPub, &PostScript;, FictionBook Txt, OpenDocument Text, and &PDF; backends only.
+	    Currently, configuration options are provided for EPub, &PostScript;, FictionBook, Txt, OpenDocument Text, and &PDF; backends only.
 	  </para>
 	  <screenshot>
 	    <screeninfo>The backends configuration dialog</screeninfo>

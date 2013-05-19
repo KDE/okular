@@ -37,7 +37,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2013-04-06</date>
+		<date>2013-05-19</date>
 		<releaseinfo>0.16.60 (&kde; 4.11)</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
@@ -1549,7 +1549,7 @@ Add a 'Find Previous' entry
 	      <guimenu>Settings</guimenu>
 	      <guimenuitem>Configure Backends...</guimenuitem>
 	    </menuchoice>.
-	    Currently, configuration options are provided for &PostScript; and &PDF; backends only.
+	    Currently, configuration options are provided for EPub, &PostScript;, FictionBook Txt, OpenDocument Text, and &PDF; backends only.
 	  </para>
 	  <screenshot>
 	    <screeninfo>The backends configuration dialog</screeninfo>
@@ -1562,6 +1562,12 @@ Add a 'Find Previous' entry
 	      </textobject>
 	    </mediaobject>
 	  </screenshot>
+	  <para>
+	    Using backend configuration pages for EPub, FictionBook Txt and OpenDocument Text you can define the font to render documents in the corresponding formats. The <guibutton>Choose...</guibutton> button in these pages opens standard &kde; font configuration window. Please refer to the <ulink url="help:/fundamentals/fonts.html">&kde; Fundamentals documentation</ulink> for the details.
+	  </para>
+	  <para>
+	    The description of &PostScript; and &PDF; backends configuration page can be found below.
+	  </para>
 	  <sect1 id="config-ghostscript">
 	    <title>&PostScript; backend configuration</title>
 	    <para>

@@ -38,7 +38,7 @@ TextDocumentSettingsWidget::TextDocumentSettingsWidget( QWidget *parent )
     d->property->setObjectName( QString::fromUtf8( objectName ) );   \
     addRow( labelName, d->property );
 
-    ADD_WIDGET( mFont, KFontRequester, "kcfg_Font", "&Default Font:" );
+    ADD_WIDGET( mFont, KFontRequester, "kcfg_Font", i18n("&Default Font:") );
 #undef ADD_WIDGET
 }
 

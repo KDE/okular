@@ -47,14 +47,15 @@ class WidgetAnnotTools : public QWidget
     private:
         QListWidget *m_list;
         KPushButton *m_btnAdd;
+        KPushButton *m_btnEdit;
         KPushButton *m_btnRemove;
         KPushButton *m_btnMoveUp;
         KPushButton *m_btnMoveDown;
 
     private slots:
-        void slotItemActivated( QListWidgetItem * );
         void updateButtons();
         void slotAdd();
+        void slotEdit();
         void slotRemove();
         void slotMoveUp();
         void slotMoveDown();

@@ -48,6 +48,10 @@ WidgetAnnotTools::WidgetAnnotTools( QWidget * parent )
     m_btnAdd = new KPushButton( i18n("&Add..."), this );
     m_btnAdd->setIcon( KIcon("list-add") );
     vBoxLayout->addWidget( m_btnAdd );
+    m_btnEdit = new KPushButton( i18n("&Edit..."), this );
+    m_btnEdit->setIcon( KIcon("edit-rename") );
+    m_btnEdit->setEnabled( false );
+    vBoxLayout->addWidget( m_btnEdit );
     m_btnRemove = new KPushButton( i18n("&Remove"), this );
     m_btnRemove->setIcon( KIcon("list-remove") );
     m_btnRemove->setEnabled( false );
@@ -63,9 +67,10 @@ WidgetAnnotTools::WidgetAnnotTools( QWidget * parent )
     vBoxLayout->addStretch();
     hBoxLayout->addLayout( vBoxLayout );
 
-    connect( m_list, SIGNAL( itemActivated(QListWidgetItem*) ), this, SLOT( slotItemActivated(QListWidgetItem*) ) );
+    connect( m_list, SIGNAL( itemActivated(QListWidgetItem*) ), this, SLOT( slotEdit() ) );
     connect( m_list, SIGNAL( currentRowChanged(int) ), this, SLOT( updateButtons() ) );
     connect( m_btnAdd, SIGNAL( clicked(bool) ), this, SLOT( slotAdd() ) );
+    connect( m_btnEdit, SIGNAL( clicked(bool) ), this, SLOT( slotEdit() ) );
     connect( m_btnRemove, SIGNAL( clicked(bool) ), this, SLOT( slotRemove() ) );
     connect( m_btnMoveUp, SIGNAL( clicked(bool) ), this, SLOT( slotMoveUp() ) );
     connect( m_btnMoveDown, SIGNAL( clicked(bool) ), this, SLOT( slotMoveDown() ) );
@@ -150,13 +155,16 @@ void WidgetAnnotTools::updateButtons()
     const int row = m_list->currentRow();
     const int last = m_list->count() - 1;
 
+    m_btnEdit->setEnabled( row != -1 );
     m_btnRemove->setEnabled( row != -1 );
     m_btnMoveUp->setEnabled( row > 0 );
     m_btnMoveDown->setEnabled( row != -1 && row != last );
 }
 
-void WidgetAnnotTools::slotItemActivated( QListWidgetItem *listEntry )
+void WidgetAnnotTools::slotEdit()
 {
+    QListWidgetItem *listEntry = m_list->currentItem();
+
     QDomDocument doc;
     doc.setContent( listEntry->data( ToolXmlRole ).value<QString>() );
     QDomElement toolElement = doc.documentElement();

@@ -1563,10 +1563,10 @@ Add a 'Find Previous' entry
 	    </mediaobject>
 	  </screenshot>
 	  <para>
-	    Using backend configuration pages for EPub, FictionBook Txt and OpenDocument Text you can define the font to render documents in the corresponding formats. The <guibutton>Choose...</guibutton> button in these pages opens standard &kde; font configuration window. Please refer to the <ulink url="help:/fundamentals/fonts.html">&kde; Fundamentals documentation</ulink> for the details.
+	    Using backend configuration pages for EPub, FictionBook, Txt and OpenDocument Text you can define the font to render documents in the corresponding formats. The <guibutton>Choose...</guibutton> button in these pages opens standard &kde; font configuration window. Please refer to the <ulink url="help:/fundamentals/fonts.html">&kde; Fundamentals documentation</ulink> for the details.
 	  </para>
 	  <para>
-	    The description of &PostScript; and &PDF; backends configuration page can be found below.
+	    The description of &PostScript; and &PDF; backends configuration pages can be found below.
 	  </para>
 	  <sect1 id="config-ghostscript">
 	    <title>&PostScript; backend configuration</title>

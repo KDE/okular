@@ -826,9 +826,6 @@ void PageView::copyTextSelection() const
 
 void PageView::selectAll()
 {
-    if ( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::TextSelect )
-        return;
-
     QVector< PageViewItem * >::const_iterator it = d->items.constBegin(), itEnd = d->items.constEnd();
     for ( ; it < itEnd; ++it )
     {

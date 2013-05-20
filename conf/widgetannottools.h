@@ -45,8 +45,6 @@ class WidgetAnnotTools : public QWidget
         void changed();
 
     private:
-        void updateButtons();
-
         QListWidget *m_list;
         KPushButton *m_btnAdd;
         KPushButton *m_btnRemove;
@@ -55,11 +53,11 @@ class WidgetAnnotTools : public QWidget
 
     private slots:
         void slotItemActivated( QListWidgetItem * );
-        void slotRowChanged( int );
-        void slotAdd( bool );
-        void slotRemove( bool );
-        void slotMoveUp( bool );
-        void slotMoveDown( bool );
+        void updateButtons();
+        void slotAdd();
+        void slotRemove();
+        void slotMoveUp();
+        void slotMoveDown();
 };
 
 class EditAnnotToolDialog : public KDialog

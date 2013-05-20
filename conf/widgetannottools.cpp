@@ -64,11 +64,11 @@ WidgetAnnotTools::WidgetAnnotTools( QWidget * parent )
     hBoxLayout->addLayout( vBoxLayout );
 
     connect( m_list, SIGNAL( itemActivated(QListWidgetItem*) ), this, SLOT( slotItemActivated(QListWidgetItem*) ) );
-    connect( m_list, SIGNAL( currentRowChanged(int) ), this, SLOT( slotRowChanged(int) ) );
-    connect( m_btnAdd, SIGNAL( clicked(bool) ), this, SLOT( slotAdd(bool) ) );
-    connect( m_btnRemove, SIGNAL( clicked(bool) ), this, SLOT( slotRemove(bool) ) );
-    connect( m_btnMoveUp, SIGNAL( clicked(bool) ), this, SLOT( slotMoveUp(bool) ) );
-    connect( m_btnMoveDown, SIGNAL( clicked(bool) ), this, SLOT( slotMoveDown(bool) ) );
+    connect( m_list, SIGNAL( currentRowChanged(int) ), this, SLOT( updateButtons() ) );
+    connect( m_btnAdd, SIGNAL( clicked(bool) ), this, SLOT( slotAdd() ) );
+    connect( m_btnRemove, SIGNAL( clicked(bool) ), this, SLOT( slotRemove() ) );
+    connect( m_btnMoveUp, SIGNAL( clicked(bool) ), this, SLOT( slotMoveUp() ) );
+    connect( m_btnMoveDown, SIGNAL( clicked(bool) ), this, SLOT( slotMoveDown() ) );
 }
 
 WidgetAnnotTools::~WidgetAnnotTools()
@@ -189,12 +189,7 @@ void WidgetAnnotTools::slotItemActivated( QListWidgetItem *listEntry )
     emit changed();
 }
 
-void WidgetAnnotTools::slotRowChanged( int )
-{
-    updateButtons();
-}
-
-void WidgetAnnotTools::slotAdd( bool )
+void WidgetAnnotTools::slotAdd()
 {
     EditAnnotToolDialog t( this );
 
@@ -224,7 +219,7 @@ void WidgetAnnotTools::slotAdd( bool )
     emit changed();
 }
 
-void WidgetAnnotTools::slotRemove( bool )
+void WidgetAnnotTools::slotRemove()
 {
     const int row = m_list->currentRow();
     delete m_list->takeItem(row);
@@ -232,7 +227,7 @@ void WidgetAnnotTools::slotRemove( bool )
     emit changed();
 }
 
-void WidgetAnnotTools::slotMoveUp( bool )
+void WidgetAnnotTools::slotMoveUp()
 {
     const int row = m_list->currentRow();
     m_list->insertItem( row, m_list->takeItem(row-1) );
@@ -241,7 +236,7 @@ void WidgetAnnotTools::slotMoveUp( bool )
     emit changed();
 }
 
-void WidgetAnnotTools::slotMoveDown( bool )
+void WidgetAnnotTools::slotMoveDown()
 {
     const int row = m_list->currentRow();
     m_list->insertItem( row, m_list->takeItem(row+1) );

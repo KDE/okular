@@ -206,7 +206,7 @@ class PickPointEngine : public AnnotatorEngine
                 rect.top = point.y;
                 rect.right=rect.left+iconhei;
                 rect.bottom=rect.top+iconhei*xscale/yscale;
-                ta->window().setSummary( i18n( "Note" ) );
+                ta->window().setSummary( i18n( "Pop-up Note" ) );
             }
             // create StampAnnotation from path
             else if ( typeString == "Stamp" )

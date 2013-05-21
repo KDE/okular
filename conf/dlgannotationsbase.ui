@@ -9,7 +9,7 @@
     <height>155</height>
    </rect>
   </property>
-  <layout class="QVBoxLayout" >
+  <layout class="QVBoxLayout" stretch="0,1,0" >
    <property name="spacing" >
     <number>6</number>
    </property>

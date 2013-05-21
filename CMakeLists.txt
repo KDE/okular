@@ -149,9 +149,10 @@ set(okularpart_SRCS
    conf/dlgdebug.cpp
    conf/dlgeditor.cpp
    conf/dlggeneral.cpp
-   conf/dlgidentity.cpp
+   conf/dlgannotations.cpp
    conf/dlgperformance.cpp
    conf/dlgpresentation.cpp
+   conf/widgetannottools.cpp
    ui/embeddedfilesdialog.cpp
    ui/annotwindow.cpp
    ui/annotationmodel.cpp
@@ -194,7 +195,7 @@ kde4_add_ui_files(okularpart_SRCS
    conf/dlgaccessibilitybase.ui
    conf/dlgeditorbase.ui
    conf/dlggeneralbase.ui
-   conf/dlgidentitybase.ui
+   conf/dlgannotationsbase.ui
    conf/dlgperformancebase.ui
    conf/dlgpresentationbase.ui
 )

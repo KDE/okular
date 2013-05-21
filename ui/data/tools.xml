@@ -17,66 +17,57 @@ Engine/Annotation Types [specific attributes]:
     Geom
 -->
 <annotatingTools>
-    <tool id="1" name="Note" pixmap="tool-note-okular">
-        <tooltip>Text Annotation</tooltip>
-        <engine type="PickPoint" color="#FFFF00" hoverIcon="tool-note">
-            <annotation type="Text" color="#FFFF00" />
+    <tool id="1" type="note-linked">
+        <engine type="PickPoint" color="#ffff00" hoverIcon="tool-note">
+            <annotation type="Text" color="#ffff00" icon="Note" />
         </engine>
         <shortcut>1</shortcut>
     </tool>
-    <tool id="2" name="Inline Note" pixmap="tool-note-inline-okular">
-        <tooltip>Inline Text Annotation (drag to select a zone)</tooltip>
-        <engine type="PickPoint" color="#FFFF00" hoverIcon="tool-note-inline" block="true">
-            <annotation type="FreeText" color="#FFFF00" />
+    <tool id="2" type="note-inline">
+        <engine type="PickPoint" color="#ffff00" hoverIcon="tool-note-inline" block="true">
+            <annotation type="FreeText" color="#ffff00" />
         </engine>
         <shortcut>2</shortcut>
     </tool>
-    <tool id="3" name="Green Freehand Line" pixmap="tool-ink-okular">
-        <tooltip>Green Ink</tooltip>
-        <engine type="SmoothLine" color="#00FF00">
-            <annotation type="Ink" color="#00FF00" width="2" />
+    <tool id="3" type="ink">
+        <engine type="SmoothLine" color="#00ff00">
+            <annotation type="Ink" color="#00ff00" width="2" />
         </engine>
         <shortcut>3</shortcut>
     </tool>
-    <tool id="4" name="Yellow Highlighter" pixmap="tool-highlighter-okular">
-        <tooltip>Yellow Highlight</tooltip>
-        <engine type="TextSelector" color="#FFFF00">
-            <annotation type="Highlight" color="#FFFF00" />
+    <tool id="4" type="highlight">
+        <engine type="TextSelector" color="#ffff00">
+            <annotation type="Highlight" color="#ffff00" />
         </engine>
         <shortcut>4</shortcut>
     </tool>
-    <tool id="5" name="Straight Yellow Line" pixmap="tool-line-okular">
-        <tooltip>Straight Yellow Line</tooltip>
-        <engine type="PolyLine" color="#FFE000" points="2">
-            <annotation type="Line" width="4" color="#FFE000" />
+    <tool id="5" type="straight-line">
+        <engine type="PolyLine" color="#ffe000" points="2">
+            <annotation type="Line" width="1" color="#ffe000" />
         </engine>
         <shortcut>5</shortcut>
     </tool>
-    <tool id="6" name="Blue Polygon" pixmap="tool-polygon-okular">
-        <tooltip>Draw a polygon (click on the first point to close it)</tooltip>
-        <engine type="PolyLine" color="#007EEE" points="-1">
-            <annotation type="Line" width="4" color="#007EEE" />
+    <tool id="6" type="polygon">
+        <engine type="PolyLine" color="#007eee" points="-1">
+            <annotation type="Line" width="1" color="#007eee" />
         </engine>
         <shortcut>6</shortcut>
     </tool>
-    <tool id="7" name="Stamp" pixmap="tool-stamp-okular">
-        <tooltip>Put a stamp symbol</tooltip>
+    <tool id="7" type="stamp">
         <engine type="PickPoint" hoverIcon="okular" size="64" block="true">
             <annotation type="Stamp" icon="okular"/>
         </engine>
         <shortcut>7</shortcut>
   </tool>
-    <tool id="8" name="Black Underlining" pixmap="tool-underline-okular">
-        <tooltip>Underline the text with a black line</tooltip>
+    <tool id="8" type="underline">
         <engine type="TextSelector" color="#000000">
             <annotation type="Underline" color="#000000" />
         </engine>
         <shortcut>8</shortcut>
     </tool>
-    <tool id="9" name="Cyan Ellipse" pixmap="tool-ellipse-okular">
-        <tooltip>A cyan ellipse</tooltip>
+    <tool id="9" type="ellipse">
         <engine type="PickPoint" color="#00ffff" block="true">
-            <annotation type="GeomCircle" color="#00ffff" />
+            <annotation type="GeomCircle" width="5" color="#00ffff" />
         </engine>
         <shortcut>9</shortcut>
     </tool>

@@ -739,6 +739,14 @@ void PageView::reparseConfig()
 
     updatePageStep();
 
+    if ( d->annotator )
+    {
+        d->annotator->setEnabled( false );
+        d->annotator->reparseConfig();
+        if ( d->aToggleAnnotator->isChecked() )
+            slotToggleAnnotator( true );
+    }
+
     // Something like invert colors may have changed
     // As we don't have a way to find out the old value
     // We just update the viewport, this shouldn't be that bad

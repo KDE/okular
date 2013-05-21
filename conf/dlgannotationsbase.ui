@@ -1,6 +1,6 @@
 <ui version="4.0" >
- <class>DlgIdentityBase</class>
- <widget class="QWidget" name="DlgIdentityBase" >
+ <class>DlgAnnotationsBase</class>
+ <widget class="QWidget" name="DlgAnnotationsBase" >
   <property name="geometry" >
    <rect>
     <x>0</x>
@@ -79,6 +79,14 @@
        </widget>
       </item>
      </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="annotToolsGroup">
+     <property name="title">
+      <string>Annotation tools</string>
+     </property>
+     <layout class="QVBoxLayout" name="annotToolsPlaceholder" />
     </widget>
    </item>
    <item>

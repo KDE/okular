@@ -475,11 +475,15 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                     }
 
                     const QPen linePen = buildPen( a, a->style().width(), a->style().color() );
+                    QBrush fillBrush;
+
+                    if ( la->lineClosed() && la->lineInnerColor().isValid() )
+                        fillBrush = QBrush( la->lineInnerColor() );
 
                     // draw the line as normalized path into image
                     drawShapeOnImage( backImage, path, la->lineClosed(),
                                       linePen,
-                                      QBrush(), pageScale ,Multiply);
+                                      fillBrush, pageScale ,Multiply);
 
                     if ( path.count() == 2 && fabs( la->lineLeadingForwardPoint() ) > 0.1 )
                     {
@@ -693,8 +697,12 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                     painter.setPen( Qt::black );
                     painter.setFont( text->textFont() );
                     Qt::AlignmentFlag halign = ( text->inplaceAlignment() == 1 ? Qt::AlignHCenter : ( text->inplaceAlignment() == 2 ? Qt::AlignRight : Qt::AlignLeft ) );
-                    painter.scale( 1.0 * scaledWidth / page->width(), 1.0 * scaledHeight / page->height() );
-                    painter.drawText( 2, 2, image.width() - 2, image.height() - 2,
+                    const double invXScale = (double)page->width() / scaledWidth;
+                    const double invYScale = (double)page->height() / scaledHeight;
+                    painter.scale( 1 / invXScale, 1 / invYScale );
+                    painter.drawText( 2 * invXScale, 2 * invYScale,
+                                      (image.width() - 2) * invXScale,
+                                      (image.height() - 2) * invYScale,
                                       Qt::AlignTop | halign | Qt::TextWordWrap,
                                       text->contents() );
                     painter.resetTransform();
@@ -722,7 +730,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                     // use it to colorize the icon, otherwise the icon will be
                     // "gray"
                     if ( a->style().color().isValid() )
-                        colorizeImage( scaledImage, a->style().color(), opacity );
+                        GuiUtils::colorizeImage( scaledImage, a->style().color(), opacity );
                     pixmap = QPixmap::fromImage( scaledImage );
 
                 // draw the mangled image to painter
@@ -902,7 +910,7 @@ void PagePainter::scalePixmapOnImage ( QImage & dest, const QPixmap * src,
 
 /** Private Helpers :: Image Drawing **/
 // from Arthur - qt4
-inline int qt_div_255(int x) { return (x + (x>>8) + 0x80) >> 8; }
+static inline int qt_div_255(int x) { return (x + (x>>8) + 0x80) >> 8; }
 
 void PagePainter::changeImageAlpha( QImage & image, unsigned int destAlpha )
 {
@@ -924,39 +932,6 @@ void PagePainter::changeImageAlpha( QImage & image, unsigned int destAlpha )
             // use destAlpha * sourceAlpha product
             sourceAlpha = qt_div_255( destAlpha * sourceAlpha );
             data[i] = qRgba( qRed(source), qGreen(source), qBlue(source), sourceAlpha );
-        }
-    }
-}
-
-void PagePainter::colorizeImage( QImage & grayImage, const QColor & color,
-    unsigned int destAlpha )
-{
-    // iterate over all pixels changing the alpha component value
-    unsigned int * data = (unsigned int *)grayImage.bits();
-    unsigned int pixels = grayImage.width() * grayImage.height();
-    int red = color.red(),
-        green = color.green(),
-        blue = color.blue();
-
-    int source, sourceSat, sourceAlpha;
-    for( register unsigned int i = 0; i < pixels; ++i )
-    {   // optimize this loop keeping byte order into account
-        source = data[i];
-        sourceSat = qRed( source );
-        int newR = qt_div_255( sourceSat * red ),
-            newG = qt_div_255( sourceSat * green ),
-            newB = qt_div_255( sourceSat * blue );
-        if ( (sourceAlpha = qAlpha( source )) == 255 )
-        {
-            // use destAlpha
-            data[i] = qRgba( newR, newG, newB, destAlpha );
-        }
-        else
-        {
-            // use destAlpha * sourceAlpha product
-            if ( destAlpha < 255 )
-                sourceAlpha = qt_div_255( destAlpha * sourceAlpha );
-            data[i] = qRgba( newR, newG, newB, sourceAlpha );
         }
     }
 }

@@ -153,7 +153,7 @@ struct AnnotationToolItem
 
     int id;
     QString text;
-    QString pixmap;
+    QPixmap pixmap;
     QString shortcut;
     bool isText;
 };

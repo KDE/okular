@@ -36,6 +36,7 @@
 #include "core/annotations.h"
 #include "settings.h"
 #include "annotationtools.h"
+#include "guiutils.h"
 #include "pageview.h"
 
 /** @short PickPointEngine */
@@ -47,10 +48,10 @@ class PickPointEngine : public AnnotatorEngine
               xscale( 1.0 ), yscale( 1.0 )
         {
             // parse engine specific attributes
-            pixmapName = engineElement.attribute( "hoverIcon" );
-            const QString stampname = m_annotElement.attribute( "icon" );
-            if ( m_annotElement.attribute( "type" ) == "Stamp" && !stampname.simplified().isEmpty() )
-                pixmapName = stampname;
+            hoverIconName = engineElement.attribute( "hoverIcon" );
+            iconName = m_annotElement.attribute( "icon" );
+            if ( m_annotElement.attribute( "type" ) == "Stamp" && !iconName.simplified().isEmpty() )
+                hoverIconName = iconName;
             center = QVariant( engineElement.attribute( "center" ) ).toBool();
             bool ok = true;
             size = engineElement.attribute( "size", "32" ).toInt( &ok );
@@ -59,8 +60,8 @@ class PickPointEngine : public AnnotatorEngine
             m_block = QVariant( engineElement.attribute( "block" ) ).toBool();
 
             // create engine objects
-            if ( !pixmapName.simplified().isEmpty() )
-                pixmap = new QPixmap( DesktopIcon( pixmapName, size ) );
+            if ( !hoverIconName.simplified().isEmpty() )
+                pixmap = new QPixmap( GuiUtils::loadStamp( hoverIconName, QSize( size, size ) ) );
         }
 
         ~PickPointEngine()
@@ -100,18 +101,18 @@ class PickPointEngine : public AnnotatorEngine
             // update variables and extents (zoom invariant rect)
             point.x = nX;
             point.y = nY;
-            if ( center && pixmap )
+            if ( center )
             {
-                rect.left = nX - ( pixmap->width() / ( xScale * 2.0 ) );
-                rect.top = nY - ( pixmap->height() / ( yScale * 2.0 ) );
+                rect.left = nX - ( size / ( xScale * 2.0 ) );
+                rect.top = nY - ( size / ( yScale * 2.0 ) );
             }
             else
             {
                 rect.left = nX;
                 rect.top = nY;
             }
-            rect.right = rect.left + ( pixmap ? pixmap->width() / xScale : 0 );
-            rect.bottom = rect.top + ( pixmap ? pixmap->height() / yScale : 0 );
+            rect.right = rect.left + size;
+            rect.bottom = rect.top + size;
             QRect boundrect = rect.geometry( (int)xScale, (int)yScale ).adjusted( 0, 0, 1, 1 );
             if ( m_block )
             {
@@ -143,11 +144,13 @@ class PickPointEngine : public AnnotatorEngine
 
         QList< Okular::Annotation* > end()
         {
-            m_creationCompleted = false;
-
             // find out annotation's description node
             if ( m_annotElement.isNull() )
+            {
+                m_creationCompleted = false;
+                clicked = false;
                 return QList< Okular::Annotation* >();
+            }
 
             // find out annotation's type
             Okular::Annotation * ann = 0;
@@ -166,6 +169,16 @@ class PickPointEngine : public AnnotatorEngine
                     ann = ta;
                     ta->setContents( note );
                     ta->setTextType( Okular::TextAnnotation::InPlace );
+                    //set alignment
+                    if ( m_annotElement.hasAttribute( "align" ) )
+                        ta->setInplaceAlignment( m_annotElement.attribute( "align" ).toInt() );
+                    //set font
+                    if ( m_annotElement.hasAttribute( "font" ) )
+                    {
+                        QFont f;
+                        f.fromString( m_annotElement.attribute( "font" ) );
+                        ta->setTextFont( f );
+                    }
                     //set boundary
                     rect.left = qMin(startpoint.x,point.x);
                     rect.top = qMin(startpoint.y,point.y);
@@ -186,21 +199,21 @@ class PickPointEngine : public AnnotatorEngine
                 Okular::TextAnnotation * ta = new Okular::TextAnnotation();
                 ann = ta;
                 ta->setTextType( Okular::TextAnnotation::Linked );
-                ta->setTextIcon( "Note" );
+                ta->setTextIcon( iconName );
                 //ta->window.flags &= ~(Okular::Annotation::Hidden);
                 const double iconhei=0.03;
                 rect.left = point.x;
                 rect.top = point.y;
                 rect.right=rect.left+iconhei;
                 rect.bottom=rect.top+iconhei*xscale/yscale;
-                ta->window().setSummary( i18n( "Note" ) );
+                ta->window().setSummary( i18n( "Pop-up Note" ) );
             }
             // create StampAnnotation from path
             else if ( typeString == "Stamp" )
             {
                 Okular::StampAnnotation * sa = new Okular::StampAnnotation();
                 ann = sa;
-                sa->setStampIconName( pixmapName );
+                sa->setStampIconName( iconName );
                 // set boundary
                 rect.left = qMin( startpoint.x, point.x );
                 rect.top = qMin( startpoint.y, point.y );
@@ -236,13 +249,19 @@ class PickPointEngine : public AnnotatorEngine
                     ga->setGeometricalType( Okular::GeomAnnotation::InscribedSquare );
                 else
                     ga->setGeometricalType( Okular::GeomAnnotation::InscribedCircle );
-                ga->style().setWidth( 5 );
+                if ( m_annotElement.hasAttribute( "width" ) )
+                    ann->style().setWidth( m_annotElement.attribute( "width" ).toDouble() );
+                if ( m_annotElement.hasAttribute( "innerColor" ) )
+                    ga->setGeometricalInnerColor( QColor( m_annotElement.attribute( "innerColor" ) ) );
                 //set boundary
                 rect.left = qMin( startpoint.x, point.x );
                 rect.top = qMin( startpoint.y, point.y );
                 rect.right = qMax( startpoint.x, point.x );
                 rect.bottom = qMax( startpoint.y, point.y );
             }
+
+            m_creationCompleted = false;
+            clicked = false;
 
             // safety check
             if ( !ann )
@@ -278,7 +297,7 @@ class PickPointEngine : public AnnotatorEngine
         Okular::NormalizedPoint startpoint;
         Okular::NormalizedPoint point;
         QPixmap * pixmap;
-        QString pixmapName;
+        QString hoverIconName, iconName;
         int size;
         double xscale,yscale;
         double pagewidth, pageheight;
@@ -411,7 +430,18 @@ class PolyLineEngine : public AnnotatorEngine
                 la->setLinePoints( list );
 
                 if ( numofpoints == -1 )
+                {
                     la->setLineClosed( true );
+                    if ( m_annotElement.hasAttribute( "innerColor" ) )
+                        la->setLineInnerColor( QColor( m_annotElement.attribute( "innerColor" ) ) );
+                }
+                else if ( numofpoints == 2 )
+                {
+                    if ( m_annotElement.hasAttribute( "leadFwd" ) )
+                        la->setLineLeadingForwardPoint( m_annotElement.attribute( "leadFwd" ).toDouble() );
+                    if ( m_annotElement.hasAttribute( "leadBack" ) )
+                        la->setLineLeadingBackwardPoint( m_annotElement.attribute( "leadBack" ).toDouble() );
+                }
 
                 la->setBoundingRectangle( normRect );
 
@@ -420,6 +450,9 @@ class PolyLineEngine : public AnnotatorEngine
             // safety check
             if ( !ann )
                 return QList< Okular::Annotation* >();
+
+            if ( m_annotElement.hasAttribute( "width" ) )
+                ann->style().setWidth( m_annotElement.attribute( "width" ).toDouble() );
 
             // set common attributes
             ann->style().setColor( m_annotElement.hasAttribute( "color" ) ?
@@ -613,47 +646,56 @@ PageViewAnnotator::PageViewAnnotator( PageView * parent, Okular::Document * stor
     m_toolBar( 0 ), m_engine( 0 ), m_textToolsEnabled( false ), m_toolsEnabled( false ),
     m_continuousMode( false ), m_hidingWasForced( false ), m_lastToolID( -1 ), m_lockedItem( 0 )
 {
-    // load the tools from the 'xml tools definition' file. store the tree internally.
-    QFile infoFile( KStandardDirs::locate("data", "okular/tools.xml") );
-    if ( infoFile.exists() && infoFile.open( QIODevice::ReadOnly ) )
-    {
-        QDomDocument doc( "annotatingTools" );
-        if ( doc.setContent( &infoFile ) )
-        {
-            m_toolsDefinition = doc.elementsByTagName("annotatingTools").item( 0 ).toElement();
+    reparseConfig();
+}
 
-            // create the AnnotationToolItems from the XML dom tree
-            QDomNode toolDescription = m_toolsDefinition.firstChild();
-            while ( toolDescription.isElement() )
-            {
-                QDomElement toolElement = toolDescription.toElement();
-                if ( toolElement.tagName() == "tool" )
-                {
-                    AnnotationToolItem item;
-                    item.id = toolElement.attribute("id").toInt();
-                    item.text = i18n( toolElement.attribute( "name" ).toUtf8() );
-                    item.pixmap = toolElement.attribute("pixmap");
-                    QDomNode shortcutNode = toolElement.elementsByTagName( "shortcut" ).item( 0 );
-                    if ( shortcutNode.isElement() )
-                        item.shortcut = shortcutNode.toElement().text();
-                    QDomNodeList engineNodeList = toolElement.elementsByTagName( "engine" );
-                    if ( engineNodeList.size() > 0 )
-                    {
-                        QDomElement engineEl = engineNodeList.item( 0 ).toElement();
-                        if ( !engineEl.isNull() && engineEl.hasAttribute( "type" ) )
-                            item.isText = engineEl.attribute( "type" ) == QLatin1String( "TextSelector" );
-                    }
-                    m_items.push_back( item );
-                }
-                toolDescription = toolDescription.nextSibling();
-            }
-        }
+void PageViewAnnotator::reparseConfig()
+{
+    m_items.clear();
+
+    // Read tool list from configuration. It's a list of XML <tool></tool> elements
+    const QStringList userTools = Okular::Settings::annotationTools();
+
+    // Populate m_toolsDefinition
+    QDomDocument doc;
+    m_toolsDefinition = doc.createElement( "annotatingTools" );
+    foreach ( const QString &toolXml, userTools )
+    {
+        QDomDocument entryParser;
+        if ( entryParser.setContent( toolXml ) )
+            m_toolsDefinition.appendChild( doc.importNode( entryParser.documentElement(), true ) );
         else
-            kWarning() << "AnnotatingTools XML file seems to be damaged";
-        infoFile.close();
+            kWarning() << "Skipping malformed tool XML in AnnotationTools setting";
     }
-    else
-        kWarning() << "Unable to open AnnotatingTools XML definition";
+
+    // Create the AnnotationToolItems from the XML dom tree
+    QDomNode toolDescription = m_toolsDefinition.firstChild();
+    while ( toolDescription.isElement() )
+    {
+        QDomElement toolElement = toolDescription.toElement();
+        if ( toolElement.tagName() == "tool" )
+        {
+            AnnotationToolItem item;
+            item.id = toolElement.attribute("id").toInt();
+            if ( toolElement.hasAttribute( "name" ) )
+                item.text = toolElement.attribute( "name" );
+            else
+                item.text = defaultToolName( toolElement );
+            item.pixmap = makeToolPixmap( toolElement );
+            QDomNode shortcutNode = toolElement.elementsByTagName( "shortcut" ).item( 0 );
+            if ( shortcutNode.isElement() )
+                item.shortcut = shortcutNode.toElement().text();
+            QDomNodeList engineNodeList = toolElement.elementsByTagName( "engine" );
+            if ( engineNodeList.size() > 0 )
+            {
+                QDomElement engineEl = engineNodeList.item( 0 ).toElement();
+                if ( !engineEl.isNull() && engineEl.hasAttribute( "type" ) )
+                    item.isText = engineEl.attribute( "type" ) == QLatin1String( "TextSelector" );
+            }
+            m_items.push_back( item );
+        }
+        toolDescription = toolDescription.nextSibling();
+    }
 }
 
 PageViewAnnotator::~PageViewAnnotator()
@@ -950,13 +992,38 @@ void PageViewAnnotator::slotToolSelected( int toolID )
                 else
                     kWarning().nospace() << "tools.xml: engine type:'" << type << "' is not defined!";
             }
+
             // display the tooltip
-            else if ( toolSubElement.tagName() == "tooltip" )
-            {
-                const QString tip = toolSubElement.text();
-                if ( !tip.isEmpty() && !m_continuousMode )
-                    m_pageView->displayMessage( i18nc( "Annotation tool", tip.toUtf8() ), QString(), PageViewMessage::Annotation );
-            }
+            const QString annotType = toolElement.attribute( "type" );
+            QString tip;
+
+            if ( annotType == "ellipse" )
+                tip = i18nc( "Annotation tool", "Draw an ellipse (drag to select a zone)" );
+            else if ( annotType == "highlight" )
+                tip = i18nc( "Annotation tool", "Highlight text" );
+            else if ( annotType == "ink" )
+                tip = i18nc( "Annotation tool", "Draw a freehand line" );
+            else if ( annotType == "note-inline" )
+                tip = i18nc( "Annotation tool", "Inline Text Annotation (drag to select a zone)" );
+            else if ( annotType == "note-linked" )
+                tip = i18nc( "Annotation tool", "Put a pop-up note" );
+            else if ( annotType == "polygon" )
+                tip = i18nc( "Annotation tool", "Draw a polygon (click on the first point to close it)" );
+            else if ( annotType == "rectangle" )
+                tip = i18nc( "Annotation tool", "Draw a rectangle" );
+            else if ( annotType == "squiggly" )
+                tip = i18nc( "Annotation tool", "Squiggle text" );
+            else if ( annotType == "stamp" )
+                tip = i18nc( "Annotation tool", "Put a stamp symbol" );
+            else if ( annotType == "straight-line" )
+                tip = i18nc( "Annotation tool", "Draw a straight line" );
+            else if ( annotType == "strikeout" )
+                tip = i18nc( "Annotation tool", "Strike out text" );
+            else if ( annotType == "underline" )
+                tip = i18nc( "Annotation tool", "Underline text" );
+
+            if ( !tip.isEmpty() && !m_continuousMode )
+                m_pageView->displayMessage( tip, QString(), PageViewMessage::Annotation );
         }
 
         // consistancy warning
@@ -984,6 +1051,177 @@ void PageViewAnnotator::slotToolDoubleClicked( int /*toolID*/ )
 void PageViewAnnotator::detachAnnotation()
 {
     m_toolBar->selectButton( -1 );
+}
+
+QString PageViewAnnotator::defaultToolName( const QDomElement &toolElement )
+{
+    const QString annotType = toolElement.attribute( "type" );
+
+    if ( annotType == "ellipse" )
+        return i18n( "Ellipse" );
+    else if ( annotType == "highlight" )
+        return i18n( "Highlighter" );
+    else if ( annotType == "ink" )
+        return i18n( "Freehand Line" );
+    else if ( annotType == "note-inline" )
+        return i18n( "Inline Note" );
+    else if ( annotType == "note-linked" )
+        return i18n( "Pop-up Note" );
+    else if ( annotType == "polygon" )
+        return i18n( "Polygon" );
+    else if ( annotType == "rectangle" )
+        return i18n( "Rectangle" );
+    else if ( annotType == "squiggly" )
+        return i18n( "Squiggle" );
+    else if ( annotType == "stamp" )
+        return i18n( "Stamp" );
+    else if ( annotType == "straight-line" )
+        return i18n( "Straight Line" );
+    else if ( annotType == "strikeout" )
+        return i18n( "Strike out" );
+    else if ( annotType == "underline" )
+        return i18n( "Underline" );
+    else
+        return QString();
+}
+
+QPixmap PageViewAnnotator::makeToolPixmap( const QDomElement &toolElement )
+{
+    QPixmap pixmap( 32, 32 );
+    const QString annotType = toolElement.attribute( "type" );
+
+    // Load base pixmap. We'll draw on top of it
+    pixmap.load( KStandardDirs::locate( "data", "okular/pics/tool-base-okular.png" ) );
+
+    /* Parse color, innerColor and icon (if present) */
+    QColor engineColor, innerColor;
+    QString icon;
+    QDomNodeList engineNodeList = toolElement.elementsByTagName( "engine" );
+    if ( engineNodeList.size() > 0 )
+    {
+        QDomElement engineEl = engineNodeList.item( 0 ).toElement();
+        if ( !engineEl.isNull() && engineEl.hasAttribute( "color" ) )
+            engineColor = QColor( engineEl.attribute( "color" ) );
+    }
+    QDomNodeList annotationNodeList = toolElement.elementsByTagName( "annotation" );
+    if ( annotationNodeList.size() > 0 )
+    {
+        QDomElement annotationEl = annotationNodeList.item( 0 ).toElement();
+        if ( !annotationEl.isNull() && annotationEl.hasAttribute( "innerColor" ) )
+            innerColor = QColor( annotationEl.attribute( "innerColor" ) );
+        if ( !annotationEl.isNull() && annotationEl.hasAttribute( "icon" ) )
+            icon = annotationEl.attribute( "icon" );
+    }
+
+    QPainter p( &pixmap );
+
+    if ( annotType == "ellipse" )
+    {
+        p.setRenderHint( QPainter::Antialiasing );
+        if ( innerColor.isValid() )
+            p.setBrush( innerColor );
+        p.setPen( QPen( engineColor, 2 ) );
+        p.drawEllipse( 2, 7, 21, 14 );
+    }
+    else if ( annotType == "highlight" )
+    {
+        QImage overlay( KStandardDirs::locate( "data", "okular/pics/tool-highlighter-okular-colorizable.png" ) );
+        QImage colorizedOverlay = overlay;
+        GuiUtils::colorizeImage( colorizedOverlay, engineColor );
+
+        p.drawImage( QPoint(0,0), colorizedOverlay ); // Trail
+        p.drawImage( QPoint(0,-32), overlay ); // Text + Shadow (uncolorized)
+        p.drawImage( QPoint(0,-64), colorizedOverlay ); // Pen
+    }
+    else if ( annotType == "ink" )
+    {
+        QImage overlay( KStandardDirs::locate( "data", "okular/pics/tool-ink-okular-colorizable.png" ) );
+        QImage colorizedOverlay = overlay;
+        GuiUtils::colorizeImage( colorizedOverlay, engineColor );
+
+        p.drawImage( QPoint(0,0), colorizedOverlay ); // Trail
+        p.drawImage( QPoint(0,-32), overlay ); // Shadow (uncolorized)
+        p.drawImage( QPoint(0,-64), colorizedOverlay ); // Pen
+    }
+    else if ( annotType == "note-inline" )
+    {
+        QImage overlay( KStandardDirs::locate( "data", "okular/pics/tool-note-inline-okular-colorizable.png" ) );
+        GuiUtils::colorizeImage( overlay, engineColor );
+        p.drawImage( QPoint(0,0), overlay );
+    }
+    else if ( annotType == "note-linked" )
+    {
+        QImage overlay( KStandardDirs::locate( "data", "okular/pics/tool-note-okular-colorizable.png" ) );
+        GuiUtils::colorizeImage( overlay, engineColor );
+        p.drawImage( QPoint(0,0), overlay );
+    }
+    else if ( annotType == "polygon" )
+    {
+        QPainterPath path;
+        path.moveTo( 0, 7 );
+        path.lineTo( 19, 7 );
+        path.lineTo( 19, 14 );
+        path.lineTo( 23, 14 );
+        path.lineTo( 23, 20 );
+        path.lineTo( 0, 20 );
+        if ( innerColor.isValid() )
+            p.setBrush( innerColor );
+        p.setPen( QPen( engineColor, 1 ) );
+        p.drawPath( path );
+    }
+    else if ( annotType == "rectangle" )
+    {
+        p.setRenderHint( QPainter::Antialiasing );
+        if ( innerColor.isValid() )
+            p.setBrush( innerColor );
+        p.setPen( QPen( engineColor, 2 ) );
+        p.drawRect( 2, 7, 21, 14 );
+    }
+    else if ( annotType == "squiggly" )
+    {
+        p.setPen( QPen( engineColor, 1, Qt::DotLine ) );
+        p.drawLine( 1, 13, 16, 13 );
+        p.drawLine( 2, 14, 15, 14 );
+        p.drawLine( 0, 20, 19, 20 );
+        p.drawLine( 1, 21, 18, 21 );
+    }
+    else if ( annotType == "stamp" )
+    {
+        QPixmap stamp = GuiUtils::loadStamp( icon, QSize( 16, 16 ) );
+        p.setRenderHint( QPainter::Antialiasing );
+        p.drawPixmap( 16, 14, stamp );
+    }
+    else if ( annotType == "straight-line" )
+    {
+        QPainterPath path;
+        path.moveTo( 1, 8 );
+        path.lineTo( 20, 8 );
+        path.lineTo( 1, 27 );
+        path.lineTo( 20, 27 );
+        p.setRenderHint( QPainter::Antialiasing );
+        p.setPen( QPen( engineColor, 1 ) );
+        p.drawPath( path ); // TODO To be discussed: This is not a straight line!
+    }
+    else if ( annotType == "strikeout" )
+    {
+        p.setPen( QPen( engineColor, 1 ) );
+        p.drawLine( 1, 10, 16, 10 );
+        p.drawLine( 0, 17, 19, 17 );
+    }
+    else if ( annotType == "underline" )
+    {
+        p.setPen( QPen( engineColor, 1 ) );
+        p.drawLine( 1, 13, 16, 13 );
+        p.drawLine( 0, 20, 19, 20 );
+    }
+    else
+    {
+        /* Unrecognized annotation type -- It shouldn't happen */
+        p.setPen( QPen( engineColor ) );
+        p.drawText( QPoint(20, 31), "?" );
+    }
+
+    return pixmap;
 }
 
 #include "pageviewannotator.moc"

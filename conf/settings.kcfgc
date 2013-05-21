@@ -5,4 +5,5 @@ Inherits=SettingsCore
 Mutators=true
 Singleton=true
 IncludeFiles=settings_core.h
+SourceIncludeFiles=kstandarddirs.h,qdom.h
 MemberVariables=dpointer

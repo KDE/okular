@@ -22,6 +22,7 @@
 #include <kicon.h>
 #include <kiconloader.h>
 #include <klocale.h>
+#include <knuminput.h>
 #include <kdebug.h>
 
 #include "core/document.h"
@@ -133,6 +134,9 @@ AnnotationWidget * AnnotationWidgetFactory::widgetFor( Okular::Annotation * ann 
         case Okular::Annotation::AHighlight:
             return new HighlightAnnotationWidget( ann );
             break;
+        case Okular::Annotation::AInk:
+            return new InkAnnotationWidget( ann );
+            break;
         case Okular::Annotation::AGeom:
             return new GeomAnnotationWidget( ann );
             break;
@@ -146,13 +150,13 @@ AnnotationWidget * AnnotationWidgetFactory::widgetFor( Okular::Annotation * ann 
         default:
             ;
     }
-    // cases not covered yet
-    return 0;
+    // cases not covered yet: return a generic widget
+    return new AnnotationWidget( ann );
 }
 
 
 AnnotationWidget::AnnotationWidget( Okular::Annotation * ann )
-    : QObject(), m_ann( ann ), m_styleWidget( 0 ), m_extraWidget( 0 )
+    : QObject(), m_ann( ann ), m_appearanceWidget( 0 ), m_extraWidget( 0 )
 {
 }
 
@@ -165,13 +169,13 @@ Okular::Annotation::SubType AnnotationWidget::annotationType() const
     return m_ann->subType();
 }
 
-QWidget * AnnotationWidget::styleWidget()
+QWidget * AnnotationWidget::appearanceWidget()
 {
-    if ( m_styleWidget )
-        return m_styleWidget;
+    if ( m_appearanceWidget )
+        return m_appearanceWidget;
 
-    m_styleWidget = createStyleWidget();
-    return m_styleWidget;
+    m_appearanceWidget = createAppearanceWidget();
+    return m_appearanceWidget;
 }
 
 QWidget * AnnotationWidget::extraWidget()
@@ -181,6 +185,50 @@ QWidget * AnnotationWidget::extraWidget()
 
     m_extraWidget = createExtraWidget();
     return m_extraWidget;
+}
+
+void AnnotationWidget::applyChanges()
+{
+    m_ann->style().setColor( m_colorBn->color() );
+    m_ann->style().setOpacity( (double)m_opacity->value() / 100.0 );
+}
+
+QWidget * AnnotationWidget::createAppearanceWidget()
+{
+    QWidget * widget = new QWidget();
+    QGridLayout * gridlayout = new QGridLayout( widget );
+
+    QLabel * tmplabel = new QLabel( i18n( "&Color:" ), widget );
+    gridlayout->addWidget( tmplabel, 0, 0, Qt::AlignRight );
+    m_colorBn = new KColorButton( widget );
+    m_colorBn->setColor( m_ann->style().color() );
+    tmplabel->setBuddy( m_colorBn );
+    gridlayout->addWidget( m_colorBn, 0, 1 );
+
+    tmplabel = new QLabel( i18n( "&Opacity:" ), widget );
+    gridlayout->addWidget( tmplabel, 1, 0, Qt::AlignRight );
+    m_opacity = new KIntNumInput( widget );
+    m_opacity->setRange( 0, 100 );
+    m_opacity->setValue( (int)( m_ann->style().opacity() * 100 ) );
+    m_opacity->setSuffix( i18nc( "Suffix for the opacity level, eg '80 %'", " %" ) );
+    tmplabel->setBuddy( m_opacity );
+    gridlayout->addWidget( m_opacity, 1, 1 );
+
+    QWidget * styleWidget = createStyleWidget();
+    if ( styleWidget )
+        gridlayout->addWidget( styleWidget, 2, 0, 1, 2 );
+
+    gridlayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::MinimumExpanding ), 3, 0 );
+
+    connect( m_colorBn, SIGNAL(changed(QColor)), this, SIGNAL(dataChanged()) );
+    connect( m_opacity, SIGNAL(valueChanged(int)), this, SIGNAL(dataChanged()) );
+
+    return widget;
+}
+
+QWidget * AnnotationWidget::createStyleWidget()
+{
+    return 0;
 }
 
 QWidget * AnnotationWidget::createExtraWidget()
@@ -203,46 +251,63 @@ QWidget * TextAnnotationWidget::createStyleWidget()
 
     if ( m_textAnn->textType() == Okular::TextAnnotation::Linked )
     {
-    QGroupBox * gb = new QGroupBox( widget );
-    lay->addWidget( gb );
-    gb->setTitle( i18n( "Icon" ) );
-    QHBoxLayout * gblay = new QHBoxLayout( gb );
-    m_pixmapSelector = new PixmapPreviewSelector( gb );
-    gblay->addWidget( m_pixmapSelector );
+        QGroupBox * gb = new QGroupBox( widget );
+        lay->addWidget( gb );
+        gb->setTitle( i18n( "Icon" ) );
+        QHBoxLayout * gblay = new QHBoxLayout( gb );
+        m_pixmapSelector = new PixmapPreviewSelector( gb );
+        gblay->addWidget( m_pixmapSelector );
 
-    m_pixmapSelector->addItem( i18n( "Comment" ), "Comment" );
-    m_pixmapSelector->addItem( i18n( "Help" ), "Help" );
-    m_pixmapSelector->addItem( i18n( "Insert" ), "Insert" );
-    m_pixmapSelector->addItem( i18n( "Key" ), "Key" );
-    m_pixmapSelector->addItem( i18n( "New Paragraph" ), "NewParagraph" );
-    m_pixmapSelector->addItem( i18n( "Note" ), "Note" );
-    m_pixmapSelector->addItem( i18n( "Paragraph" ), "Paragraph" );
-    m_pixmapSelector->setIcon( m_textAnn->textIcon() );
+        m_pixmapSelector->addItem( i18n( "Comment" ), "Comment" );
+        m_pixmapSelector->addItem( i18n( "Help" ), "Help" );
+        m_pixmapSelector->addItem( i18n( "Insert" ), "Insert" );
+        m_pixmapSelector->addItem( i18n( "Key" ), "Key" );
+        m_pixmapSelector->addItem( i18n( "New Paragraph" ), "NewParagraph" );
+        m_pixmapSelector->addItem( i18n( "Note" ), "Note" );
+        m_pixmapSelector->addItem( i18n( "Paragraph" ), "Paragraph" );
+        m_pixmapSelector->setIcon( m_textAnn->textIcon() );
 
-    connect( m_pixmapSelector, SIGNAL(iconChanged(QString)), this, SIGNAL(dataChanged()) );
+        connect( m_pixmapSelector, SIGNAL(iconChanged(QString)), this, SIGNAL(dataChanged()) );
     }
+    else if ( m_textAnn->textType() == Okular::TextAnnotation::InPlace )
+    {
+        QGridLayout * innerlay = new QGridLayout();
+        lay->addLayout( innerlay );
 
-    QHBoxLayout * fontlay = new QHBoxLayout();
-    QLabel * tmplabel = new QLabel( i18n( "Font:" ), widget );
-    fontlay->addWidget( tmplabel );
-    m_fontReq = new KFontRequester( widget );
-    fontlay->addWidget( m_fontReq );
-    lay->addLayout( fontlay );
+        QLabel * tmplabel = new QLabel( i18n( "Font:" ), widget );
+        innerlay->addWidget( tmplabel, 0, 0 );
+        m_fontReq = new KFontRequester( widget );
+        innerlay->addWidget( m_fontReq, 0, 1 );
+        m_fontReq->setFont( m_textAnn->textFont() );
 
-    m_fontReq->setFont( m_textAnn->textFont() );
+        tmplabel = new QLabel( i18n( "Align:" ), widget );
+        innerlay->addWidget( tmplabel, 1, 0 );
+        m_textAlign = new KComboBox( widget );
+        innerlay->addWidget( m_textAlign, 1, 1 );
+        m_textAlign->addItem( i18n("Left") );
+        m_textAlign->addItem( i18n("Center") );
+        m_textAlign->addItem( i18n("Right") );
+        m_textAlign->setCurrentIndex( m_textAnn->inplaceAlignment() );
 
-    connect( m_fontReq, SIGNAL(fontSelected(QFont)), this, SIGNAL(dataChanged()) );
+        connect( m_fontReq, SIGNAL(fontSelected(QFont)), this, SIGNAL(dataChanged()) );
+        connect( m_textAlign, SIGNAL(currentIndexChanged(int)), this, SIGNAL(dataChanged()) );
+    }
 
     return widget;
 }
 
 void TextAnnotationWidget::applyChanges()
 {
+    AnnotationWidget::applyChanges();
     if ( m_textAnn->textType() == Okular::TextAnnotation::Linked )
     {
         m_textAnn->setTextIcon( m_pixmapSelector->icon() );
     }
-    m_textAnn->setTextFont( m_fontReq->font() );
+    else if ( m_textAnn->textType() == Okular::TextAnnotation::InPlace )
+    {
+        m_textAnn->setTextFont( m_fontReq->font() );
+        m_textAnn->setInplaceAlignment( m_textAlign->currentIndex() );
+    }
 }
 
 
@@ -293,6 +358,7 @@ QWidget * StampAnnotationWidget::createStyleWidget()
 
 void StampAnnotationWidget::applyChanges()
 {
+    AnnotationWidget::applyChanges();
     m_stampAnn->setStampIconName( m_pixmapSelector->icon() );
 }
 
@@ -317,20 +383,20 @@ QWidget * LineAnnotationWidget::createStyleWidget()
     lay->setMargin( 0 );
     if ( m_lineType == 0 )
     {
-    QGroupBox * gb = new QGroupBox( widget );
-    lay->addWidget( gb );
-    gb->setTitle( i18n( "Line Extensions" ) );
-    QGridLayout * gridlay = new QGridLayout( gb );
-    QLabel * tmplabel = new QLabel( i18n( "Leader Line Length:" ), gb );
-    gridlay->addWidget( tmplabel, 0, 0, Qt::AlignRight );
-    m_spinLL = new QDoubleSpinBox( gb );
-    gridlay->addWidget( m_spinLL, 0, 1 );
-    tmplabel->setBuddy( m_spinLL );
-    tmplabel = new QLabel( i18n( "Leader Line Extensions Length:" ), gb );
-    gridlay->addWidget( tmplabel, 1, 0, Qt::AlignRight );
-    m_spinLLE = new QDoubleSpinBox( gb );
-    gridlay->addWidget( m_spinLLE, 1, 1 );
-    tmplabel->setBuddy( m_spinLLE );
+        QGroupBox * gb = new QGroupBox( widget );
+        lay->addWidget( gb );
+        gb->setTitle( i18n( "Line Extensions" ) );
+        QGridLayout * gridlay = new QGridLayout( gb );
+        QLabel * tmplabel = new QLabel( i18n( "Leader Line Length:" ), gb );
+        gridlay->addWidget( tmplabel, 0, 0, Qt::AlignRight );
+        m_spinLL = new QDoubleSpinBox( gb );
+        gridlay->addWidget( m_spinLL, 0, 1 );
+        tmplabel->setBuddy( m_spinLL );
+        tmplabel = new QLabel( i18n( "Leader Line Extensions Length:" ), gb );
+        gridlay->addWidget( tmplabel, 1, 0, Qt::AlignRight );
+        m_spinLLE = new QDoubleSpinBox( gb );
+        gridlay->addWidget( m_spinLLE, 1, 1 );
+        tmplabel->setBuddy( m_spinLLE );
     }
 
     QGroupBox * gb2 = new QGroupBox( widget );
@@ -343,20 +409,46 @@ QWidget * LineAnnotationWidget::createStyleWidget()
     gridlay2->addWidget( m_spinSize, 0, 1 );
     tmplabel2->setBuddy( m_spinSize );
 
+    if ( m_lineType == 1 )
+    {
+        m_useColor = new QCheckBox( i18n( "Inner color:" ), gb2 );
+        gridlay2->addWidget( m_useColor, 1, 0 );
+        m_innerColor = new KColorButton( gb2 );
+        gridlay2->addWidget( m_innerColor, 1, 1 );
+    }
+
     if ( m_lineType == 0 )
     {
-    m_spinLL->setRange( -500, 500 );
-    m_spinLL->setValue( m_lineAnn->lineLeadingForwardPoint() );
-    m_spinLLE->setRange( 0, 500 );
-    m_spinLLE->setValue( m_lineAnn->lineLeadingBackwardPoint() );
+        m_spinLL->setRange( -500, 500 );
+        m_spinLL->setValue( m_lineAnn->lineLeadingForwardPoint() );
+        m_spinLLE->setRange( 0, 500 );
+        m_spinLLE->setValue( m_lineAnn->lineLeadingBackwardPoint() );
+    }
+    else if ( m_lineType == 1 )
+    {
+        m_innerColor->setColor( m_lineAnn->lineInnerColor() );
+        if ( m_lineAnn->lineInnerColor().isValid() )
+        {
+            m_useColor->setChecked( true );
+        }
+        else
+        {
+            m_innerColor->setEnabled( false );
+        }
     }
     m_spinSize->setRange( 1, 100 );
     m_spinSize->setValue( m_lineAnn->style().width() );
 
     if ( m_lineType == 0 )
     {
-    connect( m_spinLL, SIGNAL(valueChanged(double)), this, SIGNAL(dataChanged()) );
-    connect( m_spinLLE, SIGNAL(valueChanged(double)), this, SIGNAL(dataChanged()) );
+        connect( m_spinLL, SIGNAL(valueChanged(double)), this, SIGNAL(dataChanged()) );
+        connect( m_spinLLE, SIGNAL(valueChanged(double)), this, SIGNAL(dataChanged()) );
+    }
+    else if ( m_lineType == 1 )
+    {
+        connect( m_innerColor, SIGNAL(changed(QColor)), this, SIGNAL(dataChanged()) );
+        connect( m_useColor, SIGNAL(toggled(bool)), this, SIGNAL(dataChanged()) );
+        connect( m_useColor, SIGNAL(toggled(bool)), m_innerColor, SLOT(setEnabled(bool)) );
     }
     connect( m_spinSize, SIGNAL(valueChanged(double)), this, SIGNAL(dataChanged()) );
 
@@ -365,12 +457,62 @@ QWidget * LineAnnotationWidget::createStyleWidget()
 
 void LineAnnotationWidget::applyChanges()
 {
+    AnnotationWidget::applyChanges();
     if ( m_lineType == 0 )
     {
         m_lineAnn->setLineLeadingForwardPoint( m_spinLL->value() );
         m_lineAnn->setLineLeadingBackwardPoint( m_spinLLE->value() );
     }
+    else if ( m_lineType == 1 )
+    {
+        if ( !m_useColor->isChecked() )
+        {
+            m_lineAnn->setLineInnerColor( QColor() );
+        }
+        else
+        {
+            m_lineAnn->setLineInnerColor( m_innerColor->color() );
+        }
+    }
     m_lineAnn->style().setWidth( m_spinSize->value() );
+}
+
+
+
+InkAnnotationWidget::InkAnnotationWidget( Okular::Annotation * ann )
+    : AnnotationWidget( ann )
+{
+    m_inkAnn = static_cast< Okular::InkAnnotation * >( ann );
+}
+
+QWidget * InkAnnotationWidget::createStyleWidget()
+{
+    QWidget * widget = new QWidget();
+    QVBoxLayout * lay = new QVBoxLayout( widget );
+    lay->setMargin( 0 );
+
+    QGroupBox * gb2 = new QGroupBox( widget );
+    lay->addWidget( gb2 );
+    gb2->setTitle( i18n( "Style" ) );
+    QGridLayout * gridlay2 = new QGridLayout( gb2 );
+    QLabel * tmplabel2 = new QLabel( i18n( "&Size:" ), gb2 );
+    gridlay2->addWidget( tmplabel2, 0, 0, Qt::AlignRight );
+    m_spinSize = new QDoubleSpinBox( gb2 );
+    gridlay2->addWidget( m_spinSize, 0, 1 );
+    tmplabel2->setBuddy( m_spinSize );
+
+    m_spinSize->setRange( 1, 100 );
+    m_spinSize->setValue( m_inkAnn->style().width() );
+
+    connect( m_spinSize, SIGNAL(valueChanged(double)), this, SIGNAL(dataChanged()) );
+
+    return widget;
+}
+
+void InkAnnotationWidget::applyChanges()
+{
+    AnnotationWidget::applyChanges();
+    m_inkAnn->style().setWidth( m_spinSize->value() );
 }
 
 
@@ -395,7 +537,7 @@ QWidget * HighlightAnnotationWidget::createStyleWidget()
     typelay->addWidget( m_typeCombo );
 
     m_typeCombo->addItem( i18n( "Highlight" ) );
-    m_typeCombo->addItem( i18n( "Squiggly" ) );
+    m_typeCombo->addItem( i18n( "Squiggle" ) );
     m_typeCombo->addItem( i18n( "Underline" ) );
     m_typeCombo->addItem( i18n( "Strike out" ) );
     m_typeCombo->setCurrentIndex( m_hlAnn->highlightType() );
@@ -407,6 +549,7 @@ QWidget * HighlightAnnotationWidget::createStyleWidget()
 
 void HighlightAnnotationWidget::applyChanges()
 {
+    AnnotationWidget::applyChanges();
     m_hlAnn->setHighlightType( (Okular::HighlightAnnotation::HighlightType)m_typeCombo->currentIndex() );
 }
 
@@ -464,6 +607,7 @@ QWidget * GeomAnnotationWidget::createStyleWidget()
 
 void GeomAnnotationWidget::applyChanges()
 {
+    AnnotationWidget::applyChanges();
     m_geomAnn->setGeometricalType( (Okular::GeomAnnotation::GeomType)m_typeCombo->currentIndex() );
     if ( !m_useColor->isChecked() )
     {
@@ -553,6 +697,7 @@ QWidget * FileAttachmentAnnotationWidget::createExtraWidget()
 
 void FileAttachmentAnnotationWidget::applyChanges()
 {
+    AnnotationWidget::applyChanges();
     m_attachAnn->setFileIconName( m_pixmapSelector->icon() );
 }
 
@@ -608,6 +753,7 @@ QWidget * CaretAnnotationWidget::createStyleWidget()
 
 void CaretAnnotationWidget::applyChanges()
 {
+    AnnotationWidget::applyChanges();
     m_caretAnn->setCaretSymbol( caretSymbolFromIcon( m_pixmapSelector->icon() ) );
 }
 

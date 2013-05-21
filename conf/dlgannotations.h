@@ -7,13 +7,16 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include "dlgidentity.h"
+#ifndef _DLGANNOTATIONS_H_
+#define _DLGANNOTATIONS_H_
 
-#include "ui_dlgidentitybase.h"
+#include <qwidget.h>
 
-DlgIdentity::DlgIdentity( QWidget * parent )
-    : QWidget( parent )
+
+class DlgAnnotations : public QWidget
 {
-    Ui_DlgIdentityBase dlg;
-    dlg.setupUi( this );
-}
+    public:
+        DlgAnnotations( QWidget * parent = 0 );
+};
+
+#endif

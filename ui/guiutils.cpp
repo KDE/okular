@@ -69,24 +69,41 @@ QString captionForAnnotation( const Okular::Annotation * ann )
     {
         case Okular::Annotation::AText:
             if( ( (Okular::TextAnnotation*)ann )->textType() == Okular::TextAnnotation::Linked )
-                ret = i18n( "Note" );
+                ret = i18n( "Pop-up Note" );
             else
                 ret = i18n( "Inline Note" );
             break;
         case Okular::Annotation::ALine:
-            ret = i18n( "Line" );
+            if( ( (Okular::LineAnnotation*)ann )->linePoints().count() == 2 )
+                ret = i18n( "Straight Line" );
+            else
+                ret = i18n( "Polygon" );
             break;
         case Okular::Annotation::AGeom:
             ret = i18n( "Geometry" );
             break;
         case Okular::Annotation::AHighlight:
-            ret = i18n( "Highlight" );
+            switch ( ( (Okular::HighlightAnnotation*)ann )->highlightType() )
+            {
+                case Okular::HighlightAnnotation::Highlight:
+                    ret = i18n( "Highlight" );
+                    break;
+                case Okular::HighlightAnnotation::Squiggly:
+                    ret = i18n( "Squiggle" );
+                    break;
+                case Okular::HighlightAnnotation::Underline:
+                    ret = i18n( "Underline" );
+                    break;
+                case Okular::HighlightAnnotation::StrikeOut:
+                    ret = i18n( "Strike Out" );
+                    break;
+            }
             break;
         case Okular::Annotation::AStamp:
             ret = i18n( "Stamp" );
             break;
         case Okular::Annotation::AInk:
-            ret = i18n( "Ink" );
+            ret = i18n( "Freehand Line" );
             break;
         case Okular::Annotation::ACaret:
             ret = i18n( "Caret" );
@@ -212,6 +229,45 @@ Okular::Movie* renditionMovieFromScreenAnnotation( const Okular::ScreenAnnotatio
     }
 
     return 0;
+}
+
+// from Arthur - qt4
+static inline int qt_div_255(int x) { return (x + (x>>8) + 0x80) >> 8; }
+
+void colorizeImage( QImage & grayImage, const QColor & color, unsigned int destAlpha )
+{
+    // Make sure that the image is Format_ARGB32_Premultiplied
+    if ( grayImage.format() != QImage::Format_ARGB32_Premultiplied )
+        grayImage = grayImage.convertToFormat( QImage::Format_ARGB32_Premultiplied );
+
+    // iterate over all pixels changing the alpha component value
+    unsigned int * data = (unsigned int *)grayImage.bits();
+    unsigned int pixels = grayImage.width() * grayImage.height();
+    int red = color.red(),
+        green = color.green(),
+        blue = color.blue();
+
+    int source, sourceSat, sourceAlpha;
+    for( register unsigned int i = 0; i < pixels; ++i )
+    {   // optimize this loop keeping byte order into account
+        source = data[i];
+        sourceSat = qRed( source );
+        int newR = qt_div_255( sourceSat * red ),
+            newG = qt_div_255( sourceSat * green ),
+            newB = qt_div_255( sourceSat * blue );
+        if ( (sourceAlpha = qAlpha( source )) == 255 )
+        {
+            // use destAlpha
+            data[i] = qRgba( newR, newG, newB, destAlpha );
+        }
+        else
+        {
+            // use destAlpha * sourceAlpha product
+            if ( destAlpha < 255 )
+                sourceAlpha = qt_div_255( destAlpha * sourceAlpha );
+            data[i] = qRgba( newR, newG, newB, sourceAlpha );
+        }
+    }
 }
 
 }

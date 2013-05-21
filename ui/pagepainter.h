@@ -64,10 +64,6 @@ class PagePainter
         // set the alpha component of the image to a given value
         static void changeImageAlpha( QImage & image, unsigned int alpha );
 
-        // colorize a gray image to the given color
-        static void colorizeImage( QImage & image, const QColor & color,
-            unsigned int alpha = 255 );
-
         // my pretty dear raster function
         typedef QList< Okular::NormalizedPoint > NormalizedPath;
         enum RasterOperation { Normal, Multiply };

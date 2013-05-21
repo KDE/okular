@@ -20,6 +20,7 @@ class QDoubleSpinBox;
 class QLabel;
 class QWidget;
 class KColorButton;
+class KIntNumInput;
 class KFontRequester;
 class AnnotationWidget;
 
@@ -71,27 +72,30 @@ class AnnotationWidget
     Q_OBJECT
 
 public:
+    AnnotationWidget( Okular::Annotation * ann );
     virtual ~AnnotationWidget();
 
     virtual Okular::Annotation::SubType annotationType() const;
 
-    QWidget * styleWidget();
+    QWidget * appearanceWidget();
     QWidget * extraWidget();
 
-    virtual void applyChanges() = 0;
+    virtual void applyChanges();
 
 signals:
     void dataChanged();
 
 protected:
-    AnnotationWidget( Okular::Annotation * ann );
+    QWidget * createAppearanceWidget();
 
-    virtual QWidget * createStyleWidget() = 0;
+    virtual QWidget * createStyleWidget();
     virtual QWidget * createExtraWidget();
 
     Okular::Annotation * m_ann;
-    QWidget * m_styleWidget;
+    QWidget * m_appearanceWidget;
     QWidget * m_extraWidget;
+    KColorButton *m_colorBn;
+    KIntNumInput *m_opacity;
 };
 
 class TextAnnotationWidget
@@ -111,6 +115,7 @@ private:
     Okular::TextAnnotation * m_textAnn;
     PixmapPreviewSelector * m_pixmapSelector;
     KFontRequester * m_fontReq;
+    QComboBox * m_textAlign;
 };
 
 class StampAnnotationWidget
@@ -149,6 +154,8 @@ private:
     int m_lineType;
     QDoubleSpinBox * m_spinLL;
     QDoubleSpinBox * m_spinLLE;
+    QCheckBox * m_useColor;
+    KColorButton * m_innerColor;
     QDoubleSpinBox * m_spinSize;
 };
 
@@ -226,6 +233,24 @@ protected:
 private:
     Okular::CaretAnnotation * m_caretAnn;
     PixmapPreviewSelector * m_pixmapSelector;
+};
+
+class InkAnnotationWidget
+  : public AnnotationWidget
+{
+    Q_OBJECT
+
+public:
+    InkAnnotationWidget( Okular::Annotation * ann );
+
+    virtual void applyChanges();
+
+protected:
+    virtual QWidget * createStyleWidget();
+
+private:
+    Okular::InkAnnotation * m_inkAnn;
+    QDoubleSpinBox * m_spinSize;
 };
 
 #endif

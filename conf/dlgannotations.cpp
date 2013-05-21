@@ -7,16 +7,22 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _DLGIDENTITY_H_
-#define _DLGIDENTITY_H_
+#include "dlgannotations.h"
 
-#include <qwidget.h>
+#include <kconfigdialogmanager.h>
 
+#include "widgetannottools.h"
+#include "ui_dlgannotationsbase.h"
 
-class DlgIdentity : public QWidget
+DlgAnnotations::DlgAnnotations( QWidget * parent )
+    : QWidget( parent )
 {
-    public:
-        DlgIdentity( QWidget * parent = 0 );
-};
+    Ui_DlgAnnotationsBase dlg;
+    dlg.setupUi( this );
 
-#endif
+    WidgetAnnotTools * kcfg_AnnotationTools = new WidgetAnnotTools( dlg.annotToolsGroup );
+    dlg.annotToolsPlaceholder->addWidget( kcfg_AnnotationTools );
+    kcfg_AnnotationTools->setObjectName( "kcfg_AnnotationTools" );
+
+    KConfigDialogManager::changedMap()->insert( "WidgetAnnotTools" , SIGNAL(changed()) );
+}

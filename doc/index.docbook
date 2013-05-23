@@ -37,8 +37,8 @@ Context menu actions like Rename Bookmarks etc.)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2013-05-19</date>
-		<releaseinfo>0.16.60 (&kde; 4.11)</releaseinfo>
+		<date>2013-05-22</date>
+		<releaseinfo>0.17 (&kde; 4.11)</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
 			<para>&okular; is a &kde; universal document viewer based on &kpdf; code.</para>
@@ -418,7 +418,7 @@ Add a 'Find Previous' entry
 			<para>&okular; has two different kind of annotations:</para>
 			<para>Text annotations like <guilabel>Yellow Highlighter</guilabel> and <guilabel>Black Underlining</guilabel>
 			for files with text like &eg; &PDF;.</para>
-			<para>Graphic annotations like <guilabel>Note</guilabel>, <guilabel>Inline Note</guilabel>, <guilabel>Green Freehand Line</guilabel>, <guilabel>Straight Yellow Line</guilabel>, <guilabel>Blue Polygon</guilabel>, <guilabel>Stamp</guilabel> and <guilabel>Cyan Ellipse</guilabel> for all formats supported by &okular;.</para>
+		      <para>Graphic annotations like <guilabel>Pop-up Note</guilabel>, <guilabel>Inline Note</guilabel>, <guilabel>Freehand Line</guilabel>, <guilabel>Highlighter</guilabel>, <guilabel>Straight Line</guilabel>, <guilabel>Polygon</guilabel>, <guilabel>Stamp</guilabel>, <guilabel>Underline</guilabel>, and <guilabel>Ellipse</guilabel> for all formats supported by &okular;.</para>
 			<para>Using the context menu either in the <guilabel>Reviews</guilabel> view of the navigation panel or in the main window you can open a <guilabel>Pop up Note</guilabel> for any kind of annotation and add or edit comments.</para>
 			<para>Annotations are not only limited to &PDF; files, they can be used for any format &okular; supports.</para>
 			<para>
@@ -449,6 +449,9 @@ Add a 'Find Previous' entry
 				    Any action on annotations (creation and removal of annotations, editing arbitrary annotation properties, relocating annotations with &Ctrl;+drag, and editing the text contents of an annotation) can be <link linkend="edit-undo">undone</link> or <link linkend="edit-redo">redone</link> using the corresponding item from the <guimenu>Edit</guimenu> menu. It is also possible to undo the action by pressing <keycombo>&Ctrl;<keycap>Z</keycap></keycombo> and redo the undone action by pressing <keycombo>&Ctrl;&Shift;<keycap>Z</keycap></keycombo>.
 				  </para>
 				</note>
+			<para>
+			  Since &okular; 0.17 you can configure the default properties and appearance of each annotating tool. Please refer to the <link linkend="configannotations">corresponding section in this documentation</link>.
+			</para>
 			<sect2 id="annotations-add">
 				<title>Adding annotations</title>
 				<para>
@@ -456,7 +459,7 @@ Add a 'Find Previous' entry
 					This is done by either selecting
 					<menuchoice><guimenu>Tools</guimenu><guimenuitem>Review</guimenuitem></menuchoice> or
 					pressing <keycap>F6</keycap>. Once the annotating toolbar is shown, just press one of
-					its buttons to start constructing that annotation.</para>
+					its buttons or use keyboard shortcuts (keys from <keycap>1</keycap> to <keycap>9</keycap>) to start constructing that annotation.</para>
 				<para>
                                         With a single &LMB; click on an annotation tool button you can use a tool once. 
 					If you &eg; want to highlight all important parts of a text, activate that tool 
@@ -480,8 +483,8 @@ Add a 'Find Previous' entry
 				</para>
 				<para>
 					The newly constructed annotation will have as author the author you set in the
-					<guilabel>Identity</guilabel> page in &okular;s
-					<link linkend="configure">configuration</link> dialog.
+					<link linkend="configannotations"><guilabel>Annotations</guilabel> page</link> in &okular;s
+					configuration dialog. The <guilabel>Annotations</guilabel> page can also be used to configure the content of the annotating toolbar.
 				</para>
 				<note>
 				<para>Using stamps a single click just places a square stamp (useful for icons).
@@ -1709,7 +1712,7 @@ Add a 'Find Previous' entry
 					<para><link linkend="configpresentation">Presentation</link></para>
 				</listitem>
 				<listitem>
-					<para><link linkend="configidentity">Identity</link></para>
+					<para><link linkend="configannotations">Annotations</link></para>
 				</listitem>
 				<listitem>
 					<para><link linkend="configeditor">Editor</link></para>
@@ -1971,14 +1974,47 @@ Add a 'Find Previous' entry
 				</varlistentry>
 			</variablelist>
 		</sect1>
-		<sect1 id="configidentity">
-			<title>Identity</title>
+		<sect1 id="configannotations">
+			<title>Annotations</title>
+			<screenshot>
+				<screeninfo>The Annotations page of the configuration dialog</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="configure-annotations.png" format="PNG" />
+					</imageobject>
+					<textobject>
+						<phrase>The Annotations page of the configuration dialog</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
 			<variablelist>
 				<varlistentry>
 					<term><guilabel>Author</guilabel></term>
 					<listitem>
 						<para>The author of the contents added on a document.
 						Default is the name from the <guilabel>Password &amp; User Account</guilabel> page of the &systemsettings; module <guilabel>Account Details</guilabel>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term><guilabel>Annotation tools</guilabel></term>
+					<listitem>
+					  <para>
+					    This pane is used to configure your <link linkend="annotations-add">annotating toolbar</link>.
+					  </para>
+					  <para>
+					    There are five buttons (<guibutton>Add</guibutton>, <guibutton>Edit</guibutton>, <guibutton>Remove</guibutton><guibutton>Move Up</guibutton>, <guibutton>Move Down</guibutton>) and a list box (which lists the contents of the current annotating toolbar) which are used to configure the toolbar.
+					  </para>
+					  <para>
+					    If you need to add some tool button on the toolbar click on the <guibutton>Add</guibutton> button. You can choose the <guilabel>Name</guilabel>, the <guilabel>Type</guilabel> and the <guilabel>Appearance</guilabel> of the created tool.
+					  </para>
+					  <note>
+					    <para>
+					      Please remember that annotation tools in &okular; are highly configurable. For example, so you can have two buttons of the same tool but with different color. Do not hesitate to experiment in choosing the button set that is exactly tailored to you workflow.
+					    </para>
+					  </note>
+					  <para>
+					    Click on some item in the list box then click on the corresponding button at the right part of the page to edit, remove, move up or move down the item. The keyboard shortcut of the tool (keys from <keycap>1</keycap> to <keycap>9</keycap>) depends on its position in the list of annotating toolbar.
+					  </para>
 					</listitem>
 				</varlistentry>
 			</variablelist>

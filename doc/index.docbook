@@ -2002,14 +2002,14 @@ Add a 'Find Previous' entry
 					    This pane is used to configure your <link linkend="annotations-add">annotating toolbar</link>.
 					  </para>
 					  <para>
-					    There are five buttons (<guibutton>Add</guibutton>, <guibutton>Edit</guibutton>, <guibutton>Remove</guibutton><guibutton>Move Up</guibutton>, <guibutton>Move Down</guibutton>) and a list box (which lists the contents of the current annotating toolbar) which are used to configure the toolbar.
+					    There are five buttons (<guibutton>Add</guibutton>, <guibutton>Edit</guibutton>, <guibutton>Remove</guibutton>, <guibutton>Move Up</guibutton>, <guibutton>Move Down</guibutton>) and a list box (which lists the contents of the current annotating toolbar) which are used to configure the toolbar.
 					  </para>
 					  <para>
 					    If you need to add some tool button on the toolbar click on the <guibutton>Add</guibutton> button. You can choose the <guilabel>Name</guilabel>, the <guilabel>Type</guilabel> and the <guilabel>Appearance</guilabel> of the created tool.
 					  </para>
 					  <note>
 					    <para>
-					      Please remember that annotation tools in &okular; are highly configurable. For example, so you can have two buttons of the same tool but with different color. Do not hesitate to experiment in choosing the button set that is exactly tailored to you workflow.
+					      Please remember that annotation tools in &okular; are highly configurable. For example, you can have two buttons of the same tool but with different color. Do not hesitate to experiment in choosing the button set that is exactly tailored to your workflow.
 					    </para>
 					  </note>
 					  <para>

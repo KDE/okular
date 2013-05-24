@@ -67,7 +67,7 @@ WidgetAnnotTools::WidgetAnnotTools( QWidget * parent )
     vBoxLayout->addStretch();
     hBoxLayout->addLayout( vBoxLayout );
 
-    connect( m_list, SIGNAL( itemActivated(QListWidgetItem*) ), this, SLOT( slotEdit() ) );
+    connect( m_list, SIGNAL( itemDoubleClicked(QListWidgetItem*) ), this, SLOT( slotEdit() ) );
     connect( m_list, SIGNAL( currentRowChanged(int) ), this, SLOT( updateButtons() ) );
     connect( m_btnAdd, SIGNAL( clicked(bool) ), this, SLOT( slotAdd() ) );
     connect( m_btnEdit, SIGNAL( clicked(bool) ), this, SLOT( slotEdit() ) );

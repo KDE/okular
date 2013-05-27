@@ -185,36 +185,47 @@ static QAction* actionForExportFormat( const Okular::ExportFormat& format, QObje
 
 static QString compressedMimeFor( const QString& mime_to_check )
 {
+    // The compressedMimeMap is here in case you have a very old shared mime database
+    // that doesn't have inheritance info for things like gzeps, etc
+    // Otherwise the "is()" calls below are just good enough
     static QHash< QString, QString > compressedMimeMap;
+    static bool supportBzip = false;
+    static bool supportXz = false;
+    const QString app_gzip( QString::fromLatin1( "application/x-gzip" ) );
+    const QString app_bzip( QString::fromLatin1( "application/x-bzip" ) );
+    const QString app_xz( QString::fromLatin1( "application/x-xz" ) );
     if ( compressedMimeMap.isEmpty() )
     {
         std::auto_ptr< KFilterBase > f;
-        compressedMimeMap[ QString::fromLatin1( "application/x-gzip" ) ] =
-            QString::fromLatin1( "application/x-gzip" );
-        compressedMimeMap[ QString::fromLatin1( "image/x-gzeps" ) ] =
-            QString::fromLatin1( "application/x-gzip" );
+        compressedMimeMap[ QString::fromLatin1( "image/x-gzeps" ) ] = app_gzip;
         // check we can read bzip2-compressed files
-        f.reset( KFilterBase::findFilterByMimeType( QString::fromLatin1( "application/x-bzip" ) ) );
+        f.reset( KFilterBase::findFilterByMimeType( app_bzip ) );
         if ( f.get() )
         {
-            const QString app_bzip( QString::fromLatin1( "application/x-bzip" ) );
-            compressedMimeMap[ app_bzip ] = app_bzip;
+            supportBzip = true;
             compressedMimeMap[ QString::fromLatin1( "application/x-bzpdf" ) ] = app_bzip;
             compressedMimeMap[ QString::fromLatin1( "application/x-bzpostscript" ) ] = app_bzip;
             compressedMimeMap[ QString::fromLatin1( "application/x-bzdvi" ) ] = app_bzip;
             compressedMimeMap[ QString::fromLatin1( "image/x-bzeps" ) ] = app_bzip;
         }
         // check we can read XZ-compressed files
-        f.reset( KFilterBase::findFilterByMimeType( QString::fromLatin1( "application/x-xz" ) ) );
+        f.reset( KFilterBase::findFilterByMimeType( app_xz ) );
         if ( f.get() )
         {
-            const QString app_xz( QString::fromLatin1( "application/x-xz" ) );
-            compressedMimeMap[ app_xz ] = app_xz;
+            supportXz = true;
         }
     }
     QHash< QString, QString >::const_iterator it = compressedMimeMap.constFind( mime_to_check );
     if ( it != compressedMimeMap.constEnd() )
         return it.value();
+
+    KMimeType::Ptr mime = KMimeType::mimeType( mime_to_check );
+    if ( mime->is( app_gzip ) )
+        return app_gzip;
+    else if ( supportBzip && mime->is( app_bzip ) )
+        return app_bzip;
+    else if ( supportXz && mime->is( app_xz ) )
+        return app_xz;
 
     return QString();
 }

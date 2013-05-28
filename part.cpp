@@ -1037,6 +1037,7 @@ void Part::slotGeneratorPreferences( )
 
     // we didn't find an instance of this dialog, so lets create it
     KConfigDialog * dialog = new KConfigDialog( m_pageView, "generator_prefs", Okular::Settings::self() );
+
     if( m_embedMode == ViewerWidgetMode )
     {
         dialog->setCaption( i18n( "Configure Viewer Backends" ) );
@@ -1048,6 +1049,7 @@ void Part::slotGeneratorPreferences( )
 
     m_document->fillConfigDialog( dialog );
 
+    dialog->setWindowModality( Qt::ApplicationModal );
     dialog->show();
 }
 

@@ -24,6 +24,8 @@
 PreferencesDialog::PreferencesDialog( QWidget * parent, KConfigSkeleton * skeleton, Okular::EmbedMode embedMode )
     : KConfigDialog( parent, "preferences", skeleton )
 {
+    setWindowModality( Qt::ApplicationModal );
+
     m_general = new DlgGeneral( this, embedMode );
     m_performance = new DlgPerformance( this );
     m_accessibility = new DlgAccessibility( this );

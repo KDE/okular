@@ -817,6 +817,11 @@ void Part::setupActions()
     ac->addAction( "presentation_erase_drawings", eraseDrawingAction );
     eraseDrawingAction->setIcon( KIcon( "draw-eraser" ) );
     eraseDrawingAction->setEnabled( false );
+
+    KAction *configureAnnotations = new KAction( i18n( "Configure Annotations..." ), ac );
+    ac->addAction( "options_configure_annotations", configureAnnotations );
+    configureAnnotations->setIcon( KIcon( "configure" ) );
+    connect(configureAnnotations, SIGNAL(triggered()), this, SLOT(slotAnnotationPreferences()));
 }
 
 Part::~Part()
@@ -2166,6 +2171,18 @@ void Part::slotPreferences()
     dialog->setAttribute( Qt::WA_DeleteOnClose );
 
     // Show it
+    dialog->show();
+}
+
+
+void Part::slotAnnotationPreferences()
+{
+    // Create dialog
+    PreferencesDialog * dialog = new PreferencesDialog( m_pageView, Okular::Settings::self(), m_embedMode );
+    dialog->setAttribute( Qt::WA_DeleteOnClose );
+
+    // Show it
+    dialog->switchToAnnotationsPage();
     dialog->show();
 }
 

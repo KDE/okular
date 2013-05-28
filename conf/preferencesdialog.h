@@ -31,6 +31,8 @@ class PreferencesDialog : public KConfigDialog
     public:
         PreferencesDialog( QWidget * parent, KConfigSkeleton * config, Okular::EmbedMode embedMode );
 
+        void switchToAnnotationsPage();
+
     protected:
 //      void updateSettings(); // Called when OK/Apply is pressed.
 //      void updateWidgets(); // Called upon construction or when Reset is pressed
@@ -46,6 +48,8 @@ class PreferencesDialog : public KConfigDialog
         DlgAnnotations * m_annotations;
         DlgEditor * m_editor;
         DlgDebug * m_debug;
+
+        KPageWidgetItem * m_annotationsPage;
 };
 
 #endif

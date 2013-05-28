@@ -754,6 +754,11 @@ void PageView::reparseConfig()
     viewport()->update();
 }
 
+KActionCollection *PageView::actionCollection() const
+{
+    return d->actionCollection;
+}
+
 KAction *PageView::toggleFormsAction() const
 {
     return d->aToggleForms;

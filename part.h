@@ -333,6 +333,7 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
 
     private slots:
         void slotGeneratorPreferences();
+        void slotAnnotationPreferences();
         void slotHandleActivatedSourceReference(const QString& absFileName, int line, int col, bool *handled);
 };
 

@@ -22,6 +22,7 @@
 #include <qtimer.h>
 #include <qtoolbutton.h>
 #include <kacceleratormanager.h>
+#include <kactioncollection.h>
 #include <kcolorscheme.h>
 #include <kiconloader.h>
 #include <klocale.h>
@@ -32,6 +33,7 @@
 // local includes
 #include "formwidgets.h"
 #include "guiutils.h"
+#include "pageview.h"
 #include "videowidget.h"
 #include "core/movie.h"
 #include "core/page.h"
@@ -504,7 +506,7 @@ public:
     QLinkedList< ToolBarButton * > buttons;
 };
 
-PageViewToolBar::PageViewToolBar( QWidget * parent, QWidget * anchorWidget )
+PageViewToolBar::PageViewToolBar( PageView * parent, QWidget * anchorWidget )
     : QWidget( parent ), d( new ToolBarPrivate( this ) )
 {
     // initialize values of the private data storage structure
@@ -519,6 +521,9 @@ PageViewToolBar::PageViewToolBar( QWidget * parent, QWidget * anchorWidget )
 
     // apply a filter to get notified when anchor changes geometry
     d->anchorWidget->installEventFilter( this );
+
+    setContextMenuPolicy( Qt::ActionsContextMenu );
+    addAction( parent->actionCollection()->action( "options_configure_annotations" ) );
 }
 
 PageViewToolBar::~PageViewToolBar()

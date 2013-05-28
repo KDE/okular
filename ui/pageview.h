@@ -95,6 +95,7 @@ Q_OBJECT
 
         void reparseConfig();
 
+        KActionCollection *actionCollection() const;
         KAction *toggleFormsAction() const;
 
         int contentAreaWidth() const;

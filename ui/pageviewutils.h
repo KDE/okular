@@ -24,6 +24,7 @@ class QAction;
 class QLabel;
 class QTimer;
 class FormWidgetIface;
+class PageView;
 class VideoWidget;
 
 namespace Okular {
@@ -192,7 +193,7 @@ class PageViewToolBar : public QWidget
 {
     Q_OBJECT
     public:
-        PageViewToolBar( QWidget * parent, QWidget * anchorWidget );
+        PageViewToolBar( PageView * parent, QWidget * anchorWidget );
         ~PageViewToolBar();
 
         // animated widget controls

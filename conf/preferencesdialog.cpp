@@ -31,6 +31,7 @@ PreferencesDialog::PreferencesDialog( QWidget * parent, KConfigSkeleton * skelet
     m_accessibility = new DlgAccessibility( this );
     m_presentation = 0;
     m_annotations = 0;
+    m_annotationsPage = 0;
     m_editor = 0;
 #ifdef OKULAR_DEBUG_CONFIGPAGE
     m_debug = new DlgDebug( this );
@@ -50,11 +51,18 @@ PreferencesDialog::PreferencesDialog( QWidget * parent, KConfigSkeleton * skelet
         m_editor = new DlgEditor( this );
         addPage( m_presentation, i18n("Presentation"), "view-presentation",
                  i18n("Options for Presentation Mode") );
-        addPage( m_annotations, i18n("Annotations"), "draw-freehand", i18n("Annotation Options") );
+        m_annotationsPage = addPage( m_annotations, i18n("Annotations"),
+                                     "draw-freehand", i18n("Annotation Options") );
         addPage( m_editor, i18n("Editor"), "accessories-text-editor", i18n("Editor Options") );
     }
 #ifdef OKULAR_DEBUG_CONFIGPAGE
     addPage( m_debug, "Debug", "system-run", "Debug options" );
 #endif
     setHelp("configure", "okular");
+}
+
+void PreferencesDialog::switchToAnnotationsPage()
+{
+    if ( m_annotationsPage )
+        setCurrentPage( m_annotationsPage );
 }

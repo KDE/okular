@@ -1030,13 +1030,9 @@ void Part::setWindowTitleFromDocument()
 
 void Part::slotGeneratorPreferences( )
 {
-    // an instance the dialog could be already created and could be cached,
-    // in which case you want to display the cached dialog
-    if ( KConfigDialog::showDialog( "generator_prefs" ) )
-        return;
-
-    // we didn't find an instance of this dialog, so lets create it
+    // Create dialog
     KConfigDialog * dialog = new KConfigDialog( m_pageView, "generator_prefs", Okular::Settings::self() );
+    dialog->setAttribute( Qt::WA_DeleteOnClose );
 
     if( m_embedMode == ViewerWidgetMode )
     {
@@ -1049,6 +1045,7 @@ void Part::slotGeneratorPreferences( )
 
     m_document->fillConfigDialog( dialog );
 
+    // Show it
     dialog->setWindowModality( Qt::ApplicationModal );
     dialog->show();
 }
@@ -2164,13 +2161,11 @@ void Part::slotGetNewStuff()
 
 void Part::slotPreferences()
 {
-    // an instance the dialog could be already created and could be cached,
-    // in which case you want to display the cached dialog
-    if ( PreferencesDialog::showDialog( "preferences" ) )
-        return;
-
-    // we didn't find an instance of this dialog, so lets create it
+    // Create dialog
     PreferencesDialog * dialog = new PreferencesDialog( m_pageView, Okular::Settings::self(), m_embedMode );
+    dialog->setAttribute( Qt::WA_DeleteOnClose );
+
+    // Show it
     dialog->show();
 }
 

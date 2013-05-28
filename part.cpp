@@ -502,6 +502,9 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
 
     slotNewConfig();
 
+    // keep us informed when the user changes settings
+    connect( Okular::Settings::self(), SIGNAL(configChanged()), this, SLOT(slotNewConfig()) );
+
     // [SPEECH] check for KTTSD presence and usability
     const KService::Ptr kttsd = KService::serviceByDesktopName("kttsd");
     Okular::Settings::setUseKTTSD( kttsd );
@@ -1045,8 +1048,6 @@ void Part::slotGeneratorPreferences( )
 
     m_document->fillConfigDialog( dialog );
 
-    // keep us informed when the user changes settings
-    connect( dialog, SIGNAL(settingsChanged(QString)), this, SLOT(slotNewGeneratorConfig()) );
     dialog->show();
 }
 
@@ -2168,9 +2169,6 @@ void Part::slotPreferences()
 
     // we didn't find an instance of this dialog, so lets create it
     PreferencesDialog * dialog = new PreferencesDialog( m_pageView, Okular::Settings::self(), m_embedMode );
-    // keep us informed when the user changes settings
-    connect( dialog, SIGNAL(settingsChanged(QString)), this, SLOT(slotNewConfig()) );
-
     dialog->show();
 }
 
@@ -2202,31 +2200,6 @@ void Part::slotNewConfig()
         m_reviewsWidget->reparseConfig();
 
     setWindowTitleFromDocument ();
-}
-
-
-void Part::slotNewGeneratorConfig()
-{
-    // Apply settings here. A good policy is to check whether the setting has
-    // changed before applying changes.
-
-    // NOTE: it's not needed to reload the configuration of the Document,
-    // the Document itself will take care of that
-
-    // Main View (pageView)
-    m_pageView->reparseConfig();
-
-    // update TOC settings
-    if ( m_sidebar->isItemEnabled(0) )
-        m_toc->reparseConfig();
-
-    // update ThumbnailList contents
-    if ( Okular::Settings::showLeftPanel() && !m_thumbnailList->isHidden() )
-        m_thumbnailList->updateWidgets();
-
-    // update Reviews settings
-    if ( m_sidebar->isItemEnabled(2) )
-        m_reviewsWidget->reparseConfig();
 }
 
 

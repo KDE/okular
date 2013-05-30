@@ -459,7 +459,11 @@ Add a 'Find Previous' entry
 					This is done by either selecting
 					<menuchoice><guimenu>Tools</guimenu><guimenuitem>Review</guimenuitem></menuchoice> or
 					pressing <keycap>F6</keycap>. Once the annotating toolbar is shown, just press one of
-					its buttons or use keyboard shortcuts (keys from <keycap>1</keycap> to <keycap>9</keycap>) to start constructing that annotation.</para>
+					its buttons or use keyboard shortcuts (keys from <keycap>1</keycap> to <keycap>9</keycap>) to start constructing that annotation.
+				</para>
+				<para>
+				  The contents of the annotating toolbar can be configured using the <link linkend="configannotations">Annotations page of &okular; configuration dialog</link>. This page can be opened with &RMB; clicking on the annotating toolbar then choosing <guimenuitem>Configure Annotations...</guimenuitem> from the context menu.
+				</para>
 				<para>
                                         With a single &LMB; click on an annotation tool button you can use a tool once. 
 					If you &eg; want to highlight all important parts of a text, activate that tool 

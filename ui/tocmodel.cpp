@@ -370,6 +370,11 @@ void TOCModel::setOldModelData( TOCModel *model, const QVector<QModelIndex> &lis
     d->m_oldTocExpandedIndexes = list;
 }
 
+bool TOCModel::hasOldModelData() const
+{
+    return (d->m_oldModel != 0);
+}
+
 TOCModel *TOCModel::clearOldModelData() const
 {
     TOCModel *oldModel = d->m_oldModel;

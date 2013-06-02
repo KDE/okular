@@ -45,6 +45,7 @@ class TOCModel : public QAbstractItemModel
         bool isEmpty() const;
         bool equals( const TOCModel *model ) const;
         void setOldModelData( TOCModel *model, const QVector<QModelIndex> &list );
+        bool hasOldModelData() const;
         TOCModel *clearOldModelData() const;
 
         QString externalFileNameForIndex( const QModelIndex &index ) const;

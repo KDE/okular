@@ -100,6 +100,9 @@ void TOC::prepareForReload()
 
 void TOC::rollbackReload()
 {
+    if( !m_model->hasOldModelData() )
+        return;
+
     TOCModel *m = m_model;
     m_model = m->clearOldModelData();
     delete m;

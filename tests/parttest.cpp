@@ -27,18 +27,63 @@ class PartTest
 
     private slots:
         void testReload();
+        void testCanceledReload();
         void testTOCReload();
         void testFowardPDF();
         void testFowardPDF_data();
         void testGeneratorPreferences();
 };
 
+class PartThatHijacksQueryClose : public Okular::Part
+{
+    public:
+        PartThatHijacksQueryClose(QWidget* parentWidget, QObject* parent,
+                                  const QVariantList& args, KComponentData componentData)
+        : Okular::Part(parentWidget, parent, args, componentData),
+          behavior(PassThru)
+        {}
+
+        enum Behavior { PassThru, ReturnTrue, ReturnFalse };
+
+        void setQueryCloseBehavior(Behavior new_behavior)
+        {
+            behavior = new_behavior;
+        }
+
+        bool queryClose()
+        {
+             if (behavior == PassThru)
+                 return Okular::Part::queryClose();
+             else // ReturnTrue or ReturnFalse
+                 return (behavior == ReturnTrue);
+        }
+    private:
+        Behavior behavior;
+};
+
+// Test that Okular doesn't crash after a successful reload
 void PartTest::testReload()
 {
     QVariantList dummyArgs;
     Okular::Part part(NULL, NULL, dummyArgs, KGlobal::mainComponent());
     part.openDocument(KDESRCDIR "data/file1.pdf");
     part.reload();
+    qApp->processEvents();
+}
+
+// Test that Okular doesn't crash after a canceled reload
+void PartTest::testCanceledReload()
+{
+    QVariantList dummyArgs;
+    PartThatHijacksQueryClose part(NULL, NULL, dummyArgs, KGlobal::mainComponent());
+    part.openDocument(KDESRCDIR "data/file1.pdf");
+
+    // When queryClose() returns false, the reload operation is canceled (as if
+    // the user had chosen Cancel in the "Save changes?" message box)
+    part.setQueryCloseBehavior(PartThatHijacksQueryClose::ReturnFalse);
+
+    part.reload();
+
     qApp->processEvents();
 }
 

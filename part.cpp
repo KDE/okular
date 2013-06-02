@@ -1606,6 +1606,8 @@ void Part::slotDoFileDirty()
     // close and (try to) reopen the document
     if ( !closeUrl() )
     {
+        m_viewportDirty.pageNumber = -1;
+
         if ( tocReloadPrepared ) 
         {
             m_toc->rollbackReload();

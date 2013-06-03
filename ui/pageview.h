@@ -248,7 +248,7 @@ Q_OBJECT
         void slotPageSizes( int );
         void slotTrimMarginsToggled( bool );
         void slotToggleForms();
-        void slotFormWidgetChanged( FormWidgetIface *w );
+        void slotFormChanged( int pageNumber );
         void slotRefreshPage();
         void slotSpeakDocument();
         void slotSpeakCurrentPage();

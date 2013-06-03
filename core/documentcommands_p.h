@@ -17,8 +17,12 @@
 
 namespace Okular {
 
+class Document;
 class Annotation;
 class DocumentPrivate;
+class FormFieldText;
+class FormFieldButton;
+class FormFieldChoice;
 
 class AddAnnotationCommand : public QUndoCommand
 {
@@ -157,8 +161,98 @@ class EditAnnotationContentsCommand : public EditTextCommand
         int m_pageNumber;
 };
 
-}
+class EditFormTextCommand : public EditTextCommand
+{
+    public:
+        EditFormTextCommand( Okular::Document* doc,
+                             Okular::FormFieldText* form,
+                             int pageNumber,
+                             const QString & newContents,
+                             int newCursorPos,
+                             const QString & prevContents,
+                             int prevCursorPos,
+                             int prevAnchorPos );
+        virtual void undo();
+        virtual void redo();
+        virtual int id() const;
+        virtual bool mergeWith( const QUndoCommand *uc );
+    private:
+        Okular::Document* m_doc;
+        Okular::FormFieldText* m_form;
+        int m_pageNumber;
+};
 
+class EditFormListCommand : public QUndoCommand
+{
+    public:
+        EditFormListCommand( Okular::Document* doc,
+                             FormFieldChoice* form,
+                             int pageNumber,
+                             const QList< int > & newChoices,
+                             const QList< int > & prevChoices
+                           );
+
+        virtual void undo();
+        virtual void redo();
+
+    private:
+        Okular::Document* m_doc;
+        FormFieldChoice* m_form;
+        int m_pageNumber;
+        QList< int > m_newChoices;
+        QList< int > m_prevChoices;
+};
+
+class EditFormComboCommand : public EditTextCommand
+{
+    public:
+        EditFormComboCommand( Okular::Document* doc,
+                              FormFieldChoice* form,
+                              int pageNumber,
+                              const QString & newText,
+                              int newCursorPos,
+                              const QString & prevText,
+                              int prevCursorPos,
+                              int prevAnchorPos
+                            );
+
+        virtual void undo();
+        virtual void redo();
+        virtual int id() const;
+        virtual bool mergeWith( const QUndoCommand *uc );
+
+    private:
+        Okular::Document* m_doc;
+        FormFieldChoice* m_form;
+        int m_pageNumber;
+        int m_newIndex;
+        int m_prevIndex;
+};
+
+class EditFormButtonsCommand : public QUndoCommand
+{
+    public:
+        EditFormButtonsCommand( Okular::Document* doc,
+                                int pageNumber,
+                                const QList< FormFieldButton* > & formButtons,
+                                const QList< bool > & newButtonStates
+                              );
+
+        virtual void undo();
+        virtual void redo();
+
+    private:
+        void clearFormButtonStates();
+
+    private:
+        Okular::Document* m_doc;
+        int m_pageNumber;
+        QList< FormFieldButton* > m_formButtons;
+        QList< bool > m_newButtonStates;
+        QList< bool > m_prevButtonStates;
+};
+
+}
 #endif
 
 /* kate: replace-tabs on; indent-width 4; */

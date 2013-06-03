@@ -12,6 +12,7 @@
 #include "annotations.h"
 #include "debug_p.h"
 #include "document_p.h"
+#include "form.h"
 
 #include <KLocalizedString>
 
@@ -285,6 +286,210 @@ bool EditAnnotationContentsCommand::mergeWith(const QUndoCommand* uc)
     else
     {
         return false;
+    }
+}
+
+EditFormTextCommand::EditFormTextCommand( Okular::Document* doc,
+                                          Okular::FormFieldText* form,
+                                          int pageNumber,
+                                          const QString & newContents,
+                                          int newCursorPos,
+                                          const QString & prevContents,
+                                          int prevCursorPos,
+                                          int prevAnchorPos )
+: EditTextCommand( newContents, newCursorPos, prevContents, prevCursorPos, prevAnchorPos ),
+  m_doc ( doc ),
+  m_form( form ),
+  m_pageNumber( pageNumber )
+{
+    setText( i18nc( "Edit an form's text contents", "edit form contents" ) );
+}
+
+void EditFormTextCommand::undo()
+{
+    m_form->setText( m_prevContents );
+    m_doc->formTextChangedByUndoRedo( m_pageNumber, m_form, m_prevContents, m_prevCursorPos, m_prevAnchorPos );
+}
+
+void EditFormTextCommand::redo()
+{
+    m_form->setText( m_newContents  );
+    m_doc->formTextChangedByUndoRedo( m_pageNumber, m_form, m_newContents, m_newCursorPos, m_newCursorPos );
+}
+
+int EditFormTextCommand::id() const
+{
+    return 3;
+}
+
+bool EditFormTextCommand::mergeWith(const QUndoCommand* uc)
+{
+    EditFormTextCommand *euc = (EditFormTextCommand*)uc;
+    // Only attempt merge of euc into this if they modify the same form
+    if ( m_form == euc->m_form )
+    {
+        return EditTextCommand::mergeWith( uc );
+    }
+    else
+    {
+        return false;
+    }
+}
+
+EditFormListCommand::EditFormListCommand( Okular::Document* doc,
+                                          FormFieldChoice* form,
+                                          int pageNumber,
+                                          const QList< int > & newChoices,
+                                          const QList< int > & prevChoices )
+: m_doc( doc ),
+  m_form( form ),
+  m_pageNumber( pageNumber ),
+  m_newChoices( newChoices ),
+  m_prevChoices( prevChoices )
+{
+    setText( i18nc( "Edit a list form's choices", "edit list form choices" ) );
+}
+
+void EditFormListCommand::undo()
+{
+    m_form->setCurrentChoices( m_prevChoices );
+    m_doc->formListChangedByUndoRedo( m_pageNumber, m_form, m_prevChoices );
+}
+
+void EditFormListCommand::redo()
+{
+    m_form->setCurrentChoices( m_newChoices );
+    m_doc->formListChangedByUndoRedo( m_pageNumber, m_form, m_newChoices );
+}
+
+EditFormComboCommand::EditFormComboCommand( Okular::Document* doc,
+                                            FormFieldChoice* form,
+                                            int pageNumber,
+                                            const QString & newContents,
+                                            int newCursorPos,
+                                            const QString & prevContents,
+                                            int prevCursorPos,
+                                            int prevAnchorPos )
+: EditTextCommand( newContents, newCursorPos, prevContents, prevCursorPos, prevAnchorPos ),
+  m_doc( doc ),
+  m_form( form ),
+  m_pageNumber( pageNumber ),
+  m_newIndex( -1 ),
+  m_prevIndex( -1 )
+{
+    setText( i18nc( "Edit a combo form's selection", "edit combo form selection" ) );
+
+    // Determine new and previous choice indices (if any)
+    for ( int i = 0; i < m_form->choices().size(); i++ )
+    {
+        if ( m_form->choices()[i] == m_prevContents )
+        {
+            m_prevIndex = i;
+        }
+
+        if ( m_form->choices()[i] == m_newContents )
+        {
+            m_newIndex = i;
+        }
+    }
+}
+
+void EditFormComboCommand::undo()
+{
+    if ( m_prevIndex != -1 )
+    {
+        m_form->setCurrentChoices( QList<int>() << m_prevIndex );
+    }
+    else
+    {
+        m_form->setEditChoice( m_prevContents );
+    }
+    m_doc->formComboChangedByUndoRedo( m_pageNumber, m_form, m_prevContents, m_prevCursorPos, m_prevAnchorPos );
+}
+
+void EditFormComboCommand::redo()
+{
+    if ( m_newIndex != -1 )
+    {
+        m_form->setCurrentChoices( QList<int>() << m_newIndex );
+    }
+    else
+    {
+        m_form->setEditChoice( m_newContents );
+    }
+    m_doc->formComboChangedByUndoRedo( m_pageNumber, m_form, m_newContents, m_newCursorPos, m_newCursorPos );
+}
+
+int EditFormComboCommand::id() const
+{
+    return 4;
+}
+
+bool EditFormComboCommand::mergeWith( const QUndoCommand *uc )
+{
+    EditFormComboCommand *euc = (EditFormComboCommand*)uc;
+    // Only attempt merge of euc into this if they modify the same form
+    if ( m_form == euc->m_form )
+    {
+        bool shouldMerge = EditTextCommand::mergeWith( uc );
+        if( shouldMerge )
+        {
+            m_newIndex = euc->m_newIndex;
+        }
+        return shouldMerge;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+EditFormButtonsCommand::EditFormButtonsCommand( Okular::Document* doc,
+                                                int pageNumber,
+                                                const QList< FormFieldButton* > & formButtons,
+                                                const QList< bool > & newButtonStates )
+: m_doc( doc ),
+  m_pageNumber( pageNumber ),
+  m_formButtons( formButtons ),
+  m_newButtonStates( newButtonStates ),
+  m_prevButtonStates( QList< bool >() )
+{
+    setText( i18nc( "Edit the state of a group of form buttons", "edit form button states" ) );
+    foreach( FormFieldButton* formButton, m_formButtons )
+    {
+        m_prevButtonStates.append( formButton->state() );
+    }
+}
+
+void EditFormButtonsCommand::undo()
+{
+    clearFormButtonStates();
+    for( int i = 0; i < m_formButtons.size(); i++ )
+    {
+        bool checked = m_prevButtonStates.at( i );
+        if ( checked )
+            m_formButtons.at( i )->setState( checked );
+    }
+    m_doc->formButtonsChangedByUndoRedo( m_pageNumber, m_formButtons );
+}
+
+void EditFormButtonsCommand::redo()
+{
+    clearFormButtonStates();
+    for( int i = 0; i < m_formButtons.size(); i++ )
+    {
+        bool checked = m_newButtonStates.at( i );
+        if ( checked )
+            m_formButtons.at( i )->setState( checked );
+    }
+    m_doc->formButtonsChangedByUndoRedo( m_pageNumber, m_formButtons );
+}
+
+void EditFormButtonsCommand::clearFormButtonStates()
+{
+    foreach( FormFieldButton* formButton, m_formButtons )
+    {
+        formButton->setState( false );
     }
 }
 

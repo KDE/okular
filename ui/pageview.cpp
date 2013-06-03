@@ -223,11 +223,11 @@ FormWidgetsController* PageViewPrivate::formWidgetsController()
 {
     if ( !formsWidgetController )
     {
-        formsWidgetController = new FormWidgetsController();
-        QObject::connect( formsWidgetController, SIGNAL(changed(FormWidgetIface*)),
-                          q, SLOT(slotFormWidgetChanged(FormWidgetIface*)) );
-        QObject::connect( formsWidgetController, SIGNAL(action(Okular::Action*)),
-                          q, SLOT(slotAction(Okular::Action*)) );
+        formsWidgetController = new FormWidgetsController( document );
+        QObject::connect( formsWidgetController, SIGNAL( changed( int ) ),
+                          q, SLOT( slotFormChanged( int ) ) );
+        QObject::connect( formsWidgetController, SIGNAL( action( Okular::Action* ) ),
+                          q, SLOT( slotAction( Okular::Action* ) ) );
     }
 
     return formsWidgetController;
@@ -4642,17 +4642,22 @@ void PageView::slotToggleForms()
     toggleFormWidgets( !d->m_formsVisible );
 }
 
-void PageView::slotFormWidgetChanged( FormWidgetIface *w )
+void PageView::slotFormChanged( int pageNumber )
 {
     if ( !d->refreshTimer )
     {
         d->refreshTimer = new QTimer( this );
         d->refreshTimer->setSingleShot( true );
-        connect( d->refreshTimer, SIGNAL(timeout()),
-                 this, SLOT(slotRefreshPage()) );
+        connect( d->refreshTimer, SIGNAL( timeout() ),
+                 this, SLOT( slotRefreshPage() ) );
     }
-    d->refreshPage = w->pageItem()->pageNumber();
-    d->refreshTimer->start( 1000 );
+    d->refreshPage = pageNumber;
+    int delay = 0;
+    if ( d->m_formsVisible )
+    {
+        delay = 1000;
+    }
+    d->refreshTimer->start( delay );
 }
 
 void PageView::slotRefreshPage()

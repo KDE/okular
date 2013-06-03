@@ -44,6 +44,9 @@ class DocumentViewport;
 class EmbeddedFile;
 class ExportFormat;
 class FontInfo;
+class FormFieldText;
+class FormFieldButton;
+class FormFieldChoice;
 class Generator;
 class Action;
 class MovieAction;
@@ -746,6 +749,52 @@ class OKULAR_EXPORT Document : public QObject
          */
         void redo();
 
+        /**
+         * Edit the text contents of the specified @p form on page @p page to be @p newContents.
+         * The new text cursor position (@p newCursorPos), previous text cursor position (@p prevCursorPos),
+         * and previous cursor anchor position will be restored by the undo / redo commands.
+         * @since 0.17 (KDE 4.11)
+         */
+        void editFormText( int pageNumber,
+                           Okular::FormFieldText* form,
+                           const QString & newContents,
+                           int newCursorPos,
+                           int prevCursorPos,
+                           int prevAnchorPos );
+
+        /**
+         * Edit the selected list entries in @p form on page @p page to be @p newChoices.
+         * @since 0.17 (KDE 4.11)
+         */
+        void editFormList( int pageNumber,
+                           Okular::FormFieldChoice* form,
+                           const QList<int> & newChoices );
+
+
+        /**
+         * Set the active choice in the combo box @p form on page @p page to @p newText
+         * The new cursor position (@p newCursorPos), previous cursor position
+         * (@p prevCursorPos), and previous anchor position (@p prevAnchorPos)
+         * will be restored by the undo / redo commands.
+         *
+         * @since 0.17 (KDE 4.11)
+         */
+        void editFormCombo( int pageNumber,
+                            Okular::FormFieldChoice *form,
+                            const QString & newText,
+                            int newCursorPos,
+                            int prevCursorPos,
+                            int prevAnchorPos );
+
+        /**
+         * Set the states of the group of form buttons @p formButtons on page @p page to @p newButtonStates.
+         * The lists @p formButtons and @p newButtonStates should be the same length and true values
+         * in @p newButtonStates indicate that the corresponding entry in @p formButtons should be enabled.
+         */
+        void editFormButtons( int pageNumber,
+                              const QList< Okular::FormFieldButton* > & formButtons,
+                              const QList< bool > & newButtonStates );
+
     Q_SIGNALS:
         /**
          * This signal is emitted whenever an action requests a
@@ -882,12 +931,46 @@ class OKULAR_EXPORT Document : public QObject
          */
         void annotationContentsChangedByUndoRedo( Okular::Annotation* annotation, const QString & contents, int cursorPos, int anchorPos );
 
+        /**
+         * This signal is emmitted whenever the text contents of the given text @p form on the given @p page
+         * are changed by an undo or redo action.
+         *
+         * The new text contents (@p contents), cursor position (@p cursorPos), and anchor position (@p anchorPos) are
+         * included
+         * @since 0.17 (KDE 4.11)
+         */
+        void formTextChangedByUndoRedo( int page, Okular::FormFieldText* form, const QString & contents, int cursorPos, int anchorPos );
+
+        /**
+         * This signal is emmitted whenever the selected @p choices for the given list @p form on the
+         * given @p page are changed by an undo or redo action.
+         * @since 0.17 (KDE 4.11)
+         */
+        void formListChangedByUndoRedo( int page, Okular::FormFieldChoice* form, const QList< int > & choices );
+
+        /**
+         * This signal is emmitted whenever the active @p text for the given combo @p form on the
+         * given @p page is changed by an undo or redo action.
+         * @since 0.17 (KDE 4.11)
+         */
+        void formComboChangedByUndoRedo( int page, Okular::FormFieldChoice* form, const QString & text, int cursorPos, int anchorPos );
+
+        /**
+         * This signal is emmitted whenever the state of the specified group of form buttons (@p formButtons) on the
+         * given @p page is changed by an undo or redo action.
+         * @since 0.17 (KDE 4.11)
+         */
+        void formButtonsChangedByUndoRedo( int page, const QList< Okular::FormFieldButton* > & formButtons );
     private:
         /// @cond PRIVATE
         friend class DocumentPrivate;
         friend class Part;
         friend class ::DocumentItem;
         friend class EditAnnotationContentsCommand;
+        friend class EditFormTextCommand;
+        friend class EditFormListCommand;
+        friend class EditFormComboCommand;
+        friend class EditFormButtonsCommand;
         /// @endcond
         DocumentPrivate *const d;
 

@@ -83,6 +83,7 @@
 #include "utils_p.h"
 #include "view.h"
 #include "view_p.h"
+#include "form.h"
 
 #include <memory>
 
@@ -3406,6 +3407,54 @@ void Document::undo()
 void Document::redo()
 {
     d->m_undoStack->redo();
+}
+
+void Document::editFormText( int pageNumber,
+                             Okular::FormFieldText* form,
+                             const QString & newContents,
+                             int newCursorPos,
+                             int prevCursorPos,
+                             int prevAnchorPos )
+{
+    QUndoCommand *uc = new EditFormTextCommand( this, form, pageNumber, newContents, newCursorPos, form->text(), prevCursorPos, prevAnchorPos );
+    d->m_undoStack->push( uc );
+}
+
+void Document::editFormList( int pageNumber,
+                             FormFieldChoice* form,
+                             const QList< int > & newChoices )
+{
+    const QList< int > prevChoices = form->currentChoices();
+    QUndoCommand *uc = new EditFormListCommand( this, form, pageNumber, newChoices, prevChoices );
+    d->m_undoStack->push( uc );
+}
+
+void Document::editFormCombo( int pageNumber,
+                              FormFieldChoice* form,
+                              const QString & newText,
+                              int newCursorPos,
+                              int prevCursorPos,
+                              int prevAnchorPos )
+{
+
+    QString prevText;
+    if ( form->currentChoices().isEmpty() )
+    {
+        prevText = form->editChoice();
+    }
+    else
+    {
+        prevText = form->choices()[form->currentChoices()[0]];
+    }
+
+    QUndoCommand *uc = new EditFormComboCommand( this, form, pageNumber, newText, newCursorPos, prevText, prevCursorPos, prevAnchorPos );
+    d->m_undoStack->push( uc );
+}
+
+void Document::editFormButtons( int pageNumber, const QList< FormFieldButton* >& formButtons, const QList< bool >& newButtonStates )
+{
+    QUndoCommand *uc = new EditFormButtonsCommand( this, pageNumber, formButtons, newButtonStates );
+    d->m_undoStack->push( uc );
 }
 
 BookmarkManager * Document::bookmarkManager() const

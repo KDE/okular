@@ -56,13 +56,6 @@ void TextDocumentSettingsWidget::addRow( const QString& labelText, QWidget *widg
     d->mUi->formLayout->addRow( labelText, widget );
 }
 
-QFont TextDocumentSettingsWidget::font() const
-{
-    Q_D( const TextDocumentSettingsWidget );
-
-    return d->mFont->font();
-}
-
 
 /**
  * TextDocumentSettings

@@ -87,8 +87,6 @@ class OKULAR_EXPORT TextDocumentSettingsWidget : public QWidget
 
         void addRow( const QString& labelText, QWidget *widget );
 
-        QFont font() const;
-
     private:
         friend class TextDocumentGenerator;
 

@@ -526,11 +526,6 @@ void TextDocumentGenerator::addPages( KConfigDialog* /*dlg*/ )
     return;
 }
 
-TextDocumentSettingsWidget* TextDocumentGenerator::generalSettingsWidget()
-{
-    return new TextDocumentSettingsWidget();
-}
-
 TextDocumentSettings* TextDocumentGenerator::generalSettings()
 {
     Q_D( TextDocumentGenerator );

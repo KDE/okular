@@ -56,8 +56,7 @@ class TextDocumentSettingsPrivate;
  * }
  * void YourGenerator::addPages( KConfigDialog* dlg )
  * {
- *     Okular::TextDocumentSettingsWidget *widget = generalSettingsWidget();
- *     widget->setParent( dlg );
+ *     Okular::TextDocumentSettingsWidget *widget = new Okular::TextDocumentSettingsWidget();
  *
  *     KIntSpinBox *customArgumentWidget = new KIntSpinBox( dlg );
  *     customArgumentWidget->setObjectName( QString::fromUtf8( "kcfg_CustomArgument" ) );
@@ -83,6 +82,7 @@ class TextDocumentSettingsPrivate;
 class OKULAR_EXPORT TextDocumentSettingsWidget : public QWidget
 {
     public:
+        TextDocumentSettingsWidget( QWidget *parent = 0 );
         virtual ~TextDocumentSettingsWidget();
 
         void addRow( const QString& labelText, QWidget *widget );
@@ -91,8 +91,6 @@ class OKULAR_EXPORT TextDocumentSettingsWidget : public QWidget
 
     private:
         friend class TextDocumentGenerator;
-
-        TextDocumentSettingsWidget( QWidget *parent = 0 );
 
         TextDocumentSettingsWidgetPrivate *d_ptr;
         Q_DECLARE_PRIVATE( TextDocumentSettingsWidget )

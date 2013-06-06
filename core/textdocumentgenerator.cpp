@@ -248,27 +248,12 @@ void TextDocumentGeneratorPrivate::initializeGenerator()
                       q, SIGNAL(warning(QString,int)) );
     QObject::connect( mConverter, SIGNAL(notice(QString,int)),
                       q, SIGNAL(notice(QString,int)) );
-
-    QObject::connect( mGeneralSettingsWidget, SIGNAL(destroyed()),
-                      q, SLOT(generalSettingsWidgetDestroyed()) );
-}
-
-void TextDocumentGeneratorPrivate::generalSettingsWidgetDestroyed()
-{
-    /**
-     * If addPage() is called from generator, it will install parent for this object,
-     * and parent will destroy this object before ~TextDocumentGeneratorPrivate()
-     *
-     * So just reset it.
-     */
-    mGeneralSettingsWidget = 0;
 }
 
 TextDocumentGenerator::TextDocumentGenerator( TextDocumentConverter *converter, const QString& configName, QObject *parent, const QVariantList &args )
     : Okular::Generator( *new TextDocumentGeneratorPrivate( converter ), parent, args )
 {
     Q_D( TextDocumentGenerator );
-    d->mGeneralSettingsWidget = new TextDocumentSettingsWidget();
     d->mGeneralSettings = new TextDocumentSettings( configName, this );
 
     d->initializeGenerator();
@@ -525,13 +510,7 @@ bool TextDocumentGenerator::exportTo( const QString &fileName, const Okular::Exp
 bool TextDocumentGenerator::reparseConfig()
 {
     Q_D( TextDocumentGenerator );
-
-    // don't have settings, just return "no changes".
-    if ( !d->mGeneralSettingsWidget ) {
-        return false;
-    }
-
-    const QFont newFont = d->mGeneralSettingsWidget->font();
+    const QFont newFont = d->mGeneralSettings->font();
 
     if ( newFont != d->mFont ) {
         d->mFont = newFont;
@@ -549,9 +528,7 @@ void TextDocumentGenerator::addPages( KConfigDialog* /*dlg*/ )
 
 TextDocumentSettingsWidget* TextDocumentGenerator::generalSettingsWidget()
 {
-    Q_D( TextDocumentGenerator );
-
-    return d->mGeneralSettingsWidget;
+    return new TextDocumentSettingsWidget();
 }
 
 TextDocumentSettings* TextDocumentGenerator::generalSettings()

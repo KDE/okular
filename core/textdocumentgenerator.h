@@ -224,7 +224,6 @@ class OKULAR_EXPORT TextDocumentGenerator : public Generator, public Okular::Con
         Q_PRIVATE_SLOT( d_func(), void addTitle( int, const QString&, const QTextBlock& ) )
         Q_PRIVATE_SLOT( d_func(), void addMetaData( const QString&, const QString&, const QString& ) )
         Q_PRIVATE_SLOT( d_func(), void addMetaData( DocumentInfo::Key, const QString& ) )
-        Q_PRIVATE_SLOT( d_func(), void generalSettingsWidgetDestroyed() )
 };
 
 }

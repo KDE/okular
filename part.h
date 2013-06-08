@@ -37,6 +37,7 @@ class QPrinter;
 class QMenu;
 
 class KUrl;
+class KConfigDialog;
 class KConfigGroup;
 class KDirWatch;
 class KToggleAction;
@@ -221,6 +222,7 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         void slotFileDirty( const QString& );
         void slotDoFileDirty();
         void psTransformEnded(int, QProcess::ExitStatus);
+        KConfigDialog * slotGeneratorPreferences();
 
     private:
         void setupViewerActions();
@@ -332,7 +334,6 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         FileKeeper *m_keeper;
 
     private slots:
-        void slotGeneratorPreferences();
         void slotAnnotationPreferences();
         void slotHandleActivatedSourceReference(const QString& absFileName, int line, int col, bool *handled);
 };

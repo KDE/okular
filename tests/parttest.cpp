@@ -12,6 +12,7 @@
 #include "../part.h"
 #include "../ui/toc.h"
 
+#include <KConfigDialog>
 #include <KStandardDirs>
 #include <KTempDir>
 
@@ -29,6 +30,7 @@ class PartTest
         void testTOCReload();
         void testFowardPDF();
         void testFowardPDF_data();
+        void testGeneratorPreferences();
 };
 
 void PartTest::testReload()
@@ -91,6 +93,24 @@ void PartTest::testFowardPDF_data()
 
     QTest::newRow("non-utf8") << QString(KGlobal::dirs()->resourceDirs("tmp")[0] + QString::fromUtf8("synctextest"));
     QTest::newRow("utf8")     << QString(KGlobal::dirs()->resourceDirs("tmp")[0] + QString::fromUtf8("ßðđđŋßðđŋ"));
+}
+
+void PartTest::testGeneratorPreferences()
+{
+    KConfigDialog * dialog;
+    QVariantList dummyArgs;
+    Okular::Part part(NULL, NULL, dummyArgs, KGlobal::mainComponent());
+
+    // Test that we don't crash while opening the dialog
+    dialog = part.slotGeneratorPreferences();
+    qApp->processEvents();
+    delete dialog; // closes the dialog and recursively destroys all widgets
+
+    // Test that we don't crash while opening a new instance of the dialog
+    // This catches attempts to reuse widgets that have been destroyed
+    dialog = part.slotGeneratorPreferences();
+    qApp->processEvents();
+    delete dialog;
 }
 
 }

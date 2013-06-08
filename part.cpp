@@ -1033,7 +1033,7 @@ void Part::setWindowTitleFromDocument()
     emit setWindowCaption( title );
 }
 
-void Part::slotGeneratorPreferences( )
+KConfigDialog * Part::slotGeneratorPreferences( )
 {
     // Create dialog
     KConfigDialog * dialog = new KConfigDialog( m_pageView, "generator_prefs", Okular::Settings::self() );
@@ -1053,6 +1053,8 @@ void Part::slotGeneratorPreferences( )
     // Show it
     dialog->setWindowModality( Qt::ApplicationModal );
     dialog->show();
+
+    return dialog;
 }
 
 

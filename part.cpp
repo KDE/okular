@@ -220,12 +220,15 @@ static QString compressedMimeFor( const QString& mime_to_check )
         return it.value();
 
     KMimeType::Ptr mime = KMimeType::mimeType( mime_to_check );
-    if ( mime->is( app_gzip ) )
-        return app_gzip;
-    else if ( supportBzip && mime->is( app_bzip ) )
-        return app_bzip;
-    else if ( supportXz && mime->is( app_xz ) )
-        return app_xz;
+    if ( mime )
+    {
+        if ( mime->is( app_gzip ) )
+            return app_gzip;
+        else if ( supportBzip && mime->is( app_bzip ) )
+            return app_bzip;
+        else if ( supportXz && mime->is( app_xz ) )
+            return app_xz;
+    }
 
     return QString();
 }

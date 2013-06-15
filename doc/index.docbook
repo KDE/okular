@@ -37,7 +37,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2013-05-22</date>
+		<date>2013-06-14</date>
 		<releaseinfo>0.17 (&kde; 4.11)</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
@@ -111,15 +111,14 @@ Context menu actions like Rename Bookmarks etc.)
 		<sect1 id="navigating">
 			<title>Navigating</title>
 			<para>This section describes how you can navigate through a document in &okular;.</para>
-<!--
-Presentation mode: add Up (previous page) and Down (next page) keys
-Add a 'Find Previous' entry
--->
 			<para>
 				There are multiple ways of scrolling the viewing area. One is to use the
-				<keycap>Up Arrow</keycap> and <keycap>Down Arrow</keycap> keys. You may also use
+				<keysym>Up Arrow</keysym> and <keysym>Down Arrow</keysym> keys. You may also use
 				the scrollbar, your mousewheel or the <keycap>Page Up</keycap> and <keycap>Page Down</keycap>
 				keys.
+			</para>
+			<para>
+			  You can also use <application>vim</application>-like navigation keys, namely <keycap>H</keycap> to move to the top of the previous page, <keycap>L</keycap> to move to the top of the next page, <keycap>J</keycap> to move one line down, and <keycap>K</keycap> to move one line up.
 			</para>
 			<para>
 				Another way is to hold the &LMB; down at any place on the document while dragging the mouse in the
@@ -127,6 +126,11 @@ Add a 'Find Previous' entry
 				enabled, which you can select by choosing <menuchoice><guimenu>Tools</guimenu>
 				<guimenuitem>Browse Tool</guimenuitem></menuchoice>.
 			</para>
+			<note>
+			  <para>
+			    When viewing a document in the <link linkend="presentationMode">Presentation mode</link> use <keysym>Up Arrow</keysym> and <keysym>Down Arrow</keysym> keys to switch between pages or slides. The number and the position of the current slide will be shown in the overlay at the right upper corner of screen.
+			  </para>
+			</note>
 			<para>If you want to read a document with several pages use the automatic scrolling feature of &okular;.
 			Start automatic scrolling with <keycombo action="simul">&Shift;<keysym>Down Arrow</keysym></keycombo> or
 			<keycombo action="simul">&Shift;<keysym>Up Arrow</keysym></keycombo>. Then use these keys to increase and
@@ -165,7 +169,7 @@ Add a 'Find Previous' entry
 				<listitem>
 					<para>
 						If the document has annotations, enable the <guilabel>Reviews</guilabel> view
-						and click the annotations or select them with the <keycap>Up Arrow</keycap> and <keycap>Down Arrow</keycap> keys and press <keycap>Return</keycap> to go to the associated page.
+						and click the annotations or select them with the <keysym>Up Arrow</keysym> and <keysym>Down Arrow</keysym> keys and press <keycap>Return</keycap> to go to the associated page.
 					</para>
 				</listitem>
 			</itemizedlist>
@@ -176,6 +180,11 @@ Add a 'Find Previous' entry
 				For example, clicking on a link pointing to <quote>http://www.kde.org</quote>
 				will open the web page in the default &kde;'s web browser.
 			</para>
+			<important>
+			  <para>
+			    The document internal links work only when <link linkend="menutools">Browse Tool</link> is used.
+			  </para>
+			</important>
 			<para>
 				Additionally, you may use the following functionality to quickly move to specific places
 				in the document:
@@ -245,6 +254,23 @@ Add a 'Find Previous' entry
 							<guimenu>Go</guimenu>
 							<guimenuitem>Forward</guimenuitem>
 						</menuchoice> in the menubar.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						You can go to the next match when searching using
+						<keycap>F3</keycap> key or
+						<menuchoice>
+							<guimenu>Edit</guimenu>
+							<guimenuitem>Find Next</guimenuitem>
+						</menuchoice>
+						menu item or move back to the previous match using
+						<keycombo>&Shift;<keysym>F3</keysym></keycombo> keys or
+						<menuchoice>
+							<guimenu>Edit</guimenu>
+							<guimenuitem>Find Previous</guimenuitem>
+						</menuchoice>
+						menu item.
 					</para>
 				</listitem>
 			</itemizedlist>

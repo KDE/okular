@@ -313,7 +313,8 @@ void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRe
                 totalPixels -= tile.pixmap->width()*tile.pixmap->height();
                 delete tile.pixmap;
             }
-            tile.pixmap = new QPixmap( pixmap->copy( tile.rect.geometry( width, height ).translated( -pixmapRect.topLeft() ) ) );
+            NormalizedRect rotatedRect = TilesManager::toRotatedRect( tile.rect, rotation );
+            tile.pixmap = new QPixmap( pixmap->copy( rotatedRect.geometry( width, height ).translated( -pixmapRect.topLeft() ) ) );
             tile.rotation = rotation;
             totalPixels += tile.pixmap->width()*tile.pixmap->height();
             tile.dirty = false;

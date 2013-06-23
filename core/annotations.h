@@ -93,6 +93,7 @@ class OKULAR_EXPORT Annotation
     friend class AnnotationObjectRect;
     friend class Document;
     friend class DocumentPrivate;
+    friend class ObjectRect;
     friend class Page;
     friend class PagePrivate;
     /// @endcond

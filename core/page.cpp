@@ -49,6 +49,8 @@
 
 using namespace Okular;
 
+static const double distanceConsideredEqual = 25; // 5px
+
 static void deleteObjectRects( QLinkedList< ObjectRect * >& rects, const QSet<ObjectRect::ObjectType>& which )
 {
     QLinkedList< ObjectRect * >::iterator it = rects.begin(), end = rects.end();
@@ -267,7 +269,7 @@ bool Page::hasObjectRect( double x, double y, double xScale, double yScale ) con
 
     QLinkedList< ObjectRect * >::const_iterator it = m_rects.begin(), end = m_rects.end();
     for ( ; it != end; ++it )
-        if ( (*it)->contains( x, y, xScale, yScale ) )
+        if ( (*it)->distanceSqr( x, y, xScale, yScale ) < distanceConsideredEqual )
             return true;
 
     return false;
@@ -430,7 +432,7 @@ const ObjectRect * Page::objectRect( ObjectRect::ObjectType type, double x, doub
 {
     QLinkedList< ObjectRect * >::const_iterator it = m_rects.begin(), end = m_rects.end();
     for ( ; it != end; ++it )
-        if ( ( (*it)->objectType() == type ) && (*it)->contains( x, y, xScale, yScale ) )
+        if ( ( (*it)->objectType() == type ) && (*it)->distanceSqr( x, y, xScale, yScale ) < distanceConsideredEqual )
             return *it;
     return 0;
 }
@@ -441,7 +443,7 @@ QLinkedList< const ObjectRect * > Page::objectRects( ObjectRect::ObjectType type
 
     QLinkedList< ObjectRect * >::const_iterator it = m_rects.begin(), end = m_rects.end();
     for ( ; it != end; ++it )
-        if ( ( (*it)->objectType() == type ) && (*it)->contains( x, y, xScale, yScale ) )
+        if ( ( (*it)->objectType() == type ) && (*it)->distanceSqr( x, y, xScale, yScale ) < distanceConsideredEqual )
             result.append( *it );
 
     return result;

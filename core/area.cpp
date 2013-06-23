@@ -49,6 +49,72 @@ void NormalizedPoint::transform( const QTransform &matrix )
     y = tmp_y;
 }
 
+double NormalizedPoint::distanceSqr( double x, double y, double xScale, double yScale ) const
+{
+    return pow( (this->x - x) * xScale, 2 ) + pow( (this->y - y) * yScale, 2 );
+}
+
+/**
+ * Returns a vector from the given points @p a and @p b
+ * @internal
+ */
+NormalizedPoint operator-( const NormalizedPoint& a, const NormalizedPoint& b )
+{
+    return NormalizedPoint( a.x - b.x, a.y - b.y );
+}
+
+/**
+ * @brief Calculates distance of the point @p x @p y @p xScale @p yScale to the line segment from @p start to @p end
+ */
+double NormalizedPoint::distanceSqr( double x, double y, double xScale, double yScale, const NormalizedPoint& start, const NormalizedPoint& end )
+{
+    NormalizedPoint point( x, y );
+    double thisDistance;
+    NormalizedPoint lineSegment( end - start );
+    const double lengthSqr = pow( lineSegment.x, 2 ) + pow( lineSegment.y, 2 );
+
+    //if the length of the current segment is null, we can just
+    //measure the distance to either end point
+    if ( lengthSqr == 0.0 )
+    {
+        thisDistance = end.distanceSqr( x, y, xScale, yScale );
+    }
+    else
+    {
+        //vector from the start point of the current line segment to the measurement point
+        NormalizedPoint a = point - start;
+        //vector from the same start point to the end point of the current line segment
+        NormalizedPoint b = end - start;
+
+        //we're using a * b (dot product) := |a| * |b| * cos(phi) and the knowledge
+        //that cos(phi) is adjacent side / hypotenuse (hypotenuse = |b|)
+        //therefore, t becomes the length of the vector that represents the projection of
+        //the point p onto the current line segment
+        //(hint: if this is still unclear, draw it!)
+        float t = (a.x * b.x + a.y * b.y) / lengthSqr;
+
+        if ( t < 0 )
+        {
+            //projection falls outside the line segment on the side of "start"
+            thisDistance = point.distanceSqr( start.x, start.y, xScale, yScale );
+        }
+        else if ( t > 1 )
+        {
+            //projection falls outside the line segment on the side of the current point
+            thisDistance = point.distanceSqr( end.x, end.y, xScale, yScale );
+        }
+        else
+        {
+            //projection is within [start, *i];
+            //determine the length of the perpendicular distance from the projection to the actual point
+            NormalizedPoint direction = end - start;
+            NormalizedPoint projection = start - NormalizedPoint( -t * direction.x, -t * direction.y );
+            thisDistance = projection.distanceSqr( x, y, xScale, yScale );
+        }
+    }
+    return thisDistance;
+}
+
 QDebug operator<<( QDebug str, const Okular::NormalizedPoint& p )
 {
     str.nospace() << "NormPt(" << p.x << "," << p.y << ")";
@@ -316,27 +382,29 @@ double ObjectRect::distanceSqr( double x, double y, double xScale, double yScale
     {
         case Action:
         case Image:
+        {
+            const QRectF& rect( m_transformedPath.boundingRect() );
+            return NormalizedRect( rect.x(), rect.y(), rect.right(), rect.bottom() ).distanceSqr( x, y, xScale, yScale );
+        }
         case OAnnotation:
         {
-            const QPointF center = m_transformedPath.boundingRect().center();
-            return pow( ( x - center.x() ), 2 ) + pow( ( y - center.y() ) * xScale / yScale, 2 );
+            return static_cast<Annotation*>(m_object)->d_func()->distanceSqr( x, y, xScale, yScale );
         }
         case SourceRef:
         {
-            const double ratio = yScale / xScale;
             const SourceRefObjectRect * sr = static_cast< const SourceRefObjectRect * >( this );
             const NormalizedPoint& point = sr->m_point;
             if ( point.x == -1.0 )
             {
-                return pow( ( y - point.y ) / ratio, 2 );
+                return pow( ( y - point.y ) * yScale, 2 );
             }
             else if ( point.y == -1.0 )
             {
-                return pow( ( x - point.x ), 2 );
+                return pow( ( x - point.x ) * xScale, 2 );
             }
             else
             {
-                return pow( ( x - point.x ), 2 ) + pow( ( y - point.y ) / ratio, 2 );
+                return pow( ( x - point.x ) * xScale, 2 ) + pow( ( y - point.y ) * yScale, 2 );
             }
         }
     }

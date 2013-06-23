@@ -15,6 +15,7 @@
 #include <QtGui/QPainterPath>
 #include <QtGui/QTransform>
 #include <kdebug.h>
+#include <math.h>
 
 #include "global.h"
 #include "okular_export.h"
@@ -73,6 +74,19 @@ class OKULAR_EXPORT NormalizedPoint
         void transform( const QTransform &matrix );
 
         /**
+         * Returns squared distance to point @p x @p y @p xScale @p yScale
+         * @since 0.17 (KDE 4.11)
+         */
+        double distanceSqr( double x, double y, double xScale, double yScale ) const;
+
+
+        /**
+         * @brief Calculates distance of the point @p x @p y @p xScale @p yScale to the line segment from @p start to @p end
+         * @since 0.17 (KDE 4.11)
+         */
+        static double distanceSqr( double x, double y, double xScale, double yScale, const NormalizedPoint& start, const NormalizedPoint& end );
+
+        /**
          * The normalized x coordinate.
          */
         double x;
@@ -82,6 +96,7 @@ class OKULAR_EXPORT NormalizedPoint
          */
         double y;
 };
+
 
 /**
  * NormalizedRect is a helper class which stores the coordinates
@@ -261,6 +276,27 @@ class OKULAR_EXPORT NormalizedRect
         bool isRight(const NormalizedPoint& pt) const
         {
             return right > pt.x;
+        }
+
+        /**
+         * Returns the distance of the point @p x @p y @p xScale @p yScale to the closest
+         * edge or 0 if the point is within the rectangle
+         * @since 0.17 (KDE 4.11)
+         */
+        double distanceSqr(double x, double y, double xScale, double yScale) const
+        {
+            double distX = 0;
+            if ( x < left )
+                distX = left - x;
+            else if ( x > right )
+                distX = x - right;
+
+            double distY = 0;
+            if ( top > y )
+                distY = top - y;
+            else if (bottom < y)
+                distY = y - bottom;
+            return pow( distX * xScale, 2 ) + pow( distY * yScale, 2 );
         }
 
         /**

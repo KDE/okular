@@ -14,6 +14,9 @@
 #include <QtGui/QApplication>
 #include <QtGui/QColor>
 
+// DBL_MAX
+#include <float.h>
+
 // local includes
 #include "action.h"
 #include "document.h"
@@ -23,6 +26,65 @@
 #include "sound.h"
 
 using namespace Okular;
+
+/**
+ * True, if point @p c lies to the left of the vector from @p a to @p b
+ * @internal
+ */
+static bool isLeftOfVector( const NormalizedPoint& a, const NormalizedPoint& b, const NormalizedPoint& c )
+{
+    //cross product
+    return ( (b.x - a.x) * ( c.y - a.y) - ( b.y - a.y ) * ( c.x - a.x ) ) > 0;
+}
+
+/**
+ * @brief Calculates distance of the given point @p x @p y @p xScale @p yScale to the @p path
+ *
+ * Does piecewise comparison and selects the distance to the closest segment
+ */
+static double distanceSqr( double x, double y, double xScale, double yScale, const QLinkedList<NormalizedPoint>& path )
+{
+    double distance = DBL_MAX;
+    double thisDistance;
+    QLinkedList<NormalizedPoint>::const_iterator i = path.constBegin();
+    NormalizedPoint lastPoint = *i;
+
+    for (++i; i != path.constEnd(); ++i) {
+        thisDistance = NormalizedPoint::distanceSqr( x, y, xScale, yScale, lastPoint, (*i) );
+
+        if ( thisDistance < distance )
+            distance = thisDistance;
+
+        lastPoint = *i;
+    }
+    return distance;
+}
+
+/**
+ * Given the squared @p distance from the idealized 0-width line and a pen width @p penWidth,
+ * (not squared!), returns the final distance
+ *
+ * @warning The returned distance is not exact:
+ * We calculate an (exact) squared distance to the ideal (centered) line, and then substract
+ * the squared width of the pen:
+ * a^2 - b^2 where a = "distance from idealized 0-width line" b = "pen width"
+ * For an exact result, we would want to calculate "(a - b)^2" but that would require
+ * a square root operation because we only know the squared distance a^2.
+ *
+ * However, the approximation is feasible, because:
+ * error = (a-b)^2 - (a^2 - b^2) = -2ab + 2b^2 = 2b(b - a)
+ * Therefore:
+ * lim_{a->b} a^2 - b^2 - a^2 + 2ab - b^2 --> 0
+ *
+ * In other words, this approximation will estimate the distance to be slightly more than it actually is
+ * for as long as we are far "outside" the line, becoming more accurate the closer we get to the line
+ * boundary. Trivially, it also fullfills (a1 < a2) => ((a1^2 - b^2) < (a2^2 - b^2)) making it monotonic.
+ * "Inside" of the drawn line, the distance is 0 anyway.
+ */
+static double strokeDistance( double distance, double penWidth )
+{
+    return fmax(distance - pow( penWidth, 2 ), 0);
+}
 
 //BEGIN AnnotationUtils implementation
 Annotation * AnnotationUtils::createAnnotation( const QDomElement & annElement )
@@ -771,6 +833,11 @@ void Annotation::setAnnotationProperties( const QDomNode& node )
     d_ptr->transform( d_ptr->m_page->rotationMatrix() );
 }
 
+double AnnotationPrivate::distanceSqr( double x, double y, double xScale, double yScale )
+{
+    return m_transformedBoundary.distanceSqr( x, y, xScale, yScale );
+}
+
 void AnnotationPrivate::annotationTransform( const QTransform &matrix )
 {
     resetTransformation();
@@ -1200,6 +1267,7 @@ class Okular::LineAnnotationPrivate : public Okular::AnnotationPrivate
         virtual void baseTransform( const QTransform &matrix );
         virtual void resetTransformation();
         virtual void translate( const NormalizedPoint &coord );
+        virtual double distanceSqr( double x, double y, double xScale, double yScale );
         virtual void setAnnotationProperties( const QDomNode& node );
         virtual AnnotationPrivate* getNewAnnotationPrivate();
 
@@ -1490,6 +1558,12 @@ AnnotationPrivate* LineAnnotationPrivate::getNewAnnotationPrivate()
     return new LineAnnotationPrivate();
 }
 
+double LineAnnotationPrivate::distanceSqr( double x, double y, double xScale, double yScale )
+{
+    return strokeDistance( ::distanceSqr( x, y, xScale, yScale, m_transformedLinePoints ),
+                           m_style.width() * xScale / ( m_page->m_width * 2 ) );
+}
+
 /** GeomAnnotation [Annotation] */
 
 class Okular::GeomAnnotationPrivate : public Okular::AnnotationPrivate
@@ -1501,6 +1575,7 @@ class Okular::GeomAnnotationPrivate : public Okular::AnnotationPrivate
         }
         virtual void setAnnotationProperties( const QDomNode& node );
         virtual AnnotationPrivate* getNewAnnotationPrivate();
+        virtual double distanceSqr( double x, double y, double xScale, double yScale );
 
         GeomAnnotation::GeomType m_geomType;
         QColor m_geomInnerColor;
@@ -1595,6 +1670,75 @@ void GeomAnnotationPrivate::setAnnotationProperties( const QDomNode& node )
 AnnotationPrivate* GeomAnnotationPrivate::getNewAnnotationPrivate()
 {
     return new GeomAnnotationPrivate();
+}
+
+double GeomAnnotationPrivate::distanceSqr( double x, double y, double xScale, double yScale )
+{
+    double distance = 0;
+    //the line thickness is applied unevenly (only on the "inside") - account for this
+    bool withinShape = false;
+    switch (m_geomType) {
+        case GeomAnnotation::InscribedCircle:
+        {
+            //calculate the center point and focus lengths of the ellipse
+            const double centerX = ( m_transformedBoundary.left + m_transformedBoundary.right ) / 2.0;
+            const double centerY = ( m_transformedBoundary.top + m_transformedBoundary.bottom ) / 2.0;
+            const double focusX = ( m_transformedBoundary.right - centerX);
+            const double focusY = ( m_transformedBoundary.bottom - centerY);
+
+            const double focusXSqr = pow( focusX, 2 );
+            const double focusYSqr = pow( focusY, 2 );
+
+            // to calculate the distance from the ellipse, we will first find the point "projection"
+            // that lies on the ellipse and is closest to the point (x,y)
+            // This point can obviously be written as "center + lambda(inputPoint - center)".
+            // Because the point lies on the ellipse, we know that:
+            //   1 = ((center.x - projection.x)/focusX)^2 + ((center.y - projection.y)/focusY)^2
+            // After filling in projection.x = center.x + lambda * (inputPoint.x - center.x)
+            // and its y-equivalent, we can solve for lambda:
+            const double lambda = sqrt( focusXSqr * focusYSqr /
+                                 ( focusYSqr * pow( x - centerX, 2 ) + focusXSqr * pow( y - centerY, 2 ) ) );
+
+            // if the ellipse is filled, we treat all points within as "on" it
+            if ( lambda > 1 )
+            {
+                if ( m_geomInnerColor.isValid() )
+                    return 0;
+                else
+                    withinShape = true;
+            }
+
+            //otherwise we calculate the squared distance from the projected point on the ellipse
+            NormalizedPoint projection( centerX, centerY );
+            projection.x += lambda * ( x - centerX );
+            projection.y += lambda * ( y - centerY );
+
+            distance = projection.distanceSqr( x, y, xScale, yScale );
+            break;
+        }
+
+        case GeomAnnotation::InscribedSquare:
+            //if the square is filled, only check the bounding box
+            if ( m_geomInnerColor.isValid() )
+                return AnnotationPrivate::distanceSqr( x, y, xScale, yScale );
+
+            QLinkedList<NormalizedPoint> edges;
+            edges << NormalizedPoint( m_transformedBoundary.left, m_transformedBoundary.top );
+            edges << NormalizedPoint( m_transformedBoundary.right, m_transformedBoundary.top );
+            edges << NormalizedPoint( m_transformedBoundary.right, m_transformedBoundary.bottom );
+            edges << NormalizedPoint( m_transformedBoundary.left, m_transformedBoundary.bottom );
+            edges << NormalizedPoint( m_transformedBoundary.left, m_transformedBoundary.top );
+            distance = ::distanceSqr( x, y, xScale, yScale, edges );
+
+            if ( m_transformedBoundary.contains( x, y ) )
+                withinShape = true;
+
+            break;
+    }
+    if ( withinShape )
+        distance = strokeDistance( distance, m_style.width() * xScale / m_page->m_width );
+
+    return distance;
 }
 
 /** HighlightAnnotation [Annotation] */
@@ -1710,6 +1854,7 @@ class Okular::HighlightAnnotationPrivate : public Okular::AnnotationPrivate
 
         virtual void transform( const QTransform &matrix );
         virtual void baseTransform( const QTransform &matrix );
+        virtual double distanceSqr( double x, double y, double xScale, double yScale );
         virtual void setAnnotationProperties( const QDomNode& node );
         virtual AnnotationPrivate* getNewAnnotationPrivate();
 
@@ -1860,6 +2005,37 @@ AnnotationPrivate* HighlightAnnotationPrivate::getNewAnnotationPrivate()
     return new HighlightAnnotationPrivate();
 }
 
+double HighlightAnnotationPrivate::distanceSqr( double x, double y, double xScale, double yScale )
+{
+    NormalizedPoint point( x, y );
+    double outsideDistance = DBL_MAX;
+    foreach ( const HighlightAnnotation::Quad& quad, m_highlightQuads )
+    {
+        QLinkedList<NormalizedPoint> pathPoints;
+
+        //first, we check if the point is within the area described by the 4 quads
+        //this is the case, if the point is always on one side of each segments delimiting the polygon:
+        pathPoints << NormalizedPoint( quad.point(0).x, quad.point(0).y );
+        int directionVote = 0;
+        for ( int i = 1; i < 5; ++i )
+        {
+            NormalizedPoint thisPoint( quad.point( i % 4 ).x, quad.point( i % 4 ).y );
+            directionVote += (isLeftOfVector( pathPoints.back(), thisPoint, point )) ? 1 : -1;
+            pathPoints << thisPoint;
+        }
+        if ( abs( directionVote ) == 4 )
+            return 0;
+
+        //if that's not the case, we treat the outline as path and simply determine
+        //the distance from the path to the point
+        const double thisOutsideDistance = ::distanceSqr( x, y, xScale, yScale, pathPoints );
+        if ( thisOutsideDistance < outsideDistance )
+            outsideDistance = thisOutsideDistance;
+    }
+
+    return outsideDistance;
+}
+
 /** StampAnnotation [Annotation] */
 
 class Okular::StampAnnotationPrivate : public Okular::AnnotationPrivate
@@ -1961,6 +2137,7 @@ class Okular::InkAnnotationPrivate : public Okular::AnnotationPrivate
         virtual void transform( const QTransform &matrix );
         virtual void baseTransform( const QTransform &matrix );
         virtual void resetTransformation();
+        virtual double distanceSqr( double x, double y, double xScale, double yScale );
         virtual void translate( const NormalizedPoint &coord );
         virtual void setAnnotationProperties( const QDomNode& node );
         virtual AnnotationPrivate* getNewAnnotationPrivate();
@@ -2036,6 +2213,18 @@ void InkAnnotation::store( QDomNode & node, QDomDocument & document ) const
             pointElement.setAttribute( "y", QString::number( point.y ) );
         }
     }
+}
+
+double InkAnnotationPrivate::distanceSqr( double x, double y, double xScale, double yScale )
+{
+    double distance = DBL_MAX;
+    foreach ( const QLinkedList<NormalizedPoint>& path, m_transformedInkPaths )
+    {
+        const double thisDistance = ::distanceSqr( x, y, xScale, yScale, path );
+        if ( thisDistance < distance )
+            distance = thisDistance;
+    }
+    return strokeDistance( distance, m_style.width() * xScale / ( m_page->m_width * 2 ) );
 }
 
 void InkAnnotationPrivate::transform( const QTransform &matrix )

@@ -1312,8 +1312,15 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
         QRect requestRect = r->isTile() ? r->normalizedRect().geometry( r->width(), r->height() ) : QRect( 0, 0, r->width(), r->height() );
         TilesManager *tilesManager = ( r->observer() == m_tiledObserver ) ? r->page()->d->tilesManager() : 0;
 
+        // If it's a preload but the generator is not threaded no point in trying to preload
+        if ( r->preload() && !m_generator->hasFeature( Generator::Threaded ) )
+        {
+            m_pixmapRequestsStack.pop_back();
+            delete r;
+        }
         // request only if page isn't already present and request has valid id
-        if ( ( !r->d->mForce && r->page()->hasPixmap( r->observer(), r->width(), r->height(), r->normalizedRect() ) ) || !m_observers.contains(r->observer()) )
+        // request only if page isn't already present and request has valid id
+        else if ( ( !r->d->mForce && r->page()->hasPixmap( r->observer(), r->width(), r->height(), r->normalizedRect() ) ) || !m_observers.contains(r->observer()) )
         {
             m_pixmapRequestsStack.pop_back();
             delete r;

@@ -735,6 +735,7 @@ void PageViewAnnotator::setEnabled( bool on )
         
         connect( m_toolBar, SIGNAL(buttonDoubleClicked(int)),
                 this, SLOT(slotToolDoubleClicked(int)) );
+        m_toolBar->setCursor(Qt::ArrowCursor);
     }
 
     // show the toolBar
@@ -765,9 +766,14 @@ bool PageViewAnnotator::hidingWasForced() const
     return m_hidingWasForced;
 }
 
-bool PageViewAnnotator::routeEvents() const
+bool PageViewAnnotator::active() const
 {
     return m_engine && m_toolBar;
+}
+
+bool PageViewAnnotator::annotating() const
+{
+    return active() && m_lockedItem;
 }
 
 QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::EventType & eventType, const AnnotatorEngine::Button & button,
@@ -956,6 +962,7 @@ void PageViewAnnotator::slotToolSelected( int toolID )
     if ( toolID == -1 )
     {
         m_pageView->displayMessage( QString() );
+        m_pageView->updateCursor();
         return;
     }
 
@@ -1032,6 +1039,7 @@ void PageViewAnnotator::slotToolSelected( int toolID )
             kWarning() << "tools.xml: couldn't find good engine description. check xml.";
         }
 
+        m_pageView->updateCursor();
         // stop after parsing selected tool's node
         break;
     }

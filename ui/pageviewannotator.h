@@ -66,7 +66,10 @@ class PageViewAnnotator : public QObject
         bool hidingWasForced() const;
 
         // methods used when creating the annotation
-        bool routeEvents() const;
+        // @return Is a tool currently selected?
+        bool active() const;
+        // @return Are we currently annotating (using the selected tool)?
+        bool annotating() const;
         QRect routeMouseEvent( QMouseEvent * event, PageViewItem * item );
         QRect routeTabletEvent( QTabletEvent * event, PageViewItem * item, const QPoint & localOriginInGlobal );
         QRect performRouteMouseOrTabletEvent( const AnnotatorEngine::EventType & eventType, const AnnotatorEngine::Button & button,

@@ -109,6 +109,9 @@ Q_OBJECT
 
         void setLastSourceLocationViewport( const Okular::DocumentViewport& vp );
         void clearLastSourceLocationViewport();
+
+        void updateCursor();
+
     public slots:
         void errorMessage( const QString & message, int duration = -1 )
         {

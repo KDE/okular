@@ -297,6 +297,7 @@ bool TextDocumentGenerator::loadDocument( const QString & fileName, QVector<Okul
     d->generateTitleInfos();
     d->generateLinkInfos();
     d->generateAnnotationInfos();
+    d->mDocument->setDefaultFont( d->mFont );
 
     pagesVector.resize( d->mDocument->pageCount() );
 
@@ -393,13 +394,15 @@ QImage TextDocumentGeneratorPrivate::image( PixmapRequest * request )
     QRect rect;
     rect = QRect( 0, request->pageNumber() * size.height(), size.width(), size.height() );
     p.translate( QPoint( 0, request->pageNumber() * size.height() * -1 ) );
+
 #ifdef OKULAR_TEXTDOCUMENT_THREADED_RENDERING
     q->userMutex()->lock();
-#endif
-    mDocument->setDefaultFont( mFont );
-    mDocument->drawContents( &p, rect );
-#ifdef OKULAR_TEXTDOCUMENT_THREADED_RENDERING
+    QTextDocument *cloned = mDocument->clone();
     q->userMutex()->unlock();
+    cloned->drawContents( &p, rect);
+    delete cloned;
+#else
+    mDocument->drawContents( &p, rect );
 #endif
     p.end();
 

@@ -20,7 +20,7 @@
 
 using namespace Epub;
 
-Converter::Converter() : mTextDocument(NULL)
+Converter::Converter() : mTextDocument(NULL), mDelimiter("5937DD29BCB9BB727611E23A627DB")
 {
 }
 
@@ -79,7 +79,7 @@ void Converter::_handle_anchors(const QTextBlock &start, const QString &name) {
             mLocalLinks.insert(href.toString(),
                                QPair<int, int>(frag.position(),
                                                frag.position()+frag.length()));
-          } else { // Outside document link       
+          } else { // Outside document link
             Okular::BrowseAction *action =
               new Okular::BrowseAction(href.toString());
 
@@ -92,6 +92,64 @@ void Converter::_handle_anchors(const QTextBlock &start, const QString &name) {
         if (!names.empty()) {
           for (QStringList::const_iterator lit = names.constBegin();
                lit != names.constEnd(); ++lit) {
+            mSectionMap.insert(name + '#' + *lit, bit);
+          }
+        }
+
+      } // end anchor case
+    }
+  }
+}
+
+// same as _handle_anchors, but this one iterates from the
+// given start block to the end of the document, containing
+// more than one html pages
+void Converter::_handle_all_anchors(const QTextBlock &start) {
+  mLocalLinks.clear();
+  mSectionMap.clear();
+
+  int nameIndex = 0;
+  QString name = mSubDocs[nameIndex];
+  for (QTextBlock bit = start; bit != mTextDocument->end(); bit = bit.next()) {
+    for (QTextBlock::iterator fit = bit.begin(); !(fit.atEnd()); ++fit) {
+
+      QTextFragment frag = fit.fragment();
+
+      if (frag.isValid() && frag.charFormat().isAnchor()) {
+        QString hrefString = frag.charFormat().anchorHref();
+
+        // remove ./ or ../
+        // making it easier to compare, with links
+        while(!hrefString.isNull() && ( hrefString.at(0) == '.' || hrefString.at(0) == '/') ){
+          hrefString.remove(0,1);
+        }
+
+        // if reached delimiter change prefix name
+        if(hrefString == mDelimiter){
+          name = mSubDocs[++nameIndex];
+          if(bit.next().next().isValid())   //because bit.next() points to delimiter anchor
+            mSectionMap.insert(name,bit.next().next());
+        }
+
+        QUrl href(hrefString);
+        if (href.isValid() && !href.isEmpty()) {
+          if (href.isRelative()) { // Inside document link
+            mLocalLinks.insert(href.toString(),
+                QPair<int, int>(frag.position(),
+                  frag.position()+frag.length()));
+          } else { // Outside document link
+            Okular::BrowseAction *action =
+              new Okular::BrowseAction(href.toString());
+
+            emit addAction(action, frag.position(),
+                frag.position() + frag.length());
+          }
+        }
+
+        const QStringList &names = frag.charFormat().anchorNames();
+        if (!names.empty()) {
+          for (QStringList::const_iterator lit = names.constBegin();
+              lit != names.constEnd(); ++lit) {
             mSectionMap.insert(name + '#' + *lit, bit);
           }
         }
@@ -114,15 +172,12 @@ QTextDocument* Converter::convert( const QString &fileName )
   mTextDocument->setPageSize(QSizeF(600, 800));
 
   QTextCursor *_cursor = new QTextCursor( mTextDocument );
-
-  QTextFrameFormat frameFormat;
-  frameFormat.setMargin( 20 );
-
-  QTextFrame *rootFrame = mTextDocument->rootFrame();
-  rootFrame->setFrameFormat( frameFormat );
+  QString magicString = "Ub>-#+Z{DK9}2ey3Nqm4";
 
   mLocalLinks.clear();
   mSectionMap.clear();
+  mHtmlBlocks.clear();
+  mSubDocs.clear();
 
   // Emit the document meta data
   _emitData(Okular::DocumentInfo::Title, EPUB_TITLE);
@@ -141,33 +196,49 @@ QTextDocument* Converter::convert( const QString &fileName )
 
   // iterate over the book
   it = epub_get_iterator(mTextDocument->getEpub(), EITERATOR_SPINE, 0);
-
+  bool first = true;
   do {
     if (epub_it_get_curr(it)) {
-
-      // insert block for links
-      _cursor->insertBlock();
-
       QString link = QString::fromUtf8(epub_it_get_curr_url(it));
-      mTextDocument->setCurrentSubDocument(link);
+      mSubDocs.append(link);
 
-      // Pass on all the anchor since last block
-      const QTextBlock &before = _cursor->block();
-      mSectionMap.insert(link, before);
-      _cursor->insertHtml(QString::fromUtf8(epub_it_get_curr(it)));
+      QString htmlContent = QString::fromUtf8(epub_it_get_curr(it));
 
-      // Add anchors to hashes
-      _handle_anchors(before, link);
-
-      // Start new file in a new page
-      int page = mTextDocument->pageCount();
-      while(mTextDocument->pageCount() == page)
-        _cursor->insertText("\n");
+      // adding magicStrings after every page, used while creating page breaks
+      if(!first)
+        htmlContent = "<p>"+magicString+"</p>" + htmlContent;
+      else
+        first = false;
+      mHtmlBlocks.append(htmlContent);
     }
   } while (epub_it_get_next(it));
 
+
   epub_free_iterator(it);
-  mTextDocument->setCurrentSubDocument(QString());
+
+  // preHtml & postHtml make it possible to have a margin around the content of the page
+  QString preHtml = "<html><head></head><body>"
+    "<table style=\"-qt-table-type: root; margin-top:20px; margin-bottom:20px; margin-left:20px; margin-right:20px;\">"
+    "<tr>"
+    "<td style=\"border: none;\">";
+  QString postHtml = "</tr></table></body></html>";
+
+  // a delimiter is added after every page
+  // which is used in _handle_all_anchors, to change the prefix name of links
+  mTextDocument->setHtml(preHtml + mHtmlBlocks.join(QString("<a href=\"%1\">&zwnj;</a>").arg(mDelimiter)) + postHtml);
+
+  QTextCursor csr;
+  int index = 0;
+  // iterate over the document creating pagebreaks
+  while (!(csr = mTextDocument->find(magicString,index)).isNull()) {
+    QTextBlockFormat bf = csr.blockFormat();
+    index = csr.position();
+    bf.setPageBreakPolicy(QTextFormat::PageBreak_AlwaysBefore);
+    csr.insertBlock(bf);
+  }
+
+  // handle all the links in the document
+  _handle_all_anchors(mTextDocument->begin());
 
   // handle toc
   struct titerator *tit;
@@ -185,36 +256,8 @@ QTextDocument* Converter::convert( const QString &fileName )
         char *label = epub_tit_get_curr_label(tit);
         QTextBlock block = mTextDocument->begin(); // must point somewhere
 
-        if (mSectionMap.contains(link)) {
+        if (mSectionMap.contains(link))
           block = mSectionMap.value(link);
-        } else { // load missing resource
-          char *data = 0;
-          int size = epub_get_data(mTextDocument->getEpub(), clink, &data);
-          if (data) {
-            _cursor->insertBlock();
-
-            // try to load as image and if not load as html
-            block = _cursor->block();
-            QImage image;
-            mSectionMap.insert(link, block);
-            if (image.loadFromData((unsigned char *)data, size)) {
-              mTextDocument->addResource(QTextDocument::ImageResource,
-                                         QUrl(link), image);
-              _cursor->insertImage(link);
-            } else {
-              _cursor->insertHtml(QString::fromUtf8(data));
-              // Add anchors to hashes
-              _handle_anchors(block, link);
-            }
-
-            // Start new file in a new page
-            int page = mTextDocument->pageCount();
-            while(mTextDocument->pageCount() == page)
-              _cursor->insertText("\n");
-          }
-
-          free(data);
-        }
 
         if (block.isValid()) { // be sure we actually got a block
           emit addTitle(epub_tit_get_curr_depth(tit),

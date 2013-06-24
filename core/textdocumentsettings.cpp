@@ -32,7 +32,7 @@ TextDocumentSettingsWidget::TextDocumentSettingsWidget( QWidget *parent )
 
     d->mUi->setupUi( this );
 
-    // @notice I think this will be usefull in future.
+    // @notice I think this will be useful in future.
 #define ADD_WIDGET( property, widget, objectName, labelName )        \
     d->property = new widget( this );                                \
     d->property->setObjectName( QString::fromUtf8( objectName ) );   \

@@ -2124,8 +2124,8 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
         if ( offers.isEmpty() )
         {
             // There's still no offers, do a final mime search based on the filename
-            // We need this becuase sometimes (e.g. when downloading from a webserver) the mimetype we
-            // use is the one feeded by the server, that may be wrong
+            // We need this because sometimes (e.g. when downloading from a webserver) the mimetype we
+            // use is the one fed by the server, that may be wrong
             newmime = KMimeType::findByUrl( docFile );
             if ( newmime->name() != mime->name() )
             {
@@ -2794,7 +2794,7 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests, 
     }
 
     // 1. [CLEAN STACK] remove previous requests of requesterID
-    // FIXME This asumes all requests come from the same observer, that is true atm but not enforced anywhere
+    // FIXME This assumes all requests come from the same observer, that is true atm but not enforced anywhere
     DocumentObserver *requesterObserver = requests.first()->observer();
     QSet< int > requestedPages;
     {

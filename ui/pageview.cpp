@@ -1203,7 +1203,7 @@ void PageView::notifyPageChanged( int pageNumber, int changedFlags )
                 AnnotWindow *w = *it;
                 it = d->m_annowindows.erase( it );
                 // Need to delete after removing from the list
-                // otherwise deleting will call slotAnnotationWindowDestroyed wich will mess
+                // otherwise deleting will call slotAnnotationWindowDestroyed which will mess
                 // the list and the iterators
                 delete w;
             }

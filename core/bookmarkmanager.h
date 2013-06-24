@@ -144,7 +144,7 @@ class OKULAR_EXPORT BookmarkManager : public QObject
         bool isBookmarked( int page ) const;
 
         /**
-         * Return whether the the given @p viewport is bookmarked.
+         * Return whether the given @p viewport is bookmarked.
          * @since 0.15 (KDE 4.9)
          */
         bool isBookmarked( const DocumentViewport &viewport ) const;

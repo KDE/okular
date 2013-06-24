@@ -65,7 +65,7 @@ static double distanceSqr( double x, double y, double xScale, double yScale, con
  * (not squared!), returns the final distance
  *
  * @warning The returned distance is not exact:
- * We calculate an (exact) squared distance to the ideal (centered) line, and then substract
+ * We calculate an (exact) squared distance to the ideal (centered) line, and then subtract
  * the squared width of the pen:
  * a^2 - b^2 where a = "distance from idealized 0-width line" b = "pen width"
  * For an exact result, we would want to calculate "(a - b)^2" but that would require
@@ -78,7 +78,7 @@ static double distanceSqr( double x, double y, double xScale, double yScale, con
  *
  * In other words, this approximation will estimate the distance to be slightly more than it actually is
  * for as long as we are far "outside" the line, becoming more accurate the closer we get to the line
- * boundary. Trivially, it also fullfills (a1 < a2) => ((a1^2 - b^2) < (a2^2 - b^2)) making it monotonic.
+ * boundary. Trivially, it also fulfils (a1 < a2) => ((a1^2 - b^2) < (a2^2 - b^2)) making it monotonic.
  * "Inside" of the drawn line, the distance is 0 anyway.
  */
 static double strokeDistance( double distance, double penWidth )

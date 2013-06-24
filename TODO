@@ -201,7 +201,7 @@ Done (newest features come first):
 -> ADD: page preloading
 -> FIX: smarter memory management / prioritize queries
 -> ADD: type ahead search in pageview (type '/' then the word to search..) (JakubS)
--> FIX: scroll page if the the searched string is not visible
+-> FIX: scroll page if the searched string is not visible
 -> FIX: use a global Viewport over the document (linked views, real link following, location restoring, etc)
 -> FIX: wrong zoom buttons order (BR74248) (check consistancy with kdvi/kviewshell/kghostview/.. (not konq))
 -> ADD: presentation: cursor modes: hidden, visible, hidden with delay (Tobias)

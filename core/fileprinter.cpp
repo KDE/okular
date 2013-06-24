@@ -599,7 +599,7 @@ QStringList FilePrinter::optionOrientation( QPrinter &printer, QPrinter::Orienta
 {
     // portrait and landscape options rotate the document according to the document orientation
     // If we want to print a landscape document as one would expect it, we have to pass the
-    // portrait option so that the document is not rotated additionaly
+    // portrait option so that the document is not rotated additionally
     if ( printer.orientation() == documentOrientation ) {
         // the user wants the document printed as is
         return QStringList("-o") << "portrait";

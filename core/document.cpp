@@ -1325,23 +1325,18 @@ void DocumentPrivate::refreshPixmaps( int pageNumber )
                 break;
             }
         }
-        const QList<Tile> tiles = tilesManager->tilesAt( visibleRect, TilesManager::TerminalTile );
-        QList<Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
-        while ( tIt != tEnd )
+
+        if ( !visibleRect.isNull() )
         {
-            Tile tile = *tIt;
-            if ( tilesRect.isNull() )
-                tilesRect = tile.rect();
-            else
-                tilesRect |= tile.rect();
-
-            tIt++;
+            p->setNormalizedRect( visibleRect );
+            p->setTile( true );
+            p->d->mForce = true;
+            requestedPixmaps.push_back( p );
         }
-
-        p->setNormalizedRect( tilesRect );
-        p->setTile( true );
-        p->d->mForce = true;
-        requestedPixmaps.push_back( p );
+        else
+        {
+            delete p;
+        }
     }
     if ( !requestedPixmaps.isEmpty() )
         m_parent->requestPixmaps( requestedPixmaps, Okular::Document::NoOption );

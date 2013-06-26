@@ -167,6 +167,7 @@ class PickPointEngine : public AnnotatorEngine
                     //add note
                     Okular::TextAnnotation * ta = new Okular::TextAnnotation();
                     ann = ta;
+                    ta->setFlags( ta->flags() | Okular::Annotation::FixedRotation );
                     ta->setContents( note );
                     ta->setTextType( Okular::TextAnnotation::InPlace );
                     //set alignment

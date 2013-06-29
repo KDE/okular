@@ -62,23 +62,62 @@ void Converter::_emitData(Okular::DocumentInfo::Key key,
   }
 }
 
-// Got over the blocks from start and add them to hashes use name as the 
+// Got over the blocks from start and add them to hashes use name as the
 // prefix for local links
-void Converter::_handle_anchors(const QTextBlock &start, const QString &name) {
+void Converter::_handle_all_anchors(const QTextBlock &start) {
+  mLocalLinks.clear();
+  mSectionMap.clear();
 
+  int nameIndex = 0;
+  QString name = mSubDocs[nameIndex];
+  QString curDir = QFileInfo(name).path();
+
+  // add first page
+  mSectionMap.insert(name,start);
   for (QTextBlock bit = start; bit != mTextDocument->end(); bit = bit.next()) {
     for (QTextBlock::iterator fit = bit.begin(); !(fit.atEnd()); ++fit) {
 
       QTextFragment frag = fit.fragment();
 
       if (frag.isValid() && frag.charFormat().isAnchor()) {
-        QUrl href(frag.charFormat().anchorHref());
+        QString hrefString = frag.charFormat().anchorHref();
 
+        // remove ./ or ../
+        // making it easier to compare, with links
+        while(!hrefString.isNull() && ( hrefString.at(0) == '.' || hrefString.at(0) == '/') ){
+          hrefString.remove(0,1);
+        }
+
+        // if reached delimiter change prefix name
+        if(hrefString == mDelimiter){
+          name = mSubDocs[++nameIndex];
+          curDir = QFileInfo(name).path();
+          if(bit.next().next().isValid()){   //because bit.next() points to delimiter anchor
+            mSectionMap.insert(name,bit.next().next());
+            continue;
+          }
+        }
+
+        QUrl href(hrefString);
         if (href.isValid() && !href.isEmpty()) {
           if (href.isRelative()) { // Inside document link
-            mLocalLinks.insert(href.toString(),
-                               QPair<int, int>(frag.position(),
-                                               frag.position()+frag.length()));
+            if(!hrefString.indexOf('#'))
+              hrefString = name + hrefString;
+            else if(QFileInfo(hrefString).path() == "." && curDir != ".")
+              hrefString = curDir + QDir::separator() + hrefString;
+
+            // QTextCharFormat sometimes splits a link in two
+            // if there's no white space between words & the first one is an anchor
+            // consider whole word to be an anchor
+            ++fit;
+            int fragLen = frag.length();
+            if(!fit.atEnd() && ((fit.fragment().position() - frag.position()) == 1))
+              fragLen += fit.fragment().length();
+            --fit;
+
+            _insert_local_links(hrefString,
+                                QPair<int, int>(frag.position(),
+                                                frag.position()+fragLen));
           } else { // Outside document link
             Okular::BrowseAction *action =
               new Okular::BrowseAction(href.toString());
@@ -101,61 +140,14 @@ void Converter::_handle_anchors(const QTextBlock &start, const QString &name) {
   }
 }
 
-// same as _handle_anchors, but this one iterates from the
-// given start block to the end of the document, containing
-// more than one html pages
-void Converter::_handle_all_anchors(const QTextBlock &start) {
-  mLocalLinks.clear();
-  mSectionMap.clear();
-
-  int nameIndex = 0;
-  QString name = mSubDocs[nameIndex];
-  for (QTextBlock bit = start; bit != mTextDocument->end(); bit = bit.next()) {
-    for (QTextBlock::iterator fit = bit.begin(); !(fit.atEnd()); ++fit) {
-
-      QTextFragment frag = fit.fragment();
-
-      if (frag.isValid() && frag.charFormat().isAnchor()) {
-        QString hrefString = frag.charFormat().anchorHref();
-
-        // remove ./ or ../
-        // making it easier to compare, with links
-        while(!hrefString.isNull() && ( hrefString.at(0) == '.' || hrefString.at(0) == '/') ){
-          hrefString.remove(0,1);
-        }
-
-        // if reached delimiter change prefix name
-        if(hrefString == mDelimiter){
-          name = mSubDocs[++nameIndex];
-          if(bit.next().next().isValid())   //because bit.next() points to delimiter anchor
-            mSectionMap.insert(name,bit.next().next());
-        }
-
-        QUrl href(hrefString);
-        if (href.isValid() && !href.isEmpty()) {
-          if (href.isRelative()) { // Inside document link
-            mLocalLinks.insert(href.toString(),
-                QPair<int, int>(frag.position(),
-                  frag.position()+frag.length()));
-          } else { // Outside document link
-            Okular::BrowseAction *action =
-              new Okular::BrowseAction(href.toString());
-
-            emit addAction(action, frag.position(),
-                frag.position() + frag.length());
-          }
-        }
-
-        const QStringList &names = frag.charFormat().anchorNames();
-        if (!names.empty()) {
-          for (QStringList::const_iterator lit = names.constBegin();
-              lit != names.constEnd(); ++lit) {
-            mSectionMap.insert(name + '#' + *lit, bit);
-          }
-        }
-
-      } // end anchor case
-    }
+void Converter::_insert_local_links(const QString &key, const QPair<int, int> &value)
+{
+  if(mLocalLinks.contains(key)){
+    mLocalLinks[key].append(value);
+  } else {
+    QVector< QPair<int, int> > vec;
+    vec.append(value);
+    mLocalLinks.insert(key,vec);
   }
 }
 
@@ -203,6 +195,10 @@ QTextDocument* Converter::convert( const QString &fileName )
       mSubDocs.append(link);
 
       QString htmlContent = QString::fromUtf8(epub_it_get_curr(it));
+
+      // as QTextCharFormat::anchorNames() ignores sections, replace it with <p>
+      htmlContent.replace(QRegExp("< *section"),"<p");
+      htmlContent.replace(QRegExp("< */ *section"),"</p");
 
       // adding magicStrings after every page, used while creating page breaks
       if(!first)
@@ -280,20 +276,23 @@ QTextDocument* Converter::convert( const QString &fileName )
   }
 
   // adding link actions
-  QHashIterator<QString, QPair<int, int> > hit(mLocalLinks);
+  QHashIterator<QString, QVector< QPair<int, int> > > hit(mLocalLinks);
   while (hit.hasNext()) {
     hit.next();
 
     const QTextBlock block = mSectionMap.value(hit.key());
-    if (block.isValid()) { // be sure we actually got a block
-      Okular::DocumentViewport viewport =
-        calculateViewport(mTextDocument, block);
 
-      Okular::GotoAction *action = new Okular::GotoAction(QString(), viewport);
+    for (int i = 0; i < hit.value().size(); ++i) {
+      if (block.isValid()) { // be sure we actually got a block
+        Okular::DocumentViewport viewport =
+          calculateViewport(mTextDocument, block);
 
-      emit addAction(action, hit.value().first, hit.value().second);
-    } else {
-      kDebug() << "Error: no block found for "<< hit.key();
+        Okular::GotoAction *action = new Okular::GotoAction(QString(), viewport);
+
+        emit addAction(action, hit.value()[i].first, hit.value()[i].second);
+      } else {
+        kDebug() << "Error: no block found for "<< hit.key();
+      }
     }
   }
 

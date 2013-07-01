@@ -430,10 +430,16 @@ void PagePrivate::changeSize( const PageSize &size )
 
 const ObjectRect * Page::objectRect( ObjectRect::ObjectType type, double x, double y, double xScale, double yScale ) const
 {
-    QLinkedList< ObjectRect * >::const_iterator it = m_rects.begin(), end = m_rects.end();
-    for ( ; it != end; ++it )
-        if ( ( (*it)->objectType() == type ) && (*it)->distanceSqr( x, y, xScale, yScale ) < distanceConsideredEqual )
-            return *it;
+    // Walk list in reverse order so that annotations in the foreground are preferred
+    QLinkedListIterator< ObjectRect * > it( m_rects );
+    it.toBack();
+    while ( it.hasPrevious() )
+    {
+        const ObjectRect *objrect = it.previous();
+        if ( ( objrect->objectType() == type ) && objrect->distanceSqr( x, y, xScale, yScale ) < distanceConsideredEqual )
+            return objrect;
+    }
+
     return 0;
 }
 
@@ -441,10 +447,14 @@ QLinkedList< const ObjectRect * > Page::objectRects( ObjectRect::ObjectType type
 {
     QLinkedList< const ObjectRect * > result;
 
-    QLinkedList< ObjectRect * >::const_iterator it = m_rects.begin(), end = m_rects.end();
-    for ( ; it != end; ++it )
-        if ( ( (*it)->objectType() == type ) && (*it)->distanceSqr( x, y, xScale, yScale ) < distanceConsideredEqual )
-            result.append( *it );
+    QLinkedListIterator< ObjectRect * > it( m_rects );
+    it.toBack();
+    while ( it.hasPrevious() )
+    {
+        const ObjectRect *objrect = it.previous();
+        if ( ( objrect->objectType() == type ) && objrect->distanceSqr( x, y, xScale, yScale ) < distanceConsideredEqual )
+            result.append( objrect );
+    }
 
     return result;
 }

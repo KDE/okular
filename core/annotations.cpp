@@ -1560,7 +1560,12 @@ AnnotationPrivate* LineAnnotationPrivate::getNewAnnotationPrivate()
 
 double LineAnnotationPrivate::distanceSqr( double x, double y, double xScale, double yScale )
 {
-    return strokeDistance( ::distanceSqr( x, y, xScale, yScale, m_transformedLinePoints ),
+    QLinkedList<NormalizedPoint> transformedLinePoints = m_transformedLinePoints;
+
+    if ( m_lineClosed ) // Close the path
+        transformedLinePoints.append( transformedLinePoints.first() );
+
+    return strokeDistance( ::distanceSqr( x, y, xScale, yScale, transformedLinePoints ),
                            m_style.width() * xScale / ( m_page->m_width * 2 ) );
 }
 

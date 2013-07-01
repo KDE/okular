@@ -2020,11 +2020,11 @@ double HighlightAnnotationPrivate::distanceSqr( double x, double y, double xScal
 
         //first, we check if the point is within the area described by the 4 quads
         //this is the case, if the point is always on one side of each segments delimiting the polygon:
-        pathPoints << NormalizedPoint( quad.point(0).x, quad.point(0).y );
+        pathPoints << quad.transformedPoint( 0 );
         int directionVote = 0;
         for ( int i = 1; i < 5; ++i )
         {
-            NormalizedPoint thisPoint( quad.point( i % 4 ).x, quad.point( i % 4 ).y );
+            NormalizedPoint thisPoint = quad.transformedPoint( i % 4 );
             directionVote += (isLeftOfVector( pathPoints.back(), thisPoint, point )) ? 1 : -1;
             pathPoints << thisPoint;
         }

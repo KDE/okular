@@ -1565,6 +1565,16 @@ double LineAnnotationPrivate::distanceSqr( double x, double y, double xScale, do
     if ( m_lineClosed ) // Close the path
         transformedLinePoints.append( transformedLinePoints.first() );
 
+    if ( m_lineInnerColor.isValid() )
+    {
+        QPolygonF polygon;
+        foreach ( const NormalizedPoint &p, transformedLinePoints )
+            polygon.append( QPointF( p.x, p.y ) );
+
+        if ( polygon.containsPoint( QPointF( x, y ), Qt::WindingFill ) )
+            return 0;
+    }
+
     return strokeDistance( ::distanceSqr( x, y, xScale, yScale, transformedLinePoints ),
                            m_style.width() * xScale / ( m_page->m_width * 2 ) );
 }

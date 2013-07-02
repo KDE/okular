@@ -3673,7 +3673,7 @@ void PageView::updateCursor( const QPoint &p )
             setCursor( Qt::CrossCursor );
         else if ( d->mouseAnn )
             setCursor( Qt::ClosedHandCursor );
-        else
+        else if ( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::Browse )
         {
             const Okular::ObjectRect * linkobj = pageItem->page()->objectRect( Okular::ObjectRect::Action, nX, nY, pageItem->uncroppedWidth(), pageItem->uncroppedHeight() );
             const Okular::ObjectRect * annotobj = pageItem->page()->objectRect( Okular::ObjectRect::OAnnotation, nX, nY, pageItem->uncroppedWidth(), pageItem->uncroppedHeight() );
@@ -3707,15 +3707,15 @@ void PageView::updateCursor( const QPoint &p )
                         }
                     }
                 }
-                else if ( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::Browse )
+                else
                 {
                     setCursor( Qt::OpenHandCursor );
                 }
-                else
-                {
-                    setCursor( Qt::ArrowCursor );
-                }
             }
+        }
+        else
+        {
+            setCursor( Qt::ArrowCursor );
         }
     }
     else

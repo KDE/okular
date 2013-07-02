@@ -1854,10 +1854,7 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
     if ( d->annotator && d->annotator->active() )
     {
         PageViewItem * pageItem = pickItemOnPoint( eventPos.x(), eventPos.y() );
-        if (pageItem || d->annotator->annotating())
-            setCursor( Qt::CrossCursor );
-        else
-            setCursor( Qt::ForbiddenCursor );
+        updateCursor( eventPos );
         d->annotator->routeMouseEvent( e, pageItem );
         return;
     }
@@ -3656,7 +3653,15 @@ void PageView::updateCursor( const QPoint &p )
 {
     // detect the underlaying page (if present)
     PageViewItem * pageItem = pickItemOnPoint( p.x(), p.y() );
-    if ( pageItem )
+
+    if ( d->annotator && d->annotator->active() )
+    {
+        if ( pageItem || d->annotator->annotating() )
+            setCursor( Qt::CrossCursor );
+        else
+            setCursor( Qt::ForbiddenCursor );
+    }
+    else if ( pageItem )
     {
         double nX = pageItem->absToPageX(p.x());
         double nY = pageItem->absToPageY(p.y());
@@ -3704,7 +3709,7 @@ void PageView::updateCursor( const QPoint &p )
                 }
                 else if ( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::Browse )
                 {
-                    setCursor( (d->annotator && d->annotator->active()) ? Qt::CrossCursor : Qt::OpenHandCursor );
+                    setCursor( Qt::OpenHandCursor );
                 }
                 else
                 {

@@ -26,3 +26,6 @@ target_link_libraries( translateannotationtest ${KDE4_KDECORE_LIBS} ${QT_QTGUI_L
 
 kde4_add_unit_test( modifyannotationpropertiestest modifyannotationpropertiestest.cpp testingutils.cpp)
 target_link_libraries( modifyannotationpropertiestest ${KDE4_KDECORE_LIBS} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} ${QT_QTXML_LIBRARY} okularcore )
+
+kde4_add_unit_test( epubtest epubtest.cpp )
+target_link_libraries( epubtest ${KDE4_KDECORE_LIBS} ${KDE4_KPARTS_LIBS} ${QT_QTTEST_LIBRARY} ${QT_QTGUI_LIBRARY} okularpart okularcore )

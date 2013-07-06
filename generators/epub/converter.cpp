@@ -13,6 +13,7 @@
 #include <QtGui/QTextDocument>
 #include <QtGui/QTextFrame>
 #include <QTextDocumentFragment>
+#include <QDir>
 
 #include <kdebug.h>
 #include <klocale.h>

@@ -10,14 +10,7 @@
 #include <qtest_kde.h>
 
 #include "../part.h"
-#include "../shell/shell.h"
 #include "../core/page.h"
-#include "../ui/pageview.h"
-#include <QTest>
-#include <QtTestGui>
-#include <QDesktopServices>
-#include <QDesktopWidget>
-#include <QTimer>
 
 namespace Okular
 {
@@ -36,14 +29,20 @@ void EpubTest::testInternalLinks()
     Okular::Document *doc = part.m_document;
     QVERIFY(doc);
 
-    QWidget *wid = part.widget();
-    //PageView *wid = part.m_pageView;
-    QVERIFY(wid);
-//    wid->show();
-
-    qDebug() << " width = " << wid->width();
-    qDebug() << "height = " << wid->height();
-    QTest::mouseClick(wid, Qt::LeftButton, 0, QPoint(90,20));
+    int width = doc->page( 0 )->width();  // 0 because current page is zero
+    int height = doc->page( 0 )->height();
+    QVector< double > yCords;
+    QVector< unsigned > dest;
+    yCords << 0.025 << 0.06 << 0.095 << 0.13 << 0.165 << 0.2 << 0.235 << 0.27 << 0.305 << 0.34;
+    dest << 1 << 2 << 1 << 1 << 2 << 1 << 2 << 2 << 2 << 2;
+    for (int i = 0; i < yCords.size(); ++i) {
+        const ObjectRect *rect = doc->page( 0 )->objectRect( ObjectRect::Action, 0.0366667, yCords[i], width, height);
+        QVERIFY( rect );
+        const Okular::Action * action = static_cast< const Okular::Action * >( rect->object() );
+        doc->processAction( action );
+        QCOMPARE( doc->currentPage(), dest[i] );
+        part.slotGotoFirst();
+    }
 }
 
 }

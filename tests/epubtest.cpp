@@ -18,6 +18,7 @@ class EpubTest : public QObject
 {
     Q_OBJECT
 private slots:
+    void testInternalLinks_data();
     void testInternalLinks();
 };
 
@@ -31,18 +32,31 @@ void EpubTest::testInternalLinks()
 
     int width = doc->page( 0 )->width();  // 0 because current page is zero
     int height = doc->page( 0 )->height();
-    QVector< double > yCords;
-    QVector< unsigned > dest;
-    yCords << 0.025 << 0.06 << 0.095 << 0.13 << 0.165 << 0.2 << 0.235 << 0.27 << 0.305 << 0.34;
-    dest << 1 << 2 << 1 << 1 << 2 << 1 << 2 << 2 << 2 << 2;
-    for (int i = 0; i < yCords.size(); ++i) {
-        const ObjectRect *rect = doc->page( 0 )->objectRect( ObjectRect::Action, 0.0366667, yCords[i], width, height);
-        QVERIFY( rect );
-        const Okular::Action * action = static_cast< const Okular::Action * >( rect->object() );
-        doc->processAction( action );
-        QCOMPARE( doc->currentPage(), dest[i] );
-        part.slotGotoFirst();
-    }
+    QFETCH( double, yCords );
+    QFETCH( int , pagesNos );
+    const ObjectRect *rect = doc->page( 0 )->objectRect( ObjectRect::Action, 0.0366667, yCords, width, height);
+    QVERIFY( rect );
+    const Okular::Action * action = static_cast< const Okular::Action * >( rect->object() );
+    doc->processAction( action );
+    QCOMPARE( doc->currentPage(), ( uint ) pagesNos );
+    part.slotGotoFirst();
+}
+
+
+void EpubTest::testInternalLinks_data()
+{
+    QTest::addColumn< double >( "yCords" );
+    QTest::addColumn< int >( "pagesNos" );
+    QTest::newRow( "0.025" ) << 0.025 << 1;
+    QTest::newRow( "0.06" ) << 0.06 << 2;
+    QTest::newRow( "0.095" ) << 0.095 << 1;
+    QTest::newRow( "0.13" ) << 0.13 << 1;
+    QTest::newRow( "0.165" ) << 0.165 << 2;
+    QTest::newRow( "0.2" ) << 0.2 << 1;
+    QTest::newRow( "0.235" ) << 0.235 << 2;
+    QTest::newRow( "0.27" ) << 0.27 << 2;
+    QTest::newRow( "0.305" ) << 0.305 << 2;
+    QTest::newRow( "0.34" ) << 0.34 << 2;
 }
 
 }

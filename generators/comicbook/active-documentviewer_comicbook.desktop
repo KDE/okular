@@ -1,6 +1,7 @@
 [Desktop Entry]
 MimeType=application/x-chm;
 Name=Reader
+Name[bs]=Čitač
 Name[ca]=Lector
 Name[ca@valencia]=Lector
 Name[cs]=Čtečka
@@ -42,6 +43,7 @@ Name[x-test]=xxReaderxx
 Name[zh_CN]=阅读器
 Name[zh_TW]=閱讀器
 GenericName=Document viewer
+GenericName[bs]=Prikazivač dokumenata
 GenericName[ca]=Visualitzador de documents
 GenericName[ca@valencia]=Visualitzador de documents
 GenericName[cs]=Prohlížeč dokumentů
@@ -83,6 +85,7 @@ GenericName[x-test]=xxDocument viewerxx
 GenericName[zh_CN]=文档查看器
 GenericName[zh_TW]=文件檢視器
 Comment=Viewer for various types of documents
+Comment[bs]=Pregledač raznih vrsta dokumenata
 Comment[ca]=Visualitzador de diversos tipus de documents
 Comment[ca@valencia]=Visualitzador de diversos tipus de documents
 Comment[cs]=Prohlížeč různých typů dokumentů

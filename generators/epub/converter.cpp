@@ -165,7 +165,7 @@ QTextDocument* Converter::convert( const QString &fileName )
   mTextDocument->setPageSize(QSizeF(600, 800));
 
   QTextCursor *_cursor = new QTextCursor( mTextDocument );
-  QString magicString = "Ub>-#+Z{DK9}2ey3Nqm4";
+  QString magicString = "XHCiuSthiks51hq40Wu0C3mPK6UjnR";
 
   mLocalLinks.clear();
   mSectionMap.clear();
@@ -232,6 +232,12 @@ QTextDocument* Converter::convert( const QString &fileName )
     index = csr.position();
     bf.setPageBreakPolicy(QTextFormat::PageBreak_AlwaysBefore);
     csr.insertBlock(bf);
+  }
+  // make sure no magicString exists
+  index = 0;
+  while (!(csr = mTextDocument->find(magicString,index)).isNull()) {
+      csr.select(QTextCursor::WordUnderCursor);
+      csr.removeSelectedText();
   }
 
   // handle all the links in the document

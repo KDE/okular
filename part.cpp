@@ -1562,7 +1562,7 @@ void Part::slotFileDirty( const QString& path )
                 m_dirtyHandler->start( 750 );
             }
         }
-        else if ( fi.isSymLink() )
+        else if ( fi.isSymLink() && fi.readLink() == path )
         {
             if ( QFile::exists( fi.readLink() ))
                 m_dirtyHandler->start( 750 );

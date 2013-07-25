@@ -21,7 +21,7 @@
 
 using namespace Epub;
 
-Converter::Converter() : mTextDocument(NULL), mDelimiter("5937DD29BCB9BB727611E23A627DB")
+Converter::Converter() : mTextDocument(NULL)
 {
 }
 
@@ -65,16 +65,9 @@ void Converter::_emitData(Okular::DocumentInfo::Key key,
 
 // Got over the blocks from start and add them to hashes use name as the
 // prefix for local links
-void Converter::_handle_all_anchors(const QTextBlock &start) {
-  mLocalLinks.clear();
-  mSectionMap.clear();
+void Converter::_handle_anchors(const QTextBlock &start, const QString &name) {
+  const QString curDir = QFileInfo(name).path();
 
-  int nameIndex = 0;
-  QString name = mSubDocs[nameIndex];
-  QString curDir = QFileInfo(name).path();
-
-  // add first page
-  mSectionMap.insert(name,start);
   for (QTextBlock bit = start; bit != mTextDocument->end(); bit = bit.next()) {
     for (QTextBlock::iterator fit = bit.begin(); !(fit.atEnd()); ++fit) {
 
@@ -87,16 +80,6 @@ void Converter::_handle_all_anchors(const QTextBlock &start) {
         // making it easier to compare, with links
         while(!hrefString.isNull() && ( hrefString.at(0) == '.' || hrefString.at(0) == '/') ){
           hrefString.remove(0,1);
-        }
-
-        // if reached delimiter change prefix name
-        if(hrefString == mDelimiter){
-          name = mSubDocs[++nameIndex];
-          curDir = QFileInfo(name).path();
-          if(bit.next().next().isValid()){   //because bit.next() points to delimiter anchor
-            mSectionMap.insert(name,bit.next().next());
-            continue;
-          }
         }
 
         QUrl href(hrefString);
@@ -163,14 +146,12 @@ QTextDocument* Converter::convert( const QString &fileName )
   mTextDocument = newDocument;
 
   mTextDocument->setPageSize(QSizeF(600, 800));
+  const int padding = 20;
 
   QTextCursor *_cursor = new QTextCursor( mTextDocument );
-  QString magicString = "XHCiuSthiks51hq40Wu0C3mPK6UjnR";
 
   mLocalLinks.clear();
   mSectionMap.clear();
-  mHtmlBlocks.clear();
-  mSubDocs.clear();
 
   // Emit the document meta data
   _emitData(Okular::DocumentInfo::Title, EPUB_TITLE);
@@ -189,59 +170,47 @@ QTextDocument* Converter::convert( const QString &fileName )
 
   // iterate over the book
   it = epub_get_iterator(mTextDocument->getEpub(), EITERATOR_SPINE, 0);
-  bool first = true;
-  do {
-    if (epub_it_get_curr(it)) {
-      QString link = QString::fromUtf8(epub_it_get_curr_url(it));
-      mSubDocs.append(link);
 
+  // if the background color of the document is non-white it will be handled by QTextDocument::setHtml()
+  bool firstPage = true;
+  do{
+    if(epub_it_get_curr(it)) {
+      const QString link = QString::fromUtf8(epub_it_get_curr_url(it));
+      mTextDocument->setCurrentSubDocument(link);
       QString htmlContent = QString::fromUtf8(epub_it_get_curr(it));
 
       // as QTextCharFormat::anchorNames() ignores sections, replace it with <p>
       htmlContent.replace(QRegExp("< *section"),"<p");
       htmlContent.replace(QRegExp("< */ *section"),"</p");
 
-      // adding magicStrings after every page, used while creating page breaks
-      if(!first)
-        htmlContent = "<p>"+magicString+"</p>" + htmlContent;
-      else
-        first = false;
-      mHtmlBlocks.append(htmlContent);
+      QTextBlock before;
+      const QString css = "<style> body { color : "+ mTextDocument->txtColor.name()+"; }"
+        " a { color : blue; }</style>";
+      if(firstPage) {
+        // preHtml & postHtml make it possible to have a margin around the content of the page
+        const QString preHtml = QString("<html><head>"+ css +"</head><body>"
+                                        "<table style=\"-qt-table-type: root; margin-top:%1px; margin-bottom:%1px; margin-left:%1px; margin-right:%1px;\">"
+                                        "<tr>"
+                                        "<td style=\"border: none;\">").arg(padding);
+        const QString postHtml = "</tr></table></body></html>";
+        mTextDocument->setHtml(preHtml + htmlContent + postHtml);
+        firstPage = false;
+        before = mTextDocument->begin();
+      } else {
+        before = _cursor->block();
+        _cursor->insertHtml(css + htmlContent);
+      }
+      mSectionMap.insert(link, before);
+
+      _handle_anchors(before, link);
+
+      const int page = mTextDocument->pageCount();
+      while(mTextDocument->pageCount() == page)
+        _cursor->insertText("\n");
     }
   } while (epub_it_get_next(it));
 
-
   epub_free_iterator(it);
-
-  // preHtml & postHtml make it possible to have a margin around the content of the page
-  QString preHtml = "<html><head></head><body>"
-    "<table style=\"-qt-table-type: root; margin-top:20px; margin-bottom:20px; margin-left:20px; margin-right:20px;\">"
-    "<tr>"
-    "<td style=\"border: none;\">";
-  QString postHtml = "</tr></table></body></html>";
-
-  // a delimiter is added after every page
-  // which is used in _handle_all_anchors, to change the prefix name of links
-  mTextDocument->setHtml(preHtml + mHtmlBlocks.join(QString("<a href=\"%1\">&zwnj;</a>").arg(mDelimiter)) + postHtml);
-
-  QTextCursor csr;
-  int index = 0;
-  // iterate over the document creating pagebreaks
-  while (!(csr = mTextDocument->find(magicString,index)).isNull()) {
-    QTextBlockFormat bf = csr.blockFormat();
-    index = csr.position();
-    bf.setPageBreakPolicy(QTextFormat::PageBreak_AlwaysBefore);
-    csr.insertBlock(bf);
-  }
-  // make sure no magicString exists
-  index = 0;
-  while (!(csr = mTextDocument->find(magicString,index)).isNull()) {
-      csr.select(QTextCursor::WordUnderCursor);
-      csr.removeSelectedText();
-  }
-
-  // handle all the links in the document
-  _handle_all_anchors(mTextDocument->begin());
 
   // handle toc
   struct titerator *tit;

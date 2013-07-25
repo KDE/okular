@@ -14,6 +14,7 @@
 #include <QUrl>
 #include <QVariant>
 #include <QImage>
+#include <QColor>
 #include <kurl.h>
 #include <epub.h>
 
@@ -27,6 +28,7 @@ namespace Epub {
     ~EpubDocument();
     struct epub *getEpub();
     void setCurrentSubDocument(const QString &doc);
+    QColor txtColor;
 
   protected:
     virtual QVariant loadResource(int type, const QUrl &name);
@@ -34,6 +36,7 @@ namespace Epub {
   private:
     struct epub *mEpub;
     KUrl mCurrentSubDocument;
+    void checkCSS(QString &css);
   };
 
 }

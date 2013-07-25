@@ -37,6 +37,8 @@ namespace Epub {
     struct epub *mEpub;
     KUrl mCurrentSubDocument;
     void checkCSS(QString &css);
+
+    friend class Converter;
   };
 
 }

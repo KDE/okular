@@ -183,6 +183,41 @@ QTextDocument* Converter::convert( const QString &fileName )
       htmlContent.replace(QRegExp("< *section"),"<p");
       htmlContent.replace(QRegExp("< */ *section"),"</p");
 
+      // convert svg tags to img
+      const QSizeF pageSize = mTextDocument->pageSize();
+      static const int maxHeight = pageSize.height() -
+        (2 * padding);  // ([page height] - 20[padding top] - 20[padding bottom] - [height of delimiter])
+      static const int maxWidth = pageSize.width() -
+        (2 * padding);  // ([page width] - 20[padding left] - 20[padding right])
+      QDomDocument dom;
+      if(dom.setContent(htmlContent)) {
+        QDomNodeList svgs = dom.elementsByTagName("svg");
+        if(!svgs.isEmpty()) {
+          QList< QDomNode > imgNodes;
+          for (int i = 0; i < svgs.length(); ++i) {
+            QDomNodeList images = svgs.at(i).toElement().elementsByTagName("image");
+            for (int j = 0; j < images.length(); ++j) {
+              QString lnk = images.at(i).toElement().attribute("xlink:href");
+              int ht = images.at(i).toElement().attribute("height").toInt();
+              int wd = images.at(i).toElement().attribute("width").toInt();
+              QImage img = mTextDocument->loadResource(QTextDocument::ImageResource,QUrl(lnk)).value<QImage>();
+              if(ht == 0) ht = img.height();
+              if(wd == 0) wd = img.width();
+              if(ht > maxHeight) ht = maxHeight;
+              if(wd > maxWidth) wd = maxWidth;
+              mTextDocument->addResource(QTextDocument::ImageResource,QUrl(lnk),img);
+              QDomDocument newDoc;
+              newDoc.setContent(QString("<img src=\"%1\" height=\"%2\" width=\"%3\" />").arg(lnk).arg(ht).arg(wd));
+              imgNodes.append(newDoc.documentElement());
+            }
+            foreach (QDomNode nd, imgNodes) {
+              svgs.at(i).parentNode().replaceChild(nd,svgs.at(i));
+            }
+          }
+          htmlContent = dom.toString();
+        }
+      }
+
       QTextBlock before;
       const QString css = "<style> body { color : "+ mTextDocument->txtColor.name()+"; }"
         " a { color : blue; }</style>";

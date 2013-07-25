@@ -565,7 +565,12 @@ bool PDFGenerator::init(QVector<Okular::Page*> & pagesVector, const QString &wal
     }
 
     // build Pages (currentPage was set -1 by deletePages)
-    uint pageCount = pdfdoc->numPages();
+    int pageCount = pdfdoc->numPages();
+    if (pageCount < 0) {
+        delete pdfdoc;
+        pdfdoc = 0;
+        return false;
+    }
     pagesVector.resize(pageCount);
     rectsGenerated.fill(false, pageCount);
 

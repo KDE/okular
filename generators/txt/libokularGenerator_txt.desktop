@@ -2,6 +2,7 @@
 Type=Service
 Name=txt
 Name[bg]=txt
+Name[bs]=txt
 Name[ca]=txt
 Name[cs]=txt
 Name[da]=txt
@@ -37,6 +38,7 @@ Name[zh_CN]=txt
 Name[zh_TW]=txt
 Comment=Txt backend for Okular
 Comment[bg]=Текстово ядро за Okular
+Comment[bs]=Pozadina txt-a za Okular
 Comment[ca]=Dorsal de txt per a l'Okular
 Comment[cs]= Implementace Txt pro Okular
 Comment[da]=Txt-motor til Okular

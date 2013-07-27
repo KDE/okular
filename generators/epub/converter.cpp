@@ -145,9 +145,6 @@ QTextDocument* Converter::convert( const QString &fileName )
   }
   mTextDocument = newDocument;
 
-  mTextDocument->setPageSize(QSizeF(600, 800));
-  const int padding = 20;
-
   QTextCursor *_cursor = new QTextCursor( mTextDocument );
 
   mLocalLinks.clear();
@@ -184,11 +181,8 @@ QTextDocument* Converter::convert( const QString &fileName )
       htmlContent.replace(QRegExp("< */ *section"),"</p");
 
       // convert svg tags to img
-      const QSizeF pageSize = mTextDocument->pageSize();
-      static const int maxHeight = pageSize.height() -
-        (2 * padding);  // ([page height] - 20[padding top] - 20[padding bottom] - [height of delimiter])
-      static const int maxWidth = pageSize.width() -
-        (2 * padding);  // ([page width] - 20[padding left] - 20[padding right])
+      static const int maxHeight = mTextDocument->maxContentHeight();
+      static const int maxWidth = mTextDocument->maxContentWidth();
       QDomDocument dom;
       if(dom.setContent(htmlContent)) {
         QDomNodeList svgs = dom.elementsByTagName("svg");
@@ -226,7 +220,7 @@ QTextDocument* Converter::convert( const QString &fileName )
         const QString preHtml = QString("<html><head>"+ css +"</head><body>"
                                         "<table style=\"-qt-table-type: root; margin-top:%1px; margin-bottom:%1px; margin-left:%1px; margin-right:%1px;\">"
                                         "<tr>"
-                                        "<td style=\"border: none;\">").arg(padding);
+                                        "<td style=\"border: none;\">").arg(mTextDocument->padding);
         const QString postHtml = "</tr></table></body></html>";
         mTextDocument->setHtml(preHtml + htmlContent + postHtml);
         firstPage = false;

@@ -28,7 +28,8 @@ namespace Epub {
     ~EpubDocument();
     struct epub *getEpub();
     void setCurrentSubDocument(const QString &doc);
-    QColor txtColor;
+    int maxContentHeight() const;
+    int maxContentWidth() const;
 
   protected:
     virtual QVariant loadResource(int type, const QUrl &name);
@@ -37,6 +38,9 @@ namespace Epub {
     struct epub *mEpub;
     KUrl mCurrentSubDocument;
     void checkCSS(QString &css);
+
+    QColor txtColor;
+    int padding;
 
     friend class Converter;
   };

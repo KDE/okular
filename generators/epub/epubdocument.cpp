@@ -24,9 +24,12 @@ QString resourceUrl(const KUrl &baseUrl, const QString &u)
 
 }
 
-EpubDocument::EpubDocument(const QString &fileName) : QTextDocument(), txtColor(Qt::black)
+EpubDocument::EpubDocument(const QString &fileName) : QTextDocument(),
+  txtColor(Qt::black), padding(20)
 {
   mEpub = epub_open(qPrintable(fileName), 3);
+
+  setPageSize(QSizeF(600, 800));
 }
 
 bool EpubDocument::isValid()
@@ -50,6 +53,16 @@ struct epub *EpubDocument::getEpub()
 void EpubDocument::setCurrentSubDocument(const QString &doc)
 {
   mCurrentSubDocument = KUrl::fromPath("/" + doc);
+}
+
+int EpubDocument::maxContentHeight() const
+{
+  return pageSize().height() - (2 * padding);
+}
+
+int EpubDocument::maxContentWidth() const
+{
+  return pageSize().width() - (2 * padding);
 }
 
 void EpubDocument::checkCSS(QString &css)
@@ -108,9 +121,17 @@ QVariant EpubDocument::loadResource(int type, const QUrl &name)
 
   if (data) {
     switch(type) {
-    case QTextDocument::ImageResource:
-      resource.setValue(QImage::fromData((unsigned char *)data, size));
+    case QTextDocument::ImageResource:{
+      QImage img = QImage::fromData((unsigned char *)data, size);
+      const int maxHeight = maxContentHeight();
+      const int maxWidth = maxContentWidth();
+      if(img.height() > maxHeight)
+        img = img.scaledToHeight(maxHeight);
+      if(img.width() > maxWidth)
+        img = img.scaledToWidth(maxWidth);
+      resource.setValue(img);
       break;
+    }
     case QTextDocument::StyleSheetResource: {
       QString css = QString::fromUtf8(data);
       checkCSS(css);

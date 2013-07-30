@@ -3706,6 +3706,10 @@ void PageView::updateCursor( const QPoint &p )
                             setCursor( Qt::PointingHandCursor );
                         }
                     }
+                    else
+                    {
+                        setCursor( Qt::OpenHandCursor );
+                    }
                 }
                 else
                 {

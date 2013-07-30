@@ -70,6 +70,11 @@ class PageViewAnnotator : public QObject
         bool active() const;
         // @return Are we currently annotating (using the selected tool)?
         bool annotating() const;
+
+        // returns the preferred cursor for the current tool. call this only
+        // if active() == true
+        QCursor cursor() const;
+
         QRect routeMouseEvent( QMouseEvent * event, PageViewItem * item );
         QRect routeTabletEvent( QTabletEvent * event, PageViewItem * item, const QPoint & localOriginInGlobal );
         QRect performRouteMouseOrTabletEvent( const AnnotatorEngine::EventType & eventType, const AnnotatorEngine::Button & button,

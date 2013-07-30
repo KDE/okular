@@ -630,6 +630,11 @@ class TextSelectorEngine : public AnnotatorEngine
             return QList< Okular::Annotation* >() << ann;
         }
 
+        QCursor cursor() const
+        {
+            return Qt::IBeamCursor;
+        }
+
     private:
         // data
         PageView * m_pageView;
@@ -775,6 +780,11 @@ bool PageViewAnnotator::active() const
 bool PageViewAnnotator::annotating() const
 {
     return active() && m_lockedItem;
+}
+
+QCursor PageViewAnnotator::cursor() const
+{
+    return m_engine->cursor();
 }
 
 QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::EventType & eventType, const AnnotatorEngine::Button & button,

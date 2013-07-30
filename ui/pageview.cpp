@@ -1854,10 +1854,7 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
     if ( d->annotator && d->annotator->active() )
     {
         PageViewItem * pageItem = pickItemOnPoint( eventPos.x(), eventPos.y() );
-        if (pageItem || d->annotator->annotating())
-            setCursor( Qt::CrossCursor );
-        else
-            setCursor( Qt::ForbiddenCursor );
+        updateCursor( eventPos );
         d->annotator->routeMouseEvent( e, pageItem );
         return;
     }
@@ -3656,7 +3653,15 @@ void PageView::updateCursor( const QPoint &p )
 {
     // detect the underlaying page (if present)
     PageViewItem * pageItem = pickItemOnPoint( p.x(), p.y() );
-    if ( pageItem )
+
+    if ( d->annotator && d->annotator->active() )
+    {
+        if ( pageItem || d->annotator->annotating() )
+            setCursor( d->annotator->cursor() );
+        else
+            setCursor( Qt::ForbiddenCursor );
+    }
+    else if ( pageItem )
     {
         double nX = pageItem->absToPageX(p.x());
         double nY = pageItem->absToPageY(p.y());
@@ -3668,7 +3673,7 @@ void PageView::updateCursor( const QPoint &p )
             setCursor( Qt::CrossCursor );
         else if ( d->mouseAnn )
             setCursor( Qt::ClosedHandCursor );
-        else
+        else if ( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::Browse )
         {
             const Okular::ObjectRect * linkobj = pageItem->page()->objectRect( Okular::ObjectRect::Action, nX, nY, pageItem->uncroppedWidth(), pageItem->uncroppedHeight() );
             const Okular::ObjectRect * annotobj = pageItem->page()->objectRect( Okular::ObjectRect::OAnnotation, nX, nY, pageItem->uncroppedWidth(), pageItem->uncroppedHeight() );
@@ -3701,16 +3706,20 @@ void PageView::updateCursor( const QPoint &p )
                             setCursor( Qt::PointingHandCursor );
                         }
                     }
-                }
-                else if ( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::Browse )
-                {
-                    setCursor( (d->annotator && d->annotator->active()) ? Qt::CrossCursor : Qt::OpenHandCursor );
+                    else
+                    {
+                        setCursor( Qt::OpenHandCursor );
+                    }
                 }
                 else
                 {
-                    setCursor( Qt::ArrowCursor );
+                    setCursor( Qt::OpenHandCursor );
                 }
             }
+        }
+        else
+        {
+            setCursor( Qt::ArrowCursor );
         }
     }
     else

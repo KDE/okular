@@ -11,6 +11,7 @@
 
 // qt / kde includes
 #include <qcolor.h>
+#include <qcursor.h>
 #include <qevent.h>
 #include <qpainter.h>
 
@@ -74,6 +75,11 @@ void AnnotatorEngine::decodeEvent( const QTabletEvent * tabletEvent, EventType *
 
 AnnotatorEngine::~AnnotatorEngine()
 {
+}
+
+QCursor AnnotatorEngine::cursor() const
+{
+    return Qt::CrossCursor;
 }
 
 SmoothPath::SmoothPath( const QLinkedList<Okular::NormalizedPoint> &points, const QPen &pen )

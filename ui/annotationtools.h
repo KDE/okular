@@ -53,6 +53,8 @@ class AnnotatorEngine
         static void decodeEvent( const QMouseEvent * mouseEvent, EventType * eventType, Button * button );
         static void decodeEvent( const QTabletEvent * tabletEvent, EventType * eventType, Button * button );
 
+        virtual QCursor cursor() const;
+
     protected:
         PageViewItem * item() { return m_item; }
 

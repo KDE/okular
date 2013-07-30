@@ -21,19 +21,15 @@ namespace Okular {
 class Page;
 class RotationJob;
 
+/* There is one PageController per document. It receives notifications of
+ * completed RotationJobs */
 class PageController : public QObject
 {
     Q_OBJECT
 
     public:
-        /**
-         * Constructor. No NOT use this, NEVER! Use the static self() instead.
-         */
         PageController();
-
         ~PageController();
-
-        static PageController * self();
 
         void addRotationJob( RotationJob *job );
 
@@ -42,9 +38,6 @@ class PageController : public QObject
 
     private slots:
         void imageRotationDone(ThreadWeaver::Job*);
-
-    private:
-        void initWeaver();
 };
 
 }

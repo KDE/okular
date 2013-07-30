@@ -389,7 +389,7 @@ void PagePrivate::rotateAt( Rotation orientation )
 
         RotationJob *job = new RotationJob( object.m_pixmap->toImage(), object.m_rotation, m_rotation, it.key() );
         job->setPage( this );
-        PageController::self()->addRotationJob(job);
+        m_doc->m_pageController->addRotationJob(job);
     }
 
     /**
@@ -540,7 +540,7 @@ void Page::setPixmap( DocumentObserver *observer, QPixmap *pixmap, const Normali
         RotationJob *job = new RotationJob( pixmap->toImage(), Rotation0, d->m_rotation, observer );
         job->setPage( d );
         job->setRect( TilesManager::toRotatedRect( rect, d->m_rotation ) );
-        PageController::self()->addRotationJob(job);
+        d->m_doc->m_pageController->addRotationJob(job);
 
         delete pixmap;
     }

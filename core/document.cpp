@@ -2009,8 +2009,6 @@ Document::Document( QWidget *widget )
     d->m_undoStack = new QUndoStack(this);
     d->m_tiledObserver = 0;
 
-    connect( PageController::self(), SIGNAL(rotationFinished(int,Okular::Page*)),
-             this, SLOT(rotationFinished(int,Okular::Page*)) );
     connect( SettingsCore::self(), SIGNAL(configChanged()), this, SLOT(_o_configChanged()) );
     connect( d->m_undoStack, SIGNAL( canUndoChanged(bool) ), this, SIGNAL( canUndoChanged(bool)));
     connect( d->m_undoStack, SIGNAL( canRedoChanged(bool) ), this, SIGNAL( canRedoChanged(bool) ) );
@@ -2184,6 +2182,9 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     }
 
     d->m_generatorName = offer->name();
+    d->m_pageController = new PageController();
+    connect( d->m_pageController, SIGNAL(rotationFinished(int,Okular::Page*)),
+             this, SLOT(rotationFinished(int,Okular::Page*)) );
 
     bool containsExternalAnnotations = false;
     foreach ( Page * p, d->m_pagesVector )
@@ -2284,6 +2285,9 @@ void Document::closeDocument()
     // check if there's anything to close...
     if ( !d->m_generator )
         return;
+
+    delete d->m_pageController;
+    d->m_pageController = 0;
 
     delete d->m_scripter;
     d->m_scripter = 0;

@@ -17,8 +17,6 @@
 #include "page_p.h"
 #include "rotationjob_p.h"
 
-K_GLOBAL_STATIC( Okular::PageController, page_controller_self )
-
 using namespace Okular;
 
 PageController::PageController()
@@ -30,23 +28,16 @@ PageController::~PageController()
 {
 }
 
-PageController * PageController::self()
-{
-    return page_controller_self;
-}
-
 void PageController::addRotationJob(RotationJob *job)
 {
-    initWeaver();
+    connect( job, SIGNAL(done(ThreadWeaver::Job*)),
+             this, SLOT(imageRotationDone(ThreadWeaver::Job*)) );
     ThreadWeaver::Weaver::instance()->enqueue(job);
 }
 
 void PageController::imageRotationDone(ThreadWeaver::Job *j)
 {
-    RotationJob *job = qobject_cast< RotationJob * >(j);
-
-    if ( !job )
-        return;
+    RotationJob *job = static_cast< RotationJob * >( j );
 
     if ( job->page() )
     {
@@ -56,18 +47,6 @@ void PageController::imageRotationDone(ThreadWeaver::Job *j)
     }
 
     job->deleteLater();
-}
-
-void PageController::initWeaver()
-{
-    static bool weaverInited = false;
-    if ( weaverInited )
-        return;
-
-    connect( ThreadWeaver::Weaver::instance(), SIGNAL(jobDone(ThreadWeaver::Job*)),
-             this, SLOT(imageRotationDone(ThreadWeaver::Job*)) );
-
-    weaverInited = true;
 }
 
 #include "pagecontroller_p.moc"

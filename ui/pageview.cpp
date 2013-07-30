@@ -3657,7 +3657,7 @@ void PageView::updateCursor( const QPoint &p )
     if ( d->annotator && d->annotator->active() )
     {
         if ( pageItem || d->annotator->annotating() )
-            setCursor( Qt::CrossCursor );
+            setCursor( d->annotator->cursor() );
         else
             setCursor( Qt::ForbiddenCursor );
     }

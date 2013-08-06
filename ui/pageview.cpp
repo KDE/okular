@@ -127,7 +127,6 @@ public:
     QPoint mouseGrabPos;
     QPoint mousePressPos;
     QPoint mouseSelectPos;
-    bool mouseMidZooming;
     int mouseMidLastY;
     bool mouseSelecting;
     QRect mouseSelectionRect;
@@ -274,7 +273,6 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->aViewMode = 0;
     d->zoomMode = PageView::ZoomFitWidth;
     d->zoomFactor = 1.0;
-    d->mouseMidZooming = false;
     d->mouseSelecting = false;
     d->mouseTextSelecting = false;
     d->mouseOnRect = false;
@@ -1629,7 +1627,7 @@ void PageView::keyPressEvent( QKeyEvent * e )
     e->accept();
 
     // if performing a selection or dyn zooming, disable keys handling
-    if ( ( d->mouseSelecting && e->key() != Qt::Key_Escape ) || d->mouseMidZooming )
+    if ( ( d->mouseSelecting && e->key() != Qt::Key_Escape ) || ( QApplication::mouseButtons () & Qt::MidButton ) )
         return;
 
     // if viewport is moving, disable keys handling
@@ -1808,7 +1806,7 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
         return;
 
     // if holding mouse mid button, perform zoom
-    if ( d->mouseMidZooming && (e->buttons() & Qt::MidButton) )
+    if ( e->buttons() & Qt::MidButton )
     {
         int mouseY = e->globalPos().y();
         int deltaY = d->mouseMidLastY - mouseY;
@@ -1980,7 +1978,7 @@ void PageView::mousePressEvent( QMouseEvent * e )
         return;
 
     // if performing a selection or dyn zooming, disable mouse press
-    if ( d->mouseSelecting || d->mouseMidZooming || d->viewportMoveActive )
+    if ( d->mouseSelecting || ( e->button() != Qt::MidButton && ( e->buttons() & Qt::MidButton) ) || d->viewportMoveActive )
         return;
 
     // if the page is scrolling, stop it
@@ -1993,7 +1991,6 @@ void PageView::mousePressEvent( QMouseEvent * e )
     // if pressing mid mouse button while not doing other things, begin 'continuous zoom' mode
     if ( e->button() == Qt::MidButton )
     {
-        d->mouseMidZooming = true;
         d->mouseMidLastY = e->globalPos().y();
         setCursor( Qt::SizeVerCursor );
         return;
@@ -2223,9 +2220,8 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
     const QPoint eventPos = contentAreaPoint( e->pos() );
 
     // handle mode indepent mid buttom zoom
-    if ( d->mouseMidZooming && (e->button() == Qt::MidButton) )
+    if ( e->button() == Qt::MidButton )
     {
-        d->mouseMidZooming = false;
         // request pixmaps since it was disabled during drag
         slotRequestVisiblePixmaps();
         // the cursor may now be over a link.. update it
@@ -4100,7 +4096,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
 {
     // if requests are blocked (because raised by an unwanted event), exit
     if ( d->blockPixmapsRequest || d->viewportMoveActive ||
-         d->mouseMidZooming )
+         ( QApplication::mouseButtons () & Qt::MidButton ) )
         return;
 
     // precalc view limits for intersecting with page coords inside the loop

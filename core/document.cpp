@@ -2041,10 +2041,22 @@ Document::~Document()
     delete d;
 }
 
-static bool kserviceMoreThan( const KService::Ptr &s1, const KService::Ptr &s2 )
-{
-    return s1->property( "X-KDE-Priority" ).toInt() > s2->property( "X-KDE-Priority" ).toInt();
-}
+class kMimeTypeMoreThan {
+public:
+    kMimeTypeMoreThan( const KMimeType::Ptr &mime ) : _mime( mime ) {}
+    bool operator()( const KService::Ptr &s1, const KService::Ptr &s2 )
+    {
+        const QString mimeName = _mime->name();
+        if (s1->mimeTypes().contains( mimeName ) && !s2->mimeTypes().contains( mimeName ))
+            return true;
+        else if (s2->mimeTypes().contains( mimeName ) && !s1->mimeTypes().contains( mimeName ))
+            return false;
+        return s1->property( "X-KDE-Priority" ).toInt() > s2->property( "X-KDE-Priority" ).toInt();
+    }
+
+private:
+    const KMimeType::Ptr &_mime;
+};
 
 bool Document::openDocument( const QString & docFile, const KUrl& url, const KMimeType::Ptr &_mime )
 {
@@ -2139,7 +2151,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     if ( offercount > 1 )
     {
         // sort the offers: the offers with an higher priority come before
-        qStableSort( offers.begin(), offers.end(), kserviceMoreThan );
+        qStableSort( offers.begin(), offers.end(), kMimeTypeMoreThan( mime ) );
 
         if ( SettingsCore::chooseGenerators() )
         {

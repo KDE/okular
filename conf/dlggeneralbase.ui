@@ -353,6 +353,11 @@ For files which were opened before the previous zoom is applied.</string>
           <string>Fit Page</string>
          </property>
         </item>
+        <item>
+         <property name="text">
+          <string>Auto Fit</string>
+         </property>
+        </item>
        </widget>
       </item>
      </layout>

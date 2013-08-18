@@ -173,6 +173,7 @@ public:
 
     // infinite resizing loop prevention
     bool verticalScrollBarVisible;
+    bool horizontalScrollBarVisible;
 
     // drag scroll
     QPoint dragScrollVector;
@@ -197,6 +198,7 @@ public:
     KAction * aZoomOut;
     KToggleAction * aZoomFitWidth;
     KToggleAction * aZoomFitPage;
+    KToggleAction * aZoomAutoFit;
     KActionMenu * aViewMode;
     KToggleAction * aViewContinuous;
     QAction * aPrevAction;
@@ -306,6 +308,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->aToggleAnnotator = 0;
     d->aZoomFitWidth = 0;
     d->aZoomFitPage = 0;
+    d->aZoomAutoFit = 0;
     d->aViewMode = 0;
     d->aViewContinuous = 0;
     d->aPrevAction = 0;
@@ -335,6 +338,11 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
         case 2:
         {
             d->zoomMode = PageView::ZoomFitPage;
+            break;
+        }
+        case 3:
+        {
+            d->zoomMode = PageView::ZoomFitAuto;
             break;
         }
     }
@@ -465,6 +473,10 @@ void PageView::setupViewerActions( KActionCollection * ac )
     d->aZoomFitPage  = new KToggleAction(KIcon( "zoom-fit-best" ), i18n("Fit &Page"), this);
     ac->addAction("view_fit_to_page", d->aZoomFitPage );
     connect( d->aZoomFitPage, SIGNAL(toggled(bool)), SLOT(slotFitToPageToggled(bool)) );
+
+    d->aZoomAutoFit  = new KToggleAction(KIcon( "zoom-fit-best" ), i18n("&Auto Fit"), this);
+    ac->addAction("view_auto_fit", d->aZoomAutoFit );
+    connect( d->aZoomAutoFit, SIGNAL(toggled(bool)), SLOT(slotAutoFitToggled(bool)) );
 
     // View-Layout actions
     d->aViewMode = new KActionMenu( KIcon( "view-split-left-right" ), i18n( "&View Mode" ), this );
@@ -638,6 +650,7 @@ void PageView::fitPageWidth( int page )
     Okular::Settings::setViewMode( 0 );
     d->aZoomFitWidth->setChecked( true );
     d->aZoomFitPage->setChecked( false );
+    d->aZoomAutoFit->setChecked( false );
     d->aViewMode->menu()->actions().at( 0 )->setChecked( true );
     viewport()->setUpdatesEnabled( false );
     slotRelayoutPages();
@@ -1606,7 +1619,7 @@ void PageView::resizeEvent( QResizeEvent *e )
         return;
     }
 
-    if ( d->zoomMode == ZoomFitWidth && d->verticalScrollBarVisible && !verticalScrollBar()->isVisible() && qAbs(e->oldSize().height() - e->size().height()) < verticalScrollBar()->width() )
+    if ( ( d->zoomMode == ZoomFitWidth || d->zoomMode == ZoomFitAuto ) && d->verticalScrollBarVisible && !verticalScrollBar()->isVisible() && qAbs(e->oldSize().height() - e->size().height()) < verticalScrollBar()->width() )
     {
         // this saves us from infinite resizing loop because of scrollbars appearing and disappearing
         // see bug 160628 for more info
@@ -1616,10 +1629,20 @@ void PageView::resizeEvent( QResizeEvent *e )
         resizeContentArea( e->size() );
         return;
     }
+    else if ( d->zoomMode == ZoomFitAuto && d->horizontalScrollBarVisible && !horizontalScrollBar()->isVisible() && qAbs(e->oldSize().width() - e->size().width()) < horizontalScrollBar()->height() )
+    {
+        // this saves us from infinite resizing loop because of scrollbars appearing and disappearing
+        // TODO looks are still a bit ugly because things are left uncentered
+        // but better a bit ugly than unusable
+        d->horizontalScrollBarVisible = false;
+        resizeContentArea( e->size() );
+        return;
+    }
 
     // start a timer that will refresh the pixmap after 0.2s
     d->delayResizeEventTimer->start( 200 );
     d->verticalScrollBarVisible = verticalScrollBar()->isVisible();
+    d->horizontalScrollBarVisible = horizontalScrollBar()->isVisible();
 }
 
 void PageView::keyPressEvent( QKeyEvent * e )
@@ -3283,7 +3306,7 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
 
         // Expand the crop slightly beyond the bounding box
         static const double cropExpandRatio = 0.04;
-        double cropExpand = cropExpandRatio * ( (crop.right-crop.left) + (crop.bottom-crop.top) ) / 2;
+        const double cropExpand = cropExpandRatio * ( (crop.right-crop.left) + (crop.bottom-crop.top) ) / 2;
         crop = Okular::NormalizedRect(
             crop.left - cropExpand,
             crop.top - cropExpand,
@@ -3297,13 +3320,13 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
         static const double minCropRatio = 0.5;
         if ( ( crop.right - crop.left ) < minCropRatio )
         {
-            double newLeft = ( crop.left + crop.right ) / 2 - minCropRatio/2;
+            const double newLeft = ( crop.left + crop.right ) / 2 - minCropRatio/2;
             crop.left = qMax( 0.0, qMin( 1.0 - minCropRatio, newLeft ) );
             crop.right = crop.left + minCropRatio;
         }
         if ( ( crop.bottom - crop.top ) < minCropRatio )
         {
-            double newTop = ( crop.top + crop.bottom ) / 2 - minCropRatio/2;
+            const double newTop = ( crop.top + crop.bottom ) / 2 - minCropRatio/2;
             crop.top = qMax( 0.0, qMin( 1.0 - minCropRatio, newTop ) );
             crop.bottom = crop.top + minCropRatio;
         }
@@ -3331,9 +3354,37 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
     }
     else if ( d->zoomMode == ZoomFitPage )
     {
-        double scaleW = (double)colWidth / (double)width;
-        double scaleH = (double)rowHeight / (double)height;
+        const double scaleW = (double)colWidth / (double)width;
+        const double scaleH = (double)rowHeight / (double)height;
         zoom = qMin( scaleW, scaleH );
+        item->setWHZC( (int)(zoom * width), (int)(zoom * height), zoom, crop );
+        d->zoomFactor = zoom;
+    }
+    else if ( d->zoomMode == ZoomFitAuto )
+    {
+        const double aspectRatioRelation = 1.25; // relation between aspect ratios for "auto fit"
+        const double uiAspect = (double)rowHeight / (double)colWidth;
+        const double pageAspect = (double)height / (double)width;
+        const double rel = uiAspect / pageAspect;
+
+        const bool isContinuous = Okular::Settings::viewContinuous();
+        if ( !isContinuous && rel > aspectRatioRelation )
+        {
+            // UI space is relatively much higher than the page
+            zoom = (double)rowHeight / (double)height;
+        }
+        else if ( rel < 1.0 / aspectRatioRelation )
+        {
+            // UI space is relatively much wider than the page in relation
+            zoom = (double)colWidth / (double)width;
+        }
+        else
+        {
+            // aspect ratios of page and UI space are very similar
+            const double scaleW = (double)colWidth / (double)width;
+            const double scaleH = (double)rowHeight / (double)height;
+            zoom = qMin( scaleW, scaleH );
+        }
         item->setWHZC( (int)(zoom * width), (int)(zoom * height), zoom, crop );
         d->zoomFactor = zoom;
     }
@@ -3520,6 +3571,8 @@ void PageView::updateZoom( ZoomMode newZoomMode )
             newZoomMode = ZoomFitWidth;
         else if ( d->aZoom->currentItem() == 1 )
             newZoomMode = ZoomFitPage;
+        else if ( d->aZoom->currentItem() == 2 )
+            newZoomMode = ZoomFitAuto;
     }
 
     float newFactor = d->zoomFactor;
@@ -3546,6 +3599,9 @@ void PageView::updateZoom( ZoomMode newZoomMode )
             break;
         case ZoomFitPage:
             checkedZoomAction = d->aZoomFitPage;
+            break;
+        case ZoomFitAuto:
+            checkedZoomAction = d->aZoomAutoFit;
             break;
         case ZoomRefreshCurrent:
             newZoomMode = ZoomFixed;
@@ -3577,6 +3633,7 @@ void PageView::updateZoom( ZoomMode newZoomMode )
         {
             d->aZoomFitWidth->setChecked( checkedZoomAction == d->aZoomFitWidth );
             d->aZoomFitPage->setChecked( checkedZoomAction == d->aZoomFitPage );
+            d->aZoomAutoFit->setChecked( checkedZoomAction == d->aZoomAutoFit );
         }
     }
     else if ( newZoomMode == ZoomFixed && newFactor == d->zoomFactor )
@@ -3596,12 +3653,12 @@ void PageView::updateZoomText()
 
     // add items that describe fit actions
     QStringList translated;
-    translated << i18n("Fit Width") << i18n("Fit Page");
+    translated << i18n("Fit Width") << i18n("Fit Page") << i18n("Auto Fit");
 
     // add percent items
     QString double_oh( "00" );
     const float zoomValue[13] = { 0.12, 0.25, 0.33, 0.50, 0.66, 0.75, 1.00, 1.25, 1.50, 2.00, 4.00, 8.00, 16.00 };
-    int idx = 0, selIdx = 2;
+    int idx = 0, selIdx = 3;
     bool inserted = false; //use: "d->zoomMode != ZoomFixed" to hide Fit/* zoom ratio
     int zoomValueCount = 11;
     if ( d->document->supportsTiles() )
@@ -3631,6 +3688,8 @@ void PageView::updateZoomText()
         selIdx = 0;
     else if ( d->zoomMode == ZoomFitPage )
         selIdx = 1;
+    else if ( d->zoomMode == ZoomFitAuto )
+        selIdx = 2;
     // we have to temporarily enable the actions as otherwise we can't set a new current item
     d->aZoom->setEnabled( true );
     d->aZoom->selectableActionGroup()->setEnabled( true );
@@ -4389,6 +4448,11 @@ void PageView::slotFitToWidthToggled( bool on )
 void PageView::slotFitToPageToggled( bool on )
 {
     if ( on ) updateZoom( ZoomFitPage );
+}
+
+void PageView::slotAutoFitToggled( bool on )
+{
+    if ( on ) updateZoom( ZoomFitAuto );
 }
 
 void PageView::slotViewMode( QAction *action )

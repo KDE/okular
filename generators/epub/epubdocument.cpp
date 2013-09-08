@@ -9,6 +9,10 @@
 
 #include "epubdocument.h"
 #include <QRegExp>
+#include <QTemporaryFile>
+#include <QDir>
+
+#include <kdebug.h>
 
 using namespace Epub;
 
@@ -68,7 +72,7 @@ int EpubDocument::maxContentWidth() const
 void EpubDocument::checkCSS(QString &css)
 {
   // remove paragraph line-heights
-    css.remove(QRegExp("line-height\\s*:\\s*[\\w\\.]*;"));
+  css.remove(QRegExp("line-height\\s*:\\s*[\\w\\.]*;"));
 
   // take care of text color
   QRegExp rx("body[\\n\\s]*\\{[\\w:;\\r\\n\\t\\-\\.\\(\\),%#\\s]*\\}");
@@ -136,6 +140,14 @@ QVariant EpubDocument::loadResource(int type, const QUrl &name)
       QString css = QString::fromUtf8(data);
       checkCSS(css);
       resource.setValue(css);
+      break;
+    }
+    case QTextDocument::UserResource: {
+      QTemporaryFile *tmp = new QTemporaryFile(QString("%1/okrXXXXXX").arg(QDir::tempPath()),this);
+      if(!tmp->open()) kWarning() << "EPUB : error creating temporary video file";
+      if(tmp->write(data,size) == -1) kWarning() << "EPUB : error writing data" << tmp->errorString();
+      tmp->flush();
+      resource.setValue(tmp->fileName());
       break;
     }
     default:

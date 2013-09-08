@@ -18,6 +18,8 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <core/action.h>
+#include <core/movie.h>
+#include <core/annotations.h>
 
 using namespace Epub;
 
@@ -135,6 +137,28 @@ void Converter::_insert_local_links(const QString &key, const QPair<int, int> &v
   }
 }
 
+static QPoint calculateXYPosition( QTextDocument *document, int startPosition )
+{
+  const QTextBlock startBlock = document->findBlock( startPosition );
+  const QRectF startBoundingRect = document->documentLayout()->blockBoundingRect( startBlock );
+
+  QTextLayout *startLayout = startBlock.layout();
+  if (!startLayout) {
+    kWarning() << "Start layout not found" << startLayout;
+    return QPoint();
+  }
+
+  int startPos = startPosition - startBlock.position();
+  const QTextLine startLine = startLayout->lineForTextPosition( startPos );
+
+  double x = startBoundingRect.x() ;
+  double y = startBoundingRect.y() + startLine.y();
+
+  y = (int)y % 800;
+
+  return QPoint(x,y);
+}
+
 QTextDocument* Converter::convert( const QString &fileName )
 {
   EpubDocument *newDocument = new EpubDocument(fileName);
@@ -170,7 +194,10 @@ QTextDocument* Converter::convert( const QString &fileName )
 
   // if the background color of the document is non-white it will be handled by QTextDocument::setHtml()
   bool firstPage = true;
+  QVector<Okular::MovieAnnotation *> movieAnnots;
+  const QSize videoSize(320, 240);
   do{
+    movieAnnots.clear();
     if(epub_it_get_curr(it)) {
       const QString link = QString::fromUtf8(epub_it_get_curr_url(it));
       mTextDocument->setCurrentSubDocument(link);
@@ -210,6 +237,29 @@ QTextDocument* Converter::convert( const QString &fileName )
           }
           htmlContent = dom.toString();
         }
+
+        QDomNodeList videoTags = dom.elementsByTagName("video");
+        if(!videoTags.isEmpty()) {
+          for (int i = 0; i < videoTags.size(); ++i) {
+            QDomNodeList sourceTags = videoTags.at(i).toElement().elementsByTagName("source");
+            if(!sourceTags.isEmpty()) {
+              QString lnk = sourceTags.at(0).toElement().attribute("src");
+
+              Okular::Movie *movie = new Okular::Movie(mTextDocument->loadResource(QTextDocument::UserResource,QUrl(lnk)).toString());
+              movie->setSize(videoSize);
+              movie->setShowControls(true);
+
+              Okular::MovieAnnotation *annot = new Okular::MovieAnnotation;
+              annot->setMovie(movie);
+
+              movieAnnots.push_back(annot);
+              QDomDocument tempDoc;
+              tempDoc.setContent(QString("<pre>&lt;video&gt;&lt;/video&gt;</pre>"));
+              videoTags.at(i).parentNode().replaceChild(tempDoc.documentElement(),videoTags.at(i));
+            }
+          }
+        }
+        htmlContent = dom.toString();
       }
 
       QTextBlock before;
@@ -229,6 +279,24 @@ QTextDocument* Converter::convert( const QString &fileName )
         before = _cursor->block();
         _cursor->insertHtml(css + htmlContent);
       }
+
+      QTextCursor csr(mTextDocument);   // a temporary cursor
+      csr.movePosition(QTextCursor::Start);
+      int index = 0;
+      while( !(csr = mTextDocument->find("<video></video>",csr)).isNull() ) {
+        const int posStart = csr.position();
+        const QPoint startPoint = calculateXYPosition(mTextDocument, posStart);
+        QImage img(videoSize, QImage::Format_RGB32);
+        // FIXME : insert a movie poster instead of gray color
+        img.fill(Qt::gray);
+        csr.insertImage(img);
+        const int posEnd = csr.position();
+        const QRect videoRect(startPoint,videoSize);
+        movieAnnots[index]->setBoundingRectangle(Okular::NormalizedRect(videoRect,mTextDocument->pageSize().width(), mTextDocument->pageSize().height()));
+        emit addAnnotation(movieAnnots[index++],posStart,posEnd);
+        csr.movePosition(QTextCursor::NextWord);
+      }
+
       mSectionMap.insert(link, before);
 
       _handle_anchors(before, link);

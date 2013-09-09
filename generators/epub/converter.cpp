@@ -302,6 +302,11 @@ QTextDocument* Converter::convert( const QString &fileName )
       _handle_anchors(before, link);
 
       const int page = mTextDocument->pageCount();
+
+      // it will clear the previous format
+      // useful when the last line had a bullet
+      _cursor->insertBlock(QTextBlockFormat());
+
       while(mTextDocument->pageCount() == page)
         _cursor->insertText("\n");
     }

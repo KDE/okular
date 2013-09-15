@@ -79,6 +79,7 @@
 #include "core/movie.h"
 #include "core/sourcereference.h"
 #include "core/tile.h"
+#include "core/audioplayer.h"
 #include "settings.h"
 #include "settings_core.h"
 #include "url_utils.h"
@@ -2364,6 +2365,9 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                         // creating the menu and its actions
                         KMenu menu( this );
                         QAction * actProcessLink = menu.addAction( i18n( "Follow This Link" ) );
+                        QAction * actStopSound = 0;
+                        if ( link->actionType() == Okular::Action::Sound )
+                            actStopSound = menu.addAction( i18n( "Stop Sound" ) );
                         QAction * actCopyLinkLocation = 0;
                         if ( dynamic_cast< const Okular::BrowseAction * >( link ) )
                             actCopyLinkLocation = menu.addAction( KIcon( "edit-copy" ), i18n( "Copy Link Address" ) );
@@ -2381,6 +2385,10 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                                 cb->setText( browseLink->url(), QClipboard::Clipboard );
                                 if ( cb->supportsSelection() )
                                     cb->setText( browseLink->url(), QClipboard::Selection );
+                            }
+                            else if ( res == actStopSound )
+                            {
+                                Okular::AudioPlayer::instance()->stopPlaybacks();
                             }
                         }
                     }

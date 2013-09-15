@@ -250,7 +250,7 @@ QTextDocument* Converter::convert( const QString &fileName )
             if(!sourceTags.isEmpty()) {
               QString lnk = sourceTags.at(0).toElement().attribute("src");
 
-              Okular::Movie *movie = new Okular::Movie(mTextDocument->loadResource(QTextDocument::UserResource,QUrl(lnk)).toString());
+              Okular::Movie *movie = new Okular::Movie(mTextDocument->loadResource(EpubDocument::MovieResource,QUrl(lnk)).toString());
               movie->setSize(videoSize);
               movie->setShowControls(true);
 

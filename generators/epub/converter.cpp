@@ -19,6 +19,7 @@
 #include <klocale.h>
 #include <core/action.h>
 #include <core/movie.h>
+#include <core/sound.h>
 #include <core/annotations.h>
 
 using namespace Epub;
@@ -195,9 +196,12 @@ QTextDocument* Converter::convert( const QString &fileName )
   // if the background color of the document is non-white it will be handled by QTextDocument::setHtml()
   bool firstPage = true;
   QVector<Okular::MovieAnnotation *> movieAnnots;
+  QVector<Okular::SoundAction *> soundActions;
   const QSize videoSize(320, 240);
   do{
     movieAnnots.clear();
+    soundActions.clear();
+
     if(epub_it_get_curr(it)) {
       const QString link = QString::fromUtf8(epub_it_get_curr_url(it));
       mTextDocument->setCurrentSubDocument(link);
@@ -238,6 +242,7 @@ QTextDocument* Converter::convert( const QString &fileName )
           htmlContent = dom.toString();
         }
 
+        // handle embedded videos
         QDomNodeList videoTags = dom.elementsByTagName("video");
         if(!videoTags.isEmpty()) {
           for (int i = 0; i < videoTags.size(); ++i) {
@@ -257,6 +262,24 @@ QTextDocument* Converter::convert( const QString &fileName )
               tempDoc.setContent(QString("<pre>&lt;video&gt;&lt;/video&gt;</pre>"));
               videoTags.at(i).parentNode().replaceChild(tempDoc.documentElement(),videoTags.at(i));
             }
+          }
+        }
+
+        //handle embedded audio
+        QDomNodeList audioTags = dom.elementsByTagName("audio");
+        if(!audioTags.isEmpty()) {
+          for (int i = 0; i < audioTags.size(); ++i) {
+            QString lnk = audioTags.at(i).toElement().attribute("src");
+
+            Okular::Sound *sound = new Okular::Sound(mTextDocument->loadResource(
+                    EpubDocument::AudioResource, QUrl(lnk)).toByteArray());
+
+            Okular::SoundAction *soundAction = new Okular::SoundAction(1.0,true,true,false,sound);
+            soundActions.push_back(soundAction);
+
+            QDomDocument tempDoc;
+            tempDoc.setContent(QString("<pre>&lt;audio&gt;&lt;/audio&gt;</pre>"));
+            audioTags.at(i).parentNode().replaceChild(tempDoc.documentElement(),audioTags.at(i));
           }
         }
         htmlContent = dom.toString();
@@ -294,6 +317,18 @@ QTextDocument* Converter::convert( const QString &fileName )
         const QRect videoRect(startPoint,videoSize);
         movieAnnots[index]->setBoundingRectangle(Okular::NormalizedRect(videoRect,mTextDocument->pageSize().width(), mTextDocument->pageSize().height()));
         emit addAnnotation(movieAnnots[index++],posStart,posEnd);
+        csr.movePosition(QTextCursor::NextWord);
+      }
+
+      csr.movePosition(QTextCursor::Start);
+      index = 0;
+      const QString keyToSearch("<audio></audio>");
+      // FIXME : instead of "<audio></audio>" place an audio icon
+      while( !(csr = mTextDocument->find(keyToSearch, csr)).isNull() ) {
+        const int posStart = csr.position() - keyToSearch.size();
+        const int posEnd = csr.position();
+        qDebug() << posStart << posEnd;;
+        emit addAction(soundActions[index++],posStart,posEnd);
         csr.movePosition(QTextCursor::NextWord);
       }
 

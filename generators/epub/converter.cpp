@@ -17,6 +17,8 @@
 
 #include <kdebug.h>
 #include <klocale.h>
+#include <kstandarddirs.h>
+
 #include <core/action.h>
 #include <core/movie.h>
 #include <core/sound.h>
@@ -309,9 +311,8 @@ QTextDocument* Converter::convert( const QString &fileName )
       while( !(csr = mTextDocument->find("<video></video>",csr)).isNull() ) {
         const int posStart = csr.position();
         const QPoint startPoint = calculateXYPosition(mTextDocument, posStart);
-        QImage img(videoSize, QImage::Format_RGB32);
-        // FIXME : insert a movie poster instead of gray color
-        img.fill(Qt::gray);
+        QImage img(KStandardDirs::locate("data", "okular/pics/okular-epub-movie.png"));
+        img = img.scaled(videoSize);
         csr.insertImage(img);
         const int posEnd = csr.position();
         const QRect videoRect(startPoint,videoSize);
@@ -323,9 +324,10 @@ QTextDocument* Converter::convert( const QString &fileName )
       csr.movePosition(QTextCursor::Start);
       index = 0;
       const QString keyToSearch("<audio></audio>");
-      // FIXME : instead of "<audio></audio>" place an audio icon
       while( !(csr = mTextDocument->find(keyToSearch, csr)).isNull() ) {
         const int posStart = csr.position() - keyToSearch.size();
+        const QImage img(KStandardDirs::locate("data", "okular/pics/okular-epub-sound-icon.png"));
+        csr.insertImage(img);
         const int posEnd = csr.position();
         qDebug() << posStart << posEnd;;
         emit addAction(soundActions[index++],posStart,posEnd);

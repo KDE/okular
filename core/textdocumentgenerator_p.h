@@ -114,12 +114,13 @@ class TextDocumentGeneratorPrivate : public GeneratorPrivate
 
     public:
         TextDocumentGeneratorPrivate( TextDocumentConverter *converter )
-            : mConverter( converter ), mDocument( 0 ), mGeneralSettings( 0 )
+            : mConverter( converter ), mDocument( 0 ), mGeneralSettings( 0 ), cloned ( 0 )
         {
         }
 
         virtual ~TextDocumentGeneratorPrivate()
         {
+            if(cloned) delete cloned;
             delete mConverter;
             delete mDocument;
         }
@@ -194,6 +195,10 @@ class TextDocumentGeneratorPrivate : public GeneratorPrivate
         TextDocumentSettings *mGeneralSettings;
 
         QFont mFont;
+
+        QTextDocument *cloned;
+
+        QString fname;
 };
 
 }

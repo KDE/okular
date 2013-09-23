@@ -29,6 +29,7 @@
 #include "textpage.h"
 
 #include "document.h"
+#include "document_p.h"
 
 using namespace Okular;
 
@@ -397,11 +398,14 @@ QImage TextDocumentGeneratorPrivate::image( PixmapRequest * request )
     p.translate( QPoint( 0, request->pageNumber() * size.height() * -1 ) );
 
 #ifdef OKULAR_TEXTDOCUMENT_THREADED_RENDERING
-    q->userMutex()->lock();
-    QTextDocument *cloned = mDocument->clone();
-    q->userMutex()->unlock();
-    cloned->drawContents( &p, rect);
-    delete cloned;
+    if(fname != m_document->m_docFileName){
+        if(cloned) delete cloned;
+        fname = m_document->m_docFileName;
+        mConverter->blockSignals(true);
+        cloned = mConverter->convert(fname);
+        mConverter->blockSignals(false);
+    }
+    cloned->drawContents( &p, rect );
 #else
     mDocument->drawContents( &p, rect );
 #endif

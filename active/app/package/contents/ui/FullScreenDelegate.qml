@@ -159,9 +159,10 @@ MouseEventListener {
                 id: mainPage
                 document: documentItem
                 flickable: mainFlickable
-                anchors.centerIn: parent
                 property real ratio: implicitWidth / implicitHeight
 
+                x: Math.round((parent.width - width) / 2)
+                y: Math.round((parent.height - height) / 2)
                 width: implicitWidth
                 height: implicitHeight
             }

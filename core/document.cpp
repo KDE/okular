@@ -1580,23 +1580,18 @@ void DocumentPrivate::refreshPixmaps( int pageNumber )
                 break;
             }
         }
-        const QList<Tile> tiles = tilesManager->tilesAt( visibleRect, TilesManager::TerminalTile );
-        QList<Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
-        while ( tIt != tEnd )
+
+        if ( !visibleRect.isNull() )
         {
-            Tile tile = *tIt;
-            if ( tilesRect.isNull() )
-                tilesRect = tile.rect();
-            else
-                tilesRect |= tile.rect();
-
-            tIt++;
+            p->setNormalizedRect( visibleRect );
+            p->setTile( true );
+            p->d->mForce = true;
+            requestedPixmaps.push_back( p );
         }
-
-        p->setNormalizedRect( tilesRect );
-        p->setTile( true );
-        p->d->mForce = true;
-        requestedPixmaps.push_back( p );
+        else
+        {
+            delete p;
+        }
     }
     if ( !requestedPixmaps.isEmpty() )
         m_parent->requestPixmaps( requestedPixmaps, Okular::Document::NoOption );
@@ -2014,8 +2009,6 @@ Document::Document( QWidget *widget )
     d->m_undoStack = new QUndoStack(this);
     d->m_tiledObserver = 0;
 
-    connect( PageController::self(), SIGNAL(rotationFinished(int,Okular::Page*)),
-             this, SLOT(rotationFinished(int,Okular::Page*)) );
     connect( SettingsCore::self(), SIGNAL(configChanged()), this, SLOT(_o_configChanged()) );
     connect( d->m_undoStack, SIGNAL( canUndoChanged(bool) ), this, SIGNAL( canUndoChanged(bool)));
     connect( d->m_undoStack, SIGNAL( canRedoChanged(bool) ), this, SIGNAL( canRedoChanged(bool) ) );
@@ -2048,10 +2041,22 @@ Document::~Document()
     delete d;
 }
 
-static bool kserviceMoreThan( const KService::Ptr &s1, const KService::Ptr &s2 )
-{
-    return s1->property( "X-KDE-Priority" ).toInt() > s2->property( "X-KDE-Priority" ).toInt();
-}
+class kMimeTypeMoreThan {
+public:
+    kMimeTypeMoreThan( const KMimeType::Ptr &mime ) : _mime( mime ) {}
+    bool operator()( const KService::Ptr &s1, const KService::Ptr &s2 )
+    {
+        const QString mimeName = _mime->name();
+        if (s1->mimeTypes().contains( mimeName ) && !s2->mimeTypes().contains( mimeName ))
+            return true;
+        else if (s2->mimeTypes().contains( mimeName ) && !s1->mimeTypes().contains( mimeName ))
+            return false;
+        return s1->property( "X-KDE-Priority" ).toInt() > s2->property( "X-KDE-Priority" ).toInt();
+    }
+
+private:
+    const KMimeType::Ptr &_mime;
+};
 
 bool Document::openDocument( const QString & docFile, const KUrl& url, const KMimeType::Ptr &_mime )
 {
@@ -2146,7 +2151,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     if ( offercount > 1 )
     {
         // sort the offers: the offers with an higher priority come before
-        qStableSort( offers.begin(), offers.end(), kserviceMoreThan );
+        qStableSort( offers.begin(), offers.end(), kMimeTypeMoreThan( mime ) );
 
         if ( SettingsCore::chooseGenerators() )
         {
@@ -2189,6 +2194,9 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     }
 
     d->m_generatorName = offer->name();
+    d->m_pageController = new PageController();
+    connect( d->m_pageController, SIGNAL(rotationFinished(int,Okular::Page*)),
+             this, SLOT(rotationFinished(int,Okular::Page*)) );
 
     bool containsExternalAnnotations = false;
     foreach ( Page * p, d->m_pagesVector )
@@ -2289,6 +2297,9 @@ void Document::closeDocument()
     // check if there's anything to close...
     if ( !d->m_generator )
         return;
+
+    delete d->m_pageController;
+    d->m_pageController = 0;
 
     delete d->m_scripter;
     d->m_scripter = 0;

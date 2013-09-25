@@ -1,5 +1,7 @@
 [Desktop Entry]
 Name=Document viewer
+Name[bg]=Преглед на документи
+Name[bs]=Prikazivač dokumenata
 Name[ca]=Visualitzador de documents
 Name[ca@valencia]=Visualitzador de documents
 Name[cs]=Prohlížeč dokumentů
@@ -9,7 +11,7 @@ Name[el]=Προβολέας εγγράφων
 Name[es]=Visor de documentos
 Name[et]=Dokumendinäitaja
 Name[fi]=Asiakirjakatselin
-Name[fr]=Visionneuse de document
+Name[fr]=Afficheur de documents
 Name[ga]=Amharcán cáipéisí
 Name[gl]=Visor de documentos
 Name[hu]=Dokumentummegjelenítő

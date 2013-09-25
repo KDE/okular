@@ -58,7 +58,7 @@ Q_OBJECT
         ~PageView();
 
         // Zoom mode ( last 3 are internally used only! )
-        enum ZoomMode { ZoomFixed = 0, ZoomFitWidth = 1, ZoomFitPage = 2,
+        enum ZoomMode { ZoomFixed = 0, ZoomFitWidth = 1, ZoomFitPage = 2, ZoomFitAuto = 3,
                         ZoomIn, ZoomOut, ZoomRefreshCurrent };
 
         enum ClearMode { ClearAllSelection, ClearOnlyDividers };
@@ -233,6 +233,7 @@ Q_OBJECT
         void slotZoomOut();
         void slotFitToWidthToggled( bool );
         void slotFitToPageToggled( bool );
+        void slotAutoFitToggled( bool );
         void slotViewMode( QAction *action );
         void slotContinuousToggled( bool );
         void slotSetMouseNormal();

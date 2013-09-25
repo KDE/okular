@@ -987,6 +987,8 @@ void PagePainter::drawShapeOnImage(
     {
         // create a 'path'
         QPainterPath path;
+        path.setFillRule( Qt::WindingFill );
+
         path.moveTo( normPath[ 0 ].x * fImageWidth, normPath[ 0 ].y * fImageHeight );
         for ( int i = 1; i < pointsNumber; i++ )
         {

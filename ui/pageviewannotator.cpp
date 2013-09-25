@@ -167,6 +167,7 @@ class PickPointEngine : public AnnotatorEngine
                     //add note
                     Okular::TextAnnotation * ta = new Okular::TextAnnotation();
                     ann = ta;
+                    ta->setFlags( ta->flags() | Okular::Annotation::FixedRotation );
                     ta->setContents( note );
                     ta->setTextType( Okular::TextAnnotation::InPlace );
                     //set alignment
@@ -629,6 +630,11 @@ class TextSelectorEngine : public AnnotatorEngine
             return QList< Okular::Annotation* >() << ann;
         }
 
+        QCursor cursor() const
+        {
+            return Qt::IBeamCursor;
+        }
+
     private:
         // data
         PageView * m_pageView;
@@ -774,6 +780,11 @@ bool PageViewAnnotator::active() const
 bool PageViewAnnotator::annotating() const
 {
     return active() && m_lockedItem;
+}
+
+QCursor PageViewAnnotator::cursor() const
+{
+    return m_engine->cursor();
 }
 
 QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::EventType & eventType, const AnnotatorEngine::Button & button,
@@ -1187,7 +1198,9 @@ QPixmap PageViewAnnotator::makeToolPixmap( const QDomElement &toolElement )
     }
     else if ( annotType == "squiggly" )
     {
-        p.setPen( QPen( engineColor, 1, Qt::DotLine ) );
+        QPen pen( engineColor, 1 );
+        pen.setDashPattern( QVector<qreal>() << 1 << 1 );
+        p.setPen( pen );
         p.drawLine( 1, 13, 16, 13 );
         p.drawLine( 2, 14, 15, 14 );
         p.drawLine( 0, 20, 19, 20 );

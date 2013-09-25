@@ -37,8 +37,8 @@ Context menu actions like Rename Bookmarks etc.)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2013-06-14</date>
-		<releaseinfo>0.17 (&kde; 4.11)</releaseinfo>
+		<date>2013-08-18</date>
+		<releaseinfo>0.17.60 (&kde; 4.12)</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
 			<para>&okular; is a &kde; universal document viewer based on &kpdf; code.</para>
@@ -488,7 +488,249 @@ Context menu actions like Rename Bookmarks etc.)
 					its buttons or use keyboard shortcuts (keys from <keycap>1</keycap> to <keycap>9</keycap>) to start constructing that annotation.
 				</para>
 				<para>
-				  The contents of the annotating toolbar can be configured using the <link linkend="configannotations">Annotations page of &okular; configuration dialog</link>. This page can be opened with &RMB; clicking on the annotating toolbar then choosing <guimenuitem>Configure Annotations...</guimenuitem> from the context menu.
+				  The annotating toolbar helps you to make annotations with drawings, shapes, and text messages. You can use the annotating toolbar to mark up a document (&eg; add lines, ellipses, polygons, stamps, highlights, underlines &etc;). The table below describes exactly what the default set of annotating toolbar buttons does.
+				</para>
+				<informaltable>
+				  <tgroup cols="3">
+				    <thead>
+				      <row>
+					<entry>
+					  Button
+					</entry>
+					<entry>
+					    Tool Name
+					</entry>
+					<entry>
+					    Description
+					</entry>
+				      </row>
+				    </thead>
+				    <tbody>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-note-okular.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    Pop-up Note
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    To draw multiline note. The note will can be viewed by double clicking on an icon in the document.
+					  </para>
+					  <para>
+					    Click on the tool button, then click on the place in the document where the pop-up note should be added. Enter the text of pop-up note then click on the <guilabel>Close this note</guilabel> button in the top right corner of the pop-up window.
+					  </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-note-inline-okular.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    Inline Note
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    To draw inline note. The note will be shown inline as is.
+					  </para>
+					  <para>
+					    Click on the tool button, then click with the &LMB; and hold to place the top-left corner of the note, then drag to place the bottom-right one. Enter the text of the note then click on the <guibutton>OK</guibutton> to save the note, <guibutton>Cancel</guibutton> to cancel note entering or <guibutton>Clear</guibutton> to clear the note.
+					  </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-ink-okular.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    Freehand Line
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    To draw free-form lines.
+					  </para>
+					  <para>
+					    Click on the tool button, then click with the &LMB; and hold to place the start of the line, then drag to draw the line.
+					  </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-highlighter-okular.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    Highlighter
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    To highlight text in the document with some given background color.
+					  </para>
+					  <para>
+					    Click on the tool button, then click with the &LMB; and hold to place the beginning of the highlighted text snippet, then drag to highlight it.
+					  </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-line-okular.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    Straight Line
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    To mark with a line.
+					  </para>
+					  <para>
+					    Click on the tool button, then click with the &LMB; to place the starting point of the line, then drag to place of the ending point of the line should be and click once more.
+					  </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-polygon-okular.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    Polygon
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    To draw a closed plane figure from three or more segments. The corresponding note can be viewed by double clicking inside the polygon.
+					  </para>
+					  <para>
+					    Click on the tool button, then click with the &LMB; to place the first vertex of the polygon, then drag to place of the second vertex. Proceed until you draw the whole polygon up to the first vertex. Click twice if you want to add some note to the polygon.  Enter the text of the note then click on the <guibutton>OK</guibutton> to save the note, <guibutton>Cancel</guibutton> to cancel note entering or <guibutton>Clear</guibutton> to clear the note.
+					  </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-stamp-okular.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    Stamp
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    To mark the text or image with some predefined shape.
+					  </para>
+					  <para>
+					    Click on the tool button then click with the &LMB; to place the stamp.
+					  </para>
+					  <para>
+					    A single click just places a square stamp (useful for icons).
+					    To add a rectangular stamp you can click with the &LMB; and hold to place the top-left point, then drag to place the bottom-right one.
+					  </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-underline-okular.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    Underline
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    To underline some text.
+					  </para>
+					  <para>
+					    Click on the tool button, then click with the &LMB; and hold to place the beginning of the underlined text snippet, then drag to underline it.
+					  </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-ellipse-okular.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    Ellipse
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    To draw an ellipse around some chosen area.
+					  </para>
+					  <para>
+					    Click on the tool button, then click with the &LMB; and hold to place the top-left corner of the circumscribed rectangular for the ellipse, then drag to place the bottom-right one.
+					  </para>
+					</entry>
+				      </row>
+				      </tbody>
+				    </tgroup>
+				  </informaltable>
+				  <para>
+				    The contents of the annotating toolbar can be configured using the <link linkend="configannotations">Annotations page of &okular; configuration dialog</link>. This page can be opened with &RMB; clicking on the annotating toolbar then choosing <guimenuitem>Configure Annotations...</guimenuitem> from the context menu.
 				</para>
 				<para>
                                         With a single &LMB; click on an annotation tool button you can use a tool once. 
@@ -516,11 +758,6 @@ Context menu actions like Rename Bookmarks etc.)
 					<link linkend="configannotations"><guilabel>Annotations</guilabel> page</link> in &okular;s
 					configuration dialog. The <guilabel>Annotations</guilabel> page can also be used to configure the content of the annotating toolbar.
 				</para>
-				<note>
-				<para>Using stamps a single click just places a square stamp (useful for icons).
-				To add a rectangular stamp you can click with the &LMB; and hold to place the top-left point,
-				then drag to place the bottom-right one.</para>
-				</note>
 			</sect2>
 			<sect2 id="annotations-remove">
 				<title>Removing annotations</title>
@@ -1070,6 +1307,18 @@ Context menu actions like Rename Bookmarks etc.)
 					<listitem>
 						<para><action>Change the magnification</action> of the document view
 							to a value that makes at least one whole page visible.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<guimenu>View</guimenu>
+							<guimenuitem>Auto Fit</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para><action>Change the magnification</action> of the document view
+							to a value that, depending on the size relation between the page and the view area, automatically either makes the pages' width equal to the document view's width (like fit-page), the pages' height equal to the document view's height (like fit-height), or the whole page visible (like fit-page).</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>

@@ -1560,7 +1560,22 @@ AnnotationPrivate* LineAnnotationPrivate::getNewAnnotationPrivate()
 
 double LineAnnotationPrivate::distanceSqr( double x, double y, double xScale, double yScale )
 {
-    return strokeDistance( ::distanceSqr( x, y, xScale, yScale, m_transformedLinePoints ),
+    QLinkedList<NormalizedPoint> transformedLinePoints = m_transformedLinePoints;
+
+    if ( m_lineClosed ) // Close the path
+        transformedLinePoints.append( transformedLinePoints.first() );
+
+    if ( m_lineInnerColor.isValid() )
+    {
+        QPolygonF polygon;
+        foreach ( const NormalizedPoint &p, transformedLinePoints )
+            polygon.append( QPointF( p.x, p.y ) );
+
+        if ( polygon.containsPoint( QPointF( x, y ), Qt::WindingFill ) )
+            return 0;
+    }
+
+    return strokeDistance( ::distanceSqr( x, y, xScale, yScale, transformedLinePoints ),
                            m_style.width() * xScale / ( m_page->m_width * 2 ) );
 }
 
@@ -2015,11 +2030,11 @@ double HighlightAnnotationPrivate::distanceSqr( double x, double y, double xScal
 
         //first, we check if the point is within the area described by the 4 quads
         //this is the case, if the point is always on one side of each segments delimiting the polygon:
-        pathPoints << NormalizedPoint( quad.point(0).x, quad.point(0).y );
+        pathPoints << quad.transformedPoint( 0 );
         int directionVote = 0;
         for ( int i = 1; i < 5; ++i )
         {
-            NormalizedPoint thisPoint( quad.point( i % 4 ).x, quad.point( i % 4 ).y );
+            NormalizedPoint thisPoint = quad.transformedPoint( i % 4 );
             directionVote += (isLeftOfVector( pathPoints.back(), thisPoint, point )) ? 1 : -1;
             pathPoints << thisPoint;
         }

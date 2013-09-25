@@ -38,6 +38,7 @@ struct RunningSearch;
 
 namespace Okular {
 class ConfigInterface;
+class PageController;
 class SaveInterface;
 class Scripter;
 class View;
@@ -97,6 +98,7 @@ class DocumentPrivate
             m_saveBookmarksTimer( 0 ),
             m_generator( 0 ),
             m_generatorsLoaded( false ),
+            m_pageController( 0 ),
             m_closingLoop( 0 ),
             m_scripter( 0 ),
             m_archiveData( 0 ),
@@ -250,6 +252,7 @@ class DocumentPrivate
         // cache of the mimetype we support
         QStringList m_supportedMimeTypes;
 
+        PageController *m_pageController;
         QEventLoop *m_closingLoop;
 
         Scripter *m_scripter;

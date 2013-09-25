@@ -154,10 +154,13 @@ void PopplerAnnotationProxy::notifyModification( const Okular::Annotation *okl_a
     }
 
     // Set basic properties
+    // Note: flags and boundary must be set first in order to correctly handle
+    // FixedRotation annotations.
+    ppl_ann->setFlags(maskExportedFlags( okl_ann->flags() ));
     ppl_ann->setBoundary(normRectToRectF( okl_ann->boundingRectangle() ));
+
     ppl_ann->setAuthor( okl_ann->author() );
     ppl_ann->setContents( okl_ann->contents() );
-    ppl_ann->setFlags(maskExportedFlags( okl_ann->flags() ));
 
     // Set style
     Poppler::Annotation::Style s;

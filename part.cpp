@@ -1775,6 +1775,10 @@ void Part::updateBookmarksActions()
 void Part::enableTOC(bool enable)
 {
     m_sidebar->setItemEnabled(0, enable);
+    if ( enable )
+    {
+        m_sidebar->setCurrentIndex( 0 );
+    }
 }
 
 void Part::slotRebuildBookmarkMenu()

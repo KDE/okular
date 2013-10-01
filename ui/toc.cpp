@@ -96,6 +96,7 @@ void TOC::prepareForReload()
     TOCModel *m = m_model;
     m_model = new TOCModel( m_document, m_treeView );
     m_model->setOldModelData( m, list );
+    m->setParent( 0 );
 }
 
 void TOC::rollbackReload()
@@ -105,12 +106,14 @@ void TOC::rollbackReload()
 
     TOCModel *m = m_model;
     m_model = m->clearOldModelData();
+    m_model->setParent( m_treeView );
     delete m;
 }
 
 void TOC::finishReload()
 {
     m_treeView->setModel( m_model );
+    m_model->setParent( m_treeView );
 }
 
 QVector<QModelIndex> TOC::expandedNodes( const QModelIndex &parent ) const

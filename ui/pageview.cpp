@@ -4221,7 +4221,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
         Okular::VisiblePageRect * vItem = new Okular::VisiblePageRect( i->pageNumber(), Okular::NormalizedRect( intersectionRect.translated( -i->uncroppedGeometry().topLeft() ), i->uncroppedWidth(), i->uncroppedHeight() ) );
         visibleRects.push_back( vItem );
 #ifdef PAGEVIEW_DEBUG
-        kWarning() << "checking for pixmap for page" << i->pageNumber() << "=" << i->page()->hasPixmap( Document::OBS_PAGEVIEW, i->uncroppedWidth(), i->uncroppedHeight() );
+        kWarning() << "checking for pixmap for page" << i->pageNumber() << "=" << i->page()->hasPixmap( this, i->uncroppedWidth(), i->uncroppedHeight() );
         kWarning() << "checking for text for page" << i->pageNumber() << "=" << i->page()->hasTextPage();
 #endif
 

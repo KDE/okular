@@ -23,6 +23,8 @@
 #include <kimageio.h>
 #include <klocale.h>
 
+#include <libkexiv2/kexiv2.h>
+
 #include <core/page.h>
 
 static KAboutData createAboutData()
@@ -82,6 +84,12 @@ bool KIMGIOGenerator::loadDocument( const QString & fileName, QVector<Okular::Pa
     }
     docInfo.set( Okular::DocumentInfo::MimeType, mime );
 
+    // Apply transformations dictated by Exif metadata
+    KExiv2Iface::KExiv2 exifMetadata;
+    if ( exifMetadata.load( fileName ) ) {
+        exifMetadata.rotateExifQImage( m_img, exifMetadata.getImageOrientation() );
+    }
+
     pagesVector.resize( 1 );
 
     Okular::Page * page = new Okular::Page( 0, m_img.width(), m_img.height(), Okular::Rotation0 );
@@ -106,6 +114,12 @@ bool KIMGIOGenerator::loadDocumentFromData( const QByteArray & fileData, QVector
         return false;
     }
     docInfo.set( Okular::DocumentInfo::MimeType, mime );
+
+    // Apply transformations dictated by Exif metadata
+    KExiv2Iface::KExiv2 exifMetadata;
+    if ( exifMetadata.loadFromData( fileData ) ) {
+        exifMetadata.rotateExifQImage( m_img, exifMetadata.getImageOrientation() );
+    }
 
     pagesVector.resize( 1 );
 

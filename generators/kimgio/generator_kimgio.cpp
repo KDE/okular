@@ -53,6 +53,7 @@ KIMGIOGenerator::KIMGIOGenerator( QObject *parent, const QVariantList &args )
 {
     setFeature( ReadRawData );
     setFeature( Threaded );
+    setFeature( TiledRendering );
     setFeature( PrintNative );
     setFeature( PrintToFile );
 
@@ -139,12 +140,29 @@ bool KIMGIOGenerator::doCloseDocument()
 QImage KIMGIOGenerator::image( Okular::PixmapRequest * request )
 {
     // perform a smooth scaled generation
-    int width = request->width();
-    int height = request->height();
-    if ( request->page()->rotation() % 2 == 1 )
-        qSwap( width, height );
+    if ( request->isTile() )
+    {
+        const QRect srcRect = request->normalizedRect().geometry( m_img.width(), m_img.height() );
+        const QRect destRect = request->normalizedRect().geometry( request->width(), request->height() );
 
-    return m_img.scaled( width, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
+        QImage destImg( destRect.size(), QImage::Format_RGB32 );
+        destImg.fill( Qt::white );
+
+        QPainter p( &destImg );
+        p.setRenderHint( QPainter::SmoothPixmapTransform );
+        p.drawImage( destImg.rect(), m_img, srcRect );
+
+        return destImg;
+    }
+    else
+    {
+        int width = request->width();
+        int height = request->height();
+        if ( request->page()->rotation() % 2 == 1 )
+            qSwap( width, height );
+
+        return m_img.scaled( width, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
+    }
 }
 
 bool KIMGIOGenerator::print( QPrinter& printer )

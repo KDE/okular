@@ -32,7 +32,6 @@
 
 // local includes
 #include "formwidgets.h"
-#include "guiutils.h"
 #include "pageview.h"
 #include "videowidget.h"
 #include "core/movie.h"

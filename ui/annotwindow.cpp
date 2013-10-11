@@ -35,7 +35,6 @@
 // local includes
 #include "core/annotations.h"
 #include "core/document.h"
-#include "guiutils.h"
 #include "latexrenderer.h"
 #include <core/utils.h>
 #include <KMessageBox>

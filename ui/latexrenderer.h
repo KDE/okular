@@ -13,8 +13,6 @@
 #ifndef LATEXRENDERER_H
 #define LATEXRENDERER_H
 
-#include "guiutils.h"
-
 #include <QStringList>
 
 class QString;

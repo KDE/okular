@@ -88,7 +88,6 @@
 #include <memory>
 
 #include <config-okular.h>
-#include <ui/guiutils.h>
 
 using namespace Okular;
 

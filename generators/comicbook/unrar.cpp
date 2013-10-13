@@ -11,6 +11,7 @@
 
 #include <QtCore/QEventLoop>
 #include <QtCore/QFile>
+#include <QtCore/QFileInfo>
 #include <QtCore/QRegExp>
 
 #include <kdebug.h>
@@ -133,8 +134,11 @@ QStringList Unrar::list()
     const QStringList listFiles = helper->kind->processListing( QString::fromLocal8Bit( mStdOutData ).split( '\n', QString::SkipEmptyParts ) );
     QStringList newList;
     Q_FOREACH ( const QString &f, listFiles ) {
-        if ( QFile::exists( mTempDir->name() + f ) ) {
-            newList.append( f );
+        // Extract all the files to mTempDir regardless of their path inside the archive
+        // This will break if ever an arvhice with two files with the same name in different subfolders
+        QFileInfo fi( f );
+        if ( QFile::exists( mTempDir->name() + fi.fileName() ) ) {
+            newList.append( fi.fileName() );
         }
     }
     return newList;

@@ -26,8 +26,11 @@ namespace Okular
 class PagePrivate;
 typedef QList< TinyTextEntity* > TextList;
 
-typedef bool ( *TextComparisonFunction )( const QStringRef & from, const QStringRef & to,
-                                          int *fromLength, int *toLength );
+/**
+ * Returns whether the two strings match.
+ * Satisfies the condition that if two strings match then their lengths are equal.
+ */
+typedef bool ( *TextComparisonFunction )( const QStringRef & from, const QStringRef & to );
 
 /**
  * A list of RegionText. It keeps a bunch of TextList with their bounding rectangles
@@ -41,14 +44,14 @@ class TextPagePrivate
         ~TextPagePrivate();
 
         RegularAreaRect * findTextInternalForward( int searchID, const QString &query,
-                                                   Qt::CaseSensitivity caseSensitivity,
                                                    TextComparisonFunction comparer,
                                                    const TextList::ConstIterator &start,
-                                                   const TextList::ConstIterator &end );
+                                                   int start_offset,
+                                                   const TextList::ConstIterator &end);
         RegularAreaRect * findTextInternalBackward( int searchID, const QString &query,
-                                                    Qt::CaseSensitivity caseSensitivity,
                                                     TextComparisonFunction comparer,
                                                     const TextList::ConstIterator &start,
+                                                    int start_offset,
                                                     const TextList::ConstIterator &end );
 
         /**
@@ -66,6 +69,9 @@ class TextPagePrivate
         TextList m_words;
         QMap< int, SearchPoint* > m_searchPoints;
         PagePrivate *m_page;
+
+    private:
+        RegularAreaRect * searchPointToArea(const SearchPoint* sp);
 };
 
 }

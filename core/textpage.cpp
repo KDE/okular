@@ -33,27 +33,32 @@ class SearchPoint
         {
         }
 
+        /** The TinyTextEntity containing the first character of the match. */
         TextList::ConstIterator it_begin;
+
+        /** The TinyTextEntity containing the last character of the match. */
         TextList::ConstIterator it_end;
+
+        /** The index of the first character of the match in (*it_begin)->text().
+         *  Satisfies 0 <= offset_begin < (*it_begin)->text().length().
+         */
         int offset_begin;
+
+        /** One plus the index of the last character of the match in (*it_end)->text().
+         *  Satisfies 0 < offset_end <= (*it_end)->text().length().
+         */
         int offset_end;
 };
 
 /* text comparison functions */
 
-bool CaseInsensitiveCmpFn( const QStringRef & from, const QStringRef & to,
-                           int *fromLength, int *toLength )
+static bool CaseInsensitiveCmpFn( const QStringRef & from, const QStringRef & to )
 {
-    *fromLength = from.length();
-    *toLength = to.length();
     return from.compare( to, Qt::CaseInsensitive ) == 0;
 }
 
-bool CaseSensitiveCmpFn( const QStringRef & from, const QStringRef & to,
-                           int *fromLength, int *toLength )
+static bool CaseSensitiveCmpFn( const QStringRef & from, const QStringRef & to )
 {
-    *fromLength = from.length();
-    *toLength = to.length();
     return from.compare( to, Qt::CaseSensitive ) == 0;
 }
 
@@ -106,7 +111,7 @@ static bool doesConsumeY(const QRect& first, const QRect& second, int threshold)
         const int overlap = (second.bottom() >= first.bottom()) ? first.bottom() - second.top()
                                                                 : second.bottom() - first.top();
         //we will divide by the smaller rectangle to calculate the overlap
-        const int percentage = (first.width() < second.width()) ? overlap * 100 / (first.bottom() - first.top())
+        const int percentage = (first.height() < second.height()) ? overlap * 100 / (first.bottom() - first.top())
                                                                 : overlap * 100 / (second.bottom() - second.top());
 
         if(percentage >= threshold) return true;
@@ -730,6 +735,7 @@ RegularAreaRect* TextPage::findText( int searchID, const QString &query, SearchD
     if ( d->m_words.isEmpty() || query.isEmpty() || ( area && area->isNull() ) )
         return 0;
     TextList::ConstIterator start;
+    int start_offset = 0;
     TextList::ConstIterator end;
     const QMap< int, SearchPoint* >::const_iterator sIt = d->m_searchPoints.constFind( searchID );
     if ( sIt == d->m_searchPoints.constEnd() )
@@ -746,28 +752,24 @@ RegularAreaRect* TextPage::findText( int searchID, const QString &query, SearchD
     {
         case FromTop:
             start = d->m_words.constBegin();
+            start_offset = 0;
             end = d->m_words.constEnd();
             break;
         case FromBottom:
             start = d->m_words.constEnd();
+            start_offset = 0;
             end = d->m_words.constBegin();
-            Q_ASSERT( start != end );
-            // we can safely go one step back, as we already checked
-            // that the list is not empty
-            --start;
             forward = false;
             break;
         case NextResult:
             start = (*sIt)->it_end;
+            start_offset = (*sIt)->offset_end;
             end = d->m_words.constEnd();
-            if ( ( start + 1 ) != end )
-                ++start;
             break;
         case PreviousResult:
             start = (*sIt)->it_begin;
+            start_offset = (*sIt)->offset_begin;
             end = d->m_words.constBegin();
-            if ( start != end )
-                --start;
             forward = false;
             break;
     };
@@ -776,11 +778,11 @@ RegularAreaRect* TextPage::findText( int searchID, const QString &query, SearchD
                                        ? CaseSensitiveCmpFn : CaseInsensitiveCmpFn;
     if ( forward )
     {
-        ret = d->findTextInternalForward( searchID, query, caseSensitivity, cmpFn, start, end );
+        ret = d->findTextInternalForward( searchID, query, cmpFn, start, start_offset, end );
     }
     else
     {
-        ret = d->findTextInternalBackward( searchID, query, caseSensitivity, cmpFn, start, end );
+        ret = d->findTextInternalBackward( searchID, query, cmpFn, start, start_offset, end );
     }
     return ret;
 }
@@ -789,7 +791,7 @@ RegularAreaRect* TextPage::findText( int searchID, const QString &query, SearchD
 // we have a '-' just followed by a '\n' character
 // check if the string contains a '-' character
 // if the '-' is the last entry
-static int stringLengthAdaptedWithHyphen(const QString &str, const TextList::ConstIterator &it, const TextList::ConstIterator &end, PagePrivate *page)
+static int stringLengthAdaptedWithHyphen(const QString &str, const TextList::ConstIterator &it, const TextList::ConstIterator &textListEnd, PagePrivate *page)
 {
     int len = str.length();
     
@@ -800,7 +802,7 @@ static int stringLengthAdaptedWithHyphen(const QString &str, const TextList::Con
     if ( str.endsWith( '-' ) )
     {
         // validity chek of it + 1
-        if ( ( it + 1 ) != end )
+        if ( ( it + 1 ) != textListEnd )
         {
             // 1. if the next character is '\n'
             const QString &lookahedStr = (*(it+1))->text();
@@ -834,68 +836,85 @@ static int stringLengthAdaptedWithHyphen(const QString &str, const TextList::Con
     return len;
 }
 
-RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const QString &_query,
-                                                             Qt::CaseSensitivity caseSensitivity,
-                                                             TextComparisonFunction comparer,
-                                                             const TextList::ConstIterator &start,
-                                                             const TextList::ConstIterator &end )
+RegularAreaRect* TextPagePrivate::searchPointToArea(const SearchPoint* sp)
 {
     const QTransform matrix = m_page ? m_page->rotationMatrix() : QTransform();
-
     RegularAreaRect* ret=new RegularAreaRect;
 
+    for (TextList::ConstIterator it = sp->it_begin; ; it++)
+    {
+        const TinyTextEntity* curEntity = *it;
+        ret->append( curEntity->transformedArea( matrix ) );
+
+        if (it == sp->it_end) {
+            break;
+        }
+    }
+
+    ret->simplify();
+    return ret;
+}
+
+RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const QString &_query,
+                                                             TextComparisonFunction comparer,
+                                                             const TextList::ConstIterator &start,
+                                                             int start_offset,
+                                                             const TextList::ConstIterator &end)
+{
     // normalize query search all unicode (including glyphs)
-    const QString query = (caseSensitivity == Qt::CaseSensitive)
-                            ? _query.normalized(QString::NormalizationForm_KC) 
-                            : _query.toLower().normalized(QString::NormalizationForm_KC);
+    const QString query = _query.normalized(QString::NormalizationForm_KC);
 
     // j is the current position in our query
     // len is the length of the string in TextEntity
     // queryLeft is the length of the query we have left
-    const TinyTextEntity* curEntity = 0;
-    int j=0, len=0, queryLeft=query.length();
-    int offset = 0;
-    bool haveMatch=false;
-    bool offsetMoved = false;
+    int j=0, queryLeft=query.length();
+
     TextList::ConstIterator it = start;
-    TextList::ConstIterator it_begin;
-    for ( ; it != end; ++it )
+    int offset = start_offset;
+
+    TextList::ConstIterator it_begin = TextList::ConstIterator();
+    int offset_begin = 0; //dummy initial value to suppress compiler warnings
+
+    while ( it != end )
     {
-        curEntity = *it;
-        const QString &str = curEntity->text();
-        if ( !offsetMoved && ( it == start ) )
+        const TinyTextEntity* curEntity = *it;
+        const QString& str = curEntity->text();
+        int len = stringLengthAdaptedWithHyphen(str, it, m_words.constEnd(), m_page);
+
+        if (offset >= len)
         {
-            if ( m_searchPoints.contains( searchID ) )
-            {
-                offset = qMax( m_searchPoints[ searchID ]->offset_end, 0 );
-            }
-            offsetMoved = true;
+            it++;
+            offset = 0;
+            continue;
         }
+
+        if ( it_begin == TextList::ConstIterator() )
         {
-            len = stringLengthAdaptedWithHyphen(str, it, end, m_page);
-            int min=qMin(queryLeft,len);
+            it_begin = it;
+            offset_begin = offset;
+        }
+
+        int min=qMin(queryLeft,len-offset);
+        {
 #ifdef DEBUG_TEXTPAGE
-            kDebug(OkularDebug) << str.mid(offset,min) << ":" << _query.mid(j,min);
+            kDebug(OkularDebug) << str.midRef(offset, min) << ":" << _query.midRef(j, min);
 #endif
             // we have equal (or less than) area of the query left as the length of the current 
             // entity
 
-            int resStrLen = 0, resQueryLen = 0;
-            if ( !comparer( str.midRef( offset, min ), query.midRef( j, min ),
-                            &resStrLen, &resQueryLen ) )
+            if ( !comparer( str.midRef( offset, min ), query.midRef( j, min ) ) )
             {
-                    // we not have matched
+                    // we have not matched
                     // this means we do not have a complete match
                     // we need to get back to query start
                     // and continue the search from this place
-                    haveMatch=false;
-                    ret->clear();
 #ifdef DEBUG_TEXTPAGE
             kDebug(OkularDebug) << "\tnot matched";
 #endif
-                    j=0;
-                    offset = 0;
+                    j = 0;
                     queryLeft=query.length();
+                    it = it_begin;
+                    offset = offset_begin+1;
                     it_begin = TextList::ConstIterator();
             }
             else
@@ -909,35 +928,32 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
 #ifdef DEBUG_TEXTPAGE
             kDebug(OkularDebug) << "\tmatched";
 #endif
-                    haveMatch=true;
-                    ret->append( curEntity->transformedArea( matrix ) );
-                    j += resStrLen;
-                    queryLeft -= resQueryLen;
-                    if ( it_begin == TextList::ConstIterator() )
-                    {
-                        it_begin = it;
-                    }
-            }
-        }
+                    j += min;
+                    queryLeft -= min;
 
-        if (haveMatch && queryLeft==0 && j==query.length())
-        {
-            // save or update the search point for the current searchID
-            QMap< int, SearchPoint* >::iterator sIt = m_searchPoints.find( searchID );
-            if ( sIt == m_searchPoints.end() )
-            {
-                sIt = m_searchPoints.insert( searchID, new SearchPoint );
+                    if (queryLeft==0)
+                    {
+                        // save or update the search point for the current searchID
+                        QMap< int, SearchPoint* >::iterator sIt = m_searchPoints.find( searchID );
+                        if ( sIt == m_searchPoints.end() )
+                        {
+                            sIt = m_searchPoints.insert( searchID, new SearchPoint );
+                        }
+                        SearchPoint* sp = *sIt;
+                        sp->it_begin = it_begin;
+                        sp->it_end = it;
+                        sp->offset_begin = offset_begin;
+                        sp->offset_end = offset + min;
+                        return searchPointToArea(sp);
+                    }
+
+                    it++;
+                    offset = 0;
             }
-            SearchPoint* sp = *sIt;
-            sp->it_begin = it_begin;
-            sp->it_end = it - 1;
-            sp->offset_begin = j;
-            sp->offset_end = j + qMin( queryLeft, len );
-            ret->simplify();
-            return ret;
         }
     }
     // end of loop - it means that we've ended the textentities
+
     const QMap< int, SearchPoint* >::iterator sIt = m_searchPoints.find( searchID );
     if ( sIt != m_searchPoints.end() )
     {
@@ -945,68 +961,78 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
         m_searchPoints.erase( sIt );
         delete sp;
     }
-    delete ret;
     return 0;
 }
 
 RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const QString &_query,
-                                                            Qt::CaseSensitivity caseSensitivity,
                                                             TextComparisonFunction comparer,
                                                             const TextList::ConstIterator &start,
-                                                            const TextList::ConstIterator &loop_end )
+                                                            int start_offset,
+                                                            const TextList::ConstIterator &end)
 {
-    const QTransform matrix = m_page ? m_page->rotationMatrix() : QTransform();
-
-    RegularAreaRect* ret=new RegularAreaRect;
-
     // normalize query to search all unicode (including glyphs)
-    const QString query = (caseSensitivity == Qt::CaseSensitive) 
-                            ? _query.normalized(QString::NormalizationForm_KC) 
-                            : _query.toLower().normalized(QString::NormalizationForm_KC);
+    const QString query = _query.normalized(QString::NormalizationForm_KC);
 
     // j is the current position in our query
     // len is the length of the string in TextEntity
     // queryLeft is the length of the query we have left
-    const TinyTextEntity* curEntity = 0;
-    int j=query.length() - 1, len=0, queryLeft=query.length();
-    bool haveMatch=false;
-    bool offsetMoved = false;
+    int j=query.length(), queryLeft=query.length();
+
     TextList::ConstIterator it = start;
-    TextList::ConstIterator it_begin;
+    int offset = start_offset;
+
+    TextList::ConstIterator it_begin = TextList::ConstIterator();
+    int offset_begin = 0; //dummy initial value to suppress compiler warnings
+
     while ( true )
     {
-        curEntity = *it;
-        const QString &str = curEntity->text();
-        if ( !offsetMoved && ( it == start ) )
+        if (offset <= 0)
         {
-            offsetMoved = true;
+            if ( it == end )
+            {
+                break;
+            }
+            it--;
         }
+
+        const TinyTextEntity* curEntity = *it;
+        const QString& str = curEntity->text();
+        int len = stringLengthAdaptedWithHyphen(str, it, m_words.constEnd(), m_page);
+
+        if (offset <= 0)
         {
-            len = stringLengthAdaptedWithHyphen(str, it, m_words.constEnd(), m_page);
-            int min=qMin(queryLeft,len);
+            offset = len;
+        }
+
+        if ( it_begin == TextList::ConstIterator() )
+        {
+            it_begin = it;
+            offset_begin = offset;
+        }
+
+        int min=qMin(queryLeft,offset);
+        {
 #ifdef DEBUG_TEXTPAGE
-            kDebug(OkularDebug) << str.right(min) << " : " << _query.mid(j-min+1,min);
+            kDebug(OkularDebug) << str.midRef(offset-min, min) << " : " << _query.midRef(j-min, min);
 #endif
             // we have equal (or less than) area of the query left as the length of the current 
             // entity
 
-            int resStrLen = 0, resQueryLen = 0;
             // Note len is not str.length() so we can't use rightRef here
-            const int offset = len - min;
-            if ( !comparer( str.midRef(offset, min ), query.midRef( j - min + 1, min ),
-                            &resStrLen, &resQueryLen ) )
+            if ( !comparer( str.midRef(offset-min, min ), query.midRef( j - min, min ) ) )
             {
-                    // we not have matched
+                    // we have not matched
                     // this means we do not have a complete match
                     // we need to get back to query start
                     // and continue the search from this place
-                    haveMatch=false;
-                    ret->clear();
 #ifdef DEBUG_TEXTPAGE
                     kDebug(OkularDebug) << "\tnot matched";
 #endif
-                    j=query.length() - 1;
-                    queryLeft=query.length();
+
+                    j = query.length();
+                    queryLeft = query.length();
+                    it = it_begin;
+                    offset = offset_begin-1;
                     it_begin = TextList::ConstIterator();
             }
             else
@@ -1020,39 +1046,33 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
 #ifdef DEBUG_TEXTPAGE
                     kDebug(OkularDebug) << "\tmatched";
 #endif
-                    haveMatch=true;
-                    ret->append( curEntity->transformedArea( matrix ) );
-                    j -= resStrLen;
-                    queryLeft -= resQueryLen;
-                    if ( it_begin == TextList::ConstIterator() )
+                    j -= min;
+                    queryLeft -= min;
+
+                    if ( queryLeft == 0 )
                     {
-                        it_begin = it;
+                        // save or update the search point for the current searchID
+                        QMap< int, SearchPoint* >::iterator sIt = m_searchPoints.find( searchID );
+                        if ( sIt == m_searchPoints.end() )
+                        {
+                            sIt = m_searchPoints.insert( searchID, new SearchPoint );
+                        }
+                        SearchPoint* sp = *sIt;
+                        sp->it_begin = it;
+                        sp->it_end = it_begin;
+                        sp->offset_begin = offset - min;
+                        sp->offset_end = offset_begin;
+                        return searchPointToArea(sp);
                     }
+
+                    offset = 0;
             }
+
         }
 
-        if (haveMatch && queryLeft==0 && j<0)
-        {
-            // save or update the search point for the current searchID
-            QMap< int, SearchPoint* >::iterator sIt = m_searchPoints.find( searchID );
-            if ( sIt == m_searchPoints.end() )
-            {
-                sIt = m_searchPoints.insert( searchID, new SearchPoint );
-            }
-            SearchPoint* sp = *sIt;
-            sp->it_begin = it;
-            sp->it_end = it_begin;
-            sp->offset_begin = j;
-            sp->offset_end = j + qMin( queryLeft, len );
-            ret->simplify();
-            return ret;
-        }
-        if ( it == loop_end )
-            break;
-        else
-            --it;
     }
     // end of loop - it means that we've ended the textentities
+
     const QMap< int, SearchPoint* >::iterator sIt = m_searchPoints.find( searchID );
     if ( sIt != m_searchPoints.end() )
     {
@@ -1060,7 +1080,6 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
         m_searchPoints.erase( sIt );
         delete sp;
     }
-    delete ret;
     return 0;
 }
 

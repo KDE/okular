@@ -282,7 +282,7 @@ void SearchTest::testHyphenAtEndOfLineWithoutYOverlap() {
         Okular::NormalizedRect(0.0, 0.4, 0.7, 0.5)
     };
 
-    unsigned n = sizeof(text)/sizeof(QString);
+    unsigned long n = sizeof(text)/sizeof(QString);
     QCOMPARE(n, sizeof(rect)/sizeof(Okular::NormalizedRect));
 
     Okular::Page* page;

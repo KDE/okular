@@ -358,6 +358,7 @@ void VideoWidget::pageLeft()
 
 void VideoWidget::play()
 {
+    d->controlBar->setVisible( d->movie->showControls() );
     d->load();
     d->player->play();
     d->stopAction->setEnabled( true );

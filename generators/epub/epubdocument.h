@@ -34,6 +34,10 @@ namespace Epub {
   private:
     struct epub *mEpub;
     KUrl mCurrentSubDocument;
+
+    int padding;
+
+    friend class Converter;
   };
 
 }

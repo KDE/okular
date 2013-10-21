@@ -24,7 +24,7 @@ QString resourceUrl(const KUrl &baseUrl, const QString &u)
 }
 
 EpubDocument::EpubDocument(const QString &fileName) : QTextDocument(),
-    padding(20)
+    txtColor(Qt::black), padding(20)
 {
   mEpub = epub_open(qPrintable(fileName), 3);
 
@@ -54,6 +54,47 @@ void EpubDocument::setCurrentSubDocument(const QString &doc)
   mCurrentSubDocument = KUrl::fromPath("/" + doc);
 }
 
+void EpubDocument::checkCSS(QString &css)
+{
+  // take care of text color
+  QRegExp rx("body[\\n\\s]*\\{[\\w:;\\r\\n\\t\\-\\.\\(\\),%#\\s]*\\}");
+  rx.indexIn(css);
+  QColor color(Qt::black);    // default text color
+  const QStringList bodyBlocks = rx.capturedTexts();
+  foreach (const QString &str , bodyBlocks) {
+    QRegExp regx("color[\\s:\\w#\(\\),]*;");
+    int pos = regx.indexIn(str);
+    if(pos > 0 && str[pos-1] == '-') continue; // to escape from times when we got "background-color"
+    const QStringList lines = regx.capturedTexts();
+    foreach (QString line, lines) {
+      line.remove(0,line.indexOf(':')+1);
+      line.remove(line.length()-1,1);
+      line = line.trimmed();
+      if(!line.left(3).compare(QString("rgb"),Qt::CaseInsensitive)){
+        QRegExp rgx("(\\d+),(\\d+),(\\d+)");
+        rgx.indexIn(line);
+        QStringList rgbs;
+        foreach(QString ll, rgx.capturedTexts()){
+          const QStringList temp = ll.split(',');
+          if(temp.size() == 3) {
+            rgbs = temp;
+            break;
+          } else
+            rgbs = QStringList();
+        }
+        if(!rgbs.isEmpty()) {
+          color = QColor(rgbs.at(0).toInt(), rgbs.at(1).toInt(), rgbs.at(2).toInt());
+        }
+      } else if(QColor::isValidColor(line)){
+        color = QColor(line);
+      }
+    }
+  }
+  txtColor = color;
+  css += "body { color : " + txtColor.name() + "; }";
+  css += "a { color : blue; }";
+}
+
 QVariant EpubDocument::loadResource(int type, const QUrl &name)
 {
   int size;
@@ -69,7 +110,12 @@ QVariant EpubDocument::loadResource(int type, const QUrl &name)
     case QTextDocument::ImageResource:
       resource.setValue(QImage::fromData((unsigned char *)data, size));
       break;
-
+    case QTextDocument::StyleSheetResource: {
+      QString css = QString::fromUtf8(data);
+      checkCSS(css);
+      resource.setValue(css);
+      break;
+    }
     default:
       resource.setValue(QString::fromUtf8(data));
       break;

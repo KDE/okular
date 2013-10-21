@@ -143,9 +143,11 @@ QTextDocument* Converter::convert( const QString &fileName )
       QString htmlContent = QString::fromUtf8(epub_it_get_curr(it));
 
       QTextBlock before;
+      const QString css = "<style> body { color : "+ mTextDocument->txtColor.name()+"; }"
+        " a { color : blue; }</style>";
       if(firstPage) {
         // preHtml & postHtml make it possible to have a margin around the content of the page
-        const QString preHtml = QString("<html><head></head><body>"
+        const QString preHtml = QString("<html><head>"+ css +"</head><body>"
                                         "<table style=\"-qt-table-type: root; margin-top:%1px; margin-bottom:%1px; margin-left:%1px; margin-right:%1px;\">"
                                         "<tr>"
                                         "<td style=\"border: none;\">").arg(mTextDocument->padding);
@@ -155,7 +157,7 @@ QTextDocument* Converter::convert( const QString &fileName )
         before = mTextDocument->begin();
       } else {
         before = _cursor->block();
-        _cursor->insertHtml(htmlContent);
+        _cursor->insertHtml(css + htmlContent);
       }
 
       mSectionMap.insert(link, before);

@@ -16,6 +16,7 @@
 #include <QImage>
 #include <kurl.h>
 #include <epub.h>
+#include <QColor>
 
 namespace Epub {
 
@@ -34,7 +35,9 @@ namespace Epub {
   private:
     struct epub *mEpub;
     KUrl mCurrentSubDocument;
+    void checkCSS(QString &css);
 
+    QColor txtColor;
     int padding;
 
     friend class Converter;

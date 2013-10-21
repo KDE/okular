@@ -111,15 +111,7 @@ QTextDocument* Converter::convert( const QString &fileName )
   }
   mTextDocument = newDocument;
 
-  mTextDocument->setPageSize(QSizeF(600, 800));
-
   QTextCursor *_cursor = new QTextCursor( mTextDocument );
-
-  QTextFrameFormat frameFormat;
-  frameFormat.setMargin( 20 );
-
-  QTextFrame *rootFrame = mTextDocument->rootFrame();
-  rootFrame->setFrameFormat( frameFormat );
 
   mLocalLinks.clear();
   mSectionMap.clear();
@@ -142,32 +134,46 @@ QTextDocument* Converter::convert( const QString &fileName )
   // iterate over the book
   it = epub_get_iterator(mTextDocument->getEpub(), EITERATOR_SPINE, 0);
 
-  do {
-    if (epub_it_get_curr(it)) {
-
-      // insert block for links
-      _cursor->insertBlock();
-
-      QString link = QString::fromUtf8(epub_it_get_curr_url(it));
+  // if the background color of the document is non-white it will be handled by QTextDocument::setHtml()
+  bool firstPage = true;
+  do{
+    if(epub_it_get_curr(it)) {
+      const QString link = QString::fromUtf8(epub_it_get_curr_url(it));
       mTextDocument->setCurrentSubDocument(link);
+      QString htmlContent = QString::fromUtf8(epub_it_get_curr(it));
 
-      // Pass on all the anchor since last block
-      const QTextBlock &before = _cursor->block();
+      QTextBlock before;
+      if(firstPage) {
+        // preHtml & postHtml make it possible to have a margin around the content of the page
+        const QString preHtml = QString("<html><head></head><body>"
+                                        "<table style=\"-qt-table-type: root; margin-top:%1px; margin-bottom:%1px; margin-left:%1px; margin-right:%1px;\">"
+                                        "<tr>"
+                                        "<td style=\"border: none;\">").arg(mTextDocument->padding);
+        const QString postHtml = "</tr></table></body></html>";
+        mTextDocument->setHtml(preHtml + htmlContent + postHtml);
+        firstPage = false;
+        before = mTextDocument->begin();
+      } else {
+        before = _cursor->block();
+        _cursor->insertHtml(htmlContent);
+      }
+
       mSectionMap.insert(link, before);
-      _cursor->insertHtml(QString::fromUtf8(epub_it_get_curr(it)));
 
-      // Add anchors to hashes
       _handle_anchors(before, link);
 
-      // Start new file in a new page
-      int page = mTextDocument->pageCount();
+      const int page = mTextDocument->pageCount();
+
+      // it will clear the previous format
+      // useful when the last line had a bullet
+      _cursor->insertBlock(QTextBlockFormat());
+
       while(mTextDocument->pageCount() == page)
         _cursor->insertText("\n");
     }
   } while (epub_it_get_next(it));
 
   epub_free_iterator(it);
-  mTextDocument->setCurrentSubDocument(QString());
 
   // handle toc
   struct titerator *tit;

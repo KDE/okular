@@ -23,9 +23,12 @@ QString resourceUrl(const KUrl &baseUrl, const QString &u)
 
 }
 
-EpubDocument::EpubDocument(const QString &fileName) : QTextDocument()
+EpubDocument::EpubDocument(const QString &fileName) : QTextDocument(),
+    padding(20)
 {
   mEpub = epub_open(qPrintable(fileName), 3);
+
+  setPageSize(QSizeF(600, 800));
 }
 
 bool EpubDocument::isValid()

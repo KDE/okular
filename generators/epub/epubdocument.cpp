@@ -54,6 +54,16 @@ void EpubDocument::setCurrentSubDocument(const QString &doc)
   mCurrentSubDocument = KUrl::fromPath("/" + doc);
 }
 
+int EpubDocument::maxContentHeight() const
+{
+  return pageSize().height() - (2 * padding);
+}
+
+int EpubDocument::maxContentWidth() const
+{
+  return pageSize().width() - (2 * padding);
+}
+
 QVariant EpubDocument::loadResource(int type, const QUrl &name)
 {
   int size;

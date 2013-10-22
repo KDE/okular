@@ -180,6 +180,38 @@ QTextDocument* Converter::convert( const QString &fileName )
       htmlContent.replace(QRegExp("< *section"),"<p");
       htmlContent.replace(QRegExp("< */ *section"),"</p");
 
+      // convert svg tags to img
+      const int maxHeight = mTextDocument->maxContentHeight();
+      const int maxWidth = mTextDocument->maxContentWidth();
+      QDomDocument dom;
+      if(dom.setContent(htmlContent)) {
+        QDomNodeList svgs = dom.elementsByTagName("svg");
+        if(!svgs.isEmpty()) {
+          QList< QDomNode > imgNodes;
+          for (uint i = 0; i < svgs.length(); ++i) {
+            QDomNodeList images = svgs.at(i).toElement().elementsByTagName("image");
+            for (uint j = 0; j < images.length(); ++j) {
+              QString lnk = images.at(i).toElement().attribute("xlink:href");
+              int ht = images.at(i).toElement().attribute("height").toInt();
+              int wd = images.at(i).toElement().attribute("width").toInt();
+              QImage img = mTextDocument->loadResource(QTextDocument::ImageResource,QUrl(lnk)).value<QImage>();
+              if(ht == 0) ht = img.height();
+              if(wd == 0) wd = img.width();
+              if(ht > maxHeight) ht = maxHeight;
+              if(wd > maxWidth) wd = maxWidth;
+              mTextDocument->addResource(QTextDocument::ImageResource,QUrl(lnk),img);
+              QDomDocument newDoc;
+              newDoc.setContent(QString("<img src=\"%1\" height=\"%2\" width=\"%3\" />").arg(lnk).arg(ht).arg(wd));
+              imgNodes.append(newDoc.documentElement());
+            }
+            foreach (QDomNode nd, imgNodes) {
+              svgs.at(i).parentNode().replaceChild(nd,svgs.at(i));
+            }
+          }
+          htmlContent = dom.toString();
+        }
+      }
+
       QTextBlock before;
       if(firstPage) {
         // preHtml & postHtml make it possible to have a margin around the content of the page

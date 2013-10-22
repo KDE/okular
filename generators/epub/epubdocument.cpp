@@ -54,6 +54,16 @@ void EpubDocument::setCurrentSubDocument(const QString &doc)
   mCurrentSubDocument = KUrl::fromPath("/" + doc);
 }
 
+int EpubDocument::maxContentHeight() const
+{
+  return pageSize().height() - (2 * padding);
+}
+
+int EpubDocument::maxContentWidth() const
+{
+  return pageSize().width() - (2 * padding);
+}
+
 void EpubDocument::checkCSS(QString &css)
 {
   // take care of text color

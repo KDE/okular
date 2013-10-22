@@ -66,6 +66,9 @@ int EpubDocument::maxContentWidth() const
 
 void EpubDocument::checkCSS(QString &css)
 {
+  // remove paragraph line-heights
+  css.remove(QRegExp("line-height\\s*:\\s*[\\w\\.]*;"));
+
   // take care of text color
   QRegExp rx("body[\\n\\s]*\\{[\\w:;\\r\\n\\t\\-\\.\\(\\),%#\\s]*\\}");
   rx.indexIn(css);

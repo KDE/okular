@@ -1,4 +1,6 @@
 
+add_subdirectory(data)
+
 include_directories(
    ${EPUB_INCLUDE_DIR}
 )

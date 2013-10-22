@@ -318,9 +318,6 @@ bool TextDocumentGenerator::loadDocument( const QString & fileName, QVector<Okul
     QVector< QLinkedList<Okular::Annotation*> > annots( d->mDocument->pageCount() );
     for ( int i = 0; i < d->mAnnotationInfos.count(); ++i ) {
         const TextDocumentGeneratorPrivate::AnnotationInfo &info = d->mAnnotationInfos[ i ];
-
-        QRect rect( 0, info.page * size.height(), size.width(), size.height() );
-        info.annotation->setBoundingRectangle( Okular::NormalizedRect( rect.left(), rect.top(), rect.right(), rect.bottom() ) );
         annots[ info.page ].append( info.annotation );
     }
 

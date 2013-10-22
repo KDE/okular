@@ -320,7 +320,8 @@ bool TextDocumentGenerator::loadDocument( const QString & fileName, QVector<Okul
         const TextDocumentGeneratorPrivate::AnnotationInfo &info = d->mAnnotationInfos[ i ];
 
         QRect rect( 0, info.page * size.height(), size.width(), size.height() );
-        info.annotation->setBoundingRectangle( Okular::NormalizedRect( rect.left(), rect.top(), rect.right(), rect.bottom() ) );
+        // FIXME: understand the use of below commented line
+        //info.annotation->setBoundingRectangle( Okular::NormalizedRect( rect.left(), rect.top(), rect.right(), rect.bottom() ) );
         annots[ info.page ].append( info.annotation );
     }
 

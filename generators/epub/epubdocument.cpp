@@ -8,6 +8,10 @@
  ***************************************************************************/
 
 #include "epubdocument.h"
+#include <QTemporaryFile>
+#include <QDir>
+
+#include <KDebug>
 
 using namespace Epub;
 
@@ -120,13 +124,29 @@ QVariant EpubDocument::loadResource(int type, const QUrl &name)
 
   if (data) {
     switch(type) {
-    case QTextDocument::ImageResource:
-      resource.setValue(QImage::fromData((unsigned char *)data, size));
+    case QTextDocument::ImageResource:{
+      QImage img = QImage::fromData((unsigned char *)data, size);
+      const int maxHeight = maxContentHeight();
+      const int maxWidth = maxContentWidth();
+      if(img.height() > maxHeight)
+        img = img.scaledToHeight(maxHeight);
+      if(img.width() > maxWidth)
+        img = img.scaledToWidth(maxWidth);
+      resource.setValue(img);
       break;
+    }
     case QTextDocument::StyleSheetResource: {
       QString css = QString::fromUtf8(data);
       checkCSS(css);
       resource.setValue(css);
+      break;
+    }
+    case EpubDocument::MovieResource: {
+      QTemporaryFile *tmp = new QTemporaryFile(QString("%1/okrXXXXXX").arg(QDir::tempPath()),this);
+      if(!tmp->open()) kWarning() << "EPUB : error creating temporary video file";
+      if(tmp->write(data,size) == -1) kWarning() << "EPUB : error writing data" << tmp->errorString();
+      tmp->flush();
+      resource.setValue(tmp->fileName());
       break;
     }
     default:

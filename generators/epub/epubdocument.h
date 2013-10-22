@@ -34,6 +34,8 @@ namespace Epub {
     virtual QVariant loadResource(int type, const QUrl &name);
 
   private:
+    void checkCSS(QString &css);
+
     struct epub *mEpub;
     KUrl mCurrentSubDocument;
 

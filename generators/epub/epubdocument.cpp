@@ -9,6 +9,8 @@
 
 #include "epubdocument.h"
 
+#include <QRegExp>
+
 using namespace Epub;
 
 namespace {
@@ -64,6 +66,12 @@ int EpubDocument::maxContentWidth() const
   return pageSize().width() - (2 * padding);
 }
 
+void EpubDocument::checkCSS(QString &css)
+{
+  // remove paragraph line-heights
+  css.remove(QRegExp("line-height\\s*:\\s*[\\w\\.]*;"));
+}
+
 QVariant EpubDocument::loadResource(int type, const QUrl &name)
 {
   int size;
@@ -80,6 +88,12 @@ QVariant EpubDocument::loadResource(int type, const QUrl &name)
       resource.setValue(QImage::fromData((unsigned char *)data, size));
       break;
 
+    case QTextDocument::StyleSheetResource: {
+      QString css = QString::fromUtf8(data);
+      checkCSS(css);
+      resource.setValue(css);
+      break;
+    }
     default:
       resource.setValue(QString::fromUtf8(data));
       break;

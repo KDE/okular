@@ -149,6 +149,11 @@ QVariant EpubDocument::loadResource(int type, const QUrl &name)
       resource.setValue(tmp->fileName());
       break;
     }
+    case EpubDocument::AudioResource: {
+      QByteArray ba(data,size);
+      resource.setValue(ba);
+      break;
+    }
     default:
       resource.setValue(QString::fromUtf8(data));
       break;

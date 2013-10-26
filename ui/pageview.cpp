@@ -533,6 +533,10 @@ do { \
     mz->setShortcut( Qt::CTRL + Qt::Key_2 );
     mz->setActionGroup( d->mouseModeActionGroup );
     mz->setChecked( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::Zoom );
+
+    KAction * aToogleChangeColors  = new KAction(i18n("&Toogle Change Colors"), this);
+    ac->addAction("toogle_change_colors", aToogleChangeColors );
+    connect( aToogleChangeColors, SIGNAL(triggered()), this, SLOT(slotToogleChangeColors()) );
 }
 
 // WARNING: 'setupViewerActions' must have been called before this method
@@ -4879,6 +4883,13 @@ void PageView::slotProcessRenditionAction( const Okular::RenditionAction *action
             vw->play();
             break;
     };
+}
+
+void PageView::slotToogleChangeColors()
+{
+    Okular::SettingsCore::setChangeColors( !Okular::SettingsCore::changeColors() );
+    Okular::Settings::self()->writeConfig();
+    viewport()->update();
 }
 
 //END private SLOTS

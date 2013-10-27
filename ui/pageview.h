@@ -262,7 +262,7 @@ Q_OBJECT
         void slotAnnotationWindowDestroyed( QObject *window );
         void slotProcessMovieAction( const Okular::MovieAction *action );
         void slotProcessRenditionAction( const Okular::RenditionAction *action );
-        void slotToogleChangeColors();
+        void slotToggleChangeColors();
 };
 
 #endif

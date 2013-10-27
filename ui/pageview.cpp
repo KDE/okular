@@ -534,9 +534,9 @@ do { \
     mz->setActionGroup( d->mouseModeActionGroup );
     mz->setChecked( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::Zoom );
 
-    KAction * aToogleChangeColors  = new KAction(i18n("&Toogle Change Colors"), this);
-    ac->addAction("toogle_change_colors", aToogleChangeColors );
-    connect( aToogleChangeColors, SIGNAL(triggered()), this, SLOT(slotToogleChangeColors()) );
+    KAction * aToggleChangeColors  = new KAction(i18n("&Toggle Change Colors"), this);
+    ac->addAction("toggle_change_colors", aToggleChangeColors );
+    connect( aToggleChangeColors, SIGNAL(triggered()), this, SLOT(slotToggleChangeColors()) );
 }
 
 // WARNING: 'setupViewerActions' must have been called before this method
@@ -4885,7 +4885,7 @@ void PageView::slotProcessRenditionAction( const Okular::RenditionAction *action
     };
 }
 
-void PageView::slotToogleChangeColors()
+void PageView::slotToggleChangeColors()
 {
     Okular::SettingsCore::setChangeColors( !Okular::SettingsCore::changeColors() );
     Okular::Settings::self()->writeConfig();

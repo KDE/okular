@@ -10,6 +10,7 @@
 #include <qtest_kde.h>
 
 #include "../part.h"
+#include "../core/action.h"
 #include "../core/page.h"
 
 namespace Okular
@@ -38,6 +39,9 @@ void EpubInternalLinksTest::testInternalLinks()
     const ObjectRect *rect = doc->page( 0 )->objectRect( ObjectRect::Action, 0.0453564, yCords, width, height);
     QVERIFY( rect );
     const Okular::Action * action = static_cast< const Okular::Action * >( rect->object() );
+    QCOMPARE( action->actionType(), Action::Goto );
+    const Okular::GotoAction * gAction = static_cast< const Okular::GotoAction * >( action );
+    QCOMPARE( gAction->destViewport().pageNumber, pagesNos );
     doc->processAction( action );
     QCOMPARE( doc->currentPage(), ( uint ) pagesNos );
     part.slotGotoFirst();

@@ -101,7 +101,6 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
     Q_INTERFACES(Okular::ViewerInterface)
     
     friend class PartTest;
-    friend class EpubInternalLinksTest;
 
     public:
         // Default constructor

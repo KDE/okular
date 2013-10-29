@@ -506,6 +506,10 @@ QStringList FilePrinter::cupsOptions( QPrinter &printer, QPrinter::Orientation d
         optionList << optionCollateCopies( printer );
     }
 
+    if ( ! optionPageMargins( printer ).isEmpty() ) {
+        optionList << optionPageMargins( printer );
+    }
+
     optionList << optionCupsProperties( printer );
 
     return optionList;
@@ -650,7 +654,7 @@ QStringList FilePrinter::optionPageMargins( QPrinter &printer )
         return QStringList("-o") << QString("page-left=%1").arg(l)
                        <<  "-o"  << QString("page-top=%1").arg(t)
                        <<  "-o"  << QString("page-right=%1").arg(r)
-                       <<  "-o"  << QString("page-bottom=%1").arg(b);
+                       <<  "-o"  << QString("page-bottom=%1").arg(b) << "-o" << "fit-to-page";
     }
 }
 

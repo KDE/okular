@@ -8,7 +8,7 @@
  ***************************************************************************/
 #ifndef OKULAR_GENERATOR_MOBI_H
 #define OKULAR_GENERATOR_MOBI_H
-#include <okular/core/textdocumentgenerator.h>
+#include <core/textdocumentgenerator.h>
 
 class MobiGenerator : public Okular::TextDocumentGenerator
 {

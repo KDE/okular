@@ -18,7 +18,7 @@
 #include <QtCore/QFile>
 
 #include <klocale.h>
-#include <okular/core/action.h>
+#include <core/action.h>
 
 using namespace Mobi;
 

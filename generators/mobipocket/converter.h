@@ -9,8 +9,8 @@
 #ifndef MOBI_CONVERTER_H
 #define MOBI_CONVERTER_H
 
-#include <okular/core/textdocumentgenerator.h>
-#include <okular/core/document.h>
+#include <core/textdocumentgenerator.h>
+#include <core/document.h>
 
 #include "mobidocument.h"
 #include <qmobipocket/mobipocket.h>

@@ -13,7 +13,7 @@
 #include <okular/core/document.h>
 
 #include "mobidocument.h"
-#include "mobipocket.h"
+#include <qmobipocket/mobipocket.h>
 
 
 namespace Mobi {

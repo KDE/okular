@@ -1,7 +1,4 @@
-include_directories(
-                    ${OKULAR_INCLUDE_DIR}
-                    ${PROJECT_SOURCE_DIR}/lib
-                   )
+include_directories( ${QMOBIPOCKET_INCLUDE_DIR}  )
 
 ########### next target ###############
 
@@ -13,7 +10,7 @@ set(okularGenerator_mobi_PART_SRCS
 
 kde4_add_plugin(okularGenerator_mobi ${okularGenerator_mobi_PART_SRCS})
 
-target_link_libraries(okularGenerator_mobi ${OKULAR_CORE_LIBRARY} ${KDE4_KDECORE_LIBS} ${KDE4_KDEUI_LIBS} ${QT_QTGUI_LIBRARY} qmobipocket)
+target_link_libraries(okularGenerator_mobi okularcore ${KDE4_KDECORE_LIBS} ${KDE4_KDEUI_LIBS} ${QT_QTGUI_LIBRARY} ${QMOBIPOCKET_LIBRARIES})
 
 install(TARGETS okularGenerator_mobi DESTINATION ${PLUGIN_INSTALL_DIR})
 

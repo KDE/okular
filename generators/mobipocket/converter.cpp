@@ -16,7 +16,6 @@
 #include <QtGui/QTextDocumentFragment>
 #include <QtCore/QDebug>
 #include <QtCore/QFile>
-#include "mobipocket.h"
 
 #include <klocale.h>
 #include <okular/core/action.h>

@@ -7,8 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 #include "mobidocument.h"
-#include "mobipocket.h"
-#include "qfilestream.h"
+#include <qmobipocket/mobipocket.h>
+#include <qmobipocket/qfilestream.h>
 #include <QtGui/QColor>
 #include <QtCore/QFile>
 #include <QtCore/QRegExp>

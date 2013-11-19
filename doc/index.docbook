@@ -1318,7 +1318,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</term>
 					<listitem>
 						<para><action>Change the magnification</action> of the document view
-							to a value that, depending on the size relation between the page and the view area, automatically either makes the pages' width equal to the document view's width (like fit-page), the pages' height equal to the document view's height (like fit-height), or the whole page visible (like fit-page).</para>
+							to a value that, depending on the size relation between the page and the view area, automatically either makes the pages' width equal to the document view's width (like fit-width), the pages' height equal to the document view's height (like fit-height), or the whole page visible (like fit-page).</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>

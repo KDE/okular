@@ -592,12 +592,12 @@ bool Sidebar::isItemEnabled( int index ) const
     return ( f & Qt::ItemIsEnabled ) == Qt::ItemIsEnabled;
 }
 
-void Sidebar::setCurrentIndex( int index )
+void Sidebar::setCurrentIndex( int index, SetCurrentIndexBehaviour b )
 {
     if ( index < 0 || index >= d->pages.count() || !isItemEnabled( index ) )
         return;
 
-    itemClicked( d->pages.at( index ) );
+    itemClicked( d->pages.at( index ), b );
     QModelIndex modelindex = d->list->model()->index( index, 0 );
     d->list->setCurrentIndex( modelindex );
     d->list->selectionModel()->select( modelindex, QItemSelectionModel::ClearAndSelect );
@@ -645,6 +645,11 @@ bool Sidebar::isCollapsed() const
 
 void Sidebar::itemClicked( QListWidgetItem *item )
 {
+    itemClicked( item, UncollapseIfCollapsed );
+}
+
+void Sidebar::itemClicked( QListWidgetItem *item, SetCurrentIndexBehaviour b )
+{
     if ( !item )
         return;
 
@@ -661,13 +666,16 @@ void Sidebar::itemClicked( QListWidgetItem *item )
         }
         else
         {
-            setCollapsed( false );
-            d->list->show();
+            if ( b == UncollapseIfCollapsed )
+            {
+                setCollapsed( false );
+                d->list->show();
+            }
         }
     }
     else
     {
-        if ( isCollapsed() )
+        if ( isCollapsed() && b == UncollapseIfCollapsed )
         {
             setCollapsed( false );
             d->list->show();

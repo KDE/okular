@@ -1307,9 +1307,7 @@ bool Part::openFile()
     // if the 'OpenTOC' flag is set, open the TOC
     if ( m_document->metaData( "OpenTOC" ).toBool() && m_sidebar->isItemEnabled( 0 ) && !m_sidebar->isCollapsed() )
     {
-        const bool sidebarVisible = m_sidebar->isSidebarVisible();
-        m_sidebar->setCurrentIndex( 0 );
-        m_sidebar->setSidebarVisibility( sidebarVisible );
+        m_sidebar->setCurrentIndex( 0, Sidebar::DoNotUncollapseIfCollapsed );
     }
     // if the 'StartFullScreen' flag is set, or the command line flag was
     // specified, start presentation
@@ -1779,7 +1777,7 @@ void Part::enableTOC(bool enable)
     // If present, show the TOC when a document is opened
     if ( enable )
     {
-        m_sidebar->setCurrentIndex( 0 );
+        m_sidebar->setCurrentIndex( 0, Sidebar::DoNotUncollapseIfCollapsed );
     }
 }
 

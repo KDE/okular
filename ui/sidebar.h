@@ -30,7 +30,9 @@ class Sidebar : public QWidget
         void setItemEnabled( int index, bool enabled );
         bool isItemEnabled( int index ) const;
 
-        void setCurrentIndex( int index );
+        enum SetCurrentIndexBehaviour { UncollapseIfCollapsed, DoNotUncollapseIfCollapsed };
+
+        void setCurrentIndex( int index, SetCurrentIndexBehaviour b = UncollapseIfCollapsed );
         int currentIndex() const;
 
         void setSidebarVisibility( bool visible );
@@ -48,6 +50,7 @@ class Sidebar : public QWidget
         void appearanceChanged();
 
     private:
+        void itemClicked( QListWidgetItem *item, SetCurrentIndexBehaviour b );
         void saveSplitterSize() const;
 
         // private storage

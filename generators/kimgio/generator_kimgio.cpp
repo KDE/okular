@@ -33,7 +33,7 @@ static KAboutData createAboutData()
          "okular_kimgio",
          "okular_kimgio",
          ki18n( "Image Backend" ),
-         "0.1.1",
+         "0.1.2",
          ki18n( "A simple image backend" ),
          KAboutData::License_GPL,
          ki18n( "© 2005, 2009 Albert Astals Cid\n"

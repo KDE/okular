@@ -3194,9 +3194,15 @@ void Document::setPrevViewport()
 {
     if ( d->m_viewportIterator != d->m_viewportHistory.begin() )
     {
+        const int oldViewportPage = (*d->m_viewportIterator).pageNumber;
+
         // restore previous viewport and notify it to observers
         --d->m_viewportIterator;
         foreachObserver( notifyViewportChanged( true ) );
+
+        const int currentViewportPage = (*d->m_viewportIterator).pageNumber;
+        if (oldViewportPage != currentViewportPage)
+            foreachObserver( notifyCurrentPageChanged( oldViewportPage, currentViewportPage ) );
     }
 }
 
@@ -3207,9 +3213,15 @@ void Document::setNextViewport()
     ++nextIterator;
     if ( nextIterator != d->m_viewportHistory.end() )
     {
+        const int oldViewportPage = (*d->m_viewportIterator).pageNumber;
+
         // restore next viewport and notify it to observers
         ++d->m_viewportIterator;
         foreachObserver( notifyViewportChanged( true ) );
+
+        const int currentViewportPage = (*d->m_viewportIterator).pageNumber;
+        if (oldViewportPage != currentViewportPage)
+            foreachObserver( notifyCurrentPageChanged( oldViewportPage, currentViewportPage ) );
     }
 }
 

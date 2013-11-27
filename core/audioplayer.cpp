@@ -85,7 +85,7 @@ public:
 
 
 AudioPlayerPrivate::AudioPlayerPrivate( AudioPlayer * qq )
-    : q( qq )
+    : q( qq ), m_state( AudioPlayer::StoppedState )
 {
     QObject::connect( &m_mapper, SIGNAL(mapped(int)), q, SLOT(finished(int)) );
 }
@@ -173,6 +173,7 @@ bool AudioPlayerPrivate::play( const SoundInfo& si )
         QObject::connect( data->m_mediaobject, SIGNAL(finished()), &m_mapper, SLOT(map()) );
         kDebug(OkularDebug) << "PLAY";
         data->play();
+        m_state = AudioPlayer::PlayingState;
     }
     return valid;
 }
@@ -181,6 +182,7 @@ void AudioPlayerPrivate::stopPlayings()
 {
     qDeleteAll( m_playing );
     m_playing.clear();
+    m_state = AudioPlayer::StoppedState;
 }
 
 void AudioPlayerPrivate::finished( int id )
@@ -201,6 +203,7 @@ void AudioPlayerPrivate::finished( int id )
         m_mapper.removeMappings( it.value()->m_mediaobject );
         delete it.value();
         m_playing.erase( it );
+        m_state = AudioPlayer::StoppedState;
     }
     kDebug(OkularDebug) << "finished," << m_playing.count();
 }
@@ -246,6 +249,11 @@ void AudioPlayer::playSound( const Sound * sound, const SoundAction * linksound 
 void AudioPlayer::stopPlaybacks()
 {
     d->stopPlayings();
+}
+
+AudioPlayer::State AudioPlayer::state() const
+{
+    return d->m_state;
 }
 
 #include "audioplayer.moc"

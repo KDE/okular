@@ -42,6 +42,7 @@ public:
     QHash< int, PlayData * > m_playing;
     QSignalMapper m_mapper;
     KUrl m_currentDocument;
+    AudioPlayer::State m_state;
 };
 
 }

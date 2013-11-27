@@ -32,6 +32,23 @@ class OKULAR_EXPORT AudioPlayer : public QObject
     Q_OBJECT
 
     public:
+
+        /**
+         * The state of AudioPlayer
+         * @since 0.19 (KDE 4.13)
+         */
+        enum State
+        {
+            /**
+             * The AudioPlayer is playing a audio file.
+             */
+            PlayingState,
+            /**
+             * The AudioPlayer isn't playing a audio file.
+             */
+	    StoppedState
+	};
+
         ~AudioPlayer();
 
         /**
@@ -49,6 +66,12 @@ class OKULAR_EXPORT AudioPlayer : public QObject
          * Tell the AudioPlayer to stop all the playbacks.
          */
         void stopPlaybacks();
+
+        /**
+         * Return state of sound (playing/stopped)
+         * @since 0.19 (KDE 4.13)
+         */
+        State state() const;
 
     private:
         AudioPlayer();

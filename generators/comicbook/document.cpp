@@ -185,11 +185,17 @@ void Document::pages( QVector<Okular::Page*> * pagesVector )
             {
                 QSize pageSize = reader.size();
                 if ( !pageSize.isValid() ) {
-                    pageSize = reader.read().size();
+                    const QImage i = reader.read();
+                    if ( !i.isNull() )
+                        pageSize = i.size();
                 }
-                pagesVector->replace( count, new Okular::Page( count, pageSize.width(), pageSize.height(), Okular::Rotation0 ) );
-                mPageMap.append(file);
-                count++;
+                if ( pageSize.isValid() ) {
+                    pagesVector->replace( count, new Okular::Page( count, pageSize.width(), pageSize.height(), Okular::Rotation0 ) );
+                    mPageMap.append(file);
+                    count++;
+                } else {
+                    kDebug() << "Ignoring" << file << "doesn't seem to be an image even if QImageReader::canRead returned true";
+                }
             }
         }
     }

@@ -1238,7 +1238,7 @@ bool Part::openFile()
     m_showProperties->setEnabled( ok );
     bool hasEmbeddedFiles = ok && m_document->embeddedFiles() && m_document->embeddedFiles()->count() > 0;
     if ( m_showEmbeddedFiles ) m_showEmbeddedFiles->setEnabled( hasEmbeddedFiles );
-    m_topMessage->setVisible( hasEmbeddedFiles );
+    m_topMessage->setVisible( hasEmbeddedFiles && Okular::Settings::showOSD() );
 
     // Warn the user that XFA forms are not supported yet (NOTE: poppler generator only)
     if ( ok && m_document->metaData( "HasUnsupportedXfaForm" ).toBool() == true )

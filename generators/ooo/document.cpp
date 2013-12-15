@@ -65,28 +65,22 @@ bool Document::open()
     mContent = file->data();
   }
 
-  if ( !entries.contains( "styles.xml" ) ) {
-    setError( i18n( "Invalid document structure (styles.xml is missing)" ) );
-    return false;
+  if ( entries.contains( "styles.xml" ) ) {
+    file = static_cast<const KArchiveFile*>( directory->entry( "styles.xml" ) );
+    if ( mManifest->testIfEncrypted( "styles.xml" )  ) {
+      mStyles = mManifest->decryptFile( "styles.xml", file->data() );
+    } else {
+      mStyles = file->data();
+    }
   }
 
-  file = static_cast<const KArchiveFile*>( directory->entry( "styles.xml" ) );
-  if ( mManifest->testIfEncrypted( "styles.xml" )  ) {
-    mStyles = mManifest->decryptFile( "styles.xml", file->data() );
-  } else {
-    mStyles = file->data();
-  }
-
-  if ( !entries.contains( "meta.xml" ) ) {
-    setError( i18n( "Invalid document structure (meta.xml is missing)" ) );
-    return false;
-  }
-
-  file = static_cast<const KArchiveFile*>( directory->entry( "meta.xml" ) );
-  if ( mManifest->testIfEncrypted( "meta.xml" )  ) {
-    mMeta = mManifest->decryptFile( "meta.xml", file->data() );
-  } else {
-    mMeta = file->data();
+  if ( entries.contains( "meta.xml" ) ) {
+    file = static_cast<const KArchiveFile*>( directory->entry( "meta.xml" ) );
+    if ( mManifest->testIfEncrypted( "meta.xml" )  ) {
+      mMeta = mManifest->decryptFile( "meta.xml", file->data() );
+    } else {
+      mMeta = file->data();
+    }
   }
 
   if ( entries.contains( "Pictures" ) ) {

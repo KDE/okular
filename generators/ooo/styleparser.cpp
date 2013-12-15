@@ -70,6 +70,9 @@ bool StyleParser::parseContentFile()
 
 bool StyleParser::parseStyleFile()
 {
+  if ( mDocument->styles().isEmpty() )
+    return true;
+
   QXmlSimpleReader reader;
 
   QXmlInputSource source;
@@ -106,6 +109,9 @@ bool StyleParser::parseStyleFile()
 
 bool StyleParser::parseMetaFile()
 {
+  if ( mDocument->meta().isEmpty() )
+    return true;
+
   QXmlSimpleReader reader;
 
   QXmlInputSource source;

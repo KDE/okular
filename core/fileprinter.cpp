@@ -430,7 +430,8 @@ QStringList FilePrinter::jobname( QPrinter &printer, const QString &version )
         }
 
         if ( version.startsWith( "lpr" ) ) {
-            return QStringList("-J") << printer.docName();
+            const QString shortenedDocName = QString::fromUtf8(printer.docName().toUtf8().left(255));
+            return QStringList("-J") << shortenedDocName;
         }
     }
 

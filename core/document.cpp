@@ -1699,8 +1699,16 @@ void DocumentPrivate::doProcessSearchMatch( RegularAreaRect *match, RunningSearc
         // ..queue page for notifying changes..
         pagesToNotify->insert( currentPage );
 
+        // Create a normalized rectangle around the search match that includes a 5% buffer on all sides.
+        const Okular::NormalizedRect matchRectWithBuffer = Okular::NormalizedRect( match->first().left - 0.05,
+                                                                                   match->first().top - 0.05,
+                                                                                   match->first().right + 0.05,
+                                                                                   match->first().bottom + 0.05 );
+
+        const bool matchRectFullyVisible = isNormalizedRectangleFullyVisible( matchRectWithBuffer, currentPage );
+
         // ..move the viewport to show the first of the searched word sequence centered
-        if ( moveViewport )
+        if ( moveViewport && !matchRectFullyVisible )
         {
             DocumentViewport searchViewport( currentPage );
             searchViewport.rePos.enabled = true;
@@ -1998,6 +2006,25 @@ QVariant DocumentPrivate::documentMetaData( const QString &key, const QVariant &
     }
     return QVariant();
 };
+
+bool DocumentPrivate::isNormalizedRectangleFullyVisible( const Okular::NormalizedRect & rectOfInterest, int rectPage )
+{
+    bool rectFullyVisible = false;
+    const QVector<Okular::VisiblePageRect *> & visibleRects = m_parent->visiblePageRects();
+    QVector<Okular::VisiblePageRect *>::const_iterator vEnd = visibleRects.end();
+    QVector<Okular::VisiblePageRect *>::const_iterator vIt = visibleRects.begin();
+
+    for ( ; ( vIt != vEnd ) && !rectFullyVisible; ++vIt )
+    {
+        if ( (*vIt)->pageNumber == rectPage &&
+            (*vIt)->rect.contains( rectOfInterest.left, rectOfInterest.top ) &&
+            (*vIt)->rect.contains( rectOfInterest.right, rectOfInterest.bottom ) )
+        {
+            rectFullyVisible = true;
+        }
+    }
+    return rectFullyVisible;
+}
 
 Document::Document( QWidget *widget )
     : QObject( 0 ), d( new DocumentPrivate( this ) )
@@ -3445,7 +3472,7 @@ void Document::editFormText( int pageNumber,
                              int prevCursorPos,
                              int prevAnchorPos )
 {
-    QUndoCommand *uc = new EditFormTextCommand( this, form, pageNumber, newContents, newCursorPos, form->text(), prevCursorPos, prevAnchorPos );
+    QUndoCommand *uc = new EditFormTextCommand( this->d, form, pageNumber, newContents, newCursorPos, form->text(), prevCursorPos, prevAnchorPos );
     d->m_undoStack->push( uc );
 }
 
@@ -3454,7 +3481,7 @@ void Document::editFormList( int pageNumber,
                              const QList< int > & newChoices )
 {
     const QList< int > prevChoices = form->currentChoices();
-    QUndoCommand *uc = new EditFormListCommand( this, form, pageNumber, newChoices, prevChoices );
+    QUndoCommand *uc = new EditFormListCommand( this->d, form, pageNumber, newChoices, prevChoices );
     d->m_undoStack->push( uc );
 }
 
@@ -3476,13 +3503,13 @@ void Document::editFormCombo( int pageNumber,
         prevText = form->choices()[form->currentChoices()[0]];
     }
 
-    QUndoCommand *uc = new EditFormComboCommand( this, form, pageNumber, newText, newCursorPos, prevText, prevCursorPos, prevAnchorPos );
+    QUndoCommand *uc = new EditFormComboCommand( this->d, form, pageNumber, newText, newCursorPos, prevText, prevCursorPos, prevAnchorPos );
     d->m_undoStack->push( uc );
 }
 
 void Document::editFormButtons( int pageNumber, const QList< FormFieldButton* >& formButtons, const QList< bool >& newButtonStates )
 {
-    QUndoCommand *uc = new EditFormButtonsCommand( this, pageNumber, formButtons, newButtonStates );
+    QUndoCommand *uc = new EditFormButtonsCommand( this->d, pageNumber, formButtons, newButtonStates );
     d->m_undoStack->push( uc );
 }
 

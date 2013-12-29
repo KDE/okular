@@ -259,3 +259,25 @@ void Okular::copyQIODevice( QIODevice *from, QIODevice *to )
             break;
     }
 }
+
+QTransform Okular::buildRotationMatrix(Rotation rotation)
+{
+    QTransform matrix;
+    matrix.rotate( (int)rotation * 90 );
+
+    switch ( rotation )
+    {
+        case Rotation90:
+            matrix.translate( 0, -1 );
+            break;
+        case Rotation180:
+            matrix.translate( -1, -1 );
+            break;
+        case Rotation270:
+            matrix.translate( -1, 0 );
+            break;
+        default: ;
+    }
+
+    return matrix;
+}

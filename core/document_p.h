@@ -183,6 +183,12 @@ class DocumentPrivate
          */
         QVariant documentMetaData( const QString &key, const QVariant &option ) const;
 
+        /**
+         * Return whether the normalized rectangle @p rectOfInterest on page number @p rectPage
+         * is fully visible.
+         */
+        bool isNormalizedRectangleFullyVisible( const Okular::NormalizedRect & rectOfInterest, int rectPage );
+
         // member variables
         Document *m_parent;
         QPointer<QWidget> m_widget;

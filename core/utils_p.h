@@ -17,6 +17,11 @@ namespace Okular
 
 void copyQIODevice( QIODevice *from, QIODevice *to );
 
+/**
+ * Return a rotation matrix corresponding to the @p rotation enumeration.
+ */
+QTransform buildRotationMatrix( Rotation rotation );
+
 }
 
 #endif

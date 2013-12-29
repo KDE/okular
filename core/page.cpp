@@ -40,6 +40,7 @@
 #include "textpage_p.h"
 #include "tile.h"
 #include "tilesmanager_p.h"
+#include "utils_p.h"
 
 #include <limits>
 
@@ -118,24 +119,7 @@ void PagePrivate::imageRotationDone( RotationJob * job )
 
 QTransform PagePrivate::rotationMatrix() const
 {
-    QTransform matrix;
-    matrix.rotate( (int)m_rotation * 90 );
-
-    switch ( m_rotation )
-    {
-        case Rotation90:
-            matrix.translate( 0, -1 );
-            break;
-        case Rotation180:
-            matrix.translate( -1, -1 );
-            break;
-        case Rotation270:
-            matrix.translate( -1, 0 );
-            break;
-        default: ;
-    }
-
-    return matrix;
+    return Okular::buildRotationMatrix( m_rotation );
 }
 
 /** class Page **/

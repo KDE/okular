@@ -51,7 +51,7 @@ class RemoveAnnotationCommand : public QUndoCommand
         virtual void redo();
 
     private:
-        Okular::DocumentPrivate * m_doc;
+        Okular::DocumentPrivate * m_docPriv;
         Okular::Annotation* m_annotation;
         int m_pageNumber;
         bool m_done;
@@ -90,6 +90,7 @@ class TranslateAnnotationCommand : public QUndoCommand
         virtual int id() const;
         virtual bool mergeWith(const QUndoCommand *uc);
         Okular::NormalizedPoint minusDelta();
+        Okular::NormalizedRect translateBoundingRectangle( const Okular::NormalizedPoint & delta );
 
     private:
         Okular::DocumentPrivate * m_docPriv;
@@ -164,7 +165,7 @@ class EditAnnotationContentsCommand : public EditTextCommand
 class EditFormTextCommand : public EditTextCommand
 {
     public:
-        EditFormTextCommand( Okular::Document* doc,
+        EditFormTextCommand( Okular::DocumentPrivate* docPriv,
                              Okular::FormFieldText* form,
                              int pageNumber,
                              const QString & newContents,
@@ -177,7 +178,7 @@ class EditFormTextCommand : public EditTextCommand
         virtual int id() const;
         virtual bool mergeWith( const QUndoCommand *uc );
     private:
-        Okular::Document* m_doc;
+        Okular::DocumentPrivate* m_docPriv;
         Okular::FormFieldText* m_form;
         int m_pageNumber;
 };
@@ -185,7 +186,7 @@ class EditFormTextCommand : public EditTextCommand
 class EditFormListCommand : public QUndoCommand
 {
     public:
-        EditFormListCommand( Okular::Document* doc,
+        EditFormListCommand( Okular::DocumentPrivate* docPriv,
                              FormFieldChoice* form,
                              int pageNumber,
                              const QList< int > & newChoices,
@@ -196,7 +197,7 @@ class EditFormListCommand : public QUndoCommand
         virtual void redo();
 
     private:
-        Okular::Document* m_doc;
+        Okular::DocumentPrivate* m_docPriv;
         FormFieldChoice* m_form;
         int m_pageNumber;
         QList< int > m_newChoices;
@@ -206,7 +207,7 @@ class EditFormListCommand : public QUndoCommand
 class EditFormComboCommand : public EditTextCommand
 {
     public:
-        EditFormComboCommand( Okular::Document* doc,
+        EditFormComboCommand( Okular::DocumentPrivate* docPriv,
                               FormFieldChoice* form,
                               int pageNumber,
                               const QString & newText,
@@ -222,7 +223,7 @@ class EditFormComboCommand : public EditTextCommand
         virtual bool mergeWith( const QUndoCommand *uc );
 
     private:
-        Okular::Document* m_doc;
+        Okular::DocumentPrivate* m_docPriv;
         FormFieldChoice* m_form;
         int m_pageNumber;
         int m_newIndex;
@@ -232,7 +233,7 @@ class EditFormComboCommand : public EditTextCommand
 class EditFormButtonsCommand : public QUndoCommand
 {
     public:
-        EditFormButtonsCommand( Okular::Document* doc,
+        EditFormButtonsCommand( Okular::DocumentPrivate* docPriv,
                                 int pageNumber,
                                 const QList< FormFieldButton* > & formButtons,
                                 const QList< bool > & newButtonStates
@@ -245,7 +246,7 @@ class EditFormButtonsCommand : public QUndoCommand
         void clearFormButtonStates();
 
     private:
-        Okular::Document* m_doc;
+        Okular::DocumentPrivate* m_docPriv;
         int m_pageNumber;
         QList< FormFieldButton* > m_formButtons;
         QList< bool > m_newButtonStates;

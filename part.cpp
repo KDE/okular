@@ -2268,6 +2268,8 @@ void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
        return;
 
     bool reallyShow = false;
+    const bool currentPage = page && page->number() == m_document->viewport().pageNumber;
+
     if (!m_actionsSearched)
     {
         // the quest for options_show_menubar
@@ -2300,7 +2302,8 @@ void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
     if (page)
     {
         popup->addTitle( i18n( "Page %1", page->number() + 1 ) );
-        if ( m_document->bookmarkManager()->isBookmarked( m_document->viewport() ) )
+        if ( ( !currentPage && m_document->bookmarkManager()->isBookmarked( page->number() ) ) ||
+                ( currentPage && m_document->bookmarkManager()->isBookmarked( m_document->viewport() ) ) )
             removeBookmark = popup->addAction( KIcon("edit-delete-bookmark"), i18n("Remove Bookmark") );
         else
             addBookmark = popup->addAction( KIcon("bookmark-new"), i18n("Add Bookmark") );
@@ -2332,9 +2335,24 @@ void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
         QAction *res = popup->exec(point);
         if (res)
         {
-            if (res == addBookmark) m_document->bookmarkManager()->addBookmark( m_document->viewport() );
-            else if (res == removeBookmark) m_document->bookmarkManager()->removeBookmark( m_document->viewport() );
-            else if (res == fitPageWidth) m_pageView->fitPageWidth( page->number() );
+            if (res == addBookmark)
+            {
+                if (currentPage)
+                    m_document->bookmarkManager()->addBookmark( m_document->viewport() );
+                else
+                    m_document->bookmarkManager()->addBookmark( page->number() );
+            }
+            else if (res == removeBookmark)
+            {
+                if (currentPage)
+                    m_document->bookmarkManager()->removeBookmark( m_document->viewport() );
+                else
+                    m_document->bookmarkManager()->removeBookmark( page->number() );
+            }
+            else if (res == fitPageWidth)
+            {
+                m_pageView->fitPageWidth( page->number() );
+            }
         }
     }
     delete popup;

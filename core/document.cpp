@@ -3427,6 +3427,10 @@ void Document::continueSearch( int searchID, SearchType type )
 
 void Document::resetSearch( int searchID )
 {
+    // if we are closing down, don't bother doing anything
+    if ( !d->m_generator )
+        return;
+
     // check if searchID is present in runningSearches
     QMap< int, RunningSearch * >::iterator searchIt = d->m_searches.find( searchID );
     if ( searchIt == d->m_searches.end() )

@@ -438,7 +438,7 @@ QStringList FilePrinter::jobname( QPrinter &printer, const QString &version )
     return QStringList();
 }
 
-QStringList FilePrinter::deleteFile( QPrinter &printer, FileDeletePolicy fileDeletePolicy, const QString &version )
+QStringList FilePrinter::deleteFile( QPrinter &, FileDeletePolicy fileDeletePolicy, const QString &version )
 {
     if ( fileDeletePolicy == FilePrinter::SystemDeletesFiles && version.startsWith( "lpr" ) ) {
         return QStringList("-r");

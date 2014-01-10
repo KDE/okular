@@ -35,7 +35,7 @@ static KJSObject dataGetDescription( KJSContext *, void *object )
     return KJSString( file->description() );
 }
 
-static KJSObject dataGetMIMEType( KJSContext *, void *object )
+static KJSObject dataGetMIMEType( KJSContext *, void * )
 {
     return KJSString( "" );
 }
@@ -54,7 +54,7 @@ static KJSObject dataGetName( KJSContext *, void *object )
     return KJSString( file->name() );
 }
 
-static KJSObject dataGetPath( KJSContext *, void *object )
+static KJSObject dataGetPath( KJSContext *, void * )
 {
     return KJSString( "" );
 }

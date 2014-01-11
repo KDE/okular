@@ -63,38 +63,11 @@ static bool CaseSensitiveCmpFn( const QStringRef & from, const QStringRef & to )
 }
 
 /**
- * If the horizontal arm of one rectangle fully contains the other (example below)
+ * If the vertical arm of one rectangle fully contains the other (example below)
  *  --------         ----         -----  first
  *    ----         --------       -----  second
  * or we can make it overlap of spaces by threshold%
 */
-static bool doesConsumeX(const QRect& first, const QRect& second, int threshold)
-{
-    // if one consumes another fully
-    if(first.left() <= second.left() && first.right() >= second.right())
-        return true;
-
-    if(first.left() >= second.left() && first.right() <= second.right())
-        return true;
-
-    // or if there is overlap of space by more than threshold%
-    // there is overlap
-    if(second.right() >= first.left() && first.right() >= second.left())
-    {
-        const int overlap = (second.right() >= first.right()) ? first.right() - second.left()
-                                                              : second.right() - first.left();
-        // we will divide by the smaller rectangle to calculate the overlap
-        const int percentage = (first.width() < second.width()) ? overlap * 100 / (first.right() - first.left())
-                                                                : overlap * 100 / (second.right() - second.left());
-        if(percentage >= threshold) return true;
-    }
-
-    return false;
-}
-
-/**
- * Same concept of doesConsumeX but in this case we calculate on y axis
- */
 static bool doesConsumeY(const QRect& first, const QRect& second, int threshold)
 {
     // if one consumes another fully

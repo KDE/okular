@@ -358,7 +358,8 @@ class OKULAR_EXPORT Generator : public QObject
             InvalidPrinterStatePrintError,
             UnableToFindFilePrintError,
             NoFileToPrintError,
-            NoBinaryToPrintError
+            NoBinaryToPrintError,
+            InvalidPageSizePrintError ///< @since 0.18.2 (KDE 4.12.2)
         };
         
         /**

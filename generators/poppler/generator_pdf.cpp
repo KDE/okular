@@ -1116,6 +1116,13 @@ bool PDFGenerator::print( QPrinter& printer )
     int width = printer.width();
     int height = printer.height();
 #endif
+
+    if (width <= 0 || height <= 0)
+    {
+        lastPrintError = InvalidPageSizePrintError;
+        return false;
+    }
+
     // Create the tempfile to send to FilePrinter, which will manage the deletion
     KTemporaryFile tf;
     tf.setSuffix( ".ps" );

@@ -37,8 +37,8 @@ Context menu actions like Rename Bookmarks etc.)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2013-08-18</date>
-		<releaseinfo>0.17.60 (&kde; 4.12)</releaseinfo>
+		<date>2014-01-12</date>
+		<releaseinfo>0.19 (&kde; 4.13)</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
 			<para>&okular; is a &kde; universal document viewer based on &kpdf; code.</para>
@@ -259,13 +259,13 @@ Context menu actions like Rename Bookmarks etc.)
 				<listitem>
 					<para>
 						You can go to the next match when searching using
-						<keycap>F3</keycap> key or
+						<keycap>F3</keycap> or &Enter; (when the focus is on <guilabel>Find</guilabel> text field) keys or
 						<menuchoice>
 							<guimenu>Edit</guimenu>
 							<guimenuitem>Find Next</guimenuitem>
 						</menuchoice>
 						menu item or move back to the previous match using
-						<keycombo>&Shift;<keysym>F3</keysym></keycombo> keys or
+						<keycombo>&Shift;<keysym>F3</keysym></keycombo> or <keycombo>&Shift;&Enter;</keycombo> (when the focus is on <guilabel>Find</guilabel> text field) keys or
 						<menuchoice>
 							<guimenu>Edit</guimenu>
 							<guimenuitem>Find Previous</guimenuitem>

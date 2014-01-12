@@ -24,6 +24,7 @@ class MiniBar;
 class HoverButton;
 class QIntValidator;
 class QLabel;
+class QToolBar;
 
 // [private widget] lineEdit for entering/validating page numbers
 class PagesEdit : public KLineEdit
@@ -113,6 +114,8 @@ class MiniBar : public QWidget
         MiniBar( QWidget *parent, MiniBarLogic * miniBarLogic );
         ~MiniBar();
 
+        void changeEvent( QEvent * event ) ;
+
     signals:
         void gotoPage();
         void prevPage();
@@ -124,6 +127,7 @@ class MiniBar : public QWidget
         void slotChangePage(int page);
         void slotEmitNextPage();
         void slotEmitPrevPage();
+        void slotToolBarIconSizeChanged();
 
     private:
         void resizeForPage( int pages );
@@ -136,6 +140,7 @@ class MiniBar : public QWidget
         HoverButton * m_prevButton;
         HoverButton * m_pagesButton;
         HoverButton * m_nextButton;
+        QToolBar * m_oldToobarParent;
 };
 
 /**

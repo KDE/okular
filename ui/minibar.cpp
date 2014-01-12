@@ -27,6 +27,7 @@
 #include <klineedit.h>
 #include <klocale.h>
 #include <kacceleratormanager.h>
+#include <qtoolbar.h>
 
 // local includes
 #include "core/document.h"
@@ -153,6 +154,7 @@ void MiniBarLogic::notifyCurrentPageChanged( int previousPage, int currentPage )
 MiniBar::MiniBar( QWidget * parent, MiniBarLogic * miniBarLogic )
     : QWidget( parent )
     , m_miniBarLogic( miniBarLogic )
+    , m_oldToobarParent( 0 )
 {
     setObjectName( QLatin1String( "miniBar" ) );
     
@@ -219,6 +221,27 @@ MiniBar::~MiniBar()
     m_miniBarLogic->removeMiniBar( this );
 }
 
+void MiniBar::changeEvent( QEvent * event )
+{
+    if ( event->type() == QEvent::ParentChange )
+    {
+        QToolBar *tb = dynamic_cast<QToolBar*>( parent() );
+        if ( tb != m_oldToobarParent )
+        {
+            if ( m_oldToobarParent )
+            {
+                disconnect( m_oldToobarParent, SIGNAL(iconSizeChanged(QSize)), this, SLOT(slotToolBarIconSizeChanged()));
+            }
+            m_oldToobarParent = tb;
+            if ( tb )
+            {
+                connect( tb, SIGNAL(iconSizeChanged(QSize)), this, SLOT(slotToolBarIconSizeChanged()));
+                slotToolBarIconSizeChanged();
+            }
+        }
+    }
+}
+
 bool MiniBar::eventFilter( QObject *target, QEvent *event )
 {
     if ( target == m_pageNumberEdit || target == m_pageLabelEdit )
@@ -269,6 +292,13 @@ void MiniBar::slotEmitPrevPage()
 {
     // emit signal
     prevPage();
+}
+
+void MiniBar::slotToolBarIconSizeChanged()
+{
+    const QSize buttonSize = m_oldToobarParent->iconSize();
+    m_prevButton->setIconSize( buttonSize );
+    m_nextButton->setIconSize( buttonSize );
 }
 
 void MiniBar::resizeForPage( int pages )
@@ -566,3 +596,4 @@ HoverButton::HoverButton( QWidget * parent )
 
 #include "minibar.moc"
 
+/* kate: replace-tabs on; indent-width 4; */

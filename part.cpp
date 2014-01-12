@@ -2057,7 +2057,7 @@ void Part::slotSaveFileAs()
         /* Don't show it if there are no local annotations */
         if ( containsLocalAnnotations )
         {
-            int res = KMessageBox::warningContinueCancel( widget(), "Your annotations will not be exported.\nYou can export the annotated document using File -> Export As -> Document Archive" );
+            int res = KMessageBox::warningContinueCancel( widget(), i18n("Your annotations will not be exported.\nYou can export the annotated document using File -> Export As -> Document Archive") );
             if ( res != KMessageBox::Continue )
                 return; // Canceled
         }

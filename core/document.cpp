@@ -3916,6 +3916,8 @@ QString Document::printError() const
             return i18n( "There was no file to print" );
         case Generator::NoBinaryToPrintError:
             return i18n( "Could not find a suitable binary for printing. Make sure CUPS lpr binary is available" );
+        case Generator::InvalidPageSizePrintError:
+            return i18n( "The page print size is invalid" );
         case Generator::NoPrintError:
             return QString();
         case Generator::UnknownPrintError:

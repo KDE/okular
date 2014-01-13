@@ -18,7 +18,11 @@
 #include <QIODevice>
 
 #ifdef Q_WS_X11
-#include <QX11Info>
+  #include "config-okular.h"
+  #if HAVE_LIBKSCREEN
+   #include <kscreen/config.h>
+  #endif
+  #include <QX11Info>
 #endif
 
 #ifdef Q_WS_MAC
@@ -79,6 +83,48 @@ double Utils::realDpiY()
 {
     const QDesktopWidget* w = QApplication::desktop();
     return (double(w->height()) * 25.4) / double(w->heightMM());
+}
+
+QSizeF Utils::realDpi(QWidget* widgetOnScreen)
+{
+    // Firstly try to retrieve DPI via LibKScreen
+#if HAVE_LIBKSCREEN
+    KScreen::Config* config = KScreen::Config::current();
+    KScreen::OutputList outputs = config->outputs();
+    QPoint globalPos = widgetOnScreen->parentWidget() ?
+                   widgetOnScreen->mapToGlobal(widgetOnScreen->pos()):
+                   widgetOnScreen->pos();
+    QRect widgetRect(globalPos, widgetOnScreen->size());
+
+    KScreen::Output* selectedOutput = 0;
+    int maxArea = 0;
+    Q_FOREACH(KScreen::Output *output, outputs) {
+        if (output->currentMode()) {
+            QRect outputRect(output->pos(),output->currentMode()->size());
+            QRect intersection = outputRect.intersected(widgetRect);
+            int area = intersection.width()*intersection.height();
+            if (area > maxArea) {
+                maxArea = area;
+                selectedOutput = output;
+            }
+        }
+    }
+
+    if (selectedOutput) {
+        kDebug() << "Found widget at output #" << selectedOutput->id();
+        QRect outputRect(selectedOutput->pos(),selectedOutput->currentMode()->size());
+        QSize szMM = selectedOutput->sizeMm();
+        QSizeF res(static_cast<qreal>(outputRect.width())*25.4/szMM.width(),
+                   static_cast<qreal>(outputRect.height())*25.4/szMM.height());
+        kDebug() << "Output DPI is " << res;
+        return res;
+    }
+#endif
+    // this is also fallback for LibKScreen branch if KScreen::Output
+    // for particular widget was not found
+    const QDesktopWidget* desktop = QApplication::desktop();
+    return QSizeF((desktop->width() * 25.4) / desktop->widthMM(),
+            (desktop->height() * 25.4) / desktop->heightMM());
 }
 
 #elif defined(Q_WS_MAC)
@@ -164,6 +210,11 @@ double Utils::realDpiY()
 {
     return dpiY();
 }
+
+QSizeF Utils::realDpi(QWidget*)
+{
+    return QSizeF(realDpiX(), realDpiY());
+}
 #else
 
 double Utils::dpiX()
@@ -184,6 +235,11 @@ double Utils::realDpiX()
 double Utils::realDpiY()
 {
     return dpiY();
+}
+
+QSizeF Utils::realDpi(QWidget*)
+{
+    return QSizeF(realDpiX(), realDpiY());
 }
 #endif
 

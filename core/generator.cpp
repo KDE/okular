@@ -31,7 +31,8 @@ GeneratorPrivate::GeneratorPrivate()
     : m_document( 0 ),
       mPixmapGenerationThread( 0 ), mTextPageGenerationThread( 0 ),
       m_mutex( 0 ), m_threadsMutex( 0 ), mPixmapReady( true ), mTextPageReady( true ),
-      m_closing( false ), m_closingLoop( 0 )
+      m_closing( false ), m_closingLoop( 0 ),
+      m_dpi(72.0, 72.0)
 {
 }
 
@@ -420,6 +421,18 @@ void Generator::requestFontData(const Okular::FontInfo & /*font*/, QByteArray * 
 const SourceReference * Generator::dynamicSourceReference( int /*pageNr*/, double /*absX*/, double /*absY*/)
 {
   return 0;
+}
+
+void Generator::setDPI(const QSizeF & dpi)
+{
+     Q_D( Generator );
+     d->m_dpi = dpi;
+}
+
+QSizeF Generator::dpi() const
+{
+     Q_D( const Generator );
+     return d->m_dpi;
 }
 
 PixmapRequest::PixmapRequest( DocumentObserver *observer, int pageNumber, int width, int height, int priority, PixmapRequestFeatures features )

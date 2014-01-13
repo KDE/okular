@@ -68,7 +68,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         const Okular::DocumentSynopsis * generateDocumentSynopsis();
         Okular::FontInfo::List fontsForPage( int page );
         const QList<Okular::EmbeddedFile*> * embeddedFiles() const;
-        PageSizeMetric pagesSizeMetric() const { return Points; }
+        PageSizeMetric pagesSizeMetric() const { return Pixels; }
 
         // [INHERITED] document information
         bool isAllowed( Okular::Permission permission ) const;
@@ -144,8 +144,6 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         mutable bool docEmbeddedFilesDirty;
         mutable QList<Okular::EmbeddedFile*> docEmbeddedFiles;
         int nextFontPage;
-        double dpiX;
-        double dpiY;
         PopplerAnnotationProxy *annotProxy;
         QHash<Okular::Annotation*, Poppler::Annotation*> annotationsHash;
 

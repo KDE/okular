@@ -15,6 +15,7 @@
 
 class QRect;
 class QImage;
+class QWidget;
 
 namespace Okular
 {
@@ -50,6 +51,7 @@ class OKULAR_EXPORT Utils
      * setting. Otherwise, returns the same as dpiX(),
      *
      * @since 0.9 (KDE 4.3)
+     * @deprecated Can not work with multi-monitor configurations
      */
     static double realDpiX();
 
@@ -60,8 +62,19 @@ class OKULAR_EXPORT Utils
      * setting. Otherwise, returns the same as dpiX(),
      *
      * @since 0.9 (KDE 4.3)
+     * @deprecated Can not work with multi-monitor configurations
      */
     static double realDpiY();
+
+    /**
+     * Return the real DPI of the display containing given widget
+     *
+     * On X11, it can indicate the real horizontal DPI value without any Xrdb
+     * setting. Otherwise, returns the same as realDpiX/Y(),
+     *
+     * @since 0.19 (KDE 4.13)
+     */
+    static QSizeF realDpi(QWidget* widgetOnScreen);
 
     /**
      * Compute the smallest rectangle that contains all non-white pixels in image),
@@ -75,3 +88,5 @@ class OKULAR_EXPORT Utils
 }
 
 #endif
+
+/* kate: replace-tabs on; indent-width 4; */

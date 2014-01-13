@@ -20,6 +20,7 @@
 #include <QtCore/QList>
 #include <QtCore/QObject>
 #include <QtCore/QSharedDataPointer>
+#include <QtCore/QSizeF>
 #include <QtCore/QString>
 #include <QtCore/QVariant>
 #include <QtCore/QVector>
@@ -308,7 +309,8 @@ class OKULAR_EXPORT Generator : public QObject
         enum PageSizeMetric
         {
           None,   ///< The page size is not defined in a physical metric.
-          Points  ///< The page size is given in 1/72 inches.
+          Points, ///< The page size is given in 1/72 inches.
+          Pixels  ///< The page size is given in screen pixels @since 0.19 (KDE 4.13)
         };
 
         /**
@@ -383,6 +385,13 @@ class OKULAR_EXPORT Generator : public QObject
          * Query for the specified @p feature.
          */
         bool hasFeature( GeneratorFeature feature ) const;
+
+        /**
+         * Update DPI of the generator
+         *
+         * @since 0.19 (KDE 4.13)
+         */
+        void setDPI(const QSizeF &dpi);
 
     Q_SIGNALS:
         /**
@@ -475,6 +484,12 @@ class OKULAR_EXPORT Generator : public QObject
          * @since 0.7 (KDE 4.1)
          */
         void updatePageBoundingBox( int page, const NormalizedRect & boundingBox );
+
+        /**
+         * Returns DPI, previously set via setDPI()
+         * @since 0.19 (KDE 4.13)
+         */
+        QSizeF dpi() const;
 
     protected Q_SLOTS:
         /**

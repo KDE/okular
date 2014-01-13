@@ -425,7 +425,6 @@ PDFGenerator::PDFGenerator( QObject *parent, const QVariantList &args )
     : Generator( parent, args ), pdfdoc( 0 ),
     docInfoDirty( true ), docSynopsisDirty( true ),
     docEmbeddedFilesDirty( true ), nextFontPage( 0 ),
-    dpiX( 72.0 /*Okular::Utils::dpiX()*/ ), dpiY( 72.0 /*Okular::Utils::dpiY()*/ ),
     annotProxy( 0 ), synctex_scanner( 0 )
 {
     setFeature( Threaded );
@@ -627,8 +626,8 @@ void PDFGenerator::loadPages(QVector<Okular::Page*> &pagesVector, int rotation, 
         if (p)
         {
             const QSizeF pSize = p->pageSizeF();
-            w = pSize.width() / 72.0 * dpiX;
-            h = pSize.height() / 72.0 * dpiY;
+            w = pSize.width() / 72.0 * dpi().width();
+            h = pSize.height() / 72.0 * dpi().height();
             Okular::Rotation orientation = Okular::Rotation0;
             switch (p->orientation())
             {
@@ -908,8 +907,8 @@ QImage PDFGenerator::image( Okular::PixmapRequest * request )
     if ( page->rotation() % 2 )
         qSwap( pageWidth, pageHeight );
 
-    double fakeDpiX = request->width() * dpiX / pageWidth,
-           fakeDpiY = request->height() * dpiY / pageHeight;
+    qreal fakeDpiX = request->width() / pageWidth * dpi().width();
+    qreal fakeDpiY = request->height() / pageHeight * dpi().height();
 
     // generate links rects only the first time
     bool genObjectRects = !rectsGenerated.at( page->number() );
@@ -1759,8 +1758,8 @@ void PDFGenerator::loadPdfSync( const QString & filePath, QVector<Okular::Page*>
 
         // magic numbers for TeX's RSU's (Ridiculously Small Units) conversion to pixels
         Okular::NormalizedPoint p(
-            ( pt.x * dpiX ) / ( 72.27 * 65536.0 * pagesVector[pt.page]->width() ),
-            ( pt.y * dpiY ) / ( 72.27 * 65536.0 * pagesVector[pt.page]->height() )
+            ( pt.x * dpi().width() ) / ( 72.27 * 65536.0 * pagesVector[pt.page]->width() ),
+            ( pt.y * dpi().height() ) / ( 72.27 * 65536.0 * pagesVector[pt.page]->height() )
             );
         QString file = pt.file;
         Okular::SourceReference * sourceRef = new Okular::SourceReference( file, pt.row, pt.column );
@@ -1781,7 +1780,7 @@ const Okular::SourceReference * PDFGenerator::dynamicSourceReference( int pageNr
     if  ( !synctex_scanner )
         return 0;
 
-    if (synctex_edit_query(synctex_scanner, pageNr + 1, absX * 72. / dpiX, absY * 72. / dpiY) > 0)
+    if (synctex_edit_query(synctex_scanner, pageNr + 1, absX * 72. / dpi().width(), absY * 72. / dpi().height()) > 0)
     {
         synctex_node_t node;
         // TODO what should we do if there is really more than one node?
@@ -1852,8 +1851,8 @@ void PDFGenerator::fillViewportFromSourceReference( Okular::DocumentViewport & v
             if ( !viewport.isValid() ) return;
 
             // TeX small points ...
-            double px = (synctex_node_visible_h( node ) * dpiX) / 72.27;
-            double py = (synctex_node_visible_v( node ) * dpiY) / 72.27;
+            double px = (synctex_node_visible_h( node ) * dpi().width()) / 72.27;
+            double py = (synctex_node_visible_v( node ) * dpi().height()) / 72.27;
             viewport.rePos.normalizedX = px / document()->page(viewport.pageNumber)->width();
             viewport.rePos.normalizedY = ( py + 0.5 ) / document()->page(viewport.pageNumber)->height();
             viewport.rePos.enabled = true;

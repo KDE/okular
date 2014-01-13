@@ -64,6 +64,7 @@ class GeneratorPrivate
         bool mTextPageReady : 1;
         bool m_closing : 1;
         QEventLoop *m_closingLoop;
+        QSizeF m_dpi;
 };
 
 

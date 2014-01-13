@@ -84,6 +84,7 @@
 #include "view.h"
 #include "view_p.h"
 #include "form.h"
+#include "utils.h"
 
 #include <memory>
 
@@ -265,6 +266,14 @@ QString DocumentPrivate::localizedSize(const QSizeF &size) const
         case Generator::Points:
             inchesWidth = size.width() / 72.0;
             inchesHeight = size.height() / 72.0;
+        break;
+
+        case Generator::Pixels:
+        {
+            const QSizeF dpi = m_generator->dpi();
+            inchesWidth = size.width() / dpi.width();
+            inchesHeight = size.height() / dpi.height();
+        }
         break;
 
         case Generator::None:
@@ -917,6 +926,9 @@ bool DocumentPrivate::openDocumentInternal( const KService::Ptr& offer, bool iss
     QObject::connect( m_generator, SIGNAL(notice(QString,int)), m_parent, SIGNAL(notice(QString,int)) );
 
     QApplication::setOverrideCursor( Qt::WaitCursor );
+
+    m_generator->setDPI(Utils::realDpi(m_widget));
+
     bool openOk = false;
     if ( !isstdin )
     {

@@ -87,39 +87,46 @@ double Utils::realDpiY()
 
 QSizeF Utils::realDpi(QWidget* widgetOnScreen)
 {
-    // Firstly try to retrieve DPI via LibKScreen
+    if (widgetOnScreen)
+    {
+        // Firstly try to retrieve DPI via LibKScreen
 #if HAVE_LIBKSCREEN
-    KScreen::Config* config = KScreen::Config::current();
-    KScreen::OutputList outputs = config->outputs();
-    QPoint globalPos = widgetOnScreen->parentWidget() ?
-                   widgetOnScreen->mapToGlobal(widgetOnScreen->pos()):
-                   widgetOnScreen->pos();
-    QRect widgetRect(globalPos, widgetOnScreen->size());
+        KScreen::Config* config = KScreen::Config::current();
+        KScreen::OutputList outputs = config->outputs();
+        QPoint globalPos = widgetOnScreen->parentWidget() ?
+                    widgetOnScreen->mapToGlobal(widgetOnScreen->pos()):
+                    widgetOnScreen->pos();
+        QRect widgetRect(globalPos, widgetOnScreen->size());
 
-    KScreen::Output* selectedOutput = 0;
-    int maxArea = 0;
-    Q_FOREACH(KScreen::Output *output, outputs) {
-        if (output->currentMode()) {
-            QRect outputRect(output->pos(),output->currentMode()->size());
-            QRect intersection = outputRect.intersected(widgetRect);
-            int area = intersection.width()*intersection.height();
-            if (area > maxArea) {
-                maxArea = area;
-                selectedOutput = output;
+        KScreen::Output* selectedOutput = 0;
+        int maxArea = 0;
+        Q_FOREACH(KScreen::Output *output, outputs)
+        {
+            if (output->currentMode())
+            {
+                QRect outputRect(output->pos(),output->currentMode()->size());
+                QRect intersection = outputRect.intersected(widgetRect);
+                int area = intersection.width()*intersection.height();
+                if (area > maxArea)
+                {
+                    maxArea = area;
+                    selectedOutput = output;
+                }
             }
         }
-    }
 
-    if (selectedOutput) {
-        kDebug() << "Found widget at output #" << selectedOutput->id();
-        QRect outputRect(selectedOutput->pos(),selectedOutput->currentMode()->size());
-        QSize szMM = selectedOutput->sizeMm();
-        QSizeF res(static_cast<qreal>(outputRect.width())*25.4/szMM.width(),
-                   static_cast<qreal>(outputRect.height())*25.4/szMM.height());
-        kDebug() << "Output DPI is " << res;
-        return res;
-    }
+        if (selectedOutput)
+        {
+            kDebug() << "Found widget at output #" << selectedOutput->id();
+            QRect outputRect(selectedOutput->pos(),selectedOutput->currentMode()->size());
+            QSize szMM = selectedOutput->sizeMm();
+            QSizeF res(static_cast<qreal>(outputRect.width())*25.4/szMM.width(),
+                    static_cast<qreal>(outputRect.height())*25.4/szMM.height());
+            kDebug() << "Output DPI is " << res;
+            return res;
+        }
 #endif
+    }
     // this is also fallback for LibKScreen branch if KScreen::Output
     // for particular widget was not found
     const QDesktopWidget* desktop = QApplication::desktop();
@@ -337,3 +344,5 @@ QTransform Okular::buildRotationMatrix(Rotation rotation)
 
     return matrix;
 }
+
+/* kate: replace-tabs on; indent-width 4; */

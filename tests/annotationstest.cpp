@@ -71,8 +71,8 @@ void AnnotationTest::testDistance_data()
     QTest::addColumn<double>("y");
     QTest::addColumn<int>("distance");
 
-    int documentX = m_document->page(0)->width();
-    int documentY = m_document->page(0)->height();
+    double documentX = m_document->page(0)->width();
+    double documentY = m_document->page(0)->height();
 
     // lines
     Okular::LineAnnotation *line = new Okular::LineAnnotation;

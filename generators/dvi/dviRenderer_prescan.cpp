@@ -279,7 +279,7 @@ void dviRenderer::prescan_ParseHTMLAnchorSpecial(const QString& _cp)
 void dviRenderer::prescan_ParsePSHeaderSpecial(const QString& cp)
 {
 #ifdef DEBUG_PRESCAN
-  kDebug(kvs::dvi) << "PostScript-special, header " << cp.latin1();
+  kDebug(kvs::dvi) << "PostScript-special, header " << cp;
 #endif
 
   QString _file = cp;
@@ -303,7 +303,7 @@ void dviRenderer::prescan_ParsePSHeaderSpecial(const QString& cp)
 void dviRenderer::prescan_ParsePSBangSpecial(const QString& cp)
 {
 #ifdef DEBUG_PRESCAN
-  kDebug(kvs::dvi) << "PostScript-special, literal header " << cp.latin1();
+  kDebug(kvs::dvi) << "PostScript-special, literal header " << cp;
 #endif
 
   PS_interface->PostScriptHeaderString->append( " @defspecial \n" );
@@ -315,7 +315,7 @@ void dviRenderer::prescan_ParsePSBangSpecial(const QString& cp)
 void dviRenderer::prescan_ParsePSQuoteSpecial(const QString& cp)
 {
 #ifdef DEBUG_PRESCAN
-  kError(kvs::dvi) << "PostScript-special, literal PostScript " << cp.latin1() << endl;
+  kError(kvs::dvi) << "PostScript-special, literal PostScript " << cp;
 #endif
 
   double PS_H = (currinf.data.dvi_h*300.0)/(65536*1200)-300;

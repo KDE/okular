@@ -84,7 +84,7 @@
     <Action name="show_leftpanel" group="show_merge"/>
     <Action name="show_bottombar" group="show_merge"/>
     <Action name="options_configure_generators" group="configure_merge"/>
-    <Action name="options_configure"/>
+    <Action name="options_configure" group="configure_merge"/>
   </Menu>
   <Menu name="help"><text>&amp;Help</text>
     <Action name="help_about_backend" group="about_merge"/>

@@ -36,7 +36,6 @@ class DocumentWidget;
 class dvifile;
 class dviRenderer;
 class ghostscript_interface;
-//class infoDialog;
 class QEventLoop;
 class KProgressDialog;
 class PreBookmark;
@@ -128,13 +127,6 @@ public:
 
   void setEventLoop(QEventLoop *el);
 
-#if 0
-  /** Called by the exporter or editor in order to update the
-   *  contents of the global info dialog with @c text.
-   */
-  void update_info_dialog(const QString& text, bool clear = false);
-#endif
-
   // These should not be public... only for the moment
   void          read_postamble();
   void          draw_part(double current_dimconv, bool is_vfmacro);
@@ -157,7 +149,6 @@ public slots:
   void          exportPS(const QString& fname = QString(), const QStringList& options = QStringList(), QPrinter* printer = 0, QPrinter::Orientation orientation = QPrinter::Portrait);
   void          exportPDF();
 
-//void          showInfo();
   void          handleSRCLink(const QString &linkText, const QPoint& point, DocumentWidget *widget);
 
   void          embedPostScript();
@@ -209,7 +200,6 @@ private:
   void  setResolution(double resolution_in_DPI);
 
   fontPool      font_pool;
-  //infoDialog    *info;
 
   double        resolutionInDPI;
 

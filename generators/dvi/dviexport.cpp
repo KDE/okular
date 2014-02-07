@@ -149,9 +149,7 @@ void DVIExport::output_receiver()
 {
   if (process_) {
      QString out = process_->readAllStandardOutput();
-#if 0
-    parent_->update_info_dialog(process_->readAll());
-#endif
+
     if (progress_)
       progress_->show();
   }
@@ -207,11 +205,6 @@ DVIExportToPDF::DVIExportToPDF(dviRenderer& parent, QWidget* parent_widget)
                                   "a while because dvipdfm needs to generate its own bitmap fonts "
                                   "Please be patient."),
                              i18n("Waiting for dvipdfm to finish...") );
-
-#if 0
-  parent.update_info_dialog(i18n("Export: %1 to PDF", dvi.filename),
-                              true);
-#endif
 
   start("dvipdfm",
         QStringList() << "-o"
@@ -367,11 +360,6 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
                                   "a while because dvips needs to generate its own bitmap fonts "
                                   "Please be patient."),
                              i18n("Waiting for dvips to finish...") );
-
-#if 0
-  parent.update_info_dialog(i18n("Export: %1 to PostScript", dvi.filename),
-                              true);
-#endif
 
   QStringList args;
   if (!printer)

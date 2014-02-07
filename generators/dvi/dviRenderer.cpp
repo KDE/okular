@@ -101,14 +101,6 @@ void dviRenderer::setPrefs(bool flag_showPS, const QString &str_editorCommand, b
   font_pool.setParameters( useFontHints );
 }
 
-
-void dviRenderer::showInfo()
-{
-  QMutexLocker locker(&mutex);
-
-  info->setDVIData(dviFile);
-  info->show();
-}
 #endif
 
 
@@ -445,8 +437,6 @@ bool dviRenderer::setFile(const QString &fname, const KUrl &base)
   // the dvifile and the pixmap.
   if (fname.isEmpty()) {
     // Delete DVI file
-/*    if(info)
-      info->setDVIData(0);*/
     delete dviFile;
     dviFile = 0;
     return true;
@@ -486,8 +476,6 @@ bool dviRenderer::setFile(const QString &fname, const KUrl &base)
   delete dviFile;
   dviFile = dviFile_new;
   numPages = dviFile->total_pages;
-  /* if(info)
-    info->setDVIData(dviFile); */
   _isModified = false;
   baseURL = base;
 
@@ -522,10 +510,6 @@ bool dviRenderer::setFile(const QString &fname, const KUrl &base)
 
   // Locate fonts.
   font_pool.locateFonts();
-
-  // Update the list of fonts in the info window
-  //if (info != 0)
-    //info->setFontInfo(&font_pool);
 
   // We should pre-scan the document now (to extract embedded,
   // PostScript, Hyperlinks, ets).
@@ -775,14 +759,6 @@ void dviRenderer::exportPS(const QString& fname, const QStringList& options, QPr
 }
 
 /*
-void dviRenderer::update_info_dialog(const QString& text, bool clear)
-{
-  if (clear)
-    info->clear(text);
-  else
-    info->outputReceiver(text);
-}
-
 void dviRenderer::editor_finished(const DVISourceEditor*)
 {
   editor_.attach(0);

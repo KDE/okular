@@ -26,6 +26,7 @@
 #include "fontprogress.h"
 #include "kvs_debug.h"
 
+#include <KStandardDirs>
 #include <kfiledialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -157,66 +158,6 @@ void DVIExport::output_receiver()
 }
 
 
-namespace {
-
-/** @returns the contents of environment variable @c envname as a
- *  QStringList split at the OS-dependent path separator.
- *  (':' on *nix, ';' on Windows.
- */
-const QStringList get_env_path(const char* envname)
-{
-  if (!envname || !*envname)
-    return QStringList();
-
-#if defined _WIN32
-  const char path_separator = ';';
-#else
-  const char path_separator = ':';
-#endif
-
-  const char* const envvar = ::getenv(envname);
-  if (!envvar || !*envvar)
-    return QStringList();
-
-  return QString(envvar).split(path_separator);
-}
-
-
-/** @returns true if the file @c exe_ can be found in the PATH
- *  and is executable.
- */
-bool find_exe(const QString& exe_)
-{
-#if defined _WIN32
-  const QFileInfo exe(exe_.endsWith(".exe") ? exe_ : exe_ + ".exe");
-#else
-  const QFileInfo exe(exe_);
-#endif
-
-  if (exe.isAbsolute())
-    return exe.exists() && exe.isReadable() && exe.isExecutable();
-
-  const QStringList path = get_env_path("PATH");
-  if (path.isEmpty())
-    return false;
-
-  typedef QStringList::const_iterator iterator;
-
-  const iterator end = path.end();
-  for (iterator it = path.begin(); it != end; ++it) {
-    const QString dir = it->endsWith("/") ? *it : *it + '/';
-    const QFileInfo abs_exe = QString(dir + exe.filePath());
-
-    if (abs_exe.exists())
-      return abs_exe.isReadable() && abs_exe.isExecutable();
-  }
-
-  return false;
-}
-
-} // namespace anon
-
-
 DVIExportToPDF::DVIExportToPDF(dviRenderer& parent, QWidget* parent_widget)
   : DVIExport(parent, parent_widget)
 {
@@ -229,7 +170,7 @@ DVIExportToPDF::DVIExportToPDF(dviRenderer& parent, QWidget* parent_widget)
   if (!input.exists() || !input.isReadable())
     return;
 
-  if (!find_exe("dvipdfm")) {
+  if (KStandardDirs::findExe("dvipdfm").isEmpty()) {
     KMessageBox::sorry(parent_widget,
                                i18n("Okular could not locate the program 'dvipdfm' on your computer. This program is "
                                "essential for the export function to work. You can, however, convert "
@@ -318,7 +259,7 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
     return;
   }
 
-  if (!find_exe("dvips")) {
+  if (KStandardDirs::findExe("dvips").isEmpty()) {
     KMessageBox::sorry(parent_widget,
                           i18n("Okular could not locate the program 'dvips' on your computer. That program is "
                                "essential for the export function to work.\n"

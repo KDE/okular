@@ -703,10 +703,10 @@ void Part::setupViewerActions()
     reload->setShortcut( KStandardShortcut::reload() );
     m_reload = reload;
 
-    m_closeFindBar = new KAction( i18n( "Close &Find Bar" ), ac );
-    ac->addAction("close_find_bar", m_closeFindBar);
-    connect(m_closeFindBar, SIGNAL(triggered()), this, SLOT(slotHideFindBar()));
-    widget()->addAction(m_closeFindBar);
+    m_closeFindBar = ac->addAction( "close_find_bar", this, SLOT(slotHideFindBar()) );
+    m_closeFindBar->setText( i18n("Close &Find Bar") );
+    m_closeFindBar->setShortcut( QKeySequence(Qt::Key_Escape) );
+    m_closeFindBar->setEnabled( false );
 
     KAction *pageno = new KAction( i18n( "Page Number" ), ac );
     pageno->setDefaultWidget( m_pageNumberTool );
@@ -1225,6 +1225,8 @@ bool Part::openFile()
         }
     }
     bool canSearch = m_document->supportsSearching();
+
+    emit mimeTypeChanged( mime );
 
     // update one-time actions
     emit enableCloseAction( ok );
@@ -1790,7 +1792,7 @@ void Part::slotShowFindBar()
 {
     m_findBar->show();
     m_findBar->focusAndSetCursor();
-    m_closeFindBar->setShortcut( QKeySequence( Qt::Key_Escape ) );
+    m_closeFindBar->setEnabled( true );
 }
 
 void Part::slotHideFindBar()
@@ -1798,7 +1800,7 @@ void Part::slotHideFindBar()
     if ( m_findBar->maybeHide() )
     {
         m_pageView->setFocus();
-        m_closeFindBar->setShortcut( QKeySequence( /* None */ ) );
+        m_closeFindBar->setEnabled( false );
     }
 }
 

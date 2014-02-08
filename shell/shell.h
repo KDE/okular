@@ -17,12 +17,15 @@
 #define _OKULAR_SHELL_H_
 
 #include <kparts/mainwindow.h>
+#include <kmimetype.h>
 
 #include <QtDBus/QtDBus>
 
 class KCmdLineArgs;
 class KRecentFilesAction;
 class KToggleAction;
+class KTabWidget;
+class KPluginFactory;
 
 class KDocumentViewer;
 class Part;
@@ -91,6 +94,16 @@ private slots:
   void delayedOpen();
   void showOpenRecentMenu();
   void closeUrl();
+  void print();
+  void setPrintEnabled( bool enabled );
+  void setCloseEnabled( bool enabled );
+  void setTabIcon( KMimeType::Ptr mimeType );
+
+  // Tab event handlers
+  void setActiveTab( int tab );
+  void closeTab( int tab );
+  void activateNextTab();
+  void activatePrevTab();
 
 signals:
   void restoreDocument(const KConfigGroup &group);
@@ -101,11 +114,13 @@ private:
   void setupActions();
   void init();
   QStringList fileFormats() const;
+  void openNewTab( const KUrl& url );
+  void connectPart( QObject* part );
+  int  findTabIndex( QObject* sender );
 
 private:
   KCmdLineArgs* m_args;
-  KParts::ReadWritePart* m_part;
-  KDocumentViewer* m_doc;
+  KPluginFactory* m_partFactory;
   KRecentFilesAction* m_recent;
   QStringList m_fileformats;
   bool m_fileformatsscanned;
@@ -116,6 +131,23 @@ private:
   bool m_menuBarWasShown, m_toolBarWasShown;
   bool m_unique;
   KUrl m_openUrl;
+  KTabWidget* m_tabWidget;
+  KToggleAction* m_openInTab;
+
+  struct TabState
+  {
+    TabState( KParts::ReadWritePart* p )
+      : part(p),
+        printEnabled(false),
+        closeEnabled(false)
+    {}
+    KParts::ReadWritePart* part;
+    bool printEnabled;
+    bool closeEnabled;
+  };
+  QList<TabState> m_tabs;
+  KAction* m_nextTabAction;
+  KAction* m_prevTabAction;
 
 #ifdef KActivities_FOUND
   KActivities::ResourceInstance* m_activityResource;

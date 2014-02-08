@@ -156,6 +156,7 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         void openSourceReference(const QString& absFileName, int line, int column);
         void viewerMenuStateChange(bool enabled);
         void enableCloseAction(bool enable);
+        void mimeTypeChanged(KMimeType::Ptr mimeType);
 
     protected:
         // reimplemented from KParts::ReadWritePart

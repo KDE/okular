@@ -942,6 +942,11 @@ void Part::setShowSourceLocationsGraphically(bool show)
     m_pageView->setShowSourceLocationsGraphically(show);
 }
 
+bool Part::openNewFilesInTabs() const
+{
+    return Okular::Settings::self()->shellOpenFileInTabs();
+}
+
 void Part::slotHandleActivatedSourceReference(const QString& absFileName, int line, int col, bool *handled)
 {
     emit openSourceReference( absFileName, line, col );

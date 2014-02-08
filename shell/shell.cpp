@@ -52,6 +52,7 @@
 
 // local includes
 #include "kdocumentviewer.h"
+#include "../interfaces/viewerinterface.h"
 #include "shellutils.h"
 
 static const char *shouldShowMenuBarComingFromFullScreen = "shouldShowMenuBarComingFromFullScreen";
@@ -174,7 +175,8 @@ void Shell::openUrl( const KUrl & url )
     const int activeTab = m_tabWidget->currentIndex();
     if ( activeTab < m_tabs.size() )
     {
-        if( !m_tabs[activeTab].part->url().isEmpty() )
+        KParts::ReadWritePart* const activePart = m_tabs[activeTab].part;
+        if( !activePart->url().isEmpty() )
         {
             if( m_unique )
             {
@@ -182,7 +184,7 @@ void Shell::openUrl( const KUrl & url )
             }
             else
             {
-                if( m_openInTab->isChecked() )
+                if( dynamic_cast<Okular::ViewerInterface *>(activePart)->openNewFilesInTabs() )
                 {
                     openNewTab( url );
                     setActiveTab( m_tabs.size()-1 );
@@ -197,16 +199,15 @@ void Shell::openUrl( const KUrl & url )
         }
         else
         {
-            KParts::ReadWritePart* const emptyPart = m_tabs[activeTab].part;
             m_tabWidget->setTabText( activeTab, url.fileName() );
             if ( m_args ){
-                KDocumentViewer* const doc = qobject_cast<KDocumentViewer*>(emptyPart);
+                KDocumentViewer* const doc = qobject_cast<KDocumentViewer*>(activePart);
                 if ( doc && m_args->isSet( "presentation" ) )
                     doc->startPresentation();
                 if ( m_args->isSet( "print" ) )
-                    QMetaObject::invokeMethod( emptyPart, "enableStartWithPrint" );
+                    QMetaObject::invokeMethod( activePart, "enableStartWithPrint" );
             }
-            bool openOk = emptyPart->openUrl( url );
+            bool openOk = activePart->openUrl( url );
             const bool isstdin = url.fileName( KUrl::ObeyTrailingSlash ) == QLatin1String( "-" );
             if ( !isstdin )
             {
@@ -246,8 +247,6 @@ void Shell::readSettings()
         m_menuBarWasShown = group.readEntry( shouldShowMenuBarComingFromFullScreen, true );
         m_toolBarWasShown = group.readEntry( shouldShowToolBarComingFromFullScreen, true );
     }
-
-    m_openInTab->setChecked( group.readEntry("OpenInTab", true) );
 }
 
 void Shell::writeSettings()
@@ -260,7 +259,6 @@ void Shell::writeSettings()
         group.writeEntry( shouldShowMenuBarComingFromFullScreen, m_menuBarWasShown );
         group.writeEntry( shouldShowToolBarComingFromFullScreen, m_toolBarWasShown );
     }
-    group.writeEntry( "OpenInTab", m_openInTab->isChecked() );
     KGlobal::config()->sync();
 }
 
@@ -294,9 +292,6 @@ void Shell::setupActions()
   m_prevTabAction->setShortcut( KStandardShortcut::tabPrev() );
   m_prevTabAction->setEnabled( false );
   connect( m_prevTabAction, SIGNAL(triggered()), this, SLOT(activatePrevTab()) );
-
-  m_openInTab = actionCollection()->add<KToggleAction>("open_in_tab");
-  m_openInTab->setText( i18n("Open Documents in New Tab") );
 }
 
 void Shell::saveProperties(KConfigGroup &group)

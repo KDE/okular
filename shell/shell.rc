@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui version="8" name="okular_shell" >
+<kpartgui version="7" name="okular_shell" >
  <MenuBar>
   <Menu name="file" >
    <DefineGroup append="open_merge" name="file_open" />
@@ -12,7 +12,6 @@
   <Menu name="settings" >
    <DefineGroup append="show_merge" name="show_merge" />
    <DefineGroup append="configure_merge" name="configure_merge" />
-   <Action append="fullscreen_merge" name="open_in_tab" />
   </Menu>
   <Merge/>
   <Menu name="help">

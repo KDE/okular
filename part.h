@@ -132,6 +132,7 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         void setWatchFileModeEnabled(bool enable);
         bool areSourceLocationsShownGraphically() const;
         void setShowSourceLocationsGraphically(bool show);
+        bool openNewFilesInTabs() const;
 
     public slots:                // dbus
         Q_SCRIPTABLE Q_NOREPLY void goToPage(uint page);

@@ -37,7 +37,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2014-01-12</date>
+		<date>2014-02-08</date>
 		<releaseinfo>0.19 (&kde; 4.13)</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
@@ -94,6 +94,11 @@ Context menu actions like Rename Bookmarks etc.)
 				</menuchoice>, choose a supported file in the dialog and click <guibutton>Open</guibutton>.
 				Your file should now be displayed in the main window.
 			</para>
+			<important>
+			  <para>
+			    The new document will be opened in a new tab should the <guilabel>Open new files in tabs</guilabel> option on the <link linkend="configgeneral">General configuration page</link> is checked.
+			  </para>
+			</important>
 			<para>
 				If you have already opened files in &okular; before, you can quickly access them by selecting them in
 				the <menuchoice><guimenu>File</guimenu><guisubmenu>Open Recent</guisubmenu></menuchoice> menu.
@@ -2061,6 +2066,15 @@ Context menu actions like Rename Bookmarks etc.)
 							to make it impossible to perform certain actions with &PDF; documents,
 							such as copying content to the clipboard. Note that in some configurations
 							of &okular;, this option is not available.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term><guilabel>Open new files in tabs</guilabel></term>
+					<listitem>
+						<para>Whether to open new documents in tabs. The tabs are disabled by default.</para>
+						<para>
+						  The default shortcuts to switch between tabs are <keycombo>&Ctrl;<keycap>.</keycap></keycombo> (<guilabel>Next tab</guilabel>) and <keycombo>&Ctrl;<keycap>,</keycap></keycombo> (<guilabel>Previous tab</guilabel>).
+						</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>

@@ -101,6 +101,7 @@ void Shell::init()
     m_tabWidget->setTabsClosable( true );
     m_tabWidget->setElideMode( Qt::ElideRight );
     m_tabWidget->setTabBarHidden( true );
+    m_tabWidget->setDocumentMode( true );
     connect( m_tabWidget, SIGNAL(currentChanged(int)), SLOT(setActiveTab(int)) );
     connect( m_tabWidget, SIGNAL(tabCloseRequested(int)), SLOT(closeTab(int)) );
 

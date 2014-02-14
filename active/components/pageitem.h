@@ -153,6 +153,7 @@ protected:
 
 private Q_SLOTS:
     void delayedRedraw();
+    void documentPathChanged();
     void pageHasChanged(int page, int flags);
     void checkBookmarksChanged();
     void contentXChanged();

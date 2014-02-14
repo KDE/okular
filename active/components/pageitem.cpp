@@ -118,6 +118,8 @@ void PageItem::setDocument(DocumentItem *doc)
     setPageNumber(0);
     emit documentChanged();
     m_redrawTimer->start();
+
+    connect(doc, SIGNAL(pathChanged()), this, SLOT(documentPathChanged()));
 }
 
 int PageItem::pageNumber() const
@@ -379,6 +381,15 @@ void PageItem::contentYChanged()
 
     m_viewPort.rePos.normalizedY = m_flickable.data()->property("contentY").toReal() / (height() - m_flickable.data()->height());
 }
+
+void PageItem::documentPathChanged()
+{
+    m_page = 0;
+    setPageNumber(0);
+
+    m_redrawTimer->start();
+}
+
 
 void PageItem::setIsThumbnail(bool thumbnail)
 {

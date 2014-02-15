@@ -108,10 +108,13 @@ class PageViewMessage : public QWidget
         void display( const QString & message, const QString & details = QString(), Icon icon = Info, int durationMs = 4000 );
 
     protected:
+        bool eventFilter(QObject * obj, QEvent * event );
         void paintEvent( QPaintEvent * e );
         void mousePressEvent( QMouseEvent * e );
 
     private:
+        QRect computeTextRect( const QString & message, int extra_width ) const;
+        void computeSizeAndResize();
         QString m_message;
         QString m_details;
         QPixmap m_symbol;

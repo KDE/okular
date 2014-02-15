@@ -231,6 +231,7 @@ PageViewMessage::PageViewMessage( QWidget * parent )
 void PageViewMessage::display( const QString & message, const QString & details, Icon icon, int durationMs )
 // give Caesar what belongs to Caesar: code taken from Amarok's osd.h/.cpp
 // "redde (reddite, pl.) cesari quae sunt cesaris", just btw.  :)
+// The code has been heavily modified since then.
 {
     if ( !Okular::Settings::showOSD() )
     {
@@ -244,28 +245,7 @@ void PageViewMessage::display( const QString & message, const QString & details,
     // reset vars
     m_lineSpacing = 0;
 
-    // determine text rectangle
-    QRect textRect = fontMetrics().boundingRect( m_message );
-    textRect.translate( -textRect.left(), -textRect.top() );
-    textRect.adjust( 0, 0, 2, 2 );
-    int width = textRect.width(),
-        height = textRect.height();
-
-    if ( !m_details.isEmpty() )
-    {
-        // determine details text rectangle
-        QRect detailsRect = fontMetrics().boundingRect( m_details );
-        detailsRect.translate( -detailsRect.left(), -detailsRect.top() );
-        detailsRect.adjust( 0, 0, 2, 2 );
-        width = qMax( width, detailsRect.width() );
-        height += detailsRect.height();
-
-        // plus add a ~60% line spacing
-        m_lineSpacing = static_cast< int >( fontMetrics().height() * 0.6 );
-        height += m_lineSpacing;
-    }
-
-    // load icon (if set) and update geometry
+    // load icon (if set)
     m_symbol = QPixmap();
     if ( icon != None )
     {
@@ -288,18 +268,9 @@ void PageViewMessage::display( const QString & message, const QString & details,
                 break;
         }
 
-        width += 2 + m_symbol.width();
-        height = qMax( height, m_symbol.height() );
     }
 
-    // resize widget
-    resize( QRect( 0, 0, width + 10, height + 8 ).size() );
-
-    // if the layout is RtL, we can move it to the right place only after we
-    // know how much size it will take
-    if ( layoutDirection() == Qt::RightToLeft )
-        move( parentWidget()->width() - geometry().width() - 10 - 1, 10 );
-
+    computeSizeAndResize();
     // show widget and schedule a repaint
     show();
     update();
@@ -316,24 +287,94 @@ void PageViewMessage::display( const QString & message, const QString & details,
         m_timer->start( durationMs );
     } else if ( m_timer )
         m_timer->stop();
+
+    qobject_cast<QAbstractScrollArea*>(parentWidget())->viewport()->installEventFilter(this);
+
+}
+
+QRect PageViewMessage::computeTextRect( const QString & message, int extra_width ) const
+// Return the QRect which embeds the text
+{
+    int charSize = fontMetrics().averageCharWidth();
+    /* width of the viewport, minus 20 (~ size removed by further resizing),
+       minus the extra size (usually the icon width), minus (a bit empirical)
+       twice the mean width of a character to ensure that the bounding box is
+       really smaller than the container.
+     */
+    const int boundingWidth = qobject_cast<QAbstractScrollArea*>(parentWidget())->viewport()->width() - 20 - ( extra_width > 0 ? 2 + extra_width : 0 ) - 2*charSize;
+    QRect textRect = fontMetrics().boundingRect( 0, 0, boundingWidth, 0,
+                     Qt::AlignLeft | Qt::AlignTop | Qt::TextWordWrap, message );
+    textRect.translate( -textRect.left(), -textRect.top() );
+    textRect.adjust( 0, 0, 2, 2 );
+
+    return textRect;
+}
+
+void PageViewMessage::computeSizeAndResize()
+{
+    // determine text rectangle
+    const QRect textRect = computeTextRect( m_message, m_symbol.width() );
+    int width = textRect.width(),
+        height = textRect.height();
+
+    if ( !m_details.isEmpty() )
+    {
+        // determine details text rectangle
+        const QRect detailsRect = computeTextRect( m_details, m_symbol.width() );
+        width = qMax( width, detailsRect.width() );
+        height += detailsRect.height();
+
+        // plus add a ~60% line spacing
+        m_lineSpacing = static_cast< int >( fontMetrics().height() * 0.6 );
+        height += m_lineSpacing;
+    }
+
+    // update geometry with icon information
+    if ( ! m_symbol.isNull() )
+    {
+        width += 2 + m_symbol.width();
+        height = qMax( height, m_symbol.height() );
+    }
+
+    // resize widget
+    resize( QRect( 0, 0, width + 10, height + 8 ).size() );
+
+    // if the layout is RtL, we can move it to the right place only after we
+    // know how much size it will take
+    if ( layoutDirection() == Qt::RightToLeft )
+        move( parentWidget()->width() - geometry().width() - 10 - 1, 10 );
+}
+
+
+bool PageViewMessage::eventFilter(QObject * obj, QEvent * event )
+{
+    /* if the parent object (scroll area) resizes, the message should
+       resize as well */
+    if (event->type() == QEvent::Resize)
+    {
+        QResizeEvent *resizeEvent = static_cast<QResizeEvent *>(event);
+        if ( resizeEvent->oldSize() != resizeEvent->size() )
+        {
+           computeSizeAndResize();
+        }
+    }
+    // standard event processing
+    return QObject::eventFilter(obj, event);
 }
 
 void PageViewMessage::paintEvent( QPaintEvent * /* e */ )
 {
-    QRect textRect = fontMetrics().boundingRect( m_message );
-    textRect.translate( -textRect.left(), -textRect.top() );
-    textRect.adjust( 0, 0, 2, 2 );
+    const QRect textRect = computeTextRect( m_message, m_symbol.width() );
 
     QRect detailsRect;
     if ( !m_details.isEmpty() )
     {
-        detailsRect = fontMetrics().boundingRect( m_details );
-        detailsRect.translate( -detailsRect.left(), -detailsRect.top() );
-        detailsRect.adjust( 0, 0, 2, 2 );
+        detailsRect = computeTextRect( m_details, m_symbol.width() );
     }
 
     int textXOffset = 0,
-        textYOffset = geometry().height() - textRect.height() / 2 - detailsRect.height() - m_lineSpacing,
+        // add 2 to account for the reduced drawRoundRect later
+        textYOffset = ( geometry().height() - textRect.height() - detailsRect.height() - m_lineSpacing + 2 ) / 2,
         iconXOffset = 0,
         iconYOffset = !m_symbol.isNull() ? ( geometry().height() - m_symbol.height() ) / 2 : 0,
         shadowOffset = 1;
@@ -355,15 +396,19 @@ void PageViewMessage::paintEvent( QPaintEvent * /* e */ )
     if ( !m_symbol.isNull() )
         painter.drawPixmap( 5 + iconXOffset, iconYOffset, m_symbol, 0, 0, m_symbol.width(), m_symbol.height() );
 
+    const int xStartPoint = 5 + textXOffset;
+    const int yStartPoint = textYOffset;
+    const int textDrawingFlags = Qt::AlignLeft | Qt::AlignTop | Qt::TextWordWrap;
+
     // draw shadow and text
     painter.setPen( palette().color( QPalette::Window ).dark( 115 ) );
-    painter.drawText( 5 + textXOffset + shadowOffset, textYOffset + shadowOffset, m_message );
+    painter.drawText( xStartPoint + shadowOffset, yStartPoint + shadowOffset, textRect.width(), textRect.height(), textDrawingFlags, m_message );
     if ( !m_details.isEmpty() )
-        painter.drawText( 5 + textXOffset + shadowOffset, textYOffset + textRect.height() + m_lineSpacing + shadowOffset, m_details );
+        painter.drawText( xStartPoint + shadowOffset, yStartPoint + textRect.height() + m_lineSpacing + shadowOffset, textRect.width(), detailsRect.height(), textDrawingFlags, m_details );
     painter.setPen( palette().color( QPalette::WindowText ) );
-    painter.drawText( 5 + textXOffset, textYOffset, m_message );
+    painter.drawText( xStartPoint, yStartPoint, textRect.width(), textRect.height(), textDrawingFlags, m_message );
     if ( !m_details.isEmpty() )
-        painter.drawText( 5 + textXOffset + shadowOffset, textYOffset + textRect.height() + m_lineSpacing, m_details );
+        painter.drawText( xStartPoint + shadowOffset, yStartPoint + textRect.height() + m_lineSpacing, textRect.width(), detailsRect.height(), textDrawingFlags, m_details );
 }
 
 void PageViewMessage::mousePressEvent( QMouseEvent * /*e*/ )

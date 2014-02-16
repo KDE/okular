@@ -1007,6 +1007,8 @@ void PageView::updateActionState( bool haspages, bool documentChanged, bool hasf
         d->aZoomFitWidth->setEnabled( haspages );
     if ( d->aZoomFitPage )
         d->aZoomFitPage->setEnabled( haspages );
+    if ( d->aZoomAutoFit )
+        d->aZoomAutoFit->setEnabled( haspages );
 
     if ( d->aZoom )
     {

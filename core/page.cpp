@@ -66,7 +66,7 @@ static void deleteObjectRects( QLinkedList< ObjectRect * >& rects, const QSet<Ob
 }
 
 PagePrivate::PagePrivate( Page *page, uint n, double w, double h, Rotation o )
-    : m_tilesManager( 0 ), m_page( page ), m_number( n ), m_orientation( o ),
+    : m_page( page ), m_number( n ), m_orientation( o ),
       m_width( w ), m_height( h ), m_doc( 0 ), m_boundingBox( 0, 0, 1, 1 ),
       m_rotation( Rotation0 ),
       m_text( 0 ), m_transition( 0 ), m_textSelections( 0 ),
@@ -93,7 +93,7 @@ PagePrivate::~PagePrivate()
 
 void PagePrivate::imageRotationDone( RotationJob * job )
 {
-    TilesManager *tm = ( job->observer() == m_doc->m_tiledObserver ) ? m_tilesManager : 0;
+    TilesManager *tm = tilesManager( job->observer() );
     if ( tm )
     {
         QPixmap *pixmap = new QPixmap( QPixmap::fromImage( job->image() ) );
@@ -201,7 +201,7 @@ void Page::setBoundingBox( const NormalizedRect& bbox )
 
 bool Page::hasPixmap( DocumentObserver *observer, int width, int height, const NormalizedRect &rect ) const
 {
-    TilesManager *tm = ( observer == d->m_doc->m_tiledObserver ) ? d->m_tilesManager : 0;
+    TilesManager *tm = d->tilesManager( observer );
     if ( tm )
     {
         if ( width != tm->width() || height != tm->height() )
@@ -379,8 +379,14 @@ void PagePrivate::rotateAt( Rotation orientation )
     /**
      * Rotate tiles manager
      */
-    if ( m_tilesManager )
-        m_tilesManager->setRotation( m_rotation );
+    QMapIterator<const DocumentObserver *, TilesManager *> i(m_tilesManagers);
+    while (i.hasNext()) {
+      i.next();
+
+      TilesManager *tm = i.value();
+      if ( tm )
+        tm->setRotation( m_rotation );
+    }
 
     /**
      * Rotate the object rects on the page.
@@ -501,7 +507,7 @@ QLinkedList< FormField * > Page::formFields() const
 void Page::setPixmap( DocumentObserver *observer, QPixmap *pixmap, const NormalizedRect &rect )
 {
     if ( d->m_rotation == Rotation0 ) {
-        TilesManager *tm = ( observer == d->m_doc->m_tiledObserver ) ? d->m_tilesManager : 0;
+        TilesManager *tm = d->tilesManager( observer );
         if ( tm )
         {
             tm->setPixmap( pixmap, rect );
@@ -705,10 +711,11 @@ void Page::setFormFields( const QLinkedList< FormField * >& fields )
 
 void Page::deletePixmap( DocumentObserver *observer )
 {
-    if ( observer == d->m_doc->m_tiledObserver && d->m_tilesManager )
+    TilesManager *tm = d->tilesManager( observer );
+    if ( tm )
     {
-        delete d->m_tilesManager;
-        d->m_tilesManager = 0;
+        delete tm;
+        d->m_tilesManagers.remove(observer);
     }
     else
     {
@@ -726,8 +733,9 @@ void Page::deletePixmaps()
     }
 
     d->m_pixmaps.clear();
-    delete d->m_tilesManager;
-    d->m_tilesManager = 0;
+
+    qDeleteAll(d->m_tilesManagers);
+    d->m_tilesManagers.clear();
 }
 
 void Page::deleteRects()
@@ -982,27 +990,29 @@ const QPixmap * Page::_o_nearestPixmap( DocumentObserver *observer, int w, int h
     return pixmap;
 }
 
-bool Page::hasTilesManager() const
+bool Page::hasTilesManager( const DocumentObserver *observer ) const
 {
-    return d->m_tilesManager != 0;
+    return d->tilesManager( observer ) != 0;
 }
 
-QList<Tile> Page::tilesAt( const NormalizedRect &rect ) const
+QList<Tile> Page::tilesAt( const DocumentObserver *observer, const NormalizedRect &rect ) const
 {
-    if ( d->m_tilesManager )
-        return d->m_tilesManager->tilesAt( rect, TilesManager::PixmapTile );
+    TilesManager *tm = d->m_tilesManagers.value( observer );
+    if ( tm )
+        return tm->tilesAt( rect, TilesManager::PixmapTile );
     else
         return QList<Tile>();
 }
 
-TilesManager *PagePrivate::tilesManager() const
+TilesManager *PagePrivate::tilesManager( const DocumentObserver *observer ) const
 {
-    return m_tilesManager;
+    return m_tilesManagers.value( observer );
 }
 
-void PagePrivate::setTilesManager( TilesManager *tm )
+void PagePrivate::setTilesManager( const DocumentObserver *observer, TilesManager *tm )
 {
-    delete m_tilesManager;
-    m_tilesManager = tm;
-}
+    TilesManager *old = m_tilesManagers.value( observer );
+    delete old;
 
+    m_tilesManagers.insert(observer, tm);
+}

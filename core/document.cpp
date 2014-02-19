@@ -339,52 +339,59 @@ void DocumentPrivate::cleanupPixmapMemory()
 
 void DocumentPrivate::cleanupPixmapMemory( qulonglong memoryToFree )
 {
-    if ( memoryToFree > 0 )
+    if ( memoryToFree < 1 )
+        return;
+
+    const int currentViewportPage = (*m_viewportIterator).pageNumber;
+
+    // Create a QMap of visible rects, indexed by page number
+    QMap< int, VisiblePageRect * > visibleRects;
+    QVector< Okular::VisiblePageRect * >::const_iterator vIt = m_pageRects.constBegin(), vEnd = m_pageRects.constEnd();
+    for ( ; vIt != vEnd; ++vIt )
+        visibleRects.insert( (*vIt)->pageNumber, (*vIt) );
+
+    // Free memory starting from pages that are farthest from the current one
+    int pagesFreed = 0;
+    while ( memoryToFree > 0 )
     {
-        const int currentViewportPage = (*m_viewportIterator).pageNumber;
+        AllocatedPixmap * p = searchLowestPriorityPixmap( true, true );
+        if ( !p ) // No pixmap to remove
+            break;
 
-        // Create a QMap of visible rects, indexed by page number
-        QMap< int, VisiblePageRect * > visibleRects;
-        QVector< Okular::VisiblePageRect * >::const_iterator vIt = m_pageRects.constBegin(), vEnd = m_pageRects.constEnd();
-        for ( ; vIt != vEnd; ++vIt )
-            visibleRects.insert( (*vIt)->pageNumber, (*vIt) );
+        kDebug().nospace() << "Evicting cache pixmap observer=" << p->observer << " page=" << p->page;
 
-        // Free memory starting from pages that are farthest from the current one
-        int pagesFreed = 0;
-        while ( memoryToFree > 0 )
+        // m_allocatedPixmapsTotalMemory can't underflow because we always add or remove
+        // the memory used by the AllocatedPixmap so at most it can reach zero
+        m_allocatedPixmapsTotalMemory -= p->memory;
+        // Make sure memoryToFree does not underflow
+        if ( p->memory > memoryToFree )
+            memoryToFree = 0;
+        else
+            memoryToFree -= p->memory;
+        pagesFreed++;
+        // delete pixmap
+        m_pagesVector.at( p->page )->deletePixmap( p->observer );
+        // delete allocation descriptor
+        delete p;
+    }
+
+    // If we're still on low memory, try to free individual tiles
+
+    // Store pages that weren't completely removed
+
+    QLinkedList< AllocatedPixmap * > pixmapsToKeep;
+    while (memoryToFree > 0)
+    {
+        int clean_hits = 0;
+        foreach (DocumentObserver *observer, m_observers)
         {
-            AllocatedPixmap * p = searchLowestPriorityPixmap( true, true );
+            AllocatedPixmap * p = searchLowestPriorityPixmap( false, true, observer );
             if ( !p ) // No pixmap to remove
-                break;
+                continue;
 
-            kDebug().nospace() << "Evicting cache pixmap observer=" << p->observer << " page=" << p->page;
+            clean_hits++;
 
-            // m_allocatedPixmapsTotalMemory can't underflow because we always add or remove
-            // the memory used by the AllocatedPixmap so at most it can reach zero
-            m_allocatedPixmapsTotalMemory -= p->memory;
-            // Make sure memoryToFree does not underflow
-            if ( p->memory > memoryToFree )
-                memoryToFree = 0;
-            else
-                memoryToFree -= p->memory;
-            pagesFreed++;
-            // delete pixmap
-            m_pagesVector.at( p->page )->deletePixmap( p->observer );
-            // delete allocation descriptor
-            delete p;
-        }
-
-        // If we're still on low memory, try to free individual tiles
-
-        // Store pages that weren't completely removed
-        QLinkedList< AllocatedPixmap * > pixmapsToKeep;
-        while ( memoryToFree > 0 )
-        {
-            AllocatedPixmap * p = searchLowestPriorityPixmap( false, true, m_tiledObserver );
-            if ( !p ) // No pixmap to remove
-                break;
-
-            TilesManager *tilesManager = m_pagesVector.at( p->page )->d->tilesManager();
+            TilesManager *tilesManager = m_pagesVector.at( p->page )->d->tilesManager( observer );
             if ( tilesManager && tilesManager->totalMemory() > 0 )
             {
                 qulonglong memoryDiff = p->memory;
@@ -409,9 +416,11 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong memoryToFree )
                 pixmapsToKeep.append( p );
         }
 
-        m_allocatedPixmaps += pixmapsToKeep;
-        //p--rintf("freeMemory A:[%d -%d = %d] \n", m_allocatedPixmaps.count() + pagesFreed, pagesFreed, m_allocatedPixmaps.count() );
+        if (clean_hits == 0) break;
     }
+
+    m_allocatedPixmaps += pixmapsToKeep;
+    //p--rintf("freeMemory A:[%d -%d = %d] \n", m_allocatedPixmaps.count() + pagesFreed, pagesFreed, m_allocatedPixmaps.count() );
 }
 
 /* Returns the next pixmap to evict from cache, or NULL if no suitable pixmap
@@ -1321,7 +1330,7 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
         }
 
         QRect requestRect = r->isTile() ? r->normalizedRect().geometry( r->width(), r->height() ) : QRect( 0, 0, r->width(), r->height() );
-        TilesManager *tilesManager = ( r->observer() == m_tiledObserver ) ? r->page()->d->tilesManager() : 0;
+        TilesManager *tilesManager = r->d->tilesManager();
 
         // If it's a preload but the generator is not threaded no point in trying to preload
         if ( r->preload() && !m_generator->hasFeature( Generator::Threaded ) )
@@ -1349,7 +1358,7 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
             delete r;
         }
         // If the requested area is above 8000000 pixels, switch on the tile manager
-        else if ( !tilesManager && r->observer() == m_tiledObserver && m_generator->hasFeature( Generator::TiledRendering ) && (long)r->width() * (long)r->height() > 8000000L )
+        else if ( !tilesManager && m_generator->hasFeature( Generator::TiledRendering ) && (long)r->width() * (long)r->height() > 8000000L )
         {
             // if the image is too big. start using tiles
             kDebug(OkularDebug).nospace() << "Start using tiles on page " << r->pageNumber()
@@ -1370,7 +1379,7 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
             }
             tilesManager->setRequest( r->normalizedRect(), r->width(), r->height() );
             r->page()->deletePixmap( r->observer() );
-            r->page()->d->setTilesManager( tilesManager );
+            r->page()->d->setTilesManager( r->observer(), tilesManager );
             r->setTile( true );
 
             // Change normalizedRect to the smallest rect that contains all
@@ -1443,7 +1452,7 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
 
     // [MEM] preventive memory freeing
     qulonglong pixmapBytes = 0;
-    TilesManager * tm = ( request->observer() == m_tiledObserver ) ? request->page()->d->tilesManager() : 0;
+    TilesManager * tm = request->d->tilesManager();
     if ( tm )
         pixmapBytes = tm->totalMemory();
     else
@@ -1571,39 +1580,43 @@ void DocumentPrivate::refreshPixmaps( int pageNumber )
         requestedPixmaps.push_back( p );
     }
 
-    TilesManager *tilesManager = page->d->tilesManager();
-    if ( tilesManager )
+    foreach (DocumentObserver *observer, m_observers)
     {
-        tilesManager->markDirty();
-
-        PixmapRequest * p = new PixmapRequest( m_tiledObserver, pageNumber, tilesManager->width(), tilesManager->height(), 1, PixmapRequest::Asynchronous );
-
-        NormalizedRect tilesRect;
-
-        // Get the visible page rect
-        NormalizedRect visibleRect;
-        QVector< Okular::VisiblePageRect * >::const_iterator vIt = m_pageRects.constBegin(), vEnd = m_pageRects.constEnd();
-        for ( ; vIt != vEnd; ++vIt )
+        TilesManager *tilesManager = page->d->tilesManager( observer );
+        if ( tilesManager )
         {
-            if ( (*vIt)->pageNumber == pageNumber )
+            tilesManager->markDirty();
+
+            PixmapRequest * p = new PixmapRequest( observer, pageNumber, tilesManager->width(), tilesManager->height(), 1, PixmapRequest::Asynchronous );
+
+            NormalizedRect tilesRect;
+
+            // Get the visible page rect
+            NormalizedRect visibleRect;
+            QVector< Okular::VisiblePageRect * >::const_iterator vIt = m_pageRects.constBegin(), vEnd = m_pageRects.constEnd();
+            for ( ; vIt != vEnd; ++vIt )
             {
-                visibleRect = (*vIt)->rect;
-                break;
+                if ( (*vIt)->pageNumber == pageNumber )
+                {
+                    visibleRect = (*vIt)->rect;
+                    break;
+                }
+            }
+
+            if ( !visibleRect.isNull() )
+            {
+                p->setNormalizedRect( visibleRect );
+                p->setTile( true );
+                p->d->mForce = true;
+                requestedPixmaps.push_back( p );
+            }
+            else
+            {
+                delete p;
             }
         }
-
-        if ( !visibleRect.isNull() )
-        {
-            p->setNormalizedRect( visibleRect );
-            p->setTile( true );
-            p->d->mForce = true;
-            requestedPixmaps.push_back( p );
-        }
-        else
-        {
-            delete p;
-        }
     }
+
     if ( !requestedPixmaps.isEmpty() )
         m_parent->requestPixmaps( requestedPixmaps, Okular::Document::NoOption );
 }
@@ -2045,7 +2058,6 @@ Document::Document( QWidget *widget )
     d->m_bookmarkManager = new BookmarkManager( d );
     d->m_viewportIterator = d->m_viewportHistory.insert( d->m_viewportHistory.end(), DocumentViewport() );
     d->m_undoStack = new QUndoStack(this);
-    d->m_tiledObserver = 0;
 
     connect( SettingsCore::self(), SIGNAL(configChanged()), this, SLOT(_o_configChanged()) );
     connect( d->m_undoStack, SIGNAL( canUndoChanged(bool) ), this, SIGNAL( canUndoChanged(bool)));
@@ -2888,7 +2900,7 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests, 
             // Change the current request rect so that only invalid tiles are
             // requested. Also make sure the rect is tile-aligned.
             NormalizedRect tilesRect;
-            const QList<Tile> tiles = request->page()->d->tilesManager()->tilesAt( request->normalizedRect(), TilesManager::TerminalTile );
+            const QList<Tile> tiles = request->d->tilesManager()->tilesAt( request->normalizedRect(), TilesManager::TerminalTile );
             QList<Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
             while ( tIt != tEnd )
             {
@@ -4371,7 +4383,7 @@ void DocumentPrivate::requestDone( PixmapRequest * req )
     {
         // [MEM] 1.2 append memory allocation descriptor to the FIFO
         qulonglong memoryBytes = 0;
-        const TilesManager *tm = ( req->observer() == m_tiledObserver ) ? req->page()->d->tilesManager() : 0;
+        const TilesManager *tm = req->d->tilesManager();
         if ( tm )
             memoryBytes = tm->totalMemory();
         else

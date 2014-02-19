@@ -216,9 +216,6 @@ class DocumentPrivate
 
         // observers / requests / allocator stuff
         QSet< DocumentObserver * > m_observers;
-        // FIXME This is a hack, we need to support
-        // multiple tiled observers, but for the moment we only support one
-        DocumentObserver *m_tiledObserver;
         QLinkedList< PixmapRequest * > m_pixmapRequestsStack;
         QLinkedList< PixmapRequest * > m_executingPixmapRequests;
         QMutex m_pixmapRequestsMutex;

@@ -4147,7 +4147,7 @@ static void slotRequestPreloadPixmap( Okular::DocumentObserver * observer, const
     {
         Okular::PixmapRequest::PixmapRequestFeatures requestFeatures = Okular::PixmapRequest::Preload;
         requestFeatures |= Okular::PixmapRequest::Asynchronous;
-        const bool pageHasTilesManager = i->page()->hasTilesManager();
+        const bool pageHasTilesManager = i->page()->hasTilesManager( observer );
         if ( pageHasTilesManager && !preRenderRegion.isNull() )
         {
             Okular::PixmapRequest * p = new Okular::PixmapRequest( observer, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, requestFeatures );
@@ -4240,7 +4240,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
 #endif
 
         Okular::NormalizedRect expandedVisibleRect = vItem->rect;
-        if ( i->page()->hasTilesManager() && Okular::Settings::memoryLevel() != Okular::Settings::EnumMemoryLevel::Low )
+        if ( i->page()->hasTilesManager( this ) && Okular::Settings::memoryLevel() != Okular::Settings::EnumMemoryLevel::Low )
         {
             double rectMargin = pixelsToExpand/(double)i->uncroppedHeight();
             expandedVisibleRect.left = qMax( 0.0, vItem->rect.left - rectMargin );
@@ -4258,7 +4258,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
             Okular::PixmapRequest * p = new Okular::PixmapRequest( this, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRIO, Okular::PixmapRequest::Asynchronous );
             requestedPixmaps.push_back( p );
 
-            if ( i->page()->hasTilesManager() )
+            if ( i->page()->hasTilesManager( this ) )
             {
                 p->setNormalizedRect( expandedVisibleRect );
                 p->setTile( true );

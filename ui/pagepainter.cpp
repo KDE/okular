@@ -89,7 +89,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     }
     destPainter->fillRect( limits, backgroundColor );
 
-    const bool hasTilesManager = ( page->d->m_doc->m_tiledObserver == observer && page->hasTilesManager() );
+    const bool hasTilesManager = page->hasTilesManager( observer );
     const QPixmap *pixmap = 0;
 
     if ( !hasTilesManager )
@@ -246,7 +246,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
         if ( hasTilesManager )
         {
             const Okular::NormalizedRect normalizedLimits( limitsInPixmap, scaledWidth, scaledHeight );
-            const QList<Okular::Tile> tiles = page->tilesAt( normalizedLimits );
+            const QList<Okular::Tile> tiles = page->tilesAt( observer, normalizedLimits );
             QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
             while ( tIt != tEnd )
             {
@@ -301,7 +301,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
             backImage.fill( paperColor.rgb() );
             QPainter p( &backImage );
             const Okular::NormalizedRect normalizedLimits( limitsInPixmap, scaledWidth, scaledHeight );
-            const QList<Okular::Tile> tiles = page->tilesAt( normalizedLimits );
+            const QList<Okular::Tile> tiles = page->tilesAt( observer, normalizedLimits );
             QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
             while ( tIt != tEnd )
             {

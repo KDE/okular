@@ -22,6 +22,7 @@
 #include "document.h"
 #include "document_p.h"
 #include "page.h"
+#include "page_p.h"
 #include "textpage.h"
 #include "utils.h"
 
@@ -515,6 +516,11 @@ void PixmapRequest::setNormalizedRect( const NormalizedRect &rect )
 const NormalizedRect& PixmapRequest::normalizedRect() const
 {
     return d->mNormalizedRect;
+}
+
+Okular::TilesManager* PixmapRequestPrivate::tilesManager() const
+{
+    return mPage->d->tilesManager(mObserver);
 }
 
 void PixmapRequestPrivate::swap()

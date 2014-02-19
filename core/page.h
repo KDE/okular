@@ -372,18 +372,18 @@ class OKULAR_EXPORT Page
          * Returns whether pixmaps for the tiled observer are handled by a
          * tile manager.
          *
-         * @since 0.16 (KDE 4.10)
+         * @since 0.19 (KDE 4.13)
          */
-        bool hasTilesManager() const;
+        bool hasTilesManager( const DocumentObserver *observer ) const;
 
         /**
          * Returns a list of all tiles intersecting with @p rect.
          *
          * The list contains only tiles with a pixmap
          *
-         * @since 0.16 (KDE 4.10)
+         * @since 0.19 (KDE 4.13)
          */
-        QList<Tile> tilesAt( const NormalizedRect &rect ) const;
+        QList<Tile> tilesAt( const DocumentObserver *observer, const NormalizedRect &rect ) const;
 
     private:
         PagePrivate* const d;
@@ -391,6 +391,7 @@ class OKULAR_EXPORT Page
         friend class PagePrivate;
         friend class Document;
         friend class DocumentPrivate;
+        friend class PixmapRequestPrivate;
 
         /**
          * To improve performance PagePainter accesses the following

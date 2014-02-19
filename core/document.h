@@ -964,7 +964,6 @@ class OKULAR_EXPORT Document : public QObject
     private:
         /// @cond PRIVATE
         friend class DocumentPrivate;
-        friend class Part;
         friend class ::DocumentItem;
         friend class EditAnnotationContentsCommand;
         friend class EditFormTextCommand;

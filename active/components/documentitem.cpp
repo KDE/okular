@@ -207,7 +207,6 @@ Observer *DocumentItem::pageviewObserver()
 {
     if (!m_pageviewObserver) {
         m_pageviewObserver = new Observer(this);
-        m_document->d->m_tiledObserver = m_pageviewObserver;
     }
 
     return m_pageviewObserver;

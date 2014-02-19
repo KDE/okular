@@ -30,6 +30,7 @@ class PixmapGenerationThread;
 class PixmapRequest;
 class TextPage;
 class TextPageGenerationThread;
+class TilesManager;
 
 class GeneratorPrivate
 {
@@ -72,6 +73,7 @@ class PixmapRequestPrivate
 {
     public:
         void swap();
+        TilesManager *tilesManager() const;
 
         DocumentObserver *mObserver;
         int mPageNumber;

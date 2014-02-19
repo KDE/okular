@@ -105,10 +105,14 @@ class PagePrivate
         void deleteTextSelections();
 
         /**
-         * Get/set the tiles manager for the tiled observer
+         * Get the tiles manager for the tiled @observer
          */
-        TilesManager *tilesManager() const;
-        void setTilesManager( TilesManager *tm );
+        TilesManager *tilesManager( const DocumentObserver *observer ) const;
+
+        /**
+         * Set the tiles manager for the tiled @observer
+         */
+        void setTilesManager( const DocumentObserver *observer, TilesManager *tm );
 
         class PixmapObject
         {
@@ -117,7 +121,7 @@ class PagePrivate
                 Rotation m_rotation;
         };
         QMap< DocumentObserver*, PixmapObject > m_pixmaps;
-        TilesManager* m_tilesManager;
+        QMap< const DocumentObserver*, TilesManager *> m_tilesManagers;
 
         Page *m_page;
         int m_number;

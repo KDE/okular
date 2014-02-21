@@ -77,6 +77,7 @@ dviRenderer::dviRenderer(bool useFontHinting)
 //  connect( &clearStatusBarTimer, SIGNAL(timeout()), this, SLOT(clearStatusBar()) );
   // pass status bar messages through
 //  connect(PS_interface, SIGNAL(setStatusBarText(QString)), this, SIGNAL(setStatusBarText(QString)) );
+  connect( PS_interface, SIGNAL( error(QString,int) ), this, SIGNAL( error(QString,int) ) );
 }
 
 

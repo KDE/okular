@@ -145,6 +145,17 @@ public:
   void          export_finished(const DVIExport*);
 //void          editor_finished(const DVISourceEditor*);
 
+
+Q_SIGNALS:
+  /**
+   * The following three signals are modeleed on the corresponding signals
+   * of the Document class.
+   */
+  void error( const QString &message, int duration );
+  void warning( const QString &message, int duration );
+  void notice( const QString &message, int duration );
+
+
 public slots:
   void          exportPS(const QString& fname = QString(), const QStringList& options = QStringList(), QPrinter* printer = 0, QPrinter::Orientation orientation = QPrinter::Portrait);
   void          exportPDF();

@@ -45,6 +45,9 @@ public:
    */
   bool started() const { return started_; }
 
+Q_SIGNALS:
+  void error( const QString &message, int duration );
+
 protected:
   /** @param parent is stored internally in order to inform the parent
    *  that the external process has finished and that this variable

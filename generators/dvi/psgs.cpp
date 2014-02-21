@@ -16,7 +16,6 @@
 #include "pageNumber.h"
 
 #include <klocale.h>
-#include <kmessagebox.h>
 #include <kprocess.h>
 #include <ktemporaryfile.h>
 #include <kurl.h>
@@ -261,11 +260,10 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
 	gsDevice = knownDevices.begin();
 	if (knownDevices.isEmpty())
 	  // TODO: show a requestor of some sort.
+	  emit error(i18n("The version of Ghostview that is installed on this computer does not contain "
+			  "any of the Ghostview device drivers that are known to Okular. PostScript "
+			  "support has therefore been turned off in Okular."), -1);
 #if 0
-	  KMessageBox::detailedError(0, 
-				     i18n("<qt>The version of Ghostview that is installed on this computer does not contain "
-					  "any of the Ghostview device drivers that are known to Okular. PostScript "
-					  "support has therefore been turned off in Okular.</qt>"), 
 				     i18n("<qt><p>The Ghostview program, which Okular uses internally to display the "
 					  "PostScript graphics that is included in this DVI file, is generally able to "
 					  "write its output in a variety of formats. The sub-programs that Ghostview uses "
@@ -282,8 +280,6 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
 					  "Ghostview. Among others, Okular can use the 'png256', 'jpeg' and 'pnm' "
 					  "drivers. Note that Okular needs to be restarted to re-enable PostScript support."
 					  "</p></qt>"));
-#else
-	{}
 #endif
 	else {
 	  kDebug(kvs::dvi) << QString("Okular will now try to use the '%1' device driver.").arg(*gsDevice);

@@ -132,6 +132,7 @@ InitialPreference=1
 Categories=Qt;KDE;Graphics;Viewer;
 NoDisplay=true
 X-KDE-Keywords=mobipocket
+X-KDE-Keywords[bg]=mobipocket
 X-KDE-Keywords[bs]=mobipocket
 X-KDE-Keywords[ca]=mobipocket
 X-KDE-Keywords[ca@valencia]=mobipocket

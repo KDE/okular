@@ -26,7 +26,6 @@
 #include <kconfig.h>
 #include <kglobal.h>
 #include <klocale.h>
-#include <kmessagebox.h>
 #include <kmimetype.h>
 #include <kstandarddirs.h>
 #include <kvbox.h>
@@ -218,17 +217,13 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap* page)
     }
   }
 
-#if 0
-  page->isEmpty = false;
   if (errorMsg.isEmpty() != true) {
-    KMessageBox::detailedError(parentWidget,
-                               i18n("<qt><strong>File corruption</strong> Okular could not interpret your DVI file. This is "
-                                    "most commonly caused by a corrupted file.</qt>"),
-                               errorMsg, i18n("DVI File Error"));
+    emit error(i18n("File corruption. %1", errorMsg), -1);
     errorMsg.clear();
     currentlyDrawnPage = 0;
     return;
   }
+#if 0
 
   // Tell the user (once) if the DVI file contains source specials
   // ... we don't want our great feature to go unnoticed.
@@ -354,13 +349,12 @@ void dviRenderer::embedPostScript()
   embedPS_progress = 0;
 
   if (!errorMsg.isEmpty()) {
-    errorMsg = "<qt>" + errorMsg + "</qt>";
-//    KMessageBox::detailedError(parentWidget, "<qt>" + i18n("Not all PostScript files could be embedded into your document.") + "</qt>", errorMsg);
+    emit warning(i18n("Not all PostScript files could be embedded into your document. %1", errorMsg), -1);
     errorMsg.clear();
-  } else
-/*    KMessageBox::information(parentWidget, "<qt>" + i18n("All external PostScript files were embedded into your document. You "
-                                                 "will probably want to save the DVI file now.") + "</qt>",
-                             QString(), "embeddingDone");*/
+  } else {
+    emit notice(i18n("All external PostScript files were embedded into your document."), -1);
+  }
+
 
   // Prescan phase starts here
 #ifdef PERFORMANCE_MEASUREMENT
@@ -446,13 +440,8 @@ bool dviRenderer::setFile(const QString &fname, const KUrl &base)
 
   // Make sure the file actually exists.
   if (!fi.exists() || fi.isDir()) {
-/*
-    KMessageBox::error( parentWidget,
-                        i18n("<qt><strong>File error.</strong> The specified file '%1' does not exist. "
-                             "KDVI already tried to add the ending '.dvi'.</qt>", filename),
-                        i18n("File Error"));
-*/
-	  return false;
+    emit error(i18n("The specified file '%1' does not exist.", filename), -1);
+    return false;
   }
 
   QApplication::setOverrideCursor( Qt::WaitCursor );
@@ -466,10 +455,7 @@ bool dviRenderer::setFile(const QString &fname, const KUrl &base)
   if ((dviFile_new->dvi_Data() == NULL)||(dviFile_new->errorMsg.isEmpty() != true)) {
     QApplication::restoreOverrideCursor();
     if (dviFile_new->errorMsg.isEmpty() != true)
-/*      KMessageBox::detailedError(parentWidget,
-                                 i18n("<qt>File corruption. KDVI could not interprete your DVI file. This is "
-                                      "most commonly caused by a corrupted file.</qt>"),
-                                 dviFile_new->errorMsg, i18n("DVI File Error"));*/
+      emit error(i18n("File corruption. %1", dviFile_new->errorMsg), -1);
     delete dviFile_new;
     return false;
   }
@@ -616,14 +602,10 @@ Anchor dviRenderer::parseReference(const QString &reference)
     QString  refFileName   = splitter.filePath();
 
     if (sourceHyperLinkAnchors.isEmpty()) {
-/*
-      KMessageBox::sorry(parentWidget, i18n("<qt>You have asked KDVI to locate the place in the DVI file which corresponds to "
-                                    "line %1 in the TeX-file <strong>%2</strong>. It seems, however, that the DVI file "
-                                    "does not contain the necessary source file information. "
-                                    "We refer to the manual of KDVI for a detailed explanation on how to include this "
-                                    "information. Press the F1 key to open the manual.</qt>", refLineNumber, refFileName),
-                         i18n("Could Not Find Reference"));
-*/
+      emit warning(i18n("You have asked Okular to locate the place in the DVI file which corresponds to "
+                        "line %1 in the TeX-file %2. It seems, however, that the DVI file "
+                        "does not contain the necessary source file information. ",
+                        refLineNumber, refFileName), -1);
       return Anchor();
     }
 
@@ -660,11 +642,8 @@ Anchor dviRenderer::parseReference(const QString &reference)
     else
       if (anchorForRefFileFound == false)
       {
-/*
-        KMessageBox::sorry(parentWidget, i18n("<qt>KDVI was not able to locate the place in the DVI file which corresponds to "
-                                              "line %1 in the TeX-file <strong>%2</strong>.</qt>", refLineNumber, refFileName),
-                           i18n( "Could Not Find Reference" ));
-*/
+        emit warning(i18n("Okular was not able to locate the place in the DVI file which corresponds to "
+                          "line %1 in the TeX-file %2.", refLineNumber, refFileName), -1);
       }
       else
         return Anchor();

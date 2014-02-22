@@ -17,7 +17,6 @@
 #include "TeXFont.h"
 
 #include <klocale.h>
-#include <kmessagebox.h>
 #include <kmimetype.h>
 #include <kprocess.h>
 
@@ -444,10 +443,7 @@ void dviRenderer::prescan_ParsePSFileSpecial(const QString& cp)
     EPSfilename = dviFile->convertPDFtoPS(EPSfilename, &convErrorMsg);
     //emit setStatusBarText( QString::null );	//krazy:exclude=nullstrassign for old broken gcc
     if (convErrorMsg.isEmpty() != true) {
-/*      KMessageBox::detailedError(parentWidget,
-                                 i18n("<qt><strong>File conversion error</strong> KDVI was not able to convert the external "
-                                      "PDF file <strong>%1</strong> into PostScript. Expect missing graphics or graphic errors.</qt>", oEPSfilename),
-                                 convErrorMsg, i18n("PDF/PS conversion error"));*/
+      emit error(convErrorMsg, -1);
       return;
     }
   }

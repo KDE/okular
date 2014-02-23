@@ -12,7 +12,6 @@
 #include "TeXFont.h"
 
 #include <klocale.h>
-#include <kmessagebox.h>
 
 #include <QApplication>
 #include <QPainter>
@@ -221,12 +220,10 @@ void fontPool::locateFonts()
   // present an error message to the user.
   if (!areFontsLocated()) {
     markFontsAsLocated();
-    QString details = QString("<qt><p><b>PATH:</b> %1</p>%2</qt>").arg(getenv("PATH")).arg(kpsewhichOutput);
-    KMessageBox::detailedError( 0, i18n("<qt><p>Okular was not able to locate all the font files "
-                                        "which are necessary to display the current DVI file. "
-                                        "Your document might be unreadable.</p></qt>"),
-                                details,
-                                i18n("Not All Font Files Found") );
+    emit error(i18n("Okular was not able to locate all the font files "
+                    "which are necessary to display the current DVI file. "
+                    "Your document might be unreadable.\n"
+                    "PATH: %1\nkpswhich: %2", getenv("PATH"), kpsewhichOutput), -1);
   }
 }
 
@@ -292,22 +289,11 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
                    QIODevice::ReadOnly|QIODevice::Text);
   if (!kpsewhich_.waitForStarted()) {
     QApplication::restoreOverrideCursor();
-    const QString msg =
-      i18n("<p>There were problems running <b>kpsewhich</b>. As a result, "
-           "some font files could not be located, and your document might be unreadable.</p>"
-           "<p><b>Possible reason:</b> The kpsewhich program is perhaps not installed on your system, or it "
-           "cannot be found in the current search path.</p>"
-           "<p><b>What you can do:</b> The kpsewhich program is normally contained in distributions of the TeX "
-           "typesetting system. If TeX is not installed on your system, you could install the TeX Live distribution (www.tug.org/texlive). "
-           "If you are sure that TeX is installed, please try to use the kpsewhich program from the command line to check if it "
-           "really works.</p>");
-    const QString details =
-      QString("<qt><p><b>PATH:</b> %1</p>%2</qt>").arg(getenv("PATH")).arg(kpsewhichOutput);
-
-    KMessageBox::detailedError(0,
-                               QString("<qt>%1%2</qt>").arg(importanceOfKPSEWHICH).arg(msg),
-                               details,
-                               i18n("Problem locating fonts"));
+    emit error(i18n("There were problems running 'kpsewhich'. As a result, "
+                    "some font files could not be located, and your document might be unreadable.\n"
+                    "Possible reason: The kpsewhich program is perhaps not installed on your system, or it "
+                    "cannot be found in the current search path.\n"
+                    "PATH: %1\nkpswhich: %2", getenv("PATH"), kpsewhichOutput), -1);
 
     // This makes sure the we don't try to run kpsewhich again
     markFontsAsLocated();
@@ -325,10 +311,9 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
   // Handle fatal errors.
   int const kpsewhich_exit_code = kpsewhich_.exitCode();
   if (kpsewhich_exit_code < 0) {
-    KMessageBox::sorry(0,
-                       i18n("<qt><p>The font generation by <b>kpsewhich</b> was aborted (exit code %1, error %2). As a result, "
-                               "some font files could not be located, and your document might be unreadable.</p></qt>",kpsewhich_exit_code,kpsewhich_.errorString()),
-                       i18n("Font generation aborted") );
+    emit warning(i18n("The font generation by 'kpsewhich' was aborted (exit code %1, error %2). As a"
+                      "result, some font files could not be located, and your document might be unreadable.",
+                      kpsewhich_exit_code, kpsewhich_.errorString()), -1);
 
     // This makes sure the we don't try to run kpsewhich again
     if (makePK == false)

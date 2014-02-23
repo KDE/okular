@@ -126,6 +126,9 @@ public:
 signals:
   /** Passed through to the top-level kpart. */
   void setStatusBarText( const QString& );
+  void error( const QString &message, int duration );
+  void warning( const QString &message, int duration );
+  void notice( const QString &message, int duration );
 
 public slots:
   // Locates font files on the disk using the kpsewhich program.  If

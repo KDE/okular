@@ -164,10 +164,6 @@ public slots:
 
   void          embedPostScript();
 
-  /** simply emits "setStatusBarText( QString::null )". This is used	//krazy:exclude=nullstrassign for old broken gcc
-      in dviRenderer::mouseMoveEvent(), see the explanation there. */
-  void          clearStatusBar();
-
   virtual void  drawPage(RenderedDocumentPagePixmap* page);
   virtual void  getText(RenderedDocumentPagePixmap* page);
 
@@ -252,13 +248,6 @@ private:
   void TPIC_setPen_special(const QString& cp);
   void TPIC_addPath_special(const QString& cp);
   void TPIC_flushPath_special();
-
-  /** This timer is used to delay clearing of the statusbar. Clearing
-      the statusbar is delayed to avoid awful flickering when the
-      mouse moves over a block of text that contains source
-      hyperlinks. The signal timeout() is connected to the method
-      clearStatusBar() of *this. */
-  QTimer        clearStatusBarTimer;
 
   // List of source-hyperlinks on all pages. This vector is generated
   // when the DVI-file is first loaded, i.e. when draw_part is called

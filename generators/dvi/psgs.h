@@ -103,7 +103,6 @@ private:
 
 signals:
   /** Passed through to the top-level kpart. */
-  void setStatusBarText( const QString& );
   void error( const QString &message, int duration );
 };
 

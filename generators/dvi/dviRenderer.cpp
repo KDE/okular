@@ -72,10 +72,6 @@ dviRenderer::dviRenderer(bool useFontHinting)
   //kDebug(kvs::dvi) << "dviRenderer( parent=" << par << " )";
 #endif
 
-//  connect(&font_pool, SIGNAL(setStatusBarText(QString)), this, SIGNAL(setStatusBarText(QString)) );
-//  connect( &clearStatusBarTimer, SIGNAL(timeout()), this, SLOT(clearStatusBar()) );
-  // pass status bar messages through
-//  connect(PS_interface, SIGNAL(setStatusBarText(QString)), this, SIGNAL(setStatusBarText(QString)) );
   connect( &font_pool, SIGNAL( error(QString,int) ), this, SIGNAL( error(QString,int) ) );
   connect( &font_pool, SIGNAL( warning(QString,int) ), this, SIGNAL( warning(QString,int) ) );
   connect( PS_interface, SIGNAL( error(QString,int) ), this, SIGNAL( error(QString,int) ) );
@@ -669,12 +665,6 @@ void dviRenderer::setResolution(double resolution_in_DPI)
   font_pool.setDisplayResolution( resolutionInDPI );
   shrinkfactor = 1200/resolutionInDPI;
   return;
-}
-
-
-void dviRenderer::clearStatusBar()
-{
-  //emit setStatusBarText( QString() );
 }
 
 

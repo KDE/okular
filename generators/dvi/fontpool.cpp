@@ -234,7 +234,6 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
   // disable automatic font generation as vf-fonts can't be
   // generated. If pass == 0, ennable font generation, if it was
   // enabled globally.
-  emit setStatusBarText(i18n("Locating fonts..."));
 
   // Now generate the command line for the kpsewhich
   // program. Unfortunately, this can be rather long and involved...

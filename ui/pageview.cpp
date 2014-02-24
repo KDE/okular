@@ -83,6 +83,7 @@
 #include "settings.h"
 #include "settings_core.h"
 #include "url_utils.h"
+#include "magnifierview.h"
 
 static int pageflags = PagePainter::Accessibility | PagePainter::EnhanceLinks |
                        PagePainter::EnhanceImages | PagePainter::Highlights |
@@ -121,6 +122,7 @@ public:
     Okular::Document * document;
     QVector< PageViewItem * > items;
     QLinkedList< PageViewItem * > visibleItems;
+    MagnifierView *magnifierView;
 
     // view layout (columns and continuous in Settings), zoom and mouse
     PageView::ZoomMode zoomMode;
@@ -193,6 +195,7 @@ public:
     KAction * aMouseSelect;
     KAction * aMouseTextSelect;
     KAction * aMouseTableSelect;
+    KAction * aMouseMagnifier;
     KToggleAction * aToggleAnnotator;
     KSelectAction * aZoom;
     KAction * aZoomIn;
@@ -386,6 +389,11 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     // connect(...);
     setAttribute( Qt::WA_InputMethodEnabled, true );
 
+    d->magnifierView = new MagnifierView(document, this);
+    d->magnifierView->hide();
+    d->magnifierView->setGeometry(0, 0, 350, 200); // TODO: more dynamic?
+    document->addObserver(d->magnifierView);
+
     connect(document, SIGNAL(processMovieAction(const Okular::MovieAction*)), this, SLOT(slotProcessMovieAction(const Okular::MovieAction*)));
     connect(document, SIGNAL(processRenditionAction(const Okular::RenditionAction*)), this, SLOT(slotProcessRenditionAction(const Okular::RenditionAction*)));
 
@@ -574,6 +582,15 @@ void PageView::setupActions( KActionCollection * ac )
     d->aMouseTableSelect->setShortcut( Qt::CTRL + Qt::Key_5 );
     d->aMouseTableSelect->setActionGroup( d->mouseModeActionGroup );
     d->aMouseTableSelect->setChecked( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::TableSelect );
+
+    d->aMouseMagnifier = new KAction(KIcon( "magnifier" ), i18n("&Magnifier"), this);
+    ac->addAction("mouse_magnifier", d->aMouseMagnifier );
+    connect( d->aMouseMagnifier, SIGNAL(triggered()), this, SLOT(slotSetMouseMagnifier()) );
+    d->aMouseMagnifier->setIconText( i18nc( "Magnifier Tool", "Magnifier" ) );
+    d->aMouseMagnifier->setCheckable( true );
+    d->aMouseMagnifier->setShortcut( Qt::CTRL + Qt::Key_6 );
+    d->aMouseMagnifier->setActionGroup( d->mouseModeActionGroup );
+    d->aMouseMagnifier->setChecked( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::Magnifier );
 
     d->aToggleAnnotator  = new KToggleAction(KIcon( "draw-freehand" ), i18n("&Review"), this);
     ac->addAction("mouse_toggle_annotate", d->aToggleAnnotator );
@@ -1054,6 +1071,8 @@ void PageView::updateActionState( bool haspages, bool documentChanged, bool hasf
         d->aSpeakDoc->setEnabled( enablettsactions );
         d->aSpeakPage->setEnabled( enablettsactions );
     }
+
+    d->aMouseMagnifier->setEnabled(d->document->supportsTiles());
 }
 
 bool PageView::areSourceLocationsShownGraphically() const
@@ -1989,6 +2008,15 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
             if ( d->mouseSelecting )
                 updateSelection( eventPos );
             break;
+
+        case Okular::Settings::EnumMouseMode::Magnifier:
+            if ( e->buttons() ) // if any button is pressed at all
+            {
+                moveMagnifier( e->pos() );
+                updateMagnifier( eventPos );
+            }
+            break;
+
         case Okular::Settings::EnumMouseMode::TextSelect:
             // if mouse moves 5 px away from the press point and the document soupports text extraction, do 'textselection'
             if ( !d->mouseTextSelecting && !d->mousePressPos.isNull() && d->document->supportsSearching() && ( ( eventPos - d->mouseSelectPos ).manhattanLength() > 5 ) )
@@ -2129,6 +2157,12 @@ void PageView::mousePressEvent( QMouseEvent * e )
                 selectionStart( eventPos, palette().color( QPalette::Active, QPalette::Highlight ), false );
             else if ( rightButton )
                 updateZoom( ZoomOut );
+            break;
+
+        case Okular::Settings::EnumMouseMode::Magnifier:
+            moveMagnifier( e->pos() );
+            d->magnifierView->show();
+            updateMagnifier( eventPos );
             break;
 
         case Okular::Settings::EnumMouseMode::RectSelect:   // set first corner of the selection rect
@@ -2472,6 +2506,10 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                 // hide message box and delete overlay window
                 selectionClear();
             }
+            break;
+
+        case Okular::Settings::EnumMouseMode::Magnifier:
+            d->magnifierView->hide();
             break;
 
         case Okular::Settings::EnumMouseMode::RectSelect:
@@ -3738,6 +3776,8 @@ void PageView::updateCursor( const QPoint &p )
         // if over a ObjectRect (of type Link) change cursor to hand
         if ( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::TextSelect )
             setCursor( Qt::IBeamCursor );
+        else if ( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::Magnifier )
+            setCursor( Qt::CrossCursor );
         else if ( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::RectSelect )
             setCursor( Qt::CrossCursor );
         else if ( d->mouseAnn )
@@ -3797,6 +3837,60 @@ void PageView::updateCursor( const QPoint &p )
         // go back to the normal one
         d->mouseOnRect = false;
         setCursor( Qt::ArrowCursor );
+    }
+}
+
+void PageView::moveMagnifier( const QPoint& p ) // non scaled point
+{
+    const int w = d->magnifierView->width() * 0.5;
+    const int h = d->magnifierView->height() * 0.5;
+
+    int x = p.x() - w;
+    int y = p.y() - h;
+
+    const int max_x = viewport()->width();
+    const int max_y = viewport()->height();
+
+    QPoint scroll(0,0);
+
+    if (x < 0)
+    {
+        if (horizontalScrollBar()->value() > 0) scroll.setX(x - w);
+        x = 0;
+    }
+
+    if (y < 0)
+    {
+        if (verticalScrollBar()->value() > 0) scroll.setY(y - h);
+        y = 0;
+    }
+
+    if (p.x() + w > max_x)
+    {
+        if (horizontalScrollBar()->value() < horizontalScrollBar()->maximum()) scroll.setX(p.x() + 2 * w - max_x);
+        x = max_x - d->magnifierView->width() - 1;
+    }
+
+    if (p.y() + h > max_y)
+    {
+        if (verticalScrollBar()->value() < verticalScrollBar()->maximum()) scroll.setY(p.y() + 2 * h - max_y);
+        y = max_y - d->magnifierView->height() - 1;
+    }
+
+    if (!scroll.isNull())
+        scrollPosIntoView(contentAreaPoint(p + scroll));
+
+    d->magnifierView->move(x, y);
+}
+
+void PageView::updateMagnifier( const QPoint& p ) // scaled point
+{
+    /* translate mouse coordinates to page coordinates and inform the magnifier of the situation */
+    PageViewItem *item = pickItemOnPoint(p.x(), p.y());
+    if (item)
+    {
+        Okular::NormalizedPoint np(item->absToPageX(p.x()), item->absToPageY(p.y()));
+        d->magnifierView->updateView( np, item->page() );
     }
 }
 
@@ -4516,6 +4610,16 @@ void PageView::slotSetMouseZoom()
         d->aToggleAnnotator->trigger();
         d->annotator->setHidingForced( true );
     }
+    // force an update of the cursor
+    updateCursor();
+    Okular::Settings::self()->writeConfig();
+}
+
+void PageView::slotSetMouseMagnifier()
+{
+    Okular::Settings::setMouseMode( Okular::Settings::EnumMouseMode::Magnifier );
+    d->messageWindow->display( i18n( "Click to see the magnified view." ), QString() );
+
     // force an update of the cursor
     updateCursor();
     Okular::Settings::self()->writeConfig();

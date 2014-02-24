@@ -182,6 +182,7 @@ set(okularpart_SRCS
    ui/pagesizelabel.cpp
    ui/pageviewannotator.cpp
    ui/pageview.cpp
+   ui/magnifierview.cpp
    ui/pageviewutils.cpp
    ui/presentationsearchbar.cpp
    ui/presentationwidget.cpp

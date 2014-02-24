@@ -44,6 +44,8 @@ class RenditionAction;
 class FormWidgetIface;
 class PageViewPrivate;
 
+class MagnifierView;
+
 /**
  * @short The main view. Handles zoom and continuous mode.. oh, and page
  * @short display of course :-)
@@ -187,6 +189,9 @@ Q_OBJECT
         // updates cursor
         void updateCursor( const QPoint &p );
 
+        void moveMagnifier( const QPoint &p );
+        void updateMagnifier( const QPoint &p );
+
         int viewColumns() const;
 
         void center(int cx, int cy);
@@ -238,6 +243,7 @@ Q_OBJECT
         void slotContinuousToggled( bool );
         void slotSetMouseNormal();
         void slotSetMouseZoom();
+        void slotSetMouseMagnifier();
         void slotSetMouseSelect();
         void slotSetMouseTextSelect();
         void slotSetMouseTableSelect();

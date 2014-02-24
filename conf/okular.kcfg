@@ -228,6 +228,7 @@
     <choice name="RectSelect" />
     <choice name="TextSelect" />
     <choice name="TableSelect" />
+    <choice name="Magnifier" />
    </choices>
   </entry>
   <entry key="ShowSourceLocationsGraphically" type="Bool" >

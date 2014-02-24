@@ -185,6 +185,23 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     connect( eraseDrawingAct, SIGNAL(triggered()), SLOT(clearDrawings()) );
     m_topBar->addAction( eraseDrawingAct );
     addAction( eraseDrawingAct );
+    QAction *playPauseAct = collection->action( "presentation_play_pause" );
+    playPauseAct->setEnabled( true );
+    if ( Okular::SettingsCore::slidesAdvance() )
+    {
+       playPauseAct->setIcon( KIcon( "media-playback-pause" ) );
+       playPauseAct->setChecked( true );
+       m_advanceSlides = true;
+    }
+    else
+    {
+       playPauseAct->setIcon( KIcon( "media-playback-start" ) );
+       playPauseAct->setChecked( false );
+       m_advanceSlides = false;
+    }
+    connect( playPauseAct, SIGNAL(toggled(bool)), SLOT(slotPlayPause(bool)) );
+    m_topBar->addAction( playPauseAct );
+    addAction( playPauseAct );
     QDesktopWidget *desktop = QApplication::desktop();
     if ( desktop->numScreens() > 1 )
     {
@@ -1192,7 +1209,7 @@ QRect PresentationWidget::routeMouseDrawingEvent( QMouseEvent * e )
 void PresentationWidget::startAutoChangeTimer()
 {
     double pageDuration = m_frameIndex >= 0 && m_frameIndex < (int)m_frames.count() ? m_frames[ m_frameIndex ]->page->duration() : -1;
-    if ( Okular::SettingsCore::slidesAdvance() || pageDuration >= 0.0 )
+    if ( m_advanceSlides || pageDuration >= 0.0 )
     {
         double secs = pageDuration < 0.0
                    ? Okular::SettingsCore::slidesAdvanceTime()
@@ -2160,6 +2177,22 @@ void PresentationWidget::slotProcessRenditionAction( const Okular::RenditionActi
             vw->play();
             break;
     };
+}
+
+void PresentationWidget::slotPlayPause( bool on )
+{
+    QAction * playPause = dynamic_cast< QAction* >( QObject::sender() );
+    if ( on )
+    {
+	m_advanceSlides = true;
+	startAutoChangeTimer();
+	playPause->setIcon( KIcon( "media-playback-pause" ) );
+    }
+    else
+    {
+	m_advanceSlides = false;
+	playPause->setIcon( KIcon( "media-playback-start" ) );
+    }
 }
 
 #include "presentationwidget.moc"

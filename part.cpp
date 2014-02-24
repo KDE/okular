@@ -823,6 +823,10 @@ void Part::setupActions()
     ac->addAction( "options_configure_annotations", configureAnnotations );
     configureAnnotations->setIcon( KIcon( "configure" ) );
     connect(configureAnnotations, SIGNAL(triggered()), this, SLOT(slotAnnotationPreferences()));
+    
+     KToggleAction *playPauseAction = new KToggleAction( i18n( "Play/Pause" ), ac );
+    ac->addAction( "presentation_play_pause", playPauseAction );
+    playPauseAction->setEnabled( false );
 }
 
 Part::~Part()

@@ -134,6 +134,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         bool m_blockNotifications;
         bool m_inBlackScreenMode;
         bool m_showSummaryView;
+	bool m_advanceSlides;
 
     private slots:
         void slotNextPage();
@@ -151,6 +152,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         void toggleBlackScreenMode( bool );
         void slotProcessMovieAction( const Okular::MovieAction *action );
         void slotProcessRenditionAction( const Okular::RenditionAction *action );
+	void slotPlayPause( bool );
 };
 
 #endif

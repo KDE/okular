@@ -135,8 +135,9 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     m_pressedLink( 0 ), m_handCursor( false ), m_drawingEngine( 0 ),
     m_parentWidget( parent ),
     m_document( doc ), m_frameIndex( -1 ), m_topBar( 0 ), m_pagesEdit( 0 ), m_searchBar( 0 ),
-    m_screenSelect( 0 ), m_isSetup( false ), m_blockNotifications( false ), m_inBlackScreenMode( false ),
-    m_showSummaryView( Okular::Settings::slidesShowSummary() )
+    m_ac( collection ), m_screenSelect( 0 ), m_isSetup( false ), m_blockNotifications( false ), m_inBlackScreenMode( false ),
+    m_showSummaryView( Okular::Settings::slidesShowSummary() ),
+    m_advanceSlides( Okular::SettingsCore::slidesAdvance() )
 {
     Q_UNUSED( parent )
     setAttribute( Qt::WA_DeleteOnClose );
@@ -175,6 +176,13 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     connect( m_pagesEdit, SIGNAL(returnPressed()), this, SLOT(slotPageChanged()) );
     m_topBar->addAction( KIcon( layoutDirection() == Qt::RightToLeft ? "go-previous" : "go-next" ), i18n( "Next Page" ), this, SLOT(slotNextPage()) );
     m_topBar->addSeparator();
+    QAction *playPauseAct = collection->action( "presentation_play_pause" );
+    playPauseAct->setEnabled( true );
+    connect( playPauseAct, SIGNAL(triggered()), SLOT(slotTogglePlayPause()) );
+    m_topBar->addAction( playPauseAct );
+    setPlayPauseIcon();
+    addAction( playPauseAct );
+    m_topBar->addSeparator();
     QAction *drawingAct = collection->action( "presentation_drawing_mode" );
     connect( drawingAct, SIGNAL(toggled(bool)), SLOT(togglePencilMode(bool)) );
     drawingAct->setEnabled( true );
@@ -185,23 +193,6 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     connect( eraseDrawingAct, SIGNAL(triggered()), SLOT(clearDrawings()) );
     m_topBar->addAction( eraseDrawingAct );
     addAction( eraseDrawingAct );
-    QAction *playPauseAct = collection->action( "presentation_play_pause" );
-    playPauseAct->setEnabled( true );
-    if ( Okular::SettingsCore::slidesAdvance() )
-    {
-       playPauseAct->setIcon( KIcon( "media-playback-pause" ) );
-       playPauseAct->setChecked( true );
-       m_advanceSlides = true;
-    }
-    else
-    {
-       playPauseAct->setIcon( KIcon( "media-playback-start" ) );
-       playPauseAct->setChecked( false );
-       m_advanceSlides = false;
-    }
-    connect( playPauseAct, SIGNAL(toggled(bool)), SLOT(slotPlayPause(bool)) );
-    m_topBar->addAction( playPauseAct );
-    addAction( playPauseAct );
     QDesktopWidget *desktop = QApplication::desktop();
     if ( desktop->numScreens() > 1 )
     {
@@ -256,7 +247,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
         setCursor( QCursor( Qt::BlankCursor ) );
     }
 
-    setupActions( collection );
+    setupActions();
 
     // inhibit power management
     inhibitPowerManagement();
@@ -293,6 +284,9 @@ PresentationWidget::~PresentationWidget()
 
     QAction *eraseDrawingAct = m_ac->action( "presentation_erase_drawings" );
     eraseDrawingAct->setEnabled( false );
+
+    QAction *playPauseAction = m_ac->action( "presentation_play_pause" );
+    playPauseAction->setEnabled( false );
 
     QAction *blackScreenAct = m_ac->action( "switch_blackscreen_mode" );
     blackScreenAct->setChecked( false );
@@ -491,9 +485,8 @@ bool PresentationWidget::canUnloadPixmap( int pageNumber ) const
     }
 }
 
-void PresentationWidget::setupActions( KActionCollection * collection )
+void PresentationWidget::setupActions()
 {
-    m_ac = collection;
     addAction( m_ac->action( "first_page" ) );
     addAction( m_ac->action( "last_page" ) );
     addAction( m_ac->action( KStandardAction::name( KStandardAction::Prior ) ) );
@@ -507,6 +500,20 @@ void PresentationWidget::setupActions( KActionCollection * collection )
     addAction( action );
 }
 
+void PresentationWidget::setPlayPauseIcon()
+{
+    QAction *playPauseAction = m_ac->action( "presentation_play_pause" );
+    if ( m_advanceSlides )
+    {
+       playPauseAction->setIcon( KIcon( "media-playback-pause" ) );
+       playPauseAction->setToolTip( i18nc( "For Presentation", "Pause" ) );
+    }
+    else
+    {
+       playPauseAction->setIcon( KIcon( "media-playback-start" ) );
+       playPauseAction->setToolTip( i18nc( "For Presentation", "Play" ) );
+    }
+}
 
 // <widget events>
 bool PresentationWidget::event( QEvent * e )
@@ -2179,19 +2186,17 @@ void PresentationWidget::slotProcessRenditionAction( const Okular::RenditionActi
     };
 }
 
-void PresentationWidget::slotPlayPause( bool on )
+void PresentationWidget::slotTogglePlayPause()
 {
-    QAction * playPause = dynamic_cast< QAction* >( QObject::sender() );
-    if ( on )
+    m_advanceSlides = !m_advanceSlides;
+    setPlayPauseIcon();
+    if ( m_advanceSlides )
     {
-	m_advanceSlides = true;
-	startAutoChangeTimer();
-	playPause->setIcon( KIcon( "media-playback-pause" ) );
+        startAutoChangeTimer();
     }
     else
     {
-	m_advanceSlides = false;
-	playPause->setIcon( KIcon( "media-playback-start" ) );
+        m_nextPageTimer->stop();
     }
 }
 

@@ -95,7 +95,8 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         void allowPowerManagement();
         void showTopBar( bool );
         // create actions that interact with this widget
-        void setupActions( KActionCollection * collection );
+        void setupActions();
+        void setPlayPauseIcon();
 
         // cache stuff
         int m_width;
@@ -134,7 +135,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         bool m_blockNotifications;
         bool m_inBlackScreenMode;
         bool m_showSummaryView;
-	bool m_advanceSlides;
+        bool m_advanceSlides;
 
     private slots:
         void slotNextPage();
@@ -152,7 +153,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         void toggleBlackScreenMode( bool );
         void slotProcessMovieAction( const Okular::MovieAction *action );
         void slotProcessRenditionAction( const Okular::RenditionAction *action );
-	void slotPlayPause( bool );
+        void slotTogglePlayPause();
 };
 
 #endif

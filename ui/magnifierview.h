@@ -21,11 +21,8 @@
 #define MAGNIFIERVIEW_H
 
 #include <QWidget>
-#include "core/view.h"
 #include "core/observer.h"
-#include <core/page.h>
-
-class QLabel;
+#include "core/page.h"
 
 class MagnifierView : public QWidget, public Okular::DocumentObserver
 {
@@ -37,7 +34,7 @@ class MagnifierView : public QWidget, public Okular::DocumentObserver
     void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags );
     void notifyPageChanged( int page, int flags );
     void notifyCurrentPageChanged( int previous, int current );
-    virtual bool canUnloadPixmap( int page ) const;
+    bool canUnloadPixmap( int page ) const;
 
     void updateView( const Okular::NormalizedPoint &p, const Okular::Page * page );
     void move( int x, int y );

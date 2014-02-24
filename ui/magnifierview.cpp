@@ -20,16 +20,12 @@
 #include "magnifierview.h"
 
 #include <QPainter>
-#include <QLabel>
-#include <QVBoxLayout>
-#include <QLayoutItem>
 
 #include <KLocale>
-#include <KColorScheme>
 
 #include "core/document.h"
-#include "ui/pagepainter.h"
 #include "core/generator.h"
+#include "pagepainter.h"
 #include "priorities.h"
 
 static const int SCALE = 10;
@@ -163,16 +159,16 @@ void MagnifierView::drawTicks( QPainter *p )
 {
   p->save();
 
-  p->setPen(QPen(QBrush(Qt::SolidPattern), 1, Qt::SolidLine, Qt::FlatCap));
+  p->setPen(QPen(Qt::black, 0));
   // the cross
-  p->drawLine(width() / 2, 0, width() / 2, height());
-  p->drawLine(0, height() / 2, width(), height() / 2);
+  p->drawLine(width() / 2, 0, width() / 2, height() - 1);
+  p->drawLine(0, height() / 2, width() - 1, height() / 2);
 
   // the borders
-  p->drawLine(1, 1, width() - 1, 1);
-  p->drawLine(width() - 1, 1,  width() - 1, height() - 1);
-  p->drawLine(1, height() - 1, width() - 1, height() - 1);
-  p->drawLine(1, height() - 1, 1, 1);
+  p->drawLine(0, 0, width() - 1, 0);
+  p->drawLine(width() - 1, 0,  width() - 1, height() - 1);
+  p->drawLine(0, height() - 1, width() - 1, height() - 1);
+  p->drawLine(0, height() - 1, 0, 0);
 
   // ticks
   // TODO posibility to switch units (pt, mm, cc, in, printing dots)
@@ -182,19 +178,9 @@ void MagnifierView::drawTicks( QPainter *p )
   for ( float x = 0; x < width(); x += ps )
   {
     p->drawLine(x, 1, x, tw);
-    p->drawLine(x, height(), x, height() - tw);
+    p->drawLine(x, height() - 1, x, height() - tw - 1);
     p->drawLine(1, x, tw, x);
-    p->drawLine(width(), x, width() - tw, x);
-  }
-
-  ps *= 5; // thick ones
-  p->setPen(QPen(QBrush(Qt::SolidPattern), 2, Qt::SolidLine, Qt::FlatCap));
-  for ( float x = 0; x < width(); x += ps )
-  {
-    p->drawLine(x, 1, x, tw);
-    p->drawLine(x, height(), x, height() - tw);
-    p->drawLine(1, x, tw, x);
-    p->drawLine(width(), x, width() - tw, x);
+    p->drawLine(width() - 1, x, width() - tw - 1, x);
   }
 
   p->restore();

@@ -310,7 +310,7 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
   // Handle fatal errors.
   int const kpsewhich_exit_code = kpsewhich_.exitCode();
   if (kpsewhich_exit_code < 0) {
-    emit warning(i18n("The font generation by 'kpsewhich' was aborted (exit code %1, error %2). As a"
+    emit warning(i18n("The font generation by 'kpsewhich' was aborted (exit code %1, error %2). As a "
                       "result, some font files could not be located, and your document might be unreadable.",
                       kpsewhich_exit_code, kpsewhich_.errorString()), -1);
 

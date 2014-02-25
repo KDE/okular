@@ -62,36 +62,48 @@ static bool CaseSensitiveCmpFn( const QStringRef & from, const QStringRef & to )
     return from.compare( to, Qt::CaseSensitive ) == 0;
 }
 
+
 /**
- * If the vertical arm of one rectangle fully contains the other (example below)
- *  --------         ----         -----  first
- *    ----         --------       -----  second
- * or we can make it overlap of spaces by threshold%
-*/
-static bool doesConsumeY(const QRect& first, const QRect& second, int threshold)
+ * Returns true iff segments [@p left1, @p right1] and [@p left2, @p right2] on the real line
+ * overlap within @p threshold percent, i. e. iff the ratio of the length of the
+ * intersection of the segments to the length of the shortest of the two input segments
+ * is not smaller than the threshold.
+ */
+static bool segmentsOverlap(double left1, double right1, double left2, double right2, int threshold)
 {
-    // if one consumes another fully
-    if(first.top() <= second.top() && first.bottom() >= second.bottom())
+    // check if one consumes another fully (speed optimization)
+
+    if (left1 <= left2 && right1 >= right2)
         return true;
 
-    if(first.top() >= second.top() && first.bottom() <= second.bottom())
+    if (left1 >= left2 && right1 <= right2)
         return true;
 
-    // or if there is overlap of space by more than 80%
-    // there is overlap
-    if(second.bottom() >= first.top() && first.bottom() >= second.top())
+    // check if there is overlap above threshold
+    if (right2 >= left1 && right1 >= left2)
     {
-        const int overlap = (second.bottom() >= first.bottom()) ? first.bottom() - second.top()
-                                                                : second.bottom() - first.top();
-        //we will divide by the smaller rectangle to calculate the overlap
-        const int percentage = (first.height() < second.height()) ? overlap * 100 / (first.bottom() - first.top())
-                                                                : overlap * 100 / (second.bottom() - second.top());
+        double overlap = (right2 >= right1) ? right1 - left2
+                                            : right2 - left1;
 
-        if(percentage >= threshold) return true;
+        double length1 = right1 - left1,
+               length2 = right2 - left2;
+
+        return overlap * 100 >= threshold * qMin(length1, length2);
     }
 
     return false;
 }
+
+static bool doesConsumeY(const QRect& first, const QRect& second, int threshold)
+{
+    return segmentsOverlap(first.top(), first.bottom(), second.top(), second.bottom(), threshold);
+}
+
+static bool doesConsumeY(const NormalizedRect& first, const NormalizedRect& second, int threshold)
+{
+    return segmentsOverlap(first.top, first.bottom, second.top, second.bottom, threshold);
+}
+
 
 /*
   Rationale behind TinyTextEntity:
@@ -764,7 +776,7 @@ RegularAreaRect* TextPage::findText( int searchID, const QString &query, SearchD
 // we have a '-' just followed by a '\n' character
 // check if the string contains a '-' character
 // if the '-' is the last entry
-static int stringLengthAdaptedWithHyphen(const QString &str, const TextList::ConstIterator &it, const TextList::ConstIterator &textListEnd, PagePrivate *page)
+static int stringLengthAdaptedWithHyphen(const QString &str, const TextList::ConstIterator &it, const TextList::ConstIterator &textListEnd)
 {
     int len = str.length();
     
@@ -786,11 +798,8 @@ static int stringLengthAdaptedWithHyphen(const QString &str, const TextList::Con
             else
             {
                 // 2. if the next word is in a different line or not
-                const int pageWidth = page->m_page->width();
-                const int pageHeight = page->m_page->height();
-
-                const QRect hyphenArea = (*it)->area.roundedGeometry(pageWidth, pageHeight);
-                const QRect lookaheadArea = (*(it + 1))->area.roundedGeometry(pageWidth, pageHeight);
+                const NormalizedRect& hyphenArea = (*it)->area;
+                const NormalizedRect& lookaheadArea = (*(it + 1))->area;
 
                 // lookahead to check whether both the '-' rect and next character rect overlap
                 if( !doesConsumeY( hyphenArea, lookaheadArea, 70 ) )
@@ -852,7 +861,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
     {
         const TinyTextEntity* curEntity = *it;
         const QString& str = curEntity->text();
-        int len = stringLengthAdaptedWithHyphen(str, it, m_words.constEnd(), m_page);
+        int len = stringLengthAdaptedWithHyphen(str, it, m_words.constEnd());
 
         if (offset >= len)
         {
@@ -970,7 +979,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
 
         const TinyTextEntity* curEntity = *it;
         const QString& str = curEntity->text();
-        int len = stringLengthAdaptedWithHyphen(str, it, m_words.constEnd(), m_page);
+        int len = stringLengthAdaptedWithHyphen(str, it, m_words.constEnd());
 
         if (offset <= 0)
         {
@@ -1447,7 +1456,7 @@ static void calculateStatisticalInformation(const QList<WordWithCharacters> &wor
             if(space != 0 && space != pageWidth)
             {
                 // increase the count of the space amount
-                if(hor_space_stat.contains(space)) hor_space_stat[space] = hor_space_stat[space]++;
+                if(hor_space_stat.contains(space)) hor_space_stat[space]++;
                 else hor_space_stat[space] = 1;
 
                 int left,right,top,bottom;
@@ -1468,14 +1477,14 @@ static void calculateStatisticalInformation(const QList<WordWithCharacters> &wor
         if(hor_space_stat.contains(maxSpace))
         {
             if(hor_space_stat[maxSpace] != 1)
-                hor_space_stat[maxSpace] = hor_space_stat[maxSpace]--;
+                hor_space_stat[maxSpace]--;
             else hor_space_stat.remove(maxSpace);
         }
 
         if(maxSpace != 0)
         {
             if (col_space_stat.contains(maxSpace))
-                col_space_stat[maxSpace] = col_space_stat[maxSpace]++;
+                col_space_stat[maxSpace]++;
             else col_space_stat[maxSpace] = 1;
 
             //store the max rect of each line
@@ -1866,8 +1875,13 @@ WordsWithCharacters addNecessarySpace(RegionTextList tree, int pageWidth, int pa
  */
 void TextPagePrivate::correctTextOrder()
 {
-    const int pageWidth = m_page->m_page->width();
-    const int pageHeight = m_page->m_page->height();
+    //m_page->m_page->width() and m_page->m_page->height() are in pixels at
+    //100% zoom level, and thus depend on display DPI. We scale pageWidth and
+    //pageHeight to remove the dependence. Otherwise bugs would be more difficult
+    //to reproduce and Okular could fail in extreme cases like a large TV with low DPI.
+    const double scalingFactor = 2000.0 / (m_page->m_page->width() + m_page->m_page->height());
+    const int pageWidth  = (int) (scalingFactor * m_page->m_page->width() );
+    const int pageHeight = (int) (scalingFactor * m_page->m_page->height());
 
     TextList characters = m_words;
 

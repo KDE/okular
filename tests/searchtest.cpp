@@ -46,6 +46,8 @@ class SearchTest : public QObject
         void testHyphenAtEndOfLineWithoutYOverlap();
         void testHyphenWithYOverlap();
         void testHyphenAtEndOfPage();
+        void testOneColumn();
+        void testTwoColumns();
 };
 
 void SearchTest::initTestCase()
@@ -54,22 +56,27 @@ void SearchTest::initTestCase()
     Okular::SettingsCore::instance( "searchtest" );
 }
 
-static Okular::TextPage* createTextPage(const QString text[], const Okular::NormalizedRect rect[],
-                                        int n, Okular::Page*& page) {
+static void createTextPage(const QVector<QString>& text, const QVector<Okular::NormalizedRect>& rect,
+                                        Okular::TextPage*& tp, Okular::Page*& page) {
 
-    Okular::TextPage* tp = new Okular::TextPage();
-    for (int i = 0; i < n; i++) {
+    tp = new Okular::TextPage();
+    for (int i = 0; i < text.size(); i++) {
         tp->append(text[i], new Okular::NormalizedRect(rect[i]));
     }
 
-    //We must create a Page object because TextPage::stringLengthAdaptedWithHyphen uses
-    //m_page->width() and m_page->height() (for some dubious reason).
+    //The Page::setTextPage method invokes the layout analysis algorithms tested by some tests here
+    //and also sets the tp->d->m_page field (the latter was used in older versions of Okular by
+    //TextPage::stringLengthAdaptedWithHyphen).
     //Note that calling "delete page;" will delete the TextPage as well.
     page = new Okular::Page(1, 100, 100, Okular::Rotation0);
     page -> setTextPage(tp);
-
-    return tp;
 }
+
+#define CREATE_PAGE \
+  QCOMPARE(text.size(), rect.size()); \
+  Okular::Page* page; \
+  Okular::TextPage* tp; \
+  createTextPage(text, rect, tp, page);
 
 #define TEST_NEXT_PREV(searchType, expectedStatus) \
 { \
@@ -130,16 +137,14 @@ void SearchTest::testNextAndPrevious()
     for (int i = 0; i < TEST_NEXT_PREV_SITUATION_COUNT; i++) {
         const QVector<QString>& text = texts[i];
         const QString& searchString = searchStrings[i];
-        const int n = text.size();
 
-        Okular::NormalizedRect* rect = new Okular::NormalizedRect[n]; \
+        QVector<Okular::NormalizedRect> rect; \
 
-        for (int i = 0; i < n; i++) {
-            rect[i] = Okular::NormalizedRect(0.1*i, 0.0, 0.1*(i+1), 0.1); \
+        for (int i = 0; i < text.size(); i++) {
+            rect << Okular::NormalizedRect(0.1*i, 0.0, 0.1*(i+1), 0.1); \
         }
 
-        Okular::Page* page;
-        Okular::TextPage* tp = createTextPage(text.data(), rect, n, page);
+        CREATE_PAGE;
 
         //Test 3 of the 8 cases listed above:
         //FromTop, Next-Next (match) and Next-Next (no match)
@@ -156,7 +161,6 @@ void SearchTest::testNextAndPrevious()
         TEST_NEXT_PREV(Okular::PreviousResult, false);
 
         delete page;
-        delete[] rect;
     }
 }
 
@@ -194,15 +198,13 @@ void SearchTest::test311232()
 
 void SearchTest::test323262()
 {
-    QString text[] = {
-        "a\n"
-    };
-    Okular::NormalizedRect rect[] = {
-        Okular::NormalizedRect(1, 2, 3, 4)
-    };
+    QVector<QString> text;
+    text << "a\n";
 
-    Okular::Page* page;
-    Okular::TextPage* tp = createTextPage(text, rect, 1, page);
+    QVector<Okular::NormalizedRect> rect;
+    rect << Okular::NormalizedRect(1, 2, 3, 4);
+
+    CREATE_PAGE;
 
     Okular::RegularAreaRect* result = tp->findText(0, "a", Okular::FromBottom, Qt::CaseSensitive, NULL);
     QVERIFY(result);
@@ -213,17 +215,15 @@ void SearchTest::test323262()
 
 void SearchTest::test323263()
 {
-    QString text[] = {
-        "a", "a", "b"
-    };
-    Okular::NormalizedRect rect[] = {
-        Okular::NormalizedRect(0, 0, 1, 1),
-        Okular::NormalizedRect(1, 0, 2, 1),
-        Okular::NormalizedRect(2, 0, 3, 1)
-    };
+    QVector<QString> text;
+    text << "a" << "a" << "b";
 
-    Okular::Page* page;
-    Okular::TextPage* tp = createTextPage(text, rect, 3, page);
+    QVector<Okular::NormalizedRect> rect;
+    rect << Okular::NormalizedRect(0, 0, 1, 1)
+         << Okular::NormalizedRect(1, 0, 2, 1)
+         << Okular::NormalizedRect(2, 0, 3, 1);
+
+    CREATE_PAGE;
 
     Okular::RegularAreaRect* result = tp->findText(0, "ab", Okular::FromTop, Qt::CaseSensitive, NULL);
     QVERIFY(result);
@@ -248,15 +248,13 @@ void SearchTest::testDottedI()
     //mode as well (QString::compare does not match them, at least in non-Turkish locales, since it follows
     //the Unicode case-folding rules http://www.unicode.org/Public/6.2.0/ucd/CaseFolding.txt).
 
-    QString text[] = {
-        QString::fromUtf8("İ")
-    };
-    Okular::NormalizedRect rect[] = {
-        Okular::NormalizedRect(1, 2, 3, 4)
-    };
+    QVector<QString> text;
+    text << QString::fromUtf8("İ");
 
-    Okular::Page* page;
-    Okular::TextPage* tp = createTextPage(text, rect, 1, page);
+    QVector<Okular::NormalizedRect> rect;
+    rect << Okular::NormalizedRect(1, 2, 3, 4);
+
+    CREATE_PAGE;
 
     Okular::RegularAreaRect* result = tp->findText(0, QString::fromUtf8("İ"), Okular::FromTop, Qt::CaseInsensitive, NULL);
     QVERIFY(result);
@@ -265,34 +263,29 @@ void SearchTest::testDottedI()
     delete page;
 }
 
-void SearchTest::testHyphenAtEndOfLineWithoutYOverlap() {
-    QString text[] = {
-        "super-",
-        "cali-\n",
-        "fragilistic", "-",
-        "expiali", "-\n",
-        "docious"
-    };
+void SearchTest::testHyphenAtEndOfLineWithoutYOverlap()
+{
+    QVector<QString> text;
+    text << "super-"
+         << "cali-\n"
+         << "fragilistic" << "-"
+         << "expiali" << "-\n"
+         << "docious";
 
-    Okular::NormalizedRect rect[] = {
-        Okular::NormalizedRect(0.4, 0.0, 0.9, 0.1),
-        Okular::NormalizedRect(0.0, 0.1, 0.6, 0.2),
-        Okular::NormalizedRect(0.0, 0.2, 0.8, 0.3), Okular::NormalizedRect(0.8, 0.2, 0.9, 0.3),
-        Okular::NormalizedRect(0.0, 0.3, 0.8, 0.4), Okular::NormalizedRect(0.8, 0.3, 0.9, 0.4),
-        Okular::NormalizedRect(0.0, 0.4, 0.7, 0.5)
-    };
+    QVector<Okular::NormalizedRect> rect;
+    rect << Okular::NormalizedRect(0.4, 0.0, 0.9, 0.1)
+         << Okular::NormalizedRect(0.0, 0.1, 0.6, 0.2)
+         << Okular::NormalizedRect(0.0, 0.2, 0.8, 0.3) << Okular::NormalizedRect(0.8, 0.2, 0.9, 0.3)
+         << Okular::NormalizedRect(0.0, 0.3, 0.8, 0.4) << Okular::NormalizedRect(0.8, 0.3, 0.9, 0.4)
+         << Okular::NormalizedRect(0.0, 0.4, 0.7, 0.5);
 
-    size_t n = sizeof(text)/sizeof(QString);
-    QCOMPARE(n, sizeof(rect)/sizeof(Okular::NormalizedRect));
-
-    Okular::Page* page;
-    Okular::TextPage* tp = createTextPage(text, rect, n, page);
+    CREATE_PAGE;
 
     Okular::RegularAreaRect* result = tp->findText(0, "supercalifragilisticexpialidocious",
                                                  Okular::FromTop, Qt::CaseSensitive, NULL);
     QVERIFY(result);
     Okular::RegularAreaRect expected;
-    for (unsigned i = 0; i < n; i++) {
+    for (int i = 0; i < text.size(); i++) {
         expected.append(rect[i]);
     }
     expected.simplify();
@@ -302,69 +295,63 @@ void SearchTest::testHyphenAtEndOfLineWithoutYOverlap() {
     delete page;
 }
 
-static bool testHyphen(Okular::NormalizedRect rect[], QString searchString) {
-    QString text[] = {
-        "a-",
-        "b"
-    };
-
-    int n = 2;
-
-    Okular::Page* page;
-    Okular::TextPage* tp = createTextPage(text, rect, n, page);
-
-    Okular::RegularAreaRect* result = tp->findText(0, searchString,
-               Okular::FromTop, Qt::CaseSensitive, NULL);
-
-    bool found = result;
-
-    delete result;
-    delete page;
-
-    return found;
+#define CREATE_PAGE_AND_TEST_SEARCH(searchString, matchExpected) \
+{ \
+    CREATE_PAGE; \
+ \
+    Okular::RegularAreaRect* result = tp->findText(0, searchString, \
+               Okular::FromTop, Qt::CaseSensitive, NULL); \
+ \
+    QCOMPARE(!!result, matchExpected); \
+ \
+    delete result; \
+    delete page; \
 }
 
-void SearchTest::testHyphenWithYOverlap() {
-    Okular::NormalizedRect rect[2];
+void SearchTest::testHyphenWithYOverlap()
+{
+    QVector<QString> text;
+    text << "a-"
+         << "b";
+
+    QVector<Okular::NormalizedRect> rect(2);
 
     //different lines (50% y-coordinate overlap), first rectangle has larger height
     rect[0] = Okular::NormalizedRect(0.0, 0.0,  0.9, 0.35);
     rect[1] = Okular::NormalizedRect(0.0, 0.3, 0.2, 0.4);
-    QVERIFY(testHyphen(rect, "ab"));
+    CREATE_PAGE_AND_TEST_SEARCH("ab", true);
 
     //different lines (50% y-coordinate overlap), second rectangle has larger height
     rect[0] = Okular::NormalizedRect(0.0, 0.0,  0.9, 0.1);
     rect[1] = Okular::NormalizedRect(0.0, 0.05, 0.2, 0.4);
-    QVERIFY(testHyphen(rect, "ab"));
+    CREATE_PAGE_AND_TEST_SEARCH("ab", true);
 
     //same line (90% y-coordinate overlap), first rectangle has larger height
     rect[0] = Okular::NormalizedRect(0.0, 0.0,  0.4, 0.2);
     rect[1] = Okular::NormalizedRect(0.4, 0.11, 0.6, 0.21);
-    QVERIFY(!testHyphen(rect, "ab"));
-    QVERIFY(testHyphen(rect, "a-b"));
+    CREATE_PAGE_AND_TEST_SEARCH("ab", false);
+    CREATE_PAGE_AND_TEST_SEARCH("a-b", true);
 
     //same line (90% y-coordinate overlap), second rectangle has larger height
     rect[0] = Okular::NormalizedRect(0.0, 0.0, 0.4, 0.1);
     rect[1] = Okular::NormalizedRect(0.4, 0.01, 0.6, 0.2);
-    QVERIFY(!testHyphen(rect, "ab"));
-    QVERIFY(testHyphen(rect, "a-b"));
+    CREATE_PAGE_AND_TEST_SEARCH("ab", false);
+    CREATE_PAGE_AND_TEST_SEARCH("a-b", true);
 }
 
-void SearchTest::testHyphenAtEndOfPage() {
+void SearchTest::testHyphenAtEndOfPage()
+{
     //Tests for segmentation fault that would occur if
     //we tried look ahead (for determining whether the
     //next character is at the same line) at the end of the page.
 
-    QString text[] = {
-        "a-"
-    };
+    QVector<QString> text;
+    text << "a-";
 
-    Okular::NormalizedRect rect[] = {
-        Okular::NormalizedRect(0, 0, 1, 1)
-    };
+    QVector<Okular::NormalizedRect> rect;
+    rect << Okular::NormalizedRect(0, 0, 1, 1);
 
-    Okular::Page* page;
-    Okular::TextPage* tp = createTextPage(text, rect, 1, page);
+    CREATE_PAGE;
 
     {
         Okular::RegularAreaRect* result = tp->findText(0, "a",
@@ -381,6 +368,65 @@ void SearchTest::testHyphenAtEndOfPage() {
     }
 
     delete page;
+}
+
+void SearchTest::testOneColumn()
+{
+  //Tests that the layout analysis algorithm does not create too many columns.
+  //Bug 326207 was caused by the fact that if all the horizontal breaks in a line
+  //had the same length and were smaller than vertical breaks between lines then
+  //the horizontal breaks were treated as column separators.
+  //(Note that "same length" means "same length after rounding rectangles to integer pixels".
+  //The resolution used by the XY Cut algorithm with a square page is 1000 x 1000,
+  //and the horizontal spaces in the example are 0.1, so they are indeed both exactly 100 pixels.)
+
+  QVector<QString> text;
+  text << "Only" << "one" << "column"
+       << "here";
+
+  //characters and line breaks have length 0.05, word breaks 0.1
+  QVector<Okular::NormalizedRect> rect;
+  rect << Okular::NormalizedRect(0.0,  0.0,  0.2,  0.1)
+       << Okular::NormalizedRect(0.3,  0.0,  0.5,  0.1)
+       << Okular::NormalizedRect(0.6,  0.0,  0.9,  0.1)
+       << Okular::NormalizedRect(0.0,  0.15, 0.2,  0.25);
+
+  CREATE_PAGE;
+
+  Okular::RegularAreaRect* result = tp->findText(0, "Only one column",
+      Okular::FromTop, Qt::CaseSensitive, NULL);
+  QVERIFY(result);
+  delete result;
+
+  delete page;
+}
+
+void SearchTest::testTwoColumns()
+{
+  //Tests that the layout analysis algorithm can detect two columns.
+
+  QVector<QString> text;
+  text << "This" << "text" << "in" << "two"
+       << "is" << "set"    << "columns.";
+
+  //characters, word breaks and line breaks have length 0.05
+  QVector<Okular::NormalizedRect> rect;
+  rect << Okular::NormalizedRect(0.0,  0.0,  0.20, 0.1)
+       << Okular::NormalizedRect(0.25, 0.0,  0.45, 0.1)
+       << Okular::NormalizedRect(0.6,  0.0,  0.7,  0.1)
+       << Okular::NormalizedRect(0.75, 0.0,  0.9,  0.1)
+       << Okular::NormalizedRect(0.0,  0.15, 0.1,  0.25)
+       << Okular::NormalizedRect(0.15, 0.15, 0.3,  0.25)
+       << Okular::NormalizedRect(0.6,  0.15, 1.0,  0.25);
+
+  CREATE_PAGE;
+
+  Okular::RegularAreaRect* result = tp->findText(0, "This text in",
+      Okular::FromTop, Qt::CaseSensitive, NULL);
+  QVERIFY(!result);
+  delete result;
+
+  delete page;
 }
 
 QTEST_KDEMAIN( SearchTest, GUI )

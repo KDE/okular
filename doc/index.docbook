@@ -37,7 +37,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2014-02-08</date>
+		<date>2014-02-25</date>
 		<releaseinfo>0.19 (&kde; 4.13)</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
@@ -315,6 +315,9 @@ Context menu actions like Rename Bookmarks etc.)
 				wheel, the arrow icons or the line edit in the top bar,
 				or the keys specified in the <link linkend="navigating">Navigating</link>
 				section.
+			</para>
+			<para>
+			        Use <guilabel>Play/Pause</guilabel> button in the top bar to start playing presentation or pause it, correspondingly.
 			</para>
 			<para>
 				You can exit presentation mode at any time by pressing the &Esc; key or clicking
@@ -1660,6 +1663,18 @@ Context menu actions like Rename Bookmarks etc.)
 					<listitem>
 						<para>Draw a rectangle around the text for the table, then use the click with the &LMB;
 						  to divide the text block into rows and columns. A &LMB; click on a existing line removes it and merges the adjacent rows or columns.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<shortcut><keycombo action="simul">&Ctrl;<keycap>6</keycap></keycombo></shortcut>
+							<guimenu>Tools</guimenu>
+							<guimenuitem>Magnifier</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para>Activates the magnifier mode for the mouse pointer. Press and hold the &LMB; to activate magnifier widget, move the pointer for panning through the document. The magnifier scales each pixel in the document into 10 pixels in the magnifier widget.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>

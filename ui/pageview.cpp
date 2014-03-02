@@ -1071,8 +1071,8 @@ void PageView::updateActionState( bool haspages, bool documentChanged, bool hasf
         d->aSpeakDoc->setEnabled( enablettsactions );
         d->aSpeakPage->setEnabled( enablettsactions );
     }
-
-    d->aMouseMagnifier->setEnabled(d->document->supportsTiles());
+    if (d->aMouseMagnifier)
+       d->aMouseMagnifier->setEnabled(d->document->supportsTiles());
 }
 
 bool PageView::areSourceLocationsShownGraphically() const

@@ -2030,7 +2030,7 @@ QVariant DocumentPrivate::documentMetaData( const QString &key, const QVariant &
         }
     }
     return QVariant();
-};
+}
 
 bool DocumentPrivate::isNormalizedRectangleFullyVisible( const Okular::NormalizedRect & rectOfInterest, int rectPage )
 {

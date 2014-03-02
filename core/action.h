@@ -54,7 +54,7 @@ class OKULAR_EXPORT Action
             Sound,      ///< Play a sound
             Movie,      ///< Play a movie
             Script,     ///< Executes a Script code
-            Rendition,  ///< Play a movie and/or execute a Script code @since 0.16 (KDE 4.10)
+            Rendition   ///< Play a movie and/or execute a Script code @since 0.16 (KDE 4.10)
         };
 
         /**

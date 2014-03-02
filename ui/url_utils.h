@@ -31,6 +31,6 @@ namespace UrlUtils
         else
             return QString();
     }
-};
+}
 
 #endif

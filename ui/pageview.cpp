@@ -325,6 +325,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->setting_viewCols = Okular::Settings::viewColumns();
     d->mouseModeActionGroup = 0;
     d->penDown = false;
+    d->aMouseMagnifier = 0;
 
     switch( Okular::Settings::zoomMode() )
     {

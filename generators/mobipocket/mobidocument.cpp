@@ -13,6 +13,8 @@
 #include <QtCore/QFile>
 #include <QtCore/QRegExp>
 #include <kdebug.h>
+#include <QApplication> // Because of the HACK
+#include <QPalette> // Because of the HACK
 
 using namespace Mobi;
 
@@ -23,8 +25,23 @@ MobiDocument::MobiDocument(const QString &fileName) : QTextDocument()
   if (doc->isValid()) {
       QString text=doc->text();
       QString header=text.left(1024);
-      if (header.contains("<html>") || header.contains("<HTML>")) setHtml(fixMobiMarkup(text));
-      else setPlainText(text);
+      if (header.contains("<html>") || header.contains("<HTML>")) {
+        // HACK BEGIN Get the links without CSS to be blue
+        //            Remove if Qt ever gets fixed and the code in textdocumentgenerator.cpp works
+        const QPalette orig = qApp->palette();
+        QPalette p = orig;
+        p.setColor(QPalette::Link, Qt::blue);
+        qApp->setPalette(p);
+        // HACK END
+
+        setHtml(fixMobiMarkup(text));
+
+        // HACK BEGIN
+        qApp->setPalette(orig);
+        // HACK END
+      } else {
+          setPlainText(text);
+      }
   }
 }
 

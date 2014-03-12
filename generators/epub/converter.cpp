@@ -14,6 +14,7 @@
 #include <QtGui/QTextFrame>
 #include <QTextDocumentFragment>
 #include <QFileInfo>
+#include <QApplication> // Because of the HACK
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -286,6 +287,14 @@ QTextDocument* Converter::convert( const QString &fileName )
         htmlContent = dom.toString();
       }
 
+      // HACK BEGIN Get the links without CSS to be blue
+      //            Remove if Qt ever gets fixed and the code in textdocumentgenerator.cpp works
+      const QPalette orig = qApp->palette();
+      QPalette p = orig;
+      p.setColor(QPalette::Link, Qt::blue);
+      qApp->setPalette(p);
+      // HACK END
+
       QTextBlock before;
       if(firstPage) {
         // preHtml & postHtml make it possible to have a margin around the content of the page
@@ -301,6 +310,9 @@ QTextDocument* Converter::convert( const QString &fileName )
         before = _cursor->block();
         _cursor->insertHtml(htmlContent);
       }
+      // HACK BEGIN
+      qApp->setPalette(orig);
+      // HACK END
 
       QTextCursor csr(mTextDocument);   // a temporary cursor
       csr.movePosition(QTextCursor::Start);

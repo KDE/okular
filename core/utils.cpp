@@ -120,6 +120,7 @@ QSizeF Utils::realDpi(QWidget* widgetOnScreen)
             kDebug() << "Found widget at output #" << selectedOutput->id();
             QRect outputRect(selectedOutput->pos(),selectedOutput->currentMode()->size());
             QSize szMM = selectedOutput->sizeMm();
+            kDebug() << "Output size is " << szMM;
             QSizeF res(static_cast<qreal>(outputRect.width())*25.4/szMM.width(),
                     static_cast<qreal>(outputRect.height())*25.4/szMM.height());
             kDebug() << "Output DPI is " << res;

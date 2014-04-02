@@ -76,13 +76,21 @@ double Utils::dpiY()
 double Utils::realDpiX()
 {
     const QDesktopWidget* w = QApplication::desktop();
-    return (double(w->width()) * 25.4) / double(w->widthMM());
+    if (w->width() > 0 && w->widthMM() > 0) {
+        return (double(w->width()) * 25.4) / double(w->widthMM());
+    } else {
+        return dpiX();
+    }
 }
 
 double Utils::realDpiY()
 {
     const QDesktopWidget* w = QApplication::desktop();
-    return (double(w->height()) * 25.4) / double(w->heightMM());
+    if (w->height() > 0 && w->heightMM() > 0) {
+        return (double(w->height()) * 25.4) / double(w->heightMM());
+    } else {
+        return dpiY();
+    }
 }
 
 QSizeF Utils::realDpi(QWidget* widgetOnScreen)
@@ -121,18 +129,18 @@ QSizeF Utils::realDpi(QWidget* widgetOnScreen)
             QRect outputRect(selectedOutput->pos(),selectedOutput->currentMode()->size());
             QSize szMM = selectedOutput->sizeMm();
             kDebug() << "Output size is " << szMM;
-            QSizeF res(static_cast<qreal>(outputRect.width())*25.4/szMM.width(),
-                    static_cast<qreal>(outputRect.height())*25.4/szMM.height());
-            kDebug() << "Output DPI is " << res;
-            return res;
+            if (szMM.width() > 0 && szMM.height() > 0 && outputRect.width() > 0 && outputRect.height() > 0) {
+                QSizeF res(static_cast<qreal>(outputRect.width())*25.4/szMM.width(),
+                           static_cast<qreal>(outputRect.height())*25.4/szMM.height());
+                kDebug() << "Output DPI is " << res;
+                return res;
+            }
         }
 #endif
     }
     // this is also fallback for LibKScreen branch if KScreen::Output
     // for particular widget was not found
-    const QDesktopWidget* desktop = QApplication::desktop();
-    return QSizeF((desktop->width() * 25.4) / desktop->widthMM(),
-            (desktop->height() * 25.4) / desktop->heightMM());
+    return QSizeF(realDpiX(), realDpiY());
 }
 
 #elif defined(Q_WS_MAC)

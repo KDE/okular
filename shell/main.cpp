@@ -33,13 +33,13 @@ static bool attachUniqueInstance(KCmdLineArgs* args)
         return false;
 
     if (args->isSet("print"))
-	iface.call("enableStartWithPrint");
+        iface.call("enableStartWithPrint");
     if (args->isSet("page"))
         iface.call("openDocument", ShellUtils::urlFromArg(args->arg(0), ShellUtils::qfileExistFunc(), args->getOption("page")).url());
     else
         iface.call("openDocument", ShellUtils::urlFromArg(args->arg(0), ShellUtils::qfileExistFunc()).url());
-    if (args->isSet("raise")){
-	iface2.call("tryRaise");
+    if (args->isSet("raise")) {
+        iface2.call("tryRaise");
     }
 
     return true;
@@ -48,72 +48,72 @@ static bool attachUniqueInstance(KCmdLineArgs* args)
 // Ask an existing non-unique instance to open new tabs
 static bool attachExistingInstance( KCmdLineArgs* args )
 {
-  if( args->count() < 1 )
-    return false;
-
-  const QStringList services = QDBusConnection::sessionBus().interface()->registeredServiceNames().value();
-
-  // Don't match the service without trailing "-" (unique instance)
-  const QString pattern = "org.kde.okular-";
-  const QString myPid = QString::number( kapp->applicationPid() );
-  QScopedPointer<QDBusInterface> bestService;
-  const int desktop = KWindowSystem::currentDesktop();
-
-  // Select the first instance that isn't us (metric may change in future)
-  foreach( const QString& service, services )
-  {
-    if( service.startsWith(pattern) && !service.endsWith(myPid) )
-    {
-      bestService.reset( new QDBusInterface(service,"/okularshell","org.kde.okular") );
-
-      // Find a window that can handle our documents
-      const QDBusReply<bool> reply = bestService->call( "canOpenDocs", args->count(), desktop );
-      if( reply.isValid() && reply.value() )
-        break;
-
-      bestService.reset();
-    }
-  }
-
-  if( !bestService )
-    return false;
-
-  for( int i = 0; i < args->count(); ++i )
-  {
-    QString arg = args->arg( i );
-
-    // Copy stdin to temporary file which can be opened by the existing
-    // window. The temp file is automatically deleted after it has been
-    // opened. Not sure if this behavior is safe on all platforms.
-    QScopedPointer<QTemporaryFile> tempFile;
-    if( arg == "-" )
-    {
-      tempFile.reset( new QTemporaryFile );
-      QFile stdinFile;
-      if( !tempFile->open() || !stdinFile.open(stdin,QIODevice::ReadOnly) )
+    if ( args->count() < 1 )
         return false;
 
-      const size_t bufSize = 1024*1024;
-      QScopedPointer<char,QScopedPointerArrayDeleter<char> > buf( new char[bufSize] );
-      size_t bytes;
-      do
-      {
-        bytes = stdinFile.read( buf.data(), bufSize );
-        tempFile->write( buf.data(), bytes );
-      } while( bytes != 0 );
+    const QStringList services = QDBusConnection::sessionBus().interface()->registeredServiceNames().value();
 
-      arg = tempFile->fileName();
+    // Don't match the service without trailing "-" (unique instance)
+    const QString pattern = "org.kde.okular-";
+    const QString myPid = QString::number( kapp->applicationPid() );
+    QScopedPointer<QDBusInterface> bestService;
+    const int desktop = KWindowSystem::currentDesktop();
+
+    // Select the first instance that isn't us (metric may change in future)
+    foreach ( const QString& service, services )
+    {
+        if ( service.startsWith(pattern) && !service.endsWith( myPid ) )
+        {
+            bestService.reset( new QDBusInterface(service, "/okularshell", "org.kde.okular") );
+
+            // Find a window that can handle our documents
+            const QDBusReply<bool> reply = bestService->call( "canOpenDocs", args->count(), desktop );
+            if( reply.isValid() && reply.value() )
+                break;
+
+            bestService.reset();
+        }
     }
 
-    // Returns false if it can't fit another document
-    const QDBusReply<bool> reply = bestService->call( "openDocument", arg );
-    if( !reply.isValid() || !reply.value() )
-      return false;
-  }
+    if ( !bestService )
+        return false;
 
-  bestService->call( "tryRaise" );
+    for( int i = 0; i < args->count(); ++i )
+    {
+        QString arg = args->arg( i );
 
-  return true;
+        // Copy stdin to temporary file which can be opened by the existing
+        // window. The temp file is automatically deleted after it has been
+        // opened. Not sure if this behavior is safe on all platforms.
+        QScopedPointer<QTemporaryFile> tempFile;
+        if( arg == "-" )
+        {
+            tempFile.reset( new QTemporaryFile );
+            QFile stdinFile;
+            if( !tempFile->open() || !stdinFile.open(stdin,QIODevice::ReadOnly) )
+                return false;
+
+            const size_t bufSize = 1024*1024;
+            QScopedPointer<char,QScopedPointerArrayDeleter<char> > buf( new char[bufSize] );
+            size_t bytes;
+            do
+            {
+                bytes = stdinFile.read( buf.data(), bufSize );
+                tempFile->write( buf.data(), bytes );
+            } while( bytes != 0 );
+
+            arg = tempFile->fileName();
+        }
+
+        // Returns false if it can't fit another document
+        const QDBusReply<bool> reply = bestService->call( "openDocument", arg );
+        if( !reply.isValid() || !reply.value() )
+        return false;
+    }
+
+    bestService->call( "tryRaise" );
+
+    return true;
 }
 
 int main(int argc, char** argv)
@@ -156,22 +156,22 @@ int main(int argc, char** argv)
         }
         else
         {
-          Shell* shell = new Shell( args );
-          shell->show();
-          for( int i = 0; i < args->count(); )
-          {
-            if( shell->openDocument(args->arg(i)) )
-              ++i;
-            else
+            Shell* shell = new Shell( args );
+            shell->show();
+            for ( int i = 0; i < args->count(); )
             {
-              shell = new Shell( args );
-              shell->show();
+                if ( shell->openDocument( args->arg(i)) )
+                    ++i;
+                else
+                {
+                    shell = new Shell( args );
+                    shell->show();
+                }
             }
-          }
         }
     }
 
     return app.exec();
 }
 
-// vim:ts=2:sw=2:tw=78:et
+/* kate: replace-tabs on; indent-width 4; */

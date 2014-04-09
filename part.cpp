@@ -990,7 +990,10 @@ void Part::openUrlFromBookmarks(const KUrl &_url)
 
 void Part::handleDroppedUrls( const KUrl::List& urls )
 {
-    if( m_embedMode != NativeShellMode || !openNewFilesInTabs() )
+    if ( urls.isEmpty() )
+        return;
+
+    if ( m_embedMode != NativeShellMode || !openNewFilesInTabs() )
     {
         openUrlFromDocument( urls.first() );
         return;

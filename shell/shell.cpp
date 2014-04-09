@@ -642,8 +642,7 @@ void Shell::testTabDrop( const QDragMoveEvent* event, bool& accept )
 void Shell::handleTabDrop( QDropEvent* event )
 {
     const KUrl::List list = KUrl::List::fromMimeData( event->mimeData() );
-    if( !list.isEmpty() )
-       handleDroppedUrls( list );
+    handleDroppedUrls( list );
 }
 
 #include "shell.moc"

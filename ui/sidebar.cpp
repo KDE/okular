@@ -762,8 +762,7 @@ void Sidebar::dragEnterEvent( QDragEnterEvent* event )
 void Sidebar::dropEvent( QDropEvent* event )
 {
     const KUrl::List list = KUrl::List::fromMimeData( event->mimeData() );
-    if( !list.isEmpty() )
-        emit urlsDropped( list );
+    emit urlsDropped( list );
 }
 
 #include "sidebar.moc"

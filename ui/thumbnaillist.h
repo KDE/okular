@@ -17,7 +17,6 @@
 
 #include "core/observer.h"
 
-class KUrl;
 class ThumbnailListPrivate;
 
 namespace Okular {
@@ -63,12 +62,7 @@ Q_OBJECT
         // catch the viewport event and filter them if necessary
         bool viewportEvent( QEvent * );
 
-        // file drop related events (an url may be dropped even here)
-        void dragEnterEvent( QDragEnterEvent* );
-        void dropEvent( QDropEvent* );
-
     signals:
-        void urlDropped( const KUrl& );
         void rightClick( const Okular::Page *, const QPoint & );
 
     private:

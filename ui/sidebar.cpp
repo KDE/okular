@@ -449,6 +449,7 @@ Sidebar::Sidebar( QWidget *parent )
     mainlay->setSpacing( 0 );
 
     setAutoFillBackground( true );
+    setAcceptDrops( true );
 
     d->list = new SidebarListWidget( this );
     mainlay->addWidget( d->list );
@@ -751,6 +752,17 @@ void Sidebar::iconSizeChanged( QAction *action )
 void Sidebar::appearanceChanged()
 {
     d->sideDelegate->updateBrushCache();
+}
+
+void Sidebar::dragEnterEvent( QDragEnterEvent* event )
+{
+    event->setAccepted( KUrl::List::canDecode(event->mimeData()) );
+}
+
+void Sidebar::dropEvent( QDropEvent* event )
+{
+    const KUrl::List list = KUrl::List::fromMimeData( event->mimeData() );
+    emit urlsDropped( list );
 }
 
 #include "sidebar.moc"

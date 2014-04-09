@@ -19,7 +19,7 @@ static KAboutData createAboutData()
                        "okular_mobi",
                        "okular_mobi",
                        ki18n("Mobipocket Backend"),
-                       "0.1",
+                       "0.1.1",
                        ki18n("A mobipocket backend"),
                        KAboutData::License_GPL,
                        ki18n("© 2008-2009 Jakub Stachowski")

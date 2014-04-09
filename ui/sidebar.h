@@ -11,6 +11,7 @@
 #define _SIDEBAR_H_
 
 #include <qwidget.h>
+#include <KUrl>
 
 class QIcon;
 class QListWidgetItem;
@@ -40,6 +41,13 @@ class Sidebar : public QWidget
 
         void setCollapsed( bool collapsed );
         bool isCollapsed() const;
+
+    signals:
+        void urlsDropped( const KUrl::List& urls );
+
+    protected:
+        void dragEnterEvent( QDragEnterEvent* event );
+        void dropEvent( QDropEvent* event );
 
     private slots:
         void itemClicked( QListWidgetItem *item );

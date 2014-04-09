@@ -45,6 +45,7 @@
 #include <kwindowsystem.h>
 #include <ktabwidget.h>
 #include <kxmlguifactory.h>
+#include <QDragMoveEvent>
 
 #ifdef KActivities_FOUND
 #include <KActivities/ResourceInstance>
@@ -104,6 +105,8 @@ void Shell::init()
     m_tabWidget->setDocumentMode( true );
     connect( m_tabWidget, SIGNAL(currentChanged(int)), SLOT(setActiveTab(int)) );
     connect( m_tabWidget, SIGNAL(tabCloseRequested(int)), SLOT(closeTab(int)) );
+    connect( m_tabWidget, SIGNAL(testCanDecode(const QDragMoveEvent*,bool&)), SLOT(testTabDrop(const QDragMoveEvent*,bool&)) );
+    connect( m_tabWidget, SIGNAL(receivedDropEvent(QDropEvent*)), SLOT(handleTabDrop(QDropEvent*)) );
 
     setCentralWidget( m_tabWidget );
 
@@ -118,11 +121,6 @@ void Shell::init()
     m_tabWidget->addTab( firstPart->widget(), QString() );
 
     readSettings();
-
-    if (m_args && m_args->isSet("unique") && m_args->count() == 1)
-    {
-        QDBusConnection::sessionBus().registerService("org.kde.okular");
-    }
 
     m_unique = false;
     if (m_args && m_args->isSet("unique") && m_args->count() <= 1)
@@ -169,6 +167,43 @@ Shell::~Shell()
     }
     if ( m_args )
         m_args->clear();
+}
+
+// Open a new document if we have space for it
+// This can hang if called on a unique instance and openUrl pops a messageBox
+bool Shell::openDocument( const QString& doc )
+{
+    if( m_tabs.size() <= 0 )
+       return false;
+
+    KParts::ReadWritePart* const part = m_tabs[0].part;
+
+    // Return false if we can't open new tabs and the only part is occupied
+    if( !dynamic_cast<Okular::ViewerInterface*>(part)->openNewFilesInTabs()
+        && !part->url().isEmpty() )
+        return false;
+
+    openUrl( ShellUtils::urlFromArg(doc,ShellUtils::qfileExistFunc()) );
+
+    return true;
+}
+
+bool Shell::canOpenDocs( int numDocs, int desktop )
+{
+   if( m_tabs.size() <= 0 || numDocs <= 0 || m_unique )
+      return false;
+
+   KParts::ReadWritePart* const part = m_tabs[0].part;
+   const bool allowTabs = dynamic_cast<Okular::ViewerInterface*>(part)->openNewFilesInTabs();
+
+   if( !allowTabs && (numDocs > 1 || !part->url().isEmpty()) )
+      return false;
+
+   const KWindowInfo winfo( window()->effectiveWinId(), KWindowSystem::WMDesktop );
+   if( winfo.desktop() != desktop )
+      return false;
+
+   return true;
 }
 
 void Shell::openUrl( const KUrl & url )
@@ -382,10 +417,7 @@ void Shell::slotQuit()
 
 void Shell::tryRaise()
 {
-    if (m_unique)
-    {
-        KWindowSystem::forceActiveWindow( window()->effectiveWinId() );
-    }
+    KWindowSystem::forceActiveWindow( window()->effectiveWinId() );
 }
 
 // only called when starting the program
@@ -521,6 +553,7 @@ void Shell::connectPart( QObject* part )
     connect( part, SIGNAL(enablePrintAction(bool)), this, SLOT(setPrintEnabled(bool)));
     connect( part, SIGNAL(enableCloseAction(bool)), this, SLOT(setCloseEnabled(bool)));
     connect( part, SIGNAL(mimeTypeChanged(KMimeType::Ptr)), this, SLOT(setTabIcon(KMimeType::Ptr)));
+    connect( part, SIGNAL(urlsDropped(KUrl::List)), this, SLOT(handleDroppedUrls(KUrl::List)) );
 }
 
 void Shell::print()
@@ -591,6 +624,26 @@ int Shell::findTabIndex( QObject* sender )
         }
     }
     return -1;
+}
+
+void Shell::handleDroppedUrls( const KUrl::List& urls )
+{
+    foreach( const KUrl& url, urls )
+    {
+        openUrl( url );
+    }
+}
+
+void Shell::testTabDrop( const QDragMoveEvent* event, bool& accept )
+{
+    accept = KUrl::List::canDecode( event->mimeData() );
+}
+
+void Shell::handleTabDrop( QDropEvent* event )
+{
+    const KUrl::List list = KUrl::List::fromMimeData( event->mimeData() );
+    if( !list.isEmpty() )
+       handleDroppedUrls( list );
 }
 
 #include "shell.moc"

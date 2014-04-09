@@ -30,7 +30,6 @@
 class KAction;
 class KActionCollection;
 class KMenu;
-class KUrl;
 
 namespace Okular {
 class Action;
@@ -136,7 +135,6 @@ Q_OBJECT
         void openAnnotationWindow( Okular::Annotation *annotation, int pageNumber );
 
     signals:
-        void urlDropped( const KUrl& );
         void rightClick( const Okular::Page *, const QPoint & );
         void mouseBackButtonClick();
         void mouseForwardButtonClick();
@@ -150,11 +148,6 @@ Q_OBJECT
         void keyReleaseEvent( QKeyEvent* );
         void inputMethodEvent( QInputMethodEvent * );
         void wheelEvent( QWheelEvent* );
-
-        // drag and drop related events
-        void dragEnterEvent( QDragEnterEvent* );
-        void dragMoveEvent( QDragMoveEvent* );
-        void dropEvent( QDropEvent* );
 
         void paintEvent( QPaintEvent *e );
         void tabletEvent (QTabletEvent *e );

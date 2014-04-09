@@ -63,6 +63,8 @@ public slots:
   void slotQuit();
   
   Q_SCRIPTABLE Q_NOREPLY void tryRaise();
+  Q_SCRIPTABLE bool openDocument( const QString& doc );
+  Q_SCRIPTABLE bool canOpenDocs( int numDocs, int desktop );
 
 protected:
   /**
@@ -98,12 +100,15 @@ private slots:
   void setPrintEnabled( bool enabled );
   void setCloseEnabled( bool enabled );
   void setTabIcon( KMimeType::Ptr mimeType );
+  void handleDroppedUrls( const KUrl::List& urls );
 
   // Tab event handlers
   void setActiveTab( int tab );
   void closeTab( int tab );
   void activateNextTab();
   void activatePrevTab();
+  void testTabDrop( const QDragMoveEvent* event, bool& accept );
+  void handleTabDrop( QDropEvent* event );
 
 signals:
   void restoreDocument(const KConfigGroup &group);

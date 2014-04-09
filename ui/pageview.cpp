@@ -260,7 +260,7 @@ OkularTTS* PageViewPrivate::tts()
  * Code weight (in rows) and meaning:
  *  160 - constructor and creating actions plus their connected slots (empty stuff)
  *  70  - DocumentObserver inherited methodes (important)
- *  550 - events: mouse, keyboard, drag/drop
+ *  550 - events: mouse, keyboard, drag
  *  170 - slotRelayoutPages: set contents of the scrollview on continuous/single modes
  *  100 - zoom: zooming pages in different ways, keeping update the toolbar actions, etc..
  *  other misc functions: only slotRequestVisiblePixmaps and pickItemOnPoint noticeable,
@@ -362,12 +362,11 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
 
     setObjectName( QLatin1String( "okular::pageView" ) );
 
-    // viewport setup: setup focus, accept drops and track mouse
+    // viewport setup: setup focus, and track mouse
     viewport()->setFocusProxy( this );
     viewport()->setFocusPolicy( Qt::StrongFocus );
     viewport()->setAttribute( Qt::WA_OpaquePaintEvent );
     viewport()->setAttribute( Qt::WA_NoSystemBackground );
-    setAcceptDrops( true );
     viewport()->setMouseTracking( true );
     viewport()->setAutoFillBackground( false );
     // the apparently "magic" value of 20 is the same used internally in QScrollArea
@@ -3086,26 +3085,6 @@ void PageView::wheelEvent( QWheelEvent *e )
         QAbstractScrollArea::wheelEvent( e );
 
     updateCursor();
-}
-
-void PageView::dragEnterEvent( QDragEnterEvent * ev )
-{
-    ev->accept();
-}
-
-void PageView::dragMoveEvent( QDragMoveEvent * ev )
-{
-    ev->accept();
-}
-
-void PageView::dropEvent( QDropEvent * ev )
-{
-    if (  KUrl::List::canDecode(  ev->mimeData() ) )
-    {
-        const KUrl::List list = KUrl::List::fromMimeData( ev->mimeData() );
-        if ( !list.isEmpty() )
-            emit urlDropped( list.first() );
-    }
 }
 
 bool PageView::viewportEvent( QEvent * e )

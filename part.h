@@ -158,6 +158,7 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         void viewerMenuStateChange(bool enabled);
         void enableCloseAction(bool enable);
         void mimeTypeChanged(KMimeType::Ptr mimeType);
+        void urlsDropped( const KUrl::List& urls );
 
     protected:
         // reimplemented from KParts::ReadWritePart
@@ -176,6 +177,7 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         // connected to actions
         void openUrlFromDocument(const KUrl &url);
         void openUrlFromBookmarks(const KUrl &url);
+        void handleDroppedUrls( const KUrl::List& urls );
         void slotGoToPage();
         void slotHistoryBack();
         void slotHistoryNext();

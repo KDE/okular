@@ -346,6 +346,7 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
 
     m_sidebar = new Sidebar( parentWidget );
     setWidget( m_sidebar );
+    connect( m_sidebar, SIGNAL(urlsDropped(KUrl::List)), SLOT(handleDroppedUrls(KUrl::List)) );
 
     // build the document
     m_document = new Okular::Document(widget());
@@ -382,7 +383,6 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     m_searchWidget = new SearchWidget( thumbsBox, m_document );
     m_thumbnailList = new ThumbnailList( thumbsBox, m_document );
     //	ThumbnailController * m_tc = new ThumbnailController( thumbsBox, m_thumbnailList );
-    connect( m_thumbnailList, SIGNAL(urlDropped(KUrl)), SLOT(openUrlFromDocument(KUrl)) );
     connect( m_thumbnailList, SIGNAL(rightClick(const Okular::Page*,QPoint)), this, SLOT(slotShowMenu(const Okular::Page*,QPoint)) );
     tbIndex = m_sidebar->addItem( thumbsBox, KIcon( "view-preview" ), i18n("Thumbnails") );
     m_sidebar->setCurrentIndex( tbIndex );
@@ -433,7 +433,6 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     m_pageView = new PageView( rightContainer, m_document );
     QMetaObject::invokeMethod( m_pageView, "setFocus", Qt::QueuedConnection );      //usability setting
 //    m_splitter->setFocusProxy(m_pageView);
-    connect( m_pageView, SIGNAL(urlDropped(KUrl)), SLOT(openUrlFromDocument(KUrl)));
     connect( m_pageView, SIGNAL(rightClick(const Okular::Page*,QPoint)), this, SLOT(slotShowMenu(const Okular::Page*,QPoint)) );
     connect( m_document, SIGNAL(error(QString,int)), m_pageView, SLOT(errorMessage(QString,int)) );
     connect( m_document, SIGNAL(warning(QString,int)), m_pageView, SLOT(warningMessage(QString,int)) );
@@ -987,6 +986,17 @@ void Part::openUrlFromBookmarks(const KUrl &_url)
     }
     else
         openUrl( url );
+}
+
+void Part::handleDroppedUrls( const KUrl::List& urls )
+{
+    if( m_embedMode != NativeShellMode || !openNewFilesInTabs() )
+    {
+        openUrlFromDocument( urls.first() );
+        return;
+    }
+
+    emit urlsDropped( urls );
 }
 
 void Part::slotJobStarted(KIO::Job *job)

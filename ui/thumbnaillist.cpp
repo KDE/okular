@@ -208,8 +208,6 @@ ThumbnailList::ThumbnailList( QWidget *parent, Okular::Document *document )
 
     setAttribute( Qt::WA_StaticContents );
 
-    setAcceptDrops( true );
-
     viewport()->setBackgroundRole( QPalette::Base );
 
     setWidget( d );
@@ -599,21 +597,6 @@ void ThumbnailListPrivate::viewportResizeEvent( QResizeEvent * e )
 
     // update Thumbnails since width has changed or height has increased
     delayedRequestVisiblePixmaps( 500 );
-}
-
-void ThumbnailList::dragEnterEvent( QDragEnterEvent * ev )
-{
-    ev->accept();
-}
-
-void ThumbnailList::dropEvent( QDropEvent * ev )
-{
-    if (  KUrl::List::canDecode(  ev->mimeData() ) )
-    {
-        const KUrl::List list = KUrl::List::fromMimeData( ev->mimeData() );
-        if ( !list.isEmpty() )
-            emit urlDropped( list.first() );
-    }
 }
 //END widget events
 

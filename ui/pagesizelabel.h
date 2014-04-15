@@ -10,7 +10,7 @@
 #ifndef _OKULAR_PAGESIZELABEL_H_
 #define _OKULAR_PAGESIZELABEL_H_
 
-#include <qlabel.h>
+#include <ksqueezedtextlabel.h>
 
 #include "core/observer.h"
 
@@ -21,7 +21,7 @@ class Document;
 /**
  * @short A widget to display page size.
  */
-class PageSizeLabel : public QLabel, public Okular::DocumentObserver
+class PageSizeLabel : public KSqueezedTextLabel, public Okular::DocumentObserver
 {
     Q_OBJECT
 
@@ -29,15 +29,11 @@ class PageSizeLabel : public QLabel, public Okular::DocumentObserver
         PageSizeLabel( QWidget *parent, Okular::Document * document );
         ~PageSizeLabel();
 
-        QWidget *antiWidget();
-
         // [INHERITED] from DocumentObserver
-        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags );
         void notifyCurrentPageChanged( int previous, int current );
 
     private:
         Okular::Document * m_document;
-        QWidget *m_antiWidget;
 };
 
 #endif

@@ -446,12 +446,10 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     m_pageSizeLabel = new PageSizeLabel( m_bottomBar, m_document );
     bottomBarLayout->setMargin( 0 );
     bottomBarLayout->setSpacing( 0 );
-    bottomBarLayout->addWidget( m_pageSizeLabel->antiWidget() );
     bottomBarLayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Expanding, QSizePolicy::Minimum ) );
     m_miniBarLogic = new MiniBarLogic( this, m_document );
     m_miniBar = new MiniBar( m_bottomBar, m_miniBarLogic );
     bottomBarLayout->addWidget( m_miniBar );
-    bottomBarLayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Expanding, QSizePolicy::Minimum ) );
     bottomBarLayout->addWidget( m_pageSizeLabel );
     rightLayout->addWidget( m_bottomBar );
 

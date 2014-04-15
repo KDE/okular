@@ -12,9 +12,9 @@
 #include "core/document.h"
 
 PageSizeLabel::PageSizeLabel( QWidget * parent, Okular::Document * document )
-    : QLabel( parent ), m_document( document ),
-    m_antiWidget( NULL )
+    : KSqueezedTextLabel( parent ), m_document( document )
 {
+    setAlignment( Qt::AlignRight );
 }
 
 PageSizeLabel::~PageSizeLabel()
@@ -22,52 +22,15 @@ PageSizeLabel::~PageSizeLabel()
     m_document->removeObserver( this );
 }
 
-QWidget *PageSizeLabel::antiWidget()
-{
-    if (!m_antiWidget)
-    {
-        m_antiWidget = new QWidget(qobject_cast<QWidget*>(parent()));
-        m_antiWidget->resize(0, 0);
-    }
-    return m_antiWidget;
-}
-
-void PageSizeLabel::notifySetup( const QVector< Okular::Page * > & pageVector, int setupFlags )
-{
-    // only process data when document changes
-    if ( !( setupFlags & Okular::DocumentObserver::DocumentChanged ) )
-        return;
-
-    // if document is closed or all pages have size hide widget
-    int pages = pageVector.count();
-    if ( pages < 1 || m_document->allPagesSize().isValid() )
-    {
-        hide();
-        if ( m_antiWidget )
-            m_antiWidget->hide();
-        return;
-    }
-    else
-    {
-        show();
-        if ( m_antiWidget )
-            m_antiWidget->show();
-    }
-}
-
 void PageSizeLabel::notifyCurrentPageChanged( int previousPage, int currentPage )
 {
     Q_UNUSED( previousPage )
 
-    if (isVisible())
+    // if the document is opened
+    if ( m_document->pages() > 0 && !m_document->allPagesSize().isValid() )
     {
-        // if the document is opened
-        if ( m_document->pages() > 0 )
-        {
-            setText( m_document->pageSizeString( currentPage ) );
-            m_antiWidget->setFixedSize( sizeHint() );
-        }
-   }
+        setText( m_document->pageSizeString( currentPage ) );
+    }
 }
 
 #include "pagesizelabel.moc"

@@ -16,11 +16,13 @@
 #include <QDesktopWidget>
 #include <QImage>
 #include <QIODevice>
+#include <cmath>
 
 #ifdef Q_WS_X11
   #include "config-okular.h"
   #if HAVE_LIBKSCREEN
    #include <kscreen/config.h>
+   #include <kscreen/edid.h>
   #endif
   #include <QX11Info>
 #endif
@@ -130,9 +132,22 @@ QSizeF Utils::realDpi(QWidget* widgetOnScreen)
                 QRect outputRect(selectedOutput->pos(),selectedOutput->currentMode()->size());
                 QSize szMM = selectedOutput->sizeMm();
                 kDebug() << "Output size is " << szMM;
-                if (szMM.width() > 0 && szMM.height() > 0 && outputRect.width() > 0 && outputRect.height() > 0) {
+                if (selectedOutput->edid()) {
+                    kDebug() << "EDID WxH: " << selectedOutput->edid()->width()  << 'x' << selectedOutput->edid()->height();
+                }
+                if (szMM.width() > 0 && szMM.height() > 0 && outputRect.width() > 0 && outputRect.height() > 0
+                    && selectedOutput->edid()
+                    && std::abs(static_cast<int>(selectedOutput->edid()->width()*10) - szMM.width()) < 10
+                    && std::abs(static_cast<int>(selectedOutput->edid()->height()*10) - szMM.height()) < 10)
+                {
+                    // sizes in EDID seem to be consistent
                     QSizeF res(static_cast<qreal>(outputRect.width())*25.4/szMM.width(),
-                            static_cast<qreal>(outputRect.height())*25.4/szMM.height());
+                              static_cast<qreal>(outputRect.height())*25.4/szMM.height());
+                    if (!selectedOutput->isHorizontal())
+                    {
+                        kDebug() << "Output is vertical, transposing DPI rect";
+                        res.transpose();
+                    }
                     kDebug() << "Output DPI is " << res;
                     return res;
                 }

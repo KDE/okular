@@ -100,40 +100,42 @@ QSizeF Utils::realDpi(QWidget* widgetOnScreen)
         // Firstly try to retrieve DPI via LibKScreen
 #if HAVE_LIBKSCREEN
         KScreen::Config* config = KScreen::Config::current();
-        KScreen::OutputList outputs = config->outputs();
-        QPoint globalPos = widgetOnScreen->parentWidget() ?
-                    widgetOnScreen->mapToGlobal(widgetOnScreen->pos()):
-                    widgetOnScreen->pos();
-        QRect widgetRect(globalPos, widgetOnScreen->size());
+        if (config) {
+            KScreen::OutputList outputs = config->outputs();
+            QPoint globalPos = widgetOnScreen->parentWidget() ?
+                        widgetOnScreen->mapToGlobal(widgetOnScreen->pos()):
+                        widgetOnScreen->pos();
+            QRect widgetRect(globalPos, widgetOnScreen->size());
 
-        KScreen::Output* selectedOutput = 0;
-        int maxArea = 0;
-        Q_FOREACH(KScreen::Output *output, outputs)
-        {
-            if (output->currentMode())
+            KScreen::Output* selectedOutput = 0;
+            int maxArea = 0;
+            Q_FOREACH(KScreen::Output *output, outputs)
             {
-                QRect outputRect(output->pos(),output->currentMode()->size());
-                QRect intersection = outputRect.intersected(widgetRect);
-                int area = intersection.width()*intersection.height();
-                if (area > maxArea)
+                if (output->currentMode())
                 {
-                    maxArea = area;
-                    selectedOutput = output;
+                    QRect outputRect(output->pos(),output->currentMode()->size());
+                    QRect intersection = outputRect.intersected(widgetRect);
+                    int area = intersection.width()*intersection.height();
+                    if (area > maxArea)
+                    {
+                        maxArea = area;
+                        selectedOutput = output;
+                    }
                 }
             }
-        }
 
-        if (selectedOutput)
-        {
-            kDebug() << "Found widget at output #" << selectedOutput->id();
-            QRect outputRect(selectedOutput->pos(),selectedOutput->currentMode()->size());
-            QSize szMM = selectedOutput->sizeMm();
-            kDebug() << "Output size is " << szMM;
-            if (szMM.width() > 0 && szMM.height() > 0 && outputRect.width() > 0 && outputRect.height() > 0) {
-                QSizeF res(static_cast<qreal>(outputRect.width())*25.4/szMM.width(),
-                           static_cast<qreal>(outputRect.height())*25.4/szMM.height());
-                kDebug() << "Output DPI is " << res;
-                return res;
+            if (selectedOutput)
+            {
+                kDebug() << "Found widget at output #" << selectedOutput->id();
+                QRect outputRect(selectedOutput->pos(),selectedOutput->currentMode()->size());
+                QSize szMM = selectedOutput->sizeMm();
+                kDebug() << "Output size is " << szMM;
+                if (szMM.width() > 0 && szMM.height() > 0 && outputRect.width() > 0 && outputRect.height() > 0) {
+                    QSizeF res(static_cast<qreal>(outputRect.width())*25.4/szMM.width(),
+                            static_cast<qreal>(outputRect.height())*25.4/szMM.height());
+                    kDebug() << "Output DPI is " << res;
+                    return res;
+                }
             }
         }
 #endif

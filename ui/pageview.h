@@ -174,6 +174,8 @@ Q_OBJECT
         void guessTableDividers();
         // update either text or rectangle selection
         void updateSelection( const QPoint & pos );
+        // compute the zoom factor value for FitWidth and FitPage mode
+        double zoomFactorFitMode( ZoomMode mode );
         // update internal zoom values and end in a slotRelayoutPages();
         void updateZoom( ZoomMode newZm );
         // update the text on the label using global zoom value or current page's one

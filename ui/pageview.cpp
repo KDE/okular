@@ -89,6 +89,8 @@ static int pageflags = PagePainter::Accessibility | PagePainter::EnhanceLinks |
                        PagePainter::EnhanceImages | PagePainter::Highlights |
                        PagePainter::TextSelection | PagePainter::Annotations;
 
+static const float kZoomValues[] = { 0.12, 0.25, 0.33, 0.50, 0.66, 0.75, 1.00, 1.25, 1.50, 2.00, 4.00, 8.00, 16.00 };
+
 static inline double normClamp( double value, double def )
 {
     return ( value < 0.0 || value > 1.0 ) ? def : value;
@@ -3595,6 +3597,37 @@ void PageView::selectionClear(const ClearMode mode)
     viewport()->update( updatedRect );
 }
 
+// const to be used for both zoomFactorFitMode function and slotRelayoutPages.
+static const int kcolWidthMargin = 6;
+static const int krowHeightMargin = 12;
+
+double PageView::zoomFactorFitMode( ZoomMode mode )
+{
+    const int pageCount = d->items.count();
+    if ( pageCount == 0 )
+        return 0;
+    const bool facingCentered = Okular::Settings::viewMode() == Okular::Settings::EnumViewMode::FacingFirstCentered || (Okular::Settings::viewMode() == Okular::Settings::EnumViewMode::Facing && pageCount == 1);
+    const bool overrideCentering = facingCentered && pageCount < 3;
+    const int nCols = overrideCentering ? 1 : viewColumns();
+    const double colWidth = viewport()->width() / nCols - kcolWidthMargin;
+    const double rowHeight = viewport()->height() - krowHeightMargin;
+    const PageViewItem * currentItem = d->items[ qMax( 0, (int)d->document->currentPage()) ];
+    // prevent segmentation fault when openning a new document;
+    if ( !currentItem )
+        return 0;
+    const Okular::Page * okularPage = currentItem->page();
+    const double width = okularPage->width(), height = okularPage->height();
+    if ( mode == ZoomFitWidth )
+        return (double) colWidth / width;
+    if ( mode == ZoomFitPage )
+    {
+        const double scaleW = (double) colWidth / (double)width;
+        const double scaleH = (double) rowHeight / (double)height;
+        return qMin(scaleW, scaleH);
+    }
+    return 0;
+}
+
 void PageView::updateZoom( ZoomMode newZoomMode )
 {
     if ( newZoomMode == ZoomFixed )
@@ -3619,12 +3652,40 @@ void PageView::updateZoom( ZoomMode newZoomMode )
             newFactor = KGlobal::locale()->readNumber( z ) / 100.0;
             }break;
         case ZoomIn:
-            newFactor += (newFactor > 0.99) ? ( newFactor > 1.99 ? 0.5 : 0.2 ) : 0.1;
-            newZoomMode = ZoomFixed;
-            break;
-        case ZoomOut:
-            newFactor -= (newFactor > 1.01) ? ( newFactor > 2.01 ? 0.5 : 0.2 ) : 0.1;
-            newZoomMode = ZoomFixed;
+        case ZoomOut:{
+            const float zoomFactorFitWidth = zoomFactorFitMode(ZoomFitWidth);
+            const float zoomFactorFitPage = zoomFactorFitMode(ZoomFitPage);
+            QVector<float> zoomValue(15);
+            qCopy(kZoomValues, kZoomValues + 13, zoomValue.begin());
+            zoomValue[13] = zoomFactorFitWidth;
+            zoomValue[14] = zoomFactorFitPage;
+            qSort(zoomValue.begin(), zoomValue.end());
+            QVector<float>::iterator i;
+            if ( newZoomMode == ZoomOut )
+            {
+                i = qLowerBound(zoomValue.begin(), zoomValue.end(), newFactor) - 1;
+            }
+            else
+            {
+                i = qUpperBound(zoomValue.begin(), zoomValue.end(), newFactor);
+            }
+            const float tmpFactor = *i;
+            if ( tmpFactor == zoomFactorFitWidth )
+            {
+                newZoomMode = ZoomFitWidth;
+                checkedZoomAction = d->aZoomFitWidth;
+            }
+            else if ( tmpFactor == zoomFactorFitPage )
+            {
+                newZoomMode = ZoomFitPage;
+                checkedZoomAction = d->aZoomFitPage;
+            }
+            else
+            {
+                newFactor = tmpFactor;
+                newZoomMode = ZoomFixed;
+            }
+            }
             break;
         case ZoomFitWidth:
             checkedZoomAction = d->aZoomFitWidth;
@@ -3688,8 +3749,7 @@ void PageView::updateZoomText()
     translated << i18n("Fit Width") << i18n("Fit Page") << i18n("Auto Fit");
 
     // add percent items
-    QString double_oh( "00" );
-    const float zoomValue[13] = { 0.12, 0.25, 0.33, 0.50, 0.66, 0.75, 1.00, 1.25, 1.50, 2.00, 4.00, 8.00, 16.00 };
+    const QString single_oh( "0" );
     int idx = 0, selIdx = 3;
     bool inserted = false; //use: "d->zoomMode != ZoomFixed" to hide Fit/* zoom ratio
     int zoomValueCount = 11;
@@ -3697,7 +3757,7 @@ void PageView::updateZoomText()
         zoomValueCount = 13;
     while ( idx < zoomValueCount || !inserted )
     {
-        float value = idx < zoomValueCount ? zoomValue[ idx ] : newFactor;
+        float value = idx < zoomValueCount ? kZoomValues[ idx ] : newFactor;
         if ( !inserted && newFactor < (value - 0.0001) )
             value = newFactor;
         else
@@ -3706,8 +3766,9 @@ void PageView::updateZoomText()
             inserted = true;
         if ( !inserted )
             selIdx++;
-        QString localValue( KGlobal::locale()->formatNumber( value * 100.0, 2 ) );
-        localValue.remove( KGlobal::locale()->decimalSymbol() + double_oh );
+        // we do not need to display 2-digit precision
+        QString localValue( KGlobal::locale()->formatNumber( value * 100.0, 1 ) );
+        localValue.remove( KGlobal::locale()->decimalSymbol() + single_oh );
         // remove a trailing zero in numbers like 66.70
         if ( localValue.right( 1 ) == QLatin1String( "0" ) && localValue.indexOf( KGlobal::locale()->decimalSymbol() ) > -1 )
             localValue.chop( 1 );
@@ -4066,12 +4127,12 @@ void PageView::slotRelayoutPages()
         {
             PageViewItem * item = *iIt;
             // update internal page size (leaving a little margin in case of Fit* modes)
-            updateItemSize( item, colWidth[ cIdx ] - 6, viewportHeight - 12 );
+            updateItemSize( item, colWidth[ cIdx ] - kcolWidthMargin, viewportHeight - krowHeightMargin );
             // find row's maximum height and column's max width
-            if ( item->croppedWidth() + 6 > colWidth[ cIdx ] )
-                colWidth[ cIdx ] = item->croppedWidth() + 6;
-            if ( item->croppedHeight() + 12 > rowHeight[ rIdx ] )
-                rowHeight[ rIdx ] = item->croppedHeight() + 12;
+            if ( item->croppedWidth() + kcolWidthMargin > colWidth[ cIdx ] )
+                colWidth[ cIdx ] = item->croppedWidth() + kcolWidthMargin;
+            if ( item->croppedHeight() + krowHeightMargin > rowHeight[ rIdx ] )
+                rowHeight[ rIdx ] = item->croppedHeight() + krowHeightMargin;
             // handle the 'centering on first row' stuff
             // update col/row indices
             if ( ++cIdx == nCols )

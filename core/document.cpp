@@ -1743,10 +1743,6 @@ void DocumentPrivate::doProcessSearchMatch( RegularAreaRect *match, RunningSearc
         }
         delete match;
     }
-#if 0
-    else if ( !noDialogs )
-        KMessageBox::information( m_widget, i18n( "No matches found for '%1'.", text ) );
-#endif
 
     // notify observers about highlights changes
     foreach(int pageNumber, *pagesToNotify)
@@ -3290,21 +3286,6 @@ void Document::searchText( int searchID, const QString & text, bool fromStart, Q
     {
         emit searchFinished( searchID, NoMatchFound );
         return;
-    }
-
-    if ( !noDialogs )
-    {
-#if 0
-        KDialog *searchDialog = new KDialog(widget());
-        searchDialog->setCaption( i18n("Search in progress...") );
-        searchDialog->setButtons( KDialog::Cancel );
-        QLabel *searchLabel = new QLabel(i18n("Searching for %1", text), searchDialog);
-        searchDialog->setMainWidget( searchLabel );
-
-        QTimer::singleShot(500, searchDialog, SLOT(show()));
-        connect(this, SIGNAL(searchFinished(int,Okular::Document::SearchStatus)), searchDialog, SLOT(deleteLater()));
-        connect(searchDialog, SIGNAL(finished()), this, SLOT(cancelSearch()));
-#endif
     }
 
     // if searchID search not recorded, create new descriptor and init params

@@ -654,7 +654,6 @@ void Part::setupViewerActions()
     m_findPrev = KStandardAction::findPrev( this, SLOT(slotFindPrev()), ac );
     m_findPrev->setEnabled( false );
 
-    m_saveCopyAs = 0;
     m_saveAs = 0;
 
     QAction * prefs = KStandardAction::preferences( this, SLOT(slotPreferences()), ac);
@@ -751,12 +750,6 @@ void Part::setupActions()
     m_copy = KStandardAction::create( KStandardAction::Copy, m_pageView, SLOT(copyTextSelection()), ac );
 
     m_selectAll = KStandardAction::selectAll( m_pageView, SLOT(selectAll()), ac );
-
-    m_saveCopyAs = KStandardAction::saveAs( this, SLOT(slotSaveCopyAs()), ac );
-    m_saveCopyAs->setText( i18n( "Save &Copy As..." ) );
-    m_saveCopyAs->setShortcut( KShortcut() );
-    ac->addAction( "file_save_copy", m_saveCopyAs );
-    m_saveCopyAs->setEnabled( false );
 
     m_saveAs = KStandardAction::saveAs( this, SLOT(slotSaveFileAs()), ac );
     m_saveAs->setEnabled( false );
@@ -1340,8 +1333,7 @@ bool Part::openFile()
     m_find->setEnabled( ok && canSearch );
     m_findNext->setEnabled( ok && canSearch );
     m_findPrev->setEnabled( ok && canSearch );
-    if( m_saveAs ) m_saveAs->setEnabled( ok && (m_document->canSaveChanges() || isDocumentArchive) );
-    if( m_saveCopyAs ) m_saveCopyAs->setEnabled( ok );
+    if( m_saveAs ) m_saveAs->setEnabled( ok );
     emit enablePrintAction( ok && m_document->printingSupport() != Okular::Document::NoPrinting );
     m_printPreview->setEnabled( ok && m_document->printingSupport() != Okular::Document::NoPrinting );
     m_showProperties->setEnabled( ok );
@@ -1540,7 +1532,6 @@ bool Part::closeUrl(bool promptToSave)
     m_findNext->setEnabled( false );
     m_findPrev->setEnabled( false );
     if( m_saveAs )  m_saveAs->setEnabled( false );
-    if( m_saveCopyAs ) m_saveCopyAs->setEnabled( false );
     m_printPreview->setEnabled( false );
     m_showProperties->setEnabled( false );
     if ( m_showEmbeddedFiles ) m_showEmbeddedFiles->setEnabled( false );
@@ -2138,53 +2129,59 @@ bool Part::saveFile()
     return false;
 }
 
-void Part::slotSaveFileAs()
+bool Part::slotSaveFileAs( bool showOkularArchiveAsDefaultFormat )
 {
     if ( m_embedMode == PrintPreviewMode )
-       return;
+       return false;
 
-    /* Show a warning before saving if the generator can't save annotations,
-     * unless we are going to save a .okular archive. */
-    if ( !isDocumentArchive && !m_document->canSaveChanges( Document::SaveAnnotationsCapability ) )
+    // Determine the document's mimetype
+    KMimeType::Ptr originalMimeType;
+    if ( const Okular::DocumentInfo *documentInfo = m_document->documentInfo() )
     {
-        /* Search local annotations */
-        bool containsLocalAnnotations = false;
-        const int pagecount = m_document->pages();
-
-        for ( int pageno = 0; pageno < pagecount; ++pageno )
-        {
-            const Okular::Page *page = m_document->page( pageno );
-            foreach ( const Okular::Annotation *ann, page->annotations() )
-            {
-                if ( !(ann->flags() & Okular::Annotation::External) )
-                {
-                    containsLocalAnnotations = true;
-                    break;
-                }
-            }
-            if ( containsLocalAnnotations )
-                break;
-        }
-
-        /* Don't show it if there are no local annotations */
-        if ( containsLocalAnnotations )
-        {
-            int res = KMessageBox::warningContinueCancel( widget(), i18n("Your annotations will not be exported.\nYou can export the annotated document using File -> Export As -> Document Archive") );
-            if ( res != KMessageBox::Continue )
-                return; // Canceled
-        }
+        QString typeName = documentInfo->get("mimeType");
+        if ( !typeName.isEmpty() )
+            originalMimeType = KMimeType::mimeType( typeName );
     }
 
-    KUrl saveUrl = KFileDialog::getSaveUrl( url(),
-                                            QString(), widget(), QString(),
-                                            KFileDialog::ConfirmOverwrite );
-    if ( !saveUrl.isValid() || saveUrl.isEmpty() )
-        return;
+    // What format choice should we show as default?
+    const QString defaultMimeType = (isDocumentArchive || showOkularArchiveAsDefaultFormat) ?
+        "application/vnd.kde.okular-archive" : originalMimeType->name();
 
-    saveAs( saveUrl );
+    // Prepare "Save As" dialog
+    KFileDialog fd( url(), QString(), widget() );
+    fd.setWindowTitle( i18n("Save As") );
+    fd.setOperationMode( KFileDialog::Saving );
+    fd.setMode( KFile::File );
+    fd.setConfirmOverwrite( true );
+    fd.setMimeFilter(
+        QStringList() << originalMimeType->name() << "application/vnd.kde.okular-archive",
+        defaultMimeType );
+
+    // Show it
+    if ( fd.exec() == QDialog::Accepted )
+    {
+        const KUrl saveUrl = fd.selectedUrl();
+        if ( !saveUrl.isValid() || saveUrl.isEmpty() )
+          return false;
+
+        // Has the user chosen to save in .okular archive format?
+        const bool saveAsOkularArchive = ( fd.currentMimeFilter() == "application/vnd.kde.okular-archive" );
+
+        return saveAs( saveUrl, saveAsOkularArchive );
+    }
+    else
+    {
+        return false;
+    }
 }
 
-bool Part::saveAs( const KUrl & saveUrl )
+bool Part::saveAs(const KUrl & saveUrl)
+{
+    // Save in the same format (.okular vs native) as the current file
+    return saveAs( saveUrl, isDocumentArchive /* saveAsOkularArchive */ );
+}
+
+bool Part::saveAs( const KUrl & saveUrl, bool saveAsOkularArchive )
 {
     KTemporaryFile tf;
     QString fileName;
@@ -2196,84 +2193,155 @@ bool Part::saveAs( const KUrl & saveUrl )
     fileName = tf.fileName();
     tf.close();
 
-    QString errorText;
-    bool saved;
+    QScopedPointer<KTemporaryFile> tempFile;
+    KIO::Job *copyJob; // this will be filled with the job that writes to saveUrl
 
-    if ( isDocumentArchive )
-        saved = m_document->saveDocumentArchive( fileName );
-    else
-        saved = m_document->saveChanges( fileName, &errorText );
-
-    if ( !saved )
+    // Does the user want a .okular archive?
+    if ( saveAsOkularArchive )
     {
-        if (errorText.isEmpty())
+        if ( !m_document->saveDocumentArchive( fileName ) )
         {
             KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", fileName ) );
+            return false;
+        }
+
+        copyJob = KIO::file_copy( fileName, saveUrl, -1, KIO::Overwrite );
+    }
+    else
+    {
+        // If the user wants to save in the original file's format, some features
+        // might not be available. Find out what can't be saved in this format
+        bool wontSaveAnnotations = false;
+        bool wontSaveForms = false;
+
+        if ( !m_document->canSaveChanges( Document::SaveFormsCapability ) )
+        {
+            /* Set wontSaveForms only if there are forms */
+            const int pagecount = m_document->pages();
+
+            for ( int pageno = 0; pageno < pagecount; ++pageno )
+            {
+                const Okular::Page *page = m_document->page( pageno );
+                if ( !page->formFields().empty() )
+                {
+                    wontSaveForms = true;
+                    break;
+                }
+            }
+        }
+        if ( !m_document->canSaveChanges( Document::SaveAnnotationsCapability ) )
+        {
+            /* Set wontSaveAnnotations only if there are local annotations */
+            const int pagecount = m_document->pages();
+
+            for ( int pageno = 0; pageno < pagecount; ++pageno )
+            {
+                const Okular::Page *page = m_document->page( pageno );
+                foreach ( const Okular::Annotation *ann, page->annotations() )
+                {
+                    if ( !(ann->flags() & Okular::Annotation::External) )
+                    {
+                        wontSaveAnnotations = true;
+                        break;
+                    }
+                }
+                if ( wontSaveAnnotations )
+                    break;
+            }
+        }
+
+        // If something can't be saved in this format, ask for confirmation
+        QStringList listOfwontSaves;
+        if ( wontSaveForms ) listOfwontSaves << i18n( "Filled form contents" );
+        if ( wontSaveAnnotations ) listOfwontSaves << i18n( "User annotations" );
+        if ( !listOfwontSaves.isEmpty() )
+        {
+            int result = KMessageBox::warningYesNoCancelList( widget(),
+                  i18n( "The following elements <b>cannot be saved</b> in this format and will be lost.<br>If you want to preserve them, please use the <i>Okular document archive</i> format." ),
+                  listOfwontSaves, i18n( "Warning" ),
+                  KGuiItem( i18n( "Save as Okular document archive..." ), "document-save-as" ), // <- KMessageBox::Yes
+                  KStandardGuiItem::cont() ); // <- KMessageBox::NO
+
+            switch (result)
+            {
+                case KMessageBox::Yes: // -> Save as Okular document archive
+                    return slotSaveFileAs( true /* showOkularArchiveAsDefaultFormat */ );
+                case KMessageBox::No: // -> Continue
+                    break;
+                case KMessageBox::Cancel:
+                    return false;
+            }
+        }
+
+        if ( m_document->canSaveChanges() )
+        {
+            // If the generator supports saving changes, save them
+
+            QString errorText;
+            if ( !m_document->saveChanges( fileName, &errorText ) )
+            {
+                if (errorText.isEmpty())
+                    KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", fileName ) );
+                else
+                    KMessageBox::information( widget(), i18n("File could not be saved in '%1'. %2", fileName, errorText ) );
+
+                return false;
+            }
+
+            copyJob = KIO::file_copy( fileName, saveUrl, -1, KIO::Overwrite );
         }
         else
         {
-            KMessageBox::information( widget(), i18n("File could not be saved in '%1'. %2", fileName, errorText ) );
+            // make use of the already downloaded (in case of remote URLs) file,
+            // no point in downloading that again
+            KUrl srcUrl = KUrl::fromPath( localFilePath() );
+            // duh, our local file disappeared...
+            if ( !QFile::exists( localFilePath() ) )
+            {
+                if ( url().isLocalFile() )
+                {
+#ifdef OKULAR_KEEP_FILE_OPEN
+                    // local file: try to get it back from the open handle on it
+                    tempFile.reset( m_keeper->copyToTemporary() );
+                    if ( tempFile )
+                        srcUrl = KUrl::fromPath( tempFile->fileName() );
+#else
+                    const QString msg = i18n( "Okular cannot copy %1 to the specified location.\n\nThe document does not exist anymore.", localFilePath() );
+                    KMessageBox::sorry( widget(), msg );
+                    return false;
+#endif
+                }
+                else
+                {
+                    // we still have the original remote URL of the document,
+                    // so copy the document from there
+                    srcUrl = url();
+                }
+            }
+
+            if ( srcUrl != saveUrl )
+            {
+                copyJob = KIO::file_copy( srcUrl, saveUrl, -1, KIO::Overwrite );
+            }
+            else
+            {
+                // Don't do a real copy in this case, just update the timestamps
+                copyJob = KIO::setModificationTime( saveUrl, QDateTime::currentDateTime() );
+            }
         }
-        return false;
     }
 
-    KIO::Job *copyJob = KIO::file_copy( fileName, saveUrl, -1, KIO::Overwrite );
     if ( !KIO::NetAccess::synchronousRun( copyJob, widget() ) )
     {
         KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", saveUrl.prettyUrl() ) );
         return false;
     }
 
+    // TODO: Load new file instead of the old one
+
     setModified( false );
     return true;
 }
-
-
-void Part::slotSaveCopyAs()
-{
-    if ( m_embedMode == PrintPreviewMode )
-       return;
-
-    KUrl saveUrl = KFileDialog::getSaveUrl( KUrl("kfiledialog:///okular/" + url().fileName()),
-                                            QString(), widget(), QString(),
-                                            KFileDialog::ConfirmOverwrite );
-    if ( saveUrl.isValid() && !saveUrl.isEmpty() )
-    {
-        // make use of the already downloaded (in case of remote URLs) file,
-        // no point in downloading that again
-        KUrl srcUrl = KUrl::fromPath( localFilePath() );
-        KTemporaryFile * tempFile = 0;
-        // duh, our local file disappeared...
-        if ( !QFile::exists( localFilePath() ) )
-        {
-            if ( url().isLocalFile() )
-            {
-#ifdef OKULAR_KEEP_FILE_OPEN
-                // local file: try to get it back from the open handle on it
-                if ( ( tempFile = m_keeper->copyToTemporary() ) )
-                    srcUrl = KUrl::fromPath( tempFile->fileName() );
-#else
-                const QString msg = i18n( "Okular cannot copy %1 to the specified location.\n\nThe document does not exist anymore.", localFilePath() );
-                KMessageBox::sorry( widget(), msg );
-                return;
-#endif
-            }
-            else
-            {
-                // we still have the original remote URL of the document,
-                // so copy the document from there
-                srcUrl = url();
-            }
-        }
-
-        KIO::Job *copyJob = KIO::file_copy( srcUrl, saveUrl, -1, KIO::Overwrite );
-        if ( !KIO::NetAccess::synchronousRun( copyJob, widget() ) )
-            KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", saveUrl.prettyUrl() ) );
-
-        delete tempFile;
-    }
-}
-
 
 void Part::slotGetNewStuff()
 {

@@ -166,6 +166,7 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         bool openUrl(const KUrl &url);
         void guiActivateEvent(KParts::GUIActivateEvent *event);
         void displayInfoMessage( const QString &message, KMessageWidget::MessageType messageType = KMessageWidget::Information, int duration = -1 );;
+
     public:
         bool saveFile();
         bool queryClose();
@@ -190,8 +191,7 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         void slotNextBookmark();
         void slotFindNext();
         void slotFindPrev();
-        void slotSaveFileAs();
-        void slotSaveCopyAs();
+        bool slotSaveFileAs(bool showOkularArchiveAsDefaultFormat = false);
         void slotGetNewStuff();
         void slotNewConfig();
         void slotShowMenu(const Okular::Page *page, const QPoint &point);
@@ -246,7 +246,8 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         void unsetDummyMode();
         void slotRenameBookmark( const DocumentViewport &viewport );
         void resetStartArguments();
-        
+        bool saveAs( const KUrl & saveUrl, bool saveAsOkularArchive );
+
         static int numberOfParts;
 
         KTemporaryFile *m_tempfile;

@@ -41,12 +41,10 @@
 #include <cassert>
 
 
-DVIExport::DVIExport(dviRenderer& parent, QWidget* parent_widget)
+DVIExport::DVIExport(dviRenderer& parent)
   : started_(false),
     process_(0),
-    progress_(0),
-    parent_(&parent),
-    parent_widget_(parent_widget)
+    parent_(&parent)
 {
   connect( this, SIGNAL(error(QString,int)), &parent, SIGNAL(error(QString,int)) );
 }
@@ -54,30 +52,7 @@ DVIExport::DVIExport(dviRenderer& parent, QWidget* parent_widget)
 
 DVIExport::~DVIExport()
 {
-  delete progress_;
   delete process_;
-}
-
-
-void DVIExport::initialise_progress_dialog(int total_steps,
-                                           const QString& label_text,
-                                           const QString& whats_this_text,
-                                           const QString& tooltip_text)
-{
-  assert(!progress_);
-  progress_ = new fontProgressDialog(QString(),
-                                     label_text,
-                                     QString(),
-                                     whats_this_text,
-                                     tooltip_text,
-                                     parent_widget_,
-                                     false);
-
-  if (progress_) {
-    progress_->TextLabel2->setText(i18n("Please be patient"));
-    progress_->setTotalSteps(total_steps);
-    //connect(progress_, SIGNAL(finished()), this, SLOT(abort_process()));
-  }
 }
 
 
@@ -114,15 +89,6 @@ void DVIExport::start(const QString& command,
 
 void DVIExport::abort_process_impl()
 {
-  if (progress_) {
-    // Explicitly disconnect to prevent a recursive call of abort_process.
-    disconnect(progress_, SIGNAL(finished()), 0, 0);
-    if (progress_->isVisible())
-      progress_->hide();
-    delete progress_;
-    progress_ = 0;
-  }
-
   // deleting process_ kills the external process itself
   // if it's still running.
   delete process_;
@@ -132,13 +98,6 @@ void DVIExport::abort_process_impl()
 
 void DVIExport::finished_impl(int exit_code)
 {
-  if (progress_) {
-    // Explicitly disconnect to prevent a recursive call of abort_process.
-    //disconnect(progress_, SIGNAL(finished()), 0, 0);
-    if (progress_->isVisible())
-      progress_->hide();
-  }
-
   if (process_ && exit_code != 0)
     emit error(error_message_, -1);
   // Remove this from the store of all export processes.
@@ -151,15 +110,12 @@ void DVIExport::output_receiver()
 {
   if (process_) {
      QString out = process_->readAllStandardOutput();
-
-    if (progress_)
-      progress_->show();
   }
 }
 
 
-DVIExportToPDF::DVIExportToPDF(dviRenderer& parent, QWidget* parent_widget)
-  : DVIExport(parent, parent_widget)
+DVIExportToPDF::DVIExportToPDF(dviRenderer& parent, const QString& output_name)
+  : DVIExport(parent)
 {
   // Neither of these should happen. Paranoia checks.
   if (!parent.dviFile)
@@ -184,28 +140,8 @@ DVIExportToPDF::DVIExportToPDF(dviRenderer& parent, QWidget* parent_widget)
 
   // Generate a suggestion for a reasonable file name
   const QString suggested_name = dvi.filename.left(dvi.filename.indexOf(".")) + ".pdf";
-  const QString output_name = KFileDialog::getSaveFileName(suggested_name, i18n("*.pdf|Portable Document Format (*.pdf)"), parent_widget, i18n("Export File As"));
   if (output_name.isEmpty())
     return;
-
-  const QFileInfo output(output_name);
-  if (!output.exists()) {
-    const int result =
-      KMessageBox::warningContinueCancel(parent_widget,
-                                         i18n("The file %1\nexists. Do you want to overwrite it?", output_name),
-                                         i18n("Overwrite File"),
-                                         KGuiItem( i18n("Overwrite") ));
-    if (result == KMessageBox::Cancel)
-      return;
-  }
-
-  initialise_progress_dialog(dvi.total_pages,
-                             i18n("Using dvipdfm to export the file to PDF"),
-                             i18n("Okular is currently using the external program 'dvipdfm' to "
-                                  "convert your DVI-file to PDF. Sometimes that can take "
-                                  "a while because dvipdfm needs to generate its own bitmap fonts "
-                                  "Please be patient."),
-                             i18n("Waiting for dvipdfm to finish...") );
 
   start("dvipdfm",
         QStringList() << "-o"
@@ -219,13 +155,12 @@ DVIExportToPDF::DVIExportToPDF(dviRenderer& parent, QWidget* parent_widget)
 
 
 DVIExportToPS::DVIExportToPS(dviRenderer& parent,
-                             QWidget* parent_widget,
                              const QString& output_name,
                              const QStringList& options,
                              QPrinter* printer,
                              bool useFontHinting,
                              QPrinter::Orientation orientation)
-  : DVIExport(parent, parent_widget),
+  : DVIExport(parent),
     printer_(printer),
     orientation_(orientation)
 {
@@ -256,28 +191,9 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
     return;
   }
 
-  if (!output_name.isEmpty()) {
-    output_name_ = output_name;
-
-  } else {
-    // Generate a suggestion for a reasonable file name
-    const QString suggested_name = dvi.filename.left(dvi.filename.indexOf(".")) + ".ps";
-    output_name_ = KFileDialog::getSaveFileName(suggested_name, i18n("*.ps|PostScript (*.ps)"), parent_widget, i18n("Export File As"));
-    if (output_name_.isEmpty())
-      return;
-
-    const QFileInfo output(output_name_);
-    if (!output.exists()) {
-      const int result =
-        KMessageBox::warningContinueCancel(parent_widget,
-                                           i18n("The file %1\nexists. Do you want to overwrite it?", output_name_),
-                                           i18n("Overwrite File"),
-                                           KGuiItem( i18n("Overwrite") ));
-      if (result == KMessageBox::Cancel)
-        return;
-    }
-  }
-
+  if (output_name.isEmpty())
+    return;
+  
   // There is a major problem with dvips, at least 5.86 and lower: the
   // arguments of the option "-pp" refer to TeX-pages, not to
   // sequentially numbered pages. For instance "-pp 7" may refer to 3
@@ -347,14 +263,6 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
     parent.dviFile = saved_dvi;
     newFile.saveAs(input_name);
   }
-
-  initialise_progress_dialog(dvi.total_pages,
-                             i18n("Using dvips to export the file to PostScript"),
-                             i18n("Okular is currently using the external program 'dvips' to "
-                                  "convert your DVI-file to PostScript. Sometimes that can take "
-                                  "a while because dvips needs to generate its own bitmap fonts "
-                                  "Please be patient."),
-                             i18n("Waiting for dvips to finish...") );
 
   QStringList args;
   if (!printer)

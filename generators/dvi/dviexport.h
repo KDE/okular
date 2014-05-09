@@ -26,7 +26,6 @@
 
 
 class dviRenderer;
-class fontProgressDialog;
 class KProcess;
 class QStringList;
 
@@ -52,16 +51,8 @@ protected:
   /** @param parent is stored internally in order to inform the parent
    *  that the external process has finished and that this variable
    *  can be removed from any stores.
-   *  @param parent_widget is parent's (otherwise private) parentWidget.
    */
-  DVIExport(dviRenderer& parent, QWidget* parent_widget);
-
-  /** A wrapper around fontProgressDialog, also connecting some signals/slots.
-   */
-  void initialise_progress_dialog(int total_steps,
-                                  const QString& label_text,
-                                  const QString& whats_this_text,
-                                  const QString& tooltip_text);
+  DVIExport(dviRenderer& parent);
 
   /** Spawns the external process having connected slots to the child
    *  process's stdin and stdout streams.
@@ -97,9 +88,7 @@ private:
   QString error_message_;
   bool started_;
   KProcess* process_;
-  fontProgressDialog* progress_;
   dviRenderer* parent_;
-  QWidget* parent_widget_;
 };
 
 
@@ -108,9 +97,9 @@ class DVIExportToPDF : public DVIExport
 public:
   /** @param parent is stored internally in order to inform the parent
    *  that the external process has finished.
-   *  @param parent_widget is passed to all Qt widgets.
-   */
-  DVIExportToPDF(dviRenderer& parent, QWidget* parent_widget);
+   *  @param output_name is the name of the PDF file that is
+   *  to contain the exported data.   */
+  DVIExportToPDF(dviRenderer& parent, const QString& output_name);
 };
 
 
@@ -119,10 +108,8 @@ class DVIExportToPS : public DVIExport
 public:
   /** @param parent is stored internally in order to inform the parent
    *  that the external process has finished.
-   *  @param parent_widget is passed to all Qt widgets.
    *  @param output_name is the name of the PostScript file that is
-   *  to contain the exported data. If this variable is empty, the
-   *  user will be asked to supply a file name.
+   *  to contain the exported data.
    *  @param options extra command line arguments that are to be
    *  passed to the external process's argv command line.
    *  @param printer having generated the PostScript file, it is passed
@@ -130,7 +117,6 @@ public:
    *  @param orientation the original orientation of the document
    */
   DVIExportToPS(dviRenderer& parent,
-                QWidget* parent_widget,
                 const QString& output_name,
                 const QStringList& options,
                 QPrinter* printer,

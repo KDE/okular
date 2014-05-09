@@ -248,6 +248,8 @@ class OKULAR_EXPORT Generator : public QObject
          *
          * @note Do not implement this if your format doesn't support passwords, it'll cleanly call loadDocument()
          *
+         * @since 0.20 (KDE 4.14)
+         *
          * @returns a LoadResult defining the result of the operation
          */
         virtual Document::OpenResult loadDocumentWithPassword( const QString & fileName, QVector< Page * > & pagesVector, const QString &password );
@@ -259,6 +261,8 @@ class OKULAR_EXPORT Generator : public QObject
          * @note Do not implement this if your format doesn't support passwords, it'll cleanly call loadDocumentFromData()
          *
          * @note the Generator has to have the feature @ref ReadRawData enabled
+         *
+         * @since 0.20 (KDE 4.14)
          *
          * @returns a LoadResult defining the result of the operation
          */

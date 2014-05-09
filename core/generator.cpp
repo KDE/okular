@@ -175,9 +175,24 @@ Generator::~Generator()
     delete d_ptr;
 }
 
+bool Generator::loadDocument( const QString & fileName, QVector< Page * > & pagesVector )
+{
+    return false;
+}
+
 bool Generator::loadDocumentFromData( const QByteArray &, QVector< Page * > & )
 {
     return false;
+}
+
+Document::OpenResult Generator::loadDocumentWithPassword( const QString & fileName, QVector< Page * > & pagesVector, const QString & )
+{
+    return loadDocument( fileName, pagesVector ) ? Document::OpenSuccess : Document::OpenError;
+}
+
+Document::OpenResult Generator::loadDocumentFromDataWithPassword( const QByteArray & fileData, QVector< Page * > & pagesVector, const QString & )
+{
+    return loadDocumentFromData( fileData, pagesVector ) ? Document::OpenSuccess : Document::OpenError;
 }
 
 bool Generator::closeDocument()

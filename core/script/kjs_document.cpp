@@ -121,7 +121,7 @@ static KJSObject docGetDataObjects( KJSContext *ctx, void *object )
 static KJSObject docGetExternal( KJSContext *, void *object )
 {
     DocumentPrivate *doc = reinterpret_cast< DocumentPrivate* >( object );
-    QWidget *widget = doc->m_parent->widget();
+    QWidget *widget = doc->m_widget;
 
     const bool isShell = ( widget
                            && widget->parentWidget()

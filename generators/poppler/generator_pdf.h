@@ -60,8 +60,8 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         static const int PDFDebug = 4710;
 
         // [INHERITED] load a document and fill up the pagesVector
-        bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
-        bool loadDocumentFromData( const QByteArray & fileData, QVector<Okular::Page*> & pagesVector );
+        Okular::Document::OpenResult loadDocumentWithPassword( const QString & fileName, QVector<Okular::Page*> & pagesVector, const QString & password );
+        Okular::Document::OpenResult loadDocumentFromDataWithPassword( const QByteArray & fileData, QVector<Okular::Page*> & pagesVector, const QString & password );
         void loadPages(QVector<Okular::Page*> &pagesVector, int rotation=-1, bool clear=false);
         // [INHERITED] document information
         const Okular::DocumentInfo * generateDocumentInfo();
@@ -108,7 +108,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         Okular::Generator::PrintError printError() const;
 
     private:
-        bool init(QVector<Okular::Page*> & pagesVector, const QString &walletKey);
+        Okular::Document::OpenResult init(QVector<Okular::Page*> & pagesVector, const QString &password);
 
         // create the document synopsis hieracy
         void addSynopsisChildren( QDomNode * parentSource, QDomNode * parentDestination );

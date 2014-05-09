@@ -903,7 +903,7 @@ SaveInterface* DocumentPrivate::generatorSave( GeneratorInfo& info )
     return info.save;
 }
 
-bool DocumentPrivate::openDocumentInternal( const KService::Ptr& offer, bool isstdin, const QString& docFile, const QByteArray& filedata )
+Document::OpenResult DocumentPrivate::openDocumentInternal( const KService::Ptr& offer, bool isstdin, const QString& docFile, const QByteArray& filedata, const QString& password )
 {
     QString propName = offer->name();
     QHash< QString, GeneratorInfo >::const_iterator genIt = m_loadedGenerators.constFind( propName );
@@ -917,7 +917,7 @@ bool DocumentPrivate::openDocumentInternal( const KService::Ptr& offer, bool iss
     {
         m_generator = loadGeneratorLibrary( offer );
         if ( !m_generator )
-            return false;
+            return Document::OpenError;
         genIt = m_loadedGenerators.constFind( propName );
         Q_ASSERT( genIt != m_loadedGenerators.constEnd() );
         catalogName = genIt.value().catalogName;
@@ -938,16 +938,16 @@ bool DocumentPrivate::openDocumentInternal( const KService::Ptr& offer, bool iss
 
     m_generator->setDPI(Utils::realDpi(m_widget));
 
-    bool openOk = false;
+    Document::OpenResult openResult = Document::OpenError;
     if ( !isstdin )
     {
-        openOk = m_generator->loadDocument( docFile, m_pagesVector );
+        openResult = m_generator->loadDocumentWithPassword( docFile, m_pagesVector, password );
     }
     else if ( !filedata.isEmpty() )
     {
         if ( m_generator->hasFeature( Generator::ReadRawData ) )
         {
-            openOk = m_generator->loadDocumentFromData( filedata, m_pagesVector );
+            openResult = m_generator->loadDocumentFromDataWithPassword( filedata, m_pagesVector, password );
         }
         else
         {
@@ -962,13 +962,13 @@ bool DocumentPrivate::openDocumentInternal( const KService::Ptr& offer, bool iss
                 m_tempFile->write( filedata );
                 QString tmpFileName = m_tempFile->fileName();
                 m_tempFile->close();
-                openOk = m_generator->loadDocument( tmpFileName, m_pagesVector );
+                openResult = m_generator->loadDocumentWithPassword( tmpFileName, m_pagesVector, password );
             }
         }
     }
 
     QApplication::restoreOverrideCursor();
-    if ( !openOk || m_pagesVector.size() <= 0 )
+    if ( openResult != Document::OpenSuccess || m_pagesVector.size() <= 0 )
     {
         if ( !catalogName.isEmpty() )
             KGlobal::locale()->removeCatalog( catalogName );
@@ -983,11 +983,11 @@ bool DocumentPrivate::openDocumentInternal( const KService::Ptr& offer, bool iss
         m_tempFile = 0;
 
         // TODO: emit a message telling the document is empty
-
-        openOk = false;
+        if ( openResult == Document::OpenSuccess )
+            openResult = Document::OpenError;
     }
 
-    return openOk;
+    return openResult;
 }
 
 bool DocumentPrivate::savePageDocumentInfo( KTemporaryFile *infoFile, int what ) const
@@ -1044,12 +1044,12 @@ void DocumentPrivate::warnLimitedAnnotSupport()
     {
         // Shown if the user is editing annotations in a file whose metadata is
         // not stored locally (.okular archives belong to this category)
-        KMessageBox::information( m_parent->widget(), i18n("Your annotation changes will not be saved automatically. Use File -> Save As...\nor your changes will be lost once the document is closed"), QString(), "annotNeedSaveAs" );
+        KMessageBox::information( m_widget, i18n("Your annotation changes will not be saved automatically. Use File -> Save As...\nor your changes will be lost once the document is closed"), QString(), "annotNeedSaveAs" );
     }
     else if ( !canAddAnnotationsNatively() )
     {
         // If the generator doesn't support native annotations
-        KMessageBox::information( m_parent->widget(), i18n("Your annotations are saved internally by Okular.\nYou can export the annotated document using File -> Export As -> Document Archive"), QString(), "annotExportAsArchive" );
+        KMessageBox::information( m_widget, i18n("Your annotations are saved internally by Okular.\nYou can export the annotated document using File -> Export As -> Document Archive"), QString(), "annotExportAsArchive" );
     }
 }
 
@@ -1661,7 +1661,7 @@ void DocumentPrivate::doContinueDirectionMatchSearch(void *doContinueDirectionMa
             if ( searchStruct->currentPage >= pageCount || searchStruct->currentPage < 0 )
             {
                 const QString question = searchStruct->forward ? i18n("End of document reached.\nContinue from the beginning?") : i18n("Beginning of document reached.\nContinue from the bottom?");
-                if ( searchStruct->noDialogs || KMessageBox::questionYesNo(m_parent->widget(), question, QString(), KStandardGuiItem::cont(), KStandardGuiItem::cancel()) == KMessageBox::Yes )
+                if ( searchStruct->noDialogs || KMessageBox::questionYesNo(m_widget, question, QString(), KStandardGuiItem::cont(), KStandardGuiItem::cancel()) == KMessageBox::Yes )
                     searchStruct->currentPage = searchStruct->forward ? 0 : pageCount - 1;
                 else
                     doContinue = false;
@@ -1745,7 +1745,7 @@ void DocumentPrivate::doProcessSearchMatch( RegularAreaRect *match, RunningSearc
     }
 #if 0
     else if ( !noDialogs )
-        KMessageBox::information( m_parent->widget(), i18n( "No matches found for '%1'.", text ) );
+        KMessageBox::information( m_widget, i18n( "No matches found for '%1'.", text ) );
 #endif
 
     // notify observers about highlights changes
@@ -2108,7 +2108,7 @@ private:
     const KMimeType::Ptr &_mime;
 };
 
-bool Document::openDocument( const QString & docFile, const KUrl& url, const KMimeType::Ptr &_mime )
+Document::OpenResult Document::openDocument( const QString & docFile, const KUrl& url, const KMimeType::Ptr &_mime, const QString & password )
 {
     KMimeType::Ptr mime = _mime;
     QByteArray filedata;
@@ -2118,14 +2118,14 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     if ( !isstdin )
     {
         if ( mime.count() <= 0 )
-            return false;
+            return OpenError;
 
         // docFile is always local so we can use QFileInfo on it
         QFileInfo fileReadTest( docFile );
         if ( fileReadTest.isFile() && !fileReadTest.isReadable() )
         {
             d->m_docFileName.clear();
-            return false;
+            return OpenError;
         }
         // determine the related "xml document-info" filename
         d->m_url = url;
@@ -2145,7 +2145,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
                 {
                     // ### copy or move?
                     if ( !QFile::copy( oldkpdffile, newokularfile ) )
-                        return false;
+                        return OpenError;
                 }
             }
             d->m_xmlFileName = newokularfile;
@@ -2158,7 +2158,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
         filedata = qstdin.readAll();
         mime = KMimeType::findByContent( filedata );
         if ( !mime || mime->name() == QLatin1String( "application/octet-stream" ) )
-            return false;
+            return OpenError;
         document_size = filedata.size();
         triedMimeFromFileContent = true;
     }
@@ -2193,7 +2193,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
     {
         emit error( i18n( "Can not find a plugin which is able to handle the document being passed." ), -1 );
         kWarning(OkularDebug).nospace() << "No plugin for mimetype '" << mime->name() << "'.";
-        return false;
+        return OpenError;
     }
     int hRank=0;
     // best ranked offer search
@@ -2211,10 +2211,10 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
                 list << offers.at(i)->name();
             }
 
-            ChooseEngineDialog choose( list, mime, widget() );
+            ChooseEngineDialog choose( list, mime, d->m_widget );
 
             if ( choose.exec() == QDialog::Rejected )
-                return false;
+                return OpenError;
 
             hRank = choose.selectedGenerator();
         }
@@ -2222,8 +2222,8 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
 
     KService::Ptr offer = offers.at( hRank );
     // 1. load Document
-    bool openOk = d->openDocumentInternal( offer, isstdin, docFile, filedata );
-    if ( !openOk && !triedMimeFromFileContent )
+    OpenResult openResult = d->openDocumentInternal( offer, isstdin, docFile, filedata, password );
+    if ( openResult == OpenError && !triedMimeFromFileContent )
     {
         KMimeType::Ptr newmime = KMimeType::findByFileContent( docFile );
         triedMimeFromFileContent = true;
@@ -2234,13 +2234,13 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
             if ( !offers.isEmpty() )
             {
                 offer = offers.first();
-                openOk = d->openDocumentInternal( offer, isstdin, docFile, filedata );
+                openResult = d->openDocumentInternal( offer, isstdin, docFile, filedata, password );
             }
         }
     }
-    if ( !openOk )
+    if ( openResult != OpenSuccess )
     {
-        return false;
+        return openResult;
     }
 
     d->m_generatorName = offer->name();
@@ -2327,7 +2327,7 @@ bool Document::openDocument( const QString & docFile, const KUrl& url, const KMi
         }
     }
 
-    return true;
+    return OpenSuccess;
 }
 
 
@@ -2555,11 +2555,6 @@ void Document::reparseConfig()
         d->cleanupPixmapMemory();
 }
 
-
-QWidget *Document::widget() const
-{
-    return d->m_widget;
-}
 
 bool Document::isOpened() const
 {
@@ -3673,7 +3668,7 @@ void Document::processAction( const Action * action )
                     {
                         // this case is a link pointing to an executable with a parameter
                         // that also is an executable, possibly a hand-crafted pdf
-                        KMessageBox::information( widget(), i18n("The document is trying to execute an external application and, for your safety, Okular does not allow that.") );
+                        KMessageBox::information( d->m_widget, i18n("The document is trying to execute an external application and, for your safety, Okular does not allow that.") );
                         return;
                     }
                 }
@@ -3681,7 +3676,7 @@ void Document::processAction( const Action * action )
                 {
                     // this case is a link pointing to an executable with no parameters
                     // core developers find unacceptable executing it even after asking the user
-                    KMessageBox::information( widget(), i18n("The document is trying to execute an external application and, for your safety, Okular does not allow that.") );
+                    KMessageBox::information( d->m_widget, i18n("The document is trying to execute an external application and, for your safety, Okular does not allow that.") );
                     return;
                 }
             }
@@ -3694,7 +3689,7 @@ void Document::processAction( const Action * action )
                 KRun::run( *ptr, lst, 0 );
             }
             else
-                KMessageBox::information( widget(), i18n( "No application found for opening file of mimetype %1.", mime->name() ) );
+                KMessageBox::information( d->m_widget, i18n( "No application found for opening file of mimetype %1.", mime->name() ) );
             } break;
 
         case Action::DocAction: {
@@ -3774,7 +3769,7 @@ void Document::processAction( const Action * action )
                 }
 
                 // Albert: this is not a leak!
-                new KRun( realUrl, widget() );
+                new KRun( realUrl, d->m_widget );
             }
             } break;
 
@@ -4134,30 +4129,30 @@ QByteArray Document::fontData(const FontInfo &font) const
     return result;
 }
 
-bool Document::openDocumentArchive( const QString & docFile, const KUrl & url )
+Document::OpenResult Document::openDocumentArchive( const QString & docFile, const KUrl & url, const QString & password )
 {
     const KMimeType::Ptr mime = KMimeType::findByPath( docFile, 0, false /* content too */ );
     if ( !mime->is( "application/vnd.kde.okular-archive" ) )
-        return false;
+        return OpenError;
 
     KZip okularArchive( docFile );
     if ( !okularArchive.open( QIODevice::ReadOnly ) )
-       return false;
+        return OpenError;
 
     const KArchiveDirectory * mainDir = okularArchive.directory();
     const KArchiveEntry * mainEntry = mainDir->entry( "content.xml" );
     if ( !mainEntry || !mainEntry->isFile() )
-        return false;
+        return OpenError;
 
     std::auto_ptr< QIODevice > mainEntryDevice( static_cast< const KZipFileEntry * >( mainEntry )->createDevice() );
     QDomDocument doc;
     if ( !doc.setContent( mainEntryDevice.get() ) )
-        return false;
+        return OpenError;
     mainEntryDevice.reset();
 
     QDomElement root = doc.documentElement();
     if ( root.tagName() != "OkularArchive" )
-        return false;
+        return OpenError;
 
     QString documentFileName;
     QString metadataFileName;
@@ -4177,18 +4172,18 @@ bool Document::openDocumentArchive( const QString & docFile, const KUrl & url )
         }
     }
     if ( documentFileName.isEmpty() )
-        return false;
+        return OpenError;
 
     const KArchiveEntry * docEntry = mainDir->entry( documentFileName );
     if ( !docEntry || !docEntry->isFile() )
-        return false;
+        return OpenError;
 
     std::auto_ptr< ArchiveData > archiveData( new ArchiveData() );
     const int dotPos = documentFileName.indexOf( '.' );
     if ( dotPos != -1 )
         archiveData->document.setSuffix( documentFileName.mid( dotPos ) );
     if ( !archiveData->document.open() )
-        return false;
+        return OpenError;
 
     QString tempFileName = archiveData->document.fileName();
     {
@@ -4216,9 +4211,9 @@ bool Document::openDocumentArchive( const QString & docFile, const KUrl & url )
     const KMimeType::Ptr docMime = KMimeType::findByPath( tempFileName, 0, true /* local file */ );
     d->m_archiveData = archiveData.get();
     d->m_archivedFileName = documentFileName;
-    bool ret = openDocument( tempFileName, url, docMime );
+    const OpenResult ret = openDocument( tempFileName, url, docMime, password );
 
-    if ( ret )
+    if ( ret == OpenSuccess )
     {
         archiveData.release();
     }

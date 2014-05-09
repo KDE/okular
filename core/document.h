@@ -97,9 +97,21 @@ class OKULAR_EXPORT Document : public QObject
         ~Document();
 
         /**
-         * Opens the document.
+         * Describes the result of an open document operation.
+         * @since 0.20 (KDE 4.14)
          */
-        bool openDocument( const QString & docFile, const KUrl & url, const KMimeType::Ptr &mime );
+        enum OpenResult
+        {
+            OpenSuccess,        //< The document was opened successfully
+            OpenError,          //< The document failed to open
+            OpenNeedsPassword   //< The document needs a password to be opened or the one provided is not the correct
+        };
+
+        /**
+         * Opens the document.
+         * @since 0.20 (KDE 4.14)
+         */
+        OpenResult openDocument( const QString & docFile, const KUrl & url, const KMimeType::Ptr &mime, const QString &password = QString() );
 
         /**
          * Closes the document.
@@ -120,11 +132,6 @@ class OKULAR_EXPORT Document : public QObject
          * Reparses and applies the configuration.
          */
         void reparseConfig();
-
-        /**
-         * Returns the widget to be used for relaying GUI things (messageboxes, ...)
-         */
-        QWidget *widget() const;
 
         /**
          * Returns whether the document is currently opened.
@@ -680,9 +687,9 @@ class OKULAR_EXPORT Document : public QObject
         /**
          * Opens a document archive.
          *
-         * @since 0.8 (KDE 4.2)
+         * @since 0.20 (KDE 4.14)
          */
-        bool openDocumentArchive( const QString & docFile, const KUrl & url );
+        OpenResult openDocumentArchive( const QString & docFile, const KUrl & url, const QString &password = QString() );
 
         /**
          * Saves a document archive.

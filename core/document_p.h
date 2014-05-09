@@ -135,7 +135,7 @@ class DocumentPrivate
         void setRotationInternal( int r, bool notify );
         ConfigInterface* generatorConfig( GeneratorInfo& info );
         SaveInterface* generatorSave( GeneratorInfo& info );
-        bool openDocumentInternal( const KService::Ptr& offer, bool isstdin, const QString& docFile, const QByteArray& filedata );
+        Document::OpenResult openDocumentInternal( const KService::Ptr& offer, bool isstdin, const QString& docFile, const QByteArray& filedata, const QString& password );
         bool savePageDocumentInfo( KTemporaryFile *infoFile, int what ) const;
         DocumentViewport nextDocumentViewport() const;
         void notifyAnnotationChanges( int page );

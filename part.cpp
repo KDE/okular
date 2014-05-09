@@ -65,6 +65,8 @@
 #include <kdeprintdialog.h>
 #include <kprintpreview.h>
 #include <kbookmarkmenu.h>
+#include <kpassworddialog.h>
+#include <kwallet.h>
 
 // local includes
 #include "aboutdata.h"
@@ -1236,25 +1238,96 @@ bool Part::openFile()
         uncompressOk = handleCompressed( fileNameToOpen, localFilePath(), compressedMime );
         mime = KMimeType::findByPath( fileNameToOpen );
     }
-    bool ok = false;
+    Document::OpenResult openResult = Document::OpenError;
     isDocumentArchive = false;
     if ( uncompressOk )
     {
         if ( mime->is( "application/vnd.kde.okular-archive" ) )
         {
-            ok = m_document->openDocumentArchive( fileNameToOpen, url() );
+            openResult = m_document->openDocumentArchive( fileNameToOpen,  url() );
             isDocumentArchive = true;
         }
         else
         {
-            ok = m_document->openDocument( fileNameToOpen, url(), mime );
+            openResult = m_document->openDocument( fileNameToOpen,  url(), mime );
+        }
+
+        // if the file didn't open correctly it might be encrypted, so ask for a pass
+        const QString walletKey = fileNameToOpen.section('/', -1, -1);
+        bool firstInput = true;
+        bool triedWallet = false;
+        KWallet::Wallet * wallet = 0;
+        bool keep = true;
+        while ( openResult == Document::OpenNeedsPassword )
+        {
+            QString password;
+
+            // 1.A. try to retrieve the first password from the kde wallet system
+            if ( !triedWallet && !walletKey.isNull() )
+            {
+                QString walletName = KWallet::Wallet::NetworkWallet();
+                const WId parentwid = widget()->effectiveWinId();
+                wallet = KWallet::Wallet::openWallet( walletName, parentwid );
+                if ( wallet )
+                {
+                    // use the KPdf folder (and create if missing)
+                    if ( !wallet->hasFolder( "KPdf" ) )
+                        wallet->createFolder( "KPdf" );
+                    wallet->setFolder( "KPdf" );
+
+                    // look for the pass in that folder
+                    QString retrievedPass;
+                    if ( !wallet->readPassword( walletKey, retrievedPass ) )
+                        password = retrievedPass;
+                }
+                triedWallet = true;
+            }
+
+            // 1.B. if not retrieved, ask the password using the kde password dialog
+            if ( password.isNull() )
+            {
+                QString prompt;
+                if ( firstInput )
+                    prompt = i18n( "Please enter the password to read the document:" );
+                else
+                    prompt = i18n( "Incorrect password. Try again:" );
+                firstInput = false;
+
+                // if the user presses cancel, abort opening
+                KPasswordDialog dlg( widget(), wallet ? KPasswordDialog::ShowKeepPassword : KPasswordDialog::KPasswordDialogFlags() );
+                dlg.setCaption( i18n( "Document Password" ) );
+                dlg.setPrompt( prompt );
+                if( !dlg.exec() )
+                    break;
+                password = dlg.password();
+                if ( wallet )
+                    keep = dlg.keepPassword();
+            }
+
+            // 2. reopen the document using the password
+            if ( mime->is( "application/vnd.kde.okular-archive" ) )
+            {
+                openResult = m_document->openDocumentArchive( fileNameToOpen,  url(), password );
+                isDocumentArchive = true;
+            }
+            else
+            {
+                openResult = m_document->openDocument( fileNameToOpen,  url(), mime, password );
+            }
+
+            // 3. if the password is correct and the user chose to remember it, store it to the wallet
+            if ( openResult == Document::OpenSuccess && wallet && /*safety check*/ wallet->isOpen() && keep )
+            {
+                wallet->writePassword( walletKey, password );
+            }
         }
     }
-    bool canSearch = m_document->supportsSearching();
 
+    bool canSearch = m_document->supportsSearching();
     emit mimeTypeChanged( mime );
 
     // update one-time actions
+    const bool ok = openResult == Document::OpenSuccess;
     emit enableCloseAction( ok );
     m_find->setEnabled( ok && canSearch );
     m_findNext->setEnabled( ok && canSearch );

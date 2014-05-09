@@ -28,8 +28,6 @@
 #include <kconfigdialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kpassworddialog.h>
-#include <kwallet.h>
 #include <ktemporaryfile.h>
 #include <kdebug.h>
 #include <kglobal.h>
@@ -453,19 +451,19 @@ PDFGenerator::~PDFGenerator()
 }
 
 //BEGIN Generator inherited functions
-bool PDFGenerator::loadDocument( const QString & filePath, QVector<Okular::Page*> & pagesVector )
+Okular::Document::OpenResult PDFGenerator::loadDocumentWithPassword( const QString & filePath, QVector<Okular::Page*> & pagesVector, const QString &password )
 {
 #ifndef NDEBUG
     if ( pdfdoc )
     {
         kDebug(PDFDebug) << "PDFGenerator: multiple calls to loadDocument. Check it.";
-        return false;
+        return Okular::Document::OpenError;
     }
 #endif
     // create PDFDoc for the given file
     pdfdoc = Poppler::Document::load( filePath, 0, 0 );
-    bool success = init(pagesVector, filePath.section('/', -1, -1));
-    if (success)
+    Okular::Document::OpenResult success = init(pagesVector, password);
+    if (success == Okular::Document::OpenSuccess)
     {
         // no need to check for the existence of a synctex file, no parser will be
         // created if none exists
@@ -478,89 +476,34 @@ bool PDFGenerator::loadDocument( const QString & filePath, QVector<Okular::Page*
     return success;
 }
 
-bool PDFGenerator::loadDocumentFromData( const QByteArray & fileData, QVector<Okular::Page*> & pagesVector )
+Okular::Document::OpenResult PDFGenerator::loadDocumentFromDataWithPassword( const QByteArray & fileData, QVector<Okular::Page*> & pagesVector, const QString &password )
 {
 #ifndef NDEBUG
     if ( pdfdoc )
     {
         kDebug(PDFDebug) << "PDFGenerator: multiple calls to loadDocument. Check it.";
-        return false;
+        return Okular::Document::OpenError;
     }
 #endif
     // create PDFDoc for the given file
     pdfdoc = Poppler::Document::loadFromData( fileData, 0, 0 );
-    return init(pagesVector, QString());
+    return init(pagesVector, password);
 }
 
-bool PDFGenerator::init(QVector<Okular::Page*> & pagesVector, const QString &walletKey)
+Okular::Document::OpenResult PDFGenerator::init(QVector<Okular::Page*> & pagesVector, const QString &password)
 {
-    // if the file didn't open correctly it might be encrypted, so ask for a pass
-    bool firstInput = true;
-    bool triedWallet = false;
-    KWallet::Wallet * wallet = 0;
-    bool keep = true;
-    while ( pdfdoc && pdfdoc->isLocked() )
+    if ( !pdfdoc )
+        return Okular::Document::OpenError;
+
+    if ( pdfdoc->isLocked() )
     {
-        QString password;
-
-        // 1.A. try to retrieve the first password from the kde wallet system
-        if ( !triedWallet && !walletKey.isNull() )
-        {
-            QString walletName = KWallet::Wallet::NetworkWallet();
-            WId parentwid = 0;
-            if ( document() && document()->widget() )
-                parentwid = document()->widget()->effectiveWinId();
-            wallet = KWallet::Wallet::openWallet( walletName, parentwid );
-            if ( wallet )
-            {
-                // use the KPdf folder (and create if missing)
-                if ( !wallet->hasFolder( "KPdf" ) )
-                    wallet->createFolder( "KPdf" );
-                wallet->setFolder( "KPdf" );
-
-                // look for the pass in that folder
-                QString retrievedPass;
-                if ( !wallet->readPassword( walletKey, retrievedPass ) )
-                    password = retrievedPass;
-            }
-            triedWallet = true;
-        }
-
-        // 1.B. if not retrieved, ask the password using the kde password dialog
-        if ( password.isNull() )
-        {
-            QString prompt;
-            if ( firstInput )
-                prompt = i18n( "Please enter the password to read the document:" );
-            else
-                prompt = i18n( "Incorrect password. Try again:" );
-            firstInput = false;
-
-            // if the user presses cancel, abort opening
-            KPasswordDialog dlg( document()->widget(), wallet ? KPasswordDialog::ShowKeepPassword : KPasswordDialog::KPasswordDialogFlags() );
-            dlg.setCaption( i18n( "Document Password" ) );
-            dlg.setPrompt( prompt );
-            if( !dlg.exec() )
-                break;
-            password = dlg.password();
-            if ( wallet )
-                keep = dlg.keepPassword();
-        }
-
-        // 2. reopen the document using the password
         pdfdoc->unlock( password.toLatin1(), password.toLatin1() );
 
-        // 3. if the password is correct and the user chose to remember it, store it to the wallet
-        if ( !pdfdoc->isLocked() && wallet && /*safety check*/ wallet->isOpen() && keep )
-        {
-            wallet->writePassword( walletKey, password );
+        if ( pdfdoc->isLocked() ) {
+            delete pdfdoc;
+            pdfdoc = 0;
+            return Okular::Document::OpenNeedsPassword;
         }
-    }
-    if ( !pdfdoc || pdfdoc->isLocked() )
-    {
-        delete pdfdoc;
-        pdfdoc = 0;
-        return false;
     }
 
     // build Pages (currentPage was set -1 by deletePages)
@@ -568,7 +511,7 @@ bool PDFGenerator::init(QVector<Okular::Page*> & pagesVector, const QString &wal
     if (pageCount < 0) {
         delete pdfdoc;
         pdfdoc = 0;
-        return false;
+        return Okular::Document::OpenError;
     }
     pagesVector.resize(pageCount);
     rectsGenerated.fill(false, pageCount);
@@ -584,7 +527,7 @@ bool PDFGenerator::init(QVector<Okular::Page*> & pagesVector, const QString &wal
     annotProxy = new PopplerAnnotationProxy( pdfdoc, userMutex() );
 
     // the file has been loaded correctly
-    return true;
+    return Okular::Document::OpenSuccess;
 }
 
 bool PDFGenerator::doCloseDocument()

@@ -13,6 +13,7 @@
 #define _OKULAR_GENERATOR_H_
 
 #include "okular_export.h"
+#include "document.h"
 #include "fontinfo.h"
 #include "global.h"
 #include "pagesize.h"
@@ -40,7 +41,6 @@ class KIcon;
 
 namespace Okular {
 
-class Document;
 class DocumentFonts;
 class DocumentInfo;
 class DocumentObserver;
@@ -224,19 +224,46 @@ class OKULAR_EXPORT Generator : public QObject
          * Loads the document with the given @p fileName and fills the
          * @p pagesVector with the parsed pages.
          *
+         * @note If you implement the WithPassword variants you don't need to implement this one
+         *
          * @returns true on success, false otherwise.
          */
-        virtual bool loadDocument( const QString & fileName, QVector< Page * > & pagesVector ) = 0;
+        virtual bool loadDocument( const QString & fileName, QVector< Page * > & pagesVector );
 
         /**
          * Loads the document from the raw data @p fileData and fills the
          * @p pagesVector with the parsed pages.
+         *
+         * @note If you implement the WithPassword variants you don't need to implement this one
          *
          * @note the Generator has to have the feature @ref ReadRawData enabled
          *
          * @returns true on success, false otherwise.
          */
         virtual bool loadDocumentFromData( const QByteArray & fileData, QVector< Page * > & pagesVector );
+
+        /**
+         * Loads the document with the given @p fileName and @p password and fills the
+         * @p pagesVector with the parsed pages.
+         *
+         * @note Do not implement this if your format doesn't support passwords, it'll cleanly call loadDocument()
+         *
+         * @returns a LoadResult defining the result of the operation
+         */
+        virtual Document::OpenResult loadDocumentWithPassword( const QString & fileName, QVector< Page * > & pagesVector, const QString &password );
+
+        /**
+         * Loads the document from the raw data @p fileData and @p password and fills the
+         * @p pagesVector with the parsed pages.
+         *
+         * @note Do not implement this if your format doesn't support passwords, it'll cleanly call loadDocumentFromData()
+         *
+         * @note the Generator has to have the feature @ref ReadRawData enabled
+         *
+         * @returns a LoadResult defining the result of the operation
+         */
+        virtual Document::OpenResult loadDocumentFromDataWithPassword( const QByteArray & fileData, QVector< Page * > & pagesVector, const QString &password );
+
 
         /**
          * This method is called when the document is closed and not used

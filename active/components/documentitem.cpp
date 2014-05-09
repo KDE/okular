@@ -55,6 +55,7 @@ DocumentItem::~DocumentItem()
 void DocumentItem::setPath(const QString &path)
 {
     //TODO: remote urls
+    //TODO: password
     m_document->openDocument(path, KUrl(path), KMimeType::findByUrl(KUrl(path)));
 
     m_tocModel->fill(m_document->documentSynopsis());

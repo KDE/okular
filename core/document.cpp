@@ -1650,6 +1650,7 @@ void DocumentPrivate::doContinueDirectionMatchSearch(void *doContinueDirectionMa
         return;
     }
 
+    const bool forward = search->cachedType == Document::NextMatch;
     bool doContinue = false;
     // if no match found, loop through the whole doc, starting from currentPage
     if ( !searchStruct->match )
@@ -1660,9 +1661,9 @@ void DocumentPrivate::doContinueDirectionMatchSearch(void *doContinueDirectionMa
             doContinue = true;
             if ( searchStruct->currentPage >= pageCount || searchStruct->currentPage < 0 )
             {
-                const QString question = searchStruct->forward ? i18n("End of document reached.\nContinue from the beginning?") : i18n("Beginning of document reached.\nContinue from the bottom?");
+                const QString question = forward ? i18n("End of document reached.\nContinue from the beginning?") : i18n("Beginning of document reached.\nContinue from the bottom?");
                 if ( searchStruct->noDialogs || KMessageBox::questionYesNo(m_widget, question, QString(), KStandardGuiItem::cont(), KStandardGuiItem::cancel()) == KMessageBox::Yes )
-                    searchStruct->currentPage = searchStruct->forward ? 0 : pageCount - 1;
+                    searchStruct->currentPage = forward ? 0 : pageCount - 1;
                 else
                     doContinue = false;
             }
@@ -1678,11 +1679,10 @@ void DocumentPrivate::doContinueDirectionMatchSearch(void *doContinueDirectionMa
             m_parent->requestTextPage( page->number() );
 
         // if found a match on the current page, end the loop
-        searchStruct->match = page->findText( searchStruct->searchID, searchStruct->text, searchStruct->forward ? FromTop : FromBottom, searchStruct->caseSensitivity );
-
+        searchStruct->match = page->findText( searchStruct->searchID, search->cachedString, forward ? FromTop : FromBottom, search->cachedCaseSensitivity );
         if ( !searchStruct->match )
         {
-            if (searchStruct->forward) searchStruct->currentPage++;
+            if (forward) searchStruct->currentPage++;
             else searchStruct->currentPage--;
             searchStruct->pagesDone++;
         }
@@ -1696,7 +1696,7 @@ void DocumentPrivate::doContinueDirectionMatchSearch(void *doContinueDirectionMa
     }
     else
     {
-        doProcessSearchMatch( searchStruct->match, search, searchStruct->pagesToNotify, searchStruct->currentPage, searchStruct->searchID, searchStruct->moveViewport, searchStruct->color );
+        doProcessSearchMatch( searchStruct->match, search, searchStruct->pagesToNotify, searchStruct->currentPage, searchStruct->searchID, search->cachedViewportMove, search->cachedColor );
         delete searchStruct;
     }
 }
@@ -1755,10 +1755,9 @@ void DocumentPrivate::doProcessSearchMatch( RegularAreaRect *match, RunningSearc
     delete pagesToNotify;
 }
 
-void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QString & text, int theCaseSensitivity, const QColor & color)
+void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID)
 {
     QMap< Page *, QVector<RegularAreaRect *> > *pageMatches = static_cast< QMap< Page *, QVector<RegularAreaRect *> > * >(pageMatchesMap);
-    Qt::CaseSensitivity caseSensitivity = static_cast<Qt::CaseSensitivity>(theCaseSensitivity);
     QSet< int > *pagesToNotify = static_cast< QSet< int > * >( pagesToNotifySet );
     RunningSearch *search = m_searches.value(searchID);
 
@@ -1792,9 +1791,9 @@ void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *
         while ( 1 )
         {
             if ( lastMatch )
-                lastMatch = page->findText( searchID, text, NextResult, caseSensitivity, lastMatch );
+                lastMatch = page->findText( searchID, search->cachedString, NextResult, search->cachedCaseSensitivity, lastMatch );
             else
-                lastMatch = page->findText( searchID, text, FromTop, caseSensitivity );
+                lastMatch = page->findText( searchID, search->cachedString, FromTop, search->cachedCaseSensitivity );
 
             if ( !lastMatch )
                 break;
@@ -1804,7 +1803,7 @@ void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *
         }
         delete lastMatch;
 
-        QMetaObject::invokeMethod(m_parent, "doContinueAllDocumentSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotifySet), Q_ARG(void *, pageMatches), Q_ARG(int, currentPage + 1), Q_ARG(int, searchID), Q_ARG(QString, text), Q_ARG(int, caseSensitivity), Q_ARG(QColor, color));
+        QMetaObject::invokeMethod(m_parent, "doContinueAllDocumentSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotifySet), Q_ARG(void *, pageMatches), Q_ARG(int, currentPage + 1), Q_ARG(int, searchID));
     }
     else
     {
@@ -1820,7 +1819,7 @@ void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *
         {
             foreach(RegularAreaRect *match, it.value())
             {
-                it.key()->d->setHighlight( searchID, match, color );
+                it.key()->d->setHighlight( searchID, match, search->cachedColor );
                 delete match;
             }
             search->highlightedPages.insert( it.key()->number() );
@@ -1843,11 +1842,10 @@ void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *
     }
 }
 
-void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QStringList & words, int theCaseSensitivity, const QColor & color, bool matchAll)
+void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QStringList & words)
 {
     typedef QPair<RegularAreaRect *, QColor> MatchColor;
     QMap< Page *, QVector<MatchColor> > *pageMatches = static_cast< QMap< Page *, QVector<MatchColor> > * >(pageMatchesMap);
-    Qt::CaseSensitivity caseSensitivity = static_cast<Qt::CaseSensitivity>(theCaseSensitivity);
     QSet< int > *pagesToNotify = static_cast< QSet< int > * >( pagesToNotifySet );
     RunningSearch *search = m_searches.value(searchID);
 
@@ -1873,7 +1871,7 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, vo
     const int wordCount = words.count();
     const int hueStep = (wordCount > 1) ? (60 / (wordCount - 1)) : 60;
     int baseHue, baseSat, baseVal;
-    color.getHsv( &baseHue, &baseSat, &baseVal );
+    search->cachedColor.getHsv( &baseHue, &baseSat, &baseVal );
 
     if (currentPage < m_pagesVector.count())
     {
@@ -1901,9 +1899,9 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, vo
             while ( 1 )
             {
                 if ( lastMatch )
-                    lastMatch = page->findText( searchID, word, NextResult, caseSensitivity, lastMatch );
+                    lastMatch = page->findText( searchID, word, NextResult, search->cachedCaseSensitivity, lastMatch );
                 else
-                    lastMatch = page->findText( searchID, word, FromTop, caseSensitivity);
+                    lastMatch = page->findText( searchID, word, FromTop, search->cachedCaseSensitivity);
 
                 if ( !lastMatch )
                     break;
@@ -1917,6 +1915,7 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, vo
         }
 
         // if not all words are present in page, remove partial highlights
+        const bool matchAll = search->cachedType == Document::GoogleAll;
         if ( !allMatched && matchAll )
         {
             QVector<MatchColor> &matches = (*pageMatches)[page];
@@ -1924,7 +1923,7 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, vo
             pageMatches->remove(page);
         }
 
-        QMetaObject::invokeMethod(m_parent, "doContinueGooglesDocumentSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotifySet), Q_ARG(void *, pageMatches), Q_ARG(int, currentPage + 1), Q_ARG(int, searchID), Q_ARG(QStringList, words), Q_ARG(int, caseSensitivity), Q_ARG(QColor, color), Q_ARG(bool, matchAll));
+        QMetaObject::invokeMethod(m_parent, "doContinueGooglesDocumentSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotifySet), Q_ARG(void *, pageMatches), Q_ARG(int, currentPage + 1), Q_ARG(int, searchID), Q_ARG(QStringList, words));
     }
     else
     {
@@ -3331,7 +3330,7 @@ void Document::searchText( int searchID, const QString & text, bool fromStart, Q
         QMap< Page *, QVector<RegularAreaRect *> > *pageMatches = new QMap< Page *, QVector<RegularAreaRect *> >;
 
         // search and highlight 'text' (as a solid phrase) on all pages
-        QMetaObject::invokeMethod(this, "doContinueAllDocumentSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotify), Q_ARG(void *, pageMatches), Q_ARG(int, 0), Q_ARG(int, searchID), Q_ARG(QString, text), Q_ARG(int, caseSensitivity), Q_ARG(QColor, color));
+        QMetaObject::invokeMethod(this, "doContinueAllDocumentSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotify), Q_ARG(void *, pageMatches), Q_ARG(int, 0), Q_ARG(int, searchID));
     }
     // 2. NEXTMATCH - find next matching item (or start from top)
     // 3. PREVMATCH - find previous matching item (or start from bottom)
@@ -3362,15 +3361,10 @@ void Document::searchText( int searchID, const QString & text, bool fromStart, Q
         }
 
         DoContinueDirectionMatchSearchStruct *searchStruct = new DoContinueDirectionMatchSearchStruct();
-        searchStruct->forward = forward;
         searchStruct->pagesToNotify = pagesToNotify;
         searchStruct->match = match;
         searchStruct->currentPage = currentPage;
         searchStruct->searchID = searchID;
-        searchStruct->text = text;
-        searchStruct->caseSensitivity = caseSensitivity;
-        searchStruct->moveViewport = moveViewport;
-        searchStruct->color = color;
         searchStruct->noDialogs = noDialogs;
         searchStruct->pagesDone = pagesDone;
 
@@ -3379,13 +3373,11 @@ void Document::searchText( int searchID, const QString & text, bool fromStart, Q
     // 4. GOOGLE* - process all document marking pages
     else if ( type == GoogleAll || type == GoogleAny )
     {
-        bool matchAll = type == GoogleAll;
-
         QMap< Page *, QVector< QPair<RegularAreaRect *, QColor> > > *pageMatches = new QMap< Page *, QVector<QPair<RegularAreaRect *, QColor> > >;
         const QStringList words = text.split( ' ', QString::SkipEmptyParts );
 
         // search and highlight every word in 'text' on all pages
-        QMetaObject::invokeMethod(this, "doContinueGooglesDocumentSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotify), Q_ARG(void *, pageMatches), Q_ARG(int, 0), Q_ARG(int, searchID), Q_ARG(QStringList, words), Q_ARG(int, caseSensitivity), Q_ARG(QColor, color), Q_ARG(bool, matchAll));
+        QMetaObject::invokeMethod(this, "doContinueGooglesDocumentSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotify), Q_ARG(void *, pageMatches), Q_ARG(int, 0), Q_ARG(int, searchID), Q_ARG(QStringList, words));
     }
 }
 

@@ -67,15 +67,10 @@ class FontExtractionThread;
 
 struct DoContinueDirectionMatchSearchStruct
 {
-    bool forward;
     QSet< int > *pagesToNotify;
     RegularAreaRect *match;
     int currentPage;
     int searchID;
-    QString text;
-    Qt::CaseSensitivity caseSensitivity;
-    bool moveViewport;
-    QColor color;
     bool noDialogs;
     int pagesDone;
 };
@@ -161,8 +156,8 @@ class DocumentPrivate
         void refreshPixmaps( int );
         void _o_configChanged();
         void doContinueDirectionMatchSearch(void *doContinueDirectionMatchSearchStruct);
-        void doContinueAllDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QString & text, int caseSensitivity, const QColor & color);
-        void doContinueGooglesDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QStringList & words, int caseSensitivity, const QColor & color, bool matchAll);
+        void doContinueAllDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID);
+        void doContinueGooglesDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QStringList & words);
 
         void doProcessSearchMatch( RegularAreaRect *match, RunningSearch *search, QSet< int > *pagesToNotify, int currentPage, int searchID, bool moveViewport, const QColor & color );
 

@@ -1327,7 +1327,7 @@ bool Part::openFile()
     m_find->setEnabled( ok && canSearch );
     m_findNext->setEnabled( ok && canSearch );
     m_findPrev->setEnabled( ok && canSearch );
-    if( m_saveAs ) m_saveAs->setEnabled( ok );
+    if( m_saveAs ) m_saveAs->setEnabled( ok && !( isstdin || mime->is( "inode/directory" ) ) );
     emit enablePrintAction( ok && m_document->printingSupport() != Okular::Document::NoPrinting );
     m_printPreview->setEnabled( ok && m_document->printingSupport() != Okular::Document::NoPrinting );
     m_showProperties->setEnabled( ok );

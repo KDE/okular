@@ -699,7 +699,6 @@ void Part::setupViewerActions()
     m_exportAs = 0;
     m_exportAsMenu = 0;
     m_exportAsText = 0;
-    m_exportAsDocArchive = 0;
 
     m_aboutBackend = ac->addAction("help_about_backend");
     m_aboutBackend->setText(i18n("About Backend"));
@@ -784,11 +783,6 @@ void Part::setupActions()
     m_exportAsMenu->addAction( m_exportAsText );
     m_exportAs->setEnabled( false );
     m_exportAsText->setEnabled( false );
-    m_exportAsDocArchive = actionForExportFormat( Okular::ExportFormat(
-            i18nc( "A document format, Okular-specific", "Document Archive" ),
-            KMimeType::mimeType( "application/vnd.kde.okular-archive" ) ), m_exportAsMenu );
-    m_exportAsMenu->addAction( m_exportAsDocArchive );
-    m_exportAsDocArchive->setEnabled( false );
 
     m_showPresentation = ac->addAction("presentation");
     m_showPresentation->setText(i18n("P&resentation"));
@@ -1385,7 +1379,6 @@ bool Part::openFile()
 #endif
     }
     if ( m_exportAsText ) m_exportAsText->setEnabled( ok && m_document->canExportToText() );
-    if ( m_exportAsDocArchive ) m_exportAsDocArchive->setEnabled( ok );
     if ( m_exportAs ) m_exportAs->setEnabled( ok );
 
     // update viewing actions
@@ -1537,14 +1530,13 @@ bool Part::closeUrl(bool promptToSave)
     if ( m_showEmbeddedFiles ) m_showEmbeddedFiles->setEnabled( false );
     if ( m_exportAs ) m_exportAs->setEnabled( false );
     if ( m_exportAsText ) m_exportAsText->setEnabled( false );
-    if ( m_exportAsDocArchive ) m_exportAsDocArchive->setEnabled( false );
     m_exportFormats.clear();
     if ( m_exportAs )
     {
         QMenu *menu = m_exportAs->menu();
         QList<QAction*> acts = menu->actions();
         int num = acts.count();
-        for ( int i = 2; i < num; ++i )
+        for ( int i = 1; i < num; ++i )
         {
             menu->removeAction( acts.at(i) );
             delete acts.at(i);
@@ -2656,11 +2648,8 @@ void Part::slotExportAs(QAction * act)
         case 0:
             filter = "text/plain";
             break;
-        case 1:
-            filter = "application/vnd.kde.okular-archive";
-            break;
         default:
-            filter = m_exportFormats.at( id - 2 ).mimeType()->name();
+            filter = m_exportFormats.at( id - 1 ).mimeType()->name();
             break;
     }
     QString fileName = KFileDialog::getSaveFileName( url().isLocalFile() ? url().directory() : QString(),
@@ -2674,11 +2663,8 @@ void Part::slotExportAs(QAction * act)
             case 0:
                 saved = m_document->exportToText( fileName );
                 break;
-            case 1:
-                saved = m_document->saveDocumentArchive( fileName );
-                break;
             default:
-                saved = m_document->exportTo( fileName, m_exportFormats.at( id - 2 ) );
+                saved = m_document->exportTo( fileName, m_exportFormats.at( id - 1 ) );
                 break;
         }
         if ( !saved )

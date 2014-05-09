@@ -123,8 +123,6 @@ public:
 
   virtual PageNumber totalPages() const;
 
-  void setParentWidget(QWidget *parent) {parentWidget = parent;}
-
   void setEventLoop(QEventLoop *el);
 
   // These should not be public... only for the moment
@@ -322,13 +320,6 @@ private:
   QVector<SimplePageSize> pageSizes;
 
   QMap<QString, Anchor> anchorList;
-
-  /** pointer to the parent widget
-
-  This pointer can be used by implementations e.g. to display error
-  messages. This pointer can well be zero.
-  */
-  QWidget* parentWidget;
 
   QEventLoop* m_eventLoop;
 

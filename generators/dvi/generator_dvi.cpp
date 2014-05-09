@@ -120,8 +120,6 @@ bool DviGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
         return false;
     }
 
-    m_dviRenderer->setParentWidget( document()->widget() );
-
     kDebug(DviDebug) << "# of pages:" << m_dviRenderer->dviFile->total_pages;
 
     m_resolution = Okular::Utils::dpiY();

@@ -168,7 +168,6 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         void displayInfoMessage( const QString &message, KMessageWidget::MessageType messageType = KMessageWidget::Information, int duration = -1 );;
 
     public:
-        bool saveFile();
         bool queryClose();
         bool closeUrl();
         bool closeUrl(bool promptToSave);
@@ -220,6 +219,7 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         void slotRebuildBookmarkMenu();
 
     public slots:
+        bool saveFile();
         // connected to Shell action (and browserExtension), not local one
         void slotPrint();
         void restoreDocument(const KConfigGroup &group);
@@ -309,6 +309,7 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         KAction *m_find;
         KAction *m_findNext;
         KAction *m_findPrev;
+        KAction *m_save;
         KAction *m_saveAs;
         KAction *m_saveCopyAs;
         KAction *m_printPreview;

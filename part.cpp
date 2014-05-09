@@ -654,6 +654,7 @@ void Part::setupViewerActions()
     m_findPrev = KStandardAction::findPrev( this, SLOT(slotFindPrev()), ac );
     m_findPrev->setEnabled( false );
 
+    m_save = 0;
     m_saveAs = 0;
 
     QAction * prefs = KStandardAction::preferences( this, SLOT(slotPreferences()), ac);
@@ -750,6 +751,8 @@ void Part::setupActions()
 
     m_selectAll = KStandardAction::selectAll( m_pageView, SLOT(selectAll()), ac );
 
+    m_save = KStandardAction::save( this, SLOT(saveFile()), ac );
+    m_save->setEnabled( false );
     m_saveAs = KStandardAction::saveAs( this, SLOT(slotSaveFileAs()), ac );
     m_saveAs->setEnabled( false );
 
@@ -1327,6 +1330,7 @@ bool Part::openFile()
     m_find->setEnabled( ok && canSearch );
     m_findNext->setEnabled( ok && canSearch );
     m_findPrev->setEnabled( ok && canSearch );
+    if( m_save ) m_save->setEnabled( ok && !( isstdin || mime->is( "inode/directory" ) ) );
     if( m_saveAs ) m_saveAs->setEnabled( ok && !( isstdin || mime->is( "inode/directory" ) ) );
     emit enablePrintAction( ok && m_document->printingSupport() != Okular::Document::NoPrinting );
     m_printPreview->setEnabled( ok && m_document->printingSupport() != Okular::Document::NoPrinting );
@@ -1491,13 +1495,13 @@ bool Part::queryClose()
     const int res = KMessageBox::warningYesNoCancel( widget(),
                         i18n( "Do you want to save your annotation changes or discard them?" ),
                         i18n( "Close Document" ),
-                        KStandardGuiItem::saveAs(),
+                        KStandardGuiItem::save(),
                         KStandardGuiItem::discard() );
 
     switch ( res )
     {
         case KMessageBox::Yes: // Save as
-            slotSaveFileAs();
+            saveFile();
             return !isModified(); // Only allow closing if file was really saved
         case KMessageBox::No: // Discard
             return true;
@@ -1524,6 +1528,7 @@ bool Part::closeUrl(bool promptToSave)
     m_find->setEnabled( false );
     m_findNext->setEnabled( false );
     m_findPrev->setEnabled( false );
+    if( m_save )  m_save->setEnabled( false );
     if( m_saveAs )  m_saveAs->setEnabled( false );
     m_printPreview->setEnabled( false );
     m_showProperties->setEnabled( false );
@@ -2117,8 +2122,10 @@ void Part::slotFindPrev()
 
 bool Part::saveFile()
 {
-    kDebug() << "Okular part doesn't support saving the file in the location from which it was opened";
-    return false;
+    if ( !isModified() )
+        return true;
+    else
+        return saveAs( url() );
 }
 
 bool Part::slotSaveFileAs( bool showOkularArchiveAsDefaultFormat )

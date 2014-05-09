@@ -3998,6 +3998,76 @@ const KComponentData* Document::componentData() const
     return kcd;
 }
 
+bool Document::canSwapBackingFile() const
+{
+    if ( !d->m_generator )
+        return false;
+    Q_ASSERT( !d->m_generatorName.isEmpty() );
+
+    QHash< QString, GeneratorInfo >::iterator genIt = d->m_loadedGenerators.find( d->m_generatorName );
+    Q_ASSERT( genIt != d->m_loadedGenerators.end() );
+
+    return genIt->generator->hasFeature( Generator::SwapBackingFile );
+}
+
+bool Document::swapBackingFile( const QString &newFileName, const KUrl & url )
+{
+    if ( !d->m_generator )
+        return false;
+    Q_ASSERT( !d->m_generatorName.isEmpty() );
+
+    QHash< QString, GeneratorInfo >::iterator genIt = d->m_loadedGenerators.find( d->m_generatorName );
+    Q_ASSERT( genIt != d->m_loadedGenerators.end() );
+
+    if ( !genIt->generator->hasFeature( Generator::SwapBackingFile ) )
+        return false;
+
+    kDebug(OkularDebug) << "Swapping backing file to" << newFileName;
+    if (genIt->generator->swapBackingFile( newFileName ))
+    {
+        d->m_url = url;
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool Document::swapBackingFileArchive( const QString &newFileName, const KUrl & url )
+{
+    if ( !d->m_generator )
+        return false;
+    Q_ASSERT( !d->m_generatorName.isEmpty() );
+
+    QHash< QString, GeneratorInfo >::iterator genIt = d->m_loadedGenerators.find( d->m_generatorName );
+    Q_ASSERT( genIt != d->m_loadedGenerators.end() );
+
+    if ( !genIt->generator->hasFeature( Generator::SwapBackingFile ) )
+        return false;
+
+    kDebug(OkularDebug) << "Swapping backing archive to" << newFileName;
+
+    ArchiveData *newArchive = DocumentPrivate::unpackDocumentArchive( newFileName );
+    if ( !newArchive )
+        return false;
+
+    const QString tempFileName = newArchive->document.fileName();
+
+    kDebug(OkularDebug) << "Swapping backing file to" << tempFileName;
+    if (genIt->generator->swapBackingFile( tempFileName ))
+    {
+        delete d->m_archiveData;
+        d->m_archiveData = newArchive;
+        d->m_url = url;
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 bool Document::canSaveChanges() const
 {
     if ( !d->m_generator )

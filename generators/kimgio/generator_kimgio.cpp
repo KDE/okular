@@ -56,6 +56,7 @@ KIMGIOGenerator::KIMGIOGenerator( QObject *parent, const QVariantList &args )
     setFeature( TiledRendering );
     setFeature( PrintNative );
     setFeature( PrintToFile );
+    setFeature( SwapBackingFile );
 
 /*
     setComponentData( *ownComponentData() );
@@ -127,6 +128,13 @@ bool KIMGIOGenerator::loadDocumentFromData( const QByteArray & fileData, QVector
     Okular::Page * page = new Okular::Page( 0, m_img.width(), m_img.height(), Okular::Rotation0 );
     pagesVector[0] = page;
 
+    return true;
+}
+
+bool KIMGIOGenerator::swapBackingFile( QString const &newFileName )
+{
+    // NOP: We don't actually need to do anything because all data has already
+    // been loaded in RAM
     return true;
 }
 

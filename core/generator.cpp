@@ -196,6 +196,11 @@ Document::OpenResult Generator::loadDocumentFromDataWithPassword( const QByteArr
     return loadDocumentFromData( fileData, pagesVector ) ? Document::OpenSuccess : Document::OpenError;
 }
 
+bool Generator::swapBackingFile( QString const &newFileName )
+{
+    return false;
+}
+
 bool Generator::closeDocument()
 {
     Q_D( Generator );

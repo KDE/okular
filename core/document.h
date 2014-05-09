@@ -614,6 +614,41 @@ class OKULAR_EXPORT Document : public QObject
         const KComponentData* componentData() const;
 
         /**
+         * Returns whether the generator supports hot-swapping the current file
+         * with another identical file
+         *
+         * @since 0.20 (KDE 4.14)
+         */
+        bool canSwapBackingFile() const;
+
+        /**
+         * Reload the document from a new location, without any visible effect
+         * to the user.
+         *
+         * The new file must be identical to the current one or, if the document
+         * has been modified (eg the user edited forms and annotations), the new
+         * document must have these changes too. For example, you can call
+         * saveChanges first to write changes to a file and then swapBackingFile
+         * to switch to the new location.
+         *
+         * @since 0.20 (KDE 4.14)
+         */
+        bool swapBackingFile( const QString &newFileName, const KUrl & url );
+
+        /**
+         * Same as swapBackingFile, but newFileName must be a .okular file.
+         *
+         * The new file must be identical to the current one or, if the document
+         * has been modified (eg the user edited forms and annotations), the new
+         * document must have these changes too. For example, you can call
+         * saveDocumentArchive first to write changes to a file and then
+         * swapBackingFileArchive to switch to the new location.
+         *
+         * @since 0.20 (KDE 4.14)
+         */
+        bool swapBackingFileArchive( const QString &newFileName, const KUrl & url );
+
+        /**
          * Saving capabilities. Their availability varies according to the
          * underlying generator and/or the document type.
          *

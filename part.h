@@ -259,6 +259,7 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         Okular::Document * m_document;
         QString m_temporaryLocalFile;
         bool isDocumentArchive;
+        bool m_swapInsteadOfOpening; // if set, the next open operation will replace the backing file (used when reloading just saved files)
 
         // main widgets
         Sidebar *m_sidebar;

@@ -303,7 +303,7 @@ QObject *parent,
 const QVariantList &args,
 KComponentData componentData )
 : KParts::ReadWritePart(parent),
-m_tempfile( 0 ), m_fileWasRemoved( false ), m_showMenuBarAction( 0 ), m_showFullScreenAction( 0 ), m_actionsSearched( false ),
+m_tempfile( 0 ), m_swapInsteadOfOpening( false ), m_fileWasRemoved( false ), m_showMenuBarAction( 0 ), m_showFullScreenAction( 0 ), m_actionsSearched( false ),
 m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentWidget, parent, args)), m_generatorGuiClient(0), m_keeper( 0 )
 {
     // first, we check if a config file name has been specified
@@ -1265,6 +1265,26 @@ bool Part::openFile()
         uncompressOk = handleCompressed( fileNameToOpen, localFilePath(), compressedMime );
         mime = KMimeType::findByPath( fileNameToOpen );
     }
+
+    if ( m_swapInsteadOfOpening )
+    {
+        m_swapInsteadOfOpening = false;
+
+        if ( !uncompressOk )
+            return false;
+
+        if ( mime->is( "application/vnd.kde.okular-archive" ) )
+        {
+            isDocumentArchive = true;
+            return m_document->swapBackingFileArchive( fileNameToOpen, url() );
+        }
+        else
+        {
+            isDocumentArchive = false;
+            return m_document->swapBackingFile( fileNameToOpen, url() );
+        }
+    }
+
     Document::OpenResult openResult = Document::OpenError;
     isDocumentArchive = false;
     if ( uncompressOk )
@@ -1541,6 +1561,13 @@ bool Part::closeUrl(bool promptToSave)
 {
     if ( promptToSave && !queryClose() )
         return false;
+
+    if ( m_swapInsteadOfOpening )
+    {
+        // If we're swapping the backing file, we don't want to close the
+        // current one when openUrl() calls us internally
+        return true; // pretend it worked
+    }
 
     setModified( false );
 
@@ -2396,7 +2423,34 @@ bool Part::saveAs( const KUrl & saveUrl, bool saveAsOkularArchive )
 
     // Load new file instead of the old one
     if ( url() != saveUrl )
-        slotAttemptReload( true, saveUrl );
+    {
+        if ( m_document->canSwapBackingFile() )
+        {
+            // If the generator supports hot-swapping of the backing file
+            // tell openFile to swap the backing file instead of opening a new one
+            m_swapInsteadOfOpening = true;
+
+            // this calls openFile internally, which in turn actually calls
+            // m_document->swapBackingFile() instead of the regular loadDocument
+            const bool success = openUrl( saveUrl );
+
+            // restore it back to false -- this has already been done by
+            // openFile, but let's do it again for extra safety
+            m_swapInsteadOfOpening = false;
+
+            // In case of file swapping errors, close everything to avoid inconsistencies
+            if ( !success )
+            {
+                closeUrl();
+            }
+        }
+        else
+        {
+            // If the generator doesn't support swapping file, then just reload
+            // the document from the new location
+            slotAttemptReload( true, saveUrl );
+        }
+    }
 
     // Restore watcher
     if ( url().isLocalFile() )

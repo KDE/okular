@@ -194,6 +194,8 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
   if (output_name.isEmpty())
     return;
   
+  output_name_ = output_name;
+
   // There is a major problem with dvips, at least 5.86 and lower: the
   // arguments of the option "-pp" refer to TeX-pages, not to
   // sequentially numbered pages. For instance "-pp 7" may refer to 3

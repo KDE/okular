@@ -47,13 +47,13 @@ class KAboutData;
 class KTemporaryFile;
 class KAction;
 class KMenu;
+class KMessageWidget;
 namespace KParts { class GUIActivateEvent; }
 
 class FindBar;
 class ThumbnailList;
 class PageSizeLabel;
 class PageView;
-class PageViewTopMessage;
 class PresentationWidget;
 class ProgressWidget;
 class SearchWidget;
@@ -255,8 +255,8 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         Sidebar *m_sidebar;
         SearchWidget *m_searchWidget;
         FindBar * m_findBar;
-        PageViewTopMessage * m_topMessage;
-        PageViewTopMessage * m_formsMessage;
+        KMessageWidget * m_topMessage;
+        KMessageWidget * m_formsMessage;
         QPointer<ThumbnailList> m_thumbnailList;
         QPointer<PageView> m_pageView;
         QPointer<TOC> m_toc;

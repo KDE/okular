@@ -43,6 +43,7 @@
 #include <kfiledialog.h>
 #include <kinputdialog.h>
 #include <kmessagebox.h>
+#include <kmessagewidget.h>
 #include <knuminput.h>
 #include <kio/netaccess.h>
 #include <kmenu.h>
@@ -424,11 +425,18 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     rightLayout->setSpacing( 0 );
     //	KToolBar * rtb = new KToolBar( rightContainer, "mainToolBarSS" );
     //	rightLayout->addWidget( rtb );
-    m_topMessage = new PageViewTopMessage( rightContainer );
-    m_topMessage->setup( i18n( "This document has embedded files. <a href=\"okular:/embeddedfiles\">Click here to see them</a> or go to File -> Embedded Files." ), KIcon( "mail-attachment" ) );
-    connect( m_topMessage, SIGNAL(action()), this, SLOT(slotShowEmbeddedFiles()) );
+    m_topMessage = new KMessageWidget( rightContainer );
+    m_topMessage->setVisible( false );
+    m_topMessage->setWordWrap( true );
+    m_topMessage->setMessageType( KMessageWidget::Information );
+    m_topMessage->setText( i18n( "This document has embedded files. <a href=\"okular:/embeddedfiles\">Click here to see them</a> or go to File -> Embedded Files." ) );
+    m_topMessage->setIcon( KIcon( "mail-attachment" ) );
+    connect( m_topMessage, SIGNAL(linkActivated(QString)), this, SLOT(slotShowEmbeddedFiles()) );
     rightLayout->addWidget( m_topMessage );
-    m_formsMessage = new PageViewTopMessage( rightContainer );
+    m_formsMessage = new KMessageWidget( rightContainer );
+    m_formsMessage->setVisible( false );
+    m_formsMessage->setWordWrap( true );
+    m_formsMessage->setMessageType( KMessageWidget::Information );
     rightLayout->addWidget( m_formsMessage );
     m_pageView = new PageView( rightContainer, m_document );
     QMetaObject::invokeMethod( m_pageView, "setFocus", Qt::QueuedConnection );      //usability setting
@@ -1263,13 +1271,16 @@ bool Part::openFile()
     // Warn the user that XFA forms are not supported yet (NOTE: poppler generator only)
     if ( ok && m_document->metaData( "HasUnsupportedXfaForm" ).toBool() == true )
     {
-        m_formsMessage->setup( i18n( "This document has XFA forms, which are currently <b>unsupported</b>." ), KIcon( "dialog-warning" ) );
+        m_formsMessage->setText( i18n( "This document has XFA forms, which are currently <b>unsupported</b>." ) );
+        m_formsMessage->setIcon( KIcon( "dialog-warning" ) );
+        m_formsMessage->setMessageType( KMessageWidget::Warning );
         m_formsMessage->setVisible( true );
     }
     // m_pageView->toggleFormsAction() may be null on dummy mode
     else if ( ok && m_pageView->toggleFormsAction() && m_pageView->toggleFormsAction()->isEnabled() )
     {
-        m_formsMessage->setup( i18n( "This document has forms. Click on the button to interact with them, or use View -> Show Forms." ) );
+        m_formsMessage->setText( i18n( "This document has forms. Click on the button to interact with them, or use View -> Show Forms." ) );
+        m_formsMessage->setMessageType( KMessageWidget::Information );
         m_formsMessage->setVisible( true );
     }
     else
@@ -2678,7 +2689,8 @@ void Part::unsetDummyMode()
     m_pageView->setupActions( actionCollection() );
 
     // attach the actions of the children widgets too
-    m_formsMessage->setActionButton( m_pageView->toggleFormsAction() );
+    m_formsMessage->addAction( m_pageView->toggleFormsAction() );
+    m_formsMessage->setVisible( m_pageView->toggleFormsAction() != 0 );
 
     // ensure history actions are in the correct state
     updateViewActions();

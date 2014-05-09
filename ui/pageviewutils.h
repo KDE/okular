@@ -122,32 +122,6 @@ class PageViewMessage : public QWidget
         int m_lineSpacing;
 };
 
-
-/**
- * @short A widget that displays messages in the top part of the page view.
- *
- * ...
- */
-class PageViewTopMessage : public QWidget
-{
-    Q_OBJECT
-    public:
-        PageViewTopMessage( QWidget * parent );
-
-        void setup( const QString & message, const KIcon& icon = KIcon() );
-        void setIconSize( int size );
-        void setActionButton( QAction * action );
-
-    signals:
-        void action();
-
-    private:
-        QLabel * m_label;
-        QLabel * m_icon;
-        QToolButton * m_button;
-};
-
-
 struct AnnotationToolItem
 {
     AnnotationToolItem()

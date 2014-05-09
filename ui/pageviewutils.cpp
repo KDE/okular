@@ -419,68 +419,6 @@ void PageViewMessage::mousePressEvent( QMouseEvent * /*e*/ )
 }
 
 
-/************************/
-/** PageViewTopMessage  */
-/************************/
-
-PageViewTopMessage::PageViewTopMessage( QWidget * parent )
-    : QWidget( parent )
-{
-    setAutoFillBackground( true );
-    QPalette pal = palette();
-    KColorScheme::adjustBackground( pal, KColorScheme::NeutralBackground, QPalette::Window );
-    KColorScheme::adjustForeground( pal, KColorScheme::NeutralText, QPalette::Text );
-    setPalette( pal );
-    QHBoxLayout * lay = new QHBoxLayout( this );
-    lay->setMargin( 4 );
-    m_icon = new QLabel( this );
-    lay->addWidget( m_icon );
-    m_icon->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
-    m_label = new QLabel( this );
-    lay->addWidget( m_label );
-    m_label->setWordWrap( true );
-    connect( m_label, SIGNAL(linkActivated(QString)), this, SIGNAL(action()) );
-    m_button = new QToolButton( this );
-    m_button->setVisible( false );
-    lay->addWidget( m_button );
-    QToolButton * closeButton = new QToolButton( this );
-    lay->addWidget( closeButton );
-    closeButton->setAutoRaise( true );
-    closeButton->setIcon( closeButton->style()->standardIcon( QStyle::SP_TitleBarCloseButton ) );
-    closeButton->setIconSize( QSize( 32, 32 ) );
-    closeButton->setToolTip( i18n( "Close this message" ) );
-    connect( closeButton, SIGNAL(clicked()), this, SLOT(hide()) );
-    setIconSize( 32 );
-    hide();
-}
-
-void PageViewTopMessage::setup( const QString & message, const KIcon& icon )
-{
-    m_label->setText( message );
-    if ( icon.isNull() )
-    {
-        m_icon->setPixmap( QPixmap() );
-        m_icon->setVisible( false );
-    }
-    else
-    {
-        m_icon->setPixmap( icon.pixmap( m_icon->size() ) );
-        m_icon->setVisible( true );
-    }
-    resize( minimumSizeHint() );
-}
-
-void PageViewTopMessage::setIconSize( int size )
-{
-    m_icon->setFixedSize( size, size );
-}
-
-void PageViewTopMessage::setActionButton( QAction * action )
-{
-    m_button->setDefaultAction( action );
-    m_button->setVisible( action != 0 );
-}
-
 /*********************/
 /** PageViewToolBar  */
 /*********************/

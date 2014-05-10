@@ -109,7 +109,7 @@ struct ArchiveData
     }
 
     KTemporaryFile document;
-    QString metadataFileName;
+    KTemporaryFile metadataFile;
 };
 
 struct RunningSearch
@@ -613,12 +613,12 @@ void DocumentPrivate::loadDocumentInfo()
     if ( m_xmlFileName.isEmpty() )
         return;
 
-    loadDocumentInfo( m_xmlFileName );
+    QFile infoFile( m_xmlFileName );
+    loadDocumentInfo( infoFile );
 }
 
-void DocumentPrivate::loadDocumentInfo( const QString &fileName )
+void DocumentPrivate::loadDocumentInfo( QFile &infoFile )
 {
-    QFile infoFile( fileName );
     if ( !infoFile.exists() || !infoFile.open( QIODevice::ReadOnly ) )
         return;
 
@@ -2258,7 +2258,7 @@ Document::OpenResult Document::openDocument( const QString & docFile, const KUrl
     // 2. load Additional Data (bookmarks, local annotations and metadata) about the document
     if ( d->m_archiveData )
     {
-        d->loadDocumentInfo( d->m_archiveData->metadataFileName );
+        d->loadDocumentInfo( d->m_archiveData->metadataFile );
         d->m_annotationsNeedSaveAs = true;
     }
     else
@@ -4157,19 +4157,15 @@ Document::OpenResult Document::openDocumentArchive( const QString & docFile, con
     archiveData->document.close();
     }
 
-    std::auto_ptr< KTemporaryFile > tempMetadataFileName;
     const KArchiveEntry * metadataEntry = mainDir->entry( metadataFileName );
     if ( metadataEntry && metadataEntry->isFile() )
     {
         std::auto_ptr< QIODevice > metadataEntryDevice( static_cast< const KZipFileEntry * >( metadataEntry )->createDevice() );
-        tempMetadataFileName.reset( new KTemporaryFile() );
-        tempMetadataFileName->setSuffix( ".xml" );
-        tempMetadataFileName->setAutoRemove( false );
-        if ( tempMetadataFileName->open() )
+        archiveData->metadataFile.setSuffix( ".xml" );
+        if ( archiveData->metadataFile.open() )
         {
-            copyQIODevice( metadataEntryDevice.get(), tempMetadataFileName.get() );
-            archiveData->metadataFileName = tempMetadataFileName->fileName();
-            tempMetadataFileName->close();
+            copyQIODevice( metadataEntryDevice.get(), &archiveData->metadataFile );
+            archiveData->metadataFile.close();
         }
     }
 

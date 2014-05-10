@@ -1722,7 +1722,7 @@ void Part::slotFileDirty( const QString& path )
 }
 
 // Attempt to reload the document, one or more times, optionally from a different URL
-void Part::slotAttemptReload( bool oneShot, const KUrl &newUrl )
+bool Part::slotAttemptReload( bool oneShot, const KUrl &newUrl )
 {
     bool tocReloadPrepared = false;
     
@@ -1764,7 +1764,7 @@ void Part::slotAttemptReload( bool oneShot, const KUrl &newUrl )
         {
             m_toc->rollbackReload();
         }
-        return;
+        return false;
     }
     
     if ( tocReloadPrepared )
@@ -1772,6 +1772,8 @@ void Part::slotAttemptReload( bool oneShot, const KUrl &newUrl )
 
     // inform the user about the operation in progress
     m_pageView->displayMessage( i18n("Reloading the document...") );
+
+    bool reloadSucceeded = false;
 
     if ( KParts::ReadWritePart::openUrl( m_oldUrl ) )
     {
@@ -1797,6 +1799,8 @@ void Part::slotAttemptReload( bool oneShot, const KUrl &newUrl )
         }
         if (m_wasPresentationOpen) slotShowPresentation();
         emit enablePrintAction(true && m_document->printingSupport() != Okular::Document::NoPrinting);
+
+        reloadSucceeded = true;
     }
     else if ( !oneShot )
     {
@@ -1804,6 +1808,8 @@ void Part::slotAttemptReload( bool oneShot, const KUrl &newUrl )
         setFileToWatch( localFilePath() );
         m_dirtyHandler->start( 750 );
     }
+
+    return reloadSucceeded;
 }
 
 
@@ -2421,6 +2427,8 @@ bool Part::saveAs( const KUrl & saveUrl, bool saveAsOkularArchive )
 
     setModified( false );
 
+    bool reloadedCorrectly = true;
+
     // Load new file instead of the old one
     if ( url() != saveUrl )
     {
@@ -2432,24 +2440,27 @@ bool Part::saveAs( const KUrl & saveUrl, bool saveAsOkularArchive )
 
             // this calls openFile internally, which in turn actually calls
             // m_document->swapBackingFile() instead of the regular loadDocument
-            const bool success = openUrl( saveUrl );
+            if ( !openUrl( saveUrl ) )
+                reloadedCorrectly = false;
 
             // restore it back to false -- this has already been done by
             // openFile, but let's do it again for extra safety
             m_swapInsteadOfOpening = false;
-
-            // In case of file swapping errors, close everything to avoid inconsistencies
-            if ( !success )
-            {
-                closeUrl();
-            }
         }
         else
         {
             // If the generator doesn't support swapping file, then just reload
             // the document from the new location
-            slotAttemptReload( true, saveUrl );
+            if ( !slotAttemptReload( true, saveUrl ) )
+                reloadedCorrectly = false;
         }
+    }
+
+    // In case of file swapping errors, close the document to avoid inconsistencies
+    if ( !reloadedCorrectly )
+    {
+        kDebug() << "The document hasn't been reloaded/swapped correctly";
+        closeUrl();
     }
 
     // Restore watcher

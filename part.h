@@ -225,7 +225,7 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         void restoreDocument(const KConfigGroup &group);
         void saveDocumentRestoreInfo(KConfigGroup &group);
         void slotFileDirty( const QString& );
-        void slotAttemptReload( bool oneShot = false, const KUrl &newUrl = KUrl() );
+        bool slotAttemptReload( bool oneShot = false, const KUrl &newUrl = KUrl() );
         void psTransformEnded(int, QProcess::ExitStatus);
         KConfigDialog * slotGeneratorPreferences();
 

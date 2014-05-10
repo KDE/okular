@@ -108,6 +108,7 @@ struct ArchiveData
     {
     }
 
+    QString originalFileName;
     KTemporaryFile document;
     KTemporaryFile metadataFile;
 };
@@ -4094,30 +4095,30 @@ QByteArray Document::fontData(const FontInfo &font) const
     return result;
 }
 
-Document::OpenResult Document::openDocumentArchive( const QString & docFile, const KUrl & url, const QString & password )
+ArchiveData *DocumentPrivate::unpackDocumentArchive( const QString &archivePath )
 {
-    const KMimeType::Ptr mime = KMimeType::findByPath( docFile, 0, false /* content too */ );
+    const KMimeType::Ptr mime = KMimeType::findByPath( archivePath, 0, false /* content too */ );
     if ( !mime->is( "application/vnd.kde.okular-archive" ) )
-        return OpenError;
+        return 0;
 
-    KZip okularArchive( docFile );
+    KZip okularArchive( archivePath );
     if ( !okularArchive.open( QIODevice::ReadOnly ) )
-        return OpenError;
+        return 0;
 
     const KArchiveDirectory * mainDir = okularArchive.directory();
     const KArchiveEntry * mainEntry = mainDir->entry( "content.xml" );
     if ( !mainEntry || !mainEntry->isFile() )
-        return OpenError;
+        return 0;
 
     std::auto_ptr< QIODevice > mainEntryDevice( static_cast< const KZipFileEntry * >( mainEntry )->createDevice() );
     QDomDocument doc;
     if ( !doc.setContent( mainEntryDevice.get() ) )
-        return OpenError;
+        return 0;
     mainEntryDevice.reset();
 
     QDomElement root = doc.documentElement();
     if ( root.tagName() != "OkularArchive" )
-        return OpenError;
+        return 0;
 
     QString documentFileName;
     QString metadataFileName;
@@ -4137,20 +4138,21 @@ Document::OpenResult Document::openDocumentArchive( const QString & docFile, con
         }
     }
     if ( documentFileName.isEmpty() )
-        return OpenError;
+        return 0;
 
     const KArchiveEntry * docEntry = mainDir->entry( documentFileName );
     if ( !docEntry || !docEntry->isFile() )
-        return OpenError;
+        return 0;
 
     std::auto_ptr< ArchiveData > archiveData( new ArchiveData() );
     const int dotPos = documentFileName.indexOf( '.' );
     if ( dotPos != -1 )
         archiveData->document.setSuffix( documentFileName.mid( dotPos ) );
     if ( !archiveData->document.open() )
-        return OpenError;
+        return 0;
 
-    QString tempFileName = archiveData->document.fileName();
+    archiveData->originalFileName = documentFileName;
+
     {
     std::auto_ptr< QIODevice > docEntryDevice( static_cast< const KZipFileEntry * >( docEntry )->createDevice() );
     copyQIODevice( docEntryDevice.get(), &archiveData->document );
@@ -4169,17 +4171,22 @@ Document::OpenResult Document::openDocumentArchive( const QString & docFile, con
         }
     }
 
+    return archiveData.release();
+}
+
+Document::OpenResult Document::openDocumentArchive( const QString & docFile, const KUrl & url, const QString & password )
+{
+    d->m_archiveData = DocumentPrivate::unpackDocumentArchive( docFile );
+    if ( !d->m_archiveData )
+        return OpenError;
+
+    const QString tempFileName = d->m_archiveData->document.fileName();
     const KMimeType::Ptr docMime = KMimeType::findByPath( tempFileName, 0, true /* local file */ );
-    d->m_archiveData = archiveData.get();
-    d->m_archivedFileName = documentFileName;
     const OpenResult ret = openDocument( tempFileName, url, docMime, password );
 
-    if ( ret == OpenSuccess )
+    if ( ret != OpenSuccess )
     {
-        archiveData.release();
-    }
-    else
-    {
+        delete d->m_archiveData;
         d->m_archiveData = 0;
     }
 
@@ -4193,7 +4200,7 @@ bool Document::saveDocumentArchive( const QString &fileName )
 
     /* If we opened an archive, use the name of original file (eg foo.pdf)
      * instead of the archive's one (eg foo.okular) */
-    QString docFileName = d->m_archiveData ? d->m_archivedFileName : d->m_url.fileName();
+    QString docFileName = d->m_archiveData ? d->m_archiveData->originalFileName : d->m_url.fileName();
     if ( docFileName == QLatin1String( "-" ) )
         return false;
 

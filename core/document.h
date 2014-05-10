@@ -487,9 +487,10 @@ class OKULAR_EXPORT Document : public QObject
          */
         enum SearchStatus
         {
-            MatchFound,        ///< Any match was found
-            NoMatchFound,      ///< No match was found
-            SearchCancelled    ///< The search was cancelled
+            MatchFound,           ///< Any match was found
+            NoMatchFound,         ///< No match was found
+            SearchCancelled,      ///< The search was cancelled
+            EndOfDocumentReached  ///< The end of document was reached without any match @since 0.20 (KDE 4.14)
         };
 
         /**
@@ -501,10 +502,9 @@ class OKULAR_EXPORT Document : public QObject
          * @param type The type of the search. @ref SearchType
          * @param moveViewport Whether the viewport shall be moved to the position of the matches.
          * @param color The highlighting color of the matches.
-         * @param noDialogs Whether a search dialog shall be shown.
          */
         void searchText( int searchID, const QString & text, bool fromStart, Qt::CaseSensitivity caseSensitivity,
-                         SearchType type, bool moveViewport, const QColor & color, bool noDialogs = false );
+                         SearchType type, bool moveViewport, const QColor & color );
 
         /**
          * Continues the search for the given @p searchID.

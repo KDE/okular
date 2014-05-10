@@ -71,7 +71,6 @@ struct DoContinueDirectionMatchSearchStruct
     RegularAreaRect *match;
     int currentPage;
     int searchID;
-    int pagesDone;
 };
 
 class DocumentPrivate

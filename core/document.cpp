@@ -124,9 +124,9 @@ struct RunningSearch
     Document::SearchType cachedType;
     Qt::CaseSensitivity cachedCaseSensitivity;
     bool cachedViewportMove : 1;
-    bool cachedNoDialogs : 1;
     bool isCurrentlySearching : 1;
     QColor cachedColor;
+    int pagesDone;
 };
 
 #define foreachObserver( cmd ) {\
@@ -1656,16 +1656,16 @@ void DocumentPrivate::doContinueDirectionMatchSearch(void *doContinueDirectionMa
     if ( !searchStruct->match )
     {
         const int pageCount = m_pagesVector.count();
-        if (searchStruct->pagesDone < pageCount)
+        if (search->pagesDone < pageCount)
         {
             doContinue = true;
             if ( searchStruct->currentPage >= pageCount || searchStruct->currentPage < 0 )
             {
-                const QString question = forward ? i18n("End of document reached.\nContinue from the beginning?") : i18n("Beginning of document reached.\nContinue from the bottom?");
-                if ( search->cachedNoDialogs || KMessageBox::questionYesNo(m_widget, question, QString(), KStandardGuiItem::cont(), KStandardGuiItem::cancel()) == KMessageBox::Yes )
-                    searchStruct->currentPage = forward ? 0 : pageCount - 1;
-                else
-                    doContinue = false;
+                doContinue = false;
+                search->isCurrentlySearching = false;
+                search->continueOnPage = forward ? 0 : pageCount - 1;
+                search->continueOnMatch = RegularAreaRect();
+                emit m_parent->searchFinished ( searchStruct->searchID, Document::EndOfDocumentReached );
             }
         }
     }
@@ -1684,11 +1684,11 @@ void DocumentPrivate::doContinueDirectionMatchSearch(void *doContinueDirectionMa
         {
             if (forward) searchStruct->currentPage++;
             else searchStruct->currentPage--;
-            searchStruct->pagesDone++;
+            search->pagesDone++;
         }
         else
         {
-            searchStruct->pagesDone = 1;
+            search->pagesDone = 1;
         }
 
         // Both of the previous if branches need to call doContinueDirectionMatchSearch
@@ -3276,7 +3276,7 @@ void Document::setNextDocumentDestination( const QString &namedDestination )
 }
 
 void Document::searchText( int searchID, const QString & text, bool fromStart, Qt::CaseSensitivity caseSensitivity,
-                               SearchType type, bool moveViewport, const QColor & color, bool noDialogs )
+                               SearchType type, bool moveViewport, const QColor & color )
 {
     d->m_searchCancelled = false;
 
@@ -3303,7 +3303,6 @@ void Document::searchText( int searchID, const QString & text, bool fromStart, Q
     s->cachedType = type;
     s->cachedCaseSensitivity = caseSensitivity;
     s->cachedViewportMove = moveViewport;
-    s->cachedNoDialogs = noDialogs;
     s->cachedColor = color;
     s->isCurrentlySearching = true;
 
@@ -3355,12 +3354,13 @@ void Document::searchText( int searchID, const QString & text, bool fromStart, Q
             }
         }
 
+        s->pagesDone = pagesDone;
+
         DoContinueDirectionMatchSearchStruct *searchStruct = new DoContinueDirectionMatchSearchStruct();
         searchStruct->pagesToNotify = pagesToNotify;
         searchStruct->match = match;
         searchStruct->currentPage = currentPage;
         searchStruct->searchID = searchID;
-        searchStruct->pagesDone = pagesDone;
 
         QMetaObject::invokeMethod(this, "doContinueDirectionMatchSearch", Qt::QueuedConnection, Q_ARG(void *, searchStruct));
     }
@@ -3389,8 +3389,7 @@ void Document::continueSearch( int searchID )
     RunningSearch * p = *it;
     if ( !p->isCurrentlySearching )
         searchText( searchID, p->cachedString, false, p->cachedCaseSensitivity,
-                    p->cachedType, p->cachedViewportMove, p->cachedColor,
-                    p->cachedNoDialogs );
+                    p->cachedType, p->cachedViewportMove, p->cachedColor );
 }
 
 void Document::continueSearch( int searchID, SearchType type )
@@ -3407,8 +3406,7 @@ void Document::continueSearch( int searchID, SearchType type )
     RunningSearch * p = *it;
     if ( !p->isCurrentlySearching )
         searchText( searchID, p->cachedString, false, p->cachedCaseSensitivity,
-                    type, p->cachedViewportMove, p->cachedColor,
-                    p->cachedNoDialogs );
+                    type, p->cachedViewportMove, p->cachedColor );
 }
 
 void Document::resetSearch( int searchID )

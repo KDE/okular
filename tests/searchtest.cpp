@@ -177,7 +177,7 @@ void SearchTest::test311232()
     d.openDocument(testFile, KUrl(), mime);
     
     const int searchId = 0;
-    d.searchText(searchId, " i ", true, Qt::CaseSensitive, Okular::Document::NextMatch, false, QColor(), true);
+    d.searchText(searchId, " i ", true, Qt::CaseSensitive, Okular::Document::NextMatch, false, QColor());
     QTime t;
     t.start();
     while (spy.count() != 1 && t.elapsed() < 500)

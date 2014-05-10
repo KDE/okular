@@ -20,6 +20,8 @@
 #include <kcolorscheme.h>
 #include <kpixmapsequence.h>
 #include <kpixmapsequencewidget.h>
+#include <kmessagebox.h>
+#include <klocalizedstring.h>
 
 SearchLineEdit::SearchLineEdit( QWidget * parent, Okular::Document * document )
     : KLineEdit( parent ), m_document( document ), m_minLength( 0 ),
@@ -248,6 +250,15 @@ void SearchLineEdit::searchFinished( int id, Okular::Document::SearchStatus endS
         pal.setColor( QPalette::Base, qAppPalette.color( QPalette::Base ) );
         pal.setColor( QPalette::Text, qAppPalette.color( QPalette::Text ) );
         setPalette( pal );
+    }
+
+    if ( endStatus == Okular::Document::EndOfDocumentReached ) {
+        const bool forward = m_searchType == Okular::Document::NextMatch;
+        const QString question = forward ? i18n("End of document reached.\nContinue from the beginning?") : i18n("Beginning of document reached.\nContinue from the bottom?");
+        if ( KMessageBox::questionYesNo(window(), question, QString(), KStandardGuiItem::cont(), KStandardGuiItem::cancel()) == KMessageBox::Yes ) {
+            m_document->continueSearch( m_id, m_searchType );
+            return;
+        }
     }
 
     m_searchRunning = false;

@@ -890,7 +890,7 @@ class OKULAR_EXPORT Document : public QObject
         /**
          * Reports that the current search finished
          */
-        void searchFinished( int id, Okular::Document::SearchStatus endStatus );
+        void searchFinished( int searchID, Okular::Document::SearchStatus endStatus );
 
         /**
          * This signal is emitted whenever a source reference with the given parameters has been

@@ -66,7 +66,8 @@ dviRenderer::dviRenderer(bool useFontHinting)
     number_of_elements_in_path(0),
     currentlyDrawnPage(0),
     m_eventLoop(0),
-    foreGroundPainter(0)
+    foreGroundPainter(0),
+    fontpoolLocateFontsDone(false)
 {
 #ifdef DEBUG_DVIRENDERER
   //kDebug(kvs::dvi) << "dviRenderer( parent=" << par << " )";
@@ -139,6 +140,17 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap* page)
     kError(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called, but no dviFile is loaded yet." << endl;
     page->clear();
     return;
+  }
+
+  /* locateFonts() is here just once (if it has not been executed
+     not been executed yet), so that it is possible to easily intercept
+     the cancel signal (because for example the user tries to open
+     another document); it would not have been possible (or more
+     complicated) in case it was still in the document loading section.
+   */
+  if ( !fontpoolLocateFontsDone ) {
+    font_pool.locateFonts();
+    fontpoolLocateFontsDone = true;
   }
 
   double resolution = page->resolution;
@@ -492,9 +504,6 @@ bool dviRenderer::setFile(const QString &fname, const KUrl &base)
 
   if (dviFile->page_offset.isEmpty() == true)
     return false;
-
-  // Locate fonts.
-  font_pool.locateFonts();
 
   // We should pre-scan the document now (to extract embedded,
   // PostScript, Hyperlinks, ets).

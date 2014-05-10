@@ -324,6 +324,9 @@ private:
   QEventLoop* m_eventLoop;
 
   QPainter* foreGroundPainter;
+
+  // was the locateFonts method of font pool executed?
+  bool fontpoolLocateFontsDone;
 };
 
 #endif

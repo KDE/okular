@@ -9,7 +9,6 @@
 
 #include "fontEncodingPool.h"
 #include "fontMap.h"
-#include "fontprogress.h"
 #include "TeXFontDefinition.h"
 
 #include <QList>
@@ -194,11 +193,8 @@ private:
   // setExtraSearchPath(...) method
   QString extraSearchPath;
 
-  // FontProgress; the progress dialog used when generating fonts.
-  fontProgressDialog progress;
-
   // The handle on the external process.
-  QProcess kpsewhich_;
+  QProcess *kpsewhich_;
 
 private slots:
   // This slot is called when MetaFont is run via the kpsewhich program.

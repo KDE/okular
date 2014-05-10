@@ -699,6 +699,15 @@ class OKULAR_EXPORT Document : public QObject
         bool saveDocumentArchive( const QString &fileName );
 
         /**
+         * Extract the document file from the current archive.
+         *
+         * @warning This function only works if the current file is a document archive
+         *
+         * @since 0.14 (KDE 4.20)
+         */
+        bool extractArchivedFile( const QString &destFileName );
+
+        /**
          * Asks the generator to dynamically generate a SourceReference for a given
          * page number and absolute X and Y position on this page.
          *

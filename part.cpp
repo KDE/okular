@@ -2292,41 +2292,63 @@ bool Part::saveAs( const KUrl & saveUrl, bool saveAsOkularArchive )
         }
         else
         {
-            // make use of the already downloaded (in case of remote URLs) file,
-            // no point in downloading that again
-            KUrl srcUrl = KUrl::fromPath( localFilePath() );
-            // duh, our local file disappeared...
-            if ( !QFile::exists( localFilePath() ) )
-            {
-                if ( url().isLocalFile() )
-                {
-#ifdef OKULAR_KEEP_FILE_OPEN
-                    // local file: try to get it back from the open handle on it
-                    tempFile.reset( m_keeper->copyToTemporary() );
-                    if ( tempFile )
-                        srcUrl = KUrl::fromPath( tempFile->fileName() );
-#else
-                    const QString msg = i18n( "Okular cannot copy %1 to the specified location.\n\nThe document does not exist anymore.", localFilePath() );
-                    KMessageBox::sorry( widget(), msg );
-                    return false;
-#endif
-                }
-                else
-                {
-                    // we still have the original remote URL of the document,
-                    // so copy the document from there
-                    srcUrl = url();
-                }
-            }
+            // If the generators doesn't support saving changes, we will
+            // just copy the original file.
 
-            if ( srcUrl != saveUrl )
+            if ( isDocumentArchive )
             {
-                copyJob = KIO::file_copy( srcUrl, saveUrl, -1, KIO::Overwrite );
+                // Special case: if the user is extracting the contents of a
+                // .okular archive back to the native format, we can't just copy
+                // the open file (which is a .okular). So let's ask to core to
+                // extract and give us the real file
+
+                if ( !m_document->extractArchivedFile( fileName ) )
+                {
+                    KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", fileName ) );
+                    return false;
+                }
+
+                copyJob = KIO::file_copy( fileName, saveUrl, -1, KIO::Overwrite );
             }
             else
             {
-                // Don't do a real copy in this case, just update the timestamps
-                copyJob = KIO::setModificationTime( saveUrl, QDateTime::currentDateTime() );
+                // Otherwise just copy the open file.
+                // make use of the already downloaded (in case of remote URLs) file,
+                // no point in downloading that again
+                KUrl srcUrl = KUrl::fromPath( localFilePath() );
+                // duh, our local file disappeared...
+                if ( !QFile::exists( localFilePath() ) )
+                {
+                    if ( url().isLocalFile() )
+                    {
+#ifdef OKULAR_KEEP_FILE_OPEN
+                        // local file: try to get it back from the open handle on it
+                        tempFile.reset( m_keeper->copyToTemporary() );
+                        if ( tempFile )
+                            srcUrl = KUrl::fromPath( tempFile->fileName() );
+#else
+                        const QString msg = i18n( "Okular cannot copy %1 to the specified location.\n\nThe document does not exist anymore.", localFilePath() );
+                        KMessageBox::sorry( widget(), msg );
+                        return false;
+#endif
+                    }
+                    else
+                    {
+                        // we still have the original remote URL of the document,
+                        // so copy the document from there
+                        srcUrl = url();
+                    }
+                }
+
+                if ( srcUrl != saveUrl )
+                {
+                    copyJob = KIO::file_copy( srcUrl, saveUrl, -1, KIO::Overwrite );
+                }
+                else
+                {
+                    // Don't do a real copy in this case, just update the timestamps
+                    copyJob = KIO::setModificationTime( saveUrl, QDateTime::currentDateTime() );
+                }
             }
         }
     }

@@ -4272,6 +4272,17 @@ bool Document::saveDocumentArchive( const QString &fileName )
     return true;
 }
 
+bool Document::extractArchivedFile( const QString &destFileName )
+{
+    if ( !d->m_archiveData )
+        return false;
+
+    // Remove existing file, if present (QFile::copy doesn't overwrite by itself)
+    QFile::remove( destFileName );
+
+    return d->m_archiveData->document.copy( destFileName );
+}
+
 QPrinter::Orientation Document::orientation() const
 {
     double width, height;

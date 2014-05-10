@@ -513,7 +513,7 @@ class OKULAR_EXPORT Document : public QObject
 
         /**
          * Continues the search for the given @p searchID, optionally specifying
-         * a new direction for the search.
+         * a new type for the search.
          *
          * @since 0.7 (KDE 4.1)
          */

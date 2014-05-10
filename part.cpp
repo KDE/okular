@@ -510,6 +510,8 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
 
     // document watcher and reloader
     m_watcher = new KDirWatch( this );
+    connect( m_watcher, SIGNAL(created(QString)), this, SLOT(slotFileDirty(QString)) );
+    connect( m_watcher, SIGNAL(deleted(QString)), this, SLOT(slotFileDirty(QString)) );
     connect( m_watcher, SIGNAL(dirty(QString)), this, SLOT(slotFileDirty(QString)) );
     m_dirtyHandler = new QTimer( this );
     m_dirtyHandler->setSingleShot( true );
@@ -1201,12 +1203,39 @@ bool Part::slotImportPSFile()
     return false;
 }
 
-static void addFileToWatcher( KDirWatch *watcher, const QString &filePath)
+void Part::setFileToWatch( const QString &filePath )
 {
-    if ( !watcher->contains( filePath ) ) watcher->addFile(filePath);
+    if ( !m_watchedFilePath.isEmpty() )
+        unsetFileToWatch();
+
     const QFileInfo fi(filePath);
-    if ( !watcher->contains( fi.absolutePath() ) ) watcher->addDir(fi.absolutePath());
-    if ( fi.isSymLink() ) watcher->addFile( fi.readLink() );
+
+    m_watchedFilePath = filePath;
+    m_watcher->addFile( m_watchedFilePath );
+
+    if ( fi.isSymLink() )
+    {
+        m_watchedFileSymlinkTarget = fi.readLink();
+        m_watcher->addFile( m_watchedFileSymlinkTarget );
+    }
+    else
+    {
+        m_watchedFileSymlinkTarget.clear();
+    }
+}
+
+void Part::unsetFileToWatch()
+{
+    if ( m_watchedFilePath.isEmpty() )
+        return;
+
+    m_watcher->removeFile( m_watchedFilePath );
+
+    if ( !m_watchedFileSymlinkTarget.isEmpty() )
+        m_watcher->removeFile( m_watchedFileSymlinkTarget );
+
+    m_watchedFilePath.clear();
+    m_watchedFileSymlinkTarget.clear();
 }
 
 bool Part::openFile()
@@ -1401,9 +1430,7 @@ bool Part::openFile()
 
     // set the file to the fileWatcher
     if ( url().isLocalFile() )
-    {
-        addFileToWatcher( m_watcher, localFilePath() );
-    }
+        setFileToWatch( localFilePath() );
 
     // if the 'OpenTOC' flag is set, open the TOC
     if ( m_document->metaData( "OpenTOC" ).toBool() && m_sidebar->isItemEnabled( 0 ) && !m_sidebar->isCollapsed() )
@@ -1552,12 +1579,7 @@ bool Part::closeUrl(bool promptToSave)
     emit enablePrintAction(false);
     m_realUrl = KUrl();
     if ( url().isLocalFile() )
-    {
-        m_watcher->removeFile( localFilePath() );
-        QFileInfo fi(localFilePath());
-        m_watcher->removeDir( fi.absolutePath() );
-        if ( fi.isSymLink() ) m_watcher->removeFile( fi.readLink() );
-    }
+        unsetFileToWatch();
     m_fileWasRemoved = false;
     if ( m_generatorGuiClient )
         factory()->removeClient( m_generatorGuiClient );
@@ -1629,6 +1651,8 @@ void Part::slotShowBottomBar()
 
 void Part::slotFileDirty( const QString& path )
 {
+    kDebug() << path;
+
     // The beauty of this is that each start cancels the previous one.
     // This means that timeout() is only fired when there have
     // no changes to the file for the last 750 milisecs.
@@ -1655,8 +1679,8 @@ void Part::slotFileDirty( const QString& path )
             else if (m_fileWasRemoved && QFile::exists(localFilePath()))
             {
                 // we need to watch the new file
-                m_watcher->removeFile(localFilePath());
-                m_watcher->addFile(localFilePath());
+                unsetFileToWatch();
+                setFileToWatch( localFilePath() );
                 m_dirtyHandler->start( 750 );
             }
         }
@@ -1750,7 +1774,7 @@ void Part::slotDoFileDirty()
     else
     {
         // start watching the file again (since we dropped it on close) 
-        addFileToWatcher( m_watcher, localFilePath() );
+        setFileToWatch( localFilePath() );
         m_dirtyHandler->start( 750 );
     }
 }

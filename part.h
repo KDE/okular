@@ -248,6 +248,9 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         void resetStartArguments();
         bool saveAs( const KUrl & saveUrl, bool saveAsOkularArchive );
 
+        void setFileToWatch( const QString &filePath );
+        void unsetFileToWatch();
+
         static int numberOfParts;
 
         KTemporaryFile *m_tempfile;
@@ -279,6 +282,7 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
 
         // document watcher (and reloader) variables
         KDirWatch *m_watcher;
+        QString m_watchedFilePath, m_watchedFileSymlinkTarget;
         QTimer *m_dirtyHandler;
         KUrl m_oldUrl;
         Okular::DocumentViewport m_viewportDirty;

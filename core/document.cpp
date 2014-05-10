@@ -3295,11 +3295,6 @@ void Document::searchText( int searchID, const QString & text, bool fromStart, Q
         search->continueOnPage = -1;
         searchIt = d->m_searches.insert( searchID, search );
     }
-    if (d->m_lastSearchID != searchID)
-    {
-        resetSearch(d->m_lastSearchID);
-    }
-    d->m_lastSearchID = searchID;
     RunningSearch * s = *searchIt;
 
     // update search structure

@@ -71,7 +71,6 @@ struct DoContinueDirectionMatchSearchStruct
     RegularAreaRect *match;
     int currentPage;
     int searchID;
-    bool noDialogs;
     int pagesDone;
 };
 

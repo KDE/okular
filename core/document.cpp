@@ -1662,7 +1662,7 @@ void DocumentPrivate::doContinueDirectionMatchSearch(void *doContinueDirectionMa
             if ( searchStruct->currentPage >= pageCount || searchStruct->currentPage < 0 )
             {
                 const QString question = forward ? i18n("End of document reached.\nContinue from the beginning?") : i18n("Beginning of document reached.\nContinue from the bottom?");
-                if ( searchStruct->noDialogs || KMessageBox::questionYesNo(m_widget, question, QString(), KStandardGuiItem::cont(), KStandardGuiItem::cancel()) == KMessageBox::Yes )
+                if ( search->cachedNoDialogs || KMessageBox::questionYesNo(m_widget, question, QString(), KStandardGuiItem::cont(), KStandardGuiItem::cancel()) == KMessageBox::Yes )
                     searchStruct->currentPage = forward ? 0 : pageCount - 1;
                 else
                     doContinue = false;
@@ -3360,7 +3360,6 @@ void Document::searchText( int searchID, const QString & text, bool fromStart, Q
         searchStruct->match = match;
         searchStruct->currentPage = currentPage;
         searchStruct->searchID = searchID;
-        searchStruct->noDialogs = noDialogs;
         searchStruct->pagesDone = pagesDone;
 
         QMetaObject::invokeMethod(this, "doContinueDirectionMatchSearch", Qt::QueuedConnection, Q_ARG(void *, searchStruct));

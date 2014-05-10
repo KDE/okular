@@ -43,7 +43,6 @@
 #include <kfiledialog.h>
 #include <kinputdialog.h>
 #include <kmessagebox.h>
-#include <kmessagewidget.h>
 #include <knuminput.h>
 #include <kio/netaccess.h>
 #include <kmenu.h>
@@ -440,13 +439,21 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     m_formsMessage->setWordWrap( true );
     m_formsMessage->setMessageType( KMessageWidget::Information );
     rightLayout->addWidget( m_formsMessage );
+    m_infoMessage = new KMessageWidget( rightContainer );
+    m_infoMessage->setVisible( false );
+    m_infoMessage->setWordWrap( true );
+    m_infoMessage->setMessageType( KMessageWidget::Information );
+    rightLayout->addWidget( m_infoMessage );
+    m_infoTimer = new QTimer();
+    m_infoTimer->setSingleShot( true );
+    connect( m_infoTimer, SIGNAL(timeout()), m_infoMessage, SLOT(animatedHide()) );
     m_pageView = new PageView( rightContainer, m_document );
     QMetaObject::invokeMethod( m_pageView, "setFocus", Qt::QueuedConnection );      //usability setting
 //    m_splitter->setFocusProxy(m_pageView);
     connect( m_pageView, SIGNAL(rightClick(const Okular::Page*,QPoint)), this, SLOT(slotShowMenu(const Okular::Page*,QPoint)) );
-    connect( m_document, SIGNAL(error(QString,int)), m_pageView, SLOT(errorMessage(QString,int)) );
-    connect( m_document, SIGNAL(warning(QString,int)), m_pageView, SLOT(warningMessage(QString,int)) );
-    connect( m_document, SIGNAL(notice(QString,int)), m_pageView, SLOT(noticeMessage(QString,int)) );
+    connect( m_document, SIGNAL(error(QString,int)), this, SLOT(errorMessage(QString,int)) );
+    connect( m_document, SIGNAL(warning(QString,int)), this, SLOT(warningMessage(QString,int)) );
+    connect( m_document, SIGNAL(notice(QString,int)), this, SLOT(noticeMessage(QString,int)) );
     connect( m_document, SIGNAL(sourceReferenceActivated(const QString&,int,int,bool*)), this, SLOT(slotHandleActivatedSourceReference(const QString&,int,int,bool*)) );
     rightLayout->addWidget( m_pageView );
     m_findBar = new FindBar( m_document, rightContainer );
@@ -857,6 +864,7 @@ Part::~Part()
     delete m_pageSizeLabel;
     delete m_reviewsWidget;
     delete m_bookmarkList;
+    delete m_infoTimer;
 
     delete m_document;
 
@@ -1025,7 +1033,7 @@ void Part::slotJobFinished(KJob *job)
 {
     if ( job->error() == KIO::ERR_USER_CANCELED )
     {
-        m_pageView->noticeMessage( i18n( "The loading of %1 has been canceled.", realUrl().pathOrUrl() ) );
+        m_pageView->displayMessage( i18n( "The loading of %1 has been canceled.", realUrl().pathOrUrl() ) );
     }
 }
 
@@ -2738,6 +2746,50 @@ void Part::psTransformEnded(int exit, QProcess::ExitStatus status)
     setLocalFilePath( m_temporaryLocalFile );
     openUrl( m_temporaryLocalFile );
     m_temporaryLocalFile.clear();
+}
+
+
+void Part::displayInfoMessage( const QString &message, KMessageWidget::MessageType messageType, int duration )
+{
+    if ( !Okular::Settings::showOSD() )
+    {
+        if (messageType == KMessageWidget::Error)
+        {
+            KMessageBox::error( widget(), message );
+        }
+        return;
+    }
+
+    // hide messageWindow if string is empty
+    if ( message.isEmpty() )
+        m_infoMessage->animatedHide();
+
+    // display message (duration is length dependant)
+    if ( duration < 0 )
+    {
+        duration = 500 + 100 * message.length();
+    }
+    m_infoTimer->start( duration );
+    m_infoMessage->setText( message );
+    m_infoMessage->setMessageType( messageType );
+    m_infoMessage->animatedShow();
+}
+
+
+void Part::errorMessage( const QString &message, int duration )
+{
+    displayInfoMessage( message, KMessageWidget::Error, duration );
+}
+
+void Part::warningMessage( const QString &message, int duration )
+{
+    displayInfoMessage( message, KMessageWidget::Warning, duration );
+}
+
+void Part::noticeMessage( const QString &message, int duration )
+{
+    // less important message -> simpleer display widget in the PageView
+    m_pageView->displayMessage( message, QString(), PageViewMessage::Info, duration );
 }
 
 

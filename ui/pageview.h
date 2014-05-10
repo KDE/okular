@@ -114,21 +114,6 @@ Q_OBJECT
         void updateCursor();
 
     public slots:
-        void errorMessage( const QString & message, int duration = -1 )
-        {
-            displayMessage( message, QString(), PageViewMessage::Error, duration );
-        }
-
-        void noticeMessage( const QString & message, int duration = -1 )
-        {
-            displayMessage( message, QString(), PageViewMessage::Info, duration );
-        }
-
-        void warningMessage( const QString & message, int duration = -1 )
-        {
-            displayMessage( message, QString(), PageViewMessage::Warning, duration );
-        }
-
         void copyTextSelection() const;
         void selectAll();
 

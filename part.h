@@ -18,6 +18,7 @@
 
 #include <kparts/part.h>
 #include <kpluginfactory.h>
+#include <kmessagewidget.h>
 #include <qicon.h>
 #include <qlist.h>
 #include <qpointer.h>
@@ -47,7 +48,6 @@ class KAboutData;
 class KTemporaryFile;
 class KAction;
 class KMenu;
-class KMessageWidget;
 namespace KParts { class GUIActivateEvent; }
 
 class FindBar;
@@ -165,6 +165,7 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         bool openFile();
         bool openUrl(const KUrl &url);
         void guiActivateEvent(KParts::GUIActivateEvent *event);
+        void displayInfoMessage( const QString &message, KMessageWidget::MessageType messageType = KMessageWidget::Information, int duration = -1 );;
     public:
         bool saveFile();
         bool queryClose();
@@ -228,6 +229,10 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         void psTransformEnded(int, QProcess::ExitStatus);
         KConfigDialog * slotGeneratorPreferences();
 
+        void errorMessage( const QString &message, int duration = 0 );
+        void warningMessage( const QString &message, int duration = -1 );
+        void noticeMessage( const QString &message, int duration = -1 );
+
     private:
         void setupViewerActions();
         void setViewerShortcuts();
@@ -257,6 +262,7 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         FindBar * m_findBar;
         KMessageWidget * m_topMessage;
         KMessageWidget * m_formsMessage;
+        KMessageWidget * m_infoMessage;
         QPointer<ThumbnailList> m_thumbnailList;
         QPointer<PageView> m_pageView;
         QPointer<TOC> m_toc;
@@ -336,6 +342,9 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
 
         KXMLGUIClient *m_generatorGuiClient;
         FileKeeper *m_keeper;
+
+        // Timer for m_infoMessage
+        QTimer *m_infoTimer;
 
     private slots:
         void slotAnnotationPreferences();

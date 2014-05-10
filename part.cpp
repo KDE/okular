@@ -2772,7 +2772,7 @@ void Part::displayInfoMessage( const QString &message, KMessageWidget::MessageTy
     m_infoTimer->start( duration );
     m_infoMessage->setText( message );
     m_infoMessage->setMessageType( messageType );
-    m_infoMessage->animatedShow();
+    m_infoMessage->setVisible( true );
 }
 
 

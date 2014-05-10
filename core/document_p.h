@@ -85,7 +85,6 @@ class DocumentPrivate
     public:
         DocumentPrivate( Document *parent )
           : m_parent( parent ),
-            m_lastSearchID( -1 ),
             m_tempFile( 0 ),
             m_docSize( -1 ),
             m_allocatedPixmapsTotalMemory( 0 ),
@@ -195,7 +194,6 @@ class DocumentPrivate
 
         // find descriptors, mapped by ID (we handle multiple searches)
         QMap< int, RunningSearch * > m_searches;
-        int m_lastSearchID;
         bool m_searchCancelled;
 
         // needed because for remote documents docFileName is a local file and

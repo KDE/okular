@@ -41,7 +41,6 @@ set(okularGenerator_dvi_SRCS
    fontEncodingPool.cpp
    fontMap.cpp
    fontpool.cpp
-   fontprogress.cpp
    dvisourcesplitter.cpp
    dviexport.cpp
 )

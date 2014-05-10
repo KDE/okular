@@ -23,7 +23,6 @@
 
 #include "dviFile.h"
 #include "dviRenderer.h"
-#include "fontprogress.h"
 #include "kvs_debug.h"
 
 #include <KStandardDirs>

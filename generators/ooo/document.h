@@ -24,7 +24,7 @@ class Document
     Document( const QString &fileName );
     ~Document();
 
-    bool open();
+    bool open( const QString &password );
 
     QString lastErrorString() const;
 
@@ -32,6 +32,7 @@ class Document
     QByteArray meta() const;
     QByteArray styles() const;
     QMap<QString, QByteArray> images() const;
+    bool anyFileEncrypted() const;
 
   private:
     void setError( const QString& );
@@ -43,6 +44,7 @@ class Document
     QMap<QString, QByteArray> mImages;
     Manifest *mManifest;
     QString mErrorString;
+    bool mAnyEncrypted;
 };
 
 }

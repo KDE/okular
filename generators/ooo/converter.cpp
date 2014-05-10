@@ -72,12 +72,13 @@ Converter::~Converter()
 {
 }
 
-QTextDocument* Converter::convert( const QString &fileName )
+Okular::Document::OpenResult Converter::convertWithPassword( const QString &fileName, const QString &password )
 {
   Document oooDocument( fileName );
-  if ( !oooDocument.open() ) {
-    emit error( oooDocument.lastErrorString(), -1 );
-    return 0;
+  if ( !oooDocument.open( password ) ) {
+    if ( !oooDocument.anyFileEncrypted() )
+        emit error( oooDocument.lastErrorString(), -1 );
+    return oooDocument.anyFileEncrypted() ? Okular::Document::OpenNeedsPassword : Okular::Document::OpenError;
   }
 
   mTextDocument = new QTextDocument;
@@ -94,9 +95,10 @@ QTextDocument* Converter::convert( const QString &fileName )
   QString errorMsg;
   QDomDocument document;
   if ( !document.setContent( &source, &reader, &errorMsg ) ) {
-    emit error( i18n( "Invalid XML document: %1", errorMsg ), -1 );
+    if ( !oooDocument.anyFileEncrypted() )
+      emit error( i18n( "Invalid XML document: %1", errorMsg ), -1 );
     delete mCursor;
-    return 0;
+    return oooDocument.anyFileEncrypted() ? Okular::Document::OpenNeedsPassword : Okular::Document::OpenError;
   }
 
   mStyleInformation = new StyleInformation();
@@ -107,9 +109,10 @@ QTextDocument* Converter::convert( const QString &fileName )
    */
   StyleParser styleParser( &oooDocument, document, mStyleInformation );
   if ( !styleParser.parse() ) {
-    emit error( i18n( "Unable to read style information" ), -1 );
+    if ( !oooDocument.anyFileEncrypted() )
+      emit error( i18n( "Unable to read style information" ), -1 );
     delete mCursor;
-    return 0;
+    return oooDocument.anyFileEncrypted() ? Okular::Document::OpenNeedsPassword : Okular::Document::OpenError;
   }
 
   /**
@@ -154,9 +157,10 @@ QTextDocument* Converter::convert( const QString &fileName )
   while ( !element.isNull() ) {
     if ( element.tagName() == QLatin1String( "body" ) ) {
       if ( !convertBody( element ) ) {
-        emit error( i18n( "Unable to convert document content" ), -1 );
+        if ( !oooDocument.anyFileEncrypted() )
+          emit error( i18n( "Unable to convert document content" ), -1 );
         delete mCursor;
-        return 0;
+        return oooDocument.anyFileEncrypted() ? Okular::Document::OpenNeedsPassword : Okular::Document::OpenError;
       }
     }
 
@@ -174,7 +178,8 @@ QTextDocument* Converter::convert( const QString &fileName )
   delete mStyleInformation;
   mStyleInformation = 0;
 
-  return mTextDocument;
+  setDocument( mTextDocument );
+  return Okular::Document::OpenSuccess;
 }
 
 bool Converter::convertBody( const QDomElement &element )

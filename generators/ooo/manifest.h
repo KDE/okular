@@ -205,8 +205,9 @@ class Manifest
        \param odfFileName the name of the parent ODF file
        \param manifestData the data from the manifest file, as a byte array
        of the XML format data.
+       \param password to decrypt the file
     */
-    Manifest( const QString &odfFileName, const QByteArray &manifestData );
+    Manifest( const QString &odfFileName, const QByteArray &manifestData, const QString &password );
 
     ~Manifest();
 
@@ -227,26 +228,11 @@ class Manifest
     ManifestEntry* entryByName( const QString &filename );
 
     /**
-       Try to get the password for this file from the wallet
-    */
-    void getPasswordFromWallet();
-
-    /**
-       Save the password for this file to the wallet
-    */
-    void savePasswordToWallet();
-
-    /**
        Verify whether the password we have is the right one.
 
        This verifies the provided checksum
     */
     void checkPassword( ManifestEntry *entry, const QByteArray &fileData, QByteArray *decryptedData );
-
-    /**
-       Ask the user for a password
-    */
-    void getPasswordFromUser();
 
 #ifdef QCA2
     QCA::Initializer m_init;
@@ -254,7 +240,6 @@ class Manifest
     const QString m_odfFileName;
     QMap<QString, ManifestEntry*> mEntries;
     bool m_haveGoodPassword;
-    bool m_userCancelled;
     QString m_password;
 };
 

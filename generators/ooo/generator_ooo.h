@@ -19,6 +19,8 @@ class KOOOGenerator : public Okular::TextDocumentGenerator
 
     // [INHERITED] reparse configuration
     void addPages( KConfigDialog* dlg );
+
+    virtual void walletDataForFile( const QString &fileName, QString *walletName, QString *walletFolder, QString *walletKey ) const;
 };
 
 #endif

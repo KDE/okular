@@ -106,6 +106,7 @@ class TextDocumentConverterPrivate
         }
 
         TextDocumentGeneratorPrivate *mParent;
+        QTextDocument *mDocument;
 };
 
 class TextDocumentGeneratorPrivate : public GeneratorPrivate

@@ -4300,6 +4300,13 @@ void Document::setAnnotationEditingEnabled( bool enable )
     foreachObserver( notifySetup( d->m_pagesVector, 0 ) );
 }
 
+void Document::walletDataForFile( const QString &fileName, QString *walletName, QString *walletFolder, QString *walletKey ) const
+{
+    if (d->m_generator) {
+        d->m_generator->walletDataForFile( fileName, walletName, walletFolder, walletKey );
+    }
+}
+
 void DocumentPrivate::requestDone( PixmapRequest * req )
 {
     if ( !req )

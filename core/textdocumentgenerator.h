@@ -46,8 +46,20 @@ class OKULAR_EXPORT TextDocumentConverter : public QObject
 
         /**
          * Returns the generated QTextDocument object.
+         *
+         * @note there is no need to implement this one if you implement convertWithPassword
          */
-        virtual QTextDocument *convert( const QString &fileName ) = 0;
+        virtual QTextDocument *convert( const QString &fileName );
+
+        /**
+         * Returns the generated QTextDocument object.
+         */
+        virtual Document::OpenResult convertWithPassword( const QString &fileName, const QString &password );
+
+        /**
+         * Returns the generated QTextDocument object. Will be null if convert didn't succeed
+         */
+        QTextDocument *document();
 
     Q_SIGNALS:
         /**
@@ -104,6 +116,11 @@ class OKULAR_EXPORT TextDocumentConverter : public QObject
         void notice( const QString &message, int duration );
 
     protected:
+        /**
+         * Sets the converted QTextDocument object.
+         */
+        void setDocument( QTextDocument *document );
+
         /**
          * This method can be used to calculate the viewport for a given text block.
          *
@@ -165,7 +182,7 @@ class OKULAR_EXPORT TextDocumentGenerator : public Generator, public Okular::Con
         virtual ~TextDocumentGenerator();
 
         // [INHERITED] load a document and fill up the pagesVector
-        bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
+        Document::OpenResult loadDocumentWithPassword( const QString & fileName, QVector<Okular::Page*> & pagesVector, const QString &password );
 
         // [INHERITED] perform actions on document / pages
         bool canGeneratePixmap() const;

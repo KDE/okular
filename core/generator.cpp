@@ -18,6 +18,7 @@
 #include <kdebug.h>
 #include <kicon.h>
 #include <klocale.h>
+#include <kwallet.h>
 
 #include "document.h"
 #include "document_p.h"
@@ -356,6 +357,13 @@ ExportFormat::List Generator::exportFormats() const
 bool Generator::exportTo( const QString&, const ExportFormat& )
 {
     return false;
+}
+
+void Generator::walletDataForFile( const QString &fileName, QString *walletName, QString *walletFolder, QString *walletKey ) const
+{
+    *walletKey = fileName.section('/', -1, -1);
+    *walletName = KWallet::Wallet::NetworkWallet();
+    *walletFolder = "KPdf";
 }
 
 bool Generator::hasFeature( GeneratorFeature feature ) const

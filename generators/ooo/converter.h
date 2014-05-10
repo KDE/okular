@@ -30,7 +30,7 @@ class Converter : public Okular::TextDocumentConverter
     Converter();
     ~Converter();
 
-    virtual QTextDocument *convert( const QString &fileName );
+    virtual Okular::Document::OpenResult convertWithPassword( const QString &fileName, const QString &password );
 
   private:
     bool convertBody( const QDomElement &element );

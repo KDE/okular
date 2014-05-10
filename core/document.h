@@ -726,6 +726,13 @@ class OKULAR_EXPORT Document : public QObject
         */
         void setAnnotationEditingEnabled( bool enable );
 
+        /**
+         * Returns which wallet data to use to read/write the password for the given fileName
+         *
+         * @since 0.20 (KDE 4.14)
+        */
+        void walletDataForFile( const QString &fileName, QString *walletName, QString *walletFolder, QString *walletKey ) const;
+
     public Q_SLOTS:
         /**
          * This slot is called whenever the user changes the @p rotation of

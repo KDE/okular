@@ -45,6 +45,28 @@ TextDocumentConverter::~TextDocumentConverter()
     delete d_ptr;
 }
 
+QTextDocument *TextDocumentConverter::convert( const QString & )
+{
+    return 0;
+}
+
+Document::OpenResult TextDocumentConverter::convertWithPassword( const QString &fileName, const QString & )
+{
+    QTextDocument *doc = convert( fileName );
+    setDocument( doc );
+    return doc != 0 ? Document::OpenSuccess : Document::OpenError;
+}
+
+QTextDocument *TextDocumentConverter::document()
+{
+    return d_ptr->mDocument;
+}
+
+void TextDocumentConverter::setDocument( QTextDocument *document )
+{
+    d_ptr->mDocument = document;
+}
+
 DocumentViewport TextDocumentConverter::calculateViewport( QTextDocument *document, const QTextBlock &block )
 {
     return TextDocumentUtils::calculateViewport( document, block );
@@ -271,13 +293,15 @@ TextDocumentGenerator::~TextDocumentGenerator()
 {
 }
 
-bool TextDocumentGenerator::loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector )
+Document::OpenResult TextDocumentGenerator::loadDocumentWithPassword( const QString & fileName, QVector<Okular::Page*> & pagesVector, const QString &password )
 {
     Q_D( TextDocumentGenerator );
-    d->mDocument = d->mConverter->convert( fileName );
+    const Document::OpenResult openResult = d->mConverter->convertWithPassword( fileName, password );
 
-    if ( !d->mDocument )
+    if ( openResult != Document::OpenSuccess )
     {
+        d->mDocument = 0;
+
         // loading failed, cleanup all the stuff eventually gathered from the converter
         d->mTitlePositions.clear();
         Q_FOREACH ( const TextDocumentGeneratorPrivate::LinkPosition &linkPos, d->mLinkPositions )
@@ -291,8 +315,9 @@ bool TextDocumentGenerator::loadDocument( const QString & fileName, QVector<Okul
         }
         d->mAnnotationPositions.clear();
 
-        return false;
+        return openResult;
     }
+    d->mDocument = d->mConverter->document();
 
     d->generateTitleInfos();
     d->generateLinkInfos();
@@ -334,7 +359,7 @@ bool TextDocumentGenerator::loadDocument( const QString & fileName, QVector<Okul
         }
     }
 
-    return true;
+    return openResult;
 }
 
 bool TextDocumentGenerator::doCloseDocument()

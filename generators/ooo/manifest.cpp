@@ -16,8 +16,6 @@
 #include <KFilterDev>
 #include <KLocale>
 #include <KMessageBox>
-#include <KPasswordDialog>
-#include <KWallet/Wallet>
 
 using namespace OOO;
 
@@ -125,8 +123,8 @@ QByteArray ManifestEntry::salt() const
 
 //---------------------------------------------------------------------
 
-Manifest::Manifest( const QString &odfFileName, const QByteArray &manifestData )
-  : m_odfFileName( odfFileName ), m_haveGoodPassword( false ), m_userCancelled( false )
+Manifest::Manifest( const QString &odfFileName, const QByteArray &manifestData, const QString &password )
+  : m_odfFileName( odfFileName ), m_haveGoodPassword( false ), m_password( password )
 {
   // I don't know why the parser barfs on this.
   QByteArray manifestCopy = manifestData;
@@ -212,8 +210,6 @@ Manifest::Manifest( const QString &odfFileName, const QByteArray &manifestData )
 
 Manifest::~Manifest()
 {
-  savePasswordToWallet();
-
   qDeleteAll( mEntries );
 }
 
@@ -231,88 +227,6 @@ bool Manifest::testIfEncrypted( const QString &filename )
   }
 
   return false;
-}
-
-void Manifest::getPasswordFromUser()
-{
-  // TODO: This should have a proper parent
-  KPasswordDialog dlg( 0, KPasswordDialog::KPasswordDialogFlags() );
-  dlg.setCaption( i18n( "Document Password" ) );
-  dlg.setPrompt( i18n( "Please enter the password to read the document:" ) );
-  if( ! dlg.exec() ) {
-    // user cancel
-    m_userCancelled = true;
-  } else {
-    m_password = dlg.password();
-  }
-}
-
-void Manifest::getPasswordFromWallet()
-{
-  if ( KWallet::Wallet::folderDoesNotExist( KWallet::Wallet::LocalWallet(), KWallet::Wallet::PasswordFolder() ) ) {
-    return;
-  }
-
-  if ( m_odfFileName.isEmpty() ) {
-    return;
-  }
-  // This naming is consistent with how KOffice does it.
-  QString entryKey = m_odfFileName + "/opendocument";
-
-  if ( KWallet::Wallet::keyDoesNotExist( KWallet::Wallet::LocalWallet(), KWallet::Wallet::PasswordFolder(), entryKey ) ) {
-    return;
-  }
-
-  // TODO: this should have a proper parent. I can't see a way to get one though...
-  KWallet::Wallet *wallet = KWallet::Wallet::openWallet( KWallet::Wallet::LocalWallet(), 0 );
-  if ( ! wallet ) {
-    return;
-  }
-
-  if ( ! wallet->setFolder( KWallet::Wallet::PasswordFolder() ) ) {
-    delete wallet;
-    return;
-  }
-
-  wallet->readPassword( entryKey, m_password );
-  delete wallet;
-}
-
-void Manifest::savePasswordToWallet()
-{
-  if ( ! m_haveGoodPassword ) {
-    return;
-  }
-
-  if ( m_odfFileName.isEmpty() ) {
-    return;
-  }
-
-  // TODO: this should have a proper parent. I can't see a way to get one though...
-  KWallet::Wallet *wallet = KWallet::Wallet::openWallet( KWallet::Wallet::LocalWallet(), 0 );
-  if ( ! wallet ) {
-    return;
-  }
-
-  if ( ! wallet->hasFolder( KWallet::Wallet::PasswordFolder() ) ) {
-    wallet->createFolder( KWallet::Wallet::PasswordFolder() );
-  }
-
-  if ( ! wallet->setFolder( KWallet::Wallet::PasswordFolder() ) ) {
-    delete wallet;
-    return;
-  }
-
-  // This naming is consistent with how KOffice does it.
-  QString entryKey = m_odfFileName + "/opendocument";
-
-  if ( wallet->hasEntry( entryKey ) ) {
-    wallet->removeEntry( entryKey );
-  }
-
-  wallet->writePassword( entryKey, m_password );
-
-  delete wallet;
 }
 
 void Manifest::checkPassword( ManifestEntry *entry, const QByteArray &fileData, QByteArray *decryptedData )
@@ -373,52 +287,26 @@ QByteArray Manifest::decryptFile( const QString &filename, const QByteArray &fil
     return QByteArray( fileData );
   }
 
-  if (m_userCancelled) {
+  QByteArray decryptedData;
+  checkPassword( entry, fileData, &decryptedData );
+
+  if (! m_haveGoodPassword ) {
     return QByteArray();
   }
 
-
-  QByteArray decryptedData;
-  if (! m_haveGoodPassword ) {
-    getPasswordFromWallet();
-    checkPassword( entry, fileData, &decryptedData );
+  QIODevice *decompresserDevice = KFilterDev::device( new QBuffer( &decryptedData, 0 ), "application/x-gzip", true );
+  if( !decompresserDevice ) {
+    kDebug(OooDebug) << "Couldn't create decompressor";
+    // hopefully it isn't compressed then!
+    return QByteArray( fileData );
   }
 
-  do {
-    if (! m_haveGoodPassword ) {
-      getPasswordFromUser();
-    }
+  static_cast<KFilterDev*>( decompresserDevice )->setSkipHeaders( );
 
-    if (m_userCancelled) {
-      return QByteArray();
-    }
+  decompresserDevice->open( QIODevice::ReadOnly );
 
-    checkPassword( entry, fileData, &decryptedData );
-    if ( !m_haveGoodPassword ) {
-      KMessageBox::information( 0,  i18n("The password is not correct."), i18n("Incorrect password") );
-    } else {
-      // kDebug(OooDebug) << "Have good password";
-    }
+  return decompresserDevice->readAll();
 
-  } while ( ( ! m_haveGoodPassword ) && ( ! m_userCancelled ) );
-
-  if ( m_haveGoodPassword ) {
-    QIODevice *decompresserDevice = KFilterDev::device( new QBuffer( &decryptedData, 0 ), "application/x-gzip", true );
-    if( !decompresserDevice ) {
-      kDebug(OooDebug) << "Couldn't create decompressor";
-      // hopefully it isn't compressed then!
-      return QByteArray( fileData );
-    }
-
-    static_cast<KFilterDev*>( decompresserDevice )->setSkipHeaders( );
-
-    decompresserDevice->open( QIODevice::ReadOnly );
-
-    return decompresserDevice->readAll();
-
-  } else {
-    return QByteArray( fileData );
-  }    
 #else
   // TODO: This should have a proper parent
   KMessageBox::error( 0, i18n("This document is encrypted, but Okular was compiled without crypto support. This document will probably not open.") );

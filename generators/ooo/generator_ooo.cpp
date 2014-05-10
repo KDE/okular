@@ -14,6 +14,7 @@
 #include <kaboutdata.h>
 #include <klocale.h>
 #include <kconfigdialog.h>
+#include <kwallet.h>
 
 static KAboutData createAboutData()
 {
@@ -43,4 +44,11 @@ void KOOOGenerator::addPages( KConfigDialog* dlg )
     Okular::TextDocumentSettingsWidget *widget = new Okular::TextDocumentSettingsWidget();
 
     dlg->addPage( widget, generalSettings(), i18n("OpenDocument Text"), "application-vnd.oasis.opendocument.text", i18n("OpenDocument Text Backend Configuration") );
+}
+
+void KOOOGenerator::walletDataForFile( const QString &fileName, QString *walletName, QString *walletFolder, QString *walletKey ) const
+{
+    *walletKey = fileName + "/opendocument";
+    *walletName = KWallet::Wallet::LocalWallet();
+    *walletFolder = KWallet::Wallet::PasswordFolder();
 }

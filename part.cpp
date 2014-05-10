@@ -1261,7 +1261,8 @@ bool Part::openFile()
         }
 
         // if the file didn't open correctly it might be encrypted, so ask for a pass
-        const QString walletKey = fileNameToOpen.section('/', -1, -1);
+        QString walletName, walletFolder, walletKey;
+        m_document->walletDataForFile(fileNameToOpen, &walletName, &walletFolder, &walletKey);
         bool firstInput = true;
         bool triedWallet = false;
         KWallet::Wallet * wallet = 0;
@@ -1273,15 +1274,14 @@ bool Part::openFile()
             // 1.A. try to retrieve the first password from the kde wallet system
             if ( !triedWallet && !walletKey.isNull() )
             {
-                QString walletName = KWallet::Wallet::NetworkWallet();
                 const WId parentwid = widget()->effectiveWinId();
                 wallet = KWallet::Wallet::openWallet( walletName, parentwid );
                 if ( wallet )
                 {
                     // use the KPdf folder (and create if missing)
-                    if ( !wallet->hasFolder( "KPdf" ) )
-                        wallet->createFolder( "KPdf" );
-                    wallet->setFolder( "KPdf" );
+                    if ( !wallet->hasFolder( walletFolder ) )
+                        wallet->createFolder( walletFolder );
+                    wallet->setFolder( walletFolder );
 
                     // look for the pass in that folder
                     QString retrievedPass;

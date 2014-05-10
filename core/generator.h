@@ -413,6 +413,13 @@ class OKULAR_EXPORT Generator : public QObject
         virtual bool exportTo( const QString &fileName, const ExportFormat &format );
 
         /**
+         * This method is called to know which wallet data should be used for the given file name.
+         * Unless you have very special requirements to where wallet data should be stored you
+         * don't need to reimplement this method.
+         */
+        virtual void walletDataForFile( const QString &fileName, QString *walletName, QString *walletFolder, QString *walletKey ) const;
+
+        /**
          * Query for the specified @p feature.
          */
         bool hasFeature( GeneratorFeature feature ) const;

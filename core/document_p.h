@@ -29,6 +29,7 @@
 
 class QUndoStack;
 class QEventLoop;
+class QFile;
 class QTimer;
 class KTemporaryFile;
 
@@ -121,7 +122,7 @@ class DocumentPrivate
         qulonglong getTotalMemory();
         qulonglong getFreeMemory( qulonglong *freeSwap = 0 );
         void loadDocumentInfo();
-        void loadDocumentInfo( const QString &fileName );
+        void loadDocumentInfo( QFile &infoFile );
         void loadViewsInfo( View *view, const QDomElement &e );
         void saveViewsInfo( View *view, QDomElement &e ) const;
         QString giveAbsolutePath( const QString & fileName ) const;

@@ -136,7 +136,6 @@ class DocumentPrivate
         bool canAddAnnotationsNatively() const;
         bool canModifyExternalAnnotations() const;
         bool canRemoveExternalAnnotations() const;
-        void warnLimitedAnnotSupport();
 
         // Methods that implement functionality needed by undo commands
         void performAddPageAnnotation( int page, Annotation *annotation );
@@ -264,9 +263,8 @@ class DocumentPrivate
         QSet< View * > m_views;
 
         bool m_annotationEditingEnabled;
-        bool m_annotationsNeedSaveAs;
         bool m_annotationBeingMoved; // is an annotation currently being moved?
-        bool m_showWarningLimitedAnnotSupport;
+        bool m_metadataLoadingCompleted;
 
         QUndoStack *m_undoStack;
         QDomNode m_prevPropsOfAnnotBeingModified;

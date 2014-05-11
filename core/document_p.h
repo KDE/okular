@@ -113,6 +113,7 @@ class DocumentPrivate
         }
 
         // private methods
+        bool updateMetadataXmlNameAndDocSize();
         QString pagesSizeString() const;
         QString namePaperSize(double inchesWidth, double inchesHeight) const;
         QString localizedSize(const QSizeF &size) const;

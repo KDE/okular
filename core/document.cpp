@@ -2083,7 +2083,6 @@ Document::OpenResult Document::openDocument( const QString & docFile, const KUrl
 {
     KMimeType::Ptr mime = _mime;
     QByteArray filedata;
-    qint64 document_size = -1;
     bool isstdin = url.fileName( KUrl::ObeyTrailingSlash ) == QLatin1String( "-" );
     bool triedMimeFromFileContent = false;
     if ( !isstdin )
@@ -2091,36 +2090,11 @@ Document::OpenResult Document::openDocument( const QString & docFile, const KUrl
         if ( mime.count() <= 0 )
             return OpenError;
 
-        // docFile is always local so we can use QFileInfo on it
-        QFileInfo fileReadTest( docFile );
-        if ( fileReadTest.isFile() && !fileReadTest.isReadable() )
-        {
-            d->m_docFileName.clear();
-            return OpenError;
-        }
-        // determine the related "xml document-info" filename
         d->m_url = url;
         d->m_docFileName = docFile;
-        if ( url.isLocalFile() )
-        {
-            QString fn = url.fileName();
-            document_size = fileReadTest.size();
-            fn = QString::number( document_size ) + '.' + fn + ".xml";
-            QString newokular = "okular/docdata/" + fn;
-            QString newokularfile = KStandardDirs::locateLocal( "data", newokular );
-            if ( !QFile::exists( newokularfile ) )
-            {
-                QString oldkpdf = "kpdf/" + fn;
-                QString oldkpdffile = KStandardDirs::locateLocal( "data", oldkpdf );
-                if ( QFile::exists( oldkpdffile ) )
-                {
-                    // ### copy or move?
-                    if ( !QFile::copy( oldkpdffile, newokularfile ) )
-                        return OpenError;
-                }
-            }
-            d->m_xmlFileName = newokularfile;
-        }
+
+        if ( !d->updateMetadataXmlNameAndDocSize() )
+            return OpenError;
     }
     else
     {
@@ -2130,7 +2104,7 @@ Document::OpenResult Document::openDocument( const QString & docFile, const KUrl
         mime = KMimeType::findByContent( filedata );
         if ( !mime || mime->name() == QLatin1String( "application/octet-stream" ) )
             return OpenError;
-        document_size = filedata.size();
+        d->m_docSize = filedata.size();
         triedMimeFromFileContent = true;
     }
 
@@ -2278,7 +2252,6 @@ Document::OpenResult Document::openDocument( const QString & docFile, const KUrl
     }
 
     AudioPlayer::instance()->d->m_currentDocument = isstdin ? KUrl() : d->m_url;
-    d->m_docSize = document_size;
 
     const QStringList docScripts = d->m_generator->metaData( "DocumentScripts", "JavaScript" ).toStringList();
     if ( !docScripts.isEmpty() )
@@ -2291,6 +2264,45 @@ Document::OpenResult Document::openDocument( const QString & docFile, const KUrl
     }
 
     return OpenSuccess;
+}
+
+bool DocumentPrivate::updateMetadataXmlNameAndDocSize()
+{
+    // m_docFileName is always local so we can use QFileInfo on it
+    QFileInfo fileReadTest( m_docFileName );
+    if ( !fileReadTest.isFile() && !fileReadTest.isReadable() )
+        return false;
+
+    m_docSize = fileReadTest.size();
+
+    // determine the related "xml document-info" filename
+    if ( m_url.isLocalFile() )
+    {
+        const QString fn = QString::number( m_docSize ) + '.' + m_url.fileName() + ".xml";
+        const QString newokular = "okular/docdata/" + fn;
+        const QString newokularfile = KStandardDirs::locateLocal( "data", newokular );
+        if ( !QFile::exists( newokularfile ) )
+        {
+            const QString oldkpdf = "kpdf/" + fn;
+            const QString oldkpdffile = KStandardDirs::locateLocal( "data", oldkpdf );
+            if ( QFile::exists( oldkpdffile ) )
+            {
+                // ### copy or move?
+                if ( !QFile::copy( oldkpdffile, newokularfile ) )
+                    return false;
+            }
+        }
+
+        kDebug(OkularDebug) << "Metadata file is now:" << newokularfile;
+        m_xmlFileName = newokularfile;
+    }
+    else
+    {
+        kDebug(OkularDebug) << "Metadata file: disabled";
+        m_xmlFileName = QString();
+    }
+
+    return true;
 }
 
 
@@ -4001,10 +4013,16 @@ bool Document::swapBackingFile( const QString &newFileName, const KUrl & url )
     if ( !genIt->generator->hasFeature( Generator::SwapBackingFile ) )
         return false;
 
+    // Save metadata about the file we're about to close
+    d->saveDocumentInfo();
+
     kDebug(OkularDebug) << "Swapping backing file to" << newFileName;
     if (genIt->generator->swapBackingFile( newFileName ))
     {
         d->m_url = url;
+        d->m_docFileName = newFileName;
+        d->updateMetadataXmlNameAndDocSize();
+        d->m_bookmarkManager->setUrl( d->m_url );
         return true;
     }
     else
@@ -4025,6 +4043,9 @@ bool Document::swapBackingFileArchive( const QString &newFileName, const KUrl & 
     if ( !genIt->generator->hasFeature( Generator::SwapBackingFile ) )
         return false;
 
+    // Save metadata about the file we're about to close
+    d->saveDocumentInfo();
+
     kDebug(OkularDebug) << "Swapping backing archive to" << newFileName;
 
     ArchiveData *newArchive = DocumentPrivate::unpackDocumentArchive( newFileName );
@@ -4039,6 +4060,9 @@ bool Document::swapBackingFileArchive( const QString &newFileName, const KUrl & 
         delete d->m_archiveData;
         d->m_archiveData = newArchive;
         d->m_url = url;
+        d->m_docFileName = tempFileName;
+        d->updateMetadataXmlNameAndDocSize();
+        d->m_bookmarkManager->setUrl( d->m_url );
         return true;
     }
     else

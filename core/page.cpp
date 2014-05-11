@@ -832,6 +832,10 @@ void PagePrivate::restoreLocalContents( const QDomNode & pageNode )
         // parse formList child element
         else if ( childElement.tagName() == "forms" )
         {
+            // Clone forms as root node in restoredFormFieldList
+            const QDomNode clonedNode = restoredFormFieldList.importNode( childElement, true );
+            restoredFormFieldList.appendChild( clonedNode );
+
             if ( formfields.isEmpty() )
                 continue;
 
@@ -927,7 +931,17 @@ void PagePrivate::saveLocalContents( QDomNode & parentNode, QDomDocument & docum
     }
 
     // add forms info if has got any
-    if ( ( what & FormFieldPageItems ) && !formfields.isEmpty() )
+    if ( ( what & FormFieldPageItems ) && ( what & OriginalFormFieldPageItems ) )
+    {
+        const QDomElement savedDocRoot = restoredFormFieldList.documentElement();
+        if ( !savedDocRoot.isNull() )
+        {
+            // Import and append node in target document
+            const QDomNode importedNode = document.importNode( savedDocRoot, true );
+            pageElement.appendChild( importedNode );
+        }
+    }
+    else if ( ( what & FormFieldPageItems ) && !formfields.isEmpty() )
     {
         // create the formList
         QDomElement formListElement = document.createElement( "forms" );

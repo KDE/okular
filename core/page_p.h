@@ -48,7 +48,11 @@ enum PageItem
 
     /* If set along with AnnotationPageItems, tells saveLocalContents to save
      * the original annotations (if any) instead of the modified ones */
-    OriginalAnnotationPageItems = 0x100
+    OriginalAnnotationPageItems = 0x100,
+
+    /* If set along with FormFieldPageItems, tells saveLocalContents to save
+     * the original form contents (if any) instead of the modified one */
+    OriginalFormFieldPageItems = 0x200
 };
 Q_DECLARE_FLAGS(PageItems, PageItem)
 
@@ -142,6 +146,7 @@ class PagePrivate
 
         bool m_isBoundingBoxKnown : 1;
         QDomDocument restoredLocalAnnotationList; // <annotationList>...</annotationList>
+        QDomDocument restoredFormFieldList; // <forms>...</forms>
 };
 
 }

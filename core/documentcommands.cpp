@@ -368,6 +368,7 @@ void EditFormTextCommand::undo()
     moveViewportIfBoundingRectNotFullyVisible( m_form->rect(), m_docPriv, m_pageNumber );
     m_form->setText( m_prevContents );
     emit m_docPriv->m_parent->formTextChangedByUndoRedo( m_pageNumber, m_form, m_prevContents, m_prevCursorPos, m_prevAnchorPos );
+    m_docPriv->notifyFormChanges( m_pageNumber );
 }
 
 void EditFormTextCommand::redo()
@@ -375,6 +376,7 @@ void EditFormTextCommand::redo()
     moveViewportIfBoundingRectNotFullyVisible( m_form->rect(), m_docPriv, m_pageNumber );
     m_form->setText( m_newContents  );
     emit m_docPriv->m_parent->formTextChangedByUndoRedo( m_pageNumber, m_form, m_newContents, m_newCursorPos, m_newCursorPos );
+    m_docPriv->notifyFormChanges( m_pageNumber );
 }
 
 int EditFormTextCommand::id() const
@@ -415,6 +417,7 @@ void EditFormListCommand::undo()
     moveViewportIfBoundingRectNotFullyVisible( m_form->rect(), m_docPriv, m_pageNumber );
     m_form->setCurrentChoices( m_prevChoices );
     emit m_docPriv->m_parent->formListChangedByUndoRedo( m_pageNumber, m_form, m_prevChoices );
+    m_docPriv->notifyFormChanges( m_pageNumber );
 }
 
 void EditFormListCommand::redo()
@@ -422,6 +425,7 @@ void EditFormListCommand::redo()
     moveViewportIfBoundingRectNotFullyVisible( m_form->rect(), m_docPriv, m_pageNumber );
     m_form->setCurrentChoices( m_newChoices );
     emit m_docPriv->m_parent->formListChangedByUndoRedo( m_pageNumber, m_form, m_newChoices );
+    m_docPriv->notifyFormChanges( m_pageNumber );
 }
 
 EditFormComboCommand::EditFormComboCommand( Okular::DocumentPrivate* docPriv,
@@ -468,6 +472,7 @@ void EditFormComboCommand::undo()
     }
     moveViewportIfBoundingRectNotFullyVisible( m_form->rect(), m_docPriv, m_pageNumber );
     emit m_docPriv->m_parent->formComboChangedByUndoRedo( m_pageNumber, m_form, m_prevContents, m_prevCursorPos, m_prevAnchorPos );
+    m_docPriv->notifyFormChanges( m_pageNumber );
 }
 
 void EditFormComboCommand::redo()
@@ -482,6 +487,7 @@ void EditFormComboCommand::redo()
     }
     moveViewportIfBoundingRectNotFullyVisible( m_form->rect(), m_docPriv, m_pageNumber );
     emit m_docPriv->m_parent->formComboChangedByUndoRedo( m_pageNumber, m_form, m_newContents, m_newCursorPos, m_newCursorPos );
+    m_docPriv->notifyFormChanges( m_pageNumber );
 }
 
 int EditFormComboCommand::id() const
@@ -538,6 +544,7 @@ void EditFormButtonsCommand::undo()
     Okular::NormalizedRect boundingRect = buildBoundingRectangleForButtons( m_formButtons );
     moveViewportIfBoundingRectNotFullyVisible( boundingRect, m_docPriv, m_pageNumber );
     emit m_docPriv->m_parent->formButtonsChangedByUndoRedo( m_pageNumber, m_formButtons );
+    m_docPriv->notifyFormChanges( m_pageNumber );
 }
 
 void EditFormButtonsCommand::redo()
@@ -553,6 +560,7 @@ void EditFormButtonsCommand::redo()
     Okular::NormalizedRect boundingRect = buildBoundingRectangleForButtons( m_formButtons );
     moveViewportIfBoundingRectNotFullyVisible( boundingRect, m_docPriv, m_pageNumber );
     emit m_docPriv->m_parent->formButtonsChangedByUndoRedo( m_pageNumber, m_formButtons );
+    m_docPriv->notifyFormChanges( m_pageNumber );
 }
 
 void EditFormButtonsCommand::clearFormButtonStates()

@@ -1198,12 +1198,13 @@ void DocumentPrivate::saveDocumentInfo() const
         // 2.1. Save page attributes (bookmark state, annotations, ... ) to DOM
         QDomElement pageList = doc.createElement( "pageList" );
         root.appendChild( pageList );
-        // OriginalAnnotationPageItems tells to store the same unmodified
-        // annotation list that we read when we opened the file and ignore any
-        // change made by the user. Since we don't store annotations in
-        // docdata/ any more, this is necessary to preserve annotations that
-        // previous Okular version had stored there.
-        const PageItems saveWhat = AllPageItems | OriginalAnnotationPageItems;
+        // OriginalAnnotationPageItems and OriginalFormFieldPageItems tell to
+        // store the same unmodified annotation list and form contents that we
+        // read when we opened the file and ignore any change made by the user.
+        // Since we don't store annotations and forms docdata/ any more, this is
+        // necessary to preserve annotations/forms that previous Okular version
+        // had stored there.
+        const PageItems saveWhat = AllPageItems | OriginalAnnotationPageItems | OriginalFormFieldPageItems;
         // <page list><page number='x'>.... </page> save pages that hold data
         QVector< Page * >::const_iterator pIt = m_pagesVector.constBegin(), pEnd = m_pagesVector.constEnd();
         for ( ; pIt != pEnd; ++pIt )
@@ -2919,6 +2920,16 @@ void DocumentPrivate::notifyAnnotationChanges( int page )
         flags |= DocumentObserver::NeedSaveAs;
 
     foreachObserverD( notifyPageChanged( page, flags ) );
+}
+
+void DocumentPrivate::notifyFormChanges( int page )
+{
+    // Unless we're still loading initial form contents from metadata, the user
+    // now needs to save or form changes will be lost
+    if ( !m_metadataLoadingCompleted )
+        return;
+
+    foreachObserverD( notifyPageChanged( page, DocumentObserver::NeedSaveAs ) );
 }
 
 void Document::addPageAnnotation( int page, Annotation * annotation )

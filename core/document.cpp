@@ -2213,7 +2213,7 @@ Document::OpenResult Document::openDocument( const QString & docFile, const KUrl
     d->m_bookmarkManager->setUrl( d->m_url );
 
     // 3. setup observers inernal lists and data
-    foreachObserver( notifySetup( d->m_pagesVector, DocumentObserver::DocumentChanged ) );
+    foreachObserver( notifySetup( d->m_pagesVector, DocumentObserver::DocumentChanged | DocumentObserver::UrlChanged ) );
 
     // 4. set initial page (restoring the page saved in xml if loaded)
     DocumentViewport loadedViewport = (*d->m_viewportIterator);
@@ -2408,7 +2408,7 @@ void Document::closeDocument()
     d->m_rotation = Rotation0;
 
     // send an empty list to observers (to free their data)
-    foreachObserver( notifySetup( QVector< Page * >(), DocumentObserver::DocumentChanged ) );
+    foreachObserver( notifySetup( QVector< Page * >(), DocumentObserver::DocumentChanged | DocumentObserver::UrlChanged ) );
 
     // delete pages and clear 'd->m_pagesVector' container
     QVector< Page * >::const_iterator pIt = d->m_pagesVector.constBegin();
@@ -2462,7 +2462,7 @@ void Document::addObserver( DocumentObserver * pObserver )
     // if the observer is added while a document is already opened, tell it
     if ( !d->m_pagesVector.isEmpty() )
     {
-        pObserver->notifySetup( d->m_pagesVector, DocumentObserver::DocumentChanged );
+        pObserver->notifySetup( d->m_pagesVector, DocumentObserver::DocumentChanged | DocumentObserver::UrlChanged );
         pObserver->notifyViewportChanged( false /*disables smoothMove*/ );
     }
 }
@@ -4023,6 +4023,7 @@ bool Document::swapBackingFile( const QString &newFileName, const KUrl & url )
         d->m_docFileName = newFileName;
         d->updateMetadataXmlNameAndDocSize();
         d->m_bookmarkManager->setUrl( d->m_url );
+        foreachObserver( notifySetup( d->m_pagesVector, DocumentObserver::UrlChanged ) );
         return true;
     }
     else
@@ -4063,6 +4064,7 @@ bool Document::swapBackingFileArchive( const QString &newFileName, const KUrl & 
         d->m_docFileName = tempFileName;
         d->updateMetadataXmlNameAndDocSize();
         d->m_bookmarkManager->setUrl( d->m_url );
+        foreachObserver( notifySetup( d->m_pagesVector, DocumentObserver::UrlChanged ) );
         return true;
     }
     else

@@ -169,7 +169,7 @@ BookmarkList::~BookmarkList()
 void BookmarkList::notifySetup( const QVector< Okular::Page * > & pages, int setupFlags )
 {
     Q_UNUSED( pages );
-    if ( !( setupFlags & Okular::DocumentObserver::DocumentChanged ) )
+    if ( !( setupFlags & Okular::DocumentObserver::UrlChanged ) )
         return;
 
     // clear contents

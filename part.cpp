@@ -1488,8 +1488,17 @@ bool Part::openFile()
     return true;
 }
 
-bool Part::openUrl(const KUrl &_url)
+bool Part::openUrl( const KUrl &url )
 {
+    return openUrl( url, false /* swapInsteadOfOpening */ );
+}
+
+bool Part::openUrl( const KUrl &_url, bool swapInsteadOfOpening )
+{
+    /* Store swapInsteadOfOpening, so that closeUrl and openFile will be able
+     * to read it */
+    m_swapInsteadOfOpening = swapInsteadOfOpening;
+
     // Close current document if any
     if ( !closeUrl() )
         return false;
@@ -2434,18 +2443,10 @@ bool Part::saveAs( const KUrl & saveUrl, bool saveAsOkularArchive )
     {
         if ( m_document->canSwapBackingFile() )
         {
-            // If the generator supports hot-swapping of the backing file
-            // tell openFile to swap the backing file instead of opening a new one
-            m_swapInsteadOfOpening = true;
-
             // this calls openFile internally, which in turn actually calls
             // m_document->swapBackingFile() instead of the regular loadDocument
-            if ( !openUrl( saveUrl ) )
+            if ( !openUrl( saveUrl, true /* swapInsteadOfOpening */ ) )
                 reloadedCorrectly = false;
-
-            // restore it back to false -- this has already been done by
-            // openFile, but let's do it again for extra safety
-            m_swapInsteadOfOpening = false;
         }
         else
         {

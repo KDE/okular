@@ -125,9 +125,21 @@ int main()
 }
 " HAVE_POPPLER_0_24)
 
+check_cxx_source_compiles("
+#include <poppler-qt4.h>
+int main()
+{
+  Poppler::Page *p = 0;
+  p->annotations( QSet<Poppler::Annotation::SubType>() << Poppler::Annotation::ASound );
+  return 0;
+}
+" HAVE_POPPLER_0_28)
+
   set(CMAKE_REQUIRED_INCLUDES)
   set(CMAKE_REQUIRED_LIBRARIES)
-  if (HAVE_POPPLER_0_24)
+  if (HAVE_POPPLER_0_28)
+    set(popplerVersionMessage "0.28")
+  elseif (HAVE_POPPLER_0_24)
     set(popplerVersionMessage "0.24")
   elseif (HAVE_POPPLER_0_22)
     set(popplerVersionMessage "0.22")
@@ -137,9 +149,9 @@ int main()
     set(popplerVersionMessage "0.16")
   elseif (HAVE_POPPLER_0_12_1)
     set(popplerVersionMessage "0.12.1")
-  else (HAVE_POPPLER_0_24)
+  else (HAVE_POPPLER_0_28)
     set(popplerVersionMessage "0.5.4")
-  endif (HAVE_POPPLER_0_24)
+  endif (HAVE_POPPLER_0_28)
   if (NOT Poppler_FIND_QUIETLY)
     message(STATUS "Found Poppler-Qt4: ${POPPLER_LIBRARY}, (>= ${popplerVersionMessage})")
   endif (NOT Poppler_FIND_QUIETLY)

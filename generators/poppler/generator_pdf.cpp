@@ -1429,7 +1429,25 @@ void PDFGenerator::addSynopsisChildren( QDomNode * parent, QDomNode * parentDest
 
 void PDFGenerator::addAnnotations( Poppler::Page * popplerPage, Okular::Page * page )
 {
+#ifdef HAVE_POPPLER_0_28
+    QSet<Poppler::Annotation::SubType> subtypes;
+    subtypes << Poppler::Annotation::AFileAttachment
+        << Poppler::Annotation::ASound
+        << Poppler::Annotation::AMovie
+        << Poppler::Annotation::AWidget
+        << Poppler::Annotation::AScreen
+        << Poppler::Annotation::AText
+        << Poppler::Annotation::ALine
+        << Poppler::Annotation::AGeom
+        << Poppler::Annotation::AHighlight
+        << Poppler::Annotation::AInk
+        << Poppler::Annotation::AStamp
+        << Poppler::Annotation::ACaret;
+
+    QList<Poppler::Annotation*> popplerAnnotations = popplerPage->annotations( subtypes );
+#else
     QList<Poppler::Annotation*> popplerAnnotations = popplerPage->annotations();
+#endif
 
     foreach(Poppler::Annotation *a, popplerAnnotations)
     {

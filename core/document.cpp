@@ -606,7 +606,7 @@ qulonglong DocumentPrivate::getFreeMemory( qulonglong *freeSwap )
 #endif
 }
 
-void DocumentPrivate::loadDocumentInfo()
+void DocumentPrivate::loadDocumentInfo( LoadDocumentInfoFlags loadWhat )
 // note: load data and stores it internally (document or pages). observers
 // are still uninitialized at this point so don't access them
 {
@@ -615,10 +615,10 @@ void DocumentPrivate::loadDocumentInfo()
         return;
 
     QFile infoFile( m_xmlFileName );
-    loadDocumentInfo( infoFile );
+    loadDocumentInfo( infoFile, loadWhat );
 }
 
-void DocumentPrivate::loadDocumentInfo( QFile &infoFile )
+void DocumentPrivate::loadDocumentInfo( QFile &infoFile, LoadDocumentInfoFlags loadWhat )
 {
     if ( !infoFile.exists() || !infoFile.open( QIODevice::ReadOnly ) )
         return;
@@ -646,7 +646,7 @@ void DocumentPrivate::loadDocumentInfo( QFile &infoFile )
         QString catName = topLevelNode.toElement().tagName();
 
         // Restore page attributes (bookmark, annotations, ...) from the DOM
-        if ( catName == "pageList" )
+        if ( catName == "pageList" && ( loadWhat & LoadPageInfo ) )
         {
             QDomNode pageNode = topLevelNode.firstChild();
             while ( pageNode.isElement() )
@@ -667,7 +667,7 @@ void DocumentPrivate::loadDocumentInfo( QFile &infoFile )
         }
 
         // Restore 'general info' from the DOM
-        else if ( catName == "generalInfo" )
+        else if ( catName == "generalInfo" && ( loadWhat & LoadGeneralInfo ) )
         {
             QDomNode infoNode = topLevelNode.firstChild();
             while ( infoNode.isElement() )
@@ -1196,19 +1196,23 @@ void DocumentPrivate::saveDocumentInfo() const
         doc.appendChild( root );
 
         // 2.1. Save page attributes (bookmark state, annotations, ... ) to DOM
-        QDomElement pageList = doc.createElement( "pageList" );
-        root.appendChild( pageList );
-        // OriginalAnnotationPageItems and OriginalFormFieldPageItems tell to
-        // store the same unmodified annotation list and form contents that we
-        // read when we opened the file and ignore any change made by the user.
-        // Since we don't store annotations and forms docdata/ any more, this is
-        // necessary to preserve annotations/forms that previous Okular version
-        // had stored there.
-        const PageItems saveWhat = AllPageItems | OriginalAnnotationPageItems | OriginalFormFieldPageItems;
-        // <page list><page number='x'>.... </page> save pages that hold data
-        QVector< Page * >::const_iterator pIt = m_pagesVector.constBegin(), pEnd = m_pagesVector.constEnd();
-        for ( ; pIt != pEnd; ++pIt )
-            (*pIt)->d->saveLocalContents( pageList, doc, saveWhat );
+        //  -> skipped for archives, because they store such info in their internal metadata.xml
+        if ( !m_archiveData )
+        {
+            QDomElement pageList = doc.createElement( "pageList" );
+            root.appendChild( pageList );
+            // OriginalAnnotationPageItems and OriginalFormFieldPageItems tell to
+            // store the same unmodified annotation list and form contents that we
+            // read when we opened the file and ignore any change made by the user.
+            // Since we don't store annotations and forms docdata/ any more, this is
+            // necessary to preserve annotations/forms that previous Okular version
+            // had stored there.
+            const PageItems saveWhat = AllPageItems | OriginalAnnotationPageItems | OriginalFormFieldPageItems;
+            // <page list><page number='x'>.... </page> save pages that hold data
+            QVector< Page * >::const_iterator pIt = m_pagesVector.constBegin(), pEnd = m_pagesVector.constEnd();
+            for ( ; pIt != pEnd; ++pIt )
+                (*pIt)->d->saveLocalContents( pageList, doc, saveWhat );
+        }
 
         // 2.2. Save document info (current viewport, history, ... ) to DOM
         QDomElement generalInfo = doc.createElement( "generalInfo" );
@@ -2097,7 +2101,7 @@ Document::OpenResult Document::openDocument( const QString & docFile, const KUrl
         // determine the related "xml document-info" filename
         d->m_url = url;
         d->m_docFileName = docFile;
-        if ( url.isLocalFile() && !d->m_archiveData )
+        if ( url.isLocalFile() )
         {
             QString fn = url.fileName();
             document_size = fileReadTest.size();
@@ -2223,11 +2227,12 @@ Document::OpenResult Document::openDocument( const QString & docFile, const KUrl
     // 2. load Additional Data (bookmarks, local annotations and metadata) about the document
     if ( d->m_archiveData )
     {
-        d->loadDocumentInfo( d->m_archiveData->metadataFile );
+        d->loadDocumentInfo( d->m_archiveData->metadataFile, LoadPageInfo );
+        d->loadDocumentInfo( LoadGeneralInfo );
     }
     else
     {
-        d->loadDocumentInfo();
+        d->loadDocumentInfo( LoadAllInfo );
     }
 
     d->m_metadataLoadingCompleted = true;

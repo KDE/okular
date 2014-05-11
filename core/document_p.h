@@ -74,6 +74,15 @@ struct DoContinueDirectionMatchSearchStruct
     int searchID;
 };
 
+enum LoadDocumentInfoFlag
+{
+    LoadNone = 0,
+    LoadPageInfo = 1,    // Load annotations and forms
+    LoadGeneralInfo = 2, // History, rotation, ...
+    LoadAllInfo = 0xff
+};
+Q_DECLARE_FLAGS(LoadDocumentInfoFlags, LoadDocumentInfoFlag)
+
 class DocumentPrivate
 {
     public:
@@ -114,8 +123,8 @@ class DocumentPrivate
         void calculateMaxTextPages();
         qulonglong getTotalMemory();
         qulonglong getFreeMemory( qulonglong *freeSwap = 0 );
-        void loadDocumentInfo();
-        void loadDocumentInfo( QFile &infoFile );
+        void loadDocumentInfo( LoadDocumentInfoFlags loadWhat );
+        void loadDocumentInfo( QFile &infoFile, LoadDocumentInfoFlags loadWhat );
         void loadViewsInfo( View *view, const QDomElement &e );
         void saveViewsInfo( View *view, QDomElement &e ) const;
         QString giveAbsolutePath( const QString & fileName ) const;

@@ -515,7 +515,7 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     connect( m_watcher, SIGNAL(dirty(QString)), this, SLOT(slotFileDirty(QString)) );
     m_dirtyHandler = new QTimer( this );
     m_dirtyHandler->setSingleShot( true );
-    connect( m_dirtyHandler, SIGNAL(timeout()),this, SLOT(slotDoFileDirty()) );
+    connect( m_dirtyHandler, SIGNAL(timeout()),this, SLOT(slotAttemptReload()) );
 
     slotNewConfig();
 
@@ -1034,7 +1034,7 @@ void Part::loadCancelled(const QString &reason)
     emit setWindowCaption( QString() );
     resetStartArguments();
 
-    // when m_viewportDirty.pageNumber != -1 we come from slotDoFileDirty
+    // when m_viewportDirty.pageNumber != -1 we come from slotAttemptReload
     // so we don't want to show an ugly messagebox just because the document is
     // taking more than usual to be recreated
     if (m_viewportDirty.pageNumber == -1)
@@ -1694,8 +1694,8 @@ void Part::slotFileDirty( const QString& path )
     }
 }
 
-
-void Part::slotDoFileDirty()
+// Attempt to reload the document, one or more times, optionally from a different URL
+void Part::slotAttemptReload( bool oneShot, const KUrl &newUrl )
 {
     bool tocReloadPrepared = false;
     
@@ -1703,7 +1703,7 @@ void Part::slotDoFileDirty()
     if ( m_viewportDirty.pageNumber == -1 )
     {
         // store the url of the current document
-        m_oldUrl = url();
+        m_oldUrl = newUrl.isEmpty() ? url() : newUrl;
 
         // store the current viewport
         m_viewportDirty = m_document->viewport();
@@ -1771,7 +1771,7 @@ void Part::slotDoFileDirty()
         if (m_wasPresentationOpen) slotShowPresentation();
         emit enablePrintAction(true && m_document->printingSupport() != Okular::Document::NoPrinting);
     }
-    else
+    else if ( !oneShot )
     {
         // start watching the file again (since we dropped it on close) 
         setFileToWatch( localFilePath() );
@@ -2376,15 +2376,32 @@ bool Part::saveAs( const KUrl & saveUrl, bool saveAsOkularArchive )
         }
     }
 
+    // Stop watching for changes while we write the new file (useful when
+    // overwriting)
+    if ( url().isLocalFile() )
+        unsetFileToWatch();
+
     if ( !KIO::NetAccess::synchronousRun( copyJob, widget() ) )
     {
         KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", saveUrl.prettyUrl() ) );
+
+        // Restore watcher
+        if ( url().isLocalFile() )
+            setFileToWatch( localFilePath() );
+
         return false;
     }
 
-    // TODO: Load new file instead of the old one
-
     setModified( false );
+
+    // Load new file instead of the old one
+    if ( url() != saveUrl )
+        slotAttemptReload( true, saveUrl );
+
+    // Restore watcher
+    if ( url().isLocalFile() )
+        setFileToWatch( localFilePath() );
+
     return true;
 }
 
@@ -2710,7 +2727,7 @@ void Part::slotReload()
     // auto-refresh system
     m_dirtyHandler->stop();
 
-    slotDoFileDirty();
+    slotAttemptReload();
 }
 
 

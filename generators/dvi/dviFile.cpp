@@ -396,7 +396,7 @@ QString dvifile::convertPDFtoPS(const QString &PDFFilename, QString *converrorms
                           "contained in distributions of the ghostscript PostScript interpreter system. If "
                           "ghostscript is not installed on your system, you could install it now. "
                           "If you are sure that ghostscript is installed, try to use <strong>pdf2ps</strong> "
-                          "from the command line to check if it really works.</p><p><b>PATH:</b> %2</p></qt>", PDFFilename, getenv("PATH"));
+                          "from the command line to check if it really works.</p><p><em>PATH:</em> %2</p></qt>", PDFFilename, getenv("PATH"));
       have_complainedAboutMissingPDF2PS = true;
     }
     return QString();

@@ -126,14 +126,14 @@ DVIExportToPDF::DVIExportToPDF(dviRenderer& parent, const QString& output_name)
     return;
 
   if (KStandardDirs::findExe("dvipdfm").isEmpty()) {
-    emit error(i18n("Okular could not locate the program 'dvipdfm' on your computer. This program is "
+    emit error(i18n("<qt><p>Okular could not locate the program <em>dvipdfm</em> on your computer. This program is "
                     "essential for the export function to work. You can, however, convert "
                     "the DVI-file to PDF using the print function of Okular, but that will often "
                     "produce documents which print okay, but are of inferior quality if viewed in "
                     "Acrobat Reader. It may be wise to upgrade to a more recent version of your "
-                    "TeX distribution which includes the 'dvipdfm' program.\n"
-                    "Hint to the perplexed system administrator: Okular uses the PATH environment variable "
-                    "when looking for programs."), -1);
+                    "TeX distribution which includes the <em>dvipdfm</em> program.</p>"
+                    "<p>Hint to the perplexed system administrator: Okular uses the PATH environment variable "
+                    "when looking for programs.</p></qt>"), -1);
     return;
   }
 
@@ -176,17 +176,17 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
     return;
 
   if (dvi.numberOfExternalNONPSFiles != 0) {
-    emit error(i18n("This DVI file refers to external graphic files which are not in PostScript format, and cannot be handled by the "
-                    "'dvips' program that Okular uses internally to print or to export to PostScript. The functionality that "
-                    "you require is therefore unavailable in this version of Okular."), -1);
+    emit error(i18n("<qt>This DVI file refers to external graphic files which are not in PostScript format, and cannot be handled by the "
+                    "<em>dvips</em> program that Okular uses internally to print or to export to PostScript. The functionality that "
+                    "you require is therefore unavailable in this version of Okular.</qt>"), -1);
     return;
   }
 
   if (KStandardDirs::findExe("dvips").isEmpty()) {
-    emit error(i18n("Okular could not locate the program 'dvips' on your computer. That program is "
-                    "essential for the export function to work.\n"
-                    "Hint to the perplexed system administrator: Okular uses the PATH environment variable "
-                    "when looking for programs."), -1);
+    emit error(i18n("<qt><p>Okular could not locate the program <em>dvips</em> on your computer. "
+                    "That program is essential for the export function to work.</p>"
+                    "<p>Hint to the perplexed system administrator: Okular uses the PATH environment "
+                    "variable when looking for programs.</p></qt>"), -1);
     return;
   }
 

@@ -1160,19 +1160,8 @@ QString Part::currentDocument()
 
 QString Part::documentMetaData( const QString &metaData ) const
 {
-    const Okular::DocumentInfo * info = m_document->documentInfo();
-    if ( info )
-    {
-        QDomElement docElement = info->documentElement();
-        for ( QDomNode node = docElement.firstChild(); !node.isNull(); node = node.nextSibling() )
-        {
-            const QDomElement element = node.toElement();
-            if ( metaData.compare( element.tagName(), Qt::CaseInsensitive ) == 0 )
-                return element.attribute( "value" );
-        }
-    }
-
-    return QString();
+    const Okular::DocumentInfo info = m_document->documentInfo();
+    return info.get( metaData );
 }
 
 
@@ -2537,14 +2526,12 @@ void Part::slotAboutBackend()
 
     if ( aboutData.programIconName().isEmpty() || aboutData.programIconName() == aboutData.appName() )
     {
-        if ( const Okular::DocumentInfo *documentInfo = m_document->documentInfo() )
+        const Okular::DocumentInfo documentInfo = m_document->documentInfo(QSet<DocumentInfo::Key>() << DocumentInfo::MimeType);
+        const QString mimeTypeName = documentInfo.get(DocumentInfo::MimeType);
+        if ( !mimeTypeName.isEmpty() )
         {
-            const QString mimeTypeName = documentInfo->get("mimeType");
-            if ( !mimeTypeName.isEmpty() )
-            {
-                if ( KMimeType::Ptr type = KMimeType::mimeType( mimeTypeName ) )
-                    aboutData.setProgramIconName( type->iconName() );
-            }
+            if ( KMimeType::Ptr type = KMimeType::mimeType( mimeTypeName ) )
+                aboutData.setProgramIconName( type->iconName() );
         }
     }
 

@@ -36,7 +36,7 @@ namespace Okular {
 
 class Annotation;
 class BookmarkManager;
-class DocumentInfo;
+class DocumentInfoPrivate;
 class DocumentObserver;
 class DocumentPrivate;
 class DocumentSynopsis;
@@ -62,6 +62,110 @@ class VisiblePageRect;
 #define PAGEVIEW_SEARCH_ID 2
 #define SW_SEARCH_ID 3
 #define PRESENTATION_SEARCH_ID 4
+
+/**
+ * The DocumentInfo structure can be filled in by generators to display
+ * metadata about the currently opened file.
+ */
+class OKULAR_EXPORT DocumentInfo
+{
+    friend class Document;
+
+    public:
+        /**
+         * The list of predefined keys.
+         */
+        enum Key {
+            Title,              ///< The title of the document
+            Subject,            ///< The subject of the document
+            Description,        ///< The description of the document
+            Author,             ///< The author of the document
+            Creator,            ///< The creator of the document (this can be different from the author)
+            Producer,           ///< The producer of the document (e.g. some software)
+            Copyright,          ///< The copyright of the document
+            Pages,              ///< The number of pages of the document
+            CreationDate,       ///< The date of creation of the document
+            ModificationDate,   ///< The date of last modification of the document
+            MimeType,           ///< The mime type of the document
+            Category,           ///< The category of the document
+            Keywords,           ///< The keywords which describe the content of the document
+            FilePath,           ///< The path of the file @since 0.10 (KDE 4.4)
+            DocumentSize,       ///< The size of the document @since 0.10 (KDE 4.4)
+            PagesSize,          ///< The size of the pages (if all pages have the same size) @since 0.10 (KDE 4.4)
+            CustomKeys,         ///< All the custom keys the generator supports @since 0.21
+            Invalid             ///< An invalid key @since 0.21. It will always be the last element in the enum
+        };
+
+        /**
+         * Creates a new document info.
+         */
+        DocumentInfo();
+        DocumentInfo(const DocumentInfo &info);
+        DocumentInfo& operator=( const DocumentInfo& );
+
+        ~DocumentInfo();
+
+        /**
+         * Returns all the keys present in this DocumentInfo
+         *
+         * @since 0.21
+         */
+        QStringList keys() const;
+
+        /**
+         * Returns the value for a given key or an null string when the
+         * key doesn't exist.
+         */
+        QString get( Key key ) const;
+
+        /**
+         * Returns the value for a given key or an null string when the
+         * key doesn't exist.
+         */
+        QString get( const QString &key ) const;
+
+        /**
+         * Sets a value for a custom key. The title should be an i18n'ed
+         * string, since it's used in the document information dialog.
+         */
+        void set( const QString &key, const QString &value,
+                  const QString &title = QString() );
+
+        /**
+         * Sets a value for a special key. The title should be an i18n'ed
+         * string, since it's used in the document information dialog.
+         */
+        void set( Key key, const QString &value );
+
+        /**
+         * Returns the user visible string for the given key
+         * Takes into account keys added by the set() that takes a QString
+         *
+         * @since 0.21
+         */
+        QString getKeyTitle( const QString &key ) const;
+
+        /**
+         * Returns the internal string for the given key
+         * @since 0.10 (KDE 4.4)
+         */
+        static QString getKeyString( Key key );
+
+        /**
+         * Returns the user visible string for the given key
+         * @since 0.10 (KDE 4.4)
+         */
+        static QString getKeyTitle( Key key );
+
+        /**
+         * Returns the Key from a string key
+         * @since 0.21
+         */
+        static Key getKeyFromString( const QString &key );
+
+    private:
+        DocumentInfoPrivate *d;
+};
 
 
 /**
@@ -139,10 +243,15 @@ class OKULAR_EXPORT Document : public QObject
         bool isOpened() const;
 
         /**
-         * Returns the meta data of the document or 0 if no meta data
-         * are available.
+         * Returns the meta data of the document.
          */
-        const DocumentInfo * documentInfo() const;
+        DocumentInfo documentInfo() const;
+
+        /**
+         * Returns the asked set of meta data of the document. The result may contain more
+         * metadata than the one asked for.
+         */
+        DocumentInfo documentInfo( const QSet<DocumentInfo::Key> &keys ) const;
 
         /**
          * Returns the table of content of the document or 0 if no
@@ -1075,75 +1184,6 @@ class OKULAR_EXPORT DocumentViewport
             bool width;
             bool height;
         } autoFit;
-};
-
-/**
- * @short A DOM tree containing information about the document.
- *
- * The DocumentInfo structure can be filled in by generators to display
- * metadata about the currently opened file.
- */
-class OKULAR_EXPORT DocumentInfo : public QDomDocument
-{
-    public:
-        /**
-         * The list of predefined keys.
-         */
-        enum Key {
-            Title,              ///< The title of the document
-            Subject,            ///< The subject of the document
-            Description,        ///< The description of the document
-            Author,             ///< The author of the document
-            Creator,            ///< The creator of the document (this can be different from the author)
-            Producer,           ///< The producer of the document (e.g. some software)
-            Copyright,          ///< The copyright of the document
-            Pages,              ///< The number of pages of the document
-            CreationDate,       ///< The date of creation of the document
-            ModificationDate,   ///< The date of last modification of the document
-            MimeType,           ///< The mime type of the document
-            Category,           ///< The category of the document
-            Keywords,           ///< The keywords which describe the content of the document
-            FilePath,           ///< The path of the file @since 0.10 (KDE 4.4)
-            DocumentSize,       ///< The size of the document @since 0.10 (KDE 4.4)
-            PagesSize           ///< The size of the pages (if all pages have the same size) @since 0.10 (KDE 4.4)
-        };
-
-        /**
-         * Creates a new document info.
-         */
-        DocumentInfo();
-
-        /**
-         * Sets a value for a special key. The title should be an i18n'ed
-         * string, since it's used in the document information dialog.
-         */
-        void set( const QString &key, const QString &value,
-                  const QString &title = QString() );
-
-        /**
-         * Sets the value for a predefined key. You should use this method
-         * whenever a predefined key exists for your value.
-         */
-        void set( Key key, const QString &value );
-
-        /**
-         * Returns the value for a given key or an empty string when the
-         * key doesn't exist.
-         */
-        QString get( const QString &key ) const;
-
-        /**
-         * Returns the internal string for the given key
-         * @since 0.10 (KDE 4.4)
-         */
-        static QString getKeyString( Key key );
-
-        /**
-         * Returns the user visible string for the given key
-         * @since 0.10 (KDE 4.4)
-         */
-        static QString getKeyTitle( Key key );
-
 };
 
 /**

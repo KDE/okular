@@ -54,7 +54,6 @@ OKULAR_EXPORT_PLUGIN(GSGenerator, createAboutData())
 GSGenerator::GSGenerator( QObject *parent, const QVariantList &args ) :
     Okular::Generator( parent, args ),
     m_internalDocument(0),
-    m_docInfo(0),
     m_request(0)
 {
     setFeature( PrintPostscript );
@@ -182,9 +181,6 @@ bool GSGenerator::doCloseDocument()
     spectre_document_free(m_internalDocument);
     m_internalDocument = 0;
 
-    delete m_docInfo;
-    m_docInfo = 0;
-
     return true;
 }
 
@@ -265,28 +261,34 @@ bool GSGenerator::canGeneratePixmap() const
     return !m_request;
 }
 
-const Okular::DocumentInfo * GSGenerator::generateDocumentInfo()
+Okular::DocumentInfo GSGenerator::generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const
 {
-    if (!m_docInfo)
+    Okular::DocumentInfo docInfo;
+    if ( keys.contains( Okular::DocumentInfo::Title ) )
+        docInfo.set( Okular::DocumentInfo::Title, spectre_document_get_title(m_internalDocument) );
+    if ( keys.contains( Okular::DocumentInfo::Author ) )
+        docInfo.set( Okular::DocumentInfo::Author, spectre_document_get_for(m_internalDocument) );
+    if ( keys.contains( Okular::DocumentInfo::Creator ) )
+        docInfo.set( Okular::DocumentInfo::Creator, spectre_document_get_creator(m_internalDocument) );
+    if ( keys.contains( Okular::DocumentInfo::CreationDate ) )
+        docInfo.set( Okular::DocumentInfo::CreationDate, spectre_document_get_creation_date(m_internalDocument) );
+    if ( keys.contains( Okular::DocumentInfo::CustomKeys ) )
+        docInfo.set( "dscversion", spectre_document_get_format(m_internalDocument), i18n("Document version") );
+
+    if ( keys.contains( Okular::DocumentInfo::MimeType ) )
     {
-        m_docInfo = new Okular::DocumentInfo();
-
-        m_docInfo->set( Okular::DocumentInfo::Title, spectre_document_get_title(m_internalDocument) );
-        m_docInfo->set( Okular::DocumentInfo::Author, spectre_document_get_for(m_internalDocument) );
-        m_docInfo->set( Okular::DocumentInfo::Creator, spectre_document_get_creator(m_internalDocument) );
-        m_docInfo->set( Okular::DocumentInfo::CreationDate, spectre_document_get_creation_date(m_internalDocument) );
-        m_docInfo->set( "dscversion", spectre_document_get_format(m_internalDocument), i18n("Document version") );
-
         int languageLevel = spectre_document_get_language_level(m_internalDocument);
-        if (languageLevel > 0) m_docInfo->set( "langlevel", QString::number(languageLevel), i18n("Language Level") );
+        if (languageLevel > 0) docInfo.set( "langlevel", QString::number(languageLevel), i18n("Language Level") );
         if (spectre_document_is_eps(m_internalDocument))
-            m_docInfo->set( Okular::DocumentInfo::MimeType, "image/x-eps" );
+            docInfo.set( Okular::DocumentInfo::MimeType, "image/x-eps" );
         else
-            m_docInfo->set( Okular::DocumentInfo::MimeType, "application/postscript" );
-
-        m_docInfo->set( Okular::DocumentInfo::Pages, QString::number(spectre_document_get_n_pages(m_internalDocument)) );
+            docInfo.set( Okular::DocumentInfo::MimeType, "application/postscript" );
     }
-    return m_docInfo;
+
+    if ( keys.contains( Okular::DocumentInfo::Pages ) )
+        docInfo.set( Okular::DocumentInfo::Pages, QString::number(spectre_document_get_n_pages(m_internalDocument)) );
+
+    return docInfo;
 }
 
 Okular::Rotation GSGenerator::orientation(SpectreOrientation pageOrientation) const

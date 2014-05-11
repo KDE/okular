@@ -186,9 +186,9 @@ void KIMGIOGenerator::slotTest()
     kDebug() << "Test";
 }
 
-const Okular::DocumentInfo * KIMGIOGenerator::generateDocumentInfo()
+Okular::DocumentInfo KIMGIOGenerator::generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const
 {
-    return &docInfo;
+    return docInfo;
 }
 
 #include "generator_kimgio.moc"

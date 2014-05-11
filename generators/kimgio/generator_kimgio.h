@@ -30,7 +30,7 @@ class KIMGIOGenerator : public Okular::Generator
         bool print( QPrinter& printer );
 
         // [INHERITED] document information
-        const Okular::DocumentInfo * generateDocumentInfo();
+        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const;
 
     protected:
         bool doCloseDocument();

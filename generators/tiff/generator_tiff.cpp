@@ -178,7 +178,7 @@ OKULAR_EXPORT_PLUGIN( TIFFGenerator, createAboutData() )
 
 TIFFGenerator::TIFFGenerator( QObject *parent, const QVariantList &args )
     : Okular::Generator( parent, args ),
-      d( new Private ), m_docInfo( 0 )
+      d( new Private )
 {
     setFeature( Threaded );
     setFeature( PrintNative );
@@ -194,7 +194,6 @@ TIFFGenerator::~TIFFGenerator()
         d->tiff = 0;
     }
 
-    delete m_docInfo;
     delete d;
 }
 
@@ -245,8 +244,6 @@ bool TIFFGenerator::doCloseDocument()
         delete d->dev;
         d->dev = 0;
         d->data.clear();
-        delete m_docInfo;
-        m_docInfo = 0;
         m_pageMapping.clear();
     }
 
@@ -304,40 +301,52 @@ QImage TIFFGenerator::image( Okular::PixmapRequest * request )
     return img;
 }
 
-const Okular::DocumentInfo * TIFFGenerator::generateDocumentInfo()
+Okular::DocumentInfo TIFFGenerator::generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const
 {
-    if ( !d->tiff )
-        return 0;
+    Okular::DocumentInfo docInfo;
+    if ( d->tiff )
+    {
+        if ( keys.contains( Okular::DocumentInfo::MimeType ) )
+            docInfo.set( Okular::DocumentInfo::MimeType, "image/tiff" );
 
-    if ( m_docInfo )
-        return m_docInfo;
+        if ( keys.contains( Okular::DocumentInfo::Description ) )
+        {
+            char* buffer = 0;
+            TIFFGetField( d->tiff, TIFFTAG_IMAGEDESCRIPTION, &buffer );
+            docInfo.set( Okular::DocumentInfo::Description, buffer ? QString::fromLatin1( buffer ) : QString() );
+        }
 
-    m_docInfo = new Okular::DocumentInfo();
+        if ( keys.contains( Okular::DocumentInfo::Producer ) )
+        {
+            char* buffer = 0;
+            TIFFGetField( d->tiff, TIFFTAG_SOFTWARE, &buffer );
+            docInfo.set( Okular::DocumentInfo::Producer, buffer ? QString::fromLatin1( buffer ) : QString() );
+        }
 
-    m_docInfo->set( Okular::DocumentInfo::MimeType, "image/tiff" );
+        if ( keys.contains( Okular::DocumentInfo::Copyright ) )
+        {
+            char* buffer = 0;
+            TIFFGetField( d->tiff, TIFFTAG_COPYRIGHT, &buffer );
+            docInfo.set( Okular::DocumentInfo::Copyright, buffer ? QString::fromLatin1( buffer ) : QString() );
+        }
 
-    char* buffer = 0;
-    TIFFGetField( d->tiff, TIFFTAG_IMAGEDESCRIPTION, &buffer );
-    m_docInfo->set( Okular::DocumentInfo::Description, buffer ? QString::fromLatin1( buffer ) : i18nc( "Unknown description", "Unknown" ) );
+        if ( keys.contains( Okular::DocumentInfo::Author ) )
+        {
+            char* buffer = 0;
+            TIFFGetField( d->tiff, TIFFTAG_ARTIST, &buffer );
+            docInfo.set( Okular::DocumentInfo::Author, buffer ? QString::fromLatin1( buffer ) : QString() );
+        }
 
-    buffer = 0;
-    TIFFGetField( d->tiff, TIFFTAG_SOFTWARE, &buffer );
-    m_docInfo->set( Okular::DocumentInfo::Producer, buffer ? QString::fromLatin1( buffer ) : i18nc( "Unknown producer", "Unknown" ) );
+        if ( keys.contains( Okular::DocumentInfo::CreationDate ) )
+        {
+            char* buffer = 0;
+            TIFFGetField( d->tiff, TIFFTAG_DATETIME, &buffer );
+            QDateTime date = convertTIFFDateTime( buffer );
+            docInfo.set( Okular::DocumentInfo::CreationDate, date.isValid() ? KGlobal::locale()->formatDateTime( date, KLocale::LongDate, true  ) : QString() );
+        }
+    }
 
-    buffer = 0;
-    TIFFGetField( d->tiff, TIFFTAG_COPYRIGHT, &buffer );
-    m_docInfo->set( Okular::DocumentInfo::Copyright, buffer ? QString::fromLatin1( buffer ) : i18nc( "Unknown copyright statement", "Unknown" ) );
-
-    buffer = 0;
-    TIFFGetField( d->tiff, TIFFTAG_ARTIST, &buffer );
-    m_docInfo->set( Okular::DocumentInfo::Author, buffer ? QString::fromLatin1( buffer ) : i18nc( "Unknown author", "Unknown" ) );
-
-    buffer = 0;
-    TIFFGetField( d->tiff, TIFFTAG_DATETIME, &buffer );
-    QDateTime date = convertTIFFDateTime( buffer );
-    m_docInfo->set( Okular::DocumentInfo::CreationDate, date.isValid() ? KGlobal::locale()->formatDateTime( date, KLocale::LongDate, true  ) : i18nc( "Unknown creation date", "Unknown" ) );
-
-    return m_docInfo;
+    return docInfo;
 }
 
 void TIFFGenerator::loadPages( QVector<Okular::Page*> & pagesVector )

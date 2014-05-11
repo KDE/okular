@@ -429,6 +429,21 @@ void Shell::setFullScreen( bool useFullScreen )
         setWindowState( windowState() & ~Qt::WindowFullScreen ); // reset
 }
 
+void Shell::setCaption( const QString &caption )
+{
+    bool modified = false;
+
+    const int activeTab = m_tabWidget->currentIndex();
+    if ( activeTab >= 0 && activeTab < m_tabs.size() )
+    {
+        KParts::ReadWritePart* const activePart = m_tabs[activeTab].part;
+        if ( activePart->isModified() )
+            modified = true;
+    }
+
+    setCaption( caption, modified );
+}
+
 void Shell::showEvent(QShowEvent *e)
 {
     if (m_showMenuBarAction)

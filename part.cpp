@@ -1108,7 +1108,10 @@ void Part::notifyViewportChanged( bool /*smoothMove*/ )
 void Part::notifyPageChanged( int page, int flags )
 {
     if ( flags & Okular::DocumentObserver::NeedSaveAs )
+    {
         setModified();
+        setWindowTitleFromDocument();
+    }
 
     if ( !(flags & Okular::DocumentObserver::Bookmark ) )
         return;
@@ -2435,6 +2438,7 @@ bool Part::saveAs( const KUrl & saveUrl, bool saveAsOkularArchive )
     }
 
     setModified( false );
+    setWindowTitleFromDocument();
 
     bool reloadedCorrectly = true;
 

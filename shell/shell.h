@@ -82,8 +82,11 @@ protected:
   void readSettings();
   void writeSettings();
   void setFullScreen( bool );
-  bool queryClose();
 
+  using KParts::MainWindow::setCaption;
+  void setCaption( const QString &caption );
+
+  bool queryClose();
   void showEvent(QShowEvent *event);
 
 private slots:

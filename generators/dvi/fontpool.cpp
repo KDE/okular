@@ -210,7 +210,7 @@ void fontPool::locateFonts()
                     "which are necessary to display the current DVI file. "
                     "Your document might be unreadable.</p>"
                     "<p><small><b>PATH:</b> %1</small></p>"
-                    "<p><small>%2</small></p></qt>", getenv("PATH"),
+                    "<p><small>%2</small></p></qt>", QString(qgetenv("PATH")),
                     kpsewhichOutput.replace(QLatin1String("\n"), QLatin1String("<br/>"))), -1);
   }
 }
@@ -282,7 +282,7 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
                     "Possible reason: the <em>kpsewhich</em> program is perhaps not installed on your system, "
                     "or it cannot be found in the current search path.</p>"
                     "<p><small><b>PATH:</b> %1</small></p>"
-                    "<p><small>%2</small></p></qt>", getenv("PATH"),
+                    "<p><small>%2</small></p></qt>", QString(qgetenv("PATH")),
                     kpsewhichOutput.replace(QLatin1String("\n"), QLatin1String("<br/>"))), -1);
 
     // This makes sure the we don't try to run kpsewhich again

@@ -4285,7 +4285,8 @@ bool Document::saveDocumentArchive( const QString &fileName )
     // If the generator can save annotations natively, do it
     KTemporaryFile modifiedFile;
     bool annotationsSavedNatively = false;
-    if ( d->canAddAnnotationsNatively() )
+    bool formsSavedNatively = false;
+    if ( d->canAddAnnotationsNatively() || canSaveChanges( SaveFormsCapability ) )
     {
         if ( !modifiedFile.open() )
             return false;
@@ -4296,7 +4297,8 @@ bool Document::saveDocumentArchive( const QString &fileName )
         if ( saveChanges( modifiedFile.fileName(), &errorText ) )
         {
             docPath = modifiedFile.fileName(); // Save this instead of the original file
-            annotationsSavedNatively = true;
+            annotationsSavedNatively = d->canAddAnnotationsNatively();
+            formsSavedNatively = canSaveChanges( SaveFormsCapability );
         }
         else
         {
@@ -4305,8 +4307,13 @@ bool Document::saveDocumentArchive( const QString &fileName )
         }
     }
 
+    PageItems saveWhat = None;
+    if ( !annotationsSavedNatively )
+        saveWhat |= AnnotationPageItems;
+    if ( !formsSavedNatively )
+        saveWhat |= FormFieldPageItems;
+
     KTemporaryFile metadataFile;
-    PageItems saveWhat = annotationsSavedNatively ? None : AnnotationPageItems;
     if ( !d->savePageDocumentInfo( &metadataFile, saveWhat ) )
         return false;
 

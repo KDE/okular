@@ -69,8 +69,12 @@ void FilePrinterPreviewPrivate::getPart()
     kDebug(500) << "querying trader for application/ps service";
 
     KPluginFactory *factory(0);
+    /* Explicitly look for the Okular/Ghostview part: no other PostScript
+       parts are available now; other parts which handles text are not
+       suitable here (PostScript source code) */
     KService::List offers =
-        KMimeTypeTrader::self()->query("application/postscript", "KParts/ReadOnlyPart");
+        KMimeTypeTrader::self()->query("application/postscript", "KParts/ReadOnlyPart",
+                                       "[DesktopEntryName] == 'okularghostview'");
 
     KService::List::ConstIterator it = offers.constBegin();
     while (!factory && it != offers.constEnd()) {

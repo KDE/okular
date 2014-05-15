@@ -936,7 +936,9 @@ Document::OpenResult DocumentPrivate::openDocumentInternal( const KService::Ptr&
 
     QApplication::setOverrideCursor( Qt::WaitCursor );
 
-    m_generator->setDPI(Utils::realDpi(m_widget));
+    const QSizeF dpi = Utils::realDpi(m_widget);
+    kDebug() << "Output DPI:" << dpi;
+    m_generator->setDPI(dpi);
 
     Document::OpenResult openResult = Document::OpenError;
     if ( !isstdin )

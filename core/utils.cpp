@@ -79,6 +79,7 @@ double Utils::realDpiX()
 {
     const QDesktopWidget* w = QApplication::desktop();
     if (w->width() > 0 && w->widthMM() > 0) {
+        kDebug() << "Pix:" << w->width() << "MM:" << w->widthMM();
         return (double(w->width()) * 25.4) / double(w->widthMM());
     } else {
         return dpiX();
@@ -89,6 +90,7 @@ double Utils::realDpiY()
 {
     const QDesktopWidget* w = QApplication::desktop();
     if (w->height() > 0 && w->heightMM() > 0) {
+        kDebug() << "Pix:" << w->height() << "MM:" << w->heightMM();
         return (double(w->height()) * 25.4) / double(w->heightMM());
     } else {
         return dpiY();
@@ -148,10 +150,17 @@ QSizeF Utils::realDpi(QWidget* widgetOnScreen)
                         kDebug() << "Output is vertical, transposing DPI rect";
                         res.transpose();
                     }
-                    kDebug() << "Output DPI is " << res;
                     return res;
                 }
             }
+            else
+            {
+                kDebug() << "Didn't find a KScreen selectedOutput to calculate DPI. Falling back";
+            }
+        }
+        else
+        {
+            kDebug() << "Didn't find a KScreen config to calculate DPI. Falling back";
         }
 #endif
     }

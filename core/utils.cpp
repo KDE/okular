@@ -16,7 +16,6 @@
 #include <QDesktopWidget>
 #include <QImage>
 #include <QIODevice>
-#include <cmath>
 
 #ifdef Q_WS_X11
   #include "config-okular.h"
@@ -139,8 +138,8 @@ QSizeF Utils::realDpi(QWidget* widgetOnScreen)
                 }
                 if (szMM.width() > 0 && szMM.height() > 0 && outputRect.width() > 0 && outputRect.height() > 0
                     && selectedOutput->edid()
-                    && std::abs(static_cast<int>(selectedOutput->edid()->width()*10) - szMM.width()) < 10
-                    && std::abs(static_cast<int>(selectedOutput->edid()->height()*10) - szMM.height()) < 10)
+                    && qAbs(static_cast<int>(selectedOutput->edid()->width()*10) - szMM.width()) < 10
+                    && qAbs(static_cast<int>(selectedOutput->edid()->height()*10) - szMM.height()) < 10)
                 {
                     // sizes in EDID seem to be consistent
                     QSizeF res(static_cast<qreal>(outputRect.width())*25.4/szMM.width(),

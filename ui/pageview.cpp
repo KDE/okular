@@ -1647,7 +1647,7 @@ void PageView::resizeEvent( QResizeEvent *e )
         return;
     }
 
-    if ( ( d->zoomMode == ZoomFitWidth || d->zoomMode == ZoomFitAuto ) && d->verticalScrollBarVisible && !verticalScrollBar()->isVisible() && qAbs(e->oldSize().height() - e->size().height()) < verticalScrollBar()->width() )
+    if ( ( d->zoomMode == ZoomFitWidth || d->zoomMode == ZoomFitAuto ) && !verticalScrollBar()->isVisible() && qAbs(e->oldSize().height() - e->size().height()) < verticalScrollBar()->width() && d->verticalScrollBarVisible )
     {
         // this saves us from infinite resizing loop because of scrollbars appearing and disappearing
         // see bug 160628 for more info
@@ -1657,7 +1657,7 @@ void PageView::resizeEvent( QResizeEvent *e )
         resizeContentArea( e->size() );
         return;
     }
-    else if ( d->zoomMode == ZoomFitAuto && d->horizontalScrollBarVisible && !horizontalScrollBar()->isVisible() && qAbs(e->oldSize().width() - e->size().width()) < horizontalScrollBar()->height() )
+    else if ( d->zoomMode == ZoomFitAuto && !horizontalScrollBar()->isVisible() && qAbs(e->oldSize().width() - e->size().width()) < horizontalScrollBar()->height() && d->horizontalScrollBarVisible )
     {
         // this saves us from infinite resizing loop because of scrollbars appearing and disappearing
         // TODO looks are still a bit ugly because things are left uncentered

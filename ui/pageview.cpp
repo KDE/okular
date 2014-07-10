@@ -574,7 +574,7 @@ void PageView::setupActions( KActionCollection * ac )
     d->aMouseTextSelect->setActionGroup( d->mouseModeActionGroup );
     d->aMouseTextSelect->setChecked( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::TextSelect );
 
-    d->aMouseTableSelect  = new KAction(KIcon( "select-table" ), i18n("T&able Selection Tool"), this);
+    d->aMouseTableSelect  = new KAction(KIcon( "table" ), i18n("T&able Selection Tool"), this);
     ac->addAction("mouse_tableselect", d->aMouseTableSelect );
     connect( d->aMouseTableSelect, SIGNAL( triggered() ), this, SLOT( slotSetMouseTableSelect() ) );
     d->aMouseTableSelect->setIconText( i18nc( "Table Selection Tool", "Table Selection" ) );
@@ -583,7 +583,7 @@ void PageView::setupActions( KActionCollection * ac )
     d->aMouseTableSelect->setActionGroup( d->mouseModeActionGroup );
     d->aMouseTableSelect->setChecked( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::TableSelect );
 
-    d->aMouseMagnifier = new KAction(KIcon( "magnifier" ), i18n("&Magnifier"), this);
+    d->aMouseMagnifier = new KAction(KIcon( "document-preview" ), i18n("&Magnifier"), this);
     ac->addAction("mouse_magnifier", d->aMouseMagnifier );
     connect( d->aMouseMagnifier, SIGNAL(triggered()), this, SLOT(slotSetMouseMagnifier()) );
     d->aMouseMagnifier->setIconText( i18nc( "Magnifier Tool", "Magnifier" ) );

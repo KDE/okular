@@ -132,9 +132,10 @@ QSizeF Utils::realDpi(QWidget* widgetOnScreen)
                 kDebug() << "Found widget at output #" << selectedOutput->id();
                 QRect outputRect(selectedOutput->pos(),selectedOutput->currentMode()->size());
                 QSize szMM = selectedOutput->sizeMm();
-                kDebug() << "Output size is " << szMM;
+                kDebug() << "Output size is (mm) " << szMM;
+                kDebug() << "Output rect is " << outputRect;
                 if (selectedOutput->edid()) {
-                    kDebug() << "EDID WxH: " << selectedOutput->edid()->width()  << 'x' << selectedOutput->edid()->height();
+                    kDebug() << "EDID WxH (cm): " << selectedOutput->edid()->width()  << 'x' << selectedOutput->edid()->height();
                 }
                 if (szMM.width() > 0 && szMM.height() > 0 && outputRect.width() > 0 && outputRect.height() > 0
                     && selectedOutput->edid()

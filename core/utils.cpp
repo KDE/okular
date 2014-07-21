@@ -150,7 +150,11 @@ QSizeF Utils::realDpi(QWidget* widgetOnScreen)
                         kDebug() << "Output is vertical, transposing DPI rect";
                         res.transpose();
                     }
-                    return res;
+                    if (qAbs(res.width() - res.height()) / qMin(res.height(), res.width()) < 0.05) {
+                        return res;
+                    } else {
+                        kDebug() << "KScreen calculation returned a non square dpi." << res << ". Falling back";
+                    }
                 }
             }
             else
@@ -166,7 +170,22 @@ QSizeF Utils::realDpi(QWidget* widgetOnScreen)
     }
     // this is also fallback for LibKScreen branch if KScreen::Output
     // for particular widget was not found
-    return QSizeF(realDpiX(), realDpiY());
+    QSizeF res = QSizeF(realDpiX(), realDpiY());
+    if (qAbs(res.width() - res.height()) / qMin(res.height(), res.width()) < 0.05) {
+        return res;
+    } else {
+        kDebug() << "QDesktopWidget calculation returned a non square dpi." << res << ". Falling back";
+    }
+
+    res = QSizeF(dpiX(), dpiY());
+    if (qAbs(res.width() - res.height()) / qMin(res.height(), res.width()) < 0.05) {
+        return res;
+    } else {
+        kDebug() << "QX11Info returned a non square dpi." << res << ". Falling back";
+    }
+    
+    res = QSizeF(72, 72);
+    return res;
 }
 
 #elif defined(Q_WS_MAC)

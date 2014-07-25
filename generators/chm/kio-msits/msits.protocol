@@ -20,6 +20,7 @@ Description[el]=Ένα kioslave για την εμφάνιση αρχείων Wi
 Description[en_GB]=A kioslave for displaying WinHelp files
 Description[eo]=Kio-sklavo por montri la WinHelp dosierojn
 Description[es]=Un «kioslave» para mostrar archivos WinHelp
+Description[et]=KIO-moodul WinHelp-failide näitamiseks
 Description[eu]=WinHelp fitxategiak bistaratzeko kioslave bat
 Description[fi]=WinHelp-tiedostoja näyttävä kioslave
 Description[fr]=Module d'entrées / sorties pour l'affichage des fichiers d'aide « Win Help »

@@ -109,6 +109,7 @@ private slots:
   void activatePrevTab();
   void testTabDrop( const QDragMoveEvent* event, bool& accept );
   void handleTabDrop( QDropEvent* event );
+  void moveTabData( int from, int to );
 
 signals:
   void restoreDocument(const KConfigGroup &group);

@@ -2836,7 +2836,7 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests, 
     if ( requests.isEmpty() )
         return;
 
-    if ( !d->m_generator || d->m_closingLoop )
+    if ( !d->m_pageController )
     {
         // delete requests..
         QLinkedList< PixmapRequest * >::const_iterator rIt = requests.constBegin(), rEnd = requests.constEnd();
@@ -4425,7 +4425,7 @@ void DocumentPrivate::calculateMaxTextPages()
 
 void DocumentPrivate::textGenerationDone( Page *page )
 {
-    if ( !m_generator || m_closingLoop ) return;
+    if ( !m_pageController ) return;
 
     // 1. If we reached the cache limit, delete the first text page from the fifo
     if (m_allocatedTextPagesFifo.size() == m_maxAllocatedTextPages)

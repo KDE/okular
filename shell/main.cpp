@@ -104,6 +104,10 @@ static bool attachExistingInstance( KCmdLineArgs* args )
 
             arg = tempFile->fileName();
         }
+        else
+        {
+            arg = args->url( i ).url();
+        }
 
         // Returns false if it can't fit another document
         const QDBusReply<bool> reply = bestService->call( "openDocument", arg );

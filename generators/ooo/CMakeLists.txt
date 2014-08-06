@@ -3,8 +3,13 @@ include_directories(
    ${CMAKE_CURRENT_SOURCE_DIR}/../..
 )
 
-macro_optional_find_package(QCA2)
-macro_log_feature(QCA2_FOUND "QCA" "Qt Cryptographic Architecture (QCA)" "http://delta.affinix.com/qca/" FALSE "2.0.0" "Support for encrypted OpenDocument Text documents in Okular.")
+find_package(QCA2 "2.0.0")
+set_package_properties("QCA" PROPERTIES
+        DESCRIPTION  "Qt Cryptographic Architecture (QCA)"
+        URL "http://www.digikam.org/sharedlibs"
+        TYPE RECOMMENDED
+        PURPOSE "Support for encrypted OpenDocument Text documents in Okular.")
+
 
 if ( QCA2_FOUND )
    include_directories( ${QCA2_INCLUDE_DIR} )

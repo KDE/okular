@@ -1,17 +1,39 @@
 project(okular)
 
-find_package(KDE4 4.6.0 REQUIRED)
-include(KDE4Defaults)
-include(MacroLibrary)
-include(MacroOptionalAddSubdirectory)
+cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
+
+set(QT_MIN_VERSION "5.2.0")
+
+find_package(ECM 0.0.14 REQUIRED NO_MODULE)
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH})
+
+include(KDEInstallDirs)
+include(KDECMakeSettings)
+include(KDECompilerSettings)
+include(ECMInstallIcons)
+include(ECMSetupVersion)
+include(ECMOptionalAddSubdirectory)
+
+find_package(Qt5 CONFIG REQUIRED COMPONENTS Core DBus Test Widgets)
+find_package(KF5 REQUIRED Archive Bookmarks CoreAddons Config ConfigWidgets DBusAddons KIO KDELibs4Support Parts Activities)
+
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake/modules)
 
-macro_optional_find_package(QImageBlitz)
-macro_log_feature(QIMAGEBLITZ_FOUND "QImageBlitz" "An image effects library" "http://sourceforge.net/projects/qimageblitz" TRUE "kdesupport" "Required to build Okular.")
+find_package(QImageBlitz)
+set_package_properties("QImageBlitz" PROPERTIES
+        DESCRIPTION "An image effects library"
+        URL "http://sourceforge.net/projects/qimageblitz"
+        TYPE RECOMMENDED
+        PURPOSE "Required to build Okular.")
 
-macro_optional_find_package(LibKScreen)
-macro_log_feature(LibKScreen_FOUND "LibKScreen" "KDE screen management library" "https://projects.kde.org/projects/kdereview/libkscreen" FALSE "1.0.2" "DPI detection support")
+find_package(LibKScreen "1.0.2")
+set_package_properties("LibKScreen" PROPERTIES
+        DESCRIPTION "KDE screen management library"
+        URL "https://projects.kde.org/projects/kdereview/libkscreen"
+        TYPE RECOMMENDED
+        PURPOSE "DPI detection support")
 
 add_definitions(${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
 add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
@@ -27,10 +49,11 @@ add_subdirectory( ui )
 add_subdirectory( shell )
 add_subdirectory( generators )
 add_subdirectory( tests )
-macro_optional_add_subdirectory(doc)
+
+message("TODO: doc build")
+# FIXME ecm_optional_add_subdirectory(doc)
 
 include(OkularConfigureChecks.cmake)
-include(MacroWriteBasicCMakeVersionFile)
 
 if(NOT WIN32)
  set(MATH_LIB m)
@@ -229,11 +252,12 @@ install( FILES part.rc part-viewermode.rc DESTINATION ${DATA_INSTALL_DIR}/okular
 
 ########### cmake files #################
 
-macro_write_basic_cmake_version_file(${CMAKE_CURRENT_BINARY_DIR}/OkularConfigVersion.cmake 0 11 80)
+include(WriteBasicConfigVersionFile)
+write_basic_config_version_file(${CMAKE_CURRENT_BINARY_DIR}/OkularConfigVersion.cmake VERSION 0.11.80 COMPATIBILITY AnyNewerVersion)
 
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/OkularConfig.cmake
               ${CMAKE_CURRENT_BINARY_DIR}/OkularConfigVersion.cmake
         DESTINATION ${LIB_INSTALL_DIR}/cmake/Okular )
 
-macro_display_feature_log()
+feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
 

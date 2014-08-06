@@ -4,9 +4,12 @@ include_directories(
 )
 
 # checking whether we should enable activities support
-
-macro_optional_find_package(KActivities 6.1.0)
-macro_log_feature(KActivities_FOUND "KActivities" "Activities interface library" "https://projects.kde.org/projects/kde/kdelibs/kactivities" FALSE "6.1.0" "Required for Activities integration.")
+find_package(KActivities "6.1.0")
+set_package_properties("KActivities" PROPERTIES
+        DESCRIPTION  "Activities interface library"
+        URL "https://projects.kde.org/projects/kde/kdelibs/kactivities"
+        TYPE RECOMMENDED
+        PURPOSE "Required for Activities integration.")
 
 if(KActivities_FOUND)
  add_definitions(-DKActivities_FOUND)

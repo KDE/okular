@@ -15,7 +15,7 @@ include(ECMInstallIcons)
 include(ECMSetupVersion)
 include(ECMOptionalAddSubdirectory)
 
-find_package(Qt5 CONFIG REQUIRED COMPONENTS Core DBus Test Widgets)
+find_package(Qt5 CONFIG REQUIRED COMPONENTS Core DBus Test Widgets PrintSupport)
 find_package(KF5 REQUIRED Archive Bookmarks CoreAddons Config ConfigWidgets DBusAddons KIO KDELibs4Support Parts Activities)
 
 

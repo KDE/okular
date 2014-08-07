@@ -49,4 +49,4 @@ void PageController::imageRotationDone(ThreadWeaver::Job *j)
     job->deleteLater();
 }
 
-#include "pagecontroller_p.moc"
+#include "pagecontroller.moc"

@@ -30,13 +30,14 @@
 #include <QtCore/QMap>
 #include <QtCore/QTextStream>
 #include <QtCore/QTimer>
-#include <QtGui/QApplication>
-#include <QtGui/QLabel>
-#include <QtGui/QPrinter>
-#include <QtGui/QPrintDialog>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QLabel>
+#include <QtPrintSupport/QPrinter>
+#include <QtPrintSupport/QPrintDialog>
 #include <QUndoCommand>
 
 #include <kaboutdata.h>
+#include <k4aboutdata.h>
 #include <kauthorized.h>
 #include <kcomponentdata.h>
 #include <kconfigdialog.h>

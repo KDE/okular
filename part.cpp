@@ -29,7 +29,7 @@
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qtimer.h>
-#include <QtGui/QPrinter>
+#include <QtPrintSupport/QPrinter>
 #include <QtGui/QPrintDialog>
 #include <QScrollBar>
 

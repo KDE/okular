@@ -16,7 +16,7 @@
 
 #include <QtCore/QList>
 #include <QtCore/QString>
-#include <QtGui/QPrinter>
+#include <QtPrintSupport/QPrinter>
 
 #include "okular_export.h"
 #include "generator.h"

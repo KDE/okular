@@ -12,13 +12,13 @@
 
 #include "fileprinter.h"
 
-#include <QtGui/QPrinter>
+#include <QtPrintSupport/QPrinter>
 #include <QPrintEngine>
 #include <QStringList>
 #include <QSize>
 #include <QtCore/QFile>
 #include <QtCore/QFileInfo>
-#include <QtGui/QLabel>
+#include <QtWidgets/QLabel>
 #include <QtGui/QShowEvent>
 #include <QtNetwork/QTcpSocket>
 

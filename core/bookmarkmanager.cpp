@@ -12,11 +12,13 @@
 // qt/kde includes
 #include <qhash.h>
 #include <qset.h>
+#include <kbookmarkaction.h>
 #include <kbookmarkmanager.h>
 #include <kbookmarkmenu.h>
 #include <kdebug.h>
 #include <kglobal.h>
 #include <kstandarddirs.h>
+#include <kurl.h>
 
 // local includes
 #include "document_p.h"

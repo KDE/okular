@@ -13,9 +13,9 @@
 #include <kbookmark.h>
 
 #include "okular_export.h"
+#include <kurl.h>
 
 class QAction;
-class KUrl;
 
 namespace Okular {
 

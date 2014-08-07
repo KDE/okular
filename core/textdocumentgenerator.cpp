@@ -18,7 +18,7 @@
 #include <QtGui/QFontDatabase>
 #include <QtGui/QImage>
 #include <QtGui/QPainter>
-#include <QtGui/QPrinter>
+#include <QtPrintSupport/QPrinter>
 #if QT_VERSION >= 0x040500
 #include <QtGui/QTextDocumentWriter>
 #endif

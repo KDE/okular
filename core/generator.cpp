@@ -13,7 +13,7 @@
 #include "observer.h"
 
 #include <qeventloop.h>
-#include <QtGui/QPrinter>
+#include <QtPrintSupport/QPrinter>
 
 #include <kdebug.h>
 #include <kicon.h>

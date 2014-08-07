@@ -19,7 +19,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QStringList>
 #include <QtCore/QVector>
-#include <QtGui/QPrinter>
+#include <QtPrintSupport/QPrinter>
 #include <QtXml/QDomDocument>
 
 #include <kmimetype.h>

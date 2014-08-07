@@ -11,7 +11,7 @@
 #include "annotations_p.h"
 
 // qt/kde includes
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 #include <QtGui/QColor>
 
 // DBL_MAX

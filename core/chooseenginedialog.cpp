@@ -9,8 +9,8 @@
 
 #include "chooseenginedialog_p.h"
 
-#include <QtGui/QComboBox>
-#include <QtGui/QLabel>
+#include <QtWidgets/QComboBox>
+#include <QtWidgets/QLabel>
 
 #include <klocale.h>
 

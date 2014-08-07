@@ -22,7 +22,7 @@
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QVBoxLayout>
 #include <QtGui/QGroupBox>
-#include <QtGui/QLabel>
+#include <QtWidgets/QLabel>
 #include <QtGui/QListWidget>
 #include <QtGui/QListWidgetItem>
 #include <QtGui/QStackedWidget>

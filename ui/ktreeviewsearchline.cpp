@@ -28,7 +28,7 @@
 #include <QtGui/QContextMenuEvent>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
-#include <QtGui/QLabel>
+#include <QtWidgets/QLabel>
 #include <QtGui/QMenu>
 #include <QtGui/QToolButton>
 #include <QtGui/QTreeView>

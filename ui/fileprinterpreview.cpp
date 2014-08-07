@@ -15,7 +15,7 @@
 #include <QFile>
 #include <QSize>
 #include <QtCore/QFile>
-#include <QtGui/QLabel>
+#include <QtWidgets/QLabel>
 #include <QtGui/QShowEvent>
 
 #include <kmimetypetrader.h>

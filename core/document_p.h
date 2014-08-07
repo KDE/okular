@@ -22,6 +22,7 @@
 
 #include <kcomponentdata.h>
 #include <kservicetypetrader.h>
+#include <kurl.h>
 
 // local includes
 #include "fontinfo.h"

@@ -44,11 +44,12 @@ include_directories(
    ${LibKScreen_INCLUDE_DIR}
 )
 
-add_subdirectory( active )
-add_subdirectory( ui )
-add_subdirectory( shell )
-add_subdirectory( generators )
-add_subdirectory( tests )
+message("TODO: when core compiles add subdirs")
+#add_subdirectory( active )
+#add_subdirectory( ui )
+#add_subdirectory( shell )
+#add_subdirectory( generators )
+#add_subdirectory( tests )
 
 message("TODO: doc build")
 # FIXME ecm_optional_add_subdirectory(doc)

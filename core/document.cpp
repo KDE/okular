@@ -2709,7 +2709,7 @@ bool Document::isAllowed( Permission action ) const
         return false;
 
 #if !OKULAR_FORCE_DRM
-    if ( KAuthorized::authorize( "skip_drm" ) && !Okular::SettingsCore::obeyDRM() )
+    if ( KAuthorized::authorize( "skip_drm" ) && !SettingsCore::obeyDRM() )
         return true;
 #endif
 

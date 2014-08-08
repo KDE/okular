@@ -17,7 +17,10 @@
 #define _OKULAR_SHELL_H_
 
 #include <kparts/mainwindow.h>
+#include <kparts/readwritepart.h>
 #include <kmimetype.h>
+#include <kurl.h>
+#include <kaction.h>
 
 #include <QtDBus/QtDBus>
 
@@ -130,8 +133,8 @@ private:
   KRecentFilesAction* m_recent;
   QStringList m_fileformats;
   bool m_fileformatsscanned;
-  KAction* m_printAction;
-  KAction* m_closeAction;
+  QAction* m_printAction;
+  QAction* m_closeAction;
   KToggleAction* m_fullScreenAction;
   KToggleAction* m_showMenuBarAction;
   bool m_menuBarWasShown, m_toolBarWasShown;
@@ -152,8 +155,8 @@ private:
     bool closeEnabled;
   };
   QList<TabState> m_tabs;
-  KAction* m_nextTabAction;
-  KAction* m_prevTabAction;
+  QAction* m_nextTabAction;
+  QAction* m_prevTabAction;
 
 #ifdef KActivities_FOUND
   KActivities::ResourceInstance* m_activityResource;

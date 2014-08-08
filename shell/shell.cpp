@@ -47,6 +47,9 @@
 #include <kxmlguifactory.h>
 #include <QDragMoveEvent>
 #include <QTabBar>
+#include <kicon.h>
+#include <kglobal.h>
+#include <kconfiggroup.h>
 
 #ifdef KActivities_FOUND
 #include <KActivities/ResourceInstance>

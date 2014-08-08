@@ -22,7 +22,7 @@ inline KAboutData okularAboutData( const char* name, const char* iname )
         ki18n(iname), //I18N_NOOP("okular"),
         OKULAR_VERSION_STRING,
         ki18n("Okular, a universal document viewer"),
-        KAboutData::License_GPL,
+        KAboutLicense::GPL,
         ki18n("(C) 2002 Wilco Greven, Christophe Devriese\n"
               "(C) 2004-2005 Enrico Ros\n"
               "(C) 2005 Piotr Szymanski\n"

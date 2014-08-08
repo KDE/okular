@@ -2116,7 +2116,7 @@ Document::OpenResult Document::openDocument( const QString & docFile, const KUrl
     bool triedMimeFromFileContent = false;
     if ( !isstdin )
     {
-        if ( mime.count() <= 0 )
+        if ( mime->allMimeTypes().count() <= 0 )
             return OpenError;
 
         // docFile is always local so we can use QFileInfo on it

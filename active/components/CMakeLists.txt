@@ -18,7 +18,7 @@ set(okular_SRCS
     thumbnailitem.cpp
     )
     
-kde4_add_kcfg_files(okular_SRCS ${CMAKE_SOURCE_DIR}/conf/settings.kcfgc )
+kconfig_add_kcfg_files (okular_SRCS ${CMAKE_SOURCE_DIR}/conf/settings.kcfgc )
 
 qt4_automoc(${okular_SRCS})
 

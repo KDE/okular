@@ -149,7 +149,7 @@ kde4_add_ui_files(okularcore_SRCS
    core/chooseenginewidget.ui
 )
 
-kde4_add_kcfg_files(okularcore_SRCS conf/settings_core.kcfgc )
+kconfig_add_kcfg_files(okularcore_SRCS conf/settings_core.kcfgc )
 
 kde4_add_library(okularcore SHARED ${okularcore_SRCS})
 
@@ -234,7 +234,7 @@ kde4_add_ui_files(okularpart_SRCS
    conf/dlgpresentationbase.ui
 )
 
-kde4_add_kcfg_files(okularpart_SRCS conf/settings.kcfgc )
+kconfig_add_kcfg_files(okularpart_SRCS conf/settings.kcfgc )
 
 qt4_add_dbus_interfaces(okularpart_SRCS ${KDE4_DBUS_INTERFACES_DIR}/org.kde.KSpeech.xml)
 

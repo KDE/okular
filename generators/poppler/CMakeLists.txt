@@ -40,7 +40,7 @@ kde4_add_ui_files(okularGenerator_poppler_PART_SRCS
    conf/pdfsettingswidget.ui
 )
 
-kde4_add_kcfg_files(okularGenerator_poppler_PART_SRCS conf/pdfsettings.kcfgc )
+kconfig_add_kcfg_files(okularGenerator_poppler_PART_SRCS conf/pdfsettings.kcfgc )
 
 kde4_add_plugin(okularGenerator_poppler ${okularGenerator_poppler_PART_SRCS})
 

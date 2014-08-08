@@ -28,6 +28,7 @@
 #include <kstandarddirs.h>
 #include <ktempdir.h>
 #include <kdebug.h>
+#include <kdeversion.h>
 
 #include "debug_p.h"
 

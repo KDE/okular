@@ -55,4 +55,4 @@ void DlgPerformance::radioGroup_changed( int which )
     }
 }
 
-#include "dlgperformance.moc"
+#include "moc_dlgperformance.cpp"

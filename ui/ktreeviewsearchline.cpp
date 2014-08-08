@@ -650,4 +650,4 @@ KTreeViewSearchLine *KTreeViewSearchLineWidget::searchLine() const
   return d->searchLine;
 }
 
-#include "ktreeviewsearchline.moc"
+#include "moc_ktreeviewsearchline.cpp"

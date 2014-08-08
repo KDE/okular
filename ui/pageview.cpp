@@ -5041,6 +5041,6 @@ void PageView::slotToggleChangeColors()
 
 //END private SLOTS
 
-#include "pageview.moc"
+#include "moc_pageview.cpp"
 
 /* kate: replace-tabs on; indent-width 4; */

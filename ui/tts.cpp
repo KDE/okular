@@ -142,4 +142,4 @@ void OkularTTS::slotJobStateChanged( const QString &appId, int jobNum, int state
     }
 }
 
-#include "tts.moc"
+#include "moc_tts.cpp"

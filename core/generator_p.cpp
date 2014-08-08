@@ -141,4 +141,4 @@ void FontExtractionThread::run()
     }
 }
 
-#include "generator_p.moc"
+#include "moc_generator_p.cpp"

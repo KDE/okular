@@ -1245,6 +1245,6 @@ QPixmap PageViewAnnotator::makeToolPixmap( const QDomElement &toolElement )
     return pixmap;
 }
 
-#include "pageviewannotator.moc"
+#include "moc_pageviewannotator.cpp"
 
 /* kate: replace-tabs on; indent-width 4; */

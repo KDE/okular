@@ -973,4 +973,4 @@ bool ComboEdit::event( QEvent* e )
     return QComboBox::event( e );
 }
 
-#include "formwidgets.moc"
+#include "moc_formwidgets.cpp"

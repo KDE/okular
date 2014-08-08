@@ -468,4 +468,4 @@ QTreeWidgetItem* BookmarkList::itemForUrl( const KUrl& url ) const
     return 0;
 }
 
-#include "bookmarklist.moc"
+#include "moc_bookmarklist.cpp"

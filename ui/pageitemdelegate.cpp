@@ -76,4 +76,4 @@ void PageItemDelegate::drawDisplay( QPainter *painter, const QStyleOptionViewIte
     QItemDelegate::drawDisplay( painter, newoption, pageRect, page );
 }
 
-#include "pageitemdelegate.moc"
+#include "moc_pageitemdelegate.cpp"

@@ -164,4 +164,4 @@ void FilePrinterPreview::showEvent(QShowEvent *event)
     KDialog::showEvent(event);
 }
 
-#include "fileprinterpreview.moc"
+#include "moc_fileprinterpreview.cpp"

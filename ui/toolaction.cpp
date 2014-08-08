@@ -86,4 +86,4 @@ void ToolAction::slotNewDefaultAction( QAction *action )
         }
 }
 
-#include "toolaction.moc"
+#include "moc_toolaction.cpp"

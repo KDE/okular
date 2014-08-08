@@ -934,4 +934,4 @@ void PageViewToolBar::setTextToolsEnabled( bool on )
             (*it)->setEnabled( on );
 }
 
-#include "pageviewutils.moc"
+#include "moc_pageviewutils.cpp"

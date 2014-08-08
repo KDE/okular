@@ -2964,6 +2964,6 @@ void Part::setReadWrite(bool readwrite)
 
 } // namespace Okular
 
-#include "part.moc"
+#include "moc_part.cpp"
 
 /* kate: replace-tabs on; indent-width 4; */

@@ -181,5 +181,5 @@ void AnnotsPropertiesDialog::slotapply()
     enableButton( Apply, false );
 }
 
-#include "annotationpropertiesdialog.moc"
+#include "moc_annotationpropertiesdialog.cpp"
 

@@ -182,4 +182,4 @@ void FindBar::closeAndStopSearch()
     close();
 }
 
-#include "findbar.moc"
+#include "moc_findbar.cpp"

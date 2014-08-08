@@ -447,4 +447,4 @@ void VideoWidget::resizeEvent( QResizeEvent * event )
     }
 }
 
-#include "videowidget.moc"
+#include "moc_videowidget.cpp"

@@ -256,4 +256,4 @@ AudioPlayer::State AudioPlayer::state() const
     return d->m_state;
 }
 
-#include "audioplayer.moc"
+#include "moc_audioplayer.cpp"

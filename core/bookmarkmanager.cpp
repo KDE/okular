@@ -743,6 +743,6 @@ KBookmark BookmarkManager::previousBookmark( const DocumentViewport &viewport ) 
 #undef foreachObserver
 #undef foreachObserverD
 
-#include "bookmarkmanager.moc"
+#include "moc_bookmarkmanager.cpp"
 
 /* kate: replace-tabs on; indent-width 4; */

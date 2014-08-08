@@ -106,4 +106,4 @@ void SearchWidget::slotMenuChaged( QAction * act )
     m_lineEdit->restartSearch();
 }
 
-#include "searchwidget.moc"
+#include "moc_searchwidget.cpp"

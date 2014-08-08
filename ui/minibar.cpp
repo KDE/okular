@@ -594,6 +594,6 @@ HoverButton::HoverButton( QWidget * parent )
     KAcceleratorManager::setNoAccel( this );
 }
 
-#include "minibar.moc"
+#include "moc_minibar.cpp"
 
 /* kate: replace-tabs on; indent-width 4; */

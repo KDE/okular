@@ -667,6 +667,6 @@ QDebug operator<<( QDebug str, const Okular::PixmapRequest &req )
     return str;
 }
 
-#include "generator.moc"
+#include "moc_generator.cpp"
 
 /* kate: replace-tabs on; indent-width 4; */

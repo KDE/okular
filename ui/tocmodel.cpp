@@ -433,4 +433,4 @@ bool TOCModel::checkequality( const TOCModel *model, const QModelIndex & parentA
     }
     return true;
 }
-#include "tocmodel.moc"
+#include "moc_tocmodel.cpp"

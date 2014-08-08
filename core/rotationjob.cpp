@@ -103,4 +103,4 @@ QTransform RotationJob::rotationMatrix( Rotation from, Rotation to )
     return matrix;
 }
 
-#include "rotationjob.moc"
+#include "moc_rotationjob_p.cpp"

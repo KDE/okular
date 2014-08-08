@@ -448,6 +448,6 @@ int FontsListModel::rowCount( const QModelIndex &parent ) const
     return parent.isValid() ? 0 : m_fonts.size();
 }
 
-#include "propertiesdialog.moc"
+#include "moc_propertiesdialog.cpp"
 
 /* kate: replace-tabs on; indent-width 4; */

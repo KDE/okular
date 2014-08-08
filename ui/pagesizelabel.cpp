@@ -33,4 +33,4 @@ void PageSizeLabel::notifyCurrentPageChanged( int previousPage, int currentPage 
     }
 }
 
-#include "pagesizelabel.moc"
+#include "moc_pagesizelabel.cpp"

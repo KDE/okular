@@ -175,4 +175,4 @@ void TOC::saveSearchOptions()
     Okular::Settings::self()->writeConfig();
 }
 
-#include "toc.moc"
+#include "moc_toc.cpp"

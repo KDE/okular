@@ -318,4 +318,4 @@ void SearchLineWidget::slotTimedout()
     m_anim->show();
 }
 
-#include "searchlineedit.moc"
+#include "moc_searchlineedit.cpp"

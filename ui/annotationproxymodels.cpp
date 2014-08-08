@@ -597,4 +597,4 @@ void AuthorGroupProxyModel::rebuildIndexes()
     reset();
 }
 
-#include "annotationproxymodels.moc"
+#include "moc_annotationproxymodels.cpp"

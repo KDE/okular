@@ -759,4 +759,4 @@ void CaretAnnotationWidget::applyChanges()
 
 
 
-#include "annotationwidgets.moc"
+#include "moc_annotationwidgets.cpp"

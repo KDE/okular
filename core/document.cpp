@@ -4831,6 +4831,6 @@ VisiblePageRect::VisiblePageRect( int page, const NormalizedRect &rectangle )
 #undef foreachObserver
 #undef foreachObserverD
 
-#include "document.moc"
+#include "moc_document.cpp"
 
 /* kate: replace-tabs on; indent-width 4; */

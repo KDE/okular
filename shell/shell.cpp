@@ -25,7 +25,6 @@
 #include <QtDBus/qdbusconnection.h>
 #include <kaction.h>
 #include <kapplication.h>
-#include <kcmdlineargs.h>
 #include <kfiledialog.h>
 #include <kpluginloader.h>
 #include <kmessagebox.h>
@@ -60,21 +59,11 @@
 static const char *shouldShowMenuBarComingFromFullScreen = "shouldShowMenuBarComingFromFullScreen";
 static const char *shouldShowToolBarComingFromFullScreen = "shouldShowToolBarComingFromFullScreen";
 
-Shell::Shell(KCmdLineArgs* args, int argIndex)
-  : KParts::MainWindow(), m_args(args), m_menuBarWasShown(true), m_toolBarWasShown(true)
+Shell::Shell( const QString &serializedOptions )
+  : KParts::MainWindow(), m_menuBarWasShown(true), m_toolBarWasShown(true)
 #ifdef KActivities_FOUND
     , m_activityResource(0)
 #endif
-{
-  if (m_args && argIndex != -1)
-  {
-    m_openUrl = ShellUtils::urlFromArg(m_args->arg(argIndex),
-        ShellUtils::qfileExistFunc(), m_args->getOption("page"));
-  }
-  init();
-}
-
-void Shell::init()
 {
   setObjectName( QLatin1String( "okular::Shell" ) );
   setContextMenuPolicy( Qt::NoContextMenu );
@@ -125,32 +114,24 @@ void Shell::init()
 
     readSettings();
 
-    m_unique = false;
-    if (m_args && m_args->isSet("unique") && m_args->count() <= 1)
+    m_unique = ShellUtils::unique(serializedOptions);
+    if (m_unique)
     {
         m_unique = QDBusConnection::sessionBus().registerService("org.kde.okular");
         if (!m_unique)
             KMessageBox::information(this, i18n("There is already a unique Okular instance running. This instance won't be the unique one."));
     }
-    
-    if (m_args && !m_args->isSet("raise"))
+    if (ShellUtils::noRaise(serializedOptions))
     {
         setAttribute(Qt::WA_ShowWithoutActivating);
     }
     
     QDBusConnection::sessionBus().registerObject("/okularshell", this, QDBusConnection::ExportScriptableSlots);
-
-    if (m_openUrl.isValid()) QTimer::singleShot(0, this, SLOT(delayedOpen()));
   }
   else
   {
     KMessageBox::error(this, i18n("Unable to find the Okular component."));
   }
-}
-
-void Shell::delayedOpen()
-{
-   openUrl( m_openUrl );
 }
 
 void Shell::showOpenRecentMenu()
@@ -168,13 +149,13 @@ Shell::~Shell()
            it->part->closeUrl( false );
         }
     }
-    if ( m_args )
-        m_args->clear();
+    if (m_unique)
+        QDBusConnection::sessionBus().unregisterService("org.kde.okular");
 }
 
 // Open a new document if we have space for it
 // This can hang if called on a unique instance and openUrl pops a messageBox
-bool Shell::openDocument( const QString& doc )
+bool Shell::openDocument( const QString& url, const QString &serializedOptions )
 {
     if( m_tabs.size() <= 0 )
        return false;
@@ -182,11 +163,14 @@ bool Shell::openDocument( const QString& doc )
     KParts::ReadWritePart* const part = m_tabs[0].part;
 
     // Return false if we can't open new tabs and the only part is occupied
-    if( !dynamic_cast<Okular::ViewerInterface*>(part)->openNewFilesInTabs()
-        && !part->url().isEmpty() )
+    if ( !dynamic_cast<Okular::ViewerInterface*>(part)->openNewFilesInTabs()
+         && !part->url().isEmpty()
+         && !ShellUtils::unique(serializedOptions))
+    {
         return false;
+    }
 
-    openUrl( ShellUtils::urlFromArg(doc,ShellUtils::qfileExistFunc()) );
+    openUrl( url, serializedOptions );
 
     return true;
 }
@@ -209,7 +193,7 @@ bool Shell::canOpenDocs( int numDocs, int desktop )
    return true;
 }
 
-void Shell::openUrl( const KUrl & url )
+void Shell::openUrl( const KUrl & url, const QString &serializedOptions )
 {
     const int activeTab = m_tabWidget->currentIndex();
     if ( activeTab < m_tabs.size() )
@@ -219,19 +203,19 @@ void Shell::openUrl( const KUrl & url )
         {
             if( m_unique )
             {
-                KMessageBox::error(this, i18n("Can't open more than one document in the unique Okular instance."));
+                applyOptionsToPart( activePart, serializedOptions );
+                activePart->openUrl( url );
             }
             else
             {
                 if( dynamic_cast<Okular::ViewerInterface *>(activePart)->openNewFilesInTabs() )
                 {
-                    openNewTab( url );
-                    setActiveTab( m_tabs.size()-1 );
+                    openNewTab( url, serializedOptions );
                 }
                 else
                 {
-                    Shell* newShell = new Shell();
-                    newShell->openUrl( url );
+                    Shell* newShell = new Shell( serializedOptions );
+                    newShell->openUrl( url, serializedOptions );
                     newShell->show();
                 }
             }
@@ -239,13 +223,7 @@ void Shell::openUrl( const KUrl & url )
         else
         {
             m_tabWidget->setTabText( activeTab, url.fileName() );
-            if ( m_args ){
-                KDocumentViewer* const doc = qobject_cast<KDocumentViewer*>(activePart);
-                if ( doc && m_args->isSet( "presentation" ) )
-                    doc->startPresentation();
-                if ( m_args->isSet( "print" ) )
-                    QMetaObject::invokeMethod( activePart, "enableStartWithPrint" );
-            }
+            applyOptionsToPart( activePart, serializedOptions );
             bool openOk = activePart->openUrl( url );
             const bool isstdin = url.fileName( KUrl::ObeyTrailingSlash ) == QLatin1String( "-" );
             if ( !isstdin )
@@ -525,7 +503,7 @@ void Shell::closeTab( int tab )
 
 }
 
-void Shell::openNewTab( const KUrl& url )
+void Shell::openNewTab( const KUrl& url, const QString &serializedOptions )
 {
     // Tabs are hidden when there's only one, so show it
     if( m_tabs.size() == 1 )
@@ -545,8 +523,24 @@ void Shell::openNewTab( const KUrl& url )
     KParts::ReadWritePart* const part = m_tabs[newIndex].part;
     m_tabWidget->addTab( part->widget(), url.fileName() );
 
+    applyOptionsToPart(part, serializedOptions);
+
+    int previousActiveTab = m_tabWidget->currentIndex();
+    setActiveTab( m_tabs.size() - 1 );
+
     if( part->openUrl(url) )
         m_recent->addUrl( url );
+    else
+        setActiveTab( previousActiveTab );
+}
+
+void Shell::applyOptionsToPart( QObject* part, const QString &serializedOptions )
+{
+    KDocumentViewer* const doc = qobject_cast<KDocumentViewer*>(part);
+    if ( ShellUtils::startInPresentation(serializedOptions) )
+        doc->startPresentation();
+    if ( ShellUtils::showPrintDialog(serializedOptions) )
+        QMetaObject::invokeMethod( part, "enableStartWithPrint" );
 }
 
 void Shell::connectPart( QObject* part )

@@ -17,6 +17,7 @@ endif(KActivities_FOUND)
 
 set(okular_SRCS
    main.cpp
+   okular_main.cpp
    shell.cpp
    shellutils.cpp
 )

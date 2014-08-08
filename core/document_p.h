@@ -136,6 +136,7 @@ class DocumentPrivate
         bool canModifyExternalAnnotations() const;
         bool canRemoveExternalAnnotations() const;
         void warnLimitedAnnotSupport();
+        OKULAR_EXPORT static QString docDataFileName(const KUrl &url, qint64 document_size);
 
         // Methods that implement functionality needed by undo commands
         void performAddPageAnnotation( int page, Annotation *annotation );

@@ -2105,6 +2105,26 @@ private:
     const KMimeType::Ptr &_mime;
 };
 
+QString DocumentPrivate::docDataFileName(const KUrl &url, qint64 document_size)
+{
+    QString fn = url.fileName();
+    fn = QString::number( document_size ) + '.' + fn + ".xml";
+    QString newokular = "okular/docdata/" + fn;
+    QString newokularfile = KStandardDirs::locateLocal( "data", newokular );
+    if ( !QFile::exists( newokularfile ) )
+    {
+        QString oldkpdf = "kpdf/" + fn;
+        QString oldkpdffile = KStandardDirs::locateLocal( "data", oldkpdf );
+        if ( QFile::exists( oldkpdffile ) )
+        {
+            // ### copy or move?
+            if ( !QFile::copy( oldkpdffile, newokularfile ) )
+                return QString();
+        }
+    }
+    return newokularfile;
+}
+
 Document::OpenResult Document::openDocument( const QString & docFile, const KUrl& url, const KMimeType::Ptr &_mime, const QString & password )
 {
     KMimeType::Ptr mime = _mime;
@@ -2129,23 +2149,8 @@ Document::OpenResult Document::openDocument( const QString & docFile, const KUrl
         d->m_docFileName = docFile;
         if ( url.isLocalFile() && !d->m_archiveData )
         {
-            QString fn = url.fileName();
             document_size = fileReadTest.size();
-            fn = QString::number( document_size ) + '.' + fn + ".xml";
-            QString newokular = "okular/docdata/" + fn;
-            QString newokularfile = KStandardDirs::locateLocal( "data", newokular );
-            if ( !QFile::exists( newokularfile ) )
-            {
-                QString oldkpdf = "kpdf/" + fn;
-                QString oldkpdffile = KStandardDirs::locateLocal( "data", oldkpdf );
-                if ( QFile::exists( oldkpdffile ) )
-                {
-                    // ### copy or move?
-                    if ( !QFile::copy( oldkpdffile, newokularfile ) )
-                        return OpenError;
-                }
-            }
-            d->m_xmlFileName = newokularfile;
+            d->m_xmlFileName = DocumentPrivate::docDataFileName(url, document_size);
         }
     }
     else

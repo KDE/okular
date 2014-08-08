@@ -21,12 +21,13 @@ find_package(KF5 REQUIRED Archive Bookmarks CoreAddons Config ConfigWidgets DBus
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake/modules)
 
-find_package(QImageBlitz)
-set_package_properties("QImageBlitz" PROPERTIES
-        DESCRIPTION "An image effects library"
-        URL "http://sourceforge.net/projects/qimageblitz"
-        TYPE RECOMMENDED
-        PURPOSE "Required to build Okular.")
+# There was no Qt 5 version at the time of porting
+#find_package(QImageBlitz)
+#set_package_properties("QImageBlitz" PROPERTIES
+#        DESCRIPTION "An image effects library"
+#        URL "http://sourceforge.net/projects/qimageblitz"
+#        TYPE RECOMMENDED
+#        PURPOSE "Required to build Okular.")
 
 find_package(LibKScreen "1.0.2")
 set_package_properties("LibKScreen" PROPERTIES

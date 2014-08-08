@@ -973,8 +973,9 @@ Document::OpenResult DocumentPrivate::openDocumentInternal( const KService::Ptr&
     QApplication::restoreOverrideCursor();
     if ( openResult != Document::OpenSuccess || m_pagesVector.size() <= 0 )
     {
-        if ( !catalogName.isEmpty() )
-            KGlobal::locale()->removeCatalog( catalogName );
+#pragma("KF5: FIXME load translations")
+//        if ( !catalogName.isEmpty() )
+//            KGlobal::locale()->removeCatalog( catalogName );
 
         m_generator->d_func()->m_document = 0;
         QObject::disconnect( m_generator, 0, m_parent, 0 );
@@ -2410,8 +2411,9 @@ void Document::closeDocument()
 
         QHash< QString, GeneratorInfo >::const_iterator genIt = d->m_loadedGenerators.constFind( d->m_generatorName );
         Q_ASSERT( genIt != d->m_loadedGenerators.constEnd() );
-        if ( !genIt.value().catalogName.isEmpty() && !genIt.value().config )
-            KGlobal::locale()->removeCatalog( genIt.value().catalogName );
+#pragma("KF5: FIXME load translations")
+//        if ( !genIt.value().catalogName.isEmpty() && !genIt.value().config )
+//            KGlobal::locale()->removeCatalog( genIt.value().catalogName );
     }
     d->m_generator = 0;
     d->m_generatorName = QString();

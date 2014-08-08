@@ -71,7 +71,8 @@ private slots:
     void testShell();
     void testFileRemembersPagePosition_data();
     void testFileRemembersPagePosition();
-    void testUnique2FilesError();
+    void test2FilesError_data();
+    void test2FilesError();
 
 private:
 };
@@ -442,10 +443,21 @@ void MainShellTest::testFileRemembersPagePosition()
     QCOMPARE(partDocument(part)->currentPage(), 3u);
 }
 
-void MainShellTest::testUnique2FilesError()
+void MainShellTest::test2FilesError_data()
 {
+    QTest::addColumn<QString>("serializedOptions");
+
+    QTest::newRow("startInPresentation") << ShellUtils::serializeOptions(true, false, false, false, QString());
+    QTest::newRow("showPrintDialog") << ShellUtils::serializeOptions(false, true, false, false, QString());
+    QTest::newRow("unique") << ShellUtils::serializeOptions(false, false, true, false, QString());
+    QTest::newRow("pageNumger") << ShellUtils::serializeOptions(false, false, false, false, "3");
+}
+
+void MainShellTest::test2FilesError()
+{
+    QFETCH(QString, serializedOptions);
+
     QStringList paths;
-    QString serializedOptions = ShellUtils::serializeOptions(false, false, true, false, QString());
     paths << KDESRCDIR "data/file1.pdf" << KDESRCDIR "data/tocreload.pdf";
     Okular::Status status = Okular::main(paths, serializedOptions);
     QCOMPARE(status, Okular::Error);

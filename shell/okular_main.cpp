@@ -102,7 +102,7 @@ static bool attachExistingInstance(const QStringList &paths, const QString &seri
         else
         {
             // Page only makes sense if we are opening one file
-            const QString page = paths.count() == 1 ? ShellUtils::page(serializedOptions) : QString();
+            const QString page = ShellUtils::page(serializedOptions);
             path = ShellUtils::urlFromArg(arg, ShellUtils::qfileExistFunc(), page).url();
         }
 
@@ -128,6 +128,27 @@ Status main(const QStringList &paths, const QString &serializedOptions)
         return Error;
     }
 
+    if (ShellUtils::startInPresentation(serializedOptions) && paths.count() > 1)
+    {
+        QTextStream stream(stderr);
+        stream << i18n( "Error: Can't open more than one document with the --presentation switch" ) << endl;
+        return Error;
+    }
+
+    if (ShellUtils::showPrintDialog(serializedOptions) && paths.count() > 1)
+    {
+        QTextStream stream(stderr);
+        stream << i18n( "Error: Can't open more than one document with the --presentation switch" ) << endl;
+        return Error;
+    }
+
+    if (!ShellUtils::page(serializedOptions).isEmpty() && paths.count() > 1)
+    {
+        QTextStream stream(stderr);
+        stream << i18n( "Error: Can't open more than one document with the --presentation switch" ) << endl;
+        return Error;
+    }
+
     // try to attach to existing session, unique or not
     if (attachUniqueInstance(paths, serializedOptions) || attachExistingInstance(paths, serializedOptions))
     {
@@ -139,7 +160,7 @@ Status main(const QStringList &paths, const QString &serializedOptions)
     for ( int i = 0; i < paths.count(); )
     {
         // Page only makes sense if we are opening one file
-        const QString page = paths.count() == 1 ? ShellUtils::page(serializedOptions) : QString();
+        const QString page = ShellUtils::page(serializedOptions);
         if ( shell->openDocument( ShellUtils::urlFromArg(paths[i], ShellUtils::qfileExistFunc(), page).url(), serializedOptions) )
         {
             ++i;

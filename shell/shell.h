@@ -21,7 +21,6 @@
 
 #include <QtDBus/QtDBus>
 
-class KCmdLineArgs;
 class KRecentFilesAction;
 class KToggleAction;
 class KTabWidget;
@@ -47,11 +46,13 @@ class Shell : public KParts::MainWindow
   Q_OBJECT
   Q_CLASSINFO("D-Bus Interface", "org.kde.okular")
 
+  friend class MainShellTest;
+
 public:
   /**
    * Constructor
    */
-  explicit Shell(KCmdLineArgs* args = 0, int argIndex = -1);
+  explicit Shell( const QString &serializedOptions = QString() );
 
   /**
    * Default Destructor
@@ -63,7 +64,7 @@ public slots:
   void slotQuit();
   
   Q_SCRIPTABLE Q_NOREPLY void tryRaise();
-  Q_SCRIPTABLE bool openDocument( const QString& doc );
+  Q_SCRIPTABLE bool openDocument( const QString& url, const QString &serializedOptions = QString() );
   Q_SCRIPTABLE bool canOpenDocs( int numDocs, int desktop );
 
 protected:
@@ -92,8 +93,7 @@ private slots:
   void slotUpdateFullScreen();
   void slotShowMenubar();
 
-  void openUrl( const KUrl & url );
-  void delayedOpen();
+  void openUrl( const KUrl & url, const QString &serializedOptions = QString() );
   void showOpenRecentMenu();
   void closeUrl();
   void print();
@@ -118,14 +118,13 @@ signals:
 private:
   void setupAccel();
   void setupActions();
-  void init();
   QStringList fileFormats() const;
-  void openNewTab( const KUrl& url );
+  void openNewTab( const KUrl& url, const QString &serializedOptions );
+  void applyOptionsToPart( QObject* part, const QString &serializedOptions );
   void connectPart( QObject* part );
   int  findTabIndex( QObject* sender );
 
 private:
-  KCmdLineArgs* m_args;
   KPluginFactory* m_partFactory;
   KRecentFilesAction* m_recent;
   QStringList m_fileformats;
@@ -136,7 +135,6 @@ private:
   KToggleAction* m_showMenuBarAction;
   bool m_menuBarWasShown, m_toolBarWasShown;
   bool m_unique;
-  KUrl m_openUrl;
   KTabWidget* m_tabWidget;
   KToggleAction* m_openInTab;
 

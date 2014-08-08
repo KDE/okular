@@ -69,6 +69,8 @@ private slots:
 
     void testShell_data();
     void testShell();
+    void testFileRemembersPagePosition_data();
+    void testFileRemembersPagePosition();
     void testUnique2FilesError();
 
 private:
@@ -371,6 +373,73 @@ void ClosePrintDialogHelper::closePrintDialog()
     QCOMPARE(MainShellTest::tabWidget(s)->currentIndex(), m_expectedTab);
     dialog->close();
     foundDialog = true;
+}
+
+void MainShellTest::testFileRemembersPagePosition_data()
+{
+    QTest::addColumn<int>("mode");
+
+    QTest::newRow("normal") << 1;
+    QTest::newRow("unique") << 2;
+    QTest::newRow("tabs") << 3;
+}
+
+void MainShellTest::testFileRemembersPagePosition()
+{
+    QFETCH(int, mode);
+
+    const QStringList paths = QStringList(KDESRCDIR "data/contents.epub");
+    QString serializedOptions;
+    if (mode == 1 || mode == 3)
+        serializedOptions = ShellUtils::serializeOptions(false, false, false, false, QString());
+    else
+        serializedOptions = ShellUtils::serializeOptions(false, false, true, false, QString());
+
+    Okular::Settings::self()->setShellOpenFileInTabs(mode == 3);
+
+    Okular::Status status = Okular::main(paths, serializedOptions);
+    QCOMPARE(status, Okular::Success);
+    Shell *s = findShell();
+    QVERIFY(s);
+    Okular::Part *part = s->findChild<Okular::Part*>();
+    QVERIFY(part);
+    QCOMPARE(part->url().url(), QString("file://%1").arg(paths[0]));
+    QCOMPARE(partDocument(part)->currentPage(), 0u);
+    partDocument(part)->setViewportPage(3);
+    QCOMPARE(partDocument(part)->currentPage(), 3u);
+    s->closeUrl();
+    QCOMPARE(part->url().url(), QString());
+
+    if (mode == 1)
+    {
+        delete s;
+        status = Okular::main(paths, serializedOptions);
+        QCOMPARE(status, Okular::Success);
+    }
+    else
+    {
+        QProcess p;
+        QString command = "okular " + paths[0] ;
+        if (mode == 2)
+            command += " -unique";
+        p.start(command);
+        p.waitForStarted();
+        QCOMPARE(p.state(), QProcess::Running);
+
+        // It is attaching to us, so will eventually stop
+        for (int i = 0; p.state() != QProcess::NotRunning && i < 20; ++i) {
+            QTest::qWait(100);
+        }
+        QCOMPARE(p.state(), QProcess::NotRunning);
+        QCOMPARE(p.exitStatus(), QProcess::NormalExit);
+        QCOMPARE(p.exitCode(), 0);
+    }
+    s = findShell();
+    QVERIFY(s);
+    part = s->findChild<Okular::Part*>();
+    QVERIFY(part);
+    QCOMPARE(part->url().url(), QString("file://%1").arg(paths[0]));
+    QCOMPARE(partDocument(part)->currentPage(), 3u);
 }
 
 void MainShellTest::testUnique2FilesError()

@@ -14,6 +14,7 @@ set_package_properties("KActivities" PROPERTIES
 if(KActivities_FOUND)
  add_definitions(-DKActivities_FOUND)
  include_directories(${KACTIVITIES_INCLUDE_DIRS})
+ target_link_libraries(okular KF5::KActivities)
 endif(KActivities_FOUND)
 
 # okular
@@ -28,7 +29,7 @@ kde4_add_app_icon(okular_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../ui/data/icons/hi*-
 
 kde4_add_executable(okular ${okular_SRCS})
 
-target_link_libraries(okular KF5::Parts KF5::KActivities)
+target_link_libraries(okular KF5::Parts KF5::WindowSystem KF5::KDELibs4Support)
 
 install(TARGETS okular ${INSTALL_TARGETS_DEFAULT_ARGS})
 

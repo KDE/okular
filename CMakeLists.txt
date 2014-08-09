@@ -16,8 +16,22 @@ include(ECMSetupVersion)
 include(ECMOptionalAddSubdirectory)
 
 find_package(Qt5 CONFIG REQUIRED COMPONENTS Core DBus Test Widgets PrintSupport)
-find_package(KF5 REQUIRED Archive Bookmarks CoreAddons Config ConfigWidgets DBusAddons KIO KDELibs4Support Parts Activities)
-
+find_package(KF5 REQUIRED
+    Activities
+    Archive
+    Bookmarks
+    Config
+    ConfigWidgets
+    CoreAddons
+    DBusAddons
+    JS
+    KDELibs4Support
+    KIO
+    Parts
+    ThreadWeaver
+    Wallet
+)
+find_package(Phonon4Qt5 CONFIG REQUIRED)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake/modules)
 
@@ -36,14 +50,9 @@ set_package_properties("LibKScreen" PROPERTIES
         TYPE RECOMMENDED
         PURPOSE "DPI detection support")
 
-add_definitions(${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
 add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
-include_directories(
-   ${CMAKE_CURRENT_SOURCE_DIR}
-   ${KDE4_INCLUDES}
-   ${QIMAGEBLITZ_INCLUDES}
-   ${LibKScreen_INCLUDE_DIR}
-)
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 message("TODO: when core compiles add subdirs")
 #add_subdirectory( active )
@@ -158,13 +167,24 @@ IF(APPLE)
     SET(OKULAR_IOKIT "-framework IOKit" CACHE STRING "Apple IOKit framework")
 ENDIF(APPLE)
 
-target_link_libraries(okularcore  ${OKULAR_IOKIT} ${KDE4_KIO_LIBS} ${KDE4_PHONON_LIBRARY} ${KDE4_KJSAPI_LIBRARY} ${MATH_LIB} ${KDE4_THREADWEAVER_LIBRARY} )
+target_link_libraries(okularcore
+    ${OKULAR_IOKIT}
+    KF5::Archive
+    KF5::JS
+    KF5::JSApi
+    KF5::KDELibs4Support
+    KF5::KIOCore
+    KF5::ThreadWeaver
+    KF5::Wallet
+    Phonon::phonon4qt5
+    ${MATH_LIB}
+)
 
 if(LibKScreen_FOUND)
-    target_link_libraries(okularcore ${LibKScreen_LIBRARY})
+#    target_link_libraries(okularcore KF5::LibKScreen)
 endif(LibKScreen_FOUND)
 
-set_target_properties(okularcore PROPERTIES VERSION 4.0.0 SOVERSION 4 )
+set_target_properties(okularcore PROPERTIES VERSION 5.0.0 SOVERSION 5 )
 
 install(TARGETS okularcore ${INSTALL_TARGETS_DEFAULT_ARGS} )
 
@@ -240,7 +260,7 @@ qt4_add_dbus_interfaces(okularpart_SRCS ${KDE4_DBUS_INTERFACES_DIR}/org.kde.KSpe
 
 kde4_add_plugin(okularpart SHARED ${okularpart_SRCS})
 
-target_link_libraries(okularpart okularcore KF5::Parts ${KDE4_KPRINTUTILS_LIBS} ${MATH_LIB} ${QIMAGEBLITZ_LIBRARIES} ${KDE4_PHONON_LIBRARY} ${KDE4_SOLID_LIBRARY})
+target_link_libraries(okularpart okularcore KF5::Parts ${MATH_LIB} ${QIMAGEBLITZ_LIBRARIES} KF5::Phonon KF5::Solid)
 
 install(TARGETS okularpart DESTINATION ${PLUGIN_INSTALL_DIR})
 
@@ -255,7 +275,7 @@ install( FILES part.rc part-viewermode.rc DESTINATION ${DATA_INSTALL_DIR}/okular
 ########### cmake files #################
 
 include(WriteBasicConfigVersionFile)
-write_basic_config_version_file(${CMAKE_CURRENT_BINARY_DIR}/OkularConfigVersion.cmake VERSION 0.11.80 COMPATIBILITY AnyNewerVersion)
+write_basic_config_version_file(${CMAKE_CURRENT_BINARY_DIR}/OkularConfigVersion.cmake VERSION 1.0.0 COMPATIBILITY AnyNewerVersion)
 
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/OkularConfig.cmake
               ${CMAKE_CURRENT_BINARY_DIR}/OkularConfigVersion.cmake

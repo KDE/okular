@@ -11,7 +11,7 @@
 
 // qt/kde includes
 #include <kglobal.h>
-#include <threadweaver/ThreadWeaver.h>
+#include <threadweaver/threadweaver.h>
 
 // local includes
 #include "page_p.h"

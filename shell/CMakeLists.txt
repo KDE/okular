@@ -28,7 +28,7 @@ kde4_add_app_icon(okular_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../ui/data/icons/hi*-
 
 kde4_add_executable(okular ${okular_SRCS})
 
-target_link_libraries(okular ${KDE4_KPARTS_LIBS} ${KACTIVITIES_LIBRARY})
+target_link_libraries(okular KF5::Parts KF5::KActivities)
 
 install(TARGETS okular ${INSTALL_TARGETS_DEFAULT_ARGS})
 

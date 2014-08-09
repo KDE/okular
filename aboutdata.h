@@ -14,32 +14,31 @@
 
 #include "core/version.h"
 
-inline KAboutData okularAboutData( const char* name, const char* iname )
+inline KAboutData okularAboutData()
 {
     KAboutData about(
-        name, //"okular",
-        "okular",
-        ki18n(iname), //I18N_NOOP("okular"),
-        OKULAR_VERSION_STRING,
-        ki18n("Okular, a universal document viewer"),
+        QStringLiteral("okular"),
+        i18n("Okular"),
+        QStringLiteral(OKULAR_VERSION_STRING),
+        i18n("Okular, a universal document viewer"),
         KAboutLicense::GPL,
-        ki18n("(C) 2002 Wilco Greven, Christophe Devriese\n"
+        i18n("(C) 2002 Wilco Greven, Christophe Devriese\n"
               "(C) 2004-2005 Enrico Ros\n"
               "(C) 2005 Piotr Szymanski\n"
               "(C) 2004-2009 Albert Astals Cid\n"
               "(C) 2006-2009 Pino Toscano"),
-        KLocalizedString(),
-        "http://okular.kde.org"
+        QString(),
+        QStringLiteral("http://okular.kde.org")
     );
 
-    about.addAuthor(ki18n("Pino Toscano"), ki18n("Former maintainer"), "pino@kde.org");
-    about.addAuthor(ki18n("Tobias Koenig"), ki18n("Lots of framework work, ODT and FictionBook backends"), "tokoe@kde.org");
-    about.addAuthor(ki18n("Albert Astals Cid"), ki18n("Current maintainer"), "aacid@kde.org");
-    about.addAuthor(ki18n("Piotr Szymanski"), ki18n("Created Okular from KPDF codebase"), "djurban@pld-dc.org");
-    about.addAuthor(ki18n("Enrico Ros"), ki18n("KPDF developer"), "eros.kde@email.it");
-    about.addCredit(ki18n("Eugene Trounev"), ki18n("Annotations artwork"), "eugene.trounev@gmail.com");
-    about.addCredit(ki18n("Jiri Baum - NICTA"), ki18n("Table selection tool"), "jiri@baum.com.au");
-    about.addCredit(ki18n("Fabio D'Urso"), ki18n("Annotation improvements"), "fabiodurso@hotmail.it");
+    about.addAuthor(QStringLiteral("Pino Toscano"), i18n("Former maintainer"), QStringLiteral("pino@kde.org"));
+    about.addAuthor(QStringLiteral("Tobias Koenig"), i18n("Lots of framework work, ODT and FictionBook backends"), QStringLiteral("tokoe@kde.org"));
+    about.addAuthor(QStringLiteral("Albert Astals Cid"), i18n("Current maintainer"), QStringLiteral("aacid@kde.org"));
+    about.addAuthor(QStringLiteral("Piotr Szymanski"), i18n("Created Okular from KPDF codebase"), QStringLiteral("djurban@pld-dc.org"));
+    about.addAuthor(QStringLiteral("Enrico Ros"), i18n("KPDF developer"), QStringLiteral("eros.kde@email.it"));
+    about.addCredit(QStringLiteral("Eugene Trounev"), i18n("Annotations artwork"), QStringLiteral("eugene.trounev@gmail.com"));
+    about.addCredit(QStringLiteral("Jiri Baum - NICTA"), i18n("Table selection tool"), QStringLiteral("jiri@baum.com.au"));
+    about.addCredit(QStringLiteral("Fabio D'Urso"), i18n("Annotation improvements"), QStringLiteral("fabiodurso@hotmail.it"));
 
     return about;
 }

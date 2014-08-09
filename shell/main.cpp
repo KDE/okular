@@ -123,14 +123,17 @@ static bool attachExistingInstance( QCommandLineParser* args )
 
 int main(int argc, char** argv)
 {
-    KAboutData about = okularAboutData( "okular", I18N_NOOP( "Okular" ) );
+    KAboutData aboutData = okularAboutData();
 
     QApplication app(argc, argv);
+    app.setApplicationName(aboutData.applicationData().componentName());
+    app.setApplicationDisplayName(aboutData.applicationData().displayName());
+    app.setApplicationVersion(aboutData.version());
+    app.setOrganizationDomain("kde.org");
     QCommandLineParser parser;
     KAboutData::setApplicationData(aboutData);
     parser.addVersionOption();
     parser.addHelpOption();
-    //PORTING SCRIPT: adapt aboutdata variable if necessary
     aboutData.setupCommandLine(&parser);
     parser.process(app);
     aboutData.processCommandLine(&parser);

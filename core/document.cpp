@@ -816,19 +816,21 @@ bool DocumentPrivate::openRelativeFile( const QString & fileName )
 
 Generator * DocumentPrivate::loadGeneratorLibrary( const KService::Ptr &service )
 {
-    KPluginFactory *factory = KPluginLoader( service->library() ).factory();
-    if ( !factory )
-    {
-        kWarning(OkularDebug).nospace() << "Invalid plugin factory for " << service->library() << "!";
-        return 0;
-    }
-    Generator * generator = factory->create< Okular::Generator >( service->pluginKeyword(), 0 );
-    GeneratorInfo info( factory->componentData() );
-    info.generator = generator;
-    if ( info.data.isValid() && info.data.aboutData() )
-        info.catalogName = info.data.aboutData()->catalogName();
-    m_loadedGenerators.insert( service->name(), info );
-    return generator;
+#pragma message("KF5 FIXME DocumentPrivate::loadGeneratorLibrary is disabled")
+//    KPluginFactory *factory = KPluginLoader( service->library() ).factory();
+//    if ( !factory )
+//    {
+//        kWarning(OkularDebug).nospace() << "Invalid plugin factory for " << service->library() << "!";
+//        return 0;
+//    }
+//    Generator * generator = factory->create< Okular::Generator >( service->pluginKeyword(), 0 );
+//    GeneratorInfo info( factory->componentData() );
+//    info.generator = generator;
+//    if ( info.data.isValid() && info.data.aboutData() )
+//        info.catalogName = info.data.aboutData()->catalogName();
+//    m_loadedGenerators.insert( service->name(), info );
+//    return generator;
+    return 0;
 }
 
 void DocumentPrivate::loadAllGeneratorLibraries()

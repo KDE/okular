@@ -406,7 +406,7 @@ void Shell::fileOpen()
         dlg.setFilter( i18n( "*|All Files" ) );
     else
         dlg.setMimeFilter( m_fileformats );
-    dlg.setCaption( i18n( "Open Document" ) );
+    dlg.setWindowTitle( i18n( "Open Document" ) );
     if ( !dlg.exec() )
         return;
     KUrl url = dlg.selectedUrl();

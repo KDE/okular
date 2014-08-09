@@ -1,7 +1,7 @@
 set(LIBSPECTRE_MINIMUM_VERSION "0.2")
 
 find_package(Poppler "0.12.1")
-set_package_properties("Poppler-Qt4" PROPERTIES
+set_package_properties("Poppler-Qt5" PROPERTIES
         DESCRIPTION "A PDF rendering library"
         URL "http://poppler.freedesktop.org"
         TYPE RECOMMENDED
@@ -79,9 +79,9 @@ set_package_properties("libqmobipocket" PROPERTIES
 
 # let's enable the generators properly configured
 
-if(POPPLER_FOUND AND HAVE_POPPLER_0_12_1)
+if(POPPLER_FOUND)
   add_subdirectory(poppler)
-endif(POPPLER_FOUND AND HAVE_POPPLER_0_12_1)
+endif(POPPLER_FOUND)
 
 if(LIBSPECTRE_FOUND)
   add_subdirectory(spectre)

@@ -1,5 +1,5 @@
 ClassName=SettingsCore
-Namespace=Okular
+NameSpace=Okular
 File=okular_core.kcfg
 Mutators=true
 Singleton=true

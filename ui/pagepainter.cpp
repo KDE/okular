@@ -351,7 +351,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                     break;
                 case Okular::SettingsCore::EnumRenderMode::Recolor:
                     // Recolor image using Blitz::flatten with dither:0
-#pragma("KF5: implement RenderMode::Recolor again")
+#pragma message("KF5: implement RenderMode::Recolor again")
                     // Blitz::flatten( backImage, Okular::Settings::recolorForeground(), Okular::Settings::recolorBackground() );
                     break;
                 case Okular::SettingsCore::EnumRenderMode::BlackWhite:

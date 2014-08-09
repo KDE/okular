@@ -19,7 +19,7 @@
 #include <qlayout.h>
 #include <QStyleOptionButton>
 #include <QStylePainter>
-#include <QtGui/QToolButton>
+#include <QtWidgets/QToolButton>
 #include <qvalidator.h>
 #include <qpainter.h>
 #include <kicon.h>

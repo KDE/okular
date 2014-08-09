@@ -11,6 +11,7 @@
 
 #include <klocale.h>
 #include <kmenu.h>
+#include <kicon.h>
 
 #include "annotationpropertiesdialog.h"
 

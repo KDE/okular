@@ -23,6 +23,7 @@
 #include <qlist.h>
 #include <qpointer.h>
 #include <qprocess.h>
+#include <kurl.h>
 #include "core/observer.h"
 #include "core/document.h"
 #include "kdocumentviewer.h"

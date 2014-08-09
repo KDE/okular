@@ -30,7 +30,7 @@
 #include <qlabel.h>
 #include <qtimer.h>
 #include <QtPrintSupport/QPrinter>
-#include <QtGui/QPrintDialog>
+#include <QtPrintSupport/QPrintDialog>
 #include <QScrollBar>
 
 #include <kvbox.h>
@@ -66,6 +66,7 @@
 #include <kbookmarkmenu.h>
 #include <kpassworddialog.h>
 #include <kwallet.h>
+#include <kdeversion.h>
 
 // local includes
 #include "aboutdata.h"
@@ -155,7 +156,7 @@ class FileKeeper
 };
 
 Okular::PartFactory::PartFactory()
-: KPluginFactory(okularAboutData( "okular", I18N_NOOP( "Okular" ) ))
+: KPluginFactory(okularAboutData())
 {
 }
 

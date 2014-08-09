@@ -16,9 +16,10 @@ set( okularGenerator_comicbook_PART_SRCS
 
 kde4_add_plugin(okularGenerator_comicbook ${okularGenerator_comicbook_PART_SRCS})
 
-target_link_libraries(okularGenerator_comicbook  okularcore ${KDE4_KIO_LIBS} )
+target_link_libraries(okularGenerator_comicbook  okularcore KF5::KIOCore)
 if (UNIX)
-   target_link_libraries(okularGenerator_comicbook ${KDE4_KPTY_LIBRARY})
+   find_package(KF5 REQUIRED Pty)
+   target_link_libraries(okularGenerator_comicbook KF5::Pty )
 endif (UNIX)
 
 install(TARGETS okularGenerator_comicbook DESTINATION ${PLUGIN_INSTALL_DIR})

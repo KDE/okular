@@ -11,14 +11,14 @@
 
 // qt/kde includes
 #include <QtCore/QStringList>
-#include <QtGui/QHeaderView>
-#include <QtGui/QLayout>
+#include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLayout>
 #include <QtGui/QPaintEvent>
 #include <QtGui/QPainter>
-#include <QtGui/QSizePolicy>
+#include <QtWidgets/QSizePolicy>
 #include <QtGui/QTextDocument>
-#include <QtGui/QToolBar>
-#include <QtGui/QTreeView>
+#include <QtWidgets/QToolBar>
+#include <QtWidgets/QTreeView>
 
 #include <kaction.h>
 #include <klocale.h>

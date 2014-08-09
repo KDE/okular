@@ -12,7 +12,7 @@
 
 #include <QtCore/QModelIndexList>
 #include <QtCore/QVector>
-#include <QtGui/QWidget>
+#include <QtWidgets/QWidget>
 
 #include "core/observer.h"
 

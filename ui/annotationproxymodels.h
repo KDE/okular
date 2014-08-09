@@ -10,7 +10,7 @@
 #ifndef ANNOTATIONPROXYMODEL_H
 #define ANNOTATIONPROXYMODEL_H
 
-#include <QtGui/QSortFilterProxyModel>
+#include <QtCore/QSortFilterProxyModel>
 #include <QtCore/QPair>
 
 /**

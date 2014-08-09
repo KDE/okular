@@ -20,8 +20,8 @@
 #include <kstandarddirs.h>
 #include <ktempdir.h>
 #if !defined(Q_OS_WIN)
-#include <kptyprocess.h>
-#include <kptydevice.h>
+#include <KPty/kptyprocess.h>
+#include <KPty/kptydevice.h>
 #endif
 
 #include "unrarflavours.h"

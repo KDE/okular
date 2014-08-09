@@ -17,15 +17,14 @@
 static KAboutData createAboutData()
 {
     KAboutData aboutData(
-         "okular_txt",
-         "okular_txt",
-         ki18n( "Txt Backend" ),
-         "0.1",
-         ki18n( "Txt backend." ),
-         KAboutData::License_GPL,
-         ki18n( "© 2013 Azat Khuzhin" )
+         QStringLiteral("okular_txt"),
+         i18n( "Txt Backend" ),
+         QStringLiteral("0.1"),
+         i18n( "Txt backend." ),
+         KAboutLicense::GPL,
+         i18n( "© 2013 Azat Khuzhin" )
     );
-    aboutData.addAuthor( ki18n( "Azat Khuzhin" ), KLocalizedString(), "a3at.mail@gmail.com" );
+    aboutData.addAuthor( QStringLiteral( "Azat Khuzhin" ), QString(), QStringLiteral("a3at.mail@gmail.com") );
     return aboutData;
 }
 

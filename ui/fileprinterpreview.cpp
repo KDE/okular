@@ -19,11 +19,12 @@
 #include <QtGui/QShowEvent>
 
 #include <kmimetypetrader.h>
-#include <kparts/part.h>
+#include <kparts/readonlypart.h>
 #include <kpluginfactory.h>
 #include <kpluginloader.h>
 #include <kpushbutton.h>
 #include <kservice.h>
+#include <ksharedconfig.h>
 #include <kdebug.h>
 
 using namespace Okular;

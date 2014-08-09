@@ -24,7 +24,7 @@
 #include <QtGui/QTextDocument>
 #include <QtGui/QTextFrame>
 
-#include <QtGui/QLabel>
+#include <QtWidgets/QLabel>
 
 #include <core/action.h>
 #include <core/document.h>

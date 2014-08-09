@@ -15,7 +15,7 @@ include(ECMInstallIcons)
 include(ECMSetupVersion)
 include(ECMOptionalAddSubdirectory)
 
-find_package(Qt5 CONFIG REQUIRED COMPONENTS Core DBus Test Widgets PrintSupport)
+find_package(Qt5 CONFIG REQUIRED COMPONENTS Core DBus Test Widgets PrintSupport Svg)
 find_package(KF5 REQUIRED
     Activities
     Archive
@@ -260,7 +260,7 @@ qt4_add_dbus_interfaces(okularpart_SRCS ${KDE4_DBUS_INTERFACES_DIR}/org.kde.KSpe
 
 kde4_add_plugin(okularpart SHARED ${okularpart_SRCS})
 
-target_link_libraries(okularpart okularcore KF5::Parts ${MATH_LIB} KF5::Phonon KF5::Solid)
+target_link_libraries(okularpart okularcore Qt5::Svg KF5::Parts ${MATH_LIB} KF5::Phonon KF5::Solid)
 
 install(TARGETS okularpart DESTINATION ${PLUGIN_INSTALL_DIR})
 

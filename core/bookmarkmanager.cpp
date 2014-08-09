@@ -160,7 +160,7 @@ QUrl BookmarkManager::Private::currentUrl() const
 
 QString BookmarkManager::Private::currentTitle() const
 {
-#pragma("KF5 porting: check if QUrl usage is right")
+#pragma message("KF5 porting: check if QUrl usage is right")
     return url.isLocalFile() ? url.toLocalFile() : url.prettyUrl();
 }
 

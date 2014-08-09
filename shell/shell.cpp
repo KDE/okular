@@ -63,7 +63,7 @@
 static const char *shouldShowMenuBarComingFromFullScreen = "shouldShowMenuBarComingFromFullScreen";
 static const char *shouldShowToolBarComingFromFullScreen = "shouldShowToolBarComingFromFullScreen";
 
-Shell::Shell(KCmdLineArgs* args, int argIndex)
+Shell::Shell(QCommandLineParser *args, int argIndex)
   : KParts::MainWindow(), m_args(args), m_menuBarWasShown(true), m_toolBarWasShown(true)
 #ifdef KActivities_FOUND
     , m_activityResource(0)
@@ -71,8 +71,9 @@ Shell::Shell(KCmdLineArgs* args, int argIndex)
 {
   if (m_args && argIndex != -1)
   {
-    m_openUrl = ShellUtils::urlFromArg(m_args->arg(argIndex),
-        ShellUtils::qfileExistFunc(), m_args->getOption("page"));
+    Q_ASSERT(m_args->positionalArguments().count() > argIndex);
+    m_openUrl = ShellUtils::urlFromArg(m_args->positionalArguments().at(argIndex),
+        ShellUtils::qfileExistFunc(), m_args->value("page"));
   }
   init();
 }
@@ -129,7 +130,7 @@ void Shell::init()
     readSettings();
 
     m_unique = false;
-    if (m_args && m_args->isSet("unique") && m_args->count() <= 1)
+    if (m_args && m_args->isSet("unique") && m_args->positionalArguments().count() <= 1)
     {
         m_unique = QDBusConnection::sessionBus().registerService("org.kde.okular");
         if (!m_unique)
@@ -172,7 +173,7 @@ Shell::~Shell()
         }
     }
     if ( m_args )
-        m_args->clear();
+        m_args->clearPositionalArguments();
 }
 
 // Open a new document if we have space for it

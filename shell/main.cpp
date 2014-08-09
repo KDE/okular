@@ -13,18 +13,25 @@
  ***************************************************************************/
 
 #include "shell.h"
-#include <kapplication.h>
-#include <kcmdlineargs.h>
+
+
 #include <klocale.h>
 #include <QtDBus/qdbusinterface.h>
 #include <QTextStream>
 #include <kwindowsystem.h>
+#include <QApplication>
+#include <KAboutData>
+#include <KLocalizedString>
+#include <QCommandLineParser>
+#include <QCommandLineOption>
 #include "aboutdata.h"
 #include "shellutils.h"
 
-static bool attachUniqueInstance(KCmdLineArgs* args)
+#include <kapplication.h>
+
+static bool attachUniqueInstance(QCommandLineParser* args)
 {
-    if (!args->isSet("unique") || args->count() != 1)
+    if (!args->isSet("unique") || args->positionalArguments().count() != 1)
         return false;
 
     QDBusInterface iface("org.kde.okular", "/okular", "org.kde.okular");
@@ -35,9 +42,9 @@ static bool attachUniqueInstance(KCmdLineArgs* args)
     if (args->isSet("print"))
         iface.call("enableStartWithPrint");
     if (args->isSet("page"))
-        iface.call("openDocument", ShellUtils::urlFromArg(args->arg(0), ShellUtils::qfileExistFunc(), args->getOption("page")).url());
+        iface.call("openDocument", ShellUtils::urlFromArg(args->positionalArguments().at(0), ShellUtils::qfileExistFunc(), args->value("page")).url());
     else
-        iface.call("openDocument", ShellUtils::urlFromArg(args->arg(0), ShellUtils::qfileExistFunc()).url());
+        iface.call("openDocument", ShellUtils::urlFromArg(args->positionalArguments().at(0), ShellUtils::qfileExistFunc()).url());
     if (args->isSet("raise")) {
         iface2.call("tryRaise");
     }
@@ -46,9 +53,9 @@ static bool attachUniqueInstance(KCmdLineArgs* args)
 }
 
 // Ask an existing non-unique instance to open new tabs
-static bool attachExistingInstance( KCmdLineArgs* args )
+static bool attachExistingInstance( QCommandLineParser* args )
 {
-    if ( args->count() < 1 )
+    if ( args->positionalArguments().count() < 1 )
         return false;
 
     const QStringList services = QDBusConnection::sessionBus().interface()->registeredServiceNames().value();
@@ -67,7 +74,7 @@ static bool attachExistingInstance( KCmdLineArgs* args )
             bestService.reset( new QDBusInterface(service, "/okularshell", "org.kde.okular") );
 
             // Find a window that can handle our documents
-            const QDBusReply<bool> reply = bestService->call( "canOpenDocs", args->count(), desktop );
+            const QDBusReply<bool> reply = bestService->call( "canOpenDocs", args->positionalArguments().count(), desktop );
             if( reply.isValid() && reply.value() )
                 break;
 
@@ -78,10 +85,8 @@ static bool attachExistingInstance( KCmdLineArgs* args )
     if ( !bestService )
         return false;
 
-    for( int i = 0; i < args->count(); ++i )
+    foreach ( QString arg, args->positionalArguments() )
     {
-        QString arg = args->arg( i );
-
         // Copy stdin to temporary file which can be opened by the existing
         // window. The temp file is automatically deleted after it has been
         // opened. Not sure if this behavior is safe on all platforms.
@@ -104,10 +109,6 @@ static bool attachExistingInstance( KCmdLineArgs* args )
 
             arg = tempFile->fileName();
         }
-        else
-        {
-            arg = args->url( i ).url();
-        }
 
         // Returns false if it can't fit another document
         const QDBusReply<bool> reply = bestService->call( "openDocument", arg );
@@ -124,18 +125,22 @@ int main(int argc, char** argv)
 {
     KAboutData about = okularAboutData( "okular", I18N_NOOP( "Okular" ) );
 
-    KCmdLineArgs::init(argc, argv, &about);
+    QApplication app(argc, argv);
+    QCommandLineParser parser;
+    KAboutData::setApplicationData(aboutData);
+    parser.addVersionOption();
+    parser.addHelpOption();
+    //PORTING SCRIPT: adapt aboutdata variable if necessary
+    aboutData.setupCommandLine(&parser);
+    parser.process(app);
+    aboutData.processCommandLine(&parser);
 
-    KCmdLineOptions options;
-    options.add("p");
-    options.add("page <number>", ki18n("Page of the document to be shown"));
-    options.add("presentation", ki18n("Start the document in presentation mode"));
-    options.add("print", ki18n("Start with print dialog"));
-    options.add("unique", ki18n("\"Unique instance\" control"));
-    options.add("noraise", ki18n("Not raise window"));
-    options.add("+[URL]", ki18n("Document to open. Specify '-' to read from stdin."));
-    KCmdLineArgs::addCmdLineOptions( options );
-    KApplication app;
+    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("p") << QLatin1String("page"), i18n("Page of the document to be shown"), QLatin1String("number")));
+    parser.addOption(QCommandLineOption(QStringList() <<  QLatin1String("presentation"), i18n("Start the document in presentation mode")));
+    parser.addOption(QCommandLineOption(QStringList() <<  QLatin1String("print"), i18n("Start with print dialog")));
+    parser.addOption(QCommandLineOption(QStringList() <<  QLatin1String("unique"), i18n("\"Unique instance\" control")));
+    parser.addOption(QCommandLineOption(QStringList() <<  QLatin1String("noraise"), i18n("Not raise window")));
+    parser.addOption(QCommandLineOption(QStringList() <<  QLatin1String("+[URL]"), i18n("Document to open. Specify '-' to read from stdin.")));
 
     // see if we are starting with session management
     if (app.isSessionRestored())
@@ -143,16 +148,15 @@ int main(int argc, char** argv)
         RESTORE(Shell);
     } else {
         // no session.. just start up normally
-        KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
 
         // try to attach to existing session, unique or not
-        if (attachUniqueInstance(args) || attachExistingInstance(args))
+        if (attachUniqueInstance(&parser) || attachExistingInstance(&parser))
         {
-            args->clear();
+            
             return 0;
         }
 
-        if (args->isSet( "unique" ) && args->count() > 1)
+        if (parser.isSet( "unique" ) && parser.positionalArguments().count() > 1)
         {
             QTextStream stream(stderr);
             stream << i18n( "Error: Can't open more than one document with the --unique switch" ) << endl;
@@ -160,15 +164,15 @@ int main(int argc, char** argv)
         }
         else
         {
-            Shell* shell = new Shell( args );
+            Shell* shell = new Shell( &parser );
             shell->show();
-            for ( int i = 0; i < args->count(); )
+            for ( int i = 0; i < parser.positionalArguments().count(); )
             {
-                if ( shell->openDocument( args->arg(i)) )
+                if ( shell->openDocument( parser.positionalArguments().at(i)) )
                     ++i;
                 else
                 {
-                    shell = new Shell( args );
+                    shell = new Shell( &parser );
                     shell->show();
                 }
             }

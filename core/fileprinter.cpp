@@ -100,7 +100,7 @@ int FilePrinter::doPrintFiles( QPrinter &printer, QStringList fileList, FileDele
             kDebug(OkularDebug) << "Executing" << exe << "with arguments" << argList;
             ret = KProcess::execute( exe, argList );
 
-#pragma("KF5: Fix PostScript printing")
+#pragma message("KF5: Fix PostScript printing")
 //        } else if ( inputFileInfo.suffix() == "pdf" && printer.outputFormat() == QPrinter::PostScriptFormat && pdf2psAvailable() ) {
 //            exe = "pdf2ps";
 //            argList << fileList[0] << printer.outputFileName();

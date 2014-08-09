@@ -24,7 +24,7 @@
 
 #include <QtDBus/QtDBus>
 
-class KCmdLineArgs;
+class QCommandLineParser;
 class KRecentFilesAction;
 class KToggleAction;
 class KTabWidget;
@@ -54,7 +54,7 @@ public:
   /**
    * Constructor
    */
-  explicit Shell(KCmdLineArgs* args = 0, int argIndex = -1);
+  explicit Shell(QCommandLineParser* args = 0, int argIndex = -1);
 
   /**
    * Default Destructor
@@ -128,7 +128,7 @@ private:
   int  findTabIndex( QObject* sender );
 
 private:
-  KCmdLineArgs* m_args;
+  QCommandLineParser* m_args;
   KPluginFactory* m_partFactory;
   KRecentFilesAction* m_recent;
   QStringList m_fileformats;

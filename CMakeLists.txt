@@ -241,7 +241,7 @@ set(okularpart_SRCS
    ui/toc.cpp
    ui/tocmodel.cpp
    ui/toolaction.cpp
-   ui/tts.cpp
+#   ui/tts.cpp
    ui/videowidget.cpp
 )
 
@@ -256,7 +256,8 @@ kde4_add_ui_files(okularpart_SRCS
 
 kconfig_add_kcfg_files(okularpart_SRCS conf/settings.kcfgc )
 
-qt4_add_dbus_interfaces(okularpart_SRCS ${KDE4_DBUS_INTERFACES_DIR}/org.kde.KSpeech.xml)
+message("KF5: Enable ui/tts.cpp again")
+#qt4_add_dbus_interfaces(okularpart_SRCS ${KDE4_DBUS_INTERFACES_DIR}/org.kde.KSpeech.xml)
 
 kde4_add_plugin(okularpart SHARED ${okularpart_SRCS})
 

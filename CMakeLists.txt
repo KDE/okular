@@ -52,7 +52,7 @@ set_package_properties("LibKScreen" PROPERTIES
 
 add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${PHONON_INCLUDES})
 
 message("TODO: when core compiles add subdirs")
 #add_subdirectory( active )
@@ -260,7 +260,7 @@ qt4_add_dbus_interfaces(okularpart_SRCS ${KDE4_DBUS_INTERFACES_DIR}/org.kde.KSpe
 
 kde4_add_plugin(okularpart SHARED ${okularpart_SRCS})
 
-target_link_libraries(okularpart okularcore KF5::Parts ${MATH_LIB} ${QIMAGEBLITZ_LIBRARIES} KF5::Phonon KF5::Solid)
+target_link_libraries(okularpart okularcore KF5::Parts ${MATH_LIB} KF5::Phonon KF5::Solid)
 
 install(TARGETS okularpart DESTINATION ${PLUGIN_INSTALL_DIR})
 

@@ -24,7 +24,6 @@
 
 #include <KProcess>
 #include <KShell>
-#include <klocalsocket.h>
 #include <kstandarddirs.h>
 #include <ktempdir.h>
 #include <kdebug.h>

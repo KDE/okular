@@ -23,9 +23,9 @@
 #include <QtXml/QDomDocument>
 
 #include <kmimetype.h>
+#include <kcomponentdata.h>
 
 class QPrintDialog;
-class KComponentData;
 class KBookmark;
 class KConfigDialog;
 class KXMLGUIClient;

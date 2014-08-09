@@ -16,7 +16,7 @@
 #ifndef _PART_H_
 #define _PART_H_
 
-#include <kparts/part.h>
+#include <kparts/readwritepart.h>
 #include <kpluginfactory.h>
 #include <kmessagewidget.h>
 #include <qicon.h>
@@ -24,6 +24,7 @@
 #include <qpointer.h>
 #include <qprocess.h>
 #include <kurl.h>
+#include <kio/job.h>
 #include "core/observer.h"
 #include "core/document.h"
 #include "kdocumentviewer.h"
@@ -293,39 +294,39 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         QStringList m_searchHistory;
 
         // actions
-        KAction *m_gotoPage;
-        KAction *m_prevPage;
-        KAction *m_nextPage;
-        KAction *m_beginningOfDocument;
-        KAction *m_endOfDocument;
-        KAction *m_historyBack;
-        KAction *m_historyNext;
-        KAction *m_addBookmark;
-        KAction *m_renameBookmark;
-        KAction *m_prevBookmark;
-        KAction *m_nextBookmark;
-        KAction *m_copy;
-        KAction *m_selectAll;
-        KAction *m_find;
-        KAction *m_findNext;
-        KAction *m_findPrev;
-        KAction *m_saveAs;
-        KAction *m_saveCopyAs;
-        KAction *m_printPreview;
-        KAction *m_showProperties;
-        KAction *m_showEmbeddedFiles;
-        KAction *m_exportAs;
+        QAction *m_gotoPage;
+        QAction *m_prevPage;
+        QAction *m_nextPage;
+        QAction *m_beginningOfDocument;
+        QAction *m_endOfDocument;
+        QAction *m_historyBack;
+        QAction *m_historyNext;
+        QAction *m_addBookmark;
+        QAction *m_renameBookmark;
+        QAction *m_prevBookmark;
+        QAction *m_nextBookmark;
+        QAction *m_copy;
+        QAction *m_selectAll;
+        QAction *m_find;
+        QAction *m_findNext;
+        QAction *m_findPrev;
+        QAction *m_saveAs;
+        QAction *m_saveCopyAs;
+        QAction *m_printPreview;
+        QAction *m_showProperties;
+        QAction *m_showEmbeddedFiles;
+        QAction *m_exportAs;
         QAction *m_exportAsText;
         QAction *m_exportAsDocArchive;
-        KAction *m_showPresentation;
+        QAction *m_showPresentation;
         KToggleAction* m_showMenuBarAction;
         KToggleAction* m_showLeftPanel;
         KToggleAction* m_showBottomBar;
         KToggleFullScreenAction* m_showFullScreenAction;
-        KAction *m_aboutBackend;
-        KAction *m_reload;
+        QAction *m_aboutBackend;
+        QAction *m_reload;
         QMenu *m_exportAsMenu;
-        KAction *m_closeFindBar;
+        QAction *m_closeFindBar;
 
         bool m_actionsSearched;
         BrowserExtension *m_bExtension;

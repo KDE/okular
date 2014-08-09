@@ -37,6 +37,7 @@
 #include <kaboutapplicationdialog.h>
 #include <kaction.h>
 #include <kactioncollection.h>
+#include <kbookmarkaction.h>
 #include <kdirwatch.h>
 #include <kstandardaction.h>
 #include <kpluginfactory.h>
@@ -210,7 +211,7 @@ static QString compressedMimeFor( const QString& mime_to_check )
             compressedMimeMap[ QString::fromLatin1( "application/x-bzdvi" ) ] = app_bzip;
             compressedMimeMap[ QString::fromLatin1( "image/x-bzeps" ) ] = app_bzip;
         }
-        // check we can read XZ-compressed files
+        // check if we can read XZ-compressed files
         f.reset( KFilterBase::findFilterByMimeType( app_xz ) );
         if ( f.get() )
         {
@@ -713,7 +714,7 @@ void Part::setupViewerActions()
     reload->setIcon( KIcon( "view-refresh" ) );
     reload->setWhatsThis( i18n( "Reload the current document from disk." ) );
     connect( reload, SIGNAL(triggered()), this, SLOT(slotReload()) );
-    reload->setShortcut( KStandardShortcut::reload() );
+    reload->setShortcut( QKeySequence(QKeySequence::Refresh) );
     m_reload = reload;
 
     m_closeFindBar = ac->addAction( "close_find_bar", this, SLOT(slotHideFindBar()) );
@@ -755,7 +756,7 @@ void Part::setupActions()
 
     m_saveCopyAs = KStandardAction::saveAs( this, SLOT(slotSaveCopyAs()), ac );
     m_saveCopyAs->setText( i18n( "Save &Copy As..." ) );
-    m_saveCopyAs->setShortcut( KShortcut() );
+    m_saveCopyAs->setShortcut( QKeySequence(QKeySequence::SaveAs) );
     ac->addAction( "file_save_copy", m_saveCopyAs );
     m_saveCopyAs->setEnabled( false );
 
@@ -1050,7 +1051,7 @@ void Part::loadCancelled(const QString &reason)
     {
         if (!reason.isEmpty())
         {
-            KMessageBox::error( widget(), i18n("Could not open %1. Reason: %2", url().prettyUrl(), reason ) );
+            KMessageBox::error( widget(), i18n("Could not open %1. Reason: %2", url().toDisplayString(), reason ) );
         }
     }
 }
@@ -1081,11 +1082,11 @@ KConfigDialog * Part::slotGeneratorPreferences( )
 
     if( m_embedMode == ViewerWidgetMode )
     {
-        dialog->setCaption( i18n( "Configure Viewer Backends" ) );
+        dialog->setWindowTitle( i18n( "Configure Viewer Backends" ) );
     }
     else
     {
-        dialog->setCaption( i18n( "Configure Backends" ) );
+        dialog->setWindowTitle( i18n( "Configure Backends" ) );
     }
 
     m_document->fillConfigDialog( dialog );
@@ -1224,7 +1225,7 @@ bool Part::openFile()
 {
     KMimeType::Ptr mime;
     QString fileNameToOpen = localFilePath();
-    const bool isstdin = url().isLocalFile() && url().fileName( KUrl::ObeyTrailingSlash ) == QLatin1String( "-" );
+    const bool isstdin = url().isLocalFile() && url().adjusted(QUrl::RemoveFilename) == QLatin1String( "-" );
     const QFileInfo fileInfo( fileNameToOpen );
     if ( !isstdin && !fileInfo.exists() )
         return false;
@@ -1304,7 +1305,7 @@ bool Part::openFile()
 
                 // if the user presses cancel, abort opening
                 KPasswordDialog dlg( widget(), wallet ? KPasswordDialog::ShowKeepPassword : KPasswordDialog::KPasswordDialogFlags() );
-                dlg.setCaption( i18n( "Document Password" ) );
+                dlg.setWindowTitle( i18n( "Document Password" ) );
                 dlg.setPrompt( prompt );
                 if( !dlg.exec() )
                     break;
@@ -2083,7 +2084,7 @@ void Part::slotPreviousBookmark()
 
     if ( !bookmark.isNull() )
     {
-        DocumentViewport vp( bookmark.url().htmlRef() );
+        DocumentViewport vp( bookmark.url().fragment(QUrl::FullyDecoded) );
         m_document->setViewport( vp );
     }
 }
@@ -2095,7 +2096,7 @@ void Part::slotNextBookmark()
 
     if ( !bookmark.isNull() )
     {
-        DocumentViewport vp( bookmark.url().htmlRef() );
+        DocumentViewport vp( bookmark.url().fragment(QUrl::FullyDecoded) );
         m_document->setViewport( vp );
     }
 }
@@ -2574,7 +2575,7 @@ void Part::slotExportAs(QAction * act)
             filter = m_exportFormats.at( id - 2 ).mimeType()->name();
             break;
     }
-    QString fileName = KFileDialog::getSaveFileName( url().isLocalFile() ? url().directory() : QString(),
+    QString fileName = KFileDialog::getSaveFileName( url().isLocalFile() ? url().adjusted(QUrl::RemoveFilename) : QString(),
                                                      filter, widget(), QString(),
                                                      KFileDialog::ConfirmOverwrite );
     if ( !fileName.isEmpty() )

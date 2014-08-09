@@ -42,7 +42,7 @@ PreferencesDialog::PreferencesDialog( QWidget * parent, KConfigSkeleton * skelet
     addPage( m_performance, i18n("Performance"), "preferences-system-performance", i18n("Performance Tuning") );
     if( embedMode == Okular::ViewerWidgetMode )
     {
-        setCaption( i18n("Configure Viewer") );
+        setWindowTitle( i18n("Configure Viewer") );
     }
     else
     {

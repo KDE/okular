@@ -12,6 +12,7 @@
 #define _EXTENSIONS_H_
 
 #include <kparts/browserextension.h>
+#include <kparts/liveconnectextension.h>
 
 namespace Okular
 {

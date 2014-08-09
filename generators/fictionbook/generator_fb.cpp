@@ -18,15 +18,14 @@
 static KAboutData createAboutData()
 {
     KAboutData aboutData(
-         "okular_fictionbook",
-         "okular_fictionbook",
-         ki18n( "Fiction Book Backend" ),
-         "0.1.5",
-         ki18n( "A renderer for FictionBook eBooks" ),
-         KAboutData::License_GPL,
-         ki18n( "© 2007-2008 Tobias Koenig" )
+         QStringLiteral("okular_fictionbook"),
+         i18n( "Fiction Book Backend" ),
+         QStringLiteral("0.1.5"),
+         i18n( "A renderer for FictionBook eBooks" ),
+         KAboutLicense::GPL,
+         i18n( "© 2007-2008 Tobias Koenig" )
     );
-    aboutData.addAuthor( ki18n( "Tobias Koenig" ), KLocalizedString(), "tokoe@kde.org" );
+    aboutData.addAuthor( QStringLiteral( "Tobias Koenig" ), QString(), QStringLiteral("tokoe@kde.org") );
 
     return aboutData;
 }

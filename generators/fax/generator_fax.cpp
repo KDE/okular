@@ -12,7 +12,7 @@
 #include "faxdocument.h"
 
 #include <QtGui/QPainter>
-#include <QtGui/QPrinter>
+#include <QtPrintSupport/QPrinter>
 
 #include <kaboutdata.h>
 #include <klocale.h>
@@ -23,15 +23,14 @@
 static KAboutData createAboutData()
 {
     KAboutData aboutData(
-         "okular_fax",
-         "okular_fax",
-         ki18n( "Fax Backend" ),
-         "0.1.1",
-         ki18n( "A G3/G4 fax document backend" ),
-         KAboutData::License_GPL,
-         ki18n( "© 2008 Tobias Koenig" )
+         QStringLiteral("okular_fax"),
+         i18n( "Fax Backend" ),
+         QStringLiteral("0.1.1"),
+         i18n( "A G3/G4 fax document backend" ),
+         KAboutLicense::GPL,
+         i18n( "© 2008 Tobias Koenig" )
     );
-    aboutData.addAuthor( ki18n( "Tobias Koenig" ), KLocalizedString(), "tokoe@kde.org" );
+    aboutData.addAuthor( QStringLiteral( "Tobias Koenig" ), QString(), QStringLiteral("tokoe@kde.org") );
 
     return aboutData;
 }

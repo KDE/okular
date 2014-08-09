@@ -49,13 +49,12 @@ static const int DviDebug = 4713;
 static KAboutData createAboutData()
 {
     KAboutData aboutData(
-         "okular_dvi",
-         "okular_dvi",
-         ki18n( "DVI Backend" ),
-         "0.3.6",
-         ki18n( "A DVI file renderer" ),
-         KAboutData::License_GPL,
-         ki18n( "© 2006 Luigi Toscano" )
+         QStringLiteral("okular_dvi"),
+         i18n( "DVI Backend" ),
+         QStringLiteral("0.3.6"),
+         i18n( "A DVI file renderer" ),
+         KAboutLicense::GPL,
+         i18n( "© 2006 Luigi Toscano" )
     );
     return aboutData;
 }

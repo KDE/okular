@@ -42,19 +42,18 @@ const int XpsDebug = 4712;
 static KAboutData createAboutData()
 {
     KAboutData aboutData(
-         "okular_xps",
-         "okular_xps",
-         ki18n( "XPS Backend" ),
-         "0.3.3",
-         ki18n( "An XPS backend" ),
-         KAboutData::License_GPL,
-         ki18n( "© 2006-2007 Brad Hards\n"
+         QStringLiteral("okular_xps"),
+         i18n( "XPS Backend" ),
+         QStringLiteral("0.3.3"),
+         i18n( "An XPS backend" ),
+         KAboutLicense::GPL,
+         i18n( "© 2006-2007 Brad Hards\n"
                 "© 2007 Jiri Klement\n"
                 "© 2008 Pino Toscano" )
     );
-    aboutData.addAuthor( ki18n( "Brad Hards" ), KLocalizedString(), "bradh@frogmouth.net" );
-    aboutData.addAuthor( ki18n( "Jiri Klement" ), KLocalizedString(), "jiri.klement@gmail.com" );
-    aboutData.addAuthor( ki18n( "Pino Toscano" ), KLocalizedString(), "pino@kde.org" );
+    aboutData.addAuthor( QStringLiteral( "Brad Hards" ), QString(), QStringLiteral("bradh@frogmouth.net") );
+    aboutData.addAuthor( QStringLiteral( "Jiri Klement" ), QString(), QStringLiteral("jiri.klement@gmail.com") );
+    aboutData.addAuthor( QStringLiteral( "Pino Toscano" ), QString(), QStringLiteral("pino@kde.org") );
     return aboutData;
 }
 

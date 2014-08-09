@@ -10,7 +10,7 @@
 #include "generator_comicbook.h"
 
 #include <QtGui/QPainter>
-#include <QtGui/QPrinter>
+#include <QtPrintSupport/QPrinter>
 
 #include <kaboutdata.h>
 #include <klocale.h>
@@ -22,15 +22,14 @@
 static KAboutData createAboutData()
 {
     KAboutData aboutData(
-         "okular_comicbook",
-         "okular_comicbook",
-         ki18n( "ComicBook Backend" ),
-         "0.4",
-         ki18n( "A renderer for various comic book formats" ),
-         KAboutData::License_GPL,
-         ki18n( "© 2007-2008 Tobias Koenig" )
+         QStringLiteral("okular_comicbook"),
+         i18n( "ComicBook Backend" ),
+         QStringLiteral("0.4"),
+         i18n( "A renderer for various comic book formats" ),
+         KAboutLicense::GPL,
+         i18n( "© 2007-2008 Tobias Koenig" )
     );
-    aboutData.addAuthor( ki18n( "Tobias Koenig" ), KLocalizedString(), "tokoe@kde.org" );
+    aboutData.addAuthor( QStringLiteral("Tobias Koenig" ), QString(), QStringLiteral("tokoe@kde.org") );
 
     return aboutData;
 }

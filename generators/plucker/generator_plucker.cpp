@@ -12,7 +12,7 @@
 #include <QtCore/QFile>
 #include <QtGui/QAbstractTextDocumentLayout>
 #include <QtGui/QPainter>
-#include <QtGui/QPrinter>
+#include <QtPrintSupport/QPrinter>
 #include <QtGui/QTextDocument>
 
 #include <kaboutdata.h>
@@ -23,15 +23,14 @@
 static KAboutData createAboutData()
 {
     KAboutData aboutData(
-         "okular_plucker",
-         "okular_plucker",
-         ki18n( "Plucker Document Backend" ),
-         "0.1.1",
-         ki18n( "A renderer for Plucker eBooks" ),
-         KAboutData::License_GPL,
-         ki18n( "© 2007-2008 Tobias Koenig" )
+         QStringLiteral("okular_plucker"),
+         i18n( "Plucker Document Backend" ),
+         QStringLiteral("0.1.1"),
+         i18n( "A renderer for Plucker eBooks" ),
+         KAboutLicense::GPL,
+         i18n( "© 2007-2008 Tobias Koenig" )
     );
-    aboutData.addAuthor( ki18n( "Tobias Koenig" ), KLocalizedString(), "tokoe@kde.org" );
+    aboutData.addAuthor( QStringLiteral("Tobias Koenig" ), QString(), QStringLiteral("tokoe@kde.org") );
 
     return aboutData;
 }

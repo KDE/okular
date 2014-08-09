@@ -22,7 +22,7 @@
 #include <ksharedptr.h>
 
 #include <QObject>
-#include <QtGui/QPrinter>
+#include <QtPrintSupport/QPrinter>
 
 
 class dviRenderer;

@@ -19,15 +19,14 @@
 static KAboutData createAboutData()
 {
     KAboutData aboutData(
-         "okular_ooo",
-         "okular_ooo",
-         ki18n( "OpenDocument Text Backend" ),
-         "0.2.3",
-         ki18n( "A renderer for OpenDocument Text documents" ),
-         KAboutData::License_GPL,
-         ki18n( "© 2006-2008 Tobias Koenig" )
+         QStringLiteral("okular_ooo"),
+         i18n( "OpenDocument Text Backend" ),
+         QStringLiteral("0.2.3"),
+         i18n( "A renderer for OpenDocument Text documents" ),
+         KAboutLicense::GPL,
+         i18n( "© 2006-2008 Tobias Koenig" )
     );
-    aboutData.addAuthor( ki18n( "Tobias Koenig" ), KLocalizedString(), "tokoe@kde.org" );
+    aboutData.addAuthor( QStringLiteral( "Tobias Koenig" ), QString(), QStringLiteral("tokoe@kde.org") );
 
     return aboutData;
 }

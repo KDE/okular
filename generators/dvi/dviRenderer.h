@@ -29,7 +29,7 @@
 #include <QVector>
 #include <QTimer>
 #include <QMutex>
-#include <QtGui/QPrinter>
+#include <QtPrintSupport/QPrinter>
 
 class Anchor;
 class DocumentWidget;

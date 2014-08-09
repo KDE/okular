@@ -12,7 +12,7 @@
 
 #include <QApplication>
 #include <QColor>
-#include <QCustomEvent>
+#include <QtGui/qevent.h>
 #include <QHash>
 #include <QObject>
 

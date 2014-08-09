@@ -16,7 +16,7 @@
 #include <qimage.h>
 #include <qlist.h>
 #include <qpainter.h>
-#include <QtGui/QPrinter>
+#include <QtPrintSupport/QPrinter>
 
 #include <kaboutdata.h>
 #include <kdebug.h>
@@ -161,16 +161,15 @@ static Okular::Rotation readTiffRotation( TIFF *tiff )
 static KAboutData createAboutData()
 {
     KAboutData aboutData(
-         "okular_tiff",
-         "okular_tiff",
-         ki18n( "TIFF Backend" ),
-         "0.2.4",
-         ki18n( "A TIFF backend" ),
-         KAboutData::License_GPL,
-         ki18n( "© 2006-2008 Pino Toscano" ),
-         ki18nc( "This represents the libtiff version, as string with copyrights as well; can be left as-is.", "%1" ).subs( TIFFGetVersion() )
+         QStringLiteral("okular_tiff"),
+         i18n( "TIFF Backend" ),
+         QStringLiteral("0.2.4"),
+         i18n( "A TIFF backend" ),
+         KAboutLicense::GPL,
+         i18n( "© 2006-2008 Pino Toscano" ),
+         i18nc( "This represents the libtiff version, as string with copyrights as well; can be left as-is.", "%1" ).arg( TIFFGetVersion() )
     );
-    aboutData.addAuthor( ki18n( "Pino Toscano" ), KLocalizedString(), "pino@kde.org" );
+    aboutData.addAuthor( QStringLiteral( "Pino Toscano" ), QString(), QStringLiteral("pino@kde.org") );
     return aboutData;
 }
 

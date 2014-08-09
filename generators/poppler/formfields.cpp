@@ -11,7 +11,7 @@
 
 #include "core/action.h"
 
-#include <poppler-qt4.h>
+#include <poppler-qt5.h>
 
 #include <config-okular-poppler.h>
 

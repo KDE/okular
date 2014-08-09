@@ -11,7 +11,7 @@
 #define _OKULAR_GENERATOR_PDF_ANNOTS_H_
 
 #include <poppler-annotation.h>
-#include <poppler-qt4.h>
+#include <poppler-qt5.h>
 
 #include <qmutex.h>
 

@@ -11,11 +11,9 @@
 #ifndef _OKULAR_GENERATOR_PDF_H_
 #define _OKULAR_GENERATOR_PDF_H_
 
-#define UNSTABLE_POPPLER_QT4
-
 #include "synctex/synctex_parser.h"
 
-#include <poppler-qt4.h>
+#include <poppler-qt5.h>
 
 #include <qbitarray.h>
 #include <qpointer.h>

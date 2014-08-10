@@ -353,18 +353,6 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         void slotHandleActivatedSourceReference(const QString& absFileName, int line, int col, bool *handled);
 };
 
-class PartFactory : public KPluginFactory
-{
-    Q_OBJECT
-
-    public:
-        PartFactory();
-        virtual ~PartFactory();
-
-    protected:
-        virtual QObject *create(const char *iface, QWidget *parentWidget, QObject *parent, const QVariantList &args, const QString &keyword);
-};
-
 }
 
 #endif

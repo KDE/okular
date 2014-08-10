@@ -158,23 +158,6 @@ class FileKeeper
 
 K_PLUGIN_FACTORY(OkularPartFactory, registerPlugin<Okular::Part>();)
 
-Okular::PartFactory::PartFactory()
-{
-}
-
-Okular::PartFactory::~PartFactory()
-{
-}
-
-QObject *Okular::PartFactory::create(const char *iface, QWidget *parentWidget, QObject *parent, const QVariantList &args, const QString &keyword)
-{
-    Q_UNUSED ( keyword );
-
-    Okular::Part *object = new Okular::Part( parentWidget, parent, args );
-    object->setReadWrite( QLatin1String(iface) == QLatin1String("KParts::ReadWritePart") );
-    return object;
-}
-
 static QAction* actionForExportFormat( const Okular::ExportFormat& format, QObject *parent = 0 )
 {
     QAction *act = new QAction( format.description(), parent );

@@ -112,7 +112,7 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
          * which config file should be used by adding a string containing "ConfigFileName=<file name>"
          * to 'args'.
          **/
-        Part(QWidget* parentWidget, QObject* parent, const QVariantList& args, KComponentData componentData);
+        Part(QWidget* parentWidget, QObject* parent, const QVariantList& args);
 
         // Destructor
         ~Part();

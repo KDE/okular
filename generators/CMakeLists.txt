@@ -79,52 +79,53 @@ set_package_properties("libqmobipocket" PROPERTIES
 
 # let's enable the generators properly configured
 
-if(POPPLER_FOUND)
-  add_subdirectory(poppler)
-endif(POPPLER_FOUND)
+message("KF5 enable generators")
+#if(POPPLER_FOUND)
+#  add_subdirectory(poppler)
+#endif(POPPLER_FOUND)
 
-if(LIBSPECTRE_FOUND)
-  add_subdirectory(spectre)
-endif(LIBSPECTRE_FOUND)
+#if(LIBSPECTRE_FOUND)
+#  add_subdirectory(spectre)
+#endif(LIBSPECTRE_FOUND)
 
-if(KEXIV2_FOUND)
-  add_subdirectory( kimgio )
-endif(KEXIV2_FOUND)
+#if(KEXIV2_FOUND)
+#  add_subdirectory( kimgio )
+#endif(KEXIV2_FOUND)
 
-if(CHM_FOUND)
-  add_subdirectory( chm )
-endif(CHM_FOUND)
+#if(CHM_FOUND)
+#  add_subdirectory( chm )
+#endif(CHM_FOUND)
 
-if(DJVULIBRE_FOUND)
-  add_subdirectory(djvu)
-endif(DJVULIBRE_FOUND)
+#if(DJVULIBRE_FOUND)
+#  add_subdirectory(djvu)
+#endif(DJVULIBRE_FOUND)
 
-add_subdirectory(dvi)
+#add_subdirectory(dvi)
 
-if(TIFF_FOUND)
-  add_subdirectory(tiff)
-endif(TIFF_FOUND)
+#if(TIFF_FOUND)
+#  add_subdirectory(tiff)
+#endif(TIFF_FOUND)
 
-add_subdirectory(xps)
+#add_subdirectory(xps)
 
-add_subdirectory(ooo)
+#add_subdirectory(ooo)
 
-add_subdirectory(fictionbook)
+#add_subdirectory(fictionbook)
 
-add_subdirectory(comicbook)
+#add_subdirectory(comicbook)
 
-add_subdirectory(fax)
+#add_subdirectory(fax)
 
-if(JPEG_FOUND AND ZLIB_FOUND)
-  add_subdirectory(plucker)
-endif(JPEG_FOUND AND ZLIB_FOUND)
+#if(JPEG_FOUND AND ZLIB_FOUND)
+#  add_subdirectory(plucker)
+#endif(JPEG_FOUND AND ZLIB_FOUND)
 
-if(EPUB_FOUND)
-  add_subdirectory(epub)
-endif(EPUB_FOUND)
+#if(EPUB_FOUND)
+#  add_subdirectory(epub)
+#endif(EPUB_FOUND)
 
 add_subdirectory(txt)
 
-if(QMOBIPOCKET_FOUND)
-  add_subdirectory(mobipocket)
-endif()
+#if(QMOBIPOCKET_FOUND)
+#  add_subdirectory(mobipocket)
+#endif()

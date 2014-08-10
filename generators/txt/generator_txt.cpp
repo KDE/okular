@@ -29,10 +29,8 @@ static KAboutData createAboutData()
     return aboutData;
 }
 
-OKULAR_EXPORT_PLUGIN( TxtGenerator, createAboutData() )
-
-TxtGenerator::TxtGenerator( QObject *parent, const QVariantList &args )
-    : Okular::TextDocumentGenerator( new Txt::Converter, "okular_txt_generator_settings", parent, args )
+TxtGenerator::TxtGenerator()
+    : Okular::TextDocumentGenerator( new Txt::Converter, "okular_txt_generator_settings" )
 {
 }
 

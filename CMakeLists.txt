@@ -261,7 +261,7 @@ message("KF5: Enable ui/tts.cpp again")
 
 kde4_add_plugin(okularpart SHARED ${okularpart_SRCS})
 
-target_link_libraries(okularpart okularcore Qt5::Svg KF5::Parts ${MATH_LIB} KF5::Phonon KF5::Solid)
+target_link_libraries(okularpart okularcore Qt5::Svg KF5::Parts ${MATH_LIB} Phonon::phonon4qt5 KF5::Solid)
 
 install(TARGETS okularpart DESTINATION ${PLUGIN_INSTALL_DIR})
 

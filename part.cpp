@@ -157,7 +157,6 @@ class FileKeeper
 };
 
 Okular::PartFactory::PartFactory()
-: KPluginFactory(okularAboutData())
 {
 }
 
@@ -169,7 +168,7 @@ QObject *Okular::PartFactory::create(const char *iface, QWidget *parentWidget, Q
 {
     Q_UNUSED ( keyword );
 
-    Okular::Part *object = new Okular::Part( parentWidget, parent, args, componentData() );
+    Okular::Part *object = new Okular::Part( parentWidget, parent, args );
     object->setReadWrite( QLatin1String(iface) == QLatin1String("KParts::ReadWritePart") );
     return object;
 }
@@ -202,7 +201,7 @@ static QString compressedMimeFor( const QString& mime_to_check )
         std::auto_ptr< KFilterBase > f;
         compressedMimeMap[ QString::fromLatin1( "image/x-gzeps" ) ] = app_gzip;
         // check we can read bzip2-compressed files
-        f.reset( KFilterBase::findFilterByMimeType( app_bzip ) );
+        f.reset( KCompressionDevice::filterForCompressionType( KCompressionDevice::BZip2 ) );
         if ( f.get() )
         {
             supportBzip = true;
@@ -212,7 +211,7 @@ static QString compressedMimeFor( const QString& mime_to_check )
             compressedMimeMap[ QString::fromLatin1( "image/x-bzeps" ) ] = app_bzip;
         }
         // check if we can read XZ-compressed files
-        f.reset( KFilterBase::findFilterByMimeType( app_xz ) );
+        f.reset( KCompressionDevice::filterForCompressionType( KCompressionDevice::Xz ) );
         if ( f.get() )
         {
             supportXz = true;
@@ -302,8 +301,7 @@ namespace Okular
 
 Part::Part(QWidget *parentWidget,
 QObject *parent,
-const QVariantList &args,
-KComponentData componentData )
+const QVariantList &args)
 : KParts::ReadWritePart(parent),
 m_tempfile( 0 ), m_fileWasRemoved( false ), m_showMenuBarAction( 0 ), m_showFullScreenAction( 0 ), m_actionsSearched( false ),
 m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentWidget, parent, args)), m_generatorGuiClient(0), m_keeper( 0 )
@@ -344,7 +342,8 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     new OkularLiveConnectExtension( this );
 
     // we need an instance
-    setComponentData( componentData );
+#pragma message("KF5 figure out if component data is needed here")
+//    setComponentData( componentData );
 
     GuiUtils::addIconLoader( iconLoader() );
 
@@ -1225,9 +1224,10 @@ bool Part::openFile()
 {
     KMimeType::Ptr mime;
     QString fileNameToOpen = localFilePath();
-    const bool isstdin = url().isLocalFile() && url().adjusted(QUrl::RemoveFilename) == QLatin1String( "-" );
+#pragma message("KF5: fix reading from stdin")
+    const bool isStdin = false; // url().isLocalFile() && url().adjusted(QUrl::RemoveFilename) == QLatin1String( "-" );
     const QFileInfo fileInfo( fileNameToOpen );
-    if ( !isstdin && !fileInfo.exists() )
+    if ( (!isStdin) && (!fileInfo.exists()) )
         return false;
     if ( !arguments().mimeType().isEmpty() )
     {
@@ -2531,27 +2531,28 @@ void Part::enableStartWithPrint()
 
 void Part::slotAboutBackend()
 {
-    const KComponentData *data = m_document->componentData();
-    if ( !data )
-        return;
+#pragma message("KF5 Part::slotAboutBackend disabled")
+//    const KComponentData *data = m_document->componentData();
+//    if ( !data )
+//        return;
 
-    KAboutData aboutData( *data->aboutData() );
+//    KAboutData aboutData( *data->aboutData() );
 
-    if ( aboutData.programIconName().isEmpty() || aboutData.programIconName() == aboutData.appName() )
-    {
-        if ( const Okular::DocumentInfo *documentInfo = m_document->documentInfo() )
-        {
-            const QString mimeTypeName = documentInfo->get("mimeType");
-            if ( !mimeTypeName.isEmpty() )
-            {
-                if ( KMimeType::Ptr type = KMimeType::mimeType( mimeTypeName ) )
-                    aboutData.setProgramIconName( type->iconName() );
-            }
-        }
-    }
+//    if ( aboutData.programIconName().isEmpty() || aboutData.programIconName() == aboutData.appName() )
+//    {
+//        if ( const Okular::DocumentInfo *documentInfo = m_document->documentInfo() )
+//        {
+//            const QString mimeTypeName = documentInfo->get("mimeType");
+//            if ( !mimeTypeName.isEmpty() )
+//            {
+//                if ( KMimeType::Ptr type = KMimeType::mimeType( mimeTypeName ) )
+//                    aboutData.setProgramIconName( type->iconName() );
+//            }
+//        }
+//    }
 
-    KAboutApplicationDialog dlg( &aboutData, widget() );
-    dlg.exec();
+//    KAboutApplicationDialog dlg( &aboutData, widget() );
+//    dlg.exec();
 }
 
 

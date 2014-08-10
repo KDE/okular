@@ -180,9 +180,12 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
   }
 
   // current width: left columnt + right column + dialog borders
-  int width = layout->minimumSize().width() + valMaxWidth + 2 * marginHint() + spacingHint() + 30;
+#pragma message("KF5 figure out margin/spacing")
+//  int width = layout->minimumSize().width() + valMaxWidth + 2 * marginHint() + spacingHint() + 30;
+  int width = layout->minimumSize().width() + valMaxWidth + 30;
   if ( page2Layout )
-    width = qMax( width, page2Layout->sizeHint().width() + marginHint() + spacingHint() + 31 );
+//    width = qMax( width, page2Layout->sizeHint().width() + marginHint() + spacingHint() + 31 );
+      width = qMax( width, page2Layout->sizeHint().width() + 31 );
   // stay inside the 2/3 of the screen width
   QRect screenContainer = KGlobalSettings::desktopGeometry( this );
   width = qMin( width, 2*screenContainer.width()/3 );

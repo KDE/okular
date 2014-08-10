@@ -213,7 +213,7 @@ class OKULAR_EXPORT Generator : public QObject
         /**
          * Creates a new generator.
          */
-        Generator( QObject *parent, const QVariantList &args );
+        Generator();
 
         /**
          * Destroys the generator.
@@ -554,7 +554,7 @@ class OKULAR_EXPORT Generator : public QObject
 
     protected:
         /// @cond PRIVATE
-        Generator( GeneratorPrivate &dd, QObject *parent, const QVariantList &args );
+        Generator(GeneratorPrivate &dd);
         Q_DECLARE_PRIVATE( Generator )
         GeneratorPrivate *d_ptr;
 
@@ -689,6 +689,9 @@ class OKULAR_EXPORT PixmapRequest
 }
 
 Q_DECLARE_METATYPE(Okular::Generator::PrintError)
+
+#define OkularGeneratorInterface_iid "org.kde.okular.Generator"
+Q_DECLARE_INTERFACE(Okular::Generator, OkularGeneratorInterface_iid)
 
 #ifndef QT_NO_DEBUG_STREAM
 OKULAR_EXPORT QDebug operator<<( QDebug str, const Okular::PixmapRequest &req );

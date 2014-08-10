@@ -272,19 +272,11 @@ void TextDocumentGeneratorPrivate::initializeGenerator()
                       q, SIGNAL(notice(QString,int)) );
 }
 
-TextDocumentGenerator::TextDocumentGenerator( TextDocumentConverter *converter, const QString& configName, QObject *parent, const QVariantList &args )
-    : Okular::Generator( *new TextDocumentGeneratorPrivate( converter ), parent, args )
+TextDocumentGenerator::TextDocumentGenerator( TextDocumentConverter *converter, const QString& configName )
+    : Okular::Generator( *new TextDocumentGeneratorPrivate( converter ) )
 {
     Q_D( TextDocumentGenerator );
     d->mGeneralSettings = new TextDocumentSettings( configName, this );
-
-    d->initializeGenerator();
-}
-
-TextDocumentGenerator::TextDocumentGenerator( TextDocumentConverter *converter, QObject *parent, const QVariantList &args )
-    : Okular::Generator( *new TextDocumentGeneratorPrivate( converter ), parent, args )
-{
-    Q_D( TextDocumentGenerator );
 
     d->initializeGenerator();
 }

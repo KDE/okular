@@ -16,12 +16,14 @@
 
 class TxtGenerator : public Okular::TextDocumentGenerator
 {
-    public:
-        TxtGenerator( QObject *parent, const QVariantList &args );
-        ~TxtGenerator() {}
+    Q_OBJECT
+    Q_PLUGIN_METADATA(IID OkularGeneratorInterface_iid FILE "generator_txt.json")
 
-        // [INHERITED] reparse configuration
-        void addPages( KConfigDialog* dlg );
+public:
+    TxtGenerator();
+    ~TxtGenerator() {}
+
+    void addPages( KConfigDialog* dlg ) Q_DECL_OVERRIDE;
 };
 
 #endif

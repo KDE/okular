@@ -22,14 +22,14 @@
 #include <QtPrintSupport/QPrinter>
 #include <QtXml/QDomDocument>
 
-#include <kmimetype.h>
 #include <kcomponentdata.h>
+#include <kmimetype.h>
+#include <kurl.h>
 
 class QPrintDialog;
 class KBookmark;
 class KConfigDialog;
 class KXMLGUIClient;
-class KUrl;
 class DocumentItem;
 
 namespace Okular {

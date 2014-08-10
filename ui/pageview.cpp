@@ -200,8 +200,8 @@ public:
     KAction * aMouseMagnifier;
     KToggleAction * aToggleAnnotator;
     KSelectAction * aZoom;
-    KAction * aZoomIn;
-    KAction * aZoomOut;
+    QAction * aZoomIn;
+    QAction * aZoomOut;
     KToggleAction * aZoomFitWidth;
     KToggleAction * aZoomFitPage;
     KToggleAction * aZoomAutoFit;
@@ -554,8 +554,8 @@ void PageView::setupActions( KActionCollection * ac )
 {
     d->actionCollection = ac;
 
-    d->aZoomIn->setShortcut( KStandardShortcut::zoomIn() );
-    d->aZoomOut->setShortcut( KStandardShortcut::zoomOut() );
+    d->aZoomIn->setShortcut( QKeySequence(QKeySequence::ZoomIn) );
+    d->aZoomOut->setShortcut( QKeySequence(QKeySequence::ZoomOut) );
 
     // Mouse-Mode actions
     d->aMouseSelect  = new KAction(KIcon( "select-rectangular" ), i18n("&Selection Tool"), this);
@@ -654,8 +654,8 @@ void PageView::setupActions( KActionCollection * ac )
     toggleFormWidgets( false );
 
     // Setup undo and redo actions
-    KAction *kundo = KStandardAction::create( KStandardAction::Undo, d->document, SLOT(undo()), ac );
-    KAction *kredo = KStandardAction::create( KStandardAction::Redo, d->document, SLOT(redo()), ac );
+    QAction *kundo = KStandardAction::create( KStandardAction::Undo, d->document, SLOT(undo()), ac );
+    QAction *kredo = KStandardAction::create( KStandardAction::Redo, d->document, SLOT(redo()), ac );
     connect(d->document, SIGNAL(canUndoChanged(bool)), kundo, SLOT(setEnabled(bool)));
     connect(d->document, SIGNAL(canRedoChanged(bool)), kredo, SLOT(setEnabled(bool)));
     kundo->setEnabled(false);

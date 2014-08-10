@@ -23,6 +23,7 @@
 #include <qtimer.h>
 #include <kfiledialog.h>
 #include <kicon.h>
+#include <kiconloader.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <ksqueezedtextlabel.h>
@@ -42,8 +43,8 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
       m_fontScanStarted( false )
 {
   setFaceType( Tabbed );
-  setCaption( i18n( "Unknown File" ) );
-  setButtons( Ok );
+  setWindowTitle( i18n( "Unknown File" ) );
+  setStandardButtons( QDialogButtonBox::Ok );
 
   // PROPERTIES
   QFrame *page = new QFrame();
@@ -62,7 +63,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
 
   // mime name based on mimetype id
   QString mimeName = info->get( "mimeType" ).section( '/', -1 ).toUpper();
-  setCaption( i18n( "%1 Properties", mimeName ) );
+  setWindowTitle( i18n( "%1 Properties", mimeName ) );
 
   QDomElement docElement = info->documentElement();
 
@@ -148,8 +149,9 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
     m_fontPage = addPage(page2, i18n("&Fonts"));
     m_fontPage->setIcon( KIcon( "preferences-desktop-font" ) );
     page2Layout = new QVBoxLayout(page2);
-    page2Layout->setMargin(marginHint());
-    page2Layout->setSpacing(spacingHint());
+#pragma message("KF5 fix margin/spacing")
+//    page2Layout->setMargin(marginHint());
+//    page2Layout->setSpacing(spacingHint());
     // add a tree view
     QTreeView *view = new QTreeView(page2);
     view->setContextMenuPolicy(Qt::CustomContextMenu);

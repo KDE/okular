@@ -36,7 +36,9 @@
 #include "settings_core.h"
 #include "core/document_p.h"
 
-K_GLOBAL_STATIC_WITH_ARGS( QPixmap, busyPixmap, ( KIconLoader::global()->loadIcon("okular", KIconLoader::NoGroup, 32, KIconLoader::DefaultState, QStringList(), 0, true) ) )
+#pragma message("KF5: enable busyPixmap again")
+QPixmap *busyPixmap = new QPixmap();
+//K_GLOBAL_STATIC_WITH_ARGS( QPixmap, busyPixmap, ( KIconLoader::global()->loadIcon("okular", KIconLoader::NoGroup, 32, KIconLoader::DefaultState, QStringList(), 0, true) ) )
 
 #define TEXTANNOTATION_ICONSIZE 24
 

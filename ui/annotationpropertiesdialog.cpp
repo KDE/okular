@@ -14,6 +14,7 @@
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qheaderview.h>
+#include <QtWidgets/qpushbutton.h>
 #include <qtextedit.h>
 #include <kicon.h>
 #include <klineedit.h>
@@ -36,15 +37,15 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     setCaptionTextbyAnnotType();
     if ( canEditAnnotations )
     {
-        setButtons( Ok | Apply | Cancel );
-        enableButton( Apply, false );
+        setStandardButtons( QDialogButtonBox::Ok | QDialogButtonBox::Apply | QDialogButtonBox::Cancel );
+        button( QDialogButtonBox::Apply )->setEnabled( false );
         connect( this, SIGNAL(applyClicked()), this, SLOT(slotapply()) );
         connect( this, SIGNAL(okClicked()), this, SLOT(slotapply()) );
     }
     else
     {
-        setButtons( Close );
-        setDefaultButton( Close );
+        setStandardButtons( QDialogButtonBox::Close );
+        button( QDialogButtonBox::Close )->setDefault( true );
     }
 
     m_annotWidget = AnnotationWidgetFactory::widgetFor( ann );
@@ -153,13 +154,13 @@ void AnnotsPropertiesDialog::setCaptionTextbyAnnotType()
             captiontext = i18n( "Annotation Properties" );
             break;
     }
-        setCaption( captiontext );
+        setWindowTitle( captiontext );
 }
 
 void AnnotsPropertiesDialog::setModified()
 {
     modified = true;
-    enableButton( Apply, true );
+    button( QDialogButtonBox::Apply )->setEnabled( true );
 }
 
 void AnnotsPropertiesDialog::slotapply()
@@ -178,7 +179,7 @@ void AnnotsPropertiesDialog::slotapply()
     m_modifyDateLabel->setText( i18n( "Modified: %1", KGlobal::locale()->formatDateTime( m_annot->modificationDate(), KLocale::LongDate, true ) ) );
 
     modified = false;
-    enableButton( Apply, false );
+    button( QDialogButtonBox::Apply )->setEnabled( false );
 }
 
 #include "moc_annotationpropertiesdialog.cpp"

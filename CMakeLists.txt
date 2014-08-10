@@ -1,19 +1,21 @@
 project(okular)
 
-cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
+cmake_minimum_required(VERSION 2.8.12)
 
 set(QT_MIN_VERSION "5.2.0")
 
-find_package(ECM 0.0.14 REQUIRED NO_MODULE)
-
+find_package(ECM 0.0.14 CONFIG REQUIRED)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH})
 
-include(KDEInstallDirs)
-include(KDECMakeSettings)
-include(KDECompilerSettings)
 include(ECMInstallIcons)
 include(ECMSetupVersion)
 include(ECMOptionalAddSubdirectory)
+include(GenerateExportHeader)
+include(FeatureSummary)
+include(KDEFrameworkCompilerSettings)
+include(KDEInstallDirs)
+include(KDECMakeSettings)
+
 
 find_package(Qt5 CONFIG REQUIRED COMPONENTS Core DBus Test Widgets PrintSupport Svg)
 find_package(KF5 REQUIRED COMPONENTS
@@ -259,7 +261,7 @@ kconfig_add_kcfg_files(okularpart_SRCS conf/settings.kcfgc )
 message("KF5: Enable ui/tts.cpp again")
 #qt4_add_dbus_interfaces(okularpart_SRCS ${KDE4_DBUS_INTERFACES_DIR}/org.kde.KSpeech.xml)
 
-kde4_add_plugin(okularpart SHARED ${okularpart_SRCS})
+add_library(okularpart MODULE ${okularpart_SRCS})
 
 target_link_libraries(okularpart okularcore Qt5::Svg KF5::Parts ${MATH_LIB} Phonon::phonon4qt5 KF5::Solid)
 

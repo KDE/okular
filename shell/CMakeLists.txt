@@ -37,4 +37,4 @@ install(TARGETS okular ${INSTALL_TARGETS_DEFAULT_ARGS})
 # okular shell data files
 
 install( PROGRAMS okular.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
-install( FILES shell.rc DESTINATION ${DATA_INSTALL_DIR}/okular )
+install( FILES shell.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/okular )

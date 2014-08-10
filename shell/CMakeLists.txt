@@ -4,7 +4,7 @@ include_directories(
 )
 
 # checking whether we should enable activities support
-find_package(KActivities "6.1.0")
+find_package(KF5Activities)
 set_package_properties("KActivities" PROPERTIES
         DESCRIPTION  "Activities interface library"
         URL "https://projects.kde.org/projects/kde/kdelibs/kactivities"
@@ -38,4 +38,3 @@ install(TARGETS okular ${INSTALL_TARGETS_DEFAULT_ARGS})
 
 install( PROGRAMS okular.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
 install( FILES shell.rc DESTINATION ${DATA_INSTALL_DIR}/okular )
-

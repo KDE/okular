@@ -16,7 +16,7 @@ include(ECMSetupVersion)
 include(ECMOptionalAddSubdirectory)
 
 find_package(Qt5 CONFIG REQUIRED COMPONENTS Core DBus Test Widgets PrintSupport Svg)
-find_package(KF5 REQUIRED
+find_package(KF5 REQUIRED COMPONENTS
     Activities
     Archive
     Bookmarks
@@ -43,7 +43,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake/modules)
 #        TYPE RECOMMENDED
 #        PURPOSE "Required to build Okular.")
 
-find_package(LibKScreen "1.0.2")
+find_package(KF5Screen)
 set_package_properties("LibKScreen" PROPERTIES
         DESCRIPTION "KDE screen management library"
         URL "https://projects.kde.org/projects/kdereview/libkscreen"

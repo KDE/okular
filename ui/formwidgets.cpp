@@ -18,6 +18,7 @@
 #include <klocale.h>
 #include <kstandardaction.h>
 #include <kaction.h>
+#include <kurl.h>
 
 // local includes
 #include "core/form.h"
@@ -440,8 +441,8 @@ void FormLineEdit::contextMenuEvent( QContextMenuEvent* event )
     QList<QAction *> actionList = menu->actions();
     enum { UndoAct, RedoAct, CutAct, CopyAct, PasteAct, DeleteAct, SelectAllAct };
 
-    KAction *kundo = KStandardAction::create( KStandardAction::Undo, m_controller, SIGNAL( requestUndo() ), menu );
-    KAction *kredo = KStandardAction::create( KStandardAction::Redo, m_controller, SIGNAL( requestRedo() ), menu );
+    QAction *kundo = KStandardAction::create( KStandardAction::Undo, m_controller, SIGNAL( requestUndo() ), menu );
+    QAction *kredo = KStandardAction::create( KStandardAction::Redo, m_controller, SIGNAL( requestRedo() ), menu );
     connect( m_controller, SIGNAL( canUndoChanged( bool ) ), kundo, SLOT( setEnabled( bool ) ) );
     connect( m_controller, SIGNAL( canRedoChanged( bool ) ), kredo, SLOT( setEnabled( bool ) ) );
     kundo->setEnabled( m_controller->canUndo() );
@@ -554,8 +555,8 @@ void TextAreaEdit::slotUpdateUndoAndRedoInContextMenu( QMenu* menu )
     QList<QAction *> actionList = menu->actions();
     enum { UndoAct, RedoAct, CutAct, CopyAct, PasteAct, ClearAct, SelectAllAct, NCountActs };
 
-    KAction *kundo = KStandardAction::create( KStandardAction::Undo, m_controller, SIGNAL( requestUndo() ), menu );
-    KAction *kredo = KStandardAction::create( KStandardAction::Redo, m_controller, SIGNAL( requestRedo() ), menu );
+    QAction *kundo = KStandardAction::create( KStandardAction::Undo, m_controller, SIGNAL( requestUndo() ), menu );
+    QAction *kredo = KStandardAction::create( KStandardAction::Redo, m_controller, SIGNAL( requestRedo() ), menu );
     connect(m_controller, SIGNAL( canUndoChanged( bool ) ), kundo, SLOT( setEnabled( bool ) ) );
     connect(m_controller, SIGNAL( canRedoChanged( bool ) ), kredo, SLOT( setEnabled( bool ) ) );
     kundo->setEnabled( m_controller->canUndo() );
@@ -670,8 +671,8 @@ bool FileEdit::eventFilter( QObject* obj, QEvent* event )
             QList< QAction* > actionList = menu->actions();
             enum { UndoAct, RedoAct, CutAct, CopyAct, PasteAct, DeleteAct, SelectAllAct };
 
-            KAction *kundo = KStandardAction::create( KStandardAction::Undo, m_controller, SIGNAL( requestUndo() ), menu );
-            KAction *kredo = KStandardAction::create( KStandardAction::Redo, m_controller, SIGNAL( requestRedo() ), menu );
+            QAction *kundo = KStandardAction::create( KStandardAction::Undo, m_controller, SIGNAL( requestUndo() ), menu );
+            QAction *kredo = KStandardAction::create( KStandardAction::Redo, m_controller, SIGNAL( requestRedo() ), menu );
             connect(m_controller, SIGNAL( canUndoChanged( bool ) ), kundo, SLOT( setEnabled( bool ) ) );
             connect(m_controller, SIGNAL( canRedoChanged( bool ) ), kredo, SLOT( setEnabled( bool ) ) );
             kundo->setEnabled( m_controller->canUndo() );
@@ -933,8 +934,8 @@ void ComboEdit::contextMenuEvent( QContextMenuEvent* event )
     QList<QAction *> actionList = menu->actions();
     enum { UndoAct, RedoAct, CutAct, CopyAct, PasteAct, DeleteAct, SelectAllAct };
 
-    KAction *kundo = KStandardAction::create( KStandardAction::Undo, m_controller, SIGNAL( requestUndo() ), menu );
-    KAction *kredo = KStandardAction::create( KStandardAction::Redo, m_controller, SIGNAL( requestRedo() ), menu );
+    QAction *kundo = KStandardAction::create( KStandardAction::Undo, m_controller, SIGNAL( requestUndo() ), menu );
+    QAction *kredo = KStandardAction::create( KStandardAction::Redo, m_controller, SIGNAL( requestRedo() ), menu );
     connect( m_controller, SIGNAL( canUndoChanged( bool ) ), kundo, SLOT( setEnabled( bool ) ) );
     connect( m_controller, SIGNAL( canRedoChanged( bool ) ), kredo, SLOT( setEnabled( bool ) ) );
     kundo->setEnabled( m_controller->canUndo() );

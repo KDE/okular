@@ -18,6 +18,7 @@
 #include <QtWidgets/QLabel>
 #include <QtGui/QShowEvent>
 
+#include <klocalizedstring.h>
 #include <kmimetypetrader.h>
 #include <kparts/readonlypart.h>
 #include <kpluginfactory.h>

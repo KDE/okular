@@ -301,8 +301,8 @@ void AnnotWindow::slotUpdateUndoAndRedoInContextMenu(QMenu* menu)
     QList<QAction *> actionList = menu->actions();
     enum { UndoAct, RedoAct, CutAct, CopyAct, PasteAct, ClearAct, SelectAllAct, NCountActs };
 
-    KAction *kundo = KStandardAction::create( KStandardAction::Undo, m_document, SLOT(undo()), menu);
-    KAction *kredo = KStandardAction::create( KStandardAction::Redo, m_document, SLOT(redo()), menu);
+    QAction *kundo = KStandardAction::create( KStandardAction::Undo, m_document, SLOT(undo()), menu);
+    QAction *kredo = KStandardAction::create( KStandardAction::Redo, m_document, SLOT(redo()), menu);
     connect(m_document, SIGNAL(canUndoChanged(bool)), kundo, SLOT(setEnabled(bool)));
     connect(m_document, SIGNAL(canRedoChanged(bool)), kredo, SLOT(setEnabled(bool)));
     kundo->setEnabled(m_document->canUndo());

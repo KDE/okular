@@ -22,6 +22,7 @@
 #include <QtWidgets/QToolButton>
 #include <qvalidator.h>
 #include <qpainter.h>
+#include <kglobalsettings.h>
 #include <kicon.h>
 #include <kicontheme.h>
 #include <klineedit.h>

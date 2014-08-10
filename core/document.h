@@ -71,14 +71,14 @@ class VisiblePageRect;
  * get data/properties or even for accessing pages (in a 'const' way).
  *
  * It is designed to keep it detached from the document type (pdf, ps, you
- * name it..) so whenever you want to get some data, it asks its internals
- * generator to do the job and return results in a format-indepedent way.
+ * name it..) so whenever you want to get some data, it asks its internal
+ * generators to do the job and return results in a format-indepedent way.
  *
  * Apart from the generator (the currently running one) the document stores
  * all the Pages ('Page' class) of the current document in a vector and
  * notifies all the registered DocumentObservers when some content changes.
  *
- * For a better understanding of hieracies @see README.internals.png
+ * For a better understanding of hierarchies @see README.internals.png
  * @see DocumentObserver, Page
  */
 class OKULAR_EXPORT Document : public QObject

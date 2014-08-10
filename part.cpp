@@ -156,6 +156,8 @@ class FileKeeper
         std::FILE * m_handle;
 };
 
+K_PLUGIN_FACTORY(OkularPartFactory, registerPlugin<Okular::Part>();)
+
 Okular::PartFactory::PartFactory()
 {
 }
@@ -172,8 +174,6 @@ QObject *Okular::PartFactory::create(const char *iface, QWidget *parentWidget, Q
     object->setReadWrite( QLatin1String(iface) == QLatin1String("KParts::ReadWritePart") );
     return object;
 }
-
-K_EXPORT_PLUGIN( Okular::PartFactory() )
 
 static QAction* actionForExportFormat( const Okular::ExportFormat& format, QObject *parent = 0 )
 {
@@ -2967,6 +2967,6 @@ void Part::setReadWrite(bool readwrite)
 
 } // namespace Okular
 
-#include "moc_part.cpp"
+#include "part.moc"
 
 /* kate: replace-tabs on; indent-width 4; */

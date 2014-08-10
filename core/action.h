@@ -231,7 +231,7 @@ class OKULAR_EXPORT BrowseAction : public Action
          *
          * @param url The url to browse.
          */
-        BrowseAction( const QString &url );
+        BrowseAction( const QUrl &url );
 
         /**
          * Destroys the browse action.
@@ -251,7 +251,7 @@ class OKULAR_EXPORT BrowseAction : public Action
         /**
          * Returns the url to browse.
          */
-        QString url() const;
+        QUrl url() const;
 
     private:
         Q_DECLARE_PRIVATE( BrowseAction )

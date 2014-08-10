@@ -2440,9 +2440,9 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                             {
                                 const Okular::BrowseAction * browseLink = static_cast< const Okular::BrowseAction * >( link );
                                 QClipboard *cb = QApplication::clipboard();
-                                cb->setText( browseLink->url(), QClipboard::Clipboard );
+                                cb->setText( browseLink->url().toDisplayString(), QClipboard::Clipboard );
                                 if ( cb->supportsSelection() )
-                                    cb->setText( browseLink->url(), QClipboard::Selection );
+                                    cb->setText( browseLink->url().toDisplayString(), QClipboard::Selection );
                             }
                             else if ( res == actStopSound )
                             {
@@ -2621,13 +2621,13 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                 else if ( choice == imageToFile )
                 {
                     // [3] save pixmap to file
-                    QString fileName = KFileDialog::getSaveFileName( KUrl(), "image/png image/jpeg", this, QString(),
+                    QString fileName = KFileDialog::getSaveFileName( QUrl(), "image/png image/jpeg", this, QString(),
                                                                      KFileDialog::ConfirmOverwrite );
                     if ( fileName.isEmpty() )
                         d->messageWindow->display( i18n( "File not saved." ), QString(), PageViewMessage::Warning );
                     else
                     {
-                        KMimeType::Ptr mime = KMimeType::findByUrl( fileName );
+                        KMimeType::Ptr mime = KMimeType::findByUrl( QUrl::fromLocalFile(fileName) );
                         QString type;
                         if ( !mime || mime == KMimeType::defaultMimeTypePtr() )
                             type = "PNG";

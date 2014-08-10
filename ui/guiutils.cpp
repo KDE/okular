@@ -202,7 +202,7 @@ KIconLoader* iconLoader()
 void saveEmbeddedFile( Okular::EmbeddedFile *ef, QWidget *parent )
 {
     const QString caption = i18n( "Where do you want to save %1?", ef->name() );
-    const QString path = KFileDialog::getSaveFileName( ef->name(), QString(), parent, caption,
+    const QString path = KFileDialog::getSaveFileName( QUrl::fromLocalFile(ef->name()), QString(), parent, caption,
                                                        KFileDialog::ConfirmOverwrite );
     if ( path.isEmpty() )
         return;

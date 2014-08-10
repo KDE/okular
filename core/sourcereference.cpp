@@ -57,32 +57,35 @@ int SourceReference::column() const
     return d->column;
 }
 
-bool Okular::extractLilyPondSourceReference( const QString &url, QString *file, int *row, int *col )
+bool Okular::extractLilyPondSourceReference( const QUrl &url, QString *file, int *row, int *col )
 {
-    if ( !url.startsWith( QLatin1String( "textedit://" ) ) )
+    if ( url.scheme() != QStringLiteral("textedit") )
         return false;
 
-    *row = 0;
-    *col = 0;
-    int lilyChar = 0;
-    typedef int *IntPtr;
-    const IntPtr int_data[] = { row, &lilyChar, col };
-    int int_index = sizeof( int_data ) / sizeof( int* ) - 1;
-    int index_last = -1;
-    int index = url.lastIndexOf( QLatin1Char( ':' ), index_last );
-    while ( index != -1 && int_index >= 0 )
-    {
-        // read the current "chunk"
-        const QStringRef ref = url.midRef( index + 1, index_last - index - 1 );
-        *int_data[ int_index ] = QString::fromRawData( ref.data(), ref.count() ).toInt();
-        // find the previous "chunk"
-        index_last = index;
-        index = url.lastIndexOf( QLatin1Char( ':' ), index_last - 1 );
-        --int_index;
-    }
-    // NOTE: 11 is the length of "textedit://"
-    *file = QUrl::fromPercentEncoding( url.mid( 11, index_last != -1 ? index_last - 11 : -1 ).toUtf8() );
-    return true;
+#pragma message("KF5 fix LilyPond references")
+    return false;
+
+//    *row = 0;
+//    *col = 0;
+//    int lilyChar = 0;
+//    typedef int *IntPtr;
+//    const IntPtr int_data[] = { row, &lilyChar, col };
+//    int int_index = sizeof( int_data ) / sizeof( int* ) - 1;
+//    int index_last = -1;
+//    int index = url.lastIndexOf( QLatin1Char( ':' ), index_last );
+//    while ( index != -1 && int_index >= 0 )
+//    {
+//        // read the current "chunk"
+//        const QStringRef ref = url.midRef( index + 1, index_last - index - 1 );
+//        *int_data[ int_index ] = QString::fromRawData( ref.data(), ref.count() ).toInt();
+//        // find the previous "chunk"
+//        index_last = index;
+//        index = url.lastIndexOf( QLatin1Char( ':' ), index_last - 1 );
+//        --int_index;
+//    }
+//    // NOTE: 11 is the length of "textedit://"
+//    *file = QUrl::fromPercentEncoding( url.mid( 11, index_last != -1 ? index_last - 11 : -1 ).toUtf8() );
+//    return true;
 }
 
 QString Okular::sourceReferenceToolTip( const QString &source, int row, int col )

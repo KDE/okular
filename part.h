@@ -164,17 +164,17 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
 
     protected:
         // reimplemented from KParts::ReadWritePart
-        bool openFile();
-        bool openUrl(const KUrl &url);
-        void guiActivateEvent(KParts::GUIActivateEvent *event);
-        void displayInfoMessage( const QString &message, KMessageWidget::MessageType messageType = KMessageWidget::Information, int duration = -1 );;
+        bool openFile() Q_DECL_OVERRIDE;
+        bool openUrl(const QUrl &url) Q_DECL_OVERRIDE;
+        void guiActivateEvent(KParts::GUIActivateEvent *event) Q_DECL_OVERRIDE;
+        void displayInfoMessage( const QString &message, KMessageWidget::MessageType messageType = KMessageWidget::Information, int duration = -1 );
     public:
-        bool saveFile();
-        bool queryClose();
-        bool closeUrl();
-        bool closeUrl(bool promptToSave);
-        void setReadWrite(bool readwrite);
-        bool saveAs(const KUrl & saveUrl);
+        bool saveFile() Q_DECL_OVERRIDE;
+        bool queryClose() Q_DECL_OVERRIDE;
+        bool closeUrl() Q_DECL_OVERRIDE;
+        bool closeUrl(bool promptToSave) Q_DECL_OVERRIDE;
+        void setReadWrite(bool readwrite) Q_DECL_OVERRIDE;
+        bool saveAs(const QUrl & saveUrl) Q_DECL_OVERRIDE;
 
     protected slots:
         // connected to actions

@@ -150,7 +150,7 @@ void TOC::slotExecuted( const QModelIndex &index )
     QString url = m_model->urlForIndex( index );
     if ( !url.isEmpty() )
     {
-        Okular::BrowseAction action( url );
+        Okular::BrowseAction action( QUrl::fromLocalFile( url ) );
         m_document->processAction( &action );
         return;
     }

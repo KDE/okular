@@ -396,7 +396,8 @@ void Shell::fileOpen()
     const KParts::ReadWritePart* const curPart = m_tabs[activeTab].part;
     if ( curPart->url().isLocalFile() )
         startDir = curPart->url().toLocalFile();
-    KFileDialog dlg( startDir, QString(), this );
+#pragma message("KF5 check QUrl usage")
+    KFileDialog dlg( QUrl(startDir), QString(), this );
     dlg.setOperationMode( KFileDialog::Opening );
 
     // A directory may be a document. E.g. comicbook generator.

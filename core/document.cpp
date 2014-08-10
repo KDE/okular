@@ -2181,7 +2181,9 @@ Document::OpenResult Document::openDocument( const QString & docFile, const KUrl
             // There's still no offers, do a final mime search based on the filename
             // We need this because sometimes (e.g. when downloading from a webserver) the mimetype we
             // use is the one fed by the server, that may be wrong
-            newmime = KMimeType::findByUrl( docFile );
+
+#pragma message("Fix generator loading")
+            //            newmime = KMimeType::findByUrl( docFile );
             if ( newmime->name() != mime->name() )
             {
                 mime = newmime;
@@ -3628,14 +3630,16 @@ void Document::processAction( const Action * action )
             fileName = d->giveAbsolutePath( fileName );
             KMimeType::Ptr mime = KMimeType::findByPath( fileName );
             // Check executables
-            if ( KRun::isExecutableFile( fileName, mime->name() ) )
+#pragma message("KF5 check if QUrl::fromUserInput is right here")
+            if ( KRun::isExecutableFile( QUrl::fromUserInput(fileName), mime->name() ) )
             {
                 // Don't have any pdf that uses this code path, just a guess on how it should work
                 if ( !exe->parameters().isEmpty() )
                 {
                     fileName = d->giveAbsolutePath( exe->parameters() );
                     mime = KMimeType::findByPath( fileName );
-                    if ( KRun::isExecutableFile( fileName, mime->name() ) )
+                    #pragma message("KF5 check QUrl usage")
+                    if ( KRun::isExecutableFile( QUrl(fileName), mime->name() ) )
                     {
                         // this case is a link pointing to an executable with a parameter
                         // that also is an executable, possibly a hand-crafted pdf
@@ -3713,7 +3717,7 @@ void Document::processAction( const Action * action )
             QString lilySource;
             int lilyRow = 0, lilyCol = 0;
             // if the url is a mailto one, invoke mailer
-            if ( browse->url().startsWith( "mailto:", Qt::CaseInsensitive ) )
+            if ( browse->url().scheme().compare("mailto") )
                 KToolInvocation::invokeMailer( browse->url() );
             else if ( extractLilyPondSourceReference( browse->url(), &lilySource, &lilyRow, &lilyCol ) )
             {
@@ -3722,25 +3726,25 @@ void Document::processAction( const Action * action )
             }
             else
             {
-                QString url = browse->url();
+                QUrl url = browse->url();
 
+#pragma message("KF5 fix this mess - relative urls should probably be resolved earlier")
                 // fix for #100366, documents with relative links that are the form of http:foo.pdf
-                if (url.indexOf("http:") == 0 && url.indexOf("http://") == -1 && url.right(4) == ".pdf")
-                {
-                    d->openRelativeFile(url.mid(5));
-                    return;
-                }
+//                if (url.indexOf("http:") == 0 && url.indexOf("http://") == -1 && url.right(4) == ".pdf")
+//                {
+//                    d->openRelativeFile(url.mid(5));
+//                    return;
+//                }
 
-                KUrl realUrl = KUrl( url );
+// FIXME
+//                // handle documents with relative path
+//                if ( d->m_url.isValid() )
+//                {
+//                    realUrl = KUrl( d->m_url.upUrl(), url );
+//                }
 
-                // handle documents with relative path
-                if ( d->m_url.isValid() )
-                {
-                    realUrl = KUrl( d->m_url.upUrl(), url );
-                }
-
-                // Albert: this is not a leak!
-                new KRun( realUrl, d->m_widget );
+//                // Albert: this is not a leak!
+//                new KRun( realUrl, d->m_widget );
             }
             } break;
 

@@ -244,7 +244,7 @@ void PropertiesDialog::showFontsMenu(const QPoint &pos)
         {
             Okular::FontInfo fi = index.data(FontInfoRole).value<Okular::FontInfo>();
             const QString caption = i18n( "Where do you want to save %1?", fi.name() );
-            const QString path = KFileDialog::getSaveFileName( fi.name(), QString(), this, caption, KFileDialog::ConfirmOverwrite );
+            const QString path = KFileDialog::getSaveFileName( QUrl::fromLocalFile(fi.name()), QString(), this, caption, KFileDialog::ConfirmOverwrite );
             if ( path.isEmpty() )
                 return;
             

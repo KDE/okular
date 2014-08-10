@@ -115,7 +115,7 @@ class FileKeeper
         void open( const QString & path )
         {
             if ( !m_handle )
-                m_handle = std::fopen( QFile::encodeName( path ), "r" );
+                m_handle = std::fopen( QFile::encodeName( path ).constData(), "r" );
         }
 
         void close()
@@ -361,7 +361,7 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     connect( m_document->bookmarkManager(), SIGNAL(openUrl(KUrl)), this, SLOT(openUrlFromBookmarks(KUrl)) );
     connect( m_document, SIGNAL(close()), this, SLOT(close()) );
 
-    if ( parent && parent->metaObject()->indexOfSlot( QMetaObject::normalizedSignature( "slotQuit()" ) ) != -1 )
+    if ( parent && parent->metaObject()->indexOfSlot( QMetaObject::normalizedSignature( "slotQuit()" ).constData() ) != -1 )
         connect( m_document, SIGNAL(quit()), parent, SLOT(slotQuit()) );
     else
         connect( m_document, SIGNAL(quit()), this, SLOT(cannotQuit()) );
@@ -1454,7 +1454,7 @@ bool Part::openFile()
     return true;
 }
 
-bool Part::openUrl(const KUrl &_url)
+bool Part::openUrl(const QUrl &_url)
 {
     // Close current document if any
     if ( !closeUrl() )
@@ -2186,7 +2186,7 @@ void Part::slotSaveFileAs()
     saveAs( saveUrl );
 }
 
-bool Part::saveAs( const KUrl & saveUrl )
+bool Part::saveAs( const QUrl & saveUrl )
 {
     KTemporaryFile tf;
     QString fileName;
@@ -2219,10 +2219,10 @@ bool Part::saveAs( const KUrl & saveUrl )
         return false;
     }
 
-    KIO::Job *copyJob = KIO::file_copy( fileName, saveUrl, -1, KIO::Overwrite );
+    KIO::Job *copyJob = KIO::file_copy( QUrl::fromLocalFile(fileName), saveUrl, -1, KIO::Overwrite );
     if ( !KIO::NetAccess::synchronousRun( copyJob, widget() ) )
     {
-        KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", saveUrl.prettyUrl() ) );
+        KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", saveUrl.toDisplayString() ) );
         return false;
     }
 
@@ -2576,7 +2576,7 @@ void Part::slotExportAs(QAction * act)
             filter = m_exportFormats.at( id - 2 ).mimeType()->name();
             break;
     }
-    QString fileName = KFileDialog::getSaveFileName( url().isLocalFile() ? url().adjusted(QUrl::RemoveFilename) : QString(),
+    QString fileName = KFileDialog::getSaveFileName( url(),
                                                      filter, widget(), QString(),
                                                      KFileDialog::ConfirmOverwrite );
     if ( !fileName.isEmpty() )
@@ -2747,7 +2747,7 @@ void Part::psTransformEnded(int exit, QProcess::ExitStatus status)
     }
 
     setLocalFilePath( m_temporaryLocalFile );
-    openUrl( m_temporaryLocalFile );
+    openUrl( QUrl::fromLocalFile(m_temporaryLocalFile) );
     m_temporaryLocalFile.clear();
 }
 

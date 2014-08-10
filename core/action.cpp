@@ -182,15 +182,15 @@ QString ExecuteAction::parameters() const
 class Okular::BrowseActionPrivate : public Okular::ActionPrivate
 {
     public:
-        BrowseActionPrivate( const QString &url )
+        BrowseActionPrivate( const QUrl &url )
             : ActionPrivate(), m_url( url )
         {
         }
 
-        QString m_url;
+        QUrl m_url;
 };
 
-BrowseAction::BrowseAction( const QString &url )
+BrowseAction::BrowseAction(const QUrl &url )
     : Action( *new BrowseActionPrivate( url ) )
 {
 }
@@ -213,10 +213,10 @@ QString BrowseAction::actionTip() const
     {
         return sourceReferenceToolTip( source, row, col );
     }
-    return d->m_url;
+    return d->m_url.toDisplayString();
 }
 
-QString BrowseAction::url() const
+QUrl BrowseAction::url() const
 {
     Q_D( const Okular::BrowseAction );
     return d->m_url;

@@ -124,7 +124,7 @@ message("KF5 enable generators")
 #  add_subdirectory(epub)
 #endif(EPUB_FOUND)
 
-add_subdirectory(txt)
+#add_subdirectory(txt)
 
 #if(QMOBIPOCKET_FOUND)
 #  add_subdirectory(mobipocket)

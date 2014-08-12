@@ -61,12 +61,12 @@
           }
           else
           {
-              kWarning() &lt;&lt; "AnnotatingTools XML file seems to be damaged";
+              qWarning() &lt;&lt; "AnnotatingTools XML file seems to be damaged";
           }
       }
       else
       {
-          kWarning() &lt;&lt; "Unable to open AnnotatingTools XML definition";
+          qWarning() &lt;&lt; "Unable to open AnnotatingTools XML definition";
       }
     </code>
     <default code="true">annotationTools</default>

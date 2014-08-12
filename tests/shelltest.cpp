@@ -18,7 +18,7 @@ namespace QTest
 template<>
 char* toString( const KUrl& url )
 {
-    return qstrdup( url.url().toLocal8Bit() );
+    return qstrdup( url.url().toLocal8Bit().constData() );
 }
 }
 

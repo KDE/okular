@@ -15,6 +15,7 @@ include(FeatureSummary)
 include(KDEFrameworkCompilerSettings)
 include(KDEInstallDirs)
 include(KDECMakeSettings)
+include(ECMAddTests)
 
 
 find_package(Qt5 CONFIG REQUIRED COMPONENTS Core DBus Test Widgets PrintSupport Svg)

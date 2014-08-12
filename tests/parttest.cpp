@@ -15,6 +15,7 @@
 #include <KConfigDialog>
 #include <KStandardDirs>
 #include <KTempDir>
+#include <K4AboutData>
 
 #include <QTreeView>
 
@@ -39,7 +40,7 @@ class PartThatHijacksQueryClose : public Okular::Part
     public:
         PartThatHijacksQueryClose(QWidget* parentWidget, QObject* parent,
                                   const QVariantList& args, KComponentData componentData)
-        : Okular::Part(parentWidget, parent, args, componentData),
+        : Okular::Part(parentWidget, parent, args),
           behavior(PassThru)
         {}
 
@@ -65,7 +66,7 @@ class PartThatHijacksQueryClose : public Okular::Part
 void PartTest::testReload()
 {
     QVariantList dummyArgs;
-    Okular::Part part(NULL, NULL, dummyArgs, KGlobal::mainComponent());
+    Okular::Part part(NULL, NULL, dummyArgs);
     part.openDocument(KDESRCDIR "data/file1.pdf");
     part.reload();
     qApp->processEvents();
@@ -90,7 +91,7 @@ void PartTest::testCanceledReload()
 void PartTest::testTOCReload()
 {
     QVariantList dummyArgs;
-    Okular::Part part(NULL, NULL, dummyArgs, KGlobal::mainComponent());
+    Okular::Part part(NULL, NULL, dummyArgs);
     part.openDocument(KDESRCDIR "data/tocreload.pdf");
     QCOMPARE(part.m_toc->expandedNodes().count(), 0);
     part.m_toc->m_treeView->expandAll();
@@ -105,7 +106,7 @@ void PartTest::testFowardPDF()
     QFETCH(QString, dir);
 
     QVariantList dummyArgs;
-    Okular::Part part(NULL, NULL, dummyArgs, KGlobal::mainComponent());
+    Okular::Part part(NULL, NULL, dummyArgs);
 
     KTempDir tempDir(dir);
     QFile f(KDESRCDIR "data/synctextest.tex");
@@ -144,7 +145,7 @@ void PartTest::testGeneratorPreferences()
 {
     KConfigDialog * dialog;
     QVariantList dummyArgs;
-    Okular::Part part(NULL, NULL, dummyArgs, KGlobal::mainComponent());
+    Okular::Part part(NULL, NULL, dummyArgs);
 
     // Test that we don't crash while opening the dialog
     dialog = part.slotGeneratorPreferences();
@@ -165,13 +166,13 @@ int main(int argc, char *argv[])
     // This is QTEST_KDEMAIN withouth the LC_ALL set
     setenv("LC_ALL", "en_US.UTF-8", 1);
     assert( !QDir::homePath().isEmpty() );
-    setenv("KDEHOME", QFile::encodeName( QDir::homePath() + QString::fromLatin1("/.kde-unit-test") ), 1);
-    setenv("XDG_DATA_HOME", QFile::encodeName( QDir::homePath() + QString::fromLatin1("/.kde-unit-test/xdg/local") ), 1);
-    setenv("XDG_CONFIG_HOME", QFile::encodeName( QDir::homePath() + QString::fromLatin1("/.kde-unit-test/xdg/config") ), 1);
+    setenv("KDEHOME", QFile::encodeName( QDir::homePath() + QString::fromLatin1("/.kde-unit-test") ).constData(), 1);
+    setenv("XDG_DATA_HOME", QFile::encodeName( QDir::homePath() + QString::fromLatin1("/.kde-unit-test/xdg/local") ).constData(), 1);
+    setenv("XDG_CONFIG_HOME", QFile::encodeName( QDir::homePath() + QString::fromLatin1("/.kde-unit-test/xdg/config") ).constData(), 1);
     setenv("KDE_SKIP_KDERC", "1", 1);
     unsetenv("KDE_COLOR_DEBUG");
     QFile::remove(QDir::homePath() + QString::fromLatin1("/.kde-unit-test/share/config/qttestrc")); 
-    KAboutData aboutData( QByteArray("qttest"), QByteArray(), ki18n("KDE Test Program"), QByteArray("version") ); 
+    K4AboutData aboutData( QByteArray("qttest"), QByteArray(), ki18n("KDE Test Program"), QByteArray("version") );
     KComponentData cData(&aboutData);
     QApplication app( argc, argv );
     app.setApplicationName( QLatin1String("qttest") );

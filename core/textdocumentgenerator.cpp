@@ -273,7 +273,7 @@ void TextDocumentGeneratorPrivate::initializeGenerator()
 }
 
 TextDocumentGenerator::TextDocumentGenerator( TextDocumentConverter *converter, const QString& configName )
-    : Okular::Generator( *new TextDocumentGeneratorPrivate( converter ) )
+    : Okular::Generator( *new TextDocumentGeneratorPrivate( converter )  )
 {
     Q_D( TextDocumentGenerator );
     d->mGeneralSettings = new TextDocumentSettings( configName, this );

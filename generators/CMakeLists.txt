@@ -120,9 +120,9 @@ add_subdirectory(comicbook)
 #  add_subdirectory(plucker)
 #endif(JPEG_FOUND AND ZLIB_FOUND)
 
-#if(EPUB_FOUND)
-#  add_subdirectory(epub)
-#endif(EPUB_FOUND)
+if(EPUB_FOUND)
+  add_subdirectory(epub)
+endif(EPUB_FOUND)
 
 #add_subdirectory(txt)
 

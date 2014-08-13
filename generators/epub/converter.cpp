@@ -110,7 +110,7 @@ void Converter::_handle_anchors(const QTextBlock &start, const QString &name) {
                                                 frag.position()+fragLen));
           } else { // Outside document link
             Okular::BrowseAction *action =
-              new Okular::BrowseAction(href.toString());
+              new Okular::BrowseAction(QUrl(href.toString()));
 
             emit addAction(action, frag.position(),
                            frag.position() + frag.length());

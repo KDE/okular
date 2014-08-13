@@ -82,7 +82,7 @@ QVariant EpubDocument::loadResource(int type, const QUrl &name)
   char *data;
 
   // Get the data from the epub file
-  size = epub_get_data(mEpub, resourceUrl(mCurrentSubDocument, name.toString()).toUtf8(), &data);
+  size = epub_get_data(mEpub, resourceUrl(mCurrentSubDocument, name.toString()).toUtf8().constData(), &data);
 
   QVariant resource;
 

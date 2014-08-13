@@ -13,9 +13,10 @@
 
 class EPubGenerator : public Okular::TextDocumentGenerator
 {
+    Q_OBJECT
  public:
   EPubGenerator( QObject *parent, const QVariantList &args );
-  ~EPubGenerator() {}
+  ~EPubGenerator();
 
   // [INHERITED] reparse configuration
   void addPages( KConfigDialog* dlg );

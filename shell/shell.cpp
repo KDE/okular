@@ -32,7 +32,6 @@
 #include <kmimetype.h>
 #include <kstandardaction.h>
 #include <ktoolbar.h>
-#include <kurl.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmenubar.h>
@@ -215,7 +214,7 @@ bool Shell::canOpenDocs( int numDocs, int desktop )
    return true;
 }
 
-void Shell::openUrl( const KUrl & url )
+void Shell::openUrl( const QUrl & url )
 {
     const int activeTab = m_tabWidget->currentIndex();
     if ( activeTab < m_tabs.size() )
@@ -253,7 +252,7 @@ void Shell::openUrl( const KUrl & url )
                     QMetaObject::invokeMethod( activePart, "enableStartWithPrint" );
             }
             bool openOk = activePart->openUrl( url );
-            const bool isstdin = url.fileName( KUrl::ObeyTrailingSlash ) == QLatin1String( "-" );
+            const bool isstdin = url.fileName() == QLatin1String( "-" );
             if ( !isstdin )
             {
                 if ( openOk )
@@ -310,7 +309,7 @@ void Shell::writeSettings()
 void Shell::setupActions()
 {
   KStandardAction::open(this, SLOT(fileOpen()), actionCollection());
-  m_recent = KStandardAction::openRecent( this, SLOT(openUrl(KUrl)), actionCollection() );
+  m_recent = KStandardAction::openRecent( this, SLOT(openUrl(QUrl)), actionCollection() );
   m_recent->setToolBarMode( KRecentFilesAction::MenuMode );
   connect( m_recent, SIGNAL(triggered()), this, SLOT(showOpenRecentMenu()) );
   m_recent->setToolTip( i18n("Click to open a file\nClick and hold to open a recent file") );
@@ -413,7 +412,7 @@ void Shell::fileOpen()
     dlg.setWindowTitle( i18n( "Open Document" ) );
     if ( !dlg.exec() )
         return;
-    KUrl url = dlg.selectedUrl();
+    QUrl url = dlg.selectedUrl();
     if ( !url.isEmpty() )
     {
         openUrl( url );
@@ -532,7 +531,7 @@ void Shell::closeTab( int tab )
 
 }
 
-void Shell::openNewTab( const KUrl& url )
+void Shell::openNewTab( const QUrl& url )
 {
     // Tabs are hidden when there's only one, so show it
     if( m_tabs.size() == 1 )
@@ -638,7 +637,7 @@ int Shell::findTabIndex( QObject* sender )
 
 void Shell::handleDroppedUrls( const QList<QUrl>& urls )
 {
-    foreach( const KUrl& url, urls )
+    foreach( const QUrl& url, urls )
     {
         openUrl( url );
     }

@@ -19,7 +19,6 @@
 #include <kparts/mainwindow.h>
 #include <kparts/readwritepart.h>
 #include <kmimetype.h>
-#include <kurl.h>
 #include <kaction.h>
 
 #include <QtDBus/QtDBus>
@@ -95,7 +94,7 @@ private slots:
   void slotUpdateFullScreen();
   void slotShowMenubar();
 
-  void openUrl( const KUrl & url );
+  void openUrl( const QUrl & url );
   void delayedOpen();
   void showOpenRecentMenu();
   void closeUrl();
@@ -123,7 +122,7 @@ private:
   void setupActions();
   void init();
   QStringList fileFormats() const;
-  void openNewTab( const KUrl& url );
+  void openNewTab( const QUrl& url );
   void connectPart( QObject* part );
   int  findTabIndex( QObject* sender );
 
@@ -139,7 +138,7 @@ private:
   KToggleAction* m_showMenuBarAction;
   bool m_menuBarWasShown, m_toolBarWasShown;
   bool m_unique;
-  KUrl m_openUrl;
+  QUrl m_openUrl;
   KTabWidget* m_tabWidget;
   KToggleAction* m_openInTab;
 

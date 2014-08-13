@@ -20,35 +20,29 @@
 #include "shell.h"
 
 // qt/kde includes
-#include <qdesktopwidget.h>
-#include <qtimer.h>
-#include <QtDBus/qdbusconnection.h>
-#include <kaction.h>
-#include <kapplication.h>
-#include <kcmdlineargs.h>
-#include <kfiledialog.h>
-#include <kpluginloader.h>
-#include <kmessagebox.h>
-#include <kmimetype.h>
-#include <kstandardaction.h>
-#include <ktoolbar.h>
-#include <kdebug.h>
-#include <klocale.h>
-#include <kmenubar.h>
-#include <kio/netaccess.h>
-#include <krecentfilesaction.h>
-#include <kservicetypetrader.h>
-#include <ktoggleaction.h>
-#include <ktogglefullscreenaction.h>
-#include <kactioncollection.h>
-#include <kwindowsystem.h>
-#include <ktabwidget.h>
-#include <kxmlguifactory.h>
+#include <QDesktopWidget>
+#include <QTimer>
+#include <QDBusConnection>
+#include <QMenuBar>
+#include <QApplication>
+
+#include <KFileDialog>
+#include <KPluginLoader>
+#include <KMessageBox>
+#include <KMimeType>
+#include <KStandardAction>
+#include <KToolBar>
+#include <KRecentFilesAction>
+#include <KServiceTypeTrader>
+#include <KToggleFullScreenAction>
+#include <KActionCollection>
+#include <KWindowSystem>
+#include <KTabWidget>
+#include <KXMLGUIFactory>
 #include <QDragMoveEvent>
 #include <QTabBar>
-#include <kicon.h>
-#include <kglobal.h>
-#include <kconfiggroup.h>
+#include <KGlobal>
+#include <KConfigGroup>
 #include <KUrlMimeData>
 
 #ifdef KActivities_FOUND

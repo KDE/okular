@@ -10,9 +10,10 @@
 #include "shellutils.h"
 
 // qt/kde includes
-#include <qfile.h>
-#include <qregexp.h>
-#include <kcmdlineargs.h>
+#include <QUrl>
+#include <QFile>
+#include <QRegExp>
+#include <KCmdLineArgs>
 
 namespace ShellUtils
 {
@@ -32,7 +33,7 @@ FileExistFunc qfileExistFunc()
     return detail::qfileExistFunc;
 }
 
-KUrl urlFromArg( const QString& _arg, FileExistFunc exist_func, const QString& pageArg )
+QUrl urlFromArg( const QString& _arg, FileExistFunc exist_func, const QString& pageArg )
 {
     /*
      Rationale for the small "cut-and-paste" work being done below:
@@ -46,7 +47,7 @@ KUrl urlFromArg( const QString& _arg, FileExistFunc exist_func, const QString& p
     {
         arg = QString::fromUtf8( QByteArray::fromPercentEncoding( arg.toUtf8() ) );
     }
-    KUrl url = KCmdLineArgs::makeURL( arg.toUtf8() );
+    QUrl url = KCmdLineArgs::makeURL( arg.toUtf8() );
     int sharpPos = -1;
     if ( !url.isLocalFile() || !exist_func( url.toLocalFile() ) )
     {
@@ -55,11 +56,11 @@ KUrl urlFromArg( const QString& _arg, FileExistFunc exist_func, const QString& p
     if ( sharpPos != -1 )
     {
       url = KCmdLineArgs::makeURL( arg.left( sharpPos ).toUtf8() );
-      url.setHTMLRef( arg.mid( sharpPos + 1 ) );
+      url.setFragment( arg.mid( sharpPos + 1 ) );
     }
     else if ( !pageArg.isEmpty() )
     {
-      url.setHTMLRef( pageArg );
+      url.setFragment( pageArg );
     }
     return url;
 }

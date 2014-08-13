@@ -22,7 +22,7 @@ namespace Epub {
   class EpubDocument : public QTextDocument {
 
   public:
-    EpubDocument(const QString &fileName, QSizeF dpi);
+    EpubDocument(const QString &fileName);
     bool isValid();
     ~EpubDocument();
     struct epub *getEpub();

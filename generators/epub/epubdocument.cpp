@@ -29,17 +29,12 @@ QString resourceUrl(const KUrl &baseUrl, const QString &u)
 
 }
 
-EpubDocument::EpubDocument(const QString &fileName, QSizeF dpi) :
-    QTextDocument(),
+EpubDocument::EpubDocument(const QString &fileName) : QTextDocument(),
     padding(20)
 {
   mEpub = epub_open(qPrintable(fileName), 3);
 
-  //NOTE: the 600, 800 values may or may not be a good base. Scaling by DPI
-  // seems to produce reasonable results.
-  // Assume 96 is the base DPI
-  QSizeF size(600 * dpi.width() / 96.0f, 800 * dpi.height() / 96.0f);
-  setPageSize(size);
+  setPageSize(QSizeF(600, 800));
 }
 
 bool EpubDocument::isValid()

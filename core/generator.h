@@ -430,12 +430,6 @@ class OKULAR_EXPORT Generator : public QObject
          */
         void setDPI(const QSizeF &dpi);
 
-        /**
-         * Returns DPI, previously set via setDPI()
-         * @since 0.19 (KDE 4.13)
-         */
-        QSizeF dpi() const;
-
     Q_SIGNALS:
         /**
          * This signal should be emitted whenever an error occurred in the generator.
@@ -527,6 +521,12 @@ class OKULAR_EXPORT Generator : public QObject
          * @since 0.7 (KDE 4.1)
          */
         void updatePageBoundingBox( int page, const NormalizedRect & boundingBox );
+
+        /**
+         * Returns DPI, previously set via setDPI()
+         * @since 0.19 (KDE 4.13)
+         */
+        QSizeF dpi() const;
 
     protected Q_SLOTS:
         /**

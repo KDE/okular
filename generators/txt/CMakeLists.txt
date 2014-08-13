@@ -12,9 +12,9 @@ set(okularGenerator_txt_SRCS
 )
 
 
-kde4_add_plugin(okularGenerator_txt ${okularGenerator_txt_SRCS})
+add_library(okularGenerator_txt MODULE ${okularGenerator_txt_SRCS})
 
-target_link_libraries(okularGenerator_txt okularcore ${KDE4_KDECORE_LIBS} ${KDE4_KDEUI_LIBS} ${QT_QTGUI_LIBRARY})
+target_link_libraries(okularGenerator_txt okularcore Qt5::Core)
 
 install(TARGETS okularGenerator_txt DESTINATION ${PLUGIN_INSTALL_DIR})
 

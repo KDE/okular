@@ -213,7 +213,7 @@ class OKULAR_EXPORT Generator : public QObject
         /**
          * Creates a new generator.
          */
-        Generator();
+        Generator(QObject* parent = 0, const QVariantList& args = QVariantList());
 
         /**
          * Destroys the generator.

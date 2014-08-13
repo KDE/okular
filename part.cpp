@@ -2912,9 +2912,9 @@ void Part::rebuildBookmarkMenu( bool unplugActions )
             QWidget *container = factory()->container("bookmarks", clients[i]);
             if (container && container->actions().contains(m_bookmarkActions.first()))
             {
-                Q_ASSERT(dynamic_cast<KMenu*>(container));
+                Q_ASSERT(dynamic_cast<QMenu*>(container));
                 disconnect(container, 0, this, 0);
-                connect(container, SIGNAL(aboutToShowContextMenu(KMenu*,QAction*,QMenu*)), this, SLOT(slotAboutToShowContextMenu(KMenu*,QAction*,QMenu*)));
+                connect(container, SIGNAL(aboutToShowContextMenu(QMenu*,QAction*,QMenu*)), this, SLOT(slotAboutToShowContextMenu(QMenu*,QAction*,QMenu*)));
                 containerFound = true;
             }
         }

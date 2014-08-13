@@ -1,7 +1,7 @@
 add_subdirectory( conf )
 
 set(CMAKE_REQUIRED_INCLUDES ${POPPLER_INCLUDE_DIR} ${QT_INCLUDE_DIR})
-set(CMAKE_REQUIRED_LIBRARIES ${POPPLER_LIBRARY} ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTXML_LIBRARY})
+set(CMAKE_REQUIRED_LIBRARIES ${POPPLER_LIBRARY}   Qt5::Xml)
 
 configure_file(
    ${CMAKE_CURRENT_SOURCE_DIR}/config-okular-poppler.h.cmake
@@ -36,15 +36,15 @@ set(okularGenerator_poppler_PART_SRCS
    synctex/synctex_parser_utils.c
 )
 
-kde4_add_ui_files(okularGenerator_poppler_PART_SRCS
+ki18n_wrap_ui(okularGenerator_poppler_PART_SRCS
    conf/pdfsettingswidget.ui
 )
 
 kconfig_add_kcfg_files(okularGenerator_poppler_PART_SRCS conf/pdfsettings.kcfgc )
 
-kde4_add_plugin(okularGenerator_poppler ${okularGenerator_poppler_PART_SRCS})
+add_library(okularGenerator_poppler MODULE ${okularGenerator_poppler_PART_SRCS})
 
-target_link_libraries(okularGenerator_poppler ${POPPLER_LIBRARY} okularcore ${KDE4_KDEUI_LIBS} ${QT_QTXML_LIBRARY} ${ZLIB_LIBRARIES})
+target_link_libraries(okularGenerator_poppler ${POPPLER_LIBRARY} okularcore Qt5::Xml Qt5::Widgets Qt5::Gui ${ZLIB_LIBRARIES})
 
 install(TARGETS okularGenerator_poppler DESTINATION ${PLUGIN_INSTALL_DIR})
 

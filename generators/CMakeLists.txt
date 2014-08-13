@@ -80,9 +80,9 @@ set_package_properties("libqmobipocket" PROPERTIES
 # let's enable the generators properly configured
 
 message("KF5 enable generators")
-#if(POPPLER_FOUND)
-#  add_subdirectory(poppler)
-#endif(POPPLER_FOUND)
+if(POPPLER_FOUND)
+  add_subdirectory(poppler)
+endif(POPPLER_FOUND)
 
 #if(LIBSPECTRE_FOUND)
 #  add_subdirectory(spectre)

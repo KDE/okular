@@ -815,21 +815,28 @@ bool DocumentPrivate::openRelativeFile( const QString & fileName )
 
 Generator * DocumentPrivate::loadGeneratorLibrary( const KService::Ptr &service )
 {
-#pragma message("KF5 FIXME DocumentPrivate::loadGeneratorLibrary is disabled")
-//    KPluginFactory *factory = KPluginLoader( service->library() ).factory();
-//    if ( !factory )
-//    {
-//        kWarning(OkularDebug).nospace() << "Invalid plugin factory for " << service->library() << "!";
-//        return 0;
-//    }
-//    Generator * generator = factory->create< Okular::Generator >( service->pluginKeyword(), 0 );
+    KPluginFactory *factory = KPluginLoader( service->library() ).factory();
+    if ( !factory )
+    {
+        kWarning(OkularDebug).nospace() << "Invalid plugin factory for " << service->library() << "!";
+        return 0;
+    }
+
+    QObject* plugin = service->createInstance<QObject>();
+    // vHanda: qobject_cast seems to be failing. Not sure why!
+    Generator* generator = dynamic_cast< Okular::Generator* >(plugin);
+#pragma message("We're using dynamic_cast over here instead of qobject_cast")
+    // Generator * generator = factory->create< Okular::Generator >( service->pluginKeyword(), 0 );
+
 //    GeneratorInfo info( factory->componentData() );
-//    info.generator = generator;
-//    if ( info.data.isValid() && info.data.aboutData() )
-//        info.catalogName = info.data.aboutData()->catalogName();
-//    m_loadedGenerators.insert( service->name(), info );
-//    return generator;
-    return 0;
+    KComponentData data = KComponentData::mainComponent();
+    GeneratorInfo info( data );
+    info.generator = generator;
+    if ( info.data.isValid() && info.data.aboutData() )
+        info.catalogName = info.data.aboutData()->catalogName();
+    qDebug() << "JACK" << service->name();
+    m_loadedGenerators.insert( service->name(), info );
+    return generator;
 }
 
 void DocumentPrivate::loadAllGeneratorLibraries()

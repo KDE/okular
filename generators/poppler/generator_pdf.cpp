@@ -21,10 +21,10 @@
 #include <qregexp.h>
 #include <qstack.h>
 #include <qtextstream.h>
-#include <QtGui/QPrinter>
-#include <QtGui/QPainter>
+#include <QPrinter>
+#include <QPainter>
 
-#include <kaboutdata.h>
+#include <k4aboutdata.h>
 #include <kconfigdialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -244,7 +244,7 @@ Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink)
 
         case Poppler::Link::Browse:
             popplerLinkBrowse = static_cast<const Poppler::LinkBrowse *>(popplerLink);
-            link = new Okular::BrowseAction( popplerLinkBrowse->url() );
+            link = new Okular::BrowseAction( QUrl(popplerLinkBrowse->url()) );
         break;
 
         case Poppler::Link::Action:
@@ -378,13 +378,13 @@ static QLinkedList<Okular::ObjectRect*> generateLinks( const QList<Poppler::Link
 
 static KAboutData createAboutData()
 {
-    KAboutData aboutData(
+    K4AboutData aboutData(
          "okular_poppler",
          "okular_poppler",
          ki18n( "PDF Backend" ),
          "0.6.4",
          ki18n( "A PDF file renderer" ),
-         KAboutData::License_GPL,
+         K4AboutData::License_GPL,
          ki18n( "© 2005-2008 Albert Astals Cid" )
     );
     aboutData.addAuthor( ki18n( "Albert Astals Cid" ), KLocalizedString(), "aacid@kde.org" );
@@ -747,7 +747,8 @@ Okular::FontInfo::List PDFGenerator::fontsForPage( int page )
 
     QList<Poppler::FontInfo> fonts;
     userMutex()->lock();
-    pdfdoc->scanForFonts( 1, &fonts );
+#pragma message("scanForFonts doesn't exist in Poppler5. BahhhH!")
+    //pdfdoc->scanForFonts( 1, &fonts );
     userMutex()->unlock();
 
     foreach (const Poppler::FontInfo &font, fonts)
@@ -1691,7 +1692,7 @@ void PDFGenerator::loadPdfSync( const QString & filePath, QVector<Okular::Page*>
 
 void PDFGenerator::initSynctexParser( const QString& filePath )
 {
-    synctex_scanner = synctex_scanner_new_with_output_file( QFile::encodeName( filePath ), 0, 1);
+    synctex_scanner = synctex_scanner_new_with_output_file( QFile::encodeName( filePath ).constData(), 0, 1);
 }
 
 const Okular::SourceReference * PDFGenerator::dynamicSourceReference( int pageNr, double absX, double absY )
@@ -1757,7 +1758,7 @@ void PDFGenerator::fillViewportFromSourceReference( Okular::DocumentViewport & v
     if (!ok) line = -1;
 
     // Use column == -1 for now.
-    if( synctex_display_query( synctex_scanner, QFile::encodeName(name), line, -1 ) > 0 )
+    if( synctex_display_query( synctex_scanner, QFile::encodeName(name).constData(), line, -1 ) > 0 )
     {
         synctex_node_t node;
         // For now use the first hit. Could possibly be made smarter

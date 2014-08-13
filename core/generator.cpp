@@ -157,8 +157,9 @@ QImage GeneratorPrivate::image( PixmapRequest * )
 }
 
 
-Generator::Generator()
-    : d_ptr( new GeneratorPrivate() )
+Generator::Generator(QObject* parent, const QVariantList&)
+    : QObject(parent)
+    , d_ptr( new GeneratorPrivate() )
 {
     d_ptr->q_ptr = this;
 }

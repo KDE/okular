@@ -234,6 +234,8 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         void noticeMessage( const QString &message, int duration = -1 );
 
     private:
+        Document::OpenResult doOpenFile(const KMimeType::Ptr &mime, const QString &fileNameToOpen, bool *isCompressedFile);
+
         void setupViewerActions();
         void setViewerShortcuts();
         void setupActions();

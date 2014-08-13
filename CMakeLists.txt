@@ -120,7 +120,7 @@ set(okularcore_SRCS
    core/script/kjs_util.cpp
 )
 
-kde4_add_ui_files(okularcore_SRCS
+ki18n_wrap_ui(okularcore_SRCS
    conf/textdocumentsettings.ui
 )
 
@@ -158,7 +158,7 @@ install( FILES
            interfaces/viewerinterface.h
          DESTINATION ${INCLUDE_INSTALL_DIR}/okular/interfaces COMPONENT Devel)
 
-kde4_add_ui_files(okularcore_SRCS
+ki18n_wrap_ui(okularcore_SRCS
    core/chooseenginewidget.ui
 )
 
@@ -249,7 +249,7 @@ set(okularpart_SRCS
    ui/videowidget.cpp
 )
 
-kde4_add_ui_files(okularpart_SRCS
+ki18n_wrap_ui(okularpart_SRCS
    conf/dlgaccessibilitybase.ui
    conf/dlgeditorbase.ui
    conf/dlggeneralbase.ui

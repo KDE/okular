@@ -339,7 +339,7 @@ void BookmarkList::rebuildTree( bool filter )
     m_currentDocumentItem = 0;
     m_tree->clear();
 
-    KUrl::List urls = m_document->bookmarkManager()->files();
+    QList<QUrl> urls = m_document->bookmarkManager()->files();
     if ( filter )
     {
         if ( m_document->isOpened() )

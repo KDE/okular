@@ -43,7 +43,7 @@ class Sidebar : public QWidget
         bool isCollapsed() const;
 
     signals:
-        void urlsDropped( const KUrl::List& urls );
+        void urlsDropped( const QList<QUrl>& urls );
 
     protected:
         void dragEnterEvent( QDragEnterEvent* event );

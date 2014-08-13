@@ -3666,8 +3666,8 @@ void Document::processAction( const Action * action )
             KService::Ptr ptr = KMimeTypeTrader::self()->preferredService( mime->name(), "Application" );
             if ( ptr )
             {
-                KUrl::List lst;
-                lst.append( fileName );
+                QList<QUrl> lst;
+                lst.append( QUrl::fromLocalFile(fileName) );
                 KRun::run( *ptr, lst, 0 );
             }
             else

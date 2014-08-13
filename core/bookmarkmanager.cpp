@@ -234,9 +234,9 @@ void BookmarkManager::Private::_o_changed( const QString & groupAddress, const Q
     emit q->saved();
 }
 
-KUrl::List BookmarkManager::files() const
+QList<QUrl> BookmarkManager::files() const
 {
-    KUrl::List ret;
+    QList<QUrl> ret;
     KBookmarkGroup group = d->manager->root();
     for ( KBookmark bm = group.first(); !bm.isNull(); bm = group.next( bm ) )
     {

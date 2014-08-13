@@ -103,7 +103,7 @@ private slots:
   void setPrintEnabled( bool enabled );
   void setCloseEnabled( bool enabled );
   void setTabIcon( KMimeType::Ptr mimeType );
-  void handleDroppedUrls( const KUrl::List& urls );
+  void handleDroppedUrls( const QList<QUrl>& urls );
 
   // Tab event handlers
   void setActiveTab( int tab );

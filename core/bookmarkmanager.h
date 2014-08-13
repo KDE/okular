@@ -39,7 +39,7 @@ class OKULAR_EXPORT BookmarkManager : public QObject
         /**
          * Returns the list of documents with bookmarks.
          */
-        KUrl::List files() const;
+        QList<QUrl> files() const;
 
         /**
          * Returns the list of bookmarks for the specified @p url.

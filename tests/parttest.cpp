@@ -177,7 +177,7 @@ int main(int argc, char *argv[])
     QApplication app( argc, argv );
     app.setApplicationName( QLatin1String("qttest") );
     qRegisterMetaType<KUrl>(); /*as done by kapplication*/
-    qRegisterMetaType<KUrl::List>();
+    qRegisterMetaType<QList<QUrl>>();
     Okular::PartTest test;
     KGlobal::ref(); /* don't quit qeventloop after closing a mainwindow */
     return QTest::qExec( &test, argc, argv );

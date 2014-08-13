@@ -332,7 +332,7 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
 
     m_sidebar = new Sidebar( parentWidget );
     setWidget( m_sidebar );
-    connect( m_sidebar, SIGNAL(urlsDropped(KUrl::List)), SLOT(handleDroppedUrls(KUrl::List)) );
+    connect( m_sidebar, SIGNAL(urlsDropped(QList<QUrl>)), SLOT(handleDroppedUrls(QList<QUrl>)) );
 
     // build the document
     m_document = new Okular::Document(widget());
@@ -989,7 +989,7 @@ void Part::openUrlFromBookmarks(const KUrl &_url)
         openUrl( url );
 }
 
-void Part::handleDroppedUrls( const KUrl::List& urls )
+void Part::handleDroppedUrls( const QList<QUrl>& urls )
 {
     if ( urls.isEmpty() )
         return;
@@ -2042,7 +2042,7 @@ void Part::slotRenameCurrentViewportBookmark()
     slotRenameBookmark( m_document->viewport() );
 }
 
-void Part::slotAboutToShowContextMenu(KMenu * /*menu*/, QAction *action, QMenu *contextMenu)
+void Part::slotAboutToShowContextMenu(QMenu * /*menu*/, QAction *action, QMenu *contextMenu)
 {
     const QList<QAction*> actions = contextMenu->findChildren<QAction*>("OkularPrivateRenameBookmarkActions");
     foreach(QAction *a, actions)

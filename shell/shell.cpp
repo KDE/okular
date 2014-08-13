@@ -50,6 +50,7 @@
 #include <kicon.h>
 #include <kglobal.h>
 #include <kconfiggroup.h>
+#include <KUrlMimeData>
 
 #ifdef KActivities_FOUND
 #include <KActivities/ResourceInstance>
@@ -562,7 +563,7 @@ void Shell::connectPart( QObject* part )
     connect( part, SIGNAL(enablePrintAction(bool)), this, SLOT(setPrintEnabled(bool)));
     connect( part, SIGNAL(enableCloseAction(bool)), this, SLOT(setCloseEnabled(bool)));
     connect( part, SIGNAL(mimeTypeChanged(KMimeType::Ptr)), this, SLOT(setTabIcon(KMimeType::Ptr)));
-    connect( part, SIGNAL(urlsDropped(KUrl::List)), this, SLOT(handleDroppedUrls(KUrl::List)) );
+    connect( part, SIGNAL(urlsDropped(QList<QUrl>)), this, SLOT(handleDroppedUrls(QList<QUrl>)) );
 }
 
 void Shell::print()
@@ -635,7 +636,7 @@ int Shell::findTabIndex( QObject* sender )
     return -1;
 }
 
-void Shell::handleDroppedUrls( const KUrl::List& urls )
+void Shell::handleDroppedUrls( const QList<QUrl>& urls )
 {
     foreach( const KUrl& url, urls )
     {
@@ -645,12 +646,12 @@ void Shell::handleDroppedUrls( const KUrl::List& urls )
 
 void Shell::testTabDrop( const QDragMoveEvent* event, bool& accept )
 {
-    accept = KUrl::List::canDecode( event->mimeData() );
+    accept = event->mimeData()->hasUrls();
 }
 
 void Shell::handleTabDrop( QDropEvent* event )
 {
-    const KUrl::List list = KUrl::List::fromMimeData( event->mimeData() );
+    const QList<QUrl> list = KUrlMimeData::urlsFromMimeData( event->mimeData() );
     handleDroppedUrls( list );
 }
 

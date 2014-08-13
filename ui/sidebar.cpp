@@ -24,12 +24,14 @@
 #include <qscrollbar.h>
 #include <qsplitter.h>
 #include <qstackedwidget.h>
+#include <qmimedata.h>
 
 #include <kglobalsettings.h>
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kmenu.h>
 #include <kcolorscheme.h>
+#include <kurlmimedata.h>
 
 #include "settings.h"
 
@@ -756,12 +758,12 @@ void Sidebar::appearanceChanged()
 
 void Sidebar::dragEnterEvent( QDragEnterEvent* event )
 {
-    event->setAccepted( KUrl::List::canDecode(event->mimeData()) );
+    event->setAccepted( event->mimeData()->hasUrls() );
 }
 
 void Sidebar::dropEvent( QDropEvent* event )
 {
-    const KUrl::List list = KUrl::List::fromMimeData( event->mimeData() );
+    const QList<QUrl> list = KUrlMimeData::urlsFromMimeData( event->mimeData() );
     emit urlsDropped( list );
 }
 

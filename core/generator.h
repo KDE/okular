@@ -37,7 +37,7 @@ class QByteArray;
 class QMutex;
 class QPrinter;
 class QPrintDialog;
-class KIcon;
+class QIcon;
 
 namespace Okular {
 
@@ -100,7 +100,7 @@ class OKULAR_EXPORT ExportFormat
          * @param description The i18n'ed description of the format.
          * @param mimeType The supported mime type of the format.
          */
-        ExportFormat( const KIcon &icon, const QString &description, const KMimeType::Ptr &mimeType );
+        ExportFormat( const QIcon &icon, const QString &description, const KMimeType::Ptr &mimeType );
 
         /**
          * Destroys the export format.
@@ -130,7 +130,7 @@ class OKULAR_EXPORT ExportFormat
         /**
          * Returns the icon for GUI representations of the format.
          */
-        KIcon icon() const;
+        QIcon icon() const;
 
         /**
          * Returns whether the export format is null/valid.

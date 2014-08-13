@@ -189,7 +189,7 @@ QVariant TOCModel::data( const QModelIndex &index, int role ) const
             break;
         case Qt::DecorationRole:
             if ( item->highlight )
-                return KIcon( QApplication::layoutDirection() == Qt::RightToLeft ? "arrow-left" : "arrow-right" );
+                return QIcon::fromTheme( QApplication::layoutDirection() == Qt::RightToLeft ? "arrow-left" : "arrow-right" );
             break;
         case PageItemDelegate::PageRole:
             if ( item->viewport.isValid() )

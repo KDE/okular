@@ -159,7 +159,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     m_topBar->setIconSize( QSize( 32, 32 ) );
     m_topBar->setMovable( false );
     m_topBar->layout()->setMargin(0);
-    m_topBar->addAction( KIcon( layoutDirection() == Qt::RightToLeft ? "go-next" : "go-previous" ), i18n( "Previous Page" ), this, SLOT(slotPrevPage()) );
+    m_topBar->addAction( QIcon::fromTheme( layoutDirection() == Qt::RightToLeft ? "go-next" : "go-previous" ), i18n( "Previous Page" ), this, SLOT(slotPrevPage()) );
     m_pagesEdit = new KLineEdit( m_topBar );
     QSizePolicy sp = m_pagesEdit->sizePolicy();
     sp.setHorizontalPolicy( QSizePolicy::Minimum );
@@ -175,7 +175,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     pagesLabel->setText( QLatin1String( " / " ) + QString::number( m_document->pages() ) + QLatin1String( " " ) );
     m_topBar->addWidget( pagesLabel );
     connect( m_pagesEdit, SIGNAL(returnPressed()), this, SLOT(slotPageChanged()) );
-    m_topBar->addAction( KIcon( layoutDirection() == Qt::RightToLeft ? "go-previous" : "go-next" ), i18n( "Next Page" ), this, SLOT(slotNextPage()) );
+    m_topBar->addAction( QIcon::fromTheme( layoutDirection() == Qt::RightToLeft ? "go-previous" : "go-next" ), i18n( "Next Page" ), this, SLOT(slotNextPage()) );
     m_topBar->addSeparator();
     QAction *playPauseAct = collection->action( "presentation_play_pause" );
     playPauseAct->setEnabled( true );
@@ -198,7 +198,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     if ( desktop->numScreens() > 1 )
     {
         m_topBar->addSeparator();
-        m_screenSelect = new KSelectAction( KIcon( "video-display" ), i18n( "Switch Screen" ), m_topBar );
+        m_screenSelect = new KSelectAction( QIcon::fromTheme( "video-display" ), i18n( "Switch Screen" ), m_topBar );
         m_screenSelect->setToolBarMode( KSelectAction::MenuMode );
         m_screenSelect->setToolButtonPopupMode( QToolButton::InstantPopup );
         m_topBar->addAction( m_screenSelect );
@@ -212,7 +212,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     QWidget *spacer = new QWidget( m_topBar );
     spacer->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::MinimumExpanding );
     m_topBar->addWidget( spacer );
-    m_topBar->addAction( KIcon( "application-exit" ), i18n( "Exit Presentation Mode" ), this, SLOT(close()) );
+    m_topBar->addAction( QIcon::fromTheme( "application-exit" ), i18n( "Exit Presentation Mode" ), this, SLOT(close()) );
     m_topBar->setAutoFillBackground( true );
     showTopBar( false );
     // change topbar background color
@@ -506,12 +506,12 @@ void PresentationWidget::setPlayPauseIcon()
     QAction *playPauseAction = m_ac->action( "presentation_play_pause" );
     if ( m_advanceSlides )
     {
-       playPauseAction->setIcon( KIcon( "media-playback-pause" ) );
+       playPauseAction->setIcon( QIcon::fromTheme( "media-playback-pause" ) );
        playPauseAction->setToolTip( i18nc( "For Presentation", "Pause" ) );
     }
     else
     {
-       playPauseAction->setIcon( KIcon( "media-playback-start" ) );
+       playPauseAction->setIcon( QIcon::fromTheme( "media-playback-start" ) );
        playPauseAction->setToolTip( i18nc( "For Presentation", "Play" ) );
     }
 }

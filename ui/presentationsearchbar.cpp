@@ -59,7 +59,7 @@ PresentationSearchBar::PresentationSearchBar( Okular::Document *document, QWidge
     lay->addWidget( m_handle );
 
     QToolButton * closeBtn = new QToolButton( this );
-    closeBtn->setIcon( KIcon( "dialog-close" ) );
+    closeBtn->setIcon( QIcon::fromTheme( "dialog-close" ) );
     closeBtn->setIconSize( QSize( 24, 24 ) );
     closeBtn->setToolTip( i18n( "Close" ) );
     closeBtn->setAutoRaise( true );
@@ -75,7 +75,7 @@ PresentationSearchBar::PresentationSearchBar( Okular::Document *document, QWidge
     m_search->setSearchMoveViewport( true );
     lay->addWidget( m_search );
 
-    KPushButton * findNextBtn = new KPushButton( KIcon( "go-down-search" ), i18n( "Find Next" ), this );
+    KPushButton * findNextBtn = new KPushButton( QIcon::fromTheme( "go-down-search" ), i18n( "Find Next" ), this );
     lay->addWidget( findNextBtn );
 
     m_anchor->installEventFilter( this );

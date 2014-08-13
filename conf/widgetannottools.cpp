@@ -46,22 +46,22 @@ WidgetAnnotTools::WidgetAnnotTools( QWidget * parent )
 
     QVBoxLayout *vBoxLayout = new QVBoxLayout();
     m_btnAdd = new KPushButton( i18n("&Add..."), this );
-    m_btnAdd->setIcon( KIcon("list-add") );
+    m_btnAdd->setIcon( QIcon::fromTheme("list-add") );
     vBoxLayout->addWidget( m_btnAdd );
     m_btnEdit = new KPushButton( i18n("&Edit..."), this );
-    m_btnEdit->setIcon( KIcon("edit-rename") );
+    m_btnEdit->setIcon( QIcon::fromTheme("edit-rename") );
     m_btnEdit->setEnabled( false );
     vBoxLayout->addWidget( m_btnEdit );
     m_btnRemove = new KPushButton( i18n("&Remove"), this );
-    m_btnRemove->setIcon( KIcon("list-remove") );
+    m_btnRemove->setIcon( QIcon::fromTheme("list-remove") );
     m_btnRemove->setEnabled( false );
     vBoxLayout->addWidget( m_btnRemove );
     m_btnMoveUp = new KPushButton( i18n("Move &Up"), this );
-    m_btnMoveUp->setIcon( KIcon("arrow-up") );
+    m_btnMoveUp->setIcon( QIcon::fromTheme("arrow-up") );
     m_btnMoveUp->setEnabled( false );
     vBoxLayout->addWidget( m_btnMoveUp );
     m_btnMoveDown = new KPushButton( i18n("Move &Down"), this );
-    m_btnMoveDown->setIcon( KIcon("arrow-down") );
+    m_btnMoveDown->setIcon( QIcon::fromTheme("arrow-down") );
     m_btnMoveDown->setEnabled( false );
     vBoxLayout->addWidget( m_btnMoveDown );
     vBoxLayout->addStretch();

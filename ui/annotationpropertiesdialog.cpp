@@ -61,7 +61,7 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     //BEGIN tab 2
     QFrame* page = new QFrame( this );
     addPage( page, i18n( "&General" ) );
-//    m_tabitem[1]->setIcon( KIcon( "fonts" ) );
+//    m_tabitem[1]->setIcon( QIcon::fromTheme( "fonts" ) );
     QGridLayout* gridlayout = new QGridLayout( page );
     tmplabel = new QLabel( i18n( "&Author:" ), page );
     AuthorEdit = new KLineEdit( ann->author(), page );

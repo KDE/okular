@@ -49,7 +49,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
   // PROPERTIES
   QFrame *page = new QFrame();
   KPageWidgetItem *item = addPage( page, i18n( "&Properties" ) );
-  item->setIcon( KIcon( "document-properties" ) );
+  item->setIcon( QIcon::fromTheme( "document-properties" ) );
 
   // get document info, if not present display blank data and a warning
   const Okular::DocumentInfo * info = doc->documentInfo();
@@ -147,7 +147,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
     // create fonts tab and layout it
     QFrame *page2 = new QFrame();
     m_fontPage = addPage(page2, i18n("&Fonts"));
-    m_fontPage->setIcon( KIcon( "preferences-desktop-font" ) );
+    m_fontPage->setIcon( QIcon::fromTheme( "preferences-desktop-font" ) );
     page2Layout = new QVBoxLayout(page2);
 #pragma message("KF5 fix margin/spacing")
 //    page2Layout->setMargin(marginHint());

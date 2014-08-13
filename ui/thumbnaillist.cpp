@@ -988,7 +988,7 @@ ThumbnailController::ThumbnailController( QWidget * parent, ThumbnailList * list
     // insert a togglebutton [show only bookmarked pages]
     //insertSeparator();
     QAction * showBoomarkOnlyAction = addAction(
-        KIcon( "bookmarks" ), i18n( "Show bookmarked pages only" ) );
+        QIcon::fromTheme( "bookmarks" ), i18n( "Show bookmarked pages only" ) );
     showBoomarkOnlyAction->setCheckable( true );
     connect( showBoomarkOnlyAction, SIGNAL(toggled(bool)), list, SLOT(slotFilterBookmarks(bool)) );
     showBoomarkOnlyAction->setChecked( Okular::Settings::filterBookmarks() );

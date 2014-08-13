@@ -619,7 +619,7 @@ void Shell::setTabIcon( KMimeType::Ptr mimeType )
     int i = findTabIndex( sender() );
     if( i != -1 )
     {
-        m_tabWidget->setTabIcon( i, KIcon(mimeType->iconName()) );
+        m_tabWidget->setTabIcon( i, QIcon::fromTheme(mimeType->iconName()) );
     }
 }
 

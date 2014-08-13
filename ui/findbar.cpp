@@ -32,7 +32,7 @@ FindBar::FindBar( Okular::Document * document, QWidget * parent )
     lay->setMargin( 2 );
 
     QToolButton * closeBtn = new QToolButton( this );
-    closeBtn->setIcon( KIcon( "dialog-close" ) );
+    closeBtn->setIcon( QIcon::fromTheme( "dialog-close" ) );
     closeBtn->setToolTip( i18n( "Close" ) );
     closeBtn->setAutoRaise( true );
     lay->addWidget( closeBtn );
@@ -52,11 +52,11 @@ FindBar::FindBar( Okular::Document * document, QWidget * parent )
     label->setBuddy( m_search->lineEdit() );
     lay->addWidget( m_search );
 
-    QPushButton * findNextBtn = new QPushButton( KIcon( "go-down-search" ), i18nc( "Find and go to the next search match", "Next" ), this );
+    QPushButton * findNextBtn = new QPushButton( QIcon::fromTheme( "go-down-search" ), i18nc( "Find and go to the next search match", "Next" ), this );
     findNextBtn->setToolTip( i18n( "Jump to next match" ) );
     lay->addWidget( findNextBtn );
 
-    QPushButton * findPrevBtn = new QPushButton( KIcon( "go-up-search" ), i18nc( "Find and go to the previous search match", "Previous" ), this );
+    QPushButton * findPrevBtn = new QPushButton( QIcon::fromTheme( "go-up-search" ), i18nc( "Find and go to the previous search match", "Previous" ), this );
     findPrevBtn->setToolTip( i18n( "Jump to previous match" ) );
     lay->addWidget( findPrevBtn );
 

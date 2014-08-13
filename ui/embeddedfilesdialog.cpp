@@ -63,7 +63,7 @@ EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const Okular::Document
 		KMimeType::Ptr mime = KMimeType::findByPath( ef->name(), 0, true );
 		if (mime)
 		{
-			twi->setIcon(0, KIcon(mime->iconName()));
+			twi->setIcon(0, QIcon::fromTheme(mime->iconName()));
 		}
 		twi->setText(1, ef->description());
 		twi->setText(2, ef->size() <= 0 ? i18nc("Not available size", "N/A") : KGlobal::locale()->formatByteSize(ef->size()));
@@ -111,7 +111,7 @@ void EmbeddedFilesDialog::attachViewContextMenu( const QPoint& /*pos*/ )
         return;
 
     QMenu menu( this );
-    QAction* saveAsAct = menu.addAction( KIcon( "document-save-as" ), i18nc( "@action:inmenu", "&Save As..." ) );
+    QAction* saveAsAct = menu.addAction( QIcon::fromTheme( "document-save-as" ), i18nc( "@action:inmenu", "&Save As..." ) );
 
     QAction* act = menu.exec( QCursor::pos() );
     if ( !act )

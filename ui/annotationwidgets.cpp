@@ -685,7 +685,7 @@ QWidget * FileAttachmentAnnotationWidget::createExtraWidget()
     if ( mime )
     {
         tmplabel = new QLabel( widget );
-        tmplabel->setPixmap( KIcon( mime->iconName() ).pixmap( FILEATTACH_ICONSIZE, FILEATTACH_ICONSIZE ) );
+        tmplabel->setPixmap( QIcon::fromTheme( mime->iconName() ).pixmap( FILEATTACH_ICONSIZE, FILEATTACH_ICONSIZE ) );
         tmplabel->setFixedSize( FILEATTACH_ICONSIZE, FILEATTACH_ICONSIZE );
         lay->addWidget( tmplabel, 0, 1, 3, 1, Qt::AlignTop );
     }

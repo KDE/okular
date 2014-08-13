@@ -360,7 +360,7 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     // [left toolbox: Table of Contents] | []
     m_toc = new TOC( 0, m_document );
     connect( m_toc, SIGNAL(hasTOC(bool)), this, SLOT(enableTOC(bool)) );
-    tbIndex = m_sidebar->addItem( m_toc, KIcon(QApplication::isLeftToRight() ? "format-justify-left" : "format-justify-right"), i18n("Contents") );
+    tbIndex = m_sidebar->addItem( m_toc, QIcon::fromTheme(QApplication::isLeftToRight() ? "format-justify-left" : "format-justify-right"), i18n("Contents") );
     enableTOC( false );
 
     // [left toolbox: Thumbnails and Bookmarks] | []
@@ -370,17 +370,17 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     m_thumbnailList = new ThumbnailList( thumbsBox, m_document );
     //	ThumbnailController * m_tc = new ThumbnailController( thumbsBox, m_thumbnailList );
     connect( m_thumbnailList, SIGNAL(rightClick(const Okular::Page*,QPoint)), this, SLOT(slotShowMenu(const Okular::Page*,QPoint)) );
-    tbIndex = m_sidebar->addItem( thumbsBox, KIcon( "view-preview" ), i18n("Thumbnails") );
+    tbIndex = m_sidebar->addItem( thumbsBox, QIcon::fromTheme( "view-preview" ), i18n("Thumbnails") );
     m_sidebar->setCurrentIndex( tbIndex );
 
     // [left toolbox: Reviews] | []
     m_reviewsWidget = new Reviews( 0, m_document );
-    m_sidebar->addItem( m_reviewsWidget, KIcon("draw-freehand"), i18n("Reviews") );
+    m_sidebar->addItem( m_reviewsWidget, QIcon::fromTheme("draw-freehand"), i18n("Reviews") );
     m_sidebar->setItemEnabled( 2, false );
 
     // [left toolbox: Bookmarks] | []
     m_bookmarkList = new BookmarkList( m_document, 0 );
-    m_sidebar->addItem( m_bookmarkList, KIcon("bookmarks"), i18n("Bookmarks") );
+    m_sidebar->addItem( m_bookmarkList, QIcon::fromTheme("bookmarks"), i18n("Bookmarks") );
     m_sidebar->setItemEnabled( 3, false );
 
     // widgets: [../miniBarContainer] | []
@@ -415,7 +415,7 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     m_topMessage->setWordWrap( true );
     m_topMessage->setMessageType( KMessageWidget::Information );
     m_topMessage->setText( i18n( "This document has embedded files. <a href=\"okular:/embeddedfiles\">Click here to see them</a> or go to File -> Embedded Files." ) );
-    m_topMessage->setIcon( KIcon( "mail-attachment" ) );
+    m_topMessage->setIcon( QIcon::fromTheme( "mail-attachment" ) );
     connect( m_topMessage, SIGNAL(linkActivated(QString)), this, SLOT(slotShowEmbeddedFiles()) );
     rightLayout->addWidget( m_topMessage );
     m_formsMessage = new KMessageWidget( rightContainer );
@@ -605,19 +605,19 @@ void Part::setupViewerActions()
 
     m_renameBookmark = ac->addAction("rename_bookmark");
     m_renameBookmark->setText(i18n( "Rename Bookmark" ));
-    m_renameBookmark->setIcon(KIcon( "edit-rename" ));
+    m_renameBookmark->setIcon(QIcon::fromTheme( "edit-rename" ));
     m_renameBookmark->setWhatsThis( i18n( "Rename the current bookmark" ) );
     connect( m_renameBookmark, SIGNAL(triggered()), this, SLOT(slotRenameCurrentViewportBookmark()) );
 
     m_prevBookmark = ac->addAction("previous_bookmark");
     m_prevBookmark->setText(i18n( "Previous Bookmark" ));
-    m_prevBookmark->setIcon(KIcon( "go-up-search" ));
+    m_prevBookmark->setIcon(QIcon::fromTheme( "go-up-search" ));
     m_prevBookmark->setWhatsThis( i18n( "Go to the previous bookmark" ) );
     connect( m_prevBookmark, SIGNAL(triggered()), this, SLOT(slotPreviousBookmark()) );
 
     m_nextBookmark = ac->addAction("next_bookmark");
     m_nextBookmark->setText(i18n( "Next Bookmark" ));
-    m_nextBookmark->setIcon(KIcon( "go-down-search" ));
+    m_nextBookmark->setIcon(QIcon::fromTheme( "go-down-search" ));
     m_nextBookmark->setWhatsThis( i18n( "Go to the next bookmark" ) );
     connect( m_nextBookmark, SIGNAL(triggered()), this, SLOT(slotNextBookmark()) );
 
@@ -662,7 +662,7 @@ void Part::setupViewerActions()
     {
         genPrefs->setText( i18n( "Configure Backends..." ) );
     }
-    genPrefs->setIcon( KIcon( "configure" ) );
+    genPrefs->setIcon( QIcon::fromTheme( "configure" ) );
     genPrefs->setEnabled( m_document->configurableGenerators() > 0 );
     connect( genPrefs, SIGNAL(triggered(bool)), this, SLOT(slotGeneratorPreferences()) );
 
@@ -674,7 +674,7 @@ void Part::setupViewerActions()
 
     m_showProperties = ac->addAction("properties");
     m_showProperties->setText(i18n("&Properties"));
-    m_showProperties->setIcon(KIcon("document-properties"));
+    m_showProperties->setIcon(QIcon::fromTheme("document-properties"));
     connect(m_showProperties, SIGNAL(triggered()), this, SLOT(slotShowProperties()));
     m_showProperties->setEnabled( false );
 
@@ -693,7 +693,7 @@ void Part::setupViewerActions()
 
     KAction *reload = ac->add<KAction>( "file_reload" );
     reload->setText( i18n( "Reloa&d" ) );
-    reload->setIcon( KIcon( "view-refresh" ) );
+    reload->setIcon( QIcon::fromTheme( "view-refresh" ) );
     reload->setWhatsThis( i18n( "Reload the current document from disk." ) );
     connect( reload, SIGNAL(triggered()), this, SLOT(slotReload()) );
     reload->setShortcut( QKeySequence(QKeySequence::Refresh) );
@@ -747,7 +747,7 @@ void Part::setupActions()
 
     m_showLeftPanel = ac->add<KToggleAction>("show_leftpanel");
     m_showLeftPanel->setText(i18n( "Show &Navigation Panel"));
-    m_showLeftPanel->setIcon(KIcon( "view-sidetree" ));
+    m_showLeftPanel->setIcon(QIcon::fromTheme( "view-sidetree" ));
     connect( m_showLeftPanel, SIGNAL(toggled(bool)), this, SLOT(slotShowLeftPanel()) );
     m_showLeftPanel->setShortcut( Qt::Key_F7 );
     m_showLeftPanel->setChecked( Okular::Settings::showLeftPanel() );
@@ -761,13 +761,13 @@ void Part::setupActions()
 
     m_showEmbeddedFiles = ac->addAction("embedded_files");
     m_showEmbeddedFiles->setText(i18n("&Embedded Files"));
-    m_showEmbeddedFiles->setIcon( KIcon( "mail-attachment" ) );
+    m_showEmbeddedFiles->setIcon( QIcon::fromTheme( "mail-attachment" ) );
     connect(m_showEmbeddedFiles, SIGNAL(triggered()), this, SLOT(slotShowEmbeddedFiles()));
     m_showEmbeddedFiles->setEnabled( false );
 
     m_exportAs = ac->addAction("file_export_as");
     m_exportAs->setText(i18n("E&xport As"));
-    m_exportAs->setIcon( KIcon( "document-export" ) );
+    m_exportAs->setIcon( QIcon::fromTheme( "document-export" ) );
     m_exportAsMenu = new QMenu();
     connect(m_exportAsMenu, SIGNAL(triggered(QAction*)), this, SLOT(slotExportAs(QAction*)));
     m_exportAs->setMenu( m_exportAsMenu );
@@ -783,19 +783,19 @@ void Part::setupActions()
 
     m_showPresentation = ac->addAction("presentation");
     m_showPresentation->setText(i18n("P&resentation"));
-    m_showPresentation->setIcon( KIcon( "view-presentation" ) );
+    m_showPresentation->setIcon( QIcon::fromTheme( "view-presentation" ) );
     connect(m_showPresentation, SIGNAL(triggered()), this, SLOT(slotShowPresentation()));
     m_showPresentation->setShortcut( QKeySequence( Qt::CTRL + Qt::SHIFT + Qt::Key_P ) );
     m_showPresentation->setEnabled( false );
 
     QAction * importPS = ac->addAction("import_ps");
     importPS->setText(i18n("&Import PostScript as PDF..."));
-    importPS->setIcon(KIcon("document-import"));
+    importPS->setIcon(QIcon::fromTheme("document-import"));
     connect(importPS, SIGNAL(triggered()), this, SLOT(slotImportPSFile()));
 #if 0
     QAction * ghns = ac->addAction("get_new_stuff");
     ghns->setText(i18n("&Get Books From Internet..."));
-    ghns->setIcon(KIcon("get-hot-new-stuff"));
+    ghns->setIcon(QIcon::fromTheme("get-hot-new-stuff"));
     connect(ghns, SIGNAL(triggered()), this, SLOT(slotGetNewStuff()));
     // TEMP, REMOVE ME!
     ghns->setShortcut( Qt::Key_G );
@@ -804,22 +804,22 @@ void Part::setupActions()
     KToggleAction *blackscreenAction = new KToggleAction( i18n( "Switch Blackscreen Mode" ), ac );
     ac->addAction( "switch_blackscreen_mode", blackscreenAction );
     blackscreenAction->setShortcut( QKeySequence( Qt::Key_B ) );
-    blackscreenAction->setIcon( KIcon( "view-presentation" ) );
+    blackscreenAction->setIcon( QIcon::fromTheme( "view-presentation" ) );
     blackscreenAction->setEnabled( false );
 
     KToggleAction *drawingAction = new KToggleAction( i18n( "Toggle Drawing Mode" ), ac );
     ac->addAction( "presentation_drawing_mode", drawingAction );
-    drawingAction->setIcon( KIcon( "draw-freehand" ) );
+    drawingAction->setIcon( QIcon::fromTheme( "draw-freehand" ) );
     drawingAction->setEnabled( false );
 
     KAction *eraseDrawingAction = new KAction( i18n( "Erase Drawings" ), ac );
     ac->addAction( "presentation_erase_drawings", eraseDrawingAction );
-    eraseDrawingAction->setIcon( KIcon( "draw-eraser" ) );
+    eraseDrawingAction->setIcon( QIcon::fromTheme( "draw-eraser" ) );
     eraseDrawingAction->setEnabled( false );
 
     KAction *configureAnnotations = new KAction( i18n( "Configure Annotations..." ), ac );
     ac->addAction( "options_configure_annotations", configureAnnotations );
-    configureAnnotations->setIcon( KIcon( "configure" ) );
+    configureAnnotations->setIcon( QIcon::fromTheme( "configure" ) );
     connect(configureAnnotations, SIGNAL(triggered()), this, SLOT(slotAnnotationPreferences()));
 
     KAction *playPauseAction = new KAction( i18n( "Play/Pause Presentation" ), ac );
@@ -1338,7 +1338,7 @@ bool Part::openFile()
     if ( ok && m_document->metaData( "HasUnsupportedXfaForm" ).toBool() == true )
     {
         m_formsMessage->setText( i18n( "This document has XFA forms, which are currently <b>unsupported</b>." ) );
-        m_formsMessage->setIcon( KIcon( "dialog-warning" ) );
+        m_formsMessage->setIcon( QIcon::fromTheme( "dialog-warning" ) );
         m_formsMessage->setMessageType( KMessageWidget::Warning );
         m_formsMessage->setVisible( true );
     }
@@ -1847,7 +1847,7 @@ void Part::updateBookmarksActions()
         if ( m_document->bookmarkManager()->isBookmarked( m_document->viewport() ) )
         {
             m_addBookmark->setText( i18n( "Remove Bookmark" ) );
-            m_addBookmark->setIcon( KIcon( "edit-delete-bookmark" ) );
+            m_addBookmark->setIcon( QIcon::fromTheme( "edit-delete-bookmark" ) );
             m_renameBookmark->setEnabled( true );
         }
         else
@@ -2055,7 +2055,7 @@ void Part::slotAboutToShowContextMenu(KMenu * /*menu*/, QAction *action, QMenu *
     {
         QAction *separatorAction = contextMenu->addSeparator();
         separatorAction->setObjectName("OkularPrivateRenameBookmarkActions");
-        QAction *renameAction = contextMenu->addAction( KIcon( "edit-rename" ), i18n( "Rename this Bookmark" ), this, SLOT(slotRenameBookmarkFromMenu()) );
+        QAction *renameAction = contextMenu->addAction( QIcon::fromTheme( "edit-rename" ), i18n( "Rename this Bookmark" ), this, SLOT(slotRenameBookmarkFromMenu()) );
         renameAction->setData(ba->property("htmlRef").toString());
         renameAction->setObjectName("OkularPrivateRenameBookmarkActions");
     }
@@ -2401,11 +2401,11 @@ void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
         popup->addTitle( i18n( "Page %1", page->number() + 1 ) );
         if ( ( !currentPage && m_document->bookmarkManager()->isBookmarked( page->number() ) ) ||
                 ( currentPage && m_document->bookmarkManager()->isBookmarked( m_document->viewport() ) ) )
-            removeBookmark = popup->addAction( KIcon("edit-delete-bookmark"), i18n("Remove Bookmark") );
+            removeBookmark = popup->addAction( QIcon::fromTheme("edit-delete-bookmark"), i18n("Remove Bookmark") );
         else
-            addBookmark = popup->addAction( KIcon("bookmark-new"), i18n("Add Bookmark") );
+            addBookmark = popup->addAction( QIcon::fromTheme("bookmark-new"), i18n("Add Bookmark") );
         if ( m_pageView->canFitPageWidth() )
-            fitPageWidth = popup->addAction( KIcon("zoom-fit-best"), i18n("Fit Width") );
+            fitPageWidth = popup->addAction( QIcon::fromTheme("zoom-fit-best"), i18n("Fit Width") );
         popup->addAction( m_prevBookmark );
         popup->addAction( m_nextBookmark );
         reallyShow = true;

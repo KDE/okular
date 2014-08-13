@@ -152,7 +152,7 @@ BookmarkList::BookmarkList( Okular::Document *document, QWidget *parent )
     sp.setVerticalPolicy( QSizePolicy::Minimum );
     bookmarkController->setSizePolicy( sp );
     // insert a togglebutton [show only bookmarks in the current document]
-    m_showBoomarkOnlyAction = bookmarkController->addAction( KIcon( "bookmarks" ), i18n( "Current document only" ) );
+    m_showBoomarkOnlyAction = bookmarkController->addAction( QIcon::fromTheme( "bookmarks" ), i18n( "Current document only" ) );
     m_showBoomarkOnlyAction->setCheckable( true );
     connect( m_showBoomarkOnlyAction, SIGNAL(toggled(bool)), this, SLOT(slotFilterBookmarks(bool)) );
 
@@ -189,7 +189,7 @@ void BookmarkList::notifySetup( const QVector< Okular::Page * > & pages, int set
         m_currentDocumentItem = itemForUrl( m_document->currentDocument() );
         if ( m_currentDocumentItem && m_currentDocumentItem != m_tree->invisibleRootItem()  )
         {
-            m_currentDocumentItem->setIcon( 0, KIcon( "bookmarks" ) );
+            m_currentDocumentItem->setIcon( 0, QIcon::fromTheme( "bookmarks" ) );
             m_currentDocumentItem->setExpanded( true );
         }
         connect( m_tree, SIGNAL(itemChanged(QTreeWidgetItem*,int)), this, SLOT(slotChanged(QTreeWidgetItem*)) );
@@ -246,8 +246,8 @@ void BookmarkList::contextMenuForBookmarkItem( const QPoint& p, BookmarkItem* bm
 
     KMenu menu( this );
     QAction * gotobm = menu.addAction( i18n( "Go to This Bookmark" ) );
-    QAction * editbm = menu.addAction( KIcon( "edit-rename" ), i18n( "Rename Bookmark" ) );
-    QAction * removebm = menu.addAction( KIcon( "list-remove" ), i18n( "Remove Bookmark" ) );
+    QAction * editbm = menu.addAction( QIcon::fromTheme( "edit-rename" ), i18n( "Rename Bookmark" ) );
+    QAction * removebm = menu.addAction( QIcon::fromTheme( "list-remove" ), i18n( "Remove Bookmark" ) );
     QAction * res = menu.exec( QCursor::pos() );
     if ( !res )
         return;
@@ -273,8 +273,8 @@ void BookmarkList::contextMenuForFileItem( const QPoint& p, FileItem* fItem )
     QAction * open = 0;
     if ( !thisdoc )
         open = menu.addAction( i18nc( "Opens the selected document", "Open Document" ) );
-    QAction * editbm = menu.addAction( KIcon( "edit-rename" ), i18n( "Rename Bookmark" ) );
-    QAction * removebm = menu.addAction( KIcon( "list-remove" ), i18n( "Remove Bookmarks" ) );
+    QAction * editbm = menu.addAction( QIcon::fromTheme( "edit-rename" ), i18n( "Rename Bookmark" ) );
+    QAction * removebm = menu.addAction( QIcon::fromTheme( "list-remove" ), i18n( "Remove Bookmarks" ) );
     QAction * res = menu.exec( QCursor::pos() );
     if ( !res )
         return;
@@ -374,7 +374,7 @@ void BookmarkList::rebuildTree( bool filter )
         if ( currenturlitem )
         {
             currenturlitem->setExpanded( true );
-            currenturlitem->setIcon( 0, KIcon( "bookmarks" ) );
+            currenturlitem->setIcon( 0, QIcon::fromTheme( "bookmarks" ) );
             m_tree->scrollToItem( currenturlitem, QAbstractItemView::PositionAtTop );
             m_currentDocumentItem = currenturlitem;
         }
@@ -436,7 +436,7 @@ void BookmarkList::selectiveUrlUpdate( const KUrl& url, QTreeWidgetItem*& item )
         }
         if ( m_document->isOpened() && url == m_document->currentDocument() )
         {
-            item->setIcon( 0, KIcon( "bookmarks" ) );
+            item->setIcon( 0, QIcon::fromTheme( "bookmarks" ) );
             item->setExpanded( true );
         }
         item->addChildren( createItems( url, urlbookmarks ) );

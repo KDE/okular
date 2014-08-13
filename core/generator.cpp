@@ -553,7 +553,7 @@ void PixmapRequestPrivate::swap()
 class Okular::ExportFormatPrivate : public QSharedData
 {
     public:
-        ExportFormatPrivate( const QString &description, const KMimeType::Ptr &mimeType, const KIcon &icon = KIcon() )
+        ExportFormatPrivate( const QString &description, const KMimeType::Ptr &mimeType, const QIcon &icon = QIcon() )
             : QSharedData(), mDescription( description ), mMimeType( mimeType ), mIcon( icon )
         {
         }
@@ -563,7 +563,7 @@ class Okular::ExportFormatPrivate : public QSharedData
 
         QString mDescription;
         KMimeType::Ptr mMimeType;
-        KIcon mIcon;
+        QIcon mIcon;
 };
 
 ExportFormat::ExportFormat()
@@ -576,7 +576,7 @@ ExportFormat::ExportFormat( const QString &description, const KMimeType::Ptr &mi
 {
 }
 
-ExportFormat::ExportFormat( const KIcon &icon, const QString &description, const KMimeType::Ptr &mimeType )
+ExportFormat::ExportFormat( const QIcon &icon, const QString &description, const KMimeType::Ptr &mimeType )
     : d( new ExportFormatPrivate( description, mimeType, icon ) )
 {
 }
@@ -610,7 +610,7 @@ KMimeType::Ptr ExportFormat::mimeType() const
     return d->mMimeType;
 }
 
-KIcon ExportFormat::icon() const
+QIcon ExportFormat::icon() const
 {
     return d->mIcon;
 }
@@ -625,19 +625,19 @@ ExportFormat ExportFormat::standardFormat( StandardExportFormat type )
     switch ( type )
     {
         case PlainText:
-            return ExportFormat( KIcon( "text-x-generic" ), i18n( "Plain &Text..." ), KMimeType::mimeType( "text/plain" ) );
+            return ExportFormat( QIcon::fromTheme( "text-x-generic" ), i18n( "Plain &Text..." ), KMimeType::mimeType( "text/plain" ) );
             break;
         case PDF:
-            return ExportFormat( KIcon( "application-pdf" ), i18n( "PDF" ), KMimeType::mimeType( "application/pdf" ) );
+            return ExportFormat( QIcon::fromTheme( "application-pdf" ), i18n( "PDF" ), KMimeType::mimeType( "application/pdf" ) );
             break;
         case OpenDocumentText:
             return ExportFormat(
-                KIcon( "application-vnd.oasis.opendocument.text" ),
+                QIcon::fromTheme( "application-vnd.oasis.opendocument.text" ),
                 i18nc( "This is the document format", "OpenDocument Text" ),
                 KMimeType::mimeType( "application/vnd.oasis.opendocument.text" ) );
 	    break;
         case HTML:
-            return ExportFormat( KIcon( "text-html" ), i18nc( "This is the document format", "HTML" ), KMimeType::mimeType( "text/html" ) );
+            return ExportFormat( QIcon::fromTheme( "text-html" ), i18nc( "This is the document format", "HTML" ), KMimeType::mimeType( "text/html" ) );
             break;
     }
     return ExportFormat();

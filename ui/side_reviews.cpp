@@ -125,12 +125,12 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
     toolBar->setIconSize( QSize( 16, 16 ) );
     toolBar->setMovable( false );
     // - add Page button
-    QAction * groupByPageAction = toolBar->addAction( KIcon( "text-x-generic" ), i18n( "Group by Page" ) );
+    QAction * groupByPageAction = toolBar->addAction( QIcon::fromTheme( "text-x-generic" ), i18n( "Group by Page" ) );
     groupByPageAction->setCheckable( true );
     connect( groupByPageAction, SIGNAL(toggled(bool)), this, SLOT(slotPageEnabled(bool)) );
     groupByPageAction->setChecked( Okular::Settings::groupByPage() );
     // - add Author button
-    QAction * groupByAuthorAction = toolBar->addAction( KIcon( "user-identity" ), i18n( "Group by Author" ) );
+    QAction * groupByAuthorAction = toolBar->addAction( QIcon::fromTheme( "user-identity" ), i18n( "Group by Author" ) );
     groupByAuthorAction->setCheckable( true );
     connect( groupByAuthorAction, SIGNAL(toggled(bool)), this, SLOT(slotAuthorEnabled(bool)) );
     groupByAuthorAction->setChecked( Okular::Settings::groupByAuthor() );
@@ -138,7 +138,7 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
     // - add separator
     toolBar->addSeparator();
     // - add Current Page Only button
-    QAction * curPageOnlyAction = toolBar->addAction( KIcon( "arrow-down" ), i18n( "Show reviews for current page only" ) );
+    QAction * curPageOnlyAction = toolBar->addAction( QIcon::fromTheme( "arrow-down" ), i18n( "Show reviews for current page only" ) );
     curPageOnlyAction->setCheckable( true );
     connect( curPageOnlyAction, SIGNAL(toggled(bool)), this, SLOT(slotCurrentPageOnly(bool)) );
     curPageOnlyAction->setChecked( Okular::Settings::currentPageOnly() );

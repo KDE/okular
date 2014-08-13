@@ -112,7 +112,7 @@ endif(CHM_FOUND)
 
 #add_subdirectory(fictionbook)
 
-#add_subdirectory(comicbook)
+add_subdirectory(comicbook)
 
 #add_subdirectory(fax)
 

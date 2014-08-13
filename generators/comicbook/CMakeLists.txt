@@ -14,7 +14,7 @@ set( okularGenerator_comicbook_PART_SRCS
    )
 
 
-kde4_add_plugin(okularGenerator_comicbook ${okularGenerator_comicbook_PART_SRCS})
+add_library(okularGenerator_comicbook MODULE ${okularGenerator_comicbook_PART_SRCS})
 
 target_link_libraries(okularGenerator_comicbook  okularcore KF5::KIOCore)
 if (UNIX)

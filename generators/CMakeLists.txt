@@ -92,9 +92,9 @@ endif(POPPLER_FOUND)
 #  add_subdirectory( kimgio )
 #endif(KEXIV2_FOUND)
 
-#if(CHM_FOUND)
-#  add_subdirectory( chm )
-#endif(CHM_FOUND)
+if(CHM_FOUND)
+  add_subdirectory( chm )
+endif(CHM_FOUND)
 
 #if(DJVULIBRE_FOUND)
 #  add_subdirectory(djvu)

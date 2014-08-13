@@ -198,7 +198,7 @@ bool LCHMFile::searchQuery( const QString& inquery, QStringList * searchresults,
 	
 	QRegExp rxphrase( "\"(.*)\"" );
 	QRegExp rxword( "([^\\s]+)" );
-	rxphrase.setMinimal( TRUE );
+	rxphrase.setMinimal( true );
 
 	// First, get the phrase queries
 	while ( (pos = rxphrase.indexIn (query, 0)) != -1 )

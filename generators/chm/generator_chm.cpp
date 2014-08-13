@@ -15,7 +15,7 @@
 #include <QtGui/QPainter>
 #include <QtXml/QDomElement>
 
-#include <kaboutdata.h>
+#include <k4aboutdata.h>
 #include <khtml_part.h>
 #include <khtmlview.h>
 #include <klocale.h>
@@ -29,15 +29,15 @@
 #include <core/textpage.h>
 #include <core/utils.h>
 
-static KAboutData createAboutData()
+static K4AboutData createAboutData()
 {
-    KAboutData aboutData(
+    K4AboutData aboutData(
          "okular_chm",
          "okular_chm",
          ki18n( "CHM Backend" ),
          "0.1.4",
          ki18n( "A Microsoft Windows help file renderer" ),
-         KAboutData::License_GPL,
+         K4AboutData::License_GPL,
          ki18n( "© 2005-2007 Piotr Szymański\n© 2008 Albert Astals Cid" )
     );
     aboutData.addAuthor( ki18n( "Piotr Szymański" ), KLocalizedString(), "niedakh@gmail.com" );
@@ -383,7 +383,7 @@ void CHMGenerator::additionalRequestData()
                                 new Okular::ObjectRect ( Okular::NormalizedRect(r,xScale,yScale),
                                 false,
                                 Okular::ObjectRect::Action,
-                                new Okular::BrowseAction ( url )));
+                                new Okular::BrowseAction ( QUrl(url) )));
                         }
                         else
                         {

@@ -13,7 +13,7 @@ set(okularGenerator_ghostview_SRCS
    rendererthread.cpp
 )
 
-kde4_add_ui_files(okularGenerator_ghostview_SRCS
+ki18n_wrap_ui(okularGenerator_ghostview_SRCS
    conf/gssettingswidget.ui
 )
 

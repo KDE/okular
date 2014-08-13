@@ -1,4 +1,4 @@
-add_subdirectory( kio-msits )
+#add_subdirectory( kio-msits )
 
 include_directories(
    ${CMAKE_CURRENT_SOURCE_DIR}/../..
@@ -19,9 +19,9 @@ set(okularGenerator_chmlib_SRCS
    generator_chm.cpp
 )
 
-kde4_add_plugin(okularGenerator_chmlib ${okularGenerator_chmlib_SRCS})
+add_library(okularGenerator_chmlib MODULE ${okularGenerator_chmlib_SRCS})
 
-target_link_libraries(okularGenerator_chmlib  okularcore ${CHM_LIBRARY} ${KDE4_KHTML_LIBS} )
+target_link_libraries(okularGenerator_chmlib  okularcore ${CHM_LIBRARY} KF5::KHtml)
 
 install(TARGETS okularGenerator_chmlib DESTINATION ${PLUGIN_INSTALL_DIR})
 

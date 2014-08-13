@@ -85,7 +85,7 @@ bool LCHMFileImpl::loadFile( const QString & archiveName )
 	if( m_chmFile )
 		closeAll();
 
-	m_chmFile = chm_open( QFile::encodeName(filename) );
+	m_chmFile = chm_open( QFile::encodeName(filename).constData() );
 	
 	if ( m_chmFile == NULL )
 		return false;
@@ -1054,14 +1054,14 @@ bool LCHMFileImpl::parseFileAndFillArray( const QString & file, QVector< LCHMPar
 				qFatal ("LCHMFileImpl::ParseAndFillTopicsTree: bad <param> tag '%s': no name=\n", qPrintable( tag ));
 
 			// offset+5 skips 'name='
-			offset = findStringInQuotes (tag, offset + name_pattern.length(), pname, TRUE, FALSE);
+			offset = findStringInQuotes (tag, offset + name_pattern.length(), pname, true, false);
 			pname = pname.toLower();
 
 			if ( (offset = tag.indexOf(value_pattern, offset, Qt::CaseInsensitive )) == -1 )
 				qFatal ("LCHMFileImpl::ParseAndFillTopicsTree: bad <param> tag '%s': no value=\n", qPrintable( tag ));
 
 			// offset+6 skips 'value='
-			findStringInQuotes (tag, offset + value_pattern.length(), pvalue, FALSE, TRUE);
+			findStringInQuotes (tag, offset + value_pattern.length(), pvalue, false, true);
 
 			//qDebug ("<param>: name '%s', value '%s'", qPrintable( pname ), qPrintable( pvalue ));
 

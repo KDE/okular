@@ -33,6 +33,7 @@ find_package(KF5 REQUIRED COMPONENTS
     Parts
     ThreadWeaver
     Wallet
+    KHtml
 )
 find_package(Phonon4Qt5 CONFIG REQUIRED)
 

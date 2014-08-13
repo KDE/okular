@@ -30,12 +30,12 @@
 #include <qtooltip.h>
 #include <qapplication.h>
 #include <qclipboard.h>
+#include <qmenu.h>
 
 #include <kaction.h>
 #include <kactionmenu.h>
 #include <kstandardaction.h>
 #include <kactioncollection.h>
-#include <kmenu.h>
 #include <klocale.h>
 #include <kfiledialog.h>
 #include <kglobal.h>
@@ -188,16 +188,16 @@ public:
     QTimer leftClickTimer;
 
     // actions
-    KAction * aRotateClockwise;
-    KAction * aRotateCounterClockwise;
-    KAction * aRotateOriginal;
+    QAction * aRotateClockwise;
+    QAction * aRotateCounterClockwise;
+    QAction * aRotateOriginal;
     KSelectAction * aPageSizes;
     KToggleAction * aTrimMargins;
-    KAction * aMouseNormal;
-    KAction * aMouseSelect;
-    KAction * aMouseTextSelect;
-    KAction * aMouseTableSelect;
-    KAction * aMouseMagnifier;
+    QAction * aMouseNormal;
+    QAction * aMouseSelect;
+    QAction * aMouseTextSelect;
+    QAction * aMouseTableSelect;
+    QAction * aMouseMagnifier;
     KToggleAction * aToggleAnnotator;
     KSelectAction * aZoom;
     QAction * aZoomIn;
@@ -208,10 +208,10 @@ public:
     KActionMenu * aViewMode;
     KToggleAction * aViewContinuous;
     QAction * aPrevAction;
-    KAction * aToggleForms;
-    KAction * aSpeakDoc;
-    KAction * aSpeakPage;
-    KAction * aSpeakStop;
+    QAction * aToggleForms;
+    QAction * aSpeakDoc;
+    QAction * aSpeakPage;
+    QAction * aSpeakStop;
     KActionCollection * actionCollection;
     QActionGroup * mouseModeActionGroup;
 
@@ -450,17 +450,17 @@ void PageView::setupViewerActions( KActionCollection * ac )
     d->aZoomOut->setShortcut( QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_Minus) );
 
     // orientation menu actions
-    d->aRotateClockwise = new KAction( QIcon::fromTheme( "object-rotate-right" ), i18n( "Rotate &Right" ), this );
+    d->aRotateClockwise = new QAction( QIcon::fromTheme( "object-rotate-right" ), i18n( "Rotate &Right" ), this );
     d->aRotateClockwise->setIconText( i18nc( "Rotate right", "Right" ) );
     ac->addAction( "view_orientation_rotate_cw", d->aRotateClockwise );
     d->aRotateClockwise->setEnabled( false );
     connect( d->aRotateClockwise, SIGNAL(triggered()), this, SLOT(slotRotateClockwise()) );
-    d->aRotateCounterClockwise = new KAction( QIcon::fromTheme( "object-rotate-left" ), i18n( "Rotate &Left" ), this );
+    d->aRotateCounterClockwise = new QAction( QIcon::fromTheme( "object-rotate-left" ), i18n( "Rotate &Left" ), this );
     d->aRotateCounterClockwise->setIconText( i18nc( "Rotate left", "Left" ) );
     ac->addAction( "view_orientation_rotate_ccw", d->aRotateCounterClockwise );
     d->aRotateCounterClockwise->setEnabled( false );
     connect( d->aRotateCounterClockwise, SIGNAL(triggered()), this, SLOT(slotRotateCounterClockwise()) );
-    d->aRotateOriginal = new KAction( i18n( "Original Orientation" ), this );
+    d->aRotateOriginal = new QAction( i18n( "Original Orientation" ), this );
     ac->addAction( "view_orientation_original", d->aRotateOriginal );
     d->aRotateOriginal->setEnabled( false );
     connect( d->aRotateOriginal, SIGNAL(triggered()), this, SLOT(slotRotateOriginal()) );
@@ -494,7 +494,8 @@ void PageView::setupViewerActions( KActionCollection * ac )
     d->aViewMode->setDelayed( false );
 #define ADD_VIEWMODE_ACTION( text, name, id ) \
 do { \
-    KAction *vm = new KAction( text, d->aViewMode->menu() ); \
+    QAction *vm = new QAction( text, this ); \
+    vm->setMenu( d->aViewMode->menu() ); \
     vm->setCheckable( true ); \
     vm->setData( qVariantFromValue( id ) ); \
     d->aViewMode->addAction( vm ); \
@@ -502,7 +503,7 @@ do { \
     vmGroup->addAction( vm ); \
 } while( 0 )
     ac->addAction("view_render_mode", d->aViewMode );
-    QActionGroup *vmGroup = new QActionGroup( d->aViewMode->menu() );
+    QActionGroup *vmGroup = new QActionGroup( this ); //d->aViewMode->menu() );
     ADD_VIEWMODE_ACTION( i18n( "Single Page" ), "view_render_mode_single", (int)Okular::Settings::EnumViewMode::Single );
     ADD_VIEWMODE_ACTION( i18n( "Facing Pages" ), "view_render_mode_facing", (int)Okular::Settings::EnumViewMode::Facing );
     ADD_VIEWMODE_ACTION( i18n( "Facing Pages (Center First Page)" ), "view_render_mode_facing_center_first", (int)Okular::Settings::EnumViewMode::FacingFirstCentered );
@@ -526,7 +527,7 @@ do { \
     // Mouse mode actions for viewer mode
     d->mouseModeActionGroup = new QActionGroup( this );
     d->mouseModeActionGroup->setExclusive( true );
-    d->aMouseNormal  = new KAction( QIcon::fromTheme( "input-mouse" ), i18n( "&Browse Tool" ), this );
+    d->aMouseNormal  = new QAction( QIcon::fromTheme( "input-mouse" ), i18n( "&Browse Tool" ), this );
     ac->addAction("mouse_drag", d->aMouseNormal );
     connect( d->aMouseNormal, SIGNAL(triggered()), this, SLOT(slotSetMouseNormal()) );
     d->aMouseNormal->setIconText( i18nc( "Browse Tool", "Browse" ) );
@@ -535,7 +536,7 @@ do { \
     d->aMouseNormal->setActionGroup( d->mouseModeActionGroup );
     d->aMouseNormal->setChecked( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::Browse );
 
-    KAction * mz  = new KAction(QIcon::fromTheme( "page-zoom" ), i18n("&Zoom Tool"), this);
+    QAction * mz  = new QAction(QIcon::fromTheme( "page-zoom" ), i18n("&Zoom Tool"), this);
     ac->addAction("mouse_zoom", mz );
     connect( mz, SIGNAL(triggered()), this, SLOT(slotSetMouseZoom()) );
     mz->setIconText( i18nc( "Zoom Tool", "Zoom" ) );
@@ -544,7 +545,7 @@ do { \
     mz->setActionGroup( d->mouseModeActionGroup );
     mz->setChecked( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::Zoom );
 
-    KAction * aToggleChangeColors  = new KAction(i18n("&Toggle Change Colors"), this);
+    QAction * aToggleChangeColors  = new QAction(i18n("&Toggle Change Colors"), this);
     ac->addAction("toggle_change_colors", aToggleChangeColors );
     connect( aToggleChangeColors, SIGNAL(triggered()), this, SLOT(slotToggleChangeColors()) );
 }
@@ -558,7 +559,7 @@ void PageView::setupActions( KActionCollection * ac )
     d->aZoomOut->setShortcut( QKeySequence(QKeySequence::ZoomOut) );
 
     // Mouse-Mode actions
-    d->aMouseSelect  = new KAction(QIcon::fromTheme( "select-rectangular" ), i18n("&Selection Tool"), this);
+    d->aMouseSelect  = new QAction(QIcon::fromTheme( "select-rectangular" ), i18n("&Selection Tool"), this);
     ac->addAction("mouse_select", d->aMouseSelect );
     connect( d->aMouseSelect, SIGNAL(triggered()), this, SLOT(slotSetMouseSelect()) );
     d->aMouseSelect->setIconText( i18nc( "Select Tool", "Selection" ) );
@@ -567,7 +568,7 @@ void PageView::setupActions( KActionCollection * ac )
     d->aMouseSelect->setActionGroup( d->mouseModeActionGroup );
     d->aMouseSelect->setChecked( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::RectSelect );
 
-    d->aMouseTextSelect  = new KAction(QIcon::fromTheme( "draw-text" ), i18n("&Text Selection Tool"), this);
+    d->aMouseTextSelect  = new QAction(QIcon::fromTheme( "draw-text" ), i18n("&Text Selection Tool"), this);
     ac->addAction("mouse_textselect", d->aMouseTextSelect );
     connect( d->aMouseTextSelect, SIGNAL(triggered()), this, SLOT(slotSetMouseTextSelect()) );
     d->aMouseTextSelect->setIconText( i18nc( "Text Selection Tool", "Text Selection" ) );
@@ -576,7 +577,7 @@ void PageView::setupActions( KActionCollection * ac )
     d->aMouseTextSelect->setActionGroup( d->mouseModeActionGroup );
     d->aMouseTextSelect->setChecked( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::TextSelect );
 
-    d->aMouseTableSelect  = new KAction(QIcon::fromTheme( "table" ), i18n("T&able Selection Tool"), this);
+    d->aMouseTableSelect  = new QAction(QIcon::fromTheme( "table" ), i18n("T&able Selection Tool"), this);
     ac->addAction("mouse_tableselect", d->aMouseTableSelect );
     connect( d->aMouseTableSelect, SIGNAL( triggered() ), this, SLOT( slotSetMouseTableSelect() ) );
     d->aMouseTableSelect->setIconText( i18nc( "Table Selection Tool", "Table Selection" ) );
@@ -585,7 +586,7 @@ void PageView::setupActions( KActionCollection * ac )
     d->aMouseTableSelect->setActionGroup( d->mouseModeActionGroup );
     d->aMouseTableSelect->setChecked( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::TableSelect );
 
-    d->aMouseMagnifier = new KAction(QIcon::fromTheme( "document-preview" ), i18n("&Magnifier"), this);
+    d->aMouseMagnifier = new QAction(QIcon::fromTheme( "document-preview" ), i18n("&Magnifier"), this);
     ac->addAction("mouse_magnifier", d->aMouseMagnifier );
     connect( d->aMouseMagnifier, SIGNAL(triggered()), this, SLOT(slotSetMouseMagnifier()) );
     d->aMouseMagnifier->setIconText( i18nc( "Magnifier Tool", "Magnifier" ) );
@@ -607,47 +608,47 @@ void PageView::setupActions( KActionCollection * ac )
     ta->addAction( d->aMouseTableSelect );
 
     // speak actions
-    d->aSpeakDoc = new KAction( QIcon::fromTheme( "text-speak" ), i18n( "Speak Whole Document" ), this );
+    d->aSpeakDoc = new QAction( QIcon::fromTheme( "text-speak" ), i18n( "Speak Whole Document" ), this );
     ac->addAction( "speak_document", d->aSpeakDoc );
     d->aSpeakDoc->setEnabled( false );
     connect( d->aSpeakDoc, SIGNAL(triggered()), SLOT(slotSpeakDocument()) );
 
-    d->aSpeakPage = new KAction( QIcon::fromTheme( "text-speak" ), i18n( "Speak Current Page" ), this );
+    d->aSpeakPage = new QAction( QIcon::fromTheme( "text-speak" ), i18n( "Speak Current Page" ), this );
     ac->addAction( "speak_current_page", d->aSpeakPage );
     d->aSpeakPage->setEnabled( false );
     connect( d->aSpeakPage, SIGNAL(triggered()), SLOT(slotSpeakCurrentPage()) );
 
-    d->aSpeakStop = new KAction( QIcon::fromTheme( "media-playback-stop" ), i18n( "Stop Speaking" ), this );
+    d->aSpeakStop = new QAction( QIcon::fromTheme( "media-playback-stop" ), i18n( "Stop Speaking" ), this );
     ac->addAction( "speak_stop_all", d->aSpeakStop );
     d->aSpeakStop->setEnabled( false );
     connect( d->aSpeakStop, SIGNAL(triggered()), SLOT(slotStopSpeaks()) );
 
     // Other actions
-    KAction * su  = new KAction(i18n("Scroll Up"), this);
+    QAction * su  = new QAction(i18n("Scroll Up"), this);
     ac->addAction("view_scroll_up", su );
     connect( su, SIGNAL(triggered()), this, SLOT(slotAutoScrollUp()) );
     su->setShortcut( QKeySequence(Qt::SHIFT + Qt::Key_Up) );
     addAction(su);
 
-    KAction * sd  = new KAction(i18n("Scroll Down"), this);
+    QAction * sd  = new QAction(i18n("Scroll Down"), this);
     ac->addAction("view_scroll_down", sd );
     connect( sd, SIGNAL(triggered()), this, SLOT(slotAutoScrollDown()) );
     sd->setShortcut( QKeySequence(Qt::SHIFT + Qt::Key_Down) );
     addAction(sd);
 
-    KAction * spu = new KAction(i18n("Scroll Page Up"), this);
+    QAction * spu = new QAction(i18n("Scroll Page Up"), this);
     ac->addAction( "view_scroll_page_up", spu );
     connect( spu, SIGNAL(triggered()), this, SLOT(slotScrollUp()) );
     spu->setShortcut( QKeySequence(Qt::SHIFT + Qt::Key_Space) );
     addAction( spu );
 
-    KAction * spd = new KAction(i18n("Scroll Page Down"), this);
+    QAction * spd = new QAction(i18n("Scroll Page Down"), this);
     ac->addAction( "view_scroll_page_down", spd );
     connect( spd, SIGNAL(triggered()), this, SLOT(slotScrollDown()) );
     spd->setShortcut( QKeySequence(Qt::Key_Space) );
     addAction( spd );
 
-    d->aToggleForms = new KAction( this );
+    d->aToggleForms = new QAction( this );
     ac->addAction( "view_toggle_forms", d->aToggleForms );
     connect( d->aToggleForms, SIGNAL(triggered()), this, SLOT(slotToggleForms()) );
     d->aToggleForms->setEnabled( false );
@@ -794,7 +795,7 @@ KActionCollection *PageView::actionCollection() const
     return d->actionCollection;
 }
 
-KAction *PageView::toggleFormsAction() const
+QAction *PageView::toggleFormsAction() const
 {
     return d->aToggleForms;
 }
@@ -2421,7 +2422,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                         // handle right click over a link
                         const Okular::Action * link = static_cast< const Okular::Action * >( rect->object() );
                         // creating the menu and its actions
-                        KMenu menu( this );
+                        QMenu menu( this );
                         QAction * actProcessLink = menu.addAction( i18n( "Follow This Link" ) );
                         QAction * actStopSound = 0;
                         if ( link->actionType() == Okular::Action::Sound )
@@ -2573,11 +2574,11 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
             }
 
             // popup that ask to copy:text and copy/save:image
-            KMenu menu( this );
+            QMenu menu( this );
             QAction *textToClipboard = 0, *speakText = 0, *imageToClipboard = 0, *imageToFile = 0;
             if ( d->document->supportsSearching() && !selectedText.isEmpty() )
             {
-                menu.addTitle( i18np( "Text (1 character)", "Text (%1 characters)", selectedText.length() ) );
+                menu.setTitle( i18np( "Text (1 character)", "Text (%1 characters)", selectedText.length() ) );
                 textToClipboard = menu.addAction( QIcon::fromTheme("edit-copy"), i18n( "Copy to Clipboard" ) );
                 bool copyAllowed = d->document->isAllowed( Okular::AllowCopy );
                 if ( !copyAllowed )
@@ -2592,7 +2593,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                     addWebShortcutsMenu( &menu, selectedText );
                 }
             }
-            menu.addTitle( i18n( "Image (%1 by %2 pixels)", selectionRect.width(), selectionRect.height() ) );
+            menu.setTitle( i18n( "Image (%1 by %2 pixels)", selectionRect.width(), selectionRect.height() ) );
             imageToClipboard = menu.addAction( QIcon::fromTheme("image-x-generic"), i18n( "Copy to Clipboard" ) );
             imageToFile = menu.addAction( QIcon::fromTheme("document-save"), i18n( "Save to File..." ) );
             QAction *choice = menu.exec( e->globalPos() );
@@ -2832,7 +2833,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                     //if there is text selected in the page
                     if (item && (page = item->page())->textSelection())
                     {
-                        KMenu menu( this );
+                        QMenu menu( this );
                         QAction *textToClipboard = menu.addAction( QIcon::fromTheme( "edit-copy" ), i18n( "Copy Text" ) );
                         QAction *speakText = 0;
                         QAction *httpLink = 0;
@@ -4005,7 +4006,7 @@ void PageView::updatePageStep() {
     verticalScrollBar()->setPageStep( vs.height() * (100 - Okular::Settings::scrollOverlap()) / 100 );
 }
 
-void PageView::addWebShortcutsMenu( KMenu * menu, const QString & text )
+void PageView::addWebShortcutsMenu( QMenu * menu, const QString & text )
 {
 #if KDE_IS_VERSION(4,5,70)
     if ( text.isEmpty() )
@@ -4031,17 +4032,17 @@ void PageView::addWebShortcutsMenu( KMenu * menu, const QString & text )
 
         if ( !searchProviders.isEmpty() )
         {
-            KMenu *webShortcutsMenu = new KMenu( menu );
+            QMenu *webShortcutsMenu = new QMenu( menu );
             webShortcutsMenu->setIcon( QIcon::fromTheme( "preferences-web-browser-shortcuts" ) );
 
             const QString squeezedText = KStringHandler::rsqueeze( searchText, 21 );
             webShortcutsMenu->setTitle( i18n( "Search for '%1' with", squeezedText ) );
 
-            KAction *action = 0;
+            QAction *action = 0;
 
             foreach( const QString &searchProvider, searchProviders )
             {
-                action = new KAction( searchProvider, webShortcutsMenu );
+                action = new QAction( searchProvider, webShortcutsMenu );
                 action->setIcon( QIcon::fromTheme( filterData.iconNameForPreferredSearchProvider( searchProvider ) ) );
                 action->setData( filterData.queryForPreferredSearchProvider( searchProvider ) );
                 connect( action, SIGNAL(triggered()), this, SLOT(slotHandleWebShortcutAction()) );
@@ -4050,7 +4051,7 @@ void PageView::addWebShortcutsMenu( KMenu * menu, const QString & text )
 
             webShortcutsMenu->addSeparator();
 
-            action = new KAction( i18n( "Configure Web Shortcuts..." ), webShortcutsMenu );
+            action = new QAction( i18n( "Configure Web Shortcuts..." ), webShortcutsMenu );
             action->setIcon( QIcon::fromTheme( "configure" ) );
             connect( action, SIGNAL(triggered()), this, SLOT(slotConfigureWebShortcuts()) );
             webShortcutsMenu->addAction( action );
@@ -4551,7 +4552,7 @@ void PageView::slotShowSizeAllCursor()
 void PageView::slotHandleWebShortcutAction()
 {
 #if KDE_IS_VERSION(4,5,70)
-    KAction *action = qobject_cast<KAction*>( sender() );
+    QAction *action = qobject_cast<QAction*>( sender() );
 
     if (action)
     {

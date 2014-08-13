@@ -701,8 +701,8 @@ void Sidebar::saveSplitterSize() const
 
 void Sidebar::listContextMenu( const QPoint &pos )
 {
-    KMenu menu( this );
-    menu.addTitle( i18n( "Okular" ) );
+    QMenu menu( this );
+    menu.setTitle( i18n( "Okular" ) );
     QAction *showTextAct = menu.addAction( i18n( "Show Text" ) );
     showTextAct->setCheckable( true );
     showTextAct->setChecked( d->sideDelegate->isTextShown() );

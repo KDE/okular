@@ -39,7 +39,7 @@ void AnnotationPopup::exec( const QPoint &point )
     if ( mAnnotations.isEmpty() )
         return;
 
-    KMenu menu( mParent );
+    QMenu menu( mParent );
 
     QAction *action = 0;
     Okular::FileAttachmentAnnotation *fileAttachAnnot = 0;
@@ -58,7 +58,7 @@ void AnnotationPopup::exec( const QPoint &point )
 
         const AnnotPagePair &pair = mAnnotations.at(0);
 
-        menu.addTitle( i18np( "Annotation", "%1 Annotations", mAnnotations.count() ) );
+        menu.setTitle( i18np( "Annotation", "%1 Annotations", mAnnotations.count() ) );
 
         action = menu.addAction( QIcon::fromTheme( "comment" ), i18n( "&Open Pop-up Note" ) );
         action->setData( QVariant::fromValue( pair ) );
@@ -95,7 +95,7 @@ void AnnotationPopup::exec( const QPoint &point )
     {
         foreach ( const AnnotPagePair& pair, mAnnotations )
         {
-            menu.addTitle( GuiUtils::captionForAnnotation( pair.annotation ) );
+            menu.setTitle( GuiUtils::captionForAnnotation( pair.annotation ) );
 
             action = menu.addAction( QIcon::fromTheme( "comment" ), i18n( "&Open Pop-up Note" ) );
             action->setData( QVariant::fromValue( pair ) );

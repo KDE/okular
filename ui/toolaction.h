@@ -17,7 +17,7 @@
 
 class QToolButton;
 
-class ToolAction : public KAction
+class ToolAction : public QAction
 {
     Q_OBJECT
 

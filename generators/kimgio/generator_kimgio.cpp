@@ -61,7 +61,7 @@ KIMGIOGenerator::KIMGIOGenerator( QObject *parent, const QVariantList &args )
     setComponentData( *ownComponentData() );
 
     setXMLFile( "gui.rc" );
-    KAction * kimgio_test = new KAction( this );
+    QAction * kimgio_test = new QAction( this );
     kimgio_test->setText( "Image test" );
     kimgio_test->setIcon( QIcon::fromTheme( "smiley" ) );
     connect( kimgio_test, SIGNAL(triggered(bool)), this, SLOT(slotTest()) );

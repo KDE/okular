@@ -16,7 +16,7 @@
 #include <klocale.h>
 
 ToolAction::ToolAction( QObject *parent )
-    : KAction( parent )
+    : QAction( parent )
 {
     setText( i18n( "Selection Tools" ) );
 }

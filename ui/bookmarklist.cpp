@@ -244,7 +244,7 @@ void BookmarkList::contextMenuForBookmarkItem( const QPoint& p, BookmarkItem* bm
     if ( !bmItem || !bmItem->viewport().isValid() )
         return;
 
-    KMenu menu( this );
+    QMenu menu( this );
     QAction * gotobm = menu.addAction( i18n( "Go to This Bookmark" ) );
     QAction * editbm = menu.addAction( QIcon::fromTheme( "edit-rename" ), i18n( "Rename Bookmark" ) );
     QAction * removebm = menu.addAction( QIcon::fromTheme( "list-remove" ), i18n( "Remove Bookmark" ) );
@@ -269,7 +269,7 @@ void BookmarkList::contextMenuForFileItem( const QPoint& p, FileItem* fItem )
     const KUrl itemurl = fItem->data( 0, UrlRole ).value< KUrl >();
     const bool thisdoc = itemurl == m_document->currentDocument();
 
-    KMenu menu( this );
+    QMenu menu( this );
     QAction * open = 0;
     if ( !thisdoc )
         open = menu.addAction( i18nc( "Opens the selected document", "Open Document" ) );

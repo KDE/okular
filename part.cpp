@@ -652,7 +652,7 @@ void Part::setupViewerActions()
         prefs->setText( i18n( "Configure Viewer..." ) );
     }
 
-    KAction * genPrefs = new KAction( ac );
+    QAction * genPrefs = new QAction( ac );
     ac->addAction("options_configure_generators", genPrefs);
     if ( m_embedMode == ViewerWidgetMode )
     {
@@ -691,7 +691,7 @@ void Part::setupViewerActions()
     m_aboutBackend->setEnabled( false );
     connect(m_aboutBackend, SIGNAL(triggered()), this, SLOT(slotAboutBackend()));
 
-    KAction *reload = ac->add<KAction>( "file_reload" );
+    QAction *reload = ac->add<QAction>( "file_reload" );
     reload->setText( i18n( "Reloa&d" ) );
     reload->setIcon( QIcon::fromTheme( "view-refresh" ) );
     reload->setWhatsThis( i18n( "Reload the current document from disk." ) );
@@ -704,7 +704,8 @@ void Part::setupViewerActions()
     m_closeFindBar->setShortcut( QKeySequence(Qt::Key_Escape) );
     m_closeFindBar->setEnabled( false );
 
-    KAction *pageno = new KAction( i18n( "Page Number" ), ac );
+    QWidgetAction *pageno = new QWidgetAction( ac );
+    pageno->setText( i18n( "Page Number" ) );
     pageno->setDefaultWidget( m_pageNumberTool );
     ac->addAction( "page_number", pageno );
 }
@@ -724,7 +725,7 @@ void Part::setViewerShortcuts()
     m_beginningOfDocument->setShortcut( QKeySequence( Qt::CTRL + Qt::ALT + Qt::Key_Home ) );
     m_endOfDocument->setShortcut( QKeySequence( Qt::CTRL + Qt::ALT + Qt::Key_End ) );
 
-    KAction *action = static_cast<KAction*>( ac->action( "file_reload" ) );
+    QAction *action = static_cast<QAction*>( ac->action( "file_reload" ) );
     if( action )  action->setShortcuts( QList<QKeySequence>() << QKeySequence( Qt::ALT + Qt::Key_F5 ) );
 }
 
@@ -812,17 +813,17 @@ void Part::setupActions()
     drawingAction->setIcon( QIcon::fromTheme( "draw-freehand" ) );
     drawingAction->setEnabled( false );
 
-    KAction *eraseDrawingAction = new KAction( i18n( "Erase Drawings" ), ac );
+    QAction *eraseDrawingAction = new QAction( i18n( "Erase Drawings" ), ac );
     ac->addAction( "presentation_erase_drawings", eraseDrawingAction );
     eraseDrawingAction->setIcon( QIcon::fromTheme( "draw-eraser" ) );
     eraseDrawingAction->setEnabled( false );
 
-    KAction *configureAnnotations = new KAction( i18n( "Configure Annotations..." ), ac );
+    QAction *configureAnnotations = new QAction( i18n( "Configure Annotations..." ), ac );
     ac->addAction( "options_configure_annotations", configureAnnotations );
     configureAnnotations->setIcon( QIcon::fromTheme( "configure" ) );
     connect(configureAnnotations, SIGNAL(triggered()), this, SLOT(slotAnnotationPreferences()));
 
-    KAction *playPauseAction = new KAction( i18n( "Play/Pause Presentation" ), ac );
+    QAction *playPauseAction = new QAction( i18n( "Play/Pause Presentation" ), ac );
     ac->addAction( "presentation_play_pause", playPauseAction );
     playPauseAction->setEnabled( false );
 }
@@ -2392,13 +2393,13 @@ void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
         m_actionsSearched = true;
     }
 
-    KMenu *popup = new KMenu( widget() );
+    QMenu *popup = new QMenu( widget() );
     QAction *addBookmark = 0;
     QAction *removeBookmark = 0;
     QAction *fitPageWidth = 0;
     if (page)
     {
-        popup->addTitle( i18n( "Page %1", page->number() + 1 ) );
+        popup->setTitle( i18n( "Page %1", page->number() + 1 ) );
         if ( ( !currentPage && m_document->bookmarkManager()->isBookmarked( page->number() ) ) ||
                 ( currentPage && m_document->bookmarkManager()->isBookmarked( m_document->viewport() ) ) )
             removeBookmark = popup->addAction( QIcon::fromTheme("edit-delete-bookmark"), i18n("Remove Bookmark") );
@@ -2420,7 +2421,7 @@ void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
 
     if ((m_showMenuBarAction && !m_showMenuBarAction->isChecked()) || (m_showFullScreenAction && m_showFullScreenAction->isChecked()))
     {
-        popup->addTitle( i18n( "Tools" ) );
+        popup->setTitle( i18n( "Tools" ) );
         if (m_showMenuBarAction && !m_showMenuBarAction->isChecked()) popup->addAction(m_showMenuBarAction);
         if (m_showFullScreenAction && m_showFullScreenAction->isChecked()) popup->addAction(m_showFullScreenAction);
         reallyShow = true;
@@ -2896,7 +2897,7 @@ void Part::rebuildBookmarkMenu( bool unplugActions )
     if ( m_bookmarkActions.isEmpty() )
     {
         havebookmarks = false;
-        QAction * a = new KAction( 0 );
+        QAction * a = new QAction( 0 );
         a->setText( i18n( "No Bookmarks" ) );
         a->setEnabled( false );
         m_bookmarkActions.append( a );

@@ -48,8 +48,7 @@ class KToggleFullScreenAction;
 class KSelectAction;
 class KAboutData;
 class KTemporaryFile;
-class KAction;
-class KMenu;
+class QAction;
 namespace KParts { class GUIActivateEvent; }
 
 class FindBar;
@@ -187,7 +186,7 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         void slotAddBookmark();
         void slotRenameBookmarkFromMenu();
         void slotRenameCurrentViewportBookmark();
-        void slotAboutToShowContextMenu(KMenu *menu, QAction *action, QMenu *contextMenu);
+        void slotAboutToShowContextMenu(QMenu *menu, QAction *action, QMenu *contextMenu);
         void slotPreviousBookmark();
         void slotNextBookmark();
         void slotFindNext();

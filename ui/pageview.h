@@ -27,9 +27,7 @@
 #include "core/observer.h"
 #include "core/view.h"
 
-class KAction;
 class KActionCollection;
-class KMenu;
 
 namespace Okular {
 class Action;
@@ -97,7 +95,7 @@ Q_OBJECT
         void reparseConfig();
 
         KActionCollection *actionCollection() const;
-        KAction *toggleFormsAction() const;
+        QAction *toggleFormsAction() const;
 
         int contentAreaWidth() const;
         int contentAreaHeight() const;
@@ -182,7 +180,7 @@ Q_OBJECT
         void resizeContentArea( const QSize & newSize );
         void updatePageStep();
 
-        void addWebShortcutsMenu( KMenu * menu, const QString & text );
+        void addWebShortcutsMenu( QMenu * menu, const QString & text );
         // used when selecting stuff, makes the view scroll as necessary to keep the mouse inside the view
         void scrollPosIntoView( const QPoint & pos );
 

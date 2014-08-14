@@ -1891,7 +1891,7 @@ XpsPage* XpsDocument::page(int pageNum) const
     return m_pages.at(pageNum);
 }
 
-XpsFile::XpsFile() : m_docInfo( 0 )
+XpsFile::XpsFile()
 {
 }
 
@@ -1995,14 +1995,11 @@ bool XpsFile::loadDocument(const QString &filename)
     return true;
 }
 
-const Okular::DocumentInfo * XpsFile::generateDocumentInfo()
+Okular::DocumentInfo XpsFile::generateDocumentInfo() const
 {
-    if ( m_docInfo )
-        return m_docInfo;
+    Okular::DocumentInfo docInfo;
 
-    m_docInfo = new Okular::DocumentInfo();
-
-    m_docInfo->set( Okular::DocumentInfo::MimeType, "application/oxps" );
+    docInfo.set( Okular::DocumentInfo::MimeType, "application/oxps" );
 
     if ( ! m_corePropertiesFileName.isEmpty() ) {
         const KZipFileEntry* corepropsFile = static_cast<const KZipFileEntry *>(m_xpsArchive->directory()->entry(m_corePropertiesFileName));
@@ -2017,25 +2014,25 @@ const Okular::DocumentInfo * XpsFile::generateDocumentInfo()
             if ( xml.isStartElement() )
             {
                 if (xml.name() == "title") {
-                    m_docInfo->set( Okular::DocumentInfo::Title, xml.readElementText() );
+                    docInfo.set( Okular::DocumentInfo::Title, xml.readElementText() );
                 } else if (xml.name() == "subject") {
-                    m_docInfo->set( Okular::DocumentInfo::Subject, xml.readElementText() );
+                    docInfo.set( Okular::DocumentInfo::Subject, xml.readElementText() );
                 } else if (xml.name() == "description") {
-                    m_docInfo->set( Okular::DocumentInfo::Description, xml.readElementText() );
+                    docInfo.set( Okular::DocumentInfo::Description, xml.readElementText() );
                 } else if (xml.name() == "creator") {
-                    m_docInfo->set( Okular::DocumentInfo::Creator, xml.readElementText() );
+                    docInfo.set( Okular::DocumentInfo::Creator, xml.readElementText() );
                 } else if (xml.name() == "category") {
-                    m_docInfo->set( Okular::DocumentInfo::Category, xml.readElementText() );
+                    docInfo.set( Okular::DocumentInfo::Category, xml.readElementText() );
                 } else if (xml.name() == "created") {
                     QDateTime createdDate = QDateTime::fromString( xml.readElementText(), "yyyy-MM-ddThh:mm:ssZ" );
-                    m_docInfo->set( Okular::DocumentInfo::CreationDate, KGlobal::locale()->formatDateTime( createdDate, KLocale::LongDate, true ) );
+                    docInfo.set( Okular::DocumentInfo::CreationDate, KGlobal::locale()->formatDateTime( createdDate, KLocale::LongDate, true ) );
                 } else if (xml.name() == "modified") {
                     QDateTime modifiedDate = QDateTime::fromString( xml.readElementText(), "yyyy-MM-ddThh:mm:ssZ" );
-                    m_docInfo->set( Okular::DocumentInfo::ModificationDate, KGlobal::locale()->formatDateTime( modifiedDate, KLocale::LongDate, true ) );
+                    docInfo.set( Okular::DocumentInfo::ModificationDate, KGlobal::locale()->formatDateTime( modifiedDate, KLocale::LongDate, true ) );
                 } else if (xml.name() == "keywords") {
-                    m_docInfo->set( Okular::DocumentInfo::Keywords, xml.readElementText() );
+                    docInfo.set( Okular::DocumentInfo::Keywords, xml.readElementText() );
                 } else if (xml.name() == "revision") {
-                    m_docInfo->set( "revision", xml.readElementText(), i18n( "Revision" ) );
+                    docInfo.set( "revision", xml.readElementText(), i18n( "Revision" ) );
                 }
             }
         }
@@ -2047,19 +2044,13 @@ const Okular::DocumentInfo * XpsFile::generateDocumentInfo()
         kDebug(XpsDebug) << "No core properties filename";
     }
 
-    m_docInfo->set( Okular::DocumentInfo::Pages, QString::number(numPages()) );
+    docInfo.set( Okular::DocumentInfo::Pages, QString::number(numPages()) );
 
-    return m_docInfo;
+    return docInfo;
 }
 
 bool XpsFile::closeDocument()
 {
-
-    if ( m_docInfo )
-        delete m_docInfo;
-
-    m_docInfo = 0;
-
     qDeleteAll( m_documents );
     m_documents.clear();
 
@@ -2158,7 +2149,7 @@ Okular::TextPage* XpsGenerator::textPage( Okular::Page * page )
     return xpsPage->textPage();
 }
 
-const Okular::DocumentInfo * XpsGenerator::generateDocumentInfo()
+Okular::DocumentInfo XpsGenerator::generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const
 {
     kDebug(XpsDebug) << "generating document metadata";
 

@@ -125,9 +125,9 @@ bool PluckerGenerator::doCloseDocument()
     return true;
 }
 
-const Okular::DocumentInfo* PluckerGenerator::generateDocumentInfo()
+Okular::DocumentInfo PluckerGenerator::generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> & /*keys*/ ) const
 {
-    return &mDocumentInfo;
+    return mDocumentInfo;
 }
 
 QImage PluckerGenerator::image( Okular::PixmapRequest *request )

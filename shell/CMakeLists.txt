@@ -15,6 +15,7 @@ set_package_properties("KActivities" PROPERTIES
 
 set(okular_SRCS
    main.cpp
+   okular_main.cpp
    shell.cpp
    shellutils.cpp
 )

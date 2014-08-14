@@ -1,6 +1,8 @@
 set( EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR} )
 add_definitions( -DKDESRCDIR="${CMAKE_CURRENT_SOURCE_DIR}" )
 
+include_directories(${CMAKE_CURRENT_BINARY_DIR}/..)
+
 ecm_add_test(shelltest shelltest.cpp ../shell/shellutils.cpp
     TEST_NAME "shelltest"
     LINK_LIBRARIES Qt5::Test okularcore KF5::KDELibs4Support
@@ -54,4 +56,9 @@ ecm_add_test(modifyannotationpropertiestest modifyannotationpropertiestest.cpp t
 ecm_add_test(editformstest editformstest.cpp
     TEST_NAME "editformstest"
     LINK_LIBRARIES Qt5::Widgets Qt5::Test okularcore KF5::KDELibs4Support
+)
+
+ecm_add_test(mainshelltest mainshelltest.cpp ../shell/okular_main.cpp ../shell/shellutils.cpp ../shell/shell.cpp
+    TEST_NAME "mainshelltest"
+    LINK_LIBRARIES Qt5::Test okularpart okularcore
 )

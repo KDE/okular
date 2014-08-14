@@ -14,6 +14,8 @@
 
 #include <QtGui/QImage>
 
+#include "faxdocument.h"
+
 class FaxGenerator : public Okular::Generator
 {
     Q_OBJECT
@@ -24,7 +26,7 @@ class FaxGenerator : public Okular::Generator
 
         bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
 
-        const Okular::DocumentInfo * generateDocumentInfo();
+        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const;
 
         bool print( QPrinter& printer );
 
@@ -34,7 +36,7 @@ class FaxGenerator : public Okular::Generator
 
     private:
         QImage m_img;
-        Okular::DocumentInfo *m_docInfo;
+        FaxDocument::DocumentType m_type;
 };
 
 #endif

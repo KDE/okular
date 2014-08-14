@@ -42,71 +42,55 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
       m_fontModel( 0 ), m_fontInfo( 0 ), m_fontProgressBar( 0 ),
       m_fontScanStarted( false )
 {
-  setFaceType( Tabbed );
-  setWindowTitle( i18n( "Unknown File" ) );
-  setStandardButtons( QDialogButtonBox::Ok );
+    setFaceType( Tabbed );
+    setWindowTitle( i18n( "Unknown File" ) );
+    setStandardButtons( QDialogButtonBox::Ok );
 
-  // PROPERTIES
-  QFrame *page = new QFrame();
-  KPageWidgetItem *item = addPage( page, i18n( "&Properties" ) );
-  item->setIcon( QIcon::fromTheme( "document-properties" ) );
+    // PROPERTIES
+    QFrame *page = new QFrame();
+    KPageWidgetItem *item = addPage( page, i18n( "&Properties" ) );
+    item->setIcon( QIcon::fromTheme( "document-properties" ) );
 
-  // get document info, if not present display blank data and a warning
-  const Okular::DocumentInfo * info = doc->documentInfo();
-  if ( !info ) {
-    QVBoxLayout *layout = new QVBoxLayout( page );
-    layout->addWidget( new QLabel( i18n( "No document opened." ), page ) );
-    return;
-  }
+    // get document info
+    const Okular::DocumentInfo info = doc->documentInfo();
+    QFormLayout *layout = new QFormLayout( page );
 
-  QFormLayout *layout = new QFormLayout( page );
+    // mime name based on mimetype id
+    QString mimeName = info.get( Okular::DocumentInfo::MimeType ).section( '/', -1 ).toUpper();
+    setWindowTitle( i18n( "%1 Properties", mimeName ) );
 
-  // mime name based on mimetype id
-  QString mimeName = info->get( "mimeType" ).section( '/', -1 ).toUpper();
-  setWindowTitle( i18n( "%1 Properties", mimeName ) );
+    int valMaxWidth = 100;
 
-  QDomElement docElement = info->documentElement();
-
-  int valMaxWidth = 100;
-
-  /* obtains the properties list, conveniently ordered */
-  QStringList orderedProperties;
-  orderedProperties << Okular::DocumentInfo::getKeyString( Okular::DocumentInfo::FilePath )
-                    << Okular::DocumentInfo::getKeyString( Okular::DocumentInfo::PagesSize )
-                    << Okular::DocumentInfo::getKeyString( Okular::DocumentInfo::DocumentSize );
-  for (Okular::DocumentInfo::Key ks = Okular::DocumentInfo::Title; 
-          ks <= Okular::DocumentInfo::Keywords; 
-          ks = Okular::DocumentInfo::Key( ks+1 ) ) {
-      orderedProperties << Okular::DocumentInfo::getKeyString( ks );
-  }
-  for ( QDomNode node = docElement.firstChild(); !node.isNull(); node = node.nextSibling() ) {
-    const QDomElement element = node.toElement();
-
-    const QString titleString = element.attribute( "title" );
-    const QString valueString = element.attribute( "value" );
-    if ( titleString.isEmpty() || valueString.isEmpty() )
-        continue;
-    if ( !orderedProperties.contains( element.tagName() ) ) {
-        orderedProperties << element.tagName();
+    /* obtains the properties list, conveniently ordered */
+    QStringList orderedProperties;
+    orderedProperties << Okular::DocumentInfo::getKeyString( Okular::DocumentInfo::FilePath )
+                      << Okular::DocumentInfo::getKeyString( Okular::DocumentInfo::PagesSize )
+                      << Okular::DocumentInfo::getKeyString( Okular::DocumentInfo::DocumentSize );
+    for (Okular::DocumentInfo::Key ks = Okular::DocumentInfo::Title;
+                                   ks <= Okular::DocumentInfo::Keywords;
+                                   ks = Okular::DocumentInfo::Key( ks+1 ) )
+    {
+        orderedProperties << Okular::DocumentInfo::getKeyString( ks );
     }
-  }
+    foreach( const QString &ks, info.keys()) {
+        if ( !orderedProperties.contains( ks ) ) {
+            orderedProperties << ks;
+        }
+    }
 
-  QDomNodeList list;
-  
-  for ( QStringList::Iterator it = orderedProperties.begin(); 
-          it != orderedProperties.end(); ++it ) {
-      list = docElement.elementsByTagName( (*it) );
-      if ( list.count() == 1 ) {
-
-        QDomElement element = list.at(0).toElement();
-        const QString titleString = element.attribute( "title" );
-        const QString valueString = element.attribute( "value" );
-        if ( titleString.isEmpty() || valueString.isEmpty() )
+    for ( QStringList::Iterator it = orderedProperties.begin();
+                                it != orderedProperties.end();
+                                ++it )
+    {
+        const QString key = *it;
+        const QString titleString = info.getKeyTitle( key );
+        const QString valueString = info.get( key );
+        if ( titleString.isNull() || valueString.isNull() )
             continue;
 
         // create labels and layout them
         QWidget *value = NULL;
-        if ( element.tagName() == Okular::DocumentInfo::getKeyString( Okular::DocumentInfo::MimeType ) ) {
+        if ( key == Okular::DocumentInfo::getKeyString( Okular::DocumentInfo::MimeType ) ) {
             /// for mime type fields, show icon as well
             value = new QWidget( page );
             /// place icon left of mime type's name
@@ -139,57 +123,56 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
         // refine maximum width of 'value' labels
         valMaxWidth = qMax( valMaxWidth, fontMetrics().width( valueString ) );
     }
-  }
 
-  // FONTS
-  QVBoxLayout *page2Layout = 0;
-  if ( doc->canProvideFontInformation() ) {
-    // create fonts tab and layout it
-    QFrame *page2 = new QFrame();
-    m_fontPage = addPage(page2, i18n("&Fonts"));
-    m_fontPage->setIcon( QIcon::fromTheme( "preferences-desktop-font" ) );
-    page2Layout = new QVBoxLayout(page2);
+    // FONTS
+    QVBoxLayout *page2Layout = 0;
+    if ( doc->canProvideFontInformation() ) {
+        // create fonts tab and layout it
+        QFrame *page2 = new QFrame();
+        m_fontPage = addPage(page2, i18n("&Fonts"));
+        m_fontPage->setIcon( QIcon::fromTheme( "preferences-desktop-font" ) );
+        page2Layout = new QVBoxLayout(page2);
 #pragma message("KF5 fix margin/spacing")
-//    page2Layout->setMargin(marginHint());
-//    page2Layout->setSpacing(spacingHint());
-    // add a tree view
-    QTreeView *view = new QTreeView(page2);
-    view->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(view, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showFontsMenu(QPoint)));
-    page2Layout->addWidget(view);
-    view->setRootIsDecorated(false);
-    view->setAlternatingRowColors(true);
-    view->setSortingEnabled( true );
-    // creating a proxy model so we can sort the data
-    QSortFilterProxyModel *proxymodel = new QSortFilterProxyModel(view);
-    proxymodel->setDynamicSortFilter( true );
-    proxymodel->setSortCaseSensitivity( Qt::CaseInsensitive );
-    m_fontModel = new FontsListModel(view);
-    proxymodel->setSourceModel(m_fontModel);
-    view->setModel(proxymodel);
-    view->sortByColumn( 0, Qt::AscendingOrder );
-    m_fontInfo = new QLabel( this );
-    page2Layout->addWidget( m_fontInfo );
-    m_fontInfo->setText( i18n( "Reading font information..." ) );
-    m_fontInfo->hide();
-    m_fontProgressBar = new QProgressBar( this );
-    page2Layout->addWidget( m_fontProgressBar );
-    m_fontProgressBar->setRange( 0, 100 );
-    m_fontProgressBar->setValue( 0 );
-    m_fontProgressBar->hide();
-  }
+//      page2Layout->setMargin(marginHint());
+//      page2Layout->setSpacing(spacingHint());
+        // add a tree view
+        QTreeView *view = new QTreeView(page2);
+        view->setContextMenuPolicy(Qt::CustomContextMenu);
+        connect(view, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showFontsMenu(QPoint)));
+        page2Layout->addWidget(view);
+        view->setRootIsDecorated(false);
+        view->setAlternatingRowColors(true);
+        view->setSortingEnabled( true );
+        // creating a proxy model so we can sort the data
+        QSortFilterProxyModel *proxymodel = new QSortFilterProxyModel(view);
+        proxymodel->setDynamicSortFilter( true );
+        proxymodel->setSortCaseSensitivity( Qt::CaseInsensitive );
+        m_fontModel = new FontsListModel(view);
+        proxymodel->setSourceModel(m_fontModel);
+        view->setModel(proxymodel);
+        view->sortByColumn( 0, Qt::AscendingOrder );
+        m_fontInfo = new QLabel( this );
+        page2Layout->addWidget( m_fontInfo );
+        m_fontInfo->setText( i18n( "Reading font information..." ) );
+        m_fontInfo->hide();
+        m_fontProgressBar = new QProgressBar( this );
+        page2Layout->addWidget( m_fontProgressBar );
+        m_fontProgressBar->setRange( 0, 100 );
+        m_fontProgressBar->setValue( 0 );
+        m_fontProgressBar->hide();
+    }
 
-  // current width: left columnt + right column + dialog borders
+    // current width: left columnt + right column + dialog borders
 #pragma message("KF5 figure out margin/spacing")
 //  int width = layout->minimumSize().width() + valMaxWidth + 2 * marginHint() + spacingHint() + 30;
-  int width = layout->minimumSize().width() + valMaxWidth + 30;
-  if ( page2Layout )
-//    width = qMax( width, page2Layout->sizeHint().width() + marginHint() + spacingHint() + 31 );
-      width = qMax( width, page2Layout->sizeHint().width() + 31 );
-  // stay inside the 2/3 of the screen width
-  QRect screenContainer = KGlobalSettings::desktopGeometry( this );
-  width = qMin( width, 2*screenContainer.width()/3 );
-  resize(width, 1);
+    int width = layout->minimumSize().width() + valMaxWidth + 30;
+    if ( page2Layout )
+//        width = qMax( width, page2Layout->sizeHint().width() + marginHint() + spacingHint() + 31 );
+        width = qMax( width, page2Layout->sizeHint().width() + 31 );
+    // stay inside the 2/3 of the screen width
+    QRect screenContainer = KGlobalSettings::desktopGeometry( this );
+    width = qMin( width, 2*screenContainer.width()/3 );
+    resize(width, 1);
 
     connect( pageWidget(), SIGNAL(currentPageChanged(KPageWidgetItem*,KPageWidgetItem*)),
              this, SLOT(pageChanged(KPageWidgetItem*,KPageWidgetItem*)) );

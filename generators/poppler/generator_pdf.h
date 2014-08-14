@@ -62,7 +62,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         Okular::Document::OpenResult loadDocumentFromDataWithPassword( const QByteArray & fileData, QVector<Okular::Page*> & pagesVector, const QString & password );
         void loadPages(QVector<Okular::Page*> &pagesVector, int rotation=-1, bool clear=false);
         // [INHERITED] document information
-        const Okular::DocumentInfo * generateDocumentInfo();
+        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const;
         const Okular::DocumentSynopsis * generateDocumentSynopsis();
         Okular::FontInfo::List fontsForPage( int page );
         const QList<Okular::EmbeddedFile*> * embeddedFiles() const;
@@ -135,8 +135,6 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
 
 
         // misc variables for document info and synopsis caching
-        bool docInfoDirty;
-        Okular::DocumentInfo docInfo;
         bool docSynopsisDirty;
         Okular::DocumentSynopsis docSyn;
         mutable bool docEmbeddedFilesDirty;

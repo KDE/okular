@@ -97,7 +97,6 @@ class DocumentPrivate
             m_scripter( 0 ),
             m_archiveData( 0 ),
             m_fontsCached( false ),
-            m_documentInfo( 0 ),
             m_annotationEditingEnabled ( true ),
             m_annotationBeingMoved( false )
         {
@@ -137,6 +136,7 @@ class DocumentPrivate
         bool canModifyExternalAnnotations() const;
         bool canRemoveExternalAnnotations() const;
         void warnLimitedAnnotSupport();
+        OKULAR_EXPORT static QString docDataFileName(const KUrl &url, qint64 document_size);
 
         // Methods that implement functionality needed by undo commands
         void performAddPageAnnotation( int page, Annotation *annotation );
@@ -258,7 +258,8 @@ class DocumentPrivate
 
         QPointer< FontExtractionThread > m_fontThread;
         bool m_fontsCached;
-        DocumentInfo *m_documentInfo;
+        QSet<DocumentInfo::Key> m_documentInfoAskedKeys;
+        DocumentInfo m_documentInfo;
         FontInfo::List m_fontsCache;
 
         QSet< View * > m_views;
@@ -270,6 +271,13 @@ class DocumentPrivate
 
         QUndoStack *m_undoStack;
         QDomNode m_prevPropsOfAnnotBeingModified;
+};
+
+class DocumentInfoPrivate
+{
+    public:
+        QMap<QString, QString> values; // key -> value
+        QMap<QString, QString> titles; // key -> title For the custom keys
 };
 
 }

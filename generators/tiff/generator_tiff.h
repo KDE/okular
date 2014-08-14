@@ -24,7 +24,7 @@ class TIFFGenerator : public Okular::Generator
         bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
         bool loadDocumentFromData( const QByteArray & fileData, QVector< Okular::Page * > & pagesVector );
 
-        const Okular::DocumentInfo * generateDocumentInfo();
+        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const;
 
         bool print( QPrinter& printer );
 
@@ -40,7 +40,6 @@ class TIFFGenerator : public Okular::Generator
         void loadPages( QVector<Okular::Page*> & pagesVector );
         int mapPage( int page ) const;
 
-        Okular::DocumentInfo * m_docInfo;
         QHash< int, int > m_pageMapping;
 };
 

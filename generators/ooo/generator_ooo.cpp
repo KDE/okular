@@ -21,7 +21,7 @@ static KAboutData createAboutData()
     KAboutData aboutData(
          QStringLiteral("okular_ooo"),
          i18n( "OpenDocument Text Backend" ),
-         QStringLiteral("0.2.3"),
+         QStringLiteral("0.2.4"),
          i18n( "A renderer for OpenDocument Text documents" ),
          KAboutLicense::GPL,
          i18n( "© 2006-2008 Tobias Koenig" )

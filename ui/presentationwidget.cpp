@@ -354,14 +354,11 @@ void PresentationWidget::notifySetup( const QVector< Okular::Page * > & pageSet,
 
     // get metadata from the document
     m_metaStrings.clear();
-    const Okular::DocumentInfo * info = m_document->documentInfo();
-    if ( info )
-    {
-        if ( !info->get( "title" ).isNull() )
-            m_metaStrings += i18n( "Title: %1", info->get( "title" ) );
-        if ( !info->get( "author" ).isNull() )
-            m_metaStrings += i18n( "Author: %1", info->get( "author" ) );
-    }
+    const Okular::DocumentInfo info = m_document->documentInfo( QSet<Okular::DocumentInfo::Key>() << Okular::DocumentInfo::Title << Okular::DocumentInfo::Author );
+    if ( !info.get( Okular::DocumentInfo::Title ).isNull() )
+        m_metaStrings += i18n( "Title: %1", info.get( Okular::DocumentInfo::Title ) );
+    if ( !info.get( Okular::DocumentInfo::Author ).isNull() )
+        m_metaStrings += i18n( "Author: %1", info.get( Okular::DocumentInfo::Author ) );
     m_metaStrings += i18n( "Pages: %1", m_document->pages() );
     m_metaStrings += i18n( "Click to begin" );
 

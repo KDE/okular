@@ -135,12 +135,17 @@ static KJSObject docGetInfo( KJSContext *ctx, void *object )
     DocumentPrivate *doc = reinterpret_cast< DocumentPrivate* >( object );
 
     KJSObject obj;
-    const DocumentInfo *docinfo = doc->m_generator->generateDocumentInfo();
-    if ( docinfo )
-    {
+    QSet<DocumentInfo::Key> keys;
+    keys << DocumentInfo::Title
+         << DocumentInfo::Author
+         << DocumentInfo::Subject
+         << DocumentInfo::Keywords
+         << DocumentInfo::Creator
+         << DocumentInfo::Producer;
+    const DocumentInfo docinfo = doc->m_parent->documentInfo( keys );
 #define KEY_GET( key, property ) \
 do { \
-    const QString data = docinfo->get( key ); \
+    const QString data = docinfo.get( key ); \
     if ( !data.isEmpty() ) \
     { \
         const KJSString newval( data ); \
@@ -148,14 +153,13 @@ do { \
         obj.setProperty( ctx, QString( property ).toLower(), newval );   \
     } \
 } while ( 0 );
-        KEY_GET( "title", "Title" );
-        KEY_GET( "author", "Author" );
-        KEY_GET( "subject", "Subject" );
-        KEY_GET( "keywords", "Keywords" );
-        KEY_GET( "creator", "Creator" );
-        KEY_GET( "producer", "Producer" );
+        KEY_GET( DocumentInfo::Title, "Title" );
+        KEY_GET( DocumentInfo::Author, "Author" );
+        KEY_GET( DocumentInfo::Subject, "Subject" );
+        KEY_GET( DocumentInfo::Keywords, "Keywords" );
+        KEY_GET( DocumentInfo::Creator, "Creator" );
+        KEY_GET( DocumentInfo::Producer, "Producer" );
 #undef KEY_GET
-    }
     return obj;
 }
 
@@ -163,16 +167,16 @@ do { \
 static KJSObject docGet ## name( KJSContext *, void *object ) \
 { \
     DocumentPrivate *doc = reinterpret_cast< DocumentPrivate* >( object ); \
-    const DocumentInfo *docinfo = doc->m_generator->generateDocumentInfo(); \
-    return KJSString( docinfo->get( key ) ); \
+    const DocumentInfo docinfo = doc->m_parent->documentInfo(QSet<DocumentInfo::Key>() << key ); \
+    return KJSString( docinfo.get( key ) ); \
 }
 
-DOCINFO_GET_METHOD( "author", Author )
-DOCINFO_GET_METHOD( "creator", Creator )
-DOCINFO_GET_METHOD( "keywords", Keywords )
-DOCINFO_GET_METHOD( "producer", Producer )
-DOCINFO_GET_METHOD( "title", Title )
-DOCINFO_GET_METHOD( "subject", Subject )
+DOCINFO_GET_METHOD( DocumentInfo::Author, Author )
+DOCINFO_GET_METHOD( DocumentInfo::Creator, Creator )
+DOCINFO_GET_METHOD( DocumentInfo::Keywords, Keywords )
+DOCINFO_GET_METHOD( DocumentInfo::Producer, Producer )
+DOCINFO_GET_METHOD( DocumentInfo::Title, Title )
+DOCINFO_GET_METHOD( DocumentInfo::Subject, Subject )
 
 #undef DOCINFO_GET_METHOD
 

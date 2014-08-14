@@ -36,7 +36,7 @@ class CHMGenerator : public Okular::Generator
         ~CHMGenerator();
         bool loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector );
 
-        const Okular::DocumentInfo * generateDocumentInfo();
+        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const;
         const Okular::DocumentSynopsis * generateDocumentSynopsis();
 
         bool canGeneratePixmap() const;
@@ -64,7 +64,6 @@ class CHMGenerator : public Okular::Generator
         QString m_chmUrl;
         Okular::PixmapRequest* m_request;
         int m_pixmapRequestZoom;
-        Okular::DocumentInfo* m_docInfo;
         QBitArray m_textpageAddedList;
         QBitArray m_rectsGenerated;
 };

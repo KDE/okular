@@ -2115,6 +2115,26 @@ private:
     const KMimeType::Ptr &_mime;
 };
 
+QString DocumentPrivate::docDataFileName(const KUrl &url, qint64 document_size)
+{
+    QString fn = url.fileName();
+    fn = QString::number( document_size ) + '.' + fn + ".xml";
+    QString newokular = "okular/docdata/" + fn;
+    QString newokularfile = KStandardDirs::locateLocal( "data", newokular );
+    if ( !QFile::exists( newokularfile ) )
+    {
+        QString oldkpdf = "kpdf/" + fn;
+        QString oldkpdffile = KStandardDirs::locateLocal( "data", oldkpdf );
+        if ( QFile::exists( oldkpdffile ) )
+        {
+            // ### copy or move?
+            if ( !QFile::copy( oldkpdffile, newokularfile ) )
+                return QString();
+        }
+    }
+    return newokularfile;
+}
+
 Document::OpenResult Document::openDocument( const QString & docFile, const KUrl& url, const KMimeType::Ptr &_mime, const QString & password )
 {
     KMimeType::Ptr mime = _mime;
@@ -2139,23 +2159,8 @@ Document::OpenResult Document::openDocument( const QString & docFile, const KUrl
         d->m_docFileName = docFile;
         if ( url.isLocalFile() && !d->m_archiveData )
         {
-            QString fn = url.fileName();
             document_size = fileReadTest.size();
-            fn = QString::number( document_size ) + '.' + fn + ".xml";
-            QString newokular = "okular/docdata/" + fn;
-            QString newokularfile = KStandardDirs::locateLocal( "data", newokular );
-            if ( !QFile::exists( newokularfile ) )
-            {
-                QString oldkpdf = "kpdf/" + fn;
-                QString oldkpdffile = KStandardDirs::locateLocal( "data", oldkpdf );
-                if ( QFile::exists( oldkpdffile ) )
-                {
-                    // ### copy or move?
-                    if ( !QFile::copy( oldkpdffile, newokularfile ) )
-                        return OpenError;
-                }
-            }
-            d->m_xmlFileName = newokularfile;
+            d->m_xmlFileName = DocumentPrivate::docDataFileName(url, document_size);
         }
     }
     else
@@ -2481,8 +2486,8 @@ void Document::closeDocument()
     d->m_pageSize = PageSize();
     d->m_pageSizes.clear();
 
-    delete d->m_documentInfo;
-    d->m_documentInfo = 0;
+    d->m_documentInfo = DocumentInfo();
+    d->m_documentInfoAskedKeys.clear();
 
     AudioPlayer::instance()->d->m_currentDocument = KUrl();
 
@@ -2582,42 +2587,59 @@ bool Document::canConfigurePrinter( ) const
         return 0;
 }
 
-const DocumentInfo * Document::documentInfo() const
+DocumentInfo Document::documentInfo() const
 {
-    if ( d->m_documentInfo )
-        return d->m_documentInfo;
-
-    if ( d->m_generator )
+    QSet<DocumentInfo::Key> keys;
+    for (Okular::DocumentInfo::Key ks = Okular::DocumentInfo::Title;
+                                   ks < Okular::DocumentInfo::Invalid;
+                                   ks = Okular::DocumentInfo::Key( ks+1 ) )
     {
-        DocumentInfo *info = new DocumentInfo();
-        const DocumentInfo *tmp = d->m_generator->generateDocumentInfo();
-        if ( tmp )
-            *info = *tmp;
+        keys << ks;
+    }
 
-        info->set( DocumentInfo::FilePath, currentDocument().prettyUrl() );
-        const QString pagesSize = d->pagesSizeString();
-        if ( d->m_docSize != -1 )
+    return documentInfo( keys );
+}
+
+DocumentInfo Document::documentInfo( const QSet<DocumentInfo::Key> &keys ) const
+{
+    DocumentInfo result = d->m_documentInfo;
+    const QSet<DocumentInfo::Key> missingKeys = keys - d->m_documentInfoAskedKeys;
+
+    if ( d->m_generator && !missingKeys.isEmpty() )
+    {
+        DocumentInfo info = d->m_generator->generateDocumentInfo( missingKeys );
+
+        if ( missingKeys.contains( DocumentInfo::FilePath ) )
+        {
+            info.set( DocumentInfo::FilePath, currentDocument().prettyUrl() );
+        }
+
+        if ( d->m_docSize != -1 && missingKeys.contains( DocumentInfo::DocumentSize ) )
         {
             const QString sizeString = KGlobal::locale()->formatByteSize( d->m_docSize );
-            info->set( DocumentInfo::DocumentSize, sizeString );
+            info.set( DocumentInfo::DocumentSize, sizeString );
         }
-        if (!pagesSize.isEmpty())
+        if ( missingKeys.contains( DocumentInfo::PagesSize ) )
         {
-            info->set( DocumentInfo::PagesSize, pagesSize );
+            const QString pagesSize = d->pagesSizeString();
+            if ( !pagesSize.isEmpty() )
+            {
+                info.set( DocumentInfo::PagesSize, pagesSize );
+            }
         }
 
-        const DocumentInfo::Key keyPages = DocumentInfo::Pages;
-        const QString keyString = DocumentInfo::getKeyString( keyPages );
-
-        if ( info->get( keyString ).isEmpty() ) {
-            info->set( keyString, QString::number( this->pages() ),
-                       DocumentInfo::getKeyTitle( keyPages ) );
+        if ( missingKeys.contains( DocumentInfo::Pages ) && info.get( DocumentInfo::Pages ).isEmpty() ) {
+            info.set( DocumentInfo::Pages, QString::number( this->pages() ) );
         }
 
-        d->m_documentInfo = info;
-        return info;
+        d->m_documentInfo.d->values.unite(info.d->values);
+        d->m_documentInfo.d->titles.unite(info.d->titles);
+        result.d->values.unite(info.d->values);
+        result.d->titles.unite(info.d->titles);
     }
-    else return NULL;
+    d->m_documentInfoAskedKeys += keys;
+
+    return result;
 }
 
 const DocumentSynopsis * Document::documentSynopsis() const
@@ -4651,52 +4673,51 @@ bool DocumentViewport::operator<( const DocumentViewport & vp ) const
 
 /** DocumentInfo **/
 
-DocumentInfo::DocumentInfo()
-  : QDomDocument( "DocumentInformation" )
+DocumentInfo::DocumentInfo() : d(new DocumentInfoPrivate())
 {
-    QDomElement docElement = createElement( "DocumentInfo" );
-    appendChild( docElement );
 }
 
-void DocumentInfo::set( const QString &key, const QString &value,
-                        const QString &title )
+DocumentInfo::DocumentInfo(const DocumentInfo &info) : d(new DocumentInfoPrivate())
 {
-    QDomElement docElement = documentElement();
-    QDomElement element;
+    *this = info;
+}
 
-    // check whether key already exists
-    QDomNodeList list = docElement.elementsByTagName( key );
-    if ( list.count() > 0 )
-        element = list.item( 0 ).toElement();
-    else
-        element = createElement( key );
+DocumentInfo& DocumentInfo::operator=(const DocumentInfo &info)
+{
+    d->values = info.d->values;
+    d->titles = info.d->titles;
+    return *this;
+}
 
-    element.setAttribute( "value", value );
-    element.setAttribute( "title", title );
+DocumentInfo::~DocumentInfo()
+{
+    delete d;
+}
 
-    if ( list.count() == 0 )
-        docElement.appendChild( element );
+void DocumentInfo::set( const QString &key, const QString &value, const QString &title )
+{
+    d->values[ key ] = value;
+    d->titles[ key ] = title;
 }
 
 void DocumentInfo::set( Key key, const QString &value )
 {
-    const QString keyString = getKeyString( key );
-    if ( !keyString.isEmpty() )
-        set( keyString, value, getKeyTitle( key ) );
-    else
-        kWarning(OkularDebug) << "Invalid key passed";
+    d->values[ getKeyString( key ) ] = value;
+}
+
+QStringList DocumentInfo::keys() const
+{
+    return d->values.keys();
+}
+
+QString DocumentInfo::get( Key key ) const
+{
+    return get( getKeyString( key ) );
 }
 
 QString DocumentInfo::get( const QString &key ) const
 {
-    const QDomElement docElement = documentElement();
-
-    // check whether key already exists
-    const QDomNodeList list = docElement.elementsByTagName( key );
-    if ( list.count() > 0 )
-        return list.item( 0 ).toElement().attribute( "value" );
-    else
-        return QString();
+    return d->values[ key ];
 }
 
 QString DocumentInfo::getKeyString( Key key ) //const
@@ -4751,9 +4772,31 @@ QString DocumentInfo::getKeyString( Key key ) //const
             return "pageSize";
             break;
         default:
+            kWarning() << "Unknown" << key;
             return QString();
             break;
     }
+}
+
+DocumentInfo::Key DocumentInfo::getKeyFromString( const QString &key ) //const
+{
+    if (key == "title") return Title;
+    else if (key == "subject") return Subject;
+    else if (key == "description") return Description;
+    else if (key == "author") return Author;
+    else if (key == "creator") return Creator;
+    else if (key == "producer") return Producer;
+    else if (key == "copyright") return Copyright;
+    else if (key == "pages") return Pages;
+    else if (key == "creationDate") return CreationDate;
+    else if (key == "modificationDate") return ModificationDate;
+    else if (key == "mimeType") return MimeType;
+    else if (key == "category") return Category;
+    else if (key == "keywords") return Keywords;
+    else if (key == "filePath") return FilePath;
+    else if (key == "documentSize") return DocumentSize;
+    else if (key == "pageSize") return PagesSize;
+    else return Invalid;
 }
 
 QString DocumentInfo::getKeyTitle( Key key ) //const
@@ -4812,6 +4855,15 @@ QString DocumentInfo::getKeyTitle( Key key ) //const
             break;
     }
 }
+
+QString DocumentInfo::getKeyTitle( const QString &key ) const
+{
+    QString title = getKeyTitle ( getKeyFromString( key ) );
+    if ( title.isEmpty() )
+        title = d->titles[ key ];
+    return title;
+}
+
 
 
 /** DocumentSynopsis **/

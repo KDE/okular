@@ -9,8 +9,6 @@
 
 #include "generator_fax.h"
 
-#include "faxdocument.h"
-
 #include <QtGui/QPainter>
 #include <QtPrintSupport/QPrinter>
 
@@ -51,13 +49,12 @@ FaxGenerator::~FaxGenerator()
 
 bool FaxGenerator::loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector )
 {
-    FaxDocument::DocumentType type;
     if ( fileName.toLower().endsWith( ".g3" ) )
-        type = FaxDocument::G3;
+        m_type = FaxDocument::G3;
     else
-        type = FaxDocument::G4;
+        m_type = FaxDocument::G4;
 
-    FaxDocument faxDocument( fileName, type );
+    FaxDocument faxDocument( fileName, m_type );
 
     if ( !faxDocument.load() )
     {
@@ -72,20 +69,12 @@ bool FaxGenerator::loadDocument( const QString & fileName, QVector<Okular::Page*
     Okular::Page * page = new Okular::Page( 0, m_img.width(), m_img.height(), Okular::Rotation0 );
     pagesVector[0] = page;
 
-    m_docInfo = new Okular::DocumentInfo();
-    if ( type == FaxDocument::G3 )
-        m_docInfo->set( Okular::DocumentInfo::MimeType, "image/fax-g3" );
-    else
-        m_docInfo->set( Okular::DocumentInfo::MimeType, "image/fax-g4" );
-
     return true;
 }
 
 bool FaxGenerator::doCloseDocument()
 {
     m_img = QImage();
-    delete m_docInfo;
-    m_docInfo = 0;
 
     return true;
 }
@@ -101,9 +90,17 @@ QImage FaxGenerator::image( Okular::PixmapRequest * request )
     return m_img.scaled( width, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
 }
 
-const Okular::DocumentInfo * FaxGenerator::generateDocumentInfo()
+Okular::DocumentInfo FaxGenerator::generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const
 {
-    return m_docInfo;
+    Okular::DocumentInfo docInfo;
+    if ( keys.contains( Okular::DocumentInfo::MimeType ) )
+    {
+        if ( m_type == FaxDocument::G3 )
+            docInfo.set( Okular::DocumentInfo::MimeType, "image/fax-g3" );
+        else
+            docInfo.set( Okular::DocumentInfo::MimeType, "image/fax-g4" );
+    }
+    return docInfo;
 }
 
 bool FaxGenerator::print( QPrinter& printer )

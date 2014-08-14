@@ -1145,19 +1145,8 @@ QString Part::currentDocument()
 
 QString Part::documentMetaData( const QString &metaData ) const
 {
-    const Okular::DocumentInfo * info = m_document->documentInfo();
-    if ( info )
-    {
-        QDomElement docElement = info->documentElement();
-        for ( QDomNode node = docElement.firstChild(); !node.isNull(); node = node.nextSibling() )
-        {
-            const QDomElement element = node.toElement();
-            if ( metaData.compare( element.tagName(), Qt::CaseInsensitive ) == 0 )
-                return element.attribute( "value" );
-        }
-    }
-
-    return QString();
+    const Okular::DocumentInfo info = m_document->documentInfo();
+    return info.get( metaData );
 }
 
 
@@ -1204,35 +1193,26 @@ static void addFileToWatcher( KDirWatch *watcher, const QString &filePath)
     if ( fi.isSymLink() ) watcher->addFile( fi.readLink() );
 }
 
-bool Part::openFile()
+Document::OpenResult Part::doOpenFile( const KMimeType::Ptr &mimeA, const QString &fileNameToOpenA, bool *isCompressedFile )
 {
-    KMimeType::Ptr mime;
-    QString fileNameToOpen = localFilePath();
-#pragma message("KF5: fix reading from stdin")
-    const bool isStdin = false; // url().isLocalFile() && url().adjusted(QUrl::RemoveFilename) == QLatin1String( "-" );
-    const QFileInfo fileInfo( fileNameToOpen );
-    if ( (!isStdin) && (!fileInfo.exists()) )
-        return false;
-    if ( !arguments().mimeType().isEmpty() )
-    {
-        mime = KMimeType::mimeType( arguments().mimeType() );
-    }
-    if ( !mime )
-    {
-        mime = KMimeType::findByPath( fileNameToOpen );
-    }
-    bool isCompressedFile = false;
+    Document::OpenResult openResult = Document::OpenError;
     bool uncompressOk = true;
+    KMimeType::Ptr mime = mimeA;
+    QString fileNameToOpen = fileNameToOpenA;
     QString compressedMime = compressedMimeFor( mime->name() );
     if ( compressedMime.isEmpty() )
         compressedMime = compressedMimeFor( mime->parentMimeType() );
     if ( !compressedMime.isEmpty() )
     {
-        isCompressedFile = true;
+        *isCompressedFile = true;
         uncompressOk = handleCompressed( fileNameToOpen, localFilePath(), compressedMime );
         mime = KMimeType::findByPath( fileNameToOpen );
     }
-    Document::OpenResult openResult = Document::OpenError;
+    else
+    {
+        *isCompressedFile = false;
+    }
+
     isDocumentArchive = false;
     if ( uncompressOk )
     {
@@ -1315,6 +1295,56 @@ bool Part::openFile()
                 wallet->writePassword( walletKey, password );
             }
         }
+    }
+
+    return openResult;
+}
+
+bool Part::openFile()
+{
+    QList<KMimeType::Ptr> mimes;
+    QString fileNameToOpen = localFilePath();
+    const bool isstdin = url().isLocalFile() && url().fileName() == QLatin1String( "-" );
+    const QFileInfo fileInfo( fileNameToOpen );
+    if ( (!isstdin) && (!fileInfo.exists()) )
+        return false;
+    KMimeType::Ptr pathMime = KMimeType::findByPath( fileNameToOpen );
+    if ( !arguments().mimeType().isEmpty() )
+    {
+        KMimeType::Ptr argMime = KMimeType::mimeType( arguments().mimeType() );
+
+        // Select the "childmost" mimetype, if none of them
+        // inherits the other trust more what pathMime says
+        // but still do a second try if that one fails
+        if ( argMime->is( pathMime->name() ) )
+        {
+            mimes << argMime;
+        }
+        else if ( pathMime->is( argMime->name() ) )
+        {
+            mimes << pathMime;
+        }
+        else
+        {
+            mimes << pathMime << argMime;
+        }
+
+        if (mimes[0]->name() == "text/plain") {
+            KMimeType::Ptr contentMime = KMimeType::findByFileContent( fileNameToOpen );
+            mimes.prepend( contentMime );
+        }
+    }
+    else
+    {
+        mimes << pathMime;
+    }
+
+    KMimeType::Ptr mime;
+    Document::OpenResult openResult = Document::OpenError;
+    bool isCompressedFile = false;
+    while ( !mimes.isEmpty() && openResult == Document::OpenError ) {
+        mime = mimes.takeFirst();
+        openResult = doOpenFile( mime, fileNameToOpen, &isCompressedFile );
     }
 
     bool canSearch = m_document->supportsSearching();
@@ -2515,7 +2545,7 @@ void Part::enableStartWithPrint()
 
 void Part::slotAboutBackend()
 {
-#pragma message("KF5 Part::slotAboutBackend disabled")
+#pragma message("KF5 bring back about data")
 //    const KComponentData *data = m_document->componentData();
 //    if ( !data )
 //        return;
@@ -2524,14 +2554,12 @@ void Part::slotAboutBackend()
 
 //    if ( aboutData.programIconName().isEmpty() || aboutData.programIconName() == aboutData.appName() )
 //    {
-//        if ( const Okular::DocumentInfo *documentInfo = m_document->documentInfo() )
+//        const Okular::DocumentInfo documentInfo = m_document->documentInfo(QSet<DocumentInfo::Key>() << DocumentInfo::MimeType);
+//        const QString mimeTypeName = documentInfo.get(DocumentInfo::MimeType);
+//        if ( !mimeTypeName.isEmpty() )
 //        {
-//            const QString mimeTypeName = documentInfo->get("mimeType");
-//            if ( !mimeTypeName.isEmpty() )
-//            {
-//                if ( KMimeType::Ptr type = KMimeType::mimeType( mimeTypeName ) )
-//                    aboutData.setProgramIconName( type->iconName() );
-//            }
+//            if ( KMimeType::Ptr type = KMimeType::mimeType( mimeTypeName ) )
+//                aboutData.setProgramIconName( type->iconName() );
 //        }
 //    }
 

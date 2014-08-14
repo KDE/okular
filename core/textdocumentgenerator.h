@@ -203,7 +203,7 @@ class OKULAR_EXPORT TextDocumentGenerator : public Generator, public Okular::Con
          */
         TextDocumentSettings* generalSettings();
 
-        const Okular::DocumentInfo* generateDocumentInfo();
+        Okular::DocumentInfo generateDocumentInfo( const QSet<DocumentInfo::Key> &keys ) const;
         const Okular::DocumentSynopsis* generateDocumentSynopsis();
 
     protected:

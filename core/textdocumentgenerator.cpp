@@ -445,10 +445,10 @@ bool TextDocumentGenerator::print( QPrinter& printer )
     return true;
 }
 
-const Okular::DocumentInfo* TextDocumentGenerator::generateDocumentInfo()
+Okular::DocumentInfo TextDocumentGenerator::generateDocumentInfo( const QSet<DocumentInfo::Key> & /*keys*/ ) const
 {
-    Q_D( TextDocumentGenerator );
-    return &d->mDocumentInfo;
+    Q_D( const TextDocumentGenerator );
+    return d->mDocumentInfo;
 }
 
 const Okular::DocumentSynopsis* TextDocumentGenerator::generateDocumentSynopsis()
@@ -465,7 +465,7 @@ QVariant TextDocumentGeneratorPrivate::metaData( const QString &key, const QVari
     Q_UNUSED( option )
     if ( key == "DocumentTitle" )
     {
-        return mDocumentInfo.get( "title" );
+        return mDocumentInfo.get( DocumentInfo::Title );
     }
     return QVariant();
 }

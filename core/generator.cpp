@@ -289,9 +289,9 @@ TextPage* Generator::textPage( Page* )
     return 0;
 }
 
-const DocumentInfo * Generator::generateDocumentInfo()
+DocumentInfo Generator::generateDocumentInfo(const QSet<DocumentInfo::Key> &keys) const
 {
-    return 0;
+    return DocumentInfo();
 }
 
 const DocumentSynopsis * Generator::generateDocumentSynopsis()

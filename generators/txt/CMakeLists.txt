@@ -15,8 +15,6 @@ set(okularGenerator_txt_SRCS
 add_library(okularGenerator_txt MODULE ${okularGenerator_txt_SRCS})
 
 target_link_libraries(okularGenerator_txt okularcore Qt5::Core)
-kservice_desktop_to_json(okularGenerator_txt libokularGenerator_txt.desktop)
-
 install(TARGETS okularGenerator_txt DESTINATION ${PLUGIN_INSTALL_DIR})
 
 

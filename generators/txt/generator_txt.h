@@ -17,7 +17,6 @@
 class TxtGenerator : public Okular::TextDocumentGenerator
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID OkularGeneratorInterface_iid FILE "libokularGenerator_txt.json")
 
 public:
     TxtGenerator();

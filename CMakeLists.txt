@@ -65,8 +65,7 @@ add_subdirectory( shell )
 add_subdirectory( generators )
 add_subdirectory( tests )
 
-message("TODO: doc build")
-# FIXME ecm_optional_add_subdirectory(doc)
+add_subdirectory(doc)
 
 include(OkularConfigureChecks.cmake)
 

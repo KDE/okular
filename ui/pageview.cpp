@@ -3663,10 +3663,14 @@ void PageView::updateZoom( ZoomMode newZoomMode )
             QVector<float>::iterator i;
             if ( newZoomMode == ZoomOut )
             {
+                if (newFactor <= zoomValue.first())
+                    return;
                 i = qLowerBound(zoomValue.begin(), zoomValue.end(), newFactor) - 1;
             }
             else
             {
+                if (newFactor >= zoomValue.last())
+                    return;
                 i = qUpperBound(zoomValue.begin(), zoomValue.end(), newFactor);
             }
             const float tmpFactor = *i;

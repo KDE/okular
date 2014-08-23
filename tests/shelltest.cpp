@@ -7,8 +7,10 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <qtest_kde.h>
+#include <QtTest>
+
 #include <qdir.h>
+#include <kcmdlineargs.h>
 #include <kurl.h>
 
 #include "../shell/shellutils.h"
@@ -116,6 +118,5 @@ void ShellTest::testUrlArgs()
     QCOMPARE( url, resUrl );
 }
 
-QTEST_KDEMAIN_CORE( ShellTest )
-
+QTEST_GUILESS_MAIN( ShellTest )
 #include "shelltest.moc"

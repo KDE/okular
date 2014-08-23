@@ -7,7 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <qtest_kde.h>
+#include <QtTest>
+
 #include <kmimetype.h>
 #include "../settings_core.h"
 #include "core/annotations.h"
@@ -105,7 +106,7 @@ void EditAnnotationContentsTest::init()
 {
     const QString testFile = KDESRCDIR "data/file1.pdf";
     const KMimeType::Ptr mime = KMimeType::findByPath( testFile );
-    m_document->openDocument(testFile, KUrl(), mime);
+    QCOMPARE( m_document->openDocument(testFile, KUrl(), mime), Okular::Document::OpenSuccess );
 
     // Undo and Redo should be unavailable when docuemnt is first opened.
     QVERIFY( !m_document->canUndo() );
@@ -515,5 +516,5 @@ void EditAnnotationContentsTest::testCombinations()
     QCOMPARE( 12, m_editor1->anchorPos() );
 }
 
-QTEST_KDEMAIN( EditAnnotationContentsTest, GUI )
+QTEST_MAIN( EditAnnotationContentsTest )
 #include "editannotationcontentstest.moc"

@@ -1,5 +1,5 @@
 set( EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR} )
-add_definitions( -DKDESRCDIR="${CMAKE_CURRENT_SOURCE_DIR}" )
+add_definitions( -DKDESRCDIR="${CMAKE_CURRENT_SOURCE_DIR}/" )
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/..)
 
@@ -13,10 +13,10 @@ ecm_add_test(parttest parttest.cpp
     LINK_LIBRARIES Qt5::Widgets Qt5::Test Qt5::Xml okularcore okularpart KF5::KDELibs4Support
 )
 
-#ecm_add_test(documenttest documenttest.cpp
-#    TEST_NAME "documenttest"
-#    LINK_LIBRARIES Qt5::Widgets Qt5::Test Qt5::Xml okularcore KF5::KDELibs4Support
-#)
+ecm_add_test(documenttest documenttest.cpp
+    TEST_NAME "documenttest"
+    LINK_LIBRARIES Qt5::Widgets Qt5::Test Qt5::Xml okularcore KF5::KDELibs4Support KF5::ThreadWeaver
+)
 
 ecm_add_test(searchtest searchtest.cpp
     TEST_NAME "searchtest"

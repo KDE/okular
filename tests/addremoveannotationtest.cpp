@@ -7,7 +7,7 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <qtest_kde.h>
+#include <QtTest>
 
 #include "../core/document.h"
 #include "../core/page.h"
@@ -41,7 +41,7 @@ void AddRemoveAnnotationTest::init()
 {
     const QString testFile = KDESRCDIR "data/file1.pdf";
     const KMimeType::Ptr mime = KMimeType::findByPath( testFile );
-    m_document->openDocument(testFile, KUrl(), mime);
+    QCOMPARE( m_document->openDocument(testFile, KUrl(), mime), Okular::Document::OpenSuccess );
 }
 
 void AddRemoveAnnotationTest::cleanup()
@@ -186,5 +186,5 @@ void AddRemoveAnnotationTest::testRemoveAnnotations()
     QVERIFY( TestingUtils::AnnotationDisposeWatcher::disposedAnnotationName() == annot1Name );
 }
 
-QTEST_KDEMAIN( AddRemoveAnnotationTest, GUI )
+QTEST_MAIN( AddRemoveAnnotationTest )
 #include "addremoveannotationtest.moc"

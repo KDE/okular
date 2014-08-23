@@ -7,9 +7,11 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <qtest_kde.h>
+#include <QtTest>
+
 #include <qprintdialog.h>
 #include <qwidget.h>
+#include <kglobal.h>
 #include <ktabwidget.h>
 
 #include "../shell/okular_main.h"
@@ -468,5 +470,5 @@ void MainShellTest::test2FilesError()
 }
 
 
-QTEST_KDEMAIN( MainShellTest, GUI )
+QTEST_MAIN( MainShellTest )
 #include "mainshelltest.moc"

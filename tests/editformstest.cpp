@@ -7,7 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <qtest_kde.h>
+#include <QtTest>
+
 #include <kmimetype.h>
 #include "../settings_core.h"
 #include "core/document.h"
@@ -65,7 +66,7 @@ void EditFormsTest::init()
 {
     const QString testFile = KDESRCDIR "data/formSamples.pdf";
     const KMimeType::Ptr mime = KMimeType::findByPath( testFile );
-    m_document->openDocument( testFile, KUrl(), mime );
+    QCOMPARE( m_document->openDocument(testFile, KUrl(), mime), Okular::Document::OpenSuccess );
 
     // Undo and Redo should be unavailable when docuemnt is first opened.
     QVERIFY( !m_document->canUndo() );
@@ -427,5 +428,5 @@ void EditFormsTest::verifyTextForm( Okular::FormFieldText* form )
     QVERIFY( m_document->canRedo() );
 }
 
-QTEST_KDEMAIN( EditFormsTest, GUI )
+QTEST_MAIN( EditFormsTest )
 #include "editformstest.moc"

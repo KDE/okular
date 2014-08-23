@@ -7,9 +7,9 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <qtest_kde.h>
+#include <QtTest>
 
-#include <threadweaver/ThreadWeaver.h>
+#include <threadweaver/queue.h>
 
 #include "../core/document.h"
 #include "../core/generator.h"
@@ -42,7 +42,7 @@ void DocumentTest::testCloseDuringRotationJob()
     m_document->setRotation( 1 );
 
     // Tell ThreadWeaver not to start any new job
-    ThreadWeaver::Weaver::instance()->suspend();
+    ThreadWeaver::Queue::instance()->suspend();
 
     // Request a pixmap. A RotationJob will be enqueued but not started
     Okular::PixmapRequest *pixmapReq = new Okular::PixmapRequest(
@@ -53,10 +53,10 @@ void DocumentTest::testCloseDuringRotationJob()
     delete m_document;
 
     // Resume job processing and wait for the RotationJob to finish
-    ThreadWeaver::Weaver::instance()->resume();
-    ThreadWeaver::Weaver::instance()->finish();
+    ThreadWeaver::Queue::instance()->resume();
+    ThreadWeaver::Queue::instance()->finish();
     qApp->processEvents();
 }
 
-QTEST_KDEMAIN( DocumentTest, GUI )
+QTEST_MAIN( DocumentTest )
 #include "documenttest.moc"

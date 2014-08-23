@@ -7,7 +7,7 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <qtest_kde.h>
+#include <QtTest>
 
 #include "../core/document.h"
 #include "../core/page.h"
@@ -42,13 +42,14 @@ void AnnotationTest::initTestCase()
     m_document = new Okular::Document( 0 );
     const QString testFile = KDESRCDIR "data/file1.pdf";
     const KMimeType::Ptr mime = KMimeType::findByPath( testFile );
-    m_document->openDocument(testFile, KUrl(), mime);
+    QCOMPARE( m_document->openDocument(testFile, KUrl(), mime), Okular::Document::OpenSuccess );
 }
 
 void AnnotationTest::cleanupTestCase()
 {
-    foreach ( Okular::Annotation* annotation, m_document->page( 0 )->annotations() )
-        m_document->removePageAnnotation( 0, annotation );
+    if ( m_document->isOpened() )
+        foreach ( Okular::Annotation* annotation, m_document->page( 0 )->annotations() )
+            m_document->removePageAnnotation( 0, annotation );
 }
 
 
@@ -139,6 +140,5 @@ void AnnotationTest::testDistance_data()
 }
 
 
-QTEST_KDEMAIN( AnnotationTest, GUI )
-
+QTEST_MAIN( AnnotationTest )
 #include "annotationstest.moc"

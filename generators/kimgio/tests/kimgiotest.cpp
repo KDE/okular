@@ -7,7 +7,6 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <qtest_kde.h>
 
 #include "../generator_kimgio.h"
 #include "../../settings_core.h"
@@ -16,7 +15,8 @@
 #include <core/page.h>
 #include <ui/pagepainter.h>
 
-#include <KTempDir>
+#include <QtTest>
+
 #include <QImage>
 #include <QPainter>
 #include <QTemporaryFile>
@@ -97,5 +97,5 @@ void KIMGIOTest::testExifOrientation()
 	delete m_document;
 }
 
-QTEST_KDEMAIN( KIMGIOTest, GUI )
+QTEST_MAIN(KIMGIOTest)
 #include "kimgiotest.moc"

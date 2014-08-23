@@ -7,7 +7,7 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <qtest_kde.h>
+#include <QtTest>
 
 #include "../core/document.h"
 #include "../core/page.h"
@@ -429,6 +429,5 @@ void SearchTest::testTwoColumns()
   delete page;
 }
 
-QTEST_KDEMAIN( SearchTest, GUI )
-
+QTEST_MAIN( SearchTest )
 #include "searchtest.moc"

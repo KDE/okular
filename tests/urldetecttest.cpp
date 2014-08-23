@@ -7,7 +7,7 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <qtest_kde.h>
+#include <QtTest>
 
 #include "../ui/url_utils.h"
 
@@ -52,6 +52,5 @@ void UrlDetectTest::testURL_data()
 
 }
 
-QTEST_KDEMAIN_CORE( Okular::UrlDetectTest )
-
+QTEST_MAIN( Okular::UrlDetectTest )
 #include "urldetecttest.moc"

@@ -274,7 +274,7 @@ install(TARGETS okularpart DESTINATION ${PLUGIN_INSTALL_DIR})
 install(FILES okular.upd DESTINATION ${DATA_INSTALL_DIR}/kconf_update)
 
 install( FILES okular_part.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
-install( FILES part.rc part-viewermode.rc DESTINATION ${DATA_INSTALL_DIR}/okular )
+install( FILES part.rc part-viewermode.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/okular )
 
 ########### cmake files #################
 

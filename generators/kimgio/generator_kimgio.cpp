@@ -16,26 +16,26 @@
 #include <QtGui/QPainter>
 #include <QtGui/QPrinter>
 
-#include <kaboutdata.h>
+#include <k4aboutdata.h>
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <kicon.h>
 #include <kimageio.h>
 #include <klocale.h>
 
-#include <libkexiv2/kexiv2.h>
+#include <kexiv2/kexiv2.h>
 
 #include <core/page.h>
 
-static KAboutData createAboutData()
+static K4AboutData createAboutData()
 {
-    KAboutData aboutData(
+    K4AboutData aboutData(
          "okular_kimgio",
          "okular_kimgio",
          ki18n( "Image Backend" ),
          "0.1.2",
          ki18n( "A simple image backend" ),
-         KAboutData::License_GPL,
+         K4AboutData::License_GPL,
          ki18n( "© 2005, 2009 Albert Astals Cid\n"
                 "© 2006-2007 Pino Toscano\n"
                 "© 2006-2007 Tobias Koenig" )

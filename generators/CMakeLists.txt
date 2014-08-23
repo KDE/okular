@@ -14,7 +14,7 @@ set_package_properties("libspectre" PROPERTIES
         TYPE RECOMMENDED
         PURPOSE "Support for PS files in okular.")
 
-find_package(Kexiv2)
+find_package(KF5KExiv2)
 set_package_properties("LibKExiv2" PROPERTIES
         DESCRIPTION  "Wrapper around Exiv2 library"
         URL "http://www.digikam.org/sharedlibs"
@@ -88,9 +88,9 @@ endif(POPPLER_FOUND)
 #  add_subdirectory(spectre)
 #endif(LIBSPECTRE_FOUND)
 
-#if(KEXIV2_FOUND)
-#  add_subdirectory( kimgio )
-#endif(KEXIV2_FOUND)
+if(KF5KExiv2_FOUND)
+  add_subdirectory( kimgio )
+endif(KF5KExiv2_FOUND)
 
 if(CHM_FOUND)
   add_subdirectory( chm )

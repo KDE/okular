@@ -36,9 +36,7 @@
 #include "settings_core.h"
 #include "core/document_p.h"
 
-#pragma message("KF5: enable busyPixmap again")
-QPixmap *busyPixmap = new QPixmap();
-//K_GLOBAL_STATIC_WITH_ARGS( QPixmap, busyPixmap, ( KIconLoader::global()->loadIcon("okular", KIconLoader::NoGroup, 32, KIconLoader::DefaultState, QStringList(), 0, true) ) )
+Q_GLOBAL_STATIC_WITH_ARGS( QPixmap, busyPixmap, ( KIconLoader::global()->loadIcon("okular", KIconLoader::NoGroup, 32, KIconLoader::DefaultState, QStringList(), 0, true) ) )
 
 #define TEXTANNOTATION_ICONSIZE 24
 
@@ -106,9 +104,9 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
              (scaledWidth != pixmap->width() && pixmapPixels > 6000000L) )
         {
             // draw something on the blank page: the okular icon or a cross (as a fallback)
-            if ( !busyPixmap->isNull() )
+            if ( !busyPixmap()->isNull() )
             {
-                destPainter->drawPixmap( QPoint( 10, 10 ), *busyPixmap );
+                destPainter->drawPixmap( QPoint( 10, 10 ), *busyPixmap() );
             }
             else
             {

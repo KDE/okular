@@ -17,7 +17,6 @@
 
 class KIMGIOGenerator : public Okular::Generator
 {
-    Q_OBJECT
     public:
         KIMGIOGenerator( QObject *parent, const QVariantList &args );
         virtual ~KIMGIOGenerator();
@@ -35,9 +34,6 @@ class KIMGIOGenerator : public Okular::Generator
     protected:
         bool doCloseDocument();
         QImage image( Okular::PixmapRequest * request );
-
-    private slots:
-        void slotTest();
 
     private:
         QImage m_img;

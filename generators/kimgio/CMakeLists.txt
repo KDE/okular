@@ -25,5 +25,3 @@ target_link_libraries( kimgiotest ${KDE4_KDECORE_LIBS} ${KDE4_KDEUI_LIBS} ${KDE4
 
 install( FILES libokularGenerator_kimgio.desktop okularKimgio.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
 install( PROGRAMS okularApplication_kimgio.desktop active-documentviewer_kimgio.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
-
-#install( FILES gui.rc DESTINATION ${DATA_INSTALL_DIR}/okular_kimgio )

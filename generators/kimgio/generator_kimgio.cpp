@@ -56,17 +56,6 @@ KIMGIOGenerator::KIMGIOGenerator( QObject *parent, const QVariantList &args )
     setFeature( TiledRendering );
     setFeature( PrintNative );
     setFeature( PrintToFile );
-
-/*
-    setComponentData( *ownComponentData() );
-
-    setXMLFile( "gui.rc" );
-    QAction * kimgio_test = new QAction( this );
-    kimgio_test->setText( "Image test" );
-    kimgio_test->setIcon( QIcon::fromTheme( "smiley" ) );
-    connect( kimgio_test, SIGNAL(triggered(bool)), this, SLOT(slotTest()) );
-    actionCollection()->addAction( "kimgio_test", kimgio_test );
-*/
 }
 
 KIMGIOGenerator::~KIMGIOGenerator()
@@ -179,11 +168,6 @@ bool KIMGIOGenerator::print( QPrinter& printer )
     p.drawImage( 0, 0, image );
 
     return true;
-}
-
-void KIMGIOGenerator::slotTest()
-{
-    kDebug() << "Test";
 }
 
 Okular::DocumentInfo KIMGIOGenerator::generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const

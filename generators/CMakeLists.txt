@@ -100,13 +100,13 @@ endif(CHM_FOUND)
 #  add_subdirectory(djvu)
 #endif(DJVULIBRE_FOUND)
 
-#add_subdirectory(dvi)
+add_subdirectory(dvi)
 
-#if(TIFF_FOUND)
-#  add_subdirectory(tiff)
-#endif(TIFF_FOUND)
+if(TIFF_FOUND)
+  add_subdirectory(tiff)
+endif(TIFF_FOUND)
 
-#add_subdirectory(xps)
+add_subdirectory(xps)
 
 #add_subdirectory(ooo)
 

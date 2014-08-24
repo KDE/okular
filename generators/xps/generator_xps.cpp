@@ -80,23 +80,22 @@ static int hex2int(char hex)
 }
 
 // Modified from Qt4
-static QColor hexToRgba(const char *name)
+static QColor hexToRgba(const QByteArray &name)
 {
-    if(name[0] != '#')
+    const int len = name.length();
+    if (len == 0 || name[0] != '#')
         return QColor();
-    name++; // eat the leading '#'
-    int len = qstrlen(name);
     int r, g, b;
     int a = 255;
-    if (len == 6) {
-        r = (hex2int(name[0]) << 4) + hex2int(name[1]);
-        g = (hex2int(name[2]) << 4) + hex2int(name[3]);
-        b = (hex2int(name[4]) << 4) + hex2int(name[5]);
-    } else if (len == 8) {
-        a = (hex2int(name[0]) << 4) + hex2int(name[1]);
-        r = (hex2int(name[2]) << 4) + hex2int(name[3]);
-        g = (hex2int(name[4]) << 4) + hex2int(name[5]);
-        b = (hex2int(name[6]) << 4) + hex2int(name[7]);
+    if (len == 7) {
+        r = (hex2int(name[1]) << 4) + hex2int(name[2]);
+        g = (hex2int(name[3]) << 4) + hex2int(name[4]);
+        b = (hex2int(name[5]) << 4) + hex2int(name[6]);
+    } else if (len == 9) {
+        a = (hex2int(name[1]) << 4) + hex2int(name[2]);
+        r = (hex2int(name[3]) << 4) + hex2int(name[4]);
+        g = (hex2int(name[5]) << 4) + hex2int(name[6]);
+        b = (hex2int(name[7]) << 4) + hex2int(name[8]);
     } else {
         r = g = b = -1;
     }

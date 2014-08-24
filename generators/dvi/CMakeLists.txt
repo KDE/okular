@@ -46,9 +46,9 @@ set(okularGenerator_dvi_SRCS
 )
 
 
-kde4_add_plugin(okularGenerator_dvi ${okularGenerator_dvi_SRCS})
+add_library(okularGenerator_dvi MODULE ${okularGenerator_dvi_SRCS})
 
-target_link_libraries(okularGenerator_dvi okularcore ${KDE4_KIO_LIBS} ${MATH_LIB})
+target_link_libraries(okularGenerator_dvi okularcore)
 if (FREETYPE_FOUND)
    target_link_libraries(okularGenerator_dvi ${FREETYPE_LIBRARIES})
 endif (FREETYPE_FOUND)

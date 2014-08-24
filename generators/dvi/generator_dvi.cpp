@@ -197,7 +197,7 @@ QLinkedList<Okular::ObjectRect*> DviGenerator::generateDviLinks( const dviPageIn
         }
         else
         {
-            okuLink = new Okular::BrowseAction( dviLink.linkText );
+            okuLink = new Okular::BrowseAction( QUrl::fromUserInput( dviLink.linkText ) );
         }
         if ( okuLink ) 
         {

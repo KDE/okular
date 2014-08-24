@@ -85,7 +85,7 @@ TeXFont_PK::TeXFont_PK(TeXFontDefinition *parent)
 
   for(unsigned int i=0; i<TeXFontDefinition::max_num_of_chars_in_font; i++)
     characterBitmaps[i] = 0;
-  file = fopen(QFile::encodeName(parent->filename), "r");
+  file = fopen(QFile::encodeName(parent->filename).constData(), "r");
   if (file == 0)
     kError(kvs::dvi) << i18n("Cannot open font file %1.", parent->filename) << endl;
 #ifdef DEBUG_PK

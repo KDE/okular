@@ -167,7 +167,7 @@ void dviRenderer::prescan_embedPS(char *cp, quint8 *beginningOfSpecialCommand)
   command_pointer[0] = XXX4;
   command_pointer++;
   writeUINT32(PS.length());
-  memcpy(newDVI.data()+(beginningOfSpecialCommand-dviFile->dvi_Data())+5, PS.toLatin1(), PS.length() );
+  memcpy(newDVI.data()+(beginningOfSpecialCommand-dviFile->dvi_Data())+5, PS.toLatin1().constData(), PS.length() );
   memcpy(newDVI.data()+(beginningOfSpecialCommand-dviFile->dvi_Data())+lengthOfNewSpecial, beginningOfSpecialCommand+lengthOfOldSpecial,
          dviFile->size_of_file-(beginningOfSpecialCommand-dviFile->dvi_Data())-lengthOfOldSpecial );
 

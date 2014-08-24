@@ -25,9 +25,7 @@ Q_DECLARE_METATYPE( Poppler::Annotation* )
 
 extern Okular::Sound* createSoundFromPopplerSound( const Poppler::SoundObject *popplerSound );
 extern Okular::Movie* createMovieFromPopplerMovie( const Poppler::MovieObject *popplerMovie );
-#ifdef HAVE_POPPLER_0_20
 extern Okular::Movie* createMovieFromPopplerScreen( const Poppler::LinkRendition *popplerScreen );
-#endif
 
 
 static void disposeAnnotation( const Okular::Annotation *ann )
@@ -72,12 +70,10 @@ bool PopplerAnnotationProxy::supports( Capability cap ) const
 {
     switch ( cap )
     {
-#ifdef HAVE_POPPLER_0_20
         case Addition:
         case Modification:
         case Removal:
             return true;
-#endif
         default:
             return false;
     }
@@ -85,7 +81,6 @@ bool PopplerAnnotationProxy::supports( Capability cap ) const
 
 void PopplerAnnotationProxy::notifyAddition( Okular::Annotation *okl_ann, int page )
 {
-#ifdef HAVE_POPPLER_0_20
     // Export annotation to DOM
     QDomDocument doc;
     QDomElement dom_ann = doc.createElement( "root" );
@@ -130,12 +125,10 @@ void PopplerAnnotationProxy::notifyAddition( Okular::Annotation *okl_ann, int pa
     okl_ann->setDisposeDataFunction( disposeAnnotation );
 
     kDebug(PDFGenerator::PDFDebug) << okl_ann->uniqueName();
-#endif
 }
 
 void PopplerAnnotationProxy::notifyModification( const Okular::Annotation *okl_ann, int page, bool appearanceChanged )
 {
-#ifdef HAVE_POPPLER_0_20
     Q_UNUSED( page );
     Q_UNUSED( appearanceChanged );
 
@@ -244,12 +237,10 @@ void PopplerAnnotationProxy::notifyModification( const Okular::Annotation *okl_a
     }
 
     kDebug(PDFGenerator::PDFDebug) << okl_ann->uniqueName();
-#endif
 }
 
 void PopplerAnnotationProxy::notifyRemoval( Okular::Annotation *okl_ann, int page )
 {
-#ifdef HAVE_POPPLER_0_20
     Poppler::Annotation *ppl_ann = qvariant_cast<Poppler::Annotation*>( okl_ann->nativeId() );
 
     if ( !ppl_ann ) // Ignore non-native annotations
@@ -264,7 +255,6 @@ void PopplerAnnotationProxy::notifyRemoval( Okular::Annotation *okl_ann, int pag
     okl_ann->setNativeId( qVariantFromValue(0) ); // So that we don't double-free in disposeAnnotation
 
     kDebug(PDFGenerator::PDFDebug) << okl_ann->uniqueName();
-#endif
 }
 //END PopplerAnnotationProxy implementation
 
@@ -312,28 +302,17 @@ Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *
 
             break;
         }
-#ifdef HAVE_POPPLER_0_22
         case Poppler::Annotation::AWidget:
         {
             annotation = new Okular::WidgetAnnotation();
             break;
         }
-#endif
-#ifdef HAVE_POPPLER_0_20
         case Poppler::Annotation::AScreen:
         {
-#ifdef HAVE_POPPLER_0_22
             Okular::ScreenAnnotation * m = new Okular::ScreenAnnotation();
             annotation = m;
             tieToOkularAnn = true;
             *doDelete = false;
-#else
-            Poppler::ScreenAnnotation * screenann = static_cast< Poppler::ScreenAnnotation * >( ann );
-            Okular::MovieAnnotation * m = new Okular::MovieAnnotation();
-            annotation = m;
-
-            m->setMovie( createMovieFromPopplerScreen( screenann->action() ) );
-#endif
             break;
         }
         case Poppler::Annotation::AText:
@@ -351,7 +330,6 @@ Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *
             *doDelete = false;
             /* fallback */
         }
-#endif
         default:
         {
             // this is uber ugly but i don't know a better way to do it without introducing a poppler::annotation dependency on core

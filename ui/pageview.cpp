@@ -1205,10 +1205,6 @@ void PageView::slotRealNotifyViewportChanged( bool smoothMove )
     // enable setViewport calls
     d->blockViewport = false;
 
-    // update zoom text if in a ZoomFit/* zoom mode
-    if ( d->zoomMode != ZoomFixed )
-        updateZoomText();
-
     if( viewport() )
     {
         viewport()->update();
@@ -1343,6 +1339,10 @@ void PageView::notifyCurrentPageChanged( int previous, int current )
             Q_FOREACH ( VideoWidget *videoWidget, item->videoWidgets() )
                 videoWidget->pageEntered();
         }
+
+        // update zoom text and factor if in a ZoomFit/* zoom mode
+        if ( d->zoomMode != ZoomFixed )
+            updateZoomText();
     }
 }
 
@@ -3384,7 +3384,8 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
         height = ( height / width ) * colWidth;
         zoom = (double)colWidth / width;
         item->setWHZC( colWidth, (int)height, zoom, crop );
-        d->zoomFactor = zoom;
+        if ((uint)item->pageNumber() == d->document->currentPage())
+            d->zoomFactor = zoom;
     }
     else if ( d->zoomMode == ZoomFitPage )
     {
@@ -3392,7 +3393,8 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
         const double scaleH = (double)rowHeight / (double)height;
         zoom = qMin( scaleW, scaleH );
         item->setWHZC( (int)(zoom * width), (int)(zoom * height), zoom, crop );
-        d->zoomFactor = zoom;
+        if ((uint)item->pageNumber() == d->document->currentPage())
+            d->zoomFactor = zoom;
     }
     else if ( d->zoomMode == ZoomFitAuto )
     {
@@ -3420,7 +3422,8 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
             zoom = qMin( scaleW, scaleH );
         }
         item->setWHZC( (int)(zoom * width), (int)(zoom * height), zoom, crop );
-        d->zoomFactor = zoom;
+        if ((uint)item->pageNumber() == d->document->currentPage())
+            d->zoomFactor = zoom;
     }
 #ifndef NDEBUG
     else
@@ -3663,10 +3666,14 @@ void PageView::updateZoom( ZoomMode newZoomMode )
             QVector<float>::iterator i;
             if ( newZoomMode == ZoomOut )
             {
+                if (newFactor <= zoomValue.first())
+                    return;
                 i = qLowerBound(zoomValue.begin(), zoomValue.end(), newFactor) - 1;
             }
             else
             {
+                if (newFactor >= zoomValue.last())
+                    return;
                 i = qUpperBound(zoomValue.begin(), zoomValue.end(), newFactor);
             }
             const float tmpFactor = *i;

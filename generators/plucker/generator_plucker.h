@@ -31,7 +31,7 @@ class PluckerGenerator : public Okular::Generator
         bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
 
         // [INHERITED] document information
-        const Okular::DocumentInfo * generateDocumentInfo();
+        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const;
         
         // [INHERITED] perform actions on document / pages
         QImage image( Okular::PixmapRequest *request );

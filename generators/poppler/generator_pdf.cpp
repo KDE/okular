@@ -400,7 +400,7 @@ static KAboutData createAboutData()
          "okular_poppler",
          "okular_poppler",
          ki18n( "PDF Backend" ),
-         "0.6.4",
+         "0.6.5",
          ki18n( "A PDF file renderer" ),
          KAboutData::License_GPL,
          ki18n( "© 2005-2008 Albert Astals Cid" )
@@ -421,7 +421,7 @@ static void PDFGeneratorPopplerDebugFunction(const QString &message, const QVari
 
 PDFGenerator::PDFGenerator( QObject *parent, const QVariantList &args )
     : Generator( parent, args ), pdfdoc( 0 ),
-    docInfoDirty( true ), docSynopsisDirty( true ),
+    docSynopsisDirty( true ),
     docEmbeddedFilesDirty( true ), nextFontPage( 0 ),
     annotProxy( 0 ), synctex_scanner( 0 )
 {
@@ -539,7 +539,6 @@ bool PDFGenerator::doCloseDocument()
     delete pdfdoc;
     pdfdoc = 0;
     userMutex()->unlock();
-    docInfoDirty = true;
     docSynopsisDirty = true;
     docSyn.clear();
     docEmbeddedFilesDirty = true;
@@ -619,64 +618,47 @@ void PDFGenerator::loadPages(QVector<Okular::Page*> &pagesVector, int rotation, 
     }
 }
 
-const Okular::DocumentInfo * PDFGenerator::generateDocumentInfo()
+Okular::DocumentInfo PDFGenerator::generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const
 {
-    if ( docInfoDirty )
+    Okular::DocumentInfo docInfo;
+    docInfo.set( Okular::DocumentInfo::MimeType, "application/pdf" );
+
+    userMutex()->lock();
+
+
+    if ( pdfdoc )
     {
-        userMutex()->lock();
-
-        docInfo.set( Okular::DocumentInfo::MimeType, "application/pdf" );
-
-        if ( pdfdoc )
-        {
-            // compile internal structure reading properties from PDFDoc
+        // compile internal structure reading properties from PDFDoc
+        if ( keys.contains( Okular::DocumentInfo::Title ) )
             docInfo.set( Okular::DocumentInfo::Title, pdfdoc->info("Title") );
+        if ( keys.contains( Okular::DocumentInfo::Subject ) )
             docInfo.set( Okular::DocumentInfo::Subject, pdfdoc->info("Subject") );
+        if ( keys.contains( Okular::DocumentInfo::Author ) )
             docInfo.set( Okular::DocumentInfo::Author, pdfdoc->info("Author") );
+        if ( keys.contains( Okular::DocumentInfo::Keywords ) )
             docInfo.set( Okular::DocumentInfo::Keywords, pdfdoc->info("Keywords") );
+        if ( keys.contains( Okular::DocumentInfo::Creator ) )
             docInfo.set( Okular::DocumentInfo::Creator, pdfdoc->info("Creator") );
+        if ( keys.contains( Okular::DocumentInfo::Producer ) )
             docInfo.set( Okular::DocumentInfo::Producer, pdfdoc->info("Producer") );
-            docInfo.set( Okular::DocumentInfo::CreationDate,
-                         KGlobal::locale()->formatDateTime( pdfdoc->date("CreationDate"), KLocale::LongDate, true ) );
-            docInfo.set( Okular::DocumentInfo::ModificationDate,
-                         KGlobal::locale()->formatDateTime( pdfdoc->date("ModDate"), KLocale::LongDate, true ) );
-
+        if ( keys.contains( Okular::DocumentInfo::CreationDate ) )
+            docInfo.set( Okular::DocumentInfo::CreationDate, KGlobal::locale()->formatDateTime( pdfdoc->date("CreationDate"), KLocale::LongDate, true ) );
+        if ( keys.contains( Okular::DocumentInfo::ModificationDate ) )
+            docInfo.set( Okular::DocumentInfo::ModificationDate, KGlobal::locale()->formatDateTime( pdfdoc->date("ModDate"), KLocale::LongDate, true ) );
+        if ( keys.contains( Okular::DocumentInfo::CustomKeys ) )
+        {
             int major, minor;
             pdfdoc->getPdfVersion(&major, &minor);
-            docInfo.set( "format", i18nc( "PDF v. <version>", "PDF v. %1.%2",
-                         major, minor ), i18n( "Format" ) );
-            docInfo.set( "encryption", pdfdoc->isEncrypted() ? i18n( "Encrypted" ) : i18n( "Unencrypted" ),
-                         i18n("Security") );
-            docInfo.set( "optimization", pdfdoc->isLinearized() ? i18n( "Yes" ) : i18n( "No" ),
-                         i18n("Optimized") );
-
-            docInfo.set( Okular::DocumentInfo::Pages, QString::number( pdfdoc->numPages() ) );
+            docInfo.set( "format", i18nc( "PDF v. <version>", "PDF v. %1.%2", major, minor ), i18n( "Format" ) );
+            docInfo.set( "encryption", pdfdoc->isEncrypted() ? i18n( "Encrypted" ) : i18n( "Unencrypted" ), i18n("Security") );
+            docInfo.set( "optimization", pdfdoc->isLinearized() ? i18n( "Yes" ) : i18n( "No" ), i18n("Optimized") );
         }
-        else
-        {
-            // TODO not sure one can reach here, check and if it is not possible, remove the code
-            docInfo.set( Okular::DocumentInfo::Title, i18n("Unknown") );
-            docInfo.set( Okular::DocumentInfo::Subject, i18n("Unknown") );
-            docInfo.set( Okular::DocumentInfo::Author, i18n("Unknown") );
-            docInfo.set( Okular::DocumentInfo::Keywords, i18n("Unknown") );
-            docInfo.set( Okular::DocumentInfo::Creator, i18n("Unknown") );
-            docInfo.set( Okular::DocumentInfo::Producer, i18n("Unknown") );
-            docInfo.set( Okular::DocumentInfo::CreationDate, i18n("Unknown Date") );
-            docInfo.set( Okular::DocumentInfo::ModificationDate, i18n("Unknown Date") );
 
-            docInfo.set( "format", "PDF", i18n( "Format" ) );
-            docInfo.set( "encryption", i18n( "Unknown Encryption" ), i18n( "Security" ) );
-            docInfo.set( "optimization", i18n( "Unknown Optimization" ), i18n( "Optimized" ) );
-
-            docInfo.set( Okular::DocumentInfo::Pages, i18n("Unknown") );
-        }
-        userMutex()->unlock();
-
-        // if pdfdoc is valid then we cached good info -> don't cache them again
-        if ( pdfdoc )
-            docInfoDirty = false;
+        docInfo.set( Okular::DocumentInfo::Pages, QString::number( pdfdoc->numPages() ) );
     }
-    return &docInfo;
+    userMutex()->unlock();
+
+    return docInfo;
 }
 
 const Okular::DocumentSynopsis * PDFGenerator::generateDocumentSynopsis()

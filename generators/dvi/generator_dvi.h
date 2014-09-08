@@ -31,7 +31,7 @@ class DviGenerator : public Okular::Generator
         bool loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector );
 
         // document information
-        const Okular::DocumentInfo *generateDocumentInfo();
+        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const;
 
         // table of contents
         const Okular::DocumentSynopsis *generateDocumentSynopsis();
@@ -52,7 +52,6 @@ class DviGenerator : public Okular::Generator
         double m_resolution;
         bool m_fontExtracted;
 
-        Okular::DocumentInfo *m_docInfo;
         Okular::DocumentSynopsis *m_docSynopsis;
 
         dviRenderer *m_dviRenderer;

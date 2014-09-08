@@ -1,5 +1,7 @@
 set( EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR} )
 
+include_directories(${CMAKE_CURRENT_BINARY_DIR}/..)
+
 kde4_add_unit_test( shelltest shelltest.cpp ../shell/shellutils.cpp )
 target_link_libraries( shelltest ${KDE4_KDECORE_LIBS} ${QT_QTTEST_LIBRARY} )
 
@@ -32,3 +34,6 @@ target_link_libraries( modifyannotationpropertiestest ${KDE4_KDECORE_LIBS} ${QT_
 
 kde4_add_unit_test( editformstest editformstest.cpp )
 target_link_libraries( editformstest ${KDE4_KDECORE_LIBS} ${QT_QTGUI_LIBRARY} ${QT_QTTEST_LIBRARY} ${QT_QTXML_LIBRARY} okularcore )
+
+kde4_add_unit_test( mainshelltest mainshelltest.cpp ../shell/okular_main.cpp ../shell/shellutils.cpp ../shell/shell.cpp )
+target_link_libraries( mainshelltest ${KDE4_KPARTS_LIBS} ${QT_QTTEST_LIBRARY} okularpart okularcore )

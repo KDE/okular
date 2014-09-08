@@ -16,7 +16,6 @@
 #include <QDesktopWidget>
 #include <QImage>
 #include <QIODevice>
-#include <cmath>
 
 #ifdef Q_WS_X11
   #include "config-okular.h"
@@ -79,6 +78,7 @@ double Utils::realDpiX()
 {
     const QDesktopWidget* w = QApplication::desktop();
     if (w->width() > 0 && w->widthMM() > 0) {
+        kDebug() << "Pix:" << w->width() << "MM:" << w->widthMM();
         return (double(w->width()) * 25.4) / double(w->widthMM());
     } else {
         return dpiX();
@@ -89,6 +89,7 @@ double Utils::realDpiY()
 {
     const QDesktopWidget* w = QApplication::desktop();
     if (w->height() > 0 && w->heightMM() > 0) {
+        kDebug() << "Pix:" << w->height() << "MM:" << w->heightMM();
         return (double(w->height()) * 25.4) / double(w->heightMM());
     } else {
         return dpiY();
@@ -131,14 +132,15 @@ QSizeF Utils::realDpi(QWidget* widgetOnScreen)
                 kDebug() << "Found widget at output #" << selectedOutput->id();
                 QRect outputRect(selectedOutput->pos(),selectedOutput->currentMode()->size());
                 QSize szMM = selectedOutput->sizeMm();
-                kDebug() << "Output size is " << szMM;
+                kDebug() << "Output size is (mm) " << szMM;
+                kDebug() << "Output rect is " << outputRect;
                 if (selectedOutput->edid()) {
-                    kDebug() << "EDID WxH: " << selectedOutput->edid()->width()  << 'x' << selectedOutput->edid()->height();
+                    kDebug() << "EDID WxH (cm): " << selectedOutput->edid()->width()  << 'x' << selectedOutput->edid()->height();
                 }
                 if (szMM.width() > 0 && szMM.height() > 0 && outputRect.width() > 0 && outputRect.height() > 0
                     && selectedOutput->edid()
-                    && std::abs(static_cast<int>(selectedOutput->edid()->width()*10) - szMM.width()) < 10
-                    && std::abs(static_cast<int>(selectedOutput->edid()->height()*10) - szMM.height()) < 10)
+                    && qAbs(static_cast<int>(selectedOutput->edid()->width()*10) - szMM.width()) < 10
+                    && qAbs(static_cast<int>(selectedOutput->edid()->height()*10) - szMM.height()) < 10)
                 {
                     // sizes in EDID seem to be consistent
                     QSizeF res(static_cast<qreal>(outputRect.width())*25.4/szMM.width(),
@@ -148,16 +150,42 @@ QSizeF Utils::realDpi(QWidget* widgetOnScreen)
                         kDebug() << "Output is vertical, transposing DPI rect";
                         res.transpose();
                     }
-                    kDebug() << "Output DPI is " << res;
-                    return res;
+                    if (qAbs(res.width() - res.height()) / qMin(res.height(), res.width()) < 0.05) {
+                        return res;
+                    } else {
+                        kDebug() << "KScreen calculation returned a non square dpi." << res << ". Falling back";
+                    }
                 }
             }
+            else
+            {
+                kDebug() << "Didn't find a KScreen selectedOutput to calculate DPI. Falling back";
+            }
+        }
+        else
+        {
+            kDebug() << "Didn't find a KScreen config to calculate DPI. Falling back";
         }
 #endif
     }
     // this is also fallback for LibKScreen branch if KScreen::Output
     // for particular widget was not found
-    return QSizeF(realDpiX(), realDpiY());
+    QSizeF res = QSizeF(realDpiX(), realDpiY());
+    if (qAbs(res.width() - res.height()) / qMin(res.height(), res.width()) < 0.05) {
+        return res;
+    } else {
+        kDebug() << "QDesktopWidget calculation returned a non square dpi." << res << ". Falling back";
+    }
+
+    res = QSizeF(dpiX(), dpiY());
+    if (qAbs(res.width() - res.height()) / qMin(res.height(), res.width()) < 0.05) {
+        return res;
+    } else {
+        kDebug() << "QX11Info returned a non square dpi." << res << ". Falling back";
+    }
+    
+    res = QSizeF(72, 72);
+    return res;
 }
 
 #elif defined(Q_WS_MAC)

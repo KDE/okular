@@ -71,7 +71,6 @@ CHMGenerator::CHMGenerator( QObject *parent, const QVariantList &args )
 
     m_syncGen=0;
     m_file=0;
-    m_docInfo=0;
     m_pixmapRequestZoom=1;
     m_request = 0;
 }
@@ -163,8 +162,6 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
 bool CHMGenerator::doCloseDocument()
 {
     // delete the document information of the old document
-    delete m_docInfo;
-    m_docInfo=0;
     delete m_file;
     m_file=0;
     m_textpageAddedList.clear();
@@ -234,16 +231,14 @@ void CHMGenerator::slotCompleted()
     signalPixmapRequestDone( req );
 }
 
-const Okular::DocumentInfo * CHMGenerator::generateDocumentInfo() 
+Okular::DocumentInfo CHMGenerator::generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const
 {
-    if (!m_docInfo)
-    {
-        m_docInfo=new Okular::DocumentInfo();
-
-        m_docInfo->set( Okular::DocumentInfo::MimeType, "application/x-chm" );
-        m_docInfo->set( Okular::DocumentInfo::Title, m_file->title() );
-    }
-    return m_docInfo;
+    Okular::DocumentInfo docInfo;
+    if ( keys.contains( Okular::DocumentInfo::MimeType ) )
+        docInfo.set( Okular::DocumentInfo::MimeType, "application/x-chm" );
+    if ( keys.contains( Okular::DocumentInfo::Title ) )
+        docInfo.set( Okular::DocumentInfo::Title, m_file->title() );
+    return docInfo;
 }
 
 const Okular::DocumentSynopsis * CHMGenerator::generateDocumentSynopsis()

@@ -235,7 +235,7 @@ public:
     bool loadDocument( const QString & fileName );
     bool closeDocument();
 
-    const Okular::DocumentInfo * generateDocumentInfo();
+    Okular::DocumentInfo generateDocumentInfo() const;
 
     QImage thumbnail();
 
@@ -287,7 +287,6 @@ private:
     bool m_thumbnailIsLoaded;
 
     QString m_corePropertiesFileName;
-    Okular::DocumentInfo * m_docInfo;
 
     QString m_signatureOrigin;
 
@@ -307,7 +306,7 @@ class XpsGenerator : public Okular::Generator
 
         bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
 
-        const Okular::DocumentInfo * generateDocumentInfo();
+        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const;
         const Okular::DocumentSynopsis * generateDocumentSynopsis();
 
         Okular::ExportFormat::List exportFormats() const;

@@ -320,10 +320,9 @@ class OKULAR_EXPORT Generator : public QObject
         virtual void generateTextPage( Page * page );
 
         /**
-         * Returns the general information object of the document or 0 if
-         * no information are available.
+         * Returns the general information object of the document.
          */
-        virtual const DocumentInfo * generateDocumentInfo();
+        virtual DocumentInfo generateDocumentInfo( const QSet<DocumentInfo::Key> &keys ) const;
 
         /**
          * Returns the 'table of content' object of the document or 0 if

@@ -576,7 +576,7 @@ void PageView::setupActions( KActionCollection * ac )
     d->aMouseTextSelect->setActionGroup( d->mouseModeActionGroup );
     d->aMouseTextSelect->setChecked( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::TextSelect );
 
-    d->aMouseTableSelect  = new KAction(KIcon( "select-table" ), i18n("T&able Selection Tool"), this);
+    d->aMouseTableSelect  = new KAction(KIcon( "table" ), i18n("T&able Selection Tool"), this);
     ac->addAction("mouse_tableselect", d->aMouseTableSelect );
     connect( d->aMouseTableSelect, SIGNAL( triggered() ), this, SLOT( slotSetMouseTableSelect() ) );
     d->aMouseTableSelect->setIconText( i18nc( "Table Selection Tool", "Table Selection" ) );
@@ -585,7 +585,7 @@ void PageView::setupActions( KActionCollection * ac )
     d->aMouseTableSelect->setActionGroup( d->mouseModeActionGroup );
     d->aMouseTableSelect->setChecked( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::TableSelect );
 
-    d->aMouseMagnifier = new KAction(KIcon( "magnifier" ), i18n("&Magnifier"), this);
+    d->aMouseMagnifier = new KAction(KIcon( "document-preview" ), i18n("&Magnifier"), this);
     ac->addAction("mouse_magnifier", d->aMouseMagnifier );
     connect( d->aMouseMagnifier, SIGNAL(triggered()), this, SLOT(slotSetMouseMagnifier()) );
     d->aMouseMagnifier->setIconText( i18nc( "Magnifier Tool", "Magnifier" ) );
@@ -1205,10 +1205,6 @@ void PageView::slotRealNotifyViewportChanged( bool smoothMove )
     // enable setViewport calls
     d->blockViewport = false;
 
-    // update zoom text if in a ZoomFit/* zoom mode
-    if ( d->zoomMode != ZoomFixed )
-        updateZoomText();
-
     if( viewport() )
     {
         viewport()->update();
@@ -1343,6 +1339,10 @@ void PageView::notifyCurrentPageChanged( int previous, int current )
             Q_FOREACH ( VideoWidget *videoWidget, item->videoWidgets() )
                 videoWidget->pageEntered();
         }
+
+        // update zoom text and factor if in a ZoomFit/* zoom mode
+        if ( d->zoomMode != ZoomFixed )
+            updateZoomText();
     }
 }
 
@@ -1647,7 +1647,7 @@ void PageView::resizeEvent( QResizeEvent *e )
         return;
     }
 
-    if ( ( d->zoomMode == ZoomFitWidth || d->zoomMode == ZoomFitAuto ) && d->verticalScrollBarVisible && !verticalScrollBar()->isVisible() && qAbs(e->oldSize().height() - e->size().height()) < verticalScrollBar()->width() )
+    if ( ( d->zoomMode == ZoomFitWidth || d->zoomMode == ZoomFitAuto ) && !verticalScrollBar()->isVisible() && qAbs(e->oldSize().height() - e->size().height()) < verticalScrollBar()->width() && d->verticalScrollBarVisible )
     {
         // this saves us from infinite resizing loop because of scrollbars appearing and disappearing
         // see bug 160628 for more info
@@ -1657,7 +1657,7 @@ void PageView::resizeEvent( QResizeEvent *e )
         resizeContentArea( e->size() );
         return;
     }
-    else if ( d->zoomMode == ZoomFitAuto && d->horizontalScrollBarVisible && !horizontalScrollBar()->isVisible() && qAbs(e->oldSize().width() - e->size().width()) < horizontalScrollBar()->height() )
+    else if ( d->zoomMode == ZoomFitAuto && !horizontalScrollBar()->isVisible() && qAbs(e->oldSize().width() - e->size().width()) < horizontalScrollBar()->height() && d->horizontalScrollBarVisible )
     {
         // this saves us from infinite resizing loop because of scrollbars appearing and disappearing
         // TODO looks are still a bit ugly because things are left uncentered
@@ -3384,7 +3384,8 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
         height = ( height / width ) * colWidth;
         zoom = (double)colWidth / width;
         item->setWHZC( colWidth, (int)height, zoom, crop );
-        d->zoomFactor = zoom;
+        if ((uint)item->pageNumber() == d->document->currentPage())
+            d->zoomFactor = zoom;
     }
     else if ( d->zoomMode == ZoomFitPage )
     {
@@ -3392,7 +3393,8 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
         const double scaleH = (double)rowHeight / (double)height;
         zoom = qMin( scaleW, scaleH );
         item->setWHZC( (int)(zoom * width), (int)(zoom * height), zoom, crop );
-        d->zoomFactor = zoom;
+        if ((uint)item->pageNumber() == d->document->currentPage())
+            d->zoomFactor = zoom;
     }
     else if ( d->zoomMode == ZoomFitAuto )
     {
@@ -3420,7 +3422,8 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
             zoom = qMin( scaleW, scaleH );
         }
         item->setWHZC( (int)(zoom * width), (int)(zoom * height), zoom, crop );
-        d->zoomFactor = zoom;
+        if ((uint)item->pageNumber() == d->document->currentPage())
+            d->zoomFactor = zoom;
     }
 #ifndef NDEBUG
     else
@@ -3663,10 +3666,14 @@ void PageView::updateZoom( ZoomMode newZoomMode )
             QVector<float>::iterator i;
             if ( newZoomMode == ZoomOut )
             {
+                if (newFactor <= zoomValue.first())
+                    return;
                 i = qLowerBound(zoomValue.begin(), zoomValue.end(), newFactor) - 1;
             }
             else
             {
+                if (newFactor >= zoomValue.last())
+                    return;
                 i = qUpperBound(zoomValue.begin(), zoomValue.end(), newFactor);
             }
             const float tmpFactor = *i;

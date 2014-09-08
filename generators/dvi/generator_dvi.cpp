@@ -52,7 +52,7 @@ static KAboutData createAboutData()
          "okular_dvi",
          "okular_dvi",
          ki18n( "DVI Backend" ),
-         "0.3.6",
+         "0.3.7",
          ki18n( "A DVI file renderer" ),
          KAboutData::License_GPL,
          ki18n( "© 2006 Luigi Toscano" )
@@ -63,7 +63,7 @@ static KAboutData createAboutData()
 OKULAR_EXPORT_PLUGIN( DviGenerator, createAboutData() )
 
 DviGenerator::DviGenerator( QObject *parent, const QVariantList &args ) : Okular::Generator( parent, args ),
-  m_fontExtracted( false ), m_docInfo( 0 ), m_docSynopsis( 0 ), m_dviRenderer( 0 )
+  m_fontExtracted( false ), m_docSynopsis( 0 ), m_dviRenderer( 0 )
 {
     setFeature( Threaded );
     setFeature( TextExtraction );
@@ -130,8 +130,6 @@ bool DviGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
 
 bool DviGenerator::doCloseDocument()
 {
-    delete m_docInfo;
-    m_docInfo = 0;
     delete m_docSynopsis;
     m_docSynopsis = 0;
     delete m_dviRenderer;
@@ -335,14 +333,12 @@ Okular::TextPage *DviGenerator::extractTextFromPage( dviPageInfo *pageInfo )
     return ktp;
 }
 
-const Okular::DocumentInfo *DviGenerator::generateDocumentInfo()
+Okular::DocumentInfo DviGenerator::generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const
 {
-    if ( m_docInfo )
-        return m_docInfo;
+    Okular::DocumentInfo docInfo;
 
-    m_docInfo = new Okular::DocumentInfo();
-
-    m_docInfo->set( Okular::DocumentInfo::MimeType, "application/x-dvi" );
+    if ( keys.contains( Okular::DocumentInfo::MimeType ) )
+        docInfo.set( Okular::DocumentInfo::MimeType, "application/x-dvi" );
 
     QMutexLocker lock( userMutex() );
 
@@ -351,12 +347,13 @@ const Okular::DocumentInfo *DviGenerator::generateDocumentInfo()
         dvifile *dvif = m_dviRenderer->dviFile;
 
         // read properties from dvif
-        //m_docInfo->set( "filename", dvif->filename, i18n("Filename") );
-        m_docInfo->set( "generatorDate", dvif->generatorString,
-                       i18n("Generator/Date") );
-        m_docInfo->set( Okular::DocumentInfo::Pages, QString::number( dvif->total_pages ) );
+        //docInfo.set( "filename", dvif->filename, i18n("Filename") );
+        if ( keys.contains( Okular::DocumentInfo::CustomKeys ) )
+            docInfo.set( "generatorDate", dvif->generatorString, i18n("Generator/Date") );
+        if ( keys.contains( Okular::DocumentInfo::Pages ) )
+            docInfo.set( Okular::DocumentInfo::Pages, QString::number( dvif->total_pages ) );
     }
-    return m_docInfo;
+    return docInfo;
 }
 
 const Okular::DocumentSynopsis *DviGenerator::generateDocumentSynopsis()

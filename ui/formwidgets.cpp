@@ -319,7 +319,10 @@ PushButtonEdit::PushButtonEdit( Okular::FormFieldButton * button, QWidget * pare
     setVisible( m_form->isVisible() );
     setCursor( Qt::ArrowCursor );
 
-    connect( this, SIGNAL(clicked()), this, SLOT(slotClicked()) );
+    if ( !m_form->isReadOnly() )
+    {
+        connect( this, SIGNAL(clicked()), this, SLOT(slotClicked()) );
+    }
 }
 
 void PushButtonEdit::slotClicked()
@@ -396,8 +399,11 @@ FormLineEdit::FormLineEdit( Okular::FormFieldText * text, QWidget * parent )
     m_prevCursorPos = cursorPosition();
     m_prevAnchorPos = cursorPosition();
 
-    connect( this, SIGNAL( textEdited( QString ) ), this, SLOT( slotChanged() ) );
-    connect( this, SIGNAL( cursorPositionChanged( int, int ) ), this, SLOT( slotChanged() ) );
+    if ( !m_form->isReadOnly() )
+    {
+        connect( this, SIGNAL( textEdited( QString ) ), this, SLOT( slotChanged() ) );
+        connect( this, SIGNAL( cursorPositionChanged( int, int ) ), this, SLOT( slotChanged() ) );
+    }
     setVisible( m_form->isVisible() );
 }
 
@@ -510,12 +516,13 @@ TextAreaEdit::TextAreaEdit( Okular::FormFieldText * text, QWidget * parent )
     setReadOnly( m_form->isReadOnly() );
     setUndoRedoEnabled( false );
 
-    connect( this, SIGNAL( textChanged() ), this, SLOT( slotChanged() ) );
-    connect( this, SIGNAL( cursorPositionChanged() ), this, SLOT( slotChanged() ) );
-
-    connect( this, SIGNAL( aboutToShowContextMenu( QMenu* ) ),
-             this, SLOT( slotUpdateUndoAndRedoInContextMenu( QMenu* ) ) );
-
+    if ( !m_form->isReadOnly() )
+    {
+        connect( this, SIGNAL( textChanged() ), this, SLOT( slotChanged() ) );
+        connect( this, SIGNAL( cursorPositionChanged() ), this, SLOT( slotChanged() ) );
+        connect( this, SIGNAL( aboutToShowContextMenu( QMenu* ) ),
+                 this, SLOT( slotUpdateUndoAndRedoInContextMenu( QMenu* ) ) );
+    }
     m_prevCursorPos = textCursor().position();
     m_prevAnchorPos = textCursor().anchor();
     setVisible( m_form->isVisible() );
@@ -622,8 +629,11 @@ FileEdit::FileEdit( Okular::FormFieldText * text, QWidget * parent )
     m_prevCursorPos = lineEdit()->cursorPosition();
     m_prevAnchorPos = lineEdit()->cursorPosition();
 
-    connect( this, SIGNAL( textChanged( QString ) ), this, SLOT( slotChanged() ) );
-    connect( lineEdit(), SIGNAL( cursorPositionChanged( int, int ) ), this, SLOT( slotChanged() ) );
+    if ( !m_form->isReadOnly() )
+    {
+        connect( this, SIGNAL( textChanged( QString ) ), this, SLOT( slotChanged() ) );
+        connect( lineEdit(), SIGNAL( cursorPositionChanged( int, int ) ), this, SLOT( slotChanged() ) );
+    }
     setVisible( m_form->isVisible() );
 }
 
@@ -757,7 +767,10 @@ ListEdit::ListEdit( Okular::FormFieldChoice * choice, QWidget * parent )
     }
     setEnabled( !m_form->isReadOnly() );
 
-    connect( this, SIGNAL(itemSelectionChanged()), this, SLOT(slotSelectionChanged()) );
+    if ( !m_form->isReadOnly() )
+    {
+        connect( this, SIGNAL(itemSelectionChanged()), this, SLOT(slotSelectionChanged()) );
+    }
     setVisible( m_form->isVisible() );
     setCursor( Qt::ArrowCursor );
 }
@@ -816,9 +829,12 @@ ComboEdit::ComboEdit( Okular::FormFieldChoice * choice, QWidget * parent )
     if ( m_form->isEditable() && !m_form->editChoice().isEmpty() )
         lineEdit()->setText( m_form->editChoice() );
 
-    connect( this, SIGNAL(currentIndexChanged(int)), this, SLOT(slotValueChanged()) );
-    connect( this, SIGNAL(editTextChanged(QString)), this, SLOT(slotValueChanged()) );
-    connect( lineEdit(), SIGNAL(cursorPositionChanged(int,int)), this, SLOT(slotValueChanged()));
+    if ( !m_form->isReadOnly() )
+    {
+        connect( this, SIGNAL(currentIndexChanged(int)), this, SLOT(slotValueChanged()) );
+        connect( this, SIGNAL(editTextChanged(QString)), this, SLOT(slotValueChanged()) );
+        connect( lineEdit(), SIGNAL(cursorPositionChanged(int,int)), this, SLOT(slotValueChanged()) );
+    }
 
     setVisible( m_form->isVisible() );
     setCursor( Qt::ArrowCursor );

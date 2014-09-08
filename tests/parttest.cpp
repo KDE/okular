@@ -10,6 +10,8 @@
 #include <qtest_kde.h>
 
 #include "../part.h"
+#include "../core/annotations.h"
+#include "../core/page.h"
 #include "../ui/toc.h"
 
 #include <KConfigDialog>
@@ -31,6 +33,8 @@ class PartTest
         void testTOCReload();
         void testFowardPDF();
         void testFowardPDF_data();
+        void testSaveAs();
+        void testSaveAs_data();
         void testGeneratorPreferences();
 };
 
@@ -138,6 +142,95 @@ void PartTest::testFowardPDF_data()
 
     QTest::newRow("non-utf8") << QString(KGlobal::dirs()->resourceDirs("tmp")[0] + QString::fromUtf8("synctextest"));
     QTest::newRow("utf8")     << QString(KGlobal::dirs()->resourceDirs("tmp")[0] + QString::fromUtf8("ßðđđŋßðđŋ"));
+}
+
+void PartTest::testSaveAs()
+{
+    QFETCH(QString, file);
+    QFETCH(QString, extension);
+    QFETCH(bool, nativelySupportsAnnotations);
+
+    // If we expect not to be able to preserve annotations when we write a
+    // native file, disable the warning otherwise the test will wait for the
+    // user to confirm. On the other end, if we expect annotations to be
+    // preserved (and thus no warning), we keep the warning on so that if it
+    // shows the test timeouts and we can notice that something is wrong.
+    const Part::SaveAsFlags saveAsNativeFlags = nativelySupportsAnnotations ?
+        Part::NoSaveAsFlags : Part::SaveAsDontShowWarning;
+
+    QString annotName;
+    QTemporaryFile archiveSave( QString( "%1/okrXXXXXX.okular" ).arg( QDir::tempPath() ) );
+    QTemporaryFile nativeDirectSave( QString( "%1/okrXXXXXX.%2" ).arg( QDir::tempPath() ).arg ( extension ) );
+    QTemporaryFile nativeFromArchiveFile( QString( "%1/okrXXXXXX.%2" ).arg( QDir::tempPath() ).arg ( extension ) );
+    QVERIFY( archiveSave.open() ); archiveSave.close();
+    QVERIFY( nativeDirectSave.open() ); nativeDirectSave.close();
+    QVERIFY( nativeFromArchiveFile.open() ); nativeFromArchiveFile.close();
+
+    qDebug() << "Open file, add annotation and save both natively and to .okular";
+    {
+        Okular::Part part(NULL, NULL, QVariantList(), KGlobal::mainComponent());
+        part.openDocument( file );
+
+        Okular::Annotation *annot = new Okular::TextAnnotation();
+        annot->setBoundingRectangle( Okular::NormalizedRect( 0.1, 0.1, 0.15, 0.15 ) );
+        annot->setContents( "annot contents" );
+        part.m_document->addPageAnnotation( 0, annot );
+        annotName = annot->uniqueName();
+
+        QVERIFY( part.saveAs( KUrl( archiveSave.fileName() ), Part::SaveAsOkularArchive ) );
+        QVERIFY( part.saveAs( KUrl( nativeDirectSave.fileName() ), saveAsNativeFlags ) );
+
+        part.closeUrl();
+    }
+
+    qDebug() << "Open the .okular, check that the annotation is present and save to native";
+    {
+        Okular::Part part(NULL, NULL, QVariantList(), KGlobal::mainComponent());
+        part.openDocument( archiveSave.fileName() );
+
+        QVERIFY( part.m_document->page( 0 )->annotations().size() == 1 );
+        QVERIFY( part.m_document->page( 0 )->annotations().first()->uniqueName() == annotName );
+
+        QVERIFY( part.saveAs( KUrl( nativeFromArchiveFile.fileName() ), saveAsNativeFlags ) );
+
+        part.closeUrl();
+    }
+
+    qDebug() << "Open the native file saved directly, and check that the annot"
+        << "is there iff we expect it";
+    {
+        Okular::Part part(NULL, NULL, QVariantList(), KGlobal::mainComponent());
+        part.openDocument( nativeDirectSave.fileName() );
+
+        QCOMPARE( part.m_document->page( 0 )->annotations().size(), nativelySupportsAnnotations ? 1 : 0 );
+        if ( nativelySupportsAnnotations )
+            QVERIFY( part.m_document->page( 0 )->annotations().first()->uniqueName() == annotName );
+
+        part.closeUrl();
+    }
+
+    qDebug() << "Open the native file saved from the .okular, and check that the annot"
+        << "is there iff we expect it";
+    {
+        Okular::Part part(NULL, NULL, QVariantList(), KGlobal::mainComponent());
+        part.openDocument( nativeFromArchiveFile.fileName() );
+
+        QCOMPARE( part.m_document->page( 0 )->annotations().size(), nativelySupportsAnnotations ? 1 : 0 );
+        if ( nativelySupportsAnnotations )
+            QVERIFY( part.m_document->page( 0 )->annotations().first()->uniqueName() == annotName );
+
+        part.closeUrl();
+    }
+}
+
+void PartTest::testSaveAs_data()
+{
+    QTest::addColumn<QString>("file");
+    QTest::addColumn<QString>("extension");
+    QTest::addColumn<bool>("nativelySupportsAnnotations");
+
+    QTest::newRow("pdf") << KDESRCDIR "data/file1.pdf" << "pdf" << true;
+    QTest::newRow("epub") << KDESRCDIR "data/contents.epub" << "epub" << false;
 }
 
 void PartTest::testGeneratorPreferences()

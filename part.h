@@ -249,7 +249,16 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         void unsetDummyMode();
         void slotRenameBookmark( const DocumentViewport &viewport );
         void resetStartArguments();
-        bool saveAs( const KUrl & saveUrl, bool saveAsOkularArchive );
+
+        enum SaveAsFlag
+        {
+            NoSaveAsFlags = 0,         ///< No options
+            SaveAsOkularArchive = 1,   ///< Save as Okular Archive (.okular) instead of document's native format
+            SaveAsDontShowWarning = 2, ///< Don't show warning for unsupported save features
+        };
+        Q_DECLARE_FLAGS( SaveAsFlags, SaveAsFlag )
+
+        bool saveAs( const KUrl & saveUrl, SaveAsFlags flags );
 
         void setFileToWatch( const QString &filePath );
         void unsetFileToWatch();

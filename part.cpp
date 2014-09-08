@@ -2264,7 +2264,7 @@ bool Part::slotSaveFileAs( bool showOkularArchiveAsDefaultFormat )
         // Has the user chosen to save in .okular archive format?
         const bool saveAsOkularArchive = ( fd.currentMimeFilter() == "application/vnd.kde.okular-archive" );
 
-        return saveAs( saveUrl, saveAsOkularArchive );
+        return saveAs( saveUrl, saveAsOkularArchive ? SaveAsOkularArchive : NoSaveAsFlags );
     }
     else
     {
@@ -2275,10 +2275,10 @@ bool Part::slotSaveFileAs( bool showOkularArchiveAsDefaultFormat )
 bool Part::saveAs(const KUrl & saveUrl)
 {
     // Save in the same format (.okular vs native) as the current file
-    return saveAs( saveUrl, isDocumentArchive /* saveAsOkularArchive */ );
+    return saveAs( saveUrl, isDocumentArchive ? SaveAsOkularArchive : NoSaveAsFlags );
 }
 
-bool Part::saveAs( const KUrl & saveUrl, bool saveAsOkularArchive )
+bool Part::saveAs( const KUrl & saveUrl, SaveAsFlags flags )
 {
     KTemporaryFile tf;
     QString fileName;
@@ -2294,7 +2294,7 @@ bool Part::saveAs( const KUrl & saveUrl, bool saveAsOkularArchive )
     KIO::Job *copyJob; // this will be filled with the job that writes to saveUrl
 
     // Does the user want a .okular archive?
-    if ( saveAsOkularArchive )
+    if ( flags & SaveAsOkularArchive )
     {
         if ( !m_document->saveDocumentArchive( fileName ) )
         {
@@ -2351,7 +2351,7 @@ bool Part::saveAs( const KUrl & saveUrl, bool saveAsOkularArchive )
         QStringList listOfwontSaves;
         if ( wontSaveForms ) listOfwontSaves << i18n( "Filled form contents" );
         if ( wontSaveAnnotations ) listOfwontSaves << i18n( "User annotations" );
-        if ( !listOfwontSaves.isEmpty() )
+        if ( !listOfwontSaves.isEmpty() && !( flags && SaveAsDontShowWarning ) )
         {
             int result = KMessageBox::warningYesNoCancelList( widget(),
                   i18n( "The following elements <b>cannot be saved</b> in this format and will be lost.<br>If you want to preserve them, please use the <i>Okular document archive</i> format." ),

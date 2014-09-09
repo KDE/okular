@@ -606,22 +606,22 @@ qulonglong DocumentPrivate::getFreeMemory( qulonglong *freeSwap )
 #endif
 }
 
-void DocumentPrivate::loadDocumentInfo( LoadDocumentInfoFlags loadWhat )
+bool DocumentPrivate::loadDocumentInfo( LoadDocumentInfoFlags loadWhat )
 // note: load data and stores it internally (document or pages). observers
 // are still uninitialized at this point so don't access them
 {
     //kDebug(OkularDebug).nospace() << "Using '" << d->m_xmlFileName << "' as document info file.";
     if ( m_xmlFileName.isEmpty() )
-        return;
+        return false;
 
     QFile infoFile( m_xmlFileName );
-    loadDocumentInfo( infoFile, loadWhat );
+    return loadDocumentInfo( infoFile, loadWhat );
 }
 
-void DocumentPrivate::loadDocumentInfo( QFile &infoFile, LoadDocumentInfoFlags loadWhat )
+bool DocumentPrivate::loadDocumentInfo( QFile &infoFile, LoadDocumentInfoFlags loadWhat )
 {
     if ( !infoFile.exists() || !infoFile.open( QIODevice::ReadOnly ) )
-        return;
+        return false;
 
     // Load DOM from XML file
     QDomDocument doc( "documentInfo" );
@@ -629,15 +629,16 @@ void DocumentPrivate::loadDocumentInfo( QFile &infoFile, LoadDocumentInfoFlags l
     {
         kDebug(OkularDebug) << "Can't load XML pair! Check for broken xml.";
         infoFile.close();
-        return;
+        return false;
     }
     infoFile.close();
 
     QDomElement root = doc.documentElement();
     if ( root.tagName() != "documentInfo" )
-        return;
+        return false;
 
     KUrl documentUrl( root.attribute( "url" ) );
+    bool loadedAnything = false; // set if something gets actually loaded
 
     // Parse the DOM tree
     QDomNode topLevelNode = root.firstChild();
@@ -645,7 +646,7 @@ void DocumentPrivate::loadDocumentInfo( QFile &infoFile, LoadDocumentInfoFlags l
     {
         QString catName = topLevelNode.toElement().tagName();
 
-        // Restore page attributes (bookmark, annotations, ...) from the DOM
+        // Restore page attributes (form data, annotations, ...) from the DOM
         if ( catName == "pageList" && ( loadWhat & LoadPageInfo ) )
         {
             QDomNode pageNode = topLevelNode.firstChild();
@@ -660,7 +661,10 @@ void DocumentPrivate::loadDocumentInfo( QFile &infoFile, LoadDocumentInfoFlags l
 
                     // pass the domElement to the right page, to read config data from
                     if ( ok && pageNumber >= 0 && pageNumber < (int)m_pagesVector.count() )
-                        m_pagesVector[ pageNumber ]->d->restoreLocalContents( pageElement );
+                    {
+                        if ( m_pagesVector[ pageNumber ]->d->restoreLocalContents( pageElement ) )
+                            loadedAnything = true;
+                    }
                 }
                 pageNode = pageNode.nextSibling();
             }
@@ -689,6 +693,7 @@ void DocumentPrivate::loadDocumentInfo( QFile &infoFile, LoadDocumentInfoFlags l
                             QString vpString = historyElement.attribute( "viewport" );
                             m_viewportIterator = m_viewportHistory.insert( m_viewportHistory.end(),
                                     DocumentViewport( vpString ) );
+                            loadedAnything = true;
                         }
                         historyNode = historyNode.nextSibling();
                     }
@@ -704,6 +709,7 @@ void DocumentPrivate::loadDocumentInfo( QFile &infoFile, LoadDocumentInfoFlags l
                     if ( ok && newrotation != 0 )
                     {
                         setRotationInternal( newrotation, false );
+                        loadedAnything = true;
                     }
                 }
                 else if ( infoElement.tagName() == "views" )
@@ -720,6 +726,7 @@ void DocumentPrivate::loadDocumentInfo( QFile &infoFile, LoadDocumentInfoFlags l
                                 if ( view->name() == viewName )
                                 {
                                     loadViewsInfo( view, viewElement );
+                                    loadedAnything = true;
                                     break;
                                 }
                             }
@@ -733,6 +740,8 @@ void DocumentPrivate::loadDocumentInfo( QFile &infoFile, LoadDocumentInfoFlags l
 
         topLevelNode = topLevelNode.nextSibling();
     } // </documentInfo>
+
+    return loadedAnything;
 }
 
 void DocumentPrivate::loadViewsInfo( View *view, const QDomElement &e )
@@ -1198,8 +1207,8 @@ void DocumentPrivate::saveDocumentInfo() const
         doc.appendChild( root );
 
         // 2.1. Save page attributes (bookmark state, annotations, ... ) to DOM
-        //  -> skipped for archives, because they store such info in their internal metadata.xml
-        if ( !m_archiveData )
+        //  -> do this there are not-yet-migrated annots or forms in docdata/
+        if ( m_docdataMigrationNeeded )
         {
             QDomElement pageList = doc.createElement( "pageList" );
             root.appendChild( pageList );
@@ -2219,6 +2228,7 @@ Document::OpenResult Document::openDocument( const QString & docFile, const KUrl
         p->d->m_doc = d;
 
     d->m_metadataLoadingCompleted = false;
+    d->m_docdataMigrationNeeded = false;
 
     // 2. load Additional Data (bookmarks, local annotations and metadata) about the document
     if ( d->m_archiveData )
@@ -2228,7 +2238,9 @@ Document::OpenResult Document::openDocument( const QString & docFile, const KUrl
     }
     else
     {
-        d->loadDocumentInfo( LoadAllInfo );
+        if ( d->loadDocumentInfo( LoadPageInfo ) )
+            d->m_docdataMigrationNeeded = true;
+        d->loadDocumentInfo( LoadGeneralInfo );
     }
 
     d->m_metadataLoadingCompleted = true;
@@ -2460,6 +2472,7 @@ void Document::closeDocument()
     AudioPlayer::instance()->d->m_currentDocument = KUrl();
 
     d->m_undoStack->clear();
+    d->m_docdataMigrationNeeded = false;
 }
 
 void Document::addObserver( DocumentObserver * pObserver )
@@ -2707,7 +2720,9 @@ KUrl Document::currentDocument() const
 
 bool Document::isAllowed( Permission action ) const
 {
-    if ( action == Okular::AllowNotes && !d->m_annotationEditingEnabled )
+    if ( action == Okular::AllowNotes && ( d->m_docdataMigrationNeeded || !d->m_annotationEditingEnabled ) )
+        return false;
+    if ( action == Okular::AllowFillForms && d->m_docdataMigrationNeeded )
         return false;
 
 #if !OKULAR_FORCE_DRM
@@ -4429,6 +4444,20 @@ void Document::walletDataForFile( const QString &fileName, QString *walletName, 
 {
     if (d->m_generator) {
         d->m_generator->walletDataForFile( fileName, walletName, walletFolder, walletKey );
+    }
+}
+
+bool Document::isDocdataMigrationNeeded() const
+{
+    return d->m_docdataMigrationNeeded;
+}
+
+void Document::docdataMigrationDone()
+{
+    if (d->m_docdataMigrationNeeded)
+    {
+        d->m_docdataMigrationNeeded = false;
+        foreachObserver( notifySetup( d->m_pagesVector, 0 ) );
     }
 }
 

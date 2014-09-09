@@ -886,6 +886,25 @@ class OKULAR_EXPORT Document : public QObject
         */
         void walletDataForFile( const QString &fileName, QString *walletName, QString *walletFolder, QString *walletKey ) const;
 
+        /**
+         * Since version 0.21, okular does not allow editing annotations and
+         * form data if they are stored in the docdata directory (like older
+         * okular versions did by default).
+         * If this flag is set, then annotations and forms cannot be edited.
+         *
+         * @since 0.21
+        */
+        bool isDocdataMigrationNeeded() const;
+
+        /**
+         * Delete annotations and form data from the docdata folder. Call it if
+         * isDocdataMigrationNeeded() was true and you've just saved them to an
+         * external file.
+         *
+         * @since 0.21
+        */
+        void docdataMigrationDone();
+
     public Q_SLOTS:
         /**
          * This slot is called whenever the user changes the @p rotation of

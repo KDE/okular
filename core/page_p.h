@@ -68,7 +68,7 @@ class PagePrivate
         /**
          * Loads the local contents (e.g. annotations) of the page.
          */
-        void restoreLocalContents( const QDomNode & pageNode );
+        bool restoreLocalContents( const QDomNode & pageNode );
 
         /**
          * Saves the local contents (e.g. annotations) of the page.

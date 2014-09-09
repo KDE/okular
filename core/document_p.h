@@ -106,7 +106,8 @@ class DocumentPrivate
             m_archiveData( 0 ),
             m_fontsCached( false ),
             m_annotationEditingEnabled ( true ),
-            m_annotationBeingMoved( false )
+            m_annotationBeingMoved( false ),
+            m_docdataMigrationNeeded( false )
         {
             calculateMaxTextPages();
         }
@@ -123,8 +124,8 @@ class DocumentPrivate
         void calculateMaxTextPages();
         qulonglong getTotalMemory();
         qulonglong getFreeMemory( qulonglong *freeSwap = 0 );
-        void loadDocumentInfo( LoadDocumentInfoFlags loadWhat );
-        void loadDocumentInfo( QFile &infoFile, LoadDocumentInfoFlags loadWhat );
+        bool loadDocumentInfo( LoadDocumentInfoFlags loadWhat );
+        bool loadDocumentInfo( QFile &infoFile, LoadDocumentInfoFlags loadWhat );
         void loadViewsInfo( View *view, const QDomElement &e );
         void saveViewsInfo( View *view, QDomElement &e ) const;
         QString giveAbsolutePath( const QString & fileName ) const;
@@ -280,6 +281,13 @@ class DocumentPrivate
 
         QUndoStack *m_undoStack;
         QDomNode m_prevPropsOfAnnotBeingModified;
+
+        // Since 0.21, we no longer support saving annotations and form data in
+        // the docdata/ directory and we ask the user to migrate them to an
+        // external file as soon as possible, otherwise the document will be
+        // shown in read-only mode. This flag is set if the docdata/ XML file
+        // for the current document contains any annotation or form.
+        bool m_docdataMigrationNeeded;
 };
 
 class DocumentInfoPrivate

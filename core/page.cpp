@@ -785,8 +785,10 @@ void Page::deleteAnnotations()
     m_annotations.clear();
 }
 
-void PagePrivate::restoreLocalContents( const QDomNode & pageNode )
+bool PagePrivate::restoreLocalContents( const QDomNode & pageNode )
 {
+    bool loadedAnything = false; // set if something actually gets loaded
+
     // iterate over all chilren (annotationList, ...)
     QDomNode childNode = pageNode.firstChild();
     while ( childNode.isElement() )
@@ -821,6 +823,7 @@ void PagePrivate::restoreLocalContents( const QDomNode & pageNode )
                 {
                     m_doc->performAddPageAnnotation(m_number, annotation);
                     kDebug(OkularDebug) << "restored annot:" << annotation->uniqueName();
+                    loadedAnything = true;
                 }
                 else
                     kWarning(OkularDebug).nospace() << "page (" << m_number << "): can't restore an annotation from XML.";
@@ -868,9 +871,12 @@ void PagePrivate::restoreLocalContents( const QDomNode & pageNode )
 
                 QString value = formElement.attribute( "value" );
                 (*wantedIt)->d_ptr->setValue( value );
+                loadedAnything = true;
             }
         }
     }
+
+    return loadedAnything;
 }
 
 void PagePrivate::saveLocalContents( QDomNode & parentNode, QDomDocument & document, PageItems what ) const

@@ -139,7 +139,7 @@ class FormWidgetFactory
 class FormWidgetIface
 {
     public:
-        FormWidgetIface( QWidget * w, Okular::FormField * ff );
+        FormWidgetIface( QWidget * w, Okular::FormField * ff, bool canBeEnabled );
         virtual ~FormWidgetIface();
 
         Okular::NormalizedRect rect() const;
@@ -162,6 +162,7 @@ class FormWidgetIface
         QWidget * m_widget;
         Okular::FormField * m_ff;
         PageViewItem * m_pageItem;
+        bool m_canBeEnabled;
 };
 
 

@@ -241,9 +241,11 @@ FormWidgetIface * FormWidgetFactory::createWidget( Okular::FormField * ff, QWidg
 }
 
 
-FormWidgetIface::FormWidgetIface( QWidget * w, Okular::FormField * ff )
-    : m_controller( 0 ), m_widget( w ), m_ff( ff ), m_pageItem( 0 )
+FormWidgetIface::FormWidgetIface( QWidget * w, Okular::FormField * ff, bool canBeEnabled )
+    : m_controller( 0 ), m_widget( w ), m_ff( ff ), m_pageItem( 0 ),
+      m_canBeEnabled( canBeEnabled )
 {
+    m_widget->setEnabled( m_canBeEnabled );
 }
 
 FormWidgetIface::~FormWidgetIface()
@@ -279,10 +281,7 @@ bool FormWidgetIface::setVisibility( bool visible )
 
 void FormWidgetIface::setCanBeFilled( bool fill )
 {
-    if ( m_widget->isEnabled() )
-    {
-        m_widget->setEnabled( fill );
-    }
+    m_widget->setEnabled( fill && m_canBeEnabled );
 }
 
 void FormWidgetIface::setPageItem( PageViewItem *pageItem )
@@ -312,10 +311,10 @@ QAbstractButton* FormWidgetIface::button()
 
 
 PushButtonEdit::PushButtonEdit( Okular::FormFieldButton * button, QWidget * parent )
-    : QPushButton( parent ), FormWidgetIface( this, button ), m_form( button )
+    : QPushButton( parent ), FormWidgetIface( this, button, !button->isReadOnly() ),
+      m_form( button )
 {
     setText( m_form->caption() );
-    setEnabled( !m_form->isReadOnly() );
     setVisible( m_form->isVisible() );
     setCursor( Qt::ArrowCursor );
 
@@ -333,10 +332,10 @@ void PushButtonEdit::slotClicked()
 
 
 CheckBoxEdit::CheckBoxEdit( Okular::FormFieldButton * button, QWidget * parent )
-    : QCheckBox( parent ), FormWidgetIface( this, button ), m_form( button )
+    : QCheckBox( parent ), FormWidgetIface( this, button, !button->isReadOnly() ),
+      m_form( button )
 {
     setText( m_form->caption() );
-    setEnabled( !m_form->isReadOnly() );
 
     setVisible( m_form->isVisible() );
     setCursor( Qt::ArrowCursor );
@@ -363,10 +362,10 @@ void CheckBoxEdit::slotStateChanged( int state )
 
 
 RadioButtonEdit::RadioButtonEdit( Okular::FormFieldButton * button, QWidget * parent )
-    : QRadioButton( parent ), FormWidgetIface( this, button ), m_form( button )
+    : QRadioButton( parent ), FormWidgetIface( this, button, !button->isReadOnly() ),
+      m_form( button )
 {
     setText( m_form->caption() );
-    setEnabled( !m_form->isReadOnly() );
 
     setVisible( m_form->isVisible() );
     setCursor( Qt::ArrowCursor );
@@ -385,7 +384,7 @@ QAbstractButton* RadioButtonEdit::button()
 }
 
 FormLineEdit::FormLineEdit( Okular::FormFieldText * text, QWidget * parent )
-    : QLineEdit( parent ), FormWidgetIface( this, text ), m_form( text )
+    : QLineEdit( parent ), FormWidgetIface( this, text, true ), m_form( text )
 {
     int maxlen = m_form->maximumLength();
     if ( maxlen >= 0 )
@@ -507,7 +506,7 @@ void FormLineEdit::slotHandleTextChangedByUndoRedo( int pageNumber,
 }
 
 TextAreaEdit::TextAreaEdit( Okular::FormFieldText * text, QWidget * parent )
-: KTextEdit( parent ), FormWidgetIface( this, text ), m_form( text )
+: KTextEdit( parent ), FormWidgetIface( this, text, true ), m_form( text )
 {
     setAcceptRichText( m_form->isRichText() );
     setCheckSpellingEnabled( m_form->canBeSpellChecked() );
@@ -618,13 +617,13 @@ void TextAreaEdit::slotChanged()
 
 
 FileEdit::FileEdit( Okular::FormFieldText * text, QWidget * parent )
-    : KUrlRequester( parent ), FormWidgetIface( this, text ), m_form( text )
+    : KUrlRequester( parent ), FormWidgetIface( this, text, !text->isReadOnly() ),
+      m_form( text )
 {
     setMode( KFile::File | KFile::ExistingOnly | KFile::LocalOnly );
     setFilter( i18n( "*|All Files" ) );
     setUrl( KUrl( m_form->text() ) );
     lineEdit()->setAlignment( m_form->textAlignment() );
-    setEnabled( !m_form->isReadOnly() );
 
     m_prevCursorPos = lineEdit()->cursorPosition();
     m_prevAnchorPos = lineEdit()->cursorPosition();
@@ -745,7 +744,8 @@ void FileEdit::slotHandleFileChangedByUndoRedo( int pageNumber,
 }
 
 ListEdit::ListEdit( Okular::FormFieldChoice * choice, QWidget * parent )
-    : QListWidget( parent ), FormWidgetIface( this, choice ), m_form( choice )
+    : QListWidget( parent ), FormWidgetIface( this, choice, !choice->isReadOnly() ),
+      m_form( choice )
 {
     addItems( m_form->choices() );
     setSelectionMode( m_form->multiSelect() ? QAbstractItemView::ExtendedSelection : QAbstractItemView::SingleSelection );
@@ -765,7 +765,6 @@ ListEdit::ListEdit( Okular::FormFieldChoice * choice, QWidget * parent )
             scrollToItem( item( selectedItems.at(0) ) );
         }
     }
-    setEnabled( !m_form->isReadOnly() );
 
     if ( !m_form->isReadOnly() )
     {
@@ -815,7 +814,8 @@ void ListEdit::slotHandleFormListChangedByUndoRedo( int pageNumber,
 }
 
 ComboEdit::ComboEdit( Okular::FormFieldChoice * choice, QWidget * parent )
-    : QComboBox( parent ), FormWidgetIface( this, choice ), m_form( choice )
+    : QComboBox( parent ), FormWidgetIface( this, choice, !choice->isReadOnly() ),
+      m_form( choice )
 {
     addItems( m_form->choices() );
     setEditable( true );
@@ -824,7 +824,6 @@ ComboEdit::ComboEdit( Okular::FormFieldChoice * choice, QWidget * parent )
     QList< int > selectedItems = m_form->currentChoices();
     if ( selectedItems.count() == 1 && selectedItems.at(0) >= 0 && selectedItems.at(0) < count() )
         setCurrentIndex( selectedItems.at(0) );
-    setEnabled( !m_form->isReadOnly() );
 
     if ( m_form->isEditable() && !m_form->editChoice().isEmpty() )
         lineEdit()->setText( m_form->editChoice() );

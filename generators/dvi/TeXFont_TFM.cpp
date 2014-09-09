@@ -10,6 +10,7 @@
 
 #include "TeXFont_TFM.h"
 #include "kvs_debug.h"
+#include <KDebug>
 
 #include <QDataStream>
 #include <QFile>

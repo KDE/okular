@@ -14,7 +14,7 @@
 
 #include <kglobal.h>
 #include <klocale.h>
-
+#include <KDebug>
 
 
 struct pageSizeItem

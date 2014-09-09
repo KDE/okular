@@ -16,7 +16,7 @@
 #include <QFileInfo>
 #include <QApplication> // Because of the HACK
 
-#include <kdebug.h>
+#include <QDebug>
 #include <klocale.h>
 #include <KStandardDirs>
 
@@ -148,7 +148,7 @@ static QPoint calculateXYPosition( QTextDocument *document, int startPosition )
 
   QTextLayout *startLayout = startBlock.layout();
   if (!startLayout) {
-    kWarning() << "Start layout not found" << startLayout;
+    qWarning() << "Start layout not found" << startLayout;
     return QPoint();
   }
 
@@ -412,7 +412,7 @@ QTextDocument* Converter::convert( const QString &fileName )
                         QString::fromUtf8(label),
                         block);
         } else {
-          kDebug() << "Error: no block found for"<< link;
+          qDebug() << "Error: no block found for"<< link;
         }
 
         if (clink)
@@ -424,7 +424,7 @@ QTextDocument* Converter::convert( const QString &fileName )
 
     epub_free_titerator(tit);
   } else {
-    kDebug() << "no toc found";
+    qDebug() << "no toc found";
   }
 
   // adding link actions
@@ -443,7 +443,7 @@ QTextDocument* Converter::convert( const QString &fileName )
 
         emit addAction(action, hit.value()[i].first, hit.value()[i].second);
       } else {
-        kDebug() << "Error: no block found for "<< hit.key();
+        qDebug() << "Error: no block found for "<< hit.key();
       }
     }
   }

@@ -29,7 +29,8 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <ktemporaryfile.h>
-#include <kdebug.h>
+#include <QDebug>
+#include <KDebug>
 #include <kglobal.h>
 
 #include <core/action.h>
@@ -396,7 +397,7 @@ OKULAR_EXPORT_PLUGIN(PDFGenerator, createAboutData())
 static void PDFGeneratorPopplerDebugFunction(const QString &message, const QVariant &closure)
 {
     Q_UNUSED(closure);
-    kDebug() << "[Poppler]" << message;
+    qDebug() << "[Poppler]" << message;
 }
 
 PDFGenerator::PDFGenerator( QObject *parent, const QVariantList &args )

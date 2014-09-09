@@ -18,7 +18,7 @@
 #include <qqueue.h>
 #include <qstring.h>
 
-#include <kdebug.h>
+#include <QDebug>
 #include <klocale.h>
 
 #include <libdjvu/ddjvuapi.h>
@@ -35,22 +35,22 @@ QDebug &operator<<( QDebug & s, const ddjvu_rect_t &r )
 static void which_ddjvu_message( const ddjvu_message_t *msg )
 {
 #ifdef KDJVU_DEBUG
-    kDebug() << "which_djvu_message(...):" << msg->m_any.tag;
+    qDebug() << "which_djvu_message(...):" << msg->m_any.tag;
     switch( msg->m_any.tag )
     {
         case DDJVU_ERROR:
-            kDebug().nospace() << "ERROR: file " << msg->m_error.filename << ", line " << msg->m_error.lineno;
-            kDebug().nospace() << "ERROR: function '" << msg->m_error.function << "'";
-            kDebug().nospace() << "ERROR: '" << msg->m_error.message << "'";
+            qDebug().nospace() << "ERROR: file " << msg->m_error.filename << ", line " << msg->m_error.lineno;
+            qDebug().nospace() << "ERROR: function '" << msg->m_error.function << "'";
+            qDebug().nospace() << "ERROR: '" << msg->m_error.message << "'";
             break;
         case DDJVU_INFO:
-            kDebug().nospace() << "INFO: '" << msg->m_info.message << "'";
+            qDebug().nospace() << "INFO: '" << msg->m_info.message << "'";
             break;
         case DDJVU_CHUNK:
-            kDebug().nospace() << "CHUNK: '" << QByteArray( msg->m_chunk.chunkid ) << "'";
+            qDebug().nospace() << "CHUNK: '" << QByteArray( msg->m_chunk.chunkid ) << "'";
             break;
         case DDJVU_PROGRESS:
-            kDebug().nospace() << "PROGRESS: '" << msg->m_progress.percent << "'";
+            qDebug().nospace() << "PROGRESS: '" << msg->m_progress.percent << "'";
             break;
         default: ;
     }
@@ -477,7 +477,7 @@ QImage KDjVu::Private::generateImageTile( ddjvu_page_t *djvupage, int& res,
     renderrect.w = realwidth;
     renderrect.h = realheight;
 #ifdef KDJVU_DEBUG
-    kDebug() << "renderrect:" << renderrect;
+    qDebug() << "renderrect:" << renderrect;
 #endif
     ddjvu_rect_t pagerect;
     pagerect.x = 0;
@@ -485,7 +485,7 @@ QImage KDjVu::Private::generateImageTile( ddjvu_page_t *djvupage, int& res,
     pagerect.w = width;
     pagerect.h = height;
 #ifdef KDJVU_DEBUG
-    kDebug() << "pagerect:" << pagerect;
+    qDebug() << "pagerect:" << pagerect;
 #endif
     handle_ddjvu_messages( m_djvu_cxt, false );
     QImage res_img( realwidth, realheight, QImage::Format_RGB32 );
@@ -495,7 +495,7 @@ QImage KDjVu::Private::generateImageTile( ddjvu_page_t *djvupage, int& res,
     res = ddjvu_page_render( djvupage, DDJVU_RENDER_COLOR,
                   &pagerect, &renderrect, m_format, res_img.bytesPerLine(), (char *)res_img.bits() );
 #ifdef KDJVU_DEBUG
-    kDebug() << "rendering result:" << res;
+    qDebug() << "rendering result:" << res;
 #endif
     handle_ddjvu_messages( m_djvu_cxt, false );
 
@@ -678,7 +678,7 @@ bool KDjVu::openFile( const QString & fileName )
         return false;
     }
 
-    kDebug() << "# of pages:" << ddjvu_document_get_pagenum( d->m_djvu_document );
+    qDebug() << "# of pages:" << ddjvu_document_get_pagenum( d->m_djvu_document );
     int numofpages = ddjvu_document_get_pagenum( d->m_djvu_document );
     d->m_pages.clear();
     d->m_pages.resize( numofpages );
@@ -722,7 +722,7 @@ bool KDjVu::openFile( const QString & fileName )
             handle_ddjvu_messages( d->m_djvu_cxt, true );
         if ( sts >= DDJVU_JOB_FAILED )
         {
-            kDebug().nospace() << "\t>>> page " << i << " failed: " << sts;
+            qDebug().nospace() << "\t>>> page " << i << " failed: " << sts;
             return false;
         }
 
@@ -1048,7 +1048,7 @@ bool KDjVu::exportAsPostScript( QFile* file, const QList<int>& pageList ) const
     FILE* f = fdopen( file->handle(), "w+" );
     if ( !f )
     {
-        kDebug() << "error while getting the FILE*";
+        qDebug() << "error while getting the FILE*";
         return false;
     }
 

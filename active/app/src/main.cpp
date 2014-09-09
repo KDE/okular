@@ -23,7 +23,7 @@
 #include <KApplication>
 #include <KAboutData>
 #include <KCmdLineArgs>
-#include <KDebug>
+#include <QDebug>
 #include <KDE/KLocale>
 #include <KConfigGroup>
 
@@ -52,7 +52,7 @@ int main(int argc, char **argv)
     KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
 
     KGlobal::locale()->insertCatalog("org.kde.okular");
-    //kDebug() << "ARGS:" << args << args->count();
+    //qDebug() << "ARGS:" << args << args->count();
 
     KDeclarativeMainWindow *mainWindow = new KDeclarativeMainWindow();
     mainWindow->declarativeView()->setPackageName("org.kde.active.documentviewer");

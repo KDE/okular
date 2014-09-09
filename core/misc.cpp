@@ -9,7 +9,8 @@
 
 #include "core/misc.h"
 
-#include <kdebug.h>
+#include <QDebug>
+#include <KDebug>
 
 #include "debug_p.h"
 

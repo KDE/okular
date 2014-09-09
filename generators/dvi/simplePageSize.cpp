@@ -10,6 +10,7 @@
 
 #include "simplePageSize.h"
 #include "kvs_debug.h"
+#include <KDebug>
 
 #include <QPaintDevice>
 

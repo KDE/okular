@@ -16,7 +16,8 @@
 
 #include <qhash.h>
 
-#include <kdebug.h>
+#include <QDebug>
+#include <KDebug>
 #include <kglobal.h>
 
 #include "../debug_p.h"

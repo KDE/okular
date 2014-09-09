@@ -17,7 +17,7 @@
 #include <qtoolbar.h>
 #include <qtreewidget.h>
 
-#include <kdebug.h>
+#include <QDebug>
 #include <kicon.h>
 #include <klocale.h>
 #include <kmenu.h>
@@ -321,8 +321,8 @@ QList<QTreeWidgetItem*> createItems( const KUrl& baseurl, const KBookmark::List&
     QList<QTreeWidgetItem*> ret;
     foreach ( const KBookmark& bm, bmlist )
     {
-//        kDebug().nospace() << "checking '" << tmp << "'";
-//        kDebug().nospace() << "      vs '" << baseurl << "'";
+//        qDebug().nospace() << "checking '" << tmp << "'";
+//        qDebug().nospace() << "      vs '" << baseurl << "'";
         // TODO check that bm and baseurl are the same (#ref excluded)
         QTreeWidgetItem * item = new BookmarkItem( bm );
         ret.append( item );

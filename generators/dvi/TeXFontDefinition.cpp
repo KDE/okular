@@ -12,6 +12,7 @@
 #include "xdvi.h"
 
 #include <klocale.h>
+#include <KDebug>
 
 #include <QFile>
 

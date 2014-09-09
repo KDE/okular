@@ -40,7 +40,8 @@
 #include <k4aboutdata.h>
 #include <kauthorized.h>
 #include <kconfigdialog.h>
-#include <kdebug.h>
+#include <QDebug>
+#include <KDebug>
 #include <klibloader.h>
 #include <klocale.h>
 #include <kmacroexpander.h>
@@ -254,7 +255,7 @@ QString DocumentPrivate::namePaperSize(double inchesWidth, double inchesHeight) 
             return orientation == QPrinter::Landscape ? i18nc("paper size", "unknown landscape paper size") : i18nc("paper size", "unknown portrait paper size");
     }
 
-    kWarning() << "PaperSize" << paperSize << "has not been covered";
+    qWarning() << "PaperSize" << paperSize << "has not been covered";
     return QString();
 }
 
@@ -358,7 +359,7 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong memoryToFree )
         if ( !p ) // No pixmap to remove
             break;
 
-        kDebug().nospace() << "Evicting cache pixmap observer=" << p->observer << " page=" << p->page;
+        qDebug().nospace() << "Evicting cache pixmap observer=" << p->observer << " page=" << p->page;
 
         // m_allocatedPixmapsTotalMemory can't underflow because we always add or remove
         // the memory used by the AllocatedPixmap so at most it can reach zero
@@ -946,7 +947,7 @@ Document::OpenResult DocumentPrivate::openDocumentInternal( const KService::Ptr&
     QApplication::setOverrideCursor( Qt::WaitCursor );
 
     const QSizeF dpi = Utils::realDpi(m_widget);
-    kDebug() << "Output DPI:" << dpi;
+    qDebug() << "Output DPI:" << dpi;
     m_generator->setDPI(dpi);
 
     Document::OpenResult openResult = Document::OpenError;
@@ -1360,7 +1361,7 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
         else if ( !r->d->mForce && r->preload() && qAbs( r->pageNumber() - currentViewportPage ) >= maxDistance )
         {
             m_pixmapRequestsStack.pop_back();
-            //kDebug() << "Ignoring request that doesn't fit in cache";
+            //qDebug() << "Ignoring request that doesn't fit in cache";
             delete r;
         }
         // Ignore requests for pixmaps that are already being generated
@@ -4772,7 +4773,7 @@ QString DocumentInfo::getKeyString( Key key ) //const
             return "pageSize";
             break;
         default:
-            kWarning() << "Unknown" << key;
+            qWarning() << "Unknown" << key;
             return QString();
             break;
     }

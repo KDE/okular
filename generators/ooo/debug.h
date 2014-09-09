@@ -10,7 +10,7 @@
 #ifndef OOO_DEBUG_H
 #define OOO_DEBUG_H
 
-#include <KDebug>
+#include <QDebug>
 const int OooDebug = 4715;
 
 #endif

@@ -12,6 +12,7 @@
 #include "TeXFont.h"
 
 #include <klocale.h>
+#include <KDebug>
 
 #include <QApplication>
 #include <QPainter>

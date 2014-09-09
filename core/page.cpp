@@ -19,7 +19,8 @@
 #include <QtXml/QDomDocument>
 #include <QtXml/QDomElement>
 
-#include <kdebug.h>
+#include <QDebug>
+#include <KDebug>
 
 // local includes
 #include "action.h"

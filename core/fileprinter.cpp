@@ -26,7 +26,8 @@
 #include <KShell>
 #include <kstandarddirs.h>
 #include <ktempdir.h>
-#include <kdebug.h>
+#include <QDebug>
+#include <KDebug>
 #include <kdeversion.h>
 
 #include "debug_p.h"

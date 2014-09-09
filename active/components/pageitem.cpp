@@ -338,7 +338,7 @@ void PageItem::pageHasChanged(int page, int flags)
     if (m_viewPort.pageNumber == page) {
         if (flags == 32) {
             // skip bounding box updates
-            //kDebug() << "32" << m_page->boundingBox();
+            //qDebug() << "32" << m_page->boundingBox();
         } else if (flags == Okular::DocumentObserver::Pixmap) {
             // if pixmaps have updated, just repaint .. don't bother updating pixmaps AGAIN
             update();

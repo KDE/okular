@@ -13,7 +13,8 @@
 // qt/kde includes
 #include <qbuffer.h>
 #include <qdir.h>
-#include <kdebug.h>
+#include <QDebug>
+#include <KDebug>
 #include <krandom.h>
 #include <phonon/path.h>
 #include <phonon/audiooutput.h>
@@ -110,7 +111,7 @@ int AudioPlayerPrivate::newId() const
 
 bool AudioPlayerPrivate::play( const SoundInfo& si )
 {
-    kDebug() ;
+    qDebug() ;
     PlayData * data = new PlayData();
     data->m_output = new Phonon::AudioOutput( Phonon::NotificationCategory );
     data->m_output->setVolume( si.volume );
@@ -235,7 +236,7 @@ void AudioPlayer::playSound( const Sound * sound, const SoundAction * linksound 
     if ( sound->soundType() == Sound::External && !d->m_currentDocument.isLocalFile() )
         return;
 
-    kDebug() ;
+    qDebug() ;
     SoundInfo si( sound, linksound );
 
     // if the mix flag of the new sound is false, then the currently playing

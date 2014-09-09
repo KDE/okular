@@ -14,7 +14,8 @@
 #include <kjs/kjsprototype.h>
 #include <kjs/kjsarguments.h>
 
-#include <kdebug.h>
+#include <QDebug>
+#include <KDebug>
 
 #include "../debug_p.h"
 

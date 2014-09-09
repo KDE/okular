@@ -14,7 +14,7 @@
 #include <QtGui/QColor>
 #include <QtGui/QPainterPath>
 #include <QtGui/QTransform>
-#include <kdebug.h>
+#include <QDebug>
 #include <math.h>
 
 #include "global.h"
@@ -648,7 +648,7 @@ void RegularArea<NormalizedShape, Shape>::simplify()
                    }
             }
 #ifdef DEBUG_REGULARAREA
-    kDebug() << "from" << prev_end << "to" << this->count();
+    qDebug() << "from" << prev_end << "to" << this->count();
 #endif
 }
 

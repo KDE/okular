@@ -57,6 +57,7 @@
 
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <KDebug>
 
 #include <cstdlib>
 

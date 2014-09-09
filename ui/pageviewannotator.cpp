@@ -23,7 +23,7 @@
 #include <kstandarddirs.h>
 #include <kinputdialog.h>
 #include <kuser.h>
-#include <kdebug.h>
+#include <QDebug>
 #include <kmenu.h>
 
 // system includes
@@ -185,7 +185,7 @@ class PickPointEngine : public AnnotatorEngine
                     rect.top = qMin(startpoint.y,point.y);
                     rect.right = qMax(startpoint.x,point.x);
                     rect.bottom = qMax(startpoint.y,point.y);
-                    kDebug().nospace() << "xyScale=" << xscale << "," << yscale;
+                    qDebug().nospace() << "xyScale=" << xscale << "," << yscale;
                     static int padding = 2;
                     const QFontMetricsF mf(ta->textFont());
                     const QRectF rcf = mf.boundingRect( Okular::NormalizedRect( rect.left, rect.top, 1.0, 1.0 ).geometry( (int)pagewidth, (int)pageheight ).adjusted( padding, padding, -padding, -padding ),
@@ -671,7 +671,7 @@ void PageViewAnnotator::reparseConfig()
         if ( entryParser.setContent( toolXml ) )
             m_toolsDefinition.appendChild( doc.importNode( entryParser.documentElement(), true ) );
         else
-            kWarning() << "Skipping malformed tool XML in AnnotationTools setting";
+            qWarning() << "Skipping malformed tool XML in AnnotationTools setting";
     }
 
     // Create the AnnotationToolItems from the XML dom tree
@@ -1008,7 +1008,7 @@ void PageViewAnnotator::slotToolSelected( int toolID )
                 else if ( type == "TextSelector" )
                     m_engine = new TextSelectorEngine( toolSubElement, m_pageView );
                 else
-                    kWarning().nospace() << "tools.xml: engine type:'" << type << "' is not defined!";
+                    qWarning().nospace() << "tools.xml: engine type:'" << type << "' is not defined!";
             }
 
             // display the tooltip
@@ -1047,7 +1047,7 @@ void PageViewAnnotator::slotToolSelected( int toolID )
         // consistancy warning
         if ( !m_engine )
         {
-            kWarning() << "tools.xml: couldn't find good engine description. check xml.";
+            qWarning() << "tools.xml: couldn't find good engine description. check xml.";
         }
 
         m_pageView->updateCursor();

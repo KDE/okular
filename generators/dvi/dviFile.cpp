@@ -59,6 +59,7 @@
 #include "pageSize.h"
 
 #include <klocale.h>
+#include <KDebug>
 
 #include <QProcess>
 #include <QSysInfo>

@@ -12,6 +12,7 @@
 
 #include "fontEncoding.h"
 #include "kvs_debug.h"
+#include <KDebug>
 
 #include <QFile>
 #include <QProcess>

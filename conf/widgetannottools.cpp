@@ -11,7 +11,7 @@
 
 #include <kcolorbutton.h>
 #include <kcombobox.h>
-#include <kdebug.h>
+#include <QDebug>
 #include <kicon.h>
 #include <klocalizedstring.h>
 #include <klineedit.h>
@@ -130,7 +130,7 @@ void WidgetAnnotTools::setTools(const QStringList& items)
         QDomDocument entryParser;
         if ( !entryParser.setContent( toolXml ) )
         {
-            kWarning() << "Skipping malformed tool XML string";
+            qWarning() << "Skipping malformed tool XML string";
             break;
         }
 

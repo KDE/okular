@@ -11,7 +11,7 @@
 
 #include "length.h"
 #include "kvs_debug.h"
-
+#include <KDebug>
 
 class unitOfDistance
 {

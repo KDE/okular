@@ -21,7 +21,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. *
 #include <stdio.h>
 #include <sys/types.h>
 
-#include <kdebug.h>
+#include <QDebug>
 
 #include "faxexpand.h"
 
@@ -300,14 +300,14 @@ const char *StateNames[] = {
 	case S_Ext:							\
 	    *pa++ = lastx - a0;						\
 	    if (verbose)						\
-                kDebug() << "Line " << LineNum << ": extension code\n";\
+                qDebug() << "Line " << LineNum << ": extension code\n";\
 	    SKIP_EOL;							\
 	    break;							\
 	case S_EOL:							\
 	    *pa++ = lastx - a0;						\
 	    NeedBits(4);						\
 	    if (GetBits(4) && verbose) /* already seen 7 zeros */	\
-                kDebug() << "Line " << LineNum << ": Bad EOL\n";        \
+                qDebug() << "Line " << LineNum << ": Bad EOL\n";        \
 	    ClrBits(4);							\
 	    EOLcnt = 1;							\
 	    goto eolab;							\
@@ -337,7 +337,7 @@ static void
 unexpected(const char *what, int LineNum)
 {
     if (verbose)
-        kError() << "Line " << LineNum << ": Unexpected state in "
+        qCritical() << "Line " << LineNum << ": Unexpected state in "
 		<< what << endl;
 }
 
@@ -379,7 +379,7 @@ MHexpand(struct pagenode *pn, drawfunc df)
 	    SETVAL(0);
 	if (a0 != lastx) {
 	    if (verbose)
-                kWarning() << "Line " << LineNum << ": length is "
+                qWarning() << "Line " << LineNum << ": length is "
 			<< a0 << " (expected "<< lastx << ")\n";
 	    while (a0 > lastx)
 		a0 -= *--pa;
@@ -448,7 +448,7 @@ g31expand(struct pagenode *pn, drawfunc df)
 	    ClrBits(11);
 	}
         if (EOLcnt > 1 && EOLcnt != 6 && verbose) {
-            kError() << "Line " << LineNum << ": bad RTC (" << EOLcnt << " EOLs)\n";
+            qCritical() << "Line " << LineNum << ": bad RTC (" << EOLcnt << " EOLs)\n";
         }
 	if (EOLcnt >= 6 || EndOfData(pn)) {
 	    free(runs);
@@ -463,7 +463,7 @@ g31expand(struct pagenode *pn, drawfunc df)
 	    SETVAL(0);
 	if (a0 != lastx) {
 	    if (verbose)
-                kWarning() << "Line " << LineNum << ": length is "
+                qWarning() << "Line " << LineNum << ": length is "
 			<< a0 << " (expected "<< lastx << ")\n";
 	    while (a0 > lastx)
 		a0 -= *--pa;
@@ -539,13 +539,13 @@ g32expand(struct pagenode *pn, drawfunc df)
 	    ClrBits(11);
 	}
 	if (EOLcnt > 1 && EOLcnt != 6 && verbose)
-            kError() << "Line " << LineNum << ": bad RTC (" << EOLcnt << " EOLs)\n";
+            qCritical() << "Line " << LineNum << ": bad RTC (" << EOLcnt << " EOLs)\n";
 	if (EOLcnt >= 6 || EndOfData(pn)) {
 	    free(run0);
 	    return;
 	}
 	if (LineNum == 0 && refline == 0 && verbose)
-            kDebug() << "First line is 2-D encoded\n";
+            qDebug() << "First line is 2-D encoded\n";
 	RunLength = 0;
 	if (LineNum & 1) {
 	    pa = run1;
@@ -570,7 +570,7 @@ g32expand(struct pagenode *pn, drawfunc df)
 	    SETVAL(0);
 	if (a0 != lastx) {
 	    if (verbose)
-                kWarning() << "Line " << LineNum << ": length is "
+                qWarning() << "Line " << LineNum << ": length is "
 			<< a0 << " (expected "<< lastx << ")\n";
 	    while (a0 > lastx)
 		a0 -= *--pa;
@@ -592,7 +592,7 @@ g32expand(struct pagenode *pn, drawfunc df)
 #undef eol2lab
 #define SKIP_EOL do {							\
     if (verbose)							\
-        kError() << "Line " << LineNum << ": G4 coding error\n";       \
+        qCritical() << "Line " << LineNum << ": G4 coding error\n";       \
     free(run0);								\
     return;								\
 } while (0)
@@ -654,7 +654,7 @@ g4expand(struct pagenode *pn, drawfunc df)
     EOFB:
 	NeedBits(13);
 	if (GetBits(13) != 0x1001 && verbose)
-            kError() << "Bad RTC\n";
+            qCritical() << "Bad RTC\n";
 	break;
     }
     free(run0);

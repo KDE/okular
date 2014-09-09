@@ -13,7 +13,7 @@
 #include <QTextCodec>
 
 #include <kencodingprober.h>
-#include <kdebug.h>
+#include <QDebug>
 
 #include "document.h"
 
@@ -22,13 +22,13 @@ using namespace Txt;
 Document::Document( const QString &fileName )
 {
 #ifdef TXT_DEBUG
-    kDebug() << "Opening file" << fileName;
+    qDebug() << "Opening file" << fileName;
 #endif
 
     QFile plainFile( fileName );
     if ( !plainFile.open( QIODevice::ReadOnly | QIODevice::Text ) )
     {
-        kDebug() << "Can't open file" << plainFile.fileName();
+        qDebug() << "Can't open file" << plainFile.fileName();
         return;
     }
 
@@ -65,7 +65,7 @@ QString Document::toUnicode( const QByteArray &array )
         return QString();
     }
 
-    kDebug() << "Detected" << prober.encoding() << "encoding"
+    qDebug() << "Detected" << prober.encoding() << "encoding"
              << "based on" << charsFeeded << "chars";
     return QTextCodec::codecForName( encoding )->toUnicode( array );
 }

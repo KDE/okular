@@ -29,6 +29,7 @@
 #include <kmimetype.h>
 #include <kstandarddirs.h>
 #include <kvbox.h>
+#include <KDebug>
 
 #include <QApplication>
 #include <QCheckBox>

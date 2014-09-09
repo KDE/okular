@@ -89,7 +89,7 @@ Shell::Shell( const QString &serializedOptions )
     m_tabWidget = new KTabWidget( this );
     m_tabWidget->setTabsClosable( true );
     m_tabWidget->setElideMode( Qt::ElideRight );
-    m_tabWidget->setTabBarHidden( true );
+    m_tabWidget->tabBar()->hide();
     m_tabWidget->setDocumentMode( true );
     m_tabWidget->setMovable( true );
     connect( m_tabWidget, SIGNAL(currentChanged(int)), SLOT(setActiveTab(int)) );
@@ -494,7 +494,7 @@ void Shell::closeTab( int tab )
 
         if( m_tabWidget->count() == 1 )
         {
-            m_tabWidget->setTabBarHidden( true );
+            m_tabWidget->tabBar()->hide();
             m_nextTabAction->setEnabled( false );
             m_prevTabAction->setEnabled( false );
         }
@@ -507,7 +507,7 @@ void Shell::openNewTab( const QUrl& url, const QString &serializedOptions )
     // Tabs are hidden when there's only one, so show it
     if( m_tabs.size() == 1 )
     {
-        m_tabWidget->setTabBarHidden( false );
+        m_tabWidget->tabBar()->show();
         m_nextTabAction->setEnabled( true );
         m_prevTabAction->setEnabled( true );
     }

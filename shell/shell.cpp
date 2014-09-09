@@ -215,8 +215,8 @@ void Shell::openUrl( const KUrl & url, const QString &serializedOptions )
                 else
                 {
                     Shell* newShell = new Shell( serializedOptions );
-                    newShell->openUrl( url, serializedOptions );
                     newShell->show();
+                    newShell->openUrl( url, serializedOptions );
                 }
             }
         }

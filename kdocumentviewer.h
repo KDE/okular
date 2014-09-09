@@ -17,7 +17,7 @@ class KUrl;
 /**
  * @short Abstract interface for a document viewer
  *
- * This interface describe briefly the basic functions of a document viewer.
+ * This interface describes the basic functions of a document viewer.
  */
 class KDocumentViewer
 {

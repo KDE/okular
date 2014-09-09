@@ -879,13 +879,26 @@ void PageView::selectAll()
 void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setupFlags )
 {
     bool documentChanged = setupFlags & Okular::DocumentObserver::DocumentChanged;
+    const bool allowfillforms = d->document->isAllowed( Okular::AllowFillForms );
+
     // reuse current pages if nothing new
     if ( ( pageSet.count() == d->items.count() ) && !documentChanged && !( setupFlags & Okular::DocumentObserver::NewLayoutForPages ) )
     {
         int count = pageSet.count();
         for ( int i = 0; (i < count) && !documentChanged; i++ )
+        {
             if ( (int)pageSet[i]->number() != d->items[i]->pageNumber() )
+            {
                 documentChanged = true;
+            }
+            else
+            {
+                // even if the document has not changed, allowfillforms may have
+                // changed, so update all fields' "canBeFilled" flag
+                foreach ( FormWidgetIface * w, d->items[i]->formWidgets() )
+                    w->setCanBeFilled( allowfillforms );
+            }
+        }
         if ( !documentChanged )
             return;
     }
@@ -923,7 +936,7 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
                 w->setPageItem( item );
                 w->setFormWidgetsController( d->formWidgetsController() );
                 w->setVisibility( false );
-                w->setCanBeFilled( d->document->isAllowed( Okular::AllowFillForms ) );
+                w->setCanBeFilled( allowfillforms );
                 item->formWidgets().insert( ff->id(), w );
                 hasformwidgets = true;
             }

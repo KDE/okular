@@ -309,6 +309,8 @@ class OKULAR_EXPORT Generator : public QObject
 
         /**
          * Returns the general information object of the document.
+         *
+         * Changed signature in okular version 0.21
          */
         virtual DocumentInfo generateDocumentInfo( const QSet<DocumentInfo::Key> &keys ) const;
 

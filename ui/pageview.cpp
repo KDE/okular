@@ -879,7 +879,12 @@ void PageView::selectAll()
 void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setupFlags )
 {
     bool documentChanged = setupFlags & Okular::DocumentObserver::DocumentChanged;
+    const bool allownotes = d->document->isAllowed( Okular::AllowNotes );
     const bool allowfillforms = d->document->isAllowed( Okular::AllowFillForms );
+
+    // allownotes may have changed
+    if ( d->aToggleAnnotator )
+        d->aToggleAnnotator->setEnabled( allownotes );
 
     // reuse current pages if nothing new
     if ( ( pageSet.count() == d->items.count() ) && !documentChanged && !( setupFlags & Okular::DocumentObserver::NewLayoutForPages ) )

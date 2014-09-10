@@ -1,5 +1,7 @@
 project(okular)
 
+
+
 cmake_minimum_required(VERSION 2.8.12)
 
 set(QT_MIN_VERSION "5.2.0")
@@ -55,6 +57,7 @@ set_package_properties("LibKScreen" PROPERTIES
         PURPOSE "DPI detection support")
 
 add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
+add_definitions(-DTRANSLATION_DOMAIN="okular")
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${PHONON_INCLUDES})
 

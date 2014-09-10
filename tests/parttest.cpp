@@ -188,8 +188,8 @@ void PartTest::testSaveAs()
         Okular::Part part(NULL, NULL, QVariantList(), KGlobal::mainComponent());
         part.openDocument( archiveSave.fileName() );
 
-        QVERIFY( part.m_document->page( 0 )->annotations().size() == 1 );
-        QVERIFY( part.m_document->page( 0 )->annotations().first()->uniqueName() == annotName );
+        QCOMPARE( part.m_document->page( 0 )->annotations().size(), 1 );
+        QCOMPARE( part.m_document->page( 0 )->annotations().first()->uniqueName(), annotName );
 
         QVERIFY( part.saveAs( KUrl( nativeFromArchiveFile.fileName() ), saveAsNativeFlags ) );
 
@@ -204,7 +204,7 @@ void PartTest::testSaveAs()
 
         QCOMPARE( part.m_document->page( 0 )->annotations().size(), nativelySupportsAnnotations ? 1 : 0 );
         if ( nativelySupportsAnnotations )
-            QVERIFY( part.m_document->page( 0 )->annotations().first()->uniqueName() == annotName );
+            QCOMPARE( part.m_document->page( 0 )->annotations().first()->uniqueName(), annotName );
 
         part.closeUrl();
     }
@@ -217,7 +217,7 @@ void PartTest::testSaveAs()
 
         QCOMPARE( part.m_document->page( 0 )->annotations().size(), nativelySupportsAnnotations ? 1 : 0 );
         if ( nativelySupportsAnnotations )
-            QVERIFY( part.m_document->page( 0 )->annotations().first()->uniqueName() == annotName );
+            QCOMPARE( part.m_document->page( 0 )->annotations().first()->uniqueName(), annotName );
 
         part.closeUrl();
     }

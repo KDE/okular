@@ -1269,6 +1269,8 @@ Document::OpenResult Part::doOpenFile( const KMimeType::Ptr &mimeA, const QStrin
             if (!m_document->swapBackingFile( fileNameToOpen, url() ))
                 return Document::OpenError;
         }
+
+        return Document::OpenSuccess;
     }
 
     isDocumentArchive = false;

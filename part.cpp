@@ -426,6 +426,12 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     rightLayout->setSpacing( 0 );
     //	KToolBar * rtb = new KToolBar( rightContainer, "mainToolBarSS" );
     //	rightLayout->addWidget( rtb );
+    m_migrationMessage = new KMessageWidget( rightContainer );
+    m_migrationMessage->setVisible( false );
+    m_migrationMessage->setWordWrap( true );
+    m_migrationMessage->setMessageType( KMessageWidget::Warning );
+    m_migrationMessage->setText( i18n( "This document contains annotations or form data that were saved internally by a previous Okular version. Internal storage is <b>no longer supported</b>.<br/>Please save to a file in order to move them and continue editing the document." ) );
+    rightLayout->addWidget( m_migrationMessage );
     m_topMessage = new KMessageWidget( rightContainer );
     m_topMessage->setVisible( false );
     m_topMessage->setWordWrap( true );
@@ -757,6 +763,7 @@ void Part::setupActions()
     m_save->setEnabled( false );
     m_saveAs = KStandardAction::saveAs( this, SLOT(slotSaveFileAs()), ac );
     m_saveAs->setEnabled( false );
+    m_migrationMessage->addAction( m_saveAs );
 
     m_showLeftPanel = ac->add<KToggleAction>("show_leftpanel");
     m_showLeftPanel->setText(i18n( "Show &Navigation Panel"));
@@ -1091,6 +1098,11 @@ KConfigDialog * Part::slotGeneratorPreferences( )
 
 void Part::notifySetup( const QVector< Okular::Page * > & /*pages*/, int setupFlags )
 {
+    // Hide the migration message if the user has just migrated. Otherwise,
+    // if m_migrationMessage is already hidden, this does nothing.
+    if ( !m_document->isDocdataMigrationNeeded() )
+        m_migrationMessage->animatedHide();
+
     if ( !( setupFlags & Okular::DocumentObserver::DocumentChanged ) )
         return;
 
@@ -1424,6 +1436,7 @@ bool Part::openFile()
     bool hasEmbeddedFiles = ok && m_document->embeddedFiles() && m_document->embeddedFiles()->count() > 0;
     if ( m_showEmbeddedFiles ) m_showEmbeddedFiles->setEnabled( hasEmbeddedFiles );
     m_topMessage->setVisible( hasEmbeddedFiles && Okular::Settings::showOSD() );
+    m_migrationMessage->setVisible( m_document->isDocdataMigrationNeeded() );
 
     // Warn the user that XFA forms are not supported yet (NOTE: poppler generator only)
     if ( ok && m_document->metaData( "HasUnsupportedXfaForm" ).toBool() == true )
@@ -1664,6 +1677,7 @@ bool Part::closeUrl(bool promptToSave)
     if ( widget() )
     {
         m_searchWidget->clearText();
+        m_migrationMessage->setVisible( false );
         m_topMessage->setVisible( false );
         m_formsMessage->setVisible( false );
     }
@@ -2437,6 +2451,8 @@ bool Part::saveAs( const KUrl & saveUrl, SaveAsFlags flags )
 
     setModified( false );
     setWindowTitleFromDocument();
+    if ( m_document->isDocdataMigrationNeeded() )
+        m_document->docdataMigrationDone();
 
     bool reloadedCorrectly = true;
 

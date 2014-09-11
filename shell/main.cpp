@@ -36,20 +36,22 @@ int main(int argc, char** argv)
     app.setApplicationDisplayName(aboutData.applicationData().displayName());
     app.setApplicationVersion(aboutData.version());
     app.setOrganizationDomain("kde.org");
+
     QCommandLineParser parser;
     KAboutData::setApplicationData(aboutData);
     parser.addVersionOption();
     parser.addHelpOption();
     aboutData.setupCommandLine(&parser);
-    parser.process(app);
-    aboutData.processCommandLine(&parser);
 
     parser.addOption(QCommandLineOption(QStringList() << QLatin1String("p") << QLatin1String("page"), i18n("Page of the document to be shown"), QLatin1String("number")));
-    parser.addOption(QCommandLineOption(QStringList() <<  QLatin1String("presentation"), i18n("Start the document in presentation mode")));
-    parser.addOption(QCommandLineOption(QStringList() <<  QLatin1String("print"), i18n("Start with print dialog")));
-    parser.addOption(QCommandLineOption(QStringList() <<  QLatin1String("unique"), i18n("\"Unique instance\" control")));
-    parser.addOption(QCommandLineOption(QStringList() <<  QLatin1String("noraise"), i18n("Not raise window")));
-    parser.addOption(QCommandLineOption(QStringList() <<  QLatin1String("+[URL]"), i18n("Document to open. Specify '-' to read from stdin.")));
+    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("presentation"), i18n("Start the document in presentation mode")));
+    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("print"), i18n("Start with print dialog")));
+    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("unique"), i18n("\"Unique instance\" control")));
+    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("noraise"), i18n("Not raise window")));
+    parser.addPositionalArgument(QStringLiteral("urls"), i18n("Documents to open. Specify '-' to read from stdin."));
+
+    parser.process(app);
+    aboutData.processCommandLine(&parser);
 
     // see if we are starting with session management
     if (app.isSessionRestored())

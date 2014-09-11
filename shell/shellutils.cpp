@@ -12,7 +12,9 @@
 // qt/kde includes
 #include <QUrl>
 #include <QFile>
-#include <QRegExp>
+#include <QFileInfo>
+#include <QDir>
+#include <QDebug>
 #include <QtCore/qcommandlineparser.h>
 
 namespace ShellUtils
@@ -35,30 +37,21 @@ FileExistFunc qfileExistFunc()
 
 QUrl urlFromArg( const QString& _arg, FileExistFunc exist_func, const QString& pageArg )
 {
-    /*
-     Rationale for the small "cut-and-paste" work being done below:
-     KCmdLineArgs::makeURL() (used by ::url() encodes any # into the URL itself,
-     so we have to find it manually and build up the URL by taking its ref,
-     if any.
-     */
-    QString arg = _arg;
-    arg.replace( QRegExp( "^file:/{1,3}"), "/" );
-    if ( arg != _arg )
-    {
-        arg = QString::fromUtf8( QByteArray::fromPercentEncoding( arg.toUtf8() ) );
+    // ## TODO remove exist_func
+#if QT_VERSION >= 0x050400
+    QUrl url = QUrl::fromUserInput(_arg, QDir::currentPath());
+#else
+    // Code from QUrl::fromUserInput(QString, QString)
+    QUrl url = QUrl::fromUserInput(_arg);
+    QUrl testUrl = QUrl(_arg, QUrl::TolerantMode);
+    if (testUrl.isRelative() && !QDir::isAbsolutePath(_arg)) {
+        QFileInfo fileInfo(QDir::current(), _arg);
+        if (fileInfo.exists())
+            url = QUrl::fromLocalFile(fileInfo.absoluteFilePath());
     }
-    QUrl url = QUrl::fromUserInput( arg.toUtf8() );
-    int sharpPos = -1;
-    if ( !url.isLocalFile() || !exist_func( url.toLocalFile() ) )
-    {
-        sharpPos = arg.lastIndexOf( QLatin1Char( '#' ) );
-    }
-    if ( sharpPos != -1 )
-    {
-      url = QUrl::fromUserInput( arg.left( sharpPos ).toUtf8() );
-      url.setFragment( arg.mid( sharpPos + 1 ) );
-    }
-    else if ( !pageArg.isEmpty() )
+
+#endif
+    if ( !pageArg.isEmpty() )
     {
       url.setFragment( pageArg );
     }

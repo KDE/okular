@@ -15,7 +15,7 @@
 #include "okular_main.h"
 
 #include "shell.h"
-#include <kapplication.h>
+#include <QtWidgets/qapplication.h>
 #include <klocale.h>
 #include <QtDBus/qdbusinterface.h>
 #include <QTextStream>
@@ -51,7 +51,7 @@ static bool attachExistingInstance(const QStringList &paths, const QString &seri
 
     // Don't match the service without trailing "-" (unique instance)
     const QString pattern = "org.kde.okular-";
-    const QString myPid = QString::number( kapp->applicationPid() );
+    const QString myPid = QString::number( qApp->applicationPid() );
     QScopedPointer<QDBusInterface> bestService;
     const int desktop = KWindowSystem::currentDesktop();
 

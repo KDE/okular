@@ -10,6 +10,7 @@
 #include "presentationwidget.h"
 
 // qt/kde includes
+#include <QtCore/qloggingcategory.h>
 #include <QtDBus/QDBusConnection>
 #include <QtDBus/QDBusMessage>
 #include <QtDBus/QDBusReply>
@@ -50,6 +51,7 @@
 
 // local includes
 #include "annotationtools.h"
+#include "debug_ui.h"
 #include "guiutils.h"
 #include "pagepainter.h"
 #include "presentationsearchbar.h"
@@ -313,7 +315,7 @@ void PresentationWidget::notifySetup( const QVector< Okular::Page * > & pageSet,
     for ( ; fIt != fEnd; ++fIt )
         delete *fIt;
     if ( !m_frames.isEmpty() )
-        kWarning() << "Frames setup changed while a Presentation is in progress.";
+        qCWarning(OkularUiDebug) << "Frames setup changed while a Presentation is in progress.";
     m_frames.clear();
 
     // create the new frames

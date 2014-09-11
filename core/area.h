@@ -14,7 +14,7 @@
 #include <QtGui/QColor>
 #include <QtGui/QPainterPath>
 #include <QtGui/QTransform>
-#include <kdebug.h>
+#include <QtCore/QDebug>
 #include <math.h>
 
 #include "global.h"

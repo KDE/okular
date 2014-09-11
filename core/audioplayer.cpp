@@ -13,7 +13,7 @@
 // qt/kde includes
 #include <qbuffer.h>
 #include <qdir.h>
-#include <kdebug.h>
+#include <QtCore/QDebug>
 #include <krandom.h>
 #include <phonon/path.h>
 #include <phonon/audiooutput.h>

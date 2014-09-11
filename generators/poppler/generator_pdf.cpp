@@ -29,7 +29,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <ktemporaryfile.h>
-#include <kdebug.h>
+#include <QtCore/QDebug>
 #include <kglobal.h>
 
 #include <core/action.h>
@@ -50,6 +50,7 @@
 
 #include <poppler-media.h>
 
+#include "debug_pdf.h"
 #include "annots.h"
 #include "formfields.h"
 #include "popplerembeddedfile.h"
@@ -396,7 +397,7 @@ OKULAR_EXPORT_PLUGIN(PDFGenerator, createAboutData())
 static void PDFGeneratorPopplerDebugFunction(const QString &message, const QVariant &closure)
 {
     Q_UNUSED(closure);
-    kDebug() << "[Poppler]" << message;
+    qCDebug(OkularPdfDebug) << "[Poppler]" << message;
 }
 
 PDFGenerator::PDFGenerator( QObject *parent, const QVariantList &args )
@@ -434,7 +435,7 @@ Okular::Document::OpenResult PDFGenerator::loadDocumentWithPassword( const QStri
 #ifndef NDEBUG
     if ( pdfdoc )
     {
-        kDebug(PDFDebug) << "PDFGenerator: multiple calls to loadDocument. Check it.";
+        qCDebug(OkularPdfDebug) << "PDFGenerator: multiple calls to loadDocument. Check it.";
         return Okular::Document::OpenError;
     }
 #endif
@@ -459,7 +460,7 @@ Okular::Document::OpenResult PDFGenerator::loadDocumentFromDataWithPassword( con
 #ifndef NDEBUG
     if ( pdfdoc )
     {
-        kDebug(PDFDebug) << "PDFGenerator: multiple calls to loadDocument. Check it.";
+        qCDebug(OkularPdfDebug) << "PDFGenerator: multiple calls to loadDocument. Check it.";
         return Okular::Document::OpenError;
     }
 #endif
@@ -580,7 +581,7 @@ void PDFGenerator::loadPages(QVector<Okular::Page*> &pagesVector, int rotation, 
 //        kWarning(PDFDebug).nospace() << page->width() << "x" << page->height();
 
 #ifdef PDFGENERATOR_DEBUG
-            kDebug(PDFDebug) << "load page" << i << "with rotation" << rotation << "and orientation" << orientation;
+            qCDebug(OkularPdfDebug) << "load page" << i << "with rotation" << rotation << "and orientation" << orientation;
 #endif
             delete p;
 
@@ -800,7 +801,7 @@ bool PDFGenerator::isAllowed( Okular::Permission permission ) const
 QImage PDFGenerator::image( Okular::PixmapRequest * request )
 {
     // debug requests to this (xpdf) generator
-    //kDebug(PDFDebug) << "id: " << request->id << " is requesting " << (request->async ? "ASYNC" : "sync") <<  " pixmap for page " << request->page->number() << " [" << request->width << " x " << request->height << "].";
+    //qCDebug(OkularPdfDebug) << "id: " << request->id << " is requesting " << (request->async ? "ASYNC" : "sync") <<  " pixmap for page " << request->page->number() << " [" << request->width << " x " << request->height << "].";
 
     // compute dpi used to get an image with desired width and height
     Okular::Page * page = request->page();
@@ -931,7 +932,7 @@ void PDFGenerator::resolveMediaLinkReferences( Okular::Page *page )
 Okular::TextPage* PDFGenerator::textPage( Okular::Page *page )
 {
 #ifdef PDFGENERATOR_DEBUG
-    kDebug(PDFDebug) << "page" << page->number();
+    qCDebug(OkularPdfDebug) << "page" << page->number();
 #endif
     // build a TextList...
     QList<Poppler::TextBox*> textList;
@@ -1282,7 +1283,7 @@ Okular::TextPage * PDFGenerator::abstractTextPage(const QList<Poppler::TextBox*>
     Okular::TextPage* ktp=new Okular::TextPage;
     Poppler::TextBox *next;
 #ifdef PDFGENERATOR_DEBUG
-    kDebug(PDFDebug) << "getting text page in generator pdf - rotation:" << rot;
+    qCDebug(OkularPdfDebug) << "getting text page in generator pdf - rotation:" << rot;
 #endif
     QString s;
     bool addChar;
@@ -1613,7 +1614,7 @@ void PDFGenerator::loadPdfSync( const QString & filePath, QVector<Okular::Page*>
         else if ( tokens.first() == QLatin1String( "p*" ) && tokenSize >= 4 )
         {
             // TODO
-            kDebug(PDFDebug) << "PdfSync: 'p*' line ignored";
+            qCDebug(OkularPdfDebug) << "PdfSync: 'p*' line ignored";
         }
         else if ( tokens.first() == QLatin1String( "p" ) && tokenSize >= 4 )
         {
@@ -1644,10 +1645,10 @@ void PDFGenerator::loadPdfSync( const QString & filePath, QVector<Okular::Page*>
                 fileStack.pop();
             }
             else
-                kDebug(PDFDebug) << "PdfSync: going one level down too much";
+                qCDebug(OkularPdfDebug) << "PdfSync: going one level down too much";
         }
         else
-            kDebug(PDFDebug).nospace() << "PdfSync: unknown line format: '" << line << "'";
+            qCDebug(OkularPdfDebug).nospace() << "PdfSync: unknown line format: '" << line << "'";
 
     }
 
@@ -1827,5 +1828,7 @@ Okular::AnnotationProxy* PDFGenerator::annotationProxy() const
 }
 
 #include "generator_pdf.moc"
+
+Q_LOGGING_CATEGORY(OkularPdfDebug, "org.kde.okular.generators.pdf")
 
 /* kate: replace-tabs on; indent-width 4; */

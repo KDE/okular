@@ -14,7 +14,7 @@
 #include <QtCore/QFileInfo>
 #include <QtCore/QRegExp>
 
-#include <kdebug.h>
+#include <QtCore/qloggingcategory.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
@@ -25,6 +25,7 @@
 #endif
 
 #include "unrarflavours.h"
+#include "debug_comicbook.h"
 
 #include <memory>
 
@@ -74,12 +75,12 @@ UnrarHelper::UnrarHelper()
     if ( !kind )
     {
         // no luck, print that
-        kDebug() << "No unrar detected.";
+        qWarning() << "No unrar detected.";
     }
     else
     {
         unrarPath = path;
-        kDebug() << "detected:" << path << "(" << kind->name() << ")";
+        qCDebug(OkularComicbookDebug) << "detected:" << path << "(" << kind->name() << ")";
     }
 }
 

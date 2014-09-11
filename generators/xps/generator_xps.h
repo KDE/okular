@@ -31,6 +31,7 @@
 #include <QXmlDefaultHandler>
 #include <QStack>
 #include <QVariant>
+#include <QtCore/qloggingcategory.h>
 
 #include <kzip.h>
 
@@ -322,5 +323,7 @@ class XpsGenerator : public Okular::Generator
     private:
         XpsFile *m_xpsFile;
 };
+
+Q_DECLARE_LOGGING_CATEGORY(OkularXpsDebug)
 
 #endif

@@ -16,7 +16,7 @@
 #include <QFileInfo>
 #include <QApplication> // Because of the HACK
 
-#include <kdebug.h>
+#include <QtCore/QDebug>
 #include <klocale.h>
 #include <KStandardDirs>
 

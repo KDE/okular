@@ -8,7 +8,7 @@
 #include <config.h>
 
 #include "fontpool.h"
-#include "kvs_debug.h"
+#include "debug_dvi.h"
 #include "TeXFont.h"
 
 #include <klocale.h>
@@ -36,7 +36,7 @@ bool fontPoolTimerFlag;
 fontPool::fontPool(bool useFontHinting)
 {
 #ifdef DEBUG_FONTPOOL
-  kDebug(kvs::dvi) << "fontPool::fontPool() called";
+  qCDebug(OkularDviDebug) << "fontPool::fontPool() called";
 #endif
 
   setObjectName( QLatin1String("Font Pool" ));
@@ -49,7 +49,7 @@ fontPool::fontPool(bool useFontHinting)
 #ifdef HAVE_FREETYPE
   // Initialize the Freetype Library
   if ( FT_Init_FreeType( &FreeType_library ) != 0 ) {
-    kError(kvs::dvi) << "Cannot load the FreeType library. KDVI proceeds without FreeType support." << endl;
+    qCCritical(OkularDviDebug) << "Cannot load the FreeType library. KDVI proceeds without FreeType support." << endl;
     FreeType_could_be_loaded = false;
   } else
     FreeType_could_be_loaded = true;
@@ -74,12 +74,12 @@ fontPool::fontPool(bool useFontHinting)
 
   if ((result == 0xff) || (result == 0x00)) {
 #ifdef DEBUG_FONTPOOL
-    kDebug(kvs::dvi) << "fontPool::fontPool(): QPixmap does not support the alpha channel";
+    qCDebug(OkularDviDebug) << "fontPool::fontPool(): QPixmap does not support the alpha channel";
 #endif
     QPixmapSupportsAlpha = false;
   } else {
 #ifdef DEBUG_FONTPOOL
-    kDebug(kvs::dvi) << "fontPool::fontPool(): QPixmap supports the alpha channel";
+    qCDebug(OkularDviDebug) << "fontPool::fontPool(): QPixmap supports the alpha channel";
 #endif
     QPixmapSupportsAlpha = true;
   }
@@ -89,7 +89,7 @@ fontPool::fontPool(bool useFontHinting)
 fontPool::~fontPool()
 {
 #ifdef DEBUG_FONTPOOL
-  kDebug(kvs::dvi) << "fontPool::~fontPool() called";
+  qCDebug(OkularDviDebug) << "fontPool::~fontPool() called";
 #endif
 
   // need to manually clear the fonts _before_ freetype gets unloaded
@@ -140,7 +140,7 @@ TeXFontDefinition* fontPool::appendx(const QString& fontname, quint32 checksum, 
 
   TeXFontDefinition *fontp = new TeXFontDefinition(fontname, displayResolution*enlargement, checksum, scale, this, enlargement);
   if (fontp == 0) {
-    kError(kvs::dvi) << "Could not allocate memory for a font structure";
+    qCCritical(OkularDviDebug) << "Could not allocate memory for a font structure";
     exit(0);
   }
   fontList.append(fontp);
@@ -158,7 +158,7 @@ TeXFontDefinition* fontPool::appendx(const QString& fontname, quint32 checksum, 
 bool fontPool::areFontsLocated()
 {
 #ifdef DEBUG_FONTPOOL
-  kDebug(kvs::dvi) << "fontPool::areFontsLocated() called";
+  qCDebug(OkularDviDebug) << "fontPool::areFontsLocated() called";
 #endif
 
   // Is there a font whose name we did not try to find out yet?
@@ -170,7 +170,7 @@ bool fontPool::areFontsLocated()
   }
 
 #ifdef DEBUG_FONTPOOL
-  kDebug(kvs::dvi) << "... yes, all fonts are located (but not necessarily loaded).";
+  qCDebug(OkularDviDebug) << "... yes, all fonts are located (but not necessarily loaded).";
 #endif
   return true; // That says that all fonts are located.
 }
@@ -326,7 +326,7 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
 
       if (matchingFiles.isEmpty() != true) {
 #ifdef DEBUG_FONTPOOL
-        kDebug(kvs::dvi) << "Associated " << fontp->fontname << " to " << matchingFiles.first();
+        qCDebug(OkularDviDebug) << "Associated " << fontp->fontname << " to " << matchingFiles.first();
 #endif
         QString fname = matchingFiles.first();
         fontp->fontNameReceiver(fname);
@@ -350,7 +350,7 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
 void fontPool::setCMperDVIunit( double _CMperDVI )
 {
 #ifdef DEBUG_FONTPOOL
-  kDebug(kvs::dvi) << "fontPool::setCMperDVIunit( " << _CMperDVI << " )";
+  qCDebug(OkularDviDebug) << "fontPool::setCMperDVIunit( " << _CMperDVI << " )";
 #endif
 
   if (CMperDVIunit == _CMperDVI)
@@ -369,7 +369,7 @@ void fontPool::setCMperDVIunit( double _CMperDVI )
 void fontPool::setDisplayResolution( double _displayResolution_in_dpi )
 {
 #ifdef DEBUG_FONTPOOL
-  kDebug(kvs::dvi) << "fontPool::setDisplayResolution( displayResolution_in_dpi=" << _displayResolution_in_dpi << " ) called";
+  qCDebug(OkularDviDebug) << "fontPool::setDisplayResolution( displayResolution_in_dpi=" << _displayResolution_in_dpi << " ) called";
 #endif
 
   // Ignore minute changes by less than 2 DPI. The difference would
@@ -378,7 +378,7 @@ void fontPool::setDisplayResolution( double _displayResolution_in_dpi )
   // changes the window size by 1 pixel all the time.
   if ( fabs(displayResolution_in_dpi - _displayResolution_in_dpi) <= 2.0 ) {
 #ifdef DEBUG_FONTPOOL
-    kDebug(kvs::dvi) << "fontPool::setDisplayResolution(...): resolution wasn't changed. Aborting.";
+    qCDebug(OkularDviDebug) << "fontPool::setDisplayResolution(...): resolution wasn't changed. Aborting.";
 #endif
     return;
   }
@@ -413,7 +413,7 @@ void fontPool::markFontsAsLocated()
 void fontPool::mark_fonts_as_unused()
 {
 #ifdef DEBUG_FONTPOOL
-  kDebug(kvs::dvi) << "fontPool::mark_fonts_as_unused() called";
+  qCDebug(OkularDviDebug) << "fontPool::mark_fonts_as_unused() called";
 #endif
 
   QList<TeXFontDefinition*>::iterator it_fontp = fontList.begin();
@@ -427,7 +427,7 @@ void fontPool::mark_fonts_as_unused()
 void fontPool::release_fonts()
 {
 #ifdef DEBUG_FONTPOOL
-  kDebug(kvs::dvi) << "Release_fonts";
+  qCDebug(OkularDviDebug) << "Release_fonts";
 #endif
 
   QMutableListIterator<TeXFontDefinition*> it_fontp(fontList);
@@ -454,7 +454,7 @@ void fontPool::mf_output_receiver()
   while( (numleft = MetafontOutput.indexOf('\n')) != -1) {
     QString line = MetafontOutput.left(numleft+1);
 #ifdef DEBUG_FONTPOOL
-    kDebug(kvs::dvi) << "MF OUTPUT RECEIVED: " << line;
+    qCDebug(OkularDviDebug) << "MF OUTPUT RECEIVED: " << line;
 #endif
     // If the Output of the kpsewhich program contains a line starting
     // with "kpathsea:", this means that a new MetaFont-run has been

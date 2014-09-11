@@ -11,11 +11,12 @@
 
 #include <config.h>
 
+#include "debug_dvi.h"
 #include "dviRenderer.h"
 #include "dviFile.h"
 #include "dvisourcesplitter.h"
 #include "hyperlink.h"
-#include "kvs_debug.h"
+#include "debug_dvi.h"
 #include "prebookmark.h"
 #include "psgs.h"
 //#include "renderedDviPagePixmap.h"
@@ -40,9 +41,6 @@
 #include <QPainter>
 #include <QProgressBar>
 #include <QRegExp>
-
-//#define DEBUG_DVIRENDERER
-
 
 
 //------ now comes the dviRenderer class implementation ----------
@@ -71,7 +69,7 @@ dviRenderer::dviRenderer(bool useFontHinting)
     fontpoolLocateFontsDone(false)
 {
 #ifdef DEBUG_DVIRENDERER
-  //kDebug(kvs::dvi) << "dviRenderer( parent=" << par << " )";
+  //qCDebug(OkularDviDebug) << "dviRenderer( parent=" << par << " )";
 #endif
 
   connect( &font_pool, SIGNAL( error(QString,int) ), this, SIGNAL( error(QString,int) ) );
@@ -83,7 +81,7 @@ dviRenderer::dviRenderer(bool useFontHinting)
 dviRenderer::~dviRenderer()
 {
 #ifdef DEBUG_DVIRENDERER
-  kDebug(kvs::dvi) << "~dviRenderer";
+  qCDebug(OkularDviDebug) << "~dviRenderer";
 #endif
 
   QMutexLocker locker(&mutex);
@@ -110,17 +108,17 @@ void dviRenderer::setPrefs(bool flag_showPS, const QString &str_editorCommand, b
 void dviRenderer::drawPage(RenderedDocumentPagePixmap* page)
 {
 #ifdef DEBUG_DVIRENDERER
-  //kDebug(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called, page number " << page->pageNumber;
+  //qCDebug(OkularDviDebug) << "dviRenderer::drawPage(documentPage *) called, page number " << page->pageNumber;
 #endif
 
   // Paranoid safety checks
   if (page == 0) {
-    kError(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called with argument == 0" << endl;
+    qCCritical(OkularDviDebug) << "dviRenderer::drawPage(documentPage *) called with argument == 0" << endl;
     return;
   }
   // Paranoid safety checks
   if (page->pageNumber == 0) {
-    kError(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called for a documentPage with page number 0" << endl;
+    qCCritical(OkularDviDebug) << "dviRenderer::drawPage(documentPage *) called for a documentPage with page number 0" << endl;
     return;
   }
 
@@ -128,17 +126,17 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap* page)
 
 
   if ( dviFile == 0 ) {
-    kError(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called, but no dviFile class allocated." << endl;
+    qCCritical(OkularDviDebug) << "dviRenderer::drawPage(documentPage *) called, but no dviFile class allocated." << endl;
     page->clear();
     return;
   }
   if (page->pageNumber > dviFile->total_pages) {
-    kError(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called for a documentPage with page number " << page->pageNumber
+    qCCritical(OkularDviDebug) << "dviRenderer::drawPage(documentPage *) called for a documentPage with page number " << page->pageNumber
                   << " but the current dviFile has only " << dviFile->total_pages << " pages." << endl;
     return;
   }
   if ( dviFile->dvi_Data() == 0 ) {
-    kError(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called, but no dviFile is loaded yet." << endl;
+    qCCritical(OkularDviDebug) << "dviRenderer::drawPage(documentPage *) called, but no dviFile is loaded yet." << endl;
     page->clear();
     return;
   }
@@ -181,7 +179,7 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap* page)
   }
   else
   {
-    kDebug(kvs::dvi) << "painter creation failed.";
+    qCDebug(OkularDviDebug) << "painter creation failed.";
   } 
   page->img = img;
 //page->setImage(img);
@@ -324,7 +322,7 @@ void dviRenderer::showThatSourceInformationIsPresent()
 void dviRenderer::embedPostScript()
 {
 #ifdef DEBUG_DVIRENDERER
-  kDebug(kvs::dvi) << "dviRenderer::embedPostScript()";
+  qCDebug(OkularDviDebug) << "dviRenderer::embedPostScript()";
 #endif
 
   if (!dviFile)
@@ -369,7 +367,7 @@ void dviRenderer::embedPostScript()
 
   // Prescan phase starts here
 #ifdef PERFORMANCE_MEASUREMENT
-  //kDebug(kvs::dvi) << "Time elapsed till prescan phase starts " << performanceTimer.elapsed() << "ms";
+  //qCDebug(OkularDviDebug) << "Time elapsed till prescan phase starts " << performanceTimer.elapsed() << "ms";
   //QTime preScanTimer;
   //preScanTimer.start();
 #endif
@@ -398,7 +396,7 @@ void dviRenderer::embedPostScript()
 
 
 #ifdef PERFORMANCE_MEASUREMENT
-  //kDebug(kvs::dvi) << "Time required for prescan phase: " << preScanTimer.restart() << "ms";
+  //qCDebug(OkularDviDebug) << "Time required for prescan phase: " << preScanTimer.restart() << "ms";
 #endif
   current_page = currPageSav;
   _isModified = true;
@@ -431,7 +429,7 @@ bool dviRenderer::isValidFile(const QString& filename) const
 bool dviRenderer::setFile(const QString &fname, const KUrl &base)
 {
 #ifdef DEBUG_DVIRENDERER
-  kDebug(kvs::dvi) << "dviRenderer::setFile( fname='" << fname << "' )"; //, ref='" << ref << "', sourceMarker=" << sourceMarker << " )";
+  qCDebug(OkularDviDebug) << "dviRenderer::setFile( fname='" << fname << "' )"; //, ref='" << ref << "', sourceMarker=" << sourceMarker << " )";
 #endif
 
   //QMutexLocker lock(&mutex);
@@ -511,7 +509,7 @@ bool dviRenderer::setFile(const QString &fname, const KUrl &base)
 
   // PRESCAN STARTS HERE
 #ifdef PERFORMANCE_MEASUREMENT
-  //kDebug(kvs::dvi) << "Time elapsed till prescan phase starts " << performanceTimer.elapsed() << "ms";
+  //qCDebug(OkularDviDebug) << "Time elapsed till prescan phase starts " << performanceTimer.elapsed() << "ms";
   //QTime preScanTimer;
   //preScanTimer.start();
 #endif
@@ -560,7 +558,7 @@ bool dviRenderer::setFile(const QString &fname, const KUrl &base)
 #endif
 
 #ifdef PERFORMANCE_MEASUREMENT
-  //kDebug(kvs::dvi) << "Time required for prescan phase: " << preScanTimer.restart() << "ms";
+  //qCDebug(OkularDviDebug) << "Time required for prescan phase: " << preScanTimer.restart() << "ms";
 #endif
   current_page = currPageSav;
   // PRESCAN ENDS HERE
@@ -579,7 +577,7 @@ Anchor dviRenderer::parseReference(const QString &reference)
   QMutexLocker locker(&mutex);
 
 #ifdef DEBUG_DVIRENDERER
-  kError(kvs::dvi) << "dviRenderer::parseReference( " << reference << " ) called" << endl;
+  qCCritical(OkularDviDebug) << "dviRenderer::parseReference( " << reference << " ) called" << endl;
 #endif
 
   if (dviFile == 0)

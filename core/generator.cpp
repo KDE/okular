@@ -15,7 +15,7 @@
 #include <qeventloop.h>
 #include <QtPrintSupport/QPrinter>
 
-#include <kdebug.h>
+#include <QtCore/QDebug>
 #include <kicon.h>
 #include <klocale.h>
 #include <kwallet.h>

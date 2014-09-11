@@ -19,6 +19,8 @@
 #include <core/page.h>
 #include <core/fileprinter.h>
 
+#include "debug_comicbook.h"
+
 static KAboutData createAboutData()
 {
     KAboutData aboutData(
@@ -104,6 +106,8 @@ bool ComicBookGenerator::print( QPrinter& printer )
 
     return true;
 }
+
+Q_LOGGING_CATEGORY(OkularComicbookDebug, "org.kde.okular.generators.comicbook")
 
 #include "generator_comicbook.moc"
 

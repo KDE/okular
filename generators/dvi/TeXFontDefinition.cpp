@@ -3,16 +3,18 @@
 
 #include "TeXFontDefinition.h"
 #include "dviRenderer.h"
-#include "kvs_debug.h"
+#include "debug_dvi.h"
 #ifdef HAVE_FREETYPE
 # include "TeXFont_PFB.h"
 #endif
 #include "TeXFont_PK.h"
 #include "TeXFont_TFM.h"
 #include "xdvi.h"
+#include "debug_dvi.h"
 
 #include <klocale.h>
 
+#include <QtCore/qloggingcategory.h>
 #include <QFile>
 
 extern const int MFResolutions[];
@@ -34,7 +36,7 @@ TeXFontDefinition::TeXFontDefinition(const QString &nfontname, double _displayRe
            class fontPool *pool, double _enlargement)
 {
 #ifdef DEBUG_FONT
-  kDebug(kvs::dvi) << "TeXFontDefinition::TeXFontDefinition(...); fontname=" << nfontname << ", enlargement=" << _enlargement;
+  qCDebug(OkularDviDebug) << "TeXFontDefinition::TeXFontDefinition(...); fontname=" << nfontname << ", enlargement=" << _enlargement;
 #endif
 
   enlargement              = _enlargement;
@@ -60,7 +62,7 @@ TeXFontDefinition::TeXFontDefinition(const QString &nfontname, double _displayRe
 TeXFontDefinition::~TeXFontDefinition()
 {
 #ifdef DEBUG_FONT
-  kDebug(kvs::dvi) << "discarding font " << fontname << " at " << (int)(enlargement * MFResolutions[font_pool->getMetafontMode()] + 0.5) << " dpi";
+  qCDebug(OkularDviDebug) << "discarding font " << fontname << " at " << (int)(enlargement * MFResolutions[font_pool->getMetafontMode()] + 0.5) << " dpi";
 #endif
 
   if (font != 0) {
@@ -86,7 +88,7 @@ TeXFontDefinition::~TeXFontDefinition()
 void TeXFontDefinition::fontNameReceiver(const QString& fname)
 {
 #ifdef DEBUG_FONT
-  kDebug(kvs::dvi) << "void TeXFontDefinition::fontNameReceiver( " << fname << " )";
+  qCDebug(OkularDviDebug) << "void TeXFontDefinition::fontNameReceiver( " << fname << " )";
 #endif
 
   flags |= TeXFontDefinition::FONT_LOADED;
@@ -104,7 +106,7 @@ void TeXFontDefinition::fontNameReceiver(const QString& fname)
     QString filename_test(font_pool->getExtraSearchPath() + '/' + filename);
     file = fopen( QFile::encodeName(filename_test).constData(), "r");
     if (file == 0) {
-      kError(kvs::dvi) << i18n("Cannot find font %1, file %2.", fontname, filename) << endl;
+      qCCritical(OkularDviDebug) << i18n("Cannot find font %1, file %2.", fontname, filename) << endl;
       return;
     } else
       filename = filename_test;
@@ -120,7 +122,7 @@ void TeXFontDefinition::fontNameReceiver(const QString& fname)
       font = new TeXFont_PK(this);
       set_char_p = &dviRenderer::set_char;
       if ((checksum != 0) && (checksum != font->checksum))
-        kWarning(kvs::dvi) << i18n("Checksum mismatch for font file %1", filename) ;
+        qCWarning(OkularDviDebug) << i18n("Checksum mismatch for font file %1", filename) ;
       fontType = TEX_PK;
       return;
     }
@@ -152,12 +154,12 @@ void TeXFontDefinition::fontNameReceiver(const QString& fname)
 
   if (enc.isEmpty() == false) {
 #ifdef DEBUG_FONT
-    kDebug(kvs::dvi) << "Font " << fontname << " uses encoding " << enc;
+    qCDebug(OkularDviDebug) << "Font " << fontname << " uses encoding " << enc;
 #endif
     font = new TeXFont_PFB(this, font_pool->encodingPool.findByName(enc), font_pool->fontsByTeXName.findSlant(fontname) );
   } else {
 #ifdef DEBUG_FONT
-    kDebug(kvs::dvi) << "Font " << fontname << " does not have an encoding.";
+    qCDebug(OkularDviDebug) << "Font " << fontname << " does not have an encoding.";
 #endif
     font = new TeXFont_PFB(this);
   }
@@ -168,7 +170,7 @@ void TeXFontDefinition::fontNameReceiver(const QString& fname)
 #else
   // If we don't have the FreeType library, we should never have
   // reached this point. Complain, and leave this font blank
-  kError(kvs::dvi) << i18n("Cannot recognize format for font file %1", filename) << endl;
+  qCCritical(OkularDviDebug) << i18n("Cannot recognize format for font file %1", filename) << endl;
 #endif
 }
 
@@ -214,7 +216,7 @@ void TeXFontDefinition::setDisplayResolution(double _displayResolution_in_dpi)
 void TeXFontDefinition::mark_as_used()
 {
 #ifdef DEBUG_FONT
-  kDebug(kvs::dvi) << "TeXFontDefinition::mark_as_used()";
+  qCDebug(OkularDviDebug) << "TeXFontDefinition::mark_as_used()";
 #endif
 
   if (flags & TeXFontDefinition::FONT_IN_USE)

@@ -17,7 +17,7 @@
 #include <qtoolbar.h>
 #include <qtreewidget.h>
 
-#include <kdebug.h>
+#include <QtCore/QDebug>
 #include <kicon.h>
 #include <klocale.h>
 #include <kmenu.h>

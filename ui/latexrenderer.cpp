@@ -12,7 +12,7 @@
 
 #include "latexrenderer.h"
 
-#include <kdebug.h>
+#include <QtCore/QDebug>
 #include <kstandarddirs.h>
 #include <kprocess.h>
 #include <ktemporaryfile.h>
@@ -23,6 +23,8 @@
 #include <QImage>
 #include <QTextDocument>
 #include <QTextStream>
+
+#include "debug_ui.h"
 
 namespace GuiUtils
 {

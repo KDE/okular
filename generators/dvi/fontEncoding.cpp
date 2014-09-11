@@ -11,8 +11,9 @@
 #ifdef HAVE_FREETYPE
 
 #include "fontEncoding.h"
-#include "kvs_debug.h"
+#include "debug_dvi.h"
 
+#include <QtCore/qloggingcategory.h>
 #include <QFile>
 #include <QProcess>
 #include <QTextStream>
@@ -23,7 +24,7 @@
 fontEncoding::fontEncoding(const QString &encName)
 {
 #ifdef DEBUG_FONTENC
-  kDebug(kvs::dvi) << "fontEncoding( " << encName << " )";
+  qCDebug(OkularDviDebug) << "fontEncoding( " << encName << " )";
 #endif
 
   _isValid = false;
@@ -36,7 +37,7 @@ fontEncoding::fontEncoding(const QString &encName)
                   QIODevice::ReadOnly|QIODevice::Text);
 
   if (!kpsewhich.waitForStarted()) {
-    kError(kvs::dvi) << "fontEncoding::fontEncoding(...): kpsewhich could not be started." << endl;
+    qCCritical(OkularDviDebug) << "fontEncoding::fontEncoding(...): kpsewhich could not be started." << endl;
     return;
   }
 
@@ -45,12 +46,12 @@ fontEncoding::fontEncoding(const QString &encName)
 
   const QString encFileName = QString(kpsewhich.readAll()).trimmed();
   if (encFileName.isEmpty()) {
-    kError(kvs::dvi) << QString("fontEncoding::fontEncoding(...): The file '%1' could not be found by kpsewhich.").arg(encName) << endl;
+    qCCritical(OkularDviDebug) << QString("fontEncoding::fontEncoding(...): The file '%1' could not be found by kpsewhich.").arg(encName) << endl;
     return;
   }
 
 #ifdef DEBUG_FONTENC
-  kDebug(kvs::dvi) << "FileName of the encoding: " << encFileName;
+  qCDebug(OkularDviDebug) << "FileName of the encoding: " << encFileName;
 #endif
 
   QFile file( encFileName );
@@ -68,7 +69,7 @@ fontEncoding::fontEncoding(const QString &encName)
     // Find the name of the encoding
     encodingFullName = fileContent.section('[', 0, 0).simplified().mid(1);
 #ifdef DEBUG_FONTENC
-    kDebug(kvs::dvi) << "encodingFullName: " << encodingFullName;
+    qCDebug(OkularDviDebug) << "encodingFullName: " << encodingFullName;
 #endif
 
     fileContent = fileContent.section('[', 1, 1).section(']',0,0).simplified();
@@ -78,14 +79,14 @@ fontEncoding::fontEncoding(const QString &encName)
     for ( QStringList::ConstIterator it = glyphNameList.constBegin(); (it != glyphNameList.constEnd())&&(i<256); ++it ) {
       glyphNameVector[i] = (*it).simplified();
 #ifdef DEBUG_FONTENC
-      kDebug(kvs::dvi) << i << ": " << glyphNameVector[i];
+      qCDebug(OkularDviDebug) << i << ": " << glyphNameVector[i];
 #endif
       i++;
     }
     for(; i<256; i++)
       glyphNameVector[i] = ".notdef";
   } else {
-    kError(kvs::dvi) << QString("fontEncoding::fontEncoding(...): The file '%1' could not be opened.").arg(encFileName) << endl;
+    qCCritical(OkularDviDebug) << QString("fontEncoding::fontEncoding(...): The file '%1' could not be opened.").arg(encFileName) << endl;
     return;
   }
 

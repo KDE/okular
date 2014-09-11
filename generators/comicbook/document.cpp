@@ -23,9 +23,10 @@
 
 #include <core/page.h>
 
-#include "unrar.h"
+#include "debug_comicbook.h"
 #include "directory.h"
 #include "qnatsort.h"
+#include "unrar.h"
 
 using namespace ComicBook;
 
@@ -196,7 +197,7 @@ void Document::pages( QVector<Okular::Page*> * pagesVector )
                     mPageMap.append(file);
                     count++;
                 } else {
-                    kDebug() << "Ignoring" << file << "doesn't seem to be an image even if QImageReader::canRead returned true";
+                    qCDebug(OkularComicbookDebug) << "Ignoring" << file << "doesn't seem to be an image even if QImageReader::canRead returned true";
                 }
             }
         }

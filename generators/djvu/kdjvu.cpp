@@ -18,7 +18,7 @@
 #include <qqueue.h>
 #include <qstring.h>
 
-#include <kdebug.h>
+#include <QtCore/QDebug>
 #include <klocale.h>
 
 #include <libdjvu/ddjvuapi.h>

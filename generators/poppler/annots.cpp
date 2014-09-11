@@ -11,12 +11,14 @@
 #include <poppler-annotation.h>
 
 // qt/kde includes
+#include <QtCore/qloggingcategory.h>
 #include <qvariant.h>
 
 #include <core/annotations.h>
 #include <core/area.h>
 
 #include "annots.h"
+#include "debug_pdf.h"
 #include "generator_pdf.h"
 #include "popplerembeddedfile.h"
 #include "config-okular-poppler.h"
@@ -124,7 +126,7 @@ void PopplerAnnotationProxy::notifyAddition( Okular::Annotation *okl_ann, int pa
     okl_ann->setNativeId( qVariantFromValue( ppl_ann ) );
     okl_ann->setDisposeDataFunction( disposeAnnotation );
 
-    kDebug(PDFGenerator::PDFDebug) << okl_ann->uniqueName();
+    qCDebug(OkularPdfDebug) << okl_ann->uniqueName();
 }
 
 void PopplerAnnotationProxy::notifyModification( const Okular::Annotation *okl_ann, int page, bool appearanceChanged )
@@ -232,11 +234,11 @@ void PopplerAnnotationProxy::notifyModification( const Okular::Annotation *okl_a
             break;
         }
         default:
-            kDebug() << "Type-specific property modification is not implemented for this annotation type";
+            qCDebug(OkularPdfDebug) << "Type-specific property modification is not implemented for this annotation type";
             break;
     }
 
-    kDebug(PDFGenerator::PDFDebug) << okl_ann->uniqueName();
+    qCDebug(OkularPdfDebug) << okl_ann->uniqueName();
 }
 
 void PopplerAnnotationProxy::notifyRemoval( Okular::Annotation *okl_ann, int page )
@@ -254,7 +256,7 @@ void PopplerAnnotationProxy::notifyRemoval( Okular::Annotation *okl_ann, int pag
 
     okl_ann->setNativeId( qVariantFromValue(0) ); // So that we don't double-free in disposeAnnotation
 
-    kDebug(PDFGenerator::PDFDebug) << okl_ann->uniqueName();
+    qCDebug(OkularPdfDebug) << okl_ann->uniqueName();
 }
 //END PopplerAnnotationProxy implementation
 

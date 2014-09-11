@@ -26,7 +26,7 @@
 #include <QtGui/QPrinter>
 
 #include <kaboutdata.h>
-#include <kdebug.h>
+#include <QtCore/QDebug>
 #include <klocale.h>
 #include <ktemporaryfile.h>
 

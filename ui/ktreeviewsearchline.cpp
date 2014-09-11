@@ -33,7 +33,7 @@
 #include <QtWidgets/QToolButton>
 #include <QtWidgets/QTreeView>
 
-#include <kdebug.h>
+#include <QtCore/QDebug>
 #include <kiconloader.h>
 #include <klocale.h>
 #include <ktoolbar.h>

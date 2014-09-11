@@ -16,6 +16,7 @@
 #include <core/utils.h>
 
 #include "generator_dvi.h"
+#include "debug_dvi.h"
 #include "dviFile.h"
 #include "dviPageInfo.h"
 #include "dviRenderer.h"
@@ -31,7 +32,7 @@
 #include <qmutex.h>
 
 #include <kaboutdata.h>
-#include <kdebug.h>
+#include <QtCore/QDebug>
 #include <klocale.h>
 #include <ktemporaryfile.h>
 
@@ -74,7 +75,7 @@ DviGenerator::DviGenerator( QObject *parent, const QVariantList &args ) : Okular
 
 bool DviGenerator::loadDocument( const QString & fileName, QVector< Okular::Page * > &pagesVector )
 {
-    //kDebug(DviDebug) << "file:" << fileName;
+    //qCDebug(OkularDviDebug) << "file:" << fileName;
     KUrl base( fileName );
 
     (void)userMutex();
@@ -89,7 +90,7 @@ bool DviGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
     int iter = 0;
     for ( ; !m_dviRenderer->isValidFile( fileName ) && iter < s_maxIterations; ++iter )
     {
-        kDebug(DviDebug).nospace() << "file not valid after iteration #" << iter << "/" << s_maxIterations << ", waiting for " << s_waitTime;
+        qCDebug(OkularDviDebug).nospace() << "file not valid after iteration #" << iter << "/" << s_maxIterations << ", waiting for " << s_waitTime;
 #ifdef Q_OS_WIN
         Sleep( uint( s_waitTime ) );
 #else
@@ -99,7 +100,7 @@ bool DviGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
     }
     if ( iter >= s_maxIterations && !m_dviRenderer->isValidFile( fileName ) )
     {
-        kDebug(DviDebug) << "file still not valid after" << s_maxIterations;
+        qCDebug(OkularDviDebug) << "file still not valid after" << s_maxIterations;
         delete m_dviRenderer;
         m_dviRenderer = 0;
         return false;
@@ -119,7 +120,7 @@ bool DviGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
         return false;
     }
 
-    kDebug(DviDebug) << "# of pages:" << m_dviRenderer->dviFile->total_pages;
+    qCDebug(OkularDviDebug) << "# of pages:" << m_dviRenderer->dviFile->total_pages;
 
     m_resolution = Okular::Utils::dpiY();
     loadPages( pagesVector );
@@ -242,7 +243,7 @@ QImage DviGenerator::image( Okular::PixmapRequest *request )
         pageInfo->resolution = (double)(pageInfo->width)/ps.width().getLength_in_inch();
 
 #if 0
-        kDebug(DviDebug) << *request
+        qCDebug(OkularDviDebug) << *request
         << ", res:" << pageInfo->resolution << " - (" << pageInfo->width << ","
         << ps.width().getLength_in_inch() << ")," << ps.width().getLength_in_mm()
         << endl;
@@ -252,7 +253,7 @@ QImage DviGenerator::image( Okular::PixmapRequest *request )
 
         if ( ! pageInfo->img.isNull() )
         {
-            kDebug(DviDebug) << "Image OK";
+            qCDebug(OkularDviDebug) << "Image OK";
 
             ret = pageInfo->img;
 
@@ -273,7 +274,7 @@ QImage DviGenerator::image( Okular::PixmapRequest *request )
 
 Okular::TextPage* DviGenerator::textPage( Okular::Page *page )
 {
-    kDebug(DviDebug);
+    qCDebug(OkularDviDebug);
     dviPageInfo *pageInfo = new dviPageInfo();
     pageSize ps;
     
@@ -317,7 +318,7 @@ Okular::TextPage *DviGenerator::extractTextFromPage( dviPageInfo *pageInfo )
         TextBox curTB = *it;
  
 #if 0
-        kDebug(DviDebug) << "orientation: " << orientation
+        qCDebug(OkularDviDebug) << "orientation: " << orientation
                  << ", curTB.box: " << curTB.box
                  << ", tmpRect: " << tmpRect 
                  << ", ( " << pageWidth << "," << pageHeight << " )" 
@@ -497,7 +498,7 @@ void DviGenerator::loadPages( QVector< Okular::Page * > &pagesVector )
 
     m_linkGenerated.fill( false, numofpages );
 
-    //kDebug(DviDebug) << "resolution:" << m_resolution << ", dviFile->preferred?";
+    //qCDebug(OkularDviDebug) << "resolution:" << m_resolution << ", dviFile->preferred?";
 
     /* get the suggested size */
     if ( m_dviRenderer->dviFile->suggestedPageSize )
@@ -513,7 +514,7 @@ void DviGenerator::loadPages( QVector< Okular::Page * > &pagesVector )
 
     for ( int i = 0; i < numofpages; ++i )
     {
-        //kDebug(DviDebug) << "getting status of page" << i << ":";
+        //qCDebug(OkularDviDebug) << "getting status of page" << i << ":";
 
         if ( pagesVector[i] )
         {
@@ -527,7 +528,7 @@ void DviGenerator::loadPages( QVector< Okular::Page * > &pagesVector )
 
         pagesVector[i] = page;
     }
-    kDebug(DviDebug) << "pagesVector successfully inizialized!";
+    qCDebug(OkularDviDebug) << "pagesVector successfully inizialized!";
 
     // filling the pages with the source references rects
     const QVector<DVI_SourceFileAnchor>& sourceAnchors = m_dviRenderer->sourceAnchors();
@@ -597,5 +598,8 @@ QVariant DviGenerator::metaData( const QString & key, const QVariant & option ) 
     }
     return QVariant();
 }
+
+Q_LOGGING_CATEGORY(OkularDviDebug, "org.kde.okular.generators.dvi.core")
+Q_LOGGING_CATEGORY(OkularDviShellDebug, "org.kde.okular.generators.dvi.shell")
 
 #include "generator_dvi.moc"

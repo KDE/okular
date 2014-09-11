@@ -72,6 +72,7 @@
 // local includes
 #include "aboutdata.h"
 #include "extensions.h"
+#include "ui/debug_ui.h"
 #include "ui/pageview.h"
 #include "ui/toc.h"
 #include "ui/searchwidget.h"
@@ -96,7 +97,6 @@
 #include "core/generator.h"
 #include "core/page.h"
 #include "core/fileprinter.h"
-
 #include <cstdio>
 #include <memory>
 
@@ -2152,7 +2152,7 @@ void Part::slotFindPrev()
 
 bool Part::saveFile()
 {
-    kDebug() << "Okular part doesn't support saving the file in the location from which it was opened";
+    qCDebug(OkularUiDebug) << "Okular part doesn't support saving the file in the location from which it was opened";
     return false;
 }
 

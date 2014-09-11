@@ -268,7 +268,7 @@ static QPainterPath parseAbbreviatedPathData( const QString &data)
         {
             if (token.type != abtEOF)
             {
-                kDebug(XpsDebug).nospace() << "Error in parsing abbreviated path data (" << token.type << "@" << token.curPos << "): " << data;
+                qCWarning(OkularXpsDebug).nospace() << "Error in parsing abbreviated path data (" << token.type << "@" << token.curPos << "): " << data;
             }
             return path;
         }
@@ -414,7 +414,7 @@ static QBrush parseRscRefColorForBrush( const QString &data )
 {
     if (data[0] == '{') {
         //TODO
-        kDebug(XpsDebug) << "Reference" << data;
+        qCWarning(OkularXpsDebug) << "Reference" << data;
         return QBrush();
     } else {
         return QBrush( hexToRgba( data.toLatin1() ) );
@@ -428,7 +428,7 @@ static QPen parseRscRefColorForPen( const QString &data )
 {
     if (data[0] == '{') {
         //TODO
-        kDebug(XpsDebug) << "Reference" << data;
+        qCWarning(OkularXpsDebug) << "Reference" << data;
         return QPen();
     } else {
         return QPen( hexToRgba( data.toLatin1() ) );
@@ -442,7 +442,7 @@ static QTransform parseRscRefMatrix( const QString &data )
 {
     if (data[0] == '{') {
         //TODO
-        kDebug(XpsDebug) << "Reference" << data;
+        qCWarning(OkularXpsDebug) << "Reference" << data;
         return QTransform();
     } else {
         return attsToMatrix( data );
@@ -456,7 +456,7 @@ static QPainterPath parseRscRefPath( const QString &data )
 {
     if (data[0] == '{') {
         //TODO
-        kDebug(XpsDebug) << "Reference" << data;
+        qCWarning(OkularXpsDebug) << "Reference" << data;
         return QPainterPath();
     } else {
         return parseAbbreviatedPathData( data );
@@ -753,7 +753,7 @@ XpsHandler::~XpsHandler()
 
 bool XpsHandler::startDocument()
 {
-    kDebug(XpsDebug) << "start document" << m_page->m_fileName ;
+    qCWarning(OkularXpsDebug) << "start document" << m_page->m_fileName ;
 
     XpsRenderNode node;
     node.name = "document";
@@ -790,7 +790,7 @@ bool XpsHandler::endElement( const QString &nameSpace,
 
     XpsRenderNode node = m_nodes.pop();
     if (node.name != localName) {
-        kDebug(XpsDebug) << "Name doesn't match";
+        qCWarning(OkularXpsDebug) << "Name doesn't match";
     }
     processEndElement( node );
     node.children.clear();
@@ -813,7 +813,7 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
     // Get font (doesn't work well because qt doesn't allow to load font from file)
     // This works despite the fact that font size isn't specified in points as required by qt. It's because I set point size to be equal to drawing unit.
     float fontSize = node.attributes.value("FontRenderingEmSize").toFloat();
-    // kDebug(XpsDebug) << "Font Rendering EmSize:" << fontSize;
+    // qCWarning(OkularXpsDebug) << "Font Rendering EmSize:" << fontSize;
     // a value of 0.0 means the text is not visible (see XPS specs, chapter 12, "Glyphs")
     if ( fontSize < 0.1 ) {
         m_painter->restore();
@@ -916,7 +916,7 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
                     advanceWidths.append( AdvanceWidth + uOffset );
                 } else {
                     // has vertical offset, but don't know how to handle that yet
-                    kDebug(XpsDebug) << "Unhandled Indices element: " << indicesElements.at(i);
+                    qCWarning(OkularXpsDebug) << "Unhandled Indices element: " << indicesElements.at(i);
                     advanceWidths.append( -1.0 );
                 }
             } else {
@@ -940,9 +940,9 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
             originAdvance.rx() += metrics.width( thisChar );
         }
     }
-    // kDebug(XpsDebug) << "Glyphs: " << atts.value("Fill") << ", " << atts.value("FontUri");
-    // kDebug(XpsDebug) << "    Origin: " << atts.value("OriginX") << "," << atts.value("OriginY");
-    // kDebug(XpsDebug) << "    Unicode: " << atts.value("UnicodeString");
+    // qCWarning(OkularXpsDebug) << "Glyphs: " << atts.value("Fill") << ", " << atts.value("FontUri");
+    // qCWarning(OkularXpsDebug) << "    Origin: " << atts.value("OriginX") << "," << atts.value("OriginY");
+    // qCWarning(OkularXpsDebug) << "    Unicode: " << atts.value("UnicodeString");
 
     m_painter->restore();
 }
@@ -952,7 +952,7 @@ void XpsHandler::processFill( XpsRenderNode &node )
     //TODO Ignored child elements: VirtualBrush
 
     if (node.children.size() != 1) {
-        kDebug(XpsDebug) << "Fill element should have exactly one child";
+        qCWarning(OkularXpsDebug) << "Fill element should have exactly one child";
     } else {
         node.data = node.children[0].data;
     }
@@ -963,7 +963,7 @@ void XpsHandler::processStroke( XpsRenderNode &node )
     //TODO Ignored child elements: VirtualBrush
 
     if (node.children.size() != 1) {
-        kDebug(XpsDebug) << "Stroke element should have exactly one child";
+        qCWarning(OkularXpsDebug) << "Stroke element should have exactly one child";
     } else {
         node.data = node.children[0].data;
     }
@@ -1152,7 +1152,7 @@ void XpsHandler::processPath( XpsRenderNode &node )
 void XpsHandler::processPathData( XpsRenderNode &node )
 {
     if (node.children.size() != 1) {
-        kDebug(XpsDebug) << "Path.Data element should have exactly one child";
+        qCWarning(OkularXpsDebug) << "Path.Data element should have exactly one child";
     } else {
         node.data = node.children[0].data;
     }
@@ -1394,7 +1394,7 @@ void XpsHandler::processEndElement( XpsRenderNode &node )
     } else if (node.name == "Path.Data") {
         processPathData( node );
     } else {
-        //kDebug(XpsDebug) << "Unknown element: " << node->name;
+        //qCWarning(OkularXpsDebug) << "Unknown element: " << node->name;
     }
 }
 
@@ -1403,7 +1403,7 @@ XpsPage::XpsPage(XpsFile *file, const QString &fileName): m_file( file ),
 {
     m_pageImage = NULL;
 
-    // kDebug(XpsDebug) << "page file name: " << fileName;
+    // qCWarning(OkularXpsDebug) << "page file name: " << fileName;
 
     const KZipFileEntry* pageFile = static_cast<const KZipFileEntry *>(m_file->xpsArchive()->directory()->entry( fileName ));
 
@@ -1422,7 +1422,7 @@ XpsPage::XpsPage(XpsFile *file, const QString &fileName): m_file( file ),
     }
     if ( xml.error() )
     {
-        kDebug(XpsDebug) << "Could not parse XPS page:" << xml.errorString();
+        qCWarning(OkularXpsDebug) << "Could not parse XPS page:" << xml.errorString();
     }
 }
 
@@ -1468,7 +1468,7 @@ bool XpsPage::renderToPainter( QPainter *painter )
     QBuffer buffer( &data );
     QXmlInputSource source( &buffer );
     bool ok = parser.parse( source );
-    kDebug(XpsDebug) << "Parse result: " << ok;
+    qCWarning(OkularXpsDebug) << "Parse result: " << ok;
 
     return true;
 }
@@ -1480,7 +1480,7 @@ QSizeF XpsPage::size() const
 
 QFont XpsFile::getFontByName( const QString &fileName, float size )
 {
-    // kDebug(XpsDebug) << "trying to get font: " << fileName << ", size: " << size;
+    // qCWarning(OkularXpsDebug) << "trying to get font: " << fileName << ", size: " << size;
 
     int index = m_fontCache.value(fileName, -1);
     if (index == -1)
@@ -1489,19 +1489,19 @@ QFont XpsFile::getFontByName( const QString &fileName, float size )
         m_fontCache[fileName] = index;
     }
     if ( index == -1 ) {
-        kWarning(XpsDebug) << "Requesting uknown font:" << fileName;
+        qCWarning(OkularXpsDebug) << "Requesting uknown font:" << fileName;
         return QFont();
     }
 
     const QStringList fontFamilies = m_fontDatabase.applicationFontFamilies( index );
     if ( fontFamilies.isEmpty() ) {
-      kWarning(XpsDebug) << "The unexpected has happened. No font family for a known font:" << fileName << index;
+      qCWarning(OkularXpsDebug) << "The unexpected has happened. No font family for a known font:" << fileName << index;
       return QFont();
     }
     const QString fontFamily = fontFamilies[0];
     const QStringList fontStyles = m_fontDatabase.styles( fontFamily );
     if ( fontStyles.isEmpty() ) {
-      kWarning(XpsDebug) << "The unexpected has happened. No font style for a known font family:" << fileName << index << fontFamily ;
+      qCWarning(OkularXpsDebug) << "The unexpected has happened. No font style for a known font family:" << fileName << index << fontFamily ;
       return QFont();
     }
     const QString fontStyle =  fontStyles[0];
@@ -1510,7 +1510,7 @@ QFont XpsFile::getFontByName( const QString &fileName, float size )
 
 int XpsFile::loadFontByName( const QString &fileName )
 {
-    // kDebug(XpsDebug) << "font file name: " << fileName;
+    // qCWarning(OkularXpsDebug) << "font file name: " << fileName;
 
     const KArchiveEntry* fontFile = loadEntry( m_xpsArchive, fileName, Qt::CaseInsensitive );
     if ( !fontFile ) {
@@ -1529,13 +1529,13 @@ int XpsFile::loadFontByName( const QString &fileName )
         unsigned short guid[16];
         if (!parseGUID(baseName, guid))
         {
-            kDebug(XpsDebug) << "File to load font - file name isn't a GUID";
+            qCWarning(OkularXpsDebug) << "File to load font - file name isn't a GUID";
         }
         else
         {
         if (fontData.length() < 32)
             {
-                kDebug(XpsDebug) << "Font file is too small";
+                qCWarning(OkularXpsDebug) << "Font file is too small";
             } else {
                 // Obfuscation - xor bytes in font binary with bytes from guid (font's filename)
                 const static int mapping[] = {15, 14, 13, 12, 11, 10, 9, 8, 6, 7, 4, 5, 0, 1, 2, 3};
@@ -1549,7 +1549,7 @@ int XpsFile::loadFontByName( const QString &fileName )
     }
 
 
-    // kDebug(XpsDebug) << "Loaded font: " << m_fontDatabase.applicationFontFamilies( result );
+    // qCWarning(OkularXpsDebug) << "Loaded font: " << m_fontDatabase.applicationFontFamilies( result );
 
     return result; // a font ID
 }
@@ -1560,7 +1560,7 @@ KZip * XpsFile::xpsArchive() {
 
 QImage XpsPage::loadImageFromFile( const QString &fileName )
 {
-    // kDebug(XpsDebug) << "image file name: " << fileName;
+    // qCWarning(OkularXpsDebug) << "image file name: " << fileName;
 
     if ( fileName.at( 0 ) == QLatin1Char( '{' ) ) {
         // for example: '{ColorConvertedBitmap /Resources/bla.wdp /Resources/foobar.icc}'
@@ -1607,7 +1607,7 @@ QImage XpsPage::loadImageFromFile( const QString &fileName )
 
 Okular::TextPage* XpsPage::textPage()
 {
-    // kDebug(XpsDebug) << "Parsing XpsPage, text extraction";
+    // qCWarning(OkularXpsDebug) << "Parsing XpsPage, text extraction";
 
     Okular::TextPage* textPage = new Okular::TextPage();
 
@@ -1649,7 +1649,7 @@ Okular::TextPage* XpsPage::textPage()
             } else if ( (xml.name() == "FixedPage") || (xml.name() == "FixedPage.Resources") ) {
                 // not useful for text extraction
             } else {
-                kDebug(XpsDebug) << "Unhandled element in Text Extraction start: " << xml.name().toString();
+                qCWarning(OkularXpsDebug) << "Unhandled element in Text Extraction start: " << xml.name().toString();
             }
         } else if (xml.isEndElement() ) {
             if (xml.name() == "Canvas") {
@@ -1698,19 +1698,19 @@ Okular::TextPage* XpsPage::textPage()
             } else if ( (xml.name() == "FixedPage") || (xml.name() == "FixedPage.Resources") ) {
                 // not useful for text extraction
             } else {
-                kDebug(XpsDebug) << "Unhandled element in Text Extraction end: " << xml.name().toString();
+                qCWarning(OkularXpsDebug) << "Unhandled element in Text Extraction end: " << xml.name().toString();
             }
         }
     }
     if ( xml.error() ) {
-        kDebug(XpsDebug) << "Error parsing XpsPage text: " << xml.errorString();
+        qCWarning(OkularXpsDebug) << "Error parsing XpsPage text: " << xml.errorString();
     }
     return textPage;
 }
 
 void XpsDocument::parseDocumentStructure( const QString &documentStructureFileName )
 {
-    kDebug(XpsDebug) << "document structure file name: " << documentStructureFileName;
+    qCWarning(OkularXpsDebug) << "document structure file name: " << documentStructureFileName;
     m_haveDocumentStructure = false;
 
     const KZipFileEntry* documentStructureFile = static_cast<const KZipFileEntry *>(m_file->xpsArchive()->directory()->entry( documentStructureFileName ));
@@ -1726,9 +1726,9 @@ void XpsDocument::parseDocumentStructure( const QString &documentStructureFileNa
             if ( xml.name() == "DocumentStructure" ) {
                 // just a container for optional outline and story elements - nothing to do here
             } else if ( xml.name() == "DocumentStructure.Outline" ) {
-                kDebug(XpsDebug) << "found DocumentStructure.Outline";
+                qCWarning(OkularXpsDebug) << "found DocumentStructure.Outline";
             } else if ( xml.name() == "DocumentOutline" ) {
-                kDebug(XpsDebug) << "found DocumentOutline";
+                qCWarning(OkularXpsDebug) << "found DocumentOutline";
                 m_docStructure = new Okular::DocumentSynopsis;
             } else if ( xml.name() == "OutlineEntry" ) {
                 m_haveDocumentStructure = true;
@@ -1740,12 +1740,12 @@ void XpsDocument::parseDocumentStructure( const QString &documentStructureFileNa
                 QString target = attributes.value("OutlineTarget").toString();
                 int hashPosition = target.lastIndexOf( '#' );
                 target = target.mid( hashPosition + 1 );
-                // kDebug(XpsDebug) << "target: " << target;
+                // qCWarning(OkularXpsDebug) << "target: " << target;
                 Okular::DocumentViewport viewport;
                 viewport.pageNumber = m_docStructurePageMap.value( target );
                 synopsisElement.setAttribute( "Viewport",  viewport.toString() );
                 if ( outlineLevel == 1 ) {
-                    // kDebug(XpsDebug) << "Description: "
+                    // qCWarning(OkularXpsDebug) << "Description: "
                     // << outlineEntryElement.attribute( "Description" ) << endl;
                     m_docStructure->appendChild( synopsisElement );
                 } else {
@@ -1769,7 +1769,7 @@ void XpsDocument::parseDocumentStructure( const QString &documentStructureFileNa
             } else if ( xml.name() == "StoryFragmentReference" ) {
                 // we need to handle StoryFragmentReference here, but I have no idea what to do with it.
             } else {
-                kDebug(XpsDebug) << "Unhandled entry in DocumentStructure: " << xml.name().toString();
+                qCWarning(OkularXpsDebug) << "Unhandled entry in DocumentStructure: " << xml.name().toString();
             }
         }
     }
@@ -1787,7 +1787,7 @@ bool XpsDocument::hasDocumentStructure()
 
 XpsDocument::XpsDocument(XpsFile *file, const QString &fileName): m_file(file), m_haveDocumentStructure( false ), m_docStructure( 0 )
 {
-    kDebug(XpsDebug) << "document file name: " << fileName;
+    qCWarning(OkularXpsDebug) << "document file name: " << fileName;
 
     const KArchiveEntry* documentEntry = file->xpsArchive()->directory()->entry( fileName );
     QString documentFilePath = fileName;
@@ -1800,7 +1800,7 @@ XpsDocument::XpsDocument(XpsFile *file, const QString &fileName): m_file(file), 
         if ( docXml.isStartElement() ) {
             if ( docXml.name() == "PageContent" ) {
                 QString pagePath = docXml.attributes().value("Source").toString();
-                kDebug(XpsDebug) << "Page Path: " << pagePath;
+                qCWarning(OkularXpsDebug) << "Page Path: " << pagePath;
                 XpsPage *page = new XpsPage( file, absolutePath( documentFilePath, pagePath ) );
                 m_pages.append(page);
             } else if ( docXml.name() == "PageContent.LinkTargets" ) {
@@ -1813,12 +1813,12 @@ XpsDocument::XpsDocument(XpsFile *file, const QString &fileName): m_file(file), 
             } else if ( docXml.name() == "FixedDocument" ) {
                 // we just ignore this - it is just a container
             } else {
-                kDebug(XpsDebug) << "Unhandled entry in FixedDocument: " << docXml.name().toString();
+                qCWarning(OkularXpsDebug) << "Unhandled entry in FixedDocument: " << docXml.name().toString();
             }
         }
     }
     if ( docXml.error() ) {
-        kDebug(XpsDebug) << "Could not parse main XPS document file: " << docXml.errorString();
+        qCWarning(OkularXpsDebug) << "Could not parse main XPS document file: " << docXml.errorString();
     }
 
     // There might be a relationships entry for this document - typically used to tell us where to find the
@@ -1842,28 +1842,28 @@ XpsDocument::XpsDocument(XpsFile *file, const QString &fileName): m_file(file), 
                 if ( attributes.value( "Type" ).toString() == "http://schemas.microsoft.com/xps/2005/06/documentstructure" ) {
                     documentStructureFile  = attributes.value( "Target" ).toString();
                 } else {
-                    kDebug(XpsDebug) << "Unknown document relationships element: "
+                    qCWarning(OkularXpsDebug) << "Unknown document relationships element: "
                                      << attributes.value( "Type" ).toString() << " : "
                                      << attributes.value( "Target" ).toString() << endl;
                 }
             }
         }
         if ( xml.error() ) {
-            kDebug(XpsDebug) << "Could not parse XPS page relationships file ( "
+            qCWarning(OkularXpsDebug) << "Could not parse XPS page relationships file ( "
                              << documentRelationshipFile
                              << " ) - " << xml.errorString() << endl;
         }
     } else { // the page relationship file didn't exist in the zipfile
         // this isn't fatal
-        kDebug(XpsDebug) << "Could not open Document relationship file from " << documentRelationshipFile;
+        qCWarning(OkularXpsDebug) << "Could not open Document relationship file from " << documentRelationshipFile;
     }
 
     if ( ! documentStructureFile.isEmpty() )
     {
-        // kDebug(XpsDebug) << "Document structure filename: " << documentStructureFile;
+        // qCWarning(OkularXpsDebug) << "Document structure filename: " << documentStructureFile;
         // make the document path absolute
         documentStructureFile = absolutePath( documentEntryPath, documentStructureFile );
-        // kDebug(XpsDebug) << "Document structure absolute path: " << documentStructureFile;
+        // qCWarning(OkularXpsDebug) << "Document structure absolute path: " << documentStructureFile;
         parseDocumentStructure( documentStructureFile );
     }
 
@@ -1906,9 +1906,9 @@ bool XpsFile::loadDocument(const QString &filename)
 {
     m_xpsArchive = new KZip( filename );
     if ( m_xpsArchive->open( QIODevice::ReadOnly ) == true ) {
-        kDebug(XpsDebug) << "Successful open of " << m_xpsArchive->fileName();
+        qCWarning(OkularXpsDebug) << "Successful open of " << m_xpsArchive->fileName();
     } else {
-        kDebug(XpsDebug) << "Could not open XPS archive: " << m_xpsArchive->fileName();
+        qCWarning(OkularXpsDebug) << "Could not open XPS archive: " << m_xpsArchive->fileName();
         delete m_xpsArchive;
         return false;
     }
@@ -1942,17 +1942,17 @@ bool XpsFile::loadDocument(const QString &filename)
                 } else if ("http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/origin" == type) {
                     m_signatureOrigin = target;
                 } else {
-                    kDebug(XpsDebug) << "Unknown relationships element: " << type << " : " << target;
+                    qCWarning(OkularXpsDebug) << "Unknown relationships element: " << type << " : " << target;
                 }
             } else if ( relXml.name() == "Relationships" ) {
                 // nothing to do here - this is just the container level
             } else {
-                kDebug(XpsDebug) << "unexpected element in _rels/.rels: " << relXml.name().toString();
+                qCWarning(OkularXpsDebug) << "unexpected element in _rels/.rels: " << relXml.name().toString();
             }
         }
     }
     if ( relXml.error() ) {
-        kDebug(XpsDebug) << "Could not parse _rels/.rels: " << relXml.errorString();
+        qCWarning(OkularXpsDebug) << "Could not parse _rels/.rels: " << relXml.errorString();
         return false;
     }
 
@@ -1982,12 +1982,12 @@ bool XpsFile::loadDocument(const QString &filename)
             } else if ( fixedRepXml.name() == "FixedDocumentSequence") {
                 // we don't do anything here - this is just a container for one or more DocumentReference elements
             } else {
-                kDebug(XpsDebug) << "Unhandled entry in FixedDocumentSequence: " << fixedRepXml.name().toString();
+                qCWarning(OkularXpsDebug) << "Unhandled entry in FixedDocumentSequence: " << fixedRepXml.name().toString();
             }
         }
     }
     if ( fixedRepXml.error() ) {
-        kDebug(XpsDebug) << "Could not parse FixedRepresentation file:" << fixedRepXml.errorString();
+        qCWarning(OkularXpsDebug) << "Could not parse FixedRepresentation file:" << fixedRepXml.errorString();
         return false;
     }
 
@@ -2037,10 +2037,10 @@ Okular::DocumentInfo XpsFile::generateDocumentInfo() const
         }
         if ( xml.error() )
         {
-            kDebug(XpsDebug) << "Could not parse XPS core properties:" << xml.errorString();
+            qCWarning(OkularXpsDebug) << "Could not parse XPS core properties:" << xml.errorString();
         }
     } else {
-        kDebug(XpsDebug) << "No core properties filename";
+        qCWarning(OkularXpsDebug) << "No core properties filename";
     }
 
     docInfo.set( Okular::DocumentInfo::Pages, QString::number(numPages()) );
@@ -2150,14 +2150,14 @@ Okular::TextPage* XpsGenerator::textPage( Okular::Page * page )
 
 Okular::DocumentInfo XpsGenerator::generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const
 {
-    kDebug(XpsDebug) << "generating document metadata";
+    qCWarning(OkularXpsDebug) << "generating document metadata";
 
     return m_xpsFile->generateDocumentInfo();
 }
 
 const Okular::DocumentSynopsis * XpsGenerator::generateDocumentSynopsis()
 {
-    kDebug(XpsDebug) << "generating document synopsis";
+    qCWarning(OkularXpsDebug) << "generating document synopsis";
 
     // we only generate the synopsis for the first file.
     if ( !m_xpsFile || !m_xpsFile->document( 0 ) )
@@ -2239,7 +2239,7 @@ QVariant XpsRenderNode::getRequiredChildData( const QString &name )
 {
     XpsRenderNode * child = findChild( name );
     if (child == NULL) {
-        kDebug(XpsDebug) << "Required element " << name << " is missing in " << this->name;
+        qCWarning(OkularXpsDebug) << "Required element " << name << " is missing in " << this->name;
         return QVariant();
     }
 
@@ -2255,6 +2255,8 @@ QVariant XpsRenderNode::getChildData( const QString &name )
         return child->data;
     }
 }
+
+Q_LOGGING_CATEGORY(OkularXpsDebug, "org.kde.okular.generators.xps")
 
 #include "generator_xps.moc"
 

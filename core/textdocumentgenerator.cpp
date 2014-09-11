@@ -544,7 +544,7 @@ bool TextDocumentGenerator::reparseConfig()
 
 void TextDocumentGenerator::addPages( KConfigDialog* /*dlg*/ )
 {
-    kWarning() << "You forgot to reimplement addPages in your TextDocumentGenerator";
+    qCWarning(OkularCoreDebug) << "You forgot to reimplement addPages in your TextDocumentGenerator";
     return;
 }
 

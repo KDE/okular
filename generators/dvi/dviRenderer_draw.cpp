@@ -54,11 +54,12 @@
 
 #include <config.h>
 
+#include "debug_dvi.h"
 #include "dviRenderer.h"
 #include "dvi.h"
 #include "dviFile.h"
 #include "hyperlink.h"
-#include "kvs_debug.h"
+#include "debug_dvi.h"
 #include "psgs.h"
 //#include "renderedDviPagePixmap.h"
 #include "TeXFont.h"
@@ -68,6 +69,7 @@
 #include <klocale.h>
 
 #include <QPainter>
+#include <QtCore/qloggingcategory.h>
 
 
 
@@ -76,7 +78,7 @@
 void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
 {
 #ifdef DEBUG_RENDER
-  kDebug(kvs::dvi) << "set_char #" << ch;
+  qCDebug(OkularDviDebug) << "set_char #" << ch;
 #endif
 
   glyph *g;
@@ -205,13 +207,13 @@ void dviRenderer::set_empty_char(unsigned int, unsigned int)
 void dviRenderer::set_vf_char(unsigned int cmd, unsigned int ch)
 {
 #ifdef DEBUG_RENDER
-  kDebug(kvs::dvi) << "dviRenderer::set_vf_char( cmd=" << cmd << ", ch=" << ch << " )";
+  qCDebug(OkularDviDebug) << "dviRenderer::set_vf_char( cmd=" << cmd << ", ch=" << ch << " )";
 #endif
 
   static unsigned char   c;
   macro *m = &currinf.fontp->macrotable[ch];
   if (m->pos == NULL) {
-    kError(kvs::dvi) << "Character " << ch << " not defined in font " << currinf.fontp->fontname << endl;
+    qCCritical(OkularDviDebug) << "Character " << ch << " not defined in font " << currinf.fontp->fontname << endl;
     m->pos = m->end = &c;
     return;
   }
@@ -246,7 +248,7 @@ void dviRenderer::set_vf_char(unsigned int cmd, unsigned int ch)
 void dviRenderer::set_no_char(unsigned int cmd, unsigned int ch)
 {
 #ifdef DEBUG_RENDER
-  kDebug(kvs::dvi) << "dviRenderer::set_no_char( cmd=" << cmd << ", ch =" << ch << " )" ;
+  qCDebug(OkularDviDebug) << "dviRenderer::set_no_char( cmd=" << cmd << ", ch =" << ch << " )" ;
 #endif
 
   if (currinf._virtual) {
@@ -266,7 +268,7 @@ void dviRenderer::set_no_char(unsigned int cmd, unsigned int ch)
 void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
 {
 #ifdef DEBUG_RENDER
-  kDebug(kvs::dvi) << "draw_part";
+  qCDebug(OkularDviDebug) << "draw_part";
 #endif
 
   qint32 RRtmp=0, WWtmp=0, XXtmp=0, YYtmp=0, ZZtmp=0;
@@ -371,7 +373,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
             // that at the end of a page, the stack should always be
             // empty.
             if (!stack.isEmpty()) {
-              kDebug(kvs::dvi) << "DRAW: The stack was not empty when the EOP command was encountered.";
+              qCDebug(OkularDviDebug) << "DRAW: The stack was not empty when the EOP command was encountered.";
               errorMsg = i18n("The stack was not empty when the EOP command was encountered.");
               return;
             }
@@ -579,7 +581,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
 
 #ifdef DEBUG_RENDER
     if (currentlyDrawnPage->textBoxList.size() > 0)
-      kDebug(kvs::dvi) << "Element:"
+      qCDebug(OkularDviDebug) << "Element:"
                        << currentlyDrawnPage->textBoxList.last().box
                        << currentlyDrawnPage->textBoxList.last().text
                        << " ? s:" << space_encountered
@@ -610,7 +612,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
       QString lastword(currentlyDrawnPage->textBoxList[last_space_index].text);
       for (int lidx = last_space_index+1; lidx<currentlyDrawnPage->textBoxList.size(); ++lidx)
         lastword += currentlyDrawnPage->textBoxList[lidx].text;
-      kDebug(kvs::dvi) << "space encountered: '" << lastword << "'";
+      qCDebug(OkularDviDebug) << "space encountered: '" << lastword << "'";
 #endif
       last_space_index = currentlyDrawnPage->textBoxList.size();
       after_space = true;
@@ -642,14 +644,14 @@ void dviRenderer::draw_page()
   // elapsed till the kdvi_multipage was constructed, and print
   // it. Set the flag so that is message will not be printed again.
   if (performanceFlag == 0) {
-    kDebug(kvs::dvi) << "Time elapsed till the first page is drawn: " << performanceTimer.restart() << "ms";
+    qCDebug(OkularDviDebug) << "Time elapsed till the first page is drawn: " << performanceTimer.restart() << "ms";
     performanceFlag = 1;
   }
 #endif
 
 
 #ifdef DEBUG_RENDER
-  kDebug(kvs::dvi) <<"draw_page";
+  qCDebug(OkularDviDebug) <<"draw_page";
 #endif
 
 #if 0

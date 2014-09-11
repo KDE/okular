@@ -11,7 +11,7 @@
 
 #include <qimage.h>
 
-#include <kdebug.h>
+#include <QtCore/QDebug>
 
 #include "core/generator.h"
 #include "core/page.h"

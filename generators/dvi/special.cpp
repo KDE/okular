@@ -12,7 +12,7 @@
 #include "dviFile.h"
 #include "dviRenderer.h"
 #include "hyperlink.h"
-#include "kvs_debug.h"
+#include "debug_dvi.h"
 #include "psgs.h"
 //#include "renderedDocumentPage.h"
 
@@ -23,18 +23,16 @@
 #include <QFile>
 #include <QImage>
 #include <QPainter>
-
-//#define DEBUG_SPECIAL
-
+#include "debug_dvi.h"
 
 
 void dviRenderer::printErrorMsgForSpecials(const QString& msg)
 {
   if (dviFile->errorCounter < 25) {
-    kError(kvs::dvi) << msg << endl;
+    qCCritical(OkularDviDebug) << msg << endl;
     dviFile->errorCounter++;
     if (dviFile->errorCounter == 25)
-      kError(kvs::dvi) << i18n("That makes 25 errors. Further error messages will not be printed.") << endl;
+      qCCritical(OkularDviDebug) << i18n("That makes 25 errors. Further error messages will not be printed.") << endl;
   }
 }
 
@@ -251,7 +249,7 @@ void dviRenderer::html_href_special(const QString& _cp)
   cp.truncate(cp.indexOf('"'));
 
 #ifdef DEBUG_SPECIAL
-  kDebug(kvs::dvi) << "HTML-special, href " << cp.toLatin1();
+  qCDebug(OkularDviDebug) << "HTML-special, href " << cp.toLatin1();
 #endif
   HTML_href = new QString(cp);
 }
@@ -260,7 +258,7 @@ void dviRenderer::html_href_special(const QString& _cp)
 void dviRenderer::html_anchor_end()
 {
 #ifdef DEBUG_SPECIAL
-  kDebug(kvs::dvi) << "HTML-special, anchor-end";
+  qCDebug(OkularDviDebug) << "HTML-special, anchor-end";
 #endif
 
   if (HTML_href != NULL) {
@@ -300,7 +298,7 @@ void parse_special_argument(const QString& strg, const char* argument_name, int*
       *variable = int(tmp_float+0.5);
     else
       // Maybe we should open a dialog here.
-      kError(kvs::dvi) << i18n("Malformed parameter in the epsf special command.\n"
+      qCCritical(OkularDviDebug) << i18n("Malformed parameter in the epsf special command.\n"
                                    "Expected a float to follow %1 in %2",
                                argument_name, strg) << endl;
   }
@@ -310,7 +308,7 @@ void parse_special_argument(const QString& strg, const char* argument_name, int*
 void dviRenderer::epsf_special(const QString& cp)
 {
 #ifdef DEBUG_SPECIAL
-  kDebug(kvs::dvi) << "epsf-special: psfile=" << cp;
+  qCDebug(OkularDviDebug) << "epsf-special: psfile=" << cp;
 #endif
 
   QString include_command = cp.simplified();
@@ -438,7 +436,7 @@ void dviRenderer::epsf_special(const QString& cp)
 void dviRenderer::TPIC_flushPath_special()
 {
 #ifdef DEBUG_SPECIAL
-  kDebug(kvs::dvi) << "TPIC special flushPath";
+  qCDebug(OkularDviDebug) << "TPIC special flushPath";
 #endif
 
   if (number_of_elements_in_path == 0) {
@@ -456,7 +454,7 @@ void dviRenderer::TPIC_flushPath_special()
 void dviRenderer::TPIC_addPath_special(const QString& cp)
 {
 #ifdef DEBUG_SPECIAL
-  kDebug(kvs::dvi) << "TPIC special addPath: " << cp;
+  qCDebug(OkularDviDebug) << "TPIC special addPath: " << cp;
 #endif
 
   // Adds a point to the path list
@@ -490,7 +488,7 @@ void dviRenderer::TPIC_addPath_special(const QString& cp)
 void dviRenderer::TPIC_setPen_special(const QString& cp)
 {
 #ifdef DEBUG_SPECIAL
-  kDebug(kvs::dvi) << "TPIC special setPen: " << cp;
+  qCDebug(OkularDviDebug) << "TPIC special setPen: " << cp;
 #endif
 
   // Sets the pen size in milli-inches

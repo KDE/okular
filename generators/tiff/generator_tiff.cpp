@@ -19,7 +19,7 @@
 #include <QtPrintSupport/QPrinter>
 
 #include <kaboutdata.h>
-#include <kdebug.h>
+#include <QtCore/QDebug>
 #include <kglobal.h>
 #include <klocale.h>
 
@@ -445,11 +445,13 @@ int TIFFGenerator::mapPage( int page ) const
     QHash< int, int >::const_iterator it = m_pageMapping.find( page );
     if ( it == m_pageMapping.end() )
     {
-        kWarning(TiffDebug) << "Requesting unmapped page" << page << ":" << m_pageMapping;
+        qCWarning(OkularTiffDebug) << "Requesting unmapped page" << page << ":" << m_pageMapping;
         return -1;
     }
     return it.value();
 }
+
+Q_LOGGING_CATEGORY(OkularTiffDebug, "org.kde.okular.generators.tiff")
 
 #include "generator_tiff.moc"
 

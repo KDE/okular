@@ -20,6 +20,7 @@
 #include "pageview.h"
 
 // qt/kde includes
+#include <QtCore/qloggingcategory.h>
 #include <qcursor.h>
 #include <qevent.h>
 #include <qimage.h>
@@ -43,7 +44,7 @@
 #include <kinputdialog.h>
 #include <kselectaction.h>
 #include <ktoggleaction.h>
-#include <kdebug.h>
+#include <QtCore/QDebug>
 #include <kdeversion.h>
 #include <kmessagebox.h>
 #include <kicon.h>
@@ -57,6 +58,7 @@
 #include <stdlib.h>
 
 // local includes
+#include "debug_ui.h"
 #include "formwidgets.h"
 #include "pageviewutils.h"
 #include "pagepainter.h"
@@ -1143,7 +1145,7 @@ void PageView::slotRealNotifyViewportChanged( bool smoothMove )
         }
     if ( !item )
     {
-        kWarning() << "viewport for page" << vp.pageNumber << "has no matching item!";
+        qWarning() << "viewport for page" << vp.pageNumber << "has no matching item!";
         d->blockViewport = false;
         return;
     }
@@ -2560,7 +2562,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                     {
                         // request the textpage if there isn't one
                         okularPage= item->page();
-                        kWarning() << "checking if page" << item->pageNumber() << "has text:" << okularPage->hasTextPage();
+                        qWarning() << "checking if page" << item->pageNumber() << "has text:" << okularPage->hasTextPage();
                         if ( !okularPage->hasTextPage() )
                             d->document->requestTextPage( okularPage->number() );
                         // grab text in the rect that intersects itemRect
@@ -2707,7 +2709,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                     {
                         // request the textpage if there isn't one
                         okularPage= item->page();
-                        kWarning() << "checking if page" << item->pageNumber() << "has text:" << okularPage->hasTextPage();
+                        qWarning() << "checking if page" << item->pageNumber() << "has text:" << okularPage->hasTextPage();
                         if ( !okularPage->hasTextPage() )
                             d->document->requestTextPage( okularPage->number() );
                         // grab text in the rect that intersects itemRect

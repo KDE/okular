@@ -15,7 +15,7 @@
 #include <kjs/kjsprototype.h>
 #include <kjs/kjsarguments.h>
 
-#include <kdebug.h>
+#include <QtCore/QDebug>
 
 #include "../debug_p.h"
 #include "../document_p.h"
@@ -94,7 +94,7 @@ void ExecutorKJS::execute( const QString &script )
     int errLine;
     if ( !KJSInterpreter::normalizeCode( script, &script2, &errLine, &errMsg ) )
     {
-        kWarning(OkularCoreDebug) << "Parse error during normalization!";
+        qCWarning(OkularCoreDebug) << "Parse error during normalization!";
         script2 = script;
     }
 #endif

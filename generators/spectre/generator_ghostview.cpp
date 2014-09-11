@@ -19,7 +19,7 @@
 
 #include <kaboutdata.h>
 #include <kconfigdialog.h>
-#include <kdebug.h>
+#include <QtCore/QDebug>
 #include <QMimeType>
 #include <QMimeDatabase>
 #include <ktemporaryfile.h>

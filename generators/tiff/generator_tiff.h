@@ -12,6 +12,7 @@
 
 #include <core/generator.h>
 
+#include <QtCore/qloggingcategory.h>
 #include <qhash.h>
 
 class TIFFGenerator : public Okular::Generator
@@ -42,5 +43,7 @@ class TIFFGenerator : public Okular::Generator
 
         QHash< int, int > m_pageMapping;
 };
+
+Q_DECLARE_LOGGING_CATEGORY(OkularTiffDebug)
 
 #endif

@@ -19,7 +19,7 @@
 #include <QtXml/QDomDocument>
 #include <QtXml/QDomElement>
 
-#include <kdebug.h>
+#include <QtCore/QDebug>
 
 // local includes
 #include "action.h"
@@ -823,7 +823,7 @@ void PagePrivate::restoreLocalContents( const QDomNode & pageNode )
                     qCDebug(OkularCoreDebug) << "restored annot:" << annotation->uniqueName();
                 }
                 else
-                    kWarning(OkularCoreDebug).nospace() << "page (" << m_number << "): can't restore an annotation from XML.";
+                    qCWarning(OkularCoreDebug).nospace() << "page (" << m_number << "): can't restore an annotation from XML.";
             }
 #ifdef PAGE_PROFILE
             qCDebug(OkularCoreDebug).nospace() << "annots: XML Load time: " << time.elapsed() << "ms";

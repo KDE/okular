@@ -19,7 +19,7 @@
 #include <sys/stat.h>
 
 #include <kapplication.h>
-#include <kdebug.h>
+#include <QtCore/QDebug>
 #include <kurl.h>
 #include <QMimeType>
 #include <QMimeDatabase>

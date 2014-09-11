@@ -10,6 +10,7 @@
 #include "pageviewannotator.h"
 
 // qt / kde includes
+#include <QtCore/qloggingcategory.h>
 #include <qapplication.h>
 #include <qfile.h>
 #include <qcolor.h>
@@ -23,7 +24,7 @@
 #include <kstandarddirs.h>
 #include <kinputdialog.h>
 #include <kuser.h>
-#include <kdebug.h>
+#include <QtCore/QDebug>
 #include <kmenu.h>
 
 // system includes
@@ -38,6 +39,7 @@
 #include "annotationtools.h"
 #include "guiutils.h"
 #include "pageview.h"
+#include "debug_ui.h"
 
 /** @short PickPointEngine */
 class PickPointEngine : public AnnotatorEngine
@@ -671,7 +673,7 @@ void PageViewAnnotator::reparseConfig()
         if ( entryParser.setContent( toolXml ) )
             m_toolsDefinition.appendChild( doc.importNode( entryParser.documentElement(), true ) );
         else
-            kWarning() << "Skipping malformed tool XML in AnnotationTools setting";
+            qCWarning(OkularUiDebug) << "Skipping malformed tool XML in AnnotationTools setting";
     }
 
     // Create the AnnotationToolItems from the XML dom tree
@@ -1008,7 +1010,7 @@ void PageViewAnnotator::slotToolSelected( int toolID )
                 else if ( type == "TextSelector" )
                     m_engine = new TextSelectorEngine( toolSubElement, m_pageView );
                 else
-                    kWarning().nospace() << "tools.xml: engine type:'" << type << "' is not defined!";
+                    qCWarning(OkularUiDebug).nospace() << "tools.xml: engine type:'" << type << "' is not defined!";
             }
 
             // display the tooltip
@@ -1047,7 +1049,7 @@ void PageViewAnnotator::slotToolSelected( int toolID )
         // consistancy warning
         if ( !m_engine )
         {
-            kWarning() << "tools.xml: couldn't find good engine description. check xml.";
+            qCWarning(OkularUiDebug) << "tools.xml: couldn't find good engine description. check xml.";
         }
 
         m_pageView->updateCursor();

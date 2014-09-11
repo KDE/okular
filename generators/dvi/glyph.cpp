@@ -10,7 +10,7 @@
 #include <config.h>
 
 #include "glyph.h"
-#include "kvs_debug.h"
+#include "debug_dvi.h"
 
 bitmap::bitmap()
 {
@@ -25,7 +25,7 @@ bitmap::~bitmap()
 glyph::glyph()
 {
 #ifdef DEBUG_GLYPH
-  kDebug(kvs::dvi) << "glyph::glyph()";
+  qCDebug(OkularDviDebug) << "glyph::glyph()";
 #endif
 
   addr                     = 0;

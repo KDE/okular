@@ -26,7 +26,9 @@
 #include <kpushbutton.h>
 #include <kservice.h>
 #include <ksharedconfig.h>
-#include <kdebug.h>
+#include <QtCore/qloggingcategory.h>
+
+#include "debug_ui.h"
 
 using namespace Okular;
 
@@ -65,10 +67,10 @@ public:
 void FilePrinterPreviewPrivate::getPart()
 {
     if (previewPart) {
-        kDebug(500) << "already got a part";
+        qCDebug(OkularUiDebug) << "already got a part";
         return;
     }
-    kDebug(500) << "querying trader for application/ps service";
+    qCDebug(OkularUiDebug) << "querying trader for application/ps service";
 
     KPluginFactory *factory(0);
     /* Explicitly look for the Okular/Ghostview part: no other PostScript
@@ -83,15 +85,15 @@ void FilePrinterPreviewPrivate::getPart()
         KPluginLoader loader(**it);
         factory = loader.factory();
         if (!factory) {
-            kDebug(500) << "Loading failed:" << loader.errorString();
+            qCDebug(OkularUiDebug) << "Loading failed:" << loader.errorString();
         }
         ++it;
     }
     if (factory) {
-        kDebug(500) << "Trying to create a part";
+        qCDebug(OkularUiDebug) << "Trying to create a part";
         previewPart = factory->create<KParts::ReadOnlyPart>(q, (QVariantList() << "Print/Preview"));
         if (!previewPart) {
-            kDebug(500) << "Part creation failed";
+            qCDebug(OkularUiDebug) << "Part creation failed";
         }
     }
 }
@@ -99,14 +101,14 @@ void FilePrinterPreviewPrivate::getPart()
 bool FilePrinterPreviewPrivate::doPreview()
 {
     if (!QFile::exists(filename)) {
-        kWarning() << "Nothing was produced to be previewed";
+        qCWarning(OkularUiDebug) << "Nothing was produced to be previewed";
         return false;
     }
 
     getPart();
     if (!previewPart) {
         //TODO: error dialog
-        kWarning() << "Could not find a PS viewer for the preview dialog";
+        qCWarning(OkularUiDebug) << "Could not find a PS viewer for the preview dialog";
         fail();
         return false;
     } else {
@@ -130,7 +132,7 @@ FilePrinterPreview::FilePrinterPreview( const QString &filename, QWidget *parent
     : KDialog( parent )
     , d( new FilePrinterPreviewPrivate( this, filename ) )
 {
-    kDebug(500) << "kdeprint: creating preview dialog";
+    qCDebug(OkularUiDebug) << "kdeprint: creating preview dialog";
 
     // Set up the dialog
     setCaption(i18n("Print Preview"));

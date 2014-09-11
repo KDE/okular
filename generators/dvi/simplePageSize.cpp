@@ -9,15 +9,16 @@
 #include <config.h>
 
 #include "simplePageSize.h"
-#include "kvs_debug.h"
+#include "debug_dvi.h"
 
+#include <QtCore/qloggingcategory.h>
 #include <QPaintDevice>
 
 
 double SimplePageSize::zoomForHeight(quint32 height, const QPaintDevice& pd) const
 {
   if (!isValid()) {
-    kError(kvs::shell) << "SimplePageSize::zoomForHeight() called when paper height was invalid" << endl;
+    qCCritical(OkularDviShellDebug) << "SimplePageSize::zoomForHeight() called when paper height was invalid" << endl;
     return 0.1;
   }
 
@@ -28,7 +29,7 @@ double SimplePageSize::zoomForHeight(quint32 height, const QPaintDevice& pd) con
 double SimplePageSize::zoomForWidth(quint32 width, const QPaintDevice& pd) const
 {
   if (!isValid()) {
-    kError(kvs::shell) << "SimplePageSize::zoomForWidth() called when paper width was invalid" << endl;
+    qCCritical(OkularDviShellDebug) << "SimplePageSize::zoomForWidth() called when paper width was invalid" << endl;
     return 0.1;
   }
 
@@ -39,7 +40,7 @@ double SimplePageSize::zoomForWidth(quint32 width, const QPaintDevice& pd) const
 double SimplePageSize::zoomToFitInto(const SimplePageSize &target) const
 {
   if (!isValid() || isSmall() || !target.isValid()) {
-    kWarning(kvs::shell) << "SimplePageSize::zoomToFitInto(...) with unsuitable source of target" ;
+    qCWarning(OkularDviShellDebug) << "SimplePageSize::zoomToFitInto(...) with unsuitable source of target" ;
     return 1.0;
   }
 

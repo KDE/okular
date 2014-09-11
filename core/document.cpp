@@ -40,7 +40,7 @@
 #include <k4aboutdata.h>
 #include <kauthorized.h>
 #include <kconfigdialog.h>
-#include <kdebug.h>
+#include <QtCore/QLoggingCategory>
 #include <klibloader.h>
 #include <klocale.h>
 #include <kmacroexpander.h>
@@ -254,7 +254,7 @@ QString DocumentPrivate::namePaperSize(double inchesWidth, double inchesHeight) 
             return orientation == QPrinter::Landscape ? i18nc("paper size", "unknown landscape paper size") : i18nc("paper size", "unknown portrait paper size");
     }
 
-    kWarning() << "PaperSize" << paperSize << "has not been covered";
+    qCWarning(OkularCoreDebug) << "PaperSize" << paperSize << "has not been covered";
     return QString();
 }
 
@@ -818,7 +818,7 @@ Generator * DocumentPrivate::loadGeneratorLibrary( const KService::Ptr &service 
     KPluginFactory *factory = KPluginLoader( service->library() ).factory();
     if ( !factory )
     {
-        kWarning(OkularCoreDebug).nospace() << "Invalid plugin factory for " << service->library() << "!";
+        qCWarning(OkularCoreDebug).nospace() << "Invalid plugin factory for " << service->library() << "!";
         return 0;
     }
 
@@ -1442,9 +1442,9 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
             m_pixmapRequestsStack.pop_back();
             if ( !m_warnedOutOfMemory )
             {
-                kWarning(OkularCoreDebug).nospace() << "Running out of memory on page " << r->pageNumber()
+                qCWarning(OkularCoreDebug).nospace() << "Running out of memory on page " << r->pageNumber()
                     << " (" << r->width() << "x" << r->height() << " px);";
-                kWarning(OkularCoreDebug) << "this message will be reported only once.";
+                qCWarning(OkularCoreDebug) << "this message will be reported only once.";
                 m_warnedOutOfMemory = true;
             }
             delete r;
@@ -2209,7 +2209,7 @@ Document::OpenResult Document::openDocument( const QString & docFile, const KUrl
     if (offers.isEmpty())
     {
         emit error( i18n( "Can not find a plugin which is able to handle the document being passed." ), -1 );
-        kWarning(OkularCoreDebug).nospace() << "No plugin for mimetype '" << mime.name() << "'.";
+        qCWarning(OkularCoreDebug).nospace() << "No plugin for mimetype '" << mime.name() << "'.";
         return OpenError;
     }
     int hRank=0;
@@ -3037,7 +3037,7 @@ void Document::prepareToModifyAnnotationProperties( Annotation * annotation )
     Q_ASSERT(d->m_prevPropsOfAnnotBeingModified.isNull());
     if (!d->m_prevPropsOfAnnotBeingModified.isNull())
     {
-        kError(OkularCoreDebug) << "Error: Document::prepareToModifyAnnotationProperties has already been called since last call to Document::modifyPageAnnotationProperties";
+        qCCritical(OkularCoreDebug) << "Error: Document::prepareToModifyAnnotationProperties has already been called since last call to Document::modifyPageAnnotationProperties";
         return;
     }
     d->m_prevPropsOfAnnotBeingModified = annotation->getAnnotationPropertiesDomNode();
@@ -3048,7 +3048,7 @@ void Document::modifyPageAnnotationProperties( int page, Annotation * annotation
     Q_ASSERT(!d->m_prevPropsOfAnnotBeingModified.isNull());
     if (d->m_prevPropsOfAnnotBeingModified.isNull())
     {
-        kError(OkularCoreDebug) << "Error: Document::prepareToModifyAnnotationProperties must be called before Annotation is modified";
+        qCCritical(OkularCoreDebug) << "Error: Document::prepareToModifyAnnotationProperties must be called before Annotation is modified";
         return;
     }
     QDomNode prevProps = d->m_prevPropsOfAnnotBeingModified;
@@ -3631,7 +3631,7 @@ void Document::processAction( const Action * action )
             // first open filename if link is pointing outside this document
             if ( go->isExternal() && !d->openRelativeFile( go->fileName() ) )
             {
-                kWarning(OkularCoreDebug).nospace() << "Action: Error opening '" << go->fileName() << "'.";
+                qCWarning(OkularCoreDebug).nospace() << "Action: Error opening '" << go->fileName() << "'.";
                 return;
             }
             else
@@ -4293,7 +4293,7 @@ bool Document::saveDocumentArchive( const QString &fileName )
         }
         else
         {
-            kWarning(OkularCoreDebug) << "saveChanges failed: " << errorText;
+            qCWarning(OkularCoreDebug) << "saveChanges failed: " << errorText;
             qCDebug(OkularCoreDebug) << "Falling back to saving a copy of the original file";
         }
     }
@@ -4405,7 +4405,7 @@ void DocumentPrivate::requestDone( PixmapRequest * req )
     }
 #ifndef NDEBUG
     else
-        kWarning(OkularCoreDebug) << "Receiving a done request for the defunct observer" << observer;
+        qCWarning(OkularCoreDebug) << "Receiving a done request for the defunct observer" << observer;
 #endif
 
     // 3. delete request
@@ -4777,7 +4777,7 @@ QString DocumentInfo::getKeyString( Key key ) //const
             return "pageSize";
             break;
         default:
-            kWarning() << "Unknown" << key;
+            qCWarning(OkularCoreDebug) << "Unknown" << key;
             return QString();
             break;
     }

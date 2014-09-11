@@ -54,7 +54,7 @@
 
 #include "TeXFont_PK.h"
 #include "fontpool.h"
-#include "kvs_debug.h"
+#include "debug_dvi.h"
 #include "xdvi.h"
 
 #include <klocale.h>
@@ -80,23 +80,23 @@ TeXFont_PK::TeXFont_PK(TeXFontDefinition *parent)
   : TeXFont(parent)
 {
 #ifdef DEBUG_PK
-  kDebug(kvs::dvi) << "TeXFont_PK::TeXFont_PK( parent=" << parent << ")";
+  qCDebug(OkularDviDebug) << "TeXFont_PK::TeXFont_PK( parent=" << parent << ")";
 #endif
 
   for(unsigned int i=0; i<TeXFontDefinition::max_num_of_chars_in_font; i++)
     characterBitmaps[i] = 0;
   file = fopen(QFile::encodeName(parent->filename).constData(), "r");
   if (file == 0)
-    kError(kvs::dvi) << i18n("Cannot open font file %1.", parent->filename) << endl;
+    qCCritical(OkularDviDebug) << i18n("Cannot open font file %1.", parent->filename) << endl;
 #ifdef DEBUG_PK
   else
-    kDebug(kvs::dvi) << "TeXFont_PK::TeXFont_PK(): file opened successfully";
+    qCDebug(OkularDviDebug) << "TeXFont_PK::TeXFont_PK(): file opened successfully";
 #endif
 
   read_PK_index();
 
 #ifdef DEBUG_PK
-  kDebug(kvs::dvi) << "TeXFont_PK::TeXFont_PK() ended";
+  qCDebug(OkularDviDebug) << "TeXFont_PK::TeXFont_PK() ended";
 #endif
 }
 
@@ -119,12 +119,12 @@ TeXFont_PK::~TeXFont_PK()
 glyph* TeXFont_PK::getGlyph(quint16 ch, bool generateCharacterPixmap, const QColor& color)
 {
 #ifdef DEBUG_PK
-  kDebug(kvs::dvi) << "TeXFont_PK::getGlyph( ch=" << ch << ", generateCharacterPixmap=" << generateCharacterPixmap << " )";
+  qCDebug(OkularDviDebug) << "TeXFont_PK::getGlyph( ch=" << ch << ", generateCharacterPixmap=" << generateCharacterPixmap << " )";
 #endif
 
   // Paranoia checks
   if (ch >= TeXFontDefinition::max_num_of_chars_in_font) {
-    kError(kvs::dvi) << "TeXFont_PK::getGlyph(): Argument is too big." << endl;
+    qCCritical(OkularDviDebug) << "TeXFont_PK::getGlyph(): Argument is too big." << endl;
     return glyphtable;
   }
 
@@ -136,7 +136,7 @@ glyph* TeXFont_PK::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCol
     // If the character is not defined in the PK file, mark the
     // character as missing, and print an error message
     if (g->addr == 0) {
-      kError(kvs::dvi) << i18n("TexFont_PK::operator[]: Character %1 not defined in font %2", ch, parent->filename) << endl;
+      qCCritical(OkularDviDebug) << i18n("TexFont_PK::operator[]: Character %1 not defined in font %2", ch, parent->filename) << endl;
       g->addr = -1;
       return g;
     }
@@ -373,7 +373,7 @@ static quint32        bit_masks[33] = {
 int TeXFont_PK::PK_get_nyb(FILE *fp)
 {
 #ifdef DEBUG_PK
-  kDebug(kvs::dvi) << "PK_get_nyb";
+  qCDebug(OkularDviDebug) << "PK_get_nyb";
 #endif
 
   unsigned temp;
@@ -390,7 +390,7 @@ int TeXFont_PK::PK_get_nyb(FILE *fp)
 int TeXFont_PK::PK_packed_num(FILE *fp)
 {
 #ifdef DEBUG_PK
-  kDebug(kvs::dvi) << "PK_packed_num";
+  qCDebug(OkularDviDebug) << "PK_packed_num";
 #endif
 
   int i, j;
@@ -422,7 +422,7 @@ int TeXFont_PK::PK_packed_num(FILE *fp)
 void TeXFont_PK::PK_skip_specials()
 {
 #ifdef DEBUG_PK
-  kDebug(kvs::dvi) << "TeXFont_PK::PK_skip_specials() called";
+  qCDebug(OkularDviDebug) << "TeXFont_PK::PK_skip_specials() called";
 #endif
 
   int i,j;
@@ -430,7 +430,7 @@ void TeXFont_PK::PK_skip_specials()
 
 #ifdef DEBUG_PK
   if (fp == 0)
-    kDebug(kvs::dvi) << "TeXFont_PK::PK_skip_specials(): file == 0";
+    qCDebug(OkularDviDebug) << "TeXFont_PK::PK_skip_specials(): file == 0";
 #endif
 
   do {
@@ -460,7 +460,7 @@ void TeXFont_PK::PK_skip_specials()
   while (PK_flag_byte != PK_POST && PK_flag_byte >= PK_CMD_START);
 
 #ifdef DEBUG_PK
-  kDebug(kvs::dvi) << "TeXFont_PK::PK_skip_specials() ended";
+  qCDebug(OkularDviDebug) << "TeXFont_PK::PK_skip_specials() ended";
 #endif
 }
 
@@ -468,7 +468,7 @@ void TeXFont_PK::PK_skip_specials()
 void TeXFont_PK::read_PK_char(unsigned int ch)
 {
 #ifdef DEBUG_PK
-  kDebug(kvs::dvi) << "read_PK_char";
+  qCDebug(OkularDviDebug) << "read_PK_char";
 #endif
 
   int        i, j;
@@ -497,7 +497,7 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
       n = 1;
 
 #ifdef DEBUG_PK
-  kDebug(kvs::dvi) << "loading pk char " << ch << ", char type " << n;
+  qCDebug(OkularDviDebug) << "loading pk char " << ch << ", char type " << n;
 #endif
 
   if (characterBitmaps[ch] == 0)
@@ -555,7 +555,7 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
     // (Ultra-)Sparc processors.
 
 #ifdef DEBUG_PK
-    kDebug(kvs::dvi) << "big Endian byte ordering";
+    qCDebug(OkularDviDebug) << "big Endian byte ordering";
 #endif
 
     if (PK_dyn_f == 14) {        /* get raster by bits */
@@ -641,7 +641,7 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
     // Intel and Alpha processors.
 
 #ifdef DEBUG_PK
-    kDebug(kvs::dvi) << "small Endian byte ordering";
+    qCDebug(OkularDviDebug) << "small Endian byte ordering";
 #endif
 
     if (PK_dyn_f == 14) {        /* get raster by bits */
@@ -717,17 +717,17 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
 void TeXFont_PK::read_PK_index()
 {
 #ifdef DEBUG_PK
-  kDebug(kvs::dvi) << "TeXFont_PK::read_PK_index() called";
+  qCDebug(OkularDviDebug) << "TeXFont_PK::read_PK_index() called";
 #endif
 
   if (file == 0) {
-    kError(kvs::dvi) << "TeXFont_PK::read_PK_index(): file == 0" << endl;
+    qCCritical(OkularDviDebug) << "TeXFont_PK::read_PK_index(): file == 0" << endl;
     return;
   }
 
   int magic      = two(file);
   if (magic != PK_MAGIC) {
-    kError(kvs::dvi) << "TeXFont_PK::read_PK_index(): file is not a PK file" << endl;
+    qCCritical(OkularDviDebug) << "TeXFont_PK::read_PK_index(): file is not a PK file" << endl;
     return;
   }
 
@@ -739,7 +739,7 @@ void TeXFont_PK::read_PK_index()
   int hppp = sfour(file);
   int vppp = sfour(file);
   if (hppp != vppp)
-    kWarning(kvs::dvi) << i18n("Font has non-square aspect ratio ") << vppp << ":" << hppp ;
+    qCWarning(OkularDviDebug) << i18n("Font has non-square aspect ratio ") << vppp << ":" << hppp ;
 
   // Read glyph directory (really a whole pass over the file).
   for (;;) {
@@ -766,10 +766,10 @@ void TeXFont_PK::read_PK_index()
     glyphtable[ch].x2 = PK_flag_byte;
     fseek(file, (long) bytes_left, SEEK_CUR);
 #ifdef DEBUG_PK
-    kDebug(kvs::dvi) << "Scanning pk char " << ch << "at " << glyphtable[ch].addr;
+    qCDebug(OkularDviDebug) << "Scanning pk char " << ch << "at " << glyphtable[ch].addr;
 #endif
   }
 #ifdef DEBUG_PK
-  kDebug(kvs::dvi) << "TeXFont_PK::read_PK_index() called";
+  qCDebug(OkularDviDebug) << "TeXFont_PK::read_PK_index() called";
 #endif
 }

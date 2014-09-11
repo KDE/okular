@@ -23,7 +23,7 @@
 
 #include "dviFile.h"
 #include "dviRenderer.h"
-#include "kvs_debug.h"
+#include "debug_dvi.h"
 
 #include <KStandardDirs>
 #include <kfiledialog.h>
@@ -77,7 +77,7 @@ void DVIExport::start(const QString& command,
 
   process_->start();
   if (!process_->waitForStarted(-1))
-    kError(kvs::dvi) << command << " failed to start" << endl;
+    qCCritical(OkularDviDebug) << command << " failed to start" << endl;
   else
     started_ = true;
 

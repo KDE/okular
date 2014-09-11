@@ -911,7 +911,7 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
         PageViewItem * item = new PageViewItem( *setIt );
         d->items.push_back( item );
 #ifdef PAGEVIEW_DEBUG
-        kDebug().nospace() << "cropped geom for " << d->items.last()->pageNumber() << " is " << d->items.last()->croppedGeometry();
+        qCDebug(OkularUiDebug).nospace() << "cropped geom for " << d->items.last()->pageNumber() << " is " << d->items.last()->croppedGeometry();
 #endif
         const QLinkedList< Okular::FormField * > pageFields = (*setIt)->formFields();
         QLinkedList< Okular::FormField * >::const_iterator ffIt = pageFields.constBegin(), ffEnd = pageFields.constEnd();
@@ -1148,7 +1148,7 @@ void PageView::slotRealNotifyViewportChanged( bool smoothMove )
         return;
     }
 #ifdef PAGEVIEW_DEBUG
-    kDebug() << "document viewport changed";
+    qCDebug(OkularUiDebug) << "document viewport changed";
 #endif
     // relayout in "Single Pages" mode or if a relayout is pending
     d->blockPixmapsRequest = true;
@@ -1253,7 +1253,7 @@ void PageView::notifyPageChanged( int pageNumber, int changedFlags )
     if ( changedFlags & DocumentObserver::BoundingBox )
     {
 #ifdef PAGEVIEW_DEBUG
-        kDebug() << "BoundingBox change on page" << pageNumber;
+        qCDebug(OkularUiDebug) << "BoundingBox change on page" << pageNumber;
 #endif
         slotRelayoutPages();
         slotRequestVisiblePixmaps(); // TODO: slotRelayoutPages() may have done this already!
@@ -1427,7 +1427,7 @@ void PageView::paintEvent(QPaintEvent *pe)
             return;
 
 #ifdef PAGEVIEW_DEBUG
-        kDebug() << "paintevent" << contentsRect;
+        qCDebug(OkularUiDebug) << "paintevent" << contentsRect;
 #endif
 
         // create the screen painter. a pixel painted at contentsX,contentsY
@@ -1474,7 +1474,7 @@ void PageView::paintEvent(QPaintEvent *pe)
                     continue;
             }
 #ifdef PAGEVIEW_DEBUG
-            kDebug() << contentsRect;
+            qCDebug(OkularUiDebug) << contentsRect;
 #endif
 
             // note: this check will take care of all things requiring alpha blending (not only selection)
@@ -3166,7 +3166,7 @@ QList< Okular::RegularAreaRect * > PageView::textSelections( const QPoint& start
             affectedItemsSet.insert( item->pageNumber() );
     }
 #ifdef PAGEVIEW_DEBUG
-    kDebug() << ">>>> item selected by mouse:" << affectedItemsSet.count();
+    qCDebug(OkularUiDebug) << ">>>> item selected by mouse:" << affectedItemsSet.count();
 #endif
 
     if ( !affectedItemsSet.isEmpty() )
@@ -3191,7 +3191,7 @@ QList< Okular::RegularAreaRect * > PageView::textSelections( const QPoint& start
         for ( int i = min; i <= max; ++i )
             affectedItemsIds.append( i );
 #ifdef PAGEVIEW_DEBUG
-        kDebug() << ">>>> pages:" << affectedItemsIds;
+        qCDebug(OkularUiDebug) << ">>>> pages:" << affectedItemsIds;
 #endif
         firstpage = affectedItemsIds.first();
 
@@ -3370,7 +3370,7 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
         width *= ( crop.right - crop.left );
         height *= ( crop.bottom - crop.top );
 #ifdef PAGEVIEW_DEBUG
-        kDebug() << "Cropped page" << okularPage->number() << "to" << crop
+        qCDebug(OkularUiDebug) << "Cropped page" << okularPage->number() << "to" << crop
                  << "width" << width << "height" << height << "by bbox" << okularPage->boundingBox();
 #endif
     }
@@ -3426,7 +3426,7 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
     }
 #ifndef NDEBUG
     else
-        kDebug() << "calling updateItemSize with unrecognized d->zoomMode!";
+        qCDebug(OkularUiDebug) << "calling updateItemSize with unrecognized d->zoomMode!";
 #endif
 }
 
@@ -3572,7 +3572,7 @@ Okular::RegularAreaRect * PageView::textSelectionForItem( PageViewItem * item, c
 
     Okular::RegularAreaRect * selectionArea = okularPage->textArea( &mouseTextSelectionInfo );
 #ifdef PAGEVIEW_DEBUG
-    kDebug().nospace() << "text areas (" << okularPage->number() << "): " << ( selectionArea ? QString::number( selectionArea->count() ) : "(none)" );
+    qCDebug(OkularUiDebug).nospace() << "text areas (" << okularPage->number() << "): " << ( selectionArea ? QString::number( selectionArea->count() ) : "(none)" );
 #endif
     return selectionArea;
 }

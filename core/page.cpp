@@ -667,7 +667,7 @@ bool Page::removeAnnotation( Annotation * annotation )
                     it = m_rects.erase( it );
                     rectfound = true;
                 }
-            kDebug(OkularDebug) << "removed annotation:" << annotation->uniqueName();
+            qCDebug(OkularCoreDebug) << "removed annotation:" << annotation->uniqueName();
             annotation->d_ptr->m_page = 0;
             m_annotations.erase( aIt );
             break;
@@ -820,13 +820,13 @@ void PagePrivate::restoreLocalContents( const QDomNode & pageNode )
                 if ( annotation )
                 {
                     m_doc->performAddPageAnnotation(m_number, annotation);
-                    kDebug(OkularDebug) << "restored annot:" << annotation->uniqueName();
+                    qCDebug(OkularCoreDebug) << "restored annot:" << annotation->uniqueName();
                 }
                 else
-                    kWarning(OkularDebug).nospace() << "page (" << m_number << "): can't restore an annotation from XML.";
+                    kWarning(OkularCoreDebug).nospace() << "page (" << m_number << "): can't restore an annotation from XML.";
             }
 #ifdef PAGE_PROFILE
-            kDebug(OkularDebug).nospace() << "annots: XML Load time: " << time.elapsed() << "ms";
+            qCDebug(OkularCoreDebug).nospace() << "annots: XML Load time: " << time.elapsed() << "ms";
 #endif
         }
         // parse formList child element
@@ -917,7 +917,7 @@ void PagePrivate::saveLocalContents( QDomNode & parentNode, QDomDocument & docum
                 QDomElement annElement = document.createElement( "annotation" );
                 AnnotationUtils::storeAnnotation( a, annElement, document );
                 annotListElement.appendChild( annElement );
-                kDebug(OkularDebug) << "save annotation:" << a->uniqueName();
+                qCDebug(OkularCoreDebug) << "save annotation:" << a->uniqueName();
             }
         }
 

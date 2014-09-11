@@ -1,5 +1,4 @@
 /***************************************************************************
- *   Copyright (C) 2007 by Pino Toscano <pino@kde.org>                     *
  *   Copyright (C) 2014 by Frederik Gladhorn <gladhorn@kde.org>            *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -8,11 +7,6 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef OKULAR_DEBUG_P_H
-#define OKULAR_DEBUG_P_H
+#include "debug_ui.h"
 
-#include <QtCore/qloggingcategory.h>
-
-Q_DECLARE_LOGGING_CATEGORY(OkularCoreDebug)
-
-#endif
+Q_LOGGING_CATEGORY(OkularUiDebug, "org.kde.okular.ui")

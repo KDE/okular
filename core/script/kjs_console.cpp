@@ -97,7 +97,7 @@ static void clearConsole()
 
 static void outputToConsole( const QString &cMessage )
 {
-    kDebug(OkularDebug) << "CONSOLE:" << cMessage;
+    qCDebug(OkularCoreDebug) << "CONSOLE:" << cMessage;
 }
 
 #endif /* OKULAR_JS_CONSOLE */

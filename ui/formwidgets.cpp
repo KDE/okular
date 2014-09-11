@@ -23,6 +23,7 @@
 // local includes
 #include "core/form.h"
 #include "core/document.h"
+#include "debug_ui.h"
 
 FormWidgetsController::FormWidgetsController( Okular::Document *doc )
     : QObject( doc ), m_doc( doc )
@@ -93,7 +94,7 @@ QButtonGroup* FormWidgetsController::registerRadioButton( QAbstractButton *butto
         const QList< int >::const_iterator idsIt = qFind( (*it).ids, id );
         if ( idsIt != (*it).ids.constEnd() )
         {
-            kDebug(4700) << "Adding id" << id << "To group including" << (*it).ids;
+            qDebug(OkularUiDebug) << "Adding id" << id << "To group including" << (*it).ids;
             (*it).group->addButton( button );
             (*it).group->setId( button, id );
             return (*it).group;

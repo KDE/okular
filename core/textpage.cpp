@@ -879,7 +879,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
         int min=qMin(queryLeft,len-offset);
         {
 #ifdef DEBUG_TEXTPAGE
-            kDebug(OkularDebug) << str.midRef(offset, min) << ":" << _query.midRef(j, min);
+            qCDebug(OkularCoreDebug) << str.midRef(offset, min) << ":" << _query.midRef(j, min);
 #endif
             // we have equal (or less than) area of the query left as the length of the current 
             // entity
@@ -891,7 +891,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
                     // we need to get back to query start
                     // and continue the search from this place
 #ifdef DEBUG_TEXTPAGE
-            kDebug(OkularDebug) << "\tnot matched";
+            qCDebug(OkularCoreDebug) << "\tnot matched";
 #endif
                     j = 0;
                     queryLeft=query.length();
@@ -908,7 +908,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
                     // subtract the length of the current entity from 
                     // the left length of the query
 #ifdef DEBUG_TEXTPAGE
-            kDebug(OkularDebug) << "\tmatched";
+            qCDebug(OkularCoreDebug) << "\tmatched";
 #endif
                     j += min;
                     queryLeft -= min;
@@ -995,7 +995,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
         int min=qMin(queryLeft,offset);
         {
 #ifdef DEBUG_TEXTPAGE
-            kDebug(OkularDebug) << str.midRef(offset-min, min) << " : " << _query.midRef(j-min, min);
+            qCDebug(OkularCoreDebug) << str.midRef(offset-min, min) << " : " << _query.midRef(j-min, min);
 #endif
             // we have equal (or less than) area of the query left as the length of the current 
             // entity
@@ -1008,7 +1008,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
                     // we need to get back to query start
                     // and continue the search from this place
 #ifdef DEBUG_TEXTPAGE
-                    kDebug(OkularDebug) << "\tnot matched";
+                    qCDebug(OkularCoreDebug) << "\tnot matched";
 #endif
 
                     j = query.length();
@@ -1026,7 +1026,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
                     // subtract the length of the current entity from 
                     // the left length of the query
 #ifdef DEBUG_TEXTPAGE
-                    kDebug(OkularDebug) << "\tmatched";
+                    qCDebug(OkularCoreDebug) << "\tmatched";
 #endif
                     j -= min;
                     queryLeft -= min;

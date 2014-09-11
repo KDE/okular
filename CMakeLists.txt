@@ -96,6 +96,7 @@ set(okularcore_SRCS
    core/misc.cpp
    core/movie.cpp
    core/observer.cpp
+   core/debug.cpp
    core/page.cpp
    core/pagecontroller.cpp
    core/pagesize.cpp
@@ -221,6 +222,7 @@ set(okularpart_SRCS
    ui/annotationtools.cpp
    ui/annotationwidgets.cpp
    ui/bookmarklist.cpp
+   ui/debug_ui.cpp
    ui/fileprinterpreview.cpp
    ui/findbar.cpp
    ui/formwidgets.cpp

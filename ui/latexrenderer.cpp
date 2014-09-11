@@ -143,7 +143,7 @@ LatexRenderer::Error LatexRenderer::handleLatex( QString& fileName, const QStrin
     QString latexExecutable = KStandardDirs::findExe("latex");
     if (latexExecutable.isEmpty())
     {
-        kDebug() << "Could not find latex!";
+        qCDebug(OkularUiDebug) << "Could not find latex!";
         delete tempFile;
         fileName = QString();
         return LatexNotFound;
@@ -167,7 +167,7 @@ LatexRenderer::Error LatexRenderer::handleLatex( QString& fileName, const QStrin
     QString dvipngExecutable = KStandardDirs::findExe("dvipng");
     if (dvipngExecutable.isEmpty())
     {
-        kDebug() << "Could not find dvipng!";
+        qCDebug(OkularUiDebug) << "Could not find dvipng!";
         fileName = QString();
         return DvipngNotFound;
     }

@@ -62,7 +62,7 @@ static void fieldSetReadOnly( KJSContext *context, void *object, KJSObject value
     Q_UNUSED( context );
     Q_UNUSED( object );
     Q_UNUSED( value );
-    kDebug(OkularDebug) << "Not implemented: setting readonly property";
+    qCDebug(OkularCoreDebug) << "Not implemented: setting readonly property";
 #endif
 }
 
@@ -123,7 +123,7 @@ static KJSObject fieldGetValue( KJSContext *context, void *object )
             value = g_fieldCache->value( field );
         else
             value = KJSString("");
-        kDebug(OkularDebug) << "Getting the value of a readonly field" << field->name() << ":" << value.toString( context );
+        qCDebug(OkularCoreDebug) << "Getting the value of a readonly field" << field->name() << ":" << value.toString( context );
         return value;
     }
 
@@ -163,7 +163,7 @@ static void fieldSetValue( KJSContext *context, void *object, KJSObject value )
     if ( field->isReadOnly() )
     {
         // ### throw exception?
-        kDebug(OkularDebug) << "Trying to change the readonly field" << field->name() << "to" << value.toString( context );
+        qCDebug(OkularCoreDebug) << "Trying to change the readonly field" << field->name() << "to" << value.toString( context );
         g_fieldCache->insert( field, value );
         return;
     }

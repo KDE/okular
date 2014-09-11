@@ -96,14 +96,14 @@ int FilePrinter::doPrintFiles( QPrinter &printer, QStringList fileList, FileDele
         } else if ( inputFileInfo.suffix() == "ps" && printer.outputFormat() == QPrinter::PdfFormat && ps2pdfAvailable() ) {
             exe = "ps2pdf";
             argList << fileList[0] << printer.outputFileName();
-            kDebug(OkularDebug) << "Executing" << exe << "with arguments" << argList;
+            qCDebug(OkularCoreDebug) << "Executing" << exe << "with arguments" << argList;
             ret = KProcess::execute( exe, argList );
 
 #pragma message("KF5: Fix PostScript printing")
 //        } else if ( inputFileInfo.suffix() == "pdf" && printer.outputFormat() == QPrinter::PostScriptFormat && pdf2psAvailable() ) {
 //            exe = "pdf2ps";
 //            argList << fileList[0] << printer.outputFileName();
-//            kDebug(OkularDebug) << "Executing" << exe << "with arguments" << argList;
+//            qCDebug(OkularCoreDebug) << "Executing" << exe << "with arguments" << argList;
 //            ret = KProcess::execute( exe, argList );
         } else {
             ret = -5;
@@ -135,7 +135,7 @@ int FilePrinter::doPrintFiles( QPrinter &printer, QStringList fileList, FileDele
         bool useCupsOptions = cupsAvailable();
         argList = printArguments( printer, fileDeletePolicy, pageSelectPolicy, 
                                   useCupsOptions, pageRange, exe, documentOrientation ) << fileList;
-        kDebug(OkularDebug) << "Executing" << exe << "with arguments" << argList;
+        qCDebug(OkularCoreDebug) << "Executing" << exe << "with arguments" << argList;
 
         ret = KProcess::execute( exe, argList );
 

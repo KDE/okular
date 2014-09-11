@@ -110,7 +110,7 @@ int AudioPlayerPrivate::newId() const
 
 bool AudioPlayerPrivate::play( const SoundInfo& si )
 {
-    kDebug() ;
+    qCDebug(OkularCoreDebug) ;
     PlayData * data = new PlayData();
     data->m_output = new Phonon::AudioOutput( Phonon::NotificationCategory );
     data->m_output->setVolume( si.volume );
@@ -124,7 +124,7 @@ bool AudioPlayerPrivate::play( const SoundInfo& si )
         case Sound::External:
         {
             QString url = si.sound->url();
-            kDebug(OkularDebug) << "External," << url;
+            qCDebug(OkularCoreDebug) << "External," << url;
             if ( !url.isEmpty() )
             {
                 int newid = newId();
@@ -148,10 +148,10 @@ bool AudioPlayerPrivate::play( const SoundInfo& si )
         case Sound::Embedded:
         {
             QByteArray filedata = si.sound->data();
-            kDebug(OkularDebug) << "Embedded," << filedata.length();
+            qCDebug(OkularCoreDebug) << "Embedded," << filedata.length();
             if ( !filedata.isEmpty() )
             {
-                kDebug(OkularDebug) << "Mediaobject:" << data->m_mediaobject;
+                qCDebug(OkularCoreDebug) << "Mediaobject:" << data->m_mediaobject;
                 int newid = newId();
                 m_mapper.setMapping( data->m_mediaobject, newid );
                 data->m_buffer = new QBuffer();
@@ -171,7 +171,7 @@ bool AudioPlayerPrivate::play( const SoundInfo& si )
     if ( data )
     {
         QObject::connect( data->m_mediaobject, SIGNAL(finished()), &m_mapper, SLOT(map()) );
-        kDebug(OkularDebug) << "PLAY";
+        qCDebug(OkularCoreDebug) << "PLAY";
         data->play();
         m_state = AudioPlayer::PlayingState;
     }
@@ -205,7 +205,7 @@ void AudioPlayerPrivate::finished( int id )
         m_playing.erase( it );
         m_state = AudioPlayer::StoppedState;
     }
-    kDebug(OkularDebug) << "finished," << m_playing.count();
+    qCDebug(OkularCoreDebug) << "finished," << m_playing.count();
 }
 
 
@@ -235,7 +235,7 @@ void AudioPlayer::playSound( const Sound * sound, const SoundAction * linksound 
     if ( sound->soundType() == Sound::External && !d->m_currentDocument.isLocalFile() )
         return;
 
-    kDebug() ;
+    qCDebug(OkularCoreDebug) ;
     SoundInfo si( sound, linksound );
 
     // if the mix flag of the new sound is false, then the currently playing

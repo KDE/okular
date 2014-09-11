@@ -358,7 +358,7 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong memoryToFree )
         if ( !p ) // No pixmap to remove
             break;
 
-        kDebug().nospace() << "Evicting cache pixmap observer=" << p->observer << " page=" << p->page;
+        qCDebug(OkularCoreDebug).nospace() << "Evicting cache pixmap observer=" << p->observer << " page=" << p->page;
 
         // m_allocatedPixmapsTotalMemory can't underflow because we always add or remove
         // the memory used by the AllocatedPixmap so at most it can reach zero
@@ -609,7 +609,7 @@ void DocumentPrivate::loadDocumentInfo()
 // note: load data and stores it internally (document or pages). observers
 // are still uninitialized at this point so don't access them
 {
-    //kDebug(OkularDebug).nospace() << "Using '" << d->m_xmlFileName << "' as document info file.";
+    //qCDebug(OkularCoreDebug).nospace() << "Using '" << d->m_xmlFileName << "' as document info file.";
     if ( m_xmlFileName.isEmpty() )
         return;
 
@@ -626,7 +626,7 @@ void DocumentPrivate::loadDocumentInfo( QFile &infoFile )
     QDomDocument doc( "documentInfo" );
     if ( !doc.setContent( &infoFile ) )
     {
-        kDebug(OkularDebug) << "Can't load XML pair! Check for broken xml.";
+        qCDebug(OkularCoreDebug) << "Can't load XML pair! Check for broken xml.";
         infoFile.close();
         return;
     }
@@ -807,7 +807,7 @@ bool DocumentPrivate::openRelativeFile( const QString & fileName )
     if ( absFileName.isEmpty() )
         return false;
 
-    kDebug(OkularDebug).nospace() << "openDocument: '" << absFileName << "'";
+    qCDebug(OkularCoreDebug).nospace() << "openDocument: '" << absFileName << "'";
 
     emit m_parent->openUrl( absFileName );
     return true;
@@ -818,7 +818,7 @@ Generator * DocumentPrivate::loadGeneratorLibrary( const KService::Ptr &service 
     KPluginFactory *factory = KPluginLoader( service->library() ).factory();
     if ( !factory )
     {
-        kWarning(OkularDebug).nospace() << "Invalid plugin factory for " << service->library() << "!";
+        kWarning(OkularCoreDebug).nospace() << "Invalid plugin factory for " << service->library() << "!";
         return 0;
     }
 
@@ -946,7 +946,7 @@ Document::OpenResult DocumentPrivate::openDocumentInternal( const KService::Ptr&
     QApplication::setOverrideCursor( Qt::WaitCursor );
 
     const QSizeF dpi = Utils::realDpi(m_widget);
-    kDebug() << "Output DPI:" << dpi;
+    qCDebug(OkularCoreDebug) << "Output DPI:" << dpi;
     m_generator->setDPI(dpi);
 
     Document::OpenResult openResult = Document::OpenError;
@@ -1171,7 +1171,7 @@ void DocumentPrivate::performModifyPageAnnotation( int page, Annotation * annota
         }
 
         // Redraw everything, including ExternallyDrawn annotations
-        kDebug(OkularDebug) << "Refreshing Pixmaps";
+        qCDebug(OkularCoreDebug) << "Refreshing Pixmaps";
         refreshPixmaps( page );
     }
 
@@ -1360,7 +1360,7 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
         else if ( !r->d->mForce && r->preload() && qAbs( r->pageNumber() - currentViewportPage ) >= maxDistance )
         {
             m_pixmapRequestsStack.pop_back();
-            //kDebug() << "Ignoring request that doesn't fit in cache";
+            //qCDebug(OkularCoreDebug) << "Ignoring request that doesn't fit in cache";
             delete r;
         }
         // Ignore requests for pixmaps that are already being generated
@@ -1373,7 +1373,7 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
         else if ( !tilesManager && m_generator->hasFeature( Generator::TiledRendering ) && (long)r->width() * (long)r->height() > 8000000L )
         {
             // if the image is too big. start using tiles
-            kDebug(OkularDebug).nospace() << "Start using tiles on page " << r->pageNumber()
+            qCDebug(OkularCoreDebug).nospace() << "Start using tiles on page " << r->pageNumber()
                 << " (" << r->width() << "x" << r->height() << " px);";
 
             // fill the tiles manager with the last rendered pixmap
@@ -1428,7 +1428,7 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
         // If the requested area is below 6000000 pixels, switch off the tile manager
         else if ( tilesManager && (long)r->width() * (long)r->height() < 6000000L )
         {
-            kDebug(OkularDebug).nospace() << "Stop using tiles on page " << r->pageNumber()
+            qCDebug(OkularCoreDebug).nospace() << "Stop using tiles on page " << r->pageNumber()
                 << " (" << r->width() << "x" << r->height() << " px);";
 
             // page is too small. stop using tiles.
@@ -1442,9 +1442,9 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
             m_pixmapRequestsStack.pop_back();
             if ( !m_warnedOutOfMemory )
             {
-                kWarning(OkularDebug).nospace() << "Running out of memory on page " << r->pageNumber()
+                kWarning(OkularCoreDebug).nospace() << "Running out of memory on page " << r->pageNumber()
                     << " (" << r->width() << "x" << r->height() << " px);";
-                kWarning(OkularDebug) << "this message will be reported only once.";
+                kWarning(OkularCoreDebug) << "this message will be reported only once.";
                 m_warnedOutOfMemory = true;
             }
             delete r;
@@ -1477,7 +1477,7 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
     if ( m_generator->canGeneratePixmap() )
     {
         QRect requestRect = !request->isTile() ? QRect(0, 0, request->width(), request->height() ) : request->normalizedRect().geometry( request->width(), request->height() );
-        kDebug(OkularDebug).nospace() << "sending request observer=" << request->observer() << " " <<requestRect.width() << "x" << requestRect.height() << "@" << request->pageNumber() << " async == " << request->asynchronous() << " isTile == " << request->isTile();
+        qCDebug(OkularCoreDebug).nospace() << "sending request observer=" << request->observer() << " " <<requestRect.width() << "x" << requestRect.height() << "@" << request->pageNumber() << " async == " << request->asynchronous() << " isTile == " << request->isTile();
         m_pixmapRequestsStack.removeAll ( request );
 
         if ( tm )
@@ -2209,7 +2209,7 @@ Document::OpenResult Document::openDocument( const QString & docFile, const KUrl
     if (offers.isEmpty())
     {
         emit error( i18n( "Can not find a plugin which is able to handle the document being passed." ), -1 );
-        kWarning(OkularDebug).nospace() << "No plugin for mimetype '" << mime.name() << "'.";
+        kWarning(OkularCoreDebug).nospace() << "No plugin for mimetype '" << mime.name() << "'.";
         return OpenError;
     }
     int hRank=0;
@@ -2915,7 +2915,7 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests, 
     {
         // set the 'page field' (see PixmapRequest) and check if it is valid
         PixmapRequest * request = *rIt;
-        kDebug(OkularDebug).nospace() << "request observer=" << request->observer() << " " <<request->width() << "x" << request->height() << "@" << request->pageNumber();
+        qCDebug(OkularCoreDebug).nospace() << "request observer=" << request->observer() << " " <<request->width() << "x" << request->height() << "@" << request->pageNumber();
         if ( d->m_pagesVector.value( request->pageNumber() ) == 0 )
         {
             // skip requests referencing an invalid page (must not happen)
@@ -3037,7 +3037,7 @@ void Document::prepareToModifyAnnotationProperties( Annotation * annotation )
     Q_ASSERT(d->m_prevPropsOfAnnotBeingModified.isNull());
     if (!d->m_prevPropsOfAnnotBeingModified.isNull())
     {
-        kError(OkularDebug) << "Error: Document::prepareToModifyAnnotationProperties has already been called since last call to Document::modifyPageAnnotationProperties";
+        kError(OkularCoreDebug) << "Error: Document::prepareToModifyAnnotationProperties has already been called since last call to Document::modifyPageAnnotationProperties";
         return;
     }
     d->m_prevPropsOfAnnotBeingModified = annotation->getAnnotationPropertiesDomNode();
@@ -3048,7 +3048,7 @@ void Document::modifyPageAnnotationProperties( int page, Annotation * annotation
     Q_ASSERT(!d->m_prevPropsOfAnnotBeingModified.isNull());
     if (d->m_prevPropsOfAnnotBeingModified.isNull())
     {
-        kError(OkularDebug) << "Error: Document::prepareToModifyAnnotationProperties must be called before Annotation is modified";
+        kError(OkularCoreDebug) << "Error: Document::prepareToModifyAnnotationProperties must be called before Annotation is modified";
         return;
     }
     QDomNode prevProps = d->m_prevPropsOfAnnotBeingModified;
@@ -3210,12 +3210,12 @@ void Document::setViewport( const DocumentViewport & viewport, DocumentObserver 
 {
     if ( !viewport.isValid() )
     {
-        kDebug(OkularDebug) << "invalid viewport:" << viewport.toString();
+        qCDebug(OkularCoreDebug) << "invalid viewport:" << viewport.toString();
         return;
     }
     if ( viewport.pageNumber >= int(d->m_pagesVector.count()) )
     {
-        //kDebug(OkularDebug) << "viewport out of document:" << viewport.toString();
+        //qCDebug(OkularCoreDebug) << "viewport out of document:" << viewport.toString();
         return;
     }
 
@@ -3223,7 +3223,7 @@ void Document::setViewport( const DocumentViewport & viewport, DocumentObserver 
     DocumentViewport & oldViewport = *d->m_viewportIterator;
     // disabled by enrico on 2005-03-18 (less debug output)
     //if ( viewport == oldViewport )
-    //    kDebug(OkularDebug) << "setViewport with the same viewport.";
+    //    qCDebug(OkularCoreDebug) << "setViewport with the same viewport.";
 
     const int oldPageNumber = oldViewport.pageNumber;
 
@@ -3631,7 +3631,7 @@ void Document::processAction( const Action * action )
             // first open filename if link is pointing outside this document
             if ( go->isExternal() && !d->openRelativeFile( go->fileName() ) )
             {
-                kWarning(OkularDebug).nospace() << "Action: Error opening '" << go->fileName() << "'.";
+                kWarning(OkularCoreDebug).nospace() << "Action: Error opening '" << go->fileName() << "'.";
                 return;
             }
             else
@@ -3820,14 +3820,14 @@ void Document::processSourceReference( const SourceReference * ref )
     const KUrl url( d->giveAbsolutePath( ref->fileName() ) );
     if ( !url.isLocalFile() )
     {
-        kDebug(OkularDebug) << url.url() << "is not a local file.";
+        qCDebug(OkularCoreDebug) << url.url() << "is not a local file.";
         return;
     }
 
     const QString absFileName = url.toLocalFile();
     if ( !QFile::exists( absFileName ) )
     {
-        kDebug(OkularDebug) << "No such file:" << absFileName;
+        qCDebug(OkularCoreDebug) << "No such file:" << absFileName;
         return;
     }
 
@@ -4293,8 +4293,8 @@ bool Document::saveDocumentArchive( const QString &fileName )
         }
         else
         {
-            kWarning(OkularDebug) << "saveChanges failed: " << errorText;
-            kDebug(OkularDebug) << "Falling back to saving a copy of the original file";
+            kWarning(OkularCoreDebug) << "saveChanges failed: " << errorText;
+            qCDebug(OkularCoreDebug) << "Falling back to saving a copy of the original file";
         }
     }
 
@@ -4369,7 +4369,7 @@ void DocumentPrivate::requestDone( PixmapRequest * req )
 
 #ifndef NDEBUG
     if ( !m_generator->canGeneratePixmap() )
-        kDebug(OkularDebug) << "requestDone with generator not in READY state.";
+        qCDebug(OkularCoreDebug) << "requestDone with generator not in READY state.";
 #endif
 
     // [MEM] 1.1 find and remove a previous entry for the same page and id
@@ -4405,7 +4405,7 @@ void DocumentPrivate::requestDone( PixmapRequest * req )
     }
 #ifndef NDEBUG
     else
-        kWarning(OkularDebug) << "Receiving a done request for the defunct observer" << observer;
+        kWarning(OkularCoreDebug) << "Receiving a done request for the defunct observer" << observer;
 #endif
 
     // 3. delete request
@@ -4512,7 +4512,7 @@ void DocumentPrivate::setRotationInternal( int r, bool notify )
         foreachObserverD( notifySetup( m_pagesVector, DocumentObserver::NewLayoutForPages ) );
         foreachObserverD( notifyContentsCleared( DocumentObserver::Pixmap | DocumentObserver::Highlights | DocumentObserver::Annotations ) );
     }
-    kDebug(OkularDebug) << "Rotated:" << r;
+    qCDebug(OkularCoreDebug) << "Rotated:" << r;
 }
 
 void Document::setPageSize( const PageSize &size )
@@ -4542,7 +4542,7 @@ void Document::setPageSize( const PageSize &size )
 
     foreachObserver( notifySetup( d->m_pagesVector, DocumentObserver::NewLayoutForPages ) );
     foreachObserver( notifyContentsCleared( DocumentObserver::Pixmap | DocumentObserver::Highlights ) );
-    kDebug(OkularDebug) << "New PageSize id:" << sizeid;
+    qCDebug(OkularCoreDebug) << "New PageSize id:" << sizeid;
 }
 
 

@@ -94,7 +94,7 @@ void ExecutorKJS::execute( const QString &script )
     int errLine;
     if ( !KJSInterpreter::normalizeCode( script, &script2, &errLine, &errMsg ) )
     {
-        kWarning(OkularDebug) << "Parse error during normalization!";
+        kWarning(OkularCoreDebug) << "Parse error during normalization!";
         script2 = script;
     }
 #endif
@@ -104,10 +104,10 @@ void ExecutorKJS::execute( const QString &script )
     KJSContext* ctx = d->m_interpreter->globalContext();
     if ( result.isException() || ctx->hasException() )
     {
-        kDebug(OkularDebug) << "JS exception" << result.errorMessage();
+        qCDebug(OkularCoreDebug) << "JS exception" << result.errorMessage();
     }
     else
     {
-        kDebug(OkularDebug) << "result:" << result.value().toString( ctx );
+        qCDebug(OkularCoreDebug) << "result:" << result.value().toString( ctx );
     }
 }

@@ -648,7 +648,7 @@ void RegularArea<NormalizedShape, Shape>::simplify()
                    }
             }
 #ifdef DEBUG_REGULARAREA
-    kDebug() << "from" << prev_end << "to" << this->count();
+    qCDebug(OkularCoreDebug) << "from" << prev_end << "to" << this->count();
 #endif
 }
 

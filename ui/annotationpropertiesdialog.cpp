@@ -95,9 +95,9 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     //END
 
 #if 0
-    kDebug() << "Annotation details:";
-    kDebug().nospace() << " => unique name: '" << ann->uniqueName() << "'";
-    kDebug() << " => flags:" << QString::number( m_annot->flags(), 2 );
+    qCDebug(OkularUiDebug) << "Annotation details:";
+    qCDebug(OkularUiDebug).nospace() << " => unique name: '" << ann->uniqueName() << "'";
+    qCDebug(OkularUiDebug) << " => flags:" << QString::number( m_annot->flags(), 2 );
 #endif
 
     resize( sizeHint() );

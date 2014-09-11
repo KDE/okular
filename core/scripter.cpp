@@ -45,7 +45,7 @@ Scripter::~Scripter()
 
 QString Scripter::execute( ScriptType type, const QString &script )
 {
-    kDebug(OkularDebug) << "executing the script:";
+    qCDebug(OkularCoreDebug) << "executing the script:";
 #if 0
     if ( script.length() < 1000 )
         qDebug() << script;

@@ -67,7 +67,7 @@ Movie::Movie( const QString& fileName, const QByteArray &data )
        d->m_tmp->write( data );
        d->m_tmp->flush();
     }
-    else kDebug(OkularDebug) << "Failed to create temporary file for video data.";
+    else qCDebug(OkularCoreDebug) << "Failed to create temporary file for video data.";
 }
 
 Movie::~Movie()

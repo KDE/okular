@@ -421,7 +421,7 @@ ObjectRect::~ObjectRect()
     else if ( m_objectType == SourceRef )
         delete static_cast<Okular::SourceReference*>( m_object );
     else
-        kDebug(OkularDebug).nospace() << "Object deletion not implemented for type '" << m_objectType << "'.";
+        qCDebug(OkularCoreDebug).nospace() << "Object deletion not implemented for type '" << m_objectType << "'.";
 }
 
 /** class AnnotationObjectRect **/

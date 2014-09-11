@@ -2242,8 +2242,13 @@ bool Part::slotSaveFileAs( bool showOkularArchiveAsDefaultFormat )
     if ( !typeName.isEmpty() )
         originalMimeType = KMimeType::mimeType( typeName );
 
+    // What data would we lose if we saved natively?
+    bool wontSaveForms, wontSaveAnnotations;
+    checkNativeSaveDataLoss(&wontSaveForms, &wontSaveAnnotations);
+
     // What format choice should we show as default?
-    const QString defaultMimeType = (isDocumentArchive || showOkularArchiveAsDefaultFormat) ?
+    const QString defaultMimeType = (isDocumentArchive || showOkularArchiveAsDefaultFormat ||
+        wontSaveForms || wontSaveAnnotations) ?
         "application/vnd.kde.okular-archive" : originalMimeType->name();
 
     // Prepare "Save As" dialog
@@ -2308,46 +2313,8 @@ bool Part::saveAs( const KUrl & saveUrl, SaveAsFlags flags )
     }
     else
     {
-        // If the user wants to save in the original file's format, some features
-        // might not be available. Find out what can't be saved in this format
-        bool wontSaveAnnotations = false;
-        bool wontSaveForms = false;
-
-        if ( !m_document->canSaveChanges( Document::SaveFormsCapability ) )
-        {
-            /* Set wontSaveForms only if there are forms */
-            const int pagecount = m_document->pages();
-
-            for ( int pageno = 0; pageno < pagecount; ++pageno )
-            {
-                const Okular::Page *page = m_document->page( pageno );
-                if ( !page->formFields().empty() )
-                {
-                    wontSaveForms = true;
-                    break;
-                }
-            }
-        }
-        if ( !m_document->canSaveChanges( Document::SaveAnnotationsCapability ) )
-        {
-            /* Set wontSaveAnnotations only if there are local annotations */
-            const int pagecount = m_document->pages();
-
-            for ( int pageno = 0; pageno < pagecount; ++pageno )
-            {
-                const Okular::Page *page = m_document->page( pageno );
-                foreach ( const Okular::Annotation *ann, page->annotations() )
-                {
-                    if ( !(ann->flags() & Okular::Annotation::External) )
-                    {
-                        wontSaveAnnotations = true;
-                        break;
-                    }
-                }
-                if ( wontSaveAnnotations )
-                    break;
-            }
-        }
+        bool wontSaveForms, wontSaveAnnotations;
+        checkNativeSaveDataLoss(&wontSaveForms, &wontSaveAnnotations);
 
         // If something can't be saved in this format, ask for confirmation
         QStringList listOfwontSaves;
@@ -2504,6 +2471,54 @@ bool Part::saveAs( const KUrl & saveUrl, SaveAsFlags flags )
         setFileToWatch( localFilePath() );
 
     return true;
+}
+
+// If the user wants to save in the original file's format, some features might
+// not be available. Find out what cannot be saved in this format
+void Part::checkNativeSaveDataLoss(bool *out_wontSaveForms, bool *out_wontSaveAnnotations) const
+{
+    bool wontSaveForms = false;
+    bool wontSaveAnnotations = false;
+
+    if ( !m_document->canSaveChanges( Document::SaveFormsCapability ) )
+    {
+        /* Set wontSaveForms only if there are forms */
+        const int pagecount = m_document->pages();
+
+        for ( int pageno = 0; pageno < pagecount; ++pageno )
+        {
+            const Okular::Page *page = m_document->page( pageno );
+            if ( !page->formFields().empty() )
+            {
+                wontSaveForms = true;
+                break;
+            }
+        }
+    }
+
+    if ( !m_document->canSaveChanges( Document::SaveAnnotationsCapability ) )
+    {
+        /* Set wontSaveAnnotations only if there are local annotations */
+        const int pagecount = m_document->pages();
+
+        for ( int pageno = 0; pageno < pagecount; ++pageno )
+        {
+            const Okular::Page *page = m_document->page( pageno );
+            foreach ( const Okular::Annotation *ann, page->annotations() )
+            {
+                if ( !(ann->flags() & Okular::Annotation::External) )
+                {
+                    wontSaveAnnotations = true;
+                    break;
+                }
+            }
+            if ( wontSaveAnnotations )
+                break;
+        }
+    }
+
+    *out_wontSaveForms = wontSaveForms;
+    *out_wontSaveAnnotations = wontSaveAnnotations;
 }
 
 void Part::slotGetNewStuff()

@@ -249,6 +249,7 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         void unsetDummyMode();
         void slotRenameBookmark( const DocumentViewport &viewport );
         void resetStartArguments();
+        void checkNativeSaveDataLoss(bool *out_wontSaveForms, bool *out_wontSaveAnnotations) const;
 
         enum SaveAsFlag
         {

@@ -883,7 +883,7 @@ void DocumentPrivate::cacheExportFormats()
     const ExportFormat::List formats = m_generator->exportFormats();
     for ( int i = 0; i < formats.count(); ++i )
     {
-        if ( formats.at( i ).mimeType()->name() == QLatin1String( "text/plain" ) )
+        if ( formats.at( i ).mimeType().name() == QLatin1String( "text/plain" ) )
             m_exportToText = formats.at( i );
         else
             m_exportFormats.append( formats.at( i ) );
@@ -2100,10 +2100,10 @@ Document::~Document()
 
 class kMimeTypeMoreThan {
 public:
-    kMimeTypeMoreThan( const KMimeType::Ptr &mime ) : _mime( mime ) {}
+    kMimeTypeMoreThan( const QMimeType &mime ) : _mime( mime ) {}
     bool operator()( const KService::Ptr &s1, const KService::Ptr &s2 )
     {
-        const QString mimeName = _mime->name();
+        const QString mimeName = _mime.name();
         if (s1->mimeTypes().contains( mimeName ) && !s2->mimeTypes().contains( mimeName ))
             return true;
         else if (s2->mimeTypes().contains( mimeName ) && !s1->mimeTypes().contains( mimeName ))
@@ -2112,7 +2112,7 @@ public:
     }
 
 private:
-    const KMimeType::Ptr &_mime;
+    const QMimeType &_mime;
 };
 
 QString DocumentPrivate::docDataFileName(const KUrl &url, qint64 document_size)
@@ -2135,16 +2135,19 @@ QString DocumentPrivate::docDataFileName(const KUrl &url, qint64 document_size)
     return newokularfile;
 }
 
-Document::OpenResult Document::openDocument( const QString & docFile, const KUrl& url, const KMimeType::Ptr &_mime, const QString & password )
+
+
+Document::OpenResult Document::openDocument( const QString & docFile, const KUrl& url, const QMimeType &_mime, const QString & password )
 {
-    KMimeType::Ptr mime = _mime;
+    QMimeDatabase db;
+    QMimeType mime = _mime;
     QByteArray filedata;
     qint64 document_size = -1;
     bool isstdin = url.fileName( KUrl::ObeyTrailingSlash ) == QLatin1String( "-" );
     bool triedMimeFromFileContent = false;
     if ( !isstdin )
     {
-        if ( mime->allMimeTypes().count() <= 0 )
+        if ( !mime.isValid() )
             return OpenError;
 
         // docFile is always local so we can use QFileInfo on it
@@ -2168,8 +2171,8 @@ Document::OpenResult Document::openDocument( const QString & docFile, const KUrl
         QFile qstdin;
         qstdin.open( stdin, QIODevice::ReadOnly );
         filedata = qstdin.readAll();
-        mime = KMimeType::findByContent( filedata );
-        if ( !mime || mime->name() == QLatin1String( "application/octet-stream" ) )
+        mime = db.mimeTypeForData( filedata );
+        if ( !mime.isValid() || mime.isDefault() )
             return OpenError;
         document_size = filedata.size();
         triedMimeFromFileContent = true;
@@ -2178,15 +2181,15 @@ Document::OpenResult Document::openDocument( const QString & docFile, const KUrl
     // 0. load Generator
     // request only valid non-disabled plugins suitable for the mimetype
     QString constraint("([X-KDE-Priority] > 0) and (exist Library)") ;
-    KService::List offers = KMimeTypeTrader::self()->query(mime->name(),"okular/Generator",constraint);
+    KService::List offers = KMimeTypeTrader::self()->query(mime.name(),"okular/Generator",constraint);
     if ( offers.isEmpty() && !triedMimeFromFileContent )
     {
-        KMimeType::Ptr newmime = KMimeType::findByFileContent( docFile );
+        QMimeType newmime = db.mimeTypeForFile(docFile, QMimeDatabase::MatchExtension);
         triedMimeFromFileContent = true;
-        if ( newmime->name() != mime->name() )
+        if ( newmime.name() != mime.name() )
         {
             mime = newmime;
-            offers = KMimeTypeTrader::self()->query( mime->name(), "okular/Generator", constraint );
+            offers = KMimeTypeTrader::self()->query( mime.name(), "okular/Generator", constraint );
         }
         if ( offers.isEmpty() )
         {
@@ -2195,18 +2198,18 @@ Document::OpenResult Document::openDocument( const QString & docFile, const KUrl
             // use is the one fed by the server, that may be wrong
 
 #pragma message("Fix generator loading")
-            //            newmime = KMimeType::findByUrl( docFile );
-            if ( newmime->name() != mime->name() )
+            //            newmime = db.mimeTypeForUrl( docFile );
+            if ( newmime.name() != mime.name() )
             {
                 mime = newmime;
-                offers = KMimeTypeTrader::self()->query( mime->name(), "okular/Generator", constraint );
+                offers = KMimeTypeTrader::self()->query( mime.name(), "okular/Generator", constraint );
             }
         }
     }
     if (offers.isEmpty())
     {
         emit error( i18n( "Can not find a plugin which is able to handle the document being passed." ), -1 );
-        kWarning(OkularDebug).nospace() << "No plugin for mimetype '" << mime->name() << "'.";
+        kWarning(OkularDebug).nospace() << "No plugin for mimetype '" << mime.name() << "'.";
         return OpenError;
     }
     int hRank=0;
@@ -2239,12 +2242,12 @@ Document::OpenResult Document::openDocument( const QString & docFile, const KUrl
     OpenResult openResult = d->openDocumentInternal( offer, isstdin, docFile, filedata, password );
     if ( openResult == OpenError && !triedMimeFromFileContent )
     {
-        KMimeType::Ptr newmime = KMimeType::findByFileContent( docFile );
+        QMimeType newmime = db.mimeTypeForFile(docFile, QMimeDatabase::MatchExtension);
         triedMimeFromFileContent = true;
-        if ( newmime->name() != mime->name() )
+        if ( newmime.name() != mime.name() )
         {
             mime = newmime;
-            offers = KMimeTypeTrader::self()->query( mime->name(), "okular/Generator", constraint );
+            offers = KMimeTypeTrader::self()->query( mime.name(), "okular/Generator", constraint );
             if ( !offers.isEmpty() )
             {
                 offer = offers.first();
@@ -3657,18 +3660,19 @@ void Document::processAction( const Action * action )
             // Albert: the only pdf i have that has that kind of link don't define
             // an application and use the fileName as the file to open
             fileName = d->giveAbsolutePath( fileName );
-            KMimeType::Ptr mime = KMimeType::findByPath( fileName );
+            QMimeDatabase db;
+            QMimeType mime = db.mimeTypeForFile( fileName );
             // Check executables
 #pragma message("KF5 check if QUrl::fromUserInput is right here")
-            if ( KRun::isExecutableFile( QUrl::fromUserInput(fileName), mime->name() ) )
+            if ( KRun::isExecutableFile( QUrl::fromUserInput(fileName), mime.name() ) )
             {
                 // Don't have any pdf that uses this code path, just a guess on how it should work
                 if ( !exe->parameters().isEmpty() )
                 {
                     fileName = d->giveAbsolutePath( exe->parameters() );
-                    mime = KMimeType::findByPath( fileName );
+                    mime = db.mimeTypeForFile( fileName );
                     #pragma message("KF5 check QUrl usage")
-                    if ( KRun::isExecutableFile( QUrl(fileName), mime->name() ) )
+                    if ( KRun::isExecutableFile( QUrl(fileName), mime.name() ) )
                     {
                         // this case is a link pointing to an executable with a parameter
                         // that also is an executable, possibly a hand-crafted pdf
@@ -3685,7 +3689,7 @@ void Document::processAction( const Action * action )
                 }
             }
 
-            KService::Ptr ptr = KMimeTypeTrader::self()->preferredService( mime->name(), "Application" );
+            KService::Ptr ptr = KMimeTypeTrader::self()->preferredService( mime.name(), "Application" );
             if ( ptr )
             {
                 QList<QUrl> lst;
@@ -3693,7 +3697,7 @@ void Document::processAction( const Action * action )
                 KRun::run( *ptr, lst, 0 );
             }
             else
-                KMessageBox::information( d->m_widget, i18n( "No application found for opening file of mimetype %1.", mime->name() ) );
+                KMessageBox::information( d->m_widget, i18n( "No application found for opening file of mimetype %1.", mime.name() ) );
             } break;
 
         case Action::DocAction: {
@@ -4135,8 +4139,9 @@ QByteArray Document::fontData(const FontInfo &font) const
 
 Document::OpenResult Document::openDocumentArchive( const QString & docFile, const KUrl & url, const QString & password )
 {
-    const KMimeType::Ptr mime = KMimeType::findByPath( docFile, 0, false /* content too */ );
-    if ( !mime->is( "application/vnd.kde.okular-archive" ) )
+    QMimeDatabase db;
+    const QMimeType mime = db.mimeTypeForFile( docFile, QMimeDatabase::MatchExtension );
+    if ( !mime.inherits( "application/vnd.kde.okular-archive" ) )
         return OpenError;
 
     KZip okularArchive( docFile );
@@ -4208,7 +4213,7 @@ Document::OpenResult Document::openDocumentArchive( const QString & docFile, con
         }
     }
 
-    const KMimeType::Ptr docMime = KMimeType::findByPath( tempFileName, 0, true /* local file */ );
+    const QMimeType docMime = db.mimeTypeForFile( tempFileName, QMimeDatabase::MatchContent );
     d->m_archiveData = archiveData.get();
     d->m_archivedFileName = documentFileName;
     const OpenResult ret = openDocument( tempFileName, url, docMime, password );

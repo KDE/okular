@@ -204,14 +204,15 @@ static QString compressedMimeFor( const QString& mime_to_check )
     if ( it != compressedMimeMap.constEnd() )
         return it.value();
 
-    KMimeType::Ptr mime = KMimeType::mimeType( mime_to_check );
-    if ( mime )
+    QMimeDatabase db;
+    QMimeType mime = db.mimeTypeForName( mime_to_check );
+    if ( mime.isValid() )
     {
-        if ( mime->is( app_gzip ) )
+        if ( mime.inherits( app_gzip ) )
             return app_gzip;
-        else if ( supportBzip && mime->is( app_bzip ) )
+        else if ( supportBzip && mime.inherits( app_bzip ) )
             return app_bzip;
-        else if ( supportXz && mime->is( app_xz ) )
+        else if ( supportXz && mime.inherits( app_xz ) )
             return app_xz;
     }
 
@@ -732,6 +733,7 @@ void Part::setViewerShortcuts()
 void Part::setupActions()
 {
     KActionCollection * ac = actionCollection();
+    QMimeDatabase db;
 
     m_copy = KStandardAction::create( KStandardAction::Copy, m_pageView, SLOT(copyTextSelection()), ac );
 
@@ -778,7 +780,7 @@ void Part::setupActions()
     m_exportAsText->setEnabled( false );
     m_exportAsDocArchive = actionForExportFormat( Okular::ExportFormat(
             i18nc( "A document format, Okular-specific", "Document Archive" ),
-            KMimeType::mimeType( "application/vnd.kde.okular-archive" ) ), m_exportAsMenu );
+            db.mimeTypeForName( "application/vnd.kde.okular-archive" ) ), m_exportAsMenu );
     m_exportAsMenu->addAction( m_exportAsDocArchive );
     m_exportAsDocArchive->setEnabled( false );
 
@@ -1193,20 +1195,19 @@ static void addFileToWatcher( KDirWatch *watcher, const QString &filePath)
     if ( fi.isSymLink() ) watcher->addFile( fi.readLink() );
 }
 
-Document::OpenResult Part::doOpenFile( const KMimeType::Ptr &mimeA, const QString &fileNameToOpenA, bool *isCompressedFile )
+Document::OpenResult Part::doOpenFile( const QMimeType &mimeA, const QString &fileNameToOpenA, bool *isCompressedFile )
 {
+    QMimeDatabase db;
     Document::OpenResult openResult = Document::OpenError;
     bool uncompressOk = true;
-    KMimeType::Ptr mime = mimeA;
+    QMimeType mime = mimeA;
     QString fileNameToOpen = fileNameToOpenA;
-    QString compressedMime = compressedMimeFor( mime->name() );
-    if ( compressedMime.isEmpty() )
-        compressedMime = compressedMimeFor( mime->parentMimeType() );
+    QString compressedMime = compressedMimeFor( mime.name() );
     if ( !compressedMime.isEmpty() )
     {
         *isCompressedFile = true;
         uncompressOk = handleCompressed( fileNameToOpen, localFilePath(), compressedMime );
-        mime = KMimeType::findByPath( fileNameToOpen );
+        mime = db.mimeTypeForFile( fileNameToOpen );
     }
     else
     {
@@ -1216,7 +1217,7 @@ Document::OpenResult Part::doOpenFile( const KMimeType::Ptr &mimeA, const QStrin
     isDocumentArchive = false;
     if ( uncompressOk )
     {
-        if ( mime->is( "application/vnd.kde.okular-archive" ) )
+        if ( mime.inherits( "application/vnd.kde.okular-archive" ) )
         {
             openResult = m_document->openDocumentArchive( fileNameToOpen,  url() );
             isDocumentArchive = true;
@@ -1279,7 +1280,7 @@ Document::OpenResult Part::doOpenFile( const KMimeType::Ptr &mimeA, const QStrin
             }
 
             // 2. reopen the document using the password
-            if ( mime->is( "application/vnd.kde.okular-archive" ) )
+            if ( mime.inherits( "application/vnd.kde.okular-archive" ) )
             {
                 openResult = m_document->openDocumentArchive( fileNameToOpen,  url(), password );
                 isDocumentArchive = true;
@@ -1302,25 +1303,26 @@ Document::OpenResult Part::doOpenFile( const KMimeType::Ptr &mimeA, const QStrin
 
 bool Part::openFile()
 {
-    QList<KMimeType::Ptr> mimes;
+    QList<QMimeType> mimes;
     QString fileNameToOpen = localFilePath();
     const bool isstdin = url().isLocalFile() && url().fileName() == QLatin1String( "-" );
     const QFileInfo fileInfo( fileNameToOpen );
     if ( (!isstdin) && (!fileInfo.exists()) )
         return false;
-    KMimeType::Ptr pathMime = KMimeType::findByPath( fileNameToOpen );
+    QMimeDatabase db;
+    QMimeType pathMime = db.mimeTypeForFile( fileNameToOpen );
     if ( !arguments().mimeType().isEmpty() )
     {
-        KMimeType::Ptr argMime = KMimeType::mimeType( arguments().mimeType() );
+        QMimeType argMime = db.mimeTypeForName( arguments().mimeType() );
 
         // Select the "childmost" mimetype, if none of them
         // inherits the other trust more what pathMime says
         // but still do a second try if that one fails
-        if ( argMime->is( pathMime->name() ) )
+        if ( argMime.inherits( pathMime.name() ) )
         {
             mimes << argMime;
         }
-        else if ( pathMime->is( argMime->name() ) )
+        else if ( pathMime.inherits( argMime.name() ) )
         {
             mimes << pathMime;
         }
@@ -1329,8 +1331,8 @@ bool Part::openFile()
             mimes << pathMime << argMime;
         }
 
-        if (mimes[0]->name() == "text/plain") {
-            KMimeType::Ptr contentMime = KMimeType::findByFileContent( fileNameToOpen );
+        if (mimes[0].name() == "text/plain") {
+            QMimeType contentMime = db.mimeTypeForFile(fileNameToOpen, QMimeDatabase::MatchContent);
             mimes.prepend( contentMime );
         }
     }
@@ -1339,7 +1341,7 @@ bool Part::openFile()
         mimes << pathMime;
     }
 
-    KMimeType::Ptr mime;
+    QMimeType mime;
     Document::OpenResult openResult = Document::OpenError;
     bool isCompressedFile = false;
     while ( !mimes.isEmpty() && openResult == Document::OpenError ) {
@@ -2558,7 +2560,7 @@ void Part::slotAboutBackend()
 //        const QString mimeTypeName = documentInfo.get(DocumentInfo::MimeType);
 //        if ( !mimeTypeName.isEmpty() )
 //        {
-//            if ( KMimeType::Ptr type = KMimeType::mimeType( mimeTypeName ) )
+//            if ( QMimeType type = db.mimeTypeForName( mimeTypeName ) )
 //                aboutData.setProgramIconName( type->iconName() );
 //        }
 //    }
@@ -2585,7 +2587,7 @@ void Part::slotExportAs(QAction * act)
             filter = "application/vnd.kde.okular-archive";
             break;
         default:
-            filter = m_exportFormats.at( id - 2 ).mimeType()->name();
+            filter = m_exportFormats.at( id - 2 ).mimeType().name();
             break;
     }
     QString fileName = KFileDialog::getSaveFileName( url(),

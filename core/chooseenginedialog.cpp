@@ -16,7 +16,7 @@
 
 #include "ui_chooseenginewidget.h"
 
-ChooseEngineDialog::ChooseEngineDialog( const QStringList &generators, const KMimeType::Ptr &mime, QWidget * parent )
+ChooseEngineDialog::ChooseEngineDialog( const QStringList &generators, const QMimeType &mime, QWidget * parent )
     : KDialog( parent )
 {
     setCaption( i18n( "Backend Selection" ) );
@@ -32,7 +32,7 @@ ChooseEngineDialog::ChooseEngineDialog( const QStringList &generators, const KMi
     m_widget->description->setText(
         i18n( "<qt>More than one backend found for the MIME type:<br />"
               "<b>%1</b> (%2).<br /><br />"
-              "Please select which one to use:</qt>", mime->comment(), mime->name() ) );
+              "Please select which one to use:</qt>", mime.comment(), mime.name() ) );
 }
 
 ChooseEngineDialog::~ChooseEngineDialog()

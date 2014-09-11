@@ -17,7 +17,8 @@
 #include "TeXFont.h"
 
 #include <klocale.h>
-#include <kmimetype.h>
+#include <QMimeType>
+#include <QMimeDatabase>
 #include <kprocess.h>
 
 #include <QApplication>
@@ -70,9 +71,10 @@ void dviRenderer::prescan_embedPS(char *cp, quint8 *beginningOfSpecialCommand)
 
   // If the file is neither a PostScript not a PDF file, we exit here.
   // The graphic file is later read when the page is rendered.
-  KMimeType::Ptr const mime_type =
-    KMimeType::findByFileContent(EPSfilename);
-  QString const & mime_type_name = mime_type?mime_type->name():"";
+  QMimeDatabase db;
+  QMimeType const mime_type =
+    db.mimeTypeForFile(EPSfilename, QMimeDatabase::MatchContent);
+  QString const & mime_type_name = mime_type.isValid() ? mime_type.name() : QString();
 
   bool const is_ps_file  = (mime_type_name == "application/postscript" ||
                             mime_type_name == "image/x-eps");

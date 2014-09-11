@@ -158,7 +158,7 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         void openSourceReference(const QString& absFileName, int line, int column);
         void viewerMenuStateChange(bool enabled);
         void enableCloseAction(bool enable);
-        void mimeTypeChanged(KMimeType::Ptr mimeType);
+        void mimeTypeChanged(QMimeType mimeType);
         void urlsDropped( const QList<QUrl>& urls );
 
     protected:
@@ -235,7 +235,7 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         void noticeMessage( const QString &message, int duration = -1 );
 
     private:
-        Document::OpenResult doOpenFile(const KMimeType::Ptr &mime, const QString &fileNameToOpen, bool *isCompressedFile);
+        Document::OpenResult doOpenFile(const QMimeType &mime, const QString &fileNameToOpen, bool *isCompressedFile);
 
         void setupViewerActions();
         void setViewerShortcuts();

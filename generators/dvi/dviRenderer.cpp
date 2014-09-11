@@ -26,7 +26,8 @@
 #include <kconfig.h>
 #include <kglobal.h>
 #include <klocale.h>
-#include <kmimetype.h>
+#include <QMimeType>
+#include <QMimeDatabase>
 #include <kstandarddirs.h>
 #include <kvbox.h>
 

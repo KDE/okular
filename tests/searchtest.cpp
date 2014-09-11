@@ -173,7 +173,8 @@ void SearchTest::test311232()
     QObject::connect(&d, SIGNAL(searchFinished(int,Okular::Document::SearchStatus)), &receiver, SLOT(searchFinished(int,Okular::Document::SearchStatus)));
     
     const QString testFile = KDESRCDIR "data/file1.pdf";
-    const KMimeType::Ptr mime = KMimeType::findByPath( testFile );
+    QMimeDatabase db;
+    const QMimeType mime = db.mimeTypeForFile( testFile );
     d.openDocument(testFile, KUrl(), mime);
     
     const int searchId = 0;

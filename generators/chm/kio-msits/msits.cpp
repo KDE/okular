@@ -21,7 +21,8 @@
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kurl.h>
-#include <kmimetype.h>
+#include <QMimeType>
+#include <QMimeDatabase>
 
 #include <qfile.h>
 #include <qdir.h>
@@ -121,7 +122,7 @@ void ProtocolMSITS::get( const KUrl& url )
 	}
 
     totalSize( buf.size() );
-    KMimeType::Ptr result = KMimeType::findByNameAndContent( fileName, buf );
+    QMimeType result = db.mimeTypeForNameAndData( fileName, buf );
     kDebug() << "Emitting mimetype " << result->name();
 
 	mimeType( result->name() );

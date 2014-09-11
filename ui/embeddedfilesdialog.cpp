@@ -18,7 +18,8 @@
 #include <kglobal.h>
 #include <kicon.h>
 #include <klocale.h>
-#include <kmimetype.h>
+#include <QMimeType>
+#include <QMimeDatabase>
 #include <kstandardguiitem.h>
 
 #include "core/document.h"
@@ -60,10 +61,11 @@ EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const Okular::Document
 	{
 		QTreeWidgetItem *twi = new QTreeWidgetItem();
 		twi->setText(0, ef->name());
-		KMimeType::Ptr mime = KMimeType::findByPath( ef->name(), 0, true );
-		if (mime)
+        QMimeDatabase db;
+        QMimeType mime = db.mimeTypeForFile( ef->name(), QMimeDatabase::MatchExtension);
+		if (mime.isValid())
 		{
-			twi->setIcon(0, QIcon::fromTheme(mime->iconName()));
+            twi->setIcon(0, QIcon::fromTheme(mime.iconName()));
 		}
 		twi->setText(1, ef->description());
 		twi->setText(2, ef->size() <= 0 ? i18nc("Not available size", "N/A") : KGlobal::locale()->formatByteSize(ef->size()));

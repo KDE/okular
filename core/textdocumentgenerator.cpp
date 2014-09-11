@@ -495,7 +495,7 @@ bool TextDocumentGenerator::exportTo( const QString &fileName, const Okular::Exp
     if ( !d->mDocument )
         return false;
 
-    if ( format.mimeType()->name() == QLatin1String( "application/pdf" ) ) {
+    if ( format.mimeType().name() == QLatin1String( "application/pdf" ) ) {
         QFile file( fileName );
         if ( !file.open( QIODevice::WriteOnly ) )
             return false;
@@ -506,7 +506,7 @@ bool TextDocumentGenerator::exportTo( const QString &fileName, const Okular::Exp
         d->mDocument->print( &printer );
 
         return true;
-    } else if ( format.mimeType()->name() == QLatin1String( "text/plain" ) ) {
+    } else if ( format.mimeType().name() == QLatin1String( "text/plain" ) ) {
         QFile file( fileName );
         if ( !file.open( QIODevice::WriteOnly ) )
             return false;
@@ -516,11 +516,11 @@ bool TextDocumentGenerator::exportTo( const QString &fileName, const Okular::Exp
 
         return true;
 #if QT_VERSION >= 0x040500
-    } else if ( format.mimeType()->name() == QLatin1String( "application/vnd.oasis.opendocument.text" ) ) {
+    } else if ( format.mimeType().name() == QLatin1String( "application/vnd.oasis.opendocument.text" ) ) {
         QTextDocumentWriter odfWriter( fileName, "odf" );
 
         return odfWriter.write( d->mDocument );
-    } else if ( format.mimeType()->name() == QLatin1String( "text/html" ) ) {
+    } else if ( format.mimeType().name() == QLatin1String( "text/html" ) ) {
         QTextDocumentWriter odfWriter( fileName, "html" );
 
         return odfWriter.write( d->mDocument );

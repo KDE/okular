@@ -23,7 +23,8 @@
 #include <QtXml/QDomDocument>
 
 #include <kcomponentdata.h>
-#include <kmimetype.h>
+#include <QMimeType>
+#include <QMimeDatabase>
 #include <kurl.h>
 
 class QPrintDialog;
@@ -215,7 +216,7 @@ class OKULAR_EXPORT Document : public QObject
          * Opens the document.
          * @since 0.20 (KDE 4.14)
          */
-        OpenResult openDocument( const QString & docFile, const KUrl & url, const KMimeType::Ptr &mime, const QString &password = QString() );
+        OpenResult openDocument( const QString & docFile, const KUrl & url, const QMimeType &mime, const QString &password = QString() );
 
         /**
          * Closes the document.

@@ -64,7 +64,7 @@ KIMGIOGenerator::~KIMGIOGenerator()
 
 bool KIMGIOGenerator::loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector )
 {
-    const QString mime = KMimeType::findByFileContent(fileName)->name();
+    const QString mime = db.mimeTypeForFile(fileName, QMimeDatabase::MatchContent).name();
     const QStringList types = KImageIO::typeForMime(mime);
     const QByteArray type = !types.isEmpty() ? types[0].toAscii() : QByteArray();
     QImageReader reader( fileName, type );
@@ -90,7 +90,7 @@ bool KIMGIOGenerator::loadDocument( const QString & fileName, QVector<Okular::Pa
 
 bool KIMGIOGenerator::loadDocumentFromData( const QByteArray & fileData, QVector<Okular::Page*> & pagesVector )
 {
-    const QString mime = KMimeType::findByContent(fileData)->name();
+    const QString mime = db.mimeTypeForData(fileData).name();
     const QStringList types = KImageIO::typeForMime(mime);
     const QByteArray type = !types.isEmpty() ? types[0].toAscii() : QByteArray();
     

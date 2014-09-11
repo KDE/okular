@@ -553,7 +553,7 @@ void PixmapRequestPrivate::swap()
 class Okular::ExportFormatPrivate : public QSharedData
 {
     public:
-        ExportFormatPrivate( const QString &description, const KMimeType::Ptr &mimeType, const QIcon &icon = QIcon() )
+        ExportFormatPrivate( const QString &description, const QMimeType &mimeType, const QIcon &icon = QIcon() )
             : QSharedData(), mDescription( description ), mMimeType( mimeType ), mIcon( icon )
         {
         }
@@ -562,21 +562,21 @@ class Okular::ExportFormatPrivate : public QSharedData
         }
 
         QString mDescription;
-        KMimeType::Ptr mMimeType;
+        QMimeType mMimeType;
         QIcon mIcon;
 };
 
 ExportFormat::ExportFormat()
-    : d( new ExportFormatPrivate( QString(), KMimeType::Ptr() ) )
+    : d( new ExportFormatPrivate( QString(), QMimeType() ) )
 {
 }
 
-ExportFormat::ExportFormat( const QString &description, const KMimeType::Ptr &mimeType )
+ExportFormat::ExportFormat( const QString &description, const QMimeType &mimeType )
     : d( new ExportFormatPrivate( description, mimeType ) )
 {
 }
 
-ExportFormat::ExportFormat( const QIcon &icon, const QString &description, const KMimeType::Ptr &mimeType )
+ExportFormat::ExportFormat( const QIcon &icon, const QString &description, const QMimeType &mimeType )
     : d( new ExportFormatPrivate( description, mimeType, icon ) )
 {
 }
@@ -605,7 +605,7 @@ QString ExportFormat::description() const
     return d->mDescription;
 }
 
-KMimeType::Ptr ExportFormat::mimeType() const
+QMimeType ExportFormat::mimeType() const
 {
     return d->mMimeType;
 }
@@ -617,27 +617,28 @@ QIcon ExportFormat::icon() const
 
 bool ExportFormat::isNull() const
 {
-    return d->mMimeType.isNull() || d->mDescription.isNull();
+    return !d->mMimeType.isValid() || d->mDescription.isNull();
 }
 
 ExportFormat ExportFormat::standardFormat( StandardExportFormat type )
 {
+    QMimeDatabase db;
     switch ( type )
     {
         case PlainText:
-            return ExportFormat( QIcon::fromTheme( "text-x-generic" ), i18n( "Plain &Text..." ), KMimeType::mimeType( "text/plain" ) );
+            return ExportFormat( QIcon::fromTheme( "text-x-generic" ), i18n( "Plain &Text..." ), db.mimeTypeForName( "text/plain" ) );
             break;
         case PDF:
-            return ExportFormat( QIcon::fromTheme( "application-pdf" ), i18n( "PDF" ), KMimeType::mimeType( "application/pdf" ) );
+            return ExportFormat( QIcon::fromTheme( "application-pdf" ), i18n( "PDF" ), db.mimeTypeForName( "application/pdf" ) );
             break;
         case OpenDocumentText:
             return ExportFormat(
                 QIcon::fromTheme( "application-vnd.oasis.opendocument.text" ),
                 i18nc( "This is the document format", "OpenDocument Text" ),
-                KMimeType::mimeType( "application/vnd.oasis.opendocument.text" ) );
+                db.mimeTypeForName( "application/vnd.oasis.opendocument.text" ) );
 	    break;
         case HTML:
-            return ExportFormat( QIcon::fromTheme( "text-html" ), i18nc( "This is the document format", "HTML" ), KMimeType::mimeType( "text/html" ) );
+            return ExportFormat( QIcon::fromTheme( "text-html" ), i18nc( "This is the document format", "HTML" ), db.mimeTypeForName( "text/html" ) );
             break;
     }
     return ExportFormat();

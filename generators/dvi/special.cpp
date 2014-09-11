@@ -17,7 +17,8 @@
 //#include "renderedDocumentPage.h"
 
 #include <klocale.h>
-#include <kmimetype.h>
+#include <QMimeType>
+#include <QMimeDatabase>
 
 #include <QFile>
 #include <QImage>
@@ -352,8 +353,9 @@ void dviRenderer::epsf_special(const QString& cp)
   parse_special_argument(include_command, "angle=", &angle);
 
   // If we have a png, gif, jpeg or mng file, we need to draw it here.
-  KMimeType::Ptr const mime_type = KMimeType::findByFileContent(EPSfilename);
-  QString const & mime_type_name = mime_type?mime_type->name():"";
+  QMimeDatabase db;
+  QMimeType const mime_type = db.mimeTypeForFile(EPSfilename, QMimeDatabase::MatchContent);
+  QString const & mime_type_name = mime_type.isValid() ? mime_type.name() : QString();
   bool const isGFX = (mime_type_name == "image/png" ||
                       mime_type_name == "image/gif" ||
                       mime_type_name == "image/jpeg" ||

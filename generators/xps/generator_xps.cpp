@@ -2181,7 +2181,7 @@ Okular::ExportFormat::List XpsGenerator::exportFormats() const
 
 bool XpsGenerator::exportTo( const QString &fileName, const Okular::ExportFormat &format )
 {
-    if ( format.mimeType()->name() == QLatin1String( "text/plain" ) ) {
+    if ( format.mimeType().inherits( QLatin1String( "text/plain" ) ) ) {
         QFile f( fileName );
         if ( !f.open( QIODevice::WriteOnly ) )
             return false;

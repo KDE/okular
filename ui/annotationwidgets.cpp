@@ -681,11 +681,12 @@ QWidget * FileAttachmentAnnotationWidget::createExtraWidget()
     tmplabel->setTextInteractionFlags( Qt::TextSelectableByMouse );
     lay->addWidget( tmplabel, 3, 0, 1, 2 );
 
-    KMimeType::Ptr mime = KMimeType::findByPath( ef->name(), 0, true );
-    if ( mime )
+    QMimeDatabase db;
+    QMimeType mime = db.mimeTypeForFile( ef->name(), QMimeDatabase::MatchExtension);
+    if ( mime.isValid() )
     {
         tmplabel = new QLabel( widget );
-        tmplabel->setPixmap( QIcon::fromTheme( mime->iconName() ).pixmap( FILEATTACH_ICONSIZE, FILEATTACH_ICONSIZE ) );
+        tmplabel->setPixmap( QIcon::fromTheme( mime.iconName() ).pixmap( FILEATTACH_ICONSIZE, FILEATTACH_ICONSIZE ) );
         tmplabel->setFixedSize( FILEATTACH_ICONSIZE, FILEATTACH_ICONSIZE );
         lay->addWidget( tmplabel, 0, 1, 3, 1, Qt::AlignTop );
     }

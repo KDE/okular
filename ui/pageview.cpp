@@ -2628,12 +2628,13 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                         d->messageWindow->display( i18n( "File not saved." ), QString(), PageViewMessage::Warning );
                     else
                     {
-                        KMimeType::Ptr mime = KMimeType::findByUrl( QUrl::fromLocalFile(fileName) );
+                        QMimeDatabase db;
+                        QMimeType mime = db.mimeTypeForUrl( QUrl::fromLocalFile(fileName) );
                         QString type;
-                        if ( !mime || mime == KMimeType::defaultMimeTypePtr() )
+                        if ( !mime.isDefault() )
                             type = "PNG";
                         else
-                            type = mime->name().section( '/', -1 ).toUpper();
+                            type = mime.name().section( '/', -1 ).toUpper();
                         copyPix.save( fileName, qPrintable( type ) );
                         d->messageWindow->display( i18n( "Image [%1x%2] saved to %3 file.", copyPix.width(), copyPix.height(), type ) );
                     }

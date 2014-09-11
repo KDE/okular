@@ -26,7 +26,8 @@
 #include <QtCore/QVariant>
 #include <QtCore/QVector>
 
-#include <kmimetype.h>
+#include <QMimeType>
+#include <QMimeDatabase>
 #include <kpluginfactory.h>
 
 #define OKULAR_EXPORT_PLUGIN( classname, aboutdata ) \
@@ -91,7 +92,7 @@ class OKULAR_EXPORT ExportFormat
          * @param description The i18n'ed description of the format.
          * @param mimeType The supported mime type of the format.
          */
-        ExportFormat( const QString &description, const KMimeType::Ptr &mimeType );
+        ExportFormat( const QString &description, const QMimeType &mimeType );
 
         /**
          * Creates a new export format.
@@ -100,7 +101,7 @@ class OKULAR_EXPORT ExportFormat
          * @param description The i18n'ed description of the format.
          * @param mimeType The supported mime type of the format.
          */
-        ExportFormat( const QIcon &icon, const QString &description, const KMimeType::Ptr &mimeType );
+        ExportFormat( const QIcon &icon, const QString &description, const QMimeType &mimeType );
 
         /**
          * Destroys the export format.
@@ -125,7 +126,7 @@ class OKULAR_EXPORT ExportFormat
         /**
          * Returns the mime type of the format.
          */
-        KMimeType::Ptr mimeType() const;
+        QMimeType mimeType() const;
 
         /**
          * Returns the icon for GUI representations of the format.

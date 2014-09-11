@@ -63,7 +63,7 @@ void KIMGIOTest::testExifOrientation()
 
 	Okular::SettingsCore::instance( "kimgiotest" );
 	Okular::Document *m_document = new Okular::Document( 0 );
-	const KMimeType::Ptr mime = KMimeType::findByPath( imgPath );
+	const QMimeType mime = db.mimeTypeForFile( imgPath );
 
 	Okular::DocumentObserver *dummyDocumentObserver = new Okular::DocumentObserver();
 	m_document->addObserver( dummyDocumentObserver );

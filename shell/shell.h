@@ -18,7 +18,8 @@
 
 #include <kparts/mainwindow.h>
 #include <kparts/readwritepart.h>
-#include <kmimetype.h>
+#include <QMimeType>
+#include <QMimeDatabase>
 #include <kaction.h>
 
 #include <QtDBus/QtDBus>
@@ -101,7 +102,7 @@ private slots:
   void print();
   void setPrintEnabled( bool enabled );
   void setCloseEnabled( bool enabled );
-  void setTabIcon( KMimeType::Ptr mimeType );
+  void setTabIcon(const QMimeType& mimeType );
   void handleDroppedUrls( const QList<QUrl>& urls );
 
   // Tab event handlers

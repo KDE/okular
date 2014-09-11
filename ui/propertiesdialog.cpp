@@ -97,15 +97,16 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
             QHBoxLayout *hboxLayout = new QHBoxLayout( value );
             hboxLayout->setMargin( 0 );
             /// retrieve icon and place it in a QLabel
-            KMimeType::Ptr mimeType = KMimeType::mimeType( valueString );
+            QMimeDatabase db;
+            QMimeType mimeType = db.mimeTypeForName( valueString );
             KSqueezedTextLabel *squeezed;
-            if (!mimeType.isNull()) {
+            if (mimeType.isValid()) {
                 /// retrieve icon and place it in a QLabel
                 QLabel *pixmapLabel = new QLabel( value );
                 hboxLayout->addWidget( pixmapLabel, 0 );
-                pixmapLabel->setPixmap( KIconLoader::global()->loadMimeTypeIcon( mimeType->iconName(), KIconLoader::Small ) );
+                pixmapLabel->setPixmap( KIconLoader::global()->loadMimeTypeIcon( mimeType.iconName(), KIconLoader::Small ) );
                 /// mime type's name and label
-                squeezed = new KSqueezedTextLabel( i18nc( "mimetype information, example: \"PDF Document (application/pdf)\"", "%1 (%2)", mimeType->comment(), valueString ), value );
+                squeezed = new KSqueezedTextLabel( i18nc( "mimetype information, example: \"PDF Document (application/pdf)\"", "%1 (%2)", mimeType.comment(), valueString ), value );
             } else {
                 /// only mime type name
                 squeezed = new KSqueezedTextLabel( valueString, value );

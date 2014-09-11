@@ -14,7 +14,8 @@
 #include <QtGui/QImageReader>
 
 #include <klocale.h>
-#include <kmimetype.h>
+#include <QMimeType>
+#include <QMimeDatabase>
 #include <kzip.h>
 #include <ktar.h>
 
@@ -54,12 +55,13 @@ bool Document::open( const QString &fileName )
 {
     close();
 
-    const KMimeType::Ptr mime = KMimeType::findByFileContent( fileName );
+    QMimeDatabase db;
+    const QMimeType mime = db.mimeTypeForFile(fileName, QMimeDatabase::MatchContent);
 
     /**
      * We have a zip archive
      */
-    if ( mime->is( "application/x-cbz" ) || mime->name() == "application/zip" ) {
+    if ( mime.inherits("application/x-cbz" ) || mime.inherits( "application/zip" ) ) {
         mArchive = new KZip( fileName );
 
         if ( !processArchive() ) {
@@ -68,14 +70,14 @@ bool Document::open( const QString &fileName )
     /**
      * We have a TAR archive
      */
-    } else if ( mime->is( "application/x-cbt" ) || mime->name() == "application/x-gzip" ||
-                mime->name() == "application/x-tar" || mime->name() == "application/x-bzip" ) {
+    } else if ( mime.inherits( "application/x-cbt" ) || mime.inherits( "application/x-gzip" ) ||
+                mime.inherits( "application/x-tar" ) || mime.inherits( "application/x-bzip" ) ) {
         mArchive = new KTar( fileName );
 
         if ( !processArchive() ) {
             return false;
         }
-    } else if ( mime->is( "application/x-cbr" ) || mime->name() == "application/x-rar" ) {
+    } else if ( mime.inherits( "application/x-cbr" ) || mime.inherits( "application/x-rar" ) ) {
         if ( !Unrar::isAvailable() ) {
             mLastErrorString = i18n( "Cannot open document, unrar was not found." );
             return false;
@@ -99,7 +101,7 @@ bool Document::open( const QString &fileName )
         }
 
         mEntries = mUnrar->list();
-    } else if ( mime->is( "inode/directory" ) ) {
+    } else if ( mime.inherits( "inode/directory" ) ) {
         mDirectory = new Directory();
 
         if ( !mDirectory->open( fileName ) ) {

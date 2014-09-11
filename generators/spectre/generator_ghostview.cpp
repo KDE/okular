@@ -20,7 +20,8 @@
 #include <kaboutdata.h>
 #include <kconfigdialog.h>
 #include <kdebug.h>
-#include <kmimetype.h>
+#include <QMimeType>
+#include <QMimeDatabase>
 #include <ktemporaryfile.h>
 
 #include <core/document.h>

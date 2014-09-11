@@ -9,7 +9,8 @@
 
 #include <QtTest>
 
-#include <kmimetype.h>
+#include <QMimeType>
+#include <QMimeDatabase>
 #include "../settings_core.h"
 #include "core/document.h"
 #include <core/page.h>
@@ -65,7 +66,8 @@ void EditFormsTest::cleanupTestCase()
 void EditFormsTest::init()
 {
     const QString testFile = KDESRCDIR "data/formSamples.pdf";
-    const KMimeType::Ptr mime = KMimeType::findByPath( testFile );
+    QMimeDatabase db;
+    const QMimeType mime = db.mimeTypeForFile( testFile );
     QCOMPARE( m_document->openDocument(testFile, KUrl(), mime), Okular::Document::OpenSuccess );
 
     // Undo and Redo should be unavailable when docuemnt is first opened.

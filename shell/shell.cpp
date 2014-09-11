@@ -28,7 +28,8 @@
 #include <KFileDialog>
 #include <KPluginLoader>
 #include <KMessageBox>
-#include <KMimeType>
+#include <QMimeType>
+#include <QMimeDatabase>
 #include <KStandardAction>
 #include <KToolBar>
 #include <KRecentFilesAction>
@@ -548,7 +549,7 @@ void Shell::connectPart( QObject* part )
     connect( this, SIGNAL(saveDocumentRestoreInfo(KConfigGroup&)), part, SLOT(saveDocumentRestoreInfo(KConfigGroup&)));
     connect( part, SIGNAL(enablePrintAction(bool)), this, SLOT(setPrintEnabled(bool)));
     connect( part, SIGNAL(enableCloseAction(bool)), this, SLOT(setCloseEnabled(bool)));
-    connect( part, SIGNAL(mimeTypeChanged(KMimeType::Ptr)), this, SLOT(setTabIcon(KMimeType::Ptr)));
+    connect( part, SIGNAL(mimeTypeChanged(QMimeType)), this, SLOT(setTabIcon(QMimeType)));
     connect( part, SIGNAL(urlsDropped(QList<QUrl>)), this, SLOT(handleDroppedUrls(QList<QUrl>)) );
 }
 
@@ -601,12 +602,12 @@ void Shell::activatePrevTab()
     setActiveTab( prevTab );
 }
 
-void Shell::setTabIcon( KMimeType::Ptr mimeType )
+void Shell::setTabIcon( const QMimeType& mimeType )
 {
     int i = findTabIndex( sender() );
     if( i != -1 )
     {
-        m_tabWidget->setTabIcon( i, QIcon::fromTheme(mimeType->iconName()) );
+        m_tabWidget->setTabIcon( i, QIcon::fromTheme(mimeType.iconName()) );
     }
 }
 

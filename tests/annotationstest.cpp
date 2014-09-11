@@ -41,7 +41,8 @@ void AnnotationTest::initTestCase()
     Okular::SettingsCore::instance( "annotationtest" );
     m_document = new Okular::Document( 0 );
     const QString testFile = KDESRCDIR "data/file1.pdf";
-    const KMimeType::Ptr mime = KMimeType::findByPath( testFile );
+    QMimeDatabase db;
+    const QMimeType mime = db.mimeTypeForFile( testFile );
     QCOMPARE( m_document->openDocument(testFile, KUrl(), mime), Okular::Document::OpenSuccess );
 }
 

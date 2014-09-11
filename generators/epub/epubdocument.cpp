@@ -11,7 +11,7 @@
 #include <QTemporaryFile>
 #include <QDir>
 
-#include <QDebug>
+#include <KDebug>
 
 #include <QRegExp>
 
@@ -107,8 +107,8 @@ QVariant EpubDocument::loadResource(int type, const QUrl &name)
     }
     case EpubDocument::MovieResource: {
       QTemporaryFile *tmp = new QTemporaryFile(QString("%1/okrXXXXXX").arg(QDir::tempPath()),this);
-      if(!tmp->open()) qWarning() << "EPUB : error creating temporary video file";
-      if(tmp->write(data,size) == -1) qWarning() << "EPUB : error writing data" << tmp->errorString();
+      if(!tmp->open()) kWarning() << "EPUB : error creating temporary video file";
+      if(tmp->write(data,size) == -1) kWarning() << "EPUB : error writing data" << tmp->errorString();
       tmp->flush();
       resource.setValue(tmp->fileName());
       break;

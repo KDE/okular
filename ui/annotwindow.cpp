@@ -27,7 +27,7 @@
 #include <kglobal.h>
 #include <klocale.h>
 #include <ktextedit.h>
-#include <QDebug>
+#include <kdebug.h>
 #include <kaction.h>
 #include <kstandardaction.h>
 #include <qmenu.h>

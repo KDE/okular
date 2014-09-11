@@ -31,7 +31,6 @@
 #include <kmessagebox.h>
 #include <kprocess.h>
 #include <ktemporaryfile.h>
-#include <KDebug>
 
 #include <QEventLoop>
 #include <QFileInfo>

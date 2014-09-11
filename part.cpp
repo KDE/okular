@@ -2150,7 +2150,7 @@ void Part::slotFindPrev()
 
 bool Part::saveFile()
 {
-    qDebug() << "Okular part doesn't support saving the file in the location from which it was opened";
+    kDebug() << "Okular part doesn't support saving the file in the location from which it was opened";
     return false;
 }
 

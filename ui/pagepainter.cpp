@@ -16,7 +16,7 @@
 #include <qpixmap.h>
 #include <qvarlengtharray.h>
 #include <kiconloader.h>
-#include <QDebug>
+#include <kdebug.h>
 #include <QApplication>
 // TODO KF5 #include <qimageblitz.h>
 

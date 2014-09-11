@@ -68,7 +68,7 @@
 #include <klocale.h>
 
 #include <QPainter>
-#include <KDebug>
+
 
 
 /** Routine to print characters.  */

@@ -14,7 +14,7 @@
 #include <QtCore/QFileInfo>
 #include <QtCore/QRegExp>
 
-#include <QDebug>
+#include <kdebug.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
@@ -74,12 +74,12 @@ UnrarHelper::UnrarHelper()
     if ( !kind )
     {
         // no luck, print that
-        qDebug() << "No unrar detected.";
+        kDebug() << "No unrar detected.";
     }
     else
     {
         unrarPath = path;
-        qDebug() << "detected:" << path << "(" << kind->name() << ")";
+        kDebug() << "detected:" << path << "(" << kind->name() << ")";
     }
 }
 

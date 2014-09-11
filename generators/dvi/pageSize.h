@@ -83,7 +83,7 @@ public:
       recognized
 
   If the name is not of these types, and error message is printed to
-  stderr using qCritical() and a default value, which depends on the
+  stderr using kError() and a default value, which depends on the
   locale, is set.
 
   In any case, the values will be trimmed so as not to exceed the
@@ -104,7 +104,7 @@ public:
   Sets the page size to "width" and "height", given in the associated
   units. Currently, "mm", "cm" and "in" are supported. If a unit is
   not recognized, "mm" is siliently assumed, and error message is
-  printed to stderr using qCritical(). If the page size set matches one
+  printed to stderr using kError(). If the page size set matches one
   of the standard sizes by an error of no more than 2mm, the standard
   page size will be set.  If width or height does not contain a
   number, the result is an undefined value. However, it is guaranteed
@@ -214,7 +214,7 @@ public:
   If the pageSize is one of the standard sizes, i.e. formatNumber() !=
   -1, this method can be used to get the orientation. If the pageSize
   is not a standard size, this method prints an error message stderr
-  using qCritical().
+  using kError().
 
   @returns 0 for 'portrait', or 1 for 'landscape'. If the size is none
   of the standard sizes, an undefined value is returned.
@@ -238,7 +238,7 @@ public slots:
   If the pageSize is one of the standard sizes, i.e. formatNumber() !=
   -1, this method can be used to set the orientation. If the pageSize
   is not a standard size, this method prints an error message stderr
-  using qCritical() and does nothing.
+  using kError() and does nothing.
 
   @param orient 0 sets 'portrait orientation', 1 sets 'landscape'
  */

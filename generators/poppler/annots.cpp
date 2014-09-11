@@ -12,7 +12,6 @@
 
 // qt/kde includes
 #include <qvariant.h>
-#include <KDebug>
 
 #include <core/annotations.h>
 #include <core/area.h>
@@ -233,7 +232,7 @@ void PopplerAnnotationProxy::notifyModification( const Okular::Annotation *okl_a
             break;
         }
         default:
-            qDebug() << "Type-specific property modification is not implemented for this annotation type";
+            kDebug() << "Type-specific property modification is not implemented for this annotation type";
             break;
     }
 

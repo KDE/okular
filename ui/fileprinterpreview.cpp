@@ -26,8 +26,7 @@
 #include <kpushbutton.h>
 #include <kservice.h>
 #include <ksharedconfig.h>
-#include <QDebug>
-#include <KDebug>
+#include <kdebug.h>
 
 using namespace Okular;
 
@@ -100,14 +99,14 @@ void FilePrinterPreviewPrivate::getPart()
 bool FilePrinterPreviewPrivate::doPreview()
 {
     if (!QFile::exists(filename)) {
-        qWarning() << "Nothing was produced to be previewed";
+        kWarning() << "Nothing was produced to be previewed";
         return false;
     }
 
     getPart();
     if (!previewPart) {
         //TODO: error dialog
-        qWarning() << "Could not find a PS viewer for the preview dialog";
+        kWarning() << "Could not find a PS viewer for the preview dialog";
         fail();
         return false;
     } else {

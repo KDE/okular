@@ -313,7 +313,7 @@ void PresentationWidget::notifySetup( const QVector< Okular::Page * > & pageSet,
     for ( ; fIt != fEnd; ++fIt )
         delete *fIt;
     if ( !m_frames.isEmpty() )
-        qWarning() << "Frames setup changed while a Presentation is in progress.";
+        kWarning() << "Frames setup changed while a Presentation is in progress.";
     m_frames.clear();
 
     // create the new frames
@@ -818,7 +818,7 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
 
 void PresentationWidget::resizeEvent( QResizeEvent *re )
 {
-    // qDebug() << re->oldSize() << "=>" << re->size();
+    // kDebug() << re->oldSize() << "=>" << re->size();
     if ( re->oldSize() == QSize( -1, -1 ) )
         return;
 
@@ -1246,7 +1246,7 @@ void PresentationWidget::recalcGeometry()
         Okular::Settings::setSlidesScreen( -2 );
     }
     const QRect screenGeom = desktop->screenGeometry( screen );
-    // qDebug() << screen << "=>" << screenGeom;
+    // kDebug() << screen << "=>" << screenGeom;
     m_screen = screen;
     setGeometry( screenGeom );
 }
@@ -1502,7 +1502,7 @@ void PresentationWidget::setScreen( int newScreen )
 {
     const QRect screenGeom = QApplication::desktop()->screenGeometry( newScreen );
     const QSize oldSize = size();
-    // qDebug() << newScreen << "=>" << screenGeom;
+    // kDebug() << newScreen << "=>" << screenGeom;
     m_screen = newScreen;
     setGeometry( screenGeom );
 

@@ -19,7 +19,7 @@
 #include <sys/stat.h>
 
 #include <kapplication.h>
-#include <QDebug>
+#include <kdebug.h>
 #include <kurl.h>
 #include <kmimetype.h>
 
@@ -37,20 +37,20 @@ extern "C"
 {
     int KDE_EXPORT kdemain( int argc, char **argv )
     {
-		qDebug() << "*** kio_msits Init";
+		kDebug() << "*** kio_msits Init";
 
         KComponentData instance( "kio_msits" );
 
         if ( argc != 4 )
 		{
-            qDebug() << "Usage: kio_msits protocol domain-socket1 domain-socket2";
+            kDebug() << "Usage: kio_msits protocol domain-socket1 domain-socket2";
             exit (-1);
         }
 
         ProtocolMSITS slave ( argv[2], argv[3] );
         slave.dispatchLoop();
 
-        qDebug() << "*** kio_msits Done";
+        kDebug() << "*** kio_msits Done";
         return 0;
     }
 }
@@ -83,17 +83,17 @@ void ProtocolMSITS::get( const KUrl& url )
 	chmUnitInfo ui;
 	QByteArray buf;
 
-    qDebug() << "kio_msits::get() " << url.path();
+    kDebug() << "kio_msits::get() " << url.path();
 
 	if ( !parseLoadAndLookup ( url, fileName ) )
 		return;	// error() has been called by parseLoadAndLookup
 
-	qDebug() << "kio_msits::get: parseLoadAndLookup returned " << fileName;
+	kDebug() << "kio_msits::get: parseLoadAndLookup returned " << fileName;
 
 	if ( LCHMUrlFactory::handleFileType( url.path(), htmdata ) )
 	{
 		buf = htmdata.toUtf8();
-		qDebug() << "Using special handling for image pages: " << htmdata;
+		kDebug() << "Using special handling for image pages: " << htmdata;
 	}
 	else
 	{
@@ -105,7 +105,7 @@ void ProtocolMSITS::get( const KUrl& url )
 
 		if ( !ResolveObject ( fileName, &ui) )
 		{
-			qDebug() << "kio_msits::get: could not resolve filename " << fileName;
+			kDebug() << "kio_msits::get: could not resolve filename " << fileName;
         	error( KIO::ERR_DOES_NOT_EXIST, url.prettyUrl() );
 			return;
 		}
@@ -114,7 +114,7 @@ void ProtocolMSITS::get( const KUrl& url )
 
 		if ( RetrieveObject (&ui, (unsigned char*) buf.data(), 0, ui.length) == 0 )
 		{
-			qDebug() << "kio_msits::get: could not retrieve filename " << fileName;
+			kDebug() << "kio_msits::get: could not retrieve filename " << fileName;
         	error( KIO::ERR_NO_CONTENT, url.prettyUrl() );
 			return;
 		}
@@ -122,7 +122,7 @@ void ProtocolMSITS::get( const KUrl& url )
 
     totalSize( buf.size() );
     KMimeType::Ptr result = KMimeType::findByNameAndContent( fileName, buf );
-    qDebug() << "Emitting mimetype " << result->name();
+    kDebug() << "Emitting mimetype " << result->name();
 
 	mimeType( result->name() );
     data( buf );
@@ -134,7 +134,7 @@ void ProtocolMSITS::get( const KUrl& url )
 
 bool ProtocolMSITS::parseLoadAndLookup ( const KUrl& url, QString& abspath )
 {
-	qDebug() << "ProtocolMSITS::parseLoadAndLookup (const KUrl&) " << url.path();
+	kDebug() << "ProtocolMSITS::parseLoadAndLookup (const KUrl&) " << url.path();
 
 	int pos = url.path().indexOf ("::");
 
@@ -151,7 +151,7 @@ bool ProtocolMSITS::parseLoadAndLookup ( const KUrl& url, QString& abspath )
 	if ( abspath.startsWith( "ms-its:" ) )
 		abspath = abspath.mid( 7 );
 			
-	qDebug() << "ProtocolMSITS::parseLoadAndLookup: filename " << filename << ", path " << abspath;
+	kDebug() << "ProtocolMSITS::parseLoadAndLookup: filename " << filename << ", path " << abspath;
 
     if ( filename.isEmpty() )
     {
@@ -163,7 +163,7 @@ bool ProtocolMSITS::parseLoadAndLookup ( const KUrl& url, QString& abspath )
 	if ( m_chmFile && filename == m_openedFile )
 		return true;
 
-    qDebug() << "Opening a new CHM file " << QFile::encodeName( QDir::toNativeSeparators( filename ) );
+    kDebug() << "Opening a new CHM file " << QFile::encodeName( QDir::toNativeSeparators( filename ) );
 
 	// First try to open a temporary file
 	chmFile * tmpchm;
@@ -181,7 +181,7 @@ bool ProtocolMSITS::parseLoadAndLookup ( const KUrl& url, QString& abspath )
 	m_chmFile = tmpchm;
 	m_openedFile = filename;
     
-	qDebug() << "A CHM file " << filename << " has beed opened successfully";
+	kDebug() << "A CHM file " << filename << " has beed opened successfully";
     return true;
 }
 
@@ -224,7 +224,7 @@ void ProtocolMSITS::stat (const KUrl & url)
 	QString fileName;
 	chmUnitInfo ui;
 
-    qDebug() << "kio_msits::stat (const KUrl& url) " << url.path();
+    kDebug() << "kio_msits::stat (const KUrl& url) " << url.path();
 
 	if ( !parseLoadAndLookup ( url, fileName ) )
 		return;	// error() has been called by parseLoadAndLookup
@@ -235,7 +235,7 @@ void ProtocolMSITS::stat (const KUrl & url)
 		return;
 	}
 
-	qDebug() << "kio_msits::stat: adding an entry for " << fileName;
+	kDebug() << "kio_msits::stat: adding an entry for " << fileName;
 	UDSEntry entry;
 
 	if ( isDirectory ( fileName ) )
@@ -261,7 +261,7 @@ void ProtocolMSITS::listDir (const KUrl & url)
 {
 	QString filepath;
 
-    qDebug() << "kio_msits::listDir (const KUrl& url) " << url.path();
+    kDebug() << "kio_msits::listDir (const KUrl& url) " << url.path();
 
 	if ( !parseLoadAndLookup ( url, filepath ) )
 		return;	// error() has been called by parseLoadAndLookup
@@ -274,7 +274,7 @@ void ProtocolMSITS::listDir (const KUrl & url)
 		return;
 	}
 
-    qDebug() << "kio_msits::listDir: enumerating directory " << filepath;
+    kDebug() << "kio_msits::listDir: enumerating directory " << filepath;
 
 	QVector<QString> listing;
 

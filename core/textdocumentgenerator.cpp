@@ -544,7 +544,7 @@ bool TextDocumentGenerator::reparseConfig()
 
 void TextDocumentGenerator::addPages( KConfigDialog* /*dlg*/ )
 {
-    qWarning() << "You forgot to reimplement addPages in your TextDocumentGenerator";
+    kWarning() << "You forgot to reimplement addPages in your TextDocumentGenerator";
     return;
 }
 

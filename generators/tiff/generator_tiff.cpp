@@ -19,8 +19,7 @@
 #include <QtPrintSupport/QPrinter>
 
 #include <kaboutdata.h>
-#include <QDebug>
-#include <KDebug>
+#include <kdebug.h>
 #include <kglobal.h>
 #include <klocale.h>
 

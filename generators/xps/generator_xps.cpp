@@ -28,7 +28,6 @@
 #include <kglobal.h>
 #include <klocale.h>
 #include <kurl.h>
-#include <KDebug>
 #include <QBuffer>
 #include <QImageReader>
 #include <QMutex>

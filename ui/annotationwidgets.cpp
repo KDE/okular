@@ -23,7 +23,7 @@
 #include <kiconloader.h>
 #include <klocale.h>
 #include <knuminput.h>
-#include <QDebug>
+#include <kdebug.h>
 
 #include "core/document.h"
 #include "guiutils.h"

@@ -43,7 +43,7 @@
 #include <kinputdialog.h>
 #include <kselectaction.h>
 #include <ktoggleaction.h>
-#include <QDebug>
+#include <kdebug.h>
 #include <kdeversion.h>
 #include <kmessagebox.h>
 #include <kicon.h>
@@ -911,7 +911,7 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
         PageViewItem * item = new PageViewItem( *setIt );
         d->items.push_back( item );
 #ifdef PAGEVIEW_DEBUG
-        qDebug().nospace() << "cropped geom for " << d->items.last()->pageNumber() << " is " << d->items.last()->croppedGeometry();
+        kDebug().nospace() << "cropped geom for " << d->items.last()->pageNumber() << " is " << d->items.last()->croppedGeometry();
 #endif
         const QLinkedList< Okular::FormField * > pageFields = (*setIt)->formFields();
         QLinkedList< Okular::FormField * >::const_iterator ffIt = pageFields.constBegin(), ffEnd = pageFields.constEnd();
@@ -1143,12 +1143,12 @@ void PageView::slotRealNotifyViewportChanged( bool smoothMove )
         }
     if ( !item )
     {
-        qWarning() << "viewport for page" << vp.pageNumber << "has no matching item!";
+        kWarning() << "viewport for page" << vp.pageNumber << "has no matching item!";
         d->blockViewport = false;
         return;
     }
 #ifdef PAGEVIEW_DEBUG
-    qDebug() << "document viewport changed";
+    kDebug() << "document viewport changed";
 #endif
     // relayout in "Single Pages" mode or if a relayout is pending
     d->blockPixmapsRequest = true;
@@ -1253,7 +1253,7 @@ void PageView::notifyPageChanged( int pageNumber, int changedFlags )
     if ( changedFlags & DocumentObserver::BoundingBox )
     {
 #ifdef PAGEVIEW_DEBUG
-        qDebug() << "BoundingBox change on page" << pageNumber;
+        kDebug() << "BoundingBox change on page" << pageNumber;
 #endif
         slotRelayoutPages();
         slotRequestVisiblePixmaps(); // TODO: slotRelayoutPages() may have done this already!
@@ -1427,7 +1427,7 @@ void PageView::paintEvent(QPaintEvent *pe)
             return;
 
 #ifdef PAGEVIEW_DEBUG
-        qDebug() << "paintevent" << contentsRect;
+        kDebug() << "paintevent" << contentsRect;
 #endif
 
         // create the screen painter. a pixel painted at contentsX,contentsY
@@ -1474,7 +1474,7 @@ void PageView::paintEvent(QPaintEvent *pe)
                     continue;
             }
 #ifdef PAGEVIEW_DEBUG
-            qDebug() << contentsRect;
+            kDebug() << contentsRect;
 #endif
 
             // note: this check will take care of all things requiring alpha blending (not only selection)
@@ -2560,7 +2560,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                     {
                         // request the textpage if there isn't one
                         okularPage= item->page();
-                        qWarning() << "checking if page" << item->pageNumber() << "has text:" << okularPage->hasTextPage();
+                        kWarning() << "checking if page" << item->pageNumber() << "has text:" << okularPage->hasTextPage();
                         if ( !okularPage->hasTextPage() )
                             d->document->requestTextPage( okularPage->number() );
                         // grab text in the rect that intersects itemRect
@@ -2706,7 +2706,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                     {
                         // request the textpage if there isn't one
                         okularPage= item->page();
-                        qWarning() << "checking if page" << item->pageNumber() << "has text:" << okularPage->hasTextPage();
+                        kWarning() << "checking if page" << item->pageNumber() << "has text:" << okularPage->hasTextPage();
                         if ( !okularPage->hasTextPage() )
                             d->document->requestTextPage( okularPage->number() );
                         // grab text in the rect that intersects itemRect
@@ -3165,7 +3165,7 @@ QList< Okular::RegularAreaRect * > PageView::textSelections( const QPoint& start
             affectedItemsSet.insert( item->pageNumber() );
     }
 #ifdef PAGEVIEW_DEBUG
-    qDebug() << ">>>> item selected by mouse:" << affectedItemsSet.count();
+    kDebug() << ">>>> item selected by mouse:" << affectedItemsSet.count();
 #endif
 
     if ( !affectedItemsSet.isEmpty() )
@@ -3190,7 +3190,7 @@ QList< Okular::RegularAreaRect * > PageView::textSelections( const QPoint& start
         for ( int i = min; i <= max; ++i )
             affectedItemsIds.append( i );
 #ifdef PAGEVIEW_DEBUG
-        qDebug() << ">>>> pages:" << affectedItemsIds;
+        kDebug() << ">>>> pages:" << affectedItemsIds;
 #endif
         firstpage = affectedItemsIds.first();
 
@@ -3369,7 +3369,7 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
         width *= ( crop.right - crop.left );
         height *= ( crop.bottom - crop.top );
 #ifdef PAGEVIEW_DEBUG
-        qDebug() << "Cropped page" << okularPage->number() << "to" << crop
+        kDebug() << "Cropped page" << okularPage->number() << "to" << crop
                  << "width" << width << "height" << height << "by bbox" << okularPage->boundingBox();
 #endif
     }
@@ -3425,7 +3425,7 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
     }
 #ifndef NDEBUG
     else
-        qDebug() << "calling updateItemSize with unrecognized d->zoomMode!";
+        kDebug() << "calling updateItemSize with unrecognized d->zoomMode!";
 #endif
 }
 
@@ -3571,7 +3571,7 @@ Okular::RegularAreaRect * PageView::textSelectionForItem( PageViewItem * item, c
 
     Okular::RegularAreaRect * selectionArea = okularPage->textArea( &mouseTextSelectionInfo );
 #ifdef PAGEVIEW_DEBUG
-    qDebug().nospace() << "text areas (" << okularPage->number() << "): " << ( selectionArea ? QString::number( selectionArea->count() ) : "(none)" );
+    kDebug().nospace() << "text areas (" << okularPage->number() << "): " << ( selectionArea ? QString::number( selectionArea->count() ) : "(none)" );
 #endif
     return selectionArea;
 }
@@ -4215,7 +4215,7 @@ void PageView::slotRelayoutPages()
                 insertY += rHeight;
             }
 #ifdef PAGEVIEW_DEBUG
-            qWarning() << "updating size for pageno" << item->pageNumber() << "cropped" << item->croppedGeometry() << "uncropped" << item->uncroppedGeometry();
+            kWarning() << "updating size for pageno" << item->pageNumber() << "cropped" << item->croppedGeometry() << "uncropped" << item->uncroppedGeometry();
 #endif
         }
 
@@ -4356,8 +4356,8 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
         if ( !i->isVisible() )
             continue;
 #ifdef PAGEVIEW_DEBUG
-        qWarning() << "checking page" << i->pageNumber();
-        qWarning().nospace() << "viewportRect is " << viewportRect << ", page item is " << i->croppedGeometry() << " intersect : " << viewportRect.intersects( i->croppedGeometry() );
+        kWarning() << "checking page" << i->pageNumber();
+        kWarning().nospace() << "viewportRect is " << viewportRect << ", page item is " << i->croppedGeometry() << " intersect : " << viewportRect.intersects( i->croppedGeometry() );
 #endif
         // if the item doesn't intersect the viewport, skip it
         QRect intersectionRect = viewportRect.intersect( i->croppedGeometry() );
@@ -4371,8 +4371,8 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
         Okular::VisiblePageRect * vItem = new Okular::VisiblePageRect( i->pageNumber(), Okular::NormalizedRect( intersectionRect.translated( -i->uncroppedGeometry().topLeft() ), i->uncroppedWidth(), i->uncroppedHeight() ) );
         visibleRects.push_back( vItem );
 #ifdef PAGEVIEW_DEBUG
-        qWarning() << "checking for pixmap for page" << i->pageNumber() << "=" << i->page()->hasPixmap( this, i->uncroppedWidth(), i->uncroppedHeight() );
-        qWarning() << "checking for text for page" << i->pageNumber() << "=" << i->page()->hasTextPage();
+        kWarning() << "checking for pixmap for page" << i->pageNumber() << "=" << i->page()->hasPixmap( this, i->uncroppedWidth(), i->uncroppedHeight() );
+        kWarning() << "checking for text for page" << i->pageNumber() << "=" << i->page()->hasTextPage();
 #endif
 
         Okular::NormalizedRect expandedVisibleRect = vItem->rect;
@@ -4389,7 +4389,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
         if ( !i->page()->hasPixmap( this, i->uncroppedWidth(), i->uncroppedHeight(), expandedVisibleRect ) )
         {
 #ifdef PAGEVIEW_DEBUG
-            qWarning() << "rerequesting visible pixmaps for page" << i->pageNumber() << "!";
+            kWarning() << "rerequesting visible pixmaps for page" << i->pageNumber() << "!";
 #endif
             Okular::PixmapRequest * p = new Okular::PixmapRequest( this, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRIO, Okular::PixmapRequest::Asynchronous );
             requestedPixmaps.push_back( p );

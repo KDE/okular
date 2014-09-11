@@ -78,7 +78,7 @@ double Utils::realDpiX()
 {
     const QDesktopWidget* w = QApplication::desktop();
     if (w->width() > 0 && w->widthMM() > 0) {
-        qDebug() << "Pix:" << w->width() << "MM:" << w->widthMM();
+        kDebug() << "Pix:" << w->width() << "MM:" << w->widthMM();
         return (double(w->width()) * 25.4) / double(w->widthMM());
     } else {
         return dpiX();
@@ -89,7 +89,7 @@ double Utils::realDpiY()
 {
     const QDesktopWidget* w = QApplication::desktop();
     if (w->height() > 0 && w->heightMM() > 0) {
-        qDebug() << "Pix:" << w->height() << "MM:" << w->heightMM();
+        kDebug() << "Pix:" << w->height() << "MM:" << w->heightMM();
         return (double(w->height()) * 25.4) / double(w->heightMM());
     } else {
         return dpiY();
@@ -129,13 +129,13 @@ QSizeF Utils::realDpi(QWidget* widgetOnScreen)
 
             if (selectedOutput)
             {
-                qDebug() << "Found widget at output #" << selectedOutput->id();
+                kDebug() << "Found widget at output #" << selectedOutput->id();
                 QRect outputRect(selectedOutput->pos(),selectedOutput->currentMode()->size());
                 QSize szMM = selectedOutput->sizeMm();
-                qDebug() << "Output size is (mm) " << szMM;
-                qDebug() << "Output rect is " << outputRect;
+                kDebug() << "Output size is (mm) " << szMM;
+                kDebug() << "Output rect is " << outputRect;
                 if (selectedOutput->edid()) {
-                    qDebug() << "EDID WxH (cm): " << selectedOutput->edid()->width()  << 'x' << selectedOutput->edid()->height();
+                    kDebug() << "EDID WxH (cm): " << selectedOutput->edid()->width()  << 'x' << selectedOutput->edid()->height();
                 }
                 if (szMM.width() > 0 && szMM.height() > 0 && outputRect.width() > 0 && outputRect.height() > 0
                     && selectedOutput->edid()
@@ -147,24 +147,24 @@ QSizeF Utils::realDpi(QWidget* widgetOnScreen)
                               static_cast<qreal>(outputRect.height())*25.4/szMM.height());
                     if (!selectedOutput->isHorizontal())
                     {
-                        qDebug() << "Output is vertical, transposing DPI rect";
+                        kDebug() << "Output is vertical, transposing DPI rect";
                         res.transpose();
                     }
                     if (qAbs(res.width() - res.height()) / qMin(res.height(), res.width()) < 0.05) {
                         return res;
                     } else {
-                        qDebug() << "KScreen calculation returned a non square dpi." << res << ". Falling back";
+                        kDebug() << "KScreen calculation returned a non square dpi." << res << ". Falling back";
                     }
                 }
             }
             else
             {
-                qDebug() << "Didn't find a KScreen selectedOutput to calculate DPI. Falling back";
+                kDebug() << "Didn't find a KScreen selectedOutput to calculate DPI. Falling back";
             }
         }
         else
         {
-            qDebug() << "Didn't find a KScreen config to calculate DPI. Falling back";
+            kDebug() << "Didn't find a KScreen config to calculate DPI. Falling back";
         }
 #endif
     }
@@ -174,14 +174,14 @@ QSizeF Utils::realDpi(QWidget* widgetOnScreen)
     if (qAbs(res.width() - res.height()) / qMin(res.height(), res.width()) < 0.05) {
         return res;
     } else {
-        qDebug() << "QDesktopWidget calculation returned a non square dpi." << res << ". Falling back";
+        kDebug() << "QDesktopWidget calculation returned a non square dpi." << res << ". Falling back";
     }
 
     res = QSizeF(dpiX(), dpiY());
     if (qAbs(res.width() - res.height()) / qMin(res.height(), res.width()) < 0.05) {
         return res;
     } else {
-        qDebug() << "QX11Info returned a non square dpi." << res << ". Falling back";
+        kDebug() << "QX11Info returned a non square dpi." << res << ". Falling back";
     }
     
     res = QSizeF(72, 72);
@@ -358,7 +358,7 @@ got_bottom:
                          image->width(), image->height() );
 
 #ifdef BBOX_DEBUG
-    qDebug() << "Computed bounding box" << bbox << "in" << time.elapsed() << "ms";
+    kDebug() << "Computed bounding box" << bbox << "in" << time.elapsed() << "ms";
 #endif
 
     return bbox;

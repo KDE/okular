@@ -31,8 +31,7 @@
 #include <qmutex.h>
 
 #include <kaboutdata.h>
-#include <QDebug>
-#include <KDebug>
+#include <kdebug.h>
 #include <klocale.h>
 #include <ktemporaryfile.h>
 

@@ -18,7 +18,6 @@
 #include "kvs_debug.h"
 
 #include <klocale.h>
-#include <KDebug>
 
 #include <QImage>
 

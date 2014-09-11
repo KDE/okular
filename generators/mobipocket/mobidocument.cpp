@@ -12,7 +12,7 @@
 #include <QtGui/QColor>
 #include <QtCore/QFile>
 #include <QtCore/QRegExp>
-#include <QDebug>
+#include <kdebug.h>
 #include <QApplication> // Because of the HACK
 #include <QPalette> // Because of the HACK
 

@@ -194,7 +194,7 @@ void Document::pages( QVector<Okular::Page*> * pagesVector )
                     mPageMap.append(file);
                     count++;
                 } else {
-                    qDebug() << "Ignoring" << file << "doesn't seem to be an image even if QImageReader::canRead returned true";
+                    kDebug() << "Ignoring" << file << "doesn't seem to be an image even if QImageReader::canRead returned true";
                 }
             }
         }

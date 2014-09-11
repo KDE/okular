@@ -18,7 +18,6 @@
 
 #include <klocale.h>
 #include <kmimetype.h>
-#include <KDebug>
 
 #include <QFile>
 #include <QImage>

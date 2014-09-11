@@ -19,7 +19,6 @@
 #include <kprocess.h>
 #include <ktemporaryfile.h>
 #include <kurl.h>
-#include <KDebug>
 
 #include <QDir>
 #include <QPainter>

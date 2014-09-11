@@ -9,8 +9,7 @@
 
 #include "scripter.h"
 
-#include <QDebug>
-#include <KDebug>
+#include <kdebug.h>
 
 #include "debug_p.h"
 #include "script/executor_kjs_p.h"

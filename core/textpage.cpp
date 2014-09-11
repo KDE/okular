@@ -10,7 +10,7 @@
 #include "textpage.h"
 #include "textpage_p.h"
 
-#include <QDebug>
+#include <kdebug.h>
 
 #include "area.h"
 #include "debug_p.h"
@@ -371,7 +371,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
     if ( sel->direction() == 1 || ( sel->itB() == -1 && sel->direction() == 0 ) )
     {
 #ifdef DEBUG_TEXTPAGE
-        qWarning() << "running first loop";
+        kWarning() << "running first loop";
 #endif
         const int count = d->m_words.count();
         for ( it = 0; it < count; it++ )
@@ -384,7 +384,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
                 /// we have found the (rx,ry)x(tx,ty)
                 itB = it;
 #ifdef DEBUG_TEXTPAGE
-                qWarning() << "start is" << itB << "count is" << d->m_words.count();
+                kWarning() << "start is" << itB << "count is" << d->m_words.count();
 #endif
                 break;
             }
@@ -393,13 +393,13 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
     }
     itB = sel->itB();
 #ifdef DEBUG_TEXTPAGE
-    qWarning() << "direction is" << sel->direction();
-    qWarning() << "reloaded start is" << itB << "against" << sel->itB();
+    kWarning() << "direction is" << sel->direction();
+    kWarning() << "reloaded start is" << itB << "against" << sel->itB();
 #endif
     if ( sel->direction() == 0 || ( sel->itE() == -1 && sel->direction() == 1 ) )
     {
 #ifdef DEBUG_TEXTPAGE
-        qWarning() << "running second loop";
+        kWarning() << "running second loop";
 #endif
         for ( it = d->m_words.count() - 1; it >= itB; it-- )
         {
@@ -411,8 +411,8 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
                 /// we have found the (ux,uy)x(vx,vy)
                 itE = it;
 #ifdef DEBUG_TEXTPAGE
-                qWarning() << "ending is" << itE << "count is" << d->m_words.count();
-                qWarning() << "conditions" << tmp.contains( endCx, endCy ) << " " 
+                kWarning() << "ending is" << itE << "count is" << d->m_words.count();
+                kWarning() << "conditions" << tmp.contains( endCx, endCy ) << " " 
                   << ( tmp.top <= endCy && tmp.bottom >= endCy && tmp.right <= endCx ) << " " <<
                   ( tmp.top >= endCy);
 #endif
@@ -422,7 +422,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
         sel->itE( itE );
     }
 #ifdef DEBUG_TEXTPAGE
-    qWarning() << "reloaded ending is" << itE << "against" << sel->itE();
+    kWarning() << "reloaded ending is" << itE << "against" << sel->itE();
 #endif
 
     if ( sel->itB() != -1 && sel->itE() != -1 )

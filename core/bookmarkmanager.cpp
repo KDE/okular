@@ -15,7 +15,7 @@
 #include <kbookmarkaction.h>
 #include <kbookmarkmanager.h>
 #include <kbookmarkmenu.h>
-#include <QDebug>
+#include <kdebug.h>
 #include <kglobal.h>
 #include <kstandarddirs.h>
 #include <kurl.h>

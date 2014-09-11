@@ -19,7 +19,6 @@
 #include <kstandardaction.h>
 #include <kaction.h>
 #include <kurl.h>
-#include <KDebug>
 
 // local includes
 #include "core/form.h"

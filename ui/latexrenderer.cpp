@@ -12,7 +12,7 @@
 
 #include "latexrenderer.h"
 
-#include <QDebug>
+#include <kdebug.h>
 #include <kstandarddirs.h>
 #include <kprocess.h>
 #include <ktemporaryfile.h>
@@ -143,7 +143,7 @@ LatexRenderer::Error LatexRenderer::handleLatex( QString& fileName, const QStrin
     QString latexExecutable = KStandardDirs::findExe("latex");
     if (latexExecutable.isEmpty())
     {
-        qDebug() << "Could not find latex!";
+        kDebug() << "Could not find latex!";
         delete tempFile;
         fileName = QString();
         return LatexNotFound;
@@ -167,7 +167,7 @@ LatexRenderer::Error LatexRenderer::handleLatex( QString& fileName, const QStrin
     QString dvipngExecutable = KStandardDirs::findExe("dvipng");
     if (dvipngExecutable.isEmpty())
     {
-        qDebug() << "Could not find dvipng!";
+        kDebug() << "Could not find dvipng!";
         fileName = QString();
         return DvipngNotFound;
     }

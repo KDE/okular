@@ -10,7 +10,7 @@
 #ifndef _KDVI_DEBUG_H_
 #define _KDVI_DEBUG_H_
 
-#include <QDebug>
+#include <kdebug.h>
 
 namespace kvs
 {

@@ -15,7 +15,6 @@
 #include "form.h"
 #include "utils_p.h"
 #include "page.h"
-#include <KDebug>
 
 #include <KLocalizedString>
 

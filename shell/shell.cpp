@@ -251,10 +251,10 @@ void Shell::closeUrl()
 
 void Shell::readSettings()
 {
-    m_recent->loadEntries( KGlobal::config()->group( "Recent Files" ) );
+    m_recent->loadEntries( KSharedConfig::openConfig()->group( "Recent Files" ) );
     m_recent->setEnabled( true ); // force enabling
 
-    const KConfigGroup group = KGlobal::config()->group( "Desktop Entry" );
+    const KConfigGroup group = KSharedConfig::openConfig()->group( "Desktop Entry" );
     bool fullScreen = group.readEntry( "FullScreen", false );
     setFullScreen( fullScreen );
     
@@ -267,15 +267,15 @@ void Shell::readSettings()
 
 void Shell::writeSettings()
 {
-    m_recent->saveEntries( KGlobal::config()->group( "Recent Files" ) );
-    KConfigGroup group = KGlobal::config()->group( "Desktop Entry" );
+    m_recent->saveEntries( KSharedConfig::openConfig()->group( "Recent Files" ) );
+    KConfigGroup group = KSharedConfig::openConfig()->group( "Desktop Entry" );
     group.writeEntry( "FullScreen", m_fullScreenAction->isChecked() );
     if (m_fullScreenAction->isChecked())
     {
         group.writeEntry( shouldShowMenuBarComingFromFullScreen, m_menuBarWasShown );
         group.writeEntry( shouldShowToolBarComingFromFullScreen, m_toolBarWasShown );
     }
-    KGlobal::config()->sync();
+    KSharedConfig::openConfig()->sync();
 }
 
 void Shell::setupActions()

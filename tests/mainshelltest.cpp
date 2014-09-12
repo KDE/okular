@@ -102,7 +102,7 @@ void MainShellTest::initTestCase()
     QVERIFY( bus->registerService(serviceName) == QDBusConnectionInterface::ServiceRegistered );
 
     // Tell the presentationWidget to not be annoying
-    KSharedConfigPtr c = KGlobal::config();
+    KSharedConfigPtr c = KSharedConfig::openConfig();
     KConfigGroup cg = c->group("Notification Messages");
     cg.writeEntry("presentationInfo", false);
 }

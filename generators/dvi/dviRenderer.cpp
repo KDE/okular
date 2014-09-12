@@ -272,7 +272,7 @@ void dviRenderer::showThatSourceInformationIsPresent()
   // here. Most of the code is stolen from there.
 
   // Check if the 'Don't show again' feature was used
-  KConfig *config = KGlobal::config();
+  KConfig *config = KSharedConfig::openConfig();
   KConfigGroup saver(config, "Notification Messages");
   bool showMsg = config->readEntry( "KDVI-info_on_source_specials", true);
 

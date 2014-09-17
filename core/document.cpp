@@ -28,6 +28,7 @@
 #include <QtCore/QFile>
 #include <QtCore/QFileInfo>
 #include <QtCore/QMap>
+#include <QtCore/qtemporaryfile.h>
 #include <QtCore/QTextStream>
 #include <QtCore/QTimer>
 #include <QtWidgets/QApplication>
@@ -50,7 +51,6 @@
 #include <krun.h>
 #include <kshell.h>
 #include <kstandarddirs.h>
-#include <ktemporaryfile.h>
 #include <ktoolinvocation.h>
 #include <kzip.h>
 
@@ -108,8 +108,8 @@ struct ArchiveData
     {
     }
 
-    KTemporaryFile document;
-    KTemporaryFile metadataFile;
+    QTemporaryFile document;
+    QTemporaryFile metadataFile;
 };
 
 struct RunningSearch
@@ -962,7 +962,7 @@ Document::OpenResult DocumentPrivate::openDocumentInternal( const KService::Ptr&
         }
         else
         {
-            m_tempFile = new KTemporaryFile();
+            m_tempFile = new QTemporaryFile();
             if ( !m_tempFile->open() )
             {
                 delete m_tempFile;
@@ -1002,7 +1002,7 @@ Document::OpenResult DocumentPrivate::openDocumentInternal( const KService::Ptr&
     return openResult;
 }
 
-bool DocumentPrivate::savePageDocumentInfo( KTemporaryFile *infoFile, int what ) const
+bool DocumentPrivate::savePageDocumentInfo( QTemporaryFile *infoFile, int what ) const
 {
     if ( infoFile->open() )
     {
@@ -4190,7 +4190,7 @@ Document::OpenResult Document::openDocumentArchive( const QString & docFile, con
     std::auto_ptr< ArchiveData > archiveData( new ArchiveData() );
     const int dotPos = documentFileName.indexOf( '.' );
     if ( dotPos != -1 )
-        archiveData->document.setSuffix( documentFileName.mid( dotPos ) );
+        archiveData->document.setFileTemplate(QDir::tempPath() + QLatin1String("/okular_XXXXXX") + documentFileName.mid(dotPos));
     if ( !archiveData->document.open() )
         return OpenError;
 
@@ -4205,7 +4205,7 @@ Document::OpenResult Document::openDocumentArchive( const QString & docFile, con
     if ( metadataEntry && metadataEntry->isFile() )
     {
         std::auto_ptr< QIODevice > metadataEntryDevice( static_cast< const KZipFileEntry * >( metadataEntry )->createDevice() );
-        archiveData->metadataFile.setSuffix( ".xml" );
+        archiveData->metadataFile.setFileTemplate(QDir::tempPath() + QLatin1String("/okular_XXXXXX.xml"));
         if ( archiveData->metadataFile.open() )
         {
             copyQIODevice( metadataEntryDevice.get(), &archiveData->metadataFile );
@@ -4276,7 +4276,7 @@ bool Document::saveDocumentArchive( const QString &fileName )
     metadataFileNameNode.appendChild( contentDoc.createTextNode( "metadata.xml" ) );
 
     // If the generator can save annotations natively, do it
-    KTemporaryFile modifiedFile;
+    QTemporaryFile modifiedFile;
     bool annotationsSavedNatively = false;
     if ( d->canAddAnnotationsNatively() )
     {
@@ -4298,7 +4298,7 @@ bool Document::saveDocumentArchive( const QString &fileName )
         }
     }
 
-    KTemporaryFile metadataFile;
+    QTemporaryFile metadataFile;
     PageItems saveWhat = annotationsSavedNatively ? None : AnnotationPageItems;
     if ( !d->savePageDocumentInfo( &metadataFile, saveWhat ) )
         return false;

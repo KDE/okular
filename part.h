@@ -47,7 +47,7 @@ class KToggleAction;
 class KToggleFullScreenAction;
 class KSelectAction;
 class KAboutData;
-class KTemporaryFile;
+class QTemporaryFile;
 class QAction;
 namespace KParts { class GUIActivateEvent; }
 
@@ -252,7 +252,7 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         
         static int numberOfParts;
 
-        KTemporaryFile *m_tempfile;
+        QTemporaryFile *m_tempfile;
 
         // the document
         Okular::Document * m_document;

@@ -15,12 +15,12 @@
 #include <QtCore/QDebug>
 #include <kstandarddirs.h>
 #include <kprocess.h>
-#include <ktemporaryfile.h>
 
 #include <QColor>
 #include <QDir>
 #include <QFileInfo>
 #include <QImage>
+#include <qtemporaryfile.h>
 #include <QTextDocument>
 #include <QTextStream>
 
@@ -118,9 +118,7 @@ LatexRenderer::Error LatexRenderer::handleLatex( QString& fileName, const QStrin
     KProcess latexProc;
     KProcess dvipngProc;
 
-    KTemporaryFile *tempFile = new KTemporaryFile();
-    tempFile->setPrefix("kdelatex-");
-    tempFile->setSuffix(".tex");
+    QTemporaryFile *tempFile = new QTemporaryFile(QDir::tempPath() + QLatin1String("/okular_kdelatex-XXXXXX.tex"));
     tempFile->open();
     QString tempFileName = tempFile->fileName();
     QFileInfo *tempFileInfo = new QFileInfo(tempFileName);

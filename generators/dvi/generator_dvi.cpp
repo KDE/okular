@@ -25,16 +25,17 @@
 #include "TeXFont.h"
 
 #include <qapplication.h>
+#include <qdir.h>
 #include <qstring.h>
 #include <qurl.h>
 #include <qvector.h>
 #include <qstack.h>
+#include <qtemporaryfile.h>
 #include <qmutex.h>
 
 #include <kaboutdata.h>
 #include <QtCore/QDebug>
 #include <klocale.h>
-#include <ktemporaryfile.h>
 
 #ifdef DVI_OPEN_BUSYLOOP
 #ifdef Q_OS_UNIX
@@ -548,8 +549,7 @@ void DviGenerator::loadPages( QVector< Okular::Page * > &pagesVector )
 bool DviGenerator::print( QPrinter& printer )
 {
     // Create tempfile to write to
-    KTemporaryFile tf;
-    tf.setSuffix( ".ps" );
+    QTemporaryFile tf(QDir::tempPath() + QLatin1String("/okular_XXXXXX.ps" ));
     if ( !tf.open() )
         return false;
 

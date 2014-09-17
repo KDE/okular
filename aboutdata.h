@@ -14,6 +14,8 @@
 
 #include "core/version.h"
 
+#include <klocalizedstring.h>
+
 inline KAboutData okularAboutData()
 {
     KAboutData about(

@@ -32,7 +32,7 @@ class QUndoStack;
 class QEventLoop;
 class QFile;
 class QTimer;
-class KTemporaryFile;
+class QTemporaryFile;
 
 struct AllocatedPixmap;
 struct ArchiveData;
@@ -129,7 +129,7 @@ class DocumentPrivate
         ConfigInterface* generatorConfig( GeneratorInfo& info );
         SaveInterface* generatorSave( GeneratorInfo& info );
         Document::OpenResult openDocumentInternal( const KService::Ptr& offer, bool isstdin, const QString& docFile, const QByteArray& filedata, const QString& password );
-        bool savePageDocumentInfo( KTemporaryFile *infoFile, int what ) const;
+        bool savePageDocumentInfo( QTemporaryFile *infoFile, int what ) const;
         DocumentViewport nextDocumentViewport() const;
         void notifyAnnotationChanges( int page );
         bool canAddAnnotationsNatively() const;
@@ -198,7 +198,7 @@ class DocumentPrivate
         // cached stuff
         QString m_docFileName;
         QString m_xmlFileName;
-        KTemporaryFile *m_tempFile;
+        QTemporaryFile *m_tempFile;
         qint64 m_docSize;
 
         // viewport stuff

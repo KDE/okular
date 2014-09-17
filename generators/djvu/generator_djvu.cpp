@@ -28,7 +28,7 @@
 #include <kaboutdata.h>
 #include <QtCore/QDebug>
 #include <klocale.h>
-#include <ktemporaryfile.h>
+#include <qtemporaryfile.h>
 
 static void recurseCreateTOC( QDomDocument &maindoc, const QDomNode &parent, QDomNode &parentDestination, KDjVu *djvu )
 {
@@ -186,8 +186,7 @@ bool DjVuGenerator::print( QPrinter& printer )
     bool result = false;
 
     // Create tempfile to write to
-    KTemporaryFile tf;
-    tf.setSuffix( ".ps" );
+    QTemporaryFile tf(QDir::tempPath() + QLatin1String("/okular_XXXXXX.ps"));
     if ( !tf.open() )
         return false;
 

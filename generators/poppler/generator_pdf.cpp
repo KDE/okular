@@ -14,22 +14,23 @@
 // qt/kde includes
 #include <qcheckbox.h>
 #include <qcolor.h>
+#include <qdir.h>
 #include <qfile.h>
 #include <qimage.h>
 #include <qlayout.h>
 #include <qmutex.h>
 #include <qregexp.h>
 #include <qstack.h>
+#include <qtemporaryfile.h>
 #include <qtextstream.h>
 #include <QPrinter>
 #include <QPainter>
+#include <QtCore/QDebug>
 
 #include <k4aboutdata.h>
 #include <kconfigdialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <ktemporaryfile.h>
-#include <QtCore/QDebug>
 #include <kglobal.h>
 
 #include <core/action.h>
@@ -1018,8 +1019,7 @@ bool PDFGenerator::print( QPrinter& printer )
     }
 
     // Create the tempfile to send to FilePrinter, which will manage the deletion
-    KTemporaryFile tf;
-    tf.setSuffix( ".ps" );
+    QTemporaryFile tf(QDir::tempPath() + QLatin1String("/okular_XXXXXX.ps"));
     if ( !tf.open() )
     {
         lastPrintError = TemporaryFileOpenPrintError;

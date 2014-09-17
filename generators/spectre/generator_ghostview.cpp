@@ -105,8 +105,7 @@ bool GSGenerator::print( QPrinter& printer )
     bool result = false;
 
     // Create tempfile to write to
-    KTemporaryFile tf;
-    tf.setSuffix( ".ps" );
+    QTemporaryFile tf(QDir::tempPath() + QLatin1String("/okular_XXXXXX.ps"));
 
     // Get list of pages to print
     QList<int> pageList = Okular::FilePrinter::pageList( printer,
@@ -119,7 +118,7 @@ bool GSGenerator::print( QPrinter& printer )
     if ( printer.outputFileName().right(3) == "pdf" )
     {
         exportFormat = SPECTRE_EXPORTER_FORMAT_PDF;
-        tf.setSuffix(".pdf");
+        tf.setFileTemplate(QDir::tempPath() + QLatin1String("/okular_XXXXXX.pdf"));
     }
 
     if ( !tf.open() )

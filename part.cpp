@@ -29,6 +29,7 @@
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qtimer.h>
+#include <qtemporaryfile.h>
 #include <QtPrintSupport/QPrinter>
 #include <QtPrintSupport/QPrintDialog>
 #include <QScrollBar>
@@ -52,7 +53,6 @@
 #include <kservicetypetrader.h>
 #include <kstandarddirs.h>
 #include <kstandardshortcut.h>
-#include <ktemporaryfile.h>
 #include <ktoggleaction.h>
 #include <ktogglefullscreenaction.h>
 #include <kio/job.h>
@@ -128,12 +128,12 @@ class FileKeeper
             }
         }
 
-        KTemporaryFile* copyToTemporary() const
+        QTemporaryFile* copyToTemporary() const
         {
             if ( !m_handle )
                 return 0;
 
-            KTemporaryFile * retFile = new KTemporaryFile;
+            QTemporaryFile * retFile = new QTemporaryFile;
             retFile->open();
 
             std::rewind( m_handle );
@@ -1165,8 +1165,7 @@ bool Part::slotImportPSFile()
     KUrl url = KFileDialog::getOpenUrl( KUrl(), "application/postscript", this->widget() );
     if ( url.isLocalFile() )
     {
-        KTemporaryFile tf;
-        tf.setSuffix( ".pdf" );
+        QTemporaryFile tf(QDir::tempPath() + QLatin1String("/okular_XXXXXX.pdf"));
         tf.setAutoRemove( false );
         if ( !tf.open() )
             return false;
@@ -2204,7 +2203,7 @@ void Part::slotSaveFileAs()
 
 bool Part::saveAs( const QUrl & saveUrl )
 {
-    KTemporaryFile tf;
+    QTemporaryFile tf;
     QString fileName;
     if ( !tf.open() )
     {
@@ -2260,7 +2259,7 @@ void Part::slotSaveCopyAs()
         // make use of the already downloaded (in case of remote URLs) file,
         // no point in downloading that again
         KUrl srcUrl = KUrl::fromPath( localFilePath() );
-        KTemporaryFile * tempFile = 0;
+        QTemporaryFile * tempFile = 0;
         // duh, our local file disappeared...
         if ( !QFile::exists( localFilePath() ) )
         {
@@ -2375,9 +2374,8 @@ void Part::slotPrintPreview()
     else
     {
         // Generate a temp filename for Print to File, then release the file so generator can write to it
-        KTemporaryFile tf;
+        QTemporaryFile tf(QDir::tempPath() + QLatin1String("/okular_XXXXXX.ps"));
         tf.setAutoRemove( true );
-        tf.setSuffix( ".ps" );
         tf.open();
         printer.setOutputFileName( tf.fileName() );
         tf.close();
@@ -2845,7 +2843,7 @@ bool Part::handleCompressed( QString &destpath, const QString &path, const QStri
 
     // we are working with a compressed file, decompressing
     // temporary file for decompressing
-    KTemporaryFile *newtempfile = new KTemporaryFile();
+    QTemporaryFile *newtempfile = new QTemporaryFile();
     newtempfile->setAutoRemove(true);
 
     if ( !newtempfile->open() )

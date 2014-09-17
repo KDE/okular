@@ -220,7 +220,7 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
   if (!options.isEmpty() || dvi.suggestedPageSize != 0) {
     // Get a name for a temporary file.
     // Must open the QTemporaryFile to access the name.
-    KTemporaryFile tmpfile;
+    QTemporaryFile tmpfile;
     tmpfile.setAutoRemove(false);
     tmpfile.open();
     tmpfile_name_ = tmpfile.fileName();

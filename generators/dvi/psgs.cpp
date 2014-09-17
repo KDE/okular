@@ -160,9 +160,8 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
 
   // Generate a PNG-file
   // Step 1: Write the PostScriptString to a File
-  KTemporaryFile PSfile;
+  QTemporaryFile PSfile(QDir::tempPath() + QLatin1String("/okular_XXXXXX.ps"));
   PSfile.setAutoRemove(false);
-  PSfile.setSuffix(".ps");
   PSfile.open();
   const QString PSfileName = PSfile.fileName();
 

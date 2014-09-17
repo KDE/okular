@@ -554,7 +554,7 @@ class OKULAR_EXPORT Generator : public QObject
 
     protected:
         /// @cond PRIVATE
-        Generator(GeneratorPrivate &dd);
+        Generator(GeneratorPrivate &dd, QObject *parent, const QVariantList &args);
         Q_DECLARE_PRIVATE( Generator )
         GeneratorPrivate *d_ptr;
 

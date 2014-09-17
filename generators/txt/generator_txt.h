@@ -19,7 +19,7 @@ class TxtGenerator : public Okular::TextDocumentGenerator
     Q_OBJECT
 
 public:
-    TxtGenerator();
+    TxtGenerator(QObject *parent, const QVariantList &args);
     ~TxtGenerator() {}
 
     void addPages( KConfigDialog* dlg ) Q_DECL_OVERRIDE;

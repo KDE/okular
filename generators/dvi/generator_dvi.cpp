@@ -45,8 +45,6 @@
 #endif
 #endif
 
-static const int DviDebug = 4713;
-
 static KAboutData createAboutData()
 {
     KAboutData aboutData(

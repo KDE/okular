@@ -1448,7 +1448,7 @@ bool Part::openFile()
     }
 
     // if the 'OpenTOC' flag is set, open the TOC
-    if ( m_document->metaData( "OpenTOC" ).toBool() && m_sidebar->isItemEnabled( 0 ) && !m_sidebar->isCollapsed() )
+    if ( m_document->metaData( "OpenTOC" ).toBool() && m_sidebar->isItemEnabled( 0 ) && !m_sidebar->isCollapsed() && m_sidebar->currentIndex() != 0 )
     {
         m_sidebar->setCurrentIndex( 0, Sidebar::DoNotUncollapseIfCollapsed );
     }

@@ -10,21 +10,20 @@
 
 #include "converter.h"
 
-#include <kaboutdata.h>
+#include <KAboutData>
 #include <kconfigdialog.h>
 
 static KAboutData createAboutData()
 {
   KAboutData aboutData(
                        "okular_mobi",
-                       "okular_mobi",
-                       ki18n("Mobipocket Backend"),
+                       i18n("Mobipocket Backend"),
                        "0.1.1",
-                       ki18n("A mobipocket backend"),
-                       KAboutData::License_GPL,
-                       ki18n("© 2008-2009 Jakub Stachowski")
+                       i18n("A mobipocket backend"),
+                       KAboutLicense::GPL,
+                       i18n("© 2008-2009 Jakub Stachowski")
                        );
-  aboutData.addAuthor(ki18n("Jakub Stachowski"), KLocalizedString(),
+  aboutData.addAuthor(i18n("Jakub Stachowski"), KLocalizedString(),
                       "qbast@go2.pl");
 
   return aboutData;

@@ -11,7 +11,7 @@
 #include "generator_txt.h"
 #include "converter.h"
 
-#include <kaboutdata.h>
+#include <KAboutData>
 #include <klocalizedstring.h>
 #include <KConfigDialog>
 

@@ -11,21 +11,21 @@
 
 #include "converter.h"
 
-#include <k4aboutdata.h>
+#include <KAboutData>
+#include <KLocale>
 #include <kconfigdialog.h>
 
-static K4AboutData createAboutData()
+static KAboutData createAboutData()
 {
-  K4AboutData aboutData(
+  KAboutData aboutData(
                        "okular_epub",
-                       "okular_epub",
-                       ki18n("EPub Backend"),
+                       i18n("EPub Backend"),
                        "0.2.3",
-                       ki18n("An EPub backend"),
-                       K4AboutData::License_GPL,
-                       ki18n("© 2008 Ely Levy")
+                       i18n("An EPub backend"),
+                       KAboutLicense::GPL,
+                       i18n("© 2008 Ely Levy")
                        );
-  aboutData.addAuthor(ki18n("Ely Levy"), KLocalizedString(),
+  aboutData.addAuthor(i18n("Ely Levy"), QString(),
                       "elylevy@cs.huji.ac.il");
 
   return aboutData;

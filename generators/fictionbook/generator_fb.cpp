@@ -11,7 +11,7 @@
 
 #include "converter.h"
 
-#include <kaboutdata.h>
+#include <KAboutData>
 #include <klocale.h>
 #include <kconfigdialog.h>
 

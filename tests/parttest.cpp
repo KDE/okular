@@ -16,7 +16,7 @@
 #include <KGlobal>
 #include <KStandardDirs>
 #include <KTempDir>
-#include <K4AboutData>
+#include <KAboutData>
 
 #include <QTreeView>
 
@@ -185,8 +185,7 @@ int main(int argc, char *argv[])
     setenv("KDE_SKIP_KDERC", "1", 1);
     unsetenv("KDE_COLOR_DEBUG");
     QFile::remove(QDir::homePath() + QString::fromLatin1("/.kde-unit-test/share/config/qttestrc")); 
-    K4AboutData aboutData( QByteArray("qttest"), QByteArray(), ki18n("KDE Test Program"), QByteArray("version") );
-    KComponentData cData(&aboutData);
+    KAboutData aboutData( QByteArray("qttest"), i18n("KDE Test Program"), QByteArray("version") );
     QApplication app( argc, argv );
     app.setApplicationName( QLatin1String("qttest") );
     qRegisterMetaType<KUrl>(); /*as done by kapplication*/

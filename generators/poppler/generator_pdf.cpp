@@ -27,7 +27,7 @@
 #include <QPainter>
 #include <QtCore/QDebug>
 
-#include <k4aboutdata.h>
+#include <KAboutData>
 #include <kconfigdialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -380,16 +380,14 @@ static QLinkedList<Okular::ObjectRect*> generateLinks( const QList<Poppler::Link
 
 static KAboutData createAboutData()
 {
-    K4AboutData aboutData(
-         "okular_poppler",
-         "okular_poppler",
-         ki18n( "PDF Backend" ),
+    KAboutData aboutData( "okular_poppler",
+         i18n( "PDF Backend" ),
          "0.6.5",
-         ki18n( "A PDF file renderer" ),
-         K4AboutData::License_GPL,
-         ki18n( "© 2005-2008 Albert Astals Cid" )
+         i18n( "A PDF file renderer" ),
+         KAboutLicense::GPL,
+         i18n( "© 2005-2008 Albert Astals Cid" )
     );
-    aboutData.addAuthor( ki18n( "Albert Astals Cid" ), KLocalizedString(), "aacid@kde.org" );
+    aboutData.addAuthor( i18n( "Albert Astals Cid" ), QString(), "aacid@kde.org" );
     return aboutData;
 }
 

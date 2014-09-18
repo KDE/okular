@@ -33,7 +33,7 @@
 #include <qtemporaryfile.h>
 #include <qmutex.h>
 
-#include <kaboutdata.h>
+#include <KAboutData>
 #include <QtCore/QDebug>
 #include <klocale.h>
 

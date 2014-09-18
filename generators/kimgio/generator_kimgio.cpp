@@ -11,12 +11,14 @@
 
 #include "generator_kimgio.h"
 
-#include <QtCore/QBuffer>
-#include <QtGui/QImageReader>
-#include <QtGui/QPainter>
-#include <QtGui/QPrinter>
+#include <QBuffer>
+#include <QImageReader>
+#include <QPainter>
+#include <QPrinter>
+#include <QMimeType>
+#include <QMimeDatabase>
 
-#include <k4aboutdata.h>
+#include <KAboutData>
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <kicon.h>
@@ -27,22 +29,19 @@
 
 #include <core/page.h>
 
-static K4AboutData createAboutData()
+static KAboutData createAboutData()
 {
-    K4AboutData aboutData(
+    KAboutData aboutData(
          "okular_kimgio",
-         "okular_kimgio",
-         ki18n( "Image Backend" ),
+         i18n( "Image Backend" ),
          "0.1.2",
-         ki18n( "A simple image backend" ),
-         K4AboutData::License_GPL,
-         ki18n( "© 2005, 2009 Albert Astals Cid\n"
-                "© 2006-2007 Pino Toscano\n"
-                "© 2006-2007 Tobias Koenig" )
+         i18n( "A simple image backend" ),
+         KAboutLicense::GPL,
+         i18n( "© 2005, 2009 Albert Astals Cid\n© 2006-2007 Pino Toscano\n© 2006-2007 Tobias Koenig" )
     );
-    aboutData.addAuthor( ki18n( "Albert Astals Cid" ), KLocalizedString(), "aacid@kde.org" );
-    aboutData.addAuthor( ki18n( "Pino Toscano" ), KLocalizedString(), "pino@kde.org" );
-    aboutData.addAuthor( ki18n( "Tobias Koenig" ), KLocalizedString(), "tokoe@kde.org" );
+    aboutData.addAuthor( i18n( "Albert Astals Cid" ), QString(), "aacid@kde.org" );
+    aboutData.addAuthor( i18n( "Pino Toscano" ), QString(), "pino@kde.org" );
+    aboutData.addAuthor( i18n( "Tobias Koenig" ), QString(), "tokoe@kde.org" );
     return aboutData;
 }
 
@@ -64,6 +63,7 @@ KIMGIOGenerator::~KIMGIOGenerator()
 
 bool KIMGIOGenerator::loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector )
 {
+    QMimeDatabase db;
     const QString mime = db.mimeTypeForFile(fileName, QMimeDatabase::MatchContent).name();
     const QStringList types = KImageIO::typeForMime(mime);
     const QByteArray type = !types.isEmpty() ? types[0].toAscii() : QByteArray();
@@ -90,6 +90,7 @@ bool KIMGIOGenerator::loadDocument( const QString & fileName, QVector<Okular::Pa
 
 bool KIMGIOGenerator::loadDocumentFromData( const QByteArray & fileData, QVector<Okular::Page*> & pagesVector )
 {
+    QMimeDatabase db;
     const QString mime = db.mimeTypeForData(fileData).name();
     const QStringList types = KImageIO::typeForMime(mime);
     const QByteArray type = !types.isEmpty() ? types[0].toAscii() : QByteArray();

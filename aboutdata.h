@@ -10,7 +10,7 @@
 #ifndef _ABOUTDATA_H_
 #define _ABOUTDATA_H_
 
-#include <kaboutdata.h>
+#include <KAboutData>
 
 #include "core/version.h"
 

@@ -15,7 +15,7 @@
 #include <QtPrintSupport/QPrinter>
 #include <QtGui/QTextDocument>
 
-#include <kaboutdata.h>
+#include <KAboutData>
 #include <klocale.h>
 
 #include <core/page.h>

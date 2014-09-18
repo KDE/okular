@@ -17,7 +17,7 @@
 #include <qsize.h>
 #include <QtGui/QPrinter>
 
-#include <kaboutdata.h>
+#include <KAboutData>
 #include <kconfigdialog.h>
 #include <QtCore/QDebug>
 #include <QMimeType>
@@ -38,13 +38,12 @@ static KAboutData createAboutData()
 {
     KAboutData aboutData(
          "okular_ghostview",
-         "okular_ghostview",
-         ki18n( "PS Backend" ),
+         i18n( "PS Backend" ),
          "0.1.7",
-         ki18n( "A PostScript file renderer." ),
-         KAboutData::License_GPL,
-         ki18n( "© 2007-2008 Albert Astals Cid" ),
-         ki18n( "Based on the Spectre library." )
+         i18n( "A PostScript file renderer." ),
+         KAboutLicense::GPL,
+         i18n( "© 2007-2008 Albert Astals Cid" ),
+         i18n( "Based on the Spectre library." )
     );
     aboutData.addAuthor( ki18n( "Albert Astals Cid" ), KLocalizedString(), "aacid@kde.org" );
     return aboutData;

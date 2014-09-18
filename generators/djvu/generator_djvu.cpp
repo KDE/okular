@@ -25,7 +25,7 @@
 #include <quuid.h>
 #include <QtGui/QPrinter>
 
-#include <kaboutdata.h>
+#include <KAboutData>
 #include <QtCore/QDebug>
 #include <klocale.h>
 #include <qtemporaryfile.h>
@@ -70,12 +70,11 @@ static KAboutData createAboutData()
 {
     KAboutData aboutData(
          "okular_djvu",
-         "okular_djvu",
-         ki18n( "DjVu Backend" ),
+         i18n( "DjVu Backend" ),
          "0.2.3",
-         ki18n( "DjVu backend based on DjVuLibre." ),
-         KAboutData::License_GPL,
-         ki18n( "© 2006-2008 Pino Toscano" )
+         i18n( "DjVu backend based on DjVuLibre." ),
+         KAboutLicense::GPL
+         i18n( "© 2006-2008 Pino Toscano" )
     );
     aboutData.addAuthor( ki18n( "Pino Toscano" ), KLocalizedString(), "pino@kde.org" );
     return aboutData;

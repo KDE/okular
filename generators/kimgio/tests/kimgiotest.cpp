@@ -60,7 +60,8 @@ void KIMGIOTest::testExifOrientation_data()
 void KIMGIOTest::testExifOrientation()
 {
 	QFETCH( QString, imgPath );
-
+        QMimeDatabase db;
+        
 	Okular::SettingsCore::instance( "kimgiotest" );
 	Okular::Document *m_document = new Okular::Document( 0 );
 	const QMimeType mime = db.mimeTypeForFile( imgPath );

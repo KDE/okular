@@ -15,7 +15,7 @@
 #include <QtGui/QPainter>
 #include <QtXml/QDomElement>
 
-#include <k4aboutdata.h>
+#include <KAboutData>
 #include <khtml_part.h>
 #include <khtmlview.h>
 #include <klocale.h>
@@ -29,19 +29,18 @@
 #include <core/textpage.h>
 #include <core/utils.h>
 
-static K4AboutData createAboutData()
+static KAboutData createAboutData()
 {
-    K4AboutData aboutData(
+    KAboutData aboutData(
          "okular_chm",
-         "okular_chm",
-         ki18n( "CHM Backend" ),
+         i18n( "CHM Backend" ),
          "0.1.4",
-         ki18n( "A Microsoft Windows help file renderer" ),
-         K4AboutData::License_GPL,
-         ki18n( "© 2005-2007 Piotr Szymański\n© 2008 Albert Astals Cid" )
+         i18n( "A Microsoft Windows help file renderer" ),
+         KAboutLicense::GPL,
+         i18n( "© 2005-2007 Piotr Szymański\n© 2008 Albert Astals Cid" )
     );
-    aboutData.addAuthor( ki18n( "Piotr Szymański" ), KLocalizedString(), "niedakh@gmail.com" );
-    aboutData.addAuthor( ki18n( "Albert Astals Cid" ), KLocalizedString(), "aacid@kde.org" );
+    aboutData.addAuthor( i18n( "Piotr Szymański" ), QString(), "niedakh@gmail.com" );
+    aboutData.addAuthor( i18n( "Albert Astals Cid" ), QString(), "aacid@kde.org" );
     return aboutData;
 }
 

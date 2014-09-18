@@ -24,7 +24,7 @@
 #include <qlist.h>
 #include <qpainter.h>
 #include <qprinter.h>
-#include <kaboutdata.h>
+#include <KAboutData>
 #include <kglobal.h>
 #include <klocale.h>
 #include <kurl.h>

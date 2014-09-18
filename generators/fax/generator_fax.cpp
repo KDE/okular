@@ -12,7 +12,7 @@
 #include <QtGui/QPainter>
 #include <QtPrintSupport/QPrinter>
 
-#include <kaboutdata.h>
+#include <KAboutData>
 #include <klocale.h>
 
 #include <core/document.h>

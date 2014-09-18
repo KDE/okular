@@ -1918,7 +1918,7 @@ void Part::enableTOC(bool enable)
     m_sidebar->setItemEnabled(0, enable);
 
     // If present, show the TOC when a document is opened
-    if ( enable )
+    if ( enable && m_sidebar->currentIndex() != 0 )
     {
         m_sidebar->setCurrentIndex( 0, Sidebar::DoNotUncollapseIfCollapsed );
     }

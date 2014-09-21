@@ -2350,6 +2350,8 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                         static const double s_minDistance = 0.025; // FIXME?: empirical value?
                         double distance = 0.0;
                         rect = pageItem->page()->nearestObjectRect( Okular::ObjectRect::SourceRef, nX, nY, pageItem->uncroppedWidth(), pageItem->uncroppedHeight(), &distance );
+                        // distance is distanceSqr, adapt it to a normalized value
+                        distance = distance / (pow( pageItem->uncroppedWidth(), 2 ) + pow( pageItem->uncroppedHeight(), 2 ));
                         if ( rect && ( distance > s_minDistance ) )
                             rect = 0;
                     }

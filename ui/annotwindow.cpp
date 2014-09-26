@@ -327,8 +327,8 @@ void AnnotWindow::slotOptionBtn()
 
 void AnnotWindow::slotsaveWindowText()
 {
-    QString contents = textEdit->toPlainText();
-    int cursorPos = textEdit->textCursor().position();
+    const QString contents = textEdit->toPlainText();
+    const int cursorPos = textEdit->textCursor().position();
     if (contents != m_annot->contents())
     {
         m_document->editPageAnnotationContents( m_page, m_annot, contents, cursorPos, m_prevCursorPos, m_prevAnchorPos);
@@ -344,6 +344,7 @@ void AnnotWindow::renderLatex( bool render )
     {
         textEdit->setReadOnly( true );
         disconnect(textEdit, SIGNAL(textChanged()), this,SLOT(slotsaveWindowText()));
+        disconnect(textEdit, SIGNAL(cursorPositionChanged()), this,SLOT(slotsaveWindowText()));
         textEdit->setAcceptRichText( true );
         QString contents = m_annot->contents();
         contents = Qt::convertFromPlainText( contents );
@@ -384,6 +385,7 @@ void AnnotWindow::renderLatex( bool render )
         textEdit->setAcceptRichText( false );
         textEdit->setPlainText( m_annot->contents() );
         connect(textEdit, SIGNAL(textChanged()), this,SLOT(slotsaveWindowText()));
+        connect(textEdit, SIGNAL(cursorPositionChanged()), this,SLOT(slotsaveWindowText()));
         textEdit->setReadOnly( false );
     }
 }

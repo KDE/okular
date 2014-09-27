@@ -345,7 +345,7 @@ static const uchar bitflip[256] = {
   15, 143, 79, 207, 47, 175, 111, 239, 31, 159, 95, 223, 63, 191, 127, 255
 };
 
-static quint32        bit_masks[33] = {
+static const quint32        bit_masks[33] = {
         0x0,           0x1,            0x3,            0x7,
         0xf,           0x1f,           0x3f,           0x7f,
         0xff,          0x1ff,          0x3ff,          0x7ff,

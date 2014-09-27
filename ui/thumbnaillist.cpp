@@ -338,7 +338,7 @@ void ThumbnailList::notifyCurrentPageChanged( int previousPage, int currentPage 
 
 void ThumbnailList::notifyPageChanged( int pageNumber, int changedFlags )
 {
-    static int interestingFlags = DocumentObserver::Pixmap | DocumentObserver::Bookmark | DocumentObserver::Highlights | DocumentObserver::Annotations;
+    static const int interestingFlags = DocumentObserver::Pixmap | DocumentObserver::Bookmark | DocumentObserver::Highlights | DocumentObserver::Annotations;
     // only handle change notifications we are interested in
     if ( !( changedFlags & interestingFlags ) )
         return;

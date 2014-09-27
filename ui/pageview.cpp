@@ -87,7 +87,7 @@
 #include "url_utils.h"
 #include "magnifierview.h"
 
-static int pageflags = PagePainter::Accessibility | PagePainter::EnhanceLinks |
+static const int pageflags = PagePainter::Accessibility | PagePainter::EnhanceLinks |
                        PagePainter::EnhanceImages | PagePainter::Highlights |
                        PagePainter::TextSelection | PagePainter::Annotations;
 
@@ -3274,7 +3274,7 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
             p->setPen( Qt::black );
             p->drawRect( -1, -1, itemWidth + 1, itemHeight + 1 );
             // draw bottom/right gradient
-            static int levels = 2;
+            static const int levels = 2;
             int r = backColor.red() / (levels + 2) + 6,
                 g = backColor.green() / (levels + 2) + 6,
                 b = backColor.blue() / (levels + 2) + 6;

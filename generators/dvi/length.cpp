@@ -19,7 +19,7 @@ class unitOfDistance
   const char* name;
 };
 
-unitOfDistance distanceUnitTable[] = {
+static const unitOfDistance distanceUnitTable[] = {
   // Metric units
   {1.0f, "mm"},
   {1.0f, "millimeter"},

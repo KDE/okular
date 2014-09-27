@@ -188,7 +188,7 @@ class PickPointEngine : public AnnotatorEngine
                     rect.right = qMax(startpoint.x,point.x);
                     rect.bottom = qMax(startpoint.y,point.y);
                     qCDebug(OkularUiDebug).nospace() << "xyScale=" << xscale << "," << yscale;
-                    static int padding = 2;
+                    static const int padding = 2;
                     const QFontMetricsF mf(ta->textFont());
                     const QRectF rcf = mf.boundingRect( Okular::NormalizedRect( rect.left, rect.top, 1.0, 1.0 ).geometry( (int)pagewidth, (int)pageheight ).adjusted( padding, padding, -padding, -padding ),
                                                   Qt::AlignTop | Qt::AlignLeft | Qt::TextWordWrap, ta->contents() );

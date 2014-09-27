@@ -28,7 +28,7 @@ struct pageSizeItem
 #define defaultMetricPaperSize 4 // Default paper size is "DIN A4"
 #define defaultImperialPaperSize 8 // Default paper size is "US Letter"
 
-static pageSizeItem staticList[] = { {"DIN A0",    841.0f, 1189.0f, "mm"},
+static const pageSizeItem staticList[] = { {"DIN A0",    841.0f, 1189.0f, "mm"},
                                      {"DIN A1",    594.0f, 841.0f, "mm"},
                                      {"DIN A2",    420.0f, 594.0f, "mm"},
                                      {"DIN A3",    297.0f, 420.0f, "mm"},

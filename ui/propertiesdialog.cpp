@@ -10,6 +10,8 @@
 #include "propertiesdialog.h"
 
 // qt/kde includes
+#include <qapplication.h>
+#include <qdesktopwidget.h>
 #include <qfile.h>
 #include <qlayout.h>
 #include <qformlayout.h>
@@ -27,7 +29,6 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <ksqueezedtextlabel.h>
-#include <kglobalsettings.h>
 #include <kurl.h>
 
 // local includes
@@ -171,7 +172,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
 //        width = qMax( width, page2Layout->sizeHint().width() + marginHint() + spacingHint() + 31 );
         width = qMax( width, page2Layout->sizeHint().width() + 31 );
     // stay inside the 2/3 of the screen width
-    QRect screenContainer = KGlobalSettings::desktopGeometry( this );
+    QRect screenContainer = QApplication::desktop()->screenGeometry( this );
     width = qMin( width, 2*screenContainer.width()/3 );
     resize(width, 1);
 

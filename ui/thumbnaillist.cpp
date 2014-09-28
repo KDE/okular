@@ -10,6 +10,8 @@
 #include "thumbnaillist.h"
 
 // qt/kde includes
+#include <qapplication.h>
+#include <qdesktopwidget.h>
 #include <qevent.h>
 #include <qtimer.h>
 #include <qpainter.h>
@@ -22,7 +24,6 @@
 #include <kiconloader.h>
 #include <kactioncollection.h>
 #include <kicon.h>
-#include <kglobalsettings.h>
 
 // local includes
 #include "pagepainter.h"
@@ -848,7 +849,7 @@ void ThumbnailListPrivate::mouseMoveEvent( QMouseEvent * e )
             m_mouseGrabItem = getPageByNumber( m_pageCurrentlyGrabbed );
         }
         // wrap mouse from top to bottom
-        const QRect mouseContainer = KGlobalSettings::desktopGeometry( this );
+        const QRect mouseContainer = QApplication::desktop()->screenGeometry( this );
         QPoint currentMousePos = QCursor::pos();
         if ( currentMousePos.y() <= mouseContainer.top() + 4 )
         {

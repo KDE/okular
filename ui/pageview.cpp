@@ -33,6 +33,7 @@
 #include <qclipboard.h>
 #include <qmenu.h>
 #include <QInputDialog>
+#include <qdesktopwidget.h>
 
 #include <kaction.h>
 #include <kactionmenu.h>
@@ -41,7 +42,6 @@
 #include <klocale.h>
 #include <kfiledialog.h>
 #include <kglobal.h>
-#include <kglobalsettings.h>
 #include <kselectaction.h>
 #include <ktoggleaction.h>
 #include <QtCore/QDebug>
@@ -1866,7 +1866,7 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
         int deltaY = d->mouseMidLastY - mouseY;
 
         // wrap mouse from top to bottom
-        const QRect mouseContainer = KGlobalSettings::desktopGeometry( this );
+        const QRect mouseContainer = QApplication::desktop()->screenGeometry( this );
         const int absDeltaY = abs(deltaY);
         if ( absDeltaY > mouseContainer.height() / 2 )
         {
@@ -1953,7 +1953,7 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
                     QPoint delta = d->mouseGrabPos - mousePos;
 
                     // wrap mouse from top to bottom
-                    const QRect mouseContainer = KGlobalSettings::desktopGeometry( this );
+                    const QRect mouseContainer = QApplication::desktop()->screenGeometry( this );
                     // If the delta is huge it probably means we just wrapped in that direction
                     const QPoint absDelta(abs(delta.x()), abs(delta.y()));
                     if ( absDelta.y() > mouseContainer.height() / 2 )

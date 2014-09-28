@@ -19,10 +19,10 @@
 #include <qpainter.h>
 #include <qset.h>
 #include <qvariant.h>
+#include <QInputDialog>
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
-#include <kinputdialog.h>
 #include <kuser.h>
 #include <QtCore/QDebug>
 #include <kmenu.h>
@@ -163,7 +163,7 @@ class PickPointEngine : public AnnotatorEngine
                 //note dialog
                 const QString prompt = i18n( "Text of the new note:" );
                 bool resok;
-                const QString note = KInputDialog::getMultiLineText( i18n( "New Text Note" ), prompt, QString(), &resok );
+                const QString note = QInputDialog::getMultiLineText(0, i18n( "New Text Note" ), prompt, QString(), &resok);
                 if(resok)
                 {
                     //add note

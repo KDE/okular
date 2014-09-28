@@ -33,6 +33,7 @@
 #include <QtPrintSupport/QPrinter>
 #include <QtPrintSupport/QPrintDialog>
 #include <QScrollBar>
+#include <QInputDialog>
 
 #include <kvbox.h>
 #include <kaboutapplicationdialog.h>
@@ -43,7 +44,6 @@
 #include <kstandardaction.h>
 #include <kpluginfactory.h>
 #include <kfiledialog.h>
-#include <kinputdialog.h>
 #include <kmessagebox.h>
 #include <knuminput.h>
 #include <kio/netaccess.h>
@@ -2049,7 +2049,7 @@ void Part::slotRenameBookmark( const DocumentViewport &viewport )
     if ( m_document->bookmarkManager()->isBookmarked( viewport ) )
     {
         KBookmark bookmark = m_document->bookmarkManager()->bookmark( viewport );
-        const QString newName = KInputDialog::getText( i18n( "Rename Bookmark" ), i18n( "Enter the new name of the bookmark:" ), bookmark.fullText(), 0, widget());
+        const QString newName = QInputDialog::getText(widget(), i18n( "Rename Bookmark" ), i18n( "Enter the new name of the bookmark:" ), QLineEdit::Normal, bookmark.fullText());
         if (!newName.isEmpty())
         {
             m_document->bookmarkManager()->renameBookmark(&bookmark, newName);

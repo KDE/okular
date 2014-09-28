@@ -32,6 +32,7 @@
 #include <qapplication.h>
 #include <qclipboard.h>
 #include <qmenu.h>
+#include <QInputDialog>
 
 #include <kaction.h>
 #include <kactionmenu.h>
@@ -41,7 +42,6 @@
 #include <kfiledialog.h>
 #include <kglobal.h>
 #include <kglobalsettings.h>
-#include <kinputdialog.h>
 #include <kselectaction.h>
 #include <ktoggleaction.h>
 #include <QtCore/QDebug>
@@ -4743,11 +4743,13 @@ void PageView::slotToggleAnnotator( bool on )
         if ( userName.isEmpty() )
         {
             bool ok = false;
-            userName = KInputDialog::getText(
+            userName = QInputDialog::getText(0,
                            i18n( "Annotations author" ),
                            i18n( "Please insert your name or initials:" ),
+                           QLineEdit::Normal,
                            QString(),
                            &ok );
+
             if ( !ok )
             {
                 d->aToggleAnnotator->trigger();

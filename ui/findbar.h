@@ -36,6 +36,7 @@ class FindBar
 
     signals:
         void forwardKeyPressEvent( QKeyEvent* );
+        void onCloseButtonPressed();
 
     public slots:
         void findNext();

@@ -179,6 +179,7 @@ void FindBar::closeAndStopSearch()
     {
         m_search->lineEdit()->stopSearch();
     }
+    emit onCloseButtonPressed();
     close();
 }
 

@@ -135,6 +135,11 @@ Status main(const QStringList &paths, const QString &serializedOptions)
     }
 
     Shell* shell = new Shell( serializedOptions );
+    if ( !shell->isValid() )
+    {
+        return Error;
+    }
+
     shell->show();
     for ( int i = 0; i < paths.count(); )
     {
@@ -147,6 +152,10 @@ Status main(const QStringList &paths, const QString &serializedOptions)
         else
         {
             shell = new Shell( serializedOptions );
+            if ( !shell->isValid() )
+            {
+                return Error;
+            }
             shell->show();
         }
     }

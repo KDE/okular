@@ -67,13 +67,13 @@ WidgetAnnotTools::WidgetAnnotTools( QWidget * parent )
     vBoxLayout->addStretch();
     hBoxLayout->addLayout( vBoxLayout );
 
-    connect( m_list, SIGNAL( itemDoubleClicked(QListWidgetItem*) ), this, SLOT( slotEdit() ) );
-    connect( m_list, SIGNAL( currentRowChanged(int) ), this, SLOT( updateButtons() ) );
-    connect( m_btnAdd, SIGNAL( clicked(bool) ), this, SLOT( slotAdd() ) );
-    connect( m_btnEdit, SIGNAL( clicked(bool) ), this, SLOT( slotEdit() ) );
-    connect( m_btnRemove, SIGNAL( clicked(bool) ), this, SLOT( slotRemove() ) );
-    connect( m_btnMoveUp, SIGNAL( clicked(bool) ), this, SLOT( slotMoveUp() ) );
-    connect( m_btnMoveDown, SIGNAL( clicked(bool) ), this, SLOT( slotMoveDown() ) );
+    connect(m_list, &QListWidget::itemDoubleClicked, this, &WidgetAnnotTools::slotEdit);
+    connect(m_list, &QListWidget::currentRowChanged, this, &WidgetAnnotTools::updateButtons);
+    connect(m_btnAdd, &KPushButton::clicked, this, &WidgetAnnotTools::slotAdd);
+    connect(m_btnEdit, &KPushButton::clicked, this, &WidgetAnnotTools::slotEdit);
+    connect(m_btnRemove, &KPushButton::clicked, this, &WidgetAnnotTools::slotRemove);
+    connect(m_btnMoveUp, &KPushButton::clicked, this, &WidgetAnnotTools::slotMoveUp);
+    connect(m_btnMoveDown, &KPushButton::clicked, this, &WidgetAnnotTools::slotMoveDown);
 }
 
 WidgetAnnotTools::~WidgetAnnotTools()
@@ -272,7 +272,7 @@ EditAnnotToolDialog::EditAnnotToolDialog( QWidget *parent, const QDomElement &in
     widgetLayout->addWidget( m_name, 0, 1 );
 
     m_type = new KComboBox( false, widget );
-    connect( m_type, SIGNAL( currentIndexChanged(int) ), this, SLOT( slotTypeChanged() ) );
+    connect(m_type, static_cast<void (KComboBox::*)(int)>(&KComboBox::currentIndexChanged), this, &EditAnnotToolDialog::slotTypeChanged);
     tmplabel = new QLabel( i18n( "&Type:" ), widget );
     tmplabel->setBuddy( m_type );
     widgetLayout->addWidget( tmplabel, 1, 0, Qt::AlignRight );
@@ -557,7 +557,7 @@ void EditAnnotToolDialog::rebuildAppearanceBox()
     m_annotationWidget = AnnotationWidgetFactory::widgetFor( m_stubann );
     m_appearanceBox->layout()->addWidget( m_annotationWidget->appearanceWidget() );
 
-    connect( m_annotationWidget, SIGNAL(dataChanged()), this, SLOT(slotDataChanged()) );
+    connect(m_annotationWidget, &AnnotationWidget::dataChanged, this, &EditAnnotToolDialog::slotDataChanged);
 }
 
 void EditAnnotToolDialog::updateDefaultNameAndIcon()

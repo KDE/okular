@@ -492,11 +492,10 @@ Sidebar::Sidebar( QWidget *parent )
     d->stack = new QStackedWidget( d->sideContainer );
     d->vlay->addWidget( d->stack );
 
-    connect( d->list, SIGNAL(customContextMenuRequested(QPoint)),
-             this, SLOT(listContextMenu(QPoint)) );
-    connect( d->splitter, SIGNAL(splitterMoved(int,int)), this, SLOT(splitterMoved(int,int)) );
+    connect(d->list, &SidebarListWidget::customContextMenuRequested, this, &Sidebar::listContextMenu);
+    connect(d->splitter, &QSplitter::splitterMoved, this, &Sidebar::splitterMoved);
 
-    connect( KGlobalSettings::self(), SIGNAL(appearanceChanged()), this, SLOT(appearanceChanged()) );
+    connect(KGlobalSettings::self(), &KGlobalSettings::appearanceChanged, this, &Sidebar::appearanceChanged);
 
     setCollapsed( true );
     setFocusProxy( d->list );
@@ -708,7 +707,7 @@ void Sidebar::listContextMenu( const QPoint &pos )
     QAction *showTextAct = menu.addAction( i18n( "Show Text" ) );
     showTextAct->setCheckable( true );
     showTextAct->setChecked( d->sideDelegate->isTextShown() );
-    connect( showTextAct, SIGNAL(toggled(bool)), this, SLOT(showTextToggled(bool)) );
+    connect(showTextAct, &QAction::toggled, this, &Sidebar::showTextToggled);
     menu.addSeparator();
     QActionGroup *sizeGroup = new QActionGroup( &menu );
     int curSize = d->list->iconSize().width();
@@ -725,7 +724,7 @@ void Sidebar::listContextMenu( const QPoint &pos )
     ADD_SIZE_ACTION( i18n( "Normal Icons" ), KIconLoader::SizeMedium )
     ADD_SIZE_ACTION( i18n( "Large Icons" ), KIconLoader::SizeLarge )
 #undef ADD_SIZE_ACTION
-    connect( sizeGroup, SIGNAL(triggered(QAction*)), this, SLOT(iconSizeChanged(QAction*)) );
+    connect(sizeGroup, &QActionGroup::triggered, this, &Sidebar::iconSizeChanged);
     menu.exec( mapToGlobal( pos ) );
 }
 

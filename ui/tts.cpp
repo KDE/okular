@@ -65,8 +65,7 @@ void OkularTTS::Private::setupIface()
         kspeech = new org::kde::KSpeech( "org.kde.kttsd", "/KSpeech", QDBusConnection::sessionBus() );
         kspeech->setParent( q );
         kspeech->setApplicationName( "Okular" );
-        connect( kspeech, SIGNAL(jobStateChanged(QString,int,int)),
-                 q, SLOT(slotJobStateChanged(QString,int,int)) );
+        connect(kspeech, &org::kde::KSpeech::jobStateChanged, q, &OkularTTS::slotJobStateChanged);
     }
 }
 
@@ -80,8 +79,7 @@ void OkularTTS::Private::teardownIface()
 OkularTTS::OkularTTS( QObject *parent )
     : QObject( parent ), d( new Private( this ) )
 {
-    connect( &d->watcher, SIGNAL(serviceUnregistered(QString)),
-             this, SLOT(slotServiceUnregistered(QString)) );
+    connect(&d->watcher, &QDBusServiceWatcher::serviceUnregistered, this, &OkularTTS::slotServiceUnregistered);
 }
 
 OkularTTS::~OkularTTS()

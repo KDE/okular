@@ -234,8 +234,7 @@ bool KTreeViewSearchLine::Private::checkItemParentsVisible( QTreeView *treeView,
 KTreeViewSearchLine::KTreeViewSearchLine( QWidget *parent, QTreeView *treeView )
   : KLineEdit( parent ), d( new Private( this ) )
 {
-  connect( this, SIGNAL(textChanged(QString)),
-           this, SLOT(queueSearch(QString)) );
+  connect(this, &KTreeViewSearchLine::textChanged, this, &KTreeViewSearchLine::queueSearch);
 
   setClearButtonShown( true );
   setTreeView( treeView );
@@ -249,8 +248,7 @@ KTreeViewSearchLine::KTreeViewSearchLine( QWidget *parent,
                                               const QList<QTreeView *> &treeViews )
   : KLineEdit( parent ), d( new Private( this ) )
 {
-  connect( this, SIGNAL(textChanged(QString)),
-           this, SLOT(queueSearch(QString)) );
+  connect(this, &KTreeViewSearchLine::textChanged, this, &KTreeViewSearchLine::queueSearch);
 
   setClearButtonShown( true );
   setTreeViews( treeViews );

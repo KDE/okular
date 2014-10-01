@@ -203,14 +203,10 @@ AnnotWindow::AnnotWindow( QWidget * parent, Okular::Annotation * annot, Okular::
     m_prevCursorPos = textEdit->textCursor().position();
     m_prevAnchorPos = textEdit->textCursor().anchor();
 
-    connect(textEdit, SIGNAL(textChanged()),
-            this,SLOT(slotsaveWindowText()));
-    connect(textEdit, SIGNAL(cursorPositionChanged()),
-            this,SLOT(slotsaveWindowText()));
-    connect(textEdit, SIGNAL(aboutToShowContextMenu(QMenu*)),
-            this,SLOT(slotUpdateUndoAndRedoInContextMenu(QMenu*)));
-    connect(m_document, SIGNAL(annotationContentsChangedByUndoRedo(Okular::Annotation*,QString,int,int)),
-            this, SLOT(slotHandleContentsChangedByUndoRedo(Okular::Annotation*,QString,int,int)));
+    connect(textEdit, &KTextEdit::textChanged, this, &AnnotWindow::slotsaveWindowText);
+    connect(textEdit, &KTextEdit::cursorPositionChanged, this, &AnnotWindow::slotsaveWindowText);
+    connect(textEdit, &KTextEdit::aboutToShowContextMenu, this, &AnnotWindow::slotUpdateUndoAndRedoInContextMenu);
+    connect(m_document, &Okular::Document::annotationContentsChangedByUndoRedo, this, &AnnotWindow::slotHandleContentsChangedByUndoRedo);
 
     if (!canEditAnnotation)
         textEdit->setReadOnly(true);
@@ -303,8 +299,8 @@ void AnnotWindow::slotUpdateUndoAndRedoInContextMenu(QMenu* menu)
 
     QAction *kundo = KStandardAction::create( KStandardAction::Undo, m_document, SLOT(undo()), menu);
     QAction *kredo = KStandardAction::create( KStandardAction::Redo, m_document, SLOT(redo()), menu);
-    connect(m_document, SIGNAL(canUndoChanged(bool)), kundo, SLOT(setEnabled(bool)));
-    connect(m_document, SIGNAL(canRedoChanged(bool)), kredo, SLOT(setEnabled(bool)));
+    connect(m_document, &Okular::Document::canUndoChanged, kundo, &QAction::setEnabled);
+    connect(m_document, &Okular::Document::canRedoChanged, kredo, &QAction::setEnabled);
     kundo->setEnabled(m_document->canUndo());
     kredo->setEnabled(m_document->canRedo());
 
@@ -343,8 +339,8 @@ void AnnotWindow::renderLatex( bool render )
     if (render)
     {
         textEdit->setReadOnly( true );
-        disconnect(textEdit, SIGNAL(textChanged()), this,SLOT(slotsaveWindowText()));
-        disconnect(textEdit, SIGNAL(cursorPositionChanged()), this,SLOT(slotsaveWindowText()));
+        disconnect(textEdit, &KTextEdit::textChanged, this, &AnnotWindow::slotsaveWindowText);
+        disconnect(textEdit, &KTextEdit::cursorPositionChanged, this, &AnnotWindow::slotsaveWindowText);
         textEdit->setAcceptRichText( true );
         QString contents = m_annot->contents();
         contents = Qt::convertFromPlainText( contents );
@@ -384,8 +380,8 @@ void AnnotWindow::renderLatex( bool render )
     {
         textEdit->setAcceptRichText( false );
         textEdit->setPlainText( m_annot->contents() );
-        connect(textEdit, SIGNAL(textChanged()), this,SLOT(slotsaveWindowText()));
-        connect(textEdit, SIGNAL(cursorPositionChanged()), this,SLOT(slotsaveWindowText()));
+        connect(textEdit, &KTextEdit::textChanged, this, &AnnotWindow::slotsaveWindowText);
+        connect(textEdit, &KTextEdit::cursorPositionChanged, this, &AnnotWindow::slotsaveWindowText);
         textEdit->setReadOnly( false );
     }
 }

@@ -448,7 +448,7 @@ QWidget * LineAnnotationWidget::createStyleWidget()
     {
         connect( m_innerColor, SIGNAL(changed(QColor)), this, SIGNAL(dataChanged()) );
         connect( m_useColor, SIGNAL(toggled(bool)), this, SIGNAL(dataChanged()) );
-        connect( m_useColor, SIGNAL(toggled(bool)), m_innerColor, SLOT(setEnabled(bool)) );
+        connect(m_useColor, &QCheckBox::toggled, m_innerColor, &KColorButton::setEnabled);
     }
     connect( m_spinSize, SIGNAL(valueChanged(double)), this, SIGNAL(dataChanged()) );
 
@@ -599,7 +599,7 @@ QWidget * GeomAnnotationWidget::createStyleWidget()
     connect( m_typeCombo, SIGNAL(currentIndexChanged(int)), this, SIGNAL(dataChanged()) );
     connect( m_innerColor, SIGNAL(changed(QColor)), this, SIGNAL(dataChanged()) );
     connect( m_useColor, SIGNAL(toggled(bool)), this, SIGNAL(dataChanged()) );
-    connect( m_useColor, SIGNAL(toggled(bool)), m_innerColor, SLOT(setEnabled(bool)) );
+    connect(m_useColor, &QCheckBox::toggled, m_innerColor, &KColorButton::setEnabled);
     connect( m_spinSize, SIGNAL(valueChanged(double)), this, SIGNAL(dataChanged()) );
 
     return widget;

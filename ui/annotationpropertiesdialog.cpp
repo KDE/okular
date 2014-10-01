@@ -39,8 +39,8 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     {
         setStandardButtons( QDialogButtonBox::Ok | QDialogButtonBox::Apply | QDialogButtonBox::Cancel );
         button( QDialogButtonBox::Apply )->setEnabled( false );
-        connect( this, SIGNAL(applyClicked()), this, SLOT(slotapply()) );
-        connect( this, SIGNAL(okClicked()), this, SLOT(slotapply()) );
+        connect( button( QDialogButtonBox::Apply ), &QPushButton::clicked, this, &AnnotsPropertiesDialog::slotapply);
+        connect( button( QDialogButtonBox::Ok ), &QPushButton::clicked, this, &AnnotsPropertiesDialog::slotapply);
     }
     else
     {
@@ -90,8 +90,8 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     }
 
     //BEGIN connections
-    connect( AuthorEdit, SIGNAL(textChanged(QString)), this, SLOT(setModified()) );
-    connect( m_annotWidget, SIGNAL(dataChanged()), this, SLOT(setModified()) );
+    connect(AuthorEdit, &QLineEdit::textChanged, this, &AnnotsPropertiesDialog::setModified);
+    connect(m_annotWidget, &AnnotationWidget::dataChanged, this, &AnnotsPropertiesDialog::setModified);
     //END
 
 #if 0

@@ -176,24 +176,24 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     QLabel *pagesLabel = new QLabel( m_topBar );
     pagesLabel->setText( QLatin1String( " / " ) + QString::number( m_document->pages() ) + QLatin1String( " " ) );
     m_topBar->addWidget( pagesLabel );
-    connect( m_pagesEdit, SIGNAL(returnPressed()), this, SLOT(slotPageChanged()) );
+    connect(m_pagesEdit, &QLineEdit::returnPressed, this, &PresentationWidget::slotPageChanged);
     m_topBar->addAction( QIcon::fromTheme( layoutDirection() == Qt::RightToLeft ? "go-previous" : "go-next" ), i18n( "Next Page" ), this, SLOT(slotNextPage()) );
     m_topBar->addSeparator();
     QAction *playPauseAct = collection->action( "presentation_play_pause" );
     playPauseAct->setEnabled( true );
-    connect( playPauseAct, SIGNAL(triggered()), SLOT(slotTogglePlayPause()) );
+    connect(playPauseAct, &QAction::triggered, this, &PresentationWidget::slotTogglePlayPause);
     m_topBar->addAction( playPauseAct );
     setPlayPauseIcon();
     addAction( playPauseAct );
     m_topBar->addSeparator();
     QAction *drawingAct = collection->action( "presentation_drawing_mode" );
-    connect( drawingAct, SIGNAL(toggled(bool)), SLOT(togglePencilMode(bool)) );
+    connect(drawingAct, &QAction::toggled, this, &PresentationWidget::togglePencilMode);
     drawingAct->setEnabled( true );
     m_topBar->addAction( drawingAct );
     addAction( drawingAct );
     QAction *eraseDrawingAct = collection->action( "presentation_erase_drawings" );
     eraseDrawingAct->setEnabled( true );
-    connect( eraseDrawingAct, SIGNAL(triggered()), SLOT(clearDrawings()) );
+    connect(eraseDrawingAct, &QAction::triggered, this, &PresentationWidget::clearDrawings);
     m_topBar->addAction( eraseDrawingAct );
     addAction( eraseDrawingAct );
     QDesktopWidget *desktop = QApplication::desktop();
@@ -228,16 +228,16 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     setContextMenuPolicy( Qt::PreventContextMenu );
     m_transitionTimer = new QTimer( this );
     m_transitionTimer->setSingleShot( true );
-    connect( m_transitionTimer, SIGNAL(timeout()), this, SLOT(slotTransitionStep()) );
+    connect(m_transitionTimer, &QTimer::timeout, this, &PresentationWidget::slotTransitionStep);
     m_overlayHideTimer = new QTimer( this );
     m_overlayHideTimer->setSingleShot( true );
-    connect( m_overlayHideTimer, SIGNAL(timeout()), this, SLOT(slotHideOverlay()) );
+    connect(m_overlayHideTimer, &QTimer::timeout, this, &PresentationWidget::slotHideOverlay);
     m_nextPageTimer = new QTimer( this ); 
     m_nextPageTimer->setSingleShot( true );
-    connect( m_nextPageTimer, SIGNAL(timeout()), this, SLOT(slotNextPage()) ); 
+    connect(m_nextPageTimer, &QTimer::timeout, this, &PresentationWidget::slotNextPage);
 
-    connect( m_document, SIGNAL(processMovieAction(const Okular::MovieAction*)), this, SLOT(slotProcessMovieAction(const Okular::MovieAction*)) );
-    connect( m_document, SIGNAL(processRenditionAction(const Okular::RenditionAction*)), this, SLOT(slotProcessRenditionAction(const Okular::RenditionAction*)) );
+    connect(m_document, &Okular::Document::processMovieAction, this, &PresentationWidget::slotProcessMovieAction);
+    connect(m_document, &Okular::Document::processRenditionAction, this, &PresentationWidget::slotProcessRenditionAction);
 
     // handle cursor appearance as specified in configuration
     if ( Okular::Settings::slidesCursor() == Okular::Settings::EnumSlidesCursor::HiddenDelay )
@@ -495,7 +495,7 @@ void PresentationWidget::setupActions()
     addAction( m_ac->action( KStandardAction::name( KStandardAction::DocumentForward ) ) );
 
     QAction *action = m_ac->action( "switch_blackscreen_mode" );
-    connect( action, SIGNAL(toggled(bool)), SLOT(toggleBlackScreenMode(bool)) );
+    connect(action, &QAction::toggled, this, &PresentationWidget::toggleBlackScreenMode);
     action->setEnabled( true );
     addAction( action );
 }
@@ -743,7 +743,7 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         m_width = width();
         m_height = height();
 
-        connect( m_document, SIGNAL(linkFind()), this, SLOT(slotFind()) );
+        connect(m_document, &Okular::Document::linkFind, this, &PresentationWidget::slotFind);
 
         // register this observer in document. events will come immediately
         m_document->addObserver( this );

@@ -282,7 +282,7 @@ void PageViewMessage::display( const QString & message, const QString & details,
         {
             m_timer = new QTimer( this );
             m_timer->setSingleShot( true );
-            connect( m_timer, SIGNAL(timeout()), SLOT(hide()) );
+            connect(m_timer, &QTimer::timeout, this, &PageViewMessage::hide);
         }
         m_timer->start( durationMs );
     } else if ( m_timer )
@@ -530,8 +530,8 @@ void PageViewToolBar::setItems( const QLinkedList<AnnotationToolItem> &items )
     for ( ; it != end; ++it )
     {
         ToolBarButton * button = new ToolBarButton( this, *it );
-        connect( button, SIGNAL(clicked()), this, SLOT(slotButtonClicked()) );
-        connect( button, SIGNAL(buttonDoubleClicked(int)), this, SIGNAL(buttonDoubleClicked(int)) );
+        connect(button, &ToolBarButton::clicked, this, &PageViewToolBar::slotButtonClicked);
+        connect(button, &ToolBarButton::buttonDoubleClicked, this, &PageViewToolBar::buttonDoubleClicked);
         d->buttons.append( button );
     }
 

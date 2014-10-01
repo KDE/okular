@@ -140,7 +140,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
         // add a tree view
         QTreeView *view = new QTreeView(page2);
         view->setContextMenuPolicy(Qt::CustomContextMenu);
-        connect(view, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showFontsMenu(QPoint)));
+        connect(view, &QTreeView::customContextMenuRequested, this, &PropertiesDialog::showFontsMenu);
         page2Layout->addWidget(view);
         view->setRootIsDecorated(false);
         view->setAlternatingRowColors(true);
@@ -189,9 +189,9 @@ void PropertiesDialog::pageChanged( KPageWidgetItem *current, KPageWidgetItem * 
 {
     if ( current == m_fontPage && !m_fontScanStarted )
     {
-        connect( m_document, SIGNAL(gotFont(Okular::FontInfo)), m_fontModel, SLOT(addFont(Okular::FontInfo)) );
-        connect( m_document, SIGNAL(fontReadingProgress(int)), this, SLOT(slotFontReadingProgress(int)) );
-        connect( m_document, SIGNAL(fontReadingEnded()), this, SLOT(slotFontReadingEnded()) );
+        connect(m_document, &Okular::Document::gotFont, m_fontModel, &FontsListModel::addFont);
+        connect(m_document, &Okular::Document::fontReadingProgress, this, &PropertiesDialog::slotFontReadingProgress);
+        connect(m_document, &Okular::Document::fontReadingEnded, this, &PropertiesDialog::slotFontReadingEnded);
         QTimer::singleShot( 0, this, SLOT(reallyStartFontReading()) );
 
         m_fontScanStarted = true;

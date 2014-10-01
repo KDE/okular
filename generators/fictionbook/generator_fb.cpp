@@ -41,5 +41,5 @@ void FictionBookGenerator::addPages( KConfigDialog* dlg )
 {
     Okular::TextDocumentSettingsWidget *widget = new Okular::TextDocumentSettingsWidget();
 
-    dlg->addPage( widget, generalSettings(), i18n("FictionBook"), "application-x-fictionbook+xml", i18n("FictionBook Backend Configuration") );
+    dlg->addPage( widget, generalSettings(), i18n("FictionBook"), "okular-fb2", i18n("FictionBook Backend Configuration") );
 }

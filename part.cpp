@@ -458,6 +458,7 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     m_pageNumberTool = new MiniBar( 0, m_miniBarLogic );
 
     connect( m_findBar, SIGNAL(forwardKeyPressEvent(QKeyEvent*)), m_pageView, SLOT(externalKeyPressEvent(QKeyEvent*)));
+    connect( m_findBar, SIGNAL(onCloseButtonPressed()), m_pageView, SLOT(setFocus()));
     connect( m_miniBar, SIGNAL(forwardKeyPressEvent(QKeyEvent*)), m_pageView, SLOT(externalKeyPressEvent(QKeyEvent*)));
     connect( m_pageView, SIGNAL(escPressed()), m_findBar, SLOT(resetSearch()) );
     connect( m_pageNumberTool, SIGNAL(forwardKeyPressEvent(QKeyEvent*)), m_pageView, SLOT(externalKeyPressEvent(QKeyEvent*)));
@@ -1434,7 +1435,7 @@ bool Part::openFile()
     }
 
     // if the 'OpenTOC' flag is set, open the TOC
-    if ( m_document->metaData( "OpenTOC" ).toBool() && m_sidebar->isItemEnabled( 0 ) && !m_sidebar->isCollapsed() )
+    if ( m_document->metaData( "OpenTOC" ).toBool() && m_sidebar->isItemEnabled( 0 ) && !m_sidebar->isCollapsed() && m_sidebar->currentIndex() != 0 )
     {
         m_sidebar->setCurrentIndex( 0, Sidebar::DoNotUncollapseIfCollapsed );
     }
@@ -1904,7 +1905,7 @@ void Part::enableTOC(bool enable)
     m_sidebar->setItemEnabled(0, enable);
 
     // If present, show the TOC when a document is opened
-    if ( enable )
+    if ( enable && m_sidebar->currentIndex() != 0 )
     {
         m_sidebar->setCurrentIndex( 0, Sidebar::DoNotUncollapseIfCollapsed );
     }

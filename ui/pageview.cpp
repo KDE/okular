@@ -1208,10 +1208,6 @@ void PageView::slotRealNotifyViewportChanged( bool smoothMove )
     // enable setViewport calls
     d->blockViewport = false;
 
-    // update zoom text if in a ZoomFit/* zoom mode
-    if ( d->zoomMode != ZoomFixed )
-        updateZoomText();
-
     if( viewport() )
     {
         viewport()->update();
@@ -1346,6 +1342,10 @@ void PageView::notifyCurrentPageChanged( int previous, int current )
             Q_FOREACH ( VideoWidget *videoWidget, item->videoWidgets() )
                 videoWidget->pageEntered();
         }
+
+        // update zoom text and factor if in a ZoomFit/* zoom mode
+        if ( d->zoomMode != ZoomFixed )
+            updateZoomText();
     }
 }
 
@@ -2353,6 +2353,8 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                         static const double s_minDistance = 0.025; // FIXME?: empirical value?
                         double distance = 0.0;
                         rect = pageItem->page()->nearestObjectRect( Okular::ObjectRect::SourceRef, nX, nY, pageItem->uncroppedWidth(), pageItem->uncroppedHeight(), &distance );
+                        // distance is distanceSqr, adapt it to a normalized value
+                        distance = distance / (pow( pageItem->uncroppedWidth(), 2 ) + pow( pageItem->uncroppedHeight(), 2 ));
                         if ( rect && ( distance > s_minDistance ) )
                             rect = 0;
                     }
@@ -3388,7 +3390,8 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
         height = ( height / width ) * colWidth;
         zoom = (double)colWidth / width;
         item->setWHZC( colWidth, (int)height, zoom, crop );
-        d->zoomFactor = zoom;
+        if ((uint)item->pageNumber() == d->document->currentPage())
+            d->zoomFactor = zoom;
     }
     else if ( d->zoomMode == ZoomFitPage )
     {
@@ -3396,7 +3399,8 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
         const double scaleH = (double)rowHeight / (double)height;
         zoom = qMin( scaleW, scaleH );
         item->setWHZC( (int)(zoom * width), (int)(zoom * height), zoom, crop );
-        d->zoomFactor = zoom;
+        if ((uint)item->pageNumber() == d->document->currentPage())
+            d->zoomFactor = zoom;
     }
     else if ( d->zoomMode == ZoomFitAuto )
     {
@@ -3424,7 +3428,8 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
             zoom = qMin( scaleW, scaleH );
         }
         item->setWHZC( (int)(zoom * width), (int)(zoom * height), zoom, crop );
-        d->zoomFactor = zoom;
+        if ((uint)item->pageNumber() == d->document->currentPage())
+            d->zoomFactor = zoom;
     }
 #ifndef NDEBUG
     else
@@ -3667,10 +3672,14 @@ void PageView::updateZoom( ZoomMode newZoomMode )
             QVector<float>::iterator i;
             if ( newZoomMode == ZoomOut )
             {
+                if (newFactor <= zoomValue.first())
+                    return;
                 i = qLowerBound(zoomValue.begin(), zoomValue.end(), newFactor) - 1;
             }
             else
             {
+                if (newFactor >= zoomValue.last())
+                    return;
                 i = qUpperBound(zoomValue.begin(), zoomValue.end(), newFactor);
             }
             const float tmpFactor = *i;

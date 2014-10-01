@@ -698,7 +698,7 @@ void Sidebar::splitterMoved( int /*pos*/, int index )
 void Sidebar::saveSplitterSize() const
 {
     Okular::Settings::setSplitterSizes( d->splitter->sizes() );
-    Okular::Settings::self()->writeConfig();
+    Okular::Settings::self()->save();
 }
 
 void Sidebar::listContextMenu( const QPoint &pos )
@@ -736,7 +736,7 @@ void Sidebar::showTextToggled( bool on )
     d->list->reset();
     d->list->update();
     Okular::Settings::setSidebarShowText( on );
-    Okular::Settings::self()->writeConfig();
+    Okular::Settings::self()->save();
 }
 
 void Sidebar::iconSizeChanged( QAction *action )
@@ -748,7 +748,7 @@ void Sidebar::iconSizeChanged( QAction *action )
     d->list->reset();
     d->list->update();
     Okular::Settings::setSidebarIconSize( size );
-    Okular::Settings::self()->writeConfig();
+    Okular::Settings::self()->save();
 }
 
 void Sidebar::appearanceChanged()

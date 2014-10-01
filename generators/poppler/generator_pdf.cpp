@@ -620,9 +620,9 @@ Okular::DocumentInfo PDFGenerator::generateDocumentInfo( const QSet<Okular::Docu
         if ( keys.contains( Okular::DocumentInfo::Producer ) )
             docInfo.set( Okular::DocumentInfo::Producer, pdfdoc->info("Producer") );
         if ( keys.contains( Okular::DocumentInfo::CreationDate ) )
-            docInfo.set( Okular::DocumentInfo::CreationDate, KGlobal::locale()->formatDateTime( pdfdoc->date("CreationDate"), KLocale::LongDate, true ) );
+            docInfo.set( Okular::DocumentInfo::CreationDate, KLocale::global()->formatDateTime( pdfdoc->date("CreationDate"), KLocale::LongDate, true ) );
         if ( keys.contains( Okular::DocumentInfo::ModificationDate ) )
-            docInfo.set( Okular::DocumentInfo::ModificationDate, KGlobal::locale()->formatDateTime( pdfdoc->date("ModDate"), KLocale::LongDate, true ) );
+            docInfo.set( Okular::DocumentInfo::ModificationDate, KLocale::global()->formatDateTime( pdfdoc->date("ModDate"), KLocale::LongDate, true ) );
         if ( keys.contains( Okular::DocumentInfo::CustomKeys ) )
         {
             int major, minor;

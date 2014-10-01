@@ -56,7 +56,7 @@ static QString absolutePath( const QString &baseUrl, const QString &path )
     }
     else
     {
-        KUrl url = KUrl::fromPath( baseUrl );
+        KUrl url = QUrl::fromLocalFile( baseUrl );
         url.setFileName( path );
         absPath = url.toLocalFile();
     }

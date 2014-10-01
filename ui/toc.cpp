@@ -172,7 +172,7 @@ void TOC::saveSearchOptions()
 {
     Okular::Settings::setContentsSearchRegularExpression( m_searchLine->regularExpression() );
     Okular::Settings::setContentsSearchCaseSensitive( m_searchLine->caseSensitivity() == Qt::CaseSensitive ? true : false );
-    Okular::Settings::self()->writeConfig();
+    Okular::Settings::self()->save();
 }
 
 #include "moc_toc.cpp"

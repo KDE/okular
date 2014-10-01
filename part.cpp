@@ -508,7 +508,7 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     // [SPEECH] check for KTTSD presence and usability
     const KService::Ptr kttsd = KService::serviceByDesktopName("kttsd");
     Okular::Settings::setUseKTTSD( kttsd );
-    Okular::Settings::self()->writeConfig();
+    Okular::Settings::self()->save();
 
     rebuildBookmarkMenu( false );
 
@@ -1642,7 +1642,7 @@ void Part::slotShowLeftPanel()
 {
     bool showLeft = m_showLeftPanel->isChecked();
     Okular::Settings::setShowLeftPanel( showLeft );
-    Okular::Settings::self()->writeConfig();
+    Okular::Settings::self()->save();
     // show/hide left panel
     m_sidebar->setSidebarVisibility( showLeft );
 }
@@ -1651,7 +1651,7 @@ void Part::slotShowBottomBar()
 {
     const bool showBottom = m_showBottomBar->isChecked();
     Okular::Settings::setShowBottomBar( showBottom );
-    Okular::Settings::self()->writeConfig();
+    Okular::Settings::self()->save();
     // show/hide bottom bar
     m_bottomBar->setVisible( showBottom );
 }
@@ -2258,7 +2258,7 @@ void Part::slotSaveCopyAs()
     {
         // make use of the already downloaded (in case of remote URLs) file,
         // no point in downloading that again
-        KUrl srcUrl = KUrl::fromPath( localFilePath() );
+        KUrl srcUrl = QUrl::fromLocalFile( localFilePath() );
         QTemporaryFile * tempFile = 0;
         // duh, our local file disappeared...
         if ( !QFile::exists( localFilePath() ) )
@@ -2268,7 +2268,7 @@ void Part::slotSaveCopyAs()
 #ifdef OKULAR_KEEP_FILE_OPEN
                 // local file: try to get it back from the open handle on it
                 if ( ( tempFile = m_keeper->copyToTemporary() ) )
-                    srcUrl = KUrl::fromPath( tempFile->fileName() );
+                    srcUrl = QUrl::fromLocalFile( tempFile->fileName() );
 #else
                 const QString msg = i18n( "Okular cannot copy %1 to the specified location.\n\nThe document does not exist anymore.", localFilePath() );
                 KMessageBox::sorry( widget(), msg );

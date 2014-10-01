@@ -57,7 +57,7 @@ struct epub *EpubDocument::getEpub()
 
 void EpubDocument::setCurrentSubDocument(const QString &doc)
 {
-  mCurrentSubDocument = KUrl::fromPath("/" + doc);
+  mCurrentSubDocument = QUrl::fromLocalFile("/" + doc);
 }
 
 int EpubDocument::maxContentHeight() const

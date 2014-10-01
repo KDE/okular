@@ -89,6 +89,7 @@
 #include <memory>
 
 #include <config-okular.h>
+#include <KFormat>
 
 using namespace Okular;
 
@@ -279,7 +280,7 @@ QString DocumentPrivate::localizedSize(const QSizeF &size) const
         case Generator::None:
         break;
     }
-    if (KGlobal::locale()->measureSystem() == KLocale::Imperial)
+    if (KLocale::global()->measureSystem() == KLocale::Imperial)
     {
         return i18nc("%1 is width, %2 is height, %3 is paper size name", "%1 x %2 in (%3)", inchesWidth, inchesHeight, namePaperSize(inchesWidth, inchesHeight));
     }
@@ -934,7 +935,8 @@ Document::OpenResult DocumentPrivate::openDocumentInternal( const KService::Ptr&
     Q_ASSERT_X( m_generator, "Document::load()", "null generator?!" );
 
     if ( !catalogName.isEmpty() )
-        KGlobal::locale()->insertCatalog( catalogName );
+        //KF5 port: remove this line and define TRANSLATION_DOMAIN in CMakeLists.txt instead
+//KLocale::global()->insertCatalog( catalogName );
 
     m_generator->d_func()->m_document = this;
 
@@ -983,7 +985,7 @@ Document::OpenResult DocumentPrivate::openDocumentInternal( const KService::Ptr&
     {
 #pragma message("KF5: FIXME load translations")
 //        if ( !catalogName.isEmpty() )
-//            KGlobal::locale()->removeCatalog( catalogName );
+//            KLocale::global()->removeCatalog( catalogName );
 
         m_generator->d_func()->m_document = 0;
         QObject::disconnect( m_generator, 0, m_parent, 0 );
@@ -2431,7 +2433,7 @@ void Document::closeDocument()
         Q_ASSERT( genIt != d->m_loadedGenerators.constEnd() );
 #pragma message("KF5: FIXME load translations")
 //        if ( !genIt.value().catalogName.isEmpty() && !genIt.value().config )
-//            KGlobal::locale()->removeCatalog( genIt.value().catalogName );
+//            KLocale::global()->removeCatalog( genIt.value().catalogName );
     }
     d->m_generator = 0;
     d->m_generatorName = QString();
@@ -2619,7 +2621,7 @@ DocumentInfo Document::documentInfo( const QSet<DocumentInfo::Key> &keys ) const
 
         if ( d->m_docSize != -1 && missingKeys.contains( DocumentInfo::DocumentSize ) )
         {
-            const QString sizeString = KGlobal::locale()->formatByteSize( d->m_docSize );
+            const QString sizeString = KFormat().formatByteSize( d->m_docSize );
             info.set( DocumentInfo::DocumentSize, sizeString );
         }
         if ( missingKeys.contains( DocumentInfo::PagesSize ) )
@@ -3985,8 +3987,10 @@ void Document::fillConfigDialog( KConfigDialog * dialog )
         {
             iface->addPages( dialog );
             pagesAdded = true;
-            if ( !it.value().catalogName.isEmpty() )
-                KGlobal::locale()->insertCatalog( it.value().catalogName );
+            if ( !it.value().catalogName.isEmpty() ) {
+                //KF5 port: remove this line and define TRANSLATION_DOMAIN in CMakeLists.txt instead
+                //KLocale::global()->insertCatalog( it.value().catalogName );
+            }
         }
     }
     if ( pagesAdded )

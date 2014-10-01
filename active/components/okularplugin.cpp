@@ -32,7 +32,8 @@
 void OkularPlugin::registerTypes(const char *uri)
 {
     Q_ASSERT(uri == QLatin1String("org.kde.okular"));
-    KGlobal::locale()->insertCatalog("org.kde.okular");
+    //KF5 port: remove this line and define TRANSLATION_DOMAIN in CMakeLists.txt instead
+//KLocale::global()->insertCatalog("org.kde.okular");
     qmlRegisterType<DocumentItem>(uri, 0, 1, "DocumentItem");
     qmlRegisterType<PageItem>(uri, 0, 1, "PageItem");
     qmlRegisterType<ThumbnailItem>(uri, 0, 1, "ThumbnailItem");

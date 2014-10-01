@@ -21,6 +21,7 @@
 #include <QMimeType>
 #include <QMimeDatabase>
 #include <kstandardguiitem.h>
+#include <KFormat>
 
 #include "core/document.h"
 #include "guiutils.h"
@@ -32,7 +33,7 @@ static const int EmbeddedFileRole = Qt::UserRole + 100;
 static QString dateToString( const QDateTime & date )
 {
 	return date.isValid()
-		? KGlobal::locale()->formatDateTime( date, KLocale::LongDate, true )
+		? KLocale::global()->formatDateTime( date, KLocale::LongDate, true )
 		: i18nc( "Unknown date", "Unknown" );
 }
 
@@ -68,7 +69,7 @@ EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const Okular::Document
             twi->setIcon(0, QIcon::fromTheme(mime.iconName()));
 		}
 		twi->setText(1, ef->description());
-		twi->setText(2, ef->size() <= 0 ? i18nc("Not available size", "N/A") : KGlobal::locale()->formatByteSize(ef->size()));
+		twi->setText(2, ef->size() <= 0 ? i18nc("Not available size", "N/A") : KFormat().formatByteSize(ef->size()));
 		twi->setText(3, dateToString( ef->creationDate() ) );
 		twi->setText(4, dateToString( ef->modificationDate() ) );
 		twi->setData( 0, EmbeddedFileRole, qVariantFromValue( ef ) );

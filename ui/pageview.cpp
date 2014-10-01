@@ -3653,7 +3653,7 @@ void PageView::updateZoom( ZoomMode newZoomMode )
             // kdelibs4 sometimes adds accelerators to actions' text directly :(
             z.remove ('&');
             z.remove ('%');
-            newFactor = KGlobal::locale()->readNumber( z ) / 100.0;
+            newFactor = KLocale::global()->readNumber( z ) / 100.0;
             }break;
         case ZoomIn:
         case ZoomOut:{
@@ -3771,10 +3771,10 @@ void PageView::updateZoomText()
         if ( !inserted )
             selIdx++;
         // we do not need to display 2-digit precision
-        QString localValue( KGlobal::locale()->formatNumber( value * 100.0, 1 ) );
-        localValue.remove( KGlobal::locale()->decimalSymbol() + single_oh );
+        QString localValue( KLocale::global()->formatNumber( value * 100.0, 1 ) );
+        localValue.remove( KLocale::global()->decimalSymbol() + single_oh );
         // remove a trailing zero in numbers like 66.70
-        if ( localValue.right( 1 ) == QLatin1String( "0" ) && localValue.indexOf( KGlobal::locale()->decimalSymbol() ) > -1 )
+        if ( localValue.right( 1 ) == QLatin1String( "0" ) && localValue.indexOf( KLocale::global()->decimalSymbol() ) > -1 )
             localValue.chop( 1 );
         translated << QString( "%1%" ).arg( localValue );
     }
@@ -4614,7 +4614,7 @@ void PageView::slotViewMode( QAction *action )
     if ( (int)Okular::Settings::viewMode() != nr )
     {
         Okular::Settings::setViewMode( nr );
-        Okular::Settings::self()->writeConfig();
+        Okular::Settings::self()->save();
         if ( d->document->pages() > 0 )
             slotRelayoutPages();
     }
@@ -4625,7 +4625,7 @@ void PageView::slotContinuousToggled( bool on )
     if ( Okular::Settings::viewContinuous() != on )
     {
         Okular::Settings::setViewContinuous( on );
-        Okular::Settings::self()->writeConfig();
+        Okular::Settings::self()->save();
         if ( d->document->pages() > 0 )
             slotRelayoutPages();
     }
@@ -4641,7 +4641,7 @@ void PageView::slotSetMouseNormal()
         d->aToggleAnnotator->trigger();
     // force an update of the cursor
     updateCursor();
-    Okular::Settings::self()->writeConfig();
+    Okular::Settings::self()->save();
 }
 
 void PageView::slotSetMouseZoom()
@@ -4657,7 +4657,7 @@ void PageView::slotSetMouseZoom()
     }
     // force an update of the cursor
     updateCursor();
-    Okular::Settings::self()->writeConfig();
+    Okular::Settings::self()->save();
 }
 
 void PageView::slotSetMouseMagnifier()
@@ -4667,7 +4667,7 @@ void PageView::slotSetMouseMagnifier()
 
     // force an update of the cursor
     updateCursor();
-    Okular::Settings::self()->writeConfig();
+    Okular::Settings::self()->save();
 }
 
 void PageView::slotSetMouseSelect()
@@ -4683,7 +4683,7 @@ void PageView::slotSetMouseSelect()
     }
     // force an update of the cursor
     updateCursor();
-    Okular::Settings::self()->writeConfig();
+    Okular::Settings::self()->save();
 }
 
 void PageView::slotSetMouseTextSelect()
@@ -4699,7 +4699,7 @@ void PageView::slotSetMouseTextSelect()
     }
     // force an update of the cursor
     updateCursor();
-    Okular::Settings::self()->writeConfig();
+    Okular::Settings::self()->save();
 }
 
 void PageView::slotSetMouseTableSelect()
@@ -4717,7 +4717,7 @@ void PageView::slotSetMouseTableSelect()
     }
     // force an update of the cursor
     updateCursor();
-    Okular::Settings::self()->writeConfig();
+    Okular::Settings::self()->save();
 }
 
 void PageView::slotToggleAnnotator( bool on )
@@ -4759,7 +4759,7 @@ void PageView::slotToggleAnnotator( bool on )
         }
         // save the name
         Okular::Settings::setIdentityAuthor( userName );
-        Okular::Settings::self()->writeConfig();
+        Okular::Settings::self()->save();
     }
 
     // create the annotator object if not present
@@ -4872,7 +4872,7 @@ void PageView::slotTrimMarginsToggled( bool on )
     if ( Okular::Settings::trimMargins() != on )
     {
         Okular::Settings::setTrimMargins( on );
-        Okular::Settings::self()->writeConfig();
+        Okular::Settings::self()->save();
         if ( d->document->pages() > 0 )
         {
             slotRelayoutPages();
@@ -5041,7 +5041,7 @@ void PageView::slotProcessRenditionAction( const Okular::RenditionAction *action
 void PageView::slotToggleChangeColors()
 {
     Okular::SettingsCore::setChangeColors( !Okular::SettingsCore::changeColors() );
-    Okular::Settings::self()->writeConfig();
+    Okular::Settings::self()->save();
     viewport()->update();
 }
 

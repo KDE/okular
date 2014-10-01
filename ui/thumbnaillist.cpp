@@ -487,7 +487,7 @@ void ThumbnailList::slotFilterBookmarks( bool filterOn )
 {
     // save state
     Okular::Settings::setFilterBookmarks( filterOn );
-    Okular::Settings::self()->writeConfig();
+    Okular::Settings::self()->save();
     // ask for the 'notifySetup' with a little trick (on reinsertion the
     // document sends the list again)
     d->m_document->removeObserver( this );

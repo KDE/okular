@@ -136,7 +136,7 @@ bool StyleParser::parseMetaFile()
           mStyleInformation->addMetaInformation( "producer", child.text(), i18n( "Producer" ) );
         } else if ( child.tagName() == QLatin1String( "creation-date" ) ) {
           const QDateTime dateTime = QDateTime::fromString( child.text(), Qt::ISODate );
-          mStyleInformation->addMetaInformation( "creationDate", KGlobal::locale()->formatDateTime( dateTime, KLocale::LongDate, true ),
+          mStyleInformation->addMetaInformation( "creationDate", KLocale::global()->formatDateTime( dateTime, KLocale::LongDate, true ),
                                                  i18n( "Created" ) );
         } else if ( child.tagName() == QLatin1String( "initial-creator" ) ) {
           mStyleInformation->addMetaInformation( "creator", child.text(), i18n( "Creator" ) );
@@ -144,7 +144,7 @@ bool StyleParser::parseMetaFile()
           mStyleInformation->addMetaInformation( "author", child.text(), i18n( "Author" ) );
         } else if ( child.tagName() == QLatin1String( "date" ) ) {
           const QDateTime dateTime = QDateTime::fromString( child.text(), Qt::ISODate );
-          mStyleInformation->addMetaInformation( "modificationDate", KGlobal::locale()->formatDateTime( dateTime, KLocale::LongDate, true ),
+          mStyleInformation->addMetaInformation( "modificationDate", KLocale::global()->formatDateTime( dateTime, KLocale::LongDate, true ),
                                                  i18n( "Modified" ) );
         }
 

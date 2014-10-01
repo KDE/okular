@@ -160,7 +160,7 @@ void FindBar::caseSensitivityChanged()
     if ( !m_active )
         return;
     Okular::Settings::setSearchCaseSensitive( m_caseSensitiveAct->isChecked() );
-    Okular::Settings::self()->writeConfig();
+    Okular::Settings::self()->save();
     m_search->lineEdit()->restartSearch();
 }
 
@@ -170,7 +170,7 @@ void FindBar::fromCurrentPageChanged()
     if ( !m_active )
         return;
     Okular::Settings::setSearchFromCurrentPage( m_fromCurrentPageAct->isChecked() );
-    Okular::Settings::self()->writeConfig();
+    Okular::Settings::self()->save();
 }
 
 void FindBar::closeAndStopSearch()

@@ -51,7 +51,8 @@ int main(int argc, char **argv)
 
     KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
 
-    KGlobal::locale()->insertCatalog("org.kde.okular");
+    //KF5 port: remove this line and define TRANSLATION_DOMAIN in CMakeLists.txt instead
+//KLocale::global()->insertCatalog("org.kde.okular");
     //kDebug() << "ARGS:" << args << args->count();
 
     KDeclarativeMainWindow *mainWindow = new KDeclarativeMainWindow();

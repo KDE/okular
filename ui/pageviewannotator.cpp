@@ -1061,7 +1061,7 @@ void PageViewAnnotator::slotToolSelected( int toolID )
 void PageViewAnnotator::slotSaveToolbarOrientation( int side )
 {
     Okular::Settings::setEditToolBarPlacement( (int)side );
-    Okular::Settings::self()->writeConfig();
+    Okular::Settings::self()->save();
 }
 
 void PageViewAnnotator::slotToolDoubleClicked( int /*toolID*/ )

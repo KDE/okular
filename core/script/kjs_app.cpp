@@ -56,7 +56,7 @@ static KJSObject appGetLanguage( KJSContext *, void * )
     QString lang;
     QString country;
     QString dummy;
-    KLocale::splitLocale( KGlobal::locale()->language(),
+    KLocale::splitLocale( KLocale::global()->language(),
                           lang, country, dummy, dummy );
     QString acroLang = QString::fromLatin1( "ENU" );
     if ( lang == QLatin1String( "da" ) )

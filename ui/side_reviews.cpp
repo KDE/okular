@@ -283,7 +283,7 @@ void Reviews::saveSearchOptions()
 {
     Okular::Settings::setReviewsSearchRegularExpression( m_searchLine->regularExpression() );
     Okular::Settings::setReviewsSearchCaseSensitive( m_searchLine->caseSensitivity() == Qt::CaseSensitive ? true : false );
-    Okular::Settings::self()->writeConfig();
+    Okular::Settings::self()->save();
 }
 
 #include "moc_side_reviews.cpp"

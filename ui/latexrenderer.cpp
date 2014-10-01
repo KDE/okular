@@ -93,7 +93,7 @@ LatexRenderer::Error LatexRenderer::renderLatexInHtml( QString& html, const QCol
             continue;
         imagePxWidth = theImage.width();
         imagePxHeight = theImage.height();
-        QString escapedLATEX=Qt::escape(it.key()).replace('\"',"&quot;");  //we need  the escape quotes because that string will be in a title="" argument, but not the \n
+        QString escapedLATEX=it.key().toHtmlEscaped().replace('\"',"&quot;");  //we need  the escape quotes because that string will be in a title="" argument, but not the \n
         html.replace(it.key(), " <img width=\"" + QString::number(imagePxWidth) + "\" height=\"" + QString::number(imagePxHeight) + "\" align=\"middle\" src=\"" + (*it) + "\"  alt=\"" + escapedLATEX +"\" title=\"" + escapedLATEX +"\"  /> ");
     }
     return NoError;

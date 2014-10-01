@@ -341,7 +341,7 @@ Okular::DocumentInfo TIFFGenerator::generateDocumentInfo( const QSet<Okular::Doc
             char* buffer = 0;
             TIFFGetField( d->tiff, TIFFTAG_DATETIME, &buffer );
             QDateTime date = convertTIFFDateTime( buffer );
-            docInfo.set( Okular::DocumentInfo::CreationDate, date.isValid() ? KGlobal::locale()->formatDateTime( date, KLocale::LongDate, true  ) : QString() );
+            docInfo.set( Okular::DocumentInfo::CreationDate, date.isValid() ? KLocale::global()->formatDateTime( date, KLocale::LongDate, true  ) : QString() );
         }
     }
 

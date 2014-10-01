@@ -494,7 +494,7 @@ static QString absolutePath( const QString &path, const QString &location )
         // already absolute
         retPath = location;
     } else {
-        KUrl url = KUrl::fromPath( path );
+        KUrl url = QUrl::fromLocalFile( path );
         url.setFileName( location );
         retPath = url.toLocalFile();
     }
@@ -2024,10 +2024,10 @@ Okular::DocumentInfo XpsFile::generateDocumentInfo() const
                     docInfo.set( Okular::DocumentInfo::Category, xml.readElementText() );
                 } else if (xml.name() == "created") {
                     QDateTime createdDate = QDateTime::fromString( xml.readElementText(), "yyyy-MM-ddThh:mm:ssZ" );
-                    docInfo.set( Okular::DocumentInfo::CreationDate, KGlobal::locale()->formatDateTime( createdDate, KLocale::LongDate, true ) );
+                    docInfo.set( Okular::DocumentInfo::CreationDate, KLocale::global()->formatDateTime( createdDate, KLocale::LongDate, true ) );
                 } else if (xml.name() == "modified") {
                     QDateTime modifiedDate = QDateTime::fromString( xml.readElementText(), "yyyy-MM-ddThh:mm:ssZ" );
-                    docInfo.set( Okular::DocumentInfo::ModificationDate, KGlobal::locale()->formatDateTime( modifiedDate, KLocale::LongDate, true ) );
+                    docInfo.set( Okular::DocumentInfo::ModificationDate, KLocale::global()->formatDateTime( modifiedDate, KLocale::LongDate, true ) );
                 } else if (xml.name() == "keywords") {
                     docInfo.set( Okular::DocumentInfo::Keywords, xml.readElementText() );
                 } else if (xml.name() == "revision") {

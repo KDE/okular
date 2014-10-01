@@ -47,7 +47,7 @@ DlgPresentation::DlgPresentation( QWidget * parent )
     
     m_dlg->kcfg_SlidesAdvanceTime->setSuffix(ki18ncp("Advance every %1 seconds", " second", " seconds"));
 
-    connect( m_dlg->screenCombo, SIGNAL(activated(int)), this, SLOT(screenComboChanged(int)) );
+    connect(m_dlg->screenCombo, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), this, &DlgPresentation::screenComboChanged);
 }
 
 DlgPresentation::~DlgPresentation()

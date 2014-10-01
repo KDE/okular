@@ -27,7 +27,7 @@ DlgPerformance::DlgPerformance( QWidget * parent )
     m_dlg->cpuLabel->setPixmap( BarIcon( "cpu", 32 ) );
 //     m_dlg->memoryLabel->setPixmap( BarIcon( "kcmmemory", 32 ) ); // TODO: enable again when proper icon is available
 
-    connect( m_dlg->kcfg_MemoryLevel, SIGNAL(changed(int)), this, SLOT(radioGroup_changed(int)) );
+    connect(m_dlg->kcfg_MemoryLevel, &KButtonGroup::changed, this, &DlgPerformance::radioGroup_changed);
 }
 
 DlgPerformance::~DlgPerformance()

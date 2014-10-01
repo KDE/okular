@@ -2069,8 +2069,8 @@ Document::Document( QWidget *widget )
     d->m_undoStack = new QUndoStack(this);
 
     connect( SettingsCore::self(), SIGNAL(configChanged()), this, SLOT(_o_configChanged()) );
-    connect( d->m_undoStack, SIGNAL( canUndoChanged(bool) ), this, SIGNAL( canUndoChanged(bool)));
-    connect( d->m_undoStack, SIGNAL( canRedoChanged(bool) ), this, SIGNAL( canRedoChanged(bool) ) );
+    connect(d->m_undoStack, &QUndoStack::canUndoChanged, this, &Document::canUndoChanged);
+    connect(d->m_undoStack, &QUndoStack::canRedoChanged, this, &Document::canRedoChanged);
 
     qRegisterMetaType<Okular::FontInfo>();
 }

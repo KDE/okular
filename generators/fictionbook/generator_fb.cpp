@@ -43,3 +43,5 @@ void FictionBookGenerator::addPages( KConfigDialog* dlg )
 
     dlg->addPage( widget, generalSettings(), i18n("FictionBook"), "okular-fb2", i18n("FictionBook Backend Configuration") );
 }
+#include "generator_fb.moc"
+

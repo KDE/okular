@@ -763,7 +763,7 @@ bool Converter::convertLink( const QDomElement &element )
         mLocalLinks.insert( href.mid( 1 ), QPair<int, int>( startPosition, endPosition ) );
     } else {
         // external link
-        Okular::BrowseAction *action = new Okular::BrowseAction( href );
+        Okular::BrowseAction *action = new Okular::BrowseAction( QUrl(href) );
         emit addAction( action, startPosition, endPosition );
     }
 

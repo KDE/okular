@@ -51,3 +51,4 @@ void KOOOGenerator::walletDataForFile( const QString &fileName, QString *walletN
     *walletName = KWallet::Wallet::LocalWallet();
     *walletFolder = KWallet::Wallet::PasswordFolder();
 }
+#include "generator_ooo.moc"

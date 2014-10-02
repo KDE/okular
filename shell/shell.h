@@ -63,6 +63,12 @@ public:
   virtual ~Shell();
 
   QSize sizeHint() const;
+
+  /**
+   * Returns false if Okular component wasn't found
+   **/
+  bool isValid() const;
+
 public slots:
   void slotQuit();
   
@@ -159,6 +165,7 @@ private:
 #ifdef KActivities_FOUND
   KActivities::ResourceInstance* m_activityResource;
 #endif
+  bool m_isValid;
 };
 
 #endif

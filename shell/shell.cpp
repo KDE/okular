@@ -62,6 +62,7 @@ Shell::Shell( const QString &serializedOptions )
 #ifdef KActivities_FOUND
     , m_activityResource(0)
 #endif
+    , m_isValid(true)
 {
   setObjectName( QLatin1String( "okular::Shell" ) );
   setContextMenuPolicy( Qt::NoContextMenu );
@@ -78,6 +79,7 @@ Shell::Shell( const QString &serializedOptions )
   {
     // if we couldn't find our Part, we exit since the Shell by
     // itself can't do anything useful
+    m_isValid = false;
     KMessageBox::error(this, i18n("Unable to find the Okular component: %1", loader.errorString()));
     return;
   }
@@ -129,8 +131,14 @@ Shell::Shell( const QString &serializedOptions )
   }
   else
   {
+    m_isValid = false;
     KMessageBox::error(this, i18n("Unable to find the Okular component."));
   }
+}
+
+bool Shell::isValid() const
+{
+    return m_isValid;
 }
 
 void Shell::showOpenRecentMenu()

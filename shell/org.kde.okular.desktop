@@ -130,3 +130,5 @@ X-DocPath=okular/index.html
 InitialPreference=7
 Categories=Qt;KDE;Graphics;Office;Viewer;
 MimeType=application/vnd.kde.okular-archive;
+X-DBUS-ServiceName=org.kde.okular
+

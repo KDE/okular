@@ -29,6 +29,7 @@
 #include <QtCore/QDebug>
 #include <klocale.h>
 #include <qtemporaryfile.h>
+#include <QDir>
 
 static void recurseCreateTOC( QDomDocument &maindoc, const QDomNode &parent, QDomNode &parentDestination, KDjVu *djvu )
 {
@@ -73,10 +74,9 @@ static KAboutData createAboutData()
          i18n( "DjVu Backend" ),
          "0.2.3",
          i18n( "DjVu backend based on DjVuLibre." ),
-         KAboutLicense::GPL
-         i18n( "© 2006-2008 Pino Toscano" )
-    );
-    aboutData.addAuthor( ki18n( "Pino Toscano" ), KLocalizedString(), "pino@kde.org" );
+         KAboutLicense::GPL,
+         i18n( "© 2006-2008 Pino Toscano" ));
+    aboutData.addAuthor( i18n( "Pino Toscano" ), QString(), QLatin1String("pino@kde.org") );
     return aboutData;
 }
 
@@ -333,7 +333,7 @@ Okular::ObjectRect* DjVuGenerator::convertKDjVuLink( int page, KDjVu::Link * lin
         {
             KDjVu::UrlLink* l = static_cast<KDjVu::UrlLink*>( link );
             QString url = l->url();
-            newlink = new Okular::BrowseAction( url );
+            newlink = new Okular::BrowseAction( QUrl(url) );
             break;
         }
     }

@@ -25,6 +25,7 @@
 #include <libdjvu/miniexp.h>
 
 #include <stdio.h>
+#include <KDebug>
 
 QDebug &operator<<( QDebug & s, const ddjvu_rect_t &r )
 {
@@ -275,7 +276,7 @@ void KDjVu::Annotation::setComment( const QString &comment )
     miniexp_t exp = m_anno;
     exp = miniexp_cdr( exp );
     exp = miniexp_cdr( exp );
-    miniexp_rplaca( exp, miniexp_string( comment.toUtf8() ) );
+    miniexp_rplaca( exp, miniexp_string( comment.toUtf8().constData() ) );
 }
 
 QColor KDjVu::Annotation::color() const
@@ -330,7 +331,7 @@ QColor KDjVu::TextAnnotation::color() const
 void KDjVu::TextAnnotation::setColor( const QColor &color )
 {
     const QByteArray col = color.name().toLatin1();
-    find_replace_or_add_second_in_pair( m_anno, "backclr", miniexp_symbol( col ) );
+    find_replace_or_add_second_in_pair( m_anno, "backclr", miniexp_symbol( col.constData() ) );
 }
 
 bool KDjVu::TextAnnotation::inlineText() const
@@ -375,7 +376,7 @@ QColor KDjVu::LineAnnotation::color() const
 void KDjVu::LineAnnotation::setColor( const QColor &color )
 {
     const QByteArray col = color.name().toLatin1();
-    find_replace_or_add_second_in_pair( m_anno, "lineclr", miniexp_symbol( col ) );
+    find_replace_or_add_second_in_pair( m_anno, "lineclr", miniexp_symbol( col.constData() ) );
 }
 
 QPoint KDjVu::LineAnnotation::point2() const
@@ -667,7 +668,7 @@ bool KDjVu::openFile( const QString & fileName )
         closeFile();
 
     // load the document...
-    d->m_djvu_document = ddjvu_document_create_by_filename( d->m_djvu_cxt, QFile::encodeName( fileName ), true );
+    d->m_djvu_document = ddjvu_document_create_by_filename( d->m_djvu_cxt, QFile::encodeName( fileName ).constData(), true );
     if ( !d->m_djvu_document ) return false;
     // ...and wait for its loading
     wait_for_ddjvu_message( d->m_djvu_cxt, DDJVU_DOCINFO );

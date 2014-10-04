@@ -448,8 +448,8 @@ void PageView::setupViewerActions( KActionCollection * ac )
 {
     d->actionCollection = ac;
 
-    d->aZoomIn->setShortcut( QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_Plus) );
-    d->aZoomOut->setShortcut( QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_Minus) );
+    ac->setDefaultShortcut(d->aZoomIn, QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_Plus));
+    ac->setDefaultShortcut(d->aZoomOut, QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_Minus));
 
     // orientation menu actions
     d->aRotateClockwise = new QAction( QIcon::fromTheme( "object-rotate-right" ), i18n( "Rotate &Right" ), this );
@@ -534,7 +534,7 @@ do { \
     connect( d->aMouseNormal, SIGNAL(triggered()), this, SLOT(slotSetMouseNormal()) );
     d->aMouseNormal->setIconText( i18nc( "Browse Tool", "Browse" ) );
     d->aMouseNormal->setCheckable( true );
-    d->aMouseNormal->setShortcut( Qt::CTRL + Qt::Key_1 );
+    ac->setDefaultShortcut(d->aMouseNormal, QKeySequence(Qt::CTRL + Qt::Key_1));
     d->aMouseNormal->setActionGroup( d->mouseModeActionGroup );
     d->aMouseNormal->setChecked( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::Browse );
 
@@ -543,7 +543,7 @@ do { \
     connect( mz, SIGNAL(triggered()), this, SLOT(slotSetMouseZoom()) );
     mz->setIconText( i18nc( "Zoom Tool", "Zoom" ) );
     mz->setCheckable( true );
-    mz->setShortcut( Qt::CTRL + Qt::Key_2 );
+    ac->setDefaultShortcut(mz, QKeySequence(Qt::CTRL + Qt::Key_2));
     mz->setActionGroup( d->mouseModeActionGroup );
     mz->setChecked( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::Zoom );
 
@@ -557,8 +557,8 @@ void PageView::setupActions( KActionCollection * ac )
 {
     d->actionCollection = ac;
 
-    d->aZoomIn->setShortcut( QKeySequence(QKeySequence::ZoomIn) );
-    d->aZoomOut->setShortcut( QKeySequence(QKeySequence::ZoomOut) );
+    ac->setDefaultShortcuts(d->aZoomIn, KStandardShortcut::zoomIn());
+    ac->setDefaultShortcuts(d->aZoomOut, KStandardShortcut::zoomOut());
 
     // Mouse-Mode actions
     d->aMouseSelect  = new QAction(QIcon::fromTheme( "select-rectangular" ), i18n("&Selection Tool"), this);
@@ -566,7 +566,8 @@ void PageView::setupActions( KActionCollection * ac )
     connect( d->aMouseSelect, SIGNAL(triggered()), this, SLOT(slotSetMouseSelect()) );
     d->aMouseSelect->setIconText( i18nc( "Select Tool", "Selection" ) );
     d->aMouseSelect->setCheckable( true );
-    d->aMouseSelect->setShortcut( Qt::CTRL + Qt::Key_3 );
+    ac->setDefaultShortcut(d->aMouseSelect, Qt::CTRL + Qt::Key_3);
+
     d->aMouseSelect->setActionGroup( d->mouseModeActionGroup );
     d->aMouseSelect->setChecked( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::RectSelect );
 
@@ -575,7 +576,7 @@ void PageView::setupActions( KActionCollection * ac )
     connect( d->aMouseTextSelect, SIGNAL(triggered()), this, SLOT(slotSetMouseTextSelect()) );
     d->aMouseTextSelect->setIconText( i18nc( "Text Selection Tool", "Text Selection" ) );
     d->aMouseTextSelect->setCheckable( true );
-    d->aMouseTextSelect->setShortcut( Qt::CTRL + Qt::Key_4 );
+    ac->setDefaultShortcut(d->aMouseTextSelect, Qt::CTRL + Qt::Key_4);
     d->aMouseTextSelect->setActionGroup( d->mouseModeActionGroup );
     d->aMouseTextSelect->setChecked( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::TextSelect );
 
@@ -584,7 +585,7 @@ void PageView::setupActions( KActionCollection * ac )
     connect( d->aMouseTableSelect, SIGNAL( triggered() ), this, SLOT( slotSetMouseTableSelect() ) );
     d->aMouseTableSelect->setIconText( i18nc( "Table Selection Tool", "Table Selection" ) );
     d->aMouseTableSelect->setCheckable( true );
-    d->aMouseTableSelect->setShortcut( Qt::CTRL + Qt::Key_5 );
+    ac->setDefaultShortcut(d->aMouseTableSelect, Qt::CTRL + Qt::Key_5);
     d->aMouseTableSelect->setActionGroup( d->mouseModeActionGroup );
     d->aMouseTableSelect->setChecked( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::TableSelect );
 
@@ -593,7 +594,7 @@ void PageView::setupActions( KActionCollection * ac )
     connect( d->aMouseMagnifier, SIGNAL(triggered()), this, SLOT(slotSetMouseMagnifier()) );
     d->aMouseMagnifier->setIconText( i18nc( "Magnifier Tool", "Magnifier" ) );
     d->aMouseMagnifier->setCheckable( true );
-    d->aMouseMagnifier->setShortcut( Qt::CTRL + Qt::Key_6 );
+    ac->setDefaultShortcut(d->aMouseMagnifier, Qt::CTRL + Qt::Key_6);
     d->aMouseMagnifier->setActionGroup( d->mouseModeActionGroup );
     d->aMouseMagnifier->setChecked( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::Magnifier );
 
@@ -601,7 +602,7 @@ void PageView::setupActions( KActionCollection * ac )
     ac->addAction("mouse_toggle_annotate", d->aToggleAnnotator );
     d->aToggleAnnotator->setCheckable( true );
     connect( d->aToggleAnnotator, SIGNAL(toggled(bool)), SLOT(slotToggleAnnotator(bool)) );
-    d->aToggleAnnotator->setShortcut( Qt::Key_F6 );
+    ac->setDefaultShortcut(d->aToggleAnnotator, Qt::Key_F6);
 
     ToolAction *ta = new ToolAction( this );
     ac->addAction( "mouse_selecttools", ta );
@@ -629,25 +630,25 @@ void PageView::setupActions( KActionCollection * ac )
     QAction * su  = new QAction(i18n("Scroll Up"), this);
     ac->addAction("view_scroll_up", su );
     connect( su, SIGNAL(triggered()), this, SLOT(slotAutoScrollUp()) );
-    su->setShortcut( QKeySequence(Qt::SHIFT + Qt::Key_Up) );
+    ac->setDefaultShortcut(su, QKeySequence(Qt::SHIFT + Qt::Key_Up));
     addAction(su);
 
     QAction * sd  = new QAction(i18n("Scroll Down"), this);
     ac->addAction("view_scroll_down", sd );
     connect( sd, SIGNAL(triggered()), this, SLOT(slotAutoScrollDown()) );
-    sd->setShortcut( QKeySequence(Qt::SHIFT + Qt::Key_Down) );
+    ac->setDefaultShortcut(sd, QKeySequence(Qt::SHIFT + Qt::Key_Down));
     addAction(sd);
 
     QAction * spu = new QAction(i18n("Scroll Page Up"), this);
     ac->addAction( "view_scroll_page_up", spu );
     connect( spu, SIGNAL(triggered()), this, SLOT(slotScrollUp()) );
-    spu->setShortcut( QKeySequence(Qt::SHIFT + Qt::Key_Space) );
+    ac->setDefaultShortcut(spu, QKeySequence(Qt::SHIFT + Qt::Key_Space));
     addAction( spu );
 
     QAction * spd = new QAction(i18n("Scroll Page Down"), this);
     ac->addAction( "view_scroll_page_down", spd );
     connect( spd, SIGNAL(triggered()), this, SLOT(slotScrollDown()) );
-    spd->setShortcut( QKeySequence(Qt::Key_Space) );
+    ac->setDefaultShortcut(spd, QKeySequence(Qt::Key_Space));
     addAction( spd );
 
     d->aToggleForms = new QAction( this );

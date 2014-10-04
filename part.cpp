@@ -558,7 +558,7 @@ void Part::setupViewerActions()
 
     // Page Traversal actions
     m_gotoPage = KStandardAction::gotoPage( this, SLOT(slotGoToPage()), ac );
-    m_gotoPage->setShortcut( QKeySequence(Qt::CTRL + Qt::Key_G) );
+    ac->setDefaultShortcuts(m_gotoPage, KStandardShortcut::gotoLine());
     // dirty way to activate gotopage when pressing miniBar's button
     connect( m_miniBar, SIGNAL(gotoPage()), m_gotoPage, SLOT(trigger()) );
     connect( m_pageNumberTool, SIGNAL(gotoPage()), m_gotoPage, SLOT(trigger()) );
@@ -567,7 +567,7 @@ void Part::setupViewerActions()
     m_prevPage->setIconText( i18nc( "Previous page", "Previous" ) );
     m_prevPage->setToolTip( i18n( "Go back to the Previous Page" ) );
     m_prevPage->setWhatsThis( i18n( "Moves to the previous page of the document" ) );
-    m_prevPage->setShortcut( 0 );
+    ac->setDefaultShortcuts(m_prevPage, KStandardShortcut::prior());
     // dirty way to activate prev page when pressing miniBar's button
     connect( m_miniBar, SIGNAL(prevPage()), m_prevPage, SLOT(trigger()) );
     connect( m_pageNumberTool, SIGNAL(prevPage()), m_prevPage, SLOT(trigger()) );
@@ -579,7 +579,7 @@ void Part::setupViewerActions()
     m_nextPage->setIconText( i18nc( "Next page", "Next" ) );
     m_nextPage->setToolTip( i18n( "Advance to the Next Page" ) );
     m_nextPage->setWhatsThis( i18n( "Moves to the next page of the document" ) );
-    m_nextPage->setShortcut( 0 );
+    ac->setDefaultShortcuts(m_nextPage, KStandardShortcut::next());
     // dirty way to activate next page when pressing miniBar's button
     connect( m_miniBar, SIGNAL(nextPage()), m_nextPage, SLOT(trigger()) );
     connect( m_pageNumberTool, SIGNAL(nextPage()), m_nextPage, SLOT(trigger()) );
@@ -631,7 +631,7 @@ void Part::setupViewerActions()
     m_find = KStandardAction::find( this, SLOT(slotShowFindBar()), ac );
     QList<QKeySequence> s = m_find->shortcuts();
     s.append( QKeySequence( Qt::Key_Slash ) );
-    m_find->setShortcuts( s );
+    ac->setDefaultShortcuts(m_find, s);
     m_find->setEnabled( false );
 
     m_findNext = KStandardAction::findNext( this, SLOT(slotFindNext()), ac);
@@ -698,12 +698,12 @@ void Part::setupViewerActions()
     reload->setIcon( QIcon::fromTheme( "view-refresh" ) );
     reload->setWhatsThis( i18n( "Reload the current document from disk." ) );
     connect( reload, SIGNAL(triggered()), this, SLOT(slotReload()) );
-    reload->setShortcut( QKeySequence(QKeySequence::Refresh) );
+    ac->setDefaultShortcuts(reload, KStandardShortcut::reload());
     m_reload = reload;
 
     m_closeFindBar = ac->addAction( "close_find_bar", this, SLOT(slotHideFindBar()) );
     m_closeFindBar->setText( i18n("Close &Find Bar") );
-    m_closeFindBar->setShortcut( QKeySequence(Qt::Key_Escape) );
+    ac->setDefaultShortcut(m_closeFindBar, QKeySequence(Qt::Key_Escape));
     m_closeFindBar->setEnabled( false );
 
     QWidgetAction *pageno = new QWidgetAction( ac );
@@ -716,19 +716,21 @@ void Part::setViewerShortcuts()
 {
     KActionCollection * ac = actionCollection();
 
-    m_gotoPage->setShortcut( QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_G) );
-    m_find->setShortcuts( QList<QKeySequence>() );
+    ac->setDefaultShortcut(m_gotoPage, QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_G));
+    ac->setDefaultShortcut(m_find, QKeySequence());
 
-    m_findNext->setShortcut( QKeySequence() );
-    m_findPrev->setShortcut( QKeySequence() );
+    ac->setDefaultShortcut(m_findNext, QKeySequence());
+    ac->setDefaultShortcut(m_findPrev, QKeySequence());
 
-    m_addBookmark->setShortcut( QKeySequence( Qt::CTRL + Qt::ALT + Qt::Key_B ) );
+    ac->setDefaultShortcut(m_addBookmark, QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_B));
 
-    m_beginningOfDocument->setShortcut( QKeySequence( Qt::CTRL + Qt::ALT + Qt::Key_Home ) );
-    m_endOfDocument->setShortcut( QKeySequence( Qt::CTRL + Qt::ALT + Qt::Key_End ) );
+    ac->setDefaultShortcut(m_beginningOfDocument, QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_Home));
+    ac->setDefaultShortcut(m_endOfDocument, QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_End));
 
     QAction *action = static_cast<QAction*>( ac->action( "file_reload" ) );
-    if( action )  action->setShortcuts( QList<QKeySequence>() << QKeySequence( Qt::ALT + Qt::Key_F5 ) );
+    if (action) {
+        ac->setDefaultShortcut(action, QKeySequence(Qt::ALT + Qt::Key_F5));
+    }
 }
 
 void Part::setupActions()
@@ -742,8 +744,8 @@ void Part::setupActions()
 
     m_saveCopyAs = KStandardAction::saveAs( this, SLOT(slotSaveCopyAs()), ac );
     m_saveCopyAs->setText( i18n( "Save &Copy As..." ) );
-    m_saveCopyAs->setShortcut( QKeySequence(QKeySequence::SaveAs) );
     ac->addAction( "file_save_copy", m_saveCopyAs );
+    ac->setDefaultShortcuts(m_saveCopyAs, KStandardShortcut::shortcut(KStandardShortcut::SaveAs));
     m_saveCopyAs->setEnabled( false );
 
     m_saveAs = KStandardAction::saveAs( this, SLOT(slotSaveFileAs()), ac );
@@ -753,7 +755,7 @@ void Part::setupActions()
     m_showLeftPanel->setText(i18n( "Show &Navigation Panel"));
     m_showLeftPanel->setIcon(QIcon::fromTheme( "view-sidetree" ));
     connect( m_showLeftPanel, SIGNAL(toggled(bool)), this, SLOT(slotShowLeftPanel()) );
-    m_showLeftPanel->setShortcut( Qt::Key_F7 );
+    ac->setDefaultShortcut(m_showLeftPanel, QKeySequence(Qt::Key_F7));
     m_showLeftPanel->setChecked( Okular::Settings::showLeftPanel() );
     slotShowLeftPanel();
 
@@ -789,7 +791,7 @@ void Part::setupActions()
     m_showPresentation->setText(i18n("P&resentation"));
     m_showPresentation->setIcon( QIcon::fromTheme( "view-presentation" ) );
     connect(m_showPresentation, SIGNAL(triggered()), this, SLOT(slotShowPresentation()));
-    m_showPresentation->setShortcut( QKeySequence( Qt::CTRL + Qt::SHIFT + Qt::Key_P ) );
+    ac->setDefaultShortcut(m_showPresentation, QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_P));
     m_showPresentation->setEnabled( false );
 
     QAction * importPS = ac->addAction("import_ps");
@@ -801,13 +803,11 @@ void Part::setupActions()
     ghns->setText(i18n("&Get Books From Internet..."));
     ghns->setIcon(QIcon::fromTheme("get-hot-new-stuff"));
     connect(ghns, SIGNAL(triggered()), this, SLOT(slotGetNewStuff()));
-    // TEMP, REMOVE ME!
-    ghns->setShortcut( Qt::Key_G );
 #endif
 
     KToggleAction *blackscreenAction = new KToggleAction( i18n( "Switch Blackscreen Mode" ), ac );
     ac->addAction( "switch_blackscreen_mode", blackscreenAction );
-    blackscreenAction->setShortcut( QKeySequence( Qt::Key_B ) );
+    ac->setDefaultShortcut(blackscreenAction, QKeySequence(Qt::Key_B));
     blackscreenAction->setIcon( QIcon::fromTheme( "view-presentation" ) );
     blackscreenAction->setEnabled( false );
 

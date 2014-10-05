@@ -17,7 +17,7 @@
 #include <qevent.h>
 #include <kicon.h>
 #include <klocale.h>
-#include <kpushbutton.h>
+#include <qpushbutton.h>
 
 // local includes
 #include "searchlineedit.h"

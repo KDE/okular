@@ -15,10 +15,10 @@
 #include <qstyleoption.h>
 #include <qstylepainter.h>
 #include <qtoolbutton.h>
+#include <qpushbutton.h>
 
 #include <kicon.h>
 #include <klocale.h>
-#include <kpushbutton.h>
 
 #include "searchlineedit.h"
 
@@ -75,13 +75,13 @@ PresentationSearchBar::PresentationSearchBar( Okular::Document *document, QWidge
     m_search->setSearchMoveViewport( true );
     lay->addWidget( m_search );
 
-    KPushButton * findNextBtn = new KPushButton( QIcon::fromTheme( "go-down-search" ), i18n( "Find Next" ), this );
+    QPushButton * findNextBtn = new QPushButton( QIcon::fromTheme( "go-down-search" ), i18n( "Find Next" ), this );
     lay->addWidget( findNextBtn );
 
     m_anchor->installEventFilter( this );
 
     connect( closeBtn, SIGNAL(clicked()), this, SLOT(close()) );
-    connect(findNextBtn, &KPushButton::clicked, m_search, &SearchLineEdit::findNext);
+    connect(findNextBtn, &QPushButton::clicked, m_search, &SearchLineEdit::findNext);
 }
 
 PresentationSearchBar::~PresentationSearchBar()

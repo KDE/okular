@@ -16,7 +16,7 @@
 
 class KLineEdit;
 class KComboBox;
-class KPushButton;
+class QPushButton;
 class QLabel;
 class QListWidget;
 class QListWidgetItem;
@@ -46,11 +46,11 @@ class WidgetAnnotTools : public QWidget
 
     private:
         QListWidget *m_list;
-        KPushButton *m_btnAdd;
-        KPushButton *m_btnEdit;
-        KPushButton *m_btnRemove;
-        KPushButton *m_btnMoveUp;
-        KPushButton *m_btnMoveDown;
+        QPushButton *m_btnAdd;
+        QPushButton *m_btnEdit;
+        QPushButton *m_btnRemove;
+        QPushButton *m_btnMoveUp;
+        QPushButton *m_btnMoveDown;
 
     private slots:
         void updateButtons();

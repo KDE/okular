@@ -16,6 +16,7 @@
 #include <QSize>
 #include <QtCore/QFile>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QPushButton>
 #include <QtGui/QShowEvent>
 
 #include <klocalizedstring.h>
@@ -23,7 +24,6 @@
 #include <kparts/readonlypart.h>
 #include <kpluginfactory.h>
 #include <kpluginloader.h>
-#include <kpushbutton.h>
 #include <kservice.h>
 #include <ksharedconfig.h>
 #include <QtCore/qloggingcategory.h>

@@ -16,7 +16,6 @@
 #include <klocalizedstring.h>
 #include <klineedit.h>
 #include <knuminput.h>
-#include <kpushbutton.h>
 
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QHBoxLayout>
@@ -25,6 +24,7 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QListWidgetItem>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QStackedWidget>
 #include <QtXml/QDomDocument>
 #include <QtXml/QDomElement>
@@ -45,22 +45,22 @@ WidgetAnnotTools::WidgetAnnotTools( QWidget * parent )
     hBoxLayout->addWidget( m_list );
 
     QVBoxLayout *vBoxLayout = new QVBoxLayout();
-    m_btnAdd = new KPushButton( i18n("&Add..."), this );
+    m_btnAdd = new QPushButton( i18n("&Add..."), this );
     m_btnAdd->setIcon( QIcon::fromTheme("list-add") );
     vBoxLayout->addWidget( m_btnAdd );
-    m_btnEdit = new KPushButton( i18n("&Edit..."), this );
+    m_btnEdit = new QPushButton( i18n("&Edit..."), this );
     m_btnEdit->setIcon( QIcon::fromTheme("edit-rename") );
     m_btnEdit->setEnabled( false );
     vBoxLayout->addWidget( m_btnEdit );
-    m_btnRemove = new KPushButton( i18n("&Remove"), this );
+    m_btnRemove = new QPushButton( i18n("&Remove"), this );
     m_btnRemove->setIcon( QIcon::fromTheme("list-remove") );
     m_btnRemove->setEnabled( false );
     vBoxLayout->addWidget( m_btnRemove );
-    m_btnMoveUp = new KPushButton( i18n("Move &Up"), this );
+    m_btnMoveUp = new QPushButton( i18n("Move &Up"), this );
     m_btnMoveUp->setIcon( QIcon::fromTheme("arrow-up") );
     m_btnMoveUp->setEnabled( false );
     vBoxLayout->addWidget( m_btnMoveUp );
-    m_btnMoveDown = new KPushButton( i18n("Move &Down"), this );
+    m_btnMoveDown = new QPushButton( i18n("Move &Down"), this );
     m_btnMoveDown->setIcon( QIcon::fromTheme("arrow-down") );
     m_btnMoveDown->setEnabled( false );
     vBoxLayout->addWidget( m_btnMoveDown );
@@ -69,11 +69,11 @@ WidgetAnnotTools::WidgetAnnotTools( QWidget * parent )
 
     connect(m_list, &QListWidget::itemDoubleClicked, this, &WidgetAnnotTools::slotEdit);
     connect(m_list, &QListWidget::currentRowChanged, this, &WidgetAnnotTools::updateButtons);
-    connect(m_btnAdd, &KPushButton::clicked, this, &WidgetAnnotTools::slotAdd);
-    connect(m_btnEdit, &KPushButton::clicked, this, &WidgetAnnotTools::slotEdit);
-    connect(m_btnRemove, &KPushButton::clicked, this, &WidgetAnnotTools::slotRemove);
-    connect(m_btnMoveUp, &KPushButton::clicked, this, &WidgetAnnotTools::slotMoveUp);
-    connect(m_btnMoveDown, &KPushButton::clicked, this, &WidgetAnnotTools::slotMoveDown);
+    connect(m_btnAdd, &QPushButton::clicked, this, &WidgetAnnotTools::slotAdd);
+    connect(m_btnEdit, &QPushButton::clicked, this, &WidgetAnnotTools::slotEdit);
+    connect(m_btnRemove, &QPushButton::clicked, this, &WidgetAnnotTools::slotRemove);
+    connect(m_btnMoveUp, &QPushButton::clicked, this, &WidgetAnnotTools::slotMoveUp);
+    connect(m_btnMoveDown, &QPushButton::clicked, this, &WidgetAnnotTools::slotMoveDown);
 }
 
 WidgetAnnotTools::~WidgetAnnotTools()

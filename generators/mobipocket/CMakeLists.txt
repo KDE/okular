@@ -8,9 +8,9 @@ set(okularGenerator_mobi_PART_SRCS
   converter.cpp
 )
 
-kde4_add_plugin(okularGenerator_mobi ${okularGenerator_mobi_PART_SRCS})
+add_library(okularGenerator_mobi MODULE ${okularGenerator_mobi_PART_SRCS})
 
-target_link_libraries(okularGenerator_mobi okularcore ${KDE4_KDECORE_LIBS} ${KDE4_KDEUI_LIBS} ${QT_QTGUI_LIBRARY} ${QMOBIPOCKET_LIBRARIES})
+target_link_libraries(okularGenerator_mobi okularcore KF5::KDELibs4Support  Qt5::Gui ${QMOBIPOCKET_LIBRARIES})
 
 install(TARGETS okularGenerator_mobi DESTINATION ${PLUGIN_INSTALL_DIR})
 

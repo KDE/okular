@@ -12,22 +12,23 @@
 
 #include <KAboutData>
 #include <kconfigdialog.h>
+#include <KLocalizedString>
 
 static KAboutData createAboutData()
 {
   KAboutData aboutData(
-                       "okular_mobi",
+                       QStringLiteral("okular_mobi"),
                        i18n("Mobipocket Backend"),
-                       "0.1.1",
+                       QStringLiteral("0.1.1"),
                        i18n("A mobipocket backend"),
                        KAboutLicense::GPL,
                        i18n("© 2008-2009 Jakub Stachowski")
                        );
-  aboutData.addAuthor(i18n("Jakub Stachowski"), KLocalizedString(),
-                      "qbast@go2.pl");
+  aboutData.addAuthor(i18n("Jakub Stachowski"), QString(), QLatin1String("qbast@go2.pl"));
 
   return aboutData;
 }
+
 
 OKULAR_EXPORT_PLUGIN( MobiGenerator, createAboutData() )
 

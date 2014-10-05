@@ -23,6 +23,8 @@
 #include <QMimeType>
 #include <QMimeDatabase>
 #include <ktemporaryfile.h>
+#include <KDebug>
+#include <QDir>
 
 #include <core/document.h>
 #include <core/page.h>
@@ -45,7 +47,7 @@ static KAboutData createAboutData()
          i18n( "© 2007-2008 Albert Astals Cid" ),
          i18n( "Based on the Spectre library." )
     );
-    aboutData.addAuthor( ki18n( "Albert Astals Cid" ), KLocalizedString(), "aacid@kde.org" );
+    aboutData.addAuthor( i18n( "Albert Astals Cid" ), QString(), QLatin1String("aacid@kde.org") );
     return aboutData;
 }
 
@@ -122,7 +124,7 @@ bool GSGenerator::print( QPrinter& printer )
         return false;
 
     SpectreExporter *exporter = spectre_exporter_new( m_internalDocument, exportFormat );
-    SpectreStatus exportStatus = spectre_exporter_begin( exporter, tf.fileName().toAscii() );
+    SpectreStatus exportStatus = spectre_exporter_begin( exporter, tf.fileName().toLatin1().constData() );
 
     int i = 0;
     while ( i < pageList.count() && exportStatus == SPECTRE_STATUS_SUCCESS )
@@ -159,7 +161,7 @@ bool GSGenerator::loadDocument( const QString & fileName, QVector< Okular::Page 
     cache_AAgfx = documentMetaData("GraphicsAntialias", true).toBool();
 
     m_internalDocument = spectre_document_new();
-    spectre_document_load(m_internalDocument, QFile::encodeName(fileName));
+    spectre_document_load(m_internalDocument, QFile::encodeName(fileName).constData());
     const SpectreStatus loadStatus = spectre_document_status(m_internalDocument);
     if (loadStatus != SPECTRE_STATUS_SUCCESS)
     {

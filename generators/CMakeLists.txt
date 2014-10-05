@@ -84,9 +84,9 @@ if(POPPLER_FOUND)
   add_subdirectory(poppler)
 endif(POPPLER_FOUND)
 
-#if(LIBSPECTRE_FOUND)
-#  add_subdirectory(spectre)
-#endif(LIBSPECTRE_FOUND)
+if(LIBSPECTRE_FOUND)
+  add_subdirectory(spectre)
+endif(LIBSPECTRE_FOUND)
 
 if(KF5KExiv2_FOUND)
   add_subdirectory( kimgio )

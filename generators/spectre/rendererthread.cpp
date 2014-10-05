@@ -12,6 +12,7 @@
 #include <qimage.h>
 
 #include <QtCore/QDebug>
+#include <KDebug>
 
 #include "core/generator.h"
 #include "core/page.h"
@@ -132,7 +133,5 @@ void GSRendererThread::run()
         }
     }
 }
-
-#include "rendererthread.moc"
 
 /* kate: replace-tabs on; indent-width 4; */

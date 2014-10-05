@@ -63,7 +63,7 @@ QString ManifestEntry::checksumType() const
 
 void ManifestEntry::setChecksum( const QString &checksum )
 {
-  m_checksum = QByteArray::fromBase64( checksum.toAscii() );
+  m_checksum = QByteArray::fromBase64( checksum.toLatin1() );
 }
 
 QByteArray ManifestEntry::checksum() const
@@ -83,7 +83,7 @@ QString ManifestEntry::algorithm() const
 
 void ManifestEntry::setInitialisationVector( const QString &initialisationVector )
 {
-  m_initialisationVector = QByteArray::fromBase64( initialisationVector.toAscii() );
+  m_initialisationVector = QByteArray::fromBase64( initialisationVector.toLatin1() );
 }
 
 QByteArray ManifestEntry::initialisationVector() const
@@ -113,7 +113,7 @@ int ManifestEntry::iterationCount() const
 
 void ManifestEntry::setSalt( const QString &salt )
 {
-  m_salt = QByteArray::fromBase64( salt.toAscii() );
+  m_salt = QByteArray::fromBase64( salt.toLatin1() );
 }
 
 QByteArray ManifestEntry::salt() const

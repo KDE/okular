@@ -315,7 +315,7 @@ QVariant GSGenerator::metaData(const QString &key, const QVariant &option) const
     {
         const char *title = spectre_document_get_title(m_internalDocument);
         if (title)
-            return QString::fromAscii(title);
+            return QString::fromLatin1(title);
     }
     return QVariant();
 }

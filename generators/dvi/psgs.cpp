@@ -214,7 +214,7 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
   PSfile.close();
 
   // Step 2: Call GS with the File
-  QFile::remove(filename.toAscii());
+  QFile::remove(filename.toLatin1());
   KProcess proc;
   proc.setOutputChannelMode(KProcess::SeparateChannels);
   QStringList argus;

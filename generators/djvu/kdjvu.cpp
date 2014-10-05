@@ -1065,7 +1065,7 @@ bool KDjVu::exportAsPostScript( QFile* file, const QList<int>& pageList ) const
     // setting the options
     static const int optc = 1;
     const char ** optv = (const char**)malloc( 1 * sizeof( char* ) );
-    QByteArray plb = pl.toAscii();
+    QByteArray plb = pl.toLatin1();
     optv[0] = plb.constData();
 
     ddjvu_job_t *printjob = ddjvu_document_print( d->m_djvu_document, f, optc, optv );

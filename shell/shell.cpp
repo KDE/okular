@@ -655,6 +655,4 @@ void Shell::moveTabData( int from, int to )
    m_tabs.move( from, to );
 }
 
-#include "shell.moc"
-
 /* kate: replace-tabs on; indent-width 4; */

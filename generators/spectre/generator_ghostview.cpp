@@ -15,7 +15,7 @@
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <qsize.h>
-#include <QtGui/QPrinter>
+#include <QPrinter>
 
 #include <KAboutData>
 #include <kconfigdialog.h>
@@ -25,6 +25,7 @@
 #include <ktemporaryfile.h>
 #include <KDebug>
 #include <QDir>
+#include <KLocalizedString>
 
 #include <core/document.h>
 #include <core/page.h>
@@ -39,9 +40,9 @@
 static KAboutData createAboutData()
 {
     KAboutData aboutData(
-         "okular_ghostview",
+         QStringLiteral("okular_ghostview"),
          i18n( "PS Backend" ),
-         "0.1.7",
+         QStringLiteral("0.1.7"),
          i18n( "A PostScript file renderer." ),
          KAboutLicense::GPL,
          i18n( "© 2007-2008 Albert Astals Cid" ),

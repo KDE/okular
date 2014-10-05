@@ -20,9 +20,9 @@ ki18n_wrap_ui(okularGenerator_ghostview_SRCS
 kconfig_add_kcfg_files(okularGenerator_ghostview_SRCS conf/gssettings.kcfgc )
 
 
-kde4_add_plugin(okularGenerator_ghostview ${okularGenerator_ghostview_SRCS})
+add_library(okularGenerator_ghostview MODULE ${okularGenerator_ghostview_SRCS})
 
-target_link_libraries(okularGenerator_ghostview okularcore ${LIBSPECTRE_LIBRARY} ${KDE4_KDEUI_LIBS} ${QT_QTXML_LIBRARY})
+target_link_libraries(okularGenerator_ghostview okularcore ${LIBSPECTRE_LIBRARY} KF5::KDELibs4Support Qt5::Xml Qt5::PrintSupport)
 
 install(TARGETS okularGenerator_ghostview DESTINATION ${PLUGIN_INSTALL_DIR})
 

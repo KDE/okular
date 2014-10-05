@@ -23,12 +23,13 @@
 #include <qpixmap.h>
 #include <qstring.h>
 #include <quuid.h>
-#include <QtGui/QPrinter>
+#include <QPrinter>
 
 #include <KAboutData>
 #include <QtCore/QDebug>
 #include <klocale.h>
 #include <qtemporaryfile.h>
+#include <KLocalizedString>
 #include <QDir>
 
 static void recurseCreateTOC( QDomDocument &maindoc, const QDomNode &parent, QDomNode &parentDestination, KDjVu *djvu )
@@ -70,9 +71,9 @@ static void recurseCreateTOC( QDomDocument &maindoc, const QDomNode &parent, QDo
 static KAboutData createAboutData()
 {
     KAboutData aboutData(
-         "okular_djvu",
+         QStringLiteral("okular_djvu"),
          i18n( "DjVu Backend" ),
-         "0.2.3",
+         QStringLiteral("0.2.3"),
          i18n( "DjVu backend based on DjVuLibre." ),
          KAboutLicense::GPL,
          i18n( "© 2006-2008 Pino Toscano" ));

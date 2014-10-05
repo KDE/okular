@@ -223,9 +223,10 @@ int Unrar::startSyncProcess( const QStringList &args )
     mProcess->setOutputChannelMode( KProcess::SeparateChannels );
 #endif
 
-    connect( mProcess, SIGNAL(readyReadStandardOutput()), SLOT(readFromStdout()) );
-    connect( mProcess, SIGNAL(readyReadStandardError()), SLOT(readFromStderr()) );
+    connect(mProcess, &KPtyProcess::readyReadStandardOutput, this, &Unrar::readFromStdout);
+    connect(mProcess, &KPtyProcess::readyReadStandardError, this, &Unrar::readFromStderr);
     connect( mProcess, SIGNAL(finished(int,QProcess::ExitStatus)), SLOT(finished(int,QProcess::ExitStatus)) );
+
 
 #if defined(Q_OS_WIN)
     mProcess->start( helper->unrarPath, args, QIODevice::ReadWrite | QIODevice::Unbuffered );
@@ -258,4 +259,3 @@ void Unrar::writeToProcess( const QByteArray &data )
 #endif
 }
 
-#include "unrar.moc"

@@ -72,9 +72,9 @@ dviRenderer::dviRenderer(bool useFontHinting)
   //qCDebug(OkularDviDebug) << "dviRenderer( parent=" << par << " )";
 #endif
 
-  connect( &font_pool, SIGNAL( error(QString,int) ), this, SIGNAL( error(QString,int) ) );
-  connect( &font_pool, SIGNAL( warning(QString,int) ), this, SIGNAL( warning(QString,int) ) );
-  connect( PS_interface, SIGNAL( error(QString,int) ), this, SIGNAL( error(QString,int) ) );
+  connect(&font_pool, &fontPool::error, this, &dviRenderer::error);
+  connect(&font_pool, &fontPool::warning, this, &dviRenderer::warning);
+  connect(PS_interface, &ghostscript_interface::error, this, &dviRenderer::error);
 }
 
 
@@ -764,4 +764,3 @@ void dviRenderer::setEventLoop(QEventLoop *el)
      m_eventLoop = el;
 }
 
-#include "dviRenderer.moc"

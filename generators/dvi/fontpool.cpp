@@ -263,8 +263,7 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
   // the output of MetaFont into its stderr. Here we make sure this
   // output is intercepted and parsed.
   kpsewhich_ = new QProcess();
-  connect(kpsewhich_, SIGNAL(readyReadStandardError()),
-          this, SLOT(mf_output_receiver()));
+  connect(kpsewhich_, &QProcess::readyReadStandardError, this, &fontPool::mf_output_receiver);
 
   // Now run... kpsewhich. In case of error, kick up a fuss.
   // This string is not going to be quoted, as it might be were it
@@ -480,4 +479,3 @@ void fontPool::mf_output_receiver()
   }
 }
 
-#include "fontpool.moc"

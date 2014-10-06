@@ -10,9 +10,9 @@ include_directories(
 set(kio_msits_PART_SRCS msits.cpp )
 
 
-kde4_add_plugin(kio_msits ${kio_msits_PART_SRCS})
+add_library(kio_msits MODULE ${kio_msits_PART_SRCS})
 
-target_link_libraries(kio_msits  ${KDE4_KIO_LIBS} ${CHM_LIBRARY} )
+target_link_libraries(kio_msits  KF5::KIOCore ${CHM_LIBRARY} )
 
 install(TARGETS kio_msits DESTINATION ${PLUGIN_INSTALL_DIR} )
 

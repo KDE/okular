@@ -21,9 +21,9 @@ set(okularGenerator_plucker_SRCS
 )
 
 
-kde4_add_plugin(okularGenerator_plucker ${okularGenerator_plucker_SRCS} ${qunpluck_SRCS})
+add_library(okularGenerator_plucker MODULE ${okularGenerator_plucker_SRCS} ${qunpluck_SRCS})
 
-target_link_libraries(okularGenerator_plucker okularcore ${KDE4_KIO_LIBS} ${MATH_LIB} ${JPEG_LIBRARY} ${ZLIB_LIBRARY})
+target_link_libraries(okularGenerator_plucker okularcore KF5::KIOCore ${MATH_LIB} ${JPEG_LIBRARY} ${ZLIB_LIBRARY})
 
 install(TARGETS okularGenerator_plucker DESTINATION ${PLUGIN_INSTALL_DIR})
 

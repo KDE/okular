@@ -351,4 +351,3 @@ QString ghostscript_interface::locateEPSfile(const QString &filename, const KUrl
   return QString::fromLocal8Bit(proc.readLine().trimmed());
 }
 
-#include "psgs.moc"

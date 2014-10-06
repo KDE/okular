@@ -12,13 +12,13 @@
 
 #include <QtCore/QStringList>
 
-#include <kdialog.h>
+#include <QDialog>
 #include <QMimeType>
 #include <QMimeDatabase>
 
 class Ui_ChooseEngineWidget;
 
-class ChooseEngineDialog : public KDialog
+class ChooseEngineDialog : public QDialog
 {
     public:
         ChooseEngineDialog( const QStringList &generators, const QMimeType &mime, QWidget * parent = 0 );

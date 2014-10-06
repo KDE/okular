@@ -13,20 +13,31 @@
 #include <QtWidgets/QLabel>
 
 #include <klocale.h>
+#include <KConfigGroup>
+#include <QDialogButtonBox>
+#include <QPushButton>
+#include <QVBoxLayout>
 
 #include "ui_chooseenginewidget.h"
 
 ChooseEngineDialog::ChooseEngineDialog( const QStringList &generators, const QMimeType &mime, QWidget * parent )
-    : KDialog( parent )
+    : QDialog( parent )
 {
-    setCaption( i18n( "Backend Selection" ) );
-    setButtons( Ok | Cancel );
-    setDefaultButton( Ok );
+    setWindowTitle( i18n( "Backend Selection" ) );
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    setLayout(mainLayout);
+    QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+    okButton->setDefault(true);
+    okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    okButton->setDefault(true);
     QWidget *main = new QWidget( this );
-    setMainWidget( main );
     m_widget = new Ui_ChooseEngineWidget();
     m_widget->setupUi( main );
-
+    mainLayout->addWidget(main);
+    mainLayout->addWidget(buttonBox);
     m_widget->engineList->addItems(generators);
 
     m_widget->description->setText(

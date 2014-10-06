@@ -20,7 +20,7 @@ class QDoubleSpinBox;
 class QLabel;
 class QWidget;
 class KColorButton;
-class KIntNumInput;
+class QSpinBox;
 class KFontRequester;
 class AnnotationWidget;
 
@@ -95,7 +95,7 @@ protected:
     QWidget * m_appearanceWidget;
     QWidget * m_extraWidget;
     KColorButton *m_colorBn;
-    KIntNumInput *m_opacity;
+    QSpinBox *m_opacity;
 };
 
 class TextAnnotationWidget

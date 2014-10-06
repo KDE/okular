@@ -207,7 +207,7 @@ QWidget * AnnotationWidget::createAppearanceWidget()
 
     tmplabel = new QLabel( i18n( "&Opacity:" ), widget );
     gridlayout->addWidget( tmplabel, 1, 0, Qt::AlignRight );
-    m_opacity = new KIntNumInput( widget );
+    m_opacity = new QSpinBox( widget );
     m_opacity->setRange( 0, 100 );
     m_opacity->setValue( (int)( m_ann->style().opacity() * 100 ) );
     m_opacity->setSuffix( i18nc( "Suffix for the opacity level, eg '80 %'", " %" ) );

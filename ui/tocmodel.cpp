@@ -13,7 +13,7 @@
 #include <qdom.h>
 #include <qlist.h>
 
-#include <kicon.h>
+#include <QIcon>
 
 #include "pageitemdelegate.h"
 #include "core/document.h"

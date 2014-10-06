@@ -81,7 +81,7 @@ class PDFOptionsPage : public QWidget
            layout->addWidget(m_forceRaster);
            layout->addStretch(1);
 
-#if defined(Q_WS_WIN)
+#if defined(Q_OS_WIN)
            m_printAnnots->setVisible( false );
 #endif
            setPrintAnnots( true ); // Default value
@@ -969,7 +969,7 @@ void PDFGenerator::requestFontData(const Okular::FontInfo &font, QByteArray *dat
 #define DUMMY_QPRINTER_COPY
 bool PDFGenerator::print( QPrinter& printer )
 {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     QPainter painter;
     painter.begin(&printer);
 

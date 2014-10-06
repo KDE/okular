@@ -26,7 +26,7 @@
   #include <QX11Info>
 #endif
 
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
 #include <ApplicationServices/ApplicationServices.h>
 #include <IOKit/graphics/IOGraphicsLib.h>
 #endif
@@ -188,7 +188,7 @@ QSizeF Utils::realDpi(QWidget* widgetOnScreen)
     return res;
 }
 
-#elif defined(Q_WS_MAC)
+#elif defined(Q_OS_MAC)
     /*
      * Code copied from http://developer.apple.com/qa/qa2001/qa1217.html
      */

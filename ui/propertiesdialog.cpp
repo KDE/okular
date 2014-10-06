@@ -24,7 +24,7 @@
 #include <qtreeview.h>
 #include <qtimer.h>
 #include <kfiledialog.h>
-#include <kicon.h>
+#include <QIcon>
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kmessagebox.h>

@@ -56,7 +56,7 @@
 #include <ktoggleaction.h>
 #include <ktogglefullscreenaction.h>
 #include <kio/job.h>
-#include <kicon.h>
+#include <QIcon>
 #include <kfilterdev.h>
 #include <kfilterbase.h>
 #if 0

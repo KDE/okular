@@ -23,7 +23,7 @@
 #include <kdialog.h>
 #include <kiconloader.h>
 #include <kactioncollection.h>
-#include <kicon.h>
+#include <QIcon>
 
 // local includes
 #include "pagepainter.h"

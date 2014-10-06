@@ -47,7 +47,7 @@
 #include <QtCore/QDebug>
 #include <kdeversion.h>
 #include <kmessagebox.h>
-#include <kicon.h>
+#include <QIcon>
 #include <kurifilter.h>
 #include <kstringhandler.h>
 #include <ktoolinvocation.h>

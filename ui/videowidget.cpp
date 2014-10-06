@@ -22,7 +22,7 @@
 #include <qtoolbutton.h>
 #include <qwidgetaction.h>
 
-#include <kicon.h>
+#include <QIcon>
 #include <klocale.h>
 
 #include <phonon/mediaobject.h>

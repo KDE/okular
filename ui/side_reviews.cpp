@@ -23,7 +23,7 @@
 #include <kaction.h>
 #include <klocale.h>
 #include <kiconloader.h>
-#include <kicon.h>
+#include <QIcon>
 
 // local includes
 #include "core/annotations.h"

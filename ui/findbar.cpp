@@ -15,7 +15,7 @@
 #include <qmenu.h>
 #include <qtoolbutton.h>
 #include <qevent.h>
-#include <kicon.h>
+#include <QIcon>
 #include <klocale.h>
 #include <qpushbutton.h>
 

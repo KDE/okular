@@ -23,7 +23,7 @@
 #include <qvalidator.h>
 #include <qpainter.h>
 #include <kglobalsettings.h>
-#include <kicon.h>
+#include <QIcon>
 #include <kicontheme.h>
 #include <klineedit.h>
 #include <klocale.h>

@@ -16,7 +16,7 @@
 #include <qheaderview.h>
 #include <QtWidgets/qpushbutton.h>
 #include <qtextedit.h>
-#include <kicon.h>
+#include <QIcon>
 #include <klineedit.h>
 #include <klocale.h>
 #include <kglobal.h>

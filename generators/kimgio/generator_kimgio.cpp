@@ -21,7 +21,7 @@
 #include <KAboutData>
 #include <kaction.h>
 #include <kactioncollection.h>
-#include <kicon.h>
+#include <QIcon>
 #include <kimageio.h>
 #include <klocale.h>
 

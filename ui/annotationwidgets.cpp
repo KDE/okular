@@ -19,7 +19,7 @@
 #include <kcolorbutton.h>
 #include <kcombobox.h>
 #include <kfontrequester.h>
-#include <kicon.h>
+#include <QIcon>
 #include <kiconloader.h>
 #include <klocale.h>
 #include <knuminput.h>

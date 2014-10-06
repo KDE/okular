@@ -18,7 +18,7 @@
 #include <qtreewidget.h>
 
 #include <QtCore/QDebug>
-#include <kicon.h>
+#include <QIcon>
 #include <klocale.h>
 #include <kmenu.h>
 #include <ktreewidgetsearchline.h>

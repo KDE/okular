@@ -12,7 +12,7 @@
 #include <QtCore/QList>
 #include <QtCore/QItemSelection>
 
-#include <kicon.h>
+#include <QIcon>
 
 #include "annotationmodel.h"
 

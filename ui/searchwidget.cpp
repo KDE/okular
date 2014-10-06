@@ -15,7 +15,7 @@
 #include <qaction.h>
 #include <qsizepolicy.h>
 #include <qtoolbutton.h>
-#include <kicon.h>
+#include <QIcon>
 #include <klocale.h>
 
 // local includes

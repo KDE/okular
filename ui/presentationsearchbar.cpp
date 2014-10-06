@@ -17,7 +17,7 @@
 #include <qtoolbutton.h>
 #include <qpushbutton.h>
 
-#include <kicon.h>
+#include <QIcon>
 #include <klocale.h>
 
 #include "searchlineedit.h"

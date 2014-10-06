@@ -12,7 +12,7 @@
 #include <kcolorbutton.h>
 #include <kcombobox.h>
 #include <QtCore/QDebug>
-#include <kicon.h>
+#include <QIcon>
 #include <klocalizedstring.h>
 #include <klineedit.h>
 #include <knuminput.h>

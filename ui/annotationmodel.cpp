@@ -13,7 +13,7 @@
 #include <qlist.h>
 #include <qpointer.h>
 
-#include <kicon.h>
+#include <QIcon>
 #include <klocale.h>
 
 #include "core/annotations.h"

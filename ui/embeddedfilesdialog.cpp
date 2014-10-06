@@ -16,7 +16,7 @@
 #include <QTreeWidget>
 
 #include <kglobal.h>
-#include <kicon.h>
+#include <QIcon>
 #include <klocale.h>
 #include <QMimeType>
 #include <QMimeDatabase>

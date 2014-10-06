@@ -17,7 +17,7 @@
 
 #include <qevent.h>
 #include <qfontmetrics.h>
-#include <kicon.h>
+#include <QIcon>
 #include <qtimer.h>
 #include <qimage.h>
 #include <qlabel.h>

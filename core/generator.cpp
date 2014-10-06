@@ -16,7 +16,7 @@
 #include <QtPrintSupport/QPrinter>
 
 #include <QtCore/QDebug>
-#include <kicon.h>
+#include <QIcon>
 #include <klocale.h>
 #include <kwallet.h>
 

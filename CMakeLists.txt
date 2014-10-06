@@ -167,7 +167,7 @@ ki18n_wrap_ui(okularcore_SRCS
 
 kconfig_add_kcfg_files(okularcore_SRCS conf/settings_core.kcfgc )
 
-kde4_add_library(okularcore SHARED ${okularcore_SRCS})
+add_library(okularcore SHARED ${okularcore_SRCS})
 
 # Special handling for linking okularcore on OSX/Apple
 IF(APPLE)
@@ -265,7 +265,7 @@ ki18n_wrap_ui(okularpart_SRCS
 kconfig_add_kcfg_files(okularpart_SRCS conf/settings.kcfgc )
 
 message("KF5: Enable ui/tts.cpp again")
-#qt4_add_dbus_interfaces(okularpart_SRCS ${KDE4_DBUS_INTERFACES_DIR}/org.kde.KSpeech.xml)
+#qt5_add_dbus_interfaces(okularpart_SRCS ${KDE4_DBUS_INTERFACES_DIR}/org.kde.KSpeech.xml)
 
 add_library(okularpart MODULE ${okularpart_SRCS})
 

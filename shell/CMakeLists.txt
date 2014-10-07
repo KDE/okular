@@ -22,7 +22,7 @@ set(okular_SRCS
 
 kde4_add_app_icon(okular_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../ui/data/icons/hi*-apps-okular.png")
 
-kde4_add_executable(okular ${okular_SRCS})
+add_executable(okular ${okular_SRCS})
 
 target_link_libraries(okular KF5::Parts KF5::WindowSystem KF5::KDELibs4Support)
 

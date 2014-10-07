@@ -206,7 +206,7 @@ bool QUnpluck::open( const QString &fileName )
 
             mLinks[ i ].link = new Okular::GotoAction( QString(), viewport );
         } else {
-            mLinks[ i ].link = new Okular::BrowseAction( mLinks[ i ].url );
+            mLinks[ i ].link = new Okular::BrowseAction( QUrl(mLinks[ i ].url) );
         }
     }
 

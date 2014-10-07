@@ -181,7 +181,7 @@ Okular::ExportFormat::List PluckerGenerator::exportFormats() const
 
 bool PluckerGenerator::exportTo( const QString &fileName, const Okular::ExportFormat &format )
 {
-    if ( format.mimeType()->name() == QLatin1String( "text/plain" ) ) {
+    if ( format.mimeType().name() == QLatin1String( "text/plain" ) ) {
         QFile file( fileName );
         if ( !file.open( QIODevice::WriteOnly ) )
             return false;

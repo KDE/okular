@@ -79,7 +79,6 @@ set_package_properties("libqmobipocket" PROPERTIES
 
 # let's enable the generators properly configured
 
-message("KF5 enable generators")
 if(POPPLER_FOUND)
   add_subdirectory(poppler)
 endif(POPPLER_FOUND)
@@ -114,11 +113,11 @@ add_subdirectory(fictionbook)
 
 add_subdirectory(comicbook)
 
-#add_subdirectory(fax)
+add_subdirectory(fax)
 
-#if(JPEG_FOUND AND ZLIB_FOUND)
-#  add_subdirectory(plucker)
-#endif(JPEG_FOUND AND ZLIB_FOUND)
+if(JPEG_FOUND AND ZLIB_FOUND)
+  add_subdirectory(plucker)
+endif(JPEG_FOUND AND ZLIB_FOUND)
 
 if(EPUB_FOUND)
   add_subdirectory(epub)
@@ -126,6 +125,7 @@ endif(EPUB_FOUND)
 
 add_subdirectory(txt)
 
+message("KF5 enable mobipocket generator")
 #if(QMOBIPOCKET_FOUND)
 #  add_subdirectory(mobipocket)
 #endif()

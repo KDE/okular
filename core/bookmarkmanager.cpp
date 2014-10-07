@@ -17,8 +17,9 @@
 #include <kbookmarkmenu.h>
 #include <QtCore/QDebug>
 #include <QApplication>
-#include <kstandarddirs.h>
+
 #include <kurl.h>
+#include <QStandardPaths>
 
 // local includes
 #include "document_p.h"
@@ -138,7 +139,7 @@ BookmarkManager::BookmarkManager( DocumentPrivate * document )
 
     d->document = document;
 
-    d->file = KStandardDirs::locateLocal( "data", "okular/bookmarks.xml" );
+    d->file = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1Char('/') + "okular/bookmarks.xml" ;
 
     d->manager = KBookmarkManager::managerForFile( d->file, "okular" );
     d->manager->setEditorOptions( QGuiApplication::applicationDisplayName(), false );

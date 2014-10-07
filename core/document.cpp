@@ -50,7 +50,7 @@
 #include <kprocess.h>
 #include <krun.h>
 #include <kshell.h>
-#include <kstandarddirs.h>
+
 #include <ktoolinvocation.h>
 #include <kzip.h>
 
@@ -90,6 +90,7 @@
 
 #include <config-okular.h>
 #include <KFormat>
+#include <QStandardPaths>
 
 using namespace Okular;
 
@@ -2122,11 +2123,11 @@ QString DocumentPrivate::docDataFileName(const KUrl &url, qint64 document_size)
     QString fn = url.fileName();
     fn = QString::number( document_size ) + '.' + fn + ".xml";
     QString newokular = "okular/docdata/" + fn;
-    QString newokularfile = KStandardDirs::locateLocal( "data", newokular );
+    QString newokularfile = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1Char('/') + newokular ;
     if ( !QFile::exists( newokularfile ) )
     {
         QString oldkpdf = "kpdf/" + fn;
-        QString oldkpdffile = KStandardDirs::locateLocal( "data", oldkpdf );
+        QString oldkpdffile = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1Char('/') + oldkpdf ;
         if ( QFile::exists( oldkpdffile ) )
         {
             // ### copy or move?

@@ -28,6 +28,7 @@
 #include <ktempdir.h>
 #include <QtCore/QDebug>
 #include <kdeversion.h>
+#include <QStandardPaths>
 
 #include "debug_p.h"
 
@@ -124,9 +125,9 @@ int FilePrinter::doPrintFiles( QPrinter &printer, QStringList fileList, FileDele
             exe = "lpr-cups";
         } else if ( !KStandardDirs::findExe("lpr.cups").isEmpty() ) {
             exe = "lpr.cups";
-        } else if ( !KStandardDirs::findExe("lpr").isEmpty() ) {
+        } else if ( !QStandardPaths::findExecutable("lpr").isEmpty() ) {
             exe = "lpr";
-        } else if ( !KStandardDirs::findExe("lp").isEmpty() ) {
+        } else if ( !QStandardPaths::findExecutable("lp").isEmpty() ) {
             exe = "lp";
         } else {
             return -9;
@@ -227,12 +228,12 @@ QString FilePrinter::pageListToPageRange( const QList<int> &pageList )
 
 bool FilePrinter::ps2pdfAvailable()
 {
-    return ( !KStandardDirs::findExe("ps2pdf").isEmpty() );
+    return ( !QStandardPaths::findExecutable("ps2pdf").isEmpty() );
 }
 
 bool FilePrinter::pdf2psAvailable()
 {
-    return ( !KStandardDirs::findExe("pdf2ps").isEmpty() );
+    return ( !QStandardPaths::findExecutable("pdf2ps").isEmpty() );
 }
 
 bool FilePrinter::cupsAvailable()

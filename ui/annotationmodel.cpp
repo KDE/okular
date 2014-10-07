@@ -14,7 +14,7 @@
 #include <qpointer.h>
 
 #include <QIcon>
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "core/annotations.h"
 #include "core/document.h"

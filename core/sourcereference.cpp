@@ -12,7 +12,7 @@
 
 #include <QtCore/QString>
 #include <QtCore/QUrl>
-#include <klocale.h>
+#include <KLocalizedString>
 
 using namespace Okular;
 

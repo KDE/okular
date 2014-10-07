@@ -13,7 +13,7 @@
 #include "ui_textdocumentsettings.h"
 
 #include <KFontRequester>
-#include <KLocale>
+#include <KLocalizedString>
 
 #include <QLabel>
 

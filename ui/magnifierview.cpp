@@ -21,8 +21,6 @@
 
 #include <QPainter>
 
-#include <KLocale>
-
 #include "core/document.h"
 #include "core/generator.h"
 #include "pagepainter.h"

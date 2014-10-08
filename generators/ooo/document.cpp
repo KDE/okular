@@ -9,7 +9,7 @@
 
 #include "document.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kzip.h>
 
 using namespace OOO;

@@ -56,7 +56,7 @@
 #include "xdvi.h"
 #include "debug_dvi.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kmessagebox.h>
 
 #include <cstdlib>

@@ -16,7 +16,7 @@
 #include "psgs.h"
 //#include "renderedDocumentPage.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <QMimeType>
 #include <QMimeDatabase>
 

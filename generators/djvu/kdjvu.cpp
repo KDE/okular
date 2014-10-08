@@ -19,7 +19,7 @@
 #include <qstring.h>
 
 #include <QtCore/QDebug>
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <libdjvu/ddjvuapi.h>
 #include <libdjvu/miniexp.h>

@@ -18,7 +18,7 @@
 #include <KAboutData>
 #include <khtml_part.h>
 #include <khtmlview.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kurl.h>
 #include <dom/html_misc.h>
 #include <dom/dom_node.h>

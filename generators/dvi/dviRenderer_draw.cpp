@@ -66,7 +66,7 @@
 #include "textBox.h"
 #include "xdvi.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <QPainter>
 #include <QtCore/qloggingcategory.h>

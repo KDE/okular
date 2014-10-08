@@ -19,7 +19,6 @@
 #include <qframe.h>
 #include <qlabel.h>
 #include <qlayout.h>
-#include <QPainter>
 #include <qpushbutton.h>
 #include <qsizegrip.h>
 #include <qstyle.h>

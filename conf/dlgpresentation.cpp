@@ -14,7 +14,7 @@
 #include <qapplication.h>
 #include <qdesktopwidget.h>
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "settings.h"
 

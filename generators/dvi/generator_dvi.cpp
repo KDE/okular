@@ -35,7 +35,7 @@
 
 #include <KAboutData>
 #include <QtCore/QDebug>
-#include <klocale.h>
+#include <KLocalizedString>
 
 #ifdef DVI_OPEN_BUSYLOOP
 #ifdef Q_OS_UNIX

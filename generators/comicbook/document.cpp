@@ -13,7 +13,7 @@
 #include <QtGui/QImage>
 #include <QtGui/QImageReader>
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <QMimeType>
 #include <QMimeDatabase>
 #include <kzip.h>

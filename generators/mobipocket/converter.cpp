@@ -17,7 +17,7 @@
 #include <QtCore/QDebug>
 #include <QtCore/QFile>
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <core/action.h>
 
 using namespace Mobi;

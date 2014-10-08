@@ -27,7 +27,7 @@
 
 #include <KAboutData>
 #include <QtCore/QDebug>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <qtemporaryfile.h>
 #include <KLocalizedString>
 #include <QDir>

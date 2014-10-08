@@ -16,7 +16,7 @@
 #include "pageNumber.h"
 #include "debug_dvi.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kprocess.h>
 #include <ktemporaryfile.h>
 #include <kurl.h>

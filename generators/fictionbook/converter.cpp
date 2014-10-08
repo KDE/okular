@@ -19,7 +19,7 @@
 #include <QtXml/QDomText>
 
 #include <kglobal.h>
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <core/action.h>
 #include <core/document.h>

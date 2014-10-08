@@ -13,7 +13,7 @@
 #include <QtPrintSupport/QPrinter>
 
 #include <KAboutData>
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <core/document.h>
 #include <core/page.h>

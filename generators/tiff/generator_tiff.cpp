@@ -21,7 +21,7 @@
 #include <kaboutdata.h>
 #include <QtCore/QDebug>
 #include <kglobal.h>
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <core/document.h>
 #include <core/page.h>

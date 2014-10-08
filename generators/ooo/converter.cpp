@@ -25,7 +25,7 @@
 #include <core/document.h>
 #include <core/utils.h>
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "document.h"
 #include "styleinformation.h"

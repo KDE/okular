@@ -57,7 +57,7 @@
 #include "debug_dvi.h"
 #include "xdvi.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <QFile>
 #include <QImage>

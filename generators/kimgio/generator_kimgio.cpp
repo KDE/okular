@@ -23,7 +23,7 @@
 #include <kactioncollection.h>
 #include <QIcon>
 #include <kimageio.h>
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <kexiv2/kexiv2.h>
 

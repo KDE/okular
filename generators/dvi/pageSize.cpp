@@ -13,7 +13,7 @@
 #include "length.h"
 
 #include <kglobal.h>
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <QtCore/qloggingcategory.h>
 

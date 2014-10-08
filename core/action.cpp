@@ -10,7 +10,7 @@
 #include "action.h"
 
 // kde includes
-#include <klocale.h>
+#include <KLocalizedString>
 
 // local includes
 #include "document.h"

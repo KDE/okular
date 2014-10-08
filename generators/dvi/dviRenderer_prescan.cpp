@@ -16,7 +16,7 @@
 #include "psgs.h"
 #include "TeXFont.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <QMimeType>
 #include <QMimeDatabase>
 #include <kprocess.h>

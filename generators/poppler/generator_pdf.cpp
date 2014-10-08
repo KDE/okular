@@ -29,7 +29,7 @@
 
 #include <KAboutData>
 #include <kconfigdialog.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kmessagebox.h>
 #include <kglobal.h>
 

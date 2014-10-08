@@ -16,7 +16,7 @@
 #include <QtGui/QTextDocument>
 
 #include <KAboutData>
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <core/page.h>
 

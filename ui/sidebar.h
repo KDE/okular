@@ -11,7 +11,6 @@
 #define _SIDEBAR_H_
 
 #include <qwidget.h>
-#include <KUrl>
 
 class QIcon;
 class QListWidgetItem;

@@ -16,7 +16,6 @@
 #include <qhash.h>
 #include <qtoolbutton.h>
 
-#include <QIcon>
 
 #include "core/area.h"
 

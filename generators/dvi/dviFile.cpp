@@ -59,7 +59,7 @@
 #include "debug_dvi.h"
 #include "pageSize.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <QtCore/qloggingcategory.h>
 #include <QProcess>

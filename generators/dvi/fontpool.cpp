@@ -11,7 +11,7 @@
 #include "debug_dvi.h"
 #include "TeXFont.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <QApplication>
 #include <QPainter>

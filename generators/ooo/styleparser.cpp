@@ -16,7 +16,7 @@
 #include <QtXml/QXmlSimpleReader>
 
 #include <kglobal.h>
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "document.h"
 #include "styleinformation.h"

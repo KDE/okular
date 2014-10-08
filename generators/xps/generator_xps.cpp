@@ -26,7 +26,7 @@
 #include <qprinter.h>
 #include <KAboutData>
 #include <kglobal.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kurl.h>
 #include <QBuffer>
 #include <QImageReader>

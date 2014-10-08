@@ -16,7 +16,7 @@
 
 #include <QtCore/qloggingcategory.h>
 #include <kglobal.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kstandarddirs.h>
 #include <ktempdir.h>
 #if !defined(Q_OS_WIN)

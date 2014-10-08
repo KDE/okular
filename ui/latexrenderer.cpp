@@ -21,7 +21,6 @@
 #include <QFileInfo>
 #include <QImage>
 #include <qtemporaryfile.h>
-#include <QTextDocument>
 #include <QTextStream>
 
 #include "debug_ui.h"

@@ -17,7 +17,7 @@
 #include <QApplication> // Because of the HACK
 
 #include <QtCore/QDebug>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <KStandardDirs>
 
 #include <core/action.h>

@@ -17,8 +17,6 @@
 #include <qpushbutton.h>
 #include <qlabel.h>
 #include <qlayout.h>
-#include <QStyleOptionButton>
-#include <QStylePainter>
 #include <QtWidgets/QToolButton>
 #include <qvalidator.h>
 #include <qpainter.h>

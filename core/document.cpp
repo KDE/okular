@@ -1028,7 +1028,7 @@ DocumentViewport DocumentPrivate::nextDocumentViewport() const
     DocumentViewport ret = m_nextDocumentViewport;
     if ( !m_nextDocumentDestination.isEmpty() && m_generator )
     {
-        DocumentViewport vp( m_generator->metaData( "NamedViewport", m_nextDocumentDestination ).toString() );
+        DocumentViewport vp( m_parent->metaData( "NamedViewport", m_nextDocumentDestination ).toString() );
         if ( vp.isValid() )
         {
             ret = vp;
@@ -2374,8 +2374,8 @@ Document::OpenResult Document::openDocument( const QString & docFile, const KUrl
 
     // no need to check for the existence of a synctex file, no parser will be
     // created if none exists
-    d->synctex_scanner = synctex_scanner_new_with_output_file( QFile::encodeName( docFile ), 0, 1);
-    if ( !d->synctex_scanner && QFile::exists(docFile + QLatin1String( "sync" ) ) )
+    d->m_synctex_scanner = synctex_scanner_new_with_output_file( QFile::encodeName( docFile ), 0, 1);
+    if ( !d->m_synctex_scanner && QFile::exists(docFile + QLatin1String( "sync" ) ) )
     {
         d->loadSyncFile(docFile);
     }
@@ -2534,10 +2534,10 @@ void Document::closeDocument()
         d->m_generator->closeDocument();
     }
 
-    if ( d->synctex_scanner )
+    if ( d->m_synctex_scanner )
     {
-        synctex_scanner_free( d->synctex_scanner );
-        d->synctex_scanner = 0;
+        synctex_scanner_free( d->m_synctex_scanner );
+        d->m_synctex_scanner = 0;
     }
 
     // stop timers
@@ -2951,6 +2951,69 @@ bool Document::historyAtEnd() const
 
 QVariant Document::metaData( const QString & key, const QVariant & option ) const
 {
+    // if option starts with "src:" assume that we are handling a
+    // source reference
+    if ( key == "NamedViewport"
+         && option.toString().startsWith( "src:", Qt::CaseInsensitive )
+         && d->m_synctex_scanner)
+    {
+        const QString reference = option.toString();
+
+        // The reference is of form "src:1111Filename", where "1111"
+        // points to line number 1111 in the file "Filename".
+        // Extract the file name and the numeral part from the reference string.
+        // This will fail if Filename starts with a digit.
+        QString name, lineString;
+        // Remove "src:". Presence of substring has been checked before this
+        // function is called.
+        name = reference.mid( 4 );
+        // split
+        int nameLength = name.length();
+        int i = 0;
+        for( i = 0; i < nameLength; ++i )
+        {
+            if ( !name[i].isDigit() ) break;
+        }
+        lineString = name.left( i );
+        name = name.mid( i );
+        // Remove spaces.
+        name = name.trimmed();
+        lineString = lineString.trimmed();
+        // Convert line to integer.
+        bool ok;
+        int line = lineString.toInt( &ok );
+        if (!ok) line = -1;
+
+        // Use column == -1 for now.
+        if( synctex_display_query( d->m_synctex_scanner, QFile::encodeName(name), line, -1 ) > 0 )
+        {
+            synctex_node_t node;
+            // For now use the first hit. Could possibly be made smarter
+            // in case there are multiple hits.
+            while( ( node = synctex_next_result( d->m_synctex_scanner ) ) )
+            {
+                Okular::DocumentViewport viewport;
+
+                // TeX pages start at 1.
+                viewport.pageNumber = synctex_node_page( node ) - 1;
+
+                if ( viewport.pageNumber >= 0 )
+                {
+                    const QSizeF dpi = d->m_generator->dpi();
+
+                    // TeX small points ...
+                    double px = (synctex_node_visible_h( node ) * dpi.width()) / 72.27;
+                    double py = (synctex_node_visible_v( node ) * dpi.height()) / 72.27;
+                    viewport.rePos.normalizedX = px / page(viewport.pageNumber)->width();
+                    viewport.rePos.normalizedY = ( py + 0.5 ) / page(viewport.pageNumber)->height();
+                    viewport.rePos.enabled = true;
+                    viewport.rePos.pos = Okular::DocumentViewport::Center;
+
+                    return viewport.toString();
+                }
+            }
+        }
+    }
     return d->m_generator ? d->m_generator->metaData( key, option ) : QVariant();
 }
 
@@ -3997,17 +4060,16 @@ void Document::processSourceReference( const SourceReference * ref )
 
 const SourceReference * Document::dynamicSourceReference( int pageNr, double absX, double absY )
 {
-    if  ( !d->synctex_scanner )
+    if  ( !d->m_synctex_scanner )
         return 0;
 
     const QSizeF dpi = d->m_generator->dpi();
-    qDebug() << absX << absY << dpi;
 
-    if (synctex_edit_query(d->synctex_scanner, pageNr + 1, absX * 72. / dpi.width(), absY * 72. / dpi.height()) > 0)
+    if (synctex_edit_query(d->m_synctex_scanner, pageNr + 1, absX * 72. / dpi.width(), absY * 72. / dpi.height()) > 0)
     {
         synctex_node_t node;
         // TODO what should we do if there is really more than one node?
-        while (( node = synctex_next_result( d->synctex_scanner ) ))
+        while (( node = synctex_next_result( d->m_synctex_scanner ) ))
         {
             int line = synctex_node_line(node);
             int col = synctex_node_column(node);
@@ -4016,7 +4078,7 @@ const SourceReference * Document::dynamicSourceReference( int pageNr, double abs
             {
                 col = 0;
             }
-            const char *name = synctex_scanner_get_name( d->synctex_scanner, synctex_node_tag( node ) );
+            const char *name = synctex_scanner_get_name( d->m_synctex_scanner, synctex_node_tag( node ) );
 
             return new Okular::SourceReference( QFile::decodeName( name ), line, col );
         }

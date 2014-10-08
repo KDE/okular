@@ -100,7 +100,7 @@ class DocumentPrivate
             m_fontsCached( false ),
             m_annotationEditingEnabled ( true ),
             m_annotationBeingMoved( false ),
-            synctex_scanner( 0 )
+            m_synctex_scanner( 0 )
         {
             calculateMaxTextPages();
         }
@@ -277,7 +277,7 @@ class DocumentPrivate
         QUndoStack *m_undoStack;
         QDomNode m_prevPropsOfAnnotBeingModified;
 
-        synctex_scanner_t synctex_scanner;
+        synctex_scanner_t m_synctex_scanner;
 };
 
 class DocumentInfoPrivate

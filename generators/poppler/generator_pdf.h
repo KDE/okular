@@ -117,8 +117,6 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         void addFormFields( Poppler::Page * popplerPage, Okular::Page * page );
         // load the source references from a pdfsync file
         void loadPdfSync( const QString & fileName, QVector<Okular::Page*> & pagesVector );
-        // search document for source reference
-        void fillViewportFromSourceReference( Okular::DocumentViewport & viewport, const QString & reference ) const;
 
         Okular::TextPage * abstractTextPage(const QList<Poppler::TextBox*> &text, double height, double width, int rot);
 

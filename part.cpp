@@ -749,6 +749,7 @@ void Part::setupActions()
     m_saveCopyAs->setEnabled( false );
 
     m_saveAs = KStandardAction::saveAs( this, SLOT(slotSaveFileAs()), ac );
+    ac->setDefaultShortcuts(m_saveAs, KStandardShortcut::shortcut(KStandardShortcut::Save));
     m_saveAs->setEnabled( false );
 
     m_showLeftPanel = ac->add<KToggleAction>("show_leftpanel");

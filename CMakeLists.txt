@@ -13,6 +13,8 @@ macro_log_feature(QIMAGEBLITZ_FOUND "QImageBlitz" "An image effects library" "ht
 macro_optional_find_package(LibKScreen)
 macro_log_feature(LibKScreen_FOUND "LibKScreen" "KDE screen management library" "https://projects.kde.org/projects/kdereview/libkscreen" FALSE "1.0.2" "DPI detection support")
 
+find_package(ZLIB REQUIRED)
+
 add_definitions(${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
 add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 include_directories(
@@ -20,6 +22,8 @@ include_directories(
    ${KDE4_INCLUDES}
    ${QIMAGEBLITZ_INCLUDES}
    ${LibKScreen_INCLUDE_DIR}
+   ${ZLIB_INCLUDE_DIR}
+   core/synctex
 )
 
 add_subdirectory( active )
@@ -80,6 +84,8 @@ set(okularcore_SRCS
    core/script/kjs_field.cpp
    core/script/kjs_spell.cpp
    core/script/kjs_util.cpp
+   core/synctex/synctex_parser.c
+   core/synctex/synctex_parser_utils.c
 )
 
 kde4_add_ui_files(okularcore_SRCS
@@ -133,7 +139,7 @@ IF(APPLE)
     SET(OKULAR_IOKIT "-framework IOKit" CACHE STRING "Apple IOKit framework")
 ENDIF(APPLE)
 
-target_link_libraries(okularcore  ${OKULAR_IOKIT} ${KDE4_KIO_LIBS} ${KDE4_PHONON_LIBRARY} ${KDE4_KJSAPI_LIBRARY} ${MATH_LIB} ${KDE4_THREADWEAVER_LIBRARY} )
+target_link_libraries(okularcore  ${OKULAR_IOKIT} ${KDE4_KIO_LIBS} ${KDE4_PHONON_LIBRARY} ${KDE4_KJSAPI_LIBRARY} ${MATH_LIB} ${KDE4_THREADWEAVER_LIBRARY} ${ZLIB_LIBRARIES} )
 
 if(LibKScreen_FOUND)
     target_link_libraries(okularcore ${LibKScreen_LIBRARY})

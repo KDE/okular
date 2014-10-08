@@ -2355,6 +2355,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                         if ( rect && ( distance > s_minDistance ) )
                             rect = 0;
                     }
+                    qDebug() << "C" << rect;
                     if ( rect )
                     {
                         const Okular::SourceReference * ref = static_cast< const Okular::SourceReference * >( rect->object() );
@@ -2363,6 +2364,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                     else
                     {
                         const Okular::SourceReference * ref = d->document->dynamicSourceReference( pageItem->  pageNumber(), nX * pageItem->page()->width(), nY * pageItem->page()->height() );
+                        qDebug() << "D" << ref;
                         if ( ref )
                         {
                             d->document->processSourceReference( ref );

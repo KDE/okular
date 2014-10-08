@@ -34,6 +34,7 @@
 #include <QtGui/QLabel>
 #include <QtGui/QPrinter>
 #include <QtGui/QPrintDialog>
+#include <QStack>
 #include <QUndoCommand>
 
 #include <kaboutdata.h>
@@ -2048,6 +2049,132 @@ bool DocumentPrivate::isNormalizedRectangleFullyVisible( const Okular::Normalize
     return rectFullyVisible;
 }
 
+struct pdfsyncpoint
+{
+    QString file;
+    qlonglong x;
+    qlonglong y;
+    int row;
+    int column;
+    int page;
+};
+
+void DocumentPrivate::loadSyncFile( const QString & filePath )
+{
+    QFile f( filePath + QLatin1String( "sync" ) );
+    if ( !f.open( QIODevice::ReadOnly ) )
+        return;
+
+    QTextStream ts( &f );
+    // first row: core name of the pdf output
+    const QString coreName = ts.readLine();
+    // second row: version string, in the form 'Version %u'
+    QString versionstr = ts.readLine();
+    QRegExp versionre( "Version (\\d+)" );
+    versionre.setCaseSensitivity( Qt::CaseInsensitive );
+    if ( !versionre.exactMatch( versionstr ) )
+        return;
+
+    QHash<int, pdfsyncpoint> points;
+    QStack<QString> fileStack;
+    int currentpage = -1;
+    const QLatin1String texStr( ".tex" );
+    const QChar spaceChar = QChar::fromLatin1( ' ' );
+
+    fileStack.push( coreName + texStr );
+
+    const QSizeF dpi = m_generator->dpi();
+
+    QString line;
+    while ( !ts.atEnd() )
+    {
+        line = ts.readLine();
+        const QStringList tokens = line.split( spaceChar, QString::SkipEmptyParts );
+        const int tokenSize = tokens.count();
+        if ( tokenSize < 1 )
+            continue;
+        if ( tokens.first() == QLatin1String( "l" ) && tokenSize >= 3 )
+        {
+            int id = tokens.at( 1 ).toInt();
+            QHash<int, pdfsyncpoint>::const_iterator it = points.constFind( id );
+            if ( it == points.constEnd() )
+            {
+                pdfsyncpoint pt;
+                pt.x = 0;
+                pt.y = 0;
+                pt.row = tokens.at( 2 ).toInt();
+                pt.column = 0; // TODO
+                pt.page = -1;
+                pt.file = fileStack.top();
+                points[ id ] = pt;
+            }
+        }
+        else if ( tokens.first() == QLatin1String( "s" ) && tokenSize >= 2 )
+        {
+            currentpage = tokens.at( 1 ).toInt() - 1;
+        }
+        else if ( tokens.first() == QLatin1String( "p*" ) && tokenSize >= 4 )
+        {
+            // TODO
+            kDebug() << "PdfSync: 'p*' line ignored";
+        }
+        else if ( tokens.first() == QLatin1String( "p" ) && tokenSize >= 4 )
+        {
+            int id = tokens.at( 1 ).toInt();
+            QHash<int, pdfsyncpoint>::iterator it = points.find( id );
+            if ( it != points.end() )
+            {
+                it->x = tokens.at( 2 ).toInt();
+                it->y = tokens.at( 3 ).toInt();
+                it->page = currentpage;
+            }
+        }
+        else if ( line.startsWith( QLatin1Char( '(' ) ) && tokenSize == 1 )
+        {
+            QString newfile = line;
+            // chop the leading '('
+            newfile.remove( 0, 1 );
+            if ( !newfile.endsWith( texStr ) )
+            {
+                newfile += texStr;
+            }
+            fileStack.push( newfile );
+        }
+        else if ( line == QLatin1String( ")" ) )
+        {
+            if ( !fileStack.isEmpty() )
+            {
+                fileStack.pop();
+            }
+            else
+                kDebug() << "PdfSync: going one level down too much";
+        }
+        else
+            kDebug().nospace() << "PdfSync: unknown line format: '" << line << "'";
+
+    }
+
+    QVector< QLinkedList< Okular::SourceRefObjectRect * > > refRects( m_pagesVector.size() );
+    foreach ( const pdfsyncpoint& pt, points )
+    {
+        // drop pdfsync points not completely valid
+        if ( pt.page < 0 || pt.page >= m_pagesVector.size() )
+            continue;
+
+        // magic numbers for TeX's RSU's (Ridiculously Small Units) conversion to pixels
+        Okular::NormalizedPoint p(
+            ( pt.x * dpi.width() ) / ( 72.27 * 65536.0 * m_pagesVector[pt.page]->width() ),
+            ( pt.y * dpi.height() ) / ( 72.27 * 65536.0 * m_pagesVector[pt.page]->height() )
+            );
+        QString file = pt.file;
+        Okular::SourceReference * sourceRef = new Okular::SourceReference( file, pt.row, pt.column );
+        refRects[ pt.page ].append( new Okular::SourceRefObjectRect( p, sourceRef ) );
+    }
+    for ( int i = 0; i < refRects.size(); ++i )
+        if ( !refRects.at(i).isEmpty() )
+            m_pagesVector[i]->setSourceReferences( refRects.at(i) );
+}
+
 Document::Document( QWidget *widget )
     : QObject( 0 ), d( new DocumentPrivate( this ) )
 {
@@ -2245,6 +2372,14 @@ Document::OpenResult Document::openDocument( const QString & docFile, const KUrl
         return openResult;
     }
 
+    // no need to check for the existence of a synctex file, no parser will be
+    // created if none exists
+    d->synctex_scanner = synctex_scanner_new_with_output_file( QFile::encodeName( docFile ), 0, 1);
+    if ( !d->synctex_scanner && QFile::exists(docFile + QLatin1String( "sync" ) ) )
+    {
+        d->loadSyncFile(docFile);
+    }
+
     d->m_generatorName = offer->name();
     d->m_pageController = new PageController();
     connect( d->m_pageController, SIGNAL(rotationFinished(int,Okular::Page*)),
@@ -2397,6 +2532,12 @@ void Document::closeDocument()
     {
         d->saveDocumentInfo();
         d->m_generator->closeDocument();
+    }
+
+    if ( d->synctex_scanner )
+    {
+        synctex_scanner_free( d->synctex_scanner );
+        d->synctex_scanner = 0;
     }
 
     // stop timers
@@ -3856,12 +3997,31 @@ void Document::processSourceReference( const SourceReference * ref )
 
 const SourceReference * Document::dynamicSourceReference( int pageNr, double absX, double absY )
 {
-    const SourceReference * ref = 0;
-    if ( d->m_generator )
+    if  ( !d->synctex_scanner )
+        return 0;
+
+    const QSizeF dpi = d->m_generator->dpi();
+    qDebug() << absX << absY << dpi;
+
+    if (synctex_edit_query(d->synctex_scanner, pageNr + 1, absX * 72. / dpi.width(), absY * 72. / dpi.height()) > 0)
     {
-        QMetaObject::invokeMethod( d->m_generator, "dynamicSourceReference", Qt::DirectConnection, Q_RETURN_ARG(const Okular::SourceReference*, ref), Q_ARG(int, pageNr), Q_ARG(double, absX), Q_ARG(double, absY) );
+        synctex_node_t node;
+        // TODO what should we do if there is really more than one node?
+        while (( node = synctex_next_result( d->synctex_scanner ) ))
+        {
+            int line = synctex_node_line(node);
+            int col = synctex_node_column(node);
+            // column extraction does not seem to be implemented in synctex so far. set the SourceReference default value.
+            if ( col == -1 )
+            {
+                col = 0;
+            }
+            const char *name = synctex_scanner_get_name( d->synctex_scanner, synctex_node_tag( node ) );
+
+            return new Okular::SourceReference( QFile::decodeName( name ), line, col );
+        }
     }
-    return ref;
+    return 0;
 }
 
 Document::PrintingType Document::printingSupport() const

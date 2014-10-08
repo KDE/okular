@@ -15,7 +15,6 @@
 #include <KFontRequester>
 #include <KLocalizedString>
 
-#include <QLabel>
 
 
 using namespace Okular;

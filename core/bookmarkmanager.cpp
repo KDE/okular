@@ -16,7 +16,7 @@
 #include <kbookmarkmanager.h>
 #include <kbookmarkmenu.h>
 #include <QtCore/QDebug>
-#include <QApplication>
+#include <QGuiApplication>
 
 #include <kurl.h>
 #include <QStandardPaths>

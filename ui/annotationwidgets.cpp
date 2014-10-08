@@ -24,6 +24,7 @@
 #include <klocale.h>
 #include <knuminput.h>
 #include <QtCore/QDebug>
+#include <QMimeDatabase>
 
 #include "core/document.h"
 #include "guiutils.h"

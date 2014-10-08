@@ -14,7 +14,6 @@
 
 #include <QDialog>
 #include <QMimeType>
-#include <QMimeDatabase>
 
 class Ui_ChooseEngineWidget;
 

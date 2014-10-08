@@ -34,6 +34,7 @@
 #include <qmenu.h>
 #include <QInputDialog>
 #include <qdesktopwidget.h>
+#include <QMimeDatabase>
 
 #include <kaction.h>
 #include <kactionmenu.h>

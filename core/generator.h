@@ -27,7 +27,6 @@
 #include <QtCore/QVector>
 
 #include <QMimeType>
-#include <QMimeDatabase>
 #include <kpluginfactory.h>
 
 #define OKULAR_EXPORT_PLUGIN( classname, aboutdata ) \

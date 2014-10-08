@@ -13,7 +13,6 @@
 #include <QtWidgets/QLabel>
 
 #include <klocale.h>
-#include <KConfigGroup>
 #include <QDialogButtonBox>
 #include <QPushButton>
 #include <QVBoxLayout>

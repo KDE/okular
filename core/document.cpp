@@ -36,8 +36,8 @@
 #include <QtPrintSupport/QPrinter>
 #include <QtPrintSupport/QPrintDialog>
 #include <QUndoCommand>
+#include <QMimeDatabase>
 
-#include <KAboutData>
 #include <k4aboutdata.h>
 #include <kauthorized.h>
 #include <kconfigdialog.h>

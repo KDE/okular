@@ -24,7 +24,6 @@
 
 #include <kcomponentdata.h>
 #include <QMimeType>
-#include <QMimeDatabase>
 #include <kurl.h>
 
 class QPrintDialog;

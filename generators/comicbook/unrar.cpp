@@ -225,7 +225,7 @@ int Unrar::startSyncProcess( const QStringList &args )
 
     connect(mProcess, &KPtyProcess::readyReadStandardOutput, this, &Unrar::readFromStdout);
     connect(mProcess, &KPtyProcess::readyReadStandardError, this, &Unrar::readFromStderr);
-    connect( mProcess, SIGNAL(finished(int,QProcess::ExitStatus)), SLOT(finished(int,QProcess::ExitStatus)) );
+    connect(mProcess, static_cast<void (KPtyProcess::*)(int, QProcess::ExitStatus)>(&KPtyProcess::finished), this, &Unrar::finished);
 
 
 #if defined(Q_OS_WIN)

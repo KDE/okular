@@ -66,7 +66,7 @@ void DVIExport::start(const QString& command,
   process_->setOutputChannelMode(KProcess::MergedChannels);
   process_->setNextOpenMode(QIODevice::Text);
   connect(process_, &KProcess::readyReadStandardOutput, this, &DVIExport::output_receiver);
-  connect(process_, SIGNAL(finished(int)), this, SLOT(finished(int)));
+  connect(process_, static_cast<void (KProcess::*)(int)>(&KProcess::finished), this, &DVIExport::finished);
 
   *process_ << command << args;
 

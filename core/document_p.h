@@ -13,6 +13,8 @@
 
 #include "document.h"
 
+#include "synctex/synctex_parser.h"
+
 // qt/kde/system includes
 #include <QtCore/QHash>
 #include <QtCore/QLinkedList>
@@ -98,7 +100,8 @@ class DocumentPrivate
             m_archiveData( 0 ),
             m_fontsCached( false ),
             m_annotationEditingEnabled ( true ),
-            m_annotationBeingMoved( false )
+            m_annotationBeingMoved( false ),
+            m_synctex_scanner( 0 )
         {
             calculateMaxTextPages();
         }
@@ -182,6 +185,9 @@ class DocumentPrivate
          * is fully visible.
          */
         bool isNormalizedRectangleFullyVisible( const Okular::NormalizedRect & rectOfInterest, int rectPage );
+
+        // For sync files
+        void loadSyncFile( const QString & filePath );
 
         // member variables
         Document *m_parent;
@@ -271,6 +277,8 @@ class DocumentPrivate
 
         QUndoStack *m_undoStack;
         QDomNode m_prevPropsOfAnnotBeingModified;
+
+        synctex_scanner_t m_synctex_scanner;
 };
 
 class DocumentInfoPrivate

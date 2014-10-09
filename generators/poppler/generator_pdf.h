@@ -13,8 +13,6 @@
 
 #include "synctex/synctex_parser.h"
 
-#include <poppler-qt5.h>
-
 #include <qbitarray.h>
 #include <qpointer.h>
 
@@ -100,7 +98,6 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
 
     protected slots:
         void requestFontData(const Okular::FontInfo &font, QByteArray *data);
-        const Okular::SourceReference * dynamicSourceReference( int pageNr, double absX, double absY );
         Okular::Generator::PrintError printError() const;
 
     private:
@@ -116,10 +113,6 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         void addFormFields( Poppler::Page * popplerPage, Okular::Page * page );
         // load the source references from a pdfsync file
         void loadPdfSync( const QString & fileName, QVector<Okular::Page*> & pagesVector );
-        // init the synctex parser if a synctex file exists
-        void initSynctexParser( const QString& filePath );
-        // search document for source reference
-        void fillViewportFromSourceReference( Okular::DocumentViewport & viewport, const QString & reference ) const;
 
         Okular::TextPage * abstractTextPage(const QList<Poppler::TextBox*> &text, double height, double width, int rot);
 
@@ -144,8 +137,6 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         QBitArray rectsGenerated;
 
         QPointer<PDFOptionsPage> pdfOptionsPage;
-        
-        synctex_scanner_t synctex_scanner;
         
         PrintError lastPrintError;
 };

@@ -441,11 +441,6 @@ void Generator::requestFontData(const Okular::FontInfo & /*font*/, QByteArray * 
 
 }
 
-const SourceReference * Generator::dynamicSourceReference( int /*pageNr*/, double /*absX*/, double /*absY*/)
-{
-  return 0;
-}
-
 void Generator::setDPI(const QSizeF & dpi)
 {
      Q_D( Generator );

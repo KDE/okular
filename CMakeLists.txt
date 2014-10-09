@@ -41,6 +41,8 @@ find_package(Phonon4Qt5 CONFIG REQUIRED)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake/modules)
 
+find_package(ZLIB REQUIRED)
+
 # There was no Qt 5 version at the time of porting
 #find_package(QImageBlitz)
 #set_package_properties("QImageBlitz" PROPERTIES
@@ -59,7 +61,7 @@ set_package_properties("LibKScreen" PROPERTIES
 add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 add_definitions(-DTRANSLATION_DOMAIN="okular")
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${PHONON_INCLUDES})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${PHONON_INCLUDES} core/synctex ${ZLIB_INCLUDE_DIR})
 
 message("TODO: when core compiles add subdirs")
 #add_subdirectory( active )
@@ -121,6 +123,8 @@ set(okularcore_SRCS
    core/script/kjs_field.cpp
    core/script/kjs_spell.cpp
    core/script/kjs_util.cpp
+   core/synctex/synctex_parser.c
+   core/synctex/synctex_parser_utils.c
 )
 
 ki18n_wrap_ui(okularcore_SRCS
@@ -185,6 +189,7 @@ target_link_libraries(okularcore
     KF5::Wallet
     Phonon::phonon4qt5
     ${MATH_LIB}
+    ${ZLIB_LIBRARIES}
 )
 
 if(LibKScreen_FOUND)

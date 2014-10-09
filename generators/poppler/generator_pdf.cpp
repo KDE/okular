@@ -403,7 +403,7 @@ PDFGenerator::PDFGenerator( QObject *parent, const QVariantList &args )
     : Generator( parent, args ), pdfdoc( 0 ),
     docSynopsisDirty( true ),
     docEmbeddedFilesDirty( true ), nextFontPage( 0 ),
-    annotProxy( 0 ), synctex_scanner( 0 )
+    annotProxy( 0 )
 {
     setFeature( Threaded );
     setFeature( TextExtraction );
@@ -440,18 +440,7 @@ Okular::Document::OpenResult PDFGenerator::loadDocumentWithPassword( const QStri
 #endif
     // create PDFDoc for the given file
     pdfdoc = Poppler::Document::load( filePath, 0, 0 );
-    Okular::Document::OpenResult success = init(pagesVector, password);
-    if (success == Okular::Document::OpenSuccess)
-    {
-        // no need to check for the existence of a synctex file, no parser will be
-        // created if none exists
-        initSynctexParser(filePath);
-        if ( !synctex_scanner && QFile::exists(filePath + QLatin1String( "sync" ) ) )
-        {
-            loadPdfSync(filePath, pagesVector);
-        }
-    }
-    return success;
+    return init(pagesVector, password);
 }
 
 Okular::Document::OpenResult PDFGenerator::loadDocumentFromDataWithPassword( const QByteArray & fileData, QVector<Okular::Page*> & pagesVector, const QString &password )
@@ -524,11 +513,6 @@ bool PDFGenerator::doCloseDocument()
     docEmbeddedFiles.clear();
     nextFontPage = 0;
     rectsGenerated.clear();
-    if ( synctex_scanner )
-    {
-        synctex_scanner_free( synctex_scanner );
-        synctex_scanner = 0;
-    }
 
     return true;
 }
@@ -1109,25 +1093,16 @@ QVariant PDFGenerator::metaData( const QString & key, const QVariant & option ) 
         Okular::DocumentViewport viewport;
         QString optionString = option.toString();
 
-        // if option starts with "src:" assume that we are handling a
-        // source reference
-        if ( optionString.startsWith( "src:", Qt::CaseInsensitive ) )
+        // asking for the page related to a 'named link destination'. the
+        // option is the link name. @see addSynopsisChildren.
+        userMutex()->lock();
+        Poppler::LinkDestination *ld = pdfdoc->linkDestination( optionString );
+        userMutex()->unlock();
+        if ( ld )
         {
-            fillViewportFromSourceReference( viewport, optionString );
+            fillViewportFromLinkDestination( viewport, *ld );
         }
-        else
-        {
-            // asking for the page related to a 'named link destination'. the
-            // option is the link name. @see addSynopsisChildren.
-            userMutex()->lock();
-            Poppler::LinkDestination *ld = pdfdoc->linkDestination( optionString );
-            userMutex()->unlock();
-            if ( ld )
-            {
-                fillViewportFromLinkDestination( viewport, *ld );
-            }
-            delete ld;
-        }
+        delete ld;
         if ( viewport.pageNumber >= 0 )
             return viewport.toString();
     }

@@ -21,19 +21,10 @@ include_directories(
 
 ########### next target ###############
 
-find_package(ZLIB REQUIRED)
-
-include_directories(
-  synctex
-  ${ZLIB_INCLUDE_DIR}
-)
-
 set(okularGenerator_poppler_PART_SRCS
    generator_pdf.cpp
    formfields.cpp
    annots.cpp
-   synctex/synctex_parser.c
-   synctex/synctex_parser_utils.c
 )
 
 ki18n_wrap_ui(okularGenerator_poppler_PART_SRCS
@@ -44,7 +35,7 @@ kconfig_add_kcfg_files(okularGenerator_poppler_PART_SRCS conf/pdfsettings.kcfgc 
 
 add_library(okularGenerator_poppler MODULE ${okularGenerator_poppler_PART_SRCS})
 
-target_link_libraries(okularGenerator_poppler ${POPPLER_LIBRARY} okularcore Qt5::Xml Qt5::Widgets Qt5::Gui ${ZLIB_LIBRARIES})
+target_link_libraries(okularGenerator_poppler ${POPPLER_LIBRARY} okularcore Qt5::Xml Qt5::Widgets Qt5::Gui )
 
 install(TARGETS okularGenerator_poppler DESTINATION ${PLUGIN_INSTALL_DIR})
 

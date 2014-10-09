@@ -13,7 +13,6 @@
 #include <core/page.h>
 #include <core/sourcereference.h>
 #include <core/textpage.h>
-#include <core/utils.h>
 
 #include "generator_dvi.h"
 #include "debug_dvi.h"
@@ -121,7 +120,7 @@ bool DviGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
 
     qCDebug(OkularDviDebug) << "# of pages:" << m_dviRenderer->dviFile->total_pages;
 
-    m_resolution = Okular::Utils::dpiY();
+    m_resolution = dpi().height();
     loadPages( pagesVector );
 
     return true;
@@ -537,7 +536,7 @@ void DviGenerator::loadPages( QVector< Okular::Page * > &pagesVector )
         if ( sfa.page < 1 || (int)sfa.page > numofpages )
             continue;
 
-        Okular::NormalizedPoint p( -1.0, (double)sfa.distance_from_top.getLength_in_pixel( Okular::Utils::dpiY() ) / (double)pageRequiredSize.height() );
+        Okular::NormalizedPoint p( -1.0, (double)sfa.distance_from_top.getLength_in_pixel( dpi().height() ) / (double)pageRequiredSize.height() );
         Okular::SourceReference * sourceRef = new Okular::SourceReference( sfa.fileName, sfa.line );
         refRects[ sfa.page - 1 ].append( new Okular::SourceRefObjectRect( p, sourceRef ) );
     }

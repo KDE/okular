@@ -658,7 +658,7 @@ class HTMLGenerator : public Okular::Generator
         bool canGeneratePixmap() const;
         void generatePixmap( Okular::PixmapRequest *request );
 
-        virtual const Okular::DocumentInfo* generateDocumentInfo();
+        virtual Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const;
 
         virtual const Okular::DocumentSynopsis* generateDocumentSynopsis();
 
@@ -801,9 +801,9 @@ void HTMLGenerator::generatePixmap( Okular::PixmapRequest *request )
     signalPixmapRequestDone( request );
 }
 
-const Okular::DocumentInfo* HTMLGenerator::generateDocumentInfo()
+Okular::DocumentInfo HTMLGenerator::generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const
 {
-    return &mDocumentInfo;
+    return mDocumentInfo;
 }
 
 const Okular::DocumentSynopsis* HTMLGenerator::generateDocumentSynopsis()

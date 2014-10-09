@@ -1646,97 +1646,9 @@ void PDFGenerator::loadPdfSync( const QString & filePath, QVector<Okular::Page*>
             pagesVector[i]->setSourceReferences( refRects.at(i) );
 }
 
-void PDFGenerator::initSynctexParser( const QString& filePath )
-{
-    synctex_scanner = synctex_scanner_new_with_output_file( QFile::encodeName( filePath ).constData(), 0, 1);
-}
-
-const Okular::SourceReference * PDFGenerator::dynamicSourceReference( int pageNr, double absX, double absY )
-{
-    if  ( !synctex_scanner )
-        return 0;
-
-    if (synctex_edit_query(synctex_scanner, pageNr + 1, absX * 72. / dpi().width(), absY * 72. / dpi().height()) > 0)
-    {
-        synctex_node_t node;
-        // TODO what should we do if there is really more than one node?
-        while (( node = synctex_next_result( synctex_scanner ) ))
-        {
-            int line = synctex_node_line(node);
-            int col = synctex_node_column(node);
-            // column extraction does not seem to be implemented in synctex so far. set the SourceReference default value.
-            if ( col == -1 )
-            {
-                col = 0;
-            }
-            const char *name = synctex_scanner_get_name( synctex_scanner, synctex_node_tag( node ) );
-
-            Okular::SourceReference * sourceRef = new Okular::SourceReference( QFile::decodeName( name ), line, col );
-            return sourceRef;
-        }
-    }
-    return 0;
-}
-
 PDFGenerator::PrintError PDFGenerator::printError() const
 {
     return lastPrintError;
-}
-
-void PDFGenerator::fillViewportFromSourceReference( Okular::DocumentViewport & viewport, const QString & reference ) const
-{
-    if ( !synctex_scanner )
-        return;
-
-    // The reference is of form "src:1111Filename", where "1111"
-    // points to line number 1111 in the file "Filename".
-    // Extract the file name and the numeral part from the reference string.
-    // This will fail if Filename starts with a digit.
-    QString name, lineString;
-    // Remove "src:". Presence of substring has been checked before this
-    // function is called.
-    name = reference.mid( 4 );
-    // split
-    int nameLength = name.length();
-    int i = 0;
-    for( i = 0; i < nameLength; ++i )
-    {
-        if ( !name[i].isDigit() ) break;
-    }
-    lineString = name.left( i );
-    name = name.mid( i );
-    // Remove spaces.
-    name = name.trimmed();
-    lineString = lineString.trimmed();
-    // Convert line to integer.
-    bool ok;
-    int line = lineString.toInt( &ok );
-    if (!ok) line = -1;
-
-    // Use column == -1 for now.
-    if( synctex_display_query( synctex_scanner, QFile::encodeName(name).constData(), line, -1 ) > 0 )
-    {
-        synctex_node_t node;
-        // For now use the first hit. Could possibly be made smarter
-        // in case there are multiple hits.
-        while( ( node = synctex_next_result( synctex_scanner ) ) )
-        {
-            // TeX pages start at 1.
-            viewport.pageNumber = synctex_node_page( node ) - 1;
-
-            if ( !viewport.isValid() ) return;
-
-            // TeX small points ...
-            double px = (synctex_node_visible_h( node ) * dpi().width()) / 72.27;
-            double py = (synctex_node_visible_v( node ) * dpi().height()) / 72.27;
-            viewport.rePos.normalizedX = px / document()->page(viewport.pageNumber)->width();
-            viewport.rePos.normalizedY = ( py + 0.5 ) / document()->page(viewport.pageNumber)->height();
-            viewport.rePos.enabled = true;
-            viewport.rePos.pos = Okular::DocumentViewport::Center;
-
-            return;
-        }
-    }
 }
 
 QWidget* PDFGenerator::printConfigurationWidget() const

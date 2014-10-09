@@ -10,8 +10,6 @@
 #ifndef PAGESIZE_H
 #define PAGESIZE_H
 
-#include "kviewshell_export.h"
-
 #include "simplePageSize.h"
 
 #include <QObject>
@@ -38,7 +36,7 @@ The main difference to the SimplePageSize class are the following.
 @version 1.0.0
 */
 
-class KVIEWSHELL_EXPORT pageSize : public QObject, public SimplePageSize
+class pageSize : public QObject, public SimplePageSize
 {
 Q_OBJECT
 

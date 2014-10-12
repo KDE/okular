@@ -18,7 +18,7 @@
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kstandarddirs.h>
+
 
 // local includes
 #include "core/action.h"
@@ -26,6 +26,7 @@
 #include "core/document.h"
 
 #include <memory>
+#include <QStandardPaths>
 
 struct GuiUtilsHelper
 {
@@ -43,7 +44,7 @@ QSvgRenderer* GuiUtilsHelper::svgStamps()
 {
     if ( !svgStampFile.get() )
     {
-        const QString stampFile = KStandardDirs::locate( "data", "okular/pics/stamps.svg" );
+        const QString stampFile = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "okular/pics/stamps.svg" );
         if ( !stampFile.isEmpty() )
         {
             svgStampFile.reset( new QSvgRenderer( stampFile ) );

@@ -22,13 +22,14 @@
 #include <QInputDialog>
 #include <kiconloader.h>
 #include <klocale.h>
-#include <kstandarddirs.h>
+
 #include <kuser.h>
 #include <QtCore/QDebug>
 #include <kmenu.h>
 
 // system includes
 #include <math.h>
+#include <QStandardPaths>
 
 // local includes
 #include "core/area.h"
@@ -1109,7 +1110,7 @@ QPixmap PageViewAnnotator::makeToolPixmap( const QDomElement &toolElement )
     const QString annotType = toolElement.attribute( "type" );
 
     // Load base pixmap. We'll draw on top of it
-    pixmap.load( KStandardDirs::locate( "data", "okular/pics/tool-base-okular.png" ) );
+    pixmap.load( QStandardPaths::locate(QStandardPaths::GenericDataLocation, "okular/pics/tool-base-okular.png" ) );
 
     /* Parse color, innerColor and icon (if present) */
     QColor engineColor, innerColor;
@@ -1143,7 +1144,7 @@ QPixmap PageViewAnnotator::makeToolPixmap( const QDomElement &toolElement )
     }
     else if ( annotType == "highlight" )
     {
-        QImage overlay( KStandardDirs::locate( "data", "okular/pics/tool-highlighter-okular-colorizable.png" ) );
+        QImage overlay( QStandardPaths::locate(QStandardPaths::GenericDataLocation, "okular/pics/tool-highlighter-okular-colorizable.png" ) );
         QImage colorizedOverlay = overlay;
         GuiUtils::colorizeImage( colorizedOverlay, engineColor );
 
@@ -1153,7 +1154,7 @@ QPixmap PageViewAnnotator::makeToolPixmap( const QDomElement &toolElement )
     }
     else if ( annotType == "ink" )
     {
-        QImage overlay( KStandardDirs::locate( "data", "okular/pics/tool-ink-okular-colorizable.png" ) );
+        QImage overlay( QStandardPaths::locate(QStandardPaths::GenericDataLocation, "okular/pics/tool-ink-okular-colorizable.png" ) );
         QImage colorizedOverlay = overlay;
         GuiUtils::colorizeImage( colorizedOverlay, engineColor );
 
@@ -1163,13 +1164,13 @@ QPixmap PageViewAnnotator::makeToolPixmap( const QDomElement &toolElement )
     }
     else if ( annotType == "note-inline" )
     {
-        QImage overlay( KStandardDirs::locate( "data", "okular/pics/tool-note-inline-okular-colorizable.png" ) );
+        QImage overlay( QStandardPaths::locate(QStandardPaths::GenericDataLocation, "okular/pics/tool-note-inline-okular-colorizable.png" ) );
         GuiUtils::colorizeImage( overlay, engineColor );
         p.drawImage( QPoint(0,0), overlay );
     }
     else if ( annotType == "note-linked" )
     {
-        QImage overlay( KStandardDirs::locate( "data", "okular/pics/tool-note-okular-colorizable.png" ) );
+        QImage overlay( QStandardPaths::locate(QStandardPaths::GenericDataLocation, "okular/pics/tool-note-okular-colorizable.png" ) );
         GuiUtils::colorizeImage( overlay, engineColor );
         p.drawImage( QPoint(0,0), overlay );
     }

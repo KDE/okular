@@ -16,7 +16,7 @@
 #include <qsizepolicy.h>
 #include <qtoolbutton.h>
 #include <QIcon>
-#include <klocale.h>
+#include <KLocalizedString>
 
 // local includes
 #include "searchlineedit.h"

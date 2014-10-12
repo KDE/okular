@@ -11,8 +11,8 @@
  * Classes DVIExportToPDF and DVIExportToPS control the export
  * of a DVI file to PDF or PostScript format, respectively.
  * Common functionality is factored out into a common base class,
- * DVIExport which itself derives from KShared allowing easy,
- * polymorphic storage of multiple KSharedPtr<DVIExport> variables
+ * DVIExport which itself derives from QSharedData allowing easy,
+ * polymorphic storage of multiple QExplicitlySharedDataPointer<DVIExport> variables
  * in a container of all exported processes.
  */
 

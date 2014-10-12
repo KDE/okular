@@ -682,7 +682,7 @@ void dviRenderer::handleSRCLink(const QString &linkText, const QPoint& point, Do
   Q_UNUSED( point );
   Q_UNUSED( win );
 #if 0
-  KSharedPtr<DVISourceEditor> editor(new DVISourceEditor(*this, parentWidget, linkText, point, win));
+  QExplicitlySharedDataPointer<DVISourceEditor> editor(new DVISourceEditor(*this, parentWidget, linkText, point, win));
   if (editor->started())
     editor_ = editor;
 #endif
@@ -724,7 +724,7 @@ QString dviRenderer::PDFencodingToQString(const QString& _pdfstring)
 void dviRenderer::exportPDF()
 {
 /*
-  KSharedPtr<DVIExport> exporter(new DVIExportToPDF(*this, parentWidget));
+  QExplicitlySharedDataPointer<DVIExport> exporter(new DVIExportToPDF(*this, parentWidget));
   if (exporter->started())
     all_exports_[exporter.data()] = exporter;
 */
@@ -733,7 +733,7 @@ void dviRenderer::exportPDF()
 
 void dviRenderer::exportPS(const QString& fname, const QStringList& options, QPrinter* printer, QPrinter::Orientation orientation)
 {
-  KSharedPtr<DVIExport> exporter(new DVIExportToPS(*this, fname, options, printer, font_pool.getUseFontHints(), orientation));
+  QExplicitlySharedDataPointer<DVIExport> exporter(new DVIExportToPS(*this, fname, options, printer, font_pool.getUseFontHints(), orientation));
   if (exporter->started())
     all_exports_[exporter.data()] = exporter;
 }
@@ -747,7 +747,7 @@ void dviRenderer::editor_finished(const DVISourceEditor*)
 
 void dviRenderer::export_finished(const DVIExport* key)
 {
-  typedef QMap<const DVIExport*, KSharedPtr<DVIExport> > ExportMap;
+  typedef QMap<const DVIExport*, QExplicitlySharedDataPointer<DVIExport> > ExportMap;
   ExportMap::iterator it = all_exports_.find(key);
   if (it != all_exports_.end())
     all_exports_.remove(key);

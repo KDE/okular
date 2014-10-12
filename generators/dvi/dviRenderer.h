@@ -20,7 +20,7 @@
 #include "anchor.h"
 #include "prebookmark.h"
 
-#include <ksharedptr.h>
+#include <QExplicitlySharedDataPointer>
 #include <kurl.h>
 #include <kprogressdialog.h>
 #include <QHash>
@@ -300,8 +300,8 @@ private:
 
   drawinf currinf;
   RenderedDocumentPagePixmap* currentlyDrawnPage;
-  QMap<const DVIExport*, KSharedPtr<DVIExport> > all_exports_;
-  //KSharedPtr<DVISourceEditor> editor_;
+  QMap<const DVIExport*, QExplicitlySharedDataPointer<DVIExport> > all_exports_;
+  //QExplicitlySharedDataPointer<DVISourceEditor> editor_;
 
   /** Flag if document is modified
 

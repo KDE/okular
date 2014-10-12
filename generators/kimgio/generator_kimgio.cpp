@@ -19,7 +19,7 @@
 #include <QMimeDatabase>
 
 #include <KAboutData>
-#include <kaction.h>
+#include <qaction.h>
 #include <kactioncollection.h>
 #include <QIcon>
 #include <kimageio.h>

@@ -13,7 +13,7 @@
 #include <qtoolbar.h>
 #include <qtoolbutton.h>
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 ToolAction::ToolAction( QObject *parent )
     : QAction( parent )

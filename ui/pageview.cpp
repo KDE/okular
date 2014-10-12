@@ -36,7 +36,7 @@
 #include <qdesktopwidget.h>
 #include <QMimeDatabase>
 
-#include <kaction.h>
+#include <qaction.h>
 #include <kactionmenu.h>
 #include <kstandardaction.h>
 #include <kactioncollection.h>

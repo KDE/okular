@@ -9,8 +9,8 @@
 
 #include "annotationpopup.h"
 
-#include <klocale.h>
-#include <kmenu.h>
+#include <KLocalizedString>
+#include <QMenu>
 #include <QIcon>
 
 #include "annotationpropertiesdialog.h"

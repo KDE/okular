@@ -13,7 +13,7 @@
 #include <qlist.h>
 #include <qpointer.h>
 
-#include <kaction.h>
+#include <qaction.h>
 
 class QToolButton;
 

@@ -26,7 +26,7 @@
 #include <kfiledialog.h>
 #include <QIcon>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kmessagebox.h>
 #include <ksqueezedtextlabel.h>
 #include <kurl.h>

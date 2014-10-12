@@ -20,7 +20,7 @@
 #include <QtCore/QDebug>
 #include <QIcon>
 #include <klocale.h>
-#include <kmenu.h>
+#include <qmenu.h>
 #include <ktreewidgetsearchline.h>
 
 #include "pageitemdelegate.h"

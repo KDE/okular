@@ -12,7 +12,7 @@
 #include <qdbusservicewatcher.h>
 #include <qset.h>
 
-#include <klocale.h>
+#include <KLocalisedString>
 #include <kspeech.h>
 #include <ktoolinvocation.h>
 

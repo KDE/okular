@@ -24,10 +24,10 @@
 #include <qstyle.h>
 #include <qtoolbutton.h>
 #include <kglobal.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <ktextedit.h>
 #include <QtCore/QDebug>
-#include <kaction.h>
+#include <qaction.h>
 #include <kstandardaction.h>
 #include <qmenu.h>
 

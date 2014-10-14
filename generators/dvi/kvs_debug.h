@@ -1,5 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2006 by Luigi Toscano <luigi.toscano@tiscali.it>        *
+ *   Copyright (C) 2014 by Laurent Montel <montel@kde.org>                 *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -10,12 +11,8 @@
 #ifndef _KDVI_DEBUG_H_
 #define _KDVI_DEBUG_H_
 
-#include <QtCore/QDebug>
+#include <QtCore/qloggingcategory.h>
 
-namespace kvs
-{
-   static const int dvi = 4713;
-   static const int shell = 4713;
-}
+Q_DECLARE_LOGGING_CATEGORY(OkularDviDebug)
 
 #endif

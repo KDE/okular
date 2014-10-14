@@ -35,7 +35,7 @@
 
 #include <QtCore/QDebug>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <ktoolbar.h>
 
 class KTreeViewSearchLine::Private

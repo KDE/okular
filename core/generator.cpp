@@ -18,7 +18,7 @@
 #include <QtCore/QDebug>
 #include <QIcon>
 #include <QMimeDatabase>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kwallet.h>
 
 #include "document.h"

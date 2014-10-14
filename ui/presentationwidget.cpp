@@ -32,10 +32,10 @@
 #include <kcursor.h>
 #include <krandom.h>
 #include <qtoolbar.h>
-#include <kaction.h>
+#include <qaction.h>
 #include <kactioncollection.h>
 #include <klineedit.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kiconloader.h>
 #include <kmessagebox.h>
 #include <kselectaction.h>

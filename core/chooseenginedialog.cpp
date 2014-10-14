@@ -12,7 +12,7 @@
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QLabel>
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <QDialogButtonBox>
 #include <QPushButton>
 #include <QVBoxLayout>

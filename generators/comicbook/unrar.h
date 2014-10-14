@@ -15,7 +15,7 @@
 #include <QtCore/QStringList>
 
 class QEventLoop;
-class KTempDir;
+class QTemporaryDir;
 class KPtyProcess;
 
 class Unrar : public QObject
@@ -74,7 +74,7 @@ class Unrar : public QObject
         QString mFileName;
         QByteArray mStdOutData;
         QByteArray mStdErrData;
-        KTempDir *mTempDir;
+        QTemporaryDir *mTempDir;
 };
 
 #endif

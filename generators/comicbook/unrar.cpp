@@ -13,12 +13,12 @@
 #include <QtCore/QFile>
 #include <QtCore/QFileInfo>
 #include <QtCore/QRegExp>
+#include <QTemporaryDir>
 
 #include <QtCore/qloggingcategory.h>
 #include <kglobal.h>
 #include <KLocalizedString>
 #include <kstandarddirs.h>
-#include <ktempdir.h>
 #if !defined(Q_OS_WIN)
 #include <KPty/kptyprocess.h>
 #include <KPty/kptydevice.h>
@@ -106,7 +106,7 @@ bool Unrar::open( const QString &fileName )
         return false;
 
     delete mTempDir;
-    mTempDir = new KTempDir();
+    mTempDir = new QTemporaryDir();
 
     mFileName = fileName;
 
@@ -116,7 +116,7 @@ bool Unrar::open( const QString &fileName )
     mStdOutData.clear();
     mStdErrData.clear();
 
-    int ret = startSyncProcess( QStringList() << "e" << mFileName << mTempDir->name() );
+    int ret = startSyncProcess( QStringList() << "e" << mFileName << mTempDir->path() +  '/' );
     bool ok = ret == 0;
 
     return ok;
@@ -138,7 +138,7 @@ QStringList Unrar::list()
         // Extract all the files to mTempDir regardless of their path inside the archive
         // This will break if ever an arvhice with two files with the same name in different subfolders
         QFileInfo fi( f );
-        if ( QFile::exists( mTempDir->name() + fi.fileName() ) ) {
+        if ( QFile::exists( mTempDir->path() + '/' + fi.fileName() ) ) {
             newList.append( fi.fileName() );
         }
     }
@@ -150,7 +150,7 @@ QByteArray Unrar::contentOf( const QString &fileName ) const
     if ( !isSuitableVersionAvailable() )
         return QByteArray();
 
-    QFile file( mTempDir->name() + fileName );
+    QFile file( mTempDir->path() + '/' + fileName );
     if ( !file.open( QIODevice::ReadOnly ) )
         return QByteArray();
 
@@ -162,7 +162,7 @@ QIODevice* Unrar::createDevice( const QString &fileName ) const
     if ( !isSuitableVersionAvailable() )
         return 0;
 
-    std::auto_ptr< QFile> file( new QFile( mTempDir->name() + fileName ) );
+    std::auto_ptr< QFile> file( new QFile( mTempDir->path() + '/' + fileName ) );
     if ( !file->open( QIODevice::ReadOnly ) )
         return 0;
 

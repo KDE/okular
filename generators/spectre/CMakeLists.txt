@@ -11,6 +11,7 @@ include_directories(
 set(okularGenerator_ghostview_SRCS
    generator_ghostview.cpp
    rendererthread.cpp
+   spectre_debug.cpp
 )
 
 ki18n_wrap_ui(okularGenerator_ghostview_SRCS

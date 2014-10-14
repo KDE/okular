@@ -11,8 +11,7 @@
 
 #include <qimage.h>
 
-#include <QtCore/QDebug>
-#include <KDebug>
+#include "spectre_debug.h"
 
 #include "core/generator.h"
 #include "core/page.h"
@@ -120,7 +119,7 @@ void GSRendererThread::run()
 
             if (image->width() != req.request->width() || image->height() != req.request->height())
             {
-                kWarning(4711).nospace() << "Generated image does not match wanted size: "
+                qCWarning(OkularSpectreDebug).nospace() << "Generated image does not match wanted size: "
                     << "[" << image->width() << "x" << image->height() << "] vs requested "
                     << "[" << req.request->width() << "x" << req.request->height() << "]";
                 QImage aux = image->scaled(wantedWidth, wantedHeight);

@@ -328,15 +328,17 @@ void dviRenderer::embedPostScript()
   if (!dviFile)
     return;
 
-/*  embedPS_progress = new KProgressDialog(parentWidget,
-                                         i18n("Embedding PostScript Files"), QString(), true); */
+/*  embedPS_progress = new QProgressDialog(parentWidget);
+embedPS_progress->setWindowTitle(i18n("Embedding PostScript Files"));
+embedPS_progress->setLabelText(QString());
+*/
   if (!embedPS_progress)
     return;
-  embedPS_progress->setAllowCancel(false);
-  embedPS_progress->showCancelButton(false);
+  embedPS_progress->setCancelButton(0);
+  embedPS_progress->setCancelButton(0);
   embedPS_progress->setMinimumDuration(400);
-  embedPS_progress->progressBar()->setMaximum(dviFile->numberOfExternalPSFiles);
-  embedPS_progress->progressBar()->setValue(0);
+  embedPS_progress->setMaximum(dviFile->numberOfExternalPSFiles);
+  embedPS_progress->setValue(0);
   embedPS_numOfProgressedFiles = 0;
 
   quint16 currPageSav = current_page;

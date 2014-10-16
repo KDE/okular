@@ -18,12 +18,13 @@
 
 #include <QtCore/QDebug>
 #include <KLocalizedString>
-#include <KStandardDirs>
+
 
 #include <core/action.h>
 #include <core/movie.h>
 #include <core/sound.h>
 #include <core/annotations.h>
+#include <QStandardPaths>
 
 using namespace Epub;
 
@@ -222,9 +223,9 @@ QTextDocument* Converter::convert( const QString &fileName )
         QDomNodeList svgs = dom.elementsByTagName("svg");
         if(!svgs.isEmpty()) {
           QList< QDomNode > imgNodes;
-          for (uint i = 0; i < svgs.length(); ++i) {
+          for (int i = 0; i < svgs.length(); ++i) {
             QDomNodeList images = svgs.at(i).toElement().elementsByTagName("image");
-            for (uint j = 0; j < images.length(); ++j) {
+            for (int j = 0; j < images.length(); ++j) {
               QString lnk = images.at(i).toElement().attribute("xlink:href");
               int ht = images.at(i).toElement().attribute("height").toInt();
               int wd = images.at(i).toElement().attribute("width").toInt();
@@ -320,7 +321,7 @@ QTextDocument* Converter::convert( const QString &fileName )
       while( !(csr = mTextDocument->find("<video></video>",csr)).isNull() ) {
         const int posStart = csr.position();
         const QPoint startPoint = calculateXYPosition(mTextDocument, posStart);
-        QImage img(KStandardDirs::locate("data", "okular/pics/okular-epub-movie.png"));
+        QImage img(QStandardPaths::locate(QStandardPaths::GenericDataLocation, "okular/pics/okular-epub-movie.png"));
         img = img.scaled(videoSize);
         csr.insertImage(img);
         const int posEnd = csr.position();
@@ -335,7 +336,7 @@ QTextDocument* Converter::convert( const QString &fileName )
       const QString keyToSearch("<audio></audio>");
       while( !(csr = mTextDocument->find(keyToSearch, csr)).isNull() ) {
         const int posStart = csr.position() - keyToSearch.size();
-        const QImage img(KStandardDirs::locate("data", "okular/pics/okular-epub-sound-icon.png"));
+        const QImage img(QStandardPaths::locate(QStandardPaths::GenericDataLocation, "okular/pics/okular-epub-sound-icon.png"));
         csr.insertImage(img);
         const int posEnd = csr.position();
         qDebug() << posStart << posEnd;;

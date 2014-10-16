@@ -22,7 +22,7 @@
 
 #include <QExplicitlySharedDataPointer>
 #include <kurl.h>
-#include <kprogressdialog.h>
+#include <QProgressDialog>
 #include <QHash>
 #include <QPolygon>
 #include <QStack>
@@ -37,7 +37,7 @@ class dvifile;
 class dviRenderer;
 class ghostscript_interface;
 class QEventLoop;
-class KProgressDialog;
+class QProgressDialog;
 class PreBookmark;
 class TeXFontDefinition;
 
@@ -230,7 +230,7 @@ private:
 
 
   /** Utility fields used by the embedPostScript method*/
-  KProgressDialog *embedPS_progress;
+  QProgressDialog *embedPS_progress;
   quint16         embedPS_numOfProgressedFiles;
 
   /** Shrink factor. Units are not quite clear */

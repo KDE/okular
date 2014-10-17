@@ -18,7 +18,7 @@
 
 #include <KLocalizedString>
 #include <kprocess.h>
-#include <ktemporaryfile.h>
+#include <qtemporaryfile.h>
 #include <kurl.h>
 
 #include <QtCore/qloggingcategory.h>

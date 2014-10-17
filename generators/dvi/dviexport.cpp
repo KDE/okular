@@ -25,19 +25,19 @@
 #include "dviRenderer.h"
 #include "debug_dvi.h"
 
-#include <KStandardDirs>
-#include <kfiledialog.h>
+
 #include <KLocalizedString>
 #include <kmessagebox.h>
 #include <kprocess.h>
-#include <ktemporaryfile.h>
 
 #include <QEventLoop>
 #include <QFileInfo>
 #include <QLabel>
 #include <QtPrintSupport/QPrinter>
+#include <QTemporaryFile>
 
 #include <cassert>
+#include <QStandardPaths>
 
 
 DVIExport::DVIExport(dviRenderer& parent)
@@ -125,7 +125,7 @@ DVIExportToPDF::DVIExportToPDF(dviRenderer& parent, const QString& output_name)
   if (!input.exists() || !input.isReadable())
     return;
 
-  if (KStandardDirs::findExe("dvipdfm").isEmpty()) {
+  if (QStandardPaths::findExecutable("dvipdfm").isEmpty()) {
     emit error(i18n("<qt><p>Okular could not locate the program <em>dvipdfm</em> on your computer. This program is "
                     "essential for the export function to work. You can, however, convert "
                     "the DVI-file to PDF using the print function of Okular, but that will often "
@@ -182,7 +182,7 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
     return;
   }
 
-  if (KStandardDirs::findExe("dvips").isEmpty()) {
+  if (QStandardPaths::findExecutable("dvips").isEmpty()) {
     emit error(i18n("<qt><p>Okular could not locate the program <em>dvips</em> on your computer. "
                     "That program is essential for the export function to work.</p>"
                     "<p>Hint to the perplexed system administrator: Okular uses the PATH environment "

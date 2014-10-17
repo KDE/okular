@@ -25,12 +25,10 @@
 #include <math.h>
 #include <QTime>
 #include <kconfig.h>
-#include <kglobal.h>
 #include <KLocalizedString>
 #include <QMimeType>
 #include <QMimeDatabase>
-#include <kstandarddirs.h>
-#include <kvbox.h>
+#include <QVBoxLayout>
 
 #include <QApplication>
 #include <QCheckBox>
@@ -280,11 +278,14 @@ void dviRenderer::showThatSourceInformationIsPresent()
     KDialogBase dialog(i18n("KDVI: Information"), KDialogBase::Yes, KDialogBase::Yes, KDialogBase::Yes,
                        parentWidget, "information", true, true, KStandardGuiItem::ok());
 
-    KVBox *topcontents = new KVBox (&dialog);
-    topcontents->setSpacing(KDialog::spacingHint()*2);
-    topcontents->setMargin(KDialog::marginHint()*2);
+    QWidget *topcontents = new QWidget (&dialog);
+    QVBoxLayout *topcontentsVBoxLayout = new QVBoxLayout(topcontents);
+    topcontentsVBoxLayout->setMargin(0);
+    topcontentsVBoxLayout->setSpacing(KDialog::spacingHint()*2);
+    topcontentsVBoxLayout->setMargin(KDialog::marginHint()*2);
 
     QWidget *contents = new QWidget(topcontents);
+    topcontentsVBoxLayout->addWidget(contents);
     QHBoxLayout * lay = new QHBoxLayout(contents);
     lay->setSpacing(KDialog::spacingHint()*2);
 
@@ -300,6 +301,7 @@ void dviRenderer::showThatSourceInformationIsPresent()
     lay->addStretch(1);
     QSize extraSize = QSize(50,30);
     QCheckBox *checkbox = new QCheckBox(i18n("Do not show this message again"), topcontents);
+    topcontentsVBoxLayout->addWidget(checkbox);
     extraSize = QSize(50,0);
     dialog.setHelpLinkText(i18n("Explain in more detail..."));
     dialog.setHelp("inverse-search", "kdvi");

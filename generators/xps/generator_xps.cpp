@@ -37,8 +37,6 @@
 #include <core/area.h>
 #include <core/fileprinter.h>
 
-const int XpsDebug = 4712;
-
 static KAboutData createAboutData()
 {
     KAboutData aboutData(

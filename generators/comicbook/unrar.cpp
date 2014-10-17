@@ -18,7 +18,6 @@
 #include <QtCore/qloggingcategory.h>
 #include <kglobal.h>
 #include <KLocalizedString>
-#include <kstandarddirs.h>
 #if !defined(Q_OS_WIN)
 #include <KPty/kptyprocess.h>
 #include <KPty/kptydevice.h>
@@ -28,6 +27,7 @@
 #include "debug_comicbook.h"
 
 #include <memory>
+#include <QStandardPaths>
 
 struct UnrarHelper
 {
@@ -63,11 +63,11 @@ static UnrarFlavour* detectUnrar( const QString &unrarPath )
 UnrarHelper::UnrarHelper()
    : kind( 0 )
 {
-    QString path = KStandardDirs::findExe( "unrar-nonfree" );
+    QString path = QStandardPaths::findExecutable( "unrar-nonfree" );
     if ( path.isEmpty() )
-        path = KStandardDirs::findExe( "unrar" );
+        path = QStandardPaths::findExecutable( "unrar" );
     if ( path.isEmpty() )
-        path = KStandardDirs::findExe( "rar" );
+        path = QStandardPaths::findExecutable( "rar" );
 
     if ( !path.isEmpty() )
         kind = detectUnrar( path );

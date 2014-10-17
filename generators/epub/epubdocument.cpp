@@ -11,10 +11,9 @@
 #include <QTemporaryFile>
 #include <QDir>
 
-#include <KDebug>
-
 #include <QRegExp>
 
+Q_LOGGING_CATEGORY(OkularEpuDebug, "org.kde.okular.generators.epu")
 using namespace Epub;
 
 namespace {
@@ -107,8 +106,8 @@ QVariant EpubDocument::loadResource(int type, const QUrl &name)
     }
     case EpubDocument::MovieResource: {
       QTemporaryFile *tmp = new QTemporaryFile(QString("%1/okrXXXXXX").arg(QDir::tempPath()),this);
-      if(!tmp->open()) kWarning() << "EPUB : error creating temporary video file";
-      if(tmp->write(data,size) == -1) kWarning() << "EPUB : error writing data" << tmp->errorString();
+      if(!tmp->open()) qCWarning(OkularEpuDebug) << "EPUB : error creating temporary video file";
+      if(tmp->write(data,size) == -1) qCWarning(OkularEpuDebug) << "EPUB : error writing data" << tmp->errorString();
       tmp->flush();
       resource.setValue(tmp->fileName());
       break;

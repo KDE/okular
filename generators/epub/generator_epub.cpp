@@ -12,8 +12,8 @@
 #include "converter.h"
 
 #include <KAboutData>
-#include <KLocale>
 #include <kconfigdialog.h>
+#include <KLocalizedString>
 
 static KAboutData createAboutData()
 {

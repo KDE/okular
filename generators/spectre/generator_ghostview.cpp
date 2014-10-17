@@ -22,7 +22,7 @@
 #include <QtCore/QDebug>
 #include <QMimeType>
 #include <QMimeDatabase>
-#include <ktemporaryfile.h>
+#include <qtemporaryfile.h>
 #include <QDir>
 #include <KLocalizedString>
 

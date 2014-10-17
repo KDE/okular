@@ -16,6 +16,7 @@
 #include <QImage>
 #include <kurl.h>
 #include <epub.h>
+#include <QtCore/qloggingcategory.h>
 
 namespace Epub {
 
@@ -46,4 +47,5 @@ namespace Epub {
   };
 
 }
+Q_DECLARE_LOGGING_CATEGORY(OkularEpuDebug)
 #endif

@@ -13,7 +13,7 @@
 #include "latexrenderer.h"
 
 #include <QtCore/QDebug>
-#include <kstandarddirs.h>
+
 #include <kprocess.h>
 
 #include <QColor>
@@ -22,6 +22,7 @@
 #include <QImage>
 #include <qtemporaryfile.h>
 #include <QTextStream>
+#include <QStandardPaths>
 
 #include "debug_ui.h"
 
@@ -139,7 +140,7 @@ LatexRenderer::Error LatexRenderer::handleLatex( QString& fileName, const QStrin
 \\end{document}";
 
     tempFile->close();
-    QString latexExecutable = KStandardDirs::findExe("latex");
+    QString latexExecutable = QStandardPaths::findExecutable("latex");
     if (latexExecutable.isEmpty())
     {
         qCDebug(OkularUiDebug) << "Could not find latex!";
@@ -163,7 +164,7 @@ LatexRenderer::Error LatexRenderer::handleLatex( QString& fileName, const QStrin
         return LatexFailed;
     }
 
-    QString dvipngExecutable = KStandardDirs::findExe("dvipng");
+    QString dvipngExecutable = QStandardPaths::findExecutable("dvipng");
     if (dvipngExecutable.isEmpty())
     {
         qCDebug(OkularUiDebug) << "Could not find dvipng!";

@@ -28,6 +28,10 @@
 #include <QtWidgets/QStackedWidget>
 #include <QtXml/QDomDocument>
 #include <QtXml/QDomElement>
+#include <KConfigGroup>
+#include <QDialogButtonBox>
+#include <QPushButton>
+#include <QVBoxLayout>
 
 #include "core/annotations.h"
 #include "ui/annotationwidgets.h"
@@ -254,36 +258,51 @@ void WidgetAnnotTools::slotMoveDown()
 }
 
 EditAnnotToolDialog::EditAnnotToolDialog( QWidget *parent, const QDomElement &initialState )
-    : KDialog( parent ), m_stubann( 0 ), m_annotationWidget( 0 )
+    : QDialog( parent ), m_stubann( 0 ), m_annotationWidget( 0 )
 {
-    setButtons( Ok | Cancel );
-    setDefaultButton( Ok );
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    setLayout(mainLayout);
+    QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+    okButton->setDefault(true);
+    okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    okButton->setDefault(true);
 
     QLabel * tmplabel;
     QWidget *widget = new QWidget( this );
     QGridLayout * widgetLayout = new QGridLayout( widget );
 
-    setMainWidget(widget);
+    mainLayout->addWidget(widget);
+    mainLayout->addWidget(buttonBox);
+
 
     m_name = new KLineEdit( widget );
+    mainLayout->addWidget(m_name);
     tmplabel = new QLabel( i18n( "&Name:" ), widget );
+    mainLayout->addWidget(tmplabel);
     tmplabel->setBuddy( m_name );
     widgetLayout->addWidget( tmplabel, 0, 0, Qt::AlignRight );
     widgetLayout->addWidget( m_name, 0, 1 );
 
     m_type = new KComboBox( false, widget );
+    mainLayout->addWidget(m_type);
     connect(m_type, static_cast<void (KComboBox::*)(int)>(&KComboBox::currentIndexChanged), this, &EditAnnotToolDialog::slotTypeChanged);
     tmplabel = new QLabel( i18n( "&Type:" ), widget );
+    mainLayout->addWidget(tmplabel);
     tmplabel->setBuddy( m_type );
     widgetLayout->addWidget( tmplabel, 1, 0, Qt::AlignRight );
     widgetLayout->addWidget( m_type, 1, 1 );
 
     m_toolIcon = new QLabel( widget );
+    mainLayout->addWidget(m_toolIcon);
     m_toolIcon->setAlignment( Qt::AlignRight | Qt::AlignTop );
     m_toolIcon->setMinimumSize( 40, 32 );
     widgetLayout->addWidget( m_toolIcon, 0, 2, 2, 1 );
 
     m_appearanceBox = new QGroupBox( i18n( "Appearance" ), widget );
+    mainLayout->addWidget(m_appearanceBox);
     m_appearanceBox->setLayout( new QVBoxLayout( m_appearanceBox ) );
     widgetLayout->addWidget( m_appearanceBox, 2, 0, 1, 3 );
 
@@ -301,11 +320,11 @@ EditAnnotToolDialog::EditAnnotToolDialog( QWidget *parent, const QDomElement &in
 
     if ( initialState.isNull() )
     {
-        setCaption( i18n("Create annotation tool") );
+        setWindowTitle( i18n("Create annotation tool") );
     }
     else
     {
-        setCaption( i18n("Edit annotation tool") );
+        setWindowTitle( i18n("Edit annotation tool") );
         loadTool( initialState );
     }
 

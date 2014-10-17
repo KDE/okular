@@ -10,7 +10,7 @@
 // reimplementing this
 #include "preferencesdialog.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 // single config pages
 #include "dlggeneral.h"

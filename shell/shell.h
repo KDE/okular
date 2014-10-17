@@ -20,13 +20,13 @@
 #include <kparts/readwritepart.h>
 #include <QMimeType>
 #include <QMimeDatabase>
-#include <kaction.h>
+#include <qaction.h>
 
 #include <QtDBus/QtDBus>
 
 class KRecentFilesAction;
 class KToggleAction;
-class KTabWidget;
+class QTabWidget;
 class KPluginFactory;
 
 class KDocumentViewer;
@@ -144,7 +144,7 @@ private:
   KToggleAction* m_showMenuBarAction;
   bool m_menuBarWasShown, m_toolBarWasShown;
   bool m_unique;
-  KTabWidget* m_tabWidget;
+  QTabWidget* m_tabWidget;
   KToggleAction* m_openInTab;
 
   struct TabState

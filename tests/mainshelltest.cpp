@@ -58,7 +58,7 @@ class MainShellTest : public QObject, public Okular::PartTest
     Q_OBJECT
 
 public:
-    static KTabWidget* tabWidget(Shell *s)
+    static QTabWidget* tabWidget(Shell *s)
     {
         return s->m_tabWidget;
     }

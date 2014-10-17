@@ -37,7 +37,7 @@
     <code>
       QStringList annotationTools;
       // load the default tool list from the 'xml tools definition' file
-      QFile infoFile( KStandardDirs::locate("data", "okular/tools.xml") );
+      QFile infoFile( QStandardPaths::locate(QStandardPaths::GenericDataLocation, "okular/tools.xml") );
       if ( infoFile.exists() &amp;&amp; infoFile.open( QIODevice::ReadOnly ) )
       {
           QDomDocument doc;

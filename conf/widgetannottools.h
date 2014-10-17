@@ -10,7 +10,7 @@
 #ifndef _WIDGETANNOTTOOLS_H_
 #define _WIDGETANNOTTOOLS_H_
 
-#include <kdialog.h>
+#include <QDialog>
 #include <qdom.h>
 #include <qwidget.h>
 
@@ -61,7 +61,7 @@ class WidgetAnnotTools : public QWidget
         void slotMoveDown();
 };
 
-class EditAnnotToolDialog : public KDialog
+class EditAnnotToolDialog : public QDialog
 {
     Q_OBJECT
 

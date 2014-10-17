@@ -37,7 +37,7 @@
 #include <KToggleFullScreenAction>
 #include <KActionCollection>
 #include <KWindowSystem>
-#include <KTabWidget>
+#include <QTabWidget>
 #include <KXMLGUIFactory>
 #include <QDragMoveEvent>
 #include <QTabBar>
@@ -89,7 +89,7 @@ Shell::Shell( const QString &serializedOptions )
   if (firstPart)
   {
     // Setup tab bar
-    m_tabWidget = new KTabWidget( this );
+    m_tabWidget = new QTabWidget( this );
     m_tabWidget->setTabsClosable( true );
     m_tabWidget->setElideMode( Qt::ElideRight );
     m_tabWidget->tabBar()->hide();

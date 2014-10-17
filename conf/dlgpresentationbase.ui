@@ -41,12 +41,9 @@
          </widget>
         </item>
         <item>
-         <widget class="KIntSpinBox" name="kcfg_SlidesAdvanceTime" >
+         <widget class="KPluralHandlingSpinBox" name="kcfg_SlidesAdvanceTime" >
           <property name="enabled" >
            <bool>false</bool>
-          </property>
-          <property name="suffix" >
-           <string> sec.</string>
           </property>
           <property name="value" >
            <number>5</number>
@@ -313,9 +310,9 @@
    <header>kcolorbutton.h</header>
   </customwidget>
   <customwidget>
-   <class>KIntSpinBox</class>
-   <extends>KIntSpinBox</extends>
-   <header>knuminput.h</header>
+   <class>KPluralHandlingSpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>KPluralHandlingSpinBox</header>
   </customwidget>
  </customwidgets>
  <resources/>

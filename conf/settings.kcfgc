@@ -6,5 +6,5 @@ Mutators=true
 Singleton=true
 Visibility=OKULAR_PART_EXPORT
 IncludeFiles=settings_core.h,okular_part_export.h
-SourceIncludeFiles=kstandarddirs.h,qdom.h
+SourceIncludeFiles=qdom.h,QStandardPaths
 MemberVariables=dpointer

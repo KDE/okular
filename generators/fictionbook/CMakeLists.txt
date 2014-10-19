@@ -25,4 +25,4 @@ install(TARGETS okularGenerator_fb DESTINATION ${PLUGIN_INSTALL_DIR})
 install( FILES libokularGenerator_fb.desktop okularFb.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
 install( PROGRAMS okularApplication_fb.desktop active-documentviewer_fb.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
 
-ecm_install_icons(${DATA_INSTALL_DIR}/okular/icons)
+ecm_install_icons(ICONS hi16-apps-okular-fb2.png  hi32-apps-okular-fb2.png  hi48-apps-okular-fb2.png DESTINATION ${DATA_INSTALL_DIR}/okular/icons)

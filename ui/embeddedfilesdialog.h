@@ -10,16 +10,16 @@
 #ifndef _EMBEDDEDFILESDIALOG_H_
 #define _EMBEDDEDFILESDIALOG_H_
 
-#include <kdialog.h>
+#include <QDialog>
 
 class QTreeWidget;
-
+class QPushButton;
 namespace Okular {
 class Document;
 class EmbeddedFile;
 }
 
-class EmbeddedFilesDialog : public KDialog
+class EmbeddedFilesDialog : public QDialog
 {
 Q_OBJECT
 	public:
@@ -34,6 +34,7 @@ Q_OBJECT
 		void saveFile( Okular::EmbeddedFile* );
 
 		QTreeWidget *m_tw;
+                QPushButton *mUser1Button;
 };
 
 #endif

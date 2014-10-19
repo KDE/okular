@@ -22,6 +22,11 @@
 #include <QMimeDatabase>
 #include <kstandardguiitem.h>
 #include <KFormat>
+#include <KConfigGroup>
+#include <QDialogButtonBox>
+#include <QPushButton>
+#include <KGuiItem>
+#include <QVBoxLayout>
 
 #include "core/document.h"
 #include "guiutils.h"
@@ -37,16 +42,24 @@ static QString dateToString( const QDateTime & date )
 		: i18nc( "Unknown date", "Unknown" );
 }
 
-EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const Okular::Document *document) : KDialog(parent)
+EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const Okular::Document *document) : QDialog(parent)
 {
-	setCaption(i18nc("@title:window", "Embedded Files"));
-	setButtons(Close | User1);
-	setDefaultButton(Close);
-	setButtonGuiItem(User1, KStandardGuiItem::save());
-	enableButton(User1, false);
+	setWindowTitle(i18nc("@title:window", "Embedded Files"));
+	QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
+	QVBoxLayout *mainLayout = new QVBoxLayout;
+	setLayout(mainLayout);
+	mUser1Button = new QPushButton;
+	buttonBox->addButton(mUser1Button, QDialogButtonBox::ActionRole);
+	connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+	connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+	buttonBox->button(QDialogButtonBox::Close)->setDefault(true);
+	KGuiItem::assign(mUser1Button, KStandardGuiItem::save());
+	mUser1Button->setEnabled(false);
 
 	m_tw = new QTreeWidget(this);
-	setMainWidget(m_tw);
+	mainLayout->addWidget(m_tw);
+        mainLayout->addWidget(buttonBox);
+
 	QStringList header;
 	header.append(i18nc("@title:column", "Name"));
 	header.append(i18nc("@title:column", "Description"));
@@ -83,7 +96,7 @@ EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const Okular::Document
         m_tw->setMinimumWidth(640);
         m_tw->updateGeometry();
 
-	connect(this, SIGNAL(user1Clicked()), this, SLOT(saveFile()));
+	connect(mUser1Button, SIGNAL(clicked()), this, SLOT(saveFile()));
 	connect(m_tw, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(attachViewContextMenu(QPoint)));
 	connect(m_tw, SIGNAL(itemSelectionChanged()), this, SLOT(updateSaveButton()));
 }
@@ -91,7 +104,7 @@ EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const Okular::Document
 void EmbeddedFilesDialog::updateSaveButton()
 {
 	bool enable = (m_tw->selectedItems().count() > 0);
-	enableButton(User1, enable);
+	mUser1Button->setEnabled(enable);
 }
 
 void EmbeddedFilesDialog::saveFile()

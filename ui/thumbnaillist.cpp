@@ -17,9 +17,9 @@
 #include <qpainter.h>
 #include <qscrollbar.h>
 #include <qsizepolicy.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kurl.h>
-#include <kaction.h>
+#include <qaction.h>
 #include <kdialog.h>
 #include <kiconloader.h>
 #include <kactioncollection.h>

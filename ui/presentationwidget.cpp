@@ -39,7 +39,6 @@
 #include <kiconloader.h>
 #include <kmessagebox.h>
 #include <kselectaction.h>
-#include <kshortcut.h>
 #include <kurl.h>
 #include <kdialog.h>
 

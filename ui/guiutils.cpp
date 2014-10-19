@@ -14,11 +14,9 @@
 #include <qsvgrenderer.h>
 #include <qtextdocument.h>
 #include <kfiledialog.h>
-#include <kglobal.h>
 #include <kiconloader.h>
-#include <klocale.h>
 #include <kmessagebox.h>
-
+#include <KLocalizedString>
 
 // local includes
 #include "core/action.h"
@@ -57,7 +55,7 @@ QSvgRenderer* GuiUtilsHelper::svgStamps()
     return svgStampFile.get();
 }
 
-K_GLOBAL_STATIC( GuiUtilsHelper, s_data )
+Q_GLOBAL_STATIC( GuiUtilsHelper, s_data )
 
 namespace GuiUtils {
 

@@ -19,7 +19,7 @@
 
 #include <QtCore/QDebug>
 #include <QIcon>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <qmenu.h>
 #include <ktreewidgetsearchline.h>
 

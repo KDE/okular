@@ -15,7 +15,7 @@
 #include <QMenu>
 #include <QEvent>
 #include <klineedit.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kstandardaction.h>
 #include <kaction.h>
 #include <kurl.h>

@@ -28,7 +28,7 @@
 
 #include <kglobalsettings.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <qmenu.h>
 #include <kcolorscheme.h>
 #include <kurlmimedata.h>

@@ -16,7 +16,7 @@
 #include <qtoolbutton.h>
 #include <qevent.h>
 #include <QIcon>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <qpushbutton.h>
 
 // local includes

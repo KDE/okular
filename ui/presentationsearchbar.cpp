@@ -18,7 +18,7 @@
 #include <qpushbutton.h>
 
 #include <QIcon>
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "searchlineedit.h"
 

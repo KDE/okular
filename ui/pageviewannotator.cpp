@@ -21,11 +21,11 @@
 #include <qvariant.h>
 #include <QInputDialog>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <kuser.h>
 #include <QtCore/QDebug>
-#include <kmenu.h>
+#include <qmenu.h>
 
 // system includes
 #include <math.h>

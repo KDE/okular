@@ -20,8 +20,8 @@
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QTreeView>
 
-#include <kaction.h>
-#include <klocale.h>
+#include <qaction.h>
+#include <KLocalizedString>
 #include <kiconloader.h>
 #include <QIcon>
 

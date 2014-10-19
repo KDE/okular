@@ -24,7 +24,7 @@
 #include <QIcon>
 #include <kicontheme.h>
 #include <klineedit.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kacceleratormanager.h>
 #include <qtoolbar.h>
 

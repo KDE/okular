@@ -23,7 +23,7 @@
 #include <qwidgetaction.h>
 
 #include <QIcon>
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <phonon/mediaobject.h>
 #include <phonon/seekslider.h>

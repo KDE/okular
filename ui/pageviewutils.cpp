@@ -25,7 +25,7 @@
 #include <kactioncollection.h>
 #include <kcolorscheme.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <KLocalizedString>
 
 // system includes
 #include <math.h>

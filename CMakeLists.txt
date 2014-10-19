@@ -68,7 +68,7 @@ message("TODO: when core compiles add subdirs")
 add_subdirectory( ui )
 add_subdirectory( shell )
 add_subdirectory( generators )
-add_subdirectory( tests )
+add_subdirectory( autotests )
 
 add_subdirectory(doc)
 

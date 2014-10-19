@@ -41,10 +41,10 @@
 #include <KXMLGUIFactory>
 #include <QDragMoveEvent>
 #include <QTabBar>
-#include <KGlobal>
 #include <KConfigGroup>
 #include <KUrlMimeData>
-
+#include <KLocalizedString>
+#include <KSharedConfig>
 #ifdef KActivities_FOUND
 #include <KActivities/ResourceInstance>
 #endif

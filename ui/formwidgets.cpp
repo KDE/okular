@@ -17,7 +17,7 @@
 #include <klineedit.h>
 #include <KLocalizedString>
 #include <kstandardaction.h>
-#include <kaction.h>
+#include <qaction.h>
 #include <kurl.h>
 
 // local includes

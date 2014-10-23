@@ -22,7 +22,6 @@
 #include <QIcon>
 #include <kiconloader.h>
 #include <klocale.h>
-#include <knuminput.h>
 #include <QtCore/QDebug>
 #include <QMimeDatabase>
 

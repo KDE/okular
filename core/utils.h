@@ -10,7 +10,7 @@
 #ifndef _OKULAR_UTILS_H_
 #define _OKULAR_UTILS_H_
 
-#include "okular_export.h"
+#include "okularcore_export.h"
 #include "area.h"
 
 class QRect;
@@ -25,7 +25,7 @@ namespace Okular
  *
  * This class contains some static functions of general utility.
  */
-class OKULAR_EXPORT Utils
+class OKULARCORE_EXPORT Utils
 {
   public:
     /**

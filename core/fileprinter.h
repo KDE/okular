@@ -18,14 +18,14 @@
 #include <QtCore/QString>
 #include <QtPrintSupport/QPrinter>
 
-#include "okular_export.h"
+#include "okularcore_export.h"
 #include "generator.h"
 
 class QSize;
 
 namespace Okular {
 
-class OKULAR_EXPORT FilePrinter
+class OKULARCORE_EXPORT FilePrinter
 {
 public:
 

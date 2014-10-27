@@ -11,7 +11,7 @@
 #define _OKULAR_ACTION_H_
 
 #include "global.h"
-#include "okular_export.h"
+#include "okularcore_export.h"
 
 #include <QtCore/QString>
 #include <QtCore/QVariant>
@@ -40,7 +40,7 @@ class DocumentViewport;
  * widgets to reimplement the 'actionType' method and return the type of
  * the action described by the reimplemented class.
  */
-class OKULAR_EXPORT Action
+class OKULARCORE_EXPORT Action
 {
     public:
         /**
@@ -112,7 +112,7 @@ class OKULAR_EXPORT Action
  * The Goto action changes the viewport to another page
  * or loads an external document.
  */
-class OKULAR_EXPORT GotoAction : public Action
+class OKULARCORE_EXPORT GotoAction : public Action
 {
     public:
         /**
@@ -178,7 +178,7 @@ class OKULAR_EXPORT GotoAction : public Action
 /**
  * The Execute action executes an external application.
  */
-class OKULAR_EXPORT ExecuteAction : public Action
+class OKULARCORE_EXPORT ExecuteAction : public Action
 {
     public:
         /**
@@ -223,7 +223,7 @@ class OKULAR_EXPORT ExecuteAction : public Action
  * The Browse action browses an url by opening a web browser or
  * email client, depedning on the url protocol (e.g. http, mailto, etc.).
  */
-class OKULAR_EXPORT BrowseAction : public Action
+class OKULARCORE_EXPORT BrowseAction : public Action
 {
     public:
         /**
@@ -262,7 +262,7 @@ class OKULAR_EXPORT BrowseAction : public Action
  * The DocumentAction action contains an action that is performed on
  * the current document.
  */
-class OKULAR_EXPORT DocumentAction : public Action
+class OKULARCORE_EXPORT DocumentAction : public Action
 {
     public:
         /**
@@ -320,7 +320,7 @@ class OKULAR_EXPORT DocumentAction : public Action
 /**
  * The Sound action plays a sound on activation.
  */
-class OKULAR_EXPORT SoundAction : public Action
+class OKULARCORE_EXPORT SoundAction : public Action
 {
     public:
         /**
@@ -384,7 +384,7 @@ class OKULAR_EXPORT SoundAction : public Action
  *
  * @since 0.7 (KDE 4.1)
  */
-class OKULAR_EXPORT ScriptAction : public Action
+class OKULARCORE_EXPORT ScriptAction : public Action
 {
     public:
         /**
@@ -429,7 +429,7 @@ class OKULAR_EXPORT ScriptAction : public Action
  *
  * @since 0.15 (KDE 4.9)
  */
-class OKULAR_EXPORT MovieAction : public Action
+class OKULARCORE_EXPORT MovieAction : public Action
 {
     public:
         /**
@@ -488,7 +488,7 @@ class OKULAR_EXPORT MovieAction : public Action
  *
  * @since 0.16 (KDE 4.10)
  */
-class OKULAR_EXPORT RenditionAction : public Action
+class OKULARCORE_EXPORT RenditionAction : public Action
 {
     public:
         /**

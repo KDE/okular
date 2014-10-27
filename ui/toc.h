@@ -14,7 +14,7 @@
 #include "core/observer.h"
 #include <QModelIndex>
 
-#include "okular_part_export.h"
+#include "okularpart_export.h"
 
 class QDomNode;
 class QModelIndex;
@@ -27,7 +27,7 @@ class Document;
 class PartTest;
 }
 
-class OKULAR_PART_EXPORT TOC : public QWidget, public Okular::DocumentObserver
+class OKULARPART_EXPORT TOC : public QWidget, public Okular::DocumentObserver
 {
 Q_OBJECT
     friend class Okular::PartTest;

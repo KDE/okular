@@ -12,7 +12,7 @@
 #define _OKULAR_TEXTDOCUMENTSETTINGS_H_
 
 
-#include "okular_export.h"
+#include "okularcore_export.h"
 
 #include <QFont>
 #include <QWidget>
@@ -79,7 +79,7 @@ class TextDocumentSettingsPrivate;
  *
  * @since 0.17 (KDE 4.11)
  */
-class OKULAR_EXPORT TextDocumentSettingsWidget : public QWidget
+class OKULARCORE_EXPORT TextDocumentSettingsWidget : public QWidget
 {
     public:
         TextDocumentSettingsWidget( QWidget *parent = 0 );
@@ -103,7 +103,7 @@ class OKULAR_EXPORT TextDocumentSettingsWidget : public QWidget
  *
  * @since 0.17 (KDE 4.11)
  */
-class OKULAR_EXPORT TextDocumentSettings : public KConfigSkeleton
+class OKULARCORE_EXPORT TextDocumentSettings : public KConfigSkeleton
 {
     public:
         QFont font() const;

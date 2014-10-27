@@ -12,7 +12,7 @@
 
 #include <kbookmark.h>
 
-#include "okular_export.h"
+#include "okularcore_export.h"
 #include <kurl.h>
 
 class QAction;
@@ -29,7 +29,7 @@ class DocumentViewport;
  * This class is responsible for loading and saving the bookmarks using the
  * proper format, and for working with them (eg querying, adding, removing).
  */
-class OKULAR_EXPORT BookmarkManager : public QObject
+class OKULARCORE_EXPORT BookmarkManager : public QObject
 {
     Q_OBJECT
 

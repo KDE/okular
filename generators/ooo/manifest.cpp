@@ -8,7 +8,6 @@
  ***************************************************************************/
 
 #include "manifest.h"
-#include "debug.h"
 
 #include <QBuffer>
 #include <QXmlStreamReader>
@@ -19,6 +18,7 @@
 
 using namespace OOO;
 
+Q_LOGGING_CATEGORY(OkularOooDebug, "org.kde.okular.generators.ooo")
 //---------------------------------------------------------------------
 
 ManifestEntry::ManifestEntry( const QString &fileName ) :
@@ -149,15 +149,15 @@ Manifest::Manifest( const QString &odfFileName, const QByteArray &manifestData, 
       } else if ( xml.name().toString() == "file-entry" ) {
 	QXmlStreamAttributes attributes = xml.attributes();
 	if (currentEntry != 0) {
-	  kWarning(OooDebug) << "Got new StartElement for new file-entry, but haven't finished the last one yet!";
-	  kWarning(OooDebug) << "processing" << currentEntry->fileName() << ", got" << attributes.value("manifest:full-path").toString();
+	  qCWarning(OkularOooDebug) << "Got new StartElement for new file-entry, but haven't finished the last one yet!";
+	  qCWarning(OkularOooDebug) << "processing" << currentEntry->fileName() << ", got" << attributes.value("manifest:full-path").toString();
 	}
 	currentEntry = new ManifestEntry( attributes.value("manifest:full-path").toString() );
 	currentEntry->setMimeType( attributes.value("manifest:media-type").toString() );
 	currentEntry->setSize( attributes.value("manifest:size").toString() );
       } else if ( xml.name().toString() == "encryption-data" ) {
 	if (currentEntry == 0) {
-	  kWarning(OooDebug) << "Got encryption-data without valid file-entry at line" << xml.lineNumber();
+	  qCWarning(OkularOooDebug) << "Got encryption-data without valid file-entry at line" << xml.lineNumber();
 	  continue;
 	}
 	QXmlStreamAttributes encryptionAttributes = xml.attributes();
@@ -165,7 +165,7 @@ Manifest::Manifest( const QString &odfFileName, const QByteArray &manifestData, 
 	currentEntry->setChecksum( encryptionAttributes.value("manifest:checksum").toString() );
       } else if ( xml.name().toString() == "algorithm" ) {
 	if (currentEntry == 0) {
-	  kWarning(OooDebug) << "Got algorithm without valid file-entry at line" << xml.lineNumber();
+	  qCWarning(OkularOooDebug) << "Got algorithm without valid file-entry at line" << xml.lineNumber();
 	  continue;
 	}
 	QXmlStreamAttributes algorithmAttributes = xml.attributes();
@@ -173,7 +173,7 @@ Manifest::Manifest( const QString &odfFileName, const QByteArray &manifestData, 
 	currentEntry->setInitialisationVector( algorithmAttributes.value("manifest:initialisation-vector").toString() );
       } else if ( xml.name().toString() == "key-derivation" ) {
 	if (currentEntry == 0) {
-	  kWarning(OooDebug) << "Got key-derivation without valid file-entry at line" << xml.lineNumber();
+	  qCWarning(OkularOooDebug) << "Got key-derivation without valid file-entry at line" << xml.lineNumber();
 	  continue;
 	}
 	QXmlStreamAttributes kdfAttributes = xml.attributes();
@@ -182,19 +182,19 @@ Manifest::Manifest( const QString &odfFileName, const QByteArray &manifestData, 
 	currentEntry->setSalt( kdfAttributes.value("manifest:salt").toString() );
       } else {
 	// handle other StartDocument types here 
-	kWarning(OooDebug) << "Unexpected start document type: " << xml.name().toString();
+	qCWarning(OkularOooDebug) << "Unexpected start document type: " << xml.name().toString();
       }
     } else if ( xml.tokenType() == QXmlStreamReader::EndElement ) {
       if ( xml.name().toString() == "manifest" ) {
 	continue;
       } else if ( xml.name().toString() == "file-entry") {
 	if (currentEntry == 0) {
-	  kWarning(OooDebug) << "Got EndElement for file-entry without valid StartElement at line" << xml.lineNumber();
+	  qCWarning(OkularOooDebug) << "Got EndElement for file-entry without valid StartElement at line" << xml.lineNumber();
 	  continue;
 	}
 	// we're finished processing that file entry
 	if ( mEntries.contains( currentEntry->fileName() ) ) {
-	  kWarning(OooDebug) << "Can't insert entry because of duplicate name:" << currentEntry->fileName();
+	  qCWarning(OkularOooDebug) << "Can't insert entry because of duplicate name:" << currentEntry->fileName();
 	  delete currentEntry;
 	} else {
 	  mEntries.insert( currentEntry->fileName(), currentEntry);
@@ -204,7 +204,7 @@ Manifest::Manifest( const QString &odfFileName, const QByteArray &manifestData, 
     }
   }
   if (xml.hasError()) {
-    kWarning(OooDebug) << "error: " << xml.errorString() << xml.lineNumber() << xml.columnNumber();
+    qCWarning(OkularOooDebug) << "error: " << xml.errorString() << xml.lineNumber() << xml.columnNumber();
   }
 }
 
@@ -248,7 +248,7 @@ void Manifest::checkPassword( ManifestEntry *entry, const QByteArray &fileData, 
   } else if ( entry->checksumType() == "SHA1" ) {
     csum = QCA::Hash( "sha1").hash( *decryptedData ).toByteArray();
   } else {
-    kDebug(OooDebug) << "unknown checksum type: " << entry->checksumType();
+    qCDebug(OkularOooDebug) << "unknown checksum type: " << entry->checksumType();
     // we can only assume it will be OK.
     m_haveGoodPassword = true;
     return;
@@ -296,7 +296,7 @@ QByteArray Manifest::decryptFile( const QString &filename, const QByteArray &fil
 
   QIODevice *decompresserDevice = KFilterDev::device( new QBuffer( &decryptedData, 0 ), "application/x-gzip", true );
   if( !decompresserDevice ) {
-    kDebug(OooDebug) << "Couldn't create decompressor";
+    qCDebug(OkularOooDebug) << "Couldn't create decompressor";
     // hopefully it isn't compressed then!
     return QByteArray( fileData );
   }

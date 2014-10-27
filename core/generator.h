@@ -12,7 +12,7 @@
 #ifndef _OKULAR_GENERATOR_H_
 #define _OKULAR_GENERATOR_H_
 
-#include "okular_export.h"
+#include "okularcore_export.h"
 #include "document.h"
 #include "fontinfo.h"
 #include "global.h"
@@ -73,7 +73,7 @@ class SourceReference;
  * Every Generator can support 0 or more export formats which can be
  * queried with @ref Generator::exportFormats().
  */
-class OKULAR_EXPORT ExportFormat
+class OKULARCORE_EXPORT ExportFormat
 {
     public:
         typedef QList<ExportFormat> List;
@@ -183,7 +183,7 @@ class OKULAR_EXPORT ExportFormat
  *
  * @see PrintInterface, ConfigInterface, GuiInterface
  */
-class OKULAR_EXPORT Generator : public QObject
+class OKULARCORE_EXPORT Generator : public QObject
 {
     /// @cond PRIVATE
     friend class PixmapGenerationThread;
@@ -564,7 +564,7 @@ class OKULAR_EXPORT Generator : public QObject
 /**
  * @short Describes a pixmap type request.
  */
-class OKULAR_EXPORT PixmapRequest
+class OKULARCORE_EXPORT PixmapRequest
 {
     friend class Document;
     friend class DocumentPrivate;
@@ -686,7 +686,7 @@ Q_DECLARE_METATYPE(Okular::Generator::PrintError)
 Q_DECLARE_INTERFACE(Okular::Generator, OkularGeneratorInterface_iid)
 
 #ifndef QT_NO_DEBUG_STREAM
-OKULAR_EXPORT QDebug operator<<( QDebug str, const Okular::PixmapRequest &req );
+OKULARCORE_EXPORT QDebug operator<<( QDebug str, const Okular::PixmapRequest &req );
 #endif
 
 #endif

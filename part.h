@@ -30,7 +30,7 @@
 #include "kdocumentviewer.h"
 #include "interfaces/viewerinterface.h"
 
-#include "okular_part_export.h"
+#include "okularpart_export.h"
 
 #include <QtDBus/QtDBus>
 
@@ -94,7 +94,7 @@ enum EmbedMode
  * @author Wilco Greven <greven@kde.org>
  * @version 0.2
  */
-class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::DocumentObserver, public KDocumentViewer, public Okular::ViewerInterface
+class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::DocumentObserver, public KDocumentViewer, public Okular::ViewerInterface
 {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.kde.okular")

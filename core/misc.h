@@ -10,7 +10,7 @@
 #ifndef _OKULAR_MISC_H_
 #define _OKULAR_MISC_H_
 
-#include "okular_export.h"
+#include "okularcore_export.h"
 #include "area.h"
 
 namespace Okular {
@@ -33,7 +33,7 @@ namespace Okular {
   3. Internally it that is related to the start cursor is always at it[0] while it related to end is it[1],
      transition between meanings (itB/itE) is done with dir modifier;
 */
-class OKULAR_EXPORT TextSelection
+class OKULARCORE_EXPORT TextSelection
 {
     public:
         /**

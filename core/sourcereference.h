@@ -10,8 +10,8 @@
 #ifndef OKULAR_SOURCEREFERENCE_H
 #define OKULAR_SOURCEREFERENCE_H
 
-#include "okular_export.h"
-
+#include "okularcore_export.h"
+#include <QObject>
 class QString;
 
 namespace Okular {
@@ -22,7 +22,7 @@ namespace Okular {
  * A source reference is a reference to one of the source(s) of the loaded
  * document.
  */
-class OKULAR_EXPORT SourceReference
+class OKULARCORE_EXPORT SourceReference
 {
     public:
         /**

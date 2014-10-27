@@ -18,7 +18,7 @@
 #include <math.h>
 
 #include "global.h"
-#include "okular_export.h"
+#include "okularcore_export.h"
 
 class QPolygonF;
 class QRect;
@@ -44,7 +44,7 @@ class NormalizedShape;
  *    That allows you to zoom the page by just multiplying the normalized points with the
  *    zoomed page size.
  */
-class OKULAR_EXPORT NormalizedPoint
+class OKULARCORE_EXPORT NormalizedPoint
 {
     public:
         /**
@@ -102,7 +102,7 @@ class OKULAR_EXPORT NormalizedPoint
  * NormalizedRect is a helper class which stores the coordinates
  * of a normalized rect, which is a rectangle of @see NormalizedPoints.
  */
-class OKULAR_EXPORT NormalizedRect
+class OKULARCORE_EXPORT NormalizedRect
 {
     public:
         /**
@@ -319,7 +319,7 @@ class OKULAR_EXPORT NormalizedRect
          */
         double bottom;
 };
-KDE_DUMMY_QHASH_FUNCTION(NormalizedRect)
+//KDE_DUMMY_QHASH_FUNCTION(NormalizedRect)
 
 /**
  * @short NormalizedRect that contains a reference to an object.
@@ -334,7 +334,7 @@ KDE_DUMMY_QHASH_FUNCTION(NormalizedRect)
  *  - Image     : class Image : description of an image (n/a)
  *  - Annotation: class Annotation: description of an annotation
  */
-class OKULAR_EXPORT ObjectRect
+class OKULARCORE_EXPORT ObjectRect
 {
     public:
         /**
@@ -428,7 +428,7 @@ class OKULAR_EXPORT ObjectRect
 /**
  * This class describes the object rectangle for an annotation.
  */
-class OKULAR_EXPORT AnnotationObjectRect : public ObjectRect
+class OKULARCORE_EXPORT AnnotationObjectRect : public ObjectRect
 {
     public:
         /**
@@ -471,7 +471,7 @@ class OKULAR_EXPORT AnnotationObjectRect : public ObjectRect
 /**
  * This class describes the object rectangle for a source reference.
  */
-class OKULAR_EXPORT SourceRefObjectRect : public ObjectRect
+class OKULARCORE_EXPORT SourceRefObjectRect : public ObjectRect
 {
     friend class ObjectRect;
 
@@ -857,7 +857,7 @@ void RegularArea<NormalizedShape, Shape>::transform( const QTransform &matrix )
         givePtr( (*this)[i] )->transform( matrix );
 }
 
-class OKULAR_EXPORT RegularAreaRect : public RegularArea< NormalizedRect, QRect >
+class OKULARCORE_EXPORT RegularAreaRect : public RegularArea< NormalizedRect, QRect >
 {
     public:
         RegularAreaRect();
@@ -901,12 +901,12 @@ class HighlightAreaRect : public RegularAreaRect
 /**
  * Debug operator for normalized @p point.
  */
-OKULAR_EXPORT QDebug operator<<( QDebug str, const Okular::NormalizedPoint &point );
+OKULARCORE_EXPORT QDebug operator<<( QDebug str, const Okular::NormalizedPoint &point );
 
 /**
  * Debug operator for normalized @p rect.
  */
-OKULAR_EXPORT QDebug operator<<( QDebug str, const Okular::NormalizedRect &rect );
+OKULARCORE_EXPORT QDebug operator<<( QDebug str, const Okular::NormalizedRect &rect );
 #endif
 
 #endif

@@ -12,7 +12,7 @@
 #define _OKULAR_MOVIE_H_
 
 #include "global.h"
-#include "okular_export.h"
+#include "okularcore_export.h"
 
 #include <QtCore/QSize>
 
@@ -25,7 +25,7 @@ namespace Okular {
  *
  * @since 0.8 (KDE 4.2)
  */
-class OKULAR_EXPORT Movie
+class OKULARCORE_EXPORT Movie
 {
     public:
         /**

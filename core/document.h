@@ -11,7 +11,7 @@
 #ifndef _OKULAR_DOCUMENT_H_
 #define _OKULAR_DOCUMENT_H_
 
-#include "okular_export.h"
+#include "okularcore_export.h"
 #include "area.h"
 #include "global.h"
 #include "pagesize.h"
@@ -67,7 +67,7 @@ class VisiblePageRect;
  * The DocumentInfo structure can be filled in by generators to display
  * metadata about the currently opened file.
  */
-class OKULAR_EXPORT DocumentInfo
+class OKULARCORE_EXPORT DocumentInfo
 {
     friend class Document;
 
@@ -185,7 +185,7 @@ class OKULAR_EXPORT DocumentInfo
  * For a better understanding of hierarchies @see README.internals.png
  * @see DocumentObserver, Page
  */
-class OKULAR_EXPORT Document : public QObject
+class OKULARCORE_EXPORT Document : public QObject
 {
     Q_OBJECT
 
@@ -1122,7 +1122,7 @@ class OKULAR_EXPORT Document : public QObject
  * data is broadcasted between observers to synchronize their viewports to get
  * the 'I scroll one view and others scroll too' views.
  */
-class OKULAR_EXPORT DocumentViewport
+class OKULARCORE_EXPORT DocumentViewport
 {
     public:
         /**
@@ -1204,7 +1204,7 @@ class OKULAR_EXPORT DocumentViewport
  * - URL: a URL to be open as destination; if set, no other Destination* or
  *      ExternalFileName entry is used
  */
-class OKULAR_EXPORT DocumentSynopsis : public QDomDocument
+class OKULARCORE_EXPORT DocumentSynopsis : public QDomDocument
 {
     public:
         /**
@@ -1228,7 +1228,7 @@ class OKULAR_EXPORT DocumentSynopsis : public QDomDocument
  * about an embedded file, like its name, its description, the date of creation
  * and modification, and the real data of the file.
  */
-class OKULAR_EXPORT EmbeddedFile
+class OKULARCORE_EXPORT EmbeddedFile
 {
     public:
         /**
@@ -1282,7 +1282,7 @@ class OKULAR_EXPORT EmbeddedFile
 /**
  * @short An area of a specified page
  */
-class OKULAR_EXPORT VisiblePageRect
+class OKULARCORE_EXPORT VisiblePageRect
 {
     public:
         /**

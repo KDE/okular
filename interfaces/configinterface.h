@@ -10,7 +10,7 @@
 #ifndef _OKULAR_CONFIGINTERFACE_H_
 #define _OKULAR_CONFIGINTERFACE_H_
 
-#include "../core/okular_export.h"
+#include "okularcore_export.h"
 
 #include <QtCore/QObject>
 
@@ -35,7 +35,7 @@ namespace Okular {
  * @endcode
  * and - of course - implementing its methods.
  */
-class OKULAR_EXPORT ConfigInterface
+class OKULARCORE_EXPORT ConfigInterface
 {
     public:
         /**

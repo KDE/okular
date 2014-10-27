@@ -18,7 +18,7 @@
 #include <QtXml/QDomDocument>
 #include <QtXml/QDomElement>
 
-#include "okular_export.h"
+#include "okularcore_export.h"
 #include "area.h"
 
 namespace Okular {
@@ -49,7 +49,7 @@ class WidgetAnnotationPrivate;
 /**
  * @short Helper class for (recursive) annotation retrieval/storage.
  */
-class OKULAR_EXPORT AnnotationUtils
+class OKULARCORE_EXPORT AnnotationUtils
 {
     public:
         /**
@@ -87,7 +87,7 @@ class OKULAR_EXPORT AnnotationUtils
  * An Annotation is an object (text note, highlight, sound, popup window, ..)
  * contained by a Page in the document.
  */
-class OKULAR_EXPORT Annotation
+class OKULARCORE_EXPORT Annotation
 {
     /// @cond PRIVATE
     friend class AnnotationObjectRect;
@@ -302,7 +302,7 @@ class OKULAR_EXPORT Annotation
          * The Style class contains all information about style of the
          * annotation.
          */
-        class OKULAR_EXPORT Style
+        class OKULARCORE_EXPORT Style
         {
             public:
                 /**
@@ -437,7 +437,7 @@ class OKULAR_EXPORT Annotation
          * The Window class contains all information about the popup window
          * of the annotation that is used to edit the content and properties.
          */
-        class OKULAR_EXPORT Window
+        class OKULARCORE_EXPORT Window
         {
             public:
                 /**
@@ -683,7 +683,7 @@ class OKULAR_EXPORT Annotation
  *
  * @since 0.15 (KDE 4.9)
  */
-class OKULAR_EXPORT AnnotationProxy
+class OKULARCORE_EXPORT AnnotationProxy
 {
     public:
         enum Capability
@@ -728,7 +728,7 @@ class OKULAR_EXPORT AnnotationProxy
         virtual void notifyRemoval( Annotation *annotation, int page ) = 0;
 };
 
-class OKULAR_EXPORT TextAnnotation : public Annotation
+class OKULARCORE_EXPORT TextAnnotation : public Annotation
 {
     public:
         /**
@@ -853,7 +853,7 @@ class OKULAR_EXPORT TextAnnotation : public Annotation
         Q_DISABLE_COPY( TextAnnotation )
 };
 
-class OKULAR_EXPORT LineAnnotation : public Annotation
+class OKULARCORE_EXPORT LineAnnotation : public Annotation
 {
     public:
         /**
@@ -1013,7 +1013,7 @@ class OKULAR_EXPORT LineAnnotation : public Annotation
         Q_DISABLE_COPY( LineAnnotation )
 };
 
-class OKULAR_EXPORT GeomAnnotation : public Annotation
+class OKULARCORE_EXPORT GeomAnnotation : public Annotation
 {
     public:
         // common enums
@@ -1075,7 +1075,7 @@ class OKULAR_EXPORT GeomAnnotation : public Annotation
         Q_DISABLE_COPY( GeomAnnotation )
 };
 
-class OKULAR_EXPORT HighlightAnnotation : public Annotation
+class OKULARCORE_EXPORT HighlightAnnotation : public Annotation
 {
     public:
         /**
@@ -1119,7 +1119,7 @@ class OKULAR_EXPORT HighlightAnnotation : public Annotation
          * The Quad class contains 8 coordinates and style definitions
          * which describe a line part of the whole highlight annotation.
          */
-        class OKULAR_EXPORT Quad
+        class OKULARCORE_EXPORT Quad
         {
             public:
                 /**
@@ -1218,7 +1218,7 @@ class OKULAR_EXPORT HighlightAnnotation : public Annotation
         Q_DISABLE_COPY( HighlightAnnotation )
 };
 
-class OKULAR_EXPORT StampAnnotation : public Annotation
+class OKULARCORE_EXPORT StampAnnotation : public Annotation
 {
     public:
         /**
@@ -1262,7 +1262,7 @@ class OKULAR_EXPORT StampAnnotation : public Annotation
         Q_DISABLE_COPY( StampAnnotation )
 };
 
-class OKULAR_EXPORT InkAnnotation : public Annotation
+class OKULARCORE_EXPORT InkAnnotation : public Annotation
 {
     public:
         /**
@@ -1312,7 +1312,7 @@ class OKULAR_EXPORT InkAnnotation : public Annotation
         Q_DISABLE_COPY( InkAnnotation )
 };
 
-class OKULAR_EXPORT CaretAnnotation : public Annotation
+class OKULARCORE_EXPORT CaretAnnotation : public Annotation
 {
     public:
         /**
@@ -1365,7 +1365,7 @@ class OKULAR_EXPORT CaretAnnotation : public Annotation
         Q_DISABLE_COPY( CaretAnnotation )
 };
 
-class OKULAR_EXPORT FileAttachmentAnnotation : public Annotation
+class OKULARCORE_EXPORT FileAttachmentAnnotation : public Annotation
 {
     public:
         /**
@@ -1425,7 +1425,7 @@ class OKULAR_EXPORT FileAttachmentAnnotation : public Annotation
  *
  * @since 0.7 (KDE 4.1)
  */
-class OKULAR_EXPORT SoundAnnotation : public Annotation
+class OKULARCORE_EXPORT SoundAnnotation : public Annotation
 {
     public:
         /**
@@ -1485,7 +1485,7 @@ class OKULAR_EXPORT SoundAnnotation : public Annotation
  *
  * @since 0.8 (KDE 4.2)
  */
-class OKULAR_EXPORT MovieAnnotation : public Annotation
+class OKULARCORE_EXPORT MovieAnnotation : public Annotation
 {
     public:
         /**
@@ -1531,7 +1531,7 @@ class OKULAR_EXPORT MovieAnnotation : public Annotation
  *
  * @since 0.16 (KDE 4.10)
  */
-class OKULAR_EXPORT ScreenAnnotation : public Annotation
+class OKULARCORE_EXPORT ScreenAnnotation : public Annotation
 {
     public:
         /**
@@ -1600,7 +1600,7 @@ class OKULAR_EXPORT ScreenAnnotation : public Annotation
  *
  * @since 0.16 (KDE 4.10)
  */
-class OKULAR_EXPORT WidgetAnnotation : public Annotation
+class OKULARCORE_EXPORT WidgetAnnotation : public Annotation
 {
     public:
         /**

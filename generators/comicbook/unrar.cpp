@@ -40,11 +40,11 @@ struct UnrarHelper
 
 K_GLOBAL_STATIC( UnrarHelper, helper )
 
-static UnrarFlavour* detectUnrar( const QString &unrarPath )
+static UnrarFlavour* detectUnrar( const QString &unrarPath, const QString &versionCommand )
 {
     UnrarFlavour* kind = 0;
     QProcess proc;
-    proc.start( unrarPath, QStringList() << "--version" );
+    proc.start( unrarPath, QStringList() << versionCommand );
     bool ok = proc.waitForFinished( -1 );
     Q_UNUSED( ok )
     const QStringList lines = QString::fromLocal8Bit( proc.readAllStandardOutput() ).split( '\n', QString::SkipEmptyParts );
@@ -70,7 +70,10 @@ UnrarHelper::UnrarHelper()
         path = QStandardPaths::findExecutable( "rar" );
 
     if ( !path.isEmpty() )
-        kind = detectUnrar( path );
+        kind = detectUnrar( path, "--version" );
+
+    if ( !kind )
+        kind = detectUnrar( path, "-v" );
 
     if ( !kind )
     {

@@ -2873,7 +2873,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
 //                                d->tts()->say( text );
                             }
                             else if ( choice == httpLink )
-                                new KRun( KUrl( url ), this );
+                                new KRun( QUrl( url ), this );
                         }
                     }
                 }

@@ -140,7 +140,6 @@ install( FILES
            core/form.h
            core/generator.h
            core/global.h
-           core/okular_export.h
            core/page.h
            core/pagesize.h
            core/pagetransition.h
@@ -154,6 +153,7 @@ install( FILES
            core/version.h
            core/fileprinter.h
            core/observer.h
+           ${CMAKE_CURRENT_BINARY_DIR}/okularcore_export.h
            ${CMAKE_CURRENT_BINARY_DIR}/settings_core.h
          DESTINATION ${INCLUDE_INSTALL_DIR}/okular/core COMPONENT Devel)
 

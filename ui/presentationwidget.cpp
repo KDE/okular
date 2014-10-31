@@ -1217,9 +1217,14 @@ void PresentationWidget::startAutoChangeTimer()
     double pageDuration = m_frameIndex >= 0 && m_frameIndex < (int)m_frames.count() ? m_frames[ m_frameIndex ]->page->duration() : -1;
     if ( m_advanceSlides || pageDuration >= 0.0 )
     {
-        double secs = pageDuration < 0.0
-                   ? Okular::SettingsCore::slidesAdvanceTime()
-                   : qMin<double>( pageDuration, Okular::SettingsCore::slidesAdvanceTime() );
+        double secs;
+        if ( pageDuration < 0.0 )
+            secs = Okular::SettingsCore::slidesAdvanceTime();
+        else if ( m_advanceSlides )
+            secs = qMin<double>( pageDuration, Okular::SettingsCore::slidesAdvanceTime() );
+        else
+            secs = pageDuration;
+
         m_nextPageTimer->start( (int)( secs * 1000 ) );
     }
 }

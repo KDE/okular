@@ -70,7 +70,9 @@
 #include "pageviewannotator.h"
 #include "priorities.h"
 #include "toolaction.h"
-//#include "tts.h"
+#ifdef HAVE_SPEECH
+#include "tts.h"
+#endif
 #include "videowidget.h"
 #include "core/action.h"
 #include "core/area.h"
@@ -119,7 +121,9 @@ public:
     PageViewPrivate( PageView *qq );
 
     FormWidgetsController* formWidgetsController();
-//    OkularTTS* tts();
+#ifdef HAVE_SPEECH
+    OkularTTS* tts();
+#endif
     QString selectedText() const;
 
     // the document, pageviewItems and the 'visible cache'
@@ -176,7 +180,9 @@ public:
     PageViewMessage * messageWindow;    // in pageviewutils.h
     bool m_formsVisible;
     FormWidgetsController *formsWidgetController;
-//    OkularTTS * m_tts;
+#ifdef HAVE_SPEECH
+    OkularTTS * m_tts;
+#endif
     QTimer * refreshTimer;
     int refreshPage;
 
@@ -227,6 +233,9 @@ public:
 
 PageViewPrivate::PageViewPrivate( PageView *qq )
     : q( qq )
+#ifdef HAVE_SPEECH
+    , m_tts( 0 )
+#endif
 {
 }
 
@@ -244,22 +253,22 @@ FormWidgetsController* PageViewPrivate::formWidgetsController()
     return formsWidgetController;
 }
 
-//OkularTTS* PageViewPrivate::tts()
-//{
-//    if ( !m_tts )
-//    {
-//        m_tts = new OkularTTS( q );
-//        if ( aSpeakStop )
-//        {
-//            QObject::connect( m_tts, SIGNAL(hasSpeechs(bool)),
-//                              aSpeakStop, SLOT(setEnabled(bool)) );
-//            QObject::connect( m_tts, SIGNAL(errorMessage(QString)),
-//                              q, SLOT(errorMessage(QString)) );
-//        }
-//    }
+#ifdef HAVE_SPEECH
+OkularTTS* PageViewPrivate::tts()
+{
+    if ( !m_tts )
+    {
+        m_tts = new OkularTTS( q );
+        if ( aSpeakStop )
+        {
+            QObject::connect( m_tts, SIGNAL(isSpeaking(bool)),
+                              aSpeakStop, SLOT(setEnabled(bool)) );
+        }
+    }
 
-//    return m_tts;
-//}
+    return m_tts;
+}
+#endif
 
 
 /* PageView. What's in this file? -> quick overview.
@@ -305,7 +314,9 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->messageWindow = new PageViewMessage(this);
     d->m_formsVisible = false;
     d->formsWidgetController = 0;
-//    d->m_tts = 0;
+#ifdef HAVE_SPEECH
+    d->m_tts = 0;
+#endif
     d->refreshTimer = 0;
     d->refreshPage = -1;
     d->aRotateClockwise = 0;
@@ -410,8 +421,10 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
 
 PageView::~PageView()
 {
-//    if ( d->m_tts )
-//        d->m_tts->stopAllSpeechs();
+#ifdef HAVE_SPEECH
+    if ( d->m_tts )
+        d->m_tts->stopAllSpeechs();
+#endif
 
     // delete the local storage structure
 
@@ -1074,12 +1087,14 @@ void PageView::updateActionState( bool haspages, bool documentChanged, bool hasf
         }
         d->aToggleAnnotator->setEnabled( allowAnnotations );
     }
+#ifdef HAVE_SPEECH
     if ( d->aSpeakDoc )
     {
-        const bool enablettsactions = haspages ? Okular::Settings::useKTTSD() : false;
+        const bool enablettsactions = haspages ? Okular::Settings::useTTS() : false;
         d->aSpeakDoc->setEnabled( enablettsactions );
         d->aSpeakPage->setEnabled( enablettsactions );
     }
+#endif
     if (d->aMouseMagnifier)
         d->aMouseMagnifier->setEnabled(d->document->supportsTiles());
 }
@@ -2600,7 +2615,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                     textToClipboard->setEnabled( false );
                     textToClipboard->setText( i18n("Copy forbidden by DRM") );
                 }
-                if ( Okular::Settings::useKTTSD() )
+                if ( Okular::Settings::useTTS() )
                     speakText = menu.addAction( QIcon::fromTheme("text-speak"), i18n( "Speak Text" ) );
                 if ( copyAllowed )
                 {
@@ -2665,11 +2680,13 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                     if ( cb->supportsSelection() )
                         cb->setText( selectedText, QClipboard::Selection );
                 }
+#ifdef HAVE_SPEECH
                 else if ( choice == speakText )
                 {
-                    // [2] speech selection using KTTSD
-//                    d->tts()->say( selectedText );
+                    // [2] speech selection using TTS
+                    d->tts()->say( selectedText );
                 }
+#endif
             }
             }
             // clear widget selection and invalidate rect
@@ -2850,10 +2867,10 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                     {
                         QMenu menu( this );
                         QAction *textToClipboard = menu.addAction( QIcon::fromTheme( "edit-copy" ), i18n( "Copy Text" ) );
-                        QAction *speakText = 0;
                         QAction *httpLink = 0;
-//                        if ( Okular::Settings::useKTTSD() )
-//                            speakText = menu.addAction( QIcon::fromTheme( "text-speak" ), i18n( "Speak Text" ) );
+                        QAction *speakText = 0;
+                        if ( Okular::Settings::useTTS() )
+                            speakText = menu.addAction( QIcon::fromTheme( "text-speak" ), i18n( "Speak Text" ) );
                         if ( !d->document->isAllowed( Okular::AllowCopy ) )
                         {
                             textToClipboard->setEnabled( false );
@@ -2875,11 +2892,13 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                         {
                             if ( choice == textToClipboard )
                                 copyTextSelection();
+#ifdef HAVE_SPEECH
                             else if ( choice == speakText )
                             {
                                 const QString text = d->selectedText();
-//                                d->tts()->say( text );
+                                d->tts()->say( text );
                             }
+#endif
                             else if ( choice == httpLink )
                                 new KRun( QUrl( url ), this );
                         }
@@ -4938,40 +4957,42 @@ void PageView::slotRefreshPage()
                                Q_ARG( int, req ) );
 }
 
+#ifdef HAVE_SPEECH
 void PageView::slotSpeakDocument()
 {
-//    QString text;
-//    QVector< PageViewItem * >::const_iterator it = d->items.constBegin(), itEnd = d->items.constEnd();
-//    for ( ; it < itEnd; ++it )
-//    {
-//        Okular::RegularAreaRect * area = textSelectionForItem( *it );
-//        text.append( (*it)->page()->text( area ) );
-//        text.append( '\n' );
-//        delete area;
-//    }
+    QString text;
+    QVector< PageViewItem * >::const_iterator it = d->items.constBegin(), itEnd = d->items.constEnd();
+    for ( ; it < itEnd; ++it )
+    {
+        Okular::RegularAreaRect * area = textSelectionForItem( *it );
+        text.append( (*it)->page()->text( area ) );
+        text.append( '\n' );
+        delete area;
+    }
 
-//    d->tts()->say( text );
+    d->tts()->say( text );
 }
 
 void PageView::slotSpeakCurrentPage()
 {
-//    const int currentPage = d->document->viewport().pageNumber;
+    const int currentPage = d->document->viewport().pageNumber;
 
-//    PageViewItem *item = d->items.at( currentPage );
-//    Okular::RegularAreaRect * area = textSelectionForItem( item );
-//    const QString text = item->page()->text( area );
-//    delete area;
+    PageViewItem *item = d->items.at( currentPage );
+    Okular::RegularAreaRect * area = textSelectionForItem( item );
+    const QString text = item->page()->text( area );
+    delete area;
 
-//    d->tts()->say( text );
+    d->tts()->say( text );
 }
 
 void PageView::slotStopSpeaks()
 {
-//    if ( !d->m_tts )
-//        return;
+    if ( !d->m_tts )
+        return;
 
-//    d->m_tts->stopAllSpeechs();
+    d->m_tts->stopAllSpeechs();
 }
+#endif
 
 void PageView::slotAction( Okular::Action *action )
 {

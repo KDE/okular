@@ -11,6 +11,7 @@
 #define _TTS_H_
 
 #include <qobject.h>
+#include <QTextToSpeech>
 
 class OkularTTS : public QObject
 {
@@ -22,13 +23,11 @@ class OkularTTS : public QObject
         void say( const QString &text );
         void stopAllSpeechs();
 
-    signals:
-        void hasSpeechs( bool has );
-        void errorMessage( const QString &message );
+    public slots:
+        void slotSpeechStateChanged(QTextToSpeech::State state);
 
-    private slots:
-        void slotServiceUnregistered( const QString& );
-        void slotJobStateChanged( const QString &appId, int jobNum, int state );
+    signals:
+        void isSpeaking( bool speaking );
 
     private:
         // private storage

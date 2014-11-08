@@ -19,6 +19,13 @@ include(ECMAddTests)
 
 
 find_package(Qt5 CONFIG REQUIRED COMPONENTS Core DBus Test Widgets PrintSupport Svg Qml Quick)
+find_package(Qt5 OPTIONAL_COMPONENTS TextToSpeech)
+if (NOT Qt5TextToSpeech_FOUND)
+    message(STATUS "Qt5TextToSpeech not found, speech features will be disabled")
+else()
+    add_definitions(-DHAVE_SPEECH)
+endif()
+
 find_package(KF5 REQUIRED COMPONENTS
     Activities
     Archive
@@ -253,9 +260,13 @@ set(okularpart_SRCS
    ui/toc.cpp
    ui/tocmodel.cpp
    ui/toolaction.cpp
-#   ui/tts.cpp
    ui/videowidget.cpp
 )
+
+if (Qt5TextToSpeech_FOUND)
+   set(okularpart_SRCS ${okularpart_SRCS}
+      ui/tts.cpp)
+endif()
 
 ki18n_wrap_ui(okularpart_SRCS
    conf/dlgaccessibilitybase.ui
@@ -268,7 +279,6 @@ ki18n_wrap_ui(okularpart_SRCS
 
 kconfig_add_kcfg_files(okularpart_SRCS conf/settings.kcfgc )
 
-message("KF5: Enable ui/tts.cpp again")
 #qt5_add_dbus_interfaces(okularpart_SRCS ${KDE4_DBUS_INTERFACES_DIR}/org.kde.KSpeech.xml)
 
 add_library(okularpart MODULE ${okularpart_SRCS})
@@ -276,6 +286,9 @@ generate_export_header(okularpart BASE_NAME okularpart)
 
 target_link_libraries(okularpart okularcore Qt5::Svg KF5::Parts ${MATH_LIB} Phonon::phonon4qt5 KF5::Solid)
 
+if (Qt5TextToSpeech_FOUND)
+   target_link_libraries(okularpart Qt5::TextToSpeech)
+endif()
 install(TARGETS okularpart DESTINATION ${PLUGIN_INSTALL_DIR})
 
 

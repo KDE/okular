@@ -95,7 +95,7 @@
      <choice name="Path" />
    </choices>
  </entry>
-  <entry key="UseKTTSD" type="Bool" />
+  <entry key="UseTTS" type="Bool" />
   <entry key="WatchFile" type="Bool" >
    <default>true</default>
   </entry>

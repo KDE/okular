@@ -304,7 +304,7 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
         }
     }
     Okular::Settings::instance( configFileName );
-    
+
     numberOfParts++;
     if (numberOfParts == 1) {
         QDBusConnection::sessionBus().registerObject("/okular", this, QDBusConnection::ExportScriptableSlots);
@@ -506,10 +506,11 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     // keep us informed when the user changes settings
     connect( Okular::Settings::self(), SIGNAL(configChanged()), this, SLOT(slotNewConfig()) );
 
-    // [SPEECH] check for KTTSD presence and usability
-    const KService::Ptr kttsd = KService::serviceByDesktopName("kttsd");
-    Okular::Settings::setUseKTTSD( kttsd );
+#ifdef HAVE_SPEECH
+    // [SPEECH] check for TTS presence and usability
+    Okular::Settings::setUseTTS( true );
     Okular::Settings::self()->save();
+#endif
 
     rebuildBookmarkMenu( false );
 
@@ -1708,7 +1709,7 @@ void Part::slotFileDirty( const QString& path )
 void Part::slotDoFileDirty()
 {
     bool tocReloadPrepared = false;
-    
+
     // do the following the first time the file is reloaded
     if ( m_viewportDirty.pageNumber == -1 )
     {
@@ -1725,7 +1726,7 @@ void Part::slotDoFileDirty()
 
         // store if presentation view was open
         m_wasPresentationOpen = ((PresentationWidget*)m_presentationWidget != 0);
-        
+
         // preserves the toc state after reload
         m_toc->prepareForReload();
         tocReloadPrepared = true;
@@ -1743,13 +1744,13 @@ void Part::slotDoFileDirty()
     {
         m_viewportDirty.pageNumber = -1;
 
-        if ( tocReloadPrepared ) 
+        if ( tocReloadPrepared )
         {
             m_toc->rollbackReload();
         }
         return;
     }
-    
+
     if ( tocReloadPrepared )
         m_toc->finishReload();
 
@@ -1783,7 +1784,7 @@ void Part::slotDoFileDirty()
     }
     else
     {
-        // start watching the file again (since we dropped it on close) 
+        // start watching the file again (since we dropped it on close)
         addFileToWatcher( m_watcher, localFilePath() );
         m_dirtyHandler->start( 750 );
     }
@@ -1796,14 +1797,14 @@ void Part::updateViewActions()
     if ( opened )
     {
         m_gotoPage->setEnabled( m_document->pages() > 1 );
-        
+
         // Check if you are at the beginning or not
         if (m_document->currentPage() != 0)
         {
             m_beginningOfDocument->setEnabled( true );
             m_prevPage->setEnabled( true );
         }
-        else 
+        else
         {
             if (m_pageView->verticalScrollBar()->value() != 0)
             {
@@ -1818,7 +1819,7 @@ void Part::updateViewActions()
             // The document is at the first page, you can go to a page before
             m_prevPage->setEnabled( false );
         }
-        
+
         if (m_document->pages() == m_document->currentPage() + 1 )
         {
             // If you are at the end, disable go to next page
@@ -1828,13 +1829,13 @@ void Part::updateViewActions()
                 // If you are the end of the page of the last document, you can't go to the last page
                 m_endOfDocument->setEnabled( false );
             }
-            else 
+            else
             {
                 // Otherwise you can move to the endif
                 m_endOfDocument->setEnabled( true );
             }
         }
-        else 
+        else
         {
             // If you are not at the end, enable go to next page
             m_nextPage->setEnabled( true );
@@ -2936,7 +2937,7 @@ void Part::rebuildBookmarkMenu( bool unplugActions )
         m_bookmarkActions.append( a );
     }
     plugActionList( "bookmarks_currentdocument", m_bookmarkActions );
-    
+
     if (factory())
     {
         const QList<KXMLGUIClient*> clients(factory()->clients());

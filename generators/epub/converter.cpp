@@ -246,43 +246,41 @@ QTextDocument* Converter::convert( const QString &fileName )
 
         // handle embedded videos
         QDomNodeList videoTags = dom.elementsByTagName("video");
-        if(!videoTags.isEmpty()) {
-          for (int i = 0; i < videoTags.size(); ++i) {
-            QDomNodeList sourceTags = videoTags.at(i).toElement().elementsByTagName("source");
-            if(!sourceTags.isEmpty()) {
-              QString lnk = sourceTags.at(0).toElement().attribute("src");
+        while(!videoTags.isEmpty()) {
+          QDomNodeList sourceTags = videoTags.at(0).toElement().elementsByTagName("source");
+          if(!sourceTags.isEmpty()) {
+            QString lnk = sourceTags.at(0).toElement().attribute("src");
 
-              Okular::Movie *movie = new Okular::Movie(mTextDocument->loadResource(EpubDocument::MovieResource,QUrl(lnk)).toString());
-              movie->setSize(videoSize);
-              movie->setShowControls(true);
+            Okular::Movie *movie = new Okular::Movie(mTextDocument->loadResource(EpubDocument::MovieResource,QUrl(lnk)).toString());
+            movie->setSize(videoSize);
+            movie->setShowControls(true);
 
-              Okular::MovieAnnotation *annot = new Okular::MovieAnnotation;
-              annot->setMovie(movie);
+            Okular::MovieAnnotation *annot = new Okular::MovieAnnotation;
+            annot->setMovie(movie);
 
-              movieAnnots.push_back(annot);
-              QDomDocument tempDoc;
-              tempDoc.setContent(QString("<pre>&lt;video&gt;&lt;/video&gt;</pre>"));
-              videoTags.at(i).parentNode().replaceChild(tempDoc.documentElement(),videoTags.at(i));
-            }
+            movieAnnots.push_back(annot);
+            QDomDocument tempDoc;
+            tempDoc.setContent(QString("<pre>&lt;video&gt;&lt;/video&gt;</pre>"));
+            videoTags.at(0).parentNode().replaceChild(tempDoc.documentElement(),videoTags.at(0));
           }
         }
 
         //handle embedded audio
         QDomNodeList audioTags = dom.elementsByTagName("audio");
-        if(!audioTags.isEmpty()) {
-          for (int i = 0; i < audioTags.size(); ++i) {
-            QString lnk = audioTags.at(i).toElement().attribute("src");
+        while(!audioTags.isEmpty()) {
+          QDomElement element = audioTags.at(0).toElement();
+          bool repeat = element.hasAttribute("loop");
+          QString lnk = element.attribute("src");
 
-            Okular::Sound *sound = new Okular::Sound(mTextDocument->loadResource(
-                    EpubDocument::AudioResource, QUrl(lnk)).toByteArray());
+          Okular::Sound *sound = new Okular::Sound(mTextDocument->loadResource(
+                  EpubDocument::AudioResource, QUrl(lnk)).toByteArray());
 
-            Okular::SoundAction *soundAction = new Okular::SoundAction(1.0,true,true,false,sound);
-            soundActions.push_back(soundAction);
+          Okular::SoundAction *soundAction = new Okular::SoundAction(1.0,true,repeat,false,sound);
+          soundActions.push_back(soundAction);
 
-            QDomDocument tempDoc;
-            tempDoc.setContent(QString("<pre>&lt;audio&gt;&lt;/audio&gt;</pre>"));
-            audioTags.at(i).parentNode().replaceChild(tempDoc.documentElement(),audioTags.at(i));
-          }
+          QDomDocument tempDoc;
+          tempDoc.setContent(QString("<pre>&lt;audio&gt;&lt;/audio&gt;</pre>"));
+          audioTags.at(0).parentNode().replaceChild(tempDoc.documentElement(),audioTags.at(0));
         }
         htmlContent = dom.toString();
       }

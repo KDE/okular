@@ -19,7 +19,8 @@
 
 #include "documentitem.h"
 
-#include <QtDeclarative/qdeclarative.h>
+#include <QtQml>
+#include <QMimeDatabase>
 
 #include <core/document_p.h>
 #include <core/page.h>
@@ -56,7 +57,8 @@ void DocumentItem::setPath(const QString &path)
 {
     //TODO: remote urls
     //TODO: password
-    m_document->openDocument(path, KUrl(path), db.mimeTypeForUrl(KUrl(path)));
+    QMimeDatabase db;
+    m_document->openDocument(path, KUrl(path), db.mimeTypeForUrl(QUrl(path)));
 
     m_tocModel->fill(m_document->documentSynopsis());
     m_tocModel->setCurrentViewport(m_document->viewport());
@@ -132,7 +134,7 @@ QList<int> DocumentItem::bookmarkedPages() const
     QList<int> list;
     QSet<int> pages;
     foreach (const KBookmark &bookmark, m_document->bookmarkManager()->bookmarks()) {
-        Okular::DocumentViewport viewport(bookmark.url().htmlRef());
+        Okular::DocumentViewport viewport(bookmark.url().fragment());
         pages << viewport.pageNumber;
     }
     list = pages.toList();
@@ -144,7 +146,7 @@ QStringList DocumentItem::bookmarks() const
 {
     QStringList list;
     foreach(const KBookmark &bookmark, m_document->bookmarkManager()->bookmarks()) {
-        list << bookmark.url().prettyUrl();
+        list << bookmark.url().toString();
     }
     return list;
 }

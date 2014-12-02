@@ -20,7 +20,7 @@
 #ifndef QPAGEITEM_H
 #define QPAGEITEM_H
 
-#include <QDeclarativeItem>
+#include <QQuickPaintedItem>
 
 #include <core/document.h>
 #include <core/view.h>
@@ -34,14 +34,14 @@ namespace Okular {
     class Page;
 }
 
-class PageItem : public QDeclarativeItem, public Okular::View
+class PageItem : public QQuickPaintedItem, public Okular::View
 {
     Q_OBJECT
 
     /**
      * If this page is in a Flickable, assign it in this property, to make goToBookmark work
      */
-    Q_PROPERTY(QDeclarativeItem *flickable READ flickable WRITE setFlickable NOTIFY flickableChanged)
+    Q_PROPERTY(QQuickItem *flickable READ flickable WRITE setFlickable NOTIFY flickableChanged)
 
     /**
      * The document this page belongs to
@@ -82,11 +82,11 @@ class PageItem : public QDeclarativeItem, public Okular::View
 
 public:
 
-    PageItem(QDeclarativeItem *parent=0);
+    PageItem(QQuickItem *parent=0);
     ~PageItem();
 
-    void setFlickable(QDeclarativeItem *flickable);
-    QDeclarativeItem *flickable() const;
+    void setFlickable(QQuickItem *flickable);
+    QQuickItem *flickable() const;
 
     int implicitWidth() const;
     int implicitHeight() const;
@@ -134,7 +134,7 @@ public:
      */
     Q_INVOKABLE void removeBookmark(const QString &bookmark);
 
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    void paint(QPainter *painter);
 
     void geometryChanged(const QRectF &newGeometry,
                          const QRectF &oldGeometry);
@@ -167,7 +167,7 @@ private:
     bool m_isThumbnail;
     QWeakPointer<DocumentItem> m_documentItem;
     QTimer *m_redrawTimer;
-    QWeakPointer <QDeclarativeItem> m_flickable;
+    QWeakPointer <QQuickItem> m_flickable;
     Okular::DocumentViewport m_viewPort;
 };
 

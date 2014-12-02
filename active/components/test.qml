@@ -17,26 +17,34 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include "okularplugin.h"
+import QtQuick 2.2
+import QtQuick.Controls 1.0
+import org.kde.okular 2.0 as Okular
 
-#include "documentitem.h"
-#include "pageitem.h"
-#include "thumbnailitem.h"
-
-#include <QtQml/QQmlEngine>
-
-#include <KGlobalSettings>
-#include <KLocale>
-
-void OkularPlugin::registerTypes(const char *uri)
-{
-    Q_ASSERT(uri == QLatin1String("org.kde.okular"));
-    //KF5 port: remove this line and define TRANSLATION_DOMAIN in CMakeLists.txt instead
-//KLocale::global()->insertCatalog("org.kde.okular");
-    qmlRegisterType<DocumentItem>(uri, 2, 0, "DocumentItem");
-    qmlRegisterType<PageItem>(uri, 2, 0, "PageItem");
-    qmlRegisterType<ThumbnailItem>(uri, 2, 0, "ThumbnailItem");
+Item {
+    width: 500
+    height: 600
+    Okular.DocumentItem {
+        id: docItem
+        path: "pageitem.cpp"
+    }
+    Okular.PageItem {
+        id: page
+        anchors.fill: parent
+        document: docItem
+    }
+    Row {
+        anchors {
+            bottom: parent.bottom
+            right: parent.right
+        }
+        Button {
+            text: "prev"
+            onClicked: page.pageNumber--
+        }
+        Button {
+            text: "next"
+            onClicked: page.pageNumber++
+        }
+    }
 }
-
-#include "okularplugin.moc"
-

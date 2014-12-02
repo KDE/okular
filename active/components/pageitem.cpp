@@ -35,8 +35,8 @@
 
 #define REDRAW_TIMEOUT 250
 
-PageItem::PageItem(QDeclarativeItem *parent)
-    : QDeclarativeItem(parent),
+PageItem::PageItem(QQuickItem *parent)
+    : QQuickPaintedItem(parent),
       Okular::View( QString::fromLatin1( "PageView" ) ),
       m_page(0),
       m_smooth(false),
@@ -44,7 +44,7 @@ PageItem::PageItem(QDeclarativeItem *parent)
       m_bookmarked(false),
       m_isThumbnail(false)
 {
-    setFlag(QGraphicsItem::ItemHasNoContents, false);
+    setFlag(QQuickItem::ItemHasContents, true);
 
     m_viewPort.rePos.enabled = true;
 
@@ -59,7 +59,7 @@ PageItem::~PageItem()
 {
 }
 
-void PageItem::setFlickable(QDeclarativeItem *flickable)
+void PageItem::setFlickable(QQuickItem *flickable)
 {
     if (m_flickable.data() == flickable) {
         return;
@@ -92,7 +92,7 @@ void PageItem::setFlickable(QDeclarativeItem *flickable)
     emit flickableChanged();
 }
 
-QDeclarativeItem *PageItem::flickable() const
+QQuickItem *PageItem::flickable() const
 {
     return m_flickable.data();
 }
@@ -205,7 +205,7 @@ QStringList PageItem::bookmarks() const
 {
     QStringList list;
     foreach(const KBookmark &bookmark, m_documentItem.data()->document()->bookmarkManager()->bookmarks(m_viewPort.pageNumber)) {
-        list << bookmark.url().prettyUrl();
+        list << bookmark.url().toString();
     }
     return list;
 }
@@ -287,16 +287,15 @@ void PageItem::geometryChanged(const QRectF &newGeometry,
         m_redrawTimer->start();
     }
 
-    QDeclarativeItem::geometryChanged(newGeometry, oldGeometry);
+    QQuickItem::geometryChanged(newGeometry, oldGeometry);
     //Why aren't they automatically emuitted?
     emit widthChanged();
     emit heightChanged();
 }
 
-void PageItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void PageItem::paint(QPainter *painter)
 {
     if (!m_documentItem || !m_page) {
-        QDeclarativeItem::paint(painter, option, widget);
         return;
     }
 
@@ -317,7 +316,7 @@ void PageItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
         m_intentionalDraw = false;
     }
     const int flags = PagePainter::Accessibility | PagePainter::Highlights | PagePainter::Annotations;
-    PagePainter::paintPageOnPainter(painter, m_page, observer, flags, width(), height(), option->exposedRect.toRect());
+    PagePainter::paintPageOnPainter(painter, m_page, observer, flags, width(), height(), QRect(QPoint(0,0), contentsSize()));
 
     if (setAA) {
         painter->restore();

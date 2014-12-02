@@ -19,7 +19,7 @@
 
 #include "thumbnailitem.h"
 
-ThumbnailItem::ThumbnailItem(QDeclarativeItem *parent)
+ThumbnailItem::ThumbnailItem(QQuickItem *parent)
     : PageItem(parent)
 {
     setIsThumbnail(true);

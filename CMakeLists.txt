@@ -20,7 +20,7 @@ include(KDECMakeSettings)
 include(ECMAddTests)
 
 
-find_package(Qt5 CONFIG REQUIRED COMPONENTS Core DBus Test Widgets PrintSupport Svg)
+find_package(Qt5 CONFIG REQUIRED COMPONENTS Core DBus Test Widgets PrintSupport Svg Qml Quick)
 find_package(KF5 REQUIRED COMPONENTS
     Activities
     Archive
@@ -64,7 +64,7 @@ add_definitions(-DTRANSLATION_DOMAIN="okular")
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${PHONON_INCLUDES} core/synctex ${ZLIB_INCLUDE_DIR})
 
 message("TODO: when core compiles add subdirs")
-#add_subdirectory( active )
+add_subdirectory( active )
 add_subdirectory( ui )
 add_subdirectory( shell )
 add_subdirectory( generators )

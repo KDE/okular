@@ -145,7 +145,7 @@ if(LibKScreen_FOUND)
     target_link_libraries(okularcore ${LibKScreen_LIBRARY})
 endif(LibKScreen_FOUND)
 
-set_target_properties(okularcore PROPERTIES VERSION 5.0.0 SOVERSION 5 )
+set_target_properties(okularcore PROPERTIES VERSION 6.0.0 SOVERSION 6 )
 
 install(TARGETS okularcore ${INSTALL_TARGETS_DEFAULT_ARGS} )
 
@@ -235,7 +235,7 @@ install( FILES part.rc part-viewermode.rc DESTINATION ${DATA_INSTALL_DIR}/okular
 
 ########### cmake files #################
 
-macro_write_basic_cmake_version_file(${CMAKE_CURRENT_BINARY_DIR}/OkularConfigVersion.cmake 0 11 80)
+macro_write_basic_cmake_version_file(${CMAKE_CURRENT_BINARY_DIR}/OkularConfigVersion.cmake 0 21 0)
 
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/OkularConfig.cmake
               ${CMAKE_CURRENT_BINARY_DIR}/OkularConfigVersion.cmake

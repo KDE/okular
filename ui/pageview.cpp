@@ -142,6 +142,7 @@ public:
     Okular::Annotation * mouseAnn;
     QPoint mouseAnnPos;
     int mouseAnnPageNum;
+    int mouseMode;
 
     // table selection
     QList<double> tableSelectionCols;
@@ -285,6 +286,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->mouseTextSelecting = false;
     d->mouseOnRect = false;
     d->mouseAnn = 0;
+    d->mouseMode = Okular::Settings::mouseMode();
     d->tableDividersGuessed = false;
     d->viewportMoveActive = false;
     d->lastSourceLocationViewportPageNumber = -1;
@@ -1910,7 +1912,7 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
 
     bool leftButton = (e->buttons() == Qt::LeftButton);
     bool rightButton = (e->buttons() == Qt::RightButton);
-    switch ( Okular::Settings::mouseMode() )
+    switch ( d->mouseMode )
     {
         case Okular::Settings::EnumMouseMode::Browse:
             if ( leftButton )
@@ -2086,10 +2088,10 @@ void PageView::mousePressEvent( QMouseEvent * e )
          rightButton = e->button() == Qt::RightButton;
 
 //   Not sure we should erase the selection when clicking with left.
-     if ( Okular::Settings::mouseMode() != Okular::Settings::EnumMouseMode::TextSelect )
+     if ( d->mouseMode != Okular::Settings::EnumMouseMode::TextSelect )
        textSelectionClear();
 
-    switch ( Okular::Settings::mouseMode() )
+    switch ( d->mouseMode )
     {
         case Okular::Settings::EnumMouseMode::Browse:   // drag start / click / link following
             if ( leftButton )
@@ -2314,7 +2316,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
 
     bool leftButton = e->button() == Qt::LeftButton;
     bool rightButton = e->button() == Qt::RightButton;
-    switch ( Okular::Settings::mouseMode() )
+    switch ( d->mouseMode )
     {
         case Okular::Settings::EnumMouseMode::Browse:{
             // return the cursor to its normal state after dragging
@@ -2998,7 +3000,7 @@ void PageView::mouseDoubleClickEvent( QMouseEvent * e )
             double nX = pageItem->absToPageX(eventPos.x());
             double nY = pageItem->absToPageY(eventPos.y());
 
-            if ( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::TextSelect ) {
+            if ( d->mouseMode == Okular::Settings::EnumMouseMode::TextSelect ) {
                 textSelectionClear();
 
                 Okular::RegularAreaRect *wordRect = pageItem->page()->wordAt( Okular::NormalizedPoint( nX, nY ) );
@@ -3093,7 +3095,7 @@ void PageView::wheelEvent( QWheelEvent *e )
 
 bool PageView::viewportEvent( QEvent * e )
 {
-    if ( e->type() == QEvent::ToolTip && Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::Browse )
+    if ( e->type() == QEvent::ToolTip && d->mouseMode == Okular::Settings::EnumMouseMode::Browse )
     {
         QHelpEvent * he = static_cast< QHelpEvent* >( e );
         const QPoint eventPos = contentAreaPoint( he->pos() );
@@ -3824,15 +3826,15 @@ void PageView::updateCursor( const QPoint &p )
         double nY = pageItem->absToPageY(p.y());
 
         // if over a ObjectRect (of type Link) change cursor to hand
-        if ( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::TextSelect )
+        if ( d->mouseMode == Okular::Settings::EnumMouseMode::TextSelect )
             setCursor( Qt::IBeamCursor );
-        else if ( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::Magnifier )
+        else if ( d->mouseMode == Okular::Settings::EnumMouseMode::Magnifier )
             setCursor( Qt::CrossCursor );
-        else if ( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::RectSelect )
+        else if ( d->mouseMode == Okular::Settings::EnumMouseMode::RectSelect )
             setCursor( Qt::CrossCursor );
         else if ( d->mouseAnn )
             setCursor( Qt::ClosedHandCursor );
-        else if ( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::Browse )
+        else if ( d->mouseMode == Okular::Settings::EnumMouseMode::Browse )
         {
             const Okular::ObjectRect * linkobj = pageItem->page()->objectRect( Okular::ObjectRect::Action, nX, nY, pageItem->uncroppedWidth(), pageItem->uncroppedHeight() );
             const Okular::ObjectRect * annotobj = pageItem->page()->objectRect( Okular::ObjectRect::OAnnotation, nX, nY, pageItem->uncroppedWidth(), pageItem->uncroppedHeight() );
@@ -4638,7 +4640,8 @@ void PageView::slotContinuousToggled( bool on )
 
 void PageView::slotSetMouseNormal()
 {
-    Okular::Settings::setMouseMode( Okular::Settings::EnumMouseMode::Browse );
+    d->mouseMode = Okular::Settings::EnumMouseMode::Browse;
+    Okular::Settings::setMouseMode( d->mouseMode );
     // hide the messageWindow
     d->messageWindow->hide();
     // reshow the annotator toolbar if hiding was forced (and if it is not already visible)
@@ -4651,7 +4654,8 @@ void PageView::slotSetMouseNormal()
 
 void PageView::slotSetMouseZoom()
 {
-    Okular::Settings::setMouseMode( Okular::Settings::EnumMouseMode::Zoom );
+    d->mouseMode = Okular::Settings::EnumMouseMode::Zoom;
+    Okular::Settings::setMouseMode( d->mouseMode );
     // change the text in messageWindow (and show it if hidden)
     d->messageWindow->display( i18n( "Select zooming area. Right-click to zoom out." ), QString(), PageViewMessage::Info, -1 );
     // force hiding of annotator toolbar
@@ -4667,7 +4671,8 @@ void PageView::slotSetMouseZoom()
 
 void PageView::slotSetMouseMagnifier()
 {
-    Okular::Settings::setMouseMode( Okular::Settings::EnumMouseMode::Magnifier );
+    d->mouseMode = Okular::Settings::EnumMouseMode::Magnifier;
+    Okular::Settings::setMouseMode( d->mouseMode );
     d->messageWindow->display( i18n( "Click to see the magnified view." ), QString() );
 
     // force an update of the cursor
@@ -4677,7 +4682,8 @@ void PageView::slotSetMouseMagnifier()
 
 void PageView::slotSetMouseSelect()
 {
-    Okular::Settings::setMouseMode( Okular::Settings::EnumMouseMode::RectSelect );
+    d->mouseMode = Okular::Settings::EnumMouseMode::RectSelect;
+    Okular::Settings::setMouseMode( d->mouseMode );
     // change the text in messageWindow (and show it if hidden)
     d->messageWindow->display( i18n( "Draw a rectangle around the text/graphics to copy." ), QString(), PageViewMessage::Info, -1 );
     // force hiding of annotator toolbar
@@ -4693,7 +4699,8 @@ void PageView::slotSetMouseSelect()
 
 void PageView::slotSetMouseTextSelect()
 {
-    Okular::Settings::setMouseMode( Okular::Settings::EnumMouseMode::TextSelect );
+    d->mouseMode = Okular::Settings::EnumMouseMode::TextSelect;
+    Okular::Settings::setMouseMode( d->mouseMode );
     // change the text in messageWindow (and show it if hidden)
     d->messageWindow->display( i18n( "Select text" ), QString(), PageViewMessage::Info, -1 );
     // force hiding of annotator toolbar
@@ -4709,7 +4716,8 @@ void PageView::slotSetMouseTextSelect()
 
 void PageView::slotSetMouseTableSelect()
 {
-    Okular::Settings::setMouseMode( Okular::Settings::EnumMouseMode::TableSelect );
+    d->mouseMode = Okular::Settings::EnumMouseMode::TableSelect;
+    Okular::Settings::setMouseMode( d->mouseMode );
     // change the text in messageWindow (and show it if hidden)
     d->messageWindow->display( i18n(
         "Draw a rectangle around the table, then click near edges to divide up; press Esc to clear."
@@ -4735,7 +4743,7 @@ void PageView::slotToggleAnnotator( bool on )
 
     // the annotator can be used in normal mouse mode only, so if asked for it,
     // switch to normal mode
-    if ( on && Okular::Settings::mouseMode() != Okular::Settings::EnumMouseMode::Browse )
+    if ( on && d->mouseMode != Okular::Settings::EnumMouseMode::Browse )
         d->aMouseNormal->trigger();
 
     // ask for Author's name if not already set

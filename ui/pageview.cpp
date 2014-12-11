@@ -1893,7 +1893,9 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
         if ( deltaY )
         {
             d->zoomFactor *= ( 1.0 + ( (double)deltaY / 500.0 ) );
+            d->blockPixmapsRequest = true;
             updateZoom( ZoomRefreshCurrent );
+            d->blockPixmapsRequest = false;
             viewport()->repaint();
         }
         return;
@@ -4314,8 +4316,7 @@ static void slotRequestPreloadPixmap( Okular::DocumentObserver * observer, const
 void PageView::slotRequestVisiblePixmaps( int newValue )
 {
     // if requests are blocked (because raised by an unwanted event), exit
-    if ( d->blockPixmapsRequest || d->viewportMoveActive ||
-         ( QApplication::mouseButtons () & Qt::MidButton ) )
+    if ( d->blockPixmapsRequest || d->viewportMoveActive )
         return;
 
     // precalc view limits for intersecting with page coords inside the loop

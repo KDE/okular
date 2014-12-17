@@ -119,7 +119,7 @@ int DocumentItem::pageCount() const
     return m_document->pages();
 }
 
-QList<int> DocumentItem::matchingPages() const
+QVariantList DocumentItem::matchingPages() const
 {
     return m_matchingPages;
 }

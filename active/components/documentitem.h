@@ -76,7 +76,7 @@ class DocumentItem : public QObject
     /**
      * A list of all pages that contain a match for the search terms. If no text has been searched, all pages are returned.
      */
-    Q_PROPERTY(QList<int> matchingPages READ matchingPages NOTIFY matchingPagesChanged)
+    Q_PROPERTY(QVariantList matchingPages READ matchingPages NOTIFY matchingPagesChanged)
 
     /**
      * Table of contents for the document, if available
@@ -114,7 +114,7 @@ public:
 
     bool isSearchInProgress() const;
 
-    QList<int> matchingPages() const;
+    QVariantList matchingPages() const;
 
     TOCModel *tableOfContents() const;
 
@@ -160,7 +160,7 @@ private:
     TOCModel *m_tocModel;
     Observer *m_thumbnailObserver;
     Observer *m_pageviewObserver;
-    QList<int> m_matchingPages;
+    QVariantList m_matchingPages;
     bool m_searchInProgress;
 };
 

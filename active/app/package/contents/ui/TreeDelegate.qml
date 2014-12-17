@@ -17,10 +17,10 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import QtQuick 1.1
-import org.kde.plasma.components 0.1 as PlasmaComponents
-import org.kde.plasma.core 0.1 as PlasmaCore
-import org.kde.qtextracomponents 0.1
+import QtQuick 2.1
+import org.kde.plasma.components 2.0 as PlasmaComponents
+import org.kde.plasma.core 2.0 as PlasmaCore
+import org.kde.qtextracomponents 2.0
 
 Column {
     id: treeDelegate
@@ -66,7 +66,7 @@ Column {
         //there isn't a sane way to do a dotted line in QML1
         Rectangle {
             color: theme.textColor
-            opacity: 0.1
+            opacity: 2.0
             height: 1
             anchors {
                 bottom: parent.bottom

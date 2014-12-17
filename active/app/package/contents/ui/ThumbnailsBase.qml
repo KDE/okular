@@ -17,12 +17,12 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import QtQuick 1.1
-import org.kde.okular 0.1 as Okular
-import org.kde.plasma.components 0.1 as PlasmaComponents
-import org.kde.plasma.core 0.1 as PlasmaCore
-import org.kde.plasma.extras 0.1 as PlasmaExtras
-import org.kde.plasma.mobilecomponents 0.1 as MobileComponents
+import QtQuick 2.1
+import org.kde.okular 2.0 as Okular
+import org.kde.plasma.components 2.0 as PlasmaComponents
+import org.kde.plasma.core 2.0 as PlasmaCore
+import org.kde.plasma.extras 2.0 as PlasmaExtras
+import org.kde.plasma.mobilecomponents 0.2 as MobileComponents
 
 PlasmaComponents.Page {
     id: root
@@ -41,8 +41,8 @@ PlasmaComponents.Page {
             id: resultsGrid
             anchors.fill: parent
 
-            cellWidth: theme.defaultFont.mSize.width * 14
-            cellHeight: theme.defaultFont.mSize.height * 12
+            cellWidth: theme.mSize(theme.defaultFont).width * 14
+            cellHeight: theme.mSize(theme.defaultFont).height * 12
 
             delegate: Item {
                 width: resultsGrid.cellWidth
@@ -66,9 +66,9 @@ PlasmaComponents.Page {
                         y: parent.margins.top
                         document: documentItem
                         pageNumber: modelData
-                        width: theme.defaultFont.mSize.width * 10
+                        width: theme.mSize(theme.defaultFont).width * 10
                         //value repeated to avoid binding loops
-                        height: Math.round(theme.defaultFont.mSize.width * 10 / (implicitWidth/implicitHeight))
+                        height: Math.round(theme.mSize(theme.defaultFont).width * 10 / (implicitWidth/implicitHeight))
                         Rectangle {
                             width: childrenRect.width
                             height: childrenRect.height

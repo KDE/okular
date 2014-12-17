@@ -17,10 +17,10 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import QtQuick 1.1
-import org.kde.okular 0.1 as Okular
-import org.kde.plasma.extras 0.1 as PlasmaExtras
-import org.kde.plasma.components 0.1 as PlasmaComponents
+import QtQuick 2.1
+import org.kde.okular 2.0 as Okular
+import org.kde.plasma.extras 2.0 as PlasmaExtras
+import org.kde.plasma.components 2.0 as PlasmaComponents
 
 Image {
     id: fileBrowserRoot
@@ -31,10 +31,11 @@ Image {
     width: 360
     height: 360
 
+    /*TODO: port ResourceInstance
     PlasmaExtras.ResourceInstance {
         id: resourceInstance
         uri: documentItem.path
-    }
+    }*/
 
     Okular.DocumentItem {
         id: documentItem

@@ -197,7 +197,7 @@ if(LibKScreen_FOUND)
 #    target_link_libraries(okularcore KF5::LibKScreen)
 endif(LibKScreen_FOUND)
 
-set_target_properties(okularcore PROPERTIES VERSION 5.0.0 SOVERSION 5 )
+set_target_properties(okularcore PROPERTIES VERSION 6.0.0 SOVERSION 6 )
 
 install(TARGETS okularcore ${INSTALL_TARGETS_DEFAULT_ARGS} )
 

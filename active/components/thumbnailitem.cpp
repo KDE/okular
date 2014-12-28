@@ -31,4 +31,3 @@ ThumbnailItem::~ThumbnailItem()
 }
 
 
-#include "thumbnailitem.moc"

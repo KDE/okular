@@ -2435,8 +2435,12 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                         QMenu menu( this );
                         QAction * actProcessLink = menu.addAction( i18n( "Follow This Link" ) );
                         QAction * actStopSound = 0;
-                        if ( link->actionType() == Okular::Action::Sound )
-                            actStopSound = menu.addAction( i18n( "Stop Sound" ) );
+                        if ( link->actionType() == Okular::Action::Sound ) {
+                            actProcessLink->setText( i18n( "Play this Sound" ) );
+                            if ( Okular::AudioPlayer::instance()->state() == Okular::AudioPlayer::PlayingState ) {
+                                actStopSound = menu.addAction( i18n( "Stop Sound" ) );
+                            }
+                        }
                         QAction * actCopyLinkLocation = 0;
                         if ( dynamic_cast< const Okular::BrowseAction * >( link ) )
                             actCopyLinkLocation = menu.addAction( QIcon::fromTheme( "edit-copy" ), i18n( "Copy Link Address" ) );

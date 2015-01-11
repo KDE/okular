@@ -4,7 +4,7 @@ add_definitions(${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
 include_directories(
    ${CMAKE_CURRENT_SOURCE_DIR}
    ${CMAKE_BINARY_DIR}
-   ${KDE4_INCLUDES}
+   
    ${QIMAGEBLITZ_INCLUDES}
 )
 
@@ -22,7 +22,7 @@ kconfig_add_kcfg_files (okular_SRCS ${CMAKE_SOURCE_DIR}/conf/settings.kcfgc )
 
 qt4_automoc(${okular_SRCS})
 
-kde4_add_library(okularplugin SHARED ${okular_SRCS})
+add_library(okularplugin SHARED ${okular_SRCS})
 target_link_libraries(okularplugin
         Qt5::Quick
         Qt5::Qml

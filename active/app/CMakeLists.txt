@@ -1,5 +1,5 @@
 
-include_directories( ${KDE4_INCLUDES} ${QT_INCLUDES} )
+include_directories(  ${QT_INCLUDES} )
 
 add_subdirectory(src)
 

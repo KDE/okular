@@ -33,4 +33,4 @@ install(TARGETS okularGenerator_ghostview DESTINATION ${PLUGIN_INSTALL_DIR})
 install( FILES libokularGenerator_ghostview.desktop okularGhostview.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
 install( PROGRAMS okularApplication_ghostview.desktop active-documentviewer_ghostview.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
 
-kde4_install_icons(${DATA_INSTALL_DIR}/okular/icons)
+ecm_install_icons(${DATA_INSTALL_DIR}/okular/icons)

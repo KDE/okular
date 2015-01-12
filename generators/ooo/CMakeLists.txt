@@ -3,18 +3,14 @@ include_directories(
    ${CMAKE_CURRENT_SOURCE_DIR}/../..
 )
 
-find_package(QCA2 "2.0.0")
-set_package_properties("QCA" PROPERTIES
-        DESCRIPTION  "Qt Cryptographic Architecture (QCA)"
-        URL "http://www.digikam.org/sharedlibs"
-        TYPE RECOMMENDED
-        PURPOSE "Support for encrypted OpenDocument Text documents in Okular.")
+find_package(Qca 2.1.0)
+set_package_properties(Qca PROPERTIES DESCRIPTION "Support for encryption"
+                       URL "http://delta.affinix.com/qca"
+                       TYPE RECOMMENDED)
 
-
-if ( QCA2_FOUND )
-   include_directories( ${QCA2_INCLUDE_DIR} )
+if ( Qca_FOUND )
    add_definitions( -DQCA2 )
-endif( QCA2_FOUND )
+endif()
 
 ########### next target ###############
 
@@ -32,9 +28,9 @@ set(okularGenerator_ooo_PART_SRCS
 add_library(okularGenerator_ooo MODULE ${okularGenerator_ooo_PART_SRCS})
 
 target_link_libraries(okularGenerator_ooo okularcore KF5::KIOCore ${MATH_LIB} Qt5::Xml)
-if (QCA2_FOUND)
-  target_link_libraries(okularGenerator_ooo okularcore ${QCA2_LIBRARIES})
-endif (QCA2_FOUND)
+if (Qca_FOUND)
+  target_link_libraries(okularGenerator_ooo okularcore qca)
+endif ()
 
 install(TARGETS okularGenerator_ooo DESTINATION ${PLUGIN_INSTALL_DIR})
 

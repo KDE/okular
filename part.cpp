@@ -1325,18 +1325,20 @@ bool Part::openFile()
     if ( !isstdin && !fileInfo.exists() )
         return false;
     KMimeType::Ptr pathMime = KMimeType::findByPath( fileNameToOpen );
-    if ( !arguments().mimeType().isEmpty() )
+    const QString argMimeType = arguments().mimeType();
+
+    if ( !argMimeType.isEmpty() )
     {
-        KMimeType::Ptr argMime = KMimeType::mimeType( arguments().mimeType() );
+        KMimeType::Ptr argMime = KMimeType::mimeType( argMimeType );
 
         // Select the "childmost" mimetype, if none of them
         // inherits the other trust more what pathMime says
         // but still do a second try if that one fails
-        if ( argMime->is( pathMime->name() ) )
+        if ( argMime && argMime->is( pathMime->name() ) )
         {
             mimes << argMime;
         }
-        else if ( pathMime->is( argMime->name() ) )
+        else if ( !argMime || pathMime->is( argMime->name() ) )
         {
             mimes << pathMime;
         }

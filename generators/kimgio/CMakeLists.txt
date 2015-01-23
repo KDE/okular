@@ -13,8 +13,7 @@ install(TARGETS okularGenerator_kimgio DESTINATION ${PLUGIN_INSTALL_DIR})
 
 add_definitions( -DKDESRCDIR="${CMAKE_CURRENT_SOURCE_DIR}/" )
 set( kimgiotest_SRCS tests/kimgiotest.cpp ${CMAKE_SOURCE_DIR}/ui/pagepainter.cpp ${CMAKE_SOURCE_DIR}/ui/guiutils.cpp )
-kconfig_add_kcfg_files( kimgiotest_SRCS ${CMAKE_SOURCE_DIR}/conf/settings.kcfgc )
-ecm_add_test(${kimgiotest_SRCS} TEST_NAME "kimgiotest" LINK_LIBRARIES okularcore Qt5::Svg Qt5::Test)
+ecm_add_test(${kimgiotest_SRCS} TEST_NAME "kimgiotest" LINK_LIBRARIES okularcore okularpart Qt5::Svg Qt5::Test)
 
 ########### install files ###############
 

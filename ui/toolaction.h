@@ -13,11 +13,11 @@
 #include <qlist.h>
 #include <qpointer.h>
 
-#include <qaction.h>
+#include <KSelectAction>
 
 class QToolButton;
 
-class ToolAction : public QAction
+class ToolAction : public KSelectAction
 {
     Q_OBJECT
 
@@ -28,7 +28,7 @@ class ToolAction : public QAction
         void addAction( QAction *action );
 
     protected:
-        virtual QWidget* createWidget( QWidget *parent );
+        QWidget* createWidget( QWidget *parent ) Q_DECL_OVERRIDE;
 
     private slots:
         void slotNewDefaultAction( QAction *action );

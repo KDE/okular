@@ -16,7 +16,7 @@
 #include <KLocalizedString>
 
 ToolAction::ToolAction( QObject *parent )
-    : QAction( parent )
+    : KSelectAction( parent )
 {
     setText( i18n( "Selection Tools" ) );
 }

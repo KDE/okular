@@ -26,7 +26,7 @@ namespace Okular {
 /**
  * @short Paints a Okular::Page to an open painter using given flags.
  */
-class PagePainter
+class Q_DECL_EXPORT PagePainter
 {
     public:
         // list of flags passed to the painting function. by OR-ing those flags

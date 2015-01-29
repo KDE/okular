@@ -21,9 +21,10 @@
 #include <kfontrequester.h>
 #include <QIcon>
 #include <kiconloader.h>
-#include <klocale.h>
-#include <QtCore/QDebug>
+#include <KLocalizedString>
+#include <QDebug>
 #include <QMimeDatabase>
+#include <KFormat>
 
 #include "core/document.h"
 #include "guiutils.h"
@@ -659,7 +660,7 @@ QWidget * FileAttachmentAnnotationWidget::createExtraWidget()
 
     Okular::EmbeddedFile *ef = m_attachAnn->embeddedFile();
     const int size = ef->size();
-    const QString sizeString = size <= 0 ? i18nc( "Not available size", "N/A" ) : KLocale::global()->formatByteSize( size );
+    const QString sizeString = size <= 0 ? i18nc( "Not available size", "N/A" ) : KFormat::formatByteSize( size );
     const QString descString = ef->description().isEmpty() ? i18n( "No description available." ) : ef->description();
 
     QGridLayout * lay = new QGridLayout( widget );

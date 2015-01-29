@@ -13,7 +13,7 @@
 #include <QXmlStreamReader>
 
 #include <KFilterDev>
-#include <KLocale>
+#include <KLocalizedString>
 #include <KMessageBox>
 
 using namespace OOO;

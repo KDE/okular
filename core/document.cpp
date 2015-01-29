@@ -38,13 +38,14 @@
 #include <QStack>
 #include <QUndoCommand>
 #include <QMimeDatabase>
+#include <QDesktopServices>
 
 #include <k4aboutdata.h>
 #include <kauthorized.h>
 #include <kconfigdialog.h>
 #include <QtCore/QLoggingCategory>
 #include <klibloader.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kmacroexpander.h>
 #include <kmessagebox.h>
 #include <kmimetypetrader.h>
@@ -52,7 +53,6 @@
 #include <krun.h>
 #include <kshell.h>
 
-#include <ktoolinvocation.h>
 #include <kzip.h>
 #include <KIO/Global>
 
@@ -283,7 +283,7 @@ QString DocumentPrivate::localizedSize(const QSizeF &size) const
         case Generator::None:
         break;
     }
-    if (KLocale::global()->measureSystem() == KLocale::Imperial)
+    if (QLocale::system().measurementSystem() == QLocale::ImperialSystem)
     {
         return i18nc("%1 is width, %2 is height, %3 is paper size name", "%1 x %2 in (%3)", inchesWidth, inchesHeight, namePaperSize(inchesWidth, inchesHeight));
     }
@@ -834,9 +834,6 @@ Generator * DocumentPrivate::loadGeneratorLibrary( const KService::Ptr &service 
     KComponentData data = KComponentData::mainComponent();
     GeneratorInfo info( data );
     info.generator = generator;
-    if ( info.data.isValid() && info.data.aboutData() )
-        info.catalogName = info.data.aboutData()->catalogName();
-    qDebug() << "JACK" << service->name();
     m_loadedGenerators.insert( service->name(), info );
     return generator;
 }
@@ -918,11 +915,9 @@ Document::OpenResult DocumentPrivate::openDocumentInternal( const KService::Ptr&
 {
     QString propName = offer->name();
     QHash< QString, GeneratorInfo >::const_iterator genIt = m_loadedGenerators.constFind( propName );
-    QString catalogName;
     if ( genIt != m_loadedGenerators.constEnd() )
     {
         m_generator = genIt.value().generator;
-        catalogName = genIt.value().catalogName;
     }
     else
     {
@@ -931,13 +926,8 @@ Document::OpenResult DocumentPrivate::openDocumentInternal( const KService::Ptr&
             return Document::OpenError;
         genIt = m_loadedGenerators.constFind( propName );
         Q_ASSERT( genIt != m_loadedGenerators.constEnd() );
-        catalogName = genIt.value().catalogName;
     }
     Q_ASSERT_X( m_generator, "Document::load()", "null generator?!" );
-
-    if ( !catalogName.isEmpty() )
-        //KF5 port: remove this line and define TRANSLATION_DOMAIN in CMakeLists.txt instead
-//KLocale::global()->insertCatalog( catalogName );
 
     m_generator->d_func()->m_document = this;
 
@@ -984,10 +974,6 @@ Document::OpenResult DocumentPrivate::openDocumentInternal( const KService::Ptr&
     QApplication::restoreOverrideCursor();
     if ( openResult != Document::OpenSuccess || m_pagesVector.size() <= 0 )
     {
-#pragma message("KF5: FIXME load translations")
-//        if ( !catalogName.isEmpty() )
-//            KLocale::global()->removeCatalog( catalogName );
-
         m_generator->d_func()->m_document = 0;
         QObject::disconnect( m_generator, 0, m_parent, 0 );
         m_generator = 0;
@@ -2572,9 +2558,6 @@ void Document::closeDocument()
 
         QHash< QString, GeneratorInfo >::const_iterator genIt = d->m_loadedGenerators.constFind( d->m_generatorName );
         Q_ASSERT( genIt != d->m_loadedGenerators.constEnd() );
-#pragma message("KF5: FIXME load translations")
-//        if ( !genIt.value().catalogName.isEmpty() && !genIt.value().config )
-//            KLocale::global()->removeCatalog( genIt.value().catalogName );
     }
     d->m_generator = 0;
     d->m_generatorName = QString();
@@ -3900,7 +3883,7 @@ void Document::processAction( const Action * action )
             {
                 QList<QUrl> lst;
                 lst.append( QUrl::fromLocalFile(fileName) );
-                KRun::run( *ptr, lst, 0 );
+                KRun::runService( *ptr, lst, 0 );
             }
             else
                 KMessageBox::information( d->m_widget, i18n( "No application found for opening file of mimetype %1.", mime.name() ) );
@@ -3957,7 +3940,7 @@ void Document::processAction( const Action * action )
             int lilyRow = 0, lilyCol = 0;
             // if the url is a mailto one, invoke mailer
             if ( browse->url().scheme().compare("mailto") )
-                KToolInvocation::invokeMailer( browse->url() );
+                QDesktopServices::openUrl( browse->url() );
             else if ( extractLilyPondSourceReference( browse->url(), &lilySource, &lilyRow, &lilyCol ) )
             {
                 const SourceReference ref( lilySource, lilyRow, lilyCol );
@@ -4209,10 +4192,6 @@ void Document::fillConfigDialog( KConfigDialog * dialog )
         {
             iface->addPages( dialog );
             pagesAdded = true;
-            if ( !it.value().catalogName.isEmpty() ) {
-                //KF5 port: remove this line and define TRANSLATION_DOMAIN in CMakeLists.txt instead
-                //KLocale::global()->insertCatalog( it.value().catalogName );
-            }
         }
     }
     if ( pagesAdded )
@@ -4478,7 +4457,7 @@ bool Document::saveDocumentArchive( const QString &fileName )
 
     const KUser user;
 #ifndef Q_OS_WIN
-    const KUserGroup userGroup( user.gid() );
+    const KUserGroup userGroup( user.groupId() );
 #else
     const KUserGroup userGroup( QString( "" ) );
 #endif

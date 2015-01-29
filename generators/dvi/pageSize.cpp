@@ -209,7 +209,7 @@ QString pageSize::preferredUnit() const
     return staticList[currentSize].preferredUnit;
 
   // User-defined size. Give a preferred unit depening on the locale.
-  if (KLocale::global()-> measureSystem() == KLocale::Metric)
+  if (QLocale::system().measurementSystem() == QLocale::MetricSystem)
     return "mm";
   else
     return "in";
@@ -314,7 +314,7 @@ QString pageSize::description() const
 
   QString size = " ";
   if (formatNumber() == -1) {
-    if (KLocale::global()-> measureSystem() == KLocale::Metric)
+    if (QLocale::system().measurementSystem() == QLocale::MetricSystem)
       size += QString("%1x%2 mm").arg(width().getLength_in_mm(), 0, 'f', 0).arg(height().getLength_in_mm(), 0, 'f', 0);
     else
       size += QString("%1x%2 in").arg(width().getLength_in_inch(), 0, 'g', 2).arg(height().getLength_in_inch(), 0, 'g', 2);
@@ -354,7 +354,7 @@ int pageSize::defaultPageSize()
   // FIXME: static_cast<QPrinter::PageSize>(KLocale::global()->pageSize())
   //        is the proper solution here.  Then you can determine the values
   //        without using your hardcoded table too!
-  if (KLocale::global()-> measureSystem() == KLocale::Metric)
+  if (QLocale::system().measurementSystem() == QLocale::MetricSystem)
     return defaultMetricPaperSize;
   else
     return defaultImperialPaperSize;

@@ -2020,10 +2020,10 @@ Okular::DocumentInfo XpsFile::generateDocumentInfo() const
                     docInfo.set( Okular::DocumentInfo::Category, xml.readElementText() );
                 } else if (xml.name() == "created") {
                     QDateTime createdDate = QDateTime::fromString( xml.readElementText(), "yyyy-MM-ddThh:mm:ssZ" );
-                    docInfo.set( Okular::DocumentInfo::CreationDate, KLocale::global()->formatDateTime( createdDate, KLocale::LongDate, true ) );
+                    docInfo.set( Okular::DocumentInfo::CreationDate, QLocale().toString( createdDate, QLocale::LongFormat ) );
                 } else if (xml.name() == "modified") {
                     QDateTime modifiedDate = QDateTime::fromString( xml.readElementText(), "yyyy-MM-ddThh:mm:ssZ" );
-                    docInfo.set( Okular::DocumentInfo::ModificationDate, KLocale::global()->formatDateTime( modifiedDate, KLocale::LongDate, true ) );
+                    docInfo.set( Okular::DocumentInfo::ModificationDate, QLocale().toString( modifiedDate, QLocale::LongFormat ) );
                 } else if (xml.name() == "keywords") {
                     docInfo.set( Okular::DocumentInfo::Keywords, xml.readElementText() );
                 } else if (xml.name() == "revision") {

@@ -17,7 +17,7 @@
 
 #include <kglobal.h>
 #include <QIcon>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <QMimeType>
 #include <QMimeDatabase>
 #include <kstandardguiitem.h>
@@ -25,7 +25,6 @@
 #include <KConfigGroup>
 #include <QDialogButtonBox>
 #include <QPushButton>
-#include <KGuiItem>
 #include <QVBoxLayout>
 
 #include "core/document.h"
@@ -38,7 +37,7 @@ static const int EmbeddedFileRole = Qt::UserRole + 100;
 static QString dateToString( const QDateTime & date )
 {
 	return date.isValid()
-		? KLocale::global()->formatDateTime( date, KLocale::LongDate, true )
+        ? QLocale().toString( date, QLocale::LongFormat )
 		: i18nc( "Unknown date", "Unknown" );
 }
 

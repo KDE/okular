@@ -18,7 +18,7 @@
 #include <qtextedit.h>
 #include <QIcon>
 #include <klineedit.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kglobal.h>
 
 // local includes
@@ -71,12 +71,12 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     gridlayout->addWidget( AuthorEdit, 0, 1 );
 
     tmplabel = new QLabel( page );
-    tmplabel->setText( i18n( "Created: %1", KLocale::global()->formatDateTime( ann->creationDate(), KLocale::LongDate, true ) ) );
+    tmplabel->setText( i18n( "Created: %1", QLocale().toString( ann->creationDate(), QLocale::LongFormat ) ) );
     tmplabel->setTextInteractionFlags( Qt::TextSelectableByMouse );
     gridlayout->addWidget( tmplabel, 1, 0, 1, 2 );
 
     m_modifyDateLabel = new QLabel( page );
-    m_modifyDateLabel->setText( i18n( "Modified: %1", KLocale::global()->formatDateTime( ann->modificationDate(), KLocale::LongDate, true ) ) );
+    m_modifyDateLabel->setText( i18n( "Modified: %1", QLocale().toString( ann->modificationDate(), QLocale::LongFormat ) ) );
     m_modifyDateLabel->setTextInteractionFlags( Qt::TextSelectableByMouse );
     gridlayout->addWidget( m_modifyDateLabel, 2, 0, 1, 2 );
 
@@ -176,7 +176,7 @@ void AnnotsPropertiesDialog::slotapply()
 
     m_document->modifyPageAnnotationProperties( m_page, m_annot );
 
-    m_modifyDateLabel->setText( i18n( "Modified: %1", KLocale::global()->formatDateTime( m_annot->modificationDate(), KLocale::LongDate, true ) ) );
+    m_modifyDateLabel->setText( i18n( "Modified: %1", QLocale().toString( m_annot->modificationDate(), QLocale::LongFormat ) ) );
 
     modified = false;
     button( QDialogButtonBox::Apply )->setEnabled( false );

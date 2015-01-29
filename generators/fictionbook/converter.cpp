@@ -189,7 +189,7 @@ QTextDocument* Converter::convert( const QString &fileName )
 
         if ( mDocumentInfo->mDate.isValid() )
             emit addMetaData( Okular::DocumentInfo::CreationDate,
-                      KLocale::global()->formatDate( mDocumentInfo->mDate, KLocale::ShortDate ) );
+                              QLocale().toString( mDocumentInfo->mDate, QLocale::ShortFormat ) );
     }
 
     QMapIterator<QString, QPair<int, int> > it( mLocalLinks );

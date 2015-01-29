@@ -24,7 +24,6 @@
 #include <KAboutData>
 #include <KCmdLineArgs>
 #include <KDebug>
-#include <KDE/KLocale>
 #include <KConfigGroup>
 
 #include "kdeclarativemainwindow.h"

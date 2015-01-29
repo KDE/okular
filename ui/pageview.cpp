@@ -40,7 +40,7 @@
 #include <kactionmenu.h>
 #include <kstandardaction.h>
 #include <kactioncollection.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kfiledialog.h>
 #include <kglobal.h>
 #include <kselectaction.h>
@@ -3668,7 +3668,7 @@ void PageView::updateZoom( ZoomMode newZoomMode )
             // kdelibs4 sometimes adds accelerators to actions' text directly :(
             z.remove ('&');
             z.remove ('%');
-            newFactor = KLocale::global()->readNumber( z ) / 100.0;
+            newFactor = QLocale().toDouble( z ) / 100.0;
             }break;
         case ZoomIn:
         case ZoomOut:{
@@ -3790,10 +3790,10 @@ void PageView::updateZoomText()
         if ( !inserted )
             selIdx++;
         // we do not need to display 2-digit precision
-        QString localValue( KLocale::global()->formatNumber( value * 100.0, 1 ) );
-        localValue.remove( KLocale::global()->decimalSymbol() + single_oh );
+        QString localValue( QLocale().toString( value * 100.0, 'g', 1 ) );
+        localValue.remove( QLocale().decimalPoint() + single_oh );
         // remove a trailing zero in numbers like 66.70
-        if ( localValue.right( 1 ) == QLatin1String( "0" ) && localValue.indexOf( KLocale::global()->decimalSymbol() ) > -1 )
+        if ( localValue.right( 1 ) == QLatin1String( "0" ) && localValue.indexOf( QLocale().decimalPoint() ) > -1 )
             localValue.chop( 1 );
         translated << QString( "%1%" ).arg( localValue );
     }

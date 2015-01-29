@@ -58,7 +58,6 @@ struct GeneratorInfo
 
     Okular::Generator * generator;
     KComponentData data;
-    QString catalogName;
     Okular::ConfigInterface * config;
     Okular::SaveInterface * save;
     bool configChecked : 1;

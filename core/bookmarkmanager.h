@@ -13,7 +13,7 @@
 #include <kbookmark.h>
 
 #include "okularcore_export.h"
-#include <kurl.h>
+#include <QUrl>
 
 class QAction;
 
@@ -44,7 +44,7 @@ class OKULARCORE_EXPORT BookmarkManager : public QObject
         /**
          * Returns the list of bookmarks for the specified @p url.
          */
-        KBookmark::List bookmarks( const KUrl& url ) const;
+        KBookmark::List bookmarks( const QUrl& url ) const;
 
         /**
          * Returns the list of bookmarks for document
@@ -92,7 +92,7 @@ class OKULARCORE_EXPORT BookmarkManager : public QObject
          *
          * If no @p title is specified, then \em #n will be used.
          */
-        bool addBookmark( const KUrl& referurl, const Okular::DocumentViewport& vp, const QString& title = QString() );
+        bool addBookmark( const QUrl& referurl, const Okular::DocumentViewport& vp, const QString& title = QString() );
 
         /**
          * Remove a bookmark for the given @p page.
@@ -108,7 +108,7 @@ class OKULARCORE_EXPORT BookmarkManager : public QObject
         /**
          * Removes the bookmark @p bm for the @p referurl specified.
          */
-        int removeBookmark( const KUrl& referurl, const KBookmark& bm );
+        int removeBookmark( const QUrl& referurl, const KBookmark& bm );
 
         /**
          * Removes the bookmarks in @p list for the @p referurl specified.
@@ -117,7 +117,7 @@ class OKULARCORE_EXPORT BookmarkManager : public QObject
          *
          * @since 0.11 (KDE 4.5)
          */
-        void removeBookmarks( const KUrl& referurl, const KBookmark::List& list );
+        void removeBookmarks( const QUrl& referurl, const KBookmark::List& list );
 
         /**
          * Returns the bookmark given bookmark of the document
@@ -130,13 +130,13 @@ class OKULARCORE_EXPORT BookmarkManager : public QObject
          * the @p newName specified.
          * @since 0.15 (KDE 4.9)
          */
-        void renameBookmark( const KUrl& referurl, const QString& newName );
+        void renameBookmark( const QUrl& referurl, const QString& newName );
 
         /**
          * Returns title for the @p referurl
          * @since 0.15 (KDE 4.9)
          */
-        QString titleForUrl( const KUrl& referurl ) const;
+        QString titleForUrl( const QUrl& referurl ) const;
 
         /**
          * Returns whether the given @p page is bookmarked.
@@ -167,13 +167,13 @@ class OKULARCORE_EXPORT BookmarkManager : public QObject
          * @note the actions will have no parents, so you have to delete them
          * yourself
          */
-        QList< QAction* > actionsForUrl( const KUrl& url ) const;
+        QList< QAction* > actionsForUrl( const QUrl& url ) const;
 
     Q_SIGNALS:
         /**
          * The bookmark manager is requesting to open the specified @p url.
          */
-        void openUrl( const KUrl& url );
+        void openUrl( const QUrl& url );
 
         /**
          * This signal is emitted whenever bookmarks have been saved.
@@ -185,7 +185,7 @@ class OKULARCORE_EXPORT BookmarkManager : public QObject
          *
          * @since 0.7 (KDE 4.1)
          */
-        void bookmarksChanged( const KUrl& url );
+        void bookmarksChanged( const QUrl& url );
 
     private:
         class Private;
@@ -198,7 +198,7 @@ class OKULARCORE_EXPORT BookmarkManager : public QObject
 
         BookmarkManager( DocumentPrivate * document );
 
-        void setUrl( const KUrl& url );
+        void setUrl( const QUrl& url );
         bool setPageBookmark( int page );
         bool removePageBookmark( int page );
 

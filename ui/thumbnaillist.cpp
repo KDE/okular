@@ -18,7 +18,6 @@
 #include <qscrollbar.h>
 #include <qsizepolicy.h>
 #include <KLocalizedString>
-#include <kurl.h>
 #include <qaction.h>
 #include <kdialog.h>
 #include <kiconloader.h>

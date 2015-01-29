@@ -39,7 +39,7 @@ void DocumentTest::testCloseDuringRotationJob()
     Okular::DocumentObserver *dummyDocumentObserver = new Okular::DocumentObserver();
     m_document->addObserver( dummyDocumentObserver );
 
-    m_document->openDocument( testFile, KUrl(), mime );
+    m_document->openDocument( testFile, QUrl(), mime );
     m_document->setRotation( 1 );
 
     // Tell ThreadWeaver not to start any new job

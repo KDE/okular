@@ -24,7 +24,7 @@
 
 #include <kcomponentdata.h>
 #include <QMimeType>
-#include <kurl.h>
+#include <QUrl>
 
 class QPrintDialog;
 class KBookmark;
@@ -215,7 +215,7 @@ class OKULARCORE_EXPORT Document : public QObject
          * Opens the document.
          * @since 0.20 (KDE 4.14)
          */
-        OpenResult openDocument( const QString & docFile, const KUrl & url, const QMimeType &mime, const QString &password = QString() );
+        OpenResult openDocument( const QString & docFile, const QUrl & url, const QMimeType &mime, const QString &password = QString() );
 
         /**
          * Closes the document.
@@ -321,7 +321,7 @@ class OKULARCORE_EXPORT Document : public QObject
         /**
          * Returns the url of the currently opened document.
          */
-        KUrl currentDocument() const;
+        QUrl currentDocument() const;
 
         /**
          * Returns whether the given @p action is allowed in the document.
@@ -798,7 +798,7 @@ class OKULARCORE_EXPORT Document : public QObject
          *
          * @since 0.20 (KDE 4.14)
          */
-        OpenResult openDocumentArchive( const QString & docFile, const KUrl & url, const QString &password = QString() );
+        OpenResult openDocumentArchive( const QString & docFile, const QUrl & url, const QString &password = QString() );
 
         /**
          * Saves a document archive.
@@ -959,7 +959,7 @@ class OKULARCORE_EXPORT Document : public QObject
          * This signal is emitted whenever an action requests an
          * open url operation for the given document @p url.
          */
-        void openUrl( const KUrl &url );
+        void openUrl( const QUrl &url );
 
         /**
          * This signal is emitted whenever an error occurred.

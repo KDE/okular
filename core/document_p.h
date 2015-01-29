@@ -21,10 +21,10 @@
 #include <QtCore/QMap>
 #include <QtCore/QMutex>
 #include <QtCore/QPointer>
+#include <QUrl>
 
 #include <kcomponentdata.h>
 #include <kservicetypetrader.h>
-#include <kurl.h>
 
 // local includes
 #include "fontinfo.h"
@@ -139,7 +139,7 @@ class DocumentPrivate
         bool canModifyExternalAnnotations() const;
         bool canRemoveExternalAnnotations() const;
         void warnLimitedAnnotSupport();
-        OKULARCORE_EXPORT static QString docDataFileName(const KUrl &url, qint64 document_size);
+        OKULARCORE_EXPORT static QString docDataFileName(const QUrl &url, qint64 document_size);
 
         // Methods that implement functionality needed by undo commands
         void performAddPageAnnotation( int page, Annotation *annotation );
@@ -199,7 +199,7 @@ class DocumentPrivate
 
         // needed because for remote documents docFileName is a local file and
         // we want the remote url when the document refers to relativeNames
-        KUrl m_url;
+        QUrl m_url;
 
         // cached stuff
         QString m_docFileName;

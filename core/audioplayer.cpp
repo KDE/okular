@@ -129,15 +129,15 @@ bool AudioPlayerPrivate::play( const SoundInfo& si )
             {
                 int newid = newId();
                 m_mapper.setMapping( data->m_mediaobject, newid );
-                KUrl newurl;
-                if ( KUrl::isRelativeUrl( url ) )
+                QUrl newurl;
+                if ( QUrl::fromUserInput(url).isRelative() )
                 {
-                    newurl = m_currentDocument;
-                    newurl.setFileName( url );
+                    newurl = m_currentDocument.adjusted(QUrl::RemoveFilename);
+                    newurl.setPath(newurl.path() + url );
                 }
                 else
                 {
-                    newurl = url;
+                    newurl = QUrl::fromLocalFile(url);
                 }
                 data->m_mediaobject->setCurrentSource( newurl );
                 m_playing.insert( newid, data );

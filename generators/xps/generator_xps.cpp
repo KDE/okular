@@ -27,7 +27,7 @@
 #include <KAboutData>
 #include <kglobal.h>
 #include <KLocalizedString>
-#include <kurl.h>
+#include <QUrl>
 #include <QBuffer>
 #include <QImageReader>
 #include <QMutex>
@@ -488,13 +488,11 @@ static QString entryPath( const KZipFileEntry* entry )
 static QString absolutePath( const QString &path, const QString &location )
 {
     QString retPath;
-    if ( location.at( 0 ) == QLatin1Char( '/' ) ) {
+    if ( location.startsWith(QLatin1Char( '/' ) )) {
         // already absolute
         retPath = location;
     } else {
-        KUrl url = QUrl::fromLocalFile( path );
-        url.setFileName( location );
-        retPath = url.toLocalFile();
+        retPath = QUrl::fromLocalFile(path + '/' + location).toDisplayString(QUrl::PreferLocalFile);
     }
     // it seems paths & file names can also be percent-encoded
     // (XPS won't ever finish surprising me)

@@ -341,8 +341,8 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     connect( m_document, SIGNAL(linkGoToPage()), this, SLOT(slotGoToPage()) );
     connect( m_document, SIGNAL(linkPresentation()), this, SLOT(slotShowPresentation()) );
     connect( m_document, SIGNAL(linkEndPresentation()), this, SLOT(slotHidePresentation()) );
-    connect( m_document, SIGNAL(openUrl(KUrl)), this, SLOT(openUrlFromDocument(KUrl)) );
-    connect( m_document->bookmarkManager(), SIGNAL(openUrl(KUrl)), this, SLOT(openUrlFromBookmarks(KUrl)) );
+    connect( m_document, SIGNAL(openUrl(QUrl)), this, SLOT(openUrlFromDocument(QUrl)) );
+    connect( m_document->bookmarkManager(), SIGNAL(openUrl(QUrl)), this, SLOT(openUrlFromBookmarks(QUrl)) );
     connect( m_document, SIGNAL(close()), this, SLOT(close()) );
 
     if ( parent && parent->metaObject()->indexOfSlot( QMetaObject::normalizedSignature( "slotQuit()" ).constData() ) != -1 )
@@ -869,7 +869,7 @@ Part::~Part()
 }
 
 
-bool Part::openDocument(const KUrl& url, uint page)
+bool Part::openDocument(const QUrl& url, uint page)
 {
     Okular::DocumentViewport vp( page - 1 );
     vp.rePos.enabled = true;
@@ -894,7 +894,7 @@ QStringList Part::supportedMimeTypes() const
 }
 
 
-KUrl Part::realUrl() const
+QUrl Part::realUrl() const
 {
     if ( !m_realUrl.isEmpty() )
         return m_realUrl;
@@ -962,7 +962,7 @@ void Part::slotHandleActivatedSourceReference(const QString& absFileName, int li
     }
 }
 
-void Part::openUrlFromDocument(const KUrl &url)
+void Part::openUrlFromDocument(const QUrl &url)
 {
     if ( m_embedMode == PrintPreviewMode )
        return;
@@ -970,20 +970,20 @@ void Part::openUrlFromDocument(const KUrl &url)
     if (KIO::NetAccess::exists(url, KIO::NetAccess::SourceSide, widget()))
     {
         m_bExtension->openUrlNotify();
-        m_bExtension->setLocationBarUrl(url.prettyUrl());
+        m_bExtension->setLocationBarUrl(url.toDisplayString());
         openUrl(url);
     } else {
-        KMessageBox::error( widget(), i18n("Could not open '%1'. File does not exist", url.pathOrUrl() ) );
+        KMessageBox::error( widget(), i18n("Could not open '%1'. File does not exist", url.toDisplayString() ) );
     }
 }
 
-void Part::openUrlFromBookmarks(const KUrl &_url)
+void Part::openUrlFromBookmarks(const QUrl &_url)
 {
-    KUrl url = _url;
-    Okular::DocumentViewport vp( _url.htmlRef() );
+    QUrl url = _url;
+    Okular::DocumentViewport vp( _url.fragment(QUrl::FullyDecoded) );
     if ( vp.isValid() )
         m_document->setNextDocumentViewport( vp );
-    url.setHTMLRef( QString() );
+    url.setFragment( QString() );
     if ( m_document->currentDocument() == url )
     {
         if ( vp.isValid() )
@@ -1022,7 +1022,7 @@ void Part::slotJobFinished(KJob *job)
 {
     if ( job->error() == KIO::ERR_USER_CANCELED )
     {
-        m_pageView->displayMessage( i18n( "The loading of %1 has been canceled.", realUrl().pathOrUrl() ) );
+        m_pageView->displayMessage( i18n( "The loading of %1 has been canceled.", realUrl().toDisplayString(QUrl::PreferLocalFile) ) );
     }
 }
 
@@ -1047,7 +1047,8 @@ void Part::setWindowTitleFromDocument()
 {
     // If 'DocumentTitle' should be used, check if the document has one. If
     // either case is false, use the file name.
-    QString title = Okular::Settings::displayDocumentNameOrPath() == Okular::Settings::EnumDisplayDocumentNameOrPath::Path ? realUrl().pathOrUrl() : realUrl().fileName();
+    QString title = Okular::Settings::displayDocumentNameOrPath() == Okular::Settings::EnumDisplayDocumentNameOrPath::Path ? realUrl().toDisplayString(QUrl::PreferLocalFile)
+                                                                                                                           : realUrl().fileName();
 
     if ( Okular::Settings::displayDocumentTitle() )
     {
@@ -1125,7 +1126,7 @@ void Part::goToPage(uint i)
 
 void Part::openDocument( const QString &doc )
 {
-    openUrl( KUrl( doc ) );
+    openUrl( QUrl::fromUserInput( doc ) );
 }
 
 
@@ -1143,7 +1144,7 @@ uint Part::currentPage()
 
 QString Part::currentDocument()
 {
-    return m_document->currentDocument().pathOrUrl();
+    return m_document->currentDocument().toDisplayString(QUrl::PreferLocalFile);
 }
 
 
@@ -1164,7 +1165,7 @@ bool Part::slotImportPSFile()
         return false;
     }
 
-    KUrl url = KFileDialog::getOpenUrl( KUrl(), "application/postscript", this->widget() );
+    QUrl url = KFileDialog::getOpenUrl( QUrl(), "application/postscript", this->widget() );
     if ( url.isLocalFile() )
     {
         QTemporaryFile tf(QDir::tempPath() + QLatin1String("/okular_XXXXXX.pdf"));
@@ -1425,7 +1426,7 @@ bool Part::openFile()
         // if can't open document, update windows so they display blank contents
         m_pageView->viewport()->update();
         m_thumbnailList->update();
-        setUrl( KUrl() );
+        setUrl( QUrl() );
         return false;
     }
 
@@ -1477,10 +1478,10 @@ bool Part::openUrl(const QUrl &_url)
     if ( !closeUrl() )
         return false;
 
-    KUrl url( _url );
-    if ( url.hasHTMLRef() )
+    QUrl url( _url );
+    if ( url.hasFragment() )
     {
-        const QString dest = url.htmlRef();
+        const QString dest = url.fragment(QUrl::FullyDecoded);
         bool ok = true;
         const int page = dest.toInt( &ok );
         if ( ok )
@@ -1496,7 +1497,7 @@ bool Part::openUrl(const QUrl &_url)
         {
             m_document->setNextDocumentDestination( dest );
         }
-        url.setHTMLRef( QString() );
+        url.setFragment( QString() );
     }
 
     // this calls in sequence the 'closeUrl' and 'openFile' methods
@@ -1511,7 +1512,7 @@ bool Part::openUrl(const QUrl &_url)
     else
     {
         resetStartArguments();
-        KMessageBox::error( widget(), i18n("Could not open %1", url.pathOrUrl() ) );
+        KMessageBox::error( widget(), i18n("Could not open %1", url.toDisplayString() ) );
     }
 
     return openOk;
@@ -1581,7 +1582,7 @@ bool Part::closeUrl(bool promptToSave)
     if ( m_showPresentation ) m_showPresentation->setEnabled( false );
     emit setWindowCaption("");
     emit enablePrintAction(false);
-    m_realUrl = KUrl();
+    m_realUrl = QUrl();
     if ( url().isLocalFile() )
     {
         m_watcher->removeFile( localFilePath() );
@@ -1607,7 +1608,7 @@ bool Part::closeUrl(bool promptToSave)
     m_keeper->close();
 #endif
     bool r = KParts::ReadWritePart::closeUrl();
-    setUrl(KUrl());
+    setUrl(QUrl());
 
     return r;
 }
@@ -1759,7 +1760,7 @@ void Part::slotDoFileDirty()
         if ( m_viewportDirty.pageNumber >= (int) m_document->pages() )
             m_viewportDirty.pageNumber = (int) m_document->pages() - 1;
         m_document->setViewport( m_viewportDirty );
-        m_oldUrl = KUrl();
+        m_oldUrl = QUrl();
         m_viewportDirty.pageNumber = -1;
         m_document->setRotation( m_dirtyPageRotation );
         if ( m_sidebar->currentIndex() != m_dirtyToolboxIndex && m_sidebar->isItemEnabled( m_dirtyToolboxIndex )
@@ -2194,7 +2195,7 @@ void Part::slotSaveFileAs()
         }
     }
 
-    KUrl saveUrl = KFileDialog::getSaveUrl( url(),
+    QUrl saveUrl = KFileDialog::getSaveUrl( url(),
                                             QString(), widget(), QString(),
                                             KFileDialog::ConfirmOverwrite );
     if ( !saveUrl.isValid() || saveUrl.isEmpty() )
@@ -2253,14 +2254,14 @@ void Part::slotSaveCopyAs()
     if ( m_embedMode == PrintPreviewMode )
        return;
 
-    KUrl saveUrl = KFileDialog::getSaveUrl( KUrl("kfiledialog:///okular/" + url().fileName()),
+    QUrl saveUrl = KFileDialog::getSaveUrl( QUrl("kfiledialog:///okular/" + url().fileName()),
                                             QString(), widget(), QString(),
                                             KFileDialog::ConfirmOverwrite );
     if ( saveUrl.isValid() && !saveUrl.isEmpty() )
     {
         // make use of the already downloaded (in case of remote URLs) file,
         // no point in downloading that again
-        KUrl srcUrl = QUrl::fromLocalFile( localFilePath() );
+        QUrl srcUrl = QUrl::fromLocalFile( localFilePath() );
         QTemporaryFile * tempFile = 0;
         // duh, our local file disappeared...
         if ( !QFile::exists( localFilePath() ) )
@@ -2287,7 +2288,7 @@ void Part::slotSaveCopyAs()
 
         KIO::Job *copyJob = KIO::file_copy( srcUrl, saveUrl, -1, KIO::Overwrite );
         if ( !KIO::NetAccess::synchronousRun( copyJob, widget() ) )
-            KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", saveUrl.prettyUrl() ) );
+            KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", saveUrl.toDisplayString() ) );
 
         delete tempFile;
     }
@@ -2730,7 +2731,7 @@ void Part::doPrint(QPrinter &printer)
 
 void Part::restoreDocument(const KConfigGroup &group)
 {
-    KUrl url ( group.readPathEntry( "URL", QString() ) );
+    QUrl url ( group.readPathEntry( "URL", QString() ) );
     if ( url.isValid() )
     {
         QString viewport = group.readEntry( "Viewport" );
@@ -2918,7 +2919,7 @@ void Part::rebuildBookmarkMenu( bool unplugActions )
         qDeleteAll( m_bookmarkActions );
         m_bookmarkActions.clear();
     }
-    KUrl u = m_document->currentDocument();
+    QUrl u = m_document->currentDocument();
     if ( u.isValid() )
     {
         m_bookmarkActions = m_document->bookmarkManager()->actionsForUrl( u );
@@ -2945,7 +2946,7 @@ void Part::rebuildBookmarkMenu( bool unplugActions )
             {
                 Q_ASSERT(dynamic_cast<QMenu*>(container));
                 disconnect(container, 0, this, 0);
-                connect(container, SIGNAL(aboutToShowContextMenu(QMenu*,QAction*,QMenu*)), this, SLOT(slotAboutToShowContextMenu(QMenu*,QAction*,QMenu*)));
+                connect(container, SIGNAL(aboutToShowContextMenu(QMenu*,QAction*,QMenu*)), this, SLOT(slotAboutToShowContextMenu(QMenu*,QAction*,QMenu*))); // kf5 FIXME
                 containerFound = true;
             }
         }

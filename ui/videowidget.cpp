@@ -106,15 +106,15 @@ void VideoWidget::Private::load()
     loaded = true;
 
     QString url = movie->url();
-    KUrl newurl;
+    QUrl newurl;
     if ( QDir::isRelativePath( url ) )
     {
-        newurl = document->currentDocument();
-        newurl.setFileName( url );
+        newurl = document->currentDocument().adjusted(QUrl::RemoveFilename);
+        newurl.setPath( newurl.path() + url );
     }
     else
     {
-        newurl = url;
+        newurl = QUrl::fromLocalFile(url);
     }
     if ( newurl.isLocalFile() )
         player->load( newurl.toLocalFile() );
@@ -144,15 +144,15 @@ void VideoWidget::Private::setupPlayPauseAction( PlayPauseMode mode )
 void VideoWidget::Private::takeSnapshot()
 {
     const QString url = movie->url();
-    KUrl newurl;
+    QUrl newurl;
     if ( QDir::isRelativePath( url ) )
     {
-        newurl = document->currentDocument();
-        newurl.setFileName( url );
+        newurl = document->currentDocument().adjusted(QUrl::RemoveFilename);
+        newurl.setPath( newurl.path() + url );
     }
     else
     {
-        newurl = url;
+        newurl = QUrl::fromLocalFile(url);
     }
 
     SnapshotTaker *taker = 0;

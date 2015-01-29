@@ -23,7 +23,7 @@
 
 
 #include <kio/slavebase.h>
-#include <kurl.h>
+#include <QUrl>
 
 #include <qbytearray.h>
 #include <qstring.h>
@@ -37,16 +37,16 @@ public:
     ProtocolMSITS ( const QByteArray&, const QByteArray& );
     virtual ~ProtocolMSITS();
 
-    virtual void	get ( const KUrl& );
-	virtual void	listDir (const KUrl & url);
-	virtual void	stat (const KUrl & url);
+    virtual void	get (const QUrl & );
+    virtual void	listDir (const QUrl & url);
+    virtual void	stat (const QUrl & url);
 
 private:
 	// This function does next thing:
 	// - parses the URL to get a file name and URL inside the file;
 	// - loads a new CHM file, if needed;
 	// - returns the parsed URL inside the file;
-	bool	parseLoadAndLookup ( const KUrl&, QString& abspath );
+    bool	parseLoadAndLookup (const QUrl &, QString& abspath );
 
 	// Resolve an object inside a CHM file
 	inline bool ResolveObject (const QString& fileName, chmUnitInfo *ui)

@@ -41,9 +41,9 @@ DocumentItem::DocumentItem(QObject *parent)
 
     connect(m_document, SIGNAL(searchFinished(int,Okular::Document::SearchStatus)),
             this, SLOT(searchFinished(int,Okular::Document::SearchStatus)));
-    connect(m_document->bookmarkManager(), SIGNAL(bookmarksChanged(KUrl)),
+    connect(m_document->bookmarkManager(), SIGNAL(bookmarksChanged(QUrl)),
             this, SIGNAL(bookmarkedPagesChanged()));
-    connect(m_document->bookmarkManager(), SIGNAL(bookmarksChanged(KUrl)),
+    connect(m_document->bookmarkManager(), SIGNAL(bookmarksChanged(QUrl)),
             this, SIGNAL(bookmarksChanged()));
 }
 
@@ -58,7 +58,7 @@ void DocumentItem::setPath(const QString &path)
     //TODO: remote urls
     //TODO: password
     QMimeDatabase db;
-    m_document->openDocument(path, KUrl(path), db.mimeTypeForUrl(QUrl(path)));
+    m_document->openDocument(path, QUrl::fromLocalFile(path), db.mimeTypeForUrl(QUrl::fromLocalFile(path)));
 
     m_tocModel->fill(m_document->documentSynopsis());
     m_tocModel->setCurrentViewport(m_document->viewport());
@@ -79,7 +79,8 @@ QString DocumentItem::windowTitleForDocument() const
 {
     // If 'DocumentTitle' should be used, check if the document has one. If
     // either case is false, use the file name.
-    QString title = Okular::Settings::displayDocumentNameOrPath() == Okular::Settings::EnumDisplayDocumentNameOrPath::Path ? m_document->currentDocument().pathOrUrl() : m_document->currentDocument().fileName();
+    QString title = Okular::Settings::displayDocumentNameOrPath() == Okular::Settings::EnumDisplayDocumentNameOrPath::Path ?
+                m_document->currentDocument().toDisplayString(QUrl::PreferLocalFile) : m_document->currentDocument().fileName();
 
     if (Okular::Settings::displayDocumentTitle()) {
         const QString docTitle = m_document->metaData( "DocumentTitle" ).toString();
@@ -94,7 +95,7 @@ QString DocumentItem::windowTitleForDocument() const
 
 QString DocumentItem::path() const
 {
-    return m_document->currentDocument().prettyUrl();
+    return m_document->currentDocument().toDisplayString();
 }
 
 void DocumentItem::setCurrentPage(int page)

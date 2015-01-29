@@ -29,7 +29,6 @@
 #include <KLocalizedString>
 #include <kmessagebox.h>
 #include <ksqueezedtextlabel.h>
-#include <kurl.h>
 #include <QMimeDatabase>
 
 // local includes

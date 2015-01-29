@@ -12,7 +12,7 @@
 
 #include <QtCore/QStringList>
 
-class KUrl;
+class QUrl;
 
 /**
  * @short Abstract interface for a document viewer
@@ -27,7 +27,7 @@ class KDocumentViewer
         /**
          * Open the document at the specified @p url at page @p page.
          */
-        virtual bool openDocument( const KUrl& url, uint page ) = 0;
+        virtual bool openDocument( const QUrl& url, uint page ) = 0;
 
         /**
          * Change to @p page the currently shown page.

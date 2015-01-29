@@ -70,7 +70,7 @@ void KIMGIOTest::testExifOrientation()
 	m_document->addObserver( dummyDocumentObserver );
 
 	// Load image
-	m_document->openDocument( imgPath, KUrl(), mime );
+    m_document->openDocument( imgPath, QUrl(), mime );
 	m_document->setRotation( 0 ); // Test the default rotation
 	QCOMPARE( m_document->pages(), 1u );
 

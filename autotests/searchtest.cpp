@@ -175,7 +175,7 @@ void SearchTest::test311232()
     const QString testFile = KDESRCDIR "data/file1.pdf";
     QMimeDatabase db;
     const QMimeType mime = db.mimeTypeForFile( testFile );
-    d.openDocument(testFile, KUrl(), mime);
+    d.openDocument(testFile, QUrl(), mime);
     
     const int searchId = 0;
     d.searchText(searchId, " i ", true, Qt::CaseSensitive, Okular::Document::NextMatch, false, QColor());

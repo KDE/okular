@@ -19,8 +19,8 @@
 #include <sys/stat.h>
 
 #include <kapplication.h>
-#include <QtCore/QDebug>
-#include <kurl.h>
+#include <QDebug>
+#include <QUrl>
 #include <QMimeType>
 #include <QMimeDatabase>
 
@@ -36,7 +36,7 @@ using namespace KIO;
 
 extern "C"
 {
-    int KDE_EXPORT kdemain( int argc, char **argv )
+    int Q_DECL_EXPORT kdemain( int argc, char **argv )
     {
 		kDebug() << "*** kio_msits Init";
 
@@ -78,7 +78,7 @@ static bool isDirectory ( const QString & filename )
 }
 
 
-void ProtocolMSITS::get( const KUrl& url )
+void ProtocolMSITS::get( const QUrl& url )
 {
 	QString htmdata, fileName;
 	chmUnitInfo ui;
@@ -133,7 +133,7 @@ void ProtocolMSITS::get( const KUrl& url )
 }
 
 
-bool ProtocolMSITS::parseLoadAndLookup ( const KUrl& url, QString& abspath )
+bool ProtocolMSITS::parseLoadAndLookup ( const QUrl& url, QString& abspath )
 {
 	kDebug() << "ProtocolMSITS::parseLoadAndLookup (const KUrl&) " << url.path();
 
@@ -220,7 +220,7 @@ static void app_file(UDSEntry& e, const QString & name, size_t size)
 	app_entry(e, KIO::UDSEntry::UDS_SIZE, size);
 }
 
-void ProtocolMSITS::stat (const KUrl & url)
+void ProtocolMSITS::stat (const QUrl &url)
 {
 	QString fileName;
 	chmUnitInfo ui;
@@ -258,7 +258,7 @@ static int chmlib_enumerator (struct chmFile *, struct chmUnitInfo *ui, void *co
 }
 
 
-void ProtocolMSITS::listDir (const KUrl & url)
+void ProtocolMSITS::listDir (const QUrl & url)
 {
 	QString filepath;
 

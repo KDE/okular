@@ -18,7 +18,7 @@
 #include <KLocalizedString>
 #include <kstandardaction.h>
 #include <qaction.h>
-#include <kurl.h>
+#include <QUrl>
 
 // local includes
 #include "core/form.h"
@@ -624,7 +624,7 @@ FileEdit::FileEdit( Okular::FormFieldText * text, QWidget * parent )
 {
     setMode( KFile::File | KFile::ExistingOnly | KFile::LocalOnly );
     setFilter( i18n( "*|All Files" ) );
-    setUrl( KUrl( m_form->text() ) );
+    setUrl( QUrl::fromUserInput( m_form->text() ) );
     lineEdit()->setAlignment( m_form->textAlignment() );
     setEnabled( !m_form->isReadOnly() );
 

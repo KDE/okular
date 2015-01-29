@@ -97,8 +97,8 @@ Shell::Shell( const QString &serializedOptions )
     m_tabWidget->setMovable( true );
     connect( m_tabWidget, SIGNAL(currentChanged(int)), SLOT(setActiveTab(int)) );
     connect( m_tabWidget, SIGNAL(tabCloseRequested(int)), SLOT(closeTab(int)) );
-    connect( m_tabWidget, SIGNAL(testCanDecode(const QDragMoveEvent*,bool&)), SLOT(testTabDrop(const QDragMoveEvent*,bool&)) );
-    connect( m_tabWidget, SIGNAL(receivedDropEvent(QDropEvent*)), SLOT(handleTabDrop(QDropEvent*)) );
+    connect( m_tabWidget, SIGNAL(testCanDecode(const QDragMoveEvent*,bool&)), SLOT(testTabDrop(const QDragMoveEvent*,bool&)) ); // kf5 FIXME DnD
+    connect( m_tabWidget, SIGNAL(receivedDropEvent(QDropEvent*)), SLOT(handleTabDrop(QDropEvent*)) ); // kf5 FIXME DnD
     connect( m_tabWidget->tabBar(), SIGNAL(tabMoved(int,int)), SLOT(moveTabData(int,int)) );
 
     setCentralWidget( m_tabWidget );

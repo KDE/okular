@@ -117,12 +117,12 @@ void MainShellTest::init()
     Okular::Settings::self()->setDefaults();
 
     // Clean docdatas
-    QList<KUrl> urls;
-    urls << KUrl("file://" KDESRCDIR "data/file1.pdf");
-    urls << KUrl("file://" KDESRCDIR "data/tocreload.pdf");
-    urls << KUrl("file://" KDESRCDIR "data/contents.epub");
+    QList<QUrl> urls;
+    urls << QUrl::fromUserInput("file://" KDESRCDIR "data/file1.pdf");
+    urls << QUrl::fromUserInput("file://" KDESRCDIR "data/tocreload.pdf");
+    urls << QUrl::fromUserInput("file://" KDESRCDIR "data/contents.epub");
 
-    foreach (const KUrl &url, urls)
+    foreach (const QUrl &url, urls)
     {
         QFileInfo fileReadTest( url.toLocalFile() );
         const QString docDataPath = Okular::DocumentPrivate::docDataFileName(url, fileReadTest.size());

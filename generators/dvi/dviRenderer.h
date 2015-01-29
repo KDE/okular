@@ -21,7 +21,7 @@
 #include "prebookmark.h"
 
 #include <QExplicitlySharedDataPointer>
-#include <kurl.h>
+#include <QUrl>
 #include <QProgressDialog>
 #include <QHash>
 #include <QPolygon>
@@ -95,7 +95,7 @@ public:
   dviRenderer(bool useFontHinting);
   virtual ~dviRenderer();
 
-  virtual bool  setFile(const QString &fname, const KUrl &base);
+  virtual bool  setFile(const QString &fname, const QUrl &base);
 
   dvifile* dviFile;
 
@@ -185,7 +185,7 @@ private:
   /** URL to the DVI file
       This field is initialized by the setFile() method. See the
       explanation there. */
-  KUrl baseURL;
+  QUrl baseURL;
 
   /** This method parses a color specification of type "gray 0.5", "rgb
       0.5 0.7 1.0", "hsb ...", "cmyk .." or "PineGreen". See the source

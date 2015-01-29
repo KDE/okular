@@ -1,7 +1,5 @@
 project(okular)
 
-
-
 cmake_minimum_required(VERSION 2.8.12)
 
 set(QT_MIN_VERSION "5.2.0")
@@ -194,7 +192,7 @@ target_link_libraries(okularcore
 )
 
 if(LibKScreen_FOUND)
-#    target_link_libraries(okularcore KF5::LibKScreen)
+    target_link_libraries(okularcore KF5::LibKScreen)
 endif(LibKScreen_FOUND)
 
 set_target_properties(okularcore PROPERTIES VERSION 6.0.0 SOVERSION 6 )

@@ -74,7 +74,7 @@ DviGenerator::DviGenerator( QObject *parent, const QVariantList &args ) : Okular
 bool DviGenerator::loadDocument( const QString & fileName, QVector< Okular::Page * > &pagesVector )
 {
     //qCDebug(OkularDviDebug) << "file:" << fileName;
-    KUrl base( fileName );
+    QUrl base( QUrl::fromLocalFile(fileName) );
 
     (void)userMutex();
 

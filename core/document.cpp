@@ -54,6 +54,7 @@
 
 #include <ktoolinvocation.h>
 #include <kzip.h>
+#include <KIO/Global>
 
 // local includes
 #include "action.h"
@@ -639,8 +640,6 @@ void DocumentPrivate::loadDocumentInfo( QFile &infoFile )
     if ( root.tagName() != "documentInfo" )
         return;
 
-    KUrl documentUrl( root.attribute( "url" ) );
-
     // Parse the DOM tree
     QDomNode topLevelNode = root.firstChild();
     while ( topLevelNode.isElement() )
@@ -801,7 +800,7 @@ QString DocumentPrivate::giveAbsolutePath( const QString & fileName ) const
     if ( !m_url.isValid() )
         return QString();
 
-    return m_url.upUrl().url() + fileName;
+    return KIO::upUrl(m_url).path() + fileName;
 }
 
 bool DocumentPrivate::openRelativeFile( const QString & fileName )
@@ -812,7 +811,7 @@ bool DocumentPrivate::openRelativeFile( const QString & fileName )
 
     qCDebug(OkularCoreDebug).nospace() << "openDocument: '" << absFileName << "'";
 
-    emit m_parent->openUrl( absFileName );
+    emit m_parent->openUrl( QUrl(absFileName) );
     return true;
 }
 
@@ -1234,7 +1233,7 @@ void DocumentPrivate::saveDocumentInfo() const
                 QString::fromLatin1( "xml" ), QString::fromLatin1( "version=\"1.0\" encoding=\"utf-8\"" ) );
         doc.appendChild( xmlPi );
         QDomElement root = doc.createElement( "documentInfo" );
-        root.setAttribute( "url", m_url.pathOrUrl() );
+        root.setAttribute( "url", m_url.toDisplayString(QUrl::PreferLocalFile) );
         doc.appendChild( root );
 
         // 2.1. Save page attributes (bookmark state, annotations, ... ) to DOM
@@ -2245,7 +2244,7 @@ private:
     const QMimeType &_mime;
 };
 
-QString DocumentPrivate::docDataFileName(const KUrl &url, qint64 document_size)
+QString DocumentPrivate::docDataFileName(const QUrl &url, qint64 document_size)
 {
     QString fn = url.fileName();
     fn = QString::number( document_size ) + '.' + fn + ".xml";
@@ -2267,13 +2266,13 @@ QString DocumentPrivate::docDataFileName(const KUrl &url, qint64 document_size)
 
 
 
-Document::OpenResult Document::openDocument( const QString & docFile, const KUrl& url, const QMimeType &_mime, const QString & password )
+Document::OpenResult Document::openDocument(const QString & docFile, const QUrl &url, const QMimeType &_mime, const QString & password )
 {
     QMimeDatabase db;
     QMimeType mime = _mime;
     QByteArray filedata;
     qint64 document_size = -1;
-    bool isstdin = url.fileName( KUrl::ObeyTrailingSlash ) == QLatin1String( "-" );
+    bool isstdin = url.fileName() == QLatin1String( "-" );
     bool triedMimeFromFileContent = false;
     if ( !isstdin )
     {
@@ -2469,7 +2468,7 @@ Document::OpenResult Document::openDocument( const QString & docFile, const KUrl
         d->m_nextDocumentDestination = QString();
     }
 
-    AudioPlayer::instance()->d->m_currentDocument = isstdin ? KUrl() : d->m_url;
+    AudioPlayer::instance()->d->m_currentDocument = isstdin ? QUrl() : d->m_url;
     d->m_docSize = document_size;
 
     const QStringList docScripts = d->m_generator->metaData( "DocumentScripts", "JavaScript" ).toStringList();
@@ -2579,7 +2578,7 @@ void Document::closeDocument()
     }
     d->m_generator = 0;
     d->m_generatorName = QString();
-    d->m_url = KUrl();
+    d->m_url = QUrl();
     d->m_docFileName = QString();
     d->m_xmlFileName = QString();
     delete d->m_tempFile;
@@ -2636,7 +2635,7 @@ void Document::closeDocument()
     d->m_documentInfo = DocumentInfo();
     d->m_documentInfoAskedKeys.clear();
 
-    AudioPlayer::instance()->d->m_currentDocument = KUrl();
+    AudioPlayer::instance()->d->m_currentDocument = QUrl();
 
     d->m_undoStack->clear();
 }
@@ -2758,7 +2757,7 @@ DocumentInfo Document::documentInfo( const QSet<DocumentInfo::Key> &keys ) const
 
         if ( missingKeys.contains( DocumentInfo::FilePath ) )
         {
-            info.set( DocumentInfo::FilePath, currentDocument().prettyUrl() );
+            info.set( DocumentInfo::FilePath, currentDocument().toDisplayString() );
         }
 
         if ( d->m_docSize != -1 && missingKeys.contains( DocumentInfo::DocumentSize ) )
@@ -2879,7 +2878,7 @@ uint Document::pages() const
     return d->m_pagesVector.size();
 }
 
-KUrl Document::currentDocument() const
+QUrl Document::currentDocument() const
 {
     return d->m_url;
 }
@@ -4024,7 +4023,7 @@ void Document::processSourceReference( const SourceReference * ref )
     if ( !ref )
         return;
 
-    const KUrl url( d->giveAbsolutePath( ref->fileName() ) );
+    const QUrl url( d->giveAbsolutePath( ref->fileName() ) );
     if ( !url.isLocalFile() )
     {
         qCDebug(OkularCoreDebug) << url.url() << "is not a local file.";
@@ -4364,7 +4363,7 @@ QByteArray Document::fontData(const FontInfo &font) const
     return result;
 }
 
-Document::OpenResult Document::openDocumentArchive( const QString & docFile, const KUrl & url, const QString & password )
+Document::OpenResult Document::openDocumentArchive( const QString & docFile, const QUrl & url, const QString & password )
 {
     QMimeDatabase db;
     const QMimeType mime = db.mimeTypeForFile( docFile, QMimeDatabase::MatchExtension );

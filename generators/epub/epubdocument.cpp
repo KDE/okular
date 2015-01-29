@@ -18,9 +18,9 @@ using namespace Epub;
 
 namespace {
 
-QString resourceUrl(const KUrl &baseUrl, const QString &u)
+QString resourceUrl(const QUrl &baseUrl, const QString &u)
 {
-  KUrl newUrl(KUrl(baseUrl.directory(KUrl::AppendTrailingSlash)), u);
+  QUrl newUrl(baseUrl.adjusted(QUrl::RemoveFilename).path() + '/' + u);
   QString newDir = newUrl.toLocalFile();
   newDir.remove(0, 1);
   return newDir;

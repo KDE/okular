@@ -15,21 +15,12 @@
 
 #include "../shell/shellutils.h"
 
-namespace QTest
+static const QUrl makeUrlFromCwd( const QString& u, const QString& ref = QString() )
 {
-template<>
-char* toString( const KUrl& url )
-{
-    return qstrdup( url.url().toLocal8Bit().constData() );
-}
-}
-
-static const KUrl makeUrlFromCwd( const QString& u, const QString& ref = QString() )
-{
-    KUrl url( KUrl( QDir::currentPath() + '/' ), u );
+    QUrl url( QUrl::fromLocalFile( QDir::currentPath() + '/' + u ));
     if ( !ref.isEmpty() )
-        url.setRef( ref );
-    url.cleanPath();
+        url.setFragment( ref );
+    url.setPath(QDir::cleanPath(url.path()));
     return url;
 }
 
@@ -56,7 +47,7 @@ class ShellTest
 
 void ShellTest::initTestCase()
 {
-    qRegisterMetaType<KUrl>();
+    qRegisterMetaType<QUrl>();
 
     KCmdLineArgs::setCwd( QDir::currentPath().toLocal8Bit() );
 }
@@ -65,7 +56,7 @@ void ShellTest::testUrlArgs_data()
 {
     QTest::addColumn<QString>( "arg" );
     QTest::addColumn<bool>( "exists" );
-    QTest::addColumn<KUrl>( "resUrl" );
+    QTest::addColumn<QUrl>( "resUrl" );
 
     // local files
     QTest::newRow( "foo.pdf, exist" )
@@ -87,7 +78,7 @@ void ShellTest::testUrlArgs_data()
     QTest::newRow( "#207461" )
         << "file:///tmp/file%20with%20spaces.pdf"
         << true
-        << KUrl( "file:///tmp/file%20with%20spaces.pdf" );
+        << QUrl( "file:///tmp/file%20with%20spaces.pdf" );
 
     // non-local files
     QTest::newRow( "http://kde.org/foo.pdf" )
@@ -105,16 +96,16 @@ void ShellTest::testUrlArgs_data()
     QTest::newRow( "#207461" )
         << "http://homepages.inf.ed.ac.uk/mef/file%20with%20spaces.pdf"
         << true
-        << KUrl( "http://homepages.inf.ed.ac.uk/mef/file%20with%20spaces.pdf" );
+        << QUrl( "http://homepages.inf.ed.ac.uk/mef/file%20with%20spaces.pdf" );
 }
 
 void ShellTest::testUrlArgs()
 {
     QFETCH( QString, arg );
     QFETCH( bool, exists );
-    QFETCH( KUrl, resUrl );
+    QFETCH( QUrl, resUrl );
 
-    KUrl url = ShellUtils::urlFromArg( arg, exists ? fileExist_always_Func : fileExist_never_Func );
+    QUrl url = ShellUtils::urlFromArg( arg, exists ? fileExist_always_Func : fileExist_never_Func );
     QCOMPARE( url, resUrl );
 }
 

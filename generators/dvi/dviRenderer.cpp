@@ -430,7 +430,7 @@ bool dviRenderer::isValidFile(const QString& filename) const
   return true;
 }
 
-bool dviRenderer::setFile(const QString &fname, const KUrl &base)
+bool dviRenderer::setFile(const QString &fname, const QUrl &base)
 {
 #ifdef DEBUG_DVIRENDERER
   qCDebug(OkularDviDebug) << "dviRenderer::setFile( fname='" << fname << "' )"; //, ref='" << ref << "', sourceMarker=" << sourceMarker << " )";

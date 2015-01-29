@@ -14,7 +14,7 @@
 #include <QUrl>
 #include <QVariant>
 #include <QImage>
-#include <kurl.h>
+#include <QUrl>
 #include <epub.h>
 #include <QtCore/qloggingcategory.h>
 
@@ -39,7 +39,7 @@ namespace Epub {
     void checkCSS(QString &css);
 
     struct epub *mEpub;
-    KUrl mCurrentSubDocument;
+    QUrl mCurrentSubDocument;
 
     int padding;
 

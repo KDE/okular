@@ -19,7 +19,7 @@
 #include <KLocalizedString>
 #include <kprocess.h>
 #include <qtemporaryfile.h>
-#include <kurl.h>
+#include <QUrl>
 
 #include <QtCore/qloggingcategory.h>
 #include <QDir>
@@ -332,7 +332,7 @@ void ghostscript_interface::graphics(const PageNumber& page, double dpi, long ma
 }
 
 
-QString ghostscript_interface::locateEPSfile(const QString &filename, const KUrl &base)
+QString ghostscript_interface::locateEPSfile(const QString &filename, const QUrl &base)
 {
   // If the base URL indicates that the DVI file is local, try to find
   // the graphics file in the directory where the DVI file resides

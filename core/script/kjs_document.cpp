@@ -80,7 +80,7 @@ static KJSObject docGetPath( KJSContext *, void *object )
 {
     DocumentPrivate *doc = reinterpret_cast< DocumentPrivate* >( object );
 
-    return KJSString( doc->m_url.pathOrUrl() );
+    return KJSString( doc->m_url.toDisplayString(QUrl::PreferLocalFile) );
 }
 
 // Document.URL
@@ -88,7 +88,7 @@ static KJSObject docGetURL( KJSContext *, void *object )
 {
     DocumentPrivate *doc = reinterpret_cast< DocumentPrivate* >( object );
 
-    return KJSString( doc->m_url.prettyUrl() );
+    return KJSString( doc->m_url.toDisplayString() );
 }
 
 // Document.permStatusReady

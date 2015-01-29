@@ -23,7 +23,7 @@
 #include <qlist.h>
 #include <qpointer.h>
 #include <qprocess.h>
-#include <kurl.h>
+#include <QUrl>
 #include <kio/job.h>
 #include "core/observer.h"
 #include "core/document.h"
@@ -39,7 +39,6 @@ class QWidget;
 class QPrinter;
 class QMenu;
 
-class KUrl;
 class KConfigDialog;
 class KConfigGroup;
 class KDirWatch;
@@ -121,11 +120,11 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         void notifyViewportChanged( bool smoothMove );
         void notifyPageChanged( int page, int flags );
 
-        bool openDocument(const KUrl& url, uint page);
+        bool openDocument(const QUrl &url, uint page);
         void startPresentation();
         QStringList supportedMimeTypes() const;
 
-        KUrl realUrl() const;
+        QUrl realUrl() const;
 
         void showSourceLocation(const QString& fileName, int line, int column, bool showGraphically = true);
         void clearLastShownSourceLocation();
@@ -177,8 +176,8 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
 
     protected slots:
         // connected to actions
-        void openUrlFromDocument(const KUrl &url);
-        void openUrlFromBookmarks(const KUrl &url);
+        void openUrlFromDocument(const QUrl &url);
+        void openUrlFromBookmarks(const QUrl &url);
         void handleDroppedUrls( const QList<QUrl>& urls );
         void slotGoToPage();
         void slotHistoryBack();
@@ -282,7 +281,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         // document watcher (and reloader) variables
         KDirWatch *m_watcher;
         QTimer *m_dirtyHandler;
-        KUrl m_oldUrl;
+        QUrl m_oldUrl;
         Okular::DocumentViewport m_viewportDirty;
         bool m_wasPresentationOpen;
         int m_dirtyToolboxIndex;
@@ -341,7 +340,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
 
         EmbedMode m_embedMode;
 
-        KUrl m_realUrl;
+        QUrl m_realUrl;
 
         KXMLGUIClient *m_generatorGuiClient;
         FileKeeper *m_keeper;

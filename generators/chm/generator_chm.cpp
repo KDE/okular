@@ -19,7 +19,7 @@
 #include <khtml_part.h>
 #include <khtmlview.h>
 #include <KLocalizedString>
-#include <kurl.h>
+#include <QUrl>
 #include <dom/html_misc.h>
 #include <dom/dom_node.h>
 #include <dom/dom_html.h>
@@ -49,15 +49,15 @@ OKULAR_EXPORT_PLUGIN( CHMGenerator, createAboutData() )
 static QString absolutePath( const QString &baseUrl, const QString &path )
 {
     QString absPath;
-    if ( path.at( 0 ) == QLatin1Char( '/' ) )
+    if ( path.startsWith(QLatin1Char( '/' )) )
     {
         // already absolute
         absPath = path;
     }
     else
     {
-        KUrl url = QUrl::fromLocalFile( baseUrl );
-        url.setFileName( path );
+        QUrl url = QUrl::fromLocalFile( baseUrl ).adjusted(QUrl::RemoveFilename);
+        url.setPath( url.path() + path );
         absPath = url.toLocalFile();
     }
     return absPath;
@@ -178,10 +178,10 @@ bool CHMGenerator::doCloseDocument()
 
 void CHMGenerator::preparePageForSyncOperation( int zoom , const QString & url)
 {
-    KUrl pAddress= QString("ms-its:" + m_fileName + "::" + url);
+    QString pAddress= QString("ms-its:" + m_fileName + "::" + url);
     m_chmUrl = url;
     m_syncGen->setZoomFactor(zoom);
-    m_syncGen->openUrl(pAddress);
+    m_syncGen->openUrl(QUrl(pAddress));
     m_syncGen->view()->layout();
 
     QEventLoop loop;
@@ -273,13 +273,13 @@ void CHMGenerator::generatePixmap( Okular::PixmapRequest * request )
         , static_cast<double>(requestHeight)/static_cast<double>(request->page()->height())
         ) ) * 100;
 
-    KUrl pAddress= QString("ms-its:" + m_fileName + "::" + url);
+    QString pAddress= QString("ms-its:" + m_fileName + "::" + url);
     m_chmUrl = url;
     m_syncGen->setZoomFactor(zoom);
     m_syncGen->view()->resize(requestWidth,requestHeight);
     m_request=request;
     // will emit openURL without problems
-    m_syncGen->openUrl ( pAddress );
+    m_syncGen->openUrl ( QUrl(pAddress) );
 }
 
 

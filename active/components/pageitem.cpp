@@ -113,7 +113,7 @@ void PageItem::setDocument(DocumentItem *doc)
     m_documentItem = doc;
     Observer *observer = m_isThumbnail ? m_documentItem.data()->thumbnailObserver() : m_documentItem.data()->pageviewObserver();
     connect(observer, SIGNAL(pageChanged(int, int)), this, SLOT(pageHasChanged(int, int)));
-    connect(doc->document()->bookmarkManager(), SIGNAL(bookmarksChanged(KUrl)),
+    connect(doc->document()->bookmarkManager(), SIGNAL(bookmarksChanged(QUrl)),
             this, SLOT(checkBookmarksChanged()));
     setPageNumber(0);
     emit documentChanged();
@@ -212,7 +212,7 @@ QStringList PageItem::bookmarks() const
 
 void PageItem::goToBookmark(const QString &bookmark)
 {
-    Okular::DocumentViewport viewPort(KUrl(bookmark).htmlRef());
+    Okular::DocumentViewport viewPort(QUrl::fromUserInput(bookmark).fragment(QUrl::FullyDecoded));
     setPageNumber(viewPort.pageNumber);
 
     //Are we in a flickable?
@@ -226,7 +226,7 @@ void PageItem::goToBookmark(const QString &bookmark)
 
 QPointF PageItem::bookmarkPosition(const QString &bookmark) const
 {
-    Okular::DocumentViewport viewPort(KUrl(bookmark).htmlRef());
+    Okular::DocumentViewport viewPort(QUrl::fromUserInput(bookmark).fragment(QUrl::FullyDecoded));
 
     if (viewPort.pageNumber != m_viewPort.pageNumber) {
         return QPointF(-1, -1);

@@ -13,7 +13,7 @@
 // qt/kde includes
 #include <qhash.h>
 #include <qsignalmapper.h>
-#include <kurl.h>
+#include <QUrl>
 
 class QBuffer;
 class PlayData;
@@ -41,7 +41,7 @@ public:
 
     QHash< int, PlayData * > m_playing;
     QSignalMapper m_mapper;
-    KUrl m_currentDocument;
+    QUrl m_currentDocument;
     AudioPlayer::State m_state;
 };
 

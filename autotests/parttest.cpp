@@ -139,8 +139,8 @@ void PartTest::testFowardPDF()
     QCOMPARE(part.m_document->currentPage(), 0u);
     part.closeUrl();
     
-    KUrl u(pdfResult);
-    u.setHTMLRef("src:100" + texDestination);
+    QUrl u(QUrl::fromLocalFile(pdfResult));
+    u.setFragment("src:100" + texDestination);
     part.openUrl(u);
     QCOMPARE(part.m_document->currentPage(), 1u);
 }
@@ -188,7 +188,7 @@ int main(int argc, char *argv[])
     KAboutData aboutData( QByteArray("qttest"), i18n("KDE Test Program"), QByteArray("version") );
     QApplication app( argc, argv );
     app.setApplicationName( QLatin1String("qttest") );
-    qRegisterMetaType<KUrl>(); /*as done by kapplication*/
+    qRegisterMetaType<QUrl>(); /*as done by kapplication*/
     qRegisterMetaType<QList<QUrl>>();
     Okular::PartTest test;
     KGlobal::ref(); /* don't quit qeventloop after closing a mainwindow */

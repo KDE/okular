@@ -68,7 +68,7 @@ void EditFormsTest::init()
     const QString testFile = KDESRCDIR "data/formSamples.pdf";
     QMimeDatabase db;
     const QMimeType mime = db.mimeTypeForFile( testFile );
-    QCOMPARE( m_document->openDocument(testFile, KUrl(), mime), Okular::Document::OpenSuccess );
+    QCOMPARE( m_document->openDocument(testFile, QUrl(), mime), Okular::Document::OpenSuccess );
 
     // Undo and Redo should be unavailable when docuemnt is first opened.
     QVERIFY( !m_document->canUndo() );

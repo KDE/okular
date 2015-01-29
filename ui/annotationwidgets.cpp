@@ -660,7 +660,7 @@ QWidget * FileAttachmentAnnotationWidget::createExtraWidget()
 
     Okular::EmbeddedFile *ef = m_attachAnn->embeddedFile();
     const int size = ef->size();
-    const QString sizeString = size <= 0 ? i18nc( "Not available size", "N/A" ) : KFormat::formatByteSize( size );
+    const QString sizeString = size <= 0 ? i18nc( "Not available size", "N/A" ) : KFormat().formatByteSize( size );
     const QString descString = ef->description().isEmpty() ? i18n( "No description available." ) : ef->description();
 
     QGridLayout * lay = new QGridLayout( widget );

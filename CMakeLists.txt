@@ -61,7 +61,6 @@ add_definitions(-DTRANSLATION_DOMAIN="okular")
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${PHONON_INCLUDES} core/synctex ${ZLIB_INCLUDE_DIR})
 
-message("TODO: when core compiles add subdirs")
 add_subdirectory( active )
 add_subdirectory( ui )
 add_subdirectory( shell )
@@ -192,7 +191,8 @@ target_link_libraries(okularcore
 )
 
 if(LibKScreen_FOUND)
-    target_link_libraries(okularcore KF5::LibKScreen)
+    message("KF5: port code to KScreen")
+    #target_link_libraries(okularcore KF5::LibKScreen)
 endif(LibKScreen_FOUND)
 
 set_target_properties(okularcore PROPERTIES VERSION 6.0.0 SOVERSION 6 )

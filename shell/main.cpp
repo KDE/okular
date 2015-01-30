@@ -29,9 +29,10 @@
 
 int main(int argc, char** argv)
 {
+    QApplication app(argc, argv);
+
     KAboutData aboutData = okularAboutData();
 
-    QApplication app(argc, argv);
     app.setApplicationName(aboutData.applicationData().componentName());
     app.setApplicationDisplayName(aboutData.applicationData().displayName());
     app.setApplicationVersion(aboutData.version());

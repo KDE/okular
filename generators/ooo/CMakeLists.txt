@@ -3,12 +3,12 @@ include_directories(
    ${CMAKE_CURRENT_SOURCE_DIR}/../..
 )
 
-find_package(Qca 2.1.0)
-set_package_properties(Qca PROPERTIES DESCRIPTION "Support for encryption"
-                       URL "http://delta.affinix.com/qca"
+find_package(Qca-qt5 2.1.0)
+set_package_properties(Qca-qt5 PROPERTIES DESCRIPTION "Support for encryption"
+                       URL "http://download.kde.org/stable/qca-qt5/"
                        TYPE RECOMMENDED)
 
-if ( Qca_FOUND )
+if ( Qca-qt5_FOUND )
    add_definitions( -DQCA2 )
 endif()
 
@@ -28,8 +28,8 @@ set(okularGenerator_ooo_PART_SRCS
 add_library(okularGenerator_ooo MODULE ${okularGenerator_ooo_PART_SRCS})
 
 target_link_libraries(okularGenerator_ooo okularcore KF5::KIOCore ${MATH_LIB} Qt5::Xml)
-if (Qca_FOUND)
-  target_link_libraries(okularGenerator_ooo okularcore qca)
+if (Qca-qt5_FOUND)
+  target_link_libraries(okularGenerator_ooo okularcore qca-qt5)
 endif ()
 
 install(TARGETS okularGenerator_ooo DESTINATION ${PLUGIN_INSTALL_DIR})

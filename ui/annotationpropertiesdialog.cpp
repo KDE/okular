@@ -19,7 +19,6 @@
 #include <QIcon>
 #include <klineedit.h>
 #include <KLocalizedString>
-#include <kglobal.h>
 
 // local includes
 #include "core/document.h"

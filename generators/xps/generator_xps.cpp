@@ -25,7 +25,6 @@
 #include <qpainter.h>
 #include <qprinter.h>
 #include <KAboutData>
-#include <kglobal.h>
 #include <KLocalizedString>
 #include <QUrl>
 #include <QBuffer>

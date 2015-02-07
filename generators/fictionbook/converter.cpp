@@ -18,7 +18,6 @@
 #include <QtXml/QDomElement>
 #include <QtXml/QDomText>
 
-#include <kglobal.h>
 #include <KLocalizedString>
 
 #include <core/action.h>

@@ -15,7 +15,6 @@
 #include <QMenu>
 #include <QTreeWidget>
 
-#include <kglobal.h>
 #include <QIcon>
 #include <KLocalizedString>
 #include <QMimeType>

@@ -979,7 +979,11 @@ Document::OpenResult DocumentPrivate::openDocumentInternal( const KService::Ptr&
 
         m_generator->d_func()->m_document = 0;
         QObject::disconnect( m_generator, 0, m_parent, 0 );
-        // TODO this is a hack just for 14.12 not to break API
+        // TODO this is a bit of a hack, since basically means that
+        // you can only call walletDataForFile after calling openDocument
+        // but since in reality it's what happens I've decided not to refactor/break API
+        // One solution is just kill walletDataForFile and make OpenResult be an object
+        // where the wallet data is also returned when OpenNeedsPassword
         m_walletGenerator = m_generator;
         m_generator = 0;
 

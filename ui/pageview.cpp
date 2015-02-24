@@ -3791,7 +3791,6 @@ void PageView::updateZoomText()
     translated << i18n("Fit Width") << i18n("Fit Page") << i18n("Auto Fit");
 
     // add percent items
-    const QString single_oh( "0" );
     int idx = 0, selIdx = 3;
     bool inserted = false; //use: "d->zoomMode != ZoomFixed" to hide Fit/* zoom ratio
     int zoomValueCount = 11;
@@ -3809,8 +3808,8 @@ void PageView::updateZoomText()
         if ( !inserted )
             selIdx++;
         // we do not need to display 2-digit precision
-        QString localValue( QLocale().toString( value * 100.0, 'g', 1 ) );
-        localValue.remove( QLocale().decimalPoint() + single_oh );
+        QString localValue( QLocale().toString( value * 100.0, 'f', 1 ) );
+        localValue.remove( QLocale().decimalPoint() + '0' );
         // remove a trailing zero in numbers like 66.70
         if ( localValue.right( 1 ) == QLatin1String( "0" ) && localValue.indexOf( QLocale().decimalPoint() ) > -1 )
             localValue.chop( 1 );

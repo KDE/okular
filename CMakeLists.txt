@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 2.8.12)
 
 set(QT_MIN_VERSION "5.2.0")
 
-find_package(ECM 1.2.0 CONFIG REQUIRED)
+find_package(ECM 1.7.0 CONFIG REQUIRED)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH})
 
 include(ECMInstallIcons)
@@ -16,7 +16,7 @@ include(KDEFrameworkCompilerSettings)
 include(KDEInstallDirs)
 include(KDECMakeSettings)
 include(ECMAddTests)
-
+include(ECMAddAppIcon) 
 
 find_package(Qt5 CONFIG REQUIRED COMPONENTS Core DBus Test Widgets PrintSupport Svg Qml Quick)
 find_package(Qt5 OPTIONAL_COMPONENTS TextToSpeech)

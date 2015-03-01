@@ -15,7 +15,7 @@
 #include <qdir.h>
 #include <kdebug.h>
 #include <krandom.h>
-#include <Phonon/Path>
+#include <phonon/path.h>
 #include <phonon/audiooutput.h>
 #include <phonon/abstractmediastream.h>
 #include <phonon/mediaobject.h>

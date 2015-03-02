@@ -13,6 +13,7 @@
 #include <kbookmark.h>
 
 #include "okularcore_export.h"
+#include <QObject>
 #include <QUrl>
 
 class QAction;

@@ -12,10 +12,10 @@ set(okularGenerator_tiff_SRCS
 
 add_library(okularGenerator_tiff MODULE ${okularGenerator_tiff_SRCS})
 target_link_libraries(okularGenerator_tiff okularcore ${TIFF_LIBRARIES})
-install(TARGETS okularGenerator_tiff DESTINATION ${PLUGIN_INSTALL_DIR})
+install(TARGETS okularGenerator_tiff DESTINATION ${KDE_INSTALL_PLUGINDIR})
 
 
 ########### install files ###############
 
-install( FILES libokularGenerator_tiff.desktop okularTiff.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
-install( PROGRAMS okularApplication_tiff.desktop active-documentviewer_tiff.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
+install( FILES libokularGenerator_tiff.desktop okularTiff.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
+install( PROGRAMS okularApplication_tiff.desktop active-documentviewer_tiff.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )

@@ -12,6 +12,7 @@ include(ECMSetupVersion)
 include(ECMOptionalAddSubdirectory)
 include(GenerateExportHeader)
 include(FeatureSummary)
+include(ECMAddAppIcon)
 include(KDEFrameworkCompilerSettings)
 include(KDEInstallDirs)
 include(KDECMakeSettings)
@@ -159,7 +160,7 @@ install( FILES
            core/observer.h
            ${CMAKE_CURRENT_BINARY_DIR}/okularcore_export.h
            ${CMAKE_CURRENT_BINARY_DIR}/settings_core.h
-         DESTINATION ${INCLUDE_INSTALL_DIR}/okular/core COMPONENT Devel)
+         DESTINATION ${KDE_INSTALL_INCLUDEDIR}/okular/core COMPONENT Devel)
 
 install( FILES
            interfaces/configinterface.h
@@ -167,7 +168,7 @@ install( FILES
            interfaces/printinterface.h
            interfaces/saveinterface.h
            interfaces/viewerinterface.h
-         DESTINATION ${INCLUDE_INSTALL_DIR}/okular/interfaces COMPONENT Devel)
+         DESTINATION ${KDE_INSTALL_INCLUDEDIR}/okular/interfaces COMPONENT Devel)
 
 ki18n_wrap_ui(okularcore_SRCS
    core/chooseenginewidget.ui
@@ -204,11 +205,11 @@ endif(LibKScreen_FOUND)
 
 set_target_properties(okularcore PROPERTIES VERSION 6.0.0 SOVERSION 6 )
 
-install(TARGETS okularcore ${INSTALL_TARGETS_DEFAULT_ARGS} )
+install(TARGETS okularcore ${KDE_INSTALL_TARGETS_DEFAULT_ARGS} )
 
-install(FILES conf/okular.kcfg DESTINATION ${KCFG_INSTALL_DIR})
-install(FILES conf/okular_core.kcfg DESTINATION ${KCFG_INSTALL_DIR})
-install(FILES core/okularGenerator.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
+install(FILES conf/okular.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
+install(FILES conf/okular_core.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
+install(FILES core/okularGenerator.desktop DESTINATION ${KDE_INSTALL_KSERVICETYPES5DIR})
 
 # okularpart
 
@@ -289,15 +290,15 @@ target_link_libraries(okularpart okularcore Qt5::Svg KF5::Parts ${MATH_LIB} Phon
 if (Qt5TextToSpeech_FOUND)
    target_link_libraries(okularpart Qt5::TextToSpeech)
 endif()
-install(TARGETS okularpart DESTINATION ${PLUGIN_INSTALL_DIR})
+install(TARGETS okularpart DESTINATION ${KDE_INSTALL_PLUGINDIR})
 
 
 ########### install files ###############
 
-install(FILES okular.upd DESTINATION ${DATA_INSTALL_DIR}/kconf_update)
+install(FILES okular.upd DESTINATION ${KDE_INSTALL_DATADIR}/kconf_update)
 
-install( FILES okular_part.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
-install( FILES part.rc part-viewermode.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/okular )
+install( FILES okular_part.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
+install( FILES part.rc part-viewermode.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/okular )
 
 ########### cmake files #################
 
@@ -306,7 +307,7 @@ write_basic_config_version_file(${CMAKE_CURRENT_BINARY_DIR}/OkularConfigVersion.
 
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/OkularConfig.cmake
               ${CMAKE_CURRENT_BINARY_DIR}/OkularConfigVersion.cmake
-        DESTINATION ${LIB_INSTALL_DIR}/cmake/Okular )
+        DESTINATION ${KDE_INSTALL_LIBDIR}/cmake/Okular )
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
 

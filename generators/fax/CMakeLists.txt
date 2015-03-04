@@ -11,10 +11,10 @@ add_library(okularGenerator_fax MODULE ${okularGenerator_fax_PART_SRCS})
 
 target_link_libraries(okularGenerator_fax okularcore  Qt5::Xml)
 
-install(TARGETS okularGenerator_fax DESTINATION ${PLUGIN_INSTALL_DIR})
+install(TARGETS okularGenerator_fax DESTINATION ${KDE_INSTALL_PLUGINDIR})
 
 
 ########### install files ###############
 
-install( FILES libokularGenerator_fax.desktop okularFax.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
-install( PROGRAMS okularApplication_fax.desktop active-documentviewer_fax.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
+install( FILES libokularGenerator_fax.desktop okularFax.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
+install( PROGRAMS okularApplication_fax.desktop active-documentviewer_fax.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )

@@ -4,8 +4,8 @@ include_directories(  ${QT_INCLUDES} )
 add_subdirectory(src)
 
 # QML-only thing
-install(DIRECTORY package/ DESTINATION ${DATA_INSTALL_DIR}/plasma/packages/org.kde.active.documentviewer)
+install(DIRECTORY package/ DESTINATION ${KDE_INSTALL_DATADIR}/plasma/packages/org.kde.active.documentviewer)
 
 
-install(FILES active-documentviewer.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+install(FILES active-documentviewer.desktop DESTINATION ${KDE_INSTALL_APPDIR})
 

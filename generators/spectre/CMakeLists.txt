@@ -25,12 +25,12 @@ add_library(okularGenerator_ghostview MODULE ${okularGenerator_ghostview_SRCS})
 
 target_link_libraries(okularGenerator_ghostview okularcore ${LIBSPECTRE_LIBRARY} KF5::KDELibs4Support Qt5::Xml Qt5::PrintSupport)
 
-install(TARGETS okularGenerator_ghostview DESTINATION ${PLUGIN_INSTALL_DIR})
+install(TARGETS okularGenerator_ghostview DESTINATION ${KDE_INSTALL_PLUGINDIR})
 
 
 ########### install files ###############
 
-install( FILES libokularGenerator_ghostview.desktop okularGhostview.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
-install( PROGRAMS okularApplication_ghostview.desktop active-documentviewer_ghostview.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
+install( FILES libokularGenerator_ghostview.desktop okularGhostview.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
+install( PROGRAMS okularApplication_ghostview.desktop active-documentviewer_ghostview.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
 
-ecm_install_icons(ICONS hi16-apps-okular-gv.png  hi32-app-okulars-gv.png DESTINATION ${DATA_INSTALL_DIR}/okular/icons)
+ecm_install_icons(ICONS hi16-apps-okular-gv.png  hi32-app-okulars-gv.png DESTINATION ${KDE_INSTALL_DATADIR}/okular/icons)

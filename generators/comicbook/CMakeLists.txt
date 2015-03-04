@@ -22,11 +22,11 @@ if (UNIX)
    target_link_libraries(okularGenerator_comicbook KF5::Pty )
 endif (UNIX)
 
-install(TARGETS okularGenerator_comicbook DESTINATION ${PLUGIN_INSTALL_DIR})
+install(TARGETS okularGenerator_comicbook DESTINATION ${KDE_INSTALL_PLUGINDIR})
 
 
 ########### install files ###############
 
-install( FILES libokularGenerator_comicbook.desktop okularComicbook.desktop DESTINATION  ${SERVICES_INSTALL_DIR} )
-install( PROGRAMS okularApplication_comicbook.desktop active-documentviewer_comicbook.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
+install( FILES libokularGenerator_comicbook.desktop okularComicbook.desktop DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
+install( PROGRAMS okularApplication_comicbook.desktop active-documentviewer_comicbook.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
 

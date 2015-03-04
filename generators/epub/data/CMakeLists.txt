@@ -2,4 +2,4 @@
 install(FILES
   okular-epub-sound-icon.png
   okular-epub-movie.png
-  DESTINATION ${DATA_INSTALL_DIR}/okular/pics)
+  DESTINATION ${KDE_INSTALL_DATADIR}/okular/pics)

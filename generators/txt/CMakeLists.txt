@@ -15,10 +15,10 @@ set(okularGenerator_txt_SRCS
 add_library(okularGenerator_txt MODULE ${okularGenerator_txt_SRCS})
 
 target_link_libraries(okularGenerator_txt okularcore Qt5::Core)
-install(TARGETS okularGenerator_txt DESTINATION ${PLUGIN_INSTALL_DIR})
+install(TARGETS okularGenerator_txt DESTINATION ${KDE_INSTALL_PLUGINDIR})
 
 
 ########### install files ###############
 
-install( FILES libokularGenerator_txt.desktop okularTxt.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
-install( PROGRAMS okularApplication_txt.desktop active-documentviewer_txt.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
+install( FILES libokularGenerator_txt.desktop okularTxt.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
+install( PROGRAMS okularApplication_txt.desktop active-documentviewer_txt.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )

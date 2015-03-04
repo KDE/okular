@@ -34,10 +34,10 @@ if(KActivities_FOUND)
  target_link_libraries(okular KF5::KActivities)
 endif(KActivities_FOUND)
 
-install(TARGETS okular ${INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS okular ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 
 
 # okular shell data files
 
-install( PROGRAMS org.kde.okular.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
-install( FILES shell.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/okular )
+install( PROGRAMS org.kde.okular.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
+install( FILES shell.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/okular )

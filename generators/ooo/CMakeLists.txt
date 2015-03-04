@@ -32,11 +32,11 @@ if (Qca-qt5_FOUND)
   target_link_libraries(okularGenerator_ooo okularcore qca-qt5)
 endif ()
 
-install(TARGETS okularGenerator_ooo DESTINATION ${PLUGIN_INSTALL_DIR})
+install(TARGETS okularGenerator_ooo DESTINATION ${KDE_INSTALL_PLUGINDIR})
 
 
 ########### install files ###############
 
-install( FILES libokularGenerator_ooo.desktop okularOoo.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
-install( PROGRAMS okularApplication_ooo.desktop active-documentviewer_ooo.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
+install( FILES libokularGenerator_ooo.desktop okularOoo.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
+install( PROGRAMS okularApplication_ooo.desktop active-documentviewer_ooo.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
 

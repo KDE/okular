@@ -37,11 +37,11 @@ add_library(okularGenerator_poppler MODULE ${okularGenerator_poppler_PART_SRCS})
 
 target_link_libraries(okularGenerator_poppler ${POPPLER_LIBRARY} okularcore Qt5::Xml Qt5::Widgets Qt5::Gui )
 
-install(TARGETS okularGenerator_poppler DESTINATION ${PLUGIN_INSTALL_DIR})
+install(TARGETS okularGenerator_poppler DESTINATION ${KDE_INSTALL_PLUGINDIR})
 
 
 ########### install files ###############
 
-install( FILES libokularGenerator_poppler.desktop okularPoppler.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
-install( PROGRAMS okularApplication_pdf.desktop active-documentviewer_pdf.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
+install( FILES libokularGenerator_poppler.desktop okularPoppler.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
+install( PROGRAMS okularApplication_pdf.desktop active-documentviewer_pdf.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
 

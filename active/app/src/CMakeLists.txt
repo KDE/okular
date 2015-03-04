@@ -17,5 +17,5 @@ target_link_libraries(active-documentviewer
     ${ACTIVEAPP_LIBRARIES}
 )
 
-install(TARGETS active-documentviewer ${INSTALL_TARGETS_DEFAULT_ARGS} )
+install(TARGETS active-documentviewer ${KDE_INSTALL_TARGETS_DEFAULT_ARGS} )
 

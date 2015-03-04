@@ -23,7 +23,6 @@
 #include <qsizegrip.h>
 #include <qstyle.h>
 #include <qtoolbutton.h>
-#include <kglobal.h>
 #include <KLocalizedString>
 #include <ktextedit.h>
 #include <QtCore/QDebug>

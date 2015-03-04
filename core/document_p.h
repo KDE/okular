@@ -92,6 +92,7 @@ class DocumentPrivate
             m_memCheckTimer( 0 ),
             m_saveBookmarksTimer( 0 ),
             m_generator( 0 ),
+            m_walletGenerator( 0 ),
             m_generatorsLoaded( false ),
             m_pageController( 0 ),
             m_closingLoop( 0 ),
@@ -246,6 +247,7 @@ class DocumentPrivate
         QHash<QString, GeneratorInfo> m_loadedGenerators;
         Generator * m_generator;
         QString m_generatorName;
+        Generator * m_walletGenerator;
         bool m_generatorsLoaded;
         QVector< Page * > m_pagesVector;
         QVector< VisiblePageRect * > m_pageRects;

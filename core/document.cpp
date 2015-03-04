@@ -915,6 +915,8 @@ Document::OpenResult DocumentPrivate::openDocumentInternal( const KService::Ptr&
 {
     QString propName = offer->name();
     QHash< QString, GeneratorInfo >::const_iterator genIt = m_loadedGenerators.constFind( propName );
+    QString catalogName;
+    m_walletGenerator = 0;
     if ( genIt != m_loadedGenerators.constEnd() )
     {
         m_generator = genIt.value().generator;
@@ -976,6 +978,12 @@ Document::OpenResult DocumentPrivate::openDocumentInternal( const KService::Ptr&
     {
         m_generator->d_func()->m_document = 0;
         QObject::disconnect( m_generator, 0, m_parent, 0 );
+        // TODO this is a bit of a hack, since basically means that
+        // you can only call walletDataForFile after calling openDocument
+        // but since in reality it's what happens I've decided not to refactor/break API
+        // One solution is just kill walletDataForFile and make OpenResult be an object
+        // where the wallet data is also returned when OpenNeedsPassword
+        m_walletGenerator = m_generator;
         m_generator = 0;
 
         qDeleteAll( m_pagesVector );
@@ -2562,6 +2570,7 @@ void Document::closeDocument()
     d->m_generator = 0;
     d->m_generatorName = QString();
     d->m_url = QUrl();
+    d->m_walletGenerator = 0;
     d->m_docFileName = QString();
     d->m_xmlFileName = QString();
     delete d->m_tempFile;
@@ -4553,6 +4562,8 @@ void Document::walletDataForFile( const QString &fileName, QString *walletName, 
 {
     if (d->m_generator) {
         d->m_generator->walletDataForFile( fileName, walletName, walletFolder, walletKey );
+    } else if (d->m_walletGenerator) {
+        d->m_walletGenerator->walletDataForFile( fileName, walletName, walletFolder, walletKey );
     }
 }
 

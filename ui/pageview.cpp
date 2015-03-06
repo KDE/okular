@@ -627,11 +627,12 @@ void PageView::setupActions( KActionCollection * ac )
     ta->addAction( d->aMouseTableSelect );
 
     // speak actions
+#ifdef HAVE_SPEECH
     d->aSpeakDoc = new QAction( QIcon::fromTheme( "text-speak" ), i18n( "Speak Whole Document" ), this );
     ac->addAction( "speak_document", d->aSpeakDoc );
     d->aSpeakDoc->setEnabled( false );
     connect( d->aSpeakDoc, SIGNAL(triggered()), SLOT(slotSpeakDocument()) );
-
+    
     d->aSpeakPage = new QAction( QIcon::fromTheme( "text-speak" ), i18n( "Speak Current Page" ), this );
     ac->addAction( "speak_current_page", d->aSpeakPage );
     d->aSpeakPage->setEnabled( false );
@@ -641,6 +642,11 @@ void PageView::setupActions( KActionCollection * ac )
     ac->addAction( "speak_stop_all", d->aSpeakStop );
     d->aSpeakStop->setEnabled( false );
     connect( d->aSpeakStop, SIGNAL(triggered()), SLOT(slotStopSpeaks()) );
+#else
+    d->aSpeakDoc = 0;
+    d->aSpeakPage = 0;
+    d->aSpeakStop = 0;
+#endif
 
     // Other actions
     QAction * su  = new QAction(i18n("Scroll Up"), this);

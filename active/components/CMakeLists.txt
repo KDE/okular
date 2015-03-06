@@ -1,6 +1,6 @@
 project(okular)
 
-add_definitions(${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
+add_definitions(${QT_DEFINITIONS})
 include_directories(
    ${CMAKE_CURRENT_SOURCE_DIR}
    ${CMAKE_BINARY_DIR}
@@ -16,8 +16,6 @@ set(okular_SRCS
     documentitem.cpp
     thumbnailitem.cpp
     )
-
-qt4_automoc(${okular_SRCS})
 
 add_library(okularplugin SHARED ${okular_SRCS})
 target_link_libraries(okularplugin

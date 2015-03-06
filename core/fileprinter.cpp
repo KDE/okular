@@ -24,8 +24,6 @@
 
 #include <KProcess>
 #include <KShell>
-#include <kstandarddirs.h>
-#include <ktempdir.h>
 #include <QtCore/QDebug>
 #include <kdeversion.h>
 #include <QStandardPaths>
@@ -121,9 +119,9 @@ int FilePrinter::doPrintFiles( QPrinter &printer, QStringList fileList, FileDele
         //Some distros name the CUPS version of lpr as lpr-cups or lpr.cups so try those first 
         //before default to lpr, or failing that to lp
 
-        if ( !KStandardDirs::findExe("lpr-cups").isEmpty() ) {
+        if ( !QStandardPaths::findExecutable("lpr-cups").isEmpty() ) {
             exe = "lpr-cups";
-        } else if ( !KStandardDirs::findExe("lpr.cups").isEmpty() ) {
+        } else if ( !QStandardPaths::findExecutable("lpr.cups").isEmpty() ) {
             exe = "lpr.cups";
         } else if ( !QStandardPaths::findExecutable("lpr").isEmpty() ) {
             exe = "lpr";

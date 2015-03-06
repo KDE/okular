@@ -12,7 +12,7 @@
 #include <qprintdialog.h>
 #include <qwidget.h>
 #include <kglobal.h>
-#include <ktabwidget.h>
+#include <qtabwidget.h>
 
 #include "../shell/okular_main.h"
 #include "../shell/shell.h"

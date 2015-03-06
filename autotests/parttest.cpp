@@ -15,7 +15,6 @@
 #include <KConfigDialog>
 #include <KGlobal>
 #include <KStandardDirs>
-#include <KTempDir>
 #include <KAboutData>
 
 #include <QTreeView>

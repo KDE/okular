@@ -2274,6 +2274,15 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
 
     d->leftClickTimer.stop();
 
+    if ( d->mouseAnn )
+    {
+        // Just finished to move the annotation
+        d->mouseAnn->setFlags( d->mouseAnn->flags() & ~Okular::Annotation::BeingMoved );
+        d->document->translatePageAnnotation(d->mouseAnnPageNum, d->mouseAnn, Okular::NormalizedPoint( 0.0, 0.0 ) );
+        setCursor( Qt::ArrowCursor );
+        d->mouseAnn = 0;
+    }
+
     // don't perform any mouse action when no document is shown..
     if ( d->items.isEmpty() )
     {
@@ -2305,15 +2314,6 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
         PageViewItem * pageItem = pickItemOnPoint( eventPos.x(), eventPos.y() );
         d->annotator->routeMouseEvent( e, pageItem );
         return;
-    }
-
-    if ( d->mouseAnn )
-    {
-        // Just finished to move the annotation
-        d->mouseAnn->setFlags( d->mouseAnn->flags() & ~Okular::Annotation::BeingMoved );
-        d->document->translatePageAnnotation(d->mouseAnnPageNum, d->mouseAnn, Okular::NormalizedPoint( 0.0, 0.0 ) );
-        setCursor( Qt::ArrowCursor );
-        d->mouseAnn = 0;
     }
 
     bool leftButton = e->button() == Qt::LeftButton;

@@ -2125,7 +2125,7 @@ void PageView::mousePressEvent( QMouseEvent * e )
                         d->leftClickTimer.start( QApplication::doubleClickInterval() + 10 );
                 }
             }
-            else if ( rightButton )
+            else if ( rightButton && !d->mouseAnn )
             {
                 PageViewItem * pageItem = pickItemOnPoint( eventPos.x(), eventPos.y() );
                 if ( pageItem )
@@ -2414,7 +2414,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
 #endif
                 }
             }
-            else if ( rightButton )
+            else if ( rightButton && !d->mouseAnn )
             {
                 if ( pageItem && pageItem == pageItemPressPos &&
                      ( (d->mousePressPos - e->globalPos()).manhattanLength() < QApplication::startDragDistance() ) )

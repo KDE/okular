@@ -2274,7 +2274,10 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
 
     d->leftClickTimer.stop();
 
-    if ( d->mouseAnn )
+    const bool leftButton = e->button() == Qt::LeftButton;
+    const bool rightButton = e->button() == Qt::RightButton;
+
+    if ( d->mouseAnn && leftButton )
     {
         // Just finished to move the annotation
         d->mouseAnn->setFlags( d->mouseAnn->flags() & ~Okular::Annotation::BeingMoved );
@@ -2316,8 +2319,6 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
         return;
     }
 
-    bool leftButton = e->button() == Qt::LeftButton;
-    bool rightButton = e->button() == Qt::RightButton;
     switch ( d->mouseMode )
     {
         case Okular::Settings::EnumMouseMode::Browse:{

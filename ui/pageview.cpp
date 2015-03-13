@@ -2125,7 +2125,7 @@ void PageView::mousePressEvent( QMouseEvent * e )
                         d->leftClickTimer.start( QApplication::doubleClickInterval() + 10 );
                 }
             }
-            else if ( rightButton )
+            else if ( rightButton && !d->mouseAnn )
             {
                 PageViewItem * pageItem = pickItemOnPoint( eventPos.x(), eventPos.y() );
                 if ( pageItem )
@@ -2274,6 +2274,18 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
 
     d->leftClickTimer.stop();
 
+    const bool leftButton = e->button() == Qt::LeftButton;
+    const bool rightButton = e->button() == Qt::RightButton;
+
+    if ( d->mouseAnn && leftButton )
+    {
+        // Just finished to move the annotation
+        d->mouseAnn->setFlags( d->mouseAnn->flags() & ~Okular::Annotation::BeingMoved );
+        d->document->translatePageAnnotation(d->mouseAnnPageNum, d->mouseAnn, Okular::NormalizedPoint( 0.0, 0.0 ) );
+        setCursor( Qt::ArrowCursor );
+        d->mouseAnn = 0;
+    }
+
     // don't perform any mouse action when no document is shown..
     if ( d->items.isEmpty() )
     {
@@ -2307,17 +2319,6 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
         return;
     }
 
-    if ( d->mouseAnn )
-    {
-        // Just finished to move the annotation
-        d->mouseAnn->setFlags( d->mouseAnn->flags() & ~Okular::Annotation::BeingMoved );
-        d->document->translatePageAnnotation(d->mouseAnnPageNum, d->mouseAnn, Okular::NormalizedPoint( 0.0, 0.0 ) );
-        setCursor( Qt::ArrowCursor );
-        d->mouseAnn = 0;
-    }
-
-    bool leftButton = e->button() == Qt::LeftButton;
-    bool rightButton = e->button() == Qt::RightButton;
     switch ( d->mouseMode )
     {
         case Okular::Settings::EnumMouseMode::Browse:{
@@ -2413,7 +2414,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
 #endif
                 }
             }
-            else if ( rightButton )
+            else if ( rightButton && !d->mouseAnn )
             {
                 if ( pageItem && pageItem == pageItemPressPos &&
                      ( (d->mousePressPos - e->globalPos()).manhattanLength() < QApplication::startDragDistance() ) )

@@ -130,6 +130,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
 
 
         // misc variables for document info and synopsis caching
+        QString documentFilePath;
         bool docSynopsisDirty;
         Okular::DocumentSynopsis docSyn;
         mutable bool docEmbeddedFilesDirty;

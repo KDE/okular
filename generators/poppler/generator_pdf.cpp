@@ -461,6 +461,7 @@ Okular::Document::OpenResult PDFGenerator::loadDocumentWithPassword( const QStri
 #endif
     // create PDFDoc for the given file
     pdfdoc = Poppler::Document::load( filePath, 0, 0 );
+    documentFilePath = filePath;
     return init(pagesVector, password);
 }
 
@@ -475,6 +476,7 @@ Okular::Document::OpenResult PDFGenerator::loadDocumentFromDataWithPassword( con
 #endif
     // create PDFDoc for the given file
     pdfdoc = Poppler::Document::loadFromData( fileData, 0, 0 );
+    documentFilePath = QString();
     return init(pagesVector, password);
 }
 
@@ -1010,105 +1012,116 @@ bool PDFGenerator::print( QPrinter& printer )
     return true;
 
 #else
-#ifdef DUMMY_QPRINTER_COPY
-    // Get the real page size to pass to the ps generator
-    QPrinter dummy( QPrinter::PrinterResolution );
-    dummy.setFullPage( true );
-    dummy.setOrientation( printer.orientation() );
-    dummy.setPageSize( printer.pageSize() );
-    dummy.setPaperSize( printer.paperSize( QPrinter::Millimeter ), QPrinter::Millimeter );
-    int width = dummy.width();
-    int height = dummy.height();
-#else
-    int width = printer.width();
-    int height = printer.height();
-#endif
+    // TODO For printAnnots and printForceRaster we still need the ps converter
+    // TODO If we opened from data or the file is gone we still need the ps converter (or maybe the pdf converter would work too)
+// #ifdef DUMMY_QPRINTER_COPY
+//     // Get the real page size to pass to the ps generator
+//     QPrinter dummy( QPrinter::PrinterResolution );
+//     dummy.setFullPage( true );
+//     dummy.setOrientation( printer.orientation() );
+//     dummy.setPageSize( printer.pageSize() );
+//     dummy.setPaperSize( printer.paperSize( QPrinter::Millimeter ), QPrinter::Millimeter );
+//     int width = dummy.width();
+//     int height = dummy.height();
+// #else
+//     int width = printer.width();
+//     int height = printer.height();
+// #endif
+// 
+//     if (width <= 0 || height <= 0)
+//     {
+//         lastPrintError = InvalidPageSizePrintError;
+//         return false;
+//     }
+// 
+//     // Create the tempfile to send to FilePrinter, which will manage the deletion
+//     KTemporaryFile tf;
+//     tf.setSuffix( ".ps" );
+//     if ( !tf.open() )
+//     {
+//         lastPrintError = TemporaryFileOpenPrintError;
+//         return false;
+//     }
+//     QString tempfilename = tf.fileName();
+// 
+//     // Generate the list of pages to be printed as selected in the print dialog
+//     QList<int> pageList = Okular::FilePrinter::pageList( printer, pdfdoc->numPages(),
+//                                                          document()->currentPage() + 1,
+//                                                          document()->bookmarkedPageList() );
+// 
+//     // TODO rotation
+// 
+//     tf.setAutoRemove(false);
+// 
+//     QString pstitle = metaData(QLatin1String("Title"), QVariant()).toString();
+//     if ( pstitle.trimmed().isEmpty() )
+//     {
+//         pstitle = document()->currentDocument().fileName();
+//     }
+// 
+//     bool printAnnots = true;
+//     bool forceRasterize = false;
+//     if ( pdfOptionsPage )
+//     {
+//         printAnnots = pdfOptionsPage->printAnnots();
+//         forceRasterize = pdfOptionsPage->printForceRaster();
+//     }
+// 
+//     Poppler::PSConverter *psConverter = pdfdoc->psConverter();
+// 
+//     psConverter->setOutputDevice(&tf);
+// 
+//     psConverter->setPageList(pageList);
+//     psConverter->setPaperWidth(width);
+//     psConverter->setPaperHeight(height);
+//     psConverter->setRightMargin(0);
+//     psConverter->setBottomMargin(0);
+//     psConverter->setLeftMargin(0);
+//     psConverter->setTopMargin(0);
+//     psConverter->setStrictMargins(false);
+//     psConverter->setForceRasterize(forceRasterize);
+//     psConverter->setTitle(pstitle);
+// 
+// #ifdef HAVE_POPPLER_0_20
+//     if (!printAnnots)
+//         psConverter->setPSOptions(psConverter->psOptions() | Poppler::PSConverter::HideAnnotations );
+// #endif
+// 
+//     userMutex()->lock();
+//     if (psConverter->convert())
+//     {
+//         userMutex()->unlock();
+//         delete psConverter;
+//         tf.close();
+//         int ret = Okular::FilePrinter::printFile( printer, tempfilename,
+//                                                   document()->orientation(),
+//                                                   Okular::FilePrinter::SystemDeletesFiles,
+//                                                   Okular::FilePrinter::ApplicationSelectsPages,
+//                                                   document()->bookmarkedPageRange() );
+// 
+//         lastPrintError = Okular::FilePrinter::printError( ret );
+// 
+//         return (lastPrintError == NoPrintError);
+//     }
+//     else
+//     {
+//         lastPrintError = FileConversionPrintError;
+//         delete psConverter;
+//         userMutex()->unlock();
+//     }
+// 
+//     tf.close();
+// 
+//     return false;
+    int ret = Okular::FilePrinter::printFile( printer, documentFilePath,
+                                              document()->orientation(),
+                                              Okular::FilePrinter::ApplicationDeletesFiles,
+                                              Okular::FilePrinter::SystemSelectsPages,
+                                              document()->bookmarkedPageRange() );
 
-    if (width <= 0 || height <= 0)
-    {
-        lastPrintError = InvalidPageSizePrintError;
-        return false;
-    }
+    lastPrintError = Okular::FilePrinter::printError( ret );
 
-    // Create the tempfile to send to FilePrinter, which will manage the deletion
-    KTemporaryFile tf;
-    tf.setSuffix( ".ps" );
-    if ( !tf.open() )
-    {
-        lastPrintError = TemporaryFileOpenPrintError;
-        return false;
-    }
-    QString tempfilename = tf.fileName();
-
-    // Generate the list of pages to be printed as selected in the print dialog
-    QList<int> pageList = Okular::FilePrinter::pageList( printer, pdfdoc->numPages(),
-                                                         document()->currentPage() + 1,
-                                                         document()->bookmarkedPageList() );
-
-    // TODO rotation
-
-    tf.setAutoRemove(false);
-
-    QString pstitle = metaData(QLatin1String("Title"), QVariant()).toString();
-    if ( pstitle.trimmed().isEmpty() )
-    {
-        pstitle = document()->currentDocument().fileName();
-    }
-
-    bool printAnnots = true;
-    bool forceRasterize = false;
-    if ( pdfOptionsPage )
-    {
-        printAnnots = pdfOptionsPage->printAnnots();
-        forceRasterize = pdfOptionsPage->printForceRaster();
-    }
-
-    Poppler::PSConverter *psConverter = pdfdoc->psConverter();
-
-    psConverter->setOutputDevice(&tf);
-
-    psConverter->setPageList(pageList);
-    psConverter->setPaperWidth(width);
-    psConverter->setPaperHeight(height);
-    psConverter->setRightMargin(0);
-    psConverter->setBottomMargin(0);
-    psConverter->setLeftMargin(0);
-    psConverter->setTopMargin(0);
-    psConverter->setStrictMargins(false);
-    psConverter->setForceRasterize(forceRasterize);
-    psConverter->setTitle(pstitle);
-
-#ifdef HAVE_POPPLER_0_20
-    if (!printAnnots)
-        psConverter->setPSOptions(psConverter->psOptions() | Poppler::PSConverter::HideAnnotations );
-#endif
-
-    userMutex()->lock();
-    if (psConverter->convert())
-    {
-        userMutex()->unlock();
-        delete psConverter;
-        tf.close();
-        int ret = Okular::FilePrinter::printFile( printer, tempfilename,
-                                                  document()->orientation(),
-                                                  Okular::FilePrinter::SystemDeletesFiles,
-                                                  Okular::FilePrinter::ApplicationSelectsPages,
-                                                  document()->bookmarkedPageRange() );
-
-        lastPrintError = Okular::FilePrinter::printError( ret );
-
-        return (lastPrintError == NoPrintError);
-    }
-    else
-    {
-        lastPrintError = FileConversionPrintError;
-        delete psConverter;
-        userMutex()->unlock();
-    }
-
-    tf.close();
-
-    return false;
+    return (lastPrintError == NoPrintError);
 #endif
 }
 

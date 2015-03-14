@@ -2730,6 +2730,13 @@ void Part::doPrint(QPrinter &printer)
         return;
     }
 
+#if QT_VERSION >= KDE_MAKE_VERSION(4,7,0)
+        if ( printer.printRange() == QPrinter::CurrentPage ) {
+            printer.setPrintRange(QPrinter::PageRange);
+            printer.setFromTo(currentPage(), currentPage());
+        }
+#endif
+
     if (!m_document->print(printer))
     {
         const QString error = m_document->printError();

@@ -60,7 +60,7 @@ public:
      * @param documentOrientation the orientation stored in the document itself
      * @param fileDeletePolicy if the application or system deletes the file
      * @param pageSelectPolicy if the application or system selects the pages to print
-     * @param pageRange page range to print if SystemSlectsPages and user chooses Selection in Print Dialog
+     * @param pageRange page range to print if SystemSelectsPages and user chooses Selection in Print Dialog
      *
      * @returns Returns exit code:
      *          -9 if lpr not found

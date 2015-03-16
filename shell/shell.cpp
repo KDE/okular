@@ -565,10 +565,12 @@ void Shell::applyOptionsToPart( QObject* part, const QString &serializedOptions 
 
 void Shell::connectPart( QObject* part )
 {
+    connect( this, SIGNAL(moveSplitter(int)), part, SLOT(moveSplitter(int)) );
     connect( part, SIGNAL(enablePrintAction(bool)), this, SLOT(setPrintEnabled(bool)));
     connect( part, SIGNAL(enableCloseAction(bool)), this, SLOT(setCloseEnabled(bool)));
     connect( part, SIGNAL(mimeTypeChanged(KMimeType::Ptr)), this, SLOT(setTabIcon(KMimeType::Ptr)));
     connect( part, SIGNAL(urlsDropped(KUrl::List)), this, SLOT(handleDroppedUrls(KUrl::List)) );
+    connect( part, SIGNAL(fitWindowToPage(QSize,QSize)), this, SLOT(slotFitWindowToPage(QSize,QSize)) );
 }
 
 void Shell::print()
@@ -663,6 +665,15 @@ void Shell::handleTabDrop( QDropEvent* event )
 void Shell::moveTabData( int from, int to )
 {
    m_tabs.move( from, to );
+}
+
+void Shell::slotFitWindowToPage(const QSize& pageViewSize, const QSize& pageSize )
+{
+    const int xOffset = pageViewSize.width() - pageSize.width();
+    const int yOffset = pageViewSize.height() - pageSize.height();
+    showNormal();
+    resize( width() - xOffset, height() - yOffset);
+    moveSplitter(pageSize.width());
 }
 
 /* kate: replace-tabs on; indent-width 4; */

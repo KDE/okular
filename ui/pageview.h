@@ -124,6 +124,7 @@ Q_OBJECT
         void mouseBackButtonClick();
         void mouseForwardButtonClick();
         void escPressed();
+        void fitWindowToPage( const QSize& pageViewPortSize, const QSize& pageSize );
 
     protected:
         void resizeEvent( QResizeEvent* );
@@ -249,6 +250,7 @@ Q_OBJECT
         void slotProcessMovieAction( const Okular::MovieAction *action );
         void slotProcessRenditionAction( const Okular::RenditionAction *action );
         void slotToggleChangeColors();
+        void slotFitWindowToPage();
 };
 
 #endif

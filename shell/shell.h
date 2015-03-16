@@ -121,6 +121,11 @@ private slots:
   void testTabDrop( const QDragMoveEvent* event, bool& accept );
   void handleTabDrop( QDropEvent* event );
   void moveTabData( int from, int to );
+  
+  void slotFitWindowToPage( const QSize& pageViewSize, const QSize& pageSize );
+  
+signals:
+  void moveSplitter(int sideWidgetSize);
 
 private:
   void setupAccel();

@@ -215,6 +215,7 @@ public:
     KAction * aSpeakStop;
     KActionCollection * actionCollection;
     QActionGroup * mouseModeActionGroup;
+    KAction * aFitWindowToPage;
 
     int setting_viewCols;
 
@@ -490,6 +491,12 @@ void PageView::setupViewerActions( KActionCollection * ac )
     d->aZoomAutoFit  = new KToggleAction(KIcon( "zoom-fit-best" ), i18n("&Auto Fit"), this);
     ac->addAction("view_auto_fit", d->aZoomAutoFit );
     connect( d->aZoomAutoFit, SIGNAL(toggled(bool)), SLOT(slotAutoFitToggled(bool)) );
+
+    d->aFitWindowToPage = new KAction(KIcon( "zoom-fit-width" ), i18n("Fit Wi&ndow to Page"), this);
+    d->aFitWindowToPage->setEnabled( Okular::Settings::viewMode() == (int)Okular::Settings::EnumViewMode::Single );
+    d->aFitWindowToPage->setShortcut( QKeySequence(Qt::CTRL + Qt::Key_J) );
+    ac->addAction( "fit_window_to_page", d->aFitWindowToPage );
+    connect( d->aFitWindowToPage, SIGNAL(triggered()), this, SLOT(slotFitWindowToPage()) );
 
     // View-Layout actions
     d->aViewMode = new KActionMenu( KIcon( "view-split-left-right" ), i18n( "&View Mode" ), this );
@@ -1077,6 +1084,8 @@ void PageView::updateActionState( bool haspages, bool documentChanged, bool hasf
     }
     if (d->aMouseMagnifier)
         d->aMouseMagnifier->setEnabled(d->document->supportsTiles());
+    if ( d->aFitWindowToPage )
+        d->aFitWindowToPage->setEnabled( haspages && !Okular::Settings::viewContinuous() );
 }
 
 bool PageView::areSourceLocationsShownGraphically() const
@@ -4012,8 +4021,15 @@ void PageView::toggleFormWidgets( bool on )
 void PageView::resizeContentArea( const QSize & newSize )
 {
     const QSize vs = viewport()->size();
-    horizontalScrollBar()->setRange( 0, newSize.width() - vs.width() );
-    verticalScrollBar()->setRange( 0, newSize.height() - vs.height() );
+    int hRange = newSize.width() - vs.width();
+    int vRange = newSize.height() - vs.height();
+    if ( horizontalScrollBar()->isVisible() && hRange == verticalScrollBar()->width() && verticalScrollBar()->isVisible() && vRange == horizontalScrollBar()->height() && Okular::Settings::showScrollBars() )
+    {
+        hRange = 0;
+        vRange = 0;
+    }
+    horizontalScrollBar()->setRange( 0, hRange );
+    verticalScrollBar()->setRange( 0, vRange );
     updatePageStep();
 }
 
@@ -4118,6 +4134,9 @@ void PageView::slotRelayoutPages()
     const bool centerLastPage = centerFirstPage && pageCount % 2 == 0;
     const bool continuousView = Okular::Settings::viewContinuous();
     const int nCols = overrideCentering ? 1 : viewColumns();
+    const bool singlePageViewMode = Okular::Settings::viewMode() == Okular::Settings::EnumViewMode::Single;
+
+    d->aFitWindowToPage->setEnabled( !continuousView && singlePageViewMode );
 
     // set all items geometry and resize contents. handle 'continuous' and 'single' modes separately
 
@@ -5060,6 +5079,26 @@ void PageView::slotToggleChangeColors()
     Okular::SettingsCore::setChangeColors( !Okular::SettingsCore::changeColors() );
     Okular::Settings::self()->writeConfig();
     viewport()->update();
+}
+
+void PageView::slotFitWindowToPage()
+{
+    PageViewItem currentPageItem = NULL;
+    QSize viewportSize = viewport()->size();
+    foreach ( const PageViewItem * pageItem, d->items )
+    {
+        if ( pageItem->isVisible() )
+        {
+            currentPageItem = *pageItem;
+            break;
+        }
+    }
+    const QSize pageSize = QSize( currentPageItem.uncroppedWidth() + kcolWidthMargin, currentPageItem.uncroppedHeight() + krowHeightMargin );
+    if ( verticalScrollBar()->isVisible() )
+        viewportSize.setWidth( viewportSize.width() + verticalScrollBar()->width() );
+    if ( horizontalScrollBar()->isVisible() )
+        viewportSize.setHeight( viewportSize.height() + horizontalScrollBar()->height() );
+    emit fitWindowToPage( viewportSize, pageSize );
 }
 
 //END private SLOTS

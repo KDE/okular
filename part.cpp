@@ -455,6 +455,7 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     connect( m_document, SIGNAL(warning(QString,int)), this, SLOT(warningMessage(QString,int)) );
     connect( m_document, SIGNAL(notice(QString,int)), this, SLOT(noticeMessage(QString,int)) );
     connect( m_document, SIGNAL(sourceReferenceActivated(const QString&,int,int,bool*)), this, SLOT(slotHandleActivatedSourceReference(const QString&,int,int,bool*)) );
+    connect( m_pageView, SIGNAL(fitWindowToPage(QSize,QSize)), this, SIGNAL(fitWindowToPage(QSize,QSize)) );
     rightLayout->addWidget( m_pageView );
     m_findBar = new FindBar( m_document, rightContainer );
     rightLayout->addWidget( m_findBar );
@@ -2804,6 +2805,11 @@ void Part::noticeMessage( const QString &message, int duration )
 {
     // less important message -> simpleer display widget in the PageView
     m_pageView->displayMessage( message, QString(), PageViewMessage::Info, duration );
+}
+
+void Part::moveSplitter(int sideWidgetSize)
+{
+    m_sidebar->moveSplitter( sideWidgetSize );
 }
 
 

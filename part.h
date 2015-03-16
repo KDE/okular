@@ -222,8 +222,6 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
     public slots:
         // connected to Shell action (and browserExtension), not local one
         void slotPrint();
-        void restoreDocument(const KConfigGroup &group);
-        void saveDocumentRestoreInfo(KConfigGroup &group);
         void slotFileDirty( const QString& );
         void slotDoFileDirty();
         void psTransformEnded(int, QProcess::ExitStatus);

@@ -59,6 +59,9 @@
 static const char *shouldShowMenuBarComingFromFullScreen = "shouldShowMenuBarComingFromFullScreen";
 static const char *shouldShowToolBarComingFromFullScreen = "shouldShowToolBarComingFromFullScreen";
 
+static const char* const SESSION_URL_KEY = "Urls";
+static const char* const SESSION_TAB_KEY = "ActiveTab";
+
 Shell::Shell( const QString &serializedOptions )
   : KParts::MainWindow(), m_menuBarWasShown(true), m_toolBarWasShown(true)
 #ifdef KActivities_FOUND
@@ -66,7 +69,7 @@ Shell::Shell( const QString &serializedOptions )
 #endif
     , m_isValid(true)
 {
-  setObjectName( QLatin1String( "okular::Shell" ) );
+  setObjectName( QLatin1String( "okular::Shell#" ) );
   setContextMenuPolicy( Qt::NoContextMenu );
   // set the shell's ui resource file
   setXMLFile("shell.rc");
@@ -106,6 +109,7 @@ Shell::Shell( const QString &serializedOptions )
 
     // then, setup our actions
     setupActions();
+    connect( QCoreApplication::instance(), SIGNAL(aboutToQuit()), SLOT(deleteLater()) );
     // and integrate the part's GUI with the shell's
     setupGUI(Keys | ToolBar | Save);
     createGUI(firstPart);
@@ -156,6 +160,7 @@ Shell::~Shell()
         {
            it->part->closeUrl( false );
         }
+        m_tabs.clear();
     }
     if (m_unique)
         QDBusConnection::sessionBus().unregisterService("org.kde.okular");
@@ -321,19 +326,31 @@ void Shell::setupActions()
 
 void Shell::saveProperties(KConfigGroup &group)
 {
-  // the 'config' object points to the session managed
-  // config file.  anything you write here will be available
-  // later when this app is restored
-    emit saveDocumentRestoreInfo(group);
+    // Gather lists of settings to preserve
+    QStringList urls;
+    for( int i = 0; i < m_tabs.size(); ++i )
+    {
+        urls.append( m_tabs[i].part->url().url() );
+    }
+    group.writePathEntry( SESSION_URL_KEY, urls );
+    group.writeEntry( SESSION_TAB_KEY, m_tabWidget->currentIndex() );
 }
 
 void Shell::readProperties(const KConfigGroup &group)
 {
-  // the 'config' object points to the session managed
-  // config file.  this function is automatically called whenever
-  // the app is being restored.  read in here whatever you wrote
-  // in 'saveProperties'
-    emit restoreDocument(group);
+    // Reopen documents based on saved settings
+    QStringList urls = group.readPathEntry( SESSION_URL_KEY, QStringList() );
+
+    while( !urls.isEmpty() )
+    {
+        openUrl( urls.takeFirst() );
+    }
+
+    int desiredTab = group.readEntry<int>( SESSION_TAB_KEY, 0 );
+    if( desiredTab < m_tabs.size() )
+    {
+        setActiveTab( desiredTab );
+    }
 }
 
 QStringList Shell::fileFormats() const
@@ -397,11 +414,6 @@ void Shell::fileOpen()
     {
         openUrl( url );
     }
-}
-
-void Shell::slotQuit()
-{
-    close();
 }
 
 void Shell::tryRaise()
@@ -553,8 +565,6 @@ void Shell::applyOptionsToPart( QObject* part, const QString &serializedOptions 
 
 void Shell::connectPart( QObject* part )
 {
-    connect( this, SIGNAL(restoreDocument(KConfigGroup)), part, SLOT(restoreDocument(KConfigGroup)));
-    connect( this, SIGNAL(saveDocumentRestoreInfo(KConfigGroup&)), part, SLOT(saveDocumentRestoreInfo(KConfigGroup&)));
     connect( part, SIGNAL(enablePrintAction(bool)), this, SLOT(setPrintEnabled(bool)));
     connect( part, SIGNAL(enableCloseAction(bool)), this, SLOT(setCloseEnabled(bool)));
     connect( part, SIGNAL(mimeTypeChanged(KMimeType::Ptr)), this, SLOT(setTabIcon(KMimeType::Ptr)));
@@ -654,7 +664,5 @@ void Shell::moveTabData( int from, int to )
 {
    m_tabs.move( from, to );
 }
-
-#include "shell.moc"
 
 /* kate: replace-tabs on; indent-width 4; */

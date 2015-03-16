@@ -2744,26 +2744,6 @@ void Part::doPrint(QPrinter &printer)
     }
 }
 
-
-void Part::restoreDocument(const KConfigGroup &group)
-{
-    KUrl url ( group.readPathEntry( "URL", QString() ) );
-    if ( url.isValid() )
-    {
-        QString viewport = group.readEntry( "Viewport" );
-        if (!viewport.isEmpty()) m_document->setNextDocumentViewport( Okular::DocumentViewport( viewport ) );
-        openUrl( url );
-    }
-}
-
-
-void Part::saveDocumentRestoreInfo(KConfigGroup &group)
-{
-    group.writePathEntry( "URL", url().url() );
-    group.writeEntry( "Viewport", m_document->viewport().toString() );
-}
-
-
 void Part::psTransformEnded(int exit, QProcess::ExitStatus status)
 {
     Q_UNUSED( exit )

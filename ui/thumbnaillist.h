@@ -12,11 +12,10 @@
 
 #include <qscrollarea.h>
 
-#include <kvbox.h>
 #include <qtoolbar.h>
 
 #include "core/observer.h"
-
+#include <QVBoxLayout>
 class ThumbnailListPrivate;
 
 namespace Okular {
@@ -76,10 +75,10 @@ Q_OBJECT
 /**
  * @short A vertical boxed container with zero size hint (for insertion on left toolbox)
  */
-class ThumbnailsBox : public KVBox
+class ThumbnailsBox : public QWidget
 {
     public:
-        ThumbnailsBox( QWidget * parent ) : KVBox( parent ) {}
+        ThumbnailsBox( QWidget * parent ) : QWidget( parent ) { QVBoxLayout *vbox = new QVBoxLayout(this); vbox->setMargin(0); vbox->setSpacing(0);}
         QSize sizeHint() const { return QSize(); }
 };
 

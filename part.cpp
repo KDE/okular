@@ -365,10 +365,12 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     enableTOC( false );
 
     // [left toolbox: Thumbnails and Bookmarks] | []
-    KVBox * thumbsBox = new ThumbnailsBox( 0 );
-    thumbsBox->setSpacing( 6 );
+    QWidget * thumbsBox = new ThumbnailsBox( 0 );
+    thumbsBox->layout()->setSpacing( 6 );
     m_searchWidget = new SearchWidget( thumbsBox, m_document );
+    thumbsBox->layout()->addWidget(m_searchWidget);
     m_thumbnailList = new ThumbnailList( thumbsBox, m_document );
+    thumbsBox->layout()->addWidget(m_thumbnailList);
     //	ThumbnailController * m_tc = new ThumbnailController( thumbsBox, m_thumbnailList );
     connect( m_thumbnailList, SIGNAL(rightClick(const Okular::Page*,QPoint)), this, SLOT(slotShowMenu(const Okular::Page*,QPoint)) );
     tbIndex = m_sidebar->addItem( thumbsBox, QIcon::fromTheme( "view-preview" ), i18n("Thumbnails") );

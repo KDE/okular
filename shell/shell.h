@@ -70,8 +70,6 @@ public:
   bool isValid() const;
 
 public slots:
-  void slotQuit();
-  
   Q_SCRIPTABLE Q_NOREPLY void tryRaise();
   Q_SCRIPTABLE bool openDocument(const QUrl &url, const QString &serializedOptions = QString() );
   Q_SCRIPTABLE bool canOpenDocs( int numDocs, int desktop );
@@ -89,6 +87,13 @@ protected:
    * with @ref saveProperties
    */
   void readProperties(const KConfigGroup&);
+
+  /**
+   * Expose internal functions for session restore testing
+   */
+  void savePropertiesInternal(KConfig* config, int num) {KMainWindow::savePropertiesInternal(config,num);}
+  void readPropertiesInternal(KConfig* config, int num) {KMainWindow::readPropertiesInternal(config,num);}
+
   void readSettings();
   void writeSettings();
   void setFullScreen( bool );
@@ -119,10 +124,11 @@ private slots:
   void testTabDrop( const QDragMoveEvent* event, bool& accept );
   void handleTabDrop( QDropEvent* event );
   void moveTabData( int from, int to );
-
+  
+  void slotFitWindowToPage( const QSize& pageViewSize, const QSize& pageSize );
+  
 signals:
-  void restoreDocument(const KConfigGroup &group);
-  void saveDocumentRestoreInfo(KConfigGroup &group);
+  void moveSplitter(int sideWidgetSize);
 
 private:
   void setupAccel();

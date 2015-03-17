@@ -11,8 +11,8 @@
 
 #include <qprintdialog.h>
 #include <qwidget.h>
-#include <kglobal.h>
 #include <qtabwidget.h>
+#include <kconfiggroup.h>
 
 #include "../shell/okular_main.h"
 #include "../shell/shell.h"
@@ -75,9 +75,25 @@ private slots:
     void testFileRemembersPagePosition();
     void test2FilesError_data();
     void test2FilesError();
+    void testSessionRestore_data();
+    void testSessionRestore();
 
 private:
 };
+
+QList<Shell*> getShells()
+{
+    QList<Shell*> shells;
+    foreach( KMainWindow* kmw, KMainWindow::memberList() )
+    {
+        Shell* shell = qobject_cast<Shell*>( kmw );
+        if( shell )
+        {
+            shells.append( shell );
+        }
+    }
+    return shells;
+}
 
 Shell *findShell(Shell *ignore = 0)
 {
@@ -469,6 +485,108 @@ void MainShellTest::test2FilesError()
     QVERIFY(!s);
 }
 
+void MainShellTest::testSessionRestore_data()
+{
+    QTest::addColumn<QStringList>("paths");
+    QTest::addColumn<QString>("options");
+    QTest::addColumn<bool>("useTabsOpen");
+    QTest::addColumn<bool>("useTabsRestore");
+
+    QStringList oneDocPaths( KDESRCDIR "data/file1.pdf" );
+    QStringList twoDocPaths( oneDocPaths );
+    twoDocPaths << KDESRCDIR "data/formSamples.pdf";
+
+    const QString options = ShellUtils::serializeOptions(false, false, false, false, QString());
+
+    QTest::newRow("1 doc, 1 window, tabs")      << oneDocPaths << options << true  << true;
+    QTest::newRow("2 docs, 1 window, tabs")     << twoDocPaths << options << true  << true;
+    QTest::newRow("2 docs, 2 windows, tabs")    << twoDocPaths << options << false << true;
+    QTest::newRow("2 docs, 2 windows, no tabs") << twoDocPaths << options << false << false;
+    QTest::newRow("2 docs, 1 window, no tabs")  << twoDocPaths << options << true  << false;
+}
+
+void MainShellTest::testSessionRestore()
+{
+    QFETCH( QStringList, paths );
+    QFETCH( QString, options );
+    QFETCH( bool, useTabsOpen );
+    QFETCH( bool, useTabsRestore );
+
+    Okular::Settings::self()->setShellOpenFileInTabs( useTabsOpen );
+
+    Okular::Status status = Okular::main( paths, options );
+    QCOMPARE( status, Okular::Success );
+
+    // Gather some information about the state
+    // Verify that the correct number of windows/tabs were opened
+    QList<Shell*> shells = getShells();
+    QVERIFY( !shells.isEmpty() );
+    int numDocs = 0;
+    foreach( Shell* shell, shells )
+    {
+        QTest::qWaitForWindowShown( shell );
+        numDocs += shell->m_tabs.size();
+    }
+
+    QCOMPARE( numDocs, paths.size() );
+    QCOMPARE( shells.size(), useTabsOpen ? 1 : paths.size() );
+    QTest::qWait( 100 );
+
+    // Simulate session shutdown. The actual shutdown path comes through
+    // QSessionManager XSMP handlers, then KApplication::commitData/saveState,
+    // then KMWSessionManager::commitData/saveState. Without simulating an X
+    // session manager, the best we can do here is to make a temporary Config
+    // and call KMainWindows save functions directly.
+    QTemporaryFile configFile;
+    QVERIFY( configFile.open() );
+
+    int numWindows = 0;
+    {   // Scope for config so that we can reconstruct from file
+        KConfig config( configFile.fileName(), KConfig::SimpleConfig );
+        foreach( Shell* shell, shells )
+        {
+            shell->savePropertiesInternal( &config, ++numWindows );
+            // Windows aren't necessarily closed on shutdown, but we'll use
+            // this as a way to trigger the destructor code, which is normally
+            // connected to the aboutToQuit signal
+            shell->close();
+        }
+    }
+
+    // Wait for shells to delete themselves. QTest::qWait doesn't do deferred
+    // deletions so we'll set up a full event loop to do that.
+    QEventLoop eventLoop;
+    QTimer::singleShot( 100, &eventLoop, SLOT(quit()) );
+    eventLoop.exec( QEventLoop::AllEvents );
+    shells = getShells();
+    QVERIFY( shells.isEmpty() );
+
+    Okular::Settings::self()->setShellOpenFileInTabs( useTabsRestore );
+
+    // Simulate session restore. We can't call KMainWindow::restore() directly
+    // because it asks for info from the session manager, which doesn't know
+    // about our temporary config. But the logic here mostly mirrors restore().
+    KConfig config( configFile.fileName(), KConfig::SimpleConfig );
+    for( int i = 1; i <= numWindows; ++i )
+    {
+        Shell* shell = new Shell;
+        shell->readPropertiesInternal( &config, i );
+        shell->show();
+    }
+
+    // Verify that the restore state is reasonable
+    shells = getShells();
+    QVERIFY( !shells.isEmpty() );
+    numDocs = 0;
+    foreach( Shell* shell, shells )
+    {
+        QTest::qWaitForWindowShown( shell );
+        numDocs += shell->m_tabs.size();
+    }
+
+    QCOMPARE( numDocs, paths.size() );
+    QCOMPARE( shells.size(), useTabsRestore ? numWindows : paths.size() );
+}
 
 QTEST_MAIN( MainShellTest )
 #include "mainshelltest.moc"

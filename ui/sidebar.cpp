@@ -645,6 +645,15 @@ bool Sidebar::isCollapsed() const
     return d->sideContainer->isHidden();
 }
 
+void Sidebar::moveSplitter(int sideWidgetSize)
+{
+    QList<int> splitterSizeList = d->splitter->sizes();
+    const int total = splitterSizeList.at( 0 ) + splitterSizeList.at( 1 );
+    splitterSizeList.replace( 0, total - sideWidgetSize );
+    splitterSizeList.replace( 1, sideWidgetSize );
+    d->splitter->setSizes( splitterSizeList );
+}
+
 void Sidebar::itemClicked( QListWidgetItem *item )
 {
     itemClicked( item, UncollapseIfCollapsed );

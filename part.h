@@ -159,6 +159,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         void enableCloseAction(bool enable);
         void mimeTypeChanged(QMimeType mimeType);
         void urlsDropped( const QList<QUrl>& urls );
+        void fitWindowToPage( const QSize& pageViewPortSize, const QSize& pageSize );
 
     protected:
         // reimplemented from KParts::ReadWritePart
@@ -222,8 +223,6 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
     public slots:
         // connected to Shell action (and browserExtension), not local one
         void slotPrint();
-        void restoreDocument(const KConfigGroup &group);
-        void saveDocumentRestoreInfo(KConfigGroup &group);
         void slotFileDirty( const QString& );
         void slotDoFileDirty();
         void psTransformEnded(int, QProcess::ExitStatus);
@@ -232,6 +231,8 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         void errorMessage( const QString &message, int duration = 0 );
         void warningMessage( const QString &message, int duration = -1 );
         void noticeMessage( const QString &message, int duration = -1 );
+
+        void moveSplitter( const int sideWidgetSize );
 
     private:
         Document::OpenResult doOpenFile(const QMimeType &mime, const QString &fileNameToOpen, bool *isCompressedFile);

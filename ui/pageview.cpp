@@ -224,6 +224,7 @@ public:
     QAction * aSpeakStop;
     KActionCollection * actionCollection;
     QActionGroup * mouseModeActionGroup;
+    QAction * aFitWindowToPage;
 
     int setting_viewCols;
 
@@ -506,6 +507,12 @@ void PageView::setupViewerActions( KActionCollection * ac )
     d->aZoomAutoFit  = new KToggleAction(QIcon::fromTheme( "zoom-fit-best" ), i18n("&Auto Fit"), this);
     ac->addAction("view_auto_fit", d->aZoomAutoFit );
     connect( d->aZoomAutoFit, SIGNAL(toggled(bool)), SLOT(slotAutoFitToggled(bool)) );
+
+    d->aFitWindowToPage = new QAction(QIcon::fromTheme( "zoom-fit-width" ), i18n("Fit Wi&ndow to Page"), this);
+    d->aFitWindowToPage->setEnabled( Okular::Settings::viewMode() == (int)Okular::Settings::EnumViewMode::Single );
+    d->aFitWindowToPage->setShortcut( QKeySequence(Qt::CTRL + Qt::Key_J) );
+    ac->addAction( "fit_window_to_page", d->aFitWindowToPage );
+    connect( d->aFitWindowToPage, SIGNAL(triggered()), this, SLOT(slotFitWindowToPage()) );
 
     // View-Layout actions
     d->aViewMode = new KActionMenu( QIcon::fromTheme( "view-split-left-right" ), i18n( "&View Mode" ), this );
@@ -1103,6 +1110,8 @@ void PageView::updateActionState( bool haspages, bool documentChanged, bool hasf
 #endif
     if (d->aMouseMagnifier)
         d->aMouseMagnifier->setEnabled(d->document->supportsTiles());
+    if ( d->aFitWindowToPage )
+        d->aFitWindowToPage->setEnabled( haspages && !Okular::Settings::viewContinuous() );
 }
 
 bool PageView::areSourceLocationsShownGraphically() const
@@ -2151,7 +2160,7 @@ void PageView::mousePressEvent( QMouseEvent * e )
                         d->leftClickTimer.start( QApplication::doubleClickInterval() + 10 );
                 }
             }
-            else if ( rightButton )
+            else if ( rightButton && !d->mouseAnn )
             {
                 PageViewItem * pageItem = pickItemOnPoint( eventPos.x(), eventPos.y() );
                 if ( pageItem )
@@ -2300,6 +2309,18 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
 
     d->leftClickTimer.stop();
 
+    const bool leftButton = e->button() == Qt::LeftButton;
+    const bool rightButton = e->button() == Qt::RightButton;
+
+    if ( d->mouseAnn && leftButton )
+    {
+        // Just finished to move the annotation
+        d->mouseAnn->setFlags( d->mouseAnn->flags() & ~Okular::Annotation::BeingMoved );
+        d->document->translatePageAnnotation(d->mouseAnnPageNum, d->mouseAnn, Okular::NormalizedPoint( 0.0, 0.0 ) );
+        setCursor( Qt::ArrowCursor );
+        d->mouseAnn = 0;
+    }
+
     // don't perform any mouse action when no document is shown..
     if ( d->items.isEmpty() )
     {
@@ -2333,17 +2354,6 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
         return;
     }
 
-    if ( d->mouseAnn )
-    {
-        // Just finished to move the annotation
-        d->mouseAnn->setFlags( d->mouseAnn->flags() & ~Okular::Annotation::BeingMoved );
-        d->document->translatePageAnnotation(d->mouseAnnPageNum, d->mouseAnn, Okular::NormalizedPoint( 0.0, 0.0 ) );
-        setCursor( Qt::ArrowCursor );
-        d->mouseAnn = 0;
-    }
-
-    bool leftButton = e->button() == Qt::LeftButton;
-    bool rightButton = e->button() == Qt::RightButton;
     switch ( d->mouseMode )
     {
         case Okular::Settings::EnumMouseMode::Browse:{
@@ -2439,7 +2449,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
 #endif
                 }
             }
-            else if ( rightButton )
+            else if ( rightButton && !d->mouseAnn )
             {
                 if ( pageItem && pageItem == pageItemPressPos &&
                      ( (d->mousePressPos - e->globalPos()).manhattanLength() < QApplication::startDragDistance() ) )
@@ -4041,8 +4051,15 @@ void PageView::toggleFormWidgets( bool on )
 void PageView::resizeContentArea( const QSize & newSize )
 {
     const QSize vs = viewport()->size();
-    horizontalScrollBar()->setRange( 0, newSize.width() - vs.width() );
-    verticalScrollBar()->setRange( 0, newSize.height() - vs.height() );
+    int hRange = newSize.width() - vs.width();
+    int vRange = newSize.height() - vs.height();
+    if ( horizontalScrollBar()->isVisible() && hRange == verticalScrollBar()->width() && verticalScrollBar()->isVisible() && vRange == horizontalScrollBar()->height() && Okular::Settings::showScrollBars() )
+    {
+        hRange = 0;
+        vRange = 0;
+    }
+    horizontalScrollBar()->setRange( 0, hRange );
+    verticalScrollBar()->setRange( 0, vRange );
     updatePageStep();
 }
 
@@ -4147,6 +4164,9 @@ void PageView::slotRelayoutPages()
     const bool centerLastPage = centerFirstPage && pageCount % 2 == 0;
     const bool continuousView = Okular::Settings::viewContinuous();
     const int nCols = overrideCentering ? 1 : viewColumns();
+    const bool singlePageViewMode = Okular::Settings::viewMode() == Okular::Settings::EnumViewMode::Single;
+
+    d->aFitWindowToPage->setEnabled( !continuousView && singlePageViewMode );
 
     // set all items geometry and resize contents. handle 'continuous' and 'single' modes separately
 
@@ -5093,6 +5113,26 @@ void PageView::slotToggleChangeColors()
     Okular::SettingsCore::setChangeColors( !Okular::SettingsCore::changeColors() );
     Okular::Settings::self()->save();
     viewport()->update();
+}
+
+void PageView::slotFitWindowToPage()
+{
+    PageViewItem currentPageItem = NULL;
+    QSize viewportSize = viewport()->size();
+    foreach ( const PageViewItem * pageItem, d->items )
+    {
+        if ( pageItem->isVisible() )
+        {
+            currentPageItem = *pageItem;
+            break;
+        }
+    }
+    const QSize pageSize = QSize( currentPageItem.uncroppedWidth() + kcolWidthMargin, currentPageItem.uncroppedHeight() + krowHeightMargin );
+    if ( verticalScrollBar()->isVisible() )
+        viewportSize.setWidth( viewportSize.width() + verticalScrollBar()->width() );
+    if ( horizontalScrollBar()->isVisible() )
+        viewportSize.setHeight( viewportSize.height() + horizontalScrollBar()->height() );
+    emit fitWindowToPage( viewportSize, pageSize );
 }
 
 //END private SLOTS

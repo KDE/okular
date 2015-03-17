@@ -440,6 +440,7 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     connect( m_document, SIGNAL(warning(QString,int)), this, SLOT(warningMessage(QString,int)) );
     connect( m_document, SIGNAL(notice(QString,int)), this, SLOT(noticeMessage(QString,int)) );
     connect( m_document, SIGNAL(sourceReferenceActivated(const QString&,int,int,bool*)), this, SLOT(slotHandleActivatedSourceReference(const QString&,int,int,bool*)) );
+    connect( m_pageView, SIGNAL(fitWindowToPage(QSize,QSize)), this, SIGNAL(fitWindowToPage(QSize,QSize)) );
     rightLayout->addWidget( m_pageView );
     m_findBar = new FindBar( m_document, rightContainer );
     rightLayout->addWidget( m_findBar );
@@ -2731,26 +2732,6 @@ void Part::doPrint(QPrinter &printer)
     }
 }
 
-
-void Part::restoreDocument(const KConfigGroup &group)
-{
-    QUrl url ( group.readPathEntry( "URL", QString() ) );
-    if ( url.isValid() )
-    {
-        QString viewport = group.readEntry( "Viewport" );
-        if (!viewport.isEmpty()) m_document->setNextDocumentViewport( Okular::DocumentViewport( viewport ) );
-        openUrl( url );
-    }
-}
-
-
-void Part::saveDocumentRestoreInfo(KConfigGroup &group)
-{
-    group.writePathEntry( "URL", url().url() );
-    group.writeEntry( "Viewport", m_document->viewport().toString() );
-}
-
-
 void Part::psTransformEnded(int exit, QProcess::ExitStatus status)
 {
     Q_UNUSED( exit )
@@ -2811,6 +2792,11 @@ void Part::noticeMessage( const QString &message, int duration )
 {
     // less important message -> simpleer display widget in the PageView
     m_pageView->displayMessage( message, QString(), PageViewMessage::Info, duration );
+}
+
+void Part::moveSplitter(int sideWidgetSize)
+{
+    m_sidebar->moveSplitter( sideWidgetSize );
 }
 
 

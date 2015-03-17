@@ -41,6 +41,8 @@ class Sidebar : public QWidget
         void setCollapsed( bool collapsed );
         bool isCollapsed() const;
 
+	void moveSplitter( int sideWidgetSize );
+
     signals:
         void urlsDropped( const QList<QUrl>& urls );
 

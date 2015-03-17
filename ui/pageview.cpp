@@ -510,7 +510,7 @@ void PageView::setupViewerActions( KActionCollection * ac )
 
     d->aFitWindowToPage = new QAction(QIcon::fromTheme( "zoom-fit-width" ), i18n("Fit Wi&ndow to Page"), this);
     d->aFitWindowToPage->setEnabled( Okular::Settings::viewMode() == (int)Okular::Settings::EnumViewMode::Single );
-    d->aFitWindowToPage->setShortcut( QKeySequence(Qt::CTRL + Qt::Key_J) );
+    ac->setDefaultShortcut(d->aFitWindowToPage, QKeySequence(Qt::CTRL + Qt::Key_J) );
     ac->addAction( "fit_window_to_page", d->aFitWindowToPage );
     connect( d->aFitWindowToPage, SIGNAL(triggered()), this, SLOT(slotFitWindowToPage()) );
 
@@ -2884,9 +2884,11 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                         QMenu menu( this );
                         QAction *textToClipboard = menu.addAction( QIcon::fromTheme( "edit-copy" ), i18n( "Copy Text" ) );
                         QAction *httpLink = 0;
+#ifdef HAVE_SPEECH
                         QAction *speakText = 0;
                         if ( Okular::Settings::useTTS() )
                             speakText = menu.addAction( QIcon::fromTheme( "text-speak" ), i18n( "Speak Text" ) );
+#endif
                         if ( !d->document->isAllowed( Okular::AllowCopy ) )
                         {
                             textToClipboard->setEnabled( false );

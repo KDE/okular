@@ -15,7 +15,6 @@
 #include <QIcon>
 #include <klocalizedstring.h>
 #include <klineedit.h>
-#include <knuminput.h>
 
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QHBoxLayout>

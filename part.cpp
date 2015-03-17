@@ -34,10 +34,10 @@
 #include <QtPrintSupport/QPrintDialog>
 #include <QScrollBar>
 #include <QInputDialog>
+#include <QWidgetAction>
 
 #include <kvbox.h>
 #include <kaboutapplicationdialog.h>
-#include <kaction.h>
 #include <kactioncollection.h>
 #include <kbookmarkaction.h>
 #include <kdirwatch.h>

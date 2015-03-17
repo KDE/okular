@@ -1,4 +1,4 @@
-#add_subdirectory( kio-msits )
+add_subdirectory( kio-msits )
 
 include_directories(
    ${CMAKE_CURRENT_SOURCE_DIR}/../..

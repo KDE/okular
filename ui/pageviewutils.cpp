@@ -499,7 +499,7 @@ PageViewToolBar::PageViewToolBar( PageView * parent, QWidget * anchorWidget )
 
     // create the animation timer
     d->animTimer = new QTimer( this );
-    connect( d->animTimer, SIGNAL(timeout()), this, SLOT(slotAnimate()) );
+    connect( d->animTimer, &QTimer::timeout, this, &PageViewToolBar::slotAnimate );
 
     // apply a filter to get notified when anchor changes geometry
     d->anchorWidget->installEventFilter( this );

@@ -1417,8 +1417,8 @@ void PresentationWidget::slotDelayedEvents()
     if ( m_screenSelect )
     {
         m_screenSelect->setCurrentItem( m_screen );
-        connect( m_screenSelect->selectableActionGroup(), SIGNAL(triggered(QAction*)),
-                 this, SLOT(chooseScreen(QAction*)) );
+        connect( m_screenSelect->selectableActionGroup(), &QActionGroup::triggered,
+                 this, &PresentationWidget::chooseScreen );
     }
 
     // show widget and take control

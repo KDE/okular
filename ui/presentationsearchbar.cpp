@@ -80,7 +80,7 @@ PresentationSearchBar::PresentationSearchBar( Okular::Document *document, QWidge
 
     m_anchor->installEventFilter( this );
 
-    connect( closeBtn, SIGNAL(clicked()), this, SLOT(close()) );
+    connect( closeBtn, &QAbstractButton::clicked, this, &QWidget::close );
     connect(findNextBtn, &QPushButton::clicked, m_search, &SearchLineEdit::findNext);
 }
 

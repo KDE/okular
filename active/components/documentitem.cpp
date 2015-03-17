@@ -39,8 +39,8 @@ DocumentItem::DocumentItem(QObject *parent)
     m_document = new Okular::Document(0);
     m_tocModel = new TOCModel(m_document, this);
 
-    connect(m_document, SIGNAL(searchFinished(int,Okular::Document::SearchStatus)),
-            this, SLOT(searchFinished(int,Okular::Document::SearchStatus)));
+    connect(m_document, &Okular::Document::searchFinished,
+            this, &DocumentItem::searchFinished);
     connect(m_document->bookmarkManager(), SIGNAL(bookmarksChanged(QUrl)),
             this, SIGNAL(bookmarkedPagesChanged()));
     connect(m_document->bookmarkManager(), SIGNAL(bookmarksChanged(QUrl)),

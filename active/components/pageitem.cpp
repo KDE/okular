@@ -51,7 +51,7 @@ PageItem::PageItem(QQuickItem *parent)
     m_redrawTimer = new QTimer(this);
     m_redrawTimer->setInterval(REDRAW_TIMEOUT);
     m_redrawTimer->setSingleShot(true);
-    connect(m_redrawTimer, SIGNAL(timeout()), this, SLOT(delayedRedraw()));
+    connect(m_redrawTimer, &QTimer::timeout, this, &PageItem::delayedRedraw);
 }
 
 

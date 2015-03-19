@@ -393,7 +393,7 @@ int plkr_GetConfigBoolean
              || (strcmp (svalue, "off") == 0)
              || (strcmp (svalue, "OFF") == 0)
              || (strcmp (svalue, "F") == 0)
-             || (strcmp (svalue, "F") == 0)
+             || (strcmp (svalue, "f") == 0)
              || (strcmp (svalue, "False") == 0))
         return 0;
 

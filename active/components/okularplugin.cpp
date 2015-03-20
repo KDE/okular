@@ -25,8 +25,6 @@
 
 #include <QtQml/QQmlEngine>
 
-#include <KGlobalSettings>
-
 void OkularPlugin::registerTypes(const char *uri)
 {
     Q_ASSERT(uri == QLatin1String("org.kde.okular"));

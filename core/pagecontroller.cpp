@@ -9,9 +9,6 @@
 
 #include "pagecontroller_p.h"
 
-// qt/kde includes
-#include <kglobal.h>
-
 // local includes
 #include "page_p.h"
 #include "rotationjob_p.h"

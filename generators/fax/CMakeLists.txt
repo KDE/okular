@@ -5,7 +5,7 @@ include_directories(
 
 ########### next target ###############
 
-set(okularGenerator_fax_PART_SRCS generator_fax.cpp faxdocument.cpp faxexpand.cpp faxinit.cpp )
+set(okularGenerator_fax_PART_SRCS generator_fax.cpp faxdocument.cpp faxexpand.cpp faxinit.cpp fax_debug.cpp)
 
 add_library(okularGenerator_fax MODULE ${okularGenerator_fax_PART_SRCS})
 

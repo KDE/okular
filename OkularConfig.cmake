@@ -1,9 +1,5 @@
 # get from the full path to OkularConfig.cmake up to the base dir dir:
-get_filename_component( _okularBaseDir  ${CMAKE_CURRENT_LIST_FILE} PATH)
-get_filename_component( _okularBaseDir  ${_okularBaseDir} PATH)
-get_filename_component( _okularBaseDir  ${_okularBaseDir} PATH)
-get_filename_component( _okularBaseDir  ${_okularBaseDir} PATH)
-
+get_filename_component(_okularBaseDir "${CMAKE_CURRENT_LIST_DIR}/../../../../" ABSOLUTE)
 
 # find the full paths to the library and the includes:
 find_path(OKULAR_INCLUDE_DIR okular/core/document.h
@@ -11,7 +7,7 @@ find_path(OKULAR_INCLUDE_DIR okular/core/document.h
           NO_DEFAULT_PATH)
 
 find_library(OKULAR_CORE_LIBRARY okularcore 
-             HINTS ${_okularBaseDir}/lib
+             HINTS ${_okularBaseDir}/@CMAKE_INSTALL_LIBDIR@
              NO_DEFAULT_PATH)
 
 set(OKULAR_LIBRARIES ${OKULAR_CORE_LIBRARY})

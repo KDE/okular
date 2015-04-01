@@ -138,14 +138,14 @@ Status main(const QStringList &paths, const QString &serializedOptions)
     if (ShellUtils::showPrintDialog(serializedOptions) && paths.count() > 1)
     {
         QTextStream stream(stderr);
-        stream << i18n( "Error: Can't open more than one document with the --presentation switch" ) << endl;
+        stream << i18n( "Error: Can't open more than one document with the --print switch" ) << endl;
         return Error;
     }
 
     if (!ShellUtils::page(serializedOptions).isEmpty() && paths.count() > 1)
     {
         QTextStream stream(stderr);
-        stream << i18n( "Error: Can't open more than one document with the --presentation switch" ) << endl;
+        stream << i18n( "Error: Can't open more than one document with the --page switch" ) << endl;
         return Error;
     }
 

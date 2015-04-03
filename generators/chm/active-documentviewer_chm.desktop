@@ -141,8 +141,8 @@ Comment[x-test]=xxViewer for various types of documentsxx
 Comment[zh_CN]=可以查看多种文档的工具
 Comment[zh_TW]=多種型態文件的檢視器
 
-TryExec=active-documentviewer
-Exec=active-documentviewer %u
+TryExec=kpackagelauncherqml -a org.kde.active.documentviewer
+Exec=kpackagelauncherqml -a org.kde.active.documentviewer %u
 Terminal=false
 Icon=okular
 Type=Application

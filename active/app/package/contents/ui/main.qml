@@ -19,14 +19,14 @@
 
 import QtQuick 2.1
 import org.kde.okular 2.0 as Okular
+import QtQuick.Controls 1.3
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 import org.kde.plasma.components 2.0 as PlasmaComponents
 
-Image {
+ApplicationWindow {
     id: fileBrowserRoot
     objectName: "fileBrowserRoot"
-    source: "image://appbackgrounds/contextarea"
-    fillMode: Image.Tile
+    visible: true
 
     width: 360
     height: 360
@@ -40,7 +40,7 @@ Image {
     Okular.DocumentItem {
         id: documentItem
         onWindowTitleForDocumentChanged: {
-            application.caption = windowTitleForDocument
+            fileBrowserRoot.title = windowTitleForDocument
         }
     }
 
@@ -55,8 +55,8 @@ Image {
         interval: 100
         running: true
         onTriggered: {
-            if (application.startupArguments.length > 0) {
-                documentItem.path = application.startupArguments[0]
+            if (commandlineArguments.length > 0) {
+                documentItem.path = commandlineArguments[0]
             }
 
             mainStack.push(Qt.createComponent("Browser.qml"))

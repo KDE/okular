@@ -60,5 +60,5 @@ ecm_add_test(editformstest editformstest.cpp
 
 ecm_add_test(mainshelltest mainshelltest.cpp ../shell/okular_main.cpp ../shell/shellutils.cpp ../shell/shell.cpp
     TEST_NAME "mainshelltest"
-    LINK_LIBRARIES Qt5::Test okularpart okularcore
+    LINK_LIBRARIES Qt5::Test KF5::Activities okularpart okularcore
 )

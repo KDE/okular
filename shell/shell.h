@@ -32,9 +32,7 @@ class KPluginFactory;
 class KDocumentViewer;
 class Part;
 
-#ifdef KActivities_FOUND
 namespace KActivities { class ResourceInstance; }
-#endif
 
 /**
  * This is the application "Shell".  It has a menubar and a toolbar
@@ -124,9 +122,9 @@ private slots:
   void testTabDrop( const QDragMoveEvent* event, bool& accept );
   void handleTabDrop( QDropEvent* event );
   void moveTabData( int from, int to );
-  
+
   void slotFitWindowToPage( const QSize& pageViewSize, const QSize& pageSize );
-  
+
 signals:
   void moveSplitter(int sideWidgetSize);
 
@@ -168,9 +166,7 @@ private:
   QAction* m_nextTabAction;
   QAction* m_prevTabAction;
 
-#ifdef KActivities_FOUND
   KActivities::ResourceInstance* m_activityResource;
-#endif
   bool m_isValid;
 };
 

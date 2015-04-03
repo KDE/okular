@@ -4,8 +4,6 @@ include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}/../
 )
 
-# checking whether we should enable activities support
-find_package(KF5Activities)
 set_package_properties("KActivities" PROPERTIES
         DESCRIPTION  "Activities interface library"
         URL "https://projects.kde.org/projects/kde/kdelibs/kactivities"
@@ -26,13 +24,7 @@ ecm_add_app_icon(okular_SRCS ICONS ${ICONS_SRCS})
 
 add_executable(okular ${okular_SRCS})
 
-target_link_libraries(okular KF5::Parts KF5::WindowSystem KF5::KDELibs4Support)
-
-if(KActivities_FOUND)
- add_definitions(-DKActivities_FOUND)
- include_directories(${KACTIVITIES_INCLUDE_DIRS})
- target_link_libraries(okular KF5::KActivities)
-endif(KActivities_FOUND)
+target_link_libraries(okular KF5::Parts KF5::WindowSystem KF5::KDELibs4Support KF5::Activities)
 
 install(TARGETS okular ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 

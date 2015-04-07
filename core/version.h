@@ -12,7 +12,7 @@
 
 #define OKULAR_VERSION_STRING "0.22.0"
 #define OKULAR_VERSION_MAJOR 0
-#define OKULAR_VERSION_MINOR 21
+#define OKULAR_VERSION_MINOR 22
 #define OKULAR_VERSION_RELEASE 0
 #define OKULAR_MAKE_VERSION( a,b,c ) (((a) << 16) | ((b) << 8) | (c))
 

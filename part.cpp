@@ -181,7 +181,7 @@ static QString compressedMimeFor( const QString& mime_to_check )
     const QString app_xz( QString::fromLatin1( "application/x-xz" ) );
     if ( compressedMimeMap.isEmpty() )
     {
-        std::auto_ptr< KFilterBase > f;
+        std::unique_ptr< KFilterBase > f;
         compressedMimeMap[ QString::fromLatin1( "image/x-gzeps" ) ] = app_gzip;
         // check we can read bzip2-compressed files
         f.reset( KCompressionDevice::filterForCompressionType( KCompressionDevice::BZip2 ) );

@@ -4363,7 +4363,7 @@ Document::OpenResult Document::openDocumentArchive( const QString & docFile, con
     if ( !mainEntry || !mainEntry->isFile() )
         return OpenError;
 
-    std::auto_ptr< QIODevice > mainEntryDevice( static_cast< const KZipFileEntry * >( mainEntry )->createDevice() );
+    std::unique_ptr< QIODevice > mainEntryDevice( static_cast< const KZipFileEntry * >( mainEntry )->createDevice() );
     QDomDocument doc;
     if ( !doc.setContent( mainEntryDevice.get() ) )
         return OpenError;
@@ -4397,7 +4397,7 @@ Document::OpenResult Document::openDocumentArchive( const QString & docFile, con
     if ( !docEntry || !docEntry->isFile() )
         return OpenError;
 
-    std::auto_ptr< ArchiveData > archiveData( new ArchiveData() );
+    std::unique_ptr< ArchiveData > archiveData( new ArchiveData() );
     const int dotPos = documentFileName.indexOf( '.' );
     if ( dotPos != -1 )
         archiveData->document.setFileTemplate(QDir::tempPath() + QLatin1String("/okular_XXXXXX") + documentFileName.mid(dotPos));
@@ -4406,7 +4406,7 @@ Document::OpenResult Document::openDocumentArchive( const QString & docFile, con
 
     QString tempFileName = archiveData->document.fileName();
     {
-    std::auto_ptr< QIODevice > docEntryDevice( static_cast< const KZipFileEntry * >( docEntry )->createDevice() );
+    std::unique_ptr< QIODevice > docEntryDevice( static_cast< const KZipFileEntry * >( docEntry )->createDevice() );
     copyQIODevice( docEntryDevice.get(), &archiveData->document );
     archiveData->document.close();
     }
@@ -4414,7 +4414,7 @@ Document::OpenResult Document::openDocumentArchive( const QString & docFile, con
     const KArchiveEntry * metadataEntry = mainDir->entry( metadataFileName );
     if ( metadataEntry && metadataEntry->isFile() )
     {
-        std::auto_ptr< QIODevice > metadataEntryDevice( static_cast< const KZipFileEntry * >( metadataEntry )->createDevice() );
+        std::unique_ptr< QIODevice > metadataEntryDevice( static_cast< const KZipFileEntry * >( metadataEntry )->createDevice() );
         archiveData->metadataFile.setFileTemplate(QDir::tempPath() + QLatin1String("/okular_XXXXXX.xml"));
         if ( archiveData->metadataFile.open() )
         {

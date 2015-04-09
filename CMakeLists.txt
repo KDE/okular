@@ -19,6 +19,11 @@ include(KDEInstallDirs)
 include(KDECMakeSettings)
 include(ECMAddTests)
 include(ECMAddAppIcon) 
+include(ECMPackageConfigHelpers)
+
+ecm_setup_version(1.0.0 VARIABLE_PREFIX OKULAR
+                        VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/core/version.h"
+                        PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/OkularConfigVersion.cmake")
 
 find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED COMPONENTS Core DBus Test Widgets PrintSupport Svg Qml Quick)
 find_package(Qt5 ${QT_REQUIRED_VERSION} OPTIONAL_COMPONENTS TextToSpeech)
@@ -156,9 +161,9 @@ install( FILES
            core/textpage.h
            core/tile.h
            core/utils.h
-           core/version.h
            core/fileprinter.h
            core/observer.h
+           ${CMAKE_CURRENT_BINARY_DIR}/core/version.h
            ${CMAKE_CURRENT_BINARY_DIR}/okularcore_export.h
            ${CMAKE_CURRENT_BINARY_DIR}/settings_core.h
          DESTINATION ${KDE_INSTALL_INCLUDEDIR}/okular/core COMPONENT Devel)
@@ -213,7 +218,7 @@ endif(LibKScreen_FOUND)
 
 set_target_properties(okularcore PROPERTIES VERSION 6.0.0 SOVERSION 6 )
 
-install(TARGETS okularcore ${KDE_INSTALL_TARGETS_DEFAULT_ARGS} )
+install(TARGETS okularcore EXPORT OkularTargets ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(FILES conf/okular.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
 install(FILES conf/okular_core.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
@@ -310,12 +315,24 @@ install( FILES part.rc part-viewermode.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}
 
 ########### cmake files #################
 
-include(WriteBasicConfigVersionFile)
-write_basic_config_version_file(${CMAKE_CURRENT_BINARY_DIR}/OkularConfigVersion.cmake VERSION 1.0.0 COMPATIBILITY AnyNewerVersion)
+set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/Okular")
+ecm_configure_package_config_file(
+  "${CMAKE_CURRENT_SOURCE_DIR}/OkularConfig.cmake.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/OkularConfig.cmake"
+  INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
+  PATH_VARS  INCLUDE_INSTALL_DIR CMAKE_INSTALL_PREFIX
+)
 
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/OkularConfig.cmake
-              ${CMAKE_CURRENT_BINARY_DIR}/OkularConfigVersion.cmake
-        DESTINATION ${KDE_INSTALL_LIBDIR}/cmake/Okular )
+install(FILES
+  "${CMAKE_CURRENT_BINARY_DIR}/OkularConfig.cmake"
+  "${CMAKE_CURRENT_BINARY_DIR}/OkularConfigVersion.cmake"
+  DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
+  COMPONENT Devel
+)
+
+install(EXPORT OkularTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE OkularTargets.cmake NAMESPACE Okular:: )
+
+########### summary #################
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
 

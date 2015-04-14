@@ -23,7 +23,7 @@ kconfig_add_kcfg_files(okularGenerator_ghostview_SRCS conf/gssettings.kcfgc )
 
 add_library(okularGenerator_ghostview MODULE ${okularGenerator_ghostview_SRCS})
 
-target_link_libraries(okularGenerator_ghostview okularcore ${LIBSPECTRE_LIBRARY} KF5::KDELibs4Support Qt5::Xml Qt5::PrintSupport)
+target_link_libraries(okularGenerator_ghostview okularcore ${LIBSPECTRE_LIBRARY} KF5::KDELibs4Support Qt5::Xml)
 
 install(TARGETS okularGenerator_ghostview DESTINATION ${KDE_INSTALL_PLUGINDIR})
 

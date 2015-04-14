@@ -2,7 +2,8 @@ project(okular)
 
 cmake_minimum_required(VERSION 2.8.12)
 
-set(QT_MIN_VERSION "5.2.0")
+set(QT_REQUIRED_VERSION "5.2.0")
+set(KF5_REQUIRED_VERSION "5.8.0")
 
 find_package(ECM 1.7.0 CONFIG REQUIRED)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH})
@@ -19,15 +20,15 @@ include(KDECMakeSettings)
 include(ECMAddTests)
 include(ECMAddAppIcon) 
 
-find_package(Qt5 CONFIG REQUIRED COMPONENTS Core DBus Test Widgets PrintSupport Svg Qml Quick)
-find_package(Qt5 OPTIONAL_COMPONENTS TextToSpeech)
+find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED COMPONENTS Core DBus Test Widgets PrintSupport Svg Qml Quick)
+find_package(Qt5 ${QT_REQUIRED_VERSION} OPTIONAL_COMPONENTS TextToSpeech)
 if (NOT Qt5TextToSpeech_FOUND)
     message(STATUS "Qt5TextToSpeech not found, speech features will be disabled")
 else()
     add_definitions(-DHAVE_SPEECH)
 endif()
 
-find_package(KF5 REQUIRED COMPONENTS
+find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS
     Activities
     Archive
     Bookmarks
@@ -178,6 +179,7 @@ kconfig_add_kcfg_files(okularcore_SRCS conf/settings_core.kcfgc )
 
 add_library(okularcore SHARED ${okularcore_SRCS})
 generate_export_header(okularcore BASE_NAME okularcore)
+target_include_directories(okularcore INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF5}>")
 
 # Special handling for linking okularcore on OSX/Apple
 IF(APPLE)
@@ -185,6 +187,7 @@ IF(APPLE)
 ENDIF(APPLE)
 
 target_link_libraries(okularcore
+PRIVATE
     ${OKULAR_IOKIT}
     KF5::Archive
     KF5::JS
@@ -196,6 +199,12 @@ target_link_libraries(okularcore
     Phonon::phonon4qt5
     ${MATH_LIB}
     ${ZLIB_LIBRARIES}
+PUBLIC  # these are included from the installed headers
+    KF5::CoreAddons
+    KF5::XmlGui
+    KF5::ConfigGui
+    Qt5::PrintSupport
+    Qt5::Widgets
 )
 
 if(LibKScreen_FOUND)
@@ -285,7 +294,7 @@ kconfig_add_kcfg_files(okularpart_SRCS conf/settings.kcfgc )
 add_library(okularpart MODULE ${okularpart_SRCS})
 generate_export_header(okularpart BASE_NAME okularpart)
 
-target_link_libraries(okularpart okularcore Qt5::Svg KF5::Parts ${MATH_LIB} Phonon::phonon4qt5 KF5::Solid)
+target_link_libraries(okularpart okularcore Qt5::Svg KF5::Parts ${MATH_LIB} Phonon::phonon4qt5 KF5::Solid KF5::KDELibs4Support KF5::Wallet KF5::Archive)
 
 if (Qt5TextToSpeech_FOUND)
    target_link_libraries(okularpart Qt5::TextToSpeech)

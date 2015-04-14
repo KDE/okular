@@ -14,7 +14,7 @@ set(okularGenerator_txt_SRCS
 
 add_library(okularGenerator_txt MODULE ${okularGenerator_txt_SRCS})
 
-target_link_libraries(okularGenerator_txt okularcore Qt5::Core)
+target_link_libraries(okularGenerator_txt okularcore Qt5::Core KF5::I18n)
 install(TARGETS okularGenerator_txt DESTINATION ${KDE_INSTALL_PLUGINDIR})
 
 

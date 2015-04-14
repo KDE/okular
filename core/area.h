@@ -15,7 +15,6 @@
 #include <QtGui/QPainterPath>
 #include <QtGui/QTransform>
 #include <QtCore/QDebug>
-#include <math.h>
 
 #include "global.h"
 #include "okularcore_export.h"

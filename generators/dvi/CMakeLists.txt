@@ -48,7 +48,7 @@ set(okularGenerator_dvi_SRCS
 
 add_library(okularGenerator_dvi MODULE ${okularGenerator_dvi_SRCS})
 
-target_link_libraries(okularGenerator_dvi okularcore)
+target_link_libraries(okularGenerator_dvi okularcore KF5::I18n KF5::KDELibs4Support)
 if (FREETYPE_FOUND)
    target_link_libraries(okularGenerator_dvi ${FREETYPE_LIBRARIES})
 endif (FREETYPE_FOUND)

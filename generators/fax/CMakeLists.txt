@@ -9,7 +9,7 @@ set(okularGenerator_fax_PART_SRCS generator_fax.cpp faxdocument.cpp faxexpand.cp
 
 add_library(okularGenerator_fax MODULE ${okularGenerator_fax_PART_SRCS})
 
-target_link_libraries(okularGenerator_fax okularcore  Qt5::Xml)
+target_link_libraries(okularGenerator_fax okularcore KF5::I18n Qt5::Xml)
 
 install(TARGETS okularGenerator_fax DESTINATION ${KDE_INSTALL_PLUGINDIR})
 

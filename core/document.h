@@ -22,13 +22,13 @@
 #include <QtPrintSupport/QPrinter>
 #include <QtXml/QDomDocument>
 
-#include <kcomponentdata.h>
 #include <QMimeType>
 #include <QUrl>
 
 class QPrintDialog;
 class KBookmark;
 class KConfigDialog;
+class KComponentData;
 class KXMLGUIClient;
 class DocumentItem;
 

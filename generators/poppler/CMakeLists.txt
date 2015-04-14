@@ -35,7 +35,7 @@ kconfig_add_kcfg_files(okularGenerator_poppler_PART_SRCS conf/pdfsettings.kcfgc 
 
 add_library(okularGenerator_poppler MODULE ${okularGenerator_poppler_PART_SRCS})
 
-target_link_libraries(okularGenerator_poppler ${POPPLER_LIBRARY} okularcore Qt5::Xml Qt5::Widgets Qt5::Gui )
+target_link_libraries(okularGenerator_poppler ${POPPLER_LIBRARY} okularcore KF5::I18n KF5::KDELibs4Support Qt5::Xml)
 
 install(TARGETS okularGenerator_poppler DESTINATION ${KDE_INSTALL_PLUGINDIR})
 

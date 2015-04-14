@@ -11,7 +11,7 @@ set(okularGenerator_tiff_SRCS
 )
 
 add_library(okularGenerator_tiff MODULE ${okularGenerator_tiff_SRCS})
-target_link_libraries(okularGenerator_tiff okularcore ${TIFF_LIBRARIES})
+target_link_libraries(okularGenerator_tiff okularcore ${TIFF_LIBRARIES} KF5::KDELibs4Support)
 install(TARGETS okularGenerator_tiff DESTINATION ${KDE_INSTALL_PLUGINDIR})
 
 

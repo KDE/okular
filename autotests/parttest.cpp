@@ -41,7 +41,7 @@ class PartThatHijacksQueryClose : public Okular::Part
 {
     public:
         PartThatHijacksQueryClose(QWidget* parentWidget, QObject* parent,
-                                  const QVariantList& args, KComponentData componentData)
+                                  const QVariantList& args)
         : Okular::Part(parentWidget, parent, args),
           behavior(PassThru)
         {}
@@ -84,7 +84,7 @@ void PartTest::testReload()
 void PartTest::testCanceledReload()
 {
     QVariantList dummyArgs;
-    PartThatHijacksQueryClose part(NULL, NULL, dummyArgs, KGlobal::mainComponent());
+    PartThatHijacksQueryClose part(NULL, NULL, dummyArgs);
     QVERIFY( openDocument(&part, KDESRCDIR "data/file1.pdf") );
 
     // When queryClose() returns false, the reload operation is canceled (as if

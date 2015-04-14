@@ -15,7 +15,7 @@ set(okularGenerator_djvu_SRCS
 
 add_library(okularGenerator_djvu MODULE ${okularGenerator_djvu_SRCS})
 
-target_link_libraries(okularGenerator_djvu okularcore ${DJVULIBRE_LIBRARY} KF5::KDELibs4Support Qt5::Gui Qt5::PrintSupport)
+target_link_libraries(okularGenerator_djvu okularcore ${DJVULIBRE_LIBRARY} KF5::KDELibs4Support)
 
 install(TARGETS okularGenerator_djvu DESTINATION ${KDE_INSTALL_PLUGINDIR})
 

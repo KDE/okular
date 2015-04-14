@@ -15,7 +15,7 @@ set(okularGenerator_fb_PART_SRCS
 
 add_library(okularGenerator_fb MODULE ${okularGenerator_fb_PART_SRCS})
 
-target_link_libraries(okularGenerator_fb okularcore KF5::KIOCore Qt5::Xml)
+target_link_libraries(okularGenerator_fb okularcore KF5::Archive KF5::I18n KF5::KIOCore Qt5::Xml)
 
 install(TARGETS okularGenerator_fb DESTINATION ${KDE_INSTALL_PLUGINDIR})
 

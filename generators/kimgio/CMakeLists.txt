@@ -8,7 +8,7 @@ include_directories(
 
 set(okularGenerator_kimgio_PART_SRCS generator_kimgio.cpp )
 add_library(okularGenerator_kimgio MODULE ${okularGenerator_kimgio_PART_SRCS})
-target_link_libraries(okularGenerator_kimgio okularcore KF5::KExiv2)
+target_link_libraries(okularGenerator_kimgio okularcore KF5::KExiv2 KF5::KDELibs4Support)
 install(TARGETS okularGenerator_kimgio DESTINATION ${KDE_INSTALL_PLUGINDIR})
 
 add_definitions( -DKDESRCDIR="${CMAKE_CURRENT_SOURCE_DIR}/" )

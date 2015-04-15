@@ -179,7 +179,7 @@ kconfig_add_kcfg_files(okularcore_SRCS conf/settings_core.kcfgc )
 
 add_library(okularcore SHARED ${okularcore_SRCS})
 generate_export_header(okularcore BASE_NAME okularcore)
-target_include_directories(okularcore INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF5}>")
+target_include_directories(okularcore INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR}>")
 
 # Special handling for linking okularcore on OSX/Apple
 IF(APPLE)

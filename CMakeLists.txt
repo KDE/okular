@@ -73,7 +73,7 @@ set_package_properties("LibKScreen" PROPERTIES
 add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 add_definitions(-DTRANSLATION_DOMAIN="okular")
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${PHONON_INCLUDES} core/synctex ${ZLIB_INCLUDE_DIR})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${PHONON_INCLUDES} core/synctex ${ZLIB_INCLUDE_DIR} ${CMAKE_BINARY_DIR}/core)
 
 add_subdirectory( active )
 add_subdirectory( ui )
@@ -164,7 +164,7 @@ install( FILES
            core/fileprinter.h
            core/observer.h
            ${CMAKE_CURRENT_BINARY_DIR}/core/version.h
-           ${CMAKE_CURRENT_BINARY_DIR}/okularcore_export.h
+           ${CMAKE_CURRENT_BINARY_DIR}/core/okularcore_export.h
            ${CMAKE_CURRENT_BINARY_DIR}/settings_core.h
          DESTINATION ${KDE_INSTALL_INCLUDEDIR}/okular/core COMPONENT Devel)
 
@@ -183,7 +183,7 @@ ki18n_wrap_ui(okularcore_SRCS
 kconfig_add_kcfg_files(okularcore_SRCS conf/settings_core.kcfgc )
 
 add_library(okularcore SHARED ${okularcore_SRCS})
-generate_export_header(okularcore BASE_NAME okularcore)
+generate_export_header(okularcore BASE_NAME okularcore EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/core/okularcore_export.h")
 
 # Special handling for linking okularcore on OSX/Apple
 IF(APPLE)

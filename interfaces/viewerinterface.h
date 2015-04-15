@@ -10,7 +10,7 @@
 #ifndef _OKULAR_VIEWERINTERFACE_H_
 #define _OKULAR_VIEWERINTERFACE_H_
 
-#include "okularcore_export.h"
+#include "../core/okularcore_export.h"
 
 #include <QtCore/QObject>
 #include <QtCore/QString>

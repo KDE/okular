@@ -397,7 +397,6 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->magnifierView = new MagnifierView(document, this);
     d->magnifierView->hide();
     d->magnifierView->setGeometry(0, 0, 351, 201); // TODO: more dynamic?
-    document->addObserver(d->magnifierView);
 
     connect(document, SIGNAL(processMovieAction(const Okular::MovieAction*)), this, SLOT(slotProcessMovieAction(const Okular::MovieAction*)));
     connect(document, SIGNAL(processRenditionAction(const Okular::RenditionAction*)), this, SLOT(slotProcessRenditionAction(const Okular::RenditionAction*)));

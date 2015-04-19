@@ -20,42 +20,34 @@ if(LIBSPECTRE_INCLUDE_DIR AND LIBSPECTRE_LIBRARY)
 else(LIBSPECTRE_INCLUDE_DIR AND LIBSPECTRE_LIBRARY)
 
 if(NOT WIN32)
-   # use pkg-config to get the directories and then use these values
-   # in the FIND_PATH() and FIND_LIBRARY() calls
-   INCLUDE(UsePkgConfig)
+  # use pkg-config to get the directories and then use these values
+  # in the FIND_PATH() and FIND_LIBRARY() calls
+  include(FindPkgConfig)
 
-   PKGCONFIG(libspectre _SpectreIncDir _SpectreLinkDir _SpectreLinkFlags _SpectreCflags)
-
-   if(_SpectreLinkFlags)
-     # find again pkg-config, to query it about libspectre version
-     FIND_PROGRAM(PKGCONFIG_EXECUTABLE NAMES pkg-config PATHS /usr/bin/ /usr/local/bin )
-
-     # query pkg-config asking for a libspectre >= LIBSPECTRE_MINIMUM_VERSION
-     EXEC_PROGRAM(${PKGCONFIG_EXECUTABLE} ARGS --atleast-version=${LIBSPECTRE_MINIMUM_VERSION} libspectre RETURN_VALUE _return_VALUE OUTPUT_VARIABLE _pkgconfigDevNull )
-     if(_return_VALUE STREQUAL "0")
-        set(LIBSPECTRE_INTERNAL_FOUND TRUE)
-     endif(_return_VALUE STREQUAL "0")
-   endif(_SpectreLinkFlags)
+  if(LIBSPECTRE_MINIMUM_VERSION})
+    pkg_check_modules(_pc_LIBSPECTRE libspectre>=${LIBSPECTRE_MINIMUM_VERSION})
+  else(LIBSPECTRE_MINIMUM_VERSION})
+    pkg_check_modules(_pc_LIBSPECTRE libspectre)
+  endif(LIBSPECTRE_MINIMUM_VERSION})
 else(NOT WIN32)
-    # do not use pkg-config on windows
-    find_library(_SpectreLinkFlags NAMES libspectre spectre PATHS ${CMAKE_LIBRARY_PATH})
-    
-    find_path(LIBSPECTRE_INCLUDE_DIR spectre.h PATH_SUFFIXES libspectre )
-    
-    set(LIBSPECTRE_INTERNAL_FOUND TRUE)
+  # do not use pkg-config on windows
+  set(_pc_LIBSPECTRE_FOUND TRUE)
 endif(NOT WIN32)
 
-if (LIBSPECTRE_INTERNAL_FOUND)
-  set(LIBSPECTRE_LIBRARY ${_SpectreLinkFlags})
 
-  # the cflags for libspectre can contain more than one include path
-  separate_arguments(_SpectreCflags)
-  foreach(_includedir ${_SpectreCflags})
-    string(REGEX REPLACE "-I(.+)" "\\1" _includedir "${_includedir}")
-    set(LIBSPECTRE_INCLUDE_DIR ${LIBSPECTRE_INCLUDE_DIR} ${_includedir})
-  endforeach(_includedir)
+if(_pc_LIBSPECTRE_FOUND)
+  find_library(LIBSPECTRE_LIBRARY
+    NAMES libspectre spectre
+    HINTS ${_pc_LIBSPECTRE_LIBRARY_DIRS} ${CMAKE_LIBRARY_PATH}
+  )
 
-endif (LIBSPECTRE_INTERNAL_FOUND)
+  find_path(LIBSPECTRE_INCLUDE_DIR spectre.h
+    HINTS ${_pc_LIBSPECTRE_INCLUDE_DIRS}
+    PATH_SUFFIXES libspectre
+  )
+
+  set(LIBSPECTRE_INTERNAL_FOUND TRUE)
+endif(_pc_LIBSPECTRE_FOUND)
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(LibSpectre DEFAULT_MSG LIBSPECTRE_LIBRARY LIBSPECTRE_INTERNAL_FOUND)

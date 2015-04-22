@@ -17,6 +17,9 @@
 
 class KIMGIOGenerator : public Okular::Generator
 {
+    Q_OBJECT
+    Q_INTERFACES( Okular::Generator )
+
     public:
         KIMGIOGenerator( QObject *parent, const QVariantList &args );
         virtual ~KIMGIOGenerator();

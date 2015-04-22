@@ -18,6 +18,7 @@
 class TIFFGenerator : public Okular::Generator
 {
     Q_OBJECT
+    Q_INTERFACES( Okular::Generator )
     public:
         TIFFGenerator( QObject *parent, const QVariantList &args );
         virtual ~TIFFGenerator();

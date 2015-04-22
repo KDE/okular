@@ -12,6 +12,9 @@
 
 class MobiGenerator : public Okular::TextDocumentGenerator
 {
+ Q_OBJECT
+ Q_INTERFACES( Okular::Generator )
+
  public:
   MobiGenerator( QObject *parent, const QVariantList &args );
   ~MobiGenerator() {}

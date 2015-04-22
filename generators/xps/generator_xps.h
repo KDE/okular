@@ -301,6 +301,7 @@ private:
 class XpsGenerator : public Okular::Generator
 {
     Q_OBJECT
+    Q_INTERFACES( Okular::Generator )
     public:
         XpsGenerator( QObject *parent, const QVariantList &args );
         virtual ~XpsGenerator();

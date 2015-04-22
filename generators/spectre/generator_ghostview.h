@@ -18,6 +18,7 @@
 class GSGenerator : public Okular::Generator, public Okular::ConfigInterface
 {
     Q_OBJECT
+    Q_INTERFACES( Okular::Generator )
     Q_INTERFACES( Okular::ConfigInterface )
 
     public:

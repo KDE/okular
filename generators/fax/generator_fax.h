@@ -19,6 +19,7 @@
 class FaxGenerator : public Okular::Generator
 {
     Q_OBJECT
+    Q_INTERFACES( Okular::Generator )
 
     public:
         FaxGenerator( QObject *parent, const QVariantList &args );

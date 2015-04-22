@@ -22,6 +22,7 @@ class QTextDocument;
 class PluckerGenerator : public Okular::Generator
 {
     Q_OBJECT
+    Q_INTERFACES( Okular::Generator )
 
     public:
         PluckerGenerator( QObject *parent, const QVariantList &args );

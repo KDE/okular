@@ -48,6 +48,7 @@ class PopplerAnnotationProxy;
 class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, public Okular::PrintInterface, public Okular::SaveInterface
 {
     Q_OBJECT
+    Q_INTERFACES( Okular::Generator )
     Q_INTERFACES( Okular::ConfigInterface )
     Q_INTERFACES( Okular::PrintInterface )
     Q_INTERFACES( Okular::SaveInterface )

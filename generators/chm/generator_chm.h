@@ -31,6 +31,7 @@ class Node;
 class CHMGenerator : public Okular::Generator
 {
     Q_OBJECT
+    Q_INTERFACES( Okular::Generator )
     public:
         CHMGenerator( QObject *parent, const QVariantList &args );
         ~CHMGenerator();

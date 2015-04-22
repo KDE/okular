@@ -17,6 +17,7 @@
 class ComicBookGenerator : public Okular::Generator
 {
     Q_OBJECT
+    Q_INTERFACES( Okular::Generator )
 
     public:
         ComicBookGenerator( QObject *parent, const QVariantList &args );

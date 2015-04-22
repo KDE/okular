@@ -17,6 +17,7 @@
 class TxtGenerator : public Okular::TextDocumentGenerator
 {
     Q_OBJECT
+    Q_INTERFACES( Okular::Generator )
 
 public:
     TxtGenerator(QObject *parent, const QVariantList &args);

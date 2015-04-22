@@ -24,6 +24,7 @@ class ObjectRect;
 class DjVuGenerator : public Okular::Generator
 {
     Q_OBJECT
+    Q_INTERFACES( Okular::Generator )
     public:
         DjVuGenerator( QObject *parent, const QVariantList &args );
         ~DjVuGenerator();

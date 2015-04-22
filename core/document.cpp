@@ -824,18 +824,14 @@ Generator * DocumentPrivate::loadGeneratorLibrary( const KService::Ptr &service 
         return 0;
     }
 
-    QObject* plugin = service->createInstance<QObject>();
-    // vHanda: qobject_cast seems to be failing. Not sure why!
-    Generator* generator = dynamic_cast< Okular::Generator* >(plugin);
-#pragma message("We're using dynamic_cast over here instead of qobject_cast")
-    // Generator * generator = factory->create< Okular::Generator >( service->pluginKeyword(), 0 );
+    Generator * plugin = service->createInstance<Okular::Generator>();
 
 //    GeneratorInfo info( factory->componentData() );
     KComponentData data = KComponentData::mainComponent();
     GeneratorInfo info( data );
-    info.generator = generator;
+    info.generator = plugin;
     m_loadedGenerators.insert( service->name(), info );
-    return generator;
+    return plugin;
 }
 
 void DocumentPrivate::loadAllGeneratorLibraries()

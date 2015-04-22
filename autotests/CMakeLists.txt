@@ -62,3 +62,9 @@ ecm_add_test(mainshelltest.cpp ../shell/okular_main.cpp ../shell/shellutils.cpp 
     TEST_NAME "mainshelltest"
     LINK_LIBRARIES Qt5::Test KF5::Activities okularpart okularcore
 )
+
+ecm_add_test(generatorstest.cpp
+    TEST_NAME "generatorstest"
+    LINK_LIBRARIES Qt5::Test KF5::CoreAddons okularcore
+)
+target_compile_definitions(generatorstest PRIVATE GENERATORS_BUILD_DIR="${CMAKE_BINARY_DIR}/generators")

@@ -239,8 +239,8 @@ static Okular::EmbedMode detectEmbedMode( QWidget *parentWidget, QObject *parent
     Q_UNUSED( parentWidget );
 
     if ( parent
-         && ( parent->objectName() == QLatin1String( "okular::Shell" )
-              || parent->objectName() == QLatin1String( "okular/okular__Shell" ) ) )
+         && ( parent->objectName().startsWith( QLatin1String( "okular::Shell" ) )
+              || parent->objectName().startsWith( QLatin1String( "okular/okular__Shell" ) ) ) )
         return Okular::NativeShellMode;
 
     if ( parent

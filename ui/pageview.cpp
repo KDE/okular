@@ -331,6 +331,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->mouseModeActionGroup = 0;
     d->penDown = false;
     d->aMouseMagnifier = 0;
+    d->aFitWindowToPage = 0;
 
     switch( Okular::Settings::zoomMode() )
     {
@@ -4135,7 +4136,8 @@ void PageView::slotRelayoutPages()
     const int nCols = overrideCentering ? 1 : viewColumns();
     const bool singlePageViewMode = Okular::Settings::viewMode() == Okular::Settings::EnumViewMode::Single;
 
-    d->aFitWindowToPage->setEnabled( !continuousView && singlePageViewMode );
+    if ( d->aFitWindowToPage )
+        d->aFitWindowToPage->setEnabled( !continuousView && singlePageViewMode );
 
     // set all items geometry and resize contents. handle 'continuous' and 'single' modes separately
 

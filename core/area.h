@@ -10,6 +10,8 @@
 #ifndef _OKULAR_AREA_H_
 #define _OKULAR_AREA_H_
 
+#include <math.h>
+
 #include <QtCore/QList>
 #include <QtGui/QColor>
 #include <QtGui/QPainterPath>

@@ -17,7 +17,6 @@
 #include <qhash.h>
 
 #include <QtCore/QDebug>
-#include <kglobal.h>
 
 #include "../debug_p.h"
 #include "../document_p.h"
@@ -29,7 +28,7 @@ using namespace Okular;
 static KJSPrototype *g_fieldProto;
 
 typedef QHash< FormField *, KJSObject > FormCache;
-K_GLOBAL_STATIC( FormCache, g_fieldCache )
+Q_GLOBAL_STATIC( FormCache, g_fieldCache )
 
 // Field.doc
 static KJSObject fieldGetDoc( KJSContext *context, void *  )

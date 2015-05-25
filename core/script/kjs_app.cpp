@@ -16,8 +16,9 @@
 
 #include <qapplication.h>
 
-#include <kglobal.h>
-#include <klocale.h>
+#include <QLocale>
+
+#include <KLocalizedString>
 
 #include "../document_p.h"
 #include "kjs_fullscreen_p.h"
@@ -53,11 +54,9 @@ static KJSObject appGetFormsVersion( KJSContext *, void * )
 
 static KJSObject appGetLanguage( KJSContext *, void * )
 {
-    QString lang;
-    QString country;
-    QString dummy;
-    KLocale::splitLocale( KLocale::global()->language(),
-                          lang, country, dummy, dummy );
+    QLocale locale;
+    QString lang = QLocale::languageToString(locale.language());
+    QString country = QLocale::countryToString(locale.country());
     QString acroLang = QString::fromLatin1( "ENU" );
     if ( lang == QLatin1String( "da" ) )
         acroLang = QString::fromLatin1( "DAN" ); // Danish

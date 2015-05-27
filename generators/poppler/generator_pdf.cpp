@@ -776,6 +776,11 @@ const QList<Okular::EmbeddedFile*> *PDFGenerator::embeddedFiles() const
     return &docEmbeddedFiles;
 }
 
+QAbstractItemModel* PDFGenerator::layersModel() const
+{
+    return pdfdoc->hasOptionalContent() ? pdfdoc->optionalContentModel() : NULL;
+}
+
 bool PDFGenerator::isAllowed( Okular::Permission permission ) const
 {
     bool b = true;

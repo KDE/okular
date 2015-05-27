@@ -31,6 +31,7 @@ class KConfigDialog;
 class KXMLGUIClient;
 class KUrl;
 class DocumentItem;
+class QAbstractItemModel;
 
 namespace Okular {
 
@@ -842,6 +843,11 @@ class OKULAR_EXPORT Document : public QObject
         */
         void walletDataForFile( const QString &fileName, QString *walletName, QString *walletFolder, QString *walletKey ) const;
 
+        /**
+         * Returns the model for rendering layer or NULL if no layer is present
+        */
+        QAbstractItemModel * layersModel() const;
+
     public Q_SLOTS:
         /**
          * This slot is called whenever the user changes the @p rotation of
@@ -917,6 +923,11 @@ class OKULAR_EXPORT Document : public QObject
         void editFormButtons( int pageNumber,
                               const QList< Okular::FormFieldButton* > & formButtons,
                               const QList< bool > & newButtonStates );
+
+        /**
+         * This slot is called to reload the pixmaps for whole document
+        */
+        void reloadDocument() const;
 
     Q_SIGNALS:
         /**

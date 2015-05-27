@@ -85,6 +85,7 @@
 #include "ui/sidebar.h"
 #include "ui/fileprinterpreview.h"
 #include "ui/guiutils.h"
+#include "ui/layers.h"
 #include "conf/preferencesdialog.h"
 #include "settings.h"
 #include "core/action.h"
@@ -378,6 +379,12 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     connect( m_toc, SIGNAL(hasTOC(bool)), this, SLOT(enableTOC(bool)) );
     tbIndex = m_sidebar->addItem( m_toc, KIcon(QApplication::isLeftToRight() ? "format-justify-left" : "format-justify-right"), i18n("Contents") );
     enableTOC( false );
+
+    // [left toolbox: Layers] | []
+    m_layers = new Layers( 0, m_document );
+    connect( m_layers, SIGNAL(hasLayers(bool)), this, SLOT(enableLayers(bool)) );
+    tbIndex = m_sidebar->addItem( m_layers, KIcon( "draw-freehand" ), i18n( "Layers" ) );
+    enableLayers( false );
 
     // [left toolbox: Thumbnails and Bookmarks] | []
     KVBox * thumbsBox = new ThumbnailsBox( 0 );
@@ -854,6 +861,7 @@ Part::~Part()
         Part::closeUrl( false );
 
     delete m_toc;
+    delete m_layers;
     delete m_pageView;
     delete m_thumbnailList;
     delete m_miniBar;
@@ -1933,6 +1941,11 @@ void Part::enableTOC(bool enable)
 void Part::slotRebuildBookmarkMenu()
 {
     rebuildBookmarkMenu();
+}
+
+void Part::enableLayers(bool enable)
+{
+    m_sidebar->setItemEnabled( 1, enable );
 }
 
 void Part::slotShowFindBar()

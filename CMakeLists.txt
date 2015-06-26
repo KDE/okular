@@ -73,6 +73,7 @@ set(okularcore_SRCS
    core/textpage.cpp
    core/tilesmanager.cpp
    core/utils.cpp
+   core/remotefile.cpp
    core/view.cpp
    core/fileprinter.cpp
    core/script/executor_kjs.cpp
@@ -112,6 +113,7 @@ install( FILES
            core/textpage.h
            core/tile.h
            core/utils.h
+           core/remotefile.h
            core/version.h
            core/fileprinter.h
            core/observer.h

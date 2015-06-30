@@ -18,6 +18,7 @@
 // local includes
 #include "core/document.h"
 #include "ktreeviewsearchline.h"
+#include "layersitemdelegate.h"
 
 Layers::Layers(QWidget *parent, Okular::Document *document) : QWidget(parent), m_document(document)
 {
@@ -38,12 +39,16 @@ Layers::Layers(QWidget *parent, Okular::Document *document) : QWidget(parent), m
 
     QAbstractItemModel * layersModel = m_document->layersModel();
 
+    QAbstractItemDelegate * delegate = new LayersItemDelegate( this );
+    m_treeView->setItemDelegate( delegate );
+
     if( layersModel )
     {
 	m_treeView->setModel( layersModel );
 	m_searchLine->addTreeView( m_treeView );
 	emit hasLayers( true );
 	connect( layersModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), m_document, SLOT(reloadDocument()) );
+	connect( layersModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(repaintItems(QModelIndex,QModelIndex)) );
     }
     else
     {
@@ -69,6 +74,7 @@ void Layers::notifySetup( const QVector< Okular::Page * > & /*pages*/, int /*set
 	m_searchLine->addTreeView( m_treeView );
 	emit hasLayers( true );
 	connect( layersModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), m_document, SLOT(reloadDocument()) );
+	connect( layersModel, SIGNAL(dataChanged(const QModelIndex,const QModelIndex)), this, SLOT(repaintItems(const QModelIndex,const QModelIndex)) );
     }
     else
     {
@@ -81,6 +87,12 @@ void Layers::saveSearchOptions()
     Okular::Settings::setContentsSearchRegularExpression( m_searchLine->regularExpression() );
     Okular::Settings::setContentsSearchCaseSensitive( m_searchLine->caseSensitivity() == Qt::CaseSensitive ? true : false );
     Okular::Settings::self()->writeConfig();
+}
+
+void Layers::repaintItems(const QModelIndex& topLeft, const QModelIndex& bottomRight)
+{
+    if( topLeft == bottomRight )
+	m_treeView->update( topLeft );
 }
 
  #include "layers.moc"

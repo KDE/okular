@@ -205,6 +205,7 @@ set(okularpart_SRCS
    ui/tts.cpp
    ui/videowidget.cpp
    ui/layers.cpp
+   ui/layersitemdelegate.cpp
 )
 
 kde4_add_ui_files(okularpart_SRCS

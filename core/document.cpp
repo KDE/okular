@@ -1435,7 +1435,7 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
 
             request = r;
         }
-        else if ( (long)requestRect.width() * (long)requestRect.height() > 20000000L )
+        else if ( (long)requestRect.width() * (long)requestRect.height() > 200000000L && (SettingsCore::memoryLevel() != SettingsCore::EnumMemoryLevel::Greedy )
         {
             m_pixmapRequestsStack.pop_back();
             if ( !m_warnedOutOfMemory )

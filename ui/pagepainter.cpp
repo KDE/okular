@@ -101,7 +101,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
         double pixmapRescaleRatio = pixmap ? scaledWidth / (double)pixmap->width() : -1;
         long pixmapPixels = pixmap ? (long)pixmap->width() * (long)pixmap->height() : 0;
         if ( !pixmap || pixmapRescaleRatio > 20.0 || pixmapRescaleRatio < 0.25 ||
-             (scaledWidth != pixmap->width() && pixmapPixels > 6000000L) )
+             (scaledWidth > pixmap->width() && pixmapPixels > 60000000L) )
         {
             // draw something on the blank page: the okular icon or a cross (as a fallback)
             if ( !busyPixmap->isNull() )

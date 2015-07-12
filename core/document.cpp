@@ -3741,7 +3741,9 @@ void Document::editFormButtons( int pageNumber, const QList< FormFieldButton* >&
 void Document::reloadDocument() const
 {
     const int numOfPages = pages();
-    for( int i = 0; i < numOfPages; i ++ )
+    for( int i = currentPage(); i >= 0; i -- )
+        d->refreshPixmaps( i );
+    for( int i = currentPage() + 1; i < numOfPages; i ++ )
         d->refreshPixmaps( i );
 }
 

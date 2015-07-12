@@ -1945,7 +1945,7 @@ void Part::slotRebuildBookmarkMenu()
 
 void Part::enableLayers(bool enable)
 {
-    m_sidebar->setItemEnabled( 1, enable );
+    m_sidebar->hideItem( 1, !enable );
 }
 
 void Part::slotShowFindBar()

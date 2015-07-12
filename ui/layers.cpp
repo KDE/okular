@@ -78,8 +78,8 @@ void Layers::notifySetup( const QVector< Okular::Page * > & /*pages*/, int /*set
 
 void Layers::saveSearchOptions()
 {
-    Okular::Settings::setContentsSearchRegularExpression( m_searchLine->regularExpression() );
-    Okular::Settings::setContentsSearchCaseSensitive( m_searchLine->caseSensitivity() == Qt::CaseSensitive ? true : false );
+    Okular::Settings::setLayersSearchRegularExpression( m_searchLine->regularExpression() );
+    Okular::Settings::setLayersSearchCaseSensitive( m_searchLine->caseSensitivity() == Qt::CaseSensitive ? true : false );
     Okular::Settings::self()->writeConfig();
 }
 

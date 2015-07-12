@@ -26,6 +26,14 @@
    <default>false</default>
   </entry>
  </group>
+ <group name="Layers" >
+  <entry key="LayersSearchCaseSensitive" type="Bool">
+   <default>false</default>
+  </entry>
+  <entry key="LayersSearchRegularExpression" type="Bool">
+   <default>false</default>
+  </entry>
+ </group>
  <group name="Reviews" >
   <entry key="ReviewsSearchCaseSensitive" type="Bool">
    <default>false</default>

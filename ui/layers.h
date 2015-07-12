@@ -41,7 +41,6 @@ Q_OBJECT
 
     private slots:
         void saveSearchOptions();
-	void repaintItems( const QModelIndex &topLeft, const QModelIndex &bottomRight );
 
     private:
 

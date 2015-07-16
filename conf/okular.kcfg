@@ -112,6 +112,7 @@
     <choice name="BoxIn" />
     <choice name="BoxOut" />
     <choice name="Dissolve" />
+    <choice name="Fade" />
     <choice name="GlitterDown" />
     <choice name="GlitterRight" />
     <choice name="GlitterRightDown" />

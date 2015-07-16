@@ -198,6 +198,11 @@
         </item>
         <item>
          <property name="text" >
+          <string>Fade</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
           <string>Glitter Down</string>
          </property>
         </item>

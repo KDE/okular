@@ -464,6 +464,7 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     connect( m_document, SIGNAL(sourceReferenceActivated(const QString&,int,int,bool*)), this, SLOT(slotHandleActivatedSourceReference(const QString&,int,int,bool*)) );
     connect( m_pageView, SIGNAL(fitWindowToPage(QSize,QSize)), this, SIGNAL(fitWindowToPage(QSize,QSize)) );
     rightLayout->addWidget( m_pageView );
+    m_layers->setPageView( m_pageView );
     m_findBar = new FindBar( m_document, rightContainer );
     rightLayout->addWidget( m_findBar );
     m_bottomBar = new QWidget( rightContainer );

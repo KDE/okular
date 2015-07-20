@@ -1353,6 +1353,7 @@ void PageView::notifyCurrentPageChanged( int previous, int current )
         // update zoom text and factor if in a ZoomFit/* zoom mode
         if ( d->zoomMode != ZoomFixed )
             updateZoomText();
+
     }
 }
 
@@ -3905,6 +3906,19 @@ void PageView::updateCursor( const QPoint &p )
         d->mouseOnRect = false;
         setCursor( Qt::ArrowCursor );
     }
+}
+
+void PageView::reloadForms()
+{
+    QLinkedList< PageViewItem * >::const_iterator iIt = d->visibleItems.constBegin(), iEnd = d->visibleItems.constEnd();
+    if( d->m_formsVisible )
+    {
+        for ( ; iIt != iEnd; ++iIt )
+        {
+            (*iIt)->reloadFormWidgetsState();
+        }
+    }
+
 }
 
 void PageView::moveMagnifier( const QPoint& p ) // non scaled point

@@ -15,6 +15,7 @@
 
 #include "okular_part_export.h"
 
+class PageView;
 class QModelIndex;
 class QTreeView;
 class KTreeViewSearchLine;
@@ -36,6 +37,8 @@ Q_OBJECT
         // inherited from DocumentObserver
         void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags );
 
+	void setPageView( PageView *pageView );
+
     signals:
 	void hasLayers(bool has);
 
@@ -47,6 +50,7 @@ Q_OBJECT
         Okular::Document *m_document;
         QTreeView *m_treeView;
         KTreeViewSearchLine *m_searchLine;
+	PageView *m_pageView;
 };
 
 #endif

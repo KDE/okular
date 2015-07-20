@@ -118,6 +118,7 @@ Q_OBJECT
         void selectAll();
 
         void openAnnotationWindow( Okular::Annotation *annotation, int pageNumber );
+        void reloadForms();
 
     signals:
         void rightClick( const Okular::Page *, const QPoint & );

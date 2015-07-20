@@ -36,6 +36,7 @@
 #include "videowidget.h"
 #include "core/movie.h"
 #include "core/page.h"
+#include "core/form.h"
 #include "settings.h"
 
 /*********************/
@@ -202,10 +203,19 @@ bool PageViewItem::setFormWidgetsVisible( bool visible )
     QHash<int, FormWidgetIface*>::iterator it = m_formWidgets.begin(), itEnd = m_formWidgets.end();
     for ( ; it != itEnd; ++it )
     {
-        bool hadfocus = (*it)->setVisibility( visible );
+        bool hadfocus = (*it)->setVisibility( visible && (*it)->formField()->isVisible() );
         somehadfocus = somehadfocus || hadfocus;
     }
     return somehadfocus;
+}
+
+void PageViewItem::reloadFormWidgetsState()
+{
+    QHash<int, FormWidgetIface*>::iterator it = m_formWidgets.begin(), itEnd = m_formWidgets.end();
+    for ( ; it != itEnd; ++it )
+    {
+	(*it)->setVisibility( (*it)->formField()->isVisible() );
+    }
 }
 
 /*********************/

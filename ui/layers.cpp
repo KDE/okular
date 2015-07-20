@@ -18,6 +18,7 @@
 // local includes
 #include "core/document.h"
 #include "ktreeviewsearchline.h"
+#include "ui/pageview.h"
 
 Layers::Layers(QWidget *parent, Okular::Document *document) : QWidget(parent), m_document(document)
 {
@@ -69,11 +70,17 @@ void Layers::notifySetup( const QVector< Okular::Page * > & /*pages*/, int /*set
 	m_searchLine->addTreeView( m_treeView );
 	emit hasLayers( true );
 	connect( layersModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), m_document, SLOT(reloadDocument()) );
+	connect( layersModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), m_pageView, SLOT(reloadForms()) );
     }
     else
     {
 	emit hasLayers( false );
     }
+}
+
+void Layers::setPageView(PageView *pageView)
+{
+    m_pageView = pageView;
 }
 
 void Layers::saveSearchOptions()

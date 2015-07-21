@@ -145,10 +145,10 @@ MobileComponents.OverlayDrawer {
         anchors.fill: parent
         state: "Hidden"
 
-
         PlasmaComponents.ToolBar {
             id: mainToolBar
 
+            height: units.gridUnit * 2
             y: pageStack.currentPage.contentY <= 0 ? 0 : -height
             transform: Translate {
                 y: Math.max(0, -pageStack.currentPage.contentY)
@@ -172,7 +172,7 @@ MobileComponents.OverlayDrawer {
                 left: parent.left
                 top: mainToolBar.bottom
                 right: parent.right
-                bottom: parent.bottom
+                bottom: tabsToolbar.top
             }
             clip: true
             toolBar: mainToolBar
@@ -184,24 +184,17 @@ MobileComponents.OverlayDrawer {
             target: pageStack.currentPage
 
             onContentYChanged: {
-
-                if (pageStack.currentPage.contentHeight <= pageStack.height ||
-                    (scrollConnection.oldContentY < pageStack.currentPage.contentY &&
-                     pageStack.currentPage.contentY > 0)) {
-                    tabsToolbar.y = tabsToolbar.parent.height - tabsToolbar.height
-                } else {
-                    tabsToolbar.y = tabsToolbar.parent.height
-                }
                 scrollConnection.oldContentY = pageStack.currentPage.contentY
             }
         }
 
         PlasmaComponents.ToolBar {
             id: tabsToolbar
-            y: parent.height
+            y: parent.height - tabsToolbar.height*5
+            height: mainTabBar.height
             anchors {
                 top: undefined
-                bottom: undefined
+                bottom: browserFrame.bottom
                 left: parent.left
                 right: parent.right
             }
@@ -211,6 +204,17 @@ MobileComponents.OverlayDrawer {
                 PlasmaComponents.TabBar {
                     id: mainTabBar
                     anchors.horizontalCenter: parent.horizontalCenter
+                    width: Math.min(parent.width, implicitWidth)
+                    tabPosition: Qt.BottomEdge
+                    PlasmaComponents.TabButton {
+                        id: documentsButton
+                        text: i18n("Documents")
+                        onCheckedChanged: {
+                            if (checked) {
+                                pageStack.replace(Qt.createComponent("Documents.qml"))
+                            }
+                        }
+                    }
                     PlasmaComponents.TabButton {
                         id: thumbnailsButton
                         text: i18n("Thumbnails")
@@ -240,11 +244,6 @@ MobileComponents.OverlayDrawer {
                             }
                         }
                     }
-                }
-            }
-            Behavior on y {
-                NumberAnimation {
-                    duration: 250
                 }
             }
         }

@@ -59,7 +59,10 @@ ApplicationWindow {
                 documentItem.path = commandlineArguments[0]
             }
 
-            mainStack.push(Qt.createComponent("Browser.qml"))
+            var browser = mainStack.push(Qt.createComponent("Browser.qml"))
+            if (commandlineArguments.length == 0) {
+                browser.open = true;
+            }
         }
     }
 }

@@ -1036,7 +1036,7 @@ Context menu actions like Rename Bookmarks etc.)
 						</menuchoice>
 					</term>
 					<listitem>
-					  <para><action>Save</action> saves the document under a new name including all the changes (annotations, form contents, &etc;), provided the document backend supports saving changes. With the &PDF; backend (Poppler >= 0.8 required) it is possible to save the document with the changed values of the form fields.<!--Only useful for pdf? what happens with other formats/backends?--> It can be possible (provided that the data were not secured using DRM) to save annotations with &PDF; files (Poppler >= 0.22 required).</para>
+					  <para><action>Save</action> saves the document under a new name including all the changes (annotations, form contents, &etc;), provided the document backend supports saving changes. With the &PDF; backend it is possible to save the document with the changed values of the form fields.<!--Only useful for pdf? what happens with other formats/backends?--> It can be possible (provided that the data were not secured using DRM) to save annotations with &PDF; files.</para>
                                         <note>
                                         <para>
                                             Note that, due to the way this is implemented, even if there are no changes to the file, the new file need not to be an exact bit-for-bit copy of the original file (&eg; can have a different SHA-1 hash, &etc;).

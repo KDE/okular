@@ -13,11 +13,12 @@ set(okular_SRCS
     ${CMAKE_SOURCE_DIR}/ui/guiutils.cpp
     ${CMAKE_SOURCE_DIR}/ui/tocmodel.cpp
     ${CMAKE_SOURCE_DIR}/ui/pagepainter.cpp
-    ${CMAKE_BINARY_DIR}/settings.cpp
     pageitem.cpp
     documentitem.cpp
     thumbnailitem.cpp
     )
+
+kconfig_add_kcfg_files(okular_SRCS ${CMAKE_SOURCE_DIR}/conf/settings.kcfgc )
 
 add_library(okularplugin SHARED ${okular_SRCS})
 target_link_libraries(okularplugin

@@ -4011,7 +4011,7 @@ void Document::processSourceReference( const SourceReference * ref )
     if ( !ref )
         return;
 
-    const QUrl url( d->giveAbsolutePath( ref->fileName() ) );
+    const QUrl url = QUrl::fromLocalFile( d->giveAbsolutePath( ref->fileName() ) );
     if ( !url.isLocalFile() )
     {
         qCDebug(OkularCoreDebug) << url.url() << "is not a local file.";

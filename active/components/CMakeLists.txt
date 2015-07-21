@@ -12,6 +12,8 @@ set(okular_SRCS
     okularplugin.cpp
     ${CMAKE_SOURCE_DIR}/ui/guiutils.cpp
     ${CMAKE_SOURCE_DIR}/ui/tocmodel.cpp
+    ${CMAKE_SOURCE_DIR}/ui/pagepainter.cpp
+    ${CMAKE_BINARY_DIR}/settings.cpp
     pageitem.cpp
     documentitem.cpp
     thumbnailitem.cpp
@@ -25,7 +27,7 @@ target_link_libraries(okularplugin
         Qt5::Xml
         Qt5::Svg
         okularcore
-        okularpart
+        KF5::KDELibs4Support
         )
 
 install(TARGETS okularplugin DESTINATION ${KDE_INSTALL_QMLDIR}/org/kde/okular)

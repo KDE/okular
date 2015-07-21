@@ -24,6 +24,7 @@
 #include "thumbnailitem.h"
 
 #include <QtQml/QQmlEngine>
+#include <QPluginLoader>
 
 void OkularPlugin::registerTypes(const char *uri)
 {

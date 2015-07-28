@@ -1,3 +1,4 @@
+cmake_minimum_required(VERSION 2.8.9)
 project(okular)
 
 find_package(KDE4 4.6.0 REQUIRED)

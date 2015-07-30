@@ -186,6 +186,11 @@ bool Generator::loadDocumentFromData( const QByteArray &, QVector< Page * > & )
     return false;
 }
 
+bool Generator::loadDocumentFromDevice( QIODevice *, QVector< Page * > & )
+{
+    return false;
+}
+
 Document::OpenResult Generator::loadDocumentWithPassword( const QString & fileName, QVector< Page * > & pagesVector, const QString & )
 {
     return loadDocument( fileName, pagesVector ) ? Document::OpenSuccess : Document::OpenError;
@@ -194,6 +199,11 @@ Document::OpenResult Generator::loadDocumentWithPassword( const QString & fileNa
 Document::OpenResult Generator::loadDocumentFromDataWithPassword( const QByteArray & fileData, QVector< Page * > & pagesVector, const QString & )
 {
     return loadDocumentFromData( fileData, pagesVector ) ? Document::OpenSuccess : Document::OpenError;
+}
+
+Document::OpenResult Generator::loadDocumentFromDeviceWithPassword( QIODevice * device, QVector< Page * > & pagesVector, const QString & )
+{
+    return loadDocumentFromDevice( device, pagesVector ) ? Document::OpenSuccess : Document::OpenError;
 }
 
 bool Generator::closeDocument()

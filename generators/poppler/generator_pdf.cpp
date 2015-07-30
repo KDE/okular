@@ -436,6 +436,7 @@ PDFGenerator::PDFGenerator( QObject *parent, const QVariantList &args )
         setFeature( PrintToFile );
     setFeature( ReadRawData );
     setFeature( TiledRendering );
+    setFeature( Linearization );
 
 #ifdef HAVE_POPPLER_0_16
     // You only need to do it once not for each of the documents but it is cheap enough
@@ -476,6 +477,20 @@ Okular::Document::OpenResult PDFGenerator::loadDocumentFromDataWithPassword( con
     // create PDFDoc for the given file
     pdfdoc = Poppler::Document::loadFromData( fileData, 0, 0 );
     return init(pagesVector, password);
+}
+
+Okular::Document::OpenResult PDFGenerator::loadDocumentFromDeviceWithPassword( QIODevice * remoteFile, QVector< Okular::Page* > & pagesVector, const QString & password )
+{
+#ifndef NDEBUG
+    if ( pdfdoc )
+    {
+        kDebug(PDFDebug) << "PDFGenerator: multiple calls to loadDocument. Check it.";
+        return Okular::Document::OpenError;
+    }
+#endif
+    // create PDFDoc for the given device
+    pdfdoc = Poppler::Document::loadFromDevice( remoteFile, 0, 0 );
+    return init( pagesVector, password );
 }
 
 Okular::Document::OpenResult PDFGenerator::init(QVector<Okular::Page*> & pagesVector, const QString &password)

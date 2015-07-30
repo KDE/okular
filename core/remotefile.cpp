@@ -8,33 +8,27 @@
  ***************************************************************************/
 
 // system includes
-#include <kio/jobclasses.h>
-#include <kio/filejob.h>
-#include <QIODevice>
 #include <QEventLoop>
-#include <QTimer>
+#include <kjob.h>
+#include <kio/job.h>
+#include <kio/scheduler.h>
 
 // local includes
 #include "remotefile.h"
 
 namespace Okular {
 
-    RemoteFile::RemoteFile( KIO::FileJob * job ) : QIODevice( ), m_fileJob( job )
+    RemoteFile::RemoteFile( KUrl url )
+	: QIODevice( ), m_url( url ), m_offset( 0 )
     {
-	connect( m_fileJob, SIGNAL(open(KIO::Job*)), this, SIGNAL(readyRead()) );
-	connect( m_fileJob, SIGNAL(data(KIO::Job*,const QByteArray&)), this, SLOT(slotHandleData(KIO::Job*,const QByteArray&)) );
-	connect( m_fileJob, SIGNAL(mimetype(KIO::Job*,const QString&)), this, SLOT(slotSetMimeType(KIO::Job*,const QString&)) );
-	connect( m_fileJob, SIGNAL(close(KIO::Job*)), this, SIGNAL(readyRead()) );
+	KIO::TransferJob * transferJob = KIO::get( url, KIO::Reload );
+	connect( transferJob, SIGNAL(totalSize(KJob*,qulonglong)), this, SLOT(slotTotalSize(KJob*,qulonglong)), Qt::QueuedConnection );
+	connect( transferJob, SIGNAL(mimetype(KIO::Job*,QString)), this, SLOT(slotSetMimeType(KIO::Job*,QString)), Qt::QueuedConnection );
 	waitForReadyRead( -1 );
     }
 
     RemoteFile::~RemoteFile()
     {
-	m_fileJob->close();
-	waitForReadyRead( -1 );
-	if( isOpen() )
-	    close();
-	delete m_fileJob;
     }
 
     bool RemoteFile::waitForReadyRead( int msecs )
@@ -45,27 +39,28 @@ namespace Okular {
 	    QTimer timer;
 	    timer.setSingleShot( true );
 	    timer.setInterval( msecs );
-	    connect( &timer, SIGNAL(timeout()), &pause, SLOT(quit()) );
+	    connect( &timer, SIGNAL(timeout()), &pause, SLOT(quit()), Qt::QueuedConnection );
 	    timer.start();
 	}
-	connect( this, SIGNAL(readyRead()), &pause, SLOT(quit()) );
+	connect( this, SIGNAL(readyRead()), &pause, SLOT(quit()), Qt::QueuedConnection );
 	pause.exec();
 	return QIODevice::waitForReadyRead( msecs );
     }
 
     qint64 RemoteFile::bytesAvailable() const
     {
-	return QIODevice::bytesAvailable() + m_fileJob->size();
+	return QIODevice::bytesAvailable() + m_fileSize;
     }
 
     bool RemoteFile::seek( qint64 pos )
     {
-	m_fileJob->seek( pos );
-	QEventLoop pause;
-	qRegisterMetaType<KIO::filesize_t>( "KIO::filesize_t" );
-	connect( m_fileJob, SIGNAL(position(KIO::Job*,KIO::filesize_t)), &pause, SLOT(quit()) );
-	pause.exec();
+	m_offset = pos;
 	return QIODevice::seek(pos);
+    }
+
+    QString RemoteFile::mimeType() const
+    {
+	return m_mimeType;
     }
 
     bool RemoteFile::atEnd() const
@@ -78,7 +73,19 @@ namespace Okular {
     void RemoteFile::slotHandleData( KIO::Job * /*job*/, const QByteArray & data )
     {
 	m_buffer.append( data );
-	emit readyRead();
+	if( ! data.size() )
+	    emit readyRead();
+    }
+
+    void RemoteFile::slotTotalSize( KJob * job, qulonglong size )
+    {
+	if( ! job->error() )
+	{
+	    m_fileSize = size;
+	    emit readyRead();
+	}
+	( ( KIO::TransferJob * )job )->putOnHold();
+	KIO::Scheduler::publishSlaveOnHold();
     }
 
     void RemoteFile::slotSetMimeType( KIO::Job * /*job*/, const QString & type )
@@ -89,12 +96,13 @@ namespace Okular {
     qint64 RemoteFile::readData( char * data, qint64 maxSize )
     {
 	m_buffer.clear();
-	m_fileJob->read( maxSize );
+	KIO::TransferJob * job = KIO::get( m_url );
+	job->addMetaData( QString( "cache" ), QString( "reload" ) );
+	job->addMetaData( QString( "resume" ), QString::number( m_offset ) );
+	job->addMetaData( QString( "resume_until" ), QString::number( ( m_offset + maxSize - 1 ) < m_fileSize ? m_offset + maxSize - 1 : m_fileSize ) );
+	connect( job, SIGNAL(data(KIO::Job*,QByteArray)), this, SLOT(slotHandleData(KIO::Job*,QByteArray)), Qt::QueuedConnection );
 	waitForReadyRead( -1 );
-	for( qint64 i = 0; i < m_buffer.size(); i ++ )
-	{
-	    *( data + i ) = m_buffer.at( i );
-	}
+	memcpy( data, m_buffer.data(), m_buffer.size() );
 	return m_buffer.size();
     }
 

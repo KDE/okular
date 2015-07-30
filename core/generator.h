@@ -207,7 +207,8 @@ class OKULAR_EXPORT Generator : public QObject
             PrintNative,       ///< Whether the Generator supports native cross-platform printing (QPainter-based).
             PrintPostscript,   ///< Whether the Generator supports postscript-based file printing.
             PrintToFile,       ///< Whether the Generator supports export to PDF & PS through the Print Dialog
-            TiledRendering     ///< Whether the Generator can render tiles @since 0.16 (KDE 4.10)
+            TiledRendering,     ///< Whether the Generator can render tiles @since 0.16 (KDE 4.10)
+            Linearization,      ///< Whether the Generator supports linearization or fast web view.
         };
 
         /**
@@ -243,6 +244,18 @@ class OKULAR_EXPORT Generator : public QObject
         virtual bool loadDocumentFromData( const QByteArray & fileData, QVector< Page * > & pagesVector );
 
         /**
+         * Loads the document from the QIODevice @p remoteFile and fills the
+         * @p pagesVector with the parsed pages.
+         *
+         * @note If you implement the WithPassword variants you don't need to implement this one
+         *
+         * @note the Generator has to have the feature @ref Linearization enabled
+         *
+         * @returns true on success, false otherwise.
+         */
+        virtual bool loadDocumentFromDevice( QIODevice * remoteFile, QVector< Page * > & pagesVector );
+
+        /**
          * Loads the document with the given @p fileName and @p password and fills the
          * @p pagesVector with the parsed pages.
          *
@@ -268,6 +281,17 @@ class OKULAR_EXPORT Generator : public QObject
          */
         virtual Document::OpenResult loadDocumentFromDataWithPassword( const QByteArray & fileData, QVector< Page * > & pagesVector, const QString &password );
 
+        /**
+         * Loads the document from the @p remoteFile and @p password and fills the
+         * @p pagesVector with the parsed pages.
+         *
+         * @note Do not implement this if your format doesn't support passwords, it'll cleanly call loadDocumentFromRemoteFile()
+         *
+         * @note the Generator has to have the feature @ref Linearization enabled
+         *
+         * @returns a LoadResult defining the result of the operation
+         */
+        virtual Document::OpenResult loadDocumentFromDeviceWithPassword( QIODevice * remoteFile, QVector< Page * > & pagesVector, const QString &password );
 
         /**
          * This method is called when the document is closed and not used

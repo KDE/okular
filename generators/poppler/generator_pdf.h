@@ -60,6 +60,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         // [INHERITED] load a document and fill up the pagesVector
         Okular::Document::OpenResult loadDocumentWithPassword( const QString & fileName, QVector<Okular::Page*> & pagesVector, const QString & password );
         Okular::Document::OpenResult loadDocumentFromDataWithPassword( const QByteArray & fileData, QVector<Okular::Page*> & pagesVector, const QString & password );
+        Okular::Document::OpenResult loadDocumentFromDeviceWithPassword( QIODevice * device, QVector<Okular::Page*> & pagesVector, const QString & password );
         void loadPages(QVector<Okular::Page*> &pagesVector, int rotation=-1, bool clear=false);
         // [INHERITED] document information
         Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const;

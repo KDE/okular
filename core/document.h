@@ -56,6 +56,7 @@ class RenditionAction;
 class SourceReference;
 class View;
 class VisiblePageRect;
+class RemoteFile;
 
 /** IDs for seaches. Globally defined here. **/
 #define PART_SEARCH_ID 1
@@ -215,7 +216,7 @@ class OKULAR_EXPORT Document : public QObject
          * Opens the document.
          * @since 0.20 (KDE 4.14)
          */
-        OpenResult openDocument( const QString & docFile, const KUrl & url, const KMimeType::Ptr &mime, const QString &password = QString() );
+        OpenResult openDocument( const QString & docFile, const KUrl & url, const KMimeType::Ptr &mime, const QString &password = QString(), RemoteFile * remoteFile = 0 );
 
         /**
          * Closes the document.

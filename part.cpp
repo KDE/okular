@@ -66,6 +66,7 @@
 #include <kbookmarkmenu.h>
 #include <kpassworddialog.h>
 #include <kwallet.h>
+#include <kprotocolmanager.h>
 
 // local includes
 #include "aboutdata.h"
@@ -94,6 +95,7 @@
 #include "core/generator.h"
 #include "core/page.h"
 #include "core/fileprinter.h"
+#include "core/remotefile.h"
 
 #include <cstdio>
 #include <memory>
@@ -304,7 +306,7 @@ const QVariantList &args,
 KComponentData componentData )
 : KParts::ReadWritePart(parent),
 m_tempfile( 0 ), m_fileWasRemoved( false ), m_showMenuBarAction( 0 ), m_showFullScreenAction( 0 ), m_actionsSearched( false ),
-m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentWidget, parent, args)), m_generatorGuiClient(0), m_keeper( 0 )
+m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentWidget, parent, args)), m_generatorGuiClient(0), m_keeper( 0 ), m_remoteFile( 0 )
 {
     // first, we check if a config file name has been specified
     QString configFileName = detectConfigFileName( args );
@@ -561,6 +563,9 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
 
     if ( m_embedMode == NativeShellMode )
         m_sidebar->setAutoFillBackground( false );
+
+    if( m_remoteFile )
+        delete m_remoteFile;
 
 #ifdef OKULAR_KEEP_FILE_OPEN
     m_keeper = new FileKeeper();
@@ -1223,7 +1228,10 @@ Document::OpenResult Part::doOpenFile( const KMimeType::Ptr &mimeA, const QStrin
     {
         *isCompressedFile = true;
         uncompressOk = handleCompressed( fileNameToOpen, localFilePath(), compressedMime );
-        mime = KMimeType::findByPath( fileNameToOpen );
+        if( url().isLocalFile() )
+        {
+            mime = KMimeType::findByPath( fileNameToOpen );
+        }
     }
     else
     {
@@ -1240,7 +1248,7 @@ Document::OpenResult Part::doOpenFile( const KMimeType::Ptr &mimeA, const QStrin
         }
         else
         {
-            openResult = m_document->openDocument( fileNameToOpen,  url(), mime );
+            openResult = m_document->openDocument( fileNameToOpen,  url(), mime, QString(), m_remoteFile );
         }
 
         // if the file didn't open correctly it might be encrypted, so ask for a pass
@@ -1323,9 +1331,19 @@ bool Part::openFile()
     QString fileNameToOpen = localFilePath();
     const bool isstdin = url().isLocalFile() && url().fileName( KUrl::ObeyTrailingSlash ) == QLatin1String( "-" );
     const QFileInfo fileInfo( fileNameToOpen );
-    if ( !isstdin && !fileInfo.exists() )
-        return false;
-    KMimeType::Ptr pathMime = KMimeType::findByPath( fileNameToOpen );
+    KMimeType::Ptr pathMime;
+    if( ! m_remoteFile )
+    {
+        setUrl( KUrl( fileNameToOpen ) );
+    }
+    if( url().isLocalFile() )
+    {
+        pathMime = KMimeType::findByPath( fileNameToOpen );
+    }
+    else
+    {
+        pathMime = KMimeType::findByUrl( url() );
+    }
     const QString argMimeType = arguments().mimeType();
 
     if ( !argMimeType.isEmpty() )
@@ -1349,7 +1367,11 @@ bool Part::openFile()
         }
 
         if (mimes[0]->name() == "text/plain") {
-            KMimeType::Ptr contentMime = KMimeType::findByFileContent( fileNameToOpen );
+            KMimeType::Ptr contentMime;
+            if( url().isLocalFile() )
+                contentMime = KMimeType::findByFileContent( fileNameToOpen );
+            else
+                contentMime = KMimeType::mimeType( m_remoteFile->mimeType() );
             mimes.prepend( contentMime );
         }
     }
@@ -1516,7 +1538,17 @@ bool Part::openUrl(const KUrl &_url)
     }
 
     // this calls in sequence the 'closeUrl' and 'openFile' methods
-    bool openOk = KParts::ReadWritePart::openUrl( url );
+    bool openOk;
+    setUrl( url );
+    if( url.isLocalFile() )
+    {
+        openOk = KParts::ReadWritePart::openUrl( url );
+    }
+    else
+    {
+        m_remoteFile = new Okular::RemoteFile( url );
+        openOk = openFile();
+    }
 
     if ( openOk )
     {

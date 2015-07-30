@@ -45,6 +45,7 @@ class PageController;
 class SaveInterface;
 class Scripter;
 class View;
+class RemoteFile;
 }
 
 struct GeneratorInfo
@@ -131,7 +132,7 @@ class DocumentPrivate
         void setRotationInternal( int r, bool notify );
         ConfigInterface* generatorConfig( GeneratorInfo& info );
         SaveInterface* generatorSave( GeneratorInfo& info );
-        Document::OpenResult openDocumentInternal( const KService::Ptr& offer, bool isstdin, const QString& docFile, const QByteArray& filedata, const QString& password );
+        Document::OpenResult openDocumentInternal( const KService::Ptr& offer, bool isstdin, const QString& docFile, const QByteArray& filedata, const QString& password, RemoteFile * remoteFile = 0 );
         bool savePageDocumentInfo( KTemporaryFile *infoFile, int what ) const;
         DocumentViewport nextDocumentViewport() const;
         void notifyAnnotationChanges( int page );

@@ -86,6 +86,7 @@
 #include "view_p.h"
 #include "form.h"
 #include "utils.h"
+#include "core/remotefile.h"
 
 #include <memory>
 
@@ -904,7 +905,7 @@ SaveInterface* DocumentPrivate::generatorSave( GeneratorInfo& info )
     return info.save;
 }
 
-Document::OpenResult DocumentPrivate::openDocumentInternal( const KService::Ptr& offer, bool isstdin, const QString& docFile, const QByteArray& filedata, const QString& password )
+Document::OpenResult DocumentPrivate::openDocumentInternal( const KService::Ptr& offer, bool isstdin, const QString& docFile, const QByteArray& filedata, const QString& password, Okular::RemoteFile * remoteFile )
 {
     QString propName = offer->name();
     QHash< QString, GeneratorInfo >::const_iterator genIt = m_loadedGenerators.constFind( propName );
@@ -945,7 +946,31 @@ Document::OpenResult DocumentPrivate::openDocumentInternal( const KService::Ptr&
     Document::OpenResult openResult = Document::OpenError;
     if ( !isstdin )
     {
-        openResult = m_generator->loadDocumentWithPassword( docFile, m_pagesVector, password );
+        if( m_url.isLocalFile() )
+        {
+            openResult = m_generator->loadDocumentWithPassword( docFile, m_pagesVector, password );
+        }
+        else if( m_generator->hasFeature( Generator::Linearization ) )
+        {
+            openResult = m_generator->loadDocumentFromDeviceWithPassword( remoteFile, m_pagesVector, password );
+        }
+        else
+        {
+            m_tempFile = new KTemporaryFile();
+            if( ! m_tempFile->open() || ! remoteFile->open( QIODevice::ReadOnly ) )
+            {
+                delete m_tempFile;
+                m_tempFile = 0;
+            }
+            else
+            {
+                m_tempFile->write( remoteFile->readAll() );
+                QString tmpFileName = m_tempFile->fileName();
+                m_tempFile->close();
+                remoteFile->close();
+                openResult = m_generator->loadDocumentWithPassword( tmpFileName, m_pagesVector, password );
+            }
+        }
     }
     else if ( !filedata.isEmpty() )
     {
@@ -2259,7 +2284,7 @@ QString DocumentPrivate::docDataFileName(const KUrl &url, qint64 document_size)
     return newokularfile;
 }
 
-Document::OpenResult Document::openDocument( const QString & docFile, const KUrl& url, const KMimeType::Ptr &_mime, const QString & password )
+Document::OpenResult Document::openDocument( const QString & docFile, const KUrl& url, const KMimeType::Ptr &_mime, const QString & password, RemoteFile * remoteFile )
 {
     KMimeType::Ptr mime = _mime;
     QByteArray filedata;
@@ -2271,9 +2296,8 @@ Document::OpenResult Document::openDocument( const QString & docFile, const KUrl
         if ( mime.count() <= 0 )
             return OpenError;
 
-        // docFile is always local so we can use QFileInfo on it
         QFileInfo fileReadTest( docFile );
-        if ( fileReadTest.isFile() && !fileReadTest.isReadable() )
+        if ( url.isLocalFile() && fileReadTest.isFile() && !fileReadTest.isReadable() )
         {
             d->m_docFileName.clear();
             return OpenError;
@@ -2305,7 +2329,15 @@ Document::OpenResult Document::openDocument( const QString & docFile, const KUrl
     KService::List offers = KMimeTypeTrader::self()->query(mime->name(),"okular/Generator",constraint);
     if ( offers.isEmpty() && !triedMimeFromFileContent )
     {
-        KMimeType::Ptr newmime = KMimeType::findByFileContent( docFile );
+        KMimeType::Ptr newmime;
+        if( url.isLocalFile() )
+        {
+            newmime = KMimeType::findByFileContent( docFile );
+        }
+        else
+        {
+            newmime = KMimeType::mimeType( remoteFile->mimeType() );
+        }
         triedMimeFromFileContent = true;
         if ( newmime->name() != mime->name() )
         {
@@ -2358,10 +2390,18 @@ Document::OpenResult Document::openDocument( const QString & docFile, const KUrl
 
     KService::Ptr offer = offers.at( hRank );
     // 1. load Document
-    OpenResult openResult = d->openDocumentInternal( offer, isstdin, docFile, filedata, password );
+    OpenResult openResult = d->openDocumentInternal( offer, isstdin, docFile, filedata, password, remoteFile );
     if ( openResult == OpenError && !triedMimeFromFileContent )
     {
-        KMimeType::Ptr newmime = KMimeType::findByFileContent( docFile );
+        KMimeType::Ptr newmime;
+        if( url.isLocalFile() )
+        {
+            newmime = KMimeType::findByFileContent( docFile );
+        }
+        else
+        {
+            newmime = KMimeType::mimeType( remoteFile->mimeType() );
+        }
         triedMimeFromFileContent = true;
         if ( newmime->name() != mime->name() )
         {

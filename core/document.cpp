@@ -86,6 +86,7 @@
 #include "view_p.h"
 #include "form.h"
 #include "utils.h"
+#include "qpagesize.h" // TODO Convert to <> in Qt5
 
 #include <memory>
 
@@ -170,88 +171,87 @@ QString DocumentPrivate::namePaperSize(double inchesWidth, double inchesHeight) 
     if (inchesWidth > inchesHeight)
         qSwap(inchesWidth, inchesHeight);
 
-    // Use QPrinter to find which of the predefined paper sizes
+    // Use QPageSize to find which of the predefined paper sizes
     // matches best the given paper width and height
-    QPrinter dummyPrinter;
-    QPrinter::PaperSize paperSize = QPrinter::Custom;
-    for (int i = 0; i < (int)QPrinter::NPaperSize; ++i)
+    QPageSize::PageSizeId paperSize = QPageSize::Custom;
+    for (int i = 0; i < (int)QPageSize::NPaperSize; ++i)
     {
-        const QPrinter::PaperSize ps = (QPrinter::PaperSize)i;
-        dummyPrinter.setPaperSize(ps);
-        const QSizeF definedPaperSize = dummyPrinter.paperSize(QPrinter::Inch);
+        const QPageSize size((QPageSize::PageSizeId)i);
+        const QSizeF definedPaperSize = size.size(QPageSize::Inch);
 
         if (inchesWidth > definedPaperSize.width() * lowerBoundFactor && inchesWidth < definedPaperSize.width() * upperBoundFactor
             && inchesHeight > definedPaperSize.height() * lowerBoundFactor && inchesHeight < definedPaperSize.height() * upperBoundFactor)
         {
-            paperSize = ps;
+            paperSize = (QPageSize::PageSizeId)i;
             break;
         }
     }
 
-    // Handle all paper sizes defined in QPrinter,
+    // Handle all paper sizes defined in QPageSize,
     // return string depending if paper's orientation is landscape or portrait
     switch (paperSize) {
-        case QPrinter::A0:
+        case QPageSize::A0:
             return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO A0") : i18nc("paper size", "portrait DIN/ISO A0");
-        case QPrinter::A1:
+        case QPageSize::A1:
             return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO A1") : i18nc("paper size", "portrait DIN/ISO A1");
-        case QPrinter::A2:
+        case QPageSize::A2:
             return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO A2") : i18nc("paper size", "portrait DIN/ISO A2");
-        case QPrinter::A3:
+        case QPageSize::A3:
             return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO A3") : i18nc("paper size", "portrait DIN/ISO A3");
-        case QPrinter::A4:
+        case QPageSize::A4:
             return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO A4") : i18nc("paper size", "portrait DIN/ISO A4");
-        case QPrinter::A5:
+        case QPageSize::A5:
             return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO A5") : i18nc("paper size", "portrait DIN/ISO A5");
-        case QPrinter::A6:
+        case QPageSize::A6:
             return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO A6") : i18nc("paper size", "portrait DIN/ISO A6");
-        case QPrinter::A7:
+        case QPageSize::A7:
             return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO A7") : i18nc("paper size", "portrait DIN/ISO A7");
-        case QPrinter::A8:
+        case QPageSize::A8:
             return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO A8") : i18nc("paper size", "portrait DIN/ISO A8");
-        case QPrinter::A9:
+        case QPageSize::A9:
             return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO A9") : i18nc("paper size", "portrait DIN/ISO A9");
-        case QPrinter::B0:
+        case QPageSize::B0:
             return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO B0") : i18nc("paper size", "portrait DIN/ISO B0");
-        case QPrinter::B1:
+        case QPageSize::B1:
             return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO B1") : i18nc("paper size", "portrait DIN/ISO B1");
-        case QPrinter::B2:
+        case QPageSize::B2:
             return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO B2") : i18nc("paper size", "portrait DIN/ISO B2");
-        case QPrinter::B3:
+        case QPageSize::B3:
             return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO B3") : i18nc("paper size", "portrait DIN/ISO B3");
-        case QPrinter::B4:
+        case QPageSize::B4:
             return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO B4") : i18nc("paper size", "portrait DIN/ISO B4");
-        case QPrinter::B5:
+        case QPageSize::B5:
             return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO B5") : i18nc("paper size", "portrait DIN/ISO B5");
-        case QPrinter::B6:
+        case QPageSize::B6:
             return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO B6") : i18nc("paper size", "portrait DIN/ISO B6");
-        case QPrinter::B7:
+        case QPageSize::B7:
             return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO B7") : i18nc("paper size", "portrait DIN/ISO B7");
-        case QPrinter::B8:
+        case QPageSize::B8:
             return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO B8") : i18nc("paper size", "portrait DIN/ISO B8");
-        case QPrinter::B9:
+        case QPageSize::B9:
             return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO B9") : i18nc("paper size", "portrait DIN/ISO B9");
-        case QPrinter::B10:
+        case QPageSize::B10:
             return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO B10") : i18nc("paper size", "portrait DIN/ISO B10");
-        case QPrinter::Letter:
+        case QPageSize::Letter:
             return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape letter") : i18nc("paper size", "portrait letter");
-        case QPrinter::Legal:
+        case QPageSize::Legal:
             return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape legal") : i18nc("paper size", "portrait legal");
-        case QPrinter::Executive:
+        case QPageSize::Executive:
             return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape executive") : i18nc("paper size", "portrait executive");
-        case QPrinter::C5E:
+        case QPageSize::C5E:
             return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape C5E") : i18nc("paper size", "portrait C5E");
-        case QPrinter::Comm10E:
+        case QPageSize::Comm10E:
             return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape Comm10E") : i18nc("paper size", "portrait Comm10E");
-        case QPrinter::DLE:
+        case QPageSize::DLE:
             return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DLE") : i18nc("paper size", "portrait DLE");
-        case QPrinter::Folio:
+        case QPageSize::Folio:
             return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape folio") : i18nc("paper size", "portrait folio");
-        case QPrinter::Tabloid:
-        case QPrinter::Ledger:
+        case QPageSize::Tabloid:
+        case QPageSize::Ledger:
             /// Ledger and Tabloid are the same, just rotated by 90 degrees
             return  orientation == QPrinter::Landscape ? i18nc("paper size", "ledger") : i18nc("paper size", "tabloid");
-        case QPrinter::Custom:
+        default: // TODO add new strings on master
+        case QPageSize::Custom:
             return orientation == QPrinter::Landscape ? i18nc("paper size", "unknown landscape paper size") : i18nc("paper size", "unknown portrait paper size");
     }
 

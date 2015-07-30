@@ -3293,6 +3293,7 @@ bool Document::canRemovePageAnnotation( const Annotation * annotation ) const
         case Annotation::AHighlight:
         case Annotation::AStamp:
         case Annotation::AInk:
+        case Annotation::ACaret:
             return true;
         default:
             return false;

@@ -341,6 +341,7 @@ Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *
         case Poppler::Annotation::AGeom:
         case Poppler::Annotation::AHighlight:
         case Poppler::Annotation::AInk:
+        case Poppler::Annotation::ACaret:
         {
             externallyDrawn = true;
             /* fallback */

@@ -189,6 +189,7 @@ QString DocumentPrivate::namePaperSize(double inchesWidth, double inchesHeight) 
 
     // Handle all paper sizes defined in QPageSize,
     // return string depending if paper's orientation is landscape or portrait
+    // TODO We can probably use QPageSize::name in KF5/Qt5 world
     switch (paperSize) {
         case QPageSize::A0:
             return  orientation == QPrinter::Landscape ? i18nc("paper size", "landscape DIN/ISO A0") : i18nc("paper size", "portrait DIN/ISO A0");
@@ -250,7 +251,7 @@ QString DocumentPrivate::namePaperSize(double inchesWidth, double inchesHeight) 
         case QPageSize::Ledger:
             /// Ledger and Tabloid are the same, just rotated by 90 degrees
             return  orientation == QPrinter::Landscape ? i18nc("paper size", "ledger") : i18nc("paper size", "tabloid");
-        default: // TODO add new strings on master
+        default: // TODO add new strings on master if we don't merge KF5 first
         case QPageSize::Custom:
             return orientation == QPrinter::Landscape ? i18nc("paper size", "unknown landscape paper size") : i18nc("paper size", "unknown portrait paper size");
     }

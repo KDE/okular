@@ -817,10 +817,11 @@ bool DocumentPrivate::openRelativeFile( const QString & fileName )
 
 Generator * DocumentPrivate::loadGeneratorLibrary( const KService::Ptr &service )
 {
-    KPluginFactory *factory = KPluginLoader( service->library() ).factory();
+    KPluginLoader loader( service->library() );
+    KPluginFactory *factory = loader.factory();
     if ( !factory )
     {
-        qCWarning(OkularCoreDebug).nospace() << "Invalid plugin factory for " << service->library() << "!";
+        qCWarning(OkularCoreDebug).nospace() << "Invalid plugin factory for " << service->library() << ":" << loader.errorString();
         return 0;
     }
 

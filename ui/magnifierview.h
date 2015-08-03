@@ -30,6 +30,7 @@ class MagnifierView : public QWidget, public Okular::DocumentObserver
 
   public:
     MagnifierView( Okular::Document *document, QWidget *parent = 0 );
+    ~MagnifierView();
 
     void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags );
     void notifyPageChanged( int page, int flags );

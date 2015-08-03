@@ -941,7 +941,14 @@ void PresentationWidget::changePage( int newPage )
 void PresentationWidget::generatePage( bool disableTransition )
 {
     if ( m_lastRenderedPixmap.isNull() )
+    {
         m_lastRenderedPixmap = QPixmap( m_width, m_height );
+        m_previousPagePixmap = QPixmap();
+    }
+    else
+    {
+        m_previousPagePixmap = m_lastRenderedPixmap;
+    }
 
     // opens the painter over the pixmap
     QPainter pixmapPainter;
@@ -1343,6 +1350,7 @@ void PresentationWidget::slotNextPage()
         if ( m_transitionTimer->isActive() )
         {
             m_transitionTimer->stop();
+            m_lastRenderedPixmap = m_currentPagePixmap;
             update();
         }
     }
@@ -1369,6 +1377,7 @@ void PresentationWidget::slotPrevPage()
         if ( m_transitionTimer->isActive() )
         {
             m_transitionTimer->stop();
+            m_lastRenderedPixmap = m_currentPagePixmap;
             update();
         }
     }
@@ -1393,18 +1402,40 @@ void PresentationWidget::slotHideOverlay()
 
 void PresentationWidget::slotTransitionStep()
 {
-    if ( m_transitionRects.empty() )
+    switch( m_currentTransition.type() )
     {
-        // it's better to fix the transition to cover the whole screen than
-        // enabling the following line that wastes cpu for nothing
-        //update();
-        return;
-    }
+        case Okular::PageTransition::Fade:
+        {
+            QPainter pixmapPainter;
+            m_currentPixmapOpacity += 0.01;
+            m_lastRenderedPixmap = QPixmap( m_lastRenderedPixmap.size() );
+            m_lastRenderedPixmap.fill( Qt::transparent );
+            pixmapPainter.begin( &m_lastRenderedPixmap );
+            pixmapPainter.setCompositionMode( QPainter::CompositionMode_Source );
+            pixmapPainter.setOpacity( 1 - m_currentPixmapOpacity );
+            pixmapPainter.drawPixmap( 0, 0, m_previousPagePixmap );
+            pixmapPainter.setOpacity( m_currentPixmapOpacity );
+            pixmapPainter.drawPixmap( 0, 0, m_currentPagePixmap );
+            update();
+            if( m_currentPixmapOpacity >= 1 )
+                return;
+        } break;
+        default:
+        {
+            if ( m_transitionRects.empty() )
+            {
+                // it's better to fix the transition to cover the whole screen than
+                // enabling the following line that wastes cpu for nothing
+                //update();
+                return;
+            }
 
-    for ( int i = 0; i < m_transitionMul && !m_transitionRects.empty(); i++ )
-    {
-        update( m_transitionRects.first() );
-        m_transitionRects.pop_front();
+            for ( int i = 0; i < m_transitionMul && !m_transitionRects.empty(); i++ )
+            {
+                update( m_transitionRects.first() );
+                m_transitionRects.pop_front();
+            }
+        } break;
     }
     m_transitionTimer->start( m_transitionDelay );
 }
@@ -1543,6 +1574,10 @@ void PresentationWidget::applyNewScreenSize( const QSize & oldSize )
     m_blockNotifications = true;
     requestPixmaps();
     m_blockNotifications = false;
+    }
+    if ( m_transitionTimer->isActive() )
+    {
+        m_transitionTimer->stop();
     }
     generatePage( true /* no transitions */ );
 }
@@ -1748,6 +1783,11 @@ const Okular::PageTransition PresentationWidget::defaultTransition( int type ) c
             return transition;
             break;
         }
+        case Okular::Settings::EnumSlidesTransition::Fade:
+        {
+            return Okular::PageTransition( Okular::PageTransition::Fade );
+            break;
+        }
         case Okular::Settings::EnumSlidesTransition::Replace:
         default:
             return Okular::PageTransition( Okular::PageTransition::Replace );
@@ -1772,6 +1812,8 @@ void PresentationWidget::initTransition( const Okular::PageTransition *transitio
     const float totalTime = transition->duration();
 
     m_transitionRects.clear();
+    m_currentTransition = *transition;
+    m_currentPagePixmap = m_lastRenderedPixmap;
 
     switch( transition->type() )
     {
@@ -2103,6 +2145,23 @@ void PresentationWidget::initTransition( const Okular::PageTransition *transitio
             m_transitionDelay = (int)( (m_transitionMul * 1000 * totalTime) / steps );
         } break;
 
+        case Okular::PageTransition::Fade:
+        {
+            const int steps = 100;
+            QPainter pixmapPainter;
+            m_currentPixmapOpacity = (double) 1 / steps;
+            m_transitionDelay = (int)( totalTime * 1000 ) / steps;
+            m_lastRenderedPixmap = QPixmap( m_lastRenderedPixmap.size() );
+            m_lastRenderedPixmap.fill( Qt::transparent );
+            pixmapPainter.begin( &m_lastRenderedPixmap );
+            pixmapPainter.setCompositionMode( QPainter::CompositionMode_Source );
+            pixmapPainter.setOpacity( 1 - m_currentPixmapOpacity );
+            pixmapPainter.drawPixmap( 0, 0, m_previousPagePixmap );
+            pixmapPainter.setOpacity( m_currentPixmapOpacity );
+            pixmapPainter.drawPixmap( 0, 0, m_currentPagePixmap );
+            pixmapPainter.end();
+            update();
+        } break;
         // implement missing transitions (a binary raster engine needed here)
         case Okular::PageTransition::Fly:
 
@@ -2111,8 +2170,6 @@ void PresentationWidget::initTransition( const Okular::PageTransition *transitio
         case Okular::PageTransition::Cover:
 
         case Okular::PageTransition::Uncover:
-
-        case Okular::PageTransition::Fade:
 
         default:
             update();

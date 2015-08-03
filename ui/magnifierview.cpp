@@ -33,6 +33,12 @@ MagnifierView::MagnifierView(Okular::Document* document, QWidget* parent)
   , m_document(document)
   , m_page(0)
 {
+  document->addObserver(this);
+}
+
+MagnifierView::~MagnifierView()
+{
+  m_document->removeObserver(this);
 }
 
 void MagnifierView::notifySetup(const QVector< Okular::Page* >& pages, int setupFlags)

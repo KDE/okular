@@ -125,7 +125,7 @@ static KJSObject docGetExternal( KJSContext *, void *object )
 
     const bool isShell = ( widget
                            && widget->parentWidget()
-                           && widget->parentWidget()->objectName() == QLatin1String( "okular::Shell" ) );
+                           && widget->parentWidget()->objectName().startsWith( QLatin1String( "okular::Shell" ) ) );
     return KJSBoolean( !isShell );
 }
 

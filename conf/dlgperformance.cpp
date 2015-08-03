@@ -43,10 +43,10 @@ void DlgPerformance::radioGroup_changed( int which )
             m_dlg->descLabel->setText( i18n("Keeps used memory as low as possible. Do not reuse anything. (For systems with low memory.)") );
             break;
         case 1:
-            m_dlg->descLabel->setText( i18n("A good compromise between memory usage and speed gain. Preload next page and boost searches. (For systems with 256MB of memory, typically.)") );
+            m_dlg->descLabel->setText( i18n("A good compromise between memory usage and speed gain. Preload next page and boost searches. (For systems with 2GB of memory, typically.)") );
             break;
         case 2:
-            m_dlg->descLabel->setText( i18n("Keeps everything in memory. Preload next pages. Boost searches. (For systems with more than 512MB of memory.)") );
+            m_dlg->descLabel->setText( i18n("Keeps everything in memory. Preload next pages. Boost searches. (For systems with more than 4GB of memory.)") );
             break;
         case 3:
 	    // xgettext: no-c-format

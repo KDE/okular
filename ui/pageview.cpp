@@ -345,6 +345,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->mouseModeActionGroup = 0;
     d->penDown = false;
     d->aMouseMagnifier = 0;
+    d->aFitWindowToPage = 0;
 
     switch( Okular::Settings::zoomMode() )
     {
@@ -411,7 +412,6 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->magnifierView = new MagnifierView(document, this);
     d->magnifierView->hide();
     d->magnifierView->setGeometry(0, 0, 351, 201); // TODO: more dynamic?
-    document->addObserver(d->magnifierView);
 
     connect(document, SIGNAL(processMovieAction(const Okular::MovieAction*)), this, SLOT(slotProcessMovieAction(const Okular::MovieAction*)));
     connect(document, SIGNAL(processRenditionAction(const Okular::RenditionAction*)), this, SLOT(slotProcessRenditionAction(const Okular::RenditionAction*)));
@@ -4168,7 +4168,8 @@ void PageView::slotRelayoutPages()
     const int nCols = overrideCentering ? 1 : viewColumns();
     const bool singlePageViewMode = Okular::Settings::viewMode() == Okular::Settings::EnumViewMode::Single;
 
-    d->aFitWindowToPage->setEnabled( !continuousView && singlePageViewMode );
+    if ( d->aFitWindowToPage )
+        d->aFitWindowToPage->setEnabled( !continuousView && singlePageViewMode );
 
     // set all items geometry and resize contents. handle 'continuous' and 'single' modes separately
 

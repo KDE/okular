@@ -1,3 +1,4 @@
+cmake_minimum_required(VERSION 2.8.9)
 project(okular)
 
 cmake_minimum_required(VERSION 2.8.12)
@@ -94,6 +95,7 @@ endif(NOT WIN32)
 # okularcore
 
 set(okularcore_SRCS
+   core/qpagesize.cpp # REMOVE On Qt5 port
    core/action.cpp
    core/annotations.cpp
    core/area.cpp

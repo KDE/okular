@@ -10,6 +10,8 @@
 #ifndef _KDOCUMENTVIEWER_H_
 #define _KDOCUMENTVIEWER_H_
 
+#include "okularpart_export.h"
+
 #include <QtCore/QStringList>
 
 class QUrl;
@@ -19,7 +21,7 @@ class QUrl;
  *
  * This interface describes the basic functions of a document viewer.
  */
-class KDocumentViewer
+class OKULARPART_EXPORT KDocumentViewer
 {
     public:
         virtual ~KDocumentViewer() {}

@@ -326,6 +326,9 @@ void Shell::setupActions()
 
 void Shell::saveProperties(KConfigGroup &group)
 {
+    if ( !m_isValid ) // part couldn't be loaded, nothing to save
+        return;
+
     // Gather lists of settings to preserve
     QStringList urls;
     for( int i = 0; i < m_tabs.size(); ++i )

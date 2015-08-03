@@ -31,8 +31,8 @@ class PresentationSearchBar
         void focusOnSearchEdit();
 
     protected:
-        void resizeEvent( QResizeEvent * );
-        bool eventFilter( QObject *, QEvent * );
+        void resizeEvent( QResizeEvent * ) Q_DECL_OVERRIDE;
+        bool eventFilter( QObject *, QEvent * ) Q_DECL_OVERRIDE;
 
     private:
         QWidget *m_handle;

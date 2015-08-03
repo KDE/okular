@@ -125,24 +125,24 @@ Q_OBJECT
         void fitWindowToPage( const QSize& pageViewPortSize, const QSize& pageSize );
 
     protected:
-        void resizeEvent( QResizeEvent* );
+        void resizeEvent( QResizeEvent* ) Q_DECL_OVERRIDE;
 
         // mouse / keyboard events
-        void keyPressEvent( QKeyEvent* );
-        void keyReleaseEvent( QKeyEvent* );
-        void inputMethodEvent( QInputMethodEvent * );
-        void wheelEvent( QWheelEvent* );
+        void keyPressEvent( QKeyEvent* ) Q_DECL_OVERRIDE;
+        void keyReleaseEvent( QKeyEvent* ) Q_DECL_OVERRIDE;
+        void inputMethodEvent( QInputMethodEvent * ) Q_DECL_OVERRIDE;
+        void wheelEvent( QWheelEvent* ) Q_DECL_OVERRIDE;
 
-        void paintEvent( QPaintEvent *e );
-        void tabletEvent (QTabletEvent *e );
-        void mouseMoveEvent( QMouseEvent *e );
-        void mousePressEvent( QMouseEvent *e );
-        void mouseReleaseEvent( QMouseEvent *e );
-        void mouseDoubleClickEvent( QMouseEvent *e );
+        void paintEvent( QPaintEvent *e ) Q_DECL_OVERRIDE;
+        void tabletEvent (QTabletEvent *e ) Q_DECL_OVERRIDE;
+        void mouseMoveEvent( QMouseEvent *e ) Q_DECL_OVERRIDE;
+        void mousePressEvent( QMouseEvent *e ) Q_DECL_OVERRIDE;
+        void mouseReleaseEvent( QMouseEvent *e ) Q_DECL_OVERRIDE;
+        void mouseDoubleClickEvent( QMouseEvent *e ) Q_DECL_OVERRIDE;
 
-        bool viewportEvent( QEvent *e );
+        bool viewportEvent( QEvent *e ) Q_DECL_OVERRIDE;
 
-        void scrollContentsBy( int dx, int dy );
+        void scrollContentsBy( int dx, int dy ) Q_DECL_OVERRIDE;
 
     private:
         // draw background and items on the opened qpainter

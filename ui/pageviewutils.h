@@ -107,9 +107,9 @@ class PageViewMessage : public QWidget
         void display( const QString & message, const QString & details = QString(), Icon icon = Info, int durationMs = 4000 );
 
     protected:
-        bool eventFilter(QObject * obj, QEvent * event );
-        void paintEvent( QPaintEvent * e );
-        void mousePressEvent( QMouseEvent * e );
+        bool eventFilter(QObject * obj, QEvent * event ) Q_DECL_OVERRIDE;
+        void paintEvent( QPaintEvent * e ) Q_DECL_OVERRIDE;
+        void mousePressEvent( QMouseEvent * e ) Q_DECL_OVERRIDE;
 
     private:
         QRect computeTextRect( const QString & message, int extra_width ) const;
@@ -198,11 +198,11 @@ class PageViewToolBar : public QWidget
 
     protected:
         // handle widget events { anchor_resize, paint, animation, drag }
-        bool eventFilter( QObject * o, QEvent * e );
-        void paintEvent( QPaintEvent * );
-        void mousePressEvent( QMouseEvent * e );
-        void mouseMoveEvent( QMouseEvent * e );
-        void mouseReleaseEvent( QMouseEvent * e );
+        bool eventFilter( QObject * o, QEvent * e ) Q_DECL_OVERRIDE;
+        void paintEvent( QPaintEvent * ) Q_DECL_OVERRIDE;
+        void mousePressEvent( QMouseEvent * e ) Q_DECL_OVERRIDE;
+        void mouseMoveEvent( QMouseEvent * e ) Q_DECL_OVERRIDE;
+        void mouseReleaseEvent( QMouseEvent * e ) Q_DECL_OVERRIDE;
 
     private:
         // private variables

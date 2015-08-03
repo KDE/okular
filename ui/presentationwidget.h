@@ -60,15 +60,15 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
 
     protected:
         // widget events
-        bool event( QEvent * e );
-        void keyPressEvent( QKeyEvent * e );
-        void wheelEvent( QWheelEvent * e );
-        void mousePressEvent( QMouseEvent * e );
-        void mouseReleaseEvent( QMouseEvent * e );
-        void mouseMoveEvent( QMouseEvent * e );
-        void paintEvent( QPaintEvent * e );
-        void resizeEvent( QResizeEvent * e );
-        void leaveEvent( QEvent * e );
+        bool event( QEvent * e ) Q_DECL_OVERRIDE;
+        void keyPressEvent( QKeyEvent * e ) Q_DECL_OVERRIDE;
+        void wheelEvent( QWheelEvent * e ) Q_DECL_OVERRIDE;
+        void mousePressEvent( QMouseEvent * e ) Q_DECL_OVERRIDE;
+        void mouseReleaseEvent( QMouseEvent * e ) Q_DECL_OVERRIDE;
+        void mouseMoveEvent( QMouseEvent * e ) Q_DECL_OVERRIDE;
+        void paintEvent( QPaintEvent * e ) Q_DECL_OVERRIDE;
+        void resizeEvent( QResizeEvent * e ) Q_DECL_OVERRIDE;
+        void leaveEvent( QEvent * e ) Q_DECL_OVERRIDE;
 
     private:
         const void * getObjectRect( Okular::ObjectRect::ObjectType type, int x, int y, QRect * geometry = 0 ) const;

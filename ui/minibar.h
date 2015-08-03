@@ -165,10 +165,10 @@ class ProgressWidget : public QWidget, public Okular::DocumentObserver
     protected:
         void setProgress( float percentage );
 
-        void mouseMoveEvent( QMouseEvent * e );
-        void mousePressEvent( QMouseEvent * e );
-        void wheelEvent( QWheelEvent * e );
-        void paintEvent( QPaintEvent * e );
+        void mouseMoveEvent( QMouseEvent * e ) Q_DECL_OVERRIDE;
+        void mousePressEvent( QMouseEvent * e ) Q_DECL_OVERRIDE;
+        void wheelEvent( QWheelEvent * e ) Q_DECL_OVERRIDE;
+        void paintEvent( QPaintEvent * e ) Q_DECL_OVERRIDE;
 
     private:
         Okular::Document * m_document;

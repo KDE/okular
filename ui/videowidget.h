@@ -52,9 +52,9 @@ class VideoWidget : public QWidget
         void stop();
 
     protected:
-        /* reimp */ bool eventFilter( QObject * object, QEvent * event );
-        /* reimp */ bool event( QEvent * event );
-        /* reimp */ void resizeEvent( QResizeEvent * event );
+        bool eventFilter( QObject * object, QEvent * event ) Q_DECL_OVERRIDE;
+        bool event( QEvent * event ) Q_DECL_OVERRIDE;
+        void resizeEvent( QResizeEvent * event ) Q_DECL_OVERRIDE;
 
     private:
         Q_PRIVATE_SLOT( d, void finished() )

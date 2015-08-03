@@ -1478,18 +1478,17 @@ void PresentationWidget::togglePencilMode( bool on )
     {
         QString colorstring = Okular::Settings::slidesPencilColor().name();
         // FIXME this should not be recreated every time
-        QDomDocument doc( "engine" );
-        QDomElement root = doc.createElement( "engine" );
-        root.setAttribute( "color", colorstring );
+        QDomDocument doc( QStringLiteral("engine") );
+        QDomElement root = doc.createElement( QStringLiteral("engine") );
+        root.setAttribute( QStringLiteral("color"), colorstring );
         doc.appendChild( root );
-        QDomElement annElem = doc.createElement( "annotation" );
+        QDomElement annElem = doc.createElement( QStringLiteral("annotation") );
         root.appendChild( annElem );
-        annElem.setAttribute( "type", "Ink" );
-        annElem.setAttribute( "color", colorstring );
-        annElem.setAttribute( "width", "2" );
+        annElem.setAttribute( QStringLiteral("type"), QStringLiteral("Ink") );
+        annElem.setAttribute( QStringLiteral("color"), colorstring );
+        annElem.setAttribute( QStringLiteral("width"), QStringLiteral("2") );
         m_drawingEngine = new SmoothPathEngine( root );
-#pragma message("KF5 fix cursor")
-        //        setCursor( QCursor( "pencil", Qt::ArrowCursor ) );
+        setCursor( QCursor( QPixmap(QStringLiteral("pencil")), Qt::ArrowCursor ) );
     }
     else
     {

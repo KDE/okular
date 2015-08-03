@@ -31,17 +31,17 @@ ThumbnailsBase {
         id: toolBarContent
         width: root.width
         height: searchField.height
-        MobileComponents.ViewSearch {
+        PlasmaComponents.TextField {
             id: searchField
             enabled: documentItem.supportsSearch
             anchors.centerIn: parent
             busy: documentItem.searchInProgress
-            onSearchQueryChanged: {
-                if (searchQuery.length > 2) {
-                    documentItem.searchText(searchQuery)
+            onTextChanged: {
+                if (text.length > 2) {
+                    documentItem.searchText(text);
                 } else {
-                    view.currentIndex = pageArea.delegate.pageNumber
-                    documentItem.resetSearch()
+                    view.currentIndex = pageArea.delegate.pageNumber;
+                    documentItem.resetSearch();
                 }
             }
         }

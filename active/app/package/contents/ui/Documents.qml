@@ -36,14 +36,13 @@ PlasmaComponents.Page {
         id: toolBarContent
         width: root.width
         height: searchField.height
-        MobileComponents.ViewSearch {
+        PlasmaComponents.TextField {
             id: searchField
             enabled: documentItem.supportsSearch
             anchors.centerIn: parent
-            busy: documentItem.searchInProgress
-            onSearchQueryChanged: {
-                if (searchQuery.length > 2) {
-                    filterModel.filterRegExp = ".*" + searchQuery + ".*";
+            onTextChanged: {
+                if (text.length > 2) {
+                    filterModel.filterRegExp = ".*" + text + ".*";
                 } else {
                     filterModel.filterRegExp = "";
                 }

@@ -4,9 +4,9 @@ project(okular)
 cmake_minimum_required(VERSION 2.8.12)
 
 set(QT_REQUIRED_VERSION "5.2.0")
-set(KF5_REQUIRED_VERSION "5.8.0")
+set(KF5_REQUIRED_VERSION "5.12.0")
 
-find_package(ECM 1.7.0 CONFIG REQUIRED)
+find_package(ECM 5.12.0 CONFIG REQUIRED)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH})
 
 include(ECMInstallIcons)

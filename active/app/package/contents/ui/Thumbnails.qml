@@ -35,7 +35,6 @@ ThumbnailsBase {
             id: searchField
             enabled: documentItem.supportsSearch
             anchors.centerIn: parent
-            busy: documentItem.searchInProgress
             onTextChanged: {
                 if (text.length > 2) {
                     documentItem.searchText(text);

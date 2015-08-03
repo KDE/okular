@@ -279,6 +279,8 @@ void PageItem::removeBookmark(const QString &bookmark)
 void PageItem::geometryChanged(const QRectF &newGeometry,
                                const QRectF &oldGeometry)
 {
+    setContentsSize(newGeometry.size().toSize());
+
     if (newGeometry.size().isEmpty()) {
         return;
     }

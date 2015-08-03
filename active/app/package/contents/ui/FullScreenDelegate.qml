@@ -18,6 +18,7 @@
  */
 
 import QtQuick 2.1
+import QtGraphicalEffects 1.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.extras 2.0 as PlasmaExtra
 import org.kde.plasma.components 2.0 as PlasmaComponents
@@ -81,14 +82,53 @@ MouseEventListener {
         width: mainPage.width
         color: "white"
 
-        Image {
-            source: "image://appbackgrounds/shadow-left"
-            fillMode: Image.TileVertically
-            opacity: 0.5
+        LinearGradient {
+            width: units.gridUnit/2
             anchors {
                 right: parent.left
                 top: parent.top
                 bottom: parent.bottom
+            }
+            start: Qt.point(0, 0)
+            end: Qt.point(units.gridUnit/2, 0)
+            gradient: Gradient {
+                GradientStop {
+                    position: 0.0
+                    color: "transparent"
+                }
+                GradientStop {
+                    position: 0.7
+                    color: Qt.rgba(0, 0, 0, 0.08)
+                }
+                GradientStop {
+                    position: 1.0
+                    color: Qt.rgba(0, 0, 0, 0.2)
+                }
+            }
+        }
+
+        LinearGradient {
+            width: units.gridUnit/2
+            anchors {
+                left: parent.right
+                top: parent.top
+                bottom: parent.bottom
+            }
+            start: Qt.point(0, 0)
+            end: Qt.point(units.gridUnit/2, 0)
+            gradient: Gradient {
+                GradientStop {
+                    position: 0.0
+                    color: Qt.rgba(0, 0, 0, 0.2)
+                }
+                GradientStop {
+                    position: 0.3
+                    color: Qt.rgba(0, 0, 0, 0.08)
+                }
+                GradientStop {
+                    position: 1.0
+                    color: "transparent"
+                }
             }
         }
         Image {

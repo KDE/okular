@@ -82,7 +82,7 @@ add_subdirectory( shell )
 add_subdirectory( generators )
 add_subdirectory( autotests )
 
-#add_subdirectory(doc)
+add_subdirectory(doc)
 
 include(OkularConfigureChecks.cmake)
 

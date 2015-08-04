@@ -34,7 +34,7 @@ Q_OBJECT
 		void saveFile( Okular::EmbeddedFile* );
 
 		QTreeWidget *m_tw;
-                QPushButton *mUser1Button;
+        QPushButton *mUser1Button;
 };
 
 #endif

@@ -30,13 +30,13 @@ class TOCModel : public QAbstractItemModel
         virtual ~TOCModel();
 
         // reimplementations from QAbstractItemModel
-        virtual int columnCount( const QModelIndex &parent = QModelIndex() ) const;
-        virtual QVariant data( const QModelIndex &index, int role = Qt::DisplayRole ) const;
-        virtual bool hasChildren( const QModelIndex &parent = QModelIndex() ) const;
-        virtual QVariant headerData( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const;
-        virtual QModelIndex index( int row, int column, const QModelIndex &parent = QModelIndex() ) const;
-        virtual QModelIndex parent( const QModelIndex &index ) const;
-        virtual int rowCount( const QModelIndex &parent = QModelIndex() ) const;
+        int columnCount( const QModelIndex &parent = QModelIndex() ) const;
+        QVariant data( const QModelIndex &index, int role = Qt::DisplayRole ) const Q_DECL_OVERRIDE;
+        bool hasChildren( const QModelIndex &parent = QModelIndex() ) const Q_DECL_OVERRIDE;
+        QVariant headerData( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const Q_DECL_OVERRIDE;
+        QModelIndex index( int row, int column, const QModelIndex &parent = QModelIndex() ) const Q_DECL_OVERRIDE;
+        QModelIndex parent( const QModelIndex &index ) const Q_DECL_OVERRIDE;
+        int rowCount( const QModelIndex &parent = QModelIndex() ) const Q_DECL_OVERRIDE;
 
         void fill( const Okular::DocumentSynopsis *toc );
         void clear();

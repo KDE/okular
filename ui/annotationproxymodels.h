@@ -32,7 +32,7 @@ class PageFilterProxyModel : public QSortFilterProxyModel
     /**
      * Reimplemented from QSortFilterProxy.
      */
-    virtual bool filterAcceptsRow( int, const QModelIndex& ) const;
+    bool filterAcceptsRow( int, const QModelIndex& ) const Q_DECL_OVERRIDE;
 
   public Q_SLOTS:
     /**

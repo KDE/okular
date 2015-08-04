@@ -49,11 +49,11 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         ~PresentationWidget();
 
         // inherited from DocumentObserver
-        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags );
-        void notifyViewportChanged( bool smoothMove );
-        void notifyPageChanged( int pageNumber, int changedFlags );
-        bool canUnloadPixmap( int pageNumber ) const;
-        void notifyCurrentPageChanged( int previous, int current );
+        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) Q_DECL_OVERRIDE;
+        void notifyViewportChanged( bool smoothMove ) Q_DECL_OVERRIDE;
+        void notifyPageChanged( int pageNumber, int changedFlags ) Q_DECL_OVERRIDE;
+        bool canUnloadPixmap( int pageNumber ) const Q_DECL_OVERRIDE;
+        void notifyCurrentPageChanged( int previous, int current ) Q_DECL_OVERRIDE;
 
     public slots:
         void slotFind();

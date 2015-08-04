@@ -35,10 +35,10 @@ public:
     explicit FilePrinterPreview( const QString &filename, QWidget *parent = 0 );
     virtual ~FilePrinterPreview();
 
-    QSize sizeHint() const;
+    QSize sizeHint() const Q_DECL_OVERRIDE;
 
 protected:
-    void showEvent( QShowEvent *event );
+    void showEvent( QShowEvent *event ) Q_DECL_OVERRIDE;
 
 private:
     FilePrinterPreviewPrivate * const d;

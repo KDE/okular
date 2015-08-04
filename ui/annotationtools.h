@@ -87,9 +87,9 @@ class SmoothPathEngine
     public:
         SmoothPathEngine( const QDomElement & engineElement );
 
-        QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale, const Okular::Page * /*page*/ );
+        QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale, const Okular::Page * /*page*/ ) Q_DECL_OVERRIDE;
 
-        void paint( QPainter * painter, double xScale, double yScale, const QRect & /*clipRect*/ );
+        void paint( QPainter * painter, double xScale, double yScale, const QRect & /*clipRect*/ ) Q_DECL_OVERRIDE;
 
         // These are two alternative ways to get the resulting path. Don't call them both!
         QList< Okular::Annotation* > end();

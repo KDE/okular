@@ -41,7 +41,7 @@ class Reviews : public QWidget, public Okular::DocumentObserver
         ~Reviews();
 
         // [INHERITED] from DocumentObserver
-        void notifyCurrentPageChanged( int previous, int current );
+        void notifyCurrentPageChanged( int previous, int current ) Q_DECL_OVERRIDE;
 
         void reparseConfig();
 

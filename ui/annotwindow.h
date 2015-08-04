@@ -48,8 +48,8 @@ class AnnotWindow : public QFrame
         int m_prevAnchorPos;
 
     protected:
-        virtual void showEvent( QShowEvent * event );
-        virtual bool eventFilter( QObject * obj, QEvent * event );
+        void showEvent( QShowEvent * event ) Q_DECL_OVERRIDE;
+        bool eventFilter( QObject * obj, QEvent * event ) Q_DECL_OVERRIDE;
 
     private slots:
         void slotUpdateUndoAndRedoInContextMenu(QMenu *menu);

@@ -32,10 +32,10 @@ class MagnifierView : public QWidget, public Okular::DocumentObserver
     MagnifierView( Okular::Document *document, QWidget *parent = 0 );
     ~MagnifierView();
 
-    void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags );
-    void notifyPageChanged( int page, int flags );
-    void notifyCurrentPageChanged( int previous, int current );
-    bool canUnloadPixmap( int page ) const;
+    void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) Q_DECL_OVERRIDE;
+    void notifyPageChanged( int page, int flags ) Q_DECL_OVERRIDE;
+    void notifyCurrentPageChanged( int previous, int current ) Q_DECL_OVERRIDE;
+    bool canUnloadPixmap( int page ) const Q_DECL_OVERRIDE;
 
     void updateView( const Okular::NormalizedPoint &p, const Okular::Page * page );
     void move( int x, int y );

@@ -28,6 +28,9 @@ Q_DECLARE_METATYPE( Poppler::Annotation* )
 extern Okular::Sound* createSoundFromPopplerSound( const Poppler::SoundObject *popplerSound );
 extern Okular::Movie* createMovieFromPopplerMovie( const Poppler::MovieObject *popplerMovie );
 extern Okular::Movie* createMovieFromPopplerScreen( const Poppler::LinkRendition *popplerScreen );
+#ifdef HAVE_POPPLER_0_36
+extern QPair<Okular::Movie*, Okular::EmbeddedFile*> createMovieFromPopplerRichMedia( const Poppler::RichMediaAnnotation *popplerRichMedia );
+#endif
 
 
 static void disposeAnnotation( const Okular::Annotation *ann )
@@ -317,6 +320,25 @@ Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *
             *doDelete = false;
             break;
         }
+#ifdef HAVE_POPPLER_0_36
+        case Poppler::Annotation::ARichMedia:
+        {
+            Poppler::RichMediaAnnotation * richmediaann = static_cast< Poppler::RichMediaAnnotation * >( ann );
+            const QPair<Okular::Movie*, Okular::EmbeddedFile*> result = createMovieFromPopplerRichMedia( richmediaann );
+
+            if ( result.first ) {
+                Okular::RichMediaAnnotation * r = new Okular::RichMediaAnnotation();
+                tieToOkularAnn = true;
+                *doDelete = false;
+                annotation = r;
+
+                r->setMovie( result.first );
+                r->setEmbeddedFile( result.second );
+            }
+
+            break;
+        }
+#endif
         case Poppler::Annotation::AText:
         case Poppler::Annotation::ALine:
         case Poppler::Annotation::AGeom:

@@ -45,6 +45,7 @@ class SoundAnnotationPrivate;
 class MovieAnnotationPrivate;
 class ScreenAnnotationPrivate;
 class WidgetAnnotationPrivate;
+class RichMediaAnnotationPrivate;
 
 /**
  * @short Helper class for (recursive) annotation retrieval/storage.
@@ -116,6 +117,7 @@ class OKULARCORE_EXPORT Annotation
             AMovie = 11,    ///< A movie annotation
             AScreen = 12,   ///< A screen annotation
             AWidget = 13,   ///< A widget annotation
+            ARichMedia = 14,///< A rich media annotation
             A_BASE = 0      ///< The annotation base class
         };
 
@@ -1646,6 +1648,67 @@ class OKULARCORE_EXPORT WidgetAnnotation : public Annotation
     private:
         Q_DECLARE_PRIVATE( WidgetAnnotation )
         Q_DISABLE_COPY( WidgetAnnotation )
+};
+
+/**
+ * \short RichMedia annotation.
+ *
+ * The rich media annotation represents an video or sound on a page.
+ *
+ * @since 1.0
+ */
+class OKULARCORE_EXPORT RichMediaAnnotation : public Annotation
+{
+    public:
+        /**
+         * Creates a new rich media annotation.
+         */
+        RichMediaAnnotation();
+
+        /**
+         * Creates a new rich media annotation from the xml @p description
+         */
+        RichMediaAnnotation( const QDomNode &description );
+
+        /**
+         * Destroys the rich media annotation.
+         */
+        virtual ~RichMediaAnnotation();
+
+        /**
+         * Returns the sub type of the rich media annotation.
+         */
+        SubType subType() const;
+
+        /**
+         * Stores the rich media annotation as xml in @p document
+         * under the given @p parentNode.
+         */
+        void store( QDomNode &parentNode, QDomDocument &document ) const;
+
+        /**
+         * Gets the movie object.
+         */
+        Movie* movie() const;
+
+        /**
+         * Sets the new @p movie object.
+         */
+        void setMovie( Movie *movie );
+
+        /**
+         * Sets the @p object representing the embedded file.
+         */
+        void setEmbeddedFile( EmbeddedFile *object );
+
+        /**
+         * Gets the embedded file object.
+         */
+        EmbeddedFile* embeddedFile() const;
+
+    private:
+        Q_DECLARE_PRIVATE( RichMediaAnnotation )
+        Q_DISABLE_COPY( RichMediaAnnotation )
 };
 
 }

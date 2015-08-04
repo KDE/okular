@@ -2935,3 +2935,111 @@ Action* WidgetAnnotation::additionalAction( AdditionalActionType type ) const
     else
         return d->m_additionalActions.value( type );
 }
+
+/** RichMediaAnnotation [Annotation] */
+
+class Okular::RichMediaAnnotationPrivate : public Okular::AnnotationPrivate
+{
+    public:
+        RichMediaAnnotationPrivate();
+        ~RichMediaAnnotationPrivate();
+        virtual void setAnnotationProperties( const QDomNode& node );
+        virtual AnnotationPrivate* getNewAnnotationPrivate();
+
+        // data fields
+        Movie *movie;
+        EmbeddedFile *embeddedFile;
+};
+
+RichMediaAnnotationPrivate::RichMediaAnnotationPrivate()
+    : movie( 0 ), embeddedFile( 0 )
+{
+}
+
+RichMediaAnnotationPrivate::~RichMediaAnnotationPrivate()
+{
+    delete movie;
+    delete embeddedFile;
+}
+
+void RichMediaAnnotationPrivate::setAnnotationProperties( const QDomNode& node )
+{
+    Okular::AnnotationPrivate::setAnnotationProperties(node);
+
+    // loop through the whole children looking for a 'richMedia' element
+    QDomNode subNode = node.firstChild();
+    while( subNode.isElement() )
+    {
+        QDomElement e = subNode.toElement();
+        subNode = subNode.nextSibling();
+        if ( e.tagName() != "richMedia" )
+            continue;
+
+        // loading complete
+        break;
+    }
+}
+
+AnnotationPrivate* RichMediaAnnotationPrivate::getNewAnnotationPrivate()
+{
+    return new RichMediaAnnotationPrivate();
+}
+
+RichMediaAnnotation::RichMediaAnnotation()
+    : Annotation( *new RichMediaAnnotationPrivate() )
+{
+}
+
+RichMediaAnnotation::RichMediaAnnotation( const QDomNode & node )
+    : Annotation( *new RichMediaAnnotationPrivate, node )
+{
+}
+
+RichMediaAnnotation::~RichMediaAnnotation()
+{
+}
+
+void RichMediaAnnotation::store( QDomNode & node, QDomDocument & document ) const
+{
+    // recurse to parent objects storing properties
+    Annotation::store( node, document );
+
+    // create [richMedia] element
+    QDomElement movieElement = document.createElement( "richMedia" );
+    node.appendChild( movieElement );
+}
+
+Annotation::SubType RichMediaAnnotation::subType() const
+{
+    return ARichMedia;
+}
+
+void RichMediaAnnotation::setMovie( Movie *movie )
+{
+    Q_D( RichMediaAnnotation );
+
+    delete d->movie;
+    d->movie = movie;
+}
+
+Movie* RichMediaAnnotation::movie() const
+{
+    Q_D( const RichMediaAnnotation );
+
+    return d->movie;
+}
+
+EmbeddedFile* RichMediaAnnotation::embeddedFile() const
+{
+    Q_D( const RichMediaAnnotation );
+
+    return d->embeddedFile;
+}
+
+void RichMediaAnnotation::setEmbeddedFile( EmbeddedFile *embeddedFile )
+{
+    Q_D( RichMediaAnnotation );
+
+    delete d->embeddedFile;
+    d->embeddedFile = embeddedFile;
+}

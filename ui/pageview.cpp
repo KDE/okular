@@ -973,6 +973,13 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
                 item->videoWidgets().insert( movieAnn->movie(), vw );
                 vw->pageInitialized();
             }
+            else if ( a->subType() == Okular::Annotation::ARichMedia )
+            {
+                Okular::RichMediaAnnotation * richMediaAnn = static_cast< Okular::RichMediaAnnotation * >( a );
+                VideoWidget * vw = new VideoWidget( richMediaAnn, richMediaAnn->movie(), d->document, viewport() );
+                item->videoWidgets().insert( richMediaAnn->movie(), vw );
+                vw->pageInitialized();
+            }
             else if ( a->subType() == Okular::Annotation::AScreen )
             {
                 const Okular::ScreenAnnotation * screenAnn = static_cast< Okular::ScreenAnnotation * >( a );
@@ -2423,6 +2430,12 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                         if ( ann->subType() == Okular::Annotation::AMovie )
                         {
                             VideoWidget *vw = pageItem->videoWidgets().value( static_cast<Okular::MovieAnnotation*>( ann )->movie() );
+                            vw->show();
+                            vw->play();
+                        }
+                        else if ( ann->subType() == Okular::Annotation::ARichMedia )
+                        {
+                            VideoWidget *vw = pageItem->videoWidgets().value( static_cast<Okular::RichMediaAnnotation*>( ann )->movie() );
                             vw->show();
                             vw->play();
                         }
@@ -3910,6 +3923,11 @@ void PageView::updateCursor( const QPoint &p )
                         setCursor( Qt::OpenHandCursor );
                     }
                     else if ( annotation->subType() == Okular::Annotation::AMovie )
+                    {
+                        d->mouseOnRect = true;
+                        setCursor( Qt::PointingHandCursor );
+                    }
+                    else if ( annotation->subType() == Okular::Annotation::ARichMedia )
                     {
                         d->mouseOnRect = true;
                         setCursor( Qt::PointingHandCursor );

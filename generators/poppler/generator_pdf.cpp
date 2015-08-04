@@ -199,6 +199,102 @@ Okular::Movie* createMovieFromPopplerScreen( const Poppler::LinkRendition *poppl
     return movie;
 }
 
+#ifdef HAVE_POPPLER_0_36
+QPair<Okular::Movie*, Okular::EmbeddedFile*> createMovieFromPopplerRichMedia( const Poppler::RichMediaAnnotation *popplerRichMedia )
+{
+    const QPair<Okular::Movie*, Okular::EmbeddedFile*> emptyResult(0, 0);
+
+    /**
+     * To convert a Flash/Video based RichMedia annotation to a movie, we search for the first
+     * Flash/Video richmedia instance and parse the flashVars parameter for the 'source' identifier.
+     * That identifier is then used to find the associated embedded file through the assets
+     * mapping.
+     */
+    const Poppler::RichMediaAnnotation::Content *content = popplerRichMedia->content();
+    if ( !content )
+        return emptyResult;
+
+    const QList<Poppler::RichMediaAnnotation::Configuration*> configurations = content->configurations();
+    if ( configurations.isEmpty() )
+        return emptyResult;
+
+    const Poppler::RichMediaAnnotation::Configuration *configuration = configurations[0];
+
+    const QList<Poppler::RichMediaAnnotation::Instance*> instances = configuration->instances();
+    if ( instances.isEmpty() )
+        return emptyResult;
+
+    const Poppler::RichMediaAnnotation::Instance *instance = instances[0];
+
+    if ( ( instance->type() != Poppler::RichMediaAnnotation::Instance::TypeFlash ) &&
+         ( instance->type() != Poppler::RichMediaAnnotation::Instance::TypeVideo ) )
+        return emptyResult;
+
+    const Poppler::RichMediaAnnotation::Params *params = instance->params();
+    if ( !params )
+        return emptyResult;
+
+    QString sourceId;
+    bool playbackLoops = false;
+
+    const QStringList flashVars = params->flashVars().split( QLatin1Char( '&' ) );
+    foreach ( const QString & flashVar, flashVars ) {
+        const int pos = flashVar.indexOf( QLatin1Char( '=' ) );
+        if ( pos == -1 )
+            continue;
+
+        const QString key = flashVar.left( pos );
+        const QString value = flashVar.mid( pos + 1 );
+
+        if ( key == QLatin1String( "source" ) )
+            sourceId = value;
+        else if ( key == QLatin1String( "loop" ) )
+            playbackLoops = ( value == QLatin1String( "true" ) ? true : false );
+    }
+
+    if ( sourceId.isEmpty() )
+        return emptyResult;
+
+    const QList<Poppler::RichMediaAnnotation::Asset*> assets = content->assets();
+    if ( assets.isEmpty() )
+        return emptyResult;
+
+    Poppler::RichMediaAnnotation::Asset *matchingAsset = 0;
+    foreach ( Poppler::RichMediaAnnotation::Asset *asset, assets ) {
+        if ( asset->name() == sourceId ) {
+            matchingAsset = asset;
+            break;
+        }
+    }
+
+    if ( !matchingAsset )
+        return emptyResult;
+
+    Poppler::EmbeddedFile *embeddedFile = matchingAsset->embeddedFile();
+    if ( !embeddedFile )
+        return emptyResult;
+
+    Okular::EmbeddedFile *pdfEmbeddedFile = new PDFEmbeddedFile( embeddedFile );
+
+    Okular::Movie *movie = new Okular::Movie( embeddedFile->name(), embeddedFile->data() );
+    movie->setPlayMode( playbackLoops ? Okular::Movie::PlayRepeat : Okular::Movie::PlayOnce );
+
+    if ( popplerRichMedia && popplerRichMedia->settings() && popplerRichMedia->settings()->activation() ) {
+        if ( popplerRichMedia->settings()->activation()->condition() == Poppler::RichMediaAnnotation::Activation::PageOpened ||
+             popplerRichMedia->settings()->activation()->condition() == Poppler::RichMediaAnnotation::Activation::PageVisible ) {
+            movie->setAutoPlay( true );
+        } else {
+            movie->setAutoPlay( false );
+        }
+
+    } else {
+        movie->setAutoPlay( false );
+    }
+
+    return qMakePair(movie, pdfEmbeddedFile);
+}
+#endif
+
 /**
  * Note: the function will take ownership of the popplerLink object.
  */

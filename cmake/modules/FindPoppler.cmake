@@ -79,12 +79,24 @@ int main()
 }
 " HAVE_POPPLER_0_28)
 
+check_cxx_source_compiles("
+#include <poppler-qt5.h>
+int main()
+{
+  Poppler::Page *p = 0;
+  p->annotations( QSet<Poppler::Annotation::SubType>() << Poppler::Annotation::ARichMedia );
+  return 0;
+}
+" HAVE_POPPLER_0_36)
+
   set(CMAKE_REQUIRED_INCLUDES)
   set(CMAKE_REQUIRED_LIBRARIES)
   if (HAVE_POPPLER_0_28)
     set(popplerVersionMessage "0.28")
   elseif (HAVE_POPPLER_0_24)
     set(popplerVersionMessage "0.24")
+  elseif (HAVE_POPPLER_0_36)
+    set(popplerVersionMessage "0.36")
   endif ()
   if (NOT Poppler_FIND_QUIETLY)
     message(STATUS "Found Poppler-Qt5: ${POPPLER_LIBRARY}, (>= ${popplerVersionMessage})")

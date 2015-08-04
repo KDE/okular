@@ -335,6 +335,15 @@ void PresentationWidget::notifySetup( const QVector< Okular::Page * > & pageSet,
                 frame->videoWidgets.insert( movieAnn->movie(), vw );
                 vw->pageInitialized();
             }
+            else if ( a->subType() == Okular::Annotation::ARichMedia )
+            {
+                Okular::RichMediaAnnotation * richMediaAnn = static_cast< Okular::RichMediaAnnotation * >( a );
+                if ( richMediaAnn->movie() ) {
+                    VideoWidget * vw = new VideoWidget( richMediaAnn, richMediaAnn->movie(), m_document, this );
+                    frame->videoWidgets.insert( richMediaAnn->movie(), vw );
+                    vw->pageInitialized();
+                }
+            }
             else if ( a->subType() == Okular::Annotation::AScreen )
             {
                 const Okular::ScreenAnnotation * screenAnn = static_cast< Okular::ScreenAnnotation * >( a );
@@ -629,6 +638,15 @@ void PresentationWidget::mousePressEvent( QMouseEvent * e )
                 vw->play();
                 return;
             }
+            else if ( annotation->subType() == Okular::Annotation::ARichMedia )
+            {
+                const Okular::RichMediaAnnotation *richMediaAnnotation = static_cast<const Okular::RichMediaAnnotation*>( annotation );
+
+                VideoWidget *vw = m_frames[ m_frameIndex ]->videoWidgets.value( richMediaAnnotation->movie() );
+                vw->show();
+                vw->play();
+                return;
+            }
             else if ( annotation->subType() == Okular::Annotation::AScreen )
             {
                 m_document->processAction( static_cast<const Okular::ScreenAnnotation*>( annotation )->action() );
@@ -893,6 +911,7 @@ void PresentationWidget::testCursorOnLink( int x, int y )
 
     const bool needsHandCursor = ( ( link != 0 ) ||
                                  ( ( annotation != 0 ) && ( annotation->subType() == Okular::Annotation::AMovie ) ) ||
+                                 ( ( annotation != 0 ) && ( annotation->subType() == Okular::Annotation::ARichMedia ) ) ||
                                  ( ( annotation != 0 ) && ( annotation->subType() == Okular::Annotation::AScreen ) && ( GuiUtils::renditionMovieFromScreenAnnotation( static_cast< const Okular::ScreenAnnotation * >( annotation ) ) != 0 ) ) );
 
     // only react on changes (in/out from a link)

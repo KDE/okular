@@ -28,21 +28,21 @@ class DjVuGenerator : public Okular::Generator
     public:
         DjVuGenerator( QObject *parent, const QVariantList &args );
         ~DjVuGenerator();
-        bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
+        bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector ) Q_DECL_OVERRIDE;
 
         // document information
-        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const;
-        const Okular::DocumentSynopsis * generateDocumentSynopsis();
+        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const Q_DECL_OVERRIDE;
+        const Okular::DocumentSynopsis * generateDocumentSynopsis() Q_DECL_OVERRIDE;
 
         // printing
-        bool print( QPrinter& printer );
+        bool print( QPrinter& printer ) Q_DECL_OVERRIDE;
 
-        QVariant metaData( const QString & key, const QVariant & option ) const;
+        QVariant metaData( const QString & key, const QVariant & option ) const Q_DECL_OVERRIDE;
 
     protected:
         bool doCloseDocument();
         // pixmap generation
-        QImage image( Okular::PixmapRequest *request );
+        QImage image( Okular::PixmapRequest *request ) Q_DECL_OVERRIDE;
         Okular::TextPage* textPage( Okular::Page *page );
 
     private:

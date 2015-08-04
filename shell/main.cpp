@@ -36,7 +36,7 @@ int main(int argc, char** argv)
     app.setApplicationName(aboutData.applicationData().componentName());
     app.setApplicationDisplayName(aboutData.applicationData().displayName());
     app.setApplicationVersion(aboutData.version());
-    app.setOrganizationDomain("kde.org");
+    app.setOrganizationDomain(QStringLiteral("kde.org"));
 
     QCommandLineParser parser;
     KAboutData::setApplicationData(aboutData);
@@ -44,11 +44,11 @@ int main(int argc, char** argv)
     parser.addHelpOption();
     aboutData.setupCommandLine(&parser);
 
-    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("p") << QLatin1String("page"), i18n("Page of the document to be shown"), QLatin1String("number")));
-    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("presentation"), i18n("Start the document in presentation mode")));
-    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("print"), i18n("Start with print dialog")));
-    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("unique"), i18n("\"Unique instance\" control")));
-    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("noraise"), i18n("Not raise window")));
+    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("p") << QStringLiteral("page"), i18n("Page of the document to be shown"), QStringLiteral("number")));
+    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("presentation"), i18n("Start the document in presentation mode")));
+    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("print"), i18n("Start with print dialog")));
+    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("unique"), i18n("\"Unique instance\" control")));
+    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("noraise"), i18n("Not raise window")));
     parser.addPositionalArgument(QStringLiteral("urls"), i18n("Documents to open. Specify '-' to read from stdin."));
 
     parser.process(app);

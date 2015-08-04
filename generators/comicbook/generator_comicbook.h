@@ -24,14 +24,14 @@ class ComicBookGenerator : public Okular::Generator
         virtual ~ComicBookGenerator();
 
         // [INHERITED] load a document and fill up the pagesVector
-        bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
+        bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector ) Q_DECL_OVERRIDE;
 
         // [INHERITED] print document using already configured kprinter
-        bool print( QPrinter& printer );
+        bool print( QPrinter& printer ) Q_DECL_OVERRIDE;
 
     protected:
-        bool doCloseDocument();
-        QImage image( Okular::PixmapRequest * request );
+        bool doCloseDocument() Q_DECL_OVERRIDE;
+        QImage image( Okular::PixmapRequest * request ) Q_DECL_OVERRIDE;
 
     private:
       ComicBook::Document mDocument;

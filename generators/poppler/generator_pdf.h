@@ -62,20 +62,20 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         Okular::Document::OpenResult loadDocumentFromDataWithPassword( const QByteArray & fileData, QVector<Okular::Page*> & pagesVector, const QString & password );
         void loadPages(QVector<Okular::Page*> &pagesVector, int rotation=-1, bool clear=false);
         // [INHERITED] document information
-        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const;
-        const Okular::DocumentSynopsis * generateDocumentSynopsis();
-        Okular::FontInfo::List fontsForPage( int page );
-        const QList<Okular::EmbeddedFile*> * embeddedFiles() const;
-        PageSizeMetric pagesSizeMetric() const { return Pixels; }
+        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const Q_DECL_OVERRIDE;
+        const Okular::DocumentSynopsis * generateDocumentSynopsis() Q_DECL_OVERRIDE;
+        Okular::FontInfo::List fontsForPage( int page ) Q_DECL_OVERRIDE;
+        const QList<Okular::EmbeddedFile*> * embeddedFiles() const Q_DECL_OVERRIDE;
+        PageSizeMetric pagesSizeMetric() const  Q_DECL_OVERRIDE{ return Pixels; }
 
         // [INHERITED] document information
-        bool isAllowed( Okular::Permission permission ) const;
+        bool isAllowed( Okular::Permission permission ) const Q_DECL_OVERRIDE;
 
         // [INHERITED] perform actions on document / pages
-        QImage image( Okular::PixmapRequest *page );
+        QImage image( Okular::PixmapRequest *page ) Q_DECL_OVERRIDE;
 
         // [INHERITED] print page using an already configured kprinter
-        bool print( QPrinter& printer );
+        bool print( QPrinter& printer ) Q_DECL_OVERRIDE;
 
         // [INHERITED] reply to some metadata requests
         QVariant metaData( const QString & key, const QVariant & option ) const;

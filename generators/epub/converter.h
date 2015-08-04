@@ -24,7 +24,7 @@ namespace Epub {
       Converter();
       ~Converter();
 
-      virtual QTextDocument *convert( const QString &fileName );
+      QTextDocument *convert( const QString &fileName ) Q_DECL_OVERRIDE;
 
     private:
 

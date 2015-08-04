@@ -19,7 +19,7 @@ class DlgPerformance : public QWidget
     Q_OBJECT
 
     public:
-        DlgPerformance( QWidget * parent = 0 );
+        explicit DlgPerformance( QWidget * parent = 0 );
         virtual ~DlgPerformance();
 
     protected slots:

@@ -15,7 +15,7 @@
 class DlgDebug : public QWidget
 {
     public:
-        DlgDebug( QWidget * parent = 0 );
+        explicit DlgDebug( QWidget * parent = 0 );
 };
 
 #endif

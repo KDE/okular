@@ -28,7 +28,7 @@ class ThumbnailItem : public PageItem
 
 public:
 
-    ThumbnailItem(QQuickItem *parent=0);
+    explicit ThumbnailItem(QQuickItem *parent=0);
     ~ThumbnailItem();
 };
 

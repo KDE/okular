@@ -35,7 +35,7 @@ class WidgetAnnotTools : public QWidget
     Q_PROPERTY( QStringList tools READ tools WRITE setTools NOTIFY changed USER true )
 
     public:
-        WidgetAnnotTools( QWidget * parent = 0 );
+        explicit WidgetAnnotTools( QWidget * parent = 0 );
         ~WidgetAnnotTools();
 
         QStringList tools() const;

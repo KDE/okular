@@ -16,7 +16,7 @@
 class DlgAnnotations : public QWidget
 {
     public:
-        DlgAnnotations( QWidget * parent = 0 );
+        explicit DlgAnnotations( QWidget * parent = 0 );
 };
 
 #endif

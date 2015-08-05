@@ -76,7 +76,7 @@ add_definitions(-DTRANSLATION_DOMAIN="okular")
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${PHONON_INCLUDES} core/synctex ${ZLIB_INCLUDE_DIR} ${CMAKE_BINARY_DIR}/core)
 
-add_subdirectory( active )
+add_subdirectory( mobile )
 add_subdirectory( ui )
 add_subdirectory( shell )
 add_subdirectory( generators )

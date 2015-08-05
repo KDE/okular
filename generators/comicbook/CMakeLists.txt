@@ -28,5 +28,5 @@ install(TARGETS okularGenerator_comicbook DESTINATION ${KDE_INSTALL_PLUGINDIR})
 ########### install files ###############
 
 install( FILES libokularGenerator_comicbook.desktop okularComicbook.desktop DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
-install( PROGRAMS okularApplication_comicbook.desktop active-documentviewer_comicbook.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
+install( PROGRAMS okularApplication_comicbook.desktop org.kde.mobile.okular_comicbook.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
 

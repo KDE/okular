@@ -18,4 +18,4 @@ install(TARGETS okularGenerator_tiff DESTINATION ${KDE_INSTALL_PLUGINDIR})
 ########### install files ###############
 
 install( FILES libokularGenerator_tiff.desktop okularTiff.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
-install( PROGRAMS okularApplication_tiff.desktop active-documentviewer_tiff.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
+install( PROGRAMS okularApplication_tiff.desktop org.kde.mobile.okular_tiff.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )

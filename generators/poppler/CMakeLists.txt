@@ -43,5 +43,5 @@ install(TARGETS okularGenerator_poppler DESTINATION ${KDE_INSTALL_PLUGINDIR})
 ########### install files ###############
 
 install( FILES libokularGenerator_poppler.desktop okularPoppler.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
-install( PROGRAMS okularApplication_pdf.desktop active-documentviewer_pdf.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
+install( PROGRAMS okularApplication_pdf.desktop org.kde.mobile.okular_pdf.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
 

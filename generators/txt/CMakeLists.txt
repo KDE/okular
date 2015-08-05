@@ -21,4 +21,4 @@ install(TARGETS okularGenerator_txt DESTINATION ${KDE_INSTALL_PLUGINDIR})
 ########### install files ###############
 
 install( FILES libokularGenerator_txt.desktop okularTxt.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
-install( PROGRAMS okularApplication_txt.desktop active-documentviewer_txt.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
+install( PROGRAMS okularApplication_txt.desktop org.kde.mobile.okular_txt.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )

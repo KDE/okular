@@ -59,5 +59,5 @@ install(TARGETS okularGenerator_dvi DESTINATION ${KDE_INSTALL_PLUGINDIR})
 ########### install files ###############
 
 install( FILES libokularGenerator_dvi.desktop okularDvi.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
-install( PROGRAMS okularApplication_dvi.desktop active-documentviewer_dvi.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
+install( PROGRAMS okularApplication_dvi.desktop org.kde.mobile.okular_dvi.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
 

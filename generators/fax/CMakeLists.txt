@@ -17,4 +17,4 @@ install(TARGETS okularGenerator_fax DESTINATION ${KDE_INSTALL_PLUGINDIR})
 ########### install files ###############
 
 install( FILES libokularGenerator_fax.desktop okularFax.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
-install( PROGRAMS okularApplication_fax.desktop active-documentviewer_fax.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
+install( PROGRAMS okularApplication_fax.desktop org.kde.mobile.okular_fax.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )

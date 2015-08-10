@@ -82,16 +82,18 @@ QCursor AnnotatorEngine::cursor() const
     return Qt::CrossCursor;
 }
 
-SmoothPath::SmoothPath( const QLinkedList<Okular::NormalizedPoint> &points, const QPen &pen, qreal opacity )
-    : points ( points ), pen ( pen ), opacity( opacity )
+SmoothPath::SmoothPath( const QLinkedList<Okular::NormalizedPoint> &points, const QPen &pen, qreal opacity, QPainter::CompositionMode compositionMode )
+    : points ( points ), pen ( pen ), opacity( opacity ), compositionMode( compositionMode )
 {
 }
 
 /** SmoothPathEngine */
 SmoothPathEngine::SmoothPathEngine( const QDomElement & engineElement )
-    : AnnotatorEngine( engineElement )
+    : AnnotatorEngine( engineElement ), compositionMode( QPainter::CompositionMode_SourceOver )
 {
     // parse engine specific attributes
+    if ( engineElement.attribute( QStringLiteral("compositionMode"), QStringLiteral("sourceOver") ) == QLatin1String("clear") )
+        compositionMode = QPainter::CompositionMode_Clear;
 }
 
 QRect SmoothPathEngine::event( EventType type, Button button, double nX, double nY, double xScale, double yScale, const Okular::Page * /*page*/ )
@@ -153,7 +155,7 @@ void SmoothPathEngine::paint( QPainter * painter, double xScale, double yScale, 
     const qreal opacity = m_annotElement.attribute( QStringLiteral("opacity"), QStringLiteral("1.0") ).toDouble();
 
     // use engine's color for painting
-    const SmoothPath path( points, QPen( m_engineColor, penWidth ), opacity );
+    const SmoothPath path( points, QPen( m_engineColor, penWidth ), opacity, compositionMode );
 
     // draw the path
     path.paint( painter, xScale, yScale );
@@ -164,6 +166,7 @@ void SmoothPath::paint( QPainter * painter, double xScale, double yScale ) const
     // draw SmoothPaths with at least 2 points
     if ( points.count() > 1 )
     {
+        painter->setCompositionMode( compositionMode );
         painter->setPen( pen );
         painter->setOpacity( opacity );
 
@@ -231,7 +234,7 @@ SmoothPath SmoothPathEngine::endSmoothPath()
     const int width = m_annotElement.attribute( QStringLiteral("width"), QStringLiteral("2") ).toInt();
     const qreal opacity = m_annotElement.attribute( QStringLiteral("opacity"), QStringLiteral("1.0") ).toDouble();
 
-    return SmoothPath( points, QPen(color, width), opacity );
+    return SmoothPath( points, QPen(color, width), opacity, compositionMode );
 }
 
 /* kate: replace-tabs on; indent-width 4; */

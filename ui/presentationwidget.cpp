@@ -815,16 +815,23 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
     // paint drawings
     if ( m_frameIndex != -1 )
     {
-        const QRect & geom = m_frames[ m_frameIndex ]->geometry;
         painter.save();
-        painter.translate( geom.topLeft() );
-        painter.setRenderHints( QPainter::Antialiasing );
 
+        const QRect & geom = m_frames[ m_frameIndex ]->geometry;
+
+        QPixmap pm( geom.size() );
+        pm.fill( Qt::transparent );
+        QPainter pmPainter( &pm );
+
+        pmPainter.setRenderHints( QPainter::Antialiasing );
         foreach ( const SmoothPath &drawing, m_frames[ m_frameIndex ]->drawings )
-            drawing.paint( &painter, geom.width(), geom.height() );
+            drawing.paint( &pmPainter, geom.width(), geom.height() );
 
         if ( m_drawingEngine && m_drawingRect.intersects( pe->rect() ) )
-            m_drawingEngine->paint( &painter, geom.width(), geom.height(), m_drawingRect.intersect( pe->rect() ) );
+            m_drawingEngine->paint( &pmPainter, geom.width(), geom.height(), m_drawingRect.intersect( pe->rect() ) );
+
+        painter.setRenderHints( QPainter::Antialiasing );
+        painter.drawPixmap( geom.topLeft() , pm );
 
         painter.restore();
     }

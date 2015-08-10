@@ -166,14 +166,42 @@ void DrawingToolActions::loadTools()
             annElem.setAttribute( QStringLiteral("opacity"), opacity );
 
             const QString text = i18n("Drawing Tool: %1", tooltip);
-            createToolAction( text, tooltip, colorStr, width, opacity, root );
+            createToolAction( text, tooltip, colorStr, root );
         }
 
         drawingDescription = drawingDescription.nextSibling();
     }
+
+    // add erasure action
+    {
+        QDomDocument doc( QStringLiteral("engine") );
+        QDomElement root = doc.createElement( QStringLiteral("engine") );
+        root.setAttribute( QStringLiteral("color"), QStringLiteral("transparent") );
+        root.setAttribute( QStringLiteral("compositionMode"), QStringLiteral("clear") );
+        doc.appendChild( root );
+        QDomElement annElem = doc.createElement( QStringLiteral("annotation") );
+        root.appendChild( annElem );
+        annElem.setAttribute( QStringLiteral("type"), QStringLiteral("Ink") );
+        annElem.setAttribute( QStringLiteral("color"), QStringLiteral("transparent") );
+        annElem.setAttribute( QStringLiteral("width"), 20 );
+
+        KActionCollection *ac = static_cast<KActionCollection*>( parent() );
+        QAction *action = new QAction( ac );
+        action->setText( i18n("Eraser") );
+        action->setToolTip( i18n("Eraser") );
+        action->setCheckable( true );
+        action->setIcon( QIcon::fromTheme( "draw-eraser" ) );
+        action->setProperty( "__document", QVariant::fromValue<QDomElement>( root ) );
+
+        m_actions.append( action );
+
+        ac->addAction( QString("presentation_drawing_eraser"), action );
+
+        connect( action, &QAction::triggered, this, &DrawingToolActions::actionTriggered );
+    }
 }
 
-void DrawingToolActions::createToolAction( const QString &text, const QString &toolName, const QString &colorName, const QString &width, const QString &opacity, const QDomElement &root )
+void DrawingToolActions::createToolAction( const QString &text, const QString &toolName, const QString &colorName, const QDomElement &root )
 {
     KActionCollection *ac = static_cast<KActionCollection*>( parent() );
     ColorAction *action = new ColorAction( ac );

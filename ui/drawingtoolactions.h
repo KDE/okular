@@ -37,7 +37,7 @@ private slots:
 
 private:
     void loadTools();
-    void createToolAction( const QString &text, const QString &toolName, const QString &colorName, const QString &width, const QString &opacity, const QDomElement &root );
+    void createToolAction( const QString &text, const QString &toolName, const QString &colorName, const QDomElement &root );
 
     QList<QAction*> m_actions;
 };

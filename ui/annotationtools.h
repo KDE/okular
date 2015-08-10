@@ -12,6 +12,7 @@
 
 #include <qdom.h>
 #include <qlinkedlist.h>
+#include <qpainter.h>
 #include <qpen.h>
 #include <qrect.h>
 
@@ -19,7 +20,6 @@
 
 class QMouseEvent;
 class QTabletEvent;
-class QPainter;
 class PageViewItem;
 namespace Okular {
 class Annotation;
@@ -72,13 +72,14 @@ class AnnotatorEngine
 class SmoothPath
 {
     public:
-        SmoothPath( const QLinkedList<Okular::NormalizedPoint> &points, const QPen &pen, qreal opacity = 1.0 );
+        SmoothPath( const QLinkedList<Okular::NormalizedPoint> &points, const QPen &pen, qreal opacity = 1.0, QPainter::CompositionMode compositionMode = QPainter::CompositionMode_SourceOver  );
         void paint( QPainter * painter, double xScale, double yScale ) const;
 
     private:
         const QLinkedList<Okular::NormalizedPoint> points;
         const QPen pen;
         const qreal opacity;
+        const QPainter::CompositionMode compositionMode;
 };
 
 /** @short SmoothPathEngine */
@@ -101,6 +102,7 @@ class SmoothPathEngine
         QLinkedList<Okular::NormalizedPoint> points;
         Okular::NormalizedRect totalRect;
         Okular::NormalizedPoint lastPoint;
+        QPainter::CompositionMode compositionMode;
 };
 
 #endif

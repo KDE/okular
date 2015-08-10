@@ -44,6 +44,8 @@ class Sidebar : public QWidget
 
 	void moveSplitter( int sideWidgetSize );
 
+	void hideItem( int index, bool hide );
+
     signals:
         void urlsDropped( const KUrl::List& urls );
 

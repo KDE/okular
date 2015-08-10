@@ -85,6 +85,7 @@
 #include "ui/sidebar.h"
 #include "ui/fileprinterpreview.h"
 #include "ui/guiutils.h"
+#include "ui/tags.h"
 #include "conf/preferencesdialog.h"
 #include "settings.h"
 #include "core/action.h"
@@ -398,6 +399,12 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     m_bookmarkList = new BookmarkList( m_document, 0 );
     m_sidebar->addItem( m_bookmarkList, KIcon("bookmarks"), i18n("Bookmarks") );
     m_sidebar->setItemEnabled( 3, false );
+
+    // [left toolbox: Tags] | []
+    m_tags = new Tags( 0, m_document );
+    connect( m_tags, SIGNAL(hasTags(bool)), this, SLOT(enableTags(bool)) );
+    tbIndex = m_sidebar->addItem( m_tags, KIcon( "mail-tagged" ), i18n( "Tags" ) );
+    enableTags( false );
 
     // widgets: [../miniBarContainer] | []
 #ifdef OKULAR_ENABLE_MINIBAR
@@ -854,6 +861,7 @@ Part::~Part()
         Part::closeUrl( false );
 
     delete m_toc;
+    delete m_tags;
     delete m_pageView;
     delete m_thumbnailList;
     delete m_miniBar;
@@ -1933,6 +1941,11 @@ void Part::enableTOC(bool enable)
 void Part::slotRebuildBookmarkMenu()
 {
     rebuildBookmarkMenu();
+}
+
+void Part::enableTags( bool enable )
+{
+    m_sidebar->hideItem( 4, !enable );
 }
 
 void Part::slotShowFindBar()

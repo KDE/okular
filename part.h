@@ -64,6 +64,7 @@ class MiniBarLogic;
 class FileKeeper;
 class Reviews;
 class BookmarkList;
+class Tags;
 
 namespace Okular
 {
@@ -219,6 +220,7 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         void updateBookmarksActions();
         void enableTOC(bool enable);
         void slotRebuildBookmarkMenu();
+        void enableTags( bool enable );
 
     public slots:
         // connected to Shell action (and browserExtension), not local one
@@ -278,6 +280,7 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         QPointer<PageSizeLabel> m_pageSizeLabel;
         QPointer<Reviews> m_reviewsWidget;
         QPointer<BookmarkList> m_bookmarkList;
+        QPointer<Tags> m_tags;
 
         // document watcher (and reloader) variables
         KDirWatch *m_watcher;

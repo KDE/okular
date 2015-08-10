@@ -776,6 +776,11 @@ const QList<Okular::EmbeddedFile*> *PDFGenerator::embeddedFiles() const
     return &docEmbeddedFiles;
 }
 
+QAbstractItemModel * PDFGenerator::tagsModel() const
+{
+    return ( QAbstractItemModel * )( pdfdoc->hasStructTree() ? pdfdoc->structTreeModel() : NULL );
+}
+
 bool PDFGenerator::isAllowed( Okular::Permission permission ) const
 {
     bool b = true;

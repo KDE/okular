@@ -653,6 +653,11 @@ void Sidebar::moveSplitter(int sideWidgetSize)
     d->splitter->setSizes( splitterSizeList );
 }
 
+void Sidebar::hideItem( int index, bool hide )
+{
+    d->list->setRowHidden( index, hide );
+}
+
 void Sidebar::itemClicked( QListWidgetItem *item )
 {
     itemClicked( item, UncollapseIfCollapsed );

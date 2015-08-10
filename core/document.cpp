@@ -4563,6 +4563,11 @@ void Document::walletDataForFile( const QString &fileName, QString *walletName, 
     }
 }
 
+QAbstractItemModel * Document::tagsModel() const
+{
+    return d->m_generator ? d->m_generator->tagsModel() : NULL;
+}
+
 void DocumentPrivate::requestDone( PixmapRequest * req )
 {
     if ( !req )

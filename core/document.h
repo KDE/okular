@@ -31,6 +31,7 @@ class KConfigDialog;
 class KXMLGUIClient;
 class KUrl;
 class DocumentItem;
+class QAbstractItemModel;
 
 namespace Okular {
 
@@ -841,6 +842,11 @@ class OKULAR_EXPORT Document : public QObject
          * @since 0.20 (KDE 4.14)
         */
         void walletDataForFile( const QString &fileName, QString *walletName, QString *walletFolder, QString *walletKey ) const;
+
+        /**
+         * Returns the model for rendering tags or NULL if tags are not present
+        */
+        QAbstractItemModel * tagsModel() const;
 
     public Q_SLOTS:
         /**

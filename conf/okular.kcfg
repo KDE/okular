@@ -26,6 +26,14 @@
    <default>false</default>
   </entry>
  </group>
+ <group name="Tags" >
+  <entry key="TagsSearchCaseSensitive" type="Bool">
+   <default>false</default>
+  </entry>
+  <entry key="TagsSearchRegularExpression" type="Bool">
+   <default>false</default>
+  </entry>
+ </group>
  <group name="Reviews" >
   <entry key="ReviewsSearchCaseSensitive" type="Bool">
    <default>false</default>

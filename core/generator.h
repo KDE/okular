@@ -530,6 +530,12 @@ class OKULAR_EXPORT Generator : public QObject
          */
         QSizeF dpi() const;
 
+        /**
+         * Returns the 'tags model' object of the document or NULL if
+         * tags model is not available
+         */
+        virtual QAbstractItemModel * tagsModel() const;
+
     protected Q_SLOTS:
         /**
          * Gets the font data for the given font

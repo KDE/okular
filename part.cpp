@@ -1947,6 +1947,14 @@ void Part::slotRebuildBookmarkMenu()
 void Part::enableLayers(bool enable)
 {
     m_sidebar->hideItem( 1, !enable );
+    if( enable)
+    {
+        m_sidebar->setCurrentIndex( 1 );
+    }
+    else if( m_sidebar->currentIndex() == 1 )
+    {
+        m_sidebar->setCurrentIndex( 2 );
+    }
 }
 
 void Part::slotShowFindBar()

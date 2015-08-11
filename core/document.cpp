@@ -952,7 +952,7 @@ Document::OpenResult DocumentPrivate::openDocumentInternal( const KService::Ptr&
         }
         else if( m_generator->hasFeature( Generator::Linearization ) )
         {
-            openResult = m_generator->loadDocumentFromDeviceWithPassword( remoteFile, m_pagesVector, password );
+            openResult = m_generator->loadDocumentFromUrlWithPassword( m_url, m_pagesVector, password );
         }
         else
         {

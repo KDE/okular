@@ -244,7 +244,7 @@ class OKULAR_EXPORT Generator : public QObject
         virtual bool loadDocumentFromData( const QByteArray & fileData, QVector< Page * > & pagesVector );
 
         /**
-         * Loads the document from the QIODevice @p remoteFile and fills the
+         * Loads the document from the KUrl @p url and fills the
          * @p pagesVector with the parsed pages.
          *
          * @note If you implement the WithPassword variants you don't need to implement this one
@@ -253,7 +253,7 @@ class OKULAR_EXPORT Generator : public QObject
          *
          * @returns true on success, false otherwise.
          */
-        virtual bool loadDocumentFromDevice( QIODevice * remoteFile, QVector< Page * > & pagesVector );
+        virtual bool loadDocumentFromUrl( KUrl & url , QVector< Page * > & pagesVector );
 
         /**
          * Loads the document with the given @p fileName and @p password and fills the
@@ -282,7 +282,7 @@ class OKULAR_EXPORT Generator : public QObject
         virtual Document::OpenResult loadDocumentFromDataWithPassword( const QByteArray & fileData, QVector< Page * > & pagesVector, const QString &password );
 
         /**
-         * Loads the document from the @p remoteFile and @p password and fills the
+         * Loads the document from the @p url and @p password and fills the
          * @p pagesVector with the parsed pages.
          *
          * @note Do not implement this if your format doesn't support passwords, it'll cleanly call loadDocumentFromRemoteFile()
@@ -291,7 +291,7 @@ class OKULAR_EXPORT Generator : public QObject
          *
          * @returns a LoadResult defining the result of the operation
          */
-        virtual Document::OpenResult loadDocumentFromDeviceWithPassword( QIODevice * remoteFile, QVector< Page * > & pagesVector, const QString &password );
+        virtual Document::OpenResult loadDocumentFromUrlWithPassword( KUrl & url, QVector< Page * > & pagesVector, const QString &password );
 
         /**
          * This method is called when the document is closed and not used

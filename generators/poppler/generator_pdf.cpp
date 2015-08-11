@@ -479,7 +479,7 @@ Okular::Document::OpenResult PDFGenerator::loadDocumentFromDataWithPassword( con
     return init(pagesVector, password);
 }
 
-Okular::Document::OpenResult PDFGenerator::loadDocumentFromDeviceWithPassword( QIODevice * remoteFile, QVector< Okular::Page* > & pagesVector, const QString & password )
+Okular::Document::OpenResult PDFGenerator::loadDocumentFromUrlWithPassword( KUrl & url, QVector< Okular::Page* > & pagesVector, const QString & password )
 {
 #ifndef NDEBUG
     if ( pdfdoc )
@@ -489,7 +489,7 @@ Okular::Document::OpenResult PDFGenerator::loadDocumentFromDeviceWithPassword( Q
     }
 #endif
     // create PDFDoc for the given device
-    pdfdoc = Poppler::Document::loadFromDevice( remoteFile, 0, 0 );
+    pdfdoc = Poppler::Document::loadFromUrl( url, 0, 0 );
     return init( pagesVector, password );
 }
 

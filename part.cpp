@@ -1336,6 +1336,10 @@ bool Part::openFile()
     {
         setUrl( KUrl( fileNameToOpen ) );
     }
+    if( ! fileNameToOpen.isEmpty() )
+    {
+        setUrl( KUrl( fileNameToOpen ) );
+    }
     if( url().isLocalFile() )
     {
         pathMime = KMimeType::findByPath( fileNameToOpen );
@@ -1548,6 +1552,10 @@ bool Part::openUrl(const KUrl &_url)
     {
         m_remoteFile = new Okular::RemoteFile( url );
         openOk = openFile();
+        if( !openOk )
+        {
+            openOk = KParts::ReadWritePart::openUrl( url );
+        }
     }
 
     if ( openOk )

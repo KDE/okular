@@ -210,6 +210,16 @@ class OKULAR_EXPORT Generator : public QObject
             TiledRendering     ///< Whether the Generator can render tiles @since 0.16 (KDE 4.10)
         };
 
+        /*
+         * Describe the possible custom item roles that can be used
+         * to get data using data method of QAbstractItemModels representing
+         * tags, tree structures etc.
+         */
+        enum CustomItemDataRole
+        {
+            TagsItemBoundingRects = Qt::UserRole + 1    ///< Return the rects bounding the tag item in pageview.
+        };
+
         /**
          * Creates a new generator.
          */

@@ -15,6 +15,8 @@
 #include "settings.h"
 #include "core/document.h"
 #include "ktreeviewsearchline.h"
+#include "okular/core/area.h"
+#include "core/generator.h"
 
 Tags::Tags( QWidget *parent, Okular::Document *document )
     : QWidget( parent ), m_document( document )
@@ -41,7 +43,7 @@ Tags::Tags( QWidget *parent, Okular::Document *document )
 	m_treeView->setModel( tagsModel );
 	m_searchLine->addTreeView( m_treeView );
 	emit hasTags( true );
-	//connect( tagsModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), m_document, SLOT(reloadDocument()) );
+	connect( tagsModel, SIGNAL(activated(QModelIndex)), this, SLOT(highlightDocument(QModelIndex)) );
     }
     else
     {
@@ -66,8 +68,7 @@ void Tags::notifySetup( const QVector< Okular::Page * > & /*pages*/, int /*setup
 	m_treeView->setModel( tagsModel );
 	m_searchLine->addTreeView( m_treeView );
 	emit hasTags( true );
-	//connect( layersModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), m_document, SLOT(reloadDocument()) );
-	//connect( layersModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), m_pageView, SLOT(reloadForms()) );
+	connect( m_treeView, SIGNAL(activated(QModelIndex)), this, SLOT(highlightDocument(QModelIndex)) );
     }
     else
     {
@@ -82,4 +83,43 @@ void Tags::saveSearchOptions()
     Okular::Settings::self()->writeConfig();
 }
 
- #include "tags.moc"
+void Tags::highlightDocument( QModelIndex index )
+{
+    QMap<QString, QVariant> boundingRects = index.data( Okular::Generator::TagsItemBoundingRects ).toMap();
+    QColor color( 255, 227, 0 );
+    QMap<QString, QVariant>::iterator it, endIt;
+    QList<QVariant>::iterator lIt, lEndIt;
+    if( ! boundingRects.isEmpty() )
+    {
+	endIt = boundingRects.end();
+	it = boundingRects.begin();
+	int firstPage = it.key().toInt();
+	double x = -1, y = -1;
+	for( ; it != endIt; it ++ )
+	{
+	    QList<QVariant> rectsList = it.value().toList();
+	    if( ! rectsList.isEmpty() )
+	    {
+		Okular::RegularAreaRect * rect = new Okular::RegularAreaRect();
+		lEndIt = rectsList.end();
+		for( lIt = rectsList.begin(); lIt != lEndIt; lIt ++ )
+		{
+		    rect->appendShape( Okular::NormalizedRect::fromQRectF( ( * lIt ).toRectF() ) );
+		    if( x == -1 && y == -1 )
+		    {
+			x = ( *lIt ).toRectF().x();
+			y = ( *lIt ).toRectF().y();
+		    }
+		}
+		m_document->setPageTextSelection( it.key().toInt(), rect, color );
+	    }
+	}
+	Okular::DocumentViewport viewport( firstPage );
+	viewport.rePos.enabled = true;
+        viewport.rePos.normalizedX = x;
+	viewport.rePos.normalizedY = y;
+        m_document->setViewport( viewport, 0, true );
+    }
+}
+
+#include "tags.moc"

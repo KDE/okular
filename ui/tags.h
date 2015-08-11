@@ -39,6 +39,7 @@ class OKULAR_PART_EXPORT Tags : public QWidget, public Okular::DocumentObserver
 
     private slots:
         void saveSearchOptions();
+	void highlightDocument( QModelIndex index );
 
     private:
 

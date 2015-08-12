@@ -95,7 +95,6 @@ endif(NOT WIN32)
 # okularcore
 
 set(okularcore_SRCS
-   core/qpagesize.cpp # REMOVE On Qt5 port
    core/action.cpp
    core/annotations.cpp
    core/area.cpp

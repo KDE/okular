@@ -39,6 +39,8 @@
 #include <QUndoCommand>
 #include <QMimeDatabase>
 #include <QDesktopServices>
+#include <QPageSize>
+#include <QStandardPaths>
 
 #include <k4aboutdata.h>
 #include <kauthorized.h>
@@ -52,9 +54,10 @@
 #include <kprocess.h>
 #include <krun.h>
 #include <kshell.h>
-
 #include <kzip.h>
 #include <KIO/Global>
+#include <KFormat>
+
 
 // local includes
 #include "action.h"
@@ -87,13 +90,10 @@
 #include "view_p.h"
 #include "form.h"
 #include "utils.h"
-#include "qpagesize.h" // TODO Convert to <> in Qt5
 
 #include <memory>
 
 #include <config-okular.h>
-#include <KFormat>
-#include <QStandardPaths>
 
 using namespace Okular;
 

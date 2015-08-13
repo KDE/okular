@@ -25,6 +25,7 @@ set(okularGenerator_poppler_PART_SRCS
    generator_pdf.cpp
    formfields.cpp
    annots.cpp
+   tags.cpp
 )
 
 kde4_add_ui_files(okularGenerator_poppler_PART_SRCS

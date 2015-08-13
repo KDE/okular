@@ -54,6 +54,7 @@
 #include "annots.h"
 #include "formfields.h"
 #include "popplerembeddedfile.h"
+#include "tags.h"
 
 Q_DECLARE_METATYPE(Poppler::Annotation*)
 Q_DECLARE_METATYPE(Poppler::FontInfo)
@@ -778,7 +779,12 @@ const QList<Okular::EmbeddedFile*> *PDFGenerator::embeddedFiles() const
 
 QAbstractItemModel * PDFGenerator::tagsModel() const
 {
-    return ( QAbstractItemModel * )( pdfdoc->hasStructTree() ? pdfdoc->structTreeModel() : NULL );
+    PopplerTagsProxy * proxyModel = new PopplerTagsProxy();
+    if( pdfdoc->hasStructTree() )
+        proxyModel->setSourceModel( (QAbstractItemModel * ) pdfdoc->structTreeModel() );
+    else
+        return NULL;
+    return ( QAbstractItemModel * )proxyModel;
 }
 
 bool PDFGenerator::isAllowed( Okular::Permission permission ) const

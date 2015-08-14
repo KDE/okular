@@ -39,6 +39,9 @@ class KIMGIOGenerator : public Okular::Generator
         QImage image( Okular::PixmapRequest * request );
 
     private:
+        bool loadDocumentInternal(const QByteArray & fileData, const QString & fileName,
+                                  QVector<Okular::Page*> & pagesVector );
+    private:
         QImage m_img;
         Okular::DocumentInfo docInfo;
 };

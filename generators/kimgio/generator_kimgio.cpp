@@ -12,6 +12,7 @@
 #include "generator_kimgio.h"
 
 #include <QBuffer>
+#include <QFile>
 #include <QImageReader>
 #include <QPainter>
 #include <QPrinter>
@@ -63,53 +64,49 @@ KIMGIOGenerator::~KIMGIOGenerator()
 
 bool KIMGIOGenerator::loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector )
 {
-    QMimeDatabase db;
-    const QString mime = db.mimeTypeForFile(fileName, QMimeDatabase::MatchContent).name();
-    const QStringList types = KImageIO::typeForMime(mime);
-    const QByteArray type = !types.isEmpty() ? types[0].toAscii() : QByteArray();
-    QImageReader reader( fileName, type );
-    if ( !reader.read( &m_img ) ) {
-        emit error( i18n( "Unable to load document: %1", reader.errorString() ), -1 );
+    QFile f( fileName );
+    if ( !f.open(QFile::ReadOnly) ) {
+        emit error( i18n( "Unable to load document: %1", f.errorString() ), -1 );
         return false;
     }
-    docInfo.set( Okular::DocumentInfo::MimeType, mime );
-
-    // Apply transformations dictated by Exif metadata
-    KExiv2Iface::KExiv2 exifMetadata;
-    if ( exifMetadata.load( fileName ) ) {
-        exifMetadata.rotateExifQImage( m_img, exifMetadata.getImageOrientation() );
-    }
-
-    pagesVector.resize( 1 );
-
-    Okular::Page * page = new Okular::Page( 0, m_img.width(), m_img.height(), Okular::Rotation0 );
-    pagesVector[0] = page;
-
-    return true;
+    return loadDocumentInternal( f.readAll(), fileName, pagesVector );
 }
 
 bool KIMGIOGenerator::loadDocumentFromData( const QByteArray & fileData, QVector<Okular::Page*> & pagesVector )
 {
-    QMimeDatabase db;
-    const QString mime = db.mimeTypeForData(fileData).name();
-    const QStringList types = KImageIO::typeForMime(mime);
-    const QByteArray type = !types.isEmpty() ? types[0].toAscii() : QByteArray();
-    
+    return loadDocumentInternal( fileData, QString(), pagesVector );
+}
+
+bool KIMGIOGenerator::loadDocumentInternal(const QByteArray & fileData, const QString & fileName, QVector<Okular::Page*> & pagesVector )
+{
     QBuffer buffer;
     buffer.setData( fileData );
     buffer.open( QIODevice::ReadOnly );
 
-    QImageReader reader( &buffer, type );
+    QImageReader reader( &buffer, QImageReader::imageFormat( &buffer ) );
+    reader.setAutoDetectImageFormat( true );
     if ( !reader.read( &m_img ) ) {
         emit error( i18n( "Unable to load document: %1", reader.errorString() ), -1 );
         return false;
     }
-    docInfo.set( Okular::DocumentInfo::MimeType, mime );
+    QMimeDatabase db;
+    auto mime = db.mimeTypeForFileNameAndData( fileName, fileData );
+    docInfo.set( Okular::DocumentInfo::MimeType, mime.name() );
 
     // Apply transformations dictated by Exif metadata
     KExiv2Iface::KExiv2 exifMetadata;
     if ( exifMetadata.loadFromData( fileData ) ) {
-        exifMetadata.rotateExifQImage( m_img, exifMetadata.getImageOrientation() );
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0) && QT_VERSION < QT_VERSION_CHECK(5, 4, 2)
+        // Qt 5.4 (up to 5.4.1) rotates jpeg images automatically with no way of disabling it
+        // See https://bugreports.qt.io/browse/QTBUG-37946
+        // and https://codereview.qt-project.org/#/c/98013/
+        // and https://codereview.qt-project.org/#/c/110668/
+        if (reader.format() != QByteArrayLiteral("jpeg")) {
+            exifMetadata.rotateExifQImage( m_img, exifMetadata.getImageOrientation() );
+        }
+#else
+        exifMetadata.rotateExifQImage(m_img, exifMetadata.getImageOrientation());
+#endif
     }
 
     pagesVector.resize( 1 );

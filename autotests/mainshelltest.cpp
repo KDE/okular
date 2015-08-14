@@ -286,16 +286,17 @@ void MainShellTest::testShell()
         Okular::Part *part = s->findChild<Okular::Part*>();
 
         QProcess p;
-        QString command = "okular " + externalProcessPath;
+        QStringList args;
+        args << externalProcessPath;
         if (unique)
-            command += " -unique";
+            args << "-unique";
         if (externalProcessExpectedPage != 0)
-            command += QString(" -page %1").arg(externalProcessExpectedPage + 1);
+            args << QStringLiteral("-page") << QString::number(externalProcessExpectedPage + 1);
         if (externalProcessExpectPresentation)
-            command += QString(" -presentation");
+            args << QStringLiteral("-presentation");
         if (externalProcessExpectPrintDialog)
-            command += QString(" -print");
-        p.start(command);
+            args << QStringLiteral("-print");
+        p.start(OKULAR_BINARY, args);
         p.waitForStarted();
         QCOMPARE(p.state(), QProcess::Running);
 
@@ -438,10 +439,11 @@ void MainShellTest::testFileRemembersPagePosition()
     else
     {
         QProcess p;
-        QString command = "okular " + paths[0] ;
+        QStringList args;
+        args << paths[0];
         if (mode == 2)
-            command += " -unique";
-        p.start(command);
+            args << "-unique";
+        p.start(OKULAR_BINARY, args);
         p.waitForStarted();
         QCOMPARE(p.state(), QProcess::Running);
 
@@ -449,8 +451,8 @@ void MainShellTest::testFileRemembersPagePosition()
         for (int i = 0; p.state() != QProcess::NotRunning && i < 20; ++i) {
             QTest::qWait(100);
         }
-        QCOMPARE(p.state(), QProcess::NotRunning);
-        QCOMPARE(p.exitStatus(), QProcess::NormalExit);
+        QCOMPARE((int)p.state(), (int)QProcess::NotRunning);
+        QCOMPARE((int)p.exitStatus(), (int)QProcess::NormalExit);
         QCOMPARE(p.exitCode(), 0);
     }
     s = findShell();

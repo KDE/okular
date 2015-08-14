@@ -62,6 +62,7 @@ ecm_add_test(mainshelltest.cpp ../shell/okular_main.cpp ../shell/shellutils.cpp 
     TEST_NAME "mainshelltest"
     LINK_LIBRARIES Qt5::Test KF5::Activities okularpart okularcore
 )
+target_compile_definitions(mainshelltest PRIVATE OKULAR_BINARY="$<TARGET_FILE:okular>")
 
 ecm_add_test(generatorstest.cpp
     TEST_NAME "generatorstest"

@@ -89,6 +89,7 @@ void Tags::highlightDocument( QModelIndex index )
     QColor color( 255, 227, 0 );
     QMap<QString, QVariant>::iterator it, endIt;
     QList<QVariant>::iterator lIt, lEndIt;
+    QSet<int> pagesChanged;
     if( ! boundingRects.isEmpty() )
     {
 	endIt = boundingRects.end();
@@ -98,6 +99,7 @@ void Tags::highlightDocument( QModelIndex index )
 	for( ; it != endIt; it ++ )
 	{
 	    QList<QVariant> rectsList = it.value().toList();
+	    int pageNumber = it.key().toInt();
 	    if( ! rectsList.isEmpty() )
 	    {
 		Okular::RegularAreaRect * rect = new Okular::RegularAreaRect();
@@ -111,7 +113,13 @@ void Tags::highlightDocument( QModelIndex index )
 			y = ( *lIt ).toRectF().y();
 		    }
 		}
-		m_document->setPageTextSelection( it.key().toInt(), rect, color );
+		m_document->setPageTextSelection( pageNumber, rect, color );
+
+		// Track the pages changed to remove highlight afterwards
+		pagesChanged.insert( pageNumber );
+
+		// Remove the pages which are already been redrawn
+		m_pagesChanged.remove( pageNumber );
 	    }
 	}
 	Okular::DocumentViewport viewport( firstPage );
@@ -119,6 +127,13 @@ void Tags::highlightDocument( QModelIndex index )
         viewport.rePos.normalizedX = x;
 	viewport.rePos.normalizedY = y;
         m_document->setViewport( viewport, 0, true );
+
+	foreach( const int & page, m_pagesChanged )
+	{
+	    m_document->setPageTextSelection( page, NULL, QColor() );
+	}
+
+	m_pagesChanged = pagesChanged;
     }
 }
 

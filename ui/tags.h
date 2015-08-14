@@ -46,6 +46,7 @@ class OKULAR_PART_EXPORT Tags : public QWidget, public Okular::DocumentObserver
         Okular::Document *m_document;
         QTreeView *m_treeView;
         KTreeViewSearchLine *m_searchLine;
+	QSet<int> m_pagesChanged;
 };
 
 #endif

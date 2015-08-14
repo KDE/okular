@@ -25,6 +25,7 @@ private slots:
 
 void GeneratorsTest::testLoadsCorrectly()
 {
+    QCoreApplication::setLibraryPaths(QStringList());
     QVERIFY2(QDir(GENERATORS_BUILD_DIR).exists(), GENERATORS_BUILD_DIR);
     // find all possible generators in $CMAKE_BINARY_DIR/generators
     // We can't simply hardcore the list of generators since some might not be built
@@ -37,14 +38,14 @@ void GeneratorsTest::testLoadsCorrectly()
             if (it.fileName().startsWith(QLatin1String("kio_"))) {
                 continue; // don't check kio_msits.so
             }
-            generatorLibs <<  it.fileName();
+            generatorLibs <<  it.fileInfo().absoluteFilePath();
         }
     }
     int failures = 0;
     int successful = 0;
     foreach (const QString& lib, generatorLibs) {
         KPluginLoader loader(lib);
-        QVERIFY(!loader.fileName().isEmpty());
+        QVERIFY2(!loader.fileName().isEmpty(), qPrintable(lib));
         auto factory = loader.factory();
         if (!factory) {
             qWarning() << "Could not get KPluginFactory for" << lib;

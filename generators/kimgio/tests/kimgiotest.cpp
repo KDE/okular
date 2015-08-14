@@ -19,7 +19,9 @@
 
 #include <QImage>
 #include <QPainter>
+#include <QImageReader>
 #include <QTemporaryFile>
+#include <KPluginLoader>
 
 class KIMGIOTest
 : public QObject
@@ -27,9 +29,25 @@ class KIMGIOTest
 	Q_OBJECT
 
 	private slots:
+		void initTestCase();
 		void testExifOrientation_data();
 		void testExifOrientation();
 };
+
+void KIMGIOTest::initTestCase()
+{
+	// Make sure we find the okularGenerator_kimgio that we build just now and not the system one
+	QFileInfo lib( GENERATOR_PATH );
+	QVERIFY2( lib.exists(), GENERATOR_PATH );
+	QStringList libPaths = QCoreApplication::libraryPaths();
+	libPaths.prepend( lib.absolutePath() );
+	QCoreApplication::setLibraryPaths( libPaths );
+	QVERIFY( !KPluginLoader::findPlugin( "okularGenerator_kimgio" ).isEmpty() );
+	// make sure we didn't break the search path for image formats:
+	auto availableFormats = QImageReader::supportedImageFormats();
+	QVERIFY2(availableFormats.contains( "jpeg" ), availableFormats.join( ", " ).data() );
+}
+
 
 // The following images have different Exif orientation tags, but they all
 // are a 3x2 rectangle whose top-left pixel is black, and whose other pixels are
@@ -60,8 +78,8 @@ void KIMGIOTest::testExifOrientation_data()
 void KIMGIOTest::testExifOrientation()
 {
 	QFETCH( QString, imgPath );
-        QMimeDatabase db;
-        
+	QMimeDatabase db;
+
 	Okular::SettingsCore::instance( "kimgiotest" );
 	Okular::Document *m_document = new Okular::Document( 0 );
 	const QMimeType mime = db.mimeTypeForFile( imgPath );
@@ -70,7 +88,7 @@ void KIMGIOTest::testExifOrientation()
 	m_document->addObserver( dummyDocumentObserver );
 
 	// Load image
-    m_document->openDocument( imgPath, QUrl(), mime );
+	QCOMPARE((int)m_document->openDocument( imgPath, QUrl(), mime ), (int)Okular::Document::OpenSuccess);
 	m_document->setRotation( 0 ); // Test the default rotation
 	QCOMPARE( m_document->pages(), 1u );
 

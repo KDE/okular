@@ -5,7 +5,7 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR}/..)
 
 ecm_add_test(shelltest.cpp ../shell/shellutils.cpp
     TEST_NAME "shelltest"
-    LINK_LIBRARIES Qt5::Test okularcore KF5::KDELibs4Support
+    LINK_LIBRARIES Qt5::Test okularcore
 )
 
 ecm_add_test(parttest.cpp

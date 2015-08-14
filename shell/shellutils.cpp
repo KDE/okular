@@ -39,7 +39,7 @@ QUrl urlFromArg( const QString& _arg, FileExistFunc exist_func, const QString& p
 {
     // ## TODO remove exist_func
 #if QT_VERSION >= 0x050400
-    QUrl url = QUrl::fromUserInput(_arg, QDir::currentPath());
+    QUrl url = QUrl::fromUserInput(_arg, QDir::currentPath(), QUrl::AssumeLocalFile);
 #else
     // Code from QUrl::fromUserInput(QString, QString)
     QUrl url = QUrl::fromUserInput(_arg);
@@ -49,8 +49,27 @@ QUrl urlFromArg( const QString& _arg, FileExistFunc exist_func, const QString& p
         if (fileInfo.exists())
             url = QUrl::fromLocalFile(fileInfo.absoluteFilePath());
     }
-
 #endif
+    if ( url.isLocalFile() ) {
+        // make sure something like /tmp/foo#bar.pdf is treated as a path name (default)
+        // but something like /tmp/foo.pdf#bar is foo.pdf plus an anchor "bar"
+        const QString path = url.path();
+        int hashIndex = path.lastIndexOf( QLatin1Char ( '#' ) );
+        int lastDotIndex = path.lastIndexOf( QLatin1Char ( '.' ) );
+        // make sure that we don't change the path if .pdf comes after the #
+        if ( hashIndex != -1 && hashIndex > lastDotIndex) {
+            url.setPath( path.left( hashIndex ) );
+            url.setFragment( path.mid( hashIndex + 1 ) );
+            qDebug() << "Added fragment to url:" << url.path() << url.fragment();
+        }
+    } else if ( !url.fragment().isEmpty() ) {
+        // make sure something like http://example.org/foo#bar.pdf is treated as a path name
+        // but something like http://example.org/foo.pdf#bar is foo.pdf plus an anchor "bar"
+        if ( url.fragment().contains( QLatin1Char( '.' ) ) ) {
+            url.setPath( url.path() + '#' + url.fragment() );
+            url.setFragment( QString() );
+        }
+    }
     if ( !pageArg.isEmpty() )
     {
       url.setFragment( pageArg );

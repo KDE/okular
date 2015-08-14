@@ -9,18 +9,17 @@
 
 #include <QtTest>
 
-#include <qdir.h>
-#include <kcmdlineargs.h>
-#include <kurl.h>
+#include <QDir>
+#include <QUrl>
 
 #include "../shell/shellutils.h"
 
 static const QUrl makeUrlFromCwd( const QString& u, const QString& ref = QString() )
 {
-    QUrl url( QUrl::fromLocalFile( QDir::currentPath() + '/' + u ));
+    QUrl url = QUrl::fromLocalFile( QDir::currentPath() + '/' + u) ;
     if ( !ref.isEmpty() )
         url.setFragment( ref );
-    url.setPath(QDir::cleanPath(url.path()));
+    url.setPath(QDir::cleanPath( url.path() ) );
     return url;
 }
 
@@ -48,8 +47,6 @@ class ShellTest
 void ShellTest::initTestCase()
 {
     qRegisterMetaType<QUrl>();
-
-    KCmdLineArgs::setCwd( QDir::currentPath().toLocal8Bit() );
 }
 
 void ShellTest::testUrlArgs_data()
@@ -84,19 +81,32 @@ void ShellTest::testUrlArgs_data()
     QTest::newRow( "http://kde.org/foo.pdf" )
         << "http://kde.org/foo.pdf"
         << true
-        << makeUrlFromCwd( "http://kde.org/foo.pdf" );
+        << QUrl( "http://kde.org/foo.pdf" );
+    // make sure we don't have a fragment
+    QUrl hashInName( "http://kde.org" );
+    QVERIFY( hashInName.path().isEmpty() );
+    hashInName.setPath( "/foo#bar.pdf" );
+    QVERIFY( hashInName.fragment().isEmpty() );
     QTest::newRow( "http://kde.org/foo#bar.pdf" )
         << "http://kde.org/foo#bar.pdf"
         << true
-        << makeUrlFromCwd( "http://kde.org/foo#bar.pdf" );
+        << hashInName;
+    QUrl withAnchor( "http://kde.org/foo.pdf" );
+    withAnchor.setFragment( "anchor" );
     QTest::newRow( "http://kde.org/foo.pdf#anchor" )
         << "http://kde.org/foo.pdf#anchor"
         << true
-        << makeUrlFromCwd( "http://kde.org/foo.pdf", "anchor" );
+        << withAnchor;
     QTest::newRow( "#207461" )
         << "http://homepages.inf.ed.ac.uk/mef/file%20with%20spaces.pdf"
         << true
         << QUrl( "http://homepages.inf.ed.ac.uk/mef/file%20with%20spaces.pdf" );
+    QUrl openOnPage3 = QUrl( "http://itzsimpl.info/lectures/CG/L2-transformations.pdf" );
+    openOnPage3.setFragment( "3" );
+    QTest::newRow( "RR124738" )
+        << "http://itzsimpl.info/lectures/CG/L2-transformations.pdf#3"
+        << true
+        << openOnPage3;
 }
 
 void ShellTest::testUrlArgs()
@@ -104,7 +114,7 @@ void ShellTest::testUrlArgs()
     QFETCH( QString, arg );
     QFETCH( bool, exists );
     QFETCH( QUrl, resUrl );
-
+    qDebug() << "Expected url:" << resUrl << "path =" <<  resUrl.path() << "fragment =" << resUrl.fragment();
     QUrl url = ShellUtils::urlFromArg( arg, exists ? fileExist_always_Func : fileExist_never_Func );
     QCOMPARE( url, resUrl );
 }

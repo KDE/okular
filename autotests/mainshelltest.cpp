@@ -303,10 +303,7 @@ void MainShellTest::testShell()
         if (useTabs || unique)
         {
             // It is attaching to us, so will eventually stop
-            for (int i = 0; p.state() != QProcess::NotRunning && i < 20; ++i) {
-                QTest::qWait(100);
-            }
-            QCOMPARE(p.state(), QProcess::NotRunning);
+            QTRY_COMPARE_WITH_TIMEOUT(p.state(), QProcess::NotRunning, 2000);
             QCOMPARE(p.exitStatus(), QProcess::NormalExit);
             QCOMPARE(p.exitCode(), 0);
 
@@ -347,12 +344,7 @@ void MainShellTest::testShell()
     {
         QCOMPARE(paths.count(), 1);
         Okular::Part *part = s->findChild<Okular::Part*>();
-
-        // Oh Qt5 i want your QTRY_VERIFY
-        for (int i = 0; presentationWidget(part) == 0 && i < 20; ++i) {
-            QTest::qWait(100);
-        }
-        QVERIFY(presentationWidget(part) != 0);
+        QTRY_VERIFY(presentationWidget(part) != 0);
     }
 
     if (externalProcessExpectPresentation)
@@ -369,10 +361,7 @@ void MainShellTest::testShell()
             part = dynamic_cast<Okular::Part*>(s->m_tabs[1].part);
         }
 
-        for (int i = 0; presentationWidget(part) == 0 && i < 20; ++i) {
-            QTest::qWait(100);
-        }
-        QVERIFY(presentationWidget(part) != 0);
+        QTRY_VERIFY(presentationWidget(part) != 0);
     }
 
     if (helper)
@@ -448,10 +437,7 @@ void MainShellTest::testFileRemembersPagePosition()
         QCOMPARE(p.state(), QProcess::Running);
 
         // It is attaching to us, so will eventually stop
-        for (int i = 0; p.state() != QProcess::NotRunning && i < 20; ++i) {
-            QTest::qWait(100);
-        }
-        QCOMPARE((int)p.state(), (int)QProcess::NotRunning);
+        QTRY_COMPARE_WITH_TIMEOUT((int)p.state(), (int)QProcess::NotRunning, 2000);
         QCOMPARE((int)p.exitStatus(), (int)QProcess::NormalExit);
         QCOMPARE(p.exitCode(), 0);
     }

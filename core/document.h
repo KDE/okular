@@ -56,7 +56,6 @@ class RenditionAction;
 class SourceReference;
 class View;
 class VisiblePageRect;
-class RemoteFile;
 
 /** IDs for seaches. Globally defined here. **/
 #define PART_SEARCH_ID 1
@@ -216,7 +215,7 @@ class OKULAR_EXPORT Document : public QObject
          * Opens the document.
          * @since 0.20 (KDE 4.14)
          */
-        OpenResult openDocument( const QString & docFile, const KUrl & url, const KMimeType::Ptr &mime, const QString &password = QString(), RemoteFile * remoteFile = 0 );
+        OpenResult openDocument( const QString & docFile, const KUrl & url, const KMimeType::Ptr &mime, const QString &password = QString() );
 
         /**
          * Closes the document.
@@ -1085,7 +1084,12 @@ class OKULAR_EXPORT Document : public QObject
          * @since 0.17 (KDE 4.11)
          */
         void formButtonsChangedByUndoRedo( int page, const QList< Okular::FormFieldButton* > & formButtons );
-    private:
+
+        /**
+         * This signal is emmitted when the mime type of the document is determined from the KIO job
+         */
+        void mimeTypeDetermined();
+private:
         /// @cond PRIVATE
         friend class DocumentPrivate;
         friend class ::DocumentItem;
@@ -1108,6 +1112,7 @@ class OKULAR_EXPORT Document : public QObject
         Q_PRIVATE_SLOT( d, void slotGeneratorConfigChanged( const QString& ) )
         Q_PRIVATE_SLOT( d, void refreshPixmaps( int ) )
         Q_PRIVATE_SLOT( d, void _o_configChanged() )
+        Q_PRIVATE_SLOT( d, void setMimeTypeFromContent( KIO::Job *, QString ) )
 
         // search thread simulators
         Q_PRIVATE_SLOT( d, void doContinueDirectionMatchSearch(void *doContinueDirectionMatchSearchStruct) )

@@ -29,6 +29,10 @@
 #include "fontinfo.h"
 #include "generator.h"
 
+namespace KIO {
+class Job;
+}
+
 class QUndoStack;
 class QEventLoop;
 class QFile;
@@ -45,7 +49,6 @@ class PageController;
 class SaveInterface;
 class Scripter;
 class View;
-class RemoteFile;
 }
 
 struct GeneratorInfo
@@ -132,7 +135,7 @@ class DocumentPrivate
         void setRotationInternal( int r, bool notify );
         ConfigInterface* generatorConfig( GeneratorInfo& info );
         SaveInterface* generatorSave( GeneratorInfo& info );
-        Document::OpenResult openDocumentInternal( const KService::Ptr& offer, bool isstdin, const QString& docFile, const QByteArray& filedata, const QString& password, RemoteFile * remoteFile = 0 );
+        Document::OpenResult openDocumentInternal( const KService::Ptr& offer, bool isstdin, const QString& docFile, const QByteArray& filedata, const QString& password );
         bool savePageDocumentInfo( KTemporaryFile *infoFile, int what ) const;
         DocumentViewport nextDocumentViewport() const;
         void notifyAnnotationChanges( int page );
@@ -141,6 +144,7 @@ class DocumentPrivate
         bool canRemoveExternalAnnotations() const;
         void warnLimitedAnnotSupport();
         OKULAR_EXPORT static QString docDataFileName(const KUrl &url, qint64 document_size);
+        void getMimeTypeFromContent( const KUrl & url );
 
         // Methods that implement functionality needed by undo commands
         void performAddPageAnnotation( int page, Annotation *annotation );
@@ -161,6 +165,7 @@ class DocumentPrivate
         void doContinueDirectionMatchSearch(void *doContinueDirectionMatchSearchStruct);
         void doContinueAllDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID);
         void doContinueGooglesDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QStringList & words);
+        void setMimeTypeFromContent( KIO::Job *, QString );
 
         void doProcessSearchMatch( RegularAreaRect *match, RunningSearch *search, QSet< int > *pagesToNotify, int currentPage, int searchID, bool moveViewport, const QColor & color );
 
@@ -281,6 +286,8 @@ class DocumentPrivate
         QDomNode m_prevPropsOfAnnotBeingModified;
 
         synctex_scanner_t m_synctex_scanner;
+
+        QString m_mimeTypeFromContent;
 };
 
 class DocumentInfoPrivate

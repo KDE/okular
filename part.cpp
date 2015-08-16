@@ -95,7 +95,6 @@
 #include "core/generator.h"
 #include "core/page.h"
 #include "core/fileprinter.h"
-#include "core/remotefile.h"
 
 #include <cstdio>
 #include <memory>
@@ -306,7 +305,7 @@ const QVariantList &args,
 KComponentData componentData )
 : KParts::ReadWritePart(parent),
 m_tempfile( 0 ), m_fileWasRemoved( false ), m_showMenuBarAction( 0 ), m_showFullScreenAction( 0 ), m_actionsSearched( false ),
-m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentWidget, parent, args)), m_generatorGuiClient(0), m_keeper( 0 ), m_remoteFile( 0 )
+m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentWidget, parent, args)), m_generatorGuiClient(0), m_keeper( 0 )
 {
     // first, we check if a config file name has been specified
     QString configFileName = detectConfigFileName( args );
@@ -563,9 +562,6 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
 
     if ( m_embedMode == NativeShellMode )
         m_sidebar->setAutoFillBackground( false );
-
-    if( m_remoteFile )
-        delete m_remoteFile;
 
 #ifdef OKULAR_KEEP_FILE_OPEN
     m_keeper = new FileKeeper();
@@ -1248,7 +1244,7 @@ Document::OpenResult Part::doOpenFile( const KMimeType::Ptr &mimeA, const QStrin
         }
         else
         {
-            openResult = m_document->openDocument( fileNameToOpen,  url(), mime, QString(), m_remoteFile );
+            openResult = m_document->openDocument( fileNameToOpen,  url(), mime, QString() );
         }
 
         // if the file didn't open correctly it might be encrypted, so ask for a pass
@@ -1332,10 +1328,6 @@ bool Part::openFile()
     const bool isstdin = url().isLocalFile() && url().fileName( KUrl::ObeyTrailingSlash ) == QLatin1String( "-" );
     const QFileInfo fileInfo( fileNameToOpen );
     KMimeType::Ptr pathMime;
-    if( ! m_remoteFile )
-    {
-        setUrl( KUrl( fileNameToOpen ) );
-    }
     if( ! fileNameToOpen.isEmpty() )
     {
         setUrl( KUrl( fileNameToOpen ) );
@@ -1372,10 +1364,7 @@ bool Part::openFile()
 
         if (mimes[0]->name() == "text/plain") {
             KMimeType::Ptr contentMime;
-            if( url().isLocalFile() )
-                contentMime = KMimeType::findByFileContent( fileNameToOpen );
-            else
-                contentMime = KMimeType::mimeType( m_remoteFile->mimeType() );
+            contentMime = KMimeType::findByFileContent( fileNameToOpen );
             mimes.prepend( contentMime );
         }
     }
@@ -1550,7 +1539,6 @@ bool Part::openUrl(const KUrl &_url)
     }
     else
     {
-        m_remoteFile = new Okular::RemoteFile( url );
         openOk = openFile();
         if( !openOk )
         {

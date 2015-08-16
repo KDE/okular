@@ -349,8 +349,6 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         // Timer for m_infoMessage
         QTimer *m_infoTimer;
 
-        RemoteFile * m_remoteFile;
-
     private slots:
         void slotAnnotationPreferences();
         void slotHandleActivatedSourceReference(const QString& absFileName, int line, int col, bool *handled);

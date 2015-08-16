@@ -86,9 +86,9 @@
 #include "view_p.h"
 #include "form.h"
 #include "utils.h"
-#include "core/remotefile.h"
 
 #include <memory>
+#include <kio/job.h>
 
 #include <config-okular.h>
 
@@ -905,7 +905,7 @@ SaveInterface* DocumentPrivate::generatorSave( GeneratorInfo& info )
     return info.save;
 }
 
-Document::OpenResult DocumentPrivate::openDocumentInternal( const KService::Ptr& offer, bool isstdin, const QString& docFile, const QByteArray& filedata, const QString& password, Okular::RemoteFile * remoteFile )
+Document::OpenResult DocumentPrivate::openDocumentInternal( const KService::Ptr& offer, bool isstdin, const QString& docFile, const QByteArray& filedata, const QString& password )
 {
     QString propName = offer->name();
     QHash< QString, GeneratorInfo >::const_iterator genIt = m_loadedGenerators.constFind( propName );
@@ -957,18 +957,10 @@ Document::OpenResult DocumentPrivate::openDocumentInternal( const KService::Ptr&
         else
         {
             m_tempFile = new KTemporaryFile();
-            if( ! m_tempFile->open() || ! remoteFile->open( QIODevice::ReadOnly ) )
+            if( ! m_tempFile->open() )
             {
                 delete m_tempFile;
                 m_tempFile = 0;
-            }
-            else
-            {
-                m_tempFile->write( remoteFile->readAll() );
-                QString tmpFileName = m_tempFile->fileName();
-                m_tempFile->close();
-                remoteFile->close();
-                openResult = m_generator->loadDocumentWithPassword( tmpFileName, m_pagesVector, password );
             }
         }
     }
@@ -1998,6 +1990,12 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, vo
     }
 }
 
+void DocumentPrivate::setMimeTypeFromContent( KIO::Job *, QString mimeType )
+{
+    m_mimeTypeFromContent = mimeType;
+    emit m_parent->mimeTypeDetermined();
+}
+
 QVariant DocumentPrivate::documentMetaData( const QString &key, const QVariant &option ) const
 {
     if ( key == QLatin1String( "PaperColor" ) )
@@ -2284,10 +2282,20 @@ QString DocumentPrivate::docDataFileName(const KUrl &url, qint64 document_size)
     return newokularfile;
 }
 
-Document::OpenResult Document::openDocument( const QString & docFile, const KUrl& url, const KMimeType::Ptr &_mime, const QString & password, RemoteFile * remoteFile )
+void DocumentPrivate::getMimeTypeFromContent( const KUrl & url )
+{
+    KIO::TransferJob * job = KIO::get( url );
+    QObject::connect( job, SIGNAL(mimetype(KIO::Job*,QString)), m_parent, SLOT(setMimeTypeFromContent(KIO::Job*,QString)) );
+    QEventLoop pause;
+    QObject::connect( m_parent, SIGNAL(mimeTypeDetermined()), &pause, SLOT(quit()) );
+    pause.exec();
+}
+
+Document::OpenResult Document::openDocument( const QString & docFile, const KUrl& url, const KMimeType::Ptr &_mime, const QString & password )
 {
     KMimeType::Ptr mime = _mime;
     QByteArray filedata;
+    QString mimeTypeByContent;
     qint64 document_size = -1;
     bool isstdin = url.fileName( KUrl::ObeyTrailingSlash ) == QLatin1String( "-" );
     bool triedMimeFromFileContent = false;
@@ -2336,7 +2344,8 @@ Document::OpenResult Document::openDocument( const QString & docFile, const KUrl
         }
         else
         {
-            newmime = KMimeType::mimeType( remoteFile->mimeType() );
+            d->getMimeTypeFromContent( url );
+            newmime = KMimeType::mimeType( d->m_mimeTypeFromContent );
         }
         triedMimeFromFileContent = true;
         if ( newmime->name() != mime->name() )
@@ -2390,7 +2399,7 @@ Document::OpenResult Document::openDocument( const QString & docFile, const KUrl
 
     KService::Ptr offer = offers.at( hRank );
     // 1. load Document
-    OpenResult openResult = d->openDocumentInternal( offer, isstdin, docFile, filedata, password, remoteFile );
+    OpenResult openResult = d->openDocumentInternal( offer, isstdin, docFile, filedata, password );
     if ( openResult == OpenError && !triedMimeFromFileContent )
     {
         KMimeType::Ptr newmime;
@@ -2400,7 +2409,9 @@ Document::OpenResult Document::openDocument( const QString & docFile, const KUrl
         }
         else
         {
-            newmime = KMimeType::mimeType( remoteFile->mimeType() );
+            if( d->m_mimeTypeFromContent.isEmpty() )
+                d->getMimeTypeFromContent( url );
+            newmime = KMimeType::mimeType(d->m_mimeTypeFromContent );
         }
         triedMimeFromFileContent = true;
         if ( newmime->name() != mime->name() )

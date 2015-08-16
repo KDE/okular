@@ -656,6 +656,7 @@ void Sidebar::moveSplitter(int sideWidgetSize)
 void Sidebar::hideItem( int index, bool hide )
 {
     d->list->setRowHidden( index, hide );
+    setItemEnabled( index, ! hide );
 }
 
 void Sidebar::itemClicked( QListWidgetItem *item )

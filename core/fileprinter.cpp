@@ -25,7 +25,6 @@
 #include <KProcess>
 #include <KShell>
 #include <QtCore/QDebug>
-#include <kdeversion.h>
 #include <QStandardPaths>
 
 #include "debug_p.h"
@@ -161,11 +160,9 @@ QList<int> FilePrinter::pageList( QPrinter &printer, int lastPage,
     if ( printer.printRange() == QPrinter::PageRange ) {
         startPage = printer.fromPage();
         endPage = printer.toPage();
-#if QT_VERSION >= KDE_MAKE_VERSION(4,7,0)
     } else if ( printer.printRange() == QPrinter::CurrentPage) {
         startPage = currentPage;
         endPage = currentPage;
-#endif
     } else { //AllPages
         startPage = 1;
         endPage = lastPage;

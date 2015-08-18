@@ -15,7 +15,7 @@
 #include "settings.h"
 #include "core/document.h"
 #include "ktreeviewsearchline.h"
-#include "okular/core/area.h"
+#include "core/area.h"
 #include "core/generator.h"
 
 Tags::Tags( QWidget *parent, Okular::Document *document )

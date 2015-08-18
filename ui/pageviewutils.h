@@ -150,7 +150,7 @@ class ToolBarButton : public QToolButton
         void buttonDoubleClicked( int buttonID );
 
     protected:
-        void mouseDoubleClickEvent( QMouseEvent * event );
+        void mouseDoubleClickEvent( QMouseEvent * event ) Q_DECL_OVERRIDE;
 
     private:
         int m_id;

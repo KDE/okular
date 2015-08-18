@@ -78,27 +78,27 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         bool print( QPrinter& printer ) Q_DECL_OVERRIDE;
 
         // [INHERITED] reply to some metadata requests
-        QVariant metaData( const QString & key, const QVariant & option ) const;
+        QVariant metaData( const QString & key, const QVariant & option ) const Q_DECL_OVERRIDE;
 
         // [INHERITED] reparse configuration
-        bool reparseConfig();
-        void addPages( KConfigDialog * );
+        bool reparseConfig() Q_DECL_OVERRIDE;
+        void addPages( KConfigDialog * ) Q_DECL_OVERRIDE;
 
         // [INHERITED] text exporting
-        Okular::ExportFormat::List exportFormats() const;
-        bool exportTo( const QString &fileName, const Okular::ExportFormat &format );
+        Okular::ExportFormat::List exportFormats() const Q_DECL_OVERRIDE;
+        bool exportTo( const QString &fileName, const Okular::ExportFormat &format ) Q_DECL_OVERRIDE;
 
         // [INHERITED] print interface
-        QWidget* printConfigurationWidget() const;
+        QWidget* printConfigurationWidget() const Q_DECL_OVERRIDE;
 
         // [INHERITED] save interface
-        bool supportsOption( SaveOption ) const;
-        bool save( const QString &fileName, SaveOptions options, QString *errorText );
-        Okular::AnnotationProxy* annotationProxy() const;
+        bool supportsOption( SaveOption ) const Q_DECL_OVERRIDE;
+        bool save( const QString &fileName, SaveOptions options, QString *errorText ) Q_DECL_OVERRIDE;
+        Okular::AnnotationProxy* annotationProxy() const Q_DECL_OVERRIDE;
 
     protected:
-        bool doCloseDocument();
-        Okular::TextPage* textPage( Okular::Page *page );
+        bool doCloseDocument() Q_DECL_OVERRIDE;
+        Okular::TextPage* textPage( Okular::Page *page ) Q_DECL_OVERRIDE;
 
     protected slots:
         void requestFontData(const Okular::FontInfo &font, QByteArray *data);

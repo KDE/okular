@@ -27,7 +27,7 @@ class PageFilterProxyModel : public QSortFilterProxyModel
      *
      * @param parent The parent object.
      */
-    PageFilterProxyModel( QObject *parent = Q_NULLPTR );
+    explicit PageFilterProxyModel( QObject *parent = Q_NULLPTR );
 
     /**
      * Reimplemented from QSortFilterProxy.
@@ -65,18 +65,18 @@ class PageGroupProxyModel : public QAbstractProxyModel
      *
      * @param parent The parent object.
      */
-    PageGroupProxyModel( QObject *parent = Q_NULLPTR );
+    explicit PageGroupProxyModel( QObject *parent = Q_NULLPTR );
 
-    virtual int columnCount( const QModelIndex &parentIndex ) const;
-    virtual int rowCount( const QModelIndex &parentIndex ) const;
+    int columnCount( const QModelIndex &parentIndex ) const Q_DECL_OVERRIDE;
+    int rowCount( const QModelIndex &parentIndex ) const Q_DECL_OVERRIDE;
 
-    virtual QModelIndex index( int row, int column, const QModelIndex &parentIndex = QModelIndex() ) const;
-    virtual QModelIndex parent( const QModelIndex &index ) const;
+    QModelIndex index( int row, int column, const QModelIndex &parentIndex = QModelIndex() ) const Q_DECL_OVERRIDE;
+    QModelIndex parent( const QModelIndex &index ) const Q_DECL_OVERRIDE;
 
-    virtual QModelIndex mapFromSource( const QModelIndex &sourceIndex ) const;
-    virtual QModelIndex mapToSource( const QModelIndex &proxyIndex ) const;
+    QModelIndex mapFromSource( const QModelIndex &sourceIndex ) const Q_DECL_OVERRIDE;
+    QModelIndex mapToSource( const QModelIndex &proxyIndex ) const Q_DECL_OVERRIDE;
 
-    virtual void setSourceModel( QAbstractItemModel *model );
+    void setSourceModel( QAbstractItemModel *model ) Q_DECL_OVERRIDE;
 
   public Q_SLOTS:
     /**
@@ -107,25 +107,25 @@ class AuthorGroupProxyModel : public QAbstractProxyModel
          *
          * @param parent The parent object.
          */
-        AuthorGroupProxyModel( QObject *parent = Q_NULLPTR );
+        explicit AuthorGroupProxyModel( QObject *parent = Q_NULLPTR );
         ~AuthorGroupProxyModel();
 
-        virtual int columnCount( const QModelIndex &parentIndex ) const;
-        virtual int rowCount( const QModelIndex &parentIndex ) const;
+        int columnCount( const QModelIndex &parentIndex ) const Q_DECL_OVERRIDE;
+        int rowCount( const QModelIndex &parentIndex ) const Q_DECL_OVERRIDE;
 
-        virtual QModelIndex index( int row, int column, const QModelIndex &parentIndex = QModelIndex() ) const;
-        virtual QModelIndex parent( const QModelIndex &index ) const;
+        QModelIndex index( int row, int column, const QModelIndex &parentIndex = QModelIndex() ) const Q_DECL_OVERRIDE;
+        QModelIndex parent( const QModelIndex &index ) const Q_DECL_OVERRIDE;
 
-        virtual QModelIndex mapFromSource( const QModelIndex &sourceIndex ) const;
-        virtual QModelIndex mapToSource( const QModelIndex &proxyIndex ) const;
+        QModelIndex mapFromSource( const QModelIndex &sourceIndex ) const Q_DECL_OVERRIDE;
+        QModelIndex mapToSource( const QModelIndex &proxyIndex ) const Q_DECL_OVERRIDE;
 
-        virtual void setSourceModel( QAbstractItemModel *model );
+        void setSourceModel( QAbstractItemModel *model ) Q_DECL_OVERRIDE;
 
-        virtual QItemSelection mapSelectionToSource(const QItemSelection &selection) const;
-        virtual QItemSelection mapSelectionFromSource(const QItemSelection &selection) const;
-        QVariant data(const QModelIndex &proxyIndex, int role = Qt::DisplayRole) const;
-        QMap<int, QVariant> itemData(const QModelIndex &index) const;
-        Qt::ItemFlags flags(const QModelIndex &index) const;
+        QItemSelection mapSelectionToSource(const QItemSelection &selection) const Q_DECL_OVERRIDE;
+        QItemSelection mapSelectionFromSource(const QItemSelection &selection) const Q_DECL_OVERRIDE;
+        QVariant data(const QModelIndex &proxyIndex, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
+        QMap<int, QVariant> itemData(const QModelIndex &index) const Q_DECL_OVERRIDE;
+        Qt::ItemFlags flags(const QModelIndex &index) const Q_DECL_OVERRIDE;
 
     public Q_SLOTS:
         /**

@@ -103,6 +103,6 @@ class EditAnnotToolDialog : public QDialog
         void slotDataChanged();
 };
 
-Q_DECLARE_METATYPE( EditAnnotToolDialog::ToolType );
+Q_DECLARE_METATYPE( EditAnnotToolDialog::ToolType )
 
 #endif

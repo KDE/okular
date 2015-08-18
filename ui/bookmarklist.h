@@ -35,7 +35,7 @@ class BookmarkList : public QWidget, public Okular::DocumentObserver
         ~BookmarkList();
 
         // inherited from DocumentObserver
-        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags );
+        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) Q_DECL_OVERRIDE;
 
     private slots:
         void slotFilterBookmarks( bool );

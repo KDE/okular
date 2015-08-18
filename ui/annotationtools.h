@@ -92,7 +92,7 @@ class SmoothPathEngine
         void paint( QPainter * painter, double xScale, double yScale, const QRect & /*clipRect*/ ) Q_DECL_OVERRIDE;
 
         // These are two alternative ways to get the resulting path. Don't call them both!
-        QList< Okular::Annotation* > end();
+        QList< Okular::Annotation* > end() Q_DECL_OVERRIDE;
         SmoothPath endSmoothPath();
 
     private:

@@ -53,7 +53,7 @@ struct strip {			/* tiff strip descriptor */
 class pagenode {		/* compressed page descriptor */
     public:
     pagenode();
-    ~pagenode() { };
+    ~pagenode() { }
     int	nstrips;		/* number of strips */
     int rowsperstrip;		/* number of rows per strip */
     int stripnum;		/* current strip while expanding */

@@ -33,7 +33,7 @@ namespace Epub {
     enum Multimedia { MovieResource = 4, AudioResource = 5 };
 
   protected:
-    virtual QVariant loadResource(int type, const QUrl &name);
+    QVariant loadResource(int type, const QUrl &name) Q_DECL_OVERRIDE;
 
   private:
     void checkCSS(QString &css);

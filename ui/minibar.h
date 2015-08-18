@@ -33,13 +33,13 @@ class PagesEdit : public KLineEdit
 
     public:
         PagesEdit( MiniBar * parent );
-        void setText( const QString & );
+        void setText( const QString & ) Q_DECL_OVERRIDE;
 
     protected:
-        void focusInEvent( QFocusEvent * e );
-        void focusOutEvent( QFocusEvent * e );
-        void mousePressEvent( QMouseEvent * e );
-        void wheelEvent( QWheelEvent * e );
+        void focusInEvent( QFocusEvent * e ) Q_DECL_OVERRIDE;
+        void focusOutEvent( QFocusEvent * e ) Q_DECL_OVERRIDE;
+        void mousePressEvent( QMouseEvent * e ) Q_DECL_OVERRIDE;
+        void wheelEvent( QWheelEvent * e ) Q_DECL_OVERRIDE;
 
     private slots:
         void updatePalette();
@@ -64,7 +64,7 @@ class PageLabelEdit : public PagesEdit
   Q_OBJECT
     public:
         PageLabelEdit( MiniBar * parent );
-        void setText( const QString & newText );
+        void setText( const QString & newText ) Q_DECL_OVERRIDE;
         void setPageLabels( const QVector< Okular::Page * > & pageVector );
 
     signals:
@@ -94,8 +94,8 @@ class MiniBarLogic : public QObject, public Okular::DocumentObserver
         int currentPage() const;
         
         // [INHERITED] from DocumentObserver
-        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags );
-        void notifyCurrentPageChanged( int previous, int current );
+        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) Q_DECL_OVERRIDE;
+        void notifyCurrentPageChanged( int previous, int current ) Q_DECL_OVERRIDE;
         
     private:
         QSet<MiniBar *> m_miniBars;
@@ -114,7 +114,7 @@ class MiniBar : public QWidget
         MiniBar( QWidget *parent, MiniBarLogic * miniBarLogic );
         ~MiniBar();
 
-        void changeEvent( QEvent * event ) ;
+        void changeEvent( QEvent * event )  Q_DECL_OVERRIDE;
 
     signals:
         void gotoPage();
@@ -154,7 +154,7 @@ class ProgressWidget : public QWidget, public Okular::DocumentObserver
         ~ProgressWidget();
 
         // [INHERITED] from DocumentObserver
-        void notifyCurrentPageChanged( int previous, int current );
+        void notifyCurrentPageChanged( int previous, int current ) Q_DECL_OVERRIDE;
 
         void slotGotoNormalizedPage( float index );
 

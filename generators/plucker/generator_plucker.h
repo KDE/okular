@@ -29,23 +29,23 @@ class PluckerGenerator : public Okular::Generator
         virtual ~PluckerGenerator();
 
         // [INHERITED] load a document and fill up the pagesVector
-        bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
+        bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector ) Q_DECL_OVERRIDE;
 
         // [INHERITED] document information
-        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const;
+        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const Q_DECL_OVERRIDE;
         
         // [INHERITED] perform actions on document / pages
-        QImage image( Okular::PixmapRequest *request );
+        QImage image( Okular::PixmapRequest *request ) Q_DECL_OVERRIDE;
 
         // [INHERITED] text exporting
-        Okular::ExportFormat::List exportFormats() const;
-        bool exportTo( const QString &fileName, const Okular::ExportFormat &format );
+        Okular::ExportFormat::List exportFormats() const Q_DECL_OVERRIDE;
+        bool exportTo( const QString &fileName, const Okular::ExportFormat &format ) Q_DECL_OVERRIDE;
 
         // [INHERITED] print document using already configured kprinter
-        bool print( QPrinter& printer );
+        bool print( QPrinter& printer ) Q_DECL_OVERRIDE;
 
     protected:
-        bool doCloseDocument();
+        bool doCloseDocument() Q_DECL_OVERRIDE;
 
     private:
       QList<QTextDocument*> mPages;

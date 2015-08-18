@@ -32,7 +32,7 @@ class FaxGenerator : public Okular::Generator
         bool print( QPrinter& printer ) Q_DECL_OVERRIDE;
 
     protected:
-        bool doCloseDocument();
+        bool doCloseDocument() Q_DECL_OVERRIDE;
         QImage image( Okular::PixmapRequest * request ) Q_DECL_OVERRIDE;
 
     private:

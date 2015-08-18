@@ -31,8 +31,8 @@ class TIFFGenerator : public Okular::Generator
         bool print( QPrinter& printer ) Q_DECL_OVERRIDE;
 
     protected:
-        bool doCloseDocument();
-        QImage image( Okular::PixmapRequest * request );
+        bool doCloseDocument() Q_DECL_OVERRIDE;
+        QImage image( Okular::PixmapRequest * request ) Q_DECL_OVERRIDE;
 
     private:
         class Private;

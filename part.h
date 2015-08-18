@@ -116,23 +116,23 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         ~Part();
 
         // inherited from DocumentObserver
-        void notifySetup( const QVector< Okular::Page * > &pages, int setupFlags );
-        void notifyViewportChanged( bool smoothMove );
-        void notifyPageChanged( int page, int flags );
+        void notifySetup( const QVector< Okular::Page * > &pages, int setupFlags ) Q_DECL_OVERRIDE;
+        void notifyViewportChanged( bool smoothMove ) Q_DECL_OVERRIDE;
+        void notifyPageChanged( int page, int flags ) Q_DECL_OVERRIDE;
 
-        bool openDocument(const QUrl &url, uint page);
-        void startPresentation();
-        QStringList supportedMimeTypes() const;
+        bool openDocument(const QUrl &url, uint page) Q_DECL_OVERRIDE;
+        void startPresentation() Q_DECL_OVERRIDE;
+        QStringList supportedMimeTypes() const Q_DECL_OVERRIDE;
 
         QUrl realUrl() const;
 
-        void showSourceLocation(const QString& fileName, int line, int column, bool showGraphically = true);
-        void clearLastShownSourceLocation();
-        bool isWatchFileModeEnabled() const;
-        void setWatchFileModeEnabled(bool enable);
-        bool areSourceLocationsShownGraphically() const;
-        void setShowSourceLocationsGraphically(bool show);
-        bool openNewFilesInTabs() const;
+        void showSourceLocation(const QString& fileName, int line, int column, bool showGraphically = true) Q_DECL_OVERRIDE;
+        void clearLastShownSourceLocation() Q_DECL_OVERRIDE;
+        bool isWatchFileModeEnabled() const Q_DECL_OVERRIDE;
+        void setWatchFileModeEnabled(bool enable) Q_DECL_OVERRIDE;
+        bool areSourceLocationsShownGraphically() const Q_DECL_OVERRIDE;
+        void setShowSourceLocationsGraphically(bool show) Q_DECL_OVERRIDE;
+        bool openNewFilesInTabs() const Q_DECL_OVERRIDE;
 
     public slots:                // dbus
         Q_SCRIPTABLE Q_NOREPLY void goToPage(uint page);

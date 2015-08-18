@@ -2620,7 +2620,12 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
 
             // popup that ask to copy:text and copy/save:image
             QMenu menu( this );
-            QAction *textToClipboard = 0, *speakText = 0, *imageToClipboard = 0, *imageToFile = 0;
+            QAction *textToClipboard = 0;
+#ifdef HAVE_SPEECH
+            QAction *speakText = 0;
+#endif
+            QAction *imageToClipboard = 0;
+            QAction *imageToFile = 0;
             if ( d->document->supportsSearching() && !selectedText.isEmpty() )
             {
                 menu.setTitle( i18np( "Text (1 character)", "Text (%1 characters)", selectedText.length() ) );
@@ -2631,8 +2636,10 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                     textToClipboard->setEnabled( false );
                     textToClipboard->setText( i18n("Copy forbidden by DRM") );
                 }
+#ifdef HAVE_SPEECH
                 if ( Okular::Settings::useTTS() )
                     speakText = menu.addAction( QIcon::fromTheme("text-speak"), i18n( "Speak Text" ) );
+#endif
                 if ( copyAllowed )
                 {
                     addWebShortcutsMenu( &menu, selectedText );

@@ -26,7 +26,7 @@ class TOCModel : public QAbstractItemModel
     Q_OBJECT
 
     public:
-        explicit TOCModel( Okular::Document *document, QObject *parent = 0 );
+        explicit TOCModel( Okular::Document *document, QObject *parent = Q_NULLPTR );
         virtual ~TOCModel();
 
         // reimplementations from QAbstractItemModel

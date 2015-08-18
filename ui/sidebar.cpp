@@ -71,7 +71,7 @@ class SidebarItem : public QListWidgetItem
 class SidebarDelegate : public QAbstractItemDelegate
 {
     public:
-        SidebarDelegate( QObject *parent = 0 );
+        SidebarDelegate( QObject *parent = Q_NULLPTR );
         ~SidebarDelegate();
 
         void setShowText( bool show );
@@ -210,7 +210,7 @@ QSize SidebarDelegate::sizeHint( const QStyleOptionViewItem &option, const QMode
 class SidebarListWidget : public QListWidget
 {
     public:
-        SidebarListWidget( QWidget *parent = 0 );
+        SidebarListWidget( QWidget *parent = Q_NULLPTR );
         ~SidebarListWidget();
 
     protected:

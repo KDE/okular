@@ -82,7 +82,7 @@ class TextDocumentSettingsPrivate;
 class OKULARCORE_EXPORT TextDocumentSettingsWidget : public QWidget
 {
     public:
-        TextDocumentSettingsWidget( QWidget *parent = 0 );
+        TextDocumentSettingsWidget( QWidget *parent = Q_NULLPTR );
         virtual ~TextDocumentSettingsWidget();
 
         void addRow( const QString& labelText, QWidget *widget );

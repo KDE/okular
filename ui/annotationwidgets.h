@@ -30,7 +30,7 @@ class PixmapPreviewSelector
     Q_OBJECT
 
 public:
-    explicit PixmapPreviewSelector( QWidget * parent = 0 );
+    explicit PixmapPreviewSelector( QWidget * parent = Q_NULLPTR );
     virtual ~PixmapPreviewSelector();
 
     void setIcon( const QString& icon );

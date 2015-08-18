@@ -158,7 +158,7 @@ class FileKeeper
 
 K_PLUGIN_FACTORY(OkularPartFactory, registerPlugin<Okular::Part>();)
 
-static QAction* actionForExportFormat( const Okular::ExportFormat& format, QObject *parent = 0 )
+static QAction* actionForExportFormat( const Okular::ExportFormat& format, QObject *parent = Q_NULLPTR )
 {
     QAction *act = new QAction( format.description(), parent );
     if ( !format.icon().isNull() )

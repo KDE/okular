@@ -19,7 +19,7 @@ class DlgPresentation : public QWidget
     Q_OBJECT
 
     public:
-        explicit DlgPresentation( QWidget * parent = 0 );
+        explicit DlgPresentation( QWidget * parent = Q_NULLPTR );
         virtual ~DlgPresentation();
 
     protected slots:

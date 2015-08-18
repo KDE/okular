@@ -19,7 +19,7 @@ class Sidebar : public QWidget
 {
     Q_OBJECT
     public:
-        Sidebar( QWidget *parent = 0 );
+        Sidebar( QWidget *parent = Q_NULLPTR );
         ~Sidebar();
 
         int addItem( QWidget *widget, const QIcon &icon, const QString &text );

@@ -24,7 +24,7 @@ class PresentationSearchBar
     Q_OBJECT
 
     public:
-        PresentationSearchBar( Okular::Document *document, QWidget *anchor, QWidget *parent = 0 );
+        PresentationSearchBar( Okular::Document *document, QWidget *anchor, QWidget *parent = Q_NULLPTR );
         virtual ~PresentationSearchBar();
 
         void forceSnap();

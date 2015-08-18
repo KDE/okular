@@ -27,7 +27,7 @@ class PageFilterProxyModel : public QSortFilterProxyModel
      *
      * @param parent The parent object.
      */
-    PageFilterProxyModel( QObject *parent = 0 );
+    PageFilterProxyModel( QObject *parent = Q_NULLPTR );
 
     /**
      * Reimplemented from QSortFilterProxy.
@@ -65,7 +65,7 @@ class PageGroupProxyModel : public QAbstractProxyModel
      *
      * @param parent The parent object.
      */
-    PageGroupProxyModel( QObject *parent = 0 );
+    PageGroupProxyModel( QObject *parent = Q_NULLPTR );
 
     virtual int columnCount( const QModelIndex &parentIndex ) const;
     virtual int rowCount( const QModelIndex &parentIndex ) const;
@@ -107,7 +107,7 @@ class AuthorGroupProxyModel : public QAbstractProxyModel
          *
          * @param parent The parent object.
          */
-        AuthorGroupProxyModel( QObject *parent = 0 );
+        AuthorGroupProxyModel( QObject *parent = Q_NULLPTR );
         ~AuthorGroupProxyModel();
 
         virtual int columnCount( const QModelIndex &parentIndex ) const;

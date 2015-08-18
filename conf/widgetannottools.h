@@ -35,7 +35,7 @@ class WidgetAnnotTools : public QWidget
     Q_PROPERTY( QStringList tools READ tools WRITE setTools NOTIFY changed USER true )
 
     public:
-        explicit WidgetAnnotTools( QWidget * parent = 0 );
+        explicit WidgetAnnotTools( QWidget * parent = Q_NULLPTR );
         ~WidgetAnnotTools();
 
         QStringList tools() const;
@@ -78,7 +78,7 @@ class EditAnnotToolDialog : public QDialog
             ToolStamp
         };
 
-        EditAnnotToolDialog( QWidget *parent = 0, const QDomElement &initialState = QDomElement() );
+        EditAnnotToolDialog( QWidget *parent = Q_NULLPTR, const QDomElement &initialState = QDomElement() );
         ~EditAnnotToolDialog();
         QString name() const;
         QDomDocument toolXml() const;

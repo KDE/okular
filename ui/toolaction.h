@@ -22,7 +22,7 @@ class ToolAction : public KSelectAction
     Q_OBJECT
 
     public:
-        ToolAction( QObject *parent = 0 );
+        ToolAction( QObject *parent = Q_NULLPTR );
         virtual ~ToolAction();
 
         void addAction( QAction *action );

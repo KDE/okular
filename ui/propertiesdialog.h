@@ -56,7 +56,7 @@ class FontsListModel
   Q_OBJECT
 
   public:
-    FontsListModel( QObject * parent = 0 );
+    FontsListModel( QObject * parent = Q_NULLPTR );
     virtual ~FontsListModel();
 
     // reimplementations from QAbstractTableModel

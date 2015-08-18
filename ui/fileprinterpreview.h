@@ -32,7 +32,7 @@ public:
      * @param printer file to print preview
      * @param parent  pointer to the parent widget for the dialog
      */
-    explicit FilePrinterPreview( const QString &filename, QWidget *parent = 0 );
+    explicit FilePrinterPreview( const QString &filename, QWidget *parent = Q_NULLPTR );
     virtual ~FilePrinterPreview();
 
     QSize sizeHint() const Q_DECL_OVERRIDE;

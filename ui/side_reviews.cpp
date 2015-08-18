@@ -38,7 +38,7 @@
 class TreeView : public QTreeView
 {
   public:
-    TreeView( Okular::Document *document, QWidget *parent = 0 )
+    TreeView( Okular::Document *document, QWidget *parent = Q_NULLPTR )
       : QTreeView( parent ), m_document( document )
     {
     }

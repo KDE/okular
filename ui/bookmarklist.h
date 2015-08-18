@@ -31,7 +31,7 @@ class BookmarkList : public QWidget, public Okular::DocumentObserver
     Q_OBJECT
 
     public:
-        explicit BookmarkList( Okular::Document *document, QWidget *parent = 0 );
+        explicit BookmarkList( Okular::Document *document, QWidget *parent = Q_NULLPTR );
         ~BookmarkList();
 
         // inherited from DocumentObserver

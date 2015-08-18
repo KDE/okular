@@ -29,7 +29,7 @@ class MagnifierView : public QWidget, public Okular::DocumentObserver
   Q_OBJECT
 
   public:
-    MagnifierView( Okular::Document *document, QWidget *parent = 0 );
+    MagnifierView( Okular::Document *document, QWidget *parent = Q_NULLPTR );
     ~MagnifierView();
 
     void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) Q_DECL_OVERRIDE;

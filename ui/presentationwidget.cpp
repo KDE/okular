@@ -112,7 +112,7 @@ struct PresentationFrame
 class PresentationToolBar : public QToolBar
 {
     public:
-        PresentationToolBar( QWidget * parent = 0 )
+        PresentationToolBar( QWidget * parent = Q_NULLPTR )
             : QToolBar( parent )
         {}
 

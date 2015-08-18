@@ -28,7 +28,7 @@ class HandleDrag
     : public QWidget
 {
     public:
-        HandleDrag( QWidget *parent = 0 )
+        HandleDrag( QWidget *parent = Q_NULLPTR )
             : QWidget( parent )
         {
             setCursor( Qt::SizeAllCursor );

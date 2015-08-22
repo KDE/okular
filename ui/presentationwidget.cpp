@@ -8,7 +8,6 @@
  ***************************************************************************/
 
 #include "presentationwidget.h"
-#include "drawingtoolselectaction.h"
 
 // qt/kde includes
 #include <QtCore/qloggingcategory.h>
@@ -51,6 +50,7 @@
 // local includes
 #include "annotationtools.h"
 #include "debug_ui.h"
+#include "drawingtoolactions.h"
 #include "guiutils.h"
 #include "pagepainter.h"
 #include "presentationsearchbar.h"
@@ -132,7 +132,7 @@ class PresentationToolBar : public QToolBar
 };
 
 
-PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc, KActionCollection * collection )
+PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc, DrawingToolActions * drawingToolActions, KActionCollection * collection )
     : QWidget( 0 /* must be null, to have an independent widget */, Qt::FramelessWindowHint ),
     m_pressedLink( 0 ), m_handCursor( false ), m_drawingEngine( 0 ),
     m_parentWidget( parent ),
@@ -191,10 +191,14 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     m_topBar->addAction( eraseDrawingAct );
     addAction( eraseDrawingAct );
 
-    m_drawingToolAction = new DrawingToolSelectAction( this );
-    connect( m_drawingToolAction, &DrawingToolSelectAction::changeEngine, this, &PresentationWidget::slotChangeDrawingToolEngine );
-    m_topBar->addAction( m_drawingToolAction );
-    addAction( m_drawingToolAction );
+    foreach(QAction *action, drawingToolActions->actions())
+    {
+        action->setEnabled( true );
+        m_topBar->addAction( action );
+        addAction( action );
+    }
+    connect( drawingToolActions, &DrawingToolActions::changeEngine, this, &PresentationWidget::slotChangeDrawingToolEngine );
+    connect( drawingToolActions, &DrawingToolActions::actionsRecreated, this, &PresentationWidget::slotAddDrawingToolActions );
 
     QDesktopWidget *desktop = QApplication::desktop();
     if ( desktop->numScreens() > 1 )
@@ -280,15 +284,12 @@ PresentationWidget::~PresentationWidget()
     // remove this widget from document observer
     m_document->removeObserver( this );
 
-    QAction *eraseDrawingAct = m_ac->action( "presentation_erase_drawings" );
-    eraseDrawingAct->setEnabled( false );
+    foreach( QAction *action, m_topBar->actions() )
+    {
+        action->setChecked( false );
+        action->setEnabled( false );
+    }
 
-    QAction *playPauseAction = m_ac->action( "presentation_play_pause" );
-    playPauseAction->setEnabled( false );
-
-    QAction *blackScreenAct = m_ac->action( "switch_blackscreen_mode" );
-    blackScreenAct->setChecked( false );
-    blackScreenAct->setEnabled( false );
     delete m_drawingEngine;
 
     // delete frames
@@ -1504,6 +1505,15 @@ void PresentationWidget::slotChangeDrawingToolEngine( const QDomElement &element
     }
 }
 
+void PresentationWidget::slotAddDrawingToolActions()
+{
+    DrawingToolActions *drawingToolActions = qobject_cast<DrawingToolActions*>(sender());
+    foreach(QAction *action, drawingToolActions->actions()) {
+        action->setEnabled( true );
+        m_topBar->addAction( action );
+        addAction( action );
+    }
+}
 
 void PresentationWidget::clearDrawings()
 {

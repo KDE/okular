@@ -22,6 +22,8 @@ public:
 
     QStringList tools() const Q_DECL_OVERRIDE;
     void setTools( const QStringList& items ) Q_DECL_OVERRIDE;
+    
+    QString defaultName() const;
 
 protected slots:
     void slotAdd() Q_DECL_OVERRIDE;

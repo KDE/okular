@@ -64,6 +64,7 @@ class MiniBarLogic;
 class FileKeeper;
 class Reviews;
 class BookmarkList;
+class DrawingToolActions;
 
 namespace Okular
 {
@@ -328,6 +329,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         QAction *m_reload;
         QMenu *m_exportAsMenu;
         QAction *m_closeFindBar;
+        DrawingToolActions *m_presentationDrawingActions;
 
         bool m_actionsSearched;
         BrowserExtension *m_bExtension;

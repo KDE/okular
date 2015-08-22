@@ -1,42 +1,47 @@
 /***************************************************************************
  *   Copyright (C) 2015 by Laurent Montel <montel@kde.org>                 *
+ *   Copyright (C) 2015 by Albert Astals Cid <aacid@kde.org>               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
  *   the Free Software Foundation; either version 2 of the License, or     *
  *   (at your option) any later version.                                   *
  ***************************************************************************/
-#ifndef DRAWINGTOOLSELECTACTION_H
-#define DRAWINGTOOLSELECTACTION_H
+
+#ifndef DRAWINGTOOLACTIONS_H
+#define DRAWINGTOOLACTIONS_H
 
 #include <QDomDocument>
-#include <QWidgetAction>
+#include <QObject>
 
-class QAbstractButton;
-class QButtonGroup;
-class QHBoxLayout;
+class QAction;
+class KActionCollection;
 
-class DrawingToolSelectAction : public QWidgetAction
+class DrawingToolActions : public QObject
 {
     Q_OBJECT
 public:
-    explicit DrawingToolSelectAction( QObject *parent = Q_NULLPTR );
-    ~DrawingToolSelectAction();
+    explicit DrawingToolActions( KActionCollection *parent );
+    ~DrawingToolActions();
+
+    QList<QAction*> actions() const;
+
+    void reparseConfig();
 
 signals:
     void changeEngine( const QDomElement &doc );
+    void actionsRecreated();
 
 private slots:
-    void toolButtonClicked();
+    void actionTriggered();
 
 private:
     void loadTools();
-    void createToolButton( const QString &description, const QString &colorName, const QDomElement &root, const QString &shortcut = QString() );
+    void createToolAction( const QString &text, const QString &toolName, const QString &colorName, const QString &width, const QString &opacity, const QDomElement &root );
 
-    QList<QAbstractButton*> m_buttons;
-    QHBoxLayout *m_layout;
+    QList<QAction*> m_actions;
 };
 
 Q_DECLARE_METATYPE( QDomElement )
 
-#endif // DRAWINGTOOLSELECTACTION_H
+#endif // DRAWINGTOOLACTIONS_H

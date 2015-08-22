@@ -14,6 +14,7 @@
 #include <QDomElement>
 
 class KColorButton;
+class KLineEdit;
 
 class QSpinBox;
 
@@ -26,9 +27,12 @@ public:
 
     QDomDocument toolXml() const;
 
+    QString name() const;
+
 private:
     void loadTool( const QDomElement &toolElement );
 
+    KLineEdit *m_name;
     KColorButton *m_colorBn;
     QSpinBox *m_penWidth;
     QSpinBox *m_opacity;

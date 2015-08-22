@@ -73,6 +73,7 @@
 #include "aboutdata.h"
 #include "extensions.h"
 #include "ui/debug_ui.h"
+#include "ui/drawingtoolactions.h"
 #include "ui/pageview.h"
 #include "ui/toc.h"
 #include "ui/searchwidget.h"
@@ -691,6 +692,7 @@ void Part::setupViewerActions()
     m_exportAsMenu = 0;
     m_exportAsText = 0;
     m_exportAsDocArchive = 0;
+    m_presentationDrawingActions = 0;
 
     m_aboutBackend = ac->addAction("help_about_backend");
     m_aboutBackend->setText(i18n("About Backend"));
@@ -815,6 +817,8 @@ void Part::setupActions()
     ac->setDefaultShortcut(blackscreenAction, QKeySequence(Qt::Key_B));
     blackscreenAction->setIcon( QIcon::fromTheme( "view-presentation" ) );
     blackscreenAction->setEnabled( false );
+
+    m_presentationDrawingActions = new DrawingToolActions( ac );
 
     QAction *eraseDrawingAction = new QAction( i18n( "Erase Drawings" ), ac );
     ac->addAction( "presentation_erase_drawings", eraseDrawingAction );
@@ -2358,6 +2362,13 @@ void Part::slotNewConfig()
         m_reviewsWidget->reparseConfig();
 
     setWindowTitleFromDocument ();
+
+    if ( m_presentationDrawingActions ) {
+        m_presentationDrawingActions->reparseConfig();
+        if (factory()) {
+            factory()->refreshActionProperties();
+        }
+    }
 }
 
 
@@ -2511,7 +2522,7 @@ void Part::slotShowPresentation()
 {
     if ( !m_presentationWidget )
     {
-        m_presentationWidget = new PresentationWidget( widget(), m_document, actionCollection() );
+        m_presentationWidget = new PresentationWidget( widget(), m_document, m_presentationDrawingActions, actionCollection() );
     }
 }
 
@@ -2528,7 +2539,7 @@ void Part::slotTogglePresentation()
     if ( m_document->isOpened() )
     {
         if ( !m_presentationWidget )
-            m_presentationWidget = new PresentationWidget( widget(), m_document, actionCollection() );
+            m_presentationWidget = new PresentationWidget( widget(), m_document, m_presentationDrawingActions, actionCollection() );
         else delete (PresentationWidget*) m_presentationWidget;
     }
 }

@@ -1,5 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2015 by Laurent Montel <montel@kde.org>                 *
+ *   Copyright (C) 2015 by Albert Astals Cid <aacid@kde.org>               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -7,22 +8,22 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include "drawingtoolselectaction.h"
+#include "drawingtoolactions.h"
 
 #include "debug_ui.h"
 #include "settings.h"
 
+#include <KActionCollection>
 #include <KLocalizedString>
 
-#include <QHBoxLayout>
+#include <QAction>
 #include <QPainter>
-#include <QToolButton>
 
-class ColorButton : public QToolButton
+class ColorAction : public QAction
 {
 public:
-    explicit ColorButton( QWidget *parent = Q_NULLPTR )
-        : QToolButton( parent )
+    explicit ColorAction( KActionCollection *parent )
+        : QAction( parent )
     {
     }
 
@@ -52,44 +53,50 @@ public:
     }
 };
 
-DrawingToolSelectAction::DrawingToolSelectAction( QObject *parent )
-    : QWidgetAction( parent )
+DrawingToolActions::DrawingToolActions( KActionCollection *parent )
+    : QObject( parent )
 {
-    QWidget *mainWidget = new QWidget;
-    m_layout = new QHBoxLayout( mainWidget );
-    m_layout->setContentsMargins( 0, 0, 0, 0 );
-
     loadTools();
-
-    setDefaultWidget( mainWidget );
 }
 
 
-DrawingToolSelectAction::~DrawingToolSelectAction()
+DrawingToolActions::~DrawingToolActions()
 {
 }
 
-void DrawingToolSelectAction::toolButtonClicked()
+QList<QAction*> DrawingToolActions::actions() const
 {
-    QAbstractButton *button = qobject_cast<QAbstractButton*>( sender() );
+    return m_actions;
+}
 
-    if ( button ) {
-        if ( button->isChecked() ) {
-            Q_FOREACH ( QAbstractButton *btn, m_buttons )
+void DrawingToolActions::reparseConfig()
+{
+    qDeleteAll(m_actions);
+    m_actions.clear();
+    loadTools();
+}
+
+void DrawingToolActions::actionTriggered()
+{
+    QAction *action = qobject_cast<QAction*>( sender() );
+
+    if ( action ) {
+        if ( action->isChecked() ) {
+            Q_FOREACH ( QAction *btn, m_actions )
             {
-                if ( button != btn ) {
+                if ( action != btn ) {
                     btn->setChecked( false );
                 }
             }
 
-            emit changeEngine( button->property( "__document" ).value<QDomElement>() );
+            emit changeEngine( action->property( "__document" ).value<QDomElement>() );
         } else {
             emit changeEngine( QDomElement() );
         }
     }
 }
 
-void DrawingToolSelectAction::loadTools()
+void DrawingToolActions::loadTools()
 {
     const QStringList drawingTools = Okular::Settings::drawingTools();
 
@@ -104,8 +111,6 @@ void DrawingToolSelectAction::loadTools()
             qCWarning(OkularUiDebug) << "Skipping malformed quick selection XML in QuickSelectionTools setting";
     }
 
-    int shortcutCounter = 0;
-
     // Create the AnnotationToolItems from the XML dom tree
     QDomNode drawingDescription = drawingDefinition.firstChild();
     while ( drawingDescription.isElement() )
@@ -113,9 +118,20 @@ void DrawingToolSelectAction::loadTools()
         const QDomElement toolElement = drawingDescription.toElement();
         if ( toolElement.tagName() == "tool" )
         {
+            QString tooltip;
             QString width;
             QString colorStr;
             QString opacity;
+
+            const QString name = toolElement.attribute( QStringLiteral("name") );
+            if ( toolElement.attribute( QStringLiteral("default"), QStringLiteral("false") ) == QLatin1String("true") )
+            {
+                tooltip = i18n( name.toLatin1().constData() );   
+            }
+            else
+            {
+                tooltip = name;
+            }
 
             const QDomNodeList engineNodeList = toolElement.elementsByTagName( "engine" );
             if ( engineNodeList.size() > 0 )
@@ -149,34 +165,29 @@ void DrawingToolSelectAction::loadTools()
             annElem.setAttribute( QStringLiteral("width"), width );
             annElem.setAttribute( QStringLiteral("opacity"), opacity );
 
-            const QString description = i18n("Toggle Drawing Tool:\n  color: %1\n  pen width: %2\n  opacity: %3%", colorStr, width, opacity.toDouble() * 100);
-
-            shortcutCounter++;
-            const QString shortcut = (shortcutCounter < 10 ? i18n( "Ctrl+%1", shortcutCounter ) :
-                                      shortcutCounter == 10 ? i18n( "Ctrl+0" ) :
-                                      QString());
-
-            createToolButton( description, colorStr, root, shortcut );
+            const QString text = i18n("Drawing Tool: %1", tooltip);
+            createToolAction( text, tooltip, colorStr, width, opacity, root );
         }
 
         drawingDescription = drawingDescription.nextSibling();
     }
 }
 
-void DrawingToolSelectAction::createToolButton( const QString &description, const QString &colorName, const QDomElement &root, const QString &shortcut )
+void DrawingToolActions::createToolAction( const QString &text, const QString &toolName, const QString &colorName, const QString &width, const QString &opacity, const QDomElement &root )
 {
-    ColorButton *button = new ColorButton;
-    button->setToolTip( description );
-    button->setCheckable( true );
-    button->setColor( QColor( colorName ) );
+    KActionCollection *ac = static_cast<KActionCollection*>( parent() );
+    ColorAction *action = new ColorAction( ac );
+    action->setText( text );
+    action->setToolTip( toolName );
+    action->setCheckable( true );
+    action->setColor( QColor( colorName ) );
+    action->setEnabled( false );
 
-    if ( !shortcut.isEmpty() )
-        button->setShortcut( QKeySequence( shortcut ) );
+    action->setProperty( "__document", QVariant::fromValue<QDomElement>( root ) );
 
-    button->setProperty( "__document", QVariant::fromValue<QDomElement>( root ) );
+    m_actions.append( action );
 
-    m_buttons.append( button );
-    m_layout->addWidget( button );
+    ac->addAction( QString("presentation_drawing_%1").arg( toolName ), action );
 
-    connect( button, SIGNAL(clicked()), SLOT(toolButtonClicked()) );
+    connect( action, &QAction::triggered, this, &DrawingToolActions::actionTriggered );
 }

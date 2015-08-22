@@ -11,9 +11,12 @@
 
 #include "editdrawingtooldialog.h"
 
+#include <KLocalizedString>
+
 #include <QDebug>
 #include <QDomElement>
 #include <QListWidgetItem>
+#include <QMessageBox>
 #include <QPainter>
 
 // Used to store tools' XML description in m_list's items
@@ -84,13 +87,42 @@ void WidgetDrawingTools::setTools( const QStringList &items )
         const QDomElement toolElement = entryParser.documentElement();
         if ( toolElement.tagName() == QLatin1String("tool") )
         {
-            QListWidgetItem * listEntry = new QListWidgetItem( m_list );
+            const QString name = toolElement.attribute( QStringLiteral("name") );
+            QString itemText;
+            if ( toolElement.attribute( QStringLiteral("default"), QStringLiteral("false") ) == QLatin1String("true") )
+                itemText = i18n( name.toLatin1().constData() );
+            else
+                itemText = name;
+
+            QListWidgetItem * listEntry = new QListWidgetItem( itemText, m_list );
             listEntry->setData( ToolXmlRole, qVariantFromValue( toolXml ) );
             listEntry->setData( Qt::DecorationRole, colorDecorationFromToolDescription( toolXml ) );
         }
     }
 
     updateButtons();
+}
+
+QString WidgetDrawingTools::defaultName() const
+{
+    int nameIndex = 1;
+    bool freeNameFound = false;
+    QString candidateName;
+    while (!freeNameFound)
+    {
+        candidateName = i18n("Default Drawing Tool #%1", nameIndex);
+        int i = 0;
+        for ( ; i < m_list->count(); ++i )
+        {
+            QListWidgetItem * listEntry = m_list->item( i );
+            if (candidateName == listEntry->text()) {
+                break;
+            }
+        }
+        freeNameFound = i == m_list->count();
+        ++nameIndex;
+    }
+    return candidateName;
 }
 
 void WidgetDrawingTools::slotAdd()
@@ -101,11 +133,30 @@ void WidgetDrawingTools::slotAdd()
         return;
 
     const QDomDocument rootDoc = dlg.toolXml();
-    const QDomElement toolElement = rootDoc.documentElement();
+    QDomElement toolElement = rootDoc.documentElement();
+
+    QString itemText = dlg.name().trimmed();
+
+    if (itemText.isEmpty()) {
+        itemText = defaultName();
+    }
+
+    for ( int i = 0; i < m_list->count(); ++i )
+    {
+        QListWidgetItem * listEntry = m_list->item( i );
+        if (itemText == listEntry->text()) {
+            QMessageBox::information( this, i18n("Duplicated Name"), i18n("There's already a tool with that name. Using a default one") );
+            itemText = defaultName();
+            break;
+        }
+    }
+
+    // Store name attribute only if the user specified a customized name
+    toolElement.setAttribute( QStringLiteral("name"), itemText );
 
     // Create list entry and attach XML string as data
     const QString toolXml = rootDoc.toString( -1 );
-    QListWidgetItem * listEntry = new QListWidgetItem( m_list );
+    QListWidgetItem * listEntry = new QListWidgetItem( itemText, m_list );
     listEntry->setData( ToolXmlRole, qVariantFromValue( toolXml ) );
     listEntry->setData( Qt::DecorationRole, colorDecorationFromToolDescription( toolXml ) );
 
@@ -122,7 +173,7 @@ void WidgetDrawingTools::slotEdit()
 
     QDomDocument doc;
     doc.setContent( listEntry->data( ToolXmlRole ).value<QString>() );
-    const QDomElement toolElement = doc.documentElement();
+    QDomElement toolElement = doc.documentElement();
 
     EditDrawingToolDialog dlg( toolElement, this );
 
@@ -130,9 +181,26 @@ void WidgetDrawingTools::slotEdit()
         return;
 
     doc = dlg.toolXml();
+    toolElement = doc.documentElement();
+
+    QString itemText = dlg.name();
+
+    for ( int i = 0; i < m_list->count(); ++i )
+    {
+        QListWidgetItem * auxListEntry = m_list->item( i );
+        if (itemText == auxListEntry->text() && auxListEntry != listEntry) {
+            QMessageBox::information( this, i18n("Duplicated Name"), i18n("There's already a tool with that name. Using a default one") );
+            itemText = defaultName();
+            break;
+        }
+    }
+
+    // Store name attribute only if the user specified a customized name
+    toolElement.setAttribute( QStringLiteral("name"), itemText );
 
     // Edit list entry and attach XML string as data
     const QString toolXml = doc.toString( -1 );
+    listEntry->setText( itemText );
     listEntry->setData( ToolXmlRole, qVariantFromValue( toolXml ) );
     listEntry->setData( Qt::DecorationRole, colorDecorationFromToolDescription( toolXml ) );
 

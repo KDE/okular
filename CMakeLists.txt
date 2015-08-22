@@ -258,7 +258,7 @@ set(okularpart_SRCS
    ui/annotationwidgets.cpp
    ui/bookmarklist.cpp
    ui/debug_ui.cpp
-   ui/drawingtoolselectaction.cpp
+   ui/drawingtoolactions.cpp
    ui/fileprinterpreview.cpp
    ui/findbar.cpp
    ui/formwidgets.cpp

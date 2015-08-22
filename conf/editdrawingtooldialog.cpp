@@ -10,6 +10,7 @@
 #include "editdrawingtooldialog.h"
 
 #include <KColorButton>
+#include <KLineEdit>
 #include <KLocalizedString>
 
 #include <QDialogButtonBox>
@@ -39,32 +40,42 @@ EditDrawingToolDialog::EditDrawingToolDialog( const QDomElement &initialState, Q
     mainLayout->addWidget( widget );
     mainLayout->addWidget( buttonBox );
 
-    QLabel *tmplabel = new QLabel( i18n( "Color:" ), widget );
+    m_name = new KLineEdit( widget );
+    mainLayout->addWidget( m_name );
+
+    QLabel *tmplabel = new QLabel( i18n( "&Name:" ), widget );
+    mainLayout->addWidget( tmplabel );
+    tmplabel->setBuddy( m_name );
+
     widgetLayout->addWidget( tmplabel, 0, 0, Qt::AlignRight );
+    widgetLayout->addWidget( m_name, 0, 1 );
+
+    tmplabel = new QLabel( i18n( "Color:" ), widget );
+    widgetLayout->addWidget( tmplabel, 1, 0, Qt::AlignRight );
 
     m_colorBn = new KColorButton( this );
     m_colorBn->setObjectName( QStringLiteral("colorbutton") );
-    widgetLayout->addWidget( m_colorBn, 0, 1, Qt::AlignRight );
+    widgetLayout->addWidget( m_colorBn, 1, 1, Qt::AlignRight );
 
     tmplabel = new QLabel( i18n( "&Pen Width:" ), widget );
-    widgetLayout->addWidget( tmplabel, 1, 0, Qt::AlignRight );
+    widgetLayout->addWidget( tmplabel, 2, 0, Qt::AlignRight );
 
     m_penWidth = new QSpinBox( widget );
     m_penWidth->setObjectName( QStringLiteral("penWidth") );
     m_penWidth->setRange( 0, 50 );
     m_penWidth->setSuffix( i18nc( "Suffix for the pen width, eg '10 px'", " px" ) );
     tmplabel->setBuddy( m_penWidth );
-    widgetLayout->addWidget( m_penWidth, 1, 1 );
+    widgetLayout->addWidget( m_penWidth, 2, 1 );
 
     tmplabel = new QLabel( i18n( "&Opacity:" ), widget );
-    widgetLayout->addWidget( tmplabel, 2, 0, Qt::AlignRight );
+    widgetLayout->addWidget( tmplabel, 3, 0, Qt::AlignRight );
 
     m_opacity = new QSpinBox( widget );
     m_opacity->setObjectName( QStringLiteral("opacity") );
     m_opacity->setRange( 0, 100 );
     m_opacity->setSuffix( i18nc( "Suffix for the opacity level, eg '80 %'", " %" ) );
     tmplabel->setBuddy( m_opacity );
-    widgetLayout->addWidget( m_opacity, 2, 1 );
+    widgetLayout->addWidget( m_opacity, 3, 1 );
 
     if ( initialState.isNull() )
     {
@@ -78,10 +89,17 @@ EditDrawingToolDialog::EditDrawingToolDialog( const QDomElement &initialState, Q
         setWindowTitle( i18n("Edit drawing tool") );
         loadTool( initialState );
     }
+
+    m_name->setFocus();
 }
 
 EditDrawingToolDialog::~EditDrawingToolDialog()
 {
+}
+
+QString EditDrawingToolDialog::name() const
+{
+    return m_name->text();
 }
 
 QDomDocument EditDrawingToolDialog::toolXml() const
@@ -119,4 +137,9 @@ void EditDrawingToolDialog::loadTool( const QDomElement &toolElement )
 
     m_penWidth->setValue( annotationElement.attribute( QStringLiteral("width"), QStringLiteral("2") ).toInt() );
     m_opacity->setValue( annotationElement.attribute( QStringLiteral("opacity"), QStringLiteral("1.0") ).toDouble() * 100 );
+
+    if ( toolElement.attribute( QStringLiteral("default"), QStringLiteral("false") ) == QLatin1String("true") )
+        m_name->setText( i18n( toolElement.attribute( QStringLiteral("name") ).toLatin1().constData() ) );
+    else
+        m_name->setText( toolElement.attribute( QStringLiteral("name") ) );
 }

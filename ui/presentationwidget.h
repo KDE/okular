@@ -22,12 +22,12 @@
 class QLineEdit;
 class QToolBar;
 class QTimer;
-class DrawingToolSelectAction;
 class KActionCollection;
 class KSelectAction;
 class SmoothPathEngine;
 struct PresentationFrame;
 class PresentationSearchBar;
+class DrawingToolActions;
 
 namespace Okular {
 class Action;
@@ -47,7 +47,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
 {
     Q_OBJECT
     public:
-        PresentationWidget( QWidget * parent, Okular::Document * doc, KActionCollection * collection );
+        PresentationWidget( QWidget * parent, Okular::Document * doc, DrawingToolActions * drawingToolActions, KActionCollection * collection );
         ~PresentationWidget();
 
         // inherited from DocumentObserver
@@ -137,7 +137,6 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         PresentationSearchBar *m_searchBar;
         KActionCollection * m_ac;
         KSelectAction * m_screenSelect;
-        DrawingToolSelectAction *m_drawingToolAction;
         QDomElement m_currentDrawingToolElement;
         bool m_isSetup;
         bool m_blockNotifications;
@@ -162,6 +161,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         void slotProcessRenditionAction( const Okular::RenditionAction *action );
         void slotTogglePlayPause();
         void slotChangeDrawingToolEngine( const QDomElement &doc );
+        void slotAddDrawingToolActions();
 };
 
 #endif

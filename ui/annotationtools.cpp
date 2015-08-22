@@ -82,8 +82,8 @@ QCursor AnnotatorEngine::cursor() const
     return Qt::CrossCursor;
 }
 
-SmoothPath::SmoothPath( const QLinkedList<Okular::NormalizedPoint> &points, const QPen &pen )
-    : points ( points ), pen ( pen )
+SmoothPath::SmoothPath( const QLinkedList<Okular::NormalizedPoint> &points, const QPen &pen, qreal opacity )
+    : points ( points ), pen ( pen ), opacity( opacity )
 {
 }
 
@@ -149,8 +149,11 @@ QRect SmoothPathEngine::event( EventType type, Button button, double nX, double 
 
 void SmoothPathEngine::paint( QPainter * painter, double xScale, double yScale, const QRect & /*clipRect*/ )
 {
+    const double penWidth = m_annotElement.attribute( QStringLiteral("width"), QStringLiteral("1") ).toInt();
+    const qreal opacity = m_annotElement.attribute( QStringLiteral("opacity"), QStringLiteral("1.0") ).toDouble();
+
     // use engine's color for painting
-    const SmoothPath path( points, QPen(m_engineColor, 1) );
+    const SmoothPath path( points, QPen( m_engineColor, penWidth ), opacity );
 
     // draw the path
     path.paint( painter, xScale, yScale );
@@ -162,6 +165,7 @@ void SmoothPath::paint( QPainter * painter, double xScale, double yScale ) const
     if ( points.count() > 1 )
     {
         painter->setPen( pen );
+        painter->setOpacity( opacity );
 
         QLinkedList<Okular::NormalizedPoint>::const_iterator pIt = points.begin(), pEnd = points.end();
         Okular::NormalizedPoint pA = *pIt;
@@ -221,14 +225,13 @@ SmoothPath SmoothPathEngine::endSmoothPath()
 {
     m_creationCompleted = false;
 
-    double width = 1;
-    if ( m_annotElement.hasAttribute( "width" ) )
-        width = m_annotElement.attribute( "width" ).toDouble();
-
     QColor color( m_annotElement.hasAttribute( "color" ) ?
         m_annotElement.attribute( "color" ) : m_engineColor );
 
-    return SmoothPath( points, QPen(color, width) );
+    const int width = m_annotElement.attribute( QStringLiteral("width"), QStringLiteral("2") ).toInt();
+    const qreal opacity = m_annotElement.attribute( QStringLiteral("opacity"), QStringLiteral("1.0") ).toDouble();
+
+    return SmoothPath( points, QPen(color, width), opacity );
 }
 
 /* kate: replace-tabs on; indent-width 4; */

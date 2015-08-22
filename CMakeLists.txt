@@ -81,6 +81,7 @@ add_subdirectory( ui )
 add_subdirectory( shell )
 add_subdirectory( generators )
 add_subdirectory( autotests )
+add_subdirectory( conf/autotests )
 
 add_subdirectory(doc)
 
@@ -227,9 +228,7 @@ install(FILES core/okularGenerator.desktop DESTINATION ${KDE_INSTALL_KSERVICETYP
 
 # okularpart
 
-set(okularpart_SRCS
-   part.cpp
-   extensions.cpp
+set(okularpart_conf_SRCS
    conf/preferencesdialog.cpp
    conf/dlgaccessibility.cpp
    conf/dlgdebug.cpp
@@ -238,7 +237,17 @@ set(okularpart_SRCS
    conf/dlgannotations.cpp
    conf/dlgperformance.cpp
    conf/dlgpresentation.cpp
+   conf/editannottooldialog.cpp
+   conf/editdrawingtooldialog.cpp
    conf/widgetannottools.cpp
+   conf/widgetconfigurationtoolsbase.cpp
+   conf/widgetdrawingtools.cpp
+)
+
+set(okularpart_SRCS
+   ${okularpart_conf_SRCS}
+   part.cpp
+   extensions.cpp
    ui/embeddedfilesdialog.cpp
    ui/annotwindow.cpp
    ui/annotationmodel.cpp
@@ -249,6 +258,7 @@ set(okularpart_SRCS
    ui/annotationwidgets.cpp
    ui/bookmarklist.cpp
    ui/debug_ui.cpp
+   ui/drawingtoolselectaction.cpp
    ui/fileprinterpreview.cpp
    ui/findbar.cpp
    ui/formwidgets.cpp
@@ -293,8 +303,6 @@ ki18n_wrap_ui(okularpart_SRCS
 )
 
 kconfig_add_kcfg_files(okularpart_SRCS conf/settings.kcfgc )
-
-#qt5_add_dbus_interfaces(okularpart_SRCS ${KDE4_DBUS_INTERFACES_DIR}/org.kde.KSpeech.xml)
 
 add_library(okularpart MODULE ${okularpart_SRCS})
 generate_export_header(okularpart BASE_NAME okularpart)

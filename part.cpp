@@ -816,11 +816,6 @@ void Part::setupActions()
     blackscreenAction->setIcon( QIcon::fromTheme( "view-presentation" ) );
     blackscreenAction->setEnabled( false );
 
-    KToggleAction *drawingAction = new KToggleAction( i18n( "Toggle Drawing Mode" ), ac );
-    ac->addAction( "presentation_drawing_mode", drawingAction );
-    drawingAction->setIcon( QIcon::fromTheme( "draw-freehand" ) );
-    drawingAction->setEnabled( false );
-
     QAction *eraseDrawingAction = new QAction( i18n( "Erase Drawings" ), ac );
     ac->addAction( "presentation_erase_drawings", eraseDrawingAction );
     eraseDrawingAction->setIcon( QIcon::fromTheme( "draw-eraser" ) );

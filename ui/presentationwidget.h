@@ -10,6 +10,7 @@
 #ifndef _OKULAR_PRESENTATIONWIDGET_H_
 #define _OKULAR_PRESENTATIONWIDGET_H_
 
+#include <QDomElement>
 #include <qlist.h>
 #include <qpixmap.h>
 #include <qstringlist.h>
@@ -21,6 +22,7 @@
 class QLineEdit;
 class QToolBar;
 class QTimer;
+class DrawingToolSelectAction;
 class KActionCollection;
 class KSelectAction;
 class SmoothPathEngine;
@@ -135,6 +137,8 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         PresentationSearchBar *m_searchBar;
         KActionCollection * m_ac;
         KSelectAction * m_screenSelect;
+        DrawingToolSelectAction *m_drawingToolAction;
+        QDomElement m_currentDrawingToolElement;
         bool m_isSetup;
         bool m_blockNotifications;
         bool m_inBlackScreenMode;
@@ -150,7 +154,6 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         void slotTransitionStep();
         void slotDelayedEvents();
         void slotPageChanged();
-        void togglePencilMode( bool );
         void clearDrawings();
         void screenResized( int );
         void chooseScreen( QAction * );
@@ -158,6 +161,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         void slotProcessMovieAction( const Okular::MovieAction *action );
         void slotProcessRenditionAction( const Okular::RenditionAction *action );
         void slotTogglePlayPause();
+        void slotChangeDrawingToolEngine( const QDomElement &doc );
 };
 
 #endif

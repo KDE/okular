@@ -33,6 +33,44 @@
   <entry key="ReviewsSearchRegularExpression" type="Bool">
    <default>false</default>
   </entry>
+  <entry key="DrawingTools" type="StringList">
+    <code>
+      QStringList drawingTools;
+      // load the default tool list from the 'xml tools definition' file
+      QFile infoDrawingFile( QStandardPaths::locate(QStandardPaths::GenericDataLocation, "okular/drawingtools.xml") );
+      if ( infoDrawingFile.exists() &amp;&amp; infoDrawingFile.open( QIODevice::ReadOnly ) )
+      {
+          QDomDocument doc;
+          if ( doc.setContent( &amp;infoDrawingFile ) )
+          {
+              const QDomElement toolsDefinition = doc.elementsByTagName("drawingTools").item( 0 ).toElement();
+               // create the annotationTools list from the XML dom tree
+              QDomNode toolDescription = toolsDefinition.firstChild();
+              while ( toolDescription.isElement() )
+              {
+                  const QDomElement toolElement = toolDescription.toElement();
+                  if ( toolElement.tagName() == "tool" )
+                  {
+                      QDomDocument temp;
+                      temp.appendChild( temp.importNode( toolElement, true) );
+                      // add each &lt;tool&gt;...&lt;/tool&gt; as XML string
+                      drawingTools &lt;&lt; temp.toString(-1);
+                  }
+                  toolDescription = toolDescription.nextSibling();
+              }
+          }
+          else
+          {
+              qWarning() &lt;&lt; "DrawingTools XML file seems to be damaged";
+          }
+      }
+      else
+      {
+          qWarning() &lt;&lt; "Unable to open DrawingTools XML definition";
+      }
+    </code>
+    <default code="true">drawingTools</default>
+  </entry>
   <entry key="AnnotationTools" type="StringList">
     <code>
       QStringList annotationTools;
@@ -141,9 +179,6 @@
   </entry>
   <entry key="SlidesShowSummary" type="Bool" >
    <default>false</default>
-  </entry>
-  <entry key="SlidesPencilColor" type="Color" >
-   <default code="true" >Qt::red</default>
   </entry>
   <entry key="SlidesTransitionsEnabled" type="Bool" >
    <default>true</default>

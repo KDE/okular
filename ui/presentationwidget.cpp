@@ -8,6 +8,7 @@
  ***************************************************************************/
 
 #include "presentationwidget.h"
+#include "drawingtoolselectaction.h"
 
 // qt/kde includes
 #include <QtCore/qloggingcategory.h>
@@ -184,16 +185,17 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     setPlayPauseIcon();
     addAction( playPauseAct );
     m_topBar->addSeparator();
-    QAction *drawingAct = collection->action( "presentation_drawing_mode" );
-    connect(drawingAct, &QAction::toggled, this, &PresentationWidget::togglePencilMode);
-    drawingAct->setEnabled( true );
-    m_topBar->addAction( drawingAct );
-    addAction( drawingAct );
     QAction *eraseDrawingAct = collection->action( "presentation_erase_drawings" );
     eraseDrawingAct->setEnabled( true );
     connect(eraseDrawingAct, &QAction::triggered, this, &PresentationWidget::clearDrawings);
     m_topBar->addAction( eraseDrawingAct );
     addAction( eraseDrawingAct );
+
+    m_drawingToolAction = new DrawingToolSelectAction( this );
+    connect( m_drawingToolAction, &DrawingToolSelectAction::changeEngine, this, &PresentationWidget::slotChangeDrawingToolEngine );
+    m_topBar->addAction( m_drawingToolAction );
+    addAction( m_drawingToolAction );
+
     QDesktopWidget *desktop = QApplication::desktop();
     if ( desktop->numScreens() > 1 )
     {
@@ -277,11 +279,6 @@ PresentationWidget::~PresentationWidget()
 
     // remove this widget from document observer
     m_document->removeObserver( this );
-
-    QAction *drawingAct = m_ac->action( "presentation_drawing_mode" );
-    disconnect( drawingAct, 0, this, 0 );
-    drawingAct->setChecked( false );
-    drawingAct->setEnabled( false );
 
     QAction *eraseDrawingAct = m_ac->action( "presentation_erase_drawings" );
     eraseDrawingAct->setEnabled( false );
@@ -684,9 +681,8 @@ void PresentationWidget::mouseReleaseEvent( QMouseEvent * e )
             // manually disable and re-enable the pencil mode, so we can do
             // cleaning of the actual drawer and create a new one just after
             // that - that gives continuous drawing
-            togglePencilMode( false );
-            togglePencilMode( true );
-
+            slotChangeDrawingToolEngine( QDomElement() );
+            slotChangeDrawingToolEngine( m_currentDrawingToolElement );
             // schedule repaint
             update();
         }
@@ -1491,32 +1487,23 @@ void PresentationWidget::slotPageChanged()
     changePage( p - 1 );
 }
 
-void PresentationWidget::togglePencilMode( bool on )
+void PresentationWidget::slotChangeDrawingToolEngine( const QDomElement &element )
 {
-    if ( on )
-    {
-        QString colorstring = Okular::Settings::slidesPencilColor().name();
-        // FIXME this should not be recreated every time
-        QDomDocument doc( QStringLiteral("engine") );
-        QDomElement root = doc.createElement( QStringLiteral("engine") );
-        root.setAttribute( QStringLiteral("color"), colorstring );
-        doc.appendChild( root );
-        QDomElement annElem = doc.createElement( QStringLiteral("annotation") );
-        root.appendChild( annElem );
-        annElem.setAttribute( QStringLiteral("type"), QStringLiteral("Ink") );
-        annElem.setAttribute( QStringLiteral("color"), colorstring );
-        annElem.setAttribute( QStringLiteral("width"), QStringLiteral("2") );
-        m_drawingEngine = new SmoothPathEngine( root );
-        setCursor( QCursor( QPixmap(QStringLiteral("pencil")), Qt::ArrowCursor ) );
-    }
-    else
+    if ( element.isNull() )
     {
         delete m_drawingEngine;
         m_drawingEngine = 0;
         m_drawingRect = QRect();
         setCursor( Qt::ArrowCursor );
     }
+    else
+    {
+        m_drawingEngine = new SmoothPathEngine( element );
+        setCursor( QCursor( QPixmap( QStringLiteral("pencil") ), Qt::ArrowCursor ) );
+        m_currentDrawingToolElement = element;
+    }
 }
+
 
 void PresentationWidget::clearDrawings()
 {

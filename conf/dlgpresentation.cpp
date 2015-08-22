@@ -10,10 +10,11 @@
 #include "dlgpresentation.h"
 
 #include "ui_dlgpresentationbase.h"
+#include "widgetdrawingtools.h"
 
 #include <qapplication.h>
 #include <qdesktopwidget.h>
-
+#include <KConfigDialogManager>
 #include <KLocalizedString>
 
 #include "settings.h"
@@ -23,6 +24,12 @@ DlgPresentation::DlgPresentation( QWidget * parent )
 {
     m_dlg = new Ui_DlgPresentationBase();
     m_dlg->setupUi( this );
+
+    WidgetDrawingTools * kcfg_DrawingTools = new WidgetDrawingTools( m_dlg->annotationToolsGroupBox );
+    m_dlg->verticalLayout_4->addWidget( kcfg_DrawingTools );
+    kcfg_DrawingTools->setObjectName( "kcfg_DrawingTools" );
+
+    KConfigDialogManager::changedMap()->insert( "WidgetDrawingTools", SIGNAL(changed()) );
 
     QStringList choices;
     choices.append( i18nc( "@label:listbox The current screen, for the presentation mode", "Current Screen" ) );

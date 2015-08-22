@@ -72,12 +72,13 @@ class AnnotatorEngine
 class SmoothPath
 {
     public:
-        SmoothPath( const QLinkedList<Okular::NormalizedPoint> &points, const QPen &pen );
+        SmoothPath( const QLinkedList<Okular::NormalizedPoint> &points, const QPen &pen, qreal opacity = 1.0 );
         void paint( QPainter * painter, double xScale, double yScale ) const;
 
     private:
         const QLinkedList<Okular::NormalizedPoint> points;
         const QPen pen;
+        const qreal opacity;
 };
 
 /** @short SmoothPathEngine */

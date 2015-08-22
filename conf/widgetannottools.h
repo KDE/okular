@@ -10,99 +10,29 @@
 #ifndef _WIDGETANNOTTOOLS_H_
 #define _WIDGETANNOTTOOLS_H_
 
-#include <QDialog>
+#include "widgetconfigurationtoolsbase.h"
+
 #include <qdom.h>
 #include <qwidget.h>
-
-class KLineEdit;
-class KComboBox;
-class QPushButton;
-class QLabel;
-class QListWidget;
-class QListWidgetItem;
-class QGroupBox;
-class AnnotationWidget;
 
 namespace Okular
 {
 class Annotation;
 }
 
-class WidgetAnnotTools : public QWidget
+class WidgetAnnotTools : public WidgetConfigurationToolsBase
 {
     Q_OBJECT
-
-    Q_PROPERTY( QStringList tools READ tools WRITE setTools NOTIFY changed USER true )
-
     public:
         explicit WidgetAnnotTools( QWidget * parent = Q_NULLPTR );
         ~WidgetAnnotTools();
 
-        QStringList tools() const;
-        void setTools(const QStringList& items);
+        QStringList tools() const Q_DECL_OVERRIDE;
+        void setTools(const QStringList& items) Q_DECL_OVERRIDE;
 
-    Q_SIGNALS:
-        void changed();
-
-    private:
-        QListWidget *m_list;
-        QPushButton *m_btnAdd;
-        QPushButton *m_btnEdit;
-        QPushButton *m_btnRemove;
-        QPushButton *m_btnMoveUp;
-        QPushButton *m_btnMoveDown;
-
-    private slots:
-        void updateButtons();
-        void slotAdd();
-        void slotEdit();
-        void slotRemove();
-        void slotMoveUp();
-        void slotMoveDown();
+    protected slots:
+        void slotAdd() Q_DECL_OVERRIDE;
+        void slotEdit() Q_DECL_OVERRIDE;
 };
-
-class EditAnnotToolDialog : public QDialog
-{
-    Q_OBJECT
-
-    public:
-        enum ToolType
-        {
-            ToolNoteLinked,
-            ToolNoteInline,
-            ToolInk,
-            ToolStraightLine,
-            ToolPolygon,
-            ToolTextMarkup,
-            ToolGeometricalShape,
-            ToolStamp
-        };
-
-        EditAnnotToolDialog( QWidget *parent = Q_NULLPTR, const QDomElement &initialState = QDomElement() );
-        ~EditAnnotToolDialog();
-        QString name() const;
-        QDomDocument toolXml() const;
-
-    private:
-        void createStubAnnotation();
-        void rebuildAppearanceBox();
-        void updateDefaultNameAndIcon();
-        void setToolType( ToolType newType );
-        void loadTool( const QDomElement &toolElement );
-
-        KLineEdit *m_name;
-        KComboBox *m_type;
-        QLabel *m_toolIcon;
-        QGroupBox *m_appearanceBox;
-
-        Okular::Annotation *m_stubann;
-        AnnotationWidget *m_annotationWidget;
-
-    private slots:
-        void slotTypeChanged();
-        void slotDataChanged();
-};
-
-Q_DECLARE_METATYPE( EditAnnotToolDialog::ToolType )
 
 #endif

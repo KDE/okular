@@ -520,7 +520,6 @@ void PageView::setupViewerActions( KActionCollection * ac )
 #define ADD_VIEWMODE_ACTION( text, name, id ) \
 do { \
     QAction *vm = new QAction( text, this ); \
-    vm->setMenu( d->aViewMode->menu() ); \
     vm->setCheckable( true ); \
     vm->setData( qVariantFromValue( id ) ); \
     d->aViewMode->addAction( vm ); \

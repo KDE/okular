@@ -177,6 +177,9 @@ public:
     QTimer * refreshTimer;
     int refreshPage;
 
+    // bbox state for Trim to Selection mode
+    Okular::NormalizedRect trimBoundingBox;
+
     // infinite resizing loop prevention
     bool verticalScrollBarVisible;
     bool horizontalScrollBarVisible;
@@ -193,7 +196,9 @@ public:
     KAction * aRotateCounterClockwise;
     KAction * aRotateOriginal;
     KSelectAction * aPageSizes;
+    KActionMenu * aTrimMode;
     KToggleAction * aTrimMargins;
+    KToggleAction * aTrimToSelection;
     KAction * aMouseNormal;
     KAction * aMouseSelect;
     KAction * aMouseTextSelect;
@@ -310,7 +315,9 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->aRotateCounterClockwise = 0;
     d->aRotateOriginal = 0;
     d->aPageSizes = 0;
+    d->aTrimMode = 0;
     d->aTrimMargins = 0;
+    d->aTrimToSelection = 0;
     d->aMouseNormal = 0;
     d->aMouseSelect = 0;
     d->aMouseTextSelect = 0;
@@ -332,6 +339,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->penDown = false;
     d->aMouseMagnifier = 0;
     d->aFitWindowToPage = 0;
+    d->trimBoundingBox = Okular::NormalizedRect(); // Null box
 
     switch( Okular::Settings::zoomMode() )
     {
@@ -475,11 +483,25 @@ void PageView::setupViewerActions( KActionCollection * ac )
     connect( d->aPageSizes , SIGNAL(triggered(int)),
          this, SLOT(slotPageSizes(int)) );
 
-    d->aTrimMargins  = new KToggleAction( i18n( "&Trim Margins" ), this );
-    ac->addAction("view_trim_margins", d->aTrimMargins );
+    // Trim View actions
+    d->aTrimMode = new KActionMenu(i18n( "&Trim View" ), this );
+    d->aTrimMode->setDelayed( false );
+    ac->addAction("view_trim_mode", d->aTrimMode );
+
+    d->aTrimMargins  = new KToggleAction( i18n( "&Trim Margins" ), d->aTrimMode->menu() );
+    d->aTrimMode->addAction( d->aTrimMargins  );
+    ac->addAction( "view_trim_margins", d->aTrimMargins  );
+    d->aTrimMargins->setData( qVariantFromValue( (int)Okular::Settings::EnumTrimMode::Margins ) );
     connect( d->aTrimMargins, SIGNAL(toggled(bool)), SLOT(slotTrimMarginsToggled(bool)) );
     d->aTrimMargins->setChecked( Okular::Settings::trimMargins() );
 
+    d->aTrimToSelection  = new KToggleAction( i18n( "Trim To &Selection" ), d->aTrimMode->menu() );
+    d->aTrimMode->addAction( d->aTrimToSelection);
+    ac->addAction( "view_trim_selection", d->aTrimToSelection);
+    d->aTrimToSelection->setData( qVariantFromValue( (int)Okular::Settings::EnumTrimMode::Selection ) );
+    connect( d->aTrimToSelection, SIGNAL(toggled(bool)), SLOT(slotTrimToSelectionToggled(bool)) );
+
+    //
     d->aZoomFitWidth  = new KToggleAction(KIcon( "zoom-fit-width" ), i18n("Fit &Width"), this);
     ac->addAction("view_fit_to_width", d->aZoomFitWidth );
     connect( d->aZoomFitWidth, SIGNAL(toggled(bool)), SLOT(slotFitToWidthToggled(bool)) );
@@ -1024,6 +1046,9 @@ void PageView::updateActionState( bool haspages, bool documentChanged, bool hasf
 
     if ( d->aTrimMargins )
         d->aTrimMargins->setEnabled( haspages );
+
+    if ( d->aTrimToSelection )
+        d->aTrimToSelection->setEnabled( haspages );
 
     if ( d->aViewMode )
         d->aViewMode->setEnabled( haspages );
@@ -2019,6 +2044,7 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
         case Okular::Settings::EnumMouseMode::Zoom:
         case Okular::Settings::EnumMouseMode::RectSelect:
         case Okular::Settings::EnumMouseMode::TableSelect:
+        case Okular::Settings::EnumMouseMode::TrimSelect:
             // set second corner of selection
             if ( d->mouseSelecting )
                 updateSelection( eventPos );
@@ -2181,6 +2207,7 @@ void PageView::mousePressEvent( QMouseEvent * e )
             break;
 
         case Okular::Settings::EnumMouseMode::RectSelect:   // set first corner of the selection rect
+        case Okular::Settings::EnumMouseMode::TrimSelect:
              if ( leftButton )
              {
                 selectionStart( eventPos, palette().color( QPalette::Active, QPalette::Highlight ).light( 120 ), false );
@@ -2534,6 +2561,54 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
             d->magnifierView->hide();
             break;
 
+        case Okular::Settings::EnumMouseMode::TrimSelect:
+        {
+            // if mouse is released and selection is null this is a rightClick
+            if ( rightButton && !d->mouseSelecting )
+            {
+                break;
+            }
+            PageViewItem * pageItem = pickItemOnPoint(eventPos.x(), eventPos.y());
+            // ensure end point rests within a page, or ignore
+            if (!pageItem) {
+                break;
+            }
+            QRect selectionRect = d->mouseSelectionRect.normalized();
+
+            double nLeft = pageItem->absToPageX(selectionRect.left());
+            double nRight = pageItem->absToPageX(selectionRect.right());
+            double nTop = pageItem->absToPageY(selectionRect.top());
+            double nBottom = pageItem->absToPageY(selectionRect.bottom());
+            if ( nLeft < 0 ) nLeft = 0;
+            if ( nTop < 0 ) nTop = 0;
+            if ( nRight > 1 ) nRight = 1;
+            if ( nBottom > 1 ) nBottom = 1;
+            d->trimBoundingBox = Okular::NormalizedRect(nLeft, nTop, nRight, nBottom);
+
+            // Trim Selection successfully done, hide prompt
+            d->messageWindow->hide();
+
+            // clear widget selection and invalidate rect
+            selectionClear();
+
+            // When Trim selection bbox interaction is over, we should switch to another mousemode.
+            if ( d->aPrevAction )
+            {
+                d->aPrevAction->trigger();
+                d->aPrevAction = 0;
+            } else {
+                d->aMouseNormal->trigger();
+            }
+
+            // with d->trimBoundingBox defined, redraw for trim to take visual effect
+            if ( d->document->pages() > 0 )
+            {
+                slotRelayoutPages();
+                slotRequestVisiblePixmaps();  // TODO: slotRelayoutPages() may have done this already!
+            }
+
+            break;
+        }
         case Okular::Settings::EnumMouseMode::RectSelect:
         {
             // if mouse is released and selection is null this is a rightClick
@@ -3342,11 +3417,13 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
            zoom = d->zoomFactor;
     Okular::NormalizedRect crop( 0., 0., 1., 1. );
 
-    // Handle cropping
-    if ( Okular::Settings::trimMargins() && okularPage->isBoundingBoxKnown()
-         && !okularPage->boundingBox().isNull() )
+    // Handle cropping, due to either "Trim Margin" or "Trim to Selection" cases
+    if (( Okular::Settings::trimMargins() && okularPage->isBoundingBoxKnown()
+         && !okularPage->boundingBox().isNull() ) ||
+        ( d->aTrimToSelection && d->aTrimToSelection->isChecked() &&  !d->trimBoundingBox.isNull()))
     {
-        crop = okularPage->boundingBox();
+
+        crop = Okular::Settings::trimMargins() ? okularPage->boundingBox() : d->trimBoundingBox;
 
         // Rotate the bounding box
         for ( int i = okularPage->rotation(); i > 0; --i )
@@ -3358,20 +3435,28 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
             crop.bottom = rot.right;
         }
 
-        // Expand the crop slightly beyond the bounding box
-        static const double cropExpandRatio = 0.04;
-        const double cropExpand = cropExpandRatio * ( (crop.right-crop.left) + (crop.bottom-crop.top) ) / 2;
-        crop = Okular::NormalizedRect(
-            crop.left - cropExpand,
-            crop.top - cropExpand,
-            crop.right + cropExpand,
-            crop.bottom + cropExpand ) & Okular::NormalizedRect( 0, 0, 1, 1 );
+        // Expand the crop slightly beyond the bounding box (for Trim Margins only)
+        if (Okular::Settings::trimMargins()) {
+            static const double cropExpandRatio = 0.04;
+            const double cropExpand = cropExpandRatio * ( (crop.right-crop.left) + (crop.bottom-crop.top) ) / 2;
+            crop = Okular::NormalizedRect(
+                crop.left - cropExpand,
+                crop.top - cropExpand,
+                crop.right + cropExpand,
+                crop.bottom + cropExpand ) & Okular::NormalizedRect( 0, 0, 1, 1 );
+        }
 
         // We currently generate a larger image and then crop it, so if the
         // crop rect is very small the generated image is huge. Hence, we shouldn't
         // let the crop rect become too small.
-        // Make sure we crop by at most 50% in either dimension:
-        static const double minCropRatio = 0.5;
+        static double minCropRatio;
+        if (Okular::Settings::trimMargins()) {
+            // Make sure we crop by at most 50% in either dimension:
+            minCropRatio = 0.5;
+        } else {
+            // Looser Constraint for "Trim Selection"
+            minCropRatio = 0.20;
+        }
         if ( ( crop.right - crop.left ) < minCropRatio )
         {
             const double newLeft = ( crop.left + crop.right ) / 2 - minCropRatio/2;
@@ -3847,6 +3932,8 @@ void PageView::updateCursor( const QPoint &p )
         else if ( d->mouseMode == Okular::Settings::EnumMouseMode::Magnifier )
             setCursor( Qt::CrossCursor );
         else if ( d->mouseMode == Okular::Settings::EnumMouseMode::RectSelect )
+            setCursor( Qt::CrossCursor );
+        else if ( d->mouseMode == Okular::Settings::EnumMouseMode::TrimSelect )
             setCursor( Qt::CrossCursor );
         else if ( d->mouseAnn )
             setCursor( Qt::ClosedHandCursor );
@@ -4904,8 +4991,24 @@ void PageView::slotPageSizes( int newsize )
     d->document->setPageSize( d->document->pageSizes().at( newsize ) );
 }
 
+// Enforce mutual-exclusion between trim modes
+// Each mode is uniquely identified by a single value
+// From Okular::Settings::EnumTrimMode
+void PageView::updateTrimMode( int except_id ) {
+    const QList<QAction *> trimModeActions = d->aTrimMode->menu()->actions();
+    foreach(QAction *trimModeAction, trimModeActions)
+    {
+        if (trimModeAction->data().toInt() != except_id)
+            trimModeAction->setChecked( false );
+    }
+}
+
 void PageView::slotTrimMarginsToggled( bool on )
 {
+    if (on) { // Turn off any other Trim modes
+       updateTrimMode(d->aTrimMargins->data().toInt());
+    }
+
     if ( Okular::Settings::trimMargins() != on )
     {
         Okular::Settings::setTrimMargins( on );
@@ -4916,6 +5019,49 @@ void PageView::slotTrimMarginsToggled( bool on )
             slotRequestVisiblePixmaps(); // TODO: slotRelayoutPages() may have done this already!
         }
     }
+}
+
+void PageView::slotTrimToSelectionToggled( bool on )
+{
+    if ( on ) { // Turn off any other Trim modes
+        updateTrimMode(d->aTrimToSelection->data().toInt());
+
+        d->mouseMode = Okular::Settings::EnumMouseMode::TrimSelect;
+        // change the text in messageWindow (and show it if hidden)
+        d->messageWindow->display( i18n( "Draw a rectangle around the page area you wish to keep visible" ), QString(), PageViewMessage::Info, -1 );
+        // force hiding of annotator toolbar
+        if ( d->aToggleAnnotator && d->aToggleAnnotator->isChecked() )
+        {
+           d->aToggleAnnotator->trigger();
+           d->annotator->setHidingForced( true );
+        }
+        // force an update of the cursor
+        updateCursor();
+    } else {
+
+        // toggled off while making selection
+        if ( Okular::Settings::EnumMouseMode::TrimSelect == d->mouseMode ) {
+            // clear widget selection and invalidate rect
+            selectionClear();
+
+            // When Trim selection bbox interaction is over, we should switch to another mousemode.
+            if ( d->aPrevAction )
+            {
+                d->aPrevAction->trigger();
+                d->aPrevAction = 0;
+            } else {
+                d->aMouseNormal->trigger();
+            }
+        }
+
+        d->trimBoundingBox = Okular::NormalizedRect(); // invalidate box
+        if ( d->document->pages() > 0 )
+        {
+            slotRelayoutPages();
+            slotRequestVisiblePixmaps(); // TODO: slotRelayoutPages() may have done this already!
+        }
+    }
+
 }
 
 void PageView::slotToggleForms()

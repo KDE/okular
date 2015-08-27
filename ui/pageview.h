@@ -187,6 +187,9 @@ Q_OBJECT
         // used when selecting stuff, makes the view scroll as necessary to keep the mouse inside the view
         void scrollPosIntoView( const QPoint & pos );
 
+        // called from slots to turn off trim modes mutually exclusive to id
+        void updateTrimMode( int except_id );
+
         // don't want to expose classes in here
         class PageViewPrivate * d;
 
@@ -238,6 +241,7 @@ Q_OBJECT
         void slotRotateOriginal();
         void slotPageSizes( int );
         void slotTrimMarginsToggled( bool );
+        void slotTrimToSelectionToggled( bool );
         void slotToggleForms();
         void slotFormChanged( int pageNumber );
         void slotRefreshPage();

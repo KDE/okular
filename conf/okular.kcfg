@@ -256,6 +256,14 @@
     <choice name="Summary" />
    </choices>
   </entry>
+  <entry key="TrimMode" type="Enum" >
+   <default>None</default>
+   <choices>
+    <choice name="None" />
+    <choice name="Margins" />
+    <choice name="Selection" />
+   </choices>
+  </entry>
   <entry key="MouseMode" type="Enum" >
    <default>Browse</default>
    <choices>
@@ -265,6 +273,7 @@
     <choice name="TextSelect" />
     <choice name="TableSelect" />
     <choice name="Magnifier" />
+    <choice name="TrimSelect" />
    </choices>
   </entry>
   <entry key="ShowSourceLocationsGraphically" type="Bool" >

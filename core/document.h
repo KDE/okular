@@ -844,7 +844,9 @@ class OKULAR_EXPORT Document : public QObject
         void walletDataForFile( const QString &fileName, QString *walletName, QString *walletFolder, QString *walletKey ) const;
 
         /**
-         * Returns the model for rendering layer or NULL if no layer is present
+         * Returns the model for rendering layers (NULL if the document has no layers)
+         *
+         * @since 0.24
         */
         QAbstractItemModel * layersModel() const;
 
@@ -925,7 +927,9 @@ class OKULAR_EXPORT Document : public QObject
                               const QList< bool > & newButtonStates );
 
         /**
-         * This slot is called to reload the pixmaps for whole document
+         * Reloads the pixmaps for whole document
+         *
+         * @since 0.24
         */
         void reloadDocument() const;
 

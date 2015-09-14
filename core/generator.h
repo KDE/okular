@@ -435,6 +435,8 @@ class OKULAR_EXPORT Generator : public QObject
         /**
          * Returns the 'layers model' object of the document or NULL if
          * layers model is not available.
+         *
+         * @since 0.24
          */
         virtual QAbstractItemModel * layersModel() const;
 

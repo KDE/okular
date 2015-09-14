@@ -37,10 +37,10 @@ Q_OBJECT
         // inherited from DocumentObserver
         void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags );
 
-	void setPageView( PageView *pageView );
+        void setPageView( PageView *pageView );
 
     signals:
-	void hasLayers(bool has);
+        void hasLayers(bool has);
 
     private slots:
         void saveSearchOptions();
@@ -50,7 +50,7 @@ Q_OBJECT
         Okular::Document *m_document;
         QTreeView *m_treeView;
         KTreeViewSearchLine *m_searchLine;
-	PageView *m_pageView;
+        PageView *m_pageView;
 };
 
 #endif

@@ -36,7 +36,6 @@
 #include <QtGui/QPrintDialog>
 #include <QStack>
 #include <QUndoCommand>
-#include <QAbstractItemModel>
 
 #include <kaboutdata.h>
 #include <kauthorized.h>

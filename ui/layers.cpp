@@ -37,19 +37,7 @@ Layers::Layers(QWidget *parent, Okular::Document *document) : QWidget(parent), m
     m_treeView = new QTreeView( this );
     mainlay->addWidget( m_treeView );
 
-    QAbstractItemModel * layersModel = m_document->layersModel();
-
-    if( layersModel )
-    {
-	m_treeView->setModel( layersModel );
-	m_searchLine->addTreeView( m_treeView );
-	emit hasLayers( true );
-	connect( layersModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), m_document, SLOT(reloadDocument()) );
-    }
-    else
-    {
-	emit hasLayers( false );
-    }
+    emit hasLayers( false );
     m_treeView->setSortingEnabled( false );
     m_treeView->setRootIsDecorated( true );
     m_treeView->setAlternatingRowColors( true );
@@ -64,17 +52,18 @@ Layers::~Layers()
 void Layers::notifySetup( const QVector< Okular::Page * > & /*pages*/, int /*setupFlags*/ )
 {
     QAbstractItemModel * layersModel = m_document->layersModel();
+
     if( layersModel )
     {
-	m_treeView->setModel( layersModel );
-	m_searchLine->addTreeView( m_treeView );
-	emit hasLayers( true );
-	connect( layersModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), m_document, SLOT(reloadDocument()) );
-	connect( layersModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), m_pageView, SLOT(reloadForms()) );
+        m_treeView->setModel( layersModel );
+        m_searchLine->addTreeView( m_treeView );
+        emit hasLayers( true );
+        connect( layersModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), m_document, SLOT(reloadDocument()) );
+        connect( layersModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), m_pageView, SLOT(reloadForms()) );
     }
     else
     {
-	emit hasLayers( false );
+        emit hasLayers( false );
     }
 }
 

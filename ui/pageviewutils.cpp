@@ -211,10 +211,9 @@ bool PageViewItem::setFormWidgetsVisible( bool visible )
 
 void PageViewItem::reloadFormWidgetsState()
 {
-    QHash<int, FormWidgetIface*>::iterator it = m_formWidgets.begin(), itEnd = m_formWidgets.end();
-    for ( ; it != itEnd; ++it )
+    foreach(FormWidgetIface *fwi, m_formWidgets)
     {
-	(*it)->setVisibility( (*it)->formField()->isVisible() );
+        fwi->setVisibility( fwi->formField()->isVisible() );
     }
 }
 

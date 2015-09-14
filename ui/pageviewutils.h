@@ -78,7 +78,7 @@ class PageViewItem
         void setVisible( bool visible );
         void invalidate();
         bool setFormWidgetsVisible( bool visible );
-	void reloadFormWidgetsState();
+        void reloadFormWidgetsState();
 
     private:
         const Okular::Page * m_page;

@@ -1353,7 +1353,6 @@ void PageView::notifyCurrentPageChanged( int previous, int current )
         // update zoom text and factor if in a ZoomFit/* zoom mode
         if ( d->zoomMode != ZoomFixed )
             updateZoomText();
-
     }
 }
 

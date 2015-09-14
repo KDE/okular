@@ -31,6 +31,8 @@ class Sidebar : public QWidget
         void setItemEnabled( int index, bool enabled );
         bool isItemEnabled( int index ) const;
 
+        void setItemVisible( int index, bool visible );
+
         enum SetCurrentIndexBehaviour { UncollapseIfCollapsed, DoNotUncollapseIfCollapsed };
 
         void setCurrentIndex( int index, SetCurrentIndexBehaviour b = UncollapseIfCollapsed );
@@ -42,9 +44,7 @@ class Sidebar : public QWidget
         void setCollapsed( bool collapsed );
         bool isCollapsed() const;
 
-	void moveSplitter( int sideWidgetSize );
-
-	void hideItem( int index, bool hide );
+        void moveSplitter( int sideWidgetSize );
 
     signals:
         void urlsDropped( const KUrl::List& urls );

@@ -28,15 +28,15 @@ class Sidebar : public QWidget
         void setMainWidget( QWidget *widget );
         void setBottomWidget( QWidget *widget );
 
-        void setItemEnabled( int index, bool enabled );
-        bool isItemEnabled( int index ) const;
+        void setItemEnabled( QWidget *widget, bool enabled );
+        bool isItemEnabled( QWidget *widget ) const;
 
-        void setItemVisible( int index, bool visible );
+        void setItemVisible( QWidget *widget, bool visible );
 
-        enum SetCurrentIndexBehaviour { UncollapseIfCollapsed, DoNotUncollapseIfCollapsed };
+        enum SetCurrentItemBehaviour { UncollapseIfCollapsed, DoNotUncollapseIfCollapsed };
 
-        void setCurrentIndex( int index, SetCurrentIndexBehaviour b = UncollapseIfCollapsed );
-        int currentIndex() const;
+        void setCurrentItem( QWidget *widget, SetCurrentItemBehaviour b = UncollapseIfCollapsed );
+        QWidget *currentItem() const;
 
         void setSidebarVisibility( bool visible );
         bool isSidebarVisible() const;
@@ -62,7 +62,10 @@ class Sidebar : public QWidget
         void appearanceChanged();
 
     private:
-        void itemClicked( QListWidgetItem *item, SetCurrentIndexBehaviour b );
+        void setIndexEnabled( int index, bool enabled );
+        void setCurrentIndex( int index, SetCurrentItemBehaviour b = UncollapseIfCollapsed );
+        bool isIndexEnabled( int index ) const;
+        void itemClicked( QListWidgetItem *item, SetCurrentItemBehaviour b );
         void saveSplitterSize() const;
 
         // private storage

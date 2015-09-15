@@ -288,7 +288,7 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         KUrl m_oldUrl;
         Okular::DocumentViewport m_viewportDirty;
         bool m_wasPresentationOpen;
-        int m_dirtyToolboxIndex;
+        QWidget *m_dirtyToolboxItem;
         bool m_wasSidebarVisible;
         bool m_wasSidebarCollapsed;
         bool m_fileWasRemoved;

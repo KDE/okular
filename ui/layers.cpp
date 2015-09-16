@@ -56,7 +56,7 @@ void Layers::notifySetup( const QVector< Okular::Page * > & /*pages*/, int /*set
     if( layersModel )
     {
         m_treeView->setModel( layersModel );
-        m_searchLine->addTreeView( m_treeView );
+        m_searchLine->setTreeView( m_treeView );
         emit hasLayers( true );
         connect( layersModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), m_document, SLOT(reloadDocument()) );
         connect( layersModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), m_pageView, SLOT(reloadForms()) );

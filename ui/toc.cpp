@@ -49,7 +49,7 @@ TOC::TOC(QWidget *parent, Okular::Document *document) : QWidget(parent), m_docum
     m_treeView->setSelectionBehavior( QAbstractItemView::SelectRows );
     connect( m_treeView, SIGNAL(clicked(QModelIndex)), this, SLOT(slotExecuted(QModelIndex)) );
     connect( m_treeView, SIGNAL(activated(QModelIndex)), this, SLOT(slotExecuted(QModelIndex)) );
-    m_searchLine->addTreeView( m_treeView );
+    m_searchLine->setTreeView( m_treeView );
 }
 
 TOC::~TOC()

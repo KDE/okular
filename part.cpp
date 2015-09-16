@@ -85,6 +85,7 @@
 #include "ui/sidebar.h"
 #include "ui/fileprinterpreview.h"
 #include "ui/guiutils.h"
+#include "ui/layers.h"
 #include "conf/preferencesdialog.h"
 #include "settings.h"
 #include "core/action.h"
@@ -372,12 +373,17 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     //      sLabel->setBuddy( m_searchWidget );
     //      m_searchToolBar->setStretchableWidget( m_searchWidget );
 
-    int tbIndex;
     // [left toolbox: Table of Contents] | []
     m_toc = new TOC( 0, m_document );
     connect( m_toc, SIGNAL(hasTOC(bool)), this, SLOT(enableTOC(bool)) );
-    tbIndex = m_sidebar->addItem( m_toc, KIcon(QApplication::isLeftToRight() ? "format-justify-left" : "format-justify-right"), i18n("Contents") );
+    m_sidebar->addItem( m_toc, KIcon(QApplication::isLeftToRight() ? "format-justify-left" : "format-justify-right"), i18n("Contents") );
     enableTOC( false );
+
+    // [left toolbox: Layers] | []
+    m_layers = new Layers( 0, m_document );
+    connect( m_layers, SIGNAL(hasLayers(bool)), this, SLOT(enableLayers(bool)) );
+    m_sidebar->addItem( m_layers, KIcon( "draw-freehand" ), i18n( "Layers" ) );
+    enableLayers( false );
 
     // [left toolbox: Thumbnails and Bookmarks] | []
     KVBox * thumbsBox = new ThumbnailsBox( 0 );
@@ -386,18 +392,19 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     m_thumbnailList = new ThumbnailList( thumbsBox, m_document );
     //	ThumbnailController * m_tc = new ThumbnailController( thumbsBox, m_thumbnailList );
     connect( m_thumbnailList, SIGNAL(rightClick(const Okular::Page*,QPoint)), this, SLOT(slotShowMenu(const Okular::Page*,QPoint)) );
-    tbIndex = m_sidebar->addItem( thumbsBox, KIcon( "view-preview" ), i18n("Thumbnails") );
-    m_sidebar->setCurrentIndex( tbIndex );
+    m_sidebar->addItem( thumbsBox, KIcon( "view-preview" ), i18n("Thumbnails") );
+
+    m_sidebar->setCurrentItem( thumbsBox );
 
     // [left toolbox: Reviews] | []
     m_reviewsWidget = new Reviews( 0, m_document );
     m_sidebar->addItem( m_reviewsWidget, KIcon("draw-freehand"), i18n("Reviews") );
-    m_sidebar->setItemEnabled( 2, false );
+    m_sidebar->setItemEnabled( m_reviewsWidget, false );
 
     // [left toolbox: Bookmarks] | []
     m_bookmarkList = new BookmarkList( m_document, 0 );
     m_sidebar->addItem( m_bookmarkList, KIcon("bookmarks"), i18n("Bookmarks") );
-    m_sidebar->setItemEnabled( 3, false );
+    m_sidebar->setItemEnabled( m_bookmarkList, false );
 
     // widgets: [../miniBarContainer] | []
 #ifdef OKULAR_ENABLE_MINIBAR
@@ -457,6 +464,7 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     connect( m_document, SIGNAL(sourceReferenceActivated(const QString&,int,int,bool*)), this, SLOT(slotHandleActivatedSourceReference(const QString&,int,int,bool*)) );
     connect( m_pageView, SIGNAL(fitWindowToPage(QSize,QSize)), this, SIGNAL(fitWindowToPage(QSize,QSize)) );
     rightLayout->addWidget( m_pageView );
+    m_layers->setPageView( m_pageView );
     m_findBar = new FindBar( m_document, rightContainer );
     rightLayout->addWidget( m_findBar );
     m_bottomBar = new QWidget( rightContainer );
@@ -854,6 +862,7 @@ Part::~Part()
         Part::closeUrl( false );
 
     delete m_toc;
+    delete m_layers;
     delete m_pageView;
     delete m_thumbnailList;
     delete m_miniBar;
@@ -1452,9 +1461,9 @@ bool Part::openFile()
     }
 
     // if the 'OpenTOC' flag is set, open the TOC
-    if ( m_document->metaData( "OpenTOC" ).toBool() && m_sidebar->isItemEnabled( 0 ) && !m_sidebar->isCollapsed() && m_sidebar->currentIndex() != 0 )
+    if ( m_document->metaData( "OpenTOC" ).toBool() && m_sidebar->isItemEnabled( m_toc ) && !m_sidebar->isCollapsed() && m_sidebar->currentItem() != m_toc )
     {
-        m_sidebar->setCurrentIndex( 0, Sidebar::DoNotUncollapseIfCollapsed );
+        m_sidebar->setCurrentItem( m_toc, Sidebar::DoNotUncollapseIfCollapsed );
     }
     // if the 'StartFullScreen' flag is set, or the command line flag was
     // specified, start presentation
@@ -1734,7 +1743,7 @@ void Part::slotDoFileDirty()
         m_viewportDirty = m_document->viewport();
 
         // store the current toolbox pane
-        m_dirtyToolboxIndex = m_sidebar->currentIndex();
+        m_dirtyToolboxItem = m_sidebar->currentItem();
         m_wasSidebarVisible = m_sidebar->isSidebarVisible();
         m_wasSidebarCollapsed = m_sidebar->isCollapsed();
 
@@ -1780,10 +1789,10 @@ void Part::slotDoFileDirty()
         m_oldUrl = KUrl();
         m_viewportDirty.pageNumber = -1;
         m_document->setRotation( m_dirtyPageRotation );
-        if ( m_sidebar->currentIndex() != m_dirtyToolboxIndex && m_sidebar->isItemEnabled( m_dirtyToolboxIndex )
+        if ( m_sidebar->currentItem() != m_dirtyToolboxItem && m_sidebar->isItemEnabled( m_dirtyToolboxItem )
             && !m_sidebar->isCollapsed() )
         {
-            m_sidebar->setCurrentIndex( m_dirtyToolboxIndex );
+            m_sidebar->setCurrentItem( m_dirtyToolboxItem );
         }
         if ( m_sidebar->isSidebarVisible() != m_wasSidebarVisible )
         {
@@ -1921,18 +1930,23 @@ void Part::updateBookmarksActions()
 
 void Part::enableTOC(bool enable)
 {
-    m_sidebar->setItemEnabled(0, enable);
+    m_sidebar->setItemEnabled(m_toc, enable);
 
     // If present, show the TOC when a document is opened
-    if ( enable && m_sidebar->currentIndex() != 0 )
+    if ( enable && m_sidebar->currentItem() != m_toc )
     {
-        m_sidebar->setCurrentIndex( 0, Sidebar::DoNotUncollapseIfCollapsed );
+        m_sidebar->setCurrentItem( m_toc, Sidebar::DoNotUncollapseIfCollapsed );
     }
 }
 
 void Part::slotRebuildBookmarkMenu()
 {
     rebuildBookmarkMenu();
+}
+
+void Part::enableLayers(bool enable)
+{
+    m_sidebar->setItemVisible( m_layers, enable );
 }
 
 void Part::slotShowFindBar()
@@ -2362,7 +2376,7 @@ void Part::slotNewConfig()
     m_document->reparseConfig();
 
     // update TOC settings
-    if ( m_sidebar->isItemEnabled(0) )
+    if ( m_sidebar->isItemEnabled(m_toc) )
         m_toc->reparseConfig();
 
     // update ThumbnailList contents
@@ -2370,7 +2384,7 @@ void Part::slotNewConfig()
         m_thumbnailList->updateWidgets();
 
     // update Reviews settings
-    if ( m_sidebar->isItemEnabled(2) )
+    if ( m_sidebar->isItemEnabled(m_reviewsWidget) )
         m_reviewsWidget->reparseConfig();
 
     setWindowTitleFromDocument ();
@@ -2818,8 +2832,8 @@ void Part::unsetDummyMode()
     if ( m_embedMode == PrintPreviewMode )
        return;
 
-    m_sidebar->setItemEnabled( 2, true );
-    m_sidebar->setItemEnabled( 3, true );
+    m_sidebar->setItemEnabled( m_reviewsWidget, true );
+    m_sidebar->setItemEnabled( m_bookmarkList, true );
     m_sidebar->setSidebarVisibility( Okular::Settings::showLeftPanel() );
 
     // add back and next in history

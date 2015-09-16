@@ -67,6 +67,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         Okular::FontInfo::List fontsForPage( int page );
         const QList<Okular::EmbeddedFile*> * embeddedFiles() const;
         PageSizeMetric pagesSizeMetric() const { return Pixels; }
+        QAbstractItemModel * layersModel() const;
 
         // [INHERITED] document information
         bool isAllowed( Okular::Permission permission ) const;

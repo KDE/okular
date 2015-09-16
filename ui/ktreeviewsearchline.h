@@ -40,7 +40,6 @@ class KTreeViewSearchLine : public KLineEdit
     Q_OBJECT
 
     Q_PROPERTY( Qt::CaseSensitivity caseSensitity READ caseSensitivity WRITE setCaseSensitivity )
-    Q_PROPERTY( bool keepParentsVisible READ keepParentsVisible WRITE setKeepParentsVisible )
 
 
   public:
@@ -48,20 +47,10 @@ class KTreeViewSearchLine : public KLineEdit
      * Constructs a KTreeViewSearchLine with \a treeView being the QTreeView to
      * be filtered.
      *
-     * If \a treeView is null then the widget will be disabled until listviews
-     * are set with setTreeView(), setTreeViews() or added with addTreeView().
+     * If \a treeView is null then the widget will be disabled until listview
+     * are set with setTreeView().
      */
     explicit KTreeViewSearchLine( QWidget *parent = 0, QTreeView *treeView = 0 );
-
-    /**
-     * Constructs a KTreeViewSearchLine with \a treeViews being the list of
-     * pointers to QTreeViews to be filtered.
-     *
-     * If \a treeViews is empty then the widget will be disabled until listviews
-     * are set with setTreeView(), setTreeViews() or added with addTreeView().
-     */
-    KTreeViewSearchLine( QWidget *parent, const QList<QTreeView *> &treeViews );
-
 
     /**
      * Destroys the KTreeViewSearchLine.
@@ -83,55 +72,13 @@ class KTreeViewSearchLine : public KLineEdit
     bool regularExpression() const;
 
     /**
-     * Returns the current list of columns that will be searched.  If the
-     * returned list is empty all visible columns will be searched.
-     *
-     * @see setSearchColumns
-     */
-    QList<int> searchColumns() const;
-
-    /**
-     * If this is true (the default) then the parents of matched items will also
-     * be shown.
-     *
-     * @see setKeepParentsVisible()
-     */
-    bool keepParentsVisible() const;
-
-    /**
      * Returns the listview that is currently filtered by the search.
-     * If there are multiple listviews filtered, it returns 0.
      *
-     * @see setTreeView(), treeView()
+     * @see setTreeView()
      */
     QTreeView *treeView() const;
 
-    /**
-     * Returns the list of pointers to listviews that are currently filtered by
-     * the search.
-     *
-     * @see setTreeViews(), addTreeView(), treeView()
-     */
-    QList<QTreeView *> treeViews() const;
-
   public Q_SLOTS:
-    /**
-     * Adds a QTreeView to the list of listviews filtered by this search line.
-     * If \a treeView is null then the widget will be disabled.
-     *
-     * @see treeView(), setTreeViews(), removeTreeView()
-     */
-    void addTreeView( QTreeView *treeView );
-
-    /**
-     * Removes a QTreeView from the list of listviews filtered by this search
-     * line. Does nothing if \a treeView is 0 or is not filtered by the quick search
-     * line.
-     *
-     * @see listVew(), setTreeView(), addTreeView()
-     */
-    void removeTreeView( QTreeView *treeView );
-
     /**
      * Updates search to only make visible the items that match \a pattern.  If
      * \a s is null then the line edit's text will be used.
@@ -153,45 +100,13 @@ class KTreeViewSearchLine : public KLineEdit
     void setRegularExpression( bool value );
 
     /**
-     * When a search is active on a list that's organized into a tree view if
-     * a parent or ancesestor of an item is does not match the search then it
-     * will be hidden and as such so too will any children that match.
-     *
-     * If this is set to true (the default) then the parents of matching items
-     * will be shown.
-     *
-     * @see keepParentsVisible
-     */
-    void setKeepParentsVisible( bool value );
-
-    /**
-     * Sets the list of columns to be searched.  The default is to search all,
-     * visible columns which can be restored by passing \a columns as an empty
-     * list.
-     * If listviews to be filtered have different numbers or labels of columns
-     * this method has no effect.
-     *
-     * @see searchColumns
-     */
-    void setSearchColumns( const QList<int> &columns );
-
-    /**
      * Sets the QTreeView that is filtered by this search line, replacing any
      * previously filtered listviews.  If \a treeView is null then the widget will be
      * disabled.
      *
-     * @see treeView(), setTreeViews()
+     * @see treeView()
      */
     void setTreeView( QTreeView *treeView );
-
-    /**
-     * Sets QTreeViews that are filtered by this search line, replacing any
-     * previously filtered listviews.  If \a treeViews is empty then the widget will
-     * be disabled.
-     *
-     * @see treeViews(), addTreeView(), setTreeView()
-     */
-    void setTreeViews( const QList<QTreeView *> &treeViews );
 
   Q_SIGNALS:
     /**
@@ -230,22 +145,6 @@ class KTreeViewSearchLine : public KLineEdit
      */
     virtual void disconnectTreeView( QTreeView* );
 
-    /**
-     * Checks columns in all listviews and decides whether choosing columns to
-     * filter on makes any sense.
-     *
-     * Returns false if either of the following is true:
-     * * there are no listviews connected,
-     * * the listviews have different numbers of columns,
-     * * the listviews have only one column,
-     * * the listviews differ in column labels.
-     *
-     * Otherwise it returns true.
-     *
-     * @see setSearchColumns()
-     */
-    virtual bool canChooseColumnsCheck();
-
   protected Q_SLOTS:
     /**
      * When keys are pressed a new search string is created and a timer is
@@ -278,8 +177,6 @@ class KTreeViewSearchLine : public KLineEdit
 
     Q_PRIVATE_SLOT( d, void rowsInserted( const QModelIndex&, int, int ) const )
     Q_PRIVATE_SLOT( d, void treeViewDeleted( QObject* ) )
-    Q_PRIVATE_SLOT( d, void slotColumnActivated( QAction* ) )
-    Q_PRIVATE_SLOT( d, void slotAllVisibleColumns() )
     Q_PRIVATE_SLOT( d, void slotCaseSensitive() )
     Q_PRIVATE_SLOT( d, void slotRegularExpression() )
 };

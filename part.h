@@ -64,6 +64,7 @@ class MiniBarLogic;
 class FileKeeper;
 class Reviews;
 class BookmarkList;
+class Layers;
 
 namespace Okular
 {
@@ -219,6 +220,7 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         void updateBookmarksActions();
         void enableTOC(bool enable);
         void slotRebuildBookmarkMenu();
+        void enableLayers( bool enable );
 
     public slots:
         // connected to Shell action (and browserExtension), not local one
@@ -278,6 +280,7 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         QPointer<PageSizeLabel> m_pageSizeLabel;
         QPointer<Reviews> m_reviewsWidget;
         QPointer<BookmarkList> m_bookmarkList;
+        QPointer<Layers> m_layers;
 
         // document watcher (and reloader) variables
         KDirWatch *m_watcher;
@@ -285,7 +288,7 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         KUrl m_oldUrl;
         Okular::DocumentViewport m_viewportDirty;
         bool m_wasPresentationOpen;
-        int m_dirtyToolboxIndex;
+        QWidget *m_dirtyToolboxItem;
         bool m_wasSidebarVisible;
         bool m_wasSidebarCollapsed;
         bool m_fileWasRemoved;

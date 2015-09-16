@@ -454,6 +454,11 @@ QSizeF Generator::dpi() const
      return d->m_dpi;
 }
 
+QAbstractItemModel * Generator::layersModel() const
+{
+    return 0;
+}
+
 PixmapRequest::PixmapRequest( DocumentObserver *observer, int pageNumber, int width, int height, int priority, PixmapRequestFeatures features )
   : d( new PixmapRequestPrivate )
 {

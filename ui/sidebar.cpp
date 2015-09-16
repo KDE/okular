@@ -397,6 +397,14 @@ public:
     {
     }
 
+    int indexOf(QWidget *w) const
+    {
+        for (int i = 0; i < pages.count(); ++i) {
+            if (pages[i]->widget() == w) return i;
+        }
+        return -1;
+    }
+
     void adjustListSize( bool recalc, bool expand = true );
 
     SidebarListWidget *list;
@@ -556,7 +564,13 @@ void Sidebar::setBottomWidget( QWidget *widget )
     }
 }
 
-void Sidebar::setItemEnabled( int index, bool enabled )
+void Sidebar::setItemEnabled( QWidget *widget, bool enabled )
+{
+    const int index = d->indexOf( widget );
+    setIndexEnabled( index, enabled );
+}
+
+void Sidebar::setIndexEnabled( int index, bool enabled )
 {
     if ( index < 0 || index >= d->pages.count() )
         return;
@@ -574,7 +588,7 @@ void Sidebar::setItemEnabled( int index, bool enabled )
     }
     d->pages.at( index )->setFlags( f );
 
-    if ( !enabled && index == currentIndex() && isSidebarVisible() )
+    if ( !enabled && index == d->list->currentRow() && isSidebarVisible() )
         // find an enabled item, and select that one
         for ( int i = 0; i < d->pages.count(); ++i )
             if ( d->pages.at(i)->flags() & Qt::ItemIsEnabled )
@@ -584,18 +598,30 @@ void Sidebar::setItemEnabled( int index, bool enabled )
             }
 }
 
-bool Sidebar::isItemEnabled( int index ) const
+bool Sidebar::isItemEnabled( QWidget *widget ) const
 {
-    if ( index < 0 || index >= d->pages.count() )
+    const int index = d->indexOf( widget );
+    return isIndexEnabled( index );
+}
+
+bool Sidebar::isIndexEnabled( int index ) const
+{
+    if ( index < 0 )
         return false;
 
     Qt::ItemFlags f = d->pages.at( index )->flags();
     return ( f & Qt::ItemIsEnabled ) == Qt::ItemIsEnabled;
 }
 
-void Sidebar::setCurrentIndex( int index, SetCurrentIndexBehaviour b )
+void Sidebar::setCurrentItem( QWidget *widget, SetCurrentItemBehaviour b )
 {
-    if ( index < 0 || index >= d->pages.count() || !isItemEnabled( index ) )
+    const int index = d->indexOf( widget );
+    setCurrentIndex( index, b );
+}
+
+void Sidebar::setCurrentIndex( int index, SetCurrentItemBehaviour b )
+{
+    if ( index < 0 || !isIndexEnabled( index ) )
         return;
 
     itemClicked( d->pages.at( index ), b );
@@ -604,9 +630,13 @@ void Sidebar::setCurrentIndex( int index, SetCurrentIndexBehaviour b )
     d->list->selectionModel()->select( modelindex, QItemSelectionModel::ClearAndSelect );
 }
 
-int Sidebar::currentIndex() const
+QWidget *Sidebar::currentItem() const
 {
-    return d->list->currentRow();
+    const int row = d->list->currentRow();
+    if (row < 0 || row >= d->pages.count())
+        return 0;
+
+    return d->pages[row]->widget();
 }
 
 void Sidebar::setSidebarVisibility( bool visible )
@@ -653,12 +683,22 @@ void Sidebar::moveSplitter(int sideWidgetSize)
     d->splitter->setSizes( splitterSizeList );
 }
 
+void Sidebar::setItemVisible( QWidget *widget, bool visible )
+{
+    const int index = d->indexOf( widget );
+    if ( index < 0 )
+        return;
+
+    d->list->setRowHidden( index, !visible );
+    setIndexEnabled( index, visible );
+}
+
 void Sidebar::itemClicked( QListWidgetItem *item )
 {
     itemClicked( item, UncollapseIfCollapsed );
 }
 
-void Sidebar::itemClicked( QListWidgetItem *item, SetCurrentIndexBehaviour b )
+void Sidebar::itemClicked( QListWidgetItem *item, SetCurrentItemBehaviour b )
 {
     if ( !item )
         return;

@@ -37,7 +37,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2015-08-29</date>
+		<date>2015-09-17</date>
 		<releaseinfo>0.24 (Applications 15.12)</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
@@ -161,6 +161,12 @@ Context menu actions like Rename Bookmarks etc.)
 						If the document has a table of contents, clicking on a table
 						of contents item will bring the document to the page linked to that
 						item.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						If the document has layers, you can control the layers shown by checking or unchecking
+						the items in the <guilabel>Layers</guilabel> list.
 					</para>
 				</listitem>
 				<listitem>

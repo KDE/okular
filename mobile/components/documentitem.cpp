@@ -73,6 +73,7 @@ void DocumentItem::setPath(const QString &path)
     emit openedChanged();
     emit supportsSearchingChanged();
     emit windowTitleForDocumentChanged();
+    emit bookmarkedPagesChanged();
 }
 
 QString DocumentItem::windowTitleForDocument() const
@@ -130,7 +131,7 @@ TOCModel *DocumentItem::tableOfContents() const
     return m_tocModel;
 }
 
-QList<int> DocumentItem::bookmarkedPages() const
+QVariantList DocumentItem::bookmarkedPages() const
 {
     QList<int> list;
     QSet<int> pages;
@@ -140,7 +141,12 @@ QList<int> DocumentItem::bookmarkedPages() const
     }
     list = pages.toList();
     qSort(list);
-    return list;
+
+    QVariantList variantList;
+    foreach (const int page, list) {
+        variantList << page;
+    }
+    return variantList;
 }
 
 QStringList DocumentItem::bookmarks() const

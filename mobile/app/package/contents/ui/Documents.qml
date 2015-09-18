@@ -96,7 +96,7 @@ PlasmaComponents.Page {
                 }
                 onClicked: {
                     documentItem.path = model.filePath;
-                    mainDrawer.open = false;
+                    splitDrawer.open = false;
                     mainTabBar.currentTab = thumbnailsButton;
                 }
             }

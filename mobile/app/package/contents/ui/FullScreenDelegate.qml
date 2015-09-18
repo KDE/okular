@@ -39,6 +39,7 @@ MouseEventListener {
     property alias document: mainPage.document
     property alias pageNumber: mainPage.pageNumber
     property Item pageItem: mainPage
+    property alias bookmarked: mainPage.bookmarked
 
     onWheelMoved: {
         if (wheel.modifiers == Qt.ControlModifier) {

@@ -27,11 +27,20 @@ import org.kde.okular 2.0 as Okular
 
 
 MobileComponents.SplitDrawer {
-    id: mainDrawer
+    id: splitDrawer
     anchors.fill: parent
     visible: true
+
+    property alias splitDrawerOpen: splitDrawer.open
+    property alias overlayDrawerOpen: resourceBrowser.open
+    //An alias doesn't work
+    property bool bookmarked: pageArea.delegate.bookmarked
+    onBookmarkedChanged: {
+        pageArea.delegate.bookmarked = bookmarked
+    }
+
     drawer: Documents {
-        implicitWidth: mainDrawer.width/4 * 3
+        implicitWidth: splitDrawer.width/4 * 3
     }
 
     MobileComponents.OverlayDrawer {
@@ -47,6 +56,12 @@ MobileComponents.SplitDrawer {
             property Item delegate: delegate1
             property Item oldDelegate: delegate2
             property bool incrementing: delegate.delta > 0
+
+            property bool bookmarked: delegate.bookmarked
+            onBookmarkedChanged: {
+                splitDrawer.bookmarked = delegate.bookmarked;
+            }
+
             Connections {
                 target: pageArea.delegate
                 onDeltaChanged: {

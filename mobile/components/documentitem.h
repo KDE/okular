@@ -86,7 +86,7 @@ class DocumentItem : public QObject
     /**
      * List of pages that contain a bookmark
      */
-    Q_PROPERTY(QList<int> bookmarkedPages READ bookmarkedPages NOTIFY bookmarkedPagesChanged)
+    Q_PROPERTY(QVariantList bookmarkedPages READ bookmarkedPages NOTIFY bookmarkedPagesChanged)
 
     /**
      * list of bookmarks urls valid on this page
@@ -118,7 +118,7 @@ public:
 
     TOCModel *tableOfContents() const;
 
-    QList<int> bookmarkedPages() const;
+    QVariantList bookmarkedPages() const;
 
     QStringList bookmarks() const;
 

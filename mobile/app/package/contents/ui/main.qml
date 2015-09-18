@@ -37,6 +37,55 @@ ApplicationWindow {
         uri: documentItem.path
     }*/
 
+    statusBar: PlasmaComponents.ToolBar {
+        id: toolbar
+        tools: PlasmaComponents.ToolBarLayout {
+            //TODO: those buttons should support drag to open the menus as well
+            PlasmaComponents.ToolButton {
+                id: openButton
+                iconSource: "document-open"
+                checkable: true
+                onCheckedChanged: {
+                    mainStack.currentPage.splitDrawerOpen = checked
+                    if (checked) {
+                        mainStack.currentPage.overlayDrawerOpen = false;
+                    }
+                }
+            }
+            PlasmaComponents.ToolButton {
+                id: bookmarkButton
+                iconSource: "bookmarks-organize"
+                checkable: true
+                onCheckedChanged: {
+                    mainStack.currentPage.bookmarked = checked
+                }
+            }
+            PlasmaComponents.ToolButton {
+                id: exploreButton
+                iconSource: "view-list-icons"
+                checkable: true
+                onCheckedChanged: {
+                    mainStack.currentPage.overlayDrawerOpen = checked
+                    if (checked) {
+                        mainStack.currentPage.splitDrawerOpen = false;
+                    }
+                }
+            }
+        }
+        Connections {
+            target: mainStack.currentPage
+            onSplitDrawerOpenChanged: {
+                openButton.checked = mainStack.currentPage.splitDrawerOpen;
+            }
+            onOverlayDrawerOpenChanged: {
+                exploreButton.checked = mainStack.currentPage.overlayDrawerOpen;
+            }
+            onBookmarkedChanged: {
+                bookmarkButton.checked = mainStack.currentPage.bookmarked
+            }
+        }
+    }
+
     Okular.DocumentItem {
         id: documentItem
         onWindowTitleForDocumentChanged: {
@@ -47,7 +96,6 @@ ApplicationWindow {
     PlasmaComponents.PageStack {
         id: mainStack
         clip: false
-        anchors.fill: parent
     }
 
     //FIXME: this is due to global vars being binded after the parse is done, do the 2 steps parsing

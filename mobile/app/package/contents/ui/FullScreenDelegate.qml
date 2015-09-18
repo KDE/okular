@@ -204,9 +204,10 @@ MouseEventListener {
 
                 x: Math.round((parent.width - width) / 2)
                 y: Math.round((parent.height - height) / 2)
-                width: implicitWidth
-                height: implicitHeight
+                width: root.width
+                height: width / ratio
             }
+
         }
     }
     Image {

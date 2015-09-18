@@ -27,6 +27,7 @@ import Qt.labs.folderlistmodel 2.1
 PlasmaComponents.Page {
     id: root
     anchors.fill: parent
+    visible: true
     property Item view: filesView
     property alias contentY: filesView.contentY
     property alias contentHeight: filesView.contentHeight
@@ -38,7 +39,6 @@ PlasmaComponents.Page {
         height: searchField.height
         PlasmaComponents.TextField {
             id: searchField
-            enabled: documentItem.supportsSearch
             anchors.centerIn: parent
             onTextChanged: {
                 if (text.length > 2) {
@@ -96,7 +96,7 @@ PlasmaComponents.Page {
                 }
                 onClicked: {
                     documentItem.path = model.filePath;
-                    resourceBrowser.open = false;
+                    mainDrawer.open = false;
                     mainTabBar.currentTab = thumbnailsButton;
                 }
             }

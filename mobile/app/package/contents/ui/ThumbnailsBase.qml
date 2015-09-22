@@ -41,10 +41,11 @@ PlasmaComponents.Page {
             id: resultsGrid
             anchors.fill: parent
 
-            cellWidth: theme.mSize(theme.defaultFont).width * 14
-            cellHeight: theme.mSize(theme.defaultFont).height * 12
+            cellWidth: width / Math.floor(width / (units.gridUnit * 5))
+            cellHeight: cellWidth * 1.6
 
             delegate: Item {
+                id: delegate
                 width: resultsGrid.cellWidth
                 height: resultsGrid.cellHeight
                 property bool current: documentItem.currentPage == modelData
@@ -66,9 +67,9 @@ PlasmaComponents.Page {
                         y: parent.margins.top
                         document: documentItem
                         pageNumber: modelData
-                        width: theme.mSize(theme.defaultFont).width * 10
+                        width: delegate.width - parent.margins.left + parent.margins.right - units.gridUnit
                         //value repeated to avoid binding loops
-                        height: Math.round(theme.mSize(theme.defaultFont).width * 10 / (implicitWidth/implicitHeight))
+                        height: Math.round(width / (implicitWidth/implicitHeight))
                         Rectangle {
                             width: childrenRect.width
                             height: childrenRect.height

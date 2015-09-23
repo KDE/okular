@@ -84,6 +84,16 @@ ApplicationWindow {
                 bookmarkButton.checked = mainStack.currentPage.bookmarked
             }
         }
+        PlasmaComponents.ProgressBar {
+            id: bar
+            anchors {
+                left: parent.left
+                right: parent.right
+                bottom: parent.top
+            }
+            height: units.smallSpacing
+            value: documentItem.pageCount != 0 ? (documentItem.currentPage / documentItem.pageCount) : 0
+        }
     }
 
     Okular.DocumentItem {

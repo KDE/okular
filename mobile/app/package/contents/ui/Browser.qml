@@ -156,6 +156,7 @@ MobileComponents.SplitDrawer {
         PlasmaComponents.ScrollBar {
             flickableItem: pageArea.delegate.flickable
             orientation: Qt.Horizontal
+            visible: pageArea.delegate.width > pageArea.width
             anchors {
                 left: pageArea.left
                 right: pageArea.right

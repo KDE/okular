@@ -21,16 +21,22 @@ import QtQuick 2.1
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.extras 2.0 as PlasmaExtras
-import org.kde.plasma.mobilecomponents 2.0 as MobileComponents
+import org.kde.plasma.mobilecomponents 0.2 as MobileComponents
 
 PlasmaComponents.Page {
+    id: root
     property alias contentY: flickable.contentY
     property alias contentHeight: flickable.contentHeight
 
-    tools: MobileComponents.ViewSearch {
-        id: searchField
-        anchors.centerIn: parent
-        busy: documentItem.searchInProgress
+    tools: Item {
+        id: toolBarContent
+        width: root.width
+        height: searchField.height
+        PlasmaComponents.TextField {
+            id: searchField
+            clearButtonShown: true
+            anchors.centerIn: parent
+        }
     }
     PlasmaExtras.ScrollArea {
         anchors.fill: parent

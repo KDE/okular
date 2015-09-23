@@ -132,6 +132,7 @@ void TOCModelPrivate::addChildren( const QDomNode & parentNode, TOCItem * parent
             itemsToOpen.append( currentItem );
 
         n = n.nextSibling();
+        emit q->countChanged();
     }
 }
 
@@ -167,6 +168,14 @@ TOCModel::TOCModel( Okular::Document *document, QObject *parent )
 TOCModel::~TOCModel()
 {
     delete d;
+}
+
+QHash<int, QByteArray> TOCModel::roleNames() const
+{
+    QHash<int, QByteArray> roles = QAbstractItemModel::roleNames();
+    roles[(int)PageItemDelegate::PageRole] = "page";
+    roles[(int)PageItemDelegate::PageLabelRole] = "pageLabel";
+    return roles;
 }
 
 int TOCModel::columnCount( const QModelIndex &parent ) const

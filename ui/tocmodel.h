@@ -24,12 +24,17 @@ class TOCModelPrivate;
 class TOCModel : public QAbstractItemModel
 {
     Q_OBJECT
+    /**
+     * How many items are in this model, useful for QML
+     */
+    Q_PROPERTY(int count READ count NOTIFY countChanged)
 
     public:
         explicit TOCModel( Okular::Document *document, QObject *parent = Q_NULLPTR );
         virtual ~TOCModel();
 
         // reimplementations from QAbstractItemModel
+        QHash<int, QByteArray> roleNames() const;
         int columnCount( const QModelIndex &parent = QModelIndex() ) const;
         QVariant data( const QModelIndex &index, int role = Qt::DisplayRole ) const Q_DECL_OVERRIDE;
         bool hasChildren( const QModelIndex &parent = QModelIndex() ) const Q_DECL_OVERRIDE;
@@ -51,6 +56,14 @@ class TOCModel : public QAbstractItemModel
         QString externalFileNameForIndex( const QModelIndex &index ) const;
         Okular::DocumentViewport viewportForIndex( const QModelIndex &index ) const;
         QString urlForIndex( const QModelIndex &index ) const;
+
+        int count() const
+        {
+            return rowCount();
+        }
+
+    Q_SIGNALS:
+        void countChanged();
 
     private:
         // storage

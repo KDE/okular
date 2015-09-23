@@ -20,7 +20,7 @@
 import QtQuick 2.1
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.core 2.0 as PlasmaCore
-import org.kde.qtextracomponents 2.0
+import org.kde.kquickcontrolsaddons 2.0
 
 Column {
     id: treeDelegate
@@ -28,13 +28,13 @@ Column {
     property int rowIndex: index
     width: parent.width
 
-    property bool matches: searchField.searchQuery.length < 3 || display.toLowerCase().indexOf(searchField.searchQuery.toLowerCase()) !== -1
+    property bool matches: display.toLowerCase().indexOf(searchField.text.toLowerCase()) !== -1
 
 
     MouseArea {
         id: delegateArea
         width: parent.width
-        height: label.height
+        height: matches ? label.height : 0
         opacity: matches ? 1 : 0
         Behavior on opacity {
             NumberAnimation {
@@ -56,6 +56,7 @@ Column {
             width: theme.smallIconSize
             height: width
             anchors.verticalCenter: parent.verticalCenter
+            x: units.largeSpacing
         }
         PlasmaComponents.Label {
             id: label
@@ -63,10 +64,10 @@ Column {
             verticalAlignment: Text.AlignBottom
             anchors.left: icon.right
         }
-        //there isn't a sane way to do a dotted line in QML1
+        //there isn't a sane way to do a dotted line in QML
         Rectangle {
             color: theme.textColor
-            opacity: 2.0
+            opacity: 0.3
             height: 1
             anchors {
                 bottom: parent.bottom
@@ -79,7 +80,7 @@ Column {
             text: pageLabel ? pageLabel : page
             anchors.right: parent.right
             verticalAlignment: Text.AlignBottom
-            anchors.rightMargin: 40
+            anchors.rightMargin: units.largeSpacing
         }
     }
     Column {

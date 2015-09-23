@@ -33,6 +33,7 @@ ThumbnailsBase {
         height: searchField.height
         PlasmaComponents.TextField {
             id: searchField
+            clearButtonShown: true
             enabled: documentItem.supportsSearch
             anchors.centerIn: parent
             onTextChanged: {

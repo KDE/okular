@@ -60,9 +60,10 @@ void DocumentItem::setPath(const QString &path)
     QMimeDatabase db;
     m_document->openDocument(path, QUrl::fromLocalFile(path), db.mimeTypeForUrl(QUrl::fromLocalFile(path)));
 
+    m_tocModel->clear();
     m_tocModel->fill(m_document->documentSynopsis());
     m_tocModel->setCurrentViewport(m_document->viewport());
-
+qWarning()<<"LLL"<<m_tocModel->count();
     m_matchingPages.clear();
     for (uint i = 0; i < m_document->pages(); ++i) {
          m_matchingPages << (int)i;

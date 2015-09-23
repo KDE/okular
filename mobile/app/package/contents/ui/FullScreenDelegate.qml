@@ -69,6 +69,9 @@ MouseEventListener {
             mainPage.height *= zoom
         }
 
+        pageArea.oldDelegate.pageItem.width = mainPage.width;
+        pageArea.oldDelegate.pageItem.height = mainPage.height;
+
         return true
     }
 
@@ -152,6 +155,8 @@ MouseEventListener {
         height: parent.height
         contentWidth: imageMargin.width
         contentHeight: imageMargin.height
+        boundsBehavior: Flickable.DragAndOvershootBounds
+        flickableDirection: Flickable.HorizontalAndVerticalFlick
 
         onContentXChanged: {
             if (atXBeginning && contentX < 0) {
@@ -165,7 +170,7 @@ MouseEventListener {
 
         PinchArea {
             id: imageMargin
-            width: Math.max(mainFlickable.width + (pageSwitchEnabled ? 1: 0), mainPage.width)
+            width: Math.max(mainFlickable.width+1, mainPage.width)
             height: Math.max(mainFlickable.height, mainPage.height)
 
             property real startWidth

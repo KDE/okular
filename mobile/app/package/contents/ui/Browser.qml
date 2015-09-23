@@ -95,11 +95,7 @@ MobileComponents.SplitDrawer {
                 delegate.pageSwitchEnabled = false
                 if (Math.abs(mouse.screenX - startMouseScreenX) < 20 &&
                     Math.abs(mouse.screenY - startMouseScreenY) < 20) {
-                    if (browserFrame.state == "Closed") {
-                        browserFrame.state = "Hidden"
-                    } else {
-                        browserFrame.state = "Closed"
-                    }
+                    
 
                 } else if (oldDelegate.visible && delegate.delta != 0 &&
                     (Math.abs(mouse.screenX - startMouseScreenX) > width/5) &&
@@ -128,18 +124,27 @@ MobileComponents.SplitDrawer {
                     properties: "x"
                     to: pageArea.incrementing ? -pageArea.oldDelegate.width : pageArea.oldDelegate.width
                     easing.type: Easing.InQuad
-                    duration: 250
+                    duration: units.longDuration
                 }
                 ScriptAction {
                     script: {
                         pageArea.oldDelegate.z = 0
                         pageArea.delegate.z = 10
-                        pageArea.oldDelegate.x = 0
-                        pageArea.delegate.x = 0
                     }
                 }
+                NumberAnimation {
+                    target: pageArea.oldDelegate
+                    properties: "x"
+                    to: 0
+                    easing.type: Easing.InQuad
+                    duration: units.longDuration
+                }
                 ScriptAction {
-                    script: delegate1.delta = delegate2.delta = 0
+                    script: {
+                        pageArea.oldDelegate.x = 0
+                        pageArea.delegate.x = 0
+                        delegate1.delta = delegate2.delta = 0
+                    }
                 }
             }
         }

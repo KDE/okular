@@ -18,6 +18,7 @@
  */
 
 import QtQuick 2.2
+import QtQuick.Controls 1.2 as QtControls
 import org.kde.okular 2.0
 import "./private"
 
@@ -27,24 +28,32 @@ import "./private"
  * It supports changing pages by a swipe gesture, pinch zoom
  * and flicking to scroll around
  */
-Item {
+QtControls.ScrollView {
     id: root
-    width: 500
-    height: 600
-
-    property DocumentItem documentItem
-
+    property DocumentItem document
+    property PageItem page: mouseArea.currPageDelegate.pageItem
     Flickable {
         id: flick
-        anchors.fill: parent
+        
+        clip: true
 
         Component.onCompleted: {
             flick.contentWidth = flick.width
             flick.contentHeight = flick.width / mouseArea.currPageDelegate.pageRatio
         }
-        onWidthChanged: {
-            flick.contentWidth = flick.width
-            flick.contentHeight = flick.width / mouseArea.currPageDelegate.pageRatio
+        onWidthChanged: resizeTimer.restart()
+        onHeightChanged: resizeTimer.restart()
+        Connections {
+            target: root.document
+            onPathChanged: resizeTimer.restart()
+        }
+        Timer {
+            id: resizeTimer
+            interval: 250
+            onTriggered: {
+                flick.contentWidth = flick.width
+                flick.contentHeight = flick.width / mouseArea.currPageDelegate.pageRatio
+            }
         }
 
         PinchArea {
@@ -98,10 +107,10 @@ Item {
                     oldMouseY = pos.y;
                 }
                 onReleased: {
-                    if (root.documentItem.currentPage > 0 &&
+                    if (root.document.currentPage > 0 &&
                         currPageDelegate.x > width/6) {
                         switchAnimation.running = true;
-                    } else if (root.documentItem.currentPage < documentItem.pageCount-1 &&
+                    } else if (root.document.currentPage < document.pageCount-1 &&
                         currPageDelegate.x < -width/6) {
                         switchAnimation.running = true;
                     } else {
@@ -120,17 +129,17 @@ Item {
 
                 PageView {
                     id: page1
-                    document: root.documentItem
+                    document: root.document
                     z: 2
                 }
                 PageView {
                     id: page2
-                    document: root.documentItem
+                    document: root.document
                     z: 1
                 }
                 PageView {
                     id: page3
-                    document: root.documentItem
+                    document: root.document
                     z: 0
                 }
 
@@ -138,7 +147,7 @@ Item {
                 Binding {
                     target: mouseArea.currPageDelegate
                     property: "pageNumber"
-                    value: root.documentItem.currentPage
+                    value: root.document.currentPage
                 }
                 Binding {
                     target: mouseArea.currPageDelegate
@@ -149,23 +158,23 @@ Item {
                 Binding {
                     target: mouseArea.prevPageDelegate
                     property: "pageNumber"
-                    value: root.documentItem.currentPage - 1
+                    value: root.document.currentPage - 1
                 }
                 Binding {
                     target: mouseArea.prevPageDelegate
                     property: "visible"
-                    value: !mouseArea.incrementing && root.documentItem.currentPage > 0
+                    value: !mouseArea.incrementing && root.document.currentPage > 0
                 }
 
                 Binding {
                     target: mouseArea.nextPageDelegate
                     property: "pageNumber"
-                    value: root.documentItem.currentPage + 1
+                    value: root.document.currentPage + 1
                 }
                 Binding {
                     target: mouseArea.nextPageDelegate
                     property: "visible"
-                    value: mouseArea.incrementing && root.documentItem.currentPage < documentItem.pageCount-1
+                    value: mouseArea.incrementing && root.document.currentPage < document.pageCount-1
                 }
                 
                 SequentialAnimation {
@@ -194,12 +203,12 @@ Item {
                             var oldNext = mouseArea.nextPageDelegate;
 
                             if (mouseArea.incrementing) {
-                                root.documentItem.currentPage++;
+                                root.document.currentPage++;
                                 mouseArea.currPageDelegate = oldNext;
                                 mouseArea.prevPageDelegate = oldCur;
                                 mouseArea. nextPageDelegate = oldPrev;
                             } else {
-                                root.documentItem.currentPage--;
+                                root.document.currentPage--;
                                 mouseArea.currPageDelegate = oldPrev;
                                 mouseArea.prevPageDelegate = oldCur;
                                 mouseArea. nextPageDelegate = oldNext;

@@ -30,6 +30,6 @@ Item {
     }
     Okular.DocumentView {
         anchors.fill: parent
-        documentItem: docItem
+        document: docItem
     }
 }

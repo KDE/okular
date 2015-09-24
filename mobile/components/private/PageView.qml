@@ -19,11 +19,12 @@
 
 import QtQuick 2.2
 import QtGraphicalEffects 1.0
-import org.kde.okular 2.0 as Okular
+import org.kde.okular 2.0
 
 Item {
     width: parent.width
     height: parent.height
+    property PageItem pageItem: page
     property alias document: page.document
     property alias pageNumber: page.pageNumber
     implicitWidth: page.implicitWidth
@@ -31,7 +32,7 @@ Item {
     property real pageRatio: page.implicitWidth / page.implicitHeight
     property real scaleFactor: page.width / page.implicitWidth
 
-    Okular.PageItem {
+    PageItem {
         id: page
         property bool sameOrientation: parent.width / parent.height > pageRatio
         anchors.centerIn: parent

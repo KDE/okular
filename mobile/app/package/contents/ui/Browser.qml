@@ -33,10 +33,11 @@ MobileComponents.SplitDrawer {
 
     property alias splitDrawerOpen: splitDrawer.open
     property alias overlayDrawerOpen: resourceBrowser.open
+
     //An alias doesn't work
-    property bool bookmarked: pageArea.delegate.bookmarked
+    property bool bookmarked: false
     onBookmarkedChanged: {
-        pageArea.delegate.bookmarked = bookmarked
+        pageArea.page.bookmarked = bookmarked
     }
 
     drawer: Documents {
@@ -48,126 +49,21 @@ MobileComponents.SplitDrawer {
         anchors.fill: parent
         visible: true
 
-        MouseEventListener {
+        Okular.DocumentView {
             id: pageArea
+            document: documentItem
             anchors.fill: parent
-            clip: true
-            //enabled: !delegate.interactive
-            property Item delegate: delegate1
-            property Item oldDelegate: delegate2
-            property bool incrementing: delegate.delta > 0
 
-            property bool bookmarked: delegate.bookmarked
-            onBookmarkedChanged: {
-                splitDrawer.bookmarked = delegate.bookmarked;
-            }
-
-            Connections {
-                target: pageArea.delegate
-                onDeltaChanged: {
-                    pageArea.oldDelegate.delta = pageArea.delegate.delta
-                    if (pageArea.delegate.delta > 0) {
-                        pageArea.oldDelegate.visible = true
-                        pageArea.oldDelegate.pageNumber = pageArea.delegate.pageNumber + 1
-                        documentItem.currentPage = pageArea.oldDelegate.pageNumber
-                        pageArea.oldDelegate.visible = !(pageArea.delegate.pageNumber == documentItem.pageCount-1)
-                    } else if (pageArea.delegate.delta < 0) {
-                        pageArea.oldDelegate.pageNumber =  pageArea.delegate.pageNumber - 1
-                        documentItem.currentPage = pageArea.oldDelegate.pageNumber
-
-                        pageArea.oldDelegate.visible = pageArea.delegate.pageNumber != 0
-                    }
-                }
-            }
-
-            property int startMouseScreenX
-            property int startMouseScreenY
-            onPressed: {
-                startMouseScreenX = mouse.screenX
-                startMouseScreenY = mouse.screenY
-            }
-            onPositionChanged: {
-                if (Math.abs(mouse.screenX - startMouseScreenX) > width/5) {
-                    delegate.pageSwitchEnabled = true
-                }
-            }
-            onReleased: {
-                delegate.pageSwitchEnabled = false
-                if (Math.abs(mouse.screenX - startMouseScreenX) < 20 &&
-                    Math.abs(mouse.screenY - startMouseScreenY) < 20) {
-                    
-
-                } else if (oldDelegate.visible && delegate.delta != 0 &&
-                    (Math.abs(mouse.screenX - startMouseScreenX) > width/5) &&
-                    Math.abs(mouse.screenX - startMouseScreenX) > Math.abs(mouse.screenY - startMouseScreenY)) {
-                    oldDelegate = delegate
-                    delegate = (delegate == delegate1) ? delegate2 : delegate1
-                    switchAnimation.running = true
-                }
-            }
-            FullScreenDelegate {
-                id: delegate2
-                width: parent.width
-                height: parent.height
-            }
-            FullScreenDelegate {
-                id: delegate1
-                width: parent.width
-                height: parent.height
-                Component.onCompleted: pageNumber = documentItem.currentPage
-            }
-
-            SequentialAnimation {
-                id: switchAnimation
-                NumberAnimation {
-                    target: pageArea.oldDelegate
-                    properties: "x"
-                    to: pageArea.incrementing ? -pageArea.oldDelegate.width : pageArea.oldDelegate.width
-                    easing.type: Easing.InQuad
-                    duration: units.longDuration
-                }
-                ScriptAction {
-                    script: {
-                        pageArea.oldDelegate.z = 0
-                        pageArea.delegate.z = 10
-                    }
-                }
-                NumberAnimation {
-                    target: pageArea.oldDelegate
-                    properties: "x"
-                    to: 0
-                    easing.type: Easing.InQuad
-                    duration: units.longDuration
-                }
-                ScriptAction {
-                    script: {
-                        pageArea.oldDelegate.x = 0
-                        pageArea.delegate.x = 0
-                        delegate1.delta = delegate2.delta = 0
-                    }
-                }
+            onPageChanged: {
+                bookmarkConnection.target = page
+                splitDrawer.bookmarked = page.bookmarked
             }
         }
-        PlasmaComponents.ScrollBar {
-            flickableItem: pageArea.delegate.flickable
-            orientation: Qt.Vertical
-            anchors {
-                right: pageArea.right
-                top: pageArea.top
-                bottom: pageArea.bottom
-                left: undefined
-            }
-        }
-        PlasmaComponents.ScrollBar {
-            flickableItem: pageArea.delegate.flickable
-            orientation: Qt.Horizontal
-            visible: pageArea.delegate.width > pageArea.width
-            anchors {
-                left: pageArea.left
-                right: pageArea.right
-                bottom: pageArea.bottom
-                top: undefined
-            }
+        //HACK
+        Connections {
+            id: bookmarkConnection
+            target: pageArea.page
+            onBookmarkedChanged: splitDrawer.bookmarked = pageArea.page.bookmarked
         }
 
         drawer: Item {

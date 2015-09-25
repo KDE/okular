@@ -32,8 +32,12 @@ QtControls.ScrollView {
     id: root
     property DocumentItem document
     property PageItem page: mouseArea.currPageDelegate.pageItem
+
+    onWidthChanged: resizeTimer.restart()
+    onHeightChanged: resizeTimer.restart()
     Flickable {
         id: flick
+        anchors.fill: parent
         
         clip: true
 
@@ -41,8 +45,6 @@ QtControls.ScrollView {
             flick.contentWidth = flick.width
             flick.contentHeight = flick.width / mouseArea.currPageDelegate.pageRatio
         }
-        onWidthChanged: resizeTimer.restart()
-        onHeightChanged: resizeTimer.restart()
         Connections {
             target: root.document
             onPathChanged: resizeTimer.restart()
@@ -74,7 +76,17 @@ QtControls.ScrollView {
                 flick.contentY += pinch.previousCenter.y - pinch.center.y
 
                 // resize content
-                flick.resizeContent(Math.max(flick.width+1, initialWidth * pinch.scale), Math.max(flick.height, initialHeight * pinch.scale), pinch.center);
+                //use the scale property during pinch, for speed reasons
+                if (initialHeight * pinch.scale > flick.height &&
+                    initialHeight * pinch.scale < flick.height * 3) {
+                    mouseArea.scale = pinch.scale;
+                }
+                flick.returnToBounds();
+            }
+            onPinchFinished: {
+                flick.resizeContent(Math.max(flick.width+1, initialWidth * mouseArea.scale), Math.max(flick.height, initialHeight * mouseArea.scale), pinch.center);
+                mouseArea.scale = 1;
+
                 flick.returnToBounds();
             }
             MouseArea {

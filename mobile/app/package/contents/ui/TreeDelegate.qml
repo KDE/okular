@@ -44,7 +44,6 @@ Column {
 
 
         onClicked: {
-            pageArea.delegate.pageNumber = page-1
             documentItem.currentPage = page-1
 
             resourceBrowser.open = false

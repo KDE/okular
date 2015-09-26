@@ -96,10 +96,12 @@ public:
     QStackedLayout *pageLayout;
     QLabel *posterImagePage;
     bool loaded : 1;
+    double repetitionsLeft;
 };
 
 void VideoWidget::Private::load()
 {
+    repetitionsLeft = movie->playRepetitions();
     if ( loaded )
         return;
 
@@ -176,14 +178,20 @@ void VideoWidget::Private::finished()
 {
     switch ( movie->playMode() )
     {
-        case Okular::Movie::PlayOnce:
+        case Okular::Movie::PlayLimited:
         case Okular::Movie::PlayOpen:
-            // playback has ended, nothing to do
-            stopAction->setEnabled( false );
-            setupPlayPauseAction( PlayMode );
-            if ( movie->playMode() == Okular::Movie::PlayOnce )
-                controlBar->setVisible( false );
-            videoStopped();
+            repetitionsLeft -= 1.0;
+            if ( repetitionsLeft < 1e-5 ) { // allow for some calculation error
+                // playback has ended
+                stopAction->setEnabled( false );
+                setupPlayPauseAction( PlayMode );
+                if ( movie->playMode() == Okular::Movie::PlayLimited )
+                    controlBar->setVisible( false );
+                videoStopped();
+            } else
+                // not done yet, repeat
+                // if repetitionsLeft is less than 1, we are supposed to stop midway, but not even Adobe reader does this
+                player->play();
             break;
         case Okular::Movie::PlayRepeat:
             // repeat the playback
@@ -360,6 +368,7 @@ void VideoWidget::play()
 {
     d->controlBar->setVisible( d->movie->showControls() );
     d->load();
+    // if d->repetitionsLeft is less than 1, we are supposed to stop midway, but not even Adobe reader does this
     d->player->play();
     d->stopAction->setEnabled( true );
     d->setupPlayPauseAction( Private::PauseMode );

@@ -200,7 +200,12 @@ Okular::Movie* createMovieFromPopplerScreen( const Poppler::LinkRendition *poppl
         movie = new Okular::Movie( rendition->fileName() );
     movie->setSize( rendition->size() );
     movie->setShowControls( rendition->showControls() );
-    movie->setPlayMode( Okular::Movie::PlayOnce );
+    if ( rendition->repeatCount() == 0 ) {
+        movie->setPlayMode( Okular::Movie::PlayRepeat );
+    } else {
+        movie->setPlayMode( Okular::Movie::PlayLimited );
+        movie->setPlayRepetitions( rendition->repeatCount() );
+    }
     movie->setAutoPlay( rendition->autoPlay() );
     return movie;
 }

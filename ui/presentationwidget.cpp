@@ -1406,7 +1406,7 @@ void PresentationWidget::slotTransitionStep()
         case Okular::PageTransition::Fade:
         {
             QPainter pixmapPainter;
-            m_currentPixmapOpacity += 0.01;
+            m_currentPixmapOpacity += 1.0 / m_transitionSteps;
             m_lastRenderedPixmap = QPixmap( m_lastRenderedPixmap.size() );
             m_lastRenderedPixmap.fill( Qt::transparent );
             pixmapPainter.begin( &m_lastRenderedPixmap );
@@ -2145,7 +2145,9 @@ void PresentationWidget::initTransition( const Okular::PageTransition *transitio
 
         case Okular::PageTransition::Fade:
         {
-            const int steps = 100;
+            enum {FADE_TRANSITION_FPS = 20};
+            const int steps = totalTime * FADE_TRANSITION_FPS;
+            m_transitionSteps = steps;
             QPainter pixmapPainter;
             m_currentPixmapOpacity = (double) 1 / steps;
             m_transitionDelay = (int)( totalTime * 1000 ) / steps;

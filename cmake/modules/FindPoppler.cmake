@@ -135,9 +135,20 @@ int main()
 }
 " HAVE_POPPLER_0_28)
 
+check_cxx_source_compiles("
+#include <poppler-qt4.h>
+int main()
+{
+  Poppler::PageTransition *p = 0;
+  return p->durationReal();
+}
+" HAVE_POPPLER_0_37)
+
   set(CMAKE_REQUIRED_INCLUDES)
   set(CMAKE_REQUIRED_LIBRARIES)
-  if (HAVE_POPPLER_0_28)
+  if (HAVE_POPPLER_0_37)
+    set(popplerVersionMessage "0.37")
+  elseif (HAVE_POPPLER_0_28)
     set(popplerVersionMessage "0.28")
   elseif (HAVE_POPPLER_0_24)
     set(popplerVersionMessage "0.24")

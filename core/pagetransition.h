@@ -86,7 +86,7 @@ class OKULAR_EXPORT PageTransition
         /**
          * Returns the duration of the transition in seconds.
          */
-        int duration() const;
+        double duration() const;
 
         /**
          * Returns the alignment of the transition.
@@ -121,7 +121,7 @@ class OKULAR_EXPORT PageTransition
         /**
          * Sets the @p duration in seconds for the transition.
          */
-        void setDuration( int duration );
+        void setDuration( double duration );
 
         /**
          * Sets the @p alignment of the transition (@ref Alignment).

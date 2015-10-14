@@ -1515,7 +1515,11 @@ void PDFGenerator::addTransition( Poppler::Page * pdfPage, Okular::Page * page )
             break;
     }
 
+#ifdef HAVE_POPPLER_0_37
+    transition->setDuration( pdfTransition->durationReal() );
+#else
     transition->setDuration( pdfTransition->duration() );
+#endif
 
     switch ( pdfTransition->alignment() ) {
         case Poppler::PageTransition::Horizontal:

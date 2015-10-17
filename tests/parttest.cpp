@@ -8,14 +8,18 @@
  ***************************************************************************/
 
 #include <qtest_kde.h>
+#include <qtestmouse.h>
 
+#include "../core/page.h"
 #include "../part.h"
 #include "../ui/toc.h"
+#include "../ui/pageview.h"
 
 #include <KConfigDialog>
 #include <KStandardDirs>
 #include <KTempDir>
 
+#include <QClipboard>
 #include <QTreeView>
 
 namespace Okular
@@ -32,6 +36,7 @@ class PartTest
         void testFowardPDF();
         void testFowardPDF_data();
         void testGeneratorPreferences();
+        void testSelectText();
 };
 
 class PartThatHijacksQueryClose : public Okular::Part
@@ -156,6 +161,34 @@ void PartTest::testGeneratorPreferences()
     dialog = part.slotGeneratorPreferences();
     qApp->processEvents();
     delete dialog;
+}
+
+void PartTest::testSelectText()
+{
+    QVariantList dummyArgs;
+    Okular::Part part(NULL, NULL, dummyArgs, KGlobal::mainComponent());
+    part.openDocument(KDESRCDIR "data/file2.pdf");
+    part.widget()->show();
+    QTest::qWaitForWindowShown(part.widget());
+
+    const int width = part.m_pageView->width();
+    const int height = part.m_pageView->height();
+
+    // wait for pixmap
+    while (!part.m_document->page(0)->hasPixmap(part.m_pageView))
+        QTest::qWait(100);
+
+    QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseTextSelect");
+
+    QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * 0.12, height * 0.16));
+    QTest::mousePress(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, QPoint(width * 0.12, height * 0.16));
+    QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * 0.8, height * 0.16));
+    QTest::mouseRelease(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, QPoint(width * 0.8, height * 0.16));
+
+    QApplication::clipboard()->clear();
+    QMetaObject::invokeMethod(part.m_pageView, "copyTextSelection");
+
+    QCOMPARE(QApplication::clipboard()->text(), QString("Hola que tal\n"));
 }
 
 }

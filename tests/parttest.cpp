@@ -37,6 +37,7 @@ class PartTest
         void testFowardPDF_data();
         void testGeneratorPreferences();
         void testSelectText();
+        void testClickInternalLink();
 };
 
 class PartThatHijacksQueryClose : public Okular::Part
@@ -174,6 +175,8 @@ void PartTest::testSelectText()
     const int width = part.m_pageView->width();
     const int height = part.m_pageView->height();
 
+    part.m_document->setViewportPage(0);
+
     // wait for pixmap
     while (!part.m_document->page(0)->hasPixmap(part.m_pageView))
         QTest::qWait(100);
@@ -189,6 +192,30 @@ void PartTest::testSelectText()
     QMetaObject::invokeMethod(part.m_pageView, "copyTextSelection");
 
     QCOMPARE(QApplication::clipboard()->text(), QString("Hola que tal\n"));
+}
+
+void PartTest::testClickInternalLink()
+{
+    QVariantList dummyArgs;
+    Okular::Part part(NULL, NULL, dummyArgs, KGlobal::mainComponent());
+    part.openDocument(KDESRCDIR "data/file2.pdf");
+    part.widget()->show();
+    QTest::qWaitForWindowShown(part.widget());
+
+    const int width = part.m_pageView->width();
+    const int height = part.m_pageView->height();
+
+    part.m_document->setViewportPage(0);
+
+    // wait for pixmap
+    while (!part.m_document->page(0)->hasPixmap(part.m_pageView))
+        QTest::qWait(100);
+
+    QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseNormal");
+
+    QCOMPARE(part.m_document->currentPage(), 0u);
+    QTest::mouseClick(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, QPoint(width * 0.15, height * 0.15));
+    QCOMPARE(part.m_document->currentPage(), 1u);
 }
 
 }

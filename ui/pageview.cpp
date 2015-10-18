@@ -4050,6 +4050,19 @@ void PageView::updateCursor( const QPoint &p )
     }
 }
 
+void PageView::reloadForms()
+{
+    QLinkedList< PageViewItem * >::const_iterator iIt = d->visibleItems.constBegin(), iEnd = d->visibleItems.constEnd();
+    if( d->m_formsVisible )
+    {
+        for ( ; iIt != iEnd; ++iIt )
+        {
+            (*iIt)->reloadFormWidgetsState();
+        }
+    }
+
+}
+
 void PageView::moveMagnifier( const QPoint& p ) // non scaled point
 {
     const int w = d->magnifierView->width() * 0.5;

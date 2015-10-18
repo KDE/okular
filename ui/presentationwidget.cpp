@@ -672,21 +672,7 @@ void PresentationWidget::mouseReleaseEvent( QMouseEvent * e )
 {
     if ( m_drawingEngine )
     {
-        QRect r = routeMouseDrawingEvent( e );
-        (void)r;
-        if ( m_drawingEngine->creationCompleted() )
-        {
-            // add drawing to current page
-            m_frames[ m_frameIndex ]->drawings << m_drawingEngine->endSmoothPath();
-
-            // manually disable and re-enable the pencil mode, so we can do
-            // cleaning of the actual drawer and create a new one just after
-            // that - that gives continuous drawing
-            slotChangeDrawingToolEngine( QDomElement() );
-            slotChangeDrawingToolEngine( m_currentDrawingToolElement );
-            // schedule repaint
-            update();
-        }
+        routeMouseDrawingEvent( e );
         return;
     }
 
@@ -1232,11 +1218,57 @@ QRect PresentationWidget::routeMouseDrawingEvent( QMouseEvent * e )
     double nX = ( (double)e->x() - (double)geom.left() ) / (double)geom.width();
     double nY = ( (double)e->y() - (double)geom.top() ) / (double)geom.height();
     QRect ret;
-    if ( hasclicked && nX >= 0 && nX < 1 && nY >= 0 && nY < 1 )
+    bool isInside = nX >= 0 && nX < 1 && nY >= 0 && nY < 1;
+
+    if ( hasclicked && !isInside ) {
+        // Fake a move to the last border pos
+        nX = qBound(0., nX, 1.);
+        nY = qBound(0., nY, 1.);
+        m_drawingEngine->event( AnnotatorEngine::Move, button, nX, nY, geom.width(), geom.height(), page );
+
+        // Fake a release in the following lines
+        eventType = AnnotatorEngine::Release;
+        isInside = true;
+    } else if ( !hasclicked && isInside )
+    {
+        // we're coming from the outside, pretend we started clicking at the closest border
+        if ( nX < ( 1 - nX ) && nX < nY && nX < ( 1 - nY ) )
+            nX = 0;
+        else if ( nY < ( 1 - nY ) && nY < nX && nY < ( 1 - nX ) )
+            nY = 0;
+        else if ( ( 1 - nX ) < nX && ( 1 - nX ) < nY && ( 1 - nX ) < ( 1 - nY ) )
+            nX = 1;
+        else
+            nY = 1;
+
+        hasclicked = true;
+        eventType = AnnotatorEngine::Press;
+    }
+
+    if ( hasclicked && isInside )
+    {
         ret = m_drawingEngine->event( eventType, button, nX, nY, geom.width(), geom.height(), page );
+    }
 
     if ( eventType == AnnotatorEngine::Release )
+    {
         hasclicked = false;
+    }
+
+    if ( m_drawingEngine->creationCompleted() )
+    {
+        // add drawing to current page
+        m_frames[ m_frameIndex ]->drawings << m_drawingEngine->endSmoothPath();
+
+        // manually disable and re-enable the pencil mode, so we can do
+        // cleaning of the actual drawer and create a new one just after
+        // that - that gives continuous drawing
+        slotChangeDrawingToolEngine( QDomElement() );
+        slotChangeDrawingToolEngine( m_currentDrawingToolElement );
+
+        // schedule repaint
+        update();
+    }
 
     return ret;
 }
@@ -1430,7 +1462,7 @@ void PresentationWidget::slotTransitionStep()
         case Okular::PageTransition::Fade:
         {
             QPainter pixmapPainter;
-            m_currentPixmapOpacity += 0.01;
+            m_currentPixmapOpacity += 1.0 / m_transitionSteps;
             m_lastRenderedPixmap = QPixmap( m_lastRenderedPixmap.size() );
             m_lastRenderedPixmap.fill( Qt::transparent );
             pixmapPainter.begin( &m_lastRenderedPixmap );
@@ -2169,7 +2201,9 @@ void PresentationWidget::initTransition( const Okular::PageTransition *transitio
 
         case Okular::PageTransition::Fade:
         {
-            const int steps = 100;
+            enum {FADE_TRANSITION_FPS = 20};
+            const int steps = totalTime * FADE_TRANSITION_FPS;
+            m_transitionSteps = steps;
             QPainter pixmapPainter;
             m_currentPixmapOpacity = (double) 1 / steps;
             m_transitionDelay = (int)( totalTime * 1000 ) / steps;

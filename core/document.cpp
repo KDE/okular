@@ -3738,6 +3738,15 @@ void Document::editFormButtons( int pageNumber, const QList< FormFieldButton* >&
     d->m_undoStack->push( uc );
 }
 
+void Document::reloadDocument() const
+{
+    const int numOfPages = pages();
+    for( int i = currentPage(); i >= 0; i -- )
+        d->refreshPixmaps( i );
+    for( int i = currentPage() + 1; i < numOfPages; i ++ )
+        d->refreshPixmaps( i );
+}
+
 BookmarkManager * Document::bookmarkManager() const
 {
     return d->m_bookmarkManager;
@@ -4562,6 +4571,11 @@ void Document::walletDataForFile( const QString &fileName, QString *walletName, 
     } else if (d->m_walletGenerator) {
         d->m_walletGenerator->walletDataForFile( fileName, walletName, walletFolder, walletKey );
     }
+}
+
+QAbstractItemModel * Document::layersModel() const
+{
+    return d->m_generator ? d->m_generator->layersModel() : NULL;
 }
 
 void DocumentPrivate::requestDone( PixmapRequest * req )

@@ -120,6 +120,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         QTimer * m_nextPageTimer;
         int m_transitionDelay;
         int m_transitionMul;
+        int m_transitionSteps;
         QList< QRect > m_transitionRects;
         Okular::PageTransition m_currentTransition;
         QPixmap m_currentPagePixmap;

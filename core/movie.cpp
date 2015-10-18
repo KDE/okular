@@ -28,7 +28,8 @@ class Movie::Private
         Private( const QString &url )
             : m_url( url ),
               m_rotation( Rotation0 ),
-              m_playMode( PlayOnce ),
+              m_playMode( PlayLimited ),
+              m_playRepetitions( 1.0 ),
               m_tmp( 0 ),
               m_showControls( false ),
               m_autoPlay( false ),
@@ -40,6 +41,7 @@ class Movie::Private
         QSize m_aspect;
         Rotation m_rotation;
         PlayMode m_playMode;
+        double m_playRepetitions;
         QTemporaryFile *m_tmp;
         QImage m_posterImage;
         bool m_showControls : 1;
@@ -122,6 +124,16 @@ void Movie::setPlayMode( Movie::PlayMode mode )
 Movie::PlayMode Movie::playMode() const
 {
     return d->m_playMode;
+}
+
+void Movie::setPlayRepetitions( double repetitions )
+{
+    d->m_playRepetitions = repetitions;
+}
+
+double Movie::playRepetitions() const
+{
+    return d->m_playRepetitions;
 }
 
 void Movie::setAutoPlay( bool autoPlay )

@@ -432,6 +432,14 @@ class OKULARCORE_EXPORT Generator : public QObject
          */
         void setDPI(const QSizeF &dpi);
 
+        /**
+         * Returns the 'layers model' object of the document or NULL if
+         * layers model is not available.
+         *
+         * @since 0.24
+         */
+        virtual QAbstractItemModel * layersModel() const;
+
     Q_SIGNALS:
         /**
          * This signal should be emitted whenever an error occurred in the generator.

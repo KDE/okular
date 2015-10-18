@@ -194,7 +194,12 @@ Okular::Movie* createMovieFromPopplerScreen( const Poppler::LinkRendition *poppl
         movie = new Okular::Movie( rendition->fileName() );
     movie->setSize( rendition->size() );
     movie->setShowControls( rendition->showControls() );
-    movie->setPlayMode( Okular::Movie::PlayOnce );
+    if ( rendition->repeatCount() == 0 ) {
+        movie->setPlayMode( Okular::Movie::PlayRepeat );
+    } else {
+        movie->setPlayMode( Okular::Movie::PlayLimited );
+        movie->setPlayRepetitions( rendition->repeatCount() );
+    }
     movie->setAutoPlay( rendition->autoPlay() );
     return movie;
 }
@@ -850,6 +855,11 @@ const QList<Okular::EmbeddedFile*> *PDFGenerator::embeddedFiles() const
     }
 
     return &docEmbeddedFiles;
+}
+
+QAbstractItemModel* PDFGenerator::layersModel() const
+{
+    return pdfdoc->hasOptionalContent() ? pdfdoc->optionalContentModel() : NULL;
 }
 
 bool PDFGenerator::isAllowed( Okular::Permission permission ) const
@@ -1560,7 +1570,11 @@ void PDFGenerator::addTransition( Poppler::Page * pdfPage, Okular::Page * page )
             break;
     }
 
+#ifdef HAVE_POPPLER_0_37
+    transition->setDuration( pdfTransition->durationReal() );
+#else
     transition->setDuration( pdfTransition->duration() );
+#endif
 
     switch ( pdfTransition->alignment() ) {
         case Poppler::PageTransition::Horizontal:

@@ -22,7 +22,7 @@ static inline QHash< int, QString > buildEditorsMap()
 {
     QHash< int, QString > editors;
     editors.insert( SettingsCore::EnumExternalEditor::Kate,
-        QString::fromLatin1( "kate --use --line %l --column %c" ) );
+        QString::fromLatin1( "kate --line %l --column %c" ) );
     editors.insert( SettingsCore::EnumExternalEditor::Kile,
         QString::fromLatin1( "kile --line %l" ) );
     editors.insert( SettingsCore::EnumExternalEditor::Scite,

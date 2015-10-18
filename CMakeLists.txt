@@ -293,6 +293,7 @@ set(okularpart_SRCS
    ui/tocmodel.cpp
    ui/toolaction.cpp
    ui/videowidget.cpp
+   ui/layers.cpp
 )
 
 if (Qt5TextToSpeech_FOUND)

@@ -29,7 +29,7 @@ class PageTransition::Private
         }
 
         Type m_type;
-        int m_duration;
+        double m_duration;
         Alignment m_alignment;
         Direction m_direction;
         int m_angle;
@@ -67,7 +67,7 @@ PageTransition::Type PageTransition::type() const
     return d->m_type;
 }
 
-int PageTransition::duration() const
+double PageTransition::duration() const
 {
     return d->m_duration;
 }
@@ -102,7 +102,7 @@ void PageTransition::setType( Type type )
     d->m_type = type;
 }
 
-void PageTransition::setDuration( int duration )
+void PageTransition::setDuration( double duration )
 {
     d->m_duration = duration;
 }

@@ -27,13 +27,15 @@ class Sidebar : public QWidget
         void setMainWidget( QWidget *widget );
         void setBottomWidget( QWidget *widget );
 
-        void setItemEnabled( int index, bool enabled );
-        bool isItemEnabled( int index ) const;
+        void setItemEnabled( QWidget *widget, bool enabled );
+        bool isItemEnabled( QWidget *widget ) const;
 
-        enum SetCurrentIndexBehaviour { UncollapseIfCollapsed, DoNotUncollapseIfCollapsed };
+        void setItemVisible( QWidget *widget, bool visible );
 
-        void setCurrentIndex( int index, SetCurrentIndexBehaviour b = UncollapseIfCollapsed );
-        int currentIndex() const;
+        enum SetCurrentItemBehaviour { UncollapseIfCollapsed, DoNotUncollapseIfCollapsed };
+
+        void setCurrentItem( QWidget *widget, SetCurrentItemBehaviour b = UncollapseIfCollapsed );
+        QWidget *currentItem() const;
 
         void setSidebarVisibility( bool visible );
         bool isSidebarVisible() const;
@@ -41,7 +43,7 @@ class Sidebar : public QWidget
         void setCollapsed( bool collapsed );
         bool isCollapsed() const;
 
-	void moveSplitter( int sideWidgetSize );
+        void moveSplitter( int sideWidgetSize );
 
     signals:
         void urlsDropped( const QList<QUrl>& urls );
@@ -59,7 +61,10 @@ class Sidebar : public QWidget
         void appearanceChanged();
 
     private:
-        void itemClicked( QListWidgetItem *item, SetCurrentIndexBehaviour b );
+        void setIndexEnabled( int index, bool enabled );
+        void setCurrentIndex( int index, SetCurrentItemBehaviour b = UncollapseIfCollapsed );
+        bool isIndexEnabled( int index ) const;
+        void itemClicked( QListWidgetItem *item, SetCurrentItemBehaviour b );
         void saveSplitterSize() const;
 
         // private storage

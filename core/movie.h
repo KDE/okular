@@ -33,8 +33,8 @@ class OKULARCORE_EXPORT Movie
          */
         enum PlayMode
         {
-            PlayOnce,         ///< Play the movie once, closing the movie controls at the end
-            PlayOpen,         ///< Like PlayOnce, but leaving the controls open
+            PlayLimited,      ///< Play a fixed amount of times, closing the movie controls at the end @since 0.24
+            PlayOpen,         ///< Like PlayLimited, but leaving the controls open
             PlayRepeat,       ///< Play continuously until stopped
             PlayPalindrome    ///< Play forward, then backward, then again forward and so on until stopped
         };
@@ -98,6 +98,18 @@ class OKULARCORE_EXPORT Movie
          * How to play the movie
          */
         PlayMode playMode() const;
+
+        /**
+         * Sets how many times the movie should be played
+         * @since 0.24
+         */
+        void setPlayRepetitions( double repetitions );
+
+        /**
+         * How many times to play the movie
+         * @since 0.24
+         */
+        double playRepetitions() const;
 
         /**
          * Sets whether to play the movie automatically

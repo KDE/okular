@@ -214,7 +214,7 @@ void PartTest::testClickInternalLink()
     QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseNormal");
 
     QCOMPARE(part.m_document->currentPage(), 0u);
-    QTest::mouseClick(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, QPoint(width * 0.15, height * 0.15));
+    QTest::mouseClick(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, QPoint(width * 0.17, height * 0.15));
     QCOMPARE(part.m_document->currentPage(), 1u);
 }
 

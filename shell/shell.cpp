@@ -25,7 +25,7 @@
 #include <QDBusConnection>
 #include <QMenuBar>
 #include <QApplication>
-#include <KFileDialog>
+#include <QFileDialog>
 #include <KPluginLoader>
 #include <KMessageBox>
 #include <QMimeType>
@@ -392,21 +392,16 @@ void Shell::fileOpen()
     if ( curPart->url().isLocalFile() )
         startDir = curPart->url().toLocalFile();
 #pragma message("KF5 check QUrl usage")
-    KFileDialog dlg( QUrl(startDir), QString(), this );
-    dlg.setOperationMode( KFileDialog::Opening );
-
-    // A directory may be a document. E.g. comicbook generator.
-    if ( m_fileformats.contains( "inode/directory" ) )
-        dlg.setMode( dlg.mode() | KFile::Directory );
+    QFileDialog dlg( this, i18n( "Open Document" ), startDir);
+    dlg.setAcceptMode( QFileDialog::AcceptOpen );
 
     if ( m_fileformatsscanned && m_fileformats.isEmpty() )
-        dlg.setFilter( i18n( "*|All Files" ) );
+        dlg.setNameFilter( i18n( "All Files (*)" ) );
     else
-        dlg.setMimeFilter( m_fileformats );
-    dlg.setWindowTitle( i18n( "Open Document" ) );
+        dlg.setMimeTypeFilters( m_fileformats );
     if ( !dlg.exec() )
         return;
-    QUrl url = dlg.selectedUrl();
+    QUrl url = dlg.selectedUrls().at(0);
     if ( !url.isEmpty() )
     {
         openUrl( url );

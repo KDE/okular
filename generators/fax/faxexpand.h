@@ -22,7 +22,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. *
 #define _faxexpand_h_
 
 #include <sys/types.h>
+#ifndef Q_OS_WIN
 #include <unistd.h>
+#endif
 
 #include <QtGui/QImage>
 

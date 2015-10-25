@@ -312,7 +312,7 @@ ki18n_wrap_ui(okularpart_SRCS
 
 kconfig_add_kcfg_files(okularpart_SRCS conf/settings.kcfgc )
 
-add_library(okularpart MODULE ${okularpart_SRCS})
+add_library(okularpart SHARED ${okularpart_SRCS})
 generate_export_header(okularpart BASE_NAME okularpart)
 
 target_link_libraries(okularpart okularcore Qt5::Svg KF5::Parts ${MATH_LIB} Phonon::phonon4qt5 KF5::Solid KF5::KDELibs4Support KF5::Wallet KF5::Archive)

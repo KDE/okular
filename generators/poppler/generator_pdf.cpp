@@ -282,7 +282,7 @@ QPair<Okular::Movie*, Okular::EmbeddedFile*> createMovieFromPopplerRichMedia( co
     Okular::EmbeddedFile *pdfEmbeddedFile = new PDFEmbeddedFile( embeddedFile );
 
     Okular::Movie *movie = new Okular::Movie( embeddedFile->name(), embeddedFile->data() );
-    movie->setPlayMode( playbackLoops ? Okular::Movie::PlayRepeat : Okular::Movie::PlayOnce );
+    movie->setPlayMode( playbackLoops ? Okular::Movie::PlayRepeat : Okular::Movie::PlayLimited );
 
     if ( popplerRichMedia && popplerRichMedia->settings() && popplerRichMedia->settings()->activation() ) {
         if ( popplerRichMedia->settings()->activation()->condition() == Poppler::RichMediaAnnotation::Activation::PageOpened ||

@@ -2468,6 +2468,11 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                         {
                             d->document->processAction( static_cast<Okular::ScreenAnnotation*>( ann )->action() );
                         }
+                        else if ( ann->subType() == Okular::Annotation::AFileAttachment )
+                        {
+                            const Okular::FileAttachmentAnnotation * fileAttachAnnot = static_cast< Okular::FileAttachmentAnnotation * >( ann );
+                            GuiUtils::saveEmbeddedFile( fileAttachAnnot->embeddedFile(), this );
+                        }
                     }
 #if 0
                     // a link can move us to another page or even to another document, there's no point in trying to
@@ -4024,6 +4029,11 @@ void PageView::updateCursor( const QPoint &p )
                             d->mouseOnRect = true;
                             setCursor( Qt::PointingHandCursor );
                         }
+                    }
+                    else if ( annotation->subType() == Okular::Annotation::AFileAttachment )
+                    {
+                        d->mouseOnRect = true;
+                        setCursor( Qt::PointingHandCursor );
                     }
                     else
                     {

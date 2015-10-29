@@ -50,7 +50,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
     // PROPERTIES
     QFrame *page = new QFrame();
     KPageWidgetItem *item = addPage( page, i18n( "&Properties" ) );
-    item->setIcon( QIcon::fromTheme( "document-properties" ) );
+    item->setIcon( QIcon::fromTheme( QStringLiteral("document-properties") ) );
 
     // get document info
     const Okular::DocumentInfo info = doc->documentInfo();
@@ -132,7 +132,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
         // create fonts tab and layout it
         QFrame *page2 = new QFrame();
         m_fontPage = addPage(page2, i18n("&Fonts"));
-        m_fontPage->setIcon( QIcon::fromTheme( "preferences-desktop-font" ) );
+        m_fontPage->setIcon( QIcon::fromTheme( QStringLiteral("preferences-desktop-font") ) );
         page2Layout = new QVBoxLayout(page2);
 #pragma message("KF5 fix margin/spacing")
 //      page2Layout->setMargin(marginHint());
@@ -192,7 +192,7 @@ void PropertiesDialog::pageChanged( KPageWidgetItem *current, KPageWidgetItem * 
         connect(m_document, &Okular::Document::gotFont, m_fontModel, &FontsListModel::addFont);
         connect(m_document, &Okular::Document::fontReadingProgress, this, &PropertiesDialog::slotFontReadingProgress);
         connect(m_document, &Okular::Document::fontReadingEnded, this, &PropertiesDialog::slotFontReadingEnded);
-        QTimer::singleShot( 0, this, SLOT(reallyStartFontReading()) );
+        QTimer::singleShot( 0, this, &PropertiesDialog::reallyStartFontReading );
 
         m_fontScanStarted = true;
     }
@@ -389,11 +389,11 @@ QVariant FontsListModel::data( const QModelIndex &index, int role ) const
             QString fontname = m_fonts.at( index.row() ).name();
             if ( fontname.isEmpty() )
                 fontname = i18n( "Unknown font" );
-            QString tooltip = QString::fromLatin1( "<html><b>" ) +  fontname + QString::fromLatin1( "</b>" );
+            QString tooltip = QLatin1String( "<html><b>" ) +  fontname + QLatin1String( "</b>" );
             if ( m_fonts.at( index.row() ).embedType() == Okular::FontInfo::NotEmbedded )
-                tooltip += QString::fromLatin1( " (<span style=\"font-family: '%1'\">%2</span>)" ).arg( fontname ).arg( fontname );
-            tooltip += QString::fromLatin1( "<br />" ) + i18n( "Embedded: %1", descriptionForEmbedType( m_fonts.at( index.row() ).embedType() ) );
-            tooltip += QString::fromLatin1( "</html>" );
+                tooltip += QStringLiteral( " (<span style=\"font-family: '%1'\">%2</span>)" ).arg( fontname ).arg( fontname );
+            tooltip += QLatin1String( "<br />" ) + i18n( "Embedded: %1", descriptionForEmbedType( m_fonts.at( index.row() ).embedType() ) );
+            tooltip += QLatin1String( "</html>" );
             return tooltip;
             break;
         }

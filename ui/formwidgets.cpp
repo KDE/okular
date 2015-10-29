@@ -29,44 +29,44 @@ FormWidgetsController::FormWidgetsController( Okular::Document *doc )
     : QObject( doc ), m_doc( doc )
 {
     // emit changed signal when a form has changed
-    connect( this, SIGNAL( formTextChangedByUndoRedo( int, Okular::FormFieldText*, QString, int, int ) ),
-             this, SIGNAL( changed( int ) ) );
-    connect( this, SIGNAL( formListChangedByUndoRedo(int, Okular::FormFieldChoice*, QList<int> ) ),
-             this, SIGNAL( changed( int ) ) );
-    connect( this, SIGNAL( formComboChangedByUndoRedo(int, Okular::FormFieldChoice*, QString, int, int ) ),
-             this, SIGNAL( changed( int ) ) );
+    connect( this, &FormWidgetsController::formTextChangedByUndoRedo,
+             this, &FormWidgetsController::changed );
+    connect( this, &FormWidgetsController::formListChangedByUndoRedo,
+             this, &FormWidgetsController::changed );
+    connect( this, &FormWidgetsController::formComboChangedByUndoRedo,
+             this, &FormWidgetsController::changed );
 
     // connect form modification signals to and from document
-    connect( this, SIGNAL( formTextChangedByWidget( int, Okular::FormFieldText*, QString, int, int, int ) ),
-             doc, SLOT( editFormText( int, Okular::FormFieldText*, QString, int, int, int ) ) );
-    connect( doc, SIGNAL( formTextChangedByUndoRedo( int, Okular::FormFieldText*, QString, int, int ) ),
-             this, SIGNAL( formTextChangedByUndoRedo( int, Okular::FormFieldText*, QString, int, int ) ) );
+    connect( this, &FormWidgetsController::formTextChangedByWidget,
+             doc, &Okular::Document::editFormText );
+    connect( doc, &Okular::Document::formTextChangedByUndoRedo,
+             this, &FormWidgetsController::formTextChangedByUndoRedo );
 
-    connect( this, SIGNAL( formListChangedByWidget( int, Okular::FormFieldChoice*, QList<int> ) ),
-             doc, SLOT( editFormList( int, Okular::FormFieldChoice*, QList<int> ) ) );
-    connect( doc, SIGNAL( formListChangedByUndoRedo( int, Okular::FormFieldChoice*, QList<int> ) ),
-             this, SIGNAL( formListChangedByUndoRedo( int,Okular::FormFieldChoice*, QList<int> ) ) );
+    connect( this, &FormWidgetsController::formListChangedByWidget,
+             doc, &Okular::Document::editFormList );
+    connect( doc, &Okular::Document::formListChangedByUndoRedo,
+             this, &FormWidgetsController::formListChangedByUndoRedo );
 
-    connect( this, SIGNAL( formComboChangedByWidget( int, Okular::FormFieldChoice*, QString, int, int, int ) ),
-             doc, SLOT( editFormCombo( int, Okular::FormFieldChoice*, QString, int, int, int ) ) );
-    connect( doc, SIGNAL( formComboChangedByUndoRedo( int, Okular::FormFieldChoice*, QString, int, int ) ),
-             this, SIGNAL( formComboChangedByUndoRedo( int, Okular::FormFieldChoice*, QString, int, int ) ) );
+    connect( this, &FormWidgetsController::formComboChangedByWidget,
+             doc, &Okular::Document::editFormCombo );
+    connect( doc, &Okular::Document::formComboChangedByUndoRedo,
+             this, &FormWidgetsController::formComboChangedByUndoRedo );
 
-    connect( this, SIGNAL( formButtonsChangedByWidget( int, QList<Okular::FormFieldButton*>, QList<bool> ) ),
-             doc, SLOT( editFormButtons( int, QList<Okular::FormFieldButton*>, QList<bool> ) ) );
-    connect( doc, SIGNAL( formButtonsChangedByUndoRedo( int, QList<Okular::FormFieldButton*> ) ),
-             this, SLOT( slotFormButtonsChangedByUndoRedo(int,QList<Okular::FormFieldButton*> ) ) );
+    connect( this, &FormWidgetsController::formButtonsChangedByWidget,
+             doc, &Okular::Document::editFormButtons );
+    connect( doc, &Okular::Document::formButtonsChangedByUndoRedo,
+             this, &FormWidgetsController::slotFormButtonsChangedByUndoRedo );
 
     // Connect undo/redo signals
-    connect( this, SIGNAL( requestUndo() ),
-             doc, SLOT( undo() ) );
-    connect( this, SIGNAL( requestRedo() ),
-             doc, SLOT( redo() ) );
+    connect( this, &FormWidgetsController::requestUndo,
+             doc, &Okular::Document::undo );
+    connect( this, &FormWidgetsController::requestRedo,
+             doc, &Okular::Document::redo );
 
-    connect( doc, SIGNAL( canUndoChanged( bool ) ),
-             this, SIGNAL( canUndoChanged( bool ) ) );
-    connect( doc, SIGNAL( canRedoChanged( bool ) ),
-             this, SIGNAL( canRedoChanged( bool ) ) );
+    connect( doc, &Okular::Document::canUndoChanged,
+             this, &FormWidgetsController::canUndoChanged );
+    connect( doc, &Okular::Document::canRedoChanged,
+             this, &FormWidgetsController::canRedoChanged );
 }
 
 FormWidgetsController::~FormWidgetsController()
@@ -320,7 +320,7 @@ PushButtonEdit::PushButtonEdit( Okular::FormFieldButton * button, QWidget * pare
 
     if ( !m_form->isReadOnly() )
     {
-        connect( this, SIGNAL(clicked()), this, SLOT(slotClicked()) );
+        connect( this, &QAbstractButton::clicked, this, &PushButtonEdit::slotClicked );
     }
 }
 
@@ -346,7 +346,7 @@ void CheckBoxEdit::setFormWidgetsController( FormWidgetsController *controller )
     FormWidgetIface::setFormWidgetsController( controller );
     m_controller->registerRadioButton( button(), m_form );
     setChecked( m_form->state() );
-    connect( this, SIGNAL(stateChanged(int)), this, SLOT(slotStateChanged(int)) );
+    connect( this, &QCheckBox::stateChanged, this, &CheckBoxEdit::slotStateChanged );
 }
 
 QAbstractButton* CheckBoxEdit::button()
@@ -400,8 +400,8 @@ FormLineEdit::FormLineEdit( Okular::FormFieldText * text, QWidget * parent )
 
     if ( !m_form->isReadOnly() )
     {
-        connect( this, SIGNAL( textEdited( QString ) ), this, SLOT( slotChanged() ) );
-        connect( this, SIGNAL( cursorPositionChanged( int, int ) ), this, SLOT( slotChanged() ) );
+        connect( this, &QLineEdit::textEdited, this, &FormLineEdit::slotChanged );
+        connect( this, &QLineEdit::cursorPositionChanged, this, &FormLineEdit::slotChanged );
     }
     setVisible( m_form->isVisible() );
 }
@@ -409,8 +409,8 @@ FormLineEdit::FormLineEdit( Okular::FormFieldText * text, QWidget * parent )
 void FormLineEdit::setFormWidgetsController(FormWidgetsController* controller)
 {
     FormWidgetIface::setFormWidgetsController(controller);
-    connect( m_controller, SIGNAL( formTextChangedByUndoRedo( int, Okular::FormFieldText*, QString, int, int ) ),
-             this, SLOT( slotHandleTextChangedByUndoRedo( int, Okular::FormFieldText*, QString, int, int ) ) );
+    connect( m_controller, &FormWidgetsController::formTextChangedByUndoRedo,
+             this, &FormLineEdit::slotHandleTextChangedByUndoRedo );
 }
 
 bool FormLineEdit::event( QEvent* e )
@@ -441,8 +441,8 @@ void FormLineEdit::contextMenuEvent( QContextMenuEvent* event )
 
     QAction *kundo = KStandardAction::create( KStandardAction::Undo, m_controller, SIGNAL( requestUndo() ), menu );
     QAction *kredo = KStandardAction::create( KStandardAction::Redo, m_controller, SIGNAL( requestRedo() ), menu );
-    connect( m_controller, SIGNAL( canUndoChanged( bool ) ), kundo, SLOT( setEnabled( bool ) ) );
-    connect( m_controller, SIGNAL( canRedoChanged( bool ) ), kredo, SLOT( setEnabled( bool ) ) );
+    connect( m_controller, &FormWidgetsController::canUndoChanged, kundo, &QAction::setEnabled );
+    connect( m_controller, &FormWidgetsController::canRedoChanged, kredo, &QAction::setEnabled );
     kundo->setEnabled( m_controller->canUndo() );
     kredo->setEnabled( m_controller->canRedo() );
 
@@ -495,11 +495,11 @@ void FormLineEdit::slotHandleTextChangedByUndoRedo( int pageNumber,
     {
         return;
     }
-    disconnect( this, SIGNAL( cursorPositionChanged( int, int ) ), this, SLOT( slotChanged() ) );
+    disconnect( this, &QLineEdit::cursorPositionChanged, this, &FormLineEdit::slotChanged );
     setText(contents);
     setCursorPosition(anchorPos);
     cursorForward( true, cursorPos - anchorPos );
-    connect( this, SIGNAL( cursorPositionChanged( int, int ) ), this, SLOT( slotChanged() ) );
+    connect( this, &QLineEdit::cursorPositionChanged, this, &FormLineEdit::slotChanged );
     m_prevCursorPos = cursorPos;
     m_prevAnchorPos = anchorPos;
     setFocus();
@@ -517,10 +517,10 @@ TextAreaEdit::TextAreaEdit( Okular::FormFieldText * text, QWidget * parent )
 
     if ( !m_form->isReadOnly() )
     {
-        connect( this, SIGNAL( textChanged() ), this, SLOT( slotChanged() ) );
-        connect( this, SIGNAL( cursorPositionChanged() ), this, SLOT( slotChanged() ) );
-        connect( this, SIGNAL( aboutToShowContextMenu( QMenu* ) ),
-                 this, SLOT( slotUpdateUndoAndRedoInContextMenu( QMenu* ) ) );
+        connect( this, &QTextEdit::textChanged, this, &TextAreaEdit::slotChanged );
+        connect( this, &QTextEdit::cursorPositionChanged, this, &TextAreaEdit::slotChanged );
+        connect( this, &KTextEdit::aboutToShowContextMenu,
+                 this, &TextAreaEdit::slotUpdateUndoAndRedoInContextMenu );
     }
     m_prevCursorPos = textCursor().position();
     m_prevAnchorPos = textCursor().anchor();
@@ -555,8 +555,8 @@ void TextAreaEdit::slotUpdateUndoAndRedoInContextMenu( QMenu* menu )
 
     QAction *kundo = KStandardAction::create( KStandardAction::Undo, m_controller, SIGNAL( requestUndo() ), menu );
     QAction *kredo = KStandardAction::create( KStandardAction::Redo, m_controller, SIGNAL( requestRedo() ), menu );
-    connect(m_controller, SIGNAL( canUndoChanged( bool ) ), kundo, SLOT( setEnabled( bool ) ) );
-    connect(m_controller, SIGNAL( canRedoChanged( bool ) ), kredo, SLOT( setEnabled( bool ) ) );
+    connect(m_controller, &FormWidgetsController::canUndoChanged, kundo, &QAction::setEnabled );
+    connect(m_controller, &FormWidgetsController::canRedoChanged, kredo, &QAction::setEnabled );
     kundo->setEnabled( m_controller->canUndo() );
     kredo->setEnabled( m_controller->canRedo() );
 
@@ -574,8 +574,8 @@ void TextAreaEdit::slotUpdateUndoAndRedoInContextMenu( QMenu* menu )
 void TextAreaEdit::setFormWidgetsController( FormWidgetsController* controller )
 {
     FormWidgetIface::setFormWidgetsController( controller );
-    connect( m_controller, SIGNAL( formTextChangedByUndoRedo( int, Okular::FormFieldText*, QString, int, int ) ),
-             this, SLOT( slotHandleTextChangedByUndoRedo( int, Okular::FormFieldText*, QString, int, int ) ) );
+    connect( m_controller, &FormWidgetsController::formTextChangedByUndoRedo,
+             this, &TextAreaEdit::slotHandleTextChangedByUndoRedo );
 }
 
 void TextAreaEdit::slotHandleTextChangedByUndoRedo( int pageNumber,
@@ -630,8 +630,8 @@ FileEdit::FileEdit( Okular::FormFieldText * text, QWidget * parent )
 
     if ( !m_form->isReadOnly() )
     {
-        connect( this, SIGNAL( textChanged( QString ) ), this, SLOT( slotChanged() ) );
-        connect( lineEdit(), SIGNAL( cursorPositionChanged( int, int ) ), this, SLOT( slotChanged() ) );
+        connect( this, &KUrlRequester::textChanged, this, &FileEdit::slotChanged );
+        connect( lineEdit(), &QLineEdit::cursorPositionChanged, this, &FileEdit::slotChanged );
     }
     setVisible( m_form->isVisible() );
 }
@@ -639,8 +639,8 @@ FileEdit::FileEdit( Okular::FormFieldText * text, QWidget * parent )
 void FileEdit::setFormWidgetsController( FormWidgetsController* controller )
 {
     FormWidgetIface::setFormWidgetsController( controller );
-    connect( m_controller, SIGNAL( formTextChangedByUndoRedo( int, Okular::FormFieldText*, QString, int, int ) ),
-             this, SLOT( slotHandleFileChangedByUndoRedo( int, Okular::FormFieldText*, QString, int, int ) ) );
+    connect( m_controller, &FormWidgetsController::formTextChangedByUndoRedo,
+             this, &FileEdit::slotHandleFileChangedByUndoRedo );
 }
 
 bool FileEdit::eventFilter( QObject* obj, QEvent* event )
@@ -671,8 +671,8 @@ bool FileEdit::eventFilter( QObject* obj, QEvent* event )
 
             QAction *kundo = KStandardAction::create( KStandardAction::Undo, m_controller, SIGNAL( requestUndo() ), menu );
             QAction *kredo = KStandardAction::create( KStandardAction::Redo, m_controller, SIGNAL( requestRedo() ), menu );
-            connect(m_controller, SIGNAL( canUndoChanged( bool ) ), kundo, SLOT( setEnabled( bool ) ) );
-            connect(m_controller, SIGNAL( canRedoChanged( bool ) ), kredo, SLOT( setEnabled( bool ) ) );
+            connect(m_controller, &FormWidgetsController::canUndoChanged, kundo, &QAction::setEnabled );
+            connect(m_controller, &FormWidgetsController::canRedoChanged, kredo, &QAction::setEnabled );
             kundo->setEnabled( m_controller->canUndo() );
             kredo->setEnabled( m_controller->canRedo() );
 
@@ -768,7 +768,7 @@ ListEdit::ListEdit( Okular::FormFieldChoice * choice, QWidget * parent )
 
     if ( !m_form->isReadOnly() )
     {
-        connect( this, SIGNAL(itemSelectionChanged()), this, SLOT(slotSelectionChanged()) );
+        connect( this, &QListWidget::itemSelectionChanged, this, &ListEdit::slotSelectionChanged );
     }
     setVisible( m_form->isVisible() );
     setCursor( Qt::ArrowCursor );
@@ -777,8 +777,8 @@ ListEdit::ListEdit( Okular::FormFieldChoice * choice, QWidget * parent )
 void ListEdit::setFormWidgetsController( FormWidgetsController* controller )
 {
     FormWidgetIface::setFormWidgetsController( controller );
-    connect( m_controller, SIGNAL( formListChangedByUndoRedo(int, Okular::FormFieldChoice*, QList<int> ) ),
-             this, SLOT( slotHandleFormListChangedByUndoRedo( int, Okular::FormFieldChoice*, QList<int> ) ) );
+    connect( m_controller, &FormWidgetsController::formListChangedByUndoRedo,
+             this, &ListEdit::slotHandleFormListChangedByUndoRedo );
 }
 
 void ListEdit::slotSelectionChanged()
@@ -803,12 +803,12 @@ void ListEdit::slotHandleFormListChangedByUndoRedo( int pageNumber,
         return;
     }
 
-    disconnect( this, SIGNAL( itemSelectionChanged() ), this, SLOT( slotSelectionChanged() ) );
+    disconnect( this, &QListWidget::itemSelectionChanged, this, &ListEdit::slotSelectionChanged );
     for(int i=0; i < count(); i++)
     {
         item( i )->setSelected( choices.contains(i) );
     }
-    connect( this, SIGNAL( itemSelectionChanged() ), this, SLOT( slotSelectionChanged() ) );
+    connect( this, &QListWidget::itemSelectionChanged, this, &ListEdit::slotSelectionChanged );
 
     setFocus();
 }
@@ -831,8 +831,8 @@ ComboEdit::ComboEdit( Okular::FormFieldChoice * choice, QWidget * parent )
     if ( !m_form->isReadOnly() )
     {
         connect( this, SIGNAL(currentIndexChanged(int)), this, SLOT(slotValueChanged()) );
-        connect( this, SIGNAL(editTextChanged(QString)), this, SLOT(slotValueChanged()) );
-        connect( lineEdit(), SIGNAL(cursorPositionChanged(int,int)), this, SLOT(slotValueChanged()) );
+        connect( this, &QComboBox::editTextChanged, this, &ComboEdit::slotValueChanged );
+        connect( lineEdit(), &QLineEdit::cursorPositionChanged, this, &ComboEdit::slotValueChanged );
     }
 
     setVisible( m_form->isVisible() );
@@ -844,8 +844,8 @@ ComboEdit::ComboEdit( Okular::FormFieldChoice * choice, QWidget * parent )
 void ComboEdit::setFormWidgetsController(FormWidgetsController* controller)
 {
     FormWidgetIface::setFormWidgetsController(controller);
-    connect( m_controller, SIGNAL(formComboChangedByUndoRedo(int,Okular::FormFieldChoice*, QString, int, int )),
-             this, SLOT(slotHandleFormComboChangedByUndoRedo(int,Okular::FormFieldChoice*, QString, int, int )));
+    connect( m_controller, &FormWidgetsController::formComboChangedByUndoRedo,
+             this, &ComboEdit::slotHandleFormComboChangedByUndoRedo);
 
 }
 
@@ -909,7 +909,7 @@ void ComboEdit::slotHandleFormComboChangedByUndoRedo( int pageNumber,
     m_prevCursorPos = cursorPos;
     m_prevAnchorPos = anchorPos;
 
-    disconnect( lineEdit(), SIGNAL( cursorPositionChanged( int, int ) ), this, SLOT( slotValueChanged() ) );
+    disconnect( lineEdit(), &QLineEdit::cursorPositionChanged, this, &ComboEdit::slotValueChanged );
     const bool isCustomValue = index == -1;
     if ( isCustomValue )
     {
@@ -921,7 +921,7 @@ void ComboEdit::slotHandleFormComboChangedByUndoRedo( int pageNumber,
     }
     lineEdit()->setCursorPosition( anchorPos );
     lineEdit()->cursorForward( true, cursorPos - anchorPos );
-    connect( lineEdit(), SIGNAL( cursorPositionChanged( int, int ) ), this, SLOT( slotValueChanged() ) );
+    connect( lineEdit(), &QLineEdit::cursorPositionChanged, this, &ComboEdit::slotValueChanged );
     setFocus();
 }
 
@@ -934,8 +934,8 @@ void ComboEdit::contextMenuEvent( QContextMenuEvent* event )
 
     QAction *kundo = KStandardAction::create( KStandardAction::Undo, m_controller, SIGNAL( requestUndo() ), menu );
     QAction *kredo = KStandardAction::create( KStandardAction::Redo, m_controller, SIGNAL( requestRedo() ), menu );
-    connect( m_controller, SIGNAL( canUndoChanged( bool ) ), kundo, SLOT( setEnabled( bool ) ) );
-    connect( m_controller, SIGNAL( canRedoChanged( bool ) ), kredo, SLOT( setEnabled( bool ) ) );
+    connect( m_controller, &FormWidgetsController::canUndoChanged, kundo, &QAction::setEnabled );
+    connect( m_controller, &FormWidgetsController::canRedoChanged, kredo, &QAction::setEnabled );
     kundo->setEnabled( m_controller->canUndo() );
     kredo->setEnabled( m_controller->canRedo() );
 

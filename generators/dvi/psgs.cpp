@@ -51,10 +51,10 @@ ghostscript_interface::ghostscript_interface() {
 
   PostScriptHeaderString = new QString();
 
-  knownDevices.append("png16m");
-  knownDevices.append("jpeg");
-  knownDevices.append("pnn");
-  knownDevices.append("pnnraw");
+  knownDevices.append(QStringLiteral("png16m"));
+  knownDevices.append(QStringLiteral("jpeg"));
+  knownDevices.append(QStringLiteral("pnn"));
+  knownDevices.append(QStringLiteral("pnnraw"));
   gsDevice = knownDevices.begin();
 }
 
@@ -83,7 +83,7 @@ void ghostscript_interface::setPostScript(const PageNumber& page, const QString&
 
 void ghostscript_interface::setIncludePath(const QString &_includePath) {
   if (_includePath.isEmpty())
-     includePath = "*"; // Allow all files
+     includePath = QStringLiteral("*"); // Allow all files
   else
      includePath = _includePath+"/*";
 }
@@ -198,7 +198,7 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
     os << PostScriptHeaderString->toLatin1();
 
   if (info->background != Qt::white) {
-    QString colorCommand = QString("gsave %1 %2 %3 setrgbcolor clippath fill grestore\n").
+    QString colorCommand = QStringLiteral("gsave %1 %2 %3 setrgbcolor clippath fill grestore\n").
       arg(info->background.red()/255.0).
       arg(info->background.green()/255.0).
       arg(info->background.blue()/255.0);
@@ -218,16 +218,16 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
   KProcess proc;
   proc.setOutputChannelMode(KProcess::SeparateChannels);
   QStringList argus;
-  argus << "gs";
-  argus << "-dSAFER" << "-dPARANOIDSAFER" << "-dDELAYSAFER" << "-dNOPAUSE" << "-dBATCH";
-  argus << QString("-sDEVICE=%1").arg(*gsDevice);
-  argus << QString("-sOutputFile=%1").arg(filename);
-  argus << QString("-sExtraIncludePath=%1").arg(includePath);
-  argus << QString("-g%1x%2").arg(pixel_page_w).arg(pixel_page_h); // page size in pixels
-  argus << QString("-r%1").arg(resolution);                       // resolution in dpi
-  argus << "-dTextAlphaBits=4 -dGraphicsAlphaBits=2"; // Antialiasing
-  argus << "-c" << "<< /PermitFileReading [ ExtraIncludePath ] /PermitFileWriting [] /PermitFileControl [] >> setuserparams .locksafe";
-  argus << "-f" << PSfileName;
+  argus << QStringLiteral("gs");
+  argus << QStringLiteral("-dSAFER") << QStringLiteral("-dPARANOIDSAFER") << QStringLiteral("-dDELAYSAFER") << QStringLiteral("-dNOPAUSE") << QStringLiteral("-dBATCH");
+  argus << QStringLiteral("-sDEVICE=%1").arg(*gsDevice);
+  argus << QStringLiteral("-sOutputFile=%1").arg(filename);
+  argus << QStringLiteral("-sExtraIncludePath=%1").arg(includePath);
+  argus << QStringLiteral("-g%1x%2").arg(pixel_page_w).arg(pixel_page_h); // page size in pixels
+  argus << QStringLiteral("-r%1").arg(resolution);                       // resolution in dpi
+  argus << QStringLiteral("-dTextAlphaBits=4 -dGraphicsAlphaBits=2"); // Antialiasing
+  argus << QStringLiteral("-c") << QStringLiteral("<< /PermitFileReading [ ExtraIncludePath ] /PermitFileWriting [] /PermitFileControl [] >> setuserparams .locksafe");
+  argus << QStringLiteral("-f") << PSfileName;
 
 #ifdef DEBUG_PSGS
   qCDebug(OkularDviDebug) << argus.join(" ");
@@ -254,8 +254,8 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
     proc.setReadChannel(QProcess::StandardOutput);
     while(proc.canReadLine()) {
       GSoutput = QString::fromLocal8Bit(proc.readLine());
-      if (GSoutput.contains("Unknown device")) {
-    qCDebug(OkularDviDebug) << QString("The version of ghostview installed on this computer does not support "
+      if (GSoutput.contains(QStringLiteral("Unknown device"))) {
+    qCDebug(OkularDviDebug) << QStringLiteral("The version of ghostview installed on this computer does not support "
                                      "the '%1' ghostview device driver.").arg(*gsDevice) << endl;
 	knownDevices.erase(gsDevice);
 	gsDevice = knownDevices.begin();
@@ -283,7 +283,7 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
 					  "</p></qt>"));
 #endif
 	else {
-      qCDebug(OkularDviDebug) << QString("Okular will now try to use the '%1' device driver.").arg(*gsDevice);
+      qCDebug(OkularDviDebug) << QStringLiteral("Okular will now try to use the '%1' device driver.").arg(*gsDevice);
 	  gs_generate_graphics_file(page, filename, magnification);
 	}
 	return;
@@ -346,7 +346,7 @@ QString ghostscript_interface::locateEPSfile(const QString &filename, const QUrl
 
   // Otherwise, use kpsewhich to find the eps file.
   KProcess proc;
-  proc << "kpsewhich" << filename;
+  proc << QStringLiteral("kpsewhich") << filename;
   proc.execute();
   return QString::fromLocal8Bit(proc.readLine().trimmed());
 }

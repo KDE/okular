@@ -109,7 +109,7 @@ Shell *findShell(Shell *ignore = 0)
 void MainShellTest::initTestCase()
 {
     // Don't pollute people's okular settings
-    Okular::Settings::instance( "mainshelltest" );
+    Okular::Settings::instance( QStringLiteral("mainshelltest") );
 
     // Register in bus as okular
     QDBusConnectionInterface *bus = QDBusConnection::sessionBus().interface();
@@ -134,9 +134,9 @@ void MainShellTest::init()
 
     // Clean docdatas
     QList<QUrl> urls;
-    urls << QUrl::fromUserInput("file://" KDESRCDIR "data/file1.pdf");
-    urls << QUrl::fromUserInput("file://" KDESRCDIR "data/tocreload.pdf");
-    urls << QUrl::fromUserInput("file://" KDESRCDIR "data/contents.epub");
+    urls << QUrl::fromUserInput(QStringLiteral("file://" KDESRCDIR "data/file1.pdf"));
+    urls << QUrl::fromUserInput(QStringLiteral("file://" KDESRCDIR "data/tocreload.pdf"));
+    urls << QUrl::fromUserInput(QStringLiteral("file://" KDESRCDIR "data/contents.epub"));
 
     foreach (const QUrl &url, urls)
     {
@@ -176,8 +176,8 @@ void MainShellTest::testShell_data()
     file1AndToc << KDESRCDIR "data/tocreload.pdf";
     const QString tocReload = KDESRCDIR "data/tocreload.pdf";
 
-    const QString optionsPage2 = ShellUtils::serializeOptions(false, false, false, false, "2");
-    const QString optionsPage2Presentation = ShellUtils::serializeOptions(true, false, false, false, "2");
+    const QString optionsPage2 = ShellUtils::serializeOptions(false, false, false, false, QStringLiteral("2"));
+    const QString optionsPage2Presentation = ShellUtils::serializeOptions(true, false, false, false, QStringLiteral("2"));
     const QString optionsPrint = ShellUtils::serializeOptions(false, true, false, false, QString());
     const QString optionsUnique = ShellUtils::serializeOptions(false, false, true, false, QString());
 
@@ -289,7 +289,7 @@ void MainShellTest::testShell()
         QStringList args;
         args << externalProcessPath;
         if (unique)
-            args << "-unique";
+            args << QStringLiteral("-unique");
         if (externalProcessExpectedPage != 0)
             args << QStringLiteral("-page") << QString::number(externalProcessExpectedPage + 1);
         if (externalProcessExpectPresentation)
@@ -375,7 +375,7 @@ void ClosePrintDialogHelper::closePrintDialog()
     Shell *s = findShell();
     QPrintDialog *dialog = s->findChild<QPrintDialog*>();
     if (!dialog) {
-        QTimer::singleShot(0, this, SLOT(closePrintDialog()));
+        QTimer::singleShot(0, this, &ClosePrintDialogHelper::closePrintDialog);
         return;
     }
     QVERIFY(dialog);
@@ -431,7 +431,7 @@ void MainShellTest::testFileRemembersPagePosition()
         QStringList args;
         args << paths[0];
         if (mode == 2)
-            args << "-unique";
+            args << QStringLiteral("-unique");
         p.start(OKULAR_BINARY, args);
         p.waitForStarted();
         QCOMPARE(p.state(), QProcess::Running);
@@ -456,7 +456,7 @@ void MainShellTest::test2FilesError_data()
     QTest::newRow("startInPresentation") << ShellUtils::serializeOptions(true, false, false, false, QString());
     QTest::newRow("showPrintDialog") << ShellUtils::serializeOptions(false, true, false, false, QString());
     QTest::newRow("unique") << ShellUtils::serializeOptions(false, false, true, false, QString());
-    QTest::newRow("pageNumger") << ShellUtils::serializeOptions(false, false, false, false, "3");
+    QTest::newRow("pageNumger") << ShellUtils::serializeOptions(false, false, false, false, QStringLiteral("3"));
 }
 
 void MainShellTest::test2FilesError()
@@ -544,7 +544,7 @@ void MainShellTest::testSessionRestore()
     // Wait for shells to delete themselves. QTest::qWait doesn't do deferred
     // deletions so we'll set up a full event loop to do that.
     QEventLoop eventLoop;
-    QTimer::singleShot( 100, &eventLoop, SLOT(quit()) );
+    QTimer::singleShot( 100, &eventLoop, &QEventLoop::quit );
     eventLoop.exec( QEventLoop::AllEvents );
     shells = getShells();
     QVERIFY( shells.isEmpty() );

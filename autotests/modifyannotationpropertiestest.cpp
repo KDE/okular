@@ -40,7 +40,7 @@ private:
 
 void ModifyAnnotationPropertiesTest::initTestCase()
 {
-    Okular::SettingsCore::instance( "editannotationcontentstest" );
+    Okular::SettingsCore::instance( QStringLiteral("editannotationcontentstest") );
     m_document = new Okular::Document( 0 );
 }
 
@@ -63,8 +63,8 @@ void ModifyAnnotationPropertiesTest::init()
     // Create two distinct text annotations
     m_annot1 = new Okular::TextAnnotation();
     m_annot1->setBoundingRectangle( Okular::NormalizedRect( 0.1, 0.1, 0.15, 0.15 ) );
-    m_annot1->setContents( QString( "Hello, World" ) );
-    m_annot1->setAuthor( "Jon Mease" );
+    m_annot1->setContents( QStringLiteral( "Hello, World" ) );
+    m_annot1->setAuthor( QStringLiteral("Jon Mease") );
     m_annot1->style().setColor( RED );
     m_annot1->style().setWidth( 4.0 );
     m_document->addPageAnnotation( 0, m_annot1 );

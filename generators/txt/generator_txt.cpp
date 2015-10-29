@@ -32,7 +32,7 @@ static KAboutData createAboutData()
 OKULAR_EXPORT_PLUGIN(TxtGenerator, createAboutData())
 
 TxtGenerator::TxtGenerator(QObject *parent, const QVariantList &args)
-    : Okular::TextDocumentGenerator(new Txt::Converter, "okular_txt_generator_settings" , parent, args)
+    : Okular::TextDocumentGenerator(new Txt::Converter, QStringLiteral("okular_txt_generator_settings") , parent, args)
 {
 }
 
@@ -40,7 +40,7 @@ void TxtGenerator::addPages( KConfigDialog* dlg )
 {
     Okular::TextDocumentSettingsWidget *widget = new Okular::TextDocumentSettingsWidget();
 
-    dlg->addPage( widget, generalSettings(), i18n("Txt"), "text-plain", i18n("Txt Backend Configuration") );
+    dlg->addPage( widget, generalSettings(), i18n("Txt"), QStringLiteral("text-plain"), i18n("Txt Backend Configuration") );
 }
 
 #include "generator_txt.moc"

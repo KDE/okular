@@ -325,7 +325,7 @@ void KTreeViewSearchLine::queueSearch( const QString &search )
   d->queuedSearches++;
   d->search = search;
 
-  QTimer::singleShot( 200, this, SLOT(activateSearch()) );
+  QTimer::singleShot( 200, this, &KTreeViewSearchLine::activateSearch );
 }
 
 void KTreeViewSearchLine::activateSearch()
@@ -358,7 +358,7 @@ KTreeViewSearchLineWidget::KTreeViewSearchLineWidget( QWidget *parent, QTreeView
 {
   d->treeView = treeView;
 
-  QTimer::singleShot( 0, this, SLOT(createWidgets()) );
+  QTimer::singleShot( 0, this, &KTreeViewSearchLineWidget::createWidgets );
 }
 
 KTreeViewSearchLineWidget::~KTreeViewSearchLineWidget()
@@ -374,7 +374,7 @@ KTreeViewSearchLine *KTreeViewSearchLineWidget::createSearchLine( QTreeView *tre
 void KTreeViewSearchLineWidget::createWidgets()
 {
   QLabel *label = new QLabel( i18n("S&earch:"), this );
-  label->setObjectName( QLatin1String("kde toolbar widget") );
+  label->setObjectName( QStringLiteral("kde toolbar widget") );
 
   searchLine()->show();
 

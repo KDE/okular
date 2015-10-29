@@ -46,7 +46,7 @@ Action::~Action()
 
 QString Action::actionTip() const
 {
-    return "";
+    return QLatin1String("");
 }
 
 void Action::setNativeId( const QVariant &id )
@@ -103,7 +103,7 @@ Action::ActionType GotoAction::actionType() const
 QString GotoAction::actionTip() const
 {
     Q_D( const GotoAction );
-    return d->m_extFileName.isEmpty() ? ( d->m_vp.isValid() ? i18n( "Go to page %1", d->m_vp.pageNumber + 1 ) : "" ) :
+    return d->m_extFileName.isEmpty() ? ( d->m_vp.isValid() ? i18n( "Go to page %1", d->m_vp.pageNumber + 1 ) : QLatin1String("") ) :
                                      i18n("Open external file");
 }
 

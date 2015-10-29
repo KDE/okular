@@ -62,7 +62,7 @@ bool Document::open( const QString &fileName )
     /**
      * We have a zip archive
      */
-    if ( mime.inherits("application/x-cbz" ) || mime.inherits( "application/zip" ) ) {
+    if ( mime.inherits(QStringLiteral("application/x-cbz") ) || mime.inherits( QStringLiteral("application/zip") ) ) {
         mArchive = new KZip( fileName );
 
         if ( !processArchive() ) {
@@ -71,14 +71,14 @@ bool Document::open( const QString &fileName )
     /**
      * We have a TAR archive
      */
-    } else if ( mime.inherits( "application/x-cbt" ) || mime.inherits( "application/x-gzip" ) ||
-                mime.inherits( "application/x-tar" ) || mime.inherits( "application/x-bzip" ) ) {
+    } else if ( mime.inherits( QStringLiteral("application/x-cbt") ) || mime.inherits( QStringLiteral("application/x-gzip") ) ||
+                mime.inherits( QStringLiteral("application/x-tar") ) || mime.inherits( QStringLiteral("application/x-bzip") ) ) {
         mArchive = new KTar( fileName );
 
         if ( !processArchive() ) {
             return false;
         }
-    } else if ( mime.inherits( "application/x-cbr" ) || mime.inherits( "application/x-rar" ) ) {
+    } else if ( mime.inherits( QStringLiteral("application/x-cbr") ) || mime.inherits( QStringLiteral("application/x-rar") ) ) {
         if ( !Unrar::isAvailable() ) {
             mLastErrorString = i18n( "Cannot open document, unrar was not found." );
             return false;
@@ -102,7 +102,7 @@ bool Document::open( const QString &fileName )
         }
 
         mEntries = mUnrar->list();
-    } else if ( mime.inherits( "inode/directory" ) ) {
+    } else if ( mime.inherits( QStringLiteral("inode/directory") ) ) {
         mDirectory = new Directory();
 
         if ( !mDirectory->open( fileName ) ) {

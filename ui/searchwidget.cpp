@@ -24,7 +24,7 @@
 SearchWidget::SearchWidget( QWidget * parent, Okular::Document * document )
     : QWidget( parent )
 {
-    setObjectName( QLatin1String( "iSearchBar" ) );
+    setObjectName( QStringLiteral( "iSearchBar" ) );
 
     QSizePolicy sp = sizePolicy();
     sp.setVerticalPolicy( QSizePolicy::Minimum );
@@ -69,7 +69,7 @@ SearchWidget::SearchWidget( QWidget * parent, Okular::Document * document )
     QToolButton *optionsMenuAction =  new QToolButton( this );
     mainlay->addWidget( optionsMenuAction );
     optionsMenuAction->setAutoRaise( true );
-    optionsMenuAction->setIcon( QIcon::fromTheme( "view-filter" ) );
+    optionsMenuAction->setIcon( QIcon::fromTheme( QStringLiteral("view-filter") ) );
     optionsMenuAction->setToolTip( i18n( "Filter Options" ) );
     optionsMenuAction->setPopupMode( QToolButton::InstantPopup );
     optionsMenuAction->setMenu( m_menu );

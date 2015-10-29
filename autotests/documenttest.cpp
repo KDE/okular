@@ -30,7 +30,7 @@ class DocumentTest
 // is enqueued/running
 void DocumentTest::testCloseDuringRotationJob()
 {
-    Okular::SettingsCore::instance( "documenttest" );
+    Okular::SettingsCore::instance( QStringLiteral("documenttest") );
     Okular::Document *m_document = new Okular::Document( 0 );
     const QString testFile = KDESRCDIR "data/file1.pdf";
     QMimeDatabase db;

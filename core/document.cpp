@@ -476,7 +476,7 @@ qulonglong DocumentPrivate::getTotalMemory()
 
 #if defined(Q_OS_LINUX)
     // if /proc/meminfo doesn't exist, return 128MB
-    QFile memFile( "/proc/meminfo" );
+    QFile memFile( QStringLiteral("/proc/meminfo") );
     if ( !memFile.open( QIODevice::ReadOnly ) )
         return (cachedValue = 134217728);
 
@@ -485,7 +485,7 @@ qulonglong DocumentPrivate::getTotalMemory()
     {
         QString entry = readStream.readLine();
         if ( entry.isNull() ) break;
-        if ( entry.startsWith( "MemTotal:" ) )
+        if ( entry.startsWith( QLatin1String("MemTotal:") ) )
             return (cachedValue = (Q_UINT64_C(1024) * entry.section( ' ', -2, -2 ).toULongLong()));
     }
 #elif defined(Q_OS_FREEBSD)
@@ -524,7 +524,7 @@ qulonglong DocumentPrivate::getFreeMemory( qulonglong *freeSwap )
 
 #if defined(Q_OS_LINUX)
     // if /proc/meminfo doesn't exist, return MEMORY FULL
-    QFile memFile( "/proc/meminfo" );
+    QFile memFile( QStringLiteral("/proc/meminfo") );
     if ( !memFile.open( QIODevice::ReadOnly ) )
         return 0;
 
@@ -534,7 +534,7 @@ qulonglong DocumentPrivate::getFreeMemory( qulonglong *freeSwap )
     QString entry;
     QTextStream readStream( &memFile );
     static const int nElems = 5;
-    QString names[nElems] = { "MemFree:", "Buffers:", "Cached:", "SwapFree:", "SwapTotal:" };
+    QString names[nElems] = { QStringLiteral("MemFree:"), QStringLiteral("Buffers:"), QStringLiteral("Cached:"), QStringLiteral("SwapFree:"), QStringLiteral("SwapTotal:") };
     qulonglong values[nElems] = { 0, 0, 0, 0, 0 };
     bool foundValues[nElems] = { false, false, false, false, false };
     while ( true )
@@ -628,7 +628,7 @@ void DocumentPrivate::loadDocumentInfo( QFile &infoFile )
         return;
 
     // Load DOM from XML file
-    QDomDocument doc( "documentInfo" );
+    QDomDocument doc( QStringLiteral("documentInfo") );
     if ( !doc.setContent( &infoFile ) )
     {
         qCDebug(OkularCoreDebug) << "Can't load XML pair! Check for broken xml.";
@@ -638,7 +638,7 @@ void DocumentPrivate::loadDocumentInfo( QFile &infoFile )
     infoFile.close();
 
     QDomElement root = doc.documentElement();
-    if ( root.tagName() != "documentInfo" )
+    if ( root.tagName() != QLatin1String("documentInfo") )
         return;
 
     // Parse the DOM tree
@@ -648,17 +648,17 @@ void DocumentPrivate::loadDocumentInfo( QFile &infoFile )
         QString catName = topLevelNode.toElement().tagName();
 
         // Restore page attributes (bookmark, annotations, ...) from the DOM
-        if ( catName == "pageList" )
+        if ( catName == QLatin1String("pageList") )
         {
             QDomNode pageNode = topLevelNode.firstChild();
             while ( pageNode.isElement() )
             {
                 QDomElement pageElement = pageNode.toElement();
-                if ( pageElement.hasAttribute( "number" ) )
+                if ( pageElement.hasAttribute( QStringLiteral("number") ) )
                 {
                     // get page number (node's attribute)
                     bool ok;
-                    int pageNumber = pageElement.attribute( "number" ).toInt( &ok );
+                    int pageNumber = pageElement.attribute( QStringLiteral("number") ).toInt( &ok );
 
                     // pass the domElement to the right page, to read config data from
                     if ( ok && pageNumber >= 0 && pageNumber < (int)m_pagesVector.count() )
@@ -669,7 +669,7 @@ void DocumentPrivate::loadDocumentInfo( QFile &infoFile )
         }
 
         // Restore 'general info' from the DOM
-        else if ( catName == "generalInfo" )
+        else if ( catName == QLatin1String("generalInfo") )
         {
             QDomNode infoNode = topLevelNode.firstChild();
             while ( infoNode.isElement() )
@@ -677,7 +677,7 @@ void DocumentPrivate::loadDocumentInfo( QFile &infoFile )
                 QDomElement infoElement = infoNode.toElement();
 
                 // restore viewports history
-                if ( infoElement.tagName() == "history" )
+                if ( infoElement.tagName() == QLatin1String("history") )
                 {
                     // clear history
                     m_viewportHistory.clear();
@@ -686,9 +686,9 @@ void DocumentPrivate::loadDocumentInfo( QFile &infoFile )
                     while ( historyNode.isElement() )
                     {
                         QDomElement historyElement = historyNode.toElement();
-                        if ( historyElement.hasAttribute( "viewport" ) )
+                        if ( historyElement.hasAttribute( QStringLiteral("viewport") ) )
                         {
-                            QString vpString = historyElement.attribute( "viewport" );
+                            QString vpString = historyElement.attribute( QStringLiteral("viewport") );
                             m_viewportIterator = m_viewportHistory.insert( m_viewportHistory.end(),
                                     DocumentViewport( vpString ) );
                         }
@@ -698,7 +698,7 @@ void DocumentPrivate::loadDocumentInfo( QFile &infoFile )
                     if ( m_viewportHistory.isEmpty() )
                         m_viewportIterator = m_viewportHistory.insert( m_viewportHistory.end(), DocumentViewport() );
                 }
-                else if ( infoElement.tagName() == "rotation" )
+                else if ( infoElement.tagName() == QLatin1String("rotation") )
                 {
                     QString str = infoElement.text();
                     bool ok = true;
@@ -708,15 +708,15 @@ void DocumentPrivate::loadDocumentInfo( QFile &infoFile )
                         setRotationInternal( newrotation, false );
                     }
                 }
-                else if ( infoElement.tagName() == "views" )
+                else if ( infoElement.tagName() == QLatin1String("views") )
                 {
                     QDomNode viewNode = infoNode.firstChild();
                     while ( viewNode.isElement() )
                     {
                         QDomElement viewElement = viewNode.toElement();
-                        if ( viewElement.tagName() == "view" )
+                        if ( viewElement.tagName() == QLatin1String("view") )
                         {
-                            const QString viewName = viewElement.attribute( "name" );
+                            const QString viewName = viewElement.attribute( QStringLiteral("name") );
                             Q_FOREACH ( View * view, m_views )
                             {
                                 if ( view->name() == viewName )
@@ -744,9 +744,9 @@ void DocumentPrivate::loadViewsInfo( View *view, const QDomElement &e )
     {
         QDomElement viewElement = viewNode.toElement();
 
-        if ( viewElement.tagName() == "zoom" )
+        if ( viewElement.tagName() == QLatin1String("zoom") )
         {
-            const QString valueString = viewElement.attribute( "value" );
+            const QString valueString = viewElement.attribute( QStringLiteral("value") );
             bool newzoom_ok = true;
             const double newzoom = !valueString.isEmpty() ? valueString.toDouble( &newzoom_ok ) : 1.0;
             if ( newzoom_ok && newzoom != 0
@@ -755,7 +755,7 @@ void DocumentPrivate::loadViewsInfo( View *view, const QDomElement &e )
             {
                 view->setCapability( View::Zoom, newzoom );
             }
-            const QString modeString = viewElement.attribute( "mode" );
+            const QString modeString = viewElement.attribute( QStringLiteral("mode") );
             bool newmode_ok = true;
             const int newmode = !modeString.isEmpty() ? modeString.toInt( &newmode_ok ) : 2;
             if ( newmode_ok
@@ -777,18 +777,18 @@ void DocumentPrivate::saveViewsInfo( View *view, QDomElement &e ) const
          && view->supportsCapability( View::ZoomModality )
          && ( view->capabilityFlags( View::ZoomModality ) & ( View::CapabilityRead | View::CapabilitySerializable ) ) )
     {
-        QDomElement zoomEl = e.ownerDocument().createElement( "zoom" );
+        QDomElement zoomEl = e.ownerDocument().createElement( QStringLiteral("zoom") );
         e.appendChild( zoomEl );
         bool ok = true;
         const double zoom = view->capability( View::Zoom ).toDouble( &ok );
         if ( ok && zoom != 0 )
         {
-            zoomEl.setAttribute( "value", QString::number(zoom) );
+            zoomEl.setAttribute( QStringLiteral("value"), QString::number(zoom) );
         }
         const int mode = view->capability( View::ZoomModality ).toInt( &ok );
         if ( ok )
         {
-            zoomEl.setAttribute( "mode", mode );
+            zoomEl.setAttribute( QStringLiteral("mode"), mode );
         }
     }
 }
@@ -843,8 +843,8 @@ void DocumentPrivate::loadAllGeneratorLibraries()
 
     m_generatorsLoaded = true;
 
-    QString constraint("([X-KDE-Priority] > 0) and (exist Library)") ;
-    KService::List offers = KServiceTypeTrader::self()->query( "okular/Generator", constraint );
+    QString constraint(QStringLiteral("([X-KDE-Priority] > 0) and (exist Library)")) ;
+    KService::List offers = KServiceTypeTrader::self()->query( QStringLiteral("okular/Generator"), constraint );
     loadServiceList( offers );
 }
 
@@ -932,9 +932,9 @@ Document::OpenResult DocumentPrivate::openDocumentInternal( const KService::Ptr&
     m_generator->d_func()->m_document = this;
 
     // connect error reporting signals
-    QObject::connect( m_generator, SIGNAL(error(QString,int)), m_parent, SIGNAL(error(QString,int)) );
-    QObject::connect( m_generator, SIGNAL(warning(QString,int)), m_parent, SIGNAL(warning(QString,int)) );
-    QObject::connect( m_generator, SIGNAL(notice(QString,int)), m_parent, SIGNAL(notice(QString,int)) );
+    QObject::connect( m_generator, &Generator::error, m_parent, &Document::error );
+    QObject::connect( m_generator, &Generator::warning, m_parent, &Document::warning );
+    QObject::connect( m_generator, &Generator::notice, m_parent, &Document::notice );
 
     QApplication::setOverrideCursor( Qt::WaitCursor );
 
@@ -1002,15 +1002,15 @@ bool DocumentPrivate::savePageDocumentInfo( QTemporaryFile *infoFile, int what )
     if ( infoFile->open() )
     {
         // 1. Create DOM
-        QDomDocument doc( "documentInfo" );
+        QDomDocument doc( QStringLiteral("documentInfo") );
         QDomProcessingInstruction xmlPi = doc.createProcessingInstruction(
-                QString::fromLatin1( "xml" ), QString::fromLatin1( "version=\"1.0\" encoding=\"utf-8\"" ) );
+                QStringLiteral( "xml" ), QStringLiteral( "version=\"1.0\" encoding=\"utf-8\"" ) );
         doc.appendChild( xmlPi );
-        QDomElement root = doc.createElement( "documentInfo" );
+        QDomElement root = doc.createElement( QStringLiteral("documentInfo") );
         doc.appendChild( root );
 
         // 2.1. Save page attributes (bookmark state, annotations, ... ) to DOM
-        QDomElement pageList = doc.createElement( "pageList" );
+        QDomElement pageList = doc.createElement( QStringLiteral("pageList") );
         root.appendChild( pageList );
         // <page list><page number='x'>.... </page> save pages that hold data
         QVector< Page * >::const_iterator pIt = m_pagesVector.constBegin(), pEnd = m_pagesVector.constEnd();
@@ -1032,7 +1032,7 @@ DocumentViewport DocumentPrivate::nextDocumentViewport() const
     DocumentViewport ret = m_nextDocumentViewport;
     if ( !m_nextDocumentDestination.isEmpty() && m_generator )
     {
-        DocumentViewport vp( m_parent->metaData( "NamedViewport", m_nextDocumentDestination ).toString() );
+        DocumentViewport vp( m_parent->metaData( QStringLiteral("NamedViewport"), m_nextDocumentDestination ).toString() );
         if ( vp.isValid() )
         {
             ret = vp;
@@ -1051,12 +1051,12 @@ void DocumentPrivate::warnLimitedAnnotSupport()
     {
         // Shown if the user is editing annotations in a file whose metadata is
         // not stored locally (.okular archives belong to this category)
-        KMessageBox::information( m_widget, i18n("Your annotation changes will not be saved automatically. Use File -> Save As...\nor your changes will be lost once the document is closed"), QString(), "annotNeedSaveAs" );
+        KMessageBox::information( m_widget, i18n("Your annotation changes will not be saved automatically. Use File -> Save As...\nor your changes will be lost once the document is closed"), QString(), QStringLiteral("annotNeedSaveAs") );
     }
     else if ( !canAddAnnotationsNatively() )
     {
         // If the generator doesn't support native annotations
-        KMessageBox::information( m_widget, i18n("Your annotations are saved internally by Okular.\nYou can export the annotated document using File -> Export As -> Document Archive"), QString(), "annotExportAsArchive" );
+        KMessageBox::information( m_widget, i18n("Your annotations are saved internally by Okular.\nYou can export the annotated document using File -> Export As -> Document Archive"), QString(), QStringLiteral("annotExportAsArchive") );
     }
 }
 
@@ -1220,16 +1220,16 @@ void DocumentPrivate::saveDocumentInfo() const
     if (infoFile.open( QIODevice::WriteOnly | QIODevice::Truncate) )
     {
         // 1. Create DOM
-        QDomDocument doc( "documentInfo" );
+        QDomDocument doc( QStringLiteral("documentInfo") );
         QDomProcessingInstruction xmlPi = doc.createProcessingInstruction(
-                QString::fromLatin1( "xml" ), QString::fromLatin1( "version=\"1.0\" encoding=\"utf-8\"" ) );
+                QStringLiteral( "xml" ), QStringLiteral( "version=\"1.0\" encoding=\"utf-8\"" ) );
         doc.appendChild( xmlPi );
-        QDomElement root = doc.createElement( "documentInfo" );
-        root.setAttribute( "url", m_url.toDisplayString(QUrl::PreferLocalFile) );
+        QDomElement root = doc.createElement( QStringLiteral("documentInfo") );
+        root.setAttribute( QStringLiteral("url"), m_url.toDisplayString(QUrl::PreferLocalFile) );
         doc.appendChild( root );
 
         // 2.1. Save page attributes (bookmark state, annotations, ... ) to DOM
-        QDomElement pageList = doc.createElement( "pageList" );
+        QDomElement pageList = doc.createElement( QStringLiteral("pageList") );
         root.appendChild( pageList );
         PageItems saveWhat = AllPageItems;
         if ( m_annotationsNeedSaveAs )
@@ -1246,12 +1246,12 @@ void DocumentPrivate::saveDocumentInfo() const
             (*pIt)->d->saveLocalContents( pageList, doc, saveWhat );
 
         // 2.2. Save document info (current viewport, history, ... ) to DOM
-        QDomElement generalInfo = doc.createElement( "generalInfo" );
+        QDomElement generalInfo = doc.createElement( QStringLiteral("generalInfo") );
         root.appendChild( generalInfo );
         // create rotation node
         if ( m_rotation != Rotation0 )
         {
-            QDomElement rotationNode = doc.createElement( "rotation" );
+            QDomElement rotationNode = doc.createElement( QStringLiteral("rotation") );
             generalInfo.appendChild( rotationNode );
             rotationNode.appendChild( doc.createTextNode( QString::number( (int)m_rotation ) ) );
         }
@@ -1265,7 +1265,7 @@ void DocumentPrivate::saveDocumentInfo() const
                 --backIterator;
 
             // create history root node
-            QDomElement historyNode = doc.createElement( "history" );
+            QDomElement historyNode = doc.createElement( QStringLiteral("history") );
             generalInfo.appendChild( historyNode );
 
             // add old[backIterator] and present[viewportIterator] items
@@ -1275,18 +1275,18 @@ void DocumentPrivate::saveDocumentInfo() const
             {
                 QString name = (backIterator == m_viewportIterator) ? "current" : "oldPage";
                 QDomElement historyEntry = doc.createElement( name );
-                historyEntry.setAttribute( "viewport", (*backIterator).toString() );
+                historyEntry.setAttribute( QStringLiteral("viewport"), (*backIterator).toString() );
                 historyNode.appendChild( historyEntry );
                 ++backIterator;
             }
         }
         // create views root node
-        QDomElement viewsNode = doc.createElement( "views" );
+        QDomElement viewsNode = doc.createElement( QStringLiteral("views") );
         generalInfo.appendChild( viewsNode );
         Q_FOREACH ( View * view, m_views )
         {
-            QDomElement viewEntry = doc.createElement( "view" );
-            viewEntry.setAttribute( "name", view->name() );
+            QDomElement viewEntry = doc.createElement( QStringLiteral("view") );
+            viewEntry.setAttribute( QStringLiteral("name"), view->name() );
             viewsNode.appendChild( viewEntry );
             saveViewsInfo( view, viewEntry );
         }
@@ -2074,7 +2074,7 @@ void DocumentPrivate::loadSyncFile( const QString & filePath )
     const QString coreName = ts.readLine();
     // second row: version string, in the form 'Version %u'
     QString versionstr = ts.readLine();
-    QRegExp versionre( "Version (\\d+)" );
+    QRegExp versionre( QStringLiteral("Version (\\d+)") );
     versionre.setCaseSensitivity( Qt::CaseInsensitive );
     if ( !versionre.exactMatch( versionstr ) )
         return;
@@ -2229,7 +2229,7 @@ public:
             return true;
         else if (s2->mimeTypes().contains( mimeName ) && !s1->mimeTypes().contains( mimeName ))
             return false;
-        return s1->property( "X-KDE-Priority" ).toInt() > s2->property( "X-KDE-Priority" ).toInt();
+        return s1->property( QStringLiteral("X-KDE-Priority") ).toInt() > s2->property( QStringLiteral("X-KDE-Priority") ).toInt();
     }
 
 private:
@@ -2301,8 +2301,8 @@ Document::OpenResult Document::openDocument(const QString & docFile, const QUrl 
 
     // 0. load Generator
     // request only valid non-disabled plugins suitable for the mimetype
-    QString constraint("([X-KDE-Priority] > 0) and (exist Library)") ;
-    KService::List offers = KMimeTypeTrader::self()->query(mime.name(),"okular/Generator",constraint);
+    QString constraint(QStringLiteral("([X-KDE-Priority] > 0) and (exist Library)")) ;
+    KService::List offers = KMimeTypeTrader::self()->query(mime.name(),QStringLiteral("okular/Generator"),constraint);
     if ( offers.isEmpty() && !triedMimeFromFileContent )
     {
         QMimeType newmime = db.mimeTypeForFile(docFile, QMimeDatabase::MatchExtension);
@@ -2310,7 +2310,7 @@ Document::OpenResult Document::openDocument(const QString & docFile, const QUrl 
         if ( newmime.name() != mime.name() )
         {
             mime = newmime;
-            offers = KMimeTypeTrader::self()->query( mime.name(), "okular/Generator", constraint );
+            offers = KMimeTypeTrader::self()->query( mime.name(), QStringLiteral("okular/Generator"), constraint );
         }
         if ( offers.isEmpty() )
         {
@@ -2323,7 +2323,7 @@ Document::OpenResult Document::openDocument(const QString & docFile, const QUrl 
             if ( newmime.name() != mime.name() )
             {
                 mime = newmime;
-                offers = KMimeTypeTrader::self()->query( mime.name(), "okular/Generator", constraint );
+                offers = KMimeTypeTrader::self()->query( mime.name(), QStringLiteral("okular/Generator"), constraint );
             }
         }
     }
@@ -2368,7 +2368,7 @@ Document::OpenResult Document::openDocument(const QString & docFile, const QUrl 
         if ( newmime.name() != mime.name() )
         {
             mime = newmime;
-            offers = KMimeTypeTrader::self()->query( mime.name(), "okular/Generator", constraint );
+            offers = KMimeTypeTrader::self()->query( mime.name(), QStringLiteral("okular/Generator"), constraint );
             if ( !offers.isEmpty() )
             {
                 offer = offers.first();
@@ -2463,7 +2463,7 @@ Document::OpenResult Document::openDocument(const QString & docFile, const QUrl 
     AudioPlayer::instance()->d->m_currentDocument = isstdin ? QUrl() : d->m_url;
     d->m_docSize = document_size;
 
-    const QStringList docScripts = d->m_generator->metaData( "DocumentScripts", "JavaScript" ).toStringList();
+    const QStringList docScripts = d->m_generator->metaData( QStringLiteral("DocumentScripts"), "JavaScript" ).toStringList();
     if ( !docScripts.isEmpty() )
     {
         d->m_scripter = new Scripter( d );
@@ -2804,7 +2804,7 @@ void Document::startFontReading()
 
     d->m_fontThread = new FontExtractionThread( d->m_generator, pages() );
     connect( d->m_fontThread, SIGNAL(gotFont(Okular::FontInfo)), this, SLOT(fontReadingGotFont(Okular::FontInfo)) );
-    connect( d->m_fontThread, SIGNAL(progress(int)), this, SLOT(fontReadingProgress(int)) );
+    connect( d->m_fontThread.data(), &FontExtractionThread::progress, this, &Document::fontReadingProgress );
 
     d->m_fontThread->startExtraction( /*d->m_generator->hasFeature( Generator::Threaded )*/true );
 }
@@ -2879,7 +2879,7 @@ bool Document::isAllowed( Permission action ) const
         return false;
 
 #if !OKULAR_FORCE_DRM
-    if ( KAuthorized::authorize( "skip_drm" ) && !SettingsCore::obeyDRM() )
+    if ( KAuthorized::authorize( QStringLiteral("skip_drm") ) && !SettingsCore::obeyDRM() )
         return true;
 #endif
 
@@ -2961,8 +2961,8 @@ QVariant Document::metaData( const QString & key, const QVariant & option ) cons
 {
     // if option starts with "src:" assume that we are handling a
     // source reference
-    if ( key == "NamedViewport"
-         && option.toString().startsWith( "src:", Qt::CaseInsensitive )
+    if ( key == QLatin1String("NamedViewport")
+         && option.toString().startsWith( QLatin1String("src:"), Qt::CaseInsensitive )
          && d->m_synctex_scanner)
     {
         const QString reference = option.toString();
@@ -3794,7 +3794,7 @@ QString Document::bookmarkedPageRange() const
                 range += ',';
 
             if ( endId - startId > 0 )
-                range += QString( "%1-%2" ).arg( startId + 1 ).arg( endId + 1 );
+                range += QStringLiteral( "%1-%2" ).arg( startId + 1 ).arg( endId + 1 );
             else
                 range += QString::number( startId + 1 );
             startId = -1;
@@ -3807,7 +3807,7 @@ QString Document::bookmarkedPageRange() const
             range += ',';
 
         if ( endId - startId > 0 )
-            range += QString( "%1-%2" ).arg( startId + 1 ).arg( endId + 1 );
+            range += QStringLiteral( "%1-%2" ).arg( startId + 1 ).arg( endId + 1 );
         else
             range += QString::number( startId + 1 );
     }
@@ -3857,7 +3857,7 @@ void Document::processAction( const Action * action )
         case Action::Execute: {
             const ExecuteAction * exe  = static_cast< const ExecuteAction * >( action );
             QString fileName = exe->fileName();
-            if ( fileName.endsWith( ".pdf" ) || fileName.endsWith( ".PDF" ) )
+            if ( fileName.endsWith( QLatin1String(".pdf") ) || fileName.endsWith( QLatin1String(".PDF") ) )
             {
                 d->openRelativeFile( fileName );
                 return;
@@ -3895,7 +3895,7 @@ void Document::processAction( const Action * action )
                 }
             }
 
-            KService::Ptr ptr = KMimeTypeTrader::self()->preferredService( mime.name(), "Application" );
+            KService::Ptr ptr = KMimeTypeTrader::self()->preferredService( mime.name(), QStringLiteral("Application") );
             if ( ptr )
             {
                 QList<QUrl> lst;
@@ -3956,7 +3956,7 @@ void Document::processAction( const Action * action )
             QString lilySource;
             int lilyRow = 0, lilyCol = 0;
             // if the url is a mailto one, invoke mailer
-            if ( browse->url().scheme().compare("mailto") )
+            if ( browse->url().scheme().compare(QLatin1String("mailto")) )
                 QDesktopServices::openUrl( browse->url() );
             else if ( extractLilyPondSourceReference( browse->url(), &lilySource, &lilyRow, &lilyCol ) )
             {
@@ -4193,8 +4193,8 @@ void Document::fillConfigDialog( KConfigDialog * dialog )
         return;
 
     // ensure that we have all the generators with settings loaded
-    QString constraint( "([X-KDE-Priority] > 0) and (exist Library) and ([X-KDE-okularHasInternalSettings])" );
-    KService::List offers = KServiceTypeTrader::self()->query( "okular/Generator", constraint );
+    QString constraint( QStringLiteral("([X-KDE-Priority] > 0) and (exist Library) and ([X-KDE-okularHasInternalSettings])") );
+    KService::List offers = KServiceTypeTrader::self()->query( QStringLiteral("okular/Generator"), constraint );
     d->loadServiceList( offers );
 
     bool pagesAdded = false;
@@ -4218,8 +4218,8 @@ void Document::fillConfigDialog( KConfigDialog * dialog )
 
 int Document::configurableGenerators() const
 {
-    QString constraint( "([X-KDE-Priority] > 0) and (exist Library) and ([X-KDE-okularHasInternalSettings])" );
-    KService::List offers = KServiceTypeTrader::self()->query( "okular/Generator", constraint );
+    QString constraint( QStringLiteral("([X-KDE-Priority] > 0) and (exist Library) and ([X-KDE-okularHasInternalSettings])") );
+    KService::List offers = KServiceTypeTrader::self()->query( QStringLiteral("okular/Generator"), constraint );
     return offers.count();
 }
 
@@ -4228,7 +4228,7 @@ QStringList Document::supportedMimeTypes() const
     if ( !d->m_supportedMimeTypes.isEmpty() )
         return d->m_supportedMimeTypes;
 
-    QString constraint( "(Library == 'okularpart')" );
+    QString constraint( QStringLiteral("(Library == 'okularpart')") );
     QLatin1String basePartService( "KParts/ReadOnlyPart" );
     KService::List offers = KServiceTypeTrader::self()->query( basePartService, constraint );
     KService::List::ConstIterator it = offers.constBegin(), itEnd = offers.constEnd();
@@ -4361,7 +4361,7 @@ Document::OpenResult Document::openDocumentArchive( const QString & docFile, con
 {
     QMimeDatabase db;
     const QMimeType mime = db.mimeTypeForFile( docFile, QMimeDatabase::MatchExtension );
-    if ( !mime.inherits( "application/vnd.kde.okular-archive" ) )
+    if ( !mime.inherits( QStringLiteral("application/vnd.kde.okular-archive") ) )
         return OpenError;
 
     KZip okularArchive( docFile );
@@ -4369,7 +4369,7 @@ Document::OpenResult Document::openDocumentArchive( const QString & docFile, con
         return OpenError;
 
     const KArchiveDirectory * mainDir = okularArchive.directory();
-    const KArchiveEntry * mainEntry = mainDir->entry( "content.xml" );
+    const KArchiveEntry * mainEntry = mainDir->entry( QStringLiteral("content.xml") );
     if ( !mainEntry || !mainEntry->isFile() )
         return OpenError;
 
@@ -4380,7 +4380,7 @@ Document::OpenResult Document::openDocumentArchive( const QString & docFile, con
     mainEntryDevice.reset();
 
     QDomElement root = doc.documentElement();
-    if ( root.tagName() != "OkularArchive" )
+    if ( root.tagName() != QLatin1String("OkularArchive") )
         return OpenError;
 
     QString documentFileName;
@@ -4388,14 +4388,14 @@ Document::OpenResult Document::openDocumentArchive( const QString & docFile, con
     QDomElement el = root.firstChild().toElement();
     for ( ; !el.isNull(); el = el.nextSibling().toElement() )
     {
-        if ( el.tagName() == "Files" )
+        if ( el.tagName() == QLatin1String("Files") )
         {
             QDomElement fileEl = el.firstChild().toElement();
             for ( ; !fileEl.isNull(); fileEl = fileEl.nextSibling().toElement() )
             {
-                if ( fileEl.tagName() == "DocumentFileName" )
+                if ( fileEl.tagName() == QLatin1String("DocumentFileName") )
                     documentFileName = fileEl.text();
-                else if ( fileEl.tagName() == "MetadataFileName" )
+                else if ( fileEl.tagName() == QLatin1String("MetadataFileName") )
                     metadataFileName = fileEl.text();
             }
         }
@@ -4477,23 +4477,23 @@ bool Document::saveDocumentArchive( const QString &fileName )
     const KUserGroup userGroup( QString( "" ) );
 #endif
 
-    QDomDocument contentDoc( "OkularArchive" );
+    QDomDocument contentDoc( QStringLiteral("OkularArchive") );
     QDomProcessingInstruction xmlPi = contentDoc.createProcessingInstruction(
-            QString::fromLatin1( "xml" ), QString::fromLatin1( "version=\"1.0\" encoding=\"utf-8\"" ) );
+            QStringLiteral( "xml" ), QStringLiteral( "version=\"1.0\" encoding=\"utf-8\"" ) );
     contentDoc.appendChild( xmlPi );
-    QDomElement root = contentDoc.createElement( "OkularArchive" );
+    QDomElement root = contentDoc.createElement( QStringLiteral("OkularArchive") );
     contentDoc.appendChild( root );
 
-    QDomElement filesNode = contentDoc.createElement( "Files" );
+    QDomElement filesNode = contentDoc.createElement( QStringLiteral("Files") );
     root.appendChild( filesNode );
 
-    QDomElement fileNameNode = contentDoc.createElement( "DocumentFileName" );
+    QDomElement fileNameNode = contentDoc.createElement( QStringLiteral("DocumentFileName") );
     filesNode.appendChild( fileNameNode );
     fileNameNode.appendChild( contentDoc.createTextNode( docFileName ) );
 
-    QDomElement metadataFileNameNode = contentDoc.createElement( "MetadataFileName" );
+    QDomElement metadataFileNameNode = contentDoc.createElement( QStringLiteral("MetadataFileName") );
     filesNode.appendChild( metadataFileNameNode );
-    metadataFileNameNode.appendChild( contentDoc.createTextNode( "metadata.xml" ) );
+    metadataFileNameNode.appendChild( contentDoc.createTextNode( QStringLiteral("metadata.xml") ) );
 
     // If the generator can save annotations natively, do it
     QTemporaryFile modifiedFile;
@@ -4524,11 +4524,11 @@ bool Document::saveDocumentArchive( const QString &fileName )
         return false;
 
     const QByteArray contentDocXml = contentDoc.toByteArray();
-    okularArchive.writeFile( "content.xml", user.loginName(), userGroup.name(),
+    okularArchive.writeFile( QStringLiteral("content.xml"), user.loginName(), userGroup.name(),
                              contentDocXml.constData(), contentDocXml.length() );
 
     okularArchive.addLocalFile( docPath, docFileName );
-    okularArchive.addLocalFile( metadataFile.fileName(), "metadata.xml" );
+    okularArchive.addLocalFile( metadataFile.fileName(), QStringLiteral("metadata.xml") );
 
     if ( !okularArchive.close() )
         return false;
@@ -4817,14 +4817,14 @@ DocumentViewport::DocumentViewport( const QString & xmlDesc )
             if ( !ok )
                 return;
         }
-        else if ( token.startsWith( "C1" ) )
+        else if ( token.startsWith( QLatin1String("C1") ) )
         {
             rePos.enabled = true;
             rePos.normalizedX = token.section( ':', 1, 1 ).toDouble();
             rePos.normalizedY = token.section( ':', 2, 2 ).toDouble();
             rePos.pos = Center;
         }
-        else if ( token.startsWith( "C2" ) )
+        else if ( token.startsWith( QLatin1String("C2") ) )
         {
             rePos.enabled = true;
             rePos.normalizedX = token.section( ':', 1, 1 ).toDouble();
@@ -4832,11 +4832,11 @@ DocumentViewport::DocumentViewport( const QString & xmlDesc )
             if (token.section( ':', 3, 3 ).toInt() == 1) rePos.pos = Center;
             else rePos.pos = TopLeft;
         }
-        else if ( token.startsWith( "AF1" ) )
+        else if ( token.startsWith( QLatin1String("AF1") ) )
         {
             autoFit.enabled = true;
-            autoFit.width = token.section( ':', 1, 1 ) == "T";
-            autoFit.height = token.section( ':', 2, 2 ) == "T";
+            autoFit.width = token.section( ':', 1, 1 ) == QLatin1String("T");
+            autoFit.height = token.section( ':', 2, 2 ) == QLatin1String("T");
         }
         // proceed tokenizing string
         field++;
@@ -4850,12 +4850,12 @@ QString DocumentViewport::toString() const
     QString s = QString::number( pageNumber );
     // if has center coordinates, save them on string
     if ( rePos.enabled )
-        s += QString( ";C2:" ) + QString::number( rePos.normalizedX ) +
+        s += QStringLiteral( ";C2:" ) + QString::number( rePos.normalizedX ) +
              ':' + QString::number( rePos.normalizedY ) +
              ':' + QString::number( rePos.pos );
     // if has autofit enabled, save its state on string
     if ( autoFit.enabled )
-        s += QString( ";AF1:" ) + (autoFit.width ? "T" : "F") +
+        s += QStringLiteral( ";AF1:" ) + (autoFit.width ? "T" : "F") +
              ':' + (autoFit.height ? "T" : "F");
     return s;
 }
@@ -4956,52 +4956,52 @@ QString DocumentInfo::getKeyString( Key key ) //const
 {
     switch ( key ) {
         case Title:
-            return "title";
+            return QStringLiteral("title");
             break;
         case Subject:
-            return "subject";
+            return QStringLiteral("subject");
             break;
         case Description:
-            return "description";
+            return QStringLiteral("description");
             break;
         case Author:
-            return "author";
+            return QStringLiteral("author");
             break;
         case Creator:
-            return "creator";
+            return QStringLiteral("creator");
             break;
         case Producer:
-            return "producer";
+            return QStringLiteral("producer");
             break;
         case Copyright:
-            return "copyright";
+            return QStringLiteral("copyright");
             break;
         case Pages:
-            return "pages";
+            return QStringLiteral("pages");
             break;
         case CreationDate:
-            return "creationDate";
+            return QStringLiteral("creationDate");
             break;
         case ModificationDate:
-            return "modificationDate";
+            return QStringLiteral("modificationDate");
             break;
         case MimeType:
-            return "mimeType";
+            return QStringLiteral("mimeType");
             break;
         case Category:
-            return "category";
+            return QStringLiteral("category");
             break;
         case Keywords:
-            return "keywords";
+            return QStringLiteral("keywords");
             break;
         case FilePath:
-            return "filePath";
+            return QStringLiteral("filePath");
             break;
         case DocumentSize:
-            return "documentSize";
+            return QStringLiteral("documentSize");
             break;
         case PagesSize:
-            return "pageSize";
+            return QStringLiteral("pageSize");
             break;
         default:
             qCWarning(OkularCoreDebug) << "Unknown" << key;
@@ -5012,22 +5012,22 @@ QString DocumentInfo::getKeyString( Key key ) //const
 
 DocumentInfo::Key DocumentInfo::getKeyFromString( const QString &key ) //const
 {
-    if (key == "title") return Title;
-    else if (key == "subject") return Subject;
-    else if (key == "description") return Description;
-    else if (key == "author") return Author;
-    else if (key == "creator") return Creator;
-    else if (key == "producer") return Producer;
-    else if (key == "copyright") return Copyright;
-    else if (key == "pages") return Pages;
-    else if (key == "creationDate") return CreationDate;
-    else if (key == "modificationDate") return ModificationDate;
-    else if (key == "mimeType") return MimeType;
-    else if (key == "category") return Category;
-    else if (key == "keywords") return Keywords;
-    else if (key == "filePath") return FilePath;
-    else if (key == "documentSize") return DocumentSize;
-    else if (key == "pageSize") return PagesSize;
+    if (key == QLatin1String("title")) return Title;
+    else if (key == QLatin1String("subject")) return Subject;
+    else if (key == QLatin1String("description")) return Description;
+    else if (key == QLatin1String("author")) return Author;
+    else if (key == QLatin1String("creator")) return Creator;
+    else if (key == QLatin1String("producer")) return Producer;
+    else if (key == QLatin1String("copyright")) return Copyright;
+    else if (key == QLatin1String("pages")) return Pages;
+    else if (key == QLatin1String("creationDate")) return CreationDate;
+    else if (key == QLatin1String("modificationDate")) return ModificationDate;
+    else if (key == QLatin1String("mimeType")) return MimeType;
+    else if (key == QLatin1String("category")) return Category;
+    else if (key == QLatin1String("keywords")) return Keywords;
+    else if (key == QLatin1String("filePath")) return FilePath;
+    else if (key == QLatin1String("documentSize")) return DocumentSize;
+    else if (key == QLatin1String("pageSize")) return PagesSize;
     else return Invalid;
 }
 
@@ -5101,7 +5101,7 @@ QString DocumentInfo::getKeyTitle( const QString &key ) const
 /** DocumentSynopsis **/
 
 DocumentSynopsis::DocumentSynopsis()
-  : QDomDocument( "DocumentSynopsis" )
+  : QDomDocument( QStringLiteral("DocumentSynopsis") )
 {
     // void implementation, only subclassed for naming
 }

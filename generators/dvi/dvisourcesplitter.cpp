@@ -30,7 +30,7 @@ DVI_SourceFileSplitter::DVI_SourceFileSplitter(const QString &srclink, const QSt
 #endif
 
   //remove src: if necessary
-  if ( filepart.left(4) == "src:" ) filepart = srclink.mid(4);
+  if ( filepart.left(4) == QLatin1String("src:") ) filepart = srclink.mid(4);
 
   //split first
   quint32 max = filepart.length(), i = 0;

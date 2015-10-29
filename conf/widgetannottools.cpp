@@ -58,7 +58,7 @@ QStringList WidgetAnnotTools::tools() const
 
         // Set id
         QDomElement toolElement = doc.documentElement();
-        toolElement.setAttribute( "id", i+1 );
+        toolElement.setAttribute( QStringLiteral("id"), i+1 );
 
         // Remove old shortcut, if any
         QDomNode oldShortcut = toolElement.elementsByTagName( QStringLiteral("shortcut") ).item( 0 );

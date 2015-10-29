@@ -33,7 +33,7 @@ private:
 
 void AddRemoveAnnotationTest::initTestCase()
 {
-    Okular::SettingsCore::instance( "addannotationtest" );
+    Okular::SettingsCore::instance( QStringLiteral("addannotationtest") );
     m_document = new Okular::Document( 0 );
 }
 
@@ -59,11 +59,11 @@ void AddRemoveAnnotationTest::testAddAnnotations()
     // Create two distinct text annotations
     Okular::Annotation *annot1 = new Okular::TextAnnotation();
     annot1->setBoundingRectangle( Okular::NormalizedRect( 0.1, 0.1, 0.15, 0.15 ) );
-    annot1->setContents( "annot contents" );
+    annot1->setContents( QStringLiteral("annot contents") );
 
     Okular::Annotation *annot2 = new Okular::TextAnnotation();
     annot2->setBoundingRectangle( Okular::NormalizedRect( 0.2, 0.2, 0.3, 0.4 ) );
-    annot2->setContents( "annot contents" );
+    annot2->setContents( QStringLiteral("annot contents") );
 
     // The two annotations shold have different properties XML strings
     QVERIFY( TestingUtils::getAnnotationXml( annot1 ) != TestingUtils::getAnnotationXml( annot2 ) );
@@ -123,7 +123,7 @@ void AddRemoveAnnotationTest::testAddAnnotationUndoWithRotate_Bug318091()
 {
     Okular::Annotation *annot = new Okular::TextAnnotation();
     annot->setBoundingRectangle( Okular::NormalizedRect( 0.1, 0.1, 0.15, 0.15 ) );
-    annot->setContents( "annot contents" );
+    annot->setContents( QStringLiteral("annot contents") );
 
     m_document->addPageAnnotation( 0, annot );
     QString origAnnotXml = TestingUtils::getAnnotationXml( annot );
@@ -149,11 +149,11 @@ void AddRemoveAnnotationTest::testRemoveAnnotations()
     // Create two distinct text annotations
     Okular::Annotation *annot1 = new Okular::TextAnnotation();
     annot1->setBoundingRectangle( Okular::NormalizedRect( 0.1, 0.1, 0.15, 0.15 ) );
-    annot1->setContents( "annot contents" );
+    annot1->setContents( QStringLiteral("annot contents") );
 
     Okular::Annotation *annot2 = new Okular::TextAnnotation();
     annot2->setBoundingRectangle( Okular::NormalizedRect( 0.2, 0.2, 0.3, 0.4 ) );
-    annot2->setContents( "annot contents" );
+    annot2->setContents( QStringLiteral("annot contents") );
 
     // Add annot1 and annot2 to document
     m_document->addPageAnnotation( 0, annot1 );

@@ -37,7 +37,7 @@
 
 PageItem::PageItem(QQuickItem *parent)
     : QQuickPaintedItem(parent),
-      Okular::View( QString::fromLatin1( "PageView" ) ),
+      Okular::View( QLatin1String( "PageView" ) ),
       m_page(0),
       m_smooth(false),
       m_intentionalDraw(false),
@@ -112,14 +112,14 @@ void PageItem::setDocument(DocumentItem *doc)
     disconnect(doc, 0, this, 0);
     m_documentItem = doc;
     Observer *observer = m_isThumbnail ? m_documentItem.data()->thumbnailObserver() : m_documentItem.data()->pageviewObserver();
-    connect(observer, SIGNAL(pageChanged(int, int)), this, SLOT(pageHasChanged(int, int)));
-    connect(doc->document()->bookmarkManager(), SIGNAL(bookmarksChanged(QUrl)),
-            this, SLOT(checkBookmarksChanged()));
+    connect(observer, &Observer::pageChanged, this, &PageItem::pageHasChanged);
+    connect(doc->document()->bookmarkManager(), &Okular::BookmarkManager::bookmarksChanged,
+            this, &PageItem::checkBookmarksChanged);
     setPageNumber(0);
     emit documentChanged();
     m_redrawTimer->start();
 
-    connect(doc, SIGNAL(pathChanged()), this, SLOT(documentPathChanged()));
+    connect(doc, &DocumentItem::pathChanged, this, &PageItem::documentPathChanged);
 }
 
 int PageItem::pageNumber() const

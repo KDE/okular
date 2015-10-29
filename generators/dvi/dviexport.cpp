@@ -45,7 +45,7 @@ DVIExport::DVIExport(dviRenderer& parent)
     process_(0),
     parent_(&parent)
 {
-  connect( this, SIGNAL(error(QString,int)), &parent, SIGNAL(error(QString,int)) );
+  connect( this, &DVIExport::error, &parent, &dviRenderer::error );
 }
 
 
@@ -125,7 +125,7 @@ DVIExportToPDF::DVIExportToPDF(dviRenderer& parent, const QString& output_name)
   if (!input.exists() || !input.isReadable())
     return;
 
-  if (QStandardPaths::findExecutable("dvipdfm").isEmpty()) {
+  if (QStandardPaths::findExecutable(QStringLiteral("dvipdfm")).isEmpty()) {
     emit error(i18n("<qt><p>Okular could not locate the program <em>dvipdfm</em> on your computer. This program is "
                     "essential for the export function to work. You can, however, convert "
                     "the DVI-file to PDF using the print function of Okular, but that will often "
@@ -138,12 +138,12 @@ DVIExportToPDF::DVIExportToPDF(dviRenderer& parent, const QString& output_name)
   }
 
   // Generate a suggestion for a reasonable file name
-  const QString suggested_name = dvi.filename.left(dvi.filename.indexOf(".")) + ".pdf";
+  const QString suggested_name = dvi.filename.left(dvi.filename.indexOf(QStringLiteral("."))) + ".pdf";
   if (output_name.isEmpty())
     return;
 
-  start("dvipdfm",
-        QStringList() << "-o"
+  start(QStringLiteral("dvipdfm"),
+        QStringList() << QStringLiteral("-o")
                       << output_name
                       << dvi.filename,
         QFileInfo(dvi.filename).absolutePath(),
@@ -182,7 +182,7 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
     return;
   }
 
-  if (QStandardPaths::findExecutable("dvips").isEmpty()) {
+  if (QStandardPaths::findExecutable(QStringLiteral("dvips")).isEmpty()) {
     emit error(i18n("<qt><p>Okular could not locate the program <em>dvips</em> on your computer. "
                     "That program is essential for the export function to work.</p>"
                     "<p>Hint to the perplexed system administrator: Okular uses the PATH environment "
@@ -268,16 +268,16 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
   QStringList args;
   if (!printer)
     // Export hyperlinks
-    args << "-z";
+    args << QStringLiteral("-z");
 
   if (!options.isEmpty())
     args += options;
 
   args << input_name
-       << "-o"
+       << QStringLiteral("-o")
        << output_name_;
 
-  start("dvips",
+  start(QStringLiteral("dvips"),
         args,
         QFileInfo(dvi.filename).absolutePath(),
         i18n("<qt>The external program 'dvips', which was used to export the file, reported an error. "

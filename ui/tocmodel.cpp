@@ -72,22 +72,22 @@ TOCItem::TOCItem( TOCItem *_parent, const QDomElement &e )
     text = e.tagName();
 
     // viewport loading
-    if ( e.hasAttribute( "Viewport" ) )
+    if ( e.hasAttribute( QStringLiteral("Viewport") ) )
     {
         // if the node has a viewport, set it
-        viewport = Okular::DocumentViewport( e.attribute( "Viewport" ) );
+        viewport = Okular::DocumentViewport( e.attribute( QStringLiteral("Viewport") ) );
     }
-    else if ( e.hasAttribute( "ViewportName" ) )
+    else if ( e.hasAttribute( QStringLiteral("ViewportName") ) )
     {
         // if the node references a viewport, get the reference and set it
-        const QString & page = e.attribute( "ViewportName" );
-        QString viewport_string = model->document->metaData( "NamedViewport", page ).toString();
+        const QString & page = e.attribute( QStringLiteral("ViewportName") );
+        QString viewport_string = model->document->metaData( QStringLiteral("NamedViewport"), page ).toString();
         if ( !viewport_string.isEmpty() )
             viewport = Okular::DocumentViewport( viewport_string );
     }
 
-    extFileName = e.attribute( "ExternalFileName" );
-    url = e.attribute( "URL" );
+    extFileName = e.attribute( QStringLiteral("ExternalFileName") );
+    url = e.attribute( QStringLiteral("URL") );
 }
 
 TOCItem::~TOCItem()
@@ -126,8 +126,8 @@ void TOCModelPrivate::addChildren( const QDomNode & parentNode, TOCItem * parent
 
         // open/keep close the item
         bool isOpen = false;
-        if ( e.hasAttribute( "Open" ) )
-            isOpen = QVariant( e.attribute( "Open" ) ).toBool();
+        if ( e.hasAttribute( QStringLiteral("Open") ) )
+            isOpen = QVariant( e.attribute( QStringLiteral("Open") ) ).toBool();
         if ( isOpen )
             itemsToOpen.append( currentItem );
 

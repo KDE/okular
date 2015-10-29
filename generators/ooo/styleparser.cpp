@@ -133,18 +133,18 @@ bool StyleParser::parseMetaFile()
       QDomElement child = element.firstChildElement();
       while ( !child.isNull() ) {
         if ( child.tagName() == QLatin1String( "generator" ) ) {
-          mStyleInformation->addMetaInformation( "producer", child.text(), i18n( "Producer" ) );
+          mStyleInformation->addMetaInformation( QStringLiteral("producer"), child.text(), i18n( "Producer" ) );
         } else if ( child.tagName() == QLatin1String( "creation-date" ) ) {
           const QDateTime dateTime = QDateTime::fromString( child.text(), Qt::ISODate );
-          mStyleInformation->addMetaInformation( "creationDate", QLocale().toString( dateTime, QLocale::LongFormat ),
+          mStyleInformation->addMetaInformation( QStringLiteral("creationDate"), QLocale().toString( dateTime, QLocale::LongFormat ),
                                                  i18n( "Created" ) );
         } else if ( child.tagName() == QLatin1String( "initial-creator" ) ) {
-          mStyleInformation->addMetaInformation( "creator", child.text(), i18n( "Creator" ) );
+          mStyleInformation->addMetaInformation( QStringLiteral("creator"), child.text(), i18n( "Creator" ) );
         } else if ( child.tagName() == QLatin1String( "creator" ) ) {
-          mStyleInformation->addMetaInformation( "author", child.text(), i18n( "Author" ) );
+          mStyleInformation->addMetaInformation( QStringLiteral("author"), child.text(), i18n( "Author" ) );
         } else if ( child.tagName() == QLatin1String( "date" ) ) {
           const QDateTime dateTime = QDateTime::fromString( child.text(), Qt::ISODate );
-          mStyleInformation->addMetaInformation( "modificationDate", QLocale().toString( dateTime, QLocale::LongFormat ),
+          mStyleInformation->addMetaInformation( QStringLiteral("modificationDate"), QLocale().toString( dateTime, QLocale::LongFormat ),
                                                  i18n( "Modified" ) );
         }
 
@@ -169,9 +169,9 @@ bool StyleParser::parseFontFaceDecls( QDomElement &parent )
   while ( !element.isNull() ) {
     if ( element.tagName() == QLatin1String( "font-face" ) ) {
       FontFormatProperty property;
-      property.setFamily( element.attribute( "font-family" ) );
+      property.setFamily( element.attribute( QStringLiteral("font-family") ) );
 
-      mStyleInformation->addFontProperty( element.attribute( "name" ), property );
+      mStyleInformation->addFontProperty( element.attribute( QStringLiteral("name") ), property );
     } else {
       qDebug( "unknown tag %s", qPrintable( element.tagName() ) );
     }
@@ -192,9 +192,9 @@ bool StyleParser::parseMasterStyles( QDomElement &parent )
   QDomElement element = parent.firstChildElement();
   while ( !element.isNull() ) {
     if ( element.tagName() == QLatin1String( "master-page" ) ) {
-      mStyleInformation->addMasterLayout( element.attribute( "name" ), element.attribute( "page-layout-name" ) );
+      mStyleInformation->addMasterLayout( element.attribute( QStringLiteral("name") ), element.attribute( QStringLiteral("page-layout-name") ) );
       if ( !mMasterPageNameSet ) {
-        mStyleInformation->setMasterPageName( element.attribute( "name" ) );
+        mStyleInformation->setMasterPageName( element.attribute( QStringLiteral("name") ) );
         mMasterPageNameSet = true;
       }
     } else {
@@ -213,24 +213,24 @@ bool StyleParser::parseAutomaticStyles( QDomElement &parent )
   while ( !element.isNull() ) {
     if ( element.tagName() == QLatin1String( "style" ) ) {
       const StyleFormatProperty property = parseStyleProperty( element );
-      mStyleInformation->addStyleProperty( element.attribute( "name" ), property );
+      mStyleInformation->addStyleProperty( element.attribute( QStringLiteral("name") ), property );
     } else if ( element.tagName() == QLatin1String( "page-layout" ) ) {
       QDomElement child = element.firstChildElement();
       while ( !child.isNull() ) {
         if ( child.tagName() == QLatin1String( "page-layout-properties" ) ) {
           const PageFormatProperty property = parsePageProperty( child );
-          mStyleInformation->addPageProperty( element.attribute( "name" ), property );
+          mStyleInformation->addPageProperty( element.attribute( QStringLiteral("name") ), property );
         }
 
         child = child.nextSiblingElement();
       }
     } else if ( element.tagName() == QLatin1String( "list-style" ) ) {
       const ListFormatProperty property = parseListProperty( element );
-      mStyleInformation->addListProperty( element.attribute( "name" ), property );
+      mStyleInformation->addListProperty( element.attribute( QStringLiteral("name") ), property );
     } else if ( element.tagName() == QLatin1String( "default-style" ) ) {
       StyleFormatProperty property = parseStyleProperty( element );
       property.setDefaultStyle( true );
-      mStyleInformation->addStyleProperty( element.attribute( "family" ), property );
+      mStyleInformation->addStyleProperty( element.attribute( QStringLiteral("family") ), property );
     } else {
       qDebug( "unknown tag %s", qPrintable( element.tagName() ) );
     }
@@ -245,12 +245,12 @@ StyleFormatProperty StyleParser::parseStyleProperty( QDomElement &parent )
 {
   StyleFormatProperty property( mStyleInformation );
 
-  property.setParentStyleName( parent.attribute( "parent-style-name" ) );
-  property.setFamily( parent.attribute( "family" ) );
-  if ( parent.hasAttribute( "master-page-name" ) ) {
-    property.setMasterPageName( parent.attribute( "master-page-name" ) );
+  property.setParentStyleName( parent.attribute( QStringLiteral("parent-style-name") ) );
+  property.setFamily( parent.attribute( QStringLiteral("family") ) );
+  if ( parent.hasAttribute( QStringLiteral("master-page-name") ) ) {
+    property.setMasterPageName( parent.attribute( QStringLiteral("master-page-name") ) );
     if ( !mMasterPageNameSet ) {
-      mStyleInformation->setMasterPageName( parent.attribute( "master-page-name" ) );
+      mStyleInformation->setMasterPageName( parent.attribute( QStringLiteral("master-page-name") ) );
       mMasterPageNameSet = true;
     }
   }
@@ -283,47 +283,47 @@ ParagraphFormatProperty StyleParser::parseParagraphProperty( QDomElement &parent
 {
   ParagraphFormatProperty property;
 
-  property.setPageNumber( parent.attribute( "page-number" ).toInt() );
+  property.setPageNumber( parent.attribute( QStringLiteral("page-number") ).toInt() );
 
   static QMap<QString, ParagraphFormatProperty::WritingMode> map;
   if ( map.isEmpty() ) {
-    map.insert( "lr-tb", ParagraphFormatProperty::LRTB );
-    map.insert( "rl-tb", ParagraphFormatProperty::RLTB );
-    map.insert( "tb-rl", ParagraphFormatProperty::TBRL );
-    map.insert( "tb-lr", ParagraphFormatProperty::TBLR );
-    map.insert( "lr", ParagraphFormatProperty::LR );
-    map.insert( "rl", ParagraphFormatProperty::RL );
-    map.insert( "tb", ParagraphFormatProperty::TB );
-    map.insert( "page", ParagraphFormatProperty::PAGE );
+    map.insert( QStringLiteral("lr-tb"), ParagraphFormatProperty::LRTB );
+    map.insert( QStringLiteral("rl-tb"), ParagraphFormatProperty::RLTB );
+    map.insert( QStringLiteral("tb-rl"), ParagraphFormatProperty::TBRL );
+    map.insert( QStringLiteral("tb-lr"), ParagraphFormatProperty::TBLR );
+    map.insert( QStringLiteral("lr"), ParagraphFormatProperty::LR );
+    map.insert( QStringLiteral("rl"), ParagraphFormatProperty::RL );
+    map.insert( QStringLiteral("tb"), ParagraphFormatProperty::TB );
+    map.insert( QStringLiteral("page"), ParagraphFormatProperty::PAGE );
   }
-  property.setWritingMode( map[ parent.attribute( "writing-mode" ) ] );
+  property.setWritingMode( map[ parent.attribute( QStringLiteral("writing-mode") ) ] );
 
   static QMap<QString, Qt::Alignment> alignMap;
   if ( alignMap.isEmpty() ) {
-    alignMap.insert( "center", Qt::AlignCenter );
-    alignMap.insert( "left", Qt::AlignLeft );
-    alignMap.insert( "right", Qt::AlignRight );
-    alignMap.insert( "justify", Qt::AlignJustify );
+    alignMap.insert( QStringLiteral("center"), Qt::AlignCenter );
+    alignMap.insert( QStringLiteral("left"), Qt::AlignLeft );
+    alignMap.insert( QStringLiteral("right"), Qt::AlignRight );
+    alignMap.insert( QStringLiteral("justify"), Qt::AlignJustify );
     if ( property.writingModeIsRightToLeft() ) {
-      alignMap.insert( "start", Qt::AlignRight );
-      alignMap.insert( "end", Qt::AlignLeft );
+      alignMap.insert( QStringLiteral("start"), Qt::AlignRight );
+      alignMap.insert( QStringLiteral("end"), Qt::AlignLeft );
     } else {
       // not right to left
-      alignMap.insert( "start", Qt::AlignLeft );
-      alignMap.insert( "end", Qt::AlignRight );
+      alignMap.insert( QStringLiteral("start"), Qt::AlignLeft );
+      alignMap.insert( QStringLiteral("end"), Qt::AlignRight );
     }
   }
-  if ( parent.hasAttribute( "text-align" ) ) {
-    property.setTextAlignment( alignMap[ parent.attribute( "text-align", "left" ) ] );
+  if ( parent.hasAttribute( QStringLiteral("text-align") ) ) {
+    property.setTextAlignment( alignMap[ parent.attribute( QStringLiteral("text-align"), QStringLiteral("left") ) ] );
   }
 
-  const QString marginLeft = parent.attribute( "margin-left" );
+  const QString marginLeft = parent.attribute( QStringLiteral("margin-left") );
   if ( !marginLeft.isEmpty() ) {
     qreal leftMargin = qRound( convertUnit( marginLeft ) );
     property.setLeftMargin( leftMargin );
   }
 
-  const QString colorText = parent.attribute( "background-color" );
+  const QString colorText = parent.attribute( QStringLiteral("background-color") );
   if ( !colorText.isEmpty() && colorText != QLatin1String( "transparent" ) ) {
     property.setBackgroundColor( QColor( colorText ) );
   }
@@ -335,37 +335,37 @@ TextFormatProperty StyleParser::parseTextProperty( QDomElement &parent )
 {
   TextFormatProperty property;
 
-  const QString fontSize = parent.attribute( "font-size" );
+  const QString fontSize = parent.attribute( QStringLiteral("font-size") );
   if ( !fontSize.isEmpty() )
     property.setFontSize( qRound( convertUnit( fontSize ) ) );
 
   static QMap<QString, QFont::Weight> weightMap;
   if ( weightMap.isEmpty() ) {
-    weightMap.insert( "normal", QFont::Normal );
-    weightMap.insert( "bold", QFont::Bold );
+    weightMap.insert( QStringLiteral("normal"), QFont::Normal );
+    weightMap.insert( QStringLiteral("bold"), QFont::Bold );
   }
 
-  const QString fontWeight = parent.attribute( "font-weight" );
+  const QString fontWeight = parent.attribute( QStringLiteral("font-weight") );
   if ( !fontWeight.isEmpty() )
     property.setFontWeight( weightMap[ fontWeight ] );
 
   static QMap<QString, QFont::Style> fontStyleMap;
   if ( fontStyleMap.isEmpty() ) {
-    fontStyleMap.insert( "normal", QFont::StyleNormal );
-    fontStyleMap.insert( "italic", QFont::StyleItalic );
-    fontStyleMap.insert( "oblique", QFont::StyleOblique );
+    fontStyleMap.insert( QStringLiteral("normal"), QFont::StyleNormal );
+    fontStyleMap.insert( QStringLiteral("italic"), QFont::StyleItalic );
+    fontStyleMap.insert( QStringLiteral("oblique"), QFont::StyleOblique );
   }
 
-  const QString fontStyle = parent.attribute( "font-style" );
+  const QString fontStyle = parent.attribute( QStringLiteral("font-style") );
   if ( !fontStyle.isEmpty() )
     property.setFontStyle( fontStyleMap.value( fontStyle, QFont::StyleNormal ) );
 
-  const QColor color( parent.attribute( "color" ) );
+  const QColor color( parent.attribute( QStringLiteral("color") ) );
   if ( color.isValid() ) {
     property.setColor( color );
   }
 
-  const QString colorText = parent.attribute( "background-color" );
+  const QString colorText = parent.attribute( QStringLiteral("background-color") );
   if ( !colorText.isEmpty() && colorText != QLatin1String( "transparent" ) ) {
     property.setBackgroundColor( QColor( colorText ) );
   }
@@ -377,12 +377,12 @@ PageFormatProperty StyleParser::parsePageProperty( QDomElement &parent )
 {
   PageFormatProperty property;
 
-  property.setBottomMargin( convertUnit( parent.attribute( "margin-bottom" ) ) );
-  property.setLeftMargin( convertUnit( parent.attribute( "margin-left" ) ) );
-  property.setTopMargin( convertUnit( parent.attribute( "margin-top" ) ) );
-  property.setRightMargin( convertUnit( parent.attribute( "margin-right" ) ) );
-  property.setWidth( convertUnit( parent.attribute( "page-width" ) ) );
-  property.setHeight( convertUnit( parent.attribute( "page-height" ) ) );
+  property.setBottomMargin( convertUnit( parent.attribute( QStringLiteral("margin-bottom") ) ) );
+  property.setLeftMargin( convertUnit( parent.attribute( QStringLiteral("margin-left") ) ) );
+  property.setTopMargin( convertUnit( parent.attribute( QStringLiteral("margin-top") ) ) );
+  property.setRightMargin( convertUnit( parent.attribute( QStringLiteral("margin-right") ) ) );
+  property.setWidth( convertUnit( parent.attribute( QStringLiteral("page-width") ) ) );
+  property.setHeight( convertUnit( parent.attribute( QStringLiteral("page-height") ) ) );
 
   return property;
 }
@@ -399,11 +399,11 @@ ListFormatProperty StyleParser::parseListProperty( QDomElement &parent )
 
   while ( !element.isNull() ) {
     if ( element.tagName() == QLatin1String( "list-level-style-number" ) ) {
-      int level = element.attribute( "level" ).toInt();
+      int level = element.attribute( QStringLiteral("level") ).toInt();
       property.addItem( level, 0.0 );
     } else if ( element.tagName() == QLatin1String( "list-level-style-bullet" ) ) {
-      int level = element.attribute( "level" ).toInt();
-      property.addItem( level, convertUnit( element.attribute( "space-before" ) ) );
+      int level = element.attribute( QStringLiteral("level") ).toInt();
+      property.addItem( level, convertUnit( element.attribute( QStringLiteral("space-before") ) ) );
     }
 
     element = element.nextSiblingElement();
@@ -416,7 +416,7 @@ TableColumnFormatProperty StyleParser::parseTableColumnProperty( QDomElement &pa
 {
   TableColumnFormatProperty property;
 
-  const double width = convertUnit( parent.attribute( "column-width" ) );
+  const double width = convertUnit( parent.attribute( QStringLiteral("column-width") ) );
   property.setWidth( width );
 
   return property;
@@ -426,27 +426,27 @@ TableCellFormatProperty StyleParser::parseTableCellProperty( QDomElement &parent
 {
   TableCellFormatProperty property;
 
-  if ( parent.hasAttribute( "background-color" ) )
-    property.setBackgroundColor( QColor( parent.attribute( "background-color" ) ) );
+  if ( parent.hasAttribute( QStringLiteral("background-color") ) )
+    property.setBackgroundColor( QColor( parent.attribute( QStringLiteral("background-color") ) ) );
 
-  property.setPadding( convertUnit( parent.attribute( "padding" ) ) );
+  property.setPadding( convertUnit( parent.attribute( QStringLiteral("padding") ) ) );
 
   static QMap<QString, Qt::Alignment> map;
   if ( map.isEmpty() ) {
-    map.insert( "top", Qt::AlignTop );
-    map.insert( "middle", Qt::AlignVCenter );
-    map.insert( "bottom", Qt::AlignBottom );
-    map.insert( "left", Qt::AlignLeft );
-    map.insert( "right", Qt::AlignRight );
-    map.insert( "center", Qt::AlignHCenter );
+    map.insert( QStringLiteral("top"), Qt::AlignTop );
+    map.insert( QStringLiteral("middle"), Qt::AlignVCenter );
+    map.insert( QStringLiteral("bottom"), Qt::AlignBottom );
+    map.insert( QStringLiteral("left"), Qt::AlignLeft );
+    map.insert( QStringLiteral("right"), Qt::AlignRight );
+    map.insert( QStringLiteral("center"), Qt::AlignHCenter );
   }
 
-  if ( parent.hasAttribute( "align" ) && parent.hasAttribute( "vertical-align" ) ) {
-    property.setAlignment( map[ parent.attribute( "align" ) ] | map[ parent.attribute( "vertical-align" ) ] );
-  } else if ( parent.hasAttribute( "align" ) ) {
-    property.setAlignment( map[ parent.attribute( "align" ) ] );
-  } else if ( parent.hasAttribute( "vertical-align" ) ) {
-    property.setAlignment( map[ parent.attribute( "vertical-align" ) ] );
+  if ( parent.hasAttribute( QStringLiteral("align") ) && parent.hasAttribute( QStringLiteral("vertical-align") ) ) {
+    property.setAlignment( map[ parent.attribute( QStringLiteral("align") ) ] | map[ parent.attribute( QStringLiteral("vertical-align") ) ] );
+  } else if ( parent.hasAttribute( QStringLiteral("align") ) ) {
+    property.setAlignment( map[ parent.attribute( QStringLiteral("align") ) ] );
+  } else if ( parent.hasAttribute( QStringLiteral("vertical-align") ) ) {
+    property.setAlignment( map[ parent.attribute( QStringLiteral("vertical-align") ) ] );
   }
 
   return property;
@@ -463,31 +463,31 @@ double StyleParser::convertUnit( const QString &data )
   #define CC_TO_POINT(cc) ((cc)*12.840103)
 
   double points = 0;
-  if ( data.endsWith( "pt" ) ) {
-    points = data.left( data.length() - 2 ).toDouble();
-  } else if ( data.endsWith( "cm" ) ) {
-    double value = data.left( data.length() - 2 ).toDouble();
+  if ( data.endsWith( QLatin1String("pt") ) ) {
+    points = data.leftRef( data.length() - 2 ).toDouble();
+  } else if ( data.endsWith( QLatin1String("cm") ) ) {
+    double value = data.leftRef( data.length() - 2 ).toDouble();
     points = CM_TO_POINT( value );
-  } else if ( data.endsWith( "mm" ) ) {
-    double value = data.left( data.length() - 2 ).toDouble();
+  } else if ( data.endsWith( QLatin1String("mm") ) ) {
+    double value = data.leftRef( data.length() - 2 ).toDouble();
     points = MM_TO_POINT( value );
-  } else if ( data.endsWith( "dm" ) ) {
-    double value = data.left( data.length() - 2 ).toDouble();
+  } else if ( data.endsWith( QLatin1String("dm") ) ) {
+    double value = data.leftRef( data.length() - 2 ).toDouble();
     points = DM_TO_POINT( value );
-  } else if ( data.endsWith( "in" ) ) {
-    double value = data.left( data.length() - 2 ).toDouble();
+  } else if ( data.endsWith( QLatin1String("in") ) ) {
+    double value = data.leftRef( data.length() - 2 ).toDouble();
     points = INCH_TO_POINT( value );
-  } else if ( data.endsWith( "inch" ) ) {
-    double value = data.left( data.length() - 4 ).toDouble();
+  } else if ( data.endsWith( QLatin1String("inch") ) ) {
+    double value = data.leftRef( data.length() - 4 ).toDouble();
     points = INCH_TO_POINT( value );
-  } else if ( data.endsWith( "pi" ) ) {
-    double value = data.left( data.length() - 4 ).toDouble();
+  } else if ( data.endsWith( QLatin1String("pi") ) ) {
+    double value = data.leftRef( data.length() - 4 ).toDouble();
     points = PI_TO_POINT( value );
-  } else if ( data.endsWith( "dd" ) ) {
-    double value = data.left( data.length() - 4 ).toDouble();
+  } else if ( data.endsWith( QLatin1String("dd") ) ) {
+    double value = data.leftRef( data.length() - 4 ).toDouble();
     points = DD_TO_POINT( value );
-  } else if ( data.endsWith( "cc" ) ) {
-    double value = data.left( data.length() - 4 ).toDouble();
+  } else if ( data.endsWith( QLatin1String("cc") ) ) {
+    double value = data.leftRef( data.length() - 4 ).toDouble();
     points = CC_TO_POINT( value );
   } else {
     if ( !data.isEmpty() ) {

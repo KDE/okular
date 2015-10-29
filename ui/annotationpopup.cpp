@@ -72,11 +72,11 @@ void AnnotationPopup::exec( const QPoint &point )
 
     const char *actionTypeId = "actionType";
 
-    const QString openId = QString::fromLatin1( "open" );
-    const QString deleteId = QString::fromLatin1( "delete" );
-    const QString deleteAllId = QString::fromLatin1( "deleteAll" );
-    const QString propertiesId = QString::fromLatin1( "properties" );
-    const QString saveId = QString::fromLatin1( "save" );
+    const QString openId = QStringLiteral( "open" );
+    const QString deleteId = QStringLiteral( "delete" );
+    const QString deleteAllId = QStringLiteral( "deleteAll" );
+    const QString propertiesId = QStringLiteral( "properties" );
+    const QString saveId = QStringLiteral( "save" );
 
     if ( mMenuMode == SingleAnnotationMode )
     {
@@ -86,12 +86,12 @@ void AnnotationPopup::exec( const QPoint &point )
 
         menu.setTitle( i18np( "Annotation", "%1 Annotations", mAnnotations.count() ) );
 
-        action = menu.addAction( QIcon::fromTheme( "comment" ), i18n( "&Open Pop-up Note" ) );
+        action = menu.addAction( QIcon::fromTheme( QStringLiteral("comment") ), i18n( "&Open Pop-up Note" ) );
         action->setData( QVariant::fromValue( pair ) );
         action->setEnabled( onlyOne );
         action->setProperty( actionTypeId, openId );
 
-        action = menu.addAction( QIcon::fromTheme( "list-remove" ), i18n( "&Delete" ) );
+        action = menu.addAction( QIcon::fromTheme( QStringLiteral("list-remove") ), i18n( "&Delete" ) );
         action->setEnabled( mDocument->isAllowed( Okular::AllowNotes ) );
         action->setProperty( actionTypeId, deleteAllId );
 
@@ -101,7 +101,7 @@ void AnnotationPopup::exec( const QPoint &point )
                 action->setEnabled( false );
         }
 
-        action = menu.addAction( QIcon::fromTheme( "configure" ), i18n( "&Properties" ) );
+        action = menu.addAction( QIcon::fromTheme( QStringLiteral("configure") ), i18n( "&Properties" ) );
         action->setData( QVariant::fromValue( pair ) );
         action->setEnabled( onlyOne );
         action->setProperty( actionTypeId, propertiesId );
@@ -114,7 +114,7 @@ void AnnotationPopup::exec( const QPoint &point )
                 const QString saveText = i18nc( "%1 is the name of the file to save", "&Save '%1'...", embeddedFile->name() );
 
                 menu.addSeparator();
-                action = menu.addAction( QIcon::fromTheme( "document-save" ), saveText );
+                action = menu.addAction( QIcon::fromTheme( QStringLiteral("document-save") ), saveText );
                 action->setData( QVariant::fromValue( pair ) );
                 action->setProperty( actionTypeId, saveId );
             }
@@ -126,17 +126,17 @@ void AnnotationPopup::exec( const QPoint &point )
         {
             menu.setTitle( GuiUtils::captionForAnnotation( pair.annotation ) );
 
-            action = menu.addAction( QIcon::fromTheme( "comment" ), i18n( "&Open Pop-up Note" ) );
+            action = menu.addAction( QIcon::fromTheme( QStringLiteral("comment") ), i18n( "&Open Pop-up Note" ) );
             action->setData( QVariant::fromValue( pair ) );
             action->setProperty( actionTypeId, openId );
 
-            action = menu.addAction( QIcon::fromTheme( "list-remove" ), i18n( "&Delete" ) );
+            action = menu.addAction( QIcon::fromTheme( QStringLiteral("list-remove") ), i18n( "&Delete" ) );
             action->setEnabled( mDocument->isAllowed( Okular::AllowNotes ) &&
                                 mDocument->canRemovePageAnnotation( pair.annotation ) );
             action->setData( QVariant::fromValue( pair ) );
             action->setProperty( actionTypeId, deleteId );
 
-            action = menu.addAction( QIcon::fromTheme( "configure" ), i18n( "&Properties" ) );
+            action = menu.addAction( QIcon::fromTheme( QStringLiteral("configure") ), i18n( "&Properties" ) );
             action->setData( QVariant::fromValue( pair ) );
             action->setProperty( actionTypeId, propertiesId );
 
@@ -148,7 +148,7 @@ void AnnotationPopup::exec( const QPoint &point )
                     const QString saveText = i18nc( "%1 is the name of the file to save", "&Save '%1'...", embeddedFile->name() );
 
                     menu.addSeparator();
-                    action = menu.addAction( QIcon::fromTheme( "document-save" ), saveText );
+                    action = menu.addAction( QIcon::fromTheme( QStringLiteral("document-save") ), saveText );
                     action->setData( QVariant::fromValue( pair ) );
                     action->setProperty( actionTypeId, saveId );
                 }

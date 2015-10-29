@@ -54,7 +54,7 @@ private:
 
 void EditFormsTest::initTestCase()
 {
-    Okular::SettingsCore::instance( "editformstest" );
+    Okular::SettingsCore::instance( QStringLiteral("editformstest") );
     m_document = new Okular::Document( 0 );
 }
 
@@ -244,21 +244,21 @@ void EditFormsTest::testComboEditForm()
 
     // Initially no choice is selected
     QCOMPARE( m_comboEdit->currentChoices().length(), 0 );
-    QCOMPARE( m_comboEdit->editChoice(), QString( "" ) );
+    QCOMPARE( m_comboEdit->editChoice(), QLatin1String( "" ) );
 
     // Select first choice
-    m_document->editFormCombo( 0, m_comboEdit, "combo1", 0, 0, 0);
+    m_document->editFormCombo( 0, m_comboEdit, QStringLiteral("combo1"), 0, 0, 0);
     QCOMPARE( m_comboEdit->currentChoices().length(), 1 );
     QCOMPARE( m_comboEdit->currentChoices()[0], 0 );
-    QCOMPARE( m_comboEdit->editChoice(), QString( "" ) );
+    QCOMPARE( m_comboEdit->editChoice(), QLatin1String( "" ) );
     QVERIFY( m_document->canUndo() );
     QVERIFY( !m_document->canRedo() );
 
     // Select third choice
-    m_document->editFormCombo( 0, m_comboEdit, "combo3", 0, 0, 0);
+    m_document->editFormCombo( 0, m_comboEdit, QStringLiteral("combo3"), 0, 0, 0);
     QCOMPARE( m_comboEdit->currentChoices().length(), 1 );
     QCOMPARE( m_comboEdit->currentChoices()[0], 2 );
-    QCOMPARE( m_comboEdit->editChoice(), QString( "" ) );
+    QCOMPARE( m_comboEdit->editChoice(), QLatin1String( "" ) );
     QVERIFY( m_document->canUndo() );
     QVERIFY( !m_document->canRedo() );
 
@@ -277,7 +277,7 @@ void EditFormsTest::testComboEditForm()
     QVERIFY( !m_document->canRedo() );
 
     // Select a custom choice and verify that no predefined choices are selected
-    m_document->editFormCombo( 0, m_comboEdit, "comboEdit", 0, 0, 0);
+    m_document->editFormCombo( 0, m_comboEdit, QStringLiteral("comboEdit"), 0, 0, 0);
     QCOMPARE( m_comboEdit->currentChoices().length(), 0 );
     QCOMPARE( m_comboEdit->editChoice(), QString( "comboEdit" ) );
     QVERIFY( m_document->canUndo() );
@@ -389,17 +389,17 @@ void EditFormsTest::setRadioButtonStates( bool state1, bool state2, bool state3 
 void EditFormsTest::verifyTextForm( Okular::FormFieldText* form )
 {
     // Text in form is initially empty
-    QCOMPARE( form->text(), QString("") );
+    QCOMPARE( form->text(), QLatin1String("") );
 
     // Insert the string "Hello" into the form
-    m_document->editFormText(0, form, QString("Hello"), 5, 0, 0);
+    m_document->editFormText(0, form, QStringLiteral("Hello"), 5, 0, 0);
     QCOMPARE( form->text(), QString("Hello") );
     QVERIFY( m_document->canUndo() );
     QVERIFY( !m_document->canRedo() );
 
     // Undo the insertion and verify that form is empty again
     m_document->undo();
-    QCOMPARE( form->text(), QString("") );
+    QCOMPARE( form->text(), QLatin1String("") );
     QVERIFY( !m_document->canUndo() );
     QVERIFY( m_document->canRedo() );
 
@@ -410,12 +410,12 @@ void EditFormsTest::verifyTextForm( Okular::FormFieldText* form )
     QVERIFY( !m_document->canRedo() );
 
     // Type "_World" after "Hello"
-    m_document->editFormText(0, form, QString("Hello_"), 6, 5, 5);
-    m_document->editFormText(0, form, QString("Hello_W"), 7, 6, 6);
-    m_document->editFormText(0, form, QString("Hello_Wo"), 8, 7, 7);
-    m_document->editFormText(0, form, QString("Hello_Wor"), 9, 8, 8);
-    m_document->editFormText(0, form, QString("Hello_Worl"), 10, 9, 9);
-    m_document->editFormText(0, form, QString("Hello_World"), 11, 10, 10);
+    m_document->editFormText(0, form, QStringLiteral("Hello_"), 6, 5, 5);
+    m_document->editFormText(0, form, QStringLiteral("Hello_W"), 7, 6, 6);
+    m_document->editFormText(0, form, QStringLiteral("Hello_Wo"), 8, 7, 7);
+    m_document->editFormText(0, form, QStringLiteral("Hello_Wor"), 9, 8, 8);
+    m_document->editFormText(0, form, QStringLiteral("Hello_Worl"), 10, 9, 9);
+    m_document->editFormText(0, form, QStringLiteral("Hello_World"), 11, 10, 10);
 
     // Verify that character insertion operations were merged together into a single undo command
     m_document->undo();
@@ -425,7 +425,7 @@ void EditFormsTest::verifyTextForm( Okular::FormFieldText* form )
 
     // Verify that one more undo gets us back to the original state (empty form)
     m_document->undo();
-    QCOMPARE( form->text(), QString("") );
+    QCOMPARE( form->text(), QLatin1String("") );
     QVERIFY( !m_document->canUndo() );
     QVERIFY( m_document->canRedo() );
 }

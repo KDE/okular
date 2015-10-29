@@ -144,50 +144,50 @@ Manifest::Manifest( const QString &odfFileName, const QByteArray &manifestData, 
       continue;
     }
     if (xml.tokenType() == QXmlStreamReader::StartElement) {
-      if ( xml.name().toString() == "manifest" ) {
+      if ( xml.name().toString() == QLatin1String("manifest") ) {
 	continue;
-      } else if ( xml.name().toString() == "file-entry" ) {
+      } else if ( xml.name().toString() == QLatin1String("file-entry") ) {
 	QXmlStreamAttributes attributes = xml.attributes();
 	if (currentEntry != 0) {
 	  qCWarning(OkularOooDebug) << "Got new StartElement for new file-entry, but haven't finished the last one yet!";
-	  qCWarning(OkularOooDebug) << "processing" << currentEntry->fileName() << ", got" << attributes.value("manifest:full-path").toString();
+	  qCWarning(OkularOooDebug) << "processing" << currentEntry->fileName() << ", got" << attributes.value(QStringLiteral("manifest:full-path")).toString();
 	}
-	currentEntry = new ManifestEntry( attributes.value("manifest:full-path").toString() );
-	currentEntry->setMimeType( attributes.value("manifest:media-type").toString() );
-	currentEntry->setSize( attributes.value("manifest:size").toString() );
-      } else if ( xml.name().toString() == "encryption-data" ) {
+	currentEntry = new ManifestEntry( attributes.value(QStringLiteral("manifest:full-path")).toString() );
+	currentEntry->setMimeType( attributes.value(QStringLiteral("manifest:media-type")).toString() );
+	currentEntry->setSize( attributes.value(QStringLiteral("manifest:size")).toString() );
+      } else if ( xml.name().toString() == QLatin1String("encryption-data") ) {
 	if (currentEntry == 0) {
 	  qCWarning(OkularOooDebug) << "Got encryption-data without valid file-entry at line" << xml.lineNumber();
 	  continue;
 	}
 	QXmlStreamAttributes encryptionAttributes = xml.attributes();
-	currentEntry->setChecksumType( encryptionAttributes.value("manifest:checksum-type").toString() );
-	currentEntry->setChecksum( encryptionAttributes.value("manifest:checksum").toString() );
-      } else if ( xml.name().toString() == "algorithm" ) {
+	currentEntry->setChecksumType( encryptionAttributes.value(QStringLiteral("manifest:checksum-type")).toString() );
+	currentEntry->setChecksum( encryptionAttributes.value(QStringLiteral("manifest:checksum")).toString() );
+      } else if ( xml.name().toString() == QLatin1String("algorithm") ) {
 	if (currentEntry == 0) {
 	  qCWarning(OkularOooDebug) << "Got algorithm without valid file-entry at line" << xml.lineNumber();
 	  continue;
 	}
 	QXmlStreamAttributes algorithmAttributes = xml.attributes();
-	currentEntry->setAlgorithm( algorithmAttributes.value("manifest:algorithm-name").toString() );
-	currentEntry->setInitialisationVector( algorithmAttributes.value("manifest:initialisation-vector").toString() );
-      } else if ( xml.name().toString() == "key-derivation" ) {
+	currentEntry->setAlgorithm( algorithmAttributes.value(QStringLiteral("manifest:algorithm-name")).toString() );
+	currentEntry->setInitialisationVector( algorithmAttributes.value(QStringLiteral("manifest:initialisation-vector")).toString() );
+      } else if ( xml.name().toString() == QLatin1String("key-derivation") ) {
 	if (currentEntry == 0) {
 	  qCWarning(OkularOooDebug) << "Got key-derivation without valid file-entry at line" << xml.lineNumber();
 	  continue;
 	}
 	QXmlStreamAttributes kdfAttributes = xml.attributes();
-	currentEntry->setKeyDerivationName( kdfAttributes.value("manifest:key-derivation-name").toString() );
-	currentEntry->setIterationCount( kdfAttributes.value("manifest:iteration-count").toString() );
-	currentEntry->setSalt( kdfAttributes.value("manifest:salt").toString() );
+	currentEntry->setKeyDerivationName( kdfAttributes.value(QStringLiteral("manifest:key-derivation-name")).toString() );
+	currentEntry->setIterationCount( kdfAttributes.value(QStringLiteral("manifest:iteration-count")).toString() );
+	currentEntry->setSalt( kdfAttributes.value(QStringLiteral("manifest:salt")).toString() );
       } else {
 	// handle other StartDocument types here 
 	qCWarning(OkularOooDebug) << "Unexpected start document type: " << xml.name().toString();
       }
     } else if ( xml.tokenType() == QXmlStreamReader::EndElement ) {
-      if ( xml.name().toString() == "manifest" ) {
+      if ( xml.name().toString() == QLatin1String("manifest") ) {
 	continue;
-      } else if ( xml.name().toString() == "file-entry") {
+      } else if ( xml.name().toString() == QLatin1String("file-entry")) {
 	if (currentEntry == 0) {
 	  qCWarning(OkularOooDebug) << "Got EndElement for file-entry without valid StartElement at line" << xml.lineNumber();
 	  continue;
@@ -232,21 +232,21 @@ bool Manifest::testIfEncrypted( const QString &filename )
 void Manifest::checkPassword( ManifestEntry *entry, const QByteArray &fileData, QByteArray *decryptedData )
 {
 #ifdef QCA2
-  QCA::SymmetricKey key = QCA::PBKDF2( "sha1" ).makeKey( QCA::Hash( "sha1" ).hash( m_password.toLocal8Bit() ),
+  QCA::SymmetricKey key = QCA::PBKDF2( QStringLiteral("sha1") ).makeKey( QCA::Hash( QStringLiteral("sha1") ).hash( m_password.toLocal8Bit() ),
 							 QCA::InitializationVector( entry->salt() ),
 							 16, //128 bit key
 							 entry->iterationCount() );
 
-  QCA::Cipher decoder( "blowfish", QCA::Cipher::CFB, QCA::Cipher::DefaultPadding,
+  QCA::Cipher decoder( QStringLiteral("blowfish"), QCA::Cipher::CFB, QCA::Cipher::DefaultPadding,
 		       QCA::Decode, key, QCA::InitializationVector( entry->initialisationVector() ) );
   *decryptedData = decoder.update( QCA::MemoryRegion(fileData) ).toByteArray();
   *decryptedData += decoder.final().toByteArray();
 
   QByteArray csum;
-  if ( entry->checksumType() == "SHA1/1K" ) {
-    csum = QCA::Hash( "sha1").hash( decryptedData->left(1024) ).toByteArray();
-  } else if ( entry->checksumType() == "SHA1" ) {
-    csum = QCA::Hash( "sha1").hash( *decryptedData ).toByteArray();
+  if ( entry->checksumType() == QLatin1String("SHA1/1K") ) {
+    csum = QCA::Hash( QStringLiteral("sha1")).hash( decryptedData->left(1024) ).toByteArray();
+  } else if ( entry->checksumType() == QLatin1String("SHA1") ) {
+    csum = QCA::Hash( QStringLiteral("sha1")).hash( *decryptedData ).toByteArray();
   } else {
     qCDebug(OkularOooDebug) << "unknown checksum type: " << entry->checksumType();
     // we can only assume it will be OK.
@@ -294,7 +294,7 @@ QByteArray Manifest::decryptFile( const QString &filename, const QByteArray &fil
     return QByteArray();
   }
 
-  QIODevice *decompresserDevice = KFilterDev::device( new QBuffer( &decryptedData, 0 ), "application/x-gzip", true );
+  QIODevice *decompresserDevice = KFilterDev::device( new QBuffer( &decryptedData, 0 ), QStringLiteral("application/x-gzip"), true );
   if( !decompresserDevice ) {
     qCDebug(OkularOooDebug) << "Couldn't create decompressor";
     // hopefully it isn't compressed then!

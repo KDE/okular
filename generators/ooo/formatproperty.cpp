@@ -16,7 +16,7 @@
 using namespace OOO;
 
 FontFormatProperty::FontFormatProperty()
-  : mFamily( "Nimbus Sans L" )
+  : mFamily( QStringLiteral("Nimbus Sans L") )
 {
 }
 

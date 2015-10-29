@@ -39,25 +39,25 @@ static void recurseCreateTOC( QDomDocument &maindoc, const QDomNode &parent, QDo
     {
         QDomElement el = n.toElement();
 
-        QDomElement newel = maindoc.createElement( el.attribute( "title" ) );
+        QDomElement newel = maindoc.createElement( el.attribute( QStringLiteral("title") ) );
         parentDestination.appendChild( newel );
 
         QString dest;
-        if ( !( dest = el.attribute( "PageNumber" ) ).isEmpty() )
+        if ( !( dest = el.attribute( QStringLiteral("PageNumber") ) ).isEmpty() )
         {
             Okular::DocumentViewport vp;
             vp.pageNumber = dest.toInt() - 1;
-            newel.setAttribute( "Viewport", vp.toString() );
+            newel.setAttribute( QStringLiteral("Viewport"), vp.toString() );
         }
-        else if ( !( dest = el.attribute( "PageName" ) ).isEmpty() )
+        else if ( !( dest = el.attribute( QStringLiteral("PageName") ) ).isEmpty() )
         {
             Okular::DocumentViewport vp;
             vp.pageNumber = djvu->pageNumber( dest );
-            newel.setAttribute( "Viewport", vp.toString() );
+            newel.setAttribute( QStringLiteral("Viewport"), vp.toString() );
         }
-        else if ( !( dest = el.attribute( "URL" ) ).isEmpty() )
+        else if ( !( dest = el.attribute( QStringLiteral("URL") ) ).isEmpty() )
         {
-            newel.setAttribute( "URL", dest );
+            newel.setAttribute( QStringLiteral("URL"), dest );
         }
 
         if ( el.hasChildNodes() )
@@ -77,7 +77,7 @@ static KAboutData createAboutData()
          i18n( "DjVu backend based on DjVuLibre." ),
          KAboutLicense::GPL,
          i18n( "© 2006-2008 Pino Toscano" ));
-    aboutData.addAuthor( i18n( "Pino Toscano" ), QString(), QLatin1String("pino@kde.org") );
+    aboutData.addAuthor( i18n( "Pino Toscano" ), QString(), QStringLiteral("pino@kde.org") );
     return aboutData;
 }
 
@@ -139,25 +139,25 @@ Okular::DocumentInfo DjVuGenerator::generateDocumentInfo( const QSet<Okular::Doc
     Okular::DocumentInfo docInfo;
 
     if ( keys.contains( Okular::DocumentInfo::MimeType ) )
-        docInfo.set( Okular::DocumentInfo::MimeType, "image/vnd.djvu" );
+        docInfo.set( Okular::DocumentInfo::MimeType, QStringLiteral("image/vnd.djvu") );
 
     if ( m_djvu )
     {
         // compile internal structure reading properties from KDjVu
         if ( keys.contains( Okular::DocumentInfo::Author ) )
-            docInfo.set( Okular::DocumentInfo::Title, m_djvu->metaData( "title" ).toString() );
+            docInfo.set( Okular::DocumentInfo::Title, m_djvu->metaData( QStringLiteral("title") ).toString() );
         if ( keys.contains( Okular::DocumentInfo::Author ) )
-            docInfo.set( Okular::DocumentInfo::Author, m_djvu->metaData( "author" ).toString() );
+            docInfo.set( Okular::DocumentInfo::Author, m_djvu->metaData( QStringLiteral("author") ).toString() );
         if ( keys.contains( Okular::DocumentInfo::CreationDate ) )
-            docInfo.set( Okular::DocumentInfo::CreationDate, m_djvu->metaData( "year" ).toString() );
+            docInfo.set( Okular::DocumentInfo::CreationDate, m_djvu->metaData( QStringLiteral("year") ).toString() );
         if ( keys.contains( Okular::DocumentInfo::CustomKeys ) )
         {
-            docInfo.set( "editor", m_djvu->metaData( "editor" ).toString(), i18n( "Editor" ) );
-            docInfo.set( "publisher", m_djvu->metaData( "publisher" ).toString(), i18n( "Publisher" ) );
-            docInfo.set( "volume", m_djvu->metaData( "volume" ).toString(), i18n( "Volume" ) );
-            docInfo.set( "documentType", m_djvu->metaData( "documentType" ).toString(), i18n( "Type of document" ) );
-            QVariant numcomponents = m_djvu->metaData( "componentFile" );
-            docInfo.set( "componentFile", numcomponents.type() != QVariant::Int ? i18nc( "Unknown number of component files", "Unknown" ) : numcomponents.toString(), i18n( "Component Files" ) );
+            docInfo.set( QStringLiteral("editor"), m_djvu->metaData( QStringLiteral("editor") ).toString(), i18n( "Editor" ) );
+            docInfo.set( QStringLiteral("publisher"), m_djvu->metaData( QStringLiteral("publisher") ).toString(), i18n( "Publisher" ) );
+            docInfo.set( QStringLiteral("volume"), m_djvu->metaData( QStringLiteral("volume") ).toString(), i18n( "Volume" ) );
+            docInfo.set( QStringLiteral("documentType"), m_djvu->metaData( QStringLiteral("documentType") ).toString(), i18n( "Type of document" ) );
+            QVariant numcomponents = m_djvu->metaData( QStringLiteral("componentFile") );
+            docInfo.set( QStringLiteral("componentFile"), numcomponents.type() != QVariant::Int ? i18nc( "Unknown number of component files", "Unknown" ) : numcomponents.toString(), i18n( "Component Files" ) );
         }
     }
 
@@ -213,9 +213,9 @@ bool DjVuGenerator::print( QPrinter& printer )
 QVariant DjVuGenerator::metaData( const QString &key, const QVariant &option ) const
 {
     Q_UNUSED( option )
-    if ( key == "DocumentTitle" )
+    if ( key == QLatin1String("DocumentTitle") )
     {
-        return m_djvu->metaData( "title" );
+        return m_djvu->metaData( QStringLiteral("title") );
     }
     return QVariant();
 }
@@ -228,9 +228,9 @@ Okular::TextPage* DjVuGenerator::textPage( Okular::Page *page )
     m_djvu->textEntities( page->number(), "char" );
 #endif
     if ( te.isEmpty() )
-        te = m_djvu->textEntities( page->number(), "word" );
+        te = m_djvu->textEntities( page->number(), QStringLiteral("word") );
     if ( te.isEmpty() )
-        te = m_djvu->textEntities( page->number(), "line" );
+        te = m_djvu->textEntities( page->number(), QStringLiteral("line") );
     userMutex()->unlock();
     QList<KDjVu::TextEntity>::ConstIterator it = te.constBegin();
     QList<KDjVu::TextEntity>::ConstIterator itEnd = te.constEnd();

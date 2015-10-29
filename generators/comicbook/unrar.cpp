@@ -50,11 +50,11 @@ static UnrarFlavour* detectUnrar( const QString &unrarPath, const QString &versi
     const QStringList lines = QString::fromLocal8Bit( proc.readAllStandardOutput() ).split( '\n', QString::SkipEmptyParts );
     if ( !lines.isEmpty() )
     {
-        if ( lines.first().startsWith( "UNRAR " ) )
+        if ( lines.first().startsWith( QLatin1String("UNRAR ") ) )
             kind = new NonFreeUnrarFlavour();
-        else if ( lines.first().startsWith( "RAR " ) )
+        else if ( lines.first().startsWith( QLatin1String("RAR ") ) )
             kind = new NonFreeUnrarFlavour();
-        else if ( lines.first().startsWith( "unrar " ) )
+        else if ( lines.first().startsWith( QLatin1String("unrar ") ) )
             kind = new FreeUnrarFlavour();
     }
     return kind;
@@ -63,17 +63,17 @@ static UnrarFlavour* detectUnrar( const QString &unrarPath, const QString &versi
 UnrarHelper::UnrarHelper()
    : kind( 0 )
 {
-    QString path = QStandardPaths::findExecutable( "unrar-nonfree" );
+    QString path = QStandardPaths::findExecutable( QStringLiteral("unrar-nonfree") );
     if ( path.isEmpty() )
-        path = QStandardPaths::findExecutable( "unrar" );
+        path = QStandardPaths::findExecutable( QStringLiteral("unrar") );
     if ( path.isEmpty() )
-        path = QStandardPaths::findExecutable( "rar" );
+        path = QStandardPaths::findExecutable( QStringLiteral("rar") );
 
     if ( !path.isEmpty() )
-        kind = detectUnrar( path, "--version" );
+        kind = detectUnrar( path, QStringLiteral("--version") );
 
     if ( !kind )
-        kind = detectUnrar( path, "-v" );
+        kind = detectUnrar( path, QStringLiteral("-v") );
 
     if ( !kind )
     {
@@ -119,7 +119,7 @@ bool Unrar::open( const QString &fileName )
     mStdOutData.clear();
     mStdErrData.clear();
 
-    int ret = startSyncProcess( QStringList() << "e" << mFileName << mTempDir->path() +  '/' );
+    int ret = startSyncProcess( QStringList() << QStringLiteral("e") << mFileName << mTempDir->path() +  '/' );
     bool ok = ret == 0;
 
     return ok;
@@ -133,7 +133,7 @@ QStringList Unrar::list()
     if ( !isSuitableVersionAvailable() )
         return QStringList();
 
-    startSyncProcess( QStringList() << "lb" << mFileName );
+    startSyncProcess( QStringList() << QStringLiteral("lb") << mFileName );
 
     const QStringList listFiles = helper->kind->processListing( QString::fromLocal8Bit( mStdOutData ).split( '\n', QString::SkipEmptyParts ) );
     QStringList newList;

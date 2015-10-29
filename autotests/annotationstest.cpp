@@ -38,7 +38,7 @@ private:
 
 void AnnotationTest::initTestCase()
 {
-    Okular::SettingsCore::instance( "annotationtest" );
+    Okular::SettingsCore::instance( QStringLiteral("annotationtest") );
     m_document = new Okular::Document( 0 );
     const QString testFile = KDESRCDIR "data/file1.pdf";
     QMimeDatabase db;

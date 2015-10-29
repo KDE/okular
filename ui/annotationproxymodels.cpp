@@ -201,18 +201,18 @@ QModelIndex PageGroupProxyModel::mapToSource( const QModelIndex &proxyIndex ) co
 void PageGroupProxyModel::setSourceModel( QAbstractItemModel *model )
 {
   if ( sourceModel() ) {
-    disconnect( sourceModel(), SIGNAL(layoutChanged()), this, SLOT(rebuildIndexes()) );
-    disconnect( sourceModel(), SIGNAL(modelReset()), this, SLOT(rebuildIndexes()) );
-    disconnect( sourceModel(), SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(rebuildIndexes()) );
-    disconnect( sourceModel(), SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(rebuildIndexes()) );
+    disconnect( sourceModel(), &QAbstractItemModel::layoutChanged, this, &PageGroupProxyModel::rebuildIndexes );
+    disconnect( sourceModel(), &QAbstractItemModel::modelReset, this, &PageGroupProxyModel::rebuildIndexes );
+    disconnect( sourceModel(), &QAbstractItemModel::rowsInserted, this, &PageGroupProxyModel::rebuildIndexes );
+    disconnect( sourceModel(), &QAbstractItemModel::rowsRemoved, this, &PageGroupProxyModel::rebuildIndexes );
   }
 
   QAbstractProxyModel::setSourceModel( model );
 
-  connect( sourceModel(), SIGNAL(layoutChanged()), this, SLOT(rebuildIndexes()) );
-  connect( sourceModel(), SIGNAL(modelReset()), this, SLOT(rebuildIndexes()) );
-  connect( sourceModel(), SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(rebuildIndexes()) );
-  connect( sourceModel(), SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(rebuildIndexes()) );
+  connect( sourceModel(), &QAbstractItemModel::layoutChanged, this, &PageGroupProxyModel::rebuildIndexes );
+  connect( sourceModel(), &QAbstractItemModel::modelReset, this, &PageGroupProxyModel::rebuildIndexes );
+  connect( sourceModel(), &QAbstractItemModel::rowsInserted, this, &PageGroupProxyModel::rebuildIndexes );
+  connect( sourceModel(), &QAbstractItemModel::rowsRemoved, this, &PageGroupProxyModel::rebuildIndexes );
 
   rebuildIndexes();
 }
@@ -428,18 +428,18 @@ QModelIndex AuthorGroupProxyModel::mapToSource( const QModelIndex &proxyIndex ) 
 void AuthorGroupProxyModel::setSourceModel( QAbstractItemModel *model )
 {
     if ( sourceModel() ) {
-        disconnect( sourceModel(), SIGNAL(layoutChanged()), this, SLOT(rebuildIndexes()) );
-        disconnect( sourceModel(), SIGNAL(modelReset()), this, SLOT(rebuildIndexes()) );
-        disconnect( sourceModel(), SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(rebuildIndexes()) );
-        disconnect( sourceModel(), SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(rebuildIndexes()) );
+        disconnect( sourceModel(), &QAbstractItemModel::layoutChanged, this, &AuthorGroupProxyModel::rebuildIndexes );
+        disconnect( sourceModel(), &QAbstractItemModel::modelReset, this, &AuthorGroupProxyModel::rebuildIndexes );
+        disconnect( sourceModel(), &QAbstractItemModel::rowsInserted, this, &AuthorGroupProxyModel::rebuildIndexes );
+        disconnect( sourceModel(), &QAbstractItemModel::rowsRemoved, this, &AuthorGroupProxyModel::rebuildIndexes );
     }
 
     QAbstractProxyModel::setSourceModel( model );
 
-    connect( sourceModel(), SIGNAL(layoutChanged()), this, SLOT(rebuildIndexes()) );
-    connect( sourceModel(), SIGNAL(modelReset()), this, SLOT(rebuildIndexes()) );
-    connect( sourceModel(), SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(rebuildIndexes()) );
-    connect( sourceModel(), SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(rebuildIndexes()) );
+    connect( sourceModel(), &QAbstractItemModel::layoutChanged, this, &AuthorGroupProxyModel::rebuildIndexes );
+    connect( sourceModel(), &QAbstractItemModel::modelReset, this, &AuthorGroupProxyModel::rebuildIndexes );
+    connect( sourceModel(), &QAbstractItemModel::rowsInserted, this, &AuthorGroupProxyModel::rebuildIndexes );
+    connect( sourceModel(), &QAbstractItemModel::rowsRemoved, this, &AuthorGroupProxyModel::rebuildIndexes );
 
     rebuildIndexes();
 }

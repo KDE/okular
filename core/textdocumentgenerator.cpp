@@ -106,7 +106,7 @@ Okular::TextPage* TextDocumentGeneratorPrivate::createTextPage( int pageNumber )
             QRectF rect;
             TextDocumentUtils::calculateBoundingRect( mDocument, i, i + 1, rect, pageNumber );
             if ( pageNumber == -1 )
-                text = "\n";
+                text = QStringLiteral("\n");
 
             textPage->append( text, new Okular::NormalizedRect( rect.left(), rect.top(), rect.right(), rect.bottom() ) );
         }
@@ -213,7 +213,7 @@ void TextDocumentGeneratorPrivate::generateTitleInfos()
         Okular::DocumentViewport viewport = TextDocumentUtils::calculateViewport( mDocument, position.block );
 
         QDomElement item = mDocumentSynopsis.createElement( position.title );
-        item.setAttribute( "Viewport", viewport.toString() );
+        item.setAttribute( QStringLiteral("Viewport"), viewport.toString() );
 
         int headingLevel = position.level;
 
@@ -264,12 +264,12 @@ void TextDocumentGeneratorPrivate::initializeGenerator()
     QObject::connect( mConverter, SIGNAL(addMetaData(DocumentInfo::Key,QString)),
                       q, SLOT(addMetaData(DocumentInfo::Key,QString)) );
 
-    QObject::connect( mConverter, SIGNAL(error(QString,int)),
-                      q, SIGNAL(error(QString,int)) );
-    QObject::connect( mConverter, SIGNAL(warning(QString,int)),
-                      q, SIGNAL(warning(QString,int)) );
-    QObject::connect( mConverter, SIGNAL(notice(QString,int)),
-                      q, SIGNAL(notice(QString,int)) );
+    QObject::connect( mConverter, &TextDocumentConverter::error,
+                      q, &Generator::error );
+    QObject::connect( mConverter, &TextDocumentConverter::warning,
+                      q, &Generator::warning );
+    QObject::connect( mConverter, &TextDocumentConverter::notice,
+                      q, &Generator::notice );
 }
 
 TextDocumentGenerator::TextDocumentGenerator(TextDocumentConverter *converter, const QString& configName , QObject *parent, const QVariantList &args)
@@ -463,7 +463,7 @@ const Okular::DocumentSynopsis* TextDocumentGenerator::generateDocumentSynopsis(
 QVariant TextDocumentGeneratorPrivate::metaData( const QString &key, const QVariant &option ) const
 {
     Q_UNUSED( option )
-    if ( key == "DocumentTitle" )
+    if ( key == QLatin1String("DocumentTitle") )
     {
         return mDocumentInfo.get( DocumentInfo::Title );
     }

@@ -41,7 +41,7 @@ extern "C"
 		qCDebug(KIO_MITS_LOG) << "*** kio_msits Init";
 
         QCoreApplication app(argc, argv);
-        app.setApplicationName(QLatin1String("kio_msits"));
+        app.setApplicationName(QStringLiteral("kio_msits"));
 
         if ( argc != 4 )
 		{
@@ -141,7 +141,7 @@ bool ProtocolMSITS::parseLoadAndLookup ( const QUrl& url, QString& abspath )
 {
 	qCDebug(KIO_MITS_LOG) << "ProtocolMSITS::parseLoadAndLookup (const KUrl&) " << url.path();
 
-	int pos = url.path().indexOf ("::");
+	int pos = url.path().indexOf (QStringLiteral("::"));
 
 	if ( pos == -1 )
 	{
@@ -153,7 +153,7 @@ bool ProtocolMSITS::parseLoadAndLookup ( const QUrl& url, QString& abspath )
 	abspath = url.path().mid (pos + 2); // skip ::
 	
 	// Some buggy apps add ms-its:/ to the path as well
-	if ( abspath.startsWith( "ms-its:" ) )
+	if ( abspath.startsWith( QLatin1String("ms-its:") ) )
 		abspath = abspath.mid( 7 );
 			
 	qCDebug(KIO_MITS_LOG) << "ProtocolMSITS::parseLoadAndLookup: filename " << filename << ", path " << abspath;

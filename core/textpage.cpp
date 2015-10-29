@@ -810,7 +810,7 @@ static int stringLengthAdaptedWithHyphen(const QString &str, const TextList::Con
         }
     }
     // else if it is the second last entry - for example in pdf format
-    else if (str.endsWith("-\n"))
+    else if (str.endsWith(QLatin1String("-\n")))
     {
         len -= 2;
     }
@@ -1838,7 +1838,7 @@ WordsWithCharacters addNecessarySpace(RegionTextList tree, int pageWidth, int pa
                     const int top = area2.top() < area1.top() ? area2.top() : area1.top();
                     const int bottom = area2.bottom() > area1.bottom() ? area2.bottom() : area1.bottom();
 
-                    const QString spaceStr(" ");
+                    const QString spaceStr(QStringLiteral(" "));
                     const QRect rect(QPoint(left,top),QPoint(right,bottom));
                     const NormalizedRect entRect(rect,pageWidth,pageHeight);
                     TinyTextEntity *ent1 = new TinyTextEntity(spaceStr, entRect);
@@ -1981,17 +1981,17 @@ RegularAreaRect * TextPage::wordAt( const NormalizedPoint &p, QString *word ) co
             const QString itText = (*posIt)->text();
             if ( itText.right(1).at(0).isSpace() )
             {
-                if (itText.endsWith("-\n"))
+                if (itText.endsWith(QLatin1String("-\n")))
                 {
                     // Is an hyphenated word
                     // continue searching the start of the word back
                     continue;
                 }
                 
-                if (itText == "\n" && posIt != itBegin )
+                if (itText == QLatin1String("\n") && posIt != itBegin )
                 {
                     --posIt;
-                    if ((*posIt)->text().endsWith("-")) {
+                    if ((*posIt)->text().endsWith(QLatin1String("-"))) {
                         // Is an hyphenated word
                         // continue searching the start of the word back
                         continue;
@@ -2016,7 +2016,7 @@ RegularAreaRect * TextPage::wordAt( const NormalizedPoint &p, QString *word ) co
             text += (*posIt)->text();
             if (itText.right(1).at(0).isSpace())
             {
-                if (!text.endsWith("-\n"))
+                if (!text.endsWith(QLatin1String("-\n")))
                 {
                     break;
                 }

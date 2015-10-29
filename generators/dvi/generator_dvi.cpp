@@ -73,7 +73,7 @@ bool DviGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
 
     (void)userMutex();
 
-    m_dviRenderer = new dviRenderer(documentMetaData("TextHinting", QVariant()).toBool());
+    m_dviRenderer = new dviRenderer(documentMetaData(QStringLiteral("TextHinting"), QVariant()).toBool());
     connect(m_dviRenderer, &dviRenderer::error, this, &DviGenerator::error);
     connect(m_dviRenderer, &dviRenderer::warning, this, &DviGenerator::warning);
     connect(m_dviRenderer, &dviRenderer::notice, this, &DviGenerator::notice);
@@ -169,7 +169,7 @@ QLinkedList<Okular::ObjectRect*> DviGenerator::generateDviLinks( const dviPageIn
                nb = (double)boxArea.bottom() / pageHeight;
         
         QString linkText = dviLink.linkText;
-        if ( linkText.startsWith("#") )
+        if ( linkText.startsWith(QLatin1String("#")) )
             linkText = linkText.mid( 1 );
         Anchor anch = m_dviRenderer->findAnchor( linkText );
 
@@ -182,7 +182,7 @@ QLinkedList<Okular::ObjectRect*> DviGenerator::generateDviLinks( const dviPageIn
             Okular::DocumentViewport vp;
             fillViewportFromAnchor( vp, anch, pageWidth, pageHeight );
 
-            okuLink = new Okular::GotoAction( "", vp );
+            okuLink = new Okular::GotoAction( QLatin1String(""), vp );
         }
         else
         {
@@ -326,7 +326,7 @@ Okular::DocumentInfo DviGenerator::generateDocumentInfo( const QSet<Okular::Docu
     Okular::DocumentInfo docInfo;
 
     if ( keys.contains( Okular::DocumentInfo::MimeType ) )
-        docInfo.set( Okular::DocumentInfo::MimeType, "application/x-dvi" );
+        docInfo.set( Okular::DocumentInfo::MimeType, QStringLiteral("application/x-dvi") );
 
     QMutexLocker lock( userMutex() );
 
@@ -337,7 +337,7 @@ Okular::DocumentInfo DviGenerator::generateDocumentInfo( const QSet<Okular::Docu
         // read properties from dvif
         //docInfo.set( "filename", dvif->filename, i18n("Filename") );
         if ( keys.contains( Okular::DocumentInfo::CustomKeys ) )
-            docInfo.set( "generatorDate", dvif->generatorString, i18n("Generator/Date") );
+            docInfo.set( QStringLiteral("generatorDate"), dvif->generatorString, i18n("Generator/Date") );
         if ( keys.contains( Okular::DocumentInfo::Pages ) )
             docInfo.set( Okular::DocumentInfo::Pages, QString::number( dvif->total_pages ) );
     }
@@ -375,7 +375,7 @@ const Okular::DocumentSynopsis *DviGenerator::generateDocumentSynopsis()
             const Okular::Page *p = document()->page( a.page - 1 );
 
             fillViewportFromAnchor( vp, a, (int)p->width(), (int)p->height() );
-            domel.setAttribute( "Viewport", vp.toString() );
+            domel.setAttribute( QStringLiteral("Viewport"), vp.toString() );
         }
         if ( stack.isEmpty() )
             m_docSynopsis->appendChild( domel );
@@ -414,13 +414,13 @@ Okular::FontInfo::List DviGenerator::fontsForPage( int page )
 #ifdef HAVE_FREETYPE
             if ( font->getFullFontName().isEmpty() ) 
             {
-                name = QString( "%1, %2%" )
+                name = QStringLiteral( "%1, %2%" )
                         .arg( font->fontname )
                         .arg( zoom );
             }
             else
             {
-                name = QString( "%1 (%2), %3%" ) 
+                name = QStringLiteral( "%1 (%2), %3%" ) 
                         .arg( font->fontname )
                         .arg( font->getFullFontName() ) 
                         .arg( zoom ); 
@@ -551,10 +551,10 @@ bool DviGenerator::print( QPrinter& printer )
     // List of pages to print.
     foreach ( int p, pageList )
     {
-        pages += QString(",%1").arg(p);
+        pages += QStringLiteral(",%1").arg(p);
     }
     if ( !pages.isEmpty() )
-        printOptions << "-pp" << pages.mid(1);
+        printOptions << QStringLiteral("-pp") << pages.mid(1);
 
     QEventLoop el;
     m_dviRenderer->setEventLoop( &el );
@@ -568,7 +568,7 @@ bool DviGenerator::print( QPrinter& printer )
 
 QVariant DviGenerator::metaData( const QString & key, const QVariant & option ) const
 {
-    if ( key == "NamedViewport" && !option.toString().isEmpty() )
+    if ( key == QLatin1String("NamedViewport") && !option.toString().isEmpty() )
     {
         const Anchor anchor = m_dviRenderer->parseReference( option.toString() );
         if ( anchor.isValid() )

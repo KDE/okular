@@ -75,13 +75,13 @@ void JSData::initType( KJSContext *ctx )
     if ( !g_dataProto )
         g_dataProto = new KJSPrototype();
 
-    g_dataProto->defineProperty( ctx, "creationDate", dataGetCreationDate );
-    g_dataProto->defineProperty( ctx, "description", dataGetDescription );
-    g_dataProto->defineProperty( ctx, "MIMEType", dataGetMIMEType );
-    g_dataProto->defineProperty( ctx, "modDate", dataGetModDate );
-    g_dataProto->defineProperty( ctx, "name", dataGetName );
-    g_dataProto->defineProperty( ctx, "path", dataGetPath );
-    g_dataProto->defineProperty( ctx, "size", dataGetSize );
+    g_dataProto->defineProperty( ctx, QStringLiteral("creationDate"), dataGetCreationDate );
+    g_dataProto->defineProperty( ctx, QStringLiteral("description"), dataGetDescription );
+    g_dataProto->defineProperty( ctx, QStringLiteral("MIMEType"), dataGetMIMEType );
+    g_dataProto->defineProperty( ctx, QStringLiteral("modDate"), dataGetModDate );
+    g_dataProto->defineProperty( ctx, QStringLiteral("name"), dataGetName );
+    g_dataProto->defineProperty( ctx, QStringLiteral("path"), dataGetPath );
+    g_dataProto->defineProperty( ctx, QStringLiteral("size"), dataGetSize );
 }
 
 KJSObject JSData::wrapFile( KJSContext *ctx, EmbeddedFile *f )

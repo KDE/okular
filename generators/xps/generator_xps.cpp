@@ -162,7 +162,7 @@ static bool nextAbbPathToken(AbbPathToken *token)
     {
         (*curPos)++;
     }
-    token->number = data.mid(start, *curPos - start).toDouble();
+    token->number = data.midRef(start, *curPos - start).toDouble();
     token->type = abtNumber;
 
     } else if (ch == ',')
@@ -466,7 +466,7 @@ static QPainterPath parseRscRefPath( const QString &data )
 static QString entryPath( const QString &entry )
 {
     const int index = entry.lastIndexOf( QChar::fromLatin1( '/' ) );
-    QString ret = QString::fromLatin1( "/" ) + entry.mid( 0, index );
+    QString ret = QLatin1String( "/" ) + entry.mid( 0, index );
     if ( index > 0 ) {
         ret.append( QChar::fromLatin1( '/' ) );
     }
@@ -751,7 +751,7 @@ bool XpsHandler::startDocument()
     qCWarning(OkularXpsDebug) << "start document" << m_page->m_fileName ;
 
     XpsRenderNode node;
-    node.name = "document";
+    node.name = QStringLiteral("document");
     m_nodes.push(node);
 
     return true;
@@ -807,15 +807,15 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
 
     // Get font (doesn't work well because qt doesn't allow to load font from file)
     // This works despite the fact that font size isn't specified in points as required by qt. It's because I set point size to be equal to drawing unit.
-    float fontSize = node.attributes.value("FontRenderingEmSize").toFloat();
+    float fontSize = node.attributes.value(QStringLiteral("FontRenderingEmSize")).toFloat();
     // qCWarning(OkularXpsDebug) << "Font Rendering EmSize:" << fontSize;
     // a value of 0.0 means the text is not visible (see XPS specs, chapter 12, "Glyphs")
     if ( fontSize < 0.1 ) {
         m_painter->restore();
         return;
     }
-    QFont font = m_page->m_file->getFontByName( node.attributes.value("FontUri"), fontSize );
-    att = node.attributes.value( "StyleSimulations" );
+    QFont font = m_page->m_file->getFontByName( node.attributes.value(QStringLiteral("FontUri")), fontSize );
+    att = node.attributes.value( QStringLiteral("StyleSimulations") );
     if  ( !att.isEmpty() ) {
         if ( att == QLatin1String( "ItalicSimulation" ) ) {
             font.setItalic( true );
@@ -829,13 +829,13 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
     m_painter->setFont(font);
 
     //Origin
-    QPointF origin( node.attributes.value("OriginX").toDouble(), node.attributes.value("OriginY").toDouble() );
+    QPointF origin( node.attributes.value(QStringLiteral("OriginX")).toDouble(), node.attributes.value(QStringLiteral("OriginY")).toDouble() );
 
     //Fill
     QBrush brush;
-    att = node.attributes.value("Fill");
+    att = node.attributes.value(QStringLiteral("Fill"));
     if (att.isEmpty()) {
-        QVariant data = node.getChildData( "Glyphs.Fill" );
+        QVariant data = node.getChildData( QStringLiteral("Glyphs.Fill") );
         if (data.canConvert<QBrush>()) {
             brush = data.value<QBrush>();
         } else {
@@ -856,7 +856,7 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
     m_painter->setPen( QPen( brush, 0 ) );
 
     // Opacity
-    att = node.attributes.value("Opacity");
+    att = node.attributes.value(QStringLiteral("Opacity"));
     if (! att.isEmpty()) {
         bool ok = true;
         double value = att.toDouble( &ok );
@@ -869,13 +869,13 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
     }
 
     //RenderTransform
-    att = node.attributes.value("RenderTransform");
+    att = node.attributes.value(QStringLiteral("RenderTransform"));
     if (!att.isEmpty()) {
         m_painter->setWorldTransform( parseRscRefMatrix( att ), true);
     }
 
     // Clip
-    att = node.attributes.value( "Clip" );
+    att = node.attributes.value( QStringLiteral("Clip") );
     if ( !att.isEmpty() ) {
         QPainterPath clipPath = parseRscRefPath( att );
         if ( !clipPath.isEmpty() ) {
@@ -885,7 +885,7 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
 
     // BiDiLevel - default Left-to-Right
     m_painter->setLayoutDirection( Qt::LeftToRight );
-    att = node.attributes.value( "BiDiLevel" );
+    att = node.attributes.value( QStringLiteral("BiDiLevel") );
     if ( !att.isEmpty() ) {
         if ( (att.toInt() % 2) == 1 ) {
             // odd BiDiLevel, so Right-to-Left
@@ -894,12 +894,12 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
     }
 
     // Indices - partial handling only
-    att = node.attributes.value( "Indices" );
+    att = node.attributes.value( QStringLiteral("Indices") );
     QList<qreal> advanceWidths;
     if ( ! att.isEmpty() ) {
         QStringList indicesElements = att.split( ';' );
         for( int i = 0; i < indicesElements.size(); ++i ) {
-            if ( indicesElements.at(i).contains( "," ) ) {
+            if ( indicesElements.at(i).contains( QStringLiteral(",") ) ) {
                 QStringList parts = indicesElements.at(i).split( ',' );
                 if (parts.size() == 2 ) {
                     // regular advance case, no offsets
@@ -922,7 +922,7 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
     }
 
     // UnicodeString
-    QString stringToDraw( unicodeString( node.attributes.value( "UnicodeString" ) ) );
+    QString stringToDraw( unicodeString( node.attributes.value( QStringLiteral("UnicodeString") ) ) );
     QPointF originAdvance(0, 0);
     QFontMetrics metrics = m_painter->fontMetrics();
     for ( int i = 0; i < stringToDraw.size(); ++i ) {
@@ -972,9 +972,9 @@ void XpsHandler::processImageBrush( XpsRenderNode &node )
     QString att;
     QBrush brush;
 
-    QRectF viewport = stringToRectF( node.attributes.value( "Viewport" ) );
-    QRectF viewbox = stringToRectF( node.attributes.value( "Viewbox" ) );
-    QImage image = m_page->loadImageFromFile( node.attributes.value( "ImageSource" ) );
+    QRectF viewport = stringToRectF( node.attributes.value( QStringLiteral("Viewport") ) );
+    QRectF viewbox = stringToRectF( node.attributes.value( QStringLiteral("Viewbox") ) );
+    QImage image = m_page->loadImageFromFile( node.attributes.value( QStringLiteral("ImageSource") ) );
 
     // Matrix which can transform [0, 0, 1, 1] rectangle to given viewbox
     QTransform viewboxMatrix = QTransform( viewbox.width() * image.physicalDpiX() / 96, 0, 0, viewbox.height() * image.physicalDpiY() / 96, viewbox.x(), viewbox.y() );
@@ -982,9 +982,9 @@ void XpsHandler::processImageBrush( XpsRenderNode &node )
     // Matrix which can transform [0, 0, 1, 1] rectangle to given viewport
     //TODO Take ViewPort into account
     QTransform viewportMatrix;
-    att = node.attributes.value( "Transform" );
+    att = node.attributes.value( QStringLiteral("Transform") );
     if ( att.isEmpty() ) {
-        QVariant data = node.getChildData( "ImageBrush.Transform" );
+        QVariant data = node.getChildData( QStringLiteral("ImageBrush.Transform") );
         if (data.canConvert<QTransform>()) {
             viewportMatrix = data.value<QTransform>();
         } else {
@@ -1013,8 +1013,8 @@ void XpsHandler::processPath( XpsRenderNode &node )
     QVariant data;
 
     // Get path
-    XpsPathGeometry * pathdata = node.getChildData( "Path.Data" ).value< XpsPathGeometry * >();
-    att = node.attributes.value( "Data" );
+    XpsPathGeometry * pathdata = node.getChildData( QStringLiteral("Path.Data") ).value< XpsPathGeometry * >();
+    att = node.attributes.value( QStringLiteral("Data") );
     if (! att.isEmpty() ) {
         QPainterPath path = parseRscRefPath( att );
         delete pathdata;
@@ -1028,12 +1028,12 @@ void XpsHandler::processPath( XpsRenderNode &node )
     }
 
     // Set Fill
-    att = node.attributes.value( "Fill" );
+    att = node.attributes.value( QStringLiteral("Fill") );
     QBrush brush;
     if (! att.isEmpty() ) {
         brush = parseRscRefColorForBrush( att );
     } else {
-        data = node.getChildData( "Path.Fill" );
+        data = node.getChildData( QStringLiteral("Path.Fill") );
         if (data.canConvert<QBrush>()) {
             brush = data.value<QBrush>();
         }
@@ -1041,24 +1041,24 @@ void XpsHandler::processPath( XpsRenderNode &node )
     m_painter->setBrush( brush );
 
     // Stroke (pen)
-    att = node.attributes.value( "Stroke" );
+    att = node.attributes.value( QStringLiteral("Stroke") );
     QPen pen( Qt::transparent );
     if  (! att.isEmpty() ) {
         pen = parseRscRefColorForPen( att );
     } else {
-        data = node.getChildData( "Path.Stroke" );
+        data = node.getChildData( QStringLiteral("Path.Stroke") );
         if (data.canConvert<QBrush>()) {
             pen.setBrush( data.value<QBrush>() );
         }
     }
-    att = node.attributes.value( "StrokeThickness" );
+    att = node.attributes.value( QStringLiteral("StrokeThickness") );
     if  (! att.isEmpty() ) {
         bool ok = false;
         int thickness = att.toInt( &ok );
         if (ok)
             pen.setWidth( thickness );
     }
-    att = node.attributes.value( "StrokeDashArray" );
+    att = node.attributes.value( QStringLiteral("StrokeDashArray") );
     if  ( !att.isEmpty() ) {
         const QStringList pieces = att.split( QLatin1Char( ' ' ), QString::SkipEmptyParts );
         QVector<qreal> dashPattern( pieces.count() );
@@ -1075,14 +1075,14 @@ void XpsHandler::processPath( XpsRenderNode &node )
             pen.setDashPattern( dashPattern );
         }
     }
-    att = node.attributes.value( "StrokeDashOffset" );
+    att = node.attributes.value( QStringLiteral("StrokeDashOffset") );
     if  ( !att.isEmpty() ) {
         bool ok = false;
         int offset = att.toInt( &ok );
         if ( ok )
             pen.setDashOffset( offset );
     }
-    att = node.attributes.value( "StrokeDashCap" );
+    att = node.attributes.value( QStringLiteral("StrokeDashCap") );
     if  ( !att.isEmpty() ) {
         Qt::PenCapStyle cap = Qt::FlatCap;
         if ( att == QLatin1String( "Flat" ) ) {
@@ -1095,7 +1095,7 @@ void XpsHandler::processPath( XpsRenderNode &node )
         // ### missing "Triangle"
         pen.setCapStyle( cap );
     }
-    att = node.attributes.value( "StrokeLineJoin" );
+    att = node.attributes.value( QStringLiteral("StrokeLineJoin") );
     if  ( !att.isEmpty() ) {
         Qt::PenJoinStyle joinStyle = Qt::MiterJoin;
         if ( att == QLatin1String( "Miter" ) ) {
@@ -1107,7 +1107,7 @@ void XpsHandler::processPath( XpsRenderNode &node )
         }
         pen.setJoinStyle( joinStyle );
     }
-    att = node.attributes.value( "StrokeMiterLimit" );
+    att = node.attributes.value( QStringLiteral("StrokeMiterLimit") );
     if  ( !att.isEmpty() ) {
         bool ok = false;
         double limit = att.toDouble( &ok );
@@ -1120,13 +1120,13 @@ void XpsHandler::processPath( XpsRenderNode &node )
     m_painter->setPen( pen );
 
     // Opacity
-    att = node.attributes.value("Opacity");
+    att = node.attributes.value(QStringLiteral("Opacity"));
     if (! att.isEmpty()) {
         m_painter->setOpacity(att.toDouble());
     }
 
     // RenderTransform
-    att = node.attributes.value( "RenderTransform" );
+    att = node.attributes.value( QStringLiteral("RenderTransform") );
     if (! att.isEmpty() ) {
         m_painter->setWorldTransform( parseRscRefMatrix( att ), true );
     }
@@ -1166,7 +1166,7 @@ void XpsHandler::processPathGeometry( XpsRenderNode &node )
 
     QString att;
 
-    att = node.attributes.value( "Figures" );
+    att = node.attributes.value( QStringLiteral("Figures") );
     if ( !att.isEmpty() ) {
         QPainterPath path = parseRscRefPath( att );
         qDeleteAll( geom->paths );
@@ -1174,13 +1174,13 @@ void XpsHandler::processPathGeometry( XpsRenderNode &node )
         geom->paths.append( new XpsPathFigure( path, true ) );
     }
 
-    att = node.attributes.value( "FillRule" );
+    att = node.attributes.value( QStringLiteral("FillRule") );
     if ( !att.isEmpty() ) {
         geom->fillRule = fillRuleFromString( att );
     }
 
     // Transform
-    att = node.attributes.value( "Transform" );
+    att = node.attributes.value( QStringLiteral("Transform") );
     if ( !att.isEmpty() ) {
         geom->transform = parseRscRefMatrix( att );
     }
@@ -1199,7 +1199,7 @@ void XpsHandler::processPathFigure( XpsRenderNode &node )
     QString att;
     QPainterPath path;
 
-    att = node.attributes.value( "StartPoint" );
+    att = node.attributes.value( QStringLiteral("StartPoint") );
     if ( !att.isEmpty() ) {
         QPointF point = getPointFromString( att );
         path.moveTo( point );
@@ -1209,7 +1209,7 @@ void XpsHandler::processPathFigure( XpsRenderNode &node )
 
     Q_FOREACH ( const XpsRenderNode &child, node.children ) {
         bool isStroked = true;
-        att = node.attributes.value( "IsStroked" );
+        att = node.attributes.value( QStringLiteral("IsStroked") );
         if ( !att.isEmpty() ) {
             isStroked = att == QLatin1String( "true" );
         }
@@ -1219,7 +1219,7 @@ void XpsHandler::processPathFigure( XpsRenderNode &node )
 
         // PolyLineSegment
         if ( child.name == QLatin1String( "PolyLineSegment" ) ) {
-            att = child.attributes.value( "Points" );
+            att = child.attributes.value( QStringLiteral("Points") );
             if ( !att.isEmpty() ) {
                 const QStringList points = att.split( QLatin1Char( ' ' ), QString::SkipEmptyParts );
                 Q_FOREACH ( const QString &p, points ) {
@@ -1230,7 +1230,7 @@ void XpsHandler::processPathFigure( XpsRenderNode &node )
         }
         // PolyBezierSegment
         else if ( child.name == QLatin1String( "PolyBezierSegment" ) ) {
-            att = child.attributes.value( "Points" );
+            att = child.attributes.value( QStringLiteral("Points") );
             if ( !att.isEmpty() ) {
                 const QStringList points = att.split( QLatin1Char( ' ' ), QString::SkipEmptyParts );
                 if ( points.count() % 3 == 0 ) {
@@ -1245,7 +1245,7 @@ void XpsHandler::processPathFigure( XpsRenderNode &node )
         }
         // PolyQuadraticBezierSegment
         else if ( child.name == QLatin1String( "PolyQuadraticBezierSegment" ) ) {
-            att = child.attributes.value( "Points" );
+            att = child.attributes.value( QStringLiteral("Points") );
             if ( !att.isEmpty() ) {
                 const QStringList points = att.split( QLatin1Char( ' ' ), QString::SkipEmptyParts );
                 if ( points.count() % 2 == 0 ) {
@@ -1260,7 +1260,7 @@ void XpsHandler::processPathFigure( XpsRenderNode &node )
     }
 
     bool closePath = false;
-    att = node.attributes.value( "IsClosed" );
+    att = node.attributes.value( QStringLiteral("IsClosed") );
     if ( !att.isEmpty() ) {
         closePath = att == QLatin1String( "true" );
     }
@@ -1269,7 +1269,7 @@ void XpsHandler::processPathFigure( XpsRenderNode &node )
     }
 
     bool isFilled = true;
-    att = node.attributes.value( "IsFilled" );
+    att = node.attributes.value( QStringLiteral("IsFilled") );
     if ( !att.isEmpty() ) {
         isFilled = att == QLatin1String( "true" );
     }
@@ -1281,13 +1281,13 @@ void XpsHandler::processPathFigure( XpsRenderNode &node )
 
 void XpsHandler::processStartElement( XpsRenderNode &node )
 {
-    if (node.name == "Canvas") {
+    if (node.name == QLatin1String("Canvas")) {
         m_painter->save();
-        QString att = node.attributes.value( "RenderTransform" );
+        QString att = node.attributes.value( QStringLiteral("RenderTransform") );
         if ( !att.isEmpty() ) {
             m_painter->setWorldTransform( parseRscRefMatrix( att ), true );
         }
-        att = node.attributes.value( "Opacity" );
+        att = node.attributes.value( QStringLiteral("Opacity") );
         if ( !att.isEmpty() ) {
             double value = att.toDouble();
             if ( value > 0.0 && value <= 1.0 ) {
@@ -1303,64 +1303,64 @@ void XpsHandler::processStartElement( XpsRenderNode &node )
 
 void XpsHandler::processEndElement( XpsRenderNode &node )
 {
-    if (node.name == "Glyphs") {
+    if (node.name == QLatin1String("Glyphs")) {
         processGlyph( node );
-    } else if (node.name == "Path") {
+    } else if (node.name == QLatin1String("Path")) {
         processPath( node );
-    } else if (node.name == "MatrixTransform") {
+    } else if (node.name == QLatin1String("MatrixTransform")) {
         //TODO Ignoring x:key
-        node.data = qVariantFromValue( QTransform( attsToMatrix( node.attributes.value( "Matrix" ) ) ) );
-    } else if ((node.name == "Canvas.RenderTransform") || (node.name == "Glyphs.RenderTransform") || (node.name == "Path.RenderTransform"))  {
-        QVariant data = node.getRequiredChildData( "MatrixTransform" );
+        node.data = qVariantFromValue( QTransform( attsToMatrix( node.attributes.value( QStringLiteral("Matrix") ) ) ) );
+    } else if ((node.name == QLatin1String("Canvas.RenderTransform")) || (node.name == QLatin1String("Glyphs.RenderTransform")) || (node.name == QLatin1String("Path.RenderTransform")))  {
+        QVariant data = node.getRequiredChildData( QStringLiteral("MatrixTransform") );
         if (data.canConvert<QTransform>()) {
             m_painter->setWorldTransform( data.value<QTransform>(), true );
         }
-    } else if (node.name == "Canvas") {
+    } else if (node.name == QLatin1String("Canvas")) {
         m_painter->restore();
-    } else if ((node.name == "Path.Fill") || (node.name == "Glyphs.Fill")) {
+    } else if ((node.name == QLatin1String("Path.Fill")) || (node.name == QLatin1String("Glyphs.Fill"))) {
         processFill( node );
-    } else if (node.name == "Path.Stroke") {
+    } else if (node.name == QLatin1String("Path.Stroke")) {
         processStroke( node );
-    } else if (node.name == "SolidColorBrush") {
+    } else if (node.name == QLatin1String("SolidColorBrush")) {
         //TODO Ignoring opacity, x:key
-        node.data = qVariantFromValue( QBrush( QColor( hexToRgba( node.attributes.value( "Color" ).toLatin1() ) ) ) );
-    } else if (node.name == "ImageBrush") {
+        node.data = qVariantFromValue( QBrush( QColor( hexToRgba( node.attributes.value( QStringLiteral("Color") ).toLatin1() ) ) ) );
+    } else if (node.name == QLatin1String("ImageBrush")) {
         processImageBrush( node );
-    } else if (node.name == "ImageBrush.Transform") {
-        node.data = node.getRequiredChildData( "MatrixTransform" );
-    } else if (node.name == "LinearGradientBrush") {
-        XpsRenderNode * gradients = node.findChild( "LinearGradientBrush.GradientStops" );
+    } else if (node.name == QLatin1String("ImageBrush.Transform")) {
+        node.data = node.getRequiredChildData( QStringLiteral("MatrixTransform") );
+    } else if (node.name == QLatin1String("LinearGradientBrush")) {
+        XpsRenderNode * gradients = node.findChild( QStringLiteral("LinearGradientBrush.GradientStops") );
         if ( gradients && gradients->data.canConvert< QGradient * >() ) {
-            QPointF start = getPointFromString( node.attributes.value( "StartPoint" ) );
-            QPointF end = getPointFromString( node.attributes.value( "EndPoint" ) );
+            QPointF start = getPointFromString( node.attributes.value( QStringLiteral("StartPoint") ) );
+            QPointF end = getPointFromString( node.attributes.value( QStringLiteral("EndPoint") ) );
             QLinearGradient * qgrad = static_cast< QLinearGradient * >( gradients->data.value< QGradient * >() );
             qgrad->setStart( start );
             qgrad->setFinalStop( end );
-            applySpreadStyleToQGradient( node.attributes.value( "SpreadMethod" ), qgrad );
+            applySpreadStyleToQGradient( node.attributes.value( QStringLiteral("SpreadMethod") ), qgrad );
             node.data = qVariantFromValue( QBrush( *qgrad ) );
             delete qgrad;
         }
-    } else if (node.name == "RadialGradientBrush") {
-        XpsRenderNode * gradients = node.findChild( "RadialGradientBrush.GradientStops" );
+    } else if (node.name == QLatin1String("RadialGradientBrush")) {
+        XpsRenderNode * gradients = node.findChild( QStringLiteral("RadialGradientBrush.GradientStops") );
         if ( gradients && gradients->data.canConvert< QGradient * >() ) {
-            QPointF center = getPointFromString( node.attributes.value( "Center" ) );
-            QPointF origin = getPointFromString( node.attributes.value( "GradientOrigin" ) );
-            double radiusX = node.attributes.value( "RadiusX" ).toDouble();
-            double radiusY = node.attributes.value( "RadiusY" ).toDouble();
+            QPointF center = getPointFromString( node.attributes.value( QStringLiteral("Center") ) );
+            QPointF origin = getPointFromString( node.attributes.value( QStringLiteral("GradientOrigin") ) );
+            double radiusX = node.attributes.value( QStringLiteral("RadiusX") ).toDouble();
+            double radiusY = node.attributes.value( QStringLiteral("RadiusY") ).toDouble();
             QRadialGradient * qgrad = static_cast< QRadialGradient * >( gradients->data.value< QGradient * >() );
             qgrad->setCenter( center );
             qgrad->setFocalPoint( origin );
             // TODO what in case of different radii?
             qgrad->setRadius( qMin( radiusX, radiusY ) );
-            applySpreadStyleToQGradient( node.attributes.value( "SpreadMethod" ), qgrad );
+            applySpreadStyleToQGradient( node.attributes.value( QStringLiteral("SpreadMethod") ), qgrad );
             node.data = qVariantFromValue( QBrush( *qgrad ) );
             delete qgrad;
         }
-    } else if (node.name == "LinearGradientBrush.GradientStops") {
+    } else if (node.name == QLatin1String("LinearGradientBrush.GradientStops")) {
         QList<XpsGradient> gradients;
         Q_FOREACH ( const XpsRenderNode &child, node.children ) {
-            double offset = child.attributes.value( "Offset" ).toDouble();
-            QColor color = hexToRgba( child.attributes.value( "Color" ).toLatin1() );
+            double offset = child.attributes.value( QStringLiteral("Offset") ).toDouble();
+            QColor color = hexToRgba( child.attributes.value( QStringLiteral("Color") ).toLatin1() );
             gradients.append( XpsGradient( offset, color ) );
         }
         preprocessXpsGradients( gradients );
@@ -1369,11 +1369,11 @@ void XpsHandler::processEndElement( XpsRenderNode &node )
             addXpsGradientsToQGradient( gradients, qgrad );
             node.data = qVariantFromValue< QGradient * >( qgrad );
         }
-    } else if (node.name == "RadialGradientBrush.GradientStops") {
+    } else if (node.name == QLatin1String("RadialGradientBrush.GradientStops")) {
         QList<XpsGradient> gradients;
         Q_FOREACH ( const XpsRenderNode &child, node.children ) {
-            double offset = child.attributes.value( "Offset" ).toDouble();
-            QColor color = hexToRgba( child.attributes.value( "Color" ).toLatin1() );
+            double offset = child.attributes.value( QStringLiteral("Offset") ).toDouble();
+            QColor color = hexToRgba( child.attributes.value( QStringLiteral("Color") ).toLatin1() );
             gradients.append( XpsGradient( offset, color ) );
         }
         preprocessXpsGradients( gradients );
@@ -1382,11 +1382,11 @@ void XpsHandler::processEndElement( XpsRenderNode &node )
             addXpsGradientsToQGradient( gradients, qgrad );
             node.data = qVariantFromValue< QGradient * >( qgrad );
         }
-    } else if (node.name == "PathFigure") {
+    } else if (node.name == QLatin1String("PathFigure")) {
         processPathFigure( node );
-    } else if (node.name == "PathGeometry") {
+    } else if (node.name == QLatin1String("PathGeometry")) {
         processPathGeometry( node );
-    } else if (node.name == "Path.Data") {
+    } else if (node.name == QLatin1String("Path.Data")) {
         processPathData( node );
     } else {
         //qCWarning(OkularXpsDebug) << "Unknown element: " << node->name;
@@ -1410,8 +1410,8 @@ XpsPage::XpsPage(XpsFile *file, const QString &fileName): m_file( file ),
         if ( xml.isStartElement() && ( xml.name() == "FixedPage" ) )
         {
             QXmlStreamAttributes attributes = xml.attributes();
-            m_pageSize.setWidth( attributes.value( "Width" ).toString().toDouble() );
-            m_pageSize.setHeight( attributes.value( "Height" ).toString().toDouble() );
+            m_pageSize.setWidth( attributes.value( QStringLiteral("Width") ).toString().toDouble() );
+            m_pageSize.setHeight( attributes.value( QStringLiteral("Height") ).toString().toDouble() );
             break;
         }
     }
@@ -1622,7 +1622,7 @@ Okular::TextPage* XpsPage::textPage()
             if ( xml.name() == "Canvas") {
                 matrices.push(matrix);
 
-                QString att = xml.attributes().value( "RenderTransform" ).toString();
+                QString att = xml.attributes().value( QStringLiteral("RenderTransform") ).toString();
                 if (!att.isEmpty()) {
                     matrix = parseRscRefMatrix( att ) * matrix;
                 }
@@ -1630,7 +1630,7 @@ Okular::TextPage* XpsPage::textPage()
                 useMatrix = true;
             } else if (xml.name() == "MatrixTransform") {
                 if (useMatrix) {
-                    matrix = attsToMatrix( xml.attributes().value("Matrix").toString() ) * matrix;
+                    matrix = attsToMatrix( xml.attributes().value(QStringLiteral("Matrix")).toString() ) * matrix;
                 }
             } else if (xml.name() == "Glyphs") {
                 matrices.push( matrix );
@@ -1654,19 +1654,19 @@ Okular::TextPage* XpsPage::textPage()
             } else if (xml.name() == "MatrixTransform") {
                 // not clear if we need to do anything here yet.
             } else if (xml.name() == "Glyphs") {
-                QString att = glyphsAtts.value( "RenderTransform" ).toString();
+                QString att = glyphsAtts.value( QStringLiteral("RenderTransform") ).toString();
                 if (!att.isEmpty()) {
                     matrix = parseRscRefMatrix( att ) * matrix;
                 }
-                QString text = unicodeString( glyphsAtts.value( "UnicodeString" ).toString() );
+                QString text = unicodeString( glyphsAtts.value( QStringLiteral("UnicodeString") ).toString() );
 
                 // Get font (doesn't work well because qt doesn't allow to load font from file)
-                QFont font = m_file->getFontByName( glyphsAtts.value( "FontUri" ).toString(),
-                                                    glyphsAtts.value("FontRenderingEmSize").toString().toFloat() * 72 / 96 );
+                QFont font = m_file->getFontByName( glyphsAtts.value( QStringLiteral("FontUri") ).toString(),
+                                                    glyphsAtts.value(QStringLiteral("FontRenderingEmSize")).toString().toFloat() * 72 / 96 );
                 QFontMetrics metrics = QFontMetrics( font );
                 // Origin
-                QPointF origin( glyphsAtts.value("OriginX").toString().toDouble(),
-                                glyphsAtts.value("OriginY").toString().toDouble() );
+                QPointF origin( glyphsAtts.value(QStringLiteral("OriginX")).toString().toDouble(),
+                                glyphsAtts.value(QStringLiteral("OriginY")).toString().toDouble() );
 
 
                 int lastWidth = 0;
@@ -1728,17 +1728,17 @@ void XpsDocument::parseDocumentStructure( const QString &documentStructureFileNa
             } else if ( xml.name() == "OutlineEntry" ) {
                 m_haveDocumentStructure = true;
                 QXmlStreamAttributes attributes = xml.attributes();
-                int outlineLevel = attributes.value( "OutlineLevel").toString().toInt();
-                QString description = attributes.value("Description").toString();
+                int outlineLevel = attributes.value( QStringLiteral("OutlineLevel")).toString().toInt();
+                QString description = attributes.value(QStringLiteral("Description")).toString();
                 QDomElement synopsisElement = m_docStructure->createElement( description );
-                synopsisElement.setAttribute( "OutlineLevel",  outlineLevel );
-                QString target = attributes.value("OutlineTarget").toString();
+                synopsisElement.setAttribute( QStringLiteral("OutlineLevel"),  outlineLevel );
+                QString target = attributes.value(QStringLiteral("OutlineTarget")).toString();
                 int hashPosition = target.lastIndexOf( '#' );
                 target = target.mid( hashPosition + 1 );
                 // qCWarning(OkularXpsDebug) << "target: " << target;
                 Okular::DocumentViewport viewport;
                 viewport.pageNumber = m_docStructurePageMap.value( target );
-                synopsisElement.setAttribute( "Viewport",  viewport.toString() );
+                synopsisElement.setAttribute( QStringLiteral("Viewport"),  viewport.toString() );
                 if ( outlineLevel == 1 ) {
                     // qCWarning(OkularXpsDebug) << "Description: "
                     // << outlineEntryElement.attribute( "Description" ) << endl;
@@ -1749,7 +1749,7 @@ void XpsDocument::parseDocumentStructure( const QString &documentStructureFileNa
                     QDomNode maybeParentNode = m_docStructure->lastChild();
                     while ( !maybeParentNode.isNull() )
                     {
-                        if ( maybeParentNode.toElement().attribute( "OutlineLevel" ).toInt() == ( outlineLevel - 1 ) )  {
+                        if ( maybeParentNode.toElement().attribute( QStringLiteral("OutlineLevel") ).toInt() == ( outlineLevel - 1 ) )  {
                             // we have the right parent
                             maybeParentNode.appendChild( synopsisElement );
                             break;
@@ -1794,14 +1794,14 @@ XpsDocument::XpsDocument(XpsFile *file, const QString &fileName): m_file(file), 
         docXml.readNext();
         if ( docXml.isStartElement() ) {
             if ( docXml.name() == "PageContent" ) {
-                QString pagePath = docXml.attributes().value("Source").toString();
+                QString pagePath = docXml.attributes().value(QStringLiteral("Source")).toString();
                 qCWarning(OkularXpsDebug) << "Page Path: " << pagePath;
                 XpsPage *page = new XpsPage( file, absolutePath( documentFilePath, pagePath ) );
                 m_pages.append(page);
             } else if ( docXml.name() == "PageContent.LinkTargets" ) {
                 // do nothing - wait for the real LinkTarget elements
             } else if ( docXml.name() == "LinkTarget" ) {
-                QString targetName = docXml.attributes().value( "Name" ).toString();
+                QString targetName = docXml.attributes().value( QStringLiteral("Name") ).toString();
                 if ( ! targetName.isEmpty() ) {
                     m_docStructurePageMap[ targetName ] = m_pages.count() - 1;
                 }
@@ -1834,12 +1834,12 @@ XpsDocument::XpsDocument(XpsFile *file, const QString &fileName): m_file(file), 
             xml.readNext();
             if ( xml.isStartElement() && ( xml.name() == "Relationship" ) ) {
                 QXmlStreamAttributes attributes = xml.attributes();
-                if ( attributes.value( "Type" ).toString() == "http://schemas.microsoft.com/xps/2005/06/documentstructure" ) {
-                    documentStructureFile  = attributes.value( "Target" ).toString();
+                if ( attributes.value( QStringLiteral("Type") ).toString() == QLatin1String("http://schemas.microsoft.com/xps/2005/06/documentstructure") ) {
+                    documentStructureFile  = attributes.value( QStringLiteral("Target") ).toString();
                 } else {
                     qCWarning(OkularXpsDebug) << "Unknown document relationships element: "
-                                     << attributes.value( "Type" ).toString() << " : "
-                                     << attributes.value( "Target" ).toString() << endl;
+                                     << attributes.value( QStringLiteral("Type") ).toString() << " : "
+                                     << attributes.value( QStringLiteral("Target") ).toString() << endl;
                 }
             }
         }
@@ -1909,7 +1909,7 @@ bool XpsFile::loadDocument(const QString &filename)
     }
 
     // The only fixed entry in XPS is /_rels/.rels
-    const KArchiveEntry* relEntry = m_xpsArchive->directory()->entry("_rels/.rels");
+    const KArchiveEntry* relEntry = m_xpsArchive->directory()->entry(QStringLiteral("_rels/.rels"));
     if ( !relEntry ) {
         // this might occur if we can't read the zip directory, or it doesn't have the relationships entry
         return false;
@@ -1926,8 +1926,8 @@ bool XpsFile::loadDocument(const QString &filename)
         if ( relXml.isStartElement() ) {
             if ( relXml.name() == "Relationship" ) {
                 QXmlStreamAttributes attributes = relXml.attributes();
-                QString type = attributes.value( "Type" ).toString();
-                QString target = attributes.value( "Target" ).toString();
+                QString type = attributes.value( QStringLiteral("Type") ).toString();
+                QString target = attributes.value( QStringLiteral("Target") ).toString();
                 if ( "http://schemas.openxmlformats.org/package/2006/relationships/metadata/thumbnail" == type ) {
                     m_thumbnailFileName = target;
                 } else if ( "http://schemas.microsoft.com/xps/2005/06/fixedrepresentation" == type ) {
@@ -1967,7 +1967,7 @@ bool XpsFile::loadDocument(const QString &filename)
         fixedRepXml.readNext();
         if ( fixedRepXml.isStartElement() ) {
             if ( fixedRepXml.name() == "DocumentReference" ) {
-                const QString source = fixedRepXml.attributes().value("Source").toString();
+                const QString source = fixedRepXml.attributes().value(QStringLiteral("Source")).toString();
                 XpsDocument *doc = new XpsDocument( this, absolutePath( fixedRepresentationFilePath, source ) );
                 for (int lv = 0; lv < doc->numPages(); ++lv) {
                     // our own copy of the pages list
@@ -1993,7 +1993,7 @@ Okular::DocumentInfo XpsFile::generateDocumentInfo() const
 {
     Okular::DocumentInfo docInfo;
 
-    docInfo.set( Okular::DocumentInfo::MimeType, "application/oxps" );
+    docInfo.set( Okular::DocumentInfo::MimeType, QStringLiteral("application/oxps") );
 
     if ( ! m_corePropertiesFileName.isEmpty() ) {
         const KZipFileEntry* corepropsFile = static_cast<const KZipFileEntry *>(m_xpsArchive->directory()->entry(m_corePropertiesFileName));
@@ -2018,15 +2018,15 @@ Okular::DocumentInfo XpsFile::generateDocumentInfo() const
                 } else if (xml.name() == "category") {
                     docInfo.set( Okular::DocumentInfo::Category, xml.readElementText() );
                 } else if (xml.name() == "created") {
-                    QDateTime createdDate = QDateTime::fromString( xml.readElementText(), "yyyy-MM-ddThh:mm:ssZ" );
+                    QDateTime createdDate = QDateTime::fromString( xml.readElementText(), QStringLiteral("yyyy-MM-ddThh:mm:ssZ") );
                     docInfo.set( Okular::DocumentInfo::CreationDate, QLocale().toString( createdDate, QLocale::LongFormat ) );
                 } else if (xml.name() == "modified") {
-                    QDateTime modifiedDate = QDateTime::fromString( xml.readElementText(), "yyyy-MM-ddThh:mm:ssZ" );
+                    QDateTime modifiedDate = QDateTime::fromString( xml.readElementText(), QStringLiteral("yyyy-MM-ddThh:mm:ssZ") );
                     docInfo.set( Okular::DocumentInfo::ModificationDate, QLocale().toString( modifiedDate, QLocale::LongFormat ) );
                 } else if (xml.name() == "keywords") {
                     docInfo.set( Okular::DocumentInfo::Keywords, xml.readElementText() );
                 } else if (xml.name() == "revision") {
-                    docInfo.set( "revision", xml.readElementText(), i18n( "Revision" ) );
+                    docInfo.set( QStringLiteral("revision"), xml.readElementText(), i18n( "Revision" ) );
                 }
             }
         }
@@ -2176,7 +2176,7 @@ Okular::ExportFormat::List XpsGenerator::exportFormats() const
 
 bool XpsGenerator::exportTo( const QString &fileName, const Okular::ExportFormat &format )
 {
-    if ( format.mimeType().inherits( QLatin1String( "text/plain" ) ) ) {
+    if ( format.mimeType().inherits( QStringLiteral( "text/plain" ) ) ) {
         QFile f( fileName );
         if ( !f.open( QIODevice::WriteOnly ) )
             return false;

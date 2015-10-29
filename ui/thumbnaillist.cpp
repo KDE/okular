@@ -200,7 +200,7 @@ void ThumbnailListPrivate::paintEvent( QPaintEvent * e )
 ThumbnailList::ThumbnailList( QWidget *parent, Okular::Document *document )
     : QScrollArea( parent ), d( new ThumbnailListPrivate( this, document ) )
 {
-    setObjectName( QLatin1String( "okular::Thumbnails" ) );
+    setObjectName( QStringLiteral( "okular::Thumbnails" ) );
     // set scrollbars
     setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
     setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOn );
@@ -639,7 +639,7 @@ void ThumbnailListPrivate::slotDelayTimeout()
     delete m_bookmarkOverlay;
     const int expectedWidth = q->viewport()->width() / 4;
     if ( expectedWidth > 10 )
-        m_bookmarkOverlay = new QPixmap( DesktopIcon( "bookmarks", expectedWidth ) );
+        m_bookmarkOverlay = new QPixmap( DesktopIcon( QStringLiteral("bookmarks"), expectedWidth ) );
     else
         m_bookmarkOverlay = 0;
 
@@ -977,7 +977,7 @@ void ThumbnailWidget::paint( QPainter &p, const QRect &_clipRect )
 ThumbnailController::ThumbnailController( QWidget * parent, ThumbnailList * list )
     : QToolBar( parent )
 {
-    setObjectName( QLatin1String( "ThumbsControlBar" ) );
+    setObjectName( QStringLiteral( "ThumbsControlBar" ) );
     // change toolbar appearance
     setIconSize( QSize( 16, 16 ) );
     setMovable( false );
@@ -988,9 +988,9 @@ ThumbnailController::ThumbnailController( QWidget * parent, ThumbnailList * list
     // insert a togglebutton [show only bookmarked pages]
     //insertSeparator();
     QAction * showBoomarkOnlyAction = addAction(
-        QIcon::fromTheme( "bookmarks" ), i18n( "Show bookmarked pages only" ) );
+        QIcon::fromTheme( QStringLiteral("bookmarks") ), i18n( "Show bookmarked pages only" ) );
     showBoomarkOnlyAction->setCheckable( true );
-    connect( showBoomarkOnlyAction, SIGNAL(toggled(bool)), list, SLOT(slotFilterBookmarks(bool)) );
+    connect( showBoomarkOnlyAction, &QAction::toggled, list, &ThumbnailList::slotFilterBookmarks );
     showBoomarkOnlyAction->setChecked( Okular::Settings::filterBookmarks() );
     //insertLineSeparator();
 }

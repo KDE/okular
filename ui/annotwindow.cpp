@@ -81,7 +81,7 @@ public:
         dateLabel->setCursor( Qt::SizeAllCursor );
         buttonlay->addWidget( dateLabel );
         CloseButton * close = new CloseButton( this );
-        connect( close, SIGNAL(clicked()), parent, SLOT(close()) );
+        connect( close, &QAbstractButton::clicked, parent, &QWidget::close );
         buttonlay->addWidget( close );
         // option button row
         QHBoxLayout * optionlay = new QHBoxLayout();
@@ -149,7 +149,7 @@ public:
 
     void setTitle( const QString& title )
     {
-        titleLabel->setText( QString( " " ) + title );
+        titleLabel->setText( QStringLiteral( " " ) + title );
     }
 
     void setDate( const QDateTime& dt )
@@ -159,7 +159,7 @@ public:
 
     void setAuthor( const QString& author )
     {
-        authorLabel->setText( QString( " " ) + author );
+        authorLabel->setText( QStringLiteral( " " ) + author );
     }
 
     void connectOptionButton( QObject * recv, const char* method )

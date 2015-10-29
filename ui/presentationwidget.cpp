@@ -144,8 +144,8 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     Q_UNUSED( parent )
     setAttribute( Qt::WA_DeleteOnClose );
     setAttribute( Qt::WA_OpaquePaintEvent );
-    setObjectName( QLatin1String( "presentationWidget" ) );
-    QString caption = doc->metaData( "DocumentTitle" ).toString();
+    setObjectName( QStringLiteral( "presentationWidget" ) );
+    QString caption = doc->metaData( QStringLiteral("DocumentTitle") ).toString();
     if ( caption.trimmed().isEmpty() )
         caption = doc->currentDocument().fileName();
     caption = i18nc( "[document title/filename] – Presentation", "%1 – Presentation", caption );
@@ -156,7 +156,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
 
     // create top toolbar
     m_topBar = new PresentationToolBar( this );
-    m_topBar->setObjectName( QLatin1String( "presentationBar" ) );
+    m_topBar->setObjectName( QStringLiteral( "presentationBar" ) );
     m_topBar->setIconSize( QSize( 32, 32 ) );
     m_topBar->setMovable( false );
     m_topBar->layout()->setMargin(0);
@@ -178,14 +178,14 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     connect(m_pagesEdit, &QLineEdit::returnPressed, this, &PresentationWidget::slotPageChanged);
     m_topBar->addAction( QIcon::fromTheme( layoutDirection() == Qt::RightToLeft ? "go-previous" : "go-next" ), i18n( "Next Page" ), this, SLOT(slotNextPage()) );
     m_topBar->addSeparator();
-    QAction *playPauseAct = collection->action( "presentation_play_pause" );
+    QAction *playPauseAct = collection->action( QStringLiteral("presentation_play_pause") );
     playPauseAct->setEnabled( true );
     connect(playPauseAct, &QAction::triggered, this, &PresentationWidget::slotTogglePlayPause);
     m_topBar->addAction( playPauseAct );
     setPlayPauseIcon();
     addAction( playPauseAct );
     m_topBar->addSeparator();
-    QAction *eraseDrawingAct = collection->action( "presentation_erase_drawings" );
+    QAction *eraseDrawingAct = collection->action( QStringLiteral("presentation_erase_drawings") );
     eraseDrawingAct->setEnabled( true );
     connect(eraseDrawingAct, &QAction::triggered, this, &PresentationWidget::clearDrawings);
     m_topBar->addAction( eraseDrawingAct );
@@ -204,7 +204,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     if ( desktop->numScreens() > 1 )
     {
         m_topBar->addSeparator();
-        m_screenSelect = new KSelectAction( QIcon::fromTheme( "video-display" ), i18n( "Switch Screen" ), m_topBar );
+        m_screenSelect = new KSelectAction( QIcon::fromTheme( QStringLiteral("video-display") ), i18n( "Switch Screen" ), m_topBar );
         m_screenSelect->setToolBarMode( KSelectAction::MenuMode );
         m_screenSelect->setToolButtonPopupMode( QToolButton::InstantPopup );
         m_topBar->addAction( m_screenSelect );
@@ -218,7 +218,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     QWidget *spacer = new QWidget( m_topBar );
     spacer->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::MinimumExpanding );
     m_topBar->addWidget( spacer );
-    m_topBar->addAction( QIcon::fromTheme( "application-exit" ), i18n( "Exit Presentation Mode" ), this, SLOT(close()) );
+    m_topBar->addAction( QIcon::fromTheme( QStringLiteral("application-exit") ), i18n( "Exit Presentation Mode" ), this, SLOT(close()) );
     m_topBar->setAutoFillBackground( true );
     showTopBar( false );
     // change topbar background color
@@ -261,7 +261,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
 
     show();
 
-    QTimer::singleShot( 0, this, SLOT(slotDelayedEvents()) );
+    QTimer::singleShot( 0, this, &PresentationWidget::slotDelayedEvents );
 
     // setFocus() so KCursor::setAutoHideCursor() goes into effect if it's enabled
     setFocus( Qt::OtherFocusReason );
@@ -492,14 +492,14 @@ bool PresentationWidget::canUnloadPixmap( int pageNumber ) const
 
 void PresentationWidget::setupActions()
 {
-    addAction( m_ac->action( "first_page" ) );
-    addAction( m_ac->action( "last_page" ) );
+    addAction( m_ac->action( QStringLiteral("first_page") ) );
+    addAction( m_ac->action( QStringLiteral("last_page") ) );
     addAction( m_ac->action( KStandardAction::name( KStandardAction::Prior ) ) );
     addAction( m_ac->action( KStandardAction::name( KStandardAction::Next ) ) );
     addAction( m_ac->action( KStandardAction::name( KStandardAction::DocumentBack ) ) );
     addAction( m_ac->action( KStandardAction::name( KStandardAction::DocumentForward ) ) );
 
-    QAction *action = m_ac->action( "switch_blackscreen_mode" );
+    QAction *action = m_ac->action( QStringLiteral("switch_blackscreen_mode") );
     connect(action, &QAction::toggled, this, &PresentationWidget::toggleBlackScreenMode);
     action->setEnabled( true );
     addAction( action );
@@ -507,15 +507,15 @@ void PresentationWidget::setupActions()
 
 void PresentationWidget::setPlayPauseIcon()
 {
-    QAction *playPauseAction = m_ac->action( "presentation_play_pause" );
+    QAction *playPauseAction = m_ac->action( QStringLiteral("presentation_play_pause") );
     if ( m_advanceSlides )
     {
-       playPauseAction->setIcon( QIcon::fromTheme( "media-playback-pause" ) );
+       playPauseAction->setIcon( QIcon::fromTheme( QStringLiteral("media-playback-pause") ) );
        playPauseAction->setToolTip( i18nc( "For Presentation", "Pause" ) );
     }
     else
     {
-       playPauseAction->setIcon( QIcon::fromTheme( "media-playback-start" ) );
+       playPauseAction->setIcon( QIcon::fromTheme( QStringLiteral("media-playback-start") ) );
        playPauseAction->setToolTip( i18nc( "For Presentation", "Play" ) );
     }
 }
@@ -1019,7 +1019,7 @@ void PresentationWidget::generateIntroPage( QPainter & p )
     }
 
     // draw okular logo in the four corners
-    QPixmap logo = DesktopIcon( "okular", 64 );
+    QPixmap logo = DesktopIcon( QStringLiteral("okular"), 64 );
     if ( !logo.isNull() )
     {
         p.drawPixmap( 5, 5, logo );
@@ -1511,10 +1511,10 @@ void PresentationWidget::slotDelayedEvents()
     show();
     setWindowState( windowState() | Qt::WindowFullScreen );
 
-    connect( QApplication::desktop(), SIGNAL(resized(int)), this, SLOT(screenResized(int)) );
+    connect( QApplication::desktop(), &QDesktopWidget::resized, this, &PresentationWidget::screenResized );
 
   // inform user on how to exit from presentation mode
-  KMessageBox::information( this, i18n("There are two ways of exiting presentation mode, you can press either ESC key or click with the quit button that appears when placing the mouse in the top-right corner. Of course you can cycle windows (Alt+TAB by default)"), QString(), "presentationInfo" );
+  KMessageBox::information( this, i18n("There are two ways of exiting presentation mode, you can press either ESC key or click with the quit button that appears when placing the mouse in the top-right corner. Of course you can cycle windows (Alt+TAB by default)"), QString(), QStringLiteral("presentationInfo") );
 }
 
 void PresentationWidget::slotPageChanged()

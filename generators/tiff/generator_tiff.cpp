@@ -102,7 +102,7 @@ static QDateTime convertTIFFDateTime( const char* tiffdate )
     if ( !tiffdate )
         return QDateTime();
 
-    return QDateTime::fromString( QString::fromLatin1( tiffdate ), "yyyy:MM:dd HH:mm:ss" );
+    return QDateTime::fromString( QString::fromLatin1( tiffdate ), QStringLiteral("yyyy:MM:dd HH:mm:ss") );
 }
 
 static void adaptSizeToResolution( TIFF *tiff, ttag_t whichres, double dpi, uint32 *size )
@@ -306,7 +306,7 @@ Okular::DocumentInfo TIFFGenerator::generateDocumentInfo( const QSet<Okular::Doc
     if ( d->tiff )
     {
         if ( keys.contains( Okular::DocumentInfo::MimeType ) )
-            docInfo.set( Okular::DocumentInfo::MimeType, "image/tiff" );
+            docInfo.set( Okular::DocumentInfo::MimeType, QStringLiteral("image/tiff") );
 
         if ( keys.contains( Okular::DocumentInfo::Description ) )
         {

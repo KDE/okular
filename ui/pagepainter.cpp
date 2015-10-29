@@ -920,7 +920,7 @@ void PagePainter::changeImageAlpha( QImage & image, unsigned int destAlpha )
     unsigned int pixels = image.width() * image.height();
 
     int source, sourceAlpha;
-    for( register unsigned int i = 0; i < pixels; ++i )
+    for( unsigned int i = 0; i < pixels; ++i )
     {   // optimize this loop keeping byte order into account
         source = data[i];
         if ( (sourceAlpha = qAlpha( source )) == 255 )

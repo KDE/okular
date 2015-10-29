@@ -30,7 +30,7 @@
 
 static inline void validateWord ( QString & word, bool & query_valid )
 {
-	QRegExp rxvalid ("[^\\d\\w_\\.]+");
+	QRegExp rxvalid (QStringLiteral("[^\\d\\w_\\.]+"));
 	
 	QString orig = word;
 	word.remove ( rxvalid );
@@ -41,7 +41,7 @@ static inline void validateWord ( QString & word, bool & query_valid )
 
 static inline void validateWords ( QStringList & wordlist, bool & query_valid )
 {
-	QRegExp rxvalid ("[^\\d\\w_\\.]+");
+	QRegExp rxvalid (QStringLiteral("[^\\d\\w_\\.]+"));
 	
 	for ( int i = 0; i < wordlist.size(); i++ )
 		validateWord ( wordlist[i], query_valid );
@@ -196,15 +196,15 @@ bool LCHMFile::searchQuery( const QString& inquery, QStringList * searchresults,
 	*   If there is no prefix, the word considered as required.
 	*/
 	
-	QRegExp rxphrase( "\"(.*)\"" );
-	QRegExp rxword( "([^\\s]+)" );
+	QRegExp rxphrase( QStringLiteral("\"(.*)\"") );
+	QRegExp rxword( QStringLiteral("([^\\s]+)") );
 	rxphrase.setMinimal( true );
 
 	// First, get the phrase queries
 	while ( (pos = rxphrase.indexIn (query, 0)) != -1 )
 	{
 		// A phrase query found. Locate its boundaries, and parse it.
-		QStringList plist = rxphrase.cap ( 1 ).split ( QRegExp ("\\s+") );
+		QStringList plist = rxphrase.cap ( 1 ).split ( QRegExp (QStringLiteral("\\s+")) );
 		
 		validateWords ( plist, query_valid );
 		

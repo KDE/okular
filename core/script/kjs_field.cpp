@@ -75,30 +75,30 @@ static QString fieldGetTypeHelper( const FormField *field )
             switch ( button->buttonType() )
             {
                 case FormFieldButton::Push:
-                    return "button";
+                    return QStringLiteral("button");
                 case FormFieldButton::CheckBox:
-                    return "checkbox";
+                    return QStringLiteral("checkbox");
                 case FormFieldButton::Radio:
-                    return "radiobutton";
+                    return QStringLiteral("radiobutton");
             }
             break;
         }
         case FormField::FormText:
-            return "text";
+            return QStringLiteral("text");
         case FormField::FormChoice:
         {
             const FormFieldChoice *choice = static_cast< const FormFieldChoice * >( field );
             switch ( choice->choiceType() )
             {
                 case FormFieldChoice::ComboBox:
-                    return "combobox";
+                    return QStringLiteral("combobox");
                 case FormFieldChoice::ListBox:
-                    return "listbox";
+                    return QStringLiteral("listbox");
             }
             break;
         }
         case FormField::FormSignature:
-            return "signature";
+            return QStringLiteral("signature");
     }
     return QString();
 }
@@ -204,19 +204,19 @@ void JSField::initType( KJSContext *ctx )
     if ( !g_fieldProto )
         g_fieldProto = new KJSPrototype();
 
-    g_fieldProto->defineProperty( ctx, "doc", fieldGetDoc );
-    g_fieldProto->defineProperty( ctx, "name", fieldGetName );
-    g_fieldProto->defineProperty( ctx, "readonly",
+    g_fieldProto->defineProperty( ctx, QStringLiteral("doc"), fieldGetDoc );
+    g_fieldProto->defineProperty( ctx, QStringLiteral("name"), fieldGetName );
+    g_fieldProto->defineProperty( ctx, QStringLiteral("readonly"),
                                   fieldGetReadOnly, fieldSetReadOnly );
-    g_fieldProto->defineProperty( ctx, "type", fieldGetType );
-    g_fieldProto->defineProperty( ctx, "value", fieldGetValue, fieldSetValue );
+    g_fieldProto->defineProperty( ctx, QStringLiteral("type"), fieldGetType );
+    g_fieldProto->defineProperty( ctx, QStringLiteral("value"), fieldGetValue, fieldSetValue );
 }
 
 KJSObject JSField::wrapField( KJSContext *ctx, FormField *field, Page *page )
 {
     // ### cache unique wrapper
     KJSObject f = g_fieldProto->constructObject( ctx, field );
-    f.setProperty( ctx, "page", page->number() );
+    f.setProperty( ctx, QStringLiteral("page"), page->number() );
     return f;
 }
 

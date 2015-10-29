@@ -517,7 +517,7 @@ void KDjVu::Private::readBookmarks()
          miniexp_symbolp( miniexp_nth( 0, outline ) ) &&
          ( QString::fromUtf8( miniexp_to_name( miniexp_nth( 0, outline ) ) ) == QLatin1String( "bookmarks" ) ) )
     {
-        m_docBookmarks = new QDomDocument( "KDjVuBookmarks" );
+        m_docBookmarks = new QDomDocument( QStringLiteral("KDjVuBookmarks") );
         fillBookmarksRecurse( *m_docBookmarks, *m_docBookmarks, outline, 1 );
         ddjvu_miniexp_release( m_djvu_document, outline );
     }
@@ -539,8 +539,8 @@ void KDjVu::Private::fillBookmarksRecurse( QDomDocument& maindoc, QDomNode& curn
         {
             QString title = QString::fromUtf8( miniexp_to_str( miniexp_nth( 0, cur ) ) );
             QString dest = QString::fromUtf8( miniexp_to_str( miniexp_nth( 1, cur ) ) );
-            QDomElement el = maindoc.createElement( "item" );
-            el.setAttribute( "title", title );
+            QDomElement el = maindoc.createElement( QStringLiteral("item") );
+            el.setAttribute( QStringLiteral("title"), title );
             if ( !dest.isEmpty() )
             {
                 if ( dest.at( 0 ) == QLatin1Char( '#' ) )
@@ -555,21 +555,21 @@ void KDjVu::Private::fillBookmarksRecurse( QDomDocument& maindoc, QDomNode& curn
                         int pageNo = pageWithName( dest );
                         if ( pageNo != -1 )
                         {
-                            el.setAttribute( "PageNumber", QString::number( pageNo + 1 ) );
+                            el.setAttribute( QStringLiteral("PageNumber"), QString::number( pageNo + 1 ) );
                         }
                         else
                         {
-                            el.setAttribute( "PageNumber", dest );
+                            el.setAttribute( QStringLiteral("PageNumber"), dest );
                         }
                     }
                     else
                     {
-                       el.setAttribute( "PageName", dest );
+                       el.setAttribute( QStringLiteral("PageName"), dest );
                     }
                 }
                 else
                 {
-                    el.setAttribute( "URL", dest );
+                    el.setAttribute( QStringLiteral("URL"), dest );
                 }
             }
             curnode.appendChild( el );
@@ -710,9 +710,9 @@ bool KDjVu::openFile( const QString & fileName )
             break;
     }
     if ( !doctype.isEmpty() )
-        d->m_metaData[ "documentType" ] = doctype;
+        d->m_metaData[ QStringLiteral("documentType") ] = doctype;
     // get the number of components
-    d->m_metaData[ "componentFile" ] = ddjvu_document_get_filenum( d->m_djvu_document );
+    d->m_metaData[ QStringLiteral("componentFile") ] = ddjvu_document_get_filenum( d->m_djvu_document );
 
     // read the pages
     for ( int i = 0; i < numofpages; ++i )
@@ -1057,7 +1057,7 @@ bool KDjVu::exportAsPostScript( QFile* file, const QList<int>& pageList ) const
     foreach ( int p, pageList )
     {
         if ( !pl.isEmpty() )
-            pl += QString::fromLatin1( "," );
+            pl += QLatin1String( "," );
         pl += QString::number( p );
     }
     pl.prepend( "-page=" );

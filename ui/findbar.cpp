@@ -32,7 +32,7 @@ FindBar::FindBar( Okular::Document * document, QWidget * parent )
     lay->setMargin( 2 );
 
     QToolButton * closeBtn = new QToolButton( this );
-    closeBtn->setIcon( QIcon::fromTheme( "dialog-close" ) );
+    closeBtn->setIcon( QIcon::fromTheme( QStringLiteral("dialog-close") ) );
     closeBtn->setToolTip( i18n( "Close" ) );
     closeBtn->setAutoRaise( true );
     lay->addWidget( closeBtn );
@@ -52,11 +52,11 @@ FindBar::FindBar( Okular::Document * document, QWidget * parent )
     label->setBuddy( m_search->lineEdit() );
     lay->addWidget( m_search );
 
-    QPushButton * findNextBtn = new QPushButton( QIcon::fromTheme( "go-down-search" ), i18nc( "Find and go to the next search match", "Next" ), this );
+    QPushButton * findNextBtn = new QPushButton( QIcon::fromTheme( QStringLiteral("go-down-search") ), i18nc( "Find and go to the next search match", "Next" ), this );
     findNextBtn->setToolTip( i18n( "Jump to next match" ) );
     lay->addWidget( findNextBtn );
 
-    QPushButton * findPrevBtn = new QPushButton( QIcon::fromTheme( "go-up-search" ), i18nc( "Find and go to the previous search match", "Previous" ), this );
+    QPushButton * findPrevBtn = new QPushButton( QIcon::fromTheme( QStringLiteral("go-up-search") ), i18nc( "Find and go to the previous search match", "Previous" ), this );
     findPrevBtn->setToolTip( i18n( "Jump to previous match" ) );
     lay->addWidget( findPrevBtn );
 
@@ -71,11 +71,11 @@ FindBar::FindBar( Okular::Document * document, QWidget * parent )
     optionsBtn->setMenu( optionsMenu );
     lay->addWidget( optionsBtn );
 
-    connect( closeBtn, SIGNAL(clicked()), this, SLOT(closeAndStopSearch()) );
-    connect( findNextBtn, SIGNAL(clicked()), this, SLOT(findNext()) );
-    connect( findPrevBtn, SIGNAL(clicked()), this, SLOT(findPrev()) );
-    connect( m_caseSensitiveAct, SIGNAL(toggled(bool)), this, SLOT(caseSensitivityChanged()) );
-    connect( m_fromCurrentPageAct, SIGNAL(toggled(bool)), this, SLOT(fromCurrentPageChanged()) );
+    connect( closeBtn, &QAbstractButton::clicked, this, &FindBar::closeAndStopSearch );
+    connect( findNextBtn, &QAbstractButton::clicked, this, &FindBar::findNext );
+    connect( findPrevBtn, &QAbstractButton::clicked, this, &FindBar::findPrev );
+    connect( m_caseSensitiveAct, &QAction::toggled, this, &FindBar::caseSensitivityChanged );
+    connect( m_fromCurrentPageAct, &QAction::toggled, this, &FindBar::fromCurrentPageChanged );
 
     m_caseSensitiveAct->setChecked( Okular::Settings::searchCaseSensitive() );
     m_fromCurrentPageAct->setChecked( Okular::Settings::searchFromCurrentPage() );

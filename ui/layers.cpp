@@ -32,7 +32,7 @@ Layers::Layers(QWidget *parent, Okular::Document *document) : QWidget(parent), m
     mainlay->addWidget( m_searchLine );
     m_searchLine->setCaseSensitivity( Okular::Settings::self()->layersSearchCaseSensitive() ? Qt::CaseSensitive : Qt::CaseInsensitive );
     m_searchLine->setRegularExpression( Okular::Settings::self()->layersSearchRegularExpression() );
-    connect( m_searchLine, SIGNAL(searchOptionsChanged()), this, SLOT(saveSearchOptions()) );
+    connect( m_searchLine, &KTreeViewSearchLine::searchOptionsChanged, this, &Layers::saveSearchOptions );
 
     m_treeView = new QTreeView( this );
     mainlay->addWidget( m_treeView );
@@ -58,8 +58,8 @@ void Layers::notifySetup( const QVector< Okular::Page * > & /*pages*/, int /*set
         m_treeView->setModel( layersModel );
         m_searchLine->setTreeView( m_treeView );
         emit hasLayers( true );
-        connect( layersModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), m_document, SLOT(reloadDocument()) );
-        connect( layersModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), m_pageView, SLOT(reloadForms()) );
+        connect( layersModel, &QAbstractItemModel::dataChanged, m_document, &Okular::Document::reloadDocument );
+        connect( layersModel, &QAbstractItemModel::dataChanged, m_pageView, &PageView::reloadForms );
     }
     else
     {

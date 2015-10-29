@@ -234,21 +234,21 @@ EditTextCommand::EditTextCommand( const QString & newContents,
     }
     else if ( newContentsRightOfCursor() == oldContentsRightOfCursor() &&
               newContentsLeftOfCursor() == oldContentsLeftOfCursor().left(oldContentsLeftOfCursor().length() - 1) &&
-              oldContentsLeftOfCursor().right(1) != "\n" )
+              oldContentsLeftOfCursor().right(1) != QLatin1String("\n") )
     {
         qCDebug(OkularCoreDebug) << "CharBackspace";
         m_editType = CharBackspace;
     }
     else if ( newContentsLeftOfCursor() == oldContentsLeftOfCursor() &&
               newContentsRightOfCursor() == oldContentsRightOfCursor().right(oldContentsRightOfCursor().length() - 1) &&
-              oldContentsRightOfCursor().left(1) != "\n" )
+              oldContentsRightOfCursor().left(1) != QLatin1String("\n") )
     {
         qCDebug(OkularCoreDebug) << "CharDelete";
         m_editType = CharDelete;
     }
     else if ( newContentsRightOfCursor() == oldContentsRightOfCursor() &&
               newContentsLeftOfCursor().left( newContentsLeftOfCursor().length() - 1) == oldContentsLeftOfCursor() &&
-              newContentsLeftOfCursor().right(1) != "\n" )
+              newContentsLeftOfCursor().right(1) != QLatin1String("\n") )
     {
         qCDebug(OkularCoreDebug) << "CharInsert";
         m_editType = CharInsert;

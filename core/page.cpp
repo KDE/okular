@@ -795,7 +795,7 @@ void PagePrivate::restoreLocalContents( const QDomNode & pageNode )
         childNode = childNode.nextSibling();
 
         // parse annotationList child element
-        if ( childElement.tagName() == "annotationList" )
+        if ( childElement.tagName() == QLatin1String("annotationList") )
         {
 #ifdef PAGE_PROFILE
             QTime time;
@@ -830,7 +830,7 @@ void PagePrivate::restoreLocalContents( const QDomNode & pageNode )
 #endif
         }
         // parse formList child element
-        else if ( childElement.tagName() == "forms" )
+        else if ( childElement.tagName() == QLatin1String("forms") )
         {
             if ( formfields.isEmpty() )
                 continue;
@@ -850,11 +850,11 @@ void PagePrivate::restoreLocalContents( const QDomNode & pageNode )
                 QDomElement formElement = formsNode.toElement();
                 formsNode = formsNode.nextSibling();
 
-                if ( formElement.tagName() != "form" )
+                if ( formElement.tagName() != QLatin1String("form") )
                     continue;
 
                 bool ok = true;
-                int index = formElement.attribute( "id" ).toInt( &ok );
+                int index = formElement.attribute( QStringLiteral("id") ).toInt( &ok );
                 if ( !ok )
                     continue;
 
@@ -862,7 +862,7 @@ void PagePrivate::restoreLocalContents( const QDomNode & pageNode )
                 if ( wantedIt == hashedforms.constEnd() )
                     continue;
 
-                QString value = formElement.attribute( "value" );
+                QString value = formElement.attribute( QStringLiteral("value") );
                 (*wantedIt)->d_ptr->setValue( value );
             }
         }
@@ -872,8 +872,8 @@ void PagePrivate::restoreLocalContents( const QDomNode & pageNode )
 void PagePrivate::saveLocalContents( QDomNode & parentNode, QDomDocument & document, PageItems what ) const
 {
     // create the page node and set the 'number' attribute
-    QDomElement pageElement = document.createElement( "page" );
-    pageElement.setAttribute( "number", m_number );
+    QDomElement pageElement = document.createElement( QStringLiteral("page") );
+    pageElement.setAttribute( QStringLiteral("number"), m_number );
 
 #if 0
     // add bookmark info if is bookmarked
@@ -902,7 +902,7 @@ void PagePrivate::saveLocalContents( QDomNode & parentNode, QDomDocument & docum
     else if ( ( what & AnnotationPageItems ) && !m_page->m_annotations.isEmpty() )
     {
         // create the annotationList
-        QDomElement annotListElement = document.createElement( "annotationList" );
+        QDomElement annotListElement = document.createElement( QStringLiteral("annotationList") );
 
         // add every annotation to the annotationList
         QLinkedList< Annotation * >::const_iterator aIt = m_page->m_annotations.constBegin(), aEnd = m_page->m_annotations.constEnd();
@@ -914,7 +914,7 @@ void PagePrivate::saveLocalContents( QDomNode & parentNode, QDomDocument & docum
             if ( !(a->flags() & Annotation::External) )
             {
                 // append an filled-up element called 'annotation' to the list
-                QDomElement annElement = document.createElement( "annotation" );
+                QDomElement annElement = document.createElement( QStringLiteral("annotation") );
                 AnnotationUtils::storeAnnotation( a, annElement, document );
                 annotListElement.appendChild( annElement );
                 qCDebug(OkularCoreDebug) << "save annotation:" << a->uniqueName();
@@ -930,7 +930,7 @@ void PagePrivate::saveLocalContents( QDomNode & parentNode, QDomDocument & docum
     if ( ( what & FormFieldPageItems ) && !formfields.isEmpty() )
     {
         // create the formList
-        QDomElement formListElement = document.createElement( "forms" );
+        QDomElement formListElement = document.createElement( QStringLiteral("forms") );
 
         // add every form data to the formList
         QLinkedList< FormField * >::const_iterator fIt = formfields.constBegin(), fItEnd = formfields.constEnd();
@@ -944,9 +944,9 @@ void PagePrivate::saveLocalContents( QDomNode & parentNode, QDomDocument & docum
                 continue;
 
             // append an filled-up element called 'annotation' to the list
-            QDomElement formElement = document.createElement( "form" );
-            formElement.setAttribute( "id", f->id() );
-            formElement.setAttribute( "value", newvalue );
+            QDomElement formElement = document.createElement( QStringLiteral("form") );
+            formElement.setAttribute( QStringLiteral("id"), f->id() );
+            formElement.setAttribute( QStringLiteral("value"), newvalue );
             formListElement.appendChild( formElement );
         }
 

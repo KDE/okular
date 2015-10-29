@@ -63,16 +63,16 @@ Shell::Shell( const QString &serializedOptions )
     , m_activityResource(0)
     , m_isValid(true)
 {
-  setObjectName( QLatin1String( "okular::Shell#" ) );
+  setObjectName( QStringLiteral( "okular::Shell#" ) );
   setContextMenuPolicy( Qt::NoContextMenu );
   // set the shell's ui resource file
-  setXMLFile("shell.rc");
+  setXMLFile(QStringLiteral("shell.rc"));
   m_fileformatsscanned = false;
   m_showMenuBarAction = 0;
   // this routine will find and load our Part.  it finds the Part by
   // name which is a bad idea usually.. but it's alright in this
   // case since our Part is made for this Shell
-  KPluginLoader loader("okularpart");
+  KPluginLoader loader(QStringLiteral("okularpart"));
   m_partFactory = loader.factory();
   if (!m_partFactory)
   {
@@ -94,17 +94,17 @@ Shell::Shell( const QString &serializedOptions )
     m_tabWidget->tabBar()->hide();
     m_tabWidget->setDocumentMode( true );
     m_tabWidget->setMovable( true );
-    connect( m_tabWidget, SIGNAL(currentChanged(int)), SLOT(setActiveTab(int)) );
-    connect( m_tabWidget, SIGNAL(tabCloseRequested(int)), SLOT(closeTab(int)) );
+    connect( m_tabWidget, &QTabWidget::currentChanged, this, &Shell::setActiveTab );
+    connect( m_tabWidget, &QTabWidget::tabCloseRequested, this, &Shell::closeTab );
     connect( m_tabWidget, SIGNAL(testCanDecode(const QDragMoveEvent*,bool&)), SLOT(testTabDrop(const QDragMoveEvent*,bool&)) ); // kf5 FIXME DnD
     connect( m_tabWidget, SIGNAL(receivedDropEvent(QDropEvent*)), SLOT(handleTabDrop(QDropEvent*)) ); // kf5 FIXME DnD
-    connect( m_tabWidget->tabBar(), SIGNAL(tabMoved(int,int)), SLOT(moveTabData(int,int)) );
+    connect( m_tabWidget->tabBar(), &QTabBar::tabMoved, this, &Shell::moveTabData );
 
     setCentralWidget( m_tabWidget );
 
     // then, setup our actions
     setupActions();
-    connect( QCoreApplication::instance(), SIGNAL(aboutToQuit()), SLOT(deleteLater()) );
+    connect( QCoreApplication::instance(), &QCoreApplication::aboutToQuit, this, &QObject::deleteLater );
     // and integrate the part's GUI with the shell's
     setupGUI(Keys | ToolBar | Save);
     createGUI(firstPart);
@@ -118,7 +118,7 @@ Shell::Shell( const QString &serializedOptions )
     m_unique = ShellUtils::unique(serializedOptions);
     if (m_unique)
     {
-        m_unique = QDBusConnection::sessionBus().registerService("org.kde.okular");
+        m_unique = QDBusConnection::sessionBus().registerService(QStringLiteral("org.kde.okular"));
         if (!m_unique)
             KMessageBox::information(this, i18n("There is already a unique Okular instance running. This instance won't be the unique one."));
     }
@@ -127,7 +127,7 @@ Shell::Shell( const QString &serializedOptions )
         setAttribute(Qt::WA_ShowWithoutActivating);
     }
 
-    QDBusConnection::sessionBus().registerObject("/okularshell", this, QDBusConnection::ExportScriptableSlots);
+    QDBusConnection::sessionBus().registerObject(QStringLiteral("/okularshell"), this, QDBusConnection::ExportScriptableSlots);
   }
   else
   {
@@ -158,7 +158,7 @@ Shell::~Shell()
         m_tabs.clear();
     }
     if (m_unique)
-        QDBusConnection::sessionBus().unregisterService("org.kde.okular");
+        QDBusConnection::sessionBus().unregisterService(QStringLiteral("org.kde.okular"));
 }
 
 // Open a new document if we have space for it
@@ -304,17 +304,17 @@ void Shell::setupActions()
   m_showMenuBarAction = KStandardAction::showMenubar( this, SLOT(slotShowMenubar()), actionCollection());
   m_fullScreenAction = KStandardAction::fullScreen( this, SLOT(slotUpdateFullScreen()), this,actionCollection() );
 
-  m_nextTabAction = actionCollection()->addAction("tab-next");
+  m_nextTabAction = actionCollection()->addAction(QStringLiteral("tab-next"));
   m_nextTabAction->setText( i18n("Next Tab") );
   actionCollection()->setDefaultShortcuts(m_nextTabAction, KStandardShortcut::tabNext());
   m_nextTabAction->setEnabled( false );
-  connect( m_nextTabAction, SIGNAL(triggered()), this, SLOT(activateNextTab()) );
+  connect( m_nextTabAction, &QAction::triggered, this, &Shell::activateNextTab );
 
-  m_prevTabAction = actionCollection()->addAction("tab-previous");
+  m_prevTabAction = actionCollection()->addAction(QStringLiteral("tab-previous"));
   m_prevTabAction->setText( i18n("Previous Tab") );
   actionCollection()->setDefaultShortcuts(m_prevTabAction, KStandardShortcut::tabPrev());
   m_prevTabAction->setEnabled( false );
-  connect( m_prevTabAction, SIGNAL(triggered()), this, SLOT(activatePrevTab()) );
+  connect( m_prevTabAction, &QAction::triggered, this, &Shell::activatePrevTab );
 }
 
 void Shell::saveProperties(KConfigGroup &group)
@@ -353,7 +353,7 @@ QStringList Shell::fileFormats() const
 {
     QStringList supportedPatterns;
 
-    QString constraint( "(Library == 'okularpart')" );
+    QString constraint( QStringLiteral("(Library == 'okularpart')") );
     QLatin1String basePartService( "KParts/ReadOnlyPart" );
     KService::List offers = KServiceTypeTrader::self()->query( basePartService, constraint );
     KService::List::ConstIterator it = offers.constBegin(), itEnd = offers.constEnd();
@@ -396,7 +396,7 @@ void Shell::fileOpen()
     dlg.setOperationMode( KFileDialog::Opening );
 
     // A directory may be a document. E.g. comicbook generator.
-    if ( m_fileformats.contains( "inode/directory" ) )
+    if ( m_fileformats.contains( QStringLiteral("inode/directory") ) )
         dlg.setMode( dlg.mode() | KFile::Directory );
 
     if ( m_fileformatsscanned && m_fileformats.isEmpty() )

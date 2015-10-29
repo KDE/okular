@@ -115,7 +115,7 @@ void TeXFontDefinition::fontNameReceiver(const QString& fname)
   set_char_p = &dviRenderer::set_char;
   int magic      = two(file);
 
-  if (fname.endsWith("pk"))
+  if (fname.endsWith(QLatin1String("pk")))
     if (magic == PK_MAGIC) {
       fclose(file);
       file = 0;
@@ -127,7 +127,7 @@ void TeXFontDefinition::fontNameReceiver(const QString& fname)
       return;
     }
 
-  if (fname.endsWith(".vf"))
+  if (fname.endsWith(QLatin1String(".vf")))
     if (magic == VF_MAGIC) {
       read_VF_index();
       set_char_p = &dviRenderer::set_vf_char;
@@ -135,7 +135,7 @@ void TeXFontDefinition::fontNameReceiver(const QString& fname)
       return;
     }
 
-  if (fname.endsWith(".tfm")) {
+  if (fname.endsWith(QLatin1String(".tfm"))) {
       fclose(file);
       file = 0;
       font = new TeXFont_TFM(this);

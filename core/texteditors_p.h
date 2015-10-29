@@ -22,15 +22,15 @@ static inline QHash< int, QString > buildEditorsMap()
 {
     QHash< int, QString > editors;
     editors.insert( SettingsCore::EnumExternalEditor::Kate,
-        QString::fromLatin1( "kate --line %l --column %c" ) );
+        QStringLiteral( "kate --line %l --column %c" ) );
     editors.insert( SettingsCore::EnumExternalEditor::Kile,
-        QString::fromLatin1( "kile --line %l" ) );
+        QStringLiteral( "kile --line %l" ) );
     editors.insert( SettingsCore::EnumExternalEditor::Scite,
-        QString::fromLatin1( "scite %f \"-goto:%l,%c\"" ) );
+        QStringLiteral( "scite %f \"-goto:%l,%c\"" ) );
     editors.insert( SettingsCore::EnumExternalEditor::Emacsclient,
-        QString::fromLatin1( "emacsclient -a emacs --no-wait +%l %f" ) );
+        QStringLiteral( "emacsclient -a emacs --no-wait +%l %f" ) );
     editors.insert( SettingsCore::EnumExternalEditor::Lyxclient,
-        QString::fromLatin1( "lyxclient -g %f %l" ) );
+        QStringLiteral( "lyxclient -g %f %l" ) );
     return editors;
 }
 

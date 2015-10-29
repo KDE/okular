@@ -32,7 +32,7 @@ fontEncoding::fontEncoding(const QString &encName)
   QProcess kpsewhich;
   kpsewhich.setReadChannelMode(QProcess::MergedChannels);
 
-  kpsewhich.start("kpsewhich",
+  kpsewhich.start(QStringLiteral("kpsewhich"),
                   QStringList() << encName,
                   QIODevice::ReadOnly|QIODevice::Text);
 
@@ -46,7 +46,7 @@ fontEncoding::fontEncoding(const QString &encName)
 
   const QString encFileName = QString(kpsewhich.readAll()).trimmed();
   if (encFileName.isEmpty()) {
-    qCCritical(OkularDviDebug) << QString("fontEncoding::fontEncoding(...): The file '%1' could not be found by kpsewhich.").arg(encName) << endl;
+    qCCritical(OkularDviDebug) << QStringLiteral("fontEncoding::fontEncoding(...): The file '%1' could not be found by kpsewhich.").arg(encName) << endl;
     return;
   }
 
@@ -84,9 +84,9 @@ fontEncoding::fontEncoding(const QString &encName)
       i++;
     }
     for(; i<256; i++)
-      glyphNameVector[i] = ".notdef";
+      glyphNameVector[i] = QStringLiteral(".notdef");
   } else {
-    qCCritical(OkularDviDebug) << QString("fontEncoding::fontEncoding(...): The file '%1' could not be opened.").arg(encFileName) << endl;
+    qCCritical(OkularDviDebug) << QStringLiteral("fontEncoding::fontEncoding(...): The file '%1' could not be opened.").arg(encFileName) << endl;
     return;
   }
 

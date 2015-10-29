@@ -133,12 +133,12 @@ void VideoWidget::Private::setupPlayPauseAction( PlayPauseMode mode )
 {
     if ( mode == PlayMode )
     {
-        playPauseAction->setIcon( QIcon::fromTheme( "media-playback-start" ) );
+        playPauseAction->setIcon( QIcon::fromTheme( QStringLiteral("media-playback-start") ) );
         playPauseAction->setText( i18nc( "start the movie playback", "Play" ) );
     }
     else if ( mode == PauseMode )
     {
-        playPauseAction->setIcon( QIcon::fromTheme( "media-playback-pause" ) );
+        playPauseAction->setIcon( QIcon::fromTheme( QStringLiteral("media-playback-pause") ) );
         playPauseAction->setText( i18nc( "pause the movie playback", "Pause" ) );
     }
 }
@@ -261,7 +261,7 @@ VideoWidget::VideoWidget( const Okular::Annotation *annotation, Okular::Movie *m
     d->controlBar->addAction( d->playPauseAction );
     d->setupPlayPauseAction( Private::PlayMode );
     d->stopAction = d->controlBar->addAction(
-        QIcon::fromTheme( "media-playback-stop" ),
+        QIcon::fromTheme( QStringLiteral("media-playback-stop") ),
         i18nc( "stop the movie playback", "Stop" ),
         this, SLOT(stop()) );
     d->stopAction->setEnabled( false );
@@ -273,7 +273,7 @@ VideoWidget::VideoWidget( const Okular::Annotation *annotation, Okular::Movie *m
     Phonon::SeekSlider *verticalSeekSlider = new Phonon::SeekSlider( d->player->mediaObject(), 0 );
     verticalSeekSlider->setMaximumHeight( 100 );
     d->seekSliderMenuAction = createToolBarButtonWithWidgetPopup(
-        d->controlBar, verticalSeekSlider, QIcon::fromTheme( "player-time" ) );
+        d->controlBar, verticalSeekSlider, QIcon::fromTheme( QStringLiteral("player-time") ) );
     d->seekSliderMenuAction->setVisible( false );
 
     d->controlBar->setVisible( movie->showControls() );

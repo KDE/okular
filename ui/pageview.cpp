@@ -267,8 +267,8 @@ OkularTTS* PageViewPrivate::tts()
         m_tts = new OkularTTS( q );
         if ( aSpeakStop )
         {
-            QObject::connect( m_tts, SIGNAL(isSpeaking(bool)),
-                              aSpeakStop, SLOT(setEnabled(bool)) );
+            QObject::connect( m_tts, &OkularTTS::isSpeaking,
+                              aSpeakStop, &QAction::setEnabled );
         }
     }
 
@@ -289,7 +289,7 @@ OkularTTS* PageViewPrivate::tts()
  */
 PageView::PageView( QWidget *parent, Okular::Document *document )
     : QAbstractScrollArea( parent )
-    , Okular::View( QString::fromLatin1( "PageView" ) )
+    , Okular::View( QLatin1String( "PageView" ) )
 {
     // create and initialize private storage structure
     d = new PageViewPrivate( this );
@@ -382,13 +382,13 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
 
     d->delayResizeEventTimer = new QTimer( this );
     d->delayResizeEventTimer->setSingleShot( true );
-    connect( d->delayResizeEventTimer, SIGNAL(timeout()), this, SLOT(delayedResizeEvent()) );
+    connect( d->delayResizeEventTimer, &QTimer::timeout, this, &PageView::delayedResizeEvent );
 
     setFrameStyle(QFrame::NoFrame);
 
     setAttribute( Qt::WA_StaticContents );
 
-    setObjectName( QLatin1String( "okular::pageView" ) );
+    setObjectName( QStringLiteral( "okular::pageView" ) );
 
     // viewport setup: setup focus, and track mouse
     viewport()->setFocusProxy( this );
@@ -402,12 +402,12 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     horizontalScrollBar()->setSingleStep( 20 );
 
     // conntect the padding of the viewport to pixmaps requests
-    connect(horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(slotRequestVisiblePixmaps(int)));
-    connect(verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(slotRequestVisiblePixmaps(int)));
-    connect( &d->dragScrollTimer, SIGNAL(timeout()), this, SLOT(slotDragScroll()) );
+    connect(horizontalScrollBar(), &QAbstractSlider::valueChanged, this, &PageView::slotRequestVisiblePixmaps);
+    connect(verticalScrollBar(), &QAbstractSlider::valueChanged, this, &PageView::slotRequestVisiblePixmaps);
+    connect( &d->dragScrollTimer, &QTimer::timeout, this, &PageView::slotDragScroll );
 
     d->leftClickTimer.setSingleShot( true );
-    connect( &d->leftClickTimer, SIGNAL(timeout()), this, SLOT(slotShowSizeAllCursor()) );
+    connect( &d->leftClickTimer, &QTimer::timeout, this, &PageView::slotShowSizeAllCursor );
 
     // set a corner button to resize the view to the page size
 //    QPushButton * resizeButton = new QPushButton( viewport() );
@@ -421,8 +421,8 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->magnifierView->hide();
     d->magnifierView->setGeometry(0, 0, 351, 201); // TODO: more dynamic?
 
-    connect(document, SIGNAL(processMovieAction(const Okular::MovieAction*)), this, SLOT(slotProcessMovieAction(const Okular::MovieAction*)));
-    connect(document, SIGNAL(processRenditionAction(const Okular::RenditionAction*)), this, SLOT(slotProcessRenditionAction(const Okular::RenditionAction*)));
+    connect(document, &Okular::Document::processMovieAction, this, &PageView::slotProcessMovieAction);
+    connect(document, &Okular::Document::processRenditionAction, this, &PageView::slotProcessRenditionAction);
 
     // schedule the welcome message
     QMetaObject::invokeMethod(this, "slotShowWelcome", Qt::QueuedConnection);
@@ -457,8 +457,8 @@ void PageView::setupBaseActions( KActionCollection * ac )
     d->actionCollection = ac;
 
     // Zoom actions ( higher scales takes lots of memory! )
-    d->aZoom  = new KSelectAction(QIcon::fromTheme( "page-zoom" ), i18n("Zoom"), this);
-    ac->addAction("zoom_to", d->aZoom );
+    d->aZoom  = new KSelectAction(QIcon::fromTheme( QStringLiteral("page-zoom") ), i18n("Zoom"), this);
+    ac->addAction(QStringLiteral("zoom_to"), d->aZoom );
     d->aZoom->setEditable( true );
     d->aZoom->setMaxComboViewCount( 14 );
     connect( d->aZoom, SIGNAL(triggered(QAction*)), this, SLOT(slotZoom()) );
@@ -477,23 +477,23 @@ void PageView::setupViewerActions( KActionCollection * ac )
     ac->setDefaultShortcut(d->aZoomOut, QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_Minus));
 
     // orientation menu actions
-    d->aRotateClockwise = new QAction( QIcon::fromTheme( "object-rotate-right" ), i18n( "Rotate &Right" ), this );
+    d->aRotateClockwise = new QAction( QIcon::fromTheme( QStringLiteral("object-rotate-right") ), i18n( "Rotate &Right" ), this );
     d->aRotateClockwise->setIconText( i18nc( "Rotate right", "Right" ) );
-    ac->addAction( "view_orientation_rotate_cw", d->aRotateClockwise );
+    ac->addAction( QStringLiteral("view_orientation_rotate_cw"), d->aRotateClockwise );
     d->aRotateClockwise->setEnabled( false );
-    connect( d->aRotateClockwise, SIGNAL(triggered()), this, SLOT(slotRotateClockwise()) );
-    d->aRotateCounterClockwise = new QAction( QIcon::fromTheme( "object-rotate-left" ), i18n( "Rotate &Left" ), this );
+    connect( d->aRotateClockwise, &QAction::triggered, this, &PageView::slotRotateClockwise );
+    d->aRotateCounterClockwise = new QAction( QIcon::fromTheme( QStringLiteral("object-rotate-left") ), i18n( "Rotate &Left" ), this );
     d->aRotateCounterClockwise->setIconText( i18nc( "Rotate left", "Left" ) );
-    ac->addAction( "view_orientation_rotate_ccw", d->aRotateCounterClockwise );
+    ac->addAction( QStringLiteral("view_orientation_rotate_ccw"), d->aRotateCounterClockwise );
     d->aRotateCounterClockwise->setEnabled( false );
-    connect( d->aRotateCounterClockwise, SIGNAL(triggered()), this, SLOT(slotRotateCounterClockwise()) );
+    connect( d->aRotateCounterClockwise, &QAction::triggered, this, &PageView::slotRotateCounterClockwise );
     d->aRotateOriginal = new QAction( i18n( "Original Orientation" ), this );
-    ac->addAction( "view_orientation_original", d->aRotateOriginal );
+    ac->addAction( QStringLiteral("view_orientation_original"), d->aRotateOriginal );
     d->aRotateOriginal->setEnabled( false );
-    connect( d->aRotateOriginal, SIGNAL(triggered()), this, SLOT(slotRotateOriginal()) );
+    connect( d->aRotateOriginal, &QAction::triggered, this, &PageView::slotRotateOriginal );
 
     d->aPageSizes = new KSelectAction(i18n("&Page Size"), this);
-    ac->addAction("view_pagesizes", d->aPageSizes);
+    ac->addAction(QStringLiteral("view_pagesizes"), d->aPageSizes);
     d->aPageSizes->setEnabled( false );
 
     connect( d->aPageSizes , SIGNAL(triggered(int)),
@@ -502,41 +502,41 @@ void PageView::setupViewerActions( KActionCollection * ac )
     // Trim View actions
     d->aTrimMode = new KActionMenu(i18n( "&Trim View" ), this );
     d->aTrimMode->setDelayed( false );
-    ac->addAction("view_trim_mode", d->aTrimMode );
+    ac->addAction(QStringLiteral("view_trim_mode"), d->aTrimMode );
 
     d->aTrimMargins  = new KToggleAction( i18n( "&Trim Margins" ), d->aTrimMode->menu() );
     d->aTrimMode->addAction( d->aTrimMargins  );
-    ac->addAction( "view_trim_margins", d->aTrimMargins  );
+    ac->addAction( QStringLiteral("view_trim_margins"), d->aTrimMargins  );
     d->aTrimMargins->setData( qVariantFromValue( (int)Okular::Settings::EnumTrimMode::Margins ) );
-    connect( d->aTrimMargins, SIGNAL(toggled(bool)), SLOT(slotTrimMarginsToggled(bool)) );
+    connect( d->aTrimMargins, &QAction::toggled, this, &PageView::slotTrimMarginsToggled );
     d->aTrimMargins->setChecked( Okular::Settings::trimMargins() );
 
     d->aTrimToSelection  = new KToggleAction( i18n( "Trim To &Selection" ), d->aTrimMode->menu() );
     d->aTrimMode->addAction( d->aTrimToSelection);
-    ac->addAction( "view_trim_selection", d->aTrimToSelection);
+    ac->addAction( QStringLiteral("view_trim_selection"), d->aTrimToSelection);
     d->aTrimToSelection->setData( qVariantFromValue( (int)Okular::Settings::EnumTrimMode::Selection ) );
-    connect( d->aTrimToSelection, SIGNAL(toggled(bool)), SLOT(slotTrimToSelectionToggled(bool)) );
+    connect( d->aTrimToSelection, &QAction::toggled, this, &PageView::slotTrimToSelectionToggled );
 
-    d->aZoomFitWidth  = new KToggleAction(QIcon::fromTheme( "zoom-fit-width" ), i18n("Fit &Width"), this);
-    ac->addAction("view_fit_to_width", d->aZoomFitWidth );
-    connect( d->aZoomFitWidth, SIGNAL(toggled(bool)), SLOT(slotFitToWidthToggled(bool)) );
+    d->aZoomFitWidth  = new KToggleAction(QIcon::fromTheme( QStringLiteral("zoom-fit-width") ), i18n("Fit &Width"), this);
+    ac->addAction(QStringLiteral("view_fit_to_width"), d->aZoomFitWidth );
+    connect( d->aZoomFitWidth, &QAction::toggled, this, &PageView::slotFitToWidthToggled );
 
-    d->aZoomFitPage  = new KToggleAction(QIcon::fromTheme( "zoom-fit-best" ), i18n("Fit &Page"), this);
-    ac->addAction("view_fit_to_page", d->aZoomFitPage );
-    connect( d->aZoomFitPage, SIGNAL(toggled(bool)), SLOT(slotFitToPageToggled(bool)) );
+    d->aZoomFitPage  = new KToggleAction(QIcon::fromTheme( QStringLiteral("zoom-fit-best") ), i18n("Fit &Page"), this);
+    ac->addAction(QStringLiteral("view_fit_to_page"), d->aZoomFitPage );
+    connect( d->aZoomFitPage, &QAction::toggled, this, &PageView::slotFitToPageToggled );
 
-    d->aZoomAutoFit  = new KToggleAction(QIcon::fromTheme( "zoom-fit-best" ), i18n("&Auto Fit"), this);
-    ac->addAction("view_auto_fit", d->aZoomAutoFit );
-    connect( d->aZoomAutoFit, SIGNAL(toggled(bool)), SLOT(slotAutoFitToggled(bool)) );
+    d->aZoomAutoFit  = new KToggleAction(QIcon::fromTheme( QStringLiteral("zoom-fit-best") ), i18n("&Auto Fit"), this);
+    ac->addAction(QStringLiteral("view_auto_fit"), d->aZoomAutoFit );
+    connect( d->aZoomAutoFit, &QAction::toggled, this, &PageView::slotAutoFitToggled );
 
-    d->aFitWindowToPage = new QAction(QIcon::fromTheme( "zoom-fit-width" ), i18n("Fit Wi&ndow to Page"), this);
+    d->aFitWindowToPage = new QAction(QIcon::fromTheme( QStringLiteral("zoom-fit-width") ), i18n("Fit Wi&ndow to Page"), this);
     d->aFitWindowToPage->setEnabled( Okular::Settings::viewMode() == (int)Okular::Settings::EnumViewMode::Single );
     ac->setDefaultShortcut(d->aFitWindowToPage, QKeySequence(Qt::CTRL + Qt::Key_J) );
-    ac->addAction( "fit_window_to_page", d->aFitWindowToPage );
-    connect( d->aFitWindowToPage, SIGNAL(triggered()), this, SLOT(slotFitWindowToPage()) );
+    ac->addAction( QStringLiteral("fit_window_to_page"), d->aFitWindowToPage );
+    connect( d->aFitWindowToPage, &QAction::triggered, this, &PageView::slotFitWindowToPage );
 
     // View-Layout actions
-    d->aViewMode = new KActionMenu( QIcon::fromTheme( "view-split-left-right" ), i18n( "&View Mode" ), this );
+    d->aViewMode = new KActionMenu( QIcon::fromTheme( QStringLiteral("view-split-left-right") ), i18n( "&View Mode" ), this );
     d->aViewMode->setDelayed( false );
 #define ADD_VIEWMODE_ACTION( text, name, id ) \
 do { \
@@ -547,7 +547,7 @@ do { \
     ac->addAction( name, vm ); \
     vmGroup->addAction( vm ); \
 } while( 0 )
-    ac->addAction("view_render_mode", d->aViewMode );
+    ac->addAction(QStringLiteral("view_render_mode"), d->aViewMode );
     QActionGroup *vmGroup = new QActionGroup( this ); //d->aViewMode->menu() );
     ADD_VIEWMODE_ACTION( i18n( "Single Page" ), "view_render_mode_single", (int)Okular::Settings::EnumViewMode::Single );
     ADD_VIEWMODE_ACTION( i18n( "Facing Pages" ), "view_render_mode_facing", (int)Okular::Settings::EnumViewMode::Facing );
@@ -561,29 +561,29 @@ do { \
             viewModeAction->setChecked( true );
         }
     }
-    connect( vmGroup, SIGNAL(triggered(QAction*)), this, SLOT(slotViewMode(QAction*)) );
+    connect( vmGroup, &QActionGroup::triggered, this, &PageView::slotViewMode );
 #undef ADD_VIEWMODE_ACTION
 
-    d->aViewContinuous  = new KToggleAction(QIcon::fromTheme( "view-list-text" ), i18n("&Continuous"), this);
-    ac->addAction("view_continuous", d->aViewContinuous );
-    connect( d->aViewContinuous, SIGNAL(toggled(bool)), SLOT(slotContinuousToggled(bool)) );
+    d->aViewContinuous  = new KToggleAction(QIcon::fromTheme( QStringLiteral("view-list-text") ), i18n("&Continuous"), this);
+    ac->addAction(QStringLiteral("view_continuous"), d->aViewContinuous );
+    connect( d->aViewContinuous, &QAction::toggled, this, &PageView::slotContinuousToggled );
     d->aViewContinuous->setChecked( Okular::Settings::viewContinuous() );
 
     // Mouse mode actions for viewer mode
     d->mouseModeActionGroup = new QActionGroup( this );
     d->mouseModeActionGroup->setExclusive( true );
-    d->aMouseNormal  = new QAction( QIcon::fromTheme( "input-mouse" ), i18n( "&Browse Tool" ), this );
-    ac->addAction("mouse_drag", d->aMouseNormal );
-    connect( d->aMouseNormal, SIGNAL(triggered()), this, SLOT(slotSetMouseNormal()) );
+    d->aMouseNormal  = new QAction( QIcon::fromTheme( QStringLiteral("input-mouse") ), i18n( "&Browse Tool" ), this );
+    ac->addAction(QStringLiteral("mouse_drag"), d->aMouseNormal );
+    connect( d->aMouseNormal, &QAction::triggered, this, &PageView::slotSetMouseNormal );
     d->aMouseNormal->setIconText( i18nc( "Browse Tool", "Browse" ) );
     d->aMouseNormal->setCheckable( true );
     ac->setDefaultShortcut(d->aMouseNormal, QKeySequence(Qt::CTRL + Qt::Key_1));
     d->aMouseNormal->setActionGroup( d->mouseModeActionGroup );
     d->aMouseNormal->setChecked( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::Browse );
 
-    QAction * mz  = new QAction(QIcon::fromTheme( "page-zoom" ), i18n("&Zoom Tool"), this);
-    ac->addAction("mouse_zoom", mz );
-    connect( mz, SIGNAL(triggered()), this, SLOT(slotSetMouseZoom()) );
+    QAction * mz  = new QAction(QIcon::fromTheme( QStringLiteral("page-zoom") ), i18n("&Zoom Tool"), this);
+    ac->addAction(QStringLiteral("mouse_zoom"), mz );
+    connect( mz, &QAction::triggered, this, &PageView::slotSetMouseZoom );
     mz->setIconText( i18nc( "Zoom Tool", "Zoom" ) );
     mz->setCheckable( true );
     ac->setDefaultShortcut(mz, QKeySequence(Qt::CTRL + Qt::Key_2));
@@ -591,8 +591,8 @@ do { \
     mz->setChecked( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::Zoom );
 
     QAction * aToggleChangeColors  = new QAction(i18n("&Toggle Change Colors"), this);
-    ac->addAction("toggle_change_colors", aToggleChangeColors );
-    connect( aToggleChangeColors, SIGNAL(triggered()), this, SLOT(slotToggleChangeColors()) );
+    ac->addAction(QStringLiteral("toggle_change_colors"), aToggleChangeColors );
+    connect( aToggleChangeColors, &QAction::triggered, this, &PageView::slotToggleChangeColors );
 }
 
 // WARNING: 'setupViewerActions' must have been called before this method
@@ -604,9 +604,9 @@ void PageView::setupActions( KActionCollection * ac )
     ac->setDefaultShortcuts(d->aZoomOut, KStandardShortcut::zoomOut());
 
     // Mouse-Mode actions
-    d->aMouseSelect  = new QAction(QIcon::fromTheme( "select-rectangular" ), i18n("&Selection Tool"), this);
-    ac->addAction("mouse_select", d->aMouseSelect );
-    connect( d->aMouseSelect, SIGNAL(triggered()), this, SLOT(slotSetMouseSelect()) );
+    d->aMouseSelect  = new QAction(QIcon::fromTheme( QStringLiteral("select-rectangular") ), i18n("&Selection Tool"), this);
+    ac->addAction(QStringLiteral("mouse_select"), d->aMouseSelect );
+    connect( d->aMouseSelect, &QAction::triggered, this, &PageView::slotSetMouseSelect );
     d->aMouseSelect->setIconText( i18nc( "Select Tool", "Selection" ) );
     d->aMouseSelect->setCheckable( true );
     ac->setDefaultShortcut(d->aMouseSelect, Qt::CTRL + Qt::Key_3);
@@ -614,61 +614,61 @@ void PageView::setupActions( KActionCollection * ac )
     d->aMouseSelect->setActionGroup( d->mouseModeActionGroup );
     d->aMouseSelect->setChecked( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::RectSelect );
 
-    d->aMouseTextSelect  = new QAction(QIcon::fromTheme( "draw-text" ), i18n("&Text Selection Tool"), this);
-    ac->addAction("mouse_textselect", d->aMouseTextSelect );
-    connect( d->aMouseTextSelect, SIGNAL(triggered()), this, SLOT(slotSetMouseTextSelect()) );
+    d->aMouseTextSelect  = new QAction(QIcon::fromTheme( QStringLiteral("draw-text") ), i18n("&Text Selection Tool"), this);
+    ac->addAction(QStringLiteral("mouse_textselect"), d->aMouseTextSelect );
+    connect( d->aMouseTextSelect, &QAction::triggered, this, &PageView::slotSetMouseTextSelect );
     d->aMouseTextSelect->setIconText( i18nc( "Text Selection Tool", "Text Selection" ) );
     d->aMouseTextSelect->setCheckable( true );
     ac->setDefaultShortcut(d->aMouseTextSelect, Qt::CTRL + Qt::Key_4);
     d->aMouseTextSelect->setActionGroup( d->mouseModeActionGroup );
     d->aMouseTextSelect->setChecked( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::TextSelect );
 
-    d->aMouseTableSelect  = new QAction(QIcon::fromTheme( "table" ), i18n("T&able Selection Tool"), this);
-    ac->addAction("mouse_tableselect", d->aMouseTableSelect );
-    connect( d->aMouseTableSelect, SIGNAL( triggered() ), this, SLOT( slotSetMouseTableSelect() ) );
+    d->aMouseTableSelect  = new QAction(QIcon::fromTheme( QStringLiteral("table") ), i18n("T&able Selection Tool"), this);
+    ac->addAction(QStringLiteral("mouse_tableselect"), d->aMouseTableSelect );
+    connect( d->aMouseTableSelect, &QAction::triggered, this, &PageView::slotSetMouseTableSelect );
     d->aMouseTableSelect->setIconText( i18nc( "Table Selection Tool", "Table Selection" ) );
     d->aMouseTableSelect->setCheckable( true );
     ac->setDefaultShortcut(d->aMouseTableSelect, Qt::CTRL + Qt::Key_5);
     d->aMouseTableSelect->setActionGroup( d->mouseModeActionGroup );
     d->aMouseTableSelect->setChecked( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::TableSelect );
 
-    d->aMouseMagnifier = new QAction(QIcon::fromTheme( "document-preview" ), i18n("&Magnifier"), this);
-    ac->addAction("mouse_magnifier", d->aMouseMagnifier );
-    connect( d->aMouseMagnifier, SIGNAL(triggered()), this, SLOT(slotSetMouseMagnifier()) );
+    d->aMouseMagnifier = new QAction(QIcon::fromTheme( QStringLiteral("document-preview") ), i18n("&Magnifier"), this);
+    ac->addAction(QStringLiteral("mouse_magnifier"), d->aMouseMagnifier );
+    connect( d->aMouseMagnifier, &QAction::triggered, this, &PageView::slotSetMouseMagnifier );
     d->aMouseMagnifier->setIconText( i18nc( "Magnifier Tool", "Magnifier" ) );
     d->aMouseMagnifier->setCheckable( true );
     ac->setDefaultShortcut(d->aMouseMagnifier, Qt::CTRL + Qt::Key_6);
     d->aMouseMagnifier->setActionGroup( d->mouseModeActionGroup );
     d->aMouseMagnifier->setChecked( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::Magnifier );
 
-    d->aToggleAnnotator  = new KToggleAction(QIcon::fromTheme( "draw-freehand" ), i18n("&Review"), this);
-    ac->addAction("mouse_toggle_annotate", d->aToggleAnnotator );
+    d->aToggleAnnotator  = new KToggleAction(QIcon::fromTheme( QStringLiteral("draw-freehand") ), i18n("&Review"), this);
+    ac->addAction(QStringLiteral("mouse_toggle_annotate"), d->aToggleAnnotator );
     d->aToggleAnnotator->setCheckable( true );
-    connect( d->aToggleAnnotator, SIGNAL(toggled(bool)), SLOT(slotToggleAnnotator(bool)) );
+    connect( d->aToggleAnnotator, &QAction::toggled, this, &PageView::slotToggleAnnotator );
     ac->setDefaultShortcut(d->aToggleAnnotator, Qt::Key_F6);
 
     ToolAction *ta = new ToolAction( this );
-    ac->addAction( "mouse_selecttools", ta );
+    ac->addAction( QStringLiteral("mouse_selecttools"), ta );
     ta->addAction( d->aMouseSelect );
     ta->addAction( d->aMouseTextSelect );
     ta->addAction( d->aMouseTableSelect );
 
     // speak actions
 #ifdef HAVE_SPEECH
-    d->aSpeakDoc = new QAction( QIcon::fromTheme( "text-speak" ), i18n( "Speak Whole Document" ), this );
-    ac->addAction( "speak_document", d->aSpeakDoc );
+    d->aSpeakDoc = new QAction( QIcon::fromTheme( QStringLiteral("text-speak") ), i18n( "Speak Whole Document" ), this );
+    ac->addAction( QStringLiteral("speak_document"), d->aSpeakDoc );
     d->aSpeakDoc->setEnabled( false );
-    connect( d->aSpeakDoc, SIGNAL(triggered()), SLOT(slotSpeakDocument()) );
+    connect( d->aSpeakDoc, &QAction::triggered, this, &PageView::slotSpeakDocument );
     
-    d->aSpeakPage = new QAction( QIcon::fromTheme( "text-speak" ), i18n( "Speak Current Page" ), this );
-    ac->addAction( "speak_current_page", d->aSpeakPage );
+    d->aSpeakPage = new QAction( QIcon::fromTheme( QStringLiteral("text-speak") ), i18n( "Speak Current Page" ), this );
+    ac->addAction( QStringLiteral("speak_current_page"), d->aSpeakPage );
     d->aSpeakPage->setEnabled( false );
-    connect( d->aSpeakPage, SIGNAL(triggered()), SLOT(slotSpeakCurrentPage()) );
+    connect( d->aSpeakPage, &QAction::triggered, this, &PageView::slotSpeakCurrentPage );
 
-    d->aSpeakStop = new QAction( QIcon::fromTheme( "media-playback-stop" ), i18n( "Stop Speaking" ), this );
-    ac->addAction( "speak_stop_all", d->aSpeakStop );
+    d->aSpeakStop = new QAction( QIcon::fromTheme( QStringLiteral("media-playback-stop") ), i18n( "Stop Speaking" ), this );
+    ac->addAction( QStringLiteral("speak_stop_all"), d->aSpeakStop );
     d->aSpeakStop->setEnabled( false );
-    connect( d->aSpeakStop, SIGNAL(triggered()), SLOT(slotStopSpeaks()) );
+    connect( d->aSpeakStop, &QAction::triggered, this, &PageView::slotStopSpeaks );
 #else
     d->aSpeakDoc = 0;
     d->aSpeakPage = 0;
@@ -677,40 +677,40 @@ void PageView::setupActions( KActionCollection * ac )
 
     // Other actions
     QAction * su  = new QAction(i18n("Scroll Up"), this);
-    ac->addAction("view_scroll_up", su );
-    connect( su, SIGNAL(triggered()), this, SLOT(slotAutoScrollUp()) );
+    ac->addAction(QStringLiteral("view_scroll_up"), su );
+    connect( su, &QAction::triggered, this, &PageView::slotAutoScrollUp );
     ac->setDefaultShortcut(su, QKeySequence(Qt::SHIFT + Qt::Key_Up));
     addAction(su);
 
     QAction * sd  = new QAction(i18n("Scroll Down"), this);
-    ac->addAction("view_scroll_down", sd );
-    connect( sd, SIGNAL(triggered()), this, SLOT(slotAutoScrollDown()) );
+    ac->addAction(QStringLiteral("view_scroll_down"), sd );
+    connect( sd, &QAction::triggered, this, &PageView::slotAutoScrollDown );
     ac->setDefaultShortcut(sd, QKeySequence(Qt::SHIFT + Qt::Key_Down));
     addAction(sd);
 
     QAction * spu = new QAction(i18n("Scroll Page Up"), this);
-    ac->addAction( "view_scroll_page_up", spu );
-    connect( spu, SIGNAL(triggered()), this, SLOT(slotScrollUp()) );
+    ac->addAction( QStringLiteral("view_scroll_page_up"), spu );
+    connect( spu, &QAction::triggered, this, &PageView::slotScrollUp );
     ac->setDefaultShortcut(spu, QKeySequence(Qt::SHIFT + Qt::Key_Space));
     addAction( spu );
 
     QAction * spd = new QAction(i18n("Scroll Page Down"), this);
-    ac->addAction( "view_scroll_page_down", spd );
-    connect( spd, SIGNAL(triggered()), this, SLOT(slotScrollDown()) );
+    ac->addAction( QStringLiteral("view_scroll_page_down"), spd );
+    connect( spd, &QAction::triggered, this, &PageView::slotScrollDown );
     ac->setDefaultShortcut(spd, QKeySequence(Qt::Key_Space));
     addAction( spd );
 
     d->aToggleForms = new QAction( this );
-    ac->addAction( "view_toggle_forms", d->aToggleForms );
-    connect( d->aToggleForms, SIGNAL(triggered()), this, SLOT(slotToggleForms()) );
+    ac->addAction( QStringLiteral("view_toggle_forms"), d->aToggleForms );
+    connect( d->aToggleForms, &QAction::triggered, this, &PageView::slotToggleForms );
     d->aToggleForms->setEnabled( false );
     toggleFormWidgets( false );
 
     // Setup undo and redo actions
     QAction *kundo = KStandardAction::create( KStandardAction::Undo, d->document, SLOT(undo()), ac );
     QAction *kredo = KStandardAction::create( KStandardAction::Redo, d->document, SLOT(redo()), ac );
-    connect(d->document, SIGNAL(canUndoChanged(bool)), kundo, SLOT(setEnabled(bool)));
-    connect(d->document, SIGNAL(canRedoChanged(bool)), kredo, SLOT(setEnabled(bool)));
+    connect(d->document, &Okular::Document::canUndoChanged, kundo, &QAction::setEnabled);
+    connect(d->document, &Okular::Document::canRedoChanged, kredo, &QAction::setEnabled);
     kundo->setEnabled(false);
     kredo->setEnabled(false);
 }
@@ -753,7 +753,7 @@ void PageView::openAnnotationWindow( Okular::Annotation * annotation, int pageNu
     if ( existWindow == 0 )
     {
         existWindow = new AnnotWindow( this, annotation, d->document, pageNumber );
-        connect(existWindow, SIGNAL(destroyed(QObject*)), this, SLOT(slotAnnotationWindowDestroyed(QObject*)));
+        connect(existWindow, &QObject::destroyed, this, &PageView::slotAnnotationWindowDestroyed);
 
         d->m_annowindows.insert( annotation, existWindow );
     }
@@ -1255,8 +1255,8 @@ void PageView::slotRealNotifyViewportChanged( bool smoothMove )
         if ( !d->viewportMoveTimer )
         {
             d->viewportMoveTimer = new QTimer( this );
-            connect( d->viewportMoveTimer, SIGNAL(timeout()),
-                     this, SLOT(slotMoveViewport()) );
+            connect( d->viewportMoveTimer, &QTimer::timeout,
+                     this, &PageView::slotMoveViewport );
         }
         d->viewportMoveTimer->start( 25 );
         verticalScrollBar()->setEnabled( false );
@@ -2215,8 +2215,8 @@ void PageView::mousePressEvent( QMouseEvent * e )
 
                         }
 
-                        connect( &popup, SIGNAL(openAnnotationWindow(Okular::Annotation*,int)),
-                                 this, SLOT(openAnnotationWindow(Okular::Annotation*,int)) );
+                        connect( &popup, &AnnotationPopup::openAnnotationWindow,
+                                 this, &PageView::openAnnotationWindow );
 
                         popup.exec( e->globalPos() );
                     }
@@ -2517,7 +2517,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                         }
                         QAction * actCopyLinkLocation = 0;
                         if ( dynamic_cast< const Okular::BrowseAction * >( link ) )
-                            actCopyLinkLocation = menu.addAction( QIcon::fromTheme( "edit-copy" ), i18n( "Copy Link Address" ) );
+                            actCopyLinkLocation = menu.addAction( QIcon::fromTheme( QStringLiteral("edit-copy") ), i18n( "Copy Link Address" ) );
                         QAction * res = menu.exec( e->globalPos() );
                         if ( res )
                         {
@@ -2720,7 +2720,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
             if ( d->document->supportsSearching() && !selectedText.isEmpty() )
             {
                 menu.setTitle( i18np( "Text (1 character)", "Text (%1 characters)", selectedText.length() ) );
-                textToClipboard = menu.addAction( QIcon::fromTheme("edit-copy"), i18n( "Copy to Clipboard" ) );
+                textToClipboard = menu.addAction( QIcon::fromTheme(QStringLiteral("edit-copy")), i18n( "Copy to Clipboard" ) );
                 bool copyAllowed = d->document->isAllowed( Okular::AllowCopy );
                 if ( !copyAllowed )
                 {
@@ -2729,7 +2729,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                 }
 #ifdef HAVE_SPEECH
                 if ( Okular::Settings::useTTS() )
-                    speakText = menu.addAction( QIcon::fromTheme("text-speak"), i18n( "Speak Text" ) );
+                    speakText = menu.addAction( QIcon::fromTheme(QStringLiteral("text-speak")), i18n( "Speak Text" ) );
 #endif
                 if ( copyAllowed )
                 {
@@ -2737,8 +2737,8 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                 }
             }
             menu.setTitle( i18n( "Image (%1 by %2 pixels)", selectionRect.width(), selectionRect.height() ) );
-            imageToClipboard = menu.addAction( QIcon::fromTheme("image-x-generic"), i18n( "Copy to Clipboard" ) );
-            imageToFile = menu.addAction( QIcon::fromTheme("document-save"), i18n( "Save to File..." ) );
+            imageToClipboard = menu.addAction( QIcon::fromTheme(QStringLiteral("image-x-generic")), i18n( "Copy to Clipboard" ) );
+            imageToFile = menu.addAction( QIcon::fromTheme(QStringLiteral("document-save")), i18n( "Save to File..." ) );
             QAction *choice = menu.exec( e->globalPos() );
             // check if the user really selected an action
             if ( choice )
@@ -2765,7 +2765,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                 else if ( choice == imageToFile )
                 {
                     // [3] save pixmap to file
-                    QString fileName = KFileDialog::getSaveFileName( QUrl(), "image/png image/jpeg", this, QString(),
+                    QString fileName = KFileDialog::getSaveFileName( QUrl(), QStringLiteral("image/png image/jpeg"), this, QString(),
                                                                      KFileDialog::ConfirmOverwrite );
                     if ( fileName.isEmpty() )
                         d->messageWindow->display( i18n( "File not saved." ), QString(), PageViewMessage::Warning );
@@ -2775,7 +2775,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                         QMimeType mime = db.mimeTypeForUrl( QUrl::fromLocalFile(fileName) );
                         QString type;
                         if ( !mime.isDefault() )
-                            type = "PNG";
+                            type = QStringLiteral("PNG");
                         else
                             type = mime.name().section( '/', -1 ).toUpper();
                         copyPix.save( fileName, qPrintable( type ) );
@@ -2893,11 +2893,11 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
             xs.append(1.0);
             ys.prepend(0.0);
             ys.append(1.0);
-            selHtml = "<html><head>"
+            selHtml = QStringLiteral("<html><head>"
                       "<meta content=\"text/html; charset=utf-8\" http-equiv=\"Content-Type\">"
-                      "</head><body><table>";
+                      "</head><body><table>");
             for (int r=0; r+1<ys.length(); r++) {
-                selHtml += "<tr>";
+                selHtml += QLatin1String("<tr>");
                 for (int c=0; c+1<xs.length(); c++) {
                     Okular::NormalizedRect cell(xs[c], ys[r], xs[c+1], ys[r+1]);
                     if (c) selText += '\t';
@@ -2935,16 +2935,16 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                     }
                     QString html = txt;
                     selText += txt.replace('\n', ' ');
-                    html.replace('&', "&amp;").replace('<', "&lt;").replace('>', "&gt;");
+                    html.replace('&', QLatin1String("&amp;")).replace('<', QLatin1String("&lt;")).replace('>', QLatin1String("&gt;"));
                     // Remove newlines, do not turn them into <br>, because
                     // Excel interprets <br> within cell as new cell...
-                    html.replace('\n', " ");
+                    html.replace('\n', QLatin1String(" "));
                     selHtml += "<td>"+html+"</td>";
                 }
                 selText += '\n';
-                selHtml += "</tr>\n";
+                selHtml += QLatin1String("</tr>\n");
             }
-            selHtml += "</table></body></html>\n";
+            selHtml += QLatin1String("</table></body></html>\n");
 
 
             QClipboard *cb = QApplication::clipboard();
@@ -2980,12 +2980,12 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                     if (item && (page = item->page())->textSelection())
                     {
                         QMenu menu( this );
-                        QAction *textToClipboard = menu.addAction( QIcon::fromTheme( "edit-copy" ), i18n( "Copy Text" ) );
+                        QAction *textToClipboard = menu.addAction( QIcon::fromTheme( QStringLiteral("edit-copy") ), i18n( "Copy Text" ) );
                         QAction *httpLink = 0;
 #ifdef HAVE_SPEECH
                         QAction *speakText = 0;
                         if ( Okular::Settings::useTTS() )
-                            speakText = menu.addAction( QIcon::fromTheme( "text-speak" ), i18n( "Speak Text" ) );
+                            speakText = menu.addAction( QIcon::fromTheme( QStringLiteral("text-speak") ), i18n( "Speak Text" ) );
 #endif
                         if ( !d->document->isAllowed( Okular::AllowCopy ) )
                         {
@@ -3939,7 +3939,7 @@ void PageView::updateZoomText()
         // remove a trailing zero in numbers like 66.70
         if ( localValue.right( 1 ) == QLatin1String( "0" ) && localValue.indexOf( QLocale().decimalPoint() ) > -1 )
             localValue.chop( 1 );
-        translated << QString( "%1%" ).arg( localValue );
+        translated << QStringLiteral( "%1%" ).arg( localValue );
     }
     d->aZoom->setItems( translated );
 
@@ -4231,7 +4231,7 @@ void PageView::addWebShortcutsMenu( QMenu * menu, const QString & text )
         if ( !searchProviders.isEmpty() )
         {
             QMenu *webShortcutsMenu = new QMenu( menu );
-            webShortcutsMenu->setIcon( QIcon::fromTheme( "preferences-web-browser-shortcuts" ) );
+            webShortcutsMenu->setIcon( QIcon::fromTheme( QStringLiteral("preferences-web-browser-shortcuts") ) );
 
             const QString squeezedText = KStringHandler::rsqueeze( searchText, 21 );
             webShortcutsMenu->setTitle( i18n( "Search for '%1' with", squeezedText ) );
@@ -4243,15 +4243,15 @@ void PageView::addWebShortcutsMenu( QMenu * menu, const QString & text )
                 action = new QAction( searchProvider, webShortcutsMenu );
                 action->setIcon( QIcon::fromTheme( filterData.iconNameForPreferredSearchProvider( searchProvider ) ) );
                 action->setData( filterData.queryForPreferredSearchProvider( searchProvider ) );
-                connect( action, SIGNAL(triggered()), this, SLOT(slotHandleWebShortcutAction()) );
+                connect( action, &QAction::triggered, this, &PageView::slotHandleWebShortcutAction );
                 webShortcutsMenu->addAction( action );
             }
 
             webShortcutsMenu->addSeparator();
 
             action = new QAction( i18n( "Configure Web Shortcuts..." ), webShortcutsMenu );
-            action->setIcon( QIcon::fromTheme( "configure" ) );
-            connect( action, SIGNAL(triggered()), this, SLOT(slotConfigureWebShortcuts()) );
+            action->setIcon( QIcon::fromTheme( QStringLiteral("configure") ) );
+            connect( action, &QAction::triggered, this, &PageView::slotConfigureWebShortcuts );
             webShortcutsMenu->addAction( action );
 
             menu->addMenu(webShortcutsMenu);
@@ -4713,7 +4713,7 @@ void PageView::slotAutoScoll()
     {
         d->autoScrollTimer = new QTimer( this );
         d->autoScrollTimer->setSingleShot( true );
-        connect( d->autoScrollTimer, SIGNAL(timeout()), this, SLOT(slotAutoScoll()) );
+        connect( d->autoScrollTimer, &QTimer::timeout, this, &PageView::slotAutoScoll );
     }
 
     // if scrollIncrement is zero, stop the timer
@@ -4769,7 +4769,7 @@ void PageView::slotHandleWebShortcutAction()
 
 void PageView::slotConfigureWebShortcuts()
 {
-    KToolInvocation::kdeinitExec( "kcmshell4", QStringList() << "ebrowsing" );
+    KToolInvocation::kdeinitExec( QStringLiteral("kcmshell4"), QStringList() << QStringLiteral("ebrowsing") );
 }
 
 void PageView::slotZoom()
@@ -5155,8 +5155,8 @@ void PageView::slotFormChanged( int pageNumber )
     {
         d->refreshTimer = new QTimer( this );
         d->refreshTimer->setSingleShot( true );
-        connect( d->refreshTimer, SIGNAL( timeout() ),
-                 this, SLOT( slotRefreshPage() ) );
+        connect( d->refreshTimer, &QTimer::timeout,
+                 this, &PageView::slotRefreshPage );
     }
     d->refreshPage = pageNumber;
     int delay = 0;

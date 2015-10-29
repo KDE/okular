@@ -132,7 +132,7 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
       if (source_href != NULL)
         dhl.linkText = *source_href;
       else
-        dhl.linkText = "";
+        dhl.linkText = QLatin1String("");
       currentDVIPage->sourceHyperLinkList.push_back(dhl);
     } else {
       QRect dshunion = currentDVIPage->sourceHyperLinkList[currentDVIPage->sourceHyperLinkList.size()-1].box.unite(QRect(x, y, pix.width(), pix.height())) ;
@@ -144,40 +144,40 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
   // search, etc.). Set up the currentlyDrawnPage->textBoxList.
   TextBox link;
   link.box.setRect(x, y, pix.width(), pix.height());
-  link.text = "";
+  link.text = QLatin1String("");
   currentlyDrawnPage->textBoxList.push_back(link);
 
   switch(ch) {
   case 0x0b:
-    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += "ff";
+    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += QLatin1String("ff");
     break;
   case 0x0c:
-    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += "fi";
+    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += QLatin1String("fi");
     break;
   case 0x0d:
-    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += "fl";
+    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += QLatin1String("fl");
     break;
   case 0x0e:
-    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += "ffi";
+    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += QLatin1String("ffi");
     break;
   case 0x0f:
-    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += "ffl";
+    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += QLatin1String("ffl");
     break;
 
   case 0x7b:
     currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += '-';
     break;
   case 0x7c:
-    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += "---";
+    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += QLatin1String("---");
     break;
   case 0x7d:
-    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += "\"";
+    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += QLatin1String("\"");
     break;
   case 0x7e:
     currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += '~';
     break;
   case 0x7f:
-    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += "@@"; // @@@ check!
+    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += QLatin1String("@@"); // @@@ check!
     break;
 
   default:
@@ -596,7 +596,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
         line_boundary_encountered && word_boundary_encountered) {
       if (currentlyDrawnPage->textBoxList.last().text.endsWith('\n'))
          currentlyDrawnPage->textBoxList.last().text.chop(1);
-      currentlyDrawnPage->textBoxList.last().text += " \n";
+      currentlyDrawnPage->textBoxList.last().text += QLatin1String(" \n");
       after_space = false;
     }
 

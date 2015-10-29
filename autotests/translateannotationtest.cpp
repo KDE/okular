@@ -66,7 +66,7 @@ private:
 
 void TranslateAnnotationTest::initTestCase()
 {
-    Okular::SettingsCore::instance( "editannotationcontentstest" );
+    Okular::SettingsCore::instance( QStringLiteral("editannotationcontentstest") );
     m_document = new Okular::Document( 0 );
 
     // translate m_annot1

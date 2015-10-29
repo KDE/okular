@@ -96,7 +96,7 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
     m_view->header()->hide();
 
     QToolBar *toolBar = new QToolBar( this );
-    toolBar->setObjectName( QLatin1String( "reviewOptsBar" ) );
+    toolBar->setObjectName( QStringLiteral( "reviewOptsBar" ) );
     QSizePolicy sp = toolBar->sizePolicy();
     sp.setVerticalPolicy( QSizePolicy::Minimum );
     toolBar->setSizePolicy( sp );
@@ -125,12 +125,12 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
     toolBar->setIconSize( QSize( 16, 16 ) );
     toolBar->setMovable( false );
     // - add Page button
-    QAction * groupByPageAction = toolBar->addAction( QIcon::fromTheme( "text-x-generic" ), i18n( "Group by Page" ) );
+    QAction * groupByPageAction = toolBar->addAction( QIcon::fromTheme( QStringLiteral("text-x-generic") ), i18n( "Group by Page" ) );
     groupByPageAction->setCheckable( true );
     connect(groupByPageAction, &QAction::toggled, this, &Reviews::slotPageEnabled);
     groupByPageAction->setChecked( Okular::Settings::groupByPage() );
     // - add Author button
-    QAction * groupByAuthorAction = toolBar->addAction( QIcon::fromTheme( "user-identity" ), i18n( "Group by Author" ) );
+    QAction * groupByAuthorAction = toolBar->addAction( QIcon::fromTheme( QStringLiteral("user-identity") ), i18n( "Group by Author" ) );
     groupByAuthorAction->setCheckable( true );
     connect(groupByAuthorAction, &QAction::toggled, this, &Reviews::slotAuthorEnabled);
     groupByAuthorAction->setChecked( Okular::Settings::groupByAuthor() );
@@ -138,7 +138,7 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
     // - add separator
     toolBar->addSeparator();
     // - add Current Page Only button
-    QAction * curPageOnlyAction = toolBar->addAction( QIcon::fromTheme( "arrow-down" ), i18n( "Show reviews for current page only" ) );
+    QAction * curPageOnlyAction = toolBar->addAction( QIcon::fromTheme( QStringLiteral("arrow-down") ), i18n( "Show reviews for current page only" ) );
     curPageOnlyAction->setCheckable( true );
     connect(curPageOnlyAction, &QAction::toggled, this, &Reviews::slotCurrentPageOnly);
     curPageOnlyAction->setChecked( Okular::Settings::currentPageOnly() );

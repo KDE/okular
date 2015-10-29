@@ -76,10 +76,10 @@ void dviRenderer::prescan_embedPS(char *cp, quint8 *beginningOfSpecialCommand)
     db.mimeTypeForFile(EPSfilename, QMimeDatabase::MatchContent);
   QString const & mime_type_name = mime_type.isValid() ? mime_type.name() : QString();
 
-  bool const is_ps_file  = (mime_type_name == "application/postscript" ||
-                            mime_type_name == "image/x-eps");
+  bool const is_ps_file  = (mime_type_name == QLatin1String("application/postscript") ||
+                            mime_type_name == QLatin1String("image/x-eps"));
   bool const is_pdf_file = (!is_ps_file &&
-                            mime_type_name == "application/pdf");
+                            mime_type_name == QLatin1String("application/pdf"));
   if (!(is_ps_file || is_pdf_file))
     return;
 
@@ -128,16 +128,16 @@ void dviRenderer::prescan_embedPS(char *cp, quint8 *beginningOfSpecialCommand)
   parse_special_argument(include_command, "rhi=", &rhi);
   parse_special_argument(include_command, "angle=", &angle);
 
-  int clip=include_command.indexOf(" clip"); // -1 if clip keyword is not present, >= 0 otherwise
+  int clip=include_command.indexOf(QStringLiteral(" clip")); // -1 if clip keyword is not present, >= 0 otherwise
 
   // Generate the PostScript commands to be included
-  QString PS = QString("ps: @beginspecial %1 @llx %2 @lly %3 @urx %4 @ury").arg(llx).arg(lly).arg(urx).arg(ury);
+  QString PS = QStringLiteral("ps: @beginspecial %1 @llx %2 @lly %3 @urx %4 @ury").arg(llx).arg(lly).arg(urx).arg(ury);
   if (rwi != 0)
-    PS.append( QString(" %1 @rwi").arg(rwi) );
+    PS.append( QStringLiteral(" %1 @rwi").arg(rwi) );
   if (rhi != 0)
-    PS.append( QString(" %1 @rhi").arg(rhi) );
+    PS.append( QStringLiteral(" %1 @rhi").arg(rhi) );
   if (angle != 0)
-    PS.append( QString(" %1 @angle").arg(angle) );
+    PS.append( QStringLiteral(" %1 @angle").arg(angle) );
   if (clip != -1)
     PS.append(" @clip");
   PS.append( " @setspecial\n" );
@@ -290,14 +290,14 @@ void dviRenderer::prescan_ParsePSHeaderSpecial(const QString& cp)
   if (!QFile::exists(_file)) {
     // Otherwise, use kpsewhich to find the eps file.
     KProcess proc;
-    proc << "kpsewhich" << cp;
+    proc << QStringLiteral("kpsewhich") << cp;
     proc.setOutputChannelMode(KProcess::SeparateChannels);
     proc.execute();
     _file = QString::fromLocal8Bit(proc.readLine().trimmed());
   }
 
   if (QFile::exists(_file))
-    PS_interface->PostScriptHeaderString->append( QString(" (%1) run\n").arg(_file) );
+    PS_interface->PostScriptHeaderString->append( QStringLiteral(" (%1) run\n").arg(_file) );
 }
 
 
@@ -321,7 +321,7 @@ void dviRenderer::prescan_ParsePSQuoteSpecial(const QString& cp)
 
   double PS_H = (currinf.data.dvi_h*300.0)/(65536*1200)-300;
   double PS_V = (currinf.data.dvi_v*300.0)/1200 - 300;
-  PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );
+  PostScriptOutPutString->append( QStringLiteral(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );
   PostScriptOutPutString->append( " @beginspecial @setspecial \n" );
   PostScriptOutPutString->append( cp );
   PostScriptOutPutString->append( " @endspecial \n" );
@@ -341,28 +341,28 @@ void dviRenderer::prescan_ParsePSSpecial(const QString& cp)
   // interpreter for every page which makes it really slow. This is a
   // major nuisance, so that we try to filter and interpret the
   // hypertex generated PostScript here.
-  if (cp.startsWith("ps:SDict begin")) {
+  if (cp.startsWith(QLatin1String("ps:SDict begin"))) {
     // We suspect this may be hyperref generated nonsense. Let's check
     // for some known code that hyperref generates.
-    if (cp == "ps:SDict begin H.S end")
+    if (cp == QLatin1String("ps:SDict begin H.S end"))
       return; // start of hyperref rectangle
-    if (cp == "ps:SDict begin H.R end")
+    if (cp == QLatin1String("ps:SDict begin H.R end"))
       return; // end of hyperref rectangle
-    if (cp.endsWith("H.A end"))
+    if (cp.endsWith(QLatin1String("H.A end")))
       return; // end of hyperref anchor
-    if (cp.endsWith("H.L end"))
+    if (cp.endsWith(QLatin1String("H.L end")))
       return; // end of hyperref link
-    if (cp.startsWith("ps:SDict begin /product where{pop product(Distiller)"))
+    if (cp.startsWith(QLatin1String("ps:SDict begin /product where{pop product(Distiller)")))
       return; // hyperref tries to work around Distiller bug
-    if (cp.startsWith("ps:SDict begin [") && cp.endsWith(" pdfmark end")) {  // hyperref definition of link/anchor/bookmark/etc
-      if (cp.contains("/DEST")) { // The PostScript code defines an anchor
+    if (cp.startsWith(QLatin1String("ps:SDict begin [")) && cp.endsWith(QLatin1String(" pdfmark end"))) {  // hyperref definition of link/anchor/bookmark/etc
+      if (cp.contains(QStringLiteral("/DEST"))) { // The PostScript code defines an anchor
         QString anchorName = cp.section('(', 1, 1).section(')', 0, 0);
         Length l;
         l.setLength_in_inch(currinf.data.dvi_v/(resolutionInDPI*shrinkfactor));
         anchorList[anchorName] = Anchor(current_page+1, l);
       }
       // The PostScript code defines a bookmark
-      if (cp.contains("/Dest") && cp.contains("/Title")) {
+      if (cp.contains(QStringLiteral("/Dest")) && cp.contains(QStringLiteral("/Title"))) {
         const QString childrenNumberAndMoreStuff = cp.section('-', 1, 1); // Contains from the - symbol to the end of cp, effectively containing the number of children and some stuff after it
         int indexOfFirstNonDigit = 0;
         foreach(const QChar &c, childrenNumberAndMoreStuff) {
@@ -371,7 +371,7 @@ void dviRenderer::prescan_ParsePSSpecial(const QString& cp)
         }
         prebookmarks.append(PreBookmark(PDFencodingToQString(cp.section('(', 2, 2).section(')', 0, 0)),
                                         cp.section('(', 1, 1).section(')', 0, 0),
-                                        childrenNumberAndMoreStuff.left(indexOfFirstNonDigit).toUInt()
+                                        childrenNumberAndMoreStuff.leftRef(indexOfFirstNonDigit).toUInt()
                                         ));
       }
       return;
@@ -381,18 +381,18 @@ void dviRenderer::prescan_ParsePSSpecial(const QString& cp)
   double PS_H = (currinf.data.dvi_h*300.0)/(65536*1200)-300;
   double PS_V = (currinf.data.dvi_v*300.0)/1200 - 300;
 
-  if (cp.indexOf("ps::[begin]", 0, Qt::CaseInsensitive) == 0) {
-    PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );
-    PostScriptOutPutString->append( QString(" %1\n").arg(cp.mid(11)) );
+  if (cp.indexOf(QStringLiteral("ps::[begin]"), 0, Qt::CaseInsensitive) == 0) {
+    PostScriptOutPutString->append( QStringLiteral(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );
+    PostScriptOutPutString->append( QStringLiteral(" %1\n").arg(cp.mid(11)) );
   } else {
-    if (cp.indexOf("ps::[end]", 0, Qt::CaseInsensitive) == 0) {
-      PostScriptOutPutString->append( QString(" %1\n").arg(cp.mid(9)) );
+    if (cp.indexOf(QStringLiteral("ps::[end]"), 0, Qt::CaseInsensitive) == 0) {
+      PostScriptOutPutString->append( QStringLiteral(" %1\n").arg(cp.mid(9)) );
     } else {
-      if (cp.indexOf("ps::", 0, Qt::CaseInsensitive) == 0) {
-        PostScriptOutPutString->append( QString(" %1\n").arg(cp.mid(4)) );
+      if (cp.indexOf(QStringLiteral("ps::"), 0, Qt::CaseInsensitive) == 0) {
+        PostScriptOutPutString->append( QStringLiteral(" %1\n").arg(cp.mid(4)) );
       } else {
-        PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );
-        PostScriptOutPutString->append( QString(" %1\n").arg(cp.mid(3)) );
+        PostScriptOutPutString->append( QStringLiteral(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );
+        PostScriptOutPutString->append( QStringLiteral(" %1\n").arg(cp.mid(3)) );
       }
     }
   }
@@ -426,7 +426,7 @@ void dviRenderer::prescan_ParsePSFileSpecial(const QString& cp)
   // If the file name ends in 'png', 'gif', 'jpg' or 'jpeg', we assume
   // that this is NOT a PostScript file, and we exit here.
   QString ending = EPSfilename.section('.', -1).toLower();
-  if ((ending == "png") || (ending == "gif") || (ending == "jpg") || (ending == "jpeg")) {
+  if ((ending == QLatin1String("png")) || (ending == QLatin1String("gif")) || (ending == QLatin1String("jpg")) || (ending == QLatin1String("jpeg"))) {
     dviFile->numberOfExternalNONPSFiles++;
     return;
   }
@@ -438,7 +438,7 @@ void dviRenderer::prescan_ParsePSFileSpecial(const QString& cp)
   EPSfilename = ghostscript_interface::locateEPSfile(EPSfilename, baseURL);
 
   // If the EPSfilename really points to a PDF file, convert that file now.
-  if (ending == "pdf") {
+  if (ending == QLatin1String("pdf")) {
     QString convErrorMsg;
     QString oEPSfilename = EPSfilename;
     EPSfilename = dviFile->convertPDFtoPS(EPSfilename, &convErrorMsg);
@@ -468,27 +468,27 @@ void dviRenderer::prescan_ParsePSFileSpecial(const QString& cp)
   parse_special_argument(include_command, "rhi=", &rhi);
   parse_special_argument(include_command, "angle=", &angle);
 
-  int clip=include_command.indexOf(" clip"); // -1 if clip keyword is not present, >= 0 otherwise
+  int clip=include_command.indexOf(QStringLiteral(" clip")); // -1 if clip keyword is not present, >= 0 otherwise
 
   if (QFile::exists(EPSfilename)) {
     double PS_H = (currinf.data.dvi_h*300.0)/(65536*1200)-300;
     double PS_V = (currinf.data.dvi_v*300.0)/1200 - 300;
-    PostScriptOutPutString->append( QString(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );
+    PostScriptOutPutString->append( QStringLiteral(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );
     PostScriptOutPutString->append( "@beginspecial " );
-    PostScriptOutPutString->append( QString(" %1 @llx").arg(llx) );
-    PostScriptOutPutString->append( QString(" %1 @lly").arg(lly) );
-    PostScriptOutPutString->append( QString(" %1 @urx").arg(urx) );
-    PostScriptOutPutString->append( QString(" %1 @ury").arg(ury) );
+    PostScriptOutPutString->append( QStringLiteral(" %1 @llx").arg(llx) );
+    PostScriptOutPutString->append( QStringLiteral(" %1 @lly").arg(lly) );
+    PostScriptOutPutString->append( QStringLiteral(" %1 @urx").arg(urx) );
+    PostScriptOutPutString->append( QStringLiteral(" %1 @ury").arg(ury) );
     if (rwi != 0)
-      PostScriptOutPutString->append( QString(" %1 @rwi").arg(rwi) );
+      PostScriptOutPutString->append( QStringLiteral(" %1 @rwi").arg(rwi) );
     if (rhi != 0)
-      PostScriptOutPutString->append( QString(" %1 @rhi").arg(rhi) );
+      PostScriptOutPutString->append( QStringLiteral(" %1 @rhi").arg(rhi) );
     if (angle != 0)
-      PostScriptOutPutString->append( QString(" %1 @angle").arg(angle) );
+      PostScriptOutPutString->append( QStringLiteral(" %1 @angle").arg(angle) );
     if (clip != -1)
       PostScriptOutPutString->append(" @clip");
     PostScriptOutPutString->append( " @setspecial \n" );
-    PostScriptOutPutString->append( QString(" (%1) run\n").arg(EPSfilename) );
+    PostScriptOutPutString->append( QStringLiteral(" (%1) run\n").arg(EPSfilename) );
     PostScriptOutPutString->append( "@endspecial \n" );
   }
 
@@ -508,7 +508,7 @@ void dviRenderer::prescan_ParseSourceSpecial(const QString& cp)
   for(j=0;j<cp.length();j++)
     if (!cp.at(j).isNumber())
       break;
-  quint32 sourceLineNumber = cp.left(j).toUInt();
+  quint32 sourceLineNumber = cp.leftRef(j).toUInt();
   QFileInfo fi1(dviFile->filename);
   QString  sourceFileName   = QFileInfo(fi1.dir(), cp.mid(j).trimmed()).absoluteFilePath();
   Length l;

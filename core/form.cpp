@@ -211,7 +211,7 @@ class Okular::FormFieldChoicePrivate : public Okular::FormFieldPrivate
             {
                 list.append( QString::number( c ) );
             }
-            return list.join( QLatin1String( ";" ) );
+            return list.join( QStringLiteral( ";" ) );
         }
 };
 

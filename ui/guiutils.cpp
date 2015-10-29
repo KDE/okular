@@ -42,7 +42,7 @@ QSvgRenderer* GuiUtilsHelper::svgStamps()
 {
     if ( !svgStampFile.get() )
     {
-        const QString stampFile = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "okular/pics/stamps.svg" );
+        const QString stampFile = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("okular/pics/stamps.svg") );
         if ( !stampFile.isEmpty() )
         {
             svgStampFile.reset( new QSvgRenderer( stampFile ) );
@@ -141,7 +141,7 @@ QString authorForAnnotation( const Okular::Annotation * ann )
 QString contentsHtml( const Okular::Annotation * ann )
 {
     QString text = ann->contents().toHtmlEscaped();
-    text.replace( '\n', "<br>" );
+    text.replace( '\n', QLatin1String("<br>") );
     return text;
 }
 
@@ -152,11 +152,11 @@ QString prettyToolTip( const Okular::Annotation * ann )
     QString author = authorForAnnotation( ann );
     QString contents = contentsHtml( ann );
 
-    QString tooltip = QString( "<qt><b>" ) + i18n( "Author: %1", author ) + QString( "</b>" );
+    QString tooltip = QStringLiteral( "<qt><b>" ) + i18n( "Author: %1", author ) + QStringLiteral( "</b>" );
     if ( !contents.isEmpty() )
-        tooltip += QString( "<div style=\"font-size: 4px;\"><hr /></div>" ) + contents;
+        tooltip += QStringLiteral( "<div style=\"font-size: 4px;\"><hr /></div>" ) + contents;
 
-    tooltip += "</qt>";
+    tooltip += QLatin1String("</qt>");
 
     return tooltip;
 }
@@ -250,7 +250,7 @@ void colorizeImage( QImage & grayImage, const QColor & color, unsigned int destA
         blue = color.blue();
 
     int source, sourceSat, sourceAlpha;
-    for( register unsigned int i = 0; i < pixels; ++i )
+    for( unsigned int i = 0; i < pixels; ++i )
     {   // optimize this loop keeping byte order into account
         source = data[i];
         sourceSat = qRed( source );

@@ -426,7 +426,7 @@ void TeXFont_PK::PK_skip_specials()
 #endif
 
   int i,j;
-  register FILE *fp = file;
+  FILE *fp = file;
 
 #ifdef DEBUG_PK
   if (fp == 0)
@@ -476,8 +476,8 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
   int        row_bit_pos;
   bool       paint_switch;
   quint32*  cp;
-  register class glyph *g;
-  register FILE *fp = file;
+  class glyph *g;
+  FILE *fp = file;
   long       fpwidth;
   quint32   word = 0;
   int        word_weight, bytes_wide;
@@ -531,7 +531,7 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
   {
     /* width must be multiple of 16 bits for raster_op */
     characterBitmaps[ch]->bytes_wide = ROUNDUP((int) characterBitmaps[ch]->w, 32) * 4;
-    register unsigned int size = characterBitmaps[ch]->bytes_wide * characterBitmaps[ch]->h;
+    unsigned int size = characterBitmaps[ch]->bytes_wide * characterBitmaps[ch]->h;
     characterBitmaps[ch]->bits = new char[size != 0 ? size : 1];
   }
 
@@ -628,8 +628,8 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
     // The data in the bitmap is now in the processor's bit order,
     // that is, big endian. Since XWindows needs little endian, we
     // need to change the bit order now.
-    register unsigned char* bitmapData = (unsigned char*) characterBitmaps[ch]->bits;
-    register unsigned char* endOfData  = bitmapData + characterBitmaps[ch]->bytes_wide*characterBitmaps[ch]->h;
+    unsigned char* bitmapData = (unsigned char*) characterBitmaps[ch]->bits;
+    unsigned char* endOfData  = bitmapData + characterBitmaps[ch]->bytes_wide*characterBitmaps[ch]->h;
     while(bitmapData < endOfData) {
       *bitmapData = bitflip[*bitmapData];
       bitmapData++;

@@ -55,7 +55,7 @@ QWidget* ToolAction::createWidget( QWidget *parent )
     connect(toolBar, &QToolBar::iconSizeChanged, button, &QToolButton::setIconSize);
     connect(toolBar, &QToolBar::toolButtonStyleChanged, button, &QToolButton::setToolButtonStyle);
     connect(button, &QToolButton::triggered, toolBar, &QToolBar::actionTriggered);
-    connect( button->menu(), SIGNAL(triggered(QAction*)), this, SLOT(slotNewDefaultAction(QAction*)) );
+    connect( button->menu(), &QMenu::triggered, this, &ToolAction::slotNewDefaultAction );
 
     m_buttons.append( button );
 

@@ -481,14 +481,14 @@ static QLinkedList<Okular::ObjectRect*> generateLinks( const QList<Poppler::Link
 
 static KAboutData createAboutData()
 {
-    KAboutData aboutData( "okular_poppler",
+    KAboutData aboutData( QStringLiteral("okular_poppler"),
          i18n( "PDF Backend" ),
-         "0.6.5",
+         QStringLiteral("0.6.5"),
          i18n( "A PDF file renderer" ),
          KAboutLicense::GPL,
          i18n( "© 2005-2008 Albert Astals Cid" )
     );
-    aboutData.addAuthor( i18n( "Albert Astals Cid" ), QString(), "aacid@kde.org" );
+    aboutData.addAuthor( i18n( "Albert Astals Cid" ), QString(), QStringLiteral("aacid@kde.org") );
     return aboutData;
 }
 
@@ -684,7 +684,7 @@ void PDFGenerator::loadPages(QVector<Okular::Page*> &pagesVector, int rotation, 
 Okular::DocumentInfo PDFGenerator::generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const
 {
     Okular::DocumentInfo docInfo;
-    docInfo.set( Okular::DocumentInfo::MimeType, "application/pdf" );
+    docInfo.set( Okular::DocumentInfo::MimeType, QStringLiteral("application/pdf") );
 
     userMutex()->lock();
 
@@ -693,28 +693,28 @@ Okular::DocumentInfo PDFGenerator::generateDocumentInfo( const QSet<Okular::Docu
     {
         // compile internal structure reading properties from PDFDoc
         if ( keys.contains( Okular::DocumentInfo::Title ) )
-            docInfo.set( Okular::DocumentInfo::Title, pdfdoc->info("Title") );
+            docInfo.set( Okular::DocumentInfo::Title, pdfdoc->info(QStringLiteral("Title")) );
         if ( keys.contains( Okular::DocumentInfo::Subject ) )
-            docInfo.set( Okular::DocumentInfo::Subject, pdfdoc->info("Subject") );
+            docInfo.set( Okular::DocumentInfo::Subject, pdfdoc->info(QStringLiteral("Subject")) );
         if ( keys.contains( Okular::DocumentInfo::Author ) )
-            docInfo.set( Okular::DocumentInfo::Author, pdfdoc->info("Author") );
+            docInfo.set( Okular::DocumentInfo::Author, pdfdoc->info(QStringLiteral("Author")) );
         if ( keys.contains( Okular::DocumentInfo::Keywords ) )
-            docInfo.set( Okular::DocumentInfo::Keywords, pdfdoc->info("Keywords") );
+            docInfo.set( Okular::DocumentInfo::Keywords, pdfdoc->info(QStringLiteral("Keywords")) );
         if ( keys.contains( Okular::DocumentInfo::Creator ) )
-            docInfo.set( Okular::DocumentInfo::Creator, pdfdoc->info("Creator") );
+            docInfo.set( Okular::DocumentInfo::Creator, pdfdoc->info(QStringLiteral("Creator")) );
         if ( keys.contains( Okular::DocumentInfo::Producer ) )
-            docInfo.set( Okular::DocumentInfo::Producer, pdfdoc->info("Producer") );
+            docInfo.set( Okular::DocumentInfo::Producer, pdfdoc->info(QStringLiteral("Producer")) );
         if ( keys.contains( Okular::DocumentInfo::CreationDate ) )
-            docInfo.set( Okular::DocumentInfo::CreationDate, QLocale().toString( pdfdoc->date("CreationDate"), QLocale::LongFormat ) );
+            docInfo.set( Okular::DocumentInfo::CreationDate, QLocale().toString( pdfdoc->date(QStringLiteral("CreationDate")), QLocale::LongFormat ) );
         if ( keys.contains( Okular::DocumentInfo::ModificationDate ) )
-            docInfo.set( Okular::DocumentInfo::ModificationDate, QLocale().toString( pdfdoc->date("ModDate"), QLocale::LongFormat ) );
+            docInfo.set( Okular::DocumentInfo::ModificationDate, QLocale().toString( pdfdoc->date(QStringLiteral("ModDate")), QLocale::LongFormat ) );
         if ( keys.contains( Okular::DocumentInfo::CustomKeys ) )
         {
             int major, minor;
             pdfdoc->getPdfVersion(&major, &minor);
-            docInfo.set( "format", i18nc( "PDF v. <version>", "PDF v. %1.%2", major, minor ), i18n( "Format" ) );
-            docInfo.set( "encryption", pdfdoc->isEncrypted() ? i18n( "Encrypted" ) : i18n( "Unencrypted" ), i18n("Security") );
-            docInfo.set( "optimization", pdfdoc->isLinearized() ? i18n( "Yes" ) : i18n( "No" ), i18n("Optimized") );
+            docInfo.set( QStringLiteral("format"), i18nc( "PDF v. <version>", "PDF v. %1.%2", major, minor ), i18n( "Format" ) );
+            docInfo.set( QStringLiteral("encryption"), pdfdoc->isEncrypted() ? i18n( "Encrypted" ) : i18n( "Unencrypted" ), i18n("Security") );
+            docInfo.set( QStringLiteral("optimization"), pdfdoc->isLinearized() ? i18n( "Yes" ) : i18n( "No" ), i18n("Optimized") );
         }
 
         docInfo.set( Okular::DocumentInfo::Pages, QString::number( pdfdoc->numPages() ) );
@@ -1124,7 +1124,7 @@ bool PDFGenerator::print( QPrinter& printer )
 
     tf.setAutoRemove(false);
 
-    QString pstitle = metaData(QLatin1String("Title"), QVariant()).toString();
+    QString pstitle = metaData(QStringLiteral("Title"), QVariant()).toString();
     if ( pstitle.trimmed().isEmpty() )
     {
         pstitle = document()->currentDocument().fileName();
@@ -1187,14 +1187,14 @@ bool PDFGenerator::print( QPrinter& printer )
 
 QVariant PDFGenerator::metaData( const QString & key, const QVariant & option ) const
 {
-    if ( key == "StartFullScreen" )
+    if ( key == QLatin1String("StartFullScreen") )
     {
         QMutexLocker ml(userMutex());
         // asking for the 'start in fullscreen mode' (pdf property)
         if ( pdfdoc->pageMode() == Poppler::Document::FullScreen )
             return true;
     }
-    else if ( key == "NamedViewport" && !option.toString().isEmpty() )
+    else if ( key == QLatin1String("NamedViewport") && !option.toString().isEmpty() )
     {
         Okular::DocumentViewport viewport;
         QString optionString = option.toString();
@@ -1212,25 +1212,25 @@ QVariant PDFGenerator::metaData( const QString & key, const QVariant & option ) 
         if ( viewport.pageNumber >= 0 )
             return viewport.toString();
     }
-    else if ( key == "DocumentTitle" )
+    else if ( key == QLatin1String("DocumentTitle") )
     {
         userMutex()->lock();
-        QString title = pdfdoc->info( "Title" );
+        QString title = pdfdoc->info( QStringLiteral("Title") );
         userMutex()->unlock();
         return title;
     }
-    else if ( key == "OpenTOC" )
+    else if ( key == QLatin1String("OpenTOC") )
     {
         QMutexLocker ml(userMutex());
         if ( pdfdoc->pageMode() == Poppler::Document::UseOutlines )
             return true;
     }
-    else if ( key == "DocumentScripts" && option.toString() == "JavaScript" )
+    else if ( key == QLatin1String("DocumentScripts") && option.toString() == QLatin1String("JavaScript") )
     {
         QMutexLocker ml(userMutex());
         return pdfdoc->scripts();
     }
-    else if ( key == "HasUnsupportedXfaForm" )
+    else if ( key == QLatin1String("HasUnsupportedXfaForm") )
     {
         QMutexLocker ml(userMutex());
         return pdfdoc->formType() == Poppler::Document::XfaForm;
@@ -1245,7 +1245,7 @@ bool PDFGenerator::reparseConfig()
 
     bool somethingchanged = false;
     // load paper color
-    QColor color = documentMetaData( "PaperColor", true ).value< QColor >();
+    QColor color = documentMetaData( QStringLiteral("PaperColor"), true ).value< QColor >();
     // if paper color is changed we have to rebuild every visible pixmap in addition
     // to the outputDevice. it's the 'heaviest' case, other effect are just recoloring
     // over the page rendered on 'standard' white background.
@@ -1267,7 +1267,7 @@ void PDFGenerator::addPages( KConfigDialog *dlg )
     Ui_PDFSettingsWidget pdfsw;
     QWidget* w = new QWidget(dlg);
     pdfsw.setupUi(w);
-    dlg->addPage(w, PDFSettings::self(), i18n("PDF"), "application-pdf", i18n("PDF Backend Configuration") );
+    dlg->addPage(w, PDFSettings::self(), i18n("PDF"), QStringLiteral("application-pdf"), i18n("PDF Backend Configuration") );
 #endif
 }
 
@@ -1319,7 +1319,7 @@ Okular::ExportFormat::List PDFGenerator::exportFormats() const
 
 bool PDFGenerator::exportTo( const QString &fileName, const Okular::ExportFormat &format )
 {
-    if ( format.mimeType().inherits( QLatin1String( "text/plain" ) ) ) {
+    if ( format.mimeType().inherits( QStringLiteral( "text/plain" ) ) ) {
         QFile f( fileName );
         if ( !f.open( QIODevice::WriteOnly ) )
             return false;
@@ -1410,7 +1410,7 @@ Okular::TextPage * PDFGenerator::abstractTextPage(const QList<Poppler::TextBox*>
             // vertically or horizontally aligned
             QRectF wordBBox = word->boundingBox();
             QRectF nextWordBBox = next->boundingBox();
-            append(ktp, " ",
+            append(ktp, QStringLiteral(" "),
                      wordBBox.right()/width,
                      wordBBox.bottom()/height,
                      nextWordBBox.left()/width,
@@ -1433,16 +1433,16 @@ void PDFGenerator::addSynopsisChildren( QDomNode * parent, QDomNode * parentDest
         QDomElement item = docSyn.createElement( e.tagName() );
         parentDestination->appendChild(item);
 
-        if (!e.attribute("ExternalFileName").isNull()) item.setAttribute("ExternalFileName", e.attribute("ExternalFileName"));
-        if (!e.attribute("DestinationName").isNull()) item.setAttribute("ViewportName", e.attribute("DestinationName"));
-        if (!e.attribute("Destination").isNull())
+        if (!e.attribute(QStringLiteral("ExternalFileName")).isNull()) item.setAttribute(QStringLiteral("ExternalFileName"), e.attribute(QStringLiteral("ExternalFileName")));
+        if (!e.attribute(QStringLiteral("DestinationName")).isNull()) item.setAttribute(QStringLiteral("ViewportName"), e.attribute(QStringLiteral("DestinationName")));
+        if (!e.attribute(QStringLiteral("Destination")).isNull())
         {
             Okular::DocumentViewport vp;
-            fillViewportFromLinkDestination( vp, Poppler::LinkDestination(e.attribute("Destination")) );
-            item.setAttribute( "Viewport", vp.toString() );
+            fillViewportFromLinkDestination( vp, Poppler::LinkDestination(e.attribute(QStringLiteral("Destination"))) );
+            item.setAttribute( QStringLiteral("Viewport"), vp.toString() );
         }
-        if (!e.attribute("Open").isNull()) item.setAttribute("Open", e.attribute("Open"));
-        if (!e.attribute("DestinationURI").isNull()) item.setAttribute("URL", e.attribute("DestinationURI"));
+        if (!e.attribute(QStringLiteral("Open")).isNull()) item.setAttribute(QStringLiteral("Open"), e.attribute(QStringLiteral("Open")));
+        if (!e.attribute(QStringLiteral("DestinationURI")).isNull()) item.setAttribute(QStringLiteral("URL"), e.attribute(QStringLiteral("DestinationURI")));
 
         // descend recursively and advance to the next node
         if ( e.hasChildNodes() ) addSynopsisChildren( &n, &    item );
@@ -1653,7 +1653,7 @@ void PDFGenerator::loadPdfSync( const QString & filePath, QVector<Okular::Page*>
     const QString coreName = ts.readLine();
     // second row: version string, in the form 'Version %u'
     QString versionstr = ts.readLine();
-    QRegExp versionre( "Version (\\d+)" );
+    QRegExp versionre( QStringLiteral("Version (\\d+)") );
     versionre.setCaseSensitivity( Qt::CaseInsensitive );
     if ( !versionre.exactMatch( versionstr ) )
         return;

@@ -48,8 +48,8 @@ EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const Okular::Document
 	setLayout(mainLayout);
 	mUser1Button = new QPushButton;
 	buttonBox->addButton(mUser1Button, QDialogButtonBox::ActionRole);
-	connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
-	connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+	connect(buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
+	connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
 	buttonBox->button(QDialogButtonBox::Close)->setDefault(true);
 	KGuiItem::assign(mUser1Button, KStandardGuiItem::save());
 	mUser1Button->setEnabled(false);
@@ -95,8 +95,8 @@ EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const Okular::Document
         m_tw->updateGeometry();
 
 	connect(mUser1Button, SIGNAL(clicked()), this, SLOT(saveFile()));
-	connect(m_tw, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(attachViewContextMenu(QPoint)));
-	connect(m_tw, SIGNAL(itemSelectionChanged()), this, SLOT(updateSaveButton()));
+	connect(m_tw, &QWidget::customContextMenuRequested, this, &EmbeddedFilesDialog::attachViewContextMenu);
+	connect(m_tw, &QTreeWidget::itemSelectionChanged, this, &EmbeddedFilesDialog::updateSaveButton);
 }
 
 void EmbeddedFilesDialog::updateSaveButton()
@@ -125,7 +125,7 @@ void EmbeddedFilesDialog::attachViewContextMenu( const QPoint& /*pos*/ )
         return;
 
     QMenu menu( this );
-    QAction* saveAsAct = menu.addAction( QIcon::fromTheme( "document-save-as" ), i18nc( "@action:inmenu", "&Save As..." ) );
+    QAction* saveAsAct = menu.addAction( QIcon::fromTheme( QStringLiteral("document-save-as") ), i18nc( "@action:inmenu", "&Save As..." ) );
 
     QAction* act = menu.exec( QCursor::pos() );
     if ( !act )

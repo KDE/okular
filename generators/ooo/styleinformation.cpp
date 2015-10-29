@@ -96,7 +96,7 @@ void StyleInformation::setMasterPageName( const QString &name )
 
 QString StyleInformation::masterPageName() const
 {
-  return mMasterPageName.isEmpty() ? mMasterLayouts[ "Standard" ] :  mMasterLayouts[ mMasterPageName ];
+  return mMasterPageName.isEmpty() ? mMasterLayouts[ QStringLiteral("Standard") ] :  mMasterLayouts[ mMasterPageName ];
 }
 
 void StyleInformation::addMetaInformation( const QString &key, const QString &value, const QString &title )

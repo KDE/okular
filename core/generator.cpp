@@ -362,7 +362,7 @@ void Generator::walletDataForFile( const QString &fileName, QString *walletName,
 {
     *walletKey = fileName.section('/', -1, -1);
     *walletName = KWallet::Wallet::NetworkWallet();
-    *walletFolder = "KPdf";
+    *walletFolder = QStringLiteral("KPdf");
 }
 
 bool Generator::hasFeature( GeneratorFeature feature ) const
@@ -626,19 +626,19 @@ ExportFormat ExportFormat::standardFormat( StandardExportFormat type )
     switch ( type )
     {
         case PlainText:
-            return ExportFormat( QIcon::fromTheme( "text-x-generic" ), i18n( "Plain &Text..." ), db.mimeTypeForName( "text/plain" ) );
+            return ExportFormat( QIcon::fromTheme( QStringLiteral("text-x-generic") ), i18n( "Plain &Text..." ), db.mimeTypeForName( QStringLiteral("text/plain") ) );
             break;
         case PDF:
-            return ExportFormat( QIcon::fromTheme( "application-pdf" ), i18n( "PDF" ), db.mimeTypeForName( "application/pdf" ) );
+            return ExportFormat( QIcon::fromTheme( QStringLiteral("application-pdf") ), i18n( "PDF" ), db.mimeTypeForName( QStringLiteral("application/pdf") ) );
             break;
         case OpenDocumentText:
             return ExportFormat(
-                QIcon::fromTheme( "application-vnd.oasis.opendocument.text" ),
+                QIcon::fromTheme( QStringLiteral("application-vnd.oasis.opendocument.text") ),
                 i18nc( "This is the document format", "OpenDocument Text" ),
-                db.mimeTypeForName( "application/vnd.oasis.opendocument.text" ) );
+                db.mimeTypeForName( QStringLiteral("application/vnd.oasis.opendocument.text") ) );
 	    break;
         case HTML:
-            return ExportFormat( QIcon::fromTheme( "text-html" ), i18nc( "This is the document format", "HTML" ), db.mimeTypeForName( "text/html" ) );
+            return ExportFormat( QIcon::fromTheme( QStringLiteral("text-html") ), i18nc( "This is the document format", "HTML" ), db.mimeTypeForName( QStringLiteral("text/html") ) );
             break;
     }
     return ExportFormat();
@@ -656,7 +656,7 @@ bool ExportFormat::operator!=( const ExportFormat &other ) const
 
 QDebug operator<<( QDebug str, const Okular::PixmapRequest &req )
 {
-    QString s = QString( "PixmapRequest(#%2, %1, %3x%4, page %6, prio %5)" )
+    QString s = QStringLiteral( "PixmapRequest(#%2, %1, %3x%4, page %6, prio %5)" )
         .arg( QString( req.asynchronous() ? "async" : "sync" ) )
         .arg( (qulonglong)req.observer() )
         .arg( req.width() )

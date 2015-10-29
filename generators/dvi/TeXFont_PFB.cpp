@@ -74,8 +74,8 @@ TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc, double sl
   // TeX is only able to address character codes 0-255 while
   // e.g. Type1 fonts may contain several thousands of characters)
   if (enc != 0) {
-    parent->fullEncodingName = enc->encodingFullName.remove(QString::fromLatin1( "Encoding" ));
-    parent->fullEncodingName = enc->encodingFullName.remove(QString::fromLatin1( "encoding" ));
+    parent->fullEncodingName = enc->encodingFullName.remove(QStringLiteral( "Encoding" ));
+    parent->fullEncodingName = enc->encodingFullName.remove(QStringLiteral( "encoding" ));
 
     // An encoding vector is given for this font, i.e. an array of
     // character names (such as: 'parenleft' or 'dotlessj'). We use

@@ -145,25 +145,25 @@ void pageSize::setPageSize(const QString& width, const QString& _widthUnits, con
   double h = height.toFloat();
 
   QString widthUnits = _widthUnits;
-  if ((widthUnits != "cm") && (widthUnits != "mm") && (widthUnits != "in")) {
+  if ((widthUnits != QLatin1String("cm")) && (widthUnits != QLatin1String("mm")) && (widthUnits != QLatin1String("in"))) {
     qCCritical(OkularDviShellDebug) << "Unrecognized page width unit '" << widthUnits << "'. Assuming mm" << endl;
-    widthUnits = "mm";
+    widthUnits = QStringLiteral("mm");
   }
   pageWidth.setLength_in_mm(w);
-  if (widthUnits == "cm")
+  if (widthUnits == QLatin1String("cm"))
     pageWidth.setLength_in_cm(w);
-  if (widthUnits == "in")
+  if (widthUnits == QLatin1String("in"))
     pageWidth.setLength_in_inch(w);
 
   QString heightUnits = _heightUnits;
-  if ((heightUnits != "cm") && (heightUnits != "mm") && (heightUnits != "in")) {
+  if ((heightUnits != QLatin1String("cm")) && (heightUnits != QLatin1String("mm")) && (heightUnits != QLatin1String("in"))) {
     qCCritical(OkularDviShellDebug) << "Unrecognized page height unit '" << widthUnits << "'. Assuming mm" << endl;
-    heightUnits = "mm";
+    heightUnits = QStringLiteral("mm");
   }
   pageHeight.setLength_in_mm(h);
-  if (heightUnits == "cm")
+  if (heightUnits == QLatin1String("cm"))
     pageHeight.setLength_in_cm(h);
-  if (heightUnits == "in")
+  if (heightUnits == QLatin1String("in"))
     pageHeight.setLength_in_inch(h);
 
   rectifySizes();
@@ -210,21 +210,21 @@ QString pageSize::preferredUnit() const
 
   // User-defined size. Give a preferred unit depening on the locale.
   if (QLocale::system().measurementSystem() == QLocale::MetricSystem)
-    return "mm";
+    return QStringLiteral("mm");
   else
-    return "in";
+    return QStringLiteral("in");
 }
 
 
 QString pageSize::widthString(const QString& unit) const
 {
-  QString answer = "--";
+  QString answer = QStringLiteral("--");
 
-  if (unit == "cm")
+  if (unit == QLatin1String("cm"))
     answer.setNum(pageWidth.getLength_in_cm());
-  if (unit == "mm")
+  if (unit == QLatin1String("mm"))
     answer.setNum(pageWidth.getLength_in_mm());
-  if (unit == "in")
+  if (unit == QLatin1String("in"))
     answer.setNum(pageWidth.getLength_in_inch());
 
   return answer;
@@ -233,13 +233,13 @@ QString pageSize::widthString(const QString& unit) const
 
 QString pageSize::heightString(const QString& unit) const
 {
-  QString answer = "--";
+  QString answer = QStringLiteral("--");
 
-  if (unit == "cm")
+  if (unit == QLatin1String("cm"))
     answer.setNum(pageHeight.getLength_in_cm());
-  if (unit == "mm")
+  if (unit == QLatin1String("mm"))
     answer.setNum(pageHeight.getLength_in_mm());
-  if (unit == "in")
+  if (unit == QLatin1String("in"))
     answer.setNum(pageHeight.getLength_in_inch());
 
   return answer;
@@ -303,7 +303,7 @@ QString pageSize::serialize() const
   if ((currentSize >= 0) && (fabs(staticList[currentSize].height-pageHeight.getLength_in_mm()) <= 0.5))
     return staticList[currentSize].name;
   else
-    return QString("%1x%2").arg(pageWidth.getLength_in_mm()).arg(pageHeight.getLength_in_mm());
+    return QStringLiteral("%1x%2").arg(pageWidth.getLength_in_mm()).arg(pageHeight.getLength_in_mm());
 }
 
 
@@ -312,12 +312,12 @@ QString pageSize::description() const
   if (!isValid())
     return QString();
 
-  QString size = " ";
+  QString size = QStringLiteral(" ");
   if (formatNumber() == -1) {
     if (QLocale::system().measurementSystem() == QLocale::MetricSystem)
-      size += QString("%1x%2 mm").arg(width().getLength_in_mm(), 0, 'f', 0).arg(height().getLength_in_mm(), 0, 'f', 0);
+      size += QStringLiteral("%1x%2 mm").arg(width().getLength_in_mm(), 0, 'f', 0).arg(height().getLength_in_mm(), 0, 'f', 0);
     else
-      size += QString("%1x%2 in").arg(width().getLength_in_inch(), 0, 'g', 2).arg(height().getLength_in_inch(), 0, 'g', 2);
+      size += QStringLiteral("%1x%2 in").arg(width().getLength_in_inch(), 0, 'g', 2).arg(height().getLength_in_inch(), 0, 'g', 2);
   } else {
     size += formatName() + '/';
      if (getOrientation() == 0)

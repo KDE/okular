@@ -42,7 +42,7 @@ public:
         , mainWidget(new QWidget(host))
         , previewPart(0)
         , failMessage(0)
-        , config(KSharedConfig::openConfig(QString::fromLatin1("okularrc")))
+        , config(KSharedConfig::openConfig(QStringLiteral("okularrc")))
 
     {
         filename = _filename;
@@ -77,8 +77,8 @@ void FilePrinterPreviewPrivate::getPart()
        parts are available now; other parts which handles text are not
        suitable here (PostScript source code) */
     KService::List offers =
-        KMimeTypeTrader::self()->query("application/postscript", "KParts/ReadOnlyPart",
-                                       "[DesktopEntryName] == 'okularghostview'");
+        KMimeTypeTrader::self()->query(QStringLiteral("application/postscript"), QStringLiteral("KParts/ReadOnlyPart"),
+                                       QStringLiteral("[DesktopEntryName] == 'okularghostview'"));
 
     KService::List::ConstIterator it = offers.constBegin();
     while (!factory && it != offers.constEnd()) {

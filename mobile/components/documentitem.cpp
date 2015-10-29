@@ -34,17 +34,17 @@ DocumentItem::DocumentItem(QObject *parent)
       m_pageviewObserver(0),
       m_searchInProgress(false)
 {
-    qmlRegisterUncreatableType<TOCModel>("org.kde.okular", 1, 0, "TOCModel", QLatin1String("Do not create objects of this type."));
-    Okular::Settings::instance("okularproviderrc");
+    qmlRegisterUncreatableType<TOCModel>("org.kde.okular", 1, 0, "TOCModel", QStringLiteral("Do not create objects of this type."));
+    Okular::Settings::instance(QStringLiteral("okularproviderrc"));
     m_document = new Okular::Document(0);
     m_tocModel = new TOCModel(m_document, this);
 
     connect(m_document, &Okular::Document::searchFinished,
             this, &DocumentItem::searchFinished);
-    connect(m_document->bookmarkManager(), SIGNAL(bookmarksChanged(QUrl)),
-            this, SIGNAL(bookmarkedPagesChanged()));
-    connect(m_document->bookmarkManager(), SIGNAL(bookmarksChanged(QUrl)),
-            this, SIGNAL(bookmarksChanged()));
+    connect(m_document->bookmarkManager(), &Okular::BookmarkManager::bookmarksChanged,
+            this, &DocumentItem::bookmarkedPagesChanged);
+    connect(m_document->bookmarkManager(), &Okular::BookmarkManager::bookmarksChanged,
+            this, &DocumentItem::bookmarksChanged);
 }
 
 
@@ -85,7 +85,7 @@ QString DocumentItem::windowTitleForDocument() const
                 m_document->currentDocument().toDisplayString(QUrl::PreferLocalFile) : m_document->currentDocument().fileName();
 
     if (Okular::Settings::displayDocumentTitle()) {
-        const QString docTitle = m_document->metaData( "DocumentTitle" ).toString();
+        const QString docTitle = m_document->metaData( QStringLiteral("DocumentTitle") ).toString();
 
         if (!docTitle.isEmpty() && !docTitle.trimmed().isEmpty()) {
              title = docTitle;

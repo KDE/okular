@@ -30,7 +30,7 @@ SearchLineEdit::SearchLineEdit( QWidget * parent, Okular::Document * document )
       m_moveViewport( false ), m_changed( false ), m_fromStart( true ),
       m_searchRunning( false )
 {
-    setObjectName( QLatin1String( "SearchLineEdit" ) );
+    setObjectName( QStringLiteral( "SearchLineEdit" ) );
     setClearButtonShown( true );
 
     // a timer to ensure that we don't flood the document with requests to search
@@ -40,7 +40,7 @@ SearchLineEdit::SearchLineEdit( QWidget * parent, Okular::Document * document )
 
     connect(this, &SearchLineEdit::textChanged, this, &SearchLineEdit::slotTextChanged);
     connect(this, &SearchLineEdit::returnPressed, this, &SearchLineEdit::slotReturnPressed);
-    connect(document, SIGNAL(searchFinished(int,Okular::Document::SearchStatus)), this, SLOT(searchFinished(int,Okular::Document::SearchStatus)));
+    connect(document, &Okular::Document::searchFinished, this, &SearchLineEdit::searchFinished);
 }
 
 void SearchLineEdit::clearText()
@@ -307,7 +307,7 @@ void SearchLineWidget::slotTimedout()
 {
     if ( m_anim->sequence().isEmpty() )
     {
-        const KPixmapSequence seq( "process-working", 22 );
+        const KPixmapSequence seq( QStringLiteral("process-working"), 22 );
         if ( seq.frameCount() > 0 )
         {
             m_anim->setInterval( 1000 / seq.frameCount() );

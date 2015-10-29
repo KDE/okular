@@ -72,7 +72,7 @@ int EpubDocument::maxContentWidth() const
 void EpubDocument::checkCSS(QString &css)
 {
   // remove paragraph line-heights
-  css.remove(QRegExp("line-height\\s*:\\s*[\\w\\.]*;"));
+  css.remove(QRegExp(QStringLiteral("line-height\\s*:\\s*[\\w\\.]*;")));
 }
 
 QVariant EpubDocument::loadResource(int type, const QUrl &name)
@@ -105,7 +105,7 @@ QVariant EpubDocument::loadResource(int type, const QUrl &name)
       break;
     }
     case EpubDocument::MovieResource: {
-      QTemporaryFile *tmp = new QTemporaryFile(QString("%1/okrXXXXXX").arg(QDir::tempPath()),this);
+      QTemporaryFile *tmp = new QTemporaryFile(QStringLiteral("%1/okrXXXXXX").arg(QDir::tempPath()),this);
       if(!tmp->open()) qCWarning(OkularEpuDebug) << "EPUB : error creating temporary video file";
       if(tmp->write(data,size) == -1) qCWarning(OkularEpuDebug) << "EPUB : error writing data" << tmp->errorString();
       tmp->flush();

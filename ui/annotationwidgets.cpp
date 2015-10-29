@@ -46,7 +46,7 @@ PixmapPreviewSelector::PixmapPreviewSelector( QWidget * parent )
     setPreviewSize( 32 );
 
     connect( m_comboItems, SIGNAL(currentIndexChanged(QString)), this, SLOT(iconComboChanged(QString)) );
-    connect( m_comboItems, SIGNAL(editTextChanged(QString)), this, SLOT(iconComboChanged(QString)) );
+    connect( m_comboItems, &QComboBox::editTextChanged, this, &PixmapPreviewSelector::iconComboChanged );
 }
 
 PixmapPreviewSelector::~PixmapPreviewSelector()
@@ -221,7 +221,7 @@ QWidget * AnnotationWidget::createAppearanceWidget()
 
     gridlayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::MinimumExpanding ), 3, 0 );
 
-    connect( m_colorBn, SIGNAL(changed(QColor)), this, SIGNAL(dataChanged()) );
+    connect( m_colorBn, &KColorButton::changed, this, &AnnotationWidget::dataChanged );
     connect( m_opacity, SIGNAL(valueChanged(int)), this, SIGNAL(dataChanged()) );
 
     return widget;
@@ -259,16 +259,16 @@ QWidget * TextAnnotationWidget::createStyleWidget()
         m_pixmapSelector = new PixmapPreviewSelector( gb );
         gblay->addWidget( m_pixmapSelector );
 
-        m_pixmapSelector->addItem( i18n( "Comment" ), "Comment" );
-        m_pixmapSelector->addItem( i18n( "Help" ), "Help" );
-        m_pixmapSelector->addItem( i18n( "Insert" ), "Insert" );
-        m_pixmapSelector->addItem( i18n( "Key" ), "Key" );
-        m_pixmapSelector->addItem( i18n( "New Paragraph" ), "NewParagraph" );
-        m_pixmapSelector->addItem( i18n( "Note" ), "Note" );
-        m_pixmapSelector->addItem( i18n( "Paragraph" ), "Paragraph" );
+        m_pixmapSelector->addItem( i18n( "Comment" ), QStringLiteral("Comment") );
+        m_pixmapSelector->addItem( i18n( "Help" ), QStringLiteral("Help") );
+        m_pixmapSelector->addItem( i18n( "Insert" ), QStringLiteral("Insert") );
+        m_pixmapSelector->addItem( i18n( "Key" ), QStringLiteral("Key") );
+        m_pixmapSelector->addItem( i18n( "New Paragraph" ), QStringLiteral("NewParagraph") );
+        m_pixmapSelector->addItem( i18n( "Note" ), QStringLiteral("Note") );
+        m_pixmapSelector->addItem( i18n( "Paragraph" ), QStringLiteral("Paragraph") );
         m_pixmapSelector->setIcon( m_textAnn->textIcon() );
 
-        connect( m_pixmapSelector, SIGNAL(iconChanged(QString)), this, SIGNAL(dataChanged()) );
+        connect( m_pixmapSelector, &PixmapPreviewSelector::iconChanged, this, &AnnotationWidget::dataChanged );
     }
     else if ( m_textAnn->textType() == Okular::TextAnnotation::InPlace )
     {
@@ -290,7 +290,7 @@ QWidget * TextAnnotationWidget::createStyleWidget()
         m_textAlign->addItem( i18n("Right") );
         m_textAlign->setCurrentIndex( m_textAnn->inplaceAlignment() );
 
-        connect( m_fontReq, SIGNAL(fontSelected(QFont)), this, SIGNAL(dataChanged()) );
+        connect( m_fontReq, &KFontRequester::fontSelected, this, &AnnotationWidget::dataChanged );
         connect( m_textAlign, SIGNAL(currentIndexChanged(int)), this, SIGNAL(dataChanged()) );
     }
 
@@ -331,28 +331,28 @@ QWidget * StampAnnotationWidget::createStyleWidget()
     gblay->addWidget( m_pixmapSelector );
     m_pixmapSelector->setEditable( true );
 
-    m_pixmapSelector->addItem( i18n( "Okular" ), "okular" );
-    m_pixmapSelector->addItem( i18n( "Bookmark" ), "bookmarks" );
-    m_pixmapSelector->addItem( i18n( "KDE" ), "kde" );
-    m_pixmapSelector->addItem( i18n( "Information" ), "help-about" );
-    m_pixmapSelector->addItem( i18n( "Approved" ), "Approved" );
-    m_pixmapSelector->addItem( i18n( "As Is" ), "AsIs" );
-    m_pixmapSelector->addItem( i18n( "Confidential" ), "Confidential" );
-    m_pixmapSelector->addItem( i18n( "Departmental" ), "Departmental" );
-    m_pixmapSelector->addItem( i18n( "Draft" ), "Draft" );
-    m_pixmapSelector->addItem( i18n( "Experimental" ), "Experimental" );
-    m_pixmapSelector->addItem( i18n( "Expired" ), "Expired" );
-    m_pixmapSelector->addItem( i18n( "Final" ), "Final" );
-    m_pixmapSelector->addItem( i18n( "For Comment" ), "ForComment" );
-    m_pixmapSelector->addItem( i18n( "For Public Release" ), "ForPublicRelease" );
-    m_pixmapSelector->addItem( i18n( "Not Approved" ), "NotApproved" );
-    m_pixmapSelector->addItem( i18n( "Not For Public Release" ), "NotForPublicRelease" );
-    m_pixmapSelector->addItem( i18n( "Sold" ), "Sold" );
-    m_pixmapSelector->addItem( i18n( "Top Secret" ), "TopSecret" );
+    m_pixmapSelector->addItem( i18n( "Okular" ), QStringLiteral("okular") );
+    m_pixmapSelector->addItem( i18n( "Bookmark" ), QStringLiteral("bookmarks") );
+    m_pixmapSelector->addItem( i18n( "KDE" ), QStringLiteral("kde") );
+    m_pixmapSelector->addItem( i18n( "Information" ), QStringLiteral("help-about") );
+    m_pixmapSelector->addItem( i18n( "Approved" ), QStringLiteral("Approved") );
+    m_pixmapSelector->addItem( i18n( "As Is" ), QStringLiteral("AsIs") );
+    m_pixmapSelector->addItem( i18n( "Confidential" ), QStringLiteral("Confidential") );
+    m_pixmapSelector->addItem( i18n( "Departmental" ), QStringLiteral("Departmental") );
+    m_pixmapSelector->addItem( i18n( "Draft" ), QStringLiteral("Draft") );
+    m_pixmapSelector->addItem( i18n( "Experimental" ), QStringLiteral("Experimental") );
+    m_pixmapSelector->addItem( i18n( "Expired" ), QStringLiteral("Expired") );
+    m_pixmapSelector->addItem( i18n( "Final" ), QStringLiteral("Final") );
+    m_pixmapSelector->addItem( i18n( "For Comment" ), QStringLiteral("ForComment") );
+    m_pixmapSelector->addItem( i18n( "For Public Release" ), QStringLiteral("ForPublicRelease") );
+    m_pixmapSelector->addItem( i18n( "Not Approved" ), QStringLiteral("NotApproved") );
+    m_pixmapSelector->addItem( i18n( "Not For Public Release" ), QStringLiteral("NotForPublicRelease") );
+    m_pixmapSelector->addItem( i18n( "Sold" ), QStringLiteral("Sold") );
+    m_pixmapSelector->addItem( i18n( "Top Secret" ), QStringLiteral("TopSecret") );
     m_pixmapSelector->setIcon( m_stampAnn->stampIconName() );
     m_pixmapSelector->setPreviewSize( 64 );
 
-    connect( m_pixmapSelector, SIGNAL(iconChanged(QString)), this, SIGNAL(dataChanged()) );
+    connect( m_pixmapSelector, &PixmapPreviewSelector::iconChanged, this, &AnnotationWidget::dataChanged );
 
     return widget;
 }
@@ -447,8 +447,8 @@ QWidget * LineAnnotationWidget::createStyleWidget()
     }
     else if ( m_lineType == 1 )
     {
-        connect( m_innerColor, SIGNAL(changed(QColor)), this, SIGNAL(dataChanged()) );
-        connect( m_useColor, SIGNAL(toggled(bool)), this, SIGNAL(dataChanged()) );
+        connect( m_innerColor, &KColorButton::changed, this, &AnnotationWidget::dataChanged );
+        connect( m_useColor, &QAbstractButton::toggled, this, &AnnotationWidget::dataChanged );
         connect(m_useColor, &QCheckBox::toggled, m_innerColor, &KColorButton::setEnabled);
     }
     connect( m_spinSize, SIGNAL(valueChanged(double)), this, SIGNAL(dataChanged()) );
@@ -598,8 +598,8 @@ QWidget * GeomAnnotationWidget::createStyleWidget()
     m_spinSize->setValue( m_geomAnn->style().width() );
 
     connect( m_typeCombo, SIGNAL(currentIndexChanged(int)), this, SIGNAL(dataChanged()) );
-    connect( m_innerColor, SIGNAL(changed(QColor)), this, SIGNAL(dataChanged()) );
-    connect( m_useColor, SIGNAL(toggled(bool)), this, SIGNAL(dataChanged()) );
+    connect( m_innerColor, &KColorButton::changed, this, &AnnotationWidget::dataChanged );
+    connect( m_useColor, &QAbstractButton::toggled, this, &AnnotationWidget::dataChanged );
     connect(m_useColor, &QCheckBox::toggled, m_innerColor, &KColorButton::setEnabled);
     connect( m_spinSize, SIGNAL(valueChanged(double)), this, SIGNAL(dataChanged()) );
 
@@ -642,13 +642,13 @@ QWidget * FileAttachmentAnnotationWidget::createStyleWidget()
     gblay->addWidget( m_pixmapSelector );
     m_pixmapSelector->setEditable( true );
 
-    m_pixmapSelector->addItem( i18nc( "Symbol for file attachment annotations", "Graph" ), "graph" );
-    m_pixmapSelector->addItem( i18nc( "Symbol for file attachment annotations", "Push Pin" ), "pushpin" );
-    m_pixmapSelector->addItem( i18nc( "Symbol for file attachment annotations", "Paperclip" ), "paperclip" );
-    m_pixmapSelector->addItem( i18nc( "Symbol for file attachment annotations", "Tag" ), "tag" );
+    m_pixmapSelector->addItem( i18nc( "Symbol for file attachment annotations", "Graph" ), QStringLiteral("graph") );
+    m_pixmapSelector->addItem( i18nc( "Symbol for file attachment annotations", "Push Pin" ), QStringLiteral("pushpin") );
+    m_pixmapSelector->addItem( i18nc( "Symbol for file attachment annotations", "Paperclip" ), QStringLiteral("paperclip") );
+    m_pixmapSelector->addItem( i18nc( "Symbol for file attachment annotations", "Tag" ), QStringLiteral("tag") );
     m_pixmapSelector->setIcon( m_attachAnn->fileIconName() );
 
-    connect( m_pixmapSelector, SIGNAL(iconChanged(QString)), this, SIGNAL(dataChanged()) );
+    connect( m_pixmapSelector, &PixmapPreviewSelector::iconChanged, this, &AnnotationWidget::dataChanged );
 
     return widget;
 }
@@ -710,9 +710,9 @@ static QString caretSymbolToIcon( Okular::CaretAnnotation::CaretSymbol symbol )
     switch ( symbol )
     {
         case Okular::CaretAnnotation::None:
-            return QString::fromLatin1( "caret-none" );
+            return QStringLiteral( "caret-none" );
         case Okular::CaretAnnotation::P:
-            return QString::fromLatin1( "caret-p" );
+            return QStringLiteral( "caret-p" );
     }
     return QString();
 }
@@ -744,11 +744,11 @@ QWidget * CaretAnnotationWidget::createStyleWidget()
     m_pixmapSelector = new PixmapPreviewSelector( gb );
     gblay->addWidget( m_pixmapSelector );
 
-    m_pixmapSelector->addItem( i18nc( "Symbol for caret annotations", "None" ), "caret-none" );
-    m_pixmapSelector->addItem( i18nc( "Symbol for caret annotations", "P" ), "caret-p" );
+    m_pixmapSelector->addItem( i18nc( "Symbol for caret annotations", "None" ), QStringLiteral("caret-none") );
+    m_pixmapSelector->addItem( i18nc( "Symbol for caret annotations", "P" ), QStringLiteral("caret-p") );
     m_pixmapSelector->setIcon( caretSymbolToIcon( m_caretAnn->caretSymbol() ) );
 
-    connect( m_pixmapSelector, SIGNAL(iconChanged(QString)), this, SIGNAL(dataChanged()) );
+    connect( m_pixmapSelector, &PixmapPreviewSelector::iconChanged, this, &AnnotationWidget::dataChanged );
 
     return widget;
 }

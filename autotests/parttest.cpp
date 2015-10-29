@@ -124,14 +124,14 @@ void PartTest::testFowardPDF()
     // Create temp dir named like this: ${system temp dir}/${random string}/${dir}
     const QTemporaryDir tempDir;
     const QDir workDir(QDir(tempDir.path()).filePath(dir));
-    workDir.mkpath(".");
+    workDir.mkpath(QStringLiteral("."));
 
     QFile f(KDESRCDIR "data/synctextest.tex");
     const QString texDestination = workDir.path() + "/synctextest.tex";
     QVERIFY(f.copy(texDestination));
     QProcess process;
     process.setWorkingDirectory(workDir.path());
-    process.start("pdflatex", QStringList() << "-synctex=1" << "-interaction=nonstopmode" << texDestination);
+    process.start(QStringLiteral("pdflatex"), QStringList() << QStringLiteral("-synctex=1") << QStringLiteral("-interaction=nonstopmode") << texDestination);
     process.waitForFinished();
 
     const QString pdfResult = workDir.path() + "/synctextest.pdf";

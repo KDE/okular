@@ -304,7 +304,7 @@ QVariant AnnotationModel::data( const QModelIndex &index, int role ) const
         if ( role == Qt::DisplayRole )
           return i18n( "Page %1", item->page + 1 );
         else if ( role == Qt::DecorationRole )
-          return QIcon::fromTheme( "text-plain" );
+          return QIcon::fromTheme( QStringLiteral("text-plain") );
         else if ( role == PageRole )
           return item->page;
 
@@ -316,7 +316,7 @@ QVariant AnnotationModel::data( const QModelIndex &index, int role ) const
             return GuiUtils::captionForAnnotation( item->annotation );
             break;
         case Qt::DecorationRole:
-            return QIcon::fromTheme( "okular" );
+            return QIcon::fromTheme( QStringLiteral("okular") );
             break;
         case Qt::ToolTipRole:
             return GuiUtils::prettyToolTip( item->annotation );

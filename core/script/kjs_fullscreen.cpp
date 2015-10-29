@@ -64,10 +64,10 @@ void JSFullscreen::initType( KJSContext *ctx )
     if ( !g_fsProto )
         g_fsProto = new KJSPrototype();
 
-    g_fsProto->defineProperty( ctx, "loop", fsGetLoop, fsSetLoop );
-    g_fsProto->defineProperty( ctx, "useTimer",
+    g_fsProto->defineProperty( ctx, QStringLiteral("loop"), fsGetLoop, fsSetLoop );
+    g_fsProto->defineProperty( ctx, QStringLiteral("useTimer"),
                                fsGetUseTimer, fsSetUseTimer );
-    g_fsProto->defineProperty( ctx, "timeDelay",
+    g_fsProto->defineProperty( ctx, QStringLiteral("timeDelay"),
                                fsGetTimeDelay, fsSetTimeDelay );
 }
 

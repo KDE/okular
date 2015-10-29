@@ -45,7 +45,7 @@ public:
         // draw check mark
         const int lightness = ((color.red() * 299) + (color.green() * 587) + (color.blue() * 114)) / 1000;
         p.setPen( lightness < 128 ? Qt::white : Qt::black );
-        p.drawText( QRect( QPoint( 0, 0 ), pmSel.size() ), Qt::AlignCenter, "\u2713" );
+        p.drawText( QRect( QPoint( 0, 0 ), pmSel.size() ), Qt::AlignCenter, QStringLiteral("\u2713") );
 
         icon.addPixmap( pmSel, QIcon::Normal, QIcon::On );
 
@@ -101,7 +101,7 @@ void DrawingToolActions::loadTools()
     const QStringList drawingTools = Okular::Settings::drawingTools();
 
     QDomDocument doc;
-    QDomElement drawingDefinition = doc.createElement( "drawingTools" );
+    QDomElement drawingDefinition = doc.createElement( QStringLiteral("drawingTools") );
     foreach ( const QString &drawingXml, drawingTools )
     {
         QDomDocument entryParser;
@@ -116,7 +116,7 @@ void DrawingToolActions::loadTools()
     while ( drawingDescription.isElement() )
     {
         const QDomElement toolElement = drawingDescription.toElement();
-        if ( toolElement.tagName() == "tool" )
+        if ( toolElement.tagName() == QLatin1String("tool") )
         {
             QString tooltip;
             QString width;
@@ -133,7 +133,7 @@ void DrawingToolActions::loadTools()
                 tooltip = name;
             }
 
-            const QDomNodeList engineNodeList = toolElement.elementsByTagName( "engine" );
+            const QDomNodeList engineNodeList = toolElement.elementsByTagName( QStringLiteral("engine") );
             if ( engineNodeList.size() > 0 )
             {
                 const QDomElement engineEl = engineNodeList.item( 0 ).toElement();
@@ -142,7 +142,7 @@ void DrawingToolActions::loadTools()
                     colorStr = engineEl.attribute( QStringLiteral("color") );
                 }
 
-                const QDomNodeList annotationList = engineEl.elementsByTagName( "annotation" );
+                const QDomNodeList annotationList = engineEl.elementsByTagName( QStringLiteral("annotation") );
                 if ( annotationList.size() > 0 )
                 {
                     const QDomElement annotationEl = annotationList.item( 0 ).toElement();
@@ -190,12 +190,12 @@ void DrawingToolActions::loadTools()
         action->setText( i18n("Eraser") );
         action->setToolTip( i18n("Eraser") );
         action->setCheckable( true );
-        action->setIcon( QIcon::fromTheme( "draw-eraser" ) );
+        action->setIcon( QIcon::fromTheme( QStringLiteral("draw-eraser") ) );
         action->setProperty( "__document", QVariant::fromValue<QDomElement>( root ) );
 
         m_actions.append( action );
 
-        ac->addAction( QString("presentation_drawing_eraser"), action );
+        ac->addAction( QStringLiteral("presentation_drawing_eraser"), action );
 
         connect( action, &QAction::triggered, this, &DrawingToolActions::actionTriggered );
     }
@@ -215,7 +215,7 @@ void DrawingToolActions::createToolAction( const QString &text, const QString &t
 
     m_actions.append( action );
 
-    ac->addAction( QString("presentation_drawing_%1").arg( toolName ), action );
+    ac->addAction( QStringLiteral("presentation_drawing_%1").arg( toolName ), action );
 
     connect( action, &QAction::triggered, this, &DrawingToolActions::actionTriggered );
 }

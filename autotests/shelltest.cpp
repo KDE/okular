@@ -59,40 +59,40 @@ void ShellTest::testUrlArgs_data()
     QTest::newRow( "foo.pdf, exist" )
         << "foo.pdf"
         << true
-        << makeUrlFromCwd( "foo.pdf" );
+        << makeUrlFromCwd( QStringLiteral("foo.pdf") );
     QTest::newRow( "foo.pdf, !exist" )
         << "foo.pdf"
         << false
-        << makeUrlFromCwd( "foo.pdf" );
+        << makeUrlFromCwd( QStringLiteral("foo.pdf") );
     QTest::newRow( "foo#bar.pdf, !exist" )
         << "foo#bar.pdf"
         << false
-        << makeUrlFromCwd( "foo#bar.pdf" );
+        << makeUrlFromCwd( QStringLiteral("foo#bar.pdf") );
     QTest::newRow( "foo.pdf#anchor, !exist" )
         << "foo.pdf#anchor"
         << false
-        << makeUrlFromCwd( "foo.pdf", "anchor" );
+        << makeUrlFromCwd( QStringLiteral("foo.pdf"), QStringLiteral("anchor") );
     QTest::newRow( "#207461" )
         << "file:///tmp/file%20with%20spaces.pdf"
         << true
-        << QUrl( "file:///tmp/file%20with%20spaces.pdf" );
+        << QUrl( QStringLiteral("file:///tmp/file%20with%20spaces.pdf") );
 
     // non-local files
     QTest::newRow( "http://kde.org/foo.pdf" )
         << "http://kde.org/foo.pdf"
         << true
-        << QUrl( "http://kde.org/foo.pdf" );
+        << QUrl( QStringLiteral("http://kde.org/foo.pdf") );
     // make sure we don't have a fragment
-    QUrl hashInName( "http://kde.org" );
+    QUrl hashInName( QStringLiteral("http://kde.org") );
     QVERIFY( hashInName.path().isEmpty() );
-    hashInName.setPath( "/foo#bar.pdf" );
+    hashInName.setPath( QStringLiteral("/foo#bar.pdf") );
     QVERIFY( hashInName.fragment().isEmpty() );
     QTest::newRow( "http://kde.org/foo#bar.pdf" )
         << "http://kde.org/foo#bar.pdf"
         << true
         << hashInName;
-    QUrl withAnchor( "http://kde.org/foo.pdf" );
-    withAnchor.setFragment( "anchor" );
+    QUrl withAnchor( QStringLiteral("http://kde.org/foo.pdf") );
+    withAnchor.setFragment( QStringLiteral("anchor") );
     QTest::newRow( "http://kde.org/foo.pdf#anchor" )
         << "http://kde.org/foo.pdf#anchor"
         << true
@@ -100,9 +100,9 @@ void ShellTest::testUrlArgs_data()
     QTest::newRow( "#207461" )
         << "http://homepages.inf.ed.ac.uk/mef/file%20with%20spaces.pdf"
         << true
-        << QUrl( "http://homepages.inf.ed.ac.uk/mef/file%20with%20spaces.pdf" );
-    QUrl openOnPage3 = QUrl( "http://itzsimpl.info/lectures/CG/L2-transformations.pdf" );
-    openOnPage3.setFragment( "3" );
+        << QUrl( QStringLiteral("http://homepages.inf.ed.ac.uk/mef/file%20with%20spaces.pdf") );
+    QUrl openOnPage3 = QUrl( QStringLiteral("http://itzsimpl.info/lectures/CG/L2-transformations.pdf") );
+    openOnPage3.setFragment( QStringLiteral("3") );
     QTest::newRow( "RR124738" )
         << "http://itzsimpl.info/lectures/CG/L2-transformations.pdf#3"
         << true

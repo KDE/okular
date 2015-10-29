@@ -136,13 +136,13 @@ static inline QUrl urlForGroup(const KBookmark &group)
 BookmarkManager::BookmarkManager( DocumentPrivate * document )
     : QObject( document->m_parent ), d( new Private( this ) )
 {
-    setObjectName( QLatin1String( "Okular::BookmarkManager" ) );
+    setObjectName( QStringLiteral( "Okular::BookmarkManager" ) );
 
     d->document = document;
 
     d->file = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1Char('/') + "okular/bookmarks.xml" ;
 
-    d->manager = KBookmarkManager::managerForFile( d->file, "okular" );
+    d->manager = KBookmarkManager::managerForFile( d->file, QStringLiteral("okular") );
     d->manager->setEditorOptions( QGuiApplication::applicationDisplayName(), false );
     d->manager->setUpdate( true );
     connect( d->manager, SIGNAL(changed(QString,QString)),
@@ -441,9 +441,9 @@ bool BookmarkManager::addBookmark(const QUrl &referurl, const Okular::DocumentVi
         // if there's more than one bookmark per page, give the name '#p-n'
         // where n is the index of this bookmark among the ones of its page.
         if ( count > 0 )
-            newtitle = QString( "#%1-%2" ).arg( vp.pageNumber + 1 ).arg( count );
+            newtitle = QStringLiteral( "#%1-%2" ).arg( vp.pageNumber + 1 ).arg( count );
         else
-            newtitle = QString( "#%1" ).arg( vp.pageNumber + 1 );
+            newtitle = QStringLiteral( "#%1" ).arg( vp.pageNumber + 1 );
     }
     else
         newtitle = title;
@@ -658,7 +658,7 @@ bool BookmarkManager::setPageBookmark( int page )
         vp.pageNumber = page;
         QUrl newurl = d->url;
         newurl.setFragment(vp.toString(), QUrl::DecodedMode);
-        thebg.addBookmark( QString::fromLatin1( "#" ) + QString::number( vp.pageNumber + 1 ), newurl, QString() );
+        thebg.addBookmark( QLatin1String( "#" ) + QString::number( vp.pageNumber + 1 ), newurl, QString() );
         added = true;
         d->manager->emitChanged( thebg );
     }

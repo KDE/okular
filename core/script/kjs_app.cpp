@@ -57,35 +57,35 @@ static KJSObject appGetLanguage( KJSContext *, void * )
     QLocale locale;
     QString lang = QLocale::languageToString(locale.language());
     QString country = QLocale::countryToString(locale.country());
-    QString acroLang = QString::fromLatin1( "ENU" );
+    QString acroLang = QStringLiteral( "ENU" );
     if ( lang == QLatin1String( "da" ) )
-        acroLang = QString::fromLatin1( "DAN" ); // Danish
+        acroLang = QStringLiteral( "DAN" ); // Danish
     else if ( lang == QLatin1String( "de" ) )
-        acroLang = QString::fromLatin1( "DEU" ); // German
+        acroLang = QStringLiteral( "DEU" ); // German
     else if ( lang == QLatin1String( "en" ) )
-        acroLang = QString::fromLatin1( "ENU" ); // English
+        acroLang = QStringLiteral( "ENU" ); // English
     else if ( lang == QLatin1String( "es" ) )
-        acroLang = QString::fromLatin1( "ESP" ); // Spanish
+        acroLang = QStringLiteral( "ESP" ); // Spanish
     else if ( lang == QLatin1String( "fr" ) )
-        acroLang = QString::fromLatin1( "FRA" ); // French
+        acroLang = QStringLiteral( "FRA" ); // French
     else if ( lang == QLatin1String( "it" ) )
-        acroLang = QString::fromLatin1( "ITA" ); // Italian
+        acroLang = QStringLiteral( "ITA" ); // Italian
     else if ( lang == QLatin1String( "ko" ) )
-        acroLang = QString::fromLatin1( "KOR" ); // Korean
+        acroLang = QStringLiteral( "KOR" ); // Korean
     else if ( lang == QLatin1String( "ja" ) )
-        acroLang = QString::fromLatin1( "JPN" ); // Japanese
+        acroLang = QStringLiteral( "JPN" ); // Japanese
     else if ( lang == QLatin1String( "nl" ) )
-        acroLang = QString::fromLatin1( "NLD" ); // Dutch
+        acroLang = QStringLiteral( "NLD" ); // Dutch
     else if ( lang == QLatin1String( "pt" ) && country == QLatin1String( "BR" ) )
-        acroLang = QString::fromLatin1( "PTB" ); // Brazilian Portuguese
+        acroLang = QStringLiteral( "PTB" ); // Brazilian Portuguese
     else if ( lang == QLatin1String( "fi" ) )
-        acroLang = QString::fromLatin1( "SUO" ); // Finnish
+        acroLang = QStringLiteral( "SUO" ); // Finnish
     else if ( lang == QLatin1String( "sv" ) )
-        acroLang = QString::fromLatin1( "SVE" ); // Swedish
+        acroLang = QStringLiteral( "SVE" ); // Swedish
     else if ( lang == QLatin1String( "zh" ) && country == QLatin1String( "CN" ) )
-        acroLang = QString::fromLatin1( "CHS" ); // Chinese Simplified
+        acroLang = QStringLiteral( "CHS" ); // Chinese Simplified
     else if ( lang == QLatin1String( "zh" ) && country == QLatin1String( "TW" ) )
-        acroLang = QString::fromLatin1( "CHT" ); // Chinese Traditional
+        acroLang = QStringLiteral( "CHT" ); // Chinese Traditional
     return KJSString( acroLang );
 }
 
@@ -101,7 +101,7 @@ static KJSObject appGetPlatform( KJSContext *, void * )
 #elif defined(Q_OS_MAC)
     return KJSString( QString::fromLatin1( "MAC" ) );
 #else
-    return KJSString( QString::fromLatin1( "UNIX" ) );
+    return KJSString( QLatin1String( "UNIX" ) );
 #endif
 }
 
@@ -112,11 +112,11 @@ static KJSObject appGetPlugIns( KJSContext *context, void * )
     {
         const FakePluginInfo &info = s_fake_plugins[i];
         KJSObject plugin;
-        plugin.setProperty( context, "certified", info.certified );
-        plugin.setProperty( context, "loaded", info.loaded );
-        plugin.setProperty( context, "name", info.name );
-        plugin.setProperty( context, "path", info.path );
-        plugin.setProperty( context, "version", fake_acroversion );
+        plugin.setProperty( context, QStringLiteral("certified"), info.certified );
+        plugin.setProperty( context, QStringLiteral("loaded"), info.loaded );
+        plugin.setProperty( context, QStringLiteral("name"), info.name );
+        plugin.setProperty( context, QStringLiteral("path"), info.path );
+        plugin.setProperty( context, QStringLiteral("version"), fake_acroversion );
         plugins.setProperty( context, QString::number( i ), plugin );
     }
     return plugins;
@@ -135,13 +135,13 @@ static KJSObject appGetPrinterNames( KJSContext *context, void * )
 static KJSObject appGetViewerType( KJSContext *, void * )
 {
     // faking a bit...
-    return KJSString( QString::fromLatin1( "Reader" ) );
+    return KJSString( QLatin1String( "Reader" ) );
 }
 
 static KJSObject appGetViewerVariation( KJSContext *, void * )
 {
     // faking a bit...
-    return KJSString( QString::fromLatin1( "Reader" ) );
+    return KJSString( QLatin1String( "Reader" ) );
 }
 
 static KJSObject appGetViewerVersion( KJSContext *, void * )
@@ -155,7 +155,7 @@ static KJSObject appBeep( KJSContext *context, void *,
 {
     if ( arguments.count() < 1 )
     {
-        return context->throwException( "Missing beep type" );
+        return context->throwException( QStringLiteral("Missing beep type") );
     }
     QApplication::beep();
     return KJSUndefined();
@@ -166,12 +166,12 @@ static KJSObject appGetNthPlugInName( KJSContext *context, void *,
 {
     if ( arguments.count() < 1 )
     {
-        return context->throwException( "Missing plugin index" );
+        return context->throwException( QStringLiteral("Missing plugin index") );
     }
     const int nIndex = arguments.at( 0 ).toInt32( context );
 
     if ( nIndex < 0 || nIndex >= s_num_fake_plugins )
-        return context->throwException( "PlugIn index out of bounds" );
+        return context->throwException( QStringLiteral("PlugIn index out of bounds") );
 
     const FakePluginInfo &info = s_fake_plugins[nIndex];
     return KJSString( info.name );
@@ -208,21 +208,21 @@ void JSApp::initType( KJSContext *ctx )
 
     g_appProto = new KJSPrototype();
 
-    g_appProto->defineProperty( ctx, "formsVersion", appGetFormsVersion );
-    g_appProto->defineProperty( ctx, "language", appGetLanguage );
-    g_appProto->defineProperty( ctx, "numPlugIns", appGetNumPlugins );
-    g_appProto->defineProperty( ctx, "platform", appGetPlatform );
-    g_appProto->defineProperty( ctx, "plugIns", appGetPlugIns );
-    g_appProto->defineProperty( ctx, "printColorProfiles", appGetPrintColorProfiles );
-    g_appProto->defineProperty( ctx, "printerNames", appGetPrinterNames );
-    g_appProto->defineProperty( ctx, "viewerType", appGetViewerType );
-    g_appProto->defineProperty( ctx, "viewerVariation", appGetViewerVariation );
-    g_appProto->defineProperty( ctx, "viewerVersion", appGetViewerVersion );
+    g_appProto->defineProperty( ctx, QStringLiteral("formsVersion"), appGetFormsVersion );
+    g_appProto->defineProperty( ctx, QStringLiteral("language"), appGetLanguage );
+    g_appProto->defineProperty( ctx, QStringLiteral("numPlugIns"), appGetNumPlugins );
+    g_appProto->defineProperty( ctx, QStringLiteral("platform"), appGetPlatform );
+    g_appProto->defineProperty( ctx, QStringLiteral("plugIns"), appGetPlugIns );
+    g_appProto->defineProperty( ctx, QStringLiteral("printColorProfiles"), appGetPrintColorProfiles );
+    g_appProto->defineProperty( ctx, QStringLiteral("printerNames"), appGetPrinterNames );
+    g_appProto->defineProperty( ctx, QStringLiteral("viewerType"), appGetViewerType );
+    g_appProto->defineProperty( ctx, QStringLiteral("viewerVariation"), appGetViewerVariation );
+    g_appProto->defineProperty( ctx, QStringLiteral("viewerVersion"), appGetViewerVersion );
 
-    g_appProto->defineFunction( ctx, "beep", appBeep );
-    g_appProto->defineFunction( ctx, "getNthPlugInName", appGetNthPlugInName );
-    g_appProto->defineFunction( ctx, "goBack", appGoBack );
-    g_appProto->defineFunction( ctx, "goForward", appGoForward );
+    g_appProto->defineFunction( ctx, QStringLiteral("beep"), appBeep );
+    g_appProto->defineFunction( ctx, QStringLiteral("getNthPlugInName"), appGetNthPlugInName );
+    g_appProto->defineFunction( ctx, QStringLiteral("goBack"), appGoBack );
+    g_appProto->defineFunction( ctx, QStringLiteral("goForward"), appGoForward );
 }
 
 KJSObject JSApp::object( KJSContext *ctx, DocumentPrivate *doc )

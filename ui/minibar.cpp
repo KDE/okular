@@ -155,7 +155,7 @@ MiniBar::MiniBar( QWidget * parent, MiniBarLogic * miniBarLogic )
     , m_miniBarLogic( miniBarLogic )
     , m_oldToobarParent( 0 )
 {
-    setObjectName( QLatin1String( "miniBar" ) );
+    setObjectName( QStringLiteral( "miniBar" ) );
     
     m_miniBarLogic->addMiniBar( this );
 
@@ -205,9 +205,9 @@ MiniBar::MiniBar( QWidget * parent, MiniBarLogic * miniBarLogic )
     // connect signals from child widgets to internal handlers / signals bouncers
     connect( m_pageNumberEdit, SIGNAL(returnPressed()), this, SLOT(slotChangePage()) );
     connect( m_pageLabelEdit, SIGNAL(pageNumberChosen(int)), this, SLOT(slotChangePage(int)) );
-    connect( m_pagesButton, SIGNAL(clicked()), this, SIGNAL(gotoPage()) );
-    connect( m_prevButton, SIGNAL(clicked()), this, SIGNAL(prevPage()) );
-    connect( m_nextButton, SIGNAL(clicked()), this, SIGNAL(nextPage()) );
+    connect( m_pagesButton, &QAbstractButton::clicked, this, &MiniBar::gotoPage );
+    connect( m_prevButton, &QAbstractButton::clicked, this, &MiniBar::prevPage );
+    connect( m_nextButton, &QAbstractButton::clicked, this, &MiniBar::nextPage );
 
     resize( minimumSizeHint() );
 
@@ -229,12 +229,12 @@ void MiniBar::changeEvent( QEvent * event )
         {
             if ( m_oldToobarParent )
             {
-                disconnect( m_oldToobarParent, SIGNAL(iconSizeChanged(QSize)), this, SLOT(slotToolBarIconSizeChanged()));
+                disconnect( m_oldToobarParent, &QToolBar::iconSizeChanged, this, &MiniBar::slotToolBarIconSizeChanged);
             }
             m_oldToobarParent = tb;
             if ( tb )
             {
-                connect( tb, SIGNAL(iconSizeChanged(QSize)), this, SLOT(slotToolBarIconSizeChanged()));
+                connect( tb, &QToolBar::iconSizeChanged, this, &MiniBar::slotToolBarIconSizeChanged);
                 slotToolBarIconSizeChanged();
             }
         }
@@ -321,7 +321,7 @@ ProgressWidget::ProgressWidget( QWidget * parent, Okular::Document * document )
     : QWidget( parent ), m_document( document ),
     m_progressPercentage( -1 )
 {
-    setObjectName( QLatin1String( "progress" ) );
+    setObjectName( QStringLiteral( "progress" ) );
     setAttribute( Qt::WA_OpaquePaintEvent, true );
     setFixedHeight( 4 );
     setMouseTracking( true );
@@ -496,7 +496,7 @@ PagesEdit::PagesEdit( MiniBar * parent )
     QFocusEvent fe( QEvent::FocusOut );
     QApplication::sendEvent( this, &fe );
 
-    connect( KGlobalSettings::self(), SIGNAL(appearanceChanged()), this, SLOT(updatePalette()) );
+    connect( KGlobalSettings::self(), &KGlobalSettings::appearanceChanged, this, &PagesEdit::updatePalette );
 }
 
 void PagesEdit::setText( const QString & newText )

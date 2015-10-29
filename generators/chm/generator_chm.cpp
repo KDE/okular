@@ -32,15 +32,15 @@
 static KAboutData createAboutData()
 {
     KAboutData aboutData(
-         "okular_chm",
+         QStringLiteral("okular_chm"),
          i18n( "CHM Backend" ),
-         "0.1.4",
+         QStringLiteral("0.1.4"),
          i18n( "A Microsoft Windows help file renderer" ),
          KAboutLicense::GPL,
          i18n( "© 2005-2007 Piotr Szymański\n© 2008 Albert Astals Cid" )
     );
-    aboutData.addAuthor( i18n( "Piotr Szymański" ), QString(), "niedakh@gmail.com" );
-    aboutData.addAuthor( i18n( "Albert Astals Cid" ), QString(), "aacid@kde.org" );
+    aboutData.addAuthor( i18n( "Piotr Szymański" ), QString(), QStringLiteral("niedakh@gmail.com") );
+    aboutData.addAuthor( i18n( "Albert Astals Cid" ), QString(), QStringLiteral("aacid@kde.org") );
     return aboutData;
 }
 
@@ -102,9 +102,9 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
             QString url = e.urls.first();
             if (url.contains(QChar::fromLatin1('%')))
                 url = QString::fromUtf8(QByteArray::fromPercentEncoding(url.toUtf8()));
-            item.setAttribute("ViewportName", url);
+            item.setAttribute(QStringLiteral("ViewportName"), url);
         }
-        item.setAttribute("Icon", e.imageid);
+        item.setAttribute(QStringLiteral("Icon"), e.imageid);
         if (e.indent == 0) m_docSyn.appendChild(item);
         else lastIndentElement[e.indent - 1].appendChild(item);
         lastIndentElement[e.indent] = item;
@@ -153,7 +153,7 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
     }
 
     connect( m_syncGen, SIGNAL(completed()), this, SLOT(slotCompleted()) );
-    connect( m_syncGen, SIGNAL(canceled(QString)), this, SLOT(slotCompleted()) );
+    connect( m_syncGen, &KParts::ReadOnlyPart::canceled, this, &CHMGenerator::slotCompleted );
 
     return true;
 }
@@ -186,7 +186,7 @@ void CHMGenerator::preparePageForSyncOperation( int zoom , const QString & url)
 
     QEventLoop loop;
     connect( m_syncGen, SIGNAL(completed()), &loop, SLOT(quit()) );
-    connect( m_syncGen, SIGNAL(canceled(QString)), &loop, SLOT(quit()) );
+    connect( m_syncGen, &KParts::ReadOnlyPart::canceled, &loop, &QEventLoop::quit );
     // discard any user input, otherwise it breaks the "synchronicity" of this
     // function
     loop.exec( QEventLoop::ExcludeUserInputEvents );
@@ -234,7 +234,7 @@ Okular::DocumentInfo CHMGenerator::generateDocumentInfo( const QSet<Okular::Docu
 {
     Okular::DocumentInfo docInfo;
     if ( keys.contains( Okular::DocumentInfo::MimeType ) )
-        docInfo.set( Okular::DocumentInfo::MimeType, "application/x-chm" );
+        docInfo.set( Okular::DocumentInfo::MimeType, QStringLiteral("application/x-chm") );
     if ( keys.contains( Okular::DocumentInfo::Title ) )
         docInfo.set( Okular::DocumentInfo::Title, m_file->title() );
     return docInfo;
@@ -369,9 +369,9 @@ void CHMGenerator::additionalRequestData()
                         QString url = n.attributes().getNamedItem("href").nodeValue().string();
                         r=n.getRect();
                         // there is no way for us to support javascript properly
-                        if (url.startsWith("JavaScript:"), Qt::CaseInsensitive)
+                        if (url.startsWith(QLatin1String("JavaScript:")), Qt::CaseInsensitive)
                             continue;
-                        else if (url.contains (":"))
+                        else if (url.contains (QStringLiteral(":")))
                         {
                             objRects.push_back(
                                 new Okular::ObjectRect ( Okular::NormalizedRect(r,xScale,yScale),
@@ -381,7 +381,7 @@ void CHMGenerator::additionalRequestData()
                         }
                         else
                         {
-                            Okular::DocumentViewport viewport( metaData( "NamedViewport", absolutePath( m_chmUrl, url ) ).toString() );
+                            Okular::DocumentViewport viewport( metaData( QStringLiteral("NamedViewport"), absolutePath( m_chmUrl, url ) ).toString() );
                             objRects.push_back(
                                 new Okular::ObjectRect ( Okular::NormalizedRect(r,xScale,yScale),
                                 false,
@@ -438,7 +438,7 @@ Okular::TextPage* CHMGenerator::textPage( Okular::Page * page )
 
 QVariant CHMGenerator::metaData( const QString &key, const QVariant &option ) const
 {
-    if ( key == "NamedViewport" && !option.toString().isEmpty() )
+    if ( key == QLatin1String("NamedViewport") && !option.toString().isEmpty() )
     {
         const int pos = option.toString().indexOf('#');
         QString tmpUrl = pos == -1 ? option.toString() : option.toString().left(pos);
@@ -451,7 +451,7 @@ QVariant CHMGenerator::metaData( const QString &key, const QVariant &option ) co
         }
         
     }
-    else if ( key == "DocumentTitle" )
+    else if ( key == QLatin1String("DocumentTitle") )
     {
         return m_file->title();
     }

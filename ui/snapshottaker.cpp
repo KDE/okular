@@ -21,8 +21,8 @@ SnapshotTaker::SnapshotTaker( const QString &url, QObject *parent )
     m_player->load( url );
     m_player->hide();
 
-    connect(m_player->mediaObject(), SIGNAL(stateChanged(Phonon::State, Phonon::State)),
-            this, SLOT(stateChanged(Phonon::State, Phonon::State)));
+    connect(m_player->mediaObject(), &Phonon::MediaObject::stateChanged,
+            this, &SnapshotTaker::stateChanged);
 
     m_player->play();
 }

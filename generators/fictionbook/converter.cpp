@@ -274,7 +274,7 @@ bool Converter::convertTitleInfo( const QDomElement &element )
             if ( !convertAuthor( child, firstName, middleName, lastName, dummy, dummy ) )
                 return false;
 
-            mTitleInfo->mAuthor = QString( "%1 %2 %3" ).arg( firstName, middleName, lastName );
+            mTitleInfo->mAuthor = QStringLiteral( "%1 %2 %3" ).arg( firstName, middleName, lastName );
         } else if ( child.tagName() == QLatin1String( "book-title" ) ) {
             if ( !convertTextNode( child, mTitleInfo->mTitle ) )
                 return false;
@@ -312,7 +312,7 @@ bool Converter::convertDocumentInfo( const QDomElement &element )
             if ( !convertAuthor( child, firstName, middleName, lastName, email, nickname ) )
                 return false;
 
-            mDocumentInfo->mAuthor = QString( "%1 %2 %3 <%4> (%5)" )
+            mDocumentInfo->mAuthor = QStringLiteral( "%1 %2 %3 <%4> (%5)" )
                                       .arg( firstName ).arg( middleName ).arg( lastName )
                                       .arg( email ).arg( nickname );
         } else if ( child.tagName() == QLatin1String( "program-used" ) ) {
@@ -378,16 +378,16 @@ bool Converter::convertTextNode( const QDomElement &element, QString &data )
 
 bool Converter::convertDate( const QDomElement &element, QDate &date )
 {
-    if ( element.hasAttribute( "value" ) )
-        date = QDate::fromString( element.attribute( "value" ), Qt::ISODate );
+    if ( element.hasAttribute( QStringLiteral("value") ) )
+        date = QDate::fromString( element.attribute( QStringLiteral("value") ), Qt::ISODate );
 
     return true;
 }
 
 bool Converter::convertSection( const QDomElement &element )
 {
-    if ( element.hasAttribute( "id" ) )
-        mSectionMap.insert( element.attribute( "id" ), mCursor->block() );
+    if ( element.hasAttribute( QStringLiteral("id") ) )
+        mSectionMap.insert( element.attribute( QStringLiteral("id") ), mCursor->block() );
 
     mSectionCounter++;
 
@@ -576,7 +576,7 @@ bool Converter::convertStyle( const QDomElement &element )
 
 bool Converter::convertBinary( const QDomElement &element )
 {
-    const QString id = element.attribute( "id" );
+    const QString id = element.attribute( QStringLiteral("id") );
 
     const QDomText textNode = element.firstChild().toText();
     QByteArray data = textNode.data().toLatin1();
@@ -604,7 +604,7 @@ bool Converter::convertCover( const QDomElement &element )
 
 bool Converter::convertImage( const QDomElement &element )
 {
-    QString href = element.attributeNS( "http://www.w3.org/1999/xlink", "href" );
+    QString href = element.attributeNS( QStringLiteral("http://www.w3.org/1999/xlink"), QStringLiteral("href") );
 
     if ( href.startsWith( '#' ) )
         href = href.mid( 1 );
@@ -707,17 +707,17 @@ bool Converter::convertCite( const QDomElement &element )
 
 bool Converter::convertEmptyLine( const QDomElement& )
 {
-    mCursor->insertText( "\n\n" );
+    mCursor->insertText( QStringLiteral("\n\n") );
     return true;
 }
 
 bool Converter::convertLink( const QDomElement &element )
 {
-    QString href = element.attributeNS( "http://www.w3.org/1999/xlink", "href" );
-    QString type = element.attributeNS( "http://www.w3.org/1999/xlink", "type" );
+    QString href = element.attributeNS( QStringLiteral("http://www.w3.org/1999/xlink"), QStringLiteral("href") );
+    QString type = element.attributeNS( QStringLiteral("http://www.w3.org/1999/xlink"), QStringLiteral("type") );
 
-    if ( type == "note" )
-        mCursor->insertText( "[" );
+    if ( type == QLatin1String("note") )
+        mCursor->insertText( QStringLiteral("[") );
 
     int startPosition = mCursor->position();
 
@@ -755,8 +755,8 @@ bool Converter::convertLink( const QDomElement &element )
 
     int endPosition = mCursor->position();
 
-    if ( type == "note" )
-        mCursor->insertText( "]" );
+    if ( type == QLatin1String("note") )
+        mCursor->insertText( QStringLiteral("]") );
 
     if ( href.startsWith( '#' ) ) { // local link
         mLocalLinks.insert( href.mid( 1 ), QPair<int, int>( startPosition, endPosition ) );

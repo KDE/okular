@@ -34,7 +34,7 @@ static KAboutData createAboutData()
 OKULAR_EXPORT_PLUGIN( KOOOGenerator, createAboutData() )
 
 KOOOGenerator::KOOOGenerator( QObject *parent, const QVariantList &args )
-  : Okular::TextDocumentGenerator( new OOO::Converter, "okular_ooo_generator_settings", parent, args )
+  : Okular::TextDocumentGenerator( new OOO::Converter, QStringLiteral("okular_ooo_generator_settings"), parent, args )
 {
 }
 
@@ -42,7 +42,7 @@ void KOOOGenerator::addPages( KConfigDialog* dlg )
 {
     Okular::TextDocumentSettingsWidget *widget = new Okular::TextDocumentSettingsWidget();
 
-    dlg->addPage( widget, generalSettings(), i18n("OpenDocument Text"), "application-vnd.oasis.opendocument.text", i18n("OpenDocument Text Backend Configuration") );
+    dlg->addPage( widget, generalSettings(), i18n("OpenDocument Text"), QStringLiteral("application-vnd.oasis.opendocument.text"), i18n("OpenDocument Text Backend Configuration") );
 }
 
 void KOOOGenerator::walletDataForFile( const QString &fileName, QString *walletName, QString *walletFolder, QString *walletKey ) const

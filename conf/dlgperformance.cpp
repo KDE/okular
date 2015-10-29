@@ -24,7 +24,7 @@ DlgPerformance::DlgPerformance( QWidget * parent )
     labelFont.setBold( true );
     m_dlg->descLabel->setFont( labelFont );
 
-    m_dlg->cpuLabel->setPixmap( BarIcon( "cpu", 32 ) );
+    m_dlg->cpuLabel->setPixmap( BarIcon( QStringLiteral("cpu"), 32 ) );
 //     m_dlg->memoryLabel->setPixmap( BarIcon( "kcmmemory", 32 ) ); // TODO: enable again when proper icon is available
 
     connect(m_dlg->kcfg_MemoryLevel, &KButtonGroup::changed, this, &DlgPerformance::radioGroup_changed);

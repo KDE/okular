@@ -36,8 +36,8 @@ fontMap::fontMap()
   // other way than to try both options one after another. We use the
   // teTeX 3.0 format first.
   QProcess kpsewhich;
-  kpsewhich.start("kpsewhich",
-                  QStringList() << "--format=map" << "ps2pk.map",
+  kpsewhich.start(QStringLiteral("kpsewhich"),
+                  QStringList() << QStringLiteral("--format=map") << QStringLiteral("ps2pk.map"),
                   QIODevice::ReadOnly|QIODevice::Text);
 
   if (!kpsewhich.waitForStarted()) {
@@ -52,8 +52,8 @@ fontMap::fontMap()
   if (map_fileName.isEmpty()) {
     // Map file not found? Then we try the teTeX < 3.0 way of finding
     // the file.
-    kpsewhich.start("kpsewhich",
-                    QStringList() << "--format=dvips config" << "ps2pk.map",
+    kpsewhich.start(QStringLiteral("kpsewhich"),
+                    QStringList() << QStringLiteral("--format=dvips config") << QStringLiteral("ps2pk.map"),
                     QIODevice::ReadOnly|QIODevice::Text);
     if (!kpsewhich.waitForStarted()) {
       qCCritical(OkularDviDebug) << "fontMap::fontMap(): kpsewhich could not be started." << endl;
@@ -89,7 +89,7 @@ fontMap::fontMap()
         encodingName = encodingName.mid(1);
 
       double slant = 0.0;
-      int i = line.indexOf("SlantFont");
+      int i = line.indexOf(QStringLiteral("SlantFont"));
       if (i >= 0) {
         bool ok;
         slant = line.left(i).section(' ', -1, -1 ,QString::SectionSkipEmpty).toDouble(&ok);
@@ -102,14 +102,14 @@ fontMap::fontMap()
       entry.slant        = slant;
       entry.fontFileName = fontFileName;
       entry.fullFontName = FullName;
-      if (encodingName.endsWith(".enc"))
+      if (encodingName.endsWith(QLatin1String(".enc")))
         entry.fontEncoding = encodingName;
       else
         entry.fontEncoding.clear();
     }
     file.close();
   } else
-    qCCritical(OkularDviDebug) << QString("fontMap::fontMap(): The file '%1' could not be opened.").arg(map_fileName) << endl;
+    qCCritical(OkularDviDebug) << QStringLiteral("fontMap::fontMap(): The file '%1' could not be opened.").arg(map_fileName) << endl;
 
 #ifdef DEBUG_FONTMAP
   qCDebug(OkularDviDebug) << "FontMap file parsed. Results:";

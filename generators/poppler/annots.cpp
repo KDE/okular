@@ -88,7 +88,7 @@ void PopplerAnnotationProxy::notifyAddition( Okular::Annotation *okl_ann, int pa
 {
     // Export annotation to DOM
     QDomDocument doc;
-    QDomElement dom_ann = doc.createElement( "root" );
+    QDomElement dom_ann = doc.createElement( QStringLiteral("root") );
     Okular::AnnotationUtils::storeAnnotation( okl_ann, dom_ann, doc );
 
     QMutexLocker ml(mutex);
@@ -359,7 +359,7 @@ Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *
         {
             // this is uber ugly but i don't know a better way to do it without introducing a poppler::annotation dependency on core
             QDomDocument doc;
-            QDomElement root = doc.createElement( "root" );
+            QDomElement root = doc.createElement( QStringLiteral("root") );
             doc.appendChild( root );
             Poppler::AnnotationUtils::storeAnnotation( ann, root, doc );
             annotation = Okular::AnnotationUtils::createAnnotation( root );

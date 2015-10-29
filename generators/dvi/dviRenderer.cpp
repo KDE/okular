@@ -52,7 +52,7 @@ dviRenderer::dviRenderer(bool useFontHinting)
     shrinkfactor(3),
     source_href(0),
     HTML_href(0),
-    editorCommand(""),
+    editorCommand(QLatin1String("")),
     PostScriptOutPutString(0),
     PS_interface(new ghostscript_interface),
     _postscript(true),
@@ -604,7 +604,7 @@ Anchor dviRenderer::parseReference(const QString &reference)
   // points to line number 1111 in the file "Filename". KDVI then
   // looks for source specials of the form "src:xxxxFilename", and
   // tries to find the special with the biggest xxxx
-  if (reference.indexOf("src:", 0, Qt::CaseInsensitive) == 0) {
+  if (reference.indexOf(QStringLiteral("src:"), 0, Qt::CaseInsensitive) == 0) {
 
     // Extract the file name and the numeral part from the reference string
     DVI_SourceFileSplitter splitter(reference, dviFile->filename);
@@ -699,25 +699,25 @@ QString dviRenderer::PDFencodingToQString(const QString& _pdfstring)
   // replaces them by UTF8. See Section 3.2.3 of the PDF reference
   // guide for information.
   QString pdfstring = _pdfstring;
-  pdfstring = pdfstring.replace("\\n", "\n");
-  pdfstring = pdfstring.replace("\\r", "\n");
-  pdfstring = pdfstring.replace("\\t", "\t");
-  pdfstring = pdfstring.replace("\\f", "\f");
-  pdfstring = pdfstring.replace("\\(", "(");
-  pdfstring = pdfstring.replace("\\)", ")");
-  pdfstring = pdfstring.replace("\\\\", "\\");
+  pdfstring = pdfstring.replace(QLatin1String("\\n"), QLatin1String("\n"));
+  pdfstring = pdfstring.replace(QLatin1String("\\r"), QLatin1String("\n"));
+  pdfstring = pdfstring.replace(QLatin1String("\\t"), QLatin1String("\t"));
+  pdfstring = pdfstring.replace(QLatin1String("\\f"), QLatin1String("\f"));
+  pdfstring = pdfstring.replace(QLatin1String("\\("), QLatin1String("("));
+  pdfstring = pdfstring.replace(QLatin1String("\\)"), QLatin1String(")"));
+  pdfstring = pdfstring.replace(QLatin1String("\\\\"), QLatin1String("\\"));
 
   // Now replace octal character codes with the characters they encode
   int pos;
-  QRegExp rx( "(\\\\)(\\d\\d\\d)" );  // matches "\xyz" where x,y,z are numbers
+  QRegExp rx( QStringLiteral("(\\\\)(\\d\\d\\d)") );  // matches "\xyz" where x,y,z are numbers
   while((pos = rx.indexIn( pdfstring )) != -1) {
     pdfstring = pdfstring.replace(pos, 4, QChar(rx.cap(2).toInt(0,8)));
   }
-  rx.setPattern( "(\\\\)(\\d\\d)" );  // matches "\xy" where x,y are numbers
+  rx.setPattern( QStringLiteral("(\\\\)(\\d\\d)") );  // matches "\xy" where x,y are numbers
   while((pos = rx.indexIn( pdfstring )) != -1) {
     pdfstring = pdfstring.replace(pos, 3, QChar(rx.cap(2).toInt(0,8)));
   }
-  rx.setPattern( "(\\\\)(\\d)" );  // matches "\x" where x is a number
+  rx.setPattern( QStringLiteral("(\\\\)(\\d)") );  // matches "\x" where x is a number
   while((pos = rx.indexIn( pdfstring )) != -1) {
     pdfstring = pdfstring.replace(pos, 4, QChar(rx.cap(2).toInt(0,8)));
   }

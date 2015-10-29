@@ -90,7 +90,7 @@ bool PluckerGenerator::loadDocument( const QString & fileName, QVector<Okular::P
         it.next();
         if ( !it.value().isEmpty() ) {
             if ( it.key() == QLatin1String( "name" ) )
-                mDocumentInfo.set( "name", it.value(), i18n( "Name" ) );
+                mDocumentInfo.set( QStringLiteral("name"), it.value(), i18n( "Name" ) );
             else if ( it.key() == QLatin1String( "title" ) )
                 mDocumentInfo.set( Okular::DocumentInfo::Title, it.value() );
             else if ( it.key() == QLatin1String( "author" ) )

@@ -159,6 +159,8 @@ Shell::~Shell()
     }
     if (m_unique)
         QDBusConnection::sessionBus().unregisterService(QStringLiteral("org.kde.okular"));
+
+    delete m_tabWidget;
 }
 
 // Open a new document if we have space for it

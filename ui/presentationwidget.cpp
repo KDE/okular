@@ -155,7 +155,6 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     // create top toolbar
     m_topBar = new PresentationToolBar( this );
     m_topBar->setObjectName( QLatin1String( "presentationBar" ) );
-    m_topBar->setIconSize( QSize( 32, 32 ) );
     m_topBar->setMovable( false );
     m_topBar->layout()->setMargin(0);
     m_topBar->addAction( KIcon( layoutDirection() == Qt::RightToLeft ? "go-next" : "go-previous" ), i18n( "Previous Page" ), this, SLOT(slotPrevPage()) );
@@ -1297,7 +1296,12 @@ void PresentationWidget::repositionContent()
 {
     const QRect ourGeom = geometry();
 
-    m_topBar->setGeometry( 0, 0, ourGeom.width(), 32 + 10 );
+    // tool bar height in pixels, make it large enough to hold the text fields with the page numbers
+    const int toolBarHeight = m_pagesEdit->height() * 1.5;
+
+    m_topBar->setGeometry( 0, 0, ourGeom.width(), toolBarHeight );
+    m_topBar->setIconSize( QSize( toolBarHeight * 0.75, toolBarHeight * 0.75 ) );
+
 }
 
 void PresentationWidget::requestPixmaps()

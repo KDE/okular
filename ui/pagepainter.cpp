@@ -694,19 +694,26 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                     QImage image( annotBoundary.size(), QImage::Format_ARGB32 );
                     image.fill( acolor.rgba() );
                     QPainter painter( &image );
-                    painter.setPen( Qt::black );
                     painter.setFont( text->textFont() );
                     Qt::AlignmentFlag halign = ( text->inplaceAlignment() == 1 ? Qt::AlignHCenter : ( text->inplaceAlignment() == 2 ? Qt::AlignRight : Qt::AlignLeft ) );
                     const double invXScale = (double)page->width() / scaledWidth;
                     const double invYScale = (double)page->height() / scaledHeight;
+                    const double borderWidth = text->style().width();
                     painter.scale( 1 / invXScale, 1 / invYScale );
-                    painter.drawText( 2 * invXScale, 2 * invYScale,
-                                      (image.width() - 2) * invXScale,
-                                      (image.height() - 2) * invYScale,
-                                      Qt::AlignTop | halign | Qt::TextWordWrap,
+                    painter.drawText( borderWidth * invXScale, borderWidth * invYScale,
+                                      (image.width() - 2 * borderWidth) * invXScale,
+                                      (image.height() - 2 * borderWidth) * invYScale,
+                                      Qt::AlignTop | halign | Qt::TextWrapAnywhere,
                                       text->contents() );
                     painter.resetTransform();
-                    painter.drawRect( 0, 0, image.width() - 1, image.height() - 1 );
+                    //Required as asking for a zero width pen results
+                    //in a default width pen (1.0) being created
+                    if ( borderWidth != 0 )
+                    {
+                        QPen pen( Qt::black, borderWidth );
+                        painter.setPen( pen );
+                        painter.drawRect( 0, 0, image.width() - 1, image.height() - 1 );
+                    }
                     painter.end();
 
                     mixedPainter->drawImage( annotBoundary.topLeft(), image );

@@ -360,6 +360,7 @@ QDomDocument EditAnnotToolDialog::toolXml() const
         engineElement.setAttribute( "block", "true" );
         annotationElement.setAttribute( "type", "FreeText" );
         annotationElement.setAttribute( "color", color );
+        annotationElement.setAttribute( "width", width );
         if ( ta->inplaceAlignment() != 0 )
             annotationElement.setAttribute( "align", ta->inplaceAlignment() );
         if ( ta->textFont() != QApplication::font() )
@@ -495,6 +496,7 @@ void EditAnnotToolDialog::createStubAnnotation()
     {
         Okular::TextAnnotation * ta = new Okular::TextAnnotation();
         ta->setTextType( Okular::TextAnnotation::InPlace );
+        ta->style().setWidth( 1.0 );
         ta->style().setColor( Qt::yellow );
         m_stubann = ta;
     }

@@ -289,8 +289,18 @@ QWidget * TextAnnotationWidget::createStyleWidget()
         m_textAlign->addItem( i18n("Right") );
         m_textAlign->setCurrentIndex( m_textAnn->inplaceAlignment() );
 
+        tmplabel = new QLabel( i18n( "Border Width:" ), widget );
+        innerlay->addWidget( tmplabel, 2, 0, Qt::AlignRight );
+        m_spinWidth = new QDoubleSpinBox( widget );
+        innerlay->addWidget( m_spinWidth, 2, 1 );
+        tmplabel->setBuddy( m_spinWidth );
+        m_spinWidth->setRange( 0, 100 );
+        m_spinWidth->setValue( m_textAnn->style().width() );
+        m_spinWidth->setSingleStep( 0.1 );
+
         connect( m_fontReq, SIGNAL(fontSelected(QFont)), this, SIGNAL(dataChanged()) );
         connect( m_textAlign, SIGNAL(currentIndexChanged(int)), this, SIGNAL(dataChanged()) );
+        connect( m_spinWidth, SIGNAL(valueChanged(double)), this, SIGNAL(dataChanged()) );
     }
 
     return widget;
@@ -307,6 +317,7 @@ void TextAnnotationWidget::applyChanges()
     {
         m_textAnn->setTextFont( m_fontReq->font() );
         m_textAnn->setInplaceAlignment( m_textAlign->currentIndex() );
+        m_textAnn->style().setWidth( m_spinWidth->value() );
     }
 }
 

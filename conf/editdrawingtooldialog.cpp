@@ -41,6 +41,7 @@ EditDrawingToolDialog::EditDrawingToolDialog( const QDomElement &initialState, Q
     mainLayout->addWidget( buttonBox );
 
     m_name = new KLineEdit( widget );
+    m_name->setObjectName( QStringLiteral("name") );
     mainLayout->addWidget( m_name );
 
     QLabel *tmplabel = new QLabel( i18n( "&Name:" ), widget );

@@ -179,7 +179,7 @@ void PartTest::testSelectText()
 {
     QVariantList dummyArgs;
     Okular::Part part(NULL, NULL, dummyArgs);
-    part.openDocument(KDESRCDIR "data/file2.pdf");
+    QVERIFY(openDocument(&part, KDESRCDIR "data/file2.pdf"));
     part.widget()->show();
     QTest::qWaitForWindowShown(part.widget());
 
@@ -209,7 +209,7 @@ void PartTest::testClickInternalLink()
 {
     QVariantList dummyArgs;
     Okular::Part part(NULL, NULL, dummyArgs);
-    part.openDocument(KDESRCDIR "data/file2.pdf");
+    QVERIFY(openDocument(&part, KDESRCDIR "data/file2.pdf"));
     part.widget()->show();
     QTest::qWaitForWindowShown(part.widget());
 

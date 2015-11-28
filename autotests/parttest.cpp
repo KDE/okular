@@ -189,18 +189,18 @@ void PartTest::testSelectText()
     part.m_document->setViewportPage(0);
 
     // wait for pixmap
-    while (!part.m_document->page(0)->hasPixmap(part.m_pageView))
-        QTest::qWait(100);
+    QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
 
-    QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseTextSelect");
+    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseTextSelect"));
 
     QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * 0.12, height * 0.16));
     QTest::mousePress(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, QPoint(width * 0.12, height * 0.16));
     QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * 0.8, height * 0.16));
+    QTest::qWait(100); // without this wait the test fails
     QTest::mouseRelease(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, QPoint(width * 0.8, height * 0.16));
 
     QApplication::clipboard()->clear();
-    QMetaObject::invokeMethod(part.m_pageView, "copyTextSelection");
+    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "copyTextSelection"));
 
     QCOMPARE(QApplication::clipboard()->text(), QString("Hola que tal\n"));
 }

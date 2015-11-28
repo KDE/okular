@@ -1,0 +1,25 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "aacid@kde.org",
+                "Name": "Albert Astals Cid"
+            }
+        ],
+        "Description": "A PostScript file renderer based on the Spectre library",
+        "Id": "okular_ghostview",
+        "License": "GPL",
+        "MimeTypes": [
+            "application/postscript",
+            "image/x-eps"
+        ],
+        "Name": "PS Backend",
+        "ServiceTypes": [
+            "okular/Generator"
+        ],
+        "Version": "0.1.7"
+    },
+    "X-KDE-Priority": 2,
+    "X-KDE-okularAPIVersion": 1,
+    "X-KDE-okularHasInternalSettings": true
+}

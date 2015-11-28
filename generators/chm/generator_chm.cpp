@@ -29,22 +29,7 @@
 #include <core/textpage.h>
 #include <core/utils.h>
 
-static KAboutData createAboutData()
-{
-    KAboutData aboutData(
-         QStringLiteral("okular_chm"),
-         i18n( "CHM Backend" ),
-         QStringLiteral("0.1.4"),
-         i18n( "A Microsoft Windows help file renderer" ),
-         KAboutLicense::GPL,
-         i18n( "© 2005-2007 Piotr Szymański\n© 2008 Albert Astals Cid" )
-    );
-    aboutData.addAuthor( i18n( "Piotr Szymański" ), QString(), QStringLiteral("niedakh@gmail.com") );
-    aboutData.addAuthor( i18n( "Albert Astals Cid" ), QString(), QStringLiteral("aacid@kde.org") );
-    return aboutData;
-}
-
-OKULAR_EXPORT_PLUGIN( CHMGenerator, createAboutData() )
+OKULAR_EXPORT_PLUGIN(CHMGenerator, "libokularGenerator_chmlib.json")
 
 static QString absolutePath( const QString &baseUrl, const QString &path )
 {

@@ -22,9 +22,7 @@
 #include <QtCore/QMutex>
 #include <QtCore/QPointer>
 #include <QUrl>
-
-#include <kcomponentdata.h>
-#include <kservicetypetrader.h>
+#include <KPluginMetaData>
 
 // local includes
 #include "fontinfo.h"
@@ -35,6 +33,7 @@ class QEventLoop;
 class QFile;
 class QTimer;
 class QTemporaryFile;
+class KPluginMetaData;
 
 struct AllocatedPixmap;
 struct ArchiveData;
@@ -50,14 +49,13 @@ class View;
 
 struct GeneratorInfo
 {
-    GeneratorInfo( const KComponentData &_data )
-        : generator( 0 ), data( _data ),
-          config( 0 ), save( 0 ),
+    explicit GeneratorInfo( Okular::Generator *g, const KPluginMetaData &data)
+        : generator( g ), metadata( data ), config( nullptr ), save( nullptr ),
           configChecked( false ), saveChecked( false )
     {}
 
     Okular::Generator * generator;
-    KComponentData data;
+    KPluginMetaData metadata;
     Okular::ConfigInterface * config;
     Okular::SaveInterface * save;
     bool configChecked : 1;
@@ -123,15 +121,15 @@ class DocumentPrivate
         void saveViewsInfo( View *view, QDomElement &e ) const;
         QString giveAbsolutePath( const QString & fileName ) const;
         bool openRelativeFile( const QString & fileName );
-        Generator * loadGeneratorLibrary( const KService::Ptr &service );
+        Generator * loadGeneratorLibrary( const KPluginMetaData& service );
         void loadAllGeneratorLibraries();
-        void loadServiceList( const KService::List& offers );
+        void loadServiceList( const QVector<KPluginMetaData>& offers );
         void unloadGenerator( const GeneratorInfo& info );
         void cacheExportFormats();
         void setRotationInternal( int r, bool notify );
         ConfigInterface* generatorConfig( GeneratorInfo& info );
         SaveInterface* generatorSave( GeneratorInfo& info );
-        Document::OpenResult openDocumentInternal( const KService::Ptr& offer, bool isstdin, const QString& docFile, const QByteArray& filedata, const QString& password );
+        Document::OpenResult openDocumentInternal( const KPluginMetaData& offer, bool isstdin, const QString& docFile, const QByteArray& filedata, const QString& password );
         bool savePageDocumentInfo( QTemporaryFile *infoFile, int what ) const;
         DocumentViewport nextDocumentViewport() const;
         void notifyAnnotationChanges( int page );
@@ -280,6 +278,11 @@ class DocumentPrivate
         QDomNode m_prevPropsOfAnnotBeingModified;
 
         synctex_scanner_t m_synctex_scanner;
+
+        // generator selection
+        static QVector<KPluginMetaData> availableGenerators();
+        static QVector<KPluginMetaData> configurableGenerators();
+        static KPluginMetaData generatorForMimeType(const QMimeType& type, QWidget* widget);
 };
 
 class DocumentInfoPrivate

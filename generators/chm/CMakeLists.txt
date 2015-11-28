@@ -19,15 +19,10 @@ set(okularGenerator_chmlib_SRCS
    generator_chm.cpp
 )
 
-add_library(okularGenerator_chmlib MODULE ${okularGenerator_chmlib_SRCS})
-
+okular_add_generator(okularGenerator_chmlib ${okularGenerator_chmlib_SRCS})
 target_link_libraries(okularGenerator_chmlib  okularcore ${CHM_LIBRARY} KF5::KHtml)
-
-install(TARGETS okularGenerator_chmlib DESTINATION ${KDE_INSTALL_PLUGINDIR})
-
 
 ########### install files ###############
 
-install( FILES libokularGenerator_chmlib.desktop okularChm.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
 install( PROGRAMS okularApplication_chm.desktop org.kde.mobile.okular_chm.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
 

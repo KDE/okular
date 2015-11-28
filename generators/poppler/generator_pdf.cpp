@@ -479,20 +479,7 @@ static QLinkedList<Okular::ObjectRect*> generateLinks( const QList<Poppler::Link
  * in async thread and 2) doing the 'heavy' print operation.
  */
 
-static KAboutData createAboutData()
-{
-    KAboutData aboutData( QStringLiteral("okular_poppler"),
-         i18n( "PDF Backend" ),
-         QStringLiteral("0.6.5"),
-         i18n( "A PDF file renderer" ),
-         KAboutLicense::GPL,
-         i18n( "© 2005-2008 Albert Astals Cid" )
-    );
-    aboutData.addAuthor( i18n( "Albert Astals Cid" ), QString(), QStringLiteral("aacid@kde.org") );
-    return aboutData;
-}
-
-OKULAR_EXPORT_PLUGIN(PDFGenerator, createAboutData())
+OKULAR_EXPORT_PLUGIN(PDFGenerator, "libokularGenerator_poppler.json")
 
 static void PDFGeneratorPopplerDebugFunction(const QString &message, const QVariant &closure)
 {

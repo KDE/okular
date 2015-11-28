@@ -42,12 +42,8 @@
 #include <QPageSize>
 #include <QStandardPaths>
 
-#include <k4aboutdata.h>
 #include <kauthorized.h>
 #include <kconfigdialog.h>
-#include <QtCore/QLoggingCategory>
-#include <klibloader.h>
-#include <KLocalizedString>
 #include <kmacroexpander.h>
 #include <kmessagebox.h>
 #include <kmimetypetrader.h>
@@ -57,7 +53,8 @@
 #include <kzip.h>
 #include <KIO/Global>
 #include <KFormat>
-
+#include <KLocalizedString>
+#include <KPluginMetaData>
 
 // local includes
 #include "action.h"
@@ -816,23 +813,20 @@ bool DocumentPrivate::openRelativeFile( const QString & fileName )
     return true;
 }
 
-Generator * DocumentPrivate::loadGeneratorLibrary( const KService::Ptr &service )
+Generator * DocumentPrivate::loadGeneratorLibrary( const KPluginMetaData &service )
 {
-    KPluginLoader loader( service->library() );
+    KPluginLoader loader( service.fileName() );
     KPluginFactory *factory = loader.factory();
     if ( !factory )
     {
-        qCWarning(OkularCoreDebug).nospace() << "Invalid plugin factory for " << service->library() << ":" << loader.errorString();
+        qCWarning(OkularCoreDebug).nospace() << "Invalid plugin factory for " << service.fileName() << ":" << loader.errorString();
         return 0;
     }
 
-    Generator * plugin = service->createInstance<Okular::Generator>();
+    Generator * plugin = factory->create<Okular::Generator>();
 
-//    GeneratorInfo info( factory->componentData() );
-    KComponentData data = KComponentData::mainComponent();
-    GeneratorInfo info( data );
-    info.generator = plugin;
-    m_loadedGenerators.insert( service->name(), info );
+    GeneratorInfo info( plugin, service );
+    m_loadedGenerators.insert( service.pluginId(), info );
     return plugin;
 }
 
@@ -841,14 +835,12 @@ void DocumentPrivate::loadAllGeneratorLibraries()
     if ( m_generatorsLoaded )
         return;
 
-    m_generatorsLoaded = true;
+    loadServiceList( availableGenerators() );
 
-    QString constraint(QStringLiteral("([X-KDE-Priority] > 0) and (exist Library)")) ;
-    KService::List offers = KServiceTypeTrader::self()->query( QStringLiteral("okular/Generator"), constraint );
-    loadServiceList( offers );
+    m_generatorsLoaded = true;
 }
 
-void DocumentPrivate::loadServiceList( const KService::List& offers )
+void DocumentPrivate::loadServiceList( const QVector<KPluginMetaData>& offers )
 {
     int count = offers.count();
     if ( count <= 0 )
@@ -856,9 +848,9 @@ void DocumentPrivate::loadServiceList( const KService::List& offers )
 
     for ( int i = 0; i < count; ++i )
     {
-        QString propName = offers.at(i)->name();
+        QString id = offers.at(i).pluginId();
         // don't load already loaded generators
-        QHash< QString, GeneratorInfo >::const_iterator genIt = m_loadedGenerators.constFind( propName );
+        QHash< QString, GeneratorInfo >::const_iterator genIt = m_loadedGenerators.constFind( id );
         if ( !m_loadedGenerators.isEmpty() && genIt != m_loadedGenerators.constEnd() )
             continue;
 
@@ -909,9 +901,9 @@ SaveInterface* DocumentPrivate::generatorSave( GeneratorInfo& info )
     return info.save;
 }
 
-Document::OpenResult DocumentPrivate::openDocumentInternal( const KService::Ptr& offer, bool isstdin, const QString& docFile, const QByteArray& filedata, const QString& password )
+Document::OpenResult DocumentPrivate::openDocumentInternal( const KPluginMetaData& offer, bool isstdin, const QString& docFile, const QByteArray& filedata, const QString& password )
 {
-    QString propName = offer->name();
+    QString propName = offer.pluginId();
     QHash< QString, GeneratorInfo >::const_iterator genIt = m_loadedGenerators.constFind( propName );
     QString catalogName;
     m_walletGenerator = 0;
@@ -2219,23 +2211,6 @@ Document::~Document()
     delete d;
 }
 
-class kMimeTypeMoreThan {
-public:
-    kMimeTypeMoreThan( const QMimeType &mime ) : _mime( mime ) {}
-    bool operator()( const KService::Ptr &s1, const KService::Ptr &s2 )
-    {
-        const QString mimeName = _mime.name();
-        if (s1->mimeTypes().contains( mimeName ) && !s2->mimeTypes().contains( mimeName ))
-            return true;
-        else if (s2->mimeTypes().contains( mimeName ) && !s1->mimeTypes().contains( mimeName ))
-            return false;
-        return s1->property( QStringLiteral("X-KDE-Priority") ).toInt() > s2->property( QStringLiteral("X-KDE-Priority") ).toInt();
-    }
-
-private:
-    const QMimeType &_mime;
-};
-
 QString DocumentPrivate::docDataFileName(const QUrl &url, qint64 document_size)
 {
     QString fn = url.fileName();
@@ -2256,7 +2231,66 @@ QString DocumentPrivate::docDataFileName(const QUrl &url, qint64 document_size)
     return newokularfile;
 }
 
+QVector<KPluginMetaData> DocumentPrivate::availableGenerators()
+{
+    static QVector<KPluginMetaData> result;
+    if (result.isEmpty())
+    {
+        result = KPluginLoader::findPlugins("okular/generators");
+    }
+    return result;
+}
 
+KPluginMetaData DocumentPrivate::generatorForMimeType(const QMimeType& type, QWidget* widget)
+{
+    const QVector<KPluginMetaData> available = availableGenerators();
+    QVector<KPluginMetaData> offers;
+
+    for (const KPluginMetaData& md : available)
+    {
+        foreach (const QString& supported, md.mimeTypes())
+        {
+            if (type.inherits(supported))
+            {
+                offers << md;
+            }
+        }
+    }
+    if (offers.isEmpty())
+    {
+        return KPluginMetaData();
+    }
+    int hRank=0;
+    // best ranked offer search
+    int offercount = offers.size();
+    if (offercount > 1)
+    {
+        // sort the offers: the offers with an higher priority come before
+        auto cmp = [](const KPluginMetaData& s1, const KPluginMetaData& s2)
+        {
+            const QString property = QStringLiteral("X-KDE-Priority");
+            return s1.rawData()[property].toInt() > s2.rawData()[property].toInt();
+        };
+        std::stable_sort(offers.begin(), offers.end(), cmp);
+
+        if (SettingsCore::chooseGenerators())
+        {
+            QStringList list;
+            for (int i = 0; i < offercount; ++i)
+            {
+                list << offers.at(i).pluginId();
+            }
+            ChooseEngineDialog choose(list, type, widget);
+
+            if (choose.exec() == QDialog::Rejected)
+                return KPluginMetaData();
+
+            hRank = choose.selectedGenerator();
+        }
+    }
+    Q_ASSERT(hRank < offers.size());
+    return offers.at(hRank);
+}
 
 Document::OpenResult Document::openDocument(const QString & docFile, const QUrl &url, const QMimeType &_mime, const QString & password )
 {
@@ -2301,77 +2335,50 @@ Document::OpenResult Document::openDocument(const QString & docFile, const QUrl 
 
     // 0. load Generator
     // request only valid non-disabled plugins suitable for the mimetype
-    QString constraint(QStringLiteral("([X-KDE-Priority] > 0) and (exist Library)")) ;
-    KService::List offers = KMimeTypeTrader::self()->query(mime.name(),QStringLiteral("okular/Generator"),constraint);
-    if ( offers.isEmpty() && !triedMimeFromFileContent )
+    KPluginMetaData offer = DocumentPrivate::generatorForMimeType(mime, d->m_widget);
+    if ( !offer.isValid() && !triedMimeFromFileContent )
     {
         QMimeType newmime = db.mimeTypeForFile(docFile, QMimeDatabase::MatchExtension);
         triedMimeFromFileContent = true;
-        if ( newmime.name() != mime.name() )
+        if ( newmime != mime )
         {
             mime = newmime;
-            offers = KMimeTypeTrader::self()->query( mime.name(), QStringLiteral("okular/Generator"), constraint );
+            offer = DocumentPrivate::generatorForMimeType(mime, d->m_widget);
         }
-        if ( offers.isEmpty() )
+        if ( !offer.isValid() )
         {
             // There's still no offers, do a final mime search based on the filename
             // We need this because sometimes (e.g. when downloading from a webserver) the mimetype we
             // use is the one fed by the server, that may be wrong
-
 #pragma message("Fix generator loading")
-            //            newmime = db.mimeTypeForUrl( docFile );
-            if ( newmime.name() != mime.name() )
+            newmime = db.mimeTypeForUrl( url );
+
+            if ( !newmime.isDefault() && newmime != mime )
             {
                 mime = newmime;
-                offers = KMimeTypeTrader::self()->query( mime.name(), QStringLiteral("okular/Generator"), constraint );
+                offer = DocumentPrivate::generatorForMimeType(mime, d->m_widget);
             }
         }
     }
-    if (offers.isEmpty())
+    if (!offer.isValid())
     {
         emit error( i18n( "Can not find a plugin which is able to handle the document being passed." ), -1 );
         qCWarning(OkularCoreDebug).nospace() << "No plugin for mimetype '" << mime.name() << "'.";
         return OpenError;
     }
-    int hRank=0;
-    // best ranked offer search
-    int offercount = offers.count();
-    if ( offercount > 1 )
-    {
-        // sort the offers: the offers with an higher priority come before
-        qStableSort( offers.begin(), offers.end(), kMimeTypeMoreThan( mime ) );
 
-        if ( SettingsCore::chooseGenerators() )
-        {
-            QStringList list;
-            for ( int i = 0; i < offercount; ++i )
-            {
-                list << offers.at(i)->name();
-            }
-
-            ChooseEngineDialog choose( list, mime, d->m_widget );
-
-            if ( choose.exec() == QDialog::Rejected )
-                return OpenError;
-
-            hRank = choose.selectedGenerator();
-        }
-    }
-
-    KService::Ptr offer = offers.at( hRank );
     // 1. load Document
     OpenResult openResult = d->openDocumentInternal( offer, isstdin, docFile, filedata, password );
     if ( openResult == OpenError && !triedMimeFromFileContent )
     {
         QMimeType newmime = db.mimeTypeForFile(docFile, QMimeDatabase::MatchExtension);
         triedMimeFromFileContent = true;
-        if ( newmime.name() != mime.name() )
+        if ( newmime != mime )
         {
             mime = newmime;
-            offers = KMimeTypeTrader::self()->query( mime.name(), QStringLiteral("okular/Generator"), constraint );
-            if ( !offers.isEmpty() )
+            offer = DocumentPrivate::generatorForMimeType(mime, d->m_widget);
+            if ( offer.isValid() )
             {
-                offer = offers.first();
                 openResult = d->openDocumentInternal( offer, isstdin, docFile, filedata, password );
             }
         }
@@ -2389,7 +2396,7 @@ Document::OpenResult Document::openDocument(const QString & docFile, const QUrl 
         d->loadSyncFile(docFile);
     }
 
-    d->m_generatorName = offer->name();
+    d->m_generatorName = offer.pluginId();
     d->m_pageController = new PageController();
     connect( d->m_pageController, SIGNAL(rotationFinished(int,Okular::Page*)),
              this, SLOT(rotationFinished(int,Okular::Page*)) );
@@ -4193,8 +4200,7 @@ void Document::fillConfigDialog( KConfigDialog * dialog )
         return;
 
     // ensure that we have all the generators with settings loaded
-    QString constraint( QStringLiteral("([X-KDE-Priority] > 0) and (exist Library) and ([X-KDE-okularHasInternalSettings])") );
-    KService::List offers = KServiceTypeTrader::self()->query( QStringLiteral("okular/Generator"), constraint );
+    QVector<KPluginMetaData> offers = DocumentPrivate::configurableGenerators();
     d->loadServiceList( offers );
 
     bool pagesAdded = false;
@@ -4216,48 +4222,51 @@ void Document::fillConfigDialog( KConfigDialog * dialog )
     }
 }
 
+
+QVector<KPluginMetaData> DocumentPrivate::configurableGenerators()
+{
+    const QVector<KPluginMetaData> available = availableGenerators();
+    QVector<KPluginMetaData> result;
+    for (const KPluginMetaData& md : available)
+    {
+        if (md.rawData()[QStringLiteral("X-KDE-okularHasInternalSettings")].toBool())
+        {
+            result << md;
+        }
+    }
+    return result;
+}
+
+KPluginMetaData Document::generatorInfo() const
+{
+    if (!d->m_generator)
+        return KPluginMetaData();
+
+    auto genIt = d->m_loadedGenerators.constFind(d->m_generatorName);
+    Q_ASSERT(genIt != d->m_loadedGenerators.constEnd());
+    return genIt.value().metadata;
+}
+
 int Document::configurableGenerators() const
 {
-    QString constraint( QStringLiteral("([X-KDE-Priority] > 0) and (exist Library) and ([X-KDE-okularHasInternalSettings])") );
-    KService::List offers = KServiceTypeTrader::self()->query( QStringLiteral("okular/Generator"), constraint );
-    return offers.count();
+    return DocumentPrivate::configurableGenerators().size();
 }
 
 QStringList Document::supportedMimeTypes() const
 {
-    if ( !d->m_supportedMimeTypes.isEmpty() )
-        return d->m_supportedMimeTypes;
-
-    QString constraint( QStringLiteral("(Library == 'okularpart')") );
-    QLatin1String basePartService( "KParts/ReadOnlyPart" );
-    KService::List offers = KServiceTypeTrader::self()->query( basePartService, constraint );
-    KService::List::ConstIterator it = offers.constBegin(), itEnd = offers.constEnd();
-    for ( ; it != itEnd; ++it )
+    // TODO: make it a static member of DocumentPrivate?
+    QStringList result = d->m_supportedMimeTypes;
+    if (result.isEmpty())
     {
-        KService::Ptr service = *it;
-        QStringList mimeTypes = service->serviceTypes();
-        foreach ( const QString& mimeType, mimeTypes )
-            if ( mimeType != basePartService )
-                d->m_supportedMimeTypes.append( mimeType );
+        const QVector<KPluginMetaData> available = DocumentPrivate::availableGenerators();
+        for (const KPluginMetaData& md : available)
+        {
+            // TODO should be uniquify this list?
+            result << md.mimeTypes();
+        }
+        d->m_supportedMimeTypes = result;
     }
-
-    return d->m_supportedMimeTypes;
-}
-
-const KComponentData* Document::componentData() const
-{
-    if ( !d->m_generator )
-        return 0;
-
-    QHash< QString, GeneratorInfo >::const_iterator genIt = d->m_loadedGenerators.constFind( d->m_generatorName );
-    Q_ASSERT( genIt != d->m_loadedGenerators.constEnd() );
-    const KComponentData* kcd = &genIt.value().data;
-
-    // empty about data
-    if ( kcd->isValid() && kcd->aboutData() && kcd->aboutData()->programName().isEmpty() )
-        return 0;
-
-    return kcd;
+    return result;
 }
 
 bool Document::canSaveChanges() const

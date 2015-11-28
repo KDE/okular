@@ -30,23 +30,7 @@
 
 #include <core/page.h>
 
-static KAboutData createAboutData()
-{
-    KAboutData aboutData(
-         "okular_kimgio",
-         i18n( "Image Backend" ),
-         "0.1.2",
-         i18n( "A simple image backend" ),
-         KAboutLicense::GPL,
-         i18n( "© 2005, 2009 Albert Astals Cid\n© 2006-2007 Pino Toscano\n© 2006-2007 Tobias Koenig" )
-    );
-    aboutData.addAuthor( i18n( "Albert Astals Cid" ), QString(), "aacid@kde.org" );
-    aboutData.addAuthor( i18n( "Pino Toscano" ), QString(), "pino@kde.org" );
-    aboutData.addAuthor( i18n( "Tobias Koenig" ), QString(), "tokoe@kde.org" );
-    return aboutData;
-}
-
-OKULAR_EXPORT_PLUGIN( KIMGIOGenerator, createAboutData() )
+OKULAR_EXPORT_PLUGIN(KIMGIOGenerator, "libokularGenerator_kimgio.json")
 
 KIMGIOGenerator::KIMGIOGenerator( QObject *parent, const QVariantList &args )
     : Generator( parent, args )

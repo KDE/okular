@@ -15,21 +15,7 @@
 #include <klocalizedstring.h>
 #include <KConfigDialog>
 
-static KAboutData createAboutData()
-{
-    KAboutData aboutData(
-         QStringLiteral("okular_txt"),
-         i18n( "Txt Backend" ),
-         QStringLiteral("0.1"),
-         i18n( "Txt backend." ),
-         KAboutLicense::GPL,
-         i18n( "© 2013 Azat Khuzhin" )
-    );
-    aboutData.addAuthor( QStringLiteral( "Azat Khuzhin" ), QString(), QStringLiteral("a3at.mail@gmail.com") );
-    return aboutData;
-}
-
-OKULAR_EXPORT_PLUGIN(TxtGenerator, createAboutData())
+OKULAR_EXPORT_PLUGIN(TxtGenerator, "libokularGenerator_txt.json")
 
 TxtGenerator::TxtGenerator(QObject *parent, const QVariantList &args)
     : Okular::TextDocumentGenerator(new Txt::Converter, QStringLiteral("okular_txt_generator_settings") , parent, args)

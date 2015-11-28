@@ -1,0 +1,24 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "pino@kde.org",
+                "Name": "Pino Toscano"
+            }
+        ],
+        "Description": "DjVu backend based on DjVuLibre",
+        "Id": "okular_djvu",
+        "License": "GPL",
+        "MimeTypes": [
+            "image/vnd.djvu"
+        ],
+        "Name": "DjVu Backend",
+        "ServiceTypes": [
+            "okular/Generator"
+        ],
+        "Version": "0.2.3"
+    },
+    "X-KDE-Priority": 2,
+    "X-KDE-okularAPIVersion": 1,
+    "X-KDE-okularHasInternalSettings": false
+}

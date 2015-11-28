@@ -1,4 +1,11 @@
-set(LIBSPECTRE_MINIMUM_VERSION "0.2")
+
+function(okular_add_generator _target)
+  kcoreaddons_add_plugin(${_target}
+    JSON "lib${_target}.json"
+    INSTALL_NAMESPACE "okular/generators"
+    SOURCES ${ARGN}
+  )
+endfunction()
 
 find_package(Poppler "0.12.1")
 set_package_properties("Poppler-Qt5" PROPERTIES
@@ -7,6 +14,7 @@ set_package_properties("Poppler-Qt5" PROPERTIES
         TYPE RECOMMENDED
         PURPOSE "Support for PDF files in okular.")
 
+set(LIBSPECTRE_MINIMUM_VERSION "0.2")
 find_package(LibSpectre "${LIBSPECTRE_MINIMUM_VERSION}")
 set_package_properties("libspectre" PROPERTIES
         DESCRIPTION  "A PostScript rendering library"
@@ -89,7 +97,7 @@ endif(LIBSPECTRE_FOUND)
 
 if(KF5KExiv2_FOUND)
   add_subdirectory( kimgio )
-endif(KF5KExiv2_FOUND)
+endif()
 
 if(CHM_FOUND)
   add_subdirectory( chm )

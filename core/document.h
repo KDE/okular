@@ -28,7 +28,7 @@
 class QPrintDialog;
 class KBookmark;
 class KConfigDialog;
-class KComponentData;
+class KPluginMetaData;
 class KXMLGUIClient;
 class DocumentItem;
 class QAbstractItemModel;
@@ -719,9 +719,9 @@ class OKULARCORE_EXPORT Document : public QObject
         QStringList supportedMimeTypes() const;
 
         /**
-         * Returns the component data associated with the generator. May be null.
+         * Returns the metadata associated with the generator. May be invalid.
          */
-        const KComponentData* componentData() const;
+        KPluginMetaData generatorInfo() const;
 
         /**
          * Saving capabilities. Their availability varies according to the

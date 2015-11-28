@@ -20,22 +20,7 @@
 
 #include <core/page.h>
 
-static KAboutData createAboutData()
-{
-    KAboutData aboutData(
-         QStringLiteral("okular_plucker"),
-         i18n( "Plucker Document Backend" ),
-         QStringLiteral("0.1.1"),
-         i18n( "A renderer for Plucker eBooks" ),
-         KAboutLicense::GPL,
-         i18n( "© 2007-2008 Tobias Koenig" )
-    );
-    aboutData.addAuthor( QStringLiteral("Tobias Koenig" ), QString(), QStringLiteral("tokoe@kde.org") );
-
-    return aboutData;
-}
-
-OKULAR_EXPORT_PLUGIN( PluckerGenerator, createAboutData() )
+OKULAR_EXPORT_PLUGIN(PluckerGenerator, "libokularGenerator_plucker.json")
 
 static void calculateBoundingRect( QTextDocument *document, int startPosition, int endPosition,
                                    QRectF &rect )

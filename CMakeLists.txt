@@ -205,10 +205,12 @@ PRIVATE
     KF5::Archive
     KF5::JS
     KF5::JSApi
-    KF5::KDELibs4Support
     KF5::KIOCore
+    KF5::KIOWidgets
+    KF5::I18n
     KF5::ThreadWeaver
     KF5::Wallet
+    KF5::Bookmarks
     Phonon::phonon4qt5
     ${MATH_LIB}
     ${ZLIB_LIBRARIES}

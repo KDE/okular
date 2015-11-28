@@ -68,20 +68,7 @@ static void recurseCreateTOC( QDomDocument &maindoc, const QDomNode &parent, QDo
     }
 }
 
-static KAboutData createAboutData()
-{
-    KAboutData aboutData(
-         QStringLiteral("okular_djvu"),
-         i18n( "DjVu Backend" ),
-         QStringLiteral("0.2.3"),
-         i18n( "DjVu backend based on DjVuLibre." ),
-         KAboutLicense::GPL,
-         i18n( "© 2006-2008 Pino Toscano" ));
-    aboutData.addAuthor( i18n( "Pino Toscano" ), QString(), QStringLiteral("pino@kde.org") );
-    return aboutData;
-}
-
-OKULAR_EXPORT_PLUGIN( DjVuGenerator, createAboutData() )
+OKULAR_EXPORT_PLUGIN(DjVuGenerator, "libokularGenerator_djvu.json")
 
 DjVuGenerator::DjVuGenerator( QObject *parent, const QVariantList &args )
     : Okular::Generator( parent, args ), m_docSyn( 0 )

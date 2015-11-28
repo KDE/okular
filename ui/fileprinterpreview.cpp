@@ -24,7 +24,6 @@
 #include <kparts/readonlypart.h>
 #include <kpluginfactory.h>
 #include <kpluginloader.h>
-#include <kservice.h>
 #include <ksharedconfig.h>
 #include <QtCore/qloggingcategory.h>
 

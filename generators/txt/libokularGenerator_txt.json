@@ -1,0 +1,25 @@
+{
+    "KPlugin": {
+
+        "Authors": [
+            {
+                "Email": "a3at.mail@gmail.com",
+                "Name": "Azat Khuzhin"
+            }
+        ],
+        "Description": "Txt backend",
+        "Id": "okular_txt",
+        "License": "GPL",
+        "MimeTypes": [
+            "text/plain"
+        ],
+        "Name": "Txt Backend",
+        "ServiceTypes": [
+            "okular/Generator"
+        ],
+        "Version": "0.1"
+    },
+    "X-KDE-Priority": 2,
+    "X-KDE-okularAPIVersion": 1,
+    "X-KDE-okularHasInternalSettings": true
+}

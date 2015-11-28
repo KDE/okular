@@ -1,0 +1,24 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "tokoe@kde.org",
+                "Name": "Tobias Koenig"
+            }
+        ],
+        "Description": "A renderer for Plucker eBooks",
+        "Id": "okular_plucker",
+        "License": "GPL",
+        "MimeTypes": [
+            "application/prs.plucker"
+        ],
+        "Name": "Plucker Document Backend",
+        "ServiceTypes": [
+            "okular/Generator"
+        ],
+        "Version": "0.1.1"
+    },
+    "X-KDE-Priority": 1,
+    "X-KDE-okularAPIVersion": 1,
+    "X-KDE-okularHasInternalSettings": false
+}

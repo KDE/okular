@@ -15,22 +15,7 @@
 #include <KLocalizedString>
 #include <kconfigdialog.h>
 
-static KAboutData createAboutData()
-{
-    KAboutData aboutData(
-         QStringLiteral("okular_fictionbook"),
-         i18n( "Fiction Book Backend" ),
-         QStringLiteral("0.1.5"),
-         i18n( "A renderer for FictionBook eBooks" ),
-         KAboutLicense::GPL,
-         i18n( "© 2007-2008 Tobias Koenig" )
-    );
-    aboutData.addAuthor( QStringLiteral( "Tobias Koenig" ), QString(), QStringLiteral("tokoe@kde.org") );
-
-    return aboutData;
-}
-
-OKULAR_EXPORT_PLUGIN( FictionBookGenerator, createAboutData() )
+OKULAR_EXPORT_PLUGIN(FictionBookGenerator, "libokularGenerator_fb.json")
 
 FictionBookGenerator::FictionBookGenerator( QObject *parent, const QVariantList &args )
     : Okular::TextDocumentGenerator( new FictionBook::Converter, QStringLiteral("okular_fictionbook_generator_settings"), parent, args )

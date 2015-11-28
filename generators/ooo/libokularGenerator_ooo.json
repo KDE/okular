@@ -1,0 +1,24 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "tokoe@kde.org",
+                "Name": "Tobias Koenig"
+            }
+        ],
+        "Description": "A renderer for OpenDocument Text documents",
+        "Id": "okular_ooo",
+        "License": "GPL",
+        "MimeTypes": [
+            "application/vnd.oasis.opendocument.text"
+        ],
+        "Name": "OpenDocument Text Backend",
+        "ServiceTypes": [
+            "okular/Generator"
+        ],
+        "Version": "0.2.4"
+    },
+    "X-KDE-Priority": 1,
+    "X-KDE-okularAPIVersion": 1,
+    "X-KDE-okularHasInternalSettings": true
+}

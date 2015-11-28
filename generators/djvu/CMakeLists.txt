@@ -13,16 +13,12 @@ set(okularGenerator_djvu_SRCS
 )
 
 
-add_library(okularGenerator_djvu MODULE ${okularGenerator_djvu_SRCS})
+okular_add_generator(okularGenerator_djvu ${okularGenerator_djvu_SRCS})
 
 target_link_libraries(okularGenerator_djvu okularcore ${DJVULIBRE_LIBRARY} KF5::KDELibs4Support)
 
-install(TARGETS okularGenerator_djvu DESTINATION ${KDE_INSTALL_PLUGINDIR})
-
-
 ########### install files ###############
 
-install( FILES libokularGenerator_djvu.desktop okularDjvu.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
 install( PROGRAMS okularApplication_djvu.desktop org.kde.mobile.okular_djvu.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
 
 

@@ -1,0 +1,51 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "aacid@kde.org",
+                "Name": "Albert Astals Cid"
+            }, {
+                "Email": "pino@kde.org",
+                "Name": "Pino Toscano"
+            }, {
+                "Email": "tokoe@kde.org",
+                "Name": "Tobias Koenig"
+            }
+        ],
+        "Description": "A simple image backend",
+        "Id": "okular_kimgio",
+        "License": "GPL",
+        "MimeTypes": [
+            "image/bmp",
+            "image/x-dds",
+            "image/x-eps",
+            "image/x-exr",
+            "image/gif",
+            "image/x-hdr",
+            "image/x-ico",
+            "image/jp2",
+            "image/jpeg",
+            "video/x-mng",
+            "image/x-portable-bitmap",
+            "image/x-pcx",
+            "image/x-portable-graymap",
+            "image/png",
+            "image/x-portable-pixmap",
+            "image/x-psd",
+            "image/x-rgb",
+            "image/x-tga",
+            "image/tiff",
+            "image/x-xbitmap",
+            "image/x-xcf",
+            "image/x-xpixmap"
+        ],
+        "Name": "Image Backend",
+        "ServiceTypes": [
+            "okular/Generator"
+        ],
+        "Version": "0.1.2"
+    },
+    "X-KDE-Priority": 1,
+    "X-KDE-okularAPIVersion": 1,
+    "X-KDE-okularHasInternalSettings": false
+}

@@ -25,18 +25,14 @@ set(okularGenerator_ooo_PART_SRCS
 )
 
 
-add_library(okularGenerator_ooo MODULE ${okularGenerator_ooo_PART_SRCS})
+okular_add_generator(okularGenerator_ooo ${okularGenerator_ooo_PART_SRCS})
 
 target_link_libraries(okularGenerator_ooo okularcore KF5::KIOCore KF5::Archive KF5::I18n KF5::Wallet KF5::KDELibs4Support ${MATH_LIB} Qt5::Xml)
 if (Qca-qt5_FOUND)
   target_link_libraries(okularGenerator_ooo okularcore qca-qt5)
 endif ()
 
-install(TARGETS okularGenerator_ooo DESTINATION ${KDE_INSTALL_PLUGINDIR})
-
-
 ########### install files ###############
 
-install( FILES libokularGenerator_ooo.desktop okularOoo.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
 install( PROGRAMS okularApplication_ooo.desktop org.kde.mobile.okular_ooo.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
 

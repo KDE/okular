@@ -50,7 +50,6 @@
 #include <kmenu.h>
 #include <kxmlguiclient.h>
 #include <kxmlguifactory.h>
-#include <kservicetypetrader.h>
 #include <kstandarddirs.h>
 #include <kstandardshortcut.h>
 #include <ktoggleaction.h>
@@ -2973,7 +2972,9 @@ void Part::rebuildBookmarkMenu( bool unplugActions )
 
 void Part::updateAboutBackendAction()
 {
-    const KComponentData *data = m_document->componentData();
+#warning "FIXME!! Component data"
+    void* data = nullptr;
+    // const KComponentData *data = m_document->componentData();
     if ( data )
     {
         m_aboutBackend->setEnabled( true );

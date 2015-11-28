@@ -1,0 +1,27 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "tokoe@kde.org",
+                "Name": "Tobias Koenig"
+            }
+        ],
+        "Description": "A renderer for various comic book formats",
+        "Id": "okular_comicbook",
+        "License": "GPL",
+        "MimeTypes": [
+            "application/x-cbz",
+            "application/x-cbr",
+            "application/x-cbt",
+            "inode/directory"
+        ],
+        "Name": "ComicBook Backend",
+        "ServiceTypes": [
+            "okular/Generator"
+        ],
+        "Version": "0.4"
+    },
+    "X-KDE-Priority": 1,
+    "X-KDE-okularAPIVersion": 1,
+    "X-KDE-okularHasInternalSettings": false
+}

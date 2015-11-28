@@ -16,22 +16,7 @@
 #include <kconfigdialog.h>
 #include <kwallet.h>
 
-static KAboutData createAboutData()
-{
-    KAboutData aboutData(
-         QStringLiteral("okular_ooo"),
-         i18n( "OpenDocument Text Backend" ),
-         QStringLiteral("0.2.4"),
-         i18n( "A renderer for OpenDocument Text documents" ),
-         KAboutLicense::GPL,
-         i18n( "© 2006-2008 Tobias Koenig" )
-    );
-    aboutData.addAuthor( QStringLiteral( "Tobias Koenig" ), QString(), QStringLiteral("tokoe@kde.org") );
-
-    return aboutData;
-}
-
-OKULAR_EXPORT_PLUGIN( KOOOGenerator, createAboutData() )
+OKULAR_EXPORT_PLUGIN(KOOOGenerator, "libokularGenerator_ooo.json")
 
 KOOOGenerator::KOOOGenerator( QObject *parent, const QVariantList &args )
   : Okular::TextDocumentGenerator( new OOO::Converter, QStringLiteral("okular_ooo_generator_settings"), parent, args )

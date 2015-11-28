@@ -18,22 +18,7 @@
 #include <core/document.h>
 #include <core/page.h>
 
-static KAboutData createAboutData()
-{
-    KAboutData aboutData(
-         QStringLiteral("okular_fax"),
-         i18n( "Fax Backend" ),
-         QStringLiteral("0.1.1"),
-         i18n( "A G3/G4 fax document backend" ),
-         KAboutLicense::GPL,
-         i18n( "© 2008 Tobias Koenig" )
-    );
-    aboutData.addAuthor( QStringLiteral( "Tobias Koenig" ), QString(), QStringLiteral("tokoe@kde.org") );
-
-    return aboutData;
-}
-
-OKULAR_EXPORT_PLUGIN( FaxGenerator, createAboutData() )
+OKULAR_EXPORT_PLUGIN(FaxGenerator, "libokularGenerator_fax.json")
 
 FaxGenerator::FaxGenerator( QObject *parent, const QVariantList &args )
     : Generator( parent, args )

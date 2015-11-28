@@ -37,22 +37,7 @@
 #include "spectre_debug.h"
 #include "rendererthread.h"
 
-static KAboutData createAboutData()
-{
-    KAboutData aboutData(
-         QStringLiteral("okular_ghostview"),
-         i18n( "PS Backend" ),
-         QStringLiteral("0.1.7"),
-         i18n( "A PostScript file renderer." ),
-         KAboutLicense::GPL,
-         i18n( "© 2007-2008 Albert Astals Cid" ),
-         i18n( "Based on the Spectre library." )
-    );
-    aboutData.addAuthor( i18n( "Albert Astals Cid" ), QString(), QStringLiteral("aacid@kde.org") );
-    return aboutData;
-}
-
-OKULAR_EXPORT_PLUGIN(GSGenerator, createAboutData())
+OKULAR_EXPORT_PLUGIN(GSGenerator, "libokularGenerator_ghostview.json")
 
 GSGenerator::GSGenerator( QObject *parent, const QVariantList &args ) :
     Okular::Generator( parent, args ),

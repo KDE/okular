@@ -1,0 +1,24 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "pino@kde.org",
+                "Name": "Pino Toscano"
+            }
+        ],
+        "Description": "A TIFF backend",
+        "Id": "okular_tiff",
+        "License": "GPL",
+        "MimeTypes": [
+            "image/tiff"
+        ],
+        "Name": "TIFF Backend",
+        "ServiceTypes": [
+            "okular/Generator"
+        ],
+        "Version": "0.2.4"
+    },
+    "X-KDE-Priority": 4,
+    "X-KDE-okularAPIVersion": 1,
+    "X-KDE-okularHasInternalSettings": false
+}

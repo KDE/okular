@@ -21,22 +21,7 @@
 
 #include "debug_comicbook.h"
 
-static KAboutData createAboutData()
-{
-    KAboutData aboutData(
-         QStringLiteral("okular_comicbook"),
-         i18n( "ComicBook Backend" ),
-         QStringLiteral("0.4"),
-         i18n( "A renderer for various comic book formats" ),
-         KAboutLicense::GPL,
-         i18n( "© 2007-2008 Tobias Koenig" )
-    );
-    aboutData.addAuthor( QStringLiteral("Tobias Koenig" ), QString(), QStringLiteral("tokoe@kde.org") );
-
-    return aboutData;
-}
-
-OKULAR_EXPORT_PLUGIN( ComicBookGenerator, createAboutData() )
+OKULAR_EXPORT_PLUGIN(ComicBookGenerator, "libokularGenerator_comicbook.json")
 
 ComicBookGenerator::ComicBookGenerator( QObject *parent, const QVariantList &args )
     : Generator( parent, args )

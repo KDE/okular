@@ -158,22 +158,7 @@ static Okular::Rotation readTiffRotation( TIFF *tiff )
     return ret;
 }
 
-static KAboutData createAboutData()
-{
-    KAboutData aboutData(
-         QStringLiteral("okular_tiff"),
-         i18n( "TIFF Backend" ),
-         QStringLiteral("0.2.4"),
-         i18n( "A TIFF backend" ),
-         KAboutLicense::GPL,
-         i18n( "© 2006-2008 Pino Toscano" ),
-         i18nc( "This represents the libtiff version, as string with copyrights as well; can be left as-is.", "%1" ).arg( TIFFGetVersion() )
-    );
-    aboutData.addAuthor( QStringLiteral( "Pino Toscano" ), QString(), QStringLiteral("pino@kde.org") );
-    return aboutData;
-}
-
-OKULAR_EXPORT_PLUGIN( TIFFGenerator, createAboutData() )
+OKULAR_EXPORT_PLUGIN(TIFFGenerator, "libokularGenerator_tiff.json")
 
 TIFFGenerator::TIFFGenerator( QObject *parent, const QVariantList &args )
     : Okular::Generator( parent, args ),

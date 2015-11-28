@@ -40,20 +40,7 @@
 #include <QThread>
 #endif
 
-static KAboutData createAboutData()
-{
-    KAboutData aboutData(
-         QStringLiteral("okular_dvi"),
-         i18n( "DVI Backend" ),
-         QStringLiteral("0.3.7"),
-         i18n( "A DVI file renderer" ),
-         KAboutLicense::GPL,
-         i18n( "© 2006 Luigi Toscano" )
-    );
-    return aboutData;
-}
-
-OKULAR_EXPORT_PLUGIN( DviGenerator, createAboutData() )
+OKULAR_EXPORT_PLUGIN(DviGenerator, "libokularGenerator_dvi.json")
 
 DviGenerator::DviGenerator( QObject *parent, const QVariantList &args ) : Okular::Generator( parent, args ),
   m_fontExtracted( false ), m_docSynopsis( 0 ), m_dviRenderer( 0 )

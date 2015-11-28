@@ -36,25 +36,7 @@
 #include <core/area.h>
 #include <core/fileprinter.h>
 
-static KAboutData createAboutData()
-{
-    KAboutData aboutData(
-         QStringLiteral("okular_xps"),
-         i18n( "XPS Backend" ),
-         QStringLiteral("0.3.3"),
-         i18n( "An XPS backend" ),
-         KAboutLicense::GPL,
-         i18n( "© 2006-2007 Brad Hards\n"
-                "© 2007 Jiri Klement\n"
-                "© 2008 Pino Toscano" )
-    );
-    aboutData.addAuthor( QStringLiteral( "Brad Hards" ), QString(), QStringLiteral("bradh@frogmouth.net") );
-    aboutData.addAuthor( QStringLiteral( "Jiri Klement" ), QString(), QStringLiteral("jiri.klement@gmail.com") );
-    aboutData.addAuthor( QStringLiteral( "Pino Toscano" ), QString(), QStringLiteral("pino@kde.org") );
-    return aboutData;
-}
-
-OKULAR_EXPORT_PLUGIN( XpsGenerator, createAboutData() )
+OKULAR_EXPORT_PLUGIN(XpsGenerator, "libokularGenerator_xps.json")
 
 Q_DECLARE_METATYPE( QGradient* )
 Q_DECLARE_METATYPE( XpsPathFigure* )

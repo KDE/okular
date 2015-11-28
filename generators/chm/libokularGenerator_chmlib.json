@@ -1,0 +1,28 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "niedakh@gmail.com",
+                "Name": "Piotr Szymański"
+            },
+            {
+                "Email": "aacid@kde.org",
+                "Name": "Albert Astals Cid"
+            }
+        ],
+        "Description": "A Microsoft Windows help file renderer",
+        "License": "GPL",
+        "MimeTypes": [
+            "application/x-chm"
+        ],
+        "Name": "CHM Backend",
+        "Id": "okular_chm",
+        "ServiceTypes": [
+            "okular/Generator"
+        ],
+        "Version": "0.1.4"
+    },
+    "X-KDE-Priority": 2,
+    "X-KDE-okularAPIVersion": 1,
+    "X-KDE-okularHasInternalSettings": false
+}

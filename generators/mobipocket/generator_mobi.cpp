@@ -14,23 +14,7 @@
 #include <kconfigdialog.h>
 #include <KLocalizedString>
 
-static KAboutData createAboutData()
-{
-  KAboutData aboutData(
-                       QStringLiteral("okular_mobi"),
-                       i18n("Mobipocket Backend"),
-                       QStringLiteral("0.1.1"),
-                       i18n("A mobipocket backend"),
-                       KAboutLicense::GPL,
-                       i18n("© 2008-2009 Jakub Stachowski")
-                       );
-  aboutData.addAuthor(i18n("Jakub Stachowski"), QString(), QLatin1String("qbast@go2.pl"));
-
-  return aboutData;
-}
-
-
-OKULAR_EXPORT_PLUGIN( MobiGenerator, createAboutData() )
+OKULAR_EXPORT_PLUGIN(MobiGenerator, "libokularGenerator_mobi.json")
 
 MobiGenerator::MobiGenerator( QObject *parent, const QVariantList &args )
 : Okular::TextDocumentGenerator( new Mobi::Converter, "okular_mobi_generator_settings", parent, args )

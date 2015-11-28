@@ -1,0 +1,26 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "aacid@kde.org",
+                "Name": "Albert Astals Cid"
+            }
+        ],
+        "Description": "A PDF file renderer",
+        "Id": "okular_poppler",
+        "License": "GPL",
+        "MimeTypes": [
+            "application/x-pdf",
+            "application/pdf",
+            "application/x-wwf"
+        ],
+        "Name": "PDF Backend",
+        "ServiceTypes": [
+            "okular/Generator"
+        ],
+        "Version": "0.6.5"
+    },
+    "X-KDE-Priority": 1,
+    "X-KDE-okularAPIVersion": 1,
+    "X-KDE-okularHasInternalSettings": true
+}

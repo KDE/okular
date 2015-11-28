@@ -33,15 +33,11 @@ ki18n_wrap_ui(okularGenerator_poppler_PART_SRCS
 
 kconfig_add_kcfg_files(okularGenerator_poppler_PART_SRCS conf/pdfsettings.kcfgc )
 
-add_library(okularGenerator_poppler MODULE ${okularGenerator_poppler_PART_SRCS})
+okular_add_generator(okularGenerator_poppler ${okularGenerator_poppler_PART_SRCS})
 
 target_link_libraries(okularGenerator_poppler ${POPPLER_LIBRARY} okularcore KF5::I18n KF5::KDELibs4Support Qt5::Xml)
 
-install(TARGETS okularGenerator_poppler DESTINATION ${KDE_INSTALL_PLUGINDIR})
-
-
 ########### install files ###############
 
-install( FILES libokularGenerator_poppler.desktop okularPoppler.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
 install( PROGRAMS okularApplication_pdf.desktop org.kde.mobile.okular_pdf.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
 

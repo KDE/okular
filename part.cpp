@@ -292,6 +292,10 @@ const QVariantList &args)
 m_tempfile( 0 ), m_fileWasRemoved( false ), m_showMenuBarAction( 0 ), m_showFullScreenAction( 0 ), m_actionsSearched( false ),
 m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentWidget, parent, args)), m_generatorGuiClient(0), m_keeper( 0 )
 {
+    // make sure that the component name is okular otherwise the XMLGUI .rc files are not found
+    // when this part is used in an application other than okular (e.g. unit tests)
+    setComponentName(QStringLiteral("okular"), QString());
+
     // first, we check if a config file name has been specified
     QString configFileName = detectConfigFileName( args );
     if ( configFileName.isEmpty() )

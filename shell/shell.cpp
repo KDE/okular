@@ -65,6 +65,8 @@ Shell::Shell( const QString &serializedOptions )
 {
   setObjectName( QStringLiteral( "okular::Shell#" ) );
   setContextMenuPolicy( Qt::NoContextMenu );
+  // otherwise .rc file won't be found by unit test
+  setComponentName(QStringLiteral("okular"), QString());
   // set the shell's ui resource file
   setXMLFile(QStringLiteral("shell.rc"));
   m_fileformatsscanned = false;

@@ -24,9 +24,10 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.mobilecomponents 0.2 as MobileComponents
 import Qt.labs.folderlistmodel 2.1
 
-PlasmaComponents.Page {
+MobileComponents.Page {
     id: root
     anchors.fill: parent
+    color: theme.viewBackgroundColor
     visible: true
     property Item view: filesView
     property alias contentY: filesView.contentY
@@ -52,11 +53,10 @@ PlasmaComponents.Page {
 
     PlasmaExtras.ScrollArea {
         anchors.fill: parent
-        GridView {
+        ListView {
             id: filesView
             anchors.fill: parent
-            cellWidth: units.gridUnit * 5
-            cellHeight: units.gridUnit * 5
+
             model:  PlasmaCore.SortFilterModel {
                 id: filterModel
                 filterRole: "fileName"
@@ -68,27 +68,9 @@ PlasmaComponents.Page {
                 }
             }
 
-            delegate: MouseArea {
-                width: filesView.cellWidth
-                height: filesView.cellHeight
-                PlasmaCore.IconItem {
-                    id: icon
-                    width: units.gridUnit * 3
-                    height: width
-                    anchors {
-                        top: parent.top
-                        horizontalCenter: parent.horizontalCenter
-                    }
-                    //TODO: proper icons
-                    source: "application-epub+zip"
-                }
+            delegate: MobileComponents.ListItem {
+                enabled: true
                 PlasmaComponents.Label {
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                        top: icon.bottom
-                        bottom: parent.bottom
-                    }
                     text: model.fileName
                     horizontalAlignment: Text.AlignHCenter
                     wrapMode: Text.WordWrap
@@ -96,7 +78,7 @@ PlasmaComponents.Page {
                 }
                 onClicked: {
                     documentItem.path = model.filePath;
-                    splitDrawer.open = false;
+                    globalDrawer.opened = false;
                     mainTabBar.currentTab = thumbnailsButton;
                 }
             }

@@ -31,8 +31,10 @@ MobileComponents.SplitDrawer {
     anchors.fill: parent
     visible: true
 
-    property alias splitDrawerOpen: splitDrawer.open
-    property alias overlayDrawerOpen: resourceBrowser.open
+    property alias splitDrawerOpen: splitDrawer.opened
+    property alias overlayDrawerOpen: resourceBrowser.opened
+    property Item globalDrawer: splitDrawer
+    property Item contextDrawer: resourceDrawer
 
     //An alias doesn't work
     property bool bookmarked: false
@@ -40,14 +42,14 @@ MobileComponents.SplitDrawer {
         pageArea.page.bookmarked = bookmarked
     }
 
-    drawer: Documents {
-        implicitWidth: splitDrawer.width/4 * 3
+    contentItem: Documents {
+        implicitWidth: units.gridUnit * 25
     }
 
     MobileComponents.OverlayDrawer {
         id: resourceBrowser
         anchors.fill: parent
-        visible: true
+        edge: Qt.RightEdge
 
         Okular.DocumentView {
             id: pageArea
@@ -66,7 +68,7 @@ MobileComponents.SplitDrawer {
             onBookmarkedChanged: splitDrawer.bookmarked = pageArea.page.bookmarked
         }
 
-        drawer: Item {
+        contentItem: Item {
             id: browserFrame
             anchors.fill: parent
             state: "Hidden"

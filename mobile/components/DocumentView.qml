@@ -32,6 +32,7 @@ QtControls.ScrollView {
     id: root
     property DocumentItem document
     property PageItem page: mouseArea.currPageDelegate.pageItem
+    signal clicked
 
     onWidthChanged: resizeTimer.restart()
     onHeightChanged: resizeTimer.restart()
@@ -137,6 +138,11 @@ QtControls.ScrollView {
                 onDoubleClicked: {
                     flick.contentWidth = flick.width
                     flick.contentHeight = flick.width / mouseArea.currPageDelegate.pageRatio
+                }
+                onClicked: {
+                    if (Math.abs(currPageDelegate.x) < 20) {
+                        root.clicked();
+                    }
                 }
 
                 PageView {

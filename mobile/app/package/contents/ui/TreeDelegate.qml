@@ -46,7 +46,7 @@ Column {
         onClicked: {
             documentItem.currentPage = page-1
 
-            resourceBrowser.open = false
+            contextDrawer.opened = false
         }
 
         QIconItem {

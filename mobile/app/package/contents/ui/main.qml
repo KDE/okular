@@ -22,14 +22,12 @@ import org.kde.okular 2.0 as Okular
 import QtQuick.Controls 1.3
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 import org.kde.plasma.components 2.0 as PlasmaComponents
+import org.kde.plasma.mobilecomponents 0.2 as MobileComponents
 
-ApplicationWindow {
+MobileComponents.ApplicationWindow {
     id: fileBrowserRoot
     objectName: "fileBrowserRoot"
     visible: true
-
-    width: 360
-    height: 360
 
     /*TODO: port ResourceInstance
     PlasmaExtras.ResourceInstance {
@@ -37,63 +35,26 @@ ApplicationWindow {
         uri: documentItem.path
     }*/
 
-    statusBar: PlasmaComponents.ToolBar {
-        id: toolbar
-        tools: PlasmaComponents.ToolBarLayout {
-            //TODO: those buttons should support drag to open the menus as well
-            PlasmaComponents.ToolButton {
-                id: openButton
-                iconSource: "document-open"
-                checkable: true
-                onCheckedChanged: {
-                    mainStack.currentPage.splitDrawerOpen = checked
-                    if (checked) {
-                        mainStack.currentPage.overlayDrawerOpen = false;
-                    }
-                }
-            }
-            PlasmaComponents.ToolButton {
-                id: bookmarkButton
-                iconSource: "bookmarks-organize"
-                checkable: true
-                onCheckedChanged: {
-                    mainStack.currentPage.bookmarked = checked
-                }
-            }
-            PlasmaComponents.ToolButton {
-                id: exploreButton
-                iconSource: "view-list-icons"
-                checkable: true
-                onCheckedChanged: {
-                    mainStack.currentPage.overlayDrawerOpen = checked
-                    if (checked) {
-                        mainStack.currentPage.splitDrawerOpen = false;
-                    }
-                }
-            }
+    globalDrawer: MobileComponents.OverlayDrawer {
+        edge: Qt.LeftEdge
+        contentItem: Documents {
+            implicitWidth: units.gridUnit * 20
         }
-        Connections {
-            target: mainStack.currentPage
-            onSplitDrawerOpenChanged: {
-                openButton.checked = mainStack.currentPage.splitDrawerOpen;
-            }
-            onOverlayDrawerOpenChanged: {
-                exploreButton.checked = mainStack.currentPage.overlayDrawerOpen;
-            }
-            onBookmarkedChanged: {
-                bookmarkButton.checked = mainStack.currentPage.bookmarked
-            }
+    }
+    contextDrawer: OkularDrawer {}
+    actionButton.iconSource: "bookmarks-organize"
+    actionButton.checkable: true
+    actionButton.onCheckedChanged: pageArea.page.bookmarked = actionButton.checked;
+    PlasmaComponents.ProgressBar {
+        id: bar
+        z: 99
+        anchors {
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
         }
-        PlasmaComponents.ProgressBar {
-            id: bar
-            anchors {
-                left: parent.left
-                right: parent.right
-                bottom: parent.top
-            }
-            height: units.smallSpacing
-            value: documentItem.pageCount != 0 ? (documentItem.currentPage / documentItem.pageCount) : 0
-        }
+        height: units.smallSpacing
+        value: documentItem.pageCount != 0 ? (documentItem.currentPage / documentItem.pageCount) : 0
     }
 
     Okular.DocumentItem {
@@ -103,9 +64,21 @@ ApplicationWindow {
         }
     }
 
-    PlasmaComponents.PageStack {
-        id: mainStack
-        clip: false
+    Okular.DocumentView {
+        id: pageArea
+        document: documentItem
+        anchors.fill: parent
+
+        onPageChanged: {
+            bookmarkConnection.target = page
+            actionButton.checked = page.bookmarked
+        }
+        onClicked: actionButton.toggleVisibility();
+    }
+    Connections {
+        id: bookmarkConnection
+        target: pageArea.page
+        onBookmarkedChanged: actionButton.checked = page.bookmarked
     }
 
     //FIXME: this is due to global vars being binded after the parse is done, do the 2 steps parsing
@@ -117,9 +90,8 @@ ApplicationWindow {
                 documentItem.path = commandlineArguments[0]
             }
 
-            var browser = mainStack.push(Qt.createComponent("Browser.qml"))
             if (commandlineArguments.length == 0) {
-                browser.open = true;
+                globalDrawer.opened = true;
             }
         }
     }

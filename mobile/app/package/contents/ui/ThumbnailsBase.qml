@@ -91,7 +91,7 @@ PlasmaComponents.Page {
                             resultsGrid.currentIndex = index
                             documentItem.currentPage = modelData
 
-                            resourceBrowser.open = false
+                            contextDrawer.opened = false
                             root.pageClicked(modelData)
                         }
                     }

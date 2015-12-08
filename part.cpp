@@ -43,6 +43,7 @@
 #include <kdirwatch.h>
 #include <kstandardaction.h>
 #include <kpluginfactory.h>
+#include <KPluginMetaData>
 #include <kfiledialog.h>
 #include <kmessagebox.h>
 #include <knuminput.h>
@@ -2577,26 +2578,27 @@ void Part::enableStartWithPrint()
 
 void Part::slotAboutBackend()
 {
-#pragma message("KF5 bring back about data")
-//    const KComponentData *data = m_document->componentData();
-//    if ( !data )
-//        return;
+    const KPluginMetaData data = m_document->generatorInfo();
+    if (!data.isValid())
+        return;
 
-//    KAboutData aboutData( *data->aboutData() );
+    KAboutData aboutData = KAboutData::fromPluginMetaData(data);
 
-//    if ( aboutData.programIconName().isEmpty() || aboutData.programIconName() == aboutData.appName() )
-//    {
-//        const Okular::DocumentInfo documentInfo = m_document->documentInfo(QSet<DocumentInfo::Key>() << DocumentInfo::MimeType);
-//        const QString mimeTypeName = documentInfo.get(DocumentInfo::MimeType);
-//        if ( !mimeTypeName.isEmpty() )
-//        {
-//            if ( QMimeType type = db.mimeTypeForName( mimeTypeName ) )
-//                aboutData.setProgramIconName( type->iconName() );
-//        }
-//    }
-
-//    KAboutApplicationDialog dlg( &aboutData, widget() );
-//    dlg.exec();
+    if (data.iconName().isEmpty())
+    {
+        // fall back to mime type icon
+        const Okular::DocumentInfo documentInfo = m_document->documentInfo(QSet<DocumentInfo::Key>() << DocumentInfo::MimeType);
+        const QString mimeTypeName = documentInfo.get(DocumentInfo::MimeType);
+        if (!mimeTypeName.isEmpty())
+        {
+            QMimeDatabase db;
+            QMimeType type = db.mimeTypeForName(mimeTypeName);
+            if (type.isValid())
+                aboutData.setProgramIconName(type.iconName());
+        }
+    }
+    KAboutApplicationDialog dlg(aboutData, widget());
+    dlg.exec();
 }
 
 
@@ -2972,17 +2974,8 @@ void Part::rebuildBookmarkMenu( bool unplugActions )
 
 void Part::updateAboutBackendAction()
 {
-#warning "FIXME!! Component data"
-    void* data = nullptr;
-    // const KComponentData *data = m_document->componentData();
-    if ( data )
-    {
-        m_aboutBackend->setEnabled( true );
-    }
-    else
-    {
-        m_aboutBackend->setEnabled( false );
-    }
+    const KPluginMetaData data = m_document->generatorInfo();
+    m_aboutBackend->setEnabled(data.isValid());
 }
 
 void Part::resetStartArguments()

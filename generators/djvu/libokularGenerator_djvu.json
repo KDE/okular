@@ -6,6 +6,7 @@
                 "Name": "Pino Toscano"
             }
         ],
+        "Copyright": "© 2006-2008 Pino Toscano",
         "Description": "DjVu backend based on DjVuLibre",
         "Id": "okular_djvu",
         "License": "GPL",

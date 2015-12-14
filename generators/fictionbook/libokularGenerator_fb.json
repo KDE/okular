@@ -6,6 +6,7 @@
                 "Name": "Tobias Koenig"
             }
         ],
+        "Copyright": "© 2007-2008 Tobias Koenig",
         "Description": "A renderer for FictionBook eBooks",
         "Id": "okular_fax",
         "License": "GPL",

@@ -12,6 +12,7 @@
                 "Name": "Tobias Koenig"
             }
         ],
+        "Copyright": "© 2005, 2009 Albert Astals Cid\n© 2006-2007 Pino Toscano\n© 2006-2007 Tobias Koenig",
         "Description": "A simple image backend",
         "Id": "okular_kimgio",
         "License": "GPL",

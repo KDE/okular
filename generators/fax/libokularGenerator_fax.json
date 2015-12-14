@@ -6,6 +6,7 @@
                 "Name": "Tobias Koenig"
             }
         ],
+        "Copyright": "© 2008 Tobias Koenig",
         "Description": "A G3/G4 fax document backend",
         "Id": "okular_fax",
         "License": "GPL",

@@ -6,6 +6,7 @@
                 "Name": "Pino Toscano"
             }
         ],
+        "Copyright": "© 2006-2008 Pino Toscano",
         "Description": "A TIFF backend",
         "Id": "okular_tiff",
         "License": "GPL",

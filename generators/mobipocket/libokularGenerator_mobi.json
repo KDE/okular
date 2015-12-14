@@ -6,6 +6,7 @@
                 "Name": "Jakub Stachowski"
             }
         ],
+        "Copyright": "© 2008-2009 Jakub Stachowski",
         "Description": "A mobipocket backend",
         "Id": "okular_mobi",
         "License": "GPL",

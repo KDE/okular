@@ -12,6 +12,7 @@
                 "Name": "Pino Toscano"
             }
         ],
+        "Copyright": "© 2006-2007 Brad Hards\n© 2007 Jiri Klement\n© 2008 Pino Toscano",
         "Description": "An XPS backend",
         "Id": "okular_xps",
         "License": "GPL",

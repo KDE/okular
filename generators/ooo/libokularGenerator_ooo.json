@@ -6,6 +6,7 @@
                 "Name": "Tobias Koenig"
             }
         ],
+        "Copyright": "© 2006-2008 Tobias Koenig",
         "Description": "A renderer for OpenDocument Text documents",
         "Id": "okular_ooo",
         "License": "GPL",

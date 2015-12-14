@@ -6,6 +6,7 @@
                 "Name": "Luigi Toscano"
             }
         ],
+        "Copyright": "© 2006 Luigi Toscano",
         "Description": "A DVI file renderer",
         "Id": "okular_dvi",
         "License": "GPL",

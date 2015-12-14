@@ -6,6 +6,7 @@
                 "Name": "Tobias Koenig"
             }
         ],
+        "Copyright": "© 2007-2008 Tobias Koenig",
         "Description": "A renderer for Plucker eBooks",
         "Id": "okular_plucker",
         "License": "GPL",

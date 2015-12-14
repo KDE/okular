@@ -6,6 +6,7 @@
                 "Name": "Ely Levy"
             }
         ],
+        "Copyright": "© 2008 Ely Levy",
         "Description": "An EPub backend",
         "Id": "okular_epub",
         "License": "GPL",

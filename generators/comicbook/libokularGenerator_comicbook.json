@@ -6,6 +6,7 @@
                 "Name": "Tobias Koenig"
             }
         ],
+        "Copyright": "© 2007-2008 Tobias Koenig",
         "Description": "A renderer for various comic book formats",
         "Id": "okular_comicbook",
         "License": "GPL",

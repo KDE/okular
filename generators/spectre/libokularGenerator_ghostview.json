@@ -6,6 +6,7 @@
                 "Name": "Albert Astals Cid"
             }
         ],
+        "Copyright": "© 2007-2008 Albert Astals Cid",
         "Description": "A PostScript file renderer based on the Spectre library",
         "Id": "okular_ghostview",
         "License": "GPL",

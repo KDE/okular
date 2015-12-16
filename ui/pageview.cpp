@@ -2893,7 +2893,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
             xs.append(1.0);
             ys.prepend(0.0);
             ys.append(1.0);
-            selHtml = QStringLiteral("<html><head>"
+            selHtml = QString::fromLatin1("<html><head>"
                       "<meta content=\"text/html; charset=utf-8\" http-equiv=\"Content-Type\">"
                       "</head><body><table>");
             for (int r=0; r+1<ys.length(); r++) {

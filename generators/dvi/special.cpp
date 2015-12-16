@@ -20,12 +20,12 @@
 #include <QMimeType>
 #include <QMimeDatabase>
 
+#include <QByteArray>
 #include <QFile>
 #include <QFontDatabase>
 #include <QImage>
 #include <QPainter>
 #include "debug_dvi.h"
-
 
 void dviRenderer::printErrorMsgForSpecials(const QString& msg)
 {
@@ -517,45 +517,45 @@ void dviRenderer::applicationDoSpecial(char *cp)
   // and NOT during the prescan phase
 
   // font color specials
-  if (strncasecmp(cp, "color", 5) == 0) {
+  if (qstrnicmp(cp, "color", 5) == 0) {
     color_special(special_command.mid(5));
     return;
   }
 
   // HTML reference
-  if (strncasecmp(cp, "html:<A href=", 13) == 0) {
+  if (qstrnicmp(cp, "html:<A href=", 13) == 0) {
     html_href_special(special_command.mid(14));
     return;
   }
 
   // HTML anchor end
-  if (strncasecmp(cp, "html:</A>", 9) == 0) {
+  if (qstrnicmp(cp, "html:</A>", 9) == 0) {
     html_anchor_end();
     return;
   }
 
   // TPIC specials
-  if (strncasecmp(cp, "pn", 2) == 0) {
+  if (qstrnicmp(cp, "pn", 2) == 0) {
     TPIC_setPen_special(special_command.mid(2));
     return;
   }
-  if (strncasecmp(cp, "pa ", 3) == 0) {
+  if (qstrnicmp(cp, "pa ", 3) == 0) {
     TPIC_addPath_special(special_command.mid(3));
     return;
   }
-  if (strncasecmp(cp, "fp", 2) == 0) {
+  if (qstrnicmp(cp, "fp", 2) == 0) {
     TPIC_flushPath_special();
     return;
   }
 
   // Encapsulated Postscript File
-  if (strncasecmp(cp, "PSfile=", 7) == 0) {
+  if (qstrnicmp(cp, "PSfile=", 7) == 0) {
     epsf_special(special_command.mid(7));
     return;
   }
 
   // source special
-  if (strncasecmp(cp, "src:", 4) == 0) {
+  if (qstrnicmp(cp, "src:", 4) == 0) {
     source_special(special_command.mid(4));
     return;
   }
@@ -694,11 +694,11 @@ void dviRenderer::applicationDoSpecial(char *cp)
   // unrecognized special commands.
   if ((cp[0] == '!') ||
       (cp[0] == '"') ||
-      (strncasecmp(cp, "html:<A name=", 13) == 0) ||
-      (strncasecmp(cp, "ps:", 3) == 0) ||
-      (strncasecmp(cp, "papersize", 9) == 0) ||
-      (strncasecmp(cp, "header", 6) == 0) ||
-      (strncasecmp(cp, "background", 10) == 0) )
+      (qstrnicmp(cp, "html:<A name=", 13) == 0) ||
+      (qstrnicmp(cp, "ps:", 3) == 0) ||
+      (qstrnicmp(cp, "papersize", 9) == 0) ||
+      (qstrnicmp(cp, "header", 6) == 0) ||
+      (qstrnicmp(cp, "background", 10) == 0) )
     return;
 
   printErrorMsgForSpecials(i18n("The special command '%1' is not implemented.", special_command));

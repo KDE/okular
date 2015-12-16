@@ -255,7 +255,7 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
     while(proc.canReadLine()) {
       GSoutput = QString::fromLocal8Bit(proc.readLine());
       if (GSoutput.contains(QStringLiteral("Unknown device"))) {
-    qCDebug(OkularDviDebug) << QStringLiteral("The version of ghostview installed on this computer does not support "
+    qCDebug(OkularDviDebug) << QString::fromLatin1("The version of ghostview installed on this computer does not support "
                                      "the '%1' ghostview device driver.").arg(*gsDevice) << endl;
 	knownDevices.erase(gsDevice);
 	gsDevice = knownDevices.begin();

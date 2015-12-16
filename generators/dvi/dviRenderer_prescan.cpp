@@ -22,6 +22,7 @@
 #include <kprocess.h>
 
 #include <QApplication>
+#include <QByteArray>
 #include <QDir>
 #include <QFileInfo>
 #include <QImage>
@@ -44,7 +45,7 @@ void dviRenderer::prescan_embedPS(char *cp, quint8 *beginningOfSpecialCommand)
 #endif
 
   // Encapsulated Postscript File
-  if (strncasecmp(cp, "PSfile=", 7) != 0)
+  if (qstrnicmp(cp, "PSfile=", 7) != 0)
     return;
 
   QString command(cp+7);
@@ -230,7 +231,7 @@ void dviRenderer::prescan_removePageSizeInfo(char *cp, quint8 *beginningOfSpecia
 #endif
 
   // Encapsulated Postscript File
-  if (strncasecmp(cp, "papersize=", 10) != 0)
+  if (qstrnicmp(cp, "papersize=", 10) != 0)
     return;
 
   for (quint8 *ptr=beginningOfSpecialCommand; ptr<command_pointer; ptr++)
@@ -526,25 +527,25 @@ void dviRenderer::prescan_parseSpecials(char *cp, quint8 *)
   // prescan phase, and NOT during rendering.
 
   // PaperSize special
-  if (strncasecmp(cp, "papersize", 9) == 0) {
+  if (qstrnicmp(cp, "papersize", 9) == 0) {
     prescan_ParsePapersizeSpecial(special_command.mid(9));
     return;
   }
 
   // color special for background color
-  if (strncasecmp(cp, "background", 10) == 0) {
+  if (qstrnicmp(cp, "background", 10) == 0) {
     prescan_ParseBackgroundSpecial(special_command.mid(10));
     return;
   }
 
   // HTML anchor special
-  if (strncasecmp(cp, "html:<A name=", 13) == 0) {
+  if (qstrnicmp(cp, "html:<A name=", 13) == 0) {
     prescan_ParseHTMLAnchorSpecial(special_command.mid(14));
     return;
   }
 
   // Postscript Header File
-  if (strncasecmp(cp, "header=", 7) == 0) {
+  if (qstrnicmp(cp, "header=", 7) == 0) {
     prescan_ParsePSHeaderSpecial(special_command.mid(7));
     return;
   }
@@ -562,19 +563,19 @@ void dviRenderer::prescan_parseSpecials(char *cp, quint8 *)
   }
 
   // PS-Postscript inclusion
-  if (strncasecmp(cp, "ps:", 3) == 0) {
+  if (qstrnicmp(cp, "ps:", 3) == 0) {
     prescan_ParsePSSpecial(special_command);
     return;
   }
 
   // Encapsulated Postscript File
-  if (strncasecmp(cp, "PSfile=", 7) == 0) {
+  if (qstrnicmp(cp, "PSfile=", 7) == 0) {
     prescan_ParsePSFileSpecial(special_command.mid(7));
     return;
   }
 
   // source special
-  if (strncasecmp(cp, "src:", 4) == 0) {
+  if (qstrnicmp(cp, "src:", 4) == 0) {
     prescan_ParseSourceSpecial(special_command.mid(4));
     return;
   }
@@ -583,7 +584,7 @@ void dviRenderer::prescan_parseSpecials(char *cp, quint8 *)
   // both during rendering and during the pre-scan phase
 
   // HTML anchor end
-  if (strncasecmp(cp, "html:</A>", 9) == 0) {
+  if (qstrnicmp(cp, "html:</A>", 9) == 0) {
     html_anchor_end();
     return;
   }

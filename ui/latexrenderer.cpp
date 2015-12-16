@@ -191,7 +191,7 @@ LatexRenderer::Error LatexRenderer::handleLatex( QString& fileName, const QStrin
 
 bool LatexRenderer::securityCheck( const QString &latexFormula )
 {
-    return !latexFormula.contains(QRegExp(QStringLiteral("\\\\(def|let|futurelet|newcommand|renewcommand|else|fi|write|input|include"
+    return !latexFormula.contains(QRegExp(QString::fromLatin1("\\\\(def|let|futurelet|newcommand|renewcommand|else|fi|write|input|include"
     "|chardef|catcode|makeatletter|noexpand|toksdef|every|errhelp|errorstopmode|scrollmode|nonstopmode|batchmode"
     "|read|csname|newhelp|relax|afterground|afterassignment|expandafter|noexpand|special|command|loop|repeat|toks"
     "|output|line|mathcode|name|item|section|mbox|DeclareRobustCommand)[^a-zA-Z]")));

@@ -18,6 +18,6 @@
 */
 
 #include "kio_mits_debug.h"
-Q_LOGGING_CATEGORY(KIO_MITS_LOG, "log_kio_msits")
+Q_LOGGING_CATEGORY(KIO_MITS_LOG, "org.kde.kio.msits")
 
 

@@ -330,6 +330,8 @@ install(FILES okular.upd DESTINATION ${KDE_INSTALL_DATADIR}/kconf_update)
 install( FILES okular_part.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
 install( FILES part.rc part-viewermode.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/okular )
 
+install( FILES okular.categories DESTINATION ${KDE_INSTALL_CONFDIR} )
+
 ########### cmake files #################
 
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/Okular5")

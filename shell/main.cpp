@@ -31,6 +31,8 @@ int main(int argc, char** argv)
 {
     QApplication app(argc, argv);
 
+    KLocalizedString::setApplicationDomain("okular");
+
     KAboutData aboutData = okularAboutData();
 
     app.setApplicationName(aboutData.applicationData().componentName());

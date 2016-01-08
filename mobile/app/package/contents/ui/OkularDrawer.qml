@@ -30,7 +30,8 @@ MobileComponents.OverlayDrawer {
     edge: Qt.RightEdge
     contentItem: Item {
         id: browserFrame
-        anchors.fill: parent
+        implicitWidth: MobileComponents.Units.gridUnit * 25
+        implicitHeight: implicitWidth
         state: "Hidden"
 
         PlasmaComponents.ToolBar {

@@ -81,8 +81,6 @@ QButtonGroup* FormWidgetsController::registerRadioButton( QAbstractButton *butto
     if ( !button )
         return 0;
 
-
-
     QList< RadioData >::iterator it = m_radios.begin(), itEnd = m_radios.end();
     const int id = formButton->id();
     m_formButtons.insert( id, formButton );
@@ -145,6 +143,14 @@ void FormWidgetsController::slotButtonClicked( QAbstractButton *button )
     int pageNumber = -1;
     if ( CheckBoxEdit *check = qobject_cast< CheckBoxEdit * >( button ) )
     {
+        // Checkboxes need to be uncheckable so if clicking a checked one
+        // disable the exclusive status temporarily and uncheck it
+        if (m_formButtons[check->formField()->id()]->state()) {
+            const bool wasExclusive = button->group()->exclusive();
+            button->group()->setExclusive(false);
+            check->setChecked(false);
+            button->group()->setExclusive(wasExclusive);
+        }
         pageNumber = check->pageItem()->pageNumber();
     }
     else if ( RadioButtonEdit *radio = qobject_cast< RadioButtonEdit * >( button ) )
@@ -174,8 +180,14 @@ void FormWidgetsController::slotFormButtonsChangedByUndoRedo( int pageNumber, co
     {
         int id = formButton->id();
         QAbstractButton* button = m_buttons[id];
+        // temporarily disable exclusiveness of the button group
+        // since it breaks doing/redoing steps into which all the checkboxes
+        // are unchecked
+        const bool wasExclusive = button->group()->exclusive();
+        button->group()->setExclusive(false);
         bool checked = formButton->state();
         button->setChecked( checked );
+        button->group()->setExclusive(wasExclusive);
         button->setFocus();
     }
     emit changed( pageNumber );

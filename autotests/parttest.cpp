@@ -196,7 +196,9 @@ void PartTest::testSelectText()
     QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * 0.12, height * 0.16));
     QTest::mousePress(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, QPoint(width * 0.12, height * 0.16));
     QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * 0.8, height * 0.16));
-    QTest::qWait(100); // without this wait the test fails
+    // without this wait the test fails. 100ms were enough on my local system, but when running under valgrind
+    // or on the CI server we need to wait longer.
+    QTest::qWait(1000);
     QTest::mouseRelease(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, QPoint(width * 0.8, height * 0.16));
 
     QApplication::clipboard()->clear();

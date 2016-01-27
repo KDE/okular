@@ -7,7 +7,7 @@ function(okular_add_generator _target)
   )
 endfunction()
 
-find_package(Poppler "0.12.1")
+find_package(Poppler-Qt5 "0.12.1")
 set_package_properties("Poppler-Qt5" PROPERTIES
         DESCRIPTION "A PDF rendering library"
         URL "http://poppler.freedesktop.org"

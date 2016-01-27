@@ -51,6 +51,19 @@ MobileComponents.Page {
         }
     }
 
+    MobileComponents.Label {
+        z: 2
+        visible: filesView.count == 0
+        anchors {
+            fill: parent
+            margins: MobileComponents.Units.gridUnit
+        }
+        text: i18n("No Documents found. To start to read, put some files in the Documents folder of your device.")
+        wrapMode: Text.WordWrap
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+    }
+
     PlasmaExtras.ScrollArea {
         anchors.fill: parent
         ListView {

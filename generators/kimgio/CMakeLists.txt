@@ -6,10 +6,8 @@ include_directories(
 
 ########### next target ###############
 
-set(okularGenerator_kimgio_PART_SRCS generator_kimgio.cpp )
-add_library(okularGenerator_kimgio MODULE ${okularGenerator_kimgio_PART_SRCS})
+okular_add_generator(okularGenerator_kimgio generator_kimgio.cpp)
 target_link_libraries(okularGenerator_kimgio okularcore KF5::KExiv2 KF5::I18n)
-install(TARGETS okularGenerator_kimgio DESTINATION ${KDE_INSTALL_PLUGINDIR})
 
 add_definitions( -DKDESRCDIR="${CMAKE_CURRENT_SOURCE_DIR}/" )
 set( kimgiotest_SRCS tests/kimgiotest.cpp ${CMAKE_SOURCE_DIR}/ui/pagepainter.cpp ${CMAKE_SOURCE_DIR}/ui/guiutils.cpp )

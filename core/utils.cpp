@@ -11,6 +11,7 @@
 #include "utils.h"
 #include "utils_p.h"
 
+#include "debug_p.h"
 #include "settings_core.h"
 
 #include <QtCore/QRect>
@@ -18,15 +19,8 @@
 #include <QDesktopWidget>
 #include <QImage>
 #include <QIODevice>
-
-#ifdef Q_WS_X11
-  #include "config-okular.h"
-  #if HAVE_LIBKSCREEN
-   #include <kscreen/config.h>
-   #include <kscreen/edid.h>
-  #endif
-  #include <QX11Info>
-#endif
+#include <QWindow>
+#include <QScreen>
 
 #ifdef Q_OS_MAC
 #include <ApplicationServices/ApplicationServices.h>
@@ -64,133 +58,29 @@ QRect Utils::rotateRect( const QRect & source, int width, int height, int orient
     return ret;
 }
 
-#if defined(Q_WS_X11)
-
-double Utils::dpiX()
-{
-    return QX11Info::appDpiX();
-}
-
-double Utils::dpiY()
-{
-    return QX11Info::appDpiY();
-}
-
-double Utils::realDpiX()
-{
-    const QDesktopWidget* w = QApplication::desktop();
-    if (w->width() > 0 && w->widthMM() > 0) {
-        qCDebug(OkularCoreDebug) << "Pix:" << w->width() << "MM:" << w->widthMM();
-        return (double(w->width()) * 25.4) / double(w->widthMM());
-    } else {
-        return dpiX();
-    }
-}
-
-double Utils::realDpiY()
-{
-    const QDesktopWidget* w = QApplication::desktop();
-    if (w->height() > 0 && w->heightMM() > 0) {
-        qCDebug(OkularCoreDebug) << "Pix:" << w->height() << "MM:" << w->heightMM();
-        return (double(w->height()) * 25.4) / double(w->heightMM());
-    } else {
-        return dpiY();
-    }
-}
+#if !defined(Q_OS_MAC)
 
 QSizeF Utils::realDpi(QWidget* widgetOnScreen)
 {
-    if (widgetOnScreen)
+    const QScreen* screen = widgetOnScreen && widgetOnScreen->window() && widgetOnScreen->window()->windowHandle()
+                          ? widgetOnScreen->window()->windowHandle()->screen()
+                          : qGuiApp->primaryScreen();
+
+    if (screen)
     {
-        // Firstly try to retrieve DPI via LibKScreen
-#if HAVE_LIBKSCREEN
-        KScreen::Config* config = KScreen::Config::current();
-        if (config) {
-            KScreen::OutputList outputs = config->outputs();
-            QPoint globalPos = widgetOnScreen->parentWidget() ?
-                        widgetOnScreen->mapToGlobal(widgetOnScreen->pos()):
-                        widgetOnScreen->pos();
-            QRect widgetRect(globalPos, widgetOnScreen->size());
-
-            KScreen::Output* selectedOutput = 0;
-            int maxArea = 0;
-            Q_FOREACH(KScreen::Output *output, outputs)
-            {
-                if (output->currentMode())
-                {
-                    QRect outputRect(output->pos(),output->currentMode()->size());
-                    QRect intersection = outputRect.intersected(widgetRect);
-                    int area = intersection.width()*intersection.height();
-                    if (area > maxArea)
-                    {
-                        maxArea = area;
-                        selectedOutput = output;
-                    }
-                }
-            }
-
-            if (selectedOutput)
-            {
-                qCDebug(OkularCoreDebug) << "Found widget at output #" << selectedOutput->id();
-                QRect outputRect(selectedOutput->pos(),selectedOutput->currentMode()->size());
-                QSize szMM = selectedOutput->sizeMm();
-                qCDebug(OkularCoreDebug) << "Output size is (mm) " << szMM;
-                qCDebug(OkularCoreDebug) << "Output rect is " << outputRect;
-                if (selectedOutput->edid()) {
-                    qCDebug(OkularCoreDebug) << "EDID WxH (cm): " << selectedOutput->edid()->width()  << 'x' << selectedOutput->edid()->height();
-                }
-                if (szMM.width() > 0 && szMM.height() > 0 && outputRect.width() > 0 && outputRect.height() > 0
-                    && selectedOutput->edid()
-                    && qAbs(static_cast<int>(selectedOutput->edid()->width()*10) - szMM.width()) < 10
-                    && qAbs(static_cast<int>(selectedOutput->edid()->height()*10) - szMM.height()) < 10)
-                {
-                    // sizes in EDID seem to be consistent
-                    QSizeF res(static_cast<qreal>(outputRect.width())*25.4/szMM.width(),
-                              static_cast<qreal>(outputRect.height())*25.4/szMM.height());
-                    if (!selectedOutput->isHorizontal())
-                    {
-                        qCDebug(OkularCoreDebug) << "Output is vertical, transposing DPI rect";
-                        res.transpose();
-                    }
-                    if (qAbs(res.width() - res.height()) / qMin(res.height(), res.width()) < 0.05) {
-                        return res;
-                    } else {
-                        qCDebug(OkularCoreDebug) << "KScreen calculation returned a non square dpi." << res << ". Falling back";
-                    }
-                }
-            }
-            else
-            {
-                qCDebug(OkularCoreDebug) << "Didn't find a KScreen selectedOutput to calculate DPI. Falling back";
+        const QSizeF res(screen->physicalDotsPerInchX(), screen->physicalDotsPerInchY());
+        if (res.width() > 0 && res.height() > 0) {
+            if (qAbs(res.width() - res.height()) / qMin(res.height(), res.width()) < 0.05) {
+                return res;
+            } else {
+                qCDebug(OkularCoreDebug) << "QScreen calculation returned a non square dpi." << res << ". Falling back";
             }
         }
-        else
-        {
-            qCDebug(OkularCoreDebug) << "Didn't find a KScreen config to calculate DPI. Falling back";
-        }
-#endif
     }
-    // this is also fallback for LibKScreen branch if KScreen::Output
-    // for particular widget was not found
-    QSizeF res = QSizeF(realDpiX(), realDpiY());
-    if (qAbs(res.width() - res.height()) / qMin(res.height(), res.width()) < 0.05) {
-        return res;
-    } else {
-        qCDebug(OkularCoreDebug) << "QDesktopWidget calculation returned a non square dpi." << res << ". Falling back";
-    }
-
-    res = QSizeF(dpiX(), dpiY());
-    if (qAbs(res.width() - res.height()) / qMin(res.height(), res.width()) < 0.05) {
-        return res;
-    } else {
-        qCDebug(OkularCoreDebug) << "QX11Info returned a non square dpi." << res << ". Falling back";
-    }
-    
-    res = QSizeF(72, 72);
-    return res;
+    return QSizeF(72, 72);
 }
 
-#elif defined(Q_OS_MAC)
+#else
     /*
      * Code copied from http://developer.apple.com/qa/qa2001/qa1217.html
      */
@@ -244,7 +134,7 @@ QSizeF Utils::realDpi(QWidget* widgetOnScreen)
         return err;
     }
 
-double Utils::dpiX()
+double Utils::realDpiX()
 {
     double x,y;
     CGDisplayErr err = GetDisplayDPI( CGDisplayCurrentMode(kCGDirectMainDisplay),
@@ -254,7 +144,7 @@ double Utils::dpiX()
     return err == CGDisplayNoErr ? x : 72.0;
 }
 
-double Utils::dpiY()
+double Utils::realDpiY()
 {
     double x,y;
     CGDisplayErr err = GetDisplayDPI( CGDisplayCurrentMode(kCGDirectMainDisplay),
@@ -262,42 +152,6 @@ double Utils::dpiY()
                                       &x, &y );
 
     return err == CGDisplayNoErr ? y : 72.0;
-}
-
-double Utils::realDpiX()
-{
-    return dpiX();
-}
-
-double Utils::realDpiY()
-{
-    return dpiY();
-}
-
-QSizeF Utils::realDpi(QWidget*)
-{
-    return QSizeF(realDpiX(), realDpiY());
-}
-#else
-
-double Utils::dpiX()
-{
-    return QDesktopWidget().physicalDpiX();
-}
-
-double Utils::dpiY()
-{
-    return QDesktopWidget().physicalDpiY();
-}
-
-double Utils::realDpiX()
-{
-    return dpiX();
-}
-
-double Utils::realDpiY()
-{
-    return dpiY();
 }
 
 QSizeF Utils::realDpi(QWidget*)

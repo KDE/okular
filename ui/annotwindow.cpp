@@ -345,7 +345,7 @@ void AnnotWindow::renderLatex( bool render )
         QColor fontColor = textEdit->textColor();
         int fontSize = textEdit->fontPointSize();
         QString latexOutput;
-        GuiUtils::LatexRenderer::Error errorCode = m_latexRenderer->renderLatexInHtml( contents, fontColor, fontSize, Okular::Utils::dpiX(), latexOutput );
+        GuiUtils::LatexRenderer::Error errorCode = m_latexRenderer->renderLatexInHtml( contents, fontColor, fontSize, Okular::Utils::realDpi(nullptr).width(), latexOutput );
         switch ( errorCode )
         {
             case GuiUtils::LatexRenderer::LatexNotFound:

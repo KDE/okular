@@ -65,13 +65,6 @@ find_package(ZLIB REQUIRED)
 #        TYPE RECOMMENDED
 #        PURPOSE "Required to build Okular.")
 
-find_package(KF5Screen)
-set_package_properties("LibKScreen" PROPERTIES
-        DESCRIPTION "KDE screen management library"
-        URL "https://projects.kde.org/projects/kdereview/libkscreen"
-        TYPE RECOMMENDED
-        PURPOSE "DPI detection support")
-
 add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 add_definitions(-DTRANSLATION_DOMAIN="okular")
 
@@ -222,11 +215,6 @@ PUBLIC  # these are included from the installed headers
     Qt5::PrintSupport
     Qt5::Widgets
 )
-
-if(LibKScreen_FOUND)
-    message("KF5: port code to KScreen")
-    #target_link_libraries(okularcore KF5::LibKScreen)
-endif(LibKScreen_FOUND)
 
 set_target_properties(okularcore PROPERTIES VERSION 6.0.0 SOVERSION 6 OUTPUT_NAME Okular5Core EXPORT_NAME Core)
 

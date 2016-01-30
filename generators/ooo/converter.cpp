@@ -132,8 +132,9 @@ Okular::Document::OpenResult Converter::convertWithPassword( const QString &file
   const QString masterLayout = mStyleInformation->masterPageName();
   const PageFormatProperty property = mStyleInformation->pageProperty( masterLayout );
 
-  int pageWidth = qRound(property.width() / 72.0 * Okular::Utils::dpiX());
-  int pageHeight = qRound(property.height() / 72.0 * Okular::Utils::dpiY());
+  const QSizeF dpi = Okular::Utils::realDpi(nullptr);
+  int pageWidth = qRound(property.width() / 72.0 * dpi.width());
+  int pageHeight = qRound(property.height() / 72.0 * dpi.height());
 
   if ( pageWidth == 0 )
       pageWidth = 600;

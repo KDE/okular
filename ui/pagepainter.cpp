@@ -766,7 +766,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                 if ( geom->style().width() || geom->geometricalInnerColor().isValid() )
                 {
                     mixedPainter->save();
-                    const double width = geom->style().width() * Okular::Utils::dpiX() / ( 72.0 * 2.0 ) * scaledWidth / page->width();
+                    const double width = geom->style().width() * Okular::Utils::realDpi(nullptr).width() / ( 72.0 * 2.0 ) * scaledWidth / page->width();
                     QRectF r( .0, .0, annotBoundary.width(), annotBoundary.height() );
                     r.adjust( width, width, -width, -width );
                     r.translate( annotBoundary.topLeft() );

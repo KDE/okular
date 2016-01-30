@@ -96,10 +96,12 @@ Shell::Shell( const QString &serializedOptions )
     m_tabWidget->tabBar()->hide();
     m_tabWidget->setDocumentMode( true );
     m_tabWidget->setMovable( true );
+
+    m_tabWidget->setAcceptDrops(true);
+    m_tabWidget->installEventFilter(this);
+
     connect( m_tabWidget, &QTabWidget::currentChanged, this, &Shell::setActiveTab );
     connect( m_tabWidget, &QTabWidget::tabCloseRequested, this, &Shell::closeTab );
-    connect( m_tabWidget, SIGNAL(testCanDecode(const QDragMoveEvent*,bool&)), SLOT(testTabDrop(const QDragMoveEvent*,bool&)) ); // kf5 FIXME DnD
-    connect( m_tabWidget, SIGNAL(receivedDropEvent(QDropEvent*)), SLOT(handleTabDrop(QDropEvent*)) ); // kf5 FIXME DnD
     connect( m_tabWidget->tabBar(), &QTabBar::tabMoved, this, &Shell::moveTabData );
 
     setCentralWidget( m_tabWidget );
@@ -136,6 +138,25 @@ Shell::Shell( const QString &serializedOptions )
     m_isValid = false;
     KMessageBox::error(this, i18n("Unable to find the Okular component."));
   }
+}
+
+bool Shell::eventFilter(QObject *obj, QEvent *event)
+{
+    QDragMoveEvent* dmEvent = dynamic_cast<QDragMoveEvent*>(event);
+    if (dmEvent) {
+        bool accept = dmEvent->mimeData()->hasUrls();
+        event->setAccepted(accept);
+        return accept;
+    }
+
+    QDropEvent* dEvent = dynamic_cast<QDropEvent*>(event);
+    if (dEvent) {
+        const QList<QUrl> list = KUrlMimeData::urlsFromMimeData(dEvent->mimeData());
+        handleDroppedUrls(list);
+        dEvent->setAccepted(true);
+        return true;
+    }
+    return false;
 }
 
 bool Shell::isValid() const
@@ -650,17 +671,6 @@ void Shell::handleDroppedUrls( const QList<QUrl>& urls )
     {
         openUrl( url );
     }
-}
-
-void Shell::testTabDrop( const QDragMoveEvent* event, bool& accept )
-{
-    accept = event->mimeData()->hasUrls();
-}
-
-void Shell::handleTabDrop( QDropEvent* event )
-{
-    const QList<QUrl> list = KUrlMimeData::urlsFromMimeData( event->mimeData() );
-    handleDroppedUrls( list );
 }
 
 void Shell::moveTabData( int from, int to )

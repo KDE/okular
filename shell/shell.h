@@ -119,8 +119,6 @@ private slots:
   void closeTab( int tab );
   void activateNextTab();
   void activatePrevTab();
-  void testTabDrop( const QDragMoveEvent* event, bool& accept );
-  void handleTabDrop( QDropEvent* event );
   void moveTabData( int from, int to );
 
   void slotFitWindowToPage( const QSize& pageViewSize, const QSize& pageSize );
@@ -138,6 +136,8 @@ private:
   int  findTabIndex( QObject* sender );
 
 private:
+  bool eventFilter(QObject *obj, QEvent *event) override;
+
   KPluginFactory* m_partFactory;
   KRecentFilesAction* m_recent;
   QStringList m_fileformats;

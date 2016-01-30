@@ -791,26 +791,26 @@ void DocumentPrivate::saveViewsInfo( View *view, QDomElement &e ) const
     }
 }
 
-QString DocumentPrivate::giveAbsolutePath( const QString & fileName ) const
+QUrl DocumentPrivate::giveAbsoluteUrl( const QString & fileName ) const
 {
     if ( !QDir::isRelativePath( fileName ) )
-        return fileName;
+        return QUrl::fromLocalFile(fileName);
 
     if ( !m_url.isValid() )
-        return QString();
+        return QUrl();
 
-    return KIO::upUrl(m_url).path() + fileName;
+    return QUrl(KIO::upUrl(m_url).toString() + fileName);
 }
 
 bool DocumentPrivate::openRelativeFile( const QString & fileName )
 {
-    QString absFileName = giveAbsolutePath( fileName );
-    if ( absFileName.isEmpty() )
+    QUrl url = giveAbsoluteUrl( fileName );
+    if ( url.isEmpty() )
         return false;
 
-    qCDebug(OkularCoreDebug).nospace() << "openDocument: '" << absFileName << "'";
+    qCDebug(OkularCoreDebug).nospace() << "openRelativeFile: '" << url << "'";
 
-    emit m_parent->openUrl( QUrl(absFileName) );
+    emit m_parent->openUrl( url );
     return true;
 }
 
@@ -3882,8 +3882,8 @@ void Document::processAction( const Action * action )
 
         case Action::Execute: {
             const ExecuteAction * exe  = static_cast< const ExecuteAction * >( action );
-            QString fileName = exe->fileName();
-            if ( fileName.endsWith( QLatin1String(".pdf") ) || fileName.endsWith( QLatin1String(".PDF") ) )
+            const QString fileName = exe->fileName();
+            if ( fileName.endsWith( QLatin1String(".pdf"), Qt::CaseInsensitive ) )
             {
                 d->openRelativeFile( fileName );
                 return;
@@ -3891,20 +3891,19 @@ void Document::processAction( const Action * action )
 
             // Albert: the only pdf i have that has that kind of link don't define
             // an application and use the fileName as the file to open
-            fileName = d->giveAbsolutePath( fileName );
+            QUrl url = d->giveAbsoluteUrl( fileName );
             QMimeDatabase db;
-            QMimeType mime = db.mimeTypeForFile( fileName );
+            QMimeType mime = db.mimeTypeForUrl( url );
             // Check executables
-#pragma message("KF5 check if QUrl::fromUserInput is right here")
-            if ( KRun::isExecutableFile( QUrl::fromUserInput(fileName), mime.name() ) )
+            if ( KRun::isExecutableFile( url, mime.name() ) )
             {
                 // Don't have any pdf that uses this code path, just a guess on how it should work
                 if ( !exe->parameters().isEmpty() )
                 {
-                    fileName = d->giveAbsolutePath( exe->parameters() );
-                    mime = db.mimeTypeForFile( fileName );
-                    #pragma message("KF5 check QUrl usage")
-                    if ( KRun::isExecutableFile( QUrl(fileName), mime.name() ) )
+                    url = d->giveAbsoluteUrl( exe->parameters() );
+                    mime = db.mimeTypeForUrl( url );
+
+                    if ( KRun::isExecutableFile( url, mime.name() ) )
                     {
                         // this case is a link pointing to an executable with a parameter
                         // that also is an executable, possibly a hand-crafted pdf
@@ -3925,7 +3924,7 @@ void Document::processAction( const Action * action )
             if ( ptr )
             {
                 QList<QUrl> lst;
-                lst.append( QUrl::fromLocalFile(fileName) );
+                lst.append( url );
                 KRun::runService( *ptr, lst, 0 );
             }
             else
@@ -4047,7 +4046,7 @@ void Document::processSourceReference( const SourceReference * ref )
     if ( !ref )
         return;
 
-    const QUrl url = QUrl::fromLocalFile( d->giveAbsolutePath( ref->fileName() ) );
+    const QUrl url = d->giveAbsoluteUrl( ref->fileName() );
     if ( !url.isLocalFile() )
     {
         qCDebug(OkularCoreDebug) << url.url() << "is not a local file.";

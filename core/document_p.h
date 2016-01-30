@@ -119,7 +119,7 @@ class DocumentPrivate
         void loadDocumentInfo( QFile &infoFile );
         void loadViewsInfo( View *view, const QDomElement &e );
         void saveViewsInfo( View *view, QDomElement &e ) const;
-        QString giveAbsolutePath( const QString & fileName ) const;
+        QUrl giveAbsoluteUrl( const QString & fileName ) const;
         bool openRelativeFile( const QString & fileName );
         Generator * loadGeneratorLibrary( const KPluginMetaData& service );
         void loadAllGeneratorLibraries();

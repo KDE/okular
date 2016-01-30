@@ -55,6 +55,7 @@
 #include <KFormat>
 #include <KLocalizedString>
 #include <KPluginMetaData>
+#include <Kdelibs4Migration>
 
 // local includes
 #include "action.h"
@@ -1209,86 +1210,90 @@ void DocumentPrivate::saveDocumentInfo() const
         return;
 
     QFile infoFile( m_xmlFileName );
-    if (infoFile.open( QIODevice::WriteOnly | QIODevice::Truncate) )
+    qCDebug(OkularCoreDebug) << "About to save document info to" << m_xmlFileName;
+    if (!infoFile.open( QIODevice::WriteOnly | QIODevice::Truncate))
     {
-        // 1. Create DOM
-        QDomDocument doc( QStringLiteral("documentInfo") );
-        QDomProcessingInstruction xmlPi = doc.createProcessingInstruction(
-                QStringLiteral( "xml" ), QStringLiteral( "version=\"1.0\" encoding=\"utf-8\"" ) );
-        doc.appendChild( xmlPi );
-        QDomElement root = doc.createElement( QStringLiteral("documentInfo") );
-        root.setAttribute( QStringLiteral("url"), m_url.toDisplayString(QUrl::PreferLocalFile) );
-        doc.appendChild( root );
+        qCWarning(OkularCoreDebug) << "Failed to open docdata file" << m_xmlFileName;
+        return;
 
-        // 2.1. Save page attributes (bookmark state, annotations, ... ) to DOM
-        QDomElement pageList = doc.createElement( QStringLiteral("pageList") );
-        root.appendChild( pageList );
-        PageItems saveWhat = AllPageItems;
-        if ( m_annotationsNeedSaveAs )
-        {
-            /* In this case, if the user makes a modification, he's requested to
-             * save to a new document. Therefore, if there are existing local
-             * annotations, we save them back unmodified in the original
-             * document's metadata, so that it appears that it was not changed */
-            saveWhat |= OriginalAnnotationPageItems;
-        }
-        // <page list><page number='x'>.... </page> save pages that hold data
-        QVector< Page * >::const_iterator pIt = m_pagesVector.constBegin(), pEnd = m_pagesVector.constEnd();
-        for ( ; pIt != pEnd; ++pIt )
-            (*pIt)->d->saveLocalContents( pageList, doc, saveWhat );
-
-        // 2.2. Save document info (current viewport, history, ... ) to DOM
-        QDomElement generalInfo = doc.createElement( QStringLiteral("generalInfo") );
-        root.appendChild( generalInfo );
-        // create rotation node
-        if ( m_rotation != Rotation0 )
-        {
-            QDomElement rotationNode = doc.createElement( QStringLiteral("rotation") );
-            generalInfo.appendChild( rotationNode );
-            rotationNode.appendChild( doc.createTextNode( QString::number( (int)m_rotation ) ) );
-        }
-        // <general info><history> ... </history> save history up to OKULAR_HISTORY_SAVEDSTEPS viewports
-        QLinkedList< DocumentViewport >::const_iterator backIterator = m_viewportIterator;
-        if ( backIterator != m_viewportHistory.constEnd() )
-        {
-            // go back up to OKULAR_HISTORY_SAVEDSTEPS steps from the current viewportIterator
-            int backSteps = OKULAR_HISTORY_SAVEDSTEPS;
-            while ( backSteps-- && backIterator != m_viewportHistory.constBegin() )
-                --backIterator;
-
-            // create history root node
-            QDomElement historyNode = doc.createElement( QStringLiteral("history") );
-            generalInfo.appendChild( historyNode );
-
-            // add old[backIterator] and present[viewportIterator] items
-            QLinkedList< DocumentViewport >::const_iterator endIt = m_viewportIterator;
-            ++endIt;
-            while ( backIterator != endIt )
-            {
-                QString name = (backIterator == m_viewportIterator) ? "current" : "oldPage";
-                QDomElement historyEntry = doc.createElement( name );
-                historyEntry.setAttribute( QStringLiteral("viewport"), (*backIterator).toString() );
-                historyNode.appendChild( historyEntry );
-                ++backIterator;
-            }
-        }
-        // create views root node
-        QDomElement viewsNode = doc.createElement( QStringLiteral("views") );
-        generalInfo.appendChild( viewsNode );
-        Q_FOREACH ( View * view, m_views )
-        {
-            QDomElement viewEntry = doc.createElement( QStringLiteral("view") );
-            viewEntry.setAttribute( QStringLiteral("name"), view->name() );
-            viewsNode.appendChild( viewEntry );
-            saveViewsInfo( view, viewEntry );
-        }
-
-        // 3. Save DOM to XML file
-        QString xml = doc.toString();
-        QTextStream os( &infoFile );
-        os.setCodec( "UTF-8" );
-        os << xml;
     }
+    // 1. Create DOM
+    QDomDocument doc( QStringLiteral("documentInfo") );
+    QDomProcessingInstruction xmlPi = doc.createProcessingInstruction(
+            QStringLiteral( "xml" ), QStringLiteral( "version=\"1.0\" encoding=\"utf-8\"" ) );
+    doc.appendChild( xmlPi );
+    QDomElement root = doc.createElement( QStringLiteral("documentInfo") );
+    root.setAttribute( QStringLiteral("url"), m_url.toDisplayString(QUrl::PreferLocalFile) );
+    doc.appendChild( root );
+
+    // 2.1. Save page attributes (bookmark state, annotations, ... ) to DOM
+    QDomElement pageList = doc.createElement( QStringLiteral("pageList") );
+    root.appendChild( pageList );
+    PageItems saveWhat = AllPageItems;
+    if ( m_annotationsNeedSaveAs )
+    {
+        /* In this case, if the user makes a modification, he's requested to
+            * save to a new document. Therefore, if there are existing local
+            * annotations, we save them back unmodified in the original
+            * document's metadata, so that it appears that it was not changed */
+        saveWhat |= OriginalAnnotationPageItems;
+    }
+    // <page list><page number='x'>.... </page> save pages that hold data
+    QVector< Page * >::const_iterator pIt = m_pagesVector.constBegin(), pEnd = m_pagesVector.constEnd();
+    for ( ; pIt != pEnd; ++pIt )
+        (*pIt)->d->saveLocalContents( pageList, doc, saveWhat );
+
+    // 2.2. Save document info (current viewport, history, ... ) to DOM
+    QDomElement generalInfo = doc.createElement( QStringLiteral("generalInfo") );
+    root.appendChild( generalInfo );
+    // create rotation node
+    if ( m_rotation != Rotation0 )
+    {
+        QDomElement rotationNode = doc.createElement( QStringLiteral("rotation") );
+        generalInfo.appendChild( rotationNode );
+        rotationNode.appendChild( doc.createTextNode( QString::number( (int)m_rotation ) ) );
+    }
+    // <general info><history> ... </history> save history up to OKULAR_HISTORY_SAVEDSTEPS viewports
+    QLinkedList< DocumentViewport >::const_iterator backIterator = m_viewportIterator;
+    if ( backIterator != m_viewportHistory.constEnd() )
+    {
+        // go back up to OKULAR_HISTORY_SAVEDSTEPS steps from the current viewportIterator
+        int backSteps = OKULAR_HISTORY_SAVEDSTEPS;
+        while ( backSteps-- && backIterator != m_viewportHistory.constBegin() )
+            --backIterator;
+
+        // create history root node
+        QDomElement historyNode = doc.createElement( QStringLiteral("history") );
+        generalInfo.appendChild( historyNode );
+
+        // add old[backIterator] and present[viewportIterator] items
+        QLinkedList< DocumentViewport >::const_iterator endIt = m_viewportIterator;
+        ++endIt;
+        while ( backIterator != endIt )
+        {
+            QString name = (backIterator == m_viewportIterator) ? "current" : "oldPage";
+            QDomElement historyEntry = doc.createElement( name );
+            historyEntry.setAttribute( QStringLiteral("viewport"), (*backIterator).toString() );
+            historyNode.appendChild( historyEntry );
+            ++backIterator;
+        }
+    }
+    // create views root node
+    QDomElement viewsNode = doc.createElement( QStringLiteral("views") );
+    generalInfo.appendChild( viewsNode );
+    Q_FOREACH ( View * view, m_views )
+    {
+        QDomElement viewEntry = doc.createElement( QStringLiteral("view") );
+        viewEntry.setAttribute( QStringLiteral("name"), view->name() );
+        viewsNode.appendChild( viewEntry );
+        saveViewsInfo( view, viewEntry );
+    }
+
+    // 3. Save DOM to XML file
+    QString xml = doc.toString();
+    QTextStream os( &infoFile );
+    os.setCodec( "UTF-8" );
+    os << xml;
     infoFile.close();
 }
 
@@ -2213,18 +2218,32 @@ Document::~Document()
 
 QString DocumentPrivate::docDataFileName(const QUrl &url, qint64 document_size)
 {
+
     QString fn = url.fileName();
     fn = QString::number( document_size ) + '.' + fn + ".xml";
-    QString newokular = "okular/docdata/" + fn;
-    QString newokularfile = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1Char('/') + newokular ;
-    if ( !QFile::exists( newokularfile ) )
+    QString docdataDir = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)
+            + QStringLiteral("/okular/docdata");
+    // make sure that the okular/docdata/ directory exists (probably this used to be handled by KStandardDirs)
+    if (!QFileInfo::exists(docdataDir))
     {
-        QString oldkpdf = "kpdf/" + fn;
-        QString oldkpdffile = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1Char('/') + oldkpdf ;
-        if ( QFile::exists( oldkpdffile ) )
+        qCDebug(OkularCoreDebug) << "creating docdata folder" << docdataDir;
+        QDir().mkpath(docdataDir);
+    }
+    QString newokularfile = docdataDir + QLatin1Char('/') + fn;
+    // we don't want to accidentally migrate old files when running unit tests
+    if (!QFile::exists( newokularfile ) && !QStandardPaths::isTestModeEnabled())
+    {
+        // see if an KDE4 file still exists
+        static Kdelibs4Migration k4migration;
+        QString oldfile = k4migration.locateLocal("data", QStringLiteral("okular/docdata/") + fn);
+        if (oldfile.isEmpty())
+        {
+            oldfile =  k4migration.locateLocal("data",  QStringLiteral("kpdf/") + fn);
+        }
+        if ( !oldfile.isEmpty() && QFile::exists( oldfile ) )
         {
             // ### copy or move?
-            if ( !QFile::copy( oldkpdffile, newokularfile ) )
+            if ( !QFile::copy( oldfile, newokularfile ) )
                 return QString();
         }
     }

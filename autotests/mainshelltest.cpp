@@ -12,6 +12,7 @@
 #include <qprintdialog.h>
 #include <qwidget.h>
 #include <qtabwidget.h>
+#include <QStandardPaths>
 #include <kconfiggroup.h>
 
 #include "../shell/okular_main.h"
@@ -108,6 +109,7 @@ Shell *findShell(Shell *ignore = 0)
 
 void MainShellTest::initTestCase()
 {
+    QStandardPaths::setTestModeEnabled(true);
     // Don't pollute people's okular settings
     Okular::Settings::instance( QStringLiteral("mainshelltest") );
 
@@ -331,8 +333,7 @@ void MainShellTest::testShell()
             QCOMPARE(p.state(), QProcess::Running);
             p.terminate();
             p.waitForFinished();
-            QCOMPARE(p.exitCode(), 0);
-
+            QVERIFY(p.state() != QProcess::Running);
             // It opened on a new process, so no change for us
             QCOMPARE(s->m_tabs.count(), 1);
             QCOMPARE(part->url().url(), QString("file://%1").arg(paths[0]));

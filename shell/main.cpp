@@ -42,6 +42,8 @@ int main(int argc, char** argv)
 
     QCommandLineParser parser;
     KAboutData::setApplicationData(aboutData);
+    // The KDE4 version accepted flags such as -unique with a single dash -> preserve compatibility
+    parser.setSingleDashWordOptionMode(QCommandLineParser::ParseAsLongOptions);
     parser.addVersionOption();
     parser.addHelpOption();
     aboutData.setupCommandLine(&parser);

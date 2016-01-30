@@ -167,7 +167,7 @@ Shell::~Shell()
 
 // Open a new document if we have space for it
 // This can hang if called on a unique instance and openUrl pops a messageBox
-bool Shell::openDocument( const QUrl& url, const QString &serializedOptions )
+bool Shell::openDocument( const QString& urlString, const QString &serializedOptions )
 {
     if( m_tabs.size() <= 0 )
        return false;
@@ -182,7 +182,7 @@ bool Shell::openDocument( const QUrl& url, const QString &serializedOptions )
         return false;
     }
 
-    openUrl( url, serializedOptions );
+    openUrl( QUrl( urlString, QUrl::StrictMode) , serializedOptions );
 
     return true;
 }

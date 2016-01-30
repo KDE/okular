@@ -166,7 +166,7 @@ Status main(const QStringList &paths, const QString &serializedOptions)
     {
         // Page only makes sense if we are opening one file
         const QString page = ShellUtils::page(serializedOptions);
-        if ( shell->openDocument( ShellUtils::urlFromArg(paths[i], ShellUtils::qfileExistFunc(), page), serializedOptions) )
+        if ( shell->openDocument( ShellUtils::urlFromArg(paths[i], ShellUtils::qfileExistFunc(), page).url(), serializedOptions) )
         {
             ++i;
         }

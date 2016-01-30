@@ -69,7 +69,7 @@ public:
 
 public slots:
   Q_SCRIPTABLE Q_NOREPLY void tryRaise();
-  Q_SCRIPTABLE bool openDocument(const QUrl &url, const QString &serializedOptions = QString() );
+  Q_SCRIPTABLE bool openDocument(const QString &urlString, const QString &serializedOptions = QString() );
   Q_SCRIPTABLE bool canOpenDocs( int numDocs, int desktop );
 
 protected:

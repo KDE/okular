@@ -16,7 +16,7 @@ set(okularGenerator_epub_PART_SRCS
 
 okular_add_generator(okularGenerator_epub ${okularGenerator_epub_PART_SRCS})
 
-target_link_libraries(okularGenerator_epub okularcore ${EPUB_LIBRARIES} KF5::KDELibs4Support Qt5::Widgets Qt5::Xml)
+target_link_libraries(okularGenerator_epub okularcore ${EPUB_LIBRARIES} KF5::I18n Qt5::Widgets Qt5::Xml)
 
 ########### install files ###############
 

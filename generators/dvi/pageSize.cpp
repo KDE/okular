@@ -12,7 +12,6 @@
 #include "debug_dvi.h"
 #include "length.h"
 
-#include <kglobal.h>
 #include <KLocalizedString>
 
 #include <QtCore/qloggingcategory.h>

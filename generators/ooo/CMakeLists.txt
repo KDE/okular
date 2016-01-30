@@ -27,7 +27,7 @@ set(okularGenerator_ooo_PART_SRCS
 
 okular_add_generator(okularGenerator_ooo ${okularGenerator_ooo_PART_SRCS})
 
-target_link_libraries(okularGenerator_ooo okularcore KF5::KIOCore KF5::Archive KF5::I18n KF5::Wallet KF5::KDELibs4Support ${MATH_LIB} Qt5::Xml)
+target_link_libraries(okularGenerator_ooo okularcore KF5::KIOCore KF5::Archive KF5::I18n KF5::Wallet ${MATH_LIB} Qt5::Xml)
 if (Qca-qt5_FOUND)
   target_link_libraries(okularGenerator_ooo okularcore qca-qt5)
 endif ()

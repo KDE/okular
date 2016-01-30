@@ -29,7 +29,6 @@
 #include <QtCore/QDebug>
 #include <KLocalizedString>
 #include <qtemporaryfile.h>
-#include <KLocalizedString>
 #include <QDir>
 
 static void recurseCreateTOC( QDomDocument &maindoc, const QDomNode &parent, QDomNode &parentDestination, KDjVu *djvu )

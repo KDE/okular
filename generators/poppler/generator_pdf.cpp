@@ -31,7 +31,6 @@
 #include <kconfigdialog.h>
 #include <KLocalizedString>
 #include <kmessagebox.h>
-#include <kglobal.h>
 
 #include <core/action.h>
 #include <core/page.h>

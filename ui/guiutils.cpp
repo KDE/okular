@@ -13,7 +13,7 @@
 #include <qpainter.h>
 #include <qsvgrenderer.h>
 #include <qtextdocument.h>
-#include <kfiledialog.h>
+#include <qfiledialog.h>
 #include <kiconloader.h>
 #include <kmessagebox.h>
 #include <KLocalizedString>
@@ -204,8 +204,7 @@ KIconLoader* iconLoader()
 void saveEmbeddedFile( Okular::EmbeddedFile *ef, QWidget *parent )
 {
     const QString caption = i18n( "Where do you want to save %1?", ef->name() );
-    const QString path = KFileDialog::getSaveFileName( QUrl::fromLocalFile(ef->name()), QString(), parent, caption,
-                                                       KFileDialog::ConfirmOverwrite );
+    const QString path = QFileDialog::getSaveFileName( parent, caption, ef->name() );
     if ( path.isEmpty() )
         return;
 

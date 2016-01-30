@@ -20,7 +20,6 @@
 
 #include <kaboutdata.h>
 #include <QtCore/QDebug>
-#include <kglobal.h>
 #include <KLocalizedString>
 
 #include <core/document.h>

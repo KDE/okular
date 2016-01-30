@@ -13,11 +13,10 @@
 #include <QtCore/QFile>
 #include <QtCore/QFileInfo>
 #include <QtCore/QRegExp>
+#include <QtCore/QGlobalStatic>
 #include <QTemporaryDir>
 
 #include <QtCore/qloggingcategory.h>
-#include <kglobal.h>
-#include <KLocalizedString>
 #if !defined(Q_OS_WIN)
 #include <KPty/kptyprocess.h>
 #include <KPty/kptydevice.h>
@@ -38,7 +37,7 @@ struct UnrarHelper
     QString unrarPath;
 };
 
-K_GLOBAL_STATIC( UnrarHelper, helper )
+Q_GLOBAL_STATIC( UnrarHelper, helper )
 
 static UnrarFlavour* detectUnrar( const QString &unrarPath, const QString &versionCommand )
 {

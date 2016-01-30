@@ -38,6 +38,7 @@ find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS
     Activities
     Archive
     Bookmarks
+    Completion
     Config
     ConfigWidgets
     CoreAddons

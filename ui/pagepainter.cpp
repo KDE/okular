@@ -34,7 +34,6 @@
 #include "core/observer.h"
 #include "core/tile.h"
 #include "settings_core.h"
-#include "core/document_p.h"
 
 Q_GLOBAL_STATIC_WITH_ARGS( QPixmap, busyPixmap, ( KIconLoader::global()->loadIcon("okular", KIconLoader::NoGroup, 32, KIconLoader::DefaultState, QStringList(), 0, true) ) )
 

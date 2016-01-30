@@ -15,7 +15,7 @@ set(okularGenerator_djvu_SRCS
 
 okular_add_generator(okularGenerator_djvu ${okularGenerator_djvu_SRCS})
 
-target_link_libraries(okularGenerator_djvu okularcore ${DJVULIBRE_LIBRARY} KF5::KDELibs4Support)
+target_link_libraries(okularGenerator_djvu okularcore ${DJVULIBRE_LIBRARY} KF5::I18n)
 
 ########### install files ###############
 

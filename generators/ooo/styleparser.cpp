@@ -15,7 +15,6 @@
 #include <QtXml/QDomElement>
 #include <QtXml/QXmlSimpleReader>
 
-#include <kglobal.h>
 #include <KLocalizedString>
 
 #include "document.h"

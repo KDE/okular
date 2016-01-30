@@ -15,7 +15,7 @@ set( okularGenerator_comicbook_PART_SRCS
 
 
 okular_add_generator(okularGenerator_comicbook ${okularGenerator_comicbook_PART_SRCS})
-target_link_libraries(okularGenerator_comicbook okularcore KF5::KIOCore KF5::I18n KF5::Archive KF5::KDELibs4Support)
+target_link_libraries(okularGenerator_comicbook okularcore KF5::KIOCore KF5::I18n KF5::Archive)
 if (UNIX)
    find_package(KF5 REQUIRED Pty)
    target_link_libraries(okularGenerator_comicbook KF5::Pty)

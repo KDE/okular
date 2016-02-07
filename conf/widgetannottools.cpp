@@ -336,8 +336,8 @@ QDomDocument EditAnnotToolDialog::toolXml() const
     engineElement.appendChild( annotationElement );
 
     const QString color = m_stubann->style().color().name();
-    const double opacity = m_stubann->style().opacity();
-    const double width = m_stubann->style().width();
+    const QString opacity = QString::number( m_stubann->style().opacity() );
+    const QString width = QString::number( m_stubann->style().width() );
 
     if ( toolType == ToolNoteLinked )
     {
@@ -387,8 +387,8 @@ QDomDocument EditAnnotToolDialog::toolXml() const
         annotationElement.setAttribute( "width", width );
         if ( la->lineLeadingForwardPoint() != 0 || la->lineLeadingBackwardPoint() != 0 )
         {
-            annotationElement.setAttribute( "leadFwd", la->lineLeadingForwardPoint() );
-            annotationElement.setAttribute( "leadBack", la->lineLeadingBackwardPoint() );
+            annotationElement.setAttribute( "leadFwd", QString::number( la->lineLeadingForwardPoint() ) );
+            annotationElement.setAttribute( "leadBack", QString::number( la->lineLeadingBackwardPoint() ) );
         }
     }
     else if ( toolType == ToolPolygon )
@@ -470,7 +470,7 @@ QDomDocument EditAnnotToolDialog::toolXml() const
         annotationElement.setAttribute( "icon", sa->stampIconName() );
     }
 
-    if ( opacity != 1 )
+    if ( opacity != "1" )
         annotationElement.setAttribute( "opacity", opacity );
 
     return doc;

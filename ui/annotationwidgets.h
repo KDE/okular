@@ -116,6 +116,7 @@ private:
     PixmapPreviewSelector * m_pixmapSelector;
     KFontRequester * m_fontReq;
     QComboBox * m_textAlign;
+    QDoubleSpinBox * m_spinWidth;
 };
 
 class StampAnnotationWidget

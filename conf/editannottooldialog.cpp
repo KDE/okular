@@ -125,8 +125,8 @@ QDomDocument EditAnnotToolDialog::toolXml() const
     engineElement.appendChild( annotationElement );
 
     const QString color = m_stubann->style().color().name();
-    const double opacity = m_stubann->style().opacity();
-    const double width = m_stubann->style().width();
+    const QString opacity = QString::number( m_stubann->style().opacity() );
+    const QString width = QString::number( m_stubann->style().width() );
 
     if ( toolType == ToolNoteLinked )
     {
@@ -149,6 +149,7 @@ QDomDocument EditAnnotToolDialog::toolXml() const
         engineElement.setAttribute( QStringLiteral("block"), QStringLiteral("true") );
         annotationElement.setAttribute( QStringLiteral("type"), QStringLiteral("FreeText") );
         annotationElement.setAttribute( QStringLiteral("color"), color );
+        annotationElement.setAttribute( QStringLiteral("width"), width );
         if ( ta->inplaceAlignment() != 0 )
             annotationElement.setAttribute( QStringLiteral("align"), ta->inplaceAlignment() );
         if ( ta->textFont() != QApplication::font() )
@@ -175,8 +176,8 @@ QDomDocument EditAnnotToolDialog::toolXml() const
         annotationElement.setAttribute( QStringLiteral("width"), width );
         if ( la->lineLeadingForwardPoint() != 0 || la->lineLeadingBackwardPoint() != 0 )
         {
-            annotationElement.setAttribute( QStringLiteral("leadFwd"), la->lineLeadingForwardPoint() );
-            annotationElement.setAttribute( QStringLiteral("leadBack"), la->lineLeadingBackwardPoint() );
+            annotationElement.setAttribute( QStringLiteral("leadFwd"), QString::number( la->lineLeadingForwardPoint() ) );
+            annotationElement.setAttribute( QStringLiteral("leadBack"), QString::number( la->lineLeadingBackwardPoint() ) );
         }
     }
     else if ( toolType == ToolPolygon )
@@ -258,7 +259,7 @@ QDomDocument EditAnnotToolDialog::toolXml() const
         annotationElement.setAttribute( QStringLiteral("icon"), sa->stampIconName() );
     }
 
-    if ( opacity != 1 )
+    if ( opacity != "1" )
         annotationElement.setAttribute( QStringLiteral("opacity"), opacity );
 
     return doc;
@@ -284,6 +285,7 @@ void EditAnnotToolDialog::createStubAnnotation()
     {
         Okular::TextAnnotation * ta = new Okular::TextAnnotation();
         ta->setTextType( Okular::TextAnnotation::InPlace );
+        ta->style().setWidth( 1.0 );
         ta->style().setColor( Qt::yellow );
         m_stubann = ta;
     }

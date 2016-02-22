@@ -216,7 +216,7 @@ PUBLIC  # these are included from the installed headers
     Qt5::Widgets
 )
 
-set_target_properties(okularcore PROPERTIES VERSION 6.0.0 SOVERSION 6 OUTPUT_NAME Okular5Core EXPORT_NAME Core)
+set_target_properties(okularcore PROPERTIES VERSION 7.0.0 SOVERSION 7 OUTPUT_NAME Okular5Core EXPORT_NAME Core)
 
 install(TARGETS okularcore EXPORT Okular5Targets ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 

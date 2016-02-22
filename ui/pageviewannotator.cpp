@@ -183,6 +183,11 @@ class PickPointEngine : public AnnotatorEngine
                         f.fromString( m_annotElement.attribute( QStringLiteral("font") ) );
                         ta->setTextFont( f );
                     }
+                    //set width
+                    if ( m_annotElement.hasAttribute( "width" ) )
+                    {
+                        ta->style().setWidth( m_annotElement.attribute( "width" ).toDouble() );
+                    }
                     //set boundary
                     rect.left = qMin(startpoint.x,point.x);
                     rect.top = qMin(startpoint.y,point.y);

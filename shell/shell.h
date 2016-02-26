@@ -67,6 +67,8 @@ public:
    **/
   bool isValid() const;
 
+  bool openDocument(const QUrl &url, const QString &serializedOptions);
+
 public slots:
   Q_SCRIPTABLE Q_NOREPLY void tryRaise();
   Q_SCRIPTABLE bool openDocument(const QString &urlString, const QString &serializedOptions = QString() );

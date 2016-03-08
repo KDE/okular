@@ -1,18 +1,25 @@
 add_subdirectory( conf )
 
-set(CMAKE_REQUIRED_INCLUDES ${POPPLER_INCLUDE_DIR} ${QT_INCLUDE_DIR})
-set(CMAKE_REQUIRED_LIBRARIES ${POPPLER_LIBRARY}   Qt5::Xml)
+if (Poppler_VERSION VERSION_GREATER "0.23.99")
+  set (HAVE_POPPLER_0_24 1)
+endif()
+
+if (Poppler_VERSION VERSION_GREATER "0.27.99")
+  set (HAVE_POPPLER_0_28 1)
+endif()
+
+if (Poppler_VERSION VERSION_GREATER "0.35.99")
+  set (HAVE_POPPLER_0_36 1)
+endif()
+
+if (Poppler_VERSION VERSION_GREATER "0.36.99")
+  set (HAVE_POPPLER_0_37 1)
+endif()
 
 configure_file(
    ${CMAKE_CURRENT_SOURCE_DIR}/config-okular-poppler.h.cmake
    ${CMAKE_CURRENT_BINARY_DIR}/config-okular-poppler.h
 )
-
-# Can be multiple include directories for poppler
-separate_arguments(POPPLER_INCLUDE_DIR)
-foreach(_include_dir ${POPPLER_INCLUDE_DIR})
-    include_directories(${_include_dir})
-endforeach(_include_dir ${POPPLER_INCLUDE_DIR})
 
 include_directories(
    ${CMAKE_BINARY_DIR}/okular
@@ -35,7 +42,7 @@ kconfig_add_kcfg_files(okularGenerator_poppler_PART_SRCS conf/pdfsettings.kcfgc 
 
 okular_add_generator(okularGenerator_poppler ${okularGenerator_poppler_PART_SRCS})
 
-target_link_libraries(okularGenerator_poppler ${POPPLER_LIBRARY} okularcore KF5::I18n Qt5::Xml KF5::Completion)
+target_link_libraries(okularGenerator_poppler okularcore KF5::I18n KF5::Completion Poppler::Qt5 Qt5::Xml)
 
 ########### install files ###############
 

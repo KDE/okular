@@ -7,10 +7,8 @@ function(okular_add_generator _target)
   )
 endfunction()
 
-find_package(Poppler-Qt5 "0.12.1")
-set_package_properties("Poppler-Qt5" PROPERTIES
-        DESCRIPTION "A PDF rendering library"
-        URL "http://poppler.freedesktop.org"
+find_package(Poppler "0.12.1" COMPONENTS Qt5)
+set_package_properties("Poppler" PROPERTIES
         TYPE RECOMMENDED
         PURPOSE "Support for PDF files in okular.")
 
@@ -87,9 +85,9 @@ set_package_properties("libqmobipocket" PROPERTIES
 
 # let's enable the generators properly configured
 
-if(POPPLER_FOUND)
+if(Poppler_Qt5_FOUND)
   add_subdirectory(poppler)
-endif(POPPLER_FOUND)
+endif(Poppler_Qt5_FOUND)
 
 if(LIBSPECTRE_FOUND)
   add_subdirectory(spectre)

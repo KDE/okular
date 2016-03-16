@@ -11,7 +11,7 @@
 #define _OKULAR_VIEWERINTERFACE_H_
 
 #include "../core/okularcore_export.h"
-#ifdef _MSC_VER
+#ifdef Q_OS_WIN
 #define VIEWERINTERFACE_EXPORT __declspec(dllexport)
 #else
 #define VIEWERINTERFACE_EXPORT OKULARCORE_EXPORT

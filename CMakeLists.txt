@@ -306,6 +306,7 @@ add_library(okularpart SHARED ${okularpart_SRCS})
 generate_export_header(okularpart BASE_NAME okularpart)
 
 target_link_libraries(okularpart okularcore Qt5::Svg KF5::Parts ${MATH_LIB} Phonon::phonon4qt5 KF5::Solid KF5::KDELibs4Support KF5::Wallet KF5::Archive)
+set_target_properties(okularpart PROPERTIES PREFIX "")
 
 if (Qt5TextToSpeech_FOUND)
    target_link_libraries(okularpart Qt5::TextToSpeech)

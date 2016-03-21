@@ -63,10 +63,10 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     Okular::DocumentObserver *observer, int flags, int scaledWidth, int scaledHeight, const QRect &limits,
     const Okular::NormalizedRect &crop, Okular::NormalizedPoint *viewPortPoint )
 {
-	/* Calculate the cropped geometry of the page */
-	QRect scaledCrop = crop.geometry( scaledWidth, scaledHeight );
-	int croppedWidth = scaledCrop.width();
-	int croppedHeight = scaledCrop.height();
+    /* Calculate the cropped geometry of the page */
+    QRect scaledCrop = crop.geometry( scaledWidth, scaledHeight );
+    int croppedWidth = scaledCrop.width();
+    int croppedHeight = scaledCrop.height();
 
     QColor paperColor = Qt::white;
     QColor backgroundColor = paperColor;

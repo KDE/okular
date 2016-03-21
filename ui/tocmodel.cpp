@@ -12,6 +12,7 @@
 #include <qapplication.h>
 #include <qdom.h>
 #include <qlist.h>
+#include <qtreeview.h>
 
 #include <kicon.h>
 
@@ -148,11 +149,38 @@ QModelIndex TOCModelPrivate::indexForItem( TOCItem *item ) const
 
 void TOCModelPrivate::findViewport( const Okular::DocumentViewport &viewport, TOCItem *item, QList< TOCItem* > &list ) const
 {
-    if ( item->viewport.isValid() && item->viewport.pageNumber == viewport.pageNumber )
-        list.append( item );
+    TOCItem *todo = item;
 
-    foreach ( TOCItem *child, item->children )
-        findViewport( viewport, child, list );
+    while ( todo )
+    {
+        TOCItem *current = todo;
+        todo = 0;
+        TOCItem *pos = 0;
+
+        foreach ( TOCItem *child, current->children )
+        {
+            if ( child->viewport.isValid() )
+            {
+                if ( child->viewport.pageNumber <= viewport.pageNumber )
+                {
+                    pos = child;
+                    if ( child->viewport.pageNumber == viewport.pageNumber )
+                    {
+                        break;
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+        if ( pos )
+        {
+            list.append( pos );
+            todo = pos;
+        }
+    }
 }
 
 
@@ -189,7 +217,31 @@ QVariant TOCModel::data( const QModelIndex &index, int role ) const
             break;
         case Qt::DecorationRole:
             if ( item->highlight )
-                return KIcon( QApplication::layoutDirection() == Qt::RightToLeft ? "arrow-left" : "arrow-right" );
+            {
+                const QVariant icon = KIcon( QApplication::layoutDirection() == Qt::RightToLeft ? "arrow-left" : "arrow-right" );
+                TOCItem *lastHighlighted = d->currentPage.last();
+
+                // in the mobile version our parent is not a QTreeView; add icon to the last highlighted item
+                // TODO misusing parent() here, fix
+                QTreeView *view = dynamic_cast< QTreeView* > ( QObject::parent() );
+                if ( !view )
+                {
+                    if ( item == lastHighlighted )
+                        return icon;
+                    return QVariant();
+                }
+
+                if ( view->isExpanded( index ) )
+                {
+                    // if this is the last highlighted node, its child is on a page below, thus it needs icon
+                    if ( item == lastHighlighted )
+                        return icon;
+                }
+                else
+                {
+                    return icon;
+                }
+            }
             break;
         case PageItemDelegate::PageRole:
             if ( item->viewport.isValid() )
@@ -282,6 +334,7 @@ void TOCModel::fill( const Okular::DocumentSynopsis *toc )
             if ( !index.isValid() )
                 continue;
 
+            // TODO misusing parent() here, fix
             QMetaObject::invokeMethod( QObject::parent(), "expand", Qt::QueuedConnection, Q_ARG( QModelIndex, index ) );
         }
     }
@@ -293,6 +346,7 @@ void TOCModel::fill( const Okular::DocumentSynopsis *toc )
             if ( !index.isValid() )
                 continue;
 
+            // TODO misusing parent() here, fix
             QMetaObject::invokeMethod( QObject::parent(), "expand", Qt::QueuedConnection, Q_ARG( QModelIndex, index ) );
         }
     }
@@ -329,13 +383,6 @@ void TOCModel::setCurrentViewport( const Okular::DocumentViewport &viewport )
 
     QList< TOCItem* > newCurrentPage;
     d->findViewport( viewport, d->root, newCurrentPage );
-    // HACK: for now, support only the first item found
-    if ( newCurrentPage.count() > 0 )
-    {
-        TOCItem *first = newCurrentPage.first();
-        newCurrentPage.clear();
-        newCurrentPage.append( first );
-    }
 
     d->currentPage = newCurrentPage;
 

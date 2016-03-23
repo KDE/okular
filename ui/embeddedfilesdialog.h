@@ -13,6 +13,8 @@
 #include <kdialog.h>
 
 class QTreeWidget;
+class QTemporaryFile;
+class QTreeWidgetItem;
 
 namespace Okular {
 class Document;
@@ -29,11 +31,15 @@ Q_OBJECT
 		void saveFile();
 		void attachViewContextMenu( const QPoint& pos );
 		void updateSaveButton();
+		void viewFile();
+		void viewFileItem( QTreeWidgetItem* index, int column );
 
 	private:
 		void saveFile( Okular::EmbeddedFile* );
+		void viewFile( Okular::EmbeddedFile* );
 
 		QTreeWidget *m_tw;
+		QList< QSharedPointer<QTemporaryFile> > m_openedFiles;
 };
 
 #endif

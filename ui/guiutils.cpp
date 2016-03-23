@@ -206,15 +206,18 @@ void saveEmbeddedFile( Okular::EmbeddedFile *ef, QWidget *parent )
                                                        KFileDialog::ConfirmOverwrite );
     if ( path.isEmpty() )
         return;
+    QFile targetFile( path );
+    writeEmbeddedFile( ef, parent, targetFile );
+}
 
-    QFile f( path );
-    if ( !f.open( QIODevice::WriteOnly ) )
+void writeEmbeddedFile( Okular::EmbeddedFile *ef, QWidget *parent, QFile& target ) {
+    if ( !target.open( QIODevice::WriteOnly ) )
     {
-        KMessageBox::error( parent, i18n( "Could not open \"%1\" for writing. File was not saved.", path ) );
+        KMessageBox::error( parent, i18n( "Could not open \"%1\" for writing. File was not saved.", target.fileName() ) );
         return;
     }
-    f.write( ef->data() );
-    f.close();
+    target.write( ef->data() );
+    target.close();
 }
 
 Okular::Movie* renditionMovieFromScreenAnnotation( const Okular::ScreenAnnotation *annotation )

@@ -11,15 +11,19 @@
 
 #include <QAction>
 #include <QCursor>
+#include <QDir>
 #include <QDateTime>
+#include <QFileInfo>
 #include <QMenu>
 #include <QTreeWidget>
+#include <QTemporaryFile>
 
 #include <kglobal.h>
 #include <kicon.h>
 #include <klocale.h>
 #include <kmimetype.h>
 #include <kstandardguiitem.h>
+#include <krun.h>
 
 #include "core/document.h"
 #include "guiutils.h"
@@ -38,10 +42,12 @@ static QString dateToString( const QDateTime & date )
 EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const Okular::Document *document) : KDialog(parent)
 {
 	setCaption(i18nc("@title:window", "Embedded Files"));
-	setButtons(Close | User1);
+	setButtons(Close | User1 | User2);
 	setDefaultButton(Close);
 	setButtonGuiItem(User1, KStandardGuiItem::save());
+	setButtonGuiItem(User2, KGuiItem(i18nc("@action:button", "View"), "document-open"));
 	enableButton(User1, false);
+	enableButton(User2, false);
 
 	m_tw = new QTreeWidget(this);
 	setMainWidget(m_tw);
@@ -81,14 +87,18 @@ EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const Okular::Document
         m_tw->updateGeometry();
 
 	connect(this, SIGNAL(user1Clicked()), this, SLOT(saveFile()));
+	connect(this, SIGNAL(user2Clicked()), this, SLOT(viewFile()));
+
 	connect(m_tw, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(attachViewContextMenu(QPoint)));
 	connect(m_tw, SIGNAL(itemSelectionChanged()), this, SLOT(updateSaveButton()));
+	connect(m_tw, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)), this, SLOT(viewFileItem(QTreeWidgetItem*,int)));
 }
 
 void EmbeddedFilesDialog::updateSaveButton()
 {
 	bool enable = (m_tw->selectedItems().count() > 0);
 	enableButton(User1, enable);
+	enableButton(User2, enable);
 }
 
 void EmbeddedFilesDialog::saveFile()
@@ -99,6 +109,22 @@ void EmbeddedFilesDialog::saveFile()
 		Okular::EmbeddedFile* ef = qvariant_cast< Okular::EmbeddedFile* >( twi->data( 0, EmbeddedFileRole ) );
 		saveFile(ef);
 	}
+}
+
+void EmbeddedFilesDialog::viewFile()
+{
+	QList<QTreeWidgetItem *> selected = m_tw->selectedItems();
+	foreach(QTreeWidgetItem *twi, selected)
+	{
+		Okular::EmbeddedFile* ef = qvariant_cast< Okular::EmbeddedFile* >( twi->data( 0, EmbeddedFileRole ) );
+		viewFile( ef );
+	}
+}
+
+void EmbeddedFilesDialog::viewFileItem( QTreeWidgetItem* item, int /*column*/ )
+{
+	Okular::EmbeddedFile* ef = qvariant_cast< Okular::EmbeddedFile* >( item->data( 0, EmbeddedFileRole ) );
+	viewFile( ef );
 }
 
 void EmbeddedFilesDialog::attachViewContextMenu( const QPoint& /*pos*/ )
@@ -122,6 +148,32 @@ void EmbeddedFilesDialog::attachViewContextMenu( const QPoint& /*pos*/ )
         Okular::EmbeddedFile* ef = qvariant_cast< Okular::EmbeddedFile* >( selected.at( 0 )->data( 0, EmbeddedFileRole ) );
         saveFile( ef );
     }
+}
+
+void EmbeddedFilesDialog::viewFile( Okular::EmbeddedFile* ef )
+{
+	// get name and extension
+	QFileInfo fileInfo(ef->name());
+
+	// save in temporary directory with a unique name resembling the attachment name,
+	// using QTemporaryFile's XXXXXX placeholder
+	QTemporaryFile *tmpFile = new QTemporaryFile(
+		QDir::tempPath()
+		+ QDir::separator()
+		+ fileInfo.baseName()
+		+ ".XXXXXX"
+		+ (fileInfo.completeSuffix().isEmpty() ? QString("") : "." + fileInfo.completeSuffix())
+	);
+	GuiUtils::writeEmbeddedFile( ef, this, *tmpFile );
+
+	// set readonly to prevent the viewer application from modifying it
+	tmpFile->setPermissions( QFile::ReadOwner );
+
+	// keep temporary file alive while the dialog is open
+	m_openedFiles.push_back( QSharedPointer< QTemporaryFile >( tmpFile ) );
+
+	// view the temporary file with the default application
+	new KRun( QUrl( "file://" + tmpFile->fileName() ), this );
 }
 
 void EmbeddedFilesDialog::saveFile( Okular::EmbeddedFile* ef )

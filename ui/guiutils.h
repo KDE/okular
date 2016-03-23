@@ -17,6 +17,7 @@ class QImage;
 class QPixmap;
 class QSize;
 class QWidget;
+class QFile;
 class KIconLoader;
 
 namespace Okular {
@@ -45,6 +46,7 @@ namespace GuiUtils
     KIconLoader* iconLoader();
 
     void saveEmbeddedFile( Okular::EmbeddedFile *ef, QWidget *parent );
+    void writeEmbeddedFile( Okular::EmbeddedFile *ef, QWidget *parent, QFile& targetFile );
 
     /**
      * Returns the movie object that is referenced by a rendition action of the passed screen @p annotation

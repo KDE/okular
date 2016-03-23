@@ -138,15 +138,20 @@ void EmbeddedFilesDialog::attachViewContextMenu( const QPoint& /*pos*/ )
 
     QMenu menu( this );
     QAction* saveAsAct = menu.addAction( KIcon( "document-save-as" ), i18nc( "@action:inmenu", "&Save As..." ) );
+    QAction* viewAct = menu.addAction( KIcon( "document-open" ), i18nc( "@action:inmenu", "&View..." ) );
 
     QAction* act = menu.exec( QCursor::pos() );
     if ( !act )
         return;
 
+    Okular::EmbeddedFile* ef = qvariant_cast< Okular::EmbeddedFile* >( selected.at( 0 )->data( 0, EmbeddedFileRole ) );
     if ( act == saveAsAct )
     {
-        Okular::EmbeddedFile* ef = qvariant_cast< Okular::EmbeddedFile* >( selected.at( 0 )->data( 0, EmbeddedFileRole ) );
         saveFile( ef );
+    }
+    else if ( act == viewAct )
+    {
+        viewFile( ef );
     }
 }
 

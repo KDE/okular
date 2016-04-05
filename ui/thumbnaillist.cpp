@@ -731,31 +731,21 @@ void ThumbnailListPrivate::mouseReleaseEvent( QMouseEvent * e )
         return e->ignore();
 
     QRect r = item->visibleRect();
-    const int margin = ThumbnailWidget::margin();
     const QPoint p = e->pos() - item->pos();
 
-    if ( r.contains( p - QPoint( margin / 2, margin / 2 ) ) )
+    // jump center of viewport to cursor if it wasn't dragged
+    if ( m_mouseGrabPos.isNull() )
     {
-        setCursor( Qt::OpenHandCursor );
+        m_document->setViewportPage( item->pageNumber() );
+        r = item->visibleRect();
+        Okular::DocumentViewport vp = Okular::DocumentViewport( item->pageNumber() );
+        vp.rePos.normalizedX = double(p.x()) / double(item->rect().width());
+        vp.rePos.normalizedY = double(p.y()) / double(item->rect().height());
+        vp.rePos.pos = Okular::DocumentViewport::Center;
+        vp.rePos.enabled = true;
+        m_document->setViewport( vp );
     }
-    else
-    {
-        setCursor( Qt::ArrowCursor );
-        if ( m_mouseGrabPos.isNull() )
-        {
-            if ( m_document->viewport().pageNumber != item->pageNumber() )
-            {
-                m_document->setViewportPage( item->pageNumber() );
-                r = item->visibleRect();
-                Okular::DocumentViewport vp = Okular::DocumentViewport( item->pageNumber() );
-                vp.rePos.normalizedX = 0.5;
-                vp.rePos.normalizedY = (double) r.height() / 2.0  / (double) item->pixmapHeight();
-                vp.rePos.pos = Okular::DocumentViewport::Center;
-                vp.rePos.enabled = true;
-                m_document->setViewport( vp );
-            }
-        }
-    }
+    setCursor( Qt::OpenHandCursor );
     m_mouseGrabPos.setX( 0 );
     m_mouseGrabPos.setY( 0 );
 }
@@ -763,7 +753,25 @@ void ThumbnailListPrivate::mouseReleaseEvent( QMouseEvent * e )
 void ThumbnailListPrivate::mouseMoveEvent( QMouseEvent * e )
 {
     if ( e->buttons() == Qt::NoButton )
+    {
+        ThumbnailWidget* item = itemFor( e->pos() );
+        if ( !item ) // mouse on the spacing between items
+            return e->ignore();
+
+        QRect r = item->visibleRect();
+        const int margin = ThumbnailWidget::margin();
+        const QPoint p = e->pos() - item->pos();
+        if ( r.contains( p - QPoint( margin / 2, margin / 2 ) ) )
+        {
+            setCursor( Qt::OpenHandCursor );
+        }
+        else
+        {
+            setCursor( Qt::ArrowCursor );
+        }
+
         return e->ignore();
+    }
     // no item under the mouse or previously selected
     if ( !m_mouseGrabItem )
         return e->ignore();

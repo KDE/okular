@@ -318,7 +318,14 @@ void PageItem::paint(QPainter *painter)
         m_intentionalDraw = false;
     }
     const int flags = PagePainter::Accessibility | PagePainter::Highlights | PagePainter::Annotations;
-    PagePainter::paintPageOnPainter(painter, m_page, observer, flags, width(), height(), QRect(QPoint(0,0), contentsSize()));
+    // Simply using the limits as described by contentsSize will, at times, result in the page painter
+    // attempting to write outside the data area, unsurprisingly resulting in a crash.
+    QRect limits(QPoint(0, 0), contentsSize());
+    if(limits.width() > width())
+        limits.setWidth(width());
+    if(limits.height() > height())
+        limits.setHeight(height());
+    PagePainter::paintPageOnPainter(painter, m_page, observer, flags, width(), height(), limits);
 
     if (setAA) {
         painter->restore();

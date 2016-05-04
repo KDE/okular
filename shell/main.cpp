@@ -20,7 +20,7 @@
 #include <kwindowsystem.h>
 #include <QApplication>
 #include <KAboutData>
-#include <KLocalizedString>
+#include <KMessageBox>
 #include <QCommandLineParser>
 #include <QCommandLineOption>
 #include "aboutdata.h"
@@ -80,6 +80,19 @@ int main(int argc, char** argv)
                 // Do nothing
                 break;
         }
+    }
+
+    // Make sure that if the user answered "No" and "Don't ask again"
+    // he actually still has an option of answering Yes
+    KMessageBox::ButtonCode result = KMessageBox::Yes;
+    KMessageBox::shouldBeShownYesNo(QStringLiteral("frameworks_not_official"), result);
+    if (result != KMessageBox::Yes) {
+        KMessageBox::enableMessage(QStringLiteral("frameworks_not_official"));
+    }
+
+    if (KMessageBox::warningYesNo( 0, i18n("This is not an official release of Okular.\nIf you need the best possible Okular experience you should use the kdelibs4-based version instead of the version based on KDE Frameworks 5.\nIf you report bugs make sure you mark them with [frameworks] in the Summary and understand not official release bugs have less priority.\nDo you understand?"), QString(), KStandardGuiItem::yes(), KStandardGuiItem::no(), QStringLiteral("frameworks_not_official") ) != KMessageBox::Yes)
+    {
+        return 1;
     }
 
     return app.exec();

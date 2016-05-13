@@ -84,6 +84,7 @@ QtControls.ScrollView {
                     initialHeight * pinch.scale < flick.height * 3) {
                     mouseArea.scale = pinch.scale;
                 }
+                resizeTimer.stop();
                 flick.returnToBounds();
             }
             onPinchFinished: {
@@ -144,6 +145,13 @@ QtControls.ScrollView {
                 onClicked: {
                     if (Math.abs(currPageDelegate.x) < 20) {
                         root.clicked();
+                    }
+                }
+                onWheel: {
+                    if (wheel.modifiers & Qt.ControlModifier) {
+                        var factor = (wheel.angleDelta.y / 120) * 1.2;
+                        flick.resizeContent(flick.contentWidth * factor, flick.contentHeight * factor, Qt.point(wheel.x, wheel.y));
+                        resizeTimer.stop();
                     }
                 }
 

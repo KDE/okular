@@ -19,6 +19,7 @@
 
 import QtQuick 2.1
 import QtQuick.Controls 1.3
+import QtGraphicalEffects 1.0
 import org.kde.okular 2.0 as Okular
 import org.kde.kirigami 1.0 as Kirigami
 
@@ -44,8 +45,8 @@ Kirigami.Page {
             id: resultsGrid
             anchors.fill: parent
 
-            cellWidth: width / Math.floor(width / (units.gridUnit * 5))
-            cellHeight: cellWidth * 1.6
+            cellWidth: Math.floor(width / Math.floor(width / (Kirigami.Units.gridUnit * 8)))
+            cellHeight: Math.floor(cellWidth * 1.6)
 
             delegate: Item {
                 id: delegate
@@ -68,7 +69,7 @@ Kirigami.Page {
                         y: Kirigami.Units.smallSpacing
                         document: documentItem
                         pageNumber: modelData
-                        width: delegate.width - Kirigami.Units.smallSpacing * 2 - units.gridUnit
+                        width: delegate.width - Kirigami.Units.smallSpacing * 2 - Kirigami.Units.gridUnit
                         //value repeated to avoid binding loops
                         height: Math.round(width / (implicitWidth/implicitHeight))
                         Rectangle {
@@ -96,6 +97,14 @@ Kirigami.Page {
                             root.pageClicked(modelData)
                         }
                     }
+                }
+                layer.enabled: true
+                layer.effect: DropShadow {
+                    horizontalOffset: 0
+                    verticalOffset: 0
+                    radius: Math.ceil(Kirigami.Units.gridUnit * 0.8)
+                    samples: 32
+                    color: Qt.rgba(0, 0, 0, 0.5)
                 }
             }
             highlight: Rectangle {

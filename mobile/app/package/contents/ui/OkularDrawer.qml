@@ -63,6 +63,7 @@ Kirigami.OverlayDrawer {
                 height: childrenRect.height
                 Row {
                     id: mainTabBar
+                    spacing: 0
                     anchors.horizontalCenter: parent.horizontalCenter
                     width: Math.min(parent.width, implicitWidth)
                     ExclusiveGroup { id: tabPositionGroup }
@@ -71,6 +72,8 @@ Kirigami.OverlayDrawer {
                         text: tabsToolbar.width > units.gridUnit * 30 ? i18n("Thumbnails") : ""
                         iconName: "view-preview"
                         checkable: true
+                        //Hint for Plasma style
+                        property bool flat: false
                         onCheckedChanged: {
                             if (checked) {
                                 pageStack.replace(Qt.createComponent("Thumbnails.qml"))
@@ -84,6 +87,7 @@ Kirigami.OverlayDrawer {
                         text: tabsToolbar.width > units.gridUnit * 30 ? i18n("Table of contents") : ""
                         iconName: "view-table-of-contents-ltr"
                         checkable: true
+                        property bool flat: false
                         onCheckedChanged: {
                             if (checked) {
                                 pageStack.replace(Qt.createComponent("TableOfContents.qml"))
@@ -97,6 +101,7 @@ Kirigami.OverlayDrawer {
                         text: tabsToolbar.width > units.gridUnit * 30 ? i18n("Bookmarks") : ""
                         iconName: "bookmarks-organize"
                         checkable: true
+                        property bool flat: false
                         onCheckedChanged: {
                             if (checked) {
                                 pageStack.replace(Qt.createComponent("Bookmarks.qml"))

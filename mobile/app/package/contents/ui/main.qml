@@ -18,13 +18,11 @@
  */
 
 import QtQuick 2.1
-import org.kde.okular 2.0 as Okular
 import QtQuick.Controls 1.3
-import org.kde.plasma.extras 2.0 as PlasmaExtras
-import org.kde.plasma.components 2.0 as PlasmaComponents
-import org.kde.plasma.mobilecomponents 0.2 as MobileComponents
+import org.kde.okular 2.0 as Okular
+import org.kde.kirigami 1.0 as Kirigami
 
-MobileComponents.ApplicationWindow {
+Kirigami.AbstractApplicationWindow {
     id: fileBrowserRoot
     objectName: "fileBrowserRoot"
     visible: true
@@ -35,17 +33,16 @@ MobileComponents.ApplicationWindow {
         uri: documentItem.path
     }*/
 
-    globalDrawer: MobileComponents.OverlayDrawer {
+    header: null
+    globalDrawer: Kirigami.OverlayDrawer {
         edge: Qt.LeftEdge
         contentItem: Documents {
             implicitWidth: units.gridUnit * 20
         }
     }
     contextDrawer: OkularDrawer {}
-    actionButton.iconSource: "bookmarks-organize"
-    actionButton.checkable: true
-    actionButton.onCheckedChanged: pageArea.page.bookmarked = actionButton.checked;
-    PlasmaComponents.ProgressBar {
+
+    ProgressBar {
         id: bar
         z: 99
         anchors {
@@ -64,21 +61,10 @@ MobileComponents.ApplicationWindow {
         }
     }
 
-    Okular.DocumentView {
+    MainView {
         id: pageArea
-        document: documentItem
         anchors.fill: parent
-
-        onPageChanged: {
-            bookmarkConnection.target = page
-            actionButton.checked = page.bookmarked
-        }
-        onClicked: actionButton.toggleVisibility();
-    }
-    Connections {
-        id: bookmarkConnection
-        target: pageArea.page
-        onBookmarkedChanged: actionButton.checked = page.bookmarked
+        document: documentItem
     }
 
     //FIXME: this is due to global vars being binded after the parse is done, do the 2 steps parsing

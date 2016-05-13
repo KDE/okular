@@ -18,22 +18,20 @@
  */
 
 import QtQuick 2.1
-import org.kde.plasma.components 2.0 as PlasmaComponents
-import org.kde.plasma.core 2.0 as PlasmaCore
-import org.kde.plasma.mobilecomponents 0.2 as MobileComponents
+import QtQuick.Controls 1.3
+import org.kde.kirigami 1.0 as Kirigami
 
 ThumbnailsBase {
     id: root
     model: documentItem.matchingPages
 
     anchors.fill: parent
-    tools: Item {
+    ToolBar {
         id: toolBarContent
         width: root.width
         height: searchField.height
-        PlasmaComponents.TextField {
+        TextField {
             id: searchField
-            clearButtonShown: true
             enabled: documentItem.supportsSearch
             anchors.centerIn: parent
             onTextChanged: {
@@ -45,7 +43,7 @@ ThumbnailsBase {
                 }
             }
         }
-        PlasmaComponents.Label {
+        Kirigami.Label {
             anchors {
                 left: searchField.right
                 verticalCenter: searchField.verticalCenter

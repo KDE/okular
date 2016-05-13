@@ -18,14 +18,16 @@
  */
 
 import QtQuick 2.1
+import QtQuick.Controls 1.3
 import org.kde.okular 2.0 as Okular
-import org.kde.plasma.components 2.0 as PlasmaComponents
-import org.kde.plasma.core 2.0 as PlasmaCore
-import org.kde.plasma.extras 2.0 as PlasmaExtras
-import org.kde.plasma.mobilecomponents 0.2 as MobileComponents
+import org.kde.kirigami 1.0 as Kirigami
 
-PlasmaComponents.Page {
+Kirigami.Page {
     id: root
+    leftPadding: 0
+    topPadding: 0
+    rightPadding: 0
+    bottomPadding: 0
     property alias contentY: resultsGrid.contentY
     property alias contentHeight: resultsGrid.contentHeight
     property alias model: resultsGrid.model
@@ -34,8 +36,11 @@ PlasmaComponents.Page {
 
     anchors.fill: parent
 
-    PlasmaExtras.ScrollArea {
-        anchors.fill: parent
+    ScrollView {
+        anchors {
+            fill: parent
+            topMargin: Kirigami.Units.gridUnit * 2
+        }
 
         GridView {
             id: resultsGrid
@@ -54,20 +59,18 @@ PlasmaComponents.Page {
                         resultsGrid.currentIndex = index
                     }
                 }
-                PlasmaCore.FrameSvgItem {
+                Rectangle {
                     anchors.centerIn: parent
-                    imagePath: "widgets/media-delegate"
-                    prefix: "picture"
-                    width: thumbnail.width + margins.left + margins.right
+                    width: thumbnail.width + Kirigami.Units.smallSpacing * 2
                     //FIXME: why bindings with thumbnail.height doesn't work?
-                    height: thumbnail.height + margins.top + margins.bottom
+                    height: thumbnail.height + Kirigami.Units.smallSpacing * 2
                     Okular.ThumbnailItem {
                         id: thumbnail
-                        x: parent.margins.left
-                        y: parent.margins.top
+                        x: Kirigami.Units.smallSpacing
+                        y: Kirigami.Units.smallSpacing
                         document: documentItem
                         pageNumber: modelData
-                        width: delegate.width - parent.margins.left + parent.margins.right - units.gridUnit
+                        width: delegate.width - Kirigami.Units.smallSpacing * 2 - units.gridUnit
                         //value repeated to avoid binding loops
                         height: Math.round(width / (implicitWidth/implicitHeight))
                         Rectangle {
@@ -80,7 +83,7 @@ PlasmaComponents.Page {
                                 bottom: parent.bottom
                                 right: parent.right
                             }
-                            PlasmaComponents.Label {
+                            Kirigami.Label {
                                 text: modelData + 1
                             }
                         }
@@ -97,7 +100,10 @@ PlasmaComponents.Page {
                     }
                 }
             }
-            highlight: PlasmaComponents.Highlight {}
+            highlight: Rectangle {
+                color: Kirigami.Theme.highlightColor
+                opacity: 0.4
+            }
         }
     }
 }

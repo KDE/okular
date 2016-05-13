@@ -18,28 +18,34 @@
  */
 
 import QtQuick 2.1
-import org.kde.plasma.components 2.0 as PlasmaComponents
-import org.kde.plasma.core 2.0 as PlasmaCore
-import org.kde.plasma.extras 2.0 as PlasmaExtras
-import org.kde.plasma.mobilecomponents 0.2 as MobileComponents
+import QtQuick.Controls 1.3
+import org.kde.kirigami 1.0 as Kirigami
 
-PlasmaComponents.Page {
+Kirigami.Page {
     id: root
+    leftPadding: 0
+    topPadding: 0
+    rightPadding: 0
+    bottomPadding: 0
     property alias contentY: flickable.contentY
     property alias contentHeight: flickable.contentHeight
 
-    tools: Item {
+    ToolBar {
         id: toolBarContent
         width: root.width
         height: searchField.height
-        PlasmaComponents.TextField {
+        TextField {
             id: searchField
-            clearButtonShown: true
             anchors.centerIn: parent
         }
     }
-    PlasmaExtras.ScrollArea {
-        anchors.fill: parent
+    ScrollView {
+        anchors {
+            left: parent.left
+            top: toolBarContent.bottom
+            right: parent.right
+            bottom: parent.bottom
+        }
 
         Flickable {
             id: flickable

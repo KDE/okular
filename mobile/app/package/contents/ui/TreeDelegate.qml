@@ -18,9 +18,8 @@
  */
 
 import QtQuick 2.1
-import org.kde.plasma.components 2.0 as PlasmaComponents
-import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.kquickcontrolsaddons 2.0
+import org.kde.kirigami 1.0 as Kirigami
 
 Column {
     id: treeDelegate
@@ -57,7 +56,7 @@ Column {
             anchors.verticalCenter: parent.verticalCenter
             x: units.largeSpacing
         }
-        PlasmaComponents.Label {
+        Kirigami.Label {
             id: label
             text: display
             verticalAlignment: Text.AlignBottom
@@ -74,7 +73,7 @@ Column {
                 right: pageNumber.left
             }
         }
-        PlasmaComponents.Label {
+        Kirigami.Label {
             id: pageNumber
             text: pageLabel ? pageLabel : page
             anchors.right: parent.right

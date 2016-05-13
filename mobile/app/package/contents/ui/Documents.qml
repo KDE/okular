@@ -18,45 +18,36 @@
  */
 
 import QtQuick 2.1
-import org.kde.plasma.components 2.0 as PlasmaComponents
-import org.kde.plasma.extras 2.0 as PlasmaExtras
-import org.kde.plasma.core 2.0 as PlasmaCore
-import org.kde.plasma.mobilecomponents 0.2 as MobileComponents
+import QtQuick.Controls 1.3
+import org.kde.kirigami 1.0 as Kirigami
 import Qt.labs.folderlistmodel 2.1
 
-MobileComponents.Page {
+Item {
     id: root
     anchors.fill: parent
-    color: theme.viewBackgroundColor
-    visible: true
+
     property Item view: filesView
     property alias contentY: filesView.contentY
     property alias contentHeight: filesView.contentHeight
     property alias model: filesView.model
 
-    tools: Item {
+    Item {
         id: toolBarContent
         width: root.width
-        height: searchField.height
-        PlasmaComponents.TextField {
+        height: searchField.height + Kirigami.Units.gridUnit
+        TextField {
             id: searchField
             anchors.centerIn: parent
-            onTextChanged: {
-                if (text.length > 2) {
-                    filterModel.filterRegExp = ".*" + text + ".*";
-                } else {
-                    filterModel.filterRegExp = "";
-                }
-            }
+            focus: true
         }
     }
 
-    MobileComponents.Label {
+    Kirigami.Label {
         z: 2
         visible: filesView.count == 0
         anchors {
             fill: parent
-            margins: MobileComponents.Units.gridUnit
+            margins: Kirigami.Units.gridUnit
         }
         text: i18n("No Documents found. To start to read, put some files in the Documents folder of your device.")
         wrapMode: Text.WordWrap
@@ -64,31 +55,28 @@ MobileComponents.Page {
         verticalAlignment: Text.AlignVCenter
     }
 
-    PlasmaExtras.ScrollArea {
-        anchors.fill: parent
+    ScrollView {
+        anchors {
+            top: toolBarContent.bottom
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
+        }
         ListView {
             id: filesView
             anchors.fill: parent
 
-            model:  PlasmaCore.SortFilterModel {
-                id: filterModel
-                filterRole: "fileName"
-                sourceModel: FolderListModel {
-                    id: folderModel
-                    folder: userPaths.documents
-                    nameFilters: ["*.pdf", "*.txt", "*.chm", "*.epub"]
-                    showDirs: false
-                }
+            model:  FolderListModel {
+                id: folderModel
+                folder: userPaths.documents
+                nameFilters: ["*.pdf", "*.txt", "*.chm", "*.epub"]
+                showDirs: false
             }
 
-            delegate: MobileComponents.ListItem {
-                enabled: true
-                PlasmaComponents.Label {
-                    text: model.fileName
-                    horizontalAlignment: Text.AlignHCenter
-                    wrapMode: Text.WordWrap
-                    elide: Text.ElideRight
-                }
+            delegate: Kirigami.BasicListItem {
+                label: model.fileName
+                visible: model.fileName.indexOf(searchField.text) !== -1
+                height: visible ? implicitHeight : 0
                 onClicked: {
                     documentItem.path = model.filePath;
                     globalDrawer.opened = false;

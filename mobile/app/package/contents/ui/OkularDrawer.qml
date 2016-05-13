@@ -18,68 +18,43 @@
  */
 
 import QtQuick 2.1
-import org.kde.plasma.components 2.0 as PlasmaComponents
-import org.kde.plasma.extras 2.0 as PlasmaExtras
-import org.kde.plasma.core 2.0 as PlasmaCore
-import org.kde.plasma.mobilecomponents 0.2 as MobileComponents
+import QtQuick.Controls 1.3
+import org.kde.kirigami 1.0 as Kirigami
 import org.kde.kquickcontrolsaddons 2.0
 import org.kde.okular 2.0 as Okular
 
 
-MobileComponents.OverlayDrawer {
+Kirigami.OverlayDrawer {
     edge: Qt.RightEdge
     contentItem: Item {
         id: browserFrame
-        implicitWidth: MobileComponents.Units.gridUnit * 25
+        implicitWidth: Kirigami.Units.gridUnit * 25
         implicitHeight: implicitWidth
         state: "Hidden"
 
-        PlasmaComponents.ToolBar {
-            id: mainToolBar
-
-            height: units.gridUnit * 2
-            y: pageStack.currentPage.contentY <= 0 ? 0 : -height
-            transform: Translate {
-                y: Math.max(0, -pageStack.currentPage.contentY)
-            }
-            tools: pageStack.currentPage.tools
-            Behavior on y {
-                NumberAnimation {
-                    duration: 250
-                }
-            }
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
-        }
-
-
-        PlasmaComponents.PageStack {
+        StackView {
             id: pageStack
             anchors {
                 left: parent.left
-                top: mainToolBar.bottom
+                top: parent.top
                 right: parent.right
                 bottom: tabsToolbar.top
             }
             clip: true
-            toolBar: mainToolBar
         }
 
         Connections {
             id: scrollConnection
             property int oldContentY:0
-            target: pageStack.currentPage
+            target: pageStack.currentItem
 
             onContentYChanged: {
-                scrollConnection.oldContentY = pageStack.currentPage.contentY
+                scrollConnection.oldContentY = pageStack.currentItem.contentY
             }
         }
 
-        PlasmaComponents.ToolBar {
+        ToolBar {
             id: tabsToolbar
-            y: parent.height - tabsToolbar.height*5
             height: mainTabBar.height
             anchors {
                 top: undefined
@@ -87,45 +62,52 @@ MobileComponents.OverlayDrawer {
                 left: parent.left
                 right: parent.right
             }
-            tools: Item {
+            Component.onCompleted: thumbnailsButton.checked = true;
+            Item {
                 width: parent.width
                 height: childrenRect.height
-                PlasmaComponents.TabBar {
+                Row {
                     id: mainTabBar
                     anchors.horizontalCenter: parent.horizontalCenter
                     width: Math.min(parent.width, implicitWidth)
-                    tabPosition: Qt.BottomEdge
-                    PlasmaComponents.TabButton {
+                    ExclusiveGroup { id: tabPositionGroup }
+                    ToolButton {
                         id: thumbnailsButton
                         text: tabsToolbar.width > units.gridUnit * 30 ? i18n("Thumbnails") : ""
-                        iconSource: "view-preview"
+                        iconName: "view-preview"
+                        checkable: true
                         onCheckedChanged: {
                             if (checked) {
                                 pageStack.replace(Qt.createComponent("Thumbnails.qml"))
                             }
                         }
+                        exclusiveGroup: tabPositionGroup
                     }
-                    PlasmaComponents.TabButton {
+                    ToolButton {
                         id: tocButton
                         enabled: documentItem.tableOfContents.count > 0
                         text: tabsToolbar.width > units.gridUnit * 30 ? i18n("Table of contents") : ""
-                        iconSource: "view-table-of-contents-ltr"
+                        iconName: "view-table-of-contents-ltr"
+                        checkable: true
                         onCheckedChanged: {
                             if (checked) {
                                 pageStack.replace(Qt.createComponent("TableOfContents.qml"))
                             }
                         }
+                        exclusiveGroup: tabPositionGroup
                     }
-                    PlasmaComponents.TabButton {
+                    ToolButton {
                         id: bookmarksButton
                         enabled: documentItem.bookmarkedPages.length > 0
                         text: tabsToolbar.width > units.gridUnit * 30 ? i18n("Bookmarks") : ""
-                        iconSource: "bookmarks-organize"
+                        iconName: "bookmarks-organize"
+                        checkable: true
                         onCheckedChanged: {
                             if (checked) {
                                 pageStack.replace(Qt.createComponent("Bookmarks.qml"))
                             }
                         }
+                        exclusiveGroup: tabPositionGroup
                     }
                 }
             }

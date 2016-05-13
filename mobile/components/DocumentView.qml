@@ -155,8 +155,19 @@ QtControls.ScrollView {
                 }
                 onWheel: {
                     if (wheel.modifiers & Qt.ControlModifier) {
-                        var factor = (wheel.angleDelta.y / 120) * 1.2;
-                        flick.resizeContent(flick.contentWidth * factor, flick.contentHeight * factor, Qt.point(wheel.x, wheel.y));
+                        //generate factors between 0.8 and 1.2
+                        var factor = (((wheel.angleDelta.y / 120)+1) / 5 )+ 0.8;
+
+                        var newWidth = flick.contentWidth * factor;
+                        var newHeight = flick.contentHeight * factor;
+
+                        if (newWidth < flick.width || newHeight < flick.height ||
+                            newHeight > flick.height * 3) {
+                            return;
+                        }
+
+                        flick.resizeContent(newWidth, newHeight, Qt.point(wheel.x, wheel.y));
+                        flick.returnToBounds();
                         resizeTimer.stop();
                     } else {
                         flick.contentY = Math.min(flick.contentHeight-flick.height, Math.max(0, flick.contentY - wheel.angleDelta.y));

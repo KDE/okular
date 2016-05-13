@@ -18,6 +18,7 @@
  */
 
 import QtQuick 2.1
+import QtQuick.Controls 1.3
 import org.kde.okular 2.0 as Okular
 import org.kde.kirigami 1.0 as Kirigami
 
@@ -49,5 +50,17 @@ Kirigami.Page {
         id: bookmarkConnection
         target: pageArea.page
         onBookmarkedChanged: actions.main.checked = pageArea.page.bookmarked
+    }
+    ProgressBar {
+        id: bar
+        z: 99
+        visible: applicationWindow().controlsVisible
+        height: Kirigami.Units.smallSpacing
+        anchors {
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
+        }
+        value: documentItem.pageCount != 0 ? ((documentItem.currentPage+1) / documentItem.pageCount) : 0
     }
 }

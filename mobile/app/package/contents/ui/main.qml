@@ -42,18 +42,6 @@ Kirigami.AbstractApplicationWindow {
     }
     contextDrawer: OkularDrawer {}
 
-    ProgressBar {
-        id: bar
-        z: 99
-        anchors {
-            left: parent.left
-            right: parent.right
-            bottom: parent.bottom
-        }
-        height: units.smallSpacing
-        value: documentItem.pageCount != 0 ? (documentItem.currentPage / documentItem.pageCount) : 0
-    }
-
     Okular.DocumentItem {
         id: documentItem
         onWindowTitleForDocumentChanged: {

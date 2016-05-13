@@ -100,6 +100,8 @@ QtControls.ScrollView {
 
                 property real oldMouseX
                 property real oldMouseY
+                property real startMouseX
+                property real startMouseY
                 property bool incrementing: true
                 property Item currPageDelegate: page1
                 property Item prevPageDelegate: page2
@@ -107,17 +109,21 @@ QtControls.ScrollView {
 
                 onPressed: {
                     var pos = mapToItem(flick, mouse.x, mouse.y);
-                    oldMouseX = pos.x;
-                    oldMouseY = pos.y;
+                    startMouseX = oldMouseX = pos.x;
+                    startMouseY = oldMouseY = pos.y;
                 }
                 onPositionChanged: {
                     var pos = mapToItem(flick, mouse.x, mouse.y);
-                    currPageDelegate.x += pos.x - oldMouseX;
-                    mouseArea.incrementing = currPageDelegate.x <= 0;
-
-                    preventStealing = (currPageDelegate.x > 0 && flick.atXBeginning) || (currPageDelegate.x < 0 && flick.atXEnd);
 
                     flick.contentY = Math.max(0, Math.min(flick.contentHeight - flick.height, flick.contentY - (pos.y - oldMouseY)));
+
+                    if ((pos.x - oldMouseX > 0 && flick.atXBeginning) ||
+                        (pos.x - oldMouseX < 0 && flick.atXEnd)) {
+                        currPageDelegate.x += pos.x - oldMouseX;
+                        mouseArea.incrementing = currPageDelegate.x <= 0;
+                    } else {
+                        flick.contentX = Math.max(0, Math.min(flick.contentWidth - flick.width, flick.contentX - (pos.x - oldMouseX)));
+                    }
 
                     oldMouseX = pos.x;
                     oldMouseY = pos.y;
@@ -132,18 +138,18 @@ QtControls.ScrollView {
                     } else {
                         resetAnim.running = true;
                     }
-                    preventStealing = false;
                 }
                 onCanceled: {
                     resetAnim.running = true;
-                    preventStealing = false;
                 }
                 onDoubleClicked: {
                     flick.contentWidth = flick.width
                     flick.contentHeight = flick.width / mouseArea.currPageDelegate.pageRatio
                 }
                 onClicked: {
-                    if (Math.abs(currPageDelegate.x) < 20) {
+                    var pos = mapToItem(flick, mouse.x, mouse.y);
+                    if (Math.abs(startMouseX - pos.x) < 20 &&
+                        Math.abs(startMouseY - pos.y) < 20) {
                         root.clicked();
                     }
                 }
@@ -152,6 +158,8 @@ QtControls.ScrollView {
                         var factor = (wheel.angleDelta.y / 120) * 1.2;
                         flick.resizeContent(flick.contentWidth * factor, flick.contentHeight * factor, Qt.point(wheel.x, wheel.y));
                         resizeTimer.stop();
+                    } else {
+                        flick.contentY = Math.min(flick.contentHeight-flick.height, Math.max(0, flick.contentY - wheel.angleDelta.y));
                     }
                 }
 

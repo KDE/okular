@@ -226,14 +226,25 @@ QtControls.ScrollView {
                 
                 SequentialAnimation {
                     id: switchAnimation
-                    NumberAnimation {
-                        target: mouseArea.currPageDelegate
-                        properties: "x"
-                        to: mouseArea.incrementing ? -mouseArea.currPageDelegate.width : mouseArea.currPageDelegate.width
-                        easing.type: Easing.InQuad
-                        //hardcoded number, we would need units from plasma
-                        //which cannot depend from here
-                        duration: 250
+                    ParallelAnimation {
+                        NumberAnimation {
+                            target: flick
+                            properties: "contentY"
+                            to: 0
+                            easing.type: Easing.InQuad
+                            //hardcoded number, we would need units from kirigami
+                            //which cannot depend from here
+                            duration: 250
+                        }
+                        NumberAnimation {
+                            target: mouseArea.currPageDelegate
+                            properties: "x"
+                            to: mouseArea.incrementing ? -mouseArea.currPageDelegate.width : mouseArea.currPageDelegate.width
+                            easing.type: Easing.InQuad
+                            //hardcoded number, we would need units from kirigami
+                            //which cannot depend from here
+                            duration: 250
+                        }
                     }
                     ScriptAction {
                         script: {

@@ -80,7 +80,7 @@ Item {
                 onClicked: {
                     documentItem.path = model.filePath;
                     globalDrawer.opened = false;
-                    mainTabBar.currentTab = thumbnailsButton;
+                    applicationWindow().controlsVisible = false;
                 }
             }
         }

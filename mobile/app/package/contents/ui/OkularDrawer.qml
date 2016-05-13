@@ -28,7 +28,7 @@ Kirigami.OverlayDrawer {
     edge: Qt.RightEdge
     contentItem: Item {
         id: browserFrame
-        implicitWidth: Kirigami.Units.gridUnit * 25
+        implicitWidth: Kirigami.Units.gridUnit * 45
         implicitHeight: implicitWidth
         state: "Hidden"
 
@@ -44,13 +44,8 @@ Kirigami.OverlayDrawer {
         }
 
         Connections {
-            id: scrollConnection
-            property int oldContentY:0
-            target: pageStack.currentItem
-
-            onContentYChanged: {
-                scrollConnection.oldContentY = pageStack.currentItem.contentY
-            }
+            target: documentItem
+            onPathChanged: mainTabBar.currentTab = thumbnailsButton;
         }
 
         ToolBar {

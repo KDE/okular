@@ -34,8 +34,6 @@ Kirigami.Page {
     signal pageClicked(int pageNumber)
     property Item view: resultsGrid
 
-    anchors.fill: parent
-
     ScrollView {
         anchors {
             fill: parent

@@ -25,7 +25,6 @@ ThumbnailsBase {
     id: root
     model: documentItem.matchingPages
 
-    anchors.fill: parent
     ToolBar {
         id: toolBarContent
         width: root.width
@@ -38,7 +37,6 @@ ThumbnailsBase {
                 if (text.length > 2) {
                     documentItem.searchText(text);
                 } else {
-                    view.currentIndex = pageArea.delegate.pageNumber;
                     documentItem.resetSearch();
                 }
             }

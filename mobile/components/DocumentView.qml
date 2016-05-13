@@ -33,15 +33,17 @@ QtControls.ScrollView {
     property DocumentItem document
     property PageItem page: mouseArea.currPageDelegate.pageItem
     signal clicked
-
-    onWidthChanged: resizeTimer.restart()
-    onHeightChanged: resizeTimer.restart()
+    
+    //NOTE: on some themes it tries to set the flickable to interactive
+    //but we need it always non interactive as we need to manage
+    //dragging by ourselves
+    Component.onCompleted: flick.interactive = false
     Flickable {
         id: flick
-        anchors.fill: parent
+        interactive: false
+        onWidthChanged: resizeTimer.restart()
+        onHeightChanged: resizeTimer.restart()
         
-        clip: true
-
         Component.onCompleted: {
             flick.contentWidth = flick.width
             flick.contentHeight = flick.width / mouseArea.currPageDelegate.pageRatio

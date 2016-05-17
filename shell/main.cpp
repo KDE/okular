@@ -82,18 +82,7 @@ int main(int argc, char** argv)
         }
     }
 
-    // Make sure that if the user answered "No" and "Don't ask again"
-    // he actually still has an option of answering Yes
-    KMessageBox::ButtonCode result = KMessageBox::Yes;
-    KMessageBox::shouldBeShownYesNo(QStringLiteral("frameworks_not_official"), result);
-    if (result != KMessageBox::Yes) {
-        KMessageBox::enableMessage(QStringLiteral("frameworks_not_official"));
-    }
-
-    if (KMessageBox::warningYesNo( 0, i18n("This is not an official release of Okular.\nIf you need the best possible Okular experience you should use the kdelibs4-based version instead of the version based on KDE Frameworks 5.\nIf you report bugs make sure you mark them with [frameworks] in the Summary and understand not official release bugs have less priority.\nDo you understand?"), QString(), KStandardGuiItem::yes(), KStandardGuiItem::no(), QStringLiteral("frameworks_not_official") ) != KMessageBox::Yes)
-    {
-        return 1;
-    }
+    KMessageBox::information( 0, i18n("You are currently running a development build for the upcoming, KDE Frameworks-based version of Okular.\n\nPlease be aware that this version is not an official release and contains bugs which are not present in the officially released, kdelibs4-based version.\n\nIf you report bugs found in this development build, please put [frameworks] in the Summary field, and please understand that bugs in the officially released version take higher priority than those in this development version."), QString(), QStringLiteral("frameworks_not_official") );
 
     return app.exec();
 }

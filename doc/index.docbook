@@ -2356,6 +2356,16 @@ Context menu actions like Rename Bookmarks etc.)
 					  </para>
 					</listitem>
 				</varlistentry>
+				<varlistentry>
+					<term>Using Custom Stamps</term>
+					<listitem>
+					<orderedlist>
+					<listitem><para>Create the icon you want to use for your own stamp and save it in any graphics format supported by &okular;</para></listitem>
+					<listitem><para>Click the <guibutton>Add</guibutton> button, select type <guilabel>Stamp</guilabel> and enter a name for your stamp.</para></listitem>
+					<listitem><para>Enter the full path to your custom icon into the dropdown box in the <guilabel>Stamp Symbol</guilabel> group</para></listitem>
+					</orderedlist>
+					</listitem>
+				</varlistentry>
 			</variablelist>
 		</sect1>
 		<sect1 id="configeditor">

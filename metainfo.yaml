@@ -1,0 +1,11 @@
+maintainer: aacid
+description: Okular, the unified document viewer
+platforms:
+    - name: All
+release: true
+
+public_lib: true
+public_source_dirs:
+        - core
+        - Mainpage.dox 
+logo: ui/data/icons/hi128-apps-okular.png

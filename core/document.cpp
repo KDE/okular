@@ -4279,9 +4279,9 @@ QStringList Document::supportedMimeTypes() const
         const QVector<KPluginMetaData> available = DocumentPrivate::availableGenerators();
         for (const KPluginMetaData& md : available)
         {
-            // TODO should be uniquify this list?
             result << md.mimeTypes();
         }
+        result.removeDuplicates();
         d->m_supportedMimeTypes = result;
     }
     return result;

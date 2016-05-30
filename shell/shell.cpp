@@ -25,7 +25,7 @@
 #include <QDBusConnection>
 #include <QMenuBar>
 #include <QApplication>
-#include <KFileDialog>
+#include <QFileDialog>
 #include <KPluginLoader>
 #include <KMessageBox>
 #include <QMimeType>
@@ -45,6 +45,7 @@
 #include <KUrlMimeData>
 #include <KLocalizedString>
 #include <KSharedConfig>
+#include <KIO/Global>
 #include <KActivities/ResourceInstance>
 
 // local includes
@@ -391,9 +392,9 @@ QStringList Shell::fileFormats() const
     {
         KService::Ptr service = *it;
         QStringList mimeTypes = service->serviceTypes();
-        foreach ( const QString& mimeType, mimeTypes )
-            if ( mimeType != basePartService )
-                supportedPatterns.append( mimeType );
+        mimeTypes.removeAll(basePartService);
+
+        supportedPatterns += mimeTypes;
     }
 
     return supportedPatterns;
@@ -420,24 +421,22 @@ void Shell::fileOpen()
     QUrl startDir;
     const KParts::ReadWritePart* const curPart = m_tabs[activeTab].part;
     if ( curPart->url().isLocalFile() )
-        startDir = curPart->url();
+        startDir = KIO::upUrl(curPart->url());
 
-    KFileDialog dlg( startDir, QString(), this );
-    dlg.setOperationMode( KFileDialog::Opening );
-
-    // A directory may be a document. E.g. comicbook generator.
-    if ( m_fileformats.contains( QStringLiteral("inode/directory") ) )
-        dlg.setMode( dlg.mode() | KFile::Directory );
+    QPointer<QFileDialog> dlg( new QFileDialog( this ));
+    dlg->setDirectoryUrl( startDir );
+    dlg->setAcceptMode( QFileDialog::AcceptOpen );
 
     if ( m_fileformatsscanned && m_fileformats.isEmpty() )
-        dlg.setFilter( i18n( "*|All Files" ) );
+        dlg->setNameFilter( { i18n( "All Files (*)" ) } );
     else
-        dlg.setMimeFilter( m_fileformats );
-    dlg.setWindowTitle( i18n( "Open Document" ) );
-    if ( !dlg.exec() )
+        dlg->setMimeTypeFilters( m_fileformats );
+
+    dlg->setWindowTitle( i18n( "Open Document" ) );
+    if ( !dlg->exec() || !dlg)
         return;
-    QUrl url = dlg.selectedUrl();
-    if ( !url.isEmpty() )
+
+    foreach(const QUrl& url, dlg->selectedUrls())
     {
         openUrl( url );
     }

@@ -24,7 +24,7 @@ ecm_add_app_icon(okular_SRCS ICONS ${ICONS_SRCS})
 
 add_executable(okular ${okular_SRCS})
 
-target_link_libraries(okular KF5::Parts KF5::WindowSystem KF5::KDELibs4Support KF5::Activities)
+target_link_libraries(okular KF5::Parts KF5::WindowSystem KF5::Activities)
 
 install(TARGETS okular ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 

@@ -1,4 +1,3 @@
-set( EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR} )
 add_definitions( -DKDESRCDIR="${CMAKE_CURRENT_SOURCE_DIR}/" )
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/..)
@@ -10,52 +9,52 @@ ecm_add_test(shelltest.cpp ../shell/shellutils.cpp
 
 ecm_add_test(parttest.cpp
     TEST_NAME "parttest"
-    LINK_LIBRARIES Qt5::Widgets Qt5::Test Qt5::Xml okularcore okularpart KF5::KDELibs4Support
+    LINK_LIBRARIES Qt5::Widgets Qt5::Test Qt5::Xml okularcore okularpart
 )
 
 ecm_add_test(documenttest.cpp
     TEST_NAME "documenttest"
-    LINK_LIBRARIES Qt5::Widgets Qt5::Test Qt5::Xml okularcore KF5::KDELibs4Support KF5::ThreadWeaver
+    LINK_LIBRARIES Qt5::Widgets Qt5::Test Qt5::Xml okularcore KF5::ThreadWeaver
 )
 
 ecm_add_test(searchtest.cpp
     TEST_NAME "searchtest"
-    LINK_LIBRARIES Qt5::Widgets Qt5::Test Qt5::Xml okularcore KF5::KDELibs4Support
+    LINK_LIBRARIES Qt5::Widgets Qt5::Test Qt5::Xml okularcore
 )
 
 ecm_add_test(annotationstest.cpp
     TEST_NAME "annotationstest"
-    LINK_LIBRARIES Qt5::Widgets Qt5::Test Qt5::Xml okularcore KF5::KDELibs4Support
+    LINK_LIBRARIES Qt5::Widgets Qt5::Test Qt5::Xml okularcore
 )
 
 ecm_add_test(urldetecttest.cpp
     TEST_NAME "urldetecttest"
-    LINK_LIBRARIES Qt5::Widgets Qt5::Test Qt5::Xml KF5::CoreAddons KF5::KDELibs4Support
+    LINK_LIBRARIES Qt5::Widgets Qt5::Test Qt5::Xml KF5::CoreAddons
 )
 
 ecm_add_test(editannotationcontentstest.cpp testingutils.cpp
     TEST_NAME "editannotationcontentstest"
-    LINK_LIBRARIES Qt5::Widgets Qt5::Test Qt5::Xml okularcore KF5::KDELibs4Support
+    LINK_LIBRARIES Qt5::Widgets Qt5::Test Qt5::Xml okularcore
 )
 
 ecm_add_test(addremoveannotationtest.cpp testingutils.cpp
     TEST_NAME "addremoveannotationtest"
-    LINK_LIBRARIES Qt5::Widgets Qt5::Test Qt5::Xml okularcore KF5::KDELibs4Support
+    LINK_LIBRARIES Qt5::Widgets Qt5::Test Qt5::Xml okularcore
 )
 
 ecm_add_test(translateannotationtest.cpp testingutils.cpp
     TEST_NAME "translateannotationtest"
-    LINK_LIBRARIES Qt5::Widgets Qt5::Test Qt5::Xml okularcore KF5::KDELibs4Support
+    LINK_LIBRARIES Qt5::Widgets Qt5::Test Qt5::Xml okularcore
 )
 
 ecm_add_test(modifyannotationpropertiestest.cpp testingutils.cpp
     TEST_NAME "modifyannotationpropertiestest"
-    LINK_LIBRARIES Qt5::Widgets Qt5::Test okularcore KF5::KDELibs4Support
+    LINK_LIBRARIES Qt5::Widgets Qt5::Test okularcore
 )
 
 ecm_add_test(editformstest.cpp
     TEST_NAME "editformstest"
-    LINK_LIBRARIES Qt5::Widgets Qt5::Test okularcore KF5::KDELibs4Support
+    LINK_LIBRARIES Qt5::Widgets Qt5::Test okularcore
 )
 
 ecm_add_test(mainshelltest.cpp ../shell/okular_main.cpp ../shell/shellutils.cpp ../shell/shell.cpp

@@ -10,7 +10,7 @@ set(okularGenerator_mobi_PART_SRCS
 
 okular_add_generator(okularGenerator_mobi ${okularGenerator_mobi_PART_SRCS})
 
-target_link_libraries(okularGenerator_mobi okularcore KF5::KDELibs4Support  Qt5::Gui ${QMOBIPOCKET_LIBRARIES})
+target_link_libraries(okularGenerator_mobi okularcore Qt5::Gui ${QMOBIPOCKET_LIBRARIES})
 
 ########### install files ###############
 

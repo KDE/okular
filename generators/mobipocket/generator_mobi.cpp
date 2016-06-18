@@ -27,3 +27,5 @@ void MobiGenerator::addPages( KConfigDialog* dlg )
 
     dlg->addPage( widget, generalSettings(), i18n("Mobipocket"), "application-x-mobipocket-ebook", i18n("Mobipocket Backend Configuration") );
 }
+
+#include "generator_mobi.moc"

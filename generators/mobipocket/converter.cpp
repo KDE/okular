@@ -92,7 +92,7 @@ QTextDocument* Converter::convert( const QString &fileName )
     it.next();
     QUrl u(it.key());
     // external or internal link
-    if (!u.isRelative()) emit addAction(new Okular::BrowseAction(it.key()), it.value().first, it.value().second);
+    if (!u.isRelative()) emit addAction(new Okular::BrowseAction(QUrl(it.key())), it.value().first, it.value().second);
     else {
       // is there valid target?
       if (!targets.contains( it.key() ) || !targets[it.key()].isValid()) continue;

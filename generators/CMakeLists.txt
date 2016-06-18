@@ -131,7 +131,6 @@ endif(EPUB_FOUND)
 
 add_subdirectory(txt)
 
-message("KF5 enable mobipocket generator")
-#if(QMOBIPOCKET_FOUND)
-#  add_subdirectory(mobipocket)
-#endif()
+if(QMOBIPOCKET_FOUND)
+  add_subdirectory(mobipocket)
+endif()

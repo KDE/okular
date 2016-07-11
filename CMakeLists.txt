@@ -42,6 +42,7 @@ find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS
     ConfigWidgets
     CoreAddons
     DBusAddons
+    IconThemes
     JS
     KDELibs4Support
     KIO
@@ -49,6 +50,7 @@ find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS
     ThreadWeaver
     Wallet
     KHtml
+    WindowSystem
 )
 find_package(Phonon4Qt5 CONFIG REQUIRED)
 
@@ -69,7 +71,7 @@ add_definitions(-DTRANSLATION_DOMAIN="okular")
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${PHONON_INCLUDES} core/synctex ${ZLIB_INCLUDE_DIR} ${CMAKE_BINARY_DIR}/core)
 
-add_subdirectory( mobile )
+# add_subdirectory( mobile )
 option(BUILD_COVERAGE "Build the project with gcov support" OFF)
 
 if(BUILD_COVERAGE)
@@ -83,7 +85,7 @@ add_subdirectory( generators )
 add_subdirectory( autotests )
 add_subdirectory( conf/autotests )
 
-add_subdirectory(doc)
+#add_subdirectory(doc)
 
 include(OkularConfigureChecks.cmake)
 
@@ -305,7 +307,19 @@ kconfig_add_kcfg_files(okularpart_SRCS conf/settings.kcfgc )
 add_library(okularpart SHARED ${okularpart_SRCS})
 generate_export_header(okularpart BASE_NAME okularpart)
 
-target_link_libraries(okularpart okularcore Qt5::Svg KF5::Parts ${MATH_LIB} Phonon::phonon4qt5 KF5::Solid KF5::KDELibs4Support KF5::Wallet KF5::Archive)
+target_link_libraries(okularpart okularcore
+    ${MATH_LIB}
+    Qt5::Svg
+    Phonon::phonon4qt5
+    KF5::Archive
+    KF5::IconThemes
+    KF5::KDELibs4Support
+    KF5::Parts
+    KF5::Solid
+    KF5::Wallet
+    KF5::WindowSystem
+)
+
 set_target_properties(okularpart PROPERTIES PREFIX "")
 
 if (Qt5TextToSpeech_FOUND)

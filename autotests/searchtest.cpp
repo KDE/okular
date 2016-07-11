@@ -53,7 +53,7 @@ class SearchTest : public QObject
 void SearchTest::initTestCase()
 {
     qRegisterMetaType<Okular::Document::SearchStatus>();
-    Okular::SettingsCore::instance( "searchtest" );
+    Okular::SettingsCore::instance( QStringLiteral("searchtest") );
 }
 
 static void createTextPage(const QVector<QString>& text, const QVector<Okular::NormalizedRect>& rect,
@@ -121,17 +121,17 @@ void SearchTest::testNextAndPrevious()
 #define TEST_NEXT_PREV_SITUATION_COUNT 4
 
     QVector<QString> texts[TEST_NEXT_PREV_SITUATION_COUNT] = {
-        QVector<QString>() << "a" << "b" << "a" << "b" << "a",
-        QVector<QString>() << "a" << "b" << "a" << "b",
-        QVector<QString>() << "a" << "b" << "a" << "b" << "a" << "b" << "a" ,
-        QVector<QString>() << "a" << " " << "ba" << " " << "b"
+        QVector<QString>() << QStringLiteral("a") << QStringLiteral("b") << QStringLiteral("a" ) << QStringLiteral("b") << QStringLiteral("a"),
+        QVector<QString>() << QStringLiteral("a") << QStringLiteral("b") << QStringLiteral("a" ) << QStringLiteral("b"),
+        QVector<QString>() << QStringLiteral("a") << QStringLiteral("b") << QStringLiteral("a" ) << QStringLiteral("b") << QStringLiteral("a") << QStringLiteral("b") << QStringLiteral("a"),
+        QVector<QString>() << QStringLiteral("a") << QStringLiteral(" ") << QStringLiteral("ba") << QStringLiteral(" ") << QStringLiteral("b")
     };
 
     QString searchStrings[TEST_NEXT_PREV_SITUATION_COUNT] = {
-        "b",
-        "ab",
-        "aba",
-        "a b"
+        QStringLiteral("b"),
+        QStringLiteral("ab"),
+        QStringLiteral("aba"),
+        QStringLiteral("a b")
     };
 
     for (int i = 0; i < TEST_NEXT_PREV_SITUATION_COUNT; i++) {
@@ -172,13 +172,13 @@ void SearchTest::test311232()
 
     QObject::connect(&d, SIGNAL(searchFinished(int,Okular::Document::SearchStatus)), &receiver, SLOT(searchFinished(int,Okular::Document::SearchStatus)));
     
-    const QString testFile = KDESRCDIR "data/file1.pdf";
+    const QString testFile = QStringLiteral(KDESRCDIR "data/file1.pdf");
     QMimeDatabase db;
     const QMimeType mime = db.mimeTypeForFile( testFile );
     d.openDocument(testFile, QUrl(), mime);
     
     const int searchId = 0;
-    d.searchText(searchId, " i ", true, Qt::CaseSensitive, Okular::Document::NextMatch, false, QColor());
+    d.searchText(searchId, QStringLiteral(" i "), true, Qt::CaseSensitive, Okular::Document::NextMatch, false, QColor());
     QTime t;
     t.start();
     while (spy.count() != 1 && t.elapsed() < 500)
@@ -200,14 +200,14 @@ void SearchTest::test311232()
 void SearchTest::test323262()
 {
     QVector<QString> text;
-    text << "a\n";
+    text << QStringLiteral("a\n");
 
     QVector<Okular::NormalizedRect> rect;
     rect << Okular::NormalizedRect(1, 2, 3, 4);
 
     CREATE_PAGE;
 
-    Okular::RegularAreaRect* result = tp->findText(0, "a", Okular::FromBottom, Qt::CaseSensitive, NULL);
+    Okular::RegularAreaRect* result = tp->findText(0, QStringLiteral("a"), Okular::FromBottom, Qt::CaseSensitive, NULL);
     QVERIFY(result);
     delete result;
 
@@ -217,7 +217,7 @@ void SearchTest::test323262()
 void SearchTest::test323263()
 {
     QVector<QString> text;
-    text << "a" << "a" << "b";
+    text << QStringLiteral("a") << QStringLiteral("a") << QStringLiteral("b");
 
     QVector<Okular::NormalizedRect> rect;
     rect << Okular::NormalizedRect(0, 0, 1, 1)
@@ -226,7 +226,7 @@ void SearchTest::test323263()
 
     CREATE_PAGE;
 
-    Okular::RegularAreaRect* result = tp->findText(0, "ab", Okular::FromTop, Qt::CaseSensitive, NULL);
+    Okular::RegularAreaRect* result = tp->findText(0, QStringLiteral("ab"), Okular::FromTop, Qt::CaseSensitive, NULL);
     QVERIFY(result);
     Okular::RegularAreaRect expected;
     expected.append(rect[1]);
@@ -267,11 +267,11 @@ void SearchTest::testDottedI()
 void SearchTest::testHyphenAtEndOfLineWithoutYOverlap()
 {
     QVector<QString> text;
-    text << "super-"
-         << "cali-\n"
-         << "fragilistic" << "-"
-         << "expiali" << "-\n"
-         << "docious";
+    text << QStringLiteral("super-")
+         << QStringLiteral("cali-\n")
+         << QStringLiteral("fragilistic") << QStringLiteral("-")
+         << QStringLiteral("expiali") << QStringLiteral("-\n")
+         << QStringLiteral("docious");
 
     QVector<Okular::NormalizedRect> rect;
     rect << Okular::NormalizedRect(0.4, 0.0, 0.9, 0.1)
@@ -282,7 +282,7 @@ void SearchTest::testHyphenAtEndOfLineWithoutYOverlap()
 
     CREATE_PAGE;
 
-    Okular::RegularAreaRect* result = tp->findText(0, "supercalifragilisticexpialidocious",
+    Okular::RegularAreaRect* result = tp->findText(0, QStringLiteral("supercalifragilisticexpialidocious"),
                                                  Okular::FromTop, Qt::CaseSensitive, NULL);
     QVERIFY(result);
     Okular::RegularAreaRect expected;
@@ -300,7 +300,7 @@ void SearchTest::testHyphenAtEndOfLineWithoutYOverlap()
 { \
     CREATE_PAGE; \
  \
-    Okular::RegularAreaRect* result = tp->findText(0, searchString, \
+    Okular::RegularAreaRect* result = tp->findText(0, QStringLiteral(searchString), \
                Okular::FromTop, Qt::CaseSensitive, NULL); \
  \
     QCOMPARE(!!result, matchExpected); \
@@ -312,8 +312,8 @@ void SearchTest::testHyphenAtEndOfLineWithoutYOverlap()
 void SearchTest::testHyphenWithYOverlap()
 {
     QVector<QString> text;
-    text << "a-"
-         << "b";
+    text << QStringLiteral("a-")
+         << QStringLiteral("b");
 
     QVector<Okular::NormalizedRect> rect(2);
 
@@ -347,7 +347,7 @@ void SearchTest::testHyphenAtEndOfPage()
     //next character is at the same line) at the end of the page.
 
     QVector<QString> text;
-    text << "a-";
+    text << QStringLiteral("a-");
 
     QVector<Okular::NormalizedRect> rect;
     rect << Okular::NormalizedRect(0, 0, 1, 1);
@@ -355,14 +355,14 @@ void SearchTest::testHyphenAtEndOfPage()
     CREATE_PAGE;
 
     {
-        Okular::RegularAreaRect* result = tp->findText(0, "a",
+        Okular::RegularAreaRect* result = tp->findText(0, QStringLiteral("a"),
             Okular::FromTop, Qt::CaseSensitive, NULL);
         QVERIFY(result);
         delete result;
     }
 
     {
-        Okular::RegularAreaRect* result = tp->findText(0, "a",
+        Okular::RegularAreaRect* result = tp->findText(0, QStringLiteral("a"),
             Okular::FromBottom, Qt::CaseSensitive, NULL);
         QVERIFY(result);
         delete result;
@@ -382,8 +382,8 @@ void SearchTest::testOneColumn()
   //and the horizontal spaces in the example are 0.1, so they are indeed both exactly 100 pixels.)
 
   QVector<QString> text;
-  text << "Only" << "one" << "column"
-       << "here";
+  text << QStringLiteral("Only") << QStringLiteral("one") << QStringLiteral("column")
+       << QStringLiteral("here");
 
   //characters and line breaks have length 0.05, word breaks 0.1
   QVector<Okular::NormalizedRect> rect;
@@ -394,7 +394,7 @@ void SearchTest::testOneColumn()
 
   CREATE_PAGE;
 
-  Okular::RegularAreaRect* result = tp->findText(0, "Only one column",
+  Okular::RegularAreaRect* result = tp->findText(0, QStringLiteral("Only one column"),
       Okular::FromTop, Qt::CaseSensitive, NULL);
   QVERIFY(result);
   delete result;
@@ -407,8 +407,8 @@ void SearchTest::testTwoColumns()
   //Tests that the layout analysis algorithm can detect two columns.
 
   QVector<QString> text;
-  text << "This" << "text" << "in" << "two"
-       << "is" << "set"    << "columns.";
+  text << QStringLiteral("This") << QStringLiteral("text") << QStringLiteral("in") << QStringLiteral("two")
+       << QStringLiteral("is") << QStringLiteral("set")    << QStringLiteral("columns.");
 
   //characters, word breaks and line breaks have length 0.05
   QVector<Okular::NormalizedRect> rect;
@@ -422,7 +422,7 @@ void SearchTest::testTwoColumns()
 
   CREATE_PAGE;
 
-  Okular::RegularAreaRect* result = tp->findText(0, "This text in",
+  Okular::RegularAreaRect* result = tp->findText(0, QStringLiteral("This text in"),
       Okular::FromTop, Qt::CaseSensitive, NULL);
   QVERIFY(!result);
   delete result;

@@ -26,12 +26,12 @@ private slots:
 void GeneratorsTest::testLoadsCorrectly()
 {
     QCoreApplication::setLibraryPaths(QStringList());
-    QVERIFY2(QDir(GENERATORS_BUILD_DIR).exists(), GENERATORS_BUILD_DIR);
+    QVERIFY2(QDir(QStringLiteral(GENERATORS_BUILD_DIR)).exists(), GENERATORS_BUILD_DIR);
     // find all possible generators in $CMAKE_BINARY_DIR/generators
     // We can't simply hardcore the list of generators since some might not be built
     // depending on which dependencies were found by CMake
     QStringList generatorLibs;
-    QDirIterator it(GENERATORS_BUILD_DIR, QDir::Files | QDir::Executable, QDirIterator::Subdirectories);
+    QDirIterator it(QStringLiteral(GENERATORS_BUILD_DIR), QDir::Files | QDir::Executable, QDirIterator::Subdirectories);
     while (it.hasNext()) {
         it.next();
         if (QLibrary::isLibrary(it.fileName())) {

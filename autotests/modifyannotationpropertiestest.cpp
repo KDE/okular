@@ -51,7 +51,7 @@ void ModifyAnnotationPropertiesTest::cleanupTestCase()
 
 void ModifyAnnotationPropertiesTest::init()
 {
-    const QString testFile = KDESRCDIR "data/file1.pdf";
+    const QString testFile = QStringLiteral(KDESRCDIR "data/file1.pdf");
     QMimeDatabase db;
     const QMimeType mime = db.mimeTypeForFile( testFile );
     QCOMPARE( m_document->openDocument(testFile, QUrl(), mime), Okular::Document::OpenSuccess );

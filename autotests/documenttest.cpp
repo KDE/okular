@@ -32,7 +32,7 @@ void DocumentTest::testCloseDuringRotationJob()
 {
     Okular::SettingsCore::instance( QStringLiteral("documenttest") );
     Okular::Document *m_document = new Okular::Document( 0 );
-    const QString testFile = KDESRCDIR "data/file1.pdf";
+    const QString testFile = QStringLiteral(KDESRCDIR "data/file1.pdf");
     QMimeDatabase db;
     const QMimeType mime = db.mimeTypeForFile( testFile );
 

@@ -65,7 +65,7 @@ void EditFormsTest::cleanupTestCase()
 
 void EditFormsTest::init()
 {
-    const QString testFile = KDESRCDIR "data/formSamples.pdf";
+    const QString testFile = QStringLiteral(KDESRCDIR "data/formSamples.pdf");
     QMimeDatabase db;
     const QMimeType mime = db.mimeTypeForFile( testFile );
     QCOMPARE( m_document->openDocument(testFile, QUrl(), mime), Okular::Document::OpenSuccess );
@@ -279,7 +279,7 @@ void EditFormsTest::testComboEditForm()
     // Select a custom choice and verify that no predefined choices are selected
     m_document->editFormCombo( 0, m_comboEdit, QStringLiteral("comboEdit"), 0, 0, 0);
     QCOMPARE( m_comboEdit->currentChoices().length(), 0 );
-    QCOMPARE( m_comboEdit->editChoice(), QString( "comboEdit" ) );
+    QCOMPARE( m_comboEdit->editChoice(), QStringLiteral( "comboEdit" ) );
     QVERIFY( m_document->canUndo() );
     QVERIFY( !m_document->canRedo() );
 
@@ -393,7 +393,7 @@ void EditFormsTest::verifyTextForm( Okular::FormFieldText* form )
 
     // Insert the string "Hello" into the form
     m_document->editFormText(0, form, QStringLiteral("Hello"), 5, 0, 0);
-    QCOMPARE( form->text(), QString("Hello") );
+    QCOMPARE( form->text(), QStringLiteral("Hello") );
     QVERIFY( m_document->canUndo() );
     QVERIFY( !m_document->canRedo() );
 
@@ -405,7 +405,7 @@ void EditFormsTest::verifyTextForm( Okular::FormFieldText* form )
 
     // Redo the insertion of "Hello"
     m_document->redo();
-    QCOMPARE( form->text(), QString("Hello") );
+    QCOMPARE( form->text(), QStringLiteral("Hello") );
     QVERIFY( m_document->canUndo() );
     QVERIFY( !m_document->canRedo() );
 
@@ -419,7 +419,7 @@ void EditFormsTest::verifyTextForm( Okular::FormFieldText* form )
 
     // Verify that character insertion operations were merged together into a single undo command
     m_document->undo();
-    QCOMPARE( form->text(), QString("Hello") );
+    QCOMPARE( form->text(), QStringLiteral("Hello") );
     QVERIFY( m_document->canUndo() );
     QVERIFY( m_document->canRedo() );
 

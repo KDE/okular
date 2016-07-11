@@ -116,7 +116,7 @@ void MainShellTest::initTestCase()
     // Register in bus as okular
     QDBusConnectionInterface *bus = QDBusConnection::sessionBus().interface();
     const QString myPid = QString::number( getpid() );
-    const QString serviceName = "org.kde.okular-"+ myPid;
+    const QString serviceName = QStringLiteral("org.kde.okular-")+ myPid;
     QVERIFY( bus->registerService(serviceName) == QDBusConnectionInterface::ServiceRegistered );
 
     // Tell the presentationWidget to not be annoying
@@ -171,12 +171,12 @@ void MainShellTest::testShell_data()
     QTest::addColumn<bool>("externalProcessExpectPresentation");
     QTest::addColumn<bool>("externalProcessExpectPrintDialog");
 
-    const QStringList contentsEpub = QStringList(KDESRCDIR "data/contents.epub");
-    const QStringList file1 = QStringList(KDESRCDIR "data/file1.pdf");
+    const QStringList contentsEpub = QStringList(QStringLiteral(KDESRCDIR "data/contents.epub"));
+    const QStringList file1 = QStringList(QStringLiteral(KDESRCDIR "data/file1.pdf"));
     QStringList file1AndToc;
-    file1AndToc << KDESRCDIR "data/file1.pdf";
-    file1AndToc << KDESRCDIR "data/tocreload.pdf";
-    const QString tocReload = KDESRCDIR "data/tocreload.pdf";
+    file1AndToc << QStringLiteral(KDESRCDIR "data/file1.pdf");
+    file1AndToc << QStringLiteral(KDESRCDIR "data/tocreload.pdf");
+    const QString tocReload = QStringLiteral(KDESRCDIR "data/tocreload.pdf");
 
     const QString optionsPage2 = ShellUtils::serializeOptions(false, false, false, false, QStringLiteral("2"));
     const QString optionsPage2Presentation = ShellUtils::serializeOptions(true, false, false, false, QStringLiteral("2"));
@@ -239,7 +239,7 @@ void MainShellTest::testShell()
         QCOMPARE(s->m_tabs.count(), 1);
         Okular::Part *part = s->findChild<Okular::Part*>();
         QVERIFY(part);
-        QCOMPARE(part->url().url(), QString("file://%1").arg(paths[0]));
+        QCOMPARE(part->url().url(), QStringLiteral("file://%1").arg(paths[0]));
         QCOMPARE(partDocument(part)->currentPage(), expectedPage);
     }
     else if (paths.count() == 2)
@@ -252,8 +252,8 @@ void MainShellTest::testShell()
             Okular::Part *part = dynamic_cast<Okular::Part*>(s->m_tabs[0].part);
             Okular::Part *part2 = dynamic_cast<Okular::Part*>(s->m_tabs[1].part);
             QCOMPARE(s->m_tabs.count(), 2);
-            QCOMPARE(part->url().url(), QString("file://%1").arg(paths[0]));
-            QCOMPARE(part2->url().url(), QString("file://%1").arg(paths[1]));
+            QCOMPARE(part->url().url(), QStringLiteral("file://%1").arg(paths[0]));
+            QCOMPARE(part2->url().url(), QStringLiteral("file://%1").arg(paths[1]));
             QCOMPARE(partDocument(part)->currentPage(), expectedPage);
             QCOMPARE(partDocument(part2)->currentPage(), expectedPage);
         }
@@ -278,7 +278,7 @@ void MainShellTest::testShell()
 
             foreach(const QString &path, paths)
             {
-                QVERIFY(openUrls.contains(QString("file://%1").arg(path)));
+                QVERIFY(openUrls.contains(QStringLiteral("file://%1").arg(path)));
             }
         }
     }
@@ -298,7 +298,7 @@ void MainShellTest::testShell()
             args << QStringLiteral("-presentation");
         if (externalProcessExpectPrintDialog)
             args << QStringLiteral("-print");
-        p.start(OKULAR_BINARY, args);
+        p.start(QStringLiteral(OKULAR_BINARY), args);
         p.waitForStarted();
         QCOMPARE(p.state(), QProcess::Running);
 
@@ -313,7 +313,7 @@ void MainShellTest::testShell()
             {
                 // It is unique so part got "overriten"
                 QCOMPARE(s->m_tabs.count(), 1);
-                QCOMPARE(part->url().url(), QString("file://%1").arg(externalProcessPath));
+                QCOMPARE(part->url().url(), QStringLiteral("file://%1").arg(externalProcessPath));
                 QCOMPARE(partDocument(part)->currentPage(), externalProcessExpectedPage);
             }
             else
@@ -321,7 +321,7 @@ void MainShellTest::testShell()
                 // It is attaching to us so a second tab is there
                 QCOMPARE(s->m_tabs.count(), 2);
                 Okular::Part *part2 = dynamic_cast<Okular::Part*>(s->m_tabs[1].part);
-                QCOMPARE(part2->url().url(), QString("file://%1").arg(externalProcessPath));
+                QCOMPARE(part2->url().url(), QStringLiteral("file://%1").arg(externalProcessPath));
                 QCOMPARE(partDocument(part2)->currentPage(), externalProcessExpectedPage);
             }
         }
@@ -336,7 +336,7 @@ void MainShellTest::testShell()
             QVERIFY(p.state() != QProcess::Running);
             // It opened on a new process, so no change for us
             QCOMPARE(s->m_tabs.count(), 1);
-            QCOMPARE(part->url().url(), QString("file://%1").arg(paths[0]));
+            QCOMPARE(part->url().url(), QStringLiteral("file://%1").arg(paths[0]));
             QCOMPARE(partDocument(part)->currentPage(), externalProcessExpectedPage);
         }
     }
@@ -398,7 +398,7 @@ void MainShellTest::testFileRemembersPagePosition()
 {
     QFETCH(int, mode);
 
-    const QStringList paths = QStringList(KDESRCDIR "data/contents.epub");
+    const QStringList paths = QStringList(QStringLiteral(KDESRCDIR "data/contents.epub"));
     QString serializedOptions;
     if (mode == 1 || mode == 3)
         serializedOptions = ShellUtils::serializeOptions(false, false, false, false, QString());
@@ -413,7 +413,7 @@ void MainShellTest::testFileRemembersPagePosition()
     QVERIFY(s);
     Okular::Part *part = s->findChild<Okular::Part*>();
     QVERIFY(part);
-    QCOMPARE(part->url().url(), QString("file://%1").arg(paths[0]));
+    QCOMPARE(part->url().url(), QStringLiteral("file://%1").arg(paths[0]));
     QCOMPARE(partDocument(part)->currentPage(), 0u);
     partDocument(part)->setViewportPage(3);
     QCOMPARE(partDocument(part)->currentPage(), 3u);
@@ -433,7 +433,7 @@ void MainShellTest::testFileRemembersPagePosition()
         args << paths[0];
         if (mode == 2)
             args << QStringLiteral("-unique");
-        p.start(OKULAR_BINARY, args);
+        p.start(QStringLiteral(OKULAR_BINARY), args);
         p.waitForStarted();
         QCOMPARE(p.state(), QProcess::Running);
 
@@ -446,7 +446,7 @@ void MainShellTest::testFileRemembersPagePosition()
     QVERIFY(s);
     part = s->findChild<Okular::Part*>();
     QVERIFY(part);
-    QCOMPARE(part->url().url(), QString("file://%1").arg(paths[0]));
+    QCOMPARE(part->url().url(), QStringLiteral("file://%1").arg(paths[0]));
     QCOMPARE(partDocument(part)->currentPage(), 3u);
 }
 
@@ -465,7 +465,7 @@ void MainShellTest::test2FilesError()
     QFETCH(QString, serializedOptions);
 
     QStringList paths;
-    paths << KDESRCDIR "data/file1.pdf" << KDESRCDIR "data/tocreload.pdf";
+    paths << QStringLiteral(KDESRCDIR "data/file1.pdf") << QStringLiteral(KDESRCDIR "data/tocreload.pdf");
     Okular::Status status = Okular::main(paths, serializedOptions);
     QCOMPARE(status, Okular::Error);
 
@@ -481,9 +481,9 @@ void MainShellTest::testSessionRestore_data()
     QTest::addColumn<bool>("useTabsOpen");
     QTest::addColumn<bool>("useTabsRestore");
 
-    QStringList oneDocPaths( KDESRCDIR "data/file1.pdf" );
+    QStringList oneDocPaths(QStringLiteral( KDESRCDIR "data/file1.pdf" ) );
     QStringList twoDocPaths( oneDocPaths );
-    twoDocPaths << KDESRCDIR "data/formSamples.pdf";
+    twoDocPaths << QStringLiteral(KDESRCDIR "data/formSamples.pdf");
 
     const QString options = ShellUtils::serializeOptions(false, false, false, false, QString());
 

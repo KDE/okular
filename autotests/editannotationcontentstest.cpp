@@ -105,7 +105,7 @@ void EditAnnotationContentsTest::cleanupTestCase()
 
 void EditAnnotationContentsTest::init()
 {
-    const QString testFile = KDESRCDIR "data/file1.pdf";
+    const QString testFile = QStringLiteral(KDESRCDIR "data/file1.pdf");
     QMimeDatabase db;
     const QMimeType mime = db.mimeTypeForFile( testFile );
     QCOMPARE( m_document->openDocument(testFile, QUrl(), mime), Okular::Document::OpenSuccess );
@@ -142,47 +142,47 @@ void EditAnnotationContentsTest::testConsecutiveCharBackspacesMerged()
 {
     // Hello, World| -> Hello, Worl|
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "Hello, Worl" ), 11, 12, 12 );
-    QCOMPARE( QString( "Hello, Worl" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, Worl" ), m_annot1->contents() );
 
     // Hello, Worl| -> Hello, Wor|
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "Hello, Wor" ), 10, 11, 11 );
-    QCOMPARE( QString( "Hello, Wor" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, Wor" ), m_annot1->contents() );
 
     // undo and verify that consecutive backspace operations are merged together
     m_document->undo();
-    QCOMPARE( QString( "Hello, World" ), m_annot1->contents() );
-    QCOMPARE( QString( "Hello, World" ), m_editor1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, World" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, World" ), m_editor1->contents() );
     QCOMPARE( 12, m_editor1->cursorPos() );
     QCOMPARE( 12, m_editor1->anchorPos() );
 
     m_document->redo();
-    QCOMPARE( QString( "Hello, Wor" ), m_annot1->contents() );
-    QCOMPARE( QString( "Hello, Wor" ), m_editor1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, Wor" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, Wor" ), m_editor1->contents() );
     QCOMPARE( 10, m_editor1->cursorPos() );
     QCOMPARE( 10, m_editor1->anchorPos() );
 
     // Hello, Wor| -> Hello, Wo|
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "Hello, Wo" ), 9, 10, 10 );
-    QCOMPARE( QString( "Hello, Wo" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, Wo" ), m_annot1->contents() );
 
     // Hello, Wo| -> Hello, W|
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "Hello, W" ), 8, 9, 9 );
-    QCOMPARE( QString( "Hello, W" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, W" ), m_annot1->contents() );
 
     // Hello, W| -> Hello, |
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "Hello, " ), 7, 8, 8 );
-    QCOMPARE( QString( "Hello, " ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, " ), m_annot1->contents() );
 
     // undo and verify that consecutive backspace operations are merged together
     m_document->undo();
-    QCOMPARE( QString( "Hello, World" ), m_annot1->contents() );
-    QCOMPARE( QString( "Hello, World" ), m_editor1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, World" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, World" ), m_editor1->contents() );
     QCOMPARE( 12, m_editor1->cursorPos() );
     QCOMPARE( 12, m_editor1->anchorPos() );
 
     m_document->redo();
-    QCOMPARE( QString( "Hello, " ), m_annot1->contents() );
-    QCOMPARE( QString( "Hello, " ), m_editor1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, " ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, " ), m_editor1->contents() );
     QCOMPARE( 7, m_editor1->cursorPos() );
     QCOMPARE( 7, m_editor1->anchorPos() );
 }
@@ -191,41 +191,41 @@ void EditAnnotationContentsTest::testConsecutiveNewlineBackspacesNotMerged()
 {
     // Set contents to Hello, \n\n|World
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "Hello, \n\nWorld" ), 0, 0, 0 );
-    QCOMPARE( QString( "Hello, \n\nWorld" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, \n\nWorld" ), m_annot1->contents() );
 
     // Hello, \n\n|World -> Hello, \n|World
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "Hello, \nWorld" ), 8, 9, 9 );
-    QCOMPARE( QString( "Hello, \nWorld" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, \nWorld" ), m_annot1->contents() );
 
     // Hello, \n|World -> Hello, |World
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "Hello, World" ), 7, 8, 8 );
-    QCOMPARE( QString( "Hello, World" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, World" ), m_annot1->contents() );
 
     // Hello, |World -> Hello,|World
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "Hello,World" ), 6, 7, 7 );
-    QCOMPARE( QString( "Hello,World" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello,World" ), m_annot1->contents() );
 
     // Hello,|World -> Hello|World
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "HelloWorld" ), 5, 6, 6 );
-    QCOMPARE( QString( "HelloWorld" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "HelloWorld" ), m_annot1->contents() );
 
     // Backspace operations of non-newline characters should be merged
     m_document->undo();
-    QCOMPARE( QString( "Hello, World" ), m_annot1->contents() );
-    QCOMPARE( QString( "Hello, World" ), m_editor1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, World" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, World" ), m_editor1->contents() );
     QCOMPARE( 7, m_editor1->cursorPos() );
     QCOMPARE( 7, m_editor1->anchorPos() );
 
     // Backspace operations on newline characters should not be merged
     m_document->undo();
-    QCOMPARE( QString( "Hello, \nWorld" ), m_annot1->contents() );
-    QCOMPARE( QString( "Hello, \nWorld" ), m_editor1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, \nWorld" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, \nWorld" ), m_editor1->contents() );
     QCOMPARE( 8, m_editor1->cursorPos() );
     QCOMPARE( 8, m_editor1->anchorPos() );
 
     m_document->undo();
-    QCOMPARE( QString( "Hello, \n\nWorld" ), m_annot1->contents() );
-    QCOMPARE( QString( "Hello, \n\nWorld" ), m_editor1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, \n\nWorld" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, \n\nWorld" ), m_editor1->contents() );
     QCOMPARE( 9, m_editor1->cursorPos() );
     QCOMPARE( 9, m_editor1->anchorPos() );
 }
@@ -234,30 +234,30 @@ void EditAnnotationContentsTest::testConsecutiveCharInsertionsMerged()
 {
     // Hello, |World -> Hello, B|World
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "Hello, BWorld" ), 8, 7, 7 );
-    QCOMPARE( QString( "Hello, BWorld" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, BWorld" ), m_annot1->contents() );
 
     // Hello, l| -> Hello, li|
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "Hello, BiWorld" ), 9, 8, 8 );
-    QCOMPARE( QString( "Hello, BiWorld" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, BiWorld" ), m_annot1->contents() );
 
     // Hello, li| -> Hello, lin|
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "Hello, BigWorld" ), 10, 9, 9 );
-    QCOMPARE( QString( "Hello, BigWorld" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, BigWorld" ), m_annot1->contents() );
 
     // Hello, lin| -> Hello, line|
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "Hello, Big World" ), 11, 10, 10 );
-    QCOMPARE( QString( "Hello, Big World" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, Big World" ), m_annot1->contents() );
 
     // Verify undo/redo operations merged
     m_document->undo();
-    QCOMPARE( QString( "Hello, World" ), m_annot1->contents() );
-    QCOMPARE( QString( "Hello, World" ), m_editor1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, World" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, World" ), m_editor1->contents() );
     QCOMPARE( 7, m_editor1->cursorPos() );
     QCOMPARE( 7, m_editor1->anchorPos() );
 
     m_document->redo();
-    QCOMPARE( QString( "Hello, Big World" ), m_annot1->contents() );
-    QCOMPARE( QString( "Hello, Big World" ), m_editor1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, Big World" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, Big World" ), m_editor1->contents() );
     QCOMPARE( 11, m_editor1->cursorPos() );
     QCOMPARE( 11, m_editor1->anchorPos() );
 }
@@ -266,33 +266,33 @@ void EditAnnotationContentsTest::testConsecutiveNewlineInsertionsNotMerged()
 {
     // Hello, |World -> Hello, \n|World
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "Hello, \nWorld" ), 8, 7, 7 );
-    QCOMPARE( QString( "Hello, \nWorld" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, \nWorld" ), m_annot1->contents() );
 
     // Hello, |World -> Hello, \n|World
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "Hello, \n\nWorld" ), 9, 8, 8 );
-    QCOMPARE( QString( "Hello, \n\nWorld" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, \n\nWorld" ), m_annot1->contents() );
 
     m_document->undo();
-    QCOMPARE( QString( "Hello, \nWorld" ), m_annot1->contents() );
-    QCOMPARE( QString( "Hello, \nWorld" ), m_editor1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, \nWorld" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, \nWorld" ), m_editor1->contents() );
     QCOMPARE( 8, m_editor1->cursorPos() );
     QCOMPARE( 8, m_editor1->anchorPos() );
 
     m_document->undo();
-    QCOMPARE( QString( "Hello, World" ), m_annot1->contents() );
-    QCOMPARE( QString( "Hello, World" ), m_editor1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, World" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, World" ), m_editor1->contents() );
     QCOMPARE( 7, m_editor1->cursorPos() );
     QCOMPARE( 7, m_editor1->anchorPos() );
 
     m_document->redo();
-    QCOMPARE( QString( "Hello, \nWorld" ), m_annot1->contents() );
-    QCOMPARE( QString( "Hello, \nWorld" ), m_editor1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, \nWorld" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, \nWorld" ), m_editor1->contents() );
     QCOMPARE( 8, m_editor1->cursorPos() );
     QCOMPARE( 8, m_editor1->anchorPos() );
 
     m_document->redo();
-    QCOMPARE( QString( "Hello, \n\nWorld" ), m_annot1->contents() );
-    QCOMPARE( QString( "Hello, \n\nWorld" ), m_editor1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, \n\nWorld" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, \n\nWorld" ), m_editor1->contents() );
     QCOMPARE( 9, m_editor1->cursorPos() );
     QCOMPARE( 9, m_editor1->anchorPos() );
 }
@@ -301,34 +301,34 @@ void EditAnnotationContentsTest::testConsecutiveCharDeletesMerged()
 {
     // Hello, |World -> Hello, |orld
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "Hello, orld" ), 7, 7, 7 );
-    QCOMPARE( QString( "Hello, orld" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, orld" ), m_annot1->contents() );
 
     // Hello, |orld -> Hello, |rld
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "Hello, rld" ), 7, 7, 7 );
-    QCOMPARE( QString( "Hello, rld" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, rld" ), m_annot1->contents() );
 
     // Hello, |rld -> Hello, |ld
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "Hello, ld" ), 7, 7, 7 );
-    QCOMPARE( QString( "Hello, ld" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, ld" ), m_annot1->contents() );
 
     // Hello, |ld -> Hello, |d
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "Hello, d" ), 7, 7, 7 );
-    QCOMPARE( QString( "Hello, d" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, d" ), m_annot1->contents() );
 
     // Hello, | -> Hello, |
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "Hello, " ), 7, 7, 7 );
-    QCOMPARE( QString( "Hello, " ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, " ), m_annot1->contents() );
 
     // Verify undo/redo operations merged
     m_document->undo();
-    QCOMPARE( QString( "Hello, World" ), m_annot1->contents() );
-    QCOMPARE( QString( "Hello, World" ), m_editor1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, World" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, World" ), m_editor1->contents() );
     QCOMPARE( 7, m_editor1->cursorPos() );
     QCOMPARE( 7, m_editor1->anchorPos() );
 
     m_document->redo();
-    QCOMPARE( QString( "Hello, " ), m_annot1->contents() );
-    QCOMPARE( QString( "Hello, " ), m_editor1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, " ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, " ), m_editor1->contents() );
     QCOMPARE( 7, m_editor1->cursorPos() );
     QCOMPARE( 7, m_editor1->anchorPos() );
 }
@@ -337,52 +337,52 @@ void EditAnnotationContentsTest::testConsecutiveNewlineDeletesNotMerged()
 {
     // Set contents to Hello, \n\n|World
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "Hello, \n\nWorld" ), 0, 0, 0 );
-    QCOMPARE( QString( "Hello, \n\nWorld" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, \n\nWorld" ), m_annot1->contents() );
 
     // He|llo, \n\nWorld ->  He|lo, \n\nWorld
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "Helo, \n\nWorld" ), 2, 2, 2 );
-    QCOMPARE( QString( "Helo, \n\nWorld" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Helo, \n\nWorld" ), m_annot1->contents() );
 
     // He|lo, \n\nWorld ->  He|o, \n\nWorld
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "Heo, \n\nWorld" ), 2, 2, 2 );
-    QCOMPARE( QString( "Heo, \n\nWorld" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Heo, \n\nWorld" ), m_annot1->contents() );
 
     // He|o, \n\nWorld ->  He|, \n\nWorld
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "He, \n\nWorld" ), 2, 2, 2 );
-    QCOMPARE( QString( "He, \n\nWorld" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "He, \n\nWorld" ), m_annot1->contents() );
 
     // He|, \n\nWorld ->  He| \n\nWorld
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "He \n\nWorld" ), 2, 2, 2 );
-    QCOMPARE( QString( "He \n\nWorld" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "He \n\nWorld" ), m_annot1->contents() );
 
     // He| \n\nWorld ->  He|\n\nWorld
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "He\n\nWorld" ), 2, 2, 2 );
-    QCOMPARE( QString( "He\n\nWorld" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "He\n\nWorld" ), m_annot1->contents() );
 
     // He|\n\nWorld ->  He|\nWorld
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "He\nWorld" ), 2, 2, 2 );
-    QCOMPARE( QString( "He\nWorld" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "He\nWorld" ), m_annot1->contents() );
 
     // He|\nWorld ->  He|World
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "HeWorld" ), 2, 2, 2 );
-    QCOMPARE( QString( "HeWorld" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "HeWorld" ), m_annot1->contents() );
 
     // Verify that deletions of newlines are not merged, but deletions of other characters are
     m_document->undo();
-    QCOMPARE( QString( "He\nWorld" ), m_annot1->contents() );
-    QCOMPARE( QString( "He\nWorld" ), m_editor1->contents() );
+    QCOMPARE( QStringLiteral( "He\nWorld" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "He\nWorld" ), m_editor1->contents() );
     QCOMPARE( 2, m_editor1->cursorPos() );
     QCOMPARE( 2, m_editor1->anchorPos() );
 
     m_document->undo();
-    QCOMPARE( QString( "He\n\nWorld" ), m_annot1->contents() );
-    QCOMPARE( QString( "He\n\nWorld" ), m_editor1->contents() );
+    QCOMPARE( QStringLiteral( "He\n\nWorld" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "He\n\nWorld" ), m_editor1->contents() );
     QCOMPARE( 2, m_editor1->cursorPos() );
     QCOMPARE( 2, m_editor1->anchorPos() );
 
     m_document->undo();
-    QCOMPARE( QString( "Hello, \n\nWorld" ), m_annot1->contents() );
-    QCOMPARE( QString( "Hello, \n\nWorld" ), m_editor1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, \n\nWorld" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, \n\nWorld" ), m_editor1->contents() );
     QCOMPARE( 2, m_editor1->cursorPos() );
     QCOMPARE( 2, m_editor1->anchorPos() );
 }
@@ -391,69 +391,69 @@ void EditAnnotationContentsTest::testConsecutiveEditsNotMergedAcrossDifferentAnn
 {
     // Annot1: Hello, World| -> Hello, Worl|
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "Hello, Worl" ), 11, 12, 12 );
-    QCOMPARE( QString( "Hello, Worl" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, Worl" ), m_annot1->contents() );
     // Annot1: Hello, Worl| -> Hello, Wor|
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "Hello, Wor" ), 10, 11, 11 );
-    QCOMPARE( QString( "Hello, Wor" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, Wor" ), m_annot1->contents() );
 
     // Annot2: Hello, World| -> Hello, Worl|
     m_document->editPageAnnotationContents( 0, m_annot2, QStringLiteral( "Hello, Worl" ), 11, 12, 12 );
-    QCOMPARE( QString( "Hello, Worl" ), m_annot2->contents() );
+    QCOMPARE( QStringLiteral( "Hello, Worl" ), m_annot2->contents() );
     // Annot2: Hello, Worl| -> Hello, Wor|
     m_document->editPageAnnotationContents( 0, m_annot2, QStringLiteral( "Hello, Wor" ), 10, 11, 11 );
-    QCOMPARE( QString( "Hello, Wor" ), m_annot2->contents() );
+    QCOMPARE( QStringLiteral( "Hello, Wor" ), m_annot2->contents() );
 
     // Annot1: Hello, Wor| -> Hello, Wo|
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "Hello, Wo" ), 9, 10, 10 );
-    QCOMPARE( QString( "Hello, Wo" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, Wo" ), m_annot1->contents() );
     // Annot1: Hello, Wo| -> Hello, W|
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "Hello, W" ), 8, 9, 9 );
-    QCOMPARE( QString( "Hello, W" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, W" ), m_annot1->contents() );
     // Annot1: Hello, W| -> Hello, |
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "Hello, " ), 7, 8, 8 );
-    QCOMPARE( QString( "Hello, " ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, " ), m_annot1->contents() );
 
     // Annot2: Hello, Wor| -> Hello, Wo|
     m_document->editPageAnnotationContents( 0, m_annot2, QStringLiteral( "Hello, Wo" ), 9, 10, 10 );
-    QCOMPARE( QString( "Hello, Wo" ), m_annot2->contents() );
+    QCOMPARE( QStringLiteral( "Hello, Wo" ), m_annot2->contents() );
     // Annot2: Hello, Wo| -> Hello, W|
     m_document->editPageAnnotationContents( 0, m_annot2, QStringLiteral( "Hello, W" ), 8, 9, 9 );
-    QCOMPARE( QString( "Hello, W" ), m_annot2->contents() );
+    QCOMPARE( QStringLiteral( "Hello, W" ), m_annot2->contents() );
     // Annot2: Hello, W| -> Hello, |
     m_document->editPageAnnotationContents( 0, m_annot2, QStringLiteral( "Hello, " ), 7, 8, 8 );
-    QCOMPARE( QString( "Hello, " ), m_annot2->contents() );
+    QCOMPARE( QStringLiteral( "Hello, " ), m_annot2->contents() );
 
 
     // undo and verify that consecutive backspace operations are merged together
     // m_annot2 -> "Hello, Wor|"
     m_document->undo();
-    QCOMPARE( QString( "Hello, Wor" ), m_annot2->contents() );
-    QCOMPARE( QString( "Hello, " ), m_editor1->contents() );
-    QCOMPARE( QString( "Hello, Wor" ), m_editor2->contents() );
+    QCOMPARE( QStringLiteral( "Hello, Wor" ), m_annot2->contents() );
+    QCOMPARE( QStringLiteral( "Hello, " ), m_editor1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, Wor" ), m_editor2->contents() );
     QCOMPARE( 10, m_editor2->cursorPos() );
     QCOMPARE( 10, m_editor2->anchorPos() );
 
     // m_annot1 -> "Hello, Wor|"
     m_document->undo();
-    QCOMPARE( QString( "Hello, Wor" ), m_annot1->contents() );
-    QCOMPARE( QString( "Hello, Wor" ), m_editor1->contents() );
-    QCOMPARE( QString( "Hello, Wor" ), m_editor2->contents() );
+    QCOMPARE( QStringLiteral( "Hello, Wor" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, Wor" ), m_editor1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, Wor" ), m_editor2->contents() );
     QCOMPARE( 10, m_editor1->cursorPos() );
     QCOMPARE( 10, m_editor1->anchorPos() );
 
     // m_annot2 -> "Hello, World|"
     m_document->undo();
-    QCOMPARE( QString( "Hello, World" ), m_annot2->contents() );
-    QCOMPARE( QString( "Hello, Wor" ), m_editor1->contents() );
-    QCOMPARE( QString( "Hello, World" ), m_editor2->contents() );
+    QCOMPARE( QStringLiteral( "Hello, World" ), m_annot2->contents() );
+    QCOMPARE( QStringLiteral( "Hello, Wor" ), m_editor1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, World" ), m_editor2->contents() );
     QCOMPARE( 12, m_editor2->cursorPos() );
     QCOMPARE( 12, m_editor2->anchorPos() );
 
     // m_annot1 -> "Hello, World|"
     m_document->undo();
-    QCOMPARE( QString( "Hello, World" ), m_annot1->contents() );
-    QCOMPARE( QString( "Hello, World" ), m_editor1->contents() );
-    QCOMPARE( QString( "Hello, World" ), m_editor2->contents() );
+    QCOMPARE( QStringLiteral( "Hello, World" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, World" ), m_editor1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, World" ), m_editor2->contents() );
     QCOMPARE( 12, m_editor1->cursorPos() );
     QCOMPARE( 12, m_editor1->anchorPos() );
 }
@@ -462,21 +462,21 @@ void EditAnnotationContentsTest::testInsertWithSelection()
 {
     // Annot1: |Hello|, World -> H|, World
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "H, World" ), 1, 0, 5 );
-    QCOMPARE( QString( "H, World" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "H, World" ), m_annot1->contents() );
 
     // Annot1: H|, World -> Hi|, World
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "Hi, World" ), 2, 1, 1 );
-    QCOMPARE( QString( "Hi, World" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hi, World" ), m_annot1->contents() );
 
     m_document->undo();
-    QCOMPARE( QString( "H, World" ), m_annot1->contents() );
-    QCOMPARE( QString( "H, World" ), m_editor1->contents() );
+    QCOMPARE( QStringLiteral( "H, World" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "H, World" ), m_editor1->contents() );
     QCOMPARE( 1, m_editor1->cursorPos() );
     QCOMPARE( 1, m_editor1->anchorPos() );
 
     m_document->undo();
-    QCOMPARE( QString( "Hello, World" ), m_annot1->contents() );
-    QCOMPARE( QString( "Hello, World" ), m_editor1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, World" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, World" ), m_editor1->contents() );
     QCOMPARE( 0, m_editor1->cursorPos() );
     QCOMPARE( 5, m_editor1->anchorPos() );
 }
@@ -485,35 +485,35 @@ void EditAnnotationContentsTest::testCombinations()
 {
     // Annot1: Hello, World| -> Hello, Worl|
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "Hello, Worl" ), 11, 12, 12 );
-    QCOMPARE( QString( "Hello, Worl" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, Worl" ), m_annot1->contents() );
 
     // Annot1: Hello, Worl| -> Hello, Wor|
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "Hello, Wor" ), 10, 11, 11 );
-    QCOMPARE( QString( "Hello, Wor" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, Wor" ), m_annot1->contents() );
 
     // Annot1: |He|llo, Wor -> |llo, Wor
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "llo, Wor" ), 0, 2, 0 );
-    QCOMPARE( QString( "llo, Wor" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "llo, Wor" ), m_annot1->contents() );
 
     // Annot1: |llo, Wor -> |lo, Wor
     m_document->editPageAnnotationContents( 0, m_annot1, QStringLiteral( "lo, Wor" ), 0, 0, 0 );
-    QCOMPARE( QString( "lo, Wor" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "lo, Wor" ), m_annot1->contents() );
 
     m_document->undo();
-    QCOMPARE( QString( "llo, Wor" ), m_annot1->contents() );
-    QCOMPARE( QString( "llo, Wor" ), m_editor1->contents() );
+    QCOMPARE( QStringLiteral( "llo, Wor" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "llo, Wor" ), m_editor1->contents() );
     QCOMPARE( 0, m_editor1->cursorPos() );
     QCOMPARE( 0, m_editor1->anchorPos() );
 
     m_document->undo();
-    QCOMPARE( QString( "Hello, Wor" ), m_annot1->contents() );
-    QCOMPARE( QString( "Hello, Wor" ), m_editor1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, Wor" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, Wor" ), m_editor1->contents() );
     QCOMPARE( 2, m_editor1->cursorPos() );
     QCOMPARE( 0, m_editor1->anchorPos() );
 
     m_document->undo();
-    QCOMPARE( QString( "Hello, World" ), m_annot1->contents() );
-    QCOMPARE( QString( "Hello, World" ), m_editor1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, World" ), m_annot1->contents() );
+    QCOMPARE( QStringLiteral( "Hello, World" ), m_editor1->contents() );
     QCOMPARE( 12, m_editor1->cursorPos() );
     QCOMPARE( 12, m_editor1->anchorPos() );
 }

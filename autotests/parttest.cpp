@@ -80,7 +80,7 @@ void PartTest::testReload()
 {
     QVariantList dummyArgs;
     Okular::Part part(NULL, NULL, dummyArgs);
-    QVERIFY( openDocument(&part, KDESRCDIR "data/file1.pdf") );
+    QVERIFY( openDocument(&part, QStringLiteral(KDESRCDIR "data/file1.pdf")) );
     part.reload();
     qApp->processEvents();
 }
@@ -90,7 +90,7 @@ void PartTest::testCanceledReload()
 {
     QVariantList dummyArgs;
     PartThatHijacksQueryClose part(NULL, NULL, dummyArgs);
-    QVERIFY( openDocument(&part, KDESRCDIR "data/file1.pdf") );
+    QVERIFY( openDocument(&part, QStringLiteral(KDESRCDIR "data/file1.pdf")) );
 
     // When queryClose() returns false, the reload operation is canceled (as if
     // the user had chosen Cancel in the "Save changes?" message box)
@@ -105,7 +105,7 @@ void PartTest::testTOCReload()
 {
     QVariantList dummyArgs;
     Okular::Part part(NULL, NULL, dummyArgs);
-    QVERIFY( openDocument(&part, KDESRCDIR "data/tocreload.pdf") );
+    QVERIFY( openDocument(&part, QStringLiteral(KDESRCDIR "data/tocreload.pdf")) );
     QCOMPARE(part.m_toc->expandedNodes().count(), 0);
     part.m_toc->m_treeView->expandAll();
     QCOMPARE(part.m_toc->expandedNodes().count(), 3);
@@ -126,15 +126,15 @@ void PartTest::testFowardPDF()
     const QDir workDir(QDir(tempDir.path()).filePath(dir));
     workDir.mkpath(QStringLiteral("."));
 
-    QFile f(KDESRCDIR "data/synctextest.tex");
-    const QString texDestination = workDir.path() + "/synctextest.tex";
+    QFile f(QStringLiteral(KDESRCDIR "data/synctextest.tex"));
+    const QString texDestination = workDir.path() + QStringLiteral("/synctextest.tex");
     QVERIFY(f.copy(texDestination));
     QProcess process;
     process.setWorkingDirectory(workDir.path());
     process.start(QStringLiteral("pdflatex"), QStringList() << QStringLiteral("-synctex=1") << QStringLiteral("-interaction=nonstopmode") << texDestination);
     process.waitForFinished();
 
-    const QString pdfResult = workDir.path() + "/synctextest.pdf";
+    const QString pdfResult = workDir.path() + QStringLiteral("/synctextest.pdf");
     
     QVERIFY(QFile::exists(pdfResult));
     
@@ -144,7 +144,7 @@ void PartTest::testFowardPDF()
     part.closeUrl();
     
     QUrl u(QUrl::fromLocalFile(pdfResult));
-    u.setFragment("src:100" + texDestination);
+    u.setFragment(QStringLiteral("src:100") + texDestination);
     part.openUrl(u);
     QCOMPARE(part.m_document->currentPage(), 1u);
 }
@@ -179,7 +179,7 @@ void PartTest::testSelectText()
 {
     QVariantList dummyArgs;
     Okular::Part part(NULL, NULL, dummyArgs);
-    QVERIFY(openDocument(&part, KDESRCDIR "data/file2.pdf"));
+    QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/file2.pdf")));
     part.widget()->show();
     QTest::qWaitForWindowShown(part.widget());
 
@@ -204,14 +204,14 @@ void PartTest::testSelectText()
     QApplication::clipboard()->clear();
     QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "copyTextSelection"));
 
-    QCOMPARE(QApplication::clipboard()->text(), QString("Hola que tal\n"));
+    QCOMPARE(QApplication::clipboard()->text(), QStringLiteral("Hola que tal\n"));
 }
 
 void PartTest::testClickInternalLink()
 {
     QVariantList dummyArgs;
     Okular::Part part(NULL, NULL, dummyArgs);
-    QVERIFY(openDocument(&part, KDESRCDIR "data/file2.pdf"));
+    QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/file2.pdf")));
     part.widget()->show();
     QTest::qWaitForWindowShown(part.widget());
 
@@ -245,7 +245,7 @@ int main(int argc, char *argv[])
     setenv("KDE_SKIP_KDERC", "1", 1);
     unsetenv("KDE_COLOR_DEBUG");
     QFile::remove(QDir::homePath() + QString::fromLatin1("/.kde-unit-test/share/config/qttestrc")); 
-    KAboutData aboutData( QByteArray("qttest"), i18n("KDE Test Program"), QByteArray("version") );
+    KAboutData aboutData( QStringLiteral("qttest"), i18n("KDE Test Program"), QStringLiteral("version") );
     QApplication app( argc, argv );
     app.setApplicationName( QLatin1String("qttest") );
     qRegisterMetaType<QUrl>(); /*as done by kapplication*/

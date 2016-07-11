@@ -835,7 +835,7 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
         m_lastDrawnRect = paintRect;
         m_lastDrawnRect.translate( itemRect.left(), itemRect.top() );
         // 3.2. decompose paint region in rects and send paint events
-        const QVector<QRect> rects = compoundRegion.unite( m_lastDrawnRect ).rects();
+        const QVector<QRect> rects = compoundRegion.united( m_lastDrawnRect ).rects();
         const QPoint areaPos = m_pageView->contentAreaPosition();
         for ( int i = 0; i < rects.count(); i++ )
             m_pageView->viewport()->update( rects[i].translated( -areaPos ) );
@@ -947,7 +947,7 @@ void PageViewAnnotator::routePaint( QPainter * painter, const QRect & paintRect 
     // TODO: Clip annotation painting to cropped page.
 
     // transform cliprect from absolute to item relative coords
-    QRect annotRect = paintRect.intersect( m_lastDrawnRect );
+    QRect annotRect = paintRect.intersected( m_lastDrawnRect );
     annotRect.translate( -itemRect.topLeft() );
 
     // use current engine for painting (in virtual page coordinates)

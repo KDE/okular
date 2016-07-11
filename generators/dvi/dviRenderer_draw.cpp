@@ -111,7 +111,7 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
       dhl.linkText = *HTML_href;
       currentlyDrawnPage->hyperLinkList.push_back(dhl);
     } else {
-      QRect dshunion = currentlyDrawnPage->hyperLinkList[currentlyDrawnPage->hyperLinkList.size()-1].box.unite(QRect(x, y, pix.width(), pix.height())) ;
+      QRect dshunion = currentlyDrawnPage->hyperLinkList[currentlyDrawnPage->hyperLinkList.size()-1].box.united(QRect(x, y, pix.width(), pix.height())) ;
       currentlyDrawnPage->hyperLinkList[currentlyDrawnPage->hyperLinkList.size()-1].box = dshunion;
     }
   }
@@ -135,7 +135,7 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
         dhl.linkText = QLatin1String("");
       currentDVIPage->sourceHyperLinkList.push_back(dhl);
     } else {
-      QRect dshunion = currentDVIPage->sourceHyperLinkList[currentDVIPage->sourceHyperLinkList.size()-1].box.unite(QRect(x, y, pix.width(), pix.height())) ;
+      QRect dshunion = currentDVIPage->sourceHyperLinkList[currentDVIPage->sourceHyperLinkList.size()-1].box.united(QRect(x, y, pix.width(), pix.height())) ;
       currentDVIPage->sourceHyperLinkList[currentDVIPage->sourceHyperLinkList.size()-1].box = dshunion;
     }
   }

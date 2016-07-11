@@ -38,6 +38,7 @@
 #include <QFileDialog>
 #include <QStandardPaths>
 
+#include <KJobWidgets>
 #include <kaboutapplicationdialog.h>
 #include <kactioncollection.h>
 #include <kbookmarkaction.h>
@@ -977,14 +978,23 @@ void Part::openUrlFromDocument(const QUrl &url)
     if ( m_embedMode == PrintPreviewMode )
        return;
 
-    if (KIO::NetAccess::exists(url, KIO::NetAccess::SourceSide, widget()))
-    {
-        m_bExtension->openUrlNotify();
-        m_bExtension->setLocationBarUrl(url.toDisplayString());
-        openUrl(url);
+    if (url.isLocalFile()) {
+        if (!QFile::exists(url.toLocalFile())) {
+            KMessageBox::error( widget(), i18n("Could not open '%1'. File does not exist", url.toDisplayString() ) );
+            return;
+        }
     } else {
-        KMessageBox::error( widget(), i18n("Could not open '%1'. File does not exist", url.toDisplayString() ) );
+        KIO::StatJob *statJob = KIO::stat(url, KIO::StatJob::SourceSide, 0);
+        KJobWidgets::setWindow(statJob, widget());
+        if (!statJob->exec() || statJob->error()) {
+            KMessageBox::error( widget(), i18n("Could not open '%1' (%2) ", url.toDisplayString(), statJob->errorString() ) );
+            return;
+        }
     }
+
+    m_bExtension->openUrlNotify();
+    m_bExtension->setLocationBarUrl(url.toDisplayString());
+    openUrl(url);
 }
 
 void Part::openUrlFromBookmarks(const QUrl &_url)
@@ -2256,7 +2266,8 @@ bool Part::saveAs( const QUrl & saveUrl )
     }
 
     KIO::Job *copyJob = KIO::file_copy( QUrl::fromLocalFile(fileName), saveUrl, -1, KIO::Overwrite );
-    if ( !KIO::NetAccess::synchronousRun( copyJob, widget() ) )
+    KJobWidgets::setWindow(copyJob, widget());
+    if ( !copyJob->exec() )
     {
         KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", saveUrl.toDisplayString() ) );
         return false;
@@ -2304,7 +2315,8 @@ void Part::slotSaveCopyAs()
         }
 
         KIO::Job *copyJob = KIO::file_copy( srcUrl, saveUrl, -1, KIO::Overwrite );
-        if ( !KIO::NetAccess::synchronousRun( copyJob, widget() ) )
+        KJobWidgets::setWindow(copyJob, widget());
+        if ( !copyJob->exec() )
             KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", saveUrl.toDisplayString() ) );
 
         delete tempFile;

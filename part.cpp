@@ -36,7 +36,6 @@
 #include <QInputDialog>
 #include <QWidgetAction>
 
-#include <kvbox.h>
 #include <kaboutapplicationdialog.h>
 #include <kactioncollection.h>
 #include <kbookmarkaction.h>
@@ -2870,7 +2869,7 @@ bool Part::handleCompressed( QString &destpath, const QString &path, const QStri
         KMessageBox::error( widget(),
             i18n("<qt><strong>File Error!</strong> Could not create temporary file "
             "<nobr><strong>%1</strong></nobr>.</qt>",
-            strerror(newtempfile->error())));
+            newtempfile->errorString()));
         delete newtempfile;
         return false;
     }

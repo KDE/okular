@@ -71,7 +71,7 @@ add_definitions(-DTRANSLATION_DOMAIN="okular")
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${PHONON_INCLUDES} core/synctex ${ZLIB_INCLUDE_DIR} ${CMAKE_BINARY_DIR}/core)
 
-# add_subdirectory( mobile )
+ add_subdirectory( mobile )
 option(BUILD_COVERAGE "Build the project with gcov support" OFF)
 
 if(BUILD_COVERAGE)
@@ -85,7 +85,7 @@ add_subdirectory( generators )
 add_subdirectory( autotests )
 add_subdirectory( conf/autotests )
 
-#add_subdirectory(doc)
+add_subdirectory(doc)
 
 include(OkularConfigureChecks.cmake)
 

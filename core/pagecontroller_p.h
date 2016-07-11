@@ -31,10 +31,10 @@ class PageController : public QObject
 
         void addRotationJob( RotationJob *job );
 
-    signals:
+    Q_SIGNALS:
         void rotationFinished( int page, Okular::Page *okularPage );
 
-    private slots:
+    private Q_SLOTS:
         void imageRotationDone(const ThreadWeaver::JobPointer &job);
 
     private:

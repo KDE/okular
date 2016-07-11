@@ -63,7 +63,7 @@ class EditAnnotToolDialog : public QDialog
         Okular::Annotation *m_stubann;
         AnnotationWidget *m_annotationWidget;
 
-    private slots:
+    private Q_SLOTS:
         void slotTypeChanged();
         void slotDataChanged();
 };

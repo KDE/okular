@@ -22,7 +22,7 @@ class DlgPerformance : public QWidget
         explicit DlgPerformance( QWidget * parent = Q_NULLPTR );
         virtual ~DlgPerformance();
 
-    protected slots:
+    protected Q_SLOTS:
         void radioGroup_changed( int which );
 
     protected:

@@ -25,7 +25,7 @@ public:
     
     QString defaultName() const;
 
-protected slots:
+protected Q_SLOTS:
     void slotAdd() Q_DECL_OVERRIDE;
     void slotEdit() Q_DECL_OVERRIDE;
 };

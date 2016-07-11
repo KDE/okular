@@ -41,7 +41,7 @@ class PagesEdit : public KLineEdit
         void mousePressEvent( QMouseEvent * e ) Q_DECL_OVERRIDE;
         void wheelEvent( QWheelEvent * e ) Q_DECL_OVERRIDE;
 
-    private slots:
+    private Q_SLOTS:
         void updatePalette();
 
     private:
@@ -67,10 +67,10 @@ class PageLabelEdit : public PagesEdit
         void setText( const QString & newText ) Q_DECL_OVERRIDE;
         void setPageLabels( const QVector< Okular::Page * > & pageVector );
 
-    signals:
+    Q_SIGNALS:
         void pageNumberChosen( int page );
 
-    private slots:
+    private Q_SLOTS:
         void pageChosen();
 
     private:
@@ -116,13 +116,13 @@ class MiniBar : public QWidget
 
         void changeEvent( QEvent * event )  Q_DECL_OVERRIDE;
 
-    signals:
+    Q_SIGNALS:
         void gotoPage();
         void prevPage();
         void nextPage();
         void forwardKeyPressEvent( QKeyEvent *e );
 
-    public slots:
+    public Q_SLOTS:
         void slotChangePage();
         void slotChangePage(int page);
         void slotEmitNextPage();
@@ -158,7 +158,7 @@ class ProgressWidget : public QWidget, public Okular::DocumentObserver
 
         void slotGotoNormalizedPage( float index );
 
-    signals:
+    Q_SIGNALS:
         void prevPage();
         void nextPage();
 

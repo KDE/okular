@@ -46,10 +46,10 @@ Q_OBJECT
         void rollbackReload();
         void finishReload();
 
-    signals:
+    Q_SIGNALS:
         void hasTOC(bool has);
 
-    private slots:
+    private Q_SLOTS:
         void slotExecuted( const QModelIndex & );
         void saveSearchOptions();
 

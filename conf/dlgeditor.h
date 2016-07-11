@@ -23,7 +23,7 @@ class DlgEditor : public QWidget
         explicit DlgEditor( QWidget * parent = Q_NULLPTR );
         virtual ~DlgEditor();
 
-    private slots:
+    private Q_SLOTS:
         void editorChanged( int which );
 
     private:

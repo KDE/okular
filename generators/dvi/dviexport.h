@@ -74,7 +74,7 @@ protected:
    */
   virtual void finished_impl(int exit_code);
 
-private slots:
+private Q_SLOTS:
   /// Calls an impl() inline so that derived classes don't need slots.
   void abort_process() { abort_process_impl(); }
   void finished(int exit_code) { finished_impl(exit_code); }

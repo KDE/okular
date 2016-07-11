@@ -154,7 +154,7 @@ Q_SIGNALS:
   void notice( const QString &message, int duration );
 
 
-public slots:
+public Q_SLOTS:
   void          exportPS(const QString& fname = QString(), const QStringList& options = QStringList(), QPrinter* printer = 0, QPrinter::Orientation orientation = QPrinter::Portrait);
   void          exportPDF();
 
@@ -171,7 +171,7 @@ public slots:
 
   const QVector<DVI_SourceFileAnchor>& sourceAnchors() { return sourceHyperLinkAnchors; }
 
-private slots:
+private Q_SLOTS:
   /** This method shows a dialog that tells the user that source
       information is present, and gives the opportunity to open the
       manual and learn more about forward and inverse search */

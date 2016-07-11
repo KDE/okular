@@ -61,7 +61,7 @@ class FormWidgetsController : public QObject
         bool canUndo();
         bool canRedo();
 
-    signals:
+    Q_SIGNALS:
         void changed( int pageNumber );
         void requestUndo();
         void requestRedo();
@@ -110,7 +110,7 @@ class FormWidgetsController : public QObject
 
         void action( Okular::Action *action );
 
-    private slots:
+    private Q_SLOTS:
         void slotButtonClicked( QAbstractButton *button );
         void slotFormButtonsChangedByUndoRedo( int pageNumber,
                                                const QList< Okular::FormFieldButton* > & formButtons );
@@ -172,7 +172,7 @@ class PushButtonEdit : public QPushButton, public FormWidgetIface
     public:
         explicit PushButtonEdit( Okular::FormFieldButton * button, QWidget * parent = Q_NULLPTR );
 
-    private slots:
+    private Q_SLOTS:
         void slotClicked();
 
     private:
@@ -190,7 +190,7 @@ class CheckBoxEdit : public QCheckBox, public FormWidgetIface
         void setFormWidgetsController( FormWidgetsController *controller );
         QAbstractButton* button();
 
-    private slots:
+    private Q_SLOTS:
         void slotStateChanged( int state );
 
     private:
@@ -223,13 +223,13 @@ class FormLineEdit : public QLineEdit, public FormWidgetIface
         virtual void contextMenuEvent( QContextMenuEvent* event );
 
 
-    public slots:
+    public Q_SLOTS:
         void slotHandleTextChangedByUndoRedo( int pageNumber,
                                               Okular::FormFieldText* textForm,
                                               const QString & contents,
                                               int cursorPos,
                                               int anchorPos );
-    private slots:
+    private Q_SLOTS:
         void slotChanged();
 
     private:
@@ -248,7 +248,7 @@ class TextAreaEdit : public KTextEdit, public FormWidgetIface
         virtual bool event ( QEvent * e );
 
 
-    public slots:
+    public Q_SLOTS:
         void slotHandleTextChangedByUndoRedo( int pageNumber,
                                               Okular::FormFieldText * textForm,
                                               const QString & contents,
@@ -256,7 +256,7 @@ class TextAreaEdit : public KTextEdit, public FormWidgetIface
                                               int anchorPos );
         void slotUpdateUndoAndRedoInContextMenu( QMenu* menu );
 
-    private slots:
+    private Q_SLOTS:
         void slotChanged();
 
     private:
@@ -278,7 +278,7 @@ class FileEdit : public KUrlRequester, public FormWidgetIface
         bool eventFilter( QObject *obj, QEvent *event );
 
 
-    private slots:
+    private Q_SLOTS:
         void slotChanged();
         void slotHandleFileChangedByUndoRedo( int pageNumber,
                                               Okular::FormFieldText * form,
@@ -300,7 +300,7 @@ class ListEdit : public QListWidget, public FormWidgetIface
         explicit ListEdit( Okular::FormFieldChoice * choice, QWidget * parent = Q_NULLPTR );
         void setFormWidgetsController( FormWidgetsController *controller );
 
-    private slots:
+    private Q_SLOTS:
         void slotSelectionChanged();
         void slotHandleFormListChangedByUndoRedo( int pageNumber,
                                                   Okular::FormFieldChoice * listForm,
@@ -321,7 +321,7 @@ class ComboEdit : public QComboBox, public FormWidgetIface
         virtual bool event ( QEvent * e );
         virtual void contextMenuEvent( QContextMenuEvent* event );
 
-    private slots:
+    private Q_SLOTS:
         void slotValueChanged();
         void slotHandleFormComboChangedByUndoRedo( int pageNumber,
                                                    Okular::FormFieldChoice * comboForm,

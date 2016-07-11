@@ -23,7 +23,7 @@ class DlgAccessibility : public QWidget
         explicit DlgAccessibility( QWidget * parent = Q_NULLPTR );
         ~DlgAccessibility();
 
-    private slots:
+    private Q_SLOTS:
         void slotColorMode( int mode );
 
     private:

@@ -39,10 +39,10 @@ Q_OBJECT
 
         void setPageView( PageView *pageView );
 
-    signals:
+    Q_SIGNALS:
         void hasLayers(bool has);
 
-    private slots:
+    private Q_SLOTS:
         void saveSearchOptions();
 
     private:

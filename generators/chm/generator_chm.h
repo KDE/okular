@@ -45,7 +45,7 @@ class CHMGenerator : public Okular::Generator
 
         QVariant metaData( const QString & key, const QVariant & option ) const Q_DECL_OVERRIDE;
 
-    public slots:
+    public Q_SLOTS:
         void slotCompleted();
 
     protected:

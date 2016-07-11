@@ -39,7 +39,7 @@ class WidgetConfigurationToolsBase : public QWidget
         QPushButton *m_btnMoveUp;
         QPushButton *m_btnMoveDown;
 
-    protected slots:
+    protected Q_SLOTS:
         virtual void slotAdd() = 0;
         virtual void slotEdit() = 0;
         void updateButtons();

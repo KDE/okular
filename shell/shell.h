@@ -69,7 +69,7 @@ public:
 
   bool openDocument(const QUrl &url, const QString &serializedOptions);
 
-public slots:
+public Q_SLOTS:
   Q_SCRIPTABLE Q_NOREPLY void tryRaise();
   Q_SCRIPTABLE bool openDocument(const QString &urlString, const QString &serializedOptions = QString() );
   Q_SCRIPTABLE bool canOpenDocs( int numDocs, int desktop );
@@ -101,7 +101,7 @@ protected:
 
   void showEvent(QShowEvent *event) Q_DECL_OVERRIDE;
 
-private slots:
+private Q_SLOTS:
   void fileOpen();
 
   void slotUpdateFullScreen();
@@ -125,7 +125,7 @@ private slots:
 
   void slotFitWindowToPage( const QSize& pageViewSize, const QSize& pageSize );
 
-signals:
+Q_SIGNALS:
   void moveSplitter(int sideWidgetSize);
 
 private:

@@ -45,14 +45,14 @@ class Sidebar : public QWidget
 
         void moveSplitter( int sideWidgetSize );
 
-    signals:
+    Q_SIGNALS:
         void urlsDropped( const QList<QUrl>& urls );
 
     protected:
         void dragEnterEvent( QDragEnterEvent* event ) Q_DECL_OVERRIDE;
         void dropEvent( QDropEvent* event ) Q_DECL_OVERRIDE;
 
-    private slots:
+    private Q_SLOTS:
         void itemClicked( QListWidgetItem *item );
         void splitterMoved( int pos, int index );
         void listContextMenu( const QPoint & );

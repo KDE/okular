@@ -25,7 +25,7 @@ Q_OBJECT
 	public:
 		EmbeddedFilesDialog(QWidget *parent, const Okular::Document *document);
 
-	private slots:
+    private Q_SLOTS:
 		void saveFile();
 		void attachViewContextMenu( const QPoint& pos );
 		void updateSaveButton();

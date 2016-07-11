@@ -57,7 +57,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         bool canUnloadPixmap( int pageNumber ) const Q_DECL_OVERRIDE;
         void notifyCurrentPageChanged( int previous, int current ) Q_DECL_OVERRIDE;
 
-    public slots:
+    public Q_SLOTS:
         void slotFind();
 
     protected:
@@ -145,7 +145,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         bool m_showSummaryView;
         bool m_advanceSlides;
 
-    private slots:
+    private Q_SLOTS:
         void slotNextPage();
         void slotPrevPage();
         void slotFirstPage();

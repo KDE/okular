@@ -50,7 +50,7 @@ Q_OBJECT
         // redraw visible widgets (useful for refreshing contents...)
         void updateWidgets();
 
-    public slots:
+    public Q_SLOTS:
         // these are connected to ThumbnailController buttons
         void slotFilterBookmarks( bool filterOn );
 
@@ -61,7 +61,7 @@ Q_OBJECT
         // catch the viewport event and filter them if necessary
         bool viewportEvent( QEvent * ) Q_DECL_OVERRIDE;
 
-    signals:
+    Q_SIGNALS:
         void rightClick( const Okular::Page *, const QPoint & );
 
     private:

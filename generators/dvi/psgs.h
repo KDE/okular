@@ -101,7 +101,7 @@ private:
   // removed from the list, and another device name is tried.
   QStringList           knownDevices;
 
-signals:
+Q_SIGNALS:
   /** Passed through to the top-level kpart. */
   void error( const QString &message, int duration );
 };

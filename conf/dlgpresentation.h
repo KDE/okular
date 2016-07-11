@@ -22,7 +22,7 @@ class DlgPresentation : public QWidget
         explicit DlgPresentation( QWidget * parent = Q_NULLPTR );
         virtual ~DlgPresentation();
 
-    protected slots:
+    protected Q_SLOTS:
         void screenComboChanged( int which );
 
     protected:

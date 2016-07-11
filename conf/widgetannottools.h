@@ -30,7 +30,7 @@ class WidgetAnnotTools : public WidgetConfigurationToolsBase
         QStringList tools() const Q_DECL_OVERRIDE;
         void setTools(const QStringList& items) Q_DECL_OVERRIDE;
 
-    protected slots:
+    protected Q_SLOTS:
         void slotAdd() Q_DECL_OVERRIDE;
         void slotEdit() Q_DECL_OVERRIDE;
 };

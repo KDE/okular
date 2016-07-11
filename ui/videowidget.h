@@ -46,7 +46,7 @@ class VideoWidget : public QWidget
          */
         void pageLeft();
 
-    public slots:
+    public Q_SLOTS:
         void play();
         void pause();
         void stop();

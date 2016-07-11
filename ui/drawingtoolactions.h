@@ -28,11 +28,11 @@ public:
 
     void reparseConfig();
 
-signals:
+Q_SIGNALS:
     void changeEngine( const QDomElement &doc );
     void actionsRecreated();
 
-private slots:
+private Q_SLOTS:
     void actionTriggered();
 
 private:

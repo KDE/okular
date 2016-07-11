@@ -147,7 +147,7 @@ class ToolBarButton : public QToolButton
         int buttonID() const { return m_id; }
         bool isText() const { return m_isText; }
 
-    signals:
+    Q_SIGNALS:
         void buttonDoubleClicked( int buttonID );
 
     protected:
@@ -189,7 +189,7 @@ class PageViewToolBar : public QWidget
 
         // query properties
 
-    signals:
+    Q_SIGNALS:
         // the tool 'toolID' has been selected
         void toolSelected( int toolID );
         // orientation has been changed
@@ -210,7 +210,7 @@ class PageViewToolBar : public QWidget
         friend class ToolBarPrivate;
         class ToolBarPrivate * d;
 
-    private slots:
+    private Q_SLOTS:
         void slotAnimate();
         void slotButtonClicked();
 };

@@ -16,7 +16,7 @@ namespace Okular
 class UrlDetectTest : public QObject
 {
     Q_OBJECT
-private slots:
+private Q_SLOTS:
     void testURL();
     void testURL_data();
 };

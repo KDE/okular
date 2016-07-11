@@ -43,10 +43,10 @@ public:
 
     void setEditable( bool editable );
 
-signals:
+Q_SIGNALS:
     void iconChanged( const QString& );
 
-private slots:
+private Q_SLOTS:
     void iconComboChanged( const QString& icon );
 
 private:
@@ -82,7 +82,7 @@ public:
 
     virtual void applyChanges();
 
-signals:
+Q_SIGNALS:
     void dataChanged();
 
 protected:

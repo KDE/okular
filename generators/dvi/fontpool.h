@@ -122,13 +122,13 @@ public:
       drawing routines for the different setups. */
   bool QPixmapSupportsAlpha;
 
-signals:
+Q_SIGNALS:
   /** Passed through to the top-level kpart. */
   void error( const QString &message, int duration );
   void warning( const QString &message, int duration );
   void notice( const QString &message, int duration );
 
-public slots:
+public Q_SLOTS:
   // Locates font files on the disk using the kpsewhich program.  If
   // 'locateTFMonly' is true, the method does not look for PFB- or
   // PK-fonts. Instead, only TFM-files are searched. This option can be
@@ -196,7 +196,7 @@ private:
   // The handle on the external process.
   QProcess *kpsewhich_;
 
-private slots:
+private Q_SLOTS:
   // This slot is called when MetaFont is run via the kpsewhich program.
   // The MetaFont output is transmitted to the fontpool via the @c kpsewhich_
   // member variable. This method passes on progress information to the

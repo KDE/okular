@@ -101,7 +101,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         bool doCloseDocument() Q_DECL_OVERRIDE;
         Okular::TextPage* textPage( Okular::Page *page ) Q_DECL_OVERRIDE;
 
-    protected slots:
+    protected Q_SLOTS:
         void requestFontData(const Okular::FontInfo &font, QByteArray *data);
         Okular::Generator::PrintError printError() const;
 

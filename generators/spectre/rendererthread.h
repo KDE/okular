@@ -60,7 +60,7 @@ Q_OBJECT
 
         void addRequest(const GSRendererThreadRequest &req);
 
-    signals:
+    Q_SIGNALS:
         void imageDone(QImage *image, Okular::PixmapRequest *request);
 
     private:

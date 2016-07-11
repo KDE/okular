@@ -34,16 +34,16 @@ class FindBar
         void focusAndSetCursor();
         bool maybeHide();
 
-    signals:
+    Q_SIGNALS:
         void forwardKeyPressEvent( QKeyEvent* );
         void onCloseButtonPressed();
 
-    public slots:
+    public Q_SLOTS:
         void findNext();
         void findPrev();
         void resetSearch();
 
-    private slots:
+    private Q_SLOTS:
         void caseSensitivityChanged();
         void fromCurrentPageChanged();
         void closeAndStopSearch();

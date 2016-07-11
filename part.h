@@ -136,7 +136,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         void setShowSourceLocationsGraphically(bool show) Q_DECL_OVERRIDE;
         bool openNewFilesInTabs() const Q_DECL_OVERRIDE;
 
-    public slots:                // dbus
+    public Q_SLOTS:                // dbus
         Q_SCRIPTABLE Q_NOREPLY void goToPage(uint page);
         Q_SCRIPTABLE Q_NOREPLY void openDocument( const QString &doc );
         Q_SCRIPTABLE uint pages();
@@ -154,7 +154,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         Q_SCRIPTABLE Q_NOREPLY void reload();
         Q_SCRIPTABLE Q_NOREPLY void enableStartWithPrint();
 
-    signals:
+    Q_SIGNALS:
         void enablePrintAction(bool enable);
         void openSourceReference(const QString& absFileName, int line, int column);
         void viewerMenuStateChange(bool enabled);
@@ -177,7 +177,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         void setReadWrite(bool readwrite) Q_DECL_OVERRIDE;
         bool saveAs(const QUrl & saveUrl) Q_DECL_OVERRIDE;
 
-    protected slots:
+    protected Q_SLOTS:
         // connected to actions
         void openUrlFromDocument(const QUrl &url);
         void openUrlFromBookmarks(const QUrl &url);
@@ -223,7 +223,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         void slotRebuildBookmarkMenu();
         void enableLayers( bool enable );
 
-    public slots:
+    public Q_SLOTS:
         // connected to Shell action (and browserExtension), not local one
         void slotPrint();
         void slotFileDirty( const QString& );
@@ -354,7 +354,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         // Timer for m_infoMessage
         QTimer *m_infoTimer;
 
-    private slots:
+    private Q_SLOTS:
         void slotAnnotationPreferences();
         void slotHandleActivatedSourceReference(const QString& absFileName, int line, int col, bool *handled);
 };

@@ -111,14 +111,14 @@ Q_OBJECT
 
         void updateCursor();
 
-    public slots:
+    public Q_SLOTS:
         void copyTextSelection() const;
         void selectAll();
 
         void openAnnotationWindow( Okular::Annotation *annotation, int pageNumber );
         void reloadForms();
 
-    signals:
+    Q_SIGNALS:
         void rightClick( const Okular::Page *, const QPoint & );
         void mouseBackButtonClick();
         void mouseForwardButtonClick();
@@ -192,7 +192,7 @@ Q_OBJECT
         // don't want to expose classes in here
         class PageViewPrivate * d;
 
-    private slots:
+    private Q_SLOTS:
         // used to decouple the notifyViewportChanged calle
         void slotRealNotifyViewportChanged(bool smoothMove);
         // activated either directly or via queued connection on notifySetup

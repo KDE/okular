@@ -878,7 +878,7 @@ QRect PageViewAnnotator::routeMouseEvent( QMouseEvent * e, PageViewItem * item )
     // figure out the event type and button
     AnnotatorEngine::decodeEvent( e, &eventType, &button );
 
-    return performRouteMouseOrTabletEvent( eventType, button, e->posF(), item );
+    return performRouteMouseOrTabletEvent( eventType, button, e->localPos(), item );
 }
 
 QRect PageViewAnnotator::routeTabletEvent( QTabletEvent * e, PageViewItem * item, const QPoint & localOriginInGlobal )
@@ -909,7 +909,7 @@ QRect PageViewAnnotator::routeTabletEvent( QTabletEvent * e, PageViewItem * item
     // figure out the event type and button
     AnnotatorEngine::decodeEvent( e, &eventType, &button );
 
-    const QPointF globalPosF = e->hiResGlobalPos();
+    const QPointF globalPosF = e->globalPosF();
     const QPointF localPosF = globalPosF - localOriginInGlobal;
     return performRouteMouseOrTabletEvent( eventType, button, localPosF, item );
 }

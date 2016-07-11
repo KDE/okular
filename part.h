@@ -19,6 +19,7 @@
 #include <kparts/readwritepart.h>
 #include <kpluginfactory.h>
 #include <kmessagewidget.h>
+#include <KCompressionDevice>
 #include <qicon.h>
 #include <qlist.h>
 #include <qpointer.h>
@@ -246,7 +247,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
 
         void setupPrint( QPrinter &printer );
         void doPrint( QPrinter &printer );
-        bool handleCompressed( QString &destpath, const QString &path, const QString &compressedMimetype );
+        bool handleCompressed(QString &destpath, const QString &path, KCompressionDevice::CompressionType compressionType );
         void rebuildBookmarkMenu( bool unplugActions = true );
         void updateAboutBackendAction();
         void unsetDummyMode();

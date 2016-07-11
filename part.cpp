@@ -170,12 +170,12 @@ static QAction* actionForExportFormat( const Okular::ExportFormat& format, QObje
     return act;
 }
 
-static QString compressedMimeFor( const QString& mime_to_check )
+static KFilterDev::CompressionType compressionTypeFor( const QString& mime_to_check )
 {
     // The compressedMimeMap is here in case you have a very old shared mime database
     // that doesn't have inheritance info for things like gzeps, etc
     // Otherwise the "is()" calls below are just good enough
-    static QHash< QString, QString > compressedMimeMap;
+    static QHash< QString, KFilterDev::CompressionType > compressedMimeMap;
     static bool supportBzip = false;
     static bool supportXz = false;
     const QString app_gzip( QStringLiteral( "application/x-gzip" ) );
@@ -184,16 +184,16 @@ static QString compressedMimeFor( const QString& mime_to_check )
     if ( compressedMimeMap.isEmpty() )
     {
         std::unique_ptr< KFilterBase > f;
-        compressedMimeMap[ QLatin1String( "image/x-gzeps" ) ] = app_gzip;
+        compressedMimeMap[ QLatin1String( "image/x-gzeps" ) ] = KFilterDev::GZip;
         // check we can read bzip2-compressed files
         f.reset( KCompressionDevice::filterForCompressionType( KCompressionDevice::BZip2 ) );
         if ( f.get() )
         {
             supportBzip = true;
-            compressedMimeMap[ QLatin1String( "application/x-bzpdf" ) ] = app_bzip;
-            compressedMimeMap[ QLatin1String( "application/x-bzpostscript" ) ] = app_bzip;
-            compressedMimeMap[ QLatin1String( "application/x-bzdvi" ) ] = app_bzip;
-            compressedMimeMap[ QLatin1String( "image/x-bzeps" ) ] = app_bzip;
+            compressedMimeMap[ QLatin1String( "application/x-bzpdf" ) ] = KFilterDev::BZip2;
+            compressedMimeMap[ QLatin1String( "application/x-bzpostscript" ) ] = KFilterDev::BZip2;
+            compressedMimeMap[ QLatin1String( "application/x-bzdvi" ) ] = KFilterDev::BZip2;
+            compressedMimeMap[ QLatin1String( "image/x-bzeps" ) ] = KFilterDev::BZip2;
         }
         // check if we can read XZ-compressed files
         f.reset( KCompressionDevice::filterForCompressionType( KCompressionDevice::Xz ) );
@@ -202,7 +202,7 @@ static QString compressedMimeFor( const QString& mime_to_check )
             supportXz = true;
         }
     }
-    QHash< QString, QString >::const_iterator it = compressedMimeMap.constFind( mime_to_check );
+    QHash< QString, KFilterDev::CompressionType >::const_iterator it = compressedMimeMap.constFind( mime_to_check );
     if ( it != compressedMimeMap.constEnd() )
         return it.value();
 
@@ -211,14 +211,14 @@ static QString compressedMimeFor( const QString& mime_to_check )
     if ( mime.isValid() )
     {
         if ( mime.inherits( app_gzip ) )
-            return app_gzip;
+            return KFilterDev::GZip;
         else if ( supportBzip && mime.inherits( app_bzip ) )
-            return app_bzip;
+            return KFilterDev::BZip2;
         else if ( supportXz && mime.inherits( app_xz ) )
-            return app_xz;
+            return KFilterDev::Xz;
     }
 
-    return QString();
+    return KFilterDev::None;
 }
 
 static Okular::EmbedMode detectEmbedMode( QWidget *parentWidget, QObject *parent, const QVariantList &args )
@@ -1227,11 +1227,11 @@ Document::OpenResult Part::doOpenFile( const QMimeType &mimeA, const QString &fi
     bool uncompressOk = true;
     QMimeType mime = mimeA;
     QString fileNameToOpen = fileNameToOpenA;
-    QString compressedMime = compressedMimeFor( mime.name() );
-    if ( !compressedMime.isEmpty() )
+    KFilterDev::CompressionType compressionType = compressionTypeFor( mime.name() );
+    if ( compressionType != KFilterDev::None )
     {
         *isCompressedFile = true;
-        uncompressOk = handleCompressed( fileNameToOpen, localFilePath(), compressedMime );
+        uncompressOk = handleCompressed( fileNameToOpen, localFilePath(), compressionType );
         mime = db.mimeTypeForFile( fileNameToOpen );
     }
     else
@@ -2864,7 +2864,7 @@ void Part::unsetDummyMode()
 }
 
 
-bool Part::handleCompressed( QString &destpath, const QString &path, const QString &compressedMimetype )
+bool Part::handleCompressed( QString &destpath, const QString &path, KFilterDev::CompressionType compressionType)
 {
     m_tempfile = 0;
 
@@ -2884,14 +2884,9 @@ bool Part::handleCompressed( QString &destpath, const QString &path, const QStri
     }
 
     // decompression filer
-    QIODevice* filterDev = KFilterDev::deviceForFile( path, compressedMimetype );
-    if (!filterDev)
-    {
-        delete newtempfile;
-        return false;
-    }
+    KCompressionDevice dev( path, compressionType );
 
-    if ( !filterDev->open(QIODevice::ReadOnly) )
+    if ( !dev.open(QIODevice::ReadOnly) )
     {
         KMessageBox::detailedError( widget(),
             i18n("<qt><strong>File Error!</strong> Could not open the file "
@@ -2903,7 +2898,6 @@ bool Part::handleCompressed( QString &destpath, const QString &path, const QStri
             "right-click on the file in the Dolphin "
             "file manager and then choose the 'Properties' tab.</qt>"));
 
-        delete filterDev;
         delete newtempfile;
         return false;
     }
@@ -2911,13 +2905,12 @@ bool Part::handleCompressed( QString &destpath, const QString &path, const QStri
     char buf[65536];
     int read = 0, wrtn = 0;
 
-    while ((read = filterDev->read(buf, sizeof(buf))) > 0)
+    while ((read = dev.read(buf, sizeof(buf))) > 0)
     {
         wrtn = newtempfile->write(buf, read);
         if ( read != wrtn )
             break;
     }
-    delete filterDev;
     if ((read != 0) || (newtempfile->size() == 0))
     {
         KMessageBox::detailedError(widget(),

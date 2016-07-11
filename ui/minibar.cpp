@@ -167,7 +167,7 @@ MiniBar::MiniBar( QWidget * parent, MiniBarLogic * miniBarLogic )
     QSize buttonSize( KIconLoader::SizeSmallMedium, KIconLoader::SizeSmallMedium );
     // bottom: left prev_page button
     m_prevButton = new HoverButton( this );
-    m_prevButton->setIcon( QIcon::fromTheme( layoutDirection() == Qt::RightToLeft ? "arrow-right" : "arrow-left" ) );
+    m_prevButton->setIcon( QIcon::fromTheme( layoutDirection() == Qt::RightToLeft ? QStringLiteral("arrow-right") : QStringLiteral("arrow-left") ) );
     m_prevButton->setIconSize( buttonSize );
     horLayout->addWidget( m_prevButton );
     // bottom: left lineEdit (current page box)
@@ -190,7 +190,7 @@ MiniBar::MiniBar( QWidget * parent, MiniBarLogic * miniBarLogic )
     horLayout->addWidget( m_pagesButton );
     // bottom: right next_page button
     m_nextButton = new HoverButton( this );
-    m_nextButton->setIcon( QIcon::fromTheme( layoutDirection() == Qt::RightToLeft ? "arrow-left" : "arrow-right" ) );
+    m_nextButton->setIcon( QIcon::fromTheme( layoutDirection() == Qt::RightToLeft ? QStringLiteral("arrow-left") : QStringLiteral("arrow-right") ) );
     m_nextButton->setIconSize( buttonSize );
     horLayout->addWidget( m_nextButton );
 

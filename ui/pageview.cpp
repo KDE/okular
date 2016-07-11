@@ -544,7 +544,7 @@ do { \
     vm->setCheckable( true ); \
     vm->setData( qVariantFromValue( id ) ); \
     d->aViewMode->addAction( vm ); \
-    ac->addAction( name, vm ); \
+    ac->addAction( QStringLiteral(name), vm ); \
     vmGroup->addAction( vm ); \
 } while( 0 )
     ac->addAction(QStringLiteral("view_render_mode"), d->aViewMode );
@@ -2777,7 +2777,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                         if ( !mime.isDefault() )
                             type = QStringLiteral("PNG");
                         else
-                            type = mime.name().section( '/', -1 ).toUpper();
+                            type = mime.name().section( QLatin1Char('/'), -1 ).toUpper();
                         copyPix.save( fileName, qPrintable( type ) );
                         d->messageWindow->display( i18n( "Image [%1x%2] saved to %3 file.", copyPix.width(), copyPix.height(), type ) );
                     }
@@ -2900,7 +2900,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                 selHtml += QLatin1String("<tr>");
                 for (int c=0; c+1<xs.length(); c++) {
                     Okular::NormalizedRect cell(xs[c], ys[r], xs[c+1], ys[r+1]);
-                    if (c) selText += '\t';
+                    if (c) selText += QLatin1Char('\t');
                     QString txt;
                     foreach (const TableSelectionPart &tsp, d->tableSelectionParts) {
                         // first, crop the cell to this part
@@ -2934,14 +2934,14 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                         txt += tsp.item->page()->text( &rects, Okular::TextPage::CentralPixelTextAreaInclusionBehaviour );
                     }
                     QString html = txt;
-                    selText += txt.replace('\n', ' ');
-                    html.replace('&', QLatin1String("&amp;")).replace('<', QLatin1String("&lt;")).replace('>', QLatin1String("&gt;"));
+                    selText += txt.replace(QLatin1Char('\n'), QLatin1Char(' '));
+                    html.replace(QLatin1Char('&'), QLatin1String("&amp;")).replace(QLatin1Char('<'), QLatin1String("&lt;")).replace(QLatin1Char('>'), QLatin1String("&gt;"));
                     // Remove newlines, do not turn them into <br>, because
                     // Excel interprets <br> within cell as new cell...
-                    html.replace('\n', QLatin1String(" "));
-                    selHtml += "<td>"+html+"</td>";
+                    html.replace(QLatin1Char('\n'), QLatin1String(" "));
+                    selHtml += QStringLiteral("<td>") + html + QStringLiteral("</td>");
                 }
-                selText += '\n';
+                selText += QLatin1Char('\n');
                 selHtml += QLatin1String("</tr>\n");
             }
             selHtml += QLatin1String("</table></body></html>\n");
@@ -3811,8 +3811,8 @@ void PageView::updateZoom( ZoomMode newZoomMode )
         case ZoomFixed:{ //ZoomFixed case
             QString z = d->aZoom->currentText();
             // kdelibs4 sometimes adds accelerators to actions' text directly :(
-            z.remove ('&');
-            z.remove ('%');
+            z.remove (QLatin1Char('&'));
+            z.remove (QLatin1Char('%'));
             newFactor = QLocale().toDouble( z ) / 100.0;
             }break;
         case ZoomIn:
@@ -3935,7 +3935,7 @@ void PageView::updateZoomText()
             selIdx++;
         // we do not need to display 2-digit precision
         QString localValue( QLocale().toString( value * 100.0, 'f', 1 ) );
-        localValue.remove( QLocale().decimalPoint() + '0' );
+        localValue.remove( QLocale().decimalPoint() + QLatin1Char('0') );
         // remove a trailing zero in numbers like 66.70
         if ( localValue.right( 1 ) == QLatin1String( "0" ) && localValue.indexOf( QLocale().decimalPoint() ) > -1 )
             localValue.chop( 1 );
@@ -4213,7 +4213,7 @@ void PageView::addWebShortcutsMenu( QMenu * menu, const QString & text )
     }
 
     QString searchText = text;
-    searchText = searchText.replace( '\n', ' ' ).replace( '\r', ' ' ).simplified();
+    searchText = searchText.replace( QLatin1Char('\n'), QLatin1Char(' ') ).replace(QLatin1Char( '\r'), QLatin1Char(' ') ).simplified();
 
     if ( searchText.isEmpty() )
     {

@@ -141,7 +141,7 @@ QString authorForAnnotation( const Okular::Annotation * ann )
 QString contentsHtml( const Okular::Annotation * ann )
 {
     QString text = ann->contents().toHtmlEscaped();
-    text.replace( '\n', QLatin1String("<br>") );
+    text.replace( QLatin1Char('\n'), QLatin1String("<br>") );
     return text;
 }
 

@@ -184,9 +184,9 @@ class PickPointEngine : public AnnotatorEngine
                         ta->setTextFont( f );
                     }
                     //set width
-                    if ( m_annotElement.hasAttribute( "width" ) )
+                    if ( m_annotElement.hasAttribute( QStringLiteral ( "width" ) ) )
                     {
-                        ta->style().setWidth( m_annotElement.attribute( "width" ).toDouble() );
+                        ta->style().setWidth( m_annotElement.attribute( QStringLiteral ( "width" ) ).toDouble() );
                     }
                     //set boundary
                     rect.left = qMin(startpoint.x,point.x);

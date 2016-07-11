@@ -25,7 +25,7 @@ namespace UrlUtils
         {
             QString url = reg.cap();
             if( url.startsWith( QLatin1String("www") ) )
-                url.prepend( "http://" );
+                url.prepend( QLatin1String("http://") );
             return url;
         }
         else

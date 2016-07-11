@@ -159,7 +159,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     m_topBar->setObjectName( QStringLiteral( "presentationBar" ) );
     m_topBar->setMovable( false );
     m_topBar->layout()->setMargin(0);
-    m_topBar->addAction( QIcon::fromTheme( layoutDirection() == Qt::RightToLeft ? "go-next" : "go-previous" ), i18n( "Previous Page" ), this, SLOT(slotPrevPage()) );
+    m_topBar->addAction( QIcon::fromTheme( layoutDirection() == Qt::RightToLeft ? QStringLiteral("go-next") : QStringLiteral("go-previous") ), i18n( "Previous Page" ), this, SLOT(slotPrevPage()) );
     m_pagesEdit = new KLineEdit( m_topBar );
     QSizePolicy sp = m_pagesEdit->sizePolicy();
     sp.setHorizontalPolicy( QSizePolicy::Minimum );
@@ -175,7 +175,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     pagesLabel->setText( QLatin1String( " / " ) + QString::number( m_document->pages() ) + QLatin1String( " " ) );
     m_topBar->addWidget( pagesLabel );
     connect(m_pagesEdit, &QLineEdit::returnPressed, this, &PresentationWidget::slotPageChanged);
-    m_topBar->addAction( QIcon::fromTheme( layoutDirection() == Qt::RightToLeft ? "go-previous" : "go-next" ), i18n( "Next Page" ), this, SLOT(slotNextPage()) );
+    m_topBar->addAction( QIcon::fromTheme( layoutDirection() == Qt::RightToLeft ? QStringLiteral("go-previous") : QStringLiteral("go-next") ), i18n( "Next Page" ), this, SLOT(slotNextPage()) );
     m_topBar->addSeparator();
     QAction *playPauseAct = collection->action( QStringLiteral("presentation_play_pause") );
     playPauseAct->setEnabled( true );
@@ -493,10 +493,10 @@ void PresentationWidget::setupActions()
 {
     addAction( m_ac->action( QStringLiteral("first_page") ) );
     addAction( m_ac->action( QStringLiteral("last_page") ) );
-    addAction( m_ac->action( KStandardAction::name( KStandardAction::Prior ) ) );
-    addAction( m_ac->action( KStandardAction::name( KStandardAction::Next ) ) );
-    addAction( m_ac->action( KStandardAction::name( KStandardAction::DocumentBack ) ) );
-    addAction( m_ac->action( KStandardAction::name( KStandardAction::DocumentForward ) ) );
+    addAction( m_ac->action( QString::fromLocal8Bit(KStandardAction::name( KStandardAction::Prior ) ) ) );
+    addAction( m_ac->action( QString::fromLocal8Bit(KStandardAction::name( KStandardAction::Next ) ) ) );
+    addAction( m_ac->action( QString::fromLocal8Bit(KStandardAction::name( KStandardAction::DocumentBack ) ) ) );
+    addAction( m_ac->action( QString::fromLocal8Bit(KStandardAction::name( KStandardAction::DocumentForward ) ) ) );
 
     QAction *action = m_ac->action( QStringLiteral("switch_blackscreen_mode") );
     connect(action, &QAction::toggled, this, &PresentationWidget::toggleBlackScreenMode);

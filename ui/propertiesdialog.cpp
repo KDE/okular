@@ -57,7 +57,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
     QFormLayout *layout = new QFormLayout( page );
 
     // mime name based on mimetype id
-    QString mimeName = info.get( Okular::DocumentInfo::MimeType ).section( '/', -1 ).toUpper();
+    QString mimeName = info.get( Okular::DocumentInfo::MimeType ).section( QLatin1Char('/'), -1 ).toUpper();
     setWindowTitle( i18n( "%1 Properties", mimeName ) );
 
     int valMaxWidth = 100;

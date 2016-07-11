@@ -90,7 +90,7 @@ void FilePrinterPreviewPrivate::getPart()
     }
     if (factory) {
         qCDebug(OkularUiDebug) << "Trying to create a part";
-        previewPart = factory->create<KParts::ReadOnlyPart>(q, (QVariantList() << "Print/Preview"));
+        previewPart = factory->create<KParts::ReadOnlyPart>(q, (QVariantList() << QStringLiteral("Print/Preview")));
         if (!previewPart) {
             qCDebug(OkularUiDebug) << "Part creation failed";
         }

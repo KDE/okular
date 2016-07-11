@@ -346,7 +346,7 @@ QVariant AnnotationModel::headerData( int section, Qt::Orientation orientation, 
         return QVariant();
 
     if ( section == 0 && role == Qt::DisplayRole )
-        return "Annotations";
+        return QString::fromLocal8Bit("Annotations");
 
     return QVariant();
 }

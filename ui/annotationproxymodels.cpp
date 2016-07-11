@@ -285,7 +285,7 @@ class AuthorGroupItem
         void dump( int level = 0 )
         {
             QString prefix;
-            for ( int i = 0; i < level; ++i ) prefix += ' ';
+            for ( int i = 0; i < level; ++i ) prefix += QLatin1Char(' ');
 
             qDebug( "%s%s", qPrintable( prefix ), ( mType == Page ? "Page" : (mType == Author ? "Author" : "Annotation") ) );
 
@@ -478,7 +478,7 @@ QVariant AuthorGroupProxyModel::data( const QModelIndex &proxyIndex, int role ) 
         if ( role == Qt::DisplayRole )
             return item->author();
         else if ( role == Qt::DecorationRole )
-            return QIcon::fromTheme( item->author().isEmpty() ? "user-away" : "user-identity" );
+            return QIcon::fromTheme( item->author().isEmpty() ? QStringLiteral("user-away") : QStringLiteral("user-identity") );
         else
             return QVariant();
     } else {

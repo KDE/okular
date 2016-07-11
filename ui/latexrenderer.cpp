@@ -93,8 +93,8 @@ LatexRenderer::Error LatexRenderer::renderLatexInHtml( QString& html, const QCol
             continue;
         imagePxWidth = theImage.width();
         imagePxHeight = theImage.height();
-        QString escapedLATEX=it.key().toHtmlEscaped().replace('\"',QLatin1String("&quot;"));  //we need  the escape quotes because that string will be in a title="" argument, but not the \n
-        html.replace(it.key(), " <img width=\"" + QString::number(imagePxWidth) + "\" height=\"" + QString::number(imagePxHeight) + "\" align=\"middle\" src=\"" + (*it) + "\"  alt=\"" + escapedLATEX +"\" title=\"" + escapedLATEX +"\"  /> ");
+        QString escapedLATEX=it.key().toHtmlEscaped().replace(QLatin1Char('"'),QLatin1String("&quot;"));  //we need  the escape quotes because that string will be in a title="" argument, but not the \n
+        html.replace(it.key(), QStringLiteral(" <img width=\"") + QString::number(imagePxWidth) + QStringLiteral("\" height=\"") + QString::number(imagePxHeight) + QStringLiteral("\" align=\"middle\" src=\"") + (*it) + QStringLiteral("\"  alt=\"") + escapedLATEX + QStringLiteral("\" title=\"") + escapedLATEX + QStringLiteral("\"  /> "));
     }
     return NoError;
 }
@@ -151,7 +151,7 @@ LatexRenderer::Error LatexRenderer::handleLatex( QString& fileName, const QStrin
     latexProc << latexExecutable << QStringLiteral("-interaction=nonstopmode") << QStringLiteral("-halt-on-error") << QStringLiteral("-output-directory=%1").arg(tempFilePath) << tempFile->fileName();
     latexProc.setOutputChannelMode( KProcess::MergedChannels );
     latexProc.execute();
-    latexOutput = latexProc.readAll();
+    latexOutput = QString::fromLocal8Bit(latexProc.readAll());
     tempFile->remove();
 
     QFile::remove(tempFileNameNS + QStringLiteral(".log"));

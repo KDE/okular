@@ -198,7 +198,7 @@ QVariant TOCModel::data( const QModelIndex &index, int role ) const
             break;
         case Qt::DecorationRole:
             if ( item->highlight )
-                return QIcon::fromTheme( QApplication::layoutDirection() == Qt::RightToLeft ? "arrow-left" : "arrow-right" );
+                return QIcon::fromTheme( QApplication::layoutDirection() == Qt::RightToLeft ? QStringLiteral("arrow-left") : QStringLiteral("arrow-right") );
             break;
         case PageItemDelegate::PageRole:
             if ( item->viewport.isValid() )
@@ -227,7 +227,7 @@ QVariant TOCModel::headerData( int section, Qt::Orientation orientation, int rol
         return QVariant();
 
     if ( section == 0 && role == Qt::DisplayRole )
-        return "Topics";
+        return QStringLiteral("Topics");
 
     return QVariant();
 }

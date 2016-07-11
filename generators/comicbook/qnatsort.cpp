@@ -110,7 +110,7 @@ static int natural_order_compare( const QString &leftStr, const QString &rightSt
 
     /* process run of digits */
     if ( ca.isDigit() && cb.isDigit() ) {
-      fractional = (ca == '0' || cb == '0');
+      fractional = (ca == QLatin1Char('0') || cb == QLatin1Char('0'));
 
       if ( fractional ) {
         if ( (result = compare_left( leftStr, ai, rightStr, bi )) != 0 )

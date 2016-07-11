@@ -32,7 +32,7 @@ void KOOOGenerator::addPages( KConfigDialog* dlg )
 
 void KOOOGenerator::walletDataForFile( const QString &fileName, QString *walletName, QString *walletFolder, QString *walletKey ) const
 {
-    *walletKey = fileName + "/opendocument";
+    *walletKey = fileName + QStringLiteral("/opendocument");
     *walletName = KWallet::Wallet::LocalWallet();
     *walletFolder = KWallet::Wallet::PasswordFolder();
 }

@@ -283,7 +283,7 @@ bool Converter::convertTitleInfo( const QDomElement &element )
             if ( !convertTextNode( child, keywords ) )
                 return false;
 
-            mTitleInfo->mKeywords = keywords.split( ' ', QString::SkipEmptyParts );
+            mTitleInfo->mKeywords = keywords.split( QLatin1Char(' '), QString::SkipEmptyParts );
         } else if ( child.tagName() == QLatin1String( "date" ) ) {
             if ( !convertDate( child, mTitleInfo->mDate ) )
                 return false;
@@ -606,7 +606,7 @@ bool Converter::convertImage( const QDomElement &element )
 {
     QString href = element.attributeNS( QStringLiteral("http://www.w3.org/1999/xlink"), QStringLiteral("href") );
 
-    if ( href.startsWith( '#' ) )
+    if ( href.startsWith( QLatin1Char('#') ) )
         href = href.mid( 1 );
 
     const QImage img = qVariantValue<QImage>( mTextDocument->resource( QTextDocument::ImageResource, QUrl( href ) ) );
@@ -758,7 +758,7 @@ bool Converter::convertLink( const QDomElement &element )
     if ( type == QLatin1String("note") )
         mCursor->insertText( QStringLiteral("]") );
 
-    if ( href.startsWith( '#' ) ) { // local link
+    if ( href.startsWith( QLatin1Char('#') ) ) { // local link
         mLocalLinks.insert( href.mid( 1 ), QPair<int, int>( startPosition, endPosition ) );
     } else {
         // external link

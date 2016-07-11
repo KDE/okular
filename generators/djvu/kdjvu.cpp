@@ -1059,7 +1059,7 @@ bool KDjVu::exportAsPostScript( QFile* file, const QList<int>& pageList ) const
             pl += QLatin1String( "," );
         pl += QString::number( p );
     }
-    pl.prepend( "-page=" );
+    pl.prepend( QStringLiteral ( "-page=" ) );
 
     // setting the options
     static const int optc = 1;

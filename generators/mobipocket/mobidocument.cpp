@@ -25,7 +25,7 @@ MobiDocument::MobiDocument(const QString &fileName) : QTextDocument()
   if (doc->isValid()) {
       QString text=doc->text();
       QString header=text.left(1024);
-      if (header.contains("<html>") || header.contains("<HTML>")) {
+      if (header.contains(QStringLiteral("<html>")) || header.contains(QStringLiteral("<HTML>"))) {
         // HACK BEGIN Get the links without CSS to be blue
         //            Remove if Qt ever gets fixed and the code in textdocumentgenerator.cpp works
         const QPalette orig = qApp->palette();
@@ -53,7 +53,7 @@ MobiDocument::~MobiDocument()
   
 QVariant MobiDocument::loadResource(int type, const QUrl &name) 
 {
-  if (type!=QTextDocument::ImageResource || name.scheme()!=QString("pdbrec")) return QVariant();
+  if (type!=QTextDocument::ImageResource || name.scheme()!=QString(QStringLiteral("pdbrec"))) return QVariant();
   bool ok;
   quint16 recnum=name.path().mid(1).toUShort(&ok);
   if (!ok || recnum>=doc->imageCount()) return QVariant();
@@ -69,8 +69,8 @@ QVariant MobiDocument::loadResource(int type, const QUrl &name)
 int outsideTag(const QString& data, int pos)
 {
   for (int i=pos-1;i>=0;i--) {
-    if (data[i]=='>') return pos;
-    if (data[i]=='<') return i;
+    if (data[i]==QLatin1Char('>')) return pos;
+    if (data[i]==QLatin1Char('<')) return i;
   }
   return pos;
 }
@@ -79,7 +79,7 @@ QString MobiDocument::fixMobiMarkup(const QString& data)
 {
     QString ret=data;
     QMap<int,QString> anchorPositions;
-    static QRegExp anchors("<a(?: href=\"[^\"]*\"){0,1}[\\s]+filepos=['\"]{0,1}([\\d]+)[\"']{0,1}", Qt::CaseInsensitive);
+    static QRegExp anchors(QStringLiteral("<a(?: href=\"[^\"]*\"){0,1}[\\s]+filepos=['\"]{0,1}([\\d]+)[\"']{0,1}"), Qt::CaseInsensitive);
     int pos=0;
 
     // find all link destinations
@@ -97,20 +97,20 @@ QString MobiDocument::fixMobiMarkup(const QString& data)
       // link pointing outside the document, ignore
       if ( (it.key()+offset) >= ret.size()) continue;
       int fixedpos=outsideTag(ret, it.key()+offset);
-      ret.insert(fixedpos,QString("<a name=\"")+it.value()+QString("\">&nbsp;</a>"));
+      ret.insert(fixedpos,QStringLiteral("<a name=\"")+it.value()+QStringLiteral("\">&nbsp;</a>"));
       // inserting anchor shifts all offsets after the anchor
       offset+=21+it.value().size();
     }
 
     // replace links referencing filepos with normal internal links
-    ret.replace(anchors,"<a href=\"#\\1\"");
+    ret.replace(anchors, QStringLiteral("<a href=\"#\\1\""));
     // Mobipocket uses strange variang of IMG tags: <img recindex="3232"> where recindex is number of 
     // record containing image
-    static QRegExp imgs("<img.*recindex=\"([\\d]*)\".*>", Qt::CaseInsensitive);
+    static QRegExp imgs(QStringLiteral("<img.*recindex=\"([\\d]*)\".*>"), Qt::CaseInsensitive);
     
     imgs.setMinimal(true);
-    ret.replace(imgs,"<img src=\"pdbrec:/\\1\">");
-    ret.replace("<mbp:pagebreak/>","<p style=\"page-break-after:always\"></p>");
+    ret.replace(imgs, QStringLiteral("<img src=\"pdbrec:/\\1\">"));
+    ret.replace(QStringLiteral("<mbp:pagebreak/>"), QStringLiteral("<p style=\"page-break-after:always\"></p>"));
     
     return ret;
 }

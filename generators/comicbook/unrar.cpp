@@ -46,7 +46,7 @@ static UnrarFlavour* detectUnrar( const QString &unrarPath, const QString &versi
     proc.start( unrarPath, QStringList() << versionCommand );
     bool ok = proc.waitForFinished( -1 );
     Q_UNUSED( ok )
-    const QStringList lines = QString::fromLocal8Bit( proc.readAllStandardOutput() ).split( '\n', QString::SkipEmptyParts );
+    const QStringList lines = QString::fromLocal8Bit( proc.readAllStandardOutput() ).split( QLatin1Char('\n'), QString::SkipEmptyParts );
     if ( !lines.isEmpty() )
     {
         if ( lines.first().startsWith( QLatin1String("UNRAR ") ) )
@@ -118,7 +118,7 @@ bool Unrar::open( const QString &fileName )
     mStdOutData.clear();
     mStdErrData.clear();
 
-    int ret = startSyncProcess( QStringList() << QStringLiteral("e") << mFileName << mTempDir->path() +  '/' );
+    int ret = startSyncProcess( QStringList() << QStringLiteral("e") << mFileName << mTempDir->path() +  QLatin1Char('/') );
     bool ok = ret == 0;
 
     return ok;
@@ -134,13 +134,13 @@ QStringList Unrar::list()
 
     startSyncProcess( QStringList() << QStringLiteral("lb") << mFileName );
 
-    const QStringList listFiles = helper->kind->processListing( QString::fromLocal8Bit( mStdOutData ).split( '\n', QString::SkipEmptyParts ) );
+    const QStringList listFiles = helper->kind->processListing( QString::fromLocal8Bit( mStdOutData ).split( QLatin1Char('\n'), QString::SkipEmptyParts ) );
     QStringList newList;
     Q_FOREACH ( const QString &f, listFiles ) {
         // Extract all the files to mTempDir regardless of their path inside the archive
         // This will break if ever an arvhice with two files with the same name in different subfolders
         QFileInfo fi( f );
-        if ( QFile::exists( mTempDir->path() + '/' + fi.fileName() ) ) {
+        if ( QFile::exists( mTempDir->path() + QLatin1Char('/') + fi.fileName() ) ) {
             newList.append( fi.fileName() );
         }
     }
@@ -152,7 +152,7 @@ QByteArray Unrar::contentOf( const QString &fileName ) const
     if ( !isSuitableVersionAvailable() )
         return QByteArray();
 
-    QFile file( mTempDir->path() + '/' + fileName );
+    QFile file( mTempDir->path() + QLatin1Char('/') + fileName );
     if ( !file.open( QIODevice::ReadOnly ) )
         return QByteArray();
 
@@ -164,7 +164,7 @@ QIODevice* Unrar::createDevice( const QString &fileName ) const
     if ( !isSuitableVersionAvailable() )
         return 0;
 
-    std::unique_ptr< QFile> file( new QFile( mTempDir->path() + '/' + fileName ) );
+    std::unique_ptr< QFile> file( new QFile( mTempDir->path() + QLatin1Char('/') + fileName ) );
     if ( !file->open( QIODevice::ReadOnly ) )
         return 0;
 

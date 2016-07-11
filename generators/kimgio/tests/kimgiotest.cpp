@@ -37,12 +37,12 @@ class KIMGIOTest
 void KIMGIOTest::initTestCase()
 {
 	// Make sure we find the okularGenerator_kimgio that we build just now and not the system one
-	QFileInfo lib( GENERATOR_PATH );
+    QFileInfo lib( QStringLiteral(GENERATOR_PATH) );
 	QVERIFY2( lib.exists(), GENERATOR_PATH );
 	QStringList libPaths = QCoreApplication::libraryPaths();
 	libPaths.prepend( lib.absolutePath() );
 	QCoreApplication::setLibraryPaths( libPaths );
-	QVERIFY( !KPluginLoader::findPlugin( "okularGenerator_kimgio" ).isEmpty() );
+    QVERIFY( !KPluginLoader::findPlugin( QStringLiteral("okularGenerator_kimgio") ).isEmpty() );
 	// make sure we didn't break the search path for image formats:
 	auto availableFormats = QImageReader::supportedImageFormats();
 	QVERIFY2(availableFormats.contains( "jpeg" ), availableFormats.join( ", " ).data() );
@@ -80,7 +80,7 @@ void KIMGIOTest::testExifOrientation()
 	QFETCH( QString, imgPath );
 	QMimeDatabase db;
 
-	Okular::SettingsCore::instance( "kimgiotest" );
+    Okular::SettingsCore::instance( QStringLiteral("kimgiotest") );
 	Okular::Document *m_document = new Okular::Document( 0 );
 	const QMimeType mime = db.mimeTypeForFile( imgPath );
 

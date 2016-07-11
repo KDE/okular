@@ -132,9 +132,9 @@ bool QUnpluck::open( const QString &fileName )
 
     bool status = true;
 
-    mInfo.insert( QStringLiteral("name"), plkr_GetName( mDocument ) );
-    mInfo.insert( QStringLiteral("title"), plkr_GetTitle( mDocument ) );
-    mInfo.insert( QStringLiteral("author"), plkr_GetAuthor( mDocument ) );
+    mInfo.insert( QStringLiteral("name"), QString::fromLocal8Bit(plkr_GetName( mDocument ) ));
+    mInfo.insert( QStringLiteral("title"), QString::fromLocal8Bit(plkr_GetTitle( mDocument ) ));
+    mInfo.insert( QStringLiteral("author"), QString::fromLocal8Bit(plkr_GetAuthor( mDocument ) ));
     mInfo.insert( QStringLiteral("time"), QDateTime::fromTime_t( plkr_GetPublicationTime( mDocument ) ).toString() );
 
     AddRecord( plkr_GetHomeRecordID( mDocument ) );
@@ -380,7 +380,7 @@ void QUnpluck::ParseText
     end = ptr + text_len;
     while (ptr < end) {
         if (ptr[0]) {
-            context->cursor->insertText( QString( (char*)ptr ) );
+            context->cursor->insertText( QString::fromLocal8Bit( (char*)ptr ) );
             ptr += strlen ((char*)ptr);
         }
         else {
@@ -974,7 +974,7 @@ bool QUnpluck::TranscribeTextRecord
                     QTextBlockFormat oldBlockFormat = context->cursor->blockFormat();
 
                     QTextBlockFormat blockFormat;
-                    blockFormat.setProperty( QTextFormat::BlockTrailingHorizontalRulerWidth, "100%");
+                    blockFormat.setProperty( QTextFormat::BlockTrailingHorizontalRulerWidth, QStringLiteral("100%"));
                     context->cursor->insertBlock( blockFormat );
                     context->cursor->insertBlock( oldBlockFormat );
                     context->cursor->setCharFormat( charFormat );

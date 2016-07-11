@@ -85,17 +85,17 @@ void Converter::_handle_anchors(const QTextBlock &start, const QString &name) {
 
         // remove ./ or ../
         // making it easier to compare, with links
-        while(!hrefString.isNull() && ( hrefString.at(0) == '.' || hrefString.at(0) == '/') ){
+        while(!hrefString.isNull() && ( hrefString.at(0) == QLatin1Char('.') || hrefString.at(0) == QLatin1Char('/')) ){
           hrefString.remove(0,1);
         }
 
         QUrl href(hrefString);
         if (href.isValid() && !href.isEmpty()) {
           if (href.isRelative()) { // Inside document link
-            if(!hrefString.indexOf('#'))
+            if(!hrefString.indexOf(QLatin1Char('#')))
               hrefString = name + hrefString;
             else if(QFileInfo(hrefString).path() == QLatin1String(".") && curDir != QLatin1String("."))
-              hrefString = curDir + '/' + hrefString;
+              hrefString = curDir + QLatin1Char('/') + hrefString;
 
             // QTextCharFormat sometimes splits a link in two
             // if there's no white space between words & the first one is an anchor
@@ -122,7 +122,7 @@ void Converter::_handle_anchors(const QTextBlock &start, const QString &name) {
         if (!names.empty()) {
           for (QStringList::const_iterator lit = names.constBegin();
                lit != names.constEnd(); ++lit) {
-            mSectionMap.insert(name + '#' + *lit, bit);
+            mSectionMap.insert(name + QLatin1Char('#') + *lit, bit);
           }
         }
 

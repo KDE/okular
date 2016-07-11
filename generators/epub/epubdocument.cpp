@@ -20,7 +20,7 @@ namespace {
 
 QString resourceUrl(const QUrl &baseUrl, const QString &u)
 {
-  QUrl newUrl(baseUrl.adjusted(QUrl::RemoveFilename).path() + '/' + u);
+  QUrl newUrl(baseUrl.adjusted(QUrl::RemoveFilename).path() + QLatin1Char('/') + u);
   QString newDir = newUrl.toLocalFile();
   newDir.remove(0, 1);
   return newDir;
@@ -56,7 +56,7 @@ struct epub *EpubDocument::getEpub()
 
 void EpubDocument::setCurrentSubDocument(const QString &doc)
 {
-  mCurrentSubDocument = QUrl::fromLocalFile("/" + doc);
+  mCurrentSubDocument = QUrl::fromLocalFile(QLatin1Char('/') + doc);
 }
 
 int EpubDocument::maxContentHeight() const

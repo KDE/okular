@@ -1263,7 +1263,7 @@ bool PDFGenerator::setDocumentRenderHints()
     const Poppler::Document::RenderHints oldhints = pdfdoc->renderHints();
 #define SET_HINT(hintname, hintdefvalue, hintflag) \
 { \
-    bool newhint = documentMetaData(hintname, hintdefvalue).toBool(); \
+    bool newhint = documentMetaData(QStringLiteral(hintname), hintdefvalue).toBool(); \
     if (newhint != oldhints.testFlag(hintflag)) \
     { \
         pdfdoc->setRenderHint(hintflag, newhint); \
@@ -1379,7 +1379,7 @@ Okular::TextPage * PDFGenerator::abstractTextPage(const QList<Poppler::TextBox*>
             if (addChar)
             {
                 QRectF charBBox = word->charBoundingBox(textBoxChar);
-                append(ktp, (j==qstringCharCount-1 && !next) ? (s + "\n") : s,
+                append(ktp, (j==qstringCharCount-1 && !next) ? (s + QLatin1Char('\n')) : s,
                     charBBox.left()/width,
                     charBBox.bottom()/height,
                     charBBox.right()/width,

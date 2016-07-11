@@ -253,7 +253,7 @@ bool Converter::convertHeader( QTextCursor *cursor, const QDomElement &element )
     child = child.nextSibling();
   }
 
-  emit addTitle( element.attribute( QStringLiteral("outline-level"), 0 ).toInt(), element.text(), cursor->block() );
+  emit addTitle( element.attribute( QStringLiteral("outline-level"), QStringLiteral("0") ).toInt(), element.text(), cursor->block() );
 
   return true;
 }
@@ -284,7 +284,7 @@ bool Converter::convertParagraph( QTextCursor *cursor, const QDomElement &elemen
         mCursor->insertText( QStringLiteral("    ") );
       } else if ( childElement.tagName() == QLatin1String( "s" ) ) {
         QString spaces;
-        spaces.fill( ' ', childElement.attribute( QStringLiteral("c") ).toInt() );
+        spaces.fill( QLatin1Char(' '), childElement.attribute( QStringLiteral("c") ).toInt() );
         mCursor->insertText( spaces );
       } else if ( childElement.tagName() == QLatin1String( "frame" ) ) {
         if ( !convertFrame( childElement ) )

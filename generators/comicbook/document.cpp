@@ -35,7 +35,7 @@ static void imagesInArchive( const QString &prefix, const KArchiveDirectory* dir
     Q_FOREACH ( const QString &entry, dir->entries() ) {
         const KArchiveEntry *e = dir->entry( entry );
         if ( e->isDirectory() ) {
-            imagesInArchive( prefix + entry + '/', static_cast<const KArchiveDirectory*>( e ), entries );
+            imagesInArchive( prefix + entry + QLatin1Char('/'), static_cast<const KArchiveDirectory*>( e ), entries );
         } else if ( e->isFile() ) {
             entries->append( prefix + entry );
         }

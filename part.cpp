@@ -35,6 +35,7 @@
 #include <QScrollBar>
 #include <QInputDialog>
 #include <QWidgetAction>
+#include <QFileDialog>
 
 #include <kaboutapplicationdialog.h>
 #include <kactioncollection.h>
@@ -43,7 +44,6 @@
 #include <kstandardaction.h>
 #include <kpluginfactory.h>
 #include <KPluginMetaData>
-#include <kfiledialog.h>
 #include <kmessagebox.h>
 #include <knuminput.h>
 #include <kio/netaccess.h>
@@ -1182,7 +1182,10 @@ bool Part::slotImportPSFile()
         return false;
     }
 
-    QUrl url = KFileDialog::getOpenUrl( QUrl(), QStringLiteral("application/postscript"), this->widget() );
+    QMimeDatabase mimeDatabase;
+    QString filter = i18n("Postscript files (%1)", mimeDatabase.mimeTypeForName(QStringLiteral("application/postscript")).globPatterns().join(QLatin1Char(' ')));
+
+    QUrl url = QFileDialog::getOpenFileUrl( widget(), QString(), QUrl(), filter );
     if ( url.isLocalFile() )
     {
         QTemporaryFile tf(QDir::tempPath() + QLatin1String("/okular_XXXXXX.pdf"));
@@ -2219,9 +2222,7 @@ void Part::slotSaveFileAs()
         }
     }
 
-    QUrl saveUrl = KFileDialog::getSaveUrl( url(),
-                                            QString(), widget(), QString(),
-                                            KFileDialog::ConfirmOverwrite );
+    QUrl saveUrl = QFileDialog::getSaveFileUrl( widget(), QString(), url() );
     if ( !saveUrl.isValid() || saveUrl.isEmpty() )
         return;
 
@@ -2278,9 +2279,8 @@ void Part::slotSaveCopyAs()
     if ( m_embedMode == PrintPreviewMode )
        return;
 
-    QUrl saveUrl = KFileDialog::getSaveUrl( QUrl(QStringLiteral("kfiledialog:///okular/") + url().fileName()),
-                                            QString(), widget(), QString(),
-                                            KFileDialog::ConfirmOverwrite );
+    QUrl saveUrl = QFileDialog::getSaveFileUrl( widget(), QString(), url());
+
     if ( saveUrl.isValid() && !saveUrl.isEmpty() )
     {
         // make use of the already downloaded (in case of remote URLs) file,
@@ -2610,22 +2610,24 @@ void Part::slotExportAs(QAction * act)
     if ( ( id < 0 ) || ( id >= acts.count() ) )
         return;
 
-    QString filter;
+    QMimeDatabase mimeDatabase;
+    QMimeType mimeType;
     switch ( id )
     {
         case 0:
-            filter = QStringLiteral("text/plain");
+            mimeType = mimeDatabase.mimeTypeForName(QStringLiteral("text/plain"));
             break;
         case 1:
-            filter = QStringLiteral("application/vnd.kde.okular-archive");
+            mimeType = mimeDatabase.mimeTypeForName(QStringLiteral("application/vnd.kde.okular-archive"));
             break;
         default:
-            filter = m_exportFormats.at( id - 2 ).mimeType().name();
+            mimeType = m_exportFormats.at( id - 2 ).mimeType();
             break;
     }
-    QString fileName = KFileDialog::getSaveFileName( url(),
-                                                     filter, widget(), QString(),
-                                                     KFileDialog::ConfirmOverwrite );
+    QString filter = i18nc("File type name and pattern", "%1 (%2)", mimeType.comment(), mimeType.globPatterns().join(QLatin1Char(' ')));
+
+    QString fileName = QFileDialog::getSaveFileName( widget(), QString(), QString(), filter);
+
     if ( !fileName.isEmpty() )
     {
         bool saved = false;

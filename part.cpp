@@ -36,6 +36,7 @@
 #include <QInputDialog>
 #include <QWidgetAction>
 #include <QFileDialog>
+#include <QStandardPaths>
 
 #include <kaboutapplicationdialog.h>
 #include <kactioncollection.h>
@@ -50,7 +51,6 @@
 #include <kmenu.h>
 #include <kxmlguiclient.h>
 #include <kxmlguifactory.h>
-#include <kstandarddirs.h>
 #include <kstandardshortcut.h>
 #include <ktoggleaction.h>
 #include <ktogglefullscreenaction.h>
@@ -299,14 +299,7 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     QString configFileName = detectConfigFileName( args );
     if ( configFileName.isEmpty() )
     {
-        configFileName = KStandardDirs::locateLocal( "config", QStringLiteral("okularpartrc") );
-        // first necessary step: copy the configuration from kpdf, if available
-        if ( !QFile::exists( configFileName ) )
-        {
-            QString oldkpdfconffile = KStandardDirs::locateLocal( "config", QStringLiteral("kpdfpartrc") );
-            if ( QFile::exists( oldkpdfconffile ) )
-                QFile::copy( oldkpdfconffile, configFileName );
-        }
+        configFileName = QStandardPaths::locate(QStandardPaths::ConfigLocation, QStringLiteral("okularpartrc"));
     }
     Okular::Settings::instance( configFileName );
 
@@ -1174,7 +1167,7 @@ QString Part::documentMetaData( const QString &metaData ) const
 
 bool Part::slotImportPSFile()
 {
-    QString app = KStandardDirs::findExe( QStringLiteral("ps2pdf") );
+    QString app = QStandardPaths::findExecutable(QStringLiteral("ps2pdf") );
     if ( app.isEmpty() )
     {
         // TODO point the user to their distro packages?
@@ -1183,7 +1176,7 @@ bool Part::slotImportPSFile()
     }
 
     QMimeDatabase mimeDatabase;
-    QString filter = i18n("Postscript files (%1)", mimeDatabase.mimeTypeForName(QStringLiteral("application/postscript")).globPatterns().join(QLatin1Char(' ')));
+    QString filter = i18n("Postscript files lol (%1)", mimeDatabase.mimeTypeForName(QStringLiteral("application/postscript")).globPatterns().join(QLatin1Char(' ')));
 
     QUrl url = QFileDialog::getOpenFileUrl( widget(), QString(), QUrl(), filter );
     if ( url.isLocalFile() )

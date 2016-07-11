@@ -16,7 +16,6 @@
 
 #include <KConfigDialog>
 #include <KGlobal>
-#include <KStandardDirs>
 #include <KAboutData>
 
 #include <QClipboard>

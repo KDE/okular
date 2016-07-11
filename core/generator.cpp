@@ -177,6 +177,9 @@ Generator::~Generator()
 
 bool Generator::loadDocument( const QString & fileName, QVector< Page * > & pagesVector )
 {
+    Q_UNUSED(fileName);
+    Q_UNUSED(pagesVector);
+
     return false;
 }
 
@@ -291,6 +294,8 @@ TextPage* Generator::textPage( Page* )
 
 DocumentInfo Generator::generateDocumentInfo(const QSet<DocumentInfo::Key> &keys) const
 {
+    Q_UNUSED(keys);
+
     return DocumentInfo();
 }
 

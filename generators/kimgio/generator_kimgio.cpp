@@ -153,6 +153,8 @@ bool KIMGIOGenerator::print( QPrinter& printer )
 
 Okular::DocumentInfo KIMGIOGenerator::generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const
 {
+    Q_UNUSED(keys);
+
     return docInfo;
 }
 

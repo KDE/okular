@@ -921,6 +921,8 @@ QUrl Part::realUrl() const
 
 void Part::showSourceLocation(const QString& fileName, int line, int column, bool showGraphically)
 {
+    Q_UNUSED(column);
+
     const QString u = QStringLiteral( "src:%1 %2" ).arg( line + 1 ).arg( fileName );
     GotoAction action( QString(), u );
     m_document->processAction( &action );

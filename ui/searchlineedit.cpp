@@ -165,6 +165,8 @@ void SearchLineEdit::findPrev()
 
 void SearchLineEdit::slotTextChanged( const QString & text )
 {
+    Q_UNUSED(text);
+
     prepareLineEditForSearch();
     restartSearch();
 }
@@ -190,6 +192,8 @@ void SearchLineEdit::prepareLineEditForSearch()
 
 void SearchLineEdit::slotReturnPressed( const QString &text )
 {
+    Q_UNUSED(text);
+
     m_inputDelayTimer->stop();
     prepareLineEditForSearch();
     if ( QApplication::keyboardModifiers() == Qt::ShiftModifier )

@@ -811,6 +811,8 @@ void ListEdit::slotHandleFormListChangedByUndoRedo( int pageNumber,
                                                     Okular::FormFieldChoice* listForm,
                                                     const QList< int > & choices )
 {
+    Q_UNUSED(pageNumber);
+
     if ( m_form != listForm ) {
         return;
     }
@@ -904,6 +906,8 @@ void ComboEdit::slotHandleFormComboChangedByUndoRedo( int pageNumber,
                                                       int cursorPos,
                                                       int anchorPos )
 {
+    Q_UNUSED(pageNumber);
+
     if ( m_form != form ) {
         return;
     }

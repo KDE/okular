@@ -99,6 +99,9 @@ Rotation RotationJobInternal::rotation() const
 
 void RotationJobInternal::run(ThreadWeaver::JobPointer self, ThreadWeaver::Thread *thread)
 {
+    Q_UNUSED(self);
+    Q_UNUSED(thread);
+
     if ( mOldRotation == mNewRotation ) {
         mRotatedImage = mImage;
         return;

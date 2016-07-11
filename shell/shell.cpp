@@ -143,6 +143,8 @@ Shell::Shell( const QString &serializedOptions )
 
 bool Shell::eventFilter(QObject *obj, QEvent *event)
 {
+    Q_UNUSED(obj);
+
     QDragMoveEvent* dmEvent = dynamic_cast<QDragMoveEvent*>(event);
     if (dmEvent) {
         bool accept = dmEvent->mimeData()->hasUrls();

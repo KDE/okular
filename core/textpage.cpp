@@ -784,14 +784,14 @@ static int stringLengthAdaptedWithHyphen(const QString &str, const TextList::Con
     // we have a '-' just followed by a '\n' character
     // check if the string contains a '-' character
     // if the '-' is the last entry
-    if ( str.endsWith( '-' ) )
+    if ( str.endsWith( QLatin1Char('-') ) )
     {
         // validity chek of it + 1
         if ( ( it + 1 ) != textListEnd )
         {
             // 1. if the next character is '\n'
             const QString &lookahedStr = (*(it+1))->text();
-            if (lookahedStr.startsWith('\n'))
+            if (lookahedStr.startsWith(QLatin1Char('\n')))
             {
                 len -= 1;
             }
@@ -1138,7 +1138,7 @@ void TextPagePrivate::setWordList(const TextList &list)
 static void removeSpace(TextList *words)
 {
     TextList::Iterator it = words->begin();
-    const QString str(' ');
+    const QString str(QLatin1Char(' '));
 
     while ( it != words->end() )
     {

@@ -203,7 +203,7 @@ QString FilePrinter::pageListToPageRange( const QList<int> &pageList )
             seqEnd = i;
 
             if ( !pageRange.isEmpty() ) {
-                pageRange.append(",");
+                pageRange.append(QLatin1Char(','));
             }
 
             if ( seqStart == seqEnd ) {
@@ -666,7 +666,7 @@ QStringList FilePrinter::optionCupsProperties( QPrinter &printer )
         if ( dialogOptions[i+1].isEmpty() ) {
             cupsOptions << QStringLiteral("-o") << dialogOptions[i];
         } else {
-            cupsOptions << QStringLiteral("-o") << dialogOptions[i] + '=' + dialogOptions[i+1];
+            cupsOptions << QStringLiteral("-o") << dialogOptions[i] + QLatin1Char('=') + dialogOptions[i+1];
         }
     }
 

@@ -188,7 +188,7 @@ class Okular::FormFieldChoicePrivate : public Okular::FormFieldPrivate
         void setValue( const QString& v )
         {
             Q_Q( FormFieldChoice );
-            QStringList choices = v.split( ';', QString::SkipEmptyParts );
+            QStringList choices = v.split( QLatin1Char (';'), QString::SkipEmptyParts );
             QList<int> newchoices;
             foreach ( const QString& str, choices )
             {

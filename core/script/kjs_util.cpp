@@ -37,7 +37,7 @@ static KJSObject crackURL( KJSContext *context, void *,
          || url.scheme() != QLatin1String( "http" )
          || url.scheme() != QLatin1String( "https" ) )
     {
-        return context->throwException( "Protocol not valid: '" + url.scheme() + '\'' );
+        return context->throwException( QStringLiteral("Protocol not valid: '") + url.scheme() + QLatin1Char('\'') );
     }
 
     KJSObject obj;

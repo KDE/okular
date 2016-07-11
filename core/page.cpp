@@ -633,7 +633,7 @@ void Page::addAnnotation( Annotation * annotation )
     // Generate uniqueName: okular-{UUID}
     if(annotation->uniqueName().isEmpty())
     {
-        QString uniqueName = "okular-" + QUuid::createUuid().toString();
+        QString uniqueName = QStringLiteral("okular-") + QUuid::createUuid().toString();
         annotation->setUniqueName( uniqueName );
     }
     annotation->d_ptr->m_page = d;

@@ -360,7 +360,7 @@ bool Generator::exportTo( const QString&, const ExportFormat& )
 
 void Generator::walletDataForFile( const QString &fileName, QString *walletName, QString *walletFolder, QString *walletKey ) const
 {
-    *walletKey = fileName.section('/', -1, -1);
+    *walletKey = fileName.section( QLatin1Char('/'), -1, -1);
     *walletName = KWallet::Wallet::NetworkWallet();
     *walletFolder = QStringLiteral("KPdf");
 }
@@ -657,7 +657,7 @@ bool ExportFormat::operator!=( const ExportFormat &other ) const
 QDebug operator<<( QDebug str, const Okular::PixmapRequest &req )
 {
     QString s = QStringLiteral( "PixmapRequest(#%2, %1, %3x%4, page %6, prio %5)" )
-        .arg( QString( req.asynchronous() ? "async" : "sync" ) )
+        .arg( QString( req.asynchronous() ? QStringLiteral ( "async" ) : QStringLiteral ( "sync" ) ) )
         .arg( (qulonglong)req.observer() )
         .arg( req.width() )
         .arg( req.height() )

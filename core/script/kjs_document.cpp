@@ -149,8 +149,8 @@ do { \
     if ( !data.isEmpty() ) \
     { \
         const KJSString newval( data ); \
-        obj.setProperty( ctx, property, newval );                  \
-        obj.setProperty( ctx, QString( property ).toLower(), newval );   \
+        obj.setProperty( ctx, QStringLiteral(property), newval );                  \
+        obj.setProperty( ctx, QStringLiteral( property ).toLower(), newval );   \
     } \
 } while ( 0 );
         KEY_GET( DocumentInfo::Title, "Title" );

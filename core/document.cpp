@@ -484,7 +484,7 @@ qulonglong DocumentPrivate::getTotalMemory()
         QString entry = readStream.readLine();
         if ( entry.isNull() ) break;
         if ( entry.startsWith( QLatin1String("MemTotal:") ) )
-            return (cachedValue = (Q_UINT64_C(1024) * entry.section( ' ', -2, -2 ).toULongLong()));
+            return (cachedValue = (Q_UINT64_C(1024) * entry.section( QLatin1Char ( ' ' ), -2, -2 ).toULongLong()));
     }
 #elif defined(Q_OS_FREEBSD)
     qulonglong physmem;
@@ -543,7 +543,7 @@ qulonglong DocumentPrivate::getFreeMemory( qulonglong *freeSwap )
         {
             if ( entry.startsWith( names[i] ) )
             {
-                values[i] = entry.section( ' ', -2, -2 ).toULongLong( &foundValues[i] );
+                values[i] = entry.section( QLatin1Char ( ' ' ), -2, -2 ).toULongLong( &foundValues[i] );
             }
         }
     }
@@ -1271,7 +1271,7 @@ void DocumentPrivate::saveDocumentInfo() const
         ++endIt;
         while ( backIterator != endIt )
         {
-            QString name = (backIterator == m_viewportIterator) ? "current" : "oldPage";
+            QString name = (backIterator == m_viewportIterator) ? QStringLiteral ("current") : QStringLiteral ("oldPage");
             QDomElement historyEntry = doc.createElement( name );
             historyEntry.setAttribute( QStringLiteral("viewport"), (*backIterator).toString() );
             historyNode.appendChild( historyEntry );
@@ -2220,7 +2220,7 @@ QString DocumentPrivate::docDataFileName(const QUrl &url, qint64 document_size)
 {
 
     QString fn = url.fileName();
-    fn = QString::number( document_size ) + '.' + fn + ".xml";
+    fn = QString::number( document_size ) + QLatin1Char('.') + fn + QStringLiteral(".xml");
     QString docdataDir = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)
             + QStringLiteral("/okular/docdata");
     // make sure that the okular/docdata/ directory exists (probably this used to be handled by KStandardDirs)
@@ -2255,7 +2255,7 @@ QVector<KPluginMetaData> DocumentPrivate::availableGenerators()
     static QVector<KPluginMetaData> result;
     if (result.isEmpty())
     {
-        result = KPluginLoader::findPlugins("okular/generators");
+        result = KPluginLoader::findPlugins( QLatin1String ( "okular/generators" ) );
     }
     return result;
 }
@@ -2489,7 +2489,7 @@ Document::OpenResult Document::openDocument(const QString & docFile, const QUrl 
     AudioPlayer::instance()->d->m_currentDocument = isstdin ? QUrl() : d->m_url;
     d->m_docSize = document_size;
 
-    const QStringList docScripts = d->m_generator->metaData( QStringLiteral("DocumentScripts"), "JavaScript" ).toStringList();
+    const QStringList docScripts = d->m_generator->metaData( QStringLiteral("DocumentScripts"), QStringLiteral ( "JavaScript" ) ).toStringList();
     if ( !docScripts.isEmpty() )
     {
         d->m_scripter = new Scripter( d );
@@ -3631,7 +3631,7 @@ void Document::searchText( int searchID, const QString & text, bool fromStart, Q
     else if ( type == GoogleAll || type == GoogleAny )
     {
         QMap< Page *, QVector< QPair<RegularAreaRect *, QColor> > > *pageMatches = new QMap< Page *, QVector<QPair<RegularAreaRect *, QColor> > >;
-        const QStringList words = text.split( ' ', QString::SkipEmptyParts );
+        const QStringList words = text.split( QLatin1Char ( ' ' ), QString::SkipEmptyParts );
 
         // search and highlight every word in 'text' on all pages
         QMetaObject::invokeMethod(this, "doContinueGooglesDocumentSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotify), Q_ARG(void *, pageMatches), Q_ARG(int, 0), Q_ARG(int, searchID), Q_ARG(QStringList, words));
@@ -3817,7 +3817,7 @@ QString Document::bookmarkedPageRange() const
         else if ( startId >= 0 && endId >= 0 )
         {
             if ( !range.isEmpty() )
-                range += ',';
+                range += QLatin1Char ( ',' );
 
             if ( endId - startId > 0 )
                 range += QStringLiteral( "%1-%2" ).arg( startId + 1 ).arg( endId + 1 );
@@ -3830,7 +3830,7 @@ QString Document::bookmarkedPageRange() const
     if ( startId >= 0 && endId >= 0 )
     {
         if ( !range.isEmpty() )
-            range += ',';
+            range += QLatin1Char ( ',' );
 
         if ( endId - startId > 0 )
             range += QStringLiteral( "%1-%2" ).arg( startId + 1 ).arg( endId + 1 );
@@ -4089,9 +4089,9 @@ void Document::processSourceReference( const SourceReference * ref )
 
     // replacing the placeholders
     QHash< QChar, QString > map;
-    map.insert( 'f', absFileName );
-    map.insert( 'c', QString::number( ref->column() ) );
-    map.insert( 'l', QString::number( ref->row() ) );
+    map.insert( QLatin1Char ( 'f' ), absFileName );
+    map.insert( QLatin1Char ( 'c' ), QString::number( ref->column() ) );
+    map.insert( QLatin1Char ( 'l' ), QString::number( ref->row() ) );
     const QString cmd = KMacroExpander::expandMacrosShellQuote( p, map );
     if ( cmd.isEmpty() )
         return;
@@ -4435,7 +4435,7 @@ Document::OpenResult Document::openDocumentArchive( const QString & docFile, con
         return OpenError;
 
     std::unique_ptr< ArchiveData > archiveData( new ArchiveData() );
-    const int dotPos = documentFileName.indexOf( '.' );
+    const int dotPos = documentFileName.indexOf( QLatin1Char('.') );
     if ( dotPos != -1 )
         archiveData->document.setFileTemplate(QDir::tempPath() + QLatin1String("/okular_XXXXXX") + documentFileName.mid(dotPos));
     if ( !archiveData->document.open() )
@@ -4834,7 +4834,7 @@ DocumentViewport::DocumentViewport( const QString & xmlDesc )
     // decode the string
     bool ok;
     int field = 0;
-    QString token = xmlDesc.section( ';', field, field );
+    QString token = xmlDesc.section( QLatin1Char(';'), field, field );
     while ( !token.isEmpty() )
     {
         // decode the current token
@@ -4847,27 +4847,27 @@ DocumentViewport::DocumentViewport( const QString & xmlDesc )
         else if ( token.startsWith( QLatin1String("C1") ) )
         {
             rePos.enabled = true;
-            rePos.normalizedX = token.section( ':', 1, 1 ).toDouble();
-            rePos.normalizedY = token.section( ':', 2, 2 ).toDouble();
+            rePos.normalizedX = token.section( QLatin1Char(':'), 1, 1 ).toDouble();
+            rePos.normalizedY = token.section( QLatin1Char(':'), 2, 2 ).toDouble();
             rePos.pos = Center;
         }
         else if ( token.startsWith( QLatin1String("C2") ) )
         {
             rePos.enabled = true;
-            rePos.normalizedX = token.section( ':', 1, 1 ).toDouble();
-            rePos.normalizedY = token.section( ':', 2, 2 ).toDouble();
-            if (token.section( ':', 3, 3 ).toInt() == 1) rePos.pos = Center;
+            rePos.normalizedX = token.section( QLatin1Char(':'), 1, 1 ).toDouble();
+            rePos.normalizedY = token.section( QLatin1Char(':'), 2, 2 ).toDouble();
+            if (token.section( QLatin1Char(':'), 3, 3 ).toInt() == 1) rePos.pos = Center;
             else rePos.pos = TopLeft;
         }
         else if ( token.startsWith( QLatin1String("AF1") ) )
         {
             autoFit.enabled = true;
-            autoFit.width = token.section( ':', 1, 1 ) == QLatin1String("T");
-            autoFit.height = token.section( ':', 2, 2 ) == QLatin1String("T");
+            autoFit.width = token.section( QLatin1Char(':'), 1, 1 ) == QLatin1String("T");
+            autoFit.height = token.section( QLatin1Char(':'), 2, 2 ) == QLatin1String("T");
         }
         // proceed tokenizing string
         field++;
-        token = xmlDesc.section( ';', field, field );
+        token = xmlDesc.section( QLatin1Char(';'), field, field );
     }
 }
 
@@ -4878,12 +4878,12 @@ QString DocumentViewport::toString() const
     // if has center coordinates, save them on string
     if ( rePos.enabled )
         s += QStringLiteral( ";C2:" ) + QString::number( rePos.normalizedX ) +
-             ':' + QString::number( rePos.normalizedY ) +
-             ':' + QString::number( rePos.pos );
+             QLatin1Char(':') + QString::number( rePos.normalizedY ) +
+             QLatin1Char(':') + QString::number( rePos.pos );
     // if has autofit enabled, save its state on string
     if ( autoFit.enabled )
-        s += QStringLiteral( ";AF1:" ) + (autoFit.width ? "T" : "F") +
-             ':' + (autoFit.height ? "T" : "F");
+        s += QStringLiteral( ";AF1:" ) + (autoFit.width ? QLatin1Char('T') : QLatin1Char('F')) +
+             QLatin1Char(':') + (autoFit.height ? QLatin1Char('T') : QLatin1Char('F'));
     return s;
 }
 

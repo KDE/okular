@@ -41,7 +41,7 @@ class OkularBookmarkAction : public KBookmarkAction
             : KBookmarkAction( bk, owner, parent )
         {
             if ( vp.isValid() )
-                setText( QString::number( vp.pageNumber + 1 ) + " - " + text() );
+                setText( QString::number( vp.pageNumber + 1 ) + QStringLiteral(" - ") + text() );
             setProperty("pageNumber", vp.pageNumber + 1);
             setProperty("htmlRef", bk.url().fragment(QUrl::FullyDecoded));
         }
@@ -140,7 +140,7 @@ BookmarkManager::BookmarkManager( DocumentPrivate * document )
 
     d->document = document;
 
-    d->file = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1Char('/') + "okular/bookmarks.xml" ;
+    d->file = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QStringLiteral("/okular/bookmarks.xml");
 
     d->manager = KBookmarkManager::managerForFile( d->file, QStringLiteral("okular") );
     d->manager->setEditorOptions( QGuiApplication::applicationDisplayName(), false );

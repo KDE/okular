@@ -609,7 +609,7 @@ bool Converter::convertImage( const QDomElement &element )
     if ( href.startsWith( QLatin1Char('#') ) )
         href = href.mid( 1 );
 
-    const QImage img = qVariantValue<QImage>( mTextDocument->resource( QTextDocument::ImageResource, QUrl( href ) ) );
+    const QImage img = qvariant_cast<QImage>( mTextDocument->resource( QTextDocument::ImageResource, QUrl( href ) ) );
 
     QTextImageFormat format;
     format.setName( href );

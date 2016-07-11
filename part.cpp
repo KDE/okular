@@ -366,7 +366,7 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     // [left toolbox: Table of Contents] | []
     m_toc = new TOC( 0, m_document );
     connect( m_toc.data(), &TOC::hasTOC, this, &Part::enableTOC );
-    m_sidebar->addItem( m_toc, QIcon::fromTheme(QApplication::isLeftToRight() ? "format-justify-left" : "format-justify-right"), i18n("Contents") );
+    m_sidebar->addItem( m_toc, QIcon::fromTheme(QApplication::isLeftToRight() ? QStringLiteral("format-justify-left") : QStringLiteral("format-justify-right")), i18n("Contents") );
     enableTOC( false );
 
     // [left toolbox: Layers] | []
@@ -1028,7 +1028,7 @@ void Part::slotJobStarted(KIO::Job *job)
     if (job)
     {
         QStringList supportedMimeTypes = m_document->supportedMimeTypes();
-        job->addMetaData(QStringLiteral("accept"), supportedMimeTypes.join(QStringLiteral(", ")) + ", */*;q=0.5");
+        job->addMetaData(QStringLiteral("accept"), supportedMimeTypes.join(QStringLiteral(", ")) + QStringLiteral(", */*;q=0.5"));
 
         connect(job, &KJob::result, this, &Part::slotJobFinished);
     }
@@ -2277,7 +2277,7 @@ void Part::slotSaveCopyAs()
     if ( m_embedMode == PrintPreviewMode )
        return;
 
-    QUrl saveUrl = KFileDialog::getSaveUrl( QUrl("kfiledialog:///okular/" + url().fileName()),
+    QUrl saveUrl = KFileDialog::getSaveUrl( QUrl(QStringLiteral("kfiledialog:///okular/") + url().fileName()),
                                             QString(), widget(), QString(),
                                             KFileDialog::ConfirmOverwrite );
     if ( saveUrl.isValid() && !saveUrl.isEmpty() )

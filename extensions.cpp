@@ -109,12 +109,12 @@ void OkularLiveConnectExtension::postMessage( const QStringList &args )
     Q_FOREACH ( const QString &arg, args )
     {
         QString newarg = arg;
-        newarg.replace( '\'', QLatin1String("\\'") );
-        arrayargs.append( "\"" + newarg + "\"" );
+        newarg.replace( QLatin1Char('\''), QLatin1String("\\'") );
+        arrayargs.append( QLatin1Char('"') + newarg + QLatin1Char('"') );
     }
-    const QString arrayarg = '[' + arrayargs.join( QStringLiteral(", ") ) + ']';
-    eval( "if (this.messageHandler && typeof this.messageHandler.onMessage == 'function') "
-          "{ this.messageHandler.onMessage(" + arrayarg + ") }" );
+    const QString arrayarg = QLatin1Char('[') + arrayargs.join( QStringLiteral(", ") ) + QLatin1Char(']');
+    eval( QStringLiteral("if (this.messageHandler && typeof this.messageHandler.onMessage == 'function') "
+          "{ this.messageHandler.onMessage(") + arrayarg + QStringLiteral(") }") );
 }
 
 }

@@ -28,7 +28,7 @@
 
 void OkularPlugin::registerTypes(const char *uri)
 {
-    Q_ASSERT(uri == QLatin1String("org.kde.okular"));
+    Q_ASSERT(QString::fromLocal8Bit(uri) == QLatin1String("org.kde.okular"));
     qmlRegisterType<DocumentItem>(uri, 2, 0, "DocumentItem");
     qmlRegisterType<PageItem>(uri, 2, 0, "PageItem");
     qmlRegisterType<ThumbnailItem>(uri, 2, 0, "ThumbnailItem");

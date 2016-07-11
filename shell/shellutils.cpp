@@ -66,7 +66,7 @@ QUrl urlFromArg( const QString& _arg, FileExistFunc exist_func, const QString& p
         // make sure something like http://example.org/foo#bar.pdf is treated as a path name
         // but something like http://example.org/foo.pdf#bar is foo.pdf plus an anchor "bar"
         if ( url.fragment().contains( QLatin1Char( '.' ) ) ) {
-            url.setPath( url.path() + '#' + url.fragment() );
+            url.setPath( url.path() + QLatin1Char ( '#' ) + url.fragment() );
             url.setFragment( QString() );
         }
     }

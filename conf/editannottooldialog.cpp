@@ -259,7 +259,7 @@ QDomDocument EditAnnotToolDialog::toolXml() const
         annotationElement.setAttribute( QStringLiteral("icon"), sa->stampIconName() );
     }
 
-    if ( opacity != "1" )
+    if ( opacity != QStringLiteral("1") )
         annotationElement.setAttribute( QStringLiteral("opacity"), opacity );
 
     return doc;

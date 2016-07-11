@@ -39,7 +39,7 @@ DVI_SourceFileSplitter::DVI_SourceFileSplitter(const QString &srclink, const QSt
   filepart = filepart.mid(i);
 
   //check for number mix up
-  if ( filepart[0] != ' ' && (linepart.length() != 1) ) possibleNumberMixUp = true;
+  if ( filepart[0] != QLatin1Char(' ') && (linepart.length() != 1) ) possibleNumberMixUp = true;
 
   //remove a spaces
   filepart = filepart.trimmed();
@@ -54,8 +54,8 @@ DVI_SourceFileSplitter::DVI_SourceFileSplitter(const QString &srclink, const QSt
   bool fiExists = m_fileInfo.exists();
 
   //if it doesn't exist, but adding ".tex"
-  if ( !fiExists && QFileInfo(m_fileInfo.absoluteFilePath() + ".tex").exists() )
-    m_fileInfo.setFile(m_fileInfo.absoluteFilePath() + ".tex");
+  if ( !fiExists && QFileInfo(m_fileInfo.absoluteFilePath() + QStringLiteral(".tex")).exists() )
+    m_fileInfo.setFile(m_fileInfo.absoluteFilePath() + QStringLiteral(".tex"));
 
   //if that doesn't help either, perhaps the file started with a
   //number: move the numbers from the sourceline to the filename
@@ -73,7 +73,7 @@ DVI_SourceFileSplitter::DVI_SourceFileSplitter(const QString &srclink, const QSt
       qCDebug(OkularDviDebug) << "DVI_SourceSplitter: trying " << tempInfo.fileName();
 #endif
       if ( tempInfo.exists() ) { found = true; break;}
-      tempInfo.setFile(linepart.right(index) + tempFileName + ".tex");
+      tempInfo.setFile(linepart.right(index) + tempFileName + QStringLiteral(".tex"));
 #ifdef DEBUG_SOURCESPLITTER
       qCDebug(OkularDviDebug) << "DVI_SourceSplitter: trying " << tempInfo.fileName();
 #endif

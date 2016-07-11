@@ -75,7 +75,7 @@ ProtocolMSITS::~ProtocolMSITS()
 // A simple stat() wrapper
 static bool isDirectory ( const QString & filename )
 {
-    return filename.endsWith( '/' );
+    return filename.endsWith( QLatin1Char('/') );
 }
 
 
@@ -271,7 +271,7 @@ void ProtocolMSITS::listDir (const QUrl & url)
 	if ( !parseLoadAndLookup ( url, filepath ) )
 		return;	// error() has been called by parseLoadAndLookup
 
-	filepath += '/';
+    filepath += QLatin1Char('/');
 
 	if ( !isDirectory (filepath) )
 	{

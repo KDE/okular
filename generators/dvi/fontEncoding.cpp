@@ -44,7 +44,7 @@ fontEncoding::fontEncoding(const QString &encName)
   // We wait here while the external program runs concurrently.
   kpsewhich.waitForFinished(-1);
 
-  const QString encFileName = QString(kpsewhich.readAll()).trimmed();
+  const QString encFileName = QString::fromLocal8Bit(kpsewhich.readAll()).trimmed();
   if (encFileName.isEmpty()) {
     qCCritical(OkularDviDebug) << QStringLiteral("fontEncoding::fontEncoding(...): The file '%1' could not be found by kpsewhich.").arg(encName) << endl;
     return;
@@ -61,19 +61,19 @@ fontEncoding::fontEncoding(const QString &encName)
     QTextStream stream( &file );
     QString fileContent;
     while ( !stream.atEnd() )
-      fileContent += stream.readLine().section('%', 0, 0); // line of text excluding '\n' until first '%'-sign
+      fileContent += stream.readLine().section(QLatin1Char('%'), 0, 0); // line of text excluding '\n' until first '%'-sign
     file.close();
 
     fileContent = fileContent.trimmed();
 
     // Find the name of the encoding
-    encodingFullName = fileContent.section('[', 0, 0).simplified().mid(1);
+    encodingFullName = fileContent.section(QLatin1Char('['), 0, 0).simplified().mid(1);
 #ifdef DEBUG_FONTENC
     qCDebug(OkularDviDebug) << "encodingFullName: " << encodingFullName;
 #endif
 
-    fileContent = fileContent.section('[', 1, 1).section(']',0,0).simplified();
-    const QStringList glyphNameList = fileContent.split('/', QString::SkipEmptyParts);
+    fileContent = fileContent.section(QLatin1Char('['), 1, 1).section(QLatin1Char(']'),0,0).simplified();
+    const QStringList glyphNameList = fileContent.split(QLatin1Char('/'), QString::SkipEmptyParts);
 
     int i = 0;
     for ( QStringList::ConstIterator it = glyphNameList.constBegin(); (it != glyphNameList.constEnd())&&(i<256); ++it ) {

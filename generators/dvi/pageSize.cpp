@@ -64,7 +64,7 @@ bool pageSize::setPageSize(const QString& name)
   // See if we can recognize the string
   QString currentName;
   for(int i=0; staticList[i].name != 0; i++) {
-    currentName = staticList[i].name;
+    currentName = QString::fromLocal8Bit(staticList[i].name);
     if (currentName == name) {
       currentSize = i;
       // Set page width/height accordingly
@@ -78,10 +78,10 @@ bool pageSize::setPageSize(const QString& name)
   // Check if the string contains 'x'. If yes, we assume it is of type
   // "<number>x<number>". If yes, the first number is interpreted as
   // the width in mm, the second as the height in mm
-  if (name.indexOf('x') >= 0) {
+  if (name.indexOf(QLatin1Char('x')) >= 0) {
     bool wok, hok;
-    float pageWidth_tmp  = name.section('x',0,0).toFloat(&wok);
-    float pageHeight_tmp = name.section('x',1,1).toFloat(&hok);
+    float pageWidth_tmp  = name.section(QLatin1Char('x'),0,0).toFloat(&wok);
+    float pageHeight_tmp = name.section(QLatin1Char('x'),1,1).toFloat(&hok);
     if (wok && hok) {
       pageWidth.setLength_in_mm(pageWidth_tmp);
       pageHeight.setLength_in_mm(pageHeight_tmp);
@@ -96,10 +96,10 @@ bool pageSize::setPageSize(const QString& name)
   // Check if the string contains ','. If yes, we assume it is of type
   // "<number><unit>,<number><uni>". The first number is supposed to
   // be the width, the second the height.
-  if (name.indexOf(',') >= 0) {
+  if (name.indexOf(QLatin1Char(',')) >= 0) {
     bool wok, hok;
-    float pageWidth_tmp  = Length::convertToMM(name.section(',',0,0), &wok);
-    float pageHeight_tmp = Length::convertToMM(name.section(',',1,1), &hok);
+    float pageWidth_tmp  = Length::convertToMM(name.section(QLatin1Char(','),0,0), &wok);
+    float pageHeight_tmp = Length::convertToMM(name.section(QLatin1Char(','),1,1), &hok);
     if (wok && hok) {
       pageWidth.setLength_in_mm(pageWidth_tmp);
       pageHeight.setLength_in_mm(pageHeight_tmp);
@@ -205,7 +205,7 @@ void pageSize::rectifySizes()
 QString pageSize::preferredUnit() const
 {
   if (currentSize >= 0)
-    return staticList[currentSize].preferredUnit;
+    return QString::fromLocal8Bit(staticList[currentSize].preferredUnit);
 
   // User-defined size. Give a preferred unit depening on the locale.
   if (QLocale::system().measurementSystem() == QLocale::MetricSystem)
@@ -250,7 +250,7 @@ QStringList pageSize::pageSizeNames()
   QStringList names;
 
   for(int i=0; staticList[i].name != 0; i++)
-    names << staticList[i].name;
+    names << QString::fromLocal8Bit(staticList[i].name);
 
   return names;
 }
@@ -259,7 +259,7 @@ QStringList pageSize::pageSizeNames()
 QString pageSize::formatName() const
 {
   if (currentSize >= 0)
-    return staticList[currentSize].name;
+    return QString::fromLocal8Bit(staticList[currentSize].name);
   else
     return QString();
 }
@@ -300,7 +300,7 @@ void pageSize::setOrientation(int orient)
 QString pageSize::serialize() const
 {
   if ((currentSize >= 0) && (fabs(staticList[currentSize].height-pageHeight.getLength_in_mm()) <= 0.5))
-    return staticList[currentSize].name;
+    return QString::fromLocal8Bit(staticList[currentSize].name);
   else
     return QStringLiteral("%1x%2").arg(pageWidth.getLength_in_mm()).arg(pageHeight.getLength_in_mm());
 }
@@ -318,13 +318,13 @@ QString pageSize::description() const
     else
       size += QStringLiteral("%1x%2 in").arg(width().getLength_in_inch(), 0, 'g', 2).arg(height().getLength_in_inch(), 0, 'g', 2);
   } else {
-    size += formatName() + '/';
+    size += formatName() + QLatin1Char('/');
      if (getOrientation() == 0)
       size += i18n("portrait");
     else
       size += i18n("landscape");
   }
-  return size + ' ';
+  return size + QLatin1Char(' ');
 }
 
 

@@ -66,7 +66,7 @@ TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc, double sl
   }
 
   if (face->family_name != 0)
-    parent->fullFontName = face->family_name;
+    parent->fullFontName = QString::fromLocal8Bit(face->family_name);
 
   // Finally, we need to set up the charMap array, which maps TeX
   // character codes to glyph indices in the font. (Remark: the

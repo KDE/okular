@@ -83,9 +83,9 @@ void ghostscript_interface::setPostScript(const PageNumber& page, const QString&
 
 void ghostscript_interface::setIncludePath(const QString &_includePath) {
   if (_includePath.isEmpty())
-     includePath = QStringLiteral("*"); // Allow all files
+     includePath = QLatin1Char('*'); // Allow all files
   else
-     includePath = _includePath+"/*";
+     includePath = _includePath + QStringLiteral("/*");
 }
 
 
@@ -214,7 +214,7 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber& page, co
   PSfile.close();
 
   // Step 2: Call GS with the File
-  QFile::remove(filename.toLatin1());
+  QFile::remove(filename);
   KProcess proc;
   proc.setOutputChannelMode(KProcess::SeparateChannels);
   QStringList argus;

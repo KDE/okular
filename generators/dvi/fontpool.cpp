@@ -210,7 +210,7 @@ void fontPool::locateFonts()
                     "which are necessary to display the current DVI file. "
                     "Your document might be unreadable.</p>"
                     "<p><small><b>PATH:</b> %1</small></p>"
-                    "<p><small>%2</small></p></qt>", QString(qgetenv("PATH")),
+                    "<p><small>%2</small></p></qt>", QString::fromLocal8Bit(qgetenv("PATH")),
                     kpsewhichOutput.replace(QLatin1String("\n"), QLatin1String("<br/>"))), -1);
   }
 }
@@ -230,7 +230,7 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
                  << QStringLiteral("--mode") << QStringLiteral("lexmarks");
 
   // Disable automatic pk-font generation.
-  kpsewhich_args << (makePK ? "--mktex" : "--no-mktex") << QStringLiteral("pk");
+  kpsewhich_args << QString::fromLocal8Bit(makePK ? "--mktex" : "--no-mktex") << QStringLiteral("pk");
 
   // Names of fonts that shall be located
   quint16 numFontsInJob = 0;
@@ -270,7 +270,7 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
   // a real command line, but who cares?
   const QString kpsewhich_exe = QStringLiteral("kpsewhich");
   kpsewhichOutput +=
-    "<b>" + kpsewhich_exe + ' ' + kpsewhich_args.join(QStringLiteral(" ")) + "</b>";
+    QStringLiteral("<b>") + kpsewhich_exe + QLatin1Char(' ') + kpsewhich_args.join(QStringLiteral(" ")) + QStringLiteral("</b>");
 
   kpsewhich_->start(kpsewhich_exe, kpsewhich_args,
                    QIODevice::ReadOnly|QIODevice::Text);
@@ -281,7 +281,7 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
                     "Possible reason: the <em>kpsewhich</em> program is perhaps not installed on your system, "
                     "or it cannot be found in the current search path.</p>"
                     "<p><small><b>PATH:</b> %1</small></p>"
-                    "<p><small>%2</small></p></qt>", QString(qgetenv("PATH")),
+                    "<p><small>%2</small></p></qt>", QString::fromLocal8Bit(qgetenv("PATH")),
                     kpsewhichOutput.replace(QLatin1String("\n"), QLatin1String("<br/>"))), -1);
 
     // This makes sure the we don't try to run kpsewhich again
@@ -306,7 +306,7 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
 
   // Create a list with all filenames found by the kpsewhich program.
   const QStringList fileNameList =
-    QString(kpsewhich_->readAll()).split('\n', QString::SkipEmptyParts);
+    QString::fromLocal8Bit(kpsewhich_->readAll()).split(QLatin1Char('\n'), QString::SkipEmptyParts);
 
   // Now associate the file names found with the fonts
   QList<TeXFontDefinition*>::iterator it_fontp = fontList.begin();
@@ -321,7 +321,7 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
         matchingFiles = fileNameList.filter(fn);
 #endif
       if (matchingFiles.isEmpty() == true)
-        matchingFiles += fileNameList.filter("/"+fontp->fontname+".");
+        matchingFiles += fileNameList.filter(QLatin1Char('/') + fontp->fontname + QLatin1Char('.'));
 
       if (matchingFiles.isEmpty() != true) {
 #ifdef DEBUG_FONTPOOL
@@ -450,7 +450,7 @@ void fontPool::mf_output_receiver()
 
   // We'd like to print only full lines of text.
   int numleft;
-  while( (numleft = MetafontOutput.indexOf('\n')) != -1) {
+  while( (numleft = MetafontOutput.indexOf(QLatin1Char('\n'))) != -1) {
     QString line = MetafontOutput.left(numleft+1);
 #ifdef DEBUG_FONTPOOL
     qCDebug(OkularDviDebug) << "MF OUTPUT RECEIVED: " << line;
@@ -468,9 +468,9 @@ void fontPool::mf_output_receiver()
       // are generating. The second-to-last word is the resolution in
       // dots per inch. Display this info in the text label below the
       // progress bar.
-      int lastblank     = startLine.lastIndexOf(' ');
+      int lastblank     = startLine.lastIndexOf(QLatin1Char(' '));
       QString fontName  = startLine.mid(lastblank+1);
-      int secondblank   = startLine.lastIndexOf(' ',lastblank-1);
+      int secondblank   = startLine.lastIndexOf(QLatin1Char(' '),lastblank-1);
       QString dpi       = startLine.mid(secondblank+1,lastblank-secondblank-1);
 
       emit warning( i18n("Currently generating %1 at %2 dpi...", fontName, dpi), -1 );

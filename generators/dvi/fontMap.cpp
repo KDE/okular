@@ -48,7 +48,7 @@ fontMap::fontMap()
   // We wait here while the external program runs concurrently.
   kpsewhich.waitForFinished(-1);
 
-  QString map_fileName = QString(kpsewhich.readAll()).trimmed();
+  QString map_fileName = QString::fromLocal8Bit(kpsewhich.readAll()).trimmed();
   if (map_fileName.isEmpty()) {
     // Map file not found? Then we try the teTeX < 3.0 way of finding
     // the file.
@@ -62,7 +62,7 @@ fontMap::fontMap()
 
     kpsewhich.waitForFinished(-1);
 
-    map_fileName = QString(kpsewhich.readAll()).trimmed();
+    map_fileName = QString::fromLocal8Bit(kpsewhich.readAll()).trimmed();
     // If both versions fail, then there is nothing left to do.
     if (map_fileName.isEmpty()) {
       qCCritical(OkularDviDebug) << "fontMap::fontMap(): The file 'ps2pk.map' could not be found by kpsewhich." << endl;
@@ -76,23 +76,23 @@ fontMap::fontMap()
     QString line;
     while ( !stream.atEnd() ) {
       line = stream.readLine().simplified();
-      if (line.isEmpty() || (line.at(0) == '%'))
+      if (line.isEmpty() || (line.at(0) == QLatin1Char('%')))
         continue;
 
-      QString TeXName  = line.section(' ', 0, 0);
-      QString FullName = line.section(' ', 1, 1);
-      QString fontFileName = line.section('<', -1).trimmed().section(' ', 0, 0);
-      QString encodingName = line.section('<', -2, -2).trimmed().section(' ', 0, 0);
+      QString TeXName  = line.section(QLatin1Char(' '), 0, 0);
+      QString FullName = line.section(QLatin1Char(' '), 1, 1);
+      QString fontFileName = line.section(QLatin1Char('<'), -1).trimmed().section(QLatin1Char(' '), 0, 0);
+      QString encodingName = line.section(QLatin1Char('<'), -2, -2).trimmed().section(QLatin1Char(' '), 0, 0);
       // It seems that sometimes the encoding is prepended by the
       // letter '[', which we ignore
-      if ((!encodingName.isEmpty()) && (encodingName[0] == '['))
+      if ((!encodingName.isEmpty()) && (encodingName[0] == QLatin1Char('[')))
         encodingName = encodingName.mid(1);
 
       double slant = 0.0;
       int i = line.indexOf(QStringLiteral("SlantFont"));
       if (i >= 0) {
         bool ok;
-        slant = line.left(i).section(' ', -1, -1 ,QString::SectionSkipEmpty).toDouble(&ok);
+        slant = line.left(i).section(QLatin1Char(' '), -1, -1 ,QString::SectionSkipEmpty).toDouble(&ok);
         if (ok == false)
           slant = 0.0;
       }

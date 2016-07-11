@@ -48,7 +48,7 @@ void dviRenderer::prescan_embedPS(char *cp, quint8 *beginningOfSpecialCommand)
   if (qstrnicmp(cp, "PSfile=", 7) != 0)
     return;
 
-  QString command(cp+7);
+  QString command = QString::fromLocal8Bit(cp+7);
 
   QString include_command = command.simplified();
 
@@ -58,13 +58,13 @@ void dviRenderer::prescan_embedPS(char *cp, quint8 *beginningOfSpecialCommand)
   // (already the simplified() above is wrong). If you have
   // files like this, go away.
   QString EPSfilename = include_command;
-  EPSfilename.truncate(EPSfilename.indexOf(' '));
+  EPSfilename.truncate(EPSfilename.indexOf(QLatin1Char(' ')));
 
   // Strip enclosing quotation marks which are included by some LaTeX
   // macro packages (but not by others). This probably means that
   // graphic files are no longer found if the filename really does
   // contain quotes, but we don't really care that much.
-  if ((EPSfilename.at(0) == '\"') && (EPSfilename.at(EPSfilename.length()-1) == '\"'))
+  if ((EPSfilename.at(0) == QLatin1Char('"')) && (EPSfilename.at(EPSfilename.length()-1) == QLatin1Char('"')))
     EPSfilename = EPSfilename.mid(1,EPSfilename.length()-2);
 
   // Now locate the Gfx file on the hard disk...
@@ -119,7 +119,7 @@ void dviRenderer::prescan_embedPS(char *cp, quint8 *beginningOfSpecialCommand)
   int  angle   = 0;
 
   // just to avoid ambiguities; the filename could contain keywords
-  include_command = include_command.mid(include_command.indexOf(' '));
+  include_command = include_command.mid(include_command.indexOf(QLatin1Char(' ')));
 
   parse_special_argument(include_command, "llx=", &llx);
   parse_special_argument(include_command, "lly=", &lly);
@@ -140,19 +140,19 @@ void dviRenderer::prescan_embedPS(char *cp, quint8 *beginningOfSpecialCommand)
   if (angle != 0)
     PS.append( QStringLiteral(" %1 @angle").arg(angle) );
   if (clip != -1)
-    PS.append(" @clip");
-  PS.append( " @setspecial\n" );
+    PS.append( QStringLiteral( " @clip" ));
+  PS.append( QStringLiteral( " @setspecial\n" ) );
 
   QFile file( EPSfilename );
   if ( file.open( QIODevice::ReadOnly ) ) {
     QTextStream stream( &file );
     while ( !stream.atEnd() ) {
-      PS += stream.readLine().section( '%', 0, 0);
-      PS += '\n';
+      PS += stream.readLine().section( QLatin1Char('%'), 0, 0);
+      PS += QLatin1Char('\n');
     }
     file.close();
   }
-  PS.append( "@endspecial" );
+  PS.append( QStringLiteral("@endspecial") );
   PS = PS.simplified();
 
 
@@ -247,7 +247,7 @@ void dviRenderer::prescan_ParsePapersizeSpecial(const QString& _cp)
 
   QString cp = _cp.simplified();
 
-  if (cp[0] == '=') {
+  if (cp[0] == QLatin1Char('=')) {
     cp = cp.mid(1);
     dviFile->suggestedPageSize = new pageSize;
     dviFile->suggestedPageSize->setPageSize(cp);
@@ -271,7 +271,7 @@ void dviRenderer::prescan_ParseBackgroundSpecial(const QString& cp)
 void dviRenderer::prescan_ParseHTMLAnchorSpecial(const QString& _cp)
 {
   QString cp = _cp;
-  cp.truncate(cp.indexOf('"'));
+  cp.truncate(cp.indexOf(QLatin1Char('"')));
   Length l;
   l.setLength_in_inch(currinf.data.dvi_v/(resolutionInDPI*shrinkfactor));
   anchorList[cp] = Anchor(current_page+1, l);
@@ -308,9 +308,9 @@ void dviRenderer::prescan_ParsePSBangSpecial(const QString& cp)
   qCDebug(OkularDviDebug) << "PostScript-special, literal header " << cp;
 #endif
 
-  PS_interface->PostScriptHeaderString->append( " @defspecial \n" );
+  PS_interface->PostScriptHeaderString->append( QStringLiteral( " @defspecial \n" ) );
   PS_interface->PostScriptHeaderString->append( cp );
-  PS_interface->PostScriptHeaderString->append( " @fedspecial \n" );
+  PS_interface->PostScriptHeaderString->append( QStringLiteral ( " @fedspecial \n" ) );
 }
 
 
@@ -323,9 +323,9 @@ void dviRenderer::prescan_ParsePSQuoteSpecial(const QString& cp)
   double PS_H = (currinf.data.dvi_h*300.0)/(65536*1200)-300;
   double PS_V = (currinf.data.dvi_v*300.0)/1200 - 300;
   PostScriptOutPutString->append( QStringLiteral(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );
-  PostScriptOutPutString->append( " @beginspecial @setspecial \n" );
+  PostScriptOutPutString->append( QStringLiteral(" @beginspecial @setspecial \n") );
   PostScriptOutPutString->append( cp );
-  PostScriptOutPutString->append( " @endspecial \n" );
+  PostScriptOutPutString->append( QStringLiteral(" @endspecial \n") );
 }
 
 
@@ -357,21 +357,21 @@ void dviRenderer::prescan_ParsePSSpecial(const QString& cp)
       return; // hyperref tries to work around Distiller bug
     if (cp.startsWith(QLatin1String("ps:SDict begin [")) && cp.endsWith(QLatin1String(" pdfmark end"))) {  // hyperref definition of link/anchor/bookmark/etc
       if (cp.contains(QStringLiteral("/DEST"))) { // The PostScript code defines an anchor
-        QString anchorName = cp.section('(', 1, 1).section(')', 0, 0);
+        QString anchorName = cp.section(QLatin1Char('('), 1, 1).section(QLatin1Char(')'), 0, 0);
         Length l;
         l.setLength_in_inch(currinf.data.dvi_v/(resolutionInDPI*shrinkfactor));
         anchorList[anchorName] = Anchor(current_page+1, l);
       }
       // The PostScript code defines a bookmark
       if (cp.contains(QStringLiteral("/Dest")) && cp.contains(QStringLiteral("/Title"))) {
-        const QString childrenNumberAndMoreStuff = cp.section('-', 1, 1); // Contains from the - symbol to the end of cp, effectively containing the number of children and some stuff after it
+        const QString childrenNumberAndMoreStuff = cp.section(QLatin1Char('-'), 1, 1); // Contains from the - symbol to the end of cp, effectively containing the number of children and some stuff after it
         int indexOfFirstNonDigit = 0;
         foreach(const QChar &c, childrenNumberAndMoreStuff) {
           if (c.isDigit()) ++indexOfFirstNonDigit;
           else break;
         }
-        prebookmarks.append(PreBookmark(PDFencodingToQString(cp.section('(', 2, 2).section(')', 0, 0)),
-                                        cp.section('(', 1, 1).section(')', 0, 0),
+        prebookmarks.append(PreBookmark(PDFencodingToQString(cp.section(QLatin1Char('('), 2, 2).section(QLatin1Char(')'), 0, 0)),
+                                        cp.section(QLatin1Char('('), 1, 1).section(QLatin1Char(')'), 0, 0),
                                         childrenNumberAndMoreStuff.leftRef(indexOfFirstNonDigit).toUInt()
                                         ));
       }
@@ -414,19 +414,19 @@ void dviRenderer::prescan_ParsePSFileSpecial(const QString& cp)
   // (already the simplified() above is wrong). If you have
   // files like this, go away.
   QString EPSfilename = include_command;
-  EPSfilename.truncate(EPSfilename.indexOf(' '));
+  EPSfilename.truncate(EPSfilename.indexOf(QLatin1Char(' ')));
 
   // Strip enclosing quotation marks which are included by some LaTeX
   // macro packages (but not by others). This probably means that
   // graphic files are no longer found if the filename really does
   // contain quotes, but we don't really care that much.
-  if ((EPSfilename.at(0) == '\"') && (EPSfilename.at(EPSfilename.length()-1) == '\"')) {
+  if ((EPSfilename.at(0) == QLatin1Char('\"')) && (EPSfilename.at(EPSfilename.length()-1) == QLatin1Char('\"'))) {
     EPSfilename = EPSfilename.mid(1,EPSfilename.length()-2);
   }
 
   // If the file name ends in 'png', 'gif', 'jpg' or 'jpeg', we assume
   // that this is NOT a PostScript file, and we exit here.
-  QString ending = EPSfilename.section('.', -1).toLower();
+  QString ending = EPSfilename.section(QLatin1Char('.'), -1).toLower();
   if ((ending == QLatin1String("png")) || (ending == QLatin1String("gif")) || (ending == QLatin1String("jpg")) || (ending == QLatin1String("jpeg"))) {
     dviFile->numberOfExternalNONPSFiles++;
     return;
@@ -459,7 +459,7 @@ void dviRenderer::prescan_ParsePSFileSpecial(const QString& cp)
   int  angle   = 0;
 
   // just to avoid ambiguities; the filename could contain keywords
-  include_command = include_command.mid(include_command.indexOf(' '));
+  include_command = include_command.mid(include_command.indexOf(QLatin1Char(' ')));
 
   parse_special_argument(include_command, "llx=", &llx);
   parse_special_argument(include_command, "lly=", &lly);
@@ -475,7 +475,7 @@ void dviRenderer::prescan_ParsePSFileSpecial(const QString& cp)
     double PS_H = (currinf.data.dvi_h*300.0)/(65536*1200)-300;
     double PS_V = (currinf.data.dvi_v*300.0)/1200 - 300;
     PostScriptOutPutString->append( QStringLiteral(" %1 %2 moveto\n").arg(PS_H).arg(PS_V) );
-    PostScriptOutPutString->append( "@beginspecial " );
+    PostScriptOutPutString->append( QStringLiteral("@beginspecial ") );
     PostScriptOutPutString->append( QStringLiteral(" %1 @llx").arg(llx) );
     PostScriptOutPutString->append( QStringLiteral(" %1 @lly").arg(lly) );
     PostScriptOutPutString->append( QStringLiteral(" %1 @urx").arg(urx) );
@@ -487,10 +487,10 @@ void dviRenderer::prescan_ParsePSFileSpecial(const QString& cp)
     if (angle != 0)
       PostScriptOutPutString->append( QStringLiteral(" %1 @angle").arg(angle) );
     if (clip != -1)
-      PostScriptOutPutString->append(" @clip");
-    PostScriptOutPutString->append( " @setspecial \n" );
+      PostScriptOutPutString->append( QStringLiteral(" @clip"));
+    PostScriptOutPutString->append( QStringLiteral(" @setspecial \n") );
     PostScriptOutPutString->append( QStringLiteral(" (%1) run\n").arg(EPSfilename) );
-    PostScriptOutPutString->append( "@endspecial \n" );
+    PostScriptOutPutString->append( QStringLiteral("@endspecial \n") );
   }
 
   return;

@@ -57,7 +57,7 @@ float Length::convertToMM(const QString &distance, bool *ok)
   // of the unit in 'unitPos', so that distance[0..unitPos] will hold
   // the value. Store the number of mm per unit in 'MMperUnit'.
   for(int i=0; MMperUnit==0.0 && distanceUnitTable[i].name != 0; i++) {
-    unitPos = distance.lastIndexOf(distanceUnitTable[i].name);
+    unitPos = distance.lastIndexOf(QString::fromLocal8Bit(distanceUnitTable[i].name));
     if (unitPos != -1)
       MMperUnit = distanceUnitTable[i].mmPerUnit;
   }

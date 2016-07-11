@@ -115,20 +115,20 @@ QColor dviRenderer::parseColorSpecification(const QString& colorSpec)
     namedColors[QStringLiteral("WildStrawberry")] = QColor( (int)(255.0*1), (int)(255.0*0.04), (int)(255.0*0.61));
   }
 
-  QString specType = colorSpec.section(' ', 0, 0);
+  QString specType = colorSpec.section(QLatin1Char(' '), 0, 0);
 
   if (specType.indexOf(QStringLiteral("rgb"), 0, Qt::CaseInsensitive) == 0) {
     bool ok;
 
-    double r = colorSpec.section(' ', 1, 1).toDouble(&ok);
+    double r = colorSpec.section(QLatin1Char(' '), 1, 1).toDouble(&ok);
     if ((ok == false) || (r < 0.0) || (r > 1.0))
       return QColor();
 
-    double g = colorSpec.section(' ', 2, 2).toDouble(&ok);
+    double g = colorSpec.section(QLatin1Char(' '), 2, 2).toDouble(&ok);
     if ((ok == false) || (g < 0.0) || (g > 1.0))
       return QColor();
 
-    double b = colorSpec.section(' ', 3, 3).toDouble(&ok);
+    double b = colorSpec.section(QLatin1Char(' '), 3, 3).toDouble(&ok);
     if ((ok == false) || (b < 0.0) || (b > 1.0))
       return QColor();
 
@@ -138,15 +138,15 @@ QColor dviRenderer::parseColorSpecification(const QString& colorSpec)
   if (specType.indexOf(QStringLiteral("hsb"), 0, Qt::CaseInsensitive) == 0) {
     bool ok;
 
-    double h = colorSpec.section(' ', 1, 1).toDouble(&ok);
+    double h = colorSpec.section(QLatin1Char(' '), 1, 1).toDouble(&ok);
     if ((ok == false) || (h < 0.0) || (h > 1.0))
       return QColor();
 
-    double s = colorSpec.section(' ', 2, 2).toDouble(&ok);
+    double s = colorSpec.section(QLatin1Char(' '), 2, 2).toDouble(&ok);
     if ((ok == false) || (s < 0.0) || (s > 1.0))
       return QColor();
 
-    double b = colorSpec.section(' ', 3, 3).toDouble(&ok);
+    double b = colorSpec.section(QLatin1Char(' '), 3, 3).toDouble(&ok);
     if ((ok == false) || (b < 0.0) || (b > 1.0))
       return QColor();
 
@@ -156,19 +156,19 @@ QColor dviRenderer::parseColorSpecification(const QString& colorSpec)
   if (specType.indexOf(QStringLiteral("cmyk"), 0, Qt::CaseInsensitive) == 0) {
     bool ok;
 
-    double c = colorSpec.section(' ', 1, 1).toDouble(&ok);
+    double c = colorSpec.section(QLatin1Char(' '), 1, 1).toDouble(&ok);
     if ((ok == false) || (c < 0.0) || (c > 1.0))
       return QColor();
 
-    double m = colorSpec.section(' ', 2, 2).toDouble(&ok);
+    double m = colorSpec.section(QLatin1Char(' '), 2, 2).toDouble(&ok);
     if ((ok == false) || (m < 0.0) || (m > 1.0))
       return QColor();
 
-    double y = colorSpec.section(' ', 3, 3).toDouble(&ok);
+    double y = colorSpec.section(QLatin1Char(' '), 3, 3).toDouble(&ok);
     if ((ok == false) || (y < 0.0) || (y > 1.0))
       return QColor();
 
-    double k = colorSpec.section(' ', 3, 3).toDouble(&ok);
+    double k = colorSpec.section(QLatin1Char(' '), 3, 3).toDouble(&ok);
     if ((ok == false) || (k < 0.0) || (k > 1.0))
       return QColor();
 
@@ -189,7 +189,7 @@ QColor dviRenderer::parseColorSpecification(const QString& colorSpec)
   if (specType.indexOf(QStringLiteral("gray"), 0, Qt::CaseInsensitive) == 0) {
     bool ok;
 
-    double g = colorSpec.section(' ', 1, 1).toDouble(&ok);
+    double g = colorSpec.section(QLatin1Char(' '), 1, 1).toDouble(&ok);
     if ((ok == false) || (g < 0.0) || (g > 1.0))
       return QColor();
 
@@ -209,7 +209,7 @@ void dviRenderer::color_special(const QString& _cp)
 {
   QString const cp = _cp.trimmed();
 
-  QString command = cp.section(' ', 0, 0);
+  QString command = cp.section(QLatin1Char(' '), 0, 0);
 
   if (command == QLatin1String("pop")) {
     // Take color off the stack
@@ -223,7 +223,7 @@ void dviRenderer::color_special(const QString& _cp)
 
   if (command == QLatin1String("push")) {
     // Get color specification
-    const QColor col = parseColorSpecification(cp.section(' ', 1));
+    const QColor col = parseColorSpecification(cp.section(QLatin1Char(' '), 1));
     // Set color
     if (col.isValid())
       colorStack.push(col);
@@ -247,7 +247,7 @@ void dviRenderer::color_special(const QString& _cp)
 void dviRenderer::html_href_special(const QString& _cp)
 {
   QString cp = _cp;
-  cp.truncate(cp.indexOf('"'));
+  cp.truncate(cp.indexOf(QLatin1Char('"')));
 
 #ifdef DEBUG_SPECIAL
   qCDebug(OkularDviDebug) << "HTML-special, href " << cp.toLatin1();
@@ -285,10 +285,10 @@ void dviRenderer::source_special(const QString& cp)
 
 void parse_special_argument(const QString& strg, const char* argument_name, int* variable)
 {
-  int index = strg.indexOf(argument_name);
+  int index = strg.indexOf(QString::fromLocal8Bit(argument_name));
   if (index >= 0) {
     QString tmp = strg.mid(index + strlen(argument_name));
-    index = tmp.indexOf(' ');
+    index = tmp.indexOf(QLatin1Char(' '));
     if (index >= 0)
       tmp.truncate(index);
 
@@ -301,7 +301,7 @@ void parse_special_argument(const QString& strg, const char* argument_name, int*
       // Maybe we should open a dialog here.
       qCCritical(OkularDviDebug) << i18n("Malformed parameter in the epsf special command.\n"
                                    "Expected a float to follow %1 in %2",
-                               argument_name, strg) << endl;
+                               QString::fromLocal8Bit(argument_name), strg) << endl;
   }
 }
 
@@ -320,13 +320,13 @@ void dviRenderer::epsf_special(const QString& cp)
   // (already the simplified() above is wrong). If you have
   // files like this, go away.
   QString EPSfilename_orig = include_command;
-  EPSfilename_orig.truncate(EPSfilename_orig.indexOf(' '));
+  EPSfilename_orig.truncate(EPSfilename_orig.indexOf(QLatin1Char(' ')));
 
   // Strip enclosing quotation marks which are included by some LaTeX
   // macro packages (but not by others). This probably means that
   // graphic files are no longer found if the filename really does
   // contain quotes, but we don't really care that much.
-  if ((EPSfilename_orig.at(0) == '\"') && (EPSfilename_orig.at(EPSfilename_orig.length()-1) == '\"')) {
+  if ((EPSfilename_orig.at(0) == QLatin1Char('\"')) && (EPSfilename_orig.at(EPSfilename_orig.length()-1) == QLatin1Char('\"'))) {
     EPSfilename_orig = EPSfilename_orig.mid(1,EPSfilename_orig.length()-2);
   }
   QString EPSfilename = ghostscript_interface::locateEPSfile(EPSfilename_orig, baseURL);
@@ -341,7 +341,7 @@ void dviRenderer::epsf_special(const QString& cp)
   int  angle   = 0;
 
   // just to avoid ambiguities; the filename could contain keywords
-  include_command = include_command.mid(include_command.indexOf(' '));
+  include_command = include_command.mid(include_command.indexOf(QLatin1Char(' ')));
 
   parse_special_argument(include_command, "llx=", &llx);
   parse_special_argument(include_command, "lly=", &lly);
@@ -467,12 +467,12 @@ void dviRenderer::TPIC_addPath_special(const QString& cp)
   // Adds a point to the path list
   QString cp_noWhiteSpace = cp.trimmed();
   bool ok;
-  float xKoord = cp_noWhiteSpace.section(' ', 0, 0).toFloat(&ok);
+  float xKoord = cp_noWhiteSpace.section(QLatin1Char(' '), 0, 0).toFloat(&ok);
   if (ok == false) {
     printErrorMsgForSpecials( QStringLiteral("TPIC special; cannot parse first argument in 'pn %1'.").arg(cp) );
     return;
   }
-  float yKoord = cp_noWhiteSpace.section(' ', 1, 1).toFloat(&ok);
+  float yKoord = cp_noWhiteSpace.section(QLatin1Char(' '), 1, 1).toFloat(&ok);
   if (ok == false) {
     printErrorMsgForSpecials( QStringLiteral("TPIC special; cannot parse second argument in 'pn %1'.").arg(cp) );
     return;
@@ -511,7 +511,7 @@ void dviRenderer::TPIC_setPen_special(const QString& cp)
 
 void dviRenderer::applicationDoSpecial(char *cp)
 {
-  QString special_command(cp);
+  QString special_command = QString::fromLocal8Bit(cp);
 
   // First come specials which is only interpreted during rendering,
   // and NOT during the prescan phase
@@ -650,7 +650,7 @@ void dviRenderer::applicationDoSpecial(char *cp)
     // line break is encountered)
     if (special_command.startsWith(QLatin1String("ps:SDict begin [")) && special_command.endsWith(QLatin1String(" pdfmark end"))) {
       if (!currentlyDrawnPage->hyperLinkList.isEmpty()) {
-        QString targetName = special_command.section('(', 1, 1).section(')', 0, 0);
+        QString targetName = special_command.section(QLatin1Char('('), 1, 1).section(QLatin1Char(')'), 0, 0);
         QVector<Hyperlink>::iterator it;
         for( it = currentlyDrawnPage->hyperLinkList.begin(); it != currentlyDrawnPage->hyperLinkList.end(); ++it )
           if (it->linkText == QLatin1String("glopglyph"))
@@ -667,7 +667,7 @@ void dviRenderer::applicationDoSpecial(char *cp)
   if (special_command.startsWith(QLatin1String("ps: gsave currentpoint currentpoint translate ")) &&
       special_command.endsWith(QLatin1String(" neg rotate neg exch neg exch translate")) ) {
     bool ok;
-    double angle = special_command.section(' ', 5, 5).toDouble(&ok);
+    double angle = special_command.section(QLatin1Char(' '), 5, 5).toDouble(&ok);
     if (ok == true) {
       int x = ((int) ((currinf.data.dvi_h) / (shrinkfactor * 65536)));
       int y = currinf.data.pxl_v;

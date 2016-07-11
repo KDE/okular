@@ -205,7 +205,7 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap* page)
     while (hi.linkText == hj.linkText && hi.baseline == hj.baseline)
     {
       merged = true;
-      hi.box = hi.box.unite(hj.box);
+      hi.box = hi.box.united(hj.box);
 
       j++;
       if (j == page->hyperLinkList.end())
@@ -494,7 +494,7 @@ bool dviRenderer::setFile(const QString &fname, const QUrl &base)
   QString includePath;
   if (!baseURL.isLocalFile()) {
     includePath = filename;
-    includePath.truncate(includePath.lastIndexOf('/'));
+    includePath.truncate(includePath.lastIndexOf(QLatin1Char('/')));
   }
   PS_interface->setIncludePath(includePath);
 
@@ -638,7 +638,7 @@ Anchor dviRenderer::parseReference(const QString &reference)
     QVector<DVI_SourceFileAnchor>::iterator it;
     for( it = sourceHyperLinkAnchors.begin(); it != sourceHyperLinkAnchors.end(); ++it )
       if (refFileName.trimmed() == it->fileName.trimmed()
-      || refFileName.trimmed() == it->fileName.trimmed() + ".tex"
+      || refFileName.trimmed() == it->fileName.trimmed() + QStringLiteral(".tex")
       ) {
         anchorForRefFileFound = true;
 

@@ -108,7 +108,7 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
         if (!urlLower.endsWith(QLatin1String(".html")) && !urlLower.endsWith(QLatin1String(".htm")))
             continue;
 
-        int pos = url.indexOf ('#');
+        int pos = url.indexOf (QLatin1Char(('#')));
         QString tmpUrl = pos == -1 ? url : url.left(pos);
 
         // url already there, abort insertion
@@ -163,7 +163,7 @@ bool CHMGenerator::doCloseDocument()
 
 void CHMGenerator::preparePageForSyncOperation( int zoom , const QString & url)
 {
-    QString pAddress= QString("ms-its:" + m_fileName + "::" + url);
+    QString pAddress= QStringLiteral("ms-its:") + m_fileName + QStringLiteral("::") + url;
     m_chmUrl = url;
     m_syncGen->setZoomFactor(zoom);
     m_syncGen->openUrl(QUrl(pAddress));
@@ -258,7 +258,7 @@ void CHMGenerator::generatePixmap( Okular::PixmapRequest * request )
         , static_cast<double>(requestHeight)/static_cast<double>(request->page()->height())
         ) ) * 100;
 
-    QString pAddress= QString("ms-its:" + m_fileName + "::" + url);
+    QString pAddress= QStringLiteral("ms-its:") + m_fileName + QStringLiteral("::") + url;
     m_chmUrl = url;
     m_syncGen->setZoomFactor(zoom);
     m_syncGen->view()->resize(requestWidth,requestHeight);
@@ -425,7 +425,7 @@ QVariant CHMGenerator::metaData( const QString &key, const QVariant &option ) co
 {
     if ( key == QLatin1String("NamedViewport") && !option.toString().isEmpty() )
     {
-        const int pos = option.toString().indexOf('#');
+        const int pos = option.toString().indexOf(QLatin1Char('#'));
         QString tmpUrl = pos == -1 ? option.toString() : option.toString().left(pos);
         Okular::DocumentViewport viewport;
         QMap<QString,int>::const_iterator it = m_urlPage.find(tmpUrl);

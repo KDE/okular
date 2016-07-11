@@ -165,7 +165,7 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
     break;
 
   case 0x7b:
-    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += '-';
+    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += QLatin1Char('-');
     break;
   case 0x7c:
     currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += QLatin1String("---");
@@ -174,7 +174,7 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
     currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += QLatin1String("\"");
     break;
   case 0x7e:
-    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += '~';
+    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += QLatin1Char('~');
     break;
   case 0x7f:
     currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += QLatin1String("@@"); // @@@ check!
@@ -184,7 +184,7 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
     if ((ch >= 0x21) && (ch <= 0x7a))
       currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += QChar(ch);
     else
-      currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += '?';
+      currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += QLatin1Char('?');
     break;
   }
 
@@ -465,7 +465,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
               line_boundary_encountered = true;
               space_encountered = true;
               if (abs(DDtmp) >= 10*(currinf.fontp->scaled_size_in_DVI_units/6))
-                currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += '\n';
+                currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += QLatin1Char('\n');
             }
             currinf.data.dvi_v += ((long) (DDtmp *  current_dimconv))/65536;
             currinf.data.pxl_v  = int(currinf.data.dvi_v/shrinkfactor);
@@ -487,7 +487,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
             line_boundary_encountered = true;
             space_encountered = true;
             if (abs(YYtmp) >= 10*(currinf.fontp->scaled_size_in_DVI_units/6))
-              currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += '\n';
+              currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += QLatin1Char('\n');
           }
           currinf.data.dvi_v += currinf.data.y/65536;
           currinf.data.pxl_v = int(currinf.data.dvi_v/shrinkfactor);
@@ -508,7 +508,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
             line_boundary_encountered = true;
             space_encountered = true;
             if (abs(ZZtmp) >= 10*(currinf.fontp->scaled_size_in_DVI_units/6))
-              currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += '\n';
+              currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += QLatin1Char('\n');
           }
           currinf.data.dvi_v += currinf.data.z/65536;
           currinf.data.pxl_v  = int(currinf.data.dvi_v/shrinkfactor);
@@ -594,7 +594,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
     /* heuristic to properly detect newlines; a space is needed */
     if (after_space &&
         line_boundary_encountered && word_boundary_encountered) {
-      if (currentlyDrawnPage->textBoxList.last().text.endsWith('\n'))
+      if (currentlyDrawnPage->textBoxList.last().text.endsWith(QLatin1Char('\n')))
          currentlyDrawnPage->textBoxList.last().text.chop(1);
       currentlyDrawnPage->textBoxList.last().text += QLatin1String(" \n");
       after_space = false;

@@ -139,7 +139,7 @@ void dvifile::process_preamble()
   magic_number = readUINT8();
   strncpy(job_id, (char *)command_pointer, magic_number);
   job_id[magic_number] = '\0';
-  generatorString = job_id;
+  generatorString = QString::fromLocal8Bit(job_id);
 }
 
 
@@ -205,7 +205,7 @@ void dvifile::read_postamble()
     double enlargement_factor = (double(scale) * double(_magnification))/(double(design) * 1000.0);
 
     if (font_pool != 0) {
-      TeXFontDefinition *fontp = font_pool->appendx(fontname, checksum, scale, enlargement_factor);
+      TeXFontDefinition *fontp = font_pool->appendx(QString::fromLocal8Bit(fontname), checksum, scale, enlargement_factor);
 
       // Insert font in dictionary and make sure the dictionary is big
       // enough.
@@ -398,7 +398,7 @@ QString dvifile::convertPDFtoPS(const QString &PDFFilename, QString *converrorms
                           "contained in distributions of the ghostscript PostScript interpreter system. If "
                           "ghostscript is not installed on your system, you could install it now. "
                           "If you are sure that ghostscript is installed, try to use <strong>pdf2ps</strong> "
-                          "from the command line to check if it really works.</p><p><em>PATH:</em> %2</p></qt>", PDFFilename, QString(qgetenv("PATH")));
+                          "from the command line to check if it really works.</p><p><em>PATH:</em> %2</p></qt>", PDFFilename, QString::fromLocal8Bit(qgetenv("PATH")));
       have_complainedAboutMissingPDF2PS = true;
     }
     return QString();
@@ -411,7 +411,7 @@ QString dvifile::convertPDFtoPS(const QString &PDFFilename, QString *converrorms
     // Indicates that conversion failed, won't try again.
     convertedFiles[PDFFilename].clear();
     if (converrorms != 0) {
-      const QString output = pdf2ps.readAll();
+      const QString output = QString::fromLocal8Bit(pdf2ps.readAll());
 
       *converrorms = i18n("<qt><p>The PDF-file %1 could not be converted to PostScript. Some graphic elements in your "
                           "document will therefore not be displayed.</p>"

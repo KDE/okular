@@ -103,7 +103,7 @@ void TeXFontDefinition::fontNameReceiver(const QString& fname)
   // in the DVI file's directory. If that works, modify the filename
   // accordingly and go on.
   if (file == 0) {
-    QString filename_test(font_pool->getExtraSearchPath() + '/' + filename);
+    QString filename_test(font_pool->getExtraSearchPath() + QLatin1Char('/') + filename);
     file = fopen( QFile::encodeName(filename_test).constData(), "r");
     if (file == 0) {
       qCCritical(OkularDviDebug) << i18n("Cannot find font %1, file %2.", fontname, filename) << endl;

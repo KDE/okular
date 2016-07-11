@@ -219,9 +219,9 @@ bool LCHMFile::searchQuery( const QString& inquery, QStringList * searchresults,
 	{
 		// A phrase query found. Locate its boundaries, and parse it.
 		QString word = rxword.cap ( 1 );
-		QChar type = '+';
+        QChar type = QLatin1Char('+');
 		
-		if ( word[0] == '-' || word[0] == '+' )
+        if ( word[0] == QLatin1Char('-') || word[0] == QLatin1Char('+') )
 		{
 			type = word[0];
 			word.remove (0, 1);
@@ -229,7 +229,7 @@ bool LCHMFile::searchQuery( const QString& inquery, QStringList * searchresults,
 		
 		validateWord ( word, query_valid );
 				
-		if ( type == '-' )
+        if ( type == QLatin1Char('-') )
 			words_must_not_exist.push_back ( word );
 		else
 			words_must_exist.push_back ( word );

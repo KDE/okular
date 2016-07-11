@@ -321,7 +321,7 @@ QString LCHMFileImpl::decodeEntity( const QString & entity )
 	}
 
 	// If entity is an ASCII code like &#12349; - just decode it
-	if ( entity[0] == '#' )
+    if ( entity[0] == QLatin1Char('#') )
 	{
 		bool valid;
 		unsigned int ascode = entity.midRef(1).toUInt( &valid );
@@ -351,12 +351,12 @@ QString LCHMFileImpl::decodeEntity( const QString & entity )
 
 inline int LCHMFileImpl::findStringInQuotes (const QString& tag, int offset, QString& value, bool firstquote, bool decodeentities)
 {
-	int qbegin = tag.indexOf ('"', offset);
+    int qbegin = tag.indexOf (QLatin1Char('"'), offset);
 	
 	if ( qbegin == -1 )
 		qFatal ("LCHMFileImpl::findStringInQuotes: cannot find first quote in <param> tag: '%s'", qPrintable( tag ));
 
-	int qend = firstquote ? tag.indexOf ('"', qbegin + 1) : tag.lastIndexOf ('"');
+    int qend = firstquote ? tag.indexOf (QLatin1Char('"'), qbegin + 1) : tag.lastIndexOf (QLatin1Char('"'));
 
 	if ( qend == -1 || qend <= qbegin )
 		qFatal ("LCHMFileImpl::findStringInQuotes: cannot find last quote in <param> tag: '%s'", qPrintable( tag ));
@@ -373,14 +373,14 @@ inline int LCHMFileImpl::findStringInQuotes (const QString& tag, int offset, QSt
 		{
 			if ( !fill_entity )
 			{
-				if ( tag[i] == '&' ) // HTML entity starts
+                if ( tag[i] == QLatin1Char('&') ) // HTML entity starts
 					fill_entity = true;
 				else
 					value.append (tag[i]);
 			}
 			else
 			{
-				if ( tag[i] == ';' ) // HTML entity ends
+                if ( tag[i] == QLatin1Char(';') ) // HTML entity ends
 				{
 					// If entity is an ASCII code, just decode it
 					QString decode = decodeEntity( htmlentity );
@@ -415,7 +415,7 @@ bool LCHMFileImpl::searchWord (const QString& text,
 	if ( text.isEmpty() || !m_searchAvailable )
 		return false;
 
-	QString searchword = (QString) convertSearchWord (text);
+    QString searchword = QString::fromLocal8Bit( convertSearchWord (text) );
 
 #define FTS_HEADER_LEN 0x32
 	unsigned char header[FTS_HEADER_LEN];
@@ -477,9 +477,9 @@ bool LCHMFileImpl::searchWord (const QString& text,
 			wrd_buf[word_len - 1] = 0;
 
 			if ( pos == 0 )
-				word = wrd_buf;
+                word = QString::fromLocal8Bit(wrd_buf, word_len);
 			else
-				word = word.mid (0, pos) + (const char*) wrd_buf;
+                word = word.mid (0, pos) + QString::fromLocal8Bit((const char*) wrd_buf, word_len);
 
 			delete[] wrd_buf;
 
@@ -584,9 +584,9 @@ inline uint32_t LCHMFileImpl::GetLeafNodeOffset(const QString& text,
 			wrd_buf[word_len - 1] = 0;
 
 			if ( pos == 0 )
-				word = wrd_buf;
+                word = QString::fromLocal8Bit(wrd_buf, word_len);
 			else
-				word = word.mid(0, pos) + (const char*) wrd_buf;
+                word = word.mid(0, pos) + QString::fromLocal8Bit((const char*) wrd_buf, word_len);
 
 			delete[] wrd_buf;
 
@@ -830,14 +830,14 @@ bool LCHMFileImpl::getInfoFromSystem()
 				if ( m_topicsFile.isEmpty() )
 				{
 					QString topicAttempt = QStringLiteral("/"), tmp;
-					topicAttempt += QString ((const char*) buffer +index +2);
+                    topicAttempt += QString::fromLocal8Bit ((const char*) buffer +index +2);
 
-					tmp = topicAttempt + ".hhc";
+                    tmp = topicAttempt + QStringLiteral(".hhc");
 				
 					if ( ResolveObject( tmp, &ui) )
 						m_topicsFile = qPrintable( tmp );
 
-					tmp = topicAttempt + ".hhk";
+                    tmp = topicAttempt + QStringLiteral(".hhk");
 				
 					if ( ResolveObject( tmp, &ui) )
 						m_indexFile = qPrintable( tmp );
@@ -848,7 +848,7 @@ bool LCHMFileImpl::getInfoFromSystem()
 				index += 2;
 				cursor = buffer + index;
 
-				m_font = QString ((const char*) buffer + index + 2);
+                m_font = QString::fromLocal8Bit ((const char*) buffer + index + 2);
 				break;
 			
 			default:
@@ -918,7 +918,7 @@ void LCHMFileImpl::getSearchResults( const LCHMSearchProgressResults& tempres,
 			continue;
 
 		combuf[COMMON_BUF_LEN - 1] = 0;
-		results->push_back( LCHMUrlFactory::makeURLabsoluteIfNeeded( (const char*) combuf ) );
+        results->push_back( LCHMUrlFactory::makeURLabsoluteIfNeeded( QString::fromLocal8Bit((const char*) combuf) ) );
 		
 		if ( --limit_results == 0 )
 			break;
@@ -928,7 +928,7 @@ void LCHMFileImpl::getSearchResults( const LCHMSearchProgressResults& tempres,
 
 QString LCHMFileImpl::normalizeUrl( const QString & path ) const
 {
-	int pos = path.indexOf ('#');
+    int pos = path.indexOf (QLatin1Char('#'));
 	QString fixedpath = pos == -1 ? path : path.left (pos);
 	
 	return LCHMUrlFactory::makeURLabsoluteIfNeeded( fixedpath );
@@ -971,18 +971,18 @@ bool LCHMFileImpl::parseFileAndFillArray( const QString & file, QVector< LCHMPar
 	// Split the HHC file by HTML tags
 	int stringlen = src.length();
 	
-	while ( pos < stringlen && (pos = src.indexOf ('<', pos)) != -1 )
+    while ( pos < stringlen && (pos = src.indexOf (QLatin1Char('<'), pos)) != -1 )
 	{
 		int i, word_end = 0;
 		
 		for ( i = ++pos; i < stringlen; i++ )
 		{
 			// If a " or ' is found, skip to the next one.
-			if ( (src[i] == '"' || src[i] == '\'') )
+            if ( (src[i] == QLatin1Char('"') || src[i] == QLatin1Char('\'')) )
 			{
 				// find where quote ends, either by another quote, or by '>' symbol (some people don't know HTML)
 				int nextpos = src.indexOf (src[i], i+1);
-				if ( nextpos == -1 	&& (nextpos = src.indexOf ('>', i+1)) == -1 )
+                if ( nextpos == -1 	&& (nextpos = src.indexOf (QLatin1Char('>'), i+1)) == -1 )
 				{
 					qWarning ("LCHMFileImpl::ParseHhcAndFillTree: corrupted TOC: %s", qPrintable( src.mid(i) ));
 					return false;
@@ -990,9 +990,9 @@ bool LCHMFileImpl::parseFileAndFillArray( const QString & file, QVector< LCHMPar
 
 				i =  nextpos;
 			}
-			else if ( src[i] == '>'  )
+            else if ( src[i] == QLatin1Char('>')  )
 				break;
-			else if ( !src[i].isLetterOrNumber() && src[i] != '/' && !word_end )
+            else if ( !src[i].isLetterOrNumber() && src[i] != QLatin1Char('/') && !word_end )
 				word_end = i;
 		}
 		
@@ -1080,7 +1080,7 @@ bool LCHMFileImpl::parseFileAndFillArray( const QString & file, QVector< LCHMPar
 					entry.urls.push_back( url );
 			}
 			else if ( pname == QLatin1String("see also") && asIndex && entry.name != pvalue )
-				entry.urls.push_back (":" + pvalue);
+                entry.urls.push_back (QLatin1Char(':') + pvalue);
 			else if ( pname == QLatin1String("imagenumber") )
 			{
 				bool bok;
@@ -1141,9 +1141,9 @@ bool LCHMFileImpl::getFileContentAsString( QString * str, const QString & url, b
 		if ( length > 0 )
 		{
 			buf.resize( length + 1 );
-			buf [length] = '\0';
+            buf [length] = '\0';
 			
-			*str = internal_encoding ? (QString)( buf.constData() ) :  encodeWithCurrentCodec( buf.constData() );
+            *str = internal_encoding ? QString::fromLocal8Bit( buf.constData() ) :  encodeWithCurrentCodec( buf.constData() );
 			return true;
 		}
 	}
@@ -1165,7 +1165,7 @@ QString LCHMFileImpl::getTopicByUrl( const QString & url ) const
 
 extern "C" int chm_enumerator_callback( struct chmFile*, struct chmUnitInfo *ui, void *context )
 {
-	((QStringList*) context)->push_back( ui->path );
+    ((QStringList*) context)->push_back(QString::fromLocal8Bit( ui->path ) );
 	return CHM_ENUMERATOR_CONTINUE;
 }
 
@@ -1266,7 +1266,7 @@ void LCHMFileImpl::fillTopicsUrlMap()
 		uint32_t off_url = get_int32_le( (uint32_t *)(topics.data() + i + 8) );
 		off_url = get_int32_le( (uint32_t *)( urltbl.data() + off_url + 8) ) + 8;
 
-		QString url = LCHMUrlFactory::makeURLabsoluteIfNeeded( (const char*) urlstr.data() + off_url );
+        QString url = LCHMUrlFactory::makeURLabsoluteIfNeeded( QString::fromLocal8Bit ( (const char*) urlstr.data() + off_url ) );
 
 		if ( off_title < (uint32_t)strings.size() )
 			m_url2topics[url] = encodeWithCurrentCodec ( (const char*) strings.data() + off_title );

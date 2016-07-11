@@ -60,7 +60,7 @@ public:
    */
   virtual ~Shell();
 
-  QSize sizeHint() const;
+  QSize sizeHint() const Q_DECL_OVERRIDE;
 
   /**
    * Returns false if Okular component wasn't found
@@ -138,7 +138,7 @@ private:
   int  findTabIndex( QObject* sender );
 
 private:
-  bool eventFilter(QObject *obj, QEvent *event) override;
+  bool eventFilter(QObject *obj, QEvent *event) Q_DECL_OVERRIDE;
 
   KPluginFactory* m_partFactory;
   KRecentFilesAction* m_recent;

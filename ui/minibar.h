@@ -131,7 +131,7 @@ class MiniBar : public QWidget
 
     private:
         void resizeForPage( int pages );
-        bool eventFilter( QObject *target, QEvent *event );
+        bool eventFilter( QObject *target, QEvent *event ) Q_DECL_OVERRIDE;
 
         MiniBarLogic * m_miniBarLogic;
         PageNumberEdit * m_pageNumberEdit;

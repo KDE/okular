@@ -137,7 +137,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         bool openNewFilesInTabs() const Q_DECL_OVERRIDE;
 
     public Q_SLOTS:                // dbus
-        Q_SCRIPTABLE Q_NOREPLY void goToPage(uint page);
+        Q_SCRIPTABLE Q_NOREPLY void goToPage(uint page) Q_DECL_OVERRIDE;
         Q_SCRIPTABLE Q_NOREPLY void openDocument( const QString &doc );
         Q_SCRIPTABLE uint pages();
         Q_SCRIPTABLE uint currentPage();

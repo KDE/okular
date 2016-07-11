@@ -40,10 +40,10 @@ class DjVuGenerator : public Okular::Generator
         QVariant metaData( const QString & key, const QVariant & option ) const Q_DECL_OVERRIDE;
 
     protected:
-        bool doCloseDocument();
+        bool doCloseDocument() Q_DECL_OVERRIDE;
         // pixmap generation
         QImage image( Okular::PixmapRequest *request ) Q_DECL_OVERRIDE;
-        Okular::TextPage* textPage( Okular::Page *page );
+        Okular::TextPage* textPage( Okular::Page *page ) Q_DECL_OVERRIDE;
 
     private:
         void loadPages( QVector<Okular::Page*> & pagesVector, int rotation );

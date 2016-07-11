@@ -75,19 +75,19 @@ Q_OBJECT
         void displayMessage( const QString & message, const QString & details = QString(), PageViewMessage::Icon icon=PageViewMessage::Info, int duration=-1 );
 
         // inherited from DocumentObserver
-        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags );
-        void notifyViewportChanged( bool smoothMove );
-        void notifyPageChanged( int pageNumber, int changedFlags );
-        void notifyContentsCleared( int changedFlags );
-        void notifyZoom(int factor);
-        bool canUnloadPixmap( int pageNum ) const;
-        void notifyCurrentPageChanged( int previous, int current );
+        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) Q_DECL_OVERRIDE;
+        void notifyViewportChanged( bool smoothMove ) Q_DECL_OVERRIDE;
+        void notifyPageChanged( int pageNumber, int changedFlags ) Q_DECL_OVERRIDE;
+        void notifyContentsCleared( int changedFlags ) Q_DECL_OVERRIDE;
+        void notifyZoom(int factor) Q_DECL_OVERRIDE;
+        bool canUnloadPixmap( int pageNum ) const Q_DECL_OVERRIDE;
+        void notifyCurrentPageChanged( int previous, int current ) Q_DECL_OVERRIDE;
 
         // inherited from View
-        bool supportsCapability( ViewCapability capability ) const;
-        CapabilityFlags capabilityFlags( ViewCapability capability ) const;
-        QVariant capability( ViewCapability capability ) const;
-        void setCapability( ViewCapability capability, const QVariant &option );
+        bool supportsCapability( ViewCapability capability ) const Q_DECL_OVERRIDE;
+        CapabilityFlags capabilityFlags( ViewCapability capability ) const Q_DECL_OVERRIDE;
+        QVariant capability( ViewCapability capability ) const Q_DECL_OVERRIDE;
+        void setCapability( ViewCapability capability, const QVariant &option ) Q_DECL_OVERRIDE;
 
         QList< Okular::RegularAreaRect * > textSelections( const QPoint& start, const QPoint& end, int& firstpage );
         Okular::RegularAreaRect * textSelectionForItem( PageViewItem * item, const QPoint & startPoint = QPoint(), const QPoint & endPoint = QPoint() );

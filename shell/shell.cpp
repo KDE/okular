@@ -398,8 +398,7 @@ QStringList Shell::fileFormats() const
     for ( ; it != itEnd; ++it )
     {
         KService::Ptr service = *it;
-        QStringList mimeTypes = service->serviceTypes();
-        mimeTypes.removeAll(basePartService);
+        QStringList mimeTypes = service->mimeTypes();
 
         supportedPatterns += mimeTypes;
     }

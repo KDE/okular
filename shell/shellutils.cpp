@@ -82,7 +82,7 @@ QString serializeOptions(const QCommandLineParser &args)
     const bool startInPresentation = args.isSet( QStringLiteral("presentation") );
     const bool showPrintDialog = args.isSet( QStringLiteral("print") );
     const bool unique = args.isSet(QStringLiteral("unique")) && args.positionalArguments().count() <= 1;
-    const bool noRaise = !args.isSet(QStringLiteral("raise"));
+    const bool noRaise = args.isSet(QStringLiteral("noraise"));
     const QString page = args.value(QStringLiteral("page"));
 
     return serializeOptions(startInPresentation, showPrintDialog, unique, noRaise, page);

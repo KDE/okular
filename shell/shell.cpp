@@ -127,6 +127,11 @@ Shell::Shell( const QString &serializedOptions )
         if (!m_unique)
             KMessageBox::information(this, i18n("There is already a unique Okular instance running. This instance won't be the unique one."));
     }
+    else
+    {
+        QString serviceName = QStringLiteral("org.kde.okular-") + QString::number(qApp->applicationPid());
+        QDBusConnection::sessionBus().registerService(serviceName);
+    }
     if (ShellUtils::noRaise(serializedOptions))
     {
         setAttribute(Qt::WA_ShowWithoutActivating);

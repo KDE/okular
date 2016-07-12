@@ -4281,7 +4281,22 @@ QStringList Document::supportedMimeTypes() const
         {
             result << md.mimeTypes();
         }
-        result.removeDuplicates();
+
+        // Remove duplicate mimetypes represented by different names
+        QMimeDatabase mimeDatabase;
+        QSet<QMimeType> uniqueMimetypes;
+        for (const QString &mimeName : result) {
+            uniqueMimetypes.insert(mimeDatabase.mimeTypeForName(mimeName));
+        }
+        result.clear();
+        for (const QMimeType &mimeType : uniqueMimetypes) {
+            result.append(mimeType.name());
+        }
+
+        // Sorting by mimetype name doesn't make a ton of sense,
+        // but ensures that the list is ordered the same way every time
+        qSort(result);
+
         d->m_supportedMimeTypes = result;
     }
     return result;

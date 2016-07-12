@@ -38,6 +38,8 @@
 #include <QFileDialog>
 #include <QStandardPaths>
 
+#include <Kdelibs4Migration>
+#include <Kdelibs4ConfigMigrator>
 #include <KJobWidgets>
 #include <kaboutapplicationdialog.h>
 #include <kactioncollection.h>
@@ -296,13 +298,51 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     // when this part is used in an application other than okular (e.g. unit tests)
     setComponentName(QStringLiteral("okular"), QString());
 
+    const QLatin1String configFileName("okularpartrc");
+
     // first, we check if a config file name has been specified
-    QString configFileName = detectConfigFileName( args );
-    if ( configFileName.isEmpty() )
+    QString configFilePath = detectConfigFileName( args );
+
+    if ( configFilePath.isEmpty() )
     {
-        configFileName = QStandardPaths::locate(QStandardPaths::ConfigLocation, QStringLiteral("okularpartrc"));
+        configFilePath = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QLatin1Char('/') + configFileName;
     }
-    Okular::Settings::instance( configFileName );
+
+
+    // Migrate old config
+    if ( !QFile::exists( configFilePath ) ) {
+        qCDebug(OkularUiDebug) << "Did not find a config file, attempting to look for old config";
+
+        // Migrate old config + UI
+        Kdelibs4ConfigMigrator configMigrator( componentName() );
+        // UI file is handled automatically, we only need to specify config name because we're a part
+        configMigrator.setConfigFiles( QStringList( configFileName ) );
+
+        // If there's no old okular config to migrate, look for kpdf
+        if ( !configMigrator.migrate() ) {
+            qCDebug(OkularUiDebug) << "Did not find an old okular config file, attempting to look for kpdf config";
+
+            // First try the automatic detection, using $KDEHOME etc.
+            Kdelibs4Migration migration;
+            QString kpdfConfig = migration.locateLocal( "config", QStringLiteral("kpdfpartrc") );
+
+            // Fallback just in case it tried e. g. ~/.kde4
+            if ( kpdfConfig.isEmpty() ) {
+                kpdfConfig = QDir::homePath() + QStringLiteral("/.kde/share/config/kpdfpartrc");
+            }
+
+            if ( QFile::exists( kpdfConfig ) ) {
+                qCDebug(OkularUiDebug) << "Found old kpdf config" << kpdfConfig << "copying to" << configFilePath;
+                QFile::copy( kpdfConfig, configFilePath );
+            } else {
+                qCDebug(OkularUiDebug) << "Did not find an old kpdf config file";
+            }
+        } else {
+            qCDebug(OkularUiDebug) << "Migrated old okular config";
+        }
+    }
+
+    Okular::Settings::instance( configFilePath );
 
     numberOfParts++;
     if (numberOfParts == 1) {

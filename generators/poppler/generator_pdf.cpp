@@ -800,8 +800,11 @@ Okular::FontInfo::List PDFGenerator::fontsForPage( int page )
 
     QList<Poppler::FontInfo> fonts;
     userMutex()->lock();
-#pragma message("scanForFonts doesn't exist in Poppler5. BahhhH!")
-    //pdfdoc->scanForFonts( 1, &fonts );
+
+    Poppler::FontIterator* it = pdfdoc->newFontIterator(page);
+    if (it->hasNext()) {
+        fonts = it->next();
+    }
     userMutex()->unlock();
 
     foreach (const Poppler::FontInfo &font, fonts)

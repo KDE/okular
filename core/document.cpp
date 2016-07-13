@@ -1521,10 +1521,12 @@ void DocumentPrivate::fontReadingProgress( int page )
 
 void DocumentPrivate::fontReadingGotFont( const Okular::FontInfo& font )
 {
-    // TODO try to avoid duplicate fonts
-    m_fontsCache.append( font );
+    // Try to avoid duplicate fonts
+    if (m_fontsCache.indexOf(font) == -1) {
+        m_fontsCache.append( font );
 
-    emit m_parent->gotFont( font );
+        emit m_parent->gotFont( font );
+    }
 }
 
 void DocumentPrivate::slotGeneratorConfigChanged( const QString& )

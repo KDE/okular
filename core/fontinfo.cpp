@@ -30,8 +30,7 @@ class Okular::FontInfoPrivate
                    type == rhs.type &&
                    embedType == rhs.embedType &&
                    file == rhs.file &&
-                   canBeExtracted == rhs.canBeExtracted &&
-                   nativeId == rhs.nativeId;
+                   canBeExtracted == rhs.canBeExtracted;
         }
 
         QString name;

@@ -39,7 +39,7 @@ namespace Epub {
     void checkCSS(QString &css);
 
     struct epub *mEpub;
-    QUrl mCurrentSubDocument;
+    QString mCurrentSubDocument;
 
     int padding;
 

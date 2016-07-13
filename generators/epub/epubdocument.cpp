@@ -16,18 +16,6 @@
 Q_LOGGING_CATEGORY(OkularEpuDebug, "org.kde.okular.generators.epu")
 using namespace Epub;
 
-namespace {
-
-QString resourceUrl(const QUrl &baseUrl, const QString &u)
-{
-  QUrl newUrl(baseUrl.adjusted(QUrl::RemoveFilename).path() + QLatin1Char('/') + u);
-  QString newDir = newUrl.toLocalFile();
-  newDir.remove(0, 1);
-  return newDir;
-}
-
-}
-
 EpubDocument::EpubDocument(const QString &fileName) : QTextDocument(),
     padding(20)
 {
@@ -56,7 +44,11 @@ struct epub *EpubDocument::getEpub()
 
 void EpubDocument::setCurrentSubDocument(const QString &doc)
 {
-  mCurrentSubDocument = QUrl::fromLocalFile(QLatin1Char('/') + doc);
+  mCurrentSubDocument.clear();
+  int index = doc.indexOf('/');
+  if (index > 0) {
+      mCurrentSubDocument = doc.left(index);
+  }
 }
 
 int EpubDocument::maxContentHeight() const
@@ -81,7 +73,7 @@ QVariant EpubDocument::loadResource(int type, const QUrl &name)
   char *data;
 
   // Get the data from the epub file
-  size = epub_get_data(mEpub, resourceUrl(mCurrentSubDocument, name.toString()).toUtf8().constData(), &data);
+  size = epub_get_data(mEpub, (mCurrentSubDocument + name.toString()).toUtf8().constData(), &data);
 
   QVariant resource;
 

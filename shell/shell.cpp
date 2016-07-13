@@ -432,13 +432,26 @@ void Shell::fileOpen()
     QPointer<QFileDialog> dlg( new QFileDialog( this ));
     dlg->setDirectoryUrl( startDir );
     dlg->setAcceptMode( QFileDialog::AcceptOpen );
+    dlg->setOption( QFileDialog::HideNameFilterDetails, true );
 
-    if ( m_fileformatsscanned && m_fileformats.isEmpty() )
-        dlg->setNameFilter( { i18n( "All Files (*)" ) } );
-    else
-        dlg->setMimeTypeFilters( m_fileformats );
+    QMimeDatabase mimeDatabase;
+    QSet<QString> globPatterns;
+    QStringList namePatterns;
+    foreach ( const QString &mimeName, m_fileformats ) {
+        QMimeType mimeType = mimeDatabase.mimeTypeForName( mimeName );
+        globPatterns.unite( mimeType.globPatterns().toSet() ) ;
 
-    dlg->setWindowTitle( i18n( "Open Document" ) );
+        namePatterns.append( mimeType.comment() +
+                             QStringLiteral(" (") +
+                             mimeType.globPatterns().join( QLatin1Char(' ') ) +
+                             QStringLiteral(")")
+                           );
+    }
+    namePatterns.prepend( i18n("All files (*)") );
+    namePatterns.prepend( i18n("All supported files (%s)", globPatterns.toList().join( QLatin1Char(' ') ) ) );
+    dlg->setNameFilters( namePatterns );
+
+    dlg->setWindowTitle( i18n("Open Document") );
     if ( !dlg->exec() || !dlg)
         return;
 

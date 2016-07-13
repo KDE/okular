@@ -4583,8 +4583,10 @@ bool Document::saveDocumentArchive( const QString &fileName )
         return false;
 
     const QByteArray contentDocXml = contentDoc.toByteArray();
-    okularArchive.writeFile( QStringLiteral("content.xml"), user.loginName(), userGroup.name(),
-                             contentDocXml.constData(), contentDocXml.length() );
+    const mode_t perm = 0100644;
+    okularArchive.writeFile( QStringLiteral("content.xml"), contentDocXml, perm,
+                              user.loginName(), userGroup.name() );
+
 
     okularArchive.addLocalFile( docPath, docFileName );
     okularArchive.addLocalFile( metadataFile.fileName(), QStringLiteral("metadata.xml") );

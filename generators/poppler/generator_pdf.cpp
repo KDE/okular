@@ -1773,6 +1773,7 @@ bool PDFGenerator::supportsOption( SaveOption option ) const
 
 bool PDFGenerator::save( const QString &fileName, SaveOptions options, QString *errorText )
 {
+    Q_UNUSED(errorText);
     Poppler::PDFConverter *pdfConv = pdfdoc->pdfConverter();
 
     pdfConv->setOutputFileName( fileName );

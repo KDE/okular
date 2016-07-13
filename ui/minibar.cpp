@@ -116,7 +116,7 @@ void MiniBarLogic::notifySetup( const QVector< Okular::Page * > & pageVector, in
         miniBar->m_pageNumberLabel->setVisible( labelsDiffer );
         miniBar->m_pageNumberEdit->setVisible( !labelsDiffer );
 
-        miniBar->resize( miniBar->minimumSizeHint() );
+        miniBar->adjustSize();
 
         miniBar->setEnabled( true );
     }
@@ -209,7 +209,7 @@ MiniBar::MiniBar( QWidget * parent, MiniBarLogic * miniBarLogic )
     connect( m_prevButton, &QAbstractButton::clicked, this, &MiniBar::prevPage );
     connect( m_nextButton, &QAbstractButton::clicked, this, &MiniBar::nextPage );
 
-    resize( minimumSizeHint() );
+    adjustSize();
 
     // widget starts disabled (will be enabled after opening a document)
     setEnabled( false );

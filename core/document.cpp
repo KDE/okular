@@ -2262,13 +2262,24 @@ QVector<KPluginMetaData> DocumentPrivate::availableGenerators()
 
 KPluginMetaData DocumentPrivate::generatorForMimeType(const QMimeType& type, QWidget* widget)
 {
+    // First try to find an exact match, and then look for more general ones (e. g. the plain text one)
+    // Ideally we would rank these by "closeness", but that might be overdoing it
+
     const QVector<KPluginMetaData> available = availableGenerators();
     QVector<KPluginMetaData> offers;
+    QVector<KPluginMetaData> exactMatches;
+
+    QMimeDatabase mimeDatabase;
 
     for (const KPluginMetaData& md : available)
     {
         foreach (const QString& supported, md.mimeTypes())
         {
+            QMimeType mimeType = mimeDatabase.mimeTypeForName(supported);
+            if (mimeType == type) {
+                exactMatches << md;
+            }
+
             if (type.inherits(supported))
             {
                 offers << md;
@@ -2276,6 +2287,11 @@ KPluginMetaData DocumentPrivate::generatorForMimeType(const QMimeType& type, QWi
             }
         }
     }
+
+    if (!exactMatches.isEmpty()) {
+        offers = exactMatches;
+    }
+
     if (offers.isEmpty())
     {
         return KPluginMetaData();

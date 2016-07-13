@@ -2272,6 +2272,7 @@ KPluginMetaData DocumentPrivate::generatorForMimeType(const QMimeType& type, QWi
             if (type.inherits(supported))
             {
                 offers << md;
+                break;
             }
         }
     }

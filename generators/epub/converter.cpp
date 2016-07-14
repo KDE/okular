@@ -175,7 +175,6 @@ QTextDocument* Converter::convert( const QString &fileName )
   mTextDocument = newDocument;
 
   QTextCursor *_cursor = new QTextCursor( mTextDocument );
-  _cursor->beginEditBlock();
 
   mLocalLinks.clear();
   mSectionMap.clear();
@@ -347,20 +346,18 @@ QTextDocument* Converter::convert( const QString &fileName )
 
       _handle_anchors(before, link);
 
-      // Force a page break.
-      // The new format will also clear the previous one,
+      const int page = mTextDocument->pageCount();
+
+      // it will clear the previous format
       // useful when the last line had a bullet
-      QTextBlockFormat pageBreak;
-      pageBreak.setPageBreakPolicy(QTextFormat::PageBreak_AlwaysAfter);
-      _cursor->insertBlock(pageBreak);
+      _cursor->insertBlock(QTextBlockFormat());
+
+      while(mTextDocument->pageCount() == page)
+        _cursor->insertText(QStringLiteral("\n"));
     }
   } while (epub_it_get_next(it));
 
   epub_free_iterator(it);
-
-  // Clear the previous format
-  // In particular, clear the last page break.
-  _cursor->insertBlock(QTextBlockFormat());
 
   // handle toc
   struct titerator *tit;
@@ -400,8 +397,10 @@ QTextDocument* Converter::convert( const QString &fileName )
               _handle_anchors(block, link);
             }
 
-            // start a new page.
-            _cursor->block().blockFormat().setPageBreakPolicy(QTextFormat::PageBreak_AlwaysAfter);
+            // Start new file in a new page
+            int page = mTextDocument->pageCount();
+            while(mTextDocument->pageCount() == page)
+              _cursor->insertText(QStringLiteral("\n"));
           }
 
           free(data);
@@ -447,8 +446,6 @@ QTextDocument* Converter::convert( const QString &fileName )
       }
     }
   }
-
-  _cursor->endEditBlock();
 
   delete _cursor;
 

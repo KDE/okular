@@ -25,53 +25,53 @@
 
 // qt/kde includes
 #include <QApplication>
-#include <QFile>
-#include <QLayout>
-#include <QLabel>
-#include <QTimer>
-#include <QTemporaryFile>
-#include <QtPrintSupport/QPrinter>
-#include <QtPrintSupport/QPrintDialog>
-#include <QScrollBar>
-#include <QInputDialog>
-#include <QWidgetAction>
-#include <QFileDialog>
 #include <QDialog>
 #include <QDialogButtonBox>
-#include <QStandardPaths>
+#include <QFile>
+#include <QFileDialog>
+#include <QIcon>
+#include <QInputDialog>
+#include <QLayout>
+#include <QLabel>
+#include <QMenu>
+#include <QTimer>
+#include <QTemporaryFile>
+#include <QPrinter>
+#include <QPrintDialog>
+#include <QPrintPreviewDialog>
+#include <QScrollBar>
 #include <QSlider>
 #include <QSpinBox>
+#include <QStandardPaths>
+#include <QWidgetAction>
 
-#include <Kdelibs4Migration>
+#include <KAboutApplicationDialog>
+#include <KActionCollection>
+#include <KBookmarkAction>
+#include <KBookmarkMenu>
 #include <Kdelibs4ConfigMigrator>
+#include <Kdelibs4Migration>
+#include <KDirWatch>
+#include <KFilterBase>
+#include <KFilterDev>
+#include <KIO/Job>
 #include <KJobWidgets>
-#include <kaboutapplicationdialog.h>
-#include <kactioncollection.h>
-#include <kbookmarkaction.h>
-#include <kdirwatch.h>
-#include <kstandardaction.h>
-#include <kpluginfactory.h>
+#include <KMessageBox>
+#include <KPasswordDialog>
+#include <KPluginFactory>
 #include <KPluginMetaData>
-#include <kmessagebox.h>
-#include <kio/netaccess.h>
-#include <kmenu.h>
-#include <kxmlguiclient.h>
-#include <kxmlguifactory.h>
-#include <kstandardshortcut.h>
-#include <ktoggleaction.h>
-#include <ktogglefullscreenaction.h>
-#include <kio/job.h>
-#include <QIcon>
-#include <kfilterdev.h>
-#include <kfilterbase.h>
+#include <KSharedDataCache>
+#include <KStandardShortcut>
+#include <KToggleAction>
+#include <KToggleFullScreenAction>
+#include <KWallet>
+#include <KXMLGUIClient>
+#include <KXMLGUIFactory>
+
 #if 0
 #include <knewstuff2/engine.h>
 #endif
-#include <kdeprintdialog.h>
-#include <kprintpreview.h>
-#include <kbookmarkmenu.h>
-#include <kpassworddialog.h>
-#include <kwallet.h>
+
 #include <kdeversion.h>
 
 // local includes
@@ -2461,7 +2461,7 @@ void Part::slotPrintPreview()
     // Native printing supports KPrintPreview, Postscript needs to use FilePrinterPreview
     if ( m_document->printingSupport() == Okular::Document::NativePrinting )
     {
-        KPrintPreview previewdlg( &printer, widget() );
+        QPrintPreviewDialog previewdlg( &printer, widget() );
         setupPrint( printer );
         doPrint( printer );
         previewdlg.exec();
@@ -2740,14 +2740,14 @@ void Part::slotPrint()
     {
         printConfigWidget = m_document->printConfigurationWidget();
     }
-    if ( printConfigWidget )
-    {
-        printDialog = KdePrint::createPrintDialog( &printer, QList<QWidget*>() << printConfigWidget, widget() );
+
+    printDialog = new QPrintDialog(&printer, widget());
+    printDialog->setWindowTitle(i18nc("@title:window", "Print"));
+    QList<QWidget*> options;
+    if (printConfigWidget) {
+         options << printConfigWidget;
     }
-    else
-    {
-        printDialog = KdePrint::createPrintDialog( &printer, widget() );
-    }
+        printDialog->setOptionTabs(options);
 
     if ( printDialog )
     {

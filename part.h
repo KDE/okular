@@ -16,24 +16,25 @@
 #ifndef _PART_H_
 #define _PART_H_
 
-#include <kparts/readwritepart.h>
-#include <kpluginfactory.h>
-#include <kmessagewidget.h>
-#include <KCompressionDevice>
-#include <qicon.h>
-#include <qlist.h>
-#include <qpointer.h>
-#include <qprocess.h>
+#include <QIcon>
+#include <QList>
+#include <QPointer>
+#include <QProcess>
+#include <QtDBus>
 #include <QUrl>
-#include <kio/job.h>
+
+#include <KCompressionDevice>
+#include <KIO/Job>
+#include <KMessageWidget>
+#include <KParts/ReadWritePart>
+#include <KPluginFactory>
+
 #include "core/observer.h"
 #include "core/document.h"
 #include "kdocumentviewer.h"
 #include "interfaces/viewerinterface.h"
 
 #include "okularpart_export.h"
-
-#include <QtDBus/QtDBus>
 
 class QAction;
 class QWidget;
@@ -102,7 +103,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
     Q_CLASSINFO("D-Bus Interface", "org.kde.okular")
     Q_INTERFACES(KDocumentViewer)
     Q_INTERFACES(Okular::ViewerInterface)
-    
+
     friend class PartTest;
 
     public:
@@ -253,7 +254,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         void unsetDummyMode();
         void slotRenameBookmark( const DocumentViewport &viewport );
         void resetStartArguments();
-        
+
         static int numberOfParts;
 
         QTemporaryFile *m_tempfile;

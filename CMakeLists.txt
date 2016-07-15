@@ -18,7 +18,7 @@ include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
 include(KDEInstallDirs)
 include(KDECMakeSettings)
 include(ECMAddTests)
-include(ECMAddAppIcon) 
+include(ECMAddAppIcon)
 include(ECMPackageConfigHelpers)
 
 ecm_setup_version(1.0.0 VARIABLE_PREFIX OKULAR
@@ -312,6 +312,7 @@ target_link_libraries(okularpart okularcore
     Qt5::Svg
     Phonon::phonon4qt5
     KF5::Archive
+    KF5::Bookmarks
     KF5::IconThemes
     KF5::KDELibs4Support
     KF5::Parts

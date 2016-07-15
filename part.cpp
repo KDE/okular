@@ -24,19 +24,23 @@
 #include "part.h"
 
 // qt/kde includes
-#include <qapplication.h>
-#include <qfile.h>
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qtimer.h>
-#include <qtemporaryfile.h>
+#include <QApplication>
+#include <QFile>
+#include <QLayout>
+#include <QLabel>
+#include <QTimer>
+#include <QTemporaryFile>
 #include <QtPrintSupport/QPrinter>
 #include <QtPrintSupport/QPrintDialog>
 #include <QScrollBar>
 #include <QInputDialog>
 #include <QWidgetAction>
 #include <QFileDialog>
+#include <QDialog>
+#include <QDialogButtonBox>
 #include <QStandardPaths>
+#include <QSlider>
+#include <QSpinBox>
 
 #include <Kdelibs4Migration>
 #include <Kdelibs4ConfigMigrator>
@@ -49,7 +53,6 @@
 #include <kpluginfactory.h>
 #include <KPluginMetaData>
 #include <kmessagebox.h>
-#include <knuminput.h>
 #include <kio/netaccess.h>
 #include <kmenu.h>
 #include <kxmlguiclient.h>
@@ -2005,43 +2008,56 @@ void Part::slotHideFindBar()
 }
 
 //BEGIN go to page dialog
-class GotoPageDialog : public KDialog
+class GotoPageDialog : public QDialog
 {
     public:
-        GotoPageDialog(QWidget *p, int current, int max) : KDialog(p)
+        GotoPageDialog(QWidget *p, int current, int max) : QDialog(p)
         {
-            setCaption(i18n("Go to Page"));
-            setButtons(Ok | Cancel);
-            setDefaultButton(Ok);
+            setWindowTitle(i18n("Go to Page"));
+            buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+            connect(buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
+            connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
 
-            QWidget *w = new QWidget(this);
-            setMainWidget(w);
+            QVBoxLayout *topLayout = new QVBoxLayout(this);
+            topLayout->setMargin(6);
+            QHBoxLayout *midLayout = new QHBoxLayout(this);
+            spinbox = new QSpinBox(this);
+            spinbox->setRange(1, max);
+            spinbox->setValue(current);
+            spinbox->setFocus();
 
-            QVBoxLayout *topLayout = new QVBoxLayout(w);
-            topLayout->setMargin(0);
-            topLayout->setSpacing(spacingHint());
-            e1 = new KIntNumInput(current, w);
-            e1->setRange(1, max);
-            e1->setEditFocus(true);
-            e1->setSliderEnabled(true);
+            slider = new QSlider(Qt::Horizontal, this);
+            slider->setRange(1, max);
+            slider->setValue(current);
+            slider->setSingleStep(1);
+            slider->setTickPosition(QSlider::TicksBelow);
+            slider->setTickInterval(max/10);
 
-            QLabel *label = new QLabel(i18n("&Page:"), w);
-            label->setBuddy(e1);
+            connect(slider, &QSlider::valueChanged, spinbox, &QSpinBox::setValue);
+            connect(spinbox, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), slider, &QSlider::setValue);
+
+            QLabel *label = new QLabel(i18n("&Page:"), this);
+            label->setBuddy(spinbox);
             topLayout->addWidget(label);
-            topLayout->addWidget(e1);
-                                 // A little bit extra space
-            topLayout->addSpacing(spacingHint());
+            topLayout->addLayout(midLayout);
+            midLayout->addWidget(slider);
+            midLayout->addWidget(spinbox);
+
+            // A little bit extra space
             topLayout->addStretch(10);
-            e1->setFocus();
+            topLayout->addWidget(buttonBox);
+            spinbox->setFocus();
         }
 
         int getPage() const
         {
-            return e1->value();
+            return spinbox->value();
         }
 
     protected:
-        KIntNumInput *e1;
+        QSpinBox *spinbox;
+        QSlider *slider;
+        QDialogButtonBox *buttonBox;
 };
 //END go to page dialog
 

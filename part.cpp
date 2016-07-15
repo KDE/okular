@@ -72,8 +72,6 @@
 #include <knewstuff2/engine.h>
 #endif
 
-#include <kdeversion.h>
-
 // local includes
 #include "aboutdata.h"
 #include "extensions.h"
@@ -2769,13 +2767,11 @@ void Part::slotPrint()
             printDialog->setEnabledOptions( printDialog->enabledOptions() ^ QAbstractPrintDialog::PrintToFile );
         }
 
-#if QT_VERSION >= KDE_MAKE_VERSION(4,7,0)
         // Enable the Current Page option in the dialog.
         if ( m_document->pages() > 1 && currentPage() > 0 )
         {
             printDialog->setOption( QAbstractPrintDialog::PrintCurrentPage );
         }
-#endif
 
         if ( printDialog->exec() )
             doPrint( printer );

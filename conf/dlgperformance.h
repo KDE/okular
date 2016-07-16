@@ -28,7 +28,6 @@ class DlgPerformance : public QWidget
 
     protected:
         Ui_DlgPerformanceBase * m_dlg;
-        QButtonGroup *kcfg_MemoryLevel;
 };
 
 #endif

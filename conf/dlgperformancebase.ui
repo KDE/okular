@@ -7,14 +7,23 @@
     <x>0</x>
     <y>0</y>
     <width>316</width>
-    <height>344</height>
+    <height>397</height>
    </rect>
   </property>
   <layout class="QVBoxLayout">
    <property name="spacing">
     <number>6</number>
    </property>
-   <property name="margin">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>
@@ -26,7 +35,16 @@
       <property name="spacing">
        <number>6</number>
       </property>
-      <property name="margin">
+      <property name="leftMargin">
+       <number>9</number>
+      </property>
+      <property name="topMargin">
+       <number>9</number>
+      </property>
+      <property name="rightMargin">
+       <number>9</number>
+      </property>
+      <property name="bottomMargin">
        <number>9</number>
       </property>
       <item>
@@ -34,7 +52,16 @@
         <property name="spacing">
          <number>6</number>
         </property>
-        <property name="margin">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
          <number>0</number>
         </property>
         <item>
@@ -42,7 +69,16 @@
           <property name="spacing">
            <number>6</number>
           </property>
-          <property name="margin">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
            <number>0</number>
           </property>
           <item>
@@ -59,7 +95,16 @@
           <property name="spacing">
            <number>6</number>
           </property>
-          <property name="margin">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
            <number>0</number>
           </property>
           <item>
@@ -96,7 +141,7 @@
     </widget>
    </item>
    <item>
-    <widget class="KButtonGroup" name="kcfg_MemoryLevel">
+    <widget class="KButtonGroup" name="groupbox">
      <property name="title">
       <string>Memory Usage</string>
      </property>
@@ -104,7 +149,16 @@
       <property name="spacing">
        <number>6</number>
       </property>
-      <property name="margin">
+      <property name="leftMargin">
+       <number>9</number>
+      </property>
+      <property name="topMargin">
+       <number>9</number>
+      </property>
+      <property name="rightMargin">
+       <number>9</number>
+      </property>
+      <property name="bottomMargin">
        <number>9</number>
       </property>
       <item>
@@ -112,53 +166,85 @@
         <property name="spacing">
          <number>6</number>
         </property>
-        <property name="margin">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
          <number>0</number>
         </property>
         <item>
-         <layout class="QVBoxLayout">
-          <property name="spacing">
-           <number>6</number>
+         <widget class="QGroupBox" name="kcfg_MemoryLevel">
+          <property name="title">
+           <string/>
           </property>
-          <property name="margin">
-           <number>0</number>
+          <property name="flat">
+           <bool>true</bool>
           </property>
-          <item>
-           <widget class="QRadioButton" name="lowRadio">
-            <property name="text">
-             <string>&amp;Low</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QRadioButton" name="normalRadio">
-            <property name="text">
-             <string>&amp;Normal (default)</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QRadioButton" name="aggressiveRadio">
-            <property name="text">
-             <string>&amp;Aggressive</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QRadioButton" name="greedyRadio">
-            <property name="text">
-             <string>&amp;Greedy</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QRadioButton" name="lowRadio">
+             <property name="text">
+              <string>&amp;Low</string>
+             </property>
+             <attribute name="buttonGroup">
+              <string notr="true">memoryLevelGroup</string>
+             </attribute>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="normalRadio">
+             <property name="text">
+              <string>Nor&amp;mal (default)</string>
+             </property>
+             <attribute name="buttonGroup">
+              <string notr="true">memoryLevelGroup</string>
+             </attribute>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="aggressiveRadio">
+             <property name="text">
+              <string>Aggr&amp;essive</string>
+             </property>
+             <attribute name="buttonGroup">
+              <string notr="true">memoryLevelGroup</string>
+             </attribute>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="greedyRadio">
+             <property name="text">
+              <string>G&amp;reedy</string>
+             </property>
+             <attribute name="buttonGroup">
+              <string notr="true">memoryLevelGroup</string>
+             </attribute>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </item>
         <item>
          <layout class="QVBoxLayout">
           <property name="spacing">
            <number>6</number>
           </property>
-          <property name="margin">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
            <number>0</number>
           </property>
           <item>
@@ -271,4 +357,7 @@
  </includes>
  <resources/>
  <connections/>
+ <buttongroups>
+  <buttongroup name="memoryLevelGroup"/>
+ </buttongroups>
 </ui>

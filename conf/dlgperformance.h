@@ -10,9 +10,10 @@
 #ifndef _DLGPERFORMANCE_H
 #define _DLGPERFORMANCE_H
 
-#include <qwidget.h>
+#include <QWidget>
 
 class Ui_DlgPerformanceBase;
+class QButtonGroup;
 
 class DlgPerformance : public QWidget
 {
@@ -27,6 +28,7 @@ class DlgPerformance : public QWidget
 
     protected:
         Ui_DlgPerformanceBase * m_dlg;
+        QButtonGroup *kcfg_MemoryLevel;
 };
 
 #endif

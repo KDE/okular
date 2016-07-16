@@ -73,15 +73,12 @@
          </widget>
         </item>
         <item>
-         <widget class="KButtonGroup" name="kcfg_DisplayDocumentNameOrPath">
+         <widget class="QGroupBox" name="kcfg_DisplayDocumentNameOrPath">
           <property name="styleSheet">
-           <string notr="true">KButtonGroup {border:0; }</string>
+           <string notr="true">QGroupBox {border:0; }</string>
           </property>
           <property name="flat">
            <bool>true</bool>
-          </property>
-          <property name="current" stdset="0">
-           <number>0</number>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <property name="leftMargin">
@@ -385,14 +382,6 @@ For files which were opened before the previous zoom is applied.</string>
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>KButtonGroup</class>
-   <extends>QGroupBox</extends>
-   <header>kbuttongroup.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <includes>
   <include location="global">kiconloader.h</include>
  </includes>

@@ -9,14 +9,19 @@
 
 #include "dlgperformance.h"
 
-#include <qfont.h>
-#include <kiconloader.h>
+#include <QButtonGroup>
+#include <QFont>
 
+#include <KConfigDialogManager>
+#include <KIconLoader>
+
+#include "settings_core.h"
 #include "ui_dlgperformancebase.h"
 
 DlgPerformance::DlgPerformance( QWidget * parent )
     : QWidget( parent )
 {
+    Q_PROPERTY( QButtonGroup checkedId READ checkedId USER true );
     m_dlg = new Ui_DlgPerformanceBase();
     m_dlg->setupUi( this );
 
@@ -25,9 +30,16 @@ DlgPerformance::DlgPerformance( QWidget * parent )
     m_dlg->descLabel->setFont( labelFont );
 
     m_dlg->cpuLabel->setPixmap( BarIcon( QStringLiteral("cpu"), 32 ) );
-//     m_dlg->memoryLabel->setPixmap( BarIcon( "kcmmemory", 32 ) ); // TODO: enable again when proper icon is available
+//    m_dlg->memoryLabel->setPixmap( BarIcon( "kcmmemory", 32 ) ); // TODO: enable again when proper icon is available
 
-    connect(m_dlg->kcfg_MemoryLevel, &KButtonGroup::changed, this, &DlgPerformance::radioGroup_changed);
+    m_dlg->memoryLevelGroup->setId(m_dlg->lowRadio, 0);
+    m_dlg->memoryLevelGroup->setId(m_dlg->normalRadio, 1);
+    m_dlg->memoryLevelGroup->setId(m_dlg->aggressiveRadio, 2);
+    m_dlg->memoryLevelGroup->setId(m_dlg->greedyRadio, 3);
+
+
+    connect(m_dlg->memoryLevelGroup, static_cast<void(QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked),
+            this, &DlgPerformance::radioGroup_changed);
 }
 
 DlgPerformance::~DlgPerformance()

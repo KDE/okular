@@ -35,18 +35,16 @@
 #include <QInputDialog>
 #include <qdesktopwidget.h>
 #include <QMimeDatabase>
+#include <QMimeData>
 
 #include <qaction.h>
 #include <kactionmenu.h>
 #include <kstandardaction.h>
 #include <kactioncollection.h>
 #include <KLocalizedString>
-#include <kfiledialog.h>
-#include <kglobal.h>
 #include <kselectaction.h>
 #include <ktoggleaction.h>
 #include <QtCore/QDebug>
-#include <kdeversion.h>
 #include <kmessagebox.h>
 #include <QIcon>
 #include <kurifilter.h>
@@ -659,7 +657,7 @@ void PageView::setupActions( KActionCollection * ac )
     ac->addAction( QStringLiteral("speak_document"), d->aSpeakDoc );
     d->aSpeakDoc->setEnabled( false );
     connect( d->aSpeakDoc, &QAction::triggered, this, &PageView::slotSpeakDocument );
-    
+
     d->aSpeakPage = new QAction( QIcon::fromTheme( QStringLiteral("text-speak") ), i18n( "Speak Current Page" ), this );
     ac->addAction( QStringLiteral("speak_current_page"), d->aSpeakPage );
     d->aSpeakPage->setEnabled( false );
@@ -2765,8 +2763,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                 else if ( choice == imageToFile )
                 {
                     // [3] save pixmap to file
-                    QString fileName = KFileDialog::getSaveFileName( QUrl(), QStringLiteral("image/png image/jpeg"), this, QString(),
-                                                                     KFileDialog::ConfirmOverwrite );
+                    QString fileName = QFileDialog::getSaveFileName(this, i18n("Save file"), QString(), i18n("Images (*.png .jpeg"));
                     if ( fileName.isEmpty() )
                         d->messageWindow->display( i18n( "File not saved." ), QString(), PageViewMessage::Warning );
                     else
@@ -4206,58 +4203,7 @@ void PageView::updatePageStep() {
 
 void PageView::addWebShortcutsMenu( QMenu * menu, const QString & text )
 {
-#if KDE_IS_VERSION(4,5,70)
-    if ( text.isEmpty() )
-    {
-        return;
-    }
 
-    QString searchText = text;
-    searchText = searchText.replace( QLatin1Char('\n'), QLatin1Char(' ') ).replace(QLatin1Char( '\r'), QLatin1Char(' ') ).simplified();
-
-    if ( searchText.isEmpty() )
-    {
-        return;
-    }
-
-    KUriFilterData filterData( searchText );
-
-    filterData.setSearchFilteringOptions( KUriFilterData::RetrievePreferredSearchProvidersOnly );
-
-    if ( KUriFilter::self()->filterSearchUri( filterData, KUriFilter::NormalTextFilter ) )
-    {
-        const QStringList searchProviders = filterData.preferredSearchProviders();
-
-        if ( !searchProviders.isEmpty() )
-        {
-            QMenu *webShortcutsMenu = new QMenu( menu );
-            webShortcutsMenu->setIcon( QIcon::fromTheme( QStringLiteral("preferences-web-browser-shortcuts") ) );
-
-            const QString squeezedText = KStringHandler::rsqueeze( searchText, 21 );
-            webShortcutsMenu->setTitle( i18n( "Search for '%1' with", squeezedText ) );
-
-            QAction *action = 0;
-
-            foreach( const QString &searchProvider, searchProviders )
-            {
-                action = new QAction( searchProvider, webShortcutsMenu );
-                action->setIcon( QIcon::fromTheme( filterData.iconNameForPreferredSearchProvider( searchProvider ) ) );
-                action->setData( filterData.queryForPreferredSearchProvider( searchProvider ) );
-                connect( action, &QAction::triggered, this, &PageView::slotHandleWebShortcutAction );
-                webShortcutsMenu->addAction( action );
-            }
-
-            webShortcutsMenu->addSeparator();
-
-            action = new QAction( i18n( "Configure Web Shortcuts..." ), webShortcutsMenu );
-            action->setIcon( QIcon::fromTheme( QStringLiteral("configure") ) );
-            connect( action, &QAction::triggered, this, &PageView::slotConfigureWebShortcuts );
-            webShortcutsMenu->addAction( action );
-
-            menu->addMenu(webShortcutsMenu);
-        }
-    }
-#endif
 }
 
 //BEGIN private SLOTS
@@ -4752,19 +4698,7 @@ void PageView::slotShowSizeAllCursor()
 
 void PageView::slotHandleWebShortcutAction()
 {
-#if KDE_IS_VERSION(4,5,70)
-    QAction *action = qobject_cast<QAction*>( sender() );
 
-    if (action)
-    {
-        KUriFilterData filterData( action->data().toString() );
-
-        if ( KUriFilter::self()->filterSearchUri( filterData, KUriFilter::WebShortcutFilter ) )
-        {
-            KToolInvocation::invokeBrowser( filterData.uri().url() );
-        }
-    }
-#endif
 }
 
 void PageView::slotConfigureWebShortcuts()

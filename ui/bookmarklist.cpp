@@ -16,12 +16,12 @@
 #include <qlayout.h>
 #include <qtoolbar.h>
 #include <qtreewidget.h>
-
+#include <QMenu>
 #include <QtCore/QDebug>
 #include <QIcon>
+
 #include <KLocalizedString>
-#include <qmenu.h>
-#include <ktreewidgetsearchline.h>
+#include <KTreeWidgetSearchLine>
 
 #include "pageitemdelegate.h"
 #include "core/action.h"

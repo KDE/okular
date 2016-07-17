@@ -39,7 +39,7 @@
 #include <kiconloader.h>
 #include <kmessagebox.h>
 #include <kselectaction.h>
-#include <kdialog.h>
+#include <QDialog>
 
 #include <Solid/PowerManagement>
 
@@ -149,7 +149,8 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     if ( caption.trimmed().isEmpty() )
         caption = doc->currentDocument().fileName();
     caption = i18nc( "[document title/filename] – Presentation", "%1 – Presentation", caption );
-    setWindowTitle( KDialog::makeStandardCaption( caption ) );
+    setWindowTitle( caption );
+#pragma message("KF5: Here was a makeStandardCaption, lost in KF5 port")
 
     m_width = -1;
     m_screen = -2;
@@ -235,7 +236,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     m_overlayHideTimer = new QTimer( this );
     m_overlayHideTimer->setSingleShot( true );
     connect(m_overlayHideTimer, &QTimer::timeout, this, &PresentationWidget::slotHideOverlay);
-    m_nextPageTimer = new QTimer( this ); 
+    m_nextPageTimer = new QTimer( this );
     m_nextPageTimer->setSingleShot( true );
     connect(m_nextPageTimer, &QTimer::timeout, this, &PresentationWidget::slotNextPage);
 

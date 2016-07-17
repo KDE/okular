@@ -14,11 +14,13 @@
 
 #include <QFile>
 #include <QSize>
-#include <QtCore/QFile>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QPushButton>
-#include <QtGui/QShowEvent>
+#include <QDialogButtonBox>
+#include <QLabel>
+#include <QPushButton>
+#include <QShowEvent>
+#include <QVBoxLayout>
 
+#include <KWindowConfig>
 #include <klocalizedstring.h>
 #include <kmimetypetrader.h>
 #include <kparts/readonlypart.h>
@@ -44,6 +46,9 @@ public:
         , config(KSharedConfig::openConfig(QStringLiteral("okularrc")))
 
     {
+        mainlayout = new QVBoxLayout(q);
+        buttonBox = new QDialogButtonBox(QDialogButtonBox::Close, q);
+        mainlayout->addWidget(buttonBox);
         filename = _filename;
     }
 
@@ -54,6 +59,10 @@ public:
     FilePrinterPreview *q;
 
     QWidget *mainWidget;
+
+    QDialogButtonBox *buttonBox;
+
+    QVBoxLayout *mainlayout;
 
     QString filename;
 
@@ -111,7 +120,7 @@ bool FilePrinterPreviewPrivate::doPreview()
         fail();
         return false;
     } else {
-        q->setMainWidget(previewPart->widget());
+        mainlayout->insertWidget(0, previewPart->widget());
         return previewPart->openUrl(QUrl::fromLocalFile(filename));
     }
 }
@@ -121,30 +130,30 @@ void FilePrinterPreviewPrivate::fail()
     if (!failMessage) {
         failMessage = new QLabel(i18n("Could not load print preview part"), q);
     }
-    q->setMainWidget(failMessage);
+    mainlayout->insertWidget(0, failMessage);
 }
 
 
 
 
 FilePrinterPreview::FilePrinterPreview( const QString &filename, QWidget *parent )
-    : KDialog( parent )
+    : QDialog( parent )
     , d( new FilePrinterPreviewPrivate( this, filename ) )
 {
     qCDebug(OkularUiDebug) << "kdeprint: creating preview dialog";
 
     // Set up the dialog
-    setCaption(i18n("Print Preview"));
-    setButtons(KDialog::Close);
-    button(KDialog::Close)->setAutoDefault(false);
+    setWindowTitle(i18n("Print Preview"));
 
-    restoreDialogSize(d->config->group("Print Preview"));
+    connect(d->buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
+
+    KWindowConfig::restoreWindowSize(windowHandle(), d->config->group("Print Preview"));
 }
 
 FilePrinterPreview::~FilePrinterPreview()
 {
     KConfigGroup group(d->config->group("Print Preview"));
-    saveDialogSize(group);
+    KWindowConfig::saveWindowSize(windowHandle(), group);
 
     delete d;
 }
@@ -164,7 +173,7 @@ void FilePrinterPreview::showEvent(QShowEvent *event)
             return;
         }
     }
-    KDialog::showEvent(event);
+    QDialog::showEvent(event);
 }
 
 #include "moc_fileprinterpreview.cpp"

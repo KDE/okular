@@ -13,7 +13,7 @@
 #ifndef FILEPRINTERPREVIEW_H
 #define FILEPRINTERPREVIEW_H
 
-#include <kdialog.h>
+#include <QDialog>
 
 namespace Okular {
 
@@ -21,7 +21,7 @@ namespace Okular {
 
 class FilePrinterPreviewPrivate;
 
-class FilePrinterPreview : public KDialog
+class FilePrinterPreview : public QDialog
 {
     Q_OBJECT
 

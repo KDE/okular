@@ -141,7 +141,7 @@
     </widget>
    </item>
    <item>
-    <widget class="KButtonGroup" name="groupbox">
+    <widget class="QGroupBox" name="groupbox">
      <property name="title">
       <string>Memory Usage</string>
      </property>
@@ -344,14 +344,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>KButtonGroup</class>
-   <extends>QGroupBox</extends>
-   <header>kbuttongroup.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <includes>
   <include location="global">kiconloader.h</include>
  </includes>

@@ -96,13 +96,11 @@ int FilePrinter::doPrintFiles( QPrinter &printer, QStringList fileList, FileDele
             argList << fileList[0] << printer.outputFileName();
             qCDebug(OkularCoreDebug) << "Executing" << exe << "with arguments" << argList;
             ret = KProcess::execute( exe, argList );
-
-#pragma message("KF5: Fix PostScript printing")
-//        } else if ( inputFileInfo.suffix() == "pdf" && printer.outputFormat() == QPrinter::PostScriptFormat && pdf2psAvailable() ) {
-//            exe = "pdf2ps";
-//            argList << fileList[0] << printer.outputFileName();
-//            qCDebug(OkularCoreDebug) << "Executing" << exe << "with arguments" << argList;
-//            ret = KProcess::execute( exe, argList );
+        } else if ( inputFileInfo.suffix() == "pdf" && printer.outputFormat() == QPrinter::NativeFormat && pdf2psAvailable() ) {
+            exe = "pdf2ps";
+            argList << fileList[0] << printer.outputFileName();
+            qCDebug(OkularCoreDebug) << "Executing" << exe << "with arguments" << argList;
+            ret = KProcess::execute( exe, argList );
         } else {
             ret = -5;
         }

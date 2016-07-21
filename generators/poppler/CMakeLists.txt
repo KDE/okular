@@ -45,6 +45,6 @@ okular_add_generator(okularGenerator_poppler ${okularGenerator_poppler_PART_SRCS
 target_link_libraries(okularGenerator_poppler okularcore KF5::I18n KF5::Completion Poppler::Qt5 Qt5::Xml)
 
 ########### install files ###############
-
+install( FILES okularPoppler.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
 install( PROGRAMS okularApplication_pdf.desktop org.kde.mobile.okular_pdf.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
 

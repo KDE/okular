@@ -68,6 +68,8 @@
 #include <KXMLGUIClient>
 #include <KXMLGUIFactory>
 
+#include <KPrintPreview>
+
 #if 0
 #include <knewstuff2/engine.h>
 #endif
@@ -2459,7 +2461,7 @@ void Part::slotPrintPreview()
     // Native printing supports KPrintPreview, Postscript needs to use FilePrinterPreview
     if ( m_document->printingSupport() == Okular::Document::NativePrinting )
     {
-        QPrintPreviewDialog previewdlg( &printer, widget() );
+        KPrintPreview previewdlg( &printer, widget() );
         setupPrint( printer );
         doPrint( printer );
         previewdlg.exec();
@@ -2534,8 +2536,9 @@ void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
         popup->addAction( m_nextBookmark );
         reallyShow = true;
     }
+
+#pragma message("KF5 Port: Albert says: I have not ported this as i don't see it does anything")
     /*
-        //Albert says: I have not ported this as i don't see it does anything
         if ( d->mouseOnRect ) // and rect->objectType() == ObjectRect::Image ...
         {
             m_popup->insertItem( SmallIcon("document-save"), i18n("Save Image..."), 4 );

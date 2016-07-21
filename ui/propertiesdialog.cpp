@@ -10,25 +10,26 @@
 #include "propertiesdialog.h"
 
 // qt/kde includes
-#include <qapplication.h>
-#include <qdesktopwidget.h>
-#include <qfile.h>
-#include <qlayout.h>
-#include <qformlayout.h>
-#include <qlabel.h>
-#include <qheaderview.h>
-#include <qmenu.h>
-#include <qprogressbar.h>
-#include <qpushbutton.h>
-#include <qsortfilterproxymodel.h>
-#include <qtreeview.h>
-#include <qtimer.h>
-#include <kfiledialog.h>
+#include <QApplication>
+#include <QDesktopWidget>
+#include <QFormLayout>
+#include <QFile>
+#include <QFileDialog>
 #include <QIcon>
-#include <kiconloader.h>
+#include <QLayout>
+#include <QLatin1Char>
+#include <QHeaderView>
+#include <QMenu>
+#include <QProgressBar>
+#include <QPushButton>
+#include <QSortFilterProxyModel>
+#include <QTreeView>
+#include <QTimer>
+
+#include <KIconLoader>
 #include <KLocalizedString>
-#include <kmessagebox.h>
-#include <ksqueezedtextlabel.h>
+#include <KMessageBox>
+#include <KSqueezedTextLabel>
 #include <QMimeDatabase>
 
 // local includes
@@ -229,10 +230,10 @@ void PropertiesDialog::showFontsMenu(const QPoint &pos)
         {
             Okular::FontInfo fi = index.data(FontInfoRole).value<Okular::FontInfo>();
             const QString caption = i18n( "Where do you want to save %1?", fi.name() );
-            const QString path = KFileDialog::getSaveFileName( QUrl::fromLocalFile(fi.name()), QString(), this, caption, KFileDialog::ConfirmOverwrite );
+            const QString path = QFileDialog::getSaveFileName( this, caption, fi.name() );
             if ( path.isEmpty() )
                 return;
-            
+
             QFile f( path );
             if ( f.open( QIODevice::WriteOnly ) )
             {

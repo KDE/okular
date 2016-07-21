@@ -10,12 +10,13 @@
 #include "guiutils.h"
 
 // qt/kde includes
-#include <qpainter.h>
-#include <qsvgrenderer.h>
-#include <qtextdocument.h>
-#include <qfiledialog.h>
-#include <kiconloader.h>
-#include <kmessagebox.h>
+#include <QPainter>
+#include <QSvgRenderer>
+#include <QTextDocument>
+#include <QFileDialog>
+#include <QStandardPaths>
+#include <KIconLoader>
+#include <KMessageBox>
 #include <KLocalizedString>
 
 // local includes
@@ -24,7 +25,7 @@
 #include "core/document.h"
 
 #include <memory>
-#include <QStandardPaths>
+
 
 struct GuiUtilsHelper
 {

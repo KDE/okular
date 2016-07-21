@@ -313,6 +313,7 @@ target_link_libraries(okularpart okularcore
     Phonon::phonon4qt5
     KF5::Archive
     KF5::Bookmarks
+    KF5::I18n
     KF5::IconThemes
     KF5::ItemViews
     KF5::KDELibs4Support

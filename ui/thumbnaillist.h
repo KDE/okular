@@ -10,12 +10,12 @@
 #ifndef _OKULAR_THUMBNAILLIST_H_
 #define _OKULAR_THUMBNAILLIST_H_
 
-#include <qscrollarea.h>
-
-#include <qtoolbar.h>
+#include <QScrollArea>
+#include <QToolBar>
+#include <QVBoxLayout>
 
 #include "core/observer.h"
-#include <QVBoxLayout>
+
 class ThumbnailListPrivate;
 
 namespace Okular {

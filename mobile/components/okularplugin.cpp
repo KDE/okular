@@ -23,7 +23,7 @@
 #include "pageitem.h"
 #include "thumbnailitem.h"
 
-#include <QtQml/QQmlEngine>
+#include <QQmlEngine>
 #include <QPluginLoader>
 
 void OkularPlugin::registerTypes(const char *uri)

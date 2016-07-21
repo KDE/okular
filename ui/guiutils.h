@@ -10,7 +10,7 @@
 #ifndef OKULAR_GUIUTILS_H
 #define OKULAR_GUIUTILS_H
 
-#include <QtCore/QString>
+#include <QString>
 
 class QColor;
 class QImage;

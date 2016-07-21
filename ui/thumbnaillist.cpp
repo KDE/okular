@@ -10,19 +10,20 @@
 #include "thumbnaillist.h"
 
 // qt/kde includes
-#include <qapplication.h>
-#include <qdesktopwidget.h>
-#include <qevent.h>
-#include <qtimer.h>
-#include <qpainter.h>
-#include <qscrollbar.h>
-#include <qsizepolicy.h>
-#include <KLocalizedString>
-#include <qaction.h>
-#include <kdialog.h>
-#include <kiconloader.h>
-#include <kactioncollection.h>
+#include <QAction>
+#include <QApplication>
+#include <QDesktopWidget>
 #include <QIcon>
+#include <QPainter>
+#include <QResizeEvent>
+#include <QScrollBar>
+#include <QSizePolicy>
+#include <QStyle>
+#include <QTimer>
+
+#include <KLocalizedString>
+#include <KIconLoader>
+#include <KActionCollection>
 
 // local includes
 #include "pagepainter.h"
@@ -234,7 +235,7 @@ void ThumbnailList::notifySetup( const QVector< Okular::Page * > & pages, int se
     if ( !( setupFlags & Okular::DocumentObserver::DocumentChanged ) && d->m_selected )
     {
         prevPage = d->m_selected->page()->number();
-    } else 
+    } else
         prevPage = d->m_document->viewport().pageNumber;
 
     // delete all the Thumbnails
@@ -280,7 +281,7 @@ void ThumbnailList::notifySetup( const QVector< Okular::Page * > & pages, int se
             // restoring the previous selected page, if any
             if ( (*pIt)->number() < prevPage )
             {
-                centerHeight = height + t->height() + KDialog::spacingHint()/2;
+                centerHeight = height + t->height() + this->style()->layoutSpacing(QSizePolicy::Frame, QSizePolicy::Frame, Qt::Vertical)/2;
             }
             if ( (*pIt)->number() == prevPage )
             {
@@ -288,11 +289,11 @@ void ThumbnailList::notifySetup( const QVector< Okular::Page * > & pages, int se
                 d->m_selected->setSelected( true );
                 centerHeight = height + t->height() / 2;
             }
-            height += t->height() + KDialog::spacingHint();
+            height += t->height() + this->style()->layoutSpacing(QSizePolicy::Frame, QSizePolicy::Frame, Qt::Vertical);
         }
 
     // update scrollview's contents size (sets scrollbars limits)
-    height -= KDialog::spacingHint();
+    height -= this->style()->layoutSpacing(QSizePolicy::Frame, QSizePolicy::Frame, Qt::Vertical);
     widget()->resize( width, height );
 
     // enable scrollbar when there's something to scroll
@@ -395,7 +396,7 @@ bool ThumbnailList::canUnloadPixmap( int pageNumber ) const
     // if hidden permit unloading
     return true;
 }
-//END DocumentObserver inherited methods 
+//END DocumentObserver inherited methods
 
 
 void ThumbnailList::updateWidgets()
@@ -462,12 +463,12 @@ ThumbnailListPrivate::ChangePageDirection ThumbnailListPrivate::forwardTrack(con
     Okular::DocumentViewport vp = m_document->viewport();
     const double deltaX = (double)point.x() / r.width(),
                  deltaY = (double)point.y() / r.height();
-    vp.rePos.normalizedX -= deltaX;    
+    vp.rePos.normalizedX -= deltaX;
     vp.rePos.normalizedY -= deltaY;
     if ( vp.rePos.normalizedY > 1.0 )
         return ThumbnailListPrivate::Down;
     if ( vp.rePos.normalizedY < 0.0 )
-        return ThumbnailListPrivate::Up;                
+        return ThumbnailListPrivate::Up;
     if ( vp.rePos.normalizedX > 1.0 )
         return ThumbnailListPrivate::Right;
     if ( vp.rePos.normalizedX < 0.0 )
@@ -494,7 +495,7 @@ void ThumbnailList::slotFilterBookmarks( bool filterOn )
 }
 
 
-//BEGIN widget events 
+//BEGIN widget events
 void ThumbnailList::keyPressEvent( QKeyEvent * keyEvent )
 {
     if ( d->m_thumbnails.count() < 1 )
@@ -570,11 +571,11 @@ void ThumbnailListPrivate::viewportResizeEvent( QResizeEvent * e )
             ThumbnailWidget *t = *tIt;
             t->move(0, newHeight);
             t->resizeFitWidth( newWidth );
-            newHeight += t->height() + KDialog::spacingHint();
+            newHeight += t->height() + this->style()->layoutSpacing(QSizePolicy::Frame, QSizePolicy::Frame, Qt::Vertical);
         }
 
         // update scrollview's contents size (sets scrollbars limits)
-        newHeight -= KDialog::spacingHint();
+        newHeight -= this->style()->layoutSpacing(QSizePolicy::Frame, QSizePolicy::Frame, Qt::Vertical);
         const int oldHeight = q->widget()->height();
         const int oldYCenter = q->verticalScrollBar()->value() + q->viewport()->height() / 2;
         q->widget()->resize( newWidth, newHeight );
@@ -600,7 +601,7 @@ void ThumbnailListPrivate::viewportResizeEvent( QResizeEvent * e )
 }
 //END widget events
 
-//BEGIN internal SLOTS 
+//BEGIN internal SLOTS
 void ThumbnailListPrivate::slotRequestVisiblePixmaps( int /*newContentsY*/ )
 {
     // if an update is already scheduled or the widget is hidden, don't proceed
@@ -784,7 +785,7 @@ void ThumbnailListPrivate::mouseMoveEvent( QMouseEvent * e )
             if ( !newThumb )
                 return;
             int newPageOn = newThumb->pageNumber();
-            if ( newPageOn == m_pageCurrentlyGrabbed || newPageOn < 0 || 
+            if ( newPageOn == m_pageCurrentlyGrabbed || newPageOn < 0 ||
                  newPageOn >= (int)m_document->pages() )
             {
                 return;
@@ -798,8 +799,8 @@ void ThumbnailListPrivate::mouseMoveEvent( QMouseEvent * e )
             if ( direction == ThumbnailListPrivate::Up )
             {
                 vp.rePos.normalizedY = 1.0;
-                if ( Okular::Settings::viewMode() == 
-                    Okular::Settings::EnumViewMode::FacingFirstCentered 
+                if ( Okular::Settings::viewMode() ==
+                    Okular::Settings::EnumViewMode::FacingFirstCentered
                     && !newPageOn)
                 {
                     if ( m_pageCurrentlyGrabbed == 1 )
@@ -815,8 +816,8 @@ void ThumbnailListPrivate::mouseMoveEvent( QMouseEvent * e )
             else if ( direction == ThumbnailListPrivate::Down )
             {
                 vp.rePos.normalizedY = 0.0;
-                if ( Okular::Settings::viewMode() == 
-                     Okular::Settings::EnumViewMode::FacingFirstCentered 
+                if ( Okular::Settings::viewMode() ==
+                     Okular::Settings::EnumViewMode::FacingFirstCentered
                      && !m_pageCurrentlyGrabbed)
                 {
                     if ( origNormalX < 0.5 )

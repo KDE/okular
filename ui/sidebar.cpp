@@ -476,7 +476,6 @@ Sidebar::Sidebar( QWidget *parent )
     d->list->setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
     d->list->setContextMenuPolicy( Qt::CustomContextMenu );
     d->list->viewport()->setAutoFillBackground( false );
-    d->list->setFont( KGlobalSettings::toolBarFont() );
 
     d->splitter = new QSplitter( this );
     mainlay->addWidget( d->splitter );

@@ -447,7 +447,7 @@ void QUnpluck::ParseText
                 }
                 case PLKR_TFC_COLOR:
                     if (*font) {
-                        *font--;
+                        (*font)--;
                         if ( !context->stack.isEmpty() )
                             context->cursor->setCharFormat( context->stack.pop() );
                     }
@@ -460,7 +460,7 @@ void QUnpluck::ParseText
                         context->cursor->setCharFormat( format );
                     }
 
-                    *font++;
+                    (*font)++;
                     ptr += fclen;
                     break;
                 case PLKR_TFC_BULINE:

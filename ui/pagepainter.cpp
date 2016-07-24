@@ -18,7 +18,6 @@
 #include <kiconloader.h>
 #include <QtCore/QDebug>
 #include <QApplication>
-// TODO KF5 #include <qimageblitz.h>
 
 // system includes
 #include <math.h>
@@ -349,9 +348,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                     backImage.invertPixels(QImage::InvertRgb);
                     break;
                 case Okular::SettingsCore::EnumRenderMode::Recolor:
-                    // Recolor image using Blitz::flatten with dither:0
-#pragma message("KF5: implement RenderMode::Recolor again")
-                    // Blitz::flatten( backImage, Okular::Settings::recolorForeground(), Okular::Settings::recolorBackground() );
+                    recolor(&backImage, Okular::Settings::recolorForeground(), Okular::Settings::recolorBackground());
                     break;
                 case Okular::SettingsCore::EnumRenderMode::BlackWhite:
                     // Manual Gray and Contrast
@@ -878,6 +875,32 @@ void PagePainter::cropPixmapOnImage( QImage & dest, const QPixmap * src, const Q
         p.drawPixmap( 0, 0, *src, r.left(), r.top(), r.width(), r.height() );
         p.end();
         dest = croppedImage;
+    }
+}
+
+void PagePainter::recolor(QImage *image, const QColor &foreground, const QColor &background)
+{
+    if (image->format() != QImage::Format_ARGB32_Premultiplied) {
+        qWarning() << "Wrong image format! Converting...";
+        *image = image->convertToFormat(QImage::Format_ARGB32_Premultiplied);
+    }
+
+    Q_ASSERT(image->format() == QImage::Format_ARGB32_Premultiplied);
+
+    const float scaleRed = background.redF() - foreground.redF();
+    const float scaleGreen = background.greenF() - foreground.greenF();
+    const float scaleBlue = background.blueF() - foreground.blueF();
+
+    for (int y=0; y<image->height(); y++) {
+        QRgb *pixels = reinterpret_cast<QRgb*>(image->scanLine(y));
+
+        for (int x=0; x<image->width(); x++) {
+            const int lightness = qGray(pixels[x]);
+            pixels[x] = qRgba(scaleRed * lightness,
+                           scaleGreen * lightness,
+                           scaleBlue * lightness,
+                           qAlpha(pixels[x]));
+        }
     }
 }
 

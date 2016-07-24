@@ -58,14 +58,6 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake/modules)
 
 find_package(ZLIB REQUIRED)
 
-# There was no Qt 5 version at the time of porting
-#find_package(QImageBlitz)
-#set_package_properties("QImageBlitz" PROPERTIES
-#        DESCRIPTION "An image effects library"
-#        URL "http://sourceforge.net/projects/qimageblitz"
-#        TYPE RECOMMENDED
-#        PURPOSE "Required to build Okular.")
-
 add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 add_definitions(-DTRANSLATION_DOMAIN="okular")
 

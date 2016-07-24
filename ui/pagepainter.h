@@ -54,6 +54,7 @@ class Q_DECL_EXPORT PagePainter
 
     private:
         static void cropPixmapOnImage( QImage & dest, const QPixmap * src, const QRect & r );
+        static void recolor(QImage *image, const QColor &foreground, const QColor &background);
 
         // create an image taking the 'cropRect' portion of an image scaled
         // to 'scaledWidth' by 'scaledHeight' pixels. cropRect must be inside

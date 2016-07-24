@@ -4203,7 +4203,56 @@ void PageView::updatePageStep() {
 
 void PageView::addWebShortcutsMenu( QMenu * menu, const QString & text )
 {
+    if ( text.isEmpty() )
+    {
+        return;
+    }
 
+    QString searchText = text;
+    searchText = searchText.replace( QLatin1Char('\n'), QLatin1Char(' ') ).replace(QLatin1Char( '\r'), QLatin1Char(' ') ).simplified();
+
+    if ( searchText.isEmpty() )
+    {
+        return;
+    }
+
+    KUriFilterData filterData( searchText );
+
+    filterData.setSearchFilteringOptions( KUriFilterData::RetrievePreferredSearchProvidersOnly );
+
+    if ( KUriFilter::self()->filterSearchUri( filterData, KUriFilter::NormalTextFilter ) )
+    {
+        const QStringList searchProviders = filterData.preferredSearchProviders();
+
+        if ( !searchProviders.isEmpty() )
+        {
+            QMenu *webShortcutsMenu = new QMenu( menu );
+            webShortcutsMenu->setIcon( QIcon::fromTheme( QStringLiteral("preferences-web-browser-shortcuts") ) );
+
+            const QString squeezedText = KStringHandler::rsqueeze( searchText, 21 );
+            webShortcutsMenu->setTitle( i18n( "Search for '%1' with", squeezedText ) );
+
+            QAction *action = 0;
+
+            foreach( const QString &searchProvider, searchProviders )
+            {
+                action = new QAction( searchProvider, webShortcutsMenu );
+                action->setIcon( QIcon::fromTheme( filterData.iconNameForPreferredSearchProvider( searchProvider ) ) );
+                action->setData( filterData.queryForPreferredSearchProvider( searchProvider ) );
+                connect( action, &QAction::triggered, this, &PageView::slotHandleWebShortcutAction );
+                webShortcutsMenu->addAction( action );
+            }
+
+            webShortcutsMenu->addSeparator();
+
+            action = new QAction( i18n( "Configure Web Shortcuts..." ), webShortcutsMenu );
+            action->setIcon( QIcon::fromTheme( QStringLiteral("configure") ) );
+            connect( action, &QAction::triggered, this, &PageView::slotConfigureWebShortcuts );
+            webShortcutsMenu->addAction( action );
+
+            menu->addMenu(webShortcutsMenu);
+        }
+    }
 }
 
 //BEGIN private SLOTS
@@ -4698,7 +4747,15 @@ void PageView::slotShowSizeAllCursor()
 
 void PageView::slotHandleWebShortcutAction()
 {
+    QAction *action = qobject_cast<QAction*>( sender() );
 
+    if (action) {
+        KUriFilterData filterData( action->data().toString() );
+
+        if ( KUriFilter::self()->filterSearchUri( filterData, KUriFilter::WebShortcutFilter ) ) {
+            KToolInvocation::invokeBrowser( filterData.uri().url() );
+        }
+    }
 }
 
 void PageView::slotConfigureWebShortcuts()

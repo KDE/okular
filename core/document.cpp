@@ -2388,7 +2388,6 @@ Document::OpenResult Document::openDocument(const QString & docFile, const QUrl 
             // There's still no offers, do a final mime search based on the filename
             // We need this because sometimes (e.g. when downloading from a webserver) the mimetype we
             // use is the one fed by the server, that may be wrong
-#pragma message("Fix generator loading")
             newmime = db.mimeTypeForUrl( url );
 
             if ( !newmime.isDefault() && newmime != mime )

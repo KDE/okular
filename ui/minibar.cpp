@@ -20,7 +20,6 @@
 #include <QtWidgets/QToolButton>
 #include <qvalidator.h>
 #include <qpainter.h>
-#include <kglobalsettings.h>
 #include <QIcon>
 #include <kicontheme.h>
 #include <klineedit.h>
@@ -496,7 +495,7 @@ PagesEdit::PagesEdit( MiniBar * parent )
     QFocusEvent fe( QEvent::FocusOut );
     QApplication::sendEvent( this, &fe );
 
-    connect( KGlobalSettings::self(), &KGlobalSettings::appearanceChanged, this, &PagesEdit::updatePalette );
+    connect( qApp, &QGuiApplication::paletteChanged, this, &PagesEdit::updatePalette );
 }
 
 void PagesEdit::setText( const QString & newText )

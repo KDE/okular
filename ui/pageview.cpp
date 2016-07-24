@@ -1487,7 +1487,7 @@ void PageView::paintEvent(QPaintEvent *pe)
         // create the rect into contents from the clipped screen rect
         QRect viewportRect = viewport()->rect();
         viewportRect.translate( areaPos );
-        QRect contentsRect = pe->rect().translated( areaPos ).intersect( viewportRect );
+        QRect contentsRect = pe->rect().translated( areaPos ).intersected( viewportRect );
         if ( !contentsRect.isValid() )
             return;
 
@@ -1534,7 +1534,7 @@ void PageView::paintEvent(QPaintEvent *pe)
             if ( useSubdivision )
             {
                 // set 'contentsRect' to a part of the sub-divided region
-                contentsRect = allRects[i].translated( areaPos ).intersect( viewportRect );
+                contentsRect = allRects[i].translated( areaPos ).intersected( viewportRect );
                 if ( !contentsRect.isValid() )
                     continue;
             }
@@ -1560,7 +1560,7 @@ void PageView::paintEvent(QPaintEvent *pe)
                 if ( !selectionRect.isNull() && selectionRect.intersects( contentsRect ) &&
                     !selectionRectInternal.contains( contentsRect ) )
                 {
-                    QRect blendRect = selectionRectInternal.intersect( contentsRect );
+                    QRect blendRect = selectionRectInternal.intersected( contentsRect );
                     // skip rectangles covered by the selection's border
                     if ( blendRect.isValid() )
                     {
@@ -1591,7 +1591,7 @@ void PageView::paintEvent(QPaintEvent *pe)
                     if ( !selectionPartRect.isNull() && selectionPartRect.intersects( contentsRect ) &&
                         !selectionPartRectInternal.contains( contentsRect ) )
                     {
-                        QRect blendRect = selectionPartRectInternal.intersect( contentsRect );
+                        QRect blendRect = selectionPartRectInternal.intersected( contentsRect );
                         // skip rectangles covered by the selection's border
                         if ( blendRect.isValid() )
                         {
@@ -2699,7 +2699,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                         if ( !okularPage->hasTextPage() )
                             d->document->requestTextPage( okularPage->number() );
                         // grab text in the rect that intersects itemRect
-                        QRect relativeRect = selectionRect.intersect( itemRect );
+                        QRect relativeRect = selectionRect.intersected( itemRect );
                         relativeRect.translate( -item->uncroppedGeometry().topLeft() );
                         Okular::RegularAreaRect rects;
                         rects.append( Okular::NormalizedRect( relativeRect, item->uncroppedWidth(), item->uncroppedHeight() ) );
@@ -2854,9 +2854,9 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                         if ( !okularPage->hasTextPage() )
                             d->document->requestTextPage( okularPage->number() );
                         // grab text in the rect that intersects itemRect
-                        QRect rectInItem = selectionRect.intersect( itemRect );
+                        QRect rectInItem = selectionRect.intersected( itemRect );
                         rectInItem.translate( -item->uncroppedGeometry().topLeft() );
-                        QRect rectInSelection = selectionRect.intersect( itemRect );
+                        QRect rectInSelection = selectionRect.intersected( itemRect );
                         rectInSelection.translate( -selectionRect.topLeft() );
                         d->tableSelectionParts.append(
                             TableSelectionPart(
@@ -3354,13 +3354,13 @@ QList< Okular::RegularAreaRect * > PageView::textSelections( const QPoint& start
         {
             // first item
             PageViewItem * first = d->items[ affectedItemsIds.first() ];
-            QRect geom = first->croppedGeometry().intersect( selectionRect ).translated( -first->uncroppedGeometry().topLeft() );
+            QRect geom = first->croppedGeometry().intersected( selectionRect ).translated( -first->uncroppedGeometry().topLeft() );
             ret.append( textSelectionForItem( first,
                 selectionRect.bottom() > geom.height() ? ( direction_ne_sw ? geom.topRight() : geom.topLeft() ) : ( direction_ne_sw ? geom.bottomRight() : geom.bottomLeft() ),
                 QPoint() ) );
             // last item
             PageViewItem * last = d->items[ affectedItemsIds.last() ];
-            geom = last->croppedGeometry().intersect( selectionRect ).translated( -last->uncroppedGeometry().topLeft() );
+            geom = last->croppedGeometry().intersected( selectionRect ).translated( -last->uncroppedGeometry().topLeft() );
             // the last item needs to appended at last...
             Okular::RegularAreaRect * lastArea = textSelectionForItem( last,
                 QPoint(),
@@ -3444,7 +3444,7 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
             {
                 viewPortPoint = &point;
             }
-            QRect pixmapRect = contentsRect.intersect( itemGeometry );
+            QRect pixmapRect = contentsRect.intersected( itemGeometry );
             pixmapRect.translate( -item->croppedGeometry().topLeft() );
             PagePainter::paintCroppedPageOnPainter( p, item->page(), this, pageflags,
                 item->uncroppedWidth(), item->uncroppedHeight(), pixmapRect,
@@ -3452,7 +3452,7 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
         }
 
         // remove painted area from 'remainingArea' and restore painter
-        remainingArea -= outlineGeometry.intersect( contentsRect );
+        remainingArea -= outlineGeometry.intersected( contentsRect );
         p->restore();
     }
 
@@ -4472,7 +4472,7 @@ void PageView::delayedResizeEvent()
 static void slotRequestPreloadPixmap( Okular::DocumentObserver * observer, const PageViewItem * i, const QRect &expandedViewportRect, QLinkedList< Okular::PixmapRequest * > *requestedPixmaps )
 {
     Okular::NormalizedRect preRenderRegion;
-    const QRect intersectionRect = expandedViewportRect.intersect( i->croppedGeometry() );
+    const QRect intersectionRect = expandedViewportRect.intersected( i->croppedGeometry() );
     if ( !intersectionRect.isEmpty() )
         preRenderRegion = Okular::NormalizedRect( intersectionRect.translated( -i->uncroppedGeometry().topLeft() ), i->uncroppedWidth(), i->uncroppedHeight() );
 
@@ -4544,7 +4544,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
                 qRound( i->uncroppedGeometry().left() + i->uncroppedWidth() * r.left ) + 1 - viewportRect.left(),
                 qRound( i->uncroppedGeometry().top() + i->uncroppedHeight() * r.top ) + 1 - viewportRect.top() );
 
-            if ( vw->isPlaying() && viewportRectAtZeroZero.intersect( vw->geometry() ).isEmpty() ) {
+            if ( vw->isPlaying() && viewportRectAtZeroZero.intersected( vw->geometry() ).isEmpty() ) {
                 vw->stop();
                 vw->pageLeft();
             }
@@ -4557,7 +4557,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
         kWarning().nospace() << "viewportRect is " << viewportRect << ", page item is " << i->croppedGeometry() << " intersect : " << viewportRect.intersects( i->croppedGeometry() );
 #endif
         // if the item doesn't intersect the viewport, skip it
-        QRect intersectionRect = viewportRect.intersect( i->croppedGeometry() );
+        QRect intersectionRect = viewportRect.intersected( i->croppedGeometry() );
         if ( intersectionRect.isEmpty() )
         {
             continue;

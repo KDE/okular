@@ -940,7 +940,7 @@ void ThumbnailWidget::paint( QPainter &p, const QRect &_clipRect )
         // draw the page using the shared PagePainter class
         p.translate( m_margin/2, m_margin/2 );
         clipRect.translate( -m_margin/2, -m_margin/2 );
-        clipRect = clipRect.intersect( QRect( 0, 0, m_pixmapWidth, m_pixmapHeight ) );
+        clipRect = clipRect.intersected( QRect( 0, 0, m_pixmapWidth, m_pixmapHeight ) );
         if ( clipRect.isValid() )
         {
             int flags = PagePainter::Accessibility | PagePainter::Highlights |
@@ -963,7 +963,7 @@ void ThumbnailWidget::paint( QPainter &p, const QRect &_clipRect )
         {
             int pixW = bookmarkPixmap->width(),
                 pixH = bookmarkPixmap->height();
-            clipRect = clipRect.intersect( QRect( m_pixmapWidth - pixW, 0, pixW, pixH ) );
+            clipRect = clipRect.intersected( QRect( m_pixmapWidth - pixW, 0, pixW, pixH ) );
             if ( clipRect.isValid() )
                 p.drawPixmap( m_pixmapWidth - pixW, -pixH/8, *bookmarkPixmap );
         }

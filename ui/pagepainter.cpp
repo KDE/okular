@@ -384,7 +384,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
             {
                 const Okular::NormalizedRect & r = (*hIt).second;
                 // find out the rect to highlight on pixmap
-                QRect highlightRect = r.geometry( scaledWidth, scaledHeight ).translated( -scaledCrop.topLeft() ).intersect( limits );
+                QRect highlightRect = r.geometry( scaledWidth, scaledHeight ).translated( -scaledCrop.topLeft() ).intersected( limits );
                 highlightRect.translate( -limits.left(), -limits.top() );
 
                 // highlight composition (product: highlight color * destcolor)
@@ -676,7 +676,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
 
             // get annotation boundary and drawn rect
             QRect annotBoundary = a->transformedBoundingRectangle().geometry( scaledWidth, scaledHeight ).translated( -scaledCrop.topLeft() );
-            QRect annotRect = annotBoundary.intersect( limits );
+            QRect annotRect = annotBoundary.intersected( limits );
             QRect innerRect( annotRect.left() - annotBoundary.left(), annotRect.top() -
                     annotBoundary.top(), annotRect.width(), annotRect.height() );
 
@@ -724,7 +724,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                         pixmap = GuiUtils::iconLoader()->loadIcon( text->textIcon().toLower(), KIconLoader::NoGroup, 32 );
                     QImage scaledImage;
                     QRect annotBoundary2 = QRect( annotBoundary.topLeft(), QSize( TEXTANNOTATION_ICONSIZE, TEXTANNOTATION_ICONSIZE ) );
-                    QRect annotRect2 = annotBoundary2.intersect( limits );
+                    QRect annotRect2 = annotBoundary2.intersected( limits );
                     QRect innerRect2( annotRect2.left() - annotBoundary2.left(), annotRect2.top() -
                     annotBoundary2.top(), annotRect2.width(), annotRect2.height() );
                     scalePixmapOnImage( scaledImage, &pixmap,

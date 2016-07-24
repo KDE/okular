@@ -396,8 +396,8 @@ void ProgressWidget::paintEvent( QPaintEvent * e )
     int w = width(),
         h = height(),
         l = (int)( (float)w * m_progressPercentage );
-    QRect cRect = ( QApplication::isRightToLeft() ? QRect( 0, 0, w - l, h ) : QRect( l, 0, w - l, h ) ).intersect( e->rect() );
-    QRect fRect = ( QApplication::isRightToLeft() ? QRect( w - l, 0, l, h ) : QRect( 0, 0, l, h ) ).intersect( e->rect() );
+    QRect cRect = ( QApplication::isRightToLeft() ? QRect( 0, 0, w - l, h ) : QRect( l, 0, w - l, h ) ).intersected( e->rect() );
+    QRect fRect = ( QApplication::isRightToLeft() ? QRect( w - l, 0, l, h ) : QRect( 0, 0, l, h ) ).intersected( e->rect() );
 
     QPalette pal = palette();
     // paint clear rect

@@ -110,11 +110,12 @@ void AnnotationModelPrivate::notifySetup( const QVector< Okular::Page * > &pages
     if ( !( setupFlags & Okular::DocumentObserver::DocumentChanged ) )
         return;
 
+    q->beginResetModel();
     qDeleteAll( root->children );
     root->children.clear();
-    q->reset();
 
     rebuildTree( pages );
+    q->endResetModel();
 }
 
 void AnnotationModelPrivate::notifyPageChanged( int page, int flags )

@@ -316,10 +316,11 @@ void TOCModel::clear()
     if ( !d->dirty )
        return;
 
+    beginResetModel();
     qDeleteAll( d->root->children );
     d->root->children.clear();
     d->currentPage.clear();
-    reset();
+    endResetModel();
     d->dirty = false;
 }
 

@@ -219,6 +219,8 @@ void PageGroupProxyModel::setSourceModel( QAbstractItemModel *model )
 
 void PageGroupProxyModel::rebuildIndexes()
 {
+  beginResetModel();
+
   if ( mGroupByPage ) {
     mTreeIndexes.clear();
 
@@ -243,7 +245,7 @@ void PageGroupProxyModel::rebuildIndexes()
     }
   }
 
-  reset();
+  endResetModel();
 }
 
 void PageGroupProxyModel::groupByPage( bool value )
@@ -516,6 +518,7 @@ void AuthorGroupProxyModel::groupByAuthor( bool value )
 
 void AuthorGroupProxyModel::rebuildIndexes()
 {
+    beginResetModel();
     delete d->mRoot;
     d->mRoot = new AuthorGroupItem( 0 );
 
@@ -594,7 +597,7 @@ void AuthorGroupProxyModel::rebuildIndexes()
         }
     }
 
-    reset();
+    endResetModel();
 }
 
 #include "moc_annotationproxymodels.cpp"

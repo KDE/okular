@@ -150,7 +150,6 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
         caption = doc->currentDocument().fileName();
     caption = i18nc( "[document title/filename] – Presentation", "%1 – Presentation", caption );
     setWindowTitle( caption );
-#pragma message("KF5: Here was a makeStandardCaption, lost in KF5 port")
 
     m_width = -1;
     m_screen = -2;

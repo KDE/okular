@@ -294,7 +294,7 @@ QByteArray Manifest::decryptFile( const QString &filename, const QByteArray &fil
     return QByteArray();
   }
 
-  QIODevice *decompresserDevice = KFilterDev::device( new QBuffer( &decryptedData, 0 ), QStringLiteral("application/x-gzip"), true );
+  QIODevice *decompresserDevice = new KCompressionDevice( new QBuffer( &decryptedData, 0 ), true, KCompressionDevice::GZip);
   if( !decompresserDevice ) {
     qCDebug(OkularOooDebug) << "Couldn't create decompressor";
     // hopefully it isn't compressed then!

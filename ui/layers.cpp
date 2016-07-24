@@ -76,5 +76,5 @@ void Layers::saveSearchOptions()
 {
     Okular::Settings::setLayersSearchRegularExpression( m_searchLine->regularExpression() );
     Okular::Settings::setLayersSearchCaseSensitive( m_searchLine->caseSensitivity() == Qt::CaseSensitive ? true : false );
-    Okular::Settings::self()->writeConfig();
+    Okular::Settings::self()->save();
 }

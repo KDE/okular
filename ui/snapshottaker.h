@@ -21,7 +21,7 @@ class SnapshotTaker : public QObject
     Q_OBJECT
 
     public:
-        SnapshotTaker( const QString &url, QObject *parent = Q_NULLPTR );
+        SnapshotTaker( const QUrl &url, QObject *parent = Q_NULLPTR );
         ~SnapshotTaker();
 
     Q_SIGNALS:

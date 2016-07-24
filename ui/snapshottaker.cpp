@@ -14,7 +14,7 @@
 
 #include <QtGui/QImage>
 
-SnapshotTaker::SnapshotTaker( const QString &url, QObject *parent )
+SnapshotTaker::SnapshotTaker(const QUrl &url, QObject *parent )
     : QObject( parent )
     , m_player( new Phonon::VideoPlayer( Phonon::NoCategory, 0 ) )
 {

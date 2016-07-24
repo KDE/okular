@@ -119,7 +119,7 @@ void VideoWidget::Private::load()
         newurl = QUrl::fromLocalFile(url);
     }
     if ( newurl.isLocalFile() )
-        player->load( newurl.toLocalFile() );
+        player->load( newurl );
     else
         player->load( newurl );
 
@@ -159,9 +159,9 @@ void VideoWidget::Private::takeSnapshot()
 
     SnapshotTaker *taker = 0;
     if ( newurl.isLocalFile() )
-        taker = new SnapshotTaker( newurl.toLocalFile(), q );
+        taker = new SnapshotTaker( newurl, q );
     else
-        taker = new SnapshotTaker( newurl.url(), q );
+        taker = new SnapshotTaker( newurl, q );
 
     q->connect( taker, SIGNAL( finished( const QImage& ) ), q, SLOT( setPosterImage( const QImage& ) ) );
 }

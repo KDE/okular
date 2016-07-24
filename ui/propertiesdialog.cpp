@@ -61,8 +61,6 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
     QString mimeName = info.get( Okular::DocumentInfo::MimeType ).section( QLatin1Char('/'), -1 ).toUpper();
     setWindowTitle( i18n( "%1 Properties", mimeName ) );
 
-    int valMaxWidth = 100;
-
     /* obtains the properties list, conveniently ordered */
     QStringList orderedProperties;
     orderedProperties << Okular::DocumentInfo::getKeyString( Okular::DocumentInfo::FilePath )
@@ -122,19 +120,15 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
             value = label;
         }
         layout->addRow( new QLabel( i18n( "%1:", titleString ) ), value);
-
-        // refine maximum width of 'value' labels
-        valMaxWidth = qMax( valMaxWidth, fontMetrics().width( valueString ) );
     }
 
     // FONTS
-    QVBoxLayout *page2Layout = 0;
     if ( doc->canProvideFontInformation() ) {
         // create fonts tab and layout it
         QFrame *page2 = new QFrame();
         m_fontPage = addPage(page2, i18n("&Fonts"));
         m_fontPage->setIcon( QIcon::fromTheme( QStringLiteral("preferences-desktop-font") ) );
-        page2Layout = new QVBoxLayout(page2);
+        QVBoxLayout *page2Layout = new QVBoxLayout(page2);
         // add a tree view
         QTreeView *view = new QTreeView(page2);
         view->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -162,17 +156,8 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
         m_fontProgressBar->hide();
     }
 
-    // current width: left columnt + right column + dialog borders
-#pragma message("KF5 figure out margin/spacing")
-//  int width = layout->minimumSize().width() + valMaxWidth + 2 * marginHint() + spacingHint() + 30;
-    int width = layout->minimumSize().width() + valMaxWidth + 30;
-    if ( page2Layout )
-//        width = qMax( width, page2Layout->sizeHint().width() + marginHint() + spacingHint() + 31 );
-        width = qMax( width, page2Layout->sizeHint().width() + 31 );
-    // stay inside the 2/3 of the screen width
-    QRect screenContainer = QApplication::desktop()->screenGeometry( this );
-    width = qMin( width, 2*screenContainer.width()/3 );
-    resize(width, 1);
+    // KPageDialog is a bit buggy, it doesn't fix its own sizeHint, so we have to manually resize
+    resize(layout->sizeHint());
 
     connect( pageWidget(), SIGNAL(currentPageChanged(KPageWidgetItem*,KPageWidgetItem*)),
              this, SLOT(pageChanged(KPageWidgetItem*,KPageWidgetItem*)) );

@@ -47,7 +47,9 @@ class PreferencesDialog : public KConfigDialog
         DlgPresentation * m_presentation;
         DlgAnnotations * m_annotations;
         DlgEditor * m_editor;
+#ifdef OKULAR_DEBUG_CONFIGPAGE
         DlgDebug * m_debug;
+#endif
 
         KPageWidgetItem * m_annotationsPage;
 };

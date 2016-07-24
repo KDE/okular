@@ -58,7 +58,6 @@ class Sidebar : public QWidget
         void listContextMenu( const QPoint & );
         void showTextToggled( bool );
         void iconSizeChanged( QAction *action );
-        void appearanceChanged();
 
     private:
         void setIndexEnabled( int index, bool enabled );

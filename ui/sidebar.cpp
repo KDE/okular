@@ -77,11 +77,13 @@ class SidebarDelegate : public QAbstractItemDelegate
         void setShowText( bool show );
         bool isTextShown() const;
 
-        void updateBrushCache();
 
         // from QAbstractItemDelegate
         void paint( QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index ) const;
         QSize sizeHint( const QStyleOptionViewItem &option, const QModelIndex &index ) const;
+
+    private slots:
+        void updateBrushCache();
 
     private:
         bool m_showText;
@@ -97,6 +99,7 @@ SidebarDelegate::SidebarDelegate( QObject *parent )
     m_selectionBackground( 0 ), m_selectionForeground( 0 )
 {
     updateBrushCache();
+    connect(qApp, &QGuiApplication::paletteChanged, this, &SidebarDelegate::updateBrushCache);
 }
 
 SidebarDelegate::~SidebarDelegate()
@@ -502,8 +505,6 @@ Sidebar::Sidebar( QWidget *parent )
     connect(d->list, &SidebarListWidget::customContextMenuRequested, this, &Sidebar::listContextMenu);
     connect(d->splitter, &QSplitter::splitterMoved, this, &Sidebar::splitterMoved);
 
-    connect(KGlobalSettings::self(), &KGlobalSettings::appearanceChanged, this, &Sidebar::appearanceChanged);
-
     setCollapsed( true );
     setFocusProxy( d->list );
 }
@@ -796,11 +797,6 @@ void Sidebar::iconSizeChanged( QAction *action )
     d->list->update();
     Okular::Settings::setSidebarIconSize( size );
     Okular::Settings::self()->save();
-}
-
-void Sidebar::appearanceChanged()
-{
-    d->sideDelegate->updateBrushCache();
 }
 
 void Sidebar::dragEnterEvent( QDragEnterEvent* event )

@@ -151,7 +151,7 @@ glyph* TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCo
   }
 
   // This is the address of the glyph that will be returned.
-  struct glyph *g = glyphtable+ch;
+  glyph *g = glyphtable+ch;
 
 
   if (fatalErrorInFontLoading == true)

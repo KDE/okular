@@ -28,6 +28,5 @@ public:
 private:
   QFileInfo m_fileInfo;
   quint32  m_line;
-  bool      m_exists;
 };
 #endif

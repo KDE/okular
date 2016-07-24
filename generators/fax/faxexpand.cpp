@@ -343,7 +343,7 @@ unexpected(const char *what, int LineNum)
 
 /* Expand tiff modified huffman data (g3-1d without EOLs) */
 void
-MHexpand(struct pagenode *pn, drawfunc df)
+MHexpand(pagenode *pn, drawfunc df)
 {
     int a0;			/* reference element */
     int lastx;			/* copy line width to register */
@@ -396,7 +396,7 @@ MHexpand(struct pagenode *pn, drawfunc df)
 
 /* Expand group-3 1-dimensional data */
 void
-g31expand(struct pagenode *pn, drawfunc df)
+g31expand(pagenode *pn, drawfunc df)
 {
     int a0;			/* reference element */
     int lastx;			/* copy line width to register */
@@ -480,7 +480,7 @@ g31expand(struct pagenode *pn, drawfunc df)
 
 /* Expand group-3 2-dimensional data */
 void
-g32expand(struct pagenode *pn, drawfunc df)
+g32expand(pagenode *pn, drawfunc df)
 {
     int RunLength;		/* Length of current run */
     int a0;			/* reference element */
@@ -600,7 +600,7 @@ g32expand(struct pagenode *pn, drawfunc df)
 
 /* Expand group-4 data */
 void
-g4expand(struct pagenode *pn, drawfunc df)
+g4expand(pagenode *pn, drawfunc df)
 {
     int RunLength;		/* Length of current run */
     int a0;			/* reference element */
@@ -717,7 +717,7 @@ static const unsigned char zerotab[256] = {
 
 /* count fax lines */
 int
-G3count(struct pagenode *pn, int twoD)
+G3count(pagenode *pn, int twoD)
 {
     t16bits *p = pn->data;
     t16bits *end = p + pn->length/sizeof(*p);

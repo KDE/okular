@@ -135,9 +135,6 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
         m_fontPage = addPage(page2, i18n("&Fonts"));
         m_fontPage->setIcon( QIcon::fromTheme( QStringLiteral("preferences-desktop-font") ) );
         page2Layout = new QVBoxLayout(page2);
-#pragma message("KF5 fix margin/spacing")
-//      page2Layout->setMargin(marginHint());
-//      page2Layout->setSpacing(spacingHint());
         // add a tree view
         QTreeView *view = new QTreeView(page2);
         view->setContextMenuPolicy(Qt::CustomContextMenu);

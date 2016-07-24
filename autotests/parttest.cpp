@@ -15,8 +15,8 @@
 #include "../ui/pageview.h"
 
 #include <KConfigDialog>
-#include <KGlobal>
 #include <KAboutData>
+#include <KLocalizedString>
 
 #include <QClipboard>
 #include <QTreeView>
@@ -250,7 +250,7 @@ int main(int argc, char *argv[])
     qRegisterMetaType<QUrl>(); /*as done by kapplication*/
     qRegisterMetaType<QList<QUrl>>();
     Okular::PartTest test;
-    KGlobal::ref(); /* don't quit qeventloop after closing a mainwindow */
+    app.setQuitOnLastWindowClosed(false);
     return QTest::qExec( &test, argc, argv );
 }
 

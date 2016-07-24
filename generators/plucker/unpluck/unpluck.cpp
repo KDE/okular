@@ -44,7 +44,7 @@
 /*****                                                             *****/
 /*****   Decompression code (taken from the Plucker PalmOS viewer  *****/
 /*****   sources, Copyright (c) 1998-2002, by Mark Ian Lillywhite  *****/
-/*****   and Michael Nordström, also under the GPL)                *****/
+/*****   and Michael Nordstrï¿½m, also under the GPL)                *****/
 /*****                                                             *****/
 /***********************************************************************/
 /***********************************************************************/
@@ -963,7 +963,7 @@ static long FpSize
 
 plkr_Document* plkr_OpenDBFile
     (
-    char*  filename
+    const char*  filename
     )
 {
     plkr_DBHandle   handle;

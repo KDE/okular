@@ -53,7 +53,7 @@ HashTable *SectionsTable = NULL;
 
 static HashTable* GetOrCreateSegment
     (
-    char* name
+    const char* name
     )
 {
     HashTable* target;
@@ -71,7 +71,7 @@ static HashTable* GetOrCreateSegment
 
 static int ReadConfigFile
     (
-    char* filename
+    const char* filename
     )
 {
     HashTable*  current_segment = NULL;
@@ -245,8 +245,8 @@ static int ReadConfigFile
 
 static void TryReadConfigFile
     (
-    char*  dir,
-    char*  name
+    const char*  dir,
+    const char*  name
     )
 {
     char*  filename;
@@ -266,9 +266,9 @@ static void TryReadConfigFile
 
 static void InitializeConfigInfo ()
 {
-    char *config_dir = STRINGIFY (PLUCKER_CONFIG_DIR);
-    char *system_config_file_name = STRINGIFY (SYS_CONFIG_FILE_NAME);
-    char *user_config_filename = STRINGIFY (USER_CONFIG_FILE_NAME);
+    const char *config_dir = STRINGIFY (PLUCKER_CONFIG_DIR);
+    const char *system_config_file_name = STRINGIFY (SYS_CONFIG_FILE_NAME);
+    const char *user_config_filename = STRINGIFY (USER_CONFIG_FILE_NAME);
     char *home = getenv ("HOME");
 
     TryReadConfigFile (config_dir, system_config_file_name);
@@ -278,8 +278,8 @@ static void InitializeConfigInfo ()
 
 char* plkr_GetConfigString
     (
-    char*  section_name,
-    char*  option_name,
+    const char*  section_name,
+    const char*  option_name,
     char*  default_value
     )
 {
@@ -319,8 +319,8 @@ char* plkr_GetConfigString
 
 long int plkr_GetConfigInt
     (
-    char*     section_name,
-    char*     option_name,
+    const char*     section_name,
+    const char*     option_name,
     long int  default_value
     )
 {
@@ -344,9 +344,8 @@ long int plkr_GetConfigInt
 }
 
 double plkr_GetConfigFloat
-    (
-    char*   section_name,
-    char*   option_name,
+    (const char *section_name,
+    const char *option_name,
     double  default_value
     )
 {
@@ -370,9 +369,8 @@ double plkr_GetConfigFloat
 }
 
 int plkr_GetConfigBoolean
-    (
-    char*  section_name,
-    char*  option_name,
+    (const char *section_name,
+    const char *option_name,
     int    default_value
     )
 {

@@ -42,6 +42,7 @@ find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS
     ConfigWidgets
     CoreAddons
     DBusAddons
+    DocTools
     IconThemes
     JS
     KDELibs4Support

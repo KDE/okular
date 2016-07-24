@@ -306,9 +306,7 @@ void ProtocolMSITS::listDir (const QUrl & url)
 		else
 			app_file(entry, ename, 0);
  
-		listEntry(entry, false);
 	}
 
-	listEntry(entry, true);
 	finished();
 }

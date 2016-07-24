@@ -20,24 +20,8 @@
 namespace ShellUtils
 {
 
-namespace detail
+QUrl urlFromArg( const QString& _arg, const QString& pageArg )
 {
-
-bool qfileExistFunc( const QString& fileName )
-{
-    return QFile::exists( fileName );
-}
-
-}
-
-FileExistFunc qfileExistFunc()
-{
-    return detail::qfileExistFunc;
-}
-
-QUrl urlFromArg( const QString& _arg, FileExistFunc exist_func, const QString& pageArg )
-{
-    // ## TODO remove exist_func
 #if QT_VERSION >= 0x050400
     QUrl url = QUrl::fromUserInput(_arg, QDir::currentPath(), QUrl::AssumeLocalFile);
 #else

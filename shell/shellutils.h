@@ -19,10 +19,7 @@ class QCommandLineParser;
 namespace ShellUtils
 {
 
-typedef bool (*FileExistFunc)( const QString& fileName );
-
-FileExistFunc qfileExistFunc();
-QUrl urlFromArg( const QString& _arg, FileExistFunc exist_func, const QString& pageArg = QString() );
+QUrl urlFromArg(const QString& _arg, const QString& pageArg = QString() );
 QString serializeOptions(const QCommandLineParser &args);
 QString serializeOptions(bool startInPresentation, bool showPrintDialog, bool unique, bool noRaise, const QString &page);
 bool unserializeOptions(const QString &serializedOptions, bool *presentation, bool *print, bool *unique, bool *noraise, QString *page);

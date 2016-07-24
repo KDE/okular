@@ -33,7 +33,7 @@ static bool attachUniqueInstance(const QStringList &paths, const QString &serial
         return false;
 
     const QString page = ShellUtils::page(serializedOptions);
-    iface.call(QStringLiteral("openDocument"), ShellUtils::urlFromArg(paths[0], ShellUtils::qfileExistFunc(), page).url(), serializedOptions);
+    iface.call(QStringLiteral("openDocument"), ShellUtils::urlFromArg(paths[0], page).url(), serializedOptions);
     if (!ShellUtils::noRaise(serializedOptions)) {
         iface.call(QStringLiteral("tryRaise"));
     }
@@ -103,7 +103,7 @@ static bool attachExistingInstance(const QStringList &paths, const QString &seri
         {
             // Page only makes sense if we are opening one file
             const QString page = ShellUtils::page(serializedOptions);
-            path = ShellUtils::urlFromArg(arg, ShellUtils::qfileExistFunc(), page).url();
+            path = ShellUtils::urlFromArg(arg, page).url();
         }
 
         // Returns false if it can't fit another document
@@ -166,7 +166,7 @@ Status main(const QStringList &paths, const QString &serializedOptions)
     {
         // Page only makes sense if we are opening one file
         const QString page = ShellUtils::page(serializedOptions);
-        const QUrl url = ShellUtils::urlFromArg(paths[i], ShellUtils::qfileExistFunc(), page);
+        const QUrl url = ShellUtils::urlFromArg(paths[i], page);
         if ( shell->openDocument( url, serializedOptions) )
         {
             ++i;

@@ -2304,6 +2304,8 @@ void PresentationWidget::slotProcessRenditionAction( const Okular::RenditionActi
         case Okular::RenditionAction::Resume:
             vw->play();
             break;
+        default:
+            return;
     };
 }
 

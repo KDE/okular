@@ -5292,6 +5292,8 @@ void PageView::slotProcessRenditionAction( const Okular::RenditionAction *action
         case Okular::RenditionAction::Resume:
             vw->play();
             break;
+        default:
+            return;
     };
 }
 

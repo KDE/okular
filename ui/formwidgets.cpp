@@ -503,6 +503,7 @@ void FormLineEdit::slotHandleTextChangedByUndoRedo( int pageNumber,
                                                     int cursorPos,
                                                     int anchorPos )
 {
+    Q_UNUSED(pageNumber);
     if ( textForm != m_form || contents == text() )
     {
         return;
@@ -596,6 +597,7 @@ void TextAreaEdit::slotHandleTextChangedByUndoRedo( int pageNumber,
                                                     int cursorPos,
                                                     int anchorPos )
 {
+    Q_UNUSED(pageNumber);
     if ( textForm != m_form )
     {
         return;
@@ -741,6 +743,7 @@ void FileEdit::slotHandleFileChangedByUndoRedo( int pageNumber,
                                                 int cursorPos,
                                                 int anchorPos )
 {
+    Q_UNUSED(pageNumber);
     if ( form != m_form || contents == text() )
     {
         return;

@@ -15,10 +15,9 @@
 #include "../ui/pageview.h"
 
 #include <KConfigDialog>
-#include <KAboutData>
-#include <KLocalizedString>
 
 #include <QClipboard>
+#include <QTemporaryDir>
 #include <QTreeView>
 
 namespace Okular
@@ -234,23 +233,38 @@ void PartTest::testClickInternalLink()
 
 int main(int argc, char *argv[])
 {
-#pragma message("KF5 What to do with this?")
-    // This is QTEST_KDEMAIN withouth the LC_ALL set
-    setenv("LC_ALL", "en_US.UTF-8", 1);
-    Q_ASSERT( !QDir::homePath().isEmpty() );
-    setenv("KDEHOME", QFile::encodeName( QDir::homePath() + QString::fromLatin1("/.kde-unit-test") ).constData(), 1);
-    setenv("XDG_DATA_HOME", QFile::encodeName( QDir::homePath() + QString::fromLatin1("/.kde-unit-test/xdg/local") ).constData(), 1);
-    setenv("XDG_CONFIG_HOME", QFile::encodeName( QDir::homePath() + QString::fromLatin1("/.kde-unit-test/xdg/config") ).constData(), 1);
-    setenv("KDE_SKIP_KDERC", "1", 1);
-    unsetenv("KDE_COLOR_DEBUG");
-    QFile::remove(QDir::homePath() + QString::fromLatin1("/.kde-unit-test/share/config/qttestrc")); 
-    KAboutData aboutData( QStringLiteral("qttest"), i18n("KDE Test Program"), QStringLiteral("version") );
+    // Force consistent locale
+    QLocale locale(QStringLiteral("en_US.UTF-8"));
+    if (locale == QLocale::c()) { // This is the way to check if the above worked
+        locale = QLocale(QLocale::English, QLocale::UnitedStates);
+    }
+
+    QLocale::setDefault(locale);
+    qputenv("LC_ALL", "en_US.UTF-8"); // For UNIX, third-party libraries
+
+    // Ensure consistent configs/caches
+    QTemporaryDir homeDir; // QTemporaryDir automatically cleans up when it goes out of scope
+    Q_ASSERT(homeDir.isValid());
+    QByteArray homePath = QFile::encodeName(homeDir.path());
+    qDebug() << homePath;
+    qputenv("USERPROFILE", homePath);
+    qputenv("HOME", homePath);
+    qputenv("XDG_DATA_HOME", homePath + "/.local");
+    qputenv("XDG_CONFIG_HOME", homePath + "/.kde-unit-test/xdg/config");
+
+    // Disable fancy debug output
+    qunsetenv("QT_MESSAGE_PATTERN");
+
     QApplication app( argc, argv );
-    app.setApplicationName( QLatin1String("qttest") );
+    app.setApplicationName(QLatin1String("okularparttest"));
+    app.setOrganizationDomain(QLatin1String("kde.org"));
+    app.setQuitOnLastWindowClosed(false);
+
     qRegisterMetaType<QUrl>(); /*as done by kapplication*/
     qRegisterMetaType<QList<QUrl>>();
+
     Okular::PartTest test;
-    app.setQuitOnLastWindowClosed(false);
+
     return QTest::qExec( &test, argc, argv );
 }
 

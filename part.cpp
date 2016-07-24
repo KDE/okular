@@ -2537,14 +2537,6 @@ void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
         reallyShow = true;
     }
 
-#pragma message("KF5 Port: Albert says: I have not ported this as i don't see it does anything")
-    /*
-        if ( d->mouseOnRect ) // and rect->objectType() == ObjectRect::Image ...
-        {
-            m_popup->insertItem( SmallIcon("document-save"), i18n("Save Image..."), 4 );
-            m_popup->setItemEnabled( 4, false );
-    }*/
-
     if ((m_showMenuBarAction && !m_showMenuBarAction->isChecked()) || (m_showFullScreenAction && m_showFullScreenAction->isChecked()))
     {
         popup->setTitle( i18n( "Tools" ) );

@@ -26,7 +26,6 @@
 #include <qstackedwidget.h>
 #include <qmimedata.h>
 
-#include <kglobalsettings.h>
 #include <kiconloader.h>
 #include <KLocalizedString>
 #include <qmenu.h>

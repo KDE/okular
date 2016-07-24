@@ -2647,19 +2647,26 @@ void Part::slotAboutBackend()
 
     KAboutData aboutData = KAboutData::fromPluginMetaData(data);
 
-    if (data.iconName().isEmpty())
-    {
-        // fall back to mime type icon
+    QIcon icon = QIcon::fromTheme(data.iconName());
+
+    // fall back to mime type icon
+    if (icon.isNull()) {
         const Okular::DocumentInfo documentInfo = m_document->documentInfo(QSet<DocumentInfo::Key>() << DocumentInfo::MimeType);
         const QString mimeTypeName = documentInfo.get(DocumentInfo::MimeType);
-        if (!mimeTypeName.isEmpty())
-        {
+        if (!mimeTypeName.isEmpty()) {
             QMimeDatabase db;
             QMimeType type = db.mimeTypeForName(mimeTypeName);
-            if (type.isValid())
-                aboutData.setProgramIconName(type.iconName());
+            if (type.isValid()) {
+                icon = QIcon::fromTheme(type.iconName());
+            }
         }
     }
+
+    if (!icon.isNull()) {
+        // 48x48 is what KAboutApplicationDialog wants, which doesn't match any default so we hardcode it
+        aboutData.setProgramLogo(icon.pixmap(48, 48));
+    }
+
     KAboutApplicationDialog dlg(aboutData, widget());
     dlg.exec();
 }

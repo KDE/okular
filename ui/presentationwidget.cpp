@@ -41,7 +41,10 @@
 #include <kselectaction.h>
 #include <QDialog>
 
-#include <Solid/PowerManagement>
+#ifdef Q_OS_LINUX
+#include <QDBusUnixFileDescriptor>
+#include <unistd.h> // For ::close() for sleep inhibition
+#endif
 
 // system includes
 #include <stdlib.h>
@@ -135,6 +138,7 @@ class PresentationToolBar : public QToolBar
 PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc, DrawingToolActions * drawingToolActions, KActionCollection * collection )
     : QWidget( 0 /* must be null, to have an independent widget */, Qt::FramelessWindowHint ),
     m_pressedLink( 0 ), m_handCursor( false ), m_drawingEngine( 0 ),
+    m_screenInhibitCookie(0), m_sleepInhibitCookie(0),
     m_parentWidget( parent ),
     m_document( doc ), m_frameIndex( -1 ), m_topBar( 0 ), m_pagesEdit( 0 ), m_searchBar( 0 ),
     m_ac( collection ), m_screenSelect( 0 ), m_isSetup( false ), m_blockNotifications( false ), m_inBlackScreenMode( false ),
@@ -1642,19 +1646,66 @@ void PresentationWidget::applyNewScreenSize( const QSize & oldSize )
 
 void PresentationWidget::inhibitPowerManagement()
 {
+#ifdef Q_OS_LINUX
     QString reason = i18nc( "Reason for inhibiting the screensaver activation, when the presentation mode is active", "Giving a presentation" );
 
-    // Inhibit screen and sleep
-    // Note: beginSuppressingScreenPowerManagement inhibits DPMS, automatic brightness change and screensaver
-    m_screenInhibitCookie = Solid::PowerManagement::beginSuppressingScreenPowerManagement(reason);
-    m_sleepInhibitCookie = Solid::PowerManagement::beginSuppressingSleep(reason);
+    if (!m_screenInhibitCookie) {
+        QDBusMessage message = QDBusMessage::createMethodCall("org.freedesktop.ScreenSaver", "/ScreenSaver",
+                                                              "org.freedesktop.ScreenSaver", "Inhibit");
+        message << QCoreApplication::applicationName();
+        message << reason;
+
+        QDBusPendingReply<uint> reply = QDBusConnection::sessionBus().asyncCall(message);
+        reply.waitForFinished();
+        if (reply.isValid()) {
+            m_screenInhibitCookie = reply.value();
+            qDebug() << "Screen inhibition cookie" << m_screenInhibitCookie;
+        } else {
+            qWarning() << "Unable to inhibit screensaver" << reply.error();
+        }
+    }
+
+    if (!m_sleepInhibitCookie) {
+        QDBusMessage message = QDBusMessage::createMethodCall(QStringLiteral("org.freedesktop.login1"),
+                                                              QStringLiteral("/org/freedesktop/login1"),
+                                                              QStringLiteral("org.freedesktop.login1.Manager"),
+                                                              QStringLiteral("Inhibit")
+                                                              );
+        message << QStringLiteral("sleep");
+        message << QCoreApplication::applicationName();
+        message << reason;
+        message << QStringLiteral("block");
+
+        QDBusPendingReply<QDBusUnixFileDescriptor> reply = QDBusConnection::systemBus().asyncCall(message);
+        reply.waitForFinished();
+        if (reply.isValid()) {
+            m_sleepInhibitCookie = reply.value().fileDescriptor();
+        } else {
+            qWarning() << "Unable to inhibit sleep" << reply.error();
+        }
+    }
+#endif
 }
 
 void PresentationWidget::allowPowerManagement()
 {
-    // Remove cookies
-    Solid::PowerManagement::stopSuppressingScreenPowerManagement(m_screenInhibitCookie);
-    Solid::PowerManagement::stopSuppressingSleep(m_sleepInhibitCookie);
+#ifdef Q_OS_LINUX
+    if (m_sleepInhibitCookie) {
+        ::close(m_sleepInhibitCookie);
+        m_sleepInhibitCookie = 0;
+    }
+
+    if (m_screenInhibitCookie) {
+        QDBusMessage message = QDBusMessage::createMethodCall("org.freedesktop.ScreenSaver", "/ScreenSaver",
+                                                              "org.freedesktop.ScreenSaver", "UnInhibit");
+        message << m_screenInhibitCookie;
+
+        QDBusPendingReply<uint> reply = QDBusConnection::sessionBus().asyncCall(message);
+        reply.waitForFinished();
+
+        m_screenInhibitCookie = 0;
+    }
+#endif
 }
 
 void PresentationWidget::showTopBar( bool show )

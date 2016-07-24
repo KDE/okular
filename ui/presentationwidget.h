@@ -111,7 +111,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         SmoothPathEngine * m_drawingEngine;
         QRect m_drawingRect;
         int m_screen;
-        int m_screenInhibitCookie;
+        uint m_screenInhibitCookie;
         int m_sleepInhibitCookie;
 
         // transition related

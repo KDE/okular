@@ -223,7 +223,7 @@ public:
     KAction * aFitWindowToPage;
 
     int setting_viewCols;
-
+    bool rtl_Mode;
     // Keep track of whether tablet pen is currently pressed down
     bool penDown;
 };
@@ -335,6 +335,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->actionCollection = 0;
     d->aPageSizes=0;
     d->setting_viewCols = Okular::Settings::viewColumns();
+    d->rtl_Mode = Okular::Settings::rtlReadingDirection();
     d->mouseModeActionGroup = 0;
     d->penDown = false;
     d->aMouseMagnifier = 0;
@@ -800,6 +801,12 @@ void PageView::reparseConfig()
     {
         d->setting_viewCols = Okular::Settings::viewColumns();
 
+        slotRelayoutPages();
+    }
+
+    if (Okular::Settings::rtlReadingDirection() != d->rtl_Mode )
+    {
+        d->rtl_Mode = Okular::Settings::rtlReadingDirection();
         slotRelayoutPages();
     }
 
@@ -4332,15 +4339,27 @@ void PageView::slotRelayoutPages()
                 }
                 else if ( facingPages )
                 {
-                    // page edges 'touch' the center of the viewport
-                    actualX = ( (centerFirstPage && item->pageNumber() % 2 == 1) ||
-                                (!centerFirstPage && item->pageNumber() % 2 == 0) ) ?
-                        (fullWidth / 2) - item->croppedWidth() - 1 : (fullWidth / 2) + 1;
+                    if (Okular::Settings::rtlReadingDirection()){
+                        // RTL reading mode
+                        actualX = ( (centerFirstPage && item->pageNumber() % 2 == 0) ||
+                                    (!centerFirstPage && item->pageNumber() % 2 == 1) ) ?
+                                    (fullWidth / 2) - item->croppedWidth() - 1 : (fullWidth / 2) + 1;
+                    } else {
+                        // page edges 'touch' the center of the viewport
+                        actualX = ( (centerFirstPage && item->pageNumber() % 2 == 1) ||
+                                    (!centerFirstPage && item->pageNumber() % 2 == 0) ) ?
+                                    (fullWidth / 2) - item->croppedWidth() - 1 : (fullWidth / 2) + 1;
+                    }
                 }
                 else
                 {
                     // page is centered within its virtual column
-                    actualX = insertX + (cWidth - item->croppedWidth()) / 2;
+                    //actualX = insertX + (cWidth - item->croppedWidth()) / 2;
+                    if (Okular::Settings::rtlReadingDirection()){
+                        actualX = fullWidth - insertX - cWidth +( (cWidth - item->croppedWidth()) / 2);
+                    } else {
+                        actualX = insertX + (cWidth - item->croppedWidth()) / 2;
+                    }
                 }
                 item->moveTo( actualX,
                               (continuousView ? insertY : origInsertY) + (rHeight - item->croppedHeight()) / 2 );

@@ -48,7 +48,7 @@
 #include <kmessagebox.h>
 #include <kmimetypetrader.h>
 #include <kprocess.h>
-#include <krun.h>
+#include <KRun>
 #include <kshell.h>
 #include <kzip.h>
 #include <KIO/Global>
@@ -3999,8 +3999,10 @@ void Document::processAction( const Action * action )
             QString lilySource;
             int lilyRow = 0, lilyCol = 0;
             // if the url is a mailto one, invoke mailer
-            if ( browse->url().scheme().compare(QLatin1String("mailto")) )
+            if ( browse->url().scheme() == QLatin1String("mailto") )
+            {
                 QDesktopServices::openUrl( browse->url() );
+            }
             else if ( extractLilyPondSourceReference( browse->url(), &lilySource, &lilyRow, &lilyCol ) )
             {
                 const SourceReference ref( lilySource, lilyRow, lilyCol );
@@ -4008,25 +4010,22 @@ void Document::processAction( const Action * action )
             }
             else
             {
-                QUrl url = browse->url();
+                const QUrl url = browse->url();
 
-#pragma message("KF5 fix this mess - relative urls should probably be resolved earlier")
                 // fix for #100366, documents with relative links that are the form of http:foo.pdf
-//                if (url.indexOf("http:") == 0 && url.indexOf("http://") == -1 && url.right(4) == ".pdf")
-//                {
-//                    d->openRelativeFile(url.mid(5));
-//                    return;
-//                }
+                if ((url.scheme() == "http") && url.host().isEmpty() && url.fileName().endsWith("pdf"))
+                {
+                    d->openRelativeFile(url.fileName());
+                    return;
+                }
 
-// FIXME
-//                // handle documents with relative path
-//                if ( d->m_url.isValid() )
-//                {
-//                    realUrl = KUrl( d->m_url.upUrl(), url );
-//                }
-
-//                // Albert: this is not a leak!
-//                new KRun( realUrl, d->m_widget );
+                // handle documents with relative path
+                if ( d->m_url.isValid() )
+                {
+                    const QUrl realUrl = KIO::upUrl(d->m_url).resolved(url);
+                    // KRun autodeletes
+                    new KRun( realUrl, d->m_widget );
+                }
             }
             } break;
 

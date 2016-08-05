@@ -1,7 +1,7 @@
 maintainer: aacid
 description: Okular, the unified document viewer
 platforms:
-    - name: All
+    - name: Linux
 release: true
 
 public_lib: true

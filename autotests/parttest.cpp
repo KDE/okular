@@ -179,7 +179,7 @@ void PartTest::testSelectText()
     Okular::Part part(NULL, NULL, dummyArgs);
     QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/file2.pdf")));
     part.widget()->show();
-    QTest::qWaitForWindowShown(part.widget());
+    QTest::qWaitForWindowExposed(part.widget());
 
     const int width = part.m_pageView->width();
     const int height = part.m_pageView->height();
@@ -211,7 +211,7 @@ void PartTest::testClickInternalLink()
     Okular::Part part(NULL, NULL, dummyArgs);
     QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/file2.pdf")));
     part.widget()->show();
-    QTest::qWaitForWindowShown(part.widget());
+    QTest::qWaitForWindowExposed(part.widget());
 
     const int width = part.m_pageView->width();
     const int height = part.m_pageView->height();

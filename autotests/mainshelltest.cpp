@@ -513,7 +513,7 @@ void MainShellTest::testSessionRestore()
     int numDocs = 0;
     foreach( Shell* shell, shells )
     {
-        QTest::qWaitForWindowShown( shell );
+        QTest::qWaitForWindowExposed( shell );
         numDocs += shell->m_tabs.size();
     }
 
@@ -569,7 +569,7 @@ void MainShellTest::testSessionRestore()
     numDocs = 0;
     foreach( Shell* shell, shells )
     {
-        QTest::qWaitForWindowShown( shell );
+        QTest::qWaitForWindowExposed( shell );
         numDocs += shell->m_tabs.size();
     }
 

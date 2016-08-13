@@ -21,6 +21,7 @@
 #define QPAGEITEM_H
 
 #include <QQuickPaintedItem>
+#include <QPointer>
 
 #include <core/document.h>
 #include <core/view.h>
@@ -165,9 +166,9 @@ private:
     bool m_intentionalDraw;
     bool m_bookmarked;
     bool m_isThumbnail;
-    QWeakPointer<DocumentItem> m_documentItem;
+    QPointer<DocumentItem> m_documentItem;
     QTimer *m_redrawTimer;
-    QWeakPointer <QQuickItem> m_flickable;
+    QPointer<QQuickItem> m_flickable;
     Okular::DocumentViewport m_viewPort;
 };
 

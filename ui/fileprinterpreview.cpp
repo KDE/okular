@@ -81,12 +81,18 @@ void FilePrinterPreviewPrivate::getPart()
     qCDebug(OkularUiDebug) << "querying trader for application/ps service";
 
     KPluginFactory *factory(0);
-    /* Explicitly look for the Okular/Ghostview part: no other PostScript
-       parts are available now; other parts which handles text are not
-       suitable here (PostScript source code) */
-    KService::List offers =
-        KMimeTypeTrader::self()->query(QStringLiteral("application/postscript"), QStringLiteral("KParts/ReadOnlyPart"),
-                                       QStringLiteral("[DesktopEntryName] == 'okularghostview'"));
+    KService::List offers;
+    if (filename.endsWith(QStringLiteral(".ps"))) {
+        /* Explicitly look for the Okular/Ghostview part: no other PostScript
+           parts are available now; other parts which handles text are not
+           suitable here (PostScript source code) */
+        offers =
+            KMimeTypeTrader::self()->query(QStringLiteral("application/postscript"),
+                                           QStringLiteral("KParts/ReadOnlyPart"),
+                                           QStringLiteral("[DesktopEntryName] == 'okularghostview'"));
+    } else {
+        offers = KMimeTypeTrader::self()->query("application/pdf", "KParts/ReadOnlyPart");
+    }
 
     KService::List::ConstIterator it = offers.constBegin();
     while (!factory && it != offers.constEnd()) {

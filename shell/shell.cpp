@@ -436,17 +436,23 @@ void Shell::fileOpen()
 
     QMimeDatabase mimeDatabase;
     QSet<QString> globPatterns;
-    QStringList namePatterns;
+    QMap<QString, QStringList> namedGlobs;
     foreach ( const QString &mimeName, m_fileformats ) {
         QMimeType mimeType = mimeDatabase.mimeTypeForName( mimeName );
         globPatterns.unite( mimeType.globPatterns().toSet() ) ;
 
-        namePatterns.append( mimeType.comment() +
+        namedGlobs[ mimeType.comment() ].append( mimeType.globPatterns() );
+
+    }
+    QStringList namePatterns;
+    foreach( const QString &name, namedGlobs.keys()) {
+        namePatterns.append( name +
                              QStringLiteral(" (") +
-                             mimeType.globPatterns().join( QLatin1Char(' ') ) +
+                             namedGlobs[name].join( QLatin1Char(' ') ) +
                              QStringLiteral(")")
                            );
     }
+
     namePatterns.prepend( i18n("All files (*)") );
     namePatterns.prepend( i18n("All supported files (%1)", globPatterns.toList().join( QLatin1Char(' ') ) ) );
     dlg->setNameFilters( namePatterns );

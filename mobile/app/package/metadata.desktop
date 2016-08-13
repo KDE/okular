@@ -51,6 +51,7 @@ Encoding=UTF-8
 Type=Application
 Exec=kpackagelauncherqml -a org.kde.mobile.okular %u
 Icon=okular
+NoDisplay=true
 X-KDE-ParentApp=
 X-KDE-PluginInfo-Author=Marco Martin
 X-KDE-PluginInfo-Email=mart@kde.org

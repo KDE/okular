@@ -439,9 +439,14 @@ void Shell::fileOpen()
     QMap<QString, QStringList> namedGlobs;
     foreach ( const QString &mimeName, m_fileformats ) {
         QMimeType mimeType = mimeDatabase.mimeTypeForName( mimeName );
-        globPatterns.unite( mimeType.globPatterns().toSet() ) ;
+        const QStringList globs( mimeType.globPatterns() );
+        if ( globs.isEmpty() ) {
+            continue;
+        }
 
-        namedGlobs[ mimeType.comment() ].append( mimeType.globPatterns() );
+        globPatterns.unite( globs.toSet() ) ;
+
+        namedGlobs[ mimeType.comment() ].append( globs );
 
     }
     QStringList namePatterns;

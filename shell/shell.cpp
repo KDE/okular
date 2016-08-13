@@ -463,12 +463,15 @@ void Shell::fileOpen()
     dlg->setNameFilters( namePatterns );
 
     dlg->setWindowTitle( i18n("Open Document") );
-    if ( !dlg->exec() || !dlg)
-        return;
+    if ( dlg->exec() && dlg ) {
+        foreach(const QUrl& url, dlg->selectedUrls())
+        {
+            openUrl( url );
+        }
+    }
 
-    foreach(const QUrl& url, dlg->selectedUrls())
-    {
-        openUrl( url );
+    if ( dlg ) {
+        delete dlg.data();
     }
 }
 

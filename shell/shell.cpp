@@ -448,7 +448,7 @@ void Shell::fileOpen()
                            );
     }
     namePatterns.prepend( i18n("All files (*)") );
-    namePatterns.prepend( i18n("All supported files (%s)", globPatterns.toList().join( QLatin1Char(' ') ) ) );
+    namePatterns.prepend( i18n("All supported files (%1)", globPatterns.toList().join( QLatin1Char(' ') ) ) );
     dlg->setNameFilters( namePatterns );
 
     dlg->setWindowTitle( i18n("Open Document") );

@@ -68,8 +68,6 @@
 #include <KXMLGUIClient>
 #include <KXMLGUIFactory>
 
-#include <KPrintPreview>
-
 #if 0
 #include <knewstuff2/engine.h>
 #endif
@@ -2453,30 +2451,33 @@ void Part::slotPrintPreview()
     if (m_document->pages() == 0) return;
 
     QPrinter printer;
+    QString tempFilePattern;
 
-    // Native printing supports KPrintPreview, Postscript needs to use FilePrinterPreview
-    if ( m_document->printingSupport() == Okular::Document::NativePrinting )
+    if ( m_document->printingSupport() == Okular::Document::PostscriptPrinting )
     {
-        KPrintPreview previewdlg( &printer, widget() );
-        setupPrint( printer );
-        doPrint( printer );
-        previewdlg.exec();
+        tempFilePattern = (QDir::tempPath() + QLatin1String("/okular_XXXXXX.ps"));
+    }
+    else if ( m_document->printingSupport() == Okular::Document::NativePrinting )
+    {
+        tempFilePattern = (QDir::tempPath() + QLatin1String("/okular_XXXXXX.pdf"));
     }
     else
     {
-        // Generate a temp filename for Print to File, then release the file so generator can write to it
-        QTemporaryFile tf(QDir::tempPath() + QLatin1String("/okular_XXXXXX.ps"));
-        tf.setAutoRemove( true );
-        tf.open();
-        printer.setOutputFileName( tf.fileName() );
-        tf.close();
-        setupPrint( printer );
-        doPrint( printer );
-        if ( QFile::exists( printer.outputFileName() ) )
-        {
-            Okular::FilePrinterPreview previewdlg( printer.outputFileName(), widget() );
-            previewdlg.exec();
-        }
+        return;
+    }
+
+    // Generate a temp filename for Print to File, then release the file so generator can write to it
+    QTemporaryFile tf(tempFilePattern);
+    tf.setAutoRemove( true );
+    tf.open();
+    printer.setOutputFileName( tf.fileName() );
+    tf.close();
+    setupPrint( printer );
+    doPrint( printer );
+    if ( QFile::exists( printer.outputFileName() ) )
+    {
+        Okular::FilePrinterPreview previewdlg( printer.outputFileName(), widget() );
+        previewdlg.exec();
     }
 }
 

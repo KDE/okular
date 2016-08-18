@@ -38,7 +38,7 @@ static QPixmap colorDecorationFromToolDescription( const QString &toolDescriptio
     p.drawRect( QRect( 0, 0, pm.width() - 1, pm.height() - 1 ) );
 
     return pm;
-};
+}
 
 WidgetDrawingTools::WidgetDrawingTools( QWidget *parent )
     : WidgetConfigurationToolsBase( parent )

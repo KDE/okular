@@ -2147,8 +2147,13 @@ void PresentationWidget::initTransition( const Okular::PageTransition *transitio
             // randomize the grid
             for ( int i = 0; i < steps; i++ )
             {
+#ifndef Q_OS_WIN
                 int n1 = (int)(steps * drand48());
                 int n2 = (int)(steps * drand48());
+#else
+                int n1 = (int)(steps * (std::rand() / RAND_MAX));
+                int n2 = (int)(steps * (std::rand() / RAND_MAX));
+#endif
                 // swap items if index differs
                 if ( n1 != n2 )
                 {
@@ -2238,8 +2243,13 @@ void PresentationWidget::initTransition( const Okular::PageTransition *transitio
             int randomSteps = steps / 20;
             for ( int i = 0; i < randomSteps; i++ )
             {
+#ifndef Q_OS_WIN
                 int n1 = (int)(steps * drand48());
                 int n2 = (int)(steps * drand48());
+#else
+                int n1 = (int)(steps * (std::rand() / RAND_MAX));
+                int n2 = (int)(steps * (std::rand() / RAND_MAX));
+#endif
                 // swap items if index differs
                 if ( n1 != n2 )
                 {

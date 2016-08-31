@@ -24,7 +24,11 @@
 #include "../settings.h"
 
 #include <sys/types.h>
+#ifndef Q_OS_WIN
 #include <unistd.h>
+#else
+#include <process.h>
+#endif
 
 namespace Okular {
 class PartTest

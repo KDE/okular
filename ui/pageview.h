@@ -204,7 +204,7 @@ Q_OBJECT
         // activated by the viewport move timer
         void slotMoveViewport();
         // activated by the autoscroll timer (Shift+Up/Down keys)
-        void slotAutoScoll();
+        void slotAutoScroll();
         // activated by the dragScroll timer
         void slotDragScroll();
         // show the welcome message

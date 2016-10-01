@@ -1813,7 +1813,7 @@ void PageView::keyPressEvent( QKeyEvent * e )
                 if ( d->autoScrollTimer->isActive() )
                     d->autoScrollTimer->stop();
                 else
-                    slotAutoScoll();
+                    slotAutoScroll();
                 return;
             }
             // else fall trhough
@@ -4702,14 +4702,14 @@ void PageView::slotMoveViewport()
             (int)(y + diffY * convergeSpeed ) );
 }
 
-void PageView::slotAutoScoll()
+void PageView::slotAutoScroll()
 {
     // the first time create the timer
     if ( !d->autoScrollTimer )
     {
         d->autoScrollTimer = new QTimer( this );
         d->autoScrollTimer->setSingleShot( true );
-        connect( d->autoScrollTimer, &QTimer::timeout, this, &PageView::slotAutoScoll );
+        connect( d->autoScrollTimer, &QTimer::timeout, this, &PageView::slotAutoScroll );
     }
 
     // if scrollIncrement is zero, stop the timer
@@ -4979,7 +4979,7 @@ void PageView::slotAutoScrollUp()
     if ( d->scrollIncrement < -9 )
         return;
     d->scrollIncrement--;
-    slotAutoScoll();
+    slotAutoScroll();
     setFocus();
 }
 
@@ -4988,7 +4988,7 @@ void PageView::slotAutoScrollDown()
     if ( d->scrollIncrement > 9 )
         return;
     d->scrollIncrement++;
-    slotAutoScoll();
+    slotAutoScroll();
     setFocus();
 }
 

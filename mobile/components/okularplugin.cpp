@@ -25,10 +25,17 @@
 
 #include <QQmlEngine>
 #include <QPluginLoader>
+#include <QApplication>
 
 void OkularPlugin::registerTypes(const char *uri)
 {
-    Q_ASSERT(QString::fromLocal8Bit(uri) == QLatin1String("org.kde.okular"));
+    if (!qobject_cast<QApplication*>(qApp)) {
+        qWarning() << "The Okular QML components require a QApplication";
+        return;
+    }
+    if (QString::fromLocal8Bit(uri) != QLatin1String("org.kde.okular")) {
+        return;
+    }
     qmlRegisterType<DocumentItem>(uri, 2, 0, "DocumentItem");
     qmlRegisterType<PageItem>(uri, 2, 0, "PageItem");
     qmlRegisterType<ThumbnailItem>(uri, 2, 0, "ThumbnailItem");

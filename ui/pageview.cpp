@@ -37,6 +37,7 @@
 #include <QDesktopServices>
 #include <QMimeDatabase>
 #include <QMimeData>
+#include <QGestureEvent>
 
 #include <qaction.h>
 #include <kactionmenu.h>
@@ -415,6 +416,9 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
 //    resizeButton->setEnabled( false );
     // connect(...);
     setAttribute( Qt::WA_InputMethodEnabled, true );
+
+    // Grab pinch gestures to rotate the view (and do things like zooming eventually)
+    grabGesture(Qt::PinchGesture);
 
     d->magnifierView = new MagnifierView(document, this);
     d->magnifierView->hide();
@@ -1481,6 +1485,51 @@ void PageView::setCapability( ViewCapability capability, const QVariant &option 
 //END View inherited methods
 
 //BEGIN widget events
+bool PageView::event( QEvent * event )
+{
+    if ( event->type() == QEvent::Gesture )
+    {
+        return gestureEvent(static_cast<QGestureEvent*>( event ));
+    }
+
+    // do not stop the event
+    return QAbstractScrollArea::event( event );
+}
+
+
+bool PageView::gestureEvent( QGestureEvent * event )
+{
+    QPinchGesture *pinch = static_cast<QPinchGesture*>(event->gesture(Qt::PinchGesture));
+
+    if (pinch)
+    {
+        // Viewport zoom level at the moment where the pinch gesture starts.
+        // The viewport zoom level _during_ the gesture will be this value
+        // times the relative zoom reported by QGestureEvent.
+        static qreal vanillaZoom = d->zoomFactor;
+
+        if (pinch->state() == Qt::GestureStarted)
+        {
+            vanillaZoom = d->zoomFactor;
+        }
+
+        // Zoom
+        if (pinch->changeFlags() & QPinchGesture::ScaleFactorChanged)
+        {
+            d->zoomFactor = vanillaZoom * pinch->totalScaleFactor();
+
+            d->blockPixmapsRequest = true;
+            updateZoom( ZoomRefreshCurrent );
+            d->blockPixmapsRequest = false;
+            viewport()->repaint();
+        }
+
+        return true;
+    }
+
+    return false;
+}
+
 void PageView::paintEvent(QPaintEvent *pe)
 {
         const QPoint areaPos = contentAreaPosition();

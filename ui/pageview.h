@@ -43,6 +43,8 @@ class PageViewPrivate;
 
 class MagnifierView;
 
+class QGestureEvent;
+
 /**
  * @short The main view. Handles zoom and continuous mode.. oh, and page
  * @short display of course :-)
@@ -126,7 +128,10 @@ Q_OBJECT
         void fitWindowToPage( const QSize& pageViewPortSize, const QSize& pageSize );
 
     protected:
+        bool event( QEvent * event ) Q_DECL_OVERRIDE;
+
         void resizeEvent( QResizeEvent* ) Q_DECL_OVERRIDE;
+        bool gestureEvent( QGestureEvent * e );
 
         // mouse / keyboard events
         void keyPressEvent( QKeyEvent* ) Q_DECL_OVERRIDE;

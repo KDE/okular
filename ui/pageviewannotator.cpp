@@ -521,7 +521,7 @@ class TextSelectorEngine : public AnnotatorEngine
                     delete selection;
                     selection = 0;
                     Okular::RegularAreaRect * newselection = m_pageView->textSelectionForItem( item(), start, end );
-                    if ( !newselection->isEmpty() )
+                    if ( newselection && !newselection->isEmpty() )
                     {
                         const QList<QRect> geom = newselection->geometry( (int)xScale, (int)yScale );
                         QRect newrect;

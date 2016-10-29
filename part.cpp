@@ -44,6 +44,7 @@
 #include <QSpinBox>
 #include <QStandardPaths>
 #include <QWidgetAction>
+#include <QContextMenuEvent>
 
 #include <KAboutApplicationDialog>
 #include <KActionCollection>
@@ -2156,15 +2157,8 @@ void Part::slotRenameCurrentViewportBookmark()
     slotRenameBookmark( m_document->viewport() );
 }
 
-void Part::slotAboutToShowContextMenu(QMenu * /*menu*/, QAction *action, QMenu *contextMenu)
+bool Part::aboutToShowContextMenu(QMenu * /*menu*/, QAction *action, QMenu *contextMenu)
 {
-    const QList<QAction*> actions = contextMenu->findChildren<QAction*>(QStringLiteral("OkularPrivateRenameBookmarkActions"));
-    foreach(QAction *a, actions)
-    {
-        contextMenu->removeAction(a);
-        delete a;
-    }
-
     KBookmarkAction *ba = dynamic_cast<KBookmarkAction*>(action);
     if (ba != NULL)
     {
@@ -2174,6 +2168,7 @@ void Part::slotAboutToShowContextMenu(QMenu * /*menu*/, QAction *action, QMenu *
         renameAction->setData(ba->property("htmlRef").toString());
         renameAction->setObjectName(QStringLiteral("OkularPrivateRenameBookmarkActions"));
     }
+    return ba;
 }
 
 void Part::slotPreviousBookmark()
@@ -3009,12 +3004,10 @@ void Part::rebuildBookmarkMenu( bool unplugActions )
         bool containerFound = false;
         for (int i = 0; !containerFound && i < clients.size(); ++i)
         {
-            QWidget *container = factory()->container(QStringLiteral("bookmarks"), clients[i]);
+            QMenu *container = dynamic_cast<QMenu*>(factory()->container(QStringLiteral("bookmarks"), clients[i]));
             if (container && container->actions().contains(m_bookmarkActions.first()))
             {
-                Q_ASSERT(dynamic_cast<QMenu*>(container));
-                disconnect(container, 0, this, 0);
-                connect(container, SIGNAL(aboutToShowContextMenu(QMenu*,QAction*,QMenu*)), this, SLOT(slotAboutToShowContextMenu(QMenu*,QAction*,QMenu*))); // kf5 FIXME
+                container->installEventFilter(this);
                 containerFound = true;
             }
         }
@@ -3022,6 +3015,39 @@ void Part::rebuildBookmarkMenu( bool unplugActions )
 
     m_prevBookmark->setEnabled( havebookmarks );
     m_nextBookmark->setEnabled( havebookmarks );
+}
+
+bool Part::eventFilter(QObject * watched, QEvent * event)
+{
+    switch (event->type()) {
+    case QEvent::ContextMenu: {
+        QContextMenuEvent *e = static_cast<QContextMenuEvent *>(event);
+        QMenu *menu = static_cast<QMenu *>(watched);
+
+        QScopedPointer<QMenu> ctxMenu(new QMenu);
+
+        QPoint pos;
+        bool ret = false;
+        if (e->reason() == QContextMenuEvent::Mouse) {
+            pos = e->pos();
+            ret = aboutToShowContextMenu(menu, menu->actionAt(e->pos()), ctxMenu.data());
+        } else if (menu->activeAction()) {
+            pos = menu->actionGeometry(menu->activeAction()).center();
+            ret = aboutToShowContextMenu(menu, menu->activeAction(), ctxMenu.data());
+        }
+        ctxMenu->exec(menu->mapToGlobal(pos));
+
+        if (ret) {
+            event->accept();
+        }
+        return ret;
+    }
+
+    default:
+        break;
+    }
+
+    return false;
 }
 
 void Part::updateAboutBackendAction()

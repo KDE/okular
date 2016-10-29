@@ -190,7 +190,6 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         void slotAddBookmark();
         void slotRenameBookmarkFromMenu();
         void slotRenameCurrentViewportBookmark();
-        void slotAboutToShowContextMenu(QMenu *menu, QAction *action, QMenu *contextMenu);
         void slotPreviousBookmark();
         void slotNextBookmark();
         void slotFindNext();
@@ -240,6 +239,8 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         void moveSplitter( const int sideWidgetSize );
 
     private:
+        bool aboutToShowContextMenu(QMenu *menu, QAction *action, QMenu *contextMenu);
+        bool eventFilter(QObject * watched, QEvent * event) override;
         Document::OpenResult doOpenFile(const QMimeType &mime, const QString &fileNameToOpen, bool *isCompressedFile);
 
         void setupViewerActions();

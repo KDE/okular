@@ -116,8 +116,6 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         void addTransition( Poppler::Page * popplerPage, Okular::Page * page );
         // fetch the form fields and add them to the page
         void addFormFields( Poppler::Page * popplerPage, Okular::Page * page );
-        // load the source references from a pdfsync file
-        void loadPdfSync( const QString & fileName, QVector<Okular::Page*> & pagesVector );
 
         Okular::TextPage * abstractTextPage(const QList<Poppler::TextBox*> &text, double height, double width, int rot);
 

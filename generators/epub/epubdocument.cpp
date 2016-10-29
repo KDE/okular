@@ -47,7 +47,7 @@ void EpubDocument::setCurrentSubDocument(const QString &doc)
   mCurrentSubDocument.clear();
   int index = doc.indexOf('/');
   if (index > 0) {
-      mCurrentSubDocument = doc.left(index);
+      mCurrentSubDocument = QUrl::fromLocalFile(doc.left(index+1));
   }
 }
 
@@ -72,8 +72,10 @@ QVariant EpubDocument::loadResource(int type, const QUrl &name)
   int size;
   char *data;
 
+  QString fileInPath = mCurrentSubDocument.resolved(name).path();
+
   // Get the data from the epub file
-  size = epub_get_data(mEpub, (mCurrentSubDocument + name.toString()).toUtf8().constData(), &data);
+  size = epub_get_data(mEpub, fileInPath.toUtf8().constData(), &data);
 
   QVariant resource;
 

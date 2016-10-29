@@ -896,9 +896,9 @@ void PagePainter::recolor(QImage *image, const QColor &foreground, const QColor 
 
         for (int x=0; x<image->width(); x++) {
             const int lightness = qGray(pixels[x]);
-            pixels[x] = qRgba(scaleRed * lightness,
-                           scaleGreen * lightness,
-                           scaleBlue * lightness,
+            pixels[x] = qRgba(scaleRed * lightness + foreground.red(),
+                           scaleGreen * lightness + foreground.green(),
+                           scaleBlue * lightness + foreground.blue(),
                            qAlpha(pixels[x]));
         }
     }

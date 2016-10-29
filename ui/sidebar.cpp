@@ -217,6 +217,14 @@ class SidebarListWidget : public QListWidget
         SidebarListWidget( QWidget *parent = Q_NULLPTR );
         ~SidebarListWidget();
 
+        int countVisible() const {
+            int ret = 0;
+            for ( int i = 0, c = count(); i < c; ++i ) {
+                ret += !item(i)->isHidden();
+            }
+            return ret;
+        }
+
     protected:
         // from QListWidget
         void mouseDoubleClickEvent( QMouseEvent *event );
@@ -429,10 +437,7 @@ public:
 
 void Sidebar::Private::adjustListSize( bool recalc, bool expand )
 {
-    QRect bottomElemRect(
-        QPoint( 0, 0 ),
-        list->sizeHintForIndex( list->model()->index( list->count() - 1, 0 ) )
-    );
+    QSize bottomElemSize( list->sizeHintForIndex( list->model()->index( list->count() - 1, 0 ) ) );
     if ( recalc )
     {
         int w = 0;
@@ -442,15 +447,15 @@ void Sidebar::Private::adjustListSize( bool recalc, bool expand )
             if ( s.width() > w )
                 w = s.width();
         }
-        bottomElemRect.setWidth( w );
+        bottomElemSize.setWidth( w );
     }
-    bottomElemRect.translate( 0, bottomElemRect.height() * ( list->count() - 1 ) );
-    itemsHeight = bottomElemRect.height() * list->count();
+    itemsHeight = bottomElemSize.height() * list->countVisible();
     list->setMinimumHeight( itemsHeight + list->frameWidth() * 2 );
+
     int curWidth = list->minimumWidth();
     int newWidth = expand
-                   ? qMax( bottomElemRect.width() + list->frameWidth() * 2, curWidth )
-                   : qMin( bottomElemRect.width() + list->frameWidth() * 2, curWidth );
+                   ? qMax( bottomElemSize.width() + list->frameWidth() * 2, curWidth )
+                   : qMin( bottomElemSize.width() + list->frameWidth() * 2, curWidth );
     list->setFixedWidth( newWidth );
 }
 

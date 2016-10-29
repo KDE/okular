@@ -473,7 +473,9 @@ static QString absolutePath( const QString &path, const QString &location )
         // already absolute
         retPath = location;
     } else {
-        retPath = QUrl::fromLocalFile(path + QLatin1Char('/') + location).toDisplayString(QUrl::PreferLocalFile);
+        QUrl u = QUrl::fromLocalFile(path);
+        QUrl u2 = QUrl::fromLocalFile(location);
+        retPath = u.resolved(u2).toDisplayString(QUrl::PreferLocalFile);
     }
     // it seems paths & file names can also be percent-encoded
     // (XPS won't ever finish surprising me)

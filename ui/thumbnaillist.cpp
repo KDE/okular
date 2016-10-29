@@ -41,7 +41,7 @@ class ThumbnailListPrivate : public QWidget
 {
     public:
         ThumbnailListPrivate( ThumbnailList *qq, Okular::Document *document );
-        ~ThumbnailListPrivate();
+        ~ThumbnailListPrivate() override;
 
         enum ChangePageDirection
         {
@@ -85,12 +85,12 @@ class ThumbnailListPrivate : public QWidget
         ThumbnailWidget *getThumbnailbyOffset( int current, int offset ) const;
 
     protected:
-        void mousePressEvent( QMouseEvent * e );
-        void mouseReleaseEvent( QMouseEvent * e );
-        void mouseMoveEvent( QMouseEvent * e );
-        void wheelEvent( QWheelEvent * e );
-        void contextMenuEvent( QContextMenuEvent * e );
-        void paintEvent( QPaintEvent * e );
+        void mousePressEvent( QMouseEvent * e ) override;
+        void mouseReleaseEvent( QMouseEvent * e ) override;
+        void mouseMoveEvent( QMouseEvent * e ) override;
+        void wheelEvent( QWheelEvent * e ) override;
+        void contextMenuEvent( QContextMenuEvent * e ) override;
+        void paintEvent( QPaintEvent * e ) override;
 };
 
 

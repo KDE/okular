@@ -38,7 +38,7 @@ class HandleDrag
             installEventFilter( parent );
         }
 
-        void paintEvent( QPaintEvent * )
+        void paintEvent( QPaintEvent * ) override
         {
             QStyleOption opt;
             opt.initFrom( this );

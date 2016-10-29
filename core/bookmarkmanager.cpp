@@ -99,17 +99,17 @@ class BookmarkManager::Private : public KBookmarkOwner
         {
         }
 
-        ~Private()
+        ~Private() override
         {
             knownFiles.clear();
             // no need to delete the manager, it's automatically done by KBookmarkManager
             // delete manager;
         }
 
-        virtual QUrl currentUrl() const;
-        virtual QString currentTitle() const;
-        virtual bool enableOption(BookmarkOption option) const;
-        virtual void openBookmark( const KBookmark & bm, Qt::MouseButtons, Qt::KeyboardModifiers );
+        QUrl currentUrl() const override;
+        QString currentTitle() const override;
+        bool enableOption(BookmarkOption option) const override;
+        void openBookmark( const KBookmark & bm, Qt::MouseButtons, Qt::KeyboardModifiers ) override;
 
         QHash<QUrl, QString>::iterator bookmarkFind( const QUrl& url, bool doCreate, KBookmarkGroup *result  = 0);
 

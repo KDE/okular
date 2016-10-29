@@ -300,7 +300,7 @@ class Okular::SoundActionPrivate : public Okular::ActionPrivate
         {
         }
 
-        ~SoundActionPrivate()
+        ~SoundActionPrivate() override
         {
             delete m_sound;
         }

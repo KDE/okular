@@ -73,15 +73,15 @@ class SidebarDelegate : public QAbstractItemDelegate
 
     public:
         SidebarDelegate( QObject *parent = Q_NULLPTR );
-        ~SidebarDelegate();
+        ~SidebarDelegate() override;
 
         void setShowText( bool show );
         bool isTextShown() const;
 
 
         // from QAbstractItemDelegate
-        void paint( QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index ) const;
-        QSize sizeHint( const QStyleOptionViewItem &option, const QModelIndex &index ) const;
+        void paint( QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index ) const override;
+        QSize sizeHint( const QStyleOptionViewItem &option, const QModelIndex &index ) const override;
 
     private slots:
         void updateBrushCache();
@@ -215,7 +215,7 @@ class SidebarListWidget : public QListWidget
 {
     public:
         SidebarListWidget( QWidget *parent = Q_NULLPTR );
-        ~SidebarListWidget();
+        ~SidebarListWidget() override;
 
         int countVisible() const {
             int ret = 0;
@@ -227,12 +227,12 @@ class SidebarListWidget : public QListWidget
 
     protected:
         // from QListWidget
-        void mouseDoubleClickEvent( QMouseEvent *event );
-        void mouseMoveEvent( QMouseEvent *event );
-        void mousePressEvent( QMouseEvent *event );
-        void mouseReleaseEvent( QMouseEvent *event );
+        void mouseDoubleClickEvent( QMouseEvent *event ) override;
+        void mouseMoveEvent( QMouseEvent *event ) override;
+        void mousePressEvent( QMouseEvent *event ) override;
+        void mouseReleaseEvent( QMouseEvent *event ) override;
 
-        QModelIndex moveCursor( QAbstractItemView::CursorAction cursorAction, Qt::KeyboardModifiers modifiers );
+        QModelIndex moveCursor( QAbstractItemView::CursorAction cursorAction, Qt::KeyboardModifiers modifiers ) override;
 
     private:
         // These two are used to keep track of the row an initial mousePress-

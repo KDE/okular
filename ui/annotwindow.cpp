@@ -126,7 +126,7 @@ public:
         authorLabel->installEventFilter( this );
     }
 
-    virtual bool eventFilter( QObject * obj, QEvent * e )
+    bool eventFilter( QObject * obj, QEvent * e ) override
     {
         if ( obj != titleLabel && obj != authorLabel && obj != dateLabel )
             return false;

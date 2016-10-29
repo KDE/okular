@@ -46,7 +46,7 @@ class TreeView : public QTreeView
     }
 
   protected:
-    virtual void paintEvent( QPaintEvent *event )
+    void paintEvent( QPaintEvent *event ) override
     {
       bool hasAnnotations = false;
       for ( uint i = 0; i < m_document->pages(); ++i )

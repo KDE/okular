@@ -55,10 +55,10 @@ class AnnotationModelPrivate : public Okular::DocumentObserver
 {
 public:
     AnnotationModelPrivate( AnnotationModel *qq );
-    virtual ~AnnotationModelPrivate();
+    ~AnnotationModelPrivate() override;
 
-    virtual void notifySetup( const QVector< Okular::Page * > &pages, int setupFlags );
-    virtual void notifyPageChanged( int page, int flags );
+    void notifySetup( const QVector< Okular::Page * > &pages, int setupFlags ) override;
+    void notifyPageChanged( int page, int flags ) override;
 
     QModelIndex indexForItem( AnnItem *item ) const;
     void rebuildTree( const QVector< Okular::Page * > &pages );

@@ -56,7 +56,7 @@ class PartThatHijacksQueryClose : public Okular::Part
             behavior = new_behavior;
         }
 
-        bool queryClose()
+        bool queryClose() override
         {
              if (behavior == PassThru)
                  return Okular::Part::queryClose();

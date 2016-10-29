@@ -47,7 +47,7 @@ class BookmarkItem : public QTreeWidgetItem
                 setData( 0, PageItemDelegate::PageRole, QString::number( m_viewport.pageNumber + 1 ) );
         }
 
-        virtual QVariant data( int column, int role ) const
+        QVariant data( int column, int role ) const override
         {
             switch ( role )
             {
@@ -57,7 +57,7 @@ class BookmarkItem : public QTreeWidgetItem
             return QTreeWidgetItem::data( column, role );
         }
 
-        virtual bool operator<( const QTreeWidgetItem& other ) const
+        bool operator<( const QTreeWidgetItem& other ) const override
         {
             if ( other.type() == BookmarkItemType )
             {
@@ -101,7 +101,7 @@ class FileItem : public QTreeWidgetItem
             setData( 0, UrlRole, qVariantFromValue( url ) );
         }
 
-        virtual QVariant data( int column, int role ) const
+        QVariant data( int column, int role ) const override
         {
             switch ( role )
             {

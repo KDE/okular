@@ -981,13 +981,13 @@ class Okular::TextAnnotationPrivate : public Okular::AnnotationPrivate
         {
         }
 
-        virtual void transform( const QTransform &matrix );
-        virtual void baseTransform( const QTransform &matrix );
-        virtual void resetTransformation();
-        virtual void translate( const NormalizedPoint &coord );
-        virtual bool openDialogAfterCreation() const;
-        virtual void setAnnotationProperties( const QDomNode& node );
-        virtual AnnotationPrivate* getNewAnnotationPrivate();
+        void transform( const QTransform &matrix ) override;
+        void baseTransform( const QTransform &matrix ) override;
+        void resetTransformation() override;
+        void translate( const NormalizedPoint &coord ) override;
+        bool openDialogAfterCreation() const override;
+        void setAnnotationProperties( const QDomNode& node ) override;
+        AnnotationPrivate* getNewAnnotationPrivate() override;
 
         TextAnnotation::TextType m_textType;
         QString m_textIcon;
@@ -1263,13 +1263,13 @@ class Okular::LineAnnotationPrivate : public Okular::AnnotationPrivate
         {
         }
 
-        virtual void transform( const QTransform &matrix );
-        virtual void baseTransform( const QTransform &matrix );
-        virtual void resetTransformation();
-        virtual void translate( const NormalizedPoint &coord );
-        virtual double distanceSqr( double x, double y, double xScale, double yScale );
-        virtual void setAnnotationProperties( const QDomNode& node );
-        virtual AnnotationPrivate* getNewAnnotationPrivate();
+        void transform( const QTransform &matrix ) override;
+        void baseTransform( const QTransform &matrix ) override;
+        void resetTransformation() override;
+        void translate( const NormalizedPoint &coord ) override;
+        double distanceSqr( double x, double y, double xScale, double yScale ) override;
+        void setAnnotationProperties( const QDomNode& node ) override;
+        AnnotationPrivate* getNewAnnotationPrivate() override;
 
         QLinkedList<NormalizedPoint> m_linePoints;
         QLinkedList<NormalizedPoint> m_transformedLinePoints;
@@ -1588,9 +1588,9 @@ class Okular::GeomAnnotationPrivate : public Okular::AnnotationPrivate
             : AnnotationPrivate(), m_geomType( GeomAnnotation::InscribedSquare )
         {
         }
-        virtual void setAnnotationProperties( const QDomNode& node );
-        virtual AnnotationPrivate* getNewAnnotationPrivate();
-        virtual double distanceSqr( double x, double y, double xScale, double yScale );
+        void setAnnotationProperties( const QDomNode& node ) override;
+        AnnotationPrivate* getNewAnnotationPrivate() override;
+        double distanceSqr( double x, double y, double xScale, double yScale ) override;
 
         GeomAnnotation::GeomType m_geomType;
         QColor m_geomInnerColor;
@@ -1867,11 +1867,11 @@ class Okular::HighlightAnnotationPrivate : public Okular::AnnotationPrivate
         {
         }
 
-        virtual void transform( const QTransform &matrix );
-        virtual void baseTransform( const QTransform &matrix );
-        virtual double distanceSqr( double x, double y, double xScale, double yScale );
-        virtual void setAnnotationProperties( const QDomNode& node );
-        virtual AnnotationPrivate* getNewAnnotationPrivate();
+        void transform( const QTransform &matrix ) override;
+        void baseTransform( const QTransform &matrix ) override;
+        double distanceSqr( double x, double y, double xScale, double yScale ) override;
+        void setAnnotationProperties( const QDomNode& node ) override;
+        AnnotationPrivate* getNewAnnotationPrivate() override;
 
         HighlightAnnotation::HighlightType m_highlightType;
         QList< HighlightAnnotation::Quad > m_highlightQuads;
@@ -2060,8 +2060,8 @@ class Okular::StampAnnotationPrivate : public Okular::AnnotationPrivate
             : AnnotationPrivate(), m_stampIconName( QStringLiteral("Draft") )
         {
         }
-        virtual void setAnnotationProperties( const QDomNode& node );
-        virtual AnnotationPrivate* getNewAnnotationPrivate();
+        void setAnnotationProperties( const QDomNode& node ) override;
+        AnnotationPrivate* getNewAnnotationPrivate() override;
 
         QString m_stampIconName;
 };
@@ -2149,13 +2149,13 @@ class Okular::InkAnnotationPrivate : public Okular::AnnotationPrivate
         {
         }
 
-        virtual void transform( const QTransform &matrix );
-        virtual void baseTransform( const QTransform &matrix );
-        virtual void resetTransformation();
-        virtual double distanceSqr( double x, double y, double xScale, double yScale );
-        virtual void translate( const NormalizedPoint &coord );
-        virtual void setAnnotationProperties( const QDomNode& node );
-        virtual AnnotationPrivate* getNewAnnotationPrivate();
+        void transform( const QTransform &matrix ) override;
+        void baseTransform( const QTransform &matrix ) override;
+        void resetTransformation() override;
+        double distanceSqr( double x, double y, double xScale, double yScale ) override;
+        void translate( const NormalizedPoint &coord ) override;
+        void setAnnotationProperties( const QDomNode& node ) override;
+        AnnotationPrivate* getNewAnnotationPrivate() override;
 
         QList< QLinkedList<NormalizedPoint> > m_inkPaths;
         QList< QLinkedList<NormalizedPoint> > m_transformedInkPaths;
@@ -2357,8 +2357,8 @@ class Okular::CaretAnnotationPrivate : public Okular::AnnotationPrivate
         {
         }
 
-        virtual void setAnnotationProperties( const QDomNode& node );
-        virtual AnnotationPrivate* getNewAnnotationPrivate();
+        void setAnnotationProperties( const QDomNode& node ) override;
+        AnnotationPrivate* getNewAnnotationPrivate() override;
 
         CaretAnnotation::CaretSymbol m_symbol;
 };
@@ -2466,13 +2466,13 @@ class Okular::FileAttachmentAnnotationPrivate : public Okular::AnnotationPrivate
             : AnnotationPrivate(), icon( QStringLiteral("PushPin") ), embfile( 0 )
         {
         }
-        ~FileAttachmentAnnotationPrivate()
+        ~FileAttachmentAnnotationPrivate() override
         {
             delete embfile;
         }
 
-        virtual void setAnnotationProperties( const QDomNode& node );
-        virtual AnnotationPrivate* getNewAnnotationPrivate();
+        void setAnnotationProperties( const QDomNode& node ) override;
+        AnnotationPrivate* getNewAnnotationPrivate() override;
 
         // data fields
         QString icon;
@@ -2565,13 +2565,13 @@ class Okular::SoundAnnotationPrivate : public Okular::AnnotationPrivate
             : AnnotationPrivate(), icon( QStringLiteral("Speaker") ), sound( 0 )
         {
         }
-        ~SoundAnnotationPrivate()
+        ~SoundAnnotationPrivate() override
         {
             delete sound;
         }
 
-        virtual void setAnnotationProperties( const QDomNode& node );
-        virtual AnnotationPrivate* getNewAnnotationPrivate();
+        void setAnnotationProperties( const QDomNode& node ) override;
+        AnnotationPrivate* getNewAnnotationPrivate() override;
 
         // data fields
         QString icon;
@@ -2663,13 +2663,13 @@ class Okular::MovieAnnotationPrivate : public Okular::AnnotationPrivate
             : AnnotationPrivate(), movie( 0 )
         {
         }
-        ~MovieAnnotationPrivate()
+        ~MovieAnnotationPrivate() override
         {
             delete movie;
         }
 
-        virtual void setAnnotationProperties( const QDomNode& node );
-        virtual AnnotationPrivate* getNewAnnotationPrivate();
+        void setAnnotationProperties( const QDomNode& node ) override;
+        AnnotationPrivate* getNewAnnotationPrivate() override;
 
         // data fields
         Movie *movie;
@@ -2745,10 +2745,10 @@ class Okular::ScreenAnnotationPrivate : public Okular::AnnotationPrivate
 {
     public:
         ScreenAnnotationPrivate();
-        ~ScreenAnnotationPrivate();
+        ~ScreenAnnotationPrivate() override;
 
-        virtual void setAnnotationProperties( const QDomNode& node );
-        virtual AnnotationPrivate* getNewAnnotationPrivate();
+        void setAnnotationProperties( const QDomNode& node ) override;
+        AnnotationPrivate* getNewAnnotationPrivate() override;
 
         Okular::Action* m_action;
         QMap< Okular::Annotation::AdditionalActionType, Okular::Action* > m_additionalActions;
@@ -2854,9 +2854,9 @@ Action* ScreenAnnotation::action() const
 class Okular::WidgetAnnotationPrivate : public Okular::AnnotationPrivate
 {
     public:
-        ~WidgetAnnotationPrivate();
-        virtual void setAnnotationProperties( const QDomNode& node );
-        virtual AnnotationPrivate* getNewAnnotationPrivate();
+        ~WidgetAnnotationPrivate() override;
+        void setAnnotationProperties( const QDomNode& node ) override;
+        AnnotationPrivate* getNewAnnotationPrivate() override;
 
         QMap< Okular::Annotation::AdditionalActionType, Okular::Action* > m_additionalActions;
 };
@@ -2942,9 +2942,9 @@ class Okular::RichMediaAnnotationPrivate : public Okular::AnnotationPrivate
 {
     public:
         RichMediaAnnotationPrivate();
-        ~RichMediaAnnotationPrivate();
-        virtual void setAnnotationProperties( const QDomNode& node );
-        virtual AnnotationPrivate* getNewAnnotationPrivate();
+        ~RichMediaAnnotationPrivate() override;
+        void setAnnotationProperties( const QDomNode& node ) override;
+        AnnotationPrivate* getNewAnnotationPrivate() override;
 
         // data fields
         Movie *movie;

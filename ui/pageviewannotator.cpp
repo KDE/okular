@@ -67,12 +67,12 @@ class PickPointEngine : public AnnotatorEngine
                 pixmap = new QPixmap( GuiUtils::loadStamp( hoverIconName, QSize( size, size ) ) );
         }
 
-        ~PickPointEngine()
+        ~PickPointEngine() override
         {
             delete pixmap;
         }
 
-        QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale, const Okular::Page * page )
+        QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale, const Okular::Page * page ) override
         {
             xscale=xScale;
             yscale=yScale;
@@ -125,7 +125,7 @@ class PickPointEngine : public AnnotatorEngine
             return boundrect;
         }
 
-        void paint( QPainter * painter, double xScale, double yScale, const QRect & /*clipRect*/ )
+        void paint( QPainter * painter, double xScale, double yScale, const QRect & /*clipRect*/ ) override
         {
             if ( clicked )
             {
@@ -145,7 +145,7 @@ class PickPointEngine : public AnnotatorEngine
             }
         }
 
-        QList< Okular::Annotation* > end()
+        QList< Okular::Annotation* > end() override
         {
             // find out annotation's description node
             if ( m_annotElement.isNull() )
@@ -334,7 +334,7 @@ class PolyLineEngine : public AnnotatorEngine
                 numofpoints = -1;
         }
 
-        QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale, const Okular::Page * /*page*/ )
+        QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale, const Okular::Page * /*page*/ ) override
         {
             // only proceed if pressing left button
 //            if ( button != Left )
@@ -384,7 +384,7 @@ class PolyLineEngine : public AnnotatorEngine
             return rect;
         }
 
-        void paint( QPainter * painter, double xScale, double yScale, const QRect & /*clipRect*/ )
+        void paint( QPainter * painter, double xScale, double yScale, const QRect & /*clipRect*/ ) override
         {
             if ( points.count() < 1 )
                 return;
@@ -411,7 +411,7 @@ class PolyLineEngine : public AnnotatorEngine
             }
         }
 
-        QList< Okular::Annotation* > end()
+        QList< Okular::Annotation* > end() override
         {
             m_creationCompleted = false;
 
@@ -496,12 +496,12 @@ class TextSelectorEngine : public AnnotatorEngine
             // parse engine specific attributes
         }
 
-        ~TextSelectorEngine()
+        ~TextSelectorEngine() override
         {
             delete selection;
         }
 
-        QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale, const Okular::Page * /*page*/ )
+        QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale, const Okular::Page * /*page*/ ) override
         {
             // only proceed if pressing left button
             if ( button != Left )
@@ -551,7 +551,7 @@ class TextSelectorEngine : public AnnotatorEngine
             return rect;
         }
 
-        void paint( QPainter * painter, double xScale, double yScale, const QRect & /*clipRect*/ )
+        void paint( QPainter * painter, double xScale, double yScale, const QRect & /*clipRect*/ ) override
         {
             if ( selection )
             {
@@ -566,7 +566,7 @@ class TextSelectorEngine : public AnnotatorEngine
             }
         }
 
-        QList< Okular::Annotation* > end()
+        QList< Okular::Annotation* > end() override
         {
             m_creationCompleted = false;
 
@@ -638,7 +638,7 @@ class TextSelectorEngine : public AnnotatorEngine
             return QList< Okular::Annotation* >() << ann;
         }
 
-        QCursor cursor() const
+        QCursor cursor() const override
         {
             return Qt::IBeamCursor;
         }

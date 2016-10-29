@@ -123,13 +123,13 @@ class PresentationToolBar : public QToolBar
         {}
 
     protected:
-        void mousePressEvent( QMouseEvent * e )
+        void mousePressEvent( QMouseEvent * e ) override
         {
             QToolBar::mousePressEvent( e );
             e->accept();
         }
 
-        void mouseReleaseEvent( QMouseEvent * e )
+        void mouseReleaseEvent( QMouseEvent * e ) override
         {
             QToolBar::mouseReleaseEvent( e );
             e->accept();

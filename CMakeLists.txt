@@ -8,6 +8,12 @@ set(KF5_REQUIRED_VERSION "5.16.0")
 find_package(ECM 5.19.0 CONFIG REQUIRED)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH})
 
+# KDE Application Version, managed by release script
+set (KDE_APPLICATIONS_VERSION_MAJOR "16")
+set (KDE_APPLICATIONS_VERSION_MINOR "11")
+set (KDE_APPLICATIONS_VERSION_MICRO "60")
+set (KDE_APPLICATIONS_VERSION "${KDE_APPLICATIONS_VERSION_MAJOR}.${KDE_APPLICATIONS_VERSION_MINOR}.${KDE_APPLICATIONS_VERSION_MICRO}")
+
 include(ECMInstallIcons)
 include(ECMSetupVersion)
 include(ECMOptionalAddSubdirectory)
@@ -21,9 +27,10 @@ include(ECMAddTests)
 include(ECMAddAppIcon)
 include(ECMPackageConfigHelpers)
 
-ecm_setup_version(1.0.0 VARIABLE_PREFIX OKULAR
-                        VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/core/version.h"
-                        PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/Okular5ConfigVersion.cmake")
+ecm_setup_version(0.99.${KDE_APPLICATIONS_VERSION_MICRO}
+                  VARIABLE_PREFIX OKULAR
+                  VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/core/version.h"
+                  PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/Okular5ConfigVersion.cmake")
 
 find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED COMPONENTS Core DBus Test Widgets PrintSupport Svg Qml Quick)
 find_package(Qt5 ${QT_REQUIRED_VERSION} OPTIONAL_COMPONENTS TextToSpeech)

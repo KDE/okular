@@ -52,7 +52,6 @@ static void calculateBoundingRect( QTextDocument *document, int startPosition, i
 PluckerGenerator::PluckerGenerator( QObject *parent, const QVariantList &args )
     : Generator( parent, args )
 {
-    setFeature( Threaded );
 }
 
 PluckerGenerator::~PluckerGenerator()

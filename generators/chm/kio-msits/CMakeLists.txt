@@ -19,5 +19,5 @@ install(TARGETS kio_msits DESTINATION ${KDE_INSTALL_PLUGINDIR} )
 
 ########### install files ###############
 
-install( FILES msits.protocol DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
+install( FILES ms-its.protocol DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
 

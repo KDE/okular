@@ -94,6 +94,8 @@ private:
 
 class DVIExportToPDF : public DVIExport
 {
+    Q_OBJECT
+
 public:
   /** @param parent is stored internally in order to inform the parent
    *  that the external process has finished.
@@ -105,6 +107,8 @@ public:
 
 class DVIExportToPS : public DVIExport
 {
+    Q_OBJECT
+
 public:
   /** @param parent is stored internally in order to inform the parent
    *  that the external process has finished.

@@ -81,6 +81,8 @@ class TextDocumentSettingsPrivate;
  */
 class OKULARCORE_EXPORT TextDocumentSettingsWidget : public QWidget
 {
+    Q_OBJECT
+
     public:
         TextDocumentSettingsWidget( QWidget *parent = Q_NULLPTR );
         virtual ~TextDocumentSettingsWidget();
@@ -105,6 +107,8 @@ class OKULARCORE_EXPORT TextDocumentSettingsWidget : public QWidget
  */
 class OKULARCORE_EXPORT TextDocumentSettings : public KConfigSkeleton
 {
+    Q_OBJECT
+
     public:
         QFont font() const;
 

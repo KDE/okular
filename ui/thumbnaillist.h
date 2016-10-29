@@ -77,6 +77,8 @@ Q_OBJECT
  */
 class ThumbnailsBox : public QWidget
 {
+    Q_OBJECT
+
     public:
         ThumbnailsBox( QWidget * parent ) : QWidget( parent ) { QVBoxLayout *vbox = new QVBoxLayout(this); vbox->setMargin(0); vbox->setSpacing(0);}
         QSize sizeHint() const Q_DECL_OVERRIDE { return QSize(); }
@@ -92,6 +94,8 @@ class ThumbnailsBox : public QWidget
  */
 class ThumbnailController : public QToolBar
 {
+    Q_OBJECT
+
     public:
         ThumbnailController( QWidget * parent, ThumbnailList * thumbnailList );
 };

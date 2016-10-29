@@ -115,6 +115,8 @@ struct PresentationFrame
 // background is not automatically filled
 class PresentationToolBar : public QToolBar
 {
+    Q_OBJECT
+
     public:
         PresentationToolBar( QWidget * parent = Q_NULLPTR )
             : QToolBar( parent )

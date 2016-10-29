@@ -536,7 +536,6 @@ static const KArchiveEntry* loadEntry( KZip *archive, const QString &fileName, Q
     QString path;
     QString entryName;
     const int index = fileName.lastIndexOf( QChar::fromLatin1( '/' ) );
-    QString ret;
     if ( index > 0 ) {
         path = fileName.left( index );
         entryName = fileName.mid( index + 1 );

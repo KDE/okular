@@ -27,6 +27,8 @@
 class HandleDrag
     : public QWidget
 {
+    Q_OBJECT
+
     public:
         HandleDrag( QWidget *parent = Q_NULLPTR )
             : QWidget( parent )
@@ -144,4 +146,4 @@ bool PresentationSearchBar::eventFilter( QObject *obj, QEvent *e )
     return false;
 }
 
-#include "moc_presentationsearchbar.cpp"
+#include "presentationsearchbar.moc"

@@ -41,8 +41,6 @@ static inline void validateWord ( QString & word, bool & query_valid )
 
 static inline void validateWords ( QStringList & wordlist, bool & query_valid )
 {
-	QRegExp rxvalid (QStringLiteral("[^\\d\\w_\\.]+"));
-	
 	for ( int i = 0; i < wordlist.size(); i++ )
 		validateWord ( wordlist[i], query_valid );
 }

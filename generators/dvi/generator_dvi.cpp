@@ -408,9 +408,7 @@ Okular::FontInfo::List DviGenerator::fontsForPage( int page )
             else
             {
                 name = QStringLiteral( "%1 (%2), %3%" ) 
-                        .arg( font->fontname )
-                        .arg( font->getFullFontName() ) 
-                        .arg( zoom ); 
+                        .arg( font->fontname, font->getFullFontName(), QString::number(zoom) ); 
             }
 #else
             name = QString( "%1, %2%" )

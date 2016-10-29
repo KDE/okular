@@ -34,6 +34,7 @@
 // [private widget] a flat qpushbutton that enlights on hover
 class HoverButton : public QToolButton
 {
+    Q_OBJECT
     public:
         HoverButton( QWidget * parent );
 };
@@ -592,6 +593,6 @@ HoverButton::HoverButton( QWidget * parent )
     KAcceleratorManager::setNoAccel( this );
 }
 
-#include "moc_minibar.cpp"
+#include "minibar.moc"
 
 /* kate: replace-tabs on; indent-width 4; */

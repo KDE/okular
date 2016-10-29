@@ -54,7 +54,7 @@ DVI_SourceFileSplitter::DVI_SourceFileSplitter(const QString &srclink, const QSt
   bool fiExists = m_fileInfo.exists();
 
   //if it doesn't exist, but adding ".tex"
-  if ( !fiExists && QFileInfo(m_fileInfo.absoluteFilePath() + QStringLiteral(".tex")).exists() )
+  if ( !fiExists && QFileInfo::exists(m_fileInfo.absoluteFilePath() + QStringLiteral(".tex")) )
     m_fileInfo.setFile(m_fileInfo.absoluteFilePath() + QStringLiteral(".tex"));
 
   //if that doesn't help either, perhaps the file started with a

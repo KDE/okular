@@ -101,6 +101,8 @@ class PageViewItem
  */
 class PageViewMessage : public QWidget
 {
+    Q_OBJECT
+
     public:
         PageViewMessage( QWidget * parent );
 

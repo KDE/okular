@@ -20,7 +20,9 @@
 
 namespace Epub {
 
-  class EpubDocument : public QTextDocument {
+  class EpubDocument : public QTextDocument
+  {
+    Q_OBJECT
 
   public:
     EpubDocument(const QString &fileName);

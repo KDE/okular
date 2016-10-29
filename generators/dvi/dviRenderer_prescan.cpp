@@ -441,7 +441,6 @@ void dviRenderer::prescan_ParsePSFileSpecial(const QString& cp)
   // If the EPSfilename really points to a PDF file, convert that file now.
   if (ending == QLatin1String("pdf")) {
     QString convErrorMsg;
-    QString oEPSfilename = EPSfilename;
     EPSfilename = dviFile->convertPDFtoPS(EPSfilename, &convErrorMsg);
     if (convErrorMsg.isEmpty() != true) {
       emit error(convErrorMsg, -1);

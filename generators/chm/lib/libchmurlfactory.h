@@ -30,7 +30,6 @@ static inline bool isRemoteURL( const QString & url, QString & protocol )
 {
 	// Check whether the URL is external
 	QRegExp uriregex ( QStringLiteral("^(\\w+):\\/\\/") );
-	QRegExp mailtoregex ( QStringLiteral("^(mailto):") );
 
 	// mailto: can also have different format, so handle it
 	if ( url.startsWith( QLatin1String("mailto:") ) )

@@ -328,7 +328,7 @@ void Shell::setupActions()
   KStandardAction::open(this, SLOT(fileOpen()), actionCollection());
   m_recent = KStandardAction::openRecent( this, SLOT(openUrl(QUrl)), actionCollection() );
   m_recent->setToolBarMode( KRecentFilesAction::MenuMode );
-  connect( m_recent, SIGNAL(triggered()), this, SLOT(showOpenRecentMenu()) );
+  connect( m_recent, &QAction::triggered, this, &Shell::showOpenRecentMenu );
   m_recent->setToolTip( i18n("Click to open a file\nClick and hold to open a recent file") );
   m_recent->setWhatsThis( i18n( "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file" ) );
   m_printAction = KStandardAction::print( this, SLOT(print()), actionCollection() );

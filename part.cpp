@@ -2005,6 +2005,8 @@ void Part::slotHideFindBar()
 //BEGIN go to page dialog
 class GotoPageDialog : public QDialog
 {
+    Q_OBJECT
+
     public:
         GotoPageDialog(QWidget *p, int current, int max) : QDialog(p)
         {

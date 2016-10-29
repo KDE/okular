@@ -17,6 +17,8 @@ namespace Txt
 {
     class Converter : public Okular::TextDocumentConverter
     {
+    Q_OBJECT
+
     public:
         Converter();
         ~Converter();

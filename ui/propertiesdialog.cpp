@@ -374,7 +374,7 @@ QVariant FontsListModel::data( const QModelIndex &index, int role ) const
                 fontname = i18n( "Unknown font" );
             QString tooltip = QLatin1String( "<html><b>" ) +  fontname + QLatin1String( "</b>" );
             if ( m_fonts.at( index.row() ).embedType() == Okular::FontInfo::NotEmbedded )
-                tooltip += QStringLiteral( " (<span style=\"font-family: '%1'\">%2</span>)" ).arg( fontname ).arg( fontname );
+                tooltip += QStringLiteral( " (<span style=\"font-family: '%1'\">%2</span>)" ).arg( fontname, fontname );
             tooltip += QLatin1String( "<br />" ) + i18n( "Embedded: %1", descriptionForEmbedType( m_fonts.at( index.row() ).embedType() ) );
             tooltip += QLatin1String( "</html>" );
             return tooltip;

@@ -517,8 +517,7 @@ QStringList FilePrinter::optionMedia( QPrinter &printer )
     if ( ! mediaPageSize( printer ).isEmpty() && 
          ! mediaPaperSource( printer ).isEmpty() ) {
         return QStringList(QStringLiteral("-o")) <<
-                QStringLiteral("media=%1,%2").arg( mediaPageSize( printer ) )
-                                      .arg( mediaPaperSource( printer ) );
+                QStringLiteral("media=%1,%2").arg( mediaPageSize( printer ), mediaPaperSource( printer ) );
     }
 
     if ( ! mediaPageSize( printer ).isEmpty() ) {

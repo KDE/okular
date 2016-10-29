@@ -313,8 +313,7 @@ bool Converter::convertDocumentInfo( const QDomElement &element )
                 return false;
 
             mDocumentInfo->mAuthor = QStringLiteral( "%1 %2 %3 <%4> (%5)" )
-                                      .arg( firstName ).arg( middleName ).arg( lastName )
-                                      .arg( email ).arg( nickname );
+                                      .arg( firstName, middleName, lastName, email, nickname );
         } else if ( child.tagName() == QLatin1String( "program-used" ) ) {
             if ( !convertTextNode( child, mDocumentInfo->mProducer ) )
                 return false;

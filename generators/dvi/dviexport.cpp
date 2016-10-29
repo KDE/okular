@@ -108,7 +108,7 @@ void DVIExport::finished_impl(int exit_code)
 void DVIExport::output_receiver()
 {
   if (process_) {
-     QString out = QString::fromLocal8Bit(process_->readAllStandardOutput());
+     process_->readAllStandardOutput();
   }
 }
 
@@ -137,8 +137,6 @@ DVIExportToPDF::DVIExportToPDF(dviRenderer& parent, const QString& output_name)
     return;
   }
 
-  // Generate a suggestion for a reasonable file name
-  const QString suggested_name = dvi.filename.left(dvi.filename.indexOf(QStringLiteral("."))) + QStringLiteral(".pdf");
   if (output_name.isEmpty())
     return;
 

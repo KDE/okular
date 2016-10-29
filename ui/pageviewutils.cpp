@@ -449,7 +449,7 @@ ToolBarButton::ToolBarButton( QWidget * parent, const AnnotationToolItem &item )
     // if accel is set display it along name
     QString accelString = shortcut().toString( QKeySequence::NativeText );
     if ( !accelString.isEmpty() )
-        setToolTip( QStringLiteral("%1 [%2]").arg( item.text ).arg( accelString ) );
+        setToolTip( QStringLiteral("%1 [%2]").arg( item.text, accelString ) );
     else
         setToolTip( item.text );
 }

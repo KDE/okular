@@ -39,6 +39,8 @@ static const int SidebarItemType = QListWidgetItem::UserType + 1;
 /* List item representing a sidebar entry. */
 class SidebarItem : public QListWidgetItem
 {
+    Q_OBJECT
+
     public:
         SidebarItem( QWidget* w, const QIcon &icon, const QString &text )
             : QListWidgetItem( 0, SidebarItemType ),
@@ -69,6 +71,8 @@ class SidebarItem : public QListWidgetItem
 
 class SidebarDelegate : public QAbstractItemDelegate
 {
+    Q_OBJECT
+
     public:
         SidebarDelegate( QObject *parent = Q_NULLPTR );
         ~SidebarDelegate();

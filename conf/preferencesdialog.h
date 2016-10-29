@@ -27,6 +27,7 @@ class DlgDebug;
 
 class PreferencesDialog : public KConfigDialog
 {
+    Q_OBJECT
 
     public:
         PreferencesDialog( QWidget * parent, KConfigSkeleton * config, Okular::EmbedMode embedMode );

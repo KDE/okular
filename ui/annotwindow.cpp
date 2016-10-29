@@ -40,6 +40,8 @@
 class CloseButton
   : public QPushButton
 {
+    Q_OBJECT
+
 public:
     CloseButton( QWidget * parent = Q_NULLPTR )
       : QPushButton( parent )
@@ -57,6 +59,8 @@ public:
 class MovableTitle
   : public QWidget
 {
+    Q_OBJECT
+
 public:
     MovableTitle( QWidget * parent )
       : QWidget( parent )
@@ -402,4 +406,4 @@ void AnnotWindow::slotHandleContentsChangedByUndoRedo(Okular::Annotation* annot,
     emit containsLatex( GuiUtils::LatexRenderer::mightContainLatex( m_annot->contents() ) );
 }
 
-#include "moc_annotwindow.cpp"
+#include "annotwindow.moc"

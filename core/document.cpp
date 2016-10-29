@@ -822,7 +822,6 @@ Document::OpenResult DocumentPrivate::openDocumentInternal( const KPluginMetaDat
 {
     QString propName = offer.pluginId();
     QHash< QString, GeneratorInfo >::const_iterator genIt = m_loadedGenerators.constFind( propName );
-    QString catalogName;
     m_walletGenerator = 0;
     if ( genIt != m_loadedGenerators.constEnd() )
     {
@@ -3685,7 +3684,7 @@ void Document::editFormCombo( int pageNumber,
     }
     else
     {
-        prevText = form->choices()[form->currentChoices()[0]];
+        prevText = form->choices()[form->currentChoices().constFirst()];
     }
 
     QUndoCommand *uc = new EditFormComboCommand( this->d, form, pageNumber, newText, newCursorPos, prevText, prevCursorPos, prevAnchorPos );

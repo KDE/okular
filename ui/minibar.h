@@ -51,6 +51,8 @@ class PagesEdit : public KLineEdit
 
 class PageNumberEdit : public PagesEdit
 {
+    Q_OBJECT
+
     public:
         PageNumberEdit( MiniBar * parent );
         void setPagesNumber( int pages );
@@ -83,6 +85,8 @@ class PageLabelEdit : public PagesEdit
  */
 class MiniBarLogic : public QObject, public Okular::DocumentObserver
 {
+    Q_OBJECT
+
     public:
         MiniBarLogic( QObject * parent, Okular::Document * m_document );
         ~MiniBarLogic();

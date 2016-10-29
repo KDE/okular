@@ -65,6 +65,8 @@ static const int defaultPageHeight = 842;
 
 class PDFOptionsPage : public QWidget
 {
+    Q_OBJECT
+
    public:
        PDFOptionsPage()
        {

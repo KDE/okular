@@ -18,6 +18,8 @@ class Ui_DlgGeneralBase;
 
 class DlgGeneral : public QWidget
 {
+    Q_OBJECT
+
     public:
         explicit DlgGeneral( QWidget * parent,  Okular::EmbedMode embedMode );
         virtual ~DlgGeneral();

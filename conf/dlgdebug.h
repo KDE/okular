@@ -14,6 +14,8 @@
 
 class DlgDebug : public QWidget
 {
+    Q_OBJECT
+
     public:
         explicit DlgDebug( QWidget * parent = Q_NULLPTR );
 };

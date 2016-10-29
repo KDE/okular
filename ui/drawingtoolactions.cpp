@@ -21,6 +21,8 @@
 
 class ColorAction : public QAction
 {
+    Q_OBJECT
+
 public:
     explicit ColorAction( KActionCollection *parent )
         : QAction( parent )
@@ -219,3 +221,5 @@ void DrawingToolActions::createToolAction( const QString &text, const QString &t
 
     connect( action, &QAction::triggered, this, &DrawingToolActions::actionTriggered );
 }
+
+#include "drawingtoolactions.moc"

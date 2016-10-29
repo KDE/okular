@@ -39,8 +39,6 @@ static const int SidebarItemType = QListWidgetItem::UserType + 1;
 /* List item representing a sidebar entry. */
 class SidebarItem : public QListWidgetItem
 {
-    Q_OBJECT
-
     public:
         SidebarItem( QWidget* w, const QIcon &icon, const QString &text )
             : QListWidgetItem( 0, SidebarItemType ),
@@ -813,4 +811,4 @@ void Sidebar::dropEvent( QDropEvent* event )
     emit urlsDropped( list );
 }
 
-#include "moc_sidebar.cpp"
+#include "sidebar.moc"

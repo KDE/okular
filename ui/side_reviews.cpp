@@ -285,4 +285,4 @@ void Reviews::saveSearchOptions()
     Okular::Settings::self()->save();
 }
 
-#include "moc_side_reviews.cpp"
+#include "side_reviews.moc"

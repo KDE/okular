@@ -14,7 +14,7 @@ set_package_properties("Poppler" PROPERTIES
 
 set(LIBSPECTRE_MINIMUM_VERSION "0.2")
 find_package(LibSpectre "${LIBSPECTRE_MINIMUM_VERSION}")
-set_package_properties("libspectre" PROPERTIES
+set_package_properties(LibSpectre PROPERTIES
         DESCRIPTION  "A PostScript rendering library"
         URL "http://libspectre.freedesktop.org/wiki/"
         TYPE RECOMMENDED

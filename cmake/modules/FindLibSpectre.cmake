@@ -12,13 +12,6 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-if(LIBSPECTRE_INCLUDE_DIR AND LIBSPECTRE_LIBRARY)
-
-  # in cache already
-  set(LIBSPECTRE_INTERNAL_FOUND TRUE)
-
-else(LIBSPECTRE_INCLUDE_DIR AND LIBSPECTRE_LIBRARY)
-
 if(NOT WIN32)
   # use pkg-config to get the directories and then use these values
   # in the FIND_PATH() and FIND_LIBRARY() calls
@@ -55,5 +48,3 @@ find_package_handle_standard_args(LibSpectre DEFAULT_MSG LIBSPECTRE_LIBRARY LIBS
 # ensure that they are cached
 set(LIBSPECTRE_INCLUDE_DIR ${LIBSPECTRE_INCLUDE_DIR} CACHE INTERNAL "The libspectre include path")
 set(LIBSPECTRE_LIBRARY ${LIBSPECTRE_LIBRARY} CACHE INTERNAL "The libspectre library")
-
-endif(LIBSPECTRE_INCLUDE_DIR AND LIBSPECTRE_LIBRARY)

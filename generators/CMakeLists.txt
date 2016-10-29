@@ -76,10 +76,10 @@ set_package_properties("libepub" PROPERTIES
         TYPE RECOMMENDED
         PURPOSE "Support for EPub documents in Okular.")
 
-find_package(QMobipocket)
+find_package(QMobipocket "2")
 set_package_properties("libqmobipocket" PROPERTIES
         DESCRIPTION  "A library for reading Mobipocket documents"
-        URL "https://projects.kde.org/projects/kde/kdegraphics/kdegraphics-mobipocket"
+        URL "https://commits.kde.org/kdegraphics-mobipocket"
         TYPE RECOMMENDED
         PURPOSE "Support for Mobipocket documents in Okular.")
 
@@ -131,6 +131,6 @@ endif(EPUB_FOUND)
 
 add_subdirectory(txt)
 
-if(QMOBIPOCKET_FOUND)
+if(QMobipocket_FOUND)
   add_subdirectory(mobipocket)
 endif()

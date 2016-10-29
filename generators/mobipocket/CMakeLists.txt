@@ -1,5 +1,3 @@
-include_directories( ${QMOBIPOCKET_INCLUDE_DIR}  )
-
 ########### next target ###############
 
 set(okularGenerator_mobi_PART_SRCS
@@ -10,7 +8,7 @@ set(okularGenerator_mobi_PART_SRCS
 
 okular_add_generator(okularGenerator_mobi ${okularGenerator_mobi_PART_SRCS})
 
-target_link_libraries(okularGenerator_mobi okularcore ${QMOBIPOCKET_LIBRARIES} KF5::I18n Qt5::Gui)
+target_link_libraries(okularGenerator_mobi okularcore qmobipocket KF5::I18n Qt5::Gui)
 
 ########### install files ###############
 install( FILES okularMobi.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )

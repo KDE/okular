@@ -61,7 +61,7 @@ EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const Okular::Document
 	mUser2Button = new QPushButton;
 	buttonBox->addButton(mUser2Button, QDialogButtonBox::ActionRole);
 	KGuiItem::assign(mUser2Button, KGuiItem(i18nc("@action:button", "View"), "document-open"));
-	mUser1Button->setEnabled(false);
+	mUser2Button->setEnabled(false);
 
 	m_tw = new QTreeWidget(this);
 	mainLayout->addWidget(m_tw);

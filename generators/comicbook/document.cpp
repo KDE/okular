@@ -78,7 +78,7 @@ bool Document::open( const QString &fileName )
         if ( !processArchive() ) {
             return false;
         }
-    } else if ( mime.inherits( QStringLiteral("application/x-cbr") ) || mime.inherits( QStringLiteral("application/x-rar") ) ) {
+    } else if ( mime.inherits( QStringLiteral("application/x-cbr") ) || mime.inherits( QStringLiteral("application/x-rar") ) || mime.inherits( QStringLiteral("application/vnd.rar") ) ) {
         if ( !Unrar::isAvailable() ) {
             mLastErrorString = i18n( "Cannot open document, unrar was not found." );
             return false;

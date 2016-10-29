@@ -817,6 +817,7 @@ bool DocumentPrivate::openRelativeFile( const QString & fileName )
 Generator * DocumentPrivate::loadGeneratorLibrary( const KPluginMetaData &service )
 {
     KPluginLoader loader( service.fileName() );
+    qDebug() << service.fileName();
     KPluginFactory *factory = loader.factory();
     if ( !factory )
     {

@@ -859,6 +859,3 @@ the pages vector with them.
 Afterwards we fill our Okular::DocumentInfo object with data. Since extracting the HTML meta data
 would need a lot of code we work with static data here. [to be continued]
 */
-
-// DOXYGEN_EXCLUDE = conf generators shell ui
-// DOXYGEN_FILE_PATTERNS = core/*.h *.dox

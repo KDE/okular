@@ -134,6 +134,9 @@
   <entry key="DisplayDocumentTitle" type="Bool" >
    <default>true</default>
  </entry>
+ <entry key="rtlReadingDirection" type="Bool" >
+  <default>false</default>
+</entry>
  <entry key="DisplayDocumentNameOrPath" type="Enum" >
    <default>Name</default>
    <choices>

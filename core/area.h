@@ -684,9 +684,6 @@ bool RegularArea<NormalizedShape, Shape>::intersects( const NormalizedShape& rec
 template <class NormalizedShape, class Shape>
 bool RegularArea<NormalizedShape, Shape>::intersects( const RegularArea<NormalizedShape,Shape> *area ) const
 {
-    if ( !this )
-        return false;
-
     if ( this->isEmpty() )
         return false;
 
@@ -707,9 +704,6 @@ bool RegularArea<NormalizedShape, Shape>::intersects( const RegularArea<Normaliz
 template <class NormalizedShape, class Shape>
 void RegularArea<NormalizedShape, Shape>::appendArea( const RegularArea<NormalizedShape, Shape> *area )
 {
-    if ( !this )
-        return;
-
     typename QList<NormalizedShape>::const_iterator areaIt = area->begin(), areaItEnd = area->end();
     for ( ; areaIt != areaItEnd; ++areaIt )
         this->append( *areaIt );
@@ -805,9 +799,6 @@ bool RegularArea<NormalizedShape, Shape>::contains( double x, double y ) const
 template <class NormalizedShape, class Shape>
 bool RegularArea<NormalizedShape, Shape>::contains( const NormalizedShape& shape ) const
 {
-    if ( !this )
-        return false;
-
     if ( this->isEmpty() )
         return false;
 

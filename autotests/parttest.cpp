@@ -130,7 +130,20 @@ void PartTest::testFowardPDF()
     QProcess process;
     process.setWorkingDirectory(workDir.path());
     process.start(QStringLiteral("pdflatex"), QStringList() << QStringLiteral("-synctex=1") << QStringLiteral("-interaction=nonstopmode") << texDestination);
+    bool started = process.waitForStarted();
+    if (!started) {
+        qDebug() << "start error:" << process.error();
+        qDebug() << "start stdout:" << process.readAllStandardOutput();
+        qDebug() << "start stderr:" << process.readAllStandardError();
+    }
+    QVERIFY(started);
+
     process.waitForFinished();
+    if (process.exitStatus() != QProcess::NormalExit || process.exitCode() != 0) {
+        qDebug() << "exit error:" << process.error() << "status" << process.exitStatus() << "code" << process.exitCode();
+        qDebug() << "exit stdout:" << process.readAllStandardOutput();
+        qDebug() << "exit stderr:" << process.readAllStandardError();
+    }
 
     const QString pdfResult = workDir.path() + QStringLiteral("/synctextest.pdf");
     

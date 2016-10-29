@@ -46,6 +46,7 @@ void GeneratorsTest::testLoadsCorrectly()
     foreach (const QString& lib, generatorLibs) {
         KPluginLoader loader(lib);
         QVERIFY2(!loader.fileName().isEmpty(), qPrintable(lib));
+        qDebug() << loader.fileName();
         auto factory = loader.factory();
         if (!factory) {
             qWarning() << "Could not get KPluginFactory for" << lib;

@@ -37,8 +37,8 @@ Context menu actions like Rename Bookmarks etc.)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2015-09-17</date>
-		<releaseinfo>0.24 (Applications 15.12)</releaseinfo>
+		<date>2016-07-26</date>
+		<releaseinfo>0.26 (Applications 16.08)</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
 			<para>&okular; is a &kde; universal document viewer based on &kpdf; code.</para>
@@ -2139,6 +2139,14 @@ Context menu actions like Rename Bookmarks etc.)
 					</listitem>
 				</varlistentry>
 				<varlistentry>
+					<term><guilabel>Right to left reading direction</guilabel></term>
+					<listitem>
+						<para>
+						  Whether to use right to left reading direction by default for the opened files. Can be useful for <ulink url="https://en.wikipedia.org/wiki/Right-to-left">some writing systems</ulink>.
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
 					<term><guilabel>Overview columns</guilabel></term>
 					<listitem>
 						<para>
@@ -2354,6 +2362,16 @@ Context menu actions like Rename Bookmarks etc.)
 					  <para>
 					    Click on some item in the list box then click on the corresponding button at the right part of the page to edit, remove, move up or move down the item. The keyboard shortcut of the tool (keys from <keycap>1</keycap> to <keycap>9</keycap>) depends on its position in the list of annotating toolbar.
 					  </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>Using Custom Stamps</term>
+					<listitem>
+					<orderedlist>
+					<listitem><para>Create the icon you want to use for your own stamp and save it in any graphics format supported by &okular;</para></listitem>
+					<listitem><para>Click the <guibutton>Add</guibutton> button, select type <guilabel>Stamp</guilabel> and enter a name for your stamp.</para></listitem>
+					<listitem><para>Enter the full path to your custom icon into the dropdown box in the <guilabel>Stamp Symbol</guilabel> group</para></listitem>
+					</orderedlist>
 					</listitem>
 				</varlistentry>
 			</variablelist>

@@ -17,6 +17,7 @@
 #include <KConfigDialog>
 
 #include <QClipboard>
+#include <QScrollBar>
 #include <QTemporaryDir>
 #include <QTreeView>
 
@@ -194,8 +195,10 @@ void PartTest::testSelectText()
     part.widget()->show();
     QTest::qWaitForWindowExposed(part.widget());
 
-    const int width = part.m_pageView->width();
-    const int height = part.m_pageView->height();
+    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
+                      part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->verticalScrollBar()->maximum() +
+                       part.m_pageView->viewport()->height();
 
     part.m_document->setViewportPage(0);
 
@@ -204,13 +207,13 @@ void PartTest::testSelectText()
 
     QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseTextSelect"));
 
-    QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * 0.12, height * 0.16));
-    QTest::mousePress(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, QPoint(width * 0.12, height * 0.16));
-    QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * 0.8, height * 0.16));
+    QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * 0.12, height * 0.055));
+    QTest::mousePress(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, QPoint(width * 0.12, height * 0.055));
+    QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * 0.8, height * 0.055));
     // without this wait the test fails. 100ms were enough on my local system, but when running under valgrind
     // or on the CI server we need to wait longer.
     QTest::qWait(1000);
-    QTest::mouseRelease(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, QPoint(width * 0.8, height * 0.16));
+    QTest::mouseRelease(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, QPoint(width * 0.8, height * 0.055));
 
     QApplication::clipboard()->clear();
     QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "copyTextSelection"));
@@ -226,8 +229,10 @@ void PartTest::testClickInternalLink()
     part.widget()->show();
     QTest::qWaitForWindowExposed(part.widget());
 
-    const int width = part.m_pageView->width();
-    const int height = part.m_pageView->height();
+    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
+                      part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->verticalScrollBar()->maximum() +
+                       part.m_pageView->viewport()->height();
 
     part.m_document->setViewportPage(0);
 
@@ -238,7 +243,7 @@ void PartTest::testClickInternalLink()
     QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseNormal");
 
     QCOMPARE(part.m_document->currentPage(), 0u);
-    QTest::mouseClick(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, QPoint(width * 0.17, height * 0.15));
+    QTest::mouseClick(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, QPoint(width * 0.17, height * 0.05));
     QCOMPARE(part.m_document->currentPage(), 1u);
 }
 

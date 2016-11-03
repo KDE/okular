@@ -82,8 +82,6 @@ int main(int argc, char** argv)
         }
     }
 
-    KMessageBox::information( 0, i18n("You are currently running a development build for the upcoming, KDE Frameworks-based version of Okular.\n\nPlease be aware that this version is not an official release and contains bugs which are not present in the officially released, kdelibs4-based version.\n\nIf you report bugs found in this development build, please put [frameworks] in the Summary field, and please understand that bugs in the officially released version take higher priority than those in this development version."), QString(), QStringLiteral("frameworks_not_official") );
-
     return app.exec();
 }
 

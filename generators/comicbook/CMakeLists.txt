@@ -24,4 +24,4 @@ endif (UNIX)
 ########### install files ###############
 install( FILES okularComicbook.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
 install( PROGRAMS okularApplication_comicbook.desktop org.kde.mobile.okular_comicbook.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
-install( FILES okular-comicbook.metainfo.xml DESTINATION ${KDE_INSTALL_METAINFODIR} )
+install( FILES org.kde.okular-comicbook.metainfo.xml DESTINATION ${KDE_INSTALL_METAINFODIR} )

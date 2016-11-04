@@ -2,24 +2,24 @@
     "KPlugin": {
         "Authors": [
             {
-                "Email": "elylevy@cs.huji.ac.il",
+                "Email": "elylevy@cs.huji.ac.il", 
                 "Name": "Ely Levy"
             }
-        ],
-        "Copyright": "© 2008 Ely Levy",
-        "Description": "An EPub backend",
-        "Id": "okular_epub",
-        "License": "GPL",
+        ], 
+        "Copyright": "© 2008 Ely Levy", 
+        "Description": "An EPub backend", 
+        "Id": "okular_epub", 
+        "License": "GPL", 
         "MimeTypes": [
             "application/epub+zip"
-        ],
-        "Name": "EPub Backend",
+        ], 
+        "Name": "EPub Backend", 
         "ServiceTypes": [
             "okular/Generator"
-        ],
+        ], 
         "Version": "0.2.3"
-    },
-    "X-KDE-Priority": 1,
-    "X-KDE-okularAPIVersion": 1,
+    }, 
+    "X-KDE-Priority": 1, 
+    "X-KDE-okularAPIVersion": 1, 
     "X-KDE-okularHasInternalSettings": true
 }

@@ -2,24 +2,24 @@
     "KPlugin": {
         "Authors": [
             {
-                "Email": "tokoe@kde.org",
+                "Email": "tokoe@kde.org", 
                 "Name": "Tobias Koenig"
             }
-        ],
-        "Copyright": "© 2007-2008 Tobias Koenig",
-        "Description": "A renderer for FictionBook eBooks",
-        "Id": "okular_fax",
-        "License": "GPL",
+        ], 
+        "Copyright": "© 2007-2008 Tobias Koenig", 
+        "Description": "A renderer for FictionBook eBooks", 
+        "Id": "okular_fax", 
+        "License": "GPL", 
         "MimeTypes": [
             "application/x-fictionbook+xml"
-        ],
-        "Name": "Fiction Book Backend",
+        ], 
+        "Name": "Fiction Book Backend", 
         "ServiceTypes": [
             "okular/Generator"
-        ],
+        ], 
         "Version": "0.1.5"
-    },
-    "X-KDE-Priority": 1,
-    "X-KDE-okularAPIVersion": 1,
+    }, 
+    "X-KDE-Priority": 1, 
+    "X-KDE-okularAPIVersion": 1, 
     "X-KDE-okularHasInternalSettings": true
 }

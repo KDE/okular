@@ -155,6 +155,7 @@ Comment[sr@latin]=Univerzalni prikazivač dokumenata
 Comment[sv]=Generell dokumentvisare
 Comment[uk]=Універсальний переглядач документів
 Comment[x-test]=xxUniversal document viewerxx
+Comment[zh_TW]=通用文件檢視器
 Exec=okular %U
 Icon=okular
 Type=Application

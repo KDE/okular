@@ -2,25 +2,25 @@
     "KPlugin": {
         "Authors": [
             {
-                "Email": "tokoe@kde.org",
+                "Email": "tokoe@kde.org", 
                 "Name": "Tobias Koenig"
             }
-        ],
-        "Copyright": "© 2008 Tobias Koenig",
-        "Description": "A G3/G4 fax document backend",
-        "Id": "okular_fax",
-        "License": "GPL",
+        ], 
+        "Copyright": "© 2008 Tobias Koenig", 
+        "Description": "A G3/G4 fax document backend", 
+        "Id": "okular_fax", 
+        "License": "GPL", 
         "MimeTypes": [
-            "image/fax-g3",
+            "image/fax-g3", 
             "image/g3fax"
-        ],
-        "Name": "Fax Backend",
+        ], 
+        "Name": "Fax Backend", 
         "ServiceTypes": [
             "okular/Generator"
-        ],
+        ], 
         "Version": "0.1.1"
-    },
-    "X-KDE-Priority": 1,
-    "X-KDE-okularAPIVersion": 1,
+    }, 
+    "X-KDE-Priority": 1, 
+    "X-KDE-okularAPIVersion": 1, 
     "X-KDE-okularHasInternalSettings": false
 }

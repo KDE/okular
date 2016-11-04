@@ -2,31 +2,33 @@
     "KPlugin": {
         "Authors": [
             {
-                "Email": "bradh@frogmouth.net",
+                "Email": "bradh@frogmouth.net", 
                 "Name": "Brad Hards"
-            }, {
-                "Email": "jiri.klement@gmail.com",
+            }, 
+            {
+                "Email": "jiri.klement@gmail.com", 
                 "Name": "Jiri Klement"
-            }, {
-                "Email": "pino@kde.org",
+            }, 
+            {
+                "Email": "pino@kde.org", 
                 "Name": "Pino Toscano"
             }
-        ],
-        "Copyright": "© 2006-2007 Brad Hards\n© 2007 Jiri Klement\n© 2008 Pino Toscano",
-        "Description": "An XPS backend",
-        "Id": "okular_xps",
-        "License": "GPL",
+        ], 
+        "Copyright": "© 2006-2007 Brad Hards\n© 2007 Jiri Klement\n© 2008 Pino Toscano", 
+        "Description": "An XPS backend", 
+        "Id": "okular_xps", 
+        "License": "GPL", 
         "MimeTypes": [
-            "application/oxps",
+            "application/oxps", 
             "application/vnd.ms-xpsdocument"
-        ],
-        "Name": "XPS Backend",
+        ], 
+        "Name": "XPS Backend", 
         "ServiceTypes": [
             "okular/Generator"
-        ],
+        ], 
         "Version": "0.3.3"
-    },
-    "X-KDE-Priority": 4,
-    "X-KDE-okularAPIVersion": 1,
+    }, 
+    "X-KDE-Priority": 4, 
+    "X-KDE-okularAPIVersion": 1, 
     "X-KDE-okularHasInternalSettings": false
 }

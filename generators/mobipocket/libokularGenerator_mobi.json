@@ -2,24 +2,24 @@
     "KPlugin": {
         "Authors": [
             {
-                "Email": "qbast@go2.pl",
+                "Email": "qbast@go2.pl", 
                 "Name": "Jakub Stachowski"
             }
-        ],
-        "Copyright": "© 2008-2009 Jakub Stachowski",
-        "Description": "A mobipocket backend",
-        "Id": "okular_mobi",
-        "License": "GPL",
+        ], 
+        "Copyright": "© 2008-2009 Jakub Stachowski", 
+        "Description": "A mobipocket backend", 
+        "Id": "okular_mobi", 
+        "License": "GPL", 
         "MimeTypes": [
             "application/x-mobipocket-ebook"
-        ],
-        "Name": "Mobipocket Backend",
+        ], 
+        "Name": "Mobipocket Backend", 
         "ServiceTypes": [
             "okular/Generator"
-        ],
+        ], 
         "Version": "0.1.1"
-    },
-    "X-KDE-Priority": 1,
-    "X-KDE-okularAPIVersion": 1,
+    }, 
+    "X-KDE-Priority": 1, 
+    "X-KDE-okularAPIVersion": 1, 
     "X-KDE-okularHasInternalSettings": true
 }

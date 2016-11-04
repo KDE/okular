@@ -2,24 +2,24 @@
     "KPlugin": {
         "Authors": [
             {
-                "Email": "luigi.toscano@tiscali.it",
+                "Email": "luigi.toscano@tiscali.it", 
                 "Name": "Luigi Toscano"
             }
-        ],
-        "Copyright": "© 2006 Luigi Toscano",
-        "Description": "A DVI file renderer",
-        "Id": "okular_dvi",
-        "License": "GPL",
+        ], 
+        "Copyright": "© 2006 Luigi Toscano", 
+        "Description": "A DVI file renderer", 
+        "Id": "okular_dvi", 
+        "License": "GPL", 
         "MimeTypes": [
             "application/x-dvi"
-        ],
-        "Name": "DVI Backend",
+        ], 
+        "Name": "DVI Backend", 
         "ServiceTypes": [
             "okular/Generator"
-        ],
+        ], 
         "Version": "0.3.7"
-    },
-    "X-KDE-Priority": 2,
-    "X-KDE-okularAPIVersion": 1,
+    }, 
+    "X-KDE-Priority": 2, 
+    "X-KDE-okularAPIVersion": 1, 
     "X-KDE-okularHasInternalSettings": false
 }

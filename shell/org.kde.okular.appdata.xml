@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop">
+ <id>org.kde.okular.desktop</id>
+ <metadata_license>CC0-1.0</metadata_license>
+ <project_license>GPL-2.0+ and GFDL-1.3</project_license>
+ <name>Okular</name>
+ <summary>Document Viewer</summary>
+ <description>
+  <p>
+   Okular is a universal document viewer developed by KDE. Okular works on multiple platforms, including but not limited to Linux, Windows, Mac OS X, *BSD, etc.
+  </p>
+  <p>Features:</p>
+  <ul>
+   <li>Supported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
+   <li>Sidebar with contents, thumbnails, reviews and bookmarks</li>
+   <li>Annotations support</li>
+  </ul>
+ </description>
+ <screenshots>
+  <screenshot type="default">
+   <image>https://www.kde.org/images/screenshots/okular.png</image>
+  </screenshot>
+ </screenshots>
+ <url type="homepage">https://okular.kde.org/</url>
+ <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=okular</url>
+ <project_group>KDE</project_group>
+ <provides>
+    <binary>okular</binary>
+ </provides>
+</component>

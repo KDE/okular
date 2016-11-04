@@ -20,5 +20,5 @@ target_link_libraries(okularGenerator_djvu okularcore ${DJVULIBRE_LIBRARY} KF5::
 ########### install files ###############
 install( FILES okularDjvu.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
 install( PROGRAMS okularApplication_djvu.desktop org.kde.mobile.okular_djvu.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
-
+install( FILES okular-djvu.metainfo.xml DESTINATION ${KDE_INSTALL_METAINFODIR} )
 

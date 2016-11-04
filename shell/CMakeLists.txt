@@ -33,3 +33,4 @@ install(TARGETS okular ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 
 install( PROGRAMS org.kde.okular.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
 install( FILES shell.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/okular )
+install( FILES org.kde.okular.appdata.xml DESTINATION  ${KDE_INSTALL_METAINFODIR} )

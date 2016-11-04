@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="addon">
+  <id>okular-djvu</id>
+  <extends>org.kde.okular.desktop</extends>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-2.0+ and GFDL-1.3</project_license>
+  <name>DjVu Documents</name>
+  <summary>Adds support for reading DjVu documents</summary>
+  <mimetypes>
+    <mimetype>image/vnd.djvu</mimetype>
+  </mimetypes>
+  <url type="homepage">https://okular.kde.org</url>
+</component>

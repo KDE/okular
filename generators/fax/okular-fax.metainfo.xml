@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="addon">
+  <id>okular-fax</id>
+  <extends>org.kde.okular.desktop</extends>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-2.0+ and GFDL-1.3</project_license>
+  <name>Fax</name>
+  <summary>Adds support for reading Fax documents</summary>
+  <mimetypes>
+    <mimetype>image/fax-g3</mimetype>
+    <mimetype>image/g3fax</mimetype>
+  </mimetypes>
+  <url type="homepage">https://okular.kde.org</url>
+</component>

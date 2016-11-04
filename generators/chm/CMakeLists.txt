@@ -25,4 +25,4 @@ target_link_libraries(okularGenerator_chmlib  okularcore ${CHM_LIBRARY} KF5::KHt
 ########### install files ###############
 install( FILES okularChm.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
 install( PROGRAMS okularApplication_chm.desktop org.kde.mobile.okular_chm.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
-
+install( FILES okular-chm.metainfo.xml DESTINATION ${KDE_INSTALL_METAINFODIR} )

@@ -2820,7 +2820,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                 else if ( choice == imageToFile )
                 {
                     // [3] save pixmap to file
-                    QString fileName = QFileDialog::getSaveFileName(this, i18n("Save file"), QString(), i18n("Images (*.png .jpeg"));
+                    QString fileName = QFileDialog::getSaveFileName(this, i18n("Save file"), QString(), i18n("Images (*.png *.jpeg)"));
                     if ( fileName.isEmpty() )
                         d->messageWindow->display( i18n( "File not saved." ), QString(), PageViewMessage::Warning );
                     else

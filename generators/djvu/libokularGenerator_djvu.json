@@ -3,17 +3,32 @@
         "Authors": [
             {
                 "Email": "pino@kde.org", 
-                "Name": "Pino Toscano"
+                "Name": "Pino Toscano", 
+                "Name[x-test]": "xxPino Toscanoxx"
             }
         ], 
         "Copyright": "© 2006-2008 Pino Toscano", 
+        "Copyright[uk]": "© Pino Toscano, 2006–2008", 
+        "Copyright[x-test]": "xx© 2006-2008 Pino Toscanoxx", 
         "Description": "DjVu backend based on DjVuLibre", 
+        "Description[ca]": "Dorsal pel DjVu basat en el DjVuLibre", 
+        "Description[es]": "Motor DjVu basado en DjVuLibre", 
+        "Description[nl]": "DjVu-backend gebaseerd op DjVuLibre", 
+        "Description[pt]": "Infra-estrutura do DjVu com base no DjVuLibre", 
+        "Description[uk]": "Засіб обробки DjVu, заснований на DjVuLibre", 
+        "Description[x-test]": "xxDjVu backend based on DjVuLibrexx", 
         "Id": "okular_djvu", 
         "License": "GPL", 
         "MimeTypes": [
             "image/vnd.djvu"
         ], 
         "Name": "DjVu Backend", 
+        "Name[ca]": "Dorsal DjVu", 
+        "Name[es]": "Motor para DjVu", 
+        "Name[nl]": "DjVu-backend", 
+        "Name[pt]": "Infra-Estrutura do DjVu", 
+        "Name[uk]": "Модуль DjVu", 
+        "Name[x-test]": "xxDjVu Backendxx", 
         "ServiceTypes": [
             "okular/Generator"
         ], 

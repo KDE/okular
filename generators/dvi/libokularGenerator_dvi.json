@@ -3,17 +3,32 @@
         "Authors": [
             {
                 "Email": "luigi.toscano@tiscali.it", 
-                "Name": "Luigi Toscano"
+                "Name": "Luigi Toscano", 
+                "Name[x-test]": "xxLuigi Toscanoxx"
             }
         ], 
         "Copyright": "© 2006 Luigi Toscano", 
+        "Copyright[uk]": "© Luigi Toscano, 2006", 
+        "Copyright[x-test]": "xx© 2006 Luigi Toscanoxx", 
         "Description": "A DVI file renderer", 
+        "Description[ca]": "Un renderitzador de fitxers DVI", 
+        "Description[es]": "Un visor de archivos DVI", 
+        "Description[nl]": "Een DVI-bestandsweergever", 
+        "Description[pt]": "Um visualizador de ficheiros DVI", 
+        "Description[uk]": "Інструмент для показу файлів DVI", 
+        "Description[x-test]": "xxA DVI file rendererxx", 
         "Id": "okular_dvi", 
         "License": "GPL", 
         "MimeTypes": [
             "application/x-dvi"
         ], 
         "Name": "DVI Backend", 
+        "Name[ca]": "Dorsal de DVI", 
+        "Name[es]": "Motor para DVI", 
+        "Name[nl]": "DVI-backend", 
+        "Name[pt]": "Infra-Estrutura de DVI", 
+        "Name[uk]": "Модуль DVI", 
+        "Name[x-test]": "xxDVI Backendxx", 
         "ServiceTypes": [
             "okular/Generator"
         ], 

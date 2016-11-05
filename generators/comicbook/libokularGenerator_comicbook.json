@@ -3,11 +3,20 @@
         "Authors": [
             {
                 "Email": "tokoe@kde.org", 
-                "Name": "Tobias Koenig"
+                "Name": "Tobias Koenig", 
+                "Name[x-test]": "xxTobias Koenigxx"
             }
         ], 
         "Copyright": "© 2007-2008 Tobias Koenig", 
+        "Copyright[uk]": "© Tobias Koenig, 2007–2008", 
+        "Copyright[x-test]": "xx© 2007-2008 Tobias Koenigxx", 
         "Description": "A renderer for various comic book formats", 
+        "Description[ca]": "Un renderitzador per a diversos formats de ComicBook", 
+        "Description[es]": "Un visor para diversos formatos de libros de cómics", 
+        "Description[nl]": "Een viewer voor diverse ComicBook-formaten", 
+        "Description[pt]": "Um visualizador de diversos formatos de banda desenhada", 
+        "Description[uk]": "Програма для відображення коміксів у різних форматах", 
+        "Description[x-test]": "xxA renderer for various comic book formatsxx", 
         "Id": "okular_comicbook", 
         "License": "GPL", 
         "MimeTypes": [
@@ -17,6 +26,12 @@
             "inode/directory"
         ], 
         "Name": "ComicBook Backend", 
+        "Name[ca]": "Dorsal de ComicBook", 
+        "Name[es]": "Motor para ComicBook", 
+        "Name[nl]": "ComicBook-backend", 
+        "Name[pt]": "Infra-Estrutura de ComicBook (BD)", 
+        "Name[uk]": "Модуль коміксів", 
+        "Name[x-test]": "xxComicBook Backendxx", 
         "ServiceTypes": [
             "okular/Generator"
         ], 

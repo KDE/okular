@@ -3,19 +3,30 @@
         "Authors": [
             {
                 "Email": "bradh@frogmouth.net", 
-                "Name": "Brad Hards"
+                "Name": "Brad Hards", 
+                "Name[x-test]": "xxBrad Hardsxx"
             }, 
             {
                 "Email": "jiri.klement@gmail.com", 
-                "Name": "Jiri Klement"
+                "Name": "Jiri Klement", 
+                "Name[x-test]": "xxJiri Klementxx"
             }, 
             {
                 "Email": "pino@kde.org", 
-                "Name": "Pino Toscano"
+                "Name": "Pino Toscano", 
+                "Name[x-test]": "xxPino Toscanoxx"
             }
         ], 
         "Copyright": "© 2006-2007 Brad Hards\n© 2007 Jiri Klement\n© 2008 Pino Toscano", 
+        "Copyright[uk]": "© Brad Hards, 2006–2007\n© Jiri Klement, 2007\n© Pino Toscano, 2008", 
+        "Copyright[x-test]": "xx© 2006-2007 Brad Hards\n© 2007 Jiri Klement\n© 2008 Pino Toscanoxx", 
         "Description": "An XPS backend", 
+        "Description[ca]": "Un dorsal per a l'XPS", 
+        "Description[es]": "Un motor para XPS", 
+        "Description[nl]": "Een XPS-backend", 
+        "Description[pt]": "Uma infra-estrutura de XPS", 
+        "Description[uk]": "Програма для XPS", 
+        "Description[x-test]": "xxAn XPS backendxx", 
         "Id": "okular_xps", 
         "License": "GPL", 
         "MimeTypes": [
@@ -23,6 +34,12 @@
             "application/vnd.ms-xpsdocument"
         ], 
         "Name": "XPS Backend", 
+        "Name[ca]": "Dorsal XPS", 
+        "Name[es]": "Motor para XPS", 
+        "Name[nl]": "XPS-backend", 
+        "Name[pt]": "Infra-Estrutura de XPS", 
+        "Name[uk]": "Модуль XPS", 
+        "Name[x-test]": "xxXPS Backendxx", 
         "ServiceTypes": [
             "okular/Generator"
         ], 

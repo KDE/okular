@@ -3,11 +3,20 @@
         "Authors": [
             {
                 "Email": "tokoe@kde.org", 
-                "Name": "Tobias Koenig"
+                "Name": "Tobias Koenig", 
+                "Name[x-test]": "xxTobias Koenigxx"
             }
         ], 
         "Copyright": "© 2008 Tobias Koenig", 
+        "Copyright[uk]": "© Tobias Koenig, 2008", 
+        "Copyright[x-test]": "xx© 2008 Tobias Koenigxx", 
         "Description": "A G3/G4 fax document backend", 
+        "Description[ca]": "Un dorsal per documents de fax G3/G4", 
+        "Description[es]": "Un motor para documentos de fax G3/G4", 
+        "Description[nl]": "Een backend voor een G3/G4 faxdocument", 
+        "Description[pt]": "Uma infra-estrutura de documentos de fax G3/G4", 
+        "Description[uk]": "Сервер документів факсів G3/G4", 
+        "Description[x-test]": "xxA G3/G4 fax document backendxx", 
         "Id": "okular_fax", 
         "License": "GPL", 
         "MimeTypes": [
@@ -15,6 +24,11 @@
             "image/g3fax"
         ], 
         "Name": "Fax Backend", 
+        "Name[ca]": "Dorsal de fax", 
+        "Name[es]": "Motor para fax", 
+        "Name[nl]": "Faxbackend", 
+        "Name[uk]": "Модуль факсів", 
+        "Name[x-test]": "xxFax Backendxx", 
         "ServiceTypes": [
             "okular/Generator"
         ], 

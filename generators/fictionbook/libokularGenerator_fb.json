@@ -3,17 +3,32 @@
         "Authors": [
             {
                 "Email": "tokoe@kde.org", 
-                "Name": "Tobias Koenig"
+                "Name": "Tobias Koenig", 
+                "Name[x-test]": "xxTobias Koenigxx"
             }
         ], 
         "Copyright": "© 2007-2008 Tobias Koenig", 
+        "Copyright[uk]": "© Tobias Koenig, 2007–2008", 
+        "Copyright[x-test]": "xx© 2007-2008 Tobias Koenigxx", 
         "Description": "A renderer for FictionBook eBooks", 
+        "Description[ca]": "Un renderitzador per a llibres electrònics FictionBook", 
+        "Description[es]": "Un visor para libros electrónicos FictionBook", 
+        "Description[nl]": "Een viewer voor FictionBooks eBooks", 
+        "Description[pt]": "Um visualizador de eBooks em FictionBook", 
+        "Description[uk]": "Програма для відображення електронної белетристики", 
+        "Description[x-test]": "xxA renderer for FictionBook eBooksxx", 
         "Id": "okular_fax", 
         "License": "GPL", 
         "MimeTypes": [
             "application/x-fictionbook+xml"
         ], 
         "Name": "Fiction Book Backend", 
+        "Name[ca]": "Dorsal per al Fiction Book", 
+        "Name[es]": "Motor para Fiction Book", 
+        "Name[nl]": "FictionBook-backend", 
+        "Name[pt]": "Infra-Estrutura de Livros de Ficção", 
+        "Name[uk]": "Модуль белетристики", 
+        "Name[x-test]": "xxFiction Book Backendxx", 
         "ServiceTypes": [
             "okular/Generator"
         ], 

@@ -3,19 +3,30 @@
         "Authors": [
             {
                 "Email": "aacid@kde.org", 
-                "Name": "Albert Astals Cid"
+                "Name": "Albert Astals Cid", 
+                "Name[x-test]": "xxAlbert Astals Cidxx"
             }, 
             {
                 "Email": "pino@kde.org", 
-                "Name": "Pino Toscano"
+                "Name": "Pino Toscano", 
+                "Name[x-test]": "xxPino Toscanoxx"
             }, 
             {
                 "Email": "tokoe@kde.org", 
-                "Name": "Tobias Koenig"
+                "Name": "Tobias Koenig", 
+                "Name[x-test]": "xxTobias Koenigxx"
             }
         ], 
         "Copyright": "© 2005, 2009 Albert Astals Cid\n© 2006-2007 Pino Toscano\n© 2006-2007 Tobias Koenig", 
+        "Copyright[uk]": "© Albert Astals Cid, 2005, 2009 \n© Pino Toscano, 2006–2007\n© Tobias Koenig, 2006–2007", 
+        "Copyright[x-test]": "xx© 2005, 2009 Albert Astals Cid\n© 2006-2007 Pino Toscano\n© 2006-2007 Tobias Koenigxx", 
         "Description": "A simple image backend", 
+        "Description[ca]": "Un dorsal d'imatges senzill", 
+        "Description[es]": "Un sencillo motor para imágenes", 
+        "Description[nl]": "Een eenvoudige afbeeldingsbackend", 
+        "Description[pt]": "Uma infra-estrutura de imagens simples", 
+        "Description[uk]": "Проста програма для зображень", 
+        "Description[x-test]": "xxA simple image backendxx", 
         "Id": "okular_kimgio", 
         "License": "GPL", 
         "MimeTypes": [
@@ -43,6 +54,12 @@
             "image/x-xpixmap"
         ], 
         "Name": "Image Backend", 
+        "Name[ca]": "Dorsal d'imatges", 
+        "Name[es]": "Motor para imágenes", 
+        "Name[nl]": "Afbeeldings-backend", 
+        "Name[pt]": "Infra-Estrutura de Imagens", 
+        "Name[uk]": "Модуль зображень", 
+        "Name[x-test]": "xxImage Backendxx", 
         "ServiceTypes": [
             "okular/Generator"
         ], 

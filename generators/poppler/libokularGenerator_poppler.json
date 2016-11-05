@@ -3,11 +3,20 @@
         "Authors": [
             {
                 "Email": "aacid@kde.org", 
-                "Name": "Albert Astals Cid"
+                "Name": "Albert Astals Cid", 
+                "Name[x-test]": "xxAlbert Astals Cidxx"
             }
         ], 
         "Copyright": "© 2005-2008 Albert Astals Cid", 
+        "Copyright[uk]": "© Albert Astals Cid, 2005–2008", 
+        "Copyright[x-test]": "xx© 2005-2008 Albert Astals Cidxx", 
         "Description": "A PDF file renderer", 
+        "Description[ca]": "Un renderitzador de fitxers PDF", 
+        "Description[es]": "Un visor de archivos PDF", 
+        "Description[nl]": "Een PDF-bestandsviewer", 
+        "Description[pt]": "Um visualizador de ficheiros PDF", 
+        "Description[uk]": "Програма для показу файлів PDF", 
+        "Description[x-test]": "xxA PDF file rendererxx", 
         "Id": "okular_poppler", 
         "License": "GPL", 
         "MimeTypes": [
@@ -16,6 +25,12 @@
             "application/x-wwf"
         ], 
         "Name": "PDF Backend", 
+        "Name[ca]": "Dorsal per a PDF", 
+        "Name[es]": "Motor para PDF", 
+        "Name[nl]": "PDF-backend", 
+        "Name[pt]": "Infra-Estrutura de PDF", 
+        "Name[uk]": "Модуль PDF", 
+        "Name[x-test]": "xxPDF Backendxx", 
         "ServiceTypes": [
             "okular/Generator"
         ], 

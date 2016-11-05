@@ -3,17 +3,32 @@
         "Authors": [
             {
                 "Email": "elylevy@cs.huji.ac.il", 
-                "Name": "Ely Levy"
+                "Name": "Ely Levy", 
+                "Name[x-test]": "xxEly Levyxx"
             }
         ], 
         "Copyright": "© 2008 Ely Levy", 
+        "Copyright[uk]": "© Ely Levy, 2008", 
+        "Copyright[x-test]": "xx© 2008 Ely Levyxx", 
         "Description": "An EPub backend", 
+        "Description[ca]": "Un dorsal per l'EPub", 
+        "Description[es]": "Un motor para EPub", 
+        "Description[nl]": "Een EPub-backend", 
+        "Description[pt]": "Uma infra-estrutura de EPub", 
+        "Description[uk]": "Сервер EPub", 
+        "Description[x-test]": "xxAn EPub backendxx", 
         "Id": "okular_epub", 
         "License": "GPL", 
         "MimeTypes": [
             "application/epub+zip"
         ], 
         "Name": "EPub Backend", 
+        "Name[ca]": "Dorsal EPub", 
+        "Name[es]": "Motor para EPub", 
+        "Name[nl]": "EPub-backend", 
+        "Name[pt]": "Infra-Estrutura de EPub", 
+        "Name[uk]": "Модуль EPub", 
+        "Name[x-test]": "xxEPub Backendxx", 
         "ServiceTypes": [
             "okular/Generator"
         ], 

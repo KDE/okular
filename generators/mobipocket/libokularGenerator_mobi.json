@@ -3,17 +3,32 @@
         "Authors": [
             {
                 "Email": "qbast@go2.pl", 
-                "Name": "Jakub Stachowski"
+                "Name": "Jakub Stachowski", 
+                "Name[x-test]": "xxJakub Stachowskixx"
             }
         ], 
         "Copyright": "© 2008-2009 Jakub Stachowski", 
+        "Copyright[uk]": "© Jakub Stachowski, 2008–2009", 
+        "Copyright[x-test]": "xx© 2008-2009 Jakub Stachowskixx", 
         "Description": "A mobipocket backend", 
+        "Description[ca]": "Un dorsal pel Mobipocket", 
+        "Description[es]": "Un motor para mobipocket", 
+        "Description[nl]": "Een mobipocket-backend", 
+        "Description[pt]": "Uma infra-estrutura de Mobipocket", 
+        "Description[uk]": "Сервер mobipocket", 
+        "Description[x-test]": "xxA mobipocket backendxx", 
         "Id": "okular_mobi", 
         "License": "GPL", 
         "MimeTypes": [
             "application/x-mobipocket-ebook"
         ], 
         "Name": "Mobipocket Backend", 
+        "Name[ca]": "Dorsal del Mobipocket", 
+        "Name[es]": "Motor para Mobipocket", 
+        "Name[nl]": "Mobipocket-backend", 
+        "Name[pt]": "Infra-Estrutura de Mobipocket", 
+        "Name[uk]": "Модуль Mobipocket", 
+        "Name[x-test]": "xxMobipocket Backendxx", 
         "ServiceTypes": [
             "okular/Generator"
         ], 

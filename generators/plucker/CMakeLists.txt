@@ -1,5 +1,4 @@
 include_directories(
-   ${CMAKE_BINARY_DIR}/okular
    ${CMAKE_CURRENT_SOURCE_DIR}/../..
    ${CMAKE_CURRENT_SOURCE_DIR}/../../generators/plucker/unpluck
    ${JPEG_INCLUDE_DIR}

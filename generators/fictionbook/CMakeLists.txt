@@ -1,5 +1,4 @@
 include_directories(
-   ${CMAKE_BINARY_DIR}/okular
    ${CMAKE_CURRENT_SOURCE_DIR}/../..
 )
 

@@ -1,11 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <component type="addon">
   <id>org.kde.okular-chm</id>
   <extends>org.kde.okular.desktop</extends>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+ and GFDL-1.3</project_license>
   <name>CHM Documents</name>
+  <name xml:lang="ca">Documents CHM</name>
+  <name xml:lang="ca-valencia">Documents CHM</name>
+  <name xml:lang="sk">CHM dokumenty</name>
+  <name xml:lang="sl">Dokumenti CHM</name>
+  <name xml:lang="uk">документи CHM</name>
+  <name xml:lang="x-test">xxCHM Documentsxx</name>
   <summary>Adds support for reading CHM documents</summary>
+  <summary xml:lang="ca">Afegeix la implementació per llegir documents CHM</summary>
+  <summary xml:lang="ca-valencia">Afig la implementació per llegir documents CHM</summary>
+  <summary xml:lang="sk">Pridá podporu pre čítanie CHM dokumentov</summary>
+  <summary xml:lang="sl">Doda podporo za branje dokumentov CHM</summary>
+  <summary xml:lang="uk">Додає підтримку читання документів CHM</summary>
+  <summary xml:lang="x-test">xxAdds support for reading CHM documentsxx</summary>
   <mimetypes>
     <mimetype>application/x-chm</mimetype>
   </mimetypes>

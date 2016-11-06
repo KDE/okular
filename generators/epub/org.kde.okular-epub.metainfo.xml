@@ -1,11 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <component type="addon">
   <id>org.kde.okular-epub</id>
   <extends>org.kde.okular.desktop</extends>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+ and GFDL-1.3</project_license>
   <name>EPub</name>
+  <name xml:lang="ca">EPub</name>
+  <name xml:lang="ca-valencia">EPub</name>
+  <name xml:lang="sk">EPub</name>
+  <name xml:lang="sl">EPub</name>
+  <name xml:lang="uk">EPub</name>
+  <name xml:lang="x-test">xxEPubxx</name>
   <summary>Adds support for reading E-Books</summary>
+  <summary xml:lang="ca">Afegeix la implementació per llegir llibres electrònics</summary>
+  <summary xml:lang="ca-valencia">Afig la implementació per llegir llibres electrònics</summary>
+  <summary xml:lang="sk">Pridá podporu pre čítanie e-kníh</summary>
+  <summary xml:lang="sl">Doda podporo za branje e-knjig</summary>
+  <summary xml:lang="uk">Додає підтримку читання електронних книг</summary>
+  <summary xml:lang="x-test">xxAdds support for reading E-Booksxx</summary>
   <mimetypes>
     <mimetype>application/epub+zip</mimetype>
   </mimetypes>

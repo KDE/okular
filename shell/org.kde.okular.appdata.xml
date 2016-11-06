@@ -1,30 +1,72 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <component type="desktop">
- <id>org.kde.okular.desktop</id>
- <metadata_license>CC0-1.0</metadata_license>
- <project_license>GPL-2.0+ and GFDL-1.3</project_license>
- <name>Okular</name>
- <summary>Document Viewer</summary>
- <description>
-  <p>
+  <id>org.kde.okular.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-2.0+ and GFDL-1.3</project_license>
+  <name>Okular</name>
+  <name xml:lang="ca">Okular</name>
+  <name xml:lang="ca-valencia">Okular</name>
+  <name xml:lang="sk">Okular</name>
+  <name xml:lang="sl">Okular</name>
+  <name xml:lang="uk">Okular</name>
+  <name xml:lang="x-test">xxOkularxx</name>
+  <summary>Document Viewer</summary>
+  <summary xml:lang="ca">Visualitzador de documents</summary>
+  <summary xml:lang="ca-valencia">Visualitzador de documents</summary>
+  <summary xml:lang="sk">Prehliadač dokumentov</summary>
+  <summary xml:lang="sl">Pregledovalnik dokumentov</summary>
+  <summary xml:lang="uk">Програма для перегляду документів</summary>
+  <summary xml:lang="x-test">xxDocument Viewerxx</summary>
+  <description>
+    <p>
    Okular is a universal document viewer developed by KDE. Okular works on multiple platforms, including but not limited to Linux, Windows, Mac OS X, *BSD, etc.
   </p>
-  <p>Features:</p>
-  <ul>
-   <li>Supported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
-   <li>Sidebar with contents, thumbnails, reviews and bookmarks</li>
-   <li>Annotations support</li>
-  </ul>
- </description>
- <screenshots>
-  <screenshot type="default">
-   <image>https://www.kde.org/images/screenshots/okular.png</image>
-  </screenshot>
- </screenshots>
- <url type="homepage">https://okular.kde.org/</url>
- <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=okular</url>
- <project_group>KDE</project_group>
- <provides>
+    <p xml:lang="ca">L'Okular és un visualitzador universal de documenta desenvolupat pel KDE. L'Okular funciona en diverses plataformes, incloent però sense limitar en el Linux, Windows, Mac OS X, *BSD, etc.</p>
+    <p xml:lang="ca-valencia">L'Okular és un visualitzador universal de documenta desenvolupat pel KDE. L'Okular funciona en diverses plataformes, incloent però sense limitar en el Linux, Windows, Mac OS X, *BSD, etc.</p>
+    <p xml:lang="sk">Okular je univerzálny prehliadač dokumentov vyvinutý v KDE. Okular beží na mnohých platformách, vrátane Linux, Windows, Mac OS X, *BSD, atď.</p>
+    <p xml:lang="sl">Okular je univerzalni pregledovalnik dokumentov, ki so ga razvili pri KDE. Dela v več okoljih vključno s sistemi Linux, Windows, Mac OS X in *BSD.</p>
+    <p xml:lang="uk">Okular є універсальною програмою для перегляду документів, розробленою KDE. Okular може працювати на багатьох програмних платформах, зокрема Linux, Windows, Mac OS X, *BSD тощо.</p>
+    <p xml:lang="x-test">xxOkular is a universal document viewer developed by KDE. Okular works on multiple platforms, including but not limited to Linux, Windows, Mac OS X, *BSD, etc.xx</p>
+    <p>Features:</p>
+    <p xml:lang="ca">Característiques:</p>
+    <p xml:lang="ca-valencia">Característiques:</p>
+    <p xml:lang="sk">Funkcie:</p>
+    <p xml:lang="sl">Zmožnosti:</p>
+    <p xml:lang="uk">Можливості:</p>
+    <p xml:lang="x-test">xxFeatures:xx</p>
+    <ul>
+      <li>Supported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
+      <li xml:lang="ca">Formats acceptats: PDF, PS, Tiff, CHM, DjVu, imatges, DVI, XPS, ODT, Fiction Book, llibres de còmic, Plucker, EPub, Fax</li>
+      <li xml:lang="ca-valencia">Formats acceptats: PDF, PS, Tiff, CHM, DjVu, imatges, DVI, XPS, ODT, Fiction Book, llibres de còmic, Plucker, EPub, Fax</li>
+      <li xml:lang="sk">Podporované formáty: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
+      <li xml:lang="sl">Podprte vrste: PDF, PS, Tiff, CHM, DjVu, slike, DVI, XPS, ODT, Fiction Book, stripi, Plucker, EPub, faks</li>
+      <li xml:lang="uk">Підтримувані формати: PDF, PS, Tiff, CHM, DjVu, зображення, DVI, XPS, ODT, Fiction Book, комікси, Plucker, EPub, факси.</li>
+      <li xml:lang="x-test">xxSupported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Faxxx</li>
+      <li>Sidebar with contents, thumbnails, reviews and bookmarks</li>
+      <li xml:lang="ca">Barra lateral amb el contingut, miniatures, revisions i punts</li>
+      <li xml:lang="ca-valencia">Barra lateral amb el contingut, miniatures, revisions i punts</li>
+      <li xml:lang="sk">Posuvník s obsahom, miniatúrami, revíziami a záložkami</li>
+      <li xml:lang="sl">Stranska vrstica z vsebino, sličicami, ocenami in zaznamki</li>
+      <li xml:lang="uk">Бічні панелі зі списками змісту, мініатюрами сторінок, можливість рецензування та додавання закладок.</li>
+      <li xml:lang="x-test">xxSidebar with contents, thumbnails, reviews and bookmarksxx</li>
+      <li>Annotations support</li>
+      <li xml:lang="ca">Admet anotacions</li>
+      <li xml:lang="ca-valencia">Admet anotacions</li>
+      <li xml:lang="sk">Podpora anotácií</li>
+      <li xml:lang="sl">Podpora zabeležkam</li>
+      <li xml:lang="uk">Підтримка анотування.</li>
+      <li xml:lang="x-test">xxAnnotations supportxx</li>
+    </ul>
+  </description>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://www.kde.org/images/screenshots/okular.png</image>
+    </screenshot>
+  </screenshots>
+  <url type="homepage">https://okular.kde.org/</url>
+  <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=okular</url>
+  <project_group>KDE</project_group>
+  <provides>
     <binary>okular</binary>
- </provides>
+  </provides>
 </component>

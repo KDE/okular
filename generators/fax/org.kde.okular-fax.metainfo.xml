@@ -1,11 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <component type="addon">
   <id>org.kde.okular-fax</id>
   <extends>org.kde.okular.desktop</extends>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+ and GFDL-1.3</project_license>
   <name>Fax</name>
+  <name xml:lang="ca">Fax</name>
+  <name xml:lang="ca-valencia">Fax</name>
+  <name xml:lang="sk">Fax</name>
+  <name xml:lang="sl">Faks</name>
+  <name xml:lang="uk">факс</name>
+  <name xml:lang="x-test">xxFaxxx</name>
   <summary>Adds support for reading Fax documents</summary>
+  <summary xml:lang="ca">Afegeix la implementació per llegir documents de Fax</summary>
+  <summary xml:lang="ca-valencia">Afig la implementació per llegir documents de Fax</summary>
+  <summary xml:lang="sk">Pridá podporu pre čítanie faxových dokumentov</summary>
+  <summary xml:lang="sl">Doda podporo za branje faksiranih dokumentov</summary>
+  <summary xml:lang="uk">Додає підтримку читання документів факсів</summary>
+  <summary xml:lang="x-test">xxAdds support for reading Fax documentsxx</summary>
   <mimetypes>
     <mimetype>image/fax-g3</mimetype>
     <mimetype>image/g3fax</mimetype>

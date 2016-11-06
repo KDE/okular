@@ -1,11 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <component type="addon">
   <id>org.kde.okular-dvi</id>
   <extends>org.kde.okular.desktop</extends>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+ and GFDL-1.3</project_license>
   <name>DVI Documents</name>
+  <name xml:lang="ca">Documents DVI</name>
+  <name xml:lang="ca-valencia">Documents DVI</name>
+  <name xml:lang="sk">DVI dokumenty</name>
+  <name xml:lang="sl">Dokumenti DVI</name>
+  <name xml:lang="uk">документи DVI</name>
+  <name xml:lang="x-test">xxDVI Documentsxx</name>
   <summary>Adds support for reading DVI documents</summary>
+  <summary xml:lang="ca">Afegeix la implementació per llegir documents DVI</summary>
+  <summary xml:lang="ca-valencia">Afig la implementació per llegir documents DVI</summary>
+  <summary xml:lang="sk">Pridá podporu pre čítanie DVI dokumentov</summary>
+  <summary xml:lang="sl">Doda podporo za branje dokumentov DVI</summary>
+  <summary xml:lang="uk">Додає підтримку читання документів DVI</summary>
+  <summary xml:lang="x-test">xxAdds support for reading DVI documentsxx</summary>
   <mimetypes>
     <mimetype>application/x-dvi</mimetype>
     <mimetype>application/x-gzdvi</mimetype>

@@ -1,11 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <component type="addon">
   <id>org.kde.okular-fb</id>
   <extends>org.kde.okular.desktop</extends>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+ and GFDL-1.3</project_license>
   <name>FictionBook</name>
+  <name xml:lang="ca">FictionBook</name>
+  <name xml:lang="ca-valencia">FictionBook</name>
+  <name xml:lang="sk">FictionBook</name>
+  <name xml:lang="sl">FictionBook</name>
+  <name xml:lang="uk">FictionBook</name>
+  <name xml:lang="x-test">xxFictionBookxx</name>
   <summary>Adds support for reading FictionBooks</summary>
+  <summary xml:lang="ca">Afegeix la implementació per llegir FictionBooks</summary>
+  <summary xml:lang="ca-valencia">Afig la implementació per llegir FictionBooks</summary>
+  <summary xml:lang="sk">Pridá podporu pre čítanie FictionBook</summary>
+  <summary xml:lang="sl">Doda podporo za branje dokumentov FictionBook</summary>
+  <summary xml:lang="uk">Додає підтримку читання документів FictionBook (FB2)</summary>
+  <summary xml:lang="x-test">xxAdds support for reading FictionBooksxx</summary>
   <mimetypes>
     <mimetype>application/x-fictionbook+xml</mimetype>
   </mimetypes>

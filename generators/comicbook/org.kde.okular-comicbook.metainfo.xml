@@ -1,11 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <component type="addon">
   <id>org.kde.okular-comicbook</id>
   <extends>org.kde.okular.desktop</extends>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+ and GFDL-1.3</project_license>
   <name>Comic Books</name>
+  <name xml:lang="ca">Llibres de còmics</name>
+  <name xml:lang="ca-valencia">Llibres de còmics</name>
+  <name xml:lang="sk">Knihy komiksov</name>
+  <name xml:lang="sl">Stripi</name>
+  <name xml:lang="uk">Комікси</name>
+  <name xml:lang="x-test">xxComic Booksxx</name>
   <summary>Adds support for reading comic books</summary>
+  <summary xml:lang="ca">Afegeix la implementació per llegir llibres de còmics</summary>
+  <summary xml:lang="ca-valencia">Afig la implementació per llegir llibres de còmics</summary>
+  <summary xml:lang="sk">Pridá podporu pre čítanie komiksov</summary>
+  <summary xml:lang="sl">Doda podporo za branje stripov</summary>
+  <summary xml:lang="uk">Додає підтримку читання коміксів</summary>
+  <summary xml:lang="x-test">xxAdds support for reading comic booksxx</summary>
   <mimetypes>
     <mimetype>application/x-cbr</mimetype>
     <mimetype>application/x-cbz</mimetype>

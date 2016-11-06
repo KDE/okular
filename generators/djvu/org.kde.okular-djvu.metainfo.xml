@@ -1,11 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <component type="addon">
   <id>org.kde.okular-djvu</id>
   <extends>org.kde.okular.desktop</extends>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+ and GFDL-1.3</project_license>
   <name>DjVu Documents</name>
+  <name xml:lang="ca">Documents DjVu</name>
+  <name xml:lang="ca-valencia">Documents DjVu</name>
+  <name xml:lang="sk">DjVu dokumenty</name>
+  <name xml:lang="sl">Dokumenti DjVu</name>
+  <name xml:lang="uk">документи DjVu</name>
+  <name xml:lang="x-test">xxDjVu Documentsxx</name>
   <summary>Adds support for reading DjVu documents</summary>
+  <summary xml:lang="ca">Afegeix la implementació per llegir documents DjVu</summary>
+  <summary xml:lang="ca-valencia">Afig la implementació per llegir documents DjVu</summary>
+  <summary xml:lang="sk">Pridá podporu pre čítanie DjVu dokumentov</summary>
+  <summary xml:lang="sl">Doda podporo za branje dokumentov DjVu</summary>
+  <summary xml:lang="uk">Додає підтримку читання документів DjVu</summary>
+  <summary xml:lang="x-test">xxAdds support for reading DjVu documentsxx</summary>
   <mimetypes>
     <mimetype>image/vnd.djvu</mimetype>
   </mimetypes>

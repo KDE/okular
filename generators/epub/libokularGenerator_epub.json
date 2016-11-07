@@ -19,6 +19,7 @@
         "Description[pt]": "Uma infra-estrutura de EPub", 
         "Description[sk]": "EPub backend", 
         "Description[sl]": "Zaledje za EPub", 
+        "Description[sv]": "Ett Epub-gränssnitt", 
         "Description[uk]": "Сервер EPub", 
         "Description[x-test]": "xxAn EPub backendxx", 
         "Id": "okular_epub", 
@@ -34,6 +35,7 @@
         "Name[pl]": "Moduł EPub", 
         "Name[pt]": "Infra-Estrutura de EPub", 
         "Name[sl]": "Zaledje za EPub", 
+        "Name[sv]": "Epub-gränssnitt", 
         "Name[uk]": "Модуль EPub", 
         "Name[x-test]": "xxEPub Backendxx", 
         "ServiceTypes": [

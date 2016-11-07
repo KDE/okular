@@ -19,6 +19,7 @@
         "Description[pt]": "Um visualizador de ficheiros PDF", 
         "Description[sk]": "Vykresľovanie PDF súborov", 
         "Description[sl]": "Izrisovalnik datotek PDF", 
+        "Description[sv]": "Ett återgivningsprogram för PDF-filer", 
         "Description[uk]": "Програма для показу файлів PDF", 
         "Description[x-test]": "xxA PDF file rendererxx", 
         "Id": "okular_poppler", 
@@ -36,6 +37,7 @@
         "Name[pl]": "Silnik PDF", 
         "Name[pt]": "Infra-Estrutura de PDF", 
         "Name[sl]": "Zaledje za PDF", 
+        "Name[sv]": "PDF-gränssnitt", 
         "Name[uk]": "Модуль PDF", 
         "Name[x-test]": "xxPDF Backendxx", 
         "ServiceTypes": [

@@ -19,6 +19,7 @@
         "Description[pt]": "Um visualizador de eBooks do Plucker", 
         "Description[sk]": "Vykresľovanie e-kníh Plucker", 
         "Description[sl]": "Izrisovalnik za e-knjige Plucker", 
+        "Description[sv]": "Ett återgivningsprogram för Plucker e-böcker", 
         "Description[uk]": "Програма для відображення ел. книг Plucker", 
         "Description[x-test]": "xxA renderer for Plucker eBooksxx", 
         "Id": "okular_plucker", 
@@ -35,6 +36,7 @@
         "Name[pt]": "Infra-Estrutura de Documentos do Plucker", 
         "Name[sk]": "Backend dokumentov Plucker", 
         "Name[sl]": "Zaledje za dokumente Plucker", 
+        "Name[sv]": "Plucker-dokumentgränssnitt", 
         "Name[uk]": "Модуль документів Plucker", 
         "Name[x-test]": "xxPlucker Document Backendxx", 
         "ServiceTypes": [

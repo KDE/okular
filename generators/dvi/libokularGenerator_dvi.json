@@ -19,6 +19,7 @@
         "Description[pt]": "Um visualizador de ficheiros DVI", 
         "Description[sk]": "Vykresľovanie DVI súborov", 
         "Description[sl]": "Izrisovalnik datotek DVI", 
+        "Description[sv]": "Ett återgivningsprogram för DVI-filer", 
         "Description[uk]": "Інструмент для показу файлів DVI", 
         "Description[x-test]": "xxA DVI file rendererxx", 
         "Id": "okular_dvi", 
@@ -34,6 +35,7 @@
         "Name[pl]": "Obsługa DVI", 
         "Name[pt]": "Infra-Estrutura de DVI", 
         "Name[sl]": "Zaledje za DVI", 
+        "Name[sv]": "DVI-gränssnitt", 
         "Name[uk]": "Модуль DVI", 
         "Name[x-test]": "xxDVI Backendxx", 
         "ServiceTypes": [

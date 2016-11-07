@@ -29,6 +29,7 @@
         "Description[pt]": "Uma infra-estrutura de XPS", 
         "Description[sk]": "XPS backend", 
         "Description[sl]": "Zaledje za XPS", 
+        "Description[sv]": "Ett XPS-gränssnitt", 
         "Description[uk]": "Програма для XPS", 
         "Description[x-test]": "xxAn XPS backendxx", 
         "Id": "okular_xps", 
@@ -45,6 +46,7 @@
         "Name[pl]": "Silnik XPS", 
         "Name[pt]": "Infra-Estrutura de XPS", 
         "Name[sl]": "Zaledje za XPS", 
+        "Name[sv]": "XPS-gränssnitt", 
         "Name[uk]": "Модуль XPS", 
         "Name[x-test]": "xxXPS Backendxx", 
         "ServiceTypes": [

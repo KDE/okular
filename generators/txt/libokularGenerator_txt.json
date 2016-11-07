@@ -18,6 +18,7 @@
         "Description[pl]": "Silnik tekstowy", 
         "Description[pt]": "Infra-estrutura de TXT", 
         "Description[sl]": "Zaledje za txt", 
+        "Description[sv]": "Textgränssnitt", 
         "Description[uk]": "Модуль тексту", 
         "Description[x-test]": "xxTxt backendxx", 
         "Id": "okular_txt", 
@@ -34,6 +35,7 @@
         "Name[pt]": "Infra-Estrutura de TXT", 
         "Name[sk]": "Txt backend", 
         "Name[sl]": "Zaledje za txt", 
+        "Name[sv]": "Textgränssnitt", 
         "Name[uk]": "Модуль тексту", 
         "Name[x-test]": "xxTxt Backendxx", 
         "ServiceTypes": [

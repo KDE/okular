@@ -19,6 +19,7 @@
         "Description[pt]": "Uma infra-estrutura de documentos de fax G3/G4", 
         "Description[sk]": "Backend dokumentu faxu G3/G4", 
         "Description[sl]": "Zaledje za dokumente faksov G3/G4", 
+        "Description[sv]": "Ett G3/G4 telefax-dokumentgränssnitt", 
         "Description[uk]": "Сервер документів факсів G3/G4", 
         "Description[x-test]": "xxA G3/G4 fax document backendxx", 
         "Id": "okular_fax", 
@@ -34,6 +35,7 @@
         "Name[nl]": "Faxbackend", 
         "Name[pl]": "Obsługa faksu", 
         "Name[sl]": "Zaledje za faks", 
+        "Name[sv]": "Telefax-gränssnitt", 
         "Name[uk]": "Модуль факсів", 
         "Name[x-test]": "xxFax Backendxx", 
         "ServiceTypes": [

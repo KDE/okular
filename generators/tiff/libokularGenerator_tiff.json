@@ -19,6 +19,7 @@
         "Description[pt]": "Uma infra-estrutura de TIFF", 
         "Description[sk]": "TIFF backend", 
         "Description[sl]": "Zaledje za TIFF", 
+        "Description[sv]": "Ett TIFF-gränssnitt", 
         "Description[uk]": "Програма для TIFF", 
         "Description[x-test]": "xxA TIFF backendxx", 
         "Id": "okular_tiff", 
@@ -34,6 +35,7 @@
         "Name[pl]": "Silnik TIFF", 
         "Name[pt]": "Infra-Estrutura de TIFF", 
         "Name[sl]": "Zaledje za TIFF", 
+        "Name[sv]": "TIFF-gränssnitt", 
         "Name[uk]": "Модуль TIFF", 
         "Name[x-test]": "xxTIFF Backendxx", 
         "ServiceTypes": [

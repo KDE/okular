@@ -19,6 +19,7 @@
         "Description[pt]": "Uma infra-estrutura de Mobipocket", 
         "Description[sk]": "Mobipocket backend", 
         "Description[sl]": "Zaledje za Mobipocket", 
+        "Description[sv]": "Ett Mobipocket-gränssnitt", 
         "Description[uk]": "Сервер mobipocket", 
         "Description[x-test]": "xxA mobipocket backendxx", 
         "Id": "okular_mobi", 
@@ -34,6 +35,7 @@
         "Name[pl]": "Obsługa Mobipocket", 
         "Name[pt]": "Infra-Estrutura de Mobipocket", 
         "Name[sl]": "Zaledje za Mobipocket", 
+        "Name[sv]": "Mobipocket-gränssnitt", 
         "Name[uk]": "Модуль Mobipocket", 
         "Name[x-test]": "xxMobipocket Backendxx", 
         "ServiceTypes": [

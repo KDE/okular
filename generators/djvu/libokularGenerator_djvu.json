@@ -19,6 +19,7 @@
         "Description[pt]": "Infra-estrutura do DjVu com base no DjVuLibre", 
         "Description[sk]": "DjVu backend postavený na DjVuLibre", 
         "Description[sl]": "Zaledje za DjVu, ki temelji na DjVuLibre", 
+        "Description[sv]": "DjVu-gränssnitt baserat på DjVuLibre", 
         "Description[uk]": "Засіб обробки DjVu, заснований на DjVuLibre", 
         "Description[x-test]": "xxDjVu backend based on DjVuLibrexx", 
         "Id": "okular_djvu", 
@@ -34,6 +35,7 @@
         "Name[pl]": "Silnik DjVu", 
         "Name[pt]": "Infra-Estrutura do DjVu", 
         "Name[sl]": "Zaledje za DjVu", 
+        "Name[sv]": "DjVu-gränssnitt", 
         "Name[uk]": "Модуль DjVu", 
         "Name[x-test]": "xxDjVu Backendxx", 
         "ServiceTypes": [

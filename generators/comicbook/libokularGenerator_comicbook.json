@@ -19,6 +19,7 @@
         "Description[pt]": "Um visualizador de diversos formatos de banda desenhada", 
         "Description[sk]": "Vykresľovanie rôznych formátov kníh komiksov", 
         "Description[sl]": "Izrisovalnik za različne vrste stripov", 
+        "Description[sv]": "Ett återgivningsprogram för diverse format för serieböcker", 
         "Description[uk]": "Програма для відображення коміксів у різних форматах", 
         "Description[x-test]": "xxA renderer for various comic book formatsxx", 
         "Id": "okular_comicbook", 
@@ -38,6 +39,7 @@
         "Name[pt]": "Infra-Estrutura de ComicBook (BD)", 
         "Name[sk]": "Backend pre knihy komiksov", 
         "Name[sl]": "Zaledje za stripe", 
+        "Name[sv]": "Comic Book-gränssnitt", 
         "Name[uk]": "Модуль коміксів", 
         "Name[x-test]": "xxComicBook Backendxx", 
         "ServiceTypes": [

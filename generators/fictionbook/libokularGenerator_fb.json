@@ -19,6 +19,7 @@
         "Description[pt]": "Um visualizador de eBooks em FictionBook", 
         "Description[sk]": "Vykresľovanie e-kníh FictionBook", 
         "Description[sl]": "Izrisovalnik za e-knjige FictionBook", 
+        "Description[sv]": "Ett återgivningsprogram för Fiction Book e-böcker", 
         "Description[uk]": "Програма для відображення електронної белетристики", 
         "Description[x-test]": "xxA renderer for FictionBook eBooksxx", 
         "Id": "okular_fax", 
@@ -34,6 +35,7 @@
         "Name[pl]": "Obsługa Fiction Book", 
         "Name[pt]": "Infra-Estrutura de Livros de Ficção", 
         "Name[sl]": "Zaledje za FictionBook", 
+        "Name[sv]": "Fiction Book-gränssnitt", 
         "Name[uk]": "Модуль белетристики", 
         "Name[x-test]": "xxFiction Book Backendxx", 
         "ServiceTypes": [

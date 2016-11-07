@@ -24,6 +24,7 @@
         "Description[pt]": "Um visualizador de ficheiros de ajuda do Microsoft Windows", 
         "Description[sk]": "Vykresľovanie súborov pomocníka Microsoft Windows", 
         "Description[sl]": "Izrisovalnik datotek za pomoč za Microsoft Windows", 
+        "Description[sv]": "Ett återgivningsprogram av Microsoft Windows hjälpfiler", 
         "Description[uk]": "Відображення файлів довідки Microsoft Windows", 
         "Description[x-test]": "xxA Microsoft Windows help file rendererxx", 
         "Id": "okular_chm", 
@@ -39,6 +40,7 @@
         "Name[pl]": "Silnik CHM", 
         "Name[pt]": "Infra-Estrutura de CHM", 
         "Name[sl]": "Zaledje za CHM", 
+        "Name[sv]": "CHM-gränssnitt", 
         "Name[uk]": "Модуль CHM", 
         "Name[x-test]": "xxCHM Backendxx", 
         "ServiceTypes": [

@@ -7,15 +7,25 @@
   <name>DjVu Documents</name>
   <name xml:lang="ca">Documents DjVu</name>
   <name xml:lang="ca-valencia">Documents DjVu</name>
+  <name xml:lang="en-GB">DjVu Documents</name>
+  <name xml:lang="es">Documentos DjVu</name>
+  <name xml:lang="nl">DjVu-documenten</name>
+  <name xml:lang="pt">Documentos DjVu</name>
   <name xml:lang="sk">DjVu dokumenty</name>
   <name xml:lang="sl">Dokumenti DjVu</name>
+  <name xml:lang="sv">DjVu-dokument</name>
   <name xml:lang="uk">документи DjVu</name>
   <name xml:lang="x-test">xxDjVu Documentsxx</name>
   <summary>Adds support for reading DjVu documents</summary>
   <summary xml:lang="ca">Afegeix la implementació per llegir documents DjVu</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per llegir documents DjVu</summary>
+  <summary xml:lang="en-GB">Adds support for reading DjVu documents</summary>
+  <summary xml:lang="es">Permite la lectura de documentos DjVu</summary>
+  <summary xml:lang="nl">Voegt ondersteuning voor lezen van DjVu-documenten toe</summary>
+  <summary xml:lang="pt">Adiciona o suporte para a leitura de documentos DjVu</summary>
   <summary xml:lang="sk">Pridá podporu pre čítanie DjVu dokumentov</summary>
   <summary xml:lang="sl">Doda podporo za branje dokumentov DjVu</summary>
+  <summary xml:lang="sv">Lägger till stöd för att läsa DjVu-dokument</summary>
   <summary xml:lang="uk">Додає підтримку читання документів DjVu</summary>
   <summary xml:lang="x-test">xxAdds support for reading DjVu documentsxx</summary>
   <mimetypes>

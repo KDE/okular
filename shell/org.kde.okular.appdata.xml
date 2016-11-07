@@ -6,15 +6,25 @@
   <name>Okular</name>
   <name xml:lang="ca">Okular</name>
   <name xml:lang="ca-valencia">Okular</name>
+  <name xml:lang="en-GB">Okular</name>
+  <name xml:lang="es">Okular</name>
+  <name xml:lang="nl">Okular</name>
+  <name xml:lang="pt">Okular</name>
   <name xml:lang="sk">Okular</name>
   <name xml:lang="sl">Okular</name>
+  <name xml:lang="sv">Okular</name>
   <name xml:lang="uk">Okular</name>
   <name xml:lang="x-test">xxOkularxx</name>
   <summary>Document Viewer</summary>
   <summary xml:lang="ca">Visualitzador de documents</summary>
   <summary xml:lang="ca-valencia">Visualitzador de documents</summary>
+  <summary xml:lang="en-GB">Document Viewer</summary>
+  <summary xml:lang="es">Visor de documentos</summary>
+  <summary xml:lang="nl">Documentenviewer</summary>
+  <summary xml:lang="pt">Visualizador do Documento</summary>
   <summary xml:lang="sk">Prehliadač dokumentov</summary>
   <summary xml:lang="sl">Pregledovalnik dokumentov</summary>
+  <summary xml:lang="sv">Dokumentvisare</summary>
   <summary xml:lang="uk">Програма для перегляду документів</summary>
   <summary xml:lang="x-test">xxDocument Viewerxx</summary>
   <description>
@@ -23,37 +33,62 @@
   </p>
     <p xml:lang="ca">L'Okular és un visualitzador universal de documenta desenvolupat pel KDE. L'Okular funciona en diverses plataformes, incloent però sense limitar en el Linux, Windows, Mac OS X, *BSD, etc.</p>
     <p xml:lang="ca-valencia">L'Okular és un visualitzador universal de documenta desenvolupat pel KDE. L'Okular funciona en diverses plataformes, incloent però sense limitar en el Linux, Windows, Mac OS X, *BSD, etc.</p>
+    <p xml:lang="en-GB">Okular is a universal document viewer developed by KDE. Okular works on multiple platforms, including but not limited to Linux, Windows, Mac OS X, *BSD, etc.</p>
+    <p xml:lang="es">Okular es un visor universal de documentos desarrollado por KDE. Okular funciona en diversas plataformas, incluidas Linux, Windows, Mac OS X, *BSD, etc.</p>
+    <p xml:lang="nl">Okular is een universele documentviewer ontwikkeld door KDE. Okular werkt op meerdere platforms, inclusief, maar niet beperkt tot Linux, Windows, Mac OS X, *BSD, etc.</p>
+    <p xml:lang="pt">O Okular é um visualizador universal de documentos desenvolvido pelo KDE. O Okular funciona em diversas plataformas, incluindo mas não se limitando ao Linux, Windows, Mac OS X, *BSD, etc.</p>
     <p xml:lang="sk">Okular je univerzálny prehliadač dokumentov vyvinutý v KDE. Okular beží na mnohých platformách, vrátane Linux, Windows, Mac OS X, *BSD, atď.</p>
     <p xml:lang="sl">Okular je univerzalni pregledovalnik dokumentov, ki so ga razvili pri KDE. Dela v več okoljih vključno s sistemi Linux, Windows, Mac OS X in *BSD.</p>
+    <p xml:lang="sv">Okular är en universell dokumentvisare utvecklad av KDE. Okular fungerar på flera plattformar, inklusive men inte begränsat till Linux, Windows, Max OS X, *BSD, etc.</p>
     <p xml:lang="uk">Okular є універсальною програмою для перегляду документів, розробленою KDE. Okular може працювати на багатьох програмних платформах, зокрема Linux, Windows, Mac OS X, *BSD тощо.</p>
     <p xml:lang="x-test">xxOkular is a universal document viewer developed by KDE. Okular works on multiple platforms, including but not limited to Linux, Windows, Mac OS X, *BSD, etc.xx</p>
     <p>Features:</p>
     <p xml:lang="ca">Característiques:</p>
     <p xml:lang="ca-valencia">Característiques:</p>
+    <p xml:lang="en-GB">Features:</p>
+    <p xml:lang="es">Funciones:</p>
+    <p xml:lang="nl">Kenmerken:</p>
+    <p xml:lang="pt">Funcionalidades:</p>
     <p xml:lang="sk">Funkcie:</p>
     <p xml:lang="sl">Zmožnosti:</p>
+    <p xml:lang="sv">Funktioner:</p>
     <p xml:lang="uk">Можливості:</p>
     <p xml:lang="x-test">xxFeatures:xx</p>
     <ul>
       <li>Supported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="ca">Formats acceptats: PDF, PS, Tiff, CHM, DjVu, imatges, DVI, XPS, ODT, Fiction Book, llibres de còmic, Plucker, EPub, Fax</li>
       <li xml:lang="ca-valencia">Formats acceptats: PDF, PS, Tiff, CHM, DjVu, imatges, DVI, XPS, ODT, Fiction Book, llibres de còmic, Plucker, EPub, Fax</li>
+      <li xml:lang="en-GB">Supported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
+      <li xml:lang="es">Formatos permitidos: PDF, PS, Tiff, CHM, DjVu, imágenes, DVI, XPS, ODT, Fiction Book, libros de cómics, Plucker, EPub, Fax</li>
+      <li xml:lang="nl">Ondersteunde formaten: PDF, PS, Tiff, CHM, DjVu, Afbeeldingen, DVI, XPS, ODT, Fictie boek, Stripboek, Plucker, EPub, Fax</li>
+      <li xml:lang="pt">Formatos Suportados: PDF, PS, Tiff, CHM, DjVu, Imagens, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="sk">Podporované formáty: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="sl">Podprte vrste: PDF, PS, Tiff, CHM, DjVu, slike, DVI, XPS, ODT, Fiction Book, stripi, Plucker, EPub, faks</li>
+      <li xml:lang="sv">Format som stöds: PDF, PS, Tiff, CHM, DjVu, bilder, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="uk">Підтримувані формати: PDF, PS, Tiff, CHM, DjVu, зображення, DVI, XPS, ODT, Fiction Book, комікси, Plucker, EPub, факси.</li>
       <li xml:lang="x-test">xxSupported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Faxxx</li>
       <li>Sidebar with contents, thumbnails, reviews and bookmarks</li>
       <li xml:lang="ca">Barra lateral amb el contingut, miniatures, revisions i punts</li>
       <li xml:lang="ca-valencia">Barra lateral amb el contingut, miniatures, revisions i punts</li>
+      <li xml:lang="en-GB">Sidebar with contents, thumbnails, reviews and bookmarks</li>
+      <li xml:lang="es">Barra lateral con contenido, miniaturas, revisiones y marcadores</li>
+      <li xml:lang="nl">Zijbalk met inhoud, miniaturen, reviews en bladwijzers</li>
+      <li xml:lang="pt">Barra lateral com o conteúdo, miniaturas, revisões e marcação de favoritos</li>
       <li xml:lang="sk">Posuvník s obsahom, miniatúrami, revíziami a záložkami</li>
       <li xml:lang="sl">Stranska vrstica z vsebino, sličicami, ocenami in zaznamki</li>
+      <li xml:lang="sv">Sidorad med innehåll, miniatyrbilder, granskningar och bokmärken</li>
       <li xml:lang="uk">Бічні панелі зі списками змісту, мініатюрами сторінок, можливість рецензування та додавання закладок.</li>
       <li xml:lang="x-test">xxSidebar with contents, thumbnails, reviews and bookmarksxx</li>
       <li>Annotations support</li>
       <li xml:lang="ca">Admet anotacions</li>
       <li xml:lang="ca-valencia">Admet anotacions</li>
+      <li xml:lang="en-GB">Annotations support</li>
+      <li xml:lang="es">Permite el uso de notas</li>
+      <li xml:lang="nl">Ondersteuning van annotaties</li>
+      <li xml:lang="pt">Suporte para anotações</li>
       <li xml:lang="sk">Podpora anotácií</li>
       <li xml:lang="sl">Podpora zabeležkam</li>
+      <li xml:lang="sv">Stöd för kommentarer</li>
       <li xml:lang="uk">Підтримка анотування.</li>
       <li xml:lang="x-test">xxAnnotations supportxx</li>
     </ul>

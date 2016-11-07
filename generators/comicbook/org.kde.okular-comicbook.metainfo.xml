@@ -7,15 +7,25 @@
   <name>Comic Books</name>
   <name xml:lang="ca">Llibres de còmics</name>
   <name xml:lang="ca-valencia">Llibres de còmics</name>
+  <name xml:lang="en-GB">Comic Books</name>
+  <name xml:lang="es">Libros de cómics</name>
+  <name xml:lang="nl">Stripboeken</name>
+  <name xml:lang="pt">Banda Desenhada</name>
   <name xml:lang="sk">Knihy komiksov</name>
   <name xml:lang="sl">Stripi</name>
+  <name xml:lang="sv">Comic Book</name>
   <name xml:lang="uk">Комікси</name>
   <name xml:lang="x-test">xxComic Booksxx</name>
   <summary>Adds support for reading comic books</summary>
   <summary xml:lang="ca">Afegeix la implementació per llegir llibres de còmics</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per llegir llibres de còmics</summary>
+  <summary xml:lang="en-GB">Adds support for reading comic books</summary>
+  <summary xml:lang="es">Permite la lectura de libros de cómics</summary>
+  <summary xml:lang="nl">Voegt ondersteuning voor lezen van stripboeken toe</summary>
+  <summary xml:lang="pt">Adiciona o suporte para ler livros de banda desenhada</summary>
   <summary xml:lang="sk">Pridá podporu pre čítanie komiksov</summary>
   <summary xml:lang="sl">Doda podporo za branje stripov</summary>
+  <summary xml:lang="sv">Lägger till stöd för att läsa Comic Book</summary>
   <summary xml:lang="uk">Додає підтримку читання коміксів</summary>
   <summary xml:lang="x-test">xxAdds support for reading comic booksxx</summary>
   <mimetypes>

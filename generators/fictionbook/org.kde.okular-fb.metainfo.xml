@@ -9,6 +9,7 @@
   <name xml:lang="ca-valencia">FictionBook</name>
   <name xml:lang="en-GB">FictionBook</name>
   <name xml:lang="es">FictionBook</name>
+  <name xml:lang="it">FictionBook</name>
   <name xml:lang="nl">Fictie boek</name>
   <name xml:lang="pt">FictionBook</name>
   <name xml:lang="sk">FictionBook</name>
@@ -21,6 +22,7 @@
   <summary xml:lang="ca-valencia">Afig la implementació per llegir FictionBooks</summary>
   <summary xml:lang="en-GB">Adds support for reading FictionBooks</summary>
   <summary xml:lang="es">Permite la lectura de libros en formato FictionBook</summary>
+  <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti in formato FictionBooks</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van fictie boeken toe</summary>
   <summary xml:lang="pt">Adiciona o suporte para a leitura de livros no formato FictionBooks</summary>
   <summary xml:lang="sk">Pridá podporu pre čítanie FictionBook</summary>

@@ -30,3 +30,4 @@ target_link_libraries(okularGenerator_ghostview okularcore ${LIBSPECTRE_LIBRARY}
 install( PROGRAMS okularApplication_ghostview.desktop org.kde.mobile.okular_ghostview.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
 install( FILES okularGhostview.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
 ecm_install_icons(ICONS 16-apps-okular-gv.png  32-apps-okular-gv.png DESTINATION ${KDE_INSTALL_DATADIR}/okular/icons)
+install( FILES org.kde.okular-spectre.metainfo.xml DESTINATION ${KDE_INSTALL_METAINFODIR} )

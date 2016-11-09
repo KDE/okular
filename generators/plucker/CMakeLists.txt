@@ -26,3 +26,4 @@ target_link_libraries(okularGenerator_plucker okularcore KF5::KIOCore KF5::I18n 
 ########### install files ###############
 install( FILES okularPlucker.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
 install( PROGRAMS okularApplication_plucker.desktop org.kde.mobile.okular_plucker.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
+install( FILES org.kde.okular-plucker.metainfo.xml DESTINATION ${KDE_INSTALL_METAINFODIR} )

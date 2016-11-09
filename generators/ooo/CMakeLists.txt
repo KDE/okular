@@ -34,4 +34,4 @@ endif ()
 ########### install files ###############
 install( FILES okularOoo.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
 install( PROGRAMS okularApplication_ooo.desktop org.kde.mobile.okular_ooo.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
-
+install( FILES org.kde.okular-ooo.metainfo.xml DESTINATION ${KDE_INSTALL_METAINFODIR} )

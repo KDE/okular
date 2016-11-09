@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component type="addon">
+  <id>org.kde.okular-mobipocket</id>
+  <extends>org.kde.okular.desktop</extends>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-2.0+ and GFDL-1.3</project_license>
+  <name>Mobipocket</name>
+  <summary>Adds support for reading Mobipocket E-books</summary>
+  <mimetypes>
+    <mimetype>image/bmp</mimetype>
+    <mimetype>image/x-dds</mimetype>
+    <mimetype>image/x-eps</mimetype>
+    <mimetype>image/x-exr</mimetype>
+    <mimetype>image/gif</mimetype>
+    <mimetype>image/x-hdr</mimetype>
+    <mimetype>image/x-ico</mimetype>
+    <mimetype>image/jp2</mimetype>
+    <mimetype>image/jpeg</mimetype>
+    <mimetype>video/x-mng</mimetype>
+    <mimetype>image/x-portable-bitmap</mimetype>
+    <mimetype>image/x-pcx</mimetype>
+    <mimetype>image/x-portable-graymap</mimetype>
+    <mimetype>image/png</mimetype>
+    <mimetype>image/x-portable-pixmap</mimetype>
+    <mimetype>image/x-psd</mimetype>
+    <mimetype>image/x-rgb</mimetype>
+    <mimetype>image/x-tga</mimetype>
+    <mimetype>image/tiff</mimetype>
+    <mimetype>image/x-xbitmap</mimetype>
+    <mimetype>image/x-xcf</mimetype>
+    <mimetype>image/x-xpixmap</mimetype>
+    <mimetype>image/x-gzeps</mimetype>
+    <mimetype>image/x-bzeps</mimetype>
+  </mimetypes>
+  <url type="homepage">https://okular.kde.org</url>
+</component>

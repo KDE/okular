@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component type="addon">
+  <id>org.kde.okular-txt</id>
+  <extends>org.kde.okular.desktop</extends>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-2.0+ and GFDL-1.3</project_license>
+  <name>Text</name>
+  <summary>Adds support for reading plain text documents</summary>
+  <mimetypes>
+    <mimetype>text/plain</mimetype>
+  </mimetypes>
+  <url type="homepage">https://okular.kde.org</url>
+</component>

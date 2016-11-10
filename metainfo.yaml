@@ -10,6 +10,6 @@ public_lib: true
 public_source_dirs:
         - core
         - Mainpage.dox 
-logo: ui/data/icons/hi128-apps-okular.png
+logo: ui/data/icons/128-apps-okular.png
 irc: okular
 mailinglist: okular-devel

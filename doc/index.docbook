@@ -1,10 +1,7 @@
 <?xml version="1.0" ?>
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
-  <!ENTITY kappname "&okular;">
   <!ENTITY latex "L<superscript>A</superscript>T<subscript>E</subscript>X">
-  <!ENTITY package "kdegraphics">
   <!ENTITY kpdf "<application>KPDF</application>">
-  <!ENTITY PDF "<acronym>PDF</acronym>">
   <!ENTITY % English "INCLUDE">
   <!ENTITY % addindex "IGNORE">
 ]>
@@ -37,8 +34,8 @@ Context menu actions like Rename Bookmarks etc.)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2016-07-26</date>
-		<releaseinfo>0.26 (Applications 16.08)</releaseinfo>
+		<date>2016-11-04</date>
+		<releaseinfo>1.0 (Applications 16.12)</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
 			<para>&okular; is a &kde; universal document viewer based on &kpdf; code.</para>
@@ -889,42 +886,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<variablelist>
 			    <varlistentry>
 				<term><userinput><command>okular</command>
-				<option>--help</option></userinput></term>
-				<listitem><para>This lists the most basic options available at the command line.</para></listitem>
-			    </varlistentry>
-			    <varlistentry>
-				<term><userinput><command>okular</command>
-				<option>--help-qt</option></userinput></term>
-				<listitem><para>This lists the options available for changing the way &okular; interacts with &Qt;.</para></listitem>
-			    </varlistentry>
-			    <varlistentry>
-				<term><userinput><command>okular</command>
-				<option>--help-kde</option></userinput></term>
-				<listitem><para>This lists the options available for changing the way &okular; interacts with &kde;.</para></listitem>
-			    </varlistentry>
-			    <varlistentry>
-				<term><userinput><command>okular</command>
-				<option>--help-all</option></userinput></term>
-				<listitem><para>This lists all of the command line options.</para></listitem>
-			    </varlistentry>
-			    <varlistentry>
-				<term><userinput><command>okular</command>
-				<option>--author</option></userinput></term>
-				<listitem><para>Lists &okular;'s authors in the terminal window</para></listitem>
-			    </varlistentry>
-			    <varlistentry>
-				<term><userinput><command>okular</command>
-				<option>-v, --version</option></userinput></term>
-				<listitem><para>Lists version information for &Qt;, &kde;, and &okular;. Also available through <userinput><command>okular</command> <option>-v</option></userinput> </para></listitem>
-			    </varlistentry>
-			    <varlistentry>
-				<term><userinput><command>okular</command>
-				<option>--license</option></userinput></term>
-				<listitem><para>Shows license information.</para></listitem>
-			    </varlistentry>
-			    <varlistentry>
-				<term><userinput><command>okular</command>
-				<option>--page <replaceable>number</replaceable></option></userinput></term>
+				<option>-p --page <replaceable>number</replaceable></option></userinput></term>
 				<listitem><para>Open a page with a given number in the document. Also available through <userinput><command>okular</command> <option>-p <replaceable>number</replaceable></option></userinput></para></listitem>
 			    </varlistentry>
 			    <varlistentry>
@@ -946,12 +908,7 @@ Context menu actions like Rename Bookmarks etc.)
 				<term><userinput><command>okular</command>
 				<option>--noraise</option></userinput></term>
 				<listitem><para>Allows to prevent &okular; window raising after the start.</para></listitem>
-			    </varlistentry>
-			    <varlistentry>
-				<term><userinput><command>okular</command>
-				<option>--</option></userinput></term>
-				<listitem><para>End of options.</para></listitem>
-			    </varlistentry>
+                            </varlistentry>
 			</variablelist>
 		    </sect2>
 		</sect1>
@@ -1037,6 +994,9 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term>
 						<menuchoice>
+							<shortcut>
+							<keycombo action="simul">&Ctrl;<keycap>S</keycap></keycombo>
+							</shortcut>
 							<guimenu>File</guimenu>
 							<guimenuitem>Save As...</guimenuitem>
 						</menuchoice>
@@ -1054,6 +1014,9 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term>
 						<menuchoice>
+							<shortcut>
+							<keycombo action="simul">&Ctrl;&Shift;<keycap>S</keycap></keycombo>
+							</shortcut>
 							<guimenu>File</guimenu>
 							<guimenuitem>Save Copy As...</guimenuitem>
 						</menuchoice>
@@ -2273,12 +2236,6 @@ Context menu actions like Rename Bookmarks etc.)
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term><guilabel>Pencil color</guilabel></term>
-					<listitem>
-						<para>The color of the pencil used when drawing on the pages during the presentation mode.</para>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
 					<term><guilabel>Mouse cursor</guilabel></term>
 					<listitem>
 						<para>Whether the mouse should be always hidden, always shown or hidden after a small time of inactivity.</para>
@@ -2317,6 +2274,12 @@ Context menu actions like Rename Bookmarks etc.)
 						<para><guilabel>Current Screen</guilabel> is same screen of the &okular; window that starts the presentation mode.</para>
 						<para><guilabel>Default Screen</guilabel> is the screen marked as default in the xinerama configuration.</para>
 						<para><guilabel>Screen 0</guilabel>, <guilabel>Screen 1</guilabel> &etc; are the available screens.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term><guilabel>Drawing Tool Configuration</guilabel></term>
+					<listitem>
+						<para>Manage the colors of the pencil used when drawing on the pages during the presentation mode.</para>
 					</listitem>
 				</varlistentry>
 			</variablelist>
@@ -2440,23 +2403,6 @@ Context menu actions like Rename Bookmarks etc.)
 		&underGPL;
 	</chapter>
 
-	<appendix id="installation">
-		<title>Installation</title>
-		<sect1 id="getting-kapp">
-			<title>How to obtain &okular;</title>
-			&install.intro.documentation;
-		</sect1>
-		<sect1 id="compilation">
-			<title>Compilation and Installation</title>
-			<note>
-				<para>
-					If you are reading this help in the &khelpcenter;, &okular; has already been
-					installed on this system and you do not need install it anymore.
-				</para>
-			</note>
-			&install.compile.documentation;
-		</sect1>
-	</appendix>
 	&documentation.index;
 </book>
 

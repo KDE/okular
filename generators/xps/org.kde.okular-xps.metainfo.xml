@@ -5,13 +5,21 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+ and GFDL-1.3</project_license>
   <name>XPS</name>
+  <name xml:lang="ca">XPS</name>
+  <name xml:lang="es">XPS</name>
   <name xml:lang="nl">XPS</name>
   <name xml:lang="pt">XPS</name>
+  <name xml:lang="sk">XPS</name>
+  <name xml:lang="sl">XPS</name>
   <name xml:lang="uk">XPS</name>
   <name xml:lang="x-test">xxXPSxx</name>
   <summary>Adds support for reading XPS documents</summary>
+  <summary xml:lang="ca">Afegeix la implementació per llegir documents XPS</summary>
+  <summary xml:lang="es">Permite la lectura de documentos XPS</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van XPS-documenten toe</summary>
   <summary xml:lang="pt">Adiciona o suporte para ler documentos em XPS</summary>
+  <summary xml:lang="sk">Pridá podporu pre čítanie XPS dokumentov</summary>
+  <summary xml:lang="sl">Doda podporo za branje dokumentov XPS</summary>
   <summary xml:lang="uk">Додає підтримку читання документів XPS</summary>
   <summary xml:lang="x-test">xxAdds support for reading XPS documentsxx</summary>
   <mimetypes>

@@ -5,13 +5,21 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+ and GFDL-1.3</project_license>
   <name>Mobipocket</name>
+  <name xml:lang="ca">Mobipocket</name>
+  <name xml:lang="es">Mobipocket</name>
   <name xml:lang="nl">Mobipocket</name>
   <name xml:lang="pt">Mobipocket</name>
+  <name xml:lang="sk">Mobipocket</name>
+  <name xml:lang="sl">Mobipocket</name>
   <name xml:lang="uk">Mobipocket</name>
   <name xml:lang="x-test">xxMobipocketxx</name>
   <summary>Adds support for reading Mobipocket E-books</summary>
+  <summary xml:lang="ca">Afegeix la implementació per llegir llibres electrònics Mobipocket</summary>
+  <summary xml:lang="es">Permite la lectura de libros electrónicos en formato Mobipocket</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van Mobipocket e-boeken toe</summary>
   <summary xml:lang="pt">Adiciona o suporte para ler E-books da Mobipocket</summary>
+  <summary xml:lang="sk">Pridá podporu pre čítanie e-kníh Mobipocket</summary>
+  <summary xml:lang="sl">Doda podporo za branje e-knjig Mobipocket</summary>
   <summary xml:lang="uk">Додає підтримку читання електронних книг у форматі Mobipocket</summary>
   <summary xml:lang="x-test">xxAdds support for reading Mobipocket E-booksxx</summary>
   <mimetypes>

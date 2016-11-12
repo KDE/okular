@@ -5,13 +5,21 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+ and GFDL-1.3</project_license>
   <name>OpenDocument</name>
+  <name xml:lang="ca">OpenDocument</name>
+  <name xml:lang="es">OpenDocument</name>
   <name xml:lang="nl">OpenDocument</name>
   <name xml:lang="pt">OpenDocument</name>
+  <name xml:lang="sk">OpenDocument</name>
+  <name xml:lang="sl">OpenDocument</name>
   <name xml:lang="uk">OpenDocument</name>
   <name xml:lang="x-test">xxOpenDocumentxx</name>
   <summary>Adds support for reading opendocument text files</summary>
+  <summary xml:lang="ca">Afegeix la implementació per llegir fitxers de text OpenDocument</summary>
+  <summary xml:lang="es">Permite la lectura de archivos de texto en formato OpenDocument</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van opendocument tekstbestanden toe</summary>
   <summary xml:lang="pt">Adiciona o suporte para ler documentos de texto em OpenDocument</summary>
+  <summary xml:lang="sk">Pridá podporu pre čítanie textových súborov OpenDocument</summary>
+  <summary xml:lang="sl">Doda podporo za branje besedilnih datotek OpenDocument</summary>
   <summary xml:lang="uk">Додає підтримку читання текстових документів OpenDocument</summary>
   <summary xml:lang="x-test">xxAdds support for reading opendocument text filesxx</summary>
   <mimetypes>

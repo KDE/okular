@@ -5,13 +5,21 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+ and GFDL-1.3</project_license>
   <name>PostScript</name>
+  <name xml:lang="ca">PostScript</name>
+  <name xml:lang="es">PostScript</name>
   <name xml:lang="nl">PostScript</name>
   <name xml:lang="pt">PostScript</name>
+  <name xml:lang="sk">PostScript</name>
+  <name xml:lang="sl">PostScript</name>
   <name xml:lang="uk">PostScript</name>
   <name xml:lang="x-test">xxPostScriptxx</name>
   <summary>Adds support for reading PostScript documents</summary>
+  <summary xml:lang="ca">Afegeix la implementació per llegir documents PostScript</summary>
+  <summary xml:lang="es">Permite la lectura de documentos PostScript</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van PostScript-documenten toe</summary>
   <summary xml:lang="pt">Adiciona o suporte para ler documentos em PostScript</summary>
+  <summary xml:lang="sk">Pridá podporu pre čítanie dokumentov PostScript</summary>
+  <summary xml:lang="sl">Doda podporo za branje dokumentov PostScript</summary>
   <summary xml:lang="uk">Додає підтримку читання документів PostScript</summary>
   <summary xml:lang="x-test">xxAdds support for reading PostScript documentsxx</summary>
   <mimetypes>

@@ -6,6 +6,7 @@
   <project_license>GPL-2.0+ and GFDL-1.3</project_license>
   <name>Plucker</name>
   <name xml:lang="ca">Plucker</name>
+  <name xml:lang="en-GB">Plucker</name>
   <name xml:lang="es">Plucker</name>
   <name xml:lang="nl">Plucker</name>
   <name xml:lang="pt">Plucker</name>
@@ -15,6 +16,7 @@
   <name xml:lang="x-test">xxPluckerxx</name>
   <summary>Adds support for reading plucker documents</summary>
   <summary xml:lang="ca">Afegeix la implementació per llegir documents Plucker</summary>
+  <summary xml:lang="en-GB">Adds support for reading plucker documents</summary>
   <summary xml:lang="es">Permite la lectura de documentos en formato Plucker</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van plucker-documenten toe</summary>
   <summary xml:lang="pt">Adiciona o suporte para ler documentos do Plucker</summary>

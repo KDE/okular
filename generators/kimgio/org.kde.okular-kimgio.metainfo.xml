@@ -6,6 +6,7 @@
   <project_license>GPL-2.0+ and GFDL-1.3</project_license>
   <name>Images</name>
   <name xml:lang="ca">Imatges</name>
+  <name xml:lang="en-GB">Images</name>
   <name xml:lang="es">Imágenes</name>
   <name xml:lang="nl">Afbeeldingen</name>
   <name xml:lang="pt">Imagens</name>
@@ -15,6 +16,7 @@
   <name xml:lang="x-test">xxImagesxx</name>
   <summary>Adds support for reading many image formats</summary>
   <summary xml:lang="ca">Afegeix la implementació per llegir molts formats d'imatges</summary>
+  <summary xml:lang="en-GB">Adds support for reading many image formats</summary>
   <summary xml:lang="es">Permite la lectura de diversos formatos de imagen</summary>
   <summary xml:lang="nl">Ondersteuning toevoegen om vele afbeeldingsformaten te lezen</summary>
   <summary xml:lang="pt">Adiciona o suporte para ler muitos formatos de imagem</summary>

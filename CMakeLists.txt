@@ -2,7 +2,7 @@ project(okular)
 
 cmake_minimum_required(VERSION 2.8.12)
 
-set(QT_REQUIRED_VERSION "5.2.0")
+set(QT_REQUIRED_VERSION "5.6.0")
 set(KF5_REQUIRED_VERSION "5.16.0")
 
 find_package(ECM 5.19.0 CONFIG REQUIRED)

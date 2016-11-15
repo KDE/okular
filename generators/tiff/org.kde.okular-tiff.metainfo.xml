@@ -6,6 +6,7 @@
   <project_license>GPL-2.0+ and GFDL-1.3</project_license>
   <name>Tiff</name>
   <name xml:lang="ca">TIFF</name>
+  <name xml:lang="ca-valencia">TIFF</name>
   <name xml:lang="en-GB">Tiff</name>
   <name xml:lang="es">Tiff</name>
   <name xml:lang="nl">Tiff</name>
@@ -16,6 +17,7 @@
   <name xml:lang="x-test">xxTiffxx</name>
   <summary>Adds support for reading Tiff documents</summary>
   <summary xml:lang="ca">Afegeix la implementació per llegir documents TIFF</summary>
+  <summary xml:lang="ca-valencia">Afig la implementació per llegir documents TIFF</summary>
   <summary xml:lang="en-GB">Adds support for reading Tiff documents</summary>
   <summary xml:lang="es">Permite la lectura de documentos Tiff</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van Tiff-documenten toe</summary>

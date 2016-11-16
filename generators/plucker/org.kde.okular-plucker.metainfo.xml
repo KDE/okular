@@ -15,7 +15,7 @@
   <name xml:lang="sl">Plucker</name>
   <name xml:lang="uk">Plucker</name>
   <name xml:lang="x-test">xxPluckerxx</name>
-  <summary>Adds support for reading plucker documents</summary>
+  <summary>Adds support for reading Plucker documents</summary>
   <summary xml:lang="ca">Afegeix la implementació per llegir documents Plucker</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per llegir documents Plucker</summary>
   <summary xml:lang="en-GB">Adds support for reading plucker documents</summary>

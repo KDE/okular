@@ -15,7 +15,7 @@
   <name xml:lang="sl">OpenDocument</name>
   <name xml:lang="uk">OpenDocument</name>
   <name xml:lang="x-test">xxOpenDocumentxx</name>
-  <summary>Adds support for reading opendocument text files</summary>
+  <summary>Adds support for reading OpenDocument text files</summary>
   <summary xml:lang="ca">Afegeix la implementació per llegir fitxers de text OpenDocument</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per llegir fitxers de text OpenDocument</summary>
   <summary xml:lang="en-GB">Adds support for reading opendocument text files</summary>

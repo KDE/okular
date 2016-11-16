@@ -1224,7 +1224,7 @@ bool Part::slotImportPSFile()
     }
 
     QMimeDatabase mimeDatabase;
-    QString filter = i18n("Postscript files (%1)", mimeDatabase.mimeTypeForName(QStringLiteral("application/postscript")).globPatterns().join(QLatin1Char(' ')));
+    QString filter = i18n("PostScript files (%1)", mimeDatabase.mimeTypeForName(QStringLiteral("application/postscript")).globPatterns().join(QLatin1Char(' ')));
 
     QUrl url = QFileDialog::getOpenFileUrl( widget(), QString(), QUrl(), filter );
     if ( url.isLocalFile() )

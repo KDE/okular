@@ -226,9 +226,9 @@ glyph* TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCo
         // character outline only using the alpha channel. That
         // ensures good quality rendering for overlapping characters.
         uchar *srcScanLine = slot->bitmap.buffer;
-        for(int row=0; row<slot->bitmap.rows; row++) {
+        for(unsigned int row=0; row<slot->bitmap.rows; row++) {
           uchar *destScanLine = imgi.scanLine(row);
-          for(int col=0; col<slot->bitmap.width; col++) {
+          for(unsigned int col=0; col<slot->bitmap.width; col++) {
             destScanLine[4*col+0] = color.blue();
             destScanLine[4*col+1] = color.green();
             destScanLine[4*col+2] = color.red();

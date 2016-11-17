@@ -14,6 +14,7 @@
   <name xml:lang="pt">Plucker</name>
   <name xml:lang="sk">Plucker</name>
   <name xml:lang="sl">Plucker</name>
+  <name xml:lang="sv">Plucker</name>
   <name xml:lang="uk">Plucker</name>
   <name xml:lang="x-test">xxPluckerxx</name>
   <summary>Adds support for reading Plucker documents</summary>

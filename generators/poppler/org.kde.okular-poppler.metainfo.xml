@@ -9,10 +9,12 @@
   <name xml:lang="ca-valencia">PDF</name>
   <name xml:lang="en-GB">PDF</name>
   <name xml:lang="es">PDF</name>
+  <name xml:lang="it">PDF</name>
   <name xml:lang="nl">PDF</name>
   <name xml:lang="pt">PDF</name>
   <name xml:lang="sk">PDF</name>
   <name xml:lang="sl">PDF</name>
+  <name xml:lang="sv">PDF</name>
   <name xml:lang="uk">PDF</name>
   <name xml:lang="x-test">xxPDFxx</name>
   <summary>Adds support for reading PDF documents</summary>
@@ -20,10 +22,12 @@
   <summary xml:lang="ca-valencia">Afig la implementació per llegir documents PDF</summary>
   <summary xml:lang="en-GB">Adds support for reading PDF documents</summary>
   <summary xml:lang="es">Permite la lectura de documentos PDF</summary>
+  <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti PDF</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van PDF-documenten toe</summary>
   <summary xml:lang="pt">Adiciona o suporte para ler documentos em PDF</summary>
   <summary xml:lang="sk">Pridá podporu pre čítanie PDF dokumentov</summary>
   <summary xml:lang="sl">Doda podporo za branje dokumentov PDF</summary>
+  <summary xml:lang="sv">Lägger till stöd för att läsa PDF-dokument</summary>
   <summary xml:lang="uk">Додає підтримку читання документів PDF</summary>
   <summary xml:lang="x-test">xxAdds support for reading PDF documentsxx</summary>
   <mimetypes>

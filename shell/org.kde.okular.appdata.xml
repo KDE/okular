@@ -10,6 +10,7 @@
   <name xml:lang="es">Okular</name>
   <name xml:lang="it">Okular</name>
   <name xml:lang="nl">Okular</name>
+  <name xml:lang="nn">Okular</name>
   <name xml:lang="pt">Okular</name>
   <name xml:lang="sk">Okular</name>
   <name xml:lang="sl">Okular</name>
@@ -23,6 +24,7 @@
   <summary xml:lang="es">Visor de documentos</summary>
   <summary xml:lang="it">Visore di documenti</summary>
   <summary xml:lang="nl">Documentenviewer</summary>
+  <summary xml:lang="nn">Dokumentvisar</summary>
   <summary xml:lang="pt">Visualizador do Documento</summary>
   <summary xml:lang="sk">Prehliadač dokumentov</summary>
   <summary xml:lang="sl">Pregledovalnik dokumentov</summary>
@@ -39,6 +41,7 @@
     <p xml:lang="es">Okular es un visor universal de documentos desarrollado por KDE. Okular funciona en diversas plataformas, incluidas Linux, Windows, Mac OS X, *BSD, etc.</p>
     <p xml:lang="it">Okular è un lettore universale di documenti sviluppato da KDE. Okular funziona su varie piattaforme, incluse (ma non solo) Linux, Windows, Mac OS X, *BSD, ecc.</p>
     <p xml:lang="nl">Okular is een universele documentviewer ontwikkeld door KDE. Okular werkt op meerdere platforms, inclusief, maar niet beperkt tot Linux, Windows, Mac OS X, *BSD, etc.</p>
+    <p xml:lang="nn">Okular er ein dokumentvisar for mange ulike filformat, og er utvikla av KDE. Okular køyrer på fleire plattformer, blant anna Linux, Windows, Mac OS X og *BSD.</p>
     <p xml:lang="pt">O Okular é um visualizador universal de documentos desenvolvido pelo KDE. O Okular funciona em diversas plataformas, incluindo mas não se limitando ao Linux, Windows, Mac OS X, *BSD, etc.</p>
     <p xml:lang="sk">Okular je univerzálny prehliadač dokumentov vyvinutý v KDE. Okular beží na mnohých platformách, vrátane Linux, Windows, Mac OS X, *BSD, atď.</p>
     <p xml:lang="sl">Okular je univerzalni pregledovalnik dokumentov, ki so ga razvili pri KDE. Dela v več okoljih vključno s sistemi Linux, Windows, Mac OS X in *BSD.</p>
@@ -52,6 +55,7 @@
     <p xml:lang="es">Funciones:</p>
     <p xml:lang="it">Funzionalità:</p>
     <p xml:lang="nl">Kenmerken:</p>
+    <p xml:lang="nn">Funksjonar:</p>
     <p xml:lang="pt">Funcionalidades:</p>
     <p xml:lang="sk">Funkcie:</p>
     <p xml:lang="sl">Zmožnosti:</p>
@@ -66,6 +70,7 @@
       <li xml:lang="es">Formatos permitidos: PDF, PS, Tiff, CHM, DjVu, imágenes, DVI, XPS, ODT, Fiction Book, libros de cómics, Plucker, EPub, Fax</li>
       <li xml:lang="it">Formati supportati: PDF, PS, Tiff, CHM, DjVu, immagini, DVI, XPS, ODT, Fiction Book, fumetti, Plucker, EPub, Fax</li>
       <li xml:lang="nl">Ondersteunde formaten: PDF, PS, Tiff, CHM, DjVu, Afbeeldingen, DVI, XPS, ODT, Fictie boek, Stripboek, Plucker, EPub, Fax</li>
+      <li xml:lang="nn">Støtta format: PDF, PS, Tiff, CHM, DjVu, bilete, DVI, XPS, ODT, e-bøker, teikneseriar, Plucker, EPub, Fax</li>
       <li xml:lang="pt">Formatos Suportados: PDF, PS, Tiff, CHM, DjVu, Imagens, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="sk">Podporované formáty: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="sl">Podprte vrste: PDF, PS, Tiff, CHM, DjVu, slike, DVI, XPS, ODT, Fiction Book, stripi, Plucker, EPub, faks</li>
@@ -79,6 +84,7 @@
       <li xml:lang="es">Barra lateral con contenido, miniaturas, revisiones y marcadores</li>
       <li xml:lang="it">Barra laterale con contenuti, miniature, revisioni e segnalibri</li>
       <li xml:lang="nl">Zijbalk met inhoud, miniaturen, reviews en bladwijzers</li>
+      <li xml:lang="nn">Sidestolpe med innhaldsliste, miniatyrbilete, omtalar og bokmerke</li>
       <li xml:lang="pt">Barra lateral com o conteúdo, miniaturas, revisões e marcação de favoritos</li>
       <li xml:lang="sk">Posuvník s obsahom, miniatúrami, revíziami a záložkami</li>
       <li xml:lang="sl">Stranska vrstica z vsebino, sličicami, ocenami in zaznamki</li>
@@ -92,6 +98,7 @@
       <li xml:lang="es">Permite el uso de notas</li>
       <li xml:lang="it">Supporto per le annotazioni</li>
       <li xml:lang="nl">Ondersteuning van annotaties</li>
+      <li xml:lang="nn">Støtte for merknadar</li>
       <li xml:lang="pt">Suporte para anotações</li>
       <li xml:lang="sk">Podpora anotácií</li>
       <li xml:lang="sl">Podpora zabeležkam</li>

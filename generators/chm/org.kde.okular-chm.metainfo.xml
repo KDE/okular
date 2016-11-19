@@ -11,6 +11,7 @@
   <name xml:lang="es">Documentos CHM</name>
   <name xml:lang="it">Documenti CHM</name>
   <name xml:lang="nl">CHM-documenten</name>
+  <name xml:lang="nn">CHM-dokument</name>
   <name xml:lang="pt">Documentos CHM</name>
   <name xml:lang="sk">CHM dokumenty</name>
   <name xml:lang="sl">Dokumenti CHM</name>
@@ -24,6 +25,7 @@
   <summary xml:lang="es">Permite la lectura de documentos CHM</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti CHM</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van CHM-documenten toe</summary>
+  <summary xml:lang="nn">Legg til støtte for å lesa CHM-dokument</summary>
   <summary xml:lang="pt">Adiciona o suporte para a leitura de documentos CHM</summary>
   <summary xml:lang="sk">Pridá podporu pre čítanie CHM dokumentov</summary>
   <summary xml:lang="sl">Doda podporo za branje dokumentov CHM</summary>

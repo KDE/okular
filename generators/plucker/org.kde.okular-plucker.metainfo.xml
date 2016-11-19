@@ -14,10 +14,16 @@
   <name xml:lang="pt">Plucker</name>
   <name xml:lang="sk">Plucker</name>
   <name xml:lang="sl">Plucker</name>
-  <name xml:lang="sv">Plucker</name>
   <name xml:lang="uk">Plucker</name>
   <name xml:lang="x-test">xxPluckerxx</name>
   <summary>Adds support for reading Plucker documents</summary>
+  <summary xml:lang="ca">Afegeix la implementació per llegir documents Plucker</summary>
+  <summary xml:lang="nl">Voegt ondersteuning voor lezen van Plucker-documenten toe</summary>
+  <summary xml:lang="pt">Adiciona o suporte para ler documentos do Plucker</summary>
+  <summary xml:lang="sk">Pridá podporu pre čítanie dokumentov Plucker</summary>
+  <summary xml:lang="sl">Doda podporo za branje dokumentov Plucker</summary>
+  <summary xml:lang="uk">Додає підтримку читання документів Plucker</summary>
+  <summary xml:lang="x-test">xxAdds support for reading Plucker documentsxx</summary>
   <mimetypes>
     <mimetype>application/prs.plucker</mimetype>
   </mimetypes>

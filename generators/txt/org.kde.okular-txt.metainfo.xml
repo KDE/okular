@@ -14,7 +14,6 @@
   <name xml:lang="pt">Texto</name>
   <name xml:lang="sk">Text</name>
   <name xml:lang="sl">Besedilo</name>
-  <name xml:lang="sv">Text</name>
   <name xml:lang="uk">Текст</name>
   <name xml:lang="x-test">xxTextxx</name>
   <summary>Adds support for reading plain text documents</summary>
@@ -27,7 +26,6 @@
   <summary xml:lang="pt">Adiciona o suporte para ler documentos em texto simples</summary>
   <summary xml:lang="sk">Pridá podporu pre čítanie čistých textových dokumentov</summary>
   <summary xml:lang="sl">Doda podporo za branje besedilnih dokumentov</summary>
-  <summary xml:lang="sv">Lägger till stöd för att läsa text-dokument</summary>
   <summary xml:lang="uk">Додає підтримку читання звичайних текстових документів</summary>
   <summary xml:lang="x-test">xxAdds support for reading plain text documentsxx</summary>
   <mimetypes>

@@ -19,6 +19,7 @@
   <name xml:lang="x-test">xxPluckerxx</name>
   <summary>Adds support for reading Plucker documents</summary>
   <summary xml:lang="ca">Afegeix la implementació per llegir documents Plucker</summary>
+  <summary xml:lang="es">Permite la lectura de documentos en formato Plucker</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van Plucker-documenten toe</summary>
   <summary xml:lang="sk">Pridá podporu pre čítanie dokumentov Plucker</summary>
   <summary xml:lang="sv">Lägger till stöd för att läsa Plucker-dokument</summary>

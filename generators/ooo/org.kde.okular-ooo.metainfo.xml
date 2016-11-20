@@ -19,6 +19,7 @@
   <name xml:lang="x-test">xxOpenDocumentxx</name>
   <summary>Adds support for reading OpenDocument text files</summary>
   <summary xml:lang="ca">Afegeix la implementació per llegir fitxers de text OpenDocument</summary>
+  <summary xml:lang="es">Permite la lectura de archivos de texto en formato OpenDocument</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van OpenDocument tekstbestanden toe</summary>
   <summary xml:lang="sk">Pridá podporu pre čítanie textových súborov OpenDocument</summary>
   <summary xml:lang="sv">Lägger till stöd för att läsa OpenDocument-textfiler</summary>

@@ -11,6 +11,7 @@
   <name xml:lang="es">XPS</name>
   <name xml:lang="it">XPS</name>
   <name xml:lang="nl">XPS</name>
+  <name xml:lang="nn">XPS</name>
   <name xml:lang="pt">XPS</name>
   <name xml:lang="sk">XPS</name>
   <name xml:lang="sl">XPS</name>
@@ -23,6 +24,7 @@
   <summary xml:lang="es">Permite la lectura de documentos XPS</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti XPS</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van XPS-documenten toe</summary>
+  <summary xml:lang="nn">Legg til støtte for å lesa XPS-dokument</summary>
   <summary xml:lang="pt">Adiciona o suporte para ler documentos em XPS</summary>
   <summary xml:lang="sk">Pridá podporu pre čítanie XPS dokumentov</summary>
   <summary xml:lang="sl">Doda podporo za branje dokumentov XPS</summary>

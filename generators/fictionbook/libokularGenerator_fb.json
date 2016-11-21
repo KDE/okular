@@ -4,10 +4,12 @@
             {
                 "Email": "tokoe@kde.org", 
                 "Name": "Tobias Koenig", 
+                "Name[nn]": "Tobias König", 
                 "Name[x-test]": "xxTobias Koenigxx"
             }
         ], 
         "Copyright": "© 2007-2008 Tobias Koenig", 
+        "Copyright[nn]": "© 2007–2008 Tobias König", 
         "Copyright[uk]": "© Tobias Koenig, 2007–2008", 
         "Copyright[x-test]": "xx© 2007-2008 Tobias Koenigxx", 
         "Description": "A renderer for FictionBook eBooks", 
@@ -17,6 +19,7 @@
         "Description[es]": "Un visor para libros electrónicos FictionBook", 
         "Description[it]": "Un visualizzatore per ebook FictionBook", 
         "Description[nl]": "Een viewer voor FictionBooks eBooks", 
+        "Description[nn]": "Ein lesar for e-bøker av typen FictionBook", 
         "Description[pl]": "Wyświetlanie eksiążek FictionBook", 
         "Description[pt]": "Um visualizador de eBooks em FictionBook", 
         "Description[sk]": "Vykresľovanie e-kníh FictionBook", 
@@ -36,6 +39,7 @@
         "Name[es]": "Motor para Fiction Book", 
         "Name[it]": "Backend Fiction Book", 
         "Name[nl]": "FictionBook-backend", 
+        "Name[nn]": "FictionBook-motor", 
         "Name[pl]": "Obsługa Fiction Book", 
         "Name[pt]": "Infra-Estrutura de Livros de Ficção", 
         "Name[sl]": "Zaledje za FictionBook", 

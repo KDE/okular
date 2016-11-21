@@ -8,6 +8,7 @@
             }
         ], 
         "Copyright": "© 2006-2008 Pino Toscano", 
+        "Copyright[nn]": "© 2006–2008 Pino Toscano", 
         "Copyright[uk]": "© Pino Toscano, 2006–2008", 
         "Copyright[x-test]": "xx© 2006-2008 Pino Toscanoxx", 
         "Description": "A TIFF backend", 
@@ -17,6 +18,7 @@
         "Description[es]": "Un motor para TIFF", 
         "Description[it]": "Un backend per TIFF", 
         "Description[nl]": "Een TIFF-backend", 
+        "Description[nn]": "Ein TIFF-motor", 
         "Description[pl]": "Jeden z silników TIFF", 
         "Description[pt]": "Uma infra-estrutura de TIFF", 
         "Description[sk]": "TIFF backend", 
@@ -36,6 +38,7 @@
         "Name[es]": "Motor para TIFF", 
         "Name[it]": "Backend TIFF", 
         "Name[nl]": "TIFF-backend", 
+        "Name[nn]": "TIFF-motor", 
         "Name[pl]": "Silnik TIFF", 
         "Name[pt]": "Infra-Estrutura de TIFF", 
         "Name[sl]": "Zaledje za TIFF", 

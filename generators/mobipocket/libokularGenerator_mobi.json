@@ -8,6 +8,7 @@
             }
         ], 
         "Copyright": "© 2008-2009 Jakub Stachowski", 
+        "Copyright[nn]": "© 2008–2009 Jakub Stachowski", 
         "Copyright[uk]": "© Jakub Stachowski, 2008–2009", 
         "Copyright[x-test]": "xx© 2008-2009 Jakub Stachowskixx", 
         "Description": "A mobipocket backend", 
@@ -17,6 +18,7 @@
         "Description[es]": "Un motor para mobipocket", 
         "Description[it]": "Un backend per mobipocket", 
         "Description[nl]": "Een mobipocket-backend", 
+        "Description[nn]": "Ein Mobipocket-motor", 
         "Description[pl]": "Obsługa mobipocket", 
         "Description[pt]": "Uma infra-estrutura de Mobipocket", 
         "Description[sk]": "Mobipocket backend", 
@@ -36,6 +38,7 @@
         "Name[es]": "Motor para Mobipocket", 
         "Name[it]": "Backend Mobipocket", 
         "Name[nl]": "Mobipocket-backend", 
+        "Name[nn]": "Mobipocket-motor", 
         "Name[pl]": "Obsługa Mobipocket", 
         "Name[pt]": "Infra-Estrutura de Mobipocket", 
         "Name[sl]": "Zaledje za Mobipocket", 

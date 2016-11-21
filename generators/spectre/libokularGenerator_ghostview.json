@@ -8,6 +8,7 @@
             }
         ], 
         "Copyright": "© 2007-2008 Albert Astals Cid", 
+        "Copyright[nn]": "© 2007–2008 Albert Astals Cid", 
         "Copyright[uk]": "© Albert Astals Cid, 2007–2008", 
         "Copyright[x-test]": "xx© 2007-2008 Albert Astals Cidxx", 
         "Description": "A PostScript file renderer based on the Spectre library", 
@@ -17,6 +18,7 @@
         "Description[es]": "Un visor de archivos PostScript basado en la biblioteca Spectre", 
         "Description[it]": "Un visualizzatore di file PostScript basato sulla libreria Spectre", 
         "Description[nl]": "Een renderer van PostScript bestanden gebaseerd op de bibliotheek Spectre", 
+        "Description[nn]": "Ein gjengjevar for PostScript-filer, basert på Spectre-biblioteket", 
         "Description[pl]": "Wyświetlanie plików PostScript oparte o bibliotekę Spectre", 
         "Description[pt]": "Um visualzador de ficheiros PostScript com base na biblioteca Spectre", 
         "Description[sk]": "Renderovač PostScript súborov založený na knižnici Spectre", 
@@ -37,6 +39,7 @@
         "Name[es]": "Motor para PS", 
         "Name[it]": "Backend PS", 
         "Name[nl]": "PS-backend", 
+        "Name[nn]": "PS-motor", 
         "Name[pl]": "Silnik PS", 
         "Name[pt]": "Infra-Estrutura de PS", 
         "Name[sl]": "Zaledje za PS", 

@@ -4,10 +4,12 @@
             {
                 "Email": "tokoe@kde.org", 
                 "Name": "Tobias Koenig", 
+                "Name[nn]": "Tobias König", 
                 "Name[x-test]": "xxTobias Koenigxx"
             }
         ], 
         "Copyright": "© 2008 Tobias Koenig", 
+        "Copyright[nn]": "© 2008 Tobias König", 
         "Copyright[uk]": "© Tobias Koenig, 2008", 
         "Copyright[x-test]": "xx© 2008 Tobias Koenigxx", 
         "Description": "A G3/G4 fax document backend", 
@@ -17,6 +19,7 @@
         "Description[es]": "Un motor para documentos de fax G3/G4", 
         "Description[it]": "Un backend per documenti fax G3/G4", 
         "Description[nl]": "Een backend voor een G3/G4 faxdocument", 
+        "Description[nn]": "Ein motor for G3/G4-faksdokument", 
         "Description[pl]": "Obsługa dokumentów faksowych G3/G4", 
         "Description[pt]": "Uma infra-estrutura de documentos de fax G3/G4", 
         "Description[sk]": "Backend dokumentu faxu G3/G4", 
@@ -37,6 +40,7 @@
         "Name[es]": "Motor para fax", 
         "Name[it]": "Backend fax", 
         "Name[nl]": "Faxbackend", 
+        "Name[nn]": "Faksmotor", 
         "Name[pl]": "Obsługa faksu", 
         "Name[sl]": "Zaledje za faks", 
         "Name[sv]": "Telefax-gränssnitt", 

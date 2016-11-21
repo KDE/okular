@@ -4,10 +4,12 @@
             {
                 "Email": "tokoe@kde.org", 
                 "Name": "Tobias Koenig", 
+                "Name[nn]": "Tobias König", 
                 "Name[x-test]": "xxTobias Koenigxx"
             }
         ], 
         "Copyright": "© 2006-2008 Tobias Koenig", 
+        "Copyright[nn]": "© 2006–2008 Tobias Koenig", 
         "Copyright[uk]": "© Tobias Koenig, 2006–2008", 
         "Copyright[x-test]": "xx© 2006-2008 Tobias Koenigxx", 
         "Description": "A renderer for OpenDocument Text documents", 
@@ -17,6 +19,7 @@
         "Description[es]": "Un visor para documentos de texto OpenDocument", 
         "Description[it]": "Un visualizzatore per documenti OpenDocument Text", 
         "Description[nl]": "Een viewer voor OpenDocument-tekstdocumenten", 
+        "Description[nn]": "Ein lesar for OpenDocument-tekstdokument", 
         "Description[pl]": "Program wyświetlający dokumentów tekstowych OpenDocument", 
         "Description[pt]": "Um visualizador de documentos de texto em OpenDocument", 
         "Description[sk]": "Vykresľovač pre textové dokumenty OpenDocument", 
@@ -36,6 +39,7 @@
         "Name[es]": "Motor para texto de OpenDocument", 
         "Name[it]": "Backend OpenDocument Text", 
         "Name[nl]": "OpenDocument-tekst-backend", 
+        "Name[nn]": "OpenDocument-tekstmotor", 
         "Name[pl]": "Silnik dokumentów OpenDocument", 
         "Name[pt]": "Infra-Estrutura de Texto em OpenDocument", 
         "Name[sk]": "Backend OpenDocument Text", 

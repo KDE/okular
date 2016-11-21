@@ -8,6 +8,7 @@
             }
         ], 
         "Copyright": "© 2005-2008 Albert Astals Cid", 
+        "Copyright[nn]": "© 2005–2008 Albert Astals Cid", 
         "Copyright[uk]": "© Albert Astals Cid, 2005–2008", 
         "Copyright[x-test]": "xx© 2005-2008 Albert Astals Cidxx", 
         "Description": "A PDF file renderer", 
@@ -17,6 +18,7 @@
         "Description[es]": "Un visor de archivos PDF", 
         "Description[it]": "Un visualizzatore di file PDF", 
         "Description[nl]": "Een PDF-bestandsviewer", 
+        "Description[nn]": "Ein gjengjevar for PDF-filer", 
         "Description[pl]": "Wyświetlanie pliku PDF", 
         "Description[pt]": "Um visualizador de ficheiros PDF", 
         "Description[sk]": "Vykresľovanie PDF súborov", 
@@ -38,6 +40,7 @@
         "Name[es]": "Motor para PDF", 
         "Name[it]": "Backend PDF", 
         "Name[nl]": "PDF-backend", 
+        "Name[nn]": "PDF-motor", 
         "Name[pl]": "Silnik PDF", 
         "Name[pt]": "Infra-Estrutura de PDF", 
         "Name[sl]": "Zaledje za PDF", 

@@ -11,6 +11,7 @@
   <name xml:lang="es">Imágenes</name>
   <name xml:lang="it">Immagini</name>
   <name xml:lang="nl">Afbeeldingen</name>
+  <name xml:lang="nn">Bilete</name>
   <name xml:lang="pt">Imagens</name>
   <name xml:lang="sk">Obrázky</name>
   <name xml:lang="sl">Slike</name>
@@ -24,6 +25,7 @@
   <summary xml:lang="es">Permite la lectura de diversos formatos de imagen</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di vari formati di immagini</summary>
   <summary xml:lang="nl">Ondersteuning toevoegen om vele afbeeldingsformaten te lezen</summary>
+  <summary xml:lang="nn">Legg til støtte for å lesa mange ulike biletformat</summary>
   <summary xml:lang="pt">Adiciona o suporte para ler muitos formatos de imagem</summary>
   <summary xml:lang="sk">Pridá podporu pre čítanie mnohých obrazových formátov</summary>
   <summary xml:lang="sl">Doda podporo za branje številnih slikovnih vrst</summary>

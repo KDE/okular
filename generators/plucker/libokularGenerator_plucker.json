@@ -4,10 +4,12 @@
             {
                 "Email": "tokoe@kde.org", 
                 "Name": "Tobias Koenig", 
+                "Name[nn]": "Tobias König", 
                 "Name[x-test]": "xxTobias Koenigxx"
             }
         ], 
         "Copyright": "© 2007-2008 Tobias Koenig", 
+        "Copyright[nn]": "© 2007–2008 Tobias König", 
         "Copyright[uk]": "© Tobias Koenig, 2007–2008", 
         "Copyright[x-test]": "xx© 2007-2008 Tobias Koenigxx", 
         "Description": "A renderer for Plucker eBooks", 
@@ -17,6 +19,7 @@
         "Description[es]": "Un visor de libros electrónicos Plucker", 
         "Description[it]": "Un visualizzatore per eBook Plucker", 
         "Description[nl]": "Een viewer voor Plucker eBooks", 
+        "Description[nn]": "Ein gjengjevar for Plucker-e-bøker", 
         "Description[pl]": "Wyświetlanie eksiążek w formacie Plucker", 
         "Description[pt]": "Um visualizador de eBooks do Plucker", 
         "Description[sk]": "Vykresľovanie e-kníh Plucker", 
@@ -36,6 +39,7 @@
         "Name[es]": "Motor para documento de Plucker", 
         "Name[it]": "Backend per documenti Plucker", 
         "Name[nl]": "Plucker Document-backend", 
+        "Name[nn]": "Plucker-dokumentmotor", 
         "Name[pl]": "Obsługa dokumentów Plucker", 
         "Name[pt]": "Infra-Estrutura de Documentos do Plucker", 
         "Name[sk]": "Backend dokumentov Plucker", 

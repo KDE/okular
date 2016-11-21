@@ -4,10 +4,12 @@
             {
                 "Email": "tokoe@kde.org", 
                 "Name": "Tobias Koenig", 
+                "Name[nn]": "Tobias König", 
                 "Name[x-test]": "xxTobias Koenigxx"
             }
         ], 
         "Copyright": "© 2007-2008 Tobias Koenig", 
+        "Copyright[nn]": "© 2007–2008 Tobias König", 
         "Copyright[uk]": "© Tobias Koenig, 2007–2008", 
         "Copyright[x-test]": "xx© 2007-2008 Tobias Koenigxx", 
         "Description": "A renderer for various comic book formats", 
@@ -17,6 +19,7 @@
         "Description[es]": "Un visor para diversos formatos de libros de cómics", 
         "Description[it]": "Un visualizzatore per vari formati di strisce a fumetti", 
         "Description[nl]": "Een viewer voor diverse ComicBook-formaten", 
+        "Description[nn]": "Ein gjengjevar for ulike teikneserieformat", 
         "Description[pl]": "Wyświetlanie różnych formatów comic book.", 
         "Description[pt]": "Um visualizador de diversos formatos de banda desenhada", 
         "Description[sk]": "Vykresľovanie rôznych formátov kníh komiksov", 
@@ -39,6 +42,7 @@
         "Name[es]": "Motor para ComicBook", 
         "Name[it]": "Backend ComicBook", 
         "Name[nl]": "ComicBook-backend", 
+        "Name[nn]": "ComicBook-motor", 
         "Name[pl]": "Moduł ComicBook", 
         "Name[pt]": "Infra-Estrutura de ComicBook (BD)", 
         "Name[sk]": "Backend pre knihy komiksov", 

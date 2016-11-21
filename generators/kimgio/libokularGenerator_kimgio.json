@@ -14,10 +14,12 @@
             {
                 "Email": "tokoe@kde.org", 
                 "Name": "Tobias Koenig", 
+                "Name[nn]": "Tobias König", 
                 "Name[x-test]": "xxTobias Koenigxx"
             }
         ], 
         "Copyright": "© 2005, 2009 Albert Astals Cid\n© 2006-2007 Pino Toscano\n© 2006-2007 Tobias Koenig", 
+        "Copyright[nn]": "© 2005, 2009 Albert Astals Cid\n© 2006–2007 Pino Toscano\n© 2006–2007 Tobias Koenig", 
         "Copyright[sv]": "© 2005,2009 Albert Astals Cid\n© 2006-2007 Pino Toscano\n© 2006-2007 Tobias Koenig", 
         "Copyright[uk]": "© Albert Astals Cid, 2005, 2009 \n© Pino Toscano, 2006–2007\n© Tobias Koenig, 2006–2007", 
         "Copyright[x-test]": "xx© 2005, 2009 Albert Astals Cid\n© 2006-2007 Pino Toscano\n© 2006-2007 Tobias Koenigxx", 
@@ -28,6 +30,7 @@
         "Description[es]": "Un sencillo motor para imágenes", 
         "Description[it]": "Un semplice backend per le immagini", 
         "Description[nl]": "Een eenvoudige afbeeldingsbackend", 
+        "Description[nn]": "Ein enkel biletmotor", 
         "Description[pl]": "Silnik prostych obrazków", 
         "Description[pt]": "Uma infra-estrutura de imagens simples", 
         "Description[sk]": "Backend jednoduchých obrázkov", 
@@ -68,6 +71,7 @@
         "Name[es]": "Motor para imágenes", 
         "Name[it]": "Backend immagini", 
         "Name[nl]": "Afbeeldings-backend", 
+        "Name[nn]": "Biletmotor", 
         "Name[pl]": "Silnik obrazów", 
         "Name[pt]": "Infra-Estrutura de Imagens", 
         "Name[sk]": "Backend obrázkov", 

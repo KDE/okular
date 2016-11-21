@@ -13,6 +13,7 @@
             }
         ], 
         "Copyright": "© 2005-2007 Piotr Szymański\n© 2008 Albert Astals Cid", 
+        "Copyright[nn]": "© 2005–2007 Piotr Szymański\n© 2008 Albert Astals Cid", 
         "Copyright[uk]": "© Piotr Szymański, 2005–2007\n© Albert Astals Cid, 2008", 
         "Copyright[x-test]": "xx© 2005-2007 Piotr Szymański\n© 2008 Albert Astals Cidxx", 
         "Description": "A Microsoft Windows help file renderer", 
@@ -22,6 +23,7 @@
         "Description[es]": "Un visor de archivos de ayuda de Microsoft Windows", 
         "Description[it]": "Un visualizzatore per file di aiuto di Microsoft Windows", 
         "Description[nl]": "Een viewer voor Microsoft Windows-helpbestanden", 
+        "Description[nn]": "Ein framvisar for Microsoft Windows-hjelpefiler", 
         "Description[pl]": "System zajmujący się wyświetlaniem plików pomocy Microsoft Windows", 
         "Description[pt]": "Um visualizador de ficheiros de ajuda do Microsoft Windows", 
         "Description[sk]": "Vykresľovanie súborov pomocníka Microsoft Windows", 
@@ -41,6 +43,7 @@
         "Name[es]": "Motor para CHM", 
         "Name[it]": "Backend CHM", 
         "Name[nl]": "CHM-backend", 
+        "Name[nn]": "CHM-motor", 
         "Name[pl]": "Silnik CHM", 
         "Name[pt]": "Infra-Estrutura de CHM", 
         "Name[sl]": "Zaledje za CHM", 

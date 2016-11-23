@@ -17,6 +17,7 @@
   <name xml:lang="sl">Besedilo</name>
   <name xml:lang="uk">Текст</name>
   <name xml:lang="x-test">xxTextxx</name>
+  <name xml:lang="zh-TW">文字</name>
   <summary>Adds support for reading plain text documents</summary>
   <summary xml:lang="ca">Afegeix la implementació per llegir documents de text net</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per llegir documents de text net</summary>
@@ -30,6 +31,7 @@
   <summary xml:lang="sl">Doda podporo za branje besedilnih dokumentov</summary>
   <summary xml:lang="uk">Додає підтримку читання звичайних текстових документів</summary>
   <summary xml:lang="x-test">xxAdds support for reading plain text documentsxx</summary>
+  <summary xml:lang="zh-TW">加入讀取純文字文件的支援</summary>
   <mimetypes>
     <mimetype>text/plain</mimetype>
   </mimetypes>

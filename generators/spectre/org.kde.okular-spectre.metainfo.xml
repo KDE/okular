@@ -17,6 +17,7 @@
   <name xml:lang="sl">PostScript</name>
   <name xml:lang="uk">PostScript</name>
   <name xml:lang="x-test">xxPostScriptxx</name>
+  <name xml:lang="zh-TW">PostScript</name>
   <summary>Adds support for reading PostScript documents</summary>
   <summary xml:lang="ca">Afegeix la implementació per llegir documents PostScript</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per llegir documents PostScript</summary>
@@ -30,6 +31,7 @@
   <summary xml:lang="sl">Doda podporo za branje dokumentov PostScript</summary>
   <summary xml:lang="uk">Додає підтримку читання документів PostScript</summary>
   <summary xml:lang="x-test">xxAdds support for reading PostScript documentsxx</summary>
+  <summary xml:lang="zh-TW">加入讀取 PostScript 文件的支援</summary>
   <mimetypes>
     <mimetype>application/postscript</mimetype>
     <mimetype>image/x-eps</mimetype>

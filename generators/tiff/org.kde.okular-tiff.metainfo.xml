@@ -17,6 +17,7 @@
   <name xml:lang="sl">Tiff</name>
   <name xml:lang="uk">Tiff</name>
   <name xml:lang="x-test">xxTiffxx</name>
+  <name xml:lang="zh-TW">Tiff</name>
   <summary>Adds support for reading Tiff documents</summary>
   <summary xml:lang="ca">Afegeix la implementació per llegir documents TIFF</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per llegir documents TIFF</summary>
@@ -30,6 +31,7 @@
   <summary xml:lang="sl">Doda podporo za branje dokumentov Tiff</summary>
   <summary xml:lang="uk">Додає підтримку читання документів TIFF</summary>
   <summary xml:lang="x-test">xxAdds support for reading Tiff documentsxx</summary>
+  <summary xml:lang="zh-TW">加入讀取 Tiff 文件的支援</summary>
   <mimetypes>
     <mimetype>image/tiff</mimetype>
   </mimetypes>

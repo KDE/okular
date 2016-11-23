@@ -16,6 +16,7 @@
         "Description[ca]": "Un renderitzador de fitxers PDF", 
         "Description[de]": "Ein Renderer für PDF-Dateien", 
         "Description[es]": "Un visor de archivos PDF", 
+        "Description[fr]": "Système de rendu pour les fichiers « PDF »", 
         "Description[it]": "Un visualizzatore di file PDF", 
         "Description[nl]": "Een PDF-bestandsviewer", 
         "Description[nn]": "Ein gjengjevar for PDF-filer", 
@@ -26,6 +27,7 @@
         "Description[sv]": "Ett återgivningsprogram för PDF-filer", 
         "Description[uk]": "Програма для показу файлів PDF", 
         "Description[x-test]": "xxA PDF file rendererxx", 
+        "Description[zh_TW]": "PDF 檔成像器", 
         "Id": "okular_poppler", 
         "License": "GPL", 
         "MimeTypes": [
@@ -38,6 +40,7 @@
         "Name[ca]": "Dorsal per a PDF", 
         "Name[de]": "PDF-Anzeigemodul", 
         "Name[es]": "Motor para PDF", 
+        "Name[fr]": "Moteur PDF", 
         "Name[it]": "Backend PDF", 
         "Name[nl]": "PDF-backend", 
         "Name[nn]": "PDF-motor", 
@@ -47,6 +50,7 @@
         "Name[sv]": "PDF-gränssnitt", 
         "Name[uk]": "Модуль PDF", 
         "Name[x-test]": "xxPDF Backendxx", 
+        "Name[zh_TW]": "PDF 後端介面", 
         "ServiceTypes": [
             "okular/Generator"
         ], 

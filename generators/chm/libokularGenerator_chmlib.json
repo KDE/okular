@@ -21,6 +21,7 @@
         "Description[ca]": "Un renderitzador de fitxers d'ajuda del Windows de Microsoft", 
         "Description[de]": "Darstellungsprogramm für Hilfedateien aus Microsoft Windows", 
         "Description[es]": "Un visor de archivos de ayuda de Microsoft Windows", 
+        "Description[fr]": "Un système de rendu pour les fichiers d'aide Windows", 
         "Description[it]": "Un visualizzatore per file di aiuto di Microsoft Windows", 
         "Description[nl]": "Een viewer voor Microsoft Windows-helpbestanden", 
         "Description[nn]": "Ein framvisar for Microsoft Windows-hjelpefiler", 
@@ -31,6 +32,7 @@
         "Description[sv]": "Ett återgivningsprogram av Microsoft Windows hjälpfiler", 
         "Description[uk]": "Відображення файлів довідки Microsoft Windows", 
         "Description[x-test]": "xxA Microsoft Windows help file rendererxx", 
+        "Description[zh_TW]": "Microsoft Windows 說明檔成像器", 
         "Id": "okular_chm", 
         "License": "GPL", 
         "MimeTypes": [
@@ -41,6 +43,7 @@
         "Name[ca]": "Dorsal CHM", 
         "Name[de]": "Anzeigemodul für CHM", 
         "Name[es]": "Motor para CHM", 
+        "Name[fr]": "Moteur CHM", 
         "Name[it]": "Backend CHM", 
         "Name[nl]": "CHM-backend", 
         "Name[nn]": "CHM-motor", 
@@ -50,6 +53,7 @@
         "Name[sv]": "CHM-gränssnitt", 
         "Name[uk]": "Модуль CHM", 
         "Name[x-test]": "xxCHM Backendxx", 
+        "Name[zh_TW]": "CHM 後端介面", 
         "ServiceTypes": [
             "okular/Generator"
         ], 

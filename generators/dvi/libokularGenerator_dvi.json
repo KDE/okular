@@ -15,6 +15,7 @@
         "Description[ca]": "Un renderitzador de fitxers DVI", 
         "Description[de]": "Ein Renderer für DVI-Dateien", 
         "Description[es]": "Un visor de archivos DVI", 
+        "Description[fr]": "Système de rendu pour fichiers « DVI »", 
         "Description[it]": "Un visualizzatore di file DVI", 
         "Description[nl]": "Een DVI-bestandsweergever", 
         "Description[nn]": "Ein gjengjevar for DVI-filer", 
@@ -25,6 +26,7 @@
         "Description[sv]": "Ett återgivningsprogram för DVI-filer", 
         "Description[uk]": "Інструмент для показу файлів DVI", 
         "Description[x-test]": "xxA DVI file rendererxx", 
+        "Description[zh_TW]": "DVI 檔成像器", 
         "Id": "okular_dvi", 
         "License": "GPL", 
         "MimeTypes": [
@@ -35,6 +37,7 @@
         "Name[ca]": "Dorsal de DVI", 
         "Name[de]": "Anzeigemodul für DVI", 
         "Name[es]": "Motor para DVI", 
+        "Name[fr]": "Moteur DVI", 
         "Name[it]": "Backend DVI", 
         "Name[nl]": "DVI-backend", 
         "Name[nn]": "DVI-motor", 
@@ -44,6 +47,7 @@
         "Name[sv]": "DVI-gränssnitt", 
         "Name[uk]": "Модуль DVI", 
         "Name[x-test]": "xxDVI Backendxx", 
+        "Name[zh_TW]": "DVI 後端介面", 
         "ServiceTypes": [
             "okular/Generator"
         ], 

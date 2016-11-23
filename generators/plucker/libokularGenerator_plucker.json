@@ -17,6 +17,7 @@
         "Description[ca]": "Un renderitzador per a llibres electrònics Plucker", 
         "Description[de]": "Ein Renderer für Plucker eBooks", 
         "Description[es]": "Un visor de libros electrónicos Plucker", 
+        "Description[fr]": "Système de rendu pour les livres électroniques Plucker", 
         "Description[it]": "Un visualizzatore per eBook Plucker", 
         "Description[nl]": "Een viewer voor Plucker eBooks", 
         "Description[nn]": "Ein gjengjevar for Plucker-e-bøker", 
@@ -27,6 +28,7 @@
         "Description[sv]": "Ett återgivningsprogram för Plucker e-böcker", 
         "Description[uk]": "Програма для відображення ел. книг Plucker", 
         "Description[x-test]": "xxA renderer for Plucker eBooksxx", 
+        "Description[zh_TW]": "Plucker 電子書成像器", 
         "Id": "okular_plucker", 
         "License": "GPL", 
         "MimeTypes": [
@@ -37,6 +39,7 @@
         "Name[ca]": "Dorsal per a documents Plucker", 
         "Name[de]": "Anzeigemodul für Plucker-Dokumente", 
         "Name[es]": "Motor para documento de Plucker", 
+        "Name[fr]": "Moteur de document Plucker", 
         "Name[it]": "Backend per documenti Plucker", 
         "Name[nl]": "Plucker Document-backend", 
         "Name[nn]": "Plucker-dokumentmotor", 
@@ -47,6 +50,7 @@
         "Name[sv]": "Plucker-dokumentgränssnitt", 
         "Name[uk]": "Модуль документів Plucker", 
         "Name[x-test]": "xxPlucker Document Backendxx", 
+        "Name[zh_TW]": "Pluker 文件後端介面", 
         "ServiceTypes": [
             "okular/Generator"
         ], 

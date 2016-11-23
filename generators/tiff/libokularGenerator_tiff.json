@@ -16,6 +16,7 @@
         "Description[ca]": "Un dorsal pel TIFF", 
         "Description[de]": "Ein Anzeigemodul für TIFF", 
         "Description[es]": "Un motor para TIFF", 
+        "Description[fr]": "Un moteur TIFF", 
         "Description[it]": "Un backend per TIFF", 
         "Description[nl]": "Een TIFF-backend", 
         "Description[nn]": "Ein TIFF-motor", 
@@ -26,6 +27,7 @@
         "Description[sv]": "Ett TIFF-gränssnitt", 
         "Description[uk]": "Програма для TIFF", 
         "Description[x-test]": "xxA TIFF backendxx", 
+        "Description[zh_TW]": "TIFF 後端介面", 
         "Id": "okular_tiff", 
         "License": "GPL", 
         "MimeTypes": [
@@ -36,6 +38,7 @@
         "Name[ca]": "Dorsal TIFF", 
         "Name[de]": "Anzeigemodul für TIFF", 
         "Name[es]": "Motor para TIFF", 
+        "Name[fr]": "Moteur TIFF", 
         "Name[it]": "Backend TIFF", 
         "Name[nl]": "TIFF-backend", 
         "Name[nn]": "TIFF-motor", 
@@ -45,6 +48,7 @@
         "Name[sv]": "TIFF-gränssnitt", 
         "Name[uk]": "Модуль TIFF", 
         "Name[x-test]": "xxTIFF Backendxx", 
+        "Name[zh_TW]": "TIFF 後端介面", 
         "ServiceTypes": [
             "okular/Generator"
         ], 

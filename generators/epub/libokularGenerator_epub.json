@@ -15,6 +15,7 @@
         "Description[ca]": "Un dorsal per l'EPub", 
         "Description[de]": "Ein Anzeigemodul für EPUB", 
         "Description[es]": "Un motor para EPub", 
+        "Description[fr]": "Un moteur EPub", 
         "Description[it]": "Backend EPub", 
         "Description[nl]": "Een EPub-backend", 
         "Description[nn]": "Ein EPUB-motor", 
@@ -25,6 +26,7 @@
         "Description[sv]": "Ett Epub-gränssnitt", 
         "Description[uk]": "Сервер EPub", 
         "Description[x-test]": "xxAn EPub backendxx", 
+        "Description[zh_TW]": "EPub 後端介面", 
         "Id": "okular_epub", 
         "License": "GPL", 
         "MimeTypes": [
@@ -35,6 +37,7 @@
         "Name[ca]": "Dorsal EPub", 
         "Name[de]": "Anzeigemodul für EPUB", 
         "Name[es]": "Motor para EPub", 
+        "Name[fr]": "Moteur EPub", 
         "Name[it]": "Backend EPub", 
         "Name[nl]": "EPub-backend", 
         "Name[nn]": "EPUB-motor", 
@@ -44,6 +47,7 @@
         "Name[sv]": "Epub-gränssnitt", 
         "Name[uk]": "Модуль EPub", 
         "Name[x-test]": "xxEPub Backendxx", 
+        "Name[zh_TW]": "EPub 後端介面", 
         "ServiceTypes": [
             "okular/Generator"
         ], 

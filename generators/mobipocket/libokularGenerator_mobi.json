@@ -16,6 +16,7 @@
         "Description[ca]": "Un dorsal pel Mobipocket", 
         "Description[de]": "Ein Anzeigemodul für Mobipocket-Dateien", 
         "Description[es]": "Un motor para mobipocket", 
+        "Description[fr]": "Un moteur Mobipocket", 
         "Description[it]": "Un backend per mobipocket", 
         "Description[nl]": "Een mobipocket-backend", 
         "Description[nn]": "Ein Mobipocket-motor", 
@@ -26,6 +27,7 @@
         "Description[sv]": "Ett Mobipocket-gränssnitt", 
         "Description[uk]": "Сервер mobipocket", 
         "Description[x-test]": "xxA mobipocket backendxx", 
+        "Description[zh_TW]": "Mobipocket 後端介面", 
         "Id": "okular_mobi", 
         "License": "GPL", 
         "MimeTypes": [
@@ -36,6 +38,7 @@
         "Name[ca]": "Dorsal del Mobipocket", 
         "Name[de]": "Anzeigemodul für Mobipocket-Dateien", 
         "Name[es]": "Motor para Mobipocket", 
+        "Name[fr]": "Moteur Mobipocket", 
         "Name[it]": "Backend Mobipocket", 
         "Name[nl]": "Mobipocket-backend", 
         "Name[nn]": "Mobipocket-motor", 
@@ -45,6 +48,7 @@
         "Name[sv]": "Mobipocket-gränssnitt", 
         "Name[uk]": "Модуль Mobipocket", 
         "Name[x-test]": "xxMobipocket Backendxx", 
+        "Name[zh_TW]": "Mobipocket 後端介面", 
         "ServiceTypes": [
             "okular/Generator"
         ], 

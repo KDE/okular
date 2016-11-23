@@ -27,6 +27,7 @@
         "Description[sv]": "Ett återgivningsprogram för PDF-filer", 
         "Description[uk]": "Програма для показу файлів PDF", 
         "Description[x-test]": "xxA PDF file rendererxx", 
+        "Description[zh_TW]": "PDF 檔成像器", 
         "Id": "okular_poppler", 
         "License": "GPL", 
         "MimeTypes": [
@@ -49,6 +50,7 @@
         "Name[sv]": "PDF-gränssnitt", 
         "Name[uk]": "Модуль PDF", 
         "Name[x-test]": "xxPDF Backendxx", 
+        "Name[zh_TW]": "PDF 後端介面", 
         "ServiceTypes": [
             "okular/Generator"
         ], 

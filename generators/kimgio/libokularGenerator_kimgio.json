@@ -39,6 +39,7 @@
         "Description[sv]": "Ett enkelt bildgränssnitt", 
         "Description[uk]": "Проста програма для зображень", 
         "Description[x-test]": "xxA simple image backendxx", 
+        "Description[zh_TW]": "簡易的圖片後端介面", 
         "Id": "okular_kimgio", 
         "License": "GPL", 
         "MimeTypes": [
@@ -81,6 +82,7 @@
         "Name[sv]": "Bildgränssnitt", 
         "Name[uk]": "Модуль зображень", 
         "Name[x-test]": "xxImage Backendxx", 
+        "Name[zh_TW]": "圖片後端介面", 
         "ServiceTypes": [
             "okular/Generator"
         ], 

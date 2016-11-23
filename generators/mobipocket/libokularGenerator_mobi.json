@@ -27,6 +27,7 @@
         "Description[sv]": "Ett Mobipocket-gränssnitt", 
         "Description[uk]": "Сервер mobipocket", 
         "Description[x-test]": "xxA mobipocket backendxx", 
+        "Description[zh_TW]": "Mobipocket 後端介面", 
         "Id": "okular_mobi", 
         "License": "GPL", 
         "MimeTypes": [
@@ -47,6 +48,7 @@
         "Name[sv]": "Mobipocket-gränssnitt", 
         "Name[uk]": "Модуль Mobipocket", 
         "Name[x-test]": "xxMobipocket Backendxx", 
+        "Name[zh_TW]": "Mobipocket 後端介面", 
         "ServiceTypes": [
             "okular/Generator"
         ], 

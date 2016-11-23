@@ -28,6 +28,7 @@
         "Description[sv]": "Ett återgivningsprogram för diverse format för serieböcker", 
         "Description[uk]": "Програма для відображення коміксів у різних форматах", 
         "Description[x-test]": "xxA renderer for various comic book formatsxx", 
+        "Description[zh_TW]": "多種漫畫書的成像器", 
         "Id": "okular_comicbook", 
         "License": "GPL", 
         "MimeTypes": [
@@ -52,6 +53,7 @@
         "Name[sv]": "Comic Book-gränssnitt", 
         "Name[uk]": "Модуль коміксів", 
         "Name[x-test]": "xxComicBook Backendxx", 
+        "Name[zh_TW]": "ComicBook 後端介面", 
         "ServiceTypes": [
             "okular/Generator"
         ], 

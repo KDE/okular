@@ -26,6 +26,7 @@
         "Description[sv]": "Ett återgivningsprogram för DVI-filer", 
         "Description[uk]": "Інструмент для показу файлів DVI", 
         "Description[x-test]": "xxA DVI file rendererxx", 
+        "Description[zh_TW]": "DVI 檔成像器", 
         "Id": "okular_dvi", 
         "License": "GPL", 
         "MimeTypes": [
@@ -46,6 +47,7 @@
         "Name[sv]": "DVI-gränssnitt", 
         "Name[uk]": "Модуль DVI", 
         "Name[x-test]": "xxDVI Backendxx", 
+        "Name[zh_TW]": "DVI 後端介面", 
         "ServiceTypes": [
             "okular/Generator"
         ], 

@@ -28,6 +28,7 @@
         "Description[sv]": "Ett återgivningsprogram för OpenDocument-textdokument", 
         "Description[uk]": "Модуль для показу текстових документів OpenDocument", 
         "Description[x-test]": "xxA renderer for OpenDocument Text documentsxx", 
+        "Description[zh_TW]": "OpenDocument 文字檔成像器", 
         "Id": "okular_ooo", 
         "License": "GPL", 
         "MimeTypes": [
@@ -49,6 +50,7 @@
         "Name[sv]": "OpenDocument-textgränssnitt", 
         "Name[uk]": "Модуль текстових документів OpenDocument", 
         "Name[x-test]": "xxOpenDocument Text Backendxx", 
+        "Name[zh_TW]": "OpenDocument 文字檔後端介面", 
         "ServiceTypes": [
             "okular/Generator"
         ], 

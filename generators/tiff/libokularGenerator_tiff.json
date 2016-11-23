@@ -27,6 +27,7 @@
         "Description[sv]": "Ett TIFF-gränssnitt", 
         "Description[uk]": "Програма для TIFF", 
         "Description[x-test]": "xxA TIFF backendxx", 
+        "Description[zh_TW]": "TIFF 後端介面", 
         "Id": "okular_tiff", 
         "License": "GPL", 
         "MimeTypes": [
@@ -47,6 +48,7 @@
         "Name[sv]": "TIFF-gränssnitt", 
         "Name[uk]": "Модуль TIFF", 
         "Name[x-test]": "xxTIFF Backendxx", 
+        "Name[zh_TW]": "TIFF 後端介面", 
         "ServiceTypes": [
             "okular/Generator"
         ], 

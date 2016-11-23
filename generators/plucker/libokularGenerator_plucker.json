@@ -28,6 +28,7 @@
         "Description[sv]": "Ett återgivningsprogram för Plucker e-böcker", 
         "Description[uk]": "Програма для відображення ел. книг Plucker", 
         "Description[x-test]": "xxA renderer for Plucker eBooksxx", 
+        "Description[zh_TW]": "Plucker 電子書成像器", 
         "Id": "okular_plucker", 
         "License": "GPL", 
         "MimeTypes": [
@@ -49,6 +50,7 @@
         "Name[sv]": "Plucker-dokumentgränssnitt", 
         "Name[uk]": "Модуль документів Plucker", 
         "Name[x-test]": "xxPlucker Document Backendxx", 
+        "Name[zh_TW]": "Pluker 文件後端介面", 
         "ServiceTypes": [
             "okular/Generator"
         ], 

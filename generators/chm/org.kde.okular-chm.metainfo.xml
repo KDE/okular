@@ -18,6 +18,7 @@
   <name xml:lang="sv">CHM-dokument</name>
   <name xml:lang="uk">документи CHM</name>
   <name xml:lang="x-test">xxCHM Documentsxx</name>
+  <name xml:lang="zh-TW">CHM 文件</name>
   <summary>Adds support for reading CHM documents</summary>
   <summary xml:lang="ca">Afegeix la implementació per llegir documents CHM</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per llegir documents CHM</summary>
@@ -32,6 +33,7 @@
   <summary xml:lang="sv">Lägger till stöd för att läsa CHM-dokument</summary>
   <summary xml:lang="uk">Додає підтримку читання документів CHM</summary>
   <summary xml:lang="x-test">xxAdds support for reading CHM documentsxx</summary>
+  <summary xml:lang="zh-TW">加入對讀取 CHM 文件的支援</summary>
   <mimetypes>
     <mimetype>application/x-chm</mimetype>
   </mimetypes>

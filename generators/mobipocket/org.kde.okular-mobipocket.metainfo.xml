@@ -18,6 +18,7 @@
   <name xml:lang="sv">Mobipocket</name>
   <name xml:lang="uk">Mobipocket</name>
   <name xml:lang="x-test">xxMobipocketxx</name>
+  <name xml:lang="zh-TW">Mobipocket</name>
   <summary>Adds support for reading Mobipocket E-books</summary>
   <summary xml:lang="ca">Afegeix la implementació per llegir llibres electrònics Mobipocket</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per llegir llibres electrònics Mobipocket</summary>
@@ -32,6 +33,7 @@
   <summary xml:lang="sv">Lägger till stöd för att läsa Mobipocket e-böcker</summary>
   <summary xml:lang="uk">Додає підтримку читання електронних книг у форматі Mobipocket</summary>
   <summary xml:lang="x-test">xxAdds support for reading Mobipocket E-booksxx</summary>
+  <summary xml:lang="zh-TW">加入讀取 Mobipocket 電子書的支援</summary>
   <mimetypes>
     <mimetype>image/bmp</mimetype>
     <mimetype>image/x-dds</mimetype>

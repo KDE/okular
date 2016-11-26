@@ -41,6 +41,7 @@ class QIcon;
 
 namespace Okular {
 
+class BackendOpaqueAction;
 class DocumentFonts;
 class DocumentInfo;
 class DocumentObserver;
@@ -439,6 +440,11 @@ class OKULARCORE_EXPORT Generator : public QObject
          * @since 0.24
          */
         virtual QAbstractItemModel * layersModel() const;
+
+        /**
+         * Calls the backend to execute an BackendOpaqueAction
+         */
+        virtual void opaqueAction( const BackendOpaqueAction *action );
 
     Q_SIGNALS:
         /**

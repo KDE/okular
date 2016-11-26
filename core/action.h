@@ -54,7 +54,8 @@ class OKULARCORE_EXPORT Action
             Sound,      ///< Play a sound
             Movie,      ///< Play a movie
             Script,     ///< Executes a Script code
-            Rendition   ///< Play a movie and/or execute a Script code @since 0.16 (KDE 4.10)
+            Rendition,  ///< Play a movie and/or execute a Script code @since 0.16 (KDE 4.10)
+            BackendOpaque ///< Calls back to the backend with the action @since 1.1
         };
 
         /**
@@ -560,6 +561,20 @@ class OKULARCORE_EXPORT RenditionAction : public Action
     private:
         Q_DECLARE_PRIVATE( RenditionAction )
         Q_DISABLE_COPY( RenditionAction )
+};
+
+class OKULARCORE_EXPORT BackendOpaqueAction : public Action
+{
+    public:
+        BackendOpaqueAction();
+
+        /**
+         * Returns the action type.
+         */
+        ActionType actionType() const;
+
+    private:
+        Q_DISABLE_COPY( BackendOpaqueAction )
 };
 
 }

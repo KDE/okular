@@ -853,6 +853,17 @@ QAbstractItemModel* PDFGenerator::layersModel() const
     return pdfdoc->hasOptionalContent() ? pdfdoc->optionalContentModel() : NULL;
 }
 
+void PDFGenerator::opaqueAction( const Okular::BackendOpaqueAction *action )
+{
+#ifdef HAVE_POPPLER_0_50
+a
+    const Poppler::LinkOCGState *popplerLink = action->nativeId().value<const Poppler::LinkOCGState *>();
+    pdfdoc->optionalContentModel()->applyLink( const_cast< Poppler::LinkOCGState* >( popplerLink ) );
+#else
+    (void)action;
+#endif
+}
+
 bool PDFGenerator::isAllowed( Okular::Permission permission ) const
 {
     bool b = true;

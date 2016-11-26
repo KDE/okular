@@ -3970,6 +3970,10 @@ void Document::processAction( const Action * action )
 
             emit processRenditionAction( static_cast< const RenditionAction * >( action ) );
             } break;
+        case Action::BackendOpaque: {
+            d->m_generator->opaqueAction( static_cast< const BackendOpaqueAction * >( action ) );
+            } break;
+
     }
 }
 

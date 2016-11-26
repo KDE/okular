@@ -558,3 +558,13 @@ ScreenAnnotation* RenditionAction::annotation() const
     Q_D( const Okular::RenditionAction );
     return d->m_annotation;
 }
+
+BackendOpaqueAction::BackendOpaqueAction()
+    : Action( *new ActionPrivate() )
+{
+}
+
+Action::ActionType BackendOpaqueAction::actionType() const
+{
+    return BackendOpaque;
+}

@@ -16,6 +16,17 @@ if (Poppler_VERSION VERSION_GREATER "0.36.99")
   set (HAVE_POPPLER_0_37 1)
 endif()
 
+set(CMAKE_REQUIRED_LIBRARIES Poppler::Qt5 Qt5::Core)
+
+check_cxx_source_compiles("
+#include <poppler-qt5.h>
+int main()
+{
+  Poppler::LinkOCGState *l = 0;
+  return 0;
+}
+" HAVE_POPPLER_0_50)
+
 configure_file(
    ${CMAKE_CURRENT_SOURCE_DIR}/config-okular-poppler.h.cmake
    ${CMAKE_CURRENT_BINARY_DIR}/config-okular-poppler.h

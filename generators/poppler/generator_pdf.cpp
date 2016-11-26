@@ -856,7 +856,6 @@ QAbstractItemModel* PDFGenerator::layersModel() const
 void PDFGenerator::opaqueAction( const Okular::BackendOpaqueAction *action )
 {
 #ifdef HAVE_POPPLER_0_50
-a
     const Poppler::LinkOCGState *popplerLink = action->nativeId().value<const Poppler::LinkOCGState *>();
     pdfdoc->optionalContentModel()->applyLink( const_cast< Poppler::LinkOCGState* >( popplerLink ) );
 #else

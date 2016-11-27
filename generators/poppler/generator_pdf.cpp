@@ -59,7 +59,9 @@ Q_DECLARE_METATYPE(Poppler::Annotation*)
 Q_DECLARE_METATYPE(Poppler::FontInfo)
 Q_DECLARE_METATYPE(const Poppler::LinkMovie*)
 Q_DECLARE_METATYPE(const Poppler::LinkRendition*)
+#ifdef HAVE_POPPLER_0_50
 Q_DECLARE_METATYPE(const Poppler::LinkOCGState*)
+#endif
 
 static const int defaultPageWidth = 595;
 static const int defaultPageHeight = 842;

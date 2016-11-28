@@ -9,6 +9,7 @@
   <name xml:lang="ca-valencia">Imatges</name>
   <name xml:lang="en-GB">Images</name>
   <name xml:lang="es">Imágenes</name>
+  <name xml:lang="fi">Kuvat</name>
   <name xml:lang="it">Immagini</name>
   <name xml:lang="nl">Afbeeldingen</name>
   <name xml:lang="nn">Bilete</name>
@@ -24,6 +25,7 @@
   <summary xml:lang="ca-valencia">Afig la implementació per llegir molts formats d'imatges</summary>
   <summary xml:lang="en-GB">Adds support for reading many image formats</summary>
   <summary xml:lang="es">Permite la lectura de diversos formatos de imagen</summary>
+  <summary xml:lang="fi">Lisää monien kuvatiedostomuotojen lukutuen</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di vari formati di immagini</summary>
   <summary xml:lang="nl">Ondersteuning toevoegen om vele afbeeldingsformaten te lezen</summary>
   <summary xml:lang="nn">Legg til støtte for å lesa mange ulike biletformat</summary>

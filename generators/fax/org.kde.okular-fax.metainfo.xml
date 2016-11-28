@@ -9,6 +9,7 @@
   <name xml:lang="ca-valencia">Fax</name>
   <name xml:lang="en-GB">Fax</name>
   <name xml:lang="es">Fax</name>
+  <name xml:lang="fi">Faksi</name>
   <name xml:lang="it">Fax</name>
   <name xml:lang="nl">Fax</name>
   <name xml:lang="nn">Faks</name>
@@ -24,6 +25,7 @@
   <summary xml:lang="ca-valencia">Afig la implementació per llegir documents de Fax</summary>
   <summary xml:lang="en-GB">Adds support for reading Fax documents</summary>
   <summary xml:lang="es">Permite la lectura de documentos de fax</summary>
+  <summary xml:lang="fi">Lisää faksitiedostojen lukutuen</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti Fax</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van faxdocumenten toe</summary>
   <summary xml:lang="nn">Legg til støtte for å lesa faksdokument</summary>

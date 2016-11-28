@@ -9,6 +9,7 @@
   <name xml:lang="ca-valencia">TIFF</name>
   <name xml:lang="en-GB">Tiff</name>
   <name xml:lang="es">Tiff</name>
+  <name xml:lang="fi">TIFF</name>
   <name xml:lang="it">Tiff</name>
   <name xml:lang="nl">Tiff</name>
   <name xml:lang="nn">TIFF</name>
@@ -24,6 +25,7 @@
   <summary xml:lang="ca-valencia">Afig la implementació per llegir documents TIFF</summary>
   <summary xml:lang="en-GB">Adds support for reading Tiff documents</summary>
   <summary xml:lang="es">Permite la lectura de documentos Tiff</summary>
+  <summary xml:lang="fi">Lisää TIFF-kuvatiedostojen lukutuen</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti Tiff</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van Tiff-documenten toe</summary>
   <summary xml:lang="nn">Legg til støtte for å lesa TIFF-dokument</summary>

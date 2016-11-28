@@ -9,6 +9,7 @@
   <name xml:lang="ca-valencia">EPub</name>
   <name xml:lang="en-GB">EPub</name>
   <name xml:lang="es">EPub</name>
+  <name xml:lang="fi">EPub</name>
   <name xml:lang="it">EPub</name>
   <name xml:lang="nl">EPub</name>
   <name xml:lang="nn">EPUB</name>
@@ -24,6 +25,7 @@
   <summary xml:lang="ca-valencia">Afig la implementació per llegir llibres electrònics</summary>
   <summary xml:lang="en-GB">Adds support for reading E-Books</summary>
   <summary xml:lang="es">Permite la lectura de libros electrónicos</summary>
+  <summary xml:lang="fi">Lisää e-kirjojen lukutuen</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di libri digitali in formato EPub</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van e-boeken toe</summary>
   <summary xml:lang="nn">Legg til støtte for å lesa e-bøker i EPUB-formatet</summary>

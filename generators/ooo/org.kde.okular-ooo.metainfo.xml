@@ -9,6 +9,7 @@
   <name xml:lang="ca-valencia">OpenDocument</name>
   <name xml:lang="en-GB">OpenDocument</name>
   <name xml:lang="es">OpenDocument</name>
+  <name xml:lang="fi">OpenDocument</name>
   <name xml:lang="it">OpenDocument</name>
   <name xml:lang="nl">OpenDocument</name>
   <name xml:lang="nn">OpenDocument</name>
@@ -23,6 +24,7 @@
   <summary xml:lang="ca">Afegeix la implementació per llegir fitxers de text OpenDocument</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per llegir fitxers de text OpenDocument</summary>
   <summary xml:lang="es">Permite la lectura de archivos de texto en formato OpenDocument</summary>
+  <summary xml:lang="fi">Lisää OpenDocument-tekstitiedostojen lukutuen</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti di testo OpenDocument</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van OpenDocument tekstbestanden toe</summary>
   <summary xml:lang="nn">Legg til støtte for å lesa tekstfiler i OpenDocument-formatet</summary>

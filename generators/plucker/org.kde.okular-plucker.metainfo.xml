@@ -9,6 +9,7 @@
   <name xml:lang="ca-valencia">Plucker</name>
   <name xml:lang="en-GB">Plucker</name>
   <name xml:lang="es">Plucker</name>
+  <name xml:lang="fi">Plucker</name>
   <name xml:lang="it">Plucker</name>
   <name xml:lang="nl">Plucker</name>
   <name xml:lang="nn">Plucker</name>
@@ -22,6 +23,7 @@
   <summary xml:lang="ca">Afegeix la implementació per llegir documents Plucker</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per llegir documents Plucker</summary>
   <summary xml:lang="es">Permite la lectura de documentos en formato Plucker</summary>
+  <summary xml:lang="fi">Lisää Plucker-tiedostojen lukutuen</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti Plucker</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van Plucker-documenten toe</summary>
   <summary xml:lang="nn">Legg til støtte for å lesa Plucker-dokument</summary>

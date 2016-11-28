@@ -19,6 +19,7 @@
             }
         ], 
         "Copyright": "© 2005, 2009 Albert Astals Cid\n© 2006-2007 Pino Toscano\n© 2006-2007 Tobias Koenig", 
+        "Copyright[fi]": "© 2005, 2009 Albert Astals Cid\n© 2006–2007 Pino Toscano\n© 2006–2007 Tobias Koenig", 
         "Copyright[nn]": "© 2005, 2009 Albert Astals Cid\n© 2006–2007 Pino Toscano\n© 2006–2007 Tobias Koenig", 
         "Copyright[sv]": "© 2005,2009 Albert Astals Cid\n© 2006-2007 Pino Toscano\n© 2006-2007 Tobias Koenig", 
         "Copyright[uk]": "© Albert Astals Cid, 2005, 2009 \n© Pino Toscano, 2006–2007\n© Tobias Koenig, 2006–2007", 
@@ -28,6 +29,7 @@
         "Description[ca]": "Un dorsal d'imatges senzill", 
         "Description[de]": "Ein einfaches Anzeigemodul für Bilder", 
         "Description[es]": "Un sencillo motor para imágenes", 
+        "Description[fi]": "Yksinkertainen kuvataustaosa", 
         "Description[fr]": "Un moteur simple pour image", 
         "Description[it]": "Un semplice backend per le immagini", 
         "Description[nl]": "Een eenvoudige afbeeldingsbackend", 
@@ -71,6 +73,7 @@
         "Name[ca]": "Dorsal d'imatges", 
         "Name[de]": "Anzeigemodul für Bilder", 
         "Name[es]": "Motor para imágenes", 
+        "Name[fi]": "Kuvataustaosa", 
         "Name[fr]": "Moteur image", 
         "Name[it]": "Backend immagini", 
         "Name[nl]": "Afbeeldings-backend", 

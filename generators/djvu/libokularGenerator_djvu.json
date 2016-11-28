@@ -8,6 +8,7 @@
             }
         ], 
         "Copyright": "© 2006-2008 Pino Toscano", 
+        "Copyright[fi]": "© 2006–2008 Pino Toscano", 
         "Copyright[nn]": "© 2006–2008 Pino Toscano", 
         "Copyright[uk]": "© Pino Toscano, 2006–2008", 
         "Copyright[x-test]": "xx© 2006-2008 Pino Toscanoxx", 
@@ -16,6 +17,7 @@
         "Description[ca]": "Dorsal pel DjVu basat en el DjVuLibre", 
         "Description[de]": "Anzeigemodul für DjVu auf der Basis von DjVuLibre", 
         "Description[es]": "Motor DjVu basado en DjVuLibre", 
+        "Description[fi]": "DjVuLibreen perustuva DjVu-taustaosa", 
         "Description[fr]": "Moteur DjVu utilisant DjVuLibre", 
         "Description[it]": "Backend DjVu basato su DjVuLibre", 
         "Description[nl]": "DjVu-backend gebaseerd op DjVuLibre", 
@@ -38,6 +40,7 @@
         "Name[ca]": "Dorsal DjVu", 
         "Name[de]": "Anzeigemodul für DjVu", 
         "Name[es]": "Motor para DjVu", 
+        "Name[fi]": "DjVu-taustaosa", 
         "Name[fr]": "Moteur DjVu", 
         "Name[it]": "Backend DjVu", 
         "Name[nl]": "DjVu-backend", 

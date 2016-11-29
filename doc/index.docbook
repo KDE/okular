@@ -1712,36 +1712,12 @@ Context menu actions like Rename Bookmarks etc.)
 			</variablelist>
 		</sect1>
 
-		<sect1 id="settings-menu">
-			<title>The Settings Menu</title>
+		<sect1 id="settings-help-menu">
+			<title>The Settings and Help Menu</title>
+			<para>Apart from the common &kde; <guimenu>Settings</guimenu> and <guimenu>Help</guimenu> menus described
+			in the <ulink url="help:/fundamentals/ui.html#menus">Menu</ulink> chapter of the &kde; Fundamentals documentation
+			&okular; has these application specific menu entries:</para>
 			<variablelist>
-				<varlistentry>
-					<term>
-						<menuchoice>
-							<shortcut><keycombo action="simul">&Ctrl;<keycap>M</keycap></keycombo></shortcut>
-							<guimenu>Settings</guimenu>
-							<guimenuitem>Show Menubar</guimenuitem>
-						</menuchoice>
-					</term>
-					<listitem>
-						<para><action>Toggle the Menubar display</action> on and off. Once
-						hidden it can be made visible using the shortcut
-                                                <keycombo action="simul">&Ctrl;<keycap>M</keycap></keycombo> again.
-     						If the menubar is hidden, the context menu opened with a right mouse button
-						click anywhere in the view area has an extra entry <guimenuitem>Show Menubar</guimenuitem>.</para>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
-					<term>
-						<menuchoice>
-							<guimenu>Settings</guimenu>
-							<guimenuitem>Show Toolbar</guimenuitem>
-						</menuchoice>
-					</term>
-					<listitem>
-						<para><action>Toggle the Toolbar display</action> on and off.</para>
-					</listitem>
-				</varlistentry>
 				<varlistentry>
 					<term>
 						<menuchoice>
@@ -1785,30 +1761,6 @@ Context menu actions like Rename Bookmarks etc.)
 					<term>
 						<menuchoice>
 							<guimenu>Settings</guimenu>
-							<guimenuitem>Configure Shortcuts...</guimenuitem>
-						</menuchoice>
-					</term>
-					<listitem>
-						<para>Opens a window that lets you <action>configure the keyboard
-							shortcuts</action> for many menu commands.</para>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
-					<term>
-						<menuchoice>
-							<guimenu>Settings</guimenu>
-							<guimenuitem>Configure Toolbars...</guimenuitem>
-						</menuchoice>
-					</term>
-					<listitem>
-						<para>Opens a window that lets you choose which icons are visible
-							in the toolbar.</para>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
-					<term>
-						<menuchoice>
-							<guimenu>Settings</guimenu>
 							<guimenuitem>Configure Backends...</guimenuitem>
 						</menuchoice>
 					</term>
@@ -1817,24 +1769,7 @@ Context menu actions like Rename Bookmarks etc.)
 							window.</para>
 					</listitem>
 				</varlistentry>
-				<varlistentry>
-					<term>
-						<menuchoice>
-							<guimenu>Settings</guimenu>
-							<guimenuitem>Configure &okular;...</guimenuitem>
-						</menuchoice>
-					</term>
-					<listitem>
-						<para>Opens the <link linkend="configure">Configure</link>
-							window.</para>
-					</listitem>
-				</varlistentry>
-
 			</variablelist>
-		</sect1>
-		<sect1 id="menuhelp">
-			<title>The Help Menu</title>
-			&help.menu.documentation;
 		</sect1>
 
 	</chapter>

@@ -16,6 +16,10 @@
   <name xml:lang="pt">Plucker</name>
   <name xml:lang="sk">Plucker</name>
   <name xml:lang="sl">Plucker</name>
+  <name xml:lang="sr">Плакер</name>
+  <name xml:lang="sr-Latn">Plucker</name>
+  <name xml:lang="sr-ijekavian">Плакер</name>
+  <name xml:lang="sr-ijekavianlatin">Plucker</name>
   <name xml:lang="uk">Plucker</name>
   <name xml:lang="x-test">xxPluckerxx</name>
   <name xml:lang="zh-TW">Plucker</name>
@@ -30,6 +34,10 @@
   <summary xml:lang="pt">Adiciona o suporte para ler documentos do Plucker</summary>
   <summary xml:lang="sk">Pridá podporu pre čítanie dokumentov Plucker</summary>
   <summary xml:lang="sl">Doda podporo za branje dokumentov Plucker</summary>
+  <summary xml:lang="sr">Подршка за читање плакер докумената</summary>
+  <summary xml:lang="sr-Latn">Podrška za čitanje Plucker dokumenata</summary>
+  <summary xml:lang="sr-ijekavian">Подршка за читање плакер докумената</summary>
+  <summary xml:lang="sr-ijekavianlatin">Podrška za čitanje Plucker dokumenata</summary>
   <summary xml:lang="uk">Додає підтримку читання документів Plucker</summary>
   <summary xml:lang="x-test">xxAdds support for reading Plucker documentsxx</summary>
   <summary xml:lang="zh-TW">加入讀取 Plucker 文件的支援</summary>

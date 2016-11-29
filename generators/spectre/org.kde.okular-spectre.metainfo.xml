@@ -16,6 +16,10 @@
   <name xml:lang="pt">PostScript</name>
   <name xml:lang="sk">PostScript</name>
   <name xml:lang="sl">PostScript</name>
+  <name xml:lang="sr">Постскрипт</name>
+  <name xml:lang="sr-Latn">PostScript</name>
+  <name xml:lang="sr-ijekavian">Постскрипт</name>
+  <name xml:lang="sr-ijekavianlatin">PostScript</name>
   <name xml:lang="uk">PostScript</name>
   <name xml:lang="x-test">xxPostScriptxx</name>
   <name xml:lang="zh-TW">PostScript</name>
@@ -31,6 +35,10 @@
   <summary xml:lang="pt">Adiciona o suporte para ler documentos em PostScript</summary>
   <summary xml:lang="sk">Pridá podporu pre čítanie dokumentov PostScript</summary>
   <summary xml:lang="sl">Doda podporo za branje dokumentov PostScript</summary>
+  <summary xml:lang="sr">Подршка за читање постскрипт докумената</summary>
+  <summary xml:lang="sr-Latn">Podrška za čitanje PostScript dokumenata</summary>
+  <summary xml:lang="sr-ijekavian">Подршка за читање постскрипт докумената</summary>
+  <summary xml:lang="sr-ijekavianlatin">Podrška za čitanje PostScript dokumenata</summary>
   <summary xml:lang="uk">Додає підтримку читання документів PostScript</summary>
   <summary xml:lang="x-test">xxAdds support for reading PostScript documentsxx</summary>
   <summary xml:lang="zh-TW">加入讀取 PostScript 文件的支援</summary>

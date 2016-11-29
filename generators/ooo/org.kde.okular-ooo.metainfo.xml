@@ -16,6 +16,10 @@
   <name xml:lang="pt">OpenDocument</name>
   <name xml:lang="sk">OpenDocument</name>
   <name xml:lang="sl">OpenDocument</name>
+  <name xml:lang="sr">Отворени документ</name>
+  <name xml:lang="sr-Latn">Otvoreni dokument</name>
+  <name xml:lang="sr-ijekavian">Отворени документ</name>
+  <name xml:lang="sr-ijekavianlatin">Otvoreni dokument</name>
   <name xml:lang="uk">OpenDocument</name>
   <name xml:lang="x-test">xxOpenDocumentxx</name>
   <name xml:lang="zh-TW">OpenDocument</name>
@@ -30,6 +34,10 @@
   <summary xml:lang="pt">Adiciona o suporte para ler documentos de texto em OpenDocument</summary>
   <summary xml:lang="sk">Pridá podporu pre čítanie textových súborov OpenDocument</summary>
   <summary xml:lang="sl">Doda podporo za branje besedilnih datotek OpenDocument</summary>
+  <summary xml:lang="sr">Подршка за читање отворенодокументских текстуалних фајлова</summary>
+  <summary xml:lang="sr-Latn">Podrška za čitanje otvorenodokumentskih tekstualnih fajlova</summary>
+  <summary xml:lang="sr-ijekavian">Подршка за читање отворенодокументских текстуалних фајлова</summary>
+  <summary xml:lang="sr-ijekavianlatin">Podrška za čitanje otvorenodokumentskih tekstualnih fajlova</summary>
   <summary xml:lang="uk">Додає підтримку читання текстових документів OpenDocument</summary>
   <summary xml:lang="x-test">xxAdds support for reading OpenDocument text filesxx</summary>
   <summary xml:lang="zh-TW">加入讀取 OpenDocument 文字檔的支援</summary>

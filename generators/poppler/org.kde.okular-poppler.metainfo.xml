@@ -16,6 +16,10 @@
   <name xml:lang="pt">PDF</name>
   <name xml:lang="sk">PDF</name>
   <name xml:lang="sl">PDF</name>
+  <name xml:lang="sr">ПДФ</name>
+  <name xml:lang="sr-Latn">PDF</name>
+  <name xml:lang="sr-ijekavian">ПДФ</name>
+  <name xml:lang="sr-ijekavianlatin">PDF</name>
   <name xml:lang="uk">PDF</name>
   <name xml:lang="x-test">xxPDFxx</name>
   <name xml:lang="zh-TW">PDF</name>
@@ -31,6 +35,10 @@
   <summary xml:lang="pt">Adiciona o suporte para ler documentos em PDF</summary>
   <summary xml:lang="sk">Pridá podporu pre čítanie PDF dokumentov</summary>
   <summary xml:lang="sl">Doda podporo za branje dokumentov PDF</summary>
+  <summary xml:lang="sr">Подршка за читање ПДФ докумената</summary>
+  <summary xml:lang="sr-Latn">Podrška za čitanje PDF dokumenata</summary>
+  <summary xml:lang="sr-ijekavian">Подршка за читање ПДФ докумената</summary>
+  <summary xml:lang="sr-ijekavianlatin">Podrška za čitanje PDF dokumenata</summary>
   <summary xml:lang="uk">Додає підтримку читання документів PDF</summary>
   <summary xml:lang="x-test">xxAdds support for reading PDF documentsxx</summary>
   <summary xml:lang="zh-TW">加入讀取 PDF 文件的支援</summary>

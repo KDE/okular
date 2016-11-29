@@ -16,6 +16,10 @@
   <name xml:lang="pt">Texto</name>
   <name xml:lang="sk">Text</name>
   <name xml:lang="sl">Besedilo</name>
+  <name xml:lang="sr">Текст</name>
+  <name xml:lang="sr-Latn">Tekst</name>
+  <name xml:lang="sr-ijekavian">Текст</name>
+  <name xml:lang="sr-ijekavianlatin">Tekst</name>
   <name xml:lang="uk">Текст</name>
   <name xml:lang="x-test">xxTextxx</name>
   <name xml:lang="zh-TW">文字</name>
@@ -31,6 +35,10 @@
   <summary xml:lang="pt">Adiciona o suporte para ler documentos em texto simples</summary>
   <summary xml:lang="sk">Pridá podporu pre čítanie čistých textových dokumentov</summary>
   <summary xml:lang="sl">Doda podporo za branje besedilnih dokumentov</summary>
+  <summary xml:lang="sr">Подршка за читање докумената у обичном тексту</summary>
+  <summary xml:lang="sr-Latn">Podrška za čitanje dokumenata u običnom tekstu</summary>
+  <summary xml:lang="sr-ijekavian">Подршка за читање докумената у обичном тексту</summary>
+  <summary xml:lang="sr-ijekavianlatin">Podrška za čitanje dokumenata u običnom tekstu</summary>
   <summary xml:lang="uk">Додає підтримку читання звичайних текстових документів</summary>
   <summary xml:lang="x-test">xxAdds support for reading plain text documentsxx</summary>
   <summary xml:lang="zh-TW">加入讀取純文字文件的支援</summary>

@@ -16,6 +16,10 @@
   <name xml:lang="pt">XPS</name>
   <name xml:lang="sk">XPS</name>
   <name xml:lang="sl">XPS</name>
+  <name xml:lang="sr">ИксПС</name>
+  <name xml:lang="sr-Latn">XPS</name>
+  <name xml:lang="sr-ijekavian">ИксПС</name>
+  <name xml:lang="sr-ijekavianlatin">XPS</name>
   <name xml:lang="uk">XPS</name>
   <name xml:lang="x-test">xxXPSxx</name>
   <name xml:lang="zh-TW">XPS</name>
@@ -31,6 +35,10 @@
   <summary xml:lang="pt">Adiciona o suporte para ler documentos em XPS</summary>
   <summary xml:lang="sk">Pridá podporu pre čítanie XPS dokumentov</summary>
   <summary xml:lang="sl">Doda podporo za branje dokumentov XPS</summary>
+  <summary xml:lang="sr">Подршка за читање ИксПС докумената</summary>
+  <summary xml:lang="sr-Latn">Podrška za čitanje XPS dokumenata</summary>
+  <summary xml:lang="sr-ijekavian">Подршка за читање ИксПС докумената</summary>
+  <summary xml:lang="sr-ijekavianlatin">Podrška za čitanje XPS dokumenata</summary>
   <summary xml:lang="uk">Додає підтримку читання документів XPS</summary>
   <summary xml:lang="x-test">xxAdds support for reading XPS documentsxx</summary>
   <summary xml:lang="zh-TW">加入讀取 XPS 文件的支援</summary>

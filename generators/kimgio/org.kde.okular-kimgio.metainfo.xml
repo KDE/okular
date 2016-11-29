@@ -16,6 +16,10 @@
   <name xml:lang="pt">Imagens</name>
   <name xml:lang="sk">Obrázky</name>
   <name xml:lang="sl">Slike</name>
+  <name xml:lang="sr">Слике</name>
+  <name xml:lang="sr-Latn">Slike</name>
+  <name xml:lang="sr-ijekavian">Слике</name>
+  <name xml:lang="sr-ijekavianlatin">Slike</name>
   <name xml:lang="sv">Bilder</name>
   <name xml:lang="uk">Зображення</name>
   <name xml:lang="x-test">xxImagesxx</name>
@@ -32,6 +36,10 @@
   <summary xml:lang="pt">Adiciona o suporte para ler muitos formatos de imagem</summary>
   <summary xml:lang="sk">Pridá podporu pre čítanie mnohých obrazových formátov</summary>
   <summary xml:lang="sl">Doda podporo za branje številnih slikovnih vrst</summary>
+  <summary xml:lang="sr">Подршка за читање разних формата слика</summary>
+  <summary xml:lang="sr-Latn">Podrška za čitanje raznih formata slika</summary>
+  <summary xml:lang="sr-ijekavian">Подршка за читање разних формата слика</summary>
+  <summary xml:lang="sr-ijekavianlatin">Podrška za čitanje raznih formata slika</summary>
   <summary xml:lang="sv">Lägger till stöd för att läsa många bildformat</summary>
   <summary xml:lang="uk">Додає підтримку читання зображень у багатьох форматах</summary>
   <summary xml:lang="x-test">xxAdds support for reading many image formatsxx</summary>

@@ -16,6 +16,10 @@
   <name xml:lang="pt">EPub</name>
   <name xml:lang="sk">EPub</name>
   <name xml:lang="sl">EPub</name>
+  <name xml:lang="sr">ЕПУБ</name>
+  <name xml:lang="sr-Latn">EPUB</name>
+  <name xml:lang="sr-ijekavian">ЕПУБ</name>
+  <name xml:lang="sr-ijekavianlatin">EPUB</name>
   <name xml:lang="sv">Epub</name>
   <name xml:lang="uk">EPub</name>
   <name xml:lang="x-test">xxEPubxx</name>
@@ -32,6 +36,10 @@
   <summary xml:lang="pt">Adiciona o suporte para a leitura de E-Books</summary>
   <summary xml:lang="sk">Pridá podporu pre čítanie e-kníh</summary>
   <summary xml:lang="sl">Doda podporo za branje e-knjig</summary>
+  <summary xml:lang="sr">Подршка за читање е‑књига</summary>
+  <summary xml:lang="sr-Latn">Podrška za čitanje e‑knjiga</summary>
+  <summary xml:lang="sr-ijekavian">Подршка за читање е‑књига</summary>
+  <summary xml:lang="sr-ijekavianlatin">Podrška za čitanje e‑knjiga</summary>
   <summary xml:lang="sv">Lägger till stöd för att läsa e-böcker</summary>
   <summary xml:lang="uk">Додає підтримку читання електронних книг</summary>
   <summary xml:lang="x-test">xxAdds support for reading E-Booksxx</summary>

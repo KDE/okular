@@ -16,6 +16,10 @@
   <name xml:lang="pt">Documentos DVI</name>
   <name xml:lang="sk">DVI dokumenty</name>
   <name xml:lang="sl">Dokumenti DVI</name>
+  <name xml:lang="sr">ДВИ документи</name>
+  <name xml:lang="sr-Latn">DVI dokumenti</name>
+  <name xml:lang="sr-ijekavian">ДВИ документи</name>
+  <name xml:lang="sr-ijekavianlatin">DVI dokumenti</name>
   <name xml:lang="sv">DVI-dokument</name>
   <name xml:lang="uk">документи DVI</name>
   <name xml:lang="x-test">xxDVI Documentsxx</name>
@@ -32,6 +36,10 @@
   <summary xml:lang="pt">Adiciona o suporte para a leitura de documentos DVI</summary>
   <summary xml:lang="sk">Pridá podporu pre čítanie DVI dokumentov</summary>
   <summary xml:lang="sl">Doda podporo za branje dokumentov DVI</summary>
+  <summary xml:lang="sr">Подршка за читање ДВИ докумената</summary>
+  <summary xml:lang="sr-Latn">Podrška za čitanje DVI dokumenata</summary>
+  <summary xml:lang="sr-ijekavian">Подршка за читање ДВИ докумената</summary>
+  <summary xml:lang="sr-ijekavianlatin">Podrška za čitanje DVI dokumenata</summary>
   <summary xml:lang="sv">Lägger till stöd för att läsa DVI-dokument</summary>
   <summary xml:lang="uk">Додає підтримку читання документів DVI</summary>
   <summary xml:lang="x-test">xxAdds support for reading DVI documentsxx</summary>

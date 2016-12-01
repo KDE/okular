@@ -6,6 +6,7 @@
   <name>Okular</name>
   <name xml:lang="ca">Okular</name>
   <name xml:lang="ca-valencia">Okular</name>
+  <name xml:lang="de">Okular</name>
   <name xml:lang="en-GB">Okular</name>
   <name xml:lang="es">Okular</name>
   <name xml:lang="fi">Okular</name>
@@ -26,6 +27,7 @@
   <summary>Document Viewer</summary>
   <summary xml:lang="ca">Visualitzador de documents</summary>
   <summary xml:lang="ca-valencia">Visualitzador de documents</summary>
+  <summary xml:lang="de">Dokumentenbetrachter</summary>
   <summary xml:lang="en-GB">Document Viewer</summary>
   <summary xml:lang="es">Visor de documentos</summary>
   <summary xml:lang="fi">Asiakirjakatselin</summary>
@@ -69,6 +71,7 @@
     <p>Features:</p>
     <p xml:lang="ca">Característiques:</p>
     <p xml:lang="ca-valencia">Característiques:</p>
+    <p xml:lang="de">Funktionen:</p>
     <p xml:lang="en-GB">Features:</p>
     <p xml:lang="es">Funciones:</p>
     <p xml:lang="fi">Ominaisuuksia:</p>
@@ -90,6 +93,7 @@
       <li>Supported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="ca">Formats acceptats: PDF, PS, Tiff, CHM, DjVu, imatges, DVI, XPS, ODT, Fiction Book, llibres de còmic, Plucker, EPub, Fax</li>
       <li xml:lang="ca-valencia">Formats acceptats: PDF, PS, Tiff, CHM, DjVu, imatges, DVI, XPS, ODT, Fiction Book, llibres de còmic, Plucker, EPub, Fax</li>
+      <li xml:lang="de">Unterstützte Formate: PDF, PS, Tiff, CHM, DjVu, Bilder, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="en-GB">Supported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="es">Formatos permitidos: PDF, PS, Tiff, CHM, DjVu, imágenes, DVI, XPS, ODT, Fiction Book, libros de cómics, Plucker, EPub, Fax</li>
       <li xml:lang="fi">Tuetut tiedostomuodot: PDF, PS, TIFF, CHM, DjVu, kuvatiedostot, DVI, XPS, ODT, FictionBook, sarjakuvakirjat, Plucker, EPub, faksit</li>
@@ -130,6 +134,7 @@
       <li>Annotations support</li>
       <li xml:lang="ca">Admet anotacions</li>
       <li xml:lang="ca-valencia">Admet anotacions</li>
+      <li xml:lang="de">Unterstützung für Anmerkungen</li>
       <li xml:lang="en-GB">Annotations support</li>
       <li xml:lang="es">Permite el uso de notas</li>
       <li xml:lang="fi">Merkintöjen tuki</li>

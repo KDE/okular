@@ -6,6 +6,7 @@
   <name>Okular</name>
   <name xml:lang="ca">Okular</name>
   <name xml:lang="ca-valencia">Okular</name>
+  <name xml:lang="cs">Okular</name>
   <name xml:lang="en-GB">Okular</name>
   <name xml:lang="es">Okular</name>
   <name xml:lang="fi">Okular</name>
@@ -26,6 +27,7 @@
   <summary>Document Viewer</summary>
   <summary xml:lang="ca">Visualitzador de documents</summary>
   <summary xml:lang="ca-valencia">Visualitzador de documents</summary>
+  <summary xml:lang="cs">Prohlížeč dokumentů</summary>
   <summary xml:lang="en-GB">Document Viewer</summary>
   <summary xml:lang="es">Visor de documentos</summary>
   <summary xml:lang="fi">Asiakirjakatselin</summary>
@@ -69,6 +71,7 @@
     <p>Features:</p>
     <p xml:lang="ca">Característiques:</p>
     <p xml:lang="ca-valencia">Característiques:</p>
+    <p xml:lang="cs">Vlastnosti:</p>
     <p xml:lang="en-GB">Features:</p>
     <p xml:lang="es">Funciones:</p>
     <p xml:lang="fi">Ominaisuuksia:</p>

@@ -7,6 +7,7 @@
   <name>DVI Documents</name>
   <name xml:lang="ca">Documents DVI</name>
   <name xml:lang="ca-valencia">Documents DVI</name>
+  <name xml:lang="cs">Dokumenty DVI</name>
   <name xml:lang="en-GB">DVI Documents</name>
   <name xml:lang="es">Documentos DVI</name>
   <name xml:lang="fi">DVI-tiedostot</name>
@@ -27,6 +28,7 @@
   <summary>Adds support for reading DVI documents</summary>
   <summary xml:lang="ca">Afegeix la implementació per llegir documents DVI</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per llegir documents DVI</summary>
+  <summary xml:lang="cs">Přidává podporu pro čtení dokumentů DVI</summary>
   <summary xml:lang="en-GB">Adds support for reading DVI documents</summary>
   <summary xml:lang="es">Permite la lectura de documentos DVI</summary>
   <summary xml:lang="fi">Lisää DVI-tiedostojen lukutuen</summary>

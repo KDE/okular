@@ -7,6 +7,7 @@
   <name>PostScript</name>
   <name xml:lang="ca">PostScript</name>
   <name xml:lang="ca-valencia">PostScript</name>
+  <name xml:lang="cs">PostScript</name>
   <name xml:lang="en-GB">PostScript</name>
   <name xml:lang="es">PostScript</name>
   <name xml:lang="fi">PostScript</name>
@@ -27,6 +28,7 @@
   <summary>Adds support for reading PostScript documents</summary>
   <summary xml:lang="ca">Afegeix la implementació per llegir documents PostScript</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per llegir documents PostScript</summary>
+  <summary xml:lang="cs">Přidává podporu pro čtení dokumentů PostScript</summary>
   <summary xml:lang="en-GB">Adds support for reading PostScript documents</summary>
   <summary xml:lang="es">Permite la lectura de documentos PostScript</summary>
   <summary xml:lang="fi">Lisää PostScript-tiedostojen lukutuen</summary>

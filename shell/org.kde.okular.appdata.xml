@@ -6,6 +6,7 @@
   <name>Okular</name>
   <name xml:lang="ca">Okular</name>
   <name xml:lang="ca-valencia">Okular</name>
+  <name xml:lang="cs">Okular</name>
   <name xml:lang="de">Okular</name>
   <name xml:lang="en-GB">Okular</name>
   <name xml:lang="es">Okular</name>
@@ -27,6 +28,7 @@
   <summary>Document Viewer</summary>
   <summary xml:lang="ca">Visualitzador de documents</summary>
   <summary xml:lang="ca-valencia">Visualitzador de documents</summary>
+  <summary xml:lang="cs">Prohlížeč dokumentů</summary>
   <summary xml:lang="de">Dokumentenbetrachter</summary>
   <summary xml:lang="en-GB">Document Viewer</summary>
   <summary xml:lang="es">Visor de documentos</summary>
@@ -51,6 +53,7 @@
   </p>
     <p xml:lang="ca">L'Okular és un visualitzador universal de documenta desenvolupat pel KDE. L'Okular funciona en diverses plataformes, incloent però sense limitar en el Linux, Windows, Mac OS X, *BSD, etc.</p>
     <p xml:lang="ca-valencia">L'Okular és un visualitzador universal de documenta desenvolupat pel KDE. L'Okular funciona en diverses plataformes, incloent però sense limitar en el Linux, Windows, Mac OS X, *BSD, etc.</p>
+    <p xml:lang="de">Okular ist ein universeller Dokumentenbetrachter, der von  KDE entwickelt wird. Okular ist auf verschiedenen Plattformen verfügbar, darunter auch Linux, Windows, Mac OS X, *BSD usw.</p>
     <p xml:lang="en-GB">Okular is a universal document viewer developed by KDE. Okular works on multiple platforms, including but not limited to Linux, Windows, Mac OS X, *BSD, etc.</p>
     <p xml:lang="es">Okular es un visor universal de documentos desarrollado por KDE. Okular funciona en diversas plataformas, incluidas Linux, Windows, Mac OS X, *BSD, etc.</p>
     <p xml:lang="fi">Okular on KDE:n kehittämä yleiskäyttöinen asiakirjakatselin. Okular toimii useissa ympäristöissä kuten Linuxissa, Windowsissa, Mac OS X:ssä, *BSD:ssä jne.</p>
@@ -71,6 +74,7 @@
     <p>Features:</p>
     <p xml:lang="ca">Característiques:</p>
     <p xml:lang="ca-valencia">Característiques:</p>
+    <p xml:lang="cs">Vlastnosti:</p>
     <p xml:lang="de">Funktionen:</p>
     <p xml:lang="en-GB">Features:</p>
     <p xml:lang="es">Funciones:</p>
@@ -114,6 +118,7 @@
       <li>Sidebar with contents, thumbnails, reviews and bookmarks</li>
       <li xml:lang="ca">Barra lateral amb el contingut, miniatures, revisions i punts</li>
       <li xml:lang="ca-valencia">Barra lateral amb el contingut, miniatures, revisions i punts</li>
+      <li xml:lang="de">Seitenleiste mit Inhalten, Vorschauen und Lesezeichen</li>
       <li xml:lang="en-GB">Sidebar with contents, thumbnails, reviews and bookmarks</li>
       <li xml:lang="es">Barra lateral con contenido, miniaturas, revisiones y marcadores</li>
       <li xml:lang="fi">Sivupaneeli, jossa sisältö, pienoiskuvat, tarkastelut ja kirjanmerkit</li>

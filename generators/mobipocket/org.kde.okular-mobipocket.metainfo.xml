@@ -7,6 +7,7 @@
   <name>Mobipocket</name>
   <name xml:lang="ca">Mobipocket</name>
   <name xml:lang="ca-valencia">Mobipocket</name>
+  <name xml:lang="cs">Mobipocket</name>
   <name xml:lang="de">Mobipocket</name>
   <name xml:lang="en-GB">Mobipocket</name>
   <name xml:lang="es">Mobipocket</name>
@@ -27,6 +28,7 @@
   <summary>Adds support for reading Mobipocket E-books</summary>
   <summary xml:lang="ca">Afegeix la implementació per llegir llibres electrònics Mobipocket</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per llegir llibres electrònics Mobipocket</summary>
+  <summary xml:lang="cs">Přidává podporu pro čtení e-booků Mobipocket</summary>
   <summary xml:lang="de">Bietet Unterstützung zum Lesen von Mobipocket-E-Books</summary>
   <summary xml:lang="en-GB">Adds support for reading Mobipocket E-books</summary>
   <summary xml:lang="es">Permite la lectura de libros electrónicos en formato Mobipocket</summary>

@@ -13,6 +13,7 @@
             {
                 "Email": "jiri.klement@gmail.com", 
                 "Name": "Jiri Klement", 
+                "Name[cs]": "Jiří Klement", 
                 "Name[sr@ijekavian]": "Јиржи Клемент", 
                 "Name[sr@ijekavianlatin]": "Jirži Klement", 
                 "Name[sr@latin]": "Jirži Klement", 
@@ -41,6 +42,7 @@
         "Description": "An XPS backend", 
         "Description[ca@valencia]": "Un dorsal per a l'XPS", 
         "Description[ca]": "Un dorsal per a l'XPS", 
+        "Description[cs]": "Podpůrná vrstva XPS", 
         "Description[de]": "Ein Anzeigemodul für XPS", 
         "Description[es]": "Un motor para XPS", 
         "Description[fi]": "XPS-taustaosa", 
@@ -69,6 +71,7 @@
         "Name": "XPS Backend", 
         "Name[ca@valencia]": "Dorsal XPS", 
         "Name[ca]": "Dorsal XPS", 
+        "Name[cs]": "Podpůrná vrstva XPS", 
         "Name[de]": "Anzeigemodul für XPS", 
         "Name[es]": "Motor para XPS", 
         "Name[fi]": "XPS-taustaosa", 

@@ -30,6 +30,7 @@
   <summary xml:lang="ca-valencia">Afig la implementació per llegir documents Plucker</summary>
   <summary xml:lang="cs">Přidává podporu pro čtení dokumentů Plucker</summary>
   <summary xml:lang="de">Bietet Unterstützung zum Lesen von Plucker-Dokumenten</summary>
+  <summary xml:lang="en-GB">Adds support for reading Plucker documents</summary>
   <summary xml:lang="es">Permite la lectura de documentos en formato Plucker</summary>
   <summary xml:lang="fi">Lisää Plucker-tiedostojen lukutuen</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti Plucker</summary>

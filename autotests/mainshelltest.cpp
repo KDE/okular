@@ -309,7 +309,7 @@ void MainShellTest::testShell()
         if (useTabs || unique)
         {
             // It is attaching to us, so will eventually stop
-            QTRY_COMPARE_WITH_TIMEOUT(p.state(), QProcess::NotRunning, 2000);
+            QTRY_COMPARE_WITH_TIMEOUT(p.state(), QProcess::NotRunning, 20000);
             QCOMPARE(p.exitStatus(), QProcess::NormalExit);
             QCOMPARE(p.exitCode(), 0);
 
@@ -442,7 +442,7 @@ void MainShellTest::testFileRemembersPagePosition()
         QCOMPARE(p.state(), QProcess::Running);
 
         // It is attaching to us, so will eventually stop
-        QTRY_COMPARE_WITH_TIMEOUT((int)p.state(), (int)QProcess::NotRunning, 2000);
+        QTRY_COMPARE_WITH_TIMEOUT((int)p.state(), (int)QProcess::NotRunning, 20000);
         QCOMPARE((int)p.exitStatus(), (int)QProcess::NormalExit);
         QCOMPARE(p.exitCode(), 0);
     }

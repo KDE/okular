@@ -2177,7 +2177,7 @@ QVector<KPluginMetaData> DocumentPrivate::availableGenerators()
     return result;
 }
 
-KPluginMetaData DocumentPrivate::generatorForMimeType(const QMimeType& type, QWidget* widget)
+KPluginMetaData DocumentPrivate::generatorForMimeType(const QMimeType& type, QWidget* widget, const QVector<KPluginMetaData> &triedOffers)
 {
     // First try to find an exact match, and then look for more general ones (e. g. the plain text one)
     // Ideally we would rank these by "closeness", but that might be overdoing it
@@ -2190,6 +2190,9 @@ KPluginMetaData DocumentPrivate::generatorForMimeType(const QMimeType& type, QWi
 
     for (const KPluginMetaData& md : available)
     {
+        if (triedOffers.contains(md))
+            continue;
+
         foreach (const QString& supported, md.mimeTypes())
         {
             QMimeType mimeType = mimeDatabase.mimeTypeForName(supported);
@@ -2320,18 +2323,53 @@ Document::OpenResult Document::openDocument(const QString & docFile, const QUrl 
 
     // 1. load Document
     OpenResult openResult = d->openDocumentInternal( offer, isstdin, docFile, filedata, password );
-    if ( openResult == OpenError && !triedMimeFromFileContent )
+    if ( openResult == OpenError )
     {
-        QMimeType newmime = db.mimeTypeForFile(docFile, QMimeDatabase::MatchExtension);
-        triedMimeFromFileContent = true;
-        if ( newmime != mime )
+        QVector<KPluginMetaData> triedOffers;
+        triedOffers << offer;
+        offer = DocumentPrivate::generatorForMimeType(mime, d->m_widget, triedOffers);
+
+        while ( offer.isValid() )
         {
-            mime = newmime;
-            offer = DocumentPrivate::generatorForMimeType(mime, d->m_widget);
-            if ( offer.isValid() )
+            openResult = d->openDocumentInternal( offer, isstdin, docFile, filedata, password );
+
+            if ( openResult == OpenError )
             {
-                openResult = d->openDocumentInternal( offer, isstdin, docFile, filedata, password );
+                triedOffers << offer;
+                offer = DocumentPrivate::generatorForMimeType(mime, d->m_widget, triedOffers);
             }
+            else break;
+        }
+
+        if (openResult == OpenError && !triedMimeFromFileContent )
+        {
+            QMimeType newmime = db.mimeTypeForFile(docFile, QMimeDatabase::MatchExtension);
+            triedMimeFromFileContent = true;
+            if ( newmime != mime )
+            {
+                mime = newmime;
+                offer = DocumentPrivate::generatorForMimeType(mime, d->m_widget, triedOffers);
+                while ( offer.isValid() )
+                {
+                    openResult = d->openDocumentInternal( offer, isstdin, docFile, filedata, password );
+
+                    if ( openResult == OpenError )
+                    {
+                        triedOffers << offer;
+                        offer = DocumentPrivate::generatorForMimeType(mime, d->m_widget, triedOffers);
+                    }
+                    else break;
+                }
+            }
+        }
+
+        if ( openResult == OpenSuccess )
+        {
+            // Clear errors, since we're trying various generators, maybe one of them errored out
+            // but we finally succeeded
+            // TODO one can still see the error message animating out but since this is a very rare
+            //      condition we can leave this for future work
+            emit error( QString(), -1 );
         }
     }
     if ( openResult != OpenSuccess )

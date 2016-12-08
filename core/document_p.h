@@ -282,7 +282,7 @@ class DocumentPrivate
         // generator selection
         static QVector<KPluginMetaData> availableGenerators();
         static QVector<KPluginMetaData> configurableGenerators();
-        static KPluginMetaData generatorForMimeType(const QMimeType& type, QWidget* widget);
+        static KPluginMetaData generatorForMimeType(const QMimeType& type, QWidget* widget, const QVector<KPluginMetaData> &triedOffers = QVector<KPluginMetaData>());
 };
 
 class DocumentInfoPrivate

@@ -13,6 +13,7 @@
             }
         ], 
         "Copyright": "© 2006-2008 Tobias Koenig", 
+        "Copyright[et]": "© 2006-2008: Tobias Koenig", 
         "Copyright[fi]": "© 2006–2008 Tobias Koenig", 
         "Copyright[nn]": "© 2006–2008 Tobias Koenig", 
         "Copyright[sr@ijekavian]": "© 2000–2009, Тобијас Кениг", 
@@ -27,6 +28,7 @@
         "Description[cs]": "Vykreslovač textových dokumentů OpenDocument", 
         "Description[de]": "Ein Renderer für OpenDocument-Textdokumente", 
         "Description[es]": "Un visor para documentos de texto OpenDocument", 
+        "Description[et]": "OpenDocument tekstidokumentide renderdaja", 
         "Description[fi]": "OpenDocument-tekstitiedostojen hahmonnin", 
         "Description[fr]": "Un système de rendu pour documents textes OpenDocument", 
         "Description[it]": "Un visualizzatore per documenti OpenDocument Text", 
@@ -55,6 +57,7 @@
         "Name[cs]": "Podpůrná vrstva OpenDocument Text", 
         "Name[de]": "Anzeigemodul für OpenDocument-Textformat", 
         "Name[es]": "Motor para texto de OpenDocument", 
+        "Name[et]": "OpenDocument teksti taustaprogramm", 
         "Name[fi]": "OpenDocument-tekstitaustaosa", 
         "Name[fr]": "Moteur pour texte OpenDocument", 
         "Name[it]": "Backend OpenDocument Text", 

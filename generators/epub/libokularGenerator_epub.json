@@ -12,6 +12,7 @@
             }
         ], 
         "Copyright": "© 2008 Ely Levy", 
+        "Copyright[et]": "© 2008: Ely Levy", 
         "Copyright[sr@ijekavian]": "© 2008, Ели Леви", 
         "Copyright[sr@ijekavianlatin]": "© 2008, Eli Levi", 
         "Copyright[sr@latin]": "© 2008, Eli Levi", 
@@ -24,6 +25,7 @@
         "Description[cs]": "Podpůrná vrstva EPub", 
         "Description[de]": "Ein Anzeigemodul für EPUB", 
         "Description[es]": "Un motor para EPub", 
+        "Description[et]": "EPubi taustaprogramm", 
         "Description[fi]": "EPub-taustaosa", 
         "Description[fr]": "Un moteur EPub", 
         "Description[it]": "Backend EPub", 
@@ -52,6 +54,7 @@
         "Name[cs]": "Podpůrná vrstva EPub", 
         "Name[de]": "Anzeigemodul für EPUB", 
         "Name[es]": "Motor para EPub", 
+        "Name[et]": "EPubi taustaprogramm", 
         "Name[fi]": "EPub-taustaosa", 
         "Name[fr]": "Moteur EPub", 
         "Name[it]": "Backend EPub", 

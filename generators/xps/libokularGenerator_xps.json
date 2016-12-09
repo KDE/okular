@@ -31,6 +31,7 @@
             }
         ], 
         "Copyright": "© 2006-2007 Brad Hards\n© 2007 Jiri Klement\n© 2008 Pino Toscano", 
+        "Copyright[et]": "© 2006-2007: Brad Hards\n© 2007: Jiri Klement\n© 2008: Pino Toscano", 
         "Copyright[fi]": "© 2006–2007 Brad Hards\n© 2007 Jiri Klement\n© 2008 Pino Toscano", 
         "Copyright[nn]": "© 2006–2007 Brad Hards\n© 2007 Jiri Klement\n© 2008 Pino Toscano", 
         "Copyright[sr@ijekavian]": "© 2006–2007, Бред Хардс\n© 2007, Јиржи Клемент\n© 2008, Пино Тоскано", 
@@ -45,6 +46,7 @@
         "Description[cs]": "Podpůrná vrstva XPS", 
         "Description[de]": "Ein Anzeigemodul für XPS", 
         "Description[es]": "Un motor para XPS", 
+        "Description[et]": "XPS-i taustaprogramm", 
         "Description[fi]": "XPS-taustaosa", 
         "Description[fr]": "Un moteur XPS", 
         "Description[it]": "Un backend per XPS", 
@@ -74,6 +76,7 @@
         "Name[cs]": "Podpůrná vrstva XPS", 
         "Name[de]": "Anzeigemodul für XPS", 
         "Name[es]": "Motor para XPS", 
+        "Name[et]": "XPS-i taustaprogramm", 
         "Name[fi]": "XPS-taustaosa", 
         "Name[fr]": "Moteur XPS", 
         "Name[it]": "Backend XPS", 

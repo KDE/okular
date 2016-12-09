@@ -13,6 +13,7 @@
             }
         ], 
         "Copyright": "© 2008 Tobias Koenig", 
+        "Copyright[et]": "© 2008: Tobias Koenig", 
         "Copyright[nn]": "© 2008 Tobias König", 
         "Copyright[sr@ijekavian]": "© 2008, Тобијас Кениг", 
         "Copyright[sr@ijekavianlatin]": "© 2008, Tobijas Kenig", 
@@ -26,6 +27,7 @@
         "Description[cs]": "Implementace dokumentu faxu A G3/G4", 
         "Description[de]": "Ein Anzeigemodul für G3/G4-Faxe", 
         "Description[es]": "Un motor para documentos de fax G3/G4", 
+        "Description[et]": "G3/G4 faksidokumendi taustaprogramm", 
         "Description[fi]": "G3/G4-faksitiedostotaustaosa", 
         "Description[fr]": "Un moteur de document fax G3/G4", 
         "Description[it]": "Un backend per documenti fax G3/G4", 
@@ -55,6 +57,7 @@
         "Name[cs]": "Implementace faxu", 
         "Name[de]": "Anzeigemodul für Faxe", 
         "Name[es]": "Motor para fax", 
+        "Name[et]": "Faksi taustaprogramm", 
         "Name[fi]": "Faksitaustaosa", 
         "Name[fr]": "Moteur Fax", 
         "Name[it]": "Backend fax", 

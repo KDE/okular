@@ -11,6 +11,7 @@
   <name xml:lang="de">Comic-Buch</name>
   <name xml:lang="en-GB">Comic Books</name>
   <name xml:lang="es">Libros de cómics</name>
+  <name xml:lang="et">Koomiksid</name>
   <name xml:lang="fi">Sarjakuvakirjat</name>
   <name xml:lang="it">Fumetti</name>
   <name xml:lang="nl">Stripboeken</name>
@@ -33,6 +34,7 @@
   <summary xml:lang="de">Bietet Unterstützung zum Lesen von Comic-Büchern</summary>
   <summary xml:lang="en-GB">Adds support for reading comic books</summary>
   <summary xml:lang="es">Permite la lectura de libros de cómics</summary>
+  <summary xml:lang="et">Koomiksite lugemise toetus</summary>
   <summary xml:lang="fi">Lisää sarjakuvakirjojen lukutuen</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di fumetti</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van stripboeken toe</summary>

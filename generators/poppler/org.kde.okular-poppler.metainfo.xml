@@ -11,6 +11,7 @@
   <name xml:lang="de">PDF</name>
   <name xml:lang="en-GB">PDF</name>
   <name xml:lang="es">PDF</name>
+  <name xml:lang="et">PDF</name>
   <name xml:lang="fi">PDF</name>
   <name xml:lang="it">PDF</name>
   <name xml:lang="nl">PDF</name>
@@ -32,6 +33,7 @@
   <summary xml:lang="de">Bietet Unterstützung zum Lesen von PDF-Dokumenten</summary>
   <summary xml:lang="en-GB">Adds support for reading PDF documents</summary>
   <summary xml:lang="es">Permite la lectura de documentos PDF</summary>
+  <summary xml:lang="et">PDF-dokumentide lugemise toetus</summary>
   <summary xml:lang="fi">Lisää PDF-tiedostojen lukutuen</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti PDF</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van PDF-documenten toe</summary>

@@ -10,6 +10,7 @@
   <name xml:lang="cs">Text</name>
   <name xml:lang="en-GB">Text</name>
   <name xml:lang="es">Texto</name>
+  <name xml:lang="et">Tekst</name>
   <name xml:lang="fi">Teksti</name>
   <name xml:lang="it">Testo</name>
   <name xml:lang="nl">Tekst</name>
@@ -31,6 +32,7 @@
   <summary xml:lang="cs">Přidává podporu pro čtení dokumentů v čistém textu</summary>
   <summary xml:lang="en-GB">Adds support for reading plain text documents</summary>
   <summary xml:lang="es">Permite la lectura de documentos de texto sin formato</summary>
+  <summary xml:lang="et">Lihttekstidokumentide lugemise toetus</summary>
   <summary xml:lang="fi">Lisää paljaiden tekstitiedostojen lukutuen</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti in testo semplice</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van gewone tekstdocumenten toe</summary>

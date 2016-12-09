@@ -10,6 +10,7 @@
   <name xml:lang="cs">Obrázky</name>
   <name xml:lang="en-GB">Images</name>
   <name xml:lang="es">Imágenes</name>
+  <name xml:lang="et">Pildid</name>
   <name xml:lang="fi">Kuvat</name>
   <name xml:lang="it">Immagini</name>
   <name xml:lang="nl">Afbeeldingen</name>
@@ -31,6 +32,7 @@
   <summary xml:lang="cs">Přidává podporu pro čtení formátů obrázků</summary>
   <summary xml:lang="en-GB">Adds support for reading many image formats</summary>
   <summary xml:lang="es">Permite la lectura de diversos formatos de imagen</summary>
+  <summary xml:lang="et">Paljude pildivormingute lugemise toetus</summary>
   <summary xml:lang="fi">Lisää monien kuvatiedostomuotojen lukutuen</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di vari formati di immagini</summary>
   <summary xml:lang="nl">Ondersteuning toevoegen om vele afbeeldingsformaten te lezen</summary>

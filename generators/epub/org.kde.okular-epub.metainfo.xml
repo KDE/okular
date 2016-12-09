@@ -10,6 +10,7 @@
   <name xml:lang="cs">EPub</name>
   <name xml:lang="en-GB">EPub</name>
   <name xml:lang="es">EPub</name>
+  <name xml:lang="et">EPub</name>
   <name xml:lang="fi">EPub</name>
   <name xml:lang="it">EPub</name>
   <name xml:lang="nl">EPub</name>
@@ -31,6 +32,7 @@
   <summary xml:lang="cs">Přidává podporu pro čtení e-booků</summary>
   <summary xml:lang="en-GB">Adds support for reading E-Books</summary>
   <summary xml:lang="es">Permite la lectura de libros electrónicos</summary>
+  <summary xml:lang="et">E-raamatute lugemise toetus</summary>
   <summary xml:lang="fi">Lisää e-kirjojen lukutuen</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di libri digitali in formato EPub</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van e-boeken toe</summary>

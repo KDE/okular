@@ -12,6 +12,7 @@
             }
         ], 
         "Copyright": "© 2013 Azat Khuzhin", 
+        "Copyright[et]": "© 2013: Azat Khuzhin", 
         "Copyright[sr@ijekavian]": "© 2013, Азат Хужин", 
         "Copyright[sr@ijekavianlatin]": "© 2013, Azat Hužin", 
         "Copyright[sr@latin]": "© 2013, Azat Hužin", 
@@ -24,6 +25,7 @@
         "Description[cs]": "Podpůrná vrstva txt", 
         "Description[de]": "Anzeigemodul für Textformat", 
         "Description[es]": "Motor Txt", 
+        "Description[et]": "Txt taustaprogramm", 
         "Description[fi]": "Txt-taustaosa", 
         "Description[fr]": "Moteur Txt", 
         "Description[it]": "Backend di testo semplice", 
@@ -51,6 +53,7 @@
         "Name[cs]": "Podpůrná vrstva txt", 
         "Name[de]": "Anzeigemodul für Textformat", 
         "Name[es]": "Motor para Txt", 
+        "Name[et]": "Txt taustaprogramm", 
         "Name[fi]": "Txt-taustaosa", 
         "Name[fr]": "Moteur Txt", 
         "Name[it]": "Backend di testo semplice", 

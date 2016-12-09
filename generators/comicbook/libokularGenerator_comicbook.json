@@ -13,6 +13,7 @@
             }
         ], 
         "Copyright": "© 2007-2008 Tobias Koenig", 
+        "Copyright[et]": "© 2007-2008: Tobias Koenig", 
         "Copyright[fi]": "© 2007–2008 Tobias Koenig", 
         "Copyright[nn]": "© 2007–2008 Tobias König", 
         "Copyright[sr@ijekavian]": "© 2007–2008, Тобијас Кениг", 
@@ -27,6 +28,7 @@
         "Description[cs]": "Vykreslovač různých formátů knih komiksů", 
         "Description[de]": "Ein Renderer für verschiedene Comic-Book-Formate", 
         "Description[es]": "Un visor para diversos formatos de libros de cómics", 
+        "Description[et]": "Mitmesuguste koomiksivormingute renderdaja", 
         "Description[fi]": "Eri sarjakuvakirjamuotojen hahmonnin", 
         "Description[fr]": "Un système de rendu pour divers formats de livres de BD", 
         "Description[it]": "Un visualizzatore per vari formati di strisce a fumetti", 
@@ -58,6 +60,7 @@
         "Name[cs]": "Podpůrná vrstva ComicBook", 
         "Name[de]": "Anzeigemodul für Comic-Book", 
         "Name[es]": "Motor para ComicBook", 
+        "Name[et]": "ComicBooki taustaprogramm", 
         "Name[fi]": "ComicBook-taustaosa", 
         "Name[fr]": "Moteur pour les livres de BD", 
         "Name[it]": "Backend ComicBook", 

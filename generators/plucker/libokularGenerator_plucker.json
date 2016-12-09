@@ -13,6 +13,7 @@
             }
         ], 
         "Copyright": "© 2007-2008 Tobias Koenig", 
+        "Copyright[et]": "© 2007-2008: Tobias Koenig", 
         "Copyright[fi]": "© 2007–2008 Tobias Koenig", 
         "Copyright[nn]": "© 2007–2008 Tobias König", 
         "Copyright[sr@ijekavian]": "© 2007–2008, Тобијас Кениг", 
@@ -27,6 +28,7 @@
         "Description[cs]": "Renderer elektronických knih Plucker", 
         "Description[de]": "Ein Renderer für Plucker eBooks", 
         "Description[es]": "Un visor de libros electrónicos Plucker", 
+        "Description[et]": "Pluckeri e-raamatute renderdaja", 
         "Description[fi]": "Plucker-e-kirjojen hahmonnin", 
         "Description[fr]": "Système de rendu pour les livres électroniques Plucker", 
         "Description[it]": "Un visualizzatore per eBook Plucker", 
@@ -55,6 +57,7 @@
         "Name[cs]": "Podpůrná vrstva Plucker Dokumentu", 
         "Name[de]": "Anzeigemodul für Plucker-Dokumente", 
         "Name[es]": "Motor para documento de Plucker", 
+        "Name[et]": "Pluckeri dokumendi taustaprogramm", 
         "Name[fi]": "Plucker-tiedostotaustaosa", 
         "Name[fr]": "Moteur de document Plucker", 
         "Name[it]": "Backend per documenti Plucker", 

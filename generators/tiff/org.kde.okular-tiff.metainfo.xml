@@ -14,6 +14,7 @@
   <name xml:lang="et">TIFF</name>
   <name xml:lang="fi">TIFF</name>
   <name xml:lang="it">Tiff</name>
+  <name xml:lang="ko">TIFF</name>
   <name xml:lang="nl">Tiff</name>
   <name xml:lang="nn">TIFF</name>
   <name xml:lang="pt">TIFF</name>
@@ -36,6 +37,7 @@
   <summary xml:lang="et">TIFF-dokumentide lugemise toetus</summary>
   <summary xml:lang="fi">Lisää TIFF-kuvatiedostojen lukutuen</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti Tiff</summary>
+  <summary xml:lang="ko">TIFF 문서 읽기 지원 추가</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van Tiff-documenten toe</summary>
   <summary xml:lang="nn">Legg til støtte for å lesa TIFF-dokument</summary>
   <summary xml:lang="pt">Adiciona o suporte para ler documentos em TIFF</summary>

@@ -13,6 +13,7 @@
   <name xml:lang="et">Pildid</name>
   <name xml:lang="fi">Kuvat</name>
   <name xml:lang="it">Immagini</name>
+  <name xml:lang="ko">그림</name>
   <name xml:lang="nl">Afbeeldingen</name>
   <name xml:lang="nn">Bilete</name>
   <name xml:lang="pt">Imagens</name>
@@ -35,6 +36,7 @@
   <summary xml:lang="et">Paljude pildivormingute lugemise toetus</summary>
   <summary xml:lang="fi">Lisää monien kuvatiedostomuotojen lukutuen</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di vari formati di immagini</summary>
+  <summary xml:lang="ko">다양한 그림 형식 읽기 지원 추가</summary>
   <summary xml:lang="nl">Ondersteuning toevoegen om vele afbeeldingsformaten te lezen</summary>
   <summary xml:lang="nn">Legg til støtte for å lesa mange ulike biletformat</summary>
   <summary xml:lang="pt">Adiciona o suporte para ler muitos formatos de imagem</summary>

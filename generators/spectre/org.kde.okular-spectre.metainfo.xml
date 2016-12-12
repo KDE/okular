@@ -13,6 +13,7 @@
   <name xml:lang="et">PostScript</name>
   <name xml:lang="fi">PostScript</name>
   <name xml:lang="it">PostScript</name>
+  <name xml:lang="ko">포스트스크립트</name>
   <name xml:lang="nl">PostScript</name>
   <name xml:lang="nn">PostScript</name>
   <name xml:lang="pt">PostScript</name>
@@ -35,6 +36,7 @@
   <summary xml:lang="et">PostScript-dokumentide lugemise toetus</summary>
   <summary xml:lang="fi">Lisää PostScript-tiedostojen lukutuen</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti PostScript</summary>
+  <summary xml:lang="ko">포스트스크립트 문서 읽기 지원 추가</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van PostScript-documenten toe</summary>
   <summary xml:lang="nn">Legg til støtte for å lesa PostScript-dokument</summary>
   <summary xml:lang="pt">Adiciona o suporte para ler documentos em PostScript</summary>

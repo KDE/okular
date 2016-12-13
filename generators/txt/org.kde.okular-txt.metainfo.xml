@@ -5,6 +5,7 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+ and GFDL-1.3</project_license>
   <name>Text</name>
+  <name xml:lang="ast">Testu</name>
   <name xml:lang="ca">Text</name>
   <name xml:lang="ca-valencia">Text</name>
   <name xml:lang="cs">Text</name>
@@ -28,6 +29,7 @@
   <name xml:lang="x-test">xxTextxx</name>
   <name xml:lang="zh-TW">文字</name>
   <summary>Adds support for reading plain text documents</summary>
+  <summary xml:lang="ast">Amiesta sofitu pa la llectura de documentos de testu planu</summary>
   <summary xml:lang="ca">Afegeix la implementació per llegir documents de text net</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per llegir documents de text net</summary>
   <summary xml:lang="cs">Přidává podporu pro čtení dokumentů v čistém textu</summary>

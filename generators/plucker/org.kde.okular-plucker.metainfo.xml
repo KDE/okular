@@ -5,6 +5,7 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+ and GFDL-1.3</project_license>
   <name>Plucker</name>
+  <name xml:lang="ast">Plucker</name>
   <name xml:lang="ca">Plucker</name>
   <name xml:lang="ca-valencia">Plucker</name>
   <name xml:lang="cs">Plucker</name>
@@ -28,6 +29,7 @@
   <name xml:lang="x-test">xxPluckerxx</name>
   <name xml:lang="zh-TW">Plucker</name>
   <summary>Adds support for reading Plucker documents</summary>
+  <summary xml:lang="ast">Amiesta sofitu pa la llectura de documentos Plucker</summary>
   <summary xml:lang="ca">Afegeix la implementació per llegir documents Plucker</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per llegir documents Plucker</summary>
   <summary xml:lang="cs">Přidává podporu pro čtení dokumentů Plucker</summary>

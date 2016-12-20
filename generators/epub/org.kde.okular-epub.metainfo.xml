@@ -30,7 +30,6 @@
   <name xml:lang="x-test">xxEPubxx</name>
   <name xml:lang="zh-TW">EPub</name>
   <summary>Adds support for reading E-Books</summary>
-  <summary xml:lang="ast">Amiesta sofitu pa la llectura de llibros electrónicos</summary>
   <summary xml:lang="ca">Afegeix la implementació per llegir llibres electrònics</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per llegir llibres electrònics</summary>
   <summary xml:lang="cs">Přidává podporu pro čtení e-booků</summary>

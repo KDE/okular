@@ -30,7 +30,6 @@
   <name xml:lang="x-test">xxFictionBookxx</name>
   <name xml:lang="zh-TW">FictionBook</name>
   <summary>Adds support for reading FictionBooks</summary>
-  <summary xml:lang="ast">Amiesta sofitu pa la llectura de FictionBooks</summary>
   <summary xml:lang="ca">Afegeix la implementació per llegir FictionBooks</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per llegir FictionBooks</summary>
   <summary xml:lang="cs">Přidává podporu pro čtení formátu FictionBook</summary>

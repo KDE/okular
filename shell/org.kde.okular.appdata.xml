@@ -29,7 +29,6 @@
   <name xml:lang="x-test">xxOkularxx</name>
   <name xml:lang="zh-TW">Okular</name>
   <summary>Document Viewer</summary>
-  <summary xml:lang="ast">Visor de documentos</summary>
   <summary xml:lang="ca">Visualitzador de documents</summary>
   <summary xml:lang="ca-valencia">Visualitzador de documents</summary>
   <summary xml:lang="cs">Prohlížeč dokumentů</summary>
@@ -57,7 +56,6 @@
     <p>
    Okular is a universal document viewer developed by KDE. Okular works on multiple platforms, including but not limited to Linux, Windows, Mac OS X, *BSD, etc.
   </p>
-    <p xml:lang="ast">Okular ye un visor universal de documentos desendolcáu por KDE. Okular furrula en múltiples plataformes como Linux, *BSD, MacOS, Windows... etc.</p>
     <p xml:lang="ca">L'Okular és un visualitzador universal de documenta desenvolupat pel KDE. L'Okular funciona en diverses plataformes, incloent però sense limitar en el Linux, Windows, Mac OS X, *BSD, etc.</p>
     <p xml:lang="ca-valencia">L'Okular és un visualitzador universal de documenta desenvolupat pel KDE. L'Okular funciona en diverses plataformes, incloent però sense limitar en el Linux, Windows, Mac OS X, *BSD, etc.</p>
     <p xml:lang="de">Okular ist ein universeller Dokumentenbetrachter, der von  KDE entwickelt wird. Okular ist auf verschiedenen Plattformen verfügbar, darunter auch Linux, Windows, Mac OS X, *BSD usw.</p>
@@ -81,7 +79,6 @@
     <p xml:lang="x-test">xxOkular is a universal document viewer developed by KDE. Okular works on multiple platforms, including but not limited to Linux, Windows, Mac OS X, *BSD, etc.xx</p>
     <p xml:lang="zh-TW">Okular 是一個由 KDE 開發的通用文件檢視器。Okular 可以在多種平臺上運作，包含但不限於 Linux, Windows, Mac OS X, *BSD 等等。</p>
     <p>Features:</p>
-    <p xml:lang="ast">Carauterístiques:</p>
     <p xml:lang="ca">Característiques:</p>
     <p xml:lang="ca-valencia">Característiques:</p>
     <p xml:lang="cs">Vlastnosti:</p>
@@ -107,7 +104,6 @@
     <p xml:lang="zh-TW">功能：</p>
     <ul>
       <li>Supported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
-      <li xml:lang="ast">Formatos sofitaos: PDF, PS, Tiff, CHM, DjVU, imáxenes, DVI, XPS, ODT, FictionBook, cómics, Pluker, Epub y Fax</li>
       <li xml:lang="ca">Formats acceptats: PDF, PS, Tiff, CHM, DjVu, imatges, DVI, XPS, ODT, Fiction Book, llibres de còmic, Plucker, EPub, Fax</li>
       <li xml:lang="ca-valencia">Formats acceptats: PDF, PS, Tiff, CHM, DjVu, imatges, DVI, XPS, ODT, Fiction Book, llibres de còmic, Plucker, EPub, Fax</li>
       <li xml:lang="de">Unterstützte Formate: PDF, PS, Tiff, CHM, DjVu, Bilder, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
@@ -131,7 +127,6 @@
       <li xml:lang="x-test">xxSupported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Faxxx</li>
       <li xml:lang="zh-TW">支援的檔案格式：PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li>Sidebar with contents, thumbnails, reviews and bookmarks</li>
-      <li xml:lang="ast">Barra llateral colos conteníos, miniatures, reseñes y marcadores</li>
       <li xml:lang="ca">Barra lateral amb el contingut, miniatures, revisions i punts</li>
       <li xml:lang="ca-valencia">Barra lateral amb el contingut, miniatures, revisions i punts</li>
       <li xml:lang="de">Seitenleiste mit Inhalten, Vorschauen und Lesezeichen</li>
@@ -155,7 +150,6 @@
       <li xml:lang="x-test">xxSidebar with contents, thumbnails, reviews and bookmarksxx</li>
       <li xml:lang="zh-TW">有內容、縮圖、回顧與書籤等選項的側邊欄</li>
       <li>Annotations support</li>
-      <li xml:lang="ast">Sofitu d'anotaciones</li>
       <li xml:lang="ca">Admet anotacions</li>
       <li xml:lang="ca-valencia">Admet anotacions</li>
       <li xml:lang="de">Unterstützung für Anmerkungen</li>

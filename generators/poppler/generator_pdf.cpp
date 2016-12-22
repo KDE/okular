@@ -1643,9 +1643,7 @@ bool PDFGenerator::supportsOption( SaveOption option ) const
     {
         case SaveChanges:
         {
-            // Saving files with /Encrypt is not supported before Poppler 0.22
-            QMutexLocker locker( userMutex() );
-            return pdfdoc->isEncrypted() ? false : true;
+            return true;
         }
         default: ;
     }

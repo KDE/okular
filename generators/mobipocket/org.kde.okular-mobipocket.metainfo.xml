@@ -16,6 +16,7 @@
   <name xml:lang="ko">Mobipocket</name>
   <name xml:lang="nl">Mobipocket</name>
   <name xml:lang="nn">Mobipocket</name>
+  <name xml:lang="pl">Mobipocket</name>
   <name xml:lang="pt">Mobipocket</name>
   <name xml:lang="sk">Mobipocket</name>
   <name xml:lang="sl">Mobipocket</name>
@@ -39,6 +40,7 @@
   <summary xml:lang="ko">Mobipocket 전자책 읽기 지원 추가</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van Mobipocket e-boeken toe</summary>
   <summary xml:lang="nn">Legg til støtte for å lesa e-bøker i Mobipocket-formatet</summary>
+  <summary xml:lang="pl">Dodaje obsługę czytania ebooków Mobipocket</summary>
   <summary xml:lang="pt">Adiciona o suporte para ler E-books da Mobipocket</summary>
   <summary xml:lang="sk">Pridá podporu pre čítanie e-kníh Mobipocket</summary>
   <summary xml:lang="sl">Doda podporo za branje e-knjig Mobipocket</summary>

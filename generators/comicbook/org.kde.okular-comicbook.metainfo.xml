@@ -17,6 +17,7 @@
   <name xml:lang="ko">만화책</name>
   <name xml:lang="nl">Stripboeken</name>
   <name xml:lang="nn">Teikneseriar</name>
+  <name xml:lang="pl">Komiksy</name>
   <name xml:lang="pt">Banda Desenhada</name>
   <name xml:lang="sk">Knihy komiksov</name>
   <name xml:lang="sl">Stripi</name>
@@ -41,6 +42,7 @@
   <summary xml:lang="ko">만화책 읽기 지원 추가</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van stripboeken toe</summary>
   <summary xml:lang="nn">Legg til støtte for å lesa teikneseriefiler</summary>
+  <summary xml:lang="pl">Dodaje obsługę komiksów</summary>
   <summary xml:lang="pt">Adiciona o suporte para ler livros de banda desenhada</summary>
   <summary xml:lang="sk">Pridá podporu pre čítanie komiksov</summary>
   <summary xml:lang="sl">Doda podporo za branje stripov</summary>

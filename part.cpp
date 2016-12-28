@@ -94,6 +94,7 @@
 #include "ui/fileprinterpreview.h"
 #include "ui/guiutils.h"
 #include "ui/layers.h"
+#include "ui/okmenutitle.h"
 #include "conf/preferencesdialog.h"
 #include "settings.h"
 #include "core/action.h"
@@ -2518,7 +2519,7 @@ void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
     QAction *fitPageWidth = 0;
     if (page)
     {
-        popup->setTitle( i18n( "Page %1", page->number() + 1 ) );
+        popup->addAction( new OKMenuTitle( popup, i18n( "Page %1", page->number() + 1 ) ) );
         if ( ( !currentPage && m_document->bookmarkManager()->isBookmarked( page->number() ) ) ||
                 ( currentPage && m_document->bookmarkManager()->isBookmarked( m_document->viewport() ) ) )
             removeBookmark = popup->addAction( QIcon::fromTheme(QStringLiteral("edit-delete-bookmark")), i18n("Remove Bookmark") );
@@ -2533,7 +2534,7 @@ void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
 
     if ((m_showMenuBarAction && !m_showMenuBarAction->isChecked()) || (m_showFullScreenAction && m_showFullScreenAction->isChecked()))
     {
-        popup->setTitle( i18n( "Tools" ) );
+        popup->addAction( new OKMenuTitle( popup, i18n( "Tools" ) ) );
         if (m_showMenuBarAction && !m_showMenuBarAction->isChecked()) popup->addAction(m_showMenuBarAction);
         if (m_showFullScreenAction && m_showFullScreenAction->isChecked()) popup->addAction(m_showFullScreenAction);
         reallyShow = true;

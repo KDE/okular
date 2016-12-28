@@ -70,6 +70,7 @@
 #include "pageviewannotator.h"
 #include "priorities.h"
 #include "toolaction.h"
+#include "okmenutitle.h"
 #ifdef HAVE_SPEECH
 #include "tts.h"
 #endif
@@ -2774,7 +2775,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
             QAction *imageToFile = 0;
             if ( d->document->supportsSearching() && !selectedText.isEmpty() )
             {
-                menu.setTitle( i18np( "Text (1 character)", "Text (%1 characters)", selectedText.length() ) );
+                menu.addAction( new OKMenuTitle( &menu, i18np( "Text (1 character)", "Text (%1 characters)", selectedText.length() ) ) );
                 textToClipboard = menu.addAction( QIcon::fromTheme(QStringLiteral("edit-copy")), i18n( "Copy to Clipboard" ) );
                 bool copyAllowed = d->document->isAllowed( Okular::AllowCopy );
                 if ( !copyAllowed )
@@ -2791,7 +2792,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                     addWebShortcutsMenu( &menu, selectedText );
                 }
             }
-            menu.setTitle( i18n( "Image (%1 by %2 pixels)", selectionRect.width(), selectionRect.height() ) );
+            menu.addAction( new OKMenuTitle( &menu, i18n( "Image (%1 by %2 pixels)", selectionRect.width(), selectionRect.height() ) ) );
             imageToClipboard = menu.addAction( QIcon::fromTheme(QStringLiteral("image-x-generic")), i18n( "Copy to Clipboard" ) );
             imageToFile = menu.addAction( QIcon::fromTheme(QStringLiteral("document-save")), i18n( "Save to File..." ) );
             QAction *choice = menu.exec( e->globalPos() );

@@ -264,6 +264,7 @@ set(okularpart_SRCS
    ui/ktreeviewsearchline.cpp
    ui/latexrenderer.cpp
    ui/minibar.cpp
+   ui/okmenutitle.cpp
    ui/pageitemdelegate.cpp
    ui/pagepainter.cpp
    ui/pagesizelabel.cpp

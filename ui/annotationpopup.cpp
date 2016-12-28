@@ -18,6 +18,7 @@
 #include "core/annotations.h"
 #include "core/document.h"
 #include "guiutils.h"
+#include "okmenutitle.h"
 
 Q_DECLARE_METATYPE( AnnotationPopup::AnnotPagePair )
 
@@ -84,7 +85,7 @@ void AnnotationPopup::exec( const QPoint &point )
 
         const AnnotPagePair &pair = mAnnotations.at(0);
 
-        menu.setTitle( i18np( "Annotation", "%1 Annotations", mAnnotations.count() ) );
+        menu.addAction( new OKMenuTitle( &menu, i18np( "Annotation", "%1 Annotations", mAnnotations.count() ) ) );
 
         action = menu.addAction( QIcon::fromTheme( QStringLiteral("comment") ), i18n( "&Open Pop-up Note" ) );
         action->setData( QVariant::fromValue( pair ) );
@@ -124,7 +125,7 @@ void AnnotationPopup::exec( const QPoint &point )
     {
         foreach ( const AnnotPagePair& pair, mAnnotations )
         {
-            menu.setTitle( GuiUtils::captionForAnnotation( pair.annotation ) );
+            menu.addAction( new OKMenuTitle( &menu, GuiUtils::captionForAnnotation( pair.annotation ) ) );
 
             action = menu.addAction( QIcon::fromTheme( QStringLiteral("comment") ), i18n( "&Open Pop-up Note" ) );
             action->setData( QVariant::fromValue( pair ) );

@@ -2196,11 +2196,11 @@ KPluginMetaData DocumentPrivate::generatorForMimeType(const QMimeType& type, QWi
         foreach (const QString& supported, md.mimeTypes())
         {
             QMimeType mimeType = mimeDatabase.mimeTypeForName(supported);
-            if (mimeType == type) {
+            if (mimeType == type && !exactMatches.contains(md)) {
                 exactMatches << md;
             }
 
-            if (type.inherits(supported))
+            if (type.inherits(supported) && !offers.contains(md))
             {
                 offers << md;
             }

@@ -29,6 +29,7 @@
   <name xml:lang="sv">DjVu-dokument</name>
   <name xml:lang="uk">документи DjVu</name>
   <name xml:lang="x-test">xxDjVu Documentsxx</name>
+  <name xml:lang="zh-CN">DjVu 文档</name>
   <name xml:lang="zh-TW">DjVu 文件</name>
   <summary>Adds support for reading DjVu documents</summary>
   <summary xml:lang="ca">Afegeix la implementació per llegir documents DjVu</summary>
@@ -54,6 +55,7 @@
   <summary xml:lang="sv">Lägger till stöd för att läsa DjVu-dokument</summary>
   <summary xml:lang="uk">Додає підтримку читання документів DjVu</summary>
   <summary xml:lang="x-test">xxAdds support for reading DjVu documentsxx</summary>
+  <summary xml:lang="zh-CN">增加对 DjVu 文档的阅读支持</summary>
   <summary xml:lang="zh-TW">加入讀取 DjVu 文件的支援</summary>
   <mimetypes>
     <mimetype>image/vnd.djvu</mimetype>

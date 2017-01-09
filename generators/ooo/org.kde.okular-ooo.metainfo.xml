@@ -28,6 +28,7 @@
   <name xml:lang="sr-ijekavianlatin">Otvoreni dokument</name>
   <name xml:lang="uk">OpenDocument</name>
   <name xml:lang="x-test">xxOpenDocumentxx</name>
+  <name xml:lang="zh-CN">开放文档格式</name>
   <name xml:lang="zh-TW">OpenDocument</name>
   <summary>Adds support for reading OpenDocument text files</summary>
   <summary xml:lang="ca">Afegeix la implementació per llegir fitxers de text OpenDocument</summary>
@@ -52,6 +53,7 @@
   <summary xml:lang="sr-ijekavianlatin">Podrška za čitanje otvorenodokumentskih tekstualnih fajlova</summary>
   <summary xml:lang="uk">Додає підтримку читання текстових документів OpenDocument</summary>
   <summary xml:lang="x-test">xxAdds support for reading OpenDocument text filesxx</summary>
+  <summary xml:lang="zh-CN">增加对开放文档格式文本文件的阅读支持</summary>
   <summary xml:lang="zh-TW">加入讀取 OpenDocument 文字檔的支援</summary>
   <mimetypes>
     <mimetype>application/vnd.oasis.opendocument.text</mimetype>

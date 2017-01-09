@@ -28,6 +28,7 @@
   <name xml:lang="sr-ijekavianlatin">Plucker</name>
   <name xml:lang="uk">Plucker</name>
   <name xml:lang="x-test">xxPluckerxx</name>
+  <name xml:lang="zh-CN">Plucker</name>
   <name xml:lang="zh-TW">Plucker</name>
   <summary>Adds support for reading Plucker documents</summary>
   <summary xml:lang="ca">Afegeix la implementació per llegir documents Plucker</summary>
@@ -52,6 +53,7 @@
   <summary xml:lang="sr-ijekavianlatin">Podrška za čitanje Plucker dokumenata</summary>
   <summary xml:lang="uk">Додає підтримку читання документів Plucker</summary>
   <summary xml:lang="x-test">xxAdds support for reading Plucker documentsxx</summary>
+  <summary xml:lang="zh-CN">增加对 Plucker 文档的阅读支持</summary>
   <summary xml:lang="zh-TW">加入讀取 Plucker 文件的支援</summary>
   <mimetypes>
     <mimetype>application/prs.plucker</mimetype>

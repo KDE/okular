@@ -74,6 +74,7 @@
         "Name[sv]": "TIFF-gränssnitt", 
         "Name[uk]": "Модуль TIFF", 
         "Name[x-test]": "xxTIFF Backendxx", 
+        "Name[zh_CN]": "TIFF 后端", 
         "Name[zh_TW]": "TIFF 後端介面", 
         "ServiceTypes": [
             "okular/Generator"

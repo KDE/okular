@@ -45,6 +45,7 @@
         "Description[sv]": "DjVu-gränssnitt baserat på DjVuLibre", 
         "Description[uk]": "Засіб обробки DjVu, заснований на DjVuLibre", 
         "Description[x-test]": "xxDjVu backend based on DjVuLibrexx", 
+        "Description[zh_CN]": "基于 DjVuLibre 的 DjVu 后端", 
         "Description[zh_TW]": "基於 DjVuLibre 的 DjVu 後端介面", 
         "Id": "okular_djvu", 
         "License": "GPL", 
@@ -74,6 +75,7 @@
         "Name[sv]": "DjVu-gränssnitt", 
         "Name[uk]": "Модуль DjVu", 
         "Name[x-test]": "xxDjVu Backendxx", 
+        "Name[zh_CN]": "DjVu 后端", 
         "Name[zh_TW]": "DjVu 後端介面", 
         "ServiceTypes": [
             "okular/Generator"

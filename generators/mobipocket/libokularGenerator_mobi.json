@@ -74,6 +74,7 @@
         "Name[sv]": "Mobipocket-gränssnitt", 
         "Name[uk]": "Модуль Mobipocket", 
         "Name[x-test]": "xxMobipocket Backendxx", 
+        "Name[zh_CN]": "Mobipocket 后端", 
         "Name[zh_TW]": "Mobipocket 後端介面", 
         "ServiceTypes": [
             "okular/Generator"

@@ -79,6 +79,7 @@
         "Name[sv]": "Comic Book-gränssnitt", 
         "Name[uk]": "Модуль коміксів", 
         "Name[x-test]": "xxComicBook Backendxx", 
+        "Name[zh_CN]": "漫画书后端", 
         "Name[zh_TW]": "ComicBook 後端介面", 
         "ServiceTypes": [
             "okular/Generator"

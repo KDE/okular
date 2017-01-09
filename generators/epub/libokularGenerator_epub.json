@@ -43,6 +43,7 @@
         "Description[sv]": "Ett Epub-gränssnitt", 
         "Description[uk]": "Сервер EPub", 
         "Description[x-test]": "xxAn EPub backendxx", 
+        "Description[zh_CN]": "EPub 后端", 
         "Description[zh_TW]": "EPub 後端介面", 
         "Id": "okular_epub", 
         "License": "GPL", 
@@ -72,6 +73,7 @@
         "Name[sv]": "Epub-gränssnitt", 
         "Name[uk]": "Модуль EPub", 
         "Name[x-test]": "xxEPub Backendxx", 
+        "Name[zh_CN]": "EPub 后端", 
         "Name[zh_TW]": "EPub 後端介面", 
         "ServiceTypes": [
             "okular/Generator"

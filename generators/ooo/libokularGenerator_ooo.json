@@ -76,6 +76,7 @@
         "Name[sv]": "OpenDocument-textgränssnitt", 
         "Name[uk]": "Модуль текстових документів OpenDocument", 
         "Name[x-test]": "xxOpenDocument Text Backendxx", 
+        "Name[zh_CN]": "开放文档(ODF)文本后端", 
         "Name[zh_TW]": "OpenDocument 文字檔後端介面", 
         "ServiceTypes": [
             "okular/Generator"

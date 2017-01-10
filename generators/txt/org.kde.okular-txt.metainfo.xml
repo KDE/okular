@@ -26,6 +26,7 @@
   <name xml:lang="sr-Latn">Tekst</name>
   <name xml:lang="sr-ijekavian">Текст</name>
   <name xml:lang="sr-ijekavianlatin">Tekst</name>
+  <name xml:lang="sv">Text</name>
   <name xml:lang="uk">Текст</name>
   <name xml:lang="x-test">xxTextxx</name>
   <name xml:lang="zh-CN">文本</name>
@@ -51,6 +52,7 @@
   <summary xml:lang="sr-Latn">Podrška za čitanje dokumenata u običnom tekstu</summary>
   <summary xml:lang="sr-ijekavian">Подршка за читање докумената у обичном тексту</summary>
   <summary xml:lang="sr-ijekavianlatin">Podrška za čitanje dokumenata u običnom tekstu</summary>
+  <summary xml:lang="sv">Lägger till stöd för att läsa enkla textdokument</summary>
   <summary xml:lang="uk">Додає підтримку читання звичайних текстових документів</summary>
   <summary xml:lang="x-test">xxAdds support for reading plain text documentsxx</summary>
   <summary xml:lang="zh-CN">增加对纯文本文档的支持</summary>

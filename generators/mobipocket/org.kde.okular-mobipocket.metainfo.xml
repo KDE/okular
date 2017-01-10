@@ -26,6 +26,7 @@
   <name xml:lang="sr-Latn">Mobipocket</name>
   <name xml:lang="sr-ijekavian">Мобипокет</name>
   <name xml:lang="sr-ijekavianlatin">Mobipocket</name>
+  <name xml:lang="sv">Mobipocket</name>
   <name xml:lang="uk">Mobipocket</name>
   <name xml:lang="x-test">xxMobipocketxx</name>
   <name xml:lang="zh-CN">Mobipocket</name>
@@ -51,6 +52,7 @@
   <summary xml:lang="sr-Latn">Podrška za čitanje Mobipocket e‑knjiga</summary>
   <summary xml:lang="sr-ijekavian">Подршка за читање мобипокет е‑књига</summary>
   <summary xml:lang="sr-ijekavianlatin">Podrška za čitanje Mobipocket e‑knjiga</summary>
+  <summary xml:lang="sv">Lägger till stöd för att läsa Mobipocket e-böcker</summary>
   <summary xml:lang="uk">Додає підтримку читання електронних книг у форматі Mobipocket</summary>
   <summary xml:lang="x-test">xxAdds support for reading Mobipocket E-booksxx</summary>
   <summary xml:lang="zh-CN">增加对 Mobipocket 电子书的支持</summary>

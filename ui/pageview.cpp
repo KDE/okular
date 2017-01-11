@@ -4830,7 +4830,7 @@ void PageView::slotHandleWebShortcutAction()
 
 void PageView::slotConfigureWebShortcuts()
 {
-    KToolInvocation::kdeinitExec( QStringLiteral("kcmshell5"), QStringList() << QStringLiteral("ebrowsing") );
+    KToolInvocation::kdeinitExec( QStringLiteral("kcmshell5"), QStringList() << QStringLiteral("webshortcuts") );
 }
 
 void PageView::slotZoom()

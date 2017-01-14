@@ -18,7 +18,7 @@
 
 using namespace OOO;
 
-Q_LOGGING_CATEGORY(OkularOooDebug, "org.kde.okular.generators.ooo")
+Q_LOGGING_CATEGORY(OkularOooDebug, "org.kde.okular.generators.ooo", QtWarningMsg)
 //---------------------------------------------------------------------
 
 ManifestEntry::ManifestEntry( const QString &fileName ) :

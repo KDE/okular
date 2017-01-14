@@ -433,7 +433,7 @@ int TIFFGenerator::mapPage( int page ) const
     return it.value();
 }
 
-Q_LOGGING_CATEGORY(OkularTiffDebug, "org.kde.okular.generators.tiff")
+Q_LOGGING_CATEGORY(OkularTiffDebug, "org.kde.okular.generators.tiff", QtWarningMsg)
 
 #include "generator_tiff.moc"
 

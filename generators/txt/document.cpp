@@ -71,4 +71,4 @@ QString Document::toUnicode( const QByteArray &array )
     return QTextCodec::codecForName( encoding )->toUnicode( array );
 }
 
-Q_LOGGING_CATEGORY(OkularTxtDebug, "org.kde.okular.generators.txt")
+Q_LOGGING_CATEGORY(OkularTxtDebug, "org.kde.okular.generators.txt", QtWarningMsg)

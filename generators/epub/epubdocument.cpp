@@ -13,7 +13,7 @@
 
 #include <QRegExp>
 
-Q_LOGGING_CATEGORY(OkularEpuDebug, "org.kde.okular.generators.epu")
+Q_LOGGING_CATEGORY(OkularEpuDebug, "org.kde.okular.generators.epu", QtWarningMsg)
 using namespace Epub;
 
 EpubDocument::EpubDocument(const QString &fileName) : QTextDocument(),

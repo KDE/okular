@@ -2234,7 +2234,7 @@ QVariant XpsRenderNode::getChildData( const QString &name )
     }
 }
 
-Q_LOGGING_CATEGORY(OkularXpsDebug, "org.kde.okular.generators.xps")
+Q_LOGGING_CATEGORY(OkularXpsDebug, "org.kde.okular.generators.xps", QtWarningMsg)
 
 #include "generator_xps.moc"
 

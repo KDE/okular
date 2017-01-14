@@ -9,4 +9,4 @@
 
 #include "debug_ui.h"
 
-Q_LOGGING_CATEGORY(OkularUiDebug, "org.kde.okular.ui")
+Q_LOGGING_CATEGORY(OkularUiDebug, "org.kde.okular.ui", QtWarningMsg)

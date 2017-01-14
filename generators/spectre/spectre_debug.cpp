@@ -18,6 +18,6 @@
 */
 
 #include "spectre_debug.h"
-Q_LOGGING_CATEGORY(OkularSpectreDebug, "org.kde.okular.generators.spectre")
+Q_LOGGING_CATEGORY(OkularSpectreDebug, "org.kde.okular.generators.spectre", QtWarningMsg)
 
 

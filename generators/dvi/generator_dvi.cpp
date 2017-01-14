@@ -571,7 +571,7 @@ QVariant DviGenerator::metaData( const QString & key, const QVariant & option ) 
     return QVariant();
 }
 
-Q_LOGGING_CATEGORY(OkularDviDebug, "org.kde.okular.generators.dvi.core")
-Q_LOGGING_CATEGORY(OkularDviShellDebug, "org.kde.okular.generators.dvi.shell")
+Q_LOGGING_CATEGORY(OkularDviDebug, "org.kde.okular.generators.dvi.core", QtWarningMsg)
+Q_LOGGING_CATEGORY(OkularDviShellDebug, "org.kde.okular.generators.dvi.shell", QtWarningMsg)
 
 #include "generator_dvi.moc"

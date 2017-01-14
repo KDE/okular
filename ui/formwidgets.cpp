@@ -92,7 +92,7 @@ QButtonGroup* FormWidgetsController::registerRadioButton( QAbstractButton *butto
         const QList< int >::const_iterator idsIt = qFind( (*it).ids, id );
         if ( idsIt != (*it).ids.constEnd() )
         {
-            qDebug(OkularUiDebug) << "Adding id" << id << "To group including" << (*it).ids;
+            qCDebug(OkularUiDebug) << "Adding id" << id << "To group including" << (*it).ids;
             (*it).group->addButton( button );
             (*it).group->setId( button, id );
             return (*it).group;

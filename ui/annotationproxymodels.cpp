@@ -15,6 +15,7 @@
 #include <QIcon>
 
 #include "annotationmodel.h"
+#include "debug_ui.h"
 
 static quint32 mixIndex( int row, int column )
 {
@@ -289,7 +290,7 @@ class AuthorGroupItem
             QString prefix;
             for ( int i = 0; i < level; ++i ) prefix += QLatin1Char(' ');
 
-            qDebug( "%s%s", qPrintable( prefix ), ( mType == Page ? "Page" : (mType == Author ? "Author" : "Annotation") ) );
+            qCDebug(OkularUiDebug, "%s%s", qPrintable( prefix ), ( mType == Page ? "Page" : (mType == Author ? "Author" : "Annotation") ) );
 
             for ( int i = 0; i < mChilds.count(); ++i )
                 mChilds[ i ]->dump( level + 2 );

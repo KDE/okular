@@ -13,6 +13,7 @@ set(okular_SRCS
     ${CMAKE_SOURCE_DIR}/ui/guiutils.cpp
     ${CMAKE_SOURCE_DIR}/ui/tocmodel.cpp
     ${CMAKE_SOURCE_DIR}/ui/pagepainter.cpp
+    ${CMAKE_SOURCE_DIR}/ui/debug_ui.cpp
     pageitem.cpp
     documentitem.cpp
     thumbnailitem.cpp

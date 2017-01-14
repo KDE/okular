@@ -33,6 +33,7 @@
 #include "core/observer.h"
 #include "core/tile.h"
 #include "settings_core.h"
+#include "ui/debug_ui.h"
 
 Q_GLOBAL_STATIC_WITH_ARGS( QPixmap, busyPixmap, ( KIconLoader::global()->loadIcon(QLatin1String("okular"), KIconLoader::NoGroup, 32, KIconLoader::DefaultState, QStringList(), 0, true) ) )
 
@@ -881,7 +882,7 @@ void PagePainter::cropPixmapOnImage( QImage & dest, const QPixmap * src, const Q
 void PagePainter::recolor(QImage *image, const QColor &foreground, const QColor &background)
 {
     if (image->format() != QImage::Format_ARGB32_Premultiplied) {
-        qWarning() << "Wrong image format! Converting...";
+        qCWarning(OkularUiDebug) << "Wrong image format! Converting...";
         *image = image->convertToFormat(QImage::Format_ARGB32_Premultiplied);
     }
 

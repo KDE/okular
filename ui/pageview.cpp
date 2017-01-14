@@ -1220,7 +1220,7 @@ void PageView::slotRealNotifyViewportChanged( bool smoothMove )
         }
     if ( !item )
     {
-        qWarning() << "viewport for page" << vp.pageNumber << "has no matching item!";
+        qCWarning(OkularUiDebug) << "viewport for page" << vp.pageNumber << "has no matching item!";
         d->blockViewport = false;
         return;
     }
@@ -2752,7 +2752,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                     {
                         // request the textpage if there isn't one
                         okularPage= item->page();
-                        qWarning() << "checking if page" << item->pageNumber() << "has text:" << okularPage->hasTextPage();
+                        qCDebug(OkularUiDebug) << "checking if page" << item->pageNumber() << "has text:" << okularPage->hasTextPage();
                         if ( !okularPage->hasTextPage() )
                             d->document->requestTextPage( okularPage->number() );
                         // grab text in the rect that intersects itemRect
@@ -2907,7 +2907,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                     {
                         // request the textpage if there isn't one
                         okularPage= item->page();
-                        qWarning() << "checking if page" << item->pageNumber() << "has text:" << okularPage->hasTextPage();
+                        qCDebug(OkularUiDebug) << "checking if page" << item->pageNumber() << "has text:" << okularPage->hasTextPage();
                         if ( !okularPage->hasTextPage() )
                             d->document->requestTextPage( okularPage->number() );
                         // grab text in the rect that intersects itemRect

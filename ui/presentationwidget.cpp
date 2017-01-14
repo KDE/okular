@@ -1661,9 +1661,9 @@ void PresentationWidget::inhibitPowerManagement()
         reply.waitForFinished();
         if (reply.isValid()) {
             m_screenInhibitCookie = reply.value();
-            qDebug() << "Screen inhibition cookie" << m_screenInhibitCookie;
+            qCDebug(OkularUiDebug) << "Screen inhibition cookie" << m_screenInhibitCookie;
         } else {
-            qWarning() << "Unable to inhibit screensaver" << reply.error();
+            qCWarning(OkularUiDebug) << "Unable to inhibit screensaver" << reply.error();
         }
     }
 
@@ -1683,7 +1683,7 @@ void PresentationWidget::inhibitPowerManagement()
         if (reply.isValid()) {
             m_sleepInhibitCookie = reply.value().fileDescriptor();
         } else {
-            qWarning() << "Unable to inhibit sleep" << reply.error();
+            qCWarning(OkularUiDebug) << "Unable to inhibit sleep" << reply.error();
         }
     }
 #endif

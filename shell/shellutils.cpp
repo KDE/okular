@@ -20,31 +20,32 @@
 namespace ShellUtils
 {
 
-QUrl urlFromArg( const QString& _arg, const QString& pageArg )
+namespace detail
 {
-#if QT_VERSION >= 0x050400
+
+bool qfileExistFunc( const QString& fileName )
+{
+    return QFile::exists( fileName );
+}
+
+}
+
+FileExistFunc qfileExistFunc()
+{
+    return detail::qfileExistFunc;
+}
+
+QUrl urlFromArg( const QString& _arg, FileExistFunc exist_func, const QString& pageArg )
+{
     QUrl url = QUrl::fromUserInput(_arg, QDir::currentPath(), QUrl::AssumeLocalFile);
-#else
-    // Code from QUrl::fromUserInput(QString, QString)
-    QUrl url = QUrl::fromUserInput(_arg);
-    QUrl testUrl = QUrl(_arg, QUrl::TolerantMode);
-    if (testUrl.isRelative() && !QDir::isAbsolutePath(_arg)) {
-        QFileInfo fileInfo(QDir::current(), _arg);
-        if (fileInfo.exists())
-            url = QUrl::fromLocalFile(fileInfo.absoluteFilePath());
-    }
-#endif
     if ( url.isLocalFile() ) {
         // make sure something like /tmp/foo#bar.pdf is treated as a path name (default)
         // but something like /tmp/foo.pdf#bar is foo.pdf plus an anchor "bar"
         const QString path = url.path();
         int hashIndex = path.lastIndexOf( QLatin1Char ( '#' ) );
-        int lastDotIndex = path.lastIndexOf( QLatin1Char ( '.' ) );
-        // make sure that we don't change the path if .pdf comes after the #
-        if ( hashIndex != -1 && hashIndex > lastDotIndex) {
+        if ( hashIndex != -1 && !exist_func(path) ) {
             url.setPath( path.left( hashIndex ) );
             url.setFragment( path.mid( hashIndex + 1 ) );
-            qDebug() << "Added fragment to url:" << url.path() << url.fragment();
         }
     } else if ( !url.fragment().isEmpty() ) {
         // make sure something like http://example.org/foo#bar.pdf is treated as a path name

@@ -79,17 +79,7 @@ bool KIMGIOGenerator::loadDocumentInternal(const QByteArray & fileData, const QS
     // Apply transformations dictated by Exif metadata
     KExiv2Iface::KExiv2 exifMetadata;
     if ( exifMetadata.loadFromData( fileData ) ) {
-#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0) && QT_VERSION < QT_VERSION_CHECK(5, 4, 2)
-        // Qt 5.4 (up to 5.4.1) rotates jpeg images automatically with no way of disabling it
-        // See https://bugreports.qt.io/browse/QTBUG-37946
-        // and https://codereview.qt-project.org/#/c/98013/
-        // and https://codereview.qt-project.org/#/c/110668/
-        if (reader.format() != QByteArrayLiteral("jpeg")) {
-            exifMetadata.rotateExifQImage( m_img, exifMetadata.getImageOrientation() );
-        }
-#else
         exifMetadata.rotateExifQImage(m_img, exifMetadata.getImageOrientation());
-#endif
     }
 
     pagesVector.resize( 1 );

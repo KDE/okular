@@ -2066,10 +2066,8 @@ XpsGenerator::XpsGenerator( QObject *parent, const QVariantList &args )
     // 1) QFontDatabase says so
     // 2) Qt >= 4.4.0 (see Trolltech task ID: 169502)
     // 3) Qt >= 4.4.2 (see Trolltech task ID: 215090)
-#if QT_VERSION >= 0x040402
     if ( QFontDatabase::supportsThreadedFontRendering() )
         setFeature( Threaded );
-#endif
     userMutex();
 }
 

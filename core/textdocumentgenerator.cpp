@@ -19,9 +19,7 @@
 #include <QtGui/QImage>
 #include <QtGui/QPainter>
 #include <QtPrintSupport/QPrinter>
-#if QT_VERSION >= 0x040500
 #include <QtGui/QTextDocumentWriter>
-#endif
 
 #include "action.h"
 #include "annotations.h"
@@ -476,14 +474,12 @@ Okular::ExportFormat::List TextDocumentGenerator::exportFormats(   ) const
     if ( formats.isEmpty() ) {
         formats.append( Okular::ExportFormat::standardFormat( Okular::ExportFormat::PlainText ) );
         formats.append( Okular::ExportFormat::standardFormat( Okular::ExportFormat::PDF ) );
-#if QT_VERSION >= 0x040500
         if ( QTextDocumentWriter::supportedDocumentFormats().contains( "ODF" ) ) {
             formats.append( Okular::ExportFormat::standardFormat( Okular::ExportFormat::OpenDocumentText ) );
         }
         if ( QTextDocumentWriter::supportedDocumentFormats().contains( "HTML" ) ) {
             formats.append( Okular::ExportFormat::standardFormat( Okular::ExportFormat::HTML ) );
         }
-#endif
     }
 
     return formats;
@@ -515,7 +511,6 @@ bool TextDocumentGenerator::exportTo( const QString &fileName, const Okular::Exp
         out << d->mDocument->toPlainText();
 
         return true;
-#if QT_VERSION >= 0x040500
     } else if ( format.mimeType().name() == QLatin1String( "application/vnd.oasis.opendocument.text" ) ) {
         QTextDocumentWriter odfWriter( fileName, "odf" );
 
@@ -524,7 +519,6 @@ bool TextDocumentGenerator::exportTo( const QString &fileName, const Okular::Exp
         QTextDocumentWriter odfWriter( fileName, "html" );
 
         return odfWriter.write( d->mDocument );
-#endif
     }
     return false;
 }

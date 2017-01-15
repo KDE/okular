@@ -20,7 +20,22 @@
 namespace ShellUtils
 {
 
-QUrl urlFromArg( const QString& _arg, const QString& pageArg )
+namespace detail
+{
+
+bool qfileExistFunc( const QString& fileName )
+{
+    return QFile::exists( fileName );
+}
+
+}
+
+FileExistFunc qfileExistFunc()
+{
+    return detail::qfileExistFunc;
+}
+
+QUrl urlFromArg( const QString& _arg, FileExistFunc exist_func, const QString& pageArg )
 {
 #if QT_VERSION >= 0x050400
     QUrl url = QUrl::fromUserInput(_arg, QDir::currentPath(), QUrl::AssumeLocalFile);
@@ -39,12 +54,9 @@ QUrl urlFromArg( const QString& _arg, const QString& pageArg )
         // but something like /tmp/foo.pdf#bar is foo.pdf plus an anchor "bar"
         const QString path = url.path();
         int hashIndex = path.lastIndexOf( QLatin1Char ( '#' ) );
-        int lastDotIndex = path.lastIndexOf( QLatin1Char ( '.' ) );
-        // make sure that we don't change the path if .pdf comes after the #
-        if ( hashIndex != -1 && hashIndex > lastDotIndex) {
+        if ( hashIndex != -1 && !exist_func(path) ) {
             url.setPath( path.left( hashIndex ) );
             url.setFragment( path.mid( hashIndex + 1 ) );
-            qDebug() << "Added fragment to url:" << url.path() << url.fragment();
         }
     } else if ( !url.fragment().isEmpty() ) {
         // make sure something like http://example.org/foo#bar.pdf is treated as a path name

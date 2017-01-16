@@ -1,52 +1,101 @@
-include (MacroLogFeature)
+
+function(okular_add_generator _target)
+  kcoreaddons_add_plugin(${_target}
+    JSON "lib${_target}.json"
+    INSTALL_NAMESPACE "okular/generators"
+    SOURCES ${ARGN}
+  )
+endfunction()
+
+find_package(Poppler "0.12.1" COMPONENTS Qt5)
+set_package_properties("Poppler" PROPERTIES
+        TYPE RECOMMENDED
+        PURPOSE "Support for PDF files in okular.")
 
 set(LIBSPECTRE_MINIMUM_VERSION "0.2")
+find_package(LibSpectre "${LIBSPECTRE_MINIMUM_VERSION}")
+set_package_properties(LibSpectre PROPERTIES
+        DESCRIPTION  "A PostScript rendering library"
+        URL "http://libspectre.freedesktop.org/wiki/"
+        TYPE RECOMMENDED
+        PURPOSE "Support for PS files in okular.")
 
-macro_optional_find_package(Poppler)
-macro_log_feature(HAVE_POPPLER_0_12_1 "Poppler-Qt4" "A PDF rendering library" "http://poppler.freedesktop.org" FALSE "0.12.1" "Support for PDF files in okular.")
+find_package(KF5KExiv2)
+set_package_properties("LibKExiv2" PROPERTIES
+        DESCRIPTION  "Wrapper around Exiv2 library"
+        URL "http://www.digikam.org/sharedlibs"
+        TYPE RECOMMENDED
+        PURPOSE "Support for image files")
 
-macro_optional_find_package(LibSpectre)
-macro_log_feature(LIBSPECTRE_FOUND "libspectre" "A PostScript rendering library" "http://libspectre.freedesktop.org/wiki/" FALSE "${LIBSPECTRE_MINIMUM_VERSION}" "Support for PS files in okular.")
+find_package(CHM)
+set_package_properties("CHM" PROPERTIES
+        DESCRIPTION  "A library for dealing with Microsoft ITSS/CHM format files"
+        URL "http://www.jedrea.com/chmlib"
+        TYPE RECOMMENDED
+        PURPOSE "Support CHM files in okular.")
 
-macro_optional_find_package(Kexiv2)
-macro_log_feature(KEXIV2_FOUND "LibKExiv2" "Wrapper around Exiv2 library" "http://www.digikam.org/sharedlibs" FALSE "" "Support for image files")
+find_package(DjVuLibre "3.5.17")
+set_package_properties("DjVuLibre" PROPERTIES
+        DESCRIPTION  "A library for dealing with DjVu formatted files"
+        URL "http://djvulibre.djvuzone.org"
+        TYPE RECOMMENDED
+        PURPOSE "Support for DjVu files in okular.")
 
-macro_optional_find_package(CHM)
-macro_log_feature(CHM_FOUND "CHM" "A library for dealing with Microsoft ITSS/CHM format files" "http://www.jedrea.com/chmlib" FALSE "" "Support CHM files in okular.")
+find_package(TIFF)
+set_package_properties("libTIFF" PROPERTIES
+        DESCRIPTION  "A library for reading and writing TIFF formatted files,"
+        URL "http://www.remotesensing.org/libtiff"
+        TYPE RECOMMENDED
+        PURPOSE "Support for TIFF files in okular.")
 
-macro_optional_find_package(DjVuLibre)
-macro_log_feature(DJVULIBRE_FOUND "DjVuLibre" "A library for dealing with DjVu formatted files" "http://djvulibre.djvuzone.org" FALSE "3.5.17" "Support for DjVu files in okular.")
+find_package(Freetype)
+set_package_properties("FreeType" PROPERTIES
+        DESCRIPTION  "A font rendering engine"
+        URL "http://www.freetype.org"
+        TYPE RECOMMENDED
+        PURPOSE "Provides freetype font support in the okular DVI generator.")
 
-macro_optional_find_package(TIFF)
-macro_log_feature(TIFF_FOUND "libTIFF" "A library for reading and writing TIFF formatted files," "http://www.remotesensing.org/libtiff" FALSE "" "Support for TIFF files in okular.")
+find_package(JPEG)
+set_package_properties("JPEG" PROPERTIES
+        DESCRIPTION  "A library for reading and writing JPEG image files."
+        URL "http://www.ijg.org"
+        TYPE RECOMMENDED
+        PURPOSE "Support fof PalmDB documents in okular.")
 
-macro_optional_find_package(Freetype)
-macro_log_feature(FREETYPE_FOUND "FreeType" "A font rendering engine" "http://www.freetype.org" FALSE "" "Provides freetype font support in the okular DVI generator.")
+find_package(ZLIB)
+set_package_properties("ZLib" PROPERTIES
+        DESCRIPTION  "The Zlib compression library"
+        URL "http://www.zlib.net"
+        TYPE RECOMMENDED
+        PURPOSE "Support for Plucker files in Okular.")
 
-macro_optional_find_package(JPEG)
-macro_log_feature(JPEG_FOUND "JPEG" "A library for reading and writing JPEG image files." "http://www.ijg.org" FALSE "" "Support fof PalmDB documents in okular.")
-macro_optional_find_package(ZLIB)
-macro_log_feature(ZLIB_FOUND "ZLib" "The Zlib compression library" "http://www.zlib.net" FALSE "" "Support for Plucker files in Okular.")
+find_package(EPub)
+set_package_properties("libepub" PROPERTIES
+        DESCRIPTION  "A library for reading EPub documents"
+        URL "http://sourceforge.net/projects/ebook-tools"
+        TYPE RECOMMENDED
+        PURPOSE "Support for EPub documents in Okular.")
 
-macro_optional_find_package(EPub)
-macro_log_feature(EPUB_FOUND "libepub" "A library for reading EPub documents" "http://sourceforge.net/projects/ebook-tools" FALSE "" "Support for EPub documents in Okular.")
-
-macro_optional_find_package(QMobipocket)
-macro_log_feature(QMOBIPOCKET_FOUND "libqmobipocket" "A library for reading Mobipocket documents" "https://projects.kde.org/projects/kde/kdegraphics/kdegraphics-mobipocket" FALSE "" "Support for Mobipocket documents in Okular.")
+find_package(QMobipocket "2")
+set_package_properties("libqmobipocket" PROPERTIES
+        DESCRIPTION  "A library for reading Mobipocket documents"
+        URL "https://commits.kde.org/kdegraphics-mobipocket"
+        TYPE RECOMMENDED
+        PURPOSE "Support for Mobipocket documents in Okular.")
 
 # let's enable the generators properly configured
 
-if(POPPLER_FOUND AND HAVE_POPPLER_0_12_1)
+if(Poppler_Qt5_FOUND)
   add_subdirectory(poppler)
-endif(POPPLER_FOUND AND HAVE_POPPLER_0_12_1)
+endif(Poppler_Qt5_FOUND)
 
 if(LIBSPECTRE_FOUND)
   add_subdirectory(spectre)
 endif(LIBSPECTRE_FOUND)
 
-if(KEXIV2_FOUND)
+if(KF5KExiv2_FOUND)
   add_subdirectory( kimgio )
-endif(KEXIV2_FOUND)
+endif()
 
 if(CHM_FOUND)
   add_subdirectory( chm )
@@ -82,6 +131,6 @@ endif(EPUB_FOUND)
 
 add_subdirectory(txt)
 
-if(QMOBIPOCKET_FOUND)
+if(QMobipocket_FOUND)
   add_subdirectory(mobipocket)
 endif()

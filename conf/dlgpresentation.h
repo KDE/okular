@@ -19,10 +19,10 @@ class DlgPresentation : public QWidget
     Q_OBJECT
 
     public:
-        DlgPresentation( QWidget * parent = 0 );
+        explicit DlgPresentation( QWidget * parent = Q_NULLPTR );
         virtual ~DlgPresentation();
 
-    protected slots:
+    protected Q_SLOTS:
         void screenComboChanged( int which );
 
     protected:

@@ -20,36 +20,33 @@
 #include "shell.h"
 
 // qt/kde includes
-#include <qdesktopwidget.h>
-#include <qtimer.h>
-#include <QtDBus/qdbusconnection.h>
-#include <kaction.h>
-#include <kapplication.h>
-#include <kfiledialog.h>
-#include <kpluginloader.h>
-#include <kmessagebox.h>
-#include <kmimetype.h>
-#include <kstandardaction.h>
-#include <ktoolbar.h>
-#include <kurl.h>
-#include <kdebug.h>
-#include <klocale.h>
-#include <kmenubar.h>
-#include <kio/netaccess.h>
-#include <krecentfilesaction.h>
-#include <kservicetypetrader.h>
-#include <ktoggleaction.h>
-#include <ktogglefullscreenaction.h>
-#include <kactioncollection.h>
-#include <kwindowsystem.h>
-#include <ktabwidget.h>
-#include <kxmlguifactory.h>
+#include <QDesktopWidget>
+#include <QTimer>
+#include <QDBusConnection>
+#include <QMenuBar>
+#include <QApplication>
+#include <QFileDialog>
+#include <KPluginLoader>
+#include <KMessageBox>
+#include <QMimeType>
+#include <QMimeDatabase>
+#include <KStandardAction>
+#include <KToolBar>
+#include <KRecentFilesAction>
+#include <KServiceTypeTrader>
+#include <KToggleFullScreenAction>
+#include <KActionCollection>
+#include <KWindowSystem>
+#include <QTabWidget>
+#include <KXMLGUIFactory>
 #include <QDragMoveEvent>
 #include <QTabBar>
-
-#ifdef KActivities_FOUND
+#include <KConfigGroup>
+#include <KUrlMimeData>
+#include <KLocalizedString>
+#include <KSharedConfig>
+#include <KIO/Global>
 #include <KActivities/ResourceInstance>
-#endif
 
 // local includes
 #include "kdocumentviewer.h"
@@ -59,29 +56,33 @@
 static const char *shouldShowMenuBarComingFromFullScreen = "shouldShowMenuBarComingFromFullScreen";
 static const char *shouldShowToolBarComingFromFullScreen = "shouldShowToolBarComingFromFullScreen";
 
+static const char* const SESSION_URL_KEY = "Urls";
+static const char* const SESSION_TAB_KEY = "ActiveTab";
+
 Shell::Shell( const QString &serializedOptions )
   : KParts::MainWindow(), m_menuBarWasShown(true), m_toolBarWasShown(true)
-#ifdef KActivities_FOUND
     , m_activityResource(0)
-#endif
     , m_isValid(true)
 {
-  setObjectName( QLatin1String( "okular::Shell" ) );
+  setObjectName( QStringLiteral( "okular::Shell#" ) );
   setContextMenuPolicy( Qt::NoContextMenu );
+  // otherwise .rc file won't be found by unit test
+  setComponentName(QStringLiteral("okular"), QString());
   // set the shell's ui resource file
-  setXMLFile("shell.rc");
+  setXMLFile(QStringLiteral("shell.rc"));
   m_fileformatsscanned = false;
   m_showMenuBarAction = 0;
   // this routine will find and load our Part.  it finds the Part by
   // name which is a bad idea usually.. but it's alright in this
   // case since our Part is made for this Shell
-  m_partFactory = KPluginLoader("okularpart").factory();
+  KPluginLoader loader(QStringLiteral("okularpart"));
+  m_partFactory = loader.factory();
   if (!m_partFactory)
   {
     // if we couldn't find our Part, we exit since the Shell by
     // itself can't do anything useful
     m_isValid = false;
-    KMessageBox::error(this, i18n("Unable to find the Okular component."));
+    KMessageBox::error(this, i18n("Unable to find the Okular component: %1", loader.errorString()));
     return;
   }
 
@@ -90,22 +91,25 @@ Shell::Shell( const QString &serializedOptions )
   if (firstPart)
   {
     // Setup tab bar
-    m_tabWidget = new KTabWidget( this );
+    m_tabWidget = new QTabWidget( this );
     m_tabWidget->setTabsClosable( true );
     m_tabWidget->setElideMode( Qt::ElideRight );
-    m_tabWidget->setTabBarHidden( true );
+    m_tabWidget->tabBar()->hide();
     m_tabWidget->setDocumentMode( true );
     m_tabWidget->setMovable( true );
-    connect( m_tabWidget, SIGNAL(currentChanged(int)), SLOT(setActiveTab(int)) );
-    connect( m_tabWidget, SIGNAL(tabCloseRequested(int)), SLOT(closeTab(int)) );
-    connect( m_tabWidget, SIGNAL(testCanDecode(const QDragMoveEvent*,bool&)), SLOT(testTabDrop(const QDragMoveEvent*,bool&)) );
-    connect( m_tabWidget, SIGNAL(receivedDropEvent(QDropEvent*)), SLOT(handleTabDrop(QDropEvent*)) );
-    connect( m_tabWidget->tabBar(), SIGNAL(tabMoved(int,int)), SLOT(moveTabData(int,int)) );
+
+    m_tabWidget->setAcceptDrops(true);
+    m_tabWidget->installEventFilter(this);
+
+    connect( m_tabWidget, &QTabWidget::currentChanged, this, &Shell::setActiveTab );
+    connect( m_tabWidget, &QTabWidget::tabCloseRequested, this, &Shell::closeTab );
+    connect( m_tabWidget->tabBar(), &QTabBar::tabMoved, this, &Shell::moveTabData );
 
     setCentralWidget( m_tabWidget );
 
     // then, setup our actions
     setupActions();
+    connect( QCoreApplication::instance(), &QCoreApplication::aboutToQuit, this, &QObject::deleteLater );
     // and integrate the part's GUI with the shell's
     setupGUI(Keys | ToolBar | Save);
     createGUI(firstPart);
@@ -119,22 +123,48 @@ Shell::Shell( const QString &serializedOptions )
     m_unique = ShellUtils::unique(serializedOptions);
     if (m_unique)
     {
-        m_unique = QDBusConnection::sessionBus().registerService("org.kde.okular");
+        m_unique = QDBusConnection::sessionBus().registerService(QStringLiteral("org.kde.okular"));
         if (!m_unique)
             KMessageBox::information(this, i18n("There is already a unique Okular instance running. This instance won't be the unique one."));
+    }
+    else
+    {
+        QString serviceName = QStringLiteral("org.kde.okular-") + QString::number(qApp->applicationPid());
+        QDBusConnection::sessionBus().registerService(serviceName);
     }
     if (ShellUtils::noRaise(serializedOptions))
     {
         setAttribute(Qt::WA_ShowWithoutActivating);
     }
-    
-    QDBusConnection::sessionBus().registerObject("/okularshell", this, QDBusConnection::ExportScriptableSlots);
+
+    QDBusConnection::sessionBus().registerObject(QStringLiteral("/okularshell"), this, QDBusConnection::ExportScriptableSlots);
   }
   else
   {
     m_isValid = false;
     KMessageBox::error(this, i18n("Unable to find the Okular component."));
   }
+}
+
+bool Shell::eventFilter(QObject *obj, QEvent *event)
+{
+    Q_UNUSED(obj);
+
+    QDragMoveEvent* dmEvent = dynamic_cast<QDragMoveEvent*>(event);
+    if (dmEvent) {
+        bool accept = dmEvent->mimeData()->hasUrls();
+        event->setAccepted(accept);
+        return accept;
+    }
+
+    QDropEvent* dEvent = dynamic_cast<QDropEvent*>(event);
+    if (dEvent) {
+        const QList<QUrl> list = KUrlMimeData::urlsFromMimeData(dEvent->mimeData());
+        handleDroppedUrls(list);
+        dEvent->setAccepted(true);
+        return true;
+    }
+    return false;
 }
 
 bool Shell::isValid() const
@@ -156,14 +186,17 @@ Shell::~Shell()
         {
            it->part->closeUrl( false );
         }
+        m_tabs.clear();
     }
     if (m_unique)
-        QDBusConnection::sessionBus().unregisterService("org.kde.okular");
+        QDBusConnection::sessionBus().unregisterService(QStringLiteral("org.kde.okular"));
+
+    delete m_tabWidget;
 }
 
 // Open a new document if we have space for it
 // This can hang if called on a unique instance and openUrl pops a messageBox
-bool Shell::openDocument( const QString& url, const QString &serializedOptions )
+bool Shell::openDocument( const QUrl& url, const QString &serializedOptions )
 {
     if( m_tabs.size() <= 0 )
        return false;
@@ -181,6 +214,11 @@ bool Shell::openDocument( const QString& url, const QString &serializedOptions )
     openUrl( url, serializedOptions );
 
     return true;
+}
+
+bool Shell::openDocument( const QString& urlString, const QString &serializedOptions )
+{
+    return openDocument(QUrl(urlString), serializedOptions);
 }
 
 bool Shell::canOpenDocs( int numDocs, int desktop )
@@ -201,7 +239,7 @@ bool Shell::canOpenDocs( int numDocs, int desktop )
    return true;
 }
 
-void Shell::openUrl( const KUrl & url, const QString &serializedOptions )
+void Shell::openUrl( const QUrl & url, const QString &serializedOptions )
 {
     const int activeTab = m_tabWidget->currentIndex();
     if ( activeTab < m_tabs.size() )
@@ -233,17 +271,15 @@ void Shell::openUrl( const KUrl & url, const QString &serializedOptions )
             m_tabWidget->setTabText( activeTab, url.fileName() );
             applyOptionsToPart( activePart, serializedOptions );
             bool openOk = activePart->openUrl( url );
-            const bool isstdin = url.fileName( KUrl::ObeyTrailingSlash ) == QLatin1String( "-" );
+            const bool isstdin = url.fileName() == QLatin1String( "-" );
             if ( !isstdin )
             {
                 if ( openOk )
                 {
-#ifdef KActivities_FOUND
                     if ( !m_activityResource )
                         m_activityResource = new KActivities::ResourceInstance( window()->winId(), this );
 
                     m_activityResource->setUri( url );
-#endif
                     m_recent->addUrl( url );
                 }
                 else
@@ -260,13 +296,13 @@ void Shell::closeUrl()
 
 void Shell::readSettings()
 {
-    m_recent->loadEntries( KGlobal::config()->group( "Recent Files" ) );
+    m_recent->loadEntries( KSharedConfig::openConfig()->group( "Recent Files" ) );
     m_recent->setEnabled( true ); // force enabling
 
-    const KConfigGroup group = KGlobal::config()->group( "Desktop Entry" );
+    const KConfigGroup group = KSharedConfig::openConfig()->group( "Desktop Entry" );
     bool fullScreen = group.readEntry( "FullScreen", false );
     setFullScreen( fullScreen );
-    
+
     if (fullScreen)
     {
         m_menuBarWasShown = group.readEntry( shouldShowMenuBarComingFromFullScreen, true );
@@ -276,23 +312,23 @@ void Shell::readSettings()
 
 void Shell::writeSettings()
 {
-    m_recent->saveEntries( KGlobal::config()->group( "Recent Files" ) );
-    KConfigGroup group = KGlobal::config()->group( "Desktop Entry" );
+    m_recent->saveEntries( KSharedConfig::openConfig()->group( "Recent Files" ) );
+    KConfigGroup group = KSharedConfig::openConfig()->group( "Desktop Entry" );
     group.writeEntry( "FullScreen", m_fullScreenAction->isChecked() );
     if (m_fullScreenAction->isChecked())
     {
         group.writeEntry( shouldShowMenuBarComingFromFullScreen, m_menuBarWasShown );
         group.writeEntry( shouldShowToolBarComingFromFullScreen, m_toolBarWasShown );
     }
-    KGlobal::config()->sync();
+    KSharedConfig::openConfig()->sync();
 }
 
 void Shell::setupActions()
 {
   KStandardAction::open(this, SLOT(fileOpen()), actionCollection());
-  m_recent = KStandardAction::openRecent( this, SLOT(openUrl(KUrl)), actionCollection() );
+  m_recent = KStandardAction::openRecent( this, SLOT(openUrl(QUrl)), actionCollection() );
   m_recent->setToolBarMode( KRecentFilesAction::MenuMode );
-  connect( m_recent, SIGNAL(triggered()), this, SLOT(showOpenRecentMenu()) );
+  connect( m_recent, &QAction::triggered, this, &Shell::showOpenRecentMenu );
   m_recent->setToolTip( i18n("Click to open a file\nClick and hold to open a recent file") );
   m_recent->setWhatsThis( i18n( "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file" ) );
   m_printAction = KStandardAction::print( this, SLOT(print()), actionCollection() );
@@ -306,51 +342,65 @@ void Shell::setupActions()
   m_showMenuBarAction = KStandardAction::showMenubar( this, SLOT(slotShowMenubar()), actionCollection());
   m_fullScreenAction = KStandardAction::fullScreen( this, SLOT(slotUpdateFullScreen()), this,actionCollection() );
 
-  m_nextTabAction = actionCollection()->addAction("tab-next");
+  m_nextTabAction = actionCollection()->addAction(QStringLiteral("tab-next"));
   m_nextTabAction->setText( i18n("Next Tab") );
-  m_nextTabAction->setShortcut( KStandardShortcut::tabNext() );
+  actionCollection()->setDefaultShortcuts(m_nextTabAction, KStandardShortcut::tabNext());
   m_nextTabAction->setEnabled( false );
-  connect( m_nextTabAction, SIGNAL(triggered()), this, SLOT(activateNextTab()) );
+  connect( m_nextTabAction, &QAction::triggered, this, &Shell::activateNextTab );
 
-  m_prevTabAction = actionCollection()->addAction("tab-previous");
+  m_prevTabAction = actionCollection()->addAction(QStringLiteral("tab-previous"));
   m_prevTabAction->setText( i18n("Previous Tab") );
-  m_prevTabAction->setShortcut( KStandardShortcut::tabPrev() );
+  actionCollection()->setDefaultShortcuts(m_prevTabAction, KStandardShortcut::tabPrev());
   m_prevTabAction->setEnabled( false );
-  connect( m_prevTabAction, SIGNAL(triggered()), this, SLOT(activatePrevTab()) );
+  connect( m_prevTabAction, &QAction::triggered, this, &Shell::activatePrevTab );
 }
 
 void Shell::saveProperties(KConfigGroup &group)
 {
-  // the 'config' object points to the session managed
-  // config file.  anything you write here will be available
-  // later when this app is restored
-    emit saveDocumentRestoreInfo(group);
+    if ( !m_isValid ) // part couldn't be loaded, nothing to save
+        return;
+
+    // Gather lists of settings to preserve
+    QStringList urls;
+    for( int i = 0; i < m_tabs.size(); ++i )
+    {
+        urls.append( m_tabs[i].part->url().url() );
+    }
+    group.writePathEntry( SESSION_URL_KEY, urls );
+    group.writeEntry( SESSION_TAB_KEY, m_tabWidget->currentIndex() );
 }
 
 void Shell::readProperties(const KConfigGroup &group)
 {
-  // the 'config' object points to the session managed
-  // config file.  this function is automatically called whenever
-  // the app is being restored.  read in here whatever you wrote
-  // in 'saveProperties'
-    emit restoreDocument(group);
+    // Reopen documents based on saved settings
+    QStringList urls = group.readPathEntry( SESSION_URL_KEY, QStringList() );
+
+    while( !urls.isEmpty() )
+    {
+        openUrl( QUrl(urls.takeFirst()) );
+    }
+
+    int desiredTab = group.readEntry<int>( SESSION_TAB_KEY, 0 );
+    if( desiredTab < m_tabs.size() )
+    {
+        setActiveTab( desiredTab );
+    }
 }
 
 QStringList Shell::fileFormats() const
 {
     QStringList supportedPatterns;
 
-    QString constraint( "(Library == 'okularpart')" );
+    QString constraint( QStringLiteral("(Library == 'okularpart')") );
     QLatin1String basePartService( "KParts/ReadOnlyPart" );
     KService::List offers = KServiceTypeTrader::self()->query( basePartService, constraint );
     KService::List::ConstIterator it = offers.constBegin(), itEnd = offers.constEnd();
     for ( ; it != itEnd; ++it )
     {
         KService::Ptr service = *it;
-        QStringList mimeTypes = service->serviceTypes();
-        foreach ( const QString& mimeType, mimeTypes )
-            if ( mimeType != basePartService )
-                supportedPatterns.append( mimeType );
+        QStringList mimeTypes = service->mimeTypes();
+
+        supportedPatterns += mimeTypes;
     }
 
     return supportedPatterns;
@@ -374,34 +424,55 @@ void Shell::fileOpen()
         m_fileformatsscanned = true;
     }
 
-    QString startDir;
+    QUrl startDir;
     const KParts::ReadWritePart* const curPart = m_tabs[activeTab].part;
     if ( curPart->url().isLocalFile() )
-        startDir = curPart->url().toLocalFile();
-    KFileDialog dlg( startDir, QString(), this );
-    dlg.setOperationMode( KFileDialog::Opening );
+        startDir = KIO::upUrl(curPart->url());
 
-    // A directory may be a document. E.g. comicbook generator.
-    if ( m_fileformats.contains( "inode/directory" ) )
-        dlg.setMode( dlg.mode() | KFile::Directory );
+    QPointer<QFileDialog> dlg( new QFileDialog( this ));
+    dlg->setDirectoryUrl( startDir );
+    dlg->setAcceptMode( QFileDialog::AcceptOpen );
+    dlg->setOption( QFileDialog::HideNameFilterDetails, true );
 
-    if ( m_fileformatsscanned && m_fileformats.isEmpty() )
-        dlg.setFilter( i18n( "*|All Files" ) );
-    else
-        dlg.setMimeFilter( m_fileformats );
-    dlg.setCaption( i18n( "Open Document" ) );
-    if ( !dlg.exec() )
-        return;
-    KUrl url = dlg.selectedUrl();
-    if ( !url.isEmpty() )
-    {
-        openUrl( url );
+    QMimeDatabase mimeDatabase;
+    QSet<QString> globPatterns;
+    QMap<QString, QStringList> namedGlobs;
+    foreach ( const QString &mimeName, m_fileformats ) {
+        QMimeType mimeType = mimeDatabase.mimeTypeForName( mimeName );
+        const QStringList globs( mimeType.globPatterns() );
+        if ( globs.isEmpty() ) {
+            continue;
+        }
+
+        globPatterns.unite( globs.toSet() ) ;
+
+        namedGlobs[ mimeType.comment() ].append( globs );
+
     }
-}
+    QStringList namePatterns;
+    foreach( const QString &name, namedGlobs.keys()) {
+        namePatterns.append( name +
+                             QStringLiteral(" (") +
+                             namedGlobs[name].join( QLatin1Char(' ') ) +
+                             QStringLiteral(")")
+                           );
+    }
 
-void Shell::slotQuit()
-{
-    close();
+    namePatterns.prepend( i18n("All files (*)") );
+    namePatterns.prepend( i18n("All supported files (%1)", globPatterns.toList().join( QLatin1Char(' ') ) ) );
+    dlg->setNameFilters( namePatterns );
+
+    dlg->setWindowTitle( i18n("Open Document") );
+    if ( dlg->exec() && dlg ) {
+        foreach(const QUrl& url, dlg->selectedUrls())
+        {
+            openUrl( url );
+        }
+    }
+
+    if ( dlg ) {
+        delete dlg.data();
+    }
 }
 
 void Shell::tryRaise()
@@ -432,11 +503,11 @@ void Shell::slotUpdateFullScreen()
     {
       m_menuBarWasShown = !menuBar()->isHidden();
       menuBar()->hide();
-      
+
       m_toolBarWasShown = !toolBar()->isHidden();
       toolBar()->hide();
 
-      KToggleFullScreenAction::setFullScreen(this, true);      
+      KToggleFullScreenAction::setFullScreen(this, true);
     }
     else
     {
@@ -448,7 +519,7 @@ void Shell::slotUpdateFullScreen()
       {
         toolBar()->show();
       }
-      KToggleFullScreenAction::setFullScreen(this, false);      
+      KToggleFullScreenAction::setFullScreen(this, false);
     }
 }
 
@@ -503,7 +574,7 @@ void Shell::closeTab( int tab )
 
         if( m_tabWidget->count() == 1 )
         {
-            m_tabWidget->setTabBarHidden( true );
+            m_tabWidget->tabBar()->hide();
             m_nextTabAction->setEnabled( false );
             m_prevTabAction->setEnabled( false );
         }
@@ -511,12 +582,12 @@ void Shell::closeTab( int tab )
 
 }
 
-void Shell::openNewTab( const KUrl& url, const QString &serializedOptions )
+void Shell::openNewTab( const QUrl& url, const QString &serializedOptions )
 {
     // Tabs are hidden when there's only one, so show it
     if( m_tabs.size() == 1 )
     {
-        m_tabWidget->setTabBarHidden( false );
+        m_tabWidget->tabBar()->show();
         m_nextTabAction->setEnabled( true );
         m_prevTabAction->setEnabled( true );
     }
@@ -553,12 +624,12 @@ void Shell::applyOptionsToPart( QObject* part, const QString &serializedOptions 
 
 void Shell::connectPart( QObject* part )
 {
-    connect( this, SIGNAL(restoreDocument(KConfigGroup)), part, SLOT(restoreDocument(KConfigGroup)));
-    connect( this, SIGNAL(saveDocumentRestoreInfo(KConfigGroup&)), part, SLOT(saveDocumentRestoreInfo(KConfigGroup&)));
+    connect( this, SIGNAL(moveSplitter(int)), part, SLOT(moveSplitter(int)) );
     connect( part, SIGNAL(enablePrintAction(bool)), this, SLOT(setPrintEnabled(bool)));
     connect( part, SIGNAL(enableCloseAction(bool)), this, SLOT(setCloseEnabled(bool)));
-    connect( part, SIGNAL(mimeTypeChanged(KMimeType::Ptr)), this, SLOT(setTabIcon(KMimeType::Ptr)));
-    connect( part, SIGNAL(urlsDropped(KUrl::List)), this, SLOT(handleDroppedUrls(KUrl::List)) );
+    connect( part, SIGNAL(mimeTypeChanged(QMimeType)), this, SLOT(setTabIcon(QMimeType)));
+    connect( part, SIGNAL(urlsDropped(QList<QUrl>)), this, SLOT(handleDroppedUrls(QList<QUrl>)) );
+    connect( part, SIGNAL(fitWindowToPage(QSize,QSize)), this, SLOT(slotFitWindowToPage(QSize,QSize)) );
 }
 
 void Shell::print()
@@ -610,12 +681,12 @@ void Shell::activatePrevTab()
     setActiveTab( prevTab );
 }
 
-void Shell::setTabIcon( KMimeType::Ptr mimeType )
+void Shell::setTabIcon( const QMimeType& mimeType )
 {
     int i = findTabIndex( sender() );
     if( i != -1 )
     {
-        m_tabWidget->setTabIcon( i, KIcon(mimeType->iconName()) );
+        m_tabWidget->setTabIcon( i, QIcon::fromTheme(mimeType.iconName()) );
     }
 }
 
@@ -631,23 +702,12 @@ int Shell::findTabIndex( QObject* sender )
     return -1;
 }
 
-void Shell::handleDroppedUrls( const KUrl::List& urls )
+void Shell::handleDroppedUrls( const QList<QUrl>& urls )
 {
-    foreach( const KUrl& url, urls )
+    foreach( const QUrl& url, urls )
     {
         openUrl( url );
     }
-}
-
-void Shell::testTabDrop( const QDragMoveEvent* event, bool& accept )
-{
-    accept = KUrl::List::canDecode( event->mimeData() );
-}
-
-void Shell::handleTabDrop( QDropEvent* event )
-{
-    const KUrl::List list = KUrl::List::fromMimeData( event->mimeData() );
-    handleDroppedUrls( list );
 }
 
 void Shell::moveTabData( int from, int to )
@@ -655,6 +715,13 @@ void Shell::moveTabData( int from, int to )
    m_tabs.move( from, to );
 }
 
-#include "shell.moc"
+void Shell::slotFitWindowToPage(const QSize& pageViewSize, const QSize& pageSize )
+{
+    const int xOffset = pageViewSize.width() - pageSize.width();
+    const int yOffset = pageViewSize.height() - pageSize.height();
+    showNormal();
+    resize( width() - xOffset, height() - yOffset);
+    moveSplitter(pageSize.width());
+}
 
 /* kate: replace-tabs on; indent-width 4; */

@@ -21,9 +21,8 @@
 #include <QtCore/QMap>
 #include <QtCore/QMutex>
 #include <QtCore/QPointer>
-
-#include <kcomponentdata.h>
-#include <kservicetypetrader.h>
+#include <QUrl>
+#include <KPluginMetaData>
 
 // local includes
 #include "fontinfo.h"
@@ -33,7 +32,8 @@ class QUndoStack;
 class QEventLoop;
 class QFile;
 class QTimer;
-class KTemporaryFile;
+class QTemporaryFile;
+class KPluginMetaData;
 
 struct AllocatedPixmap;
 struct ArchiveData;
@@ -49,15 +49,13 @@ class View;
 
 struct GeneratorInfo
 {
-    GeneratorInfo( const KComponentData &_data )
-        : generator( 0 ), data( _data ),
-          config( 0 ), save( 0 ),
+    explicit GeneratorInfo( Okular::Generator *g, const KPluginMetaData &data)
+        : generator( g ), metadata( data ), config( nullptr ), save( nullptr ),
           configChecked( false ), saveChecked( false )
     {}
 
     Okular::Generator * generator;
-    KComponentData data;
-    QString catalogName;
+    KPluginMetaData metadata;
     Okular::ConfigInterface * config;
     Okular::SaveInterface * save;
     bool configChecked : 1;
@@ -121,25 +119,25 @@ class DocumentPrivate
         void loadDocumentInfo( QFile &infoFile );
         void loadViewsInfo( View *view, const QDomElement &e );
         void saveViewsInfo( View *view, QDomElement &e ) const;
-        QString giveAbsolutePath( const QString & fileName ) const;
+        QUrl giveAbsoluteUrl( const QString & fileName ) const;
         bool openRelativeFile( const QString & fileName );
-        Generator * loadGeneratorLibrary( const KService::Ptr &service );
+        Generator * loadGeneratorLibrary( const KPluginMetaData& service );
         void loadAllGeneratorLibraries();
-        void loadServiceList( const KService::List& offers );
+        void loadServiceList( const QVector<KPluginMetaData>& offers );
         void unloadGenerator( const GeneratorInfo& info );
         void cacheExportFormats();
         void setRotationInternal( int r, bool notify );
         ConfigInterface* generatorConfig( GeneratorInfo& info );
         SaveInterface* generatorSave( GeneratorInfo& info );
-        Document::OpenResult openDocumentInternal( const KService::Ptr& offer, bool isstdin, const QString& docFile, const QByteArray& filedata, const QString& password );
-        bool savePageDocumentInfo( KTemporaryFile *infoFile, int what ) const;
+        Document::OpenResult openDocumentInternal( const KPluginMetaData& offer, bool isstdin, const QString& docFile, const QByteArray& filedata, const QString& password );
+        bool savePageDocumentInfo( QTemporaryFile *infoFile, int what ) const;
         DocumentViewport nextDocumentViewport() const;
         void notifyAnnotationChanges( int page );
         bool canAddAnnotationsNatively() const;
         bool canModifyExternalAnnotations() const;
         bool canRemoveExternalAnnotations() const;
         void warnLimitedAnnotSupport();
-        OKULAR_EXPORT static QString docDataFileName(const KUrl &url, qint64 document_size);
+        OKULARCORE_EXPORT static QString docDataFileName(const QUrl &url, qint64 document_size);
 
         // Methods that implement functionality needed by undo commands
         void performAddPageAnnotation( int page, Annotation *annotation );
@@ -199,12 +197,12 @@ class DocumentPrivate
 
         // needed because for remote documents docFileName is a local file and
         // we want the remote url when the document refers to relativeNames
-        KUrl m_url;
+        QUrl m_url;
 
         // cached stuff
         QString m_docFileName;
         QString m_xmlFileName;
-        KTemporaryFile *m_tempFile;
+        QTemporaryFile *m_tempFile;
         qint64 m_docSize;
 
         // viewport stuff
@@ -280,6 +278,11 @@ class DocumentPrivate
         QDomNode m_prevPropsOfAnnotBeingModified;
 
         synctex_scanner_t m_synctex_scanner;
+
+        // generator selection
+        static QVector<KPluginMetaData> availableGenerators();
+        static QVector<KPluginMetaData> configurableGenerators();
+        static KPluginMetaData generatorForMimeType(const QMimeType& type, QWidget* widget, const QVector<KPluginMetaData> &triedOffers = QVector<KPluginMetaData>());
 };
 
 class DocumentInfoPrivate

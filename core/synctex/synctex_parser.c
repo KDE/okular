@@ -1049,7 +1049,7 @@ typedef int synctex_status_t;
 #   define SYNCTEX_FILE (scanner->file)
 
 /*  Actually, the minimum buffer size is driven by integer and float parsing.
- *  ±0.123456789e123
+ *  Â±0.123456789e123
  */
 #   define SYNCTEX_BUFFER_MIN_SIZE 16
 #   define SYNCTEX_BUFFER_SIZE 32768
@@ -1837,9 +1837,8 @@ synctex_status_t _synctex_setup_visible_box(synctex_node_t box) {
  *  With this method, one can enlarge the box to contain the given point (h,v).
  */
 synctex_status_t _synctex_horiz_box_setup_visible(synctex_node_t node,int h, int v) {
-#	ifdef __DARWIN_UNIX03
-#       pragma unused(v)
-#   endif
+    (void)v; /* unused */
+
 	int itsBtm, itsTop;
 	if (NULL == node || node->class->type != synctex_node_type_hbox) {
 		return SYNCTEX_STATUS_BAD_ARGUMENT;
@@ -3261,9 +3260,7 @@ int synctex_node_line(synctex_node_t node) {
 	return node?SYNCTEX_LINE(node):-1;
 }
 int synctex_node_column(synctex_node_t node) {
-#	ifdef __DARWIN_UNIX03
-#       pragma unused(node)
-#   endif
+    (void)node; /* unused */
 	return -1;
 }
 #	ifdef SYNCTEX_NOTHING
@@ -3290,9 +3287,8 @@ synctex_node_t synctex_sheet_content(synctex_scanner_t scanner,int page) {
 #   endif
 
 int synctex_display_query(synctex_scanner_t scanner,const char * name,int line,int column) {
-#	ifdef __DARWIN_UNIX03
-#       pragma unused(column)
-#   endif
+    (void)column; /* unused */
+
 	int tag = synctex_scanner_get_tag(scanner,name);
 	size_t size = 0;
 	int friend_index = 0;
@@ -3689,9 +3685,8 @@ int _synctex_point_h_distance(synctex_point_t hitPoint, synctex_node_t node, syn
  *  if node is at the bottom of the hit point, this distance is negative.*/
 int _synctex_point_v_distance(synctex_point_t hitPoint, synctex_node_t node,synctex_bool_t visible);
 int _synctex_point_v_distance(synctex_point_t hitPoint, synctex_node_t node,synctex_bool_t visible) {
-#	ifdef __DARWIN_UNIX03
-#       pragma unused(visible)
-#   endif
+    (void)visible; /* unused */
+
 	if (node) {
 		int min,max;
 		switch(node->class->type) {
@@ -3779,9 +3774,8 @@ synctex_bool_t _synctex_point_in_box(synctex_point_t hitPoint, synctex_node_t no
 }
 
 int _synctex_node_distance_to_point(synctex_point_t hitPoint, synctex_node_t node, synctex_bool_t visible) {
-#	ifdef __DARWIN_UNIX03
-#       pragma unused(visible)
-#   endif
+    (void)visible;
+
 	int result = INT_MAX; /*  when the distance is meaning less (sheet, input...)  */
 	if (node) {
 		int minH,maxH,minV,maxV;
@@ -4150,7 +4144,7 @@ typedef int (*synctex_fprintf_t)(void *, const char * , ...); /*  print formatte
 #   define SYNCTEX_BITS_PER_BYTE 8
 
 struct __synctex_updater_t {
-    void *file;                 /*  the foo.synctex or foo.synctex.gz I/O identifier  */
+    struct gzFile_s *file;                 /*  the foo.synctex or foo.synctex.gz I/O identifier  */
 	synctex_fprintf_t fprintf;  /*  either fprintf or gzprintf */
 	int length;                 /*  the number of chars appended */
     struct _flags {

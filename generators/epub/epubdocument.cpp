@@ -11,23 +11,10 @@
 #include <QTemporaryFile>
 #include <QDir>
 
-#include <KDebug>
-
 #include <QRegExp>
 
+Q_LOGGING_CATEGORY(OkularEpuDebug, "org.kde.okular.generators.epu")
 using namespace Epub;
-
-namespace {
-
-QString resourceUrl(const KUrl &baseUrl, const QString &u)
-{
-  KUrl newUrl(KUrl(baseUrl.directory(KUrl::AppendTrailingSlash)), u);
-  QString newDir = newUrl.toLocalFile();
-  newDir.remove(0, 1);
-  return newDir;
-}
-
-}
 
 EpubDocument::EpubDocument(const QString &fileName) : QTextDocument(),
     padding(20)
@@ -57,7 +44,11 @@ struct epub *EpubDocument::getEpub()
 
 void EpubDocument::setCurrentSubDocument(const QString &doc)
 {
-  mCurrentSubDocument = KUrl::fromPath("/" + doc);
+  mCurrentSubDocument.clear();
+  int index = doc.indexOf('/');
+  if (index > 0) {
+      mCurrentSubDocument = QUrl::fromLocalFile(doc.left(index+1));
+  }
 }
 
 int EpubDocument::maxContentHeight() const
@@ -73,7 +64,7 @@ int EpubDocument::maxContentWidth() const
 void EpubDocument::checkCSS(QString &css)
 {
   // remove paragraph line-heights
-  css.remove(QRegExp("line-height\\s*:\\s*[\\w\\.]*;"));
+  css.remove(QRegExp(QStringLiteral("line-height\\s*:\\s*[\\w\\.]*;")));
 }
 
 QVariant EpubDocument::loadResource(int type, const QUrl &name)
@@ -81,8 +72,10 @@ QVariant EpubDocument::loadResource(int type, const QUrl &name)
   int size;
   char *data;
 
+  QString fileInPath = mCurrentSubDocument.resolved(name).path();
+
   // Get the data from the epub file
-  size = epub_get_data(mEpub, resourceUrl(mCurrentSubDocument, name.toString()).toUtf8(), &data);
+  size = epub_get_data(mEpub, fileInPath.toUtf8().constData(), &data);
 
   QVariant resource;
 
@@ -106,9 +99,9 @@ QVariant EpubDocument::loadResource(int type, const QUrl &name)
       break;
     }
     case EpubDocument::MovieResource: {
-      QTemporaryFile *tmp = new QTemporaryFile(QString("%1/okrXXXXXX").arg(QDir::tempPath()),this);
-      if(!tmp->open()) kWarning() << "EPUB : error creating temporary video file";
-      if(tmp->write(data,size) == -1) kWarning() << "EPUB : error writing data" << tmp->errorString();
+      QTemporaryFile *tmp = new QTemporaryFile(QStringLiteral("%1/okrXXXXXX").arg(QDir::tempPath()),this);
+      if(!tmp->open()) qCWarning(OkularEpuDebug) << "EPUB : error creating temporary video file";
+      if(tmp->write(data,size) == -1) qCWarning(OkularEpuDebug) << "EPUB : error writing data" << tmp->errorString();
       tmp->flush();
       resource.setValue(tmp->fileName());
       break;

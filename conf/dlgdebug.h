@@ -14,8 +14,10 @@
 
 class DlgDebug : public QWidget
 {
+    Q_OBJECT
+
     public:
-        DlgDebug( QWidget * parent = 0 );
+        explicit DlgDebug( QWidget * parent = Q_NULLPTR );
 };
 
 #endif

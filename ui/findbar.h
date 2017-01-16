@@ -25,7 +25,7 @@ class FindBar
     Q_OBJECT
 
     public:
-        explicit FindBar( Okular::Document * document, QWidget * parent = 0 );
+        explicit FindBar( Okular::Document * document, QWidget * parent = Q_NULLPTR );
         virtual ~FindBar();
 
         QString text() const;
@@ -34,16 +34,16 @@ class FindBar
         void focusAndSetCursor();
         bool maybeHide();
 
-    signals:
+    Q_SIGNALS:
         void forwardKeyPressEvent( QKeyEvent* );
         void onCloseButtonPressed();
 
-    public slots:
+    public Q_SLOTS:
         void findNext();
         void findPrev();
         void resetSearch();
 
-    private slots:
+    private Q_SLOTS:
         void caseSensitivityChanged();
         void fromCurrentPageChanged();
         void closeAndStopSearch();

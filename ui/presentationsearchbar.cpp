@@ -15,10 +15,10 @@
 #include <qstyleoption.h>
 #include <qstylepainter.h>
 #include <qtoolbutton.h>
+#include <qpushbutton.h>
 
-#include <kicon.h>
-#include <klocale.h>
-#include <kpushbutton.h>
+#include <QIcon>
+#include <KLocalizedString>
 
 #include "searchlineedit.h"
 
@@ -27,8 +27,10 @@
 class HandleDrag
     : public QWidget
 {
+    Q_OBJECT
+
     public:
-        HandleDrag( QWidget *parent = 0 )
+        HandleDrag( QWidget *parent = Q_NULLPTR )
             : QWidget( parent )
         {
             setCursor( Qt::SizeAllCursor );
@@ -36,7 +38,7 @@ class HandleDrag
             installEventFilter( parent );
         }
 
-        void paintEvent( QPaintEvent * )
+        void paintEvent( QPaintEvent * ) override
         {
             QStyleOption opt;
             opt.initFrom( this );
@@ -59,7 +61,7 @@ PresentationSearchBar::PresentationSearchBar( Okular::Document *document, QWidge
     lay->addWidget( m_handle );
 
     QToolButton * closeBtn = new QToolButton( this );
-    closeBtn->setIcon( KIcon( "dialog-close" ) );
+    closeBtn->setIcon( QIcon::fromTheme( QStringLiteral("dialog-close") ) );
     closeBtn->setIconSize( QSize( 24, 24 ) );
     closeBtn->setToolTip( i18n( "Close" ) );
     closeBtn->setAutoRaise( true );
@@ -75,13 +77,13 @@ PresentationSearchBar::PresentationSearchBar( Okular::Document *document, QWidge
     m_search->setSearchMoveViewport( true );
     lay->addWidget( m_search );
 
-    KPushButton * findNextBtn = new KPushButton( KIcon( "go-down-search" ), i18n( "Find Next" ), this );
+    QPushButton * findNextBtn = new QPushButton( QIcon::fromTheme( QStringLiteral("go-down-search") ), i18n( "Find Next" ), this );
     lay->addWidget( findNextBtn );
 
     m_anchor->installEventFilter( this );
 
-    connect( closeBtn, SIGNAL(clicked()), this, SLOT(close()) );
-    connect( findNextBtn, SIGNAL(clicked()), m_search, SLOT(findNext()) );
+    connect( closeBtn, &QAbstractButton::clicked, this, &QWidget::close );
+    connect(findNextBtn, &QPushButton::clicked, m_search, &SearchLineEdit::findNext);
 }
 
 PresentationSearchBar::~PresentationSearchBar()

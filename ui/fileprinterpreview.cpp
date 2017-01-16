@@ -14,17 +14,22 @@
 
 #include <QFile>
 #include <QSize>
-#include <QtCore/QFile>
-#include <QtGui/QLabel>
-#include <QtGui/QShowEvent>
+#include <QDialogButtonBox>
+#include <QLabel>
+#include <QPushButton>
+#include <QShowEvent>
+#include <QVBoxLayout>
 
+#include <KWindowConfig>
+#include <klocalizedstring.h>
 #include <kmimetypetrader.h>
-#include <kparts/part.h>
+#include <kparts/readonlypart.h>
 #include <kpluginfactory.h>
 #include <kpluginloader.h>
-#include <kpushbutton.h>
-#include <kservice.h>
-#include <kdebug.h>
+#include <ksharedconfig.h>
+#include <QtCore/qloggingcategory.h>
+
+#include "debug_ui.h"
 
 using namespace Okular;
 
@@ -38,9 +43,12 @@ public:
         , mainWidget(new QWidget(host))
         , previewPart(0)
         , failMessage(0)
-        , config(KSharedConfig::openConfig(QString::fromLatin1("okularrc")))
+        , config(KSharedConfig::openConfig(QStringLiteral("okularrc")))
 
     {
+        mainlayout = new QVBoxLayout(q);
+        buttonBox = new QDialogButtonBox(QDialogButtonBox::Close, q);
+        mainlayout->addWidget(buttonBox);
         filename = _filename;
     }
 
@@ -51,6 +59,10 @@ public:
     FilePrinterPreview *q;
 
     QWidget *mainWidget;
+
+    QDialogButtonBox *buttonBox;
+
+    QVBoxLayout *mainlayout;
 
     QString filename;
 
@@ -63,33 +75,39 @@ public:
 void FilePrinterPreviewPrivate::getPart()
 {
     if (previewPart) {
-        kDebug(500) << "already got a part";
+        qCDebug(OkularUiDebug) << "already got a part";
         return;
     }
-    kDebug(500) << "querying trader for application/ps service";
+    qCDebug(OkularUiDebug) << "querying trader for application/ps service";
 
     KPluginFactory *factory(0);
-    /* Explicitly look for the Okular/Ghostview part: no other PostScript
-       parts are available now; other parts which handles text are not
-       suitable here (PostScript source code) */
-    KService::List offers =
-        KMimeTypeTrader::self()->query("application/postscript", "KParts/ReadOnlyPart",
-                                       "[DesktopEntryName] == 'okularghostview'");
+    KService::List offers;
+    if (filename.endsWith(QStringLiteral(".ps"))) {
+        /* Explicitly look for the Okular/Ghostview part: no other PostScript
+           parts are available now; other parts which handles text are not
+           suitable here (PostScript source code) */
+        offers =
+            KMimeTypeTrader::self()->query(QStringLiteral("application/postscript"),
+                                           QStringLiteral("KParts/ReadOnlyPart"),
+                                           QStringLiteral("[DesktopEntryName] == 'okularghostview'"));
+    } else {
+        offers = KMimeTypeTrader::self()->query("application/pdf", "KParts/ReadOnlyPart");
+    }
 
     KService::List::ConstIterator it = offers.constBegin();
     while (!factory && it != offers.constEnd()) {
         KPluginLoader loader(**it);
         factory = loader.factory();
         if (!factory) {
-            kDebug(500) << "Loading failed:" << loader.errorString();
+            qCDebug(OkularUiDebug) << "Loading failed:" << loader.errorString();
         }
         ++it;
     }
     if (factory) {
-        kDebug(500) << "Trying to create a part";
-        previewPart = factory->create<KParts::ReadOnlyPart>(q, (QVariantList() << "Print/Preview"));
+        qCDebug(OkularUiDebug) << "Trying to create a part";
+        previewPart = factory->create<KParts::ReadOnlyPart>(q, (QVariantList() << QStringLiteral("Print/Preview")));
         if (!previewPart) {
-            kDebug(500) << "Part creation failed";
+            qCDebug(OkularUiDebug) << "Part creation failed";
         }
     }
 }
@@ -97,19 +115,19 @@ void FilePrinterPreviewPrivate::getPart()
 bool FilePrinterPreviewPrivate::doPreview()
 {
     if (!QFile::exists(filename)) {
-        kWarning() << "Nothing was produced to be previewed";
+        qCWarning(OkularUiDebug) << "Nothing was produced to be previewed";
         return false;
     }
 
     getPart();
     if (!previewPart) {
         //TODO: error dialog
-        kWarning() << "Could not find a PS viewer for the preview dialog";
+        qCWarning(OkularUiDebug) << "Could not find a PS viewer for the preview dialog";
         fail();
         return false;
     } else {
-        q->setMainWidget(previewPart->widget());
-        return previewPart->openUrl(filename);
+        mainlayout->insertWidget(0, previewPart->widget());
+        return previewPart->openUrl(QUrl::fromLocalFile(filename));
     }
 }
 
@@ -118,30 +136,30 @@ void FilePrinterPreviewPrivate::fail()
     if (!failMessage) {
         failMessage = new QLabel(i18n("Could not load print preview part"), q);
     }
-    q->setMainWidget(failMessage);
+    mainlayout->insertWidget(0, failMessage);
 }
 
 
 
 
 FilePrinterPreview::FilePrinterPreview( const QString &filename, QWidget *parent )
-    : KDialog( parent )
+    : QDialog( parent )
     , d( new FilePrinterPreviewPrivate( this, filename ) )
 {
-    kDebug(500) << "kdeprint: creating preview dialog";
+    qCDebug(OkularUiDebug) << "kdeprint: creating preview dialog";
 
     // Set up the dialog
-    setCaption(i18n("Print Preview"));
-    setButtons(KDialog::Close);
-    button(KDialog::Close)->setAutoDefault(false);
+    setWindowTitle(i18n("Print Preview"));
 
-    restoreDialogSize(d->config->group("Print Preview"));
+    connect(d->buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
+
+    KWindowConfig::restoreWindowSize(windowHandle(), d->config->group("Print Preview"));
 }
 
 FilePrinterPreview::~FilePrinterPreview()
 {
     KConfigGroup group(d->config->group("Print Preview"));
-    saveDialogSize(group);
+    KWindowConfig::saveWindowSize(windowHandle(), group);
 
     delete d;
 }
@@ -161,7 +179,7 @@ void FilePrinterPreview::showEvent(QShowEvent *event)
             return;
         }
     }
-    KDialog::showEvent(event);
+    QDialog::showEvent(event);
 }
 
-#include "fileprinterpreview.moc"
+#include "moc_fileprinterpreview.cpp"

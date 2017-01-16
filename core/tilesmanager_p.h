@@ -9,7 +9,7 @@
 #ifndef _OKULAR_TILES_MANAGER_P_H_
 #define _OKULAR_TILES_MANAGER_P_H_
 
-#include "okular_export.h"
+#include "okularcore_export.h"
 #include "area.h"
 
 class QPixmap;

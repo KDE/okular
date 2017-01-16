@@ -1,6 +1,5 @@
 include_directories(
    ${CMAKE_CURRENT_SOURCE_DIR}/../..
-   ${CMAKE_BINARY_DIR}/okular
 )
 
 ########### next target ###############
@@ -12,14 +11,11 @@ set(okularGenerator_txt_SRCS
 )
 
 
-kde4_add_plugin(okularGenerator_txt ${okularGenerator_txt_SRCS})
+okular_add_generator(okularGenerator_txt ${okularGenerator_txt_SRCS})
 
-target_link_libraries(okularGenerator_txt okularcore ${KDE4_KDECORE_LIBS} ${KDE4_KDEUI_LIBS} ${QT_QTGUI_LIBRARY})
-
-install(TARGETS okularGenerator_txt DESTINATION ${PLUGIN_INSTALL_DIR})
-
+target_link_libraries(okularGenerator_txt okularcore Qt5::Core KF5::I18n)
 
 ########### install files ###############
-
-install( FILES libokularGenerator_txt.desktop okularTxt.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
-install( PROGRAMS okularApplication_txt.desktop active-documentviewer_txt.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
+install( FILES okularTxt.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
+install( PROGRAMS okularApplication_txt.desktop org.kde.mobile.okular_txt.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
+install( FILES org.kde.okular-txt.metainfo.xml DESTINATION ${KDE_INSTALL_METAINFODIR} )

@@ -27,9 +27,7 @@
 #include "core/observer.h"
 #include "core/view.h"
 
-class KAction;
 class KActionCollection;
-class KMenu;
 
 namespace Okular {
 class Action;
@@ -44,6 +42,8 @@ class FormWidgetIface;
 class PageViewPrivate;
 
 class MagnifierView;
+
+class QGestureEvent;
 
 /**
  * @short The main view. Handles zoom and continuous mode.. oh, and page
@@ -77,19 +77,19 @@ Q_OBJECT
         void displayMessage( const QString & message, const QString & details = QString(), PageViewMessage::Icon icon=PageViewMessage::Info, int duration=-1 );
 
         // inherited from DocumentObserver
-        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags );
-        void notifyViewportChanged( bool smoothMove );
-        void notifyPageChanged( int pageNumber, int changedFlags );
-        void notifyContentsCleared( int changedFlags );
-        void notifyZoom(int factor);
-        bool canUnloadPixmap( int pageNum ) const;
-        void notifyCurrentPageChanged( int previous, int current );
+        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) Q_DECL_OVERRIDE;
+        void notifyViewportChanged( bool smoothMove ) Q_DECL_OVERRIDE;
+        void notifyPageChanged( int pageNumber, int changedFlags ) Q_DECL_OVERRIDE;
+        void notifyContentsCleared( int changedFlags ) Q_DECL_OVERRIDE;
+        void notifyZoom(int factor) Q_DECL_OVERRIDE;
+        bool canUnloadPixmap( int pageNum ) const Q_DECL_OVERRIDE;
+        void notifyCurrentPageChanged( int previous, int current ) Q_DECL_OVERRIDE;
 
         // inherited from View
-        bool supportsCapability( ViewCapability capability ) const;
-        CapabilityFlags capabilityFlags( ViewCapability capability ) const;
-        QVariant capability( ViewCapability capability ) const;
-        void setCapability( ViewCapability capability, const QVariant &option );
+        bool supportsCapability( ViewCapability capability ) const Q_DECL_OVERRIDE;
+        CapabilityFlags capabilityFlags( ViewCapability capability ) const Q_DECL_OVERRIDE;
+        QVariant capability( ViewCapability capability ) const Q_DECL_OVERRIDE;
+        void setCapability( ViewCapability capability, const QVariant &option ) Q_DECL_OVERRIDE;
 
         QList< Okular::RegularAreaRect * > textSelections( const QPoint& start, const QPoint& end, int& firstpage );
         Okular::RegularAreaRect * textSelectionForItem( PageViewItem * item, const QPoint & startPoint = QPoint(), const QPoint & endPoint = QPoint() );
@@ -97,7 +97,7 @@ Q_OBJECT
         void reparseConfig();
 
         KActionCollection *actionCollection() const;
-        KAction *toggleFormsAction() const;
+        QAction *toggleFormsAction() const;
 
         int contentAreaWidth() const;
         int contentAreaHeight() const;
@@ -113,37 +113,42 @@ Q_OBJECT
 
         void updateCursor();
 
-    public slots:
+    public Q_SLOTS:
         void copyTextSelection() const;
         void selectAll();
 
         void openAnnotationWindow( Okular::Annotation *annotation, int pageNumber );
+        void reloadForms();
 
-    signals:
+    Q_SIGNALS:
         void rightClick( const Okular::Page *, const QPoint & );
         void mouseBackButtonClick();
         void mouseForwardButtonClick();
         void escPressed();
+        void fitWindowToPage( const QSize& pageViewPortSize, const QSize& pageSize );
 
     protected:
-        void resizeEvent( QResizeEvent* );
+        bool event( QEvent * event ) Q_DECL_OVERRIDE;
+
+        void resizeEvent( QResizeEvent* ) Q_DECL_OVERRIDE;
+        bool gestureEvent( QGestureEvent * e );
 
         // mouse / keyboard events
-        void keyPressEvent( QKeyEvent* );
-        void keyReleaseEvent( QKeyEvent* );
-        void inputMethodEvent( QInputMethodEvent * );
-        void wheelEvent( QWheelEvent* );
+        void keyPressEvent( QKeyEvent* ) Q_DECL_OVERRIDE;
+        void keyReleaseEvent( QKeyEvent* ) Q_DECL_OVERRIDE;
+        void inputMethodEvent( QInputMethodEvent * ) Q_DECL_OVERRIDE;
+        void wheelEvent( QWheelEvent* ) Q_DECL_OVERRIDE;
 
-        void paintEvent( QPaintEvent *e );
-        void tabletEvent (QTabletEvent *e );
-        void mouseMoveEvent( QMouseEvent *e );
-        void mousePressEvent( QMouseEvent *e );
-        void mouseReleaseEvent( QMouseEvent *e );
-        void mouseDoubleClickEvent( QMouseEvent *e );
+        void paintEvent( QPaintEvent *e ) Q_DECL_OVERRIDE;
+        void tabletEvent (QTabletEvent *e ) Q_DECL_OVERRIDE;
+        void mouseMoveEvent( QMouseEvent *e ) Q_DECL_OVERRIDE;
+        void mousePressEvent( QMouseEvent *e ) Q_DECL_OVERRIDE;
+        void mouseReleaseEvent( QMouseEvent *e ) Q_DECL_OVERRIDE;
+        void mouseDoubleClickEvent( QMouseEvent *e ) Q_DECL_OVERRIDE;
 
-        bool viewportEvent( QEvent *e );
+        bool viewportEvent( QEvent *e ) Q_DECL_OVERRIDE;
 
-        void scrollContentsBy( int dx, int dy );
+        void scrollContentsBy( int dx, int dy ) Q_DECL_OVERRIDE;
 
     private:
         // draw background and items on the opened qpainter
@@ -182,14 +187,17 @@ Q_OBJECT
         void resizeContentArea( const QSize & newSize );
         void updatePageStep();
 
-        void addWebShortcutsMenu( KMenu * menu, const QString & text );
+        void addWebShortcutsMenu( QMenu * menu, const QString & text );
         // used when selecting stuff, makes the view scroll as necessary to keep the mouse inside the view
         void scrollPosIntoView( const QPoint & pos );
+
+        // called from slots to turn off trim modes mutually exclusive to id
+        void updateTrimMode( int except_id );
 
         // don't want to expose classes in here
         class PageViewPrivate * d;
 
-    private slots:
+    private Q_SLOTS:
         // used to decouple the notifyViewportChanged calle
         void slotRealNotifyViewportChanged(bool smoothMove);
         // activated either directly or via queued connection on notifySetup
@@ -201,7 +209,7 @@ Q_OBJECT
         // activated by the viewport move timer
         void slotMoveViewport();
         // activated by the autoscroll timer (Shift+Up/Down keys)
-        void slotAutoScoll();
+        void slotAutoScroll();
         // activated by the dragScroll timer
         void slotDragScroll();
         // show the welcome message
@@ -237,18 +245,22 @@ Q_OBJECT
         void slotRotateOriginal();
         void slotPageSizes( int );
         void slotTrimMarginsToggled( bool );
+        void slotTrimToSelectionToggled( bool );
         void slotToggleForms();
         void slotFormChanged( int pageNumber );
         void slotRefreshPage();
+#ifdef HAVE_SPEECH
         void slotSpeakDocument();
         void slotSpeakCurrentPage();
         void slotStopSpeaks();
+#endif
         void slotAction( Okular::Action *action );
         void externalKeyPressEvent( QKeyEvent *e );
         void slotAnnotationWindowDestroyed( QObject *window );
         void slotProcessMovieAction( const Okular::MovieAction *action );
         void slotProcessRenditionAction( const Okular::RenditionAction *action );
         void slotToggleChangeColors();
+        void slotFitWindowToPage();
 };
 
 #endif

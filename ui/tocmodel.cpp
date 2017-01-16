@@ -12,8 +12,9 @@
 #include <qapplication.h>
 #include <qdom.h>
 #include <qlist.h>
+#include <qtreeview.h>
 
-#include <kicon.h>
+#include <QIcon>
 
 #include "pageitemdelegate.h"
 #include "core/document.h"
@@ -72,22 +73,22 @@ TOCItem::TOCItem( TOCItem *_parent, const QDomElement &e )
     text = e.tagName();
 
     // viewport loading
-    if ( e.hasAttribute( "Viewport" ) )
+    if ( e.hasAttribute( QStringLiteral("Viewport") ) )
     {
         // if the node has a viewport, set it
-        viewport = Okular::DocumentViewport( e.attribute( "Viewport" ) );
+        viewport = Okular::DocumentViewport( e.attribute( QStringLiteral("Viewport") ) );
     }
-    else if ( e.hasAttribute( "ViewportName" ) )
+    else if ( e.hasAttribute( QStringLiteral("ViewportName") ) )
     {
         // if the node references a viewport, get the reference and set it
-        const QString & page = e.attribute( "ViewportName" );
-        QString viewport_string = model->document->metaData( "NamedViewport", page ).toString();
+        const QString & page = e.attribute( QStringLiteral("ViewportName") );
+        QString viewport_string = model->document->metaData( QStringLiteral("NamedViewport"), page ).toString();
         if ( !viewport_string.isEmpty() )
             viewport = Okular::DocumentViewport( viewport_string );
     }
 
-    extFileName = e.attribute( "ExternalFileName" );
-    url = e.attribute( "URL" );
+    extFileName = e.attribute( QStringLiteral("ExternalFileName") );
+    url = e.attribute( QStringLiteral("URL") );
 }
 
 TOCItem::~TOCItem()
@@ -126,12 +127,13 @@ void TOCModelPrivate::addChildren( const QDomNode & parentNode, TOCItem * parent
 
         // open/keep close the item
         bool isOpen = false;
-        if ( e.hasAttribute( "Open" ) )
-            isOpen = QVariant( e.attribute( "Open" ) ).toBool();
+        if ( e.hasAttribute( QStringLiteral("Open") ) )
+            isOpen = QVariant( e.attribute( QStringLiteral("Open") ) ).toBool();
         if ( isOpen )
             itemsToOpen.append( currentItem );
 
         n = n.nextSibling();
+        emit q->countChanged();
     }
 }
 
@@ -148,11 +150,38 @@ QModelIndex TOCModelPrivate::indexForItem( TOCItem *item ) const
 
 void TOCModelPrivate::findViewport( const Okular::DocumentViewport &viewport, TOCItem *item, QList< TOCItem* > &list ) const
 {
-    if ( item->viewport.isValid() && item->viewport.pageNumber == viewport.pageNumber )
-        list.append( item );
+    TOCItem *todo = item;
 
-    foreach ( TOCItem *child, item->children )
-        findViewport( viewport, child, list );
+    while ( todo )
+    {
+        TOCItem *current = todo;
+        todo = 0;
+        TOCItem *pos = 0;
+
+        foreach ( TOCItem *child, current->children )
+        {
+            if ( child->viewport.isValid() )
+            {
+                if ( child->viewport.pageNumber <= viewport.pageNumber )
+                {
+                    pos = child;
+                    if ( child->viewport.pageNumber == viewport.pageNumber )
+                    {
+                        break;
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+        if ( pos )
+        {
+            list.append( pos );
+            todo = pos;
+        }
+    }
 }
 
 
@@ -167,6 +196,14 @@ TOCModel::TOCModel( Okular::Document *document, QObject *parent )
 TOCModel::~TOCModel()
 {
     delete d;
+}
+
+QHash<int, QByteArray> TOCModel::roleNames() const
+{
+    QHash<int, QByteArray> roles = QAbstractItemModel::roleNames();
+    roles[(int)PageItemDelegate::PageRole] = "page";
+    roles[(int)PageItemDelegate::PageLabelRole] = "pageLabel";
+    return roles;
 }
 
 int TOCModel::columnCount( const QModelIndex &parent ) const
@@ -189,7 +226,31 @@ QVariant TOCModel::data( const QModelIndex &index, int role ) const
             break;
         case Qt::DecorationRole:
             if ( item->highlight )
-                return KIcon( QApplication::layoutDirection() == Qt::RightToLeft ? "arrow-left" : "arrow-right" );
+            {
+                const QVariant icon = QIcon::fromTheme( QApplication::layoutDirection() == Qt::RightToLeft ? QStringLiteral("arrow-left") : QStringLiteral("arrow-right") );
+                TOCItem *lastHighlighted = d->currentPage.last();
+
+                // in the mobile version our parent is not a QTreeView; add icon to the last highlighted item
+                // TODO misusing parent() here, fix
+                QTreeView *view = dynamic_cast< QTreeView* > ( QObject::parent() );
+                if ( !view )
+                {
+                    if ( item == lastHighlighted )
+                        return icon;
+                    return QVariant();
+                }
+
+                if ( view->isExpanded( index ) )
+                {
+                    // if this is the last highlighted node, its child is on a page below, thus it needs icon
+                    if ( item == lastHighlighted )
+                        return icon;
+                }
+                else
+                {
+                    return icon;
+                }
+            }
             break;
         case PageItemDelegate::PageRole:
             if ( item->viewport.isValid() )
@@ -218,7 +279,7 @@ QVariant TOCModel::headerData( int section, Qt::Orientation orientation, int rol
         return QVariant();
 
     if ( section == 0 && role == Qt::DisplayRole )
-        return "Topics";
+        return QStringLiteral("Topics");
 
     return QVariant();
 }
@@ -282,6 +343,7 @@ void TOCModel::fill( const Okular::DocumentSynopsis *toc )
             if ( !index.isValid() )
                 continue;
 
+            // TODO misusing parent() here, fix
             QMetaObject::invokeMethod( QObject::parent(), "expand", Qt::QueuedConnection, Q_ARG( QModelIndex, index ) );
         }
     }
@@ -293,6 +355,7 @@ void TOCModel::fill( const Okular::DocumentSynopsis *toc )
             if ( !index.isValid() )
                 continue;
 
+            // TODO misusing parent() here, fix
             QMetaObject::invokeMethod( QObject::parent(), "expand", Qt::QueuedConnection, Q_ARG( QModelIndex, index ) );
         }
     }
@@ -307,10 +370,11 @@ void TOCModel::clear()
     if ( !d->dirty )
        return;
 
+    beginResetModel();
     qDeleteAll( d->root->children );
     d->root->children.clear();
     d->currentPage.clear();
-    reset();
+    endResetModel();
     d->dirty = false;
 }
 
@@ -329,13 +393,6 @@ void TOCModel::setCurrentViewport( const Okular::DocumentViewport &viewport )
 
     QList< TOCItem* > newCurrentPage;
     d->findViewport( viewport, d->root, newCurrentPage );
-    // HACK: for now, support only the first item found
-    if ( newCurrentPage.count() > 0 )
-    {
-        TOCItem *first = newCurrentPage.first();
-        newCurrentPage.clear();
-        newCurrentPage.append( first );
-    }
 
     d->currentPage = newCurrentPage;
 
@@ -433,4 +490,4 @@ bool TOCModel::checkequality( const TOCModel *model, const QModelIndex & parentA
     }
     return true;
 }
-#include "tocmodel.moc"
+#include "moc_tocmodel.cpp"

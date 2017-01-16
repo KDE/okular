@@ -144,7 +144,7 @@ typedef struct plkr_Document_s plkr_Document;
    call to plkr_CloseDoc.
 */
 plkr_Document *plkr_OpenDBFile (
-    char * /* filename */
+    const char * /* filename */
 );
 
 
@@ -364,8 +364,8 @@ int plkr_ShowMessages (
    names and option names should be all lowercase.
 */
 char *plkr_GetConfigString (
-    char *section_name,
-    char *option_name,
+    const char *section_name,
+    const char *option_name,
     char *default_value
 );
 
@@ -378,8 +378,8 @@ char *plkr_GetConfigString (
    names and option names should be all lowercase.
 */
 long int plkr_GetConfigInt (
-    char *section_name,
-    char *option_name,
+    const char *section_name,
+    const char *option_name,
     long int default_value
 );
 
@@ -392,8 +392,8 @@ long int plkr_GetConfigInt (
    names and option names should be all lowercase.
 */
 double plkr_GetConfigFloat (
-    char *section_name,
-    char *option_name,
+    const char *section_name,
+    const char *option_name,
     double default_value
 );
 
@@ -406,8 +406,8 @@ double plkr_GetConfigFloat (
    names and option names should be all lowercase.
 */
 int plkr_GetConfigBoolean (
-    char *section_name,
-    char *option_name,
+    const char *section_name,
+    const char *option_name,
     int default_value
 );
 #endif

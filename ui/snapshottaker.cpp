@@ -14,15 +14,15 @@
 
 #include <QtGui/QImage>
 
-SnapshotTaker::SnapshotTaker( const QString &url, QObject *parent )
+SnapshotTaker::SnapshotTaker(const QUrl &url, QObject *parent )
     : QObject( parent )
     , m_player( new Phonon::VideoPlayer( Phonon::NoCategory, 0 ) )
 {
     m_player->load( url );
     m_player->hide();
 
-    connect(m_player->mediaObject(), SIGNAL(stateChanged(Phonon::State, Phonon::State)),
-            this, SLOT(stateChanged(Phonon::State, Phonon::State)));
+    connect(m_player->mediaObject(), &Phonon::MediaObject::stateChanged,
+            this, &SnapshotTaker::stateChanged);
 
     m_player->play();
 }

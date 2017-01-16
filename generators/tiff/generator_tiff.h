@@ -12,25 +12,27 @@
 
 #include <core/generator.h>
 
+#include <QtCore/qloggingcategory.h>
 #include <qhash.h>
 
 class TIFFGenerator : public Okular::Generator
 {
     Q_OBJECT
+    Q_INTERFACES( Okular::Generator )
     public:
         TIFFGenerator( QObject *parent, const QVariantList &args );
         virtual ~TIFFGenerator();
 
-        bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
-        bool loadDocumentFromData( const QByteArray & fileData, QVector< Okular::Page * > & pagesVector );
+        bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector ) Q_DECL_OVERRIDE;
+        bool loadDocumentFromData( const QByteArray & fileData, QVector< Okular::Page * > & pagesVector ) Q_DECL_OVERRIDE;
 
-        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const;
+        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const Q_DECL_OVERRIDE;
 
-        bool print( QPrinter& printer );
+        bool print( QPrinter& printer ) Q_DECL_OVERRIDE;
 
     protected:
-        bool doCloseDocument();
-        QImage image( Okular::PixmapRequest * request );
+        bool doCloseDocument() Q_DECL_OVERRIDE;
+        QImage image( Okular::PixmapRequest * request ) Q_DECL_OVERRIDE;
 
     private:
         class Private;
@@ -42,5 +44,7 @@ class TIFFGenerator : public Okular::Generator
 
         QHash< int, int > m_pageMapping;
 };
+
+Q_DECLARE_LOGGING_CATEGORY(OkularTiffDebug)
 
 #endif

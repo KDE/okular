@@ -10,8 +10,6 @@
 #ifndef PAGESIZE_H
 #define PAGESIZE_H
 
-#include "kviewshell_export.h"
-
 #include "simplePageSize.h"
 
 #include <QObject>
@@ -38,7 +36,7 @@ The main difference to the SimplePageSize class are the following.
 @version 1.0.0
 */
 
-class KVIEWSHELL_EXPORT pageSize : public QObject, public SimplePageSize
+class pageSize : public QObject, public SimplePageSize
 {
 Q_OBJECT
 
@@ -232,7 +230,7 @@ public:
   /** \brief Returns a textual description of the page size. */
   QString description() const;
 
-public slots:
+public Q_SLOTS:
   /** \brief Sets orientation
 
   If the pageSize is one of the standard sizes, i.e. formatNumber() !=
@@ -244,7 +242,7 @@ public slots:
  */
   void        setOrientation(int orient);
 
-signals:
+Q_SIGNALS:
   /** \brief Signal emitted when the page sizes changes
 
   emitted to indicate that the size changed. Not emitted immediately

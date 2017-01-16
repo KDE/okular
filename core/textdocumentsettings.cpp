@@ -13,9 +13,8 @@
 #include "ui_textdocumentsettings.h"
 
 #include <KFontRequester>
-#include <KLocale>
+#include <KLocalizedString>
 
-#include <QLabel>
 
 
 using namespace Okular;
@@ -67,7 +66,7 @@ TextDocumentSettings::TextDocumentSettings( const QString& config, QObject *pare
 {
     Q_D( TextDocumentSettings );
 
-    addItemFont( "Font", d->mFont );
+    addItemFont( QStringLiteral("Font"), d->mFont );
 }
 
 QFont TextDocumentSettings::font() const

@@ -13,42 +13,63 @@
  ***************************************************************************/
 
 #include "shell.h"
-#include <kapplication.h>
-#include <kcmdlineargs.h>
+
+#include <KLocalizedString>
+#include <QtDBus/qdbusinterface.h>
+#include <QTextStream>
+#include <kwindowsystem.h>
+#include <QApplication>
+#include <KAboutData>
+#include <KMessageBox>
+#include <QCommandLineParser>
+#include <QCommandLineOption>
 #include "aboutdata.h"
 #include "okular_main.h"
 #include "shellutils.h"
 
 int main(int argc, char** argv)
 {
-    KAboutData about = okularAboutData( "okular", I18N_NOOP( "Okular" ) );
+    QApplication app(argc, argv);
 
-    KCmdLineArgs::init(argc, argv, &about);
+    KLocalizedString::setApplicationDomain("okular");
 
-    KCmdLineOptions options;
-    options.add("p");
-    options.add("page <number>", ki18n("Page of the document to be shown"));
-    options.add("presentation", ki18n("Start the document in presentation mode"));
-    options.add("print", ki18n("Start with print dialog"));
-    options.add("unique", ki18n("\"Unique instance\" control"));
-    options.add("noraise", ki18n("Not raise window"));
-    options.add("+[URL]", ki18n("Document to open. Specify '-' to read from stdin."));
-    KCmdLineArgs::addCmdLineOptions( options );
-    KApplication app;
+    KAboutData aboutData = okularAboutData();
+
+    app.setApplicationName(aboutData.applicationData().componentName());
+    app.setApplicationDisplayName(aboutData.applicationData().displayName());
+    app.setApplicationVersion(aboutData.version());
+    app.setOrganizationDomain(QStringLiteral("kde.org"));
+
+    QCommandLineParser parser;
+    KAboutData::setApplicationData(aboutData);
+    // The KDE4 version accepted flags such as -unique with a single dash -> preserve compatibility
+    parser.setSingleDashWordOptionMode(QCommandLineParser::ParseAsLongOptions);
+    parser.addVersionOption();
+    parser.addHelpOption();
+    aboutData.setupCommandLine(&parser);
+
+    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("p") << QStringLiteral("page"), i18n("Page of the document to be shown"), QStringLiteral("number")));
+    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("presentation"), i18n("Start the document in presentation mode")));
+    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("print"), i18n("Start with print dialog")));
+    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("unique"), i18n("\"Unique instance\" control")));
+    parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("noraise"), i18n("Not raise window")));
+    parser.addPositionalArgument(QStringLiteral("urls"), i18n("Documents to open. Specify '-' to read from stdin."));
+
+    parser.process(app);
+    aboutData.processCommandLine(&parser);
 
     // see if we are starting with session management
     if (app.isSessionRestored())
     {
-        RESTORE(Shell);
+        kRestoreMainWindows<Shell>();
     }
     else
     {
         // no session.. just start up normally
-        KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
         QStringList paths;
-        for ( int i = 0; i < args->count(); ++i )
-            paths << args->arg(i);
-        Okular::Status status = Okular::main(paths, ShellUtils::serializeOptions(*args));
+        for ( int i = 0; i < parser.positionalArguments().count(); ++i )
+            paths << parser.positionalArguments().at(i);
+        Okular::Status status = Okular::main(paths, ShellUtils::serializeOptions(parser));
         switch (status)
         {
             case Okular::Error:

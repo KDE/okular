@@ -1,10 +1,7 @@
 <?xml version="1.0" ?>
-<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
-  <!ENTITY kappname "&okular;">
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
   <!ENTITY latex "L<superscript>A</superscript>T<subscript>E</subscript>X">
-  <!ENTITY package "kdegraphics">
   <!ENTITY kpdf "<application>KPDF</application>">
-  <!ENTITY PDF "<acronym>PDF</acronym>">
   <!ENTITY % English "INCLUDE">
   <!ENTITY % addindex "IGNORE">
 ]>
@@ -37,8 +34,8 @@ Context menu actions like Rename Bookmarks etc.)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2014-02-25</date>
-		<releaseinfo>0.19 (&kde; 4.13)</releaseinfo>
+		<date>2016-11-04</date>
+		<releaseinfo>1.0 (Applications 16.12)</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
 			<para>&okular; is a &kde; universal document viewer based on &kpdf; code.</para>
@@ -161,6 +158,12 @@ Context menu actions like Rename Bookmarks etc.)
 						If the document has a table of contents, clicking on a table
 						of contents item will bring the document to the page linked to that
 						item.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						If the document has layers, you can control the layers shown by checking or unchecking
+						the items in the <guilabel>Layers</guilabel> list.
 					</para>
 				</listitem>
 				<listitem>
@@ -883,42 +886,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<variablelist>
 			    <varlistentry>
 				<term><userinput><command>okular</command>
-				<option>--help</option></userinput></term>
-				<listitem><para>This lists the most basic options available at the command line.</para></listitem>
-			    </varlistentry>
-			    <varlistentry>
-				<term><userinput><command>okular</command>
-				<option>--help-qt</option></userinput></term>
-				<listitem><para>This lists the options available for changing the way &okular; interacts with &Qt;.</para></listitem>
-			    </varlistentry>
-			    <varlistentry>
-				<term><userinput><command>okular</command>
-				<option>--help-kde</option></userinput></term>
-				<listitem><para>This lists the options available for changing the way &okular; interacts with &kde;.</para></listitem>
-			    </varlistentry>
-			    <varlistentry>
-				<term><userinput><command>okular</command>
-				<option>--help-all</option></userinput></term>
-				<listitem><para>This lists all of the command line options.</para></listitem>
-			    </varlistentry>
-			    <varlistentry>
-				<term><userinput><command>okular</command>
-				<option>--author</option></userinput></term>
-				<listitem><para>Lists &okular;'s authors in the terminal window</para></listitem>
-			    </varlistentry>
-			    <varlistentry>
-				<term><userinput><command>okular</command>
-				<option>-v, --version</option></userinput></term>
-				<listitem><para>Lists version information for &Qt;, &kde;, and &okular;. Also available through <userinput><command>okular</command> <option>-v</option></userinput> </para></listitem>
-			    </varlistentry>
-			    <varlistentry>
-				<term><userinput><command>okular</command>
-				<option>--license</option></userinput></term>
-				<listitem><para>Shows license information.</para></listitem>
-			    </varlistentry>
-			    <varlistentry>
-				<term><userinput><command>okular</command>
-				<option>--page <replaceable>number</replaceable></option></userinput></term>
+				<option>-p --page <replaceable>number</replaceable></option></userinput></term>
 				<listitem><para>Open a page with a given number in the document. Also available through <userinput><command>okular</command> <option>-p <replaceable>number</replaceable></option></userinput></para></listitem>
 			    </varlistentry>
 			    <varlistentry>
@@ -940,14 +908,19 @@ Context menu actions like Rename Bookmarks etc.)
 				<term><userinput><command>okular</command>
 				<option>--noraise</option></userinput></term>
 				<listitem><para>Allows to prevent &okular; window raising after the start.</para></listitem>
-			    </varlistentry>
-			    <varlistentry>
-				<term><userinput><command>okular</command>
-				<option>--</option></userinput></term>
-				<listitem><para>End of options.</para></listitem>
-			    </varlistentry>
+                            </varlistentry>
 			</variablelist>
 		    </sect2>
+		</sect1>
+		<sect1 id="fit-window-to-page">
+			<title>Fit window to page</title>
+			<para>
+			    The Fit window to page feature resizes the window so that it is exactly the same size as the page at the current zoom factor.
+			    If the page doesn't completely fit on the screen, the window is enlarged so that the largest possible part of the page is shown.
+			</para>
+			<para>
+			    This feature can be accessed by using the keyboard shortcut <keycombo action="simul">&Ctrl;<keycap>J</keycap></keycombo>
+			</para>
 		</sect1>
 	</chapter>
 
@@ -1021,26 +994,35 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term>
 						<menuchoice>
+							<shortcut>
+							<keycombo action="simul">&Ctrl;<keycap>S</keycap></keycombo>
+							</shortcut>
 							<guimenu>File</guimenu>
 							<guimenuitem>Save As...</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
-					  <para><action>Save</action> the currently open file under a different name using the document backend. With the &PDF; backend (Poppler >= 0.8 required) it is possible to save the document with the changed values of the form fields.<!--Only useful for pdf? what happens with other formats/backends?--> It can be possible (provided that the data were not secured using DRM) to save annotations with &PDF; files (Poppler >= 0.22 required).</para>
+					  <para><action>Saves</action> the document under a new name including all the changes (annotations, form contents, &etc;), provided the document backend supports saving changes. With the &PDF; backend it is possible to save the document with the changed values of the form fields.<!--Only useful for pdf? what happens with other formats/backends?--> It can be possible (provided that the data were not secured using DRM) to save annotations with &PDF; files.</para>
+                                        <note>
+                                        <para>
+                                            Note that, due to the way this is implemented, even if there are no changes to the file, the new file need not to be an exact bit-for-bit copy of the original file (&eg; can have a different SHA-1 hash, &etc;).
+                                        </para>
+                                        </note>
 					</listitem>
 				</varlistentry>
 
 				<varlistentry>
 					<term>
 						<menuchoice>
+							<shortcut>
+							<keycombo action="simul">&Ctrl;&Shift;<keycap>S</keycap></keycombo>
+							</shortcut>
 							<guimenu>File</guimenu>
 							<guimenuitem>Save Copy As...</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
-						<para><action>Save</action> a copy of the currently open file under a different name
-						without using the current document backend.</para>
-                                                <!-- does not save the annotations, they are still coupled to the original file-->
+						<para><action>Saves</action> a copy of the original document under a new name (completely bypassing the document backend). The saved document will be a bit-for-bit copy of the original.</para>
 					</listitem>
 				</varlistentry>
 
@@ -1408,12 +1390,24 @@ Context menu actions like Rename Bookmarks etc.)
 					<term>
 						<menuchoice>
 							<guimenu>View</guimenu>
-							<guimenuitem>Trim Margins</guimenuitem>
+							<guisubmenu>Trim View</guisubmenu>
 						</menuchoice>
 					</term>
 					<listitem>
 						<para>
-							Remove the white border of pages when viewing pages.
+						  This submenu allows you to remove the white border of pages when viewing pages (<guimenuitem>Trim Margins</guimenuitem> item) or trim viewport to selection (<guimenuitem>Trim To Selection</guimenuitem> item).
+						</para>
+						<para>
+						  The <quote>trim to selection</quote> mode allows you to draw a selection over the rendered page in order to define a visible bounding box to be applied to <emphasis>all pages</emphasis> in the document. Selecting a small trim bounding box enforces minimum dimensions size (20% as a percentage of total page size).
+						</para>
+						<para>
+						  The <quote>trim margins</quote> mode is persistent across &okular; restarts. The <quote>trim to selection</quote> mode is forgotten across &okular; restarts.
+						</para>
+						<para>
+						  When you switch &okular; from <quote>trim margins</quote> mode to <quote>trim to selection</quote> mode, the view jumps out of <quote>trim margins</quote> mode for the bounding box selection interaction.
+						</para>
+						<para>
+						  The trim mode can be deactivated by selecting the same menu item that activates it once again.
 						</para>
 					</listitem>
 				</varlistentry>
@@ -1718,36 +1712,12 @@ Context menu actions like Rename Bookmarks etc.)
 			</variablelist>
 		</sect1>
 
-		<sect1 id="settings-menu">
-			<title>The Settings Menu</title>
+		<sect1 id="settings-help-menu">
+			<title>The Settings and Help Menu</title>
+			<para>Apart from the common &kde; <guimenu>Settings</guimenu> and <guimenu>Help</guimenu> menus described
+			in the <ulink url="help:/fundamentals/ui.html#menus">Menu</ulink> chapter of the &kde; Fundamentals documentation
+			&okular; has these application specific menu entries:</para>
 			<variablelist>
-				<varlistentry>
-					<term>
-						<menuchoice>
-							<shortcut><keycombo action="simul">&Ctrl;<keycap>M</keycap></keycombo></shortcut>
-							<guimenu>Settings</guimenu>
-							<guimenuitem>Show Menubar</guimenuitem>
-						</menuchoice>
-					</term>
-					<listitem>
-						<para><action>Toggle the Menubar display</action> on and off. Once
-						hidden it can be made visible using the shortcut
-                                                <keycombo action="simul">&Ctrl;<keycap>M</keycap></keycombo> again.
-     						If the menubar is hidden, the context menu opened with a right mouse button
-						click anywhere in the view area has an extra entry <guimenuitem>Show Menubar</guimenuitem>.</para>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
-					<term>
-						<menuchoice>
-							<guimenu>Settings</guimenu>
-							<guimenuitem>Show Toolbar</guimenuitem>
-						</menuchoice>
-					</term>
-					<listitem>
-						<para><action>Toggle the Toolbar display</action> on and off.</para>
-					</listitem>
-				</varlistentry>
 				<varlistentry>
 					<term>
 						<menuchoice>
@@ -1791,30 +1761,6 @@ Context menu actions like Rename Bookmarks etc.)
 					<term>
 						<menuchoice>
 							<guimenu>Settings</guimenu>
-							<guimenuitem>Configure Shortcuts...</guimenuitem>
-						</menuchoice>
-					</term>
-					<listitem>
-						<para>Opens a window that lets you <action>configure the keyboard
-							shortcuts</action> for many menu commands.</para>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
-					<term>
-						<menuchoice>
-							<guimenu>Settings</guimenu>
-							<guimenuitem>Configure Toolbars...</guimenuitem>
-						</menuchoice>
-					</term>
-					<listitem>
-						<para>Opens a window that lets you choose which icons are visible
-							in the toolbar.</para>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
-					<term>
-						<menuchoice>
-							<guimenu>Settings</guimenu>
 							<guimenuitem>Configure Backends...</guimenuitem>
 						</menuchoice>
 					</term>
@@ -1823,24 +1769,7 @@ Context menu actions like Rename Bookmarks etc.)
 							window.</para>
 					</listitem>
 				</varlistentry>
-				<varlistentry>
-					<term>
-						<menuchoice>
-							<guimenu>Settings</guimenu>
-							<guimenuitem>Configure &okular;...</guimenuitem>
-						</menuchoice>
-					</term>
-					<listitem>
-						<para>Opens the <link linkend="configure">Configure</link>
-							window.</para>
-					</listitem>
-				</varlistentry>
-
 			</variablelist>
-		</sect1>
-		<sect1 id="menuhelp">
-			<title>The Help Menu</title>
-			&help.menu.documentation;
 		</sect1>
 
 	</chapter>
@@ -2108,6 +2037,14 @@ Context menu actions like Rename Bookmarks etc.)
 					</listitem>
 				</varlistentry>
 				<varlistentry>
+					<term><guilabel>Right to left reading direction</guilabel></term>
+					<listitem>
+						<para>
+						  Whether to use right to left reading direction by default for the opened files. Can be useful for <ulink url="https://en.wikipedia.org/wiki/Right-to-left">some writing systems</ulink>.
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
 					<term><guilabel>Overview columns</guilabel></term>
 					<listitem>
 						<para>
@@ -2234,12 +2171,6 @@ Context menu actions like Rename Bookmarks etc.)
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term><guilabel>Pencil color</guilabel></term>
-					<listitem>
-						<para>The color of the pencil used when drawing on the pages during the presentation mode.</para>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
 					<term><guilabel>Mouse cursor</guilabel></term>
 					<listitem>
 						<para>Whether the mouse should be always hidden, always shown or hidden after a small time of inactivity.</para>
@@ -2278,6 +2209,12 @@ Context menu actions like Rename Bookmarks etc.)
 						<para><guilabel>Current Screen</guilabel> is same screen of the &okular; window that starts the presentation mode.</para>
 						<para><guilabel>Default Screen</guilabel> is the screen marked as default in the xinerama configuration.</para>
 						<para><guilabel>Screen 0</guilabel>, <guilabel>Screen 1</guilabel> &etc; are the available screens.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term><guilabel>Drawing Tool Configuration</guilabel></term>
+					<listitem>
+						<para>Manage the colors of the pencil used when drawing on the pages during the presentation mode.</para>
 					</listitem>
 				</varlistentry>
 			</variablelist>
@@ -2323,6 +2260,16 @@ Context menu actions like Rename Bookmarks etc.)
 					  <para>
 					    Click on some item in the list box then click on the corresponding button at the right part of the page to edit, remove, move up or move down the item. The keyboard shortcut of the tool (keys from <keycap>1</keycap> to <keycap>9</keycap>) depends on its position in the list of annotating toolbar.
 					  </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>Using Custom Stamps</term>
+					<listitem>
+					<orderedlist>
+					<listitem><para>Create the icon you want to use for your own stamp and save it in any graphics format supported by &okular;</para></listitem>
+					<listitem><para>Click the <guibutton>Add</guibutton> button, select type <guilabel>Stamp</guilabel> and enter a name for your stamp.</para></listitem>
+					<listitem><para>Enter the full path to your custom icon into the dropdown box in the <guilabel>Stamp Symbol</guilabel> group</para></listitem>
+					</orderedlist>
 					</listitem>
 				</varlistentry>
 			</variablelist>
@@ -2391,23 +2338,6 @@ Context menu actions like Rename Bookmarks etc.)
 		&underGPL;
 	</chapter>
 
-	<appendix id="installation">
-		<title>Installation</title>
-		<sect1 id="getting-kapp">
-			<title>How to obtain &okular;</title>
-			&install.intro.documentation;
-		</sect1>
-		<sect1 id="compilation">
-			<title>Compilation and Installation</title>
-			<note>
-				<para>
-					If you are reading this help in the &khelpcenter;, &okular; has already been
-					installed on this system and you do not need install it anymore.
-				</para>
-			</note>
-			&install.compile.documentation;
-		</sect1>
-	</appendix>
 	&documentation.index;
 </book>
 

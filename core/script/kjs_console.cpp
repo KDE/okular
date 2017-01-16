@@ -14,7 +14,7 @@
 #include <kjs/kjsprototype.h>
 #include <kjs/kjsarguments.h>
 
-#include <kdebug.h>
+#include <QtCore/QDebug>
 
 #include "../debug_p.h"
 
@@ -97,7 +97,7 @@ static void clearConsole()
 
 static void outputToConsole( const QString &cMessage )
 {
-    kDebug(OkularDebug) << "CONSOLE:" << cMessage;
+    qCDebug(OkularCoreDebug) << "CONSOLE:" << cMessage;
 }
 
 #endif /* OKULAR_JS_CONSOLE */
@@ -138,10 +138,10 @@ void JSConsole::initType( KJSContext *ctx )
 
     g_consoleProto = new KJSPrototype();
 
-    g_consoleProto->defineFunction( ctx, "clear", consoleClear );
-    g_consoleProto->defineFunction( ctx, "hide", consoleHide );
-    g_consoleProto->defineFunction( ctx, "println", consolePrintln );
-    g_consoleProto->defineFunction( ctx, "hide", consoleShow );
+    g_consoleProto->defineFunction( ctx, QStringLiteral("clear"), consoleClear );
+    g_consoleProto->defineFunction( ctx, QStringLiteral("hide"), consoleHide );
+    g_consoleProto->defineFunction( ctx, QStringLiteral("println"), consolePrintln );
+    g_consoleProto->defineFunction( ctx, QStringLiteral("hide"), consoleShow );
 }
 
 KJSObject JSConsole::object( KJSContext *ctx )

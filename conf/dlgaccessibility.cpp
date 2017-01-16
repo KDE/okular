@@ -28,7 +28,7 @@ DlgAccessibility::DlgAccessibility( QWidget * parent )
         page->hide();
     m_color_pages[ m_selected ]->show();
 
-    connect( m_dlg->kcfg_RenderMode, SIGNAL(currentIndexChanged(int)), this, SLOT(slotColorMode(int)) );
+    connect(m_dlg->kcfg_RenderMode, static_cast<void (KComboBox::*)(int)>(&KComboBox::currentIndexChanged), this, &DlgAccessibility::slotColorMode);
 }
 
 DlgAccessibility::~DlgAccessibility()
@@ -44,4 +44,4 @@ void DlgAccessibility::slotColorMode( int mode )
     m_selected = mode;
 }
 
-#include "dlgaccessibility.moc"
+#include "moc_dlgaccessibility.cpp"

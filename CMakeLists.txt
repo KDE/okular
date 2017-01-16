@@ -1,40 +1,92 @@
 project(okular)
 
-find_package(KDE4 4.6.0 REQUIRED)
-include(KDE4Defaults)
-include(MacroLibrary)
-include(MacroOptionalAddSubdirectory)
+cmake_minimum_required(VERSION 2.8.12)
+
+set(QT_REQUIRED_VERSION "5.6.0")
+set(KF5_REQUIRED_VERSION "5.16.0")
+
+find_package(ECM 5.19.0 CONFIG REQUIRED)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH})
+
+# KDE Application Version, managed by release script
+set (KDE_APPLICATIONS_VERSION_MAJOR "17")
+set (KDE_APPLICATIONS_VERSION_MINOR "03")
+set (KDE_APPLICATIONS_VERSION_MICRO "70")
+set (KDE_APPLICATIONS_VERSION "${KDE_APPLICATIONS_VERSION_MAJOR}.${KDE_APPLICATIONS_VERSION_MINOR}.${KDE_APPLICATIONS_VERSION_MICRO}")
+
+include(ECMInstallIcons)
+include(ECMSetupVersion)
+include(ECMOptionalAddSubdirectory)
+include(GenerateExportHeader)
+include(FeatureSummary)
+include(ECMAddAppIcon)
+include(KDECompilerSettings NO_POLICY_SCOPE)
+include(KDEInstallDirs)
+include(KDECMakeSettings)
+include(ECMAddTests)
+include(ECMAddAppIcon)
+include(ECMPackageConfigHelpers)
+
+ecm_setup_version(1.0.${KDE_APPLICATIONS_VERSION_MICRO}
+                  VARIABLE_PREFIX OKULAR
+                  VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/core/version.h"
+                  PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/Okular5ConfigVersion.cmake")
+
+find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED COMPONENTS Core DBus Test Widgets PrintSupport Svg Qml Quick)
+find_package(Qt5 ${QT_REQUIRED_VERSION} OPTIONAL_COMPONENTS TextToSpeech)
+if (NOT Qt5TextToSpeech_FOUND)
+    message(STATUS "Qt5TextToSpeech not found, speech features will be disabled")
+else()
+    add_definitions(-DHAVE_SPEECH)
+endif()
+
+find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS
+    Activities
+    Archive
+    Bookmarks
+    Completion
+    Config
+    ConfigWidgets
+    CoreAddons
+    DBusAddons
+    DocTools
+    IconThemes
+    JS
+    KIO
+    Parts
+    ThreadWeaver
+    Wallet
+    KHtml
+    WindowSystem
+)
+find_package(Phonon4Qt5 CONFIG REQUIRED)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake/modules)
 
-macro_optional_find_package(QImageBlitz)
-macro_log_feature(QIMAGEBLITZ_FOUND "QImageBlitz" "An image effects library" "http://sourceforge.net/projects/qimageblitz" TRUE "kdesupport" "Required to build Okular.")
-
-macro_optional_find_package(LibKScreen)
-macro_log_feature(LibKScreen_FOUND "LibKScreen" "KDE screen management library" "https://projects.kde.org/projects/kdereview/libkscreen" FALSE "1.0.2" "DPI detection support")
-
 find_package(ZLIB REQUIRED)
 
-add_definitions(${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
 add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
-include_directories(
-   ${CMAKE_CURRENT_SOURCE_DIR}
-   ${KDE4_INCLUDES}
-   ${QIMAGEBLITZ_INCLUDES}
-   ${LibKScreen_INCLUDE_DIR}
-   ${ZLIB_INCLUDE_DIR}
-   core/synctex
-)
+add_definitions(-DTRANSLATION_DOMAIN="okular")
 
-add_subdirectory( active )
+include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${PHONON_INCLUDES} core/synctex ${ZLIB_INCLUDE_DIR} ${CMAKE_BINARY_DIR}/core)
+
+add_subdirectory( mobile )
+option(BUILD_COVERAGE "Build the project with gcov support" OFF)
+
+if(BUILD_COVERAGE)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lgcov")
+endif()
+
 add_subdirectory( ui )
 add_subdirectory( shell )
 add_subdirectory( generators )
-add_subdirectory( tests )
-macro_optional_add_subdirectory(doc)
+add_subdirectory( autotests )
+add_subdirectory( conf/autotests )
+
+add_subdirectory(doc)
 
 include(OkularConfigureChecks.cmake)
-include(MacroWriteBasicCMakeVersionFile)
 
 if(NOT WIN32)
  set(MATH_LIB m)
@@ -60,6 +112,7 @@ set(okularcore_SRCS
    core/misc.cpp
    core/movie.cpp
    core/observer.cpp
+   core/debug.cpp
    core/page.cpp
    core/pagecontroller.cpp
    core/pagesize.cpp
@@ -88,7 +141,7 @@ set(okularcore_SRCS
    core/synctex/synctex_parser_utils.c
 )
 
-kde4_add_ui_files(okularcore_SRCS
+ki18n_wrap_ui(okularcore_SRCS
    conf/textdocumentsettings.ui
 )
 
@@ -101,7 +154,6 @@ install( FILES
            core/form.h
            core/generator.h
            core/global.h
-           core/okular_export.h
            core/page.h
            core/pagesize.h
            core/pagetransition.h
@@ -112,11 +164,12 @@ install( FILES
            core/textpage.h
            core/tile.h
            core/utils.h
-           core/version.h
            core/fileprinter.h
            core/observer.h
+           ${CMAKE_CURRENT_BINARY_DIR}/core/version.h
+           ${CMAKE_CURRENT_BINARY_DIR}/core/okularcore_export.h
            ${CMAKE_CURRENT_BINARY_DIR}/settings_core.h
-         DESTINATION ${INCLUDE_INSTALL_DIR}/okular/core COMPONENT Devel)
+         DESTINATION ${KDE_INSTALL_INCLUDEDIR}/okular/core COMPONENT Devel)
 
 install( FILES
            interfaces/configinterface.h
@@ -124,40 +177,56 @@ install( FILES
            interfaces/printinterface.h
            interfaces/saveinterface.h
            interfaces/viewerinterface.h
-         DESTINATION ${INCLUDE_INSTALL_DIR}/okular/interfaces COMPONENT Devel)
+         DESTINATION ${KDE_INSTALL_INCLUDEDIR}/okular/interfaces COMPONENT Devel)
 
-kde4_add_ui_files(okularcore_SRCS
+ki18n_wrap_ui(okularcore_SRCS
    core/chooseenginewidget.ui
 )
 
-kde4_add_kcfg_files(okularcore_SRCS conf/settings_core.kcfgc )
+kconfig_add_kcfg_files(okularcore_SRCS conf/settings_core.kcfgc )
 
-kde4_add_library(okularcore SHARED ${okularcore_SRCS})
+add_library(okularcore SHARED ${okularcore_SRCS})
+generate_export_header(okularcore BASE_NAME okularcore EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/core/okularcore_export.h")
 
 # Special handling for linking okularcore on OSX/Apple
 IF(APPLE)
     SET(OKULAR_IOKIT "-framework IOKit" CACHE STRING "Apple IOKit framework")
 ENDIF(APPLE)
 
-target_link_libraries(okularcore  ${OKULAR_IOKIT} ${KDE4_KIO_LIBS} ${KDE4_PHONON_LIBRARY} ${KDE4_KJSAPI_LIBRARY} ${MATH_LIB} ${KDE4_THREADWEAVER_LIBRARY} ${ZLIB_LIBRARIES} )
+target_link_libraries(okularcore
+PRIVATE
+    ${OKULAR_IOKIT}
+    KF5::Archive
+    KF5::JS
+    KF5::JSApi
+    KF5::KIOCore
+    KF5::KIOWidgets
+    KF5::I18n
+    KF5::ThreadWeaver
+    KF5::Wallet
+    KF5::Bookmarks
+    Phonon::phonon4qt5
+    ${MATH_LIB}
+    ${ZLIB_LIBRARIES}
+PUBLIC  # these are included from the installed headers
+    KF5::CoreAddons
+    KF5::XmlGui
+    KF5::ConfigGui
+    Qt5::PrintSupport
+    Qt5::Widgets
+)
 
-if(LibKScreen_FOUND)
-    target_link_libraries(okularcore ${LibKScreen_LIBRARY})
-endif(LibKScreen_FOUND)
+set_target_properties(okularcore PROPERTIES VERSION 7.0.0 SOVERSION 7 OUTPUT_NAME Okular5Core EXPORT_NAME Core)
 
-set_target_properties(okularcore PROPERTIES VERSION 6.0.0 SOVERSION 6 )
+install(TARGETS okularcore EXPORT Okular5Targets ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 
-install(TARGETS okularcore ${INSTALL_TARGETS_DEFAULT_ARGS} )
-
-install(FILES conf/okular.kcfg DESTINATION ${KCFG_INSTALL_DIR})
-install(FILES conf/okular_core.kcfg DESTINATION ${KCFG_INSTALL_DIR})
-install(FILES core/okularGenerator.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
+install(FILES conf/okular.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
+install(FILES conf/okular_core.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
+install(FILES core/okularGenerator.desktop DESTINATION ${KDE_INSTALL_KSERVICETYPES5DIR})
 
 # okularpart
 
-set(okularpart_SRCS
-   part.cpp
-   extensions.cpp
+set(okularpart_conf_SRCS
    conf/preferencesdialog.cpp
    conf/dlgaccessibility.cpp
    conf/dlgdebug.cpp
@@ -166,7 +235,17 @@ set(okularpart_SRCS
    conf/dlgannotations.cpp
    conf/dlgperformance.cpp
    conf/dlgpresentation.cpp
+   conf/editannottooldialog.cpp
+   conf/editdrawingtooldialog.cpp
    conf/widgetannottools.cpp
+   conf/widgetconfigurationtoolsbase.cpp
+   conf/widgetdrawingtools.cpp
+)
+
+set(okularpart_SRCS
+   ${okularpart_conf_SRCS}
+   part.cpp
+   extensions.cpp
    ui/embeddedfilesdialog.cpp
    ui/annotwindow.cpp
    ui/annotationmodel.cpp
@@ -176,6 +255,8 @@ set(okularpart_SRCS
    ui/annotationtools.cpp
    ui/annotationwidgets.cpp
    ui/bookmarklist.cpp
+   ui/debug_ui.cpp
+   ui/drawingtoolactions.cpp
    ui/fileprinterpreview.cpp
    ui/findbar.cpp
    ui/formwidgets.cpp
@@ -183,6 +264,7 @@ set(okularpart_SRCS
    ui/ktreeviewsearchline.cpp
    ui/latexrenderer.cpp
    ui/minibar.cpp
+   ui/okmenutitle.cpp
    ui/pageitemdelegate.cpp
    ui/pagepainter.cpp
    ui/pagesizelabel.cpp
@@ -202,11 +284,16 @@ set(okularpart_SRCS
    ui/toc.cpp
    ui/tocmodel.cpp
    ui/toolaction.cpp
-   ui/tts.cpp
    ui/videowidget.cpp
+   ui/layers.cpp
 )
 
-kde4_add_ui_files(okularpart_SRCS
+if (Qt5TextToSpeech_FOUND)
+   set(okularpart_SRCS ${okularpart_SRCS}
+      ui/tts.cpp)
+endif()
+
+ki18n_wrap_ui(okularpart_SRCS
    conf/dlgaccessibilitybase.ui
    conf/dlgeditorbase.ui
    conf/dlggeneralbase.ui
@@ -215,31 +302,67 @@ kde4_add_ui_files(okularpart_SRCS
    conf/dlgpresentationbase.ui
 )
 
-kde4_add_kcfg_files(okularpart_SRCS conf/settings.kcfgc )
+kconfig_add_kcfg_files(okularpart_SRCS conf/settings.kcfgc )
 
-qt4_add_dbus_interfaces(okularpart_SRCS ${KDE4_DBUS_INTERFACES_DIR}/org.kde.KSpeech.xml)
+add_library(okularpart SHARED ${okularpart_SRCS})
+generate_export_header(okularpart BASE_NAME okularpart)
 
-kde4_add_plugin(okularpart SHARED ${okularpart_SRCS})
+target_link_libraries(okularpart okularcore
+    ${MATH_LIB}
+    Qt5::Svg
+    Phonon::phonon4qt5
+    KF5::Archive
+    KF5::Bookmarks
+    KF5::I18n
+    KF5::IconThemes
+    KF5::ItemViews
+    KF5::KIOCore
+    KF5::KIOFileWidgets
+    KF5::KIOWidgets
+    KF5::KIONTLM
+    KF5::Parts
+    KF5::Solid
+    KF5::Wallet
+    KF5::WindowSystem
+)
 
-target_link_libraries(okularpart okularcore ${KDE4_KPARTS_LIBS} ${KDE4_KPRINTUTILS_LIBS} ${MATH_LIB} ${QIMAGEBLITZ_LIBRARIES} ${KDE4_PHONON_LIBRARY} ${KDE4_SOLID_LIBRARY})
+set_target_properties(okularpart PROPERTIES PREFIX "")
 
-install(TARGETS okularpart DESTINATION ${PLUGIN_INSTALL_DIR})
+if (Qt5TextToSpeech_FOUND)
+   target_link_libraries(okularpart Qt5::TextToSpeech)
+endif()
+install(TARGETS okularpart DESTINATION ${KDE_INSTALL_PLUGINDIR})
 
 
 ########### install files ###############
 
-install(FILES okular.upd DESTINATION ${DATA_INSTALL_DIR}/kconf_update)
+install(FILES okular.upd DESTINATION ${KDE_INSTALL_DATADIR}/kconf_update)
 
-install( FILES okular_part.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
-install( FILES part.rc part-viewermode.rc DESTINATION ${DATA_INSTALL_DIR}/okular )
+install( FILES okular_part.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
+install( FILES part.rc part-viewermode.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/okular )
+
+install( FILES okular.categories DESTINATION ${KDE_INSTALL_CONFDIR} )
 
 ########### cmake files #################
 
-macro_write_basic_cmake_version_file(${CMAKE_CURRENT_BINARY_DIR}/OkularConfigVersion.cmake 0 21 0)
+set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/Okular5")
+ecm_configure_package_config_file(
+  "${CMAKE_CURRENT_SOURCE_DIR}/Okular5Config.cmake.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/Okular5Config.cmake"
+  INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
+  PATH_VARS  INCLUDE_INSTALL_DIR CMAKE_INSTALL_PREFIX
+)
 
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/OkularConfig.cmake
-              ${CMAKE_CURRENT_BINARY_DIR}/OkularConfigVersion.cmake
-        DESTINATION ${LIB_INSTALL_DIR}/cmake/Okular )
+install(FILES
+  "${CMAKE_CURRENT_BINARY_DIR}/Okular5Config.cmake"
+  "${CMAKE_CURRENT_BINARY_DIR}/Okular5ConfigVersion.cmake"
+  DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
+  COMPONENT Devel
+)
 
-macro_display_feature_log()
+install(EXPORT Okular5Targets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE Okular5Targets.cmake NAMESPACE Okular::)
+
+########### summary #################
+
+feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
 

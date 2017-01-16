@@ -52,14 +52,16 @@
 
 #include <config.h>
 
+#include "debug_dvi.h"
 #include "dviFile.h"
 #include "dvi.h"
 #include "fontpool.h"
-#include "kvs_debug.h"
+#include "debug_dvi.h"
 #include "pageSize.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 
+#include <QtCore/qloggingcategory.h>
 #include <QProcess>
 #include <QSysInfo>
 #include <QTemporaryFile>
@@ -84,7 +86,7 @@ dvifile::dvifile(const dvifile *old, fontPool *fp)
   size_of_file = old->size_of_file;
   end_pointer = dvi_Data()+size_of_file;
   if (dvi_Data() == 0) {
-    kError(kvs::dvi) << "Not enough memory to copy the DVI-file." << endl;
+    qCCritical(OkularDviDebug) << "Not enough memory to copy the DVI-file." << endl;
     return;
   }
 
@@ -137,7 +139,7 @@ void dvifile::process_preamble()
   magic_number = readUINT8();
   strncpy(job_id, (char *)command_pointer, magic_number);
   job_id[magic_number] = '\0';
-  generatorString = job_id;
+  generatorString = QString::fromLocal8Bit(job_id);
 }
 
 
@@ -195,7 +197,7 @@ void dvifile::read_postamble()
     command_pointer += len;
 
 #ifdef DEBUG_FONTS
-    kDebug(kvs::dvi) << "Postamble: define font \"" << fontname << "\" scale=" << scale << " design=" << design;
+    qCDebug(OkularDviDebug) << "Postamble: define font \"" << fontname << "\" scale=" << scale << " design=" << design;
 #endif
 
     // According to section A.4 of the DVI driver standard, this font
@@ -203,7 +205,7 @@ void dvifile::read_postamble()
     double enlargement_factor = (double(scale) * double(_magnification))/(double(design) * 1000.0);
 
     if (font_pool != 0) {
-      TeXFontDefinition *fontp = font_pool->appendx(fontname, checksum, scale, enlargement_factor);
+      TeXFontDefinition *fontp = font_pool->appendx(QString::fromLocal8Bit(fontname), checksum, scale, enlargement_factor);
 
       // Insert font in dictionary and make sure the dictionary is big
       // enough.
@@ -233,14 +235,14 @@ void dvifile::read_postamble()
 void dvifile::prepare_pages()
 {
 #ifdef DEBUG_DVIFILE
-  kDebug(kvs::dvi) << "prepare_pages";
+  qCDebug(OkularDviDebug) << "prepare_pages";
 #endif
   if (total_pages == 0)
     return;
 
   page_offset.resize(total_pages+1);
   if (page_offset.size() < (total_pages+1)) {
-    kError(kvs::dvi) << "No memory for page list!" << endl;
+    qCCritical(OkularDviDebug) << "No memory for page list!" << endl;
     return;
   }
   for(int i=0; i<=total_pages; i++)
@@ -269,7 +271,7 @@ void dvifile::prepare_pages()
 dvifile::dvifile(const QString& fname, fontPool* pool)
 {
 #ifdef DEBUG_DVIFILE
-  kDebug(kvs::dvi) << "init_dvi_file: " << fname;
+  qCDebug(OkularDviDebug) << "init_dvi_file: " << fname;
 #endif
 
   errorMsg.clear();
@@ -291,13 +293,13 @@ dvifile::dvifile(const QString& fname, fontPool* pool)
   // whole memory buffer is readable
   end_pointer = dvi_Data()+size_of_file;
   if (dvi_Data() == 0) {
-    kError(kvs::dvi) << "Not enough memory to load the DVI-file.";
+    qCCritical(OkularDviDebug) << "Not enough memory to load the DVI-file.";
     return;
   }
   file.read((char *)dvi_Data(), size_of_file);
   file.close();
   if (file.error() != QFile::NoError) {
-    kError(kvs::dvi) << "Could not load the DVI-file.";
+    qCCritical(OkularDviDebug) << "Could not load the DVI-file.";
     return;
   }
 
@@ -316,7 +318,7 @@ dvifile::dvifile(const QString& fname, fontPool* pool)
 dvifile::~dvifile()
 {
 #ifdef DEBUG_DVIFILE
-  kDebug(kvs::dvi) << "destroy dvi-file";
+  qCDebug(OkularDviDebug) << "destroy dvi-file";
 #endif
 
   // Delete converted PDF files
@@ -379,7 +381,7 @@ QString dvifile::convertPDFtoPS(const QString &PDFFilename, QString *converrorms
   // Use pdf2ps to do the conversion
   QProcess pdf2ps;
   pdf2ps.setReadChannelMode(QProcess::MergedChannels);
-  pdf2ps.start("pdf2ps",
+  pdf2ps.start(QStringLiteral("pdf2ps"),
                QStringList() << PDFFilename << convertedFileName,
                QIODevice::ReadOnly|QIODevice::Text);
 
@@ -396,7 +398,7 @@ QString dvifile::convertPDFtoPS(const QString &PDFFilename, QString *converrorms
                           "contained in distributions of the ghostscript PostScript interpreter system. If "
                           "ghostscript is not installed on your system, you could install it now. "
                           "If you are sure that ghostscript is installed, try to use <strong>pdf2ps</strong> "
-                          "from the command line to check if it really works.</p><p><em>PATH:</em> %2</p></qt>", PDFFilename, QString(qgetenv("PATH")));
+                          "from the command line to check if it really works.</p><p><em>PATH:</em> %2</p></qt>", PDFFilename, QString::fromLocal8Bit(qgetenv("PATH")));
       have_complainedAboutMissingPDF2PS = true;
     }
     return QString();
@@ -409,7 +411,7 @@ QString dvifile::convertPDFtoPS(const QString &PDFFilename, QString *converrorms
     // Indicates that conversion failed, won't try again.
     convertedFiles[PDFFilename].clear();
     if (converrorms != 0) {
-      const QString output = pdf2ps.readAll();
+      const QString output = QString::fromLocal8Bit(pdf2ps.readAll());
 
       *converrorms = i18n("<qt><p>The PDF-file %1 could not be converted to PostScript. Some graphic elements in your "
                           "document will therefore not be displayed.</p>"

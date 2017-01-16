@@ -12,6 +12,7 @@
 #define _EXTENSIONS_H_
 
 #include <kparts/browserextension.h>
+#include <kparts/liveconnectextension.h>
 
 namespace Okular
 {
@@ -25,7 +26,7 @@ class BrowserExtension : public KParts::BrowserExtension
     public:
         BrowserExtension(Part*);
 
-    public slots:
+    public Q_SLOTS:
         // Automatically detected by the host.
         void print();
 

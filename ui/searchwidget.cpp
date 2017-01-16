@@ -15,8 +15,8 @@
 #include <qaction.h>
 #include <qsizepolicy.h>
 #include <qtoolbutton.h>
-#include <kicon.h>
-#include <klocale.h>
+#include <QIcon>
+#include <KLocalizedString>
 
 // local includes
 #include "searchlineedit.h"
@@ -24,7 +24,7 @@
 SearchWidget::SearchWidget( QWidget * parent, Okular::Document * document )
     : QWidget( parent )
 {
-    setObjectName( QLatin1String( "iSearchBar" ) );
+    setObjectName( QStringLiteral( "iSearchBar" ) );
 
     QSizePolicy sp = sizePolicy();
     sp.setVerticalPolicy( QSizePolicy::Minimum );
@@ -63,13 +63,13 @@ SearchWidget::SearchWidget( QWidget * parent, Okular::Document * document )
     m_marchAnyWordsAction->setActionGroup( actgrp );
 
     m_marchAllWordsAction->setChecked( true );
-    connect( m_menu, SIGNAL(triggered(QAction*)), SLOT(slotMenuChaged(QAction*)) );
+    connect(m_menu, &QMenu::triggered, this, &SearchWidget::slotMenuChaged);
 
     // 3.2. create the toolbar button that spawns the popup menu
     QToolButton *optionsMenuAction =  new QToolButton( this );
     mainlay->addWidget( optionsMenuAction );
     optionsMenuAction->setAutoRaise( true );
-    optionsMenuAction->setIcon( KIcon( "view-filter" ) );
+    optionsMenuAction->setIcon( QIcon::fromTheme( QStringLiteral("view-filter") ) );
     optionsMenuAction->setToolTip( i18n( "Filter Options" ) );
     optionsMenuAction->setPopupMode( QToolButton::InstantPopup );
     optionsMenuAction->setMenu( m_menu );
@@ -106,4 +106,4 @@ void SearchWidget::slotMenuChaged( QAction * act )
     m_lineEdit->restartSearch();
 }
 
-#include "searchwidget.moc"
+#include "moc_searchwidget.cpp"

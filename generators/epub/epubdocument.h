@@ -14,12 +14,15 @@
 #include <QUrl>
 #include <QVariant>
 #include <QImage>
-#include <kurl.h>
+#include <QUrl>
 #include <epub.h>
+#include <QtCore/qloggingcategory.h>
 
 namespace Epub {
 
-  class EpubDocument : public QTextDocument {
+  class EpubDocument : public QTextDocument
+  {
+    Q_OBJECT
 
   public:
     EpubDocument(const QString &fileName);
@@ -32,13 +35,13 @@ namespace Epub {
     enum Multimedia { MovieResource = 4, AudioResource = 5 };
 
   protected:
-    virtual QVariant loadResource(int type, const QUrl &name);
+    QVariant loadResource(int type, const QUrl &name) Q_DECL_OVERRIDE;
 
   private:
     void checkCSS(QString &css);
 
     struct epub *mEpub;
-    KUrl mCurrentSubDocument;
+    QUrl mCurrentSubDocument;
 
     int padding;
 
@@ -46,4 +49,5 @@ namespace Epub {
   };
 
 }
+Q_DECLARE_LOGGING_CATEGORY(OkularEpuDebug)
 #endif

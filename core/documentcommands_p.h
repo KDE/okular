@@ -10,7 +10,7 @@
 #ifndef _OKULAR_DOCUMENT_COMMANDS_P_H_
 #define _OKULAR_DOCUMENT_COMMANDS_P_H_
 
-#include <QtGui/QUndoCommand>
+#include <QtWidgets/QUndoCommand>
 #include <QDomNode>
 
 #include "area.h"

@@ -84,13 +84,13 @@ class Okular::FormFieldButtonPrivate : public Okular::FormFieldPrivate
 
         Q_DECLARE_PUBLIC( FormFieldButton )
 
-        void setValue( const QString& v )
+        void setValue( const QString& v ) override
         {
             Q_Q( FormFieldButton );
             q->setState( QVariant( v ).toBool() );
         }
 
-        QString value() const
+        QString value() const override
         {
             Q_Q( const FormFieldButton );
             return qVariantFromValue<bool>( q->state() ).toString();
@@ -122,13 +122,13 @@ class Okular::FormFieldTextPrivate : public Okular::FormFieldPrivate
 
         Q_DECLARE_PUBLIC( FormFieldText )
 
-        void setValue( const QString& v )
+        void setValue( const QString& v ) override
         {
             Q_Q( FormFieldText );
             q->setText( v );
         }
 
-        QString value() const
+        QString value() const override
         {
             Q_Q( const FormFieldText );
             return q->text();
@@ -185,10 +185,10 @@ class Okular::FormFieldChoicePrivate : public Okular::FormFieldPrivate
 
         Q_DECLARE_PUBLIC( FormFieldChoice )
 
-        void setValue( const QString& v )
+        void setValue( const QString& v ) override
         {
             Q_Q( FormFieldChoice );
-            QStringList choices = v.split( ';', QString::SkipEmptyParts );
+            QStringList choices = v.split( QLatin1Char (';'), QString::SkipEmptyParts );
             QList<int> newchoices;
             foreach ( const QString& str, choices )
             {
@@ -201,7 +201,7 @@ class Okular::FormFieldChoicePrivate : public Okular::FormFieldPrivate
                 q->setCurrentChoices( newchoices );
         }
 
-        QString value() const
+        QString value() const override
         {
             Q_Q( const FormFieldChoice );
             QList<int> choices = q->currentChoices();
@@ -211,7 +211,7 @@ class Okular::FormFieldChoicePrivate : public Okular::FormFieldPrivate
             {
                 list.append( QString::number( c ) );
             }
-            return list.join( QLatin1String( ";" ) );
+            return list.join( QStringLiteral( ";" ) );
         }
 };
 

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component type="addon">
+  <id>org.kde.okular-comicbook</id>
+  <extends>org.kde.okular.desktop</extends>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-2.0+ and GFDL-1.3</project_license>
+  <name>Comic Books</name>
+  <name xml:lang="ca">Llibres de còmics</name>
+  <name xml:lang="ca-valencia">Llibres de còmics</name>
+  <name xml:lang="cs">Komiksy</name>
+  <name xml:lang="de">Comic-Buch</name>
+  <name xml:lang="en-GB">Comic Books</name>
+  <name xml:lang="es">Libros de cómics</name>
+  <name xml:lang="et">Koomiksid</name>
+  <name xml:lang="fi">Sarjakuvakirjat</name>
+  <name xml:lang="it">Fumetti</name>
+  <name xml:lang="ko">만화책</name>
+  <name xml:lang="nl">Stripboeken</name>
+  <name xml:lang="nn">Teikneseriar</name>
+  <name xml:lang="pl">Komiksy</name>
+  <name xml:lang="pt">Banda Desenhada</name>
+  <name xml:lang="sk">Knihy komiksov</name>
+  <name xml:lang="sl">Stripi</name>
+  <name xml:lang="sr">Стрипови</name>
+  <name xml:lang="sr-Latn">Stripovi</name>
+  <name xml:lang="sr-ijekavian">Стрипови</name>
+  <name xml:lang="sr-ijekavianlatin">Stripovi</name>
+  <name xml:lang="sv">Comic Book</name>
+  <name xml:lang="uk">Комікси</name>
+  <name xml:lang="x-test">xxComic Booksxx</name>
+  <name xml:lang="zh-CN">漫画书</name>
+  <name xml:lang="zh-TW">漫畫書</name>
+  <summary>Adds support for reading comic books</summary>
+  <summary xml:lang="ca">Afegeix la implementació per llegir llibres de còmics</summary>
+  <summary xml:lang="ca-valencia">Afig la implementació per llegir llibres de còmics</summary>
+  <summary xml:lang="cs">Přidává podporu pro čtení komiksů</summary>
+  <summary xml:lang="de">Bietet Unterstützung zum Lesen von Comic-Büchern</summary>
+  <summary xml:lang="en-GB">Adds support for reading comic books</summary>
+  <summary xml:lang="es">Permite la lectura de libros de cómics</summary>
+  <summary xml:lang="et">Koomiksite lugemise toetus</summary>
+  <summary xml:lang="fi">Lisää sarjakuvakirjojen lukutuen</summary>
+  <summary xml:lang="it">Aggiunge il supporto per la lettura di fumetti</summary>
+  <summary xml:lang="ko">만화책 읽기 지원 추가</summary>
+  <summary xml:lang="nl">Voegt ondersteuning voor lezen van stripboeken toe</summary>
+  <summary xml:lang="nn">Legg til støtte for å lesa teikneseriefiler</summary>
+  <summary xml:lang="pl">Dodaje obsługę komiksów</summary>
+  <summary xml:lang="pt">Adiciona o suporte para ler livros de banda desenhada</summary>
+  <summary xml:lang="sk">Pridá podporu pre čítanie komiksov</summary>
+  <summary xml:lang="sl">Doda podporo za branje stripov</summary>
+  <summary xml:lang="sr">Подршка за читање стрипова</summary>
+  <summary xml:lang="sr-Latn">Podrška za čitanje stripova</summary>
+  <summary xml:lang="sr-ijekavian">Подршка за читање стрипова</summary>
+  <summary xml:lang="sr-ijekavianlatin">Podrška za čitanje stripova</summary>
+  <summary xml:lang="sv">Lägger till stöd för att läsa Comic Book</summary>
+  <summary xml:lang="uk">Додає підтримку читання коміксів</summary>
+  <summary xml:lang="x-test">xxAdds support for reading comic booksxx</summary>
+  <summary xml:lang="zh-CN">增加对漫画书的阅读支持</summary>
+  <summary xml:lang="zh-TW">加入讀取漫畫書的支援</summary>
+  <mimetypes>
+    <mimetype>application/x-cbr</mimetype>
+    <mimetype>application/x-cbz</mimetype>
+    <mimetype>application/x-cbt</mimetype>
+  </mimetypes>
+  <url type="homepage">https://okular.kde.org</url>
+</component>

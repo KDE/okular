@@ -13,20 +13,20 @@
 #include <QtCore/QFile>
 #include <QtCore/QFileInfo>
 #include <QtCore/QRegExp>
+#include <QtCore/QGlobalStatic>
+#include <QTemporaryDir>
 
-#include <kdebug.h>
-#include <kglobal.h>
-#include <klocale.h>
-#include <kstandarddirs.h>
-#include <ktempdir.h>
+#include <QtCore/qloggingcategory.h>
 #if !defined(Q_OS_WIN)
-#include <kptyprocess.h>
-#include <kptydevice.h>
+#include <KPty/kptyprocess.h>
+#include <KPty/kptydevice.h>
 #endif
 
 #include "unrarflavours.h"
+#include "debug_comicbook.h"
 
 #include <memory>
+#include <QStandardPaths>
 
 struct UnrarHelper
 {
@@ -37,7 +37,7 @@ struct UnrarHelper
     QString unrarPath;
 };
 
-K_GLOBAL_STATIC( UnrarHelper, helper )
+Q_GLOBAL_STATIC( UnrarHelper, helper )
 
 static UnrarFlavour* detectUnrar( const QString &unrarPath, const QString &versionCommand )
 {
@@ -46,14 +46,14 @@ static UnrarFlavour* detectUnrar( const QString &unrarPath, const QString &versi
     proc.start( unrarPath, QStringList() << versionCommand );
     bool ok = proc.waitForFinished( -1 );
     Q_UNUSED( ok )
-    const QStringList lines = QString::fromLocal8Bit( proc.readAllStandardOutput() ).split( '\n', QString::SkipEmptyParts );
+    const QStringList lines = QString::fromLocal8Bit( proc.readAllStandardOutput() ).split( QLatin1Char('\n'), QString::SkipEmptyParts );
     if ( !lines.isEmpty() )
     {
-        if ( lines.first().startsWith( "UNRAR " ) )
+        if ( lines.first().startsWith( QLatin1String("UNRAR ") ) )
             kind = new NonFreeUnrarFlavour();
-        else if ( lines.first().startsWith( "RAR " ) )
+        else if ( lines.first().startsWith( QLatin1String("RAR ") ) )
             kind = new NonFreeUnrarFlavour();
-        else if ( lines.first().startsWith( "unrar " ) )
+        else if ( lines.first().startsWith( QLatin1String("unrar ") ) )
             kind = new FreeUnrarFlavour();
     }
     return kind;
@@ -62,27 +62,27 @@ static UnrarFlavour* detectUnrar( const QString &unrarPath, const QString &versi
 UnrarHelper::UnrarHelper()
    : kind( 0 )
 {
-    QString path = KStandardDirs::findExe( "unrar-nonfree" );
+    QString path = QStandardPaths::findExecutable( QStringLiteral("unrar-nonfree") );
     if ( path.isEmpty() )
-        path = KStandardDirs::findExe( "unrar" );
+        path = QStandardPaths::findExecutable( QStringLiteral("unrar") );
     if ( path.isEmpty() )
-        path = KStandardDirs::findExe( "rar" );
+        path = QStandardPaths::findExecutable( QStringLiteral("rar") );
 
     if ( !path.isEmpty() )
-        kind = detectUnrar( path, "--version" );
+        kind = detectUnrar( path, QStringLiteral("--version") );
 
     if ( !kind )
-        kind = detectUnrar( path, "-v" );
+        kind = detectUnrar( path, QStringLiteral("-v") );
 
     if ( !kind )
     {
         // no luck, print that
-        kDebug() << "No unrar detected.";
+        qWarning() << "No unrar detected.";
     }
     else
     {
         unrarPath = path;
-        kDebug() << "detected:" << path << "(" << kind->name() << ")";
+        qCDebug(OkularComicbookDebug) << "detected:" << path << "(" << kind->name() << ")";
     }
 }
 
@@ -108,7 +108,7 @@ bool Unrar::open( const QString &fileName )
         return false;
 
     delete mTempDir;
-    mTempDir = new KTempDir();
+    mTempDir = new QTemporaryDir();
 
     mFileName = fileName;
 
@@ -118,7 +118,7 @@ bool Unrar::open( const QString &fileName )
     mStdOutData.clear();
     mStdErrData.clear();
 
-    int ret = startSyncProcess( QStringList() << "e" << mFileName << mTempDir->name() );
+    int ret = startSyncProcess( QStringList() << QStringLiteral("e") << mFileName << mTempDir->path() +  QLatin1Char('/') );
     bool ok = ret == 0;
 
     return ok;
@@ -132,15 +132,15 @@ QStringList Unrar::list()
     if ( !isSuitableVersionAvailable() )
         return QStringList();
 
-    startSyncProcess( QStringList() << "lb" << mFileName );
+    startSyncProcess( QStringList() << QStringLiteral("lb") << mFileName );
 
-    const QStringList listFiles = helper->kind->processListing( QString::fromLocal8Bit( mStdOutData ).split( '\n', QString::SkipEmptyParts ) );
+    const QStringList listFiles = helper->kind->processListing( QString::fromLocal8Bit( mStdOutData ).split( QLatin1Char('\n'), QString::SkipEmptyParts ) );
     QStringList newList;
     Q_FOREACH ( const QString &f, listFiles ) {
         // Extract all the files to mTempDir regardless of their path inside the archive
         // This will break if ever an arvhice with two files with the same name in different subfolders
         QFileInfo fi( f );
-        if ( QFile::exists( mTempDir->name() + fi.fileName() ) ) {
+        if ( QFile::exists( mTempDir->path() + QLatin1Char('/') + fi.fileName() ) ) {
             newList.append( fi.fileName() );
         }
     }
@@ -152,7 +152,7 @@ QByteArray Unrar::contentOf( const QString &fileName ) const
     if ( !isSuitableVersionAvailable() )
         return QByteArray();
 
-    QFile file( mTempDir->name() + fileName );
+    QFile file( mTempDir->path() + QLatin1Char('/') + fileName );
     if ( !file.open( QIODevice::ReadOnly ) )
         return QByteArray();
 
@@ -164,7 +164,7 @@ QIODevice* Unrar::createDevice( const QString &fileName ) const
     if ( !isSuitableVersionAvailable() )
         return 0;
 
-    std::auto_ptr< QFile> file( new QFile( mTempDir->name() + fileName ) );
+    std::unique_ptr< QFile> file( new QFile( mTempDir->path() + QLatin1Char('/') + fileName ) );
     if ( !file->open( QIODevice::ReadOnly ) )
         return 0;
 
@@ -219,15 +219,19 @@ int Unrar::startSyncProcess( const QStringList &args )
     int ret = 0;
 
 #if defined(Q_OS_WIN)
-    mProcess = new QProcess( this );
+    mProcess = new QProcess( this );    
+    connect(mProcess, &QProcess::readyReadStandardOutput, this, &Unrar::readFromStdout);
+    connect(mProcess, &QProcess::readyReadStandardError, this, &Unrar::readFromStderr);
+    connect(mProcess, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), this, &Unrar::finished);
+
 #else
     mProcess = new KPtyProcess( this );
-    mProcess->setOutputChannelMode( KProcess::SeparateChannels );
-#endif
+    mProcess->setOutputChannelMode( KProcess::SeparateChannels );    
+    connect(mProcess, &KPtyProcess::readyReadStandardOutput, this, &Unrar::readFromStdout);
+    connect(mProcess, &KPtyProcess::readyReadStandardError, this, &Unrar::readFromStderr);
+    connect(mProcess, static_cast<void (KPtyProcess::*)(int, QProcess::ExitStatus)>(&KPtyProcess::finished), this, &Unrar::finished);
 
-    connect( mProcess, SIGNAL(readyReadStandardOutput()), SLOT(readFromStdout()) );
-    connect( mProcess, SIGNAL(readyReadStandardError()), SLOT(readFromStderr()) );
-    connect( mProcess, SIGNAL(finished(int,QProcess::ExitStatus)), SLOT(finished(int,QProcess::ExitStatus)) );
+#endif
 
 #if defined(Q_OS_WIN)
     mProcess->start( helper->unrarPath, args, QIODevice::ReadWrite | QIODevice::Unbuffered );
@@ -260,4 +264,3 @@ void Unrar::writeToProcess( const QByteArray &data )
 #endif
 }
 
-#include "unrar.moc"

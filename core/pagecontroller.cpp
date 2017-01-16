@@ -9,13 +9,11 @@
 
 #include "pagecontroller_p.h"
 
-// qt/kde includes
-#include <kglobal.h>
-#include <threadweaver/ThreadWeaver.h>
-
 // local includes
 #include "page_p.h"
 #include "rotationjob_p.h"
+
+#include <threadweaver/queueing.h>
 
 using namespace Okular;
 
@@ -30,14 +28,14 @@ PageController::~PageController()
 
 void PageController::addRotationJob(RotationJob *job)
 {
-    connect( job, SIGNAL(done(ThreadWeaver::Job*)),
-             this, SLOT(imageRotationDone(ThreadWeaver::Job*)) );
-    ThreadWeaver::Weaver::instance()->enqueue(job);
+    connect( job, SIGNAL(done(ThreadWeaver::JobPointer)),
+             this, SLOT(imageRotationDone(ThreadWeaver::JobPointer)) );
+    ThreadWeaver::enqueue(&m_weaver, job);
 }
 
-void PageController::imageRotationDone(ThreadWeaver::Job *j)
+void PageController::imageRotationDone(const ThreadWeaver::JobPointer &j)
 {
-    RotationJob *job = static_cast< RotationJob * >( j );
+    RotationJob *job = static_cast< RotationJob * >( j.data() );
 
     if ( job->page() )
     {
@@ -49,4 +47,4 @@ void PageController::imageRotationDone(ThreadWeaver::Job *j)
     job->deleteLater();
 }
 
-#include "pagecontroller_p.moc"
+#include "moc_pagecontroller_p.cpp"

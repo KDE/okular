@@ -250,7 +250,7 @@ bool TranscribePalmImageToJPEG
 
     QTemporaryFile tempFile;
     tempFile.open();
-    FILE *outfile = fopen( QFile::encodeName( tempFile.fileName() ), "w" );
+    FILE *outfile = fopen( QFile::encodeName( tempFile.fileName() ).constData(), "w" );
     if ( !outfile )
       return false;
 

@@ -10,16 +10,10 @@ set(okularGenerator_tiff_SRCS
    generator_tiff.cpp
 )
 
-
-kde4_add_plugin(okularGenerator_tiff ${okularGenerator_tiff_SRCS})
-
-target_link_libraries(okularGenerator_tiff okularcore ${TIFF_LIBRARIES} ${KDE4_KDEUI_LIBS} ${QT_QTXML_LIBRARY})
-
-install(TARGETS okularGenerator_tiff DESTINATION ${PLUGIN_INSTALL_DIR})
-
+okular_add_generator(okularGenerator_tiff ${okularGenerator_tiff_SRCS})
+target_link_libraries(okularGenerator_tiff okularcore ${TIFF_LIBRARIES} KF5::I18n)
 
 ########### install files ###############
-
-install( FILES libokularGenerator_tiff.desktop okularTiff.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
-install( PROGRAMS okularApplication_tiff.desktop active-documentviewer_tiff.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
-
+install( FILES okularTiff.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
+install( PROGRAMS okularApplication_tiff.desktop org.kde.mobile.okular_tiff.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
+install( FILES org.kde.okular-tiff.metainfo.xml DESTINATION ${KDE_INSTALL_METAINFODIR} )

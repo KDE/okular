@@ -25,7 +25,7 @@
 #include <kactioncollection.h>
 #include <kcolorscheme.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <KLocalizedString>
 
 // system includes
 #include <math.h>
@@ -36,6 +36,7 @@
 #include "videowidget.h"
 #include "core/movie.h"
 #include "core/page.h"
+#include "core/form.h"
 #include "settings.h"
 
 /*********************/
@@ -202,10 +203,18 @@ bool PageViewItem::setFormWidgetsVisible( bool visible )
     QHash<int, FormWidgetIface*>::iterator it = m_formWidgets.begin(), itEnd = m_formWidgets.end();
     for ( ; it != itEnd; ++it )
     {
-        bool hadfocus = (*it)->setVisibility( visible );
+        bool hadfocus = (*it)->setVisibility( visible && (*it)->formField()->isVisible() );
         somehadfocus = somehadfocus || hadfocus;
     }
     return somehadfocus;
+}
+
+void PageViewItem::reloadFormWidgetsState()
+{
+    foreach(FormWidgetIface *fwi, m_formWidgets)
+    {
+        fwi->setVisibility( fwi->formField()->isVisible() );
+    }
 }
 
 /*********************/
@@ -216,7 +225,7 @@ PageViewMessage::PageViewMessage( QWidget * parent )
     : QWidget( parent ), m_timer( 0 )
     , m_lineSpacing( 0 )
 {
-    setObjectName( QLatin1String( "pageViewMessage" ) );
+    setObjectName( QStringLiteral( "pageViewMessage" ) );
     setFocusPolicy( Qt::NoFocus );
     QPalette pal = palette();
     pal.setColor( QPalette::Active, QPalette::Window, QApplication::palette().color( QPalette::Active, QPalette::Window ) );
@@ -252,19 +261,19 @@ void PageViewMessage::display( const QString & message, const QString & details,
         switch ( icon )
         {
             case Annotation:
-                m_symbol = SmallIcon( "draw-freehand" );
+                m_symbol = SmallIcon( QStringLiteral("draw-freehand") );
                 break;
             case Find:
-                m_symbol = SmallIcon( "zoom-original" );
+                m_symbol = SmallIcon( QStringLiteral("zoom-original") );
                 break;
             case Error:
-                m_symbol = SmallIcon( "dialog-error" );
+                m_symbol = SmallIcon( QStringLiteral("dialog-error") );
                 break;
             case Warning:
-                m_symbol = SmallIcon( "dialog-warning" );
+                m_symbol = SmallIcon( QStringLiteral("dialog-warning") );
                 break;
             default:
-                m_symbol = SmallIcon( "dialog-information" );
+                m_symbol = SmallIcon( QStringLiteral("dialog-information") );
                 break;
         }
 
@@ -282,7 +291,7 @@ void PageViewMessage::display( const QString & message, const QString & details,
         {
             m_timer = new QTimer( this );
             m_timer->setSingleShot( true );
-            connect( m_timer, SIGNAL(timeout()), SLOT(hide()) );
+            connect(m_timer, &QTimer::timeout, this, &PageViewMessage::hide);
         }
         m_timer->start( durationMs );
     } else if ( m_timer )
@@ -440,7 +449,7 @@ ToolBarButton::ToolBarButton( QWidget * parent, const AnnotationToolItem &item )
     // if accel is set display it along name
     QString accelString = shortcut().toString( QKeySequence::NativeText );
     if ( !accelString.isEmpty() )
-        setToolTip( QString("%1 [%2]").arg( item.text ).arg( accelString ) );
+        setToolTip( QStringLiteral("%1 [%2]").arg( item.text, accelString ) );
     else
         setToolTip( item.text );
 }
@@ -499,13 +508,13 @@ PageViewToolBar::PageViewToolBar( PageView * parent, QWidget * anchorWidget )
 
     // create the animation timer
     d->animTimer = new QTimer( this );
-    connect( d->animTimer, SIGNAL(timeout()), this, SLOT(slotAnimate()) );
+    connect( d->animTimer, &QTimer::timeout, this, &PageViewToolBar::slotAnimate );
 
     // apply a filter to get notified when anchor changes geometry
     d->anchorWidget->installEventFilter( this );
 
     setContextMenuPolicy( Qt::ActionsContextMenu );
-    addAction( parent->actionCollection()->action( "options_configure_annotations" ) );
+    addAction( parent->actionCollection()->action( QStringLiteral("options_configure_annotations") ) );
 }
 
 PageViewToolBar::~PageViewToolBar()
@@ -530,8 +539,8 @@ void PageViewToolBar::setItems( const QLinkedList<AnnotationToolItem> &items )
     for ( ; it != end; ++it )
     {
         ToolBarButton * button = new ToolBarButton( this, *it );
-        connect( button, SIGNAL(clicked()), this, SLOT(slotButtonClicked()) );
-        connect( button, SIGNAL(buttonDoubleClicked(int)), this, SIGNAL(buttonDoubleClicked(int)) );
+        connect(button, &ToolBarButton::clicked, this, &PageViewToolBar::slotButtonClicked);
+        connect(button, &ToolBarButton::buttonDoubleClicked, this, &PageViewToolBar::buttonDoubleClicked);
         d->buttons.append( button );
     }
 
@@ -934,4 +943,4 @@ void PageViewToolBar::setTextToolsEnabled( bool on )
             (*it)->setEnabled( on );
 }
 
-#include "pageviewutils.moc"
+#include "moc_pageviewutils.cpp"

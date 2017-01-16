@@ -10,7 +10,7 @@
 #ifndef _OKULAR_TEXTDOCUMENTGENERATOR_H_
 #define _OKULAR_TEXTDOCUMENTGENERATOR_H_
 
-#include "okular_export.h"
+#include "okularcore_export.h"
 
 #include "document.h"
 #include "generator.h"
@@ -26,7 +26,7 @@ class TextDocumentConverterPrivate;
 class TextDocumentGenerator;
 class TextDocumentGeneratorPrivate;
 
-class OKULAR_EXPORT TextDocumentConverter : public QObject
+class OKULARCORE_EXPORT TextDocumentConverter : public QObject
 {
     Q_OBJECT
 
@@ -150,7 +150,7 @@ class OKULAR_EXPORT TextDocumentConverter : public QObject
  * This generator provides a document in the form of a QTextDocument object,
  * parsed using a specialized TextDocumentConverter.
  */
-class OKULAR_EXPORT TextDocumentGenerator : public Generator, public Okular::ConfigInterface
+class OKULARCORE_EXPORT TextDocumentGenerator : public Generator, public Okular::ConfigInterface
 {
     /// @cond PRIVATE
     friend class TextDocumentConverter;
@@ -169,16 +169,8 @@ class OKULAR_EXPORT TextDocumentGenerator : public Generator, public Okular::Con
          *       don't have to delete it yourself
          * @since 0.17 (KDE 4.11)
          */
-        TextDocumentGenerator( TextDocumentConverter *converter, const QString& configName, QObject *parent, const QVariantList &args );
-        /**
-         * Creates a new generator that uses the specified @p converter.
-         *
-         * @deprecated use the one with configName
-         *
-         * @note the generator will take ownership of the converter, so you
-         *       don't have to delete it yourself
-         */
-        KDE_DEPRECATED TextDocumentGenerator( TextDocumentConverter *converter, QObject *parent, const QVariantList &args );
+        TextDocumentGenerator(TextDocumentConverter *converter, const QString& configName, QObject *parent, const QVariantList &args);
+
         virtual ~TextDocumentGenerator();
 
         // [INHERITED] load a document and fill up the pagesVector

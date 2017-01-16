@@ -19,6 +19,8 @@ namespace FictionBook {
 
 class Converter : public Okular::TextDocumentConverter
 {
+    Q_OBJECT
+
     public:
         Converter();
         ~Converter();

@@ -10,8 +10,7 @@
 #include <config.h>
 
 #include "length.h"
-#include "kvs_debug.h"
-
+#include "debug_dvi.h"
 
 class unitOfDistance
 {
@@ -20,7 +19,7 @@ class unitOfDistance
   const char* name;
 };
 
-unitOfDistance distanceUnitTable[] = {
+static const unitOfDistance distanceUnitTable[] = {
   // Metric units
   {1.0f, "mm"},
   {1.0f, "millimeter"},
@@ -58,7 +57,7 @@ float Length::convertToMM(const QString &distance, bool *ok)
   // of the unit in 'unitPos', so that distance[0..unitPos] will hold
   // the value. Store the number of mm per unit in 'MMperUnit'.
   for(int i=0; MMperUnit==0.0 && distanceUnitTable[i].name != 0; i++) {
-    unitPos = distance.lastIndexOf(distanceUnitTable[i].name);
+    unitPos = distance.lastIndexOf(QString::fromLocal8Bit(distanceUnitTable[i].name));
     if (unitPos != -1)
       MMperUnit = distanceUnitTable[i].mmPerUnit;
   }
@@ -66,7 +65,7 @@ float Length::convertToMM(const QString &distance, bool *ok)
   // If no unit has been found -> error message, set *ok to false and
   // return 0.0.
   if (MMperUnit == 0.0) {
-    kError(kvs::shell) << "distance::convertToMM: no known unit found in the string '" << distance << "'." << endl;
+    qCCritical(OkularDviShellDebug) << "distance::convertToMM: no known unit found in the string '" << distance << "'." << endl;
     if (ok)
       *ok = false;
     return 0.0;

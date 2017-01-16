@@ -16,12 +16,11 @@
 #include <qimage.h>
 #include <qlist.h>
 #include <qpainter.h>
-#include <QtGui/QPrinter>
+#include <QtPrintSupport/QPrinter>
 
 #include <kaboutdata.h>
-#include <kdebug.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <QtCore/QDebug>
+#include <KLocalizedString>
 
 #include <core/document.h>
 #include <core/page.h>
@@ -102,7 +101,7 @@ static QDateTime convertTIFFDateTime( const char* tiffdate )
     if ( !tiffdate )
         return QDateTime();
 
-    return QDateTime::fromString( QString::fromLatin1( tiffdate ), "yyyy:MM:dd HH:mm:ss" );
+    return QDateTime::fromString( QString::fromLatin1( tiffdate ), QStringLiteral("yyyy:MM:dd HH:mm:ss") );
 }
 
 static void adaptSizeToResolution( TIFF *tiff, ttag_t whichres, double dpi, uint32 *size )
@@ -158,23 +157,7 @@ static Okular::Rotation readTiffRotation( TIFF *tiff )
     return ret;
 }
 
-static KAboutData createAboutData()
-{
-    KAboutData aboutData(
-         "okular_tiff",
-         "okular_tiff",
-         ki18n( "TIFF Backend" ),
-         "0.2.4",
-         ki18n( "A TIFF backend" ),
-         KAboutData::License_GPL,
-         ki18n( "© 2006-2008 Pino Toscano" ),
-         ki18nc( "This represents the libtiff version, as string with copyrights as well; can be left as-is.", "%1" ).subs( TIFFGetVersion() )
-    );
-    aboutData.addAuthor( ki18n( "Pino Toscano" ), KLocalizedString(), "pino@kde.org" );
-    return aboutData;
-}
-
-OKULAR_EXPORT_PLUGIN( TIFFGenerator, createAboutData() )
+OKULAR_EXPORT_PLUGIN(TIFFGenerator, "libokularGenerator_tiff.json")
 
 TIFFGenerator::TIFFGenerator( QObject *parent, const QVariantList &args )
     : Okular::Generator( parent, args ),
@@ -307,7 +290,7 @@ Okular::DocumentInfo TIFFGenerator::generateDocumentInfo( const QSet<Okular::Doc
     if ( d->tiff )
     {
         if ( keys.contains( Okular::DocumentInfo::MimeType ) )
-            docInfo.set( Okular::DocumentInfo::MimeType, "image/tiff" );
+            docInfo.set( Okular::DocumentInfo::MimeType, QStringLiteral("image/tiff") );
 
         if ( keys.contains( Okular::DocumentInfo::Description ) )
         {
@@ -342,7 +325,7 @@ Okular::DocumentInfo TIFFGenerator::generateDocumentInfo( const QSet<Okular::Doc
             char* buffer = 0;
             TIFFGetField( d->tiff, TIFFTAG_DATETIME, &buffer );
             QDateTime date = convertTIFFDateTime( buffer );
-            docInfo.set( Okular::DocumentInfo::CreationDate, date.isValid() ? KGlobal::locale()->formatDateTime( date, KLocale::LongDate, true  ) : QString() );
+            docInfo.set( Okular::DocumentInfo::CreationDate, date.isValid() ? QLocale().toString( date, QLocale::LongFormat ) : QString() );
         }
     }
 
@@ -361,9 +344,7 @@ void TIFFGenerator::loadPages( QVector<Okular::Page*> & pagesVector )
     uint32 width = 0;
     uint32 height = 0;
 
-    const double dpiX = Okular::Utils::dpiX();
-    const double dpiY = Okular::Utils::dpiY();
-
+    const QSizeF dpi = Okular::Utils::realDpi(nullptr);
     for ( tdir_t i = 0; i < dirs; ++i )
     {
         if ( !TIFFSetDirectory( d->tiff, i ) )
@@ -373,8 +354,8 @@ void TIFFGenerator::loadPages( QVector<Okular::Page*> & pagesVector )
              TIFFGetField( d->tiff, TIFFTAG_IMAGELENGTH, &height ) != 1 )
             continue;
 
-        adaptSizeToResolution( d->tiff, TIFFTAG_XRESOLUTION, dpiX, &width );
-        adaptSizeToResolution( d->tiff, TIFFTAG_YRESOLUTION, dpiY, &height );
+        adaptSizeToResolution( d->tiff, TIFFTAG_XRESOLUTION, dpi.width(), &width );
+        adaptSizeToResolution( d->tiff, TIFFTAG_YRESOLUTION, dpi.height(), &height );
 
         Okular::Page * page = new Okular::Page( realdirs, width, height, readTiffRotation( d->tiff ) );
         pagesVector[ realdirs ] = page;
@@ -446,11 +427,13 @@ int TIFFGenerator::mapPage( int page ) const
     QHash< int, int >::const_iterator it = m_pageMapping.find( page );
     if ( it == m_pageMapping.end() )
     {
-        kWarning(TiffDebug) << "Requesting unmapped page" << page << ":" << m_pageMapping;
+        qCWarning(OkularTiffDebug) << "Requesting unmapped page" << page << ":" << m_pageMapping;
         return -1;
     }
     return it.value();
 }
+
+Q_LOGGING_CATEGORY(OkularTiffDebug, "org.kde.okular.generators.tiff")
 
 #include "generator_tiff.moc"
 

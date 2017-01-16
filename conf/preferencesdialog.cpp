@@ -10,7 +10,7 @@
 // reimplementing this
 #include "preferencesdialog.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 // single config pages
 #include "dlggeneral.h"
@@ -22,7 +22,7 @@
 #include "dlgdebug.h"
 
 PreferencesDialog::PreferencesDialog( QWidget * parent, KConfigSkeleton * skeleton, Okular::EmbedMode embedMode )
-    : KConfigDialog( parent, "preferences", skeleton )
+    : KConfigDialog( parent, QStringLiteral("preferences"), skeleton )
 {
     setWindowModality( Qt::ApplicationModal );
 
@@ -37,28 +37,28 @@ PreferencesDialog::PreferencesDialog( QWidget * parent, KConfigSkeleton * skelet
     m_debug = new DlgDebug( this );
 #endif
 
-    addPage( m_general, i18n("General"), "okular", i18n("General Options") );
-    addPage( m_accessibility, i18n("Accessibility"), "preferences-desktop-accessibility", i18n("Accessibility Reading Aids") );
-    addPage( m_performance, i18n("Performance"), "preferences-system-performance", i18n("Performance Tuning") );
+    addPage( m_general, i18n("General"), QStringLiteral("okular"), i18n("General Options") );
+    addPage( m_accessibility, i18n("Accessibility"), QStringLiteral("preferences-desktop-accessibility"), i18n("Accessibility Reading Aids") );
+    addPage( m_performance, i18n("Performance"), QStringLiteral("preferences-system-performance"), i18n("Performance Tuning") );
     if( embedMode == Okular::ViewerWidgetMode )
     {
-        setCaption( i18n("Configure Viewer") );
+        setWindowTitle( i18n("Configure Viewer") );
     }
     else
     {
         m_presentation = new DlgPresentation( this );
         m_annotations = new DlgAnnotations( this );
         m_editor = new DlgEditor( this );
-        addPage( m_presentation, i18n("Presentation"), "view-presentation",
+        addPage( m_presentation, i18n("Presentation"), QStringLiteral("view-presentation"),
                  i18n("Options for Presentation Mode") );
         m_annotationsPage = addPage( m_annotations, i18n("Annotations"),
-                                     "draw-freehand", i18n("Annotation Options") );
-        addPage( m_editor, i18n("Editor"), "accessories-text-editor", i18n("Editor Options") );
+                                     QStringLiteral("draw-freehand"), i18n("Annotation Options") );
+        addPage( m_editor, i18n("Editor"), QStringLiteral("accessories-text-editor"), i18n("Editor Options") );
     }
 #ifdef OKULAR_DEBUG_CONFIGPAGE
     addPage( m_debug, "Debug", "system-run", "Debug options" );
 #endif
-    setHelp("configure", "okular");
+    setHelp(QStringLiteral("configure"), QStringLiteral("okular"));
 }
 
 void PreferencesDialog::switchToAnnotationsPage()

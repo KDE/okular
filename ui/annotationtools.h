@@ -12,6 +12,7 @@
 
 #include <qdom.h>
 #include <qlinkedlist.h>
+#include <qpainter.h>
 #include <qpen.h>
 #include <qrect.h>
 
@@ -19,7 +20,6 @@
 
 class QMouseEvent;
 class QTabletEvent;
-class QPainter;
 class PageViewItem;
 namespace Okular {
 class Annotation;
@@ -72,12 +72,14 @@ class AnnotatorEngine
 class SmoothPath
 {
     public:
-        SmoothPath( const QLinkedList<Okular::NormalizedPoint> &points, const QPen &pen );
+        SmoothPath( const QLinkedList<Okular::NormalizedPoint> &points, const QPen &pen, qreal opacity = 1.0, QPainter::CompositionMode compositionMode = QPainter::CompositionMode_SourceOver  );
         void paint( QPainter * painter, double xScale, double yScale ) const;
 
     private:
         const QLinkedList<Okular::NormalizedPoint> points;
         const QPen pen;
+        const qreal opacity;
+        const QPainter::CompositionMode compositionMode;
 };
 
 /** @short SmoothPathEngine */
@@ -87,12 +89,12 @@ class SmoothPathEngine
     public:
         SmoothPathEngine( const QDomElement & engineElement );
 
-        QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale, const Okular::Page * /*page*/ );
+        QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale, const Okular::Page * /*page*/ ) Q_DECL_OVERRIDE;
 
-        void paint( QPainter * painter, double xScale, double yScale, const QRect & /*clipRect*/ );
+        void paint( QPainter * painter, double xScale, double yScale, const QRect & /*clipRect*/ ) Q_DECL_OVERRIDE;
 
         // These are two alternative ways to get the resulting path. Don't call them both!
-        QList< Okular::Annotation* > end();
+        QList< Okular::Annotation* > end() Q_DECL_OVERRIDE;
         SmoothPath endSmoothPath();
 
     private:
@@ -100,6 +102,7 @@ class SmoothPathEngine
         QLinkedList<Okular::NormalizedPoint> points;
         Okular::NormalizedRect totalRect;
         Okular::NormalizedPoint lastPoint;
+        QPainter::CompositionMode compositionMode;
 };
 
 #endif

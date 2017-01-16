@@ -10,11 +10,12 @@
 #include "dlgpresentation.h"
 
 #include "ui_dlgpresentationbase.h"
+#include "widgetdrawingtools.h"
 
 #include <qapplication.h>
 #include <qdesktopwidget.h>
-
-#include <klocale.h>
+#include <KConfigDialogManager>
+#include <KLocalizedString>
 
 #include "settings.h"
 
@@ -23,6 +24,12 @@ DlgPresentation::DlgPresentation( QWidget * parent )
 {
     m_dlg = new Ui_DlgPresentationBase();
     m_dlg->setupUi( this );
+
+    WidgetDrawingTools * kcfg_DrawingTools = new WidgetDrawingTools( m_dlg->annotationToolsGroupBox );
+    m_dlg->verticalLayout_4->addWidget( kcfg_DrawingTools );
+    kcfg_DrawingTools->setObjectName( QStringLiteral("kcfg_DrawingTools") );
+
+    KConfigDialogManager::changedMap()->insert( QStringLiteral("WidgetDrawingTools"), SIGNAL(changed()) );
 
     QStringList choices;
     choices.append( i18nc( "@label:listbox The current screen, for the presentation mode", "Current Screen" ) );
@@ -47,7 +54,7 @@ DlgPresentation::DlgPresentation( QWidget * parent )
     
     m_dlg->kcfg_SlidesAdvanceTime->setSuffix(ki18ncp("Advance every %1 seconds", " second", " seconds"));
 
-    connect( m_dlg->screenCombo, SIGNAL(activated(int)), this, SLOT(screenComboChanged(int)) );
+    connect(m_dlg->screenCombo, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), this, &DlgPresentation::screenComboChanged);
 }
 
 DlgPresentation::~DlgPresentation()
@@ -60,4 +67,4 @@ void DlgPresentation::screenComboChanged( int which )
     Okular::Settings::setSlidesScreen( which - 2 );
 }
 
-#include "dlgpresentation.moc"
+#include "moc_dlgpresentation.cpp"

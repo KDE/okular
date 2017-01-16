@@ -10,31 +10,15 @@
 #include "generator_fax.h"
 
 #include <QtGui/QPainter>
-#include <QtGui/QPrinter>
+#include <QtPrintSupport/QPrinter>
 
-#include <kaboutdata.h>
-#include <klocale.h>
+#include <KAboutData>
+#include <KLocalizedString>
 
 #include <core/document.h>
 #include <core/page.h>
 
-static KAboutData createAboutData()
-{
-    KAboutData aboutData(
-         "okular_fax",
-         "okular_fax",
-         ki18n( "Fax Backend" ),
-         "0.1.1",
-         ki18n( "A G3/G4 fax document backend" ),
-         KAboutData::License_GPL,
-         ki18n( "© 2008 Tobias Koenig" )
-    );
-    aboutData.addAuthor( ki18n( "Tobias Koenig" ), KLocalizedString(), "tokoe@kde.org" );
-
-    return aboutData;
-}
-
-OKULAR_EXPORT_PLUGIN( FaxGenerator, createAboutData() )
+OKULAR_EXPORT_PLUGIN(FaxGenerator, "libokularGenerator_fax.json")
 
 FaxGenerator::FaxGenerator( QObject *parent, const QVariantList &args )
     : Generator( parent, args )
@@ -50,7 +34,7 @@ FaxGenerator::~FaxGenerator()
 
 bool FaxGenerator::loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector )
 {
-    if ( fileName.toLower().endsWith( ".g3" ) )
+    if ( fileName.toLower().endsWith( QLatin1String(".g3") ) )
         m_type = FaxDocument::G3;
     else
         m_type = FaxDocument::G4;
@@ -97,9 +81,9 @@ Okular::DocumentInfo FaxGenerator::generateDocumentInfo( const QSet<Okular::Docu
     if ( keys.contains( Okular::DocumentInfo::MimeType ) )
     {
         if ( m_type == FaxDocument::G3 )
-            docInfo.set( Okular::DocumentInfo::MimeType, "image/fax-g3" );
+            docInfo.set( Okular::DocumentInfo::MimeType, QStringLiteral("image/fax-g3") );
         else
-            docInfo.set( Okular::DocumentInfo::MimeType, "image/fax-g4" );
+            docInfo.set( Okular::DocumentInfo::MimeType, QStringLiteral("image/fax-g4") );
     }
     return docInfo;
 }

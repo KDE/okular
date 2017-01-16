@@ -1,5 +1,4 @@
 include_directories(
-   ${CMAKE_BINARY_DIR}/okular
    ${CMAKE_CURRENT_SOURCE_DIR}/../..
 )
 
@@ -13,16 +12,13 @@ set(okularGenerator_fb_PART_SRCS
 )
 
 
-kde4_add_plugin(okularGenerator_fb ${okularGenerator_fb_PART_SRCS})
+okular_add_generator(okularGenerator_fb ${okularGenerator_fb_PART_SRCS})
 
-target_link_libraries(okularGenerator_fb okularcore ${KDE4_KIO_LIBS} ${QT_QTXML_LIBRARY})
-
-install(TARGETS okularGenerator_fb DESTINATION ${PLUGIN_INSTALL_DIR})
-
+target_link_libraries(okularGenerator_fb okularcore KF5::Archive KF5::I18n KF5::KIOCore Qt5::Xml)
 
 ########### install files ###############
+install( FILES okularFb.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
+install( PROGRAMS okularApplication_fb.desktop org.kde.mobile.okular_fb.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
+install( FILES org.kde.okular-fb.metainfo.xml DESTINATION ${KDE_INSTALL_METAINFODIR} )
 
-install( FILES libokularGenerator_fb.desktop okularFb.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
-install( PROGRAMS okularApplication_fb.desktop active-documentviewer_fb.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
-
-kde4_install_icons(${DATA_INSTALL_DIR}/okular/icons)
+ecm_install_icons(ICONS 16-apps-okular-fb2.png  32-apps-okular-fb2.png  48-apps-okular-fb2.png DESTINATION ${KDE_INSTALL_DATADIR}/okular/icons THEME hicolor)

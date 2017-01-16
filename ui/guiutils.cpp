@@ -10,15 +10,14 @@
 #include "guiutils.h"
 
 // qt/kde includes
-#include <qpainter.h>
-#include <qsvgrenderer.h>
-#include <qtextdocument.h>
-#include <kfiledialog.h>
-#include <kglobal.h>
-#include <kiconloader.h>
-#include <klocale.h>
-#include <kmessagebox.h>
-#include <kstandarddirs.h>
+#include <QPainter>
+#include <QSvgRenderer>
+#include <QTextDocument>
+#include <QFileDialog>
+#include <QStandardPaths>
+#include <KIconLoader>
+#include <KMessageBox>
+#include <KLocalizedString>
 
 // local includes
 #include "core/action.h"
@@ -26,6 +25,7 @@
 #include "core/document.h"
 
 #include <memory>
+
 
 struct GuiUtilsHelper
 {
@@ -36,14 +36,14 @@ struct GuiUtilsHelper
     QSvgRenderer* svgStamps();
 
     QList<KIconLoader *> il;
-    std::auto_ptr< QSvgRenderer > svgStampFile;
+    std::unique_ptr< QSvgRenderer > svgStampFile;
 };
 
 QSvgRenderer* GuiUtilsHelper::svgStamps()
 {
     if ( !svgStampFile.get() )
     {
-        const QString stampFile = KStandardDirs::locate( "data", "okular/pics/stamps.svg" );
+        const QString stampFile = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("okular/pics/stamps.svg") );
         if ( !stampFile.isEmpty() )
         {
             svgStampFile.reset( new QSvgRenderer( stampFile ) );
@@ -56,7 +56,7 @@ QSvgRenderer* GuiUtilsHelper::svgStamps()
     return svgStampFile.get();
 }
 
-K_GLOBAL_STATIC( GuiUtilsHelper, s_data )
+Q_GLOBAL_STATIC( GuiUtilsHelper, s_data )
 
 namespace GuiUtils {
 
@@ -123,6 +123,9 @@ QString captionForAnnotation( const Okular::Annotation * ann )
         case Okular::Annotation::AWidget:
             ret = i18nc( "Caption for a widget annotation", "Widget" );
             break;
+        case Okular::Annotation::ARichMedia:
+            ret = i18nc( "Caption for a rich media annotation", "Rich Media" );
+            break;
         case Okular::Annotation::A_BASE:
             break;
     }
@@ -138,8 +141,8 @@ QString authorForAnnotation( const Okular::Annotation * ann )
 
 QString contentsHtml( const Okular::Annotation * ann )
 {
-    QString text = Qt::escape( ann->contents() );
-    text.replace( '\n', "<br>" );
+    QString text = ann->contents().toHtmlEscaped();
+    text.replace( QLatin1Char('\n'), QLatin1String("<br>") );
     return text;
 }
 
@@ -150,11 +153,11 @@ QString prettyToolTip( const Okular::Annotation * ann )
     QString author = authorForAnnotation( ann );
     QString contents = contentsHtml( ann );
 
-    QString tooltip = QString( "<qt><b>" ) + i18n( "Author: %1", author ) + QString( "</b>" );
+    QString tooltip = QStringLiteral( "<qt><b>" ) + i18n( "Author: %1", author ) + QStringLiteral( "</b>" );
     if ( !contents.isEmpty() )
-        tooltip += QString( "<div style=\"font-size: 4px;\"><hr /></div>" ) + contents;
+        tooltip += QStringLiteral( "<div style=\"font-size: 4px;\"><hr /></div>" ) + contents;
 
-    tooltip += "</qt>";
+    tooltip += QLatin1String("</qt>");
 
     return tooltip;
 }
@@ -202,19 +205,21 @@ KIconLoader* iconLoader()
 void saveEmbeddedFile( Okular::EmbeddedFile *ef, QWidget *parent )
 {
     const QString caption = i18n( "Where do you want to save %1?", ef->name() );
-    const QString path = KFileDialog::getSaveFileName( ef->name(), QString(), parent, caption,
-                                                       KFileDialog::ConfirmOverwrite );
+    const QString path = QFileDialog::getSaveFileName( parent, caption, ef->name() );
     if ( path.isEmpty() )
         return;
+    QFile targetFile( path );
+    writeEmbeddedFile( ef, parent, targetFile );
+}
 
-    QFile f( path );
-    if ( !f.open( QIODevice::WriteOnly ) )
+void writeEmbeddedFile( Okular::EmbeddedFile *ef, QWidget *parent, QFile& target ) {
+    if ( !target.open( QIODevice::WriteOnly ) )
     {
-        KMessageBox::error( parent, i18n( "Could not open \"%1\" for writing. File was not saved.", path ) );
+        KMessageBox::error( parent, i18n( "Could not open \"%1\" for writing. File was not saved.", target.fileName() ) );
         return;
     }
-    f.write( ef->data() );
-    f.close();
+    target.write( ef->data() );
+    target.close();
 }
 
 Okular::Movie* renditionMovieFromScreenAnnotation( const Okular::ScreenAnnotation *annotation )
@@ -248,7 +253,7 @@ void colorizeImage( QImage & grayImage, const QColor & color, unsigned int destA
         blue = color.blue();
 
     int source, sourceSat, sourceAlpha;
-    for( register unsigned int i = 0; i < pixels; ++i )
+    for( unsigned int i = 0; i < pixels; ++i )
     {   // optimize this loop keeping byte order into account
         source = data[i];
         sourceSat = qRed( source );

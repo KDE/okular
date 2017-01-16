@@ -368,7 +368,7 @@ int LCHMFileImpl::getEncodingIndex( const LCHMTextEncoding * enc)
 const LCHMTextEncoding * LCHMFileImpl::lookupByQtCodec(const QString & codec)
 {
 	for ( const LCHMTextEncoding * t = text_encoding_table; t->family; t++ )
-		if ( codec == t->qtcodec )
+        if ( codec == QString::fromLocal8Bit(t->qtcodec) )
 			return t;
 
 	return 0;

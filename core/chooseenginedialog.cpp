@@ -9,30 +9,40 @@
 
 #include "chooseenginedialog_p.h"
 
-#include <QtGui/QComboBox>
-#include <QtGui/QLabel>
+#include <QtWidgets/QComboBox>
+#include <QtWidgets/QLabel>
 
-#include <klocale.h>
+#include <KLocalizedString>
+#include <QDialogButtonBox>
+#include <QPushButton>
+#include <QVBoxLayout>
 
 #include "ui_chooseenginewidget.h"
 
-ChooseEngineDialog::ChooseEngineDialog( const QStringList &generators, const KMimeType::Ptr &mime, QWidget * parent )
-    : KDialog( parent )
+ChooseEngineDialog::ChooseEngineDialog( const QStringList &generators, const QMimeType &mime, QWidget * parent )
+    : QDialog( parent )
 {
-    setCaption( i18n( "Backend Selection" ) );
-    setButtons( Ok | Cancel );
-    setDefaultButton( Ok );
+    setWindowTitle( i18n( "Backend Selection" ) );
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    setLayout(mainLayout);
+    QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+    okButton->setDefault(true);
+    okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+    connect(buttonBox, &QDialogButtonBox::accepted, this, &ChooseEngineDialog::accept);
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &ChooseEngineDialog::reject);
+    okButton->setDefault(true);
     QWidget *main = new QWidget( this );
-    setMainWidget( main );
     m_widget = new Ui_ChooseEngineWidget();
     m_widget->setupUi( main );
-
+    mainLayout->addWidget(main);
+    mainLayout->addWidget(buttonBox);
     m_widget->engineList->addItems(generators);
 
     m_widget->description->setText(
         i18n( "<qt>More than one backend found for the MIME type:<br />"
               "<b>%1</b> (%2).<br /><br />"
-              "Please select which one to use:</qt>", mime->comment(), mime->name() ) );
+              "Please select which one to use:</qt>", mime.comment(), mime.name() ) );
 }
 
 ChooseEngineDialog::~ChooseEngineDialog()

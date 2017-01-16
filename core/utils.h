@@ -10,7 +10,7 @@
 #ifndef _OKULAR_UTILS_H_
 #define _OKULAR_UTILS_H_
 
-#include "okular_export.h"
+#include "okularcore_export.h"
 #include "area.h"
 
 class QRect;
@@ -25,7 +25,7 @@ namespace Okular
  *
  * This class contains some static functions of general utility.
  */
-class OKULAR_EXPORT Utils
+class OKULARCORE_EXPORT Utils
 {
   public:
     /**
@@ -33,38 +33,6 @@ class OKULAR_EXPORT Utils
      * specified \p orientation .
      */
     static QRect rotateRect( const QRect & source, int width, int height, int orientation );
-
-    /**
-     * Return the horizontal DPI of the main display
-     */
-    static double dpiX();
-
-    /**
-     * Return the vertical DPI of the main display
-     */
-    static double dpiY();
-
-    /**
-     * Return the real horizontal DPI of the main display.
-     *
-     * On X11, it can indicate the real horizontal DPI value without any Xrdb
-     * setting. Otherwise, returns the same as dpiX(),
-     *
-     * @since 0.9 (KDE 4.3)
-     * @deprecated Can not work with multi-monitor configurations
-     */
-    static double realDpiX();
-
-    /**
-     * Return the real vertical DPI of the main display
-     *
-     * On X11, it can indicate the real horizontal DPI value without any Xrdb
-     * setting. Otherwise, returns the same as dpiX(),
-     *
-     * @since 0.9 (KDE 4.3)
-     * @deprecated Can not work with multi-monitor configurations
-     */
-    static double realDpiY();
 
     /**
      * Return the real DPI of the display containing given widget

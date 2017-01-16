@@ -138,8 +138,7 @@ void _plkr_message (
 ;
 /* Display the message to stderr */
 
-char *_plkr_strndup (
-    char *str,
+char *_plkr_strndup (const char *str,
     int len
 );
 /* return a freshly-malloced copy of str */
@@ -152,20 +151,20 @@ HashTable *_plkr_NewHashTable (
 
 void *_plkr_FindInTable (
     HashTable * ht,
-    char *key
+    const char *key
 );
 /* lookup the specified "key" in the specified "ht". */
 
 void *_plkr_RemoveFromTable (
     HashTable * ht,
-    char *key
+    const char *key
 );
 /* remove the entry with "key" from the table, if present, and return
    the value as the result. */
 
 int _plkr_AddToTable (
     HashTable * ht,
-    char *key,
+    const char *key,
     void *obj
 );
 /* Add the specified "obj" to the table with key "key".  Returns

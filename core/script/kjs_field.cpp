@@ -16,8 +16,7 @@
 
 #include <qhash.h>
 
-#include <kdebug.h>
-#include <kglobal.h>
+#include <QtCore/QDebug>
 
 #include "../debug_p.h"
 #include "../document_p.h"
@@ -29,7 +28,7 @@ using namespace Okular;
 static KJSPrototype *g_fieldProto;
 
 typedef QHash< FormField *, KJSObject > FormCache;
-K_GLOBAL_STATIC( FormCache, g_fieldCache )
+Q_GLOBAL_STATIC( FormCache, g_fieldCache )
 
 // Field.doc
 static KJSObject fieldGetDoc( KJSContext *context, void *  )
@@ -62,7 +61,7 @@ static void fieldSetReadOnly( KJSContext *context, void *object, KJSObject value
     Q_UNUSED( context );
     Q_UNUSED( object );
     Q_UNUSED( value );
-    kDebug(OkularDebug) << "Not implemented: setting readonly property";
+    qCDebug(OkularCoreDebug) << "Not implemented: setting readonly property";
 #endif
 }
 
@@ -76,30 +75,30 @@ static QString fieldGetTypeHelper( const FormField *field )
             switch ( button->buttonType() )
             {
                 case FormFieldButton::Push:
-                    return "button";
+                    return QStringLiteral("button");
                 case FormFieldButton::CheckBox:
-                    return "checkbox";
+                    return QStringLiteral("checkbox");
                 case FormFieldButton::Radio:
-                    return "radiobutton";
+                    return QStringLiteral("radiobutton");
             }
             break;
         }
         case FormField::FormText:
-            return "text";
+            return QStringLiteral("text");
         case FormField::FormChoice:
         {
             const FormFieldChoice *choice = static_cast< const FormFieldChoice * >( field );
             switch ( choice->choiceType() )
             {
                 case FormFieldChoice::ComboBox:
-                    return "combobox";
+                    return QStringLiteral("combobox");
                 case FormFieldChoice::ListBox:
-                    return "listbox";
+                    return QStringLiteral("listbox");
             }
             break;
         }
         case FormField::FormSignature:
-            return "signature";
+            return QStringLiteral("signature");
     }
     return QString();
 }
@@ -123,7 +122,7 @@ static KJSObject fieldGetValue( KJSContext *context, void *object )
             value = g_fieldCache->value( field );
         else
             value = KJSString("");
-        kDebug(OkularDebug) << "Getting the value of a readonly field" << field->name() << ":" << value.toString( context );
+        qCDebug(OkularCoreDebug) << "Getting the value of a readonly field" << field->name() << ":" << value.toString( context );
         return value;
     }
 
@@ -163,7 +162,7 @@ static void fieldSetValue( KJSContext *context, void *object, KJSObject value )
     if ( field->isReadOnly() )
     {
         // ### throw exception?
-        kDebug(OkularDebug) << "Trying to change the readonly field" << field->name() << "to" << value.toString( context );
+        qCDebug(OkularCoreDebug) << "Trying to change the readonly field" << field->name() << "to" << value.toString( context );
         g_fieldCache->insert( field, value );
         return;
     }
@@ -205,19 +204,19 @@ void JSField::initType( KJSContext *ctx )
     if ( !g_fieldProto )
         g_fieldProto = new KJSPrototype();
 
-    g_fieldProto->defineProperty( ctx, "doc", fieldGetDoc );
-    g_fieldProto->defineProperty( ctx, "name", fieldGetName );
-    g_fieldProto->defineProperty( ctx, "readonly",
+    g_fieldProto->defineProperty( ctx, QStringLiteral("doc"), fieldGetDoc );
+    g_fieldProto->defineProperty( ctx, QStringLiteral("name"), fieldGetName );
+    g_fieldProto->defineProperty( ctx, QStringLiteral("readonly"),
                                   fieldGetReadOnly, fieldSetReadOnly );
-    g_fieldProto->defineProperty( ctx, "type", fieldGetType );
-    g_fieldProto->defineProperty( ctx, "value", fieldGetValue, fieldSetValue );
+    g_fieldProto->defineProperty( ctx, QStringLiteral("type"), fieldGetType );
+    g_fieldProto->defineProperty( ctx, QStringLiteral("value"), fieldGetValue, fieldSetValue );
 }
 
 KJSObject JSField::wrapField( KJSContext *ctx, FormField *field, Page *page )
 {
     // ### cache unique wrapper
     KJSObject f = g_fieldProto->constructObject( ctx, field );
-    f.setProperty( ctx, "page", page->number() );
+    f.setProperty( ctx, QStringLiteral("page"), page->number() );
     return f;
 }
 

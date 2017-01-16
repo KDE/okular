@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component type="addon">
+  <id>org.kde.okular-mobipocket</id>
+  <extends>org.kde.okular.desktop</extends>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-2.0+ and GFDL-1.3</project_license>
+  <name>Mobipocket</name>
+  <name xml:lang="ast">Mobipocket</name>
+  <name xml:lang="ca">Mobipocket</name>
+  <name xml:lang="ca-valencia">Mobipocket</name>
+  <name xml:lang="cs">Mobipocket</name>
+  <name xml:lang="de">Mobipocket</name>
+  <name xml:lang="en-GB">Mobipocket</name>
+  <name xml:lang="es">Mobipocket</name>
+  <name xml:lang="et">Mobipocket</name>
+  <name xml:lang="fi">Mobipocket</name>
+  <name xml:lang="it">Mobipocket</name>
+  <name xml:lang="ko">Mobipocket</name>
+  <name xml:lang="nl">Mobipocket</name>
+  <name xml:lang="nn">Mobipocket</name>
+  <name xml:lang="pl">Mobipocket</name>
+  <name xml:lang="pt">Mobipocket</name>
+  <name xml:lang="sk">Mobipocket</name>
+  <name xml:lang="sl">Mobipocket</name>
+  <name xml:lang="sr">Мобипокет</name>
+  <name xml:lang="sr-Latn">Mobipocket</name>
+  <name xml:lang="sr-ijekavian">Мобипокет</name>
+  <name xml:lang="sr-ijekavianlatin">Mobipocket</name>
+  <name xml:lang="sv">Mobipocket</name>
+  <name xml:lang="uk">Mobipocket</name>
+  <name xml:lang="x-test">xxMobipocketxx</name>
+  <name xml:lang="zh-CN">Mobipocket</name>
+  <name xml:lang="zh-TW">Mobipocket</name>
+  <summary>Adds support for reading Mobipocket E-books</summary>
+  <summary xml:lang="ca">Afegeix la implementació per llegir llibres electrònics Mobipocket</summary>
+  <summary xml:lang="ca-valencia">Afig la implementació per llegir llibres electrònics Mobipocket</summary>
+  <summary xml:lang="cs">Přidává podporu pro čtení e-booků Mobipocket</summary>
+  <summary xml:lang="de">Bietet Unterstützung zum Lesen von Mobipocket-E-Books</summary>
+  <summary xml:lang="en-GB">Adds support for reading Mobipocket E-books</summary>
+  <summary xml:lang="es">Permite la lectura de libros electrónicos en formato Mobipocket</summary>
+  <summary xml:lang="et">Mobipocketi e-raamatute lugemise toetus</summary>
+  <summary xml:lang="fi">Lisää MobiPocket-e-kirjojen lukutuen</summary>
+  <summary xml:lang="it">Aggiunge il supporto per la lettura di libri digitali in formato Mobipocket</summary>
+  <summary xml:lang="ko">Mobipocket 전자책 읽기 지원 추가</summary>
+  <summary xml:lang="nl">Voegt ondersteuning voor lezen van Mobipocket e-boeken toe</summary>
+  <summary xml:lang="nn">Legg til støtte for å lesa e-bøker i Mobipocket-formatet</summary>
+  <summary xml:lang="pl">Dodaje obsługę czytania ebooków Mobipocket</summary>
+  <summary xml:lang="pt">Adiciona o suporte para ler E-books da Mobipocket</summary>
+  <summary xml:lang="sk">Pridá podporu pre čítanie e-kníh Mobipocket</summary>
+  <summary xml:lang="sl">Doda podporo za branje e-knjig Mobipocket</summary>
+  <summary xml:lang="sr">Подршка за читање мобипокет е‑књига</summary>
+  <summary xml:lang="sr-Latn">Podrška za čitanje Mobipocket e‑knjiga</summary>
+  <summary xml:lang="sr-ijekavian">Подршка за читање мобипокет е‑књига</summary>
+  <summary xml:lang="sr-ijekavianlatin">Podrška za čitanje Mobipocket e‑knjiga</summary>
+  <summary xml:lang="sv">Lägger till stöd för att läsa Mobipocket e-böcker</summary>
+  <summary xml:lang="uk">Додає підтримку читання електронних книг у форматі Mobipocket</summary>
+  <summary xml:lang="x-test">xxAdds support for reading Mobipocket E-booksxx</summary>
+  <summary xml:lang="zh-CN">增加对 Mobipocket 电子书的支持</summary>
+  <summary xml:lang="zh-TW">加入讀取 Mobipocket 電子書的支援</summary>
+  <mimetypes>
+    <mimetype>image/bmp</mimetype>
+    <mimetype>image/x-dds</mimetype>
+    <mimetype>image/x-eps</mimetype>
+    <mimetype>image/x-exr</mimetype>
+    <mimetype>image/gif</mimetype>
+    <mimetype>image/x-hdr</mimetype>
+    <mimetype>image/x-ico</mimetype>
+    <mimetype>image/jp2</mimetype>
+    <mimetype>image/jpeg</mimetype>
+    <mimetype>video/x-mng</mimetype>
+    <mimetype>image/x-portable-bitmap</mimetype>
+    <mimetype>image/x-pcx</mimetype>
+    <mimetype>image/x-portable-graymap</mimetype>
+    <mimetype>image/png</mimetype>
+    <mimetype>image/x-portable-pixmap</mimetype>
+    <mimetype>image/x-psd</mimetype>
+    <mimetype>image/x-rgb</mimetype>
+    <mimetype>image/x-tga</mimetype>
+    <mimetype>image/tiff</mimetype>
+    <mimetype>image/x-xbitmap</mimetype>
+    <mimetype>image/x-xcf</mimetype>
+    <mimetype>image/x-xpixmap</mimetype>
+    <mimetype>image/x-gzeps</mimetype>
+    <mimetype>image/x-bzeps</mimetype>
+  </mimetypes>
+  <url type="homepage">https://okular.kde.org</url>
+</component>

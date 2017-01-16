@@ -19,12 +19,14 @@ class QTextCursor;
 
 namespace Epub {
   class Converter : public Okular::TextDocumentConverter
-    {
+  {
+    Q_OBJECT
+
     public:
       Converter();
       ~Converter();
 
-      virtual QTextDocument *convert( const QString &fileName );
+      QTextDocument *convert( const QString &fileName ) Q_DECL_OVERRIDE;
 
     private:
 

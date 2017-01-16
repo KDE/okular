@@ -14,7 +14,7 @@
 #include "core/observer.h"
 #include <QModelIndex>
 
-#include "okular_part_export.h"
+#include "okularpart_export.h"
 
 class QDomNode;
 class QModelIndex;
@@ -27,7 +27,7 @@ class Document;
 class PartTest;
 }
 
-class OKULAR_PART_EXPORT TOC : public QWidget, public Okular::DocumentObserver
+class OKULARPART_EXPORT TOC : public QWidget, public Okular::DocumentObserver
 {
 Q_OBJECT
     friend class Okular::PartTest;
@@ -37,8 +37,8 @@ Q_OBJECT
         ~TOC();
 
         // inherited from DocumentObserver
-        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags );
-        void notifyCurrentPageChanged( int previous, int current );
+        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) Q_DECL_OVERRIDE;
+        void notifyCurrentPageChanged( int previous, int current ) Q_DECL_OVERRIDE;
 
         void reparseConfig();
 
@@ -46,10 +46,10 @@ Q_OBJECT
         void rollbackReload();
         void finishReload();
 
-    signals:
+    Q_SIGNALS:
         void hasTOC(bool has);
 
-    private slots:
+    private Q_SLOTS:
         void slotExecuted( const QModelIndex & );
         void saveSearchOptions();
 

@@ -9,16 +9,45 @@
 
 #include "annotationpopup.h"
 
-#include <klocale.h>
-#include <kmenu.h>
+#include <KLocalizedString>
+#include <QMenu>
+#include <QIcon>
 
 #include "annotationpropertiesdialog.h"
 
 #include "core/annotations.h"
 #include "core/document.h"
 #include "guiutils.h"
+#include "okmenutitle.h"
 
 Q_DECLARE_METATYPE( AnnotationPopup::AnnotPagePair )
+
+namespace {
+
+bool annotationHasFileAttachment( Okular::Annotation *annotation )
+{
+    return ( annotation->subType() == Okular::Annotation::AFileAttachment || annotation->subType() == Okular::Annotation::ARichMedia );
+}
+
+Okular::EmbeddedFile* embeddedFileFromAnnotation( Okular::Annotation *annotation )
+{
+    if ( annotation->subType() == Okular::Annotation::AFileAttachment )
+    {
+        const Okular::FileAttachmentAnnotation *fileAttachAnnot = static_cast<Okular::FileAttachmentAnnotation*>( annotation );
+        return fileAttachAnnot->embeddedFile();
+    }
+    else if ( annotation->subType() == Okular::Annotation::ARichMedia )
+    {
+        const Okular::RichMediaAnnotation *richMediaAnnot = static_cast<Okular::RichMediaAnnotation*>( annotation );
+        return richMediaAnnot->embeddedFile();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+}
 
 AnnotationPopup::AnnotationPopup( Okular::Document *document, MenuMode mode,
                                   QWidget *parent )
@@ -38,18 +67,17 @@ void AnnotationPopup::exec( const QPoint &point )
     if ( mAnnotations.isEmpty() )
         return;
 
-    KMenu menu( mParent );
+    QMenu menu( mParent );
 
     QAction *action = 0;
-    Okular::FileAttachmentAnnotation *fileAttachAnnot = 0;
 
     const char *actionTypeId = "actionType";
 
-    const QString openId = QString::fromLatin1( "open" );
-    const QString deleteId = QString::fromLatin1( "delete" );
-    const QString deleteAllId = QString::fromLatin1( "deleteAll" );
-    const QString propertiesId = QString::fromLatin1( "properties" );
-    const QString saveId = QString::fromLatin1( "save" );
+    const QString openId = QStringLiteral( "open" );
+    const QString deleteId = QStringLiteral( "delete" );
+    const QString deleteAllId = QStringLiteral( "deleteAll" );
+    const QString propertiesId = QStringLiteral( "properties" );
+    const QString saveId = QStringLiteral( "save" );
 
     if ( mMenuMode == SingleAnnotationMode )
     {
@@ -57,14 +85,14 @@ void AnnotationPopup::exec( const QPoint &point )
 
         const AnnotPagePair &pair = mAnnotations.at(0);
 
-        menu.addTitle( i18np( "Annotation", "%1 Annotations", mAnnotations.count() ) );
+        menu.addAction( new OKMenuTitle( &menu, i18np( "Annotation", "%1 Annotations", mAnnotations.count() ) ) );
 
-        action = menu.addAction( KIcon( "comment" ), i18n( "&Open Pop-up Note" ) );
+        action = menu.addAction( QIcon::fromTheme( QStringLiteral("comment") ), i18n( "&Open Pop-up Note" ) );
         action->setData( QVariant::fromValue( pair ) );
         action->setEnabled( onlyOne );
         action->setProperty( actionTypeId, openId );
 
-        action = menu.addAction( KIcon( "list-remove" ), i18n( "&Delete" ) );
+        action = menu.addAction( QIcon::fromTheme( QStringLiteral("list-remove") ), i18n( "&Delete" ) );
         action->setEnabled( mDocument->isAllowed( Okular::AllowNotes ) );
         action->setProperty( actionTypeId, deleteAllId );
 
@@ -74,51 +102,57 @@ void AnnotationPopup::exec( const QPoint &point )
                 action->setEnabled( false );
         }
 
-        action = menu.addAction( KIcon( "configure" ), i18n( "&Properties" ) );
+        action = menu.addAction( QIcon::fromTheme( QStringLiteral("configure") ), i18n( "&Properties" ) );
         action->setData( QVariant::fromValue( pair ) );
         action->setEnabled( onlyOne );
         action->setProperty( actionTypeId, propertiesId );
 
-        if ( onlyOne && pair.annotation->subType() == Okular::Annotation::AFileAttachment )
+        if ( onlyOne && annotationHasFileAttachment( pair.annotation ) )
         {
-            menu.addSeparator();
-            fileAttachAnnot = static_cast< Okular::FileAttachmentAnnotation * >( pair.annotation );
-            const QString saveText = i18nc( "%1 is the name of the file to save", "&Save '%1'...", fileAttachAnnot->embeddedFile()->name() );
+            const Okular::EmbeddedFile *embeddedFile = embeddedFileFromAnnotation( pair.annotation );
+            if ( embeddedFile )
+            {
+                const QString saveText = i18nc( "%1 is the name of the file to save", "&Save '%1'...", embeddedFile->name() );
 
-            action = menu.addAction( KIcon( "document-save" ), saveText );
-            action->setData( QVariant::fromValue( pair ) );
-            action->setProperty( actionTypeId, saveId );
+                menu.addSeparator();
+                action = menu.addAction( QIcon::fromTheme( QStringLiteral("document-save") ), saveText );
+                action->setData( QVariant::fromValue( pair ) );
+                action->setProperty( actionTypeId, saveId );
+            }
         }
     }
     else
     {
         foreach ( const AnnotPagePair& pair, mAnnotations )
         {
-            menu.addTitle( GuiUtils::captionForAnnotation( pair.annotation ) );
+            menu.addAction( new OKMenuTitle( &menu, GuiUtils::captionForAnnotation( pair.annotation ) ) );
 
-            action = menu.addAction( KIcon( "comment" ), i18n( "&Open Pop-up Note" ) );
+            action = menu.addAction( QIcon::fromTheme( QStringLiteral("comment") ), i18n( "&Open Pop-up Note" ) );
             action->setData( QVariant::fromValue( pair ) );
             action->setProperty( actionTypeId, openId );
 
-            action = menu.addAction( KIcon( "list-remove" ), i18n( "&Delete" ) );
+            action = menu.addAction( QIcon::fromTheme( QStringLiteral("list-remove") ), i18n( "&Delete" ) );
             action->setEnabled( mDocument->isAllowed( Okular::AllowNotes ) &&
                                 mDocument->canRemovePageAnnotation( pair.annotation ) );
             action->setData( QVariant::fromValue( pair ) );
             action->setProperty( actionTypeId, deleteId );
 
-            action = menu.addAction( KIcon( "configure" ), i18n( "&Properties" ) );
+            action = menu.addAction( QIcon::fromTheme( QStringLiteral("configure") ), i18n( "&Properties" ) );
             action->setData( QVariant::fromValue( pair ) );
             action->setProperty( actionTypeId, propertiesId );
 
-            if ( pair.annotation->subType() == Okular::Annotation::AFileAttachment )
+            if ( annotationHasFileAttachment( pair.annotation ) )
             {
-                menu.addSeparator();
-                fileAttachAnnot = static_cast< Okular::FileAttachmentAnnotation * >( pair.annotation );
-                const QString saveText = i18nc( "%1 is the name of the file to save", "&Save '%1'...", fileAttachAnnot->embeddedFile()->name() );
+                const Okular::EmbeddedFile *embeddedFile = embeddedFileFromAnnotation( pair.annotation );
+                if ( embeddedFile )
+                {
+                    const QString saveText = i18nc( "%1 is the name of the file to save", "&Save '%1'...", embeddedFile->name() );
 
-                action = menu.addAction( KIcon( "document-save" ), saveText );
-                action->setData( QVariant::fromValue( pair ) );
-                action->setProperty( actionTypeId, saveId );
+                    menu.addSeparator();
+                    action = menu.addAction( QIcon::fromTheme( QStringLiteral("document-save") ), saveText );
+                    action->setData( QVariant::fromValue( pair ) );
+                    action->setProperty( actionTypeId, saveId );
+                }
             }
         }
     }
@@ -147,10 +181,10 @@ void AnnotationPopup::exec( const QPoint &point )
                 propdialog.exec();
             }
         } else if( actionType == saveId ) {
-            const Okular::FileAttachmentAnnotation * fileAttachAnnot = static_cast< Okular::FileAttachmentAnnotation * >( pair.annotation );
-            GuiUtils::saveEmbeddedFile( fileAttachAnnot->embeddedFile(), mParent );
+            Okular::EmbeddedFile *embeddedFile = embeddedFileFromAnnotation( pair.annotation );
+            GuiUtils::saveEmbeddedFile( embeddedFile, mParent );
         }
     }
 }
 
-#include "annotationpopup.moc"
+#include "moc_annotationpopup.cpp"

@@ -111,14 +111,14 @@ class LCHMFileImpl
 		//! Encode the string with the currently selected text codec, if possible. Or return as-is, if not.
 		inline QString encodeWithCurrentCodec( const QByteArray& str) const
 		{
-			return (m_textCodec ? m_textCodec->toUnicode( str.constData () ) : str);
+            return (m_textCodec ? m_textCodec->toUnicode( str ) : QString::fromLocal8Bit(str));
 		}
 	
 		//! Encode the string with the currently selected text codec, if possible. Or return as-is, if not.
 		inline QString encodeWithCurrentCodec (const char * str) const
-		{
-			return (m_textCodec ? m_textCodec->toUnicode( str ) : (QString) str);
-		}
+        {
+            return (m_textCodec ? m_textCodec->toUnicode( str ) : QString::fromLocal8Bit(str));
+        }
 	
 		//! Encode the string from internal files with the currently selected text codec, if possible. 
 		//! Or return as-is, if not.	
@@ -131,7 +131,7 @@ class LCHMFileImpl
 		//! Or return as-is, if not.	
 		inline QString encodeInternalWithCurrentCodec (const char * str) const
 		{
-			return (m_textCodecForSpecialFiles ? m_textCodecForSpecialFiles->toUnicode (str) : (QString) str);
+            return (m_textCodecForSpecialFiles ? m_textCodecForSpecialFiles->toUnicode ( str ) : QString::fromLocal8Bit(str));
 		}
 	
 		//! Helper. Translates from Win32 encodings to generic wxWidgets ones.

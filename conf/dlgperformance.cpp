@@ -9,14 +9,19 @@
 
 #include "dlgperformance.h"
 
-#include <qfont.h>
-#include <kiconloader.h>
+#include <QButtonGroup>
+#include <QFont>
 
+#include <KConfigDialogManager>
+#include <KIconLoader>
+
+#include "settings_core.h"
 #include "ui_dlgperformancebase.h"
 
 DlgPerformance::DlgPerformance( QWidget * parent )
     : QWidget( parent )
 {
+    Q_PROPERTY( QButtonGroup checkedId READ checkedId USER true );
     m_dlg = new Ui_DlgPerformanceBase();
     m_dlg->setupUi( this );
 
@@ -24,10 +29,17 @@ DlgPerformance::DlgPerformance( QWidget * parent )
     labelFont.setBold( true );
     m_dlg->descLabel->setFont( labelFont );
 
-    m_dlg->cpuLabel->setPixmap( BarIcon( "cpu", 32 ) );
-//     m_dlg->memoryLabel->setPixmap( BarIcon( "kcmmemory", 32 ) ); // TODO: enable again when proper icon is available
+    m_dlg->cpuLabel->setPixmap( BarIcon( QStringLiteral("cpu"), 32 ) );
+//    m_dlg->memoryLabel->setPixmap( BarIcon( "kcmmemory", 32 ) ); // TODO: enable again when proper icon is available
 
-    connect( m_dlg->kcfg_MemoryLevel, SIGNAL(changed(int)), this, SLOT(radioGroup_changed(int)) );
+    m_dlg->memoryLevelGroup->setId(m_dlg->lowRadio, 0);
+    m_dlg->memoryLevelGroup->setId(m_dlg->normalRadio, 1);
+    m_dlg->memoryLevelGroup->setId(m_dlg->aggressiveRadio, 2);
+    m_dlg->memoryLevelGroup->setId(m_dlg->greedyRadio, 3);
+
+
+    connect(m_dlg->memoryLevelGroup, static_cast<void(QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked),
+            this, &DlgPerformance::radioGroup_changed);
 }
 
 DlgPerformance::~DlgPerformance()
@@ -43,10 +55,10 @@ void DlgPerformance::radioGroup_changed( int which )
             m_dlg->descLabel->setText( i18n("Keeps used memory as low as possible. Do not reuse anything. (For systems with low memory.)") );
             break;
         case 1:
-            m_dlg->descLabel->setText( i18n("A good compromise between memory usage and speed gain. Preload next page and boost searches. (For systems with 256MB of memory, typically.)") );
+            m_dlg->descLabel->setText( i18n("A good compromise between memory usage and speed gain. Preload next page and boost searches. (For systems with 2GB of memory, typically.)") );
             break;
         case 2:
-            m_dlg->descLabel->setText( i18n("Keeps everything in memory. Preload next pages. Boost searches. (For systems with more than 512MB of memory.)") );
+            m_dlg->descLabel->setText( i18n("Keeps everything in memory. Preload next pages. Boost searches. (For systems with more than 4GB of memory.)") );
             break;
         case 3:
 	    // xgettext: no-c-format
@@ -55,4 +67,4 @@ void DlgPerformance::radioGroup_changed( int which )
     }
 }
 
-#include "dlgperformance.moc"
+#include "moc_dlgperformance.cpp"

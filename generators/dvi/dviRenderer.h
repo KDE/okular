@@ -20,16 +20,16 @@
 #include "anchor.h"
 #include "prebookmark.h"
 
-#include <ksharedptr.h>
-#include <kurl.h>
-#include <kprogressdialog.h>
+#include <QExplicitlySharedDataPointer>
+#include <QUrl>
+#include <QProgressDialog>
 #include <QHash>
 #include <QPolygon>
 #include <QStack>
 #include <QVector>
 #include <QTimer>
 #include <QMutex>
-#include <QtGui/QPrinter>
+#include <QtPrintSupport/QPrinter>
 
 class Anchor;
 class DocumentWidget;
@@ -37,7 +37,7 @@ class dvifile;
 class dviRenderer;
 class ghostscript_interface;
 class QEventLoop;
-class KProgressDialog;
+class QProgressDialog;
 class PreBookmark;
 class TeXFontDefinition;
 
@@ -95,7 +95,7 @@ public:
   dviRenderer(bool useFontHinting);
   virtual ~dviRenderer();
 
-  virtual bool  setFile(const QString &fname, const KUrl &base);
+  virtual bool  setFile(const QString &fname, const QUrl &base);
 
   dvifile* dviFile;
 
@@ -154,7 +154,7 @@ Q_SIGNALS:
   void notice( const QString &message, int duration );
 
 
-public slots:
+public Q_SLOTS:
   void          exportPS(const QString& fname = QString(), const QStringList& options = QStringList(), QPrinter* printer = 0, QPrinter::Orientation orientation = QPrinter::Portrait);
   void          exportPDF();
 
@@ -171,7 +171,7 @@ public slots:
 
   const QVector<DVI_SourceFileAnchor>& sourceAnchors() { return sourceHyperLinkAnchors; }
 
-private slots:
+private Q_SLOTS:
   /** This method shows a dialog that tells the user that source
       information is present, and gives the opportunity to open the
       manual and learn more about forward and inverse search */
@@ -185,7 +185,7 @@ private:
   /** URL to the DVI file
       This field is initialized by the setFile() method. See the
       explanation there. */
-  KUrl baseURL;
+  QUrl baseURL;
 
   /** This method parses a color specification of type "gray 0.5", "rgb
       0.5 0.7 1.0", "hsb ...", "cmyk .." or "PineGreen". See the source
@@ -230,7 +230,7 @@ private:
 
 
   /** Utility fields used by the embedPostScript method*/
-  KProgressDialog *embedPS_progress;
+  QProgressDialog *embedPS_progress;
   quint16         embedPS_numOfProgressedFiles;
 
   /** Shrink factor. Units are not quite clear */
@@ -300,8 +300,8 @@ private:
 
   drawinf currinf;
   RenderedDocumentPagePixmap* currentlyDrawnPage;
-  QMap<const DVIExport*, KSharedPtr<DVIExport> > all_exports_;
-  //KSharedPtr<DVISourceEditor> editor_;
+  QMap<const DVIExport*, QExplicitlySharedDataPointer<DVIExport> > all_exports_;
+  //QExplicitlySharedDataPointer<DVISourceEditor> editor_;
 
   /** Flag if document is modified
 

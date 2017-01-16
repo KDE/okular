@@ -52,14 +52,16 @@
 
 #include <config.h>
 
-#include "kvs_debug.h"
+#include "debug_dvi.h"
 #include "xdvi.h"
+#include "debug_dvi.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kmessagebox.h>
 
 #include <cstdlib>
 
+#include <QtCore/qloggingcategory.h>
 
 /*
  *   General utility routines.
@@ -71,7 +73,7 @@
 
 void oops(const QString& message)
 {
-  kError(kvs::dvi) << "Fatal Error:" << message << endl;
+  qCCritical(OkularDviDebug) << "Fatal Error:" << message << endl;
 
   KMessageBox::error( NULL,
                       i18n("Fatal error.\n\n") +
@@ -93,7 +95,7 @@ please report the problem."));
  */
 unsigned long num(FILE *fp, int size)
 {
-  register long x = 0;
+  long x = 0;
 
   while (size--) x = (x << 8) | one(fp);
   return x;
@@ -101,7 +103,7 @@ unsigned long num(FILE *fp, int size)
 
 long snum(FILE *fp, int size)
 {
-  register long x;
+  long x;
 
 #ifdef __STDC__
   x = (signed char) getc(fp);

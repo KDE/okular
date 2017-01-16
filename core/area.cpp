@@ -11,7 +11,7 @@
 
 #include <QtCore/QRect>
 #include <QtGui/QPolygonF>
-#include <kdebug.h>
+#include <QtCore/QDebug>
 
 #include <math.h>
 
@@ -267,6 +267,11 @@ void NormalizedRect::transform( const QTransform &matrix )
     bottom = rect.bottom();
 }
 
+uint qHash( const NormalizedRect& r, uint seed )
+{
+    return qHash(r.bottom, qHash(r.right, qHash(r.top, qHash(r.left, seed))));
+}
+
 QDebug operator<<( QDebug str, const Okular::NormalizedRect& r )
 {
     str.nospace() << "NormRect(" << r.left << "," << r.top << " x " << ( r.right - r.left ) << "+" << ( r.bottom - r.top ) << ")";
@@ -421,7 +426,7 @@ ObjectRect::~ObjectRect()
     else if ( m_objectType == SourceRef )
         delete static_cast<Okular::SourceReference*>( m_object );
     else
-        kDebug(OkularDebug).nospace() << "Object deletion not implemented for type '" << m_objectType << "'.";
+        qCDebug(OkularCoreDebug).nospace() << "Object deletion not implemented for type '" << m_objectType << "'.";
 }
 
 /** class AnnotationObjectRect **/

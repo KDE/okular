@@ -12,7 +12,7 @@
 
 #include <QtCore/QModelIndexList>
 #include <QtCore/QVector>
-#include <QtGui/QWidget>
+#include <QtWidgets/QWidget>
 
 #include "core/observer.h"
 
@@ -41,7 +41,7 @@ class Reviews : public QWidget, public Okular::DocumentObserver
         ~Reviews();
 
         // [INHERITED] from DocumentObserver
-        void notifyCurrentPageChanged( int previous, int current );
+        void notifyCurrentPageChanged( int previous, int current ) Q_DECL_OVERRIDE;
 
         void reparseConfig();
 

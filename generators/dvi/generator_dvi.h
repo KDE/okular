@@ -26,6 +26,7 @@ class ObjectRect;
 class DviGenerator : public Okular::Generator
 {
     Q_OBJECT
+    Q_INTERFACES( Okular::Generator )
     public:
         DviGenerator( QObject *parent, const QVariantList &args );
         bool loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector );

@@ -26,12 +26,13 @@
 
 #include <config.h>
 
+#include "debug_dvi.h"
 #include "dvi.h"
 #include "dviRenderer.h"
-#include "kvs_debug.h"
+#include "debug_dvi.h"
 #include "xdvi.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <cstdio>
 #include <cstdlib>
@@ -68,7 +69,7 @@ extern void oops(const QString& message);
 void TeXFontDefinition::read_VF_index()
 {
 #ifdef DEBUG_FONTS
-  kDebug(kvs::dvi) << "font::read_VF_index()";
+  qCDebug(OkularDviDebug) << "font::read_VF_index()";
 #endif
   FILE *VF_file = file;
   unsigned char        cmnd;
@@ -78,14 +79,14 @@ void TeXFontDefinition::read_VF_index()
   flags      |= FONT_VIRTUAL;
   set_char_p  = &dviRenderer::set_vf_char;
 #ifdef DEBUG_FONTS
-  kDebug(kvs::dvi) << "TeXFontDefinition::read_VF_index: reading VF pixel file " << filename;
+  qCDebug(OkularDviDebug) << "TeXFontDefinition::read_VF_index: reading VF pixel file " << filename;
 #endif
   // Read preamble.
   fseek(VF_file, (long) one(VF_file), 1);        /* skip comment */
   quint32 const file_checksum = four(VF_file);
 
   if (file_checksum && checksum && file_checksum != checksum)
-    kError(kvs::dvi) << "Checksum mismatch dvi = " << checksum << "u, vf = " << file_checksum <<
+    qCCritical(OkularDviDebug) << "Checksum mismatch dvi = " << checksum << "u, vf = " << file_checksum <<
       "u) in font file" << filename << endl;
   (void) four(VF_file);                /* skip design size */
 
@@ -103,7 +104,7 @@ void TeXFontDefinition::read_VF_index()
     fontname[len] = '\0';
 
 #ifdef DEBUG_FONTS
-    kDebug(kvs::dvi) << "Virtual font defines subfont \"" << fontname << "\" scale=" << scale << " design=" << design;
+    qCDebug(OkularDviDebug) << "Virtual font defines subfont \"" << fontname << "\" scale=" << scale << " design=" << design;
 #endif
 
     // According to Knuth's documentation found in the web source code
@@ -114,7 +115,7 @@ void TeXFontDefinition::read_VF_index()
     double enlargement_factor = double(scale)/(1<<20) * enlargement;
 
     //    TeXFontDefinition *newfontp = font_pool->appendx(fontname, checksum, (quint32)(scaled_size_in_DVI_units*enlargement_factor), enlargement_factor);
-    TeXFontDefinition *newfontp = font_pool->appendx(fontname, checksum, (quint32)((double(scale)/(1<<20))*scaled_size_in_DVI_units), enlargement_factor);
+    TeXFontDefinition *newfontp = font_pool->appendx(QString::fromLocal8Bit(fontname), checksum, (quint32)((double(scale)/(1<<20))*scaled_size_in_DVI_units), enlargement_factor);
 
     // Insert font in dictionary and make sure the dictionary is big
     // enough.
@@ -131,7 +132,7 @@ void TeXFontDefinition::read_VF_index()
   // Prepare macro array.
   macrotable = new macro[max_num_of_chars_in_font];
   if (macrotable == 0) {
-    kError(kvs::dvi) << "Could not allocate memory for a macro table.";
+    qCCritical(OkularDviDebug) << "Could not allocate memory for a macro table.";
     exit(0);
   }
 
@@ -148,7 +149,7 @@ void TeXFontDefinition::read_VF_index()
       cc = four(VF_file);
       width = four(VF_file);
       if (cc >= 256) {
-        kError(kvs::dvi) << "Virtual character" << cc << "in font"
+        qCCritical(OkularDviDebug) << "Virtual character" << cc << "in font"
                   << fontname << "ignored.";
         fseek(VF_file, (long) len, 1);
         continue;

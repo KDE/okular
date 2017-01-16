@@ -18,6 +18,10 @@
 #include <QtCrypto>
 #endif
 
+#include <QtCore/qloggingcategory.h>
+
+Q_DECLARE_LOGGING_CATEGORY(OkularOooDebug)
+
 namespace OOO {
 
 /**

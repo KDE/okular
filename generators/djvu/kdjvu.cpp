@@ -18,8 +18,8 @@
 #include <qqueue.h>
 #include <qstring.h>
 
-#include <kdebug.h>
-#include <klocale.h>
+#include <QtCore/QDebug>
+#include <KLocalizedString>
 
 #include <libdjvu/ddjvuapi.h>
 #include <libdjvu/miniexp.h>
@@ -35,22 +35,22 @@ QDebug &operator<<( QDebug & s, const ddjvu_rect_t &r )
 static void which_ddjvu_message( const ddjvu_message_t *msg )
 {
 #ifdef KDJVU_DEBUG
-    kDebug() << "which_djvu_message(...):" << msg->m_any.tag;
+    qDebug() << "which_djvu_message(...):" << msg->m_any.tag;
     switch( msg->m_any.tag )
     {
         case DDJVU_ERROR:
-            kDebug().nospace() << "ERROR: file " << msg->m_error.filename << ", line " << msg->m_error.lineno;
-            kDebug().nospace() << "ERROR: function '" << msg->m_error.function << "'";
-            kDebug().nospace() << "ERROR: '" << msg->m_error.message << "'";
+            qDebug().nospace() << "ERROR: file " << msg->m_error.filename << ", line " << msg->m_error.lineno;
+            qDebug().nospace() << "ERROR: function '" << msg->m_error.function << "'";
+            qDebug().nospace() << "ERROR: '" << msg->m_error.message << "'";
             break;
         case DDJVU_INFO:
-            kDebug().nospace() << "INFO: '" << msg->m_info.message << "'";
+            qDebug().nospace() << "INFO: '" << msg->m_info.message << "'";
             break;
         case DDJVU_CHUNK:
-            kDebug().nospace() << "CHUNK: '" << QByteArray( msg->m_chunk.chunkid ) << "'";
+            qDebug().nospace() << "CHUNK: '" << QByteArray( msg->m_chunk.chunkid ) << "'";
             break;
         case DDJVU_PROGRESS:
-            kDebug().nospace() << "PROGRESS: '" << msg->m_progress.percent << "'";
+            qDebug().nospace() << "PROGRESS: '" << msg->m_progress.percent << "'";
             break;
         default: ;
     }
@@ -275,7 +275,7 @@ void KDjVu::Annotation::setComment( const QString &comment )
     miniexp_t exp = m_anno;
     exp = miniexp_cdr( exp );
     exp = miniexp_cdr( exp );
-    miniexp_rplaca( exp, miniexp_string( comment.toUtf8() ) );
+    miniexp_rplaca( exp, miniexp_string( comment.toUtf8().constData() ) );
 }
 
 QColor KDjVu::Annotation::color() const
@@ -330,7 +330,7 @@ QColor KDjVu::TextAnnotation::color() const
 void KDjVu::TextAnnotation::setColor( const QColor &color )
 {
     const QByteArray col = color.name().toLatin1();
-    find_replace_or_add_second_in_pair( m_anno, "backclr", miniexp_symbol( col ) );
+    find_replace_or_add_second_in_pair( m_anno, "backclr", miniexp_symbol( col.constData() ) );
 }
 
 bool KDjVu::TextAnnotation::inlineText() const
@@ -375,7 +375,7 @@ QColor KDjVu::LineAnnotation::color() const
 void KDjVu::LineAnnotation::setColor( const QColor &color )
 {
     const QByteArray col = color.name().toLatin1();
-    find_replace_or_add_second_in_pair( m_anno, "lineclr", miniexp_symbol( col ) );
+    find_replace_or_add_second_in_pair( m_anno, "lineclr", miniexp_symbol( col.constData() ) );
 }
 
 QPoint KDjVu::LineAnnotation::point2() const
@@ -477,7 +477,7 @@ QImage KDjVu::Private::generateImageTile( ddjvu_page_t *djvupage, int& res,
     renderrect.w = realwidth;
     renderrect.h = realheight;
 #ifdef KDJVU_DEBUG
-    kDebug() << "renderrect:" << renderrect;
+    qDebug() << "renderrect:" << renderrect;
 #endif
     ddjvu_rect_t pagerect;
     pagerect.x = 0;
@@ -485,7 +485,7 @@ QImage KDjVu::Private::generateImageTile( ddjvu_page_t *djvupage, int& res,
     pagerect.w = width;
     pagerect.h = height;
 #ifdef KDJVU_DEBUG
-    kDebug() << "pagerect:" << pagerect;
+    qDebug() << "pagerect:" << pagerect;
 #endif
     handle_ddjvu_messages( m_djvu_cxt, false );
     QImage res_img( realwidth, realheight, QImage::Format_RGB32 );
@@ -495,7 +495,7 @@ QImage KDjVu::Private::generateImageTile( ddjvu_page_t *djvupage, int& res,
     res = ddjvu_page_render( djvupage, DDJVU_RENDER_COLOR,
                   &pagerect, &renderrect, m_format, res_img.bytesPerLine(), (char *)res_img.bits() );
 #ifdef KDJVU_DEBUG
-    kDebug() << "rendering result:" << res;
+    qDebug() << "rendering result:" << res;
 #endif
     handle_ddjvu_messages( m_djvu_cxt, false );
 
@@ -516,7 +516,7 @@ void KDjVu::Private::readBookmarks()
          miniexp_symbolp( miniexp_nth( 0, outline ) ) &&
          ( QString::fromUtf8( miniexp_to_name( miniexp_nth( 0, outline ) ) ) == QLatin1String( "bookmarks" ) ) )
     {
-        m_docBookmarks = new QDomDocument( "KDjVuBookmarks" );
+        m_docBookmarks = new QDomDocument( QStringLiteral("KDjVuBookmarks") );
         fillBookmarksRecurse( *m_docBookmarks, *m_docBookmarks, outline, 1 );
         ddjvu_miniexp_release( m_djvu_document, outline );
     }
@@ -538,8 +538,8 @@ void KDjVu::Private::fillBookmarksRecurse( QDomDocument& maindoc, QDomNode& curn
         {
             QString title = QString::fromUtf8( miniexp_to_str( miniexp_nth( 0, cur ) ) );
             QString dest = QString::fromUtf8( miniexp_to_str( miniexp_nth( 1, cur ) ) );
-            QDomElement el = maindoc.createElement( "item" );
-            el.setAttribute( "title", title );
+            QDomElement el = maindoc.createElement( QStringLiteral("item") );
+            el.setAttribute( QStringLiteral("title"), title );
             if ( !dest.isEmpty() )
             {
                 if ( dest.at( 0 ) == QLatin1Char( '#' ) )
@@ -554,21 +554,21 @@ void KDjVu::Private::fillBookmarksRecurse( QDomDocument& maindoc, QDomNode& curn
                         int pageNo = pageWithName( dest );
                         if ( pageNo != -1 )
                         {
-                            el.setAttribute( "PageNumber", QString::number( pageNo + 1 ) );
+                            el.setAttribute( QStringLiteral("PageNumber"), QString::number( pageNo + 1 ) );
                         }
                         else
                         {
-                            el.setAttribute( "PageNumber", dest );
+                            el.setAttribute( QStringLiteral("PageNumber"), dest );
                         }
                     }
                     else
                     {
-                       el.setAttribute( "PageName", dest );
+                       el.setAttribute( QStringLiteral("PageName"), dest );
                     }
                 }
                 else
                 {
-                    el.setAttribute( "URL", dest );
+                    el.setAttribute( QStringLiteral("URL"), dest );
                 }
             }
             curnode.appendChild( el );
@@ -667,7 +667,7 @@ bool KDjVu::openFile( const QString & fileName )
         closeFile();
 
     // load the document...
-    d->m_djvu_document = ddjvu_document_create_by_filename( d->m_djvu_cxt, QFile::encodeName( fileName ), true );
+    d->m_djvu_document = ddjvu_document_create_by_filename( d->m_djvu_cxt, QFile::encodeName( fileName ).constData(), true );
     if ( !d->m_djvu_document ) return false;
     // ...and wait for its loading
     wait_for_ddjvu_message( d->m_djvu_cxt, DDJVU_DOCINFO );
@@ -678,7 +678,7 @@ bool KDjVu::openFile( const QString & fileName )
         return false;
     }
 
-    kDebug() << "# of pages:" << ddjvu_document_get_pagenum( d->m_djvu_document );
+    qDebug() << "# of pages:" << ddjvu_document_get_pagenum( d->m_djvu_document );
     int numofpages = ddjvu_document_get_pagenum( d->m_djvu_document );
     d->m_pages.clear();
     d->m_pages.resize( numofpages );
@@ -709,9 +709,9 @@ bool KDjVu::openFile( const QString & fileName )
             break;
     }
     if ( !doctype.isEmpty() )
-        d->m_metaData[ "documentType" ] = doctype;
+        d->m_metaData[ QStringLiteral("documentType") ] = doctype;
     // get the number of components
-    d->m_metaData[ "componentFile" ] = ddjvu_document_get_filenum( d->m_djvu_document );
+    d->m_metaData[ QStringLiteral("componentFile") ] = ddjvu_document_get_filenum( d->m_djvu_document );
 
     // read the pages
     for ( int i = 0; i < numofpages; ++i )
@@ -722,7 +722,7 @@ bool KDjVu::openFile( const QString & fileName )
             handle_ddjvu_messages( d->m_djvu_cxt, true );
         if ( sts >= DDJVU_JOB_FAILED )
         {
-            kDebug().nospace() << "\t>>> page " << i << " failed: " << sts;
+            qDebug().nospace() << "\t>>> page " << i << " failed: " << sts;
             return false;
         }
 
@@ -1048,7 +1048,7 @@ bool KDjVu::exportAsPostScript( QFile* file, const QList<int>& pageList ) const
     FILE* f = fdopen( file->handle(), "w+" );
     if ( !f )
     {
-        kDebug() << "error while getting the FILE*";
+        qDebug() << "error while getting the FILE*";
         return false;
     }
 
@@ -1056,15 +1056,15 @@ bool KDjVu::exportAsPostScript( QFile* file, const QList<int>& pageList ) const
     foreach ( int p, pageList )
     {
         if ( !pl.isEmpty() )
-            pl += QString::fromLatin1( "," );
+            pl += QLatin1String( "," );
         pl += QString::number( p );
     }
-    pl.prepend( "-page=" );
+    pl.prepend( QStringLiteral ( "-page=" ) );
 
     // setting the options
     static const int optc = 1;
     const char ** optv = (const char**)malloc( 1 * sizeof( char* ) );
-    QByteArray plb = pl.toAscii();
+    QByteArray plb = pl.toLatin1();
     optv[0] = plb.constData();
 
     ddjvu_job_t *printjob = ddjvu_document_print( d->m_djvu_document, f, optc, optv );

@@ -18,6 +18,8 @@
 class KIMGIOGenerator : public Okular::Generator
 {
     Q_OBJECT
+    Q_INTERFACES( Okular::Generator )
+
     public:
         KIMGIOGenerator( QObject *parent, const QVariantList &args );
         virtual ~KIMGIOGenerator();
@@ -36,9 +38,9 @@ class KIMGIOGenerator : public Okular::Generator
         bool doCloseDocument();
         QImage image( Okular::PixmapRequest * request );
 
-    private slots:
-        void slotTest();
-
+    private:
+        bool loadDocumentInternal(const QByteArray & fileData, const QString & fileName,
+                                  QVector<Okular::Page*> & pagesVector );
     private:
         QImage m_img;
         Okular::DocumentInfo docInfo;

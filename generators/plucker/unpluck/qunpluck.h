@@ -34,7 +34,7 @@ class Link
         {
         }
 
-        typedef QList<Link> List;
+        typedef QVector<Link> List;
 
         Okular::Action *link;
         QString url;

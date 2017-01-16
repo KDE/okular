@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component type="addon">
+  <id>org.kde.okular-kimgio</id>
+  <extends>org.kde.okular.desktop</extends>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-2.0+ and GFDL-1.3</project_license>
+  <name>Images</name>
+  <name xml:lang="ca">Imatges</name>
+  <name xml:lang="ca-valencia">Imatges</name>
+  <name xml:lang="cs">Obrázky</name>
+  <name xml:lang="de">Bilder</name>
+  <name xml:lang="en-GB">Images</name>
+  <name xml:lang="es">Imágenes</name>
+  <name xml:lang="et">Pildid</name>
+  <name xml:lang="fi">Kuvat</name>
+  <name xml:lang="it">Immagini</name>
+  <name xml:lang="ko">그림</name>
+  <name xml:lang="nl">Afbeeldingen</name>
+  <name xml:lang="nn">Bilete</name>
+  <name xml:lang="pl">Obrazy</name>
+  <name xml:lang="pt">Imagens</name>
+  <name xml:lang="sk">Obrázky</name>
+  <name xml:lang="sl">Slike</name>
+  <name xml:lang="sr">Слике</name>
+  <name xml:lang="sr-Latn">Slike</name>
+  <name xml:lang="sr-ijekavian">Слике</name>
+  <name xml:lang="sr-ijekavianlatin">Slike</name>
+  <name xml:lang="sv">Bilder</name>
+  <name xml:lang="uk">Зображення</name>
+  <name xml:lang="x-test">xxImagesxx</name>
+  <name xml:lang="zh-CN">图片</name>
+  <name xml:lang="zh-TW">影像</name>
+  <summary>Adds support for reading many image formats</summary>
+  <summary xml:lang="ca">Afegeix la implementació per llegir molts formats d'imatges</summary>
+  <summary xml:lang="ca-valencia">Afig la implementació per llegir molts formats d'imatges</summary>
+  <summary xml:lang="cs">Přidává podporu pro čtení formátů obrázků</summary>
+  <summary xml:lang="de">Bietet Unterstützung zum Lesen von vielen Bildformaten</summary>
+  <summary xml:lang="en-GB">Adds support for reading many image formats</summary>
+  <summary xml:lang="es">Permite la lectura de diversos formatos de imagen</summary>
+  <summary xml:lang="et">Paljude pildivormingute lugemise toetus</summary>
+  <summary xml:lang="fi">Lisää monien kuvatiedostomuotojen lukutuen</summary>
+  <summary xml:lang="it">Aggiunge il supporto per la lettura di vari formati di immagini</summary>
+  <summary xml:lang="ko">다양한 그림 형식 읽기 지원 추가</summary>
+  <summary xml:lang="nl">Ondersteuning toevoegen om vele afbeeldingsformaten te lezen</summary>
+  <summary xml:lang="nn">Legg til støtte for å lesa mange ulike biletformat</summary>
+  <summary xml:lang="pl">Dodaje obsługę czytania wielu formatów obrazów</summary>
+  <summary xml:lang="pt">Adiciona o suporte para ler muitos formatos de imagem</summary>
+  <summary xml:lang="sk">Pridá podporu pre čítanie mnohých obrazových formátov</summary>
+  <summary xml:lang="sl">Doda podporo za branje številnih slikovnih vrst</summary>
+  <summary xml:lang="sr">Подршка за читање разних формата слика</summary>
+  <summary xml:lang="sr-Latn">Podrška za čitanje raznih formata slika</summary>
+  <summary xml:lang="sr-ijekavian">Подршка за читање разних формата слика</summary>
+  <summary xml:lang="sr-ijekavianlatin">Podrška za čitanje raznih formata slika</summary>
+  <summary xml:lang="sv">Lägger till stöd för att läsa många bildformat</summary>
+  <summary xml:lang="uk">Додає підтримку читання зображень у багатьох форматах</summary>
+  <summary xml:lang="x-test">xxAdds support for reading many image formatsxx</summary>
+  <summary xml:lang="zh-CN">支持多种图片格式的阅读</summary>
+  <summary xml:lang="zh-TW">加入讀取許多影像格式的支援</summary>
+  <mimetypes>
+    <mimetype>image/bmp</mimetype>
+    <mimetype>image/x-dds</mimetype>
+    <mimetype>image/x-eps</mimetype>
+    <mimetype>image/x-exr</mimetype>
+    <mimetype>image/gif</mimetype>
+    <mimetype>image/x-hdr</mimetype>
+    <mimetype>image/x-ico</mimetype>
+    <mimetype>image/jp2</mimetype>
+    <mimetype>image/jpeg</mimetype>
+    <mimetype>video/x-mng</mimetype>
+    <mimetype>image/x-portable-bitmap</mimetype>
+    <mimetype>image/x-pcx</mimetype>
+    <mimetype>image/x-portable-graymap</mimetype>
+    <mimetype>image/png</mimetype>
+    <mimetype>image/x-portable-pixmap</mimetype>
+    <mimetype>image/x-psd</mimetype>
+    <mimetype>image/x-rgb</mimetype>
+    <mimetype>image/x-tga</mimetype>
+    <mimetype>image/tiff</mimetype>
+    <mimetype>image/x-xbitmap</mimetype>
+    <mimetype>image/x-xcf</mimetype>
+    <mimetype>image/x-xpixmap</mimetype>
+    <mimetype>image/x-gzeps</mimetype>
+    <mimetype>image/x-bzeps</mimetype>
+  </mimetypes>
+  <url type="homepage">https://okular.kde.org</url>
+</component>

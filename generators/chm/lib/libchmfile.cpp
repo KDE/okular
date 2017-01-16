@@ -53,7 +53,7 @@ QString LCHMFile::title( ) const
 QString LCHMFile::homeUrl( ) const
 {
 	QString url = m_impl->homeUrl();
-	return url.isNull() ? "/" : url;
+	return url.isNull() ? QStringLiteral("/") : url;
 }
 
 bool LCHMFile::hasTableOfContents( ) const
@@ -73,12 +73,12 @@ bool LCHMFile::hasSearchTable( ) const
 
 bool LCHMFile::parseTableOfContents( QVector< LCHMParsedEntry > * topics ) const
 {
-	return m_impl->parseFileAndFillArray( m_impl->m_topicsFile, topics, false );
+    return m_impl->parseFileAndFillArray( QString::fromLocal8Bit(m_impl->m_topicsFile), topics, false );
 }
 
 bool LCHMFile::parseIndex( QVector< LCHMParsedEntry > * indexes ) const
 {
-	return m_impl->parseFileAndFillArray( m_impl->m_indexFile, indexes, true );
+    return m_impl->parseFileAndFillArray( QString::fromLocal8Bit(m_impl->m_indexFile), indexes, true );
 }
 
 bool LCHMFile::getFileContentAsString( QString * str, const QString & url )

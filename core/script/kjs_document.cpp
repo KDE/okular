@@ -16,7 +16,7 @@
 #include <kjs/kjsprototype.h>
 #include <kjs/kjsarguments.h>
 
-#include <kdebug.h>
+#include <QtCore/QDebug>
 #include <assert.h>
 
 #include "../document_p.h"
@@ -80,7 +80,7 @@ static KJSObject docGetPath( KJSContext *, void *object )
 {
     DocumentPrivate *doc = reinterpret_cast< DocumentPrivate* >( object );
 
-    return KJSString( doc->m_url.pathOrUrl() );
+    return KJSString( doc->m_url.toDisplayString(QUrl::PreferLocalFile) );
 }
 
 // Document.URL
@@ -88,7 +88,7 @@ static KJSObject docGetURL( KJSContext *, void *object )
 {
     DocumentPrivate *doc = reinterpret_cast< DocumentPrivate* >( object );
 
-    return KJSString( doc->m_url.prettyUrl() );
+    return KJSString( doc->m_url.toDisplayString() );
 }
 
 // Document.permStatusReady
@@ -125,7 +125,7 @@ static KJSObject docGetExternal( KJSContext *, void *object )
 
     const bool isShell = ( widget
                            && widget->parentWidget()
-                           && widget->parentWidget()->objectName() == QLatin1String( "okular::Shell" ) );
+                           && widget->parentWidget()->objectName().startsWith( QLatin1String( "okular::Shell" ) ) );
     return KJSBoolean( !isShell );
 }
 
@@ -149,8 +149,8 @@ do { \
     if ( !data.isEmpty() ) \
     { \
         const KJSString newval( data ); \
-        obj.setProperty( ctx, property, newval );                  \
-        obj.setProperty( ctx, QString( property ).toLower(), newval );   \
+        obj.setProperty( ctx, QStringLiteral(property), newval );                  \
+        obj.setProperty( ctx, QStringLiteral( property ).toLower(), newval );   \
     } \
 } while ( 0 );
         KEY_GET( DocumentInfo::Title, "Title" );
@@ -232,7 +232,7 @@ static KJSObject docGotoNamedDest( KJSContext *ctx, void *object,
 
     QString dest = arguments.at( 0 ).toString( ctx );
 
-    DocumentViewport viewport( doc->m_generator->metaData( "NamedViewport", dest ).toString() );
+    DocumentViewport viewport( doc->m_generator->metaData( QStringLiteral("NamedViewport"), dest ).toString() );
     if ( !viewport.isValid() )
         return KJSUndefined();
 
@@ -257,30 +257,30 @@ void JSDocument::initType( KJSContext *ctx )
         return;
     initialized = true;
 
-    g_docProto->defineProperty( ctx, "numPages", docGetNumPages );
-    g_docProto->defineProperty( ctx, "pageNum", docGetPageNum, docSetPageNum );
-    g_docProto->defineProperty( ctx, "documentFileName", docGetDocumentFileName );
-    g_docProto->defineProperty( ctx, "filesize", docGetFilesize );
-    g_docProto->defineProperty( ctx, "path", docGetPath );
-    g_docProto->defineProperty( ctx, "URL", docGetURL );
-    g_docProto->defineProperty( ctx, "permStatusReady", docGetPermStatusReady );
-    g_docProto->defineProperty( ctx, "dataObjects", docGetDataObjects );
-    g_docProto->defineProperty( ctx, "external", docGetExternal );
+    g_docProto->defineProperty( ctx, QStringLiteral("numPages"), docGetNumPages );
+    g_docProto->defineProperty( ctx, QStringLiteral("pageNum"), docGetPageNum, docSetPageNum );
+    g_docProto->defineProperty( ctx, QStringLiteral("documentFileName"), docGetDocumentFileName );
+    g_docProto->defineProperty( ctx, QStringLiteral("filesize"), docGetFilesize );
+    g_docProto->defineProperty( ctx, QStringLiteral("path"), docGetPath );
+    g_docProto->defineProperty( ctx, QStringLiteral("URL"), docGetURL );
+    g_docProto->defineProperty( ctx, QStringLiteral("permStatusReady"), docGetPermStatusReady );
+    g_docProto->defineProperty( ctx, QStringLiteral("dataObjects"), docGetDataObjects );
+    g_docProto->defineProperty( ctx, QStringLiteral("external"), docGetExternal );
 
     // info properties
-    g_docProto->defineProperty( ctx, "info", docGetInfo );
-    g_docProto->defineProperty( ctx, "author", docGetAuthor );
-    g_docProto->defineProperty( ctx, "creator", docGetCreator );
-    g_docProto->defineProperty( ctx, "keywords", docGetKeywords );
-    g_docProto->defineProperty( ctx, "producer", docGetProducer );
-    g_docProto->defineProperty( ctx, "title", docGetTitle );
-    g_docProto->defineProperty( ctx, "subject", docGetSubject );
+    g_docProto->defineProperty( ctx, QStringLiteral("info"), docGetInfo );
+    g_docProto->defineProperty( ctx, QStringLiteral("author"), docGetAuthor );
+    g_docProto->defineProperty( ctx, QStringLiteral("creator"), docGetCreator );
+    g_docProto->defineProperty( ctx, QStringLiteral("keywords"), docGetKeywords );
+    g_docProto->defineProperty( ctx, QStringLiteral("producer"), docGetProducer );
+    g_docProto->defineProperty( ctx, QStringLiteral("title"), docGetTitle );
+    g_docProto->defineProperty( ctx, QStringLiteral("subject"), docGetSubject );
 
-    g_docProto->defineFunction( ctx, "getField", docGetField );
-    g_docProto->defineFunction( ctx, "getPageLabel", docGetPageLabel );
-    g_docProto->defineFunction( ctx, "getPageRotation", docGetPageRotation );
-    g_docProto->defineFunction( ctx, "gotoNamedDest", docGotoNamedDest );
-    g_docProto->defineFunction( ctx, "syncAnnotScan", docSyncAnnotScan );
+    g_docProto->defineFunction( ctx, QStringLiteral("getField"), docGetField );
+    g_docProto->defineFunction( ctx, QStringLiteral("getPageLabel"), docGetPageLabel );
+    g_docProto->defineFunction( ctx, QStringLiteral("getPageRotation"), docGetPageRotation );
+    g_docProto->defineFunction( ctx, QStringLiteral("gotoNamedDest"), docGotoNamedDest );
+    g_docProto->defineFunction( ctx, QStringLiteral("syncAnnotScan"), docSyncAnnotScan );
 }
 
 KJSGlobalObject JSDocument::wrapDocument( DocumentPrivate *doc )

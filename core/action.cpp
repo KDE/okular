@@ -10,7 +10,7 @@
 #include "action.h"
 
 // kde includes
-#include <klocale.h>
+#include <KLocalizedString>
 
 // local includes
 #include "document.h"
@@ -46,7 +46,7 @@ Action::~Action()
 
 QString Action::actionTip() const
 {
-    return "";
+    return QLatin1String("");
 }
 
 void Action::setNativeId( const QVariant &id )
@@ -103,7 +103,7 @@ Action::ActionType GotoAction::actionType() const
 QString GotoAction::actionTip() const
 {
     Q_D( const GotoAction );
-    return d->m_extFileName.isEmpty() ? ( d->m_vp.isValid() ? i18n( "Go to page %1", d->m_vp.pageNumber + 1 ) : "" ) :
+    return d->m_extFileName.isEmpty() ? ( d->m_vp.isValid() ? i18n( "Go to page %1", d->m_vp.pageNumber + 1 ) : QLatin1String("") ) :
                                      i18n("Open external file");
 }
 
@@ -182,15 +182,15 @@ QString ExecuteAction::parameters() const
 class Okular::BrowseActionPrivate : public Okular::ActionPrivate
 {
     public:
-        BrowseActionPrivate( const QString &url )
+        BrowseActionPrivate( const QUrl &url )
             : ActionPrivate(), m_url( url )
         {
         }
 
-        QString m_url;
+        QUrl m_url;
 };
 
-BrowseAction::BrowseAction( const QString &url )
+BrowseAction::BrowseAction(const QUrl &url )
     : Action( *new BrowseActionPrivate( url ) )
 {
 }
@@ -213,10 +213,10 @@ QString BrowseAction::actionTip() const
     {
         return sourceReferenceToolTip( source, row, col );
     }
-    return d->m_url;
+    return d->m_url.toDisplayString();
 }
 
-QString BrowseAction::url() const
+QUrl BrowseAction::url() const
 {
     Q_D( const Okular::BrowseAction );
     return d->m_url;
@@ -300,7 +300,7 @@ class Okular::SoundActionPrivate : public Okular::ActionPrivate
         {
         }
 
-        ~SoundActionPrivate()
+        ~SoundActionPrivate() override
         {
             delete m_sound;
         }
@@ -557,4 +557,14 @@ ScreenAnnotation* RenditionAction::annotation() const
 {
     Q_D( const Okular::RenditionAction );
     return d->m_annotation;
+}
+
+BackendOpaqueAction::BackendOpaqueAction()
+    : Action( *new ActionPrivate() )
+{
+}
+
+Action::ActionType BackendOpaqueAction::actionType() const
+{
+    return BackendOpaque;
 }

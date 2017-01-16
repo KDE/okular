@@ -14,18 +14,14 @@ set( okularGenerator_comicbook_PART_SRCS
    )
 
 
-kde4_add_plugin(okularGenerator_comicbook ${okularGenerator_comicbook_PART_SRCS})
-
-target_link_libraries(okularGenerator_comicbook  okularcore ${KDE4_KIO_LIBS} )
+okular_add_generator(okularGenerator_comicbook ${okularGenerator_comicbook_PART_SRCS})
+target_link_libraries(okularGenerator_comicbook okularcore KF5::KIOCore KF5::I18n KF5::Archive)
 if (UNIX)
-   target_link_libraries(okularGenerator_comicbook ${KDE4_KPTY_LIBRARY})
+   find_package(KF5 REQUIRED Pty)
+   target_link_libraries(okularGenerator_comicbook KF5::Pty)
 endif (UNIX)
 
-install(TARGETS okularGenerator_comicbook DESTINATION ${PLUGIN_INSTALL_DIR})
-
-
 ########### install files ###############
-
-install( FILES libokularGenerator_comicbook.desktop okularComicbook.desktop DESTINATION  ${SERVICES_INSTALL_DIR} )
-install( PROGRAMS okularApplication_comicbook.desktop active-documentviewer_comicbook.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
-
+install( FILES okularComicbook.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
+install( PROGRAMS okularApplication_comicbook.desktop org.kde.mobile.okular_comicbook.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
+install( FILES org.kde.okular-comicbook.metainfo.xml DESTINATION ${KDE_INSTALL_METAINFODIR} )

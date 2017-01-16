@@ -31,6 +31,7 @@
 #include <QXmlDefaultHandler>
 #include <QStack>
 #include <QVariant>
+#include <QtCore/qloggingcategory.h>
 
 #include <kzip.h>
 
@@ -115,11 +116,11 @@ public:
     bool startElement( const QString & nameSpace,
                        const QString & localName,
                        const QString & qname,
-                       const QXmlAttributes & atts );
+                       const QXmlAttributes & atts ) Q_DECL_OVERRIDE;
     bool endElement( const QString & nameSpace,
                      const QString & localName,
-                     const QString & qname );
-    bool startDocument();
+                     const QString & qname ) Q_DECL_OVERRIDE;
+    bool startDocument() Q_DECL_OVERRIDE;
 
 protected:
     XpsPage *m_page;
@@ -300,27 +301,30 @@ private:
 class XpsGenerator : public Okular::Generator
 {
     Q_OBJECT
+    Q_INTERFACES( Okular::Generator )
     public:
         XpsGenerator( QObject *parent, const QVariantList &args );
         virtual ~XpsGenerator();
 
-        bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
+        bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector ) Q_DECL_OVERRIDE;
 
-        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const;
-        const Okular::DocumentSynopsis * generateDocumentSynopsis();
+        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const Q_DECL_OVERRIDE;
+        const Okular::DocumentSynopsis * generateDocumentSynopsis() Q_DECL_OVERRIDE;
 
-        Okular::ExportFormat::List exportFormats() const;
-        bool exportTo( const QString &fileName, const Okular::ExportFormat &format );
+        Okular::ExportFormat::List exportFormats() const Q_DECL_OVERRIDE;
+        bool exportTo( const QString &fileName, const Okular::ExportFormat &format ) Q_DECL_OVERRIDE;
 
-        bool print( QPrinter &printer );
+        bool print( QPrinter &printer ) Q_DECL_OVERRIDE;
 
     protected:
-        bool doCloseDocument();
-        QImage image( Okular::PixmapRequest *page );
-        Okular::TextPage* textPage( Okular::Page * page );
+        bool doCloseDocument() Q_DECL_OVERRIDE;
+        QImage image( Okular::PixmapRequest *page ) Q_DECL_OVERRIDE;
+        Okular::TextPage* textPage( Okular::Page * page ) Q_DECL_OVERRIDE;
 
     private:
         XpsFile *m_xpsFile;
 };
+
+Q_DECLARE_LOGGING_CATEGORY(OkularXpsDebug)
 
 #endif

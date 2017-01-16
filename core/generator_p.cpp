@@ -9,7 +9,7 @@
 
 #include "generator_p.h"
 
-#include <kdebug.h>
+#include <QtCore/QDebug>
 
 #include "fontinfo.h"
 #include "generator.h"
@@ -113,7 +113,7 @@ void FontExtractionThread::startExtraction( bool async )
 {
     if ( async )
     {
-        connect( this, SIGNAL(finished()), this, SLOT(deleteLater()) );
+        connect(this, &FontExtractionThread::finished, this, &FontExtractionThread::deleteLater);
         start( QThread::InheritPriority );
     }
     else
@@ -141,4 +141,4 @@ void FontExtractionThread::run()
     }
 }
 
-#include "generator_p.moc"
+#include "moc_generator_p.cpp"

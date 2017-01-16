@@ -13,11 +13,12 @@
 #include "observer.h"
 
 #include <qeventloop.h>
-#include <QtGui/QPrinter>
+#include <QtPrintSupport/QPrinter>
 
-#include <kdebug.h>
-#include <kicon.h>
-#include <klocale.h>
+#include <QtCore/QDebug>
+#include <QIcon>
+#include <QMimeDatabase>
+#include <KLocalizedString>
 #include <kwallet.h>
 
 #include "document.h"
@@ -61,8 +62,7 @@ PixmapGenerationThread* GeneratorPrivate::pixmapGenerationThread()
 
     Q_Q( Generator );
     mPixmapGenerationThread = new PixmapGenerationThread( q );
-    QObject::connect( mPixmapGenerationThread, SIGNAL(finished()),
-                      q, SLOT(pixmapGenerationFinished()),
+    QObject::connect( mPixmapGenerationThread, SIGNAL(finished()), q, SLOT(pixmapGenerationFinished()),
                       Qt::QueuedConnection );
 
     return mPixmapGenerationThread;
@@ -75,8 +75,7 @@ TextPageGenerationThread* GeneratorPrivate::textPageGenerationThread()
 
     Q_Q( Generator );
     mTextPageGenerationThread = new TextPageGenerationThread( q );
-    QObject::connect( mTextPageGenerationThread, SIGNAL(finished()),
-                      q, SLOT(textpageGenerationFinished()),
+    QObject::connect( mTextPageGenerationThread, SIGNAL(finished()), q, SLOT(textpageGenerationFinished()),
                       Qt::QueuedConnection );
 
     return mTextPageGenerationThread;
@@ -157,18 +156,18 @@ QImage GeneratorPrivate::image( PixmapRequest * )
 }
 
 
-Generator::Generator( QObject *parent, const QVariantList &args )
-    : QObject( parent ), d_ptr( new GeneratorPrivate() )
+Generator::Generator(QObject* parent, const QVariantList&)
+    : QObject(parent)
+    , d_ptr( new GeneratorPrivate() )
 {
     d_ptr->q_ptr = this;
-    Q_UNUSED( args )
 }
 
-Generator::Generator( GeneratorPrivate &dd, QObject *parent, const QVariantList &args )
-    : QObject( parent ), d_ptr( &dd )
+Generator::Generator(GeneratorPrivate &dd, QObject *parent, const QVariantList &args)
+    : QObject(parent), d_ptr(&dd)
 {
     d_ptr->q_ptr = this;
-    Q_UNUSED( args )
+    Q_UNUSED(args)
 }
 
 Generator::~Generator()
@@ -178,6 +177,9 @@ Generator::~Generator()
 
 bool Generator::loadDocument( const QString & fileName, QVector< Page * > & pagesVector )
 {
+    Q_UNUSED(fileName);
+    Q_UNUSED(pagesVector);
+
     return false;
 }
 
@@ -292,6 +294,8 @@ TextPage* Generator::textPage( Page* )
 
 DocumentInfo Generator::generateDocumentInfo(const QSet<DocumentInfo::Key> &keys) const
 {
+    Q_UNUSED(keys);
+
     return DocumentInfo();
 }
 
@@ -343,6 +347,10 @@ Generator::PrintError Generator::printError() const
     return UnknownPrintError;
 }
 
+void Generator::opaqueAction( const BackendOpaqueAction * /*action*/ )
+{
+}
+
 QVariant Generator::metaData( const QString &key, const QVariant &option ) const
 {
     Q_D( const Generator );
@@ -361,9 +369,9 @@ bool Generator::exportTo( const QString&, const ExportFormat& )
 
 void Generator::walletDataForFile( const QString &fileName, QString *walletName, QString *walletFolder, QString *walletKey ) const
 {
-    *walletKey = fileName.section('/', -1, -1);
+    *walletKey = fileName.section( QLatin1Char('/'), -1, -1);
     *walletName = KWallet::Wallet::NetworkWallet();
-    *walletFolder = "KPdf";
+    *walletFolder = QStringLiteral("KPdf");
 }
 
 bool Generator::hasFeature( GeneratorFeature feature ) const
@@ -452,6 +460,11 @@ QSizeF Generator::dpi() const
 {
      Q_D( const Generator );
      return d->m_dpi;
+}
+
+QAbstractItemModel * Generator::layersModel() const
+{
+    return 0;
 }
 
 PixmapRequest::PixmapRequest( DocumentObserver *observer, int pageNumber, int width, int height, int priority, PixmapRequestFeatures features )
@@ -549,7 +562,7 @@ void PixmapRequestPrivate::swap()
 class Okular::ExportFormatPrivate : public QSharedData
 {
     public:
-        ExportFormatPrivate( const QString &description, const KMimeType::Ptr &mimeType, const KIcon &icon = KIcon() )
+        ExportFormatPrivate( const QString &description, const QMimeType &mimeType, const QIcon &icon = QIcon() )
             : QSharedData(), mDescription( description ), mMimeType( mimeType ), mIcon( icon )
         {
         }
@@ -558,21 +571,21 @@ class Okular::ExportFormatPrivate : public QSharedData
         }
 
         QString mDescription;
-        KMimeType::Ptr mMimeType;
-        KIcon mIcon;
+        QMimeType mMimeType;
+        QIcon mIcon;
 };
 
 ExportFormat::ExportFormat()
-    : d( new ExportFormatPrivate( QString(), KMimeType::Ptr() ) )
+    : d( new ExportFormatPrivate( QString(), QMimeType() ) )
 {
 }
 
-ExportFormat::ExportFormat( const QString &description, const KMimeType::Ptr &mimeType )
+ExportFormat::ExportFormat( const QString &description, const QMimeType &mimeType )
     : d( new ExportFormatPrivate( description, mimeType ) )
 {
 }
 
-ExportFormat::ExportFormat( const KIcon &icon, const QString &description, const KMimeType::Ptr &mimeType )
+ExportFormat::ExportFormat( const QIcon &icon, const QString &description, const QMimeType &mimeType )
     : d( new ExportFormatPrivate( description, mimeType, icon ) )
 {
 }
@@ -601,39 +614,40 @@ QString ExportFormat::description() const
     return d->mDescription;
 }
 
-KMimeType::Ptr ExportFormat::mimeType() const
+QMimeType ExportFormat::mimeType() const
 {
     return d->mMimeType;
 }
 
-KIcon ExportFormat::icon() const
+QIcon ExportFormat::icon() const
 {
     return d->mIcon;
 }
 
 bool ExportFormat::isNull() const
 {
-    return d->mMimeType.isNull() || d->mDescription.isNull();
+    return !d->mMimeType.isValid() || d->mDescription.isNull();
 }
 
 ExportFormat ExportFormat::standardFormat( StandardExportFormat type )
 {
+    QMimeDatabase db;
     switch ( type )
     {
         case PlainText:
-            return ExportFormat( KIcon( "text-x-generic" ), i18n( "Plain &Text..." ), KMimeType::mimeType( "text/plain" ) );
+            return ExportFormat( QIcon::fromTheme( QStringLiteral("text-x-generic") ), i18n( "Plain &Text..." ), db.mimeTypeForName( QStringLiteral("text/plain") ) );
             break;
         case PDF:
-            return ExportFormat( KIcon( "application-pdf" ), i18n( "PDF" ), KMimeType::mimeType( "application/pdf" ) );
+            return ExportFormat( QIcon::fromTheme( QStringLiteral("application-pdf") ), i18n( "PDF" ), db.mimeTypeForName( QStringLiteral("application/pdf") ) );
             break;
         case OpenDocumentText:
             return ExportFormat(
-                KIcon( "application-vnd.oasis.opendocument.text" ),
+                QIcon::fromTheme( QStringLiteral("application-vnd.oasis.opendocument.text") ),
                 i18nc( "This is the document format", "OpenDocument Text" ),
-                KMimeType::mimeType( "application/vnd.oasis.opendocument.text" ) );
+                db.mimeTypeForName( QStringLiteral("application/vnd.oasis.opendocument.text") ) );
 	    break;
         case HTML:
-            return ExportFormat( KIcon( "text-html" ), i18nc( "This is the document format", "HTML" ), KMimeType::mimeType( "text/html" ) );
+            return ExportFormat( QIcon::fromTheme( QStringLiteral("text-html") ), i18nc( "This is the document format", "HTML" ), db.mimeTypeForName( QStringLiteral("text/html") ) );
             break;
     }
     return ExportFormat();
@@ -651,8 +665,8 @@ bool ExportFormat::operator!=( const ExportFormat &other ) const
 
 QDebug operator<<( QDebug str, const Okular::PixmapRequest &req )
 {
-    QString s = QString( "PixmapRequest(#%2, %1, %3x%4, page %6, prio %5)" )
-        .arg( QString( req.asynchronous() ? "async" : "sync" ) )
+    QString s = QStringLiteral( "PixmapRequest(#%2, %1, %3x%4, page %6, prio %5)" )
+        .arg( QString( req.asynchronous() ? QStringLiteral ( "async" ) : QStringLiteral ( "sync" ) ) )
         .arg( (qulonglong)req.observer() )
         .arg( req.width() )
         .arg( req.height() )
@@ -662,6 +676,6 @@ QDebug operator<<( QDebug str, const Okular::PixmapRequest &req )
     return str;
 }
 
-#include "generator.moc"
+#include "moc_generator.cpp"
 
 /* kate: replace-tabs on; indent-width 4; */

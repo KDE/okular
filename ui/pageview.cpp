@@ -20,6 +20,7 @@
 #include "pageview.h"
 
 // qt/kde includes
+#include <QtCore/qloggingcategory.h>
 #include <qcursor.h>
 #include <qevent.h>
 #include <qimage.h>
@@ -30,23 +31,24 @@
 #include <qtooltip.h>
 #include <qapplication.h>
 #include <qclipboard.h>
+#include <qmenu.h>
+#include <QInputDialog>
+#include <qdesktopwidget.h>
+#include <QDesktopServices>
+#include <QMimeDatabase>
+#include <QMimeData>
+#include <QGestureEvent>
 
-#include <kaction.h>
+#include <qaction.h>
 #include <kactionmenu.h>
 #include <kstandardaction.h>
 #include <kactioncollection.h>
-#include <kmenu.h>
-#include <klocale.h>
-#include <kfiledialog.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
-#include <kinputdialog.h>
+#include <KLocalizedString>
 #include <kselectaction.h>
 #include <ktoggleaction.h>
-#include <kdebug.h>
-#include <kdeversion.h>
+#include <QtCore/QDebug>
 #include <kmessagebox.h>
-#include <kicon.h>
+#include <QIcon>
 #include <kurifilter.h>
 #include <kstringhandler.h>
 #include <ktoolinvocation.h>
@@ -57,6 +59,7 @@
 #include <stdlib.h>
 
 // local includes
+#include "debug_ui.h"
 #include "formwidgets.h"
 #include "pageviewutils.h"
 #include "pagepainter.h"
@@ -67,7 +70,10 @@
 #include "pageviewannotator.h"
 #include "priorities.h"
 #include "toolaction.h"
+#include "okmenutitle.h"
+#ifdef HAVE_SPEECH
 #include "tts.h"
+#endif
 #include "videowidget.h"
 #include "core/action.h"
 #include "core/area.h"
@@ -85,7 +91,7 @@
 #include "url_utils.h"
 #include "magnifierview.h"
 
-static int pageflags = PagePainter::Accessibility | PagePainter::EnhanceLinks |
+static const int pageflags = PagePainter::Accessibility | PagePainter::EnhanceLinks |
                        PagePainter::EnhanceImages | PagePainter::Highlights |
                        PagePainter::TextSelection | PagePainter::Annotations;
 
@@ -116,7 +122,9 @@ public:
     PageViewPrivate( PageView *qq );
 
     FormWidgetsController* formWidgetsController();
+#ifdef HAVE_SPEECH
     OkularTTS* tts();
+#endif
     QString selectedText() const;
 
     // the document, pageviewItems and the 'visible cache'
@@ -173,9 +181,14 @@ public:
     PageViewMessage * messageWindow;    // in pageviewutils.h
     bool m_formsVisible;
     FormWidgetsController *formsWidgetController;
+#ifdef HAVE_SPEECH
     OkularTTS * m_tts;
+#endif
     QTimer * refreshTimer;
     int refreshPage;
+
+    // bbox state for Trim to Selection mode
+    Okular::NormalizedRect trimBoundingBox;
 
     // infinite resizing loop prevention
     bool verticalScrollBarVisible;
@@ -189,41 +202,47 @@ public:
     QTimer leftClickTimer;
 
     // actions
-    KAction * aRotateClockwise;
-    KAction * aRotateCounterClockwise;
-    KAction * aRotateOriginal;
+    QAction * aRotateClockwise;
+    QAction * aRotateCounterClockwise;
+    QAction * aRotateOriginal;
     KSelectAction * aPageSizes;
+    KActionMenu * aTrimMode;
     KToggleAction * aTrimMargins;
-    KAction * aMouseNormal;
-    KAction * aMouseSelect;
-    KAction * aMouseTextSelect;
-    KAction * aMouseTableSelect;
-    KAction * aMouseMagnifier;
+    QAction * aMouseNormal;
+    QAction * aMouseSelect;
+    QAction * aMouseTextSelect;
+    QAction * aMouseTableSelect;
+    QAction * aMouseMagnifier;
+    KToggleAction * aTrimToSelection;
     KToggleAction * aToggleAnnotator;
     KSelectAction * aZoom;
-    KAction * aZoomIn;
-    KAction * aZoomOut;
+    QAction * aZoomIn;
+    QAction * aZoomOut;
     KToggleAction * aZoomFitWidth;
     KToggleAction * aZoomFitPage;
     KToggleAction * aZoomAutoFit;
     KActionMenu * aViewMode;
     KToggleAction * aViewContinuous;
     QAction * aPrevAction;
-    KAction * aToggleForms;
-    KAction * aSpeakDoc;
-    KAction * aSpeakPage;
-    KAction * aSpeakStop;
+    QAction * aToggleForms;
+    QAction * aSpeakDoc;
+    QAction * aSpeakPage;
+    QAction * aSpeakStop;
     KActionCollection * actionCollection;
     QActionGroup * mouseModeActionGroup;
+    QAction * aFitWindowToPage;
 
     int setting_viewCols;
-
+    bool rtl_Mode;
     // Keep track of whether tablet pen is currently pressed down
     bool penDown;
 };
 
 PageViewPrivate::PageViewPrivate( PageView *qq )
     : q( qq )
+#ifdef HAVE_SPEECH
+    , m_tts( 0 )
+#endif
 {
 }
 
@@ -241,6 +260,7 @@ FormWidgetsController* PageViewPrivate::formWidgetsController()
     return formsWidgetController;
 }
 
+#ifdef HAVE_SPEECH
 OkularTTS* PageViewPrivate::tts()
 {
     if ( !m_tts )
@@ -248,15 +268,14 @@ OkularTTS* PageViewPrivate::tts()
         m_tts = new OkularTTS( q );
         if ( aSpeakStop )
         {
-            QObject::connect( m_tts, SIGNAL(hasSpeechs(bool)),
-                              aSpeakStop, SLOT(setEnabled(bool)) );
-            QObject::connect( m_tts, SIGNAL(errorMessage(QString)),
-                              q, SLOT(errorMessage(QString)) );
+            QObject::connect( m_tts, &OkularTTS::isSpeaking,
+                              aSpeakStop, &QAction::setEnabled );
         }
     }
 
     return m_tts;
 }
+#endif
 
 
 /* PageView. What's in this file? -> quick overview.
@@ -271,7 +290,7 @@ OkularTTS* PageViewPrivate::tts()
  */
 PageView::PageView( QWidget *parent, Okular::Document *document )
     : QAbstractScrollArea( parent )
-    , Okular::View( QString::fromLatin1( "PageView" ) )
+    , Okular::View( QLatin1String( "PageView" ) )
 {
     // create and initialize private storage structure
     d = new PageViewPrivate( this );
@@ -302,14 +321,18 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->messageWindow = new PageViewMessage(this);
     d->m_formsVisible = false;
     d->formsWidgetController = 0;
+#ifdef HAVE_SPEECH
     d->m_tts = 0;
+#endif
     d->refreshTimer = 0;
     d->refreshPage = -1;
     d->aRotateClockwise = 0;
     d->aRotateCounterClockwise = 0;
     d->aRotateOriginal = 0;
     d->aPageSizes = 0;
+    d->aTrimMode = 0;
     d->aTrimMargins = 0;
+    d->aTrimToSelection = 0;
     d->aMouseNormal = 0;
     d->aMouseSelect = 0;
     d->aMouseTextSelect = 0;
@@ -327,9 +350,12 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->actionCollection = 0;
     d->aPageSizes=0;
     d->setting_viewCols = Okular::Settings::viewColumns();
+    d->rtl_Mode = Okular::Settings::rtlReadingDirection();
     d->mouseModeActionGroup = 0;
     d->penDown = false;
     d->aMouseMagnifier = 0;
+    d->aFitWindowToPage = 0;
+    d->trimBoundingBox = Okular::NormalizedRect(); // Null box
 
     switch( Okular::Settings::zoomMode() )
     {
@@ -358,13 +384,13 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
 
     d->delayResizeEventTimer = new QTimer( this );
     d->delayResizeEventTimer->setSingleShot( true );
-    connect( d->delayResizeEventTimer, SIGNAL(timeout()), this, SLOT(delayedResizeEvent()) );
+    connect( d->delayResizeEventTimer, &QTimer::timeout, this, &PageView::delayedResizeEvent );
 
     setFrameStyle(QFrame::NoFrame);
 
     setAttribute( Qt::WA_StaticContents );
 
-    setObjectName( QLatin1String( "okular::pageView" ) );
+    setObjectName( QStringLiteral( "okular::pageView" ) );
 
     // viewport setup: setup focus, and track mouse
     viewport()->setFocusProxy( this );
@@ -378,12 +404,12 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     horizontalScrollBar()->setSingleStep( 20 );
 
     // conntect the padding of the viewport to pixmaps requests
-    connect(horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(slotRequestVisiblePixmaps(int)));
-    connect(verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(slotRequestVisiblePixmaps(int)));
-    connect( &d->dragScrollTimer, SIGNAL(timeout()), this, SLOT(slotDragScroll()) );
+    connect(horizontalScrollBar(), &QAbstractSlider::valueChanged, this, &PageView::slotRequestVisiblePixmaps);
+    connect(verticalScrollBar(), &QAbstractSlider::valueChanged, this, &PageView::slotRequestVisiblePixmaps);
+    connect( &d->dragScrollTimer, &QTimer::timeout, this, &PageView::slotDragScroll );
 
     d->leftClickTimer.setSingleShot( true );
-    connect( &d->leftClickTimer, SIGNAL(timeout()), this, SLOT(slotShowSizeAllCursor()) );
+    connect( &d->leftClickTimer, &QTimer::timeout, this, &PageView::slotShowSizeAllCursor );
 
     // set a corner button to resize the view to the page size
 //    QPushButton * resizeButton = new QPushButton( viewport() );
@@ -393,13 +419,15 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     // connect(...);
     setAttribute( Qt::WA_InputMethodEnabled, true );
 
+    // Grab pinch gestures to rotate the view (and do things like zooming eventually)
+    grabGesture(Qt::PinchGesture);
+
     d->magnifierView = new MagnifierView(document, this);
     d->magnifierView->hide();
     d->magnifierView->setGeometry(0, 0, 351, 201); // TODO: more dynamic?
-    document->addObserver(d->magnifierView);
 
-    connect(document, SIGNAL(processMovieAction(const Okular::MovieAction*)), this, SLOT(slotProcessMovieAction(const Okular::MovieAction*)));
-    connect(document, SIGNAL(processRenditionAction(const Okular::RenditionAction*)), this, SLOT(slotProcessRenditionAction(const Okular::RenditionAction*)));
+    connect(document, &Okular::Document::processMovieAction, this, &PageView::slotProcessMovieAction);
+    connect(document, &Okular::Document::processRenditionAction, this, &PageView::slotProcessRenditionAction);
 
     // schedule the welcome message
     QMetaObject::invokeMethod(this, "slotShowWelcome", Qt::QueuedConnection);
@@ -407,8 +435,10 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
 
 PageView::~PageView()
 {
+#ifdef HAVE_SPEECH
     if ( d->m_tts )
         d->m_tts->stopAllSpeechs();
+#endif
 
     // delete the local storage structure
 
@@ -432,8 +462,8 @@ void PageView::setupBaseActions( KActionCollection * ac )
     d->actionCollection = ac;
 
     // Zoom actions ( higher scales takes lots of memory! )
-    d->aZoom  = new KSelectAction(KIcon( "page-zoom" ), i18n("Zoom"), this);
-    ac->addAction("zoom_to", d->aZoom );
+    d->aZoom  = new KSelectAction(QIcon::fromTheme( QStringLiteral("page-zoom") ), i18n("Zoom"), this);
+    ac->addAction(QStringLiteral("zoom_to"), d->aZoom );
     d->aZoom->setEditable( true );
     d->aZoom->setMaxComboViewCount( 14 );
     connect( d->aZoom, SIGNAL(triggered(QAction*)), this, SLOT(slotZoom()) );
@@ -448,63 +478,82 @@ void PageView::setupViewerActions( KActionCollection * ac )
 {
     d->actionCollection = ac;
 
-    d->aZoomIn->setShortcut( QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_Plus) );
-    d->aZoomOut->setShortcut( QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_Minus) );
+    ac->setDefaultShortcut(d->aZoomIn, QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_Plus));
+    ac->setDefaultShortcut(d->aZoomOut, QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_Minus));
 
     // orientation menu actions
-    d->aRotateClockwise = new KAction( KIcon( "object-rotate-right" ), i18n( "Rotate &Right" ), this );
+    d->aRotateClockwise = new QAction( QIcon::fromTheme( QStringLiteral("object-rotate-right") ), i18n( "Rotate &Right" ), this );
     d->aRotateClockwise->setIconText( i18nc( "Rotate right", "Right" ) );
-    ac->addAction( "view_orientation_rotate_cw", d->aRotateClockwise );
+    ac->addAction( QStringLiteral("view_orientation_rotate_cw"), d->aRotateClockwise );
     d->aRotateClockwise->setEnabled( false );
-    connect( d->aRotateClockwise, SIGNAL(triggered()), this, SLOT(slotRotateClockwise()) );
-    d->aRotateCounterClockwise = new KAction( KIcon( "object-rotate-left" ), i18n( "Rotate &Left" ), this );
+    connect( d->aRotateClockwise, &QAction::triggered, this, &PageView::slotRotateClockwise );
+    d->aRotateCounterClockwise = new QAction( QIcon::fromTheme( QStringLiteral("object-rotate-left") ), i18n( "Rotate &Left" ), this );
     d->aRotateCounterClockwise->setIconText( i18nc( "Rotate left", "Left" ) );
-    ac->addAction( "view_orientation_rotate_ccw", d->aRotateCounterClockwise );
+    ac->addAction( QStringLiteral("view_orientation_rotate_ccw"), d->aRotateCounterClockwise );
     d->aRotateCounterClockwise->setEnabled( false );
-    connect( d->aRotateCounterClockwise, SIGNAL(triggered()), this, SLOT(slotRotateCounterClockwise()) );
-    d->aRotateOriginal = new KAction( i18n( "Original Orientation" ), this );
-    ac->addAction( "view_orientation_original", d->aRotateOriginal );
+    connect( d->aRotateCounterClockwise, &QAction::triggered, this, &PageView::slotRotateCounterClockwise );
+    d->aRotateOriginal = new QAction( i18n( "Original Orientation" ), this );
+    ac->addAction( QStringLiteral("view_orientation_original"), d->aRotateOriginal );
     d->aRotateOriginal->setEnabled( false );
-    connect( d->aRotateOriginal, SIGNAL(triggered()), this, SLOT(slotRotateOriginal()) );
+    connect( d->aRotateOriginal, &QAction::triggered, this, &PageView::slotRotateOriginal );
 
     d->aPageSizes = new KSelectAction(i18n("&Page Size"), this);
-    ac->addAction("view_pagesizes", d->aPageSizes);
+    ac->addAction(QStringLiteral("view_pagesizes"), d->aPageSizes);
     d->aPageSizes->setEnabled( false );
 
     connect( d->aPageSizes , SIGNAL(triggered(int)),
          this, SLOT(slotPageSizes(int)) );
 
-    d->aTrimMargins  = new KToggleAction( i18n( "&Trim Margins" ), this );
-    ac->addAction("view_trim_margins", d->aTrimMargins );
-    connect( d->aTrimMargins, SIGNAL(toggled(bool)), SLOT(slotTrimMarginsToggled(bool)) );
+    // Trim View actions
+    d->aTrimMode = new KActionMenu(i18n( "&Trim View" ), this );
+    d->aTrimMode->setDelayed( false );
+    ac->addAction(QStringLiteral("view_trim_mode"), d->aTrimMode );
+
+    d->aTrimMargins  = new KToggleAction( i18n( "&Trim Margins" ), d->aTrimMode->menu() );
+    d->aTrimMode->addAction( d->aTrimMargins  );
+    ac->addAction( QStringLiteral("view_trim_margins"), d->aTrimMargins  );
+    d->aTrimMargins->setData( qVariantFromValue( (int)Okular::Settings::EnumTrimMode::Margins ) );
+    connect( d->aTrimMargins, &QAction::toggled, this, &PageView::slotTrimMarginsToggled );
     d->aTrimMargins->setChecked( Okular::Settings::trimMargins() );
 
-    d->aZoomFitWidth  = new KToggleAction(KIcon( "zoom-fit-width" ), i18n("Fit &Width"), this);
-    ac->addAction("view_fit_to_width", d->aZoomFitWidth );
-    connect( d->aZoomFitWidth, SIGNAL(toggled(bool)), SLOT(slotFitToWidthToggled(bool)) );
+    d->aTrimToSelection  = new KToggleAction( i18n( "Trim To &Selection" ), d->aTrimMode->menu() );
+    d->aTrimMode->addAction( d->aTrimToSelection);
+    ac->addAction( QStringLiteral("view_trim_selection"), d->aTrimToSelection);
+    d->aTrimToSelection->setData( qVariantFromValue( (int)Okular::Settings::EnumTrimMode::Selection ) );
+    connect( d->aTrimToSelection, &QAction::toggled, this, &PageView::slotTrimToSelectionToggled );
 
-    d->aZoomFitPage  = new KToggleAction(KIcon( "zoom-fit-best" ), i18n("Fit &Page"), this);
-    ac->addAction("view_fit_to_page", d->aZoomFitPage );
-    connect( d->aZoomFitPage, SIGNAL(toggled(bool)), SLOT(slotFitToPageToggled(bool)) );
+    d->aZoomFitWidth  = new KToggleAction(QIcon::fromTheme( QStringLiteral("zoom-fit-width") ), i18n("Fit &Width"), this);
+    ac->addAction(QStringLiteral("view_fit_to_width"), d->aZoomFitWidth );
+    connect( d->aZoomFitWidth, &QAction::toggled, this, &PageView::slotFitToWidthToggled );
 
-    d->aZoomAutoFit  = new KToggleAction(KIcon( "zoom-fit-best" ), i18n("&Auto Fit"), this);
-    ac->addAction("view_auto_fit", d->aZoomAutoFit );
-    connect( d->aZoomAutoFit, SIGNAL(toggled(bool)), SLOT(slotAutoFitToggled(bool)) );
+    d->aZoomFitPage  = new KToggleAction(QIcon::fromTheme( QStringLiteral("zoom-fit-best") ), i18n("Fit &Page"), this);
+    ac->addAction(QStringLiteral("view_fit_to_page"), d->aZoomFitPage );
+    connect( d->aZoomFitPage, &QAction::toggled, this, &PageView::slotFitToPageToggled );
+
+    d->aZoomAutoFit  = new KToggleAction(QIcon::fromTheme( QStringLiteral("zoom-fit-best") ), i18n("&Auto Fit"), this);
+    ac->addAction(QStringLiteral("view_auto_fit"), d->aZoomAutoFit );
+    connect( d->aZoomAutoFit, &QAction::toggled, this, &PageView::slotAutoFitToggled );
+
+    d->aFitWindowToPage = new QAction(QIcon::fromTheme( QStringLiteral("zoom-fit-width") ), i18n("Fit Wi&ndow to Page"), this);
+    d->aFitWindowToPage->setEnabled( Okular::Settings::viewMode() == (int)Okular::Settings::EnumViewMode::Single );
+    ac->setDefaultShortcut(d->aFitWindowToPage, QKeySequence(Qt::CTRL + Qt::Key_J) );
+    ac->addAction( QStringLiteral("fit_window_to_page"), d->aFitWindowToPage );
+    connect( d->aFitWindowToPage, &QAction::triggered, this, &PageView::slotFitWindowToPage );
 
     // View-Layout actions
-    d->aViewMode = new KActionMenu( KIcon( "view-split-left-right" ), i18n( "&View Mode" ), this );
+    d->aViewMode = new KActionMenu( QIcon::fromTheme( QStringLiteral("view-split-left-right") ), i18n( "&View Mode" ), this );
     d->aViewMode->setDelayed( false );
 #define ADD_VIEWMODE_ACTION( text, name, id ) \
 do { \
-    KAction *vm = new KAction( text, d->aViewMode->menu() ); \
+    QAction *vm = new QAction( text, this ); \
     vm->setCheckable( true ); \
     vm->setData( qVariantFromValue( id ) ); \
     d->aViewMode->addAction( vm ); \
-    ac->addAction( name, vm ); \
+    ac->addAction( QStringLiteral(name), vm ); \
     vmGroup->addAction( vm ); \
 } while( 0 )
-    ac->addAction("view_render_mode", d->aViewMode );
-    QActionGroup *vmGroup = new QActionGroup( d->aViewMode->menu() );
+    ac->addAction(QStringLiteral("view_render_mode"), d->aViewMode );
+    QActionGroup *vmGroup = new QActionGroup( this ); //d->aViewMode->menu() );
     ADD_VIEWMODE_ACTION( i18n( "Single Page" ), "view_render_mode_single", (int)Okular::Settings::EnumViewMode::Single );
     ADD_VIEWMODE_ACTION( i18n( "Facing Pages" ), "view_render_mode_facing", (int)Okular::Settings::EnumViewMode::Facing );
     ADD_VIEWMODE_ACTION( i18n( "Facing Pages (Center First Page)" ), "view_render_mode_facing_center_first", (int)Okular::Settings::EnumViewMode::FacingFirstCentered );
@@ -517,38 +566,38 @@ do { \
             viewModeAction->setChecked( true );
         }
     }
-    connect( vmGroup, SIGNAL(triggered(QAction*)), this, SLOT(slotViewMode(QAction*)) );
+    connect( vmGroup, &QActionGroup::triggered, this, &PageView::slotViewMode );
 #undef ADD_VIEWMODE_ACTION
 
-    d->aViewContinuous  = new KToggleAction(KIcon( "view-list-text" ), i18n("&Continuous"), this);
-    ac->addAction("view_continuous", d->aViewContinuous );
-    connect( d->aViewContinuous, SIGNAL(toggled(bool)), SLOT(slotContinuousToggled(bool)) );
+    d->aViewContinuous  = new KToggleAction(QIcon::fromTheme( QStringLiteral("view-list-text") ), i18n("&Continuous"), this);
+    ac->addAction(QStringLiteral("view_continuous"), d->aViewContinuous );
+    connect( d->aViewContinuous, &QAction::toggled, this, &PageView::slotContinuousToggled );
     d->aViewContinuous->setChecked( Okular::Settings::viewContinuous() );
 
     // Mouse mode actions for viewer mode
     d->mouseModeActionGroup = new QActionGroup( this );
     d->mouseModeActionGroup->setExclusive( true );
-    d->aMouseNormal  = new KAction( KIcon( "input-mouse" ), i18n( "&Browse Tool" ), this );
-    ac->addAction("mouse_drag", d->aMouseNormal );
-    connect( d->aMouseNormal, SIGNAL(triggered()), this, SLOT(slotSetMouseNormal()) );
+    d->aMouseNormal  = new QAction( QIcon::fromTheme( QStringLiteral("input-mouse") ), i18n( "&Browse Tool" ), this );
+    ac->addAction(QStringLiteral("mouse_drag"), d->aMouseNormal );
+    connect( d->aMouseNormal, &QAction::triggered, this, &PageView::slotSetMouseNormal );
     d->aMouseNormal->setIconText( i18nc( "Browse Tool", "Browse" ) );
     d->aMouseNormal->setCheckable( true );
-    d->aMouseNormal->setShortcut( Qt::CTRL + Qt::Key_1 );
+    ac->setDefaultShortcut(d->aMouseNormal, QKeySequence(Qt::CTRL + Qt::Key_1));
     d->aMouseNormal->setActionGroup( d->mouseModeActionGroup );
     d->aMouseNormal->setChecked( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::Browse );
 
-    KAction * mz  = new KAction(KIcon( "page-zoom" ), i18n("&Zoom Tool"), this);
-    ac->addAction("mouse_zoom", mz );
-    connect( mz, SIGNAL(triggered()), this, SLOT(slotSetMouseZoom()) );
+    QAction * mz  = new QAction(QIcon::fromTheme( QStringLiteral("page-zoom") ), i18n("&Zoom Tool"), this);
+    ac->addAction(QStringLiteral("mouse_zoom"), mz );
+    connect( mz, &QAction::triggered, this, &PageView::slotSetMouseZoom );
     mz->setIconText( i18nc( "Zoom Tool", "Zoom" ) );
     mz->setCheckable( true );
-    mz->setShortcut( Qt::CTRL + Qt::Key_2 );
+    ac->setDefaultShortcut(mz, QKeySequence(Qt::CTRL + Qt::Key_2));
     mz->setActionGroup( d->mouseModeActionGroup );
     mz->setChecked( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::Zoom );
 
-    KAction * aToggleChangeColors  = new KAction(i18n("&Toggle Change Colors"), this);
-    ac->addAction("toggle_change_colors", aToggleChangeColors );
-    connect( aToggleChangeColors, SIGNAL(triggered()), this, SLOT(slotToggleChangeColors()) );
+    QAction * aToggleChangeColors  = new QAction(i18n("&Toggle Change Colors"), this);
+    ac->addAction(QStringLiteral("toggle_change_colors"), aToggleChangeColors );
+    connect( aToggleChangeColors, &QAction::triggered, this, &PageView::slotToggleChangeColors );
 }
 
 // WARNING: 'setupViewerActions' must have been called before this method
@@ -556,110 +605,117 @@ void PageView::setupActions( KActionCollection * ac )
 {
     d->actionCollection = ac;
 
-    d->aZoomIn->setShortcut( KStandardShortcut::zoomIn() );
-    d->aZoomOut->setShortcut( KStandardShortcut::zoomOut() );
+    ac->setDefaultShortcuts(d->aZoomIn, KStandardShortcut::zoomIn());
+    ac->setDefaultShortcuts(d->aZoomOut, KStandardShortcut::zoomOut());
 
     // Mouse-Mode actions
-    d->aMouseSelect  = new KAction(KIcon( "select-rectangular" ), i18n("&Selection Tool"), this);
-    ac->addAction("mouse_select", d->aMouseSelect );
-    connect( d->aMouseSelect, SIGNAL(triggered()), this, SLOT(slotSetMouseSelect()) );
+    d->aMouseSelect  = new QAction(QIcon::fromTheme( QStringLiteral("select-rectangular") ), i18n("&Selection Tool"), this);
+    ac->addAction(QStringLiteral("mouse_select"), d->aMouseSelect );
+    connect( d->aMouseSelect, &QAction::triggered, this, &PageView::slotSetMouseSelect );
     d->aMouseSelect->setIconText( i18nc( "Select Tool", "Selection" ) );
     d->aMouseSelect->setCheckable( true );
-    d->aMouseSelect->setShortcut( Qt::CTRL + Qt::Key_3 );
+    ac->setDefaultShortcut(d->aMouseSelect, Qt::CTRL + Qt::Key_3);
+
     d->aMouseSelect->setActionGroup( d->mouseModeActionGroup );
     d->aMouseSelect->setChecked( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::RectSelect );
 
-    d->aMouseTextSelect  = new KAction(KIcon( "draw-text" ), i18n("&Text Selection Tool"), this);
-    ac->addAction("mouse_textselect", d->aMouseTextSelect );
-    connect( d->aMouseTextSelect, SIGNAL(triggered()), this, SLOT(slotSetMouseTextSelect()) );
+    d->aMouseTextSelect  = new QAction(QIcon::fromTheme( QStringLiteral("draw-text") ), i18n("&Text Selection Tool"), this);
+    ac->addAction(QStringLiteral("mouse_textselect"), d->aMouseTextSelect );
+    connect( d->aMouseTextSelect, &QAction::triggered, this, &PageView::slotSetMouseTextSelect );
     d->aMouseTextSelect->setIconText( i18nc( "Text Selection Tool", "Text Selection" ) );
     d->aMouseTextSelect->setCheckable( true );
-    d->aMouseTextSelect->setShortcut( Qt::CTRL + Qt::Key_4 );
+    ac->setDefaultShortcut(d->aMouseTextSelect, Qt::CTRL + Qt::Key_4);
     d->aMouseTextSelect->setActionGroup( d->mouseModeActionGroup );
     d->aMouseTextSelect->setChecked( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::TextSelect );
 
-    d->aMouseTableSelect  = new KAction(KIcon( "table" ), i18n("T&able Selection Tool"), this);
-    ac->addAction("mouse_tableselect", d->aMouseTableSelect );
-    connect( d->aMouseTableSelect, SIGNAL( triggered() ), this, SLOT( slotSetMouseTableSelect() ) );
+    d->aMouseTableSelect  = new QAction(QIcon::fromTheme( QStringLiteral("table") ), i18n("T&able Selection Tool"), this);
+    ac->addAction(QStringLiteral("mouse_tableselect"), d->aMouseTableSelect );
+    connect( d->aMouseTableSelect, &QAction::triggered, this, &PageView::slotSetMouseTableSelect );
     d->aMouseTableSelect->setIconText( i18nc( "Table Selection Tool", "Table Selection" ) );
     d->aMouseTableSelect->setCheckable( true );
-    d->aMouseTableSelect->setShortcut( Qt::CTRL + Qt::Key_5 );
+    ac->setDefaultShortcut(d->aMouseTableSelect, Qt::CTRL + Qt::Key_5);
     d->aMouseTableSelect->setActionGroup( d->mouseModeActionGroup );
     d->aMouseTableSelect->setChecked( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::TableSelect );
 
-    d->aMouseMagnifier = new KAction(KIcon( "document-preview" ), i18n("&Magnifier"), this);
-    ac->addAction("mouse_magnifier", d->aMouseMagnifier );
-    connect( d->aMouseMagnifier, SIGNAL(triggered()), this, SLOT(slotSetMouseMagnifier()) );
+    d->aMouseMagnifier = new QAction(QIcon::fromTheme( QStringLiteral("document-preview") ), i18n("&Magnifier"), this);
+    ac->addAction(QStringLiteral("mouse_magnifier"), d->aMouseMagnifier );
+    connect( d->aMouseMagnifier, &QAction::triggered, this, &PageView::slotSetMouseMagnifier );
     d->aMouseMagnifier->setIconText( i18nc( "Magnifier Tool", "Magnifier" ) );
     d->aMouseMagnifier->setCheckable( true );
-    d->aMouseMagnifier->setShortcut( Qt::CTRL + Qt::Key_6 );
+    ac->setDefaultShortcut(d->aMouseMagnifier, Qt::CTRL + Qt::Key_6);
     d->aMouseMagnifier->setActionGroup( d->mouseModeActionGroup );
     d->aMouseMagnifier->setChecked( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::Magnifier );
 
-    d->aToggleAnnotator  = new KToggleAction(KIcon( "draw-freehand" ), i18n("&Review"), this);
-    ac->addAction("mouse_toggle_annotate", d->aToggleAnnotator );
+    d->aToggleAnnotator  = new KToggleAction(QIcon::fromTheme( QStringLiteral("draw-freehand") ), i18n("&Review"), this);
+    ac->addAction(QStringLiteral("mouse_toggle_annotate"), d->aToggleAnnotator );
     d->aToggleAnnotator->setCheckable( true );
-    connect( d->aToggleAnnotator, SIGNAL(toggled(bool)), SLOT(slotToggleAnnotator(bool)) );
-    d->aToggleAnnotator->setShortcut( Qt::Key_F6 );
+    connect( d->aToggleAnnotator, &QAction::toggled, this, &PageView::slotToggleAnnotator );
+    ac->setDefaultShortcut(d->aToggleAnnotator, Qt::Key_F6);
 
     ToolAction *ta = new ToolAction( this );
-    ac->addAction( "mouse_selecttools", ta );
+    ac->addAction( QStringLiteral("mouse_selecttools"), ta );
     ta->addAction( d->aMouseSelect );
     ta->addAction( d->aMouseTextSelect );
     ta->addAction( d->aMouseTableSelect );
 
     // speak actions
-    d->aSpeakDoc = new KAction( KIcon( "text-speak" ), i18n( "Speak Whole Document" ), this );
-    ac->addAction( "speak_document", d->aSpeakDoc );
+#ifdef HAVE_SPEECH
+    d->aSpeakDoc = new QAction( QIcon::fromTheme( QStringLiteral("text-speak") ), i18n( "Speak Whole Document" ), this );
+    ac->addAction( QStringLiteral("speak_document"), d->aSpeakDoc );
     d->aSpeakDoc->setEnabled( false );
-    connect( d->aSpeakDoc, SIGNAL(triggered()), SLOT(slotSpeakDocument()) );
+    connect( d->aSpeakDoc, &QAction::triggered, this, &PageView::slotSpeakDocument );
 
-    d->aSpeakPage = new KAction( KIcon( "text-speak" ), i18n( "Speak Current Page" ), this );
-    ac->addAction( "speak_current_page", d->aSpeakPage );
+    d->aSpeakPage = new QAction( QIcon::fromTheme( QStringLiteral("text-speak") ), i18n( "Speak Current Page" ), this );
+    ac->addAction( QStringLiteral("speak_current_page"), d->aSpeakPage );
     d->aSpeakPage->setEnabled( false );
-    connect( d->aSpeakPage, SIGNAL(triggered()), SLOT(slotSpeakCurrentPage()) );
+    connect( d->aSpeakPage, &QAction::triggered, this, &PageView::slotSpeakCurrentPage );
 
-    d->aSpeakStop = new KAction( KIcon( "media-playback-stop" ), i18n( "Stop Speaking" ), this );
-    ac->addAction( "speak_stop_all", d->aSpeakStop );
+    d->aSpeakStop = new QAction( QIcon::fromTheme( QStringLiteral("media-playback-stop") ), i18n( "Stop Speaking" ), this );
+    ac->addAction( QStringLiteral("speak_stop_all"), d->aSpeakStop );
     d->aSpeakStop->setEnabled( false );
-    connect( d->aSpeakStop, SIGNAL(triggered()), SLOT(slotStopSpeaks()) );
+    connect( d->aSpeakStop, &QAction::triggered, this, &PageView::slotStopSpeaks );
+#else
+    d->aSpeakDoc = 0;
+    d->aSpeakPage = 0;
+    d->aSpeakStop = 0;
+#endif
 
     // Other actions
-    KAction * su  = new KAction(i18n("Scroll Up"), this);
-    ac->addAction("view_scroll_up", su );
-    connect( su, SIGNAL(triggered()), this, SLOT(slotAutoScrollUp()) );
-    su->setShortcut( QKeySequence(Qt::SHIFT + Qt::Key_Up) );
+    QAction * su  = new QAction(i18n("Scroll Up"), this);
+    ac->addAction(QStringLiteral("view_scroll_up"), su );
+    connect( su, &QAction::triggered, this, &PageView::slotAutoScrollUp );
+    ac->setDefaultShortcut(su, QKeySequence(Qt::SHIFT + Qt::Key_Up));
     addAction(su);
 
-    KAction * sd  = new KAction(i18n("Scroll Down"), this);
-    ac->addAction("view_scroll_down", sd );
-    connect( sd, SIGNAL(triggered()), this, SLOT(slotAutoScrollDown()) );
-    sd->setShortcut( QKeySequence(Qt::SHIFT + Qt::Key_Down) );
+    QAction * sd  = new QAction(i18n("Scroll Down"), this);
+    ac->addAction(QStringLiteral("view_scroll_down"), sd );
+    connect( sd, &QAction::triggered, this, &PageView::slotAutoScrollDown );
+    ac->setDefaultShortcut(sd, QKeySequence(Qt::SHIFT + Qt::Key_Down));
     addAction(sd);
 
-    KAction * spu = new KAction(i18n("Scroll Page Up"), this);
-    ac->addAction( "view_scroll_page_up", spu );
-    connect( spu, SIGNAL(triggered()), this, SLOT(slotScrollUp()) );
-    spu->setShortcut( QKeySequence(Qt::SHIFT + Qt::Key_Space) );
+    QAction * spu = new QAction(i18n("Scroll Page Up"), this);
+    ac->addAction( QStringLiteral("view_scroll_page_up"), spu );
+    connect( spu, &QAction::triggered, this, &PageView::slotScrollUp );
+    ac->setDefaultShortcut(spu, QKeySequence(Qt::SHIFT + Qt::Key_Space));
     addAction( spu );
 
-    KAction * spd = new KAction(i18n("Scroll Page Down"), this);
-    ac->addAction( "view_scroll_page_down", spd );
-    connect( spd, SIGNAL(triggered()), this, SLOT(slotScrollDown()) );
-    spd->setShortcut( QKeySequence(Qt::Key_Space) );
+    QAction * spd = new QAction(i18n("Scroll Page Down"), this);
+    ac->addAction( QStringLiteral("view_scroll_page_down"), spd );
+    connect( spd, &QAction::triggered, this, &PageView::slotScrollDown );
+    ac->setDefaultShortcut(spd, QKeySequence(Qt::Key_Space));
     addAction( spd );
 
-    d->aToggleForms = new KAction( this );
-    ac->addAction( "view_toggle_forms", d->aToggleForms );
-    connect( d->aToggleForms, SIGNAL(triggered()), this, SLOT(slotToggleForms()) );
+    d->aToggleForms = new QAction( this );
+    ac->addAction( QStringLiteral("view_toggle_forms"), d->aToggleForms );
+    connect( d->aToggleForms, &QAction::triggered, this, &PageView::slotToggleForms );
     d->aToggleForms->setEnabled( false );
     toggleFormWidgets( false );
 
     // Setup undo and redo actions
-    KAction *kundo = KStandardAction::create( KStandardAction::Undo, d->document, SLOT(undo()), ac );
-    KAction *kredo = KStandardAction::create( KStandardAction::Redo, d->document, SLOT(redo()), ac );
-    connect(d->document, SIGNAL(canUndoChanged(bool)), kundo, SLOT(setEnabled(bool)));
-    connect(d->document, SIGNAL(canRedoChanged(bool)), kredo, SLOT(setEnabled(bool)));
+    QAction *kundo = KStandardAction::create( KStandardAction::Undo, d->document, SLOT(undo()), ac );
+    QAction *kredo = KStandardAction::create( KStandardAction::Redo, d->document, SLOT(redo()), ac );
+    connect(d->document, &Okular::Document::canUndoChanged, kundo, &QAction::setEnabled);
+    connect(d->document, &Okular::Document::canRedoChanged, kredo, &QAction::setEnabled);
     kundo->setEnabled(false);
     kredo->setEnabled(false);
 }
@@ -702,7 +758,7 @@ void PageView::openAnnotationWindow( Okular::Annotation * annotation, int pageNu
     if ( existWindow == 0 )
     {
         existWindow = new AnnotWindow( this, annotation, d->document, pageNumber );
-        connect(existWindow, SIGNAL(destroyed(QObject*)), this, SLOT(slotAnnotationWindowDestroyed(QObject*)));
+        connect(existWindow, &QObject::destroyed, this, &PageView::slotAnnotationWindowDestroyed);
 
         d->m_annowindows.insert( annotation, existWindow );
     }
@@ -774,6 +830,12 @@ void PageView::reparseConfig()
         slotRelayoutPages();
     }
 
+    if (Okular::Settings::rtlReadingDirection() != d->rtl_Mode )
+    {
+        d->rtl_Mode = Okular::Settings::rtlReadingDirection();
+        slotRelayoutPages();
+    }
+
     updatePageStep();
 
     if ( d->annotator )
@@ -796,7 +858,7 @@ KActionCollection *PageView::actionCollection() const
     return d->actionCollection;
 }
 
-KAction *PageView::toggleFormsAction() const
+QAction *PageView::toggleFormsAction() const
 {
     return d->aToggleForms;
 }
@@ -912,7 +974,7 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
         PageViewItem * item = new PageViewItem( *setIt );
         d->items.push_back( item );
 #ifdef PAGEVIEW_DEBUG
-        kDebug().nospace() << "cropped geom for " << d->items.last()->pageNumber() << " is " << d->items.last()->croppedGeometry();
+        qCDebug(OkularUiDebug).nospace() << "cropped geom for " << d->items.last()->pageNumber() << " is " << d->items.last()->croppedGeometry();
 #endif
         const QLinkedList< Okular::FormField * > pageFields = (*setIt)->formFields();
         QLinkedList< Okular::FormField * >::const_iterator ffIt = pageFields.constBegin(), ffEnd = pageFields.constEnd();
@@ -940,6 +1002,13 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
                 Okular::MovieAnnotation * movieAnn = static_cast< Okular::MovieAnnotation * >( a );
                 VideoWidget * vw = new VideoWidget( movieAnn, movieAnn->movie(), d->document, viewport() );
                 item->videoWidgets().insert( movieAnn->movie(), vw );
+                vw->pageInitialized();
+            }
+            else if ( a->subType() == Okular::Annotation::ARichMedia )
+            {
+                Okular::RichMediaAnnotation * richMediaAnn = static_cast< Okular::RichMediaAnnotation * >( a );
+                VideoWidget * vw = new VideoWidget( richMediaAnn, richMediaAnn->movie(), d->document, viewport() );
+                item->videoWidgets().insert( richMediaAnn->movie(), vw );
                 vw->pageInitialized();
             }
             else if ( a->subType() == Okular::Annotation::AScreen )
@@ -1018,6 +1087,9 @@ void PageView::updateActionState( bool haspages, bool documentChanged, bool hasf
     if ( d->aTrimMargins )
         d->aTrimMargins->setEnabled( haspages );
 
+    if ( d->aTrimToSelection )
+        d->aTrimToSelection->setEnabled( haspages );
+
     if ( d->aViewMode )
         d->aViewMode->setEnabled( haspages );
 
@@ -1069,14 +1141,18 @@ void PageView::updateActionState( bool haspages, bool documentChanged, bool hasf
         }
         d->aToggleAnnotator->setEnabled( allowAnnotations );
     }
+#ifdef HAVE_SPEECH
     if ( d->aSpeakDoc )
     {
-        const bool enablettsactions = haspages ? Okular::Settings::useKTTSD() : false;
+        const bool enablettsactions = haspages ? Okular::Settings::useTTS() : false;
         d->aSpeakDoc->setEnabled( enablettsactions );
         d->aSpeakPage->setEnabled( enablettsactions );
     }
+#endif
     if (d->aMouseMagnifier)
         d->aMouseMagnifier->setEnabled(d->document->supportsTiles());
+    if ( d->aFitWindowToPage )
+        d->aFitWindowToPage->setEnabled( haspages && !Okular::Settings::viewContinuous() );
 }
 
 bool PageView::areSourceLocationsShownGraphically() const
@@ -1144,12 +1220,12 @@ void PageView::slotRealNotifyViewportChanged( bool smoothMove )
         }
     if ( !item )
     {
-        kWarning() << "viewport for page" << vp.pageNumber << "has no matching item!";
+        qCWarning(OkularUiDebug) << "viewport for page" << vp.pageNumber << "has no matching item!";
         d->blockViewport = false;
         return;
     }
 #ifdef PAGEVIEW_DEBUG
-    kDebug() << "document viewport changed";
+    qCDebug(OkularUiDebug) << "document viewport changed";
 #endif
     // relayout in "Single Pages" mode or if a relayout is pending
     d->blockPixmapsRequest = true;
@@ -1190,8 +1266,8 @@ void PageView::slotRealNotifyViewportChanged( bool smoothMove )
         if ( !d->viewportMoveTimer )
         {
             d->viewportMoveTimer = new QTimer( this );
-            connect( d->viewportMoveTimer, SIGNAL(timeout()),
-                     this, SLOT(slotMoveViewport()) );
+            connect( d->viewportMoveTimer, &QTimer::timeout,
+                     this, &PageView::slotMoveViewport );
         }
         d->viewportMoveTimer->start( 25 );
         verticalScrollBar()->setEnabled( false );
@@ -1250,7 +1326,7 @@ void PageView::notifyPageChanged( int pageNumber, int changedFlags )
     if ( changedFlags & DocumentObserver::BoundingBox )
     {
 #ifdef PAGEVIEW_DEBUG
-        kDebug() << "BoundingBox change on page" << pageNumber;
+        qCDebug(OkularUiDebug) << "BoundingBox change on page" << pageNumber;
 #endif
         slotRelayoutPages();
         slotRequestVisiblePixmaps(); // TODO: slotRelayoutPages() may have done this already!
@@ -1417,18 +1493,63 @@ void PageView::setCapability( ViewCapability capability, const QVariant &option 
 //END View inherited methods
 
 //BEGIN widget events
+bool PageView::event( QEvent * event )
+{
+    if ( event->type() == QEvent::Gesture )
+    {
+        return gestureEvent(static_cast<QGestureEvent*>( event ));
+    }
+
+    // do not stop the event
+    return QAbstractScrollArea::event( event );
+}
+
+
+bool PageView::gestureEvent( QGestureEvent * event )
+{
+    QPinchGesture *pinch = static_cast<QPinchGesture*>(event->gesture(Qt::PinchGesture));
+
+    if (pinch)
+    {
+        // Viewport zoom level at the moment where the pinch gesture starts.
+        // The viewport zoom level _during_ the gesture will be this value
+        // times the relative zoom reported by QGestureEvent.
+        static qreal vanillaZoom = d->zoomFactor;
+
+        if (pinch->state() == Qt::GestureStarted)
+        {
+            vanillaZoom = d->zoomFactor;
+        }
+
+        // Zoom
+        if (pinch->changeFlags() & QPinchGesture::ScaleFactorChanged)
+        {
+            d->zoomFactor = vanillaZoom * pinch->totalScaleFactor();
+
+            d->blockPixmapsRequest = true;
+            updateZoom( ZoomRefreshCurrent );
+            d->blockPixmapsRequest = false;
+            viewport()->repaint();
+        }
+
+        return true;
+    }
+
+    return false;
+}
+
 void PageView::paintEvent(QPaintEvent *pe)
 {
         const QPoint areaPos = contentAreaPosition();
         // create the rect into contents from the clipped screen rect
         QRect viewportRect = viewport()->rect();
         viewportRect.translate( areaPos );
-        QRect contentsRect = pe->rect().translated( areaPos ).intersect( viewportRect );
+        QRect contentsRect = pe->rect().translated( areaPos ).intersected( viewportRect );
         if ( !contentsRect.isValid() )
             return;
 
 #ifdef PAGEVIEW_DEBUG
-        kDebug() << "paintevent" << contentsRect;
+        qCDebug(OkularUiDebug) << "paintevent" << contentsRect;
 #endif
 
         // create the screen painter. a pixel painted at contentsX,contentsY
@@ -1470,12 +1591,12 @@ void PageView::paintEvent(QPaintEvent *pe)
             if ( useSubdivision )
             {
                 // set 'contentsRect' to a part of the sub-divided region
-                contentsRect = allRects[i].translated( areaPos ).intersect( viewportRect );
+                contentsRect = allRects[i].translated( areaPos ).intersected( viewportRect );
                 if ( !contentsRect.isValid() )
                     continue;
             }
 #ifdef PAGEVIEW_DEBUG
-            kDebug() << contentsRect;
+            qCDebug(OkularUiDebug) << contentsRect;
 #endif
 
             // note: this check will take care of all things requiring alpha blending (not only selection)
@@ -1496,7 +1617,7 @@ void PageView::paintEvent(QPaintEvent *pe)
                 if ( !selectionRect.isNull() && selectionRect.intersects( contentsRect ) &&
                     !selectionRectInternal.contains( contentsRect ) )
                 {
-                    QRect blendRect = selectionRectInternal.intersect( contentsRect );
+                    QRect blendRect = selectionRectInternal.intersected( contentsRect );
                     // skip rectangles covered by the selection's border
                     if ( blendRect.isValid() )
                     {
@@ -1527,7 +1648,7 @@ void PageView::paintEvent(QPaintEvent *pe)
                     if ( !selectionPartRect.isNull() && selectionPartRect.intersects( contentsRect ) &&
                         !selectionPartRectInternal.contains( contentsRect ) )
                     {
-                        QRect blendRect = selectionPartRectInternal.intersect( contentsRect );
+                        QRect blendRect = selectionPartRectInternal.intersected( contentsRect );
                         // skip rectangles covered by the selection's border
                         if ( blendRect.isValid() )
                         {
@@ -1749,7 +1870,7 @@ void PageView::keyPressEvent( QKeyEvent * e )
                 if ( d->autoScrollTimer->isActive() )
                     d->autoScrollTimer->stop();
                 else
-                    slotAutoScoll();
+                    slotAutoScroll();
                 return;
             }
             // else fall trhough
@@ -1865,7 +1986,7 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
         int deltaY = d->mouseMidLastY - mouseY;
 
         // wrap mouse from top to bottom
-        const QRect mouseContainer = KGlobalSettings::desktopGeometry( this );
+        const QRect mouseContainer = QApplication::desktop()->screenGeometry( this );
         const int absDeltaY = abs(deltaY);
         if ( absDeltaY > mouseContainer.height() / 2 )
         {
@@ -1954,7 +2075,7 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
                     QPoint delta = d->mouseGrabPos - mousePos;
 
                     // wrap mouse from top to bottom
-                    const QRect mouseContainer = KGlobalSettings::desktopGeometry( this );
+                    const QRect mouseContainer = QApplication::desktop()->screenGeometry( this );
                     // If the delta is huge it probably means we just wrapped in that direction
                     const QPoint absDelta(abs(delta.x()), abs(delta.y()));
                     if ( absDelta.y() > mouseContainer.height() / 2 )
@@ -2010,6 +2131,7 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
         case Okular::Settings::EnumMouseMode::Zoom:
         case Okular::Settings::EnumMouseMode::RectSelect:
         case Okular::Settings::EnumMouseMode::TableSelect:
+        case Okular::Settings::EnumMouseMode::TrimSelect:
             // set second corner of selection
             if ( d->mouseSelecting )
                 updateSelection( eventPos );
@@ -2149,8 +2271,8 @@ void PageView::mousePressEvent( QMouseEvent * e )
 
                         }
 
-                        connect( &popup, SIGNAL(openAnnotationWindow(Okular::Annotation*,int)),
-                                 this, SLOT(openAnnotationWindow(Okular::Annotation*,int)) );
+                        connect( &popup, &AnnotationPopup::openAnnotationWindow,
+                                 this, &PageView::openAnnotationWindow );
 
                         popup.exec( e->globalPos() );
                     }
@@ -2172,6 +2294,7 @@ void PageView::mousePressEvent( QMouseEvent * e )
             break;
 
         case Okular::Settings::EnumMouseMode::RectSelect:   // set first corner of the selection rect
+        case Okular::Settings::EnumMouseMode::TrimSelect:
              if ( leftButton )
              {
                 selectionStart( eventPos, palette().color( QPalette::Active, QPalette::Highlight ).light( 120 ), false );
@@ -2391,9 +2514,20 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                             vw->show();
                             vw->play();
                         }
+                        else if ( ann->subType() == Okular::Annotation::ARichMedia )
+                        {
+                            VideoWidget *vw = pageItem->videoWidgets().value( static_cast<Okular::RichMediaAnnotation*>( ann )->movie() );
+                            vw->show();
+                            vw->play();
+                        }
                         else if ( ann->subType() == Okular::Annotation::AScreen )
                         {
                             d->document->processAction( static_cast<Okular::ScreenAnnotation*>( ann )->action() );
+                        }
+                        else if ( ann->subType() == Okular::Annotation::AFileAttachment )
+                        {
+                            const Okular::FileAttachmentAnnotation * fileAttachAnnot = static_cast< Okular::FileAttachmentAnnotation * >( ann );
+                            GuiUtils::saveEmbeddedFile( fileAttachAnnot->embeddedFile(), this );
                         }
                     }
 #if 0
@@ -2428,7 +2562,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                         // handle right click over a link
                         const Okular::Action * link = static_cast< const Okular::Action * >( rect->object() );
                         // creating the menu and its actions
-                        KMenu menu( this );
+                        QMenu menu( this );
                         QAction * actProcessLink = menu.addAction( i18n( "Follow This Link" ) );
                         QAction * actStopSound = 0;
                         if ( link->actionType() == Okular::Action::Sound ) {
@@ -2439,7 +2573,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                         }
                         QAction * actCopyLinkLocation = 0;
                         if ( dynamic_cast< const Okular::BrowseAction * >( link ) )
-                            actCopyLinkLocation = menu.addAction( KIcon( "edit-copy" ), i18n( "Copy Link Address" ) );
+                            actCopyLinkLocation = menu.addAction( QIcon::fromTheme( QStringLiteral("edit-copy") ), i18n( "Copy Link Address" ) );
                         QAction * res = menu.exec( e->globalPos() );
                         if ( res )
                         {
@@ -2451,9 +2585,9 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                             {
                                 const Okular::BrowseAction * browseLink = static_cast< const Okular::BrowseAction * >( link );
                                 QClipboard *cb = QApplication::clipboard();
-                                cb->setText( browseLink->url(), QClipboard::Clipboard );
+                                cb->setText( browseLink->url().toDisplayString(), QClipboard::Clipboard );
                                 if ( cb->supportsSelection() )
-                                    cb->setText( browseLink->url(), QClipboard::Selection );
+                                    cb->setText( browseLink->url().toDisplayString(), QClipboard::Selection );
                             }
                             else if ( res == actStopSound )
                             {
@@ -2525,6 +2659,54 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
             d->magnifierView->hide();
             break;
 
+        case Okular::Settings::EnumMouseMode::TrimSelect:
+        {
+            // if mouse is released and selection is null this is a rightClick
+            if ( rightButton && !d->mouseSelecting )
+            {
+                break;
+            }
+            PageViewItem * pageItem = pickItemOnPoint(eventPos.x(), eventPos.y());
+            // ensure end point rests within a page, or ignore
+            if (!pageItem) {
+                break;
+            }
+            QRect selectionRect = d->mouseSelectionRect.normalized();
+
+            double nLeft = pageItem->absToPageX(selectionRect.left());
+            double nRight = pageItem->absToPageX(selectionRect.right());
+            double nTop = pageItem->absToPageY(selectionRect.top());
+            double nBottom = pageItem->absToPageY(selectionRect.bottom());
+            if ( nLeft < 0 ) nLeft = 0;
+            if ( nTop < 0 ) nTop = 0;
+            if ( nRight > 1 ) nRight = 1;
+            if ( nBottom > 1 ) nBottom = 1;
+            d->trimBoundingBox = Okular::NormalizedRect(nLeft, nTop, nRight, nBottom);
+
+            // Trim Selection successfully done, hide prompt
+            d->messageWindow->hide();
+
+            // clear widget selection and invalidate rect
+            selectionClear();
+
+            // When Trim selection bbox interaction is over, we should switch to another mousemode.
+            if ( d->aPrevAction )
+            {
+                d->aPrevAction->trigger();
+                d->aPrevAction = 0;
+            } else {
+                d->aMouseNormal->trigger();
+            }
+
+            // with d->trimBoundingBox defined, redraw for trim to take visual effect
+            if ( d->document->pages() > 0 )
+            {
+                slotRelayoutPages();
+                slotRequestVisiblePixmaps();  // TODO: slotRelayoutPages() may have done this already!
+            }
+
+            break;
+        }
         case Okular::Settings::EnumMouseMode::RectSelect:
         {
             // if mouse is released and selection is null this is a rightClick
@@ -2570,11 +2752,11 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                     {
                         // request the textpage if there isn't one
                         okularPage= item->page();
-                        kWarning() << "checking if page" << item->pageNumber() << "has text:" << okularPage->hasTextPage();
+                        qCDebug(OkularUiDebug) << "checking if page" << item->pageNumber() << "has text:" << okularPage->hasTextPage();
                         if ( !okularPage->hasTextPage() )
                             d->document->requestTextPage( okularPage->number() );
                         // grab text in the rect that intersects itemRect
-                        QRect relativeRect = selectionRect.intersect( itemRect );
+                        QRect relativeRect = selectionRect.intersected( itemRect );
                         relativeRect.translate( -item->uncroppedGeometry().topLeft() );
                         Okular::RegularAreaRect rects;
                         rects.append( Okular::NormalizedRect( relativeRect, item->uncroppedWidth(), item->uncroppedHeight() ) );
@@ -2584,28 +2766,35 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
             }
 
             // popup that ask to copy:text and copy/save:image
-            KMenu menu( this );
-            QAction *textToClipboard = 0, *speakText = 0, *imageToClipboard = 0, *imageToFile = 0;
+            QMenu menu( this );
+            QAction *textToClipboard = 0;
+#ifdef HAVE_SPEECH
+            QAction *speakText = 0;
+#endif
+            QAction *imageToClipboard = 0;
+            QAction *imageToFile = 0;
             if ( d->document->supportsSearching() && !selectedText.isEmpty() )
             {
-                menu.addTitle( i18np( "Text (1 character)", "Text (%1 characters)", selectedText.length() ) );
-                textToClipboard = menu.addAction( KIcon("edit-copy"), i18n( "Copy to Clipboard" ) );
+                menu.addAction( new OKMenuTitle( &menu, i18np( "Text (1 character)", "Text (%1 characters)", selectedText.length() ) ) );
+                textToClipboard = menu.addAction( QIcon::fromTheme(QStringLiteral("edit-copy")), i18n( "Copy to Clipboard" ) );
                 bool copyAllowed = d->document->isAllowed( Okular::AllowCopy );
                 if ( !copyAllowed )
                 {
                     textToClipboard->setEnabled( false );
                     textToClipboard->setText( i18n("Copy forbidden by DRM") );
                 }
-                if ( Okular::Settings::useKTTSD() )
-                    speakText = menu.addAction( KIcon("text-speak"), i18n( "Speak Text" ) );
+#ifdef HAVE_SPEECH
+                if ( Okular::Settings::useTTS() )
+                    speakText = menu.addAction( QIcon::fromTheme(QStringLiteral("text-speak")), i18n( "Speak Text" ) );
+#endif
                 if ( copyAllowed )
                 {
                     addWebShortcutsMenu( &menu, selectedText );
                 }
             }
-            menu.addTitle( i18n( "Image (%1 by %2 pixels)", selectionRect.width(), selectionRect.height() ) );
-            imageToClipboard = menu.addAction( KIcon("image-x-generic"), i18n( "Copy to Clipboard" ) );
-            imageToFile = menu.addAction( KIcon("document-save"), i18n( "Save to File..." ) );
+            menu.addAction( new OKMenuTitle( &menu, i18n( "Image (%1 by %2 pixels)", selectionRect.width(), selectionRect.height() ) ) );
+            imageToClipboard = menu.addAction( QIcon::fromTheme(QStringLiteral("image-x-generic")), i18n( "Copy to Clipboard" ) );
+            imageToFile = menu.addAction( QIcon::fromTheme(QStringLiteral("document-save")), i18n( "Save to File..." ) );
             QAction *choice = menu.exec( e->globalPos() );
             // check if the user really selected an action
             if ( choice )
@@ -2632,18 +2821,18 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                 else if ( choice == imageToFile )
                 {
                     // [3] save pixmap to file
-                    QString fileName = KFileDialog::getSaveFileName( KUrl(), "image/png image/jpeg", this, QString(),
-                                                                     KFileDialog::ConfirmOverwrite );
+                    QString fileName = QFileDialog::getSaveFileName(this, i18n("Save file"), QString(), i18n("Images (*.png *.jpeg)"));
                     if ( fileName.isEmpty() )
                         d->messageWindow->display( i18n( "File not saved." ), QString(), PageViewMessage::Warning );
                     else
                     {
-                        KMimeType::Ptr mime = KMimeType::findByUrl( fileName );
+                        QMimeDatabase db;
+                        QMimeType mime = db.mimeTypeForUrl( QUrl::fromLocalFile(fileName) );
                         QString type;
-                        if ( !mime || mime == KMimeType::defaultMimeTypePtr() )
-                            type = "PNG";
+                        if ( !mime.isDefault() )
+                            type = QStringLiteral("PNG");
                         else
-                            type = mime->name().section( '/', -1 ).toUpper();
+                            type = mime.name().section( QLatin1Char('/'), -1 ).toUpper();
                         copyPix.save( fileName, qPrintable( type ) );
                         d->messageWindow->display( i18n( "Image [%1x%2] saved to %3 file.", copyPix.width(), copyPix.height(), type ) );
                     }
@@ -2660,11 +2849,13 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                     if ( cb->supportsSelection() )
                         cb->setText( selectedText, QClipboard::Selection );
                 }
+#ifdef HAVE_SPEECH
                 else if ( choice == speakText )
                 {
-                    // [2] speech selection using KTTSD
+                    // [2] speech selection using TTS
                     d->tts()->say( selectedText );
                 }
+#endif
             }
             }
             // clear widget selection and invalidate rect
@@ -2716,13 +2907,13 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                     {
                         // request the textpage if there isn't one
                         okularPage= item->page();
-                        kWarning() << "checking if page" << item->pageNumber() << "has text:" << okularPage->hasTextPage();
+                        qCDebug(OkularUiDebug) << "checking if page" << item->pageNumber() << "has text:" << okularPage->hasTextPage();
                         if ( !okularPage->hasTextPage() )
                             d->document->requestTextPage( okularPage->number() );
                         // grab text in the rect that intersects itemRect
-                        QRect rectInItem = selectionRect.intersect( itemRect );
+                        QRect rectInItem = selectionRect.intersected( itemRect );
                         rectInItem.translate( -item->uncroppedGeometry().topLeft() );
-                        QRect rectInSelection = selectionRect.intersect( itemRect );
+                        QRect rectInSelection = selectionRect.intersected( itemRect );
                         rectInSelection.translate( -selectionRect.topLeft() );
                         d->tableSelectionParts.append(
                             TableSelectionPart(
@@ -2757,14 +2948,14 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
             xs.append(1.0);
             ys.prepend(0.0);
             ys.append(1.0);
-            selHtml = "<html><head>"
+            selHtml = QString::fromLatin1("<html><head>"
                       "<meta content=\"text/html; charset=utf-8\" http-equiv=\"Content-Type\">"
-                      "</head><body><table>";
+                      "</head><body><table>");
             for (int r=0; r+1<ys.length(); r++) {
-                selHtml += "<tr>";
+                selHtml += QLatin1String("<tr>");
                 for (int c=0; c+1<xs.length(); c++) {
                     Okular::NormalizedRect cell(xs[c], ys[r], xs[c+1], ys[r+1]);
-                    if (c) selText += '\t';
+                    if (c) selText += QLatin1Char('\t');
                     QString txt;
                     foreach (const TableSelectionPart &tsp, d->tableSelectionParts) {
                         // first, crop the cell to this part
@@ -2798,17 +2989,17 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                         txt += tsp.item->page()->text( &rects, Okular::TextPage::CentralPixelTextAreaInclusionBehaviour );
                     }
                     QString html = txt;
-                    selText += txt.replace('\n', ' ');
-                    html.replace('&', "&amp;").replace('<', "&lt;").replace('>', "&gt;");
+                    selText += txt.replace(QLatin1Char('\n'), QLatin1Char(' '));
+                    html.replace(QLatin1Char('&'), QLatin1String("&amp;")).replace(QLatin1Char('<'), QLatin1String("&lt;")).replace(QLatin1Char('>'), QLatin1String("&gt;"));
                     // Remove newlines, do not turn them into <br>, because
                     // Excel interprets <br> within cell as new cell...
-                    html.replace('\n', " ");
-                    selHtml += "<td>"+html+"</td>";
+                    html.replace(QLatin1Char('\n'), QLatin1String(" "));
+                    selHtml += QStringLiteral("<td>") + html + QStringLiteral("</td>");
                 }
-                selText += '\n';
-                selHtml += "</tr>\n";
+                selText += QLatin1Char('\n');
+                selHtml += QLatin1String("</tr>\n");
             }
-            selHtml += "</table></body></html>\n";
+            selHtml += QLatin1String("</table></body></html>\n");
 
 
             QClipboard *cb = QApplication::clipboard();
@@ -2843,12 +3034,14 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                     //if there is text selected in the page
                     if (item && (page = item->page())->textSelection())
                     {
-                        KMenu menu( this );
-                        QAction *textToClipboard = menu.addAction( KIcon( "edit-copy" ), i18n( "Copy Text" ) );
-                        QAction *speakText = 0;
+                        QMenu menu( this );
+                        QAction *textToClipboard = menu.addAction( QIcon::fromTheme( QStringLiteral("edit-copy") ), i18n( "Copy Text" ) );
                         QAction *httpLink = 0;
-                        if ( Okular::Settings::useKTTSD() )
-                            speakText = menu.addAction( KIcon( "text-speak" ), i18n( "Speak Text" ) );
+#ifdef HAVE_SPEECH
+                        QAction *speakText = 0;
+                        if ( Okular::Settings::useTTS() )
+                            speakText = menu.addAction( QIcon::fromTheme( QStringLiteral("text-speak") ), i18n( "Speak Text" ) );
+#endif
                         if ( !d->document->isAllowed( Okular::AllowCopy ) )
                         {
                             textToClipboard->setEnabled( false );
@@ -2870,13 +3063,15 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                         {
                             if ( choice == textToClipboard )
                                 copyTextSelection();
+#ifdef HAVE_SPEECH
                             else if ( choice == speakText )
                             {
                                 const QString text = d->selectedText();
                                 d->tts()->say( text );
                             }
+#endif
                             else if ( choice == httpLink )
-                                new KRun( KUrl( url ), this );
+                                new KRun( QUrl( url ), this );
                         }
                     }
                 }
@@ -3175,7 +3370,7 @@ QList< Okular::RegularAreaRect * > PageView::textSelections( const QPoint& start
             affectedItemsSet.insert( item->pageNumber() );
     }
 #ifdef PAGEVIEW_DEBUG
-    kDebug() << ">>>> item selected by mouse:" << affectedItemsSet.count();
+    qCDebug(OkularUiDebug) << ">>>> item selected by mouse:" << affectedItemsSet.count();
 #endif
 
     if ( !affectedItemsSet.isEmpty() )
@@ -3200,7 +3395,7 @@ QList< Okular::RegularAreaRect * > PageView::textSelections( const QPoint& start
         for ( int i = min; i <= max; ++i )
             affectedItemsIds.append( i );
 #ifdef PAGEVIEW_DEBUG
-        kDebug() << ">>>> pages:" << affectedItemsIds;
+        qCDebug(OkularUiDebug) << ">>>> pages:" << affectedItemsIds;
 #endif
         firstpage = affectedItemsIds.first();
 
@@ -3216,13 +3411,13 @@ QList< Okular::RegularAreaRect * > PageView::textSelections( const QPoint& start
         {
             // first item
             PageViewItem * first = d->items[ affectedItemsIds.first() ];
-            QRect geom = first->croppedGeometry().intersect( selectionRect ).translated( -first->uncroppedGeometry().topLeft() );
+            QRect geom = first->croppedGeometry().intersected( selectionRect ).translated( -first->uncroppedGeometry().topLeft() );
             ret.append( textSelectionForItem( first,
                 selectionRect.bottom() > geom.height() ? ( direction_ne_sw ? geom.topRight() : geom.topLeft() ) : ( direction_ne_sw ? geom.bottomRight() : geom.bottomLeft() ),
                 QPoint() ) );
             // last item
             PageViewItem * last = d->items[ affectedItemsIds.last() ];
-            geom = last->croppedGeometry().intersect( selectionRect ).translated( -last->uncroppedGeometry().topLeft() );
+            geom = last->croppedGeometry().intersected( selectionRect ).translated( -last->uncroppedGeometry().topLeft() );
             // the last item needs to appended at last...
             Okular::RegularAreaRect * lastArea = textSelectionForItem( last,
                 QPoint(),
@@ -3281,7 +3476,7 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
             p->setPen( Qt::black );
             p->drawRect( -1, -1, itemWidth + 1, itemHeight + 1 );
             // draw bottom/right gradient
-            static int levels = 2;
+            static const int levels = 2;
             int r = backColor.red() / (levels + 2) + 6,
                 g = backColor.green() / (levels + 2) + 6,
                 b = backColor.blue() / (levels + 2) + 6;
@@ -3306,7 +3501,7 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
             {
                 viewPortPoint = &point;
             }
-            QRect pixmapRect = contentsRect.intersect( itemGeometry );
+            QRect pixmapRect = contentsRect.intersected( itemGeometry );
             pixmapRect.translate( -item->croppedGeometry().topLeft() );
             PagePainter::paintCroppedPageOnPainter( p, item->page(), this, pageflags,
                 item->uncroppedWidth(), item->uncroppedHeight(), pixmapRect,
@@ -3314,7 +3509,7 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
         }
 
         // remove painted area from 'remainingArea' and restore painter
-        remainingArea -= outlineGeometry.intersect( contentsRect );
+        remainingArea -= outlineGeometry.intersected( contentsRect );
         p->restore();
     }
 
@@ -3333,11 +3528,13 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
            zoom = d->zoomFactor;
     Okular::NormalizedRect crop( 0., 0., 1., 1. );
 
-    // Handle cropping
-    if ( Okular::Settings::trimMargins() && okularPage->isBoundingBoxKnown()
-         && !okularPage->boundingBox().isNull() )
+    // Handle cropping, due to either "Trim Margin" or "Trim to Selection" cases
+    if (( Okular::Settings::trimMargins() && okularPage->isBoundingBoxKnown()
+         && !okularPage->boundingBox().isNull() ) ||
+        ( d->aTrimToSelection && d->aTrimToSelection->isChecked() &&  !d->trimBoundingBox.isNull()))
     {
-        crop = okularPage->boundingBox();
+
+        crop = Okular::Settings::trimMargins() ? okularPage->boundingBox() : d->trimBoundingBox;
 
         // Rotate the bounding box
         for ( int i = okularPage->rotation(); i > 0; --i )
@@ -3349,20 +3546,28 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
             crop.bottom = rot.right;
         }
 
-        // Expand the crop slightly beyond the bounding box
-        static const double cropExpandRatio = 0.04;
-        const double cropExpand = cropExpandRatio * ( (crop.right-crop.left) + (crop.bottom-crop.top) ) / 2;
-        crop = Okular::NormalizedRect(
-            crop.left - cropExpand,
-            crop.top - cropExpand,
-            crop.right + cropExpand,
-            crop.bottom + cropExpand ) & Okular::NormalizedRect( 0, 0, 1, 1 );
+        // Expand the crop slightly beyond the bounding box (for Trim Margins only)
+        if (Okular::Settings::trimMargins()) {
+            static const double cropExpandRatio = 0.04;
+            const double cropExpand = cropExpandRatio * ( (crop.right-crop.left) + (crop.bottom-crop.top) ) / 2;
+            crop = Okular::NormalizedRect(
+                crop.left - cropExpand,
+                crop.top - cropExpand,
+                crop.right + cropExpand,
+                crop.bottom + cropExpand ) & Okular::NormalizedRect( 0, 0, 1, 1 );
+        }
 
         // We currently generate a larger image and then crop it, so if the
         // crop rect is very small the generated image is huge. Hence, we shouldn't
         // let the crop rect become too small.
-        // Make sure we crop by at most 50% in either dimension:
-        static const double minCropRatio = 0.5;
+        static double minCropRatio;
+        if (Okular::Settings::trimMargins()) {
+            // Make sure we crop by at most 50% in either dimension:
+            minCropRatio = 0.5;
+        } else {
+            // Looser Constraint for "Trim Selection"
+            minCropRatio = 0.20;
+        }
         if ( ( crop.right - crop.left ) < minCropRatio )
         {
             const double newLeft = ( crop.left + crop.right ) / 2 - minCropRatio/2;
@@ -3379,7 +3584,7 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
         width *= ( crop.right - crop.left );
         height *= ( crop.bottom - crop.top );
 #ifdef PAGEVIEW_DEBUG
-        kDebug() << "Cropped page" << okularPage->number() << "to" << crop
+        qCDebug(OkularUiDebug) << "Cropped page" << okularPage->number() << "to" << crop
                  << "width" << width << "height" << height << "by bbox" << okularPage->boundingBox();
 #endif
     }
@@ -3438,7 +3643,7 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
     }
 #ifndef NDEBUG
     else
-        kDebug() << "calling updateItemSize with unrecognized d->zoomMode!";
+        qCDebug(OkularUiDebug) << "calling updateItemSize with unrecognized d->zoomMode!";
 #endif
 }
 
@@ -3584,7 +3789,7 @@ Okular::RegularAreaRect * PageView::textSelectionForItem( PageViewItem * item, c
 
     Okular::RegularAreaRect * selectionArea = okularPage->textArea( &mouseTextSelectionInfo );
 #ifdef PAGEVIEW_DEBUG
-    kDebug().nospace() << "text areas (" << okularPage->number() << "): " << ( selectionArea ? QString::number( selectionArea->count() ) : "(none)" );
+    qCDebug(OkularUiDebug).nospace() << "text areas (" << okularPage->number() << "): " << ( selectionArea ? QString::number( selectionArea->count() ) : "(none)" );
 #endif
     return selectionArea;
 }
@@ -3661,9 +3866,9 @@ void PageView::updateZoom( ZoomMode newZoomMode )
         case ZoomFixed:{ //ZoomFixed case
             QString z = d->aZoom->currentText();
             // kdelibs4 sometimes adds accelerators to actions' text directly :(
-            z.remove ('&');
-            z.remove ('%');
-            newFactor = KGlobal::locale()->readNumber( z ) / 100.0;
+            z.remove (QLatin1Char('&'));
+            z.remove (QLatin1Char('%'));
+            newFactor = QLocale().toDouble( z ) / 100.0;
             }break;
         case ZoomIn:
         case ZoomOut:{
@@ -3767,7 +3972,6 @@ void PageView::updateZoomText()
     translated << i18n("Fit Width") << i18n("Fit Page") << i18n("Auto Fit");
 
     // add percent items
-    const QString single_oh( "0" );
     int idx = 0, selIdx = 3;
     bool inserted = false; //use: "d->zoomMode != ZoomFixed" to hide Fit/* zoom ratio
     int zoomValueCount = 11;
@@ -3785,12 +3989,12 @@ void PageView::updateZoomText()
         if ( !inserted )
             selIdx++;
         // we do not need to display 2-digit precision
-        QString localValue( KGlobal::locale()->formatNumber( value * 100.0, 1 ) );
-        localValue.remove( KGlobal::locale()->decimalSymbol() + single_oh );
+        QString localValue( QLocale().toString( value * 100.0, 'f', 1 ) );
+        localValue.remove( QLocale().decimalPoint() + QLatin1Char('0') );
         // remove a trailing zero in numbers like 66.70
-        if ( localValue.right( 1 ) == QLatin1String( "0" ) && localValue.indexOf( KGlobal::locale()->decimalSymbol() ) > -1 )
+        if ( localValue.right( 1 ) == QLatin1String( "0" ) && localValue.indexOf( QLocale().decimalPoint() ) > -1 )
             localValue.chop( 1 );
-        translated << QString( "%1%" ).arg( localValue );
+        translated << QStringLiteral( "%1%" ).arg( localValue );
     }
     d->aZoom->setItems( translated );
 
@@ -3839,6 +4043,8 @@ void PageView::updateCursor( const QPoint &p )
             setCursor( Qt::CrossCursor );
         else if ( d->mouseMode == Okular::Settings::EnumMouseMode::RectSelect )
             setCursor( Qt::CrossCursor );
+        else if ( d->mouseMode == Okular::Settings::EnumMouseMode::TrimSelect )
+            setCursor( Qt::CrossCursor );
         else if ( d->mouseAnn )
             setCursor( Qt::ClosedHandCursor );
         else if ( d->mouseMode == Okular::Settings::EnumMouseMode::Browse )
@@ -3866,6 +4072,11 @@ void PageView::updateCursor( const QPoint &p )
                         d->mouseOnRect = true;
                         setCursor( Qt::PointingHandCursor );
                     }
+                    else if ( annotation->subType() == Okular::Annotation::ARichMedia )
+                    {
+                        d->mouseOnRect = true;
+                        setCursor( Qt::PointingHandCursor );
+                    }
                     else if ( annotation->subType() == Okular::Annotation::AScreen )
                     {
                         if ( GuiUtils::renditionMovieFromScreenAnnotation( static_cast< const Okular::ScreenAnnotation * >( annotation ) ) != 0 )
@@ -3873,6 +4084,11 @@ void PageView::updateCursor( const QPoint &p )
                             d->mouseOnRect = true;
                             setCursor( Qt::PointingHandCursor );
                         }
+                    }
+                    else if ( annotation->subType() == Okular::Annotation::AFileAttachment )
+                    {
+                        d->mouseOnRect = true;
+                        setCursor( Qt::PointingHandCursor );
                     }
                     else
                     {
@@ -3897,6 +4113,19 @@ void PageView::updateCursor( const QPoint &p )
         d->mouseOnRect = false;
         setCursor( Qt::ArrowCursor );
     }
+}
+
+void PageView::reloadForms()
+{
+    QLinkedList< PageViewItem * >::const_iterator iIt = d->visibleItems.constBegin(), iEnd = d->visibleItems.constEnd();
+    if( d->m_formsVisible )
+    {
+        for ( ; iIt != iEnd; ++iIt )
+        {
+            (*iIt)->reloadFormWidgetsState();
+        }
+    }
+
 }
 
 void PageView::moveMagnifier( const QPoint& p ) // non scaled point
@@ -4012,8 +4241,15 @@ void PageView::toggleFormWidgets( bool on )
 void PageView::resizeContentArea( const QSize & newSize )
 {
     const QSize vs = viewport()->size();
-    horizontalScrollBar()->setRange( 0, newSize.width() - vs.width() );
-    verticalScrollBar()->setRange( 0, newSize.height() - vs.height() );
+    int hRange = newSize.width() - vs.width();
+    int vRange = newSize.height() - vs.height();
+    if ( horizontalScrollBar()->isVisible() && hRange == verticalScrollBar()->width() && verticalScrollBar()->isVisible() && vRange == horizontalScrollBar()->height() && Okular::Settings::showScrollBars() )
+    {
+        hRange = 0;
+        vRange = 0;
+    }
+    horizontalScrollBar()->setRange( 0, hRange );
+    verticalScrollBar()->setRange( 0, vRange );
     updatePageStep();
 }
 
@@ -4023,16 +4259,15 @@ void PageView::updatePageStep() {
     verticalScrollBar()->setPageStep( vs.height() * (100 - Okular::Settings::scrollOverlap()) / 100 );
 }
 
-void PageView::addWebShortcutsMenu( KMenu * menu, const QString & text )
+void PageView::addWebShortcutsMenu( QMenu * menu, const QString & text )
 {
-#if KDE_IS_VERSION(4,5,70)
     if ( text.isEmpty() )
     {
         return;
     }
 
     QString searchText = text;
-    searchText = searchText.replace( '\n', ' ' ).replace( '\r', ' ' ).simplified();
+    searchText = searchText.replace( QLatin1Char('\n'), QLatin1Char(' ') ).replace(QLatin1Char( '\r'), QLatin1Char(' ') ).simplified();
 
     if ( searchText.isEmpty() )
     {
@@ -4049,34 +4284,33 @@ void PageView::addWebShortcutsMenu( KMenu * menu, const QString & text )
 
         if ( !searchProviders.isEmpty() )
         {
-            KMenu *webShortcutsMenu = new KMenu( menu );
-            webShortcutsMenu->setIcon( KIcon( "preferences-web-browser-shortcuts" ) );
+            QMenu *webShortcutsMenu = new QMenu( menu );
+            webShortcutsMenu->setIcon( QIcon::fromTheme( QStringLiteral("preferences-web-browser-shortcuts") ) );
 
             const QString squeezedText = KStringHandler::rsqueeze( searchText, 21 );
             webShortcutsMenu->setTitle( i18n( "Search for '%1' with", squeezedText ) );
 
-            KAction *action = 0;
+            QAction *action = 0;
 
             foreach( const QString &searchProvider, searchProviders )
             {
-                action = new KAction( searchProvider, webShortcutsMenu );
-                action->setIcon( KIcon( filterData.iconNameForPreferredSearchProvider( searchProvider ) ) );
+                action = new QAction( searchProvider, webShortcutsMenu );
+                action->setIcon( QIcon::fromTheme( filterData.iconNameForPreferredSearchProvider( searchProvider ) ) );
                 action->setData( filterData.queryForPreferredSearchProvider( searchProvider ) );
-                connect( action, SIGNAL(triggered()), this, SLOT(slotHandleWebShortcutAction()) );
+                connect( action, &QAction::triggered, this, &PageView::slotHandleWebShortcutAction );
                 webShortcutsMenu->addAction( action );
             }
 
             webShortcutsMenu->addSeparator();
 
-            action = new KAction( i18n( "Configure Web Shortcuts..." ), webShortcutsMenu );
-            action->setIcon( KIcon( "configure" ) );
-            connect( action, SIGNAL(triggered()), this, SLOT(slotConfigureWebShortcuts()) );
+            action = new QAction( i18n( "Configure Web Shortcuts..." ), webShortcutsMenu );
+            action->setIcon( QIcon::fromTheme( QStringLiteral("configure") ) );
+            connect( action, &QAction::triggered, this, &PageView::slotConfigureWebShortcuts );
             webShortcutsMenu->addAction( action );
 
             menu->addMenu(webShortcutsMenu);
         }
     }
-#endif
 }
 
 //BEGIN private SLOTS
@@ -4118,6 +4352,10 @@ void PageView::slotRelayoutPages()
     const bool centerLastPage = centerFirstPage && pageCount % 2 == 0;
     const bool continuousView = Okular::Settings::viewContinuous();
     const int nCols = overrideCentering ? 1 : viewColumns();
+    const bool singlePageViewMode = Okular::Settings::viewMode() == Okular::Settings::EnumViewMode::Single;
+
+    if ( d->aFitWindowToPage )
+        d->aFitWindowToPage->setEnabled( !continuousView && singlePageViewMode );
 
     // set all items geometry and resize contents. handle 'continuous' and 'single' modes separately
 
@@ -4202,15 +4440,27 @@ void PageView::slotRelayoutPages()
                 }
                 else if ( facingPages )
                 {
-                    // page edges 'touch' the center of the viewport
-                    actualX = ( (centerFirstPage && item->pageNumber() % 2 == 1) ||
-                                (!centerFirstPage && item->pageNumber() % 2 == 0) ) ?
-                        (fullWidth / 2) - item->croppedWidth() - 1 : (fullWidth / 2) + 1;
+                    if (Okular::Settings::rtlReadingDirection()){
+                        // RTL reading mode
+                        actualX = ( (centerFirstPage && item->pageNumber() % 2 == 0) ||
+                                    (!centerFirstPage && item->pageNumber() % 2 == 1) ) ?
+                                    (fullWidth / 2) - item->croppedWidth() - 1 : (fullWidth / 2) + 1;
+                    } else {
+                        // page edges 'touch' the center of the viewport
+                        actualX = ( (centerFirstPage && item->pageNumber() % 2 == 1) ||
+                                    (!centerFirstPage && item->pageNumber() % 2 == 0) ) ?
+                                    (fullWidth / 2) - item->croppedWidth() - 1 : (fullWidth / 2) + 1;
+                    }
                 }
                 else
                 {
                     // page is centered within its virtual column
-                    actualX = insertX + (cWidth - item->croppedWidth()) / 2;
+                    //actualX = insertX + (cWidth - item->croppedWidth()) / 2;
+                    if (Okular::Settings::rtlReadingDirection()){
+                        actualX = fullWidth - insertX - cWidth +( (cWidth - item->croppedWidth()) / 2);
+                    } else {
+                        actualX = insertX + (cWidth - item->croppedWidth()) / 2;
+                    }
                 }
                 item->moveTo( actualX,
                               (continuousView ? insertY : origInsertY) + (rHeight - item->croppedHeight()) / 2 );
@@ -4291,7 +4541,7 @@ void PageView::delayedResizeEvent()
 static void slotRequestPreloadPixmap( Okular::DocumentObserver * observer, const PageViewItem * i, const QRect &expandedViewportRect, QLinkedList< Okular::PixmapRequest * > *requestedPixmaps )
 {
     Okular::NormalizedRect preRenderRegion;
-    const QRect intersectionRect = expandedViewportRect.intersect( i->croppedGeometry() );
+    const QRect intersectionRect = expandedViewportRect.intersected( i->croppedGeometry() );
     if ( !intersectionRect.isEmpty() )
         preRenderRegion = Okular::NormalizedRect( intersectionRect.translated( -i->uncroppedGeometry().topLeft() ), i->uncroppedWidth(), i->uncroppedHeight() );
 
@@ -4363,7 +4613,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
                 qRound( i->uncroppedGeometry().left() + i->uncroppedWidth() * r.left ) + 1 - viewportRect.left(),
                 qRound( i->uncroppedGeometry().top() + i->uncroppedHeight() * r.top ) + 1 - viewportRect.top() );
 
-            if ( vw->isPlaying() && viewportRectAtZeroZero.intersect( vw->geometry() ).isEmpty() ) {
+            if ( vw->isPlaying() && viewportRectAtZeroZero.intersected( vw->geometry() ).isEmpty() ) {
                 vw->stop();
                 vw->pageLeft();
             }
@@ -4376,7 +4626,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
         kWarning().nospace() << "viewportRect is " << viewportRect << ", page item is " << i->croppedGeometry() << " intersect : " << viewportRect.intersects( i->croppedGeometry() );
 #endif
         // if the item doesn't intersect the viewport, skip it
-        QRect intersectionRect = viewportRect.intersect( i->croppedGeometry() );
+        QRect intersectionRect = viewportRect.intersected( i->croppedGeometry() );
         if ( intersectionRect.isEmpty() )
         {
             continue;
@@ -4521,14 +4771,14 @@ void PageView::slotMoveViewport()
             (int)(y + diffY * convergeSpeed ) );
 }
 
-void PageView::slotAutoScoll()
+void PageView::slotAutoScroll()
 {
     // the first time create the timer
     if ( !d->autoScrollTimer )
     {
         d->autoScrollTimer = new QTimer( this );
         d->autoScrollTimer->setSingleShot( true );
-        connect( d->autoScrollTimer, SIGNAL(timeout()), this, SLOT(slotAutoScoll()) );
+        connect( d->autoScrollTimer, &QTimer::timeout, this, &PageView::slotAutoScroll );
     }
 
     // if scrollIncrement is zero, stop the timer
@@ -4567,24 +4817,20 @@ void PageView::slotShowSizeAllCursor()
 
 void PageView::slotHandleWebShortcutAction()
 {
-#if KDE_IS_VERSION(4,5,70)
-    KAction *action = qobject_cast<KAction*>( sender() );
+    QAction *action = qobject_cast<QAction*>( sender() );
 
-    if (action)
-    {
+    if (action) {
         KUriFilterData filterData( action->data().toString() );
 
-        if ( KUriFilter::self()->filterSearchUri( filterData, KUriFilter::WebShortcutFilter ) )
-        {
-            KToolInvocation::invokeBrowser( filterData.uri().url() );
+        if ( KUriFilter::self()->filterSearchUri( filterData, KUriFilter::WebShortcutFilter ) ) {
+            QDesktopServices::openUrl( filterData.uri() );
         }
     }
-#endif
 }
 
 void PageView::slotConfigureWebShortcuts()
 {
-    KToolInvocation::kdeinitExec( "kcmshell4", QStringList() << "ebrowsing" );
+    KToolInvocation::kdeinitExec( QStringLiteral("kcmshell5"), QStringList() << QStringLiteral("webshortcuts") );
 }
 
 void PageView::slotZoom()
@@ -4627,7 +4873,7 @@ void PageView::slotViewMode( QAction *action )
     if ( (int)Okular::Settings::viewMode() != nr )
     {
         Okular::Settings::setViewMode( nr );
-        Okular::Settings::self()->writeConfig();
+        Okular::Settings::self()->save();
         if ( d->document->pages() > 0 )
             slotRelayoutPages();
     }
@@ -4638,7 +4884,7 @@ void PageView::slotContinuousToggled( bool on )
     if ( Okular::Settings::viewContinuous() != on )
     {
         Okular::Settings::setViewContinuous( on );
-        Okular::Settings::self()->writeConfig();
+        Okular::Settings::self()->save();
         if ( d->document->pages() > 0 )
             slotRelayoutPages();
     }
@@ -4655,7 +4901,7 @@ void PageView::slotSetMouseNormal()
         d->aToggleAnnotator->trigger();
     // force an update of the cursor
     updateCursor();
-    Okular::Settings::self()->writeConfig();
+    Okular::Settings::self()->save();
 }
 
 void PageView::slotSetMouseZoom()
@@ -4672,7 +4918,7 @@ void PageView::slotSetMouseZoom()
     }
     // force an update of the cursor
     updateCursor();
-    Okular::Settings::self()->writeConfig();
+    Okular::Settings::self()->save();
 }
 
 void PageView::slotSetMouseMagnifier()
@@ -4683,7 +4929,7 @@ void PageView::slotSetMouseMagnifier()
 
     // force an update of the cursor
     updateCursor();
-    Okular::Settings::self()->writeConfig();
+    Okular::Settings::self()->save();
 }
 
 void PageView::slotSetMouseSelect()
@@ -4700,7 +4946,7 @@ void PageView::slotSetMouseSelect()
     }
     // force an update of the cursor
     updateCursor();
-    Okular::Settings::self()->writeConfig();
+    Okular::Settings::self()->save();
 }
 
 void PageView::slotSetMouseTextSelect()
@@ -4717,7 +4963,7 @@ void PageView::slotSetMouseTextSelect()
     }
     // force an update of the cursor
     updateCursor();
-    Okular::Settings::self()->writeConfig();
+    Okular::Settings::self()->save();
 }
 
 void PageView::slotSetMouseTableSelect()
@@ -4736,7 +4982,7 @@ void PageView::slotSetMouseTableSelect()
     }
     // force an update of the cursor
     updateCursor();
-    Okular::Settings::self()->writeConfig();
+    Okular::Settings::self()->save();
 }
 
 void PageView::slotToggleAnnotator( bool on )
@@ -4762,11 +5008,13 @@ void PageView::slotToggleAnnotator( bool on )
         if ( userName.isEmpty() )
         {
             bool ok = false;
-            userName = KInputDialog::getText(
+            userName = QInputDialog::getText(0,
                            i18n( "Annotations author" ),
                            i18n( "Please insert your name or initials:" ),
+                           QLineEdit::Normal,
                            QString(),
                            &ok );
+
             if ( !ok )
             {
                 d->aToggleAnnotator->trigger();
@@ -4776,7 +5024,7 @@ void PageView::slotToggleAnnotator( bool on )
         }
         // save the name
         Okular::Settings::setIdentityAuthor( userName );
-        Okular::Settings::self()->writeConfig();
+        Okular::Settings::self()->save();
     }
 
     // create the annotator object if not present
@@ -4800,7 +5048,7 @@ void PageView::slotAutoScrollUp()
     if ( d->scrollIncrement < -9 )
         return;
     d->scrollIncrement--;
-    slotAutoScoll();
+    slotAutoScroll();
     setFocus();
 }
 
@@ -4809,7 +5057,7 @@ void PageView::slotAutoScrollDown()
     if ( d->scrollIncrement > 9 )
         return;
     d->scrollIncrement++;
-    slotAutoScoll();
+    slotAutoScroll();
     setFocus();
 }
 
@@ -4884,18 +5132,77 @@ void PageView::slotPageSizes( int newsize )
     d->document->setPageSize( d->document->pageSizes().at( newsize ) );
 }
 
+// Enforce mutual-exclusion between trim modes
+// Each mode is uniquely identified by a single value
+// From Okular::Settings::EnumTrimMode
+void PageView::updateTrimMode( int except_id ) {
+    const QList<QAction *> trimModeActions = d->aTrimMode->menu()->actions();
+    foreach(QAction *trimModeAction, trimModeActions)
+    {
+        if (trimModeAction->data().toInt() != except_id)
+            trimModeAction->setChecked( false );
+    }
+}
+
 void PageView::slotTrimMarginsToggled( bool on )
 {
+    if (on) { // Turn off any other Trim modes
+       updateTrimMode(d->aTrimMargins->data().toInt());
+    }
+
     if ( Okular::Settings::trimMargins() != on )
     {
         Okular::Settings::setTrimMargins( on );
-        Okular::Settings::self()->writeConfig();
+        Okular::Settings::self()->save();
         if ( d->document->pages() > 0 )
         {
             slotRelayoutPages();
             slotRequestVisiblePixmaps(); // TODO: slotRelayoutPages() may have done this already!
         }
     }
+}
+
+void PageView::slotTrimToSelectionToggled( bool on )
+{
+    if ( on ) { // Turn off any other Trim modes
+        updateTrimMode(d->aTrimToSelection->data().toInt());
+
+        d->mouseMode = Okular::Settings::EnumMouseMode::TrimSelect;
+        // change the text in messageWindow (and show it if hidden)
+        d->messageWindow->display( i18n( "Draw a rectangle around the page area you wish to keep visible" ), QString(), PageViewMessage::Info, -1 );
+        // force hiding of annotator toolbar
+        if ( d->aToggleAnnotator && d->aToggleAnnotator->isChecked() )
+        {
+           d->aToggleAnnotator->trigger();
+           d->annotator->setHidingForced( true );
+        }
+        // force an update of the cursor
+        updateCursor();
+    } else {
+
+        // toggled off while making selection
+        if ( Okular::Settings::EnumMouseMode::TrimSelect == d->mouseMode ) {
+            // clear widget selection and invalidate rect
+            selectionClear();
+
+            // When Trim selection bbox interaction is over, we should switch to another mousemode.
+            if ( d->aPrevAction )
+            {
+                d->aPrevAction->trigger();
+                d->aPrevAction = 0;
+            } else {
+                d->aMouseNormal->trigger();
+            }
+        }
+
+        d->trimBoundingBox = Okular::NormalizedRect(); // invalidate box
+        if ( d->document->pages() > 0 )
+        {
+            slotRelayoutPages();
+            slotRequestVisiblePixmaps(); // TODO: slotRelayoutPages() may have done this already!
+        }
+    }
+
 }
 
 void PageView::slotToggleForms()
@@ -4909,8 +5216,8 @@ void PageView::slotFormChanged( int pageNumber )
     {
         d->refreshTimer = new QTimer( this );
         d->refreshTimer->setSingleShot( true );
-        connect( d->refreshTimer, SIGNAL( timeout() ),
-                 this, SLOT( slotRefreshPage() ) );
+        connect( d->refreshTimer, &QTimer::timeout,
+                 this, &PageView::slotRefreshPage );
     }
     d->refreshPage = pageNumber;
     int delay = 0;
@@ -4931,6 +5238,7 @@ void PageView::slotRefreshPage()
                                Q_ARG( int, req ) );
 }
 
+#ifdef HAVE_SPEECH
 void PageView::slotSpeakDocument()
 {
     QString text;
@@ -4965,6 +5273,7 @@ void PageView::slotStopSpeaks()
 
     d->m_tts->stopAllSpeechs();
 }
+#endif
 
 void PageView::slotAction( Okular::Action *action )
 {
@@ -5052,18 +5361,40 @@ void PageView::slotProcessRenditionAction( const Okular::RenditionAction *action
         case Okular::RenditionAction::Resume:
             vw->play();
             break;
+        default:
+            return;
     };
 }
 
 void PageView::slotToggleChangeColors()
 {
     Okular::SettingsCore::setChangeColors( !Okular::SettingsCore::changeColors() );
-    Okular::Settings::self()->writeConfig();
+    Okular::Settings::self()->save();
     viewport()->update();
+}
+
+void PageView::slotFitWindowToPage()
+{
+    PageViewItem currentPageItem = NULL;
+    QSize viewportSize = viewport()->size();
+    foreach ( const PageViewItem * pageItem, d->items )
+    {
+        if ( pageItem->isVisible() )
+        {
+            currentPageItem = *pageItem;
+            break;
+        }
+    }
+    const QSize pageSize = QSize( currentPageItem.uncroppedWidth() + kcolWidthMargin, currentPageItem.uncroppedHeight() + krowHeightMargin );
+    if ( verticalScrollBar()->isVisible() )
+        viewportSize.setWidth( viewportSize.width() + verticalScrollBar()->width() );
+    if ( horizontalScrollBar()->isVisible() )
+        viewportSize.setHeight( viewportSize.height() + horizontalScrollBar()->height() );
+    emit fitWindowToPage( viewportSize, pageSize );
 }
 
 //END private SLOTS
 
-#include "pageview.moc"
+#include "moc_pageview.cpp"
 
 /* kate: replace-tabs on; indent-width 4; */

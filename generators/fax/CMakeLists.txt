@@ -5,16 +5,13 @@ include_directories(
 
 ########### next target ###############
 
-set(okularGenerator_fax_PART_SRCS generator_fax.cpp faxdocument.cpp faxexpand.cpp faxinit.cpp )
+set(okularGenerator_fax_PART_SRCS generator_fax.cpp faxdocument.cpp faxexpand.cpp faxinit.cpp fax_debug.cpp)
 
-kde4_add_plugin(okularGenerator_fax ${okularGenerator_fax_PART_SRCS})
+okular_add_generator(okularGenerator_fax ${okularGenerator_fax_PART_SRCS})
 
-target_link_libraries(okularGenerator_fax okularcore ${KDE4_KDEUI_LIBS} ${QT_QTXML_LIBRARY})
-
-install(TARGETS okularGenerator_fax DESTINATION ${PLUGIN_INSTALL_DIR})
-
+target_link_libraries(okularGenerator_fax okularcore KF5::I18n Qt5::Xml)
 
 ########### install files ###############
-
-install( FILES libokularGenerator_fax.desktop okularFax.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
-install( PROGRAMS okularApplication_fax.desktop active-documentviewer_fax.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
+install( FILES okularFax.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
+install( PROGRAMS okularApplication_fax.desktop org.kde.mobile.okular_fax.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
+install( FILES org.kde.okular-fax.metainfo.xml DESTINATION ${KDE_INSTALL_METAINFODIR} )

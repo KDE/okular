@@ -10,24 +10,27 @@
 #include "propertiesdialog.h"
 
 // qt/kde includes
-#include <qfile.h>
-#include <qlayout.h>
-#include <qformlayout.h>
-#include <qlabel.h>
-#include <qheaderview.h>
-#include <qmenu.h>
-#include <qprogressbar.h>
-#include <qpushbutton.h>
-#include <qsortfilterproxymodel.h>
-#include <qtreeview.h>
-#include <qtimer.h>
-#include <kfiledialog.h>
-#include <kicon.h>
-#include <klocale.h>
-#include <kmessagebox.h>
-#include <ksqueezedtextlabel.h>
-#include <kglobalsettings.h>
-#include <kurl.h>
+#include <QApplication>
+#include <QDesktopWidget>
+#include <QFormLayout>
+#include <QFile>
+#include <QFileDialog>
+#include <QIcon>
+#include <QLayout>
+#include <QLatin1Char>
+#include <QHeaderView>
+#include <QMenu>
+#include <QProgressBar>
+#include <QPushButton>
+#include <QSortFilterProxyModel>
+#include <QTreeView>
+#include <QTimer>
+
+#include <KIconLoader>
+#include <KLocalizedString>
+#include <KMessageBox>
+#include <KSqueezedTextLabel>
+#include <QMimeDatabase>
 
 // local includes
 #include "core/document.h"
@@ -42,23 +45,21 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
       m_fontScanStarted( false )
 {
     setFaceType( Tabbed );
-    setCaption( i18n( "Unknown File" ) );
-    setButtons( Ok );
+    setWindowTitle( i18n( "Unknown File" ) );
+    setStandardButtons( QDialogButtonBox::Ok );
 
     // PROPERTIES
     QFrame *page = new QFrame();
     KPageWidgetItem *item = addPage( page, i18n( "&Properties" ) );
-    item->setIcon( KIcon( "document-properties" ) );
+    item->setIcon( QIcon::fromTheme( QStringLiteral("document-properties") ) );
 
     // get document info
     const Okular::DocumentInfo info = doc->documentInfo();
     QFormLayout *layout = new QFormLayout( page );
 
     // mime name based on mimetype id
-    QString mimeName = info.get( Okular::DocumentInfo::MimeType ).section( '/', -1 ).toUpper();
-    setCaption( i18n( "%1 Properties", mimeName ) );
-
-    int valMaxWidth = 100;
+    QString mimeName = info.get( Okular::DocumentInfo::MimeType ).section( QLatin1Char('/'), -1 ).toUpper();
+    setWindowTitle( i18n( "%1 Properties", mimeName ) );
 
     /* obtains the properties list, conveniently ordered */
     QStringList orderedProperties;
@@ -96,15 +97,16 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
             QHBoxLayout *hboxLayout = new QHBoxLayout( value );
             hboxLayout->setMargin( 0 );
             /// retrieve icon and place it in a QLabel
-            KMimeType::Ptr mimeType = KMimeType::mimeType( valueString );
+            QMimeDatabase db;
+            QMimeType mimeType = db.mimeTypeForName( valueString );
             KSqueezedTextLabel *squeezed;
-            if (!mimeType.isNull()) {
+            if (mimeType.isValid()) {
                 /// retrieve icon and place it in a QLabel
                 QLabel *pixmapLabel = new QLabel( value );
                 hboxLayout->addWidget( pixmapLabel, 0 );
-                pixmapLabel->setPixmap( KIconLoader::global()->loadMimeTypeIcon( mimeType->iconName(), KIconLoader::Small ) );
+                pixmapLabel->setPixmap( KIconLoader::global()->loadMimeTypeIcon( mimeType.iconName(), KIconLoader::Small ) );
                 /// mime type's name and label
-                squeezed = new KSqueezedTextLabel( i18nc( "mimetype information, example: \"PDF Document (application/pdf)\"", "%1 (%2)", mimeType->comment(), valueString ), value );
+                squeezed = new KSqueezedTextLabel( i18nc( "mimetype information, example: \"PDF Document (application/pdf)\"", "%1 (%2)", mimeType.comment(), valueString ), value );
             } else {
                 /// only mime type name
                 squeezed = new KSqueezedTextLabel( valueString, value );
@@ -118,25 +120,19 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
             value = label;
         }
         layout->addRow( new QLabel( i18n( "%1:", titleString ) ), value);
-
-        // refine maximum width of 'value' labels
-        valMaxWidth = qMax( valMaxWidth, fontMetrics().width( valueString ) );
     }
 
     // FONTS
-    QVBoxLayout *page2Layout = 0;
     if ( doc->canProvideFontInformation() ) {
         // create fonts tab and layout it
         QFrame *page2 = new QFrame();
         m_fontPage = addPage(page2, i18n("&Fonts"));
-        m_fontPage->setIcon( KIcon( "preferences-desktop-font" ) );
-        page2Layout = new QVBoxLayout(page2);
-        page2Layout->setMargin(marginHint());
-        page2Layout->setSpacing(spacingHint());
+        m_fontPage->setIcon( QIcon::fromTheme( QStringLiteral("preferences-desktop-font") ) );
+        QVBoxLayout *page2Layout = new QVBoxLayout(page2);
         // add a tree view
         QTreeView *view = new QTreeView(page2);
         view->setContextMenuPolicy(Qt::CustomContextMenu);
-        connect(view, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showFontsMenu(QPoint)));
+        connect(view, &QTreeView::customContextMenuRequested, this, &PropertiesDialog::showFontsMenu);
         page2Layout->addWidget(view);
         view->setRootIsDecorated(false);
         view->setAlternatingRowColors(true);
@@ -160,14 +156,8 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
         m_fontProgressBar->hide();
     }
 
-    // current width: left columnt + right column + dialog borders
-    int width = layout->minimumSize().width() + valMaxWidth + 2 * marginHint() + spacingHint() + 30;
-    if ( page2Layout )
-        width = qMax( width, page2Layout->sizeHint().width() + marginHint() + spacingHint() + 31 );
-    // stay inside the 2/3 of the screen width
-    QRect screenContainer = KGlobalSettings::desktopGeometry( this );
-    width = qMin( width, 2*screenContainer.width()/3 );
-    resize(width, 1);
+    // KPageDialog is a bit buggy, it doesn't fix its own sizeHint, so we have to manually resize
+    resize(layout->sizeHint());
 
     connect( pageWidget(), SIGNAL(currentPageChanged(KPageWidgetItem*,KPageWidgetItem*)),
              this, SLOT(pageChanged(KPageWidgetItem*,KPageWidgetItem*)) );
@@ -182,10 +172,10 @@ void PropertiesDialog::pageChanged( KPageWidgetItem *current, KPageWidgetItem * 
 {
     if ( current == m_fontPage && !m_fontScanStarted )
     {
-        connect( m_document, SIGNAL(gotFont(Okular::FontInfo)), m_fontModel, SLOT(addFont(Okular::FontInfo)) );
-        connect( m_document, SIGNAL(fontReadingProgress(int)), this, SLOT(slotFontReadingProgress(int)) );
-        connect( m_document, SIGNAL(fontReadingEnded()), this, SLOT(slotFontReadingEnded()) );
-        QTimer::singleShot( 0, this, SLOT(reallyStartFontReading()) );
+        connect(m_document, &Okular::Document::gotFont, m_fontModel, &FontsListModel::addFont);
+        connect(m_document, &Okular::Document::fontReadingProgress, this, &PropertiesDialog::slotFontReadingProgress);
+        connect(m_document, &Okular::Document::fontReadingEnded, this, &PropertiesDialog::slotFontReadingEnded);
+        QTimer::singleShot( 0, this, &PropertiesDialog::reallyStartFontReading );
 
         m_fontScanStarted = true;
     }
@@ -222,10 +212,10 @@ void PropertiesDialog::showFontsMenu(const QPoint &pos)
         {
             Okular::FontInfo fi = index.data(FontInfoRole).value<Okular::FontInfo>();
             const QString caption = i18n( "Where do you want to save %1?", fi.name() );
-            const QString path = KFileDialog::getSaveFileName( fi.name(), QString(), this, caption, KFileDialog::ConfirmOverwrite );
+            const QString path = QFileDialog::getSaveFileName( this, caption, fi.name() );
             if ( path.isEmpty() )
                 return;
-            
+
             QFile f( path );
             if ( f.open( QIODevice::WriteOnly ) )
             {
@@ -382,11 +372,11 @@ QVariant FontsListModel::data( const QModelIndex &index, int role ) const
             QString fontname = m_fonts.at( index.row() ).name();
             if ( fontname.isEmpty() )
                 fontname = i18n( "Unknown font" );
-            QString tooltip = QString::fromLatin1( "<html><b>" ) +  fontname + QString::fromLatin1( "</b>" );
+            QString tooltip = QLatin1String( "<html><b>" ) +  fontname + QLatin1String( "</b>" );
             if ( m_fonts.at( index.row() ).embedType() == Okular::FontInfo::NotEmbedded )
-                tooltip += QString::fromLatin1( " (<span style=\"font-family: '%1'\">%2</span>)" ).arg( fontname ).arg( fontname );
-            tooltip += QString::fromLatin1( "<br />" ) + i18n( "Embedded: %1", descriptionForEmbedType( m_fonts.at( index.row() ).embedType() ) );
-            tooltip += QString::fromLatin1( "</html>" );
+                tooltip += QStringLiteral( " (<span style=\"font-family: '%1'\">%2</span>)" ).arg( fontname, fontname );
+            tooltip += QLatin1String( "<br />" ) + i18n( "Embedded: %1", descriptionForEmbedType( m_fonts.at( index.row() ).embedType() ) );
+            tooltip += QLatin1String( "</html>" );
             return tooltip;
             break;
         }
@@ -431,6 +421,6 @@ int FontsListModel::rowCount( const QModelIndex &parent ) const
     return parent.isValid() ? 0 : m_fonts.size();
 }
 
-#include "propertiesdialog.moc"
+#include "moc_propertiesdialog.cpp"
 
 /* kate: replace-tabs on; indent-width 4; */

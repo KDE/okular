@@ -15,8 +15,10 @@
 
 class DlgAnnotations : public QWidget
 {
+    Q_OBJECT
+
     public:
-        DlgAnnotations( QWidget * parent = 0 );
+        explicit DlgAnnotations( QWidget * parent = Q_NULLPTR );
 };
 
 #endif

@@ -10,7 +10,7 @@
 #ifndef _OKULAR_FORM_H_
 #define _OKULAR_FORM_H_
 
-#include "okular_export.h"
+#include "okularcore_export.h"
 #include "area.h"
 
 #include <QtCore/QStringList>
@@ -33,7 +33,7 @@ class FormFieldChoicePrivate;
  * This is not meant to be used as a direct base for the form fields in a
  * document, but its abstract subclasses are.
  */
-class OKULAR_EXPORT FormField
+class OKULARCORE_EXPORT FormField
 {
     /// @cond PRIVATE
     friend class Page;
@@ -115,7 +115,7 @@ class OKULAR_EXPORT FormField
  *
  * @since 0.7 (KDE 4.1)
  */
-class OKULAR_EXPORT FormFieldButton : public FormField
+class OKULARCORE_EXPORT FormFieldButton : public FormField
 {
     public:
         /**
@@ -173,7 +173,7 @@ class OKULAR_EXPORT FormFieldButton : public FormField
  * This is the base interface to reimplement to represent a text field, ie a
  * field where the user insert text.
  */
-class OKULAR_EXPORT FormFieldText : public FormField
+class OKULARCORE_EXPORT FormFieldText : public FormField
 {
     public:
         /**
@@ -255,7 +255,7 @@ class OKULAR_EXPORT FormFieldText : public FormField
  * field where the user can select one (of more) element(s) among a set of
  * choices.
  */
-class OKULAR_EXPORT FormFieldChoice : public FormField
+class OKULARCORE_EXPORT FormFieldChoice : public FormField
 {
     public:
         /**

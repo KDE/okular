@@ -13,10 +13,10 @@
 #include <qtoolbar.h>
 #include <qtoolbutton.h>
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 ToolAction::ToolAction( QObject *parent )
-    : KAction( parent )
+    : KSelectAction( parent )
 {
     setText( i18n( "Selection Tools" ) );
 }
@@ -52,12 +52,10 @@ QWidget* ToolAction::createWidget( QWidget *parent )
     button->setPopupMode( QToolButton::DelayedPopup );
     button->setMenu( new QMenu( button ) );
     button->setCheckable( true );
-    connect( toolBar, SIGNAL(iconSizeChanged(QSize)),
-             button, SLOT(setIconSize(QSize)) );
-    connect( toolBar, SIGNAL(toolButtonStyleChanged(Qt::ToolButtonStyle)),
-             button, SLOT(setToolButtonStyle(Qt::ToolButtonStyle)) );
-    connect( button, SIGNAL(triggered(QAction*)), toolBar, SIGNAL(actionTriggered(QAction*)) );
-    connect( button->menu(), SIGNAL(triggered(QAction*)), this, SLOT(slotNewDefaultAction(QAction*)) );
+    connect(toolBar, &QToolBar::iconSizeChanged, button, &QToolButton::setIconSize);
+    connect(toolBar, &QToolBar::toolButtonStyleChanged, button, &QToolButton::setToolButtonStyle);
+    connect(button, &QToolButton::triggered, toolBar, &QToolBar::actionTriggered);
+    connect( button->menu(), &QMenu::triggered, this, &ToolAction::slotNewDefaultAction );
 
     m_buttons.append( button );
 
@@ -86,4 +84,4 @@ void ToolAction::slotNewDefaultAction( QAction *action )
         }
 }
 
-#include "toolaction.moc"
+#include "moc_toolaction.cpp"

@@ -18,12 +18,14 @@ class Ui_DlgGeneralBase;
 
 class DlgGeneral : public QWidget
 {
+    Q_OBJECT
+
     public:
-        DlgGeneral( QWidget * parent,  Okular::EmbedMode embedMode );
+        explicit DlgGeneral( QWidget * parent,  Okular::EmbedMode embedMode );
         virtual ~DlgGeneral();
 
     protected:
-        virtual void showEvent( QShowEvent * );
+        void showEvent( QShowEvent * ) Q_DECL_OVERRIDE;
 
         Ui_DlgGeneralBase * m_dlg;
 };

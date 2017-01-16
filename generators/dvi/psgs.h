@@ -12,11 +12,11 @@
 
 #include <QApplication>
 #include <QColor>
-#include <QCustomEvent>
+#include <QtGui/qevent.h>
 #include <QHash>
 #include <QObject>
 
-class KUrl;
+class QUrl;
 class PageNumber;
 class QPainter;
 
@@ -76,7 +76,7 @@ public:
       returned. Otherwise, the method returns the first argument. TODO:
       use the DVI file's baseURL, once this is implemented.
   */
-  static  QString locateEPSfile(const QString &filename, const KUrl &base);
+  static  QString locateEPSfile(const QString &filename, const QUrl &base);
 
 private:
   void                  gs_generate_graphics_file(const PageNumber& page, const QString& filename, long magnification);
@@ -101,7 +101,7 @@ private:
   // removed from the list, and another device name is tried.
   QStringList           knownDevices;
 
-signals:
+Q_SIGNALS:
   /** Passed through to the top-level kpart. */
   void error( const QString &message, int duration );
 };

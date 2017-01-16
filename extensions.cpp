@@ -97,7 +97,7 @@ QString OkularLiveConnectExtension::eval( const QString &script )
     args.append( qMakePair( KParts::LiveConnectExtension::TypeString, script ) );
     m_evalRes.clear();
     m_inEval = true;
-    emit partEvent( 0, "eval", args );
+    emit partEvent( 0, QStringLiteral("eval"), args );
     m_inEval = false;
     return m_evalRes;
 }
@@ -109,16 +109,16 @@ void OkularLiveConnectExtension::postMessage( const QStringList &args )
     Q_FOREACH ( const QString &arg, args )
     {
         QString newarg = arg;
-        newarg.replace( '\'', "\\'" );
-        arrayargs.append( "\"" + newarg + "\"" );
+        newarg.replace( QLatin1Char('\''), QLatin1String("\\'") );
+        arrayargs.append( QLatin1Char('"') + newarg + QLatin1Char('"') );
     }
-    const QString arrayarg = '[' + arrayargs.join( ", " ) + ']';
-    eval( "if (this.messageHandler && typeof this.messageHandler.onMessage == 'function') "
-          "{ this.messageHandler.onMessage(" + arrayarg + ") }" );
+    const QString arrayarg = QLatin1Char('[') + arrayargs.join( QStringLiteral(", ") ) + QLatin1Char(']');
+    eval( QStringLiteral("if (this.messageHandler && typeof this.messageHandler.onMessage == 'function') "
+          "{ this.messageHandler.onMessage(") + arrayarg + QStringLiteral(") }") );
 }
 
 }
 
-#include "extensions.moc"
+#include "moc_extensions.cpp"
 
 /* kate: replace-tabs on; indent-width 4; */

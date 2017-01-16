@@ -16,28 +16,31 @@
 #ifndef _PART_H_
 #define _PART_H_
 
-#include <kparts/part.h>
-#include <kpluginfactory.h>
-#include <kmessagewidget.h>
-#include <qicon.h>
-#include <qlist.h>
-#include <qpointer.h>
-#include <qprocess.h>
+#include <QIcon>
+#include <QList>
+#include <QPointer>
+#include <QProcess>
+#include <QtDBus>
+#include <QUrl>
+
+#include <KCompressionDevice>
+#include <KIO/Job>
+#include <KMessageWidget>
+#include <KParts/ReadWritePart>
+#include <KPluginFactory>
+
 #include "core/observer.h"
 #include "core/document.h"
 #include "kdocumentviewer.h"
 #include "interfaces/viewerinterface.h"
 
-#include "okular_part_export.h"
-
-#include <QtDBus/QtDBus>
+#include "okularpart_export.h"
 
 class QAction;
 class QWidget;
 class QPrinter;
 class QMenu;
 
-class KUrl;
 class KConfigDialog;
 class KConfigGroup;
 class KDirWatch;
@@ -45,9 +48,8 @@ class KToggleAction;
 class KToggleFullScreenAction;
 class KSelectAction;
 class KAboutData;
-class KTemporaryFile;
-class KAction;
-class KMenu;
+class QTemporaryFile;
+class QAction;
 namespace KParts { class GUIActivateEvent; }
 
 class FindBar;
@@ -64,6 +66,8 @@ class MiniBarLogic;
 class FileKeeper;
 class Reviews;
 class BookmarkList;
+class DrawingToolActions;
+class Layers;
 
 namespace Okular
 {
@@ -93,13 +97,13 @@ enum EmbedMode
  * @author Wilco Greven <greven@kde.org>
  * @version 0.2
  */
-class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::DocumentObserver, public KDocumentViewer, public Okular::ViewerInterface
+class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::DocumentObserver, public KDocumentViewer, public Okular::ViewerInterface
 {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.kde.okular")
     Q_INTERFACES(KDocumentViewer)
     Q_INTERFACES(Okular::ViewerInterface)
-    
+
     friend class PartTest;
 
     public:
@@ -110,32 +114,32 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
          * which config file should be used by adding a string containing "ConfigFileName=<file name>"
          * to 'args'.
          **/
-        Part(QWidget* parentWidget, QObject* parent, const QVariantList& args, KComponentData componentData);
+        Part(QWidget* parentWidget, QObject* parent, const QVariantList& args);
 
         // Destructor
         ~Part();
 
         // inherited from DocumentObserver
-        void notifySetup( const QVector< Okular::Page * > &pages, int setupFlags );
-        void notifyViewportChanged( bool smoothMove );
-        void notifyPageChanged( int page, int flags );
+        void notifySetup( const QVector< Okular::Page * > &pages, int setupFlags ) Q_DECL_OVERRIDE;
+        void notifyViewportChanged( bool smoothMove ) Q_DECL_OVERRIDE;
+        void notifyPageChanged( int page, int flags ) Q_DECL_OVERRIDE;
 
-        bool openDocument(const KUrl& url, uint page);
-        void startPresentation();
-        QStringList supportedMimeTypes() const;
+        bool openDocument(const QUrl &url, uint page) Q_DECL_OVERRIDE;
+        void startPresentation() Q_DECL_OVERRIDE;
+        QStringList supportedMimeTypes() const Q_DECL_OVERRIDE;
 
-        KUrl realUrl() const;
+        QUrl realUrl() const;
 
-        void showSourceLocation(const QString& fileName, int line, int column, bool showGraphically = true);
-        void clearLastShownSourceLocation();
-        bool isWatchFileModeEnabled() const;
-        void setWatchFileModeEnabled(bool enable);
-        bool areSourceLocationsShownGraphically() const;
-        void setShowSourceLocationsGraphically(bool show);
-        bool openNewFilesInTabs() const;
+        void showSourceLocation(const QString& fileName, int line, int column, bool showGraphically = true) Q_DECL_OVERRIDE;
+        void clearLastShownSourceLocation() Q_DECL_OVERRIDE;
+        bool isWatchFileModeEnabled() const Q_DECL_OVERRIDE;
+        void setWatchFileModeEnabled(bool enable) Q_DECL_OVERRIDE;
+        bool areSourceLocationsShownGraphically() const Q_DECL_OVERRIDE;
+        void setShowSourceLocationsGraphically(bool show) Q_DECL_OVERRIDE;
+        bool openNewFilesInTabs() const Q_DECL_OVERRIDE;
 
-    public slots:                // dbus
-        Q_SCRIPTABLE Q_NOREPLY void goToPage(uint page);
+    public Q_SLOTS:                // dbus
+        Q_SCRIPTABLE Q_NOREPLY void goToPage(uint page) Q_DECL_OVERRIDE;
         Q_SCRIPTABLE Q_NOREPLY void openDocument( const QString &doc );
         Q_SCRIPTABLE uint pages();
         Q_SCRIPTABLE uint currentPage();
@@ -152,40 +156,40 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         Q_SCRIPTABLE Q_NOREPLY void reload();
         Q_SCRIPTABLE Q_NOREPLY void enableStartWithPrint();
 
-    signals:
+    Q_SIGNALS:
         void enablePrintAction(bool enable);
         void openSourceReference(const QString& absFileName, int line, int column);
         void viewerMenuStateChange(bool enabled);
         void enableCloseAction(bool enable);
-        void mimeTypeChanged(KMimeType::Ptr mimeType);
-        void urlsDropped( const KUrl::List& urls );
+        void mimeTypeChanged(QMimeType mimeType);
+        void urlsDropped( const QList<QUrl>& urls );
+        void fitWindowToPage( const QSize& pageViewPortSize, const QSize& pageSize );
 
     protected:
         // reimplemented from KParts::ReadWritePart
-        bool openFile();
-        bool openUrl(const KUrl &url);
-        void guiActivateEvent(KParts::GUIActivateEvent *event);
-        void displayInfoMessage( const QString &message, KMessageWidget::MessageType messageType = KMessageWidget::Information, int duration = -1 );;
+        bool openFile() Q_DECL_OVERRIDE;
+        bool openUrl(const QUrl &url) Q_DECL_OVERRIDE;
+        void guiActivateEvent(KParts::GUIActivateEvent *event) Q_DECL_OVERRIDE;
+        void displayInfoMessage( const QString &message, KMessageWidget::MessageType messageType = KMessageWidget::Information, int duration = -1 );
     public:
-        bool saveFile();
-        bool queryClose();
-        bool closeUrl();
-        bool closeUrl(bool promptToSave);
-        void setReadWrite(bool readwrite);
-        bool saveAs(const KUrl & saveUrl);
+        bool saveFile() Q_DECL_OVERRIDE;
+        bool queryClose() Q_DECL_OVERRIDE;
+        bool closeUrl() Q_DECL_OVERRIDE;
+        bool closeUrl(bool promptToSave) Q_DECL_OVERRIDE;
+        void setReadWrite(bool readwrite) Q_DECL_OVERRIDE;
+        bool saveAs(const QUrl & saveUrl) Q_DECL_OVERRIDE;
 
-    protected slots:
+    protected Q_SLOTS:
         // connected to actions
-        void openUrlFromDocument(const KUrl &url);
-        void openUrlFromBookmarks(const KUrl &url);
-        void handleDroppedUrls( const KUrl::List& urls );
+        void openUrlFromDocument(const QUrl &url);
+        void openUrlFromBookmarks(const QUrl &url);
+        void handleDroppedUrls( const QList<QUrl>& urls );
         void slotGoToPage();
         void slotHistoryBack();
         void slotHistoryNext();
         void slotAddBookmark();
         void slotRenameBookmarkFromMenu();
         void slotRenameCurrentViewportBookmark();
-        void slotAboutToShowContextMenu(KMenu *menu, QAction *action, QMenu *contextMenu);
         void slotPreviousBookmark();
         void slotNextBookmark();
         void slotFindNext();
@@ -218,12 +222,11 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         void updateBookmarksActions();
         void enableTOC(bool enable);
         void slotRebuildBookmarkMenu();
+        void enableLayers( bool enable );
 
-    public slots:
+    public Q_SLOTS:
         // connected to Shell action (and browserExtension), not local one
         void slotPrint();
-        void restoreDocument(const KConfigGroup &group);
-        void saveDocumentRestoreInfo(KConfigGroup &group);
         void slotFileDirty( const QString& );
         void slotDoFileDirty();
         void psTransformEnded(int, QProcess::ExitStatus);
@@ -233,8 +236,12 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         void warningMessage( const QString &message, int duration = -1 );
         void noticeMessage( const QString &message, int duration = -1 );
 
+        void moveSplitter( const int sideWidgetSize );
+
     private:
-        Document::OpenResult doOpenFile(const KMimeType::Ptr &mime, const QString &fileNameToOpen, bool *isCompressedFile);
+        bool aboutToShowContextMenu(QMenu *menu, QAction *action, QMenu *contextMenu);
+        bool eventFilter(QObject * watched, QEvent * event) override;
+        Document::OpenResult doOpenFile(const QMimeType &mime, const QString &fileNameToOpen, bool *isCompressedFile);
 
         void setupViewerActions();
         void setViewerShortcuts();
@@ -242,16 +249,16 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
 
         void setupPrint( QPrinter &printer );
         void doPrint( QPrinter &printer );
-        bool handleCompressed( QString &destpath, const QString &path, const QString &compressedMimetype );
+        bool handleCompressed(QString &destpath, const QString &path, KCompressionDevice::CompressionType compressionType );
         void rebuildBookmarkMenu( bool unplugActions = true );
         void updateAboutBackendAction();
         void unsetDummyMode();
         void slotRenameBookmark( const DocumentViewport &viewport );
         void resetStartArguments();
-        
+
         static int numberOfParts;
 
-        KTemporaryFile *m_tempfile;
+        QTemporaryFile *m_tempfile;
 
         // the document
         Okular::Document * m_document;
@@ -277,14 +284,15 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         QPointer<PageSizeLabel> m_pageSizeLabel;
         QPointer<Reviews> m_reviewsWidget;
         QPointer<BookmarkList> m_bookmarkList;
+        QPointer<Layers> m_layers;
 
         // document watcher (and reloader) variables
         KDirWatch *m_watcher;
         QTimer *m_dirtyHandler;
-        KUrl m_oldUrl;
+        QUrl m_oldUrl;
         Okular::DocumentViewport m_viewportDirty;
         bool m_wasPresentationOpen;
-        int m_dirtyToolboxIndex;
+        QWidget *m_dirtyToolboxItem;
         bool m_wasSidebarVisible;
         bool m_wasSidebarCollapsed;
         bool m_fileWasRemoved;
@@ -294,39 +302,40 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         QStringList m_searchHistory;
 
         // actions
-        KAction *m_gotoPage;
-        KAction *m_prevPage;
-        KAction *m_nextPage;
-        KAction *m_beginningOfDocument;
-        KAction *m_endOfDocument;
-        KAction *m_historyBack;
-        KAction *m_historyNext;
-        KAction *m_addBookmark;
-        KAction *m_renameBookmark;
-        KAction *m_prevBookmark;
-        KAction *m_nextBookmark;
-        KAction *m_copy;
-        KAction *m_selectAll;
-        KAction *m_find;
-        KAction *m_findNext;
-        KAction *m_findPrev;
-        KAction *m_saveAs;
-        KAction *m_saveCopyAs;
-        KAction *m_printPreview;
-        KAction *m_showProperties;
-        KAction *m_showEmbeddedFiles;
-        KAction *m_exportAs;
+        QAction *m_gotoPage;
+        QAction *m_prevPage;
+        QAction *m_nextPage;
+        QAction *m_beginningOfDocument;
+        QAction *m_endOfDocument;
+        QAction *m_historyBack;
+        QAction *m_historyNext;
+        QAction *m_addBookmark;
+        QAction *m_renameBookmark;
+        QAction *m_prevBookmark;
+        QAction *m_nextBookmark;
+        QAction *m_copy;
+        QAction *m_selectAll;
+        QAction *m_find;
+        QAction *m_findNext;
+        QAction *m_findPrev;
+        QAction *m_saveAs;
+        QAction *m_saveCopyAs;
+        QAction *m_printPreview;
+        QAction *m_showProperties;
+        QAction *m_showEmbeddedFiles;
+        QAction *m_exportAs;
         QAction *m_exportAsText;
         QAction *m_exportAsDocArchive;
-        KAction *m_showPresentation;
+        QAction *m_showPresentation;
         KToggleAction* m_showMenuBarAction;
         KToggleAction* m_showLeftPanel;
         KToggleAction* m_showBottomBar;
         KToggleFullScreenAction* m_showFullScreenAction;
-        KAction *m_aboutBackend;
-        KAction *m_reload;
+        QAction *m_aboutBackend;
+        QAction *m_reload;
         QMenu *m_exportAsMenu;
-        KAction *m_closeFindBar;
+        QAction *m_closeFindBar;
+        DrawingToolActions *m_presentationDrawingActions;
 
         bool m_actionsSearched;
         BrowserExtension *m_bExtension;
@@ -340,7 +349,7 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
 
         EmbedMode m_embedMode;
 
-        KUrl m_realUrl;
+        QUrl m_realUrl;
 
         KXMLGUIClient *m_generatorGuiClient;
         FileKeeper *m_keeper;
@@ -348,21 +357,9 @@ class OKULAR_PART_EXPORT Part : public KParts::ReadWritePart, public Okular::Doc
         // Timer for m_infoMessage
         QTimer *m_infoTimer;
 
-    private slots:
+    private Q_SLOTS:
         void slotAnnotationPreferences();
         void slotHandleActivatedSourceReference(const QString& absFileName, int line, int col, bool *handled);
-};
-
-class PartFactory : public KPluginFactory
-{
-    Q_OBJECT
-
-    public:
-        PartFactory();
-        virtual ~PartFactory();
-
-    protected:
-        virtual QObject *create(const char *iface, QWidget *parentWidget, QObject *parent, const QVariantList &args, const QString &keyword);
 };
 
 }

@@ -13,22 +13,23 @@
 #include <QTextCodec>
 
 #include <kencodingprober.h>
-#include <kdebug.h>
+#include <QtCore/QDebug>
 
 #include "document.h"
+#include "debug_txt.h"
 
 using namespace Txt;
 
 Document::Document( const QString &fileName )
 {
 #ifdef TXT_DEBUG
-    kDebug() << "Opening file" << fileName;
+    qCDebug(OkularTxtDebug) << "Opening file" << fileName;
 #endif
 
     QFile plainFile( fileName );
     if ( !plainFile.open( QIODevice::ReadOnly | QIODevice::Text ) )
     {
-        kDebug() << "Can't open file" << plainFile.fileName();
+        qCDebug(OkularTxtDebug) << "Can't open file" << plainFile.fileName();
         return;
     }
 
@@ -65,7 +66,9 @@ QString Document::toUnicode( const QByteArray &array )
         return QString();
     }
 
-    kDebug() << "Detected" << prober.encoding() << "encoding"
+    qCDebug(OkularTxtDebug) << "Detected" << prober.encoding() << "encoding"
              << "based on" << charsFeeded << "chars";
     return QTextCodec::codecForName( encoding )->toUnicode( array );
 }
+
+Q_LOGGING_CATEGORY(OkularTxtDebug, "org.kde.okular.generators.txt")

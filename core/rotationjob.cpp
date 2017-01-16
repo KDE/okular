@@ -14,7 +14,8 @@
 using namespace Okular;
 
 RotationJob::RotationJob( const QImage &image, Rotation oldRotation, Rotation newRotation, DocumentObserver *observer )
-    : mImage( image ), mOldRotation( oldRotation ), mNewRotation( newRotation ), mObserver( observer ), m_pd( 0 )
+    : ThreadWeaver::QObjectDecorator( new RotationJobInternal( image, oldRotation, newRotation ) )
+    , mObserver( observer ), m_pd( 0 )
     , mRect( NormalizedRect() )
 {
 }
@@ -27,16 +28,6 @@ void RotationJob::setPage( PagePrivate * pd )
 void RotationJob::setRect( const NormalizedRect &rect )
 {
     mRect = rect;
-}
-
-QImage RotationJob::image() const
-{
-    return mRotatedImage;
-}
-
-Rotation RotationJob::rotation() const
-{
-    return mNewRotation;
 }
 
 DocumentObserver * RotationJob::observer() const
@@ -52,18 +43,6 @@ PagePrivate * RotationJob::page() const
 NormalizedRect RotationJob::rect() const
 {
     return mRect;
-}
-
-void RotationJob::run()
-{
-    if ( mOldRotation == mNewRotation ) {
-        mRotatedImage = mImage;
-        return;
-    }
-
-    QTransform matrix = rotationMatrix( mOldRotation, mNewRotation );
-
-    mRotatedImage = mImage.transformed( matrix );
 }
 
 QTransform RotationJob::rotationMatrix( Rotation from, Rotation to )
@@ -103,4 +82,34 @@ QTransform RotationJob::rotationMatrix( Rotation from, Rotation to )
     return matrix;
 }
 
-#include "rotationjob_p.moc"
+RotationJobInternal::RotationJobInternal( const QImage &image, Rotation oldRotation, Rotation newRotation )
+    : mImage( image ), mOldRotation( oldRotation ), mNewRotation( newRotation )
+{
+}
+
+QImage RotationJobInternal::image() const
+{
+    return mRotatedImage;
+}
+
+Rotation RotationJobInternal::rotation() const
+{
+    return mNewRotation;
+}
+
+void RotationJobInternal::run(ThreadWeaver::JobPointer self, ThreadWeaver::Thread *thread)
+{
+    Q_UNUSED(self);
+    Q_UNUSED(thread);
+
+    if ( mOldRotation == mNewRotation ) {
+        mRotatedImage = mImage;
+        return;
+    }
+
+    const QTransform matrix = RotationJob::rotationMatrix( mOldRotation, mNewRotation );
+
+    mRotatedImage = mImage.transformed( matrix );
+}
+
+#include "moc_rotationjob_p.cpp"

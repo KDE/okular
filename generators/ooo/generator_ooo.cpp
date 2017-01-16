@@ -11,31 +11,15 @@
 
 #include "converter.h"
 
-#include <kaboutdata.h>
-#include <klocale.h>
+#include <KAboutData>
+#include <KLocalizedString>
 #include <kconfigdialog.h>
 #include <kwallet.h>
 
-static KAboutData createAboutData()
-{
-    KAboutData aboutData(
-         "okular_ooo",
-         "okular_ooo",
-         ki18n( "OpenDocument Text Backend" ),
-         "0.2.4",
-         ki18n( "A renderer for OpenDocument Text documents" ),
-         KAboutData::License_GPL,
-         ki18n( "© 2006-2008 Tobias Koenig" )
-    );
-    aboutData.addAuthor( ki18n( "Tobias Koenig" ), KLocalizedString(), "tokoe@kde.org" );
-
-    return aboutData;
-}
-
-OKULAR_EXPORT_PLUGIN( KOOOGenerator, createAboutData() )
+OKULAR_EXPORT_PLUGIN(KOOOGenerator, "libokularGenerator_ooo.json")
 
 KOOOGenerator::KOOOGenerator( QObject *parent, const QVariantList &args )
-  : Okular::TextDocumentGenerator( new OOO::Converter, "okular_ooo_generator_settings", parent, args )
+  : Okular::TextDocumentGenerator( new OOO::Converter, QStringLiteral("okular_ooo_generator_settings"), parent, args )
 {
 }
 
@@ -43,12 +27,13 @@ void KOOOGenerator::addPages( KConfigDialog* dlg )
 {
     Okular::TextDocumentSettingsWidget *widget = new Okular::TextDocumentSettingsWidget();
 
-    dlg->addPage( widget, generalSettings(), i18n("OpenDocument Text"), "application-vnd.oasis.opendocument.text", i18n("OpenDocument Text Backend Configuration") );
+    dlg->addPage( widget, generalSettings(), i18n("OpenDocument Text"), QStringLiteral("application-vnd.oasis.opendocument.text"), i18n("OpenDocument Text Backend Configuration") );
 }
 
 void KOOOGenerator::walletDataForFile( const QString &fileName, QString *walletName, QString *walletFolder, QString *walletKey ) const
 {
-    *walletKey = fileName + "/opendocument";
+    *walletKey = fileName + QStringLiteral("/opendocument");
     *walletName = KWallet::Wallet::LocalWallet();
     *walletFolder = KWallet::Wallet::PasswordFolder();
 }
+#include "generator_ooo.moc"

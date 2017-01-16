@@ -16,14 +16,15 @@
 #include <QFileInfo>
 #include <QApplication> // Because of the HACK
 
-#include <kdebug.h>
-#include <klocale.h>
-#include <KStandardDirs>
+#include <QtCore/QDebug>
+#include <KLocalizedString>
+
 
 #include <core/action.h>
 #include <core/movie.h>
 #include <core/sound.h>
 #include <core/annotations.h>
+#include <QStandardPaths>
 
 using namespace Epub;
 
@@ -43,7 +44,7 @@ QString _strPack(char **str, int size)
   res = QString::fromUtf8(str[0]);
 
   for (int i=1;i<size;i++) {
-    res += ", ";
+    res += QLatin1String(", ");
     res += QString::fromUtf8(str[i]);
   }
 
@@ -84,17 +85,17 @@ void Converter::_handle_anchors(const QTextBlock &start, const QString &name) {
 
         // remove ./ or ../
         // making it easier to compare, with links
-        while(!hrefString.isNull() && ( hrefString.at(0) == '.' || hrefString.at(0) == '/') ){
+        while(!hrefString.isNull() && ( hrefString.at(0) == QLatin1Char('.') || hrefString.at(0) == QLatin1Char('/')) ){
           hrefString.remove(0,1);
         }
 
         QUrl href(hrefString);
         if (href.isValid() && !href.isEmpty()) {
           if (href.isRelative()) { // Inside document link
-            if(!hrefString.indexOf('#'))
+            if(!hrefString.indexOf(QLatin1Char('#')))
               hrefString = name + hrefString;
-            else if(QFileInfo(hrefString).path() == "." && curDir != ".")
-              hrefString = curDir + '/' + hrefString;
+            else if(QFileInfo(hrefString).path() == QLatin1String(".") && curDir != QLatin1String("."))
+              hrefString = curDir + QLatin1Char('/') + hrefString;
 
             // QTextCharFormat sometimes splits a link in two
             // if there's no white space between words & the first one is an anchor
@@ -110,7 +111,7 @@ void Converter::_handle_anchors(const QTextBlock &start, const QString &name) {
                                                 frag.position()+fragLen));
           } else { // Outside document link
             Okular::BrowseAction *action =
-              new Okular::BrowseAction(href.toString());
+              new Okular::BrowseAction(QUrl(href.toString()));
 
             emit addAction(action, frag.position(),
                            frag.position() + frag.length());
@@ -121,7 +122,7 @@ void Converter::_handle_anchors(const QTextBlock &start, const QString &name) {
         if (!names.empty()) {
           for (QStringList::const_iterator lit = names.constBegin();
                lit != names.constEnd(); ++lit) {
-            mSectionMap.insert(name + '#' + *lit, bit);
+            mSectionMap.insert(name + QLatin1Char('#') + *lit, bit);
           }
         }
 
@@ -148,7 +149,7 @@ static QPoint calculateXYPosition( QTextDocument *document, int startPosition )
 
   QTextLayout *startLayout = startBlock.layout();
   if (!startLayout) {
-    kWarning() << "Start layout not found" << startLayout;
+    qWarning() << "Start layout not found" << startLayout;
     return QPoint();
   }
 
@@ -189,7 +190,7 @@ QTextDocument* Converter::convert( const QString &fileName )
   _emitData(Okular::DocumentInfo::CreationDate, EPUB_DATE);
   _emitData(Okular::DocumentInfo::Category, EPUB_TYPE);
   _emitData(Okular::DocumentInfo::Copyright, EPUB_RIGHTS);
-  emit addMetaData( Okular::DocumentInfo::MimeType, "application/epub+zip");
+  emit addMetaData( Okular::DocumentInfo::MimeType, QStringLiteral("application/epub+zip"));
 
   struct eiterator *it;
 
@@ -211,23 +212,23 @@ QTextDocument* Converter::convert( const QString &fileName )
       QString htmlContent = QString::fromUtf8(epub_it_get_curr(it));
 
       // as QTextCharFormat::anchorNames() ignores sections, replace it with <p>
-      htmlContent.replace(QRegExp("< *section"),"<p");
-      htmlContent.replace(QRegExp("< */ *section"),"</p");
+      htmlContent.replace(QRegExp(QStringLiteral("< *section")),QStringLiteral("<p"));
+      htmlContent.replace(QRegExp(QStringLiteral("< */ *section")),QStringLiteral("</p"));
 
       // convert svg tags to img
       const int maxHeight = mTextDocument->maxContentHeight();
       const int maxWidth = mTextDocument->maxContentWidth();
       QDomDocument dom;
       if(dom.setContent(htmlContent)) {
-        QDomNodeList svgs = dom.elementsByTagName("svg");
+        QDomNodeList svgs = dom.elementsByTagName(QStringLiteral("svg"));
         if(!svgs.isEmpty()) {
           QList< QDomNode > imgNodes;
-          for (uint i = 0; i < svgs.length(); ++i) {
-            QDomNodeList images = svgs.at(i).toElement().elementsByTagName("image");
-            for (uint j = 0; j < images.length(); ++j) {
-              QString lnk = images.at(i).toElement().attribute("xlink:href");
-              int ht = images.at(i).toElement().attribute("height").toInt();
-              int wd = images.at(i).toElement().attribute("width").toInt();
+          for (int i = 0; i < svgs.length(); ++i) {
+            QDomNodeList images = svgs.at(i).toElement().elementsByTagName(QStringLiteral("image"));
+            for (int j = 0; j < images.length(); ++j) {
+              QString lnk = images.at(i).toElement().attribute(QStringLiteral("xlink:href"));
+              int ht = images.at(i).toElement().attribute(QStringLiteral("height")).toInt();
+              int wd = images.at(i).toElement().attribute(QStringLiteral("width")).toInt();
               QImage img = mTextDocument->loadResource(QTextDocument::ImageResource,QUrl(lnk)).value<QImage>();
               if(ht == 0) ht = img.height();
               if(wd == 0) wd = img.width();
@@ -235,21 +236,21 @@ QTextDocument* Converter::convert( const QString &fileName )
               if(wd > maxWidth) wd = maxWidth;
               mTextDocument->addResource(QTextDocument::ImageResource,QUrl(lnk),img);
               QDomDocument newDoc;
-              newDoc.setContent(QString("<img src=\"%1\" height=\"%2\" width=\"%3\" />").arg(lnk).arg(ht).arg(wd));
+              newDoc.setContent(QStringLiteral("<img src=\"%1\" height=\"%2\" width=\"%3\" />").arg(lnk).arg(ht).arg(wd));
               imgNodes.append(newDoc.documentElement());
             }
-            foreach (QDomNode nd, imgNodes) {
+            foreach (const QDomNode& nd, imgNodes) {
               svgs.at(i).parentNode().replaceChild(nd,svgs.at(i));
             }
           }
         }
 
         // handle embedded videos
-        QDomNodeList videoTags = dom.elementsByTagName("video");
+        QDomNodeList videoTags = dom.elementsByTagName(QStringLiteral("video"));
         while(!videoTags.isEmpty()) {
-          QDomNodeList sourceTags = videoTags.at(0).toElement().elementsByTagName("source");
+          QDomNodeList sourceTags = videoTags.at(0).toElement().elementsByTagName(QStringLiteral("source"));
           if(!sourceTags.isEmpty()) {
-            QString lnk = sourceTags.at(0).toElement().attribute("src");
+            QString lnk = sourceTags.at(0).toElement().attribute(QStringLiteral("src"));
 
             Okular::Movie *movie = new Okular::Movie(mTextDocument->loadResource(EpubDocument::MovieResource,QUrl(lnk)).toString());
             movie->setSize(videoSize);
@@ -260,17 +261,17 @@ QTextDocument* Converter::convert( const QString &fileName )
 
             movieAnnots.push_back(annot);
             QDomDocument tempDoc;
-            tempDoc.setContent(QString("<pre>&lt;video&gt;&lt;/video&gt;</pre>"));
+            tempDoc.setContent(QStringLiteral("<pre>&lt;video&gt;&lt;/video&gt;</pre>"));
             videoTags.at(0).parentNode().replaceChild(tempDoc.documentElement(),videoTags.at(0));
           }
         }
 
         //handle embedded audio
-        QDomNodeList audioTags = dom.elementsByTagName("audio");
+        QDomNodeList audioTags = dom.elementsByTagName(QStringLiteral("audio"));
         while(!audioTags.isEmpty()) {
           QDomElement element = audioTags.at(0).toElement();
-          bool repeat = element.hasAttribute("loop");
-          QString lnk = element.attribute("src");
+          bool repeat = element.hasAttribute(QStringLiteral("loop"));
+          QString lnk = element.attribute(QStringLiteral("src"));
 
           Okular::Sound *sound = new Okular::Sound(mTextDocument->loadResource(
                   EpubDocument::AudioResource, QUrl(lnk)).toByteArray());
@@ -279,7 +280,7 @@ QTextDocument* Converter::convert( const QString &fileName )
           soundActions.push_back(soundAction);
 
           QDomDocument tempDoc;
-          tempDoc.setContent(QString("<pre>&lt;audio&gt;&lt;/audio&gt;</pre>"));
+          tempDoc.setContent(QStringLiteral("<pre>&lt;audio&gt;&lt;/audio&gt;</pre>"));
           audioTags.at(0).parentNode().replaceChild(tempDoc.documentElement(),audioTags.at(0));
         }
         htmlContent = dom.toString();
@@ -296,11 +297,11 @@ QTextDocument* Converter::convert( const QString &fileName )
       QTextBlock before;
       if(firstPage) {
         // preHtml & postHtml make it possible to have a margin around the content of the page
-        const QString preHtml = QString("<html><head></head><body>"
+        const QString preHtml = QString::fromLatin1("<html><head></head><body>"
                                         "<table style=\"-qt-table-type: root; margin-top:%1px; margin-bottom:%1px; margin-left:%1px; margin-right:%1px;\">"
                                         "<tr>"
                                         "<td style=\"border: none;\">").arg(mTextDocument->padding);
-        const QString postHtml = "</tr></table></body></html>";
+        const QString postHtml = QStringLiteral("</tr></table></body></html>");
         mTextDocument->setHtml(preHtml + htmlContent + postHtml);
         firstPage = false;
         before = mTextDocument->begin();
@@ -315,10 +316,10 @@ QTextDocument* Converter::convert( const QString &fileName )
       QTextCursor csr(mTextDocument);   // a temporary cursor
       csr.movePosition(QTextCursor::Start);
       int index = 0;
-      while( !(csr = mTextDocument->find("<video></video>",csr)).isNull() ) {
+      while( !(csr = mTextDocument->find(QStringLiteral("<video></video>"),csr)).isNull() ) {
         const int posStart = csr.position();
         const QPoint startPoint = calculateXYPosition(mTextDocument, posStart);
-        QImage img(KStandardDirs::locate("data", "okular/pics/okular-epub-movie.png"));
+        QImage img(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("okular/pics/okular-epub-movie.png")));
         img = img.scaled(videoSize);
         csr.insertImage(img);
         const int posEnd = csr.position();
@@ -330,10 +331,10 @@ QTextDocument* Converter::convert( const QString &fileName )
 
       csr.movePosition(QTextCursor::Start);
       index = 0;
-      const QString keyToSearch("<audio></audio>");
+      const QString keyToSearch(QStringLiteral("<audio></audio>"));
       while( !(csr = mTextDocument->find(keyToSearch, csr)).isNull() ) {
         const int posStart = csr.position() - keyToSearch.size();
-        const QImage img(KStandardDirs::locate("data", "okular/pics/okular-epub-sound-icon.png"));
+        const QImage img(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("okular/pics/okular-epub-sound-icon.png")));
         csr.insertImage(img);
         const int posEnd = csr.position();
         qDebug() << posStart << posEnd;;
@@ -352,7 +353,7 @@ QTextDocument* Converter::convert( const QString &fileName )
       _cursor->insertBlock(QTextBlockFormat());
 
       while(mTextDocument->pageCount() == page)
-        _cursor->insertText("\n");
+        _cursor->insertText(QStringLiteral("\n"));
     }
   } while (epub_it_get_next(it));
 
@@ -399,7 +400,7 @@ QTextDocument* Converter::convert( const QString &fileName )
             // Start new file in a new page
             int page = mTextDocument->pageCount();
             while(mTextDocument->pageCount() == page)
-              _cursor->insertText("\n");
+              _cursor->insertText(QStringLiteral("\n"));
           }
 
           free(data);
@@ -410,7 +411,7 @@ QTextDocument* Converter::convert( const QString &fileName )
                         QString::fromUtf8(label),
                         block);
         } else {
-          kDebug() << "Error: no block found for"<< link;
+          qDebug() << "Error: no block found for"<< link;
         }
 
         if (clink)
@@ -422,7 +423,7 @@ QTextDocument* Converter::convert( const QString &fileName )
 
     epub_free_titerator(tit);
   } else {
-    kDebug() << "no toc found";
+    qDebug() << "no toc found";
   }
 
   // adding link actions
@@ -441,7 +442,7 @@ QTextDocument* Converter::convert( const QString &fileName )
 
         emit addAction(action, hit.value()[i].first, hit.value()[i].second);
       } else {
-        kDebug() << "Error: no block found for "<< hit.key();
+        qDebug() << "Error: no block found for "<< hit.key();
       }
     }
   }

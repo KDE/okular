@@ -1,10 +1,11 @@
-# an own directory for multi-size icons retrieved by KIconLoader
+# an own directory for multi-size icons retrieved by KIconThemeLoader
 add_subdirectory(icons)
 
 # install annotator xml tools description
 install(FILES
    tools.xml
-   DESTINATION ${DATA_INSTALL_DIR}/okular)
+   drawingtools.xml
+   DESTINATION ${KDE_INSTALL_DATADIR}/okular)
 
 # install annotation tool images
 install(FILES
@@ -15,7 +16,7 @@ install(FILES
    tool-note-okular-colorizable.png
    tool-note-inline.png
    tool-note-inline-okular-colorizable.png
-   DESTINATION ${DATA_INSTALL_DIR}/okular/pics)
+   DESTINATION ${KDE_INSTALL_DATADIR}/okular/pics)
 # install annotation page images
 install(FILES
    checkmark.png
@@ -35,17 +36,17 @@ install(FILES
    star.png
    uparrow.png
    upleftarrow.png
-   DESTINATION ${DATA_INSTALL_DIR}/okular/pics)
+   DESTINATION ${KDE_INSTALL_DATADIR}/okular/pics)
 # install annotation stamps
 install(FILES
    stamps.svg
-   DESTINATION ${DATA_INSTALL_DIR}/okular/pics)
+   DESTINATION ${KDE_INSTALL_DATADIR}/okular/pics)
 # install misc images
 
 # newstuff
 if (FALSE)
 install(FILES
    okular.knsrc
-   DESTINATION ${CONFIG_INSTALL_DIR})
+   DESTINATION ${KDE_INSTALL_CONFDIR})
 endif (FALSE)
 

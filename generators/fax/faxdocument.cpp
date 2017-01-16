@@ -19,7 +19,7 @@ static const char FAXMAGIC[]   = "\000PC Research, Inc\000\000\000\000\000\000";
 #define FAX_DPI_FINE QPoint(203,196)
 
 /* rearrange input bits into t16bits lsb-first chunks */
-static void normalize( struct pagenode *pn, int revbits, int swapbytes, size_t length )
+static void normalize( pagenode *pn, int revbits, int swapbytes, size_t length )
 {
     t32bits *p = (t32bits *) pn->data;
 
@@ -205,7 +205,7 @@ static void draw_line( pixnum *run, int lineNum, pagenode *pn )
     }
 }
 
-static bool get_image( struct pagenode *pn )
+static bool get_image( pagenode *pn )
 {
     unsigned char *data = getstrip( pn, 0 );
     if ( !data )
@@ -229,7 +229,7 @@ class FaxDocument::Private
         }
 
         FaxDocument *mParent;
-        struct pagenode mPageNode;
+        pagenode mPageNode;
         FaxDocument::DocumentType mType;
 };
 

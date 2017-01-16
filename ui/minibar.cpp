@@ -17,15 +17,13 @@
 #include <qpushbutton.h>
 #include <qlabel.h>
 #include <qlayout.h>
-#include <QStyleOptionButton>
-#include <QStylePainter>
-#include <QtGui/QToolButton>
+#include <QtWidgets/QToolButton>
 #include <qvalidator.h>
 #include <qpainter.h>
-#include <kicon.h>
+#include <QIcon>
 #include <kicontheme.h>
 #include <klineedit.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kacceleratormanager.h>
 #include <qtoolbar.h>
 
@@ -36,6 +34,7 @@
 // [private widget] a flat qpushbutton that enlights on hover
 class HoverButton : public QToolButton
 {
+    Q_OBJECT
     public:
         HoverButton( QWidget * parent );
 };
@@ -117,7 +116,7 @@ void MiniBarLogic::notifySetup( const QVector< Okular::Page * > & pageVector, in
         miniBar->m_pageNumberLabel->setVisible( labelsDiffer );
         miniBar->m_pageNumberEdit->setVisible( !labelsDiffer );
 
-        miniBar->resize( miniBar->minimumSizeHint() );
+        miniBar->adjustSize();
 
         miniBar->setEnabled( true );
     }
@@ -156,7 +155,7 @@ MiniBar::MiniBar( QWidget * parent, MiniBarLogic * miniBarLogic )
     , m_miniBarLogic( miniBarLogic )
     , m_oldToobarParent( 0 )
 {
-    setObjectName( QLatin1String( "miniBar" ) );
+    setObjectName( QStringLiteral( "miniBar" ) );
     
     m_miniBarLogic->addMiniBar( this );
 
@@ -168,7 +167,7 @@ MiniBar::MiniBar( QWidget * parent, MiniBarLogic * miniBarLogic )
     QSize buttonSize( KIconLoader::SizeSmallMedium, KIconLoader::SizeSmallMedium );
     // bottom: left prev_page button
     m_prevButton = new HoverButton( this );
-    m_prevButton->setIcon( KIcon( layoutDirection() == Qt::RightToLeft ? "arrow-right" : "arrow-left" ) );
+    m_prevButton->setIcon( QIcon::fromTheme( layoutDirection() == Qt::RightToLeft ? QStringLiteral("arrow-right") : QStringLiteral("arrow-left") ) );
     m_prevButton->setIconSize( buttonSize );
     horLayout->addWidget( m_prevButton );
     // bottom: left lineEdit (current page box)
@@ -191,7 +190,7 @@ MiniBar::MiniBar( QWidget * parent, MiniBarLogic * miniBarLogic )
     horLayout->addWidget( m_pagesButton );
     // bottom: right next_page button
     m_nextButton = new HoverButton( this );
-    m_nextButton->setIcon( KIcon( layoutDirection() == Qt::RightToLeft ? "arrow-left" : "arrow-right" ) );
+    m_nextButton->setIcon( QIcon::fromTheme( layoutDirection() == Qt::RightToLeft ? QStringLiteral("arrow-left") : QStringLiteral("arrow-right") ) );
     m_nextButton->setIconSize( buttonSize );
     horLayout->addWidget( m_nextButton );
 
@@ -206,11 +205,11 @@ MiniBar::MiniBar( QWidget * parent, MiniBarLogic * miniBarLogic )
     // connect signals from child widgets to internal handlers / signals bouncers
     connect( m_pageNumberEdit, SIGNAL(returnPressed()), this, SLOT(slotChangePage()) );
     connect( m_pageLabelEdit, SIGNAL(pageNumberChosen(int)), this, SLOT(slotChangePage(int)) );
-    connect( m_pagesButton, SIGNAL(clicked()), this, SIGNAL(gotoPage()) );
-    connect( m_prevButton, SIGNAL(clicked()), this, SIGNAL(prevPage()) );
-    connect( m_nextButton, SIGNAL(clicked()), this, SIGNAL(nextPage()) );
+    connect( m_pagesButton, &QAbstractButton::clicked, this, &MiniBar::gotoPage );
+    connect( m_prevButton, &QAbstractButton::clicked, this, &MiniBar::prevPage );
+    connect( m_nextButton, &QAbstractButton::clicked, this, &MiniBar::nextPage );
 
-    resize( minimumSizeHint() );
+    adjustSize();
 
     // widget starts disabled (will be enabled after opening a document)
     setEnabled( false );
@@ -230,12 +229,12 @@ void MiniBar::changeEvent( QEvent * event )
         {
             if ( m_oldToobarParent )
             {
-                disconnect( m_oldToobarParent, SIGNAL(iconSizeChanged(QSize)), this, SLOT(slotToolBarIconSizeChanged()));
+                disconnect( m_oldToobarParent, &QToolBar::iconSizeChanged, this, &MiniBar::slotToolBarIconSizeChanged);
             }
             m_oldToobarParent = tb;
             if ( tb )
             {
-                connect( tb, SIGNAL(iconSizeChanged(QSize)), this, SLOT(slotToolBarIconSizeChanged()));
+                connect( tb, &QToolBar::iconSizeChanged, this, &MiniBar::slotToolBarIconSizeChanged);
                 slotToolBarIconSizeChanged();
             }
         }
@@ -322,7 +321,7 @@ ProgressWidget::ProgressWidget( QWidget * parent, Okular::Document * document )
     : QWidget( parent ), m_document( document ),
     m_progressPercentage( -1 )
 {
-    setObjectName( QLatin1String( "progress" ) );
+    setObjectName( QStringLiteral( "progress" ) );
     setAttribute( Qt::WA_OpaquePaintEvent, true );
     setFixedHeight( 4 );
     setMouseTracking( true );
@@ -398,8 +397,8 @@ void ProgressWidget::paintEvent( QPaintEvent * e )
     int w = width(),
         h = height(),
         l = (int)( (float)w * m_progressPercentage );
-    QRect cRect = ( QApplication::isRightToLeft() ? QRect( 0, 0, w - l, h ) : QRect( l, 0, w - l, h ) ).intersect( e->rect() );
-    QRect fRect = ( QApplication::isRightToLeft() ? QRect( w - l, 0, l, h ) : QRect( 0, 0, l, h ) ).intersect( e->rect() );
+    QRect cRect = ( QApplication::isRightToLeft() ? QRect( 0, 0, w - l, h ) : QRect( l, 0, w - l, h ) ).intersected( e->rect() );
+    QRect fRect = ( QApplication::isRightToLeft() ? QRect( w - l, 0, l, h ) : QRect( 0, 0, l, h ) ).intersected( e->rect() );
 
     QPalette pal = palette();
     // paint clear rect
@@ -497,7 +496,7 @@ PagesEdit::PagesEdit( MiniBar * parent )
     QFocusEvent fe( QEvent::FocusOut );
     QApplication::sendEvent( this, &fe );
 
-    connect( KGlobalSettings::self(), SIGNAL(appearanceChanged()), this, SLOT(updatePalette()) );
+    connect( qApp, &QGuiApplication::paletteChanged, this, &PagesEdit::updatePalette );
 }
 
 void PagesEdit::setText( const QString & newText )

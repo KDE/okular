@@ -18,6 +18,7 @@
 #include "document.h"
 #include "generator_p.h"
 #include "textdocumentgenerator.h"
+#include "debug_p.h"
 
 namespace Okular {
 
@@ -37,7 +38,7 @@ namespace TextDocumentUtils {
             QTextLayout *startLayout = startBlock.layout();
             QTextLayout *endLayout = endBlock.layout();
             if (!startLayout || !endLayout) {
-                kWarning() << "Start or end layout not found" << startLayout << endLayout;
+                qCWarning(OkularCoreDebug) << "Start or end layout not found" << startLayout << endLayout;
                 page = -1;
                 return;
             }

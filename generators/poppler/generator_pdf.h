@@ -11,9 +11,10 @@
 #ifndef _OKULAR_GENERATOR_PDF_H_
 #define _OKULAR_GENERATOR_PDF_H_
 
-#define UNSTABLE_POPPLER_QT4
+//#include "synctex/synctex_parser.h"
 
-#include <poppler-qt4.h>
+#include <poppler-qt5.h>
+
 
 #include <qbitarray.h>
 #include <qpointer.h>
@@ -47,6 +48,7 @@ class PopplerAnnotationProxy;
 class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, public Okular::PrintInterface, public Okular::SaveInterface
 {
     Q_OBJECT
+    Q_INTERFACES( Okular::Generator )
     Q_INTERFACES( Okular::ConfigInterface )
     Q_INTERFACES( Okular::PrintInterface )
     Q_INTERFACES( Okular::SaveInterface )
@@ -55,52 +57,52 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         PDFGenerator( QObject *parent, const QVariantList &args );
         virtual ~PDFGenerator();
 
-        static const int PDFDebug = 4710;
-
         // [INHERITED] load a document and fill up the pagesVector
-        Okular::Document::OpenResult loadDocumentWithPassword( const QString & fileName, QVector<Okular::Page*> & pagesVector, const QString & password );
-        Okular::Document::OpenResult loadDocumentFromDataWithPassword( const QByteArray & fileData, QVector<Okular::Page*> & pagesVector, const QString & password );
+        Okular::Document::OpenResult loadDocumentWithPassword( const QString & fileName, QVector<Okular::Page*> & pagesVector, const QString & password ) Q_DECL_OVERRIDE;
+        Okular::Document::OpenResult loadDocumentFromDataWithPassword( const QByteArray & fileData, QVector<Okular::Page*> & pagesVector, const QString & password ) Q_DECL_OVERRIDE;
         void loadPages(QVector<Okular::Page*> &pagesVector, int rotation=-1, bool clear=false);
         // [INHERITED] document information
-        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const;
-        const Okular::DocumentSynopsis * generateDocumentSynopsis();
-        Okular::FontInfo::List fontsForPage( int page );
-        const QList<Okular::EmbeddedFile*> * embeddedFiles() const;
-        PageSizeMetric pagesSizeMetric() const { return Pixels; }
+        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const Q_DECL_OVERRIDE;
+        const Okular::DocumentSynopsis * generateDocumentSynopsis() Q_DECL_OVERRIDE;
+        Okular::FontInfo::List fontsForPage( int page ) Q_DECL_OVERRIDE;
+        const QList<Okular::EmbeddedFile*> * embeddedFiles() const Q_DECL_OVERRIDE;
+        PageSizeMetric pagesSizeMetric() const Q_DECL_OVERRIDE{ return Pixels; }
+        QAbstractItemModel * layersModel() const Q_DECL_OVERRIDE;
+        void opaqueAction( const Okular::BackendOpaqueAction *action ) Q_DECL_OVERRIDE;
 
         // [INHERITED] document information
-        bool isAllowed( Okular::Permission permission ) const;
+        bool isAllowed( Okular::Permission permission ) const Q_DECL_OVERRIDE;
 
         // [INHERITED] perform actions on document / pages
-        QImage image( Okular::PixmapRequest *page );
+        QImage image( Okular::PixmapRequest *page ) Q_DECL_OVERRIDE;
 
         // [INHERITED] print page using an already configured kprinter
-        bool print( QPrinter& printer );
+        bool print( QPrinter& printer ) Q_DECL_OVERRIDE;
 
         // [INHERITED] reply to some metadata requests
-        QVariant metaData( const QString & key, const QVariant & option ) const;
+        QVariant metaData( const QString & key, const QVariant & option ) const Q_DECL_OVERRIDE;
 
         // [INHERITED] reparse configuration
-        bool reparseConfig();
-        void addPages( KConfigDialog * );
+        bool reparseConfig() Q_DECL_OVERRIDE;
+        void addPages( KConfigDialog * ) Q_DECL_OVERRIDE;
 
         // [INHERITED] text exporting
-        Okular::ExportFormat::List exportFormats() const;
-        bool exportTo( const QString &fileName, const Okular::ExportFormat &format );
+        Okular::ExportFormat::List exportFormats() const Q_DECL_OVERRIDE;
+        bool exportTo( const QString &fileName, const Okular::ExportFormat &format ) Q_DECL_OVERRIDE;
 
         // [INHERITED] print interface
-        QWidget* printConfigurationWidget() const;
+        QWidget* printConfigurationWidget() const Q_DECL_OVERRIDE;
 
         // [INHERITED] save interface
-        bool supportsOption( SaveOption ) const;
-        bool save( const QString &fileName, SaveOptions options, QString *errorText );
-        Okular::AnnotationProxy* annotationProxy() const;
+        bool supportsOption( SaveOption ) const Q_DECL_OVERRIDE;
+        bool save( const QString &fileName, SaveOptions options, QString *errorText ) Q_DECL_OVERRIDE;
+        Okular::AnnotationProxy* annotationProxy() const Q_DECL_OVERRIDE;
 
     protected:
-        bool doCloseDocument();
-        Okular::TextPage* textPage( Okular::Page *page );
+        bool doCloseDocument() Q_DECL_OVERRIDE;
+        Okular::TextPage* textPage( Okular::Page *page ) Q_DECL_OVERRIDE;
 
-    protected slots:
+    protected Q_SLOTS:
         void requestFontData(const Okular::FontInfo &font, QByteArray *data);
         Okular::Generator::PrintError printError() const;
 
@@ -115,8 +117,6 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         void addTransition( Poppler::Page * popplerPage, Okular::Page * page );
         // fetch the form fields and add them to the page
         void addFormFields( Poppler::Page * popplerPage, Okular::Page * page );
-        // load the source references from a pdfsync file
-        void loadPdfSync( const QString & fileName, QVector<Okular::Page*> & pagesVector );
 
         Okular::TextPage * abstractTextPage(const QList<Poppler::TextBox*> &text, double height, double width, int rot);
 

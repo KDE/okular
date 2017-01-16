@@ -12,22 +12,20 @@
 
 #include "fileprinter.h"
 
-#include <QtGui/QPrinter>
+#include <QtPrintSupport/QPrinter>
 #include <QPrintEngine>
 #include <QStringList>
 #include <QSize>
 #include <QtCore/QFile>
 #include <QtCore/QFileInfo>
-#include <QtGui/QLabel>
+#include <QtWidgets/QLabel>
 #include <QtGui/QShowEvent>
 #include <QtNetwork/QTcpSocket>
 
 #include <KProcess>
 #include <KShell>
-#include <klocalsocket.h>
-#include <kstandarddirs.h>
-#include <ktempdir.h>
-#include <kdebug.h>
+#include <QtCore/QDebug>
+#include <QStandardPaths>
 
 #include "debug_p.h"
 
@@ -93,15 +91,15 @@ int FilePrinter::doPrintFiles( QPrinter &printer, QStringList fileList, FileDele
                     ret = -5;
                 }
             }
-        } else if ( inputFileInfo.suffix() == "ps" && printer.outputFormat() == QPrinter::PdfFormat && ps2pdfAvailable() ) {
-            exe = "ps2pdf";
+        } else if ( inputFileInfo.suffix() == QLatin1String("ps") && printer.outputFormat() == QPrinter::PdfFormat && ps2pdfAvailable() ) {
+            exe = QStringLiteral("ps2pdf");
             argList << fileList[0] << printer.outputFileName();
-            kDebug(OkularDebug) << "Executing" << exe << "with arguments" << argList;
+            qCDebug(OkularCoreDebug) << "Executing" << exe << "with arguments" << argList;
             ret = KProcess::execute( exe, argList );
-        } else if ( inputFileInfo.suffix() == "pdf" && printer.outputFormat() == QPrinter::PostScriptFormat && pdf2psAvailable() ) {
+        } else if ( inputFileInfo.suffix() == "pdf" && printer.outputFormat() == QPrinter::NativeFormat && pdf2psAvailable() ) {
             exe = "pdf2ps";
             argList << fileList[0] << printer.outputFileName();
-            kDebug(OkularDebug) << "Executing" << exe << "with arguments" << argList;
+            qCDebug(OkularCoreDebug) << "Executing" << exe << "with arguments" << argList;
             ret = KProcess::execute( exe, argList );
         } else {
             ret = -5;
@@ -118,14 +116,14 @@ int FilePrinter::doPrintFiles( QPrinter &printer, QStringList fileList, FileDele
         //Some distros name the CUPS version of lpr as lpr-cups or lpr.cups so try those first 
         //before default to lpr, or failing that to lp
 
-        if ( !KStandardDirs::findExe("lpr-cups").isEmpty() ) {
-            exe = "lpr-cups";
-        } else if ( !KStandardDirs::findExe("lpr.cups").isEmpty() ) {
-            exe = "lpr.cups";
-        } else if ( !KStandardDirs::findExe("lpr").isEmpty() ) {
-            exe = "lpr";
-        } else if ( !KStandardDirs::findExe("lp").isEmpty() ) {
-            exe = "lp";
+        if ( !QStandardPaths::findExecutable(QStringLiteral("lpr-cups")).isEmpty() ) {
+            exe = QStringLiteral("lpr-cups");
+        } else if ( !QStandardPaths::findExecutable(QStringLiteral("lpr.cups")).isEmpty() ) {
+            exe = QStringLiteral("lpr.cups");
+        } else if ( !QStandardPaths::findExecutable(QStringLiteral("lpr")).isEmpty() ) {
+            exe = QStringLiteral("lpr");
+        } else if ( !QStandardPaths::findExecutable(QStringLiteral("lp")).isEmpty() ) {
+            exe = QStringLiteral("lp");
         } else {
             return -9;
         }
@@ -133,7 +131,7 @@ int FilePrinter::doPrintFiles( QPrinter &printer, QStringList fileList, FileDele
         bool useCupsOptions = cupsAvailable();
         argList = printArguments( printer, fileDeletePolicy, pageSelectPolicy, 
                                   useCupsOptions, pageRange, exe, documentOrientation ) << fileList;
-        kDebug(OkularDebug) << "Executing" << exe << "with arguments" << argList;
+        qCDebug(OkularCoreDebug) << "Executing" << exe << "with arguments" << argList;
 
         ret = KProcess::execute( exe, argList );
 
@@ -160,11 +158,9 @@ QList<int> FilePrinter::pageList( QPrinter &printer, int lastPage,
     if ( printer.printRange() == QPrinter::PageRange ) {
         startPage = printer.fromPage();
         endPage = printer.toPage();
-#if QT_VERSION >= KDE_MAKE_VERSION(4,7,0)
     } else if ( printer.printRange() == QPrinter::CurrentPage) {
         startPage = currentPage;
         endPage = currentPage;
-#endif
     } else { //AllPages
         startPage = 1;
         endPage = lastPage;
@@ -184,10 +180,10 @@ QString FilePrinter::pageRange( QPrinter &printer, int lastPage, const QList<int
     }
 
     if ( printer.printRange() == QPrinter::PageRange ) {
-        return QString("%1-%2").arg(printer.fromPage()).arg(printer.toPage());
+        return QStringLiteral("%1-%2").arg(printer.fromPage()).arg(printer.toPage());
     }
 
-    return QString("1-%2").arg( lastPage );
+    return QStringLiteral("1-%2").arg( lastPage );
 }
 
 QString FilePrinter::pageListToPageRange( const QList<int> &pageList )
@@ -205,13 +201,13 @@ QString FilePrinter::pageListToPageRange( const QList<int> &pageList )
             seqEnd = i;
 
             if ( !pageRange.isEmpty() ) {
-                pageRange.append(",");
+                pageRange.append(QLatin1Char(','));
             }
 
             if ( seqStart == seqEnd ) {
                 pageRange.append(pageList[i]);
             } else {
-                pageRange.append(QString("%1-%2").arg(seqStart).arg(seqEnd));
+                pageRange.append(QStringLiteral("%1-%2").arg(seqStart).arg(seqEnd));
             }
 
             seqStart = i + 1;
@@ -225,17 +221,17 @@ QString FilePrinter::pageListToPageRange( const QList<int> &pageList )
 
 bool FilePrinter::ps2pdfAvailable()
 {
-    return ( !KStandardDirs::findExe("ps2pdf").isEmpty() );
+    return ( !QStandardPaths::findExecutable(QStringLiteral("ps2pdf")).isEmpty() );
 }
 
 bool FilePrinter::pdf2psAvailable()
 {
-    return ( !KStandardDirs::findExe("pdf2ps").isEmpty() );
+    return ( !QStandardPaths::findExecutable(QStringLiteral("pdf2ps")).isEmpty() );
 }
 
 bool FilePrinter::cupsAvailable()
 {
-#ifdef Q_WS_X11
+#if defined(Q_OS_UNIX) && !defined(Q_OS_OSX)
     // Ideally we would have access to the private Qt method
     // QCUPSSupport::cupsAvailable() to do this as it is very complex routine.
     // However, if CUPS is available then QPrinter::numCopies() will always return 1
@@ -252,7 +248,7 @@ bool FilePrinter::cupsAvailable()
 bool FilePrinter::detectCupsService()
 {
     QTcpSocket qsock;
-    qsock.connectToHost("localhost", 631);
+    qsock.connectToHost(QStringLiteral("localhost"), 631);
     bool rtn = qsock.waitForConnected() && qsock.isValid();
     qsock.abort();
     return rtn;
@@ -260,11 +256,11 @@ bool FilePrinter::detectCupsService()
 
 bool FilePrinter::detectCupsConfig()
 {
-    if ( QFile::exists("/etc/cups/cupsd.conf") ) return true;
-    if ( QFile::exists("/usr/etc/cups/cupsd.conf") ) return true;
-    if ( QFile::exists("/usr/local/etc/cups/cupsd.conf") ) return true;
-    if ( QFile::exists("/opt/etc/cups/cupsd.conf") ) return true;
-    if ( QFile::exists("/opt/local/etc/cups/cupsd.conf") ) return true;
+    if ( QFile::exists(QStringLiteral("/etc/cups/cupsd.conf")) ) return true;
+    if ( QFile::exists(QStringLiteral("/usr/etc/cups/cupsd.conf")) ) return true;
+    if ( QFile::exists(QStringLiteral("/usr/local/etc/cups/cupsd.conf")) ) return true;
+    if ( QFile::exists(QStringLiteral("/opt/etc/cups/cupsd.conf")) ) return true;
+    if ( QFile::exists(QStringLiteral("/opt/local/etc/cups/cupsd.conf")) ) return true;
     return false;
 }
 
@@ -386,8 +382,8 @@ QStringList FilePrinter::printArguments( QPrinter &printer, FileDeletePolicy fil
         argList << deleteFile( printer, fileDeletePolicy, version );
     }
 
-    if ( version == "lp" ) {
-        argList << "--";
+    if ( version == QLatin1String("lp") ) {
+        argList << QStringLiteral("--");
     }
 
     return argList;
@@ -395,12 +391,12 @@ QStringList FilePrinter::printArguments( QPrinter &printer, FileDeletePolicy fil
 
 QStringList FilePrinter::destination( QPrinter &printer, const QString &version )
 {
-    if ( version == "lp" ) {
-        return QStringList("-d") << printer.printerName();
+    if ( version == QLatin1String("lp") ) {
+        return QStringList(QStringLiteral("-d")) << printer.printerName();
     }
 
-    if ( version.startsWith( "lpr" ) ) {
-        return QStringList("-P") << printer.printerName();
+    if ( version.startsWith( QLatin1String("lpr") ) ) {
+        return QStringList(QStringLiteral("-P")) << printer.printerName();
     }
 
     return QStringList();
@@ -410,12 +406,12 @@ QStringList FilePrinter::copies( QPrinter &printer, const QString &version )
 {
     int cp = printer.actualNumCopies();
 
-    if ( version == "lp" ) {
-        return QStringList("-n") << QString("%1").arg( cp );
+    if ( version == QLatin1String("lp") ) {
+        return QStringList(QStringLiteral("-n")) << QStringLiteral("%1").arg( cp );
     }
 
-    if ( version.startsWith( "lpr" ) ) {
-        return QStringList() << QString("-#%1").arg( cp );
+    if ( version.startsWith( QLatin1String("lpr") ) ) {
+        return QStringList() << QStringLiteral("-#%1").arg( cp );
     }
 
     return QStringList();
@@ -425,13 +421,13 @@ QStringList FilePrinter::jobname( QPrinter &printer, const QString &version )
 {
     if ( ! printer.docName().isEmpty() ) {
 
-        if ( version == "lp" ) {
-            return QStringList("-t") << printer.docName();
+        if ( version == QLatin1String("lp") ) {
+            return QStringList(QStringLiteral("-t")) << printer.docName();
         }
 
-        if ( version.startsWith( "lpr" ) ) {
+        if ( version.startsWith( QLatin1String("lpr") ) ) {
             const QString shortenedDocName = QString::fromUtf8(printer.docName().toUtf8().left(255));
-            return QStringList("-J") << shortenedDocName;
+            return QStringList(QStringLiteral("-J")) << shortenedDocName;
         }
     }
 
@@ -440,8 +436,8 @@ QStringList FilePrinter::jobname( QPrinter &printer, const QString &version )
 
 QStringList FilePrinter::deleteFile( QPrinter &, FileDeletePolicy fileDeletePolicy, const QString &version )
 {
-    if ( fileDeletePolicy == FilePrinter::SystemDeletesFiles && version.startsWith( "lpr" ) ) {
-        return QStringList("-r");
+    if ( fileDeletePolicy == FilePrinter::SystemDeletesFiles && version.startsWith( QLatin1String("lpr") ) ) {
+        return QStringList(QStringLiteral("-r"));
     }
 
     return QStringList();
@@ -454,25 +450,25 @@ QStringList FilePrinter::pages( QPrinter &printer, PageSelectPolicy pageSelectPo
 
         if ( printer.printRange() == QPrinter::Selection && ! pageRange.isEmpty() ) {
 
-            if ( version == "lp" ) {
-                return QStringList("-P") << pageRange ;
+            if ( version == QLatin1String("lp") ) {
+                return QStringList(QStringLiteral("-P")) << pageRange ;
             }
 
-            if ( version.startsWith( "lpr" ) && useCupsOptions ) {
-                return QStringList("-o") << QString("page-ranges=%1").arg( pageRange );
+            if ( version.startsWith( QLatin1String("lpr") ) && useCupsOptions ) {
+                return QStringList(QStringLiteral("-o")) << QStringLiteral("page-ranges=%1").arg( pageRange );
             }
 
         }
 
         if ( printer.printRange() == QPrinter::PageRange ) {
 
-            if ( version == "lp" ) {
-                return QStringList("-P") << QString("%1-%2").arg( printer.fromPage() )
+            if ( version == QLatin1String("lp") ) {
+                return QStringList(QStringLiteral("-P")) << QStringLiteral("%1-%2").arg( printer.fromPage() )
                                                             .arg( printer.toPage() );
             }
 
-            if ( version.startsWith( "lpr" ) && useCupsOptions ) {
-                return QStringList("-o") << QString("page-ranges=%1-%2").arg( printer.fromPage() )
+            if ( version.startsWith( QLatin1String("lpr") ) && useCupsOptions ) {
+                return QStringList(QStringLiteral("-o")) << QStringLiteral("page-ranges=%1-%2").arg( printer.fromPage() )
                                                                         .arg( printer.toPage() );
             }
 
@@ -520,19 +516,18 @@ QStringList FilePrinter::optionMedia( QPrinter &printer )
 {
     if ( ! mediaPageSize( printer ).isEmpty() && 
          ! mediaPaperSource( printer ).isEmpty() ) {
-        return QStringList("-o") <<
-                QString("media=%1,%2").arg( mediaPageSize( printer ) )
-                                      .arg( mediaPaperSource( printer ) );
+        return QStringList(QStringLiteral("-o")) <<
+                QStringLiteral("media=%1,%2").arg( mediaPageSize( printer ), mediaPaperSource( printer ) );
     }
 
     if ( ! mediaPageSize( printer ).isEmpty() ) {
-        return QStringList("-o") <<
-                QString("media=%1").arg( mediaPageSize( printer ) );
+        return QStringList(QStringLiteral("-o")) <<
+                QStringLiteral("media=%1").arg( mediaPageSize( printer ) );
     }
 
     if ( ! mediaPaperSource( printer ).isEmpty() ) {
-        return QStringList("-o") <<
-                QString("media=%1").arg( mediaPaperSource( printer ) );
+        return QStringList(QStringLiteral("-o")) <<
+                QStringLiteral("media=%1").arg( mediaPaperSource( printer ) );
     }
 
     return QStringList();
@@ -541,37 +536,37 @@ QStringList FilePrinter::optionMedia( QPrinter &printer )
 QString FilePrinter::mediaPageSize( QPrinter &printer )
 {
     switch ( printer.pageSize() ) {
-    case QPrinter::A0:         return "A0";
-    case QPrinter::A1:         return "A1";
-    case QPrinter::A2:         return "A2";
-    case QPrinter::A3:         return "A3";
-    case QPrinter::A4:         return "A4";
-    case QPrinter::A5:         return "A5";
-    case QPrinter::A6:         return "A6";
-    case QPrinter::A7:         return "A7";
-    case QPrinter::A8:         return "A8";
-    case QPrinter::A9:         return "A9";
-    case QPrinter::B0:         return "B0";
-    case QPrinter::B1:         return "B1";
-    case QPrinter::B10:        return "B10";
-    case QPrinter::B2:         return "B2";
-    case QPrinter::B3:         return "B3";
-    case QPrinter::B4:         return "B4";
-    case QPrinter::B5:         return "B5";
-    case QPrinter::B6:         return "B6";
-    case QPrinter::B7:         return "B7";
-    case QPrinter::B8:         return "B8";
-    case QPrinter::B9:         return "B9";
-    case QPrinter::C5E:        return "C5";     //Correct Translation?
-    case QPrinter::Comm10E:    return "Comm10"; //Correct Translation?
-    case QPrinter::DLE:        return "DL";     //Correct Translation?
-    case QPrinter::Executive:  return "Executive";
-    case QPrinter::Folio:      return "Folio";
-    case QPrinter::Ledger:     return "Ledger";
-    case QPrinter::Legal:      return "Legal";
-    case QPrinter::Letter:     return "Letter";
-    case QPrinter::Tabloid:    return "Tabloid";
-    case QPrinter::Custom:     return QString("Custom.%1x%2mm")
+    case QPrinter::A0:         return QStringLiteral("A0");
+    case QPrinter::A1:         return QStringLiteral("A1");
+    case QPrinter::A2:         return QStringLiteral("A2");
+    case QPrinter::A3:         return QStringLiteral("A3");
+    case QPrinter::A4:         return QStringLiteral("A4");
+    case QPrinter::A5:         return QStringLiteral("A5");
+    case QPrinter::A6:         return QStringLiteral("A6");
+    case QPrinter::A7:         return QStringLiteral("A7");
+    case QPrinter::A8:         return QStringLiteral("A8");
+    case QPrinter::A9:         return QStringLiteral("A9");
+    case QPrinter::B0:         return QStringLiteral("B0");
+    case QPrinter::B1:         return QStringLiteral("B1");
+    case QPrinter::B10:        return QStringLiteral("B10");
+    case QPrinter::B2:         return QStringLiteral("B2");
+    case QPrinter::B3:         return QStringLiteral("B3");
+    case QPrinter::B4:         return QStringLiteral("B4");
+    case QPrinter::B5:         return QStringLiteral("B5");
+    case QPrinter::B6:         return QStringLiteral("B6");
+    case QPrinter::B7:         return QStringLiteral("B7");
+    case QPrinter::B8:         return QStringLiteral("B8");
+    case QPrinter::B9:         return QStringLiteral("B9");
+    case QPrinter::C5E:        return QStringLiteral("C5");     //Correct Translation?
+    case QPrinter::Comm10E:    return QStringLiteral("Comm10"); //Correct Translation?
+    case QPrinter::DLE:        return QStringLiteral("DL");     //Correct Translation?
+    case QPrinter::Executive:  return QStringLiteral("Executive");
+    case QPrinter::Folio:      return QStringLiteral("Folio");
+    case QPrinter::Ledger:     return QStringLiteral("Ledger");
+    case QPrinter::Legal:      return QStringLiteral("Legal");
+    case QPrinter::Letter:     return QStringLiteral("Letter");
+    case QPrinter::Tabloid:    return QStringLiteral("Tabloid");
+    case QPrinter::Custom:     return QStringLiteral("Custom.%1x%2mm")
                                             .arg( printer.heightMM() )
                                             .arg( printer.widthMM() );
     default:                   return QString();
@@ -583,19 +578,19 @@ QString FilePrinter::mediaPaperSource( QPrinter &printer )
 {
     switch ( printer.paperSource() ) {
     case QPrinter::Auto:            return QString();
-    case QPrinter::Cassette:        return "Cassette";
-    case QPrinter::Envelope:        return "Envelope";
-    case QPrinter::EnvelopeManual:  return "EnvelopeManual";
-    case QPrinter::FormSource:      return "FormSource";
-    case QPrinter::LargeCapacity:   return "LargeCapacity";
-    case QPrinter::LargeFormat:     return "LargeFormat";
-    case QPrinter::Lower:           return "Lower";
-    case QPrinter::MaxPageSource:   return "MaxPageSource";
-    case QPrinter::Middle:          return "Middle";
-    case QPrinter::Manual:          return "Manual";
-    case QPrinter::OnlyOne:         return "OnlyOne";
-    case QPrinter::Tractor:         return "Tractor";
-    case QPrinter::SmallFormat:     return "SmallFormat";
+    case QPrinter::Cassette:        return QStringLiteral("Cassette");
+    case QPrinter::Envelope:        return QStringLiteral("Envelope");
+    case QPrinter::EnvelopeManual:  return QStringLiteral("EnvelopeManual");
+    case QPrinter::FormSource:      return QStringLiteral("FormSource");
+    case QPrinter::LargeCapacity:   return QStringLiteral("LargeCapacity");
+    case QPrinter::LargeFormat:     return QStringLiteral("LargeFormat");
+    case QPrinter::Lower:           return QStringLiteral("Lower");
+    case QPrinter::MaxPageSource:   return QStringLiteral("MaxPageSource");
+    case QPrinter::Middle:          return QStringLiteral("Middle");
+    case QPrinter::Manual:          return QStringLiteral("Manual");
+    case QPrinter::OnlyOne:         return QStringLiteral("OnlyOne");
+    case QPrinter::Tractor:         return QStringLiteral("Tractor");
+    case QPrinter::SmallFormat:     return QStringLiteral("SmallFormat");
     default:                        return QString();
     }
 }
@@ -607,24 +602,24 @@ QStringList FilePrinter::optionOrientation( QPrinter &printer, QPrinter::Orienta
     // portrait option so that the document is not rotated additionally
     if ( printer.orientation() == documentOrientation ) {
         // the user wants the document printed as is
-        return QStringList("-o") << "portrait";
+        return QStringList(QStringLiteral("-o")) << QStringLiteral("portrait");
     } else {
         // the user expects the document being rotated by 90 degrees
-        return QStringList("-o") << "landscape";
+        return QStringList(QStringLiteral("-o")) << QStringLiteral("landscape");
     }
 }
 
 QStringList FilePrinter::optionDoubleSidedPrinting( QPrinter &printer )
 {
     switch ( printer.duplex() ) {
-    case QPrinter::DuplexNone:       return QStringList("-o") << "sides=one-sided";
+    case QPrinter::DuplexNone:       return QStringList(QStringLiteral("-o")) << QStringLiteral("sides=one-sided");
     case QPrinter::DuplexAuto:       if ( printer.orientation() == QPrinter::Landscape ) {
-                                         return QStringList("-o") << "sides=two-sided-short-edge";
+                                         return QStringList(QStringLiteral("-o")) << QStringLiteral("sides=two-sided-short-edge");
                                      } else {
-                                         return QStringList("-o") << "sides=two-sided-long-edge";
+                                         return QStringList(QStringLiteral("-o")) << QStringLiteral("sides=two-sided-long-edge");
                                      }
-    case QPrinter::DuplexLongSide:   return QStringList("-o") << "sides=two-sided-long-edge";
-    case QPrinter::DuplexShortSide:  return QStringList("-o") << "sides=two-sided-short-edge";
+    case QPrinter::DuplexLongSide:   return QStringList(QStringLiteral("-o")) << QStringLiteral("sides=two-sided-long-edge");
+    case QPrinter::DuplexShortSide:  return QStringList(QStringLiteral("-o")) << QStringLiteral("sides=two-sided-short-edge");
     default:                         return QStringList();  //Use printer default
     }
 }
@@ -632,17 +627,17 @@ QStringList FilePrinter::optionDoubleSidedPrinting( QPrinter &printer )
 QStringList FilePrinter::optionPageOrder( QPrinter &printer )
 {
     if ( printer.pageOrder() == QPrinter::LastPageFirst ) {
-        return QStringList("-o") << "outputorder=reverse";
+        return QStringList(QStringLiteral("-o")) << QStringLiteral("outputorder=reverse");
     }
-    return QStringList("-o") << "outputorder=normal";
+    return QStringList(QStringLiteral("-o")) << QStringLiteral("outputorder=normal");
 }
 
 QStringList FilePrinter::optionCollateCopies( QPrinter &printer )
 {
     if ( printer.collateCopies() ) {
-        return QStringList("-o") << "Collate=True";
+        return QStringList(QStringLiteral("-o")) << QStringLiteral("Collate=True");
     }
-    return QStringList("-o") << "Collate=False";
+    return QStringList(QStringLiteral("-o")) << QStringLiteral("Collate=False");
 }
 
 QStringList FilePrinter::optionPageMargins( QPrinter &printer )
@@ -652,10 +647,10 @@ QStringList FilePrinter::optionPageMargins( QPrinter &printer )
     } else {
         qreal l, t, r, b;
         printer.getPageMargins( &l, &t, &r, &b, QPrinter::Point );
-        return QStringList("-o") << QString("page-left=%1").arg(l)
-                       <<  "-o"  << QString("page-top=%1").arg(t)
-                       <<  "-o"  << QString("page-right=%1").arg(r)
-                       <<  "-o"  << QString("page-bottom=%1").arg(b) << "-o" << "fit-to-page";
+        return QStringList(QStringLiteral("-o")) << QStringLiteral("page-left=%1").arg(l)
+                       <<  QStringLiteral("-o")  << QStringLiteral("page-top=%1").arg(t)
+                       <<  QStringLiteral("-o")  << QStringLiteral("page-right=%1").arg(r)
+                       <<  QStringLiteral("-o")  << QStringLiteral("page-bottom=%1").arg(b) << QStringLiteral("-o") << QStringLiteral("fit-to-page");
     }
 }
 
@@ -666,9 +661,9 @@ QStringList FilePrinter::optionCupsProperties( QPrinter &printer )
 
     for ( int i = 0; i < dialogOptions.count(); i = i + 2 ) {
         if ( dialogOptions[i+1].isEmpty() ) {
-            cupsOptions << "-o" << dialogOptions[i];
+            cupsOptions << QStringLiteral("-o") << dialogOptions[i];
         } else {
-            cupsOptions << "-o" << dialogOptions[i] + '=' + dialogOptions[i+1];
+            cupsOptions << QStringLiteral("-o") << dialogOptions[i] + QLatin1Char('=') + dialogOptions[i+1];
         }
     }
 

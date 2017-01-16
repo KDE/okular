@@ -13,6 +13,8 @@
 
 #include <QtCore/QStringList>
 
+class QIODevice;
+
 class Directory
 {
     public:

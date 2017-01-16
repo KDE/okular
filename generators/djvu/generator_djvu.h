@@ -24,25 +24,26 @@ class ObjectRect;
 class DjVuGenerator : public Okular::Generator
 {
     Q_OBJECT
+    Q_INTERFACES( Okular::Generator )
     public:
         DjVuGenerator( QObject *parent, const QVariantList &args );
         ~DjVuGenerator();
-        bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
+        bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector ) Q_DECL_OVERRIDE;
 
         // document information
-        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const;
-        const Okular::DocumentSynopsis * generateDocumentSynopsis();
+        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const Q_DECL_OVERRIDE;
+        const Okular::DocumentSynopsis * generateDocumentSynopsis() Q_DECL_OVERRIDE;
 
         // printing
-        bool print( QPrinter& printer );
+        bool print( QPrinter& printer ) Q_DECL_OVERRIDE;
 
-        QVariant metaData( const QString & key, const QVariant & option ) const;
+        QVariant metaData( const QString & key, const QVariant & option ) const Q_DECL_OVERRIDE;
 
     protected:
-        bool doCloseDocument();
+        bool doCloseDocument() Q_DECL_OVERRIDE;
         // pixmap generation
-        QImage image( Okular::PixmapRequest *request );
-        Okular::TextPage* textPage( Okular::Page *page );
+        QImage image( Okular::PixmapRequest *request ) Q_DECL_OVERRIDE;
+        Okular::TextPage* textPage( Okular::Page *page ) Q_DECL_OVERRIDE;
 
     private:
         void loadPages( QVector<Okular::Page*> & pagesVector, int rotation );

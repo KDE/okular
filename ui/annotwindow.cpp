@@ -19,16 +19,14 @@
 #include <qframe.h>
 #include <qlabel.h>
 #include <qlayout.h>
-#include <QPainter>
 #include <qpushbutton.h>
 #include <qsizegrip.h>
 #include <qstyle.h>
 #include <qtoolbutton.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <ktextedit.h>
-#include <kdebug.h>
-#include <kaction.h>
+#include <QtCore/QDebug>
+#include <qaction.h>
 #include <kstandardaction.h>
 #include <qmenu.h>
 
@@ -42,8 +40,10 @@
 class CloseButton
   : public QPushButton
 {
+    Q_OBJECT
+
 public:
-    CloseButton( QWidget * parent = 0 )
+    CloseButton( QWidget * parent = Q_NULLPTR )
       : QPushButton( parent )
     {
         setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
@@ -59,6 +59,8 @@ public:
 class MovableTitle
   : public QWidget
 {
+    Q_OBJECT
+
 public:
     MovableTitle( QWidget * parent )
       : QWidget( parent )
@@ -83,7 +85,7 @@ public:
         dateLabel->setCursor( Qt::SizeAllCursor );
         buttonlay->addWidget( dateLabel );
         CloseButton * close = new CloseButton( this );
-        connect( close, SIGNAL(clicked()), parent, SLOT(close()) );
+        connect( close, &QAbstractButton::clicked, parent, &QWidget::close );
         buttonlay->addWidget( close );
         // option button row
         QHBoxLayout * optionlay = new QHBoxLayout();
@@ -124,7 +126,7 @@ public:
         authorLabel->installEventFilter( this );
     }
 
-    virtual bool eventFilter( QObject * obj, QEvent * e )
+    bool eventFilter( QObject * obj, QEvent * e ) override
     {
         if ( obj != titleLabel && obj != authorLabel && obj != dateLabel )
             return false;
@@ -151,17 +153,17 @@ public:
 
     void setTitle( const QString& title )
     {
-        titleLabel->setText( QString( " " ) + title );
+        titleLabel->setText( QStringLiteral( " " ) + title );
     }
 
     void setDate( const QDateTime& dt )
     {
-        dateLabel->setText( KGlobal::locale()->formatDateTime( dt, KLocale::ShortDate, true ) + ' ' );
+        dateLabel->setText( QLocale().toString( dt, QLocale::ShortFormat ) + QLatin1Char(' ') );
     }
 
     void setAuthor( const QString& author )
     {
-        authorLabel->setText( QString( " " ) + author );
+        authorLabel->setText( QStringLiteral( " " ) + author );
     }
 
     void connectOptionButton( QObject * recv, const char* method )
@@ -203,14 +205,10 @@ AnnotWindow::AnnotWindow( QWidget * parent, Okular::Annotation * annot, Okular::
     m_prevCursorPos = textEdit->textCursor().position();
     m_prevAnchorPos = textEdit->textCursor().anchor();
 
-    connect(textEdit, SIGNAL(textChanged()),
-            this,SLOT(slotsaveWindowText()));
-    connect(textEdit, SIGNAL(cursorPositionChanged()),
-            this,SLOT(slotsaveWindowText()));
-    connect(textEdit, SIGNAL(aboutToShowContextMenu(QMenu*)),
-            this,SLOT(slotUpdateUndoAndRedoInContextMenu(QMenu*)));
-    connect(m_document, SIGNAL(annotationContentsChangedByUndoRedo(Okular::Annotation*,QString,int,int)),
-            this, SLOT(slotHandleContentsChangedByUndoRedo(Okular::Annotation*,QString,int,int)));
+    connect(textEdit, &KTextEdit::textChanged, this, &AnnotWindow::slotsaveWindowText);
+    connect(textEdit, &KTextEdit::cursorPositionChanged, this, &AnnotWindow::slotsaveWindowText);
+    connect(textEdit, &KTextEdit::aboutToShowContextMenu, this, &AnnotWindow::slotUpdateUndoAndRedoInContextMenu);
+    connect(m_document, &Okular::Document::annotationContentsChangedByUndoRedo, this, &AnnotWindow::slotHandleContentsChangedByUndoRedo);
 
     if (!canEditAnnotation)
         textEdit->setReadOnly(true);
@@ -301,10 +299,10 @@ void AnnotWindow::slotUpdateUndoAndRedoInContextMenu(QMenu* menu)
     QList<QAction *> actionList = menu->actions();
     enum { UndoAct, RedoAct, CutAct, CopyAct, PasteAct, ClearAct, SelectAllAct, NCountActs };
 
-    KAction *kundo = KStandardAction::create( KStandardAction::Undo, m_document, SLOT(undo()), menu);
-    KAction *kredo = KStandardAction::create( KStandardAction::Redo, m_document, SLOT(redo()), menu);
-    connect(m_document, SIGNAL(canUndoChanged(bool)), kundo, SLOT(setEnabled(bool)));
-    connect(m_document, SIGNAL(canRedoChanged(bool)), kredo, SLOT(setEnabled(bool)));
+    QAction *kundo = KStandardAction::create( KStandardAction::Undo, m_document, SLOT(undo()), menu);
+    QAction *kredo = KStandardAction::create( KStandardAction::Redo, m_document, SLOT(redo()), menu);
+    connect(m_document, &Okular::Document::canUndoChanged, kundo, &QAction::setEnabled);
+    connect(m_document, &Okular::Document::canRedoChanged, kredo, &QAction::setEnabled);
     kundo->setEnabled(m_document->canUndo());
     kredo->setEnabled(m_document->canRedo());
 
@@ -343,15 +341,15 @@ void AnnotWindow::renderLatex( bool render )
     if (render)
     {
         textEdit->setReadOnly( true );
-        disconnect(textEdit, SIGNAL(textChanged()), this,SLOT(slotsaveWindowText()));
-        disconnect(textEdit, SIGNAL(cursorPositionChanged()), this,SLOT(slotsaveWindowText()));
+        disconnect(textEdit, &KTextEdit::textChanged, this, &AnnotWindow::slotsaveWindowText);
+        disconnect(textEdit, &KTextEdit::cursorPositionChanged, this, &AnnotWindow::slotsaveWindowText);
         textEdit->setAcceptRichText( true );
         QString contents = m_annot->contents();
         contents = Qt::convertFromPlainText( contents );
         QColor fontColor = textEdit->textColor();
         int fontSize = textEdit->fontPointSize();
         QString latexOutput;
-        GuiUtils::LatexRenderer::Error errorCode = m_latexRenderer->renderLatexInHtml( contents, fontColor, fontSize, Okular::Utils::dpiX(), latexOutput );
+        GuiUtils::LatexRenderer::Error errorCode = m_latexRenderer->renderLatexInHtml( contents, fontColor, fontSize, Okular::Utils::realDpi(nullptr).width(), latexOutput );
         switch ( errorCode )
         {
             case GuiUtils::LatexRenderer::LatexNotFound:
@@ -384,8 +382,8 @@ void AnnotWindow::renderLatex( bool render )
     {
         textEdit->setAcceptRichText( false );
         textEdit->setPlainText( m_annot->contents() );
-        connect(textEdit, SIGNAL(textChanged()), this,SLOT(slotsaveWindowText()));
-        connect(textEdit, SIGNAL(cursorPositionChanged()), this,SLOT(slotsaveWindowText()));
+        connect(textEdit, &KTextEdit::textChanged, this, &AnnotWindow::slotsaveWindowText);
+        connect(textEdit, &KTextEdit::cursorPositionChanged, this, &AnnotWindow::slotsaveWindowText);
         textEdit->setReadOnly( false );
     }
 }

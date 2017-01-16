@@ -13,7 +13,7 @@
 #ifndef FILEPRINTERPREVIEW_H
 #define FILEPRINTERPREVIEW_H
 
-#include <kdialog.h>
+#include <QDialog>
 
 namespace Okular {
 
@@ -21,7 +21,7 @@ namespace Okular {
 
 class FilePrinterPreviewPrivate;
 
-class FilePrinterPreview : public KDialog
+class FilePrinterPreview : public QDialog
 {
     Q_OBJECT
 
@@ -32,13 +32,13 @@ public:
      * @param printer file to print preview
      * @param parent  pointer to the parent widget for the dialog
      */
-    explicit FilePrinterPreview( const QString &filename, QWidget *parent = 0 );
+    explicit FilePrinterPreview( const QString &filename, QWidget *parent = Q_NULLPTR );
     virtual ~FilePrinterPreview();
 
-    QSize sizeHint() const;
+    QSize sizeHint() const Q_DECL_OVERRIDE;
 
 protected:
-    void showEvent( QShowEvent *event );
+    void showEvent( QShowEvent *event ) Q_DECL_OVERRIDE;
 
 private:
     FilePrinterPreviewPrivate * const d;

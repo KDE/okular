@@ -44,7 +44,7 @@ QStringList NonFreeUnrarFlavour::processListing( const QStringList &data )
 
 QString NonFreeUnrarFlavour::name() const
 {
-    return "unrar-nonfree";
+    return QStringLiteral("unrar-nonfree");
 }
 
 
@@ -55,7 +55,7 @@ FreeUnrarFlavour::FreeUnrarFlavour()
 
 QStringList FreeUnrarFlavour::processListing( const QStringList &data )
 {
-    QRegExp re( "^ ([^/]+/([^\\s]+))$" );
+    QRegExp re( QStringLiteral("^ ([^/]+/([^\\s]+))$") );
 
     QStringList newdata;
     foreach ( const QString &line, data )
@@ -68,6 +68,6 @@ QStringList FreeUnrarFlavour::processListing( const QStringList &data )
 
 QString FreeUnrarFlavour::name() const
 {
-    return "unrar-free";
+    return QStringLiteral("unrar-free");
 }
 

@@ -229,33 +229,33 @@ EditTextCommand::EditTextCommand( const QString & newContents,
     // If There was a selection then edit was not a simple single character backspace, delete, or insert
     if (m_prevCursorPos != m_prevAnchorPos)
     {
-        kDebug(OkularDebug) << "OtherEdit, selection";
+        qCDebug(OkularCoreDebug) << "OtherEdit, selection";
         m_editType = OtherEdit;
     }
     else if ( newContentsRightOfCursor() == oldContentsRightOfCursor() &&
               newContentsLeftOfCursor() == oldContentsLeftOfCursor().left(oldContentsLeftOfCursor().length() - 1) &&
-              oldContentsLeftOfCursor().right(1) != "\n" )
+              oldContentsLeftOfCursor().right(1) != QLatin1String("\n") )
     {
-        kDebug(OkularDebug) << "CharBackspace";
+        qCDebug(OkularCoreDebug) << "CharBackspace";
         m_editType = CharBackspace;
     }
     else if ( newContentsLeftOfCursor() == oldContentsLeftOfCursor() &&
               newContentsRightOfCursor() == oldContentsRightOfCursor().right(oldContentsRightOfCursor().length() - 1) &&
-              oldContentsRightOfCursor().left(1) != "\n" )
+              oldContentsRightOfCursor().left(1) != QLatin1String("\n") )
     {
-        kDebug(OkularDebug) << "CharDelete";
+        qCDebug(OkularCoreDebug) << "CharDelete";
         m_editType = CharDelete;
     }
     else if ( newContentsRightOfCursor() == oldContentsRightOfCursor() &&
               newContentsLeftOfCursor().left( newContentsLeftOfCursor().length() - 1) == oldContentsLeftOfCursor() &&
-              newContentsLeftOfCursor().right(1) != "\n" )
+              newContentsLeftOfCursor().right(1) != QLatin1String("\n") )
     {
-        kDebug(OkularDebug) << "CharInsert";
+        qCDebug(OkularCoreDebug) << "CharInsert";
         m_editType = CharInsert;
     }
     else
     {
-        kDebug(OkularDebug) << "OtherEdit";
+        qCDebug(OkularCoreDebug) << "OtherEdit";
         m_editType = OtherEdit;
     }
 }

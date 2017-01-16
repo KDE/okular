@@ -13,7 +13,8 @@
 #include <QtGui/QImage>
 #include <QtGui/QTransform>
 
-#include <threadweaver/Job.h>
+#include <threadweaver/qobjectdecorator.h>
+#include <threadweaver/job.h>
 
 #include "core/global.h"
 #include "core/area.h"
@@ -23,33 +24,46 @@ namespace Okular {
 class DocumentObserver;
 class PagePrivate;
 
-class RotationJob : public ThreadWeaver::Job
+class RotationJobInternal : public ThreadWeaver::Job
+{
+    friend class RotationJob;
+
+    public:
+        QImage image() const;
+        Rotation rotation() const;
+        NormalizedRect rect() const;
+
+    protected:
+        void run(ThreadWeaver::JobPointer self, ThreadWeaver::Thread *thread) Q_DECL_OVERRIDE;
+
+    private:
+        RotationJobInternal( const QImage &image, Rotation oldRotation, Rotation newRotation );
+
+        const QImage mImage;
+        Rotation mOldRotation;
+        Rotation mNewRotation;
+        QImage mRotatedImage;
+};
+
+class RotationJob : public ThreadWeaver::QObjectDecorator
 {
     Q_OBJECT
-
     public:
         RotationJob( const QImage &image, Rotation oldRotation, Rotation newRotation, DocumentObserver *observer );
 
         void setPage( PagePrivate * pd );
         void setRect( const NormalizedRect &rect );
 
-        QImage image() const;
-        Rotation rotation() const;
+        QImage image() const { return static_cast<const RotationJobInternal*>(job())->image(); }
+        Rotation rotation() const { return static_cast<const RotationJobInternal*>(job())->rotation(); }
         DocumentObserver *observer() const;
         PagePrivate * page() const;
         NormalizedRect rect() const;
 
         static QTransform rotationMatrix( Rotation from, Rotation to );
 
-    protected:
-        virtual void run();
-
     private:
-        const QImage mImage;
-        Rotation mOldRotation;
-        Rotation mNewRotation;
         DocumentObserver *mObserver;
-        QImage mRotatedImage;
         PagePrivate * m_pd;
         NormalizedRect mRect;
 };

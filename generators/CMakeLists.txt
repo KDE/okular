@@ -76,6 +76,13 @@ set_package_properties("libepub" PROPERTIES
         TYPE RECOMMENDED
         PURPOSE "Support for EPub documents in Okular.")
 
+find_package(PDFium)
+set_package_properties("libpdfium" PROPERTIES
+        DESCRIPTION  "PDFium"
+        URL "http://pdfium.googlesource.com/pdfium"
+        TYPE RECOMMENDED
+        PURPOSE "PDF Support")
+        
 find_package(QMobipocket "2")
 set_package_properties("libqmobipocket" PROPERTIES
         DESCRIPTION  "A library for reading Mobipocket documents"
@@ -128,6 +135,10 @@ endif(JPEG_FOUND AND ZLIB_FOUND)
 if(EPUB_FOUND)
   add_subdirectory(epub)
 endif(EPUB_FOUND)
+
+if(PDFIUM_FOUND)
+  add_subdirectory(pdfium)
+endif(PDFIUM_FOUND)
 
 add_subdirectory(txt)
 

@@ -2,25 +2,17 @@
     "KPlugin": {
         "Authors": [
             {
-                "Email": "aacid@kde.org", 
-                "Name": "Albert Astals Cid", 
-                "Name[sr@ijekavian]": "Алберт Асталс Сид", 
-                "Name[sr@ijekavianlatin]": "Albert Astals Sid", 
-                "Name[sr@latin]": "Albert Astals Sid", 
-                "Name[sr]": "Алберт Асталс Сид", 
-                "Name[x-test]": "xxAlbert Astals Cidxx"
+                "Email": "gassaf@gmx.de", 
+                "Name": "Gilbert Assaf", 
+                "Name[x-test]": "xxGilbert Assafxx"
             }
         ], 
-        "Copyright": "© 2005-2008 Albert Astals Cid", 
-        "Copyright[et]": "© 2005-2008: Albert Astals Cid", 
-        "Copyright[fi]": "© 2005–2008 Albert Astals Cid", 
-        "Copyright[nn]": "© 2005–2008 Albert Astals Cid", 
-        "Copyright[sr@ijekavian]": "© 2005–2008, Алберт Асталс Сид", 
-        "Copyright[sr@ijekavianlatin]": "© 2005–2008, Albert Astals Sid", 
-        "Copyright[sr@latin]": "© 2005–2008, Albert Astals Sid", 
-        "Copyright[sr]": "© 2005–2008, Алберт Асталс Сид", 
-        "Copyright[uk]": "© Albert Astals Cid, 2005–2008", 
-        "Copyright[x-test]": "xx© 2005-2008 Albert Astals Cidxx", 
+        "Copyright": "© 2005-2008 Gilbert Assaf", 
+        "Copyright[et]": "© 2005-2008: Gilbert Assaf", 
+        "Copyright[fi]": "© 2005–2008 Gilbert Assaf", 
+        "Copyright[nn]": "© 2005–2008 Gilbert Assaf", 
+        "Copyright[uk]": "© Gilbert Assaf, 2005–2008", 
+        "Copyright[x-test]": "xx© 2005-2008 Gilbert Assafxx", 
         "Description": "A PDF file renderer", 
         "Description[ca@valencia]": "Un renderitzador de fitxers PDF", 
         "Description[ca]": "Un renderitzador de fitxers PDF", 
@@ -80,7 +72,7 @@
         "ServiceTypes": [
             "okular/Generator"
         ], 
-        "Version": "0.6.5"
+        "Version": "0.1"
     }, 
     "X-KDE-Priority": 1, 
     "X-KDE-okularAPIVersion": 1, 

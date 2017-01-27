@@ -210,22 +210,17 @@ Okular::TextPage* PDFiumGenerator::textPage(Okular::Page* page)
     FPDF_PAGE f_page = FPDF_LoadPage(pdfdoc, page->number());
     FPDF_TEXTPAGE text_page = FPDFText_LoadPage(f_page);
     int allChars = FPDFText_CountChars(text_page);
-    int numRect = FPDFText_CountRects(text_page, 0, allChars);
 
-    for (int i = 0; i < numRect; ++i) {
-        unsigned short buffer[500];
+    for (int i = 0; i < allChars; ++i) {
+        unsigned int character = FPDFText_GetUnicode(text_page, i);
+        QChar c(character);
+        QString s(c);
         double left, top, right, bottom;
-        FPDFText_GetRect(text_page, i, &left, &top, &right, &bottom);
-        //TODO: suppert larger texts
-        FPDFText_GetBoundedText(text_page, left, top, right, bottom, buffer, 500);
-        top = page->height() - top;
-        bottom = page->height() - bottom;
 
-        QPoint topleft(left, top);
-        QPoint bottomright(right, bottom);
-        QRect rect(bottomright, topleft);
+        FPDFText_GetCharBox(text_page, i, &left, &right, &bottom, &top);
 
-        tp->append(QString::fromUtf16(buffer), new Okular::NormalizedRect(rect, page->width(), page->height()));
+        Okular::NormalizedRect rectN = generateRectangle(left, top, right, bottom, page->width(), page->height());
+        tp->append(s, new Okular::NormalizedRect(rectN));
     }
 
     FPDFText_ClosePage(text_page);

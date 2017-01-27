@@ -10,6 +10,9 @@
 #ifndef GENERATOR_PDFIUM_H
 #define GENERATOR_PDFIUM_H
 
+#include <qbitarray.h>
+#include <QLinkedList>
+
 #include <fpdfview.h>
 
 #include <core/document.h>
@@ -33,8 +36,12 @@ protected:
 private:
     QString getMetaText ( const QString& tag ) const;
     QString getPageLabel ( int page_index ) const;
+    QLinkedList<Okular::ObjectRect*> generateObjectRects ( int page_index );
+    Okular::NormalizedRect generateRectangle ( double x1, double y1, double x2, double y2, double pageWidth, double pageHeight );
+    Okular::Action* createAction ( FPDF_ACTION action, unsigned long type, double pageWidth, double pageHeight );
     
     FPDF_DOCUMENT pdfdoc;
+    QBitArray rectsGenerated;
 };
 
 #endif // GENERATOR_PDFIUM_H

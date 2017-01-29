@@ -980,7 +980,7 @@ class OKULARCORE_EXPORT Document : public QObject
          * This signal is emitted whenever an error occurred.
          *
          * @param text The description of the error.
-         * @param duration The time in seconds the message should be shown to the user.
+         * @param duration The time in milliseconds the message should be shown to the user.
          */
         void error( const QString &text, int duration );
 
@@ -988,7 +988,7 @@ class OKULARCORE_EXPORT Document : public QObject
          * This signal is emitted to signal a warning.
          *
          * @param text The description of the warning.
-         * @param duration The time in seconds the message should be shown to the user.
+         * @param duration The time in milliseconds the message should be shown to the user.
          */
         void warning( const QString &text, int duration );
 
@@ -996,7 +996,7 @@ class OKULARCORE_EXPORT Document : public QObject
          * This signal is emitted to signal a notice.
          *
          * @param text The description of the notice.
-         * @param duration The time in seconds the message should be shown to the user.
+         * @param duration The time in milliseconds the message should be shown to the user.
          */
         void notice( const QString &text, int duration );
 

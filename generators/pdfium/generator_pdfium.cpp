@@ -12,10 +12,12 @@
 #include <fpdf_doc.h>
 #include <fpdf_text.h>
 
+#include <KLocalizedString>
+
 #include <core/page.h>
 #include <core/action.h>
 #include <QImage>
-
+#include <QDateTime>
 
 OKULAR_EXPORT_PLUGIN(PDFiumGenerator, "libokularGenerator_pdfium.json")
 
@@ -204,10 +206,23 @@ Okular::DocumentInfo PDFiumGenerator::generateDocumentInfo(const QSet<Okular::Do
             docInfo.set(Okular::DocumentInfo::Producer, getMetaText("Producer"));
         }
         if (keys.contains(Okular::DocumentInfo::CreationDate)) {
-            docInfo.set(Okular::DocumentInfo::CreationDate, getMetaText("CreationDate"));
+            QString date = getMetaText("CreationDate");
+            date.chop(7); //TODO: support TimeZones
+            QDateTime dateTime = QDateTime ::fromString(date, "'D:'yyyyMMddHHmmss");
+            docInfo.set(Okular::DocumentInfo::CreationDate, QLocale().toString(dateTime, QLocale::LongFormat));
         }
         if (keys.contains(Okular::DocumentInfo::ModificationDate)) {
-            docInfo.set(Okular::DocumentInfo::ModificationDate, getMetaText("ModDate"));
+            QString date = getMetaText("ModDate");
+            date.chop(7); //TODO: support TimeZones
+            QDateTime dateTime = QDateTime ::fromString(date, "'D:'yyyyMMddHHmmss");
+            docInfo.set(Okular::DocumentInfo::ModificationDate, QLocale().toString(dateTime, QLocale::LongFormat));
+        }
+        if (keys.contains(Okular::DocumentInfo::CustomKeys)) {
+            int fileVersion;
+            FPDF_GetFileVersion(pdfdoc, &fileVersion);
+	    float majorMinor = fileVersion;
+	    majorMinor = majorMinor/10;//<Major><Minor> => <Major>.<Minor>
+            docInfo.set(QStringLiteral("format"), i18nc("PDF v. <version>", "PDF v. %1",majorMinor), i18n("Format"));
         }
 
         docInfo.set(Okular::DocumentInfo::Pages, QString::number(FPDF_GetPageCount(pdfdoc)));

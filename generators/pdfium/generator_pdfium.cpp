@@ -25,7 +25,7 @@ PDFiumGenerator::PDFiumGenerator(QObject* parent, const QVariantList& args)
     setFeature(TextExtraction);
 }
 
-bool PDFiumGenerator::loadDocument(const QString& fileName, QVector< Okular::Page* >& pagesVector)
+Okular::Document::OpenResult PDFiumGenerator::loadDocumentWithPassword(const QString& filePath, QVector<Okular::Page*>& pagesVector, const QString& password)
 {
     FPDF_LIBRARY_CONFIG config;
     config.version = 2;
@@ -34,28 +34,40 @@ bool PDFiumGenerator::loadDocument(const QString& fileName, QVector< Okular::Pag
     config.m_v8EmbedderSlot = 0;
     FPDF_InitLibraryWithConfig(&config);
 
-    QByteArray qBA = fileName.toLatin1();
-    const char* file_name = qBA.data();
-    pdfdoc = FPDF_LoadDocument(file_name, NULL);
+    QByteArray qBFile = filePath.toLatin1();
+    const char* file_name = qBFile.data();
+
+    QByteArray qBpwd = password.toUtf8();
+    FPDF_BYTESTRING pwd = qBpwd.constData();
+
+    pdfdoc = FPDF_LoadDocument(file_name, pwd);
+
     unsigned long err = FPDF_GetLastError();
 
     if (pdfdoc) {
         if (err == FPDF_ERR_SUCCESS) {
-            pagesVector.resize(FPDF_GetPageCount(pdfdoc));
+            int pageCount = FPDF_GetPageCount(pdfdoc);
 
-            for (int i = 0; i < FPDF_GetPageCount(pdfdoc); ++i) {
+            pagesVector.resize(pageCount);
+            for (int i = 0; i < pageCount; ++i) {
                 double width, height;
                 FPDF_GetPageSizeByIndex(pdfdoc, i, &width, &height);
                 Okular::Page* page = new Okular::Page(i, width, height, Okular::Rotation0);
                 page->setLabel(getPageLabel(i));
                 pagesVector[ i ] = page;
             }
-
-            return true;
+            rectsGenerated.fill(false, pageCount);
+            return Okular::Document::OpenSuccess;
+        } else if (err == FPDF_ERR_PASSWORD) {
+            //wrong password
+            return Okular::Document::OpenNeedsPassword;
         }
+    } else if (err == FPDF_ERR_PASSWORD) {
+        //document needs a password, aka const QString& password == ""
+        return Okular::Document::OpenNeedsPassword;
     }
 
-    return false;
+    return Okular::Document::OpenError;
 }
 
 QImage PDFiumGenerator::image(Okular::PixmapRequest* request)

@@ -24,7 +24,7 @@ class PDFiumGenerator : public Okular::Generator
     Q_INTERFACES ( Okular::Generator )
 public:
     PDFiumGenerator ( QObject* parent, const QVariantList& args );
-    bool loadDocument ( const QString& fileName, QVector< Okular::Page* >& pagesVector ) Q_DECL_OVERRIDE;
+    Okular::Document::OpenResult loadDocumentWithPassword( const QString & fileName, QVector<Okular::Page*> & pagesVector, const QString & password ) Q_DECL_OVERRIDE;
     Okular::DocumentInfo generateDocumentInfo ( const QSet<Okular::DocumentInfo::Key>& keys ) const Q_DECL_OVERRIDE;
     QImage image ( Okular::PixmapRequest* page ) Q_DECL_OVERRIDE;
     QVariant metaData ( const QString& key, const QVariant& option ) const Q_DECL_OVERRIDE;

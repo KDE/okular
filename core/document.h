@@ -588,8 +588,8 @@ class OKULARCORE_EXPORT Document : public QObject
             NextMatch,      ///< Search next match
             PreviousMatch,  ///< Search previous match
             AllDocument,    ///< Search complete document
-            GoogleAll,      ///< Search all words in google style
-            GoogleAny       ///< Search any words in google style
+            GoogleAll,      ///< Search complete document (all words in google style)
+            GoogleAny       ///< Search complete document (any words in google style)
         };
 
         /**

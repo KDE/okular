@@ -1117,7 +1117,7 @@ class OKULARCORE_EXPORT Document : public QObject
         Q_PRIVATE_SLOT( d, void slotTimedMemoryCheck() )
         Q_PRIVATE_SLOT( d, void sendGeneratorPixmapRequest() )
         Q_PRIVATE_SLOT( d, void rotationFinished( int page, Okular::Page *okularPage ) )
-        Q_PRIVATE_SLOT( d, void fontReadingProgress( int page ) )
+        Q_PRIVATE_SLOT( d, void slotFontReadingProgress( int page ) )
         Q_PRIVATE_SLOT( d, void fontReadingGotFont( const Okular::FontInfo& font ) )
         Q_PRIVATE_SLOT( d, void slotGeneratorConfigChanged( const QString& ) )
         Q_PRIVATE_SLOT( d, void refreshPixmaps( int ) )

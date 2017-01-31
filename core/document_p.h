@@ -150,7 +150,7 @@ class DocumentPrivate
         void slotTimedMemoryCheck();
         void sendGeneratorPixmapRequest();
         void rotationFinished( int page, Okular::Page *okularPage );
-        void fontReadingProgress( int page );
+        void slotFontReadingProgress( int page );
         void fontReadingGotFont( const Okular::FontInfo& font );
         void slotGeneratorConfigChanged( const QString& );
         void refreshPixmaps( int );

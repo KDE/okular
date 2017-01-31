@@ -1422,7 +1422,7 @@ void DocumentPrivate::rotationFinished( int page, Okular::Page *okularPage )
         o->notifyPageChanged( page, DocumentObserver::Pixmap | DocumentObserver::Annotations );
 }
 
-void DocumentPrivate::fontReadingProgress( int page )
+void DocumentPrivate::slotFontReadingProgress( int page )
 {
     emit m_parent->fontReadingProgress( page );
 
@@ -2800,7 +2800,7 @@ void Document::startFontReading()
 
     d->m_fontThread = new FontExtractionThread( d->m_generator, pages() );
     connect( d->m_fontThread, SIGNAL(gotFont(Okular::FontInfo)), this, SLOT(fontReadingGotFont(Okular::FontInfo)) );
-    connect( d->m_fontThread.data(), &FontExtractionThread::progress, this, &Document::fontReadingProgress );
+    connect( d->m_fontThread.data(), SIGNAL(progress(int)), this, SLOT(slotFontReadingProgress(int)) );
 
     d->m_fontThread->startExtraction( /*d->m_generator->hasFeature( Generator::Threaded )*/true );
 }

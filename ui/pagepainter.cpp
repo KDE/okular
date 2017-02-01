@@ -837,7 +837,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
             {
                 if ( limitsEnlarged.intersects( rect->boundingRect( scaledWidth, scaledHeight ).translated( -scaledCrop.topLeft() ) ) )
                 {
-                    mixedPainter->strokePath( rect->region(), QPen( normalColor ) );
+                    mixedPainter->strokePath( rect->region(), QPen( normalColor, 0 ) );
                 }
             }
         }

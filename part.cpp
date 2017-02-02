@@ -2018,7 +2018,7 @@ class GotoPageDialog : public QDialog
 
             QVBoxLayout *topLayout = new QVBoxLayout(this);
             topLayout->setMargin(6);
-            QHBoxLayout *midLayout = new QHBoxLayout(this);
+            QHBoxLayout *midLayout = new QHBoxLayout();
             spinbox = new QSpinBox(this);
             spinbox->setRange(1, max);
             spinbox->setValue(current);

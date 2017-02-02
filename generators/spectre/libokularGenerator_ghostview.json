@@ -24,6 +24,7 @@
         "Description": "A PostScript file renderer based on the Spectre library", 
         "Description[ca@valencia]": "Un renderitzador de fitxers PostScript basat en la biblioteca Spectre", 
         "Description[ca]": "Un renderitzador de fitxers PostScript basat en la biblioteca Spectre", 
+        "Description[cs]": "Vykreslovač souborů PostScript založený na knihovně Spectre.", 
         "Description[de]": "Ein Renderer für PostScript-Dateien entwickelt aus der Spectre-Bibliothek", 
         "Description[es]": "Un visor de archivos PostScript basado en la biblioteca Spectre", 
         "Description[et]": "PostScript-faili renderdaja Spectre teegi alusel", 

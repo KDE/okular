@@ -177,6 +177,7 @@ bool PDFiumGenerator::doCloseDocument()
 {
     FPDF_CloseDocument(pdfdoc);
     FPDF_DestroyLibrary();
+    docSyn.clear();
     return true;
 }
 
@@ -297,6 +298,68 @@ QVariant PDFiumGenerator::metaData(const QString& key, const QVariant& option) c
     }
 
     return QVariant();
+}
+
+const Okular::DocumentSynopsis* PDFiumGenerator::generateDocumentSynopsis()
+{
+    if (!pdfdoc)
+        return NULL;
+
+    FPDF_BOOKMARK bookmark = FPDFBookmark_GetFirstChild(pdfdoc, NULL);
+
+    addSynopsisChildren(bookmark, &docSyn);
+    return &docSyn;
+}
+
+void PDFiumGenerator::addSynopsisChildren(FPDF_BOOKMARK bookmark, QDomNode* parentDestination)
+{
+    while (bookmark != NULL) {
+        char16_t buffer_new[255];
+        FPDFBookmark_GetTitle(bookmark, buffer_new, 255);
+        QString title = QString::fromUtf16(buffer_new);
+        QDomElement item = docSyn.createElement(title);
+        parentDestination->appendChild(item);
+
+        FPDF_ACTION action = FPDFBookmark_GetAction(bookmark);
+        FPDF_DEST dest = FPDFBookmark_GetDest(pdfdoc, bookmark);
+        unsigned long type = FPDFAction_GetType(action);
+
+        if (type == PDFACTION_GOTO) {
+            double pageWidth, pageHeight;
+            unsigned long page_index = FPDFDest_GetPageIndex(pdfdoc, dest);
+            FPDF_GetPageSizeByIndex(pdfdoc, page_index, &pageWidth, &pageHeight);
+            FPDF_BOOL hasXCoord, hasYCoord, hasZoom;
+            float x, y, zoom;
+            FPDFDest_GetLocationInPage(dest, &hasXCoord, &hasYCoord, &hasZoom, &x, &y, &zoom);
+            Okular::DocumentViewport viewport;
+            viewport.pageNumber = page_index;
+            viewport.rePos.normalizedX = x / pageWidth;
+            viewport.rePos.normalizedY = (y - pageHeight) / pageHeight;
+            viewport.rePos.enabled = true;
+            viewport.rePos.pos = Okular::DocumentViewport::TopLeft;
+
+            item.setAttribute(QStringLiteral("Viewport"), viewport.toString());
+
+        } else if (type == PDFACTION_REMOTEGOTO) {
+            char16_t buffer[255];
+            FPDFAction_GetFilePath(action, buffer, 255);
+            QString fileName = QString::fromUtf16(buffer);
+
+            item.setAttribute(QStringLiteral("ExternalFileName"), fileName);
+
+        } else if (type == PDFACTION_URI) {
+            char buffer[255];
+            FPDFAction_GetURIPath(pdfdoc, action, buffer, 255);
+            QString url = QString::fromUtf8(buffer);
+
+            item.setAttribute(QStringLiteral("URL"), url);
+
+        }
+
+        FPDF_BOOKMARK sibling = FPDFBookmark_GetFirstChild(pdfdoc, bookmark);
+        addSynopsisChildren(sibling, &item);
+        bookmark = FPDFBookmark_GetNextSibling(pdfdoc, bookmark);
+    }
 }
 
 #include "generator_pdfium.moc"

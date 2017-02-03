@@ -26,6 +26,7 @@ public:
     PDFiumGenerator ( QObject* parent, const QVariantList& args );
     Okular::Document::OpenResult loadDocumentWithPassword( const QString & fileName, QVector<Okular::Page*> & pagesVector, const QString & password ) Q_DECL_OVERRIDE;
     Okular::DocumentInfo generateDocumentInfo ( const QSet<Okular::DocumentInfo::Key>& keys ) const Q_DECL_OVERRIDE;
+    const Okular::DocumentSynopsis * generateDocumentSynopsis() Q_DECL_OVERRIDE;
     QImage image ( Okular::PixmapRequest* page ) Q_DECL_OVERRIDE;
     QVariant metaData ( const QString& key, const QVariant& option ) const Q_DECL_OVERRIDE;
     
@@ -39,9 +40,11 @@ private:
     QLinkedList<Okular::ObjectRect*> generateObjectRects ( int page_index );
     Okular::NormalizedRect generateRectangle ( double x1, double y1, double x2, double y2, double pageWidth, double pageHeight );
     Okular::Action* createAction ( FPDF_ACTION action, unsigned long type, double pageWidth, double pageHeight );
+    void addSynopsisChildren(FPDF_BOOKMARK bookmark, QDomNode * parentDestination);
     
     FPDF_DOCUMENT pdfdoc;
     QBitArray rectsGenerated;
+    Okular::DocumentSynopsis docSyn;
 };
 
 #endif // GENERATOR_PDFIUM_H

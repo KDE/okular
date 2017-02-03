@@ -39,7 +39,6 @@ SearchLineEdit::SearchLineEdit( QWidget * parent, Okular::Document * document )
     connect(m_inputDelayTimer, &QTimer::timeout, this, &SearchLineEdit::startSearch);
 
     connect(this, &SearchLineEdit::textChanged, this, &SearchLineEdit::slotTextChanged);
-    connect(this, &SearchLineEdit::returnPressed, this, &SearchLineEdit::slotReturnPressed);
     connect(document, &Okular::Document::searchFinished, this, &SearchLineEdit::searchFinished);
 }
 
@@ -65,7 +64,15 @@ void SearchLineEdit::setSearchType( Okular::Document::SearchType type )
     if ( type == m_searchType )
         return;
 
+    disconnect(this, &SearchLineEdit::returnPressed, this, &SearchLineEdit::slotReturnPressed);
+
     m_searchType = type;
+
+    // Only connect Enter for next/prev searches, the rest of searches are document global so
+    // next/prev serach does not make sense for them
+    if (m_searchType == Okular::Document::NextMatch || m_searchType == Okular::Document::PreviousMatch) {
+        connect(this, &SearchLineEdit::returnPressed, this, &SearchLineEdit::slotReturnPressed);
+    }
 
     if ( !m_changed )
         m_changed = ( m_searchType != Okular::Document::NextMatch && m_searchType != Okular::Document::PreviousMatch );

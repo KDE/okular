@@ -71,8 +71,8 @@ class Q_DECL_EXPORT PagePainter
         static void drawShapeOnImage(
             QImage & image,
             const NormalizedPath & imagePoints,
-            bool closeShape = true,
-            const QPen & pen = QPen(),
+            bool closeShape,
+            const QPen & pen,
             const QBrush & brush = QBrush(),
             double penWidthMultiplier = 1.0,
             RasterOperation op = Normal

@@ -51,6 +51,7 @@
             "application/epub+zip"
         ], 
         "Name": "EPub Backend", 
+        "Name[ast]": "Backend d'EPub", 
         "Name[ca@valencia]": "Dorsal EPub", 
         "Name[ca]": "Dorsal EPub", 
         "Name[cs]": "Podpůrná vrstva EPub", 

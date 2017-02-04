@@ -54,6 +54,7 @@
             "image/g3fax"
         ], 
         "Name": "Fax Backend", 
+        "Name[ast]": "Backend de fax", 
         "Name[ca@valencia]": "Dorsal de fax", 
         "Name[ca]": "Dorsal de fax", 
         "Name[cs]": "Implementace faxu", 

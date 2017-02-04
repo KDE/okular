@@ -94,6 +94,7 @@
             "image/x-xpixmap"
         ], 
         "Name": "Image Backend", 
+        "Name[ast]": "Backend d'imáxenes", 
         "Name[ca@valencia]": "Dorsal d'imatges", 
         "Name[ca]": "Dorsal d'imatges", 
         "Name[cs]": "Podpůrná vrstva obrázků", 

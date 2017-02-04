@@ -73,6 +73,7 @@
             "application/vnd.ms-xpsdocument"
         ], 
         "Name": "XPS Backend", 
+        "Name[ast]": "Backend XPS", 
         "Name[ca@valencia]": "Dorsal XPS", 
         "Name[ca]": "Dorsal XPS", 
         "Name[cs]": "Podpůrná vrstva XPS", 

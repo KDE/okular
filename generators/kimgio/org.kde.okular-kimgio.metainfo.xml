@@ -5,6 +5,7 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+ and GFDL-1.3</project_license>
   <name>Images</name>
+  <name xml:lang="ast">Imáxenes</name>
   <name xml:lang="ca">Imatges</name>
   <name xml:lang="ca-valencia">Imatges</name>
   <name xml:lang="cs">Obrázky</name>
@@ -31,6 +32,7 @@
   <name xml:lang="zh-CN">图片</name>
   <name xml:lang="zh-TW">影像</name>
   <summary>Adds support for reading many image formats</summary>
+  <summary xml:lang="ast">Amiesta sofitu pa la llectura de munchos formatos d'imaxe</summary>
   <summary xml:lang="ca">Afegeix la implementació per llegir molts formats d'imatges</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per llegir molts formats d'imatges</summary>
   <summary xml:lang="cs">Přidává podporu pro čtení formátů obrázků</summary>

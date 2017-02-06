@@ -102,17 +102,19 @@ QImage PDFiumGenerator::image(Okular::PixmapRequest* request)
 }
 
 
-Okular::Action* PDFiumGenerator::createAction(FPDF_ACTION action, unsigned long type, double pageWidth, double pageHeight)
+Okular::Action* PDFiumGenerator::createAction(FPDF_ACTION action, unsigned long type)
 {
     Okular::Action* okularAction = 0;
     if (type == PDFACTION_GOTO) {
         FPDF_DEST dest = FPDFAction_GetDest(pdfdoc, action);
-        unsigned long index = FPDFDest_GetPageIndex(pdfdoc, dest);
+        unsigned long page_index = FPDFDest_GetPageIndex(pdfdoc, dest);
+        double pageWidth, pageHeight;
+        FPDF_GetPageSizeByIndex(pdfdoc, page_index, &pageWidth, &pageHeight);
         FPDF_BOOL hasXCoord, hasYCoord, hasZoom;
         float x, y, zoom;
         FPDFDest_GetLocationInPage(dest, &hasXCoord, &hasYCoord, &hasZoom, &x, &y, &zoom);
         Okular::DocumentViewport viewport;
-        viewport.pageNumber = index;
+        viewport.pageNumber = page_index;
         viewport.rePos.normalizedX = x / pageWidth;
         viewport.rePos.normalizedY = (y - pageHeight) / pageHeight;
         viewport.rePos.enabled = true;
@@ -166,7 +168,7 @@ QLinkedList<Okular::ObjectRect*> PDFiumGenerator::generateObjectRects(int page_i
         FS_RECTF rect;
         FPDFLink_GetAnnotRect(link, &rect);
         Okular::NormalizedRect rectN = generateRectangle(rect.right, rect.top, rect.left, rect.bottom, pageWidth, pageHeight);
-        Okular::ObjectRect* objRect = new Okular::ObjectRect(rectN, false, Okular::ObjectRect::Action, createAction(action, type, pageWidth, pageHeight));
+        Okular::ObjectRect* objRect = new Okular::ObjectRect(rectN, false, Okular::ObjectRect::Action, createAction(action, type));
         objectRects.push_front(objRect);
     }
 
@@ -221,8 +223,8 @@ Okular::DocumentInfo PDFiumGenerator::generateDocumentInfo(const QSet<Okular::Do
         if (keys.contains(Okular::DocumentInfo::CustomKeys)) {
             int fileVersion;
             FPDF_GetFileVersion(pdfdoc, &fileVersion);
-	    float majorMinor = fileVersion;
-	    majorMinor = majorMinor/10;//<Major><Minor> => <Major>.<Minor>
+            float majorMinor = fileVersion;
+            majorMinor = majorMinor / 10; //<Major><Minor> => <Major>.<Minor>
             docInfo.set(QStringLiteral("format"), i18nc("PDF v. <version>", "PDF v. %1",majorMinor), i18n("Format"));
         }
 
@@ -321,38 +323,23 @@ void PDFiumGenerator::addSynopsisChildren(FPDF_BOOKMARK bookmark, QDomNode* pare
         parentDestination->appendChild(item);
 
         FPDF_ACTION action = FPDFBookmark_GetAction(bookmark);
-        FPDF_DEST dest = FPDFBookmark_GetDest(pdfdoc, bookmark);
         unsigned long type = FPDFAction_GetType(action);
 
         if (type == PDFACTION_GOTO) {
-            double pageWidth, pageHeight;
-            unsigned long page_index = FPDFDest_GetPageIndex(pdfdoc, dest);
-            FPDF_GetPageSizeByIndex(pdfdoc, page_index, &pageWidth, &pageHeight);
-            FPDF_BOOL hasXCoord, hasYCoord, hasZoom;
-            float x, y, zoom;
-            FPDFDest_GetLocationInPage(dest, &hasXCoord, &hasYCoord, &hasZoom, &x, &y, &zoom);
-            Okular::DocumentViewport viewport;
-            viewport.pageNumber = page_index;
-            viewport.rePos.normalizedX = x / pageWidth;
-            viewport.rePos.normalizedY = (y - pageHeight) / pageHeight;
-            viewport.rePos.enabled = true;
-            viewport.rePos.pos = Okular::DocumentViewport::TopLeft;
-
-            item.setAttribute(QStringLiteral("Viewport"), viewport.toString());
-
+            Okular::Action* oAction = createAction(action, type);
+            Okular::GotoAction* gotoAction = static_cast<Okular::GotoAction*>(oAction);
+            item.setAttribute(QStringLiteral("Viewport"), gotoAction->destViewport().toString());
         } else if (type == PDFACTION_REMOTEGOTO) {
-            char16_t buffer[255];
-            FPDFAction_GetFilePath(action, buffer, 255);
-            QString fileName = QString::fromUtf16(buffer);
+            Okular::Action* oAction = createAction(action, type);
+            Okular::GotoAction* gotoAction = static_cast<Okular::GotoAction*>(oAction);
 
-            item.setAttribute(QStringLiteral("ExternalFileName"), fileName);
+            item.setAttribute(QStringLiteral("ExternalFileName"), gotoAction->fileName());
 
         } else if (type == PDFACTION_URI) {
-            char buffer[255];
-            FPDFAction_GetURIPath(pdfdoc, action, buffer, 255);
-            QString url = QString::fromUtf8(buffer);
+            Okular::Action* oAction = createAction(action, type);
+            Okular::BrowseAction* browseAction = static_cast<Okular::BrowseAction*>(oAction);
 
-            item.setAttribute(QStringLiteral("URL"), url);
+            item.setAttribute(QStringLiteral("URL"), browseAction->url().toString());
 
         }
 

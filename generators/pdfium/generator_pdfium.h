@@ -39,7 +39,7 @@ private:
     QString getPageLabel ( int page_index ) const;
     QLinkedList<Okular::ObjectRect*> generateObjectRects ( int page_index );
     Okular::NormalizedRect generateRectangle ( double x1, double y1, double x2, double y2, double pageWidth, double pageHeight );
-    Okular::Action* createAction ( FPDF_ACTION action, unsigned long type, double pageWidth, double pageHeight );
+    Okular::Action* createAction ( FPDF_ACTION action, unsigned long type );
     void addSynopsisChildren(FPDF_BOOKMARK bookmark, QDomNode * parentDestination);
     
     FPDF_DOCUMENT pdfdoc;

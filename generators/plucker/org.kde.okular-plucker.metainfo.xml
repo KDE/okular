@@ -32,6 +32,7 @@
   <name xml:lang="zh-CN">Plucker</name>
   <name xml:lang="zh-TW">Plucker</name>
   <summary>Adds support for reading Plucker documents</summary>
+  <summary xml:lang="ast">Amiesta sofitu pa la llectura de documentos Plucker</summary>
   <summary xml:lang="ca">Afegeix la implementació per llegir documents Plucker</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per llegir documents Plucker</summary>
   <summary xml:lang="cs">Přidává podporu pro čtení dokumentů Plucker</summary>

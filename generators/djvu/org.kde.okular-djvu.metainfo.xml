@@ -10,6 +10,7 @@
   <name xml:lang="ca-valencia">Documents DjVu</name>
   <name xml:lang="cs">Dokumenty DjVu</name>
   <name xml:lang="de">DjVu-Dokumente</name>
+  <name xml:lang="el">Έγγραφα DjVu</name>
   <name xml:lang="en-GB">DjVu Documents</name>
   <name xml:lang="es">Documentos DjVu</name>
   <name xml:lang="et">DjVu dokumendid</name>
@@ -37,6 +38,7 @@
   <summary xml:lang="ca-valencia">Afig la implementació per llegir documents DjVu</summary>
   <summary xml:lang="cs">Přidává podporu pro čtení dokumentů DjVu</summary>
   <summary xml:lang="de">Bietet Unterstützung zum Lesen von DjVu-Dokumenten</summary>
+  <summary xml:lang="el">Προσθέτει υποστήριξη για την ανάγνωση εγγράφων DjVu</summary>
   <summary xml:lang="en-GB">Adds support for reading DjVu documents</summary>
   <summary xml:lang="es">Permite la lectura de documentos DjVu</summary>
   <summary xml:lang="et">DjVu dokumentide lugemise toetus</summary>

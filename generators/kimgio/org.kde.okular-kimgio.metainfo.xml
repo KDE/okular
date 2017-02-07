@@ -10,6 +10,7 @@
   <name xml:lang="ca-valencia">Imatges</name>
   <name xml:lang="cs">Obrázky</name>
   <name xml:lang="de">Bilder</name>
+  <name xml:lang="el">Εικόνες</name>
   <name xml:lang="en-GB">Images</name>
   <name xml:lang="es">Imágenes</name>
   <name xml:lang="et">Pildid</name>
@@ -37,6 +38,7 @@
   <summary xml:lang="ca-valencia">Afig la implementació per llegir molts formats d'imatges</summary>
   <summary xml:lang="cs">Přidává podporu pro čtení formátů obrázků</summary>
   <summary xml:lang="de">Bietet Unterstützung zum Lesen von vielen Bildformaten</summary>
+  <summary xml:lang="el">Προσθέτει υποστήριξη για την ανάγνωση πολλών τύπων αποθήκευσης εικόνων</summary>
   <summary xml:lang="en-GB">Adds support for reading many image formats</summary>
   <summary xml:lang="es">Permite la lectura de diversos formatos de imagen</summary>
   <summary xml:lang="et">Paljude pildivormingute lugemise toetus</summary>

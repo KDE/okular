@@ -34,6 +34,12 @@ set_package_properties("CHM" PROPERTIES
         TYPE RECOMMENDED
         PURPOSE "Support CHM files in okular.")
 
+find_package(KF5KHtml)
+set_package_properties("KF5KHtml" PROPERTIES
+        DESCRIPTION "HTML rendering library"
+        TYPE RECOMMENDED
+        PURPOSE "Support CHM files in okular.")
+
 find_package(DjVuLibre "3.5.17")
 set_package_properties("DjVuLibre" PROPERTIES
         DESCRIPTION  "A library for dealing with DjVu formatted files"
@@ -97,7 +103,7 @@ if(KF5KExiv2_FOUND)
   add_subdirectory( kimgio )
 endif()
 
-if(CHM_FOUND)
+if(CHM_FOUND AND KF5KHtml_FOUND)
   add_subdirectory( chm )
 endif(CHM_FOUND)
 

@@ -16,8 +16,12 @@
 
 #include <core/page.h>
 #include <core/action.h>
+#include <core/fileprinter.h>
+
 #include <QImage>
 #include <QDateTime>
+#include <QPainter>
+
 
 OKULAR_EXPORT_PLUGIN(PDFiumGenerator, "libokularGenerator_pdfium.json")
 
@@ -25,6 +29,8 @@ PDFiumGenerator::PDFiumGenerator(QObject* parent, const QVariantList& args)
     : Okular::Generator(parent, args)
 {
     setFeature(TextExtraction);
+    setFeature(PrintNative);
+    setFeature(PrintToFile);
 }
 
 Okular::Document::OpenResult PDFiumGenerator::loadDocumentWithPassword(const QString& filePath, QVector<Okular::Page*>& pagesVector, const QString& password)
@@ -79,11 +85,11 @@ QImage PDFiumGenerator::image(Okular::PixmapRequest* request)
     FPDF_PAGE f_page = FPDF_LoadPage(pdfdoc, page->number());
     int x = request->width();
     int y = request->height();
-    QImage image(x, y, QImage::Format_RGBA8888);
+    QImage image(x, y, QImage::Format_ARGB32);
 
-    image.fill(0xFFFFFFFF);
+    image.fill(Qt::transparent);
 
-    FPDF_BITMAP bitmap = FPDFBitmap_CreateEx(image.width(), image.height(), FPDFBitmap_BGRA, image.scanLine(0), image.bytesPerLine());
+    FPDF_BITMAP bitmap = FPDFBitmap_CreateEx(image.width(), image.height(), FPDFBitmap_BGRA, image.bits(), image.bytesPerLine());
     FPDF_RenderPageBitmap(bitmap, f_page, 0, 0, image.width(), image.height(), 0, 0);
 
     FPDFBitmap_Destroy(bitmap);
@@ -98,7 +104,7 @@ QImage PDFiumGenerator::image(Okular::PixmapRequest* request)
 
     FPDF_ClosePage(f_page);
 
-    return image.rgbSwapped();
+    return image;
 }
 
 
@@ -347,6 +353,42 @@ void PDFiumGenerator::addSynopsisChildren(FPDF_BOOKMARK bookmark, QDomNode* pare
         addSynopsisChildren(sibling, &item);
         bookmark = FPDFBookmark_GetNextSibling(pdfdoc, bookmark);
     }
+}
+
+bool PDFiumGenerator::print(QPrinter& printer)
+{
+
+    QPainter p(&printer);
+
+    QList<int> pageList = Okular::FilePrinter::pageList(printer, document()->pages(),
+                          document()->currentPage() + 1,
+                          document()->bookmarkedPageList());
+
+    for (int i = 0; i < pageList.count(); ++i) {
+        FPDF_PAGE f_page = FPDF_LoadPage(pdfdoc, pageList[i] - 1);
+        double pageWidth, pageHeight;
+        FPDF_GetPageSizeByIndex(pdfdoc, pageList[i] - 1, &pageWidth, &pageHeight);
+
+        QImage image(pageWidth, pageHeight, QImage::Format_ARGB32);
+
+        image.fill(Qt::transparent);
+
+        FPDF_BITMAP bitmap = FPDFBitmap_CreateEx(image.width(), image.height(), FPDFBitmap_BGRA, image.bits(), image.bytesPerLine());
+        FPDF_RenderPageBitmap(bitmap, f_page, 0, 0, image.width(), image.height(), 0, FPDF_PRINTING);
+
+        FPDFBitmap_Destroy(bitmap);
+
+
+        FPDF_ClosePage(f_page);
+        if (i != 0)
+            printer.newPage();
+
+        p.drawImage(0, 0, image);
+
+
+    }
+
+    return true;
 }
 
 #include "generator_pdfium.moc"

@@ -29,6 +29,7 @@ public:
     const Okular::DocumentSynopsis * generateDocumentSynopsis() Q_DECL_OVERRIDE;
     QImage image ( Okular::PixmapRequest* page ) Q_DECL_OVERRIDE;
     QVariant metaData ( const QString& key, const QVariant& option ) const Q_DECL_OVERRIDE;
+    bool print( QPrinter& printer ) Q_DECL_OVERRIDE;
     
 protected:
     bool doCloseDocument() Q_DECL_OVERRIDE;

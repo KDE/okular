@@ -87,7 +87,7 @@ QImage PDFiumGenerator::image(Okular::PixmapRequest* request)
     int y = request->height();
     QImage image(x, y, QImage::Format_ARGB32);
 
-    image.fill(Qt::transparent);
+    image.fill(0xFFFFFFFF);
 
     FPDF_BITMAP bitmap = FPDFBitmap_CreateEx(image.width(), image.height(), FPDFBitmap_BGRA, image.bits(), image.bytesPerLine());
     FPDF_RenderPageBitmap(bitmap, f_page, 0, 0, image.width(), image.height(), 0, 0);
@@ -173,7 +173,7 @@ QLinkedList<Okular::ObjectRect*> PDFiumGenerator::generateObjectRects(int page_i
 
         FS_RECTF rect;
         FPDFLink_GetAnnotRect(link, &rect);
-        Okular::NormalizedRect rectN = generateRectangle(rect.right, rect.top, rect.left, rect.bottom, pageWidth, pageHeight);
+        Okular::NormalizedRect rectN = generateRectangle(rect.left, rect.top, rect.right, rect.bottom, pageWidth, pageHeight);
         Okular::ObjectRect* objRect = new Okular::ObjectRect(rectN, false, Okular::ObjectRect::Action, createAction(action, type));
         objectRects.push_front(objRect);
     }
@@ -292,15 +292,19 @@ Okular::NormalizedRect PDFiumGenerator::generateRectangle(double x1, double y1, 
     y1 = pageHeight - y1;
     y2 = pageHeight - y2;
 
-    QPoint topleft(x1, y1);
-    QPoint bottomright(x2, y2);
-    QRect rect(bottomright, topleft);
-    return Okular::NormalizedRect(rect, pageWidth, pageHeight);
+    double l = x1 / pageWidth;
+    double t = y1 / pageHeight;
+    double r = x2 / pageWidth;
+    double b = y2 / pageHeight;
+
+    return Okular::NormalizedRect(l, t, r, b);
 }
 
 
 QVariant PDFiumGenerator::metaData(const QString& key, const QVariant& option) const
 {
+    Q_UNUSED(option)
+
     if (key == QLatin1String("DocumentTitle")) {
         return getMetaText("Title");
     }
@@ -371,7 +375,7 @@ bool PDFiumGenerator::print(QPrinter& printer)
 
         QImage image(pageWidth, pageHeight, QImage::Format_ARGB32);
 
-        image.fill(Qt::transparent);
+        image.fill(0xFFFFFFFF);
 
         FPDF_BITMAP bitmap = FPDFBitmap_CreateEx(image.width(), image.height(), FPDFBitmap_BGRA, image.bits(), image.bytesPerLine());
         FPDF_RenderPageBitmap(bitmap, f_page, 0, 0, image.width(), image.height(), 0, FPDF_PRINTING);
@@ -392,3 +396,5 @@ bool PDFiumGenerator::print(QPrinter& printer)
 }
 
 #include "generator_pdfium.moc"
+
+/* kate: replace-tabs on; indent-width 4; */

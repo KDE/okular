@@ -49,3 +49,5 @@ private:
 };
 
 #endif // GENERATOR_PDFIUM_H
+
+/* kate: replace-tabs on; indent-width 4; */

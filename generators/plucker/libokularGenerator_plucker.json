@@ -80,6 +80,7 @@
         "Name[sv]": "Plucker-dokumentgränssnitt", 
         "Name[uk]": "Модуль документів Plucker", 
         "Name[x-test]": "xxPlucker Document Backendxx", 
+        "Name[zh_CN]": "Plucker 文档后端", 
         "Name[zh_TW]": "Pluker 文件後端介面", 
         "ServiceTypes": [
             "okular/Generator"

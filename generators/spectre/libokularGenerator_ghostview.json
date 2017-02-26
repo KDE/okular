@@ -78,6 +78,7 @@
         "Name[sv]": "PS-gränssnitt", 
         "Name[uk]": "Модуль PS", 
         "Name[x-test]": "xxPS Backendxx", 
+        "Name[zh_CN]": "PS 后端", 
         "Name[zh_TW]": "PS 後端介面", 
         "ServiceTypes": [
             "okular/Generator"

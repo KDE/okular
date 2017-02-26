@@ -66,6 +66,7 @@
         "Description[sv]": "Ett XPS-gränssnitt", 
         "Description[uk]": "Програма для XPS", 
         "Description[x-test]": "xxAn XPS backendxx", 
+        "Description[zh_CN]": "XPS 后端", 
         "Description[zh_TW]": "XPS 後端介面", 
         "Id": "okular_xps", 
         "License": "GPL", 
@@ -97,6 +98,7 @@
         "Name[sv]": "XPS-gränssnitt", 
         "Name[uk]": "Модуль XPS", 
         "Name[x-test]": "xxXPS Backendxx", 
+        "Name[zh_CN]": "XPS 后端", 
         "Name[zh_TW]": "XPS 後端介面", 
         "ServiceTypes": [
             "okular/Generator"

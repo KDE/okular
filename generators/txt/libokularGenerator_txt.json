@@ -76,6 +76,7 @@
         "Name[sv]": "Textgränssnitt", 
         "Name[uk]": "Модуль тексту", 
         "Name[x-test]": "xxTxt Backendxx", 
+        "Name[zh_CN]": "纯文本后端", 
         "Name[zh_TW]": "Txt 後端介面", 
         "ServiceTypes": [
             "okular/Generator"

@@ -27,6 +27,7 @@
   <name xml:lang="sv">Bilder</name>
   <name xml:lang="uk">Зображення</name>
   <name xml:lang="x-test">xxImagesxx</name>
+  <name xml:lang="zh-CN">图片</name>
   <name xml:lang="zh-TW">影像</name>
   <summary>Adds support for reading many image formats</summary>
   <summary xml:lang="ca">Afegeix la implementació per llegir molts formats d'imatges</summary>
@@ -51,6 +52,7 @@
   <summary xml:lang="sv">Lägger till stöd för att läsa många bildformat</summary>
   <summary xml:lang="uk">Додає підтримку читання зображень у багатьох форматах</summary>
   <summary xml:lang="x-test">xxAdds support for reading many image formatsxx</summary>
+  <summary xml:lang="zh-CN">支持多种图片格式的阅读</summary>
   <summary xml:lang="zh-TW">加入讀取許多影像格式的支援</summary>
   <mimetypes>
     <mimetype>image/bmp</mimetype>

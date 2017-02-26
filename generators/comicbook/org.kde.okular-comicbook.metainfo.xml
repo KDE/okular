@@ -27,6 +27,7 @@
   <name xml:lang="sv">Comic Book</name>
   <name xml:lang="uk">Комікси</name>
   <name xml:lang="x-test">xxComic Booksxx</name>
+  <name xml:lang="zh-CN">漫画书</name>
   <name xml:lang="zh-TW">漫畫書</name>
   <summary>Adds support for reading comic books</summary>
   <summary xml:lang="ca">Afegeix la implementació per llegir llibres de còmics</summary>
@@ -51,6 +52,7 @@
   <summary xml:lang="sv">Lägger till stöd för att läsa Comic Book</summary>
   <summary xml:lang="uk">Додає підтримку читання коміксів</summary>
   <summary xml:lang="x-test">xxAdds support for reading comic booksxx</summary>
+  <summary xml:lang="zh-CN">增加对漫画书的阅读支持</summary>
   <summary xml:lang="zh-TW">加入讀取漫畫書的支援</summary>
   <mimetypes>
     <mimetype>application/x-cbr</mimetype>

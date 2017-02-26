@@ -27,6 +27,7 @@
   <name xml:lang="sv">Epub</name>
   <name xml:lang="uk">EPub</name>
   <name xml:lang="x-test">xxEPubxx</name>
+  <name xml:lang="zh-CN">EPub</name>
   <name xml:lang="zh-TW">EPub</name>
   <summary>Adds support for reading E-Books</summary>
   <summary xml:lang="ca">Afegeix la implementació per llegir llibres electrònics</summary>
@@ -51,6 +52,7 @@
   <summary xml:lang="sv">Lägger till stöd för att läsa e-böcker</summary>
   <summary xml:lang="uk">Додає підтримку читання електронних книг</summary>
   <summary xml:lang="x-test">xxAdds support for reading E-Booksxx</summary>
+  <summary xml:lang="zh-CN">增加对电子书的阅读支持</summary>
   <summary xml:lang="zh-TW">加入讀取電子書的支援</summary>
   <mimetypes>
     <mimetype>application/epub+zip</mimetype>

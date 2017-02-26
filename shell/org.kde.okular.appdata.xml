@@ -27,6 +27,7 @@
   <name xml:lang="sv">Okular</name>
   <name xml:lang="uk">Okular</name>
   <name xml:lang="x-test">xxOkularxx</name>
+  <name xml:lang="zh-CN">Okular</name>
   <name xml:lang="zh-TW">Okular</name>
   <summary>Document Viewer</summary>
   <summary xml:lang="ca">Visualitzador de documents</summary>
@@ -52,6 +53,7 @@
   <summary xml:lang="sv">Dokumentvisare</summary>
   <summary xml:lang="uk">Програма для перегляду документів</summary>
   <summary xml:lang="x-test">xxDocument Viewerxx</summary>
+  <summary xml:lang="zh-CN">文档查看器</summary>
   <summary xml:lang="zh-TW">文件檢視器</summary>
   <description>
     <p>

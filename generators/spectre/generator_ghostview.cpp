@@ -70,8 +70,8 @@ bool GSGenerator::reparseConfig()
         changed = true; \
     } \
 }
-    SET_HINT("GraphicsAntialias", true, AAgfx)
-    SET_HINT("TextAntialias", true, AAtext)
+    SET_HINT(GraphicsAntialiasMetaData, true, AAgfx)
+    SET_HINT(TextAntialiasMetaData, true, AAtext)
 #undef SET_HINT
     }
     return changed;

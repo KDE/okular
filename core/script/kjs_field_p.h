@@ -24,6 +24,7 @@ class JSField
     public:
         static void initType( KJSContext *ctx );
         static KJSObject wrapField( KJSContext *ctx, FormField *field, Page *page );
+        static void clearCachedFields();
 };
 
 }

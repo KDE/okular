@@ -108,4 +108,5 @@ void ExecutorKJS::execute( const QString &script )
     {
         qCDebug(OkularCoreDebug) << "result:" << result.value().toString( ctx );
     }
+    JSField::clearCachedFields();
 }

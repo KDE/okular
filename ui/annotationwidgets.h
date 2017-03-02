@@ -148,7 +148,7 @@ public:
     void applyChanges() override;
 
 protected:
-    virtual QWidget * createStyleWidget() override;
+    QWidget * createStyleWidget() override;
 
 private:
     Okular::LineAnnotation * m_lineAnn;

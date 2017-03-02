@@ -23,7 +23,7 @@ class VideoWidget : public QWidget
 {
     Q_OBJECT
     public:
-        VideoWidget( const Okular::Annotation *annot, Okular::Movie *movie, Okular::Document *document, QWidget *parent = Q_NULLPTR );
+        VideoWidget( const Okular::Annotation *annot, Okular::Movie *movie, Okular::Document *document, QWidget *parent = nullptr );
         ~VideoWidget();
 
         void setNormGeometry( const Okular::NormalizedRect &rect );

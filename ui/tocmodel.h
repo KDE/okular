@@ -30,7 +30,7 @@ class TOCModel : public QAbstractItemModel
     Q_PROPERTY(int count READ count NOTIFY countChanged)
 
     public:
-        explicit TOCModel( Okular::Document *document, QObject *parent = Q_NULLPTR );
+        explicit TOCModel( Okular::Document *document, QObject *parent = nullptr );
         virtual ~TOCModel();
 
         // reimplementations from QAbstractItemModel

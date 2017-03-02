@@ -20,7 +20,7 @@ class DlgAccessibility : public QWidget
     Q_OBJECT
 
     public:
-        explicit DlgAccessibility( QWidget * parent = Q_NULLPTR );
+        explicit DlgAccessibility( QWidget * parent = nullptr );
         ~DlgAccessibility();
 
     private Q_SLOTS:

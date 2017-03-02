@@ -214,7 +214,7 @@ class OKULARCORE_EXPORT Generator : public QObject
         /**
          * Creates a new generator.
          */
-        Generator(QObject* parent = Q_NULLPTR, const QVariantList& args = QVariantList());
+        Generator(QObject* parent = nullptr, const QVariantList& args = QVariantList());
 
         /**
          * Destroys the generator.

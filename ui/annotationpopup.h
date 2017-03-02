@@ -34,7 +34,7 @@ class AnnotationPopup : public QObject
             MultiAnnotationMode   ///< The menu shows entries to manipulate multiple annotations.
         };
 
-        AnnotationPopup( Okular::Document *document, MenuMode mode, QWidget *parent = Q_NULLPTR );
+        AnnotationPopup( Okular::Document *document, MenuMode mode, QWidget *parent = nullptr );
 
         void addAnnotation( Okular::Annotation* annotation, int pageNumber );
 

@@ -24,7 +24,7 @@ class WidgetAnnotTools : public WidgetConfigurationToolsBase
 {
     Q_OBJECT
     public:
-        explicit WidgetAnnotTools( QWidget * parent = Q_NULLPTR );
+        explicit WidgetAnnotTools( QWidget * parent = nullptr );
         ~WidgetAnnotTools();
 
         QStringList tools() const Q_DECL_OVERRIDE;

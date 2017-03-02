@@ -25,7 +25,7 @@ class FindBar
     Q_OBJECT
 
     public:
-        explicit FindBar( Okular::Document * document, QWidget * parent = Q_NULLPTR );
+        explicit FindBar( Okular::Document * document, QWidget * parent = nullptr );
         virtual ~FindBar();
 
         QString text() const;

@@ -22,7 +22,7 @@ class EditDrawingToolDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit EditDrawingToolDialog( const QDomElement &initialState = QDomElement(), QWidget *parent = Q_NULLPTR );
+    explicit EditDrawingToolDialog( const QDomElement &initialState = QDomElement(), QWidget *parent = nullptr );
     ~EditDrawingToolDialog();
 
     QDomDocument toolXml() const;

@@ -29,7 +29,7 @@ class AnnotationModel : public QAbstractItemModel
             PageRole
         };
 
-        explicit AnnotationModel( Okular::Document *document, QObject *parent = Q_NULLPTR );
+        explicit AnnotationModel( Okular::Document *document, QObject *parent = nullptr );
         virtual ~AnnotationModel();
 
         // reimplementations from QAbstractItemModel

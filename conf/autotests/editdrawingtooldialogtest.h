@@ -16,7 +16,7 @@ class EditDrawingToolDialogTest : public QObject
 {
     Q_OBJECT
 public:
-    explicit EditDrawingToolDialogTest(QObject *parent = Q_NULLPTR);
+    explicit EditDrawingToolDialogTest(QObject *parent = nullptr);
     ~EditDrawingToolDialogTest();
 
 private Q_SLOTS:

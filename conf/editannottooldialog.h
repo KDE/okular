@@ -43,7 +43,7 @@ class EditAnnotToolDialog : public QDialog
             ToolStamp
         };
 
-        EditAnnotToolDialog( QWidget *parent = Q_NULLPTR, const QDomElement &initialState = QDomElement() );
+        EditAnnotToolDialog( QWidget *parent = nullptr, const QDomElement &initialState = QDomElement() );
         ~EditAnnotToolDialog();
         QString name() const;
         QDomDocument toolXml() const;

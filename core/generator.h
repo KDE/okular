@@ -522,10 +522,10 @@ class OKULARCORE_EXPORT Generator : public QObject
          * Internal document setting
          */
         enum DocumentMetaDataKey {
-            PaperColorMetaData,         ///< Returns the paper color if set in Settings or the default color (white) if option is true (otherwise returns a non initialized QColor)
-            TextAntialiasMetaData,      ///< Returns text antialias from Settings (option is not used)
-            GraphicsAntialiasMetaData,  ///< Returns graphic antialias from Settings (option is not used)
-            TextHintingMetaData         ///< Returns text hinting from Settings (option is not used)
+            PaperColorMetaData,         ///< Returns (QColor) the paper color if set in Settings or the default color (white) if option is true (otherwise returns a non initialized QColor)
+            TextAntialiasMetaData,      ///< Returns (bool) text antialias from Settings (option is not used)
+            GraphicsAntialiasMetaData,  ///< Returns (bool)graphic antialias from Settings (option is not used)
+            TextHintingMetaData         ///< Returns (bool)text hinting from Settings (option is not used)
         };
 
         /**

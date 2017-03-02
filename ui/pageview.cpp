@@ -185,7 +185,7 @@ public:
     OkularTTS * m_tts;
 #endif
     QTimer * refreshTimer;
-    int refreshPage;
+    QSet<int> refreshPages;
 
     // bbox state for Trim to Selection mode
     Okular::NormalizedRect trimBoundingBox;
@@ -325,7 +325,6 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->m_tts = 0;
 #endif
     d->refreshTimer = 0;
-    d->refreshPage = -1;
     d->aRotateClockwise = 0;
     d->aRotateCounterClockwise = 0;
     d->aRotateOriginal = 0;
@@ -5219,7 +5218,7 @@ void PageView::slotFormChanged( int pageNumber )
         connect( d->refreshTimer, &QTimer::timeout,
                  this, &PageView::slotRefreshPage );
     }
-    d->refreshPage = pageNumber;
+    d->refreshPages << pageNumber;
     int delay = 0;
     if ( d->m_formsVisible )
     {
@@ -5230,12 +5229,12 @@ void PageView::slotFormChanged( int pageNumber )
 
 void PageView::slotRefreshPage()
 {
-    const int req = d->refreshPage;
-    if ( req < 0 )
-        return;
-    d->refreshPage = -1;
-    QMetaObject::invokeMethod( d->document, "refreshPixmaps", Qt::QueuedConnection,
-                               Q_ARG( int, req ) );
+    foreach(int req, d->refreshPages)
+    {
+        QMetaObject::invokeMethod( d->document, "refreshPixmaps", Qt::QueuedConnection,
+                                   Q_ARG( int, req ) );
+    }
+    d->refreshPages.clear();
 }
 
 #ifdef HAVE_SPEECH

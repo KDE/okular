@@ -437,7 +437,7 @@ QVariant Generator::documentMetaData( const QString &key, const QVariant &option
     return QVariant();
 }
 
-QVariant Generator::documentMetaData( const DocumentMetaDataKey &key, const QVariant &option ) const
+QVariant Generator::documentMetaData( const DocumentMetaDataKey key, const QVariant &option ) const
 {
     Q_D( const Generator );
     if ( !d->m_document )

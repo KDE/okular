@@ -534,7 +534,7 @@ class OKULARCORE_EXPORT Generator : public QObject
          *
          * @since 1.1
          */
-        QVariant documentMetaData( const DocumentMetaDataKey &key, const QVariant &option = QVariant() ) const;
+        QVariant documentMetaData( const DocumentMetaDataKey key, const QVariant &option = QVariant() ) const;
 
         /**
          * Request a meta data of the Document, if available, like an internal

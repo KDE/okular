@@ -1884,7 +1884,7 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, vo
     }
 }
 
-QVariant DocumentPrivate::documentMetaData( const Generator::DocumentMetaDataKey &key, const QVariant &option ) const
+QVariant DocumentPrivate::documentMetaData( const Generator::DocumentMetaDataKey key, const QVariant &option ) const
 {
     switch ( key )
     {

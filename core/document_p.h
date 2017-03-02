@@ -177,7 +177,7 @@ class DocumentPrivate
          * Request a particular metadata of the Document itself (ie, not something
          * depending on the document type/backend).
          */
-        QVariant documentMetaData( const Generator::DocumentMetaDataKey &key, const QVariant &option ) const;
+        QVariant documentMetaData( const Generator::DocumentMetaDataKey key, const QVariant &option ) const;
 
         /**
          * Return whether the normalized rectangle @p rectOfInterest on page number @p rectPage

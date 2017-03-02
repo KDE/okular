@@ -90,6 +90,10 @@ PagePrivate::~PagePrivate()
     delete m_transition;
 }
 
+PagePrivate *PagePrivate::get( Page * page )
+{
+    return page->d;
+}
 
 void PagePrivate::imageRotationDone( RotationJob * job )
 {

@@ -143,8 +143,8 @@ bool GSGenerator::print( QPrinter& printer )
 
 bool GSGenerator::loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector )
 {
-    cache_AAtext = documentMetaData(QStringLiteral("TextAntialias"), true).toBool();
-    cache_AAgfx = documentMetaData(QStringLiteral("GraphicsAntialias"), true).toBool();
+    cache_AAtext = documentMetaData(TextAntialiasMetaData, true).toBool();
+    cache_AAgfx = documentMetaData(GraphicsAntialiasMetaData, true).toBool();
 
     m_internalDocument = spectre_document_new();
     spectre_document_load(m_internalDocument, QFile::encodeName(fileName).constData());

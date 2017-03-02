@@ -70,7 +70,7 @@ Q_OBJECT
 
         static GSRendererThread *theRenderer;
 
-        void run();
+        void run() override;
 
         SpectreRenderContext *m_renderContext;
         QQueue<GSRendererThreadRequest> m_queue;

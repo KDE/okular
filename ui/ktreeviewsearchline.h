@@ -126,7 +126,7 @@ class KTreeViewSearchLine : public KLineEdit
     /**
     * Re-implemented for internal reasons.  API not affected.
     */
-    virtual void contextMenuEvent( QContextMenuEvent* );
+    void contextMenuEvent( QContextMenuEvent* ) override;
 
     /**
      * Updates search to only make visible appropriate items in \a treeView.  If

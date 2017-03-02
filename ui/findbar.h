@@ -52,7 +52,7 @@ class FindBar
         SearchLineWidget * m_search;
         QAction * m_caseSensitiveAct;
         QAction * m_fromCurrentPageAct;
-        bool eventFilter( QObject *target, QEvent *event );
+        bool eventFilter( QObject *target, QEvent *event ) override;
         bool m_active;
 };
 

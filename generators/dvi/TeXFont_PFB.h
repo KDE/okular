@@ -26,7 +26,7 @@ class TeXFont_PFB : public TeXFont {
   TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc=0, double slant=0.0 );
   ~TeXFont_PFB();
 
-  glyph* getGlyph(quint16 character, bool generateCharacterPixmap=false, const QColor& color=Qt::black);
+  glyph* getGlyph(quint16 character, bool generateCharacterPixmap=false, const QColor& color=Qt::black) override;
 
  private:
   FT_Face       face;

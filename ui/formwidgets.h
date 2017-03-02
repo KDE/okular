@@ -187,8 +187,8 @@ class CheckBoxEdit : public QCheckBox, public FormWidgetIface
         explicit CheckBoxEdit( Okular::FormFieldButton * button, QWidget * parent = nullptr );
 
         // reimplemented from FormWidgetIface
-        void setFormWidgetsController( FormWidgetsController *controller );
-        QAbstractButton* button();
+        void setFormWidgetsController( FormWidgetsController *controller ) override;
+        QAbstractButton* button() override;
 
     private Q_SLOTS:
         void slotStateChanged( int state );
@@ -205,8 +205,8 @@ class RadioButtonEdit : public QRadioButton, public FormWidgetIface
         explicit RadioButtonEdit( Okular::FormFieldButton * button, QWidget * parent = nullptr );
 
         // reimplemented from FormWidgetIface
-        void setFormWidgetsController( FormWidgetsController *controller );
-        QAbstractButton* button();
+        void setFormWidgetsController( FormWidgetsController *controller ) override;
+        QAbstractButton* button() override;
 
     private:
         Okular::FormFieldButton * m_form;
@@ -218,9 +218,9 @@ class FormLineEdit : public QLineEdit, public FormWidgetIface
 
     public:
         explicit FormLineEdit( Okular::FormFieldText * text, QWidget * parent = nullptr );
-        void setFormWidgetsController( FormWidgetsController *controller );
-        virtual bool event ( QEvent * e );
-        virtual void contextMenuEvent( QContextMenuEvent* event );
+        void setFormWidgetsController( FormWidgetsController *controller ) override;
+        bool event ( QEvent * e ) override;
+        void contextMenuEvent( QContextMenuEvent* event ) override;
 
 
     public Q_SLOTS:
@@ -244,8 +244,8 @@ class TextAreaEdit : public KTextEdit, public FormWidgetIface
 
     public:
         explicit TextAreaEdit( Okular::FormFieldText * text, QWidget * parent = nullptr );
-        void setFormWidgetsController( FormWidgetsController *controller );
-        virtual bool event ( QEvent * e );
+        void setFormWidgetsController( FormWidgetsController *controller ) override;
+        bool event ( QEvent * e ) override;
 
 
     public Q_SLOTS:
@@ -272,10 +272,10 @@ class FileEdit : public KUrlRequester, public FormWidgetIface
 
     public:
         explicit FileEdit( Okular::FormFieldText * text, QWidget * parent = nullptr );
-        void setFormWidgetsController( FormWidgetsController *controller );
+        void setFormWidgetsController( FormWidgetsController *controller ) override;
 
     protected:
-        bool eventFilter( QObject *obj, QEvent *event );
+        bool eventFilter( QObject *obj, QEvent *event ) override;
 
 
     private Q_SLOTS:
@@ -298,7 +298,7 @@ class ListEdit : public QListWidget, public FormWidgetIface
 
     public:
         explicit ListEdit( Okular::FormFieldChoice * choice, QWidget * parent = nullptr );
-        void setFormWidgetsController( FormWidgetsController *controller );
+        void setFormWidgetsController( FormWidgetsController *controller ) override;
 
     private Q_SLOTS:
         void slotSelectionChanged();
@@ -317,9 +317,9 @@ class ComboEdit : public QComboBox, public FormWidgetIface
 
     public:
         explicit ComboEdit( Okular::FormFieldChoice * choice, QWidget * parent = nullptr );
-        void setFormWidgetsController( FormWidgetsController *controller );
-        virtual bool event ( QEvent * e );
-        virtual void contextMenuEvent( QContextMenuEvent* event );
+        void setFormWidgetsController( FormWidgetsController *controller ) override;
+        bool event ( QEvent * e ) override;
+        void contextMenuEvent( QContextMenuEvent* event ) override;
 
     private Q_SLOTS:
         void slotValueChanged();

@@ -25,18 +25,18 @@ class KIMGIOGenerator : public Okular::Generator
         virtual ~KIMGIOGenerator();
 
         // [INHERITED] load a document and fill up the pagesVector
-        bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
-        bool loadDocumentFromData( const QByteArray & fileData, QVector<Okular::Page*> & pagesVector );
+        bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector ) override;
+        bool loadDocumentFromData( const QByteArray & fileData, QVector<Okular::Page*> & pagesVector ) override;
 
         // [INHERITED] print document using already configured kprinter
-        bool print( QPrinter& printer );
+        bool print( QPrinter& printer ) override;
 
         // [INHERITED] document information
-        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const;
+        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const override;
 
     protected:
-        bool doCloseDocument();
-        QImage image( Okular::PixmapRequest * request );
+        bool doCloseDocument() override;
+        QImage image( Okular::PixmapRequest * request ) override;
 
     private:
         bool loadDocumentInternal(const QByteArray & fileData, const QString & fileName,

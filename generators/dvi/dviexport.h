@@ -128,8 +128,8 @@ public:
                 QPrinter::Orientation orientation = QPrinter::Portrait);
 
 private:
-  virtual void abort_process_impl();
-  virtual void finished_impl(int exit_code);
+  void abort_process_impl() override;
+  void finished_impl(int exit_code) override;
 
   QPrinter* printer_;
   QString output_name_;

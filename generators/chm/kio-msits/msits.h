@@ -37,9 +37,9 @@ public:
     ProtocolMSITS ( const QByteArray&, const QByteArray& );
     virtual ~ProtocolMSITS();
 
-    virtual void	get (const QUrl & );
-    virtual void	listDir (const QUrl & url);
-    virtual void	stat (const QUrl & url);
+    void	get (const QUrl & ) override;
+    void	listDir (const QUrl & url) override;
+    void	stat (const QUrl & url) override;
 
 private:
 	// This function does next thing:

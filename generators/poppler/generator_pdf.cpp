@@ -309,6 +309,9 @@ QPair<Okular::Movie*, Okular::EmbeddedFile*> createMovieFromPopplerRichMedia( co
  */
 Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink)
 {
+    if (!popplerLink)
+        return nullptr;
+
     Okular::Action *link = 0;
     const Poppler::LinkGoto *popplerLinkGoto;
     const Poppler::LinkExecute *popplerLinkExecute;

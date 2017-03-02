@@ -23,10 +23,10 @@ class PageItemDelegate : public QItemDelegate
         static const int PageRole = 0x000f0001;
         static const int PageLabelRole = 0x000f0002;
 
-        void paint( QPainter *painter, const QStyleOptionViewItem & option, const QModelIndex & index ) const Q_DECL_OVERRIDE;
+        void paint( QPainter *painter, const QStyleOptionViewItem & option, const QModelIndex & index ) const override;
 
     protected:
-        void drawDisplay( QPainter *painter, const QStyleOptionViewItem & option, const QRect & rect, const QString & text ) const Q_DECL_OVERRIDE;
+        void drawDisplay( QPainter *painter, const QStyleOptionViewItem & option, const QRect & rect, const QString & text ) const override;
 
     private:
         class Private;

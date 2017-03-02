@@ -30,7 +30,7 @@ class PageSizeLabel : public KSqueezedTextLabel, public Okular::DocumentObserver
         ~PageSizeLabel();
 
         // [INHERITED] from DocumentObserver
-        void notifyCurrentPageChanged( int previous, int current ) Q_DECL_OVERRIDE;
+        void notifyCurrentPageChanged( int previous, int current ) override;
 
     private:
         Okular::Document * m_document;

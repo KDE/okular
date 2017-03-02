@@ -23,16 +23,16 @@ class TIFFGenerator : public Okular::Generator
         TIFFGenerator( QObject *parent, const QVariantList &args );
         virtual ~TIFFGenerator();
 
-        bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector ) Q_DECL_OVERRIDE;
-        bool loadDocumentFromData( const QByteArray & fileData, QVector< Okular::Page * > & pagesVector ) Q_DECL_OVERRIDE;
+        bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector ) override;
+        bool loadDocumentFromData( const QByteArray & fileData, QVector< Okular::Page * > & pagesVector ) override;
 
-        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const Q_DECL_OVERRIDE;
+        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const override;
 
-        bool print( QPrinter& printer ) Q_DECL_OVERRIDE;
+        bool print( QPrinter& printer ) override;
 
     protected:
-        bool doCloseDocument() Q_DECL_OVERRIDE;
-        QImage image( Okular::PixmapRequest * request ) Q_DECL_OVERRIDE;
+        bool doCloseDocument() override;
+        QImage image( Okular::PixmapRequest * request ) override;
 
     private:
         class Private;

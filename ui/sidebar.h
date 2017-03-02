@@ -49,8 +49,8 @@ class Sidebar : public QWidget
         void urlsDropped( const QList<QUrl>& urls );
 
     protected:
-        void dragEnterEvent( QDragEnterEvent* event ) Q_DECL_OVERRIDE;
-        void dropEvent( QDropEvent* event ) Q_DECL_OVERRIDE;
+        void dragEnterEvent( QDragEnterEvent* event ) override;
+        void dropEvent( QDropEvent* event ) override;
 
     private Q_SLOTS:
         void itemClicked( QListWidgetItem *item );

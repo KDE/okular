@@ -28,7 +28,7 @@ class ToolAction : public KSelectAction
         void addAction( QAction *action );
 
     protected:
-        QWidget* createWidget( QWidget *parent ) Q_DECL_OVERRIDE;
+        QWidget* createWidget( QWidget *parent ) override;
 
     private Q_SLOTS:
         void slotNewDefaultAction( QAction *action );

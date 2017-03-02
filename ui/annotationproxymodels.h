@@ -32,7 +32,7 @@ class PageFilterProxyModel : public QSortFilterProxyModel
     /**
      * Reimplemented from QSortFilterProxy.
      */
-    bool filterAcceptsRow( int, const QModelIndex& ) const Q_DECL_OVERRIDE;
+    bool filterAcceptsRow( int, const QModelIndex& ) const override;
 
   public Q_SLOTS:
     /**
@@ -67,16 +67,16 @@ class PageGroupProxyModel : public QAbstractProxyModel
      */
     explicit PageGroupProxyModel( QObject *parent = nullptr );
 
-    int columnCount( const QModelIndex &parentIndex ) const Q_DECL_OVERRIDE;
-    int rowCount( const QModelIndex &parentIndex ) const Q_DECL_OVERRIDE;
+    int columnCount( const QModelIndex &parentIndex ) const override;
+    int rowCount( const QModelIndex &parentIndex ) const override;
 
-    QModelIndex index( int row, int column, const QModelIndex &parentIndex = QModelIndex() ) const Q_DECL_OVERRIDE;
-    QModelIndex parent( const QModelIndex &index ) const Q_DECL_OVERRIDE;
+    QModelIndex index( int row, int column, const QModelIndex &parentIndex = QModelIndex() ) const override;
+    QModelIndex parent( const QModelIndex &index ) const override;
 
-    QModelIndex mapFromSource( const QModelIndex &sourceIndex ) const Q_DECL_OVERRIDE;
-    QModelIndex mapToSource( const QModelIndex &proxyIndex ) const Q_DECL_OVERRIDE;
+    QModelIndex mapFromSource( const QModelIndex &sourceIndex ) const override;
+    QModelIndex mapToSource( const QModelIndex &proxyIndex ) const override;
 
-    void setSourceModel( QAbstractItemModel *model ) Q_DECL_OVERRIDE;
+    void setSourceModel( QAbstractItemModel *model ) override;
 
   public Q_SLOTS:
     /**
@@ -110,22 +110,22 @@ class AuthorGroupProxyModel : public QAbstractProxyModel
         explicit AuthorGroupProxyModel( QObject *parent = nullptr );
         ~AuthorGroupProxyModel();
 
-        int columnCount( const QModelIndex &parentIndex ) const Q_DECL_OVERRIDE;
-        int rowCount( const QModelIndex &parentIndex ) const Q_DECL_OVERRIDE;
+        int columnCount( const QModelIndex &parentIndex ) const override;
+        int rowCount( const QModelIndex &parentIndex ) const override;
 
-        QModelIndex index( int row, int column, const QModelIndex &parentIndex = QModelIndex() ) const Q_DECL_OVERRIDE;
-        QModelIndex parent( const QModelIndex &index ) const Q_DECL_OVERRIDE;
+        QModelIndex index( int row, int column, const QModelIndex &parentIndex = QModelIndex() ) const override;
+        QModelIndex parent( const QModelIndex &index ) const override;
 
-        QModelIndex mapFromSource( const QModelIndex &sourceIndex ) const Q_DECL_OVERRIDE;
-        QModelIndex mapToSource( const QModelIndex &proxyIndex ) const Q_DECL_OVERRIDE;
+        QModelIndex mapFromSource( const QModelIndex &sourceIndex ) const override;
+        QModelIndex mapToSource( const QModelIndex &proxyIndex ) const override;
 
-        void setSourceModel( QAbstractItemModel *model ) Q_DECL_OVERRIDE;
+        void setSourceModel( QAbstractItemModel *model ) override;
 
-        QItemSelection mapSelectionToSource(const QItemSelection &selection) const Q_DECL_OVERRIDE;
-        QItemSelection mapSelectionFromSource(const QItemSelection &selection) const Q_DECL_OVERRIDE;
-        QVariant data(const QModelIndex &proxyIndex, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
-        QMap<int, QVariant> itemData(const QModelIndex &index) const Q_DECL_OVERRIDE;
-        Qt::ItemFlags flags(const QModelIndex &index) const Q_DECL_OVERRIDE;
+        QItemSelection mapSelectionToSource(const QItemSelection &selection) const override;
+        QItemSelection mapSelectionFromSource(const QItemSelection &selection) const override;
+        QVariant data(const QModelIndex &proxyIndex, int role = Qt::DisplayRole) const override;
+        QMap<int, QVariant> itemData(const QModelIndex &index) const override;
+        Qt::ItemFlags flags(const QModelIndex &index) const override;
 
     public Q_SLOTS:
         /**

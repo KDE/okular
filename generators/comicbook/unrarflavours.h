@@ -38,8 +38,8 @@ class NonFreeUnrarFlavour : public UnrarFlavour
     public:
         NonFreeUnrarFlavour();
 
-        QStringList processListing( const QStringList &data ) Q_DECL_OVERRIDE;
-        QString name() const Q_DECL_OVERRIDE;
+        QStringList processListing( const QStringList &data ) override;
+        QString name() const override;
 };
 
 class FreeUnrarFlavour : public UnrarFlavour
@@ -47,8 +47,8 @@ class FreeUnrarFlavour : public UnrarFlavour
     public:
         FreeUnrarFlavour();
 
-        QStringList processListing( const QStringList &data ) Q_DECL_OVERRIDE;
-        QString name() const Q_DECL_OVERRIDE;
+        QStringList processListing( const QStringList &data ) override;
+        QString name() const override;
 };
 
 #endif

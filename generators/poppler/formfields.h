@@ -20,19 +20,19 @@ class PopplerFormFieldButton : public Okular::FormFieldButton
         virtual ~PopplerFormFieldButton();
 
         // inherited from Okular::FormField
-        Okular::NormalizedRect rect() const Q_DECL_OVERRIDE;
-        int id() const Q_DECL_OVERRIDE;
-        QString name() const Q_DECL_OVERRIDE;
-        QString uiName() const Q_DECL_OVERRIDE;
-        virtual bool isReadOnly() const Q_DECL_OVERRIDE;
-        virtual bool isVisible() const Q_DECL_OVERRIDE;
+        Okular::NormalizedRect rect() const override;
+        int id() const override;
+        QString name() const override;
+        QString uiName() const override;
+        virtual bool isReadOnly() const override;
+        virtual bool isVisible() const override;
 
         // inherited from Okular::FormFieldButton
-        virtual ButtonType buttonType() const Q_DECL_OVERRIDE;
-        virtual QString caption() const Q_DECL_OVERRIDE;
-        virtual bool state() const Q_DECL_OVERRIDE;
-        virtual void setState( bool state ) Q_DECL_OVERRIDE;
-        virtual QList< int > siblings() const Q_DECL_OVERRIDE;
+        virtual ButtonType buttonType() const override;
+        virtual QString caption() const override;
+        virtual bool state() const override;
+        virtual void setState( bool state ) override;
+        virtual QList< int > siblings() const override;
 
     private:
         Poppler::FormFieldButton * m_field;

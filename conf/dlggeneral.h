@@ -25,7 +25,7 @@ class DlgGeneral : public QWidget
         virtual ~DlgGeneral();
 
     protected:
-        void showEvent( QShowEvent * ) Q_DECL_OVERRIDE;
+        void showEvent( QShowEvent * ) override;
 
         Ui_DlgGeneralBase * m_dlg;
 };

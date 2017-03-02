@@ -23,7 +23,7 @@ namespace Txt
         Converter();
         ~Converter();
 
-        QTextDocument *convert( const QString &fileName ) Q_DECL_OVERRIDE;
+        QTextDocument *convert( const QString &fileName ) override;
     };
 }
 

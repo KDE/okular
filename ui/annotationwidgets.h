@@ -106,10 +106,10 @@ class TextAnnotationWidget
 public:
     explicit TextAnnotationWidget( Okular::Annotation * ann );
 
-    void applyChanges() Q_DECL_OVERRIDE;
+    void applyChanges() override;
 
 protected:
-    QWidget * createStyleWidget() Q_DECL_OVERRIDE;
+    QWidget * createStyleWidget() override;
 
 private:
     Okular::TextAnnotation * m_textAnn;
@@ -127,10 +127,10 @@ class StampAnnotationWidget
 public:
     explicit StampAnnotationWidget( Okular::Annotation * ann );
 
-    void applyChanges() Q_DECL_OVERRIDE;
+    void applyChanges() override;
 
 protected:
-    QWidget * createStyleWidget() Q_DECL_OVERRIDE;
+    QWidget * createStyleWidget() override;
 
 private:
     Okular::StampAnnotation * m_stampAnn;
@@ -145,10 +145,10 @@ class LineAnnotationWidget
 public:
     explicit LineAnnotationWidget( Okular::Annotation * ann );
 
-    void applyChanges() Q_DECL_OVERRIDE;
+    void applyChanges() override;
 
 protected:
-    virtual QWidget * createStyleWidget() Q_DECL_OVERRIDE;
+    virtual QWidget * createStyleWidget() override;
 
 private:
     Okular::LineAnnotation * m_lineAnn;
@@ -168,10 +168,10 @@ class HighlightAnnotationWidget
 public:
     explicit HighlightAnnotationWidget( Okular::Annotation * ann );
 
-    void applyChanges() Q_DECL_OVERRIDE;
+    void applyChanges() override;
 
 protected:
-    QWidget * createStyleWidget() Q_DECL_OVERRIDE;
+    QWidget * createStyleWidget() override;
 
 private:
     Okular::HighlightAnnotation * m_hlAnn;
@@ -186,10 +186,10 @@ class GeomAnnotationWidget
 public:
     explicit GeomAnnotationWidget( Okular::Annotation * ann );
 
-    void applyChanges() Q_DECL_OVERRIDE;
+    void applyChanges() override;
 
 protected:
-    QWidget * createStyleWidget() Q_DECL_OVERRIDE;
+    QWidget * createStyleWidget() override;
 
 private:
     Okular::GeomAnnotation * m_geomAnn;
@@ -207,11 +207,11 @@ class FileAttachmentAnnotationWidget
 public:
     explicit FileAttachmentAnnotationWidget( Okular::Annotation * ann );
 
-    void applyChanges() Q_DECL_OVERRIDE;
+    void applyChanges() override;
 
 protected:
-    QWidget * createStyleWidget() Q_DECL_OVERRIDE;
-    QWidget * createExtraWidget() Q_DECL_OVERRIDE;
+    QWidget * createStyleWidget() override;
+    QWidget * createExtraWidget() override;
 
 private:
     Okular::FileAttachmentAnnotation * m_attachAnn;
@@ -226,10 +226,10 @@ class CaretAnnotationWidget
 public:
     explicit CaretAnnotationWidget( Okular::Annotation * ann );
 
-    void applyChanges() Q_DECL_OVERRIDE;
+    void applyChanges() override;
 
 protected:
-    QWidget * createStyleWidget() Q_DECL_OVERRIDE;
+    QWidget * createStyleWidget() override;
 
 private:
     Okular::CaretAnnotation * m_caretAnn;
@@ -244,10 +244,10 @@ class InkAnnotationWidget
 public:
     explicit InkAnnotationWidget( Okular::Annotation * ann );
 
-    void applyChanges() Q_DECL_OVERRIDE;
+    void applyChanges() override;
 
 protected:
-    QWidget * createStyleWidget() Q_DECL_OVERRIDE;
+    QWidget * createStyleWidget() override;
 
 private:
     Okular::InkAnnotation * m_inkAnn;

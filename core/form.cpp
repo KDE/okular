@@ -73,6 +73,19 @@ void FormField::setActivationAction( Action *action )
     d->m_activateAction = action;
 }
 
+Action* FormField::additionalAction( AdditionalActionType type ) const
+{
+    Q_D( const FormField );
+    return d->m_additionalActions.value(type);
+}
+
+void FormField::setAdditionalAction( AdditionalActionType type, Action *action )
+{
+    Q_D( FormField );
+    delete d->m_additionalActions.value(type);
+    d->m_additionalActions[type] = action;
+}
+
 
 class Okular::FormFieldButtonPrivate : public Okular::FormFieldPrivate
 {

@@ -93,6 +93,26 @@ class OKULARCORE_EXPORT FormField
 
         Action* activationAction() const;
 
+        /**
+         * Describes the type of form additional action.
+         *
+         * @since 1.1
+         */
+        enum AdditionalActionType
+        {
+            FieldModified,   ///< An action to be performed when the user modifies the field
+            FormatField,     ///< An action to be performed before the field is formatted to display its value
+            ValidateField,   ///< An action to be performed when the field value changes
+            CalculateField,  ///< An action to be performed when the field needs to be recalculated
+        };
+
+        /**
+         * Returns the additional action of the given @p type or @c nullptr if no action has been defined.
+         *
+         * @since 1.1
+        */
+        Action* additionalAction( AdditionalActionType type ) const;
+
     protected:
         /// @cond PRIVATE
         FormField( FormFieldPrivate &dd );
@@ -101,6 +121,7 @@ class OKULARCORE_EXPORT FormField
         /// @endcond
 
         void setActivationAction( Action *action );
+        void setAdditionalAction( AdditionalActionType type, Action *action );
 
     private:
         Q_DISABLE_COPY( FormField )

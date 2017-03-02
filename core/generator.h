@@ -519,10 +519,28 @@ class OKULARCORE_EXPORT Generator : public QObject
         void setFeature( GeneratorFeature feature, bool on = true );
 
         /**
+         * Internal document setting
+         */
+        enum DocumentMetaDataKey {
+            PaperColorMetaData,         ///< Returns the paper color if set in Settings or the default color (white) if option is true (otherwise returns a non initialized QColor)
+            TextAntialiasMetaData,      ///< Returns text antialias from Settings (option is not used)
+            GraphicsAntialiasMetaData,  ///< Returns graphic antialias from Settings (option is not used)
+            TextHintingMetaData         ///< Returns text hinting from Settings (option is not used)
+        };
+
+        /**
+         * Request a meta data of the Document, if available, like an internal
+         * setting.
+         *
+         * @since 1.1
+         */
+        QVariant documentMetaData( const DocumentMetaDataKey &key, const QVariant &option = QVariant() ) const;
+
+        /**
          * Request a meta data of the Document, if available, like an internal
          * setting.
          */
-        QVariant documentMetaData( const QString &key, const QVariant &option = QVariant() ) const;
+        OKULARCORE_DEPRECATED QVariant documentMetaData( const QString &key, const QVariant &option = QVariant() ) const;
 
         /**
          * Return the pointer to a mutex the generator can use freely.

@@ -27,9 +27,6 @@ using namespace Okular;
 
 static KJSPrototype *g_fieldProto;
 
-typedef QHash< FormField *, KJSObject > FormCache;
-Q_GLOBAL_STATIC( FormCache, g_fieldCache )
-
 // Field.doc
 static KJSObject fieldGetDoc( KJSContext *context, void *  )
 {
@@ -115,16 +112,6 @@ static KJSObject fieldGetType( KJSContext *, void *object  )
 static KJSObject fieldGetValue( KJSContext *context, void *object )
 {
     FormField *field = reinterpret_cast< FormField * >( object );
-    if ( field->isReadOnly() )
-    {
-        KJSObject value = g_fieldCache->value( field );
-        if ( g_fieldCache.exists() && g_fieldCache->contains( field ) )
-            value = g_fieldCache->value( field );
-        else
-            value = KJSString("");
-        qCDebug(OkularCoreDebug) << "Getting the value of a readonly field" << field->name() << ":" << value.toString( context );
-        return value;
-    }
 
     switch ( field->type() )
     {
@@ -158,14 +145,6 @@ static KJSObject fieldGetValue( KJSContext *context, void *object )
 static void fieldSetValue( KJSContext *context, void *object, KJSObject value )
 {
     FormField *field = reinterpret_cast< FormField * >( object );
-
-    if ( field->isReadOnly() )
-    {
-        // ### throw exception?
-        qCDebug(OkularCoreDebug) << "Trying to change the readonly field" << field->name() << "to" << value.toString( context );
-        g_fieldCache->insert( field, value );
-        return;
-    }
 
     switch ( field->type() )
     {
@@ -218,12 +197,4 @@ KJSObject JSField::wrapField( KJSContext *ctx, FormField *field, Page *page )
     KJSObject f = g_fieldProto->constructObject( ctx, field );
     f.setProperty( ctx, QStringLiteral("page"), page->number() );
     return f;
-}
-
-void JSField::clearCachedFields()
-{
-    if ( g_fieldCache.exists() )
-    {
-        g_fieldCache->clear();
-    }
 }

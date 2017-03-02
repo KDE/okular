@@ -41,8 +41,6 @@ class Okular::ExecutorKJSPrivate
         }
         ~ExecutorKJSPrivate()
         {
-            JSField::clearCachedFields();
-
             delete m_interpreter;
         }
 

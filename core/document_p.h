@@ -145,6 +145,8 @@ class DocumentPrivate
         void performModifyPageAnnotation( int page, Annotation * annotation, bool appearanceChanged );
         void performSetAnnotationContents( const QString & newContents, Annotation *annot, int pageNumber );
 
+        void recalculateForms();
+
         // private slots
         void saveDocumentInfo() const;
         void slotTimedMemoryCheck();

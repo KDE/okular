@@ -1119,6 +1119,35 @@ void DocumentPrivate::performSetAnnotationContents( const QString & newContents,
     performModifyPageAnnotation( pageNumber,  annot, appearanceChanged );
 }
 
+void DocumentPrivate::recalculateForms()
+{
+    const QVariant fco = m_parent->metaData(QLatin1String("FormCalculateOrder"));
+    const QVector<int> formCalculateOrder = fco.value<QVector<int>>();
+    foreach(int formId, formCalculateOrder) {
+        for ( uint pageIdx = 0; pageIdx  < m_parent->pages(); pageIdx++ )
+        {
+            const Page *p = m_parent->page( pageIdx );
+            if (p)
+            {
+                foreach( FormField *form, p->formFields() )
+                {
+                    if ( form->id() == formId ) {
+                        Action *action = form->additionalAction( FormField::CalculateField );
+                        if (action)
+                        {
+                            m_parent->processAction( action );
+                        }
+                        else
+                        {
+                            qWarning() << "Form that is part of calculate order doesn't have a calculate action";
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 void DocumentPrivate::saveDocumentInfo() const
 {
     if ( m_xmlFileName.isEmpty() )
@@ -3697,6 +3726,8 @@ void Document::editFormText( int pageNumber,
 {
     QUndoCommand *uc = new EditFormTextCommand( this->d, form, pageNumber, newContents, newCursorPos, form->text(), prevCursorPos, prevAnchorPos );
     d->m_undoStack->push( uc );
+
+    d->recalculateForms();
 }
 
 void Document::editFormList( int pageNumber,
@@ -3706,6 +3737,8 @@ void Document::editFormList( int pageNumber,
     const QList< int > prevChoices = form->currentChoices();
     QUndoCommand *uc = new EditFormListCommand( this->d, form, pageNumber, newChoices, prevChoices );
     d->m_undoStack->push( uc );
+
+    d->recalculateForms();
 }
 
 void Document::editFormCombo( int pageNumber,
@@ -3728,6 +3761,8 @@ void Document::editFormCombo( int pageNumber,
 
     QUndoCommand *uc = new EditFormComboCommand( this->d, form, pageNumber, newText, newCursorPos, prevText, prevCursorPos, prevAnchorPos );
     d->m_undoStack->push( uc );
+
+    d->recalculateForms();
 }
 
 void Document::editFormButtons( int pageNumber, const QList< FormFieldButton* >& formButtons, const QList< bool >& newButtonStates )

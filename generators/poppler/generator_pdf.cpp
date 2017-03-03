@@ -1242,6 +1242,13 @@ QVariant PDFGenerator::metaData( const QString & key, const QVariant & option ) 
         QMutexLocker ml(userMutex());
         return pdfdoc->formType() == Poppler::Document::XfaForm;
     }
+    else if ( key == QLatin1String("FormCalculateOrder") )
+    {
+#ifdef HAVE_POPPLER_0_53
+        QMutexLocker ml(userMutex());
+        return QVariant::fromValue<QVector<int>>(pdfdoc->formCalculateOrder());
+#endif
+    }
     return QVariant();
 }
 

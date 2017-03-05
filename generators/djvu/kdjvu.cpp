@@ -909,27 +909,27 @@ QImage KDjVu::image( int page, int width, int height, int rotation )
 {
     if ( d->m_cacheEnabled )
     {
-    bool found = false;
-    QList<ImageCacheItem*>::Iterator it = d->mImgCache.begin(), itEnd = d->mImgCache.end();
-    for ( ; ( it != itEnd ) && !found; ++it )
-    {
-        ImageCacheItem* cur = *it;
-        if ( ( cur->page == page ) &&
-             ( rotation % 2 == 0
-               ? cur->width == width && cur->height == height
-               : cur->width == height && cur->height == width ) )
-            found = true;
-    }
-    if ( found )
-    {
-        // taking the element and pushing to the top of the list
-        --it;
-        ImageCacheItem* cur2 = *it;
-        d->mImgCache.erase( it );
-        d->mImgCache.push_front( cur2 );
+        bool found = false;
+        QList<ImageCacheItem*>::Iterator it = d->mImgCache.begin(), itEnd = d->mImgCache.end();
+        for ( ; ( it != itEnd ) && !found; ++it )
+        {
+            ImageCacheItem* cur = *it;
+            if ( ( cur->page == page ) &&
+                ( rotation % 2 == 0
+                ? cur->width == width && cur->height == height
+                : cur->width == height && cur->height == width ) )
+                found = true;
+        }
+        if ( found )
+        {
+            // taking the element and pushing to the top of the list
+            --it;
+            ImageCacheItem* cur2 = *it;
+            d->mImgCache.erase( it );
+            d->mImgCache.push_front( cur2 );
 
-        return cur2->img;
-    }
+            return cur2->img;
+        }
     }
 
     if ( !d->m_pages_cache.at( page ) )

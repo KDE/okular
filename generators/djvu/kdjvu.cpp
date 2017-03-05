@@ -494,6 +494,10 @@ QImage KDjVu::Private::generateImageTile( ddjvu_page_t *djvupage, int& res,
     ddjvu_page_get_width( djvupage );
     res = ddjvu_page_render( djvupage, DDJVU_RENDER_COLOR,
                   &pagerect, &renderrect, m_format, res_img.bytesPerLine(), (char *)res_img.bits() );
+    if (!res)
+    {
+        res_img.fill(Qt::white);
+    }
 #ifdef KDJVU_DEBUG
     qDebug() << "rendering result:" << res;
 #endif

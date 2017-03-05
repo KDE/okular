@@ -209,7 +209,7 @@ class KTreeViewSearchLineWidget : public QWidget
   protected Q_SLOTS:
     /**
      * Creates the widgets inside of the widget.  This is called from the
-     * constructor via a single shot timer so that it it guaranteed to run
+     * constructor via a single shot timer so that it is guaranteed to run
      * after construction is complete.  This makes it suitable for overriding in
      * subclasses.
      */

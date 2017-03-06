@@ -24,15 +24,15 @@ class PresentationSearchBar
     Q_OBJECT
 
     public:
-        PresentationSearchBar( Okular::Document *document, QWidget *anchor, QWidget *parent = Q_NULLPTR );
+        PresentationSearchBar( Okular::Document *document, QWidget *anchor, QWidget *parent = nullptr );
         virtual ~PresentationSearchBar();
 
         void forceSnap();
         void focusOnSearchEdit();
 
     protected:
-        void resizeEvent( QResizeEvent * ) Q_DECL_OVERRIDE;
-        bool eventFilter( QObject *, QEvent * ) Q_DECL_OVERRIDE;
+        void resizeEvent( QResizeEvent * ) override;
+        bool eventFilter( QObject *, QEvent * ) override;
 
     private:
         QWidget *m_handle;

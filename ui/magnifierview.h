@@ -29,19 +29,19 @@ class MagnifierView : public QWidget, public Okular::DocumentObserver
   Q_OBJECT
 
   public:
-    MagnifierView( Okular::Document *document, QWidget *parent = Q_NULLPTR );
+    MagnifierView( Okular::Document *document, QWidget *parent = nullptr );
     ~MagnifierView();
 
-    void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) Q_DECL_OVERRIDE;
-    void notifyPageChanged( int page, int flags ) Q_DECL_OVERRIDE;
-    void notifyCurrentPageChanged( int previous, int current ) Q_DECL_OVERRIDE;
-    bool canUnloadPixmap( int page ) const Q_DECL_OVERRIDE;
+    void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) override;
+    void notifyPageChanged( int page, int flags ) override;
+    void notifyCurrentPageChanged( int previous, int current ) override;
+    bool canUnloadPixmap( int page ) const override;
 
     void updateView( const Okular::NormalizedPoint &p, const Okular::Page * page );
     void move( int x, int y );
 
   protected:
-    void paintEvent( QPaintEvent *e ) Q_DECL_OVERRIDE;
+    void paintEvent( QPaintEvent *e ) override;
 
   private:
     Okular::NormalizedRect normalizedView() const;

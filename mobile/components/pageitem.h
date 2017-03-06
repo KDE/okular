@@ -135,10 +135,10 @@ public:
      */
     Q_INVOKABLE void removeBookmark(const QString &bookmark);
 
-    void paint(QPainter *painter);
+    void paint(QPainter *painter) override;
 
     void geometryChanged(const QRectF &newGeometry,
-                         const QRectF &oldGeometry);
+                         const QRectF &oldGeometry) override;
 
 Q_SIGNALS:
     void flickableChanged();

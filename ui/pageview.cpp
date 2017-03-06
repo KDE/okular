@@ -166,6 +166,7 @@ public:
     double lastSourceLocationViewportNormalizedX;
     double lastSourceLocationViewportNormalizedY;
     QTimer * viewportMoveTimer;
+    int controlWheelAccumulatedDelta;
     // auto scroll
     int scrollIncrement;
     QTimer * autoScrollTimer;
@@ -185,7 +186,7 @@ public:
     OkularTTS * m_tts;
 #endif
     QTimer * refreshTimer;
-    int refreshPage;
+    QSet<int> refreshPages;
 
     // bbox state for Trim to Selection mode
     Okular::NormalizedRect trimBoundingBox;
@@ -312,6 +313,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->lastSourceLocationViewportNormalizedX = 0.0;
     d->lastSourceLocationViewportNormalizedY = 0.0;
     d->viewportMoveTimer = 0;
+    d->controlWheelAccumulatedDelta = 0;
     d->scrollIncrement = 0;
     d->autoScrollTimer = 0;
     d->annotator = 0;
@@ -325,7 +327,6 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->m_tts = 0;
 #endif
     d->refreshTimer = 0;
-    d->refreshPage = -1;
     d->aRotateClockwise = 0;
     d->aRotateCounterClockwise = 0;
     d->aRotateOriginal = 0;
@@ -1971,6 +1972,8 @@ void PageView::tabletEvent( QTabletEvent * e )
 
 void PageView::mouseMoveEvent( QMouseEvent * e )
 {
+    d->controlWheelAccumulatedDelta = 0;
+
     // don't perform any mouse action when no document is shown
     if ( d->items.isEmpty() )
         return;
@@ -2159,6 +2162,8 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
 
 void PageView::mousePressEvent( QMouseEvent * e )
 {
+    d->controlWheelAccumulatedDelta = 0;
+
     // don't perform any mouse action when no document is shown
     if ( d->items.isEmpty() )
         return;
@@ -2392,6 +2397,8 @@ void PageView::mousePressEvent( QMouseEvent * e )
 
 void PageView::mouseReleaseEvent( QMouseEvent * e )
 {
+    d->controlWheelAccumulatedDelta = 0;
+
     // stop the drag scrolling
     d->dragScrollTimer.stop();
 
@@ -3192,6 +3199,8 @@ void PageView::guessTableDividers()
 
 void PageView::mouseDoubleClickEvent( QMouseEvent * e )
 {
+    d->controlWheelAccumulatedDelta = 0;
+
     if ( e->button() == Qt::LeftButton )
     {
         const QPoint eventPos = contentAreaPoint( e->pos() );
@@ -3254,43 +3263,55 @@ void PageView::wheelEvent( QWheelEvent *e )
         vScroll = verticalScrollBar()->value();
     e->accept();
     if ( (e->modifiers() & Qt::ControlModifier) == Qt::ControlModifier ) {
-        if ( e->delta() < 0 )
+        d->controlWheelAccumulatedDelta += delta;
+        if ( d->controlWheelAccumulatedDelta <= -QWheelEvent::DefaultDeltasPerStep )
+        {
             slotZoomOut();
-        else
-            slotZoomIn();
-    }
-    else if ( delta <= -120 && !Okular::Settings::viewContinuous() && vScroll == verticalScrollBar()->maximum() )
-    {
-        // go to next page
-        if ( (int)d->document->currentPage() < d->items.count() - 1 )
-        {
-            // more optimized than document->setNextPage and then move view to top
-            Okular::DocumentViewport newViewport = d->document->viewport();
-            newViewport.pageNumber += viewColumns();
-            if ( newViewport.pageNumber >= (int)d->items.count() )
-                newViewport.pageNumber = d->items.count() - 1;
-            newViewport.rePos.enabled = true;
-            newViewport.rePos.normalizedY = 0.0;
-            d->document->setViewport( newViewport );
+            d->controlWheelAccumulatedDelta = 0;
         }
-    }
-    else if ( delta >= 120 && !Okular::Settings::viewContinuous() && vScroll == verticalScrollBar()->minimum() )
-    {
-        // go to prev page
-        if ( d->document->currentPage() > 0 )
+        else if ( d->controlWheelAccumulatedDelta >= QWheelEvent::DefaultDeltasPerStep )
         {
-            // more optimized than document->setPrevPage and then move view to bottom
-            Okular::DocumentViewport newViewport = d->document->viewport();
-            newViewport.pageNumber -= viewColumns();
-            if ( newViewport.pageNumber < 0 )
-                newViewport.pageNumber = 0;
-            newViewport.rePos.enabled = true;
-            newViewport.rePos.normalizedY = 1.0;
-            d->document->setViewport( newViewport );
+            slotZoomIn();
+            d->controlWheelAccumulatedDelta = 0;
         }
     }
     else
-        QAbstractScrollArea::wheelEvent( e );
+    {
+        d->controlWheelAccumulatedDelta = 0;
+
+        if ( delta <= -QWheelEvent::DefaultDeltasPerStep && !Okular::Settings::viewContinuous() && vScroll == verticalScrollBar()->maximum() )
+        {
+            // go to next page
+            if ( (int)d->document->currentPage() < d->items.count() - 1 )
+            {
+                // more optimized than document->setNextPage and then move view to top
+                Okular::DocumentViewport newViewport = d->document->viewport();
+                newViewport.pageNumber += viewColumns();
+                if ( newViewport.pageNumber >= (int)d->items.count() )
+                    newViewport.pageNumber = d->items.count() - 1;
+                newViewport.rePos.enabled = true;
+                newViewport.rePos.normalizedY = 0.0;
+                d->document->setViewport( newViewport );
+            }
+        }
+        else if ( delta >= QWheelEvent::DefaultDeltasPerStep && !Okular::Settings::viewContinuous() && vScroll == verticalScrollBar()->minimum() )
+        {
+            // go to prev page
+            if ( d->document->currentPage() > 0 )
+            {
+                // more optimized than document->setPrevPage and then move view to bottom
+                Okular::DocumentViewport newViewport = d->document->viewport();
+                newViewport.pageNumber -= viewColumns();
+                if ( newViewport.pageNumber < 0 )
+                    newViewport.pageNumber = 0;
+                newViewport.rePos.enabled = true;
+                newViewport.rePos.normalizedY = 1.0;
+                d->document->setViewport( newViewport );
+            }
+        }
+        else
+            QAbstractScrollArea::wheelEvent( e );
+    }
 
     updateCursor();
 }
@@ -5219,7 +5240,7 @@ void PageView::slotFormChanged( int pageNumber )
         connect( d->refreshTimer, &QTimer::timeout,
                  this, &PageView::slotRefreshPage );
     }
-    d->refreshPage = pageNumber;
+    d->refreshPages << pageNumber;
     int delay = 0;
     if ( d->m_formsVisible )
     {
@@ -5230,12 +5251,12 @@ void PageView::slotFormChanged( int pageNumber )
 
 void PageView::slotRefreshPage()
 {
-    const int req = d->refreshPage;
-    if ( req < 0 )
-        return;
-    d->refreshPage = -1;
-    QMetaObject::invokeMethod( d->document, "refreshPixmaps", Qt::QueuedConnection,
-                               Q_ARG( int, req ) );
+    foreach(int req, d->refreshPages)
+    {
+        QMetaObject::invokeMethod( d->document, "refreshPixmaps", Qt::QueuedConnection,
+                                   Q_ARG( int, req ) );
+    }
+    d->refreshPages.clear();
 }
 
 #ifdef HAVE_SPEECH

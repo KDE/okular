@@ -92,7 +92,7 @@ class KDjVu
             friend class KDjVu;
 
             public:
-                virtual int type() const;
+                int type() const override;
                 QString page() const;
 
             private:
@@ -108,7 +108,7 @@ class KDjVu
             friend class KDjVu;
 
             public:
-                virtual int type() const;
+                int type() const override;
                 QString url() const;
 
             private:
@@ -150,9 +150,9 @@ class KDjVu
             friend class KDjVu;
 
             public:
-                virtual int type() const;
-                virtual QColor color() const;
-                virtual void setColor( const QColor &color );
+                int type() const override;
+                QColor color() const override;
+                void setColor( const QColor &color ) override;
                 QSize size() const;
                 bool inlineText() const;
 
@@ -170,9 +170,9 @@ class KDjVu
             friend class KDjVu;
 
             public:
-                virtual int type() const;
-                virtual QColor color() const;
-                virtual void setColor( const QColor &color );
+                int type() const override;
+                QColor color() const override;
+                void setColor( const QColor &color ) override;
                 QPoint point2() const;
                 bool isArrow() const;
                 int width() const;

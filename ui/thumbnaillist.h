@@ -35,17 +35,17 @@ Q_OBJECT
         ~ThumbnailList();
 
         // inherited: create thumbnails ( inherited as a DocumentObserver )
-        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) Q_DECL_OVERRIDE;
+        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) override;
         // inherited: hilihght current thumbnail ( inherited as DocumentObserver )
-        void notifyCurrentPageChanged( int previous, int current ) Q_DECL_OVERRIDE;
+        void notifyCurrentPageChanged( int previous, int current ) override;
         // inherited: redraw thumbnail ( inherited as DocumentObserver )
-        void notifyPageChanged( int pageNumber, int changedFlags ) Q_DECL_OVERRIDE;
+        void notifyPageChanged( int pageNumber, int changedFlags ) override;
         // inherited: request all visible pixmap (due to a global shange or so..)
-        void notifyContentsCleared( int changedFlags ) Q_DECL_OVERRIDE;
+        void notifyContentsCleared( int changedFlags ) override;
         // inherited: the visible areas of the page have changed
-        void notifyVisibleRectsChanged() Q_DECL_OVERRIDE;
+        void notifyVisibleRectsChanged() override;
         // inherited: tell if pixmap is hidden and can be unloaded
-        bool canUnloadPixmap( int pageNumber ) const Q_DECL_OVERRIDE;
+        bool canUnloadPixmap( int pageNumber ) const override;
 
         // redraw visible widgets (useful for refreshing contents...)
         void updateWidgets();
@@ -56,10 +56,10 @@ Q_OBJECT
 
     protected:
         // scroll up/down the view
-        void keyPressEvent( QKeyEvent * e ) Q_DECL_OVERRIDE;
+        void keyPressEvent( QKeyEvent * e ) override;
 
         // catch the viewport event and filter them if necessary
-        bool viewportEvent( QEvent * ) Q_DECL_OVERRIDE;
+        bool viewportEvent( QEvent * ) override;
 
     Q_SIGNALS:
         void rightClick( const Okular::Page *, const QPoint & );
@@ -81,7 +81,7 @@ class ThumbnailsBox : public QWidget
 
     public:
         ThumbnailsBox( QWidget * parent ) : QWidget( parent ) { QVBoxLayout *vbox = new QVBoxLayout(this); vbox->setMargin(0); vbox->setSpacing(0);}
-        QSize sizeHint() const Q_DECL_OVERRIDE { return QSize(); }
+        QSize sizeHint() const override { return QSize(); }
 };
 
 /**

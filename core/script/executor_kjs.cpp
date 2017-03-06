@@ -41,8 +41,6 @@ class Okular::ExecutorKJSPrivate
         }
         ~ExecutorKJSPrivate()
         {
-            JSField::clearCachedFields();
-
             delete m_interpreter;
         }
 
@@ -110,4 +108,5 @@ void ExecutorKJS::execute( const QString &script )
     {
         qCDebug(OkularCoreDebug) << "result:" << result.value().toString( ctx );
     }
+    JSField::clearCachedFields();
 }

@@ -24,15 +24,15 @@ class WidgetAnnotTools : public WidgetConfigurationToolsBase
 {
     Q_OBJECT
     public:
-        explicit WidgetAnnotTools( QWidget * parent = Q_NULLPTR );
+        explicit WidgetAnnotTools( QWidget * parent = nullptr );
         ~WidgetAnnotTools();
 
-        QStringList tools() const Q_DECL_OVERRIDE;
-        void setTools(const QStringList& items) Q_DECL_OVERRIDE;
+        QStringList tools() const override;
+        void setTools(const QStringList& items) override;
 
     protected Q_SLOTS:
-        void slotAdd() Q_DECL_OVERRIDE;
-        void slotEdit() Q_DECL_OVERRIDE;
+        void slotAdd() override;
+        void slotEdit() override;
 };
 
 #endif

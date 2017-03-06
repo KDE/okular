@@ -145,6 +145,8 @@ class DocumentPrivate
         void performModifyPageAnnotation( int page, Annotation * annotation, bool appearanceChanged );
         void performSetAnnotationContents( const QString & newContents, Annotation *annot, int pageNumber );
 
+        void recalculateForms();
+
         // private slots
         void saveDocumentInfo() const;
         void slotTimedMemoryCheck();
@@ -172,11 +174,12 @@ class DocumentPrivate
          * Sets the bounding box of the given @p page (in terms of upright orientation, i.e., Rotation0).
          */
         void setPageBoundingBox( int page, const NormalizedRect& boundingBox );
+
         /**
          * Request a particular metadata of the Document itself (ie, not something
          * depending on the document type/backend).
          */
-        QVariant documentMetaData( const QString &key, const QVariant &option ) const;
+        QVariant documentMetaData( const Generator::DocumentMetaDataKey key, const QVariant &option ) const;
 
         /**
          * Return whether the normalized rectangle @p rectOfInterest on page number @p rectPage

@@ -22,13 +22,13 @@ class ToolAction : public KSelectAction
     Q_OBJECT
 
     public:
-        ToolAction( QObject *parent = Q_NULLPTR );
+        ToolAction( QObject *parent = nullptr );
         virtual ~ToolAction();
 
         void addAction( QAction *action );
 
     protected:
-        QWidget* createWidget( QWidget *parent ) Q_DECL_OVERRIDE;
+        QWidget* createWidget( QWidget *parent ) override;
 
     private Q_SLOTS:
         void slotNewDefaultAction( QAction *action );

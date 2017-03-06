@@ -17,17 +17,17 @@ class WidgetDrawingTools : public WidgetConfigurationToolsBase
 {
     Q_OBJECT
 public:
-    explicit WidgetDrawingTools( QWidget * parent = Q_NULLPTR );
+    explicit WidgetDrawingTools( QWidget * parent = nullptr );
     ~WidgetDrawingTools();
 
-    QStringList tools() const Q_DECL_OVERRIDE;
-    void setTools( const QStringList& items ) Q_DECL_OVERRIDE;
+    QStringList tools() const override;
+    void setTools( const QStringList& items ) override;
     
     QString defaultName() const;
 
 protected Q_SLOTS:
-    void slotAdd() Q_DECL_OVERRIDE;
-    void slotEdit() Q_DECL_OVERRIDE;
+    void slotAdd() override;
+    void slotEdit() override;
 };
 
 #endif // WIDGETDRAWINGTOOLS_H

@@ -33,13 +33,13 @@ class PagesEdit : public KLineEdit
 
     public:
         PagesEdit( MiniBar * parent );
-        void setText( const QString & ) Q_DECL_OVERRIDE;
+        void setText( const QString & ) override;
 
     protected:
-        void focusInEvent( QFocusEvent * e ) Q_DECL_OVERRIDE;
-        void focusOutEvent( QFocusEvent * e ) Q_DECL_OVERRIDE;
-        void mousePressEvent( QMouseEvent * e ) Q_DECL_OVERRIDE;
-        void wheelEvent( QWheelEvent * e ) Q_DECL_OVERRIDE;
+        void focusInEvent( QFocusEvent * e ) override;
+        void focusOutEvent( QFocusEvent * e ) override;
+        void mousePressEvent( QMouseEvent * e ) override;
+        void wheelEvent( QWheelEvent * e ) override;
 
     private Q_SLOTS:
         void updatePalette();
@@ -66,7 +66,7 @@ class PageLabelEdit : public PagesEdit
   Q_OBJECT
     public:
         PageLabelEdit( MiniBar * parent );
-        void setText( const QString & newText ) Q_DECL_OVERRIDE;
+        void setText( const QString & newText ) override;
         void setPageLabels( const QVector< Okular::Page * > & pageVector );
 
     Q_SIGNALS:
@@ -98,8 +98,8 @@ class MiniBarLogic : public QObject, public Okular::DocumentObserver
         int currentPage() const;
         
         // [INHERITED] from DocumentObserver
-        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) Q_DECL_OVERRIDE;
-        void notifyCurrentPageChanged( int previous, int current ) Q_DECL_OVERRIDE;
+        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) override;
+        void notifyCurrentPageChanged( int previous, int current ) override;
         
     private:
         QSet<MiniBar *> m_miniBars;
@@ -118,7 +118,7 @@ class MiniBar : public QWidget
         MiniBar( QWidget *parent, MiniBarLogic * miniBarLogic );
         ~MiniBar();
 
-        void changeEvent( QEvent * event )  Q_DECL_OVERRIDE;
+        void changeEvent( QEvent * event )  override;
 
     Q_SIGNALS:
         void gotoPage();
@@ -135,7 +135,7 @@ class MiniBar : public QWidget
 
     private:
         void resizeForPage( int pages );
-        bool eventFilter( QObject *target, QEvent *event ) Q_DECL_OVERRIDE;
+        bool eventFilter( QObject *target, QEvent *event ) override;
 
         MiniBarLogic * m_miniBarLogic;
         PageNumberEdit * m_pageNumberEdit;
@@ -158,7 +158,7 @@ class ProgressWidget : public QWidget, public Okular::DocumentObserver
         ~ProgressWidget();
 
         // [INHERITED] from DocumentObserver
-        void notifyCurrentPageChanged( int previous, int current ) Q_DECL_OVERRIDE;
+        void notifyCurrentPageChanged( int previous, int current ) override;
 
         void slotGotoNormalizedPage( float index );
 
@@ -169,10 +169,10 @@ class ProgressWidget : public QWidget, public Okular::DocumentObserver
     protected:
         void setProgress( float percentage );
 
-        void mouseMoveEvent( QMouseEvent * e ) Q_DECL_OVERRIDE;
-        void mousePressEvent( QMouseEvent * e ) Q_DECL_OVERRIDE;
-        void wheelEvent( QWheelEvent * e ) Q_DECL_OVERRIDE;
-        void paintEvent( QPaintEvent * e ) Q_DECL_OVERRIDE;
+        void mouseMoveEvent( QMouseEvent * e ) override;
+        void mousePressEvent( QMouseEvent * e ) override;
+        void wheelEvent( QWheelEvent * e ) override;
+        void paintEvent( QPaintEvent * e ) override;
 
     private:
         Okular::Document * m_document;

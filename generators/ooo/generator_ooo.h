@@ -20,9 +20,9 @@ class KOOOGenerator : public Okular::TextDocumentGenerator
     KOOOGenerator( QObject *parent, const QVariantList &args );
 
     // [INHERITED] reparse configuration
-    void addPages( KConfigDialog* dlg ) Q_DECL_OVERRIDE;
+    void addPages( KConfigDialog* dlg ) override;
 
-    void walletDataForFile( const QString &fileName, QString *walletName, QString *walletFolder, QString *walletKey ) const Q_DECL_OVERRIDE;
+    void walletDataForFile( const QString &fileName, QString *walletName, QString *walletFolder, QString *walletKey ) const override;
 };
 
 #endif

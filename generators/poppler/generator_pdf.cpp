@@ -309,6 +309,9 @@ QPair<Okular::Movie*, Okular::EmbeddedFile*> createMovieFromPopplerRichMedia( co
  */
 Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink)
 {
+    if (!popplerLink)
+        return nullptr;
+
     Okular::Action *link = 0;
     const Poppler::LinkGoto *popplerLinkGoto;
     const Poppler::LinkExecute *popplerLinkExecute;
@@ -1239,6 +1242,13 @@ QVariant PDFGenerator::metaData( const QString & key, const QVariant & option ) 
         QMutexLocker ml(userMutex());
         return pdfdoc->formType() == Poppler::Document::XfaForm;
     }
+    else if ( key == QLatin1String("FormCalculateOrder") )
+    {
+#ifdef HAVE_POPPLER_0_53
+        QMutexLocker ml(userMutex());
+        return QVariant::fromValue<QVector<int>>(pdfdoc->formCalculateOrder());
+#endif
+    }
     return QVariant();
 }
 
@@ -1249,7 +1259,7 @@ bool PDFGenerator::reparseConfig()
 
     bool somethingchanged = false;
     // load paper color
-    QColor color = documentMetaData( QStringLiteral("PaperColor"), true ).value< QColor >();
+    QColor color = documentMetaData( PaperColorMetaData, true ).value< QColor >();
     // if paper color is changed we have to rebuild every visible pixmap in addition
     // to the outputDevice. it's the 'heaviest' case, other effect are just recoloring
     // over the page rendered on 'standard' white background.
@@ -1281,16 +1291,16 @@ bool PDFGenerator::setDocumentRenderHints()
     const Poppler::Document::RenderHints oldhints = pdfdoc->renderHints();
 #define SET_HINT(hintname, hintdefvalue, hintflag) \
 { \
-    bool newhint = documentMetaData(QStringLiteral(hintname), hintdefvalue).toBool(); \
+    bool newhint = documentMetaData(hintname, hintdefvalue).toBool(); \
     if (newhint != oldhints.testFlag(hintflag)) \
     { \
         pdfdoc->setRenderHint(hintflag, newhint); \
         changed = true; \
     } \
 }
-    SET_HINT("GraphicsAntialias", true, Poppler::Document::Antialiasing)
-    SET_HINT("TextAntialias", true, Poppler::Document::TextAntialiasing)
-    SET_HINT("TextHinting", false, Poppler::Document::TextHinting)
+    SET_HINT(GraphicsAntialiasMetaData, true, Poppler::Document::Antialiasing)
+    SET_HINT(TextAntialiasMetaData, true, Poppler::Document::TextAntialiasing)
+    SET_HINT(TextHintingMetaData, false, Poppler::Document::TextHinting)
 #undef SET_HINT
 #ifdef HAVE_POPPLER_0_24
     // load thin line mode

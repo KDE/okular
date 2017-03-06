@@ -23,7 +23,7 @@ public:
     TxtGenerator(QObject *parent, const QVariantList &args);
     ~TxtGenerator() {}
 
-    void addPages( KConfigDialog* dlg ) Q_DECL_OVERRIDE;
+    void addPages( KConfigDialog* dlg ) override;
 };
 
 #endif

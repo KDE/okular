@@ -29,25 +29,25 @@ class DviGenerator : public Okular::Generator
     Q_INTERFACES( Okular::Generator )
     public:
         DviGenerator( QObject *parent, const QVariantList &args );
-        bool loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector );
+        bool loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector ) override;
 
         // document information
-        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const;
+        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const override;
 
         // table of contents
-        const Okular::DocumentSynopsis *generateDocumentSynopsis();
+        const Okular::DocumentSynopsis *generateDocumentSynopsis() override;
 
         // list of fonts
-        Okular::FontInfo::List fontsForPage( int page );
+        Okular::FontInfo::List fontsForPage( int page ) override;
 
-        bool print( QPrinter &printer );
+        bool print( QPrinter &printer ) override;
 
-        QVariant metaData( const QString & key, const QVariant & option ) const;
+        QVariant metaData( const QString & key, const QVariant & option ) const override;
 
     protected:
-        bool doCloseDocument();
-        QImage image( Okular::PixmapRequest * request );
-        Okular::TextPage* textPage( Okular::Page *page );
+        bool doCloseDocument() override;
+        QImage image( Okular::PixmapRequest * request ) override;
+        Okular::TextPage* textPage( Okular::Page *page ) override;
 
     private:
         double m_resolution;

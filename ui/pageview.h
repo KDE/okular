@@ -77,19 +77,19 @@ Q_OBJECT
         void displayMessage( const QString & message, const QString & details = QString(), PageViewMessage::Icon icon=PageViewMessage::Info, int duration=-1 );
 
         // inherited from DocumentObserver
-        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) Q_DECL_OVERRIDE;
-        void notifyViewportChanged( bool smoothMove ) Q_DECL_OVERRIDE;
-        void notifyPageChanged( int pageNumber, int changedFlags ) Q_DECL_OVERRIDE;
-        void notifyContentsCleared( int changedFlags ) Q_DECL_OVERRIDE;
-        void notifyZoom(int factor) Q_DECL_OVERRIDE;
-        bool canUnloadPixmap( int pageNum ) const Q_DECL_OVERRIDE;
-        void notifyCurrentPageChanged( int previous, int current ) Q_DECL_OVERRIDE;
+        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) override;
+        void notifyViewportChanged( bool smoothMove ) override;
+        void notifyPageChanged( int pageNumber, int changedFlags ) override;
+        void notifyContentsCleared( int changedFlags ) override;
+        void notifyZoom(int factor) override;
+        bool canUnloadPixmap( int pageNum ) const override;
+        void notifyCurrentPageChanged( int previous, int current ) override;
 
         // inherited from View
-        bool supportsCapability( ViewCapability capability ) const Q_DECL_OVERRIDE;
-        CapabilityFlags capabilityFlags( ViewCapability capability ) const Q_DECL_OVERRIDE;
-        QVariant capability( ViewCapability capability ) const Q_DECL_OVERRIDE;
-        void setCapability( ViewCapability capability, const QVariant &option ) Q_DECL_OVERRIDE;
+        bool supportsCapability( ViewCapability capability ) const override;
+        CapabilityFlags capabilityFlags( ViewCapability capability ) const override;
+        QVariant capability( ViewCapability capability ) const override;
+        void setCapability( ViewCapability capability, const QVariant &option ) override;
 
         QList< Okular::RegularAreaRect * > textSelections( const QPoint& start, const QPoint& end, int& firstpage );
         Okular::RegularAreaRect * textSelectionForItem( PageViewItem * item, const QPoint & startPoint = QPoint(), const QPoint & endPoint = QPoint() );
@@ -128,27 +128,27 @@ Q_OBJECT
         void fitWindowToPage( const QSize& pageViewPortSize, const QSize& pageSize );
 
     protected:
-        bool event( QEvent * event ) Q_DECL_OVERRIDE;
+        bool event( QEvent * event ) override;
 
-        void resizeEvent( QResizeEvent* ) Q_DECL_OVERRIDE;
+        void resizeEvent( QResizeEvent* ) override;
         bool gestureEvent( QGestureEvent * e );
 
         // mouse / keyboard events
-        void keyPressEvent( QKeyEvent* ) Q_DECL_OVERRIDE;
-        void keyReleaseEvent( QKeyEvent* ) Q_DECL_OVERRIDE;
-        void inputMethodEvent( QInputMethodEvent * ) Q_DECL_OVERRIDE;
-        void wheelEvent( QWheelEvent* ) Q_DECL_OVERRIDE;
+        void keyPressEvent( QKeyEvent* ) override;
+        void keyReleaseEvent( QKeyEvent* ) override;
+        void inputMethodEvent( QInputMethodEvent * ) override;
+        void wheelEvent( QWheelEvent* ) override;
 
-        void paintEvent( QPaintEvent *e ) Q_DECL_OVERRIDE;
-        void tabletEvent (QTabletEvent *e ) Q_DECL_OVERRIDE;
-        void mouseMoveEvent( QMouseEvent *e ) Q_DECL_OVERRIDE;
-        void mousePressEvent( QMouseEvent *e ) Q_DECL_OVERRIDE;
-        void mouseReleaseEvent( QMouseEvent *e ) Q_DECL_OVERRIDE;
-        void mouseDoubleClickEvent( QMouseEvent *e ) Q_DECL_OVERRIDE;
+        void paintEvent( QPaintEvent *e ) override;
+        void tabletEvent (QTabletEvent *e ) override;
+        void mouseMoveEvent( QMouseEvent *e ) override;
+        void mousePressEvent( QMouseEvent *e ) override;
+        void mouseReleaseEvent( QMouseEvent *e ) override;
+        void mouseDoubleClickEvent( QMouseEvent *e ) override;
 
-        bool viewportEvent( QEvent *e ) Q_DECL_OVERRIDE;
+        bool viewportEvent( QEvent *e ) override;
 
-        void scrollContentsBy( int dx, int dy ) Q_DECL_OVERRIDE;
+        void scrollContentsBy( int dx, int dy ) override;
 
     private:
         // draw background and items on the opened qpainter

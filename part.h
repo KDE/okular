@@ -120,26 +120,26 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         ~Part();
 
         // inherited from DocumentObserver
-        void notifySetup( const QVector< Okular::Page * > &pages, int setupFlags ) Q_DECL_OVERRIDE;
-        void notifyViewportChanged( bool smoothMove ) Q_DECL_OVERRIDE;
-        void notifyPageChanged( int page, int flags ) Q_DECL_OVERRIDE;
+        void notifySetup( const QVector< Okular::Page * > &pages, int setupFlags ) override;
+        void notifyViewportChanged( bool smoothMove ) override;
+        void notifyPageChanged( int page, int flags ) override;
 
-        bool openDocument(const QUrl &url, uint page) Q_DECL_OVERRIDE;
-        void startPresentation() Q_DECL_OVERRIDE;
-        QStringList supportedMimeTypes() const Q_DECL_OVERRIDE;
+        bool openDocument(const QUrl &url, uint page) override;
+        void startPresentation() override;
+        QStringList supportedMimeTypes() const override;
 
         QUrl realUrl() const;
 
-        void showSourceLocation(const QString& fileName, int line, int column, bool showGraphically = true) Q_DECL_OVERRIDE;
-        void clearLastShownSourceLocation() Q_DECL_OVERRIDE;
-        bool isWatchFileModeEnabled() const Q_DECL_OVERRIDE;
-        void setWatchFileModeEnabled(bool enable) Q_DECL_OVERRIDE;
-        bool areSourceLocationsShownGraphically() const Q_DECL_OVERRIDE;
-        void setShowSourceLocationsGraphically(bool show) Q_DECL_OVERRIDE;
-        bool openNewFilesInTabs() const Q_DECL_OVERRIDE;
+        void showSourceLocation(const QString& fileName, int line, int column, bool showGraphically = true) override;
+        void clearLastShownSourceLocation() override;
+        bool isWatchFileModeEnabled() const override;
+        void setWatchFileModeEnabled(bool enable) override;
+        bool areSourceLocationsShownGraphically() const override;
+        void setShowSourceLocationsGraphically(bool show) override;
+        bool openNewFilesInTabs() const override;
 
     public Q_SLOTS:                // dbus
-        Q_SCRIPTABLE Q_NOREPLY void goToPage(uint page) Q_DECL_OVERRIDE;
+        Q_SCRIPTABLE Q_NOREPLY void goToPage(uint page) override;
         Q_SCRIPTABLE Q_NOREPLY void openDocument( const QString &doc );
         Q_SCRIPTABLE uint pages();
         Q_SCRIPTABLE uint currentPage();
@@ -167,17 +167,17 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
 
     protected:
         // reimplemented from KParts::ReadWritePart
-        bool openFile() Q_DECL_OVERRIDE;
-        bool openUrl(const QUrl &url) Q_DECL_OVERRIDE;
-        void guiActivateEvent(KParts::GUIActivateEvent *event) Q_DECL_OVERRIDE;
+        bool openFile() override;
+        bool openUrl(const QUrl &url) override;
+        void guiActivateEvent(KParts::GUIActivateEvent *event) override;
         void displayInfoMessage( const QString &message, KMessageWidget::MessageType messageType = KMessageWidget::Information, int duration = -1 );
     public:
-        bool saveFile() Q_DECL_OVERRIDE;
-        bool queryClose() Q_DECL_OVERRIDE;
-        bool closeUrl() Q_DECL_OVERRIDE;
-        bool closeUrl(bool promptToSave) Q_DECL_OVERRIDE;
-        void setReadWrite(bool readwrite) Q_DECL_OVERRIDE;
-        bool saveAs(const QUrl & saveUrl) Q_DECL_OVERRIDE;
+        bool saveFile() override;
+        bool queryClose() override;
+        bool closeUrl() override;
+        bool closeUrl(bool promptToSave) override;
+        void setReadWrite(bool readwrite) override;
+        bool saveAs(const QUrl & saveUrl) override;
 
     protected Q_SLOTS:
         // connected to actions

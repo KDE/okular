@@ -173,7 +173,7 @@ public:
     ~Observer();
 
     // inherited from DocumentObserver
-    void notifyPageChanged(int page, int flags);
+    void notifyPageChanged(int page, int flags) override;
 
 Q_SIGNALS:
     void pageChanged(int page, int flags);

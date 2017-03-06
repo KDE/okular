@@ -34,7 +34,7 @@ class RotationJobInternal : public ThreadWeaver::Job
         NormalizedRect rect() const;
 
     protected:
-        void run(ThreadWeaver::JobPointer self, ThreadWeaver::Thread *thread) Q_DECL_OVERRIDE;
+        void run(ThreadWeaver::JobPointer self, ThreadWeaver::Thread *thread) override;
 
     private:
         RotationJobInternal( const QImage &image, Rotation oldRotation, Rotation newRotation );

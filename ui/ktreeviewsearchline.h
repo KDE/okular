@@ -50,7 +50,7 @@ class KTreeViewSearchLine : public KLineEdit
      * If \a treeView is null then the widget will be disabled until listview
      * are set with setTreeView().
      */
-    explicit KTreeViewSearchLine( QWidget *parent = Q_NULLPTR, QTreeView *treeView = 0 );
+    explicit KTreeViewSearchLine( QWidget *parent = nullptr, QTreeView *treeView = 0 );
 
     /**
      * Destroys the KTreeViewSearchLine.
@@ -126,7 +126,7 @@ class KTreeViewSearchLine : public KLineEdit
     /**
     * Re-implemented for internal reasons.  API not affected.
     */
-    virtual void contextMenuEvent( QContextMenuEvent* );
+    void contextMenuEvent( QContextMenuEvent* ) override;
 
     /**
      * Updates search to only make visible appropriate items in \a treeView.  If
@@ -194,7 +194,7 @@ class KTreeViewSearchLineWidget : public QWidget
      * Creates a KTreeViewSearchLineWidget for \a treeView with \a parent as the
      * parent.
      */
-    explicit KTreeViewSearchLineWidget( QWidget *parent = Q_NULLPTR, QTreeView *treeView = 0 );
+    explicit KTreeViewSearchLineWidget( QWidget *parent = nullptr, QTreeView *treeView = 0 );
 
     /**
      * Destroys the KTreeViewSearchLineWidget
@@ -209,7 +209,7 @@ class KTreeViewSearchLineWidget : public QWidget
   protected Q_SLOTS:
     /**
      * Creates the widgets inside of the widget.  This is called from the
-     * constructor via a single shot timer so that it it guaranteed to run
+     * constructor via a single shot timer so that it is guaranteed to run
      * after construction is complete.  This makes it suitable for overriding in
      * subclasses.
      */

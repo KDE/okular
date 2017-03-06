@@ -37,8 +37,8 @@ Q_OBJECT
         ~TOC();
 
         // inherited from DocumentObserver
-        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) Q_DECL_OVERRIDE;
-        void notifyCurrentPageChanged( int previous, int current ) Q_DECL_OVERRIDE;
+        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) override;
+        void notifyCurrentPageChanged( int previous, int current ) override;
 
         void reparseConfig();
 

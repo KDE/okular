@@ -35,7 +35,7 @@ Q_OBJECT
         ~Layers();
 
         // inherited from DocumentObserver
-        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags );
+        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) override;
 
         void setPageView( PageView *pageView );
 

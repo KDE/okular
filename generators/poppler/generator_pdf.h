@@ -58,49 +58,49 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         virtual ~PDFGenerator();
 
         // [INHERITED] load a document and fill up the pagesVector
-        Okular::Document::OpenResult loadDocumentWithPassword( const QString & fileName, QVector<Okular::Page*> & pagesVector, const QString & password ) Q_DECL_OVERRIDE;
-        Okular::Document::OpenResult loadDocumentFromDataWithPassword( const QByteArray & fileData, QVector<Okular::Page*> & pagesVector, const QString & password ) Q_DECL_OVERRIDE;
+        Okular::Document::OpenResult loadDocumentWithPassword( const QString & fileName, QVector<Okular::Page*> & pagesVector, const QString & password ) override;
+        Okular::Document::OpenResult loadDocumentFromDataWithPassword( const QByteArray & fileData, QVector<Okular::Page*> & pagesVector, const QString & password ) override;
         void loadPages(QVector<Okular::Page*> &pagesVector, int rotation=-1, bool clear=false);
         // [INHERITED] document information
-        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const Q_DECL_OVERRIDE;
-        const Okular::DocumentSynopsis * generateDocumentSynopsis() Q_DECL_OVERRIDE;
-        Okular::FontInfo::List fontsForPage( int page ) Q_DECL_OVERRIDE;
-        const QList<Okular::EmbeddedFile*> * embeddedFiles() const Q_DECL_OVERRIDE;
-        PageSizeMetric pagesSizeMetric() const Q_DECL_OVERRIDE{ return Pixels; }
-        QAbstractItemModel * layersModel() const Q_DECL_OVERRIDE;
-        void opaqueAction( const Okular::BackendOpaqueAction *action ) Q_DECL_OVERRIDE;
+        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const override;
+        const Okular::DocumentSynopsis * generateDocumentSynopsis() override;
+        Okular::FontInfo::List fontsForPage( int page ) override;
+        const QList<Okular::EmbeddedFile*> * embeddedFiles() const override;
+        PageSizeMetric pagesSizeMetric() const override{ return Pixels; }
+        QAbstractItemModel * layersModel() const override;
+        void opaqueAction( const Okular::BackendOpaqueAction *action ) override;
 
         // [INHERITED] document information
-        bool isAllowed( Okular::Permission permission ) const Q_DECL_OVERRIDE;
+        bool isAllowed( Okular::Permission permission ) const override;
 
         // [INHERITED] perform actions on document / pages
-        QImage image( Okular::PixmapRequest *page ) Q_DECL_OVERRIDE;
+        QImage image( Okular::PixmapRequest *page ) override;
 
         // [INHERITED] print page using an already configured kprinter
-        bool print( QPrinter& printer ) Q_DECL_OVERRIDE;
+        bool print( QPrinter& printer ) override;
 
         // [INHERITED] reply to some metadata requests
-        QVariant metaData( const QString & key, const QVariant & option ) const Q_DECL_OVERRIDE;
+        QVariant metaData( const QString & key, const QVariant & option ) const override;
 
         // [INHERITED] reparse configuration
-        bool reparseConfig() Q_DECL_OVERRIDE;
-        void addPages( KConfigDialog * ) Q_DECL_OVERRIDE;
+        bool reparseConfig() override;
+        void addPages( KConfigDialog * ) override;
 
         // [INHERITED] text exporting
-        Okular::ExportFormat::List exportFormats() const Q_DECL_OVERRIDE;
-        bool exportTo( const QString &fileName, const Okular::ExportFormat &format ) Q_DECL_OVERRIDE;
+        Okular::ExportFormat::List exportFormats() const override;
+        bool exportTo( const QString &fileName, const Okular::ExportFormat &format ) override;
 
         // [INHERITED] print interface
-        QWidget* printConfigurationWidget() const Q_DECL_OVERRIDE;
+        QWidget* printConfigurationWidget() const override;
 
         // [INHERITED] save interface
-        bool supportsOption( SaveOption ) const Q_DECL_OVERRIDE;
-        bool save( const QString &fileName, SaveOptions options, QString *errorText ) Q_DECL_OVERRIDE;
-        Okular::AnnotationProxy* annotationProxy() const Q_DECL_OVERRIDE;
+        bool supportsOption( SaveOption ) const override;
+        bool save( const QString &fileName, SaveOptions options, QString *errorText ) override;
+        Okular::AnnotationProxy* annotationProxy() const override;
 
     protected:
-        bool doCloseDocument() Q_DECL_OVERRIDE;
-        Okular::TextPage* textPage( Okular::Page *page ) Q_DECL_OVERRIDE;
+        bool doCloseDocument() override;
+        Okular::TextPage* textPage( Okular::Page *page ) override;
 
     protected Q_SLOTS:
         void requestFontData(const Okular::FontInfo &font, QByteArray *data);

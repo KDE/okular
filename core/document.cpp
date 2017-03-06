@@ -1119,6 +1119,35 @@ void DocumentPrivate::performSetAnnotationContents( const QString & newContents,
     performModifyPageAnnotation( pageNumber,  annot, appearanceChanged );
 }
 
+void DocumentPrivate::recalculateForms()
+{
+    const QVariant fco = m_parent->metaData(QLatin1String("FormCalculateOrder"));
+    const QVector<int> formCalculateOrder = fco.value<QVector<int>>();
+    foreach(int formId, formCalculateOrder) {
+        for ( uint pageIdx = 0; pageIdx  < m_parent->pages(); pageIdx++ )
+        {
+            const Page *p = m_parent->page( pageIdx );
+            if (p)
+            {
+                foreach( FormField *form, p->formFields() )
+                {
+                    if ( form->id() == formId ) {
+                        Action *action = form->additionalAction( FormField::CalculateField );
+                        if (action)
+                        {
+                            m_parent->processAction( action );
+                        }
+                        else
+                        {
+                            qWarning() << "Form that is part of calculate order doesn't have a calculate action";
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 void DocumentPrivate::saveDocumentInfo() const
 {
     if ( m_xmlFileName.isEmpty() )
@@ -1884,66 +1913,68 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, vo
     }
 }
 
-QVariant DocumentPrivate::documentMetaData( const QString &key, const QVariant &option ) const
+QVariant DocumentPrivate::documentMetaData( const Generator::DocumentMetaDataKey key, const QVariant &option ) const
 {
-    if ( key == QLatin1String( "PaperColor" ) )
+    switch ( key )
     {
-        bool giveDefault = option.toBool();
-        // load paper color from Settings, or use the default color (white)
-        // if we were told to do so
-        QColor color;
-        if ( ( SettingsCore::renderMode() == SettingsCore::EnumRenderMode::Paper )
-             && SettingsCore::changeColors() )
+        case Generator::PaperColorMetaData:
         {
-            color = SettingsCore::paperColor();
+            bool giveDefault = option.toBool();
+            QColor color;
+            if ( ( SettingsCore::renderMode() == SettingsCore::EnumRenderMode::Paper )
+                && SettingsCore::changeColors() )
+            {
+                color = SettingsCore::paperColor();
+            }
+            else if ( giveDefault )
+            {
+                color = Qt::white;
+            }
+            return color;
         }
-        else if ( giveDefault )
-        {
-            color = Qt::white;
-        }
-        return color;
-    }
-    else if ( key == QLatin1String( "TextAntialias" ) )
-    {
-        switch ( SettingsCore::textAntialias() )
-        {
-            case SettingsCore::EnumTextAntialias::Enabled:
-                return true;
-                break;
+        break;
+
+        case Generator::TextAntialiasMetaData:
+            switch ( SettingsCore::textAntialias() )
+            {
+                case SettingsCore::EnumTextAntialias::Enabled:
+                    return true;
+                    break;
 #if 0
-            case Settings::EnumTextAntialias::UseKDESettings:
-                // TODO: read the KDE configuration
-                return true;
-                break;
+                case Settings::EnumTextAntialias::UseKDESettings:
+                    // TODO: read the KDE configuration
+                    return true;
+                    break;
 #endif
-            case SettingsCore::EnumTextAntialias::Disabled:
-                return false;
-                break;
-        }
-    }
-    else if ( key == QLatin1String( "GraphicsAntialias" ) )
-    {
-        switch ( SettingsCore::graphicsAntialias() )
-        {
-            case SettingsCore::EnumGraphicsAntialias::Enabled:
-                return true;
-                break;
-            case SettingsCore::EnumGraphicsAntialias::Disabled:
-                return false;
-                break;
-        }
-    }
-    else if ( key == QLatin1String( "TextHinting" ) )
-    {
-        switch ( SettingsCore::textHinting() )
-        {
-            case SettingsCore::EnumTextHinting::Enabled:
-                return true;
-                break;
-            case SettingsCore::EnumTextHinting::Disabled:
-                return false;
-                break;
-        }
+                case SettingsCore::EnumTextAntialias::Disabled:
+                    return false;
+                    break;
+            }
+        break;
+
+        case Generator::GraphicsAntialiasMetaData:
+            switch ( SettingsCore::graphicsAntialias() )
+            {
+                case SettingsCore::EnumGraphicsAntialias::Enabled:
+                    return true;
+                    break;
+                case SettingsCore::EnumGraphicsAntialias::Disabled:
+                    return false;
+                    break;
+            }
+        break;
+
+        case Generator::TextHintingMetaData:
+            switch ( SettingsCore::textHinting() )
+            {
+                case SettingsCore::EnumTextHinting::Enabled:
+                    return true;
+                    break;
+                case SettingsCore::EnumTextHinting::Disabled:
+                    return false;
+                    break;
+            }
+        break;
     }
     return QVariant();
 }
@@ -3695,6 +3726,8 @@ void Document::editFormText( int pageNumber,
 {
     QUndoCommand *uc = new EditFormTextCommand( this->d, form, pageNumber, newContents, newCursorPos, form->text(), prevCursorPos, prevAnchorPos );
     d->m_undoStack->push( uc );
+
+    d->recalculateForms();
 }
 
 void Document::editFormList( int pageNumber,
@@ -3704,6 +3737,8 @@ void Document::editFormList( int pageNumber,
     const QList< int > prevChoices = form->currentChoices();
     QUndoCommand *uc = new EditFormListCommand( this->d, form, pageNumber, newChoices, prevChoices );
     d->m_undoStack->push( uc );
+
+    d->recalculateForms();
 }
 
 void Document::editFormCombo( int pageNumber,
@@ -3726,6 +3761,8 @@ void Document::editFormCombo( int pageNumber,
 
     QUndoCommand *uc = new EditFormComboCommand( this->d, form, pageNumber, newText, newCursorPos, prevText, prevCursorPos, prevAnchorPos );
     d->m_undoStack->push( uc );
+
+    d->recalculateForms();
 }
 
 void Document::editFormButtons( int pageNumber, const QList< FormFieldButton* >& formButtons, const QList< bool >& newButtonStates )

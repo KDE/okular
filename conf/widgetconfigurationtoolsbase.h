@@ -21,7 +21,7 @@ class WidgetConfigurationToolsBase : public QWidget
     Q_PROPERTY( QStringList tools READ tools WRITE setTools NOTIFY changed USER true )
 
     public:
-        explicit WidgetConfigurationToolsBase( QWidget * parent = Q_NULLPTR );
+        explicit WidgetConfigurationToolsBase( QWidget * parent = nullptr );
         ~WidgetConfigurationToolsBase();
 
         virtual QStringList tools() const = 0;

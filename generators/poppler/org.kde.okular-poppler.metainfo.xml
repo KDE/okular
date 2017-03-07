@@ -8,6 +8,7 @@
   <name xml:lang="ca">PDF</name>
   <name xml:lang="ca-valencia">PDF</name>
   <name xml:lang="cs">PDF</name>
+  <name xml:lang="de">PDF</name>
   <name xml:lang="en-GB">PDF</name>
   <name xml:lang="es">PDF</name>
   <name xml:lang="et">PDF</name>
@@ -33,6 +34,7 @@
   <summary xml:lang="ca">Afegeix la implementació per llegir documents PDF</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per llegir documents PDF</summary>
   <summary xml:lang="cs">Přidává podporu pro čtení dokumentů PDF</summary>
+  <summary xml:lang="de">Bietet Unterstützung zum Lesen von PDF-Dokumenten</summary>
   <summary xml:lang="en-GB">Adds support for reading PDF documents</summary>
   <summary xml:lang="es">Permite la lectura de documentos PDF</summary>
   <summary xml:lang="et">PDF-dokumentide lugemise toetus</summary>

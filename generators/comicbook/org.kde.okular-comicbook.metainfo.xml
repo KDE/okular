@@ -8,6 +8,7 @@
   <name xml:lang="ca">Llibres de còmics</name>
   <name xml:lang="ca-valencia">Llibres de còmics</name>
   <name xml:lang="cs">Komiksy</name>
+  <name xml:lang="de">Comic-Buch</name>
   <name xml:lang="en-GB">Comic Books</name>
   <name xml:lang="es">Libros de cómics</name>
   <name xml:lang="et">Koomiksid</name>
@@ -33,6 +34,7 @@
   <summary xml:lang="ca">Afegeix la implementació per llegir llibres de còmics</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per llegir llibres de còmics</summary>
   <summary xml:lang="cs">Přidává podporu pro čtení komiksů</summary>
+  <summary xml:lang="de">Bietet Unterstützung zum Lesen von Comic-Büchern</summary>
   <summary xml:lang="en-GB">Adds support for reading comic books</summary>
   <summary xml:lang="es">Permite la lectura de libros de cómics</summary>
   <summary xml:lang="et">Koomiksite lugemise toetus</summary>

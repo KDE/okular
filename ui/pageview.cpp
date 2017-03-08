@@ -2280,6 +2280,9 @@ void PageView::mousePressEvent( QMouseEvent * e )
                                  this, &PageView::openAnnotationWindow );
 
                         popup.exec( e->globalPos() );
+                        // Since ↑ spins its own event loop we won't get the mouse release event
+                        // so reset mousePressPos here
+                        d->mousePressPos = QPoint();
                     }
                 }
             }

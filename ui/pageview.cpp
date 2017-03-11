@@ -420,7 +420,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     // connect(...);
     setAttribute( Qt::WA_InputMethodEnabled, true );
 
-    // Grab pinch gestures to rotate the view (and do things like zooming eventually)
+    // Grab pinch gestures to zoom and rotate the view
     grabGesture(Qt::PinchGesture);
 
     d->magnifierView = new MagnifierView(document, this);
@@ -1522,6 +1522,8 @@ bool PageView::gestureEvent( QGestureEvent * event )
             vanillaZoom = d->zoomFactor;
         }
 
+        const QPinchGesture::ChangeFlags changeFlags = pinch->changeFlags();
+
         // Zoom
         if (pinch->changeFlags() & QPinchGesture::ScaleFactorChanged)
         {
@@ -1531,6 +1533,32 @@ bool PageView::gestureEvent( QGestureEvent * event )
             updateZoom( ZoomRefreshCurrent );
             d->blockPixmapsRequest = false;
             viewport()->repaint();
+        }
+
+        // Count the number of 90-degree rotations we did since the start of the pinch gesture.
+        // Otherwise a pinch turned to 90 degrees and held there will rotate the page again and again.
+        static int rotations = 0;
+
+        if (changeFlags & QPinchGesture::RotationAngleChanged)
+        {
+            // Rotation angle relative to the accumulated page rotations triggered by the current pinch
+            // We actually turn at 80 degrees rather than at 90 degrees.  That's less strain on the hands.
+            const qreal relativeAngle = pinch->rotationAngle() - rotations*90;
+            if (relativeAngle > 80)
+            {
+                slotRotateClockwise();
+                rotations++;
+            }
+            if (relativeAngle < -80)
+            {
+                slotRotateCounterClockwise();
+                rotations--;
+            }
+        }
+
+        if (pinch->state() == Qt::GestureFinished)
+        {
+            rotations = 0;
         }
 
         return true;

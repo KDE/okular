@@ -46,12 +46,14 @@ class FindBar
     private Q_SLOTS:
         void caseSensitivityChanged();
         void fromCurrentPageChanged();
+        void findAsYouTypeChanged();
         void closeAndStopSearch();
 
     private:
         SearchLineWidget * m_search;
         QAction * m_caseSensitiveAct;
         QAction * m_fromCurrentPageAct;
+        QAction * m_findAsYouTypeAct;
         bool eventFilter( QObject *target, QEvent *event ) override;
         bool m_active;
 };

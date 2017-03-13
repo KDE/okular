@@ -47,6 +47,7 @@ FindBar::FindBar( Okular::Document * document, QWidget * parent )
     m_search->lineEdit()->setSearchId( PART_SEARCH_ID );
     m_search->lineEdit()->setSearchColor( qRgb( 255, 255, 64 ) );
     m_search->lineEdit()->setSearchMoveViewport( true );
+    m_search->lineEdit()->setFindAsYouType( false );
     m_search->lineEdit()->setToolTip( i18n( "Text to search for" ) );
     m_search->installEventFilter( this );
     label->setBuddy( m_search->lineEdit() );
@@ -68,6 +69,8 @@ FindBar::FindBar( Okular::Document * document, QWidget * parent )
     m_caseSensitiveAct->setCheckable( true );
     m_fromCurrentPageAct = optionsMenu->addAction( i18n( "From current page" ) );
     m_fromCurrentPageAct->setCheckable( true );
+    m_findAsYouTypeAct = optionsMenu->addAction( i18n( "Find as you type" ) );
+    m_findAsYouTypeAct->setCheckable( true );
     optionsBtn->setMenu( optionsMenu );
     lay->addWidget( optionsBtn );
 
@@ -76,9 +79,11 @@ FindBar::FindBar( Okular::Document * document, QWidget * parent )
     connect( findPrevBtn, &QAbstractButton::clicked, this, &FindBar::findPrev );
     connect( m_caseSensitiveAct, &QAction::toggled, this, &FindBar::caseSensitivityChanged );
     connect( m_fromCurrentPageAct, &QAction::toggled, this, &FindBar::fromCurrentPageChanged );
+    connect( m_findAsYouTypeAct, &QAction::toggled, this, &FindBar::findAsYouTypeChanged );
 
     m_caseSensitiveAct->setChecked( Okular::Settings::searchCaseSensitive() );
     m_fromCurrentPageAct->setChecked( Okular::Settings::searchFromCurrentPage() );
+    m_findAsYouTypeAct->setChecked( Okular::Settings::findAsYouType() );
 
     hide();
 
@@ -170,6 +175,15 @@ void FindBar::fromCurrentPageChanged()
     if ( !m_active )
         return;
     Okular::Settings::setSearchFromCurrentPage( m_fromCurrentPageAct->isChecked() );
+    Okular::Settings::self()->save();
+}
+
+void FindBar::findAsYouTypeChanged()
+{
+    m_search->lineEdit()->setFindAsYouType( m_findAsYouTypeAct->isChecked() );
+    if ( !m_active )
+        return;
+    Okular::Settings::setFindAsYouType( m_findAsYouTypeAct->isChecked() );
     Okular::Settings::self()->save();
 }
 

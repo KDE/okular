@@ -41,7 +41,6 @@ else()
 endif()
 
 find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS
-    Activities
     Archive
     Bookmarks
     Completion
@@ -58,6 +57,11 @@ find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS
     Wallet
     WindowSystem
 )
+if(NOT WIN32)
+    find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS
+        Activities
+    )
+endif()
 find_package(Phonon4Qt5 CONFIG REQUIRED)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake/modules)

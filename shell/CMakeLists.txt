@@ -4,11 +4,14 @@ include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}/../
 )
 
+
+if(NOT WIN32)
 set_package_properties("KActivities" PROPERTIES
         DESCRIPTION  "Activities interface library"
         URL "https://projects.kde.org/projects/kde/kdelibs/kactivities"
         TYPE RECOMMENDED
         PURPOSE "Required for Activities integration.")
+endif()
 
 # okular
 
@@ -24,7 +27,11 @@ ecm_add_app_icon(okular_SRCS ICONS ${ICONS_SRCS})
 
 add_executable(okular ${okular_SRCS})
 
-target_link_libraries(okular KF5::Parts KF5::WindowSystem KF5::Activities)
+target_link_libraries(okular KF5::Parts KF5::WindowSystem)
+
+if(NOT WIN32)
+	target_link_libraries(okular KF5::Activities)
+endif()
 
 install(TARGETS okular ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 

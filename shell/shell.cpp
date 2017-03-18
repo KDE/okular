@@ -46,7 +46,9 @@
 #include <KLocalizedString>
 #include <KSharedConfig>
 #include <KIO/Global>
+#ifndef Q_OS_WIN
 #include <KActivities/ResourceInstance>
+#endif
 
 // local includes
 #include "kdocumentviewer.h"
@@ -61,7 +63,9 @@ static const char* const SESSION_TAB_KEY = "ActiveTab";
 
 Shell::Shell( const QString &serializedOptions )
   : KParts::MainWindow(), m_menuBarWasShown(true), m_toolBarWasShown(true)
+#ifndef Q_OS_WIN
     , m_activityResource(0)
+#endif
     , m_isValid(true)
 {
   setObjectName( QStringLiteral( "okular::Shell#" ) );
@@ -276,10 +280,12 @@ void Shell::openUrl( const QUrl & url, const QString &serializedOptions )
             {
                 if ( openOk )
                 {
+#ifndef Q_OS_WIN
                     if ( !m_activityResource )
                         m_activityResource = new KActivities::ResourceInstance( window()->winId(), this );
 
                     m_activityResource->setUri( url );
+#endif
                     m_recent->addUrl( url );
                 }
                 else

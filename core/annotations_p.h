@@ -42,8 +42,10 @@ class AnnotationPrivate
         virtual void baseTransform( const QTransform &matrix );
         virtual void resetTransformation();
         virtual void translate( const NormalizedPoint &coord );
+        virtual void adjust( const NormalizedPoint & deltaCoord1, const NormalizedPoint & deltaCoord2 );
         virtual bool openDialogAfterCreation() const;
         virtual void setAnnotationProperties( const QDomNode& node );
+        virtual bool canBeResized() const;
         virtual AnnotationPrivate* getNewAnnotationPrivate() = 0;
 
         /**

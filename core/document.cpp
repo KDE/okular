@@ -1061,16 +1061,16 @@ void DocumentPrivate::performModifyPageAnnotation( int page, Annotation * annota
     {
         /* When an annotation is being moved, the generator will not render it.
          * Therefore there's no need to refresh pixmaps after the first time */
-        if ( annotation->flags() & Annotation::BeingMoved )
+        if ( annotation->flags() & (Annotation::BeingMoved | Annotation::BeingResized) )
         {
-            if ( m_annotationBeingMoved )
+            if ( m_annotationBeingModified )
                 return;
             else // First time: take note
-                m_annotationBeingMoved = true;
+                m_annotationBeingModified = true;
         }
         else
         {
-            m_annotationBeingMoved = false;
+            m_annotationBeingModified = false;
         }
 
         // Redraw everything, including ExternallyDrawn annotations
@@ -1078,8 +1078,8 @@ void DocumentPrivate::performModifyPageAnnotation( int page, Annotation * annota
         refreshPixmaps( page );
     }
 
-    // If the user is moving the annotation, don't steal the focus
-    if ( (annotation->flags() & Annotation::BeingMoved) == 0 )
+    // If the user is moving or resizing the annotation, don't steal the focus
+    if ( (annotation->flags() & (Annotation::BeingMoved | Annotation::BeingResized) ) == 0 )
         warnLimitedAnnotSupport();
 }
 
@@ -3288,6 +3288,13 @@ void Document::translatePageAnnotation(int page, Annotation* annotation, const N
 {
     int complete = (annotation->flags() & Okular::Annotation::BeingMoved) == 0;
     QUndoCommand *uc = new Okular::TranslateAnnotationCommand( d, annotation, page, delta, complete );
+    d->m_undoStack->push(uc);
+}
+
+void Document::adjustPageAnnotation( int page, Annotation *annotation, const Okular::NormalizedPoint & delta1, const Okular::NormalizedPoint & delta2 )
+{
+    const bool complete = (annotation->flags() & Okular::Annotation::BeingResized) == 0;
+    QUndoCommand *uc = new Okular::AdjustAnnotationCommand( d, annotation, page, delta1, delta2, complete );
     d->m_undoStack->push(uc);
 }
 

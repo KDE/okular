@@ -272,6 +272,7 @@ set(okularpart_SRCS
    ui/pagepainter.cpp
    ui/pagesizelabel.cpp
    ui/pageviewannotator.cpp
+   ui/pageviewmouseannotation.cpp
    ui/pageview.cpp
    ui/magnifierview.cpp
    ui/pageviewutils.cpp

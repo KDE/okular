@@ -98,7 +98,7 @@ class DocumentPrivate
             m_archiveData( 0 ),
             m_fontsCached( false ),
             m_annotationEditingEnabled ( true ),
-            m_annotationBeingMoved( false ),
+            m_annotationBeingModified( false ),
             m_synctex_scanner( 0 )
         {
             calculateMaxTextPages();
@@ -274,7 +274,7 @@ class DocumentPrivate
 
         bool m_annotationEditingEnabled;
         bool m_annotationsNeedSaveAs;
-        bool m_annotationBeingMoved; // is an annotation currently being moved?
+        bool m_annotationBeingModified; // is an annotation currently being moved or resized?
         bool m_showWarningLimitedAnnotSupport;
 
         QUndoStack *m_undoStack;

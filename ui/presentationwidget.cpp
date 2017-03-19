@@ -146,7 +146,8 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     m_document( doc ), m_frameIndex( -1 ), m_topBar( 0 ), m_pagesEdit( 0 ), m_searchBar( 0 ),
     m_ac( collection ), m_screenSelect( 0 ), m_isSetup( false ), m_blockNotifications( false ), m_inBlackScreenMode( false ),
     m_showSummaryView( Okular::Settings::slidesShowSummary() ),
-    m_advanceSlides( Okular::SettingsCore::slidesAdvance() )
+    m_advanceSlides( Okular::SettingsCore::slidesAdvance() ),
+    m_goToNextPageOnRelease( false )
 {
     Q_UNUSED( parent )
     setAttribute( Qt::WA_DeleteOnClose );
@@ -698,6 +699,8 @@ void PresentationWidget::mousePressEvent( QMouseEvent * e )
             overlayClick( e->pos() );
             return;
         }
+
+        m_goToNextPageOnRelease = true;
     }
     // pressing right button
     else if ( e->button() == Qt::RightButton )
@@ -721,8 +724,10 @@ void PresentationWidget::mouseReleaseEvent( QMouseEvent * e )
         m_pressedLink = 0;
     }
 
-    // if no other actions, go to next page
-    slotNextPage();
+    if ( m_goToNextPageOnRelease ) {
+        slotNextPage();
+        m_goToNextPageOnRelease = false;
+    }
 }
 
 void PresentationWidget::mouseMoveEvent( QMouseEvent * e )

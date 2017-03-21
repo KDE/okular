@@ -282,7 +282,10 @@ QString PDFiumGenerator::getPageLabel(int page_index) const
 {
     char16_t buffer[255];
 
-    FPDF_GetPageLabel(pdfdoc, page_index , buffer, 255);
+    int len = FPDF_GetPageLabel(pdfdoc, page_index , buffer, 255);
+    if (len == 0)
+        return QString();
+
     return QString::fromUtf16(buffer);
 }
 

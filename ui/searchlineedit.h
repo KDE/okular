@@ -36,6 +36,7 @@ class SearchLineEdit : public KLineEdit
         void setSearchColor( const QColor &color );
         void setSearchMoveViewport( bool move );
         void setSearchFromStart( bool fromStart );
+        void setFindAsYouType( bool findAsYouType );
         void resetSearch();
 
         bool isSearchRunning() const;
@@ -63,6 +64,7 @@ class SearchLineEdit : public KLineEdit
         bool m_moveViewport;
         bool m_changed;
         bool m_fromStart;
+        bool m_findAsYouType;
         bool m_searchRunning;
 
     private Q_SLOTS:

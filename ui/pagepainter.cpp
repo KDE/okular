@@ -123,6 +123,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     bool canDrawAnnotations = (flags & Annotations) && !page->m_annotations.isEmpty();
     bool enhanceLinks = (flags & EnhanceLinks) && Okular::Settings::highlightLinks();
     bool enhanceImages = (flags & EnhanceImages) && Okular::Settings::highlightImages();
+
     // vectors containing objects to draw
     // make this a qcolor, rect map, since we don't need
     // to know s_id here! we are only drawing this right?
@@ -190,9 +191,11 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                 if ( flags & Okular::Annotation::ExternallyDrawn )
                 {
                     // ExternallyDrawn annots are never rendered by PagePainter.
-                    // Just paint the boundingRect if the annot is BeingMoved
-                    if ( flags & Okular::Annotation::BeingMoved )
+                    // Just paint the boundingRect if the annot is moved or resized.
+                    if ( flags & (Okular::Annotation::BeingMoved | Okular::Annotation::BeingResized) )
+                    {
                         boundingRectOnlyAnn = ann;
+                    }
                     continue;
                 }
 

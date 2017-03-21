@@ -100,6 +100,32 @@ class TranslateAnnotationCommand : public QUndoCommand
         bool m_completeDrag;
 };
 
+class AdjustAnnotationCommand : public QUndoCommand
+{
+    public:
+        AdjustAnnotationCommand(Okular::DocumentPrivate * docPriv,
+                                   Okular::Annotation *  annotation,
+                                   int pageNumber,
+                                   const Okular::NormalizedPoint & delta1,
+                                   const Okular::NormalizedPoint & delta2,
+                                   bool completeDrag
+                                  );
+        void undo() override;
+        void redo() override;
+        int id() const override;
+        bool mergeWith(const QUndoCommand * uc) override;
+        Okular::NormalizedRect adjustBoundingRectangle(
+                const Okular::NormalizedPoint & delta1, const Okular::NormalizedPoint & delta2 );
+
+    private:
+        Okular::DocumentPrivate * m_docPriv;
+        Okular::Annotation* m_annotation;
+        int m_pageNumber;
+        Okular::NormalizedPoint m_delta1;
+        Okular::NormalizedPoint m_delta2;
+        bool m_completeDrag;
+};
+
 class EditTextCommand : public QUndoCommand
 {
     public:

@@ -212,6 +212,71 @@ Okular::NormalizedRect TranslateAnnotationCommand::translateBoundingRectangle( c
     return boundingRect;
 }
 
+AdjustAnnotationCommand::AdjustAnnotationCommand(Okular::DocumentPrivate * docPriv,
+        Okular::Annotation * annotation,
+        int pageNumber,
+        const Okular::NormalizedPoint & delta1,
+        const Okular::NormalizedPoint & delta2,
+        bool completeDrag )
+ : m_docPriv( docPriv ),
+   m_annotation( annotation ),
+   m_pageNumber( pageNumber ),
+   m_delta1( delta1 ),
+   m_delta2( delta2 ),
+   m_completeDrag( completeDrag )
+{
+    setText( i18nc( "Change an annotation's size", "adjust annotation" ) );
+}
+
+void AdjustAnnotationCommand::undo()
+{
+    const NormalizedPoint minusDelta1 = Okular::NormalizedPoint( -m_delta1.x, -m_delta1.y );
+    const NormalizedPoint minusDelta2 = Okular::NormalizedPoint( -m_delta2.x, -m_delta2.y );
+    moveViewportIfBoundingRectNotFullyVisible( adjustBoundingRectangle( minusDelta1, minusDelta2 ), m_docPriv, m_pageNumber );
+    m_annotation->adjust( minusDelta1, minusDelta2 );
+    m_docPriv->performModifyPageAnnotation( m_pageNumber, m_annotation, true );
+}
+
+void AdjustAnnotationCommand::redo()
+{
+    moveViewportIfBoundingRectNotFullyVisible( adjustBoundingRectangle( m_delta1, m_delta2 ), m_docPriv, m_pageNumber );
+    m_annotation->adjust( m_delta1, m_delta2 );
+    m_docPriv->performModifyPageAnnotation( m_pageNumber, m_annotation, true );
+}
+
+int AdjustAnnotationCommand::id() const
+{
+    return 5;
+}
+
+bool AdjustAnnotationCommand::mergeWith( const QUndoCommand * uc )
+{
+    AdjustAnnotationCommand *tuc = (AdjustAnnotationCommand *)uc;
+
+    if ( tuc->m_annotation != m_annotation )
+        return false;
+
+    if ( m_completeDrag )
+    {
+        return false;
+    }
+    m_delta1 = Okular::NormalizedPoint( tuc->m_delta1.x + m_delta1.x, tuc->m_delta1.y + m_delta1.y );
+    m_delta2 = Okular::NormalizedPoint( tuc->m_delta2.x + m_delta2.x, tuc->m_delta2.y + m_delta2.y );
+    m_completeDrag = tuc->m_completeDrag;
+    return true;
+}
+
+Okular::NormalizedRect AdjustAnnotationCommand::adjustBoundingRectangle(
+        const Okular::NormalizedPoint & delta1, const Okular::NormalizedPoint & delta2 )
+{
+    const Okular::NormalizedRect annotBoundingRect = m_annotation->boundingRectangle();
+    const double left = qMin<double>( annotBoundingRect.left, annotBoundingRect.left + delta1.x );
+    const double right = qMax<double>( annotBoundingRect.right, annotBoundingRect.right + delta2.x );
+    const double top = qMin<double>( annotBoundingRect.top, annotBoundingRect.top + delta1.y );
+    const double bottom = qMax<double>( annotBoundingRect.bottom, annotBoundingRect.bottom + delta2.y );
+    return Okular::NormalizedRect( left, top, right, bottom );
+}
+
 EditTextCommand::EditTextCommand( const QString & newContents,
                                   int newCursorPos,
                                   const QString & prevContents,

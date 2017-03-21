@@ -135,7 +135,8 @@ class OKULARCORE_EXPORT Annotation
             ToggleHidingOnMouse = 64, ///< Can be hidden/shown by mouse click
             External = 128,           ///< Is stored external
             ExternallyDrawn = 256,    ///< Is drawn externally (by the generator which provided it) @since 0.10 (KDE 4.4)
-            BeingMoved = 512          ///< Is being moved (mouse drag and drop). If ExternallyDrawn, the generator must not draw it @since 0.15 (KDE 4.9)
+            BeingMoved = 512,         ///< Is being moved (mouse drag and drop). If ExternallyDrawn, the generator must not draw it @since 0.15 (KDE 4.9)
+            BeingResized = 1024       ///< Is being resized (mouse drag and drop). If ExternallyDrawn, the generator must not draw it @since 1.1.0
         };
 
         /**
@@ -299,6 +300,15 @@ class OKULARCORE_EXPORT Annotation
          * @see canBeMoved()
          */
         void translate( const NormalizedPoint &coord );
+
+        /**
+         * Adjust the annotation by the specified coordinates.
+         * Adds coordinates of @p deltaCoord1 to annotations top left corner,
+         * and @p deltaCoord2 to the bottom right.
+         *
+         * @see canBeResized()
+         */
+        void adjust( const NormalizedPoint & deltaCoord1, const NormalizedPoint & deltaCoord2 );
 
         /**
          * The Style class contains all information about style of the
@@ -633,6 +643,11 @@ class OKULARCORE_EXPORT Annotation
          * @since 0.7 (KDE 4.1)
          */
         bool canBeMoved() const;
+
+        /**
+         * Returns whether the annotation can be resized.
+         */
+        bool canBeResized() const;
 
         /**
          * Returns whether the annotation dialog should be open after creation of the annotation or not

@@ -22,6 +22,7 @@
 class QLineEdit;
 class QToolBar;
 class QTimer;
+class QGestureEvent;
 class KActionCollection;
 class KSelectAction;
 class SmoothPathEngine;
@@ -71,6 +72,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         void paintEvent( QPaintEvent * e ) override;
         void resizeEvent( QResizeEvent * e ) override;
         void leaveEvent( QEvent * e ) override;
+        bool gestureEvent (QGestureEvent * e );
 
     private:
         const void * getObjectRect( Okular::ObjectRect::ObjectType type, int x, int y, QRect * geometry = 0 ) const;
@@ -144,6 +146,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         bool m_inBlackScreenMode;
         bool m_showSummaryView;
         bool m_advanceSlides;
+        bool m_goToNextPageOnRelease;
 
     private Q_SLOTS:
         void slotNextPage();

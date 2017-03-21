@@ -144,7 +144,7 @@ void PopplerAnnotationProxy::notifyModification( const Okular::Annotation *okl_a
 
     QMutexLocker ml(mutex);
 
-    if ( okl_ann->flags() & Okular::Annotation::BeingMoved )
+    if ( okl_ann->flags() & (Okular::Annotation::BeingMoved | Okular::Annotation::BeingResized) )
     {
         // Okular ui already renders the annotation on its own
         ppl_ann->setFlags( Poppler::Annotation::Hidden );

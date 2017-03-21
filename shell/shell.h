@@ -32,7 +32,9 @@ class KPluginFactory;
 class KDocumentViewer;
 class Part;
 
+#ifndef Q_OS_WIN
 namespace KActivities { class ResourceInstance; }
+#endif
 
 /**
  * This is the application "Shell".  It has a menubar and a toolbar
@@ -168,7 +170,9 @@ private:
   QAction* m_nextTabAction;
   QAction* m_prevTabAction;
 
+#ifndef Q_OS_WIN
   KActivities::ResourceInstance* m_activityResource;
+#endif
   bool m_isValid;
 };
 

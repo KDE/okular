@@ -522,12 +522,25 @@ class OKULARCORE_EXPORT Document : public QObject
          * Translates the position of the given @p annotation on the given @p page by a distance @p delta in normalized coordinates.
          *
          * Consecutive translations applied to the same @p annotation are merged together on the undo stack if the
-         * BeingMoved flag is set on the @P annotation
+         * BeingMoved flag is set on the @P annotation.
          *
          * @since 0.17 (KDE 4.11)
          */
         void translatePageAnnotation( int page, Annotation *annotation, const Okular::NormalizedPoint & delta );
 
+        /**
+         * Adjusts the position of the top-left and bottom-right corners of given @p annotation on the given @p page.
+         *
+         * Can be used to implement resize functionality.
+         * @p delta1 in normalized coordinates is added to top-left.
+         * @p delta2 in normalized coordinates is added to bottom-right.
+         *
+         * Consecutive adjustments applied to the same @p annotation are merged together on the undo stack if the
+         * BeingResized flag is set on the @P annotation.
+         *
+         * @since 1.1.0
+         */
+        void adjustPageAnnotation( int page, Annotation * annotation, const Okular::NormalizedPoint & delta1, const Okular::NormalizedPoint & delta2 );
 
         /**
          * Edits the plain text contents of the given @p annotation on the given @p page.

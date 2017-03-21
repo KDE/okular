@@ -298,6 +298,9 @@
   <entry key="SearchFromCurrentPage" type="Bool">
    <default>true</default>
   </entry>
+  <entry key="FindAsYouType" type="Bool">
+   <default>true</default>
+  </entry>
  </group>
  <group name="Dlg Accessibility" >
   <entry key="HighlightImages" type="Bool" >

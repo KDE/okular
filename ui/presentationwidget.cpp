@@ -29,6 +29,7 @@
 #include <qvalidator.h>
 #include <qapplication.h>
 #include <qdesktopwidget.h>
+#include <QGestureEvent>
 #include <kcursor.h>
 #include <krandom.h>
 #include <qtoolbar.h>
@@ -145,7 +146,8 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     m_document( doc ), m_frameIndex( -1 ), m_topBar( 0 ), m_pagesEdit( 0 ), m_searchBar( 0 ),
     m_ac( collection ), m_screenSelect( 0 ), m_isSetup( false ), m_blockNotifications( false ), m_inBlackScreenMode( false ),
     m_showSummaryView( Okular::Settings::slidesShowSummary() ),
-    m_advanceSlides( Okular::SettingsCore::slidesAdvance() )
+    m_advanceSlides( Okular::SettingsCore::slidesAdvance() ),
+    m_goToNextPageOnRelease( false )
 {
     Q_UNUSED( parent )
     setAttribute( Qt::WA_DeleteOnClose );
@@ -231,6 +233,9 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     p.setColor( QPalette::Active, QPalette::Button, Qt::gray );
     p.setColor( QPalette::Active, QPalette::Background, Qt::darkGray );
     m_topBar->setPalette( p );
+
+    // Grab swipe gestures to change pages
+    grabGesture(Qt::SwipeGesture);
 
     // misc stuff
     setMouseTracking( true );
@@ -528,6 +533,9 @@ void PresentationWidget::setPlayPauseIcon()
 // <widget events>
 bool PresentationWidget::event( QEvent * e )
 {
+    if ( e->type() == QEvent::Gesture )
+        return gestureEvent(static_cast<QGestureEvent*>(e));
+
     if ( e->type() == QEvent::ToolTip )
     {
         QHelpEvent * he = (QHelpEvent*)e;
@@ -549,6 +557,33 @@ bool PresentationWidget::event( QEvent * e )
         return QWidget::event( e );
 }
 
+bool PresentationWidget::gestureEvent( QGestureEvent * event )
+{
+    // Swiping left or right on a touch screen will go to the previous or next slide, respectively.
+    // The precise gesture is the standard Qt swipe: with three(!) fingers.
+    if (QGesture *swipe = event->gesture(Qt::SwipeGesture))
+    {
+        QSwipeGesture * swipeEvent = static_cast<QSwipeGesture *>(swipe);
+
+        if (swipeEvent->state() == Qt::GestureFinished)
+        {
+            if (swipeEvent->horizontalDirection() == QSwipeGesture::Left)
+            {
+                slotPrevPage();
+                event->accept();
+                return true;
+            }
+            if (swipeEvent->horizontalDirection() == QSwipeGesture::Right)
+            {
+                slotNextPage();
+                event->accept();
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
 void PresentationWidget::keyPressEvent( QKeyEvent * e )
 {
     if ( !m_isSetup )
@@ -665,8 +700,7 @@ void PresentationWidget::mousePressEvent( QMouseEvent * e )
             return;
         }
 
-        // if no other actions, go to next page
-        slotNextPage();
+        m_goToNextPageOnRelease = true;
     }
     // pressing right button
     else if ( e->button() == Qt::RightButton )
@@ -688,6 +722,11 @@ void PresentationWidget::mouseReleaseEvent( QMouseEvent * e )
         if ( link == m_pressedLink )
             m_document->processAction( link );
         m_pressedLink = 0;
+    }
+
+    if ( m_goToNextPageOnRelease ) {
+        slotNextPage();
+        m_goToNextPageOnRelease = false;
     }
 }
 

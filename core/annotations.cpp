@@ -630,6 +630,17 @@ void Annotation::translate( const NormalizedPoint &coord )
     }
 }
 
+void Annotation::adjust( const NormalizedPoint & deltaCoord1, const NormalizedPoint & deltaCoord2 )
+{
+    Q_D( Annotation );
+    d->adjust( deltaCoord1, deltaCoord2 );
+    d->resetTransformation();
+    if ( d->m_page )
+    {
+        d->transform( d->m_page->rotationMatrix() );
+    }
+}
+
 bool Annotation::openDialogAfterCreation() const
 {
     Q_D( const Annotation );
@@ -705,6 +716,17 @@ bool Annotation::canBeMoved() const
     return true;
 }
 
+bool Annotation::canBeResized() const
+{
+    Q_D( const Annotation );
+
+    // Don't resize annotations if they cannot be modified
+    if ( !d->m_page || !d->m_page->m_doc->m_parent->canModifyPageAnnotation(this) )
+        return false;
+
+    return d->canBeResized();
+}
+
 void Annotation::store( QDomNode & annNode, QDomDocument & document ) const
 {
     Q_D( const Annotation );
@@ -726,7 +748,7 @@ void Annotation::store( QDomNode & annNode, QDomDocument & document ) const
 
     // store -other- attributes
     if ( d->m_flags ) // Strip internal flags
-        e.setAttribute( QStringLiteral("flags"), d->m_flags & ~(External | ExternallyDrawn | BeingMoved) );
+        e.setAttribute( QStringLiteral("flags"), d->m_flags & ~(External | ExternallyDrawn | BeingMoved | BeingResized ) );
     if ( d->m_style.color().isValid() )
         e.setAttribute( QStringLiteral("color"), d->m_style.color().name() );
     if ( d->m_style.opacity() != 1.0 )
@@ -812,7 +834,7 @@ void Annotation::setAnnotationProperties( const QDomNode& node )
     // Save off internal properties that aren't contained in node
     Okular::PagePrivate *p = d_ptr->m_page;
     QVariant nativeID = d_ptr->m_nativeId;
-    int internalFlags = d_ptr->m_flags & (External | ExternallyDrawn | BeingMoved);
+    const int internalFlags = d_ptr->m_flags & (External | ExternallyDrawn | BeingMoved | BeingResized );
     Annotation::DisposeDataFunction disposeFunc = d_ptr->m_disposeFunc;
 
     // Replace AnnotationPrivate object with a fresh copy
@@ -865,6 +887,14 @@ void AnnotationPrivate::translate( const NormalizedPoint &coord )
     m_boundary.right = m_boundary.right + coord.x;
     m_boundary.top = m_boundary.top + coord.y;
     m_boundary.bottom = m_boundary.bottom + coord.y;
+}
+
+void AnnotationPrivate::adjust( const NormalizedPoint &deltaCoord1, const NormalizedPoint &deltaCoord2 )
+{
+    m_boundary.left = m_boundary.left + qBound( -m_boundary.left, deltaCoord1.x, m_boundary.right - m_boundary.left );
+    m_boundary.top = m_boundary.top + qBound( -m_boundary.top, deltaCoord1.y, m_boundary.bottom - m_boundary.top );;
+    m_boundary.right = m_boundary.right + qBound( m_boundary.left - m_boundary.right, deltaCoord2.x, 1. - m_boundary.right );
+    m_boundary.bottom = m_boundary.bottom + qBound( m_boundary.top - m_boundary.bottom, deltaCoord2.y, 1. - m_boundary.bottom );
 }
 
 bool AnnotationPrivate::openDialogAfterCreation() const
@@ -966,6 +996,11 @@ void AnnotationPrivate::setAnnotationProperties( const QDomNode& node )
     m_transformedBoundary = m_boundary;
 }
 
+bool AnnotationPrivate::canBeResized() const
+{
+    return false;
+}
+
 //END Annotation implementation
 
 
@@ -987,6 +1022,7 @@ class Okular::TextAnnotationPrivate : public Okular::AnnotationPrivate
         void translate( const NormalizedPoint &coord ) override;
         bool openDialogAfterCreation() const override;
         void setAnnotationProperties( const QDomNode& node ) override;
+        bool canBeResized() const override;
         AnnotationPrivate* getNewAnnotationPrivate() override;
 
         TextAnnotation::TextType m_textType;
@@ -1243,6 +1279,14 @@ void TextAnnotationPrivate::setAnnotationProperties( const QDomNode& node )
 
     for ( int i = 0; i < 3; ++i )
         m_transformedInplaceCallout[i] = m_inplaceCallout[i];
+}
+
+bool TextAnnotationPrivate::canBeResized() const
+{
+    if ( m_textType != TextAnnotation::Linked ) {
+        return true;
+    }
+    return false;
 }
 
 AnnotationPrivate* TextAnnotationPrivate::getNewAnnotationPrivate()
@@ -1589,6 +1633,7 @@ class Okular::GeomAnnotationPrivate : public Okular::AnnotationPrivate
         {
         }
         void setAnnotationProperties( const QDomNode& node ) override;
+        bool canBeResized() const override;
         AnnotationPrivate* getNewAnnotationPrivate() override;
         double distanceSqr( double x, double y, double xScale, double yScale ) override;
 
@@ -1680,6 +1725,11 @@ void GeomAnnotationPrivate::setAnnotationProperties( const QDomNode& node )
         // loading complete
         break;
     }
+}
+
+bool GeomAnnotationPrivate::canBeResized() const
+{
+    return true;
 }
 
 AnnotationPrivate* GeomAnnotationPrivate::getNewAnnotationPrivate()
@@ -2061,6 +2111,7 @@ class Okular::StampAnnotationPrivate : public Okular::AnnotationPrivate
         {
         }
         void setAnnotationProperties( const QDomNode& node ) override;
+        bool canBeResized() const override;
         AnnotationPrivate* getNewAnnotationPrivate() override;
 
         QString m_stampIconName;
@@ -2132,6 +2183,11 @@ void StampAnnotationPrivate::setAnnotationProperties( const QDomNode& node )
         // loading complete
         break;
     }
+}
+
+bool StampAnnotationPrivate::canBeResized() const
+{
+    return true;
 }
 
 AnnotationPrivate* StampAnnotationPrivate::getNewAnnotationPrivate()

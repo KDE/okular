@@ -68,6 +68,7 @@
 #include "guiutils.h"
 #include "annotationpopup.h"
 #include "pageviewannotator.h"
+#include "pageviewmouseannotation.h"
 #include "priorities.h"
 #include "toolaction.h"
 #include "okmenutitle.h"
@@ -147,10 +148,8 @@ public:
     bool mouseTextSelecting;
     QSet< int > pagesWithTextSelection;
     bool mouseOnRect;
-    Okular::Annotation * mouseAnn;
-    QPoint mouseAnnPos;
-    int mouseAnnPageNum;
     int mouseMode;
+    MouseAnnotation * mouseAnnotation;
 
     // table selection
     QList<double> tableSelectionCols;
@@ -305,8 +304,8 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->mouseSelecting = false;
     d->mouseTextSelecting = false;
     d->mouseOnRect = false;
-    d->mouseAnn = 0;
     d->mouseMode = Okular::Settings::mouseMode();
+    d->mouseAnnotation = new MouseAnnotation( this, document );
     d->tableDividersGuessed = false;
     d->viewportMoveActive = false;
     d->lastSourceLocationViewportPageNumber = -1;
@@ -420,7 +419,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     // connect(...);
     setAttribute( Qt::WA_InputMethodEnabled, true );
 
-    // Grab pinch gestures to rotate the view (and do things like zooming eventually)
+    // Grab pinch gestures to zoom and rotate the view
     grabGesture(Qt::PinchGesture);
 
     d->magnifierView = new MagnifierView(document, this);
@@ -440,6 +439,8 @@ PageView::~PageView()
     if ( d->m_tts )
         d->m_tts->stopAllSpeechs();
 #endif
+
+    delete d->mouseAnnotation;
 
     // delete the local storage structure
 
@@ -1322,6 +1323,12 @@ void PageView::notifyPageChanged( int pageNumber, int changedFlags )
                 delete w;
             }
         }
+
+        QLinkedList< Okular::Annotation * >::ConstIterator annIt = qFind( annots, d->mouseAnnotation->annotation() );
+        if ( annIt == annItEnd )
+        {
+            d->mouseAnnotation->cancel();
+        }
     }
 
     if ( changedFlags & DocumentObserver::BoundingBox )
@@ -1522,6 +1529,8 @@ bool PageView::gestureEvent( QGestureEvent * event )
             vanillaZoom = d->zoomFactor;
         }
 
+        const QPinchGesture::ChangeFlags changeFlags = pinch->changeFlags();
+
         // Zoom
         if (pinch->changeFlags() & QPinchGesture::ScaleFactorChanged)
         {
@@ -1531,6 +1540,32 @@ bool PageView::gestureEvent( QGestureEvent * event )
             updateZoom( ZoomRefreshCurrent );
             d->blockPixmapsRequest = false;
             viewport()->repaint();
+        }
+
+        // Count the number of 90-degree rotations we did since the start of the pinch gesture.
+        // Otherwise a pinch turned to 90 degrees and held there will rotate the page again and again.
+        static int rotations = 0;
+
+        if (changeFlags & QPinchGesture::RotationAngleChanged)
+        {
+            // Rotation angle relative to the accumulated page rotations triggered by the current pinch
+            // We actually turn at 80 degrees rather than at 90 degrees.  That's less strain on the hands.
+            const qreal relativeAngle = pinch->rotationAngle() - rotations*90;
+            if (relativeAngle > 80)
+            {
+                slotRotateClockwise();
+                rotations++;
+            }
+            if (relativeAngle < -80)
+            {
+                slotRotateCounterClockwise();
+                rotations--;
+            }
+        }
+
+        if (pinch->state() == Qt::GestureFinished)
+        {
+            rotations = 0;
         }
 
         return true;
@@ -1673,9 +1708,12 @@ void PageView::paintEvent(QPaintEvent *pe)
                     }
                 }
                 drawTableDividers( &pixmapPainter );
-                // 3) Layer 1: give annotator painting control
+                // 3a) Layer 1: give annotator painting control
                 if ( d->annotator && d->annotator->routePaints( contentsRect ) )
                     d->annotator->routePaint( &pixmapPainter, contentsRect );
+                // 3b) Layer 1: give mouseAnnotation painting control
+                d->mouseAnnotation->routePaint( &pixmapPainter, contentsRect );
+
                 // 4) Layer 2: overlays
                 if ( Okular::Settings::debugDrawBoundaries() )
                 {
@@ -1712,9 +1750,12 @@ void PageView::paintEvent(QPaintEvent *pe)
                     }
                 }
                 drawTableDividers( &screenPainter );
-                // 3) Layer 1: give annotator painting control
+                // 3a) Layer 1: give annotator painting control
                 if ( d->annotator && d->annotator->routePaints( contentsRect ) )
                     d->annotator->routePaint( &screenPainter, contentsRect );
+                // 3b) Layer 1: give mouseAnnotation painting control
+                d->mouseAnnotation->routePaint( &screenPainter, contentsRect );
+
                 // 4) Layer 2: overlays
                 if ( Okular::Settings::debugDrawBoundaries() )
                 {
@@ -1863,6 +1904,10 @@ void PageView::keyPressEvent( QKeyEvent * e )
                 d->aPrevAction->trigger();
                 d->aPrevAction = 0;
             }
+            d->mouseAnnotation->routeKeyPressEvent( e );
+            break;
+        case Qt::Key_Delete:
+            d->mouseAnnotation->routeKeyPressEvent( e );
             break;
         case Qt::Key_Shift:
         case Qt::Key_Control:
@@ -1907,29 +1952,6 @@ void PageView::keyReleaseEvent( QKeyEvent * e )
 void PageView::inputMethodEvent( QInputMethodEvent * e )
 {
     Q_UNUSED(e)
-}
-
-static QPoint rotateInRect( const QPoint &rotated, Okular::Rotation rotation )
-{
-    QPoint ret;
-
-    switch ( rotation )
-    {
-        case Okular::Rotation90:
-            ret = QPoint( rotated.y(), -rotated.x() );
-            break;
-        case Okular::Rotation180:
-            ret = QPoint( -rotated.x(), -rotated.y() );
-            break;
-        case Okular::Rotation270:
-            ret = QPoint( -rotated.y(), rotated.x() );
-            break;
-        case Okular::Rotation0:  // no modifications
-        default: // other cases
-            ret = rotated;
-    }
-
-    return ret;
 }
 
 void PageView::tabletEvent( QTabletEvent * e )
@@ -2038,36 +2060,19 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
 
     bool leftButton = (e->buttons() == Qt::LeftButton);
     bool rightButton = (e->buttons() == Qt::RightButton);
+
     switch ( d->mouseMode )
     {
         case Okular::Settings::EnumMouseMode::Browse:
+        {
+            PageViewItem * pageItem = pickItemOnPoint( eventPos.x(), eventPos.y() );
             if ( leftButton )
             {
                 d->leftClickTimer.stop();
-
-                if ( d->mouseAnn )
+                if ( pageItem && d->mouseAnnotation->isActive() )
                 {
-                    PageViewItem * pageItem = pickItemOnPoint( eventPos.x(), eventPos.y() );
-                    if ( pageItem )
-                    {
-                        const QRect & itemRect = pageItem->uncroppedGeometry();
-                        QPoint newpos = eventPos - itemRect.topLeft();
-                        QPoint p( newpos - d->mouseAnnPos );
-                        QPointF pf( rotateInRect( p, pageItem->page()->rotation() ) );
-                        if ( pageItem->page()->rotation() % 2 == 0 )
-                        {
-                            pf.rx() /= pageItem->uncroppedWidth();
-                            pf.ry() /= pageItem->uncroppedHeight();
-                        }
-                        else
-                        {
-                            pf.rx() /= pageItem->uncroppedHeight();
-                            pf.ry() /= pageItem->uncroppedWidth();
-                        }
-
-                        d->document->translatePageAnnotation(d->mouseAnnPageNum, d->mouseAnn, Okular::NormalizedPoint( pf.x(), pf.y() ) );
-                        d->mouseAnnPos = newpos;
-                    }
+                    // if left button pressed and annotation is focused, forward move event
+                    d->mouseAnnotation->routeMouseMoveEvent( pageItem, eventPos, leftButton );
                 }
                 // drag page
                 else if ( !d->mouseGrabPos.isNull() )
@@ -2126,10 +2131,12 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
             }
             else
             {
-                // only hovering the page, so update the cursor
+                /* Forward move events which are still not yet consumed by "mouse grab" or aMouseSelect */
+                d->mouseAnnotation->routeMouseMoveEvent( pageItem, eventPos, leftButton );
                 updateCursor();
             }
-            break;
+        }
+        break;
 
         case Okular::Settings::EnumMouseMode::Zoom:
         case Okular::Settings::EnumMouseMode::RectSelect:
@@ -2223,38 +2230,20 @@ void PageView::mousePressEvent( QMouseEvent * e )
     switch ( d->mouseMode )
     {
         case Okular::Settings::EnumMouseMode::Browse:   // drag start / click / link following
+        {
+            PageViewItem * pageItem = pickItemOnPoint( eventPos.x(), eventPos.y() );
             if ( leftButton )
             {
-                PageViewItem * pageItem = 0;
-                if ( ( e->modifiers() & Qt::ControlModifier ) && ( pageItem = pickItemOnPoint( eventPos.x(), eventPos.y() ) ) )
+                if ( pageItem )
                 {
-                    // find out normalized mouse coords inside current item
-                    const QRect & itemRect = pageItem->uncroppedGeometry();
-                    double nX = pageItem->absToPageX(eventPos.x());
-                    double nY = pageItem->absToPageY(eventPos.y());
-                    const Okular::ObjectRect * orect = pageItem->page()->objectRect( Okular::ObjectRect::OAnnotation, nX, nY, itemRect.width(), itemRect.height() );
-                    d->mouseAnnPos = eventPos - itemRect.topLeft();
-                    if ( orect )
-                        d->mouseAnn = ( (Okular::AnnotationObjectRect *)orect )->annotation();
-                    // consider no annotation caught if its type is not movable
-                    if ( d->mouseAnn && !d->mouseAnn->canBeMoved() )
-                        d->mouseAnn = 0;
+                    d->mouseAnnotation->routeMousePressEvent( pageItem, eventPos );
                 }
-                if ( d->mouseAnn )
-                {
-                    d->mouseAnn->setFlags( d->mouseAnn->flags() | Okular::Annotation::BeingMoved );
-                    d->mouseAnnPageNum = pageItem->pageNumber();
-                }
-                else
-                {
-                    d->mouseGrabPos = d->mouseOnRect ? QPoint() : d->mousePressPos;
-                    if ( !d->mouseOnRect )
-                        d->leftClickTimer.start( QApplication::doubleClickInterval() + 10 );
-                }
+                d->mouseGrabPos = d->mouseOnRect ? QPoint() : d->mousePressPos;
+                if ( !d->mouseOnRect )
+                    d->leftClickTimer.start( QApplication::doubleClickInterval() + 10 );
             }
-            else if ( rightButton && !d->mouseAnn )
+            else if ( rightButton )
             {
-                PageViewItem * pageItem = pickItemOnPoint( eventPos.x(), eventPos.y() );
                 if ( pageItem )
                 {
                     // find out normalized mouse coords inside current item
@@ -2280,10 +2269,14 @@ void PageView::mousePressEvent( QMouseEvent * e )
                                  this, &PageView::openAnnotationWindow );
 
                         popup.exec( e->globalPos() );
+                        // Since ↑ spins its own event loop we won't get the mouse release event
+                        // so reset mousePressPos here
+                        d->mousePressPos = QPoint();
                     }
                 }
             }
-            break;
+        }
+        break;
 
         case Okular::Settings::EnumMouseMode::Zoom:     // set first corner of the zoom rect
             if ( leftButton )
@@ -2407,13 +2400,10 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
     const bool leftButton = e->button() == Qt::LeftButton;
     const bool rightButton = e->button() == Qt::RightButton;
 
-    if ( d->mouseAnn && leftButton )
+    if ( d->mouseAnnotation->isActive() && leftButton )
     {
         // Just finished to move the annotation
-        d->mouseAnn->setFlags( d->mouseAnn->flags() & ~Okular::Annotation::BeingMoved );
-        d->document->translatePageAnnotation(d->mouseAnnPageNum, d->mouseAnn, Okular::NormalizedPoint( 0.0, 0.0 ) );
-        setCursor( Qt::ArrowCursor );
-        d->mouseAnn = 0;
+        d->mouseAnnotation->routeMouseReleaseEvent();
     }
 
     // don't perform any mouse action when no document is shown..
@@ -2505,39 +2495,9 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                         }
                     }
                 }
+#if 0
                 else
                 {
-                    Okular::Annotation *ann = 0;
-
-                    rect = pageItem->page()->objectRect( Okular::ObjectRect::OAnnotation, nX, nY, pageItem->uncroppedWidth(), pageItem->uncroppedHeight() );
-                    if ( rect )
-                        ann = ( (Okular::AnnotationObjectRect *)rect )->annotation();
-
-                    if ( ann )
-                    {
-                        if ( ann->subType() == Okular::Annotation::AMovie )
-                        {
-                            VideoWidget *vw = pageItem->videoWidgets().value( static_cast<Okular::MovieAnnotation*>( ann )->movie() );
-                            vw->show();
-                            vw->play();
-                        }
-                        else if ( ann->subType() == Okular::Annotation::ARichMedia )
-                        {
-                            VideoWidget *vw = pageItem->videoWidgets().value( static_cast<Okular::RichMediaAnnotation*>( ann )->movie() );
-                            vw->show();
-                            vw->play();
-                        }
-                        else if ( ann->subType() == Okular::Annotation::AScreen )
-                        {
-                            d->document->processAction( static_cast<Okular::ScreenAnnotation*>( ann )->action() );
-                        }
-                        else if ( ann->subType() == Okular::Annotation::AFileAttachment )
-                        {
-                            const Okular::FileAttachmentAnnotation * fileAttachAnnot = static_cast< Okular::FileAttachmentAnnotation * >( ann );
-                            GuiUtils::saveEmbeddedFile( fileAttachAnnot->embeddedFile(), this );
-                        }
-                    }
-#if 0
                     // a link can move us to another page or even to another document, there's no point in trying to
                     //  process the click on the image once we have processes the click on the link
                     rect = pageItem->page()->objectRect( Okular::ObjectRect::Image, nX, nY, pageItem->width(), pageItem->height() );
@@ -2552,10 +2512,10 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                         // if ( pageItem->pageNumber() != (int)d->document->currentPage() )
                         d->document->setViewportPage( pageItem->pageNumber(), this );
                     }*/
-#endif
                 }
+#endif
             }
-            else if ( rightButton && !d->mouseAnn )
+            else if ( rightButton && !d->mouseAnnotation->isModified() )
             {
                 if ( pageItem && pageItem == pageItemPressPos &&
                      ( (d->mousePressPos - e->globalPos()).manhattanLength() < QApplication::startDragDistance() ) )
@@ -3321,42 +3281,34 @@ bool PageView::viewportEvent( QEvent * e )
     if ( e->type() == QEvent::ToolTip && d->mouseMode == Okular::Settings::EnumMouseMode::Browse )
     {
         QHelpEvent * he = static_cast< QHelpEvent* >( e );
-        const QPoint eventPos = contentAreaPoint( he->pos() );
-        PageViewItem * pageItem = pickItemOnPoint( eventPos.x(), eventPos.y() );
-        const Okular::ObjectRect * rect = 0;
-        const Okular::Action * link = 0;
-        const Okular::Annotation * ann = 0;
-        if ( pageItem )
+        if ( d->mouseAnnotation->isMouseOver() )
         {
-            double nX = pageItem->absToPageX( eventPos.x() );
-            double nY = pageItem->absToPageY( eventPos.y() );
-            rect = pageItem->page()->objectRect( Okular::ObjectRect::OAnnotation, nX, nY, pageItem->uncroppedWidth(), pageItem->uncroppedHeight() );
-            if ( rect )
-                ann = static_cast< const Okular::AnnotationObjectRect * >( rect )->annotation();
-            else
+            d->mouseAnnotation->routeTooltipEvent( he );
+        }
+        else
+        {
+            const QPoint eventPos = contentAreaPoint( he->pos() );
+            PageViewItem * pageItem = pickItemOnPoint( eventPos.x(), eventPos.y() );
+            const Okular::ObjectRect * rect = 0;
+            const Okular::Action * link = 0;
+            if ( pageItem )
             {
+                double nX = pageItem->absToPageX( eventPos.x() );
+                double nY = pageItem->absToPageY( eventPos.y() );
                 rect = pageItem->page()->objectRect( Okular::ObjectRect::Action, nX, nY, pageItem->uncroppedWidth(), pageItem->uncroppedHeight() );
                 if ( rect )
                     link = static_cast< const Okular::Action * >( rect->object() );
             }
-        }
 
-        if ( ann && ann->subType() != Okular::Annotation::AWidget )
-        {
-            QRect r = rect->boundingRect( pageItem->uncroppedWidth(), pageItem->uncroppedHeight() );
-            r.translate( pageItem->uncroppedGeometry().topLeft() );
-            r.translate( -contentAreaPosition() );
-            QString tip = GuiUtils::prettyToolTip( ann );
-            QToolTip::showText( he->globalPos(), tip, viewport(), r );
-        }
-        else if ( link )
-        {
-            QRect r = rect->boundingRect( pageItem->uncroppedWidth(), pageItem->uncroppedHeight() );
-            r.translate( pageItem->uncroppedGeometry().topLeft() );
-            r.translate( -contentAreaPosition() );
-            QString tip = link->actionTip();
-            if ( !tip.isEmpty() )
-                QToolTip::showText( he->globalPos(), tip, viewport(), r );
+            if ( link )
+            {
+                QRect r = rect->boundingRect( pageItem->uncroppedWidth(), pageItem->uncroppedHeight() );
+                r.translate( pageItem->uncroppedGeometry().topLeft() );
+                r.translate( -contentAreaPosition() );
+                QString tip = link->actionTip();
+                if ( !tip.isEmpty() )
+                    QToolTip::showText( he->globalPos(), tip, viewport(), r );
+            }
         }
         e->accept();
         return true;
@@ -4066,55 +4018,21 @@ void PageView::updateCursor( const QPoint &p )
             setCursor( Qt::CrossCursor );
         else if ( d->mouseMode == Okular::Settings::EnumMouseMode::TrimSelect )
             setCursor( Qt::CrossCursor );
-        else if ( d->mouseAnn )
-            setCursor( Qt::ClosedHandCursor );
         else if ( d->mouseMode == Okular::Settings::EnumMouseMode::Browse )
         {
-            const Okular::ObjectRect * linkobj = pageItem->page()->objectRect( Okular::ObjectRect::Action, nX, nY, pageItem->uncroppedWidth(), pageItem->uncroppedHeight() );
-            const Okular::ObjectRect * annotobj = pageItem->page()->objectRect( Okular::ObjectRect::OAnnotation, nX, nY, pageItem->uncroppedWidth(), pageItem->uncroppedHeight() );
-            if ( linkobj && !annotobj )
+            d->mouseOnRect = false;
+            if ( d->mouseAnnotation->isMouseOver() )
             {
                 d->mouseOnRect = true;
-                setCursor( Qt::PointingHandCursor );
+                setCursor( d->mouseAnnotation->cursor() );
             }
             else
             {
-                d->mouseOnRect = false;
-                if ( annotobj )
+                const Okular::ObjectRect * linkobj = pageItem->page()->objectRect( Okular::ObjectRect::Action, nX, nY, pageItem->uncroppedWidth(), pageItem->uncroppedHeight() );
+                if ( linkobj )
                 {
-                    const Okular::Annotation *annotation = static_cast< const Okular::AnnotationObjectRect * >( annotobj )->annotation();
-                    if ( ( QApplication::keyboardModifiers() & Qt::ControlModifier )
-                         && annotation->canBeMoved() )
-                    {
-                        setCursor( Qt::OpenHandCursor );
-                    }
-                    else if ( annotation->subType() == Okular::Annotation::AMovie )
-                    {
-                        d->mouseOnRect = true;
-                        setCursor( Qt::PointingHandCursor );
-                    }
-                    else if ( annotation->subType() == Okular::Annotation::ARichMedia )
-                    {
-                        d->mouseOnRect = true;
-                        setCursor( Qt::PointingHandCursor );
-                    }
-                    else if ( annotation->subType() == Okular::Annotation::AScreen )
-                    {
-                        if ( GuiUtils::renditionMovieFromScreenAnnotation( static_cast< const Okular::ScreenAnnotation * >( annotation ) ) != 0 )
-                        {
-                            d->mouseOnRect = true;
-                            setCursor( Qt::PointingHandCursor );
-                        }
-                    }
-                    else if ( annotation->subType() == Okular::Annotation::AFileAttachment )
-                    {
-                        d->mouseOnRect = true;
-                        setCursor( Qt::PointingHandCursor );
-                    }
-                    else
-                    {
-                        setCursor( Qt::OpenHandCursor );
-                    }
+                    d->mouseOnRect = true;
+                    setCursor( Qt::PointingHandCursor );
                 }
                 else
                 {

@@ -28,7 +28,7 @@ SearchLineEdit::SearchLineEdit( QWidget * parent, Okular::Document * document )
       m_caseSensitivity( Qt::CaseInsensitive ),
       m_searchType( Okular::Document::AllDocument ), m_id( -1 ),
       m_moveViewport( false ), m_changed( false ), m_fromStart( true ),
-      m_searchRunning( false )
+      m_findAsYouType( true ), m_searchRunning( false )
 {
     setObjectName( QStringLiteral( "SearchLineEdit" ) );
     setClearButtonShown( true );
@@ -98,6 +98,11 @@ void SearchLineEdit::setSearchMoveViewport( bool move )
 void SearchLineEdit::setSearchFromStart( bool fromStart )
 {
     m_fromStart = fromStart;
+}
+
+void SearchLineEdit::setFindAsYouType( bool findAsYouType )
+{
+    m_findAsYouType = findAsYouType;
 }
 
 void SearchLineEdit::resetSearch()
@@ -175,7 +180,11 @@ void SearchLineEdit::slotTextChanged( const QString & text )
     Q_UNUSED(text);
 
     prepareLineEditForSearch();
-    restartSearch();
+
+    if ( m_findAsYouType )
+        restartSearch();
+    else
+        m_changed = true;
 }
 
 void SearchLineEdit::prepareLineEditForSearch()

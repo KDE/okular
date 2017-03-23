@@ -199,7 +199,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         void slotGetNewStuff();
         void slotNewConfig();
         void slotShowMenu(const Okular::Page *page, const QPoint &point);
-        void slotShowTOCMenu(const Okular::DocumentViewport &vp, const QPoint &point, const QString title);
+        void slotShowTOCMenu(const Okular::DocumentViewport &vp, const QPoint &point, const QString &title);
         void slotShowProperties();
         void slotShowEmbeddedFiles();
         void slotShowLeftPanel();

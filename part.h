@@ -199,6 +199,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         void slotGetNewStuff();
         void slotNewConfig();
         void slotShowMenu(const Okular::Page *page, const QPoint &point);
+        void slotShowTOCMenu(const Okular::DocumentViewport &vp, const QPoint &point, const QString title);
         void slotShowProperties();
         void slotShowEmbeddedFiles();
         void slotShowLeftPanel();
@@ -240,6 +241,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
 
     private:
         bool aboutToShowContextMenu(QMenu *menu, QAction *action, QMenu *contextMenu);
+        void showMenu(const Okular::Page *page, const QPoint &point, const QString &bookmarkTitle = QString(), const Okular::DocumentViewport &vp = DocumentViewport());
         bool eventFilter(QObject * watched, QEvent * event) override;
         Document::OpenResult doOpenFile(const QMimeType &mime, const QString &fileNameToOpen, bool *isCompressedFile);
 

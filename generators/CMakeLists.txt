@@ -105,7 +105,7 @@ endif()
 
 if(CHM_FOUND AND KF5KHtml_FOUND)
   add_subdirectory( chm )
-endif(CHM_FOUND)
+endif()
 
 if(DJVULIBRE_FOUND)
   add_subdirectory(djvu)

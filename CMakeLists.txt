@@ -27,7 +27,7 @@ include(ECMAddTests)
 include(ECMAddAppIcon)
 include(ECMPackageConfigHelpers)
 
-ecm_setup_version(1.0.${KDE_APPLICATIONS_VERSION_MICRO}
+ecm_setup_version(1.1.${KDE_APPLICATIONS_VERSION_MICRO}
                   VARIABLE_PREFIX OKULAR
                   VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/core/version.h"
                   PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/Okular5ConfigVersion.cmake")

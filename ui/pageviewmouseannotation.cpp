@@ -414,6 +414,13 @@ void MouseAnnotation::cancel()
     }
 }
 
+void MouseAnnotation::reset()
+{
+    cancel();
+    m_focusedAnnotation.invalidate();
+    m_mouseOverAnnotation.invalidate();
+}
+
 /* Handle state changes for the focused annotation. */
 void MouseAnnotation::setState( MouseAnnotationState state, const AnnotationDescription & ad )
 {

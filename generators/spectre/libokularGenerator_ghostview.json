@@ -4,6 +4,7 @@
             {
                 "Email": "aacid@kde.org",
                 "Name": "Albert Astals Cid",
+                "Name[ia]": "Albert  Astals Cid",
                 "Name[sr@ijekavian]": "Алберт Асталс Сид",
                 "Name[sr@ijekavianlatin]": "Albert Astals Sid",
                 "Name[sr@latin]": "Albert Astals Sid",
@@ -14,6 +15,7 @@
         "Copyright": "© 2007-2008 Albert Astals Cid",
         "Copyright[et]": "© 2007-2008: Albert Astals Cid",
         "Copyright[fi]": "© 2007–2008 Albert Astals Cid",
+        "Copyright[ia]": "Albert  Astals Cid",
         "Copyright[nn]": "© 2007–2008 Albert Astals Cid",
         "Copyright[ru]": "© Albert Astals Cid, 2007-2008",
         "Copyright[sr@ijekavian]": "© 2007–2008, Алберт Асталс Сид",
@@ -65,6 +67,7 @@
         "Name[et]": "PS-i taustaprogramm",
         "Name[fi]": "PS-taustaosa",
         "Name[fr]": "Moteur PS",
+        "Name[ia]": "Retro-Administration de PS",
         "Name[it]": "Backend PS",
         "Name[ko]": "PS 백엔드",
         "Name[nl]": "PS-backend",

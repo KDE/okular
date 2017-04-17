@@ -4,6 +4,7 @@
             {
                 "Email": "aacid@kde.org",
                 "Name": "Albert Astals Cid",
+                "Name[ia]": "Albert  Astals Cid",
                 "Name[sr@ijekavian]": "Алберт Асталс Сид",
                 "Name[sr@ijekavianlatin]": "Albert Astals Sid",
                 "Name[sr@latin]": "Albert Astals Sid",
@@ -53,6 +54,7 @@
         "Description[et]": "Lihtne pildi taustaprogramm",
         "Description[fi]": "Yksinkertainen kuvataustaosa",
         "Description[fr]": "Un moteur simple pour image",
+        "Description[ia]": "Un simplice retroadministration de image",
         "Description[it]": "Un semplice backend per le immagini",
         "Description[ko]": "간단한 그림 백엔드",
         "Description[nl]": "Een eenvoudige afbeeldingsbackend",
@@ -108,6 +110,7 @@
         "Name[et]": "Pildi taustaprogramm",
         "Name[fi]": "Kuvataustaosa",
         "Name[fr]": "Moteur image",
+        "Name[ia]": "Retro-Administration de Image",
         "Name[it]": "Backend immagini",
         "Name[ko]": "그림 백엔드",
         "Name[nl]": "Afbeeldings-backend",

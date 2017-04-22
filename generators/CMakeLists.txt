@@ -66,7 +66,7 @@ set_package_properties("JPEG" PROPERTIES
         DESCRIPTION  "A library for reading and writing JPEG image files."
         URL "http://www.ijg.org"
         TYPE RECOMMENDED
-        PURPOSE "Support fof PalmDB documents in okular.")
+        PURPOSE "Support for PalmDB documents in okular.")
 
 find_package(ZLIB)
 set_package_properties("ZLib" PROPERTIES

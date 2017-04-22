@@ -28,6 +28,7 @@
   <name xml:lang="sr-ijekavian">Фикшнбук</name>
   <name xml:lang="sr-ijekavianlatin">FictionBook</name>
   <name xml:lang="sv">Fiction Book</name>
+  <name xml:lang="tr">FictionBook</name>
   <name xml:lang="uk">FictionBook</name>
   <name xml:lang="x-test">xxFictionBookxx</name>
   <name xml:lang="zh-CN">FictionBook</name>
@@ -56,6 +57,7 @@
   <summary xml:lang="sr-ijekavian">Подршка за читање фикшнбук е‑књига</summary>
   <summary xml:lang="sr-ijekavianlatin">Podrška za čitanje FictionBook e‑knjiga</summary>
   <summary xml:lang="sv">Lägger till stöd för att läsa Fiction Book</summary>
+  <summary xml:lang="tr">FictionBook'ları okumak için destek ekler</summary>
   <summary xml:lang="uk">Додає підтримку читання документів FictionBook (FB2)</summary>
   <summary xml:lang="x-test">xxAdds support for reading FictionBooksxx</summary>
   <summary xml:lang="zh-CN">添加对 FictionBook 的阅读支持</summary>

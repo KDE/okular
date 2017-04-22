@@ -28,6 +28,7 @@
   <name xml:lang="sr-ijekavian">Слике</name>
   <name xml:lang="sr-ijekavianlatin">Slike</name>
   <name xml:lang="sv">Bilder</name>
+  <name xml:lang="tr">Resimler</name>
   <name xml:lang="uk">Зображення</name>
   <name xml:lang="x-test">xxImagesxx</name>
   <name xml:lang="zh-CN">图片</name>
@@ -56,6 +57,7 @@
   <summary xml:lang="sr-ijekavian">Подршка за читање разних формата слика</summary>
   <summary xml:lang="sr-ijekavianlatin">Podrška za čitanje raznih formata slika</summary>
   <summary xml:lang="sv">Lägger till stöd för att läsa många bildformat</summary>
+  <summary xml:lang="tr">Birçok resim biçimini okuma desteği ekler</summary>
   <summary xml:lang="uk">Додає підтримку читання зображень у багатьох форматах</summary>
   <summary xml:lang="x-test">xxAdds support for reading many image formatsxx</summary>
   <summary xml:lang="zh-CN">支持多种图片格式的阅读</summary>

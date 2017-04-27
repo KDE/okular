@@ -10,7 +10,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH})
 
 # KDE Application Version, managed by release script
 set (KDE_APPLICATIONS_VERSION_MAJOR "17")
-set (KDE_APPLICATIONS_VERSION_MINOR "03")
+set (KDE_APPLICATIONS_VERSION_MINOR "07")
 set (KDE_APPLICATIONS_VERSION_MICRO "70")
 set (KDE_APPLICATIONS_VERSION "${KDE_APPLICATIONS_VERSION_MAJOR}.${KDE_APPLICATIONS_VERSION_MINOR}.${KDE_APPLICATIONS_VERSION_MICRO}")
 
@@ -27,7 +27,7 @@ include(ECMAddTests)
 include(ECMAddAppIcon)
 include(ECMPackageConfigHelpers)
 
-ecm_setup_version(1.0.${KDE_APPLICATIONS_VERSION_MICRO}
+ecm_setup_version(1.1.${KDE_APPLICATIONS_VERSION_MICRO}
                   VARIABLE_PREFIX OKULAR
                   VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/core/version.h"
                   PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/Okular5ConfigVersion.cmake")
@@ -47,7 +47,6 @@ find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS
     Config
     ConfigWidgets
     CoreAddons
-    DBusAddons
     DocTools
     IconThemes
     JS

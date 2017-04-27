@@ -956,6 +956,9 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
             return;
     }
 
+    // mouseAnnotation must not access our PageViewItem widgets any longer
+    d->mouseAnnotation->reset();
+
     // delete all widgets (one for each page in pageSet)
     QVector< PageViewItem * >::const_iterator dIt = d->items.constBegin(), dEnd = d->items.constEnd();
     for ( ; dIt != dEnd; ++dIt )

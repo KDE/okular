@@ -14,6 +14,7 @@
 #include <qheaderview.h>
 #include <qlayout.h>
 #include <qtreeview.h>
+#include <QContextMenuEvent>
 
 #include <klineedit.h>
 
@@ -173,6 +174,17 @@ void TOC::saveSearchOptions()
     Okular::Settings::setContentsSearchRegularExpression( m_searchLine->regularExpression() );
     Okular::Settings::setContentsSearchCaseSensitive( m_searchLine->caseSensitivity() == Qt::CaseSensitive ? true : false );
     Okular::Settings::self()->save();
+}
+
+void TOC::contextMenuEvent(QContextMenuEvent* e)
+{
+    QModelIndex index = m_treeView->currentIndex();
+    if (!index.isValid())
+        return;
+
+    Okular::DocumentViewport viewport = m_model->viewportForIndex(index);
+
+    emit rightClick(viewport, e->globalPos(), m_model->data(index).toString());
 }
 
 #include "moc_toc.cpp"

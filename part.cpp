@@ -398,6 +398,7 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     // [left toolbox: Table of Contents] | []
     m_toc = new TOC( 0, m_document );
     connect( m_toc.data(), &TOC::hasTOC, this, &Part::enableTOC );
+    connect( m_toc.data(), &TOC::rightClick, this, &Part::slotShowTOCMenu );
     m_sidebar->addItem( m_toc, QIcon::fromTheme(QApplication::isLeftToRight() ? QStringLiteral("format-justify-left") : QStringLiteral("format-justify-right")), i18n("Contents") );
     enableTOC( false );
 
@@ -2479,8 +2480,17 @@ void Part::slotPrintPreview()
     }
 }
 
+void Part::slotShowTOCMenu(const Okular::DocumentViewport &vp, const QPoint &point, const QString &title)
+{
+    showMenu(m_document->page(vp.pageNumber), point, title, vp);
+}
 
 void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
+{
+    showMenu(page, point);
+}
+
+void Part::showMenu(const Okular::Page *page, const QPoint &point, const QString &bookmarkTitle, const Okular::DocumentViewport &vp)
 {
     if ( m_embedMode == PrintPreviewMode )
        return;
@@ -2548,8 +2558,10 @@ void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
         {
             if (res == addBookmark)
             {
-                if (currentPage)
+                if ( currentPage && bookmarkTitle.isEmpty() )
                     m_document->bookmarkManager()->addBookmark( m_document->viewport() );
+                else if ( !bookmarkTitle.isEmpty() )
+                    m_document->bookmarkManager()->addBookmark( m_document->currentDocument(), vp, bookmarkTitle );
                 else
                     m_document->bookmarkManager()->addBookmark( page->number() );
             }
@@ -2568,7 +2580,6 @@ void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
     }
     delete popup;
 }
-
 
 void Part::slotShowProperties()
 {

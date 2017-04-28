@@ -93,6 +93,9 @@ public:
     /* Cancel the current selection or action, if any. */
     void cancel();
 
+    /* Reset to initial state. Cancel current action and relinquish references to PageViewItem widgets. */
+    void reset();
+
     Okular::Annotation * annotation() const;
 
     /* Return true, if MouseAnnotation demands control for a mouse click on the current cursor position. */

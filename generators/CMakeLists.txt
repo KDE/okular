@@ -66,7 +66,7 @@ set_package_properties("JPEG" PROPERTIES
         DESCRIPTION  "A library for reading and writing JPEG image files."
         URL "http://www.ijg.org"
         TYPE RECOMMENDED
-        PURPOSE "Support fof PalmDB documents in okular.")
+        PURPOSE "Support for PalmDB documents in okular.")
 
 find_package(ZLIB)
 set_package_properties("ZLib" PROPERTIES
@@ -112,7 +112,7 @@ endif()
 
 if(CHM_FOUND AND KF5KHtml_FOUND)
   add_subdirectory( chm )
-endif(CHM_FOUND)
+endif()
 
 if(DJVULIBRE_FOUND)
   add_subdirectory(djvu)

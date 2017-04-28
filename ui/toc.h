@@ -12,6 +12,7 @@
 
 #include <qwidget.h>
 #include "core/observer.h"
+#include "core/document.h"
 #include <QModelIndex>
 
 #include "okularpart_export.h"
@@ -48,10 +49,14 @@ Q_OBJECT
 
     Q_SIGNALS:
         void hasTOC(bool has);
+        void rightClick( const Okular::DocumentViewport &, const QPoint &, const QString & );
 
     private Q_SLOTS:
         void slotExecuted( const QModelIndex & );
         void saveSearchOptions();
+
+    protected:
+        void contextMenuEvent( QContextMenuEvent * e ) override;
 
     private:
         QVector<QModelIndex> expandedNodes( const QModelIndex & parent=QModelIndex() ) const;

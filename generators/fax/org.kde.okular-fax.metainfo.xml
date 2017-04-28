@@ -28,6 +28,7 @@
   <name xml:lang="sr-ijekavian">Факс</name>
   <name xml:lang="sr-ijekavianlatin">Faks</name>
   <name xml:lang="sv">Telefax</name>
+  <name xml:lang="tr">Faks</name>
   <name xml:lang="uk">факс</name>
   <name xml:lang="x-test">xxFaxxx</name>
   <name xml:lang="zh-CN">传真</name>
@@ -56,6 +57,7 @@
   <summary xml:lang="sr-ijekavian">Подршка за читање факс докумената</summary>
   <summary xml:lang="sr-ijekavianlatin">Podrška za čitanje faks dokumenata</summary>
   <summary xml:lang="sv">Lägger till stöd för att läsa telefax-dokument</summary>
+  <summary xml:lang="tr">Faks belgelerini okuma desteği ekler</summary>
   <summary xml:lang="uk">Додає підтримку читання документів факсів</summary>
   <summary xml:lang="x-test">xxAdds support for reading Fax documentsxx</summary>
   <summary xml:lang="zh-CN">增加对传真文档的阅读支持</summary>

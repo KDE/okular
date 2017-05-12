@@ -14,6 +14,7 @@
   <name xml:lang="es">Okular</name>
   <name xml:lang="et">Okular</name>
   <name xml:lang="fi">Okular</name>
+  <name xml:lang="fr">Okular</name>
   <name xml:lang="it">Okular</name>
   <name xml:lang="ko">Okular</name>
   <name xml:lang="nl">Okular</name>
@@ -43,6 +44,7 @@
   <summary xml:lang="es">Visor de documentos</summary>
   <summary xml:lang="et">Dokumendinäitaja</summary>
   <summary xml:lang="fi">Asiakirjakatselin</summary>
+  <summary xml:lang="fr">Afficheur de documents</summary>
   <summary xml:lang="it">Visore di documenti</summary>
   <summary xml:lang="ko">문서 뷰어</summary>
   <summary xml:lang="nl">Documentenviewer</summary>
@@ -74,6 +76,7 @@
     <p xml:lang="es">Okular es un visor universal de documentos desarrollado por KDE. Okular funciona en diversas plataformas, incluidas Linux, Windows, Mac OS X, *BSD, etc.</p>
     <p xml:lang="et">Okular on KDE välja töötatud universaalne dokumentide näitaja. Okular võib töötada eri platvormidel, kaasa arvatud Linux, Windows, Mac OS X, *BSD jne.</p>
     <p xml:lang="fi">Okular on KDE:n kehittämä yleiskäyttöinen asiakirjakatselin. Okular toimii useissa ympäristöissä kuten Linuxissa, Windowsissa, Mac OS X:ssä, *BSD:ssä jne.</p>
+    <p xml:lang="fr">Okular est un afficheur universel de documents développé par KDE. Okular fonctionne sur de multiples plate-formes, comme Linux, Windows, Mac OS X, etc.</p>
     <p xml:lang="it">Okular è un lettore universale di documenti sviluppato da KDE. Okular funziona su varie piattaforme, incluse (ma non solo) Linux, Windows, Mac OS X, *BSD, ecc.</p>
     <p xml:lang="ko">Okular는 만능 문서 뷰어입니다. Okular는 리눅스, macOS, Windows, *BSD 등 여러 플랫폼에서 동작합니다.</p>
     <p xml:lang="nl">Okular is een universele documentviewer ontwikkeld door KDE. Okular werkt op meerdere platforms, inclusief, maar niet beperkt tot Linux, Windows, Mac OS X, *BSD, etc.</p>
@@ -90,6 +93,7 @@
     <p xml:lang="tr">Okular, KDE tarafından geliştirilmiş evrensel bir belge görüntüleyicidir. Okular, Linux, Windows, Mac OS X, *BSD, vb. dahil ancak bunlarla sınırlı olmayan birden çok platformda çalışır.</p>
     <p xml:lang="uk">Okular є універсальною програмою для перегляду документів, розробленою KDE. Okular може працювати на багатьох програмних платформах, зокрема Linux, Windows, Mac OS X, *BSD тощо.</p>
     <p xml:lang="x-test">xxOkular is a universal document viewer developed by KDE. Okular works on multiple platforms, including but not limited to Linux, Windows, Mac OS X, *BSD, etc.xx</p>
+    <p xml:lang="zh-CN">Okular 是由 KDE 开发的通用文档查看器。Okular 可在多个平台上运行，包括但不是限于 Linux，Windows，Mac OS X，* BSD，等。</p>
     <p xml:lang="zh-TW">Okular 是一個由 KDE 開發的通用文件檢視器。Okular 可以在多種平臺上運作，包含但不限於 Linux, Windows, Mac OS X, *BSD 等等。</p>
     <p>Features:</p>
     <p xml:lang="ast">Carauterístiques:</p>
@@ -102,6 +106,7 @@
     <p xml:lang="es">Funciones:</p>
     <p xml:lang="et">Omadused:</p>
     <p xml:lang="fi">Ominaisuuksia:</p>
+    <p xml:lang="fr">Fonctionnalités :</p>
     <p xml:lang="it">Funzionalità:</p>
     <p xml:lang="ko">기능:</p>
     <p xml:lang="nl">Kenmerken:</p>
@@ -118,6 +123,7 @@
     <p xml:lang="tr">Özellikler:</p>
     <p xml:lang="uk">Можливості:</p>
     <p xml:lang="x-test">xxFeatures:xx</p>
+    <p xml:lang="zh-CN">功能：</p>
     <p xml:lang="zh-TW">功能：</p>
     <ul>
       <li>Supported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
@@ -131,6 +137,7 @@
       <li xml:lang="es">Formatos permitidos: PDF, PS, Tiff, CHM, DjVu, imágenes, DVI, XPS, ODT, Fiction Book, libros de cómics, Plucker, EPub, Fax</li>
       <li xml:lang="et">Toetatud vormingud: PDF, PS, Tiff, CHM, DjVu, pildid, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, faks</li>
       <li xml:lang="fi">Tuetut tiedostomuodot: PDF, PS, TIFF, CHM, DjVu, kuvatiedostot, DVI, XPS, ODT, FictionBook, sarjakuvakirjat, Plucker, EPub, faksit</li>
+      <li xml:lang="fr">Formats de fichiers gérés : PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="it">Formati supportati: PDF, PS, Tiff, CHM, DjVu, immagini, DVI, XPS, ODT, Fiction Book, fumetti, Plucker, EPub, Fax</li>
       <li xml:lang="ko">지원하는 형식: PDF, PS, Tiff, CHM, DjVu, 사진, DVI, XPS, ODT, Fiction Book, 만화책, Plucker, EPub, 팩스</li>
       <li xml:lang="nl">Ondersteunde formaten: PDF, PS, Tiff, CHM, DjVu, Afbeeldingen, DVI, XPS, ODT, Fictie boek, Stripboek, Plucker, EPub, Fax</li>
@@ -147,6 +154,7 @@
       <li xml:lang="tr">Desteklenen Biçimler: PDF, PS, Tiff, CHM, DjVu, Resimler, DVI, XPS, ODT, Kurgu Kitabı, Çizgi Roman Kitabı, Plucker, EPub, Faks</li>
       <li xml:lang="uk">Підтримувані формати: PDF, PS, Tiff, CHM, DjVu, зображення, DVI, XPS, ODT, Fiction Book, комікси, Plucker, EPub, факси.</li>
       <li xml:lang="x-test">xxSupported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Faxxx</li>
+      <li xml:lang="zh-CN">支持的格式︰ PDF，PS，Tiff，CHM，DjVu，图片，DVI，XPS，ODT，FictionBook，漫画书，Plucker，EPub，传真</li>
       <li xml:lang="zh-TW">支援的檔案格式：PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li>Sidebar with contents, thumbnails, reviews and bookmarks</li>
       <li xml:lang="ast">Barra llateral colos conteníos, miniatures, reseñes y marcadores</li>
@@ -158,6 +166,7 @@
       <li xml:lang="es">Barra lateral con contenido, miniaturas, revisiones y marcadores</li>
       <li xml:lang="et">Külgriba sisukorra, pisipiltide, annotatsioonide ja järjehoidjatega</li>
       <li xml:lang="fi">Sivupaneeli, jossa sisältö, pienoiskuvat, tarkastelut ja kirjanmerkit</li>
+      <li xml:lang="fr">Barre latérale montrant les contenus, miniatures, informations de relecture et signets</li>
       <li xml:lang="it">Barra laterale con contenuti, miniature, revisioni e segnalibri</li>
       <li xml:lang="ko">목차, 책갈피, 미리 보기, 주석이 있는 사이드바</li>
       <li xml:lang="nl">Zijbalk met inhoud, miniaturen, reviews en bladwijzers</li>
@@ -174,6 +183,7 @@
       <li xml:lang="tr">İçindekiler, küçük resimler, incelemeler ve yer imleri bulunan kenar çubuğu</li>
       <li xml:lang="uk">Бічні панелі зі списками змісту, мініатюрами сторінок, можливість рецензування та додавання закладок.</li>
       <li xml:lang="x-test">xxSidebar with contents, thumbnails, reviews and bookmarksxx</li>
+      <li xml:lang="zh-CN">目录，缩略图，批注和书签侧边栏</li>
       <li xml:lang="zh-TW">有內容、縮圖、回顧與書籤等選項的側邊欄</li>
       <li>Annotations support</li>
       <li xml:lang="ast">Sofitu d'anotaciones</li>
@@ -185,6 +195,7 @@
       <li xml:lang="es">Permite el uso de notas</li>
       <li xml:lang="et">Annotatsioonide toetus</li>
       <li xml:lang="fi">Merkintöjen tuki</li>
+      <li xml:lang="fr">Gestion des annotations</li>
       <li xml:lang="it">Supporto per le annotazioni</li>
       <li xml:lang="ko">주석 지원</li>
       <li xml:lang="nl">Ondersteuning van annotaties</li>
@@ -201,6 +212,7 @@
       <li xml:lang="tr">Ek açıklamalar desteği</li>
       <li xml:lang="uk">Підтримка анотування.</li>
       <li xml:lang="x-test">xxAnnotations supportxx</li>
+      <li xml:lang="zh-CN">支持批注</li>
       <li xml:lang="zh-TW">支援註記</li>
     </ul>
   </description>

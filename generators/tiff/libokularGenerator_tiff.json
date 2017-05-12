@@ -50,6 +50,7 @@
         "Description[tr]": "Bir TIFF arka ucu",
         "Description[uk]": "Програма для TIFF",
         "Description[x-test]": "xxA TIFF backendxx",
+        "Description[zh_CN]": "TIFF 后端",
         "Description[zh_TW]": "TIFF 後端介面",
         "Id": "okular_tiff",
         "License": "GPL",

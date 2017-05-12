@@ -52,6 +52,7 @@
         "Description[tr]": "OpenDocument Metin belgeleri için bir oluşturucu",
         "Description[uk]": "Модуль для показу текстових документів OpenDocument",
         "Description[x-test]": "xxA renderer for OpenDocument Text documentsxx",
+        "Description[zh_CN]": "OpenDocument 文本文档渲染器",
         "Description[zh_TW]": "OpenDocument 文字檔成像器",
         "Id": "okular_ooo",
         "License": "GPL",

@@ -52,6 +52,7 @@
         "Description[tr]": "Bir mobipocket arka ucu",
         "Description[uk]": "Сервер mobipocket",
         "Description[x-test]": "xxA mobipocket backendxx",
+        "Description[zh_CN]": "Mobipocket 后端",
         "Description[zh_TW]": "Mobipocket 後端介面",
         "Id": "okular_mobi",
         "License": "GPL",

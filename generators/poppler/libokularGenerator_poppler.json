@@ -52,6 +52,7 @@
         "Description[tr]": "PDF dosyası oluşturucu",
         "Description[uk]": "Програма для показу файлів PDF",
         "Description[x-test]": "xxA PDF file rendererxx",
+        "Description[zh_CN]": "PDF 文件渲染器",
         "Description[zh_TW]": "PDF 檔成像器",
         "Id": "okular_poppler",
         "License": "GPL",

@@ -51,6 +51,7 @@
         "Description[tr]": "Spectre kitaplığına dayalı bir PostScript dosya oluşturucu",
         "Description[uk]": "Обробник файлів PostScript на основі бібліотеки Spectre",
         "Description[x-test]": "xxA PostScript file renderer based on the Spectre libraryxx",
+        "Description[zh_CN]": "基于 Spectre 库的 PostScript 文件渲染器",
         "Description[zh_TW]": "基於 Spectre 函式庫的 PostScript 檔成像器",
         "Id": "okular_ghostview",
         "License": "GPL",

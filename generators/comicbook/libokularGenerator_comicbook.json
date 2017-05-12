@@ -52,6 +52,7 @@
         "Description[tr]": "Çeşitli çizgi roman biçimleri için bir oluşturucu",
         "Description[uk]": "Програма для відображення коміксів у різних форматах",
         "Description[x-test]": "xxA renderer for various comic book formatsxx",
+        "Description[zh_CN]": "多种漫画书格式的渲染器",
         "Description[zh_TW]": "多種漫畫書的成像器",
         "Id": "okular_comicbook",
         "License": "GPL",

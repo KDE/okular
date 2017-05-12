@@ -15,6 +15,7 @@
   <name xml:lang="es">FictionBook</name>
   <name xml:lang="et">FictionBook</name>
   <name xml:lang="fi">FictionBook</name>
+  <name xml:lang="fr">FictionBook</name>
   <name xml:lang="it">FictionBook</name>
   <name xml:lang="ko">FictionBook</name>
   <name xml:lang="nl">Fictie boek</name>
@@ -43,6 +44,7 @@
   <summary xml:lang="es">Permite la lectura de libros en formato FictionBook</summary>
   <summary xml:lang="et">FictionBooki lugemise toetus</summary>
   <summary xml:lang="fi">Lisää FictionBook-lukutuen</summary>
+  <summary xml:lang="fr">Permet la lecture des fichiers FictionBooks</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti in formato FictionBooks</summary>
   <summary xml:lang="ko">FictionBook 읽기 지원 추가</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van fictie boeken toe</summary>

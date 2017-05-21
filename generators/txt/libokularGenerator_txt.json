@@ -46,6 +46,7 @@
         "Description[sv]": "Textgränssnitt",
         "Description[uk]": "Модуль тексту",
         "Description[x-test]": "xxTxt backendxx",
+        "Description[zh_CN]": "纯文本后端",
         "Description[zh_TW]": "Txt 後端介面",
         "Id": "okular_txt",
         "License": "GPL",

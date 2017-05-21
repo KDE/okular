@@ -46,6 +46,7 @@
         "Description[sv]": "Ett återgivningsprogram för DVI-filer",
         "Description[uk]": "Інструмент для показу файлів DVI",
         "Description[x-test]": "xxA DVI file rendererxx",
+        "Description[zh_CN]": "DVI 文件渲染器",
         "Description[zh_TW]": "DVI 檔成像器",
         "Id": "okular_dvi",
         "License": "GPL",

@@ -57,6 +57,7 @@
         "Description[sv]": "Ett återgivningsprogram av Microsoft Windows hjälpfiler",
         "Description[uk]": "Відображення файлів довідки Microsoft Windows",
         "Description[x-test]": "xxA Microsoft Windows help file rendererxx",
+        "Description[zh_CN]": "Microsoft Windows 帮助文件渲染器",
         "Description[zh_TW]": "Microsoft Windows 說明檔成像器",
         "Id": "okular_chm",
         "License": "GPL",

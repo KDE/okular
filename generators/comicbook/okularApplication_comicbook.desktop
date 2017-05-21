@@ -158,6 +158,7 @@ Comment[sv]=Generell dokumentvisare
 Comment[tr]=Evrensel belge görüntüleyici
 Comment[uk]=Універсальний переглядач документів
 Comment[x-test]=xxUniversal document viewerxx
+Comment[zh_CN]=通用文档查看器
 Comment[zh_TW]=通用文件檢視器
 Exec=okular %U
 Icon=okular

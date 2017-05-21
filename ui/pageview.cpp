@@ -400,7 +400,9 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     viewport()->setMouseTracking( true );
     viewport()->setAutoFillBackground( false );
     // the apparently "magic" value of 20 is the same used internally in QScrollArea
+    verticalScrollBar()->setCursor( Qt::ArrowCursor );
     verticalScrollBar()->setSingleStep( 20 );
+    horizontalScrollBar()->setCursor( Qt::ArrowCursor );
     horizontalScrollBar()->setSingleStep( 20 );
 
     // conntect the padding of the viewport to pixmaps requests

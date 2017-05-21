@@ -90,6 +90,7 @@
     <p xml:lang="sv">Okular är en universell dokumentvisare utvecklad av KDE. Okular fungerar på flera plattformar, inklusive men inte begränsat till Linux, Windows, Max OS X, *BSD, etc.</p>
     <p xml:lang="uk">Okular є універсальною програмою для перегляду документів, розробленою KDE. Okular може працювати на багатьох програмних платформах, зокрема Linux, Windows, Mac OS X, *BSD тощо.</p>
     <p xml:lang="x-test">xxOkular is a universal document viewer developed by KDE. Okular works on multiple platforms, including but not limited to Linux, Windows, Mac OS X, *BSD, etc.xx</p>
+    <p xml:lang="zh-CN">Okular 是由 KDE 开发的通用文档查看器。Okular 可在多个平台上运行，包括但不是限于 Linux，Windows，Mac OS X，* BSD，等。</p>
     <p xml:lang="zh-TW">Okular 是一個由 KDE 開發的通用文件檢視器。Okular 可以在多種平臺上運作，包含但不限於 Linux, Windows, Mac OS X, *BSD 等等。</p>
     <p>Features:</p>
     <p xml:lang="ast">Carauterístiques:</p>
@@ -118,6 +119,7 @@
     <p xml:lang="sv">Funktioner:</p>
     <p xml:lang="uk">Можливості:</p>
     <p xml:lang="x-test">xxFeatures:xx</p>
+    <p xml:lang="zh-CN">功能：</p>
     <p xml:lang="zh-TW">功能：</p>
     <ul>
       <li>Supported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
@@ -147,6 +149,7 @@
       <li xml:lang="sv">Format som stöds: PDF, PS, Tiff, CHM, DjVu, bilder, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="uk">Підтримувані формати: PDF, PS, Tiff, CHM, DjVu, зображення, DVI, XPS, ODT, Fiction Book, комікси, Plucker, EPub, факси.</li>
       <li xml:lang="x-test">xxSupported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Faxxx</li>
+      <li xml:lang="zh-CN">支持的格式︰ PDF，PS，Tiff，CHM，DjVu，图片，DVI，XPS，ODT，FictionBook，漫画书，Plucker，EPub，传真</li>
       <li xml:lang="zh-TW">支援的檔案格式：PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li>Sidebar with contents, thumbnails, reviews and bookmarks</li>
       <li xml:lang="ast">Barra llateral colos conteníos, miniatures, reseñes y marcadores</li>
@@ -174,6 +177,7 @@
       <li xml:lang="sv">Sidorad med innehåll, miniatyrbilder, granskningar och bokmärken</li>
       <li xml:lang="uk">Бічні панелі зі списками змісту, мініатюрами сторінок, можливість рецензування та додавання закладок.</li>
       <li xml:lang="x-test">xxSidebar with contents, thumbnails, reviews and bookmarksxx</li>
+      <li xml:lang="zh-CN">目录，缩略图，批注和书签侧边栏</li>
       <li xml:lang="zh-TW">有內容、縮圖、回顧與書籤等選項的側邊欄</li>
       <li>Annotations support</li>
       <li xml:lang="ast">Sofitu d'anotaciones</li>
@@ -201,6 +205,7 @@
       <li xml:lang="sv">Stöd för kommentarer</li>
       <li xml:lang="uk">Підтримка анотування.</li>
       <li xml:lang="x-test">xxAnnotations supportxx</li>
+      <li xml:lang="zh-CN">支持批注</li>
       <li xml:lang="zh-TW">支援註記</li>
     </ul>
   </description>

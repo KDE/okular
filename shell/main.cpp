@@ -29,8 +29,9 @@
 
 int main(int argc, char** argv)
 {
-    QApplication app(argc, argv);
+    QGuiApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 
+    QApplication app(argc, argv);
     KLocalizedString::setApplicationDomain("okular");
 
     KAboutData aboutData = okularAboutData();

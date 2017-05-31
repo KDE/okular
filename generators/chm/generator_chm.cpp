@@ -78,6 +78,9 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
     
     // fill m_docSyn
     QMap<int, QDomElement> lastIndentElement;
+    QMap<QString, int> tmpPageList;
+    int pageNum = 0;
+
     foreach(const LCHMParsedEntry &e, topics)
     {
         QDomElement item = m_docSyn.createElement(e.name);
@@ -87,6 +90,11 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
             if (url.contains(QChar::fromLatin1('%')))
                 url = QString::fromUtf8(QByteArray::fromPercentEncoding(url.toUtf8()));
             item.setAttribute(QStringLiteral("ViewportName"), url);
+            if(!tmpPageList.contains(url))
+            {//add a page only once
+                tmpPageList.insert(url, pageNum);
+                pageNum++;
+            }
         }
         item.setAttribute(QStringLiteral("Icon"), e.imageid);
         if (e.indent == 0) m_docSyn.appendChild(item);
@@ -95,12 +103,13 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
     }
     
     // fill m_urlPage and m_pageUrl
-    int pageNum = 0;
     QStringList pageList;
     m_file->enumerateFiles(&pageList);
     const QString home = m_file->homeUrl();
     if (home != QLatin1String("/"))
         pageList.prepend(home);
+    m_pageUrl.resize(pageNum);
+
     foreach (const QString &url, pageList)
     {
         const QString urlLower = url.toLower();
@@ -108,15 +117,22 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
             continue;
 
         int pos = url.indexOf (QLatin1Char(('#')));
+        // insert the url into the maps, but insert always the variant without the #ref part
         QString tmpUrl = pos == -1 ? url : url.left(pos);
 
         // url already there, abort insertion
         if (m_urlPage.contains(tmpUrl)) continue;
 
-        // insert the url into the maps, but insert always the variant without the #ref part
-        m_urlPage.insert(tmpUrl, pageNum);
-        m_pageUrl.append(tmpUrl);
-        pageNum++;
+        int foundPage = tmpPageList.value(tmpUrl, -1);
+        if (foundPage != -1 ) {
+            m_urlPage.insert(tmpUrl, foundPage);
+            m_pageUrl[foundPage] = tmpUrl;
+        } else {
+            //add pages not present in toc
+            m_urlPage.insert(tmpUrl, pageNum);
+            m_pageUrl.append(tmpUrl);
+            pageNum++;
+        }
     }
 
     pagesVector.resize(m_pageUrl.count());

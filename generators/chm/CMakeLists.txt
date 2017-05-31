@@ -22,6 +22,16 @@ set(okularGenerator_chmlib_SRCS
 okular_add_generator(okularGenerator_chmlib ${okularGenerator_chmlib_SRCS})
 target_link_libraries(okularGenerator_chmlib  okularcore ${CHM_LIBRARY} KF5::KHtml)
 
+########### autotests ###############
+
+add_definitions( -DKDESRCDIR="${CMAKE_CURRENT_SOURCE_DIR}/" )
+ecm_add_test(autotests/chmgeneratortest.cpp
+    TEST_NAME "chmgeneratortest"
+    LINK_LIBRARIES Qt5::Test KF5::CoreAddons okularcore
+)
+
+target_compile_definitions(chmgeneratortest PRIVATE -DGENERATOR_PATH="$<TARGET_FILE:okularGenerator_chmlib>")
+
 ########### install files ###############
 install( FILES okularChm.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
 install( PROGRAMS okularApplication_chm.desktop org.kde.mobile.okular_chm.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )

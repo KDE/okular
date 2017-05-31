@@ -101,7 +101,8 @@ bool LCHMFileImpl::loadFile( const QString & archiveName )
 	// and guess the encoding
 	getInfoFromWindows();
 	getInfoFromSystem();
-	guessTextEncoding();
+	if ( !guessTextEncoding() )
+		return false;
 
 	// Check whether the search tables are present
 	if ( ResolveObject(QStringLiteral("/#TOPICS"), &m_chmTOPICS)
@@ -1192,8 +1193,11 @@ bool LCHMFileImpl::guessTextEncoding( )
 	const LCHMTextEncoding * enc = 0;
 
 	if ( !m_detectedLCID || (enc = lookupByLCID (m_detectedLCID)) == 0 )
-		qFatal ("Could not detect text encoding by LCID");
-	
+    {
+		qWarning ("Could not detect text encoding by LCID");
+		return false;
+    }
+
 	if ( changeFileEncoding (enc->qtcodec) )
 	{
 		m_currentEncoding = enc;

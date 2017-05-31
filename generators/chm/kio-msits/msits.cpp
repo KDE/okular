@@ -123,13 +123,13 @@ void ProtocolMSITS::get( const QUrl& url )
 	}
 
     totalSize( buf.size() );
-#if 0 //PORT QT5
+
     QMimeDatabase db;
-    QMimeType result = db.mimeTypeForNameAndData( fileName, buf );
+    QMimeType result = db.mimeTypeForFileNameAndData( fileName, buf );
     qCDebug(KIO_MITS_LOG) << "Emitting mimetype " << result.name();
 
-        mimeType( result.name() );
-#endif
+    mimeType( result.name() );
+
     data( buf );
 	processedSize( buf.size() );
 

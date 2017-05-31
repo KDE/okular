@@ -55,7 +55,7 @@ class CHMGenerator : public Okular::Generator
     private:
         void additionalRequestData();
         void recursiveExploreNodes( DOM::Node node, Okular::TextPage *tp );
-        void preparePageForSyncOperation( int zoom , const QString &url );
+        void preparePageForSyncOperation( const QString &url );
         QMap<QString, int> m_urlPage;
         QVector<QString> m_pageUrl;
         Okular::DocumentSynopsis m_docSyn;
@@ -64,7 +64,6 @@ class CHMGenerator : public Okular::Generator
         QString m_fileName;
         QString m_chmUrl;
         Okular::PixmapRequest* m_request;
-        int m_pixmapRequestZoom;
         QBitArray m_textpageAddedList;
         QBitArray m_rectsGenerated;
 };

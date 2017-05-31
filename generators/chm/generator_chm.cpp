@@ -55,7 +55,6 @@ CHMGenerator::CHMGenerator( QObject *parent, const QVariantList &args )
 
     m_syncGen=0;
     m_file=0;
-    m_pixmapRequestZoom=1;
     m_request = 0;
 }
 
@@ -132,7 +131,7 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
 
     for (int i = 0; i < m_pageUrl.count(); ++i)
     {
-        preparePageForSyncOperation(100, m_pageUrl.at(i));
+        preparePageForSyncOperation(m_pageUrl.at(i));
         pagesVector[ i ] = new Okular::Page (i, m_syncGen->view()->contentsWidth(),
             m_syncGen->view()->contentsHeight(), Okular::Rotation0 );
     }
@@ -161,11 +160,11 @@ bool CHMGenerator::doCloseDocument()
     return true;
 }
 
-void CHMGenerator::preparePageForSyncOperation( int zoom , const QString & url)
+void CHMGenerator::preparePageForSyncOperation(const QString & url)
 {
     QString pAddress= QStringLiteral("ms-its:") + m_fileName + QStringLiteral("::") + url;
     m_chmUrl = url;
-    m_syncGen->setZoomFactor(zoom);
+
     m_syncGen->openUrl(QUrl(pAddress));
     m_syncGen->view()->layout();
 
@@ -183,7 +182,7 @@ void CHMGenerator::slotCompleted()
         return;
 
     QImage image( m_request->width(), m_request->height(), QImage::Format_ARGB32 );
-    image.fill( qRgb( 255, 255, 255 ) );
+    image.fill( Qt::white );
 
     QPainter p( &image );
     QRect r( 0, 0, m_request->width(), m_request->height() );
@@ -192,9 +191,6 @@ void CHMGenerator::slotCompleted()
     m_syncGen->paint( &p, r, 0, &moreToPaint );
 
     p.end();
-
-    if ( m_pixmapRequestZoom > 1 )
-        m_pixmapRequestZoom = 1;
 
     if ( !m_textpageAddedList.at( m_request->pageNumber() ) ) {
         additionalRequestData();
@@ -245,23 +241,13 @@ void CHMGenerator::generatePixmap( Okular::PixmapRequest * request )
 {
     int requestWidth = request->width();
     int requestHeight = request->height();
-    if (requestWidth<300)
-    {
-        m_pixmapRequestZoom=900/requestWidth;
-        requestWidth*=m_pixmapRequestZoom;
-        requestHeight*=m_pixmapRequestZoom;
-    }
 
     userMutex()->lock();
     QString url= m_pageUrl[request->pageNumber()];
-    int zoom = qRound( qMax( static_cast<double>(requestWidth)/static_cast<double>(request->page()->width())
-        , static_cast<double>(requestHeight)/static_cast<double>(request->page()->height())
-        ) ) * 100;
 
     QString pAddress= QStringLiteral("ms-its:") + m_fileName + QStringLiteral("::") + url;
     m_chmUrl = url;
-    m_syncGen->setZoomFactor(zoom);
-    m_syncGen->view()->resize(requestWidth,requestHeight);
+    m_syncGen->view()->resizeContents(requestWidth,requestHeight);
     m_request=request;
     // will emit openURL without problems
     m_syncGen->openUrl ( QUrl(pAddress) );
@@ -411,10 +397,10 @@ void CHMGenerator::additionalRequestData()
 Okular::TextPage* CHMGenerator::textPage( Okular::Page * page )
 {
     userMutex()->lock();
-    const int zoom = 100;
+
     m_syncGen->view()->resize(page->width(), page->height());
     
-    preparePageForSyncOperation(zoom, m_pageUrl[page->number()]);
+    preparePageForSyncOperation(m_pageUrl[page->number()]);
     Okular::TextPage *tp=new Okular::TextPage();
     recursiveExploreNodes( m_syncGen->htmlDocument(), tp);
     userMutex()->unlock();

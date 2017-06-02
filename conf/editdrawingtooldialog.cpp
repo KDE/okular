@@ -24,8 +24,7 @@ EditDrawingToolDialog::EditDrawingToolDialog( const QDomElement &initialState, Q
 {
     QDialogButtonBox *buttonBox = new QDialogButtonBox( QDialogButtonBox::Ok | QDialogButtonBox::Cancel );
     buttonBox->setObjectName( QStringLiteral("buttonbox") );
-    QVBoxLayout *mainLayout = new QVBoxLayout;
-    setLayout(mainLayout);
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
 
     QPushButton *okButton = buttonBox->button( QDialogButtonBox::Ok );
     okButton->setDefault( true );

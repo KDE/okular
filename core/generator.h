@@ -617,10 +617,11 @@ class OKULARCORE_EXPORT PixmapRequest
          * @param pageNumber The page number.
          * @param width The width of the page.
          * @param height The height of the page.
+         * @param dpr The device pixel ratio of the page.
          * @param priority The priority of the request.
          * @param features The features of generation.
          */
-        PixmapRequest( DocumentObserver *observer, int pageNumber, int width, int height, int priority, PixmapRequestFeatures features );
+        PixmapRequest( DocumentObserver *observer, int pageNumber, int width, int height, qreal dpr, int priority, PixmapRequestFeatures features );
 
         /**
          * Destroys the pixmap request.
@@ -646,6 +647,13 @@ class OKULARCORE_EXPORT PixmapRequest
          * Returns the page height of the requested pixmap.
          */
         int height() const;
+
+        /**
+         * Returns the device pixel ratio of the requested pixmap.
+         *
+         * @since 1.2
+         */
+        qreal devicePixelRatio() const;
 
         /**
          * Returns the priority (less it better, 0 is maximum) of the

@@ -23,6 +23,7 @@
 #include <QPainter>
 #include <QTimer>
 #include <QStyleOptionGraphicsItem>
+#include <QGuiApplication>
 
 #include <core/bookmarkmanager.h>
 #include <core/document.h>
@@ -312,7 +313,7 @@ void PageItem::paint(QPainter *painter)
 
     if (m_intentionalDraw) {
         QLinkedList<Okular::PixmapRequest *> requestedPixmaps;
-        requestedPixmaps.push_back(new Okular::PixmapRequest(observer, m_viewPort.pageNumber, width(), height(), priority, Okular::PixmapRequest::Asynchronous));
+        requestedPixmaps.push_back(new Okular::PixmapRequest(observer, m_viewPort.pageNumber, width(), height(), qApp->devicePixelRatio(), priority, Okular::PixmapRequest::Asynchronous));
         const Okular::Document::PixmapRequestFlag prf = m_isThumbnail ? Okular::Document::NoOption : Okular::Document::RemoveAllPrevious;
         m_documentItem.data()->document()->requestPixmaps(requestedPixmaps, prf);
         m_intentionalDraw = false;

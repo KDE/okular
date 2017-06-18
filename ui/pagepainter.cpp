@@ -18,6 +18,7 @@
 #include <kiconloader.h>
 #include <QtCore/QDebug>
 #include <QApplication>
+#include <QIcon>
 
 // system includes
 #include <math.h>
@@ -35,7 +36,7 @@
 #include "settings_core.h"
 #include "ui/debug_ui.h"
 
-Q_GLOBAL_STATIC_WITH_ARGS( QPixmap, busyPixmap, ( KIconLoader::global()->loadIcon(QLatin1String("okular"), KIconLoader::NoGroup, 32, KIconLoader::DefaultState, QStringList(), 0, true) ) )
+Q_GLOBAL_STATIC_WITH_ARGS( QPixmap, busyPixmap, ( KIconLoader::global()->loadIcon(QLatin1String("okular"), KIconLoader::NoGroup, IconSize(KIconLoader::Desktop), KIconLoader::DefaultState, QStringList(), 0, true) ) )
 
 #define TEXTANNOTATION_ICONSIZE 24
 
@@ -62,10 +63,18 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     Okular::DocumentObserver *observer, int flags, int scaledWidth, int scaledHeight, const QRect &limits,
     const Okular::NormalizedRect &crop, Okular::NormalizedPoint *viewPortPoint )
 {
+    qreal dpr = destPainter->device()->devicePixelRatioF();
+
     /* Calculate the cropped geometry of the page */
     QRect scaledCrop = crop.geometry( scaledWidth, scaledHeight );
+    const QRect dScaledCrop(QRectF(scaledCrop.x() * dpr, scaledCrop.y() * dpr, scaledCrop.width() * dpr, scaledCrop.height() * dpr).toAlignedRect());
+
     int croppedWidth = scaledCrop.width();
     int croppedHeight = scaledCrop.height();
+
+    int dScaledWidth = floor(scaledWidth * dpr) + 1;
+    int dScaledHeight = floor(scaledHeight * dpr) + 1;
+    const QRect dLimits(QRectF(limits.x() * dpr, limits.y() * dpr, limits.width() * dpr, limits.height() * dpr).toAlignedRect());
 
     QColor paperColor = Qt::white;
     QColor backgroundColor = paperColor;
@@ -94,17 +103,18 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     if ( !hasTilesManager )
     {
         /** 1 - RETRIEVE THE 'PAGE+ID' PIXMAP OR A SIMILAR 'PAGE' ONE **/
-        pixmap = page->_o_nearestPixmap( observer, scaledWidth, scaledHeight );
+        pixmap = page->_o_nearestPixmap( observer, scaledWidth, scaledHeight, dpr );
 
         /** 1B - IF NO PIXMAP, DRAW EMPTY PAGE **/
-        double pixmapRescaleRatio = pixmap ? scaledWidth / (double)pixmap->width() : -1;
+        double pixmapRescaleRatio = pixmap ? dScaledWidth / (double)pixmap->width() : -1;
         long pixmapPixels = pixmap ? (long)pixmap->width() * (long)pixmap->height() : 0;
         if ( !pixmap || pixmapRescaleRatio > 20.0 || pixmapRescaleRatio < 0.25 ||
-             (scaledWidth > pixmap->width() && pixmapPixels > 60000000L) )
+             (dScaledWidth > pixmap->width() && pixmapPixels > 60000000L) )
         {
             // draw something on the blank page: the okular icon or a cross (as a fallback)
             if ( !busyPixmap()->isNull() )
             {
+                busyPixmap->setDevicePixelRatio(dpr);
                 destPainter->drawPixmap( QPoint( 10, 10 ), *busyPixmap() );
             }
             else
@@ -135,10 +145,10 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     if ( canDrawHighlights || canDrawTextSelection || canDrawAnnotations )
     {
         // precalc normalized 'limits rect' for intersection
-        double nXMin = ( (double)limits.left() / (double)scaledWidth ) + crop.left,
-               nXMax = ( (double)limits.right() / (double)scaledWidth )  + crop.left,
-               nYMin = ( (double)limits.top() / (double)scaledHeight ) + crop.top,
-               nYMax = ( (double)limits.bottom() / (double)scaledHeight ) + crop.top;
+        double nXMin = ( (double)limits.left() / dScaledWidth ) + crop.left,
+               nXMax = ( (double)limits.right() / dScaledWidth )  + crop.left,
+               nYMin = ( (double)limits.top() / dScaledHeight ) + crop.top,
+               nYMax = ( (double)limits.bottom() / dScaledHeight ) + crop.top;
         // append all highlights inside limits to their list
         if ( canDrawHighlights )
         {
@@ -240,9 +250,12 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     QPixmap * backPixmap = 0;
     QPainter * mixedPainter = 0;
     QRect limitsInPixmap = limits.translated( scaledCrop.topLeft() );
+    QRect dLimitsInPixmap = dLimits.translated( dScaledCrop.topLeft() );
+
         // limits within full (scaled but uncropped) pixmap
 
     /** 4A -- REGULAR FLOW. PAINT PIXMAP NORMAL OR RESCALED USING GIVEN QPAINTER **/
+    /* when zoomed in */
     if ( !useBackBuffer )
     {
         if ( hasTilesManager )
@@ -254,32 +267,26 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
             {
                 const Okular::Tile &tile = *tIt;
                 QRect tileRect = tile.rect().geometry( scaledWidth, scaledHeight ).translated( -scaledCrop.topLeft() );
+                QRect dTileRect = QRectF(tileRect.x() * dpr, tileRect.y() * dpr, tileRect.width() * dpr, tileRect.height() * dpr).toAlignedRect();
                 QRect limitsInTile = limits & tileRect;
+                QRectF dLimitsInTile = dLimits & dTileRect;
+
                 if ( !limitsInTile.isEmpty() )
                 {
-                    if ( tile.pixmap()->width() == tileRect.width() && tile.pixmap()->height() == tileRect.height() )
+                    if ( tile.pixmap()->width() == (dTileRect.width()) && tile.pixmap()->height() == (dTileRect.height()) ) {
                         destPainter->drawPixmap( limitsInTile.topLeft(), *(tile.pixmap()),
-                                limitsInTile.translated( -tileRect.topLeft() ) );
-                    else
-                        destPainter->drawPixmap( tileRect, *(tile.pixmap()) );
+                                dLimitsInTile.translated( -dTileRect.topLeft() ) );
+                    } else {
+                        destPainter->drawPixmap( tileRect, *(tile.pixmap()));
+                    }
                 }
                 tIt++;
             }
         }
         else
         {
-            // 4A.1. if size is ok, draw the page pixmap using painter
-            if ( pixmap->width() == scaledWidth && pixmap->height() == scaledHeight )
-                destPainter->drawPixmap( limits.topLeft(), *pixmap, limitsInPixmap );
-
-            // else draw a scaled portion of the magnified pixmap
-            else
-            {
-                QImage destImage;
-                scalePixmapOnImage( destImage, pixmap, scaledWidth, scaledHeight, limitsInPixmap );
-                destPainter->drawImage( limits.left(), limits.top(), destImage, 0, 0,
-                                         limits.width(),limits.height() );
-            }
+            QPixmap scaledCroppedPixmap = pixmap->scaled(dScaledWidth, dScaledHeight).copy(dLimitsInPixmap);
+            destPainter->drawPixmap( limits.topLeft(), scaledCroppedPixmap, QRectF(0, 0, dLimits.width(),dLimits.height()));
         }
 
         // 4A.2. active painter is the one passed to this method
@@ -289,7 +296,10 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     else
     {
         // the image over which we are going to draw
-        QImage backImage;
+        QImage backImage = QImage( dLimits.width(), dLimits.height(), QImage::Format_ARGB32_Premultiplied );
+        backImage.setDevicePixelRatio(dpr);
+        backImage.fill( paperColor );
+        QPainter p( &backImage );
 
         bool has_alpha;
         if ( pixmap )
@@ -299,9 +309,6 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
 
         if ( hasTilesManager )
         {
-            backImage = QImage( limits.width(), limits.height(), QImage::Format_ARGB32_Premultiplied );
-            backImage.fill( paperColor.rgb() );
-            QPainter p( &backImage );
             const Okular::NormalizedRect normalizedLimits( limitsInPixmap, scaledWidth, scaledHeight );
             const QList<Okular::Tile> tiles = page->tilesAt( observer, normalizedLimits );
             QList<Okular::Tile>::const_iterator tIt = tiles.constBegin(), tEnd = tiles.constEnd();
@@ -309,21 +316,22 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
             {
                 const Okular::Tile &tile = *tIt;
                 QRect tileRect = tile.rect().geometry( scaledWidth, scaledHeight ).translated( -scaledCrop.topLeft() );
+                QRectF dTileRect(tileRect.x() * dpr, tileRect.y() * dpr, tileRect.width() * dpr, tileRect.height() * dpr);
                 QRect limitsInTile = limits & tileRect;
                 if ( !limitsInTile.isEmpty() )
                 {
                     if ( !tile.pixmap()->hasAlpha() )
                         has_alpha = false;
 
-                    if ( tile.pixmap()->width() == tileRect.width() && tile.pixmap()->height() == tileRect.height() )
+                    if ( tile.pixmap()->width() == dTileRect.width() && tile.pixmap()->height() == dTileRect.height() )
                     {
                         p.drawPixmap( limitsInTile.translated( -limits.topLeft() ).topLeft(), *(tile.pixmap()),
                                 limitsInTile.translated( -tileRect.topLeft() ) );
                     }
                     else
                     {
-                        double xScale = tile.pixmap()->width() / (double)tileRect.width();
-                        double yScale = tile.pixmap()->height() / (double)tileRect.height();
+                        double xScale = tile.pixmap()->width() / dTileRect.width();
+                        double yScale = tile.pixmap()->height() / dTileRect.height();
                         QTransform transform( xScale, 0, 0, yScale, 0, 0 );
                         p.drawPixmap( limitsInTile.translated( -limits.topLeft() ), *(tile.pixmap()),
                                 transform.mapRect( limitsInTile ).translated( -transform.mapRect( tileRect ).topLeft() ) );
@@ -331,16 +339,16 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                 }
                 ++tIt;
             }
-            p.end();
         }
         else
         {
             // 4B.1. draw the page pixmap: normal or scaled
-            if ( pixmap->width() == scaledWidth && pixmap->height() == scaledHeight )
-                cropPixmapOnImage( backImage, pixmap, limitsInPixmap );
-            else
-                scalePixmapOnImage( backImage, pixmap, scaledWidth, scaledHeight, limitsInPixmap );
+            QPixmap scaledCroppedPixmap = pixmap->scaled(dScaledWidth, dScaledHeight).copy(dLimitsInPixmap);
+            scaledCroppedPixmap.setDevicePixelRatio(dpr);
+            p.drawPixmap( limits.topLeft(), scaledCroppedPixmap, QRect(0, 0, dLimitsInPixmap.width(),dLimitsInPixmap.height()));
         }
+
+        p.end();
 
         // 4B.2. modify pixmap following accessibility settings
         if ( bufferAccessibility )
@@ -379,6 +387,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                     break;
             }
         }
+
         // 4B.3. highlight rects in page
         if ( bufferedHighlights )
         {
@@ -388,10 +397,20 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
             {
                 const Okular::NormalizedRect & r = (*hIt).second;
                 // find out the rect to highlight on pixmap
+
                 QRect highlightRect = r.geometry( scaledWidth, scaledHeight ).translated( -scaledCrop.topLeft() ).intersected( limits );
                 highlightRect.translate( -limits.left(), -limits.top() );
 
+                QPainter painter(&backImage);
+                painter.fillRect(highlightRect, QColor((*hIt).first.red(), (*hIt).first.green(), (*hIt).first.blue(), 150));
+
+                // the code below works too, but the mordern method would be to just use a QPainter?
+
                 // highlight composition (product: highlight color * destcolor)
+                /*
+                QRect highlightRect = r.geometry( dScaledWidth, dScaledHeight ).translated( -dScaledCrop.topLeft() ).intersected( dLimits );
+                highlightRect.translate( -dLimits.left(), -dLimits.top() );
+
                 unsigned int * data = (unsigned int *)backImage.bits();
                 int val, newR, newG, newB,
                     rh = (*hIt).first.red(),
@@ -427,8 +446,10 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                     }
                     offset += backImage.width();
                 }
+                }*/
             }
         }
+
         // 4B.4. paint annotations [COMPOSITED ONES]
         if ( bufferedAnnotations )
         {
@@ -621,7 +642,6 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                 }
             } // end current annotation drawing
         }
-
         if(viewPortPoint)
         {
             QPainter painter(&backImage);
@@ -651,6 +671,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
 
         // 4B.5. create the back pixmap converting from the local image
         backPixmap = new QPixmap( QPixmap::fromImage( backImage ) );
+        backPixmap->setDevicePixelRatio(dpr);
 
         // 4B.6. create a painter over the pixmap and set it as the active one
         mixedPainter = new QPainter( backPixmap );
@@ -683,6 +704,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
             QRect annotRect = annotBoundary.intersected( limits );
             QRect innerRect( annotRect.left() - annotBoundary.left(), annotRect.top() -
                     annotBoundary.top(), annotRect.width(), annotRect.height() );
+            QRectF dInnerRect(innerRect.x() * dpr, innerRect.y() * dpr, innerRect.width() * dpr, innerRect.height() * dpr);
 
             Okular::Annotation::SubType type = a->subType();
 
@@ -726,23 +748,24 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                     QPixmap pixmap = GuiUtils::iconLoader()->loadIcon( text->textIcon().toLower(), KIconLoader::User, 32, KIconLoader::DefaultState, QStringList(), &path, true );
                     if ( path.isEmpty() )
                         pixmap = GuiUtils::iconLoader()->loadIcon( text->textIcon().toLower(), KIconLoader::NoGroup, 32 );
-                    QImage scaledImage;
-                    QRect annotBoundary2 = QRect( annotBoundary.topLeft(), QSize( TEXTANNOTATION_ICONSIZE, TEXTANNOTATION_ICONSIZE ) );
+                    QRect annotBoundary2 = QRect( annotBoundary.topLeft(), QSize( TEXTANNOTATION_ICONSIZE * dpr, TEXTANNOTATION_ICONSIZE * dpr ) );
                     QRect annotRect2 = annotBoundary2.intersected( limits );
                     QRect innerRect2( annotRect2.left() - annotBoundary2.left(), annotRect2.top() -
                     annotBoundary2.top(), annotRect2.width(), annotRect2.height() );
-                    scalePixmapOnImage( scaledImage, &pixmap,
-                                        TEXTANNOTATION_ICONSIZE, TEXTANNOTATION_ICONSIZE,
-                                        innerRect2, QImage::Format_ARGB32 );
+
+                    QPixmap scaledCroppedPixmap = pixmap.scaled(TEXTANNOTATION_ICONSIZE * dpr, TEXTANNOTATION_ICONSIZE * dpr).copy(dInnerRect.toAlignedRect());
+                    scaledCroppedPixmap.setDevicePixelRatio(dpr);
+                    QImage scaledCroppedImage = scaledCroppedPixmap.toImage();
+
                     // if the annotation color is valid (ie it was set), then
                     // use it to colorize the icon, otherwise the icon will be
                     // "gray"
                     if ( a->style().color().isValid() )
-                        GuiUtils::colorizeImage( scaledImage, a->style().color(), opacity );
-                    pixmap = QPixmap::fromImage( scaledImage );
+                        GuiUtils::colorizeImage( scaledCroppedImage, a->style().color(), opacity );
+                    pixmap = QPixmap::fromImage( scaledCroppedImage );
 
-                // draw the mangled image to painter
-                    mixedPainter->drawPixmap( annotRect.topLeft(), pixmap );
+                    // draw the mangled image to painter
+                    mixedPainter->drawPixmap( annotRect.topLeft(), pixmap);
                 }
 
             }
@@ -755,12 +778,16 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                 QPixmap pixmap = GuiUtils::loadStamp( stamp->stampIconName(), annotBoundary.size() );
                 if ( !pixmap.isNull() ) // should never happen but can happen on huge sizes
                 {
-                    QImage scaledImage;
-                    scalePixmapOnImage( scaledImage, &pixmap, annotBoundary.width(),
-                                        annotBoundary.height(), innerRect, QImage::Format_ARGB32 );
+                    const QRect dInnerRect(QRectF(innerRect.x() * dpr, innerRect.y() * dpr, innerRect.width() * dpr, innerRect.height() * dpr).toAlignedRect());
+
+                    QPixmap scaledCroppedPixmap = pixmap.scaled(annotBoundary.width() * dpr, annotBoundary.height() * dpr).copy(dInnerRect);
+                    scaledCroppedPixmap.setDevicePixelRatio(dpr);
+
+                    QImage scaledCroppedImage = scaledCroppedPixmap.toImage();
+
                     if ( opacity < 255 )
-                        changeImageAlpha( scaledImage, opacity );
-                    pixmap = QPixmap::fromImage( scaledImage );
+                        changeImageAlpha( scaledCroppedImage, opacity );
+                    pixmap = QPixmap::fromImage( scaledCroppedImage );
 
                     // draw the scaled and al
                     mixedPainter->drawPixmap( annotRect.topLeft(), pixmap );
@@ -865,8 +892,10 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
 /** Private Helpers :: Pixmap conversion **/
 void PagePainter::cropPixmapOnImage( QImage & dest, const QPixmap * src, const QRect & r )
 {
+    qreal dpr = src->devicePixelRatioF();
+
     // handle quickly the case in which the whole pixmap has to be converted
-    if ( r == QRect( 0, 0, src->width(), src->height() ) )
+    if ( r == QRect( 0, 0, src->width() / dpr, src->height() / dpr ) )
     {
         dest = src->toImage();
         dest = dest.convertToFormat(QImage::Format_ARGB32_Premultiplied);
@@ -874,7 +903,8 @@ void PagePainter::cropPixmapOnImage( QImage & dest, const QPixmap * src, const Q
     // else copy a portion of the src to an internal pixmap (smaller) and convert it
     else
     {
-        QImage croppedImage( r.width(), r.height(), QImage::Format_ARGB32_Premultiplied );
+        QImage croppedImage( r.width() * dpr, r.height() * dpr, QImage::Format_ARGB32_Premultiplied );
+        croppedImage.setDevicePixelRatio(dpr);
         QPainter p( &croppedImage );
         p.drawPixmap( 0, 0, *src, r.left(), r.top(), r.width(), r.height() );
         p.end();
@@ -905,40 +935,6 @@ void PagePainter::recolor(QImage *image, const QColor &foreground, const QColor 
                            scaleBlue * lightness + foreground.blue(),
                            qAlpha(pixels[x]));
         }
-    }
-}
-
-void PagePainter::scalePixmapOnImage ( QImage & dest, const QPixmap * src,
-    int scaledWidth, int scaledHeight, const QRect & cropRect, QImage::Format format )
-{
-    // {source, destination, scaling} params
-    int srcWidth = src->width(),
-        srcHeight = src->height(),
-        destLeft = cropRect.left(),
-        destTop = cropRect.top(),
-        destWidth = cropRect.width(),
-        destHeight = cropRect.height();
-
-    // destination image (same geometry as the pageLimits rect)
-    dest = QImage( destWidth, destHeight, format );
-    unsigned int * destData = (unsigned int *)dest.bits();
-
-    // source image (1:1 conversion from pixmap)
-    QImage srcImage = src->toImage().convertToFormat(format);
-    unsigned int * srcData = (unsigned int *)srcImage.bits();
-
-    // precalc the x correspondancy conversion in a lookup table
-    QVarLengthArray<unsigned int> xOffset( destWidth );
-    for ( int x = 0; x < destWidth; x++ )
-        xOffset[ x ] = ((x + destLeft) * srcWidth) / scaledWidth;
-
-    // for each pixel of the destination image apply the color of the
-    // corresponsing pixel on the source image (note: keep parenthesis)
-    for ( int y = 0; y < destHeight; y++ )
-    {
-        unsigned int srcOffset = srcWidth * (((destTop + y) * srcHeight) / scaledHeight);
-        for ( int x = 0; x < destWidth; x++ )
-            (*destData++) = srcData[ srcOffset + xOffset[x] ];
     }
 }
 

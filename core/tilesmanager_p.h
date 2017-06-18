@@ -104,7 +104,7 @@ class TilesManager
             PixmapTile        ///< Return only tiles with pixmap
         };
 
-        TilesManager( int pageNumber, int width, int height, Rotation rotation = Rotation0 );
+        TilesManager( int pageNumber, int width, int height, qreal dpr, Rotation rotation = Rotation0 );
         ~TilesManager();
 
         /**
@@ -174,6 +174,11 @@ class TilesManager
          * Gets the height of the page in tiles manager
          */
         int height() const;
+
+        /**
+         * Gets the device pixel ratio of the page in tiles manager
+         */
+        qreal devicePixelRatio() const;
 
         /**
          * Inform the new rotation of the page

@@ -97,7 +97,7 @@ void KIMGIOTest::testExifOrientation()
 	QCOMPARE( m_document->page(0)->height(), double(2) );
 
 	// Generate pixmap
-	Okular::PixmapRequest *req = new Okular::PixmapRequest( dummyDocumentObserver, 0, 3, 2,
+	Okular::PixmapRequest *req = new Okular::PixmapRequest( dummyDocumentObserver, 0, 3, 2, 1.0,
 		1, Okular::PixmapRequest::NoFeature );
 	m_document->requestPixmaps( QLinkedList<Okular::PixmapRequest*>() << req );
 	QVERIFY( m_document->page(0)->hasPixmap( dummyDocumentObserver, 3, 2 ) );

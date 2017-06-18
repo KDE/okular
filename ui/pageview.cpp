@@ -978,7 +978,7 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
     QVector< Okular::Page * >::const_iterator setIt = pageSet.constBegin(), setEnd = pageSet.constEnd();
     for ( ; setIt != setEnd; ++setIt )
     {
-        PageViewItem * item = new PageViewItem( *setIt );
+        PageViewItem * item = new PageViewItem( *setIt, devicePixelRatio() );
         d->items.push_back( item );
 #ifdef PAGEVIEW_DEBUG
         qCDebug(OkularUiDebug).nospace() << "cropped geom for " << d->items.last()->pageNumber() << " is " << d->items.last()->croppedGeometry();
@@ -1648,8 +1648,10 @@ void PageView::paintEvent(QPaintEvent *pe)
             if ( wantCompositing && Okular::Settings::enableCompositing() )
             {
                 // create pixmap and open a painter over it (contents{left,top} becomes pixmap {0,0})
-                QPixmap doubleBuffer( contentsRect.size() );
+                QPixmap doubleBuffer( contentsRect.size() * devicePixelRatioF() );
+                doubleBuffer.setDevicePixelRatio(devicePixelRatioF());
                 QPainter pixmapPainter( &doubleBuffer );
+
                 pixmapPainter.translate( -contentsRect.left(), -contentsRect.top() );
 
                 // 1) Layer 0: paint items and clear bg on unpainted rects
@@ -1663,11 +1665,12 @@ void PageView::paintEvent(QPaintEvent *pe)
                     if ( blendRect.isValid() )
                     {
                         // grab current pixmap into a new one to colorize contents
-                        QPixmap blendedPixmap( blendRect.width(), blendRect.height() );
+                        QPixmap blendedPixmap( blendRect.width() * devicePixelRatioF(), blendRect.height() * devicePixelRatioF() );
+                        blendedPixmap.setDevicePixelRatio(devicePixelRatioF());
                         QPainter p( &blendedPixmap );
                         p.drawPixmap( 0, 0, doubleBuffer,
                                     blendRect.left() - contentsRect.left(), blendRect.top() - contentsRect.top(),
-                                    blendRect.width(), blendRect.height() );
+                                    blendRect.width() * devicePixelRatioF(), blendRect.height() * devicePixelRatioF() );
 
                         QColor blCol = selBlendColor.dark( 140 );
                         blCol.setAlphaF( 0.2 );
@@ -1694,11 +1697,12 @@ void PageView::paintEvent(QPaintEvent *pe)
                         if ( blendRect.isValid() )
                         {
                             // grab current pixmap into a new one to colorize contents
-                            QPixmap blendedPixmap( blendRect.width(), blendRect.height() );
+                            QPixmap blendedPixmap( blendRect.width()  * devicePixelRatioF(), blendRect.height()  * devicePixelRatioF() );
+                            blendedPixmap.setDevicePixelRatio(devicePixelRatioF());
                             QPainter p( &blendedPixmap );
                             p.drawPixmap( 0, 0, doubleBuffer,
                                         blendRect.left() - contentsRect.left(), blendRect.top() - contentsRect.top(),
-                                        blendRect.width(), blendRect.height() );
+                                        blendRect.width() * devicePixelRatioF(), blendRect.height() * devicePixelRatioF() );
 
                             QColor blCol = d->mouseSelectionColor.dark( 140 );
                             blCol.setAlphaF( 0.2 );
@@ -4482,7 +4486,7 @@ void PageView::delayedResizeEvent()
     slotRequestVisiblePixmaps();
 }
 
-static void slotRequestPreloadPixmap( Okular::DocumentObserver * observer, const PageViewItem * i, const QRect &expandedViewportRect, QLinkedList< Okular::PixmapRequest * > *requestedPixmaps )
+void PageView::slotRequestPreloadPixmap( Okular::DocumentObserver * observer, const PageViewItem * i, const QRect &expandedViewportRect, QLinkedList< Okular::PixmapRequest * > *requestedPixmaps )
 {
     Okular::NormalizedRect preRenderRegion;
     const QRect intersectionRect = expandedViewportRect.intersected( i->croppedGeometry() );
@@ -4497,7 +4501,7 @@ static void slotRequestPreloadPixmap( Okular::DocumentObserver * observer, const
         const bool pageHasTilesManager = i->page()->hasTilesManager( observer );
         if ( pageHasTilesManager && !preRenderRegion.isNull() )
         {
-            Okular::PixmapRequest * p = new Okular::PixmapRequest( observer, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, requestFeatures );
+            Okular::PixmapRequest * p = new Okular::PixmapRequest( observer, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), devicePixelRatioF(), PAGEVIEW_PRELOAD_PRIO, requestFeatures );
             requestedPixmaps->push_back( p );
 
             p->setNormalizedRect( preRenderRegion );
@@ -4505,7 +4509,7 @@ static void slotRequestPreloadPixmap( Okular::DocumentObserver * observer, const
         }
         else if ( !pageHasTilesManager )
         {
-            Okular::PixmapRequest * p = new Okular::PixmapRequest( observer, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, requestFeatures );
+            Okular::PixmapRequest * p = new Okular::PixmapRequest( observer, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), devicePixelRatioF(), PAGEVIEW_PRELOAD_PRIO, requestFeatures );
             requestedPixmaps->push_back( p );
             p->setNormalizedRect( preRenderRegion );
         }
@@ -4601,7 +4605,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
 #ifdef PAGEVIEW_DEBUG
             kWarning() << "rerequesting visible pixmaps for page" << i->pageNumber() << "!";
 #endif
-            Okular::PixmapRequest * p = new Okular::PixmapRequest( this, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRIO, Okular::PixmapRequest::Asynchronous );
+            Okular::PixmapRequest * p = new Okular::PixmapRequest( this, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), devicePixelRatioF(), PAGEVIEW_PRIO, Okular::PixmapRequest::Asynchronous );
             requestedPixmaps.push_back( p );
 
             if ( i->page()->hasTilesManager( this ) )
@@ -5319,17 +5323,17 @@ void PageView::slotToggleChangeColors()
 
 void PageView::slotFitWindowToPage()
 {
-    PageViewItem currentPageItem = NULL;
+    const PageViewItem *currentPageItem;
     QSize viewportSize = viewport()->size();
     foreach ( const PageViewItem * pageItem, d->items )
     {
         if ( pageItem->isVisible() )
         {
-            currentPageItem = *pageItem;
+            currentPageItem = pageItem;
             break;
         }
     }
-    const QSize pageSize = QSize( currentPageItem.uncroppedWidth() + kcolWidthMargin, currentPageItem.uncroppedHeight() + krowHeightMargin );
+    const QSize pageSize = QSize( currentPageItem->uncroppedWidth() + kcolWidthMargin, currentPageItem->uncroppedHeight() + krowHeightMargin );
     if ( verticalScrollBar()->isVisible() )
         viewportSize.setWidth( viewportSize.width() + verticalScrollBar()->width() );
     if ( horizontalScrollBar()->isVisible() )

@@ -1384,7 +1384,7 @@ void PresentationWidget::requestPixmaps()
     QApplication::setOverrideCursor( QCursor( Qt::BusyCursor ) );
     // request the pixmap
     QLinkedList< Okular::PixmapRequest * > requests;
-    requests.push_back( new Okular::PixmapRequest( this, m_frameIndex, pixW, pixH, PRESENTATION_PRIO, Okular::PixmapRequest::NoFeature ) );
+    requests.push_back( new Okular::PixmapRequest( this, m_frameIndex, pixW, pixH, devicePixelRatioF(), PRESENTATION_PRIO, Okular::PixmapRequest::NoFeature ) );
     // restore cursor
     QApplication::restoreOverrideCursor();
     // ask for next and previous page if not in low memory usage setting
@@ -1408,7 +1408,7 @@ void PresentationWidget::requestPixmaps()
                 pixW = nextFrame->geometry.width();
                 pixH = nextFrame->geometry.height();
                 if ( !nextFrame->page->hasPixmap( this, pixW, pixH ) )
-                    requests.push_back( new Okular::PixmapRequest( this, tailRequest, pixW, pixH, PRESENTATION_PRELOAD_PRIO, requestFeatures ) );
+                    requests.push_back( new Okular::PixmapRequest( this, tailRequest, pixW, pixH, devicePixelRatioF(), PRESENTATION_PRELOAD_PRIO, requestFeatures ) );
             }
 
             int headRequest = m_frameIndex - j;
@@ -1418,7 +1418,7 @@ void PresentationWidget::requestPixmaps()
                 pixW = prevFrame->geometry.width();
                 pixH = prevFrame->geometry.height();
                 if ( !prevFrame->page->hasPixmap( this, pixW, pixH ) )
-                    requests.push_back( new Okular::PixmapRequest( this, headRequest, pixW, pixH, PRESENTATION_PRELOAD_PRIO, requestFeatures ) );
+                    requests.push_back( new Okular::PixmapRequest( this, headRequest, pixW, pixH, devicePixelRatioF(), PRESENTATION_PRELOAD_PRIO, requestFeatures ) );
             }
 
             // stop if we've already reached both ends of the document

@@ -36,6 +36,7 @@ class DocumentViewport;
 class Annotation;
 class MovieAction;
 class RenditionAction;
+class PixmapRequest;
 }
 
 class FormWidgetIface;
@@ -261,6 +262,7 @@ Q_OBJECT
         void slotProcessRenditionAction( const Okular::RenditionAction *action );
         void slotToggleChangeColors();
         void slotFitWindowToPage();
+        void slotRequestPreloadPixmap( Okular::DocumentObserver *observer, const PageViewItem *i, const QRect &expandedViewportRect, QLinkedList< Okular::PixmapRequest * > *requestedPixmaps );
 };
 
 #endif

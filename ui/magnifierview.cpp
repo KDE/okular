@@ -130,7 +130,7 @@ void MagnifierView::requestPixmap()
   {
     QLinkedList< Okular::PixmapRequest * > requestedPixmaps;
 
-    Okular::PixmapRequest *p = new Okular::PixmapRequest( this, m_current, full_width, full_height, PAGEVIEW_PRIO, Okular::PixmapRequest::Asynchronous );
+    Okular::PixmapRequest *p = new Okular::PixmapRequest( this, m_current, full_width, full_height, devicePixelRatioF(), PAGEVIEW_PRIO, Okular::PixmapRequest::Asynchronous );
 
     if ( m_page->hasTilesManager( this ) ) {
       p->setTile( true );

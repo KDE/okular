@@ -964,24 +964,26 @@ void PagePrivate::saveLocalContents( QDomNode & parentNode, QDomDocument & docum
         parentNode.appendChild( pageElement );
 }
 
-const QPixmap * Page::_o_nearestPixmap( DocumentObserver *observer, int w, int h ) const
+const QPixmap * Page::_o_nearestPixmap( DocumentObserver *observer, int w, int h, qreal dpr ) const
 {
     Q_UNUSED( h )
 
-    const QPixmap * pixmap = 0;
+    QPixmap * pixmap = 0;
 
     // if a pixmap is present for given id, use it
     QMap< DocumentObserver*, PagePrivate::PixmapObject >::const_iterator itPixmap = d->m_pixmaps.constFind( observer );
-    if ( itPixmap != d->m_pixmaps.constEnd() )
+    if ( itPixmap != d->m_pixmaps.constEnd() ) {
         pixmap = itPixmap.value().m_pixmap;
+        pixmap->setDevicePixelRatio(dpr);
     // else find the closest match using pixmaps of other IDs (great optim!)
+    }
     else if ( !d->m_pixmaps.isEmpty() )
     {
         int minDistance = -1;
         QMap< DocumentObserver*, PagePrivate::PixmapObject >::const_iterator it = d->m_pixmaps.constBegin(), end = d->m_pixmaps.constEnd();
         for ( ; it != end; ++it )
         {
-            int pixWidth = (*it).m_pixmap->width(),
+            int pixWidth = (*it).m_pixmap->width() / (*it).m_pixmap->devicePixelRatioF(),
                 distance = pixWidth > w ? pixWidth - w : w - pixWidth;
             if ( minDistance == -1 || distance < minDistance )
             {

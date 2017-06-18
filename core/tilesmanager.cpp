@@ -69,6 +69,7 @@ class TilesManager::Private
         TileNode tiles[16];
         int width;
         int height;
+        qreal dpr;
         int pageNumber;
         qulonglong totalPixels;
         Rotation rotation;
@@ -81,6 +82,7 @@ class TilesManager::Private
 TilesManager::Private::Private()
     : width( 0 )
     , height( 0 )
+    , dpr ( 1.0 )
     , pageNumber( 0 )
     , totalPixels( 0 )
     , rotation( Rotation0 )
@@ -90,12 +92,13 @@ TilesManager::Private::Private()
 {
 }
 
-TilesManager::TilesManager( int pageNumber, int width, int height, Rotation rotation )
+TilesManager::TilesManager( int pageNumber, int width, int height, qreal dpr, Rotation rotation )
     : d( new Private )
 {
     d->pageNumber = pageNumber;
     d->width = width;
     d->height = height;
+    d->dpr = dpr;
     d->rotation = rotation;
 
     // The page is split in a 4x4 grid of tiles
@@ -154,6 +157,11 @@ int TilesManager::height() const
     return d->height;
 }
 
+qreal TilesManager::devicePixelRatio() const
+{
+    return d->dpr;
+}
+
 void TilesManager::setRotation( Rotation rotation )
 {
     if ( rotation == d->rotation )
@@ -199,7 +207,7 @@ void TilesManager::setPixmap( const QPixmap *pixmap, const NormalizedRect &rect 
         // rotation before comparing to pixmap's size. This is to avoid
         // conversion issues. The pixmap request was made using an unrotated
         // rect.
-        QSize pixmapSize = pixmap->size();
+        QSize pixmapSize = pixmap->size() / pixmap->devicePixelRatioF();
         int w = width();
         int h = height();
         if ( d->rotation % 2 )
@@ -259,7 +267,8 @@ void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRe
                 delete tile.pixmap;
             }
             NormalizedRect rotatedRect = TilesManager::toRotatedRect( tile.rect, rotation );
-            tile.pixmap = new QPixmap( pixmap->copy( rotatedRect.geometry( width, height ).translated( -pixmapRect.topLeft() ) ) );
+            tile.pixmap = new QPixmap( pixmap->copy( rotatedRect.geometry( width * pixmap->devicePixelRatioF(), height * pixmap->devicePixelRatioF() ).translated( -pixmapRect.topLeft() ) ) );
+            tile.pixmap->setDevicePixelRatio(pixmap->devicePixelRatioF());
             tile.rotation = rotation;
             totalPixels += tile.pixmap->width()*tile.pixmap->height();
         }
@@ -314,7 +323,8 @@ void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRe
                 delete tile.pixmap;
             }
             NormalizedRect rotatedRect = TilesManager::toRotatedRect( tile.rect, rotation );
-            tile.pixmap = new QPixmap( pixmap->copy( rotatedRect.geometry( width, height ).translated( -pixmapRect.topLeft() ) ) );
+            tile.pixmap = new QPixmap( pixmap->copy( rotatedRect.geometry( width * pixmap->devicePixelRatioF(), height * pixmap->devicePixelRatioF() ).translated( -pixmapRect.topLeft() ) ) );
+            tile.pixmap->setDevicePixelRatio(pixmap->devicePixelRatioF());
             tile.rotation = rotation;
             totalPixels += tile.pixmap->width()*tile.pixmap->height();
             tile.dirty = false;
@@ -421,7 +431,8 @@ void TilesManager::Private::tilesAt( const NormalizedRect &rect, TileNode &tile,
                     h = tile.pixmap->width();
                     break;
             }
-            QPixmap *rotatedPixmap = new QPixmap( w, h );
+            QPixmap *rotatedPixmap = new QPixmap( w * tile.pixmap->width(), h  * tile.pixmap->height() );
+            rotatedPixmap->setDevicePixelRatio(tile.pixmap->devicePixelRatioF());
             QPainter p( rotatedPixmap );
             p.rotate( angleToRotate );
             p.translate( xOffset, yOffset );

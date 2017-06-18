@@ -79,6 +79,7 @@ class PixmapRequestPrivate
         int mPageNumber;
         int mWidth;
         int mHeight;
+        qreal mDpr;
         int mPriority;
         int mFeatures;
         bool mForce : 1;

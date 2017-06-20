@@ -28,6 +28,7 @@
   <name xml:lang="sr-ijekavian">Окулар</name>
   <name xml:lang="sr-ijekavianlatin">Okular</name>
   <name xml:lang="sv">Okular</name>
+  <name xml:lang="tr">Okular</name>
   <name xml:lang="uk">Okular</name>
   <name xml:lang="x-test">xxOkularxx</name>
   <name xml:lang="zh-CN">Okular</name>
@@ -57,6 +58,7 @@
   <summary xml:lang="sr-ijekavian">Приказивач докумената</summary>
   <summary xml:lang="sr-ijekavianlatin">Prikazivač dokumenata</summary>
   <summary xml:lang="sv">Dokumentvisare</summary>
+  <summary xml:lang="tr">Belge Görüntüleyicisi</summary>
   <summary xml:lang="uk">Програма для перегляду документів</summary>
   <summary xml:lang="x-test">xxDocument Viewerxx</summary>
   <summary xml:lang="zh-CN">文档查看器</summary>
@@ -88,6 +90,7 @@
     <p xml:lang="sr-ijekavian">Окулар је универзални приказивач докумената, који развија КДЕ. Ради на већем броју платформи, укључујући Линукс, Виндоуз, МекОС X, БСД‑ове, итд.</p>
     <p xml:lang="sr-ijekavianlatin">Okular je univerzalni prikazivač dokumenata, koji razvija KDE. Radi na većem broju platformi, uključujući Linux, Windows, MacOS X, BSD‑ove, itd.</p>
     <p xml:lang="sv">Okular är en universell dokumentvisare utvecklad av KDE. Okular fungerar på flera plattformar, inklusive men inte begränsat till Linux, Windows, Max OS X, *BSD, etc.</p>
+    <p xml:lang="tr">Okular, KDE tarafından geliştirilmiş evrensel bir belge görüntüleyicidir. Okular, Linux, Windows, Mac OS X, *BSD, vb. dahil ancak bunlarla sınırlı olmayan birden çok platformda çalışır.</p>
     <p xml:lang="uk">Okular є універсальною програмою для перегляду документів, розробленою KDE. Okular може працювати на багатьох програмних платформах, зокрема Linux, Windows, Mac OS X, *BSD тощо.</p>
     <p xml:lang="x-test">xxOkular is a universal document viewer developed by KDE. Okular works on multiple platforms, including but not limited to Linux, Windows, Mac OS X, *BSD, etc.xx</p>
     <p xml:lang="zh-CN">Okular 是由 KDE 开发的通用文档查看器。Okular 可在多个平台上运行，包括但不是限于 Linux，Windows，Mac OS X，* BSD，等。</p>
@@ -117,6 +120,7 @@
     <p xml:lang="sr-ijekavian">Могућности:</p>
     <p xml:lang="sr-ijekavianlatin">Mogućnosti:</p>
     <p xml:lang="sv">Funktioner:</p>
+    <p xml:lang="tr">Özellikler:</p>
     <p xml:lang="uk">Можливості:</p>
     <p xml:lang="x-test">xxFeatures:xx</p>
     <p xml:lang="zh-CN">功能：</p>
@@ -147,6 +151,7 @@
       <li xml:lang="sr-ijekavian">Подржани формати: ПДФ, постскрипт, ТИФФ, ЦХМ, ДјВу, слике, ДВИ, ИксПС, ОДТ, фикшнбук, стрипови, Плакер, ЕПУБ, факс.</li>
       <li xml:lang="sr-ijekavianlatin">Podržani formati: PDF, PostScript, TIFF, CHM, DjVu, slike, DVI, XPS, ODT, FictionBook, stripovi, Plucker, EPUB, faks.</li>
       <li xml:lang="sv">Format som stöds: PDF, PS, Tiff, CHM, DjVu, bilder, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
+      <li xml:lang="tr">Desteklenen Biçimler: PDF, PS, Tiff, CHM, DjVu, Resimler, DVI, XPS, ODT, Kurgu Kitabı, Çizgi Roman Kitabı, Plucker, EPub, Faks</li>
       <li xml:lang="uk">Підтримувані формати: PDF, PS, Tiff, CHM, DjVu, зображення, DVI, XPS, ODT, Fiction Book, комікси, Plucker, EPub, факси.</li>
       <li xml:lang="x-test">xxSupported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Faxxx</li>
       <li xml:lang="zh-CN">支持的格式︰ PDF，PS，Tiff，CHM，DjVu，图片，DVI，XPS，ODT，FictionBook，漫画书，Plucker，EPub，传真</li>
@@ -175,6 +180,7 @@
       <li xml:lang="sr-ijekavian">Бочна трака са садржајем, сличицама, рецензијама и обележивачима.</li>
       <li xml:lang="sr-ijekavianlatin">Bočna traka sa sadržajem, sličicama, recenzijama i obeleživačima.</li>
       <li xml:lang="sv">Sidorad med innehåll, miniatyrbilder, granskningar och bokmärken</li>
+      <li xml:lang="tr">İçindekiler, küçük resimler, incelemeler ve yer imleri bulunan kenar çubuğu</li>
       <li xml:lang="uk">Бічні панелі зі списками змісту, мініатюрами сторінок, можливість рецензування та додавання закладок.</li>
       <li xml:lang="x-test">xxSidebar with contents, thumbnails, reviews and bookmarksxx</li>
       <li xml:lang="zh-CN">目录，缩略图，批注和书签侧边栏</li>
@@ -203,6 +209,7 @@
       <li xml:lang="sr-ijekavian">Подршка за тумачења.</li>
       <li xml:lang="sr-ijekavianlatin">Podrška za tumačenja.</li>
       <li xml:lang="sv">Stöd för kommentarer</li>
+      <li xml:lang="tr">Ek açıklamalar desteği</li>
       <li xml:lang="uk">Підтримка анотування.</li>
       <li xml:lang="x-test">xxAnnotations supportxx</li>
       <li xml:lang="zh-CN">支持批注</li>

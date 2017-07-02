@@ -497,7 +497,7 @@ void Shell::setFullScreen( bool useFullScreen )
 
 void Shell::showEvent(QShowEvent *e)
 {
-    if (m_showMenuBarAction)
+    if (!menuBar()->isNativeMenuBar() && m_showMenuBarAction)
         m_showMenuBarAction->setChecked( menuBar()->isVisible() );
 
     KParts::MainWindow::showEvent(e);

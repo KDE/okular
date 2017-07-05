@@ -72,8 +72,8 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     int croppedWidth = scaledCrop.width();
     int croppedHeight = scaledCrop.height();
 
-    int dScaledWidth = floor(scaledWidth * dpr) + 1;
-    int dScaledHeight = floor(scaledHeight * dpr) + 1;
+    int dScaledWidth = ceil(scaledWidth * dpr);
+    int dScaledHeight = ceil(scaledHeight * dpr);
     const QRect dLimits(QRectF(limits.x() * dpr, limits.y() * dpr, limits.width() * dpr, limits.height() * dpr).toAlignedRect());
 
     QColor paperColor = Qt::white;
@@ -345,7 +345,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
             // 4B.1. draw the page pixmap: normal or scaled
             QPixmap scaledCroppedPixmap = pixmap->scaled(dScaledWidth, dScaledHeight).copy(dLimitsInPixmap);
             scaledCroppedPixmap.setDevicePixelRatio(dpr);
-            p.drawPixmap( limits.topLeft(), scaledCroppedPixmap, QRect(0, 0, dLimitsInPixmap.width(),dLimitsInPixmap.height()));
+            p.drawPixmap( 0, 0, scaledCroppedPixmap );
         }
 
         p.end();

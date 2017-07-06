@@ -276,8 +276,10 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                     if ( tile.pixmap()->width() == (dTileRect.width()) && tile.pixmap()->height() == (dTileRect.height()) ) {
                         destPainter->drawPixmap( limitsInTile.topLeft(), *(tile.pixmap()),
                                 dLimitsInTile.translated( -dTileRect.topLeft() ) );
+                        qCWarning(OkularUiDebug) << "PagePainter: 4AT1";
                     } else {
                         destPainter->drawPixmap( tileRect, *(tile.pixmap()));
+                        qCWarning(OkularUiDebug) << "PagePainter: 4AT2";
                     }
                 }
                 tIt++;
@@ -287,6 +289,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
         {
             QPixmap scaledCroppedPixmap = pixmap->scaled(dScaledWidth, dScaledHeight).copy(dLimitsInPixmap);
             destPainter->drawPixmap( limits.topLeft(), scaledCroppedPixmap, QRectF(0, 0, dLimits.width(),dLimits.height()));
+            qCWarning(OkularUiDebug) << "PagePainter: 4AN";
         }
 
         // 4A.2. active painter is the one passed to this method
@@ -316,8 +319,10 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
             {
                 const Okular::Tile &tile = *tIt;
                 QRect tileRect = tile.rect().geometry( scaledWidth, scaledHeight ).translated( -scaledCrop.topLeft() );
-                QRectF dTileRect(tileRect.x() * dpr, tileRect.y() * dpr, tileRect.width() * dpr, tileRect.height() * dpr);
+                QRect dTileRect(QRectF(tileRect.x() * dpr, tileRect.y() * dpr, tileRect.width() * dpr, tileRect.height() * dpr).toAlignedRect());
                 QRect limitsInTile = limits & tileRect;
+                QRect dLimitsInTile = dLimits & dTileRect;
+
                 if ( !limitsInTile.isEmpty() )
                 {
                     if ( !tile.pixmap()->hasAlpha() )
@@ -325,16 +330,18 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
 
                     if ( tile.pixmap()->width() == dTileRect.width() && tile.pixmap()->height() == dTileRect.height() )
                     {
+                        qCWarning(OkularUiDebug) << "PagePainter: 4BT1";
                         p.drawPixmap( limitsInTile.translated( -limits.topLeft() ).topLeft(), *(tile.pixmap()),
-                                limitsInTile.translated( -tileRect.topLeft() ) );
+                                dLimitsInTile.translated( -dTileRect.topLeft() ) );
                     }
                     else
                     {
-                        double xScale = tile.pixmap()->width() / dTileRect.width();
-                        double yScale = tile.pixmap()->height() / dTileRect.height();
+                        qCWarning(OkularUiDebug) << "PagePainter: 4BT2";
+                        double xScale = tile.pixmap()->width() / tileRect.width();
+                        double yScale = tile.pixmap()->height() / tileRect.height();
                         QTransform transform( xScale, 0, 0, yScale, 0, 0 );
                         p.drawPixmap( limitsInTile.translated( -limits.topLeft() ), *(tile.pixmap()),
-                                transform.mapRect( limitsInTile ).translated( -transform.mapRect( tileRect ).topLeft() ) );
+                                transform.mapRect( dLimitsInTile ).translated( -transform.mapRect( dTileRect ).topLeft() ) );
                     }
                 }
                 ++tIt;
@@ -343,6 +350,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
         else
         {
             // 4B.1. draw the page pixmap: normal or scaled
+            qCWarning(OkularUiDebug) << "PagePainter: 4BN";
             QPixmap scaledCroppedPixmap = pixmap->scaled(dScaledWidth, dScaledHeight).copy(dLimitsInPixmap);
             scaledCroppedPixmap.setDevicePixelRatio(dpr);
             p.drawPixmap( 0, 0, scaledCroppedPixmap );

@@ -361,7 +361,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
             qDebug() << "PagePainter: 4BN: " << r;
             QPixmap scaledCroppedPixmap = pixmap->scaled(dScaledWidth, dScaledHeight).copy(dLimitsInPixmap);
             scaledCroppedPixmap.setDevicePixelRatio(dpr);
-            scaledCroppedPixmap.save("/tmp/paint/p_" + QString::number(page->number()) + "_" + r + "_4bn.png");
+            //scaledCroppedPixmap.save("/tmp/paint/p_" + QString::number(page->number()) + "_" + r + "_4bn.png");
             p.drawPixmap( 0, 0, scaledCroppedPixmap );
         }
 

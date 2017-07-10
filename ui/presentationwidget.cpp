@@ -826,14 +826,14 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
     for ( uint i = 0; i < numRects; i++ )
     {
         const QRect & r = allRects[i];
-        const QRect dR(QRectF(r.x() * dpr, r.y() * dpr, r.width() * dpr, r.height() * dpr).toAlignedRect());
         if ( !r.isValid() )
             continue;
 #ifdef ENABLE_PROGRESS_OVERLAY
-        if ( Okular::Settings::slidesShowProgress() && r.intersects( m_overlayGeometry ) )
+        const QRect dR(QRectF(r.x() * dpr, r.y() * dpr, r.width() * dpr, r.height() * dpr).toAlignedRect());
+        if ( Okular::Settings::slidesShowProgress() && dR.intersects( m_overlayGeometry ) )
         {
             // backbuffer the overlay operation
-            QPixmap backPixmap( r.size() * dpr );
+            QPixmap backPixmap( dR.size() );
             backPixmap.setDevicePixelRatio( dpr );
             QPainter pixPainter( &backPixmap );
 
@@ -841,14 +841,17 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
             pixPainter.drawPixmap( QPoint(0,0), m_lastRenderedPixmap, dR );
 
             // then blend the overlay (a piece of) over the background
-            QRect ovr = m_overlayGeometry.intersected( r );
-            pixPainter.drawPixmap( ovr.left() - r.left(), ovr.top() - r.top(),
-                m_lastRenderedOverlay, ovr.left() - m_overlayGeometry.left(),
-                ovr.top() - m_overlayGeometry.top(), ovr.width(), ovr.height() );
+            m_lastRenderedOverlay.save("/tmp/overlay.png");
+            QRect ovr = m_overlayGeometry.intersected( dR );
+            pixPainter.drawPixmap( (ovr.left() - r.left()), (ovr.top() - r.top()),
+                m_lastRenderedOverlay, (ovr.left() - m_overlayGeometry.left()),
+                (ovr.top() - m_overlayGeometry.top()), ovr.width(), ovr.height() );
 
             // finally blit the pixmap to the screen
             pixPainter.end();
-            painter.drawPixmap( r.topLeft(), backPixmap, backPixmap.rect() );
+            const QRect backPixmapRect = backPixmap.rect();
+            const QRect dBackPixmapRect(QRectF(backPixmapRect.x() * dpr, backPixmapRect.y() * dpr, backPixmapRect.width() * dpr, backPixmapRect.height() * dpr).toAlignedRect());
+            painter.drawPixmap( r.topLeft(), backPixmap, dBackPixmapRect );
         } else
 #endif
         // copy the rendered pixmap to the screen
@@ -1011,7 +1014,7 @@ void PresentationWidget::generatePage( bool disableTransition )
     if ( m_lastRenderedPixmap.isNull() )
     {
         qreal dpr = qApp->devicePixelRatio();
-        m_lastRenderedPixmap = QPixmap( m_width * dpr, m_height * dpr );
+        m_lastRenderedPixmap = QPixmap( m_width, m_height );
         m_lastRenderedPixmap.setDevicePixelRatio(dpr);
 
         m_previousPagePixmap = QPixmap();
@@ -1068,6 +1071,8 @@ void PresentationWidget::generatePage( bool disableTransition )
 
 void PresentationWidget::generateIntroPage( QPainter & p )
 {
+    qreal dpr = qApp->devicePixelRatio();
+    
     // use a vertical gray gradient background
     int blend1 = m_height / 10,
         blend2 = 9 * m_height / 10;
@@ -1083,7 +1088,8 @@ void PresentationWidget::generateIntroPage( QPainter & p )
     }
 
     // draw okular logo in the four corners
-    QPixmap logo = DesktopIcon( QStringLiteral("okular"), 64 );
+    QPixmap logo = DesktopIcon( QStringLiteral("okular"), 64 * dpr );
+    logo.setDevicePixelRatio( dpr );
     if ( !logo.isNull() )
     {
         p.drawPixmap( 5, 5, logo );
@@ -1154,6 +1160,8 @@ inline int qt_div255(int x) { return (x + (x>>8) + 0x80) >> 8; }
 void PresentationWidget::generateOverlay()
 {
 #ifdef ENABLE_PROGRESS_OVERLAY
+    qreal dpr = qApp->devicePixelRatio();
+    
     // calculate overlay geometry and resize pixmap if needed
     int side = m_width / 16;
     m_overlayGeometry.setRect( m_width - side - 4, 4, side, side );
@@ -1163,6 +1171,7 @@ void PresentationWidget::generateOverlay()
     // painter on the double sized pixmap.
     side *= 2;
     QPixmap doublePixmap( side, side );
+    doublePixmap.setDevicePixelRatio( dpr );
     doublePixmap.fill( Qt::black );
     QPainter pixmapPainter( &doublePixmap );
     pixmapPainter.setRenderHints( QPainter::Antialiasing );
@@ -1208,7 +1217,9 @@ void PresentationWidget::generateOverlay()
     // end drawing pixmap and halve image
     pixmapPainter.end();
     QImage image( doublePixmap.toImage().scaled( side / 2, side / 2, Qt::IgnoreAspectRatio, Qt::SmoothTransformation ) );
+    image.setDevicePixelRatio( dpr );
     image = image.convertToFormat( QImage::Format_ARGB32 );
+    image.setDevicePixelRatio( dpr );
 
     // draw circular shadow using the same technique
     doublePixmap.fill( Qt::black );
@@ -1218,7 +1229,8 @@ void PresentationWidget::generateOverlay()
     pixmapPainter.drawEllipse( 0, 0, side, side );
     pixmapPainter.end();
     QImage shadow( doublePixmap.toImage().scaled( side / 2, side / 2, Qt::IgnoreAspectRatio, Qt::SmoothTransformation ) );
-
+    shadow.setDevicePixelRatio( dpr );
+    
     // generate a 2 colors pixmap using mixing shadow (made with highlight color)
     // and image (made with highlightedText color)
     QPalette pal = palette();
@@ -1255,6 +1267,7 @@ void PresentationWidget::generateOverlay()
             data[i] = qRgba( cR, cG, cB, cA );
     }
     m_lastRenderedOverlay = QPixmap::fromImage( image );
+    m_lastRenderedOverlay.setDevicePixelRatio( dpr );
 
     // start the autohide timer
     //repaint( m_overlayGeometry ); // toggle with next line
@@ -1682,8 +1695,8 @@ void PresentationWidget::applyNewScreenSize( const QSize & oldSize )
     if ( size() == oldSize )
         return;
 
-    m_width = width();
-    m_height = height();
+    m_width = width() * qApp->devicePixelRatio();
+    m_height = height() * qApp->devicePixelRatio();
 
     // update the frames
     QVector< PresentationFrame * >::const_iterator fIt = m_frames.constBegin(), fEnd = m_frames.constEnd();

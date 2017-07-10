@@ -777,7 +777,7 @@ void PresentationWidget::mouseMoveEvent( QMouseEvent * e )
 
 void PresentationWidget::paintEvent( QPaintEvent * pe )
 {
-    qreal dpr = 1.7;
+    qreal dpr = devicePixelRatioF();
     
     //QPainter painter( this );
     //painter.fillRect( pe->rect(), Qt::green );
@@ -830,7 +830,7 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
             continue;
 #ifdef ENABLE_PROGRESS_OVERLAY
         const QRect dR(QRectF(r.x() * dpr, r.y() * dpr, r.width() * dpr, r.height() * dpr).toAlignedRect());
-        if ( Okular::Settings::slidesShowProgress() && dR.intersects( m_overlayGeometry ) )
+        if ( Okular::Settings::slidesShowProgress() && r.intersects( m_overlayGeometry ) )
         {
             // backbuffer the overlay operation
             QPixmap backPixmap( dR.size() );
@@ -842,10 +842,10 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
 
             // then blend the overlay (a piece of) over the background
             m_lastRenderedOverlay.save("/tmp/overlay.png");
-            QRect ovr = m_overlayGeometry.intersected( dR );
+            QRect ovr = m_overlayGeometry.intersected( r );
             pixPainter.drawPixmap( (ovr.left() - r.left()), (ovr.top() - r.top()),
-                m_lastRenderedOverlay, (ovr.left() - m_overlayGeometry.left()),
-                (ovr.top() - m_overlayGeometry.top()), ovr.width(), ovr.height() );
+                m_lastRenderedOverlay, (ovr.left() - m_overlayGeometry.left()) * dpr,
+                (ovr.top() - m_overlayGeometry.top()) * dpr, ovr.width() * dpr, ovr.height() * dpr );
 
             // finally blit the pixmap to the screen
             pixPainter.end();
@@ -855,7 +855,7 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         } else
 #endif
         // copy the rendered pixmap to the screen
-            painter.drawPixmap( r.topLeft(), m_lastRenderedPixmap, r );
+            painter.drawPixmap( r.topLeft(), m_lastRenderedPixmap, dR );
         
         qDebug() << "m_lastRenderedPixmap DPR" << m_lastRenderedPixmap.devicePixelRatioF();
     }
@@ -1014,7 +1014,7 @@ void PresentationWidget::generatePage( bool disableTransition )
     if ( m_lastRenderedPixmap.isNull() )
     {
         qreal dpr = qApp->devicePixelRatio();
-        m_lastRenderedPixmap = QPixmap( m_width, m_height );
+        m_lastRenderedPixmap = QPixmap( m_width * dpr, m_height * dpr );
         m_lastRenderedPixmap.setDevicePixelRatio(dpr);
 
         m_previousPagePixmap = QPixmap();
@@ -1170,7 +1170,8 @@ void PresentationWidget::generateOverlay()
     // and the resulting image is smoothly scaled down. So here we open a
     // painter on the double sized pixmap.
     side *= 2;
-    QPixmap doublePixmap( side, side );
+    
+    QPixmap doublePixmap( side * dpr, side * dpr );
     doublePixmap.setDevicePixelRatio( dpr );
     doublePixmap.fill( Qt::black );
     QPainter pixmapPainter( &doublePixmap );
@@ -1216,7 +1217,7 @@ void PresentationWidget::generateOverlay()
 
     // end drawing pixmap and halve image
     pixmapPainter.end();
-    QImage image( doublePixmap.toImage().scaled( side / 2, side / 2, Qt::IgnoreAspectRatio, Qt::SmoothTransformation ) );
+    QImage image( doublePixmap.toImage().scaled( (side / 2) * dpr, (side / 2) * dpr, Qt::IgnoreAspectRatio, Qt::SmoothTransformation ) );
     image.setDevicePixelRatio( dpr );
     image = image.convertToFormat( QImage::Format_ARGB32 );
     image.setDevicePixelRatio( dpr );
@@ -1228,7 +1229,7 @@ void PresentationWidget::generateOverlay()
     pixmapPainter.setBrush( QColor( 0x80 ) );
     pixmapPainter.drawEllipse( 0, 0, side, side );
     pixmapPainter.end();
-    QImage shadow( doublePixmap.toImage().scaled( side / 2, side / 2, Qt::IgnoreAspectRatio, Qt::SmoothTransformation ) );
+    QImage shadow( doublePixmap.toImage().scaled( (side / 2) * dpr, (side / 2) * dpr, Qt::IgnoreAspectRatio, Qt::SmoothTransformation ) );
     shadow.setDevicePixelRatio( dpr );
     
     // generate a 2 colors pixmap using mixing shadow (made with highlight color)
@@ -1695,8 +1696,8 @@ void PresentationWidget::applyNewScreenSize( const QSize & oldSize )
     if ( size() == oldSize )
         return;
 
-    m_width = width() * qApp->devicePixelRatio();
-    m_height = height() * qApp->devicePixelRatio();
+    m_width = width();
+    m_height = height();
 
     // update the frames
     QVector< PresentationFrame * >::const_iterator fIt = m_frames.constBegin(), fEnd = m_frames.constEnd();

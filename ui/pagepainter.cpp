@@ -65,6 +65,8 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
 {
     qreal dpr = destPainter->device()->devicePixelRatioF();
 
+    qDebug() << "PagePainter dpr" << dpr;
+    
     /* Calculate the cropped geometry of the page */
     QRect scaledCrop = crop.geometry( scaledWidth, scaledHeight );
     const QRect dScaledCrop(QRectF(scaledCrop.x() * dpr, scaledCrop.y() * dpr, scaledCrop.width() * dpr, scaledCrop.height() * dpr).toAlignedRect());
@@ -76,6 +78,9 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     int dScaledHeight = ceil(scaledHeight * dpr);
     const QRect dLimits(QRectF(limits.x() * dpr, limits.y() * dpr, limits.width() * dpr, limits.height() * dpr).toAlignedRect());
 
+    qDebug() << "PagePainter dScaledWidth" << dScaledWidth << "dScaledHeight" << dScaledHeight;
+    qDebug() << "PagePainter dLimits" << dLimits;
+    
     QColor paperColor = Qt::white;
     QColor backgroundColor = paperColor;
     if ( Okular::SettingsCore::changeColors() )
@@ -123,6 +128,8 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                 destPainter->drawLine( 0, 0, croppedWidth-1, croppedHeight-1 );
                 destPainter->drawLine( 0, croppedHeight-1, croppedWidth-1, 0 );
             }
+            
+            qDebug() << "PagePainter !hasTilesManager";
             return;
         }
     }
@@ -350,9 +357,11 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
         else
         {
             // 4B.1. draw the page pixmap: normal or scaled
-            qCWarning(OkularUiDebug) << "PagePainter: 4BN";
+            QString r = QString::number(qrand());
+            qDebug() << "PagePainter: 4BN: " << r;
             QPixmap scaledCroppedPixmap = pixmap->scaled(dScaledWidth, dScaledHeight).copy(dLimitsInPixmap);
             scaledCroppedPixmap.setDevicePixelRatio(dpr);
+            scaledCroppedPixmap.save("/tmp/paint/p_" + QString::number(page->number()) + "_" + r + "_4bn.png");
             p.drawPixmap( 0, 0, scaledCroppedPixmap );
         }
 
@@ -894,6 +903,8 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     delete bufferedHighlights;
     delete bufferedAnnotations;
     delete unbufferedAnnotations;
+    
+    qDebug() << "PagePainter END";
 }
 
 

@@ -83,19 +83,22 @@ struct PresentationFrame
         qDeleteAll( videoWidgets );
     }
 
-    void recalcGeometry( int width, int height, float screenRatio )
+    void recalcGeometry( int width, int height, float screenRatio, qreal dpr )
     {
         // calculate frame geometry keeping constant aspect ratio
         float pageRatio = page->ratio();
-        int pageWidth = width,
-            pageHeight = height;
+        qreal pageWidth = width,
+              pageHeight = height;
         if ( pageRatio > screenRatio )
             pageWidth = (int)( (float)pageHeight / pageRatio );
         else
             pageHeight = (int)( (float)pageWidth * pageRatio );
-        geometry.setRect( ( width - pageWidth ) / 2,
-                          ( height - pageHeight ) / 2,
-                          pageWidth, pageHeight );
+        geometry.setRect( (( width - pageWidth ) / 2) /** dpr*/,
+                          (( height - pageHeight ) / 2) /** dpr*/,
+                          pageWidth /** dpr*/, pageHeight /** dpr */);
+        
+        qDebug() << "PW recalcGeometry geometry" << geometry;
+        
         Q_FOREACH ( VideoWidget *vw, videoWidgets )
         {
             const Okular::NormalizedRect r = vw->normGeometry();
@@ -364,7 +367,7 @@ void PresentationWidget::notifySetup( const QVector< Okular::Page * > & pageSet,
                 }
             }
         }
-        frame->recalcGeometry( m_width, m_height, screenRatio );
+        frame->recalcGeometry( m_width, m_height, screenRatio, qApp->devicePixelRatio() );
         // add the frame to the vector
         m_frames.push_back( frame );
     }
@@ -780,6 +783,11 @@ void PresentationWidget::mouseMoveEvent( QMouseEvent * e )
 
 void PresentationWidget::paintEvent( QPaintEvent * pe )
 {
+    qreal dpr = 1.7;
+    
+    //QPainter painter( this );
+    //painter.fillRect( pe->rect(), Qt::green );
+    
     if ( m_inBlackScreenMode )
     {
         QPainter painter( this );
@@ -791,7 +799,7 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
     {
         m_width = width();
         m_height = height();
-
+        
         connect(m_document, &Okular::Document::linkFind, this, &PresentationWidget::slotFind);
 
         // register this observer in document. events will come immediately
@@ -801,7 +809,8 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         if ( Okular::Settings::slidesShowSummary() )
             generatePage();
     }
-
+    qDebug() << "PW: width" << m_width << "height" << m_height;
+    
     // check painting rect consistancy
     QRect r = pe->rect().intersected( QRect( QPoint( 0, 0 ), geometry().size() ) );
     if ( r.isNull() )
@@ -814,6 +823,8 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         return;
     }
 
+    m_lastRenderedPixmap.save("/tmp/paint/pw_last.png");
+    
     // blit the pixmap to the screen
     QVector<QRect> allRects = pe->region().rects();
     uint numRects = allRects.count();
@@ -821,17 +832,19 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
     for ( uint i = 0; i < numRects; i++ )
     {
         const QRect & r = allRects[i];
+        const QRect dR(QRectF(r.x() * dpr, r.y() * dpr, r.width() * dpr, r.height() * dpr).toAlignedRect());
         if ( !r.isValid() )
             continue;
 #ifdef ENABLE_PROGRESS_OVERLAY
         if ( Okular::Settings::slidesShowProgress() && r.intersects( m_overlayGeometry ) )
         {
             // backbuffer the overlay operation
-            QPixmap backPixmap( r.size() );
+            QPixmap backPixmap( r.size() * dpr );
+            backPixmap.setDevicePixelRatio( dpr );
             QPainter pixPainter( &backPixmap );
 
             // first draw the background on the backbuffer
-            pixPainter.drawPixmap( QPoint(0,0), m_lastRenderedPixmap, r );
+            pixPainter.drawPixmap( QPoint(0,0), m_lastRenderedPixmap, dR );
 
             // then blend the overlay (a piece of) over the background
             QRect ovr = m_overlayGeometry.intersected( r );
@@ -845,7 +858,9 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         } else
 #endif
         // copy the rendered pixmap to the screen
-        painter.drawPixmap( r.topLeft(), m_lastRenderedPixmap, r );
+            painter.drawPixmap( r.topLeft(), m_lastRenderedPixmap, r );
+        
+        qDebug() << "m_lastRenderedPixmap DPR" << m_lastRenderedPixmap.devicePixelRatioF();
     }
 
     // paint drawings
@@ -1001,13 +1016,18 @@ void PresentationWidget::generatePage( bool disableTransition )
 {
     if ( m_lastRenderedPixmap.isNull() )
     {
-        m_lastRenderedPixmap = QPixmap( m_width, m_height );
+        qreal dpr = qApp->devicePixelRatio();
+        m_lastRenderedPixmap = QPixmap( m_width * dpr, m_height * dpr );
+        m_lastRenderedPixmap.setDevicePixelRatio(dpr);
+
         m_previousPagePixmap = QPixmap();
     }
     else
     {
         m_previousPagePixmap = m_lastRenderedPixmap;
     }
+    
+    
 
     // opens the painter over the pixmap
     QPainter pixmapPainter;
@@ -1116,6 +1136,9 @@ void PresentationWidget::generateContentsPage( int pageNum, QPainter & p )
 
     // draw the page using the shared PagePainter class
     int flags = PagePainter::Accessibility | PagePainter::Highlights | PagePainter::Annotations;
+    
+    qDebug() << "PW paintPageOnPainter" << geom.width() << geom.height() << geom;
+    
     PagePainter::paintPageOnPainter( &p, frame->page, this, flags,
                                      geom.width(), geom.height(), geom );
 
@@ -1390,6 +1413,7 @@ void PresentationWidget::requestPixmaps()
     QApplication::setOverrideCursor( QCursor( Qt::BusyCursor ) );
     // request the pixmap
     QLinkedList< Okular::PixmapRequest * > requests;
+    qDebug() << "PW PixmapRequest" << devicePixelRatioF();
     requests.push_back( new Okular::PixmapRequest( this, m_frameIndex, pixW, pixH, devicePixelRatioF(), PRESENTATION_PRIO, Okular::PixmapRequest::NoFeature ) );
     // restore cursor
     QApplication::restoreOverrideCursor();
@@ -1519,6 +1543,7 @@ void PresentationWidget::slotTransitionStep()
             QPainter pixmapPainter;
             m_currentPixmapOpacity += 1.0 / m_transitionSteps;
             m_lastRenderedPixmap = QPixmap( m_lastRenderedPixmap.size() );
+            m_lastRenderedPixmap.setDevicePixelRatio( qApp->devicePixelRatio() );
             m_lastRenderedPixmap.fill( Qt::transparent );
             pixmapPainter.begin( &m_lastRenderedPixmap );
             pixmapPainter.setCompositionMode( QPainter::CompositionMode_Source );
@@ -1671,7 +1696,7 @@ void PresentationWidget::applyNewScreenSize( const QSize & oldSize )
     const float screenRatio = (float)m_height / (float)m_width;
     for ( ; fIt != fEnd; ++fIt )
     {
-        (*fIt)->recalcGeometry( m_width, m_height, screenRatio );
+        (*fIt)->recalcGeometry( m_width, m_height, screenRatio, qApp->devicePixelRatio() );
     }
 
     if ( m_frameIndex != -1 )

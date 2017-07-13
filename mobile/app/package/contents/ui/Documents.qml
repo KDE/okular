@@ -19,7 +19,8 @@
 
 import QtQuick 2.1
 import QtQuick.Controls 1.3
-import org.kde.kirigami 1.0 as Kirigami
+import QtQuick.Controls 2.0 as QQC2
+import org.kde.kirigami 2.0 as Kirigami
 import Qt.labs.folderlistmodel 2.1
 
 Item {
@@ -35,7 +36,7 @@ Item {
         id: toolBarContent
         width: root.width
         height: searchField.height + Kirigami.Units.gridUnit
-        TextField {
+        QQC2.TextField {
             id: searchField
             anchors.centerIn: parent
             focus: true
@@ -79,7 +80,7 @@ Item {
                 height: visible ? implicitHeight : 0
                 onClicked: {
                     documentItem.path = model.filePath;
-                    globalDrawer.opened = false;
+                    globalDrawer.close();
                     applicationWindow().controlsVisible = false;
                 }
             }

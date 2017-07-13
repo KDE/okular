@@ -20,7 +20,7 @@
 import QtQuick 2.1
 import QtQuick.Controls 1.3
 import org.kde.okular 2.0 as Okular
-import org.kde.kirigami 1.0 as Kirigami
+import org.kde.kirigami 2.0 as Kirigami
 
 Kirigami.AbstractApplicationWindow {
     id: fileBrowserRoot
@@ -37,10 +37,12 @@ Kirigami.AbstractApplicationWindow {
     globalDrawer: Kirigami.OverlayDrawer {
         edge: Qt.LeftEdge
         contentItem: Documents {
-            implicitWidth: units.gridUnit * 20
+            implicitWidth: Kirigami.Units.gridUnit * 20
         }
     }
-    contextDrawer: OkularDrawer {}
+    contextDrawer: OkularDrawer {
+        drawerOpen: false
+    }
 
     Okular.DocumentItem {
         id: documentItem
@@ -65,7 +67,7 @@ Kirigami.AbstractApplicationWindow {
             }
 
             if (commandlineArguments.length == 0) {
-                globalDrawer.opened = true;
+                globalDrawer.open();
             }
         }
     }

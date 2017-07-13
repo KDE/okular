@@ -18,8 +18,10 @@
  */
 
 import QtQuick 2.1
+//still needed for icons in toolbuttons
 import QtQuick.Controls 1.3
-import org.kde.kirigami 1.0 as Kirigami
+import QtQuick.Controls 2.0 as QQC2
+import org.kde.kirigami 2.0 as Kirigami
 import org.kde.kquickcontrolsaddons 2.0
 import org.kde.okular 2.0 as Okular
 
@@ -45,10 +47,10 @@ Kirigami.OverlayDrawer {
 
         Connections {
             target: documentItem
-            onPathChanged: mainTabBar.currentTab = thumbnailsButton;
+            onPathChanged: thumbnailsButton.checked = true;
         }
 
-        ToolBar {
+        QQC2.ToolBar {
             id: tabsToolbar
             height: mainTabBar.height
             anchors {
@@ -69,7 +71,7 @@ Kirigami.OverlayDrawer {
                     ExclusiveGroup { id: tabPositionGroup }
                     ToolButton {
                         id: thumbnailsButton
-                        text: tabsToolbar.width > units.gridUnit * 30 ? i18n("Thumbnails") : ""
+                        text: tabsToolbar.width > Kirigami.Units.gridUnit * 30 ? i18n("Thumbnails") : ""
                         iconName: "view-preview"
                         checkable: true
                         //Hint for Plasma style
@@ -84,7 +86,7 @@ Kirigami.OverlayDrawer {
                     ToolButton {
                         id: tocButton
                         enabled: documentItem.tableOfContents.count > 0
-                        text: tabsToolbar.width > units.gridUnit * 30 ? i18n("Table of contents") : ""
+                        text: tabsToolbar.width > Kirigami.Units.gridUnit * 30 ? i18n("Table of contents") : ""
                         iconName: "view-table-of-contents-ltr"
                         checkable: true
                         property bool flat: false
@@ -98,7 +100,7 @@ Kirigami.OverlayDrawer {
                     ToolButton {
                         id: bookmarksButton
                         enabled: documentItem.bookmarkedPages.length > 0
-                        text: tabsToolbar.width > units.gridUnit * 30 ? i18n("Bookmarks") : ""
+                        text: tabsToolbar.width > Kirigami.Units.gridUnit * 30 ? i18n("Bookmarks") : ""
                         iconName: "bookmarks-organize"
                         checkable: true
                         property bool flat: false

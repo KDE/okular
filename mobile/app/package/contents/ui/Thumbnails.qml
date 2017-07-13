@@ -18,8 +18,8 @@
  */
 
 import QtQuick 2.1
-import QtQuick.Controls 1.3
-import org.kde.kirigami 1.0 as Kirigami
+import QtQuick.Controls 2.0
+import org.kde.kirigami 2.0 as Kirigami
 
 ThumbnailsBase {
     id: root
@@ -31,7 +31,7 @@ ThumbnailsBase {
         height: searchField.height
         TextField {
             id: searchField
-            enabled: documentItem.supportsSearch
+            enabled: documentItem ? documentItem.supportsSearch : false
             anchors.centerIn: parent
             onTextChanged: {
                 if (text.length > 2) {

@@ -19,7 +19,8 @@
 
 import QtQuick 2.1
 import QtQuick.Controls 1.3
-import org.kde.kirigami 1.0 as Kirigami
+import QtQuick.Controls 2.0 as QQC2
+import org.kde.kirigami 2.0 as Kirigami
 
 Kirigami.Page {
     id: root
@@ -30,11 +31,11 @@ Kirigami.Page {
     property alias contentY: flickable.contentY
     property alias contentHeight: flickable.contentHeight
 
-    ToolBar {
+    QQC2.ToolBar {
         id: toolBarContent
         width: root.width
         height: searchField.height
-        TextField {
+        QQC2.TextField {
             id: searchField
             anchors.centerIn: parent
         }

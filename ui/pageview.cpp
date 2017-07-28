@@ -1924,7 +1924,7 @@ void PageView::keyPressEvent( QKeyEvent * e )
                     slotAutoScroll();
                 return;
             }
-            // else fall trhough
+            // fallthrough
         default:
             e->ignore();
             return;

@@ -392,6 +392,7 @@ MHexpand(pagenode *pn, drawfunc df)
 	(*df)(runs, LineNum++, pn);
     }
     free(runs);
+    (void)EOLcnt; // make gcc happy
 }
 
 /* Expand group-3 1-dimensional data */
@@ -658,6 +659,7 @@ g4expand(pagenode *pn, drawfunc df)
 	break;
     }
     free(run0);
+    (void)EOLcnt; // make gcc happy
 }
 
 static const unsigned char zerotab[256] = {

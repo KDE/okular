@@ -423,6 +423,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
         case W4:
           WWtmp = readINT(ch - W0);
           currinf.data.w = ((long) (WWtmp *  current_dimconv));
+          // fallthrough
         case W0:
           if ((is_vfmacro == false) &&
               (currinf.fontp != 0) &&
@@ -440,6 +441,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
         case X4:
           XXtmp = readINT(ch - X0);
           currinf.data.x = ((long) (XXtmp *  current_dimconv));
+          // fallthrough
         case X0:
           if ((is_vfmacro == false)  &&
               (currinf.fontp != 0) &&
@@ -478,6 +480,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
         case Y4:
           YYtmp = readINT(ch - Y0);
           currinf.data.y    = ((long) (YYtmp *  current_dimconv));
+          // fallthrough
         case Y0:
           if ((is_vfmacro == false) &&
               (currinf.fontp != 0) &&
@@ -499,6 +502,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
         case Z4:
           ZZtmp = readINT(ch - Z0);
           currinf.data.z    = ((long) (ZZtmp *  current_dimconv));
+          // fallthrough
         case Z0:
           if ((is_vfmacro == false) &&
               (currinf.fontp != 0) &&

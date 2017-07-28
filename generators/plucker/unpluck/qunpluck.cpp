@@ -130,7 +130,7 @@ bool QUnpluck::open( const QString &fileName )
         return false;
     }
 
-    bool status = true;
+//     bool status = true;
 
     mInfo.insert( QStringLiteral("name"), QString::fromLocal8Bit(plkr_GetName( mDocument ) ));
     mInfo.insert( QStringLiteral("title"), QString::fromLocal8Bit(plkr_GetTitle( mDocument ) ));
@@ -141,7 +141,7 @@ bool QUnpluck::open( const QString &fileName )
 
     int number = GetNextRecordNumber();
     while ( number > 0 ) {
-        status = TranscribeRecord( number );
+        /*status = */TranscribeRecord( number );
         number = GetNextRecordNumber ();
     }
 
@@ -151,7 +151,7 @@ bool QUnpluck::open( const QString &fileName )
 
     number = GetNextRecordNumber();
     while ( number > 0 ) {
-        status = TranscribeRecord( number );
+        /*status = */TranscribeRecord( number );
         number = GetNextRecordNumber ();
     }
 
@@ -527,29 +527,29 @@ bool QUnpluck::TranscribeTableRecord
     unsigned char*  ptr = &bytes[24];
     unsigned char*  end;
 //    char*           align_names[] = { "left", "right", "center" };
-    bool            in_row = false;
-    int             cols;
+//     bool            in_row = false;
+//     int             cols;
     int             size;
-    int             rows;
-    int             border;
+//     int             rows;
+//     int             border;
     int             record_id;
-    int             align;
+//     int             align;
     int             text_len;
-    int             colspan;
-    int             rowspan;
+//     int             colspan;
+//     int             rowspan;
     int             font = 0;
     int             style = 0;
     int             fctype;
     int             fclen;
-    long            border_color;
-    long            link_color;
+//     long            border_color;
+//     long            link_color;
 
     size = (bytes[8] << 8) + bytes[9];
-    cols = (bytes[10] << 8) + bytes[11];
-    rows = (bytes[12] << 8) + bytes[13];
-    border = bytes[15];
-    border_color = (bytes[17] << 16) + (bytes[18] << 8) + (bytes[19] << 8);
-    link_color = (bytes[21] << 16) + (bytes[22] << 8) + (bytes[23] << 8);
+//     cols = (bytes[10] << 8) + bytes[11];
+//     rows = (bytes[12] << 8) + bytes[13];
+//     border = bytes[15];
+//     border_color = (bytes[17] << 16) + (bytes[18] << 8) + (bytes[19] << 8);
+//     link_color = (bytes[21] << 16) + (bytes[22] << 8) + (bytes[23] << 8);
 
     end = ptr + size - 1;
 /**
@@ -568,14 +568,14 @@ bool QUnpluck::TranscribeTableRecord
                             if (in_row)
                                 output += QString( "</TR>\n" );
                             output += QString( "<TR>\n" );
-                            */
                             in_row = true;
+                            */
                             ptr += fclen;
                             break;
                         case 9:        /* NEW_CELL */
-                            align = ptr[2];
-                            colspan = ptr[5];
-                            rowspan = ptr[6];
+//                             align = ptr[2];
+//                             colspan = ptr[5];
+//                             rowspan = ptr[6];
                             /**
                             output += QString( "<TD align=\"%1\" colspan=%2 "
                                      "rowspan=%3 bordercolor=\"#\">" ).arg( 
@@ -670,11 +670,11 @@ bool QUnpluck::TranscribeTextRecord
     int             data_len;
     int             current_font;
     int             record_index;
-    int             current_alignment;
-    int             current_left_margin;
-    int             current_right_margin;
+//     int             current_alignment;
+//     int             current_left_margin;
+//     int             current_right_margin;
     int             nparagraphs;
-    long            current_color;
+//     long            current_color;
 
     record_index = id;
 
@@ -742,13 +742,13 @@ bool QUnpluck::TranscribeTextRecord
 
         /* at the beginning of a paragraph, we start with a clean graphics context */
         current_font = 0;
-        current_alignment = 0;
-        current_color = 0;
+//         current_alignment = 0;
+//         current_color = 0;
         current_italic = false;
         current_underline = false;
         current_struckthrough = false;
-        current_left_margin = 0;
-        current_right_margin = 0;
+//         current_left_margin = 0;
+//         current_right_margin = 0;
 
         for (para_start = ptr, textlen = 0; (ptr - para_start) < para_len;) {
 
@@ -980,7 +980,7 @@ bool QUnpluck::TranscribeTextRecord
                     context->cursor->setCharFormat( charFormat );
                 }
                 else if (fctype == PLKR_TFC_ALIGN) {
-                    current_alignment = 0;
+//                     current_alignment = 0;
 
                     if (*ptr < 4) {
                         QTextBlockFormat format( context->cursor->blockFormat() );
@@ -997,7 +997,7 @@ bool QUnpluck::TranscribeTextRecord
                         context->cursor->insertBlock( format );
                         context->cursor->setCharFormat( charFormat );
 
-                        current_alignment = (*ptr) + 1;
+//                         current_alignment = (*ptr) + 1;
                     }
 
                 }
@@ -1044,8 +1044,8 @@ bool QUnpluck::TranscribeTextRecord
                     }
 #endif
 
-                    current_left_margin = ptr[0];
-                    current_right_margin = ptr[1];
+//                     current_left_margin = ptr[0];
+//                     current_right_margin = ptr[1];
 
                 }
                 else if (fctype == PLKR_TFC_COLOR) {
@@ -1054,8 +1054,8 @@ bool QUnpluck::TranscribeTextRecord
                     /*
                     fprintf (fp, "<!-- color=\"#%02x%02x%02x\" -->",
                              ptr[0], ptr[1], ptr[2]);*/
-                    current_color =
-                        (ptr[0] << 16) + (ptr[1] << 8) + ptr[2];
+//                     current_color =
+//                         (ptr[0] << 16) + (ptr[1] << 8) + ptr[2];
 
                 } else if (fctype == PLKR_TFC_IMAGE || fctype == PLKR_TFC_IMAGE2) {
                     QTextCharFormat format = context->cursor->charFormat();

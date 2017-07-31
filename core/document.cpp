@@ -1316,7 +1316,7 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
             const QPixmap *pixmap = r->page()->_o_nearestPixmap( r->observer(), r->width(), r->height(), r->devicePixelRatio() );
             if ( pixmap )
             {
-                tilesManager = new TilesManager( r->pageNumber(), pixmap->width() / pixmap->devicePixelRatioF(), pixmap->height() / pixmap->devicePixelRatioF(), r->page()->rotation() );
+                tilesManager = new TilesManager( r->pageNumber(), pixmap->width(), pixmap->height(), r->page()->rotation() );
                 tilesManager->setPixmap( pixmap, NormalizedRect( 0, 0, 1, 1 ) );
                 tilesManager->setSize( r->width(), r->height() );
             }
@@ -1527,7 +1527,7 @@ void DocumentPrivate::refreshPixmaps( int pageNumber )
         QSize size = (*it).m_pixmap->size();
         qreal dpr = (*it).m_pixmap->devicePixelRatioF();
 
-        PixmapRequest * p = new PixmapRequest( it.key(), pageNumber, size.width() / dpr, size.height() / dpr, dpr, 1, PixmapRequest::Asynchronous );
+        PixmapRequest * p = new PixmapRequest( it.key(), pageNumber, size.width(), size.height(), dpr, 1, PixmapRequest::Asynchronous );
         p->d->mForce = true;
         requestedPixmaps.push_back( p );
     }

@@ -974,7 +974,7 @@ const QPixmap * Page::_o_nearestPixmap( DocumentObserver *observer, int w, int h
     QMap< DocumentObserver*, PagePrivate::PixmapObject >::const_iterator itPixmap = d->m_pixmaps.constFind( observer );
     if ( itPixmap != d->m_pixmaps.constEnd() ) {
         pixmap = itPixmap.value().m_pixmap;
-        pixmap->setDevicePixelRatio(dpr);
+        //pixmap->setDevicePixelRatio(dpr);
     // else find the closest match using pixmaps of other IDs (great optim!)
     }
     else if ( !d->m_pixmaps.isEmpty() )
@@ -983,7 +983,7 @@ const QPixmap * Page::_o_nearestPixmap( DocumentObserver *observer, int w, int h
         QMap< DocumentObserver*, PagePrivate::PixmapObject >::const_iterator it = d->m_pixmaps.constBegin(), end = d->m_pixmaps.constEnd();
         for ( ; it != end; ++it )
         {
-            int pixWidth = (*it).m_pixmap->width() / (*it).m_pixmap->devicePixelRatioF(),
+            int pixWidth = (*it).m_pixmap->width() /*/ (*it).m_pixmap->devicePixelRatioF()*/,
                 distance = pixWidth > w ? pixWidth - w : w - pixWidth;
             if ( minDistance == -1 || distance < minDistance )
             {

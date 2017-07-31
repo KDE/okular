@@ -14,6 +14,7 @@
 
 #include <qeventloop.h>
 #include <QtPrintSupport/QPrinter>
+#include <QApplication>
 
 #include <QtCore/QDebug>
 #include <QIcon>
@@ -103,7 +104,7 @@ void GeneratorPrivate::pixmapGenerationFinished()
 
     const QImage& img = mPixmapGenerationThread->image();
     QPixmap *p = new QPixmap( QPixmap::fromImage( img ) );
-    p->setDevicePixelRatio( p->devicePixelRatioF() );
+    //p->setDevicePixelRatio( p->devicePixelRatioF() );
     request->page()->setPixmap( request->observer(), p, request->normalizedRect() );
     const int pageNumber = request->page()->number();
 
@@ -261,7 +262,7 @@ void Generator::generatePixmap( PixmapRequest *request )
 
     const QImage& img = image( request );
     QPixmap *p = new QPixmap( QPixmap::fromImage( img ) );
-    p->setDevicePixelRatio( img.devicePixelRatioF() );
+    //p->setDevicePixelRatio( img.devicePixelRatioF() );
     request->page()->setPixmap( request->observer(), p , request->normalizedRect() );
     const int pageNumber = request->page()->number();
 
@@ -289,7 +290,7 @@ QImage Generator::image( PixmapRequest *request )
 {
     Q_D( Generator );
     QImage image = d->image( request );
-    image.setDevicePixelRatio( request->devicePixelRatio() );
+    //image.setDevicePixelRatio( request->devicePixelRatio() );
     return image;
 }
 
@@ -496,8 +497,8 @@ PixmapRequest::PixmapRequest( DocumentObserver *observer, int pageNumber, int wi
 {
     d->mObserver = observer;
     d->mPageNumber = pageNumber;
-    d->mWidth = width * dpr;
-    d->mHeight = height * dpr;
+    d->mWidth = width * qApp->devicePixelRatio();
+    d->mHeight = height * qApp->devicePixelRatio();
     d->mDpr = dpr;
     d->mPriority = priority;
     d->mFeatures = features;

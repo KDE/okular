@@ -344,8 +344,8 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                     else
                     {
                         qCWarning(OkularUiDebug) << "PagePainter: 4BT2";
-                        double xScale = tile.pixmap()->width() / tileRect.width();
-                        double yScale = tile.pixmap()->height() / tileRect.height();
+                        double xScale = tile.pixmap()->width() / (double)dTileRect.width();
+                        double yScale = tile.pixmap()->height() / (double)dTileRect.height();
                         QTransform transform( xScale, 0, 0, yScale, 0, 0 );
                         p.drawPixmap( limitsInTile.translated( -limits.topLeft() ), *(tile.pixmap()),
                                 transform.mapRect( dLimitsInTile ).translated( -transform.mapRect( dTileRect ).topLeft() ) );

@@ -43,8 +43,8 @@
 /** PageViewItem     */
 /*********************/
 
-PageViewItem::PageViewItem( const Okular::Page * page, qreal dpr )
-    : m_page( page ), m_dpr( dpr ), m_zoomFactor( 1.0 ), m_visible( true ),
+PageViewItem::PageViewItem( const Okular::Page * page )
+    : m_page( page ), m_zoomFactor( 1.0 ), m_visible( true ),
     m_formsVisible( false ), m_crop( 0., 0., 1., 1. )
 {
 }

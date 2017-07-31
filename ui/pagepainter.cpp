@@ -65,8 +65,6 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
 {
     qreal dpr = destPainter->device()->devicePixelRatioF();
 
-    qDebug() << "PagePainter dpr" << dpr;
-    
     /* Calculate the cropped geometry of the page */
     QRect scaledCrop = crop.geometry( scaledWidth, scaledHeight );
     const QRect dScaledCrop(QRectF(scaledCrop.x() * dpr, scaledCrop.y() * dpr, scaledCrop.width() * dpr, scaledCrop.height() * dpr).toAlignedRect());
@@ -78,9 +76,6 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     int dScaledHeight = ceil(scaledHeight * dpr);
     const QRect dLimits(QRectF(limits.x() * dpr, limits.y() * dpr, limits.width() * dpr, limits.height() * dpr).toAlignedRect());
 
-    qDebug() << "PagePainter dScaledWidth" << dScaledWidth << "dScaledHeight" << dScaledHeight;
-    qDebug() << "PagePainter dLimits" << dLimits;
-    
     QColor paperColor = Qt::white;
     QColor backgroundColor = paperColor;
     if ( Okular::SettingsCore::changeColors() )
@@ -109,17 +104,12 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     {
         /** 1 - RETRIEVE THE 'PAGE+ID' PIXMAP OR A SIMILAR 'PAGE' ONE **/
         const QPixmap *p = 0;
-        
-        p = page->_o_nearestPixmap( observer, dScaledWidth, dScaledHeight, dpr );
+
+        p = page->_o_nearestPixmap( observer, dScaledWidth, dScaledHeight );
         if ( p != NULL ) {
-            qDebug() << "PagePainter PIXMAP IS NOT NULL";
             pixmap = p->copy();
             pixmap.setDevicePixelRatio( qApp->devicePixelRatio() );
-        } else {
-            qDebug() << "PagePainter PIXMAP IS NULL";
         }
-        
-        //pixmap.setDevicePixelRatio( qApp->devicePixelRatio() );
 
         /** 1B - IF NO PIXMAP, DRAW EMPTY PAGE **/
         double pixmapRescaleRatio = !pixmap.isNull() ? dScaledWidth / (double)pixmap.width() : -1;
@@ -139,8 +129,6 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                 destPainter->drawLine( 0, 0, croppedWidth-1, croppedHeight-1 );
                 destPainter->drawLine( 0, croppedHeight-1, croppedWidth-1, 0 );
             }
-            
-            qDebug() << "PagePainter !hasTilesManager";
             return;
         }
     }
@@ -293,7 +281,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                 {
                     QPixmap tilePixmap = tile.pixmap()->copy();
                     tilePixmap.setDevicePixelRatio( qApp->devicePixelRatio() );
-                    
+
                     if ( tilePixmap.width() == dTileRect.width() && tilePixmap.height() == dTileRect.height() ) {
                         destPainter->drawPixmap( limitsInTile.topLeft(), tilePixmap,
                                 dLimitsInTile.translated( -dTileRect.topLeft() ) );
@@ -348,7 +336,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                 {
                     QPixmap tilePixmap = tile.pixmap()->copy();
                     tilePixmap.setDevicePixelRatio( qApp->devicePixelRatio() );
-                    
+
                     if ( !tilePixmap.hasAlpha() )
                         has_alpha = false;
 

@@ -40,7 +40,7 @@ class Page;
 class PageViewItem
 {
     public:
-        PageViewItem( const Okular::Page * page, qreal dpr );
+        PageViewItem( const Okular::Page * page );
         ~PageViewItem();
 
         const Okular::Page * page() const;
@@ -81,7 +81,6 @@ class PageViewItem
 
     private:
         const Okular::Page * m_page;
-        qreal m_dpr;
         double m_zoomFactor;
         bool m_visible;
         bool m_formsVisible;

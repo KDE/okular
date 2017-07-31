@@ -627,7 +627,6 @@ void PDFGenerator::loadPages(QVector<Okular::Page*> &pagesVector, int rotation, 
             const QSizeF pSize = p->pageSizeF();
             w = pSize.width() / 72.0 * dpi().width();
             h = pSize.height() / 72.0 * dpi().height();
-
             Okular::Rotation orientation = Okular::Rotation0;
             switch (p->orientation())
             {

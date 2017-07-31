@@ -12,6 +12,7 @@
 #include "generator_p.h"
 #include "observer.h"
 
+#include <QApplication>
 #include <qeventloop.h>
 #include <QtPrintSupport/QPrinter>
 
@@ -102,9 +103,7 @@ void GeneratorPrivate::pixmapGenerationFinished()
     }
 
     const QImage& img = mPixmapGenerationThread->image();
-    QPixmap *p = new QPixmap( QPixmap::fromImage( img ) );
-    p->setDevicePixelRatio( p->devicePixelRatioF() );
-    request->page()->setPixmap( request->observer(), p, request->normalizedRect() );
+    request->page()->setPixmap( request->observer(), new QPixmap( QPixmap::fromImage( img ) ), request->normalizedRect() );
     const int pageNumber = request->page()->number();
 
     if ( mPixmapGenerationThread->calcBoundingBox() )
@@ -260,9 +259,7 @@ void Generator::generatePixmap( PixmapRequest *request )
     }
 
     const QImage& img = image( request );
-    QPixmap *p = new QPixmap( QPixmap::fromImage( img ) );
-    p->setDevicePixelRatio( img.devicePixelRatioF() );
-    request->page()->setPixmap( request->observer(), p , request->normalizedRect() );
+    request->page()->setPixmap( request->observer(), new QPixmap( QPixmap::fromImage( img ) ), request->normalizedRect() );
     const int pageNumber = request->page()->number();
 
     d->mPixmapReady = true;
@@ -288,9 +285,7 @@ void Generator::generateTextPage( Page *page )
 QImage Generator::image( PixmapRequest *request )
 {
     Q_D( Generator );
-    QImage image = d->image( request );
-    image.setDevicePixelRatio( request->devicePixelRatio() );
-    return image;
+    return d->image( request );
 }
 
 TextPage* Generator::textPage( Page* )
@@ -491,14 +486,13 @@ QAbstractItemModel * Generator::layersModel() const
     return 0;
 }
 
-PixmapRequest::PixmapRequest( DocumentObserver *observer, int pageNumber, int width, int height, qreal dpr, int priority, PixmapRequestFeatures features )
+PixmapRequest::PixmapRequest( DocumentObserver *observer, int pageNumber, int width, int height, int priority, PixmapRequestFeatures features )
   : d( new PixmapRequestPrivate )
 {
     d->mObserver = observer;
     d->mPageNumber = pageNumber;
-    d->mWidth = width * dpr;
-    d->mHeight = height * dpr;
-    d->mDpr = dpr;
+    d->mWidth = width * qApp->devicePixelRatio();
+    d->mHeight = height * qApp->devicePixelRatio();
     d->mPriority = priority;
     d->mFeatures = features;
     d->mForce = false;
@@ -529,11 +523,6 @@ int PixmapRequest::width() const
 int PixmapRequest::height() const
 {
     return d->mHeight;
-}
-
-qreal PixmapRequest::devicePixelRatio() const
-{
-    return d->mDpr;
 }
 
 int PixmapRequest::priority() const

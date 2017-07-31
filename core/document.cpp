@@ -1313,10 +1313,10 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
                 << " (" << r->width() << "x" << r->height() << " px);";
 
             // fill the tiles manager with the last rendered pixmap
-            const QPixmap *pixmap = r->page()->_o_nearestPixmap( r->observer(), r->width(), r->height(), r->devicePixelRatio() );
+            const QPixmap *pixmap = r->page()->_o_nearestPixmap( r->observer(), r->width(), r->height() );
             if ( pixmap )
             {
-                tilesManager = new TilesManager( r->pageNumber(), pixmap->width() / pixmap->devicePixelRatioF(), pixmap->height() / pixmap->devicePixelRatioF(), r->page()->rotation() );
+                tilesManager = new TilesManager( r->pageNumber(), pixmap->width(), pixmap->height(), r->page()->rotation() );
                 tilesManager->setPixmap( pixmap, NormalizedRect( 0, 0, 1, 1 ) );
                 tilesManager->setSize( r->width(), r->height() );
             }
@@ -1525,9 +1525,7 @@ void DocumentPrivate::refreshPixmaps( int pageNumber )
     for ( ; it != itEnd; ++it )
     {
         QSize size = (*it).m_pixmap->size();
-        qreal dpr = (*it).m_pixmap->devicePixelRatioF();
-
-        PixmapRequest * p = new PixmapRequest( it.key(), pageNumber, size.width() / dpr, size.height() / dpr, dpr, 1, PixmapRequest::Asynchronous );
+        PixmapRequest * p = new PixmapRequest( it.key(), pageNumber, size.width(), size.height(), 1, PixmapRequest::Asynchronous );
         p->d->mForce = true;
         requestedPixmaps.push_back( p );
     }
@@ -1539,7 +1537,7 @@ void DocumentPrivate::refreshPixmaps( int pageNumber )
         {
             tilesManager->markDirty();
 
-            PixmapRequest * p = new PixmapRequest( observer, pageNumber, tilesManager->width(), tilesManager->height(), tilesManager->devicePixelRatio(), 1, PixmapRequest::Asynchronous );
+            PixmapRequest * p = new PixmapRequest( observer, pageNumber, tilesManager->width(), tilesManager->height(), 1, PixmapRequest::Asynchronous );
 
             NormalizedRect tilesRect;
 

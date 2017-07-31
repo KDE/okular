@@ -978,7 +978,7 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
     QVector< Okular::Page * >::const_iterator setIt = pageSet.constBegin(), setEnd = pageSet.constEnd();
     for ( ; setIt != setEnd; ++setIt )
     {
-        PageViewItem * item = new PageViewItem( *setIt, devicePixelRatio() );
+        PageViewItem * item = new PageViewItem( *setIt );
         d->items.push_back( item );
 #ifdef PAGEVIEW_DEBUG
         qCDebug(OkularUiDebug).nospace() << "cropped geom for " << d->items.last()->pageNumber() << " is " << d->items.last()->croppedGeometry();
@@ -4486,7 +4486,7 @@ void PageView::delayedResizeEvent()
     slotRequestVisiblePixmaps();
 }
 
-void PageView::slotRequestPreloadPixmap( Okular::DocumentObserver * observer, const PageViewItem * i, const QRect &expandedViewportRect, QLinkedList< Okular::PixmapRequest * > *requestedPixmaps )
+static void slotRequestPreloadPixmap( Okular::DocumentObserver * observer, const PageViewItem * i, const QRect &expandedViewportRect, QLinkedList< Okular::PixmapRequest * > *requestedPixmaps )
 {
     Okular::NormalizedRect preRenderRegion;
     const QRect intersectionRect = expandedViewportRect.intersected( i->croppedGeometry() );
@@ -4501,7 +4501,7 @@ void PageView::slotRequestPreloadPixmap( Okular::DocumentObserver * observer, co
         const bool pageHasTilesManager = i->page()->hasTilesManager( observer );
         if ( pageHasTilesManager && !preRenderRegion.isNull() )
         {
-            Okular::PixmapRequest * p = new Okular::PixmapRequest( observer, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), devicePixelRatioF(), PAGEVIEW_PRELOAD_PRIO, requestFeatures );
+            Okular::PixmapRequest * p = new Okular::PixmapRequest( observer, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, requestFeatures );
             requestedPixmaps->push_back( p );
 
             p->setNormalizedRect( preRenderRegion );
@@ -4509,7 +4509,7 @@ void PageView::slotRequestPreloadPixmap( Okular::DocumentObserver * observer, co
         }
         else if ( !pageHasTilesManager )
         {
-            Okular::PixmapRequest * p = new Okular::PixmapRequest( observer, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), devicePixelRatioF(), PAGEVIEW_PRELOAD_PRIO, requestFeatures );
+            Okular::PixmapRequest * p = new Okular::PixmapRequest( observer, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, requestFeatures );
             requestedPixmaps->push_back( p );
             p->setNormalizedRect( preRenderRegion );
         }
@@ -4605,7 +4605,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
 #ifdef PAGEVIEW_DEBUG
             kWarning() << "rerequesting visible pixmaps for page" << i->pageNumber() << "!";
 #endif
-            Okular::PixmapRequest * p = new Okular::PixmapRequest( this, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), devicePixelRatioF(), PAGEVIEW_PRIO, Okular::PixmapRequest::Asynchronous );
+            Okular::PixmapRequest * p = new Okular::PixmapRequest( this, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRIO, Okular::PixmapRequest::Asynchronous );
             requestedPixmaps.push_back( p );
 
             if ( i->page()->hasTilesManager( this ) )
@@ -5323,17 +5323,17 @@ void PageView::slotToggleChangeColors()
 
 void PageView::slotFitWindowToPage()
 {
-    const PageViewItem *currentPageItem;
+    PageViewItem currentPageItem = NULL;
     QSize viewportSize = viewport()->size();
     foreach ( const PageViewItem * pageItem, d->items )
     {
         if ( pageItem->isVisible() )
         {
-            currentPageItem = pageItem;
+            currentPageItem = *pageItem;
             break;
         }
     }
-    const QSize pageSize = QSize( currentPageItem->uncroppedWidth() + kcolWidthMargin, currentPageItem->uncroppedHeight() + krowHeightMargin );
+    const QSize pageSize = QSize( currentPageItem.uncroppedWidth() + kcolWidthMargin, currentPageItem.uncroppedHeight() + krowHeightMargin );
     if ( verticalScrollBar()->isVisible() )
         viewportSize.setWidth( viewportSize.width() + verticalScrollBar()->width() );
     if ( horizontalScrollBar()->isVisible() )

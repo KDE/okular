@@ -400,7 +400,7 @@ class OKULARCORE_EXPORT Page
         friend class ::PagePainter;
         /// @endcond
 
-        const QPixmap * _o_nearestPixmap( DocumentObserver *, int, int, qreal ) const;
+        const QPixmap * _o_nearestPixmap( DocumentObserver *, int, int ) const;
 
         QLinkedList< ObjectRect* > m_rects;
         QLinkedList< HighlightAreaRect* > m_highlights;

@@ -291,12 +291,6 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
         // the image over which we are going to draw
         QImage backImage;
 
-        bool has_alpha;
-        if ( pixmap )
-            has_alpha = pixmap->hasAlpha();
-        else
-            has_alpha = true;
-
         if ( hasTilesManager )
         {
             backImage = QImage( limits.width(), limits.height(), QImage::Format_ARGB32_Premultiplied );
@@ -312,9 +306,6 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                 QRect limitsInTile = limits & tileRect;
                 if ( !limitsInTile.isEmpty() )
                 {
-                    if ( !tile.pixmap()->hasAlpha() )
-                        has_alpha = false;
-
                     if ( tile.pixmap()->width() == tileRect.width() && tile.pixmap()->height() == tileRect.height() )
                     {
                         p.drawPixmap( limitsInTile.translated( -limits.topLeft() ).topLeft(), *(tile.pixmap()),
@@ -383,50 +374,17 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
         if ( bufferedHighlights )
         {
             // draw highlights that are inside the 'limits' paint region
-            QList< QPair<QColor, Okular::NormalizedRect> >::const_iterator hIt = bufferedHighlights->constBegin(), hEnd = bufferedHighlights->constEnd();
-            for ( ; hIt != hEnd; ++hIt )
+            for (const auto& highlight : *bufferedHighlights)
             {
-                const Okular::NormalizedRect & r = (*hIt).second;
+                const Okular::NormalizedRect & r = highlight.second;
                 // find out the rect to highlight on pixmap
                 QRect highlightRect = r.geometry( scaledWidth, scaledHeight ).translated( -scaledCrop.topLeft() ).intersected( limits );
                 highlightRect.translate( -limits.left(), -limits.top() );
 
-                // highlight composition (product: highlight color * destcolor)
-                unsigned int * data = (unsigned int *)backImage.bits();
-                int val, newR, newG, newB,
-                    rh = (*hIt).first.red(),
-                    gh = (*hIt).first.green(),
-                    bh = (*hIt).first.blue(),
-                    offset = highlightRect.top() * backImage.width();
-                for( int y = highlightRect.top(); y <= highlightRect.bottom(); ++y )
-                {
-                    for( int x = highlightRect.left(); x <= highlightRect.right(); ++x )
-                    {
-                        val = data[ x + offset ];
-                        //for odt or epub
-                        if(has_alpha)
-                        {
-                            newR = qRed(val);
-                            newG = qGreen(val);
-                            newB = qBlue(val);
-
-                            if(newR == newG && newG == newB && newR == 0)
-                                newR = newG = newB = 255;
-
-                            newR = (newR * rh) / 255;
-                            newG = (newG * gh) / 255;
-                            newB = (newB * bh) / 255;
-                        }
-                        else
-                        {
-                            newR = (qRed(val) * rh) / 255;
-                            newG = (qGreen(val) * gh) / 255;
-                            newB = (qBlue(val) * bh) / 255;
-                        }
-                        data[ x + offset ] = qRgba( newR, newG, newB, 255 );
-                    }
-                    offset += backImage.width();
-                }
+                const QColor highlightColor = highlight.first;
+                QPainter painter(&backImage);
+                painter.setCompositionMode(QPainter::CompositionMode_Multiply);
+                painter.fillRect(highlightRect, highlightColor);
             }
         }
         // 4B.4. paint annotations [COMPOSITED ONES]

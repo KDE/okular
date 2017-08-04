@@ -1066,7 +1066,25 @@ void PDFGenerator::requestFontData(const Okular::FontInfo &font, QByteArray *dat
 #define DUMMY_QPRINTER_COPY
 bool PDFGenerator::print( QPrinter& printer )
 {
+    bool printAnnots = true;
+    bool forceRasterize = false;
+
+    if ( pdfOptionsPage )
+    {
+        printAnnots = pdfOptionsPage->printAnnots();
+        forceRasterize = pdfOptionsPage->printForceRaster();
+    }
+
 #ifdef Q_OS_WIN
+    // Windows can only print by rasterization and with annotations, because that is
+    // currently the only way Okular implements printing without using UNIX-specific
+    // tools like 'lpr'.
+    forceRasterize = true;
+    printAnnots = true;
+#endif
+
+    if ( forceRasterize && printAnnots)
+    {
     QPainter painter;
     painter.begin(&printer);
 
@@ -1083,7 +1101,12 @@ bool PDFGenerator::print( QPrinter& printer )
         Poppler::Page *pp = pdfdoc->page( page );
         if (pp)
         {
+#ifdef Q_OS_WIN
             QImage img = pp->renderToImage(  printer.physicalDpiX(), printer.physicalDpiY() );
+#else
+            // UNIX: Same resolution as the postscript rasterizer; see discussion at https://git.reviewboard.kde.org/r/130218/
+            QImage img = pp->renderToImage( 300, 300 );
+#endif
             painter.drawImage( painter.window(), img, QRectF(0, 0, img.width(), img.height()) );
             delete pp;
         }
@@ -1091,8 +1114,8 @@ bool PDFGenerator::print( QPrinter& printer )
     }
     painter.end();
     return true;
+    }
 
-#else
 #ifdef DUMMY_QPRINTER_COPY
     // Get the real page size to pass to the ps generator
     QPrinter dummy( QPrinter::PrinterResolution );
@@ -1135,14 +1158,6 @@ bool PDFGenerator::print( QPrinter& printer )
     if ( pstitle.trimmed().isEmpty() )
     {
         pstitle = document()->currentDocument().fileName();
-    }
-
-    bool printAnnots = true;
-    bool forceRasterize = false;
-    if ( pdfOptionsPage )
-    {
-        printAnnots = pdfOptionsPage->printAnnots();
-        forceRasterize = pdfOptionsPage->printForceRaster();
     }
 
     Poppler::PSConverter *psConverter = pdfdoc->psConverter();
@@ -1189,7 +1204,6 @@ bool PDFGenerator::print( QPrinter& printer )
     tf.close();
 
     return false;
-#endif
 }
 
 QVariant PDFGenerator::metaData( const QString & key, const QVariant & option ) const

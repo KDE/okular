@@ -498,6 +498,8 @@ PixmapRequest::PixmapRequest( DocumentObserver *observer, int pageNumber, int wi
     d->mForce = false;
     d->mTile = false;
     d->mNormalizedRect = NormalizedRect();
+    
+    qDebug() << "PixmapRequest" << d->mWidth << "x" << d->mHeight;
 }
 
 PixmapRequest::~PixmapRequest()

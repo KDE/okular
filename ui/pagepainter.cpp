@@ -296,9 +296,14 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
         }
         else
         {
+            QString r = QString::number(qrand());
+            qCWarning(OkularUiDebug) << "PagePainter: 4AN" << pixmap.width() << dScaledWidth << ";" << pixmap.height() << dScaledHeight << ";" << dLimitsInPixmap;
+            pixmap.save("/tmp/paint/p_" + QString::number(page->number()) + "_" + r + "_4an_before.png");
             QPixmap scaledCroppedPixmap = pixmap.scaled(dScaledWidth, dScaledHeight).copy(dLimitsInPixmap);
+            scaledCroppedPixmap.save("/tmp/paint/p_" + QString::number(page->number()) + "_" + r + "_4an.png");
             destPainter->drawPixmap( limits.topLeft(), scaledCroppedPixmap, QRectF(0, 0, dLimits.width(),dLimits.height()));
-            qCWarning(OkularUiDebug) << "PagePainter: 4AN";
+            
+            qCWarning(OkularUiDebug) << "PagePainter: 4AN" << scaledCroppedPixmap.devicePixelRatioF();
         }
 
         // 4A.2. active painter is the one passed to this method
@@ -368,7 +373,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
             qDebug() << "PagePainter: 4BN: " << r;
             QPixmap scaledCroppedPixmap = pixmap.scaled(dScaledWidth, dScaledHeight).copy(dLimitsInPixmap);
             scaledCroppedPixmap.setDevicePixelRatio(dpr);
-            //scaledCroppedPixmap.save("/tmp/paint/p_" + QString::number(page->number()) + "_" + r + "_4bn.png");
+            scaledCroppedPixmap.save("/tmp/paint/p_" + QString::number(page->number()) + "_" + r + "_4bn.png");
             p.drawPixmap( 0, 0, scaledCroppedPixmap );
         }
 

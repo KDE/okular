@@ -149,10 +149,10 @@ bool TranscribePalmImageToJPEG
     unsigned int    height;
     unsigned int    bytes_per_row;
     unsigned int    flags;
-    unsigned int    next_depth_offset;
+//     unsigned int    next_depth_offset;
     unsigned int    bits_per_pixel;
-    unsigned int    version;
-    unsigned int    transparent_index;
+//     unsigned int    version;
+//     unsigned int    transparent_index;
     unsigned int    compression_type;
     unsigned int    i;
     unsigned int    j;
@@ -164,8 +164,8 @@ bool TranscribePalmImageToJPEG
     unsigned int    palm_green_bits = 0;
     unsigned int    palm_blue_bits = 0;
     unsigned char*  palm_ptr;
-    unsigned char*  x_ptr;
-    unsigned char*  imagedata = 0;
+//     unsigned char*  x_ptr;
+//     unsigned char*  imagedata = 0;
     unsigned char*  inbyte;
     unsigned char*  rowbuf;
     unsigned char*  lastrow;
@@ -184,9 +184,9 @@ bool TranscribePalmImageToJPEG
     bytes_per_row = READ_BIGENDIAN_SHORT (palmimage + 4);
     flags = READ_BIGENDIAN_SHORT (palmimage + 6);
     bits_per_pixel = palmimage[8];
-    version = palmimage[9];
-    next_depth_offset = READ_BIGENDIAN_SHORT (palmimage + 10);
-    transparent_index = palmimage[12];
+//     version = palmimage[9];
+//     next_depth_offset = READ_BIGENDIAN_SHORT (palmimage + 10);
+//     transparent_index = palmimage[12];
     compression_type = palmimage[13];
     /* bytes 14 and 15 are reserved by Palm and always 0 */
 
@@ -280,7 +280,7 @@ bool TranscribePalmImageToJPEG
     /* row by row, uncompress the Palm image and copy it to the JPEG buffer */
     rowbuf = (unsigned char *) malloc (bytes_per_row * width);
     lastrow = (unsigned char *) malloc (bytes_per_row * width);
-    for (i = 0, palm_ptr = imagedatastart, x_ptr = imagedata; i < height;
+    for (i = 0, palm_ptr = imagedatastart/*, x_ptr = imagedata*/; i < height;
          ++i) {
 
         /* first, uncompress the Palm image */

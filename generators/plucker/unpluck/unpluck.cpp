@@ -60,13 +60,13 @@ static unsigned int UncompressDOC
                                       document in */
     )
 {
-    unsigned int  offset;
+//     unsigned int  offset;
     unsigned int  src_index;
     unsigned int  dest_index;
 
     assert (src != NULL && src_len != 0 && dest != NULL && dest_len != 0);
 
-    offset = 0;
+//     offset = 0;
     src_index = 0;
     dest_index = 0;
     memset (dest, 0, dest_len);

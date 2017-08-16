@@ -345,16 +345,12 @@ Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *
         case Poppler::Annotation::AHighlight:
         case Poppler::Annotation::AInk:
         case Poppler::Annotation::ACaret:
-        {
             externallyDrawn = true;
-            /* fallback */
-        }
+            /* fallthrough */
         case Poppler::Annotation::AStamp:
-        {
             tieToOkularAnn = true;
             *doDelete = false;
-            /* fallback */
-        }
+            /* fallthrough */
         default:
         {
             // this is uber ugly but i don't know a better way to do it without introducing a poppler::annotation dependency on core

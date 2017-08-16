@@ -318,12 +318,6 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
         backImage.fill( paperColor );
         QPainter p( &backImage );
 
-        bool has_alpha;
-        if ( !pixmap.isNull() )
-            has_alpha = pixmap.hasAlpha();
-        else
-            has_alpha = true;
-
         if ( hasTilesManager )
         {
             const Okular::NormalizedRect normalizedLimits( limitsInPixmap, scaledWidth, scaledHeight );
@@ -341,9 +335,6 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                 {
                     QPixmap tilePixmap = tile.pixmap()->copy();
                     tilePixmap.setDevicePixelRatio( qApp->devicePixelRatio() );
-
-                    if ( !tilePixmap.hasAlpha() )
-                        has_alpha = false;
 
                     if ( tilePixmap.width() == dTileRect.width() && tilePixmap.height() == dTileRect.height() )
                     {
@@ -421,61 +412,18 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
         if ( bufferedHighlights )
         {
             // draw highlights that are inside the 'limits' paint region
-            QList< QPair<QColor, Okular::NormalizedRect> >::const_iterator hIt = bufferedHighlights->constBegin(), hEnd = bufferedHighlights->constEnd();
-            for ( ; hIt != hEnd; ++hIt )
+            for (const auto& highlight : *bufferedHighlights)
             {
-                const Okular::NormalizedRect & r = (*hIt).second;
+                const Okular::NormalizedRect & r = highlight.second;
                 // find out the rect to highlight on pixmap
 
                 QRect highlightRect = r.geometry( scaledWidth, scaledHeight ).translated( -scaledCrop.topLeft() ).intersected( limits );
                 highlightRect.translate( -limits.left(), -limits.top() );
 
+                const QColor highlightColor = highlight.first;
                 QPainter painter(&backImage);
-                painter.fillRect(highlightRect, QColor((*hIt).first.red(), (*hIt).first.green(), (*hIt).first.blue(), 150));
-
-                // the code below works too, but the mordern method would be to just use a QPainter?
-
-                // highlight composition (product: highlight color * destcolor)
-                /*
-                QRect highlightRect = r.geometry( dScaledWidth, dScaledHeight ).translated( -dScaledCrop.topLeft() ).intersected( dLimits );
-                highlightRect.translate( -dLimits.left(), -dLimits.top() );
-
-                unsigned int * data = (unsigned int *)backImage.bits();
-                int val, newR, newG, newB,
-                    rh = (*hIt).first.red(),
-                    gh = (*hIt).first.green(),
-                    bh = (*hIt).first.blue(),
-                    offset = highlightRect.top() * backImage.width();
-                for( int y = highlightRect.top(); y <= highlightRect.bottom(); ++y )
-                {
-                    for( int x = highlightRect.left(); x <= highlightRect.right(); ++x )
-                    {
-                        val = data[ x + offset ];
-                        //for odt or epub
-                        if(has_alpha)
-                        {
-                            newR = qRed(val);
-                            newG = qGreen(val);
-                            newB = qBlue(val);
-
-                            if(newR == newG && newG == newB && newR == 0)
-                                newR = newG = newB = 255;
-
-                            newR = (newR * rh) / 255;
-                            newG = (newG * gh) / 255;
-                            newB = (newB * bh) / 255;
-                        }
-                        else
-                        {
-                            newR = (qRed(val) * rh) / 255;
-                            newG = (qGreen(val) * gh) / 255;
-                            newB = (qBlue(val) * bh) / 255;
-                        }
-                        data[ x + offset ] = qRgba( newR, newG, newB, 255 );
-                    }
-                    offset += backImage.width();
-                }
-                }*/
+                painter.setCompositionMode(QPainter::CompositionMode_Multiply);
+                painter.fillRect(highlightRect, highlightColor);
             }
         }
 

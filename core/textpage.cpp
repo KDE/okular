@@ -136,8 +136,8 @@ class TinyTextEntity
                     // fall through
                 case 3:
                     d.qc[2] = text.at( 2 ).unicode();
-                    // fall through
 #endif
+                    // fall through
                 case 2:
                     d.qc[1] = text.at( 1 ).unicode();
                     // fall through

@@ -16,6 +16,7 @@
   <name xml:lang="et">DVI dokumendid</name>
   <name xml:lang="fi">DVI-tiedostot</name>
   <name xml:lang="fr">Documents DVI</name>
+  <name xml:lang="gl">Documentos DVI</name>
   <name xml:lang="it">Documenti DVI</name>
   <name xml:lang="ko">DVI 문서</name>
   <name xml:lang="nl">DVI-documenten</name>
@@ -46,6 +47,7 @@
   <summary xml:lang="et">DVI dokumentide lugemise toetus</summary>
   <summary xml:lang="fi">Lisää DVI-tiedostojen lukutuen</summary>
   <summary xml:lang="fr">Permet la lecture des documents DVI</summary>
+  <summary xml:lang="gl">Permite ler documentos DVI.</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti DVI</summary>
   <summary xml:lang="ko">DVI 문서 읽기 지원 추가</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van DVI-documenten toe</summary>

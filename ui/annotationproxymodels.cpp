@@ -184,7 +184,7 @@ QModelIndex PageGroupProxyModel::mapToSource( const QModelIndex &proxyIndex ) co
 
       return mTreeIndexes[ proxyIndex.row() ].first;
     } else {
-      if ( proxyIndex.internalId() - 1 >= mTreeIndexes.count() ||
+      if ( qint32(proxyIndex.internalId()) - 1 >= mTreeIndexes.count() ||
            proxyIndex.row() >= mTreeIndexes[ proxyIndex.internalId() - 1 ].second.count() )
         return QModelIndex();
 

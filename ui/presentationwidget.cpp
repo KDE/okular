@@ -458,8 +458,9 @@ void PresentationWidget::notifyCurrentPageChanged( int previousPage, int current
 
         // if pixmap not inside the Okular::Page we request it and wait for
         // notifyPixmapChanged call or else we can proceed to pixmap generation
-        if ( !frame->page->hasPixmap( this, pixW, pixH ) )
+        if ( !frame->page->hasPixmap( this, pixW * qApp->devicePixelRatio(), pixH * qApp->devicePixelRatio() ) )
         {
+            qDebug() << "PRES requestPixmaps";
             requestPixmaps();
         }
         else

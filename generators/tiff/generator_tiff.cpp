@@ -269,15 +269,8 @@ QImage TIFFGenerator::image( Okular::PixmapRequest * request )
             int reqheight = request->height();
             if ( rotation % 2 == 1 )
                 qSwap( reqwidth, reqheight );
+            img = image.scaled( reqwidth, reqheight, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
 
-            image.save("/tmp/paint/p_" + QString::number(request->page()->number()) + "_" + "_tiff_1.png");
-
-            qDebug() << "TIFF image" << reqwidth << reqheight;
-            
-            //img = image.scaled( reqwidth, reqheight, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation );
-
-            img.save("/tmp/paint/p_" + QString::number(request->page()->number()) + "_" + "_tiff_2.png");
-            
             generated = true;
         }
     }
@@ -364,8 +357,6 @@ void TIFFGenerator::loadPages( QVector<Okular::Page*> & pagesVector )
         adaptSizeToResolution( d->tiff, TIFFTAG_XRESOLUTION, dpi.width(), &width );
         adaptSizeToResolution( d->tiff, TIFFTAG_YRESOLUTION, dpi.height(), &height );
 
-        qDebug() << "TIFF: " << width << height;
-        
         Okular::Page * page = new Okular::Page( realdirs, width, height, readTiffRotation( d->tiff ) );
         pagesVector[ realdirs ] = page;
 
@@ -418,8 +409,6 @@ bool TIFFGenerator::print( QPrinter& printer )
 
         QSize targetSize = printer.pageRect().size();
 
-        qDebug() << "TIFF: " << image.width() << targetSize.width() << image.height() << targetSize.height();
-        
         if ( (image.width() < targetSize.width()) && (image.height() < targetSize.height()) )
         {
             // draw small images at 100% (don't scale up)

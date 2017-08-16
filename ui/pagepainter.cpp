@@ -261,7 +261,6 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
         // limits within full (scaled but uncropped) pixmap
 
     /** 4A -- REGULAR FLOW. PAINT PIXMAP NORMAL OR RESCALED USING GIVEN QPAINTER **/
-    /* when zoomed in */
     if ( !useBackBuffer )
     {
         if ( hasTilesManager )
@@ -285,10 +284,8 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                     if ( tilePixmap.width() == dTileRect.width() && tilePixmap.height() == dTileRect.height() ) {
                         destPainter->drawPixmap( limitsInTile.topLeft(), tilePixmap,
                                 dLimitsInTile.translated( -dTileRect.topLeft() ) );
-                        qCWarning(OkularUiDebug) << "PagePainter: 4AT1";
                     } else {
                         destPainter->drawPixmap( tileRect, tilePixmap);
-                        qCWarning(OkularUiDebug) << "PagePainter: 4AT2";
                     }
                 }
                 tIt++;
@@ -296,14 +293,9 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
         }
         else
         {
-            QString r = QString::number(qrand());
-            qCWarning(OkularUiDebug) << "PagePainter: 4AN" << pixmap.width() << dScaledWidth << ";" << pixmap.height() << dScaledHeight << ";" << dLimitsInPixmap;
-            pixmap.save("/tmp/paint/p_" + QString::number(page->number()) + "_" + r + "_4an_before.png");
             QPixmap scaledCroppedPixmap = pixmap.scaled(dScaledWidth, dScaledHeight).copy(dLimitsInPixmap);
-            scaledCroppedPixmap.save("/tmp/paint/p_" + QString::number(page->number()) + "_" + r + "_4an.png");
+            scaledCroppedPixmap.setDevicePixelRatio(dpr);
             destPainter->drawPixmap( limits.topLeft(), scaledCroppedPixmap, QRectF(0, 0, dLimits.width(),dLimits.height()));
-            
-            qCWarning(OkularUiDebug) << "PagePainter: 4AN" << scaledCroppedPixmap.devicePixelRatioF();
         }
 
         // 4A.2. active painter is the one passed to this method
@@ -338,20 +330,16 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
 
                     if ( tilePixmap.width() == dTileRect.width() && tilePixmap.height() == dTileRect.height() )
                     {
-                        qCWarning(OkularUiDebug) << "PagePainter: 4BT1";
                         p.drawPixmap( limitsInTile.translated( -limits.topLeft() ).topLeft(), tilePixmap,
                                 dLimitsInTile.translated( -dTileRect.topLeft() ) );
                     }
                     else
                     {
-                        qCWarning(OkularUiDebug) << "PagePainter: 4BT2";
                         double xScale = tilePixmap.width() / (double)dTileRect.width();
                         double yScale = tilePixmap.height() / (double)dTileRect.height();
                         QTransform transform( xScale, 0, 0, yScale, 0, 0 );
                         p.drawPixmap( limitsInTile.translated( -limits.topLeft() ), tilePixmap,
                                 transform.mapRect( dLimitsInTile ).translated( -transform.mapRect( dTileRect ).topLeft() ) );
-                        //tilePixmap.save("/tmp/pix.png");
-                        qCWarning(OkularUiDebug) << "PagePainter: 4BT2 DONE";
                     }
                 }
                 ++tIt;
@@ -360,11 +348,8 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
         else
         {
             // 4B.1. draw the page pixmap: normal or scaled
-            QString r = QString::number(qrand());
-            qDebug() << "PagePainter: 4BN: " << r;
             QPixmap scaledCroppedPixmap = pixmap.scaled(dScaledWidth, dScaledHeight).copy(dLimitsInPixmap);
             scaledCroppedPixmap.setDevicePixelRatio(dpr);
-            scaledCroppedPixmap.save("/tmp/paint/p_" + QString::number(page->number()) + "_" + r + "_4bn.png");
             p.drawPixmap( 0, 0, scaledCroppedPixmap );
         }
 
@@ -416,7 +401,6 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
             {
                 const Okular::NormalizedRect & r = highlight.second;
                 // find out the rect to highlight on pixmap
-
                 QRect highlightRect = r.geometry( scaledWidth, scaledHeight ).translated( -scaledCrop.topLeft() ).intersected( limits );
                 highlightRect.translate( -limits.left(), -limits.top() );
 
@@ -863,8 +847,6 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     delete bufferedHighlights;
     delete bufferedAnnotations;
     delete unbufferedAnnotations;
-    
-    qDebug() << "PagePainter END";
 }
 
 

@@ -510,7 +510,6 @@ QLinkedList< FormField * > Page::formFields() const
 
 void Page::setPixmap( DocumentObserver *observer, QPixmap *pixmap, const NormalizedRect &rect )
 {
-    pixmap->save("/tmp/paint/p_" + QString::number(number()) + "_" + "_setPixmap.png");
     if ( d->m_rotation == Rotation0 ) {
         TilesManager *tm = d->tilesManager( observer );
         if ( tm )

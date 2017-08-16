@@ -3479,6 +3479,8 @@ void Document::setViewport( const DocumentViewport & viewport, DocumentObserver 
 
     const int currentViewportPage = (*d->m_viewportIterator).pageNumber;
 
+    qDebug() << "PRES page" << oldPageNumber << currentViewportPage;
+    
     const bool currentPageChanged = (oldPageNumber != currentViewportPage);
 
     // notify change to all other (different from id) observers

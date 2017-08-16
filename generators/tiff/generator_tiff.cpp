@@ -274,7 +274,7 @@ QImage TIFFGenerator::image( Okular::PixmapRequest * request )
 
             qDebug() << "TIFF image" << reqwidth << reqheight;
             
-            img = image.scaled( reqwidth, reqheight, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
+            //img = image.scaled( reqwidth, reqheight, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation );
 
             img.save("/tmp/paint/p_" + QString::number(request->page()->number()) + "_" + "_tiff_2.png");
             

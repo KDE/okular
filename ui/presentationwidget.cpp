@@ -396,6 +396,8 @@ void PresentationWidget::notifyViewportChanged( bool /*smoothMove*/ )
 
 void PresentationWidget::notifyPageChanged( int pageNumber, int changedFlags )
 {
+    qDebug() << "PRES notifyPageChanged " << pageNumber << m_frameIndex;
+    
     // if we are blocking the notifications, do nothing
     if ( m_blockNotifications )
         return;
@@ -407,6 +409,8 @@ void PresentationWidget::notifyPageChanged( int pageNumber, int changedFlags )
 
 void PresentationWidget::notifyCurrentPageChanged( int previousPage, int currentPage )
 {
+    qDebug() << "PRES notifyCurrentPageChanged " << previousPage << currentPage;
+    
     if ( previousPage != -1 )
     {
         // stop video playback
@@ -1017,6 +1021,8 @@ void PresentationWidget::changePage( int newPage )
 
 void PresentationWidget::generatePage( bool disableTransition )
 {
+    qDebug() << "PRES generatePage!";
+    
     if ( m_lastRenderedPixmap.isNull() )
     {
         qreal dpr = qApp->devicePixelRatio();
@@ -1133,6 +1139,8 @@ void PresentationWidget::generateIntroPage( QPainter & p )
 
 void PresentationWidget::generateContentsPage( int pageNum, QPainter & p )
 {
+    qDebug() << "PRES generateContentsPage: " << pageNum;
+    
     PresentationFrame * frame = m_frames[ pageNum ];
 
     // translate painter and contents rect
@@ -1484,6 +1492,8 @@ void PresentationWidget::slotNextPage()
 
     if ( nextIndex < m_frames.count() )
     {
+        qDebug() << "PRES nextIndex" << nextIndex;
+        
         // go to next page
         changePage( nextIndex );
         // auto advance to the next page if set

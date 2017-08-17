@@ -101,21 +101,24 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     destPainter->fillRect( limits, backgroundColor );
 
     const bool hasTilesManager = page->hasTilesManager( observer );
-    QPixmap *pixmap = 0;
+    QPixmap pixmap;
 
     if ( !hasTilesManager )
     {
         /** 1 - RETRIEVE THE 'PAGE+ID' PIXMAP OR A SIMILAR 'PAGE' ONE **/
-        pixmap = const_cast<QPixmap *>(page->_o_nearestPixmap( observer, dScaledWidth, dScaledHeight ));
-        if ( pixmap ) {
-            pixmap->setDevicePixelRatio( qApp->devicePixelRatio() );
+        const QPixmap *p = page->_o_nearestPixmap( observer, dScaledWidth, dScaledHeight );
+        pixmap = *p;
+        
+        //pixmap = const_cast<QPixmap *>();
+        if ( !pixmap.isNull() ) {
+            pixmap.setDevicePixelRatio( qApp->devicePixelRatio() );
         }
 
         /** 1B - IF NO PIXMAP, DRAW EMPTY PAGE **/
-        double pixmapRescaleRatio = pixmap ? dScaledWidth / (double)pixmap->width() : -1;
-        long pixmapPixels = pixmap ? (long)pixmap->width() * (long)pixmap->height() : 0;
-        if ( !pixmap || pixmapRescaleRatio > 20.0 || pixmapRescaleRatio < 0.25 ||
-             (dScaledWidth > pixmap->width() && pixmapPixels > 60000000L) )
+        double pixmapRescaleRatio = !pixmap.isNull() ? dScaledWidth / (double)pixmap.width() : -1;
+        long pixmapPixels = !pixmap.isNull() ? (long)pixmap.width() * (long)pixmap.height() : 0;
+        if ( pixmap.isNull() || pixmapRescaleRatio > 20.0 || pixmapRescaleRatio < 0.25 ||
+             (dScaledWidth > pixmap.width() && pixmapPixels > 60000000L) )
         {
             // draw something on the blank page: the okular icon or a cross (as a fallback)
             if ( !busyPixmap()->isNull() )
@@ -293,7 +296,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
         }
         else
         {
-            QPixmap scaledCroppedPixmap = pixmap->scaled(dScaledWidth, dScaledHeight).copy(dLimitsInPixmap);
+            QPixmap scaledCroppedPixmap = pixmap.scaled(dScaledWidth, dScaledHeight).copy(dLimitsInPixmap);
             scaledCroppedPixmap.setDevicePixelRatio(dpr);
             destPainter->drawPixmap( limits.topLeft(), scaledCroppedPixmap, QRectF(0, 0, dLimits.width(),dLimits.height()));
         }
@@ -348,7 +351,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
         else
         {
             // 4B.1. draw the page pixmap: normal or scaled
-            QPixmap scaledCroppedPixmap = pixmap->scaled(dScaledWidth, dScaledHeight).copy(dLimitsInPixmap);
+            QPixmap scaledCroppedPixmap = pixmap.scaled(dScaledWidth, dScaledHeight).copy(dLimitsInPixmap);
             scaledCroppedPixmap.setDevicePixelRatio(dpr);
             p.drawPixmap( 0, 0, scaledCroppedPixmap );
         }

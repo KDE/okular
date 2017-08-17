@@ -110,10 +110,6 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
         
         if (p != NULL) {
             pixmap = *p;
-        }
-            
-        //pixmap = const_cast<QPixmap *>();
-        if ( !pixmap.isNull() ) {
             pixmap.setDevicePixelRatio( qApp->devicePixelRatio() );
         }
 

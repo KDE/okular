@@ -839,7 +839,6 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
             pixPainter.drawPixmap( QPoint(0,0), m_lastRenderedPixmap, dR );
 
             // then blend the overlay (a piece of) over the background
-            m_lastRenderedOverlay.save("/tmp/overlay.png");
             QRect ovr = m_overlayGeometry.intersected( r );
             pixPainter.drawPixmap( (ovr.left() - r.left()), (ovr.top() - r.top()),
                 m_lastRenderedOverlay, (ovr.left() - m_overlayGeometry.left()) * dpr,

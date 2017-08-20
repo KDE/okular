@@ -537,8 +537,8 @@ QString FilePrinter::mediaPageSize( QPrinter &printer )
     case QPrinter::Letter:     return QStringLiteral("Letter");
     case QPrinter::Tabloid:    return QStringLiteral("Tabloid");
     case QPrinter::Custom:     return QStringLiteral("Custom.%1x%2mm")
-                                            .arg( printer.heightMM() )
-                                            .arg( printer.widthMM() );
+                                            .arg( printer.widthMM() )
+                                            .arg( printer.heightMM() );
     default:                   return QString();
     }
 }

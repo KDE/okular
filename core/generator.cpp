@@ -491,8 +491,8 @@ PixmapRequest::PixmapRequest( DocumentObserver *observer, int pageNumber, int wi
 {
     d->mObserver = observer;
     d->mPageNumber = pageNumber;
-    d->mWidth = width * qApp->devicePixelRatio();
-    d->mHeight = height * qApp->devicePixelRatio();
+    d->mWidth = ceil(width * qApp->devicePixelRatio());
+    d->mHeight = ceil(height * qApp->devicePixelRatio());
     d->mPriority = priority;
     d->mFeatures = features;
     d->mForce = false;

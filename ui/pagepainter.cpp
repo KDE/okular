@@ -327,20 +327,20 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
 
                 if ( !limitsInTile.isEmpty() )
                 {
-                    QPixmap tilePixmap = tile.pixmap()->copy();
-                    tilePixmap.setDevicePixelRatio( qApp->devicePixelRatio() );
+                    QPixmap* tilePixmap = tile.pixmap();
+                    tilePixmap->setDevicePixelRatio( qApp->devicePixelRatio() );
 
-                    if ( tilePixmap.width() == dTileRect.width() && tilePixmap.height() == dTileRect.height() )
+                    if ( tilePixmap->width() == dTileRect.width() && tilePixmap->height() == dTileRect.height() )
                     {
-                        p.drawPixmap( limitsInTile.translated( -limits.topLeft() ).topLeft(), tilePixmap,
+                        p.drawPixmap( limitsInTile.translated( -limits.topLeft() ).topLeft(), *tilePixmap,
                                 dLimitsInTile.translated( -dTileRect.topLeft() ) );
                     }
                     else
                     {
-                        double xScale = tilePixmap.width() / (double)dTileRect.width();
-                        double yScale = tilePixmap.height() / (double)dTileRect.height();
+                        double xScale = tilePixmap->width() / (double)dTileRect.width();
+                        double yScale = tilePixmap->height() / (double)dTileRect.height();
                         QTransform transform( xScale, 0, 0, yScale, 0, 0 );
-                        p.drawPixmap( limitsInTile.translated( -limits.topLeft() ), tilePixmap,
+                        p.drawPixmap( limitsInTile.translated( -limits.topLeft() ), *tilePixmap,
                                 transform.mapRect( dLimitsInTile ).translated( -transform.mapRect( dTileRect ).topLeft() ) );
                     }
                 }

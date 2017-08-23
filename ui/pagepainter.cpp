@@ -107,7 +107,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     {
         /** 1 - RETRIEVE THE 'PAGE+ID' PIXMAP OR A SIMILAR 'PAGE' ONE **/
         const QPixmap *p = page->_o_nearestPixmap( observer, dScaledWidth, dScaledHeight );
-        
+
         if (p != NULL) {
             pixmap = *p;
             pixmap.setDevicePixelRatio( qApp->devicePixelRatio() );

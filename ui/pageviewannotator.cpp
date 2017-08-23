@@ -1114,19 +1114,18 @@ QPixmap PageViewAnnotator::makeToolPixmap( const QDomElement &toolElement )
     QPixmap pixmap( 32 * qApp->devicePixelRatio(), 32 * qApp->devicePixelRatio() );
     pixmap.setDevicePixelRatio( qApp->devicePixelRatio() );
     const QString annotType = toolElement.attribute( QStringLiteral("type") );
-  
+
+    // Load HiDPI variant on HiDPI screen
     QString imageVariant;
     if ( qApp->devicePixelRatio() > 1.05 ) {
         imageVariant = "@2x";
     } else {
         imageVariant = "";
     }
-    //QPixmap basePixmap( QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString("okular/pics/tool-base-okular" + imageVariant + ".png") ) );
 
-
+    // Load base pixmap. We'll draw on top of it
     pixmap.load( QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString("okular/pics/tool-base-okular" + imageVariant + ".png") ) );
-    //pixmap.save("/tmp/base2.png");
-    
+
     /* Parse color, innerColor and icon (if present) */
     QColor engineColor, innerColor;
     QString icon;
@@ -1149,19 +1148,6 @@ QPixmap PageViewAnnotator::makeToolPixmap( const QDomElement &toolElement )
 
     QPainter p( &pixmap );
 
-    // Load base pixmap. We'll draw on top of it
-    //QString imageVariant;
-    //if ( m_pageView->devicePixelRatioF() > 1 ) {
-    //if ( qApp->devicePixelRatio() > 1.05 ) {
-    //    imageVariant = "@2x";
-    //} else {
-    //    imageVariant = "";
-    //}
-    //QPixmap basePixmap( QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString("okular/pics/tool-base-okular" + imageVariant + ".png") ) );
-    //qDebug() << "PVA basePixmap" << basePixmap.devicePixelRatioF() << "; " << basePixmap.size();
-    //basePixmap.save("/tmp/base.png");
-    //p.drawPixmap( 0, 0, 32, 32, basePixmap );
-    
     if ( annotType == QLatin1String("ellipse") )
     {
         p.setRenderHint( QPainter::Antialiasing );
@@ -1193,7 +1179,6 @@ QPixmap PageViewAnnotator::makeToolPixmap( const QDomElement &toolElement )
     else if ( annotType == QLatin1String("note-inline") )
     {
         QImage overlay( QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString("okular/pics/tool-note-inline-okular-colorizable" + imageVariant + ".png") ) );
-        qDebug() << "PVA overlay" << overlay.devicePixelRatioF() << ";" << overlay.size();
         GuiUtils::colorizeImage( overlay, engineColor );
         p.drawImage( QPoint(0,0), overlay );
     }

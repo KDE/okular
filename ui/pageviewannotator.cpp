@@ -1111,15 +1111,11 @@ QString PageViewAnnotator::defaultToolName( const QDomElement &toolElement )
 
 QPixmap PageViewAnnotator::makeToolPixmap( const QDomElement &toolElement )
 {
-    QPixmap pixmap( 32 * qApp->devicePixelRatio(), 32 * qApp->devicePixelRatio() );
-    pixmap.setDevicePixelRatio( qApp->devicePixelRatio() );
-    
+    QPixmap pixmap( 32, 32 );
     const QString annotType = toolElement.attribute( QStringLiteral("type") );
 
-    qDebug() << "makeToolPixmap" << annotType;
-    
     // Load base pixmap. We'll draw on top of it
-    //pixmap.load( QIcon::fromTheme(QStringLiteral("okular/pics/tool-base-okular.png") ) );
+    pixmap.load( QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("okular/pics/tool-base-okular.png") ) );
 
     /* Parse color, innerColor and icon (if present) */
     QColor engineColor, innerColor;
@@ -1142,12 +1138,7 @@ QPixmap PageViewAnnotator::makeToolPixmap( const QDomElement &toolElement )
     }
 
     QPainter p( &pixmap );
-    QPixmap basePixmap = QIcon::fromTheme(QStringLiteral("tool-base-okular")).pixmap( 32 ); // should already have DPR set
-    qDebug() << "PVA basePixmap" << basePixmap.size() << "; " << basePixmap.devicePixelRatio();
-    p.drawPixmap( 0, 0, basePixmap );
-    //p.drawPi
-    //qDebug() << "PVA sizes" << basePixmap.availableSizes();
-    
+
     if ( annotType == QLatin1String("ellipse") )
     {
         p.setRenderHint( QPainter::Antialiasing );
@@ -1158,14 +1149,10 @@ QPixmap PageViewAnnotator::makeToolPixmap( const QDomElement &toolElement )
     }
     else if ( annotType == QLatin1String("highlight") )
     {
-        //QImage overlay( QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("okular/pics/tool-highlighter-okular-colorizable.png") ) );
-        //QImage colorizedOverlay = overlay;
-        QImage overlay( QIcon::fromTheme(QStringLiteral("tool-highlighter-okular-colorizable")).pixmap( 32, 96 ).toImage() );
-        overlay.save("/tmp/overlay.png");
+        QImage overlay( QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("okular/pics/tool-highlighter-okular-colorizable.png") ) );
         QImage colorizedOverlay = overlay;
         GuiUtils::colorizeImage( colorizedOverlay, engineColor );
-        
-        
+
         p.drawImage( QPoint(0,0), colorizedOverlay ); // Trail
         p.drawImage( QPoint(0,-32), overlay ); // Text + Shadow (uncolorized)
         p.drawImage( QPoint(0,-64), colorizedOverlay ); // Pen

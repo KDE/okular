@@ -75,9 +75,9 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     int croppedWidth = scaledCrop.width();
     int croppedHeight = scaledCrop.height();
 
-    int dScaledWidth = ceil(scaledWidth * dpr);
-    int dScaledHeight = ceil(scaledHeight * dpr);
-    const QRect dLimits(QRectF(limits.x() * dpr, limits.y() * dpr, limits.width() * dpr, limits.height() * dpr).toAlignedRect());
+    int dScaledWidth = ceil( scaledWidth * dpr );
+    int dScaledHeight = ceil( scaledHeight * dpr );
+    const QRect dLimits( QRectF( limits.x() * dpr, limits.y() * dpr, limits.width() * dpr, limits.height() * dpr ).toAlignedRect());
 
     QColor paperColor = Qt::white;
     QColor backgroundColor = paperColor;
@@ -274,7 +274,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
             {
                 const Okular::Tile &tile = *tIt;
                 QRect tileRect = tile.rect().geometry( scaledWidth, scaledHeight ).translated( -scaledCrop.topLeft() );
-                QRect dTileRect = QRectF(tileRect.x() * dpr, tileRect.y() * dpr, tileRect.width() * dpr, tileRect.height() * dpr).toAlignedRect();
+                QRect dTileRect = QRectF( tileRect.x() * dpr, tileRect.y() * dpr, tileRect.width() * dpr, tileRect.height() * dpr ).toAlignedRect();
                 QRect limitsInTile = limits & tileRect;
                 QRectF dLimitsInTile = dLimits & dTileRect;
 
@@ -308,7 +308,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     {
         // the image over which we are going to draw
         QImage backImage = QImage( dLimits.width(), dLimits.height(), QImage::Format_ARGB32_Premultiplied );
-        backImage.setDevicePixelRatio(dpr);
+        backImage.setDevicePixelRatio( dpr );
         backImage.fill( paperColor );
         QPainter p( &backImage );
 
@@ -321,7 +321,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
             {
                 const Okular::Tile &tile = *tIt;
                 QRect tileRect = tile.rect().geometry( scaledWidth, scaledHeight ).translated( -scaledCrop.topLeft() );
-                QRect dTileRect(QRectF(tileRect.x() * dpr, tileRect.y() * dpr, tileRect.width() * dpr, tileRect.height() * dpr).toAlignedRect());
+                QRect dTileRect( QRectF( tileRect.x() * dpr, tileRect.y() * dpr, tileRect.width() * dpr, tileRect.height() * dpr ).toAlignedRect());
                 QRect limitsInTile = limits & tileRect;
                 QRect dLimitsInTile = dLimits & dTileRect;
 
@@ -351,7 +351,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
         {
             // 4B.1. draw the page pixmap: normal or scaled
             QPixmap scaledCroppedPixmap = pixmap.scaled(dScaledWidth, dScaledHeight).copy(dLimitsInPixmap);
-            scaledCroppedPixmap.setDevicePixelRatio(dpr);
+            scaledCroppedPixmap.setDevicePixelRatio( dpr );
             p.drawPixmap( 0, 0, scaledCroppedPixmap );
         }
 
@@ -634,7 +634,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
 
         // 4B.5. create the back pixmap converting from the local image
         backPixmap = new QPixmap( QPixmap::fromImage( backImage ) );
-        backPixmap->setDevicePixelRatio(dpr);
+        backPixmap->setDevicePixelRatio( dpr );
 
         // 4B.6. create a painter over the pixmap and set it as the active one
         mixedPainter = new QPainter( backPixmap );
@@ -716,8 +716,8 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                     QRect innerRect2( annotRect2.left() - annotBoundary2.left(), annotRect2.top() -
                     annotBoundary2.top(), annotRect2.width(), annotRect2.height() );
 
-                    QPixmap scaledCroppedPixmap = pixmap.scaled(TEXTANNOTATION_ICONSIZE * dpr, TEXTANNOTATION_ICONSIZE * dpr).copy(dInnerRect.toAlignedRect());
-                    scaledCroppedPixmap.setDevicePixelRatio(dpr);
+                    QPixmap scaledCroppedPixmap = pixmap.scaled( TEXTANNOTATION_ICONSIZE * dpr, TEXTANNOTATION_ICONSIZE * dpr ).copy( dInnerRect.toAlignedRect() );
+                    scaledCroppedPixmap.setDevicePixelRatio( dpr );
                     QImage scaledCroppedImage = scaledCroppedPixmap.toImage();
 
                     // if the annotation color is valid (ie it was set), then
@@ -741,10 +741,10 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                 QPixmap pixmap = GuiUtils::loadStamp( stamp->stampIconName(), annotBoundary.size() );
                 if ( !pixmap.isNull() ) // should never happen but can happen on huge sizes
                 {
-                    const QRect dInnerRect(QRectF(innerRect.x() * dpr, innerRect.y() * dpr, innerRect.width() * dpr, innerRect.height() * dpr).toAlignedRect());
+                    const QRect dInnerRect( QRectF( innerRect.x() * dpr, innerRect.y() * dpr, innerRect.width() * dpr, innerRect.height() * dpr ).toAlignedRect());
 
-                    QPixmap scaledCroppedPixmap = pixmap.scaled(annotBoundary.width() * dpr, annotBoundary.height() * dpr).copy(dInnerRect);
-                    scaledCroppedPixmap.setDevicePixelRatio(dpr);
+                    QPixmap scaledCroppedPixmap = pixmap.scaled( annotBoundary.width() * dpr, annotBoundary.height() * dpr ).copy( dInnerRect );
+                    scaledCroppedPixmap.setDevicePixelRatio( dpr );
 
                     QImage scaledCroppedImage = scaledCroppedPixmap.toImage();
 
@@ -858,7 +858,7 @@ void PagePainter::cropPixmapOnImage( QImage & dest, const QPixmap * src, const Q
     qreal dpr = src->devicePixelRatioF();
 
     // handle quickly the case in which the whole pixmap has to be converted
-    if ( r == QRect( 0, 0, src->width() / dpr, src->height() / dpr ) )
+    if ( r == QRect( 0, 0, ceil( src->width() / dpr ), ceil( src->height() / dpr ) ) )
     {
         dest = src->toImage();
         dest = dest.convertToFormat(QImage::Format_ARGB32_Premultiplied);
@@ -866,8 +866,8 @@ void PagePainter::cropPixmapOnImage( QImage & dest, const QPixmap * src, const Q
     // else copy a portion of the src to an internal pixmap (smaller) and convert it
     else
     {
-        QImage croppedImage( r.width() * dpr, r.height() * dpr, QImage::Format_ARGB32_Premultiplied );
-        croppedImage.setDevicePixelRatio(dpr);
+        QImage croppedImage( ceil( r.width() * dpr ), ceil( r.height() * dpr ), QImage::Format_ARGB32_Premultiplied );
+        croppedImage.setDevicePixelRatio( dpr );
         QPainter p( &croppedImage );
         p.drawPixmap( 0, 0, *src, r.left(), r.top(), r.width(), r.height() );
         p.end();

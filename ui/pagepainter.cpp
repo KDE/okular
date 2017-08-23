@@ -280,14 +280,14 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
 
                 if ( !limitsInTile.isEmpty() )
                 {
-                    QPixmap tilePixmap = tile.pixmap()->copy();
-                    tilePixmap.setDevicePixelRatio( qApp->devicePixelRatio() );
+                    QPixmap* tilePixmap = tile.pixmap();
+                    tilePixmap->setDevicePixelRatio( qApp->devicePixelRatio() );
 
-                    if ( tilePixmap.width() == dTileRect.width() && tilePixmap.height() == dTileRect.height() ) {
-                        destPainter->drawPixmap( limitsInTile.topLeft(), tilePixmap,
+                    if ( tilePixmap->width() == dTileRect.width() && tilePixmap->height() == dTileRect.height() ) {
+                        destPainter->drawPixmap( limitsInTile.topLeft(), *tilePixmap,
                                 dLimitsInTile.translated( -dTileRect.topLeft() ) );
                     } else {
-                        destPainter->drawPixmap( tileRect, tilePixmap);
+                        destPainter->drawPixmap( tileRect, *tilePixmap );
                     }
                 }
                 tIt++;

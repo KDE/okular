@@ -1,0 +1,13 @@
+[Desktop Entry]
+MimeType=text/markdown;
+Terminal=false
+Name=Okular
+GenericName=Document Viewer
+Comment=Universal document viewer
+Exec=okular %U
+Icon=okular
+Type=Application
+InitialPreference=7
+Categories=Qt;KDE;Graphics;Viewer;
+NoDisplay=true
+X-KDE-Keywords=Markdown

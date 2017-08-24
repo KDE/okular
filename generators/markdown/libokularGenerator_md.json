@@ -1,0 +1,26 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "wolff@julianwolff.de",
+                "Name": "Julian Wolff",
+                "Name[x-test]": "xxJulian Wolffxx"
+            }
+        ],
+        "Copyright": "© 2017 Julian Wolff",
+        "Id": "okular_markdown",
+        "License": "GPL",
+        "MimeTypes": [
+            "text/markdown",
+            "text/x-markdown"
+        ],
+        "Name": "Markdown Backend",
+        "ServiceTypes": [
+            "okular/Generator"
+        ],
+        "Version": "0.1.0"
+    },
+    "X-KDE-Priority": 1,
+    "X-KDE-okularAPIVersion": 1,
+    "X-KDE-okularHasInternalSettings": true
+}

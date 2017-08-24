@@ -45,7 +45,7 @@ class OKULARCORE_EXPORT TextDocumentConverter : public QObject
         ~TextDocumentConverter();
 
         /**
-         * Returns the generated QTextDocument object.
+         * Returns the generated QTextDocument object. The caller takes ownership of the QTextDocument
          *
          * @note there is no need to implement this one if you implement convertWithPassword
          */

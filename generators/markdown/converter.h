@@ -10,11 +10,10 @@
 #ifndef MARKDOWN_CONVERTER_H
 #define MARKDOWN_CONVERTER_H
 
-#include <QDir>
-
 #include <core/textdocumentgenerator.h>
 
-class QTextCursor;
+class QDir;
+class QTextBlock;
 class QTextFrame;
 
 namespace Markdown {
@@ -30,16 +29,10 @@ class Converter : public Okular::TextDocumentConverter
         QTextDocument *convert( const QString &fileName ) override;
 
     private:
-        void convertLinks();
-        void convertImages();
-        
         void convertLinks(QTextFrame *parent);
-        void convertLinks(QTextBlock& parent);
-        void convertImages(QTextFrame *parent);
-        void convertImages(QTextBlock& parent);
-        
-        QTextDocument *mTextDocument;
-        QDir mDir;
+        void convertLinks(const QTextBlock& parent);
+        void convertImages(QTextFrame *parent, const QDir &dir, QTextDocument *textDocument);
+        void convertImages(const QTextBlock& parent, const QDir &dir, QTextDocument *textDocument);
 };
 
 }

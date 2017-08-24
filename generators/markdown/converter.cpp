@@ -11,7 +11,7 @@
 
 #include <KLocalizedString>
 
-#include <QTemporaryFile>
+#include <QDir>
 #include <QTextDocument>
 #include <QTextStream>
 #include <QTextFrame>
@@ -42,7 +42,6 @@ extern "C" {
 using namespace Markdown;
 
 Converter::Converter()
-: mTextDocument(nullptr)
 {
 }
 
@@ -53,7 +52,7 @@ Converter::~Converter()
 QTextDocument* Converter::convert( const QString &fileName )
 {
     FILE *markdownFile = fopen( fileName.toLocal8Bit(), "rb" );
-    mDir = QDir( fileName.left( fileName.lastIndexOf( '/' ) ) );
+    const QDir dir = QDir( fileName.left( fileName.lastIndexOf( '/' ) ) );
     
     MMIOT *markdownHandle = mkd_in( markdownFile, 0 );
     
@@ -63,55 +62,48 @@ QTextDocument* Converter::convert( const QString &fileName )
     }
     
     char *htmlDocument;
-    int size = mkd_document( markdownHandle, &htmlDocument );
+    const int size = mkd_document( markdownHandle, &htmlDocument );
     
-    QString html = QString::fromUtf8( htmlDocument, size );
+    const QString html = QString::fromUtf8( htmlDocument, size );
     
-    mTextDocument = new QTextDocument;
-    mTextDocument->setPageSize( QSizeF( 980, 1307 ) );
-    mTextDocument->setHtml( html );
+    QTextDocument *textDocument = new QTextDocument;
+    textDocument->setPageSize( QSizeF( 980, 1307 ) );
+    textDocument->setHtml( html );
     
     mkd_cleanup( markdownHandle );
     
     QTextFrameFormat frameFormat;
     frameFormat.setMargin( 45 );
 
-    QTextFrame *rootFrame = mTextDocument->rootFrame();
+    QTextFrame *rootFrame = textDocument->rootFrame();
     rootFrame->setFrameFormat( frameFormat );
     
-    convertLinks();
-    convertImages();
+    convertLinks( rootFrame );
+    convertImages( rootFrame, dir, textDocument );
 
-    return mTextDocument;
+    return textDocument;
 }
-
-void Converter::convertLinks()
-{
-    convertLinks( mTextDocument->rootFrame() );
-}
-
 
 void Converter::convertLinks(QTextFrame * parent)
 {
     for ( QTextFrame::iterator it = parent->begin(); !it.atEnd(); ++it ) {
         QTextFrame *textFrame = it.currentFrame();
-        QTextBlock textBlock = it.currentBlock();
+        const QTextBlock textBlock = it.currentBlock();
 
         if ( textFrame ) {
             convertLinks(textFrame);
-        }
-        else if ( textBlock.isValid() ) {
+        } else if ( textBlock.isValid() ) {
             convertLinks(textBlock);
         }
     }
 }
 
-void Converter::convertLinks(QTextBlock & parent)
+void Converter::convertLinks(const QTextBlock & parent)
 {
     for ( QTextBlock::iterator it = parent.begin(); !it.atEnd(); ++it ) {
-        QTextFragment textFragment = it.fragment();
+        const QTextFragment textFragment = it.fragment();
         if ( textFragment.isValid() ) {
-            QTextCharFormat textCharFormat = textFragment.charFormat();
+            const QTextCharFormat textCharFormat = textFragment.charFormat();
             if ( textCharFormat.isAnchor() ) {
                 Okular::BrowseAction *action = new Okular::BrowseAction( QUrl( textCharFormat.anchorHref() ) );
                 emit addAction( action, textFragment.position(), textFragment.position()+textFragment.length() );
@@ -121,51 +113,44 @@ void Converter::convertLinks(QTextBlock & parent)
     }
 }
 
-void Converter::convertImages()
-{
-    convertImages( mTextDocument->rootFrame() );
-}
-
-void Converter::convertImages(QTextFrame * parent)
+void Converter::convertImages(QTextFrame * parent, const QDir &dir, QTextDocument *textDocument)
 {
     for ( QTextFrame::iterator it = parent->begin(); !it.atEnd(); ++it ) {
         QTextFrame *textFrame = it.currentFrame();
-        QTextBlock textBlock = it.currentBlock();
+        const QTextBlock textBlock = it.currentBlock();
 
         if ( textFrame ) {
-            convertImages(textFrame);
-        }
-        else if ( textBlock.isValid() ) {
-            convertImages(textBlock);
+            convertImages(textFrame, dir, textDocument);
+        } else if ( textBlock.isValid() ) {
+            convertImages(textBlock, dir, textDocument);
         }
     }
 }
 
-void Converter::convertImages(QTextBlock & parent)
+void Converter::convertImages(const QTextBlock & parent, const QDir &dir, QTextDocument *textDocument)
 {
     for ( QTextBlock::iterator it = parent.begin(); !it.atEnd(); ++it ) {
-        QTextFragment textFragment = it.fragment();
+        const QTextFragment textFragment = it.fragment();
         if ( textFragment.isValid() ) {
-            QTextCharFormat textCharFormat = textFragment.charFormat();
+            const QTextCharFormat textCharFormat = textFragment.charFormat();
             if( textCharFormat.isImageFormat() ) {
                 
                 //TODO: Show images from http URIs
                 
                 QTextImageFormat format;
                 
-                format.setName( QDir::cleanPath( mDir.absoluteFilePath( textCharFormat.toImageFormat().name() ) ) );
+                format.setName( QDir::cleanPath( dir.absoluteFilePath( textCharFormat.toImageFormat().name() ) ) );
                 const QImage img = QImage( format.name() );
                 
                 if ( img.width() > 890 ) {
                     format.setWidth( 890 );
                     format.setHeight( img.height() * 890. / img.width() );
-                }
-                else {
+                } else {
                     format.setWidth( img.width() );
                     format.setHeight( img.height() );
                 }
                 
-                QTextCursor cursor( mTextDocument );
+                QTextCursor cursor( textDocument );
                 cursor.setPosition( textFragment.position(), QTextCursor::MoveAnchor );
                 cursor.setPosition( textFragment.position() + textFragment.length(), QTextCursor::KeepAnchor );
                 cursor.removeSelectedText();

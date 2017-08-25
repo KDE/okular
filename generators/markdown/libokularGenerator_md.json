@@ -3,8 +3,7 @@
         "Authors": [
             {
                 "Email": "wolff@julianwolff.de",
-                "Name": "Julian Wolff",
-                "Name[x-test]": "xxJulian Wolffxx"
+                "Name": "Julian Wolff"
             }
         ],
         "Copyright": "© 2017 Julian Wolff",

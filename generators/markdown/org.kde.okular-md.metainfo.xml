@@ -5,7 +5,25 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+ and GFDL-1.3</project_license>
   <name>Markdown</name>
+  <name xml:lang="nl">Noteren</name>
+  <name xml:lang="pt">Markdown</name>
+  <name xml:lang="sr">Маркдаун</name>
+  <name xml:lang="sr-Latn">Markdown</name>
+  <name xml:lang="sr-ijekavian">Маркдаун</name>
+  <name xml:lang="sr-ijekavianlatin">Markdown</name>
+  <name xml:lang="sv">Markdown</name>
+  <name xml:lang="uk">Markdown</name>
+  <name xml:lang="x-test">xxMarkdownxx</name>
   <summary>Adds support for reading Markdown documents</summary>
+  <summary xml:lang="nl">Voegt ondersteuning voor lezen van documenten met notities toe</summary>
+  <summary xml:lang="pt">Adiciona o suporte para a leitura de documentos em Markdown</summary>
+  <summary xml:lang="sr">Подршка за читање маркдаун докумената</summary>
+  <summary xml:lang="sr-Latn">Podrška za čitanje Markdown dokumenata</summary>
+  <summary xml:lang="sr-ijekavian">Подршка за читање маркдаун докумената</summary>
+  <summary xml:lang="sr-ijekavianlatin">Podrška za čitanje Markdown dokumenata</summary>
+  <summary xml:lang="sv">Lägger till stöd för att läsa Markdown-dokument</summary>
+  <summary xml:lang="uk">Додає підтримку читання документів Markdown</summary>
+  <summary xml:lang="x-test">xxAdds support for reading Markdown documentsxx</summary>
   <mimetypes>
     <mimetype>text/markdown</mimetype>
   </mimetypes>

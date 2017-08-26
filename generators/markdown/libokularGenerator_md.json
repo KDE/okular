@@ -3,10 +3,21 @@
         "Authors": [
             {
                 "Email": "wolff@julianwolff.de",
-                "Name": "Julian Wolff"
+                "Name": "Julian Wolff",
+                "Name[sr@ijekavian]": "Јулијан Волф",
+                "Name[sr@ijekavianlatin]": "Julijan Volf",
+                "Name[sr@latin]": "Julijan Volf",
+                "Name[sr]": "Јулијан Волф",
+                "Name[x-test]": "xxJulian Wolffxx"
             }
         ],
         "Copyright": "© 2017 Julian Wolff",
+        "Copyright[sr@ijekavian]": "© 2017, Јулијан Волф",
+        "Copyright[sr@ijekavianlatin]": "© 2017, Julijan Volf",
+        "Copyright[sr@latin]": "© 2017, Julijan Volf",
+        "Copyright[sr]": "© 2017, Јулијан Волф",
+        "Copyright[uk]": "© Julian Wolff, 2017",
+        "Copyright[x-test]": "xx© 2017 Julian Wolffxx",
         "Id": "okular_markdown",
         "License": "GPL",
         "MimeTypes": [
@@ -14,6 +25,16 @@
             "text/x-markdown"
         ],
         "Name": "Markdown Backend",
+        "Name[ca]": "Dorsal de Markdown",
+        "Name[nl]": "Notatie-backend",
+        "Name[pt]": "Infra-Estrutura de Markdown",
+        "Name[sr@ijekavian]": "Позадина за маркдаун",
+        "Name[sr@ijekavianlatin]": "Pozadina za Markdown",
+        "Name[sr@latin]": "Pozadina za Markdown",
+        "Name[sr]": "Позадина за маркдаун",
+        "Name[sv]": "Markdown-gränssnitt",
+        "Name[uk]": "Модуль Markdown",
+        "Name[x-test]": "xxMarkdown Backendxx",
         "ServiceTypes": [
             "okular/Generator"
         ],

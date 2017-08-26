@@ -36,7 +36,7 @@
   <name xml:lang="zh-TW">影像</name>
   <summary>Adds support for reading many image formats</summary>
   <summary xml:lang="ast">Amiesta sofitu pa la llectura de munchos formatos d'imaxe</summary>
-  <summary xml:lang="ca">Afegeix la implementació per llegir molts formats d'imatges</summary>
+  <summary xml:lang="ca">Afegeix la implementació per a llegir molts formats d'imatge</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per llegir molts formats d'imatges</summary>
   <summary xml:lang="cs">Přidává podporu pro čtení formátů obrázků</summary>
   <summary xml:lang="de">Bietet Unterstützung zum Lesen von vielen Bildformaten</summary>

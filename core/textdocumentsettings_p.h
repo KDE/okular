@@ -31,9 +31,13 @@ class TextDocumentSettingsWidgetPrivate
         Ui_TextDocumentSettings *mUi;
 };
 
-class TextDocumentSettingsPrivate
+class TextDocumentSettingsPrivate : public QObject
 {
     public:
+        TextDocumentSettingsPrivate(QObject *parent)
+            : QObject(parent)
+        {}
+
         QFont mFont;
 };
 

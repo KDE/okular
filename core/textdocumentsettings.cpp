@@ -46,6 +46,7 @@ TextDocumentSettingsWidget::~TextDocumentSettingsWidget()
     Q_D( TextDocumentSettingsWidget );
 
     delete d->mUi;
+    delete d;
 }
 
 void TextDocumentSettingsWidget::addRow( const QString& labelText, QWidget *widget )
@@ -62,7 +63,7 @@ void TextDocumentSettingsWidget::addRow( const QString& labelText, QWidget *widg
 
 TextDocumentSettings::TextDocumentSettings( const QString& config, QObject *parent )
     : KConfigSkeleton( config, parent )
-    , d_ptr( new TextDocumentSettingsPrivate() )
+    , d_ptr( new TextDocumentSettingsPrivate(this) )
 {
     Q_D( TextDocumentSettings );
 

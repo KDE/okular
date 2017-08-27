@@ -69,6 +69,7 @@ QTextDocument* Converter::convert( const QString &fileName )
     QTextDocument *textDocument = new QTextDocument;
     textDocument->setPageSize( QSizeF( 980, 1307 ) );
     textDocument->setHtml( html );
+    textDocument->setDefaultFont( generator()->generalSettings()->font() );
     
     mkd_cleanup( markdownHandle );
     

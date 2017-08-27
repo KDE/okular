@@ -25,9 +25,11 @@
             "text/x-markdown"
         ],
         "Name": "Markdown Backend",
+        "Name[ca@valencia]": "Dorsal de Markdown",
         "Name[ca]": "Dorsal de Markdown",
-        "Name[nl]": "Notatie-backend",
+        "Name[nl]": "Markdown-backend",
         "Name[pt]": "Infra-Estrutura de Markdown",
+        "Name[sk]": "Markdown backend",
         "Name[sr@ijekavian]": "Позадина за маркдаун",
         "Name[sr@ijekavianlatin]": "Pozadina za Markdown",
         "Name[sr@latin]": "Pozadina za Markdown",

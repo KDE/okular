@@ -26,7 +26,7 @@ WidgetConfigurationToolsBase::WidgetConfigurationToolsBase( QWidget * parent )
 {
     QHBoxLayout *hBoxLayout = new QHBoxLayout( this );
     m_list = new QListWidget( this );
-    m_list->setIconSize( QSize( 64, 64 ) );
+    m_list->setIconSize( QSize( 32, 32 ) );
     hBoxLayout->addWidget( m_list );
 
     QVBoxLayout *vBoxLayout = new QVBoxLayout();

@@ -1,12 +1,13 @@
-Description: Disable SYNCTEX_INLINE on non-MSVC compilers.
- It is misplaced in the code (before "static"), so it causes compiling errors.
+Disable SYNCTEX_INLINE on non-MSVC compilers. It is misplaced
+in the code (before "static"), so it causes compiling errors.
 Author: Pino Toscano <pino@kde.org>
-diff --git a/generators/poppler/synctex/synctex_parser.c b/generators/poppler/synctex/synctex_parser.c
-index 0d3de08..53f462d 100644
---- a/generators/poppler/synctex/synctex_parser.c
-+++ b/generators/poppler/synctex/synctex_parser.c
-@@ -67,7 +67,7 @@ Thu Jun 19 09:39:21 UTC 2008
- #       if defined(_MSC_VER) 
+
+Index: synctex/synctex_parser.c
+===================================================================
+--- synctex.orig/synctex_parser.c
++++ synctex/synctex_parser.c
+@@ -91,7 +91,7 @@
+ #       if defined(_MSC_VER)
  #          define SYNCTEX_INLINE __inline
  #       else
 -#          define SYNCTEX_INLINE inline

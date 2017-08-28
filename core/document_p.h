@@ -280,7 +280,7 @@ class DocumentPrivate
         QUndoStack *m_undoStack;
         QDomNode m_prevPropsOfAnnotBeingModified;
 
-        synctex_scanner_t m_synctex_scanner;
+        synctex_scanner_p m_synctex_scanner;
 
         // generator selection
         static QVector<KPluginMetaData> availableGenerators();

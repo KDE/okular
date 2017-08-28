@@ -1119,8 +1119,6 @@ QPixmap PageViewAnnotator::makeToolPixmap( const QDomElement &toolElement )
     QString imageVariant;
     if ( qApp->devicePixelRatio() > 1.05 ) {
         imageVariant = "@2x";
-    } else {
-        imageVariant = "";
     }
 
     // Load base pixmap. We'll draw on top of it

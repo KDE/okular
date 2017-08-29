@@ -1,3 +1,5 @@
+add_definitions(-DTRANSLATION_DOMAIN="okular_mobi")
+
 ########### next target ###############
 
 set(okularGenerator_mobi_PART_SRCS

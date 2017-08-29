@@ -1,3 +1,5 @@
+add_definitions(-DTRANSLATION_DOMAIN="okular_plucker")
+
 include_directories(
    ${CMAKE_CURRENT_SOURCE_DIR}/../..
    ${CMAKE_CURRENT_SOURCE_DIR}/../../generators/plucker/unpluck

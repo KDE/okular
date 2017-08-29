@@ -1,3 +1,5 @@
+add_definitions(-DTRANSLATION_DOMAIN="okular_ghostview")
+
 add_subdirectory( conf )
 
 include_directories(

@@ -1,3 +1,5 @@
+add_definitions(-DTRANSLATION_DOMAIN="okular_chm")
+
 add_subdirectory( kio-msits )
 
 include_directories(

@@ -1,3 +1,5 @@
+add_definitions(-DTRANSLATION_DOMAIN="okular_poppler")
+
 add_subdirectory( conf )
 
 if (Poppler_VERSION VERSION_GREATER "0.23.99")

@@ -359,6 +359,8 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         // Timer for m_infoMessage
         QTimer *m_infoTimer;
 
+        QString m_registerDbusName;
+
     private Q_SLOTS:
         void slotAnnotationPreferences();
         void slotHandleActivatedSourceReference(const QString& absFileName, int line, int col, bool *handled);

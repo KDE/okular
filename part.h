@@ -293,6 +293,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         QTimer *m_dirtyHandler;
         QUrl m_oldUrl;
         Okular::DocumentViewport m_viewportDirty;
+        bool m_isReloading;
         bool m_wasPresentationOpen;
         QWidget *m_dirtyToolboxItem;
         bool m_wasSidebarVisible;

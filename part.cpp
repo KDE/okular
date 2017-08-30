@@ -294,7 +294,7 @@ Part::Part(QWidget *parentWidget,
 QObject *parent,
 const QVariantList &args)
 : KParts::ReadWritePart(parent),
-m_tempfile( 0 ), m_fileWasRemoved( false ), m_showMenuBarAction( 0 ), m_showFullScreenAction( 0 ), m_actionsSearched( false ),
+m_tempfile( 0 ), m_isReloading( false ), m_fileWasRemoved( false ), m_showMenuBarAction( 0 ), m_showFullScreenAction( 0 ), m_actionsSearched( false ),
 m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentWidget, parent, args)), m_generatorGuiClient(0), m_keeper( 0 )
 {
     // make sure that the component name is okular otherwise the XMLGUI .rc files are not found
@@ -1773,6 +1773,12 @@ void Part::slotFileDirty( const QString& path )
 
 void Part::slotDoFileDirty()
 {
+    // Skip reload when another reload is already in progress
+    if ( m_isReloading ) {
+        return;
+    }
+    QScopedValueRollback<bool> rollback(m_isReloading, true);
+
     bool tocReloadPrepared = false;
 
     // do the following the first time the file is reloaded

@@ -1,3 +1,4 @@
+remove_definitions(-DTRANSLATION_DOMAIN="okular")
 add_definitions(-DTRANSLATION_DOMAIN="okular_plucker")
 
 include_directories(

@@ -1,18 +1,18 @@
-project(okular)
-
-cmake_minimum_required(VERSION 2.8.12)
-
-set(QT_REQUIRED_VERSION "5.6.0")
-set(KF5_REQUIRED_VERSION "5.16.0")
-
-find_package(ECM 5.19.0 CONFIG REQUIRED)
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH})
+cmake_minimum_required(VERSION 3.0)
 
 # KDE Application Version, managed by release script
 set (KDE_APPLICATIONS_VERSION_MAJOR "17")
 set (KDE_APPLICATIONS_VERSION_MINOR "11")
 set (KDE_APPLICATIONS_VERSION_MICRO "70")
 set (KDE_APPLICATIONS_VERSION "${KDE_APPLICATIONS_VERSION_MAJOR}.${KDE_APPLICATIONS_VERSION_MINOR}.${KDE_APPLICATIONS_VERSION_MICRO}")
+
+project(okular VERSION 1.2.${KDE_APPLICATIONS_VERSION_MICRO})
+
+set(QT_REQUIRED_VERSION "5.6.0")
+set(KF5_REQUIRED_VERSION "5.16.0")
+
+find_package(ECM 5.19.0 CONFIG REQUIRED)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH})
 
 include(ECMInstallIcons)
 include(ECMSetupVersion)
@@ -27,7 +27,7 @@ include(ECMAddTests)
 include(ECMAddAppIcon)
 include(ECMPackageConfigHelpers)
 
-ecm_setup_version(1.3.${KDE_APPLICATIONS_VERSION_MICRO}
+ecm_setup_version(${PROJECT_VERSION}
                   VARIABLE_PREFIX OKULAR
                   VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/core/version.h"
                   PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/Okular5ConfigVersion.cmake")

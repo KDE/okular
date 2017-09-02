@@ -20,7 +20,7 @@ set_package_properties(LibSpectre PROPERTIES
         TYPE RECOMMENDED
         PURPOSE "Support for PS files in okular.")
 
-find_package(KF5KExiv2)
+find_package(KF5KExiv2 CONFIG)
 set_package_properties("LibKExiv2" PROPERTIES
         DESCRIPTION  "Wrapper around Exiv2 library"
         URL "http://www.digikam.org/sharedlibs"
@@ -34,7 +34,7 @@ set_package_properties("CHM" PROPERTIES
         TYPE RECOMMENDED
         PURPOSE "Support CHM files in okular.")
 
-find_package(KF5KHtml)
+find_package(KF5KHtml CONFIG)
 set_package_properties("KF5KHtml" PROPERTIES
         DESCRIPTION "HTML rendering library"
         TYPE RECOMMENDED
@@ -82,7 +82,7 @@ set_package_properties("libepub" PROPERTIES
         TYPE RECOMMENDED
         PURPOSE "Support for EPub documents in Okular.")
 
-find_package(QMobipocket "2")
+find_package(QMobipocket "2" CONFIG)
 set_package_properties("libqmobipocket" PROPERTIES
         DESCRIPTION  "A library for reading Mobipocket documents"
         URL "https://commits.kde.org/kdegraphics-mobipocket"

@@ -85,7 +85,7 @@ class PDFOptionsPage : public QWidget
            layout->addWidget(m_forceRaster);
            layout->addStretch(1);
 
-#if defined(Q_OS_WIN)
+#if defined(Q_OS_WIN) && !defined HAVE_POPPLER_0_60
            m_printAnnots->setVisible( false );
 #endif
            setPrintAnnots( true ); // Default value
@@ -1076,15 +1076,24 @@ bool PDFGenerator::print( QPrinter& printer )
     }
 
 #ifdef Q_OS_WIN
-    // Windows can only print by rasterization and with annotations, because that is
+    // Windows can only print by rasterization, because that is
     // currently the only way Okular implements printing without using UNIX-specific
     // tools like 'lpr'.
     forceRasterize = true;
+#ifndef HAVE_POPPLER_0_60
+    // The Document::HideAnnotations flags was introduced in poppler 0.60
     printAnnots = true;
 #endif
+#endif
 
+#ifdef HAVE_POPPLER_0_60
+    if ( forceRasterize )
+    {
+        pdfdoc->setRenderHint(Poppler::Document::HideAnnotations, !printAnnots);
+#else
     if ( forceRasterize && printAnnots)
     {
+#endif
     QPainter painter;
     painter.begin(&printer);
 

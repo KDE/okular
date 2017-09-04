@@ -61,6 +61,12 @@ if(NOT WIN32)
         Activities
     )
 endif()
+find_package(KF5Kirigami2)
+set_package_properties(KF5Kirigami2 PROPERTIES
+    DESCRIPTION "A QtQuick based components set"
+    PURPOSE "Required at runtime by the mobile app"
+    TYPE RUNTIME
+)
 find_package(Phonon4Qt5 CONFIG REQUIRED)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake/modules)

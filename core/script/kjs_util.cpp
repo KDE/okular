@@ -69,6 +69,6 @@ void JSUtil::initType( KJSContext *ctx )
 
 KJSObject JSUtil::object( KJSContext *ctx )
 {
-    return g_utilProto->constructObject( ctx, 0 );
+    return g_utilProto->constructObject( ctx, nullptr );
 }
 

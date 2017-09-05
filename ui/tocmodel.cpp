@@ -61,7 +61,7 @@ public:
 
 
 TOCItem::TOCItem()
-    : highlight( false ), parent( 0 ), model( 0 )
+    : highlight( false ), parent( nullptr ), model( nullptr )
 {
 }
 
@@ -98,7 +98,7 @@ TOCItem::~TOCItem()
 
 
 TOCModelPrivate::TOCModelPrivate( TOCModel *qq )
-    : q( qq ), root( new TOCItem ), dirty( false ), m_oldModel( 0 )
+    : q( qq ), root( new TOCItem ), dirty( false ), m_oldModel( nullptr )
 {
     root->model = this;
 }
@@ -111,7 +111,7 @@ TOCModelPrivate::~TOCModelPrivate()
 
 void TOCModelPrivate::addChildren( const QDomNode & parentNode, TOCItem * parentItem )
 {
-    TOCItem * currentItem = 0;
+    TOCItem * currentItem = nullptr;
     QDomNode n = parentNode.firstChild();
     while( !n.isNull() )
     {
@@ -155,8 +155,8 @@ void TOCModelPrivate::findViewport( const Okular::DocumentViewport &viewport, TO
     while ( todo )
     {
         TOCItem *current = todo;
-        todo = 0;
-        TOCItem *pos = 0;
+        todo = nullptr;
+        TOCItem *pos = nullptr;
 
         foreach ( TOCItem *child, current->children )
         {
@@ -361,7 +361,7 @@ void TOCModel::fill( const Okular::DocumentSynopsis *toc )
     }
     d->itemsToOpen.clear();
     delete d->m_oldModel;
-    d->m_oldModel = 0;
+    d->m_oldModel = nullptr;
     d->m_oldTocExpandedIndexes.clear();
 }
 
@@ -429,13 +429,13 @@ void TOCModel::setOldModelData( TOCModel *model, const QVector<QModelIndex> &lis
 
 bool TOCModel::hasOldModelData() const
 {
-    return (d->m_oldModel != 0);
+    return (d->m_oldModel != nullptr);
 }
 
 TOCModel *TOCModel::clearOldModelData() const
 {
     TOCModel *oldModel = d->m_oldModel;
-    d->m_oldModel = 0;
+    d->m_oldModel = nullptr;
     d->m_oldTocExpandedIndexes.clear();
     return oldModel;
 }

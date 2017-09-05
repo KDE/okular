@@ -47,7 +47,7 @@ class PickPointEngine : public AnnotatorEngine
 {
     public:
         PickPointEngine( const QDomElement & engineElement )
-            : AnnotatorEngine( engineElement ), clicked( false ), pixmap( 0 ),
+            : AnnotatorEngine( engineElement ), clicked( false ), pixmap( nullptr ),
               xscale( 1.0 ), yscale( 1.0 )
         {
             // parse engine specific attributes
@@ -156,7 +156,7 @@ class PickPointEngine : public AnnotatorEngine
             }
 
             // find out annotation's type
-            Okular::Annotation * ann = 0;
+            Okular::Annotation * ann = nullptr;
             const QString typeString = m_annotElement.attribute( QStringLiteral("type") );
             // create TextAnnotation from path
             if ( typeString == QLatin1String("FreeText"))	//<annotation type="Text"
@@ -164,7 +164,7 @@ class PickPointEngine : public AnnotatorEngine
                 //note dialog
                 const QString prompt = i18n( "Text of the new note:" );
                 bool resok;
-                const QString note = QInputDialog::getMultiLineText(0, i18n( "New Text Note" ), prompt, QString(), &resok);
+                const QString note = QInputDialog::getMultiLineText(nullptr, i18n( "New Text Note" ), prompt, QString(), &resok);
                 if(resok)
                 {
                     //add note
@@ -420,7 +420,7 @@ class PolyLineEngine : public AnnotatorEngine
                 return QList< Okular::Annotation* >();
 
             // find out annotation's type
-            Okular::Annotation * ann = 0;
+            Okular::Annotation * ann = nullptr;
             const QString typeString = m_annotElement.attribute( QStringLiteral("type") );
 
             // create LineAnnotation from path
@@ -491,7 +491,7 @@ class TextSelectorEngine : public AnnotatorEngine
     public:
         TextSelectorEngine( const QDomElement & engineElement, PageView * pageView )
             : AnnotatorEngine( engineElement ), m_pageView( pageView ),
-            selection( 0 )
+            selection( nullptr )
         {
             // parse engine specific attributes
         }
@@ -522,7 +522,7 @@ class TextSelectorEngine : public AnnotatorEngine
                     const QPoint start( (int)( lastPoint.x * item()->uncroppedWidth() ), (int)( lastPoint.y * item()->uncroppedHeight() ) );
                     const QPoint end( (int)( nX * item()->uncroppedWidth() ), (int)( nY * item()->uncroppedHeight() ) );
                     delete selection;
-                    selection = 0;
+                    selection = nullptr;
                     Okular::RegularAreaRect * newselection = m_pageView->textSelectionForItem( item(), start, end );
                     if ( newselection && !newselection->isEmpty() )
                     {
@@ -575,7 +575,7 @@ class TextSelectorEngine : public AnnotatorEngine
                 return QList< Okular::Annotation* >();
 
             // find out annotation's type
-            Okular::Annotation * ann = 0;
+            Okular::Annotation * ann = nullptr;
             const QString typeString = m_annotElement.attribute( QStringLiteral("type") );
 
             Okular::HighlightAnnotation::HighlightType type = Okular::HighlightAnnotation::Highlight;
@@ -622,7 +622,7 @@ class TextSelectorEngine : public AnnotatorEngine
             }
 
             delete selection;
-            selection = 0;
+            selection = nullptr;
 
             // safety check
             if ( !ann )
@@ -657,8 +657,8 @@ class TextSelectorEngine : public AnnotatorEngine
 
 PageViewAnnotator::PageViewAnnotator( PageView * parent, Okular::Document * storage )
     : QObject( parent ), m_document( storage ), m_pageView( parent ),
-    m_toolBar( 0 ), m_engine( 0 ), m_textToolsEnabled( false ), m_toolsEnabled( false ),
-    m_continuousMode( false ), m_hidingWasForced( false ), m_lastToolID( -1 ), m_lockedItem( 0 )
+    m_toolBar( nullptr ), m_engine( nullptr ), m_textToolsEnabled( false ), m_toolsEnabled( false ),
+    m_continuousMode( false ), m_hidingWasForced( false ), m_lastToolID( -1 ), m_lockedItem( nullptr )
 {
     reparseConfig();
 }
@@ -724,7 +724,7 @@ void PageViewAnnotator::setEnabled( bool on )
         // remove toolBar
         if ( m_toolBar )
             m_toolBar->hideAndDestroy();
-        m_toolBar = 0;
+        m_toolBar = nullptr;
         // deactivate the active tool, if any
         slotToolSelected( -1 );
         return;
@@ -961,9 +961,9 @@ void PageViewAnnotator::slotToolSelected( int toolID )
     if ( m_engine )
     {
         delete m_engine;
-        m_engine = 0;
+        m_engine = nullptr;
     }
-    m_lockedItem = 0;
+    m_lockedItem = nullptr;
     if ( m_lastDrawnRect.isValid() )
     {
         m_pageView->viewport()->update( m_lastDrawnRect.translated( -m_pageView->contentAreaPosition() ) );

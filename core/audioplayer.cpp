@@ -31,7 +31,7 @@ using namespace Okular;
 class SoundInfo
 {
 public:
-    explicit SoundInfo( const Sound * s = 0, const SoundAction * ls = 0 )
+    explicit SoundInfo( const Sound * s = nullptr, const SoundAction * ls = nullptr )
       : sound( s ), volume( 0.5 ), synchronous( false ), repeat( false ),
         mix( false )
     {
@@ -56,7 +56,7 @@ class PlayData
 {
 public:
     PlayData()
-        : m_mediaobject( 0 ), m_output( 0 ), m_buffer( 0 )
+        : m_mediaobject( nullptr ), m_output( nullptr ), m_buffer( nullptr )
     {
     }
 
@@ -166,7 +166,7 @@ bool AudioPlayerPrivate::play( const SoundInfo& si )
     if ( !valid )
     {
         delete data;
-        data = 0;
+        data = nullptr;
     }
     if ( data )
     {

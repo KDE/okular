@@ -143,11 +143,11 @@ class ThumbnailWidget
 
 
 ThumbnailListPrivate::ThumbnailListPrivate( ThumbnailList *qq, Okular::Document *document )
-    : QWidget(), q( qq ), m_document( document ), m_selected( 0 ),
-    m_delayTimer( 0 ), m_bookmarkOverlay( 0 ), m_vectorIndex( 0 )
+    : QWidget(), q( qq ), m_document( document ), m_selected( nullptr ),
+    m_delayTimer( nullptr ), m_bookmarkOverlay( nullptr ), m_vectorIndex( 0 )
 {
     setMouseTracking( true );
-    m_mouseGrabItem = 0;
+    m_mouseGrabItem = nullptr;
 }
 
 
@@ -159,7 +159,7 @@ ThumbnailWidget* ThumbnailListPrivate::getPageByNumber( int page ) const
         if ( (*tIt)->pageNumber() == page )
             return (*tIt);
     }
-    return 0;
+    return nullptr;
 }
 
 ThumbnailListPrivate::~ThumbnailListPrivate()
@@ -174,7 +174,7 @@ ThumbnailWidget* ThumbnailListPrivate::itemFor( const QPoint & p ) const
         if ( (*tIt)->rect().contains( p ) )
             return (*tIt);
     }
-    return 0;
+    return nullptr;
 }
 
 void ThumbnailListPrivate::paintEvent( QPaintEvent * e )
@@ -244,8 +244,8 @@ void ThumbnailList::notifySetup( const QVector< Okular::Page * > & pages, int se
         delete *tIt;
     d->m_thumbnails.clear();
     d->m_visibleThumbnails.clear();
-    d->m_selected = 0;
-    d->m_mouseGrabItem = 0;
+    d->m_selected = nullptr;
+    d->m_mouseGrabItem = nullptr;
 
     if ( pages.count() < 1 )
     {
@@ -315,7 +315,7 @@ void ThumbnailList::notifyCurrentPageChanged( int previousPage, int currentPage 
     // deselect previous thumbnail
     if ( d->m_selected )
         d->m_selected->setSelected( false );
-    d->m_selected = 0;
+    d->m_selected = nullptr;
 
     // select the page with viewport and ensure it's centered in the view
     d->m_vectorIndex = 0;
@@ -451,10 +451,10 @@ ThumbnailWidget *ThumbnailListPrivate::getThumbnailbyOffset(int current, int off
         ++it;
     }
     if ( it == itE )
-        return 0;
+        return nullptr;
     idx += offset;
     if ( idx < 0 || idx >= m_thumbnails.size() )
-        return 0;
+        return nullptr;
     return m_thumbnails[idx];
 }
 
@@ -531,7 +531,7 @@ void ThumbnailList::keyPressEvent( QKeyEvent * keyEvent )
     keyEvent->accept();
     if ( d->m_selected )
         d->m_selected->setSelected( false );
-    d->m_selected = 0;
+    d->m_selected = nullptr;
     d->m_document->setViewportPage( nextPage );
 }
 
@@ -593,7 +593,7 @@ void ThumbnailListPrivate::viewportResizeEvent( QResizeEvent * e )
     if ( m_bookmarkOverlay )
     {
         delete m_bookmarkOverlay;
-        m_bookmarkOverlay = 0;
+        m_bookmarkOverlay = nullptr;
     }
 
     // update Thumbnails since width has changed or height has increased
@@ -642,7 +642,7 @@ void ThumbnailListPrivate::slotDelayTimeout()
     if ( expectedWidth > 10 )
         m_bookmarkOverlay = new QPixmap( DesktopIcon( QStringLiteral("bookmarks"), expectedWidth ) );
     else
-        m_bookmarkOverlay = 0;
+        m_bookmarkOverlay = nullptr;
 
     // request pixmaps
     slotRequestVisiblePixmaps();
@@ -720,7 +720,7 @@ void ThumbnailListPrivate::mousePressEvent( QMouseEvent * e )
     {
         m_mouseGrabPos.setX( 0 );
         m_mouseGrabPos.setY( 0 );
-        m_mouseGrabItem = 0;
+        m_mouseGrabItem = nullptr;
     }
 }
 

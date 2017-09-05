@@ -71,7 +71,7 @@ public:
 
 
 AnnItem::AnnItem()
-    : parent( 0 ), annotation( 0 ), page( -1 )
+    : parent( nullptr ), annotation( nullptr ), page( -1 )
 {
 }
 
@@ -83,7 +83,7 @@ AnnItem::AnnItem( AnnItem *_parent, Okular::Annotation *ann )
 }
 
 AnnItem::AnnItem( AnnItem *_parent, int _page )
-    : parent( _parent ), annotation( 0 ), page( _page )
+    : parent( _parent ), annotation( nullptr ), page( _page )
 {
     Q_ASSERT( !parent->parent );
     parent->children.append( this );
@@ -268,7 +268,7 @@ AnnItem* AnnotationModelPrivate::findItem( int page, int *index ) const
     }
     if ( index )
         *index = -1;
-    return 0;
+    return nullptr;
 }
 
 
@@ -387,7 +387,7 @@ bool AnnotationModel::isAnnotation( const QModelIndex &index ) const
 Okular::Annotation* AnnotationModel::annotationForIndex( const QModelIndex &index ) const
 {
     if ( !index.isValid() )
-        return 0;
+        return nullptr;
 
     AnnItem *item = static_cast< AnnItem* >( index.internalPointer() );
     return item->annotation;

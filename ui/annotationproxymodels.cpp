@@ -307,7 +307,7 @@ class AuthorGroupItem
                     return item;
             }
 
-            return 0;
+            return nullptr;
         }
 
         int row() const
@@ -333,7 +333,7 @@ class AuthorGroupProxyModel::Private
 {
     public:
         Private( AuthorGroupProxyModel *parent )
-            : mParent( parent ), mRoot( 0 ),
+            : mParent( parent ), mRoot( nullptr ),
             mGroupByAuthor( false )
         {
         }
@@ -365,7 +365,7 @@ int AuthorGroupProxyModel::columnCount( const QModelIndex& ) const
 
 int AuthorGroupProxyModel::rowCount( const QModelIndex &parentIndex ) const
 {
-    AuthorGroupItem *item = 0;
+    AuthorGroupItem *item = nullptr;
     if ( !parentIndex.isValid() )
         item = d->mRoot;
     else
@@ -379,7 +379,7 @@ QModelIndex AuthorGroupProxyModel::index( int row, int column, const QModelIndex
     if ( !hasIndex( row, column, parentIndex ) )
         return QModelIndex();
 
-    AuthorGroupItem *parentItem = 0;
+    AuthorGroupItem *parentItem = nullptr;
     if ( !parentIndex.isValid() )
         parentItem = d->mRoot;
     else
@@ -521,7 +521,7 @@ void AuthorGroupProxyModel::rebuildIndexes()
 {
     beginResetModel();
     delete d->mRoot;
-    d->mRoot = new AuthorGroupItem( 0 );
+    d->mRoot = new AuthorGroupItem( nullptr );
 
     if ( d->mGroupByAuthor ) {
         QMap<QString, AuthorGroupItem*> authorMap;

@@ -42,7 +42,7 @@
 
 DVIExport::DVIExport(dviRenderer& parent)
   : started_(false),
-    process_(0),
+    process_(nullptr),
     parent_(&parent)
 {
   connect( this, &DVIExport::error, &parent, &dviRenderer::error );
@@ -91,7 +91,7 @@ void DVIExport::abort_process_impl()
   // deleting process_ kills the external process itself
   // if it's still running.
   delete process_;
-  process_ = 0;
+  process_ = nullptr;
 }
 
 
@@ -215,7 +215,7 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
   // input_name is the name of the DVI which is used by dvips, either
   // the original file, or a temporary file with a new numbering.
   QString input_name = dvi.filename;
-  if (!options.isEmpty() || dvi.suggestedPageSize != 0) {
+  if (!options.isEmpty() || dvi.suggestedPageSize != nullptr) {
     // Get a name for a temporary file.
     // Must open the QTemporaryFile to access the name.
     QTemporaryFile tmpfile;
@@ -248,13 +248,13 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
         parent.end_pointer =
           newFile.dvi_Data() + parent.dviFile->page_offset[int(parent.current_page+1)];
       } else {
-        parent.command_pointer = 0;
-        parent.end_pointer = 0;
+        parent.command_pointer = nullptr;
+        parent.end_pointer = nullptr;
       }
 
       memset((char*) &parent.currinf.data, 0, sizeof(parent.currinf.data));
       parent.currinf.fonttable = &(parent.dviFile->tn_table);
-      parent.currinf._virtual  = 0;
+      parent.currinf._virtual  = nullptr;
       parent.prescan(&dviRenderer::prescan_removePageSizeInfo);
     }
 
@@ -315,7 +315,7 @@ void DVIExportToPS::abort_process_impl()
     tmpfile_name_.clear();
   }
 
-  printer_ = 0;
+  printer_ = nullptr;
 
   DVIExport::abort_process_impl();
 }

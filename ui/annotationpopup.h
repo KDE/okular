@@ -45,7 +45,7 @@ class AnnotationPopup : public QObject
 
     public:
         struct AnnotPagePair {
-            AnnotPagePair() : annotation( 0 ),  pageNumber( -1 )
+            AnnotPagePair() : annotation( nullptr ),  pageNumber( -1 )
             { }
 
             AnnotPagePair( Okular::Annotation *a, int pn ) : annotation( a ),  pageNumber( pn )

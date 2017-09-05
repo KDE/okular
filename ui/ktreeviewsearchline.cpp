@@ -43,7 +43,7 @@ class KTreeViewSearchLine::Private
   public:
     Private( KTreeViewSearchLine *_parent )
       : parent( _parent ),
-        treeView( 0 ),
+        treeView( nullptr ),
         caseSensitive( Qt::CaseInsensitive ),
         regularExpression( false ),
         activeSearch( false ),
@@ -78,7 +78,7 @@ void KTreeViewSearchLine::Private::rowsInserted( const QModelIndex & parentIndex
   if ( !model )
     return;
 
-  QTreeView* widget = 0L;
+  QTreeView* widget = nullptr;
   if ( treeView->model() == model ) {
     widget = treeView;
   }
@@ -94,7 +94,7 @@ void KTreeViewSearchLine::Private::rowsInserted( const QModelIndex & parentIndex
 void KTreeViewSearchLine::Private::treeViewDeleted( QObject *object )
 {
   if ( object == treeView ) {
-    treeView = 0;
+    treeView = nullptr;
     parent->setEnabled( false );
   }
 }
@@ -244,7 +244,7 @@ void KTreeViewSearchLine::setTreeView( QTreeView *treeView )
   d->treeView = treeView;
   connectTreeView( treeView );
 
-  setEnabled( treeView != NULL );
+  setEnabled( treeView != nullptr );
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -344,8 +344,8 @@ class KTreeViewSearchLineWidget::Private
 {
   public:
     Private()
-      : treeView( 0 ),
-        searchLine( 0 )
+      : treeView( nullptr ),
+        searchLine( nullptr )
     {
     }
 

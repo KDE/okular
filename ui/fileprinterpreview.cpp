@@ -41,8 +41,8 @@ public:
     FilePrinterPreviewPrivate( FilePrinterPreview *host, const QString & _filename )
         : q(host)
         , mainWidget(new QWidget(host))
-        , previewPart(0)
-        , failMessage(0)
+        , previewPart(nullptr)
+        , failMessage(nullptr)
         , config(KSharedConfig::openConfig(QStringLiteral("okularrc")))
 
     {
@@ -80,7 +80,7 @@ void FilePrinterPreviewPrivate::getPart()
     }
     qCDebug(OkularUiDebug) << "querying trader for application/ps service";
 
-    KPluginFactory *factory(0);
+    KPluginFactory *factory(nullptr);
     KService::List offers;
     if (filename.endsWith(QStringLiteral(".ps"))) {
         /* Explicitly look for the Okular/Ghostview part: no other PostScript

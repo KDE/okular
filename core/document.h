@@ -302,7 +302,7 @@ class OKULARCORE_EXPORT Document : public QObject
          * Sets the list of visible page rectangles.
          * @see VisiblePageRect
          */
-        void setVisiblePageRects( const QVector< VisiblePageRect * > & visiblePageRects, DocumentObserver *excludeObserver = 0 );
+        void setVisiblePageRects( const QVector< VisiblePageRect * > & visiblePageRects, DocumentObserver *excludeObserver = nullptr );
 
         /**
          * Returns the list of visible page rectangles.
@@ -419,7 +419,7 @@ class OKULARCORE_EXPORT Document : public QObject
          * @param excludeObserver The observer ids which shouldn't be effected by this change.
          * @param smoothMove Whether the move shall be animated smoothly.
          */
-        void setViewportPage( int page, DocumentObserver *excludeObserver = 0, bool smoothMove = false );
+        void setViewportPage( int page, DocumentObserver *excludeObserver = nullptr, bool smoothMove = false );
 
         /**
          * Sets the current document viewport to the given @p viewport.
@@ -427,7 +427,7 @@ class OKULARCORE_EXPORT Document : public QObject
          * @param excludeObserver The observer which shouldn't be effected by this change.
          * @param smoothMove Whether the move shall be animated smoothly.
          */
-        void setViewport( const DocumentViewport &viewport, DocumentObserver *excludeObserver = 0, bool smoothMove = false );
+        void setViewport( const DocumentViewport &viewport, DocumentObserver *excludeObserver = nullptr, bool smoothMove = false );
 
         /**
          * Sets the current document viewport to the next viewport in the
@@ -456,7 +456,7 @@ class OKULARCORE_EXPORT Document : public QObject
         /**
          * Sets the zoom for the current document.
          */
-        void setZoom( int factor, DocumentObserver *excludeObserver = 0 );
+        void setZoom( int factor, DocumentObserver *excludeObserver = nullptr );
 
         /**
          * Describes the possible options for the pixmap requests.

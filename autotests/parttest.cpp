@@ -78,7 +78,7 @@ bool PartTest::openDocument(Okular::Part *part, const QString &filePath)
 void PartTest::testReload()
 {
     QVariantList dummyArgs;
-    Okular::Part part(NULL, NULL, dummyArgs);
+    Okular::Part part(nullptr, nullptr, dummyArgs);
     QVERIFY( openDocument(&part, QStringLiteral(KDESRCDIR "data/file1.pdf")) );
     part.reload();
     qApp->processEvents();
@@ -88,7 +88,7 @@ void PartTest::testReload()
 void PartTest::testCanceledReload()
 {
     QVariantList dummyArgs;
-    PartThatHijacksQueryClose part(NULL, NULL, dummyArgs);
+    PartThatHijacksQueryClose part(nullptr, nullptr, dummyArgs);
     QVERIFY( openDocument(&part, QStringLiteral(KDESRCDIR "data/file1.pdf")) );
 
     // When queryClose() returns false, the reload operation is canceled (as if
@@ -103,7 +103,7 @@ void PartTest::testCanceledReload()
 void PartTest::testTOCReload()
 {
     QVariantList dummyArgs;
-    Okular::Part part(NULL, NULL, dummyArgs);
+    Okular::Part part(nullptr, nullptr, dummyArgs);
     QVERIFY( openDocument(&part, QStringLiteral(KDESRCDIR "data/tocreload.pdf")) );
     QCOMPARE(part.m_toc->expandedNodes().count(), 0);
     part.m_toc->m_treeView->expandAll();
@@ -118,7 +118,7 @@ void PartTest::testFowardPDF()
     QFETCH(QString, dir);
 
     QVariantList dummyArgs;
-    Okular::Part part(NULL, NULL, dummyArgs);
+    Okular::Part part(nullptr, nullptr, dummyArgs);
 
     // Create temp dir named like this: ${system temp dir}/${random string}/${dir}
     const QTemporaryDir tempDir;
@@ -173,7 +173,7 @@ void PartTest::testGeneratorPreferences()
 {
     KConfigDialog * dialog;
     QVariantList dummyArgs;
-    Okular::Part part(NULL, NULL, dummyArgs);
+    Okular::Part part(nullptr, nullptr, dummyArgs);
 
     // Test that we don't crash while opening the dialog
     dialog = part.slotGeneratorPreferences();
@@ -190,7 +190,7 @@ void PartTest::testGeneratorPreferences()
 void PartTest::testSelectText()
 {
     QVariantList dummyArgs;
-    Okular::Part part(NULL, NULL, dummyArgs);
+    Okular::Part part(nullptr, nullptr, dummyArgs);
     QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/file2.pdf")));
     part.widget()->show();
     QTest::qWaitForWindowExposed(part.widget());
@@ -228,7 +228,7 @@ void PartTest::testSelectText()
 void PartTest::testClickInternalLink()
 {
     QVariantList dummyArgs;
-    Okular::Part part(NULL, NULL, dummyArgs);
+    Okular::Part part(nullptr, nullptr, dummyArgs);
     QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/file2.pdf")));
     part.widget()->show();
     QTest::qWaitForWindowExposed(part.widget());

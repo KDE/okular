@@ -20,7 +20,7 @@ class Okular::ScripterPrivate
 {
     public:
         ScripterPrivate( DocumentPrivate *doc )
-            : m_doc( doc ), m_kjs( 0 )
+            : m_doc( doc ), m_kjs( nullptr )
         {
         }
 

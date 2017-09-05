@@ -419,7 +419,7 @@ class Okular::MovieActionPrivate : public Okular::ActionPrivate
 {
     public:
         MovieActionPrivate( MovieAction::OperationType operation )
-            : ActionPrivate(), m_operation( operation ), m_annotation( 0 )
+            : ActionPrivate(), m_operation( operation ), m_annotation( nullptr )
         {
         }
 
@@ -471,7 +471,7 @@ class Okular::RenditionActionPrivate : public Okular::ActionPrivate
     public:
         RenditionActionPrivate( RenditionAction::OperationType operation, Okular::Movie *movie, enum ScriptType scriptType, const QString &script )
             : ActionPrivate(), m_operation( operation ), m_movie( movie ), m_scriptType( scriptType ),
-              m_script( script ), m_annotation( 0 )
+              m_script( script ), m_annotation( nullptr )
         {
         }
 

@@ -15,7 +15,7 @@
 using namespace OOO;
 
 Document::Document( const QString &fileName )
-  : mFileName( fileName ), mManifest( 0 ), mAnyEncrypted( false )
+  : mFileName( fileName ), mManifest( nullptr ), mAnyEncrypted( false )
 {
 }
 

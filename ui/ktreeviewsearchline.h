@@ -50,7 +50,7 @@ class KTreeViewSearchLine : public KLineEdit
      * If \a treeView is null then the widget will be disabled until listview
      * are set with setTreeView().
      */
-    explicit KTreeViewSearchLine( QWidget *parent = nullptr, QTreeView *treeView = 0 );
+    explicit KTreeViewSearchLine( QWidget *parent = nullptr, QTreeView *treeView = nullptr );
 
     /**
      * Destroys the KTreeViewSearchLine.
@@ -194,7 +194,7 @@ class KTreeViewSearchLineWidget : public QWidget
      * Creates a KTreeViewSearchLineWidget for \a treeView with \a parent as the
      * parent.
      */
-    explicit KTreeViewSearchLineWidget( QWidget *parent = nullptr, QTreeView *treeView = 0 );
+    explicit KTreeViewSearchLineWidget( QWidget *parent = nullptr, QTreeView *treeView = nullptr );
 
     /**
      * Destroys the KTreeViewSearchLineWidget

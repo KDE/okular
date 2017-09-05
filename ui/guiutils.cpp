@@ -165,7 +165,7 @@ QString prettyToolTip( const Okular::Annotation * ann )
 QPixmap loadStamp( const QString& _name, const QSize& size, int iconSize )
 {
     const QString name = _name.toLower();
-    QSvgRenderer * r = 0;
+    QSvgRenderer * r = nullptr;
     if ( ( r = s_data->svgStamps() ) && r->elementExists( name ) )
     {
         const QRectF stampElemRect = r->boundsOnElement( name );
@@ -225,7 +225,7 @@ void writeEmbeddedFile( Okular::EmbeddedFile *ef, QWidget *parent, QFile& target
 Okular::Movie* renditionMovieFromScreenAnnotation( const Okular::ScreenAnnotation *annotation )
 {
     if ( !annotation )
-        return 0;
+        return nullptr;
 
     if ( annotation->action() && annotation->action()->actionType() == Okular::Action::Rendition )
     {
@@ -233,7 +233,7 @@ Okular::Movie* renditionMovieFromScreenAnnotation( const Okular::ScreenAnnotatio
         return renditionAction->movie();
     }
 
-    return 0;
+    return nullptr;
 }
 
 // from Arthur - qt4

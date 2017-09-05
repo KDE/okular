@@ -43,7 +43,7 @@ Okular::EmbeddedFile* embeddedFileFromAnnotation( Okular::Annotation *annotation
     }
     else
     {
-        return 0;
+        return nullptr;
     }
 }
 
@@ -69,7 +69,7 @@ void AnnotationPopup::exec( const QPoint &point )
 
     QMenu menu( mParent );
 
-    QAction *action = 0;
+    QAction *action = nullptr;
 
     const char *actionTypeId = "actionType";
 

@@ -359,7 +359,7 @@ AllocatedPixmap * DocumentPrivate::searchLowestPriorityPixmap( bool unloadableOn
     {
         const AllocatedPixmap * p = *pIt;
         // Filter by observer
-        if ( observer == 0 || p->observer == observer )
+        if ( observer == nullptr || p->observer == observer )
         {
             const int distance = qAbs( p->page - currentViewportPage );
             if ( maxDistance < distance && ( !unloadableOnly || p->observer->canUnloadPixmap( p->page ) ) )
@@ -373,7 +373,7 @@ AllocatedPixmap * DocumentPrivate::searchLowestPriorityPixmap( bool unloadableOn
 
     /* No pixmap to remove */
     if ( farthestPixmap == pEnd )
-        return 0;
+        return nullptr;
 
     AllocatedPixmap * selectedPixmap = *farthestPixmap;
     if ( thenRemoveIt )
@@ -737,7 +737,7 @@ Generator * DocumentPrivate::loadGeneratorLibrary( const KPluginMetaData &servic
     if ( !factory )
     {
         qCWarning(OkularCoreDebug).nospace() << "Invalid plugin factory for " << service.fileName() << ":" << loader.errorString();
-        return 0;
+        return nullptr;
     }
 
     Generator * plugin = factory->create<Okular::Generator>();
@@ -822,7 +822,7 @@ Document::OpenResult DocumentPrivate::openDocumentInternal( const KPluginMetaDat
 {
     QString propName = offer.pluginId();
     QHash< QString, GeneratorInfo >::const_iterator genIt = m_loadedGenerators.constFind( propName );
-    m_walletGenerator = 0;
+    m_walletGenerator = nullptr;
     if ( genIt != m_loadedGenerators.constEnd() )
     {
         m_generator = genIt.value().generator;
@@ -867,7 +867,7 @@ Document::OpenResult DocumentPrivate::openDocumentInternal( const KPluginMetaDat
             if ( !m_tempFile->open() )
             {
                 delete m_tempFile;
-                m_tempFile = 0;
+                m_tempFile = nullptr;
             }
             else
             {
@@ -882,20 +882,20 @@ Document::OpenResult DocumentPrivate::openDocumentInternal( const KPluginMetaDat
     QApplication::restoreOverrideCursor();
     if ( openResult != Document::OpenSuccess || m_pagesVector.size() <= 0 )
     {
-        m_generator->d_func()->m_document = 0;
-        QObject::disconnect( m_generator, 0, m_parent, 0 );
+        m_generator->d_func()->m_document = nullptr;
+        QObject::disconnect( m_generator, nullptr, m_parent, nullptr );
         // TODO this is a bit of a hack, since basically means that
         // you can only call walletDataForFile after calling openDocument
         // but since in reality it's what happens I've decided not to refactor/break API
         // One solution is just kill walletDataForFile and make OpenResult be an object
         // where the wallet data is also returned when OpenNeedsPassword
         m_walletGenerator = m_generator;
-        m_generator = 0;
+        m_generator = nullptr;
 
         qDeleteAll( m_pagesVector );
         m_pagesVector.clear();
         delete m_tempFile;
-        m_tempFile = 0;
+        m_tempFile = nullptr;
 
         // TODO: emit a message telling the document is empty
         if ( openResult == Document::OpenSuccess )
@@ -971,7 +971,7 @@ void DocumentPrivate::warnLimitedAnnotSupport()
 void DocumentPrivate::performAddPageAnnotation( int page, Annotation * annotation )
 {
     Okular::SaveInterface * iface = qobject_cast< Okular::SaveInterface * >( m_generator );
-    AnnotationProxy *proxy = iface ? iface->annotationProxy() : 0;
+    AnnotationProxy *proxy = iface ? iface->annotationProxy() : nullptr;
 
     // find out the page to attach annotation
     Page * kp = m_pagesVector[ page ];
@@ -1004,7 +1004,7 @@ void DocumentPrivate::performAddPageAnnotation( int page, Annotation * annotatio
 void DocumentPrivate::performRemovePageAnnotation( int page, Annotation * annotation )
 {
     Okular::SaveInterface * iface = qobject_cast< Okular::SaveInterface * >( m_generator );
-    AnnotationProxy *proxy = iface ? iface->annotationProxy() : 0;
+    AnnotationProxy *proxy = iface ? iface->annotationProxy() : nullptr;
     bool isExternallyDrawn;
 
     // find out the page
@@ -1042,7 +1042,7 @@ void DocumentPrivate::performRemovePageAnnotation( int page, Annotation * annota
 void DocumentPrivate::performModifyPageAnnotation( int page, Annotation * annotation, bool appearanceChanged )
 {
     Okular::SaveInterface * iface = qobject_cast< Okular::SaveInterface * >( m_generator );
-    AnnotationProxy *proxy = iface ? iface->annotationProxy() : 0;
+    AnnotationProxy *proxy = iface ? iface->annotationProxy() : nullptr;
 
     // find out the page
     Page * kp = m_pagesVector[ page ];
@@ -1266,7 +1266,7 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
     }
 
     // find a request
-    PixmapRequest * request = 0;
+    PixmapRequest * request = nullptr;
     m_pixmapRequestsMutex.lock();
     while ( !m_pixmapRequestsStack.isEmpty() && !request )
     {
@@ -1458,7 +1458,7 @@ void DocumentPrivate::slotFontReadingProgress( int page )
     if ( page >= (int)m_parent->pages() - 1 )
     {
         emit m_parent->fontReadingEnded();
-        m_fontThread = 0;
+        m_fontThread = nullptr;
         m_fontsCached = true;
     }
 }
@@ -1578,7 +1578,7 @@ void DocumentPrivate::_o_configChanged()
     while (m_allocatedTextPagesFifo.count() > m_maxAllocatedTextPages)
     {
         int pageToKick = m_allocatedTextPagesFifo.takeFirst();
-        m_pagesVector.at(pageToKick)->setTextPage( 0 ); // deletes the textpage
+        m_pagesVector.at(pageToKick)->setTextPage( nullptr ); // deletes the textpage
     }
 }
 
@@ -1689,7 +1689,7 @@ void DocumentPrivate::doProcessSearchMatch( RegularAreaRect *match, RunningSearc
             searchViewport.rePos.enabled = true;
             searchViewport.rePos.normalizedX = (match->first().left + match->first().right) / 2.0;
             searchViewport.rePos.normalizedY = (match->first().top + match->first().bottom) / 2.0;
-            m_parent->setViewport( searchViewport, 0, true );
+            m_parent->setViewport( searchViewport, nullptr, true );
         }
         delete match;
     }
@@ -1737,7 +1737,7 @@ void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *
             m_parent->requestTextPage( pageNumber );
 
         // loop on a page adding highlights for all found items
-        RegularAreaRect * lastMatch = 0;
+        RegularAreaRect * lastMatch = nullptr;
         while ( 1 )
         {
             if ( lastMatch )
@@ -1843,7 +1843,7 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, vo
             if ( newHue < 0 )
                 newHue += 360;
             QColor wordColor = QColor::fromHsv( newHue, baseSat, baseVal );
-            RegularAreaRect * lastMatch = 0;
+            RegularAreaRect * lastMatch = nullptr;
             // add all highlights for current word
             bool wordMatched = false;
             while ( 1 )
@@ -2125,7 +2125,7 @@ void DocumentPrivate::loadSyncFile( const QString & filePath )
 }
 
 Document::Document( QWidget *widget )
-    : QObject( 0 ), d( new DocumentPrivate( this ) )
+    : QObject( nullptr ), d( new DocumentPrivate( this ) )
 {
     d->m_widget = widget;
     d->m_bookmarkManager = new BookmarkManager( d );
@@ -2148,7 +2148,7 @@ Document::~Document()
     for ( ; viewIt != viewEnd; ++viewIt )
     {
         View *v = *viewIt;
-        v->d_func()->document = 0;
+        v->d_func()->document = nullptr;
     }
 
     // delete the bookmark manager
@@ -2410,7 +2410,7 @@ Document::OpenResult Document::openDocument(const QString & docFile, const QUrl 
 
     // no need to check for the existence of a synctex file, no parser will be
     // created if none exists
-    d->m_synctex_scanner = synctex_scanner_new_with_output_file( QFile::encodeName( docFile ).constData(), 0, 1);
+    d->m_synctex_scanner = synctex_scanner_new_with_output_file( QFile::encodeName( docFile ).constData(), nullptr, 1);
     if ( !d->m_synctex_scanner && QFile::exists(docFile + QLatin1String( "sync" ) ) )
     {
         d->loadSyncFile(docFile);
@@ -2512,7 +2512,7 @@ KXMLGUIClient* Document::guiClient()
         if ( iface )
             return iface->guiClient();
     }
-    return 0;
+    return nullptr;
 }
 
 void Document::closeDocument()
@@ -2522,10 +2522,10 @@ void Document::closeDocument()
         return;
 
     delete d->m_pageController;
-    d->m_pageController = 0;
+    d->m_pageController = nullptr;
 
     delete d->m_scripter;
-    d->m_scripter = 0;
+    d->m_scripter = nullptr;
 
      // remove requests left in queue
     d->m_pixmapRequestsMutex.lock();
@@ -2547,17 +2547,17 @@ void Document::closeDocument()
         {
             d->m_closingLoop = &loop;
             loop.exec();
-            d->m_closingLoop = 0;
+            d->m_closingLoop = nullptr;
         }
     }
     while ( startEventLoop );
 
     if ( d->m_fontThread )
     {
-        disconnect( d->m_fontThread, 0, this, 0 );
+        disconnect( d->m_fontThread, nullptr, this, nullptr );
         d->m_fontThread->stopExtraction();
         d->m_fontThread->wait();
-        d->m_fontThread = 0;
+        d->m_fontThread = nullptr;
     }
 
     // stop any audio playback
@@ -2573,7 +2573,7 @@ void Document::closeDocument()
     if ( d->m_synctex_scanner )
     {
         synctex_scanner_free( d->m_synctex_scanner );
-        d->m_synctex_scanner = 0;
+        d->m_synctex_scanner = nullptr;
     }
 
     // stop timers
@@ -2585,23 +2585,23 @@ void Document::closeDocument()
     if ( d->m_generator )
     {
         // disconnect the generator from this document ...
-        d->m_generator->d_func()->m_document = 0;
+        d->m_generator->d_func()->m_document = nullptr;
         // .. and this document from the generator signals
-        disconnect( d->m_generator, 0, this, 0 );
+        disconnect( d->m_generator, nullptr, this, nullptr );
 
         QHash< QString, GeneratorInfo >::const_iterator genIt = d->m_loadedGenerators.constFind( d->m_generatorName );
         Q_ASSERT( genIt != d->m_loadedGenerators.constEnd() );
     }
-    d->m_generator = 0;
+    d->m_generator = nullptr;
     d->m_generatorName = QString();
     d->m_url = QUrl();
-    d->m_walletGenerator = 0;
+    d->m_walletGenerator = nullptr;
     d->m_docFileName = QString();
     d->m_xmlFileName = QString();
     delete d->m_tempFile;
-    d->m_tempFile = 0;
+    d->m_tempFile = nullptr;
     delete d->m_archiveData;
-    d->m_archiveData = 0;
+    d->m_archiveData = nullptr;
     d->m_docSize = -1;
     d->m_exportCached = false;
     d->m_exportFormats.clear();
@@ -2807,7 +2807,7 @@ DocumentInfo Document::documentInfo( const QSet<DocumentInfo::Key> &keys ) const
 
 const DocumentSynopsis * Document::documentSynopsis() const
 {
-    return d->m_generator ? d->m_generator->generateDocumentSynopsis() : NULL;
+    return d->m_generator ? d->m_generator->generateDocumentSynopsis() : nullptr;
 }
 
 void Document::startFontReading()
@@ -2841,9 +2841,9 @@ void Document::stopFontReading()
     if ( !d->m_fontThread )
         return;
 
-    disconnect( d->m_fontThread, 0, this, 0 );
+    disconnect( d->m_fontThread, nullptr, this, nullptr );
     d->m_fontThread->stopExtraction();
-    d->m_fontThread = 0;
+    d->m_fontThread = nullptr;
     d->m_fontsCache.clear();
 }
 
@@ -2854,7 +2854,7 @@ bool Document::canProvideFontInformation() const
 
 const QList<EmbeddedFile*> *Document::embeddedFiles() const
 {
-    return d->m_generator ? d->m_generator->embeddedFiles() : NULL;
+    return d->m_generator ? d->m_generator->embeddedFiles() : nullptr;
 }
 
 const Page * Document::page( int n ) const
@@ -3610,7 +3610,7 @@ void Document::searchText( int searchID, const QString & text, bool fromStart, Q
         int pagesDone = 0;
 
         // continue checking last TextPage first (if it is the current page)
-        RegularAreaRect * match = 0;
+        RegularAreaRect * match = nullptr;
         if ( lastPage && lastPage->number() == s->continueOnPage )
         {
             if ( newText )
@@ -3887,7 +3887,7 @@ void Document::processAction( const Action * action )
                 if ( !nextViewport.isValid() )
                     return;
 
-                setViewport( nextViewport, 0, true );
+                setViewport( nextViewport, nullptr, true );
                 d->m_nextDocumentViewport = DocumentViewport();
                 d->m_nextDocumentDestination = QString();
             }
@@ -3939,7 +3939,7 @@ void Document::processAction( const Action * action )
             {
                 QList<QUrl> lst;
                 lst.append( url );
-                KRun::runService( *ptr, lst, 0 );
+                KRun::runService( *ptr, lst, nullptr );
             }
             else
                 KMessageBox::information( d->m_widget, i18n( "No application found for opening file of mimetype %1.", mime.name() ) );
@@ -4122,7 +4122,7 @@ void Document::processSourceReference( const SourceReference * ref )
 const SourceReference * Document::dynamicSourceReference( int pageNr, double absX, double absY )
 {
     if  ( !d->m_synctex_scanner )
-        return 0;
+        return nullptr;
 
     const QSizeF dpi = d->m_generator->dpi();
 
@@ -4144,7 +4144,7 @@ const SourceReference * Document::dynamicSourceReference( int pageNr, double abs
             return new Okular::SourceReference( QFile::decodeName( name ), line, col );
         }
     }
-    return 0;
+    return nullptr;
 }
 
 Document::PrintingType Document::printingSupport() const
@@ -4223,10 +4223,10 @@ QWidget* Document::printConfigurationWidget() const
     if ( d->m_generator )
     {
         PrintInterface * iface = qobject_cast< Okular::PrintInterface * >( d->m_generator );
-        return iface ? iface->printConfigurationWidget() : 0;
+        return iface ? iface->printConfigurationWidget() : nullptr;
     }
     else
-        return 0;
+        return nullptr;
 }
 
 void Document::fillConfigDialog( KConfigDialog * dialog )
@@ -4400,7 +4400,7 @@ void Document::unregisterView( View *view )
     if ( !viewDoc || viewDoc != this )
         return;
 
-    view->d_func()->document = 0;
+    view->d_func()->document = nullptr;
     d->m_views.remove( view );
 }
 
@@ -4503,7 +4503,7 @@ Document::OpenResult Document::openDocumentArchive( const QString & docFile, con
     }
     else
     {
-        d->m_archiveData = 0;
+        d->m_archiveData = nullptr;
     }
 
     return ret;
@@ -4636,7 +4636,7 @@ void Document::walletDataForFile( const QString &fileName, QString *walletName, 
 
 QAbstractItemModel * Document::layersModel() const
 {
-    return d->m_generator ? d->m_generator->layersModel() : NULL;
+    return d->m_generator ? d->m_generator->layersModel() : nullptr;
 }
 
 void DocumentPrivate::requestDone( PixmapRequest * req )
@@ -4763,7 +4763,7 @@ void DocumentPrivate::textGenerationDone( Page *page )
         int pageToKick = m_allocatedTextPagesFifo.takeFirst();
         if (pageToKick != page->number()) // this should never happen but better be safe than sorry
         {
-            m_pagesVector.at(pageToKick)->setTextPage( 0 ); // deletes the textpage
+            m_pagesVector.at(pageToKick)->setTextPage( nullptr ); // deletes the textpage
         }
     }
 

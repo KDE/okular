@@ -146,5 +146,5 @@ void JSConsole::initType( KJSContext *ctx )
 
 KJSObject JSConsole::object( KJSContext *ctx )
 {
-    return g_consoleProto->constructObject( ctx, 0 );
+    return g_consoleProto->constructObject( ctx, nullptr );
 }

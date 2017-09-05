@@ -150,7 +150,7 @@ class OKULARCORE_EXPORT TextPage
          * - the text which is included by rectangular area @p rect otherwise
          * Uses AnyPixelTextAreaInclusionBehaviour
          */
-        QString text( const RegularAreaRect *rect = 0 ) const;
+        QString text( const RegularAreaRect *rect = nullptr ) const;
 
         /**
          * Text extraction function.
@@ -177,7 +177,7 @@ class OKULARCORE_EXPORT TextPage
          * Note that ownership of the returned area belongs to the caller.
          * @since 0.15 (KDE 4.9)
          */
-        RegularAreaRect * wordAt( const NormalizedPoint &p, QString *word = 0 ) const;
+        RegularAreaRect * wordAt( const NormalizedPoint &p, QString *word = nullptr ) const;
 
         /**
          * Returns the rectangular area of the given @p selection.

@@ -79,27 +79,27 @@ class DocumentPrivate
     public:
         DocumentPrivate( Document *parent )
           : m_parent( parent ),
-            m_tempFile( 0 ),
+            m_tempFile( nullptr ),
             m_docSize( -1 ),
             m_allocatedPixmapsTotalMemory( 0 ),
             m_maxAllocatedTextPages( 0 ),
             m_warnedOutOfMemory( false ),
             m_rotation( Rotation0 ),
             m_exportCached( false ),
-            m_bookmarkManager( 0 ),
-            m_memCheckTimer( 0 ),
-            m_saveBookmarksTimer( 0 ),
-            m_generator( 0 ),
-            m_walletGenerator( 0 ),
+            m_bookmarkManager( nullptr ),
+            m_memCheckTimer( nullptr ),
+            m_saveBookmarksTimer( nullptr ),
+            m_generator( nullptr ),
+            m_walletGenerator( nullptr ),
             m_generatorsLoaded( false ),
-            m_pageController( 0 ),
-            m_closingLoop( 0 ),
-            m_scripter( 0 ),
-            m_archiveData( 0 ),
+            m_pageController( nullptr ),
+            m_closingLoop( nullptr ),
+            m_scripter( nullptr ),
+            m_archiveData( nullptr ),
             m_fontsCached( false ),
             m_annotationEditingEnabled ( true ),
             m_annotationBeingModified( false ),
-            m_synctex_scanner( 0 )
+            m_synctex_scanner( nullptr )
         {
             calculateMaxTextPages();
         }
@@ -111,10 +111,10 @@ class DocumentPrivate
         qulonglong calculateMemoryToFree();
         void cleanupPixmapMemory();
         void cleanupPixmapMemory( qulonglong memoryToFree );
-        AllocatedPixmap * searchLowestPriorityPixmap( bool unloadableOnly = false, bool thenRemoveIt = false, DocumentObserver *observer = 0 /* any */ );
+        AllocatedPixmap * searchLowestPriorityPixmap( bool unloadableOnly = false, bool thenRemoveIt = false, DocumentObserver *observer = nullptr /* any */ );
         void calculateMaxTextPages();
         qulonglong getTotalMemory();
-        qulonglong getFreeMemory( qulonglong *freeSwap = 0 );
+        qulonglong getFreeMemory( qulonglong *freeSwap = nullptr );
         void loadDocumentInfo();
         void loadDocumentInfo( QFile &infoFile );
         void loadViewsInfo( View *view, const QDomElement &e );

@@ -40,7 +40,7 @@ pageInfo::pageInfo(const QString& _PostScriptString) {
 
 
 pageInfo::~pageInfo() {
-  if (PostScriptString != 0L)
+  if (PostScriptString != nullptr)
     delete PostScriptString;
 }
 
@@ -59,7 +59,7 @@ ghostscript_interface::ghostscript_interface() {
 }
 
 ghostscript_interface::~ghostscript_interface() {
-  if (PostScriptHeaderString != 0L)
+  if (PostScriptHeaderString != nullptr)
     delete PostScriptHeaderString;
   qDeleteAll(pageList);
 }
@@ -298,7 +298,7 @@ void ghostscript_interface::graphics(const PageNumber& page, double dpi, long ma
   qCDebug(OkularDviDebug) << "ghostscript_interface::graphics( " << page << ", " << dpi << ", ... ) called.";
 #endif
 
-  if (paint == 0) {
+  if (paint == nullptr) {
     qCCritical(OkularDviDebug) << "ghostscript_interface::graphics(PageNumber page, double dpi, long magnification, QPainter *paint) called with paint == 0" << endl;
     return;
   }
@@ -311,7 +311,7 @@ void ghostscript_interface::graphics(const PageNumber& page, double dpi, long ma
   pageInfo *info = pageList.value(page);
 
   // No PostScript? Then return immediately.
-  if ((info == 0) || (info->PostScriptString->isEmpty())) {
+  if ((info == nullptr) || (info->PostScriptString->isEmpty())) {
 #ifdef DEBUG_PSGS
     qCDebug(OkularDviDebug) << "No PostScript found. Not drawing anything.";
 #endif

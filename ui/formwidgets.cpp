@@ -81,7 +81,7 @@ void FormWidgetsController::signalAction( Okular::Action *a )
 QButtonGroup* FormWidgetsController::registerRadioButton( QAbstractButton *button, Okular::FormFieldButton *formButton )
 {
     if ( !button )
-        return 0;
+        return nullptr;
 
     QList< RadioData >::iterator it = m_radios.begin(), itEnd = m_radios.end();
     const int id = formButton->id();
@@ -260,7 +260,7 @@ FormWidgetIface * FormWidgetFactory::createWidget( Okular::FormField * ff, QWidg
 
 
 FormWidgetIface::FormWidgetIface( QWidget * w, Okular::FormField * ff )
-    : m_controller( 0 ), m_widget( w ), m_ff( ff ), m_pageItem( 0 )
+    : m_controller( nullptr ), m_widget( w ), m_ff( ff ), m_pageItem( nullptr )
 {
 }
 
@@ -322,7 +322,7 @@ void FormWidgetIface::setFormWidgetsController( FormWidgetsController *controlle
 
 QAbstractButton* FormWidgetIface::button()
 {
-    return 0;
+    return nullptr;
 }
 
 

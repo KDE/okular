@@ -19,7 +19,7 @@
 #include "core/annotations.h"
 
 AnnotatorEngine::AnnotatorEngine( const QDomElement & engineElement )
-    : m_engineElement( engineElement ), m_creationCompleted( false ), m_item( 0 )
+    : m_engineElement( engineElement ), m_creationCompleted( false ), m_item( nullptr )
 {
     // parse common engine attributes
     if ( engineElement.hasAttribute( QStringLiteral("color") ) )
@@ -192,7 +192,7 @@ QList< Okular::Annotation* > SmoothPathEngine::end()
                 return QList< Okular::Annotation* >();
 
     // find out annotation's type
-    Okular::Annotation * ann = 0;
+    Okular::Annotation * ann = nullptr;
     QString typeString = m_annotElement.attribute( QStringLiteral("type") );
 
     // create InkAnnotation from path

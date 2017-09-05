@@ -131,7 +131,7 @@ public:
         if ( obj != titleLabel && obj != authorLabel && obj != dateLabel )
             return false;
 
-        QMouseEvent * me = 0;
+        QMouseEvent * me = nullptr;
         switch ( e->type() )
         {
             case QEvent::MouseButtonPress:

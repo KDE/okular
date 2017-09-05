@@ -74,7 +74,7 @@ dvifile::dvifile(const dvifile *old, fontPool *fp)
   errorMsg.clear();
   errorCounter = 0;
   page_offset.clear();
-  suggestedPageSize = 0;
+  suggestedPageSize = nullptr;
   numberOfExternalPSFiles = 0;
   numberOfExternalNONPSFiles = 0;
   sourceSpecialMarker = old->sourceSpecialMarker;
@@ -85,7 +85,7 @@ dvifile::dvifile(const dvifile *old, fontPool *fp)
   filename = old->filename;
   size_of_file = old->size_of_file;
   end_pointer = dvi_Data()+size_of_file;
-  if (dvi_Data() == 0) {
+  if (dvi_Data() == nullptr) {
     qCCritical(OkularDviDebug) << "Not enough memory to copy the DVI-file." << endl;
     return;
   }
@@ -204,7 +204,7 @@ void dvifile::read_postamble()
     // shall be enlarged by the following factor before it is used.
     double enlargement_factor = (double(scale) * double(_magnification))/(double(design) * 1000.0);
 
-    if (font_pool != 0) {
+    if (font_pool != nullptr) {
       TeXFontDefinition *fontp = font_pool->appendx(QString::fromLocal8Bit(fontname), checksum, scale, enlargement_factor);
 
       // Insert font in dictionary and make sure the dictionary is big
@@ -227,7 +227,7 @@ void dvifile::read_postamble()
 
   // Now we remove all those fonts from the memory which are no longer
   // in use.
-  if (font_pool != 0)
+  if (font_pool != nullptr)
     font_pool->release_fonts();
 }
 
@@ -277,7 +277,7 @@ dvifile::dvifile(const QString& fname, fontPool* pool)
   errorMsg.clear();
   errorCounter = 0;
   page_offset.clear();
-  suggestedPageSize = 0;
+  suggestedPageSize = nullptr;
   numberOfExternalPSFiles = 0;
   numberOfExternalNONPSFiles = 0;
   font_pool    = pool;
@@ -292,7 +292,7 @@ dvifile::dvifile(const QString& fname, fontPool* pool)
   // Sets the end pointer for the bigEndianByteReader so that the
   // whole memory buffer is readable
   end_pointer = dvi_Data()+size_of_file;
-  if (dvi_Data() == 0) {
+  if (dvi_Data() == nullptr) {
     qCCritical(OkularDviDebug) << "Not enough memory to load the DVI-file.";
     return;
   }
@@ -328,9 +328,9 @@ dvifile::~dvifile()
     QFile::remove(i.value());
   }
 
-  if (suggestedPageSize != 0)
+  if (suggestedPageSize != nullptr)
     delete suggestedPageSize;
-  if (font_pool != 0)
+  if (font_pool != nullptr)
     font_pool->mark_fonts_as_unused();
 }
 
@@ -388,7 +388,7 @@ QString dvifile::convertPDFtoPS(const QString &PDFFilename, QString *converrorms
   if (!pdf2ps.waitForStarted()) {
     // Indicates that conversion failed, won't try again.
     convertedFiles[PDFFilename].clear();
-    if (converrorms != 0 && !have_complainedAboutMissingPDF2PS) {
+    if (converrorms != nullptr && !have_complainedAboutMissingPDF2PS) {
       *converrorms = i18n("<qt><p>The external program <strong>pdf2ps</strong> could not be started. As a result, "
                           "the PDF-file %1 could not be converted to PostScript. Some graphic elements in your "
                           "document will therefore not be displayed.</p>"
@@ -410,7 +410,7 @@ QString dvifile::convertPDFtoPS(const QString &PDFFilename, QString *converrorms
   if (!QFile::exists(convertedFileName) || pdf2ps.exitCode() != 0) {
     // Indicates that conversion failed, won't try again.
     convertedFiles[PDFFilename].clear();
-    if (converrorms != 0) {
+    if (converrorms != nullptr) {
       const QString output = QString::fromLocal8Bit(pdf2ps.readAll());
 
       *converrorms = i18n("<qt><p>The PDF-file %1 could not be converted to PostScript. Some graphic elements in your "
@@ -433,7 +433,7 @@ QString dvifile::convertPDFtoPS(const QString &PDFFilename, QString *converrorms
 
 bool dvifile::saveAs(const QString &filename)
 {
-  if (dvi_Data() == 0)
+  if (dvi_Data() == nullptr)
     return false;
 
   QFile out(filename);

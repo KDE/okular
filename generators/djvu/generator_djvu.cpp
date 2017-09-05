@@ -70,7 +70,7 @@ static void recurseCreateTOC( QDomDocument &maindoc, const QDomNode &parent, QDo
 OKULAR_EXPORT_PLUGIN(DjVuGenerator, "libokularGenerator_djvu.json")
 
 DjVuGenerator::DjVuGenerator( QObject *parent, const QVariantList &args )
-    : Okular::Generator( parent, args ), m_docSyn( 0 )
+    : Okular::Generator( parent, args ), m_docSyn( nullptr )
 {
     setFeature( TextExtraction );
     setFeature( Threaded );
@@ -107,7 +107,7 @@ bool DjVuGenerator::doCloseDocument()
     userMutex()->unlock();
 
     delete m_docSyn;
-    m_docSyn = 0;
+    m_docSyn = nullptr;
 
     return true;
 }
@@ -292,8 +292,8 @@ void DjVuGenerator::loadPages( QVector<Okular::Page*> & pagesVector, int rotatio
 Okular::ObjectRect* DjVuGenerator::convertKDjVuLink( int page, KDjVu::Link * link ) const
 {
     int newpage = -1;
-    Okular::Action *newlink = 0;
-    Okular::ObjectRect *newrect = 0;
+    Okular::Action *newlink = nullptr;
+    Okular::ObjectRect *newrect = nullptr;
     switch ( link->type() )
     {
         case KDjVu::Link::PageLink:
@@ -379,7 +379,7 @@ Okular::ObjectRect* DjVuGenerator::convertKDjVuLink( int page, KDjVu::Link * lin
 
 Okular::Annotation* DjVuGenerator::convertKDjVuAnnotation( int w, int h, KDjVu::Annotation * ann ) const
 {
-    Okular::Annotation *newann = 0;
+    Okular::Annotation *newann = nullptr;
     switch ( ann->type() )
     {
         case KDjVu::Annotation::TextAnnotation:

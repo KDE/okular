@@ -44,7 +44,7 @@ static void imagesInArchive( const QString &prefix, const KArchiveDirectory* dir
 
 
 Document::Document()
-    : mDirectory( 0 ), mUnrar( 0 ), mArchive( 0 )
+    : mDirectory( nullptr ), mUnrar( nullptr ), mArchive( nullptr )
 {
 }
 
@@ -96,7 +96,7 @@ bool Document::open( const QString &fileName )
 
         if ( !mUnrar->open( fileName ) ) {
             delete mUnrar;
-            mUnrar = 0;
+            mUnrar = nullptr;
 
             return false;
         }
@@ -107,7 +107,7 @@ bool Document::open( const QString &fileName )
 
         if ( !mDirectory->open( fileName ) ) {
             delete mDirectory;
-            mDirectory = 0;
+            mDirectory = nullptr;
 
             return false;
         }
@@ -129,11 +129,11 @@ void Document::close()
         return;
 
     delete mArchive;
-    mArchive = 0;
+    mArchive = nullptr;
     delete mDirectory;
-    mDirectory = 0;
+    mDirectory = nullptr;
     delete mUnrar;
-    mUnrar = 0;
+    mUnrar = nullptr;
     mPageMap.clear();
     mEntries.clear();
 }
@@ -141,7 +141,7 @@ void Document::close()
 bool Document::processArchive() {
     if ( !mArchive->open( QIODevice::ReadOnly ) ) {
         delete mArchive;
-        mArchive = 0;
+        mArchive = nullptr;
 
         return false;
     }
@@ -149,7 +149,7 @@ bool Document::processArchive() {
     const KArchiveDirectory *directory = mArchive->directory();
     if ( !directory ) {
         delete mArchive;
-        mArchive = 0;
+        mArchive = nullptr;
 
         return false;
     }

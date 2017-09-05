@@ -498,7 +498,7 @@ static QString absolutePath( const QString &path, const QString &location )
 
    \see XPS specification 10.1.2
 */
-static QByteArray readFileOrDirectoryParts( const KArchiveEntry *entry, QString *pathOfFile = 0 )
+static QByteArray readFileOrDirectoryParts( const KArchiveEntry *entry, QString *pathOfFile = nullptr )
 {
     QByteArray data;
     if ( entry->isDirectory() ) {
@@ -556,13 +556,13 @@ static const KArchiveEntry* loadEntry( KZip *archive, const QString &fileName, Q
             }
         }
     }
-    return 0;
+    return nullptr;
 }
 
 static const KZipFileEntry* loadFile( KZip *archive, const QString &fileName, Qt::CaseSensitivity cs )
 {
     const KArchiveEntry *entry = loadEntry( archive, fileName, cs );
-    return entry->isFile() ? static_cast< const KZipFileEntry * >( entry ) : 0;
+    return entry->isFile() ? static_cast< const KZipFileEntry * >( entry ) : nullptr;
 }
 
 /**
@@ -722,7 +722,7 @@ static QString unicodeString( const QString &raw )
 
 XpsHandler::XpsHandler(XpsPage *page): m_page(page)
 {
-    m_painter = NULL;
+    m_painter = nullptr;
 }
 
 XpsHandler::~XpsHandler()
@@ -1379,7 +1379,7 @@ void XpsHandler::processEndElement( XpsRenderNode &node )
 XpsPage::XpsPage(XpsFile *file, const QString &fileName): m_file( file ),
     m_fileName( fileName ), m_pageIsRendered(false)
 {
-    m_pageImage = NULL;
+    m_pageImage = nullptr;
 
     // qCWarning(OkularXpsDebug) << "page file name: " << fileName;
 
@@ -1412,7 +1412,7 @@ XpsPage::~XpsPage()
 bool XpsPage::renderToImage( QImage *p )
 {
 
-    if ((m_pageImage == NULL) || (m_pageImage->size() != p->size())) {
+    if ((m_pageImage == nullptr) || (m_pageImage->size() != p->size())) {
         delete m_pageImage;
         m_pageImage = new QImage( p->size(), QImage::Format_ARGB32 );
         // Set one point = one drawing unit. Useful for fonts, because xps specifies font size using drawing units, not points as usual
@@ -1763,7 +1763,7 @@ bool XpsDocument::hasDocumentStructure()
     return m_haveDocumentStructure;
 }
 
-XpsDocument::XpsDocument(XpsFile *file, const QString &fileName): m_file(file), m_haveDocumentStructure( false ), m_docStructure( 0 )
+XpsDocument::XpsDocument(XpsFile *file, const QString &fileName): m_file(file), m_haveDocumentStructure( false ), m_docStructure( nullptr )
 {
     qCWarning(OkularXpsDebug) << "document file name: " << fileName;
 
@@ -2057,7 +2057,7 @@ XpsPage* XpsFile::page(int pageNum) const
 }
 
 XpsGenerator::XpsGenerator( QObject *parent, const QVariantList &args )
-  : Okular::Generator( parent, args ), m_xpsFile( 0 )
+  : Okular::Generator( parent, args ), m_xpsFile( nullptr )
 {
     setFeature( TextExtraction );
     setFeature( PrintNative );
@@ -2102,7 +2102,7 @@ bool XpsGenerator::doCloseDocument()
 {
     m_xpsFile->closeDocument();
     delete m_xpsFile;
-    m_xpsFile = 0;
+    m_xpsFile = nullptr;
 
     return true;
 }
@@ -2139,13 +2139,13 @@ const Okular::DocumentSynopsis * XpsGenerator::generateDocumentSynopsis()
 
     // we only generate the synopsis for the first file.
     if ( !m_xpsFile || !m_xpsFile->document( 0 ) )
-        return NULL;
+        return nullptr;
 
     if ( m_xpsFile->document( 0 )->hasDocumentStructure() )
         return m_xpsFile->document( 0 )->documentStructure();
 
 
-    return NULL;
+    return nullptr;
 }
 
 Okular::ExportFormat::List XpsGenerator::exportFormats() const
@@ -2210,13 +2210,13 @@ XpsRenderNode * XpsRenderNode::findChild( const QString &name )
         }
     }
 
-    return NULL;
+    return nullptr;
 }
 
 QVariant XpsRenderNode::getRequiredChildData( const QString &name )
 {
     XpsRenderNode * child = findChild( name );
-    if (child == NULL) {
+    if (child == nullptr) {
         qCWarning(OkularXpsDebug) << "Required element " << name << " is missing in " << this->name;
         return QVariant();
     }
@@ -2227,7 +2227,7 @@ QVariant XpsRenderNode::getRequiredChildData( const QString &name )
 QVariant XpsRenderNode::getChildData( const QString &name )
 {
     XpsRenderNode * child = findChild( name );
-    if (child == NULL) {
+    if (child == nullptr) {
         return QVariant();
     } else {
         return child->data;

@@ -262,9 +262,9 @@ void dviRenderer::html_anchor_end()
   qCDebug(OkularDviDebug) << "HTML-special, anchor-end";
 #endif
 
-  if (HTML_href != NULL) {
+  if (HTML_href != nullptr) {
     delete HTML_href;
-    HTML_href = NULL;
+    HTML_href = nullptr;
   }
 }
 
@@ -608,9 +608,9 @@ void dviRenderer::applicationDoSpecial(char *cp)
     // special, where the destination is specified. This special is
     // treated below.
     if ((special_command == QLatin1String("ps:SDict begin H.R end")) || special_command.endsWith(QLatin1String("H.L end"))) {
-      if (HTML_href != NULL) {
+      if (HTML_href != nullptr) {
         delete HTML_href;
-        HTML_href = NULL;
+        HTML_href = nullptr;
       }
       return; // end of hyperref rectangle
     }
@@ -627,9 +627,9 @@ void dviRenderer::applicationDoSpecial(char *cp)
     // hyperlink-anchor rectangle therefore never contains characters,
     // so no character will by accidentally underlined in blue.
     if (special_command.endsWith(QLatin1String("H.A end"))) {
-      if (HTML_href != NULL) {
+      if (HTML_href != nullptr) {
         delete HTML_href;
-        HTML_href = NULL;
+        HTML_href = nullptr;
       }
       while (!currentlyDrawnPage->hyperLinkList.isEmpty())
         if (currentlyDrawnPage->hyperLinkList.last().linkText == QLatin1String("glopglyph"))

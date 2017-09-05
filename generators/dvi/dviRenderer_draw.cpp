@@ -86,7 +86,7 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
     g = ((TeXFont *)(currinf.fontp->font))->getGlyph(ch, true, globalColor);
   else
     g = ((TeXFont *)(currinf.fontp->font))->getGlyph(ch, true, colorStack.top());
-  if (g == NULL)
+  if (g == nullptr)
     return;
 
   long dvi_h_sav = currinf.data.dvi_h;
@@ -100,7 +100,7 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
 
   // Are we drawing text for a hyperlink? And are hyperlinks
   // enabled?
-  if (HTML_href != NULL) {
+  if (HTML_href != nullptr) {
     // Now set up a rectangle which is checked against every mouse
     // event.
     if (line_boundary_encountered == true) {
@@ -121,7 +121,7 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
   // If we are printing source hyperlinks are irrelevant, otherwise we
   // actually got a pointer to a RenderedDviPagePixmap.
   RenderedDviPagePixmap* currentDVIPage = dynamic_cast<RenderedDviPagePixmap*>(currentlyDrawnPage);
-  if (source_href != 0 && currentDVIPage) {
+  if (source_href != nullptr && currentDVIPage) {
     // Now set up a rectangle which is checked against every mouse
     // event.
     if (line_boundary_encountered == true) {
@@ -129,7 +129,7 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
       Hyperlink dhl;
       dhl.baseline = currinf.data.pxl_v;
       dhl.box.setRect(x, y, pix.width(), pix.height());
-      if (source_href != NULL)
+      if (source_href != nullptr)
         dhl.linkText = *source_href;
       else
         dhl.linkText = QLatin1String("");
@@ -212,7 +212,7 @@ void dviRenderer::set_vf_char(unsigned int cmd, unsigned int ch)
 
   static unsigned char   c;
   macro *m = &currinf.fontp->macrotable[ch];
-  if (m->pos == NULL) {
+  if (m->pos == nullptr) {
     qCCritical(OkularDviDebug) << "Character " << ch << " not defined in font " << currinf.fontp->fontname << endl;
     m->pos = m->end = &c;
     return;
@@ -253,7 +253,7 @@ void dviRenderer::set_no_char(unsigned int cmd, unsigned int ch)
 
   if (currinf._virtual) {
     currinf.fontp = currinf._virtual->first_font;
-    if (currinf.fontp != NULL) {
+    if (currinf.fontp != nullptr) {
       currinf.set_char_p = currinf.fontp->set_char_p;
       (this->*currinf.set_char_p)(cmd, ch);
       return;
@@ -274,7 +274,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
   qint32 RRtmp=0, WWtmp=0, XXtmp=0, YYtmp=0, ZZtmp=0;
   quint8 ch;
 
-  currinf.fontp        = NULL;
+  currinf.fontp        = nullptr;
   currinf.set_char_p   = &dviRenderer::set_no_char;
 
   int last_space_index = 0;
@@ -288,7 +288,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
     } else
       if (FNTNUM0 <= ch && ch <= (unsigned char) (FNTNUM0 + 63)) {
         currinf.fontp = currinf.fonttable->value(ch - FNTNUM0);
-        if (currinf.fontp == NULL) {
+        if (currinf.fontp == nullptr) {
           errorMsg = i18n("The DVI code referred to font #%1, which was not previously defined.", ch - FNTNUM0);
           return;
         }
@@ -408,7 +408,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
           // comparatively large backspaces when it positions
           // accents. (comments stolen from the source of dvitype)
           if ((is_vfmacro == false) &&
-              (currinf.fontp != 0) &&
+              (currinf.fontp != nullptr) &&
               ((RRtmp >= currinf.fontp->scaled_size_in_DVI_units/6) || (RRtmp <= -4*(currinf.fontp->scaled_size_in_DVI_units/6))) &&
               (currentlyDrawnPage->textBoxList.size() > 0)) {
             //currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += ' ';
@@ -426,7 +426,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
           // fallthrough
         case W0:
           if ((is_vfmacro == false) &&
-              (currinf.fontp != 0) &&
+              (currinf.fontp != nullptr) &&
               ((WWtmp >= currinf.fontp->scaled_size_in_DVI_units/6) || (WWtmp <= -4*(currinf.fontp->scaled_size_in_DVI_units/6))) &&
               (currentlyDrawnPage->textBoxList.size() > 0) ) {
             //currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += ' ';
@@ -444,7 +444,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
           // fallthrough
         case X0:
           if ((is_vfmacro == false)  &&
-              (currinf.fontp != 0) &&
+              (currinf.fontp != nullptr) &&
               ((XXtmp >= currinf.fontp->scaled_size_in_DVI_units/6) || (XXtmp <= -4*(currinf.fontp->scaled_size_in_DVI_units/6))) &&
               (currentlyDrawnPage->textBoxList.size() > 0)) {
             //currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += ' ';
@@ -460,7 +460,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
           {
             qint32 DDtmp = readINT(ch - DOWN1 + 1);
             if ((is_vfmacro == false) &&
-                (currinf.fontp != 0) &&
+                (currinf.fontp != nullptr) &&
                 (abs(DDtmp) >= 5*(currinf.fontp->scaled_size_in_DVI_units/6)) &&
                 (currentlyDrawnPage->textBoxList.size() > 0)) {
               word_boundary_encountered = true;
@@ -483,7 +483,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
           // fallthrough
         case Y0:
           if ((is_vfmacro == false) &&
-              (currinf.fontp != 0) &&
+              (currinf.fontp != nullptr) &&
               (abs(YYtmp) >= 5*(currinf.fontp->scaled_size_in_DVI_units/6)) &&
               (currentlyDrawnPage->textBoxList.size() > 0)) {
             word_boundary_encountered = true;
@@ -505,7 +505,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
           // fallthrough
         case Z0:
           if ((is_vfmacro == false) &&
-              (currinf.fontp != 0) &&
+              (currinf.fontp != nullptr) &&
               (abs(ZZtmp) >= 5*(currinf.fontp->scaled_size_in_DVI_units/6)) &&
               (currentlyDrawnPage->textBoxList.size() > 0)) {
             word_boundary_encountered = true;
@@ -522,7 +522,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
         case FNT2:
         case FNT3:
           currinf.fontp = currinf.fonttable->value(readUINT(ch - FNT1 + 1));
-          if (currinf.fontp == NULL) {
+          if (currinf.fontp == nullptr) {
             errorMsg = i18n("The DVI code referred to a font which was not previously defined.");
             return;
           }
@@ -531,7 +531,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
 
         case FNT4:
           currinf.fontp = currinf.fonttable->value(readINT(ch - FNT1 + 1));
-          if (currinf.fontp == NULL) {
+          if (currinf.fontp == nullptr) {
             errorMsg = i18n("The DVI code referred to a font which was not previously defined.");
             return;
           }
@@ -628,8 +628,8 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
 void dviRenderer::draw_page()
 {
   // Reset a couple of variables
-  HTML_href         = 0;
-  source_href       = 0;
+  HTML_href         = nullptr;
+  source_href       = nullptr;
   penWidth_in_mInch = 0.0;
 
   // Calling resize() here rather than clear() means that the memory
@@ -697,21 +697,21 @@ void dviRenderer::draw_page()
     command_pointer = dviFile->dvi_Data() + dviFile->page_offset[int(current_page)];
     end_pointer     = dviFile->dvi_Data() + dviFile->page_offset[int(current_page+1)];
   } else
-    command_pointer = end_pointer = 0;
+    command_pointer = end_pointer = nullptr;
 
   memset((char *) &currinf.data, 0, sizeof(currinf.data));
   currinf.fonttable      = &(dviFile->tn_table);
-  currinf._virtual       = 0;
+  currinf._virtual       = nullptr;
 
   double fontPixelPerDVIunit = dviFile->getCmPerDVIunit() * 1200.0/2.54;
 
   draw_part(65536.0*fontPixelPerDVIunit, false);
-  if (HTML_href != 0) {
+  if (HTML_href != nullptr) {
     delete HTML_href;
-    HTML_href = 0;
+    HTML_href = nullptr;
   }
-  if (source_href != 0) {
+  if (source_href != nullptr) {
     delete source_href;
-    source_href = 0;
+    source_href = nullptr;
   }
 }

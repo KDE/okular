@@ -139,12 +139,12 @@ class PresentationToolBar : public QToolBar
 
 
 PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc, DrawingToolActions * drawingToolActions, KActionCollection * collection )
-    : QWidget( 0 /* must be null, to have an independent widget */, Qt::FramelessWindowHint ),
-    m_pressedLink( 0 ), m_handCursor( false ), m_drawingEngine( 0 ),
+    : QWidget( nullptr /* must be null, to have an independent widget */, Qt::FramelessWindowHint ),
+    m_pressedLink( nullptr ), m_handCursor( false ), m_drawingEngine( nullptr ),
     m_screenInhibitCookie(0), m_sleepInhibitCookie(0),
     m_parentWidget( parent ),
-    m_document( doc ), m_frameIndex( -1 ), m_topBar( 0 ), m_pagesEdit( 0 ), m_searchBar( 0 ),
-    m_ac( collection ), m_screenSelect( 0 ), m_isSetup( false ), m_blockNotifications( false ), m_inBlackScreenMode( false ),
+    m_document( doc ), m_frameIndex( -1 ), m_topBar( nullptr ), m_pagesEdit( nullptr ), m_searchBar( nullptr ),
+    m_ac( collection ), m_screenSelect( nullptr ), m_isSetup( false ), m_blockNotifications( false ), m_inBlackScreenMode( false ),
     m_showSummaryView( Okular::Settings::slidesShowSummary() ),
     m_advanceSlides( Okular::SettingsCore::slidesAdvance() ),
     m_goToNextPageOnRelease( false )
@@ -423,7 +423,7 @@ void PresentationWidget::notifyCurrentPageChanged( int previousPage, int current
         // perform the additional actions of the page's annotations, if any
         Q_FOREACH ( const Okular::Annotation *annotation, m_document->page( previousPage )->annotations() )
         {
-            Okular::Action *action = 0;
+            Okular::Action *action = nullptr;
 
             if ( annotation->subType() == Okular::Annotation::AScreen )
                 action = static_cast<const Okular::ScreenAnnotation*>( annotation )->additionalAction( Okular::Annotation::PageClosing );
@@ -468,7 +468,7 @@ void PresentationWidget::notifyCurrentPageChanged( int previousPage, int current
         // perform the additional actions of the page's annotations, if any
         Q_FOREACH ( const Okular::Annotation *annotation, m_document->page( m_frameIndex )->annotations() )
         {
-            Okular::Action *action = 0;
+            Okular::Action *action = nullptr;
 
             if ( annotation->subType() == Okular::Annotation::AScreen )
                 action = static_cast<const Okular::ScreenAnnotation*>( annotation )->additionalAction( Okular::Annotation::PageOpening );
@@ -727,7 +727,7 @@ void PresentationWidget::mouseReleaseEvent( QMouseEvent * e )
         const Okular::Action * link = getLink( e->x(), e->y() );
         if ( link == m_pressedLink )
             m_document->processAction( link );
-        m_pressedLink = 0;
+        m_pressedLink = nullptr;
     }
 
     if ( m_goToNextPageOnRelease ) {
@@ -902,7 +902,7 @@ const void * PresentationWidget::getObjectRect( Okular::ObjectRect::ObjectType t
     if ( geometry && !geometry->isNull() )
         geometry->setRect( 0, 0, 0, 0 );
     if ( m_frameIndex < 0 || m_frameIndex >= (int)m_frames.size() )
-        return 0;
+        return nullptr;
 
     // get frame, page and geometry
     const PresentationFrame * frame = m_frames[ m_frameIndex ];
@@ -915,13 +915,13 @@ const void * PresentationWidget::getObjectRect( Okular::ObjectRect::ObjectType t
 
     // no links outside the pages
     if ( nx < 0 || nx > 1 || ny < 0 || ny > 1 )
-        return 0;
+        return nullptr;
 
     // check if 1) there is an object and 2) it's a link
     const QRect d = QApplication::desktop()->screenGeometry( m_screen );
     const Okular::ObjectRect * object = page->objectRect( type, nx, ny, d.width(), d.height() );
     if ( !object )
-        return 0;
+        return nullptr;
 
     // compute link geometry if destination rect present
     if ( geometry )
@@ -946,13 +946,13 @@ const Okular::Annotation * PresentationWidget::getAnnotation( int x, int y, QRec
 
 void PresentationWidget::testCursorOnLink( int x, int y )
 {
-    const Okular::Action * link = getLink( x, y, 0 );
-    const Okular::Annotation *annotation = getAnnotation( x, y, 0 );
+    const Okular::Action * link = getLink( x, y, nullptr );
+    const Okular::Annotation *annotation = getAnnotation( x, y, nullptr );
 
-    const bool needsHandCursor = ( ( link != 0 ) ||
-                                 ( ( annotation != 0 ) && ( annotation->subType() == Okular::Annotation::AMovie ) ) ||
-                                 ( ( annotation != 0 ) && ( annotation->subType() == Okular::Annotation::ARichMedia ) ) ||
-                                 ( ( annotation != 0 ) && ( annotation->subType() == Okular::Annotation::AScreen ) && ( GuiUtils::renditionMovieFromScreenAnnotation( static_cast< const Okular::ScreenAnnotation * >( annotation ) ) != 0 ) ) );
+    const bool needsHandCursor = ( ( link != nullptr ) ||
+                                 ( ( annotation != nullptr ) && ( annotation->subType() == Okular::Annotation::AMovie ) ) ||
+                                 ( ( annotation != nullptr ) && ( annotation->subType() == Okular::Annotation::ARichMedia ) ) ||
+                                 ( ( annotation != nullptr ) && ( annotation->subType() == Okular::Annotation::AScreen ) && ( GuiUtils::renditionMovieFromScreenAnnotation( static_cast< const Okular::ScreenAnnotation * >( annotation ) ) != nullptr ) ) );
 
     // only react on changes (in/out from a link)
     if ( ( needsHandCursor && !m_handCursor ) || ( !needsHandCursor && m_handCursor ) )
@@ -1030,7 +1030,7 @@ void PresentationWidget::generatePage( bool disableTransition )
     if ( !disableTransition && Okular::Settings::slidesTransitionsEnabled() )
     {
         const Okular::PageTransition * transition = m_frameIndex != -1 ?
-            m_frames[ m_frameIndex ]->page->transition() : 0;
+            m_frames[ m_frameIndex ]->page->transition() : nullptr;
         if ( transition )
             initTransition( transition );
         else {
@@ -1587,7 +1587,7 @@ void PresentationWidget::slotChangeDrawingToolEngine( const QDomElement &element
     if ( element.isNull() )
     {
         delete m_drawingEngine;
-        m_drawingEngine = 0;
+        m_drawingEngine = nullptr;
         m_drawingRect = QRect();
         setCursor( Qt::ArrowCursor );
     }

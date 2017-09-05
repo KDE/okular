@@ -95,7 +95,7 @@ class BookmarkManager::Private : public KBookmarkOwner
 {
     public:
         Private( BookmarkManager * qq )
-            : KBookmarkOwner(), q( qq ), document( 0 ), manager( 0 )
+            : KBookmarkOwner(), q( qq ), document( nullptr ), manager( nullptr )
         {
         }
 
@@ -111,7 +111,7 @@ class BookmarkManager::Private : public KBookmarkOwner
         bool enableOption(BookmarkOption option) const override;
         void openBookmark( const KBookmark & bm, Qt::MouseButtons, Qt::KeyboardModifiers ) override;
 
-        QHash<QUrl, QString>::iterator bookmarkFind( const QUrl& url, bool doCreate, KBookmarkGroup *result  = 0);
+        QHash<QUrl, QString>::iterator bookmarkFind( const QUrl& url, bool doCreate, KBookmarkGroup *result  = nullptr);
 
         // slots
         void _o_changed( const QString & groupAddress, const QString & caller );
@@ -603,7 +603,7 @@ QList< QAction * > BookmarkManager::actionsForUrl(const QUrl &url ) const
             if ( b.isSeparator() || b.isGroup() )
                 continue;
 
-            ret.append( new OkularBookmarkAction( DocumentViewport( b.url().fragment(QUrl::FullyDecoded) ), b, d, 0 ) );
+            ret.append( new OkularBookmarkAction( DocumentViewport( b.url().fragment(QUrl::FullyDecoded) ), b, d, nullptr ) );
         }
         break;
     }

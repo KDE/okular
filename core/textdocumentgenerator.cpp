@@ -34,7 +34,7 @@ using namespace Okular;
  * Generic Converter Implementation
  */
 TextDocumentConverter::TextDocumentConverter()
-    : QObject( 0 ), d_ptr( new TextDocumentConverterPrivate )
+    : QObject( nullptr ), d_ptr( new TextDocumentConverterPrivate )
 {
 }
 
@@ -45,14 +45,14 @@ TextDocumentConverter::~TextDocumentConverter()
 
 QTextDocument *TextDocumentConverter::convert( const QString & )
 {
-    return 0;
+    return nullptr;
 }
 
 Document::OpenResult TextDocumentConverter::convertWithPassword( const QString &fileName, const QString & )
 {
     QTextDocument *doc = convert( fileName );
     setDocument( doc );
-    return doc != 0 ? Document::OpenSuccess : Document::OpenError;
+    return doc != nullptr ? Document::OpenSuccess : Document::OpenError;
 }
 
 QTextDocument *TextDocumentConverter::document()
@@ -72,7 +72,7 @@ DocumentViewport TextDocumentConverter::calculateViewport( QTextDocument *docume
 
 TextDocumentGenerator* TextDocumentConverter::generator() const
 {
-    return d_ptr->mParent ? d_ptr->mParent->q_func() : 0;
+    return d_ptr->mParent ? d_ptr->mParent->q_func() : nullptr;
 }
 
 /**
@@ -290,7 +290,7 @@ Document::OpenResult TextDocumentGenerator::loadDocumentWithPassword( const QStr
 
     if ( openResult != Document::OpenSuccess )
     {
-        d->mDocument = 0;
+        d->mDocument = nullptr;
 
         // loading failed, cleanup all the stuff eventually gathered from the converter
         d->mTitlePositions.clear();
@@ -356,7 +356,7 @@ bool TextDocumentGenerator::doCloseDocument()
 {
     Q_D( TextDocumentGenerator );
     delete d->mDocument;
-    d->mDocument = 0;
+    d->mDocument = nullptr;
 
     d->mTitlePositions.clear();
     d->mLinkPositions.clear();
@@ -453,7 +453,7 @@ const Okular::DocumentSynopsis* TextDocumentGenerator::generateDocumentSynopsis(
 {
     Q_D( TextDocumentGenerator );
     if ( !d->mDocumentSynopsis.hasChildNodes() )
-        return 0;
+        return nullptr;
     else
         return &d->mDocumentSynopsis;
 }

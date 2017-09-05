@@ -15,7 +15,7 @@ using namespace Okular;
 
 RotationJob::RotationJob( const QImage &image, Rotation oldRotation, Rotation newRotation, DocumentObserver *observer )
     : ThreadWeaver::QObjectDecorator( new RotationJobInternal( image, oldRotation, newRotation ) )
-    , mObserver( observer ), m_pd( 0 )
+    , mObserver( observer ), m_pd( nullptr )
     , mRect( NormalizedRect() )
 {
 }

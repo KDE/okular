@@ -55,7 +55,7 @@ private:
 void EditFormsTest::initTestCase()
 {
     Okular::SettingsCore::instance( QStringLiteral("editformstest") );
-    m_document = new Okular::Document( 0 );
+    m_document = new Okular::Document( nullptr );
 }
 
 void EditFormsTest::cleanupTestCase()

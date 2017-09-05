@@ -42,15 +42,15 @@ TeXFontDefinition::TeXFontDefinition(const QString &nfontname, double _displayRe
   enlargement              = _enlargement;
   font_pool                = pool;
   fontname                 = nfontname;
-  font                     = 0;
+  font                     = nullptr;
   displayResolution_in_dpi = _displayResolution_in_dpi;
   checksum                 = chk;
   flags                    = TeXFontDefinition::FONT_IN_USE;
-  file                     = 0;
+  file                     = nullptr;
   filename.clear();
   scaled_size_in_DVI_units = _scaled_size_in_DVI_units;
 
-  macrotable               = 0;
+  macrotable               = nullptr;
 
   // By default, this font contains only empty characters. After the
   // font has been loaded, this function pointer will be replaced by
@@ -65,19 +65,19 @@ TeXFontDefinition::~TeXFontDefinition()
   qCDebug(OkularDviDebug) << "discarding font " << fontname << " at " << (int)(enlargement * MFResolutions[font_pool->getMetafontMode()] + 0.5) << " dpi";
 #endif
 
-  if (font != 0) {
+  if (font != nullptr) {
     delete font;
-    font = 0;
+    font = nullptr;
   }
-  if (macrotable != 0) {
+  if (macrotable != nullptr) {
     delete [] macrotable;
-    macrotable = 0;
+    macrotable = nullptr;
   }
 
   if (flags & FONT_LOADED) {
-    if (file != 0) {
+    if (file != nullptr) {
       fclose(file);
-      file = 0;
+      file = nullptr;
     }
     if (flags & FONT_VIRTUAL)
       vf_table.clear();
@@ -102,10 +102,10 @@ void TeXFontDefinition::fontNameReceiver(const QString& fname)
   // Check if the file could be opened. If not, try to find the file
   // in the DVI file's directory. If that works, modify the filename
   // accordingly and go on.
-  if (file == 0) {
+  if (file == nullptr) {
     QString filename_test(font_pool->getExtraSearchPath() + QLatin1Char('/') + filename);
     file = fopen( QFile::encodeName(filename_test).constData(), "r");
-    if (file == 0) {
+    if (file == nullptr) {
       qCCritical(OkularDviDebug) << i18n("Cannot find font %1, file %2.", fontname, filename) << endl;
       return;
     } else
@@ -118,7 +118,7 @@ void TeXFontDefinition::fontNameReceiver(const QString& fname)
   if (fname.endsWith(QLatin1String("pk")))
     if (magic == PK_MAGIC) {
       fclose(file);
-      file = 0;
+      file = nullptr;
       font = new TeXFont_PK(this);
       set_char_p = &dviRenderer::set_char;
       if ((checksum != 0) && (checksum != font->checksum))
@@ -137,7 +137,7 @@ void TeXFontDefinition::fontNameReceiver(const QString& fname)
 
   if (fname.endsWith(QLatin1String(".tfm"))) {
       fclose(file);
-      file = 0;
+      file = nullptr;
       font = new TeXFont_TFM(this);
       set_char_p = &dviRenderer::set_char;
       fontType = TEX_FONTMETRIC;
@@ -147,7 +147,7 @@ void TeXFontDefinition::fontNameReceiver(const QString& fname)
   // None of these known types? Then it should be one of the font
   // formats that are handled by the FreeType library
   fclose(file);
-  file = 0;
+  file = nullptr;
 #ifdef HAVE_FREETYPE
   // Find the encoding for that font
   const QString &enc = font_pool->fontsByTeXName.findEncoding(fontname);
@@ -177,20 +177,20 @@ void TeXFontDefinition::fontNameReceiver(const QString& fname)
 
 void TeXFontDefinition::reset()
 {
-  if (font != 0) {
+  if (font != nullptr) {
     delete font;
-    font = 0;
+    font = nullptr;
   }
 
-  if (macrotable != 0) {
+  if (macrotable != nullptr) {
     delete [] macrotable;
-    macrotable = 0;
+    macrotable = nullptr;
   }
 
   if (flags & FONT_LOADED) {
-    if (file != 0) {
+    if (file != nullptr) {
       fclose(file);
-      file = 0;
+      file = nullptr;
     }
     if (flags & FONT_VIRTUAL)
       vf_table.clear();
@@ -205,7 +205,7 @@ void TeXFontDefinition::reset()
 void TeXFontDefinition::setDisplayResolution(double _displayResolution_in_dpi)
 {
   displayResolution_in_dpi = _displayResolution_in_dpi;
-  if (font != 0)
+  if (font != nullptr)
     font->setDisplayResolution();
 }
 
@@ -236,8 +236,8 @@ void TeXFontDefinition::mark_as_used()
 
 macro::macro()
 {
-  pos     = 0;                /* address of first byte of macro */
-  end     = 0;                /* address of last+1 byte */
+  pos     = nullptr;                /* address of first byte of macro */
+  end     = nullptr;                /* address of last+1 byte */
   dvi_advance_in_units_of_design_size_by_2e20 = 0;        /* DVI units to move reference point */
   free_me = false;
 }
@@ -245,6 +245,6 @@ macro::macro()
 
 macro::~macro()
 {
-  if ((pos != 0L) && (free_me == true))
+  if ((pos != nullptr) && (free_me == true))
     delete [] pos;
 }

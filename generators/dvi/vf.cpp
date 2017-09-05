@@ -91,7 +91,7 @@ void TeXFontDefinition::read_VF_index()
   (void) four(VF_file);                /* skip design size */
 
   // Read the fonts.
-  first_font = NULL;
+  first_font = nullptr;
   while ((cmnd = one(VF_file)) >= FNTDEF1 && cmnd <= FNTDEF4) {
     int   TeXnumber = num(VF_file, (int) cmnd - FNTDEF1 + 1);
     quint32 checksum  = four(VF_file);
@@ -125,19 +125,19 @@ void TeXFontDefinition::read_VF_index()
       vf_table.reserve(vf_table.capacity()*2);
     vf_table.insert(TeXnumber, newfontp);
 
-    if (first_font == NULL)
+    if (first_font == nullptr)
       first_font = newfontp;
   }
 
   // Prepare macro array.
   macrotable = new macro[max_num_of_chars_in_font];
-  if (macrotable == 0) {
+  if (macrotable == nullptr) {
     qCCritical(OkularDviDebug) << "Could not allocate memory for a macro table.";
     exit(0);
   }
 
   // Read macros.
-  avail = availend = NULL;
+  avail = availend = nullptr;
   for (; cmnd <= LONG_CHAR; cmnd = one(VF_file)) {
     macro *m;
     int len;
@@ -183,5 +183,5 @@ void TeXFontDefinition::read_VF_index()
     oops(i18n("Wrong command byte found in VF macro list: %1", cmnd));
 
   fclose (VF_file);
-  file = NULL;
+  file = nullptr;
 }

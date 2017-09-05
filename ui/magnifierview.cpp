@@ -31,7 +31,7 @@ static const int SCALE = 10;
 MagnifierView::MagnifierView(Okular::Document* document, QWidget* parent)
   : QWidget(parent)
   , m_document(document)
-  , m_page(0)
+  , m_page(nullptr)
 {
   document->addObserver(this);
 }
@@ -48,7 +48,7 @@ void MagnifierView::notifySetup(const QVector< Okular::Page* >& pages, int setup
   }
 
   m_pages = pages;
-  m_page = 0;
+  m_page = nullptr;
   m_current = -1;
 }
 
@@ -107,7 +107,7 @@ void MagnifierView::paintEvent(QPaintEvent* e)
   if (m_page)
   {
     QRect where = QRect(0, 0, width(), height());
-    PagePainter::paintCroppedPageOnPainter(&p, m_page, this, 0, m_page->width() * SCALE, m_page->height() * SCALE, where, normalizedView(), NULL);
+    PagePainter::paintCroppedPageOnPainter(&p, m_page, this, 0, m_page->width() * SCALE, m_page->height() * SCALE, where, normalizedView(), nullptr);
   }
 
   drawTicks(&p);

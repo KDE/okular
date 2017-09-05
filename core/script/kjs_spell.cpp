@@ -38,5 +38,5 @@ void JSSpell::initType( KJSContext *ctx )
 
 KJSObject JSSpell::object( KJSContext *ctx )
 {
-    return g_spellProto->constructObject( ctx, 0 );
+    return g_spellProto->constructObject( ctx, nullptr );
 }

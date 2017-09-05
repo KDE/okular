@@ -41,7 +41,7 @@ Q_GLOBAL_STATIC( UnrarHelper, helper )
 
 static UnrarFlavour* detectUnrar( const QString &unrarPath, const QString &versionCommand )
 {
-    UnrarFlavour* kind = 0;
+    UnrarFlavour* kind = nullptr;
     QProcess proc;
     proc.start( unrarPath, QStringList() << versionCommand );
     bool ok = proc.waitForFinished( -1 );
@@ -60,7 +60,7 @@ static UnrarFlavour* detectUnrar( const QString &unrarPath, const QString &versi
 }
 
 UnrarHelper::UnrarHelper()
-   : kind( 0 )
+   : kind( nullptr )
 {
     QString path = QStandardPaths::findExecutable( QStringLiteral("unrar-nonfree") );
     if ( path.isEmpty() )
@@ -93,7 +93,7 @@ UnrarHelper::~UnrarHelper()
 
 
 Unrar::Unrar()
-    : QObject( 0 ), mLoop( 0 ), mTempDir( 0 )
+    : QObject( nullptr ), mLoop( nullptr ), mTempDir( nullptr )
 {
 }
 
@@ -162,11 +162,11 @@ QByteArray Unrar::contentOf( const QString &fileName ) const
 QIODevice* Unrar::createDevice( const QString &fileName ) const
 {
     if ( !isSuitableVersionAvailable() )
-        return 0;
+        return nullptr;
 
     std::unique_ptr< QFile> file( new QFile( mTempDir->path() + QLatin1Char('/') + fileName ) );
     if ( !file->open( QIODevice::ReadOnly ) )
-        return 0;
+        return nullptr;
 
     return file.release();
 }
@@ -243,11 +243,11 @@ int Unrar::startSyncProcess( const QStringList &args )
     QEventLoop loop;
     mLoop = &loop;
     ret = loop.exec( QEventLoop::WaitForMoreEvents | QEventLoop::ExcludeUserInputEvents );
-    mLoop = 0;
+    mLoop = nullptr;
 #endif
 
     delete mProcess;
-    mProcess = 0;
+    mProcess = nullptr;
 
     return ret;
 }

@@ -132,7 +132,7 @@ Manifest::Manifest( const QString &odfFileName, const QByteArray &manifestData, 
 
   QXmlStreamReader xml( manifestCopy );
 
-  ManifestEntry *currentEntry = 0;
+  ManifestEntry *currentEntry = nullptr;
   while ( ! xml.atEnd() ) {
     xml.readNext();
     if ( (xml.tokenType() == QXmlStreamReader::NoToken) ||
@@ -148,7 +148,7 @@ Manifest::Manifest( const QString &odfFileName, const QByteArray &manifestData, 
 	continue;
       } else if ( xml.name().toString() == QLatin1String("file-entry") ) {
 	QXmlStreamAttributes attributes = xml.attributes();
-	if (currentEntry != 0) {
+	if (currentEntry != nullptr) {
 	  qCWarning(OkularOooDebug) << "Got new StartElement for new file-entry, but haven't finished the last one yet!";
 	  qCWarning(OkularOooDebug) << "processing" << currentEntry->fileName() << ", got" << attributes.value(QStringLiteral("manifest:full-path")).toString();
 	}
@@ -156,7 +156,7 @@ Manifest::Manifest( const QString &odfFileName, const QByteArray &manifestData, 
 	currentEntry->setMimeType( attributes.value(QStringLiteral("manifest:media-type")).toString() );
 	currentEntry->setSize( attributes.value(QStringLiteral("manifest:size")).toString() );
       } else if ( xml.name().toString() == QLatin1String("encryption-data") ) {
-	if (currentEntry == 0) {
+	if (currentEntry == nullptr) {
 	  qCWarning(OkularOooDebug) << "Got encryption-data without valid file-entry at line" << xml.lineNumber();
 	  continue;
 	}
@@ -164,7 +164,7 @@ Manifest::Manifest( const QString &odfFileName, const QByteArray &manifestData, 
 	currentEntry->setChecksumType( encryptionAttributes.value(QStringLiteral("manifest:checksum-type")).toString() );
 	currentEntry->setChecksum( encryptionAttributes.value(QStringLiteral("manifest:checksum")).toString() );
       } else if ( xml.name().toString() == QLatin1String("algorithm") ) {
-	if (currentEntry == 0) {
+	if (currentEntry == nullptr) {
 	  qCWarning(OkularOooDebug) << "Got algorithm without valid file-entry at line" << xml.lineNumber();
 	  continue;
 	}
@@ -172,7 +172,7 @@ Manifest::Manifest( const QString &odfFileName, const QByteArray &manifestData, 
 	currentEntry->setAlgorithm( algorithmAttributes.value(QStringLiteral("manifest:algorithm-name")).toString() );
 	currentEntry->setInitialisationVector( algorithmAttributes.value(QStringLiteral("manifest:initialisation-vector")).toString() );
       } else if ( xml.name().toString() == QLatin1String("key-derivation") ) {
-	if (currentEntry == 0) {
+	if (currentEntry == nullptr) {
 	  qCWarning(OkularOooDebug) << "Got key-derivation without valid file-entry at line" << xml.lineNumber();
 	  continue;
 	}
@@ -188,7 +188,7 @@ Manifest::Manifest( const QString &odfFileName, const QByteArray &manifestData, 
       if ( xml.name().toString() == QLatin1String("manifest") ) {
 	continue;
       } else if ( xml.name().toString() == QLatin1String("file-entry")) {
-	if (currentEntry == 0) {
+	if (currentEntry == nullptr) {
 	  qCWarning(OkularOooDebug) << "Got EndElement for file-entry without valid StartElement at line" << xml.lineNumber();
 	  continue;
 	}
@@ -199,7 +199,7 @@ Manifest::Manifest( const QString &odfFileName, const QByteArray &manifestData, 
 	} else {
 	  mEntries.insert( currentEntry->fileName(), currentEntry);
 	}
-        currentEntry = 0;
+        currentEntry = nullptr;
       }
     }
   }
@@ -270,19 +270,19 @@ QByteArray Manifest::decryptFile( const QString &filename, const QByteArray &fil
   ManifestEntry *entry = entryByName( filename );
 
   if ( ! QCA::isSupported( "sha1" ) ) {
-    KMessageBox::error( 0, i18n("This document is encrypted, and crypto support is compiled in, but a hashing plugin could not be located") );
+    KMessageBox::error( nullptr, i18n("This document is encrypted, and crypto support is compiled in, but a hashing plugin could not be located") );
     // in the hope that it wasn't really encrypted...
     return QByteArray( fileData );
   }
 
   if ( ! QCA::isSupported( "pbkdf2(sha1)") )  {
-    KMessageBox::error( 0, i18n("This document is encrypted, and crypto support is compiled in, but a key derivation plugin could not be located") );
+    KMessageBox::error( nullptr, i18n("This document is encrypted, and crypto support is compiled in, but a key derivation plugin could not be located") );
     // in the hope that it wasn't really encrypted...
     return QByteArray( fileData );
   }
 
   if ( ! QCA::isSupported( "blowfish-cfb") )  {
-    KMessageBox::error( 0, i18n("This document is encrypted, and crypto support is compiled in, but a cipher plugin could not be located") );
+    KMessageBox::error( nullptr, i18n("This document is encrypted, and crypto support is compiled in, but a cipher plugin could not be located") );
     // in the hope that it wasn't really encrypted...
     return QByteArray( fileData );
   }
@@ -294,7 +294,7 @@ QByteArray Manifest::decryptFile( const QString &filename, const QByteArray &fil
     return QByteArray();
   }
 
-  QIODevice *decompresserDevice = new KCompressionDevice( new QBuffer( &decryptedData, 0 ), true, KCompressionDevice::GZip);
+  QIODevice *decompresserDevice = new KCompressionDevice( new QBuffer( &decryptedData, nullptr ), true, KCompressionDevice::GZip);
   if( !decompresserDevice ) {
     qCDebug(OkularOooDebug) << "Couldn't create decompressor";
     // hopefully it isn't compressed then!

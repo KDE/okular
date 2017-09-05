@@ -23,7 +23,7 @@ class glyph;
 
 class TeXFont_PFB : public TeXFont {
  public:
-  TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc=0, double slant=0.0 );
+  TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc=nullptr, double slant=0.0 );
   ~TeXFont_PFB();
 
   glyph* getGlyph(quint16 character, bool generateCharacterPixmap=false, const QColor& color=Qt::black) override;

@@ -43,7 +43,7 @@ class AnnotationDescription
 {
 public:
     AnnotationDescription()
-        : annotation( 0 ), pageViewItem( 0 ), pageNumber( 0 ) {}
+        : annotation( nullptr ), pageViewItem( nullptr ), pageNumber( 0 ) {}
     AnnotationDescription( PageViewItem * newPageViewItem, const QPoint& eventPos );
     bool isValid() const;
     void invalidate();

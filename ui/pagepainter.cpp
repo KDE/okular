@@ -55,7 +55,7 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
     Okular::DocumentObserver *observer, int flags, int scaledWidth, int scaledHeight, const QRect &limits )
 {
         paintCroppedPageOnPainter( destPainter, page, observer, flags, scaledWidth, scaledHeight, limits,
-                                   Okular::NormalizedRect( 0, 0, 1, 1 ), 0 );
+                                   Okular::NormalizedRect( 0, 0, 1, 1 ), nullptr );
 }
 
 void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okular::Page * page,
@@ -89,7 +89,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     destPainter->fillRect( limits, backgroundColor );
 
     const bool hasTilesManager = page->hasTilesManager( observer );
-    const QPixmap *pixmap = 0;
+    const QPixmap *pixmap = nullptr;
 
     if ( !hasTilesManager )
     {
@@ -127,10 +127,10 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     // vectors containing objects to draw
     // make this a qcolor, rect map, since we don't need
     // to know s_id here! we are only drawing this right?
-    QList< QPair<QColor, Okular::NormalizedRect> > * bufferedHighlights = 0;
-    QList< Okular::Annotation * > * bufferedAnnotations = 0;
-    QList< Okular::Annotation * > * unbufferedAnnotations = 0;
-    Okular::Annotation *boundingRectOnlyAnn = 0; // Paint the bounding rect of this annotation
+    QList< QPair<QColor, Okular::NormalizedRect> > * bufferedHighlights = nullptr;
+    QList< Okular::Annotation * > * bufferedAnnotations = nullptr;
+    QList< Okular::Annotation * > * unbufferedAnnotations = nullptr;
+    Okular::Annotation *boundingRectOnlyAnn = nullptr; // Paint the bounding rect of this annotation
     // fill up lists with visible annotation/highlight objects/text selections
     if ( canDrawHighlights || canDrawTextSelection || canDrawAnnotations )
     {
@@ -237,8 +237,8 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     /** 3 - ENABLE BACKBUFFERING IF DIRECT IMAGE MANIPULATION IS NEEDED **/
     bool bufferAccessibility = (flags & Accessibility) && Okular::SettingsCore::changeColors() && (Okular::SettingsCore::renderMode() != Okular::SettingsCore::EnumRenderMode::Paper);
     bool useBackBuffer = bufferAccessibility || bufferedHighlights || bufferedAnnotations || viewPortPoint;
-    QPixmap * backPixmap = 0;
-    QPainter * mixedPainter = 0;
+    QPixmap * backPixmap = nullptr;
+    QPainter * mixedPainter = nullptr;
     QRect limitsInPixmap = limits.translated( scaledCrop.topLeft() );
         // limits within full (scaled but uncropped) pixmap
 

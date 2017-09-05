@@ -279,12 +279,12 @@ QDebug operator<<( QDebug str, const Okular::NormalizedRect& r )
 }
 
 RegularAreaRect::RegularAreaRect()
-    : RegularArea< NormalizedRect, QRect >(), d( 0 )
+    : RegularArea< NormalizedRect, QRect >(), d( nullptr )
 {
 }
 
 RegularAreaRect::RegularAreaRect( const RegularAreaRect& rar )
-    : RegularArea< NormalizedRect, QRect >( rar ), d( 0 )
+    : RegularArea< NormalizedRect, QRect >( rar ), d( nullptr )
 {
 }
 
@@ -463,7 +463,7 @@ AnnotationObjectRect::~AnnotationObjectRect()
 {
     // the annotation pointer is kept elsewehere (in Page, most probably),
     // so just release its pointer
-    m_object = 0;
+    m_object = nullptr;
 }
 
 void AnnotationObjectRect::transform( const QTransform &matrix )

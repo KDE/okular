@@ -37,7 +37,7 @@ static const pageSizeItem staticList[] = { {"DIN A0",    841.0f, 1189.0f, "mm"},
                                      {"DIN B5",    176.0f, 250.0f, "mm"},
                                      {"US Letter", 215.9f, 279.4f, "in"},
                                      {"US Legal",  215.9f, 355.6f, "in"},
-                                     {0,  0.0f, 0.0f, 0} // marks the end of the list.
+                                     {nullptr,  0.0f, 0.0f, nullptr} // marks the end of the list.
 };
 
 
@@ -63,7 +63,7 @@ bool pageSize::setPageSize(const QString& name)
 {
   // See if we can recognize the string
   QString currentName;
-  for(int i=0; staticList[i].name != 0; i++) {
+  for(int i=0; staticList[i].name != nullptr; i++) {
     currentName = QString::fromLocal8Bit(staticList[i].name);
     if (currentName == name) {
       currentSize = i;
@@ -249,7 +249,7 @@ QStringList pageSize::pageSizeNames()
 {
   QStringList names;
 
-  for(int i=0; staticList[i].name != 0; i++)
+  for(int i=0; staticList[i].name != nullptr; i++)
     names << QString::fromLocal8Bit(staticList[i].name);
 
   return names;
@@ -330,7 +330,7 @@ QString pageSize::description() const
 
 void pageSize::reconstructCurrentSize()
 {
-  for(int i=0; staticList[i].name != 0; i++) {
+  for(int i=0; staticList[i].name != nullptr; i++) {
     if ((fabs(staticList[i].width - pageWidth.getLength_in_mm()) <= 2) && (fabs(staticList[i].height - pageHeight.getLength_in_mm()) <= 2)) {
       currentSize = i;
       pageWidth.setLength_in_mm(staticList[currentSize].width);

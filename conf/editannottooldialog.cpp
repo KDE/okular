@@ -28,7 +28,7 @@
 
 
 EditAnnotToolDialog::EditAnnotToolDialog( QWidget *parent, const QDomElement &initialState )
-    : QDialog( parent ), m_stubann( 0 ), m_annotationWidget( 0 )
+    : QDialog( parent ), m_stubann( nullptr ), m_annotationWidget( nullptr )
 {
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
     QVBoxLayout *mainLayout = new QVBoxLayout;

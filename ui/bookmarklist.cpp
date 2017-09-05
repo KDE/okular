@@ -116,7 +116,7 @@ class FileItem : public QTreeWidgetItem
 
 
 BookmarkList::BookmarkList( Okular::Document *document, QWidget *parent )
-    : QWidget( parent ), m_document( document ), m_currentDocumentItem( 0 )
+    : QWidget( parent ), m_document( document ), m_currentDocumentItem( nullptr )
 {
     QVBoxLayout *mainlay = new QVBoxLayout( this );
     mainlay->setMargin( 0 );
@@ -231,7 +231,7 @@ void BookmarkList::slotChanged( QTreeWidgetItem * item )
 void BookmarkList::slotContextMenu( const QPoint& p )
 {
     QTreeWidgetItem * item = m_tree->itemAt( p );
-    BookmarkItem* bmItem = item ? dynamic_cast<BookmarkItem*>( item ) : 0;
+    BookmarkItem* bmItem = item ? dynamic_cast<BookmarkItem*>( item ) : nullptr;
     if ( bmItem )
         contextMenuForBookmarkItem( p, bmItem );
     else if ( FileItem* fItem = dynamic_cast< FileItem * >( item ) )
@@ -270,7 +270,7 @@ void BookmarkList::contextMenuForFileItem( const QPoint& p, FileItem* fItem )
     const bool thisdoc = itemurl == m_document->currentDocument();
 
     QMenu menu( this );
-    QAction * open = 0;
+    QAction * open = nullptr;
     if ( !thisdoc )
         open = menu.addAction( i18nc( "Opens the selected document", "Open Document" ) );
     QAction * editbm = menu.addAction( QIcon::fromTheme( QStringLiteral("edit-rename") ), i18n( "Rename Bookmark" ) );
@@ -336,7 +336,7 @@ void BookmarkList::rebuildTree( bool filter )
     // signals for all the current items
     disconnect(m_tree, &QTreeWidget::itemChanged, this, &BookmarkList::slotChanged);
 
-    m_currentDocumentItem = 0;
+    m_currentDocumentItem = nullptr;
     m_tree->clear();
 
     QList<QUrl> urls = m_document->bookmarkManager()->files();
@@ -357,7 +357,7 @@ void BookmarkList::rebuildTree( bool filter )
     }
     else
     {
-        QTreeWidgetItem * currenturlitem = 0;
+        QTreeWidgetItem * currenturlitem = nullptr;
         foreach ( const QUrl& url, urls )
         {
             QList<QTreeWidgetItem*> subitems = createItems( url, m_document->bookmarkManager()->bookmarks( url ) );
@@ -408,7 +408,7 @@ void BookmarkList::selectiveUrlUpdate( const QUrl& url, QTreeWidgetItem*& item )
         if ( item != m_tree->invisibleRootItem() )
         {
             m_tree->invisibleRootItem()->removeChild( item );
-            item = 0;
+            item = nullptr;
         }
         else if ( item )
         {
@@ -465,7 +465,7 @@ QTreeWidgetItem* BookmarkList::itemForUrl( const QUrl& url ) const
             return item;
         }
     }
-    return 0;
+    return nullptr;
 }
 
 #include "moc_bookmarklist.cpp"

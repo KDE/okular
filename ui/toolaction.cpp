@@ -42,7 +42,7 @@ QWidget* ToolAction::createWidget( QWidget *parent )
 {
     QToolBar *toolBar = qobject_cast< QToolBar * >( parent );
     if ( !toolBar )
-        return 0;
+        return nullptr;
 
     QToolButton *button = new QToolButton( toolBar );
     button->setAutoRaise( true );

@@ -27,7 +27,7 @@
 
 
 TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc, double slant)
-  : TeXFont(parent), face(0)
+  : TeXFont(parent), face(nullptr)
 {
 #ifdef DEBUG_PFB
   if (enc != 0)
@@ -62,10 +62,10 @@ TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc, double sl
     transformationMatrix.yx = 0;
     transformationMatrix.yy = 0x10000;
 
-    FT_Set_Transform( face, &transformationMatrix, 0);
+    FT_Set_Transform( face, &transformationMatrix, nullptr);
   }
 
-  if (face->family_name != 0)
+  if (face->family_name != nullptr)
     parent->fullFontName = QString::fromLocal8Bit(face->family_name);
 
   // Finally, we need to set up the charMap array, which maps TeX
@@ -73,7 +73,7 @@ TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc, double sl
   // charMap, and the font encoding procedure is necessary, because
   // TeX is only able to address character codes 0-255 while
   // e.g. Type1 fonts may contain several thousands of characters)
-  if (enc != 0) {
+  if (enc != nullptr) {
     parent->fullEncodingName = enc->encodingFullName.remove(QStringLiteral( "Encoding" ));
     parent->fullEncodingName = enc->encodingFullName.remove(QStringLiteral( "encoding" ));
 
@@ -94,7 +94,7 @@ TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc, double sl
     // If there is no encoding vector available, we check if the font
     // itself contains a charmap that could be used. An admissible
     // charMap will be stored under platform_id=7 and encoding_id=2.
-    FT_CharMap  found = 0;
+    FT_CharMap  found = nullptr;
     for (int n = 0; n<face->num_charmaps; n++ ) {
       FT_CharMap charmap = face->charmaps[n];
       if ( charmap->platform_id == 7 && charmap->encoding_id == 2 ) {
@@ -103,7 +103,7 @@ TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc, double sl
       }
     }
 
-    if ((found != 0) && (FT_Set_Charmap( face, found ) == 0)) {
+    if ((found != nullptr) && (FT_Set_Charmap( face, found ) == 0)) {
       // Feed the charMap array with the charmap data found in the
       // previous step.
 #ifdef DEBUG_PFB
@@ -112,7 +112,7 @@ TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc, double sl
       for(int i=0; i<256; i++)
         charMap[i] = FT_Get_Char_Index( face, i );
     } else {
-      if ((found == 0) && (face->charmap != 0)) {
+      if ((found == nullptr) && (face->charmap != nullptr)) {
 #ifdef DEBUG_PFB
         qCDebug(OkularDviDebug) << "No encoding given: using charmap platform=" << face->charmap->platform_id <<
           ", encoding=" << face->charmap->encoding_id << " that is contained in the font." << endl;

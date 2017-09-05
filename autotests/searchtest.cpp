@@ -166,7 +166,7 @@ void SearchTest::testNextAndPrevious()
 
 void SearchTest::test311232()
 {
-    Okular::Document d(0);
+    Okular::Document d(nullptr);
     SearchFinishedReceiver receiver;
     QSignalSpy spy(&d, SIGNAL(searchFinished(int,Okular::Document::SearchStatus)));
 
@@ -207,7 +207,7 @@ void SearchTest::test323262()
 
     CREATE_PAGE;
 
-    Okular::RegularAreaRect* result = tp->findText(0, QStringLiteral("a"), Okular::FromBottom, Qt::CaseSensitive, NULL);
+    Okular::RegularAreaRect* result = tp->findText(0, QStringLiteral("a"), Okular::FromBottom, Qt::CaseSensitive, nullptr);
     QVERIFY(result);
     delete result;
 
@@ -226,7 +226,7 @@ void SearchTest::test323263()
 
     CREATE_PAGE;
 
-    Okular::RegularAreaRect* result = tp->findText(0, QStringLiteral("ab"), Okular::FromTop, Qt::CaseSensitive, NULL);
+    Okular::RegularAreaRect* result = tp->findText(0, QStringLiteral("ab"), Okular::FromTop, Qt::CaseSensitive, nullptr);
     QVERIFY(result);
     Okular::RegularAreaRect expected;
     expected.append(rect[1]);
@@ -257,7 +257,7 @@ void SearchTest::testDottedI()
 
     CREATE_PAGE;
 
-    Okular::RegularAreaRect* result = tp->findText(0, QString::fromUtf8("İ"), Okular::FromTop, Qt::CaseInsensitive, NULL);
+    Okular::RegularAreaRect* result = tp->findText(0, QString::fromUtf8("İ"), Okular::FromTop, Qt::CaseInsensitive, nullptr);
     QVERIFY(result);
     delete result;
 
@@ -283,7 +283,7 @@ void SearchTest::testHyphenAtEndOfLineWithoutYOverlap()
     CREATE_PAGE;
 
     Okular::RegularAreaRect* result = tp->findText(0, QStringLiteral("supercalifragilisticexpialidocious"),
-                                                 Okular::FromTop, Qt::CaseSensitive, NULL);
+                                                 Okular::FromTop, Qt::CaseSensitive, nullptr);
     QVERIFY(result);
     Okular::RegularAreaRect expected;
     for (int i = 0; i < text.size(); i++) {
@@ -356,14 +356,14 @@ void SearchTest::testHyphenAtEndOfPage()
 
     {
         Okular::RegularAreaRect* result = tp->findText(0, QStringLiteral("a"),
-            Okular::FromTop, Qt::CaseSensitive, NULL);
+            Okular::FromTop, Qt::CaseSensitive, nullptr);
         QVERIFY(result);
         delete result;
     }
 
     {
         Okular::RegularAreaRect* result = tp->findText(0, QStringLiteral("a"),
-            Okular::FromBottom, Qt::CaseSensitive, NULL);
+            Okular::FromBottom, Qt::CaseSensitive, nullptr);
         QVERIFY(result);
         delete result;
     }
@@ -395,7 +395,7 @@ void SearchTest::testOneColumn()
   CREATE_PAGE;
 
   Okular::RegularAreaRect* result = tp->findText(0, QStringLiteral("Only one column"),
-      Okular::FromTop, Qt::CaseSensitive, NULL);
+      Okular::FromTop, Qt::CaseSensitive, nullptr);
   QVERIFY(result);
   delete result;
 
@@ -423,7 +423,7 @@ void SearchTest::testTwoColumns()
   CREATE_PAGE;
 
   Okular::RegularAreaRect* result = tp->findText(0, QStringLiteral("This text in"),
-      Okular::FromTop, Qt::CaseSensitive, NULL);
+      Okular::FromTop, Qt::CaseSensitive, nullptr);
   QVERIFY(!result);
   delete result;
 

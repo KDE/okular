@@ -34,7 +34,7 @@ private:
 void AddRemoveAnnotationTest::initTestCase()
 {
     Okular::SettingsCore::instance( QStringLiteral("addannotationtest") );
-    m_document = new Okular::Document( 0 );
+    m_document = new Okular::Document( nullptr );
 }
 
 void AddRemoveAnnotationTest::init()

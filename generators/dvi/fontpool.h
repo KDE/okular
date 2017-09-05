@@ -170,7 +170,7 @@ private:
   // characters. If not null, the bool pointed at by virtualFontsFound
   // is set to true if one of the fonts found is a virtual font. If no
   // virtual font is found, the variable remains untouched.
-  void locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFound=0);
+  void locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFound=nullptr);
 
   // This QString is used internally by the mf_output_receiver()
   // method.  This string is set to QString() in locateFonts(bool,

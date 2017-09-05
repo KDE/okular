@@ -157,7 +157,7 @@ AnnotationWidget * AnnotationWidgetFactory::widgetFor( Okular::Annotation * ann 
 
 
 AnnotationWidget::AnnotationWidget( Okular::Annotation * ann )
-    : QObject(), m_ann( ann ), m_appearanceWidget( 0 ), m_extraWidget( 0 )
+    : QObject(), m_ann( ann ), m_appearanceWidget( nullptr ), m_extraWidget( nullptr )
 {
 }
 
@@ -229,17 +229,17 @@ QWidget * AnnotationWidget::createAppearanceWidget()
 
 QWidget * AnnotationWidget::createStyleWidget()
 {
-    return 0;
+    return nullptr;
 }
 
 QWidget * AnnotationWidget::createExtraWidget()
 {
-    return 0;
+    return nullptr;
 }
 
 
 TextAnnotationWidget::TextAnnotationWidget( Okular::Annotation * ann )
-    : AnnotationWidget( ann ), m_pixmapSelector( 0 )
+    : AnnotationWidget( ann ), m_pixmapSelector( nullptr )
 {
     m_textAnn = static_cast< Okular::TextAnnotation * >( ann );
 }
@@ -325,7 +325,7 @@ void TextAnnotationWidget::applyChanges()
 
 
 StampAnnotationWidget::StampAnnotationWidget( Okular::Annotation * ann )
-    : AnnotationWidget( ann ), m_pixmapSelector( 0 )
+    : AnnotationWidget( ann ), m_pixmapSelector( nullptr )
 {
     m_stampAnn = static_cast< Okular::StampAnnotation * >( ann );
 }
@@ -636,7 +636,7 @@ void GeomAnnotationWidget::applyChanges()
 
 
 FileAttachmentAnnotationWidget::FileAttachmentAnnotationWidget( Okular::Annotation * ann )
-    : AnnotationWidget( ann ), m_pixmapSelector( 0 )
+    : AnnotationWidget( ann ), m_pixmapSelector( nullptr )
 {
     m_attachAnn = static_cast< Okular::FileAttachmentAnnotation * >( ann );
 }
@@ -739,7 +739,7 @@ static Okular::CaretAnnotation::CaretSymbol caretSymbolFromIcon( const QString &
 }
 
 CaretAnnotationWidget::CaretAnnotationWidget( Okular::Annotation * ann )
-    : AnnotationWidget( ann ), m_pixmapSelector( 0 )
+    : AnnotationWidget( ann ), m_pixmapSelector( nullptr )
 {
     m_caretAnn = static_cast< Okular::CaretAnnotation * >( ann );
 }

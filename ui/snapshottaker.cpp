@@ -16,7 +16,7 @@
 
 SnapshotTaker::SnapshotTaker(const QUrl &url, QObject *parent )
     : QObject( parent )
-    , m_player( new Phonon::VideoPlayer( Phonon::NoCategory, 0 ) )
+    , m_player( new Phonon::VideoPlayer( Phonon::NoCategory, nullptr ) )
 {
     m_player->load( url );
     m_player->hide();

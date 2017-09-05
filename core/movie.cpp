@@ -30,7 +30,7 @@ class Movie::Private
               m_rotation( Rotation0 ),
               m_playMode( PlayLimited ),
               m_playRepetitions( 1.0 ),
-              m_tmp( 0 ),
+              m_tmp( nullptr ),
               m_showControls( false ),
               m_autoPlay( false ),
               m_showPosterImage( false )

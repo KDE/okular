@@ -33,7 +33,7 @@ void moveViewportIfBoundingRectNotFullyVisible( Okular::NormalizedRect boundingR
         searchViewport.rePos.enabled = true;
         searchViewport.rePos.normalizedX = ( boundingRect.left + boundingRect.right ) / 2.0;
         searchViewport.rePos.normalizedY = ( boundingRect.top + boundingRect.bottom ) / 2.0;
-        docPriv->m_parent->setViewport( searchViewport, 0, true );
+        docPriv->m_parent->setViewport( searchViewport, nullptr, true );
     }
 }
 

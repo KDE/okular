@@ -43,7 +43,7 @@
 OKULAR_EXPORT_PLUGIN(DviGenerator, "libokularGenerator_dvi.json")
 
 DviGenerator::DviGenerator( QObject *parent, const QVariantList &args ) : Okular::Generator( parent, args ),
-  m_fontExtracted( false ), m_docSynopsis( 0 ), m_dviRenderer( 0 )
+  m_fontExtracted( false ), m_docSynopsis( nullptr ), m_dviRenderer( nullptr )
 {
     setFeature( Threaded );
     setFeature( TextExtraction );
@@ -84,14 +84,14 @@ bool DviGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
     if ( !m_dviRenderer->isValidFile( fileName ) )
     {
         delete m_dviRenderer;
-        m_dviRenderer = 0;
+        m_dviRenderer = nullptr;
         return false;
     }
 #endif
     if ( ! m_dviRenderer->setFile( fileName, base ) )
     {
         delete m_dviRenderer;
-        m_dviRenderer = 0;
+        m_dviRenderer = nullptr;
         return false;
     }
 
@@ -106,9 +106,9 @@ bool DviGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
 bool DviGenerator::doCloseDocument()
 {
     delete m_docSynopsis;
-    m_docSynopsis = 0;
+    m_docSynopsis = nullptr;
     delete m_dviRenderer;
-    m_dviRenderer = 0;
+    m_dviRenderer = nullptr;
 
     m_linkGenerated.clear();
     m_fontExtracted = false;
@@ -160,7 +160,7 @@ QLinkedList<Okular::ObjectRect*> DviGenerator::generateDviLinks( const dviPageIn
             linkText = linkText.mid( 1 );
         Anchor anch = m_dviRenderer->findAnchor( linkText );
 
-        Okular::Action *okuLink = 0;
+        Okular::Action *okuLink = nullptr;
 
         /* distinguish between local (-> anchor) and remote links */
         if (anch.isValid())
@@ -263,7 +263,7 @@ Okular::TextPage* DviGenerator::textPage( Okular::Page *page )
     QMutexLocker lock( userMutex() );
 
     // get page text from m_dviRenderer
-    Okular::TextPage *ktp = 0;
+    Okular::TextPage *ktp = nullptr;
     if ( m_dviRenderer )
     {
         SimplePageSize s = m_dviRenderer->sizeOfPage( pageInfo->pageNumber );
@@ -419,7 +419,7 @@ Okular::FontInfo::List DviGenerator::fontsForPage( int page )
 
             QString fontFileName;
             if (!(font->flags & TeXFontDefinition::FONT_VIRTUAL)) {
-                if ( font->font != 0 )
+                if ( font->font != nullptr )
                     fontFileName = font->font->errorMessage;
                 else
                     fontFileName = i18n("Font file not found");

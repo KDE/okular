@@ -91,10 +91,10 @@ Annotation * AnnotationUtils::createAnnotation( const QDomElement & annElement )
 {
     // safety check on annotation element
     if ( !annElement.hasAttribute( QStringLiteral("type") ) )
-        return 0;
+        return nullptr;
 
     // build annotation of given type
-    Annotation * annotation = 0;
+    Annotation * annotation = nullptr;
     int typeNumber = annElement.attribute( QStringLiteral("type") ).toInt();
     switch ( typeNumber )
     {
@@ -425,7 +425,7 @@ class Annotation::Revision::Private
 {
     public:
         Private()
-            : m_annotation( 0 ), m_scope( Reply ), m_type( None )
+            : m_annotation( nullptr ), m_scope( Reply ), m_type( None )
         {
         }
 
@@ -490,7 +490,7 @@ Annotation::RevisionType Annotation::Revision::type() const
 
 
 AnnotationPrivate::AnnotationPrivate()
-    : m_page( 0 ), m_flags( 0 ), m_disposeFunc( 0 )
+    : m_page( nullptr ), m_flags( 0 ), m_disposeFunc( nullptr )
 {
 }
 
@@ -2519,7 +2519,7 @@ class Okular::FileAttachmentAnnotationPrivate : public Okular::AnnotationPrivate
 {
     public:
         FileAttachmentAnnotationPrivate()
-            : AnnotationPrivate(), icon( QStringLiteral("PushPin") ), embfile( 0 )
+            : AnnotationPrivate(), icon( QStringLiteral("PushPin") ), embfile( nullptr )
         {
         }
         ~FileAttachmentAnnotationPrivate() override
@@ -2618,7 +2618,7 @@ class Okular::SoundAnnotationPrivate : public Okular::AnnotationPrivate
 {
     public:
         SoundAnnotationPrivate()
-            : AnnotationPrivate(), icon( QStringLiteral("Speaker") ), sound( 0 )
+            : AnnotationPrivate(), icon( QStringLiteral("Speaker") ), sound( nullptr )
         {
         }
         ~SoundAnnotationPrivate() override
@@ -2716,7 +2716,7 @@ class Okular::MovieAnnotationPrivate : public Okular::AnnotationPrivate
 {
     public:
         MovieAnnotationPrivate()
-            : AnnotationPrivate(), movie( 0 )
+            : AnnotationPrivate(), movie( nullptr )
         {
         }
         ~MovieAnnotationPrivate() override
@@ -2811,7 +2811,7 @@ class Okular::ScreenAnnotationPrivate : public Okular::AnnotationPrivate
 };
 
 ScreenAnnotationPrivate::ScreenAnnotationPrivate()
-    : m_action( 0 )
+    : m_action( nullptr )
 {
 }
 
@@ -2886,7 +2886,7 @@ Action* ScreenAnnotation::additionalAction( AdditionalActionType type ) const
 {
     Q_D( const ScreenAnnotation );
     if ( !d->m_additionalActions.contains( type ) )
-        return 0;
+        return nullptr;
     else
         return d->m_additionalActions.value( type );
 }
@@ -2987,7 +2987,7 @@ Action* WidgetAnnotation::additionalAction( AdditionalActionType type ) const
 {
     Q_D( const WidgetAnnotation );
     if ( !d->m_additionalActions.contains( type ) )
-        return 0;
+        return nullptr;
     else
         return d->m_additionalActions.value( type );
 }
@@ -3008,7 +3008,7 @@ class Okular::RichMediaAnnotationPrivate : public Okular::AnnotationPrivate
 };
 
 RichMediaAnnotationPrivate::RichMediaAnnotationPrivate()
-    : movie( 0 ), embeddedFile( 0 )
+    : movie( nullptr ), embeddedFile( nullptr )
 {
 }
 

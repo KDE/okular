@@ -95,7 +95,7 @@ class DocumentItem : public QObject
 
 public:
 
-    explicit DocumentItem(QObject *parent=0);
+    explicit DocumentItem(QObject *parent=nullptr);
     ~DocumentItem();
 
     void setPath(const QString &path);

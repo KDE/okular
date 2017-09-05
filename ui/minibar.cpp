@@ -153,7 +153,7 @@ void MiniBarLogic::notifyCurrentPageChanged( int previousPage, int currentPage )
 MiniBar::MiniBar( QWidget * parent, MiniBarLogic * miniBarLogic )
     : QWidget( parent )
     , m_miniBarLogic( miniBarLogic )
-    , m_oldToobarParent( 0 )
+    , m_oldToobarParent( nullptr )
 {
     setObjectName( QStringLiteral( "miniBar" ) );
     

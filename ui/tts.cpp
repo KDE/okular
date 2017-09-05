@@ -26,7 +26,7 @@ public:
     ~Private()
     {
         delete speech;
-        speech = 0;
+        speech = nullptr;
     }
 
     OkularTTS *q;

@@ -31,10 +31,10 @@
 using namespace Okular;
 
 GeneratorPrivate::GeneratorPrivate()
-    : m_document( 0 ),
-      mPixmapGenerationThread( 0 ), mTextPageGenerationThread( 0 ),
-      m_mutex( 0 ), m_threadsMutex( 0 ), mPixmapReady( true ), mTextPageReady( true ),
-      m_closing( false ), m_closingLoop( 0 ),
+    : m_document( nullptr ),
+      mPixmapGenerationThread( nullptr ), mTextPageGenerationThread( nullptr ),
+      m_mutex( nullptr ), m_threadsMutex( nullptr ), mPixmapReady( true ), mTextPageReady( true ),
+      m_closing( false ), m_closingLoop( nullptr ),
       m_dpi(72.0, 72.0)
 {
 }
@@ -214,7 +214,7 @@ bool Generator::closeDocument()
 
         loop.exec();
 
-        d->m_closingLoop = 0;
+        d->m_closingLoop = nullptr;
     }
     else
     {
@@ -289,7 +289,7 @@ QImage Generator::image( PixmapRequest *request )
 
 TextPage* Generator::textPage( Page* )
 {
-    return 0;
+    return nullptr;
 }
 
 DocumentInfo Generator::generateDocumentInfo(const QSet<DocumentInfo::Key> &keys) const
@@ -301,7 +301,7 @@ DocumentInfo Generator::generateDocumentInfo(const QSet<DocumentInfo::Key> &keys
 
 const DocumentSynopsis * Generator::generateDocumentSynopsis()
 {
-    return 0;
+    return nullptr;
 }
 
 FontInfo::List Generator::fontsForPage( int )
@@ -311,7 +311,7 @@ FontInfo::List Generator::fontsForPage( int )
 
 const QList<EmbeddedFile*> * Generator::embeddedFiles() const
 {
-    return 0;
+    return nullptr;
 }
 
 Generator::PageSizeMetric Generator::pagesSizeMetric() const
@@ -407,7 +407,7 @@ const Document * Generator::document() const
     {
         return d->m_document->m_parent;
     }
-    return 0;
+    return nullptr;
 }
 
 void Generator::setFeature( GeneratorFeature feature, bool on )
@@ -482,7 +482,7 @@ QSizeF Generator::dpi() const
 
 QAbstractItemModel * Generator::layersModel() const
 {
-    return 0;
+    return nullptr;
 }
 
 PixmapRequest::PixmapRequest( DocumentObserver *observer, int pageNumber, int width, int height, int priority, PixmapRequestFeatures features )

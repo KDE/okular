@@ -241,7 +241,7 @@ public:
 PageViewPrivate::PageViewPrivate( PageView *qq )
     : q( qq )
 #ifdef HAVE_SPEECH
-    , m_tts( 0 )
+    , m_tts( nullptr )
 #endif
 {
 }
@@ -295,10 +295,10 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     // create and initialize private storage structure
     d = new PageViewPrivate( this );
     d->document = document;
-    d->aRotateClockwise = 0;
-    d->aRotateCounterClockwise = 0;
-    d->aRotateOriginal = 0;
-    d->aViewMode = 0;
+    d->aRotateClockwise = nullptr;
+    d->aRotateCounterClockwise = nullptr;
+    d->aRotateOriginal = nullptr;
+    d->aViewMode = nullptr;
     d->zoomMode = PageView::ZoomFitWidth;
     d->zoomFactor = 1.0;
     d->mouseSelecting = false;
@@ -311,50 +311,50 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->lastSourceLocationViewportPageNumber = -1;
     d->lastSourceLocationViewportNormalizedX = 0.0;
     d->lastSourceLocationViewportNormalizedY = 0.0;
-    d->viewportMoveTimer = 0;
+    d->viewportMoveTimer = nullptr;
     d->controlWheelAccumulatedDelta = 0;
     d->scrollIncrement = 0;
-    d->autoScrollTimer = 0;
-    d->annotator = 0;
+    d->autoScrollTimer = nullptr;
+    d->annotator = nullptr;
     d->dirtyLayout = false;
     d->blockViewport = false;
     d->blockPixmapsRequest = false;
     d->messageWindow = new PageViewMessage(this);
     d->m_formsVisible = false;
-    d->formsWidgetController = 0;
+    d->formsWidgetController = nullptr;
 #ifdef HAVE_SPEECH
-    d->m_tts = 0;
+    d->m_tts = nullptr;
 #endif
-    d->refreshTimer = 0;
-    d->aRotateClockwise = 0;
-    d->aRotateCounterClockwise = 0;
-    d->aRotateOriginal = 0;
-    d->aPageSizes = 0;
-    d->aTrimMode = 0;
-    d->aTrimMargins = 0;
-    d->aTrimToSelection = 0;
-    d->aMouseNormal = 0;
-    d->aMouseSelect = 0;
-    d->aMouseTextSelect = 0;
-    d->aToggleAnnotator = 0;
-    d->aZoomFitWidth = 0;
-    d->aZoomFitPage = 0;
-    d->aZoomAutoFit = 0;
-    d->aViewMode = 0;
-    d->aViewContinuous = 0;
-    d->aPrevAction = 0;
-    d->aToggleForms = 0;
-    d->aSpeakDoc = 0;
-    d->aSpeakPage = 0;
-    d->aSpeakStop = 0;
-    d->actionCollection = 0;
-    d->aPageSizes=0;
+    d->refreshTimer = nullptr;
+    d->aRotateClockwise = nullptr;
+    d->aRotateCounterClockwise = nullptr;
+    d->aRotateOriginal = nullptr;
+    d->aPageSizes = nullptr;
+    d->aTrimMode = nullptr;
+    d->aTrimMargins = nullptr;
+    d->aTrimToSelection = nullptr;
+    d->aMouseNormal = nullptr;
+    d->aMouseSelect = nullptr;
+    d->aMouseTextSelect = nullptr;
+    d->aToggleAnnotator = nullptr;
+    d->aZoomFitWidth = nullptr;
+    d->aZoomFitPage = nullptr;
+    d->aZoomAutoFit = nullptr;
+    d->aViewMode = nullptr;
+    d->aViewContinuous = nullptr;
+    d->aPrevAction = nullptr;
+    d->aToggleForms = nullptr;
+    d->aSpeakDoc = nullptr;
+    d->aSpeakPage = nullptr;
+    d->aSpeakStop = nullptr;
+    d->actionCollection = nullptr;
+    d->aPageSizes=nullptr;
     d->setting_viewCols = Okular::Settings::viewColumns();
     d->rtl_Mode = Okular::Settings::rtlReadingDirection();
-    d->mouseModeActionGroup = 0;
+    d->mouseModeActionGroup = nullptr;
     d->penDown = false;
-    d->aMouseMagnifier = 0;
-    d->aFitWindowToPage = 0;
+    d->aMouseMagnifier = nullptr;
+    d->aFitWindowToPage = nullptr;
     d->trimBoundingBox = Okular::NormalizedRect(); // Null box
 
     switch( Okular::Settings::zoomMode() )
@@ -752,14 +752,14 @@ void PageView::openAnnotationWindow( Okular::Annotation * annotation, int pageNu
         return;
 
     // find the annot window
-    AnnotWindow* existWindow = 0;
+    AnnotWindow* existWindow = nullptr;
     QHash< Okular::Annotation *, AnnotWindow * >::ConstIterator it = d->m_annowindows.constFind( annotation );
     if ( it != d->m_annowindows.constEnd() )
     {
         existWindow = *it;
     }
 
-    if ( existWindow == 0 )
+    if ( existWindow == nullptr )
     {
         existWindow = new AnnotWindow( this, annotation, d->document, pageNumber );
         connect(existWindow, &QObject::destroyed, this, &PageView::slotAnnotationWindowDestroyed);
@@ -900,7 +900,7 @@ QString PageViewPrivate::selectedText() const
     QString text;
     QList< int > selpages = pagesWithTextSelection.toList();
     qSort( selpages );
-    const Okular::Page * pg = 0;
+    const Okular::Page * pg = nullptr;
     if ( selpages.count() == 1 )
     {
         pg = document->page( selpages.first() );
@@ -914,7 +914,7 @@ QString PageViewPrivate::selectedText() const
         for( int i = 1; i < end; ++i )
         {
             pg = document->page( selpages.at( i ) );
-            text.append( pg->text( 0, Okular::TextPage::CentralPixelTextAreaInclusionBehaviour ) );
+            text.append( pg->text( nullptr, Okular::TextPage::CentralPixelTextAreaInclusionBehaviour ) );
         }
         pg = document->page( selpages.last() );
         text.append( pg->text( pg->textSelection(), Okular::TextPage::CentralPixelTextAreaInclusionBehaviour ) );
@@ -1217,7 +1217,7 @@ void PageView::slotRealNotifyViewportChanged( bool smoothMove )
 
     // find PageViewItem matching the viewport description
     const Okular::DocumentViewport & vp = d->document->viewport();
-    PageViewItem * item = 0;
+    PageViewItem * item = nullptr;
     QVector< PageViewItem * >::const_iterator iIt = d->items.constBegin(), iEnd = d->items.constEnd();
     for ( ; iIt != iEnd; ++iIt )
         if ( (*iIt)->pageNumber() == vp.pageNumber )
@@ -1459,7 +1459,7 @@ Okular::View::CapabilityFlags PageView::capabilityFlags( ViewCapability capabili
         case ZoomModality:
             return CapabilityRead | CapabilityWrite | CapabilitySerializable;
     }
-    return 0;
+    return nullptr;
 }
 
 QVariant PageView::capability( ViewCapability capability ) const
@@ -1907,7 +1907,7 @@ void PageView::keyPressEvent( QKeyEvent * e )
             if ( d->aPrevAction )
             {
                 d->aPrevAction->trigger();
-                d->aPrevAction = 0;
+                d->aPrevAction = nullptr;
             }
             d->mouseAnnotation->routeKeyPressEvent( e );
             break;
@@ -2416,7 +2416,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
     {
         // ..except for right Clicks (emitted even it viewport is empty)
         if ( e->button() == Qt::RightButton )
-            emit rightClick( 0, e->globalPos() );
+            emit rightClick( nullptr, e->globalPos() );
         return;
     }
 
@@ -2483,7 +2483,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                         // distance is distanceSqr, adapt it to a normalized value
                         distance = distance / (pow( pageItem->uncroppedWidth(), 2 ) + pow( pageItem->uncroppedHeight(), 2 ));
                         if ( rect && ( distance > s_minDistance ) )
-                            rect = 0;
+                            rect = nullptr;
                     }
                     if ( rect )
                     {
@@ -2536,14 +2536,14 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                         // creating the menu and its actions
                         QMenu menu( this );
                         QAction * actProcessLink = menu.addAction( i18n( "Follow This Link" ) );
-                        QAction * actStopSound = 0;
+                        QAction * actStopSound = nullptr;
                         if ( link->actionType() == Okular::Action::Sound ) {
                             actProcessLink->setText( i18n( "Play this Sound" ) );
                             if ( Okular::AudioPlayer::instance()->state() == Okular::AudioPlayer::PlayingState ) {
                                 actStopSound = menu.addAction( i18n( "Stop Sound" ) );
                             }
                         }
-                        QAction * actCopyLinkLocation = 0;
+                        QAction * actCopyLinkLocation = nullptr;
                         if ( dynamic_cast< const Okular::BrowseAction * >( link ) )
                             actCopyLinkLocation = menu.addAction( QIcon::fromTheme( QStringLiteral("edit-copy") ), i18n( "Copy Link Address" ) );
                         QAction * res = menu.exec( e->globalPos() );
@@ -2588,7 +2588,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                 {
                     // right click (if not within 5 px of the press point, the mode
                     // had been already changed to 'Selection' instead of 'Normal')
-                    emit rightClick( pageItem ? pageItem->page() : 0, e->globalPos() );
+                    emit rightClick( pageItem ? pageItem->page() : nullptr, e->globalPos() );
                 }
             }
             }break;
@@ -2665,7 +2665,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
             if ( d->aPrevAction )
             {
                 d->aPrevAction->trigger();
-                d->aPrevAction = 0;
+                d->aPrevAction = nullptr;
             } else {
                 d->aMouseNormal->trigger();
             }
@@ -2685,7 +2685,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
             if ( rightButton && !d->mouseSelecting )
             {
                 PageViewItem * pageItem = pickItemOnPoint( eventPos.x(), eventPos.y() );
-                emit rightClick( pageItem ? pageItem->page() : 0, e->globalPos() );
+                emit rightClick( pageItem ? pageItem->page() : nullptr, e->globalPos() );
                 break;
             }
 
@@ -2701,7 +2701,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                 if ( d->aPrevAction )
                 {
                     d->aPrevAction->trigger();
-                    d->aPrevAction = 0;
+                    d->aPrevAction = nullptr;
                 }
                 break;
             }
@@ -2711,7 +2711,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
             if (d->document->supportsSearching())
             {
                 // grab text in selection by extracting it from all intersected pages
-                const Okular::Page * okularPage=0;
+                const Okular::Page * okularPage=nullptr;
                 QVector< PageViewItem * >::const_iterator iIt = d->items.constBegin(), iEnd = d->items.constEnd();
                 for ( ; iIt != iEnd; ++iIt )
                 {
@@ -2739,12 +2739,12 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
 
             // popup that ask to copy:text and copy/save:image
             QMenu menu( this );
-            QAction *textToClipboard = 0;
+            QAction *textToClipboard = nullptr;
 #ifdef HAVE_SPEECH
-            QAction *speakText = 0;
+            QAction *speakText = nullptr;
 #endif
-            QAction *imageToClipboard = 0;
-            QAction *imageToFile = 0;
+            QAction *imageToClipboard = nullptr;
+            QAction *imageToFile = nullptr;
             if ( d->document->supportsSearching() && !selectedText.isEmpty() )
             {
                 menu.addAction( new OKMenuTitle( &menu, i18np( "Text (1 character)", "Text (%1 characters)", selectedText.length() ) ) );
@@ -2837,7 +2837,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
             if ( d->aPrevAction )
             {
                 d->aPrevAction->trigger();
-                d->aPrevAction = 0;
+                d->aPrevAction = nullptr;
             }
             }break;
 
@@ -2847,7 +2847,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
             if ( rightButton && !d->mouseSelecting )
             {
                 PageViewItem * pageItem = pickItemOnPoint( eventPos.x(), eventPos.y() );
-                emit rightClick( pageItem ? pageItem->page() : 0, e->globalPos() );
+                emit rightClick( pageItem ? pageItem->page() : nullptr, e->globalPos() );
                 break;
             }
 
@@ -2858,7 +2858,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                 if ( d->aPrevAction )
                 {
                     d->aPrevAction->trigger();
-                    d->aPrevAction = 0;
+                    d->aPrevAction = nullptr;
                 }
                 break;
             }
@@ -2866,7 +2866,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
             if (d->mouseSelecting) {
                 // break up the selection into page-relative pieces
                 d->tableSelectionParts.clear();
-                const Okular::Page * okularPage=0;
+                const Okular::Page * okularPage=nullptr;
                 QVector< PageViewItem * >::const_iterator iIt = d->items.constBegin(), iEnd = d->items.constEnd();
                 for ( ; iIt != iEnd; ++iIt )
                 {
@@ -3008,9 +3008,9 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                     {
                         QMenu menu( this );
                         QAction *textToClipboard = menu.addAction( QIcon::fromTheme( QStringLiteral("edit-copy") ), i18n( "Copy Text" ) );
-                        QAction *httpLink = 0;
+                        QAction *httpLink = nullptr;
 #ifdef HAVE_SPEECH
-                        QAction *speakText = 0;
+                        QAction *speakText = nullptr;
                         if ( Okular::Settings::useTTS() )
                             speakText = menu.addAction( QIcon::fromTheme( QStringLiteral("text-speak") ), i18n( "Speak Text" ) );
 #endif
@@ -3200,7 +3200,7 @@ void PageView::mouseDoubleClickEvent( QMouseEvent * e )
             }
 
             const QRect & itemRect = pageItem->uncroppedGeometry();
-            Okular::Annotation * ann = 0;
+            Okular::Annotation * ann = nullptr;
             const Okular::ObjectRect * orect = pageItem->page()->objectRect( Okular::ObjectRect::OAnnotation, nX, nY, itemRect.width(), itemRect.height() );
             if ( orect )
                 ann = ( (Okular::AnnotationObjectRect *)orect )->annotation();
@@ -3294,8 +3294,8 @@ bool PageView::viewportEvent( QEvent * e )
         {
             const QPoint eventPos = contentAreaPoint( he->pos() );
             PageViewItem * pageItem = pickItemOnPoint( eventPos.x(), eventPos.y() );
-            const Okular::ObjectRect * rect = 0;
-            const Okular::Action * link = 0;
+            const Okular::ObjectRect * rect = nullptr;
+            const Okular::Action * link = nullptr;
             if ( pageItem )
             {
                 double nX = pageItem->absToPageX( eventPos.x() );
@@ -3472,7 +3472,7 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
         // draw the page using the PagePainter with all flags active
         if ( contentsRect.intersects( itemGeometry ) )
         {
-            Okular::NormalizedPoint *viewPortPoint = 0;
+            Okular::NormalizedPoint *viewPortPoint = nullptr;
             Okular::NormalizedPoint point( d->lastSourceLocationViewportNormalizedX, d->lastSourceLocationViewportNormalizedY );
             if( Okular::Settings::showSourceLocationsGraphically()
                 && item->pageNumber() ==  d->lastSourceLocationViewportPageNumber )
@@ -3627,7 +3627,7 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
 
 PageViewItem * PageView::pickItemOnPoint( int x, int y )
 {
-    PageViewItem * item = 0;
+    PageViewItem * item = nullptr;
     QLinkedList< PageViewItem * >::const_iterator iIt = d->visibleItems.constBegin(), iEnd = d->visibleItems.constEnd();
     for ( ; iIt != iEnd; ++iIt )
     {
@@ -3650,7 +3650,7 @@ void PageView::textSelectionClear()
     {
         QSet< int >::ConstIterator it = d->pagesWithTextSelection.constBegin(), itEnd = d->pagesWithTextSelection.constEnd();
         for ( ; it != itEnd; ++it )
-            d->document->setPageTextSelection( *it, 0, QColor() );
+            d->document->setPageTextSelection( *it, nullptr, QColor() );
         d->pagesWithTextSelection.clear();
     }
 }
@@ -3711,7 +3711,7 @@ void PageView::updateSelection( const QPoint & pos )
         // clear the selection from pages not selected anymore
         foreach( int p, noMoreSelectedPages )
         {
-            d->document->setPageTextSelection( p, 0, QColor() );
+            d->document->setPageTextSelection( p, nullptr, QColor() );
         }
         // set the new selection for the selected pages
         foreach( int p, pagesWithSelectionSet )
@@ -3838,7 +3838,7 @@ void PageView::updateZoom( ZoomMode newZoomMode )
     }
 
     float newFactor = d->zoomFactor;
-    QAction * checkedZoomAction = 0;
+    QAction * checkedZoomAction = nullptr;
     switch ( newZoomMode )
     {
         case ZoomFixed:{ //ZoomFixed case
@@ -4234,7 +4234,7 @@ void PageView::addWebShortcutsMenu( QMenu * menu, const QString & text )
             const QString squeezedText = KStringHandler::rsqueeze( searchText, 21 );
             webShortcutsMenu->setTitle( i18n( "Search for '%1' with", squeezedText ) );
 
-            QAction *action = 0;
+            QAction *action = nullptr;
 
             foreach( const QString &searchProvider, searchProviders )
             {
@@ -4952,7 +4952,7 @@ void PageView::slotToggleAnnotator( bool on )
         if ( userName.isEmpty() )
         {
             bool ok = false;
-            userName = QInputDialog::getText(0,
+            userName = QInputDialog::getText(nullptr,
                            i18n( "Annotations author" ),
                            i18n( "Please insert your name or initials:" ),
                            QLineEdit::Normal,
@@ -5133,7 +5133,7 @@ void PageView::slotTrimToSelectionToggled( bool on )
             if ( d->aPrevAction )
             {
                 d->aPrevAction->trigger();
-                d->aPrevAction = 0;
+                d->aPrevAction = nullptr;
             } else {
                 d->aMouseNormal->trigger();
             }
@@ -5319,7 +5319,7 @@ void PageView::slotToggleChangeColors()
 
 void PageView::slotFitWindowToPage()
 {
-    PageViewItem currentPageItem = NULL;
+    PageViewItem currentPageItem = nullptr;
     QSize viewportSize = viewport()->size();
     foreach ( const PageViewItem * pageItem, d->items )
     {

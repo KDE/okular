@@ -180,7 +180,7 @@ class Length
   although the string is malformed.
 
   It is fine to set ok to 0. */
-  static float convertToMM(const QString &distance, bool *ok=0);
+  static float convertToMM(const QString &distance, bool *ok=nullptr);
 
  private:
   /** Length in millimeters */

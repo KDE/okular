@@ -44,16 +44,16 @@
 //------ now comes the dviRenderer class implementation ----------
 
 dviRenderer::dviRenderer(bool useFontHinting)
-  : dviFile(0),
+  : dviFile(nullptr),
     font_pool(useFontHinting),
     resolutionInDPI(0),
-    embedPS_progress(0),
+    embedPS_progress(nullptr),
     embedPS_numOfProgressedFiles(0),
     shrinkfactor(3),
-    source_href(0),
-    HTML_href(0),
+    source_href(nullptr),
+    HTML_href(nullptr),
     editorCommand(QLatin1String("")),
-    PostScriptOutPutString(0),
+    PostScriptOutPutString(nullptr),
     PS_interface(new ghostscript_interface),
     _postscript(true),
     line_boundary_encountered(false),
@@ -61,9 +61,9 @@ dviRenderer::dviRenderer(bool useFontHinting)
     current_page(0),
     penWidth_in_mInch(0),
     number_of_elements_in_path(0),
-    currentlyDrawnPage(0),
-    m_eventLoop(0),
-    foreGroundPainter(0),
+    currentlyDrawnPage(nullptr),
+    m_eventLoop(nullptr),
+    foreGroundPainter(nullptr),
     fontpoolLocateFontsDone(false)
 {
 #ifdef DEBUG_DVIRENDERER
@@ -110,7 +110,7 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap* page)
 #endif
 
   // Paranoid safety checks
-  if (page == 0) {
+  if (page == nullptr) {
     qCCritical(OkularDviDebug) << "dviRenderer::drawPage(documentPage *) called with argument == 0" << endl;
     return;
   }
@@ -123,7 +123,7 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap* page)
   QMutexLocker locker(&mutex);
 
 
-  if ( dviFile == 0 ) {
+  if ( dviFile == nullptr ) {
     qCCritical(OkularDviDebug) << "dviRenderer::drawPage(documentPage *) called, but no dviFile class allocated." << endl;
     page->clear();
     return;
@@ -133,7 +133,7 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap* page)
                   << " but the current dviFile has only " << dviFile->total_pages << " pages." << endl;
     return;
   }
-  if ( dviFile->dvi_Data() == 0 ) {
+  if ( dviFile->dvi_Data() == nullptr ) {
     qCCritical(OkularDviDebug) << "dviRenderer::drawPage(documentPage *) called, but no dviFile is loaded yet." << endl;
     page->clear();
     return;
@@ -169,11 +169,11 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap* page)
  
   QImage img(pageWidth, pageHeight, QImage::Format_RGB32);
   foreGroundPainter = new QPainter(&img);
-  if (foreGroundPainter != 0) {
+  if (foreGroundPainter != nullptr) {
     errorMsg.clear();
     draw_page();
     delete foreGroundPainter;
-    foreGroundPainter = 0;
+    foreGroundPainter = nullptr;
   }
   else
   {
@@ -227,7 +227,7 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap* page)
   if (errorMsg.isEmpty() != true) {
     emit error(i18n("File corruption. %1", errorMsg), -1);
     errorMsg.clear();
-    currentlyDrawnPage = 0;
+    currentlyDrawnPage = nullptr;
     return;
   }
 #if 0
@@ -246,7 +246,7 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap* page)
     }
   }
 #endif
-  currentlyDrawnPage = 0;
+  currentlyDrawnPage = nullptr;
 }
 
 
@@ -336,8 +336,8 @@ embedPS_progress->setLabelText(QString());
 */
   if (!embedPS_progress)
     return;
-  embedPS_progress->setCancelButton(0);
-  embedPS_progress->setCancelButton(0);
+  embedPS_progress->setCancelButton(nullptr);
+  embedPS_progress->setCancelButton(nullptr);
   embedPS_progress->setMinimumDuration(400);
   embedPS_progress->setMaximum(dviFile->numberOfExternalPSFiles);
   embedPS_progress->setValue(0);
@@ -350,16 +350,16 @@ embedPS_progress->setLabelText(QString());
       command_pointer = dviFile->dvi_Data() + dviFile->page_offset[int(current_page)];
       end_pointer     = dviFile->dvi_Data() + dviFile->page_offset[int(current_page+1)];
     } else
-      command_pointer = end_pointer = 0;
+      command_pointer = end_pointer = nullptr;
 
     memset((char *) &currinf.data, 0, sizeof(currinf.data));
     currinf.fonttable = &(dviFile->tn_table);
-    currinf._virtual  = NULL;
+    currinf._virtual  = nullptr;
     prescan(&dviRenderer::prescan_embedPS);
   }
 
   delete embedPS_progress;
-  embedPS_progress = 0;
+  embedPS_progress = nullptr;
 
   if (!errorMsg.isEmpty()) {
     emit warning(i18n("Not all PostScript files could be embedded into your document. %1", errorMsg), -1);
@@ -384,11 +384,11 @@ embedPS_progress->setLabelText(QString());
       command_pointer = dviFile->dvi_Data() + dviFile->page_offset[int(current_page)];
       end_pointer     = dviFile->dvi_Data() + dviFile->page_offset[int(current_page+1)];
     } else
-      command_pointer = end_pointer = 0;
+      command_pointer = end_pointer = nullptr;
 
     memset((char *) &currinf.data, 0, sizeof(currinf.data));
     currinf.fonttable = &(dviFile->tn_table);
-    currinf._virtual  = NULL;
+    currinf._virtual  = nullptr;
 
     prescan(&dviRenderer::prescan_parseSpecials);
 
@@ -396,7 +396,7 @@ embedPS_progress->setLabelText(QString());
       PS_interface->setPostScript(current_page, *PostScriptOutPutString);
     delete PostScriptOutPutString;
   }
-  PostScriptOutPutString = NULL;
+  PostScriptOutPutString = nullptr;
 
 
 #ifdef PERFORMANCE_MEASUREMENT
@@ -446,7 +446,7 @@ bool dviRenderer::setFile(const QString &fname, const QUrl &base)
   if (fname.isEmpty()) {
     // Delete DVI file
     delete dviFile;
-    dviFile = 0;
+    dviFile = nullptr;
     return true;
   }
 
@@ -460,12 +460,12 @@ bool dviRenderer::setFile(const QString &fname, const QUrl &base)
   QApplication::setOverrideCursor( Qt::WaitCursor );
   dvifile *dviFile_new = new dvifile(filename, &font_pool);
 
-  if ((dviFile == 0) || (dviFile->filename != filename))
+  if ((dviFile == nullptr) || (dviFile->filename != filename))
     dviFile_new->sourceSpecialMarker = true;
   else
     dviFile_new->sourceSpecialMarker = false;
 
-  if ((dviFile_new->dvi_Data() == NULL)||(dviFile_new->errorMsg.isEmpty() != true)) {
+  if ((dviFile_new->dvi_Data() == nullptr)||(dviFile_new->errorMsg.isEmpty() != true)) {
     QApplication::restoreOverrideCursor();
     if (dviFile_new->errorMsg.isEmpty() != true)
       emit error(i18n("File corruption. %1", dviFile_new->errorMsg), -1);
@@ -528,18 +528,18 @@ bool dviRenderer::setFile(const QString &fname, const QUrl &base)
       command_pointer = dviFile->dvi_Data() + dviFile->page_offset[int(current_page)];
       end_pointer     = dviFile->dvi_Data() + dviFile->page_offset[int(current_page+1)];
     } else
-      command_pointer = end_pointer = 0;
+      command_pointer = end_pointer = nullptr;
 
     memset((char *) &currinf.data, 0, sizeof(currinf.data));
     currinf.fonttable = &(dviFile->tn_table);
-    currinf._virtual  = NULL;
+    currinf._virtual  = nullptr;
     prescan(&dviRenderer::prescan_parseSpecials);
 
     if (!PostScriptOutPutString->isEmpty())
       PS_interface->setPostScript(current_page, *PostScriptOutPutString);
     delete PostScriptOutPutString;
   }
-  PostScriptOutPutString = NULL;
+  PostScriptOutPutString = nullptr;
 
 #if 0
   // Generate the list of bookmarks
@@ -568,7 +568,7 @@ bool dviRenderer::setFile(const QString &fname, const QUrl &base)
   // PRESCAN ENDS HERE
 
   pageSizes.resize(0);
-  if (dviFile->suggestedPageSize != 0) {
+  if (dviFile->suggestedPageSize != nullptr) {
     // Fill the vector pageSizes with total_pages identical entries
     pageSizes.fill(*(dviFile->suggestedPageSize), dviFile->total_pages);
   }
@@ -584,7 +584,7 @@ Anchor dviRenderer::parseReference(const QString &reference)
   qCCritical(OkularDviDebug) << "dviRenderer::parseReference( " << reference << " ) called" << endl;
 #endif
 
-  if (dviFile == 0)
+  if (dviFile == nullptr)
     return Anchor();
 
   // case 1: The reference is a number, which we'll interpret as a
@@ -711,15 +711,15 @@ QString dviRenderer::PDFencodingToQString(const QString& _pdfstring)
   int pos;
   QRegExp rx( QStringLiteral("(\\\\)(\\d\\d\\d)") );  // matches "\xyz" where x,y,z are numbers
   while((pos = rx.indexIn( pdfstring )) != -1) {
-    pdfstring = pdfstring.replace(pos, 4, QChar(rx.cap(2).toInt(0,8)));
+    pdfstring = pdfstring.replace(pos, 4, QChar(rx.cap(2).toInt(nullptr,8)));
   }
   rx.setPattern( QStringLiteral("(\\\\)(\\d\\d)") );  // matches "\xy" where x,y are numbers
   while((pos = rx.indexIn( pdfstring )) != -1) {
-    pdfstring = pdfstring.replace(pos, 3, QChar(rx.cap(2).toInt(0,8)));
+    pdfstring = pdfstring.replace(pos, 3, QChar(rx.cap(2).toInt(nullptr,8)));
   }
   rx.setPattern( QStringLiteral("(\\\\)(\\d)") );  // matches "\x" where x is a number
   while((pos = rx.indexIn( pdfstring )) != -1) {
-    pdfstring = pdfstring.replace(pos, 4, QChar(rx.cap(2).toInt(0,8)));
+    pdfstring = pdfstring.replace(pos, 4, QChar(rx.cap(2).toInt(nullptr,8)));
   }
   return pdfstring;
 }
@@ -759,10 +759,10 @@ void dviRenderer::export_finished(const DVIExport* key)
 
 void dviRenderer::setEventLoop(QEventLoop *el) 
 {
-  if (el == NULL)
+  if (el == nullptr)
   {
      delete m_eventLoop;
-     m_eventLoop = NULL; 
+     m_eventLoop = nullptr; 
   }
   else
      m_eventLoop = el;

@@ -75,9 +75,9 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         bool gestureEvent (QGestureEvent * e );
 
     private:
-        const void * getObjectRect( Okular::ObjectRect::ObjectType type, int x, int y, QRect * geometry = 0 ) const;
-        const Okular::Action * getLink( int x, int y, QRect * geometry = 0 ) const;
-        const Okular::Annotation * getAnnotation( int x, int y, QRect * geometry = 0 ) const;
+        const void * getObjectRect( Okular::ObjectRect::ObjectType type, int x, int y, QRect * geometry = nullptr ) const;
+        const Okular::Action * getLink( int x, int y, QRect * geometry = nullptr ) const;
+        const Okular::Annotation * getAnnotation( int x, int y, QRect * geometry = nullptr ) const;
         void testCursorOnLink( int x, int y );
         void overlayClick( const QPoint & position );
         void changePage( int newPage );

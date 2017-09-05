@@ -75,7 +75,7 @@ void oops(const QString& message)
 {
   qCCritical(OkularDviDebug) << "Fatal Error:" << message << endl;
 
-  KMessageBox::error( NULL,
+  KMessageBox::error( nullptr,
                       i18n("Fatal error.\n\n") +
                       message +
                       i18n("\n\n\

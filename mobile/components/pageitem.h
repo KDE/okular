@@ -83,7 +83,7 @@ class PageItem : public QQuickPaintedItem, public Okular::View
 
 public:
 
-    explicit PageItem(QQuickItem *parent=0);
+    explicit PageItem(QQuickItem *parent=nullptr);
     ~PageItem();
 
     void setFlickable(QQuickItem *flickable);

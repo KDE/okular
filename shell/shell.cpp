@@ -64,7 +64,7 @@ static const char* const SESSION_TAB_KEY = "ActiveTab";
 Shell::Shell( const QString &serializedOptions )
   : KParts::MainWindow(), m_menuBarWasShown(true), m_toolBarWasShown(true)
 #ifndef Q_OS_WIN
-    , m_activityResource(0)
+    , m_activityResource(nullptr)
 #endif
     , m_isValid(true)
 {
@@ -75,7 +75,7 @@ Shell::Shell( const QString &serializedOptions )
   // set the shell's ui resource file
   setXMLFile(QStringLiteral("shell.rc"));
   m_fileformatsscanned = false;
-  m_showMenuBarAction = 0;
+  m_showMenuBarAction = nullptr;
   // this routine will find and load our Part.  it finds the Part by
   // name which is a bad idea usually.. but it's alright in this
   // case since our Part is made for this Shell

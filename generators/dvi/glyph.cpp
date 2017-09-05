@@ -14,7 +14,7 @@
 
 bitmap::bitmap()
 {
-  bits = 0; 
+  bits = nullptr; 
 }
 
 bitmap::~bitmap()

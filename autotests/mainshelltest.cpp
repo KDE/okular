@@ -100,7 +100,7 @@ QList<Shell*> getShells()
     return shells;
 }
 
-Shell *findShell(Shell *ignore = 0)
+Shell *findShell(Shell *ignore = nullptr)
 {
     foreach (QWidget *widget, QApplication::topLevelWidgets())
     {
@@ -108,7 +108,7 @@ Shell *findShell(Shell *ignore = 0)
         if (s && s != ignore)
             return s;
     }
-    return 0;
+    return nullptr;
 }
 
 void MainShellTest::initTestCase()
@@ -349,7 +349,7 @@ void MainShellTest::testShell()
     {
         QCOMPARE(paths.count(), 1);
         Okular::Part *part = s->findChild<Okular::Part*>();
-        QTRY_VERIFY(presentationWidget(part) != 0);
+        QTRY_VERIFY(presentationWidget(part) != nullptr);
     }
 
     if (externalProcessExpectPresentation)
@@ -366,7 +366,7 @@ void MainShellTest::testShell()
             part = dynamic_cast<Okular::Part*>(s->m_tabs[1].part);
         }
 
-        QTRY_VERIFY(presentationWidget(part) != 0);
+        QTRY_VERIFY(presentationWidget(part) != nullptr);
     }
 
     if (helper)

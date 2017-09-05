@@ -859,7 +859,7 @@ class HighlightAreaRect : public RegularAreaRect
          * Creates a new highlight area rect with the coordinates of
          * the given @p area.
          */
-        HighlightAreaRect( const RegularAreaRect *area = 0 );
+        HighlightAreaRect( const RegularAreaRect *area = nullptr );
 
         /**
          * The search ID of the highlight owner.

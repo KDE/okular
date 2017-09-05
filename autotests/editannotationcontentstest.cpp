@@ -95,7 +95,7 @@ void MockEditor::slotAnnotationContentsChangedByUndoRedo(Okular::Annotation* ann
 void EditAnnotationContentsTest::initTestCase()
 {
     Okular::SettingsCore::instance( QStringLiteral("editannotationcontentstest") );
-    m_document = new Okular::Document( 0 );
+    m_document = new Okular::Document( nullptr );
 }
 
 void EditAnnotationContentsTest::cleanupTestCase()

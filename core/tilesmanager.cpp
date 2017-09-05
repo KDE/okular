@@ -239,7 +239,7 @@ void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRe
                 setPixmap( pixmap, rect, tile.tiles[ i ] );
 
             delete tile.pixmap;
-            tile.pixmap = 0;
+            tile.pixmap = nullptr;
         }
 
         return;
@@ -269,7 +269,7 @@ void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRe
             {
                 totalPixels -= tile.pixmap->width()*tile.pixmap->height();
                 delete tile.pixmap;
-                tile.pixmap = 0;
+                tile.pixmap = nullptr;
             }
 
             for ( int i = 0; i < tile.nTiles; ++i )
@@ -288,7 +288,7 @@ void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRe
             {
                 totalPixels -= tile.pixmap->width()*tile.pixmap->height();
                 delete tile.pixmap;
-                tile.pixmap = 0;
+                tile.pixmap = nullptr;
             }
 
             for ( int i = 0; i < tile.nTiles; ++i )
@@ -300,11 +300,11 @@ void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRe
             for ( int i = 0; i < tile.nTiles; ++i )
             {
                 deleteTiles( tile.tiles[ i ] );
-                tile.tiles[ i ].pixmap = 0;
+                tile.tiles[ i ].pixmap = nullptr;
             }
 
             delete [] tile.tiles;
-            tile.tiles = 0;
+            tile.tiles = nullptr;
             tile.nTiles = 0;
 
             // paint tile
@@ -473,7 +473,7 @@ void TilesManager::cleanupPixmapMemory( qulonglong numberOfBytes, const Normaliz
             numberOfBytes -= 4*pixels;
 
         delete tile->pixmap;
-        tile->pixmap = 0;
+        tile->pixmap = nullptr;
 
         d->markParentDirty( *tile );
     }
@@ -629,13 +629,13 @@ NormalizedRect TilesManager::toRotatedRect( const NormalizedRect &rect, Rotation
 }
 
 TileNode::TileNode()
-    : pixmap( 0 )
+    : pixmap( nullptr )
     , rotation( Rotation0 )
     , dirty ( true )
     , distance( -1 )
-    , tiles( 0 )
+    , tiles( nullptr )
     , nTiles( 0 )
-    , parent( 0 )
+    , parent( nullptr )
 {
 }
 
@@ -655,7 +655,7 @@ class Tile::Private
 };
 
 Tile::Private::Private()
-    : pixmap( 0 )
+    : pixmap( nullptr )
     , isValid( false )
 {
 }

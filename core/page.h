@@ -183,13 +183,13 @@ class OKULARCORE_EXPORT Page
          *                 right/below the coordinates of the given rect.
          */
         RegularAreaRect* findText( int id, const QString & text, SearchDirection direction,
-                                   Qt::CaseSensitivity caseSensitivity, const RegularAreaRect * lastRect=0) const;
+                                   Qt::CaseSensitivity caseSensitivity, const RegularAreaRect * lastRect=nullptr) const;
 
         /**
          * Returns the page text (or part of it).
          * @see TextPage::text()
          */
-        QString text( const RegularAreaRect * rect = 0 ) const;
+        QString text( const RegularAreaRect * rect = nullptr ) const;
 
         /**
          * Returns the page text (or part of it).
@@ -213,7 +213,7 @@ class OKULARCORE_EXPORT Page
          * @see TextPage::wordAt()
          * @since 0.15 (KDE 4.9)
          */
-        RegularAreaRect * wordAt( const NormalizedPoint &p, QString *word = 0 ) const;
+        RegularAreaRect * wordAt( const NormalizedPoint &p, QString *word = nullptr ) const;
 
         /**
          * Returns the rectangular area of the given @p selection.

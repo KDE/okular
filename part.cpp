@@ -111,7 +111,7 @@ class FileKeeper
 {
     public:
         FileKeeper()
-            : m_handle( NULL )
+            : m_handle( nullptr )
         {
         }
 
@@ -131,14 +131,14 @@ class FileKeeper
             {
                 int ret = std::fclose( m_handle );
                 Q_UNUSED( ret )
-                m_handle = NULL;
+                m_handle = nullptr;
             }
         }
 
         QTemporaryFile* copyToTemporary() const
         {
             if ( !m_handle )
-                return 0;
+                return nullptr;
 
             QTemporaryFile * retFile = new QTemporaryFile;
             retFile->open();
@@ -294,8 +294,8 @@ Part::Part(QWidget *parentWidget,
 QObject *parent,
 const QVariantList &args)
 : KParts::ReadWritePart(parent),
-m_tempfile( 0 ), m_isReloading( false ), m_fileWasRemoved( false ), m_showMenuBarAction( 0 ), m_showFullScreenAction( 0 ), m_actionsSearched( false ),
-m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentWidget, parent, args)), m_generatorGuiClient(0), m_keeper( 0 )
+m_tempfile( nullptr ), m_isReloading( false ), m_fileWasRemoved( false ), m_showMenuBarAction( nullptr ), m_showFullScreenAction( nullptr ), m_actionsSearched( false ),
+m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentWidget, parent, args)), m_generatorGuiClient(nullptr), m_keeper( nullptr )
 {
     // make sure that the component name is okular otherwise the XMLGUI .rc files are not found
     // when this part is used in an application other than okular (e.g. unit tests)
@@ -397,20 +397,20 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     //      m_searchToolBar->setStretchableWidget( m_searchWidget );
 
     // [left toolbox: Table of Contents] | []
-    m_toc = new TOC( 0, m_document );
+    m_toc = new TOC( nullptr, m_document );
     connect( m_toc.data(), &TOC::hasTOC, this, &Part::enableTOC );
     connect( m_toc.data(), &TOC::rightClick, this, &Part::slotShowTOCMenu );
     m_sidebar->addItem( m_toc, QIcon::fromTheme(QApplication::isLeftToRight() ? QStringLiteral("format-justify-left") : QStringLiteral("format-justify-right")), i18n("Contents") );
     enableTOC( false );
 
     // [left toolbox: Layers] | []
-    m_layers = new Layers( 0, m_document );
+    m_layers = new Layers( nullptr, m_document );
     connect( m_layers.data(), &Layers::hasLayers, this, &Part::enableLayers );
     m_sidebar->addItem( m_layers, QIcon::fromTheme( QStringLiteral("draw-freehand") ), i18n( "Layers" ) );
     enableLayers( false );
 
     // [left toolbox: Thumbnails and Bookmarks] | []
-    QWidget * thumbsBox = new ThumbnailsBox( 0 );
+    QWidget * thumbsBox = new ThumbnailsBox( nullptr );
     thumbsBox->layout()->setSpacing( 6 );
     m_searchWidget = new SearchWidget( thumbsBox, m_document );
     thumbsBox->layout()->addWidget(m_searchWidget);
@@ -423,12 +423,12 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     m_sidebar->setCurrentItem( thumbsBox );
 
     // [left toolbox: Reviews] | []
-    m_reviewsWidget = new Reviews( 0, m_document );
+    m_reviewsWidget = new Reviews( nullptr, m_document );
     m_sidebar->addItem( m_reviewsWidget, QIcon::fromTheme(QStringLiteral("draw-freehand")), i18n("Reviews") );
     m_sidebar->setItemEnabled( m_reviewsWidget, false );
 
     // [left toolbox: Bookmarks] | []
-    m_bookmarkList = new BookmarkList( m_document, 0 );
+    m_bookmarkList = new BookmarkList( m_document, nullptr );
     m_sidebar->addItem( m_bookmarkList, QIcon::fromTheme(QStringLiteral("bookmarks")), i18n("Bookmarks") );
     m_sidebar->setItemEnabled( m_bookmarkList, false );
 
@@ -452,7 +452,7 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
 #endif
 
     // widgets: [] | [right 'pageView']
-    QWidget * rightContainer = new QWidget( 0 );
+    QWidget * rightContainer = new QWidget( nullptr );
     m_sidebar->setMainWidget( rightContainer );
     QVBoxLayout * rightLayout = new QVBoxLayout( rightContainer );
     rightLayout->setMargin( 0 );
@@ -505,7 +505,7 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     bottomBarLayout->addWidget( m_pageSizeLabel );
     rightLayout->addWidget( m_bottomBar );
 
-    m_pageNumberTool = new MiniBar( 0, m_miniBarLogic );
+    m_pageNumberTool = new MiniBar( nullptr, m_miniBarLogic );
 
     connect( m_findBar, SIGNAL(forwardKeyPressEvent(QKeyEvent*)), m_pageView, SLOT(externalKeyPressEvent(QKeyEvent*)));
     connect( m_findBar, SIGNAL(onCloseButtonPressed()), m_pageView, SLOT(setFocus()));
@@ -649,8 +649,8 @@ void Part::setupViewerActions()
     m_endOfDocument->setWhatsThis( i18n( "Moves to the end of the document" ) );
 
     // we do not want back and next in history in the dummy mode
-    m_historyBack = 0;
-    m_historyNext = 0;
+    m_historyBack = nullptr;
+    m_historyNext = nullptr;
 
     m_addBookmark = KStandardAction::addBookmark( this, SLOT(slotAddBookmark()), ac );
     m_addBookmarkText = m_addBookmark->text();
@@ -674,9 +674,9 @@ void Part::setupViewerActions()
     m_nextBookmark->setWhatsThis( i18n( "Go to the next bookmark" ) );
     connect( m_nextBookmark, &QAction::triggered, this, &Part::slotNextBookmark );
 
-    m_copy = 0;
+    m_copy = nullptr;
 
-    m_selectAll = 0;
+    m_selectAll = nullptr;
 
     // Find and other actions
     m_find = KStandardAction::find( this, SLOT(slotShowFindBar()), ac );
@@ -691,8 +691,8 @@ void Part::setupViewerActions()
     m_findPrev = KStandardAction::findPrev( this, SLOT(slotFindPrev()), ac );
     m_findPrev->setEnabled( false );
 
-    m_saveCopyAs = 0;
-    m_saveAs = 0;
+    m_saveCopyAs = nullptr;
+    m_saveAs = nullptr;
 
     QAction * prefs = KStandardAction::preferences( this, SLOT(slotPreferences()), ac);
     if ( m_embedMode == NativeShellMode )
@@ -722,8 +722,8 @@ void Part::setupViewerActions()
     m_printPreview = KStandardAction::printPreview( this, SLOT(slotPrintPreview()), ac );
     m_printPreview->setEnabled( false );
 
-    m_showLeftPanel = 0;
-    m_showBottomBar = 0;
+    m_showLeftPanel = nullptr;
+    m_showBottomBar = nullptr;
 
     m_showProperties = ac->addAction(QStringLiteral("properties"));
     m_showProperties->setText(i18n("&Properties"));
@@ -731,14 +731,14 @@ void Part::setupViewerActions()
     connect(m_showProperties, &QAction::triggered, this, &Part::slotShowProperties);
     m_showProperties->setEnabled( false );
 
-    m_showEmbeddedFiles = 0;
-    m_showPresentation = 0;
+    m_showEmbeddedFiles = nullptr;
+    m_showPresentation = nullptr;
 
-    m_exportAs = 0;
-    m_exportAsMenu = 0;
-    m_exportAsText = 0;
-    m_exportAsDocArchive = 0;
-    m_presentationDrawingActions = 0;
+    m_exportAs = nullptr;
+    m_exportAsMenu = nullptr;
+    m_exportAsText = nullptr;
+    m_exportAsDocArchive = nullptr;
+    m_presentationDrawingActions = nullptr;
 
     m_aboutBackend = ac->addAction(QStringLiteral("help_about_backend"));
     m_aboutBackend->setText(i18n("About Backend"));
@@ -1300,7 +1300,7 @@ Document::OpenResult Part::doOpenFile( const QMimeType &mimeA, const QString &fi
         m_document->walletDataForFile(fileNameToOpen, &walletName, &walletFolder, &walletKey);
         bool firstInput = true;
         bool triedWallet = false;
-        KWallet::Wallet * wallet = 0;
+        KWallet::Wallet * wallet = nullptr;
         bool keep = true;
         while ( openResult == Document::OpenNeedsPassword )
         {
@@ -1527,7 +1527,7 @@ bool Part::openFile()
         if ( goAheadWithPresentationMode )
             QMetaObject::invokeMethod( this, "slotShowPresentation", Qt::QueuedConnection );
     }
-    m_generatorGuiClient = factory() ? m_document->guiClient() : 0;
+    m_generatorGuiClient = factory() ? m_document->guiClient() : nullptr;
     if ( m_generatorGuiClient )
         factory()->addClient( m_generatorGuiClient );
     if ( m_cliPrint )
@@ -1659,11 +1659,11 @@ bool Part::closeUrl(bool promptToSave)
     m_fileWasRemoved = false;
     if ( m_generatorGuiClient )
         factory()->removeClient( m_generatorGuiClient );
-    m_generatorGuiClient = 0;
+    m_generatorGuiClient = nullptr;
     m_document->closeDocument();
     updateViewActions();
     delete m_tempfile;
-    m_tempfile = 0;
+    m_tempfile = nullptr;
     if ( widget() )
     {
         m_searchWidget->clearText();
@@ -1796,7 +1796,7 @@ void Part::slotDoFileDirty()
         m_wasSidebarCollapsed = m_sidebar->isCollapsed();
 
         // store if presentation view was open
-        m_wasPresentationOpen = ((PresentationWidget*)m_presentationWidget != 0);
+        m_wasPresentationOpen = ((PresentationWidget*)m_presentationWidget != nullptr);
 
         // preserves the toc state after reload
         m_toc->prepareForReload();
@@ -2173,7 +2173,7 @@ void Part::slotRenameCurrentViewportBookmark()
 bool Part::aboutToShowContextMenu(QMenu * /*menu*/, QAction *action, QMenu *contextMenu)
 {
     KBookmarkAction *ba = dynamic_cast<KBookmarkAction*>(action);
-    if (ba != NULL)
+    if (ba != nullptr)
     {
         QAction *separatorAction = contextMenu->addSeparator();
         separatorAction->setObjectName(QStringLiteral("OkularPrivateRenameBookmarkActions"));
@@ -2212,7 +2212,7 @@ void Part::slotFind()
 {
     // when in presentation mode, there's already a search bar, taking care of
     // the 'find' requests
-    if ( (PresentationWidget*)m_presentationWidget != 0 )
+    if ( (PresentationWidget*)m_presentationWidget != nullptr )
     {
         m_presentationWidget->slotFind();
     }
@@ -2348,7 +2348,7 @@ void Part::slotSaveCopyAs()
         // make use of the already downloaded (in case of remote URLs) file,
         // no point in downloading that again
         QUrl srcUrl = QUrl::fromLocalFile( localFilePath() );
-        QTemporaryFile * tempFile = 0;
+        QTemporaryFile * tempFile = nullptr;
         // duh, our local file disappeared...
         if ( !QFile::exists( localFilePath() ) )
         {
@@ -2533,9 +2533,9 @@ void Part::showMenu(const Okular::Page *page, const QPoint &point, const QString
     }
 
     QMenu *popup = new QMenu( widget() );
-    QAction *addBookmark = 0;
-    QAction *removeBookmark = 0;
-    QAction *fitPageWidth = 0;
+    QAction *addBookmark = nullptr;
+    QAction *removeBookmark = nullptr;
+    QAction *fitPageWidth = nullptr;
     if (page)
     {
         popup->addAction( new OKMenuTitle( popup, i18n( "Page %1", page->number() + 1 ) ) );
@@ -2744,8 +2744,8 @@ void Part::slotPrint()
 #else
     QPrinter printer;
 #endif
-    QPrintDialog *printDialog = 0;
-    QWidget *printConfigWidget = 0;
+    QPrintDialog *printDialog = nullptr;
+    QWidget *printConfigWidget = nullptr;
 
     // Must do certain QPrinter setup before creating QPrintDialog
     setupPrint( printer );
@@ -2926,7 +2926,7 @@ void Part::unsetDummyMode()
 
     // attach the actions of the children widgets too
     m_formsMessage->addAction( m_pageView->toggleFormsAction() );
-    m_formsMessage->setVisible( m_pageView->toggleFormsAction() != 0 );
+    m_formsMessage->setVisible( m_pageView->toggleFormsAction() != nullptr );
 
     // ensure history actions are in the correct state
     updateViewActions();
@@ -2935,7 +2935,7 @@ void Part::unsetDummyMode()
 
 bool Part::handleCompressed( QString &destpath, const QString &path, KFilterDev::CompressionType compressionType)
 {
-    m_tempfile = 0;
+    m_tempfile = nullptr;
 
     // we are working with a compressed file, decompressing
     // temporary file for decompressing
@@ -3014,7 +3014,7 @@ void Part::rebuildBookmarkMenu( bool unplugActions )
     if ( m_bookmarkActions.isEmpty() )
     {
         havebookmarks = false;
-        QAction * a = new QAction( 0 );
+        QAction * a = new QAction( nullptr );
         a->setText( i18n( "No Bookmarks" ) );
         a->setEnabled( false );
         m_bookmarkActions.append( a );

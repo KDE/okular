@@ -59,7 +59,7 @@ class VideoWidget::Private
 {
 public:
     Private( Okular::Movie *m, Okular::Document *doc, VideoWidget *qq )
-        : q( qq ), movie( m ), document( doc ), player( 0 ), loaded( false )
+        : q( qq ), movie( m ), document( doc ), player( nullptr ), loaded( false )
     {
     }
 
@@ -260,7 +260,7 @@ VideoWidget::VideoWidget( const Okular::Annotation *annotation, Okular::Movie *m
     d->seekSliderAction = d->controlBar->addWidget( d->seekSlider );
     d->seekSlider->setEnabled( false );
 
-    Phonon::SeekSlider *verticalSeekSlider = new Phonon::SeekSlider( d->player->mediaObject(), 0 );
+    Phonon::SeekSlider *verticalSeekSlider = new Phonon::SeekSlider( d->player->mediaObject(), nullptr );
     verticalSeekSlider->setMaximumHeight( 100 );
     d->seekSliderMenuAction = createToolBarButtonWithWidgetPopup(
         d->controlBar, verticalSeekSlider, QIcon::fromTheme( QStringLiteral("player-time") ) );

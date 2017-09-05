@@ -114,7 +114,7 @@ class dvifile : public bigEndianByteReader
 
   @returns The name of the PS file, or QString() on failure.
   */
-  QString convertPDFtoPS(const QString &PDFFilename, QString *converrorms=0);
+  QString convertPDFtoPS(const QString &PDFFilename, QString *converrorms=nullptr);
 
  private:
   /** process_preamble reads the information in the preamble and

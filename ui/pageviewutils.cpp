@@ -222,7 +222,7 @@ void PageViewItem::reloadFormWidgetsState()
 /*********************/
 
 PageViewMessage::PageViewMessage( QWidget * parent )
-    : QWidget( parent ), m_timer( 0 )
+    : QWidget( parent ), m_timer( nullptr )
     , m_lineSpacing( 0 )
 {
     setObjectName( QStringLiteral( "pageViewMessage" ) );
@@ -595,7 +595,7 @@ void PageViewToolBar::hideAndDestroy()
 
 void PageViewToolBar::selectButton( int id )
 {
-    ToolBarButton * button = 0;
+    ToolBarButton * button = nullptr;
     if ( id >= 0 && id < d->buttons.count() )
         button = *(d->buttons.begin() + id);
     else

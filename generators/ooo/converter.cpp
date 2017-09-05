@@ -63,8 +63,8 @@ QTextCharFormat Style::textFormat() const
 }
 
 Converter::Converter()
-  : mTextDocument( 0 ), mCursor( 0 ),
-    mStyleInformation( 0 )
+  : mTextDocument( nullptr ), mCursor( nullptr ),
+    mStyleInformation( nullptr )
 {
 }
 
@@ -177,7 +177,7 @@ Okular::Document::OpenResult Converter::convertWithPassword( const QString &file
 
   delete mCursor;
   delete mStyleInformation;
-  mStyleInformation = 0;
+  mStyleInformation = nullptr;
 
   setDocument( mTextDocument );
   return Okular::Document::OpenSuccess;

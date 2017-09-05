@@ -40,8 +40,8 @@ static const int IsExtractableRole = Qt::UserRole;
 static const int FontInfoRole = Qt::UserRole + 1;
 
 PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
-    : KPageDialog( parent ), m_document( doc ), m_fontPage( 0 ),
-      m_fontModel( 0 ), m_fontInfo( 0 ), m_fontProgressBar( 0 ),
+    : KPageDialog( parent ), m_document( doc ), m_fontPage( nullptr ),
+      m_fontModel( nullptr ), m_fontInfo( nullptr ), m_fontProgressBar( nullptr ),
       m_fontScanStarted( false )
 {
     setFaceType( Tabbed );
@@ -89,7 +89,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
             continue;
 
         // create labels and layout them
-        QWidget *value = NULL;
+        QWidget *value = nullptr;
         if ( key == Okular::DocumentInfo::getKeyString( Okular::DocumentInfo::MimeType ) ) {
             /// for mime type fields, show icon as well
             value = new QWidget( page );

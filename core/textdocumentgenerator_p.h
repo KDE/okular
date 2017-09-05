@@ -102,7 +102,7 @@ class TextDocumentConverterPrivate
 {
     public:
         TextDocumentConverterPrivate()
-            : mParent( 0 )
+            : mParent( nullptr )
         {
         }
 
@@ -116,7 +116,7 @@ class TextDocumentGeneratorPrivate : public GeneratorPrivate
 
     public:
         TextDocumentGeneratorPrivate( TextDocumentConverter *converter )
-            : mConverter( converter ), mDocument( 0 ), mGeneralSettings( 0 )
+            : mConverter( converter ), mDocument( nullptr ), mGeneralSettings( nullptr )
         {
         }
 

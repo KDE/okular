@@ -36,7 +36,7 @@ static const int handleSizeHalf = handleSize / 2;
 
 bool AnnotationDescription::isValid() const
 {
-    return ( annotation != 0 );
+    return ( annotation != nullptr );
 }
 
 void AnnotationDescription::invalidate()
@@ -48,7 +48,7 @@ void AnnotationDescription::invalidate()
 
 AnnotationDescription::AnnotationDescription( PageViewItem * newPageViewItem, const QPoint& eventPos )
 {
-    const Okular::AnnotationObjectRect * annObjRect = 0;
+    const Okular::AnnotationObjectRect * annObjRect = nullptr;
     if ( newPageViewItem )
     {
         const QRect & uncroppedPage = newPageViewItem->uncroppedGeometry();
@@ -386,7 +386,7 @@ Qt::CursorShape MouseAnnotation::cursor() const
         }
         else if ( m_mouseOverAnnotation.annotation->subType() == Okular::Annotation::AScreen )
         {
-            if ( GuiUtils::renditionMovieFromScreenAnnotation( static_cast< const Okular::ScreenAnnotation * >( m_mouseOverAnnotation.annotation ) ) != 0 )
+            if ( GuiUtils::renditionMovieFromScreenAnnotation( static_cast< const Okular::ScreenAnnotation * >( m_mouseOverAnnotation.annotation ) ) != nullptr )
             {
                 return Qt::PointingHandCursor;
             }

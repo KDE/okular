@@ -139,7 +139,7 @@ TeXFontDefinition* fontPool::appendx(const QString& fontname, quint32 checksum, 
   double displayResolution = displayResolution_in_dpi;
 
   TeXFontDefinition *fontp = new TeXFontDefinition(fontname, displayResolution*enlargement, checksum, scale, this, enlargement);
-  if (fontp == 0) {
+  if (fontp == nullptr) {
     qCCritical(OkularDviDebug) << "Could not allocate memory for a font structure";
     exit(0);
   }
@@ -331,7 +331,7 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
         fontp->fontNameReceiver(fname);
         fontp->flags |= TeXFontDefinition::FONT_KPSE_NAME;
         if (fname.endsWith(QLatin1String(".vf"))) {
-          if (virtualFontsFound != 0)
+          if (virtualFontsFound != nullptr)
             *virtualFontsFound = true;
           // Constructing a virtual font will most likely insert other
           // fonts into the fontList. After that, fontList.next() will

@@ -84,9 +84,9 @@ TeXFont_PK::TeXFont_PK(TeXFontDefinition *parent)
 #endif
 
   for(unsigned int i=0; i<TeXFontDefinition::max_num_of_chars_in_font; i++)
-    characterBitmaps[i] = 0;
+    characterBitmaps[i] = nullptr;
   file = fopen(QFile::encodeName(parent->filename).constData(), "r");
-  if (file == 0)
+  if (file == nullptr)
     qCCritical(OkularDviDebug) << i18n("Cannot open font file %1.", parent->filename) << endl;
 #ifdef DEBUG_PK
   else
@@ -106,12 +106,12 @@ TeXFont_PK::~TeXFont_PK()
   //@@@ Release bitmaps
   for(unsigned int i=0; i<TeXFontDefinition::max_num_of_chars_in_font; i++) {
     delete characterBitmaps[i];
-    characterBitmaps[i] = 0;
+    characterBitmaps[i] = nullptr;
   }
 
-  if (file != 0) {
+  if (file != nullptr) {
     fclose(file);
-    file = 0;
+    file = nullptr;
   }
 }
 
@@ -132,7 +132,7 @@ glyph* TeXFont_PK::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCol
   class glyph *g = glyphtable+ch;
 
   // Check if the glyph is loaded. If not, load it now.
-  if (characterBitmaps[ch] == 0) {
+  if (characterBitmaps[ch] == nullptr) {
     // If the character is not defined in the PK file, mark the
     // character as missing, and print an error message
     if (g->addr == 0) {
@@ -151,7 +151,7 @@ glyph* TeXFont_PK::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCol
     read_PK_char(ch);
     // Check if the character could be loaded. If not, mark the
     // character as 'missing', and return a pointer.
-    if (characterBitmaps[ch]->bits == 0) {
+    if (characterBitmaps[ch]->bits == nullptr) {
       g->addr = -1;
       return g;
     }
@@ -500,7 +500,7 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
   qCDebug(OkularDviDebug) << "loading pk char " << ch << ", char type " << n;
 #endif
 
-  if (characterBitmaps[ch] == 0)
+  if (characterBitmaps[ch] == nullptr)
     characterBitmaps[ch] = new bitmap();
 
   /*
@@ -720,7 +720,7 @@ void TeXFont_PK::read_PK_index()
   qCDebug(OkularDviDebug) << "TeXFont_PK::read_PK_index() called";
 #endif
 
-  if (file == 0) {
+  if (file == nullptr) {
     qCCritical(OkularDviDebug) << "TeXFont_PK::read_PK_index(): file == 0" << endl;
     return;
   }

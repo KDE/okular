@@ -25,13 +25,13 @@ fontEncoding *fontEncodingPool::findByName(const QString &name)
 {
   fontEncoding *ptr = dictionary.value( name );
 
-  if (ptr == 0) {
+  if (ptr == nullptr) {
     ptr = new fontEncoding(name);
     if (ptr->isValid())
       dictionary.insert(name, ptr );
     else {
       delete ptr;
-      ptr = 0;
+      ptr = nullptr;
     }
   }
 

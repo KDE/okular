@@ -60,7 +60,7 @@ class OKULARCORE_EXPORT AudioPlayer : public QObject
          * Enqueue the specified @p sound for playing, optionally taking more
          * information about the playing from the @p soundlink .
          */
-        void playSound( const Sound * sound, const SoundAction * linksound = 0 );
+        void playSound( const Sound * sound, const SoundAction * linksound = nullptr );
 
         /**
          * Tell the AudioPlayer to stop all the playbacks.

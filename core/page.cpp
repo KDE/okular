@@ -67,10 +67,10 @@ static void deleteObjectRects( QLinkedList< ObjectRect * >& rects, const QSet<Ob
 
 PagePrivate::PagePrivate( Page *page, uint n, double w, double h, Rotation o )
     : m_page( page ), m_number( n ), m_orientation( o ),
-      m_width( w ), m_height( h ), m_doc( 0 ), m_boundingBox( 0, 0, 1, 1 ),
+      m_width( w ), m_height( h ), m_doc( nullptr ), m_boundingBox( 0, 0, 1, 1 ),
       m_rotation( Rotation0 ),
-      m_text( 0 ), m_transition( 0 ), m_textSelections( 0 ),
-      m_openingAction( 0 ), m_closingAction( 0 ), m_duration( -1 ),
+      m_text( nullptr ), m_transition( nullptr ), m_textSelections( nullptr ),
+      m_openingAction( nullptr ), m_closingAction( nullptr ), m_duration( -1 ),
       m_isBoundingBoxKnown( false )
 {
     // avoid Division-By-Zero problems in the program
@@ -231,7 +231,7 @@ bool Page::hasPixmap( DocumentObserver *observer, int width, int height, const N
 
 bool Page::hasTextPage() const
 {
-    return d->m_text != 0;
+    return d->m_text != nullptr;
 }
 
 RegularAreaRect * Page::wordAt( const NormalizedPoint &p, QString *word ) const
@@ -239,7 +239,7 @@ RegularAreaRect * Page::wordAt( const NormalizedPoint &p, QString *word ) const
     if ( d->m_text )
         return d->m_text->wordAt( p, word );
 
-    return 0;
+    return nullptr;
 }
 
 RegularAreaRect * Page::textArea ( TextSelection * selection ) const
@@ -247,7 +247,7 @@ RegularAreaRect * Page::textArea ( TextSelection * selection ) const
     if ( d->m_text )
         return d->m_text->textArea( selection );
 
-    return 0;
+    return nullptr;
 }
 
 bool Page::hasObjectRect( double x, double y, double xScale, double yScale ) const
@@ -281,7 +281,7 @@ bool Page::hasHighlights( int s_id ) const
 
 bool Page::hasTransition() const
 {
-    return d->m_transition != 0;
+    return d->m_transition != nullptr;
 }
 
 bool Page::hasAnnotations() const
@@ -292,7 +292,7 @@ bool Page::hasAnnotations() const
 RegularAreaRect * Page::findText( int id, const QString & text, SearchDirection direction,
                                   Qt::CaseSensitivity caseSensitivity, const RegularAreaRect *lastRect ) const
 {
-    RegularAreaRect* rect = 0;
+    RegularAreaRect* rect = nullptr;
     if ( text.isEmpty() || !d->m_text )
         return rect;
 
@@ -320,7 +320,7 @@ QString Page::text( const RegularAreaRect * area, TextPage::TextAreaInclusionBeh
         ret = d->m_text->text( &rotatedArea, b );
     }
     else
-        ret = d->m_text->text( 0, b );
+        ret = d->m_text->text( nullptr, b );
 
     return ret;
 }
@@ -340,7 +340,7 @@ TextEntity::List Page::words( const RegularAreaRect * area, TextPage::TextAreaIn
         ret = d->m_text->words( &rotatedArea, b );
     }
     else
-        ret = d->m_text->words( 0, b );
+        ret = d->m_text->words( nullptr, b );
 
     for (int i = 0; i < ret.length(); ++i)
     {
@@ -434,7 +434,7 @@ const ObjectRect * Page::objectRect( ObjectRect::ObjectType type, double x, doub
             return objrect;
     }
 
-    return 0;
+    return nullptr;
 }
 
 QLinkedList< const ObjectRect * > Page::objectRects( ObjectRect::ObjectType type, double x, double y, double xScale, double yScale ) const
@@ -456,7 +456,7 @@ QLinkedList< const ObjectRect * > Page::objectRects( ObjectRect::ObjectType type
 
 const ObjectRect* Page::nearestObjectRect( ObjectRect::ObjectType type, double x, double y, double xScale, double yScale, double * distance ) const
 {
-    ObjectRect * res = 0;
+    ObjectRect * res = nullptr;
     double minDistance = std::numeric_limits<double>::max();
 
     QLinkedList< ObjectRect * >::const_iterator it = m_rects.constBegin(), end = m_rects.constEnd();
@@ -500,7 +500,7 @@ const Action * Page::pageAction( PageAction action ) const
             break;
     }
 
-    return 0;
+    return nullptr;
 }
 
 QLinkedList< FormField * > Page::formFields() const
@@ -672,7 +672,7 @@ bool Page::removeAnnotation( Annotation * annotation )
                     rectfound = true;
                 }
             qCDebug(OkularCoreDebug) << "removed annotation:" << annotation->uniqueName();
-            annotation->d_ptr->m_page = 0;
+            annotation->d_ptr->m_page = nullptr;
             m_annotations.erase( aIt );
             break;
         }
@@ -770,7 +770,7 @@ void PagePrivate::deleteHighlights( int s_id )
 void PagePrivate::deleteTextSelections()
 {
     delete m_textSelections;
-    m_textSelections = 0;
+    m_textSelections = nullptr;
 }
 
 void Page::deleteSourceReferences()
@@ -968,7 +968,7 @@ const QPixmap * Page::_o_nearestPixmap( DocumentObserver *observer, int w, int h
 {
     Q_UNUSED( h )
 
-    const QPixmap * pixmap = 0;
+    const QPixmap * pixmap = nullptr;
 
     // if a pixmap is present for given id, use it
     QMap< DocumentObserver*, PagePrivate::PixmapObject >::const_iterator itPixmap = d->m_pixmaps.constFind( observer );
@@ -996,7 +996,7 @@ const QPixmap * Page::_o_nearestPixmap( DocumentObserver *observer, int w, int h
 
 bool Page::hasTilesManager( const DocumentObserver *observer ) const
 {
-    return d->tilesManager( observer ) != 0;
+    return d->tilesManager( observer ) != nullptr;
 }
 
 QList<Tile> Page::tilesAt( const DocumentObserver *observer, const NormalizedRect &rect ) const

@@ -81,7 +81,7 @@ void KIMGIOTest::testExifOrientation()
 	QMimeDatabase db;
 
     Okular::SettingsCore::instance( QStringLiteral("kimgiotest") );
-	Okular::Document *m_document = new Okular::Document( 0 );
+	Okular::Document *m_document = new Okular::Document( nullptr );
 	const QMimeType mime = db.mimeTypeForFile( imgPath );
 
 	Okular::DocumentObserver *dummyDocumentObserver = new Okular::DocumentObserver();

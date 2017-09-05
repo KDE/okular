@@ -38,7 +38,7 @@
 PageItem::PageItem(QQuickItem *parent)
     : QQuickPaintedItem(parent),
       Okular::View( QLatin1String( "PageView" ) ),
-      m_page(0),
+      m_page(nullptr),
       m_smooth(false),
       m_intentionalDraw(false),
       m_bookmarked(false),
@@ -72,7 +72,7 @@ void PageItem::setFlickable(QQuickItem *flickable)
     }
 
     if (m_flickable) {
-        disconnect(m_flickable.data(), 0, this, 0);
+        disconnect(m_flickable.data(), nullptr, this, nullptr);
     }
 
     //check the object can act as a flickable
@@ -108,8 +108,8 @@ void PageItem::setDocument(DocumentItem *doc)
         return;
     }
 
-    m_page = 0;
-    disconnect(doc, 0, this, 0);
+    m_page = nullptr;
+    disconnect(doc, nullptr, this, nullptr);
     m_documentItem = doc;
     Observer *observer = m_isThumbnail ? m_documentItem.data()->thumbnailObserver() : m_documentItem.data()->pageviewObserver();
     connect(observer, &Observer::pageChanged, this, &PageItem::pageHasChanged);
@@ -392,7 +392,7 @@ void PageItem::contentYChanged()
 
 void PageItem::documentPathChanged()
 {
-    m_page = 0;
+    m_page = nullptr;
     setPageNumber(0);
 
     m_redrawTimer->start();

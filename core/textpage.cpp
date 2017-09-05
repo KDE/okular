@@ -186,7 +186,7 @@ class TinyTextEntity
 
 
 TextEntity::TextEntity( const QString &text, NormalizedRect *area )
-    : m_text( text ), m_area( area ), d( 0 )
+    : m_text( text ), m_area( area ), d( nullptr )
 {
 }
 
@@ -214,7 +214,7 @@ NormalizedRect TextEntity::transformedArea(const QTransform &matrix) const
 
 
 TextPagePrivate::TextPagePrivate()
-    : m_page( 0 )
+    : m_page( nullptr )
 {
 }
 
@@ -718,7 +718,7 @@ RegularAreaRect* TextPage::findText( int searchID, const QString &query, SearchD
     SearchDirection dir=direct;
     // invalid search request
     if ( d->m_words.isEmpty() || query.isEmpty() || ( area && area->isNull() ) )
-        return 0;
+        return nullptr;
     TextList::ConstIterator start;
     int start_offset = 0;
     TextList::ConstIterator end;
@@ -758,7 +758,7 @@ RegularAreaRect* TextPage::findText( int searchID, const QString &query, SearchD
             forward = false;
             break;
     };
-    RegularAreaRect* ret = 0;
+    RegularAreaRect* ret = nullptr;
     const TextComparisonFunction cmpFn = caseSensitivity == Qt::CaseSensitive
                                        ? CaseSensitiveCmpFn : CaseInsensitiveCmpFn;
     if ( forward )
@@ -943,7 +943,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
         m_searchPoints.erase( sIt );
         delete sp;
     }
-    return 0;
+    return nullptr;
 }
 
 RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const QString &_query,
@@ -1062,7 +1062,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
         m_searchPoints.erase( sIt );
         delete sp;
     }
-    return 0;
+    return nullptr;
 }
 
 QString TextPage::text(const RegularAreaRect *area) const
@@ -1972,7 +1972,7 @@ RegularAreaRect * TextPage::wordAt( const NormalizedPoint &p, QString *word ) co
     {
         if ( (*posIt)->text().simplified().isEmpty() )
         {
-            return NULL;
+            return nullptr;
         }
         // Find the first TinyTextEntity of the word
         while ( posIt != itBegin )
@@ -2031,6 +2031,6 @@ RegularAreaRect * TextPage::wordAt( const NormalizedPoint &p, QString *word ) co
     }
     else
     {
-        return NULL;
+        return nullptr;
     }
 }

@@ -42,7 +42,7 @@ static const unitOfDistance distanceUnitTable[] = {
   {float(25.4*0.178), "cc"},     // cicero points = 0.178 inches
   {float(25.4*0.178), "cicero"},
 
-  {0.0f, 0},
+  {0.0f, nullptr},
 };
 
 
@@ -56,7 +56,7 @@ float Length::convertToMM(const QString &distance, bool *ok)
   // Check for various known units, and store the beginning position
   // of the unit in 'unitPos', so that distance[0..unitPos] will hold
   // the value. Store the number of mm per unit in 'MMperUnit'.
-  for(int i=0; MMperUnit==0.0 && distanceUnitTable[i].name != 0; i++) {
+  for(int i=0; MMperUnit==0.0 && distanceUnitTable[i].name != nullptr; i++) {
     unitPos = distance.lastIndexOf(QString::fromLocal8Bit(distanceUnitTable[i].name));
     if (unitPos != -1)
       MMperUnit = distanceUnitTable[i].mmPerUnit;

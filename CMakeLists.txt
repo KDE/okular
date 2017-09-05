@@ -25,7 +25,7 @@ include(KDEInstallDirs)
 include(KDECMakeSettings)
 include(ECMAddTests)
 include(ECMAddAppIcon)
-include(ECMPackageConfigHelpers)
+include(CMakePackageConfigHelpers)
 
 ecm_setup_version(${PROJECT_VERSION}
                   VARIABLE_PREFIX OKULAR
@@ -361,7 +361,7 @@ install( FILES okular.categories DESTINATION ${KDE_INSTALL_CONFDIR} )
 ########### cmake files #################
 
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/Okular5")
-ecm_configure_package_config_file(
+configure_package_config_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/Okular5Config.cmake.in"
   "${CMAKE_CURRENT_BINARY_DIR}/Okular5Config.cmake"
   INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}

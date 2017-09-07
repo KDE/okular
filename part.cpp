@@ -547,6 +547,7 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     // document watcher and reloader
     m_watcher = new KDirWatch( this );
     connect( m_watcher, &KDirWatch::dirty, this, &Part::slotFileDirty );
+    connect( m_watcher, &KDirWatch::created, this, &Part::slotFileDirty );
     m_dirtyHandler = new QTimer( this );
     m_dirtyHandler->setSingleShot( true );
     connect( m_dirtyHandler, &QTimer::timeout,this, &Part::slotDoFileDirty );

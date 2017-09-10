@@ -18,40 +18,41 @@
 class GSGenerator : public Okular::Generator, public Okular::ConfigInterface
 {
     Q_OBJECT
+    Q_INTERFACES( Okular::Generator )
     Q_INTERFACES( Okular::ConfigInterface )
 
     public:
         /** virtual methods to reimplement **/
         // load a document and fill up the pagesVector
-        bool loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector );
+        bool loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector ) override;
 
         // Document description and Table of contents
-        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const;
-        const Okular::DocumentSynopsis * generateDocumentSynopsis() { return 0L; }
+        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const override;
+        const Okular::DocumentSynopsis * generateDocumentSynopsis()  override { return 0L; }
         const Okular::DocumentFonts * generateDocumentFonts() { return 0L; }
 
         // page contents generation
-        bool canGeneratePixmap() const;
-        void generatePixmap( Okular::PixmapRequest * request );
+        bool canGeneratePixmap() const override;
+        void generatePixmap( Okular::PixmapRequest * request ) override;
 
-        QVariant metaData(const QString &key, const QVariant &option) const;
+        QVariant metaData(const QString &key, const QVariant &option) const override;
 
         // print document using already configured kprinter
-        bool print( QPrinter& /*printer*/ );
+        bool print( QPrinter& /*printer*/ ) override;
         QString fileName() const;
 
-        bool reparseConfig();
-        void addPages( KConfigDialog* dlg );
+        bool reparseConfig() override;
+        void addPages( KConfigDialog* dlg ) override;
 
         /** constructor **/
         GSGenerator( QObject *parent, const QVariantList &args );
         ~GSGenerator();
 
-    public slots:
+    public Q_SLOTS:
         void slotImageGenerated(QImage *img, Okular::PixmapRequest *request);
 
     protected:
-        bool doCloseDocument();
+        bool doCloseDocument() override;
 
     private:
         bool loadPages( QVector< Okular::Page * > & pagesVector );

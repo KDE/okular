@@ -22,7 +22,7 @@ namespace Okular {
  *
  * @since 0.16 (KDE 4.10)
  */
-class OKULAR_EXPORT Tile
+class OKULARCORE_EXPORT Tile
 {
     public:
         Tile( const NormalizedRect &rect, QPixmap *pixmap, bool isValid );

@@ -22,8 +22,8 @@
 #include <qtoolbutton.h>
 #include <qwidgetaction.h>
 
-#include <kicon.h>
-#include <klocale.h>
+#include <QIcon>
+#include <KLocalizedString>
 
 #include <phonon/mediaobject.h>
 #include <phonon/seekslider.h>
@@ -59,7 +59,7 @@ class VideoWidget::Private
 {
 public:
     Private( Okular::Movie *m, Okular::Document *doc, VideoWidget *qq )
-        : q( qq ), movie( m ), document( doc ), player( 0 ), loaded( false )
+        : q( qq ), movie( m ), document( doc ), player( nullptr ), loaded( false )
     {
     }
 
@@ -96,30 +96,37 @@ public:
     QStackedLayout *pageLayout;
     QLabel *posterImagePage;
     bool loaded : 1;
+    double repetitionsLeft;
 };
+
+static QUrl urlFromUrlString(const QString &url, Okular::Document *document)
+{
+    QUrl newurl;
+    if ( url.startsWith( QLatin1Char( '/' ) ) )
+    {
+        newurl = QUrl::fromLocalFile( url );
+    }
+    else
+    {
+        newurl = QUrl( url );
+        if ( newurl.isRelative() )
+        {
+            newurl = document->currentDocument().adjusted(QUrl::RemoveFilename);
+            newurl.setPath( newurl.path() + url );
+        }
+    }
+    return newurl;
+}
 
 void VideoWidget::Private::load()
 {
+    repetitionsLeft = movie->playRepetitions();
     if ( loaded )
         return;
 
     loaded = true;
 
-    QString url = movie->url();
-    KUrl newurl;
-    if ( QDir::isRelativePath( url ) )
-    {
-        newurl = document->currentDocument();
-        newurl.setFileName( url );
-    }
-    else
-    {
-        newurl = url;
-    }
-    if ( newurl.isLocalFile() )
-        player->load( newurl.toLocalFile() );
-    else
-        player->load( newurl );
+    player->load( urlFromUrlString( movie->url(), document ) );
 
     connect( player->mediaObject(), SIGNAL( stateChanged( Phonon::State, Phonon::State ) ),
              q, SLOT( stateChanged( Phonon::State, Phonon::State ) ) );
@@ -131,35 +138,20 @@ void VideoWidget::Private::setupPlayPauseAction( PlayPauseMode mode )
 {
     if ( mode == PlayMode )
     {
-        playPauseAction->setIcon( KIcon( "media-playback-start" ) );
+        playPauseAction->setIcon( QIcon::fromTheme( QStringLiteral("media-playback-start") ) );
         playPauseAction->setText( i18nc( "start the movie playback", "Play" ) );
     }
     else if ( mode == PauseMode )
     {
-        playPauseAction->setIcon( KIcon( "media-playback-pause" ) );
+        playPauseAction->setIcon( QIcon::fromTheme( QStringLiteral("media-playback-pause") ) );
         playPauseAction->setText( i18nc( "pause the movie playback", "Pause" ) );
     }
 }
 
 void VideoWidget::Private::takeSnapshot()
 {
-    const QString url = movie->url();
-    KUrl newurl;
-    if ( QDir::isRelativePath( url ) )
-    {
-        newurl = document->currentDocument();
-        newurl.setFileName( url );
-    }
-    else
-    {
-        newurl = url;
-    }
-
-    SnapshotTaker *taker = 0;
-    if ( newurl.isLocalFile() )
-        taker = new SnapshotTaker( newurl.toLocalFile(), q );
-    else
-        taker = new SnapshotTaker( newurl.url(), q );
+    const QUrl url = urlFromUrlString( movie->url(), document );
+    SnapshotTaker *taker = new SnapshotTaker( url, q );
 
     q->connect( taker, SIGNAL( finished( const QImage& ) ), q, SLOT( setPosterImage( const QImage& ) ) );
 }
@@ -176,14 +168,20 @@ void VideoWidget::Private::finished()
 {
     switch ( movie->playMode() )
     {
-        case Okular::Movie::PlayOnce:
+        case Okular::Movie::PlayLimited:
         case Okular::Movie::PlayOpen:
-            // playback has ended, nothing to do
-            stopAction->setEnabled( false );
-            setupPlayPauseAction( PlayMode );
-            if ( movie->playMode() == Okular::Movie::PlayOnce )
-                controlBar->setVisible( false );
-            videoStopped();
+            repetitionsLeft -= 1.0;
+            if ( repetitionsLeft < 1e-5 ) { // allow for some calculation error
+                // playback has ended
+                stopAction->setEnabled( false );
+                setupPlayPauseAction( PlayMode );
+                if ( movie->playMode() == Okular::Movie::PlayLimited )
+                    controlBar->setVisible( false );
+                videoStopped();
+            } else
+                // not done yet, repeat
+                // if repetitionsLeft is less than 1, we are supposed to stop midway, but not even Adobe reader does this
+                player->play();
             break;
         case Okular::Movie::PlayRepeat:
             // repeat the playback
@@ -253,7 +251,7 @@ VideoWidget::VideoWidget( const Okular::Annotation *annotation, Okular::Movie *m
     d->controlBar->addAction( d->playPauseAction );
     d->setupPlayPauseAction( Private::PlayMode );
     d->stopAction = d->controlBar->addAction(
-        KIcon( "media-playback-stop" ),
+        QIcon::fromTheme( QStringLiteral("media-playback-stop") ),
         i18nc( "stop the movie playback", "Stop" ),
         this, SLOT(stop()) );
     d->stopAction->setEnabled( false );
@@ -262,10 +260,10 @@ VideoWidget::VideoWidget( const Okular::Annotation *annotation, Okular::Movie *m
     d->seekSliderAction = d->controlBar->addWidget( d->seekSlider );
     d->seekSlider->setEnabled( false );
 
-    Phonon::SeekSlider *verticalSeekSlider = new Phonon::SeekSlider( d->player->mediaObject(), 0 );
+    Phonon::SeekSlider *verticalSeekSlider = new Phonon::SeekSlider( d->player->mediaObject(), nullptr );
     verticalSeekSlider->setMaximumHeight( 100 );
     d->seekSliderMenuAction = createToolBarButtonWithWidgetPopup(
-        d->controlBar, verticalSeekSlider, KIcon( "player-time" ) );
+        d->controlBar, verticalSeekSlider, QIcon::fromTheme( QStringLiteral("player-time") ) );
     d->seekSliderMenuAction->setVisible( false );
 
     d->controlBar->setVisible( movie->showControls() );
@@ -360,6 +358,7 @@ void VideoWidget::play()
 {
     d->controlBar->setVisible( d->movie->showControls() );
     d->load();
+    // if d->repetitionsLeft is less than 1, we are supposed to stop midway, but not even Adobe reader does this
     d->player->play();
     d->stopAction->setEnabled( true );
     d->setupPlayPauseAction( Private::PauseMode );
@@ -395,6 +394,7 @@ bool VideoWidget::eventFilter( QObject * object, QEvent * event )
                     }
                     event->accept();
                 }
+                break;
             }
             case QEvent::Wheel:
             {
@@ -447,4 +447,4 @@ void VideoWidget::resizeEvent( QResizeEvent * event )
     }
 }
 
-#include "videowidget.moc"
+#include "moc_videowidget.cpp"

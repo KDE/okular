@@ -11,7 +11,7 @@
 
 #include <QtCore/QRect>
 #include <QtGui/QPolygonF>
-#include <kdebug.h>
+#include <QtCore/QDebug>
 
 #include <math.h>
 
@@ -267,6 +267,11 @@ void NormalizedRect::transform( const QTransform &matrix )
     bottom = rect.bottom();
 }
 
+uint qHash( const NormalizedRect& r, uint seed )
+{
+    return qHash(r.bottom, qHash(r.right, qHash(r.top, qHash(r.left, seed))));
+}
+
 QDebug operator<<( QDebug str, const Okular::NormalizedRect& r )
 {
     str.nospace() << "NormRect(" << r.left << "," << r.top << " x " << ( r.right - r.left ) << "+" << ( r.bottom - r.top ) << ")";
@@ -274,12 +279,12 @@ QDebug operator<<( QDebug str, const Okular::NormalizedRect& r )
 }
 
 RegularAreaRect::RegularAreaRect()
-    : RegularArea< NormalizedRect, QRect >(), d( 0 )
+    : RegularArea< NormalizedRect, QRect >(), d( nullptr )
 {
 }
 
 RegularAreaRect::RegularAreaRect( const RegularAreaRect& rar )
-    : RegularArea< NormalizedRect, QRect >( rar ), d( 0 )
+    : RegularArea< NormalizedRect, QRect >( rar ), d( nullptr )
 {
 }
 
@@ -421,7 +426,7 @@ ObjectRect::~ObjectRect()
     else if ( m_objectType == SourceRef )
         delete static_cast<Okular::SourceReference*>( m_object );
     else
-        kDebug(OkularDebug).nospace() << "Object deletion not implemented for type '" << m_objectType << "'.";
+        qCDebug(OkularCoreDebug).nospace() << "Object deletion not implemented for type '" << m_objectType << "'.";
 }
 
 /** class AnnotationObjectRect **/
@@ -458,7 +463,7 @@ AnnotationObjectRect::~AnnotationObjectRect()
 {
     // the annotation pointer is kept elsewehere (in Page, most probably),
     // so just release its pointer
-    m_object = 0;
+    m_object = nullptr;
 }
 
 void AnnotationObjectRect::transform( const QTransform &matrix )

@@ -10,7 +10,7 @@
 #ifndef POPPLEREMBEDDEDFILE_H
 #define POPPLEREMBEDDEDFILE_H
 
-#include <poppler-qt4.h>
+#include <poppler-qt5.h>
 
 #include <core/document.h>
 
@@ -21,33 +21,33 @@ class PDFEmbeddedFile : public Okular::EmbeddedFile
         {
         }
         
-        QString name() const
+        QString name() const override
         {
             return ef->name();
         }
         
-        QString description() const
+        QString description() const override
         {
             return ef->description();
         }
         
-        QByteArray data() const
+        QByteArray data() const override
         {
             return ef->data();
         }
         
-        int size() const
+        int size() const override
         {
             int s = ef->size();
             return s <= 0 ? -1 : s;
         }
         
-        QDateTime modificationDate() const
+        QDateTime modificationDate() const override
         {
             return ef->modDate();
         }
         
-        QDateTime creationDate() const
+        QDateTime creationDate() const override
         {
             return ef->createDate();
         }

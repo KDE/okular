@@ -1,15 +1,18 @@
+remove_definitions(-DTRANSLATION_DOMAIN="okular")
+add_definitions(-DTRANSLATION_DOMAIN="okular_ooo")
+
 include_directories(
-   ${CMAKE_BINARY_DIR}/okular
    ${CMAKE_CURRENT_SOURCE_DIR}/../..
 )
 
-macro_optional_find_package(QCA2)
-macro_log_feature(QCA2_FOUND "QCA" "Qt Cryptographic Architecture (QCA)" "http://delta.affinix.com/qca/" FALSE "2.0.0" "Support for encrypted OpenDocument Text documents in Okular.")
+find_package(Qca-qt5 2.1.0)
+set_package_properties(Qca-qt5 PROPERTIES DESCRIPTION "Support for encryption"
+                       URL "http://download.kde.org/stable/qca-qt5/"
+                       TYPE RECOMMENDED)
 
-if ( QCA2_FOUND )
-   include_directories( ${QCA2_INCLUDE_DIR} )
+if ( Qca-qt5_FOUND )
    add_definitions( -DQCA2 )
-endif( QCA2_FOUND )
+endif()
 
 ########### next target ###############
 
@@ -24,18 +27,14 @@ set(okularGenerator_ooo_PART_SRCS
 )
 
 
-kde4_add_plugin(okularGenerator_ooo ${okularGenerator_ooo_PART_SRCS})
+okular_add_generator(okularGenerator_ooo ${okularGenerator_ooo_PART_SRCS})
 
-target_link_libraries(okularGenerator_ooo okularcore ${KDE4_KIO_LIBS} ${MATH_LIB} ${QT_QTXML_LIBRARY})
-if (QCA2_FOUND)
-  target_link_libraries(okularGenerator_ooo okularcore ${QCA2_LIBRARIES})
-endif (QCA2_FOUND)
-
-install(TARGETS okularGenerator_ooo DESTINATION ${PLUGIN_INSTALL_DIR})
-
+target_link_libraries(okularGenerator_ooo okularcore KF5::KIOCore KF5::Archive KF5::I18n KF5::Wallet ${MATH_LIB} Qt5::Xml)
+if (Qca-qt5_FOUND)
+  target_link_libraries(okularGenerator_ooo okularcore qca-qt5)
+endif ()
 
 ########### install files ###############
-
-install( FILES libokularGenerator_ooo.desktop okularOoo.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
-install( PROGRAMS okularApplication_ooo.desktop active-documentviewer_ooo.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
-
+install( FILES okularOoo.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
+install( PROGRAMS okularApplication_ooo.desktop org.kde.mobile.okular_ooo.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
+install( FILES org.kde.okular-ooo.metainfo.xml DESTINATION ${KDE_INSTALL_METAINFODIR} )

@@ -1,17 +1,18 @@
 <?xml version="1.0" ?>
-<!DOCTYPE refentry PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
+<!DOCTYPE refentry PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
 <!ENTITY % English "INCLUDE">
 ]>
 
 <!--  Please keep this man page content in sync with Command Line Options sections of Okular handbook -->
 <refentry lang="&language;">
 <refentryinfo>
-<title>KDE User's Manual</title>
+<title>Okular User's Manual</title>
 <author><firstname>Yuri</firstname><surname>Chornoivan</surname>
 <contrib>Okular man page.</contrib>
 <email>yurchor@ukr.net</email></author>
-<date>2013-03-09</date>
-<productname>K Desktop Environment</productname>
+<date>2016-11-04</date>
+<releaseinfo>Okular 1.0</releaseinfo>
+<productname>KDE Applications</productname>
 </refentryinfo>
 
 <refmeta>
@@ -26,8 +27,7 @@
 <!-- body begins here -->
 <refsynopsisdiv id='synopsis'>
 <cmdsynopsis>
-  <command>okular</command>    <arg choice="opt"><replaceable>Qt-options</replaceable></arg>
-    <arg choice="opt"><replaceable>KDE-options</replaceable></arg>
+  <command>okular</command>
     <arg choice="opt"><replaceable>Okular options</replaceable></arg>
     <arg choice="opt"><replaceable>URL</replaceable></arg>
 </cmdsynopsis>
@@ -38,59 +38,6 @@
 <para><command>okular</command>
 is aimed to show documents in different formats.</para>
 
-</refsect1>
-
-<refsect1 id="generic_options"><title>Generic Options</title>
-<variablelist>
-  <varlistentry>
-  <term><option>--help</option></term>
-  <listitem>
-<para>Show help about options.</para>
-  </listitem>
-  </varlistentry>
-  <varlistentry>
-  <term><option>--help-qt</option></term>
-  <listitem>
-<para>Show Qt specific options.</para>
-  </listitem>
-  </varlistentry>
-  <varlistentry>
-  <term><option>--help-kde</option></term>
-  <listitem>
-<para>Show KDE specific options.</para>
-  </listitem>
-  </varlistentry>
-  <varlistentry>
-  <term><option>--help-all</option></term>
-  <listitem>
-<para>Show all options.</para>
-  </listitem>
-  </varlistentry>
-  <varlistentry>
-  <term><option>--author</option></term>
-  <listitem>
-<para>Show author information.</para>
-  </listitem>
-  </varlistentry>
-  <varlistentry>
-  <term><option>-v, --version</option></term>
-  <listitem>
-<para>Show version information.</para>
-  </listitem>
-  </varlistentry>
-  <varlistentry>
-  <term><option>--license</option></term>
-  <listitem>
-<para>Show license information.</para>
-  </listitem>
-  </varlistentry>
-  <varlistentry>
-  <term><option>--</option></term>
-  <listitem>
-<para>End of options.</para>
-  </listitem>
-  </varlistentry>
-</variablelist>
 </refsect1>
 
 <refsect1 id="options"><title>Okular options</title>
@@ -145,11 +92,17 @@ is aimed to show documents in different formats.</para>
 
 <refsect1>
 <title>See Also</title>
-<para>More detailed user documentation is available from <ulink
+<simplelist>
+<member>More detailed user documentation is available from <ulink
 url="help:/okular">help:/okular</ulink>
 (either enter this <acronym>URL</acronym> into &konqueror;, or run
 <userinput><command>khelpcenter</command>
-<parameter>help:/okular</parameter></userinput>).</para>
+<parameter>help:/okular</parameter></userinput>).</member>
+<member>kf5options(7)</member>
+<member>qt5options(7)</member>
+<member>There is also further information available at
+<ulink url="http://okular.kde.org/">http://okular.kde.org/</ulink></member>
+</simplelist>
 </refsect1>
 
 <refsect1 id="copyright"><title>Copyright</title>

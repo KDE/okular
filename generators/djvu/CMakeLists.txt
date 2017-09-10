@@ -1,7 +1,9 @@
+remove_definitions(-DTRANSLATION_DOMAIN="okular")
+add_definitions(-DTRANSLATION_DOMAIN="okular_djvu")
+
 include_directories(
    ${DJVULIBRE_INCLUDE_DIR}
    ${CMAKE_CURRENT_SOURCE_DIR}/../..
-   ${CMAKE_BINARY_DIR}/okular
 )
 
 
@@ -13,16 +15,12 @@ set(okularGenerator_djvu_SRCS
 )
 
 
-kde4_add_plugin(okularGenerator_djvu ${okularGenerator_djvu_SRCS})
+okular_add_generator(okularGenerator_djvu ${okularGenerator_djvu_SRCS})
 
-target_link_libraries(okularGenerator_djvu okularcore ${DJVULIBRE_LIBRARY} ${KDE4_KDEUI_LIBS} ${QT_QTXML_LIBRARY})
-
-install(TARGETS okularGenerator_djvu DESTINATION ${PLUGIN_INSTALL_DIR})
-
+target_link_libraries(okularGenerator_djvu okularcore ${DJVULIBRE_LIBRARY} KF5::I18n)
 
 ########### install files ###############
-
-install( FILES libokularGenerator_djvu.desktop okularDjvu.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
-install( PROGRAMS okularApplication_djvu.desktop active-documentviewer_djvu.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
-
+install( FILES okularDjvu.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
+install( PROGRAMS okularApplication_djvu.desktop org.kde.mobile.okular_djvu.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
+install( FILES org.kde.okular-djvu.metainfo.xml DESTINATION ${KDE_INSTALL_METAINFODIR} )
 

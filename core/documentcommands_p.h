@@ -10,7 +10,7 @@
 #ifndef _OKULAR_DOCUMENT_COMMANDS_P_H_
 #define _OKULAR_DOCUMENT_COMMANDS_P_H_
 
-#include <QtGui/QUndoCommand>
+#include <QtWidgets/QUndoCommand>
 #include <QDomNode>
 
 #include "area.h"
@@ -31,9 +31,9 @@ class AddAnnotationCommand : public QUndoCommand
 
         virtual ~AddAnnotationCommand();
 
-        virtual void undo();
+        void undo() override;
 
-        virtual void redo();
+        void redo() override;
 
     private:
         Okular::DocumentPrivate * m_docPriv;
@@ -47,8 +47,8 @@ class RemoveAnnotationCommand : public QUndoCommand
     public:
         RemoveAnnotationCommand(Okular::DocumentPrivate * doc,  Okular::Annotation* annotation, int pageNumber);
         virtual ~RemoveAnnotationCommand();
-        virtual void undo();
-        virtual void redo();
+        void undo() override;
+        void redo() override;
 
     private:
         Okular::DocumentPrivate * m_docPriv;
@@ -65,8 +65,8 @@ class ModifyAnnotationPropertiesCommand : public QUndoCommand
                                                                   QDomNode oldProperties,
                                                                   QDomNode newProperties );
 
-        virtual void undo();
-        virtual void redo();
+        void undo() override;
+        void redo() override;
 
     private:
         Okular::DocumentPrivate * m_docPriv;
@@ -85,10 +85,10 @@ class TranslateAnnotationCommand : public QUndoCommand
                                    const Okular::NormalizedPoint & delta,
                                    bool completeDrag
                                   );
-        virtual void undo();
-        virtual void redo();
-        virtual int id() const;
-        virtual bool mergeWith(const QUndoCommand *uc);
+        void undo() override;
+        void redo() override;
+        int id() const override;
+        bool mergeWith(const QUndoCommand *uc) override;
         Okular::NormalizedPoint minusDelta();
         Okular::NormalizedRect translateBoundingRectangle( const Okular::NormalizedPoint & delta );
 
@@ -97,6 +97,32 @@ class TranslateAnnotationCommand : public QUndoCommand
         Okular::Annotation* m_annotation;
         int m_pageNumber;
         Okular::NormalizedPoint m_delta;
+        bool m_completeDrag;
+};
+
+class AdjustAnnotationCommand : public QUndoCommand
+{
+    public:
+        AdjustAnnotationCommand(Okular::DocumentPrivate * docPriv,
+                                   Okular::Annotation *  annotation,
+                                   int pageNumber,
+                                   const Okular::NormalizedPoint & delta1,
+                                   const Okular::NormalizedPoint & delta2,
+                                   bool completeDrag
+                                  );
+        void undo() override;
+        void redo() override;
+        int id() const override;
+        bool mergeWith(const QUndoCommand * uc) override;
+        Okular::NormalizedRect adjustBoundingRectangle(
+                const Okular::NormalizedPoint & delta1, const Okular::NormalizedPoint & delta2 );
+
+    private:
+        Okular::DocumentPrivate * m_docPriv;
+        Okular::Annotation* m_annotation;
+        int m_pageNumber;
+        Okular::NormalizedPoint m_delta1;
+        Okular::NormalizedPoint m_delta2;
         bool m_completeDrag;
 };
 
@@ -110,10 +136,10 @@ class EditTextCommand : public QUndoCommand
                          int prevAnchorPos
                        );
 
-        virtual void undo() = 0;
-        virtual void redo() = 0;
-        virtual int id() const = 0;
-        virtual bool mergeWith(const QUndoCommand *uc);
+        void undo() override = 0;
+        void redo() override = 0;
+        int id() const override = 0;
+        bool mergeWith(const QUndoCommand *uc) override;
 
     private:
         enum EditType {
@@ -151,10 +177,10 @@ class EditAnnotationContentsCommand : public EditTextCommand
                                       int prevAnchorPos
                                      );
 
-        virtual void undo();
-        virtual void redo();
-        virtual int id() const;
-        virtual bool mergeWith(const QUndoCommand *uc);
+        void undo() override;
+        void redo() override;
+        int id() const override;
+        bool mergeWith(const QUndoCommand *uc) override;
 
     private:
         Okular::DocumentPrivate * m_docPriv;
@@ -173,10 +199,10 @@ class EditFormTextCommand : public EditTextCommand
                              const QString & prevContents,
                              int prevCursorPos,
                              int prevAnchorPos );
-        virtual void undo();
-        virtual void redo();
-        virtual int id() const;
-        virtual bool mergeWith( const QUndoCommand *uc );
+        void undo() override;
+        void redo() override;
+        int id() const override;
+        bool mergeWith( const QUndoCommand *uc ) override;
     private:
         Okular::DocumentPrivate* m_docPriv;
         Okular::FormFieldText* m_form;
@@ -193,8 +219,8 @@ class EditFormListCommand : public QUndoCommand
                              const QList< int > & prevChoices
                            );
 
-        virtual void undo();
-        virtual void redo();
+        void undo() override;
+        void redo() override;
 
     private:
         Okular::DocumentPrivate* m_docPriv;
@@ -217,10 +243,10 @@ class EditFormComboCommand : public EditTextCommand
                               int prevAnchorPos
                             );
 
-        virtual void undo();
-        virtual void redo();
-        virtual int id() const;
-        virtual bool mergeWith( const QUndoCommand *uc );
+        void undo() override;
+        void redo() override;
+        int id() const override;
+        bool mergeWith( const QUndoCommand *uc ) override;
 
     private:
         Okular::DocumentPrivate* m_docPriv;
@@ -239,8 +265,8 @@ class EditFormButtonsCommand : public QUndoCommand
                                 const QList< bool > & newButtonStates
                               );
 
-        virtual void undo();
-        virtual void redo();
+        void undo() override;
+        void redo() override;
 
     private:
         void clearFormButtonStates();

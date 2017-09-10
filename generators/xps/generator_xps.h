@@ -31,6 +31,7 @@
 #include <QXmlDefaultHandler>
 #include <QStack>
 #include <QVariant>
+#include <QtCore/qloggingcategory.h>
 
 #include <kzip.h>
 
@@ -115,11 +116,11 @@ public:
     bool startElement( const QString & nameSpace,
                        const QString & localName,
                        const QString & qname,
-                       const QXmlAttributes & atts );
+                       const QXmlAttributes & atts ) override;
     bool endElement( const QString & nameSpace,
                      const QString & localName,
-                     const QString & qname );
-    bool startDocument();
+                     const QString & qname ) override;
+    bool startDocument() override;
 
 protected:
     XpsPage *m_page;
@@ -300,27 +301,30 @@ private:
 class XpsGenerator : public Okular::Generator
 {
     Q_OBJECT
+    Q_INTERFACES( Okular::Generator )
     public:
         XpsGenerator( QObject *parent, const QVariantList &args );
         virtual ~XpsGenerator();
 
-        bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector );
+        bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector ) override;
 
-        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const;
-        const Okular::DocumentSynopsis * generateDocumentSynopsis();
+        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const override;
+        const Okular::DocumentSynopsis * generateDocumentSynopsis() override;
 
-        Okular::ExportFormat::List exportFormats() const;
-        bool exportTo( const QString &fileName, const Okular::ExportFormat &format );
+        Okular::ExportFormat::List exportFormats() const override;
+        bool exportTo( const QString &fileName, const Okular::ExportFormat &format ) override;
 
-        bool print( QPrinter &printer );
+        bool print( QPrinter &printer ) override;
 
     protected:
-        bool doCloseDocument();
-        QImage image( Okular::PixmapRequest *page );
-        Okular::TextPage* textPage( Okular::Page * page );
+        bool doCloseDocument() override;
+        QImage image( Okular::PixmapRequest *page ) override;
+        Okular::TextPage* textPage( Okular::Page * page ) override;
 
     private:
         XpsFile *m_xpsFile;
 };
+
+Q_DECLARE_LOGGING_CATEGORY(OkularXpsDebug)
 
 #endif

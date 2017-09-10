@@ -11,7 +11,7 @@
 #define _OKULAR_GENERATOR_PDF_ANNOTS_H_
 
 #include <poppler-annotation.h>
-#include <poppler-qt4.h>
+#include <poppler-qt5.h>
 
 #include <qmutex.h>
 
@@ -26,10 +26,10 @@ class PopplerAnnotationProxy : public Okular::AnnotationProxy
         PopplerAnnotationProxy( Poppler::Document *doc, QMutex *userMutex );
         ~PopplerAnnotationProxy();
 
-        bool supports( Capability capability ) const;
-        void notifyAddition( Okular::Annotation *annotation, int page );
-        void notifyModification( const Okular::Annotation *annotation, int page, bool appearanceChanged );
-        void notifyRemoval( Okular::Annotation *annotation, int page );
+        bool supports( Capability capability ) const override;
+        void notifyAddition( Okular::Annotation *annotation, int page ) override;
+        void notifyModification( const Okular::Annotation *annotation, int page, bool appearanceChanged ) override;
+        void notifyRemoval( Okular::Annotation *annotation, int page ) override;
     private:
         Poppler::Document *ppl_doc;
         QMutex *mutex;

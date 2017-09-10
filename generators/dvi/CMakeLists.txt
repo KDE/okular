@@ -1,6 +1,8 @@
+remove_definitions(-DTRANSLATION_DOMAIN="okular")
+add_definitions(-DTRANSLATION_DOMAIN="okular_dvi")
+
 include_directories(
    ${CMAKE_CURRENT_SOURCE_DIR}/../..
-   ${CMAKE_BINARY_DIR}/okular
 )
 
 #add_definitions(-DDEBUG_DVIRENDERER -DDEBUG_RENDER -DDEBUG_PRESCAN -DDEBUG_PSGS -DDEBUG_FONTPOOL)
@@ -46,18 +48,15 @@ set(okularGenerator_dvi_SRCS
 )
 
 
-kde4_add_plugin(okularGenerator_dvi ${okularGenerator_dvi_SRCS})
+okular_add_generator(okularGenerator_dvi ${okularGenerator_dvi_SRCS})
 
-target_link_libraries(okularGenerator_dvi okularcore ${KDE4_KIO_LIBS} ${MATH_LIB})
+target_link_libraries(okularGenerator_dvi okularcore KF5::I18n)
 if (FREETYPE_FOUND)
    target_link_libraries(okularGenerator_dvi ${FREETYPE_LIBRARIES})
 endif (FREETYPE_FOUND)
 
-install(TARGETS okularGenerator_dvi DESTINATION ${PLUGIN_INSTALL_DIR})
-
 
 ########### install files ###############
-
-install( FILES libokularGenerator_dvi.desktop okularDvi.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
-install( PROGRAMS okularApplication_dvi.desktop active-documentviewer_dvi.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
-
+install( FILES okularDvi.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
+install( PROGRAMS okularApplication_dvi.desktop org.kde.mobile.okular_dvi.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
+install( FILES org.kde.okular-dvi.metainfo.xml DESTINATION ${KDE_INSTALL_METAINFODIR} )

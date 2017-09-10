@@ -9,7 +9,7 @@
 
 #include "generator_p.h"
 
-#include <kdebug.h>
+#include <QtCore/QDebug>
 
 #include "fontinfo.h"
 #include "generator.h"
@@ -18,7 +18,7 @@
 using namespace Okular;
 
 PixmapGenerationThread::PixmapGenerationThread( Generator *generator )
-    : mGenerator( generator ), mRequest( 0 ), mCalcBoundingBox( false )
+    : mGenerator( generator ), mRequest( nullptr ), mCalcBoundingBox( false )
 {
 }
 
@@ -32,7 +32,7 @@ void PixmapGenerationThread::startGeneration( PixmapRequest *request, bool calcB
 
 void PixmapGenerationThread::endGeneration()
 {
-    mRequest = 0;
+    mRequest = nullptr;
 }
 
 PixmapRequest *PixmapGenerationThread::request() const
@@ -69,7 +69,7 @@ void PixmapGenerationThread::run()
 
 
 TextPageGenerationThread::TextPageGenerationThread( Generator *generator )
-    : mGenerator( generator ), mPage( 0 )
+    : mGenerator( generator ), mPage( nullptr )
 {
 }
 
@@ -82,7 +82,7 @@ void TextPageGenerationThread::startGeneration( Page *page )
 
 void TextPageGenerationThread::endGeneration()
 {
-    mPage = 0;
+    mPage = nullptr;
 }
 
 Page *TextPageGenerationThread::page() const
@@ -97,7 +97,7 @@ TextPage* TextPageGenerationThread::textPage() const
 
 void TextPageGenerationThread::run()
 {
-    mTextPage = 0;
+    mTextPage = nullptr;
 
     if ( mPage )
         mTextPage = mGenerator->textPage( mPage );
@@ -113,7 +113,7 @@ void FontExtractionThread::startExtraction( bool async )
 {
     if ( async )
     {
-        connect( this, SIGNAL(finished()), this, SLOT(deleteLater()) );
+        connect(this, &FontExtractionThread::finished, this, &FontExtractionThread::deleteLater);
         start( QThread::InheritPriority );
     }
     else
@@ -141,4 +141,4 @@ void FontExtractionThread::run()
     }
 }
 
-#include "generator_p.moc"
+#include "moc_generator_p.cpp"

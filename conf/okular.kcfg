@@ -26,6 +26,14 @@
    <default>false</default>
   </entry>
  </group>
+ <group name="Layers" >
+  <entry key="LayersSearchCaseSensitive" type="Bool">
+   <default>false</default>
+  </entry>
+  <entry key="LayersSearchRegularExpression" type="Bool">
+   <default>false</default>
+  </entry>
+ </group>
  <group name="Reviews" >
   <entry key="ReviewsSearchCaseSensitive" type="Bool">
    <default>false</default>
@@ -33,11 +41,49 @@
   <entry key="ReviewsSearchRegularExpression" type="Bool">
    <default>false</default>
   </entry>
+  <entry key="DrawingTools" type="StringList">
+    <code>
+      QStringList drawingTools;
+      // load the default tool list from the 'xml tools definition' file
+      QFile infoDrawingFile( QStandardPaths::locate(QStandardPaths::GenericDataLocation, "okular/drawingtools.xml") );
+      if ( infoDrawingFile.exists() &amp;&amp; infoDrawingFile.open( QIODevice::ReadOnly ) )
+      {
+          QDomDocument doc;
+          if ( doc.setContent( &amp;infoDrawingFile ) )
+          {
+              const QDomElement toolsDefinition = doc.elementsByTagName("drawingTools").item( 0 ).toElement();
+               // create the annotationTools list from the XML dom tree
+              QDomNode toolDescription = toolsDefinition.firstChild();
+              while ( toolDescription.isElement() )
+              {
+                  const QDomElement toolElement = toolDescription.toElement();
+                  if ( toolElement.tagName() == "tool" )
+                  {
+                      QDomDocument temp;
+                      temp.appendChild( temp.importNode( toolElement, true) );
+                      // add each &lt;tool&gt;...&lt;/tool&gt; as XML string
+                      drawingTools &lt;&lt; temp.toString(-1);
+                  }
+                  toolDescription = toolDescription.nextSibling();
+              }
+          }
+          else
+          {
+              qWarning() &lt;&lt; "DrawingTools XML file seems to be damaged";
+          }
+      }
+      else
+      {
+          qWarning() &lt;&lt; "Unable to open DrawingTools XML definition";
+      }
+    </code>
+    <default code="true">drawingTools</default>
+  </entry>
   <entry key="AnnotationTools" type="StringList">
     <code>
       QStringList annotationTools;
       // load the default tool list from the 'xml tools definition' file
-      QFile infoFile( KStandardDirs::locate("data", "okular/tools.xml") );
+      QFile infoFile( QStandardPaths::locate(QStandardPaths::GenericDataLocation, "okular/tools.xml") );
       if ( infoFile.exists() &amp;&amp; infoFile.open( QIODevice::ReadOnly ) )
       {
           QDomDocument doc;
@@ -61,12 +107,12 @@
           }
           else
           {
-              kWarning() &lt;&lt; "AnnotatingTools XML file seems to be damaged";
+              qWarning() &lt;&lt; "AnnotatingTools XML file seems to be damaged";
           }
       }
       else
       {
-          kWarning() &lt;&lt; "Unable to open AnnotatingTools XML definition";
+          qWarning() &lt;&lt; "Unable to open AnnotatingTools XML definition";
       }
     </code>
     <default code="true">annotationTools</default>
@@ -88,6 +134,9 @@
   <entry key="DisplayDocumentTitle" type="Bool" >
    <default>true</default>
  </entry>
+ <entry key="rtlReadingDirection" type="Bool" >
+  <default>false</default>
+</entry>
  <entry key="DisplayDocumentNameOrPath" type="Enum" >
    <default>Name</default>
    <choices>
@@ -95,7 +144,7 @@
      <choice name="Path" />
    </choices>
  </entry>
-  <entry key="UseKTTSD" type="Bool" />
+  <entry key="UseTTS" type="Bool" />
   <entry key="WatchFile" type="Bool" >
    <default>true</default>
   </entry>
@@ -112,6 +161,7 @@
     <choice name="BoxIn" />
     <choice name="BoxOut" />
     <choice name="Dissolve" />
+    <choice name="Fade" />
     <choice name="GlitterDown" />
     <choice name="GlitterRight" />
     <choice name="GlitterRightDown" />
@@ -140,9 +190,6 @@
   </entry>
   <entry key="SlidesShowSummary" type="Bool" >
    <default>false</default>
-  </entry>
-  <entry key="SlidesPencilColor" type="Color" >
-   <default code="true" >Qt::red</default>
   </entry>
   <entry key="SlidesTransitionsEnabled" type="Bool" >
    <default>true</default>
@@ -220,6 +267,14 @@
     <choice name="Summary" />
    </choices>
   </entry>
+  <entry key="TrimMode" type="Enum" >
+   <default>None</default>
+   <choices>
+    <choice name="None" />
+    <choice name="Margins" />
+    <choice name="Selection" />
+   </choices>
+  </entry>
   <entry key="MouseMode" type="Enum" >
    <default>Browse</default>
    <choices>
@@ -229,6 +284,7 @@
     <choice name="TextSelect" />
     <choice name="TableSelect" />
     <choice name="Magnifier" />
+    <choice name="TrimSelect" />
    </choices>
   </entry>
   <entry key="ShowSourceLocationsGraphically" type="Bool" >
@@ -240,6 +296,9 @@
    <default>false</default>
   </entry>
   <entry key="SearchFromCurrentPage" type="Bool">
+   <default>true</default>
+  </entry>
+  <entry key="FindAsYouType" type="Bool">
    <default>true</default>
   </entry>
  </group>

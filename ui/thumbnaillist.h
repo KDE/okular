@@ -10,10 +10,9 @@
 #ifndef _OKULAR_THUMBNAILLIST_H_
 #define _OKULAR_THUMBNAILLIST_H_
 
-#include <qscrollarea.h>
-
-#include <kvbox.h>
-#include <qtoolbar.h>
+#include <QScrollArea>
+#include <QToolBar>
+#include <QVBoxLayout>
 
 #include "core/observer.h"
 
@@ -36,33 +35,33 @@ Q_OBJECT
         ~ThumbnailList();
 
         // inherited: create thumbnails ( inherited as a DocumentObserver )
-        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags );
+        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) override;
         // inherited: hilihght current thumbnail ( inherited as DocumentObserver )
-        void notifyCurrentPageChanged( int previous, int current );
+        void notifyCurrentPageChanged( int previous, int current ) override;
         // inherited: redraw thumbnail ( inherited as DocumentObserver )
-        void notifyPageChanged( int pageNumber, int changedFlags );
+        void notifyPageChanged( int pageNumber, int changedFlags ) override;
         // inherited: request all visible pixmap (due to a global shange or so..)
-        void notifyContentsCleared( int changedFlags );
+        void notifyContentsCleared( int changedFlags ) override;
         // inherited: the visible areas of the page have changed
-        void notifyVisibleRectsChanged();
+        void notifyVisibleRectsChanged() override;
         // inherited: tell if pixmap is hidden and can be unloaded
-        bool canUnloadPixmap( int pageNumber ) const;
+        bool canUnloadPixmap( int pageNumber ) const override;
 
         // redraw visible widgets (useful for refreshing contents...)
         void updateWidgets();
 
-    public slots:
+    public Q_SLOTS:
         // these are connected to ThumbnailController buttons
         void slotFilterBookmarks( bool filterOn );
 
     protected:
         // scroll up/down the view
-        void keyPressEvent( QKeyEvent * e );
+        void keyPressEvent( QKeyEvent * e ) override;
 
         // catch the viewport event and filter them if necessary
-        bool viewportEvent( QEvent * );
+        bool viewportEvent( QEvent * ) override;
 
-    signals:
+    Q_SIGNALS:
         void rightClick( const Okular::Page *, const QPoint & );
 
     private:
@@ -76,11 +75,13 @@ Q_OBJECT
 /**
  * @short A vertical boxed container with zero size hint (for insertion on left toolbox)
  */
-class ThumbnailsBox : public KVBox
+class ThumbnailsBox : public QWidget
 {
+    Q_OBJECT
+
     public:
-        ThumbnailsBox( QWidget * parent ) : KVBox( parent ) {}
-        QSize sizeHint() const { return QSize(); }
+        ThumbnailsBox( QWidget * parent ) : QWidget( parent ) { QVBoxLayout *vbox = new QVBoxLayout(this); vbox->setMargin(0); vbox->setSpacing(0);}
+        QSize sizeHint() const override { return QSize(); }
 };
 
 /**
@@ -93,6 +94,8 @@ class ThumbnailsBox : public KVBox
  */
 class ThumbnailController : public QToolBar
 {
+    Q_OBJECT
+
     public:
         ThumbnailController( QWidget * parent, ThumbnailList * thumbnailList );
 };

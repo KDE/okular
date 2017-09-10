@@ -62,6 +62,8 @@ class PagePrivate
         PagePrivate( Page *page, uint n, double w, double h, Rotation o );
         ~PagePrivate();
 
+        static PagePrivate *get( Page *page );
+
         void imageRotationDone( RotationJob * job );
         QTransform rotationMatrix() const;
 

@@ -19,7 +19,7 @@
 #include <QtXml/QDomDocument>
 #include <QtXml/QDomElement>
 
-#include <kdebug.h>
+#include <QtCore/QDebug>
 
 // local includes
 #include "action.h"
@@ -67,10 +67,10 @@ static void deleteObjectRects( QLinkedList< ObjectRect * >& rects, const QSet<Ob
 
 PagePrivate::PagePrivate( Page *page, uint n, double w, double h, Rotation o )
     : m_page( page ), m_number( n ), m_orientation( o ),
-      m_width( w ), m_height( h ), m_doc( 0 ), m_boundingBox( 0, 0, 1, 1 ),
+      m_width( w ), m_height( h ), m_doc( nullptr ), m_boundingBox( 0, 0, 1, 1 ),
       m_rotation( Rotation0 ),
-      m_text( 0 ), m_transition( 0 ), m_textSelections( 0 ),
-      m_openingAction( 0 ), m_closingAction( 0 ), m_duration( -1 ),
+      m_text( nullptr ), m_transition( nullptr ), m_textSelections( nullptr ),
+      m_openingAction( nullptr ), m_closingAction( nullptr ), m_duration( -1 ),
       m_isBoundingBoxKnown( false )
 {
     // avoid Division-By-Zero problems in the program
@@ -90,6 +90,10 @@ PagePrivate::~PagePrivate()
     delete m_transition;
 }
 
+PagePrivate *PagePrivate::get( Page * page )
+{
+    return page->d;
+}
 
 void PagePrivate::imageRotationDone( RotationJob * job )
 {
@@ -227,7 +231,7 @@ bool Page::hasPixmap( DocumentObserver *observer, int width, int height, const N
 
 bool Page::hasTextPage() const
 {
-    return d->m_text != 0;
+    return d->m_text != nullptr;
 }
 
 RegularAreaRect * Page::wordAt( const NormalizedPoint &p, QString *word ) const
@@ -235,7 +239,7 @@ RegularAreaRect * Page::wordAt( const NormalizedPoint &p, QString *word ) const
     if ( d->m_text )
         return d->m_text->wordAt( p, word );
 
-    return 0;
+    return nullptr;
 }
 
 RegularAreaRect * Page::textArea ( TextSelection * selection ) const
@@ -243,7 +247,7 @@ RegularAreaRect * Page::textArea ( TextSelection * selection ) const
     if ( d->m_text )
         return d->m_text->textArea( selection );
 
-    return 0;
+    return nullptr;
 }
 
 bool Page::hasObjectRect( double x, double y, double xScale, double yScale ) const
@@ -277,7 +281,7 @@ bool Page::hasHighlights( int s_id ) const
 
 bool Page::hasTransition() const
 {
-    return d->m_transition != 0;
+    return d->m_transition != nullptr;
 }
 
 bool Page::hasAnnotations() const
@@ -288,7 +292,7 @@ bool Page::hasAnnotations() const
 RegularAreaRect * Page::findText( int id, const QString & text, SearchDirection direction,
                                   Qt::CaseSensitivity caseSensitivity, const RegularAreaRect *lastRect ) const
 {
-    RegularAreaRect* rect = 0;
+    RegularAreaRect* rect = nullptr;
     if ( text.isEmpty() || !d->m_text )
         return rect;
 
@@ -316,7 +320,7 @@ QString Page::text( const RegularAreaRect * area, TextPage::TextAreaInclusionBeh
         ret = d->m_text->text( &rotatedArea, b );
     }
     else
-        ret = d->m_text->text( 0, b );
+        ret = d->m_text->text( nullptr, b );
 
     return ret;
 }
@@ -336,7 +340,7 @@ TextEntity::List Page::words( const RegularAreaRect * area, TextPage::TextAreaIn
         ret = d->m_text->words( &rotatedArea, b );
     }
     else
-        ret = d->m_text->words( 0, b );
+        ret = d->m_text->words( nullptr, b );
 
     for (int i = 0; i < ret.length(); ++i)
     {
@@ -430,7 +434,7 @@ const ObjectRect * Page::objectRect( ObjectRect::ObjectType type, double x, doub
             return objrect;
     }
 
-    return 0;
+    return nullptr;
 }
 
 QLinkedList< const ObjectRect * > Page::objectRects( ObjectRect::ObjectType type, double x, double y, double xScale, double yScale ) const
@@ -452,7 +456,7 @@ QLinkedList< const ObjectRect * > Page::objectRects( ObjectRect::ObjectType type
 
 const ObjectRect* Page::nearestObjectRect( ObjectRect::ObjectType type, double x, double y, double xScale, double yScale, double * distance ) const
 {
-    ObjectRect * res = 0;
+    ObjectRect * res = nullptr;
     double minDistance = std::numeric_limits<double>::max();
 
     QLinkedList< ObjectRect * >::const_iterator it = m_rects.constBegin(), end = m_rects.constEnd();
@@ -496,7 +500,7 @@ const Action * Page::pageAction( PageAction action ) const
             break;
     }
 
-    return 0;
+    return nullptr;
 }
 
 QLinkedList< FormField * > Page::formFields() const
@@ -633,7 +637,7 @@ void Page::addAnnotation( Annotation * annotation )
     // Generate uniqueName: okular-{UUID}
     if(annotation->uniqueName().isEmpty())
     {
-        QString uniqueName = "okular-" + QUuid::createUuid().toString();
+        QString uniqueName = QStringLiteral("okular-") + QUuid::createUuid().toString();
         annotation->setUniqueName( uniqueName );
     }
     annotation->d_ptr->m_page = d;
@@ -667,8 +671,8 @@ bool Page::removeAnnotation( Annotation * annotation )
                     it = m_rects.erase( it );
                     rectfound = true;
                 }
-            kDebug(OkularDebug) << "removed annotation:" << annotation->uniqueName();
-            annotation->d_ptr->m_page = 0;
+            qCDebug(OkularCoreDebug) << "removed annotation:" << annotation->uniqueName();
+            annotation->d_ptr->m_page = nullptr;
             m_annotations.erase( aIt );
             break;
         }
@@ -766,7 +770,7 @@ void PagePrivate::deleteHighlights( int s_id )
 void PagePrivate::deleteTextSelections()
 {
     delete m_textSelections;
-    m_textSelections = 0;
+    m_textSelections = nullptr;
 }
 
 void Page::deleteSourceReferences()
@@ -797,7 +801,7 @@ bool PagePrivate::restoreLocalContents( const QDomNode & pageNode )
         childNode = childNode.nextSibling();
 
         // parse annotationList child element
-        if ( childElement.tagName() == "annotationList" )
+        if ( childElement.tagName() == QLatin1String("annotationList") )
         {
 #ifdef PAGE_PROFILE
             QTime time;
@@ -822,18 +826,18 @@ bool PagePrivate::restoreLocalContents( const QDomNode & pageNode )
                 if ( annotation )
                 {
                     m_doc->performAddPageAnnotation(m_number, annotation);
-                    kDebug(OkularDebug) << "restored annot:" << annotation->uniqueName();
+                    qCDebug(OkularCoreDebug) << "restored annot:" << annotation->uniqueName();
                     loadedAnything = true;
                 }
                 else
-                    kWarning(OkularDebug).nospace() << "page (" << m_number << "): can't restore an annotation from XML.";
+                    qCWarning(OkularCoreDebug).nospace() << "page (" << m_number << "): can't restore an annotation from XML.";
             }
 #ifdef PAGE_PROFILE
-            kDebug(OkularDebug).nospace() << "annots: XML Load time: " << time.elapsed() << "ms";
+            qCDebug(OkularCoreDebug).nospace() << "annots: XML Load time: " << time.elapsed() << "ms";
 #endif
         }
         // parse formList child element
-        else if ( childElement.tagName() == "forms" )
+        else if ( childElement.tagName() == QLatin1String("forms") )
         {
             // Clone forms as root node in restoredFormFieldList
             const QDomNode clonedNode = restoredFormFieldList.importNode( childElement, true );
@@ -857,11 +861,11 @@ bool PagePrivate::restoreLocalContents( const QDomNode & pageNode )
                 QDomElement formElement = formsNode.toElement();
                 formsNode = formsNode.nextSibling();
 
-                if ( formElement.tagName() != "form" )
+                if ( formElement.tagName() != QLatin1String("form") )
                     continue;
 
                 bool ok = true;
-                int index = formElement.attribute( "id" ).toInt( &ok );
+                int index = formElement.attribute( QStringLiteral("id") ).toInt( &ok );
                 if ( !ok )
                     continue;
 
@@ -869,7 +873,7 @@ bool PagePrivate::restoreLocalContents( const QDomNode & pageNode )
                 if ( wantedIt == hashedforms.constEnd() )
                     continue;
 
-                QString value = formElement.attribute( "value" );
+                QString value = formElement.attribute( QStringLiteral("value") );
                 (*wantedIt)->d_ptr->setValue( value );
                 loadedAnything = true;
             }
@@ -882,8 +886,8 @@ bool PagePrivate::restoreLocalContents( const QDomNode & pageNode )
 void PagePrivate::saveLocalContents( QDomNode & parentNode, QDomDocument & document, PageItems what ) const
 {
     // create the page node and set the 'number' attribute
-    QDomElement pageElement = document.createElement( "page" );
-    pageElement.setAttribute( "number", m_number );
+    QDomElement pageElement = document.createElement( QStringLiteral("page") );
+    pageElement.setAttribute( QStringLiteral("number"), m_number );
 
 #if 0
     // add bookmark info if is bookmarked
@@ -912,7 +916,7 @@ void PagePrivate::saveLocalContents( QDomNode & parentNode, QDomDocument & docum
     else if ( ( what & AnnotationPageItems ) && !m_page->m_annotations.isEmpty() )
     {
         // create the annotationList
-        QDomElement annotListElement = document.createElement( "annotationList" );
+        QDomElement annotListElement = document.createElement( QStringLiteral("annotationList") );
 
         // add every annotation to the annotationList
         QLinkedList< Annotation * >::const_iterator aIt = m_page->m_annotations.constBegin(), aEnd = m_page->m_annotations.constEnd();
@@ -924,10 +928,10 @@ void PagePrivate::saveLocalContents( QDomNode & parentNode, QDomDocument & docum
             if ( !(a->flags() & Annotation::External) )
             {
                 // append an filled-up element called 'annotation' to the list
-                QDomElement annElement = document.createElement( "annotation" );
+                QDomElement annElement = document.createElement( QStringLiteral("annotation") );
                 AnnotationUtils::storeAnnotation( a, annElement, document );
                 annotListElement.appendChild( annElement );
-                kDebug(OkularDebug) << "save annotation:" << a->uniqueName();
+                qCDebug(OkularCoreDebug) << "save annotation:" << a->uniqueName();
             }
         }
 
@@ -950,7 +954,7 @@ void PagePrivate::saveLocalContents( QDomNode & parentNode, QDomDocument & docum
     else if ( ( what & FormFieldPageItems ) && !formfields.isEmpty() )
     {
         // create the formList
-        QDomElement formListElement = document.createElement( "forms" );
+        QDomElement formListElement = document.createElement( QStringLiteral("forms") );
 
         // add every form data to the formList
         QLinkedList< FormField * >::const_iterator fIt = formfields.constBegin(), fItEnd = formfields.constEnd();
@@ -964,9 +968,9 @@ void PagePrivate::saveLocalContents( QDomNode & parentNode, QDomDocument & docum
                 continue;
 
             // append an filled-up element called 'annotation' to the list
-            QDomElement formElement = document.createElement( "form" );
-            formElement.setAttribute( "id", f->id() );
-            formElement.setAttribute( "value", newvalue );
+            QDomElement formElement = document.createElement( QStringLiteral("form") );
+            formElement.setAttribute( QStringLiteral("id"), f->id() );
+            formElement.setAttribute( QStringLiteral("value"), newvalue );
             formListElement.appendChild( formElement );
         }
 
@@ -984,7 +988,7 @@ const QPixmap * Page::_o_nearestPixmap( DocumentObserver *observer, int w, int h
 {
     Q_UNUSED( h )
 
-    const QPixmap * pixmap = 0;
+    const QPixmap * pixmap = nullptr;
 
     // if a pixmap is present for given id, use it
     QMap< DocumentObserver*, PagePrivate::PixmapObject >::const_iterator itPixmap = d->m_pixmaps.constFind( observer );
@@ -1012,7 +1016,7 @@ const QPixmap * Page::_o_nearestPixmap( DocumentObserver *observer, int w, int h
 
 bool Page::hasTilesManager( const DocumentObserver *observer ) const
 {
-    return d->tilesManager( observer ) != 0;
+    return d->tilesManager( observer ) != nullptr;
 }
 
 QList<Tile> Page::tilesAt( const DocumentObserver *observer, const NormalizedRect &rect ) const

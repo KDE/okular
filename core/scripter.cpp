@@ -9,7 +9,7 @@
 
 #include "scripter.h"
 
-#include <kdebug.h>
+#include <QtCore/QDebug>
 
 #include "debug_p.h"
 #include "script/executor_kjs_p.h"
@@ -20,7 +20,7 @@ class Okular::ScripterPrivate
 {
     public:
         ScripterPrivate( DocumentPrivate *doc )
-            : m_doc( doc ), m_kjs( 0 )
+            : m_doc( doc ), m_kjs( nullptr )
         {
         }
 
@@ -45,7 +45,7 @@ Scripter::~Scripter()
 
 QString Scripter::execute( ScriptType type, const QString &script )
 {
-    kDebug(OkularDebug) << "executing the script:";
+    qCDebug(OkularCoreDebug) << "executing the script:";
 #if 0
     if ( script.length() < 1000 )
         qDebug() << script;

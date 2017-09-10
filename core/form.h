@@ -10,7 +10,7 @@
 #ifndef _OKULAR_FORM_H_
 #define _OKULAR_FORM_H_
 
-#include "okular_export.h"
+#include "okularcore_export.h"
 #include "area.h"
 
 #include <QtCore/QStringList>
@@ -33,7 +33,7 @@ class FormFieldChoicePrivate;
  * This is not meant to be used as a direct base for the form fields in a
  * document, but its abstract subclasses are.
  */
-class OKULAR_EXPORT FormField
+class OKULARCORE_EXPORT FormField
 {
     /// @cond PRIVATE
     friend class Page;
@@ -93,6 +93,26 @@ class OKULAR_EXPORT FormField
 
         Action* activationAction() const;
 
+        /**
+         * Describes the type of form additional action.
+         *
+         * @since 1.1
+         */
+        enum AdditionalActionType
+        {
+            FieldModified,   ///< An action to be performed when the user modifies the field
+            FormatField,     ///< An action to be performed before the field is formatted to display its value
+            ValidateField,   ///< An action to be performed when the field value changes
+            CalculateField,  ///< An action to be performed when the field needs to be recalculated
+        };
+
+        /**
+         * Returns the additional action of the given @p type or @c nullptr if no action has been defined.
+         *
+         * @since 1.1
+        */
+        Action* additionalAction( AdditionalActionType type ) const;
+
     protected:
         /// @cond PRIVATE
         FormField( FormFieldPrivate &dd );
@@ -101,6 +121,7 @@ class OKULAR_EXPORT FormField
         /// @endcond
 
         void setActivationAction( Action *action );
+        void setAdditionalAction( AdditionalActionType type, Action *action );
 
     private:
         Q_DISABLE_COPY( FormField )
@@ -115,7 +136,7 @@ class OKULAR_EXPORT FormField
  *
  * @since 0.7 (KDE 4.1)
  */
-class OKULAR_EXPORT FormFieldButton : public FormField
+class OKULARCORE_EXPORT FormFieldButton : public FormField
 {
     public:
         /**
@@ -173,7 +194,7 @@ class OKULAR_EXPORT FormFieldButton : public FormField
  * This is the base interface to reimplement to represent a text field, ie a
  * field where the user insert text.
  */
-class OKULAR_EXPORT FormFieldText : public FormField
+class OKULARCORE_EXPORT FormFieldText : public FormField
 {
     public:
         /**
@@ -255,7 +276,7 @@ class OKULAR_EXPORT FormFieldText : public FormField
  * field where the user can select one (of more) element(s) among a set of
  * choices.
  */
-class OKULAR_EXPORT FormFieldChoice : public FormField
+class OKULARCORE_EXPORT FormFieldChoice : public FormField
 {
     public:
         /**

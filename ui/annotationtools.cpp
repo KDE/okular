@@ -19,15 +19,15 @@
 #include "core/annotations.h"
 
 AnnotatorEngine::AnnotatorEngine( const QDomElement & engineElement )
-    : m_engineElement( engineElement ), m_creationCompleted( false ), m_item( 0 )
+    : m_engineElement( engineElement ), m_creationCompleted( false ), m_item( nullptr )
 {
     // parse common engine attributes
-    if ( engineElement.hasAttribute( "color" ) )
-        m_engineColor = QColor( engineElement.attribute( "color" ) );
+    if ( engineElement.hasAttribute( QStringLiteral("color") ) )
+        m_engineColor = QColor( engineElement.attribute( QStringLiteral("color") ) );
 
     // get the annotation element
     QDomElement annElement = m_engineElement.firstChild().toElement();
-    if ( !annElement.isNull() && annElement.tagName() == "annotation" )
+    if ( !annElement.isNull() && annElement.tagName() == QLatin1String("annotation") )
         m_annotElement = annElement;
 }
 
@@ -82,16 +82,18 @@ QCursor AnnotatorEngine::cursor() const
     return Qt::CrossCursor;
 }
 
-SmoothPath::SmoothPath( const QLinkedList<Okular::NormalizedPoint> &points, const QPen &pen )
-    : points ( points ), pen ( pen )
+SmoothPath::SmoothPath( const QLinkedList<Okular::NormalizedPoint> &points, const QPen &pen, qreal opacity, QPainter::CompositionMode compositionMode )
+    : points ( points ), pen ( pen ), opacity( opacity ), compositionMode( compositionMode )
 {
 }
 
 /** SmoothPathEngine */
 SmoothPathEngine::SmoothPathEngine( const QDomElement & engineElement )
-    : AnnotatorEngine( engineElement )
+    : AnnotatorEngine( engineElement ), compositionMode( QPainter::CompositionMode_SourceOver )
 {
     // parse engine specific attributes
+    if ( engineElement.attribute( QStringLiteral("compositionMode"), QStringLiteral("sourceOver") ) == QLatin1String("clear") )
+        compositionMode = QPainter::CompositionMode_Clear;
 }
 
 QRect SmoothPathEngine::event( EventType type, Button button, double nX, double nY, double xScale, double yScale, const Okular::Page * /*page*/ )
@@ -149,8 +151,11 @@ QRect SmoothPathEngine::event( EventType type, Button button, double nX, double 
 
 void SmoothPathEngine::paint( QPainter * painter, double xScale, double yScale, const QRect & /*clipRect*/ )
 {
+    const double penWidth = m_annotElement.attribute( QStringLiteral("width"), QStringLiteral("1") ).toInt();
+    const qreal opacity = m_annotElement.attribute( QStringLiteral("opacity"), QStringLiteral("1.0") ).toDouble();
+
     // use engine's color for painting
-    const SmoothPath path( points, QPen(m_engineColor, 1) );
+    const SmoothPath path( points, QPen( m_engineColor, penWidth ), opacity, compositionMode );
 
     // draw the path
     path.paint( painter, xScale, yScale );
@@ -161,7 +166,9 @@ void SmoothPath::paint( QPainter * painter, double xScale, double yScale ) const
     // draw SmoothPaths with at least 2 points
     if ( points.count() > 1 )
     {
+        painter->setCompositionMode( compositionMode );
         painter->setPen( pen );
+        painter->setOpacity( opacity );
 
         QLinkedList<Okular::NormalizedPoint>::const_iterator pIt = points.begin(), pEnd = points.end();
         Okular::NormalizedPoint pA = *pIt;
@@ -185,16 +192,16 @@ QList< Okular::Annotation* > SmoothPathEngine::end()
                 return QList< Okular::Annotation* >();
 
     // find out annotation's type
-    Okular::Annotation * ann = 0;
-    QString typeString = m_annotElement.attribute( "type" );
+    Okular::Annotation * ann = nullptr;
+    QString typeString = m_annotElement.attribute( QStringLiteral("type") );
 
     // create InkAnnotation from path
-    if ( typeString == "Ink" )
+    if ( typeString == QLatin1String("Ink") )
     {
         Okular::InkAnnotation * ia = new Okular::InkAnnotation();
         ann = ia;
-        if ( m_annotElement.hasAttribute( "width" ) )
-            ann->style().setWidth( m_annotElement.attribute( "width" ).toDouble() );
+        if ( m_annotElement.hasAttribute( QStringLiteral("width") ) )
+            ann->style().setWidth( m_annotElement.attribute( QStringLiteral("width") ).toDouble() );
         // fill points
         QList< QLinkedList<Okular::NormalizedPoint> > list = ia->inkPaths();
         list.append( points );
@@ -208,10 +215,10 @@ QList< Okular::Annotation* > SmoothPathEngine::end()
         return QList< Okular::Annotation* >();
 
     // set common attributes
-    ann->style().setColor( m_annotElement.hasAttribute( "color" ) ?
-        m_annotElement.attribute( "color" ) : m_engineColor );
-    if ( m_annotElement.hasAttribute( "opacity" ) )
-        ann->style().setOpacity( m_annotElement.attribute( "opacity", "1.0" ).toDouble() );
+    ann->style().setColor( m_annotElement.hasAttribute( QStringLiteral("color") ) ?
+        m_annotElement.attribute( QStringLiteral("color") ) : m_engineColor );
+    if ( m_annotElement.hasAttribute( QStringLiteral("opacity") ) )
+        ann->style().setOpacity( m_annotElement.attribute( QStringLiteral("opacity"), QStringLiteral("1.0") ).toDouble() );
 
     // return annotation
     return QList< Okular::Annotation* >() << ann;
@@ -221,14 +228,13 @@ SmoothPath SmoothPathEngine::endSmoothPath()
 {
     m_creationCompleted = false;
 
-    double width = 1;
-    if ( m_annotElement.hasAttribute( "width" ) )
-        width = m_annotElement.attribute( "width" ).toDouble();
+    QColor color( m_annotElement.hasAttribute( QStringLiteral("color") ) ?
+        m_annotElement.attribute( QStringLiteral("color") ) : m_engineColor );
 
-    QColor color( m_annotElement.hasAttribute( "color" ) ?
-        m_annotElement.attribute( "color" ) : m_engineColor );
+    const int width = m_annotElement.attribute( QStringLiteral("width"), QStringLiteral("2") ).toInt();
+    const qreal opacity = m_annotElement.attribute( QStringLiteral("opacity"), QStringLiteral("1.0") ).toDouble();
 
-    return SmoothPath( points, QPen(color, width) );
+    return SmoothPath( points, QPen(color, width), opacity, compositionMode );
 }
 
 /* kate: replace-tabs on; indent-width 4; */

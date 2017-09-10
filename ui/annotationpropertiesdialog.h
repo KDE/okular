@@ -40,7 +40,7 @@ private:
     
     void setCaptionTextbyAnnotType();
 
-private slots:
+private Q_SLOTS:
     void setModified();
     void slotapply();
 };

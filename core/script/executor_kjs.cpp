@@ -15,7 +15,7 @@
 #include <kjs/kjsprototype.h>
 #include <kjs/kjsarguments.h>
 
-#include <kdebug.h>
+#include <QtCore/QDebug>
 
 #include "../debug_p.h"
 #include "../document_p.h"
@@ -41,8 +41,6 @@ class Okular::ExecutorKJSPrivate
         }
         ~ExecutorKJSPrivate()
         {
-            JSField::clearCachedFields();
-
             delete m_interpreter;
         }
 
@@ -69,11 +67,11 @@ void ExecutorKJSPrivate::initTypes()
     JSSpell::initType( ctx );
     JSUtil::initType( ctx );
 
-    m_docObject.setProperty( ctx, "app", JSApp::object( ctx, m_doc ) );
-    m_docObject.setProperty( ctx, "console", JSConsole::object( ctx ) );
-    m_docObject.setProperty( ctx, "Doc", m_docObject );
-    m_docObject.setProperty( ctx, "spell", JSSpell::object( ctx ) );
-    m_docObject.setProperty( ctx, "util", JSUtil::object( ctx ) );
+    m_docObject.setProperty( ctx, QStringLiteral("app"), JSApp::object( ctx, m_doc ) );
+    m_docObject.setProperty( ctx, QStringLiteral("console"), JSConsole::object( ctx ) );
+    m_docObject.setProperty( ctx, QStringLiteral("Doc"), m_docObject );
+    m_docObject.setProperty( ctx, QStringLiteral("spell"), JSSpell::object( ctx ) );
+    m_docObject.setProperty( ctx, QStringLiteral("util"), JSUtil::object( ctx ) );
 }
 
 ExecutorKJS::ExecutorKJS( DocumentPrivate *doc )
@@ -94,20 +92,21 @@ void ExecutorKJS::execute( const QString &script )
     int errLine;
     if ( !KJSInterpreter::normalizeCode( script, &script2, &errLine, &errMsg ) )
     {
-        kWarning(OkularDebug) << "Parse error during normalization!";
+        qCWarning(OkularCoreDebug) << "Parse error during normalization!";
         script2 = script;
     }
 #endif
 
-    KJSResult result = d->m_interpreter->evaluate( "okular.js", 1,
+    KJSResult result = d->m_interpreter->evaluate( QStringLiteral("okular.js"), 1,
                                                    script, &d->m_docObject );
     KJSContext* ctx = d->m_interpreter->globalContext();
     if ( result.isException() || ctx->hasException() )
     {
-        kDebug(OkularDebug) << "JS exception" << result.errorMessage();
+        qCDebug(OkularCoreDebug) << "JS exception" << result.errorMessage();
     }
     else
     {
-        kDebug(OkularDebug) << "result:" << result.value().toString( ctx );
+        qCDebug(OkularCoreDebug) << "result:" << result.value().toString( ctx );
     }
+    JSField::clearCachedFields();
 }

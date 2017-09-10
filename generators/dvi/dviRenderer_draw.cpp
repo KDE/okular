@@ -54,20 +54,22 @@
 
 #include <config.h>
 
+#include "debug_dvi.h"
 #include "dviRenderer.h"
 #include "dvi.h"
 #include "dviFile.h"
 #include "hyperlink.h"
-#include "kvs_debug.h"
+#include "debug_dvi.h"
 #include "psgs.h"
 //#include "renderedDviPagePixmap.h"
 #include "TeXFont.h"
 #include "textBox.h"
 #include "xdvi.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <QPainter>
+#include <QtCore/qloggingcategory.h>
 
 
 
@@ -76,7 +78,7 @@
 void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
 {
 #ifdef DEBUG_RENDER
-  kDebug(kvs::dvi) << "set_char #" << ch;
+  qCDebug(OkularDviDebug) << "set_char #" << ch;
 #endif
 
   glyph *g;
@@ -84,7 +86,7 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
     g = ((TeXFont *)(currinf.fontp->font))->getGlyph(ch, true, globalColor);
   else
     g = ((TeXFont *)(currinf.fontp->font))->getGlyph(ch, true, colorStack.top());
-  if (g == NULL)
+  if (g == nullptr)
     return;
 
   long dvi_h_sav = currinf.data.dvi_h;
@@ -98,7 +100,7 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
 
   // Are we drawing text for a hyperlink? And are hyperlinks
   // enabled?
-  if (HTML_href != NULL) {
+  if (HTML_href != nullptr) {
     // Now set up a rectangle which is checked against every mouse
     // event.
     if (line_boundary_encountered == true) {
@@ -109,7 +111,7 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
       dhl.linkText = *HTML_href;
       currentlyDrawnPage->hyperLinkList.push_back(dhl);
     } else {
-      QRect dshunion = currentlyDrawnPage->hyperLinkList[currentlyDrawnPage->hyperLinkList.size()-1].box.unite(QRect(x, y, pix.width(), pix.height())) ;
+      QRect dshunion = currentlyDrawnPage->hyperLinkList[currentlyDrawnPage->hyperLinkList.size()-1].box.united(QRect(x, y, pix.width(), pix.height())) ;
       currentlyDrawnPage->hyperLinkList[currentlyDrawnPage->hyperLinkList.size()-1].box = dshunion;
     }
   }
@@ -119,7 +121,7 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
   // If we are printing source hyperlinks are irrelevant, otherwise we
   // actually got a pointer to a RenderedDviPagePixmap.
   RenderedDviPagePixmap* currentDVIPage = dynamic_cast<RenderedDviPagePixmap*>(currentlyDrawnPage);
-  if (source_href != 0 && currentDVIPage) {
+  if (source_href != nullptr && currentDVIPage) {
     // Now set up a rectangle which is checked against every mouse
     // event.
     if (line_boundary_encountered == true) {
@@ -127,13 +129,13 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
       Hyperlink dhl;
       dhl.baseline = currinf.data.pxl_v;
       dhl.box.setRect(x, y, pix.width(), pix.height());
-      if (source_href != NULL)
+      if (source_href != nullptr)
         dhl.linkText = *source_href;
       else
-        dhl.linkText = "";
+        dhl.linkText = QLatin1String("");
       currentDVIPage->sourceHyperLinkList.push_back(dhl);
     } else {
-      QRect dshunion = currentDVIPage->sourceHyperLinkList[currentDVIPage->sourceHyperLinkList.size()-1].box.unite(QRect(x, y, pix.width(), pix.height())) ;
+      QRect dshunion = currentDVIPage->sourceHyperLinkList[currentDVIPage->sourceHyperLinkList.size()-1].box.united(QRect(x, y, pix.width(), pix.height())) ;
       currentDVIPage->sourceHyperLinkList[currentDVIPage->sourceHyperLinkList.size()-1].box = dshunion;
     }
   }
@@ -142,47 +144,47 @@ void dviRenderer::set_char(unsigned int cmd, unsigned int ch)
   // search, etc.). Set up the currentlyDrawnPage->textBoxList.
   TextBox link;
   link.box.setRect(x, y, pix.width(), pix.height());
-  link.text = "";
+  link.text = QLatin1String("");
   currentlyDrawnPage->textBoxList.push_back(link);
 
   switch(ch) {
   case 0x0b:
-    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += "ff";
+    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += QLatin1String("ff");
     break;
   case 0x0c:
-    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += "fi";
+    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += QLatin1String("fi");
     break;
   case 0x0d:
-    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += "fl";
+    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += QLatin1String("fl");
     break;
   case 0x0e:
-    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += "ffi";
+    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += QLatin1String("ffi");
     break;
   case 0x0f:
-    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += "ffl";
+    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += QLatin1String("ffl");
     break;
 
   case 0x7b:
-    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += '-';
+    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += QLatin1Char('-');
     break;
   case 0x7c:
-    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += "---";
+    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += QLatin1String("---");
     break;
   case 0x7d:
-    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += "\"";
+    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += QLatin1String("\"");
     break;
   case 0x7e:
-    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += '~';
+    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += QLatin1Char('~');
     break;
   case 0x7f:
-    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += "@@"; // @@@ check!
+    currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += QLatin1String("@@"); // @@@ check!
     break;
 
   default:
     if ((ch >= 0x21) && (ch <= 0x7a))
       currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += QChar(ch);
     else
-      currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += '?';
+      currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += QLatin1Char('?');
     break;
   }
 
@@ -205,13 +207,13 @@ void dviRenderer::set_empty_char(unsigned int, unsigned int)
 void dviRenderer::set_vf_char(unsigned int cmd, unsigned int ch)
 {
 #ifdef DEBUG_RENDER
-  kDebug(kvs::dvi) << "dviRenderer::set_vf_char( cmd=" << cmd << ", ch=" << ch << " )";
+  qCDebug(OkularDviDebug) << "dviRenderer::set_vf_char( cmd=" << cmd << ", ch=" << ch << " )";
 #endif
 
   static unsigned char   c;
   macro *m = &currinf.fontp->macrotable[ch];
-  if (m->pos == NULL) {
-    kError(kvs::dvi) << "Character " << ch << " not defined in font " << currinf.fontp->fontname << endl;
+  if (m->pos == nullptr) {
+    qCCritical(OkularDviDebug) << "Character " << ch << " not defined in font " << currinf.fontp->fontname << endl;
     m->pos = m->end = &c;
     return;
   }
@@ -246,12 +248,12 @@ void dviRenderer::set_vf_char(unsigned int cmd, unsigned int ch)
 void dviRenderer::set_no_char(unsigned int cmd, unsigned int ch)
 {
 #ifdef DEBUG_RENDER
-  kDebug(kvs::dvi) << "dviRenderer::set_no_char( cmd=" << cmd << ", ch =" << ch << " )" ;
+  qCDebug(OkularDviDebug) << "dviRenderer::set_no_char( cmd=" << cmd << ", ch =" << ch << " )" ;
 #endif
 
   if (currinf._virtual) {
     currinf.fontp = currinf._virtual->first_font;
-    if (currinf.fontp != NULL) {
+    if (currinf.fontp != nullptr) {
       currinf.set_char_p = currinf.fontp->set_char_p;
       (this->*currinf.set_char_p)(cmd, ch);
       return;
@@ -266,13 +268,13 @@ void dviRenderer::set_no_char(unsigned int cmd, unsigned int ch)
 void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
 {
 #ifdef DEBUG_RENDER
-  kDebug(kvs::dvi) << "draw_part";
+  qCDebug(OkularDviDebug) << "draw_part";
 #endif
 
   qint32 RRtmp=0, WWtmp=0, XXtmp=0, YYtmp=0, ZZtmp=0;
   quint8 ch;
 
-  currinf.fontp        = NULL;
+  currinf.fontp        = nullptr;
   currinf.set_char_p   = &dviRenderer::set_no_char;
 
   int last_space_index = 0;
@@ -286,7 +288,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
     } else
       if (FNTNUM0 <= ch && ch <= (unsigned char) (FNTNUM0 + 63)) {
         currinf.fontp = currinf.fonttable->value(ch - FNTNUM0);
-        if (currinf.fontp == NULL) {
+        if (currinf.fontp == nullptr) {
           errorMsg = i18n("The DVI code referred to font #%1, which was not previously defined.", ch - FNTNUM0);
           return;
         }
@@ -371,7 +373,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
             // that at the end of a page, the stack should always be
             // empty.
             if (!stack.isEmpty()) {
-              kDebug(kvs::dvi) << "DRAW: The stack was not empty when the EOP command was encountered.";
+              qCDebug(OkularDviDebug) << "DRAW: The stack was not empty when the EOP command was encountered.";
               errorMsg = i18n("The stack was not empty when the EOP command was encountered.");
               return;
             }
@@ -406,7 +408,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
           // comparatively large backspaces when it positions
           // accents. (comments stolen from the source of dvitype)
           if ((is_vfmacro == false) &&
-              (currinf.fontp != 0) &&
+              (currinf.fontp != nullptr) &&
               ((RRtmp >= currinf.fontp->scaled_size_in_DVI_units/6) || (RRtmp <= -4*(currinf.fontp->scaled_size_in_DVI_units/6))) &&
               (currentlyDrawnPage->textBoxList.size() > 0)) {
             //currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += ' ';
@@ -421,9 +423,10 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
         case W4:
           WWtmp = readINT(ch - W0);
           currinf.data.w = ((long) (WWtmp *  current_dimconv));
+          // fallthrough
         case W0:
           if ((is_vfmacro == false) &&
-              (currinf.fontp != 0) &&
+              (currinf.fontp != nullptr) &&
               ((WWtmp >= currinf.fontp->scaled_size_in_DVI_units/6) || (WWtmp <= -4*(currinf.fontp->scaled_size_in_DVI_units/6))) &&
               (currentlyDrawnPage->textBoxList.size() > 0) ) {
             //currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += ' ';
@@ -438,9 +441,10 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
         case X4:
           XXtmp = readINT(ch - X0);
           currinf.data.x = ((long) (XXtmp *  current_dimconv));
+          // fallthrough
         case X0:
           if ((is_vfmacro == false)  &&
-              (currinf.fontp != 0) &&
+              (currinf.fontp != nullptr) &&
               ((XXtmp >= currinf.fontp->scaled_size_in_DVI_units/6) || (XXtmp <= -4*(currinf.fontp->scaled_size_in_DVI_units/6))) &&
               (currentlyDrawnPage->textBoxList.size() > 0)) {
             //currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += ' ';
@@ -456,14 +460,14 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
           {
             qint32 DDtmp = readINT(ch - DOWN1 + 1);
             if ((is_vfmacro == false) &&
-                (currinf.fontp != 0) &&
+                (currinf.fontp != nullptr) &&
                 (abs(DDtmp) >= 5*(currinf.fontp->scaled_size_in_DVI_units/6)) &&
                 (currentlyDrawnPage->textBoxList.size() > 0)) {
               word_boundary_encountered = true;
               line_boundary_encountered = true;
               space_encountered = true;
               if (abs(DDtmp) >= 10*(currinf.fontp->scaled_size_in_DVI_units/6))
-                currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += '\n';
+                currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += QLatin1Char('\n');
             }
             currinf.data.dvi_v += ((long) (DDtmp *  current_dimconv))/65536;
             currinf.data.pxl_v  = int(currinf.data.dvi_v/shrinkfactor);
@@ -476,16 +480,17 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
         case Y4:
           YYtmp = readINT(ch - Y0);
           currinf.data.y    = ((long) (YYtmp *  current_dimconv));
+          // fallthrough
         case Y0:
           if ((is_vfmacro == false) &&
-              (currinf.fontp != 0) &&
+              (currinf.fontp != nullptr) &&
               (abs(YYtmp) >= 5*(currinf.fontp->scaled_size_in_DVI_units/6)) &&
               (currentlyDrawnPage->textBoxList.size() > 0)) {
             word_boundary_encountered = true;
             line_boundary_encountered = true;
             space_encountered = true;
             if (abs(YYtmp) >= 10*(currinf.fontp->scaled_size_in_DVI_units/6))
-              currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += '\n';
+              currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += QLatin1Char('\n');
           }
           currinf.data.dvi_v += currinf.data.y/65536;
           currinf.data.pxl_v = int(currinf.data.dvi_v/shrinkfactor);
@@ -497,16 +502,17 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
         case Z4:
           ZZtmp = readINT(ch - Z0);
           currinf.data.z    = ((long) (ZZtmp *  current_dimconv));
+          // fallthrough
         case Z0:
           if ((is_vfmacro == false) &&
-              (currinf.fontp != 0) &&
+              (currinf.fontp != nullptr) &&
               (abs(ZZtmp) >= 5*(currinf.fontp->scaled_size_in_DVI_units/6)) &&
               (currentlyDrawnPage->textBoxList.size() > 0)) {
             word_boundary_encountered = true;
             line_boundary_encountered = true;
             space_encountered = true;
             if (abs(ZZtmp) >= 10*(currinf.fontp->scaled_size_in_DVI_units/6))
-              currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += '\n';
+              currentlyDrawnPage->textBoxList[currentlyDrawnPage->textBoxList.size()-1].text += QLatin1Char('\n');
           }
           currinf.data.dvi_v += currinf.data.z/65536;
           currinf.data.pxl_v  = int(currinf.data.dvi_v/shrinkfactor);
@@ -516,7 +522,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
         case FNT2:
         case FNT3:
           currinf.fontp = currinf.fonttable->value(readUINT(ch - FNT1 + 1));
-          if (currinf.fontp == NULL) {
+          if (currinf.fontp == nullptr) {
             errorMsg = i18n("The DVI code referred to a font which was not previously defined.");
             return;
           }
@@ -525,7 +531,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
 
         case FNT4:
           currinf.fontp = currinf.fonttable->value(readINT(ch - FNT1 + 1));
-          if (currinf.fontp == NULL) {
+          if (currinf.fontp == nullptr) {
             errorMsg = i18n("The DVI code referred to a font which was not previously defined.");
             return;
           }
@@ -579,7 +585,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
 
 #ifdef DEBUG_RENDER
     if (currentlyDrawnPage->textBoxList.size() > 0)
-      kDebug(kvs::dvi) << "Element:"
+      qCDebug(OkularDviDebug) << "Element:"
                        << currentlyDrawnPage->textBoxList.last().box
                        << currentlyDrawnPage->textBoxList.last().text
                        << " ? s:" << space_encountered
@@ -592,9 +598,9 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
     /* heuristic to properly detect newlines; a space is needed */
     if (after_space &&
         line_boundary_encountered && word_boundary_encountered) {
-      if (currentlyDrawnPage->textBoxList.last().text.endsWith('\n'))
+      if (currentlyDrawnPage->textBoxList.last().text.endsWith(QLatin1Char('\n')))
          currentlyDrawnPage->textBoxList.last().text.chop(1);
-      currentlyDrawnPage->textBoxList.last().text += " \n";
+      currentlyDrawnPage->textBoxList.last().text += QLatin1String(" \n");
       after_space = false;
     }
 
@@ -610,7 +616,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
       QString lastword(currentlyDrawnPage->textBoxList[last_space_index].text);
       for (int lidx = last_space_index+1; lidx<currentlyDrawnPage->textBoxList.size(); ++lidx)
         lastword += currentlyDrawnPage->textBoxList[lidx].text;
-      kDebug(kvs::dvi) << "space encountered: '" << lastword << "'";
+      qCDebug(OkularDviDebug) << "space encountered: '" << lastword << "'";
 #endif
       last_space_index = currentlyDrawnPage->textBoxList.size();
       after_space = true;
@@ -622,8 +628,8 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
 void dviRenderer::draw_page()
 {
   // Reset a couple of variables
-  HTML_href         = 0;
-  source_href       = 0;
+  HTML_href         = nullptr;
+  source_href       = nullptr;
   penWidth_in_mInch = 0.0;
 
   // Calling resize() here rather than clear() means that the memory
@@ -642,14 +648,14 @@ void dviRenderer::draw_page()
   // elapsed till the kdvi_multipage was constructed, and print
   // it. Set the flag so that is message will not be printed again.
   if (performanceFlag == 0) {
-    kDebug(kvs::dvi) << "Time elapsed till the first page is drawn: " << performanceTimer.restart() << "ms";
+    qCDebug(OkularDviDebug) << "Time elapsed till the first page is drawn: " << performanceTimer.restart() << "ms";
     performanceFlag = 1;
   }
 #endif
 
 
 #ifdef DEBUG_RENDER
-  kDebug(kvs::dvi) <<"draw_page";
+  qCDebug(OkularDviDebug) <<"draw_page";
 #endif
 
 #if 0
@@ -691,21 +697,21 @@ void dviRenderer::draw_page()
     command_pointer = dviFile->dvi_Data() + dviFile->page_offset[int(current_page)];
     end_pointer     = dviFile->dvi_Data() + dviFile->page_offset[int(current_page+1)];
   } else
-    command_pointer = end_pointer = 0;
+    command_pointer = end_pointer = nullptr;
 
   memset((char *) &currinf.data, 0, sizeof(currinf.data));
   currinf.fonttable      = &(dviFile->tn_table);
-  currinf._virtual       = 0;
+  currinf._virtual       = nullptr;
 
   double fontPixelPerDVIunit = dviFile->getCmPerDVIunit() * 1200.0/2.54;
 
   draw_part(65536.0*fontPixelPerDVIunit, false);
-  if (HTML_href != 0) {
+  if (HTML_href != nullptr) {
     delete HTML_href;
-    HTML_href = 0;
+    HTML_href = nullptr;
   }
-  if (source_href != 0) {
+  if (source_href != nullptr) {
     delete source_href;
-    source_href = 0;
+    source_href = nullptr;
   }
 }

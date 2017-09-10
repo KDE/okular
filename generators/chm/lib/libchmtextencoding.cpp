@@ -171,7 +171,7 @@ static short lcid_Western[] =
 	0x440A, 0x100A, 0x480A, 0x080A, 0x4C0A, 0x180A, 0x3C0A, 0x280A,
 	0x500A, 0x0C0A, 0x380A, 0x200A, 0x0441, 0x081D, 0x041D, 0x0434,
 	0x0435, 0x042B, 0x042C, 0x0439, 0x043A, 0x044E, 0x044F, 0x081A,
-	0x0443,
+	0x0443, 0x0009,
 	0
 };
 
@@ -368,7 +368,7 @@ int LCHMFileImpl::getEncodingIndex( const LCHMTextEncoding * enc)
 const LCHMTextEncoding * LCHMFileImpl::lookupByQtCodec(const QString & codec)
 {
 	for ( const LCHMTextEncoding * t = text_encoding_table; t->family; t++ )
-		if ( codec == t->qtcodec )
+        if ( codec == QString::fromLocal8Bit(t->qtcodec) )
 			return t;
 
 	return 0;

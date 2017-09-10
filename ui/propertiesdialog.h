@@ -34,7 +34,7 @@ class PropertiesDialog : public KPageDialog
         PropertiesDialog( QWidget *parent, Okular::Document *doc );
         virtual ~PropertiesDialog();
 
-    private slots:
+    private Q_SLOTS:
         void pageChanged( KPageWidgetItem *, KPageWidgetItem * );
         void slotFontReadingProgress( int page );
         void slotFontReadingEnded();
@@ -56,16 +56,16 @@ class FontsListModel
   Q_OBJECT
 
   public:
-    FontsListModel( QObject * parent = 0 );
+    FontsListModel( QObject * parent = nullptr );
     virtual ~FontsListModel();
 
     // reimplementations from QAbstractTableModel
-    virtual int columnCount( const QModelIndex &parent = QModelIndex() ) const;
-    virtual QVariant data( const QModelIndex &index, int role = Qt::DisplayRole ) const;
-    virtual QVariant headerData( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const;
-    virtual int rowCount( const QModelIndex &parent = QModelIndex() ) const;
+    int columnCount( const QModelIndex &parent = QModelIndex() ) const override;
+    QVariant data( const QModelIndex &index, int role = Qt::DisplayRole ) const override;
+    QVariant headerData( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const override;
+    int rowCount( const QModelIndex &parent = QModelIndex() ) const override;
 
-  public slots:
+  public Q_SLOTS:
     void addFont( const Okular::FontInfo &fi );
 
   private:

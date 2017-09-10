@@ -18,7 +18,7 @@ class QAction;
 class QTreeWidget;
 class QTreeWidgetItem;
 class KTreeWidgetSearchLine;
-class KUrl;
+class QUrl;
 class BookmarkItem;
 class FileItem;
 
@@ -31,24 +31,24 @@ class BookmarkList : public QWidget, public Okular::DocumentObserver
     Q_OBJECT
 
     public:
-        explicit BookmarkList( Okular::Document *document, QWidget *parent = 0 );
+        explicit BookmarkList( Okular::Document *document, QWidget *parent = nullptr );
         ~BookmarkList();
 
         // inherited from DocumentObserver
-        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags );
+        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) override;
 
-    private slots:
+    private Q_SLOTS:
         void slotFilterBookmarks( bool );
         void slotExecuted( QTreeWidgetItem * item );
         void slotChanged( QTreeWidgetItem * item );
         void slotContextMenu( const QPoint& p );
-        void slotBookmarksChanged( const KUrl& url );
+        void slotBookmarksChanged( const QUrl& url );
 
     private:
         void rebuildTree( bool filter );
         void goTo( BookmarkItem * item );
-        void selectiveUrlUpdate( const KUrl& url, QTreeWidgetItem*& item );
-        QTreeWidgetItem* itemForUrl( const KUrl& url ) const;
+        void selectiveUrlUpdate( const QUrl& url, QTreeWidgetItem*& item );
+        QTreeWidgetItem* itemForUrl(const QUrl &url ) const;
         void contextMenuForBookmarkItem( const QPoint& p, BookmarkItem* bmItem );
         void contextMenuForFileItem( const QPoint& p, FileItem* fItem );
 

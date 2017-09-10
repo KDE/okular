@@ -1,0 +1,4 @@
+CMakeLists.txt.user*
+*.kdev4
+*.swp
+/build/

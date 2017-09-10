@@ -14,11 +14,14 @@
 
 class FictionBookGenerator : public Okular::TextDocumentGenerator
 {
+    Q_OBJECT
+    Q_INTERFACES( Okular::Generator )
+
     public:
         FictionBookGenerator( QObject *parent, const QVariantList &args );
 
         // [INHERITED] reparse configuration
-        void addPages( KConfigDialog* dlg );
+        void addPages( KConfigDialog* dlg ) override;
 };
 
 #endif

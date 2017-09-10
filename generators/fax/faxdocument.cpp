@@ -19,7 +19,7 @@ static const char FAXMAGIC[]   = "\000PC Research, Inc\000\000\000\000\000\000";
 #define FAX_DPI_FINE QPoint(203,196)
 
 /* rearrange input bits into t16bits lsb-first chunks */
-static void normalize( struct pagenode *pn, int revbits, int swapbytes, size_t length )
+static void normalize( pagenode *pn, int revbits, int swapbytes, size_t length )
 {
     t32bits *p = (t32bits *) pn->data;
 
@@ -79,9 +79,9 @@ static unsigned char* getstrip( pagenode *pn, int strip )
 
     QFile file( pn->filename );
     if ( !file.open( QIODevice::ReadOnly ) )
-        return 0;
+        return nullptr;
 
-    if ( pn->strips == 0 )
+    if ( pn->strips == nullptr )
     {
         offset = 0;
         pn->length = file.size();
@@ -92,7 +92,7 @@ static unsigned char* getstrip( pagenode *pn, int strip )
         pn->length = pn->strips[ strip ].size;
     }
     else
-        return 0;
+        return nullptr;
 
     /* round size to full boundary plus t32bits */
     roundup = (pn->length + 7) & ~3;
@@ -107,13 +107,13 @@ static unsigned char* getstrip( pagenode *pn, int strip )
     if ( !file.seek(offset) || (size_t) file.read( (char *)data, pn->length ) != pn->length )
     {
         delete [] data;
-        return 0;
+        return nullptr;
     }
     file.close();
 
     pn->data = (t16bits *)data;
 
-    if ( pn->strips == 0 && memcmp( data, FAXMAGIC, sizeof( FAXMAGIC ) - 1 ) == 0 )
+    if ( pn->strips == nullptr && memcmp( data, FAXMAGIC, sizeof( FAXMAGIC ) - 1 ) == 0 )
     {
         /* handle ghostscript / PC Research fax file */
         pn->length -= 64;
@@ -129,11 +129,11 @@ static unsigned char* getstrip( pagenode *pn, int strip )
     if ( pn->size.height() == 0 )
     {
         delete [] data;
-        pn->data = 0;
-        return 0;
+        pn->data = nullptr;
+        return nullptr;
     }
 
-    if ( pn->strips == 0 )
+    if ( pn->strips == nullptr )
         pn->rowsperstrip = pn->size.height();
 
     pn->dataOrig = (t16bits *)data;
@@ -156,7 +156,7 @@ static void draw_line( pixnum *run, int lineNum, pagenode *pn )
         return;
 
     p = (t32bits *)(pn->imageData + lineNum*(2-pn->vres)*pn->bytes_per_line);
-    p1 =(t32bits *)(pn->vres ? 0 : p + pn->bytes_per_line/sizeof(*p));
+    p1 =(t32bits *)(pn->vres ? nullptr : p + pn->bytes_per_line/sizeof(*p));
 
     r = run;
     acc = 0;
@@ -205,7 +205,7 @@ static void draw_line( pixnum *run, int lineNum, pagenode *pn )
     }
 }
 
-static bool get_image( struct pagenode *pn )
+static bool get_image( pagenode *pn )
 {
     unsigned char *data = getstrip( pn, 0 );
     if ( !data )
@@ -229,7 +229,7 @@ class FaxDocument::Private
         }
 
         FaxDocument *mParent;
-        struct pagenode mPageNode;
+        pagenode mPageNode;
         FaxDocument::DocumentType mType;
 };
 
@@ -237,14 +237,14 @@ FaxDocument::FaxDocument( const QString &fileName, DocumentType type )
     : d( new Private( this ) )
 {
     d->mPageNode.filename = fileName;
-    d->mPageNode.strips = 0;
+    d->mPageNode.strips = nullptr;
     d->mPageNode.stripnum = 0;
     d->mPageNode.lsbfirst = 0;
     d->mPageNode.vres = 1;
     d->mPageNode.inverse = 0;
-    d->mPageNode.data = 0;
-    d->mPageNode.dataOrig = 0;
-    d->mPageNode.imageData = 0;
+    d->mPageNode.data = nullptr;
+    d->mPageNode.dataOrig = nullptr;
+    d->mPageNode.imageData = nullptr;
     d->mType = type;
 
     if ( d->mType == G3 )

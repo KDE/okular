@@ -11,7 +11,7 @@
 
 #include <QtCore/QFile>
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kzip.h>
 
 using namespace FictionBook;
@@ -27,7 +27,7 @@ bool Document::open()
 
     QFile file( mFileName );
     KZip zip( mFileName );
-    if ( mFileName.endsWith( ".fb" ) || mFileName.endsWith( ".fb2" ) ) {
+    if ( mFileName.endsWith( QLatin1String(".fb") ) || mFileName.endsWith( QLatin1String(".fb2") ) ) {
         if ( !file.open( QIODevice::ReadOnly ) ) {
             setError( i18n( "Unable to open document: %1", file.errorString() ) );
             return false;
@@ -50,7 +50,7 @@ bool Document::open()
 
         QString documentFile;
         for ( int i = 0; i < entries.count(); ++i ) {
-            if ( entries[ i ].endsWith( ".fb2" ) ) {
+            if ( entries[ i ].endsWith( QLatin1String(".fb2") ) ) {
                 documentFile = entries[ i ];
                 break;
             }

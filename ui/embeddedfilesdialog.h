@@ -10,30 +10,41 @@
 #ifndef _EMBEDDEDFILESDIALOG_H_
 #define _EMBEDDEDFILESDIALOG_H_
 
-#include <kdialog.h>
+#include <QDialog>
 
 class QTreeWidget;
+class QPushButton;
+class QTemporaryFile;
+class QTreeWidgetItem;
 
 namespace Okular {
 class Document;
 class EmbeddedFile;
 }
 
-class EmbeddedFilesDialog : public KDialog
+class EmbeddedFilesDialog : public QDialog
 {
 Q_OBJECT
 	public:
 		EmbeddedFilesDialog(QWidget *parent, const Okular::Document *document);
 
-	private slots:
+    private Q_SLOTS:
 		void saveFile();
 		void attachViewContextMenu( const QPoint& pos );
 		void updateSaveButton();
+		void viewFile();
+		void viewFileItem( QTreeWidgetItem* index, int column );
 
 	private:
 		void saveFile( Okular::EmbeddedFile* );
+		void viewFile( Okular::EmbeddedFile* );
 
 		QTreeWidget *m_tw;
+
+                
+		QPushButton *mUser1Button;
+		QPushButton *mUser2Button;
+		QList< QSharedPointer<QTemporaryFile> > m_openedFiles;
 };
 
 #endif

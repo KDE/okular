@@ -11,30 +11,18 @@
 
 #include "converter.h"
 
-#include <kaboutdata.h>
+#include <KAboutData>
 #include <kconfigdialog.h>
+#include <KLocalizedString>
 
-static KAboutData createAboutData()
-{
-  KAboutData aboutData(
-                       "okular_epub",
-                       "okular_epub",
-                       ki18n("EPub Backend"),
-                       "0.2.3",
-                       ki18n("An EPub backend"),
-                       KAboutData::License_GPL,
-                       ki18n("© 2008 Ely Levy")
-                       );
-  aboutData.addAuthor(ki18n("Ely Levy"), KLocalizedString(),
-                      "elylevy@cs.huji.ac.il");
-
-  return aboutData;
-}
-
-OKULAR_EXPORT_PLUGIN( EPubGenerator, createAboutData() )
+OKULAR_EXPORT_PLUGIN(EPubGenerator, "libokularGenerator_epub.json")
 
 EPubGenerator::EPubGenerator( QObject *parent, const QVariantList &args )
-: Okular::TextDocumentGenerator( new Epub::Converter, "okular_epub_generator_settings", parent, args )
+: Okular::TextDocumentGenerator(new Epub::Converter, QStringLiteral("okular_epub_generator_settings"), parent, args)
+{
+}
+
+EPubGenerator::~EPubGenerator()
 {
 }
 
@@ -42,5 +30,7 @@ void EPubGenerator::addPages( KConfigDialog* dlg )
 {
   Okular::TextDocumentSettingsWidget *widget = new Okular::TextDocumentSettingsWidget();
 
-  dlg->addPage( widget, generalSettings(), i18n("EPub"), "application-epub+zip", i18n("EPub Backend Configuration") );
+  dlg->addPage( widget, generalSettings(), i18n("EPub"), QStringLiteral("application-epub+zip"), i18n("EPub Backend Configuration") );
 }
+
+#include "generator_epub.moc"

@@ -88,7 +88,7 @@ class PageViewAnnotator : public QObject
         static QString defaultToolName( const QDomElement &toolElement );
         static QPixmap makeToolPixmap( const QDomElement &toolElement );
 
-    private slots:
+    private Q_SLOTS:
         void slotToolSelected( int toolID );
         void slotSaveToolbarOrientation( int side );
         void slotToolDoubleClicked( int toolID );

@@ -24,19 +24,24 @@ class TOCModelPrivate;
 class TOCModel : public QAbstractItemModel
 {
     Q_OBJECT
+    /**
+     * How many items are in this model, useful for QML
+     */
+    Q_PROPERTY(int count READ count NOTIFY countChanged)
 
     public:
-        explicit TOCModel( Okular::Document *document, QObject *parent = 0 );
+        explicit TOCModel( Okular::Document *document, QObject *parent = nullptr );
         virtual ~TOCModel();
 
         // reimplementations from QAbstractItemModel
-        virtual int columnCount( const QModelIndex &parent = QModelIndex() ) const;
-        virtual QVariant data( const QModelIndex &index, int role = Qt::DisplayRole ) const;
-        virtual bool hasChildren( const QModelIndex &parent = QModelIndex() ) const;
-        virtual QVariant headerData( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const;
-        virtual QModelIndex index( int row, int column, const QModelIndex &parent = QModelIndex() ) const;
-        virtual QModelIndex parent( const QModelIndex &index ) const;
-        virtual int rowCount( const QModelIndex &parent = QModelIndex() ) const;
+        QHash<int, QByteArray> roleNames() const override;
+        int columnCount( const QModelIndex &parent = QModelIndex() ) const override;
+        QVariant data( const QModelIndex &index, int role = Qt::DisplayRole ) const override;
+        bool hasChildren( const QModelIndex &parent = QModelIndex() ) const override;
+        QVariant headerData( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const override;
+        QModelIndex index( int row, int column, const QModelIndex &parent = QModelIndex() ) const override;
+        QModelIndex parent( const QModelIndex &index ) const override;
+        int rowCount( const QModelIndex &parent = QModelIndex() ) const override;
 
         void fill( const Okular::DocumentSynopsis *toc );
         void clear();
@@ -51,6 +56,14 @@ class TOCModel : public QAbstractItemModel
         QString externalFileNameForIndex( const QModelIndex &index ) const;
         Okular::DocumentViewport viewportForIndex( const QModelIndex &index ) const;
         QString urlForIndex( const QModelIndex &index ) const;
+
+        int count() const
+        {
+            return rowCount();
+        }
+
+    Q_SIGNALS:
+        void countChanged();
 
     private:
         // storage

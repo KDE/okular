@@ -29,17 +29,17 @@ class AnnotationModel : public QAbstractItemModel
             PageRole
         };
 
-        explicit AnnotationModel( Okular::Document *document, QObject *parent = 0 );
+        explicit AnnotationModel( Okular::Document *document, QObject *parent = nullptr );
         virtual ~AnnotationModel();
 
         // reimplementations from QAbstractItemModel
-        virtual int columnCount( const QModelIndex &parent = QModelIndex() ) const;
-        virtual QVariant data( const QModelIndex &index, int role = Qt::DisplayRole ) const;
-        virtual bool hasChildren( const QModelIndex &parent = QModelIndex() ) const;
-        virtual QVariant headerData( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const;
-        virtual QModelIndex index( int row, int column, const QModelIndex &parent = QModelIndex() ) const;
-        virtual QModelIndex parent( const QModelIndex &index ) const;
-        virtual int rowCount( const QModelIndex &parent = QModelIndex() ) const;
+        int columnCount( const QModelIndex &parent = QModelIndex() ) const override;
+        QVariant data( const QModelIndex &index, int role = Qt::DisplayRole ) const override;
+        bool hasChildren( const QModelIndex &parent = QModelIndex() ) const override;
+        QVariant headerData( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const override;
+        QModelIndex index( int row, int column, const QModelIndex &parent = QModelIndex() ) const override;
+        QModelIndex parent( const QModelIndex &index ) const override;
+        int rowCount( const QModelIndex &parent = QModelIndex() ) const override;
 
         bool isAnnotation( const QModelIndex &index ) const;
         Okular::Annotation* annotationForIndex( const QModelIndex &index ) const;

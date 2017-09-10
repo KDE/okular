@@ -106,7 +106,7 @@ class PixmapGenerationThread : public QThread
         NormalizedRect boundingBox() const;
 
     protected:
-        virtual void run();
+        void run() override;
 
     private:
         Generator *mGenerator;
@@ -133,7 +133,7 @@ class TextPageGenerationThread : public QThread
         TextPage* textPage() const;
 
     protected:
-        virtual void run();
+        void run() override;
 
     private:
         Generator *mGenerator;
@@ -156,7 +156,7 @@ class FontExtractionThread : public QThread
         void progress( int page );
 
     protected:
-        virtual void run();
+        void run() override;
 
     private:
         Generator *mGenerator;

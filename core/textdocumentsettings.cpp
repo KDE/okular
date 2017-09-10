@@ -13,9 +13,8 @@
 #include "ui_textdocumentsettings.h"
 
 #include <KFontRequester>
-#include <KLocale>
+#include <KLocalizedString>
 
-#include <QLabel>
 
 
 using namespace Okular;
@@ -47,6 +46,7 @@ TextDocumentSettingsWidget::~TextDocumentSettingsWidget()
     Q_D( TextDocumentSettingsWidget );
 
     delete d->mUi;
+    delete d;
 }
 
 void TextDocumentSettingsWidget::addRow( const QString& labelText, QWidget *widget )
@@ -63,11 +63,11 @@ void TextDocumentSettingsWidget::addRow( const QString& labelText, QWidget *widg
 
 TextDocumentSettings::TextDocumentSettings( const QString& config, QObject *parent )
     : KConfigSkeleton( config, parent )
-    , d_ptr( new TextDocumentSettingsPrivate() )
+    , d_ptr( new TextDocumentSettingsPrivate(this) )
 {
     Q_D( TextDocumentSettings );
 
-    addItemFont( "Font", d->mFont );
+    addItemFont( QStringLiteral("Font"), d->mFont );
 }
 
 QFont TextDocumentSettings::font() const

@@ -10,6 +10,7 @@
 #ifndef _OKULAR_PRESENTATIONWIDGET_H_
 #define _OKULAR_PRESENTATIONWIDGET_H_
 
+#include <QDomElement>
 #include <qlist.h>
 #include <qpixmap.h>
 #include <qstringlist.h>
@@ -21,11 +22,13 @@
 class QLineEdit;
 class QToolBar;
 class QTimer;
+class QGestureEvent;
 class KActionCollection;
 class KSelectAction;
 class SmoothPathEngine;
 struct PresentationFrame;
 class PresentationSearchBar;
+class DrawingToolActions;
 
 namespace Okular {
 class Action;
@@ -45,35 +48,36 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
 {
     Q_OBJECT
     public:
-        PresentationWidget( QWidget * parent, Okular::Document * doc, KActionCollection * collection );
+        PresentationWidget( QWidget * parent, Okular::Document * doc, DrawingToolActions * drawingToolActions, KActionCollection * collection );
         ~PresentationWidget();
 
         // inherited from DocumentObserver
-        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags );
-        void notifyViewportChanged( bool smoothMove );
-        void notifyPageChanged( int pageNumber, int changedFlags );
-        bool canUnloadPixmap( int pageNumber ) const;
-        void notifyCurrentPageChanged( int previous, int current );
+        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) override;
+        void notifyViewportChanged( bool smoothMove ) override;
+        void notifyPageChanged( int pageNumber, int changedFlags ) override;
+        bool canUnloadPixmap( int pageNumber ) const override;
+        void notifyCurrentPageChanged( int previous, int current ) override;
 
-    public slots:
+    public Q_SLOTS:
         void slotFind();
 
     protected:
         // widget events
-        bool event( QEvent * e );
-        void keyPressEvent( QKeyEvent * e );
-        void wheelEvent( QWheelEvent * e );
-        void mousePressEvent( QMouseEvent * e );
-        void mouseReleaseEvent( QMouseEvent * e );
-        void mouseMoveEvent( QMouseEvent * e );
-        void paintEvent( QPaintEvent * e );
-        void resizeEvent( QResizeEvent * e );
-        void leaveEvent( QEvent * e );
+        bool event( QEvent * e ) override;
+        void keyPressEvent( QKeyEvent * e ) override;
+        void wheelEvent( QWheelEvent * e ) override;
+        void mousePressEvent( QMouseEvent * e ) override;
+        void mouseReleaseEvent( QMouseEvent * e ) override;
+        void mouseMoveEvent( QMouseEvent * e ) override;
+        void paintEvent( QPaintEvent * e ) override;
+        void resizeEvent( QResizeEvent * e ) override;
+        void leaveEvent( QEvent * e ) override;
+        bool gestureEvent (QGestureEvent * e );
 
     private:
-        const void * getObjectRect( Okular::ObjectRect::ObjectType type, int x, int y, QRect * geometry = 0 ) const;
-        const Okular::Action * getLink( int x, int y, QRect * geometry = 0 ) const;
-        const Okular::Annotation * getAnnotation( int x, int y, QRect * geometry = 0 ) const;
+        const void * getObjectRect( Okular::ObjectRect::ObjectType type, int x, int y, QRect * geometry = nullptr ) const;
+        const Okular::Action * getLink( int x, int y, QRect * geometry = nullptr ) const;
+        const Okular::Annotation * getAnnotation( int x, int y, QRect * geometry = nullptr ) const;
         void testCursorOnLink( int x, int y );
         void overlayClick( const QPoint & position );
         void changePage( int newPage );
@@ -109,7 +113,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         SmoothPathEngine * m_drawingEngine;
         QRect m_drawingRect;
         int m_screen;
-        int m_screenInhibitCookie;
+        uint m_screenInhibitCookie;
         int m_sleepInhibitCookie;
 
         // transition related
@@ -118,7 +122,12 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         QTimer * m_nextPageTimer;
         int m_transitionDelay;
         int m_transitionMul;
+        int m_transitionSteps;
         QList< QRect > m_transitionRects;
+        Okular::PageTransition m_currentTransition;
+        QPixmap m_currentPagePixmap;
+        QPixmap m_previousPagePixmap;
+        double m_currentPixmapOpacity;
 
         // misc stuff
         QWidget * m_parentWidget;
@@ -131,13 +140,15 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         PresentationSearchBar *m_searchBar;
         KActionCollection * m_ac;
         KSelectAction * m_screenSelect;
+        QDomElement m_currentDrawingToolElement;
         bool m_isSetup;
         bool m_blockNotifications;
         bool m_inBlackScreenMode;
         bool m_showSummaryView;
         bool m_advanceSlides;
+        bool m_goToNextPageOnRelease;
 
-    private slots:
+    private Q_SLOTS:
         void slotNextPage();
         void slotPrevPage();
         void slotFirstPage();
@@ -146,7 +157,6 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         void slotTransitionStep();
         void slotDelayedEvents();
         void slotPageChanged();
-        void togglePencilMode( bool );
         void clearDrawings();
         void screenResized( int );
         void chooseScreen( QAction * );
@@ -154,6 +164,8 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         void slotProcessMovieAction( const Okular::MovieAction *action );
         void slotProcessRenditionAction( const Okular::RenditionAction *action );
         void slotTogglePlayPause();
+        void slotChangeDrawingToolEngine( const QDomElement &doc );
+        void slotAddDrawingToolActions();
 };
 
 #endif

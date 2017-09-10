@@ -20,10 +20,10 @@ class DlgEditor : public QWidget
     Q_OBJECT
 
     public:
-        DlgEditor( QWidget * parent = 0 );
+        explicit DlgEditor( QWidget * parent = nullptr );
         virtual ~DlgEditor();
 
-    private slots:
+    private Q_SLOTS:
         void editorChanged( int which );
 
     private:

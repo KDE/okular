@@ -17,16 +17,16 @@ class PageItemDelegate : public QItemDelegate
     Q_OBJECT
 
     public:
-        PageItemDelegate( QObject * parent = 0 );
+        PageItemDelegate( QObject * parent = nullptr );
         virtual ~PageItemDelegate();
 
         static const int PageRole = 0x000f0001;
         static const int PageLabelRole = 0x000f0002;
 
-        virtual void paint( QPainter *painter, const QStyleOptionViewItem & option, const QModelIndex & index ) const;
+        void paint( QPainter *painter, const QStyleOptionViewItem & option, const QModelIndex & index ) const override;
 
     protected:
-        virtual void drawDisplay( QPainter *painter, const QStyleOptionViewItem & option, const QRect & rect, const QString & text ) const;
+        void drawDisplay( QPainter *painter, const QStyleOptionViewItem & option, const QRect & rect, const QString & text ) const override;
 
     private:
         class Private;

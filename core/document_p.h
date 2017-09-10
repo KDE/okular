@@ -13,15 +13,16 @@
 
 #include "document.h"
 
+#include "synctex/synctex_parser.h"
+
 // qt/kde/system includes
 #include <QtCore/QHash>
 #include <QtCore/QLinkedList>
 #include <QtCore/QMap>
 #include <QtCore/QMutex>
 #include <QtCore/QPointer>
-
-#include <kcomponentdata.h>
-#include <kservicetypetrader.h>
+#include <QUrl>
+#include <KPluginMetaData>
 
 // local includes
 #include "fontinfo.h"
@@ -31,7 +32,8 @@ class QUndoStack;
 class QEventLoop;
 class QFile;
 class QTimer;
-class KTemporaryFile;
+class QTemporaryFile;
+class KPluginMetaData;
 
 struct AllocatedPixmap;
 struct ArchiveData;
@@ -47,15 +49,13 @@ class View;
 
 struct GeneratorInfo
 {
-    GeneratorInfo( const KComponentData &_data )
-        : generator( 0 ), data( _data ),
-          config( 0 ), save( 0 ),
+    explicit GeneratorInfo( Okular::Generator *g, const KPluginMetaData &data)
+        : generator( g ), metadata( data ), config( nullptr ), save( nullptr ),
           configChecked( false ), saveChecked( false )
     {}
 
     Okular::Generator * generator;
-    KComponentData data;
-    QString catalogName;
+    KPluginMetaData metadata;
     Okular::ConfigInterface * config;
     Okular::SaveInterface * save;
     bool configChecked : 1;
@@ -88,26 +88,28 @@ class DocumentPrivate
     public:
         DocumentPrivate( Document *parent )
           : m_parent( parent ),
-            m_tempFile( 0 ),
+            m_tempFile( nullptr ),
             m_docSize( -1 ),
             m_allocatedPixmapsTotalMemory( 0 ),
             m_maxAllocatedTextPages( 0 ),
             m_warnedOutOfMemory( false ),
             m_rotation( Rotation0 ),
             m_exportCached( false ),
-            m_bookmarkManager( 0 ),
-            m_memCheckTimer( 0 ),
-            m_saveBookmarksTimer( 0 ),
-            m_generator( 0 ),
+            m_bookmarkManager( nullptr ),
+            m_memCheckTimer( nullptr ),
+            m_saveBookmarksTimer( nullptr ),
+            m_generator( nullptr ),
+            m_walletGenerator( nullptr ),
             m_generatorsLoaded( false ),
-            m_pageController( 0 ),
-            m_closingLoop( 0 ),
-            m_scripter( 0 ),
-            m_archiveData( 0 ),
+            m_pageController( nullptr ),
+            m_closingLoop( nullptr ),
+            m_scripter( nullptr ),
+            m_archiveData( nullptr ),
             m_fontsCached( false ),
             m_annotationEditingEnabled ( true ),
-            m_annotationBeingMoved( false ),
-            m_docdataMigrationNeeded( false )
+            m_annotationBeingModified( false ),
+            m_docdataMigrationNeeded( false ),
+            m_synctex_scanner( nullptr )
         {
             calculateMaxTextPages();
         }
@@ -120,34 +122,34 @@ class DocumentPrivate
         qulonglong calculateMemoryToFree();
         void cleanupPixmapMemory();
         void cleanupPixmapMemory( qulonglong memoryToFree );
-        AllocatedPixmap * searchLowestPriorityPixmap( bool unloadableOnly = false, bool thenRemoveIt = false, DocumentObserver *observer = 0 /* any */ );
+        AllocatedPixmap * searchLowestPriorityPixmap( bool unloadableOnly = false, bool thenRemoveIt = false, DocumentObserver *observer = nullptr /* any */ );
         void calculateMaxTextPages();
         qulonglong getTotalMemory();
-        qulonglong getFreeMemory( qulonglong *freeSwap = 0 );
+        qulonglong getFreeMemory( qulonglong *freeSwap = nullptr );
         bool loadDocumentInfo( LoadDocumentInfoFlags loadWhat );
         bool loadDocumentInfo( QFile &infoFile, LoadDocumentInfoFlags loadWhat );
         void loadViewsInfo( View *view, const QDomElement &e );
         void saveViewsInfo( View *view, QDomElement &e ) const;
-        QString giveAbsolutePath( const QString & fileName ) const;
+        QUrl giveAbsoluteUrl( const QString & fileName ) const;
         bool openRelativeFile( const QString & fileName );
-        Generator * loadGeneratorLibrary( const KService::Ptr &service );
+        Generator * loadGeneratorLibrary( const KPluginMetaData& service );
         void loadAllGeneratorLibraries();
-        void loadServiceList( const KService::List& offers );
+        void loadServiceList( const QVector<KPluginMetaData>& offers );
         void unloadGenerator( const GeneratorInfo& info );
         void cacheExportFormats();
         void setRotationInternal( int r, bool notify );
         ConfigInterface* generatorConfig( GeneratorInfo& info );
         SaveInterface* generatorSave( GeneratorInfo& info );
-        Document::OpenResult openDocumentInternal( const KService::Ptr& offer, bool isstdin, const QString& docFile, const QByteArray& filedata, const QString& password );
+        Document::OpenResult openDocumentInternal( const KPluginMetaData& offer, bool isstdin, const QString& docFile, const QByteArray& filedata, const QString& password );
         static ArchiveData *unpackDocumentArchive( const QString &archivePath );
-        bool savePageDocumentInfo( KTemporaryFile *infoFile, int what ) const;
+        bool savePageDocumentInfo( QTemporaryFile *infoFile, int what ) const;
         DocumentViewport nextDocumentViewport() const;
         void notifyAnnotationChanges( int page );
         void notifyFormChanges( int page );
         bool canAddAnnotationsNatively() const;
         bool canModifyExternalAnnotations() const;
         bool canRemoveExternalAnnotations() const;
-        OKULAR_EXPORT static QString docDataFileName(const KUrl &url, qint64 document_size);
+        OKULARCORE_EXPORT static QString docDataFileName(const QUrl &url, qint64 document_size);
 
         // Methods that implement functionality needed by undo commands
         void performAddPageAnnotation( int page, Annotation *annotation );
@@ -155,12 +157,14 @@ class DocumentPrivate
         void performModifyPageAnnotation( int page, Annotation * annotation, bool appearanceChanged );
         void performSetAnnotationContents( const QString & newContents, Annotation *annot, int pageNumber );
 
+        void recalculateForms();
+
         // private slots
         void saveDocumentInfo() const;
         void slotTimedMemoryCheck();
         void sendGeneratorPixmapRequest();
         void rotationFinished( int page, Okular::Page *okularPage );
-        void fontReadingProgress( int page );
+        void slotFontReadingProgress( int page );
         void fontReadingGotFont( const Okular::FontInfo& font );
         void slotGeneratorConfigChanged( const QString& );
         void refreshPixmaps( int );
@@ -182,17 +186,21 @@ class DocumentPrivate
          * Sets the bounding box of the given @p page (in terms of upright orientation, i.e., Rotation0).
          */
         void setPageBoundingBox( int page, const NormalizedRect& boundingBox );
+
         /**
          * Request a particular metadata of the Document itself (ie, not something
          * depending on the document type/backend).
          */
-        QVariant documentMetaData( const QString &key, const QVariant &option ) const;
+        QVariant documentMetaData( const Generator::DocumentMetaDataKey key, const QVariant &option ) const;
 
         /**
          * Return whether the normalized rectangle @p rectOfInterest on page number @p rectPage
          * is fully visible.
          */
         bool isNormalizedRectangleFullyVisible( const Okular::NormalizedRect & rectOfInterest, int rectPage );
+
+        // For sync files
+        void loadSyncFile( const QString & filePath );
 
         // member variables
         Document *m_parent;
@@ -204,12 +212,12 @@ class DocumentPrivate
 
         // needed because for remote documents docFileName is a local file and
         // we want the remote url when the document refers to relativeNames
-        KUrl m_url;
+        QUrl m_url;
 
         // cached stuff
         QString m_docFileName;
         QString m_xmlFileName;
-        KTemporaryFile *m_tempFile;
+        QTemporaryFile *m_tempFile;
         qint64 m_docSize;
 
         // viewport stuff
@@ -252,6 +260,7 @@ class DocumentPrivate
         QHash<QString, GeneratorInfo> m_loadedGenerators;
         Generator * m_generator;
         QString m_generatorName;
+        Generator * m_walletGenerator;
         bool m_generatorsLoaded;
         QVector< Page * > m_pagesVector;
         QVector< VisiblePageRect * > m_pageRects;
@@ -276,7 +285,7 @@ class DocumentPrivate
         QSet< View * > m_views;
 
         bool m_annotationEditingEnabled;
-        bool m_annotationBeingMoved; // is an annotation currently being moved?
+        bool m_annotationBeingModified; // is an annotation currently being moved or resized?
         bool m_metadataLoadingCompleted;
 
         QUndoStack *m_undoStack;
@@ -288,6 +297,13 @@ class DocumentPrivate
         // shown in read-only mode. This flag is set if the docdata/ XML file
         // for the current document contains any annotation or form.
         bool m_docdataMigrationNeeded;
+
+        synctex_scanner_t m_synctex_scanner;
+
+        // generator selection
+        static QVector<KPluginMetaData> availableGenerators();
+        static QVector<KPluginMetaData> configurableGenerators();
+        static KPluginMetaData generatorForMimeType(const QMimeType& type, QWidget* widget, const QVector<KPluginMetaData> &triedOffers = QVector<KPluginMetaData>());
 };
 
 class DocumentInfoPrivate

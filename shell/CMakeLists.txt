@@ -1,17 +1,17 @@
 
 include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/..
+  ${CMAKE_CURRENT_BINARY_DIR}/../
 )
 
-# checking whether we should enable activities support
 
-macro_optional_find_package(KActivities 6.1.0)
-macro_log_feature(KActivities_FOUND "KActivities" "Activities interface library" "https://projects.kde.org/projects/kde/kdelibs/kactivities" FALSE "6.1.0" "Required for Activities integration.")
-
-if(KActivities_FOUND)
- add_definitions(-DKActivities_FOUND)
- include_directories(${KACTIVITIES_INCLUDE_DIRS})
-endif(KActivities_FOUND)
+if(NOT WIN32)
+set_package_properties("KActivities" PROPERTIES
+        DESCRIPTION  "Activities interface library"
+        URL "https://projects.kde.org/projects/kde/kdelibs/kactivities"
+        TYPE RECOMMENDED
+        PURPOSE "Required for Activities integration.")
+endif()
 
 # okular
 
@@ -22,17 +22,22 @@ set(okular_SRCS
    shellutils.cpp
 )
 
-kde4_add_app_icon(okular_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../ui/data/icons/hi*-apps-okular.png")
+file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../ui/data/icons/*-apps-okular.png")
+ecm_add_app_icon(okular_SRCS ICONS ${ICONS_SRCS})
 
-kde4_add_executable(okular ${okular_SRCS})
+add_executable(okular ${okular_SRCS})
 
-target_link_libraries(okular ${KDE4_KPARTS_LIBS} ${KACTIVITIES_LIBRARY})
+target_link_libraries(okular KF5::Parts KF5::WindowSystem)
 
-install(TARGETS okular ${INSTALL_TARGETS_DEFAULT_ARGS})
+if(NOT WIN32)
+	target_link_libraries(okular KF5::Activities)
+endif()
+
+install(TARGETS okular ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 
 
 # okular shell data files
 
-install( PROGRAMS okular.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
-install( FILES shell.rc DESTINATION ${DATA_INSTALL_DIR}/okular )
-
+install( PROGRAMS org.kde.okular.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
+install( FILES shell.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/okular )
+install( FILES org.kde.okular.appdata.xml DESTINATION  ${KDE_INSTALL_METAINFODIR} )

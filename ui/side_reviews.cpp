@@ -11,19 +11,19 @@
 
 // qt/kde includes
 #include <QtCore/QStringList>
-#include <QtGui/QHeaderView>
-#include <QtGui/QLayout>
+#include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLayout>
 #include <QtGui/QPaintEvent>
 #include <QtGui/QPainter>
-#include <QtGui/QSizePolicy>
+#include <QtWidgets/QSizePolicy>
 #include <QtGui/QTextDocument>
-#include <QtGui/QToolBar>
-#include <QtGui/QTreeView>
+#include <QtWidgets/QToolBar>
+#include <QtWidgets/QTreeView>
 
-#include <kaction.h>
-#include <klocale.h>
+#include <qaction.h>
+#include <KLocalizedString>
 #include <kiconloader.h>
-#include <kicon.h>
+#include <QIcon>
 
 // local includes
 #include "core/annotations.h"
@@ -37,14 +37,16 @@
 
 class TreeView : public QTreeView
 {
+  Q_OBJECT
+
   public:
-    TreeView( Okular::Document *document, QWidget *parent = 0 )
+    TreeView( Okular::Document *document, QWidget *parent = Q_NULLPTR )
       : QTreeView( parent ), m_document( document )
     {
     }
 
   protected:
-    virtual void paintEvent( QPaintEvent *event )
+    void paintEvent( QPaintEvent *event ) override
     {
       bool hasAnnotations = false;
       for ( uint i = 0; i < m_document->pages(); ++i )
@@ -96,7 +98,7 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
     m_view->header()->hide();
 
     QToolBar *toolBar = new QToolBar( this );
-    toolBar->setObjectName( QLatin1String( "reviewOptsBar" ) );
+    toolBar->setObjectName( QStringLiteral( "reviewOptsBar" ) );
     QSizePolicy sp = toolBar->sizePolicy();
     sp.setVerticalPolicy( QSizePolicy::Minimum );
     toolBar->setSizePolicy( sp );
@@ -117,7 +119,7 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
     m_searchLine = new KTreeViewSearchLine( this, m_view );
     m_searchLine->setCaseSensitivity( Okular::Settings::self()->reviewsSearchCaseSensitive() ? Qt::CaseSensitive : Qt::CaseInsensitive );
     m_searchLine->setRegularExpression( Okular::Settings::self()->reviewsSearchRegularExpression() );
-    connect( m_searchLine, SIGNAL(searchOptionsChanged()), this, SLOT(saveSearchOptions()) );
+    connect(m_searchLine, &KTreeViewSearchLine::searchOptionsChanged, this, &Reviews::saveSearchOptions);
     vLayout->addWidget( m_searchLine );
     vLayout->addWidget( m_view );
     vLayout->addWidget( toolBar );
@@ -125,30 +127,28 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
     toolBar->setIconSize( QSize( 16, 16 ) );
     toolBar->setMovable( false );
     // - add Page button
-    QAction * groupByPageAction = toolBar->addAction( KIcon( "text-x-generic" ), i18n( "Group by Page" ) );
+    QAction * groupByPageAction = toolBar->addAction( QIcon::fromTheme( QStringLiteral("text-x-generic") ), i18n( "Group by Page" ) );
     groupByPageAction->setCheckable( true );
-    connect( groupByPageAction, SIGNAL(toggled(bool)), this, SLOT(slotPageEnabled(bool)) );
+    connect(groupByPageAction, &QAction::toggled, this, &Reviews::slotPageEnabled);
     groupByPageAction->setChecked( Okular::Settings::groupByPage() );
     // - add Author button
-    QAction * groupByAuthorAction = toolBar->addAction( KIcon( "user-identity" ), i18n( "Group by Author" ) );
+    QAction * groupByAuthorAction = toolBar->addAction( QIcon::fromTheme( QStringLiteral("user-identity") ), i18n( "Group by Author" ) );
     groupByAuthorAction->setCheckable( true );
-    connect( groupByAuthorAction, SIGNAL(toggled(bool)), this, SLOT(slotAuthorEnabled(bool)) );
+    connect(groupByAuthorAction, &QAction::toggled, this, &Reviews::slotAuthorEnabled);
     groupByAuthorAction->setChecked( Okular::Settings::groupByAuthor() );
 
     // - add separator
     toolBar->addSeparator();
     // - add Current Page Only button
-    QAction * curPageOnlyAction = toolBar->addAction( KIcon( "arrow-down" ), i18n( "Show reviews for current page only" ) );
+    QAction * curPageOnlyAction = toolBar->addAction( QIcon::fromTheme( QStringLiteral("arrow-down") ), i18n( "Show reviews for current page only" ) );
     curPageOnlyAction->setCheckable( true );
-    connect( curPageOnlyAction, SIGNAL(toggled(bool)), this, SLOT(slotCurrentPageOnly(bool)) );
+    connect(curPageOnlyAction, &QAction::toggled, this, &Reviews::slotCurrentPageOnly);
     curPageOnlyAction->setChecked( Okular::Settings::currentPageOnly() );
 
-    connect( m_view, SIGNAL(activated(QModelIndex)),
-             this, SLOT(activated(QModelIndex)) );
+    connect(m_view, &TreeView::activated, this, &Reviews::activated);
 
     m_view->setContextMenuPolicy( Qt::CustomContextMenu );
-    connect( m_view, SIGNAL(customContextMenuRequested(QPoint)),
-             this, SLOT(contextMenuRequested(QPoint)) );
+    connect(m_view, &TreeView::customContextMenuRequested, this, &Reviews::contextMenuRequested);
 
 }
 
@@ -227,7 +227,7 @@ void Reviews::activated( const QModelIndex &index )
     vp.rePos.normalizedX = ( nr.right + nr.left ) / 2.0;
     vp.rePos.normalizedY = ( nr.bottom + nr.top ) / 2.0;
     // setting the viewport
-    m_document->setViewport( vp, 0, true );
+    m_document->setViewport( vp, nullptr, true );
 }
 
 QModelIndexList Reviews::retrieveAnnotations(const QModelIndex& idx) const
@@ -255,8 +255,7 @@ QModelIndexList Reviews::retrieveAnnotations(const QModelIndex& idx) const
 void Reviews::contextMenuRequested( const QPoint &pos )
 {
     AnnotationPopup popup( m_document, AnnotationPopup::SingleAnnotationMode, this );
-    connect( &popup, SIGNAL(openAnnotationWindow(Okular::Annotation*,int)),
-             this, SIGNAL(openAnnotationWindow(Okular::Annotation*,int)) );
+    connect(&popup, &AnnotationPopup::openAnnotationWindow, this, &Reviews::openAnnotationWindow);
 
     QModelIndexList indexes = m_view->selectionModel()->selectedIndexes();
     Q_FOREACH ( const QModelIndex &index, indexes )
@@ -283,7 +282,7 @@ void Reviews::saveSearchOptions()
 {
     Okular::Settings::setReviewsSearchRegularExpression( m_searchLine->regularExpression() );
     Okular::Settings::setReviewsSearchCaseSensitive( m_searchLine->caseSensitivity() == Qt::CaseSensitive ? true : false );
-    Okular::Settings::self()->writeConfig();
+    Okular::Settings::self()->save();
 }
 
 #include "side_reviews.moc"

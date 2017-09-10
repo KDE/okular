@@ -13,8 +13,8 @@
 #include <qlist.h>
 #include <qpointer.h>
 
-#include <kicon.h>
-#include <klocale.h>
+#include <QIcon>
+#include <KLocalizedString>
 
 #include "core/annotations.h"
 #include "core/document.h"
@@ -55,10 +55,10 @@ class AnnotationModelPrivate : public Okular::DocumentObserver
 {
 public:
     AnnotationModelPrivate( AnnotationModel *qq );
-    virtual ~AnnotationModelPrivate();
+    ~AnnotationModelPrivate() override;
 
-    virtual void notifySetup( const QVector< Okular::Page * > &pages, int setupFlags );
-    virtual void notifyPageChanged( int page, int flags );
+    void notifySetup( const QVector< Okular::Page * > &pages, int setupFlags ) override;
+    void notifyPageChanged( int page, int flags ) override;
 
     QModelIndex indexForItem( AnnItem *item ) const;
     void rebuildTree( const QVector< Okular::Page * > &pages );
@@ -71,7 +71,7 @@ public:
 
 
 AnnItem::AnnItem()
-    : parent( 0 ), annotation( 0 ), page( -1 )
+    : parent( nullptr ), annotation( nullptr ), page( -1 )
 {
 }
 
@@ -83,7 +83,7 @@ AnnItem::AnnItem( AnnItem *_parent, Okular::Annotation *ann )
 }
 
 AnnItem::AnnItem( AnnItem *_parent, int _page )
-    : parent( _parent ), annotation( 0 ), page( _page )
+    : parent( _parent ), annotation( nullptr ), page( _page )
 {
     Q_ASSERT( !parent->parent );
     parent->children.append( this );
@@ -110,11 +110,12 @@ void AnnotationModelPrivate::notifySetup( const QVector< Okular::Page * > &pages
     if ( !( setupFlags & Okular::DocumentObserver::DocumentChanged ) )
         return;
 
+    q->beginResetModel();
     qDeleteAll( root->children );
     root->children.clear();
-    q->reset();
 
     rebuildTree( pages );
+    q->endResetModel();
 }
 
 void AnnotationModelPrivate::notifyPageChanged( int page, int flags )
@@ -267,7 +268,7 @@ AnnItem* AnnotationModelPrivate::findItem( int page, int *index ) const
     }
     if ( index )
         *index = -1;
-    return 0;
+    return nullptr;
 }
 
 
@@ -304,7 +305,7 @@ QVariant AnnotationModel::data( const QModelIndex &index, int role ) const
         if ( role == Qt::DisplayRole )
           return i18n( "Page %1", item->page + 1 );
         else if ( role == Qt::DecorationRole )
-          return KIcon( "text-plain" );
+          return QIcon::fromTheme( QStringLiteral("text-plain") );
         else if ( role == PageRole )
           return item->page;
 
@@ -316,7 +317,7 @@ QVariant AnnotationModel::data( const QModelIndex &index, int role ) const
             return GuiUtils::captionForAnnotation( item->annotation );
             break;
         case Qt::DecorationRole:
-            return KIcon( "okular" );
+            return QIcon::fromTheme( QStringLiteral("okular") );
             break;
         case Qt::ToolTipRole:
             return GuiUtils::prettyToolTip( item->annotation );
@@ -346,7 +347,7 @@ QVariant AnnotationModel::headerData( int section, Qt::Orientation orientation, 
         return QVariant();
 
     if ( section == 0 && role == Qt::DisplayRole )
-        return "Annotations";
+        return QString::fromLocal8Bit("Annotations");
 
     return QVariant();
 }
@@ -386,10 +387,10 @@ bool AnnotationModel::isAnnotation( const QModelIndex &index ) const
 Okular::Annotation* AnnotationModel::annotationForIndex( const QModelIndex &index ) const
 {
     if ( !index.isValid() )
-        return 0;
+        return nullptr;
 
     AnnItem *item = static_cast< AnnItem* >( index.internalPointer() );
     return item->annotation;
 }
 
-#include "annotationmodel.moc"
+#include "moc_annotationmodel.cpp"

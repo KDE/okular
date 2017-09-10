@@ -11,42 +11,25 @@
 
 #include "generator_kimgio.h"
 
-#include <QtCore/QBuffer>
-#include <QtGui/QImageReader>
-#include <QtGui/QPainter>
-#include <QtGui/QPrinter>
+#include <QBuffer>
+#include <QFile>
+#include <QImageReader>
+#include <QPainter>
+#include <QPrinter>
+#include <QMimeType>
+#include <QMimeDatabase>
 
-#include <kaboutdata.h>
-#include <kaction.h>
+#include <KAboutData>
+#include <qaction.h>
 #include <kactioncollection.h>
-#include <kicon.h>
-#include <kimageio.h>
-#include <klocale.h>
+#include <QIcon>
+#include <KLocalizedString>
 
-#include <libkexiv2/kexiv2.h>
+#include <kexiv2/kexiv2.h>
 
 #include <core/page.h>
 
-static KAboutData createAboutData()
-{
-    KAboutData aboutData(
-         "okular_kimgio",
-         "okular_kimgio",
-         ki18n( "Image Backend" ),
-         "0.1.2",
-         ki18n( "A simple image backend" ),
-         KAboutData::License_GPL,
-         ki18n( "© 2005, 2009 Albert Astals Cid\n"
-                "© 2006-2007 Pino Toscano\n"
-                "© 2006-2007 Tobias Koenig" )
-    );
-    aboutData.addAuthor( ki18n( "Albert Astals Cid" ), KLocalizedString(), "aacid@kde.org" );
-    aboutData.addAuthor( ki18n( "Pino Toscano" ), KLocalizedString(), "pino@kde.org" );
-    aboutData.addAuthor( ki18n( "Tobias Koenig" ), KLocalizedString(), "tokoe@kde.org" );
-    return aboutData;
-}
-
-OKULAR_EXPORT_PLUGIN( KIMGIOGenerator, createAboutData() )
+OKULAR_EXPORT_PLUGIN(KIMGIOGenerator, "libokularGenerator_kimgio.json")
 
 KIMGIOGenerator::KIMGIOGenerator( QObject *parent, const QVariantList &args )
     : Generator( parent, args )
@@ -57,17 +40,6 @@ KIMGIOGenerator::KIMGIOGenerator( QObject *parent, const QVariantList &args )
     setFeature( PrintNative );
     setFeature( PrintToFile );
     setFeature( SwapBackingFile );
-
-/*
-    setComponentData( *ownComponentData() );
-
-    setXMLFile( "gui.rc" );
-    KAction * kimgio_test = new KAction( this );
-    kimgio_test->setText( "Image test" );
-    kimgio_test->setIcon( KIcon( "smiley" ) );
-    connect( kimgio_test, SIGNAL(triggered(bool)), this, SLOT(slotTest()) );
-    actionCollection()->addAction( "kimgio_test", kimgio_test );
-*/
 }
 
 KIMGIOGenerator::~KIMGIOGenerator()
@@ -76,51 +48,39 @@ KIMGIOGenerator::~KIMGIOGenerator()
 
 bool KIMGIOGenerator::loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector )
 {
-    const QString mime = KMimeType::findByFileContent(fileName)->name();
-    const QStringList types = KImageIO::typeForMime(mime);
-    const QByteArray type = !types.isEmpty() ? types[0].toAscii() : QByteArray();
-    QImageReader reader( fileName, type );
-    if ( !reader.read( &m_img ) ) {
-        emit error( i18n( "Unable to load document: %1", reader.errorString() ), -1 );
+    QFile f( fileName );
+    if ( !f.open(QFile::ReadOnly) ) {
+        emit error( i18n( "Unable to load document: %1", f.errorString() ), -1 );
         return false;
     }
-    docInfo.set( Okular::DocumentInfo::MimeType, mime );
-
-    // Apply transformations dictated by Exif metadata
-    KExiv2Iface::KExiv2 exifMetadata;
-    if ( exifMetadata.load( fileName ) ) {
-        exifMetadata.rotateExifQImage( m_img, exifMetadata.getImageOrientation() );
-    }
-
-    pagesVector.resize( 1 );
-
-    Okular::Page * page = new Okular::Page( 0, m_img.width(), m_img.height(), Okular::Rotation0 );
-    pagesVector[0] = page;
-
-    return true;
+    return loadDocumentInternal( f.readAll(), fileName, pagesVector );
 }
 
 bool KIMGIOGenerator::loadDocumentFromData( const QByteArray & fileData, QVector<Okular::Page*> & pagesVector )
 {
-    const QString mime = KMimeType::findByContent(fileData)->name();
-    const QStringList types = KImageIO::typeForMime(mime);
-    const QByteArray type = !types.isEmpty() ? types[0].toAscii() : QByteArray();
-    
+    return loadDocumentInternal( fileData, QString(), pagesVector );
+}
+
+bool KIMGIOGenerator::loadDocumentInternal(const QByteArray & fileData, const QString & fileName, QVector<Okular::Page*> & pagesVector )
+{
     QBuffer buffer;
     buffer.setData( fileData );
     buffer.open( QIODevice::ReadOnly );
 
-    QImageReader reader( &buffer, type );
+    QImageReader reader( &buffer, QImageReader::imageFormat( &buffer ) );
+    reader.setAutoDetectImageFormat( true );
     if ( !reader.read( &m_img ) ) {
         emit error( i18n( "Unable to load document: %1", reader.errorString() ), -1 );
         return false;
     }
-    docInfo.set( Okular::DocumentInfo::MimeType, mime );
+    QMimeDatabase db;
+    auto mime = db.mimeTypeForFileNameAndData( fileName, fileData );
+    docInfo.set( Okular::DocumentInfo::MimeType, mime.name() );
 
     // Apply transformations dictated by Exif metadata
     KExiv2Iface::KExiv2 exifMetadata;
     if ( exifMetadata.loadFromData( fileData ) ) {
-        exifMetadata.rotateExifQImage( m_img, exifMetadata.getImageOrientation() );
+        exifMetadata.rotateExifQImage(m_img, exifMetadata.getImageOrientation());
     }
 
     pagesVector.resize( 1 );
@@ -131,7 +91,7 @@ bool KIMGIOGenerator::loadDocumentFromData( const QByteArray & fileData, QVector
     return true;
 }
 
-bool KIMGIOGenerator::swapBackingFile( QString const &newFileName )
+bool KIMGIOGenerator::swapBackingFile( QString const &/*newFileName*/ )
 {
     // NOP: We don't actually need to do anything because all data has already
     // been loaded in RAM
@@ -189,13 +149,10 @@ bool KIMGIOGenerator::print( QPrinter& printer )
     return true;
 }
 
-void KIMGIOGenerator::slotTest()
-{
-    kDebug() << "Test";
-}
-
 Okular::DocumentInfo KIMGIOGenerator::generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const
 {
+    Q_UNUSED(keys);
+
     return docInfo;
 }
 

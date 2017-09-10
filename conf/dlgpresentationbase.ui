@@ -1,54 +1,79 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>DlgPresentationBase</class>
- <widget class="QWidget" name="DlgPresentationBase" >
-  <property name="geometry" >
+ <widget class="QWidget" name="DlgPresentationBase">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>446</height>
+    <height>525</height>
    </rect>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2" >
-   <property name="margin" >
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>
-    <widget class="QGroupBox" name="groupBox" >
-     <property name="title" >
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
       <string>Navigation</string>
      </property>
-     <layout class="QVBoxLayout" >
-      <property name="spacing" >
+     <layout class="QVBoxLayout">
+      <property name="spacing">
        <number>6</number>
       </property>
-      <property name="margin" >
+      <property name="leftMargin">
+       <number>9</number>
+      </property>
+      <property name="topMargin">
+       <number>9</number>
+      </property>
+      <property name="rightMargin">
+       <number>9</number>
+      </property>
+      <property name="bottomMargin">
        <number>9</number>
       </property>
       <item>
-       <layout class="QHBoxLayout" >
-        <property name="spacing" >
+       <layout class="QHBoxLayout">
+        <property name="spacing">
          <number>6</number>
         </property>
-        <property name="margin" >
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
          <number>0</number>
         </property>
         <item>
-         <widget class="QCheckBox" name="kcfg_SlidesAdvance" >
-          <property name="text" >
+         <widget class="QCheckBox" name="kcfg_SlidesAdvance">
+          <property name="text">
            <string>Advance every:</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="KIntSpinBox" name="kcfg_SlidesAdvanceTime" >
-          <property name="enabled" >
+         <widget class="KPluralHandlingSpinBox" name="kcfg_SlidesAdvanceTime">
+          <property name="enabled">
            <bool>false</bool>
           </property>
-          <property name="suffix" >
-           <string> sec.</string>
-          </property>
-          <property name="value" >
+          <property name="value">
            <number>5</number>
           </property>
          </widget>
@@ -56,8 +81,8 @@
        </layout>
       </item>
       <item>
-       <widget class="QCheckBox" name="kcfg_SlidesLoop" >
-        <property name="text" >
+       <widget class="QCheckBox" name="kcfg_SlidesLoop">
+        <property name="text">
          <string>Loop after last page</string>
         </property>
        </widget>
@@ -66,63 +91,50 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBox_2" >
-     <property name="title" >
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
       <string>Appearance</string>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout" >
+     <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <layout class="QGridLayout" name="gridLayout_3" >
-        <item row="0" column="0" >
-         <widget class="QLabel" name="textLabel3" >
-          <property name="text" >
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="0" column="0">
+         <widget class="QLabel" name="textLabel3">
+          <property name="text">
            <string>Background color:</string>
           </property>
-          <property name="alignment" >
+          <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
         </item>
-        <item row="0" column="1" >
-         <widget class="KColorButton" name="kcfg_SlidesBackgroundColor" />
+        <item row="0" column="1">
+         <widget class="KColorButton" name="kcfg_SlidesBackgroundColor"/>
         </item>
-        <item row="1" column="0" >
-         <widget class="QLabel" name="label" >
-          <property name="text" >
-           <string>Pencil color:</string>
-          </property>
-          <property name="alignment" >
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1" >
-         <widget class="KColorButton" name="kcfg_SlidesPencilColor" />
-        </item>
-        <item row="2" column="0" >
-         <widget class="QLabel" name="textLabel2" >
-          <property name="text" >
+        <item row="1" column="0">
+         <widget class="QLabel" name="textLabel2">
+          <property name="text">
            <string>Mouse cursor:</string>
           </property>
-          <property name="alignment" >
+          <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
         </item>
-        <item row="2" column="1" >
-         <widget class="QComboBox" name="kcfg_SlidesCursor" >
+        <item row="1" column="1">
+         <widget class="QComboBox" name="kcfg_SlidesCursor">
           <item>
-           <property name="text" >
+           <property name="text">
             <string>Hidden After Delay</string>
            </property>
           </item>
           <item>
-           <property name="text" >
+           <property name="text">
             <string>Always Visible</string>
            </property>
           </item>
           <item>
-           <property name="text" >
+           <property name="text">
             <string>Always Hidden</string>
            </property>
           </item>
@@ -131,15 +143,15 @@
        </layout>
       </item>
       <item>
-       <widget class="QCheckBox" name="kcfg_SlidesShowProgress" >
-        <property name="text" >
+       <widget class="QCheckBox" name="kcfg_SlidesShowProgress">
+        <property name="text">
          <string>Show &amp;progress indicator</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="kcfg_SlidesShowSummary" >
-        <property name="text" >
+       <widget class="QCheckBox" name="kcfg_SlidesShowSummary">
+        <property name="text">
          <string>Show s&amp;ummary page</string>
         </property>
        </widget>
@@ -148,116 +160,121 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="kcfg_SlidesTransitionsEnabled" >
-     <property name="title" >
+    <widget class="QGroupBox" name="kcfg_SlidesTransitionsEnabled">
+     <property name="title">
       <string>Enable transitions</string>
      </property>
-     <property name="checkable" >
+     <property name="checkable">
       <bool>true</bool>
      </property>
-     <property name="checked" >
+     <property name="checked">
       <bool>true</bool>
      </property>
-     <layout class="QGridLayout" name="gridLayout" >
-      <item row="0" column="0" >
-       <widget class="QLabel" name="textLabel1" >
-        <property name="text" >
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="textLabel1">
+        <property name="text">
          <string>Default transition:</string>
         </property>
-        <property name="alignment" >
+        <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
       </item>
-      <item row="0" column="1" >
-       <widget class="QComboBox" name="kcfg_SlidesTransition" >
+      <item row="0" column="1">
+       <widget class="QComboBox" name="kcfg_SlidesTransition">
         <item>
-         <property name="text" >
+         <property name="text">
           <string>Blinds Vertical</string>
          </property>
         </item>
         <item>
-         <property name="text" >
+         <property name="text">
           <string>Blinds Horizontal</string>
          </property>
         </item>
         <item>
-         <property name="text" >
+         <property name="text">
           <string>Box In</string>
          </property>
         </item>
         <item>
-         <property name="text" >
+         <property name="text">
           <string>Box Out</string>
          </property>
         </item>
         <item>
-         <property name="text" >
+         <property name="text">
           <string>Dissolve</string>
          </property>
         </item>
         <item>
-         <property name="text" >
+         <property name="text">
+          <string>Fade</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
           <string>Glitter Down</string>
          </property>
         </item>
         <item>
-         <property name="text" >
+         <property name="text">
           <string>Glitter Right</string>
          </property>
         </item>
         <item>
-         <property name="text" >
+         <property name="text">
           <string>Glitter Right-Down</string>
          </property>
         </item>
         <item>
-         <property name="text" >
+         <property name="text">
           <string>Random Transition</string>
          </property>
         </item>
         <item>
-         <property name="text" >
+         <property name="text">
           <string>Replace</string>
          </property>
         </item>
         <item>
-         <property name="text" >
+         <property name="text">
           <string>Split Horizontal In</string>
          </property>
         </item>
         <item>
-         <property name="text" >
+         <property name="text">
           <string>Split Horizontal Out</string>
          </property>
         </item>
         <item>
-         <property name="text" >
+         <property name="text">
           <string>Split Vertical In</string>
          </property>
         </item>
         <item>
-         <property name="text" >
+         <property name="text">
           <string>Split Vertical Out</string>
          </property>
         </item>
         <item>
-         <property name="text" >
+         <property name="text">
           <string>Wipe Down</string>
          </property>
         </item>
         <item>
-         <property name="text" >
+         <property name="text">
           <string>Wipe Right</string>
          </property>
         </item>
         <item>
-         <property name="text" >
+         <property name="text">
           <string>Wipe Left</string>
          </property>
         </item>
         <item>
-         <property name="text" >
+         <property name="text">
           <string>Wipe Up</string>
          </property>
         </item>
@@ -267,55 +284,47 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBox_4" >
-     <property name="title" >
+    <widget class="QGroupBox" name="groupBox_4">
+     <property name="title">
       <string>Placement</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout_2" >
-      <item row="0" column="0" >
-       <widget class="QLabel" name="label_2" >
-        <property name="text" >
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
          <string>Screen:</string>
         </property>
-        <property name="alignment" >
+        <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
       </item>
-      <item row="0" column="1" >
-       <widget class="QComboBox" name="screenCombo" />
+      <item row="0" column="1">
+       <widget class="QComboBox" name="screenCombo"/>
       </item>
      </layout>
     </widget>
    </item>
    <item>
-    <spacer>
-     <property name="orientation" >
-      <enum>Qt::Vertical</enum>
+    <widget class="QGroupBox" name="annotationToolsGroupBox">
+     <property name="title">
+      <string>Drawing Tool Configuration</string>
      </property>
-     <property name="sizeType" >
-      <enum>QSizePolicy::Expanding</enum>
-     </property>
-     <property name="sizeHint" stdset="0" >
-      <size>
-       <width>20</width>
-       <height>4</height>
-      </size>
-     </property>
-    </spacer>
+     <layout class="QVBoxLayout" name="verticalLayout_4"/>
+    </widget>
    </item>
   </layout>
  </widget>
-  <customwidgets>
+ <customwidgets>
   <customwidget>
    <class>KColorButton</class>
    <extends>QPushButton</extends>
    <header>kcolorbutton.h</header>
   </customwidget>
   <customwidget>
-   <class>KIntSpinBox</class>
-   <extends>KIntSpinBox</extends>
-   <header>knuminput.h</header>
+   <class>KPluralHandlingSpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>KPluralHandlingSpinBox</header>
   </customwidget>
  </customwidgets>
  <resources/>
@@ -326,11 +335,11 @@
    <receiver>kcfg_SlidesAdvanceTime</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>88</x>
      <y>43</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>280</x>
      <y>49</y>
     </hint>

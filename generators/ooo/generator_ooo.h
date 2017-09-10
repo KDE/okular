@@ -14,13 +14,15 @@
 
 class KOOOGenerator : public Okular::TextDocumentGenerator
 {
+  Q_OBJECT
+  Q_INTERFACES( Okular::Generator )
   public:
     KOOOGenerator( QObject *parent, const QVariantList &args );
 
     // [INHERITED] reparse configuration
-    void addPages( KConfigDialog* dlg );
+    void addPages( KConfigDialog* dlg ) override;
 
-    virtual void walletDataForFile( const QString &fileName, QString *walletName, QString *walletFolder, QString *walletKey ) const;
+    void walletDataForFile( const QString &fileName, QString *walletName, QString *walletFolder, QString *walletKey ) const override;
 };
 
 #endif

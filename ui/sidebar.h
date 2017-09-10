@@ -11,7 +11,6 @@
 #define _SIDEBAR_H_
 
 #include <qwidget.h>
-#include <KUrl>
 
 class QIcon;
 class QListWidgetItem;
@@ -20,7 +19,7 @@ class Sidebar : public QWidget
 {
     Q_OBJECT
     public:
-        Sidebar( QWidget *parent = 0 );
+        Sidebar( QWidget *parent = nullptr );
         ~Sidebar();
 
         int addItem( QWidget *widget, const QIcon &icon, const QString &text );
@@ -28,13 +27,15 @@ class Sidebar : public QWidget
         void setMainWidget( QWidget *widget );
         void setBottomWidget( QWidget *widget );
 
-        void setItemEnabled( int index, bool enabled );
-        bool isItemEnabled( int index ) const;
+        void setItemEnabled( QWidget *widget, bool enabled );
+        bool isItemEnabled( QWidget *widget ) const;
 
-        enum SetCurrentIndexBehaviour { UncollapseIfCollapsed, DoNotUncollapseIfCollapsed };
+        void setItemVisible( QWidget *widget, bool visible );
 
-        void setCurrentIndex( int index, SetCurrentIndexBehaviour b = UncollapseIfCollapsed );
-        int currentIndex() const;
+        enum SetCurrentItemBehaviour { UncollapseIfCollapsed, DoNotUncollapseIfCollapsed };
+
+        void setCurrentItem( QWidget *widget, SetCurrentItemBehaviour b = UncollapseIfCollapsed );
+        QWidget *currentItem() const;
 
         void setSidebarVisibility( bool visible );
         bool isSidebarVisible() const;
@@ -42,23 +43,27 @@ class Sidebar : public QWidget
         void setCollapsed( bool collapsed );
         bool isCollapsed() const;
 
-    signals:
-        void urlsDropped( const KUrl::List& urls );
+        void moveSplitter( int sideWidgetSize );
+
+    Q_SIGNALS:
+        void urlsDropped( const QList<QUrl>& urls );
 
     protected:
-        void dragEnterEvent( QDragEnterEvent* event );
-        void dropEvent( QDropEvent* event );
+        void dragEnterEvent( QDragEnterEvent* event ) override;
+        void dropEvent( QDropEvent* event ) override;
 
-    private slots:
+    private Q_SLOTS:
         void itemClicked( QListWidgetItem *item );
         void splitterMoved( int pos, int index );
         void listContextMenu( const QPoint & );
         void showTextToggled( bool );
         void iconSizeChanged( QAction *action );
-        void appearanceChanged();
 
     private:
-        void itemClicked( QListWidgetItem *item, SetCurrentIndexBehaviour b );
+        void setIndexEnabled( int index, bool enabled );
+        void setCurrentIndex( int index, SetCurrentItemBehaviour b = UncollapseIfCollapsed );
+        bool isIndexEnabled( int index ) const;
+        void itemClicked( QListWidgetItem *item, SetCurrentItemBehaviour b );
         void saveSplitterSize() const;
 
         // private storage

@@ -1,0 +1,3 @@
+module org.kde.okular
+plugin okularplugin
+DocumentView 2.0 DocumentView.qml

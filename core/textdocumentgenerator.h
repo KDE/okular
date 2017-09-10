@@ -10,7 +10,7 @@
 #ifndef _OKULAR_TEXTDOCUMENTGENERATOR_H_
 #define _OKULAR_TEXTDOCUMENTGENERATOR_H_
 
-#include "okular_export.h"
+#include "okularcore_export.h"
 
 #include "document.h"
 #include "generator.h"
@@ -26,7 +26,7 @@ class TextDocumentConverterPrivate;
 class TextDocumentGenerator;
 class TextDocumentGeneratorPrivate;
 
-class OKULAR_EXPORT TextDocumentConverter : public QObject
+class OKULARCORE_EXPORT TextDocumentConverter : public QObject
 {
     Q_OBJECT
 
@@ -45,7 +45,7 @@ class OKULAR_EXPORT TextDocumentConverter : public QObject
         ~TextDocumentConverter();
 
         /**
-         * Returns the generated QTextDocument object.
+         * Returns the generated QTextDocument object. The caller takes ownership of the QTextDocument
          *
          * @note there is no need to implement this one if you implement convertWithPassword
          */
@@ -150,7 +150,7 @@ class OKULAR_EXPORT TextDocumentConverter : public QObject
  * This generator provides a document in the form of a QTextDocument object,
  * parsed using a specialized TextDocumentConverter.
  */
-class OKULAR_EXPORT TextDocumentGenerator : public Generator, public Okular::ConfigInterface
+class OKULARCORE_EXPORT TextDocumentGenerator : public Generator, public Okular::ConfigInterface
 {
     /// @cond PRIVATE
     friend class TextDocumentConverter;
@@ -169,37 +169,29 @@ class OKULAR_EXPORT TextDocumentGenerator : public Generator, public Okular::Con
          *       don't have to delete it yourself
          * @since 0.17 (KDE 4.11)
          */
-        TextDocumentGenerator( TextDocumentConverter *converter, const QString& configName, QObject *parent, const QVariantList &args );
-        /**
-         * Creates a new generator that uses the specified @p converter.
-         *
-         * @deprecated use the one with configName
-         *
-         * @note the generator will take ownership of the converter, so you
-         *       don't have to delete it yourself
-         */
-        KDE_DEPRECATED TextDocumentGenerator( TextDocumentConverter *converter, QObject *parent, const QVariantList &args );
+        TextDocumentGenerator(TextDocumentConverter *converter, const QString& configName, QObject *parent, const QVariantList &args);
+
         virtual ~TextDocumentGenerator();
 
         // [INHERITED] load a document and fill up the pagesVector
-        Document::OpenResult loadDocumentWithPassword( const QString & fileName, QVector<Okular::Page*> & pagesVector, const QString &password );
+        Document::OpenResult loadDocumentWithPassword( const QString & fileName, QVector<Okular::Page*> & pagesVector, const QString &password ) override;
 
         // [INHERITED] perform actions on document / pages
-        bool canGeneratePixmap() const;
-        void generatePixmap( Okular::PixmapRequest * request );
+        bool canGeneratePixmap() const override;
+        void generatePixmap( Okular::PixmapRequest * request ) override;
 
         // [INHERITED] print document using already configured QPrinter
-        bool print( QPrinter& printer );
+        bool print( QPrinter& printer ) override;
 
         // [INHERITED] text exporting
-        Okular::ExportFormat::List exportFormats() const;
-        bool exportTo( const QString &fileName, const Okular::ExportFormat &format );
+        Okular::ExportFormat::List exportFormats() const override;
+        bool exportTo( const QString &fileName, const Okular::ExportFormat &format ) override;
 
         // [INHERITED] config interface
         /// By default checks if the default font has changed or not
-        bool reparseConfig();
+        bool reparseConfig() override;
         /// Does nothing by default. You need to reimplement it in your generator
-        void addPages( KConfigDialog* dlg );
+        void addPages( KConfigDialog* dlg ) override;
 
         /**
          * Config skeleton for TextDocumentSettingsWidget
@@ -211,12 +203,12 @@ class OKULAR_EXPORT TextDocumentGenerator : public Generator, public Okular::Con
          */
         TextDocumentSettings* generalSettings();
 
-        Okular::DocumentInfo generateDocumentInfo( const QSet<DocumentInfo::Key> &keys ) const;
-        const Okular::DocumentSynopsis* generateDocumentSynopsis();
+        Okular::DocumentInfo generateDocumentInfo( const QSet<DocumentInfo::Key> &keys ) const override;
+        const Okular::DocumentSynopsis* generateDocumentSynopsis() override;
 
     protected:
-        bool doCloseDocument();
-        Okular::TextPage* textPage( Okular::Page *page );
+        bool doCloseDocument() override;
+        Okular::TextPage* textPage( Okular::Page *page ) override;
 
     private:
         Q_DECLARE_PRIVATE( TextDocumentGenerator )

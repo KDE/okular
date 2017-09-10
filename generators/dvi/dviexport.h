@@ -11,18 +11,18 @@
  * Classes DVIExportToPDF and DVIExportToPS control the export
  * of a DVI file to PDF or PostScript format, respectively.
  * Common functionality is factored out into a common base class,
- * DVIExport which itself derives from KShared allowing easy,
- * polymorphic storage of multiple KSharedPtr<DVIExport> variables
+ * DVIExport which itself derives from QSharedData allowing easy,
+ * polymorphic storage of multiple QExplicitlySharedDataPointer<DVIExport> variables
  * in a container of all exported processes.
  */
 
 #ifndef DVIEXPORT_H
 #define DVIEXPORT_H
 
-#include <ksharedptr.h>
+#include <QExplicitlySharedDataPointer>
 
 #include <QObject>
-#include <QtGui/QPrinter>
+#include <QtPrintSupport/QPrinter>
 
 
 class dviRenderer;
@@ -30,7 +30,7 @@ class KProcess;
 class QStringList;
 
 
-class DVIExport: public QObject, public KShared
+class DVIExport: public QObject, public QSharedData
 {
   Q_OBJECT
 public:
@@ -74,7 +74,7 @@ protected:
    */
   virtual void finished_impl(int exit_code);
 
-private slots:
+private Q_SLOTS:
   /// Calls an impl() inline so that derived classes don't need slots.
   void abort_process() { abort_process_impl(); }
   void finished(int exit_code) { finished_impl(exit_code); }
@@ -94,6 +94,8 @@ private:
 
 class DVIExportToPDF : public DVIExport
 {
+    Q_OBJECT
+
 public:
   /** @param parent is stored internally in order to inform the parent
    *  that the external process has finished.
@@ -105,6 +107,8 @@ public:
 
 class DVIExportToPS : public DVIExport
 {
+    Q_OBJECT
+
 public:
   /** @param parent is stored internally in order to inform the parent
    *  that the external process has finished.
@@ -124,8 +128,8 @@ public:
                 QPrinter::Orientation orientation = QPrinter::Portrait);
 
 private:
-  virtual void abort_process_impl();
-  virtual void finished_impl(int exit_code);
+  void abort_process_impl() override;
+  void finished_impl(int exit_code) override;
 
   QPrinter* printer_;
   QString output_name_;

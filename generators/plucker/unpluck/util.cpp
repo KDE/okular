@@ -90,7 +90,7 @@ int plkr_ShowMessages
 
 char* _plkr_strndup
     (
-    char*  str,
+    const char*  str,
     int    len
     )
 {
@@ -135,8 +135,8 @@ struct HashTable {
 
 static int CompareStrings
     (
-    char*  key1,
-    char*  key2
+    const char*  key1,
+    const char*  key2
     )
 {
     return (strcmp (key1, key2) == 0);
@@ -144,7 +144,7 @@ static int CompareStrings
 
 static int HashString
     (
-    char*  str,
+    const char*  str,
     int    size
     )
 {
@@ -158,7 +158,7 @@ static int HashString
 void* _plkr_FindInTable
     (
     HashTable*  ht,
-    char*       key
+    const char*       key
     )
 {
     HashTableSlot*  slot;
@@ -177,7 +177,7 @@ void* _plkr_FindInTable
 void* _plkr_RemoveFromTable
     (
     HashTable*  ht,
-    char*       key
+    const char*       key
     )
 {
     HashTableSlot*  slot;
@@ -210,7 +210,7 @@ void* _plkr_RemoveFromTable
 int _plkr_AddToTable
     (
     HashTable*  ht,
-    char*       key,
+    const char*       key,
     void*       obj
     )
 {

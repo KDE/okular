@@ -60,7 +60,7 @@ Q_OBJECT
 
         void addRequest(const GSRendererThreadRequest &req);
 
-    signals:
+    Q_SIGNALS:
         void imageDone(QImage *image, Okular::PixmapRequest *request);
 
     private:
@@ -70,7 +70,7 @@ Q_OBJECT
 
         static GSRendererThread *theRenderer;
 
-        void run();
+        void run() override;
 
         SpectreRenderContext *m_renderContext;
         QQueue<GSRendererThreadRequest> m_queue;

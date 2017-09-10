@@ -16,7 +16,6 @@
 #include <qhash.h>
 #include <qtoolbutton.h>
 
-#include <KIcon>
 
 #include "core/area.h"
 
@@ -78,6 +77,7 @@ class PageViewItem
         void setVisible( bool visible );
         void invalidate();
         bool setFormWidgetsVisible( bool visible );
+        void reloadFormWidgetsState();
 
     private:
         const Okular::Page * m_page;
@@ -101,6 +101,8 @@ class PageViewItem
  */
 class PageViewMessage : public QWidget
 {
+    Q_OBJECT
+
     public:
         PageViewMessage( QWidget * parent );
 
@@ -108,9 +110,9 @@ class PageViewMessage : public QWidget
         void display( const QString & message, const QString & details = QString(), Icon icon = Info, int durationMs = 4000 );
 
     protected:
-        bool eventFilter(QObject * obj, QEvent * event );
-        void paintEvent( QPaintEvent * e );
-        void mousePressEvent( QMouseEvent * e );
+        bool eventFilter(QObject * obj, QEvent * event ) override;
+        void paintEvent( QPaintEvent * e ) override;
+        void mousePressEvent( QMouseEvent * e ) override;
 
     private:
         QRect computeTextRect( const QString & message, int extra_width ) const;
@@ -147,11 +149,11 @@ class ToolBarButton : public QToolButton
         int buttonID() const { return m_id; }
         bool isText() const { return m_isText; }
 
-    signals:
+    Q_SIGNALS:
         void buttonDoubleClicked( int buttonID );
 
     protected:
-        void mouseDoubleClickEvent( QMouseEvent * event );
+        void mouseDoubleClickEvent( QMouseEvent * event ) override;
 
     private:
         int m_id;
@@ -189,7 +191,7 @@ class PageViewToolBar : public QWidget
 
         // query properties
 
-    signals:
+    Q_SIGNALS:
         // the tool 'toolID' has been selected
         void toolSelected( int toolID );
         // orientation has been changed
@@ -199,18 +201,18 @@ class PageViewToolBar : public QWidget
 
     protected:
         // handle widget events { anchor_resize, paint, animation, drag }
-        bool eventFilter( QObject * o, QEvent * e );
-        void paintEvent( QPaintEvent * );
-        void mousePressEvent( QMouseEvent * e );
-        void mouseMoveEvent( QMouseEvent * e );
-        void mouseReleaseEvent( QMouseEvent * e );
+        bool eventFilter( QObject * o, QEvent * e ) override;
+        void paintEvent( QPaintEvent * ) override;
+        void mousePressEvent( QMouseEvent * e ) override;
+        void mouseMoveEvent( QMouseEvent * e ) override;
+        void mouseReleaseEvent( QMouseEvent * e ) override;
 
     private:
         // private variables
         friend class ToolBarPrivate;
         class ToolBarPrivate * d;
 
-    private slots:
+    private Q_SLOTS:
         void slotAnimate();
         void slotButtonClicked();
 };

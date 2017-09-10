@@ -11,8 +11,8 @@
 #ifdef HAVE_FREETYPE
 
 #include "fontMap.h"
-#include "kvs_debug.h"
-
+#include "debug_dvi.h"
+#include <QtCore/qloggingcategory.h>
 #include <QFile>
 #include <QProcess>
 #include <QTextStream>
@@ -36,36 +36,36 @@ fontMap::fontMap()
   // other way than to try both options one after another. We use the
   // teTeX 3.0 format first.
   QProcess kpsewhich;
-  kpsewhich.start("kpsewhich",
-                  QStringList() << "--format=map" << "ps2pk.map",
+  kpsewhich.start(QStringLiteral("kpsewhich"),
+                  QStringList() << QStringLiteral("--format=map") << QStringLiteral("ps2pk.map"),
                   QIODevice::ReadOnly|QIODevice::Text);
 
   if (!kpsewhich.waitForStarted()) {
-    kError(kvs::dvi) << "fontMap::fontMap(): kpsewhich could not be started." << endl;
+    qCCritical(OkularDviDebug) << "fontMap::fontMap(): kpsewhich could not be started." << endl;
     return;
   }
 
   // We wait here while the external program runs concurrently.
   kpsewhich.waitForFinished(-1);
 
-  QString map_fileName = QString(kpsewhich.readAll()).trimmed();
+  QString map_fileName = QString::fromLocal8Bit(kpsewhich.readAll()).trimmed();
   if (map_fileName.isEmpty()) {
     // Map file not found? Then we try the teTeX < 3.0 way of finding
     // the file.
-    kpsewhich.start("kpsewhich",
-                    QStringList() << "--format=dvips config" << "ps2pk.map",
+    kpsewhich.start(QStringLiteral("kpsewhich"),
+                    QStringList() << QStringLiteral("--format=dvips config") << QStringLiteral("ps2pk.map"),
                     QIODevice::ReadOnly|QIODevice::Text);
     if (!kpsewhich.waitForStarted()) {
-      kError(kvs::dvi) << "fontMap::fontMap(): kpsewhich could not be started." << endl;
+      qCCritical(OkularDviDebug) << "fontMap::fontMap(): kpsewhich could not be started." << endl;
       return;
     }
 
     kpsewhich.waitForFinished(-1);
 
-    map_fileName = QString(kpsewhich.readAll()).trimmed();
+    map_fileName = QString::fromLocal8Bit(kpsewhich.readAll()).trimmed();
     // If both versions fail, then there is nothing left to do.
     if (map_fileName.isEmpty()) {
-      kError(kvs::dvi) << "fontMap::fontMap(): The file 'ps2pk.map' could not be found by kpsewhich." << endl;
+      qCCritical(OkularDviDebug) << "fontMap::fontMap(): The file 'ps2pk.map' could not be found by kpsewhich." << endl;
       return;
     }
   }
@@ -76,23 +76,23 @@ fontMap::fontMap()
     QString line;
     while ( !stream.atEnd() ) {
       line = stream.readLine().simplified();
-      if (line.isEmpty() || (line.at(0) == '%'))
+      if (line.isEmpty() || (line.at(0) == QLatin1Char('%')))
         continue;
 
-      QString TeXName  = line.section(' ', 0, 0);
-      QString FullName = line.section(' ', 1, 1);
-      QString fontFileName = line.section('<', -1).trimmed().section(' ', 0, 0);
-      QString encodingName = line.section('<', -2, -2).trimmed().section(' ', 0, 0);
+      QString TeXName  = line.section(QLatin1Char(' '), 0, 0);
+      QString FullName = line.section(QLatin1Char(' '), 1, 1);
+      QString fontFileName = line.section(QLatin1Char('<'), -1).trimmed().section(QLatin1Char(' '), 0, 0);
+      QString encodingName = line.section(QLatin1Char('<'), -2, -2).trimmed().section(QLatin1Char(' '), 0, 0);
       // It seems that sometimes the encoding is prepended by the
       // letter '[', which we ignore
-      if ((!encodingName.isEmpty()) && (encodingName[0] == '['))
+      if ((!encodingName.isEmpty()) && (encodingName[0] == QLatin1Char('[')))
         encodingName = encodingName.mid(1);
 
       double slant = 0.0;
-      int i = line.indexOf("SlantFont");
+      int i = line.indexOf(QStringLiteral("SlantFont"));
       if (i >= 0) {
         bool ok;
-        slant = line.left(i).section(' ', -1, -1 ,QString::SectionSkipEmpty).toDouble(&ok);
+        slant = line.left(i).section(QLatin1Char(' '), -1, -1 ,QString::SectionSkipEmpty).toDouble(&ok);
         if (ok == false)
           slant = 0.0;
       }
@@ -102,20 +102,20 @@ fontMap::fontMap()
       entry.slant        = slant;
       entry.fontFileName = fontFileName;
       entry.fullFontName = FullName;
-      if (encodingName.endsWith(".enc"))
+      if (encodingName.endsWith(QLatin1String(".enc")))
         entry.fontEncoding = encodingName;
       else
         entry.fontEncoding.clear();
     }
     file.close();
   } else
-    kError(kvs::dvi) << QString("fontMap::fontMap(): The file '%1' could not be opened.").arg(map_fileName) << endl;
+    qCCritical(OkularDviDebug) << QStringLiteral("fontMap::fontMap(): The file '%1' could not be opened.").arg(map_fileName) << endl;
 
 #ifdef DEBUG_FONTMAP
-  kDebug(kvs::dvi) << "FontMap file parsed. Results:";
+  qCDebug(OkularDviDebug) << "FontMap file parsed. Results:";
   QMap<QString, fontMapEntry>::Iterator it;
   for ( it = fontMapEntries.begin(); it != fontMapEntries.end(); ++it )
-    kDebug(kvs::dvi) << "TeXName: " << it.key()
+    qCDebug(OkularDviDebug) << "TeXName: " << it.key()
                   << ", FontFileName=" << it.data().fontFileName
                   << ", FullName=" << it.data().fullFontName
                   << ", Encoding=" << it.data().fontEncoding

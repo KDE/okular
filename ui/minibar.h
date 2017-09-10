@@ -33,15 +33,15 @@ class PagesEdit : public KLineEdit
 
     public:
         PagesEdit( MiniBar * parent );
-        void setText( const QString & );
+        void setText( const QString & ) override;
 
     protected:
-        void focusInEvent( QFocusEvent * e );
-        void focusOutEvent( QFocusEvent * e );
-        void mousePressEvent( QMouseEvent * e );
-        void wheelEvent( QWheelEvent * e );
+        void focusInEvent( QFocusEvent * e ) override;
+        void focusOutEvent( QFocusEvent * e ) override;
+        void mousePressEvent( QMouseEvent * e ) override;
+        void wheelEvent( QWheelEvent * e ) override;
 
-    private slots:
+    private Q_SLOTS:
         void updatePalette();
 
     private:
@@ -51,6 +51,8 @@ class PagesEdit : public KLineEdit
 
 class PageNumberEdit : public PagesEdit
 {
+    Q_OBJECT
+
     public:
         PageNumberEdit( MiniBar * parent );
         void setPagesNumber( int pages );
@@ -64,13 +66,13 @@ class PageLabelEdit : public PagesEdit
   Q_OBJECT
     public:
         PageLabelEdit( MiniBar * parent );
-        void setText( const QString & newText );
+        void setText( const QString & newText ) override;
         void setPageLabels( const QVector< Okular::Page * > & pageVector );
 
-    signals:
+    Q_SIGNALS:
         void pageNumberChosen( int page );
 
-    private slots:
+    private Q_SLOTS:
         void pageChosen();
 
     private:
@@ -83,6 +85,8 @@ class PageLabelEdit : public PagesEdit
  */
 class MiniBarLogic : public QObject, public Okular::DocumentObserver
 {
+    Q_OBJECT
+
     public:
         MiniBarLogic( QObject * parent, Okular::Document * m_document );
         ~MiniBarLogic();
@@ -94,8 +98,8 @@ class MiniBarLogic : public QObject, public Okular::DocumentObserver
         int currentPage() const;
         
         // [INHERITED] from DocumentObserver
-        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags );
-        void notifyCurrentPageChanged( int previous, int current );
+        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) override;
+        void notifyCurrentPageChanged( int previous, int current ) override;
         
     private:
         QSet<MiniBar *> m_miniBars;
@@ -114,15 +118,15 @@ class MiniBar : public QWidget
         MiniBar( QWidget *parent, MiniBarLogic * miniBarLogic );
         ~MiniBar();
 
-        void changeEvent( QEvent * event ) ;
+        void changeEvent( QEvent * event )  override;
 
-    signals:
+    Q_SIGNALS:
         void gotoPage();
         void prevPage();
         void nextPage();
         void forwardKeyPressEvent( QKeyEvent *e );
 
-    public slots:
+    public Q_SLOTS:
         void slotChangePage();
         void slotChangePage(int page);
         void slotEmitNextPage();
@@ -131,7 +135,7 @@ class MiniBar : public QWidget
 
     private:
         void resizeForPage( int pages );
-        bool eventFilter( QObject *target, QEvent *event );
+        bool eventFilter( QObject *target, QEvent *event ) override;
 
         MiniBarLogic * m_miniBarLogic;
         PageNumberEdit * m_pageNumberEdit;
@@ -154,21 +158,21 @@ class ProgressWidget : public QWidget, public Okular::DocumentObserver
         ~ProgressWidget();
 
         // [INHERITED] from DocumentObserver
-        void notifyCurrentPageChanged( int previous, int current );
+        void notifyCurrentPageChanged( int previous, int current ) override;
 
         void slotGotoNormalizedPage( float index );
 
-    signals:
+    Q_SIGNALS:
         void prevPage();
         void nextPage();
 
     protected:
         void setProgress( float percentage );
 
-        void mouseMoveEvent( QMouseEvent * e );
-        void mousePressEvent( QMouseEvent * e );
-        void wheelEvent( QWheelEvent * e );
-        void paintEvent( QPaintEvent * e );
+        void mouseMoveEvent( QMouseEvent * e ) override;
+        void mousePressEvent( QMouseEvent * e ) override;
+        void wheelEvent( QWheelEvent * e ) override;
+        void paintEvent( QPaintEvent * e ) override;
 
     private:
         Okular::Document * m_document;

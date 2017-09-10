@@ -13,9 +13,9 @@
 #include <core/page.h>
 #include <core/sourcereference.h>
 #include <core/textpage.h>
-#include <core/utils.h>
 
 #include "generator_dvi.h"
+#include "debug_dvi.h"
 #include "dviFile.h"
 #include "dviPageInfo.h"
 #include "dviRenderer.h"
@@ -24,46 +24,26 @@
 #include "TeXFont.h"
 
 #include <qapplication.h>
+#include <qdir.h>
 #include <qstring.h>
 #include <qurl.h>
 #include <qvector.h>
 #include <qstack.h>
+#include <qtemporaryfile.h>
 #include <qmutex.h>
 
-#include <kaboutdata.h>
-#include <kdebug.h>
-#include <klocale.h>
-#include <ktemporaryfile.h>
+#include <KAboutData>
+#include <QtCore/QDebug>
+#include <KLocalizedString>
 
 #ifdef DVI_OPEN_BUSYLOOP
-#ifdef Q_OS_UNIX
-#include <ctime>
-#endif
-#ifdef Q_OS_WIN
-#include <windows.h> // for Sleep
-#endif
+#include <QThread>
 #endif
 
-static const int DviDebug = 4713;
-
-static KAboutData createAboutData()
-{
-    KAboutData aboutData(
-         "okular_dvi",
-         "okular_dvi",
-         ki18n( "DVI Backend" ),
-         "0.3.7",
-         ki18n( "A DVI file renderer" ),
-         KAboutData::License_GPL,
-         ki18n( "© 2006 Luigi Toscano" )
-    );
-    return aboutData;
-}
-
-OKULAR_EXPORT_PLUGIN( DviGenerator, createAboutData() )
+OKULAR_EXPORT_PLUGIN(DviGenerator, "libokularGenerator_dvi.json")
 
 DviGenerator::DviGenerator( QObject *parent, const QVariantList &args ) : Okular::Generator( parent, args ),
-  m_fontExtracted( false ), m_docSynopsis( 0 ), m_dviRenderer( 0 )
+  m_fontExtracted( false ), m_docSynopsis( nullptr ), m_dviRenderer( nullptr )
 {
     setFeature( Threaded );
     setFeature( TextExtraction );
@@ -75,32 +55,27 @@ DviGenerator::DviGenerator( QObject *parent, const QVariantList &args ) : Okular
 
 bool DviGenerator::loadDocument( const QString & fileName, QVector< Okular::Page * > &pagesVector )
 {
-    //kDebug(DviDebug) << "file:" << fileName;
-    KUrl base( fileName );
+    //qCDebug(OkularDviDebug) << "file:" << fileName;
+    QUrl base( QUrl::fromLocalFile(fileName) );
 
     (void)userMutex();
 
-    m_dviRenderer = new dviRenderer(documentMetaData("TextHinting", QVariant()).toBool());
-    connect( m_dviRenderer, SIGNAL( error(QString,int) ), this, SIGNAL( error(QString,int) ) );
-    connect( m_dviRenderer, SIGNAL( warning(QString,int) ), this, SIGNAL( warning(QString,int) ) );
-    connect( m_dviRenderer, SIGNAL( notice(QString,int) ), this, SIGNAL( notice(QString,int) ) );
+    m_dviRenderer = new dviRenderer(documentMetaData(TextHintingMetaData, QVariant()).toBool());
+    connect(m_dviRenderer, &dviRenderer::error, this, &DviGenerator::error);
+    connect(m_dviRenderer, &dviRenderer::warning, this, &DviGenerator::warning);
+    connect(m_dviRenderer, &dviRenderer::notice, this, &DviGenerator::notice);
 #ifdef DVI_OPEN_BUSYLOOP
     static const ushort s_waitTime = 800; // milliseconds
     static const int s_maxIterations = 10;
     int iter = 0;
     for ( ; !m_dviRenderer->isValidFile( fileName ) && iter < s_maxIterations; ++iter )
     {
-        kDebug(DviDebug).nospace() << "file not valid after iteration #" << iter << "/" << s_maxIterations << ", waiting for " << s_waitTime;
-#ifdef Q_OS_WIN
-        Sleep( uint( s_waitTime ) );
-#else
-        struct timespec ts = { 0, s_waitTime * 1000 * 1000 };
-        nanosleep( &ts, NULL );
-#endif
+        qCDebug(OkularDviDebug).nospace() << "file not valid after iteration #" << iter << "/" << s_maxIterations << ", waiting for " << s_waitTime;
+        QThread::msleep(s_waitTime);
     }
     if ( iter >= s_maxIterations && !m_dviRenderer->isValidFile( fileName ) )
     {
-        kDebug(DviDebug) << "file still not valid after" << s_maxIterations;
+        qCDebug(OkularDviDebug) << "file still not valid after" << s_maxIterations;
         delete m_dviRenderer;
         m_dviRenderer = 0;
         return false;
@@ -109,20 +84,20 @@ bool DviGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
     if ( !m_dviRenderer->isValidFile( fileName ) )
     {
         delete m_dviRenderer;
-        m_dviRenderer = 0;
+        m_dviRenderer = nullptr;
         return false;
     }
 #endif
     if ( ! m_dviRenderer->setFile( fileName, base ) )
     {
         delete m_dviRenderer;
-        m_dviRenderer = 0;
+        m_dviRenderer = nullptr;
         return false;
     }
 
-    kDebug(DviDebug) << "# of pages:" << m_dviRenderer->dviFile->total_pages;
+    qCDebug(OkularDviDebug) << "# of pages:" << m_dviRenderer->dviFile->total_pages;
 
-    m_resolution = Okular::Utils::dpiY();
+    m_resolution = dpi().height();
     loadPages( pagesVector );
 
     return true;
@@ -131,9 +106,9 @@ bool DviGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
 bool DviGenerator::doCloseDocument()
 {
     delete m_docSynopsis;
-    m_docSynopsis = 0;
+    m_docSynopsis = nullptr;
     delete m_dviRenderer;
-    m_dviRenderer = 0;
+    m_dviRenderer = nullptr;
 
     m_linkGenerated.clear();
     m_fontExtracted = false;
@@ -181,11 +156,11 @@ QLinkedList<Okular::ObjectRect*> DviGenerator::generateDviLinks( const dviPageIn
                nb = (double)boxArea.bottom() / pageHeight;
         
         QString linkText = dviLink.linkText;
-        if ( linkText.startsWith("#") )
+        if ( linkText.startsWith(QLatin1String("#")) )
             linkText = linkText.mid( 1 );
         Anchor anch = m_dviRenderer->findAnchor( linkText );
 
-        Okular::Action *okuLink = 0;
+        Okular::Action *okuLink = nullptr;
 
         /* distinguish between local (-> anchor) and remote links */
         if (anch.isValid())
@@ -194,11 +169,11 @@ QLinkedList<Okular::ObjectRect*> DviGenerator::generateDviLinks( const dviPageIn
             Okular::DocumentViewport vp;
             fillViewportFromAnchor( vp, anch, pageWidth, pageHeight );
 
-            okuLink = new Okular::GotoAction( "", vp );
+            okuLink = new Okular::GotoAction( QLatin1String(""), vp );
         }
         else
         {
-            okuLink = new Okular::BrowseAction( dviLink.linkText );
+            okuLink = new Okular::BrowseAction( QUrl::fromUserInput( dviLink.linkText ) );
         }
         if ( okuLink ) 
         {
@@ -243,7 +218,7 @@ QImage DviGenerator::image( Okular::PixmapRequest *request )
         pageInfo->resolution = (double)(pageInfo->width)/ps.width().getLength_in_inch();
 
 #if 0
-        kDebug(DviDebug) << *request
+        qCDebug(OkularDviDebug) << *request
         << ", res:" << pageInfo->resolution << " - (" << pageInfo->width << ","
         << ps.width().getLength_in_inch() << ")," << ps.width().getLength_in_mm()
         << endl;
@@ -253,7 +228,7 @@ QImage DviGenerator::image( Okular::PixmapRequest *request )
 
         if ( ! pageInfo->img.isNull() )
         {
-            kDebug(DviDebug) << "Image OK";
+            qCDebug(OkularDviDebug) << "Image OK";
 
             ret = pageInfo->img;
 
@@ -274,7 +249,7 @@ QImage DviGenerator::image( Okular::PixmapRequest *request )
 
 Okular::TextPage* DviGenerator::textPage( Okular::Page *page )
 {
-    kDebug(DviDebug);
+    qCDebug(OkularDviDebug);
     dviPageInfo *pageInfo = new dviPageInfo();
     pageSize ps;
     
@@ -288,7 +263,7 @@ Okular::TextPage* DviGenerator::textPage( Okular::Page *page )
     QMutexLocker lock( userMutex() );
 
     // get page text from m_dviRenderer
-    Okular::TextPage *ktp = 0;
+    Okular::TextPage *ktp = nullptr;
     if ( m_dviRenderer )
     {
         SimplePageSize s = m_dviRenderer->sizeOfPage( pageInfo->pageNumber );
@@ -318,7 +293,7 @@ Okular::TextPage *DviGenerator::extractTextFromPage( dviPageInfo *pageInfo )
         TextBox curTB = *it;
  
 #if 0
-        kDebug(DviDebug) << "orientation: " << orientation
+        qCDebug(OkularDviDebug) << "orientation: " << orientation
                  << ", curTB.box: " << curTB.box
                  << ", tmpRect: " << tmpRect 
                  << ", ( " << pageWidth << "," << pageHeight << " )" 
@@ -338,7 +313,7 @@ Okular::DocumentInfo DviGenerator::generateDocumentInfo( const QSet<Okular::Docu
     Okular::DocumentInfo docInfo;
 
     if ( keys.contains( Okular::DocumentInfo::MimeType ) )
-        docInfo.set( Okular::DocumentInfo::MimeType, "application/x-dvi" );
+        docInfo.set( Okular::DocumentInfo::MimeType, QStringLiteral("application/x-dvi") );
 
     QMutexLocker lock( userMutex() );
 
@@ -349,7 +324,7 @@ Okular::DocumentInfo DviGenerator::generateDocumentInfo( const QSet<Okular::Docu
         // read properties from dvif
         //docInfo.set( "filename", dvif->filename, i18n("Filename") );
         if ( keys.contains( Okular::DocumentInfo::CustomKeys ) )
-            docInfo.set( "generatorDate", dvif->generatorString, i18n("Generator/Date") );
+            docInfo.set( QStringLiteral("generatorDate"), dvif->generatorString, i18n("Generator/Date") );
         if ( keys.contains( Okular::DocumentInfo::Pages ) )
             docInfo.set( Okular::DocumentInfo::Pages, QString::number( dvif->total_pages ) );
     }
@@ -387,7 +362,7 @@ const Okular::DocumentSynopsis *DviGenerator::generateDocumentSynopsis()
             const Okular::Page *p = document()->page( a.page - 1 );
 
             fillViewportFromAnchor( vp, a, (int)p->width(), (int)p->height() );
-            domel.setAttribute( "Viewport", vp.toString() );
+            domel.setAttribute( QStringLiteral("Viewport"), vp.toString() );
         }
         if ( stack.isEmpty() )
             m_docSynopsis->appendChild( domel );
@@ -426,16 +401,14 @@ Okular::FontInfo::List DviGenerator::fontsForPage( int page )
 #ifdef HAVE_FREETYPE
             if ( font->getFullFontName().isEmpty() ) 
             {
-                name = QString( "%1, %2%" )
+                name = QStringLiteral( "%1, %2%" )
                         .arg( font->fontname )
                         .arg( zoom );
             }
             else
             {
-                name = QString( "%1 (%2), %3%" ) 
-                        .arg( font->fontname )
-                        .arg( font->getFullFontName() ) 
-                        .arg( zoom ); 
+                name = QStringLiteral( "%1 (%2), %3%" ) 
+                        .arg( font->fontname, font->getFullFontName(), QString::number(zoom) ); 
             }
 #else
             name = QString( "%1, %2%" )
@@ -446,7 +419,7 @@ Okular::FontInfo::List DviGenerator::fontsForPage( int page )
 
             QString fontFileName;
             if (!(font->flags & TeXFontDefinition::FONT_VIRTUAL)) {
-                if ( font->font != 0 )
+                if ( font->font != nullptr )
                     fontFileName = font->font->errorMessage;
                 else
                     fontFileName = i18n("Font file not found");
@@ -498,7 +471,7 @@ void DviGenerator::loadPages( QVector< Okular::Page * > &pagesVector )
 
     m_linkGenerated.fill( false, numofpages );
 
-    //kDebug(DviDebug) << "resolution:" << m_resolution << ", dviFile->preferred?";
+    //qCDebug(OkularDviDebug) << "resolution:" << m_resolution << ", dviFile->preferred?";
 
     /* get the suggested size */
     if ( m_dviRenderer->dviFile->suggestedPageSize )
@@ -514,7 +487,7 @@ void DviGenerator::loadPages( QVector< Okular::Page * > &pagesVector )
 
     for ( int i = 0; i < numofpages; ++i )
     {
-        //kDebug(DviDebug) << "getting status of page" << i << ":";
+        //qCDebug(OkularDviDebug) << "getting status of page" << i << ":";
 
         if ( pagesVector[i] )
         {
@@ -528,7 +501,7 @@ void DviGenerator::loadPages( QVector< Okular::Page * > &pagesVector )
 
         pagesVector[i] = page;
     }
-    kDebug(DviDebug) << "pagesVector successfully inizialized!";
+    qCDebug(OkularDviDebug) << "pagesVector successfully inizialized!";
 
     // filling the pages with the source references rects
     const QVector<DVI_SourceFileAnchor>& sourceAnchors = m_dviRenderer->sourceAnchors();
@@ -538,7 +511,7 @@ void DviGenerator::loadPages( QVector< Okular::Page * > &pagesVector )
         if ( sfa.page < 1 || (int)sfa.page > numofpages )
             continue;
 
-        Okular::NormalizedPoint p( -1.0, (double)sfa.distance_from_top.getLength_in_pixel( Okular::Utils::dpiY() ) / (double)pageRequiredSize.height() );
+        Okular::NormalizedPoint p( -1.0, (double)sfa.distance_from_top.getLength_in_pixel( dpi().height() ) / (double)pageRequiredSize.height() );
         Okular::SourceReference * sourceRef = new Okular::SourceReference( sfa.fileName, sfa.line );
         refRects[ sfa.page - 1 ].append( new Okular::SourceRefObjectRect( p, sourceRef ) );
     }
@@ -550,8 +523,7 @@ void DviGenerator::loadPages( QVector< Okular::Page * > &pagesVector )
 bool DviGenerator::print( QPrinter& printer )
 {
     // Create tempfile to write to
-    KTemporaryFile tf;
-    tf.setSuffix( ".ps" );
+    QTemporaryFile tf(QDir::tempPath() + QLatin1String("/okular_XXXXXX.ps" ));
     if ( !tf.open() )
         return false;
 
@@ -564,10 +536,10 @@ bool DviGenerator::print( QPrinter& printer )
     // List of pages to print.
     foreach ( int p, pageList )
     {
-        pages += QString(",%1").arg(p);
+        pages += QStringLiteral(",%1").arg(p);
     }
     if ( !pages.isEmpty() )
-        printOptions << "-pp" << pages.mid(1);
+        printOptions << QStringLiteral("-pp") << pages.mid(1);
 
     QEventLoop el;
     m_dviRenderer->setEventLoop( &el );
@@ -581,7 +553,7 @@ bool DviGenerator::print( QPrinter& printer )
 
 QVariant DviGenerator::metaData( const QString & key, const QVariant & option ) const
 {
-    if ( key == "NamedViewport" && !option.toString().isEmpty() )
+    if ( key == QLatin1String("NamedViewport") && !option.toString().isEmpty() )
     {
         const Anchor anchor = m_dviRenderer->parseReference( option.toString() );
         if ( anchor.isValid() )
@@ -598,5 +570,8 @@ QVariant DviGenerator::metaData( const QString & key, const QVariant & option ) 
     }
     return QVariant();
 }
+
+Q_LOGGING_CATEGORY(OkularDviDebug, "org.kde.okular.generators.dvi.core", QtWarningMsg)
+Q_LOGGING_CATEGORY(OkularDviShellDebug, "org.kde.okular.generators.dvi.shell", QtWarningMsg)
 
 #include "generator_dvi.moc"

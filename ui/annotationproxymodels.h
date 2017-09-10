@@ -10,7 +10,7 @@
 #ifndef ANNOTATIONPROXYMODEL_H
 #define ANNOTATIONPROXYMODEL_H
 
-#include <QtGui/QSortFilterProxyModel>
+#include <QtCore/QSortFilterProxyModel>
 #include <QtCore/QPair>
 
 /**
@@ -27,12 +27,12 @@ class PageFilterProxyModel : public QSortFilterProxyModel
      *
      * @param parent The parent object.
      */
-    PageFilterProxyModel( QObject *parent = 0 );
+    explicit PageFilterProxyModel( QObject *parent = nullptr );
 
     /**
      * Reimplemented from QSortFilterProxy.
      */
-    virtual bool filterAcceptsRow( int, const QModelIndex& ) const;
+    bool filterAcceptsRow( int, const QModelIndex& ) const override;
 
   public Q_SLOTS:
     /**
@@ -65,18 +65,18 @@ class PageGroupProxyModel : public QAbstractProxyModel
      *
      * @param parent The parent object.
      */
-    PageGroupProxyModel( QObject *parent = 0 );
+    explicit PageGroupProxyModel( QObject *parent = nullptr );
 
-    virtual int columnCount( const QModelIndex &parentIndex ) const;
-    virtual int rowCount( const QModelIndex &parentIndex ) const;
+    int columnCount( const QModelIndex &parentIndex ) const override;
+    int rowCount( const QModelIndex &parentIndex ) const override;
 
-    virtual QModelIndex index( int row, int column, const QModelIndex &parentIndex = QModelIndex() ) const;
-    virtual QModelIndex parent( const QModelIndex &index ) const;
+    QModelIndex index( int row, int column, const QModelIndex &parentIndex = QModelIndex() ) const override;
+    QModelIndex parent( const QModelIndex &index ) const override;
 
-    virtual QModelIndex mapFromSource( const QModelIndex &sourceIndex ) const;
-    virtual QModelIndex mapToSource( const QModelIndex &proxyIndex ) const;
+    QModelIndex mapFromSource( const QModelIndex &sourceIndex ) const override;
+    QModelIndex mapToSource( const QModelIndex &proxyIndex ) const override;
 
-    virtual void setSourceModel( QAbstractItemModel *model );
+    void setSourceModel( QAbstractItemModel *model ) override;
 
   public Q_SLOTS:
     /**
@@ -107,25 +107,25 @@ class AuthorGroupProxyModel : public QAbstractProxyModel
          *
          * @param parent The parent object.
          */
-        AuthorGroupProxyModel( QObject *parent = 0 );
+        explicit AuthorGroupProxyModel( QObject *parent = nullptr );
         ~AuthorGroupProxyModel();
 
-        virtual int columnCount( const QModelIndex &parentIndex ) const;
-        virtual int rowCount( const QModelIndex &parentIndex ) const;
+        int columnCount( const QModelIndex &parentIndex ) const override;
+        int rowCount( const QModelIndex &parentIndex ) const override;
 
-        virtual QModelIndex index( int row, int column, const QModelIndex &parentIndex = QModelIndex() ) const;
-        virtual QModelIndex parent( const QModelIndex &index ) const;
+        QModelIndex index( int row, int column, const QModelIndex &parentIndex = QModelIndex() ) const override;
+        QModelIndex parent( const QModelIndex &index ) const override;
 
-        virtual QModelIndex mapFromSource( const QModelIndex &sourceIndex ) const;
-        virtual QModelIndex mapToSource( const QModelIndex &proxyIndex ) const;
+        QModelIndex mapFromSource( const QModelIndex &sourceIndex ) const override;
+        QModelIndex mapToSource( const QModelIndex &proxyIndex ) const override;
 
-        virtual void setSourceModel( QAbstractItemModel *model );
+        void setSourceModel( QAbstractItemModel *model ) override;
 
-        virtual QItemSelection mapSelectionToSource(const QItemSelection &selection) const;
-        virtual QItemSelection mapSelectionFromSource(const QItemSelection &selection) const;
-        QVariant data(const QModelIndex &proxyIndex, int role = Qt::DisplayRole) const;
-        QMap<int, QVariant> itemData(const QModelIndex &index) const;
-        Qt::ItemFlags flags(const QModelIndex &index) const;
+        QItemSelection mapSelectionToSource(const QItemSelection &selection) const override;
+        QItemSelection mapSelectionFromSource(const QItemSelection &selection) const override;
+        QVariant data(const QModelIndex &proxyIndex, int role = Qt::DisplayRole) const override;
+        QMap<int, QVariant> itemData(const QModelIndex &index) const override;
+        Qt::ItemFlags flags(const QModelIndex &index) const override;
 
     public Q_SLOTS:
         /**

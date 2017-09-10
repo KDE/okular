@@ -15,38 +15,40 @@
 
 #include "TeXFont_PFB.h"
 #include "fontpool.h"
-#include "kvs_debug.h"
+#include "debug_dvi.h"
+#include "debug_dvi.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 
+#include <QtCore/qloggingcategory.h>
 #include <QImage>
 
 //#define DEBUG_PFB 1
 
 
 TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc, double slant)
-  : TeXFont(parent), face(0)
+  : TeXFont(parent), face(nullptr)
 {
 #ifdef DEBUG_PFB
   if (enc != 0)
-    kDebug(kvs::dvi) << "TeXFont_PFB::TeXFont_PFB( parent=" << parent << ", encoding=" << enc->encodingFullName << " )";
+    qCDebug(OkularDviDebug) << "TeXFont_PFB::TeXFont_PFB( parent=" << parent << ", encoding=" << enc->encodingFullName << " )";
   else
-    kDebug(kvs::dvi) << "TeXFont_PFB::TeXFont_PFB( parent=" << parent << ", encoding=0 )";
+    qCDebug(OkularDviDebug) << "TeXFont_PFB::TeXFont_PFB( parent=" << parent << ", encoding=0 )";
 #endif
 
   fatalErrorInFontLoading = false;
 
-  int error = FT_New_Face( parent->font_pool->FreeType_library, parent->filename.toLocal8Bit(), 0, &face );
+  int error = FT_New_Face( parent->font_pool->FreeType_library, parent->filename.toLocal8Bit().constData(), 0, &face );
 
   if ( error == FT_Err_Unknown_File_Format ) {
     errorMessage = i18n("The font file %1 could be opened and read, but its font format is unsupported.", parent->filename);
-    kError(kvs::dvi) << errorMessage << endl;
+    qCCritical(OkularDviDebug) << errorMessage << endl;
     fatalErrorInFontLoading = true;
     return;
   } else
     if ( error ) {
       errorMessage = i18n("The font file %1 is broken, or it could not be opened or read.", parent->filename);
-      kError(kvs::dvi) << errorMessage << endl;
+      qCCritical(OkularDviDebug) << errorMessage << endl;
       fatalErrorInFontLoading = true;
       return;
     }
@@ -60,39 +62,39 @@ TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc, double sl
     transformationMatrix.yx = 0;
     transformationMatrix.yy = 0x10000;
 
-    FT_Set_Transform( face, &transformationMatrix, 0);
+    FT_Set_Transform( face, &transformationMatrix, nullptr);
   }
 
-  if (face->family_name != 0)
-    parent->fullFontName = face->family_name;
+  if (face->family_name != nullptr)
+    parent->fullFontName = QString::fromLocal8Bit(face->family_name);
 
   // Finally, we need to set up the charMap array, which maps TeX
   // character codes to glyph indices in the font. (Remark: the
   // charMap, and the font encoding procedure is necessary, because
   // TeX is only able to address character codes 0-255 while
   // e.g. Type1 fonts may contain several thousands of characters)
-  if (enc != 0) {
-    parent->fullEncodingName = enc->encodingFullName.remove(QString::fromLatin1( "Encoding" ));
-    parent->fullEncodingName = enc->encodingFullName.remove(QString::fromLatin1( "encoding" ));
+  if (enc != nullptr) {
+    parent->fullEncodingName = enc->encodingFullName.remove(QStringLiteral( "Encoding" ));
+    parent->fullEncodingName = enc->encodingFullName.remove(QStringLiteral( "encoding" ));
 
     // An encoding vector is given for this font, i.e. an array of
     // character names (such as: 'parenleft' or 'dotlessj'). We use
     // the FreeType library function 'FT_Get_Name_Index()' to
     // associate glyph indices to those names.
 #ifdef DEBUG_PFB
-    kDebug(kvs::dvi) << "Trying to associate glyph indices to names from the encoding vector.";
+    qCDebug(OkularDviDebug) << "Trying to associate glyph indices to names from the encoding vector.";
 #endif
     for(int i=0; i<256; i++) {
-      charMap[i] = FT_Get_Name_Index( face, (FT_String *)(enc->glyphNameVector[i].toAscii().data()) );
+      charMap[i] = FT_Get_Name_Index( face, (FT_String *)(enc->glyphNameVector[i].toLatin1().data()) );
 #ifdef DEBUG_PFB
-      kDebug(kvs::dvi) << i << ": " << enc->glyphNameVector[i] << ", GlyphIndex=" <<  charMap[i];
+      qCDebug(OkularDviDebug) << i << ": " << enc->glyphNameVector[i] << ", GlyphIndex=" <<  charMap[i];
 #endif
     }
   } else {
     // If there is no encoding vector available, we check if the font
     // itself contains a charmap that could be used. An admissible
     // charMap will be stored under platform_id=7 and encoding_id=2.
-    FT_CharMap  found = 0;
+    FT_CharMap  found = nullptr;
     for (int n = 0; n<face->num_charmaps; n++ ) {
       FT_CharMap charmap = face->charmaps[n];
       if ( charmap->platform_id == 7 && charmap->encoding_id == 2 ) {
@@ -101,18 +103,18 @@ TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc, double sl
       }
     }
 
-    if ((found != 0) && (FT_Set_Charmap( face, found ) == 0)) {
+    if ((found != nullptr) && (FT_Set_Charmap( face, found ) == 0)) {
       // Feed the charMap array with the charmap data found in the
       // previous step.
 #ifdef DEBUG_PFB
-      kDebug(kvs::dvi) << "No encoding given: using charmap platform=7, encoding=2 that is contained in the font.";
+      qCDebug(OkularDviDebug) << "No encoding given: using charmap platform=7, encoding=2 that is contained in the font.";
 #endif
       for(int i=0; i<256; i++)
         charMap[i] = FT_Get_Char_Index( face, i );
     } else {
-      if ((found == 0) && (face->charmap != 0)) {
+      if ((found == nullptr) && (face->charmap != nullptr)) {
 #ifdef DEBUG_PFB
-        kDebug(kvs::dvi) << "No encoding given: using charmap platform=" << face->charmap->platform_id <<
+        qCDebug(OkularDviDebug) << "No encoding given: using charmap platform=" << face->charmap->platform_id <<
           ", encoding=" << face->charmap->encoding_id << " that is contained in the font." << endl;
 #endif
         for(int i=0; i<256; i++)
@@ -120,7 +122,7 @@ TeXFont_PFB::TeXFont_PFB(TeXFontDefinition *parent, fontEncoding *enc, double sl
       } else {
         // As a last resort, we use the identity map.
 #ifdef DEBUG_PFB
-        kDebug(kvs::dvi) << "No encoding given, no suitable charmaps found in the font: using identity charmap.";
+        qCDebug(OkularDviDebug) << "No encoding given, no suitable charmaps found in the font: using identity charmap.";
 #endif
         for(int i=0; i<256; i++)
           charMap[i] = i;
@@ -139,17 +141,17 @@ TeXFont_PFB::~TeXFont_PFB()
 glyph* TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QColor& color)
 {
 #ifdef DEBUG_PFB
-  kDebug(kvs::dvi) << "TeXFont_PFB::getGlyph( ch=" << ch << ", '" << (char)(ch) << "', generateCharacterPixmap=" << generateCharacterPixmap << " )";
+  qCDebug(OkularDviDebug) << "TeXFont_PFB::getGlyph( ch=" << ch << ", '" << (char)(ch) << "', generateCharacterPixmap=" << generateCharacterPixmap << " )";
 #endif
 
   // Paranoia checks
   if (ch >= TeXFontDefinition::max_num_of_chars_in_font) {
-    kError(kvs::dvi) << "TeXFont_PFB::getGlyph(): Argument is too big." << endl;
+    qCCritical(OkularDviDebug) << "TeXFont_PFB::getGlyph(): Argument is too big." << endl;
     return glyphtable;
   }
 
   // This is the address of the glyph that will be returned.
-  struct glyph *g = glyphtable+ch;
+  glyph *g = glyphtable+ch;
 
 
   if (fatalErrorInFontLoading == true)
@@ -169,7 +171,7 @@ glyph* TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCo
       QString msg = i18n("FreeType reported an error when setting the character size for font file %1.", parent->filename);
       if (errorMessage.isEmpty())
         errorMessage = msg;
-      kError(kvs::dvi) << msg << endl;
+      qCCritical(OkularDviDebug) << msg << endl;
       g->shrunkenCharacter = QImage(1, 1, QImage::Format_RGB32);
       g->shrunkenCharacter.fill(qRgb(255, 255, 255));
       return g;
@@ -185,7 +187,7 @@ glyph* TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCo
       QString msg = i18n("FreeType is unable to load glyph #%1 from font file %2.", ch, parent->filename);
       if (errorMessage.isEmpty())
         errorMessage = msg;
-      kError(kvs::dvi) << msg << endl;
+      qCCritical(OkularDviDebug) << msg << endl;
       g->shrunkenCharacter = QImage(1, 1, QImage::Format_RGB32);
       g->shrunkenCharacter.fill(qRgb(255, 255, 255));
       return g;
@@ -197,7 +199,7 @@ glyph* TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCo
       QString msg = i18n("FreeType is unable to render glyph #%1 from font file %2.", ch, parent->filename);
       if (errorMessage.isEmpty())
         errorMessage = msg;
-      kError(kvs::dvi) << msg << endl;
+      qCCritical(OkularDviDebug) << msg << endl;
       g->shrunkenCharacter = QImage(1, 1, QImage::Format_RGB32);
       g->shrunkenCharacter.fill(qRgb(255, 255, 255));
       return g;
@@ -208,7 +210,7 @@ glyph* TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCo
     if ((slot->bitmap.width == 0) || (slot->bitmap.rows == 0)) {
       if (errorMessage.isEmpty())
         errorMessage = i18n("Glyph #%1 is empty.", ch);
-      kError(kvs::dvi) << i18n("Glyph #%1 from font file %2 is empty.", ch, parent->filename) << endl;
+      qCCritical(OkularDviDebug) << i18n("Glyph #%1 from font file %2 is empty.", ch, parent->filename) << endl;
       g->shrunkenCharacter = QImage(15, 15 , QImage::Format_RGB32);
       g->shrunkenCharacter.fill(qRgb(255, 0, 0));
       g->x2 = 0;
@@ -224,9 +226,9 @@ glyph* TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCo
         // character outline only using the alpha channel. That
         // ensures good quality rendering for overlapping characters.
         uchar *srcScanLine = slot->bitmap.buffer;
-        for(int row=0; row<slot->bitmap.rows; row++) {
+        for(unsigned int row=0; row<slot->bitmap.rows; row++) {
           uchar *destScanLine = imgi.scanLine(row);
-          for(int col=0; col<slot->bitmap.width; col++) {
+          for(unsigned int col=0; col<slot->bitmap.width; col++) {
             destScanLine[4*col+0] = color.blue();
             destScanLine[4*col+1] = color.green();
             destScanLine[4*col+2] = color.red();
@@ -279,7 +281,7 @@ glyph* TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCo
       QString msg = i18n("FreeType is unable to load metric for glyph #%1 from font file %2.", ch, parent->filename);
       if (errorMessage.isEmpty())
         errorMessage = msg;
-      kError(kvs::dvi) << msg << endl;
+      qCCritical(OkularDviDebug) << msg << endl;
       g->dvi_advance_in_units_of_design_size_by_2e20 =  1;
     }
     g->dvi_advance_in_units_of_design_size_by_2e20 =  (qint32)(((qint64)(1<<20) * (qint64)face->glyph->metrics.horiAdvance) / (qint64)face->units_per_EM);

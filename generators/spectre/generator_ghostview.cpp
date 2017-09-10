@@ -15,13 +15,16 @@
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <qsize.h>
-#include <QtGui/QPrinter>
+#include <QPrinter>
 
-#include <kaboutdata.h>
+#include <KAboutData>
 #include <kconfigdialog.h>
-#include <kdebug.h>
-#include <kmimetype.h>
-#include <ktemporaryfile.h>
+#include <QtCore/QDebug>
+#include <QMimeType>
+#include <QMimeDatabase>
+#include <qtemporaryfile.h>
+#include <QDir>
+#include <KLocalizedString>
 
 #include <core/document.h>
 #include <core/page.h>
@@ -31,25 +34,10 @@
 #include "ui_gssettingswidget.h"
 #include "gssettings.h"
 
+#include "spectre_debug.h"
 #include "rendererthread.h"
 
-static KAboutData createAboutData()
-{
-    KAboutData aboutData(
-         "okular_ghostview",
-         "okular_ghostview",
-         ki18n( "PS Backend" ),
-         "0.1.7",
-         ki18n( "A PostScript file renderer." ),
-         KAboutData::License_GPL,
-         ki18n( "© 2007-2008 Albert Astals Cid" ),
-         ki18n( "Based on the Spectre library." )
-    );
-    aboutData.addAuthor( ki18n( "Albert Astals Cid" ), KLocalizedString(), "aacid@kde.org" );
-    return aboutData;
-}
-
-OKULAR_EXPORT_PLUGIN(GSGenerator, createAboutData())
+OKULAR_EXPORT_PLUGIN(GSGenerator, "libokularGenerator_ghostview.json")
 
 GSGenerator::GSGenerator( QObject *parent, const QVariantList &args ) :
     Okular::Generator( parent, args ),
@@ -61,9 +49,7 @@ GSGenerator::GSGenerator( QObject *parent, const QVariantList &args ) :
 
     GSRendererThread *renderer = GSRendererThread::getCreateRenderer();
     if (!renderer->isRunning()) renderer->start();
-    connect(renderer, SIGNAL(imageDone(QImage*,Okular::PixmapRequest*)),
-                      SLOT(slotImageGenerated(QImage*,Okular::PixmapRequest*)),
-                      Qt::QueuedConnection);
+    connect(renderer, &GSRendererThread::imageDone, this, &GSGenerator::slotImageGenerated, Qt::QueuedConnection);
 }
 
 GSGenerator::~GSGenerator()
@@ -84,8 +70,8 @@ bool GSGenerator::reparseConfig()
         changed = true; \
     } \
 }
-    SET_HINT("GraphicsAntialias", true, AAgfx)
-    SET_HINT("TextAntialias", true, AAtext)
+    SET_HINT(GraphicsAntialiasMetaData, true, AAgfx)
+    SET_HINT(TextAntialiasMetaData, true, AAtext)
 #undef SET_HINT
     }
     return changed;
@@ -96,7 +82,7 @@ void GSGenerator::addPages( KConfigDialog *dlg )
     Ui_GSSettingsWidget gsw;
     QWidget* w = new QWidget(dlg);
     gsw.setupUi(w);
-    dlg->addPage(w, GSSettings::self(), i18n("Ghostscript"), "okular-gv", i18n("Ghostscript Backend Configuration") );
+    dlg->addPage(w, GSSettings::self(), i18n("Ghostscript"), QStringLiteral("okular-gv"), i18n("Ghostscript Backend Configuration") );
 }
 
 bool GSGenerator::print( QPrinter& printer )
@@ -104,8 +90,7 @@ bool GSGenerator::print( QPrinter& printer )
     bool result = false;
 
     // Create tempfile to write to
-    KTemporaryFile tf;
-    tf.setSuffix( ".ps" );
+    QTemporaryFile tf(QDir::tempPath() + QLatin1String("/okular_XXXXXX.ps"));
 
     // Get list of pages to print
     QList<int> pageList = Okular::FilePrinter::pageList( printer,
@@ -115,17 +100,17 @@ bool GSGenerator::print( QPrinter& printer )
 
     // Default to Postscript export, but if printing to PDF use that instead
     SpectreExporterFormat exportFormat = SPECTRE_EXPORTER_FORMAT_PS;
-    if ( printer.outputFileName().right(3) == "pdf" )
+    if ( printer.outputFileName().right(3) == QLatin1String("pdf") )
     {
         exportFormat = SPECTRE_EXPORTER_FORMAT_PDF;
-        tf.setSuffix(".pdf");
+        tf.setFileTemplate(QDir::tempPath() + QLatin1String("/okular_XXXXXX.pdf"));
     }
 
     if ( !tf.open() )
         return false;
 
     SpectreExporter *exporter = spectre_exporter_new( m_internalDocument, exportFormat );
-    SpectreStatus exportStatus = spectre_exporter_begin( exporter, tf.fileName().toAscii() );
+    SpectreStatus exportStatus = spectre_exporter_begin( exporter, tf.fileName().toLatin1().constData() );
 
     int i = 0;
     while ( i < pageList.count() && exportStatus == SPECTRE_STATUS_SUCCESS )
@@ -158,21 +143,21 @@ bool GSGenerator::print( QPrinter& printer )
 
 bool GSGenerator::loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector )
 {
-    cache_AAtext = documentMetaData("TextAntialias", true).toBool();
-    cache_AAgfx = documentMetaData("GraphicsAntialias", true).toBool();
+    cache_AAtext = documentMetaData(TextAntialiasMetaData, true).toBool();
+    cache_AAgfx = documentMetaData(GraphicsAntialiasMetaData, true).toBool();
 
     m_internalDocument = spectre_document_new();
-    spectre_document_load(m_internalDocument, QFile::encodeName(fileName));
+    spectre_document_load(m_internalDocument, QFile::encodeName(fileName).constData());
     const SpectreStatus loadStatus = spectre_document_status(m_internalDocument);
     if (loadStatus != SPECTRE_STATUS_SUCCESS)
     {
-        kDebug(4711) << "ERR:" << spectre_status_to_string(loadStatus);
+        qCDebug(OkularSpectreDebug) << "ERR:" << spectre_status_to_string(loadStatus);
         spectre_document_free(m_internalDocument);
         m_internalDocument = 0;
         return false;
     }
     pagesVector.resize( spectre_document_get_n_pages(m_internalDocument) );
-    kDebug(4711) << "Page count:" << pagesVector.count();
+    qCDebug(OkularSpectreDebug) << "Page count:" << pagesVector.count();
     return loadPages(pagesVector);
 }
 
@@ -209,7 +194,7 @@ bool GSGenerator::loadPages( QVector< Okular::Page * > & pagesVector )
         SpectreOrientation pageOrientation = SPECTRE_ORIENTATION_PORTRAIT;
         page = spectre_document_get_page (m_internalDocument, i);
         if (spectre_document_status (m_internalDocument)) {
-            kDebug(4711) << "Error getting page" << i << spectre_status_to_string(spectre_document_status(m_internalDocument));
+            qCDebug(OkularSpectreDebug) << "Error getting page" << i << spectre_status_to_string(spectre_document_status(m_internalDocument));
         } else {
             spectre_page_get_size(page, &width, &height);
             pageOrientation = spectre_page_get_orientation(page);
@@ -223,7 +208,7 @@ bool GSGenerator::loadPages( QVector< Okular::Page * > & pagesVector )
 
 void GSGenerator::generatePixmap( Okular::PixmapRequest * req )
 {
-    kDebug(4711) << "receiving" << *req;
+    qCDebug(OkularSpectreDebug) << "receiving" << *req;
 
     SpectrePage *page = spectre_document_get_page(m_internalDocument, req->pageNumber());
 
@@ -273,16 +258,16 @@ Okular::DocumentInfo GSGenerator::generateDocumentInfo( const QSet<Okular::Docum
     if ( keys.contains( Okular::DocumentInfo::CreationDate ) )
         docInfo.set( Okular::DocumentInfo::CreationDate, spectre_document_get_creation_date(m_internalDocument) );
     if ( keys.contains( Okular::DocumentInfo::CustomKeys ) )
-        docInfo.set( "dscversion", spectre_document_get_format(m_internalDocument), i18n("Document version") );
+        docInfo.set( QStringLiteral("dscversion"), spectre_document_get_format(m_internalDocument), i18n("Document version") );
 
     if ( keys.contains( Okular::DocumentInfo::MimeType ) )
     {
         int languageLevel = spectre_document_get_language_level(m_internalDocument);
-        if (languageLevel > 0) docInfo.set( "langlevel", QString::number(languageLevel), i18n("Language Level") );
+        if (languageLevel > 0) docInfo.set( QStringLiteral("langlevel"), QString::number(languageLevel), i18n("Language Level") );
         if (spectre_document_is_eps(m_internalDocument))
-            docInfo.set( Okular::DocumentInfo::MimeType, "image/x-eps" );
+            docInfo.set( Okular::DocumentInfo::MimeType, QStringLiteral("image/x-eps") );
         else
-            docInfo.set( Okular::DocumentInfo::MimeType, "application/postscript" );
+            docInfo.set( Okular::DocumentInfo::MimeType, QStringLiteral("application/postscript") );
     }
 
     if ( keys.contains( Okular::DocumentInfo::Pages ) )
@@ -311,11 +296,11 @@ Okular::Rotation GSGenerator::orientation(SpectreOrientation pageOrientation) co
 QVariant GSGenerator::metaData(const QString &key, const QVariant &option) const
 {
     Q_UNUSED(option)
-    if (key == "DocumentTitle")
+    if (key == QLatin1String("DocumentTitle"))
     {
         const char *title = spectre_document_get_title(m_internalDocument);
         if (title)
-            return QString::fromAscii(title);
+            return QString::fromLatin1(title);
     }
     return QVariant();
 }

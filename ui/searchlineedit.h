@@ -36,15 +36,16 @@ class SearchLineEdit : public KLineEdit
         void setSearchColor( const QColor &color );
         void setSearchMoveViewport( bool move );
         void setSearchFromStart( bool fromStart );
+        void setFindAsYouType( bool findAsYouType );
         void resetSearch();
 
         bool isSearchRunning() const;
 
-    signals:
+    Q_SIGNALS:
         void searchStarted();
         void searchStopped();
 
-    public slots:
+    public Q_SLOTS:
         void restartSearch();
         void stopSearch();
         void findNext();
@@ -63,9 +64,10 @@ class SearchLineEdit : public KLineEdit
         bool m_moveViewport;
         bool m_changed;
         bool m_fromStart;
+        bool m_findAsYouType;
         bool m_searchRunning;
 
-    private slots:
+    private Q_SLOTS:
         void slotTextChanged( const QString & text );
         void slotReturnPressed( const QString &text );
         void startSearch();
@@ -80,7 +82,7 @@ class SearchLineWidget : public QWidget
 
         SearchLineEdit* lineEdit() const;
 
-    private slots:
+    private Q_SLOTS:
         void slotSearchStarted();
         void slotSearchStopped();
         void slotTimedout();

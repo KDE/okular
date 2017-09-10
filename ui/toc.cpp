@@ -14,6 +14,7 @@
 #include <qheaderview.h>
 #include <qlayout.h>
 #include <qtreeview.h>
+#include <QContextMenuEvent>
 
 #include <klineedit.h>
 
@@ -35,7 +36,7 @@ TOC::TOC(QWidget *parent, Okular::Document *document) : QWidget(parent), m_docum
     mainlay->addWidget( m_searchLine );
     m_searchLine->setCaseSensitivity( Okular::Settings::self()->contentsSearchCaseSensitive() ? Qt::CaseSensitive : Qt::CaseInsensitive );
     m_searchLine->setRegularExpression( Okular::Settings::self()->contentsSearchRegularExpression() );
-    connect( m_searchLine, SIGNAL(searchOptionsChanged()), this, SLOT(saveSearchOptions()) );
+    connect(m_searchLine, &KTreeViewSearchLine::searchOptionsChanged, this, &TOC::saveSearchOptions);
 
     m_treeView = new QTreeView( this );
     mainlay->addWidget( m_treeView );
@@ -47,9 +48,9 @@ TOC::TOC(QWidget *parent, Okular::Document *document) : QWidget(parent), m_docum
     m_treeView->setItemDelegate( new PageItemDelegate( m_treeView ) );
     m_treeView->header()->hide();
     m_treeView->setSelectionBehavior( QAbstractItemView::SelectRows );
-    connect( m_treeView, SIGNAL(clicked(QModelIndex)), this, SLOT(slotExecuted(QModelIndex)) );
-    connect( m_treeView, SIGNAL(activated(QModelIndex)), this, SLOT(slotExecuted(QModelIndex)) );
-    m_searchLine->addTreeView( m_treeView );
+    connect(m_treeView, &QTreeView::clicked, this, &TOC::slotExecuted);
+    connect(m_treeView, &QTreeView::activated, this, &TOC::slotExecuted);
+    m_searchLine->setTreeView( m_treeView );
 }
 
 TOC::~TOC()
@@ -72,7 +73,7 @@ void TOC::notifySetup( const QVector< Okular::Page * > & /*pages*/, int setupFla
         if ( m_document->isOpened() )
         {
             // Make sure we clear the reload old model data
-            m_model->setOldModelData( 0, QVector<QModelIndex>() );
+            m_model->setOldModelData( nullptr, QVector<QModelIndex>() );
         }
         emit hasTOC( false );
         return;
@@ -96,7 +97,7 @@ void TOC::prepareForReload()
     TOCModel *m = m_model;
     m_model = new TOCModel( m_document, m_treeView );
     m_model->setOldModelData( m, list );
-    m->setParent( 0 );
+    m->setParent( nullptr );
 }
 
 void TOC::rollbackReload()
@@ -150,7 +151,7 @@ void TOC::slotExecuted( const QModelIndex &index )
     QString url = m_model->urlForIndex( index );
     if ( !url.isEmpty() )
     {
-        Okular::BrowseAction action( url );
+        Okular::BrowseAction action( QUrl::fromLocalFile( url ) );
         m_document->processAction( &action );
         return;
     }
@@ -172,7 +173,18 @@ void TOC::saveSearchOptions()
 {
     Okular::Settings::setContentsSearchRegularExpression( m_searchLine->regularExpression() );
     Okular::Settings::setContentsSearchCaseSensitive( m_searchLine->caseSensitivity() == Qt::CaseSensitive ? true : false );
-    Okular::Settings::self()->writeConfig();
+    Okular::Settings::self()->save();
 }
 
-#include "toc.moc"
+void TOC::contextMenuEvent(QContextMenuEvent* e)
+{
+    QModelIndex index = m_treeView->currentIndex();
+    if (!index.isValid())
+        return;
+
+    Okular::DocumentViewport viewport = m_model->viewportForIndex(index);
+
+    emit rightClick(viewport, e->globalPos(), m_model->data(index).toString());
+}
+
+#include "moc_toc.cpp"

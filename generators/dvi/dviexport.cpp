@@ -11,8 +11,8 @@
  * Classes DVIExportToPDF and DVIExportToPS control the export
  * of a DVI file to PDF or PostScript format, respectively.
  * Common functionality is factored out into a common base class,
- * DVIExport which itself derives from KShared allowing easy,
- * polymorphic storage of multiple KSharedPtr<DVIExport> variables
+ * DVIExport which itself derives from QSharedData allowing easy,
+ * polymorphic storage of multiple QExplicitlySharedDataPointer<DVIExport> variables
  * in a container of all exported processes.
  */
 
@@ -23,29 +23,29 @@
 
 #include "dviFile.h"
 #include "dviRenderer.h"
-#include "kvs_debug.h"
+#include "debug_dvi.h"
 
-#include <KStandardDirs>
-#include <kfiledialog.h>
-#include <klocale.h>
+
+#include <KLocalizedString>
 #include <kmessagebox.h>
 #include <kprocess.h>
-#include <ktemporaryfile.h>
 
 #include <QEventLoop>
 #include <QFileInfo>
 #include <QLabel>
-#include <QtGui/QPrinter>
+#include <QtPrintSupport/QPrinter>
+#include <QTemporaryFile>
 
 #include <cassert>
+#include <QStandardPaths>
 
 
 DVIExport::DVIExport(dviRenderer& parent)
   : started_(false),
-    process_(0),
+    process_(nullptr),
     parent_(&parent)
 {
-  connect( this, SIGNAL(error(QString,int)), &parent, SIGNAL(error(QString,int)) );
+  connect( this, &DVIExport::error, &parent, &dviRenderer::error );
 }
 
 
@@ -65,8 +65,8 @@ void DVIExport::start(const QString& command,
   process_ = new KProcess;
   process_->setOutputChannelMode(KProcess::MergedChannels);
   process_->setNextOpenMode(QIODevice::Text);
-  connect(process_, SIGNAL(readyReadStandardOutput()), this, SLOT(output_receiver()));
-  connect(process_, SIGNAL(finished(int)), this, SLOT(finished(int)));
+  connect(process_, &KProcess::readyReadStandardOutput, this, &DVIExport::output_receiver);
+  connect(process_, static_cast<void (KProcess::*)(int)>(&KProcess::finished), this, &DVIExport::finished);
 
   *process_ << command << args;
 
@@ -77,7 +77,7 @@ void DVIExport::start(const QString& command,
 
   process_->start();
   if (!process_->waitForStarted(-1))
-    kError(kvs::dvi) << command << " failed to start" << endl;
+    qCCritical(OkularDviDebug) << command << " failed to start" << endl;
   else
     started_ = true;
 
@@ -91,7 +91,7 @@ void DVIExport::abort_process_impl()
   // deleting process_ kills the external process itself
   // if it's still running.
   delete process_;
-  process_ = 0;
+  process_ = nullptr;
 }
 
 
@@ -108,7 +108,7 @@ void DVIExport::finished_impl(int exit_code)
 void DVIExport::output_receiver()
 {
   if (process_) {
-     QString out = process_->readAllStandardOutput();
+     process_->readAllStandardOutput();
   }
 }
 
@@ -125,7 +125,7 @@ DVIExportToPDF::DVIExportToPDF(dviRenderer& parent, const QString& output_name)
   if (!input.exists() || !input.isReadable())
     return;
 
-  if (KStandardDirs::findExe("dvipdfm").isEmpty()) {
+  if (QStandardPaths::findExecutable(QStringLiteral("dvipdfm")).isEmpty()) {
     emit error(i18n("<qt><p>Okular could not locate the program <em>dvipdfm</em> on your computer. This program is "
                     "essential for the export function to work. You can, however, convert "
                     "the DVI-file to PDF using the print function of Okular, but that will often "
@@ -137,13 +137,11 @@ DVIExportToPDF::DVIExportToPDF(dviRenderer& parent, const QString& output_name)
     return;
   }
 
-  // Generate a suggestion for a reasonable file name
-  const QString suggested_name = dvi.filename.left(dvi.filename.indexOf(".")) + ".pdf";
   if (output_name.isEmpty())
     return;
 
-  start("dvipdfm",
-        QStringList() << "-o"
+  start(QStringLiteral("dvipdfm"),
+        QStringList() << QStringLiteral("-o")
                       << output_name
                       << dvi.filename,
         QFileInfo(dvi.filename).absolutePath(),
@@ -182,7 +180,7 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
     return;
   }
 
-  if (KStandardDirs::findExe("dvips").isEmpty()) {
+  if (QStandardPaths::findExecutable(QStringLiteral("dvips")).isEmpty()) {
     emit error(i18n("<qt><p>Okular could not locate the program <em>dvips</em> on your computer. "
                     "That program is essential for the export function to work.</p>"
                     "<p>Hint to the perplexed system administrator: Okular uses the PATH environment "
@@ -217,10 +215,10 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
   // input_name is the name of the DVI which is used by dvips, either
   // the original file, or a temporary file with a new numbering.
   QString input_name = dvi.filename;
-  if (!options.isEmpty() || dvi.suggestedPageSize != 0) {
+  if (!options.isEmpty() || dvi.suggestedPageSize != nullptr) {
     // Get a name for a temporary file.
     // Must open the QTemporaryFile to access the name.
-    KTemporaryFile tmpfile;
+    QTemporaryFile tmpfile;
     tmpfile.setAutoRemove(false);
     tmpfile.open();
     tmpfile_name_ = tmpfile.fileName();
@@ -250,13 +248,13 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
         parent.end_pointer =
           newFile.dvi_Data() + parent.dviFile->page_offset[int(parent.current_page+1)];
       } else {
-        parent.command_pointer = 0;
-        parent.end_pointer = 0;
+        parent.command_pointer = nullptr;
+        parent.end_pointer = nullptr;
       }
 
       memset((char*) &parent.currinf.data, 0, sizeof(parent.currinf.data));
       parent.currinf.fonttable = &(parent.dviFile->tn_table);
-      parent.currinf._virtual  = 0;
+      parent.currinf._virtual  = nullptr;
       parent.prescan(&dviRenderer::prescan_removePageSizeInfo);
     }
 
@@ -268,16 +266,16 @@ DVIExportToPS::DVIExportToPS(dviRenderer& parent,
   QStringList args;
   if (!printer)
     // Export hyperlinks
-    args << "-z";
+    args << QStringLiteral("-z");
 
   if (!options.isEmpty())
     args += options;
 
   args << input_name
-       << "-o"
+       << QStringLiteral("-o")
        << output_name_;
 
-  start("dvips",
+  start(QStringLiteral("dvips"),
         args,
         QFileInfo(dvi.filename).absolutePath(),
         i18n("<qt>The external program 'dvips', which was used to export the file, reported an error. "
@@ -317,10 +315,9 @@ void DVIExportToPS::abort_process_impl()
     tmpfile_name_.clear();
   }
 
-  printer_ = 0;
+  printer_ = nullptr;
 
   DVIExport::abort_process_impl();
 }
 
 
-#include "dviexport.moc"

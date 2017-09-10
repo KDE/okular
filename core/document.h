@@ -11,7 +11,7 @@
 #ifndef _OKULAR_DOCUMENT_H_
 #define _OKULAR_DOCUMENT_H_
 
-#include "okular_export.h"
+#include "okularcore_export.h"
 #include "area.h"
 #include "global.h"
 #include "pagesize.h"
@@ -19,18 +19,19 @@
 #include <QtCore/QObject>
 #include <QtCore/QStringList>
 #include <QtCore/QVector>
-#include <QtGui/QPrinter>
+#include <QtPrintSupport/QPrinter>
 #include <QtXml/QDomDocument>
 
-#include <kmimetype.h>
+#include <QMimeType>
+#include <QUrl>
 
 class QPrintDialog;
-class KComponentData;
 class KBookmark;
 class KConfigDialog;
+class KPluginMetaData;
 class KXMLGUIClient;
-class KUrl;
 class DocumentItem;
+class QAbstractItemModel;
 
 namespace Okular {
 
@@ -67,7 +68,7 @@ class VisiblePageRect;
  * The DocumentInfo structure can be filled in by generators to display
  * metadata about the currently opened file.
  */
-class OKULAR_EXPORT DocumentInfo
+class OKULARCORE_EXPORT DocumentInfo
 {
     friend class Document;
 
@@ -175,17 +176,17 @@ class OKULAR_EXPORT DocumentInfo
  * get data/properties or even for accessing pages (in a 'const' way).
  *
  * It is designed to keep it detached from the document type (pdf, ps, you
- * name it..) so whenever you want to get some data, it asks its internals
- * generator to do the job and return results in a format-indepedent way.
+ * name it..) so whenever you want to get some data, it asks its internal
+ * generators to do the job and return results in a format-indepedent way.
  *
  * Apart from the generator (the currently running one) the document stores
  * all the Pages ('Page' class) of the current document in a vector and
  * notifies all the registered DocumentObservers when some content changes.
  *
- * For a better understanding of hieracies @see README.internals.png
+ * For a better understanding of hierarchies @see README.internals.png
  * @see DocumentObserver, Page
  */
-class OKULAR_EXPORT Document : public QObject
+class OKULARCORE_EXPORT Document : public QObject
 {
     Q_OBJECT
 
@@ -215,7 +216,7 @@ class OKULAR_EXPORT Document : public QObject
          * Opens the document.
          * @since 0.20 (KDE 4.14)
          */
-        OpenResult openDocument( const QString & docFile, const KUrl & url, const KMimeType::Ptr &mime, const QString &password = QString() );
+        OpenResult openDocument( const QString & docFile, const QUrl & url, const QMimeType &mime, const QString &password = QString() );
 
         /**
          * Closes the document.
@@ -301,7 +302,7 @@ class OKULAR_EXPORT Document : public QObject
          * Sets the list of visible page rectangles.
          * @see VisiblePageRect
          */
-        void setVisiblePageRects( const QVector< VisiblePageRect * > & visiblePageRects, DocumentObserver *excludeObserver = 0 );
+        void setVisiblePageRects( const QVector< VisiblePageRect * > & visiblePageRects, DocumentObserver *excludeObserver = nullptr );
 
         /**
          * Returns the list of visible page rectangles.
@@ -321,7 +322,7 @@ class OKULAR_EXPORT Document : public QObject
         /**
          * Returns the url of the currently opened document.
          */
-        KUrl currentDocument() const;
+        QUrl currentDocument() const;
 
         /**
          * Returns whether the given @p action is allowed in the document.
@@ -418,7 +419,7 @@ class OKULAR_EXPORT Document : public QObject
          * @param excludeObserver The observer ids which shouldn't be effected by this change.
          * @param smoothMove Whether the move shall be animated smoothly.
          */
-        void setViewportPage( int page, DocumentObserver *excludeObserver = 0, bool smoothMove = false );
+        void setViewportPage( int page, DocumentObserver *excludeObserver = nullptr, bool smoothMove = false );
 
         /**
          * Sets the current document viewport to the given @p viewport.
@@ -426,7 +427,7 @@ class OKULAR_EXPORT Document : public QObject
          * @param excludeObserver The observer which shouldn't be effected by this change.
          * @param smoothMove Whether the move shall be animated smoothly.
          */
-        void setViewport( const DocumentViewport &viewport, DocumentObserver *excludeObserver = 0, bool smoothMove = false );
+        void setViewport( const DocumentViewport &viewport, DocumentObserver *excludeObserver = nullptr, bool smoothMove = false );
 
         /**
          * Sets the current document viewport to the next viewport in the
@@ -455,7 +456,7 @@ class OKULAR_EXPORT Document : public QObject
         /**
          * Sets the zoom for the current document.
          */
-        void setZoom( int factor, DocumentObserver *excludeObserver = 0 );
+        void setZoom( int factor, DocumentObserver *excludeObserver = nullptr );
 
         /**
          * Describes the possible options for the pixmap requests.
@@ -521,12 +522,25 @@ class OKULAR_EXPORT Document : public QObject
          * Translates the position of the given @p annotation on the given @p page by a distance @p delta in normalized coordinates.
          *
          * Consecutive translations applied to the same @p annotation are merged together on the undo stack if the
-         * BeingMoved flag is set on the @P annotation
+         * BeingMoved flag is set on the @P annotation.
          *
          * @since 0.17 (KDE 4.11)
          */
         void translatePageAnnotation( int page, Annotation *annotation, const Okular::NormalizedPoint & delta );
 
+        /**
+         * Adjusts the position of the top-left and bottom-right corners of given @p annotation on the given @p page.
+         *
+         * Can be used to implement resize functionality.
+         * @p delta1 in normalized coordinates is added to top-left.
+         * @p delta2 in normalized coordinates is added to bottom-right.
+         *
+         * Consecutive adjustments applied to the same @p annotation are merged together on the undo stack if the
+         * BeingResized flag is set on the @P annotation.
+         *
+         * @since 1.1.0
+         */
+        void adjustPageAnnotation( int page, Annotation * annotation, const Okular::NormalizedPoint & delta1, const Okular::NormalizedPoint & delta2 );
 
         /**
          * Edits the plain text contents of the given @p annotation on the given @p page.
@@ -587,8 +601,8 @@ class OKULAR_EXPORT Document : public QObject
             NextMatch,      ///< Search next match
             PreviousMatch,  ///< Search previous match
             AllDocument,    ///< Search complete document
-            GoogleAll,      ///< Search all words in google style
-            GoogleAny       ///< Search any words in google style
+            GoogleAll,      ///< Search complete document (all words in google style)
+            GoogleAny       ///< Search complete document (any words in google style)
         };
 
         /**
@@ -718,9 +732,9 @@ class OKULAR_EXPORT Document : public QObject
         QStringList supportedMimeTypes() const;
 
         /**
-         * Returns the component data associated with the generator. May be null.
+         * Returns the metadata associated with the generator. May be invalid.
          */
-        const KComponentData* componentData() const;
+        KPluginMetaData generatorInfo() const;
 
         /**
          * Returns whether the generator supports hot-swapping the current file
@@ -742,7 +756,7 @@ class OKULAR_EXPORT Document : public QObject
          *
          * @since 0.20 (KDE 4.14)
          */
-        bool swapBackingFile( const QString &newFileName, const KUrl & url );
+        bool swapBackingFile( const QString &newFileName, const QUrl & url );
 
         /**
          * Same as swapBackingFile, but newFileName must be a .okular file.
@@ -755,7 +769,7 @@ class OKULAR_EXPORT Document : public QObject
          *
          * @since 0.20 (KDE 4.14)
          */
-        bool swapBackingFileArchive( const QString &newFileName, const KUrl & url );
+        bool swapBackingFileArchive( const QString &newFileName, const QUrl & url );
 
         /**
          * Saving capabilities. Their availability varies according to the
@@ -833,7 +847,7 @@ class OKULAR_EXPORT Document : public QObject
          *
          * @since 0.20 (KDE 4.14)
          */
-        OpenResult openDocumentArchive( const QString & docFile, const KUrl & url, const QString &password = QString() );
+        OpenResult openDocumentArchive( const QString & docFile, const QUrl & url, const QString &password = QString() );
 
         /**
          * Saves a document archive.
@@ -904,6 +918,13 @@ class OKULAR_EXPORT Document : public QObject
          * @since 0.21
         */
         void docdataMigrationDone();
+
+        /**
+         * Returns the model for rendering layers (NULL if the document has no layers)
+         *
+         * @since 0.24
+        */
+        QAbstractItemModel * layersModel() const;
 
     public Q_SLOTS:
         /**
@@ -981,6 +1002,13 @@ class OKULAR_EXPORT Document : public QObject
                               const QList< Okular::FormFieldButton* > & formButtons,
                               const QList< bool > & newButtonStates );
 
+        /**
+         * Reloads the pixmaps for whole document
+         *
+         * @since 0.24
+        */
+        void reloadDocument() const;
+
     Q_SIGNALS:
         /**
          * This signal is emitted whenever an action requests a
@@ -1022,13 +1050,13 @@ class OKULAR_EXPORT Document : public QObject
          * This signal is emitted whenever an action requests an
          * open url operation for the given document @p url.
          */
-        void openUrl( const KUrl &url );
+        void openUrl( const QUrl &url );
 
         /**
          * This signal is emitted whenever an error occurred.
          *
          * @param text The description of the error.
-         * @param duration The time in seconds the message should be shown to the user.
+         * @param duration The time in milliseconds the message should be shown to the user.
          */
         void error( const QString &text, int duration );
 
@@ -1036,7 +1064,7 @@ class OKULAR_EXPORT Document : public QObject
          * This signal is emitted to signal a warning.
          *
          * @param text The description of the warning.
-         * @param duration The time in seconds the message should be shown to the user.
+         * @param duration The time in milliseconds the message should be shown to the user.
          */
         void warning( const QString &text, int duration );
 
@@ -1044,7 +1072,7 @@ class OKULAR_EXPORT Document : public QObject
          * This signal is emitted to signal a notice.
          *
          * @param text The description of the notice.
-         * @param duration The time in seconds the message should be shown to the user.
+         * @param duration The time in milliseconds the message should be shown to the user.
          */
         void notice( const QString &text, int duration );
 
@@ -1165,7 +1193,7 @@ class OKULAR_EXPORT Document : public QObject
         Q_PRIVATE_SLOT( d, void slotTimedMemoryCheck() )
         Q_PRIVATE_SLOT( d, void sendGeneratorPixmapRequest() )
         Q_PRIVATE_SLOT( d, void rotationFinished( int page, Okular::Page *okularPage ) )
-        Q_PRIVATE_SLOT( d, void fontReadingProgress( int page ) )
+        Q_PRIVATE_SLOT( d, void slotFontReadingProgress( int page ) )
         Q_PRIVATE_SLOT( d, void fontReadingGotFont( const Okular::FontInfo& font ) )
         Q_PRIVATE_SLOT( d, void slotGeneratorConfigChanged( const QString& ) )
         Q_PRIVATE_SLOT( d, void refreshPixmaps( int ) )
@@ -1185,7 +1213,7 @@ class OKULAR_EXPORT Document : public QObject
  * data is broadcasted between observers to synchronize their viewports to get
  * the 'I scroll one view and others scroll too' views.
  */
-class OKULAR_EXPORT DocumentViewport
+class OKULARCORE_EXPORT DocumentViewport
 {
     public:
         /**
@@ -1267,7 +1295,7 @@ class OKULAR_EXPORT DocumentViewport
  * - URL: a URL to be open as destination; if set, no other Destination* or
  *      ExternalFileName entry is used
  */
-class OKULAR_EXPORT DocumentSynopsis : public QDomDocument
+class OKULARCORE_EXPORT DocumentSynopsis : public QDomDocument
 {
     public:
         /**
@@ -1291,7 +1319,7 @@ class OKULAR_EXPORT DocumentSynopsis : public QDomDocument
  * about an embedded file, like its name, its description, the date of creation
  * and modification, and the real data of the file.
  */
-class OKULAR_EXPORT EmbeddedFile
+class OKULARCORE_EXPORT EmbeddedFile
 {
     public:
         /**
@@ -1345,7 +1373,7 @@ class OKULAR_EXPORT EmbeddedFile
 /**
  * @short An area of a specified page
  */
-class OKULAR_EXPORT VisiblePageRect
+class OKULARCORE_EXPORT VisiblePageRect
 {
     public:
         /**

@@ -16,7 +16,7 @@
 using namespace Okular;
 
 ViewPrivate::ViewPrivate()
-    : document( 0 )
+    : document( nullptr )
 {
 }
 
@@ -43,7 +43,7 @@ View::~View()
 
 Document* View::viewDocument() const
 {
-    return d_ptr->document ? d_ptr->document->m_parent : 0;
+    return d_ptr->document ? d_ptr->document->m_parent : nullptr;
 }
 
 QString View::name() const
@@ -60,7 +60,7 @@ bool View::supportsCapability( View::ViewCapability capability ) const
 View::CapabilityFlags View::capabilityFlags( View::ViewCapability capability ) const
 {
     Q_UNUSED( capability )
-    return 0;
+    return nullptr;
 }
 
 QVariant View::capability( View::ViewCapability capability ) const

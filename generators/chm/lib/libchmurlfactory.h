@@ -29,13 +29,12 @@ namespace LCHMUrlFactory
 static inline bool isRemoteURL( const QString & url, QString & protocol )
 {
 	// Check whether the URL is external
-	QRegExp uriregex ( "^(\\w+):\\/\\/" );
-	QRegExp mailtoregex ( "^(mailto):" );
+	QRegExp uriregex ( QStringLiteral("^(\\w+):\\/\\/") );
 
 	// mailto: can also have different format, so handle it
-	if ( url.startsWith( "mailto:" ) )
+	if ( url.startsWith( QLatin1String("mailto:") ) )
 	{
-		protocol = "mailto";
+		protocol = QStringLiteral("mailto");
 		return true;
 	}
 	else if ( uriregex.indexIn( url ) != -1 )
@@ -43,10 +42,10 @@ static inline bool isRemoteURL( const QString & url, QString & protocol )
 		QString proto = uriregex.cap ( 1 ).toLower();
 	
 		// Filter the URLs which need to be opened by a browser
-		if ( proto == "http" 
-						|| proto == "ftp"
-						|| proto == "mailto"
-						|| proto == "news" )
+		if ( proto == QLatin1String("http") 
+						|| proto == QLatin1String("ftp")
+						|| proto == QLatin1String("mailto")
+						|| proto == QLatin1String("news") )
 		{
 			protocol = proto;
 			return true;
@@ -59,13 +58,13 @@ static inline bool isRemoteURL( const QString & url, QString & protocol )
 // Some JS urls start with javascript://
 static inline bool isJavascriptURL( const QString & url )
 {
-	return url.startsWith ("javascript://");
+	return url.startsWith (QLatin1String("javascript://"));
 }
 
 // Parse urls like "ms-its:file name.chm::/topic.htm"
 static inline bool isNewChmURL( const QString & url, QString & chmfile, QString & page )
 {
-	QRegExp uriregex ( "^ms-its:(.*)::(.*)$" );
+	QRegExp uriregex ( QStringLiteral("^ms-its:(.*)::(.*)$") );
 	uriregex.setCaseSensitivity( Qt::CaseInsensitive );
 
 	if ( uriregex.indexIn ( url ) != -1 )
@@ -90,8 +89,8 @@ static inline QString makeURLabsoluteIfNeeded( const QString & url )
 		newurl = QDir::cleanPath (url);
 
 		// Normalize url, so it becomes absolute
-		if ( newurl[0] != '/' )
-			newurl = "/" + newurl;
+                if ( newurl[0] != QLatin1Char ('/') )
+                        newurl = QLatin1Char('/') + newurl;
 	}
 
 	//qDebug ("makeURLabsolute (%s) -> (%s)", url.ascii(), newurl.ascii());
@@ -103,7 +102,7 @@ static inline QString makeURLabsoluteIfNeeded( const QString & url )
 // to regognize our own internal urls, which is necessary to show image-only pages.
 static inline QString getInternalUriExtension()
 {
-	return ".KCHMVIEWER_SPECIAL_HANDLER";
+	return QStringLiteral(".KCHMVIEWER_SPECIAL_HANDLER");
 }
 
 
@@ -115,7 +114,7 @@ static inline bool handleFileType( const QString& link, QString& generated )
 		return false;
 
 	QString filelink = link.left( link.length() - intext.length() );
-	generated = "<html><body><img src=\"" + filelink + "\"></body></html>";
+        generated = QStringLiteral("<html><body><img src=\"") + filelink + QStringLiteral("\"></body></html>");
 	return true;
 }
 

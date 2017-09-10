@@ -21,10 +21,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. *
 #ifndef _faxexpand_h_
 #define _faxexpand_h_
 
-#include <sys/types.h>
-#include <unistd.h>
-
 #include <QtGui/QImage>
+
+#include <sys/types.h>
+#ifndef Q_OS_WIN
+#include <unistd.h>
+#endif
 
 #define t32bits quint32
 #define t16bits quint16
@@ -53,7 +55,7 @@ struct strip {			/* tiff strip descriptor */
 class pagenode {		/* compressed page descriptor */
     public:
     pagenode();
-    ~pagenode() { };
+    ~pagenode() { }
     int	nstrips;		/* number of strips */
     int rowsperstrip;		/* number of rows per strip */
     int stripnum;		/* current strip while expanding */

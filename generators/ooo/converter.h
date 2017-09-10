@@ -26,11 +26,13 @@ class Document;
 
 class Converter : public Okular::TextDocumentConverter
 {
+  Q_OBJECT
+
   public:
     Converter();
     ~Converter();
 
-    virtual Okular::Document::OpenResult convertWithPassword( const QString &fileName, const QString &password );
+    Okular::Document::OpenResult convertWithPassword( const QString &fileName, const QString &password ) override;
 
   private:
     bool convertBody( const QDomElement &element );

@@ -13,8 +13,9 @@
 #include <QtGui/QImage>
 #include <QtGui/QImageReader>
 
-#include <klocale.h>
-#include <kmimetype.h>
+#include <KLocalizedString>
+#include <QMimeType>
+#include <QMimeDatabase>
 #include <kzip.h>
 #include <ktar.h>
 
@@ -22,9 +23,10 @@
 
 #include <core/page.h>
 
-#include "unrar.h"
+#include "debug_comicbook.h"
 #include "directory.h"
 #include "qnatsort.h"
+#include "unrar.h"
 
 using namespace ComicBook;
 
@@ -33,7 +35,7 @@ static void imagesInArchive( const QString &prefix, const KArchiveDirectory* dir
     Q_FOREACH ( const QString &entry, dir->entries() ) {
         const KArchiveEntry *e = dir->entry( entry );
         if ( e->isDirectory() ) {
-            imagesInArchive( prefix + entry + '/', static_cast<const KArchiveDirectory*>( e ), entries );
+            imagesInArchive( prefix + entry + QLatin1Char('/'), static_cast<const KArchiveDirectory*>( e ), entries );
         } else if ( e->isFile() ) {
             entries->append( prefix + entry );
         }
@@ -42,7 +44,7 @@ static void imagesInArchive( const QString &prefix, const KArchiveDirectory* dir
 
 
 Document::Document()
-    : mDirectory( 0 ), mUnrar( 0 ), mArchive( 0 )
+    : mDirectory( nullptr ), mUnrar( nullptr ), mArchive( nullptr )
 {
 }
 
@@ -54,12 +56,13 @@ bool Document::open( const QString &fileName )
 {
     close();
 
-    const KMimeType::Ptr mime = KMimeType::findByFileContent( fileName );
+    QMimeDatabase db;
+    const QMimeType mime = db.mimeTypeForFile(fileName, QMimeDatabase::MatchContent);
 
     /**
      * We have a zip archive
      */
-    if ( mime->is( "application/x-cbz" ) || mime->name() == "application/zip" ) {
+    if ( mime.inherits(QStringLiteral("application/x-cbz") ) || mime.inherits( QStringLiteral("application/zip") ) ) {
         mArchive = new KZip( fileName );
 
         if ( !processArchive() ) {
@@ -68,14 +71,14 @@ bool Document::open( const QString &fileName )
     /**
      * We have a TAR archive
      */
-    } else if ( mime->is( "application/x-cbt" ) || mime->name() == "application/x-gzip" ||
-                mime->name() == "application/x-tar" || mime->name() == "application/x-bzip" ) {
+    } else if ( mime.inherits( QStringLiteral("application/x-cbt") ) || mime.inherits( QStringLiteral("application/x-gzip") ) ||
+                mime.inherits( QStringLiteral("application/x-tar") ) || mime.inherits( QStringLiteral("application/x-bzip") ) ) {
         mArchive = new KTar( fileName );
 
         if ( !processArchive() ) {
             return false;
         }
-    } else if ( mime->is( "application/x-cbr" ) || mime->name() == "application/x-rar" ) {
+    } else if ( mime.inherits( QStringLiteral("application/x-cbr") ) || mime.inherits( QStringLiteral("application/x-rar") ) || mime.inherits( QStringLiteral("application/vnd.rar") ) ) {
         if ( !Unrar::isAvailable() ) {
             mLastErrorString = i18n( "Cannot open document, unrar was not found." );
             return false;
@@ -93,18 +96,18 @@ bool Document::open( const QString &fileName )
 
         if ( !mUnrar->open( fileName ) ) {
             delete mUnrar;
-            mUnrar = 0;
+            mUnrar = nullptr;
 
             return false;
         }
 
         mEntries = mUnrar->list();
-    } else if ( mime->is( "inode/directory" ) ) {
+    } else if ( mime.inherits( QStringLiteral("inode/directory") ) ) {
         mDirectory = new Directory();
 
         if ( !mDirectory->open( fileName ) ) {
             delete mDirectory;
-            mDirectory = 0;
+            mDirectory = nullptr;
 
             return false;
         }
@@ -126,11 +129,11 @@ void Document::close()
         return;
 
     delete mArchive;
-    mArchive = 0;
+    mArchive = nullptr;
     delete mDirectory;
-    mDirectory = 0;
+    mDirectory = nullptr;
     delete mUnrar;
-    mUnrar = 0;
+    mUnrar = nullptr;
     mPageMap.clear();
     mEntries.clear();
 }
@@ -138,7 +141,7 @@ void Document::close()
 bool Document::processArchive() {
     if ( !mArchive->open( QIODevice::ReadOnly ) ) {
         delete mArchive;
-        mArchive = 0;
+        mArchive = nullptr;
 
         return false;
     }
@@ -146,7 +149,7 @@ bool Document::processArchive() {
     const KArchiveDirectory *directory = mArchive->directory();
     if ( !directory ) {
         delete mArchive;
-        mArchive = 0;
+        mArchive = nullptr;
 
         return false;
     }
@@ -194,7 +197,7 @@ void Document::pages( QVector<Okular::Page*> * pagesVector )
                     mPageMap.append(file);
                     count++;
                 } else {
-                    kDebug() << "Ignoring" << file << "doesn't seem to be an image even if QImageReader::canRead returned true";
+                    qCDebug(OkularComicbookDebug) << "Ignoring" << file << "doesn't seem to be an image even if QImageReader::canRead returned true";
                 }
             }
         }

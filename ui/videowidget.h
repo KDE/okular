@@ -23,7 +23,7 @@ class VideoWidget : public QWidget
 {
     Q_OBJECT
     public:
-        VideoWidget( const Okular::Annotation *annot, Okular::Movie *movie, Okular::Document *document, QWidget *parent = 0 );
+        VideoWidget( const Okular::Annotation *annot, Okular::Movie *movie, Okular::Document *document, QWidget *parent = nullptr );
         ~VideoWidget();
 
         void setNormGeometry( const Okular::NormalizedRect &rect );
@@ -46,15 +46,15 @@ class VideoWidget : public QWidget
          */
         void pageLeft();
 
-    public slots:
+    public Q_SLOTS:
         void play();
         void pause();
         void stop();
 
     protected:
-        /* reimp */ bool eventFilter( QObject * object, QEvent * event );
-        /* reimp */ bool event( QEvent * event );
-        /* reimp */ void resizeEvent( QResizeEvent * event );
+        bool eventFilter( QObject * object, QEvent * event ) override;
+        bool event( QEvent * event ) override;
+        void resizeEvent( QResizeEvent * event ) override;
 
     private:
         Q_PRIVATE_SLOT( d, void finished() )

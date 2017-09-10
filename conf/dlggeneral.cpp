@@ -26,6 +26,7 @@ DlgGeneral::DlgGeneral( QWidget * parent, Okular::EmbedMode embedMode )
         m_dlg->kcfg_SyncThumbnailsViewport->setVisible( false );
         m_dlg->kcfg_DisplayDocumentTitle->setVisible( false );
         m_dlg->kcfg_WatchFile->setVisible( false );
+        m_dlg->kcfg_rtlReadingDirection->setVisible(false);
     }
     m_dlg->kcfg_ShellOpenFileInTabs->setVisible( embedMode == Okular::NativeShellMode );
 }
@@ -40,7 +41,7 @@ void DlgGeneral::showEvent( QShowEvent * )
 #if OKULAR_FORCE_DRM
     m_dlg->kcfg_ObeyDRM->hide();
 #else
-    if ( KAuthorized::authorize( "skip_drm" ) )
+    if ( KAuthorized::authorize( QStringLiteral("skip_drm") ) )
         m_dlg->kcfg_ObeyDRM->show();
     else
         m_dlg->kcfg_ObeyDRM->hide();

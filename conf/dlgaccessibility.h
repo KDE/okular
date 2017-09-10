@@ -20,10 +20,10 @@ class DlgAccessibility : public QWidget
     Q_OBJECT
 
     public:
-        DlgAccessibility( QWidget * parent = 0 );
+        explicit DlgAccessibility( QWidget * parent = nullptr );
         ~DlgAccessibility();
 
-    private slots:
+    private Q_SLOTS:
         void slotColorMode( int mode );
 
     private:

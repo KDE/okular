@@ -10,15 +10,16 @@
 #ifndef _OKULAR_AREA_H_
 #define _OKULAR_AREA_H_
 
+#include <math.h>
+
 #include <QtCore/QList>
 #include <QtGui/QColor>
 #include <QtGui/QPainterPath>
 #include <QtGui/QTransform>
-#include <kdebug.h>
-#include <math.h>
+#include <QtCore/QDebug>
 
 #include "global.h"
-#include "okular_export.h"
+#include "okularcore_export.h"
 
 class QPolygonF;
 class QRect;
@@ -44,7 +45,7 @@ class NormalizedShape;
  *    That allows you to zoom the page by just multiplying the normalized points with the
  *    zoomed page size.
  */
-class OKULAR_EXPORT NormalizedPoint
+class OKULARCORE_EXPORT NormalizedPoint
 {
     public:
         /**
@@ -102,7 +103,7 @@ class OKULAR_EXPORT NormalizedPoint
  * NormalizedRect is a helper class which stores the coordinates
  * of a normalized rect, which is a rectangle of @see NormalizedPoints.
  */
-class OKULAR_EXPORT NormalizedRect
+class OKULARCORE_EXPORT NormalizedRect
 {
     public:
         /**
@@ -319,7 +320,7 @@ class OKULAR_EXPORT NormalizedRect
          */
         double bottom;
 };
-KDE_DUMMY_QHASH_FUNCTION(NormalizedRect)
+//KDE_DUMMY_QHASH_FUNCTION(NormalizedRect)
 
 /**
  * @short NormalizedRect that contains a reference to an object.
@@ -334,7 +335,7 @@ KDE_DUMMY_QHASH_FUNCTION(NormalizedRect)
  *  - Image     : class Image : description of an image (n/a)
  *  - Annotation: class Annotation: description of an annotation
  */
-class OKULAR_EXPORT ObjectRect
+class OKULARCORE_EXPORT ObjectRect
 {
     public:
         /**
@@ -428,7 +429,7 @@ class OKULAR_EXPORT ObjectRect
 /**
  * This class describes the object rectangle for an annotation.
  */
-class OKULAR_EXPORT AnnotationObjectRect : public ObjectRect
+class OKULARCORE_EXPORT AnnotationObjectRect : public ObjectRect
 {
     public:
         /**
@@ -451,18 +452,18 @@ class OKULAR_EXPORT AnnotationObjectRect : public ObjectRect
          * Returns the bounding rect of the annotation object rectangle for the
          * scaling factor @p xScale and @p yScale.
          */
-        virtual QRect boundingRect( double xScale, double yScale ) const;
+        QRect boundingRect( double xScale, double yScale ) const override;
 
         /**
          * Returns whether the annotation object rectangle contains the point @p x, @p y for the
          * scaling factor @p xScale and @p yScale.
          */
-        virtual bool contains( double x, double y, double xScale, double yScale ) const;
+        bool contains( double x, double y, double xScale, double yScale ) const override;
 
         /**
          * Transforms the annotation object rectangle with the operations defined by @p matrix.
          */
-        virtual void transform( const QTransform &matrix );
+        void transform( const QTransform &matrix ) override;
 
     private:
         Annotation * m_annotation;
@@ -471,7 +472,7 @@ class OKULAR_EXPORT AnnotationObjectRect : public ObjectRect
 /**
  * This class describes the object rectangle for a source reference.
  */
-class OKULAR_EXPORT SourceRefObjectRect : public ObjectRect
+class OKULARCORE_EXPORT SourceRefObjectRect : public ObjectRect
 {
     friend class ObjectRect;
 
@@ -488,13 +489,13 @@ class OKULAR_EXPORT SourceRefObjectRect : public ObjectRect
          * Returns the bounding rect of the source reference object rectangle for the
          * scaling factor @p xScale and @p yScale.
          */
-        virtual QRect boundingRect( double xScale, double yScale ) const;
+        QRect boundingRect( double xScale, double yScale ) const override;
 
         /**
          * Returns whether the source reference object rectangle contains the point @p x, @p y for the
          * scaling factor @p xScale and @p yScale.
          */
-        virtual bool contains( double x, double y, double xScale, double yScale ) const;
+        bool contains( double x, double y, double xScale, double yScale ) const override;
 
     private:
         NormalizedPoint m_point;
@@ -648,16 +649,13 @@ void RegularArea<NormalizedShape, Shape>::simplify()
                    }
             }
 #ifdef DEBUG_REGULARAREA
-    kDebug() << "from" << prev_end << "to" << this->count();
+    qCDebug(OkularCoreDebug) << "from" << prev_end << "to" << this->count();
 #endif
 }
 
 template <class NormalizedShape, class Shape>
 bool RegularArea<NormalizedShape, Shape>::isNull() const
 {
-    if ( !this )
-        return false;
-
     if ( this->isEmpty() )
         return false;
 
@@ -672,9 +670,6 @@ bool RegularArea<NormalizedShape, Shape>::isNull() const
 template <class NormalizedShape, class Shape>
 bool RegularArea<NormalizedShape, Shape>::intersects( const NormalizedShape& rect ) const
 {
-    if ( !this )
-        return false;
-
     if ( this->isEmpty() )
         return false;
 
@@ -689,9 +684,6 @@ bool RegularArea<NormalizedShape, Shape>::intersects( const NormalizedShape& rec
 template <class NormalizedShape, class Shape>
 bool RegularArea<NormalizedShape, Shape>::intersects( const RegularArea<NormalizedShape,Shape> *area ) const
 {
-    if ( !this )
-        return false;
-
     if ( this->isEmpty() )
         return false;
 
@@ -712,9 +704,6 @@ bool RegularArea<NormalizedShape, Shape>::intersects( const RegularArea<Normaliz
 template <class NormalizedShape, class Shape>
 void RegularArea<NormalizedShape, Shape>::appendArea( const RegularArea<NormalizedShape, Shape> *area )
 {
-    if ( !this )
-        return;
-
     typename QList<NormalizedShape>::const_iterator areaIt = area->begin(), areaItEnd = area->end();
     for ( ; areaIt != areaItEnd; ++areaIt )
         this->append( *areaIt );
@@ -724,9 +713,6 @@ void RegularArea<NormalizedShape, Shape>::appendArea( const RegularArea<Normaliz
 template <class NormalizedShape, class Shape>
 void RegularArea<NormalizedShape, Shape>::appendShape( const NormalizedShape& shape, MergeSide side )
 {
-    if ( !this )
-        return;
-
     int size = this->count();
     // if the list is empty, adds the shape normally
     if ( size == 0 )
@@ -799,9 +785,6 @@ void RegularArea<NormalizedShape, Shape>::appendShape( const NormalizedShape& sh
 template <class NormalizedShape, class Shape>
 bool RegularArea<NormalizedShape, Shape>::contains( double x, double y ) const
 {
-    if ( !this )
-        return false;
-
     if ( this->isEmpty() )
         return false;
 
@@ -816,9 +799,6 @@ bool RegularArea<NormalizedShape, Shape>::contains( double x, double y ) const
 template <class NormalizedShape, class Shape>
 bool RegularArea<NormalizedShape, Shape>::contains( const NormalizedShape& shape ) const
 {
-    if ( !this )
-        return false;
-
     if ( this->isEmpty() )
         return false;
 
@@ -828,7 +808,7 @@ bool RegularArea<NormalizedShape, Shape>::contains( const NormalizedShape& shape
 template <class NormalizedShape, class Shape>
 QList<Shape> RegularArea<NormalizedShape, Shape>::geometry( int xScale, int yScale, int dx, int dy ) const
 {
-    if ( !this || this->isEmpty() )
+    if ( this->isEmpty() )
         return QList<Shape>();
 
     QList<Shape> ret;
@@ -847,9 +827,6 @@ QList<Shape> RegularArea<NormalizedShape, Shape>::geometry( int xScale, int ySca
 template <class NormalizedShape, class Shape>
 void RegularArea<NormalizedShape, Shape>::transform( const QTransform &matrix )
 {
-    if ( !this )
-        return;
-
     if ( this->isEmpty() )
         return;
 
@@ -857,7 +834,7 @@ void RegularArea<NormalizedShape, Shape>::transform( const QTransform &matrix )
         givePtr( (*this)[i] )->transform( matrix );
 }
 
-class OKULAR_EXPORT RegularAreaRect : public RegularArea< NormalizedRect, QRect >
+class OKULARCORE_EXPORT RegularAreaRect : public RegularArea< NormalizedRect, QRect >
 {
     public:
         RegularAreaRect();
@@ -882,7 +859,7 @@ class HighlightAreaRect : public RegularAreaRect
          * Creates a new highlight area rect with the coordinates of
          * the given @p area.
          */
-        HighlightAreaRect( const RegularAreaRect *area = 0 );
+        HighlightAreaRect( const RegularAreaRect *area = nullptr );
 
         /**
          * The search ID of the highlight owner.
@@ -897,16 +874,18 @@ class HighlightAreaRect : public RegularAreaRect
 
 }
 
+uint qHash(const Okular::NormalizedRect& r, uint seed = 0);
+
 #ifndef QT_NO_DEBUG_STREAM
 /**
  * Debug operator for normalized @p point.
  */
-OKULAR_EXPORT QDebug operator<<( QDebug str, const Okular::NormalizedPoint &point );
+OKULARCORE_EXPORT QDebug operator<<( QDebug str, const Okular::NormalizedPoint &point );
 
 /**
  * Debug operator for normalized @p rect.
  */
-OKULAR_EXPORT QDebug operator<<( QDebug str, const Okular::NormalizedRect &rect );
+OKULARCORE_EXPORT QDebug operator<<( QDebug str, const Okular::NormalizedRect &rect );
 #endif
 
 #endif

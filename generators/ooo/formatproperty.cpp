@@ -16,7 +16,7 @@
 using namespace OOO;
 
 FontFormatProperty::FontFormatProperty()
-  : mFamily( "Nimbus Sans L" )
+  : mFamily( QStringLiteral("Nimbus Sans L") )
 {
 }
 
@@ -88,7 +88,7 @@ void ParagraphFormatProperty::setLeftMargin( const qreal margin )
 }
 
 TextFormatProperty::TextFormatProperty()
-  : mStyleInformation( 0 ), mHasFontSize( false ),
+  : mStyleInformation( nullptr ), mHasFontSize( false ),
     mFontWeight( -1 ), mFontStyle( -1 ), mTextPosition( 0 )
 {
 }
@@ -173,7 +173,7 @@ void TextFormatProperty::setBackgroundColor( const QColor &color )
 }
 
 StyleFormatProperty::StyleFormatProperty()
-  : mStyleInformation( 0 ), mDefaultStyle( false )
+  : mStyleInformation( nullptr ), mDefaultStyle( false )
 {
 }
 

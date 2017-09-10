@@ -41,7 +41,7 @@ class SearchWidget : public QWidget
         QAction *m_matchPhraseAction, *m_caseSensitiveAction, * m_marchAllWordsAction, *m_marchAnyWordsAction;
         SearchLineEdit *m_lineEdit;
 
-    private slots:
+    private Q_SLOTS:
         void slotMenuChaged( QAction * );
 };
 

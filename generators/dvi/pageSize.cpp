@@ -9,13 +9,12 @@
 #include <config.h>
 
 #include "pageSize.h"
-#include "kvs_debug.h"
+#include "debug_dvi.h"
 #include "length.h"
 
-#include <kglobal.h>
-#include <klocale.h>
+#include <KLocalizedString>
 
-
+#include <QtCore/qloggingcategory.h>
 
 struct pageSizeItem
 {
@@ -28,7 +27,7 @@ struct pageSizeItem
 #define defaultMetricPaperSize 4 // Default paper size is "DIN A4"
 #define defaultImperialPaperSize 8 // Default paper size is "US Letter"
 
-static pageSizeItem staticList[] = { {"DIN A0",    841.0f, 1189.0f, "mm"},
+static const pageSizeItem staticList[] = { {"DIN A0",    841.0f, 1189.0f, "mm"},
                                      {"DIN A1",    594.0f, 841.0f, "mm"},
                                      {"DIN A2",    420.0f, 594.0f, "mm"},
                                      {"DIN A3",    297.0f, 420.0f, "mm"},
@@ -38,7 +37,7 @@ static pageSizeItem staticList[] = { {"DIN A0",    841.0f, 1189.0f, "mm"},
                                      {"DIN B5",    176.0f, 250.0f, "mm"},
                                      {"US Letter", 215.9f, 279.4f, "in"},
                                      {"US Legal",  215.9f, 355.6f, "in"},
-                                     {0,  0.0f, 0.0f, 0} // marks the end of the list.
+                                     {nullptr,  0.0f, 0.0f, nullptr} // marks the end of the list.
 };
 
 
@@ -64,8 +63,8 @@ bool pageSize::setPageSize(const QString& name)
 {
   // See if we can recognize the string
   QString currentName;
-  for(int i=0; staticList[i].name != 0; i++) {
-    currentName = staticList[i].name;
+  for(int i=0; staticList[i].name != nullptr; i++) {
+    currentName = QString::fromLocal8Bit(staticList[i].name);
     if (currentName == name) {
       currentSize = i;
       // Set page width/height accordingly
@@ -79,10 +78,10 @@ bool pageSize::setPageSize(const QString& name)
   // Check if the string contains 'x'. If yes, we assume it is of type
   // "<number>x<number>". If yes, the first number is interpreted as
   // the width in mm, the second as the height in mm
-  if (name.indexOf('x') >= 0) {
+  if (name.indexOf(QLatin1Char('x')) >= 0) {
     bool wok, hok;
-    float pageWidth_tmp  = name.section('x',0,0).toFloat(&wok);
-    float pageHeight_tmp = name.section('x',1,1).toFloat(&hok);
+    float pageWidth_tmp  = name.section(QLatin1Char('x'),0,0).toFloat(&wok);
+    float pageHeight_tmp = name.section(QLatin1Char('x'),1,1).toFloat(&hok);
     if (wok && hok) {
       pageWidth.setLength_in_mm(pageWidth_tmp);
       pageHeight.setLength_in_mm(pageHeight_tmp);
@@ -97,10 +96,10 @@ bool pageSize::setPageSize(const QString& name)
   // Check if the string contains ','. If yes, we assume it is of type
   // "<number><unit>,<number><uni>". The first number is supposed to
   // be the width, the second the height.
-  if (name.indexOf(',') >= 0) {
+  if (name.indexOf(QLatin1Char(',')) >= 0) {
     bool wok, hok;
-    float pageWidth_tmp  = Length::convertToMM(name.section(',',0,0), &wok);
-    float pageHeight_tmp = Length::convertToMM(name.section(',',1,1), &hok);
+    float pageWidth_tmp  = Length::convertToMM(name.section(QLatin1Char(','),0,0), &wok);
+    float pageHeight_tmp = Length::convertToMM(name.section(QLatin1Char(','),1,1), &hok);
     if (wok && hok) {
       pageWidth.setLength_in_mm(pageWidth_tmp);
       pageHeight.setLength_in_mm(pageHeight_tmp);
@@ -117,7 +116,7 @@ bool pageSize::setPageSize(const QString& name)
   currentSize = defaultPageSize();
   pageWidth.setLength_in_mm(staticList[currentSize].width);
   pageHeight.setLength_in_mm(staticList[currentSize].height);
-  kError(kvs::shell) << "pageSize::setPageSize: could not parse '" << name << "'. Using " << staticList[currentSize].name << " as a default." << endl;
+  qCCritical(OkularDviShellDebug) << "pageSize::setPageSize: could not parse '" << name << "'. Using " << staticList[currentSize].name << " as a default." << endl;
   emit(sizeChanged(*this));
   return false;
 }
@@ -145,25 +144,25 @@ void pageSize::setPageSize(const QString& width, const QString& _widthUnits, con
   double h = height.toFloat();
 
   QString widthUnits = _widthUnits;
-  if ((widthUnits != "cm") && (widthUnits != "mm") && (widthUnits != "in")) {
-    kError(kvs::shell) << "Unrecognized page width unit '" << widthUnits << "'. Assuming mm" << endl;
-    widthUnits = "mm";
+  if ((widthUnits != QLatin1String("cm")) && (widthUnits != QLatin1String("mm")) && (widthUnits != QLatin1String("in"))) {
+    qCCritical(OkularDviShellDebug) << "Unrecognized page width unit '" << widthUnits << "'. Assuming mm" << endl;
+    widthUnits = QStringLiteral("mm");
   }
   pageWidth.setLength_in_mm(w);
-  if (widthUnits == "cm")
+  if (widthUnits == QLatin1String("cm"))
     pageWidth.setLength_in_cm(w);
-  if (widthUnits == "in")
+  if (widthUnits == QLatin1String("in"))
     pageWidth.setLength_in_inch(w);
 
   QString heightUnits = _heightUnits;
-  if ((heightUnits != "cm") && (heightUnits != "mm") && (heightUnits != "in")) {
-    kError(kvs::shell) << "Unrecognized page height unit '" << widthUnits << "'. Assuming mm" << endl;
-    heightUnits = "mm";
+  if ((heightUnits != QLatin1String("cm")) && (heightUnits != QLatin1String("mm")) && (heightUnits != QLatin1String("in"))) {
+    qCCritical(OkularDviShellDebug) << "Unrecognized page height unit '" << widthUnits << "'. Assuming mm" << endl;
+    heightUnits = QStringLiteral("mm");
   }
   pageHeight.setLength_in_mm(h);
-  if (heightUnits == "cm")
+  if (heightUnits == QLatin1String("cm"))
     pageHeight.setLength_in_cm(h);
-  if (heightUnits == "in")
+  if (heightUnits == QLatin1String("in"))
     pageHeight.setLength_in_inch(h);
 
   rectifySizes();
@@ -206,25 +205,25 @@ void pageSize::rectifySizes()
 QString pageSize::preferredUnit() const
 {
   if (currentSize >= 0)
-    return staticList[currentSize].preferredUnit;
+    return QString::fromLocal8Bit(staticList[currentSize].preferredUnit);
 
   // User-defined size. Give a preferred unit depening on the locale.
-  if (KGlobal::locale()-> measureSystem() == KLocale::Metric)
-    return "mm";
+  if (QLocale::system().measurementSystem() == QLocale::MetricSystem)
+    return QStringLiteral("mm");
   else
-    return "in";
+    return QStringLiteral("in");
 }
 
 
 QString pageSize::widthString(const QString& unit) const
 {
-  QString answer = "--";
+  QString answer = QStringLiteral("--");
 
-  if (unit == "cm")
+  if (unit == QLatin1String("cm"))
     answer.setNum(pageWidth.getLength_in_cm());
-  if (unit == "mm")
+  if (unit == QLatin1String("mm"))
     answer.setNum(pageWidth.getLength_in_mm());
-  if (unit == "in")
+  if (unit == QLatin1String("in"))
     answer.setNum(pageWidth.getLength_in_inch());
 
   return answer;
@@ -233,13 +232,13 @@ QString pageSize::widthString(const QString& unit) const
 
 QString pageSize::heightString(const QString& unit) const
 {
-  QString answer = "--";
+  QString answer = QStringLiteral("--");
 
-  if (unit == "cm")
+  if (unit == QLatin1String("cm"))
     answer.setNum(pageHeight.getLength_in_cm());
-  if (unit == "mm")
+  if (unit == QLatin1String("mm"))
     answer.setNum(pageHeight.getLength_in_mm());
-  if (unit == "in")
+  if (unit == QLatin1String("in"))
     answer.setNum(pageHeight.getLength_in_inch());
 
   return answer;
@@ -250,8 +249,8 @@ QStringList pageSize::pageSizeNames()
 {
   QStringList names;
 
-  for(int i=0; staticList[i].name != 0; i++)
-    names << staticList[i].name;
+  for(int i=0; staticList[i].name != nullptr; i++)
+    names << QString::fromLocal8Bit(staticList[i].name);
 
   return names;
 }
@@ -260,7 +259,7 @@ QStringList pageSize::pageSizeNames()
 QString pageSize::formatName() const
 {
   if (currentSize >= 0)
-    return staticList[currentSize].name;
+    return QString::fromLocal8Bit(staticList[currentSize].name);
   else
     return QString();
 }
@@ -269,7 +268,7 @@ QString pageSize::formatName() const
 int pageSize::getOrientation() const
 {
   if (currentSize == -1) {
-    kError(kvs::shell) << "pageSize::getOrientation: getOrientation called for page format that does not have a name." << endl;
+    qCCritical(OkularDviShellDebug) << "pageSize::getOrientation: getOrientation called for page format that does not have a name." << endl;
     return 0;
   }
 
@@ -283,7 +282,7 @@ int pageSize::getOrientation() const
 void pageSize::setOrientation(int orient)
 {
   if (currentSize == -1) {
-    kError(kvs::shell) << "pageSize::setOrientation: setOrientation called for page format that does not have a name." << endl;
+    qCCritical(OkularDviShellDebug) << "pageSize::setOrientation: setOrientation called for page format that does not have a name." << endl;
     return;
   }
 
@@ -301,9 +300,9 @@ void pageSize::setOrientation(int orient)
 QString pageSize::serialize() const
 {
   if ((currentSize >= 0) && (fabs(staticList[currentSize].height-pageHeight.getLength_in_mm()) <= 0.5))
-    return staticList[currentSize].name;
+    return QString::fromLocal8Bit(staticList[currentSize].name);
   else
-    return QString("%1x%2").arg(pageWidth.getLength_in_mm()).arg(pageHeight.getLength_in_mm());
+    return QStringLiteral("%1x%2").arg(pageWidth.getLength_in_mm()).arg(pageHeight.getLength_in_mm());
 }
 
 
@@ -312,26 +311,26 @@ QString pageSize::description() const
   if (!isValid())
     return QString();
 
-  QString size = " ";
+  QString size = QStringLiteral(" ");
   if (formatNumber() == -1) {
-    if (KGlobal::locale()-> measureSystem() == KLocale::Metric)
-      size += QString("%1x%2 mm").arg(width().getLength_in_mm(), 0, 'f', 0).arg(height().getLength_in_mm(), 0, 'f', 0);
+    if (QLocale::system().measurementSystem() == QLocale::MetricSystem)
+      size += QStringLiteral("%1x%2 mm").arg(width().getLength_in_mm(), 0, 'f', 0).arg(height().getLength_in_mm(), 0, 'f', 0);
     else
-      size += QString("%1x%2 in").arg(width().getLength_in_inch(), 0, 'g', 2).arg(height().getLength_in_inch(), 0, 'g', 2);
+      size += QStringLiteral("%1x%2 in").arg(width().getLength_in_inch(), 0, 'g', 2).arg(height().getLength_in_inch(), 0, 'g', 2);
   } else {
-    size += formatName() + '/';
+    size += formatName() + QLatin1Char('/');
      if (getOrientation() == 0)
       size += i18n("portrait");
     else
       size += i18n("landscape");
   }
-  return size + ' ';
+  return size + QLatin1Char(' ');
 }
 
 
 void pageSize::reconstructCurrentSize()
 {
-  for(int i=0; staticList[i].name != 0; i++) {
+  for(int i=0; staticList[i].name != nullptr; i++) {
     if ((fabs(staticList[i].width - pageWidth.getLength_in_mm()) <= 2) && (fabs(staticList[i].height - pageHeight.getLength_in_mm()) <= 2)) {
       currentSize = i;
       pageWidth.setLength_in_mm(staticList[currentSize].width);
@@ -351,14 +350,13 @@ void pageSize::reconstructCurrentSize()
 
 int pageSize::defaultPageSize()
 {
-  // FIXME: static_cast<QPrinter::PageSize>(KGlobal::locale()->pageSize())
+  // FIXME: static_cast<QPrinter::PageSize>(KLocale::global()->pageSize())
   //        is the proper solution here.  Then you can determine the values
   //        without using your hardcoded table too!
-  if (KGlobal::locale()-> measureSystem() == KLocale::Metric)
+  if (QLocale::system().measurementSystem() == QLocale::MetricSystem)
     return defaultMetricPaperSize;
   else
     return defaultImperialPaperSize;
 }
 
-#include "pageSize.moc"
 

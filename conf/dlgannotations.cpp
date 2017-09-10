@@ -22,7 +22,7 @@ DlgAnnotations::DlgAnnotations( QWidget * parent )
 
     WidgetAnnotTools * kcfg_AnnotationTools = new WidgetAnnotTools( dlg.annotToolsGroup );
     dlg.annotToolsPlaceholder->addWidget( kcfg_AnnotationTools );
-    kcfg_AnnotationTools->setObjectName( "kcfg_AnnotationTools" );
+    kcfg_AnnotationTools->setObjectName( QStringLiteral("kcfg_AnnotationTools") );
 
-    KConfigDialogManager::changedMap()->insert( "WidgetAnnotTools" , SIGNAL(changed()) );
+    KConfigDialogManager::changedMap()->insert( QStringLiteral("WidgetAnnotTools") , SIGNAL(changed()) );
 }

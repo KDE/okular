@@ -10,7 +10,7 @@
 #ifndef _OKULAR_AUDIOPLAYER_H_
 #define _OKULAR_AUDIOPLAYER_H_
 
-#include "okular_export.h"
+#include "okularcore_export.h"
 
 #include <QtCore/QObject>
 
@@ -27,7 +27,7 @@ class SoundAction;
  * Singleton utility class to play sounds in documents using the KDE sound
  * system.
  */
-class OKULAR_EXPORT AudioPlayer : public QObject
+class OKULARCORE_EXPORT AudioPlayer : public QObject
 {
     Q_OBJECT
 
@@ -60,7 +60,7 @@ class OKULAR_EXPORT AudioPlayer : public QObject
          * Enqueue the specified @p sound for playing, optionally taking more
          * information about the playing from the @p soundlink .
          */
-        void playSound( const Sound * sound, const SoundAction * linksound = 0 );
+        void playSound( const Sound * sound, const SoundAction * linksound = nullptr );
 
         /**
          * Tell the AudioPlayer to stop all the playbacks.

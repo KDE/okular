@@ -10,7 +10,12 @@
 #ifndef _OKULAR_VIEWERINTERFACE_H_
 #define _OKULAR_VIEWERINTERFACE_H_
 
-#include "../core/okular_export.h"
+#include "../core/okularcore_export.h"
+#ifdef Q_OS_WIN
+#define VIEWERINTERFACE_EXPORT __declspec(dllexport)
+#else
+#define VIEWERINTERFACE_EXPORT OKULARCORE_EXPORT
+#endif
 
 #include <QtCore/QObject>
 #include <QtCore/QString>
@@ -23,7 +28,7 @@ namespace Okular {
  * This interface can be used to control some more or less advanced features of a document
  * viewer.
  */
-class ViewerInterface
+class VIEWERINTERFACE_EXPORT ViewerInterface
 {
     public:
         virtual ~ViewerInterface() {}

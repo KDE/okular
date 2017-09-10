@@ -11,7 +11,7 @@
 
 #include "core/texteditors_p.h"
 
-#include <klocale.h>
+#include <klocalizedstring.h>
 
 #include "ui_dlgeditorbase.h"
 
@@ -23,7 +23,7 @@ DlgEditor::DlgEditor( QWidget * parent )
 
     m_editors = Okular::buildEditorsMap();
 
-    connect( m_dlg->kcfg_ExternalEditor, SIGNAL(currentIndexChanged(int)), this, SLOT(editorChanged(int)) );
+    connect(m_dlg->kcfg_ExternalEditor, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &DlgEditor::editorChanged);
 
     m_dlg->kcfg_ExternalEditor->addItem( i18nc( "Text editor", "Custom Text Editor" ) );
     m_dlg->kcfg_ExternalEditor->addItem( i18nc( "Text editor", "Kate" ), 1 );
@@ -68,4 +68,4 @@ void DlgEditor::editorChanged( int which )
     }
 }
 
-#include "dlgeditor.moc"
+#include "moc_dlgeditor.cpp"

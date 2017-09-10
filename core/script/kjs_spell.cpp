@@ -33,10 +33,10 @@ void JSSpell::initType( KJSContext *ctx )
     initialized = true;
 
     g_spellProto = new KJSPrototype();
-    g_spellProto->defineProperty( ctx, QString( "available" ), spellGetAvailable );
+    g_spellProto->defineProperty( ctx, QStringLiteral( "available" ), spellGetAvailable );
 }
 
 KJSObject JSSpell::object( KJSContext *ctx )
 {
-    return g_spellProto->constructObject( ctx, 0 );
+    return g_spellProto->constructObject( ctx, nullptr );
 }

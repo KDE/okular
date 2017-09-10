@@ -10,7 +10,7 @@
 
 #include "bigEndianByteReader.h"
 #include "dvi.h"
-#include "kvs_debug.h"
+#include "debug_dvi.h"
 
 
 //#define DEBUG_ENDIANREADER
@@ -21,9 +21,9 @@ quint8 bigEndianByteReader::readUINT8()
   // necessary for virtual fonts, which do not end with EOP.
   if (command_pointer >= end_pointer) {
 #ifdef DEBUG_ENDIANREADER
-    kError(kvs::dvi) << "bigEndianByteReader::readUINT8() tried to read past end of data chunk" << endl;
-    kError(kvs::dvi) << "end_pointer     = " << end_pointer << endl;
-    kError(kvs::dvi) << "command_pointer = " << command_pointer << endl;
+    qCCritical(OkularDviDebug) << "bigEndianByteReader::readUINT8() tried to read past end of data chunk" << endl;
+    qCCritical(OkularDviDebug) << "end_pointer     = " << end_pointer << endl;
+    qCCritical(OkularDviDebug) << "command_pointer = " << command_pointer << endl;
 #endif
     return EOP;
   }

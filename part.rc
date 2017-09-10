@@ -43,7 +43,7 @@
       <Action name="view_orientation_original"/>
     </Menu>
     <Action name="view_pagesizes"/>
-    <Action name="view_trim_margins"/>
+    <Action name="view_trim_mode"/>
     <Separator/>
     <Action name="view_toggle_forms"/>
   </Menu>

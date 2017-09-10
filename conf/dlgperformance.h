@@ -10,19 +10,20 @@
 #ifndef _DLGPERFORMANCE_H
 #define _DLGPERFORMANCE_H
 
-#include <qwidget.h>
+#include <QWidget>
 
 class Ui_DlgPerformanceBase;
+class QButtonGroup;
 
 class DlgPerformance : public QWidget
 {
     Q_OBJECT
 
     public:
-        DlgPerformance( QWidget * parent = 0 );
+        explicit DlgPerformance( QWidget * parent = nullptr );
         virtual ~DlgPerformance();
 
-    protected slots:
+    protected Q_SLOTS:
         void radioGroup_changed( int which );
 
     protected:

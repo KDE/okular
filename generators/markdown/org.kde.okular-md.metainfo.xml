@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component type="addon">
+  <id>org.kde.okular-md</id>
+  <extends>org.kde.okular.desktop</extends>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-2.0+ and GFDL-1.3</project_license>
+  <name>Markdown</name>
+  <name xml:lang="ca">Markdown</name>
+  <name xml:lang="ca-valencia">Markdown</name>
+  <name xml:lang="cs">Markdown</name>
+  <name xml:lang="es">Markdown</name>
+  <name xml:lang="nl">Markdown</name>
+  <name xml:lang="nn">Markdown</name>
+  <name xml:lang="pl">Markdown</name>
+  <name xml:lang="pt">Markdown</name>
+  <name xml:lang="sk">Zrážka</name>
+  <name xml:lang="sr">Маркдаун</name>
+  <name xml:lang="sr-Latn">Markdown</name>
+  <name xml:lang="sr-ijekavian">Маркдаун</name>
+  <name xml:lang="sr-ijekavianlatin">Markdown</name>
+  <name xml:lang="sv">Markdown</name>
+  <name xml:lang="uk">Markdown</name>
+  <name xml:lang="x-test">xxMarkdownxx</name>
+  <name xml:lang="zh-CN">Markdown</name>
+  <summary>Adds support for reading Markdown documents</summary>
+  <summary xml:lang="ca">Afegeix la implementació per a llegir documents de Markdown</summary>
+  <summary xml:lang="ca-valencia">Afig la implementació per a llegir documents de Markdown</summary>
+  <summary xml:lang="cs">Přidává podporu pro čtení dokumentů Markdown</summary>
+  <summary xml:lang="es">Permite la lectura de documentos Markdown</summary>
+  <summary xml:lang="nl">Voegt ondersteuning voor lezen van Markdown-documenten toe</summary>
+  <summary xml:lang="nn">Legg til støtte for å lesa Markdown-dokument</summary>
+  <summary xml:lang="pl">Dodaje obsługę odczytu dokumentów Markdown</summary>
+  <summary xml:lang="pt">Adiciona o suporte para a leitura de documentos em Markdown</summary>
+  <summary xml:lang="sk">Pridá podporu pre čítanie dokumentov Markdown</summary>
+  <summary xml:lang="sr">Подршка за читање маркдаун докумената</summary>
+  <summary xml:lang="sr-Latn">Podrška za čitanje Markdown dokumenata</summary>
+  <summary xml:lang="sr-ijekavian">Подршка за читање маркдаун докумената</summary>
+  <summary xml:lang="sr-ijekavianlatin">Podrška za čitanje Markdown dokumenata</summary>
+  <summary xml:lang="sv">Lägger till stöd för att läsa Markdown-dokument</summary>
+  <summary xml:lang="uk">Додає підтримку читання документів Markdown</summary>
+  <summary xml:lang="x-test">xxAdds support for reading Markdown documentsxx</summary>
+  <mimetypes>
+    <mimetype>text/markdown</mimetype>
+  </mimetypes>
+  <url type="homepage">https://okular.kde.org</url>
+</component>

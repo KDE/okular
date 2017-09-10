@@ -14,7 +14,7 @@
 #include <kjs/kjsprototype.h>
 #include <kjs/kjsarguments.h>
 
-#include <kurl.h>
+#include <QUrl>
 
 using namespace Okular;
 
@@ -25,33 +25,33 @@ static KJSObject crackURL( KJSContext *context, void *,
 {
     if ( arguments.count() < 1 )
     {
-        return context->throwException( "Missing URL argument" );
+        return context->throwException( QStringLiteral("Missing URL argument") );
     }
     QString cURL = arguments.at( 0 ).toString( context );
-    KUrl url( cURL );
+    QUrl url(QUrl::fromLocalFile(cURL) );
     if ( !url.isValid() )
     {
-        return context->throwException( "Invalid URL" );
+        return context->throwException( QStringLiteral("Invalid URL") );
     }
-    if ( url.protocol() != QLatin1String( "file" )
-         || url.protocol() != QLatin1String( "http" )
-         || url.protocol() != QLatin1String( "https" ) )
+    if ( url.scheme() != QLatin1String( "file" )
+         || url.scheme() != QLatin1String( "http" )
+         || url.scheme() != QLatin1String( "https" ) )
     {
-        return context->throwException( "Protocol not valid: '" + url.protocol() + '\'' );
+        return context->throwException( QStringLiteral("Protocol not valid: '") + url.scheme() + QLatin1Char('\'') );
     }
 
     KJSObject obj;
-    obj.setProperty( context, "cScheme", url.protocol() );
-    if ( url.hasUser() )
-        obj.setProperty( context, "cUser", url.user() );
-    if ( url.hasPass() )
-        obj.setProperty( context, "cPassword", url.password() );
-    obj.setProperty( context, "cHost", url.host() );
-    obj.setProperty( context, "nPort", url.port( 80 ) );
+    obj.setProperty( context, QStringLiteral("cScheme"), url.scheme() );
+    if ( !url.userName().isEmpty() )
+        obj.setProperty( context, QStringLiteral("cUser"), url.userName() );
+    if ( !url.password().isEmpty() )
+        obj.setProperty( context, QStringLiteral("cPassword"), url.password() );
+    obj.setProperty( context, QStringLiteral("cHost"), url.host() );
+    obj.setProperty( context, QStringLiteral("nPort"), url.port( 80 ) );
     // TODO cPath       (Optional) The path portion of the URL.
     // TODO cParameters (Optional) The parameter string portion of the URL.
-    if ( url.hasRef() )
-        obj.setProperty( context, "cFragments", url.ref() );
+    if ( url.hasFragment() )
+        obj.setProperty( context, QStringLiteral("cFragments"), url.fragment(QUrl::FullyDecoded) );
 
     return obj;
 }
@@ -64,11 +64,11 @@ void JSUtil::initType( KJSContext *ctx )
     initialized = true;
 
     g_utilProto = new KJSPrototype();
-    g_utilProto->defineFunction( ctx, "crackURL", crackURL );
+    g_utilProto->defineFunction( ctx, QStringLiteral("crackURL"), crackURL );
 }
 
 KJSObject JSUtil::object( KJSContext *ctx )
 {
-    return g_utilProto->constructObject( ctx, 0 );
+    return g_utilProto->constructObject( ctx, nullptr );
 }
 

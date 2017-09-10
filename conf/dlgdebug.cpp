@@ -14,8 +14,8 @@
 
 #define DEBUG_SIMPLE_BOOL( cfgname, layout ) \
 { \
-    QCheckBox * foo = new QCheckBox( cfgname, this ); \
-    foo->setObjectName( "kcfg_" cfgname ); \
+    QCheckBox * foo = new QCheckBox( QStringLiteral(cfgname), this ); \
+    foo->setObjectName( QStringLiteral("kcfg_" cfgname) ); \
     layout->addWidget( foo ); \
 }
 

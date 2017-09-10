@@ -11,21 +11,29 @@
 
 #include "core/action.h"
 
-#include <poppler-qt4.h>
+#include <poppler-qt5.h>
 
 #include <config-okular-poppler.h>
 
 extern Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink);
 
+#ifdef HAVE_POPPLER_0_53
+#define SET_ACTIONS \
+    setActivationAction( createLinkFromPopplerLink( field->activationAction() ) ); \
+    setAdditionalAction( Okular::FormField::FieldModified, createLinkFromPopplerLink( field->additionalAction( Poppler::FormField::FieldModified ) ) ); \
+    setAdditionalAction( Okular::FormField::FormatField, createLinkFromPopplerLink( field->additionalAction( Poppler::FormField::FormatField ) ) ); \
+    setAdditionalAction( Okular::FormField::ValidateField, createLinkFromPopplerLink( field->additionalAction( Poppler::FormField::ValidateField ) ) ); \
+    setAdditionalAction( Okular::FormField::CalculateField, createLinkFromPopplerLink( field->additionalAction( Poppler::FormField::CalculateField ) ) );
+#else
+#define SET_ACTIONS \
+    setActivationAction( createLinkFromPopplerLink( field->activationAction() ) );
+#endif
+
 PopplerFormFieldButton::PopplerFormFieldButton( Poppler::FormFieldButton * field )
     : Okular::FormFieldButton(), m_field( field )
 {
     m_rect = Okular::NormalizedRect::fromQRectF( m_field->rect() );
-    Poppler::Link *aAction = field->activationAction();
-    if ( aAction )
-    {
-        setActivationAction( createLinkFromPopplerLink( aAction ) );
-    }
+    SET_ACTIONS
 }
 
 PopplerFormFieldButton::~PopplerFormFieldButton()
@@ -102,11 +110,7 @@ PopplerFormFieldText::PopplerFormFieldText( Poppler::FormFieldText * field )
     : Okular::FormFieldText(), m_field( field )
 {
     m_rect = Okular::NormalizedRect::fromQRectF( m_field->rect() );
-    Poppler::Link *aAction = field->activationAction();
-    if ( aAction )
-    {
-        setActivationAction( createLinkFromPopplerLink( aAction ) );
-    }
+    SET_ACTIONS
 }
 
 PopplerFormFieldText::~PopplerFormFieldText()
@@ -198,11 +202,7 @@ PopplerFormFieldChoice::PopplerFormFieldChoice( Poppler::FormFieldChoice * field
     : Okular::FormFieldChoice(), m_field( field )
 {
     m_rect = Okular::NormalizedRect::fromQRectF( m_field->rect() );
-    Poppler::Link *aAction = field->activationAction();
-    if ( aAction )
-    {
-        setActivationAction( createLinkFromPopplerLink( aAction ) );
-    }
+    SET_ACTIONS
 }
 
 PopplerFormFieldChoice::~PopplerFormFieldChoice()
@@ -279,18 +279,12 @@ void PopplerFormFieldChoice::setCurrentChoices( const QList<int>& choices )
 
 QString PopplerFormFieldChoice::editChoice() const
 {
-#ifdef HAVE_POPPLER_0_22
     return m_field->editChoice();
-#else
-    return QString();
-#endif
 }
 
 void PopplerFormFieldChoice::setEditChoice( const QString& text )
 {
-#ifdef HAVE_POPPLER_0_22
     m_field->setEditChoice( text );
-#endif
 }
 
 Qt::Alignment PopplerFormFieldChoice::textAlignment() const

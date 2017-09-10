@@ -76,7 +76,7 @@
    </choices>
   </entry>
   <entry key="ExternalEditorCommand" type="String">
-    <default>kate --use --line %l --column %c</default>
+    <default>kate --line %l --column %c</default>
   </entry>
  </group>
  <group name="Core Presentation" >

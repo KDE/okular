@@ -38,8 +38,8 @@ class NonFreeUnrarFlavour : public UnrarFlavour
     public:
         NonFreeUnrarFlavour();
 
-        virtual QStringList processListing( const QStringList &data );
-        virtual QString name() const;
+        QStringList processListing( const QStringList &data ) override;
+        QString name() const override;
 };
 
 class FreeUnrarFlavour : public UnrarFlavour
@@ -47,8 +47,8 @@ class FreeUnrarFlavour : public UnrarFlavour
     public:
         FreeUnrarFlavour();
 
-        virtual QStringList processListing( const QStringList &data );
-        virtual QString name() const;
+        QStringList processListing( const QStringList &data ) override;
+        QString name() const override;
 };
 
 #endif

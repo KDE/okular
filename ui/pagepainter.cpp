@@ -16,9 +16,8 @@
 #include <qpixmap.h>
 #include <qvarlengtharray.h>
 #include <kiconloader.h>
-#include <kdebug.h>
+#include <QtCore/QDebug>
 #include <QApplication>
-#include <qimageblitz.h>
 
 // system includes
 #include <math.h>
@@ -34,9 +33,9 @@
 #include "core/observer.h"
 #include "core/tile.h"
 #include "settings_core.h"
-#include "core/document_p.h"
+#include "ui/debug_ui.h"
 
-K_GLOBAL_STATIC_WITH_ARGS( QPixmap, busyPixmap, ( KIconLoader::global()->loadIcon("okular", KIconLoader::NoGroup, 32, KIconLoader::DefaultState, QStringList(), 0, true) ) )
+Q_GLOBAL_STATIC_WITH_ARGS( QPixmap, busyPixmap, ( KIconLoader::global()->loadIcon(QLatin1String("okular"), KIconLoader::NoGroup, 32, KIconLoader::DefaultState, QStringList(), 0, true) ) )
 
 #define TEXTANNOTATION_ICONSIZE 24
 
@@ -56,17 +55,17 @@ void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page
     Okular::DocumentObserver *observer, int flags, int scaledWidth, int scaledHeight, const QRect &limits )
 {
         paintCroppedPageOnPainter( destPainter, page, observer, flags, scaledWidth, scaledHeight, limits,
-                                   Okular::NormalizedRect( 0, 0, 1, 1 ), 0 );
+                                   Okular::NormalizedRect( 0, 0, 1, 1 ), nullptr );
 }
 
 void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okular::Page * page,
     Okular::DocumentObserver *observer, int flags, int scaledWidth, int scaledHeight, const QRect &limits,
     const Okular::NormalizedRect &crop, Okular::NormalizedPoint *viewPortPoint )
 {
-	/* Calculate the cropped geometry of the page */
-	QRect scaledCrop = crop.geometry( scaledWidth, scaledHeight );
-	int croppedWidth = scaledCrop.width();
-	int croppedHeight = scaledCrop.height();
+    /* Calculate the cropped geometry of the page */
+    QRect scaledCrop = crop.geometry( scaledWidth, scaledHeight );
+    int croppedWidth = scaledCrop.width();
+    int croppedHeight = scaledCrop.height();
 
     QColor paperColor = Qt::white;
     QColor backgroundColor = paperColor;
@@ -90,7 +89,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     destPainter->fillRect( limits, backgroundColor );
 
     const bool hasTilesManager = page->hasTilesManager( observer );
-    const QPixmap *pixmap = 0;
+    const QPixmap *pixmap = nullptr;
 
     if ( !hasTilesManager )
     {
@@ -101,12 +100,12 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
         double pixmapRescaleRatio = pixmap ? scaledWidth / (double)pixmap->width() : -1;
         long pixmapPixels = pixmap ? (long)pixmap->width() * (long)pixmap->height() : 0;
         if ( !pixmap || pixmapRescaleRatio > 20.0 || pixmapRescaleRatio < 0.25 ||
-             (scaledWidth != pixmap->width() && pixmapPixels > 6000000L) )
+             (scaledWidth > pixmap->width() && pixmapPixels > 60000000L) )
         {
             // draw something on the blank page: the okular icon or a cross (as a fallback)
-            if ( !busyPixmap->isNull() )
+            if ( !busyPixmap()->isNull() )
             {
-                destPainter->drawPixmap( QPoint( 10, 10 ), *busyPixmap );
+                destPainter->drawPixmap( QPoint( 10, 10 ), *busyPixmap() );
             }
             else
             {
@@ -124,13 +123,14 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     bool canDrawAnnotations = (flags & Annotations) && !page->m_annotations.isEmpty();
     bool enhanceLinks = (flags & EnhanceLinks) && Okular::Settings::highlightLinks();
     bool enhanceImages = (flags & EnhanceImages) && Okular::Settings::highlightImages();
+
     // vectors containing objects to draw
     // make this a qcolor, rect map, since we don't need
     // to know s_id here! we are only drawing this right?
-    QList< QPair<QColor, Okular::NormalizedRect> > * bufferedHighlights = 0;
-    QList< Okular::Annotation * > * bufferedAnnotations = 0;
-    QList< Okular::Annotation * > * unbufferedAnnotations = 0;
-    Okular::Annotation *boundingRectOnlyAnn = 0; // Paint the bounding rect of this annotation
+    QList< QPair<QColor, Okular::NormalizedRect> > * bufferedHighlights = nullptr;
+    QList< Okular::Annotation * > * bufferedAnnotations = nullptr;
+    QList< Okular::Annotation * > * unbufferedAnnotations = nullptr;
+    Okular::Annotation *boundingRectOnlyAnn = nullptr; // Paint the bounding rect of this annotation
     // fill up lists with visible annotation/highlight objects/text selections
     if ( canDrawHighlights || canDrawTextSelection || canDrawAnnotations )
     {
@@ -191,9 +191,11 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                 if ( flags & Okular::Annotation::ExternallyDrawn )
                 {
                     // ExternallyDrawn annots are never rendered by PagePainter.
-                    // Just paint the boundingRect if the annot is BeingMoved
-                    if ( flags & Okular::Annotation::BeingMoved )
+                    // Just paint the boundingRect if the annot is moved or resized.
+                    if ( flags & (Okular::Annotation::BeingMoved | Okular::Annotation::BeingResized) )
+                    {
                         boundingRectOnlyAnn = ann;
+                    }
                     continue;
                 }
 
@@ -235,8 +237,8 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     /** 3 - ENABLE BACKBUFFERING IF DIRECT IMAGE MANIPULATION IS NEEDED **/
     bool bufferAccessibility = (flags & Accessibility) && Okular::SettingsCore::changeColors() && (Okular::SettingsCore::renderMode() != Okular::SettingsCore::EnumRenderMode::Paper);
     bool useBackBuffer = bufferAccessibility || bufferedHighlights || bufferedAnnotations || viewPortPoint;
-    QPixmap * backPixmap = 0;
-    QPainter * mixedPainter = 0;
+    QPixmap * backPixmap = nullptr;
+    QPainter * mixedPainter = nullptr;
     QRect limitsInPixmap = limits.translated( scaledCrop.topLeft() );
         // limits within full (scaled but uncropped) pixmap
 
@@ -289,12 +291,6 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
         // the image over which we are going to draw
         QImage backImage;
 
-        bool has_alpha;
-        if ( pixmap )
-            has_alpha = pixmap->hasAlpha();
-        else
-            has_alpha = true;
-
         if ( hasTilesManager )
         {
             backImage = QImage( limits.width(), limits.height(), QImage::Format_ARGB32_Premultiplied );
@@ -310,9 +306,6 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                 QRect limitsInTile = limits & tileRect;
                 if ( !limitsInTile.isEmpty() )
                 {
-                    if ( !tile.pixmap()->hasAlpha() )
-                        has_alpha = false;
-
                     if ( tile.pixmap()->width() == tileRect.width() && tile.pixmap()->height() == tileRect.height() )
                     {
                         p.drawPixmap( limitsInTile.translated( -limits.topLeft() ).topLeft(), *(tile.pixmap()),
@@ -350,8 +343,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                     backImage.invertPixels(QImage::InvertRgb);
                     break;
                 case Okular::SettingsCore::EnumRenderMode::Recolor:
-                    // Recolor image using Blitz::flatten with dither:0
-                    Blitz::flatten( backImage, Okular::Settings::recolorForeground(), Okular::Settings::recolorBackground() );
+                    recolor(&backImage, Okular::Settings::recolorForeground(), Okular::Settings::recolorBackground());
                     break;
                 case Okular::SettingsCore::EnumRenderMode::BlackWhite:
                     // Manual Gray and Contrast
@@ -382,50 +374,17 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
         if ( bufferedHighlights )
         {
             // draw highlights that are inside the 'limits' paint region
-            QList< QPair<QColor, Okular::NormalizedRect> >::const_iterator hIt = bufferedHighlights->constBegin(), hEnd = bufferedHighlights->constEnd();
-            for ( ; hIt != hEnd; ++hIt )
+            for (const auto& highlight : *bufferedHighlights)
             {
-                const Okular::NormalizedRect & r = (*hIt).second;
+                const Okular::NormalizedRect & r = highlight.second;
                 // find out the rect to highlight on pixmap
-                QRect highlightRect = r.geometry( scaledWidth, scaledHeight ).translated( -scaledCrop.topLeft() ).intersect( limits );
+                QRect highlightRect = r.geometry( scaledWidth, scaledHeight ).translated( -scaledCrop.topLeft() ).intersected( limits );
                 highlightRect.translate( -limits.left(), -limits.top() );
 
-                // highlight composition (product: highlight color * destcolor)
-                unsigned int * data = (unsigned int *)backImage.bits();
-                int val, newR, newG, newB,
-                    rh = (*hIt).first.red(),
-                    gh = (*hIt).first.green(),
-                    bh = (*hIt).first.blue(),
-                    offset = highlightRect.top() * backImage.width();
-                for( int y = highlightRect.top(); y <= highlightRect.bottom(); ++y )
-                {
-                    for( int x = highlightRect.left(); x <= highlightRect.right(); ++x )
-                    {
-                        val = data[ x + offset ];
-                        //for odt or epub
-                        if(has_alpha)
-                        {
-                            newR = qRed(val);
-                            newG = qGreen(val);
-                            newB = qBlue(val);
-
-                            if(newR == newG && newG == newB && newR == 0)
-                                newR = newG = newB = 255;
-
-                            newR = (newR * rh) / 255;
-                            newG = (newG * gh) / 255;
-                            newB = (newB * bh) / 255;
-                        }
-                        else
-                        {
-                            newR = (qRed(val) * rh) / 255;
-                            newG = (qGreen(val) * gh) / 255;
-                            newB = (qBlue(val) * bh) / 255;
-                        }
-                        data[ x + offset ] = qRgba( newR, newG, newB, 255 );
-                    }
-                    offset += backImage.width();
-                }
+                const QColor highlightColor = highlight.first;
+                QPainter painter(&backImage);
+                painter.setCompositionMode(QPainter::CompositionMode_Multiply);
+                painter.fillRect(highlightRect, highlightColor);
             }
         }
         // 4B.4. paint annotations [COMPOSITED ONES]
@@ -679,7 +638,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
 
             // get annotation boundary and drawn rect
             QRect annotBoundary = a->transformedBoundingRectangle().geometry( scaledWidth, scaledHeight ).translated( -scaledCrop.topLeft() );
-            QRect annotRect = annotBoundary.intersect( limits );
+            QRect annotRect = annotBoundary.intersected( limits );
             QRect innerRect( annotRect.left() - annotBoundary.left(), annotRect.top() -
                     annotBoundary.top(), annotRect.width(), annotRect.height() );
 
@@ -694,19 +653,26 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                     QImage image( annotBoundary.size(), QImage::Format_ARGB32 );
                     image.fill( acolor.rgba() );
                     QPainter painter( &image );
-                    painter.setPen( Qt::black );
                     painter.setFont( text->textFont() );
                     Qt::AlignmentFlag halign = ( text->inplaceAlignment() == 1 ? Qt::AlignHCenter : ( text->inplaceAlignment() == 2 ? Qt::AlignRight : Qt::AlignLeft ) );
                     const double invXScale = (double)page->width() / scaledWidth;
                     const double invYScale = (double)page->height() / scaledHeight;
+                    const double borderWidth = text->style().width();
                     painter.scale( 1 / invXScale, 1 / invYScale );
-                    painter.drawText( 2 * invXScale, 2 * invYScale,
-                                      (image.width() - 2) * invXScale,
-                                      (image.height() - 2) * invYScale,
-                                      Qt::AlignTop | halign | Qt::TextWordWrap,
+                    painter.drawText( borderWidth * invXScale, borderWidth * invYScale,
+                                      (image.width() - 2 * borderWidth) * invXScale,
+                                      (image.height() - 2 * borderWidth) * invYScale,
+                                      Qt::AlignTop | halign | Qt::TextWrapAnywhere,
                                       text->contents() );
                     painter.resetTransform();
-                    painter.drawRect( 0, 0, image.width() - 1, image.height() - 1 );
+                    //Required as asking for a zero width pen results
+                    //in a default width pen (1.0) being created
+                    if ( borderWidth != 0 )
+                    {
+                        QPen pen( Qt::black, borderWidth );
+                        painter.setPen( pen );
+                        painter.drawRect( 0, 0, image.width() - 1, image.height() - 1 );
+                    }
                     painter.end();
 
                     mixedPainter->drawImage( annotBoundary.topLeft(), image );
@@ -720,7 +686,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                         pixmap = GuiUtils::iconLoader()->loadIcon( text->textIcon().toLower(), KIconLoader::NoGroup, 32 );
                     QImage scaledImage;
                     QRect annotBoundary2 = QRect( annotBoundary.topLeft(), QSize( TEXTANNOTATION_ICONSIZE, TEXTANNOTATION_ICONSIZE ) );
-                    QRect annotRect2 = annotBoundary2.intersect( limits );
+                    QRect annotRect2 = annotBoundary2.intersected( limits );
                     QRect innerRect2( annotRect2.left() - annotBoundary2.left(), annotRect2.top() -
                     annotBoundary2.top(), annotRect2.width(), annotRect2.height() );
                     scalePixmapOnImage( scaledImage, &pixmap,
@@ -766,7 +732,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                 if ( geom->style().width() || geom->geometricalInnerColor().isValid() )
                 {
                     mixedPainter->save();
-                    const double width = geom->style().width() * Okular::Utils::dpiX() / ( 72.0 * 2.0 ) * scaledWidth / page->width();
+                    const double width = geom->style().width() * Okular::Utils::realDpi(nullptr).width() / ( 72.0 * 2.0 ) * scaledWidth / page->width();
                     QRectF r( .0, .0, annotBoundary.width(), annotBoundary.height() );
                     r.adjust( width, width, -width, -width );
                     r.translate( annotBoundary.topLeft() );
@@ -832,7 +798,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
             {
                 if ( limitsEnlarged.intersects( rect->boundingRect( scaledWidth, scaledHeight ).translated( -scaledCrop.topLeft() ) ) )
                 {
-                    mixedPainter->strokePath( rect->region(), QPen( normalColor ) );
+                    mixedPainter->strokePath( rect->region(), QPen( normalColor, 0 ) );
                 }
             }
         }
@@ -871,6 +837,32 @@ void PagePainter::cropPixmapOnImage( QImage & dest, const QPixmap * src, const Q
         p.drawPixmap( 0, 0, *src, r.left(), r.top(), r.width(), r.height() );
         p.end();
         dest = croppedImage;
+    }
+}
+
+void PagePainter::recolor(QImage *image, const QColor &foreground, const QColor &background)
+{
+    if (image->format() != QImage::Format_ARGB32_Premultiplied) {
+        qCWarning(OkularUiDebug) << "Wrong image format! Converting...";
+        *image = image->convertToFormat(QImage::Format_ARGB32_Premultiplied);
+    }
+
+    Q_ASSERT(image->format() == QImage::Format_ARGB32_Premultiplied);
+
+    const float scaleRed = background.redF() - foreground.redF();
+    const float scaleGreen = background.greenF() - foreground.greenF();
+    const float scaleBlue = background.blueF() - foreground.blueF();
+
+    for (int y=0; y<image->height(); y++) {
+        QRgb *pixels = reinterpret_cast<QRgb*>(image->scanLine(y));
+
+        for (int x=0; x<image->width(); x++) {
+            const int lightness = qGray(pixels[x]);
+            pixels[x] = qRgba(scaleRed * lightness + foreground.red(),
+                           scaleGreen * lightness + foreground.green(),
+                           scaleBlue * lightness + foreground.blue(),
+                           qAlpha(pixels[x]));
+        }
     }
 }
 
@@ -919,7 +911,7 @@ void PagePainter::changeImageAlpha( QImage & image, unsigned int destAlpha )
     unsigned int pixels = image.width() * image.height();
 
     int source, sourceAlpha;
-    for( register unsigned int i = 0; i < pixels; ++i )
+    for( unsigned int i = 0; i < pixels; ++i )
     {   // optimize this loop keeping byte order into account
         source = data[i];
         if ( (sourceAlpha = qAlpha( source )) == 255 )

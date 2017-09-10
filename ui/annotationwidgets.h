@@ -20,7 +20,7 @@ class QDoubleSpinBox;
 class QLabel;
 class QWidget;
 class KColorButton;
-class KIntNumInput;
+class QSpinBox;
 class KFontRequester;
 class AnnotationWidget;
 
@@ -30,7 +30,7 @@ class PixmapPreviewSelector
     Q_OBJECT
 
 public:
-    explicit PixmapPreviewSelector( QWidget * parent = 0 );
+    explicit PixmapPreviewSelector( QWidget * parent = nullptr );
     virtual ~PixmapPreviewSelector();
 
     void setIcon( const QString& icon );
@@ -43,10 +43,10 @@ public:
 
     void setEditable( bool editable );
 
-signals:
+Q_SIGNALS:
     void iconChanged( const QString& );
 
-private slots:
+private Q_SLOTS:
     void iconComboChanged( const QString& icon );
 
 private:
@@ -82,7 +82,7 @@ public:
 
     virtual void applyChanges();
 
-signals:
+Q_SIGNALS:
     void dataChanged();
 
 protected:
@@ -95,7 +95,7 @@ protected:
     QWidget * m_appearanceWidget;
     QWidget * m_extraWidget;
     KColorButton *m_colorBn;
-    KIntNumInput *m_opacity;
+    QSpinBox *m_opacity;
 };
 
 class TextAnnotationWidget
@@ -104,18 +104,19 @@ class TextAnnotationWidget
     Q_OBJECT
 
 public:
-    TextAnnotationWidget( Okular::Annotation * ann );
+    explicit TextAnnotationWidget( Okular::Annotation * ann );
 
-    virtual void applyChanges();
+    void applyChanges() override;
 
 protected:
-    virtual QWidget * createStyleWidget();
+    QWidget * createStyleWidget() override;
 
 private:
     Okular::TextAnnotation * m_textAnn;
     PixmapPreviewSelector * m_pixmapSelector;
     KFontRequester * m_fontReq;
     QComboBox * m_textAlign;
+    QDoubleSpinBox * m_spinWidth;
 };
 
 class StampAnnotationWidget
@@ -124,12 +125,12 @@ class StampAnnotationWidget
     Q_OBJECT
 
 public:
-    StampAnnotationWidget( Okular::Annotation * ann );
+    explicit StampAnnotationWidget( Okular::Annotation * ann );
 
-    virtual void applyChanges();
+    void applyChanges() override;
 
 protected:
-    virtual QWidget * createStyleWidget();
+    QWidget * createStyleWidget() override;
 
 private:
     Okular::StampAnnotation * m_stampAnn;
@@ -142,12 +143,12 @@ class LineAnnotationWidget
     Q_OBJECT
 
 public:
-    LineAnnotationWidget( Okular::Annotation * ann );
+    explicit LineAnnotationWidget( Okular::Annotation * ann );
 
-    virtual void applyChanges();
+    void applyChanges() override;
 
 protected:
-    virtual QWidget * createStyleWidget();
+    QWidget * createStyleWidget() override;
 
 private:
     Okular::LineAnnotation * m_lineAnn;
@@ -165,12 +166,12 @@ class HighlightAnnotationWidget
     Q_OBJECT
 
 public:
-    HighlightAnnotationWidget( Okular::Annotation * ann );
+    explicit HighlightAnnotationWidget( Okular::Annotation * ann );
 
-    virtual void applyChanges();
+    void applyChanges() override;
 
 protected:
-    virtual QWidget * createStyleWidget();
+    QWidget * createStyleWidget() override;
 
 private:
     Okular::HighlightAnnotation * m_hlAnn;
@@ -183,12 +184,12 @@ class GeomAnnotationWidget
     Q_OBJECT
 
 public:
-    GeomAnnotationWidget( Okular::Annotation * ann );
+    explicit GeomAnnotationWidget( Okular::Annotation * ann );
 
-    virtual void applyChanges();
+    void applyChanges() override;
 
 protected:
-    virtual QWidget * createStyleWidget();
+    QWidget * createStyleWidget() override;
 
 private:
     Okular::GeomAnnotation * m_geomAnn;
@@ -204,13 +205,13 @@ class FileAttachmentAnnotationWidget
     Q_OBJECT
 
 public:
-    FileAttachmentAnnotationWidget( Okular::Annotation * ann );
+    explicit FileAttachmentAnnotationWidget( Okular::Annotation * ann );
 
-    virtual void applyChanges();
+    void applyChanges() override;
 
 protected:
-    virtual QWidget * createStyleWidget();
-    virtual QWidget * createExtraWidget();
+    QWidget * createStyleWidget() override;
+    QWidget * createExtraWidget() override;
 
 private:
     Okular::FileAttachmentAnnotation * m_attachAnn;
@@ -223,12 +224,12 @@ class CaretAnnotationWidget
     Q_OBJECT
 
 public:
-    CaretAnnotationWidget( Okular::Annotation * ann );
+    explicit CaretAnnotationWidget( Okular::Annotation * ann );
 
-    virtual void applyChanges();
+    void applyChanges() override;
 
 protected:
-    virtual QWidget * createStyleWidget();
+    QWidget * createStyleWidget() override;
 
 private:
     Okular::CaretAnnotation * m_caretAnn;
@@ -241,12 +242,12 @@ class InkAnnotationWidget
     Q_OBJECT
 
 public:
-    InkAnnotationWidget( Okular::Annotation * ann );
+    explicit InkAnnotationWidget( Okular::Annotation * ann );
 
-    virtual void applyChanges();
+    void applyChanges() override;
 
 protected:
-    virtual QWidget * createStyleWidget();
+    QWidget * createStyleWidget() override;
 
 private:
     Okular::InkAnnotation * m_inkAnn;

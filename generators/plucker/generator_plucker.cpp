@@ -12,31 +12,15 @@
 #include <QtCore/QFile>
 #include <QtGui/QAbstractTextDocumentLayout>
 #include <QtGui/QPainter>
-#include <QtGui/QPrinter>
+#include <QtPrintSupport/QPrinter>
 #include <QtGui/QTextDocument>
 
-#include <kaboutdata.h>
-#include <klocale.h>
+#include <KAboutData>
+#include <KLocalizedString>
 
 #include <core/page.h>
 
-static KAboutData createAboutData()
-{
-    KAboutData aboutData(
-         "okular_plucker",
-         "okular_plucker",
-         ki18n( "Plucker Document Backend" ),
-         "0.1.1",
-         ki18n( "A renderer for Plucker eBooks" ),
-         KAboutData::License_GPL,
-         ki18n( "© 2007-2008 Tobias Koenig" )
-    );
-    aboutData.addAuthor( ki18n( "Tobias Koenig" ), KLocalizedString(), "tokoe@kde.org" );
-
-    return aboutData;
-}
-
-OKULAR_EXPORT_PLUGIN( PluckerGenerator, createAboutData() )
+OKULAR_EXPORT_PLUGIN(PluckerGenerator, "libokularGenerator_plucker.json")
 
 static void calculateBoundingRect( QTextDocument *document, int startPosition, int endPosition,
                                    QRectF &rect )
@@ -68,7 +52,6 @@ static void calculateBoundingRect( QTextDocument *document, int startPosition, i
 PluckerGenerator::PluckerGenerator( QObject *parent, const QVariantList &args )
     : Generator( parent, args )
 {
-    setFeature( Threaded );
 }
 
 PluckerGenerator::~PluckerGenerator()
@@ -91,7 +74,7 @@ bool PluckerGenerator::loadDocument( const QString & fileName, QVector<Okular::P
         it.next();
         if ( !it.value().isEmpty() ) {
             if ( it.key() == QLatin1String( "name" ) )
-                mDocumentInfo.set( "name", it.value(), i18n( "Name" ) );
+                mDocumentInfo.set( QStringLiteral("name"), it.value(), i18n( "Name" ) );
             else if ( it.key() == QLatin1String( "title" ) )
                 mDocumentInfo.set( Okular::DocumentInfo::Title, it.value() );
             else if ( it.key() == QLatin1String( "author" ) )
@@ -182,7 +165,7 @@ Okular::ExportFormat::List PluckerGenerator::exportFormats() const
 
 bool PluckerGenerator::exportTo( const QString &fileName, const Okular::ExportFormat &format )
 {
-    if ( format.mimeType()->name() == QLatin1String( "text/plain" ) ) {
+    if ( format.mimeType().name() == QLatin1String( "text/plain" ) ) {
         QFile file( fileName );
         if ( !file.open( QIODevice::WriteOnly ) )
             return false;

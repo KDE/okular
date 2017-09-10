@@ -11,12 +11,14 @@
 #include <poppler-annotation.h>
 
 // qt/kde includes
+#include <QtCore/qloggingcategory.h>
 #include <qvariant.h>
 
 #include <core/annotations.h>
 #include <core/area.h>
 
 #include "annots.h"
+#include "debug_pdf.h"
 #include "generator_pdf.h"
 #include "popplerembeddedfile.h"
 #include "config-okular-poppler.h"
@@ -25,8 +27,9 @@ Q_DECLARE_METATYPE( Poppler::Annotation* )
 
 extern Okular::Sound* createSoundFromPopplerSound( const Poppler::SoundObject *popplerSound );
 extern Okular::Movie* createMovieFromPopplerMovie( const Poppler::MovieObject *popplerMovie );
-#ifdef HAVE_POPPLER_0_20
 extern Okular::Movie* createMovieFromPopplerScreen( const Poppler::LinkRendition *popplerScreen );
+#ifdef HAVE_POPPLER_0_36
+extern QPair<Okular::Movie*, Okular::EmbeddedFile*> createMovieFromPopplerRichMedia( const Poppler::RichMediaAnnotation *popplerRichMedia );
 #endif
 
 
@@ -72,12 +75,10 @@ bool PopplerAnnotationProxy::supports( Capability cap ) const
 {
     switch ( cap )
     {
-#ifdef HAVE_POPPLER_0_20
         case Addition:
         case Modification:
         case Removal:
             return true;
-#endif
         default:
             return false;
     }
@@ -85,10 +86,9 @@ bool PopplerAnnotationProxy::supports( Capability cap ) const
 
 void PopplerAnnotationProxy::notifyAddition( Okular::Annotation *okl_ann, int page )
 {
-#ifdef HAVE_POPPLER_0_20
     // Export annotation to DOM
     QDomDocument doc;
-    QDomElement dom_ann = doc.createElement( "root" );
+    QDomElement dom_ann = doc.createElement( QStringLiteral("root") );
     Okular::AnnotationUtils::storeAnnotation( okl_ann, dom_ann, doc );
 
     QMutexLocker ml(mutex);
@@ -129,13 +129,11 @@ void PopplerAnnotationProxy::notifyAddition( Okular::Annotation *okl_ann, int pa
     okl_ann->setNativeId( qVariantFromValue( ppl_ann ) );
     okl_ann->setDisposeDataFunction( disposeAnnotation );
 
-    kDebug(PDFGenerator::PDFDebug) << okl_ann->uniqueName();
-#endif
+    qCDebug(OkularPdfDebug) << okl_ann->uniqueName();
 }
 
 void PopplerAnnotationProxy::notifyModification( const Okular::Annotation *okl_ann, int page, bool appearanceChanged )
 {
-#ifdef HAVE_POPPLER_0_20
     Q_UNUSED( page );
     Q_UNUSED( appearanceChanged );
 
@@ -146,7 +144,7 @@ void PopplerAnnotationProxy::notifyModification( const Okular::Annotation *okl_a
 
     QMutexLocker ml(mutex);
 
-    if ( okl_ann->flags() & Okular::Annotation::BeingMoved )
+    if ( okl_ann->flags() & (Okular::Annotation::BeingMoved | Okular::Annotation::BeingResized) )
     {
         // Okular ui already renders the annotation on its own
         ppl_ann->setFlags( Poppler::Annotation::Hidden );
@@ -239,17 +237,15 @@ void PopplerAnnotationProxy::notifyModification( const Okular::Annotation *okl_a
             break;
         }
         default:
-            kDebug() << "Type-specific property modification is not implemented for this annotation type";
+            qCDebug(OkularPdfDebug) << "Type-specific property modification is not implemented for this annotation type";
             break;
     }
 
-    kDebug(PDFGenerator::PDFDebug) << okl_ann->uniqueName();
-#endif
+    qCDebug(OkularPdfDebug) << okl_ann->uniqueName();
 }
 
 void PopplerAnnotationProxy::notifyRemoval( Okular::Annotation *okl_ann, int page )
 {
-#ifdef HAVE_POPPLER_0_20
     Poppler::Annotation *ppl_ann = qvariant_cast<Poppler::Annotation*>( okl_ann->nativeId() );
 
     if ( !ppl_ann ) // Ignore non-native annotations
@@ -263,8 +259,7 @@ void PopplerAnnotationProxy::notifyRemoval( Okular::Annotation *okl_ann, int pag
 
     okl_ann->setNativeId( qVariantFromValue(0) ); // So that we don't double-free in disposeAnnotation
 
-    kDebug(PDFGenerator::PDFDebug) << okl_ann->uniqueName();
-#endif
+    qCDebug(OkularPdfDebug) << okl_ann->uniqueName();
 }
 //END PopplerAnnotationProxy implementation
 
@@ -312,51 +307,55 @@ Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *
 
             break;
         }
-#ifdef HAVE_POPPLER_0_22
         case Poppler::Annotation::AWidget:
         {
             annotation = new Okular::WidgetAnnotation();
             break;
         }
-#endif
-#ifdef HAVE_POPPLER_0_20
         case Poppler::Annotation::AScreen:
         {
-#ifdef HAVE_POPPLER_0_22
             Okular::ScreenAnnotation * m = new Okular::ScreenAnnotation();
             annotation = m;
             tieToOkularAnn = true;
             *doDelete = false;
-#else
-            Poppler::ScreenAnnotation * screenann = static_cast< Poppler::ScreenAnnotation * >( ann );
-            Okular::MovieAnnotation * m = new Okular::MovieAnnotation();
-            annotation = m;
-
-            m->setMovie( createMovieFromPopplerScreen( screenann->action() ) );
-#endif
             break;
         }
+#ifdef HAVE_POPPLER_0_36
+        case Poppler::Annotation::ARichMedia:
+        {
+            Poppler::RichMediaAnnotation * richmediaann = static_cast< Poppler::RichMediaAnnotation * >( ann );
+            const QPair<Okular::Movie*, Okular::EmbeddedFile*> result = createMovieFromPopplerRichMedia( richmediaann );
+
+            if ( result.first ) {
+                Okular::RichMediaAnnotation * r = new Okular::RichMediaAnnotation();
+                tieToOkularAnn = true;
+                *doDelete = false;
+                annotation = r;
+
+                r->setMovie( result.first );
+                r->setEmbeddedFile( result.second );
+            }
+
+            break;
+        }
+#endif
         case Poppler::Annotation::AText:
         case Poppler::Annotation::ALine:
         case Poppler::Annotation::AGeom:
         case Poppler::Annotation::AHighlight:
         case Poppler::Annotation::AInk:
-        {
+        case Poppler::Annotation::ACaret:
             externallyDrawn = true;
-            /* fallback */
-        }
+            /* fallthrough */
         case Poppler::Annotation::AStamp:
-        {
             tieToOkularAnn = true;
             *doDelete = false;
-            /* fallback */
-        }
-#endif
+            /* fallthrough */
         default:
         {
             // this is uber ugly but i don't know a better way to do it without introducing a poppler::annotation dependency on core
             QDomDocument doc;
-            QDomElement root = doc.createElement( "root" );
+            QDomElement root = doc.createElement( QStringLiteral("root") );
             doc.appendChild( root );
             Poppler::AnnotationUtils::storeAnnotation( ann, root, doc );
             annotation = Okular::AnnotationUtils::createAnnotation( root );

@@ -17,7 +17,7 @@
 #include <QtCore/QDebug>
 #include <QtCore/QFile>
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <core/action.h>
 
 using namespace Mobi;
@@ -82,7 +82,7 @@ QTextDocument* Converter::convert( const QString &fileName )
     if (!format.anchorNames().isEmpty()) {
       // link targets
       Q_FOREACH(const QString& name, format.anchorNames()) 
-	targets['#'+name]=it;
+    targets[QLatin1Char('#')+name]=it;
     }
   }
 
@@ -92,7 +92,7 @@ QTextDocument* Converter::convert( const QString &fileName )
     it.next();
     QUrl u(it.key());
     // external or internal link
-    if (!u.isRelative()) emit addAction(new Okular::BrowseAction(it.key()), it.value().first, it.value().second);
+    if (!u.isRelative()) emit addAction(new Okular::BrowseAction(QUrl(it.key())), it.value().first, it.value().second);
     else {
       // is there valid target?
       if (!targets.contains( it.key() ) || !targets[it.key()].isValid()) continue;

@@ -12,17 +12,19 @@
 
 #include "latexrenderer.h"
 
-#include <kdebug.h>
-#include <kstandarddirs.h>
+#include <QtCore/QDebug>
+
 #include <kprocess.h>
-#include <ktemporaryfile.h>
 
 #include <QColor>
 #include <QDir>
 #include <QFileInfo>
 #include <QImage>
-#include <QTextDocument>
+#include <qtemporaryfile.h>
 #include <QTextStream>
+#include <QStandardPaths>
+
+#include "debug_ui.h"
 
 namespace GuiUtils
 {
@@ -41,11 +43,11 @@ LatexRenderer::~LatexRenderer()
 
 LatexRenderer::Error LatexRenderer::renderLatexInHtml( QString& html, const QColor& textColor, int fontSize, int resolution, QString& latexOutput )
 {
-    if( !html.contains("$$"))
+    if( !html.contains(QStringLiteral("$$")))
         return NoError;
 
     // this searches for $$formula$$ 
-    QRegExp rg("\\$\\$.+\\$\\$");
+    QRegExp rg(QStringLiteral("\\$\\$.+\\$\\$"));
     rg.setMinimal(true);
 
     int pos = 0;
@@ -62,14 +64,14 @@ LatexRenderer::Error LatexRenderer::renderLatexInHtml( QString& html, const QCol
 
             QString formul=match;
             // first remove the $$ delimiters on start and end
-            formul.remove("$$");
+            formul.remove(QStringLiteral("$$"));
             // then trim the result, so we can skip totally empty/whitespace-only formulas
             formul = formul.trimmed();
             if (formul.isEmpty() || !securityCheck(formul))
                 continue;
 
             //unescape formula
-            formul.replace("&gt;",">").replace("&lt;","<").replace("&amp;","&").replace("&quot;","\"").replace("&apos;","\'").replace("<br>"," ");
+            formul.replace(QLatin1String("&gt;"),QLatin1String(">")).replace(QLatin1String("&lt;"),QLatin1String("<")).replace(QLatin1String("&amp;"),QLatin1String("&")).replace(QLatin1String("&quot;"),QLatin1String("\"")).replace(QLatin1String("&apos;"),QLatin1String("\'")).replace(QLatin1String("<br>"),QLatin1String(" "));
 
             QString fileName;
             Error returnCode = handleLatex(fileName, formul, textColor, fontSize, resolution, latexOutput);
@@ -91,19 +93,19 @@ LatexRenderer::Error LatexRenderer::renderLatexInHtml( QString& html, const QCol
             continue;
         imagePxWidth = theImage.width();
         imagePxHeight = theImage.height();
-        QString escapedLATEX=Qt::escape(it.key()).replace('\"',"&quot;");  //we need  the escape quotes because that string will be in a title="" argument, but not the \n
-        html.replace(it.key(), " <img width=\"" + QString::number(imagePxWidth) + "\" height=\"" + QString::number(imagePxHeight) + "\" align=\"middle\" src=\"" + (*it) + "\"  alt=\"" + escapedLATEX +"\" title=\"" + escapedLATEX +"\"  /> ");
+        QString escapedLATEX=it.key().toHtmlEscaped().replace(QLatin1Char('"'),QLatin1String("&quot;"));  //we need  the escape quotes because that string will be in a title="" argument, but not the \n
+        html.replace(it.key(), QStringLiteral(" <img width=\"") + QString::number(imagePxWidth) + QStringLiteral("\" height=\"") + QString::number(imagePxHeight) + QStringLiteral("\" align=\"middle\" src=\"") + (*it) + QStringLiteral("\"  alt=\"") + escapedLATEX + QStringLiteral("\" title=\"") + escapedLATEX + QStringLiteral("\"  /> "));
     }
     return NoError;
 }
 
 bool LatexRenderer::mightContainLatex (const QString& text)
 {
-    if( !text.contains("$$"))
+    if( !text.contains(QStringLiteral("$$")))
         return false;
 
     // this searches for $$formula$$ 
-    QRegExp rg("\\$\\$.+\\$\\$");
+    QRegExp rg(QStringLiteral("\\$\\$.+\\$\\$"));
     rg.setMinimal(true);
     if( rg.lastIndexIn(text) == -1 )
         return false;
@@ -116,9 +118,7 @@ LatexRenderer::Error LatexRenderer::handleLatex( QString& fileName, const QStrin
     KProcess latexProc;
     KProcess dvipngProc;
 
-    KTemporaryFile *tempFile = new KTemporaryFile();
-    tempFile->setPrefix("kdelatex-");
-    tempFile->setSuffix(".tex");
+    QTemporaryFile *tempFile = new QTemporaryFile(QDir::tempPath() + QLatin1String("/okular_kdelatex-XXXXXX.tex"));
     tempFile->open();
     QString tempFileName = tempFile->fileName();
     QFileInfo *tempFileInfo = new QFileInfo(tempFileName);
@@ -140,61 +140,61 @@ LatexRenderer::Error LatexRenderer::handleLatex( QString& fileName, const QStrin
 \\end{document}";
 
     tempFile->close();
-    QString latexExecutable = KStandardDirs::findExe("latex");
+    QString latexExecutable = QStandardPaths::findExecutable(QStringLiteral("latex"));
     if (latexExecutable.isEmpty())
     {
-        kDebug() << "Could not find latex!";
+        qCDebug(OkularUiDebug) << "Could not find latex!";
         delete tempFile;
         fileName = QString();
         return LatexNotFound;
     }
-    latexProc << latexExecutable << "-interaction=nonstopmode" << "-halt-on-error" << QString("-output-directory=%1").arg(tempFilePath) << tempFile->fileName();
+    latexProc << latexExecutable << QStringLiteral("-interaction=nonstopmode") << QStringLiteral("-halt-on-error") << QStringLiteral("-output-directory=%1").arg(tempFilePath) << tempFile->fileName();
     latexProc.setOutputChannelMode( KProcess::MergedChannels );
     latexProc.execute();
-    latexOutput = latexProc.readAll();
+    latexOutput = QString::fromLocal8Bit(latexProc.readAll());
     tempFile->remove();
 
-    QFile::remove(tempFileNameNS + QString(".log"));
-    QFile::remove(tempFileNameNS + QString(".aux"));
+    QFile::remove(tempFileNameNS + QStringLiteral(".log"));
+    QFile::remove(tempFileNameNS + QStringLiteral(".aux"));
     delete tempFile;
 
-    if (!QFile::exists(tempFileNameNS + QString(".dvi")))
+    if (!QFile::exists(tempFileNameNS + QStringLiteral(".dvi")))
     {
         fileName = QString();
         return LatexFailed;
     }
 
-    QString dvipngExecutable = KStandardDirs::findExe("dvipng");
+    QString dvipngExecutable = QStandardPaths::findExecutable(QStringLiteral("dvipng"));
     if (dvipngExecutable.isEmpty())
     {
-        kDebug() << "Could not find dvipng!";
+        qCDebug(OkularUiDebug) << "Could not find dvipng!";
         fileName = QString();
         return DvipngNotFound;
     }
 
-    dvipngProc << dvipngExecutable << QString("-o%1").arg(tempFileNameNS + QString(".png")) << "-Ttight" << "-bgTransparent" << QString("-D %1").arg(resolution) << QString("%1").arg(tempFileNameNS + QString(".dvi"));
+    dvipngProc << dvipngExecutable << QStringLiteral("-o%1").arg(tempFileNameNS + QStringLiteral(".png")) << QStringLiteral("-Ttight") << QStringLiteral("-bgTransparent") << QStringLiteral("-D %1").arg(resolution) << QStringLiteral("%1").arg(tempFileNameNS + QStringLiteral(".dvi"));
     dvipngProc.setOutputChannelMode( KProcess::MergedChannels );
     dvipngProc.execute();
 
-    QFile::remove(tempFileNameNS + QString(".dvi"));
+    QFile::remove(tempFileNameNS + QStringLiteral(".dvi"));
     
-    if (!QFile::exists(tempFileNameNS + QString(".png")))
+    if (!QFile::exists(tempFileNameNS + QStringLiteral(".png")))
     {
         fileName = QString();
         return DvipngFailed;
     }
 
-    fileName = tempFileNameNS + QString(".png");
+    fileName = tempFileNameNS + QStringLiteral(".png");
     m_fileList << fileName;
     return NoError;
 }
 
 bool LatexRenderer::securityCheck( const QString &latexFormula )
 {
-    return !latexFormula.contains(QRegExp("\\\\(def|let|futurelet|newcommand|renewcommand|else|fi|write|input|include"
+    return !latexFormula.contains(QRegExp(QString::fromLatin1("\\\\(def|let|futurelet|newcommand|renewcommand|else|fi|write|input|include"
     "|chardef|catcode|makeatletter|noexpand|toksdef|every|errhelp|errorstopmode|scrollmode|nonstopmode|batchmode"
     "|read|csname|newhelp|relax|afterground|afterassignment|expandafter|noexpand|special|command|loop|repeat|toks"
-    "|output|line|mathcode|name|item|section|mbox|DeclareRobustCommand)[^a-zA-Z]"));
+    "|output|line|mathcode|name|item|section|mbox|DeclareRobustCommand)[^a-zA-Z]")));
 }
 
 }

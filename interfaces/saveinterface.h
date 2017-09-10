@@ -10,7 +10,7 @@
 #ifndef _OKULAR_SAVEINTERFACE_H_
 #define _OKULAR_SAVEINTERFACE_H_
 
-#include "../core/okular_export.h"
+#include "../core/okularcore_export.h"
 
 #include <QtCore/QObject>
 
@@ -36,7 +36,7 @@ class AnnotationProxy;
  * @endcode
  * and - of course - implementing its methods.
  */
-class OKULAR_EXPORT SaveInterface
+class OKULARCORE_EXPORT SaveInterface
 {
     public:
         /**

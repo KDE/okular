@@ -12,11 +12,13 @@
 // qt/kde includes
 #include <qhash.h>
 #include <qset.h>
+#include <kbookmarkaction.h>
 #include <kbookmarkmanager.h>
 #include <kbookmarkmenu.h>
-#include <kdebug.h>
-#include <kglobal.h>
-#include <kstandarddirs.h>
+#include <QDebug>
+#include <QGuiApplication>
+#include <QUrl>
+#include <QStandardPaths>
 
 // local includes
 #include "document_p.h"
@@ -39,9 +41,9 @@ class OkularBookmarkAction : public KBookmarkAction
             : KBookmarkAction( bk, owner, parent )
         {
             if ( vp.isValid() )
-                setText( QString::number( vp.pageNumber + 1 ) + " - " + text() );
+                setText( QString::number( vp.pageNumber + 1 ) + QStringLiteral(" - ") + text() );
             setProperty("pageNumber", vp.pageNumber + 1);
-            setProperty("htmlRef", bk.url().htmlRef());
+            setProperty("htmlRef", bk.url().fragment(QUrl::FullyDecoded));
         }
         
         inline int pageNumber() const
@@ -75,8 +77,8 @@ static inline bool documentViewportFuzzyCompare( const DocumentViewport &vp1, co
 
 static inline bool bookmarkLessThan( const KBookmark &b1, const KBookmark &b2 )
 {
-    DocumentViewport vp1( b1.url().htmlRef() );
-    DocumentViewport vp2( b2.url().htmlRef() );
+    DocumentViewport vp1( b1.url().fragment(QUrl::FullyDecoded) );
+    DocumentViewport vp2( b2.url().fragment(QUrl::FullyDecoded) );
 
     return vp1 < vp2;
 }
@@ -93,53 +95,55 @@ class BookmarkManager::Private : public KBookmarkOwner
 {
     public:
         Private( BookmarkManager * qq )
-            : KBookmarkOwner(), q( qq ), document( 0 ), manager( 0 )
+            : KBookmarkOwner(), q( qq ), document( nullptr ), manager( nullptr )
         {
         }
 
-        ~Private()
+        ~Private() override
         {
             knownFiles.clear();
             // no need to delete the manager, it's automatically done by KBookmarkManager
             // delete manager;
         }
 
-        virtual QString currentUrl() const;
-        virtual QString currentTitle() const;
-        virtual bool enableOption(BookmarkOption option) const;
-        virtual void openBookmark( const KBookmark & bm, Qt::MouseButtons, Qt::KeyboardModifiers );
+        QUrl currentUrl() const override;
+        QString currentTitle() const override;
+        bool enableOption(BookmarkOption option) const override;
+        void openBookmark( const KBookmark & bm, Qt::MouseButtons, Qt::KeyboardModifiers ) override;
 
-        QHash<KUrl, QString>::iterator bookmarkFind( const KUrl& url, bool doCreate, KBookmarkGroup *result  = 0);
+        QHash<QUrl, QString>::iterator bookmarkFind( const QUrl& url, bool doCreate, KBookmarkGroup *result  = nullptr);
 
         // slots
         void _o_changed( const QString & groupAddress, const QString & caller );
 
         BookmarkManager * q;
-        KUrl url;
+        QUrl url;
         QHash<int,int> urlBookmarks;
         DocumentPrivate * document;
         QString file;
         KBookmarkManager * manager;
-        QHash<KUrl, QString> knownFiles;
+        QHash<QUrl, QString> knownFiles;
 };
 
-static inline KUrl urlForGroup(const KBookmark &group)
+static inline QUrl urlForGroup(const KBookmark &group)
 {
-    if ( group.url().isValid() ) return group.url();
-    else return KUrl( group.fullText() );
+    if ( group.url().isValid() )
+        return group.url();
+    else
+        return QUrl::fromUserInput( group.fullText() );
 }
 
 BookmarkManager::BookmarkManager( DocumentPrivate * document )
     : QObject( document->m_parent ), d( new Private( this ) )
 {
-    setObjectName( QLatin1String( "Okular::BookmarkManager" ) );
+    setObjectName( QStringLiteral( "Okular::BookmarkManager" ) );
 
     d->document = document;
 
-    d->file = KStandardDirs::locateLocal( "data", "okular/bookmarks.xml" );
+    d->file = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QStringLiteral("/okular/bookmarks.xml");
 
-    d->manager = KBookmarkManager::managerForFile( d->file, "okular" );
-    d->manager->setEditorOptions( KGlobal::caption(), false );
+    d->manager = KBookmarkManager::managerForFile( d->file, QStringLiteral("okular") );
+    d->manager->setEditorOptions( QGuiApplication::applicationDisplayName(), false );
     d->manager->setUpdate( true );
     connect( d->manager, SIGNAL(changed(QString,QString)),
              this, SLOT(_o_changed(QString,QString)) );
@@ -151,14 +155,14 @@ BookmarkManager::~BookmarkManager()
 }
 
 //BEGIN Reimplementations from KBookmarkOwner
-QString BookmarkManager::Private::currentUrl() const
+QUrl BookmarkManager::Private::currentUrl() const
 {
-    return url.prettyUrl();
+    return url;
 }
 
 QString BookmarkManager::Private::currentTitle() const
 {
-    return url.isLocalFile() ? url.toLocalFile() : url.prettyUrl();
+    return url.toDisplayString();
 }
 
 bool BookmarkManager::Private::enableOption(BookmarkOption option) const
@@ -179,9 +183,9 @@ void BookmarkManager::Private::_o_changed( const QString & groupAddress, const Q
     if ( groupAddress.isEmpty() )
         return;
 
-    KUrl referurl;
+    QUrl referurl;
     // first, try to find the bookmark group whom change notification was just received
-    QHash<KUrl, QString>::iterator it = knownFiles.begin(), itEnd = knownFiles.end();
+    QHash<QUrl, QString>::iterator it = knownFiles.begin(), itEnd = knownFiles.end();
     for ( ; it != itEnd; ++it )
     {
         if ( it.value() == groupAddress )
@@ -231,9 +235,9 @@ void BookmarkManager::Private::_o_changed( const QString & groupAddress, const Q
     emit q->saved();
 }
 
-KUrl::List BookmarkManager::files() const
+QList<QUrl> BookmarkManager::files() const
 {
-    KUrl::List ret;
+    QList<QUrl> ret;
     KBookmarkGroup group = d->manager->root();
     for ( KBookmark bm = group.first(); !bm.isNull(); bm = group.next( bm ) )
     {
@@ -245,7 +249,7 @@ KUrl::List BookmarkManager::files() const
     return ret;
 }
 
-KBookmark::List BookmarkManager::bookmarks( const KUrl& url ) const
+KBookmark::List BookmarkManager::bookmarks(const QUrl &url ) const
 {
     KBookmark::List ret;
     KBookmarkGroup group = d->manager->root();
@@ -279,7 +283,7 @@ KBookmark::List BookmarkManager::bookmarks( int page ) const
     KBookmark::List ret;
     foreach( const KBookmark &bm, bmarks )
     {
-        DocumentViewport vp( bm.url().htmlRef() );
+        DocumentViewport vp( bm.url().fragment(QUrl::FullyDecoded) );
         if ( vp.isValid() && vp.pageNumber == page )
         {
             ret.append(bm);
@@ -294,7 +298,7 @@ KBookmark BookmarkManager::bookmark( int page ) const
     const KBookmark::List bmarks = bookmarks();
     foreach( const KBookmark &bm, bmarks )
     {
-        DocumentViewport vp( bm.url().htmlRef() );
+        DocumentViewport vp( bm.url().fragment(QUrl::FullyDecoded) );
         if ( vp.isValid() && vp.pageNumber == page )
         {
             return bm;
@@ -309,7 +313,7 @@ KBookmark BookmarkManager::bookmark( const DocumentViewport &viewport ) const
         return KBookmark();
 
     KBookmarkGroup thebg;
-    QHash<KUrl, QString>::iterator it = d->bookmarkFind( d->url, false, &thebg );
+    QHash<QUrl, QString>::iterator it = d->bookmarkFind( d->url, false, &thebg );
     if ( it == d->knownFiles.end() )
         return KBookmark();
 
@@ -318,7 +322,7 @@ KBookmark BookmarkManager::bookmark( const DocumentViewport &viewport ) const
         if ( bm.isSeparator() || bm.isGroup() )
             continue;
 
-        DocumentViewport vp( bm.url().htmlRef() );
+        DocumentViewport vp( bm.url().fragment(QUrl::FullyDecoded) );
         if ( documentViewportFuzzyCompare( vp, viewport ) )
         {
             return bm;
@@ -334,9 +338,9 @@ void BookmarkManager::save() const
     emit const_cast<BookmarkManager*>( this )->saved();
 }
 
-QHash<KUrl, QString>::iterator BookmarkManager::Private::bookmarkFind( const KUrl& url, bool doCreate, KBookmarkGroup *result )
+QHash<QUrl, QString>::iterator BookmarkManager::Private::bookmarkFind( const QUrl& url, bool doCreate, KBookmarkGroup *result )
 {
-    QHash<KUrl, QString>::iterator it = knownFiles.find( url );
+    QHash<QUrl, QString>::iterator it = knownFiles.find( url );
     if ( it == knownFiles.end() )
     {
         // if the url we want to add a new entry for is not in the hash of the
@@ -349,7 +353,7 @@ QHash<KUrl, QString>::iterator BookmarkManager::Private::bookmarkFind( const KUr
             if ( bm.isSeparator() || !bm.isGroup() )
                 continue;
 
-            KUrl tmpurl( urlForGroup( bm ) );
+            QUrl tmpurl( urlForGroup( bm ) );
             if ( tmpurl == url )
             {
                 // got it! place it the hash of known files
@@ -365,7 +369,7 @@ QHash<KUrl, QString>::iterator BookmarkManager::Private::bookmarkFind( const KUr
         {
             // folder not found :(
             // then, in a single step create a new folder and add it in our cache :)
-            QString purl = url.isLocalFile() ? url.toLocalFile() : url.prettyUrl();
+            QString purl = url.isLocalFile() ? url.toLocalFile() : url.toDisplayString();
             KBookmarkGroup newbg = root.createNewFolder( purl );
             newbg.setUrl( url );
             it = knownFiles.insert( url, newbg.address() );
@@ -396,7 +400,7 @@ void BookmarkManager::addBookmark( const DocumentViewport &vp )
     addBookmark( d->url, vp );
 }
 
-bool BookmarkManager::addBookmark( const KUrl& referurl, const Okular::DocumentViewport& vp, const QString& title )
+bool BookmarkManager::addBookmark(const QUrl &referurl, const Okular::DocumentViewport& vp, const QString& title )
 {
     if ( !referurl.isValid() || !vp.isValid() )
         return false;
@@ -405,7 +409,7 @@ bool BookmarkManager::addBookmark( const KUrl& referurl, const Okular::DocumentV
         return false;
 
     KBookmarkGroup thebg;
-    QHash<KUrl, QString>::iterator it = d->bookmarkFind( referurl, true, &thebg );
+    QHash<QUrl, QString>::iterator it = d->bookmarkFind( referurl, true, &thebg );
     Q_ASSERT( it != d->knownFiles.end() );
 
     int count = 0; // Number of bookmarks in the current page
@@ -416,7 +420,7 @@ bool BookmarkManager::addBookmark( const KUrl& referurl, const Okular::DocumentV
         if ( bm.isSeparator() || bm.isGroup() )
             continue;
 
-        DocumentViewport bmViewport( bm.url().htmlRef() );
+        DocumentViewport bmViewport( bm.url().fragment(QUrl::FullyDecoded) );
         if ( bmViewport.isValid() && bmViewport.pageNumber == vp.pageNumber )
         {
             ++count;
@@ -437,15 +441,15 @@ bool BookmarkManager::addBookmark( const KUrl& referurl, const Okular::DocumentV
         // if there's more than one bookmark per page, give the name '#p-n'
         // where n is the index of this bookmark among the ones of its page.
         if ( count > 0 )
-            newtitle = QString( "#%1-%2" ).arg( vp.pageNumber + 1 ).arg( count );
+            newtitle = QStringLiteral( "#%1-%2" ).arg( vp.pageNumber + 1 ).arg( count );
         else
-            newtitle = QString( "#%1" ).arg( vp.pageNumber + 1 );
+            newtitle = QStringLiteral( "#%1" ).arg( vp.pageNumber + 1 );
     }
     else
         newtitle = title;
 
-    KUrl newurl = referurl;
-    newurl.setHTMLRef( vp.toString() );
+    QUrl newurl = referurl;
+    newurl.setFragment(vp.toString(), QUrl::DecodedMode);
     thebg.addBookmark( newtitle, newurl, QString() );
     if ( referurl == d->document->m_url )
     {
@@ -477,7 +481,7 @@ void BookmarkManager::removeBookmark( const DocumentViewport &vp )
 void BookmarkManager::renameBookmark( KBookmark* bm, const QString& newName)
 {
     KBookmarkGroup thebg;
-    QHash<KUrl, QString>::iterator it = d->bookmarkFind( d->url, false, &thebg );
+    QHash<QUrl, QString>::iterator it = d->bookmarkFind( d->url, false, &thebg );
     Q_ASSERT ( it != d->knownFiles.end() );
     if ( it == d->knownFiles.end() )
         return;
@@ -486,13 +490,13 @@ void BookmarkManager::renameBookmark( KBookmark* bm, const QString& newName)
     d->manager->emitChanged( thebg );
 }
 
-void BookmarkManager::renameBookmark( const KUrl& referurl, const QString& newName )
+void BookmarkManager::renameBookmark(const QUrl &referurl, const QString& newName )
 {
     if ( !referurl.isValid() )
         return;
 
     KBookmarkGroup thebg;
-    QHash<KUrl, QString>::iterator it = d->bookmarkFind( referurl, false, &thebg );
+    QHash<QUrl, QString>::iterator it = d->bookmarkFind( referurl, false, &thebg );
     Q_ASSERT ( it != d->knownFiles.end() );
     if ( it == d->knownFiles.end() )
         return;
@@ -501,26 +505,26 @@ void BookmarkManager::renameBookmark( const KUrl& referurl, const QString& newNa
     d->manager->emitChanged( thebg );
 }
 
-QString BookmarkManager::titleForUrl( const KUrl& referurl ) const
+QString BookmarkManager::titleForUrl(const QUrl &referurl ) const
 {
     KBookmarkGroup thebg;
-    QHash<KUrl, QString>::iterator it = d->bookmarkFind( referurl, false, &thebg );
+    QHash<QUrl, QString>::iterator it = d->bookmarkFind( referurl, false, &thebg );
     Q_ASSERT( it != d->knownFiles.end() );
 
     return thebg.fullText();
 }
 
-int BookmarkManager::removeBookmark( const KUrl& referurl, const KBookmark& bm )
+int BookmarkManager::removeBookmark(const QUrl &referurl, const KBookmark& bm )
 {
     if ( !referurl.isValid() || bm.isNull() || bm.isGroup() || bm.isSeparator() )
         return -1;
 
-    DocumentViewport vp( bm.url().htmlRef() );
+    DocumentViewport vp( bm.url().fragment(QUrl::FullyDecoded) );
     if ( !vp.isValid() )
         return -1;
 
     KBookmarkGroup thebg;
-    QHash<KUrl, QString>::iterator it = d->bookmarkFind( referurl, false, &thebg );
+    QHash<QUrl, QString>::iterator it = d->bookmarkFind( referurl, false, &thebg );
     if ( it == d->knownFiles.end() )
         return -1;
 
@@ -536,13 +540,13 @@ int BookmarkManager::removeBookmark( const KUrl& referurl, const KBookmark& bm )
     return vp.pageNumber;
 }
 
-void BookmarkManager::removeBookmarks( const KUrl& referurl, const KBookmark::List& list )
+void BookmarkManager::removeBookmarks(const QUrl &referurl, const KBookmark::List& list )
 {
     if ( !referurl.isValid() || list.isEmpty() )
         return;
 
     KBookmarkGroup thebg;
-    QHash<KUrl, QString>::iterator it = d->bookmarkFind( referurl, false, &thebg );
+    QHash<QUrl, QString>::iterator it = d->bookmarkFind( referurl, false, &thebg );
     if ( it == d->knownFiles.end() )
         return;
 
@@ -555,7 +559,7 @@ void BookmarkManager::removeBookmarks( const KUrl& referurl, const KBookmark::Li
             thebg.deleteBookmark( bm );
             deletedAny = true;
 
-            DocumentViewport vp( bm.url().htmlRef() );
+            DocumentViewport vp( bm.url().fragment(QUrl::FullyDecoded) );
             if ( referurl == d->document->m_url )
             {
                 d->urlBookmarks[ vp.pageNumber ]--;
@@ -584,7 +588,7 @@ void BookmarkManager::removeBookmarks( const KUrl& referurl, const KBookmark::Li
         d->manager->emitChanged( thebg );
 }
 
-QList< QAction * > BookmarkManager::actionsForUrl( const KUrl& url ) const
+QList< QAction * > BookmarkManager::actionsForUrl(const QUrl &url ) const
 {
     QList< QAction * > ret;
     KBookmarkGroup group = d->manager->root();
@@ -599,7 +603,7 @@ QList< QAction * > BookmarkManager::actionsForUrl( const KUrl& url ) const
             if ( b.isSeparator() || b.isGroup() )
                 continue;
 
-            ret.append( new OkularBookmarkAction( DocumentViewport( b.url().htmlRef() ), b, d, 0 ) );
+            ret.append( new OkularBookmarkAction( DocumentViewport( b.url().fragment(QUrl::FullyDecoded) ), b, d, nullptr ) );
         }
         break;
     }
@@ -607,12 +611,12 @@ QList< QAction * > BookmarkManager::actionsForUrl( const KUrl& url ) const
     return ret;
 }
 
-void BookmarkManager::setUrl( const KUrl& url )
+void BookmarkManager::setUrl(const QUrl &url )
 {
     d->url = url;
     d->urlBookmarks.clear();
     KBookmarkGroup thebg;
-    QHash<KUrl, QString>::iterator it = d->bookmarkFind( url, false, &thebg );
+    QHash<QUrl, QString>::iterator it = d->bookmarkFind( url, false, &thebg );
     if ( it != d->knownFiles.end() )
     {
         for ( KBookmark bm = thebg.first(); !bm.isNull(); bm = thebg.next( bm ) )
@@ -620,7 +624,7 @@ void BookmarkManager::setUrl( const KUrl& url )
             if ( bm.isSeparator() || bm.isGroup() )
                 continue;
 
-            DocumentViewport vp( bm.url().htmlRef() );
+            DocumentViewport vp( bm.url().fragment(QUrl::FullyDecoded) );
             if ( !vp.isValid() )
                 continue;
 
@@ -632,7 +636,7 @@ void BookmarkManager::setUrl( const KUrl& url )
 bool BookmarkManager::setPageBookmark( int page )
 {
     KBookmarkGroup thebg;
-    QHash<KUrl, QString>::iterator it = d->bookmarkFind( d->url, true, &thebg );
+    QHash<QUrl, QString>::iterator it = d->bookmarkFind( d->url, true, &thebg );
     Q_ASSERT( it != d->knownFiles.end() );
 
     bool found = false;
@@ -642,7 +646,7 @@ bool BookmarkManager::setPageBookmark( int page )
         if ( bm.isSeparator() || bm.isGroup() )
             continue;
 
-        DocumentViewport vp( bm.url().htmlRef() );
+        DocumentViewport vp( bm.url().fragment(QUrl::FullyDecoded) );
         if ( vp.isValid() && vp.pageNumber == page )
             found = true;
 
@@ -652,9 +656,9 @@ bool BookmarkManager::setPageBookmark( int page )
         d->urlBookmarks[ page ]++;
         DocumentViewport vp;
         vp.pageNumber = page;
-        KUrl newurl = d->url;
-        newurl.setHTMLRef( vp.toString() );
-        thebg.addBookmark( QString::fromLatin1( "#" ) + QString::number( vp.pageNumber + 1 ), newurl, QString() );
+        QUrl newurl = d->url;
+        newurl.setFragment(vp.toString(), QUrl::DecodedMode);
+        thebg.addBookmark( QLatin1String( "#" ) + QString::number( vp.pageNumber + 1 ), newurl, QString() );
         added = true;
         d->manager->emitChanged( thebg );
     }
@@ -664,7 +668,7 @@ bool BookmarkManager::setPageBookmark( int page )
 bool BookmarkManager::removePageBookmark( int page )
 {
     KBookmarkGroup thebg;
-    QHash<KUrl, QString>::iterator it = d->bookmarkFind( d->url, false, &thebg );
+    QHash<QUrl, QString>::iterator it = d->bookmarkFind( d->url, false, &thebg );
     if ( it == d->knownFiles.end() )
         return false;
 
@@ -674,7 +678,7 @@ bool BookmarkManager::removePageBookmark( int page )
         if ( bm.isSeparator() || bm.isGroup() )
             continue;
 
-        DocumentViewport vp( bm.url().htmlRef() );
+        DocumentViewport vp( bm.url().fragment(QUrl::FullyDecoded) );
         if ( vp.isValid() && vp.pageNumber == page )
         {
             found = true;
@@ -706,7 +710,7 @@ KBookmark BookmarkManager::nextBookmark( const DocumentViewport &viewport) const
     KBookmark bookmark;
     foreach ( const KBookmark &bm, bmarks )
     {
-        DocumentViewport vp( bm.url().htmlRef() );
+        DocumentViewport vp( bm.url().fragment(QUrl::FullyDecoded) );
         if ( viewport < vp )
         {
             bookmark = bm;
@@ -726,7 +730,7 @@ KBookmark BookmarkManager::previousBookmark( const DocumentViewport &viewport ) 
     for ( KBookmark::List::const_iterator it = bmarks.constEnd(); it != bmarks.constBegin(); --it )
     {
         KBookmark bm = *(it-1);
-        DocumentViewport vp( bm.url().htmlRef() );
+        DocumentViewport vp( bm.url().fragment(QUrl::FullyDecoded) );
         if ( vp < viewport )
         {
             bookmark = bm;
@@ -740,6 +744,6 @@ KBookmark BookmarkManager::previousBookmark( const DocumentViewport &viewport ) 
 #undef foreachObserver
 #undef foreachObserverD
 
-#include "bookmarkmanager.moc"
+#include "moc_bookmarkmanager.cpp"
 
 /* kate: replace-tabs on; indent-width 4; */

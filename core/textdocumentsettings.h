@@ -12,7 +12,7 @@
 #define _OKULAR_TEXTDOCUMENTSETTINGS_H_
 
 
-#include "okular_export.h"
+#include "okularcore_export.h"
 
 #include <QFont>
 #include <QWidget>
@@ -79,10 +79,12 @@ class TextDocumentSettingsPrivate;
  *
  * @since 0.17 (KDE 4.11)
  */
-class OKULAR_EXPORT TextDocumentSettingsWidget : public QWidget
+class OKULARCORE_EXPORT TextDocumentSettingsWidget : public QWidget
 {
+    Q_OBJECT
+
     public:
-        TextDocumentSettingsWidget( QWidget *parent = 0 );
+        TextDocumentSettingsWidget( QWidget *parent = nullptr );
         virtual ~TextDocumentSettingsWidget();
 
         void addRow( const QString& labelText, QWidget *widget );
@@ -103,8 +105,10 @@ class OKULAR_EXPORT TextDocumentSettingsWidget : public QWidget
  *
  * @since 0.17 (KDE 4.11)
  */
-class OKULAR_EXPORT TextDocumentSettings : public KConfigSkeleton
+class OKULARCORE_EXPORT TextDocumentSettings : public KConfigSkeleton
 {
+    Q_OBJECT
+
     public:
         QFont font() const;
 

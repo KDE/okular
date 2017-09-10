@@ -24,7 +24,7 @@
 #include <QtGui/QTextDocument>
 #include <QtGui/QTextFrame>
 
-#include <QtGui/QLabel>
+#include <QtWidgets/QLabel>
 
 #include <core/action.h>
 #include <core/document.h>
@@ -130,18 +130,18 @@ bool QUnpluck::open( const QString &fileName )
         return false;
     }
 
-    bool status = true;
+//     bool status = true;
 
-    mInfo.insert( "name", plkr_GetName( mDocument ) );
-    mInfo.insert( "title", plkr_GetTitle( mDocument ) );
-    mInfo.insert( "author", plkr_GetAuthor( mDocument ) );
-    mInfo.insert( "time", QDateTime::fromTime_t( plkr_GetPublicationTime( mDocument ) ).toString() );
+    mInfo.insert( QStringLiteral("name"), QString::fromLocal8Bit(plkr_GetName( mDocument ) ));
+    mInfo.insert( QStringLiteral("title"), QString::fromLocal8Bit(plkr_GetTitle( mDocument ) ));
+    mInfo.insert( QStringLiteral("author"), QString::fromLocal8Bit(plkr_GetAuthor( mDocument ) ));
+    mInfo.insert( QStringLiteral("time"), QDateTime::fromTime_t( plkr_GetPublicationTime( mDocument ) ).toString() );
 
     AddRecord( plkr_GetHomeRecordID( mDocument ) );
 
     int number = GetNextRecordNumber();
     while ( number > 0 ) {
-        status = TranscribeRecord( number );
+        /*status = */TranscribeRecord( number );
         number = GetNextRecordNumber ();
     }
 
@@ -151,7 +151,7 @@ bool QUnpluck::open( const QString &fileName )
 
     number = GetNextRecordNumber();
     while ( number > 0 ) {
-        status = TranscribeRecord( number );
+        /*status = */TranscribeRecord( number );
         number = GetNextRecordNumber ();
     }
 
@@ -177,7 +177,7 @@ bool QUnpluck::open( const QString &fileName )
         for ( int j = 0; j < context->images.count(); ++j ) {
             int imgNumber = context->images[ j ];
             context->document->addResource( QTextDocument::ImageResource,
-                                            QUrl( QString( "%1.jpg" ).arg( imgNumber ) ),
+                                            QUrl( QStringLiteral( "%1.jpg" ).arg( imgNumber ) ),
                                             mImages[ imgNumber ] );
         }
 
@@ -189,15 +189,15 @@ bool QUnpluck::open( const QString &fileName )
     // convert record_id into page
     for ( int i = 0; i < mLinks.count(); ++i ) {
         mLinks[ i ].page = pageHash[ mLinks[ i ].page ];
-        if ( mLinks[ i ].url.startsWith( "page:" ) ) {
-            int page = mLinks[ i ].url.mid( 5 ).toInt();
+        if ( mLinks[ i ].url.startsWith( QLatin1String("page:") ) ) {
+            int page = mLinks[ i ].url.midRef( 5 ).toInt();
             Okular::DocumentViewport viewport( pageHash[ page ] );
             viewport.rePos.normalizedX = 0;
             viewport.rePos.normalizedY = 0;
             viewport.rePos.enabled = true;
             viewport.rePos.pos = Okular::DocumentViewport::TopLeft;
             mLinks[ i ].link = new Okular::GotoAction( QString(), viewport );
-        } else if ( mLinks[ i ].url.startsWith( "para:" ) ) {
+        } else if ( mLinks[ i ].url.startsWith( QLatin1String("para:") ) ) {
             QPair<int, QTextBlock> data = mNamedTargets[ mLinks[ i ].url ];
 
             QTextDocument *document = mPages[ mLinks[ i ].page ];
@@ -206,7 +206,7 @@ bool QUnpluck::open( const QString &fileName )
 
             mLinks[ i ].link = new Okular::GotoAction( QString(), viewport );
         } else {
-            mLinks[ i ].link = new Okular::BrowseAction( mLinks[ i ].url );
+            mLinks[ i ].link = new Okular::BrowseAction( QUrl(mLinks[ i ].url) );
         }
     }
 
@@ -289,7 +289,7 @@ QString QUnpluck::MailtoURLFromBytes( unsigned char* record_data )
     int subject_offset = (bytes[4] << 8) + bytes[5];
     int body_offset = (bytes[6] << 8) + bytes[7];
 
-    QString url( "mailto:" );
+    QString url( QStringLiteral("mailto:") );
     if ( to_offset != 0 )
         url += QString::fromLatin1( (char *)(bytes + to_offset) );
 
@@ -352,7 +352,7 @@ void QUnpluck::DoStyle( Context* context, int style, bool start )
                 format.setFontWeight( QFont::Bold );
                 break;
             case 8:
-                format.setFontFamily( QString::fromLatin1( "Courier New,courier" ) );
+                format.setFontFamily( QStringLiteral( "Courier New,courier" ) );
                 break;
         }
         format.setFontPointSize( qMax( pointSize, 1 ) );
@@ -380,7 +380,7 @@ void QUnpluck::ParseText
     end = ptr + text_len;
     while (ptr < end) {
         if (ptr[0]) {
-            context->cursor->insertText( QString( (char*)ptr ) );
+            context->cursor->insertText( QString::fromLocal8Bit( (char*)ptr ) );
             ptr += strlen ((char*)ptr);
         }
         else {
@@ -424,7 +424,7 @@ void QUnpluck::ParseText
                 {
                     // TODO: remove the setCharFormat when Qt is fixed
                     QTextCharFormat format( context->cursor->charFormat() );
-                    context->cursor->insertText( "\n" );
+                    context->cursor->insertText( QStringLiteral("\n") );
                     context->cursor->setCharFormat( format );
                     ptr += fclen;
                     break;
@@ -447,7 +447,7 @@ void QUnpluck::ParseText
                 }
                 case PLKR_TFC_COLOR:
                     if (*font) {
-                        *font--;
+                        (*font)--;
                         if ( !context->stack.isEmpty() )
                             context->cursor->setCharFormat( context->stack.pop() );
                     }
@@ -460,7 +460,7 @@ void QUnpluck::ParseText
                         context->cursor->setCharFormat( format );
                     }
 
-                    *font++;
+                    (*font)++;
                     ptr += fclen;
                     break;
                 case PLKR_TFC_BULINE:
@@ -527,29 +527,29 @@ bool QUnpluck::TranscribeTableRecord
     unsigned char*  ptr = &bytes[24];
     unsigned char*  end;
 //    char*           align_names[] = { "left", "right", "center" };
-    bool            in_row = false;
-    int             cols;
+//     bool            in_row = false;
+//     int             cols;
     int             size;
-    int             rows;
-    int             border;
+//     int             rows;
+//     int             border;
     int             record_id;
-    int             align;
+//     int             align;
     int             text_len;
-    int             colspan;
-    int             rowspan;
+//     int             colspan;
+//     int             rowspan;
     int             font = 0;
     int             style = 0;
     int             fctype;
     int             fclen;
-    long            border_color;
-    long            link_color;
+//     long            border_color;
+//     long            link_color;
 
     size = (bytes[8] << 8) + bytes[9];
-    cols = (bytes[10] << 8) + bytes[11];
-    rows = (bytes[12] << 8) + bytes[13];
-    border = bytes[15];
-    border_color = (bytes[17] << 16) + (bytes[18] << 8) + (bytes[19] << 8);
-    link_color = (bytes[21] << 16) + (bytes[22] << 8) + (bytes[23] << 8);
+//     cols = (bytes[10] << 8) + bytes[11];
+//     rows = (bytes[12] << 8) + bytes[13];
+//     border = bytes[15];
+//     border_color = (bytes[17] << 16) + (bytes[18] << 8) + (bytes[19] << 8);
+//     link_color = (bytes[21] << 16) + (bytes[22] << 8) + (bytes[23] << 8);
 
     end = ptr + size - 1;
 /**
@@ -568,14 +568,14 @@ bool QUnpluck::TranscribeTableRecord
                             if (in_row)
                                 output += QString( "</TR>\n" );
                             output += QString( "<TR>\n" );
-                            */
                             in_row = true;
+                            */
                             ptr += fclen;
                             break;
                         case 9:        /* NEW_CELL */
-                            align = ptr[2];
-                            colspan = ptr[5];
-                            rowspan = ptr[6];
+//                             align = ptr[2];
+//                             colspan = ptr[5];
+//                             rowspan = ptr[6];
                             /**
                             output += QString( "<TD align=\"%1\" colspan=%2 "
                                      "rowspan=%3 bordercolor=\"#\">" ).arg( 
@@ -584,7 +584,7 @@ bool QUnpluck::TranscribeTableRecord
 */
                             if ( (record_id = READ_BIGENDIAN_SHORT (&ptr[3])) ) {
                                 QTextCharFormat format = context->cursor->charFormat();
-                                context->cursor->insertImage( QString( "%1.jpg" ).arg(record_id) );
+                                context->cursor->insertImage( QStringLiteral( "%1.jpg" ).arg(record_id) );
                                 context->cursor->setCharFormat( format );
                                 context->images.append( record_id );
                                 AddRecord (record_id);
@@ -670,11 +670,11 @@ bool QUnpluck::TranscribeTextRecord
     int             data_len;
     int             current_font;
     int             record_index;
-    int             current_alignment;
-    int             current_left_margin;
-    int             current_right_margin;
+//     int             current_alignment;
+//     int             current_left_margin;
+//     int             current_right_margin;
     int             nparagraphs;
-    long            current_color;
+//     long            current_color;
 
     record_index = id;
 
@@ -735,20 +735,20 @@ bool QUnpluck::TranscribeTextRecord
         context->cursor->insertBlock( blockFormat );
         context->cursor->setCharFormat( format );
 
-        mNamedTargets.insert( QString( "para:%1-%2" ).arg( record_index ).arg( para_index ),
+        mNamedTargets.insert( QStringLiteral( "para:%1-%2" ).arg( record_index ).arg( para_index ),
                               QPair<int, QTextBlock>( GetPageID( record_index ), context->cursor->block() ) );
 
         current_link = false;
 
         /* at the beginning of a paragraph, we start with a clean graphics context */
         current_font = 0;
-        current_alignment = 0;
-        current_color = 0;
+//         current_alignment = 0;
+//         current_color = 0;
         current_italic = false;
         current_underline = false;
         current_struckthrough = false;
-        current_left_margin = 0;
-        current_right_margin = 0;
+//         current_left_margin = 0;
+//         current_right_margin = 0;
 
         for (para_start = ptr, textlen = 0; (ptr - para_start) < para_len;) {
 
@@ -769,7 +769,7 @@ bool QUnpluck::TranscribeTextRecord
                 if (fctype == PLKR_TFC_NEWLINE) {
                     // TODO: remove the setCharFormat when Qt is fixed
                     QTextCharFormat format( context->cursor->charFormat() );
-                    context->cursor->insertText( "\n" );
+                    context->cursor->insertText( QStringLiteral("\n") );
                     context->cursor->setCharFormat( format );
                 }
                 else if (fctype == PLKR_TFC_LINK) {
@@ -831,11 +831,11 @@ bool QUnpluck::TranscribeTextRecord
                             if (type == PLKR_DRTYPE_IMAGE
                                 || type == PLKR_DRTYPE_IMAGE_COMPRESSED) {
 
-                                context->linkUrl = QString( "%1.jpg" ).arg( record_id );
+                                context->linkUrl = QStringLiteral( "%1.jpg" ).arg( record_id );
                                 context->linkStart = context->cursor->position();
                             }
                             else {
-                                context->linkUrl = QString( "page:%1" ).arg( real_record_id );
+                                context->linkUrl = QStringLiteral( "page:%1" ).arg( real_record_id );
                                 context->linkStart = context->cursor->position();
                             }
                             QTextCharFormat format( context->cursor->charFormat() );
@@ -848,7 +848,7 @@ bool QUnpluck::TranscribeTextRecord
                         else if (bytes && (fclen == 4)) {
                             AddRecord (record_id);
 
-                            context->linkUrl = QString( "para:%1-%2" ).arg( record_id ).arg( (ptr[2] << 8) + ptr[3] );
+                            context->linkUrl = QStringLiteral( "para:%1-%2" ).arg( record_id ).arg( (ptr[2] << 8) + ptr[3] );
                             context->linkStart = context->cursor->position();
 
                             QTextCharFormat format( context->cursor->charFormat() );
@@ -901,7 +901,7 @@ bool QUnpluck::TranscribeTextRecord
                             format.setFontWeight( QFont::Bold );
                         }
                         else if (*ptr == 8) {
-                            format.setFontFamily( QString::fromLatin1( "Courier New,courier" ) );
+                            format.setFontFamily( QStringLiteral( "Courier New,courier" ) );
                         }
                         else if (*ptr == 11) {
                             format.setVerticalAlignment( QTextCharFormat::AlignSuperScript );
@@ -974,13 +974,13 @@ bool QUnpluck::TranscribeTextRecord
                     QTextBlockFormat oldBlockFormat = context->cursor->blockFormat();
 
                     QTextBlockFormat blockFormat;
-                    blockFormat.setProperty( QTextFormat::BlockTrailingHorizontalRulerWidth, "100%");
+                    blockFormat.setProperty( QTextFormat::BlockTrailingHorizontalRulerWidth, QStringLiteral("100%"));
                     context->cursor->insertBlock( blockFormat );
                     context->cursor->insertBlock( oldBlockFormat );
                     context->cursor->setCharFormat( charFormat );
                 }
                 else if (fctype == PLKR_TFC_ALIGN) {
-                    current_alignment = 0;
+//                     current_alignment = 0;
 
                     if (*ptr < 4) {
                         QTextBlockFormat format( context->cursor->blockFormat() );
@@ -997,7 +997,7 @@ bool QUnpluck::TranscribeTextRecord
                         context->cursor->insertBlock( format );
                         context->cursor->setCharFormat( charFormat );
 
-                        current_alignment = (*ptr) + 1;
+//                         current_alignment = (*ptr) + 1;
                     }
 
                 }
@@ -1044,8 +1044,8 @@ bool QUnpluck::TranscribeTextRecord
                     }
 #endif
 
-                    current_left_margin = ptr[0];
-                    current_right_margin = ptr[1];
+//                     current_left_margin = ptr[0];
+//                     current_right_margin = ptr[1];
 
                 }
                 else if (fctype == PLKR_TFC_COLOR) {
@@ -1054,12 +1054,12 @@ bool QUnpluck::TranscribeTextRecord
                     /*
                     fprintf (fp, "<!-- color=\"#%02x%02x%02x\" -->",
                              ptr[0], ptr[1], ptr[2]);*/
-                    current_color =
-                        (ptr[0] << 16) + (ptr[1] << 8) + ptr[2];
+//                     current_color =
+//                         (ptr[0] << 16) + (ptr[1] << 8) + ptr[2];
 
                 } else if (fctype == PLKR_TFC_IMAGE || fctype == PLKR_TFC_IMAGE2) {
                     QTextCharFormat format = context->cursor->charFormat();
-                    context->cursor->insertImage( QString( "%1.jpg" ).arg( (ptr[0] << 8) + ptr[1] ) );
+                    context->cursor->insertImage( QStringLiteral( "%1.jpg" ).arg( (ptr[0] << 8) + ptr[1] ) );
                     context->images.append( (ptr[0] << 8) + ptr[1] );
                     context->cursor->setCharFormat( format );
                     AddRecord ((ptr[0] << 8) + ptr[1]);
@@ -1179,7 +1179,7 @@ bool QUnpluck::TranscribeRecord( int index )
 
         QTextCharFormat charFormat;
         charFormat.setFontPointSize( 10 );
-        charFormat.setFontFamily( "Helvetica" );
+        charFormat.setFontFamily( QStringLiteral("Helvetica") );
         context->cursor->setCharFormat( charFormat );
 
         status = TranscribeTextRecord( mDocument, index, context, data, type );

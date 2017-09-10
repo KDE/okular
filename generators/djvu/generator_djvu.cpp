@@ -23,12 +23,13 @@
 #include <qpixmap.h>
 #include <qstring.h>
 #include <quuid.h>
-#include <QtGui/QPrinter>
+#include <QPrinter>
 
-#include <kaboutdata.h>
-#include <kdebug.h>
-#include <klocale.h>
-#include <ktemporaryfile.h>
+#include <KAboutData>
+#include <QtCore/QDebug>
+#include <KLocalizedString>
+#include <qtemporaryfile.h>
+#include <QDir>
 
 static void recurseCreateTOC( QDomDocument &maindoc, const QDomNode &parent, QDomNode &parentDestination, KDjVu *djvu )
 {
@@ -37,25 +38,25 @@ static void recurseCreateTOC( QDomDocument &maindoc, const QDomNode &parent, QDo
     {
         QDomElement el = n.toElement();
 
-        QDomElement newel = maindoc.createElement( el.attribute( "title" ) );
+        QDomElement newel = maindoc.createElement( el.attribute( QStringLiteral("title") ) );
         parentDestination.appendChild( newel );
 
         QString dest;
-        if ( !( dest = el.attribute( "PageNumber" ) ).isEmpty() )
+        if ( !( dest = el.attribute( QStringLiteral("PageNumber") ) ).isEmpty() )
         {
             Okular::DocumentViewport vp;
             vp.pageNumber = dest.toInt() - 1;
-            newel.setAttribute( "Viewport", vp.toString() );
+            newel.setAttribute( QStringLiteral("Viewport"), vp.toString() );
         }
-        else if ( !( dest = el.attribute( "PageName" ) ).isEmpty() )
+        else if ( !( dest = el.attribute( QStringLiteral("PageName") ) ).isEmpty() )
         {
             Okular::DocumentViewport vp;
             vp.pageNumber = djvu->pageNumber( dest );
-            newel.setAttribute( "Viewport", vp.toString() );
+            newel.setAttribute( QStringLiteral("Viewport"), vp.toString() );
         }
-        else if ( !( dest = el.attribute( "URL" ) ).isEmpty() )
+        else if ( !( dest = el.attribute( QStringLiteral("URL") ) ).isEmpty() )
         {
-            newel.setAttribute( "URL", dest );
+            newel.setAttribute( QStringLiteral("URL"), dest );
         }
 
         if ( el.hasChildNodes() )
@@ -66,25 +67,10 @@ static void recurseCreateTOC( QDomDocument &maindoc, const QDomNode &parent, QDo
     }
 }
 
-static KAboutData createAboutData()
-{
-    KAboutData aboutData(
-         "okular_djvu",
-         "okular_djvu",
-         ki18n( "DjVu Backend" ),
-         "0.2.3",
-         ki18n( "DjVu backend based on DjVuLibre." ),
-         KAboutData::License_GPL,
-         ki18n( "© 2006-2008 Pino Toscano" )
-    );
-    aboutData.addAuthor( ki18n( "Pino Toscano" ), KLocalizedString(), "pino@kde.org" );
-    return aboutData;
-}
-
-OKULAR_EXPORT_PLUGIN( DjVuGenerator, createAboutData() )
+OKULAR_EXPORT_PLUGIN(DjVuGenerator, "libokularGenerator_djvu.json")
 
 DjVuGenerator::DjVuGenerator( QObject *parent, const QVariantList &args )
-    : Okular::Generator( parent, args ), m_docSyn( 0 )
+    : Okular::Generator( parent, args ), m_docSyn( nullptr )
 {
     setFeature( TextExtraction );
     setFeature( Threaded );
@@ -121,7 +107,7 @@ bool DjVuGenerator::doCloseDocument()
     userMutex()->unlock();
 
     delete m_docSyn;
-    m_docSyn = 0;
+    m_docSyn = nullptr;
 
     return true;
 }
@@ -139,25 +125,25 @@ Okular::DocumentInfo DjVuGenerator::generateDocumentInfo( const QSet<Okular::Doc
     Okular::DocumentInfo docInfo;
 
     if ( keys.contains( Okular::DocumentInfo::MimeType ) )
-        docInfo.set( Okular::DocumentInfo::MimeType, "image/vnd.djvu" );
+        docInfo.set( Okular::DocumentInfo::MimeType, QStringLiteral("image/vnd.djvu") );
 
     if ( m_djvu )
     {
         // compile internal structure reading properties from KDjVu
         if ( keys.contains( Okular::DocumentInfo::Author ) )
-            docInfo.set( Okular::DocumentInfo::Title, m_djvu->metaData( "title" ).toString() );
+            docInfo.set( Okular::DocumentInfo::Title, m_djvu->metaData( QStringLiteral("title") ).toString() );
         if ( keys.contains( Okular::DocumentInfo::Author ) )
-            docInfo.set( Okular::DocumentInfo::Author, m_djvu->metaData( "author" ).toString() );
+            docInfo.set( Okular::DocumentInfo::Author, m_djvu->metaData( QStringLiteral("author") ).toString() );
         if ( keys.contains( Okular::DocumentInfo::CreationDate ) )
-            docInfo.set( Okular::DocumentInfo::CreationDate, m_djvu->metaData( "year" ).toString() );
+            docInfo.set( Okular::DocumentInfo::CreationDate, m_djvu->metaData( QStringLiteral("year") ).toString() );
         if ( keys.contains( Okular::DocumentInfo::CustomKeys ) )
         {
-            docInfo.set( "editor", m_djvu->metaData( "editor" ).toString(), i18n( "Editor" ) );
-            docInfo.set( "publisher", m_djvu->metaData( "publisher" ).toString(), i18n( "Publisher" ) );
-            docInfo.set( "volume", m_djvu->metaData( "volume" ).toString(), i18n( "Volume" ) );
-            docInfo.set( "documentType", m_djvu->metaData( "documentType" ).toString(), i18n( "Type of document" ) );
-            QVariant numcomponents = m_djvu->metaData( "componentFile" );
-            docInfo.set( "componentFile", numcomponents.type() != QVariant::Int ? i18nc( "Unknown number of component files", "Unknown" ) : numcomponents.toString(), i18n( "Component Files" ) );
+            docInfo.set( QStringLiteral("editor"), m_djvu->metaData( QStringLiteral("editor") ).toString(), i18n( "Editor" ) );
+            docInfo.set( QStringLiteral("publisher"), m_djvu->metaData( QStringLiteral("publisher") ).toString(), i18n( "Publisher" ) );
+            docInfo.set( QStringLiteral("volume"), m_djvu->metaData( QStringLiteral("volume") ).toString(), i18n( "Volume" ) );
+            docInfo.set( QStringLiteral("documentType"), m_djvu->metaData( QStringLiteral("documentType") ).toString(), i18n( "Type of document" ) );
+            QVariant numcomponents = m_djvu->metaData( QStringLiteral("componentFile") );
+            docInfo.set( QStringLiteral("componentFile"), numcomponents.type() != QVariant::Int ? i18nc( "Unknown number of component files", "Unknown" ) : numcomponents.toString(), i18n( "Component Files" ) );
         }
     }
 
@@ -186,8 +172,7 @@ bool DjVuGenerator::print( QPrinter& printer )
     bool result = false;
 
     // Create tempfile to write to
-    KTemporaryFile tf;
-    tf.setSuffix( ".ps" );
+    QTemporaryFile tf(QDir::tempPath() + QLatin1String("/okular_XXXXXX.ps"));
     if ( !tf.open() )
         return false;
 
@@ -214,9 +199,9 @@ bool DjVuGenerator::print( QPrinter& printer )
 QVariant DjVuGenerator::metaData( const QString &key, const QVariant &option ) const
 {
     Q_UNUSED( option )
-    if ( key == "DocumentTitle" )
+    if ( key == QLatin1String("DocumentTitle") )
     {
-        return m_djvu->metaData( "title" );
+        return m_djvu->metaData( QStringLiteral("title") );
     }
     return QVariant();
 }
@@ -229,9 +214,9 @@ Okular::TextPage* DjVuGenerator::textPage( Okular::Page *page )
     m_djvu->textEntities( page->number(), "char" );
 #endif
     if ( te.isEmpty() )
-        te = m_djvu->textEntities( page->number(), "word" );
+        te = m_djvu->textEntities( page->number(), QStringLiteral("word") );
     if ( te.isEmpty() )
-        te = m_djvu->textEntities( page->number(), "line" );
+        te = m_djvu->textEntities( page->number(), QStringLiteral("line") );
     userMutex()->unlock();
     QList<KDjVu::TextEntity>::ConstIterator it = te.constBegin();
     QList<KDjVu::TextEntity>::ConstIterator itEnd = te.constEnd();
@@ -307,8 +292,8 @@ void DjVuGenerator::loadPages( QVector<Okular::Page*> & pagesVector, int rotatio
 Okular::ObjectRect* DjVuGenerator::convertKDjVuLink( int page, KDjVu::Link * link ) const
 {
     int newpage = -1;
-    Okular::Action *newlink = 0;
-    Okular::ObjectRect *newrect = 0;
+    Okular::Action *newlink = nullptr;
+    Okular::ObjectRect *newrect = nullptr;
     switch ( link->type() )
     {
         case KDjVu::Link::PageLink:
@@ -335,7 +320,7 @@ Okular::ObjectRect* DjVuGenerator::convertKDjVuLink( int page, KDjVu::Link * lin
         {
             KDjVu::UrlLink* l = static_cast<KDjVu::UrlLink*>( link );
             QString url = l->url();
-            newlink = new Okular::BrowseAction( url );
+            newlink = new Okular::BrowseAction( QUrl(url) );
             break;
         }
     }
@@ -394,7 +379,7 @@ Okular::ObjectRect* DjVuGenerator::convertKDjVuLink( int page, KDjVu::Link * lin
 
 Okular::Annotation* DjVuGenerator::convertKDjVuAnnotation( int w, int h, KDjVu::Annotation * ann ) const
 {
-    Okular::Annotation *newann = 0;
+    Okular::Annotation *newann = nullptr;
     switch ( ann->type() )
     {
         case KDjVu::Annotation::TextAnnotation:

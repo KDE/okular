@@ -12,6 +12,7 @@
 #define _EXTENSIONS_H_
 
 #include <kparts/browserextension.h>
+#include <kparts/liveconnectextension.h>
 
 namespace Okular
 {
@@ -25,7 +26,7 @@ class BrowserExtension : public KParts::BrowserExtension
     public:
         BrowserExtension(Part*);
 
-    public slots:
+    public Q_SLOTS:
         // Automatically detected by the host.
         void print();
 
@@ -41,11 +42,11 @@ class OkularLiveConnectExtension : public KParts::LiveConnectExtension
         OkularLiveConnectExtension( Part *parent );
 
         // from LiveConnectExtension
-        virtual bool get( const unsigned long objid, const QString &field, Type &type,
-                          unsigned long &retobjid, QString &value );
-        virtual bool put( const unsigned long objid, const QString &field, const QString &value );
-        virtual bool call( const unsigned long objid, const QString &func, const QStringList &args,
-                           Type &type, unsigned long &retobjid, QString &value );
+        bool get( const unsigned long objid, const QString &field, Type &type,
+                          unsigned long &retobjid, QString &value ) override;
+        bool put( const unsigned long objid, const QString &field, const QString &value ) override;
+        bool call( const unsigned long objid, const QString &func, const QStringList &args,
+                           Type &type, unsigned long &retobjid, QString &value ) override;
 
     private:
         QString eval( const QString &script );

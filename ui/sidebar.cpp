@@ -24,12 +24,13 @@
 #include <qscrollbar.h>
 #include <qsplitter.h>
 #include <qstackedwidget.h>
+#include <qmimedata.h>
 
-#include <kglobalsettings.h>
 #include <kiconloader.h>
-#include <klocale.h>
-#include <kmenu.h>
+#include <KLocalizedString>
+#include <qmenu.h>
 #include <kcolorscheme.h>
+#include <kurlmimedata.h>
 
 #include "settings.h"
 
@@ -40,7 +41,7 @@ class SidebarItem : public QListWidgetItem
 {
     public:
         SidebarItem( QWidget* w, const QIcon &icon, const QString &text )
-            : QListWidgetItem( 0, SidebarItemType ),
+            : QListWidgetItem( nullptr, SidebarItemType ),
               m_widget( w )
         {
             setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled );
@@ -68,18 +69,22 @@ class SidebarItem : public QListWidgetItem
 
 class SidebarDelegate : public QAbstractItemDelegate
 {
+    Q_OBJECT
+
     public:
-        SidebarDelegate( QObject *parent = 0 );
-        ~SidebarDelegate();
+        SidebarDelegate( QObject *parent = Q_NULLPTR );
+        ~SidebarDelegate() override;
 
         void setShowText( bool show );
         bool isTextShown() const;
 
-        void updateBrushCache();
 
         // from QAbstractItemDelegate
-        void paint( QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index ) const;
-        QSize sizeHint( const QStyleOptionViewItem &option, const QModelIndex &index ) const;
+        void paint( QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index ) const override;
+        QSize sizeHint( const QStyleOptionViewItem &option, const QModelIndex &index ) const override;
+
+    private slots:
+        void updateBrushCache();
 
     private:
         bool m_showText;
@@ -91,10 +96,11 @@ class SidebarDelegate : public QAbstractItemDelegate
 
 SidebarDelegate::SidebarDelegate( QObject *parent )
     : QAbstractItemDelegate( parent ), m_showText( true ),
-    m_windowBackground( 0 ), m_windowForeground( 0 ),
-    m_selectionBackground( 0 ), m_selectionForeground( 0 )
+    m_windowBackground( nullptr ), m_windowForeground( nullptr ),
+    m_selectionBackground( nullptr ), m_selectionForeground( nullptr )
 {
     updateBrushCache();
+    connect(qApp, &QGuiApplication::paletteChanged, this, &SidebarDelegate::updateBrushCache);
 }
 
 SidebarDelegate::~SidebarDelegate()
@@ -149,7 +155,7 @@ void SidebarDelegate::paint( QPainter *painter, const QStyleOptionViewItem &opti
         foreColor = m_windowForeground->brush(option.palette).color();
     }
     QStyle *style = QApplication::style();
-    QStyleOptionViewItemV4 opt( option );
+    QStyleOptionViewItem opt( option );
     // KStyle provides an "hover highlight" effect for free;
     // but we want that for non-KStyle-based styles too
     if ( !style->inherits( "KStyle" ) && hover )
@@ -161,7 +167,7 @@ void SidebarDelegate::paint( QPainter *painter, const QStyleOptionViewItem &opti
             opt.backgroundBrush = backBrush;
     }
     painter->save();
-    style->drawPrimitive( QStyle::PE_PanelItemViewItem, &opt, painter, 0 );
+    style->drawPrimitive( QStyle::PE_PanelItemViewItem, &opt, painter, nullptr );
     painter->restore();
     QIcon icon = index.data( Qt::DecorationRole ).value< QIcon >();
     if ( !icon.isNull() )
@@ -208,17 +214,25 @@ QSize SidebarDelegate::sizeHint( const QStyleOptionViewItem &option, const QMode
 class SidebarListWidget : public QListWidget
 {
     public:
-        SidebarListWidget( QWidget *parent = 0 );
-        ~SidebarListWidget();
+        SidebarListWidget( QWidget *parent = Q_NULLPTR );
+        ~SidebarListWidget() override;
+
+        int countVisible() const {
+            int ret = 0;
+            for ( int i = 0, c = count(); i < c; ++i ) {
+                ret += !item(i)->isHidden();
+            }
+            return ret;
+        }
 
     protected:
         // from QListWidget
-        void mouseDoubleClickEvent( QMouseEvent *event );
-        void mouseMoveEvent( QMouseEvent *event );
-        void mousePressEvent( QMouseEvent *event );
-        void mouseReleaseEvent( QMouseEvent *event );
+        void mouseDoubleClickEvent( QMouseEvent *event ) override;
+        void mouseMoveEvent( QMouseEvent *event ) override;
+        void mousePressEvent( QMouseEvent *event ) override;
+        void mouseReleaseEvent( QMouseEvent *event ) override;
 
-        QModelIndex moveCursor( QAbstractItemView::CursorAction cursorAction, Qt::KeyboardModifiers modifiers );
+        QModelIndex moveCursor( QAbstractItemView::CursorAction cursorAction, Qt::KeyboardModifiers modifiers ) override;
 
     private:
         // These two are used to keep track of the row an initial mousePress-
@@ -392,9 +406,17 @@ class Sidebar::Private
 {
 public:
     Private()
-        : sideWidget( 0 ), bottomWidget( 0 ), splitterSizesSet( false ),
+        : sideWidget( nullptr ), bottomWidget( nullptr ), splitterSizesSet( false ),
           itemsHeight( 0 )
     {
+    }
+
+    int indexOf(QWidget *w) const
+    {
+        for (int i = 0; i < pages.count(); ++i) {
+            if (pages[i]->widget() == w) return i;
+        }
+        return -1;
     }
 
     void adjustListSize( bool recalc, bool expand = true );
@@ -415,10 +437,7 @@ public:
 
 void Sidebar::Private::adjustListSize( bool recalc, bool expand )
 {
-    QRect bottomElemRect(
-        QPoint( 0, 0 ),
-        list->sizeHintForIndex( list->model()->index( list->count() - 1, 0 ) )
-    );
+    QSize bottomElemSize( list->sizeHintForIndex( list->model()->index( list->count() - 1, 0 ) ) );
     if ( recalc )
     {
         int w = 0;
@@ -428,15 +447,15 @@ void Sidebar::Private::adjustListSize( bool recalc, bool expand )
             if ( s.width() > w )
                 w = s.width();
         }
-        bottomElemRect.setWidth( w );
+        bottomElemSize.setWidth( w );
     }
-    bottomElemRect.translate( 0, bottomElemRect.height() * ( list->count() - 1 ) );
-    itemsHeight = bottomElemRect.height() * list->count();
+    itemsHeight = bottomElemSize.height() * list->countVisible();
     list->setMinimumHeight( itemsHeight + list->frameWidth() * 2 );
+
     int curWidth = list->minimumWidth();
     int newWidth = expand
-                   ? qMax( bottomElemRect.width() + list->frameWidth() * 2, curWidth )
-                   : qMin( bottomElemRect.width() + list->frameWidth() * 2, curWidth );
+                   ? qMax( bottomElemSize.width() + list->frameWidth() * 2, curWidth )
+                   : qMin( bottomElemSize.width() + list->frameWidth() * 2, curWidth );
     list->setFixedWidth( newWidth );
 }
 
@@ -466,7 +485,6 @@ Sidebar::Sidebar( QWidget *parent )
     d->list->setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
     d->list->setContextMenuPolicy( Qt::CustomContextMenu );
     d->list->viewport()->setAutoFillBackground( false );
-    d->list->setFont( KGlobalSettings::toolBarFont() );
 
     d->splitter = new QSplitter( this );
     mainlay->addWidget( d->splitter );
@@ -490,11 +508,8 @@ Sidebar::Sidebar( QWidget *parent )
     d->stack = new QStackedWidget( d->sideContainer );
     d->vlay->addWidget( d->stack );
 
-    connect( d->list, SIGNAL(customContextMenuRequested(QPoint)),
-             this, SLOT(listContextMenu(QPoint)) );
-    connect( d->splitter, SIGNAL(splitterMoved(int,int)), this, SLOT(splitterMoved(int,int)) );
-
-    connect( KGlobalSettings::self(), SIGNAL(appearanceChanged()), this, SLOT(appearanceChanged()) );
+    connect(d->list, &SidebarListWidget::customContextMenuRequested, this, &Sidebar::listContextMenu);
+    connect(d->splitter, &QSplitter::splitterMoved, this, &Sidebar::splitterMoved);
 
     setCollapsed( true );
     setFocusProxy( d->list );
@@ -556,7 +571,13 @@ void Sidebar::setBottomWidget( QWidget *widget )
     }
 }
 
-void Sidebar::setItemEnabled( int index, bool enabled )
+void Sidebar::setItemEnabled( QWidget *widget, bool enabled )
+{
+    const int index = d->indexOf( widget );
+    setIndexEnabled( index, enabled );
+}
+
+void Sidebar::setIndexEnabled( int index, bool enabled )
 {
     if ( index < 0 || index >= d->pages.count() )
         return;
@@ -574,7 +595,7 @@ void Sidebar::setItemEnabled( int index, bool enabled )
     }
     d->pages.at( index )->setFlags( f );
 
-    if ( !enabled && index == currentIndex() && isSidebarVisible() )
+    if ( !enabled && index == d->list->currentRow() && isSidebarVisible() )
         // find an enabled item, and select that one
         for ( int i = 0; i < d->pages.count(); ++i )
             if ( d->pages.at(i)->flags() & Qt::ItemIsEnabled )
@@ -584,18 +605,30 @@ void Sidebar::setItemEnabled( int index, bool enabled )
             }
 }
 
-bool Sidebar::isItemEnabled( int index ) const
+bool Sidebar::isItemEnabled( QWidget *widget ) const
 {
-    if ( index < 0 || index >= d->pages.count() )
+    const int index = d->indexOf( widget );
+    return isIndexEnabled( index );
+}
+
+bool Sidebar::isIndexEnabled( int index ) const
+{
+    if ( index < 0 )
         return false;
 
     Qt::ItemFlags f = d->pages.at( index )->flags();
     return ( f & Qt::ItemIsEnabled ) == Qt::ItemIsEnabled;
 }
 
-void Sidebar::setCurrentIndex( int index, SetCurrentIndexBehaviour b )
+void Sidebar::setCurrentItem( QWidget *widget, SetCurrentItemBehaviour b )
 {
-    if ( index < 0 || index >= d->pages.count() || !isItemEnabled( index ) )
+    const int index = d->indexOf( widget );
+    setCurrentIndex( index, b );
+}
+
+void Sidebar::setCurrentIndex( int index, SetCurrentItemBehaviour b )
+{
+    if ( index < 0 || !isIndexEnabled( index ) )
         return;
 
     itemClicked( d->pages.at( index ), b );
@@ -604,9 +637,13 @@ void Sidebar::setCurrentIndex( int index, SetCurrentIndexBehaviour b )
     d->list->selectionModel()->select( modelindex, QItemSelectionModel::ClearAndSelect );
 }
 
-int Sidebar::currentIndex() const
+QWidget *Sidebar::currentItem() const
 {
-    return d->list->currentRow();
+    const int row = d->list->currentRow();
+    if (row < 0 || row >= d->pages.count())
+        return nullptr;
+
+    return d->pages[row]->widget();
 }
 
 void Sidebar::setSidebarVisibility( bool visible )
@@ -644,12 +681,31 @@ bool Sidebar::isCollapsed() const
     return d->sideContainer->isHidden();
 }
 
+void Sidebar::moveSplitter(int sideWidgetSize)
+{
+    QList<int> splitterSizeList = d->splitter->sizes();
+    const int total = splitterSizeList.at( 0 ) + splitterSizeList.at( 1 );
+    splitterSizeList.replace( 0, total - sideWidgetSize );
+    splitterSizeList.replace( 1, sideWidgetSize );
+    d->splitter->setSizes( splitterSizeList );
+}
+
+void Sidebar::setItemVisible( QWidget *widget, bool visible )
+{
+    const int index = d->indexOf( widget );
+    if ( index < 0 )
+        return;
+
+    d->list->setRowHidden( index, !visible );
+    setIndexEnabled( index, visible );
+}
+
 void Sidebar::itemClicked( QListWidgetItem *item )
 {
     itemClicked( item, UncollapseIfCollapsed );
 }
 
-void Sidebar::itemClicked( QListWidgetItem *item, SetCurrentIndexBehaviour b )
+void Sidebar::itemClicked( QListWidgetItem *item, SetCurrentItemBehaviour b )
 {
     if ( !item )
         return;
@@ -696,17 +752,17 @@ void Sidebar::splitterMoved( int /*pos*/, int index )
 void Sidebar::saveSplitterSize() const
 {
     Okular::Settings::setSplitterSizes( d->splitter->sizes() );
-    Okular::Settings::self()->writeConfig();
+    Okular::Settings::self()->save();
 }
 
 void Sidebar::listContextMenu( const QPoint &pos )
 {
-    KMenu menu( this );
-    menu.addTitle( i18n( "Okular" ) );
+    QMenu menu( this );
+    menu.setTitle( i18n( "Okular" ) );
     QAction *showTextAct = menu.addAction( i18n( "Show Text" ) );
     showTextAct->setCheckable( true );
     showTextAct->setChecked( d->sideDelegate->isTextShown() );
-    connect( showTextAct, SIGNAL(toggled(bool)), this, SLOT(showTextToggled(bool)) );
+    connect(showTextAct, &QAction::toggled, this, &Sidebar::showTextToggled);
     menu.addSeparator();
     QActionGroup *sizeGroup = new QActionGroup( &menu );
     int curSize = d->list->iconSize().width();
@@ -723,7 +779,7 @@ void Sidebar::listContextMenu( const QPoint &pos )
     ADD_SIZE_ACTION( i18n( "Normal Icons" ), KIconLoader::SizeMedium )
     ADD_SIZE_ACTION( i18n( "Large Icons" ), KIconLoader::SizeLarge )
 #undef ADD_SIZE_ACTION
-    connect( sizeGroup, SIGNAL(triggered(QAction*)), this, SLOT(iconSizeChanged(QAction*)) );
+    connect(sizeGroup, &QActionGroup::triggered, this, &Sidebar::iconSizeChanged);
     menu.exec( mapToGlobal( pos ) );
 }
 
@@ -734,7 +790,7 @@ void Sidebar::showTextToggled( bool on )
     d->list->reset();
     d->list->update();
     Okular::Settings::setSidebarShowText( on );
-    Okular::Settings::self()->writeConfig();
+    Okular::Settings::self()->save();
 }
 
 void Sidebar::iconSizeChanged( QAction *action )
@@ -746,22 +802,17 @@ void Sidebar::iconSizeChanged( QAction *action )
     d->list->reset();
     d->list->update();
     Okular::Settings::setSidebarIconSize( size );
-    Okular::Settings::self()->writeConfig();
-}
-
-void Sidebar::appearanceChanged()
-{
-    d->sideDelegate->updateBrushCache();
+    Okular::Settings::self()->save();
 }
 
 void Sidebar::dragEnterEvent( QDragEnterEvent* event )
 {
-    event->setAccepted( KUrl::List::canDecode(event->mimeData()) );
+    event->setAccepted( event->mimeData()->hasUrls() );
 }
 
 void Sidebar::dropEvent( QDropEvent* event )
 {
-    const KUrl::List list = KUrl::List::fromMimeData( event->mimeData() );
+    const QList<QUrl> list = KUrlMimeData::urlsFromMimeData( event->mimeData() );
     emit urlsDropped( list );
 }
 

@@ -10,7 +10,7 @@
 #include "textpage.h"
 #include "textpage_p.h"
 
-#include <kdebug.h>
+#include <QtCore/QDebug>
 
 #include "area.h"
 #include "debug_p.h"
@@ -136,8 +136,8 @@ class TinyTextEntity
                     // fall through
                 case 3:
                     d.qc[2] = text.at( 2 ).unicode();
-                    // fall through
 #endif
+                    // fall through
                 case 2:
                     d.qc[1] = text.at( 1 ).unicode();
                     // fall through
@@ -186,7 +186,7 @@ class TinyTextEntity
 
 
 TextEntity::TextEntity( const QString &text, NormalizedRect *area )
-    : m_text( text ), m_area( area ), d( 0 )
+    : m_text( text ), m_area( area ), d( nullptr )
 {
 }
 
@@ -214,7 +214,7 @@ NormalizedRect TextEntity::transformedArea(const QTransform &matrix) const
 
 
 TextPagePrivate::TextPagePrivate()
-    : m_page( 0 )
+    : m_page( nullptr )
 {
 }
 
@@ -371,7 +371,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
     if ( sel->direction() == 1 || ( sel->itB() == -1 && sel->direction() == 0 ) )
     {
 #ifdef DEBUG_TEXTPAGE
-        kWarning() << "running first loop";
+        qCWarning(OkularCoreDebug) << "running first loop";
 #endif
         const int count = d->m_words.count();
         for ( it = 0; it < count; it++ )
@@ -384,7 +384,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
                 /// we have found the (rx,ry)x(tx,ty)
                 itB = it;
 #ifdef DEBUG_TEXTPAGE
-                kWarning() << "start is" << itB << "count is" << d->m_words.count();
+                qCWarning(OkularCoreDebug) << "start is" << itB << "count is" << d->m_words.count();
 #endif
                 break;
             }
@@ -393,13 +393,13 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
     }
     itB = sel->itB();
 #ifdef DEBUG_TEXTPAGE
-    kWarning() << "direction is" << sel->direction();
-    kWarning() << "reloaded start is" << itB << "against" << sel->itB();
+    qCWarning(OkularCoreDebug) << "direction is" << sel->direction();
+    qCWarning(OkularCoreDebug) << "reloaded start is" << itB << "against" << sel->itB();
 #endif
     if ( sel->direction() == 0 || ( sel->itE() == -1 && sel->direction() == 1 ) )
     {
 #ifdef DEBUG_TEXTPAGE
-        kWarning() << "running second loop";
+        qCWarning(OkularCoreDebug) << "running second loop";
 #endif
         for ( it = d->m_words.count() - 1; it >= itB; it-- )
         {
@@ -411,8 +411,8 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
                 /// we have found the (ux,uy)x(vx,vy)
                 itE = it;
 #ifdef DEBUG_TEXTPAGE
-                kWarning() << "ending is" << itE << "count is" << d->m_words.count();
-                kWarning() << "conditions" << tmp.contains( endCx, endCy ) << " " 
+                qCWarning(OkularCoreDebug) << "ending is" << itE << "count is" << d->m_words.count();
+                qCWarning(OkularCoreDebug) << "conditions" << tmp.contains( endCx, endCy ) << " " 
                   << ( tmp.top <= endCy && tmp.bottom >= endCy && tmp.right <= endCx ) << " " <<
                   ( tmp.top >= endCy);
 #endif
@@ -422,7 +422,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
         sel->itE( itE );
     }
 #ifdef DEBUG_TEXTPAGE
-    kWarning() << "reloaded ending is" << itE << "against" << sel->itE();
+    qCWarning(OkularCoreDebug) << "reloaded ending is" << itE << "against" << sel->itE();
 #endif
 
     if ( sel->itB() != -1 && sel->itE() != -1 )
@@ -718,7 +718,7 @@ RegularAreaRect* TextPage::findText( int searchID, const QString &query, SearchD
     SearchDirection dir=direct;
     // invalid search request
     if ( d->m_words.isEmpty() || query.isEmpty() || ( area && area->isNull() ) )
-        return 0;
+        return nullptr;
     TextList::ConstIterator start;
     int start_offset = 0;
     TextList::ConstIterator end;
@@ -758,7 +758,7 @@ RegularAreaRect* TextPage::findText( int searchID, const QString &query, SearchD
             forward = false;
             break;
     };
-    RegularAreaRect* ret = 0;
+    RegularAreaRect* ret = nullptr;
     const TextComparisonFunction cmpFn = caseSensitivity == Qt::CaseSensitive
                                        ? CaseSensitiveCmpFn : CaseInsensitiveCmpFn;
     if ( forward )
@@ -784,14 +784,14 @@ static int stringLengthAdaptedWithHyphen(const QString &str, const TextList::Con
     // we have a '-' just followed by a '\n' character
     // check if the string contains a '-' character
     // if the '-' is the last entry
-    if ( str.endsWith( '-' ) )
+    if ( str.endsWith( QLatin1Char('-') ) )
     {
         // validity chek of it + 1
         if ( ( it + 1 ) != textListEnd )
         {
             // 1. if the next character is '\n'
             const QString &lookahedStr = (*(it+1))->text();
-            if (lookahedStr.startsWith('\n'))
+            if (lookahedStr.startsWith(QLatin1Char('\n')))
             {
                 len -= 1;
             }
@@ -810,7 +810,7 @@ static int stringLengthAdaptedWithHyphen(const QString &str, const TextList::Con
         }
     }
     // else if it is the second last entry - for example in pdf format
-    else if (str.endsWith("-\n"))
+    else if (str.endsWith(QLatin1String("-\n")))
     {
         len -= 2;
     }
@@ -879,7 +879,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
         int min=qMin(queryLeft,len-offset);
         {
 #ifdef DEBUG_TEXTPAGE
-            kDebug(OkularDebug) << str.midRef(offset, min) << ":" << _query.midRef(j, min);
+            qCDebug(OkularCoreDebug) << str.midRef(offset, min) << ":" << _query.midRef(j, min);
 #endif
             // we have equal (or less than) area of the query left as the length of the current 
             // entity
@@ -891,7 +891,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
                     // we need to get back to query start
                     // and continue the search from this place
 #ifdef DEBUG_TEXTPAGE
-            kDebug(OkularDebug) << "\tnot matched";
+            qCDebug(OkularCoreDebug) << "\tnot matched";
 #endif
                     j = 0;
                     queryLeft=query.length();
@@ -908,7 +908,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
                     // subtract the length of the current entity from 
                     // the left length of the query
 #ifdef DEBUG_TEXTPAGE
-            kDebug(OkularDebug) << "\tmatched";
+            qCDebug(OkularCoreDebug) << "\tmatched";
 #endif
                     j += min;
                     queryLeft -= min;
@@ -943,7 +943,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
         m_searchPoints.erase( sIt );
         delete sp;
     }
-    return 0;
+    return nullptr;
 }
 
 RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const QString &_query,
@@ -995,7 +995,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
         int min=qMin(queryLeft,offset);
         {
 #ifdef DEBUG_TEXTPAGE
-            kDebug(OkularDebug) << str.midRef(offset-min, min) << " : " << _query.midRef(j-min, min);
+            qCDebug(OkularCoreDebug) << str.midRef(offset-min, min) << " : " << _query.midRef(j-min, min);
 #endif
             // we have equal (or less than) area of the query left as the length of the current 
             // entity
@@ -1008,7 +1008,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
                     // we need to get back to query start
                     // and continue the search from this place
 #ifdef DEBUG_TEXTPAGE
-                    kDebug(OkularDebug) << "\tnot matched";
+                    qCDebug(OkularCoreDebug) << "\tnot matched";
 #endif
 
                     j = query.length();
@@ -1026,7 +1026,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
                     // subtract the length of the current entity from 
                     // the left length of the query
 #ifdef DEBUG_TEXTPAGE
-                    kDebug(OkularDebug) << "\tmatched";
+                    qCDebug(OkularCoreDebug) << "\tmatched";
 #endif
                     j -= min;
                     queryLeft -= min;
@@ -1062,7 +1062,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
         m_searchPoints.erase( sIt );
         delete sp;
     }
-    return 0;
+    return nullptr;
 }
 
 QString TextPage::text(const RegularAreaRect *area) const
@@ -1138,7 +1138,7 @@ void TextPagePrivate::setWordList(const TextList &list)
 static void removeSpace(TextList *words)
 {
     TextList::Iterator it = words->begin();
-    const QString str(' ');
+    const QString str(QLatin1Char(' '));
 
     while ( it != words->end() )
     {
@@ -1838,7 +1838,7 @@ WordsWithCharacters addNecessarySpace(RegionTextList tree, int pageWidth, int pa
                     const int top = area2.top() < area1.top() ? area2.top() : area1.top();
                     const int bottom = area2.bottom() > area1.bottom() ? area2.bottom() : area1.bottom();
 
-                    const QString spaceStr(" ");
+                    const QString spaceStr(QStringLiteral(" "));
                     const QRect rect(QPoint(left,top),QPoint(right,bottom));
                     const NormalizedRect entRect(rect,pageWidth,pageHeight);
                     TinyTextEntity *ent1 = new TinyTextEntity(spaceStr, entRect);
@@ -1972,7 +1972,7 @@ RegularAreaRect * TextPage::wordAt( const NormalizedPoint &p, QString *word ) co
     {
         if ( (*posIt)->text().simplified().isEmpty() )
         {
-            return NULL;
+            return nullptr;
         }
         // Find the first TinyTextEntity of the word
         while ( posIt != itBegin )
@@ -1981,17 +1981,17 @@ RegularAreaRect * TextPage::wordAt( const NormalizedPoint &p, QString *word ) co
             const QString itText = (*posIt)->text();
             if ( itText.right(1).at(0).isSpace() )
             {
-                if (itText.endsWith("-\n"))
+                if (itText.endsWith(QLatin1String("-\n")))
                 {
                     // Is an hyphenated word
                     // continue searching the start of the word back
                     continue;
                 }
                 
-                if (itText == "\n" && posIt != itBegin )
+                if (itText == QLatin1String("\n") && posIt != itBegin )
                 {
                     --posIt;
-                    if ((*posIt)->text().endsWith("-")) {
+                    if ((*posIt)->text().endsWith(QLatin1String("-"))) {
                         // Is an hyphenated word
                         // continue searching the start of the word back
                         continue;
@@ -2016,7 +2016,7 @@ RegularAreaRect * TextPage::wordAt( const NormalizedPoint &p, QString *word ) co
             text += (*posIt)->text();
             if (itText.right(1).at(0).isSpace())
             {
-                if (!text.endsWith("-\n"))
+                if (!text.endsWith(QLatin1String("-\n")))
                 {
                     break;
                 }
@@ -2031,6 +2031,6 @@ RegularAreaRect * TextPage::wordAt( const NormalizedPoint &p, QString *word ) co
     }
     else
     {
-        return NULL;
+        return nullptr;
     }
 }

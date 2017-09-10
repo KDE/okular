@@ -11,11 +11,12 @@
 
 #include <config.h>
 
+#include "debug_dvi.h"
 #include "dviRenderer.h"
 #include "dviFile.h"
 #include "dvisourcesplitter.h"
 #include "hyperlink.h"
-#include "kvs_debug.h"
+#include "debug_dvi.h"
 #include "prebookmark.h"
 #include "psgs.h"
 //#include "renderedDviPagePixmap.h"
@@ -24,11 +25,10 @@
 #include <math.h>
 #include <QTime>
 #include <kconfig.h>
-#include <kglobal.h>
-#include <klocale.h>
-#include <kmimetype.h>
-#include <kstandarddirs.h>
-#include <kvbox.h>
+#include <KLocalizedString>
+#include <QMimeType>
+#include <QMimeDatabase>
+#include <QVBoxLayout>
 
 #include <QApplication>
 #include <QCheckBox>
@@ -40,23 +40,20 @@
 #include <QProgressBar>
 #include <QRegExp>
 
-//#define DEBUG_DVIRENDERER
-
-
 
 //------ now comes the dviRenderer class implementation ----------
 
 dviRenderer::dviRenderer(bool useFontHinting)
-  : dviFile(0),
+  : dviFile(nullptr),
     font_pool(useFontHinting),
     resolutionInDPI(0),
-    embedPS_progress(0),
+    embedPS_progress(nullptr),
     embedPS_numOfProgressedFiles(0),
     shrinkfactor(3),
-    source_href(0),
-    HTML_href(0),
-    editorCommand(""),
-    PostScriptOutPutString(0),
+    source_href(nullptr),
+    HTML_href(nullptr),
+    editorCommand(QLatin1String("")),
+    PostScriptOutPutString(nullptr),
     PS_interface(new ghostscript_interface),
     _postscript(true),
     line_boundary_encountered(false),
@@ -64,25 +61,25 @@ dviRenderer::dviRenderer(bool useFontHinting)
     current_page(0),
     penWidth_in_mInch(0),
     number_of_elements_in_path(0),
-    currentlyDrawnPage(0),
-    m_eventLoop(0),
-    foreGroundPainter(0),
+    currentlyDrawnPage(nullptr),
+    m_eventLoop(nullptr),
+    foreGroundPainter(nullptr),
     fontpoolLocateFontsDone(false)
 {
 #ifdef DEBUG_DVIRENDERER
-  //kDebug(kvs::dvi) << "dviRenderer( parent=" << par << " )";
+  //qCDebug(OkularDviDebug) << "dviRenderer( parent=" << par << " )";
 #endif
 
-  connect( &font_pool, SIGNAL( error(QString,int) ), this, SIGNAL( error(QString,int) ) );
-  connect( &font_pool, SIGNAL( warning(QString,int) ), this, SIGNAL( warning(QString,int) ) );
-  connect( PS_interface, SIGNAL( error(QString,int) ), this, SIGNAL( error(QString,int) ) );
+  connect(&font_pool, &fontPool::error, this, &dviRenderer::error);
+  connect(&font_pool, &fontPool::warning, this, &dviRenderer::warning);
+  connect(PS_interface, &ghostscript_interface::error, this, &dviRenderer::error);
 }
 
 
 dviRenderer::~dviRenderer()
 {
 #ifdef DEBUG_DVIRENDERER
-  kDebug(kvs::dvi) << "~dviRenderer";
+  qCDebug(OkularDviDebug) << "~dviRenderer";
 #endif
 
   QMutexLocker locker(&mutex);
@@ -109,35 +106,35 @@ void dviRenderer::setPrefs(bool flag_showPS, const QString &str_editorCommand, b
 void dviRenderer::drawPage(RenderedDocumentPagePixmap* page)
 {
 #ifdef DEBUG_DVIRENDERER
-  //kDebug(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called, page number " << page->pageNumber;
+  //qCDebug(OkularDviDebug) << "dviRenderer::drawPage(documentPage *) called, page number " << page->pageNumber;
 #endif
 
   // Paranoid safety checks
-  if (page == 0) {
-    kError(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called with argument == 0" << endl;
+  if (page == nullptr) {
+    qCCritical(OkularDviDebug) << "dviRenderer::drawPage(documentPage *) called with argument == 0" << endl;
     return;
   }
   // Paranoid safety checks
   if (page->pageNumber == 0) {
-    kError(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called for a documentPage with page number 0" << endl;
+    qCCritical(OkularDviDebug) << "dviRenderer::drawPage(documentPage *) called for a documentPage with page number 0" << endl;
     return;
   }
 
   QMutexLocker locker(&mutex);
 
 
-  if ( dviFile == 0 ) {
-    kError(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called, but no dviFile class allocated." << endl;
+  if ( dviFile == nullptr ) {
+    qCCritical(OkularDviDebug) << "dviRenderer::drawPage(documentPage *) called, but no dviFile class allocated." << endl;
     page->clear();
     return;
   }
   if (page->pageNumber > dviFile->total_pages) {
-    kError(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called for a documentPage with page number " << page->pageNumber
+    qCCritical(OkularDviDebug) << "dviRenderer::drawPage(documentPage *) called for a documentPage with page number " << page->pageNumber
                   << " but the current dviFile has only " << dviFile->total_pages << " pages." << endl;
     return;
   }
-  if ( dviFile->dvi_Data() == 0 ) {
-    kError(kvs::dvi) << "dviRenderer::drawPage(documentPage *) called, but no dviFile is loaded yet." << endl;
+  if ( dviFile->dvi_Data() == nullptr ) {
+    qCCritical(OkularDviDebug) << "dviRenderer::drawPage(documentPage *) called, but no dviFile is loaded yet." << endl;
     page->clear();
     return;
   }
@@ -172,15 +169,15 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap* page)
  
   QImage img(pageWidth, pageHeight, QImage::Format_RGB32);
   foreGroundPainter = new QPainter(&img);
-  if (foreGroundPainter != 0) {
+  if (foreGroundPainter != nullptr) {
     errorMsg.clear();
     draw_page();
     delete foreGroundPainter;
-    foreGroundPainter = 0;
+    foreGroundPainter = nullptr;
   }
   else
   {
-    kDebug(kvs::dvi) << "painter creation failed.";
+    qCDebug(OkularDviDebug) << "painter creation failed.";
   } 
   page->img = img;
 //page->setImage(img);
@@ -208,7 +205,7 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap* page)
     while (hi.linkText == hj.linkText && hi.baseline == hj.baseline)
     {
       merged = true;
-      hi.box = hi.box.unite(hj.box);
+      hi.box = hi.box.united(hj.box);
 
       j++;
       if (j == page->hyperLinkList.end())
@@ -230,7 +227,7 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap* page)
   if (errorMsg.isEmpty() != true) {
     emit error(i18n("File corruption. %1", errorMsg), -1);
     errorMsg.clear();
-    currentlyDrawnPage = 0;
+    currentlyDrawnPage = nullptr;
     return;
   }
 #if 0
@@ -249,7 +246,7 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap* page)
     }
   }
 #endif
-  currentlyDrawnPage = 0;
+  currentlyDrawnPage = nullptr;
 }
 
 
@@ -273,7 +270,7 @@ void dviRenderer::showThatSourceInformationIsPresent()
   // here. Most of the code is stolen from there.
 
   // Check if the 'Don't show again' feature was used
-  KConfig *config = KGlobal::config();
+  KConfig *config = KSharedConfig::openConfig();
   KConfigGroup saver(config, "Notification Messages");
   bool showMsg = config->readEntry( "KDVI-info_on_source_specials", true);
 
@@ -281,11 +278,14 @@ void dviRenderer::showThatSourceInformationIsPresent()
     KDialogBase dialog(i18n("KDVI: Information"), KDialogBase::Yes, KDialogBase::Yes, KDialogBase::Yes,
                        parentWidget, "information", true, true, KStandardGuiItem::ok());
 
-    KVBox *topcontents = new KVBox (&dialog);
-    topcontents->setSpacing(KDialog::spacingHint()*2);
-    topcontents->setMargin(KDialog::marginHint()*2);
+    QWidget *topcontents = new QWidget (&dialog);
+    QVBoxLayout *topcontentsVBoxLayout = new QVBoxLayout(topcontents);
+    topcontentsVBoxLayout->setMargin(0);
+    topcontentsVBoxLayout->setSpacing(KDialog::spacingHint()*2);
+    topcontentsVBoxLayout->setMargin(KDialog::marginHint()*2);
 
     QWidget *contents = new QWidget(topcontents);
+    topcontentsVBoxLayout->addWidget(contents);
     QHBoxLayout * lay = new QHBoxLayout(contents);
     lay->setSpacing(KDialog::spacingHint()*2);
 
@@ -301,6 +301,7 @@ void dviRenderer::showThatSourceInformationIsPresent()
     lay->addStretch(1);
     QSize extraSize = QSize(50,30);
     QCheckBox *checkbox = new QCheckBox(i18n("Do not show this message again"), topcontents);
+    topcontentsVBoxLayout->addWidget(checkbox);
     extraSize = QSize(50,0);
     dialog.setHelpLinkText(i18n("Explain in more detail..."));
     dialog.setHelp("inverse-search", "kdvi");
@@ -323,21 +324,23 @@ void dviRenderer::showThatSourceInformationIsPresent()
 void dviRenderer::embedPostScript()
 {
 #ifdef DEBUG_DVIRENDERER
-  kDebug(kvs::dvi) << "dviRenderer::embedPostScript()";
+  qCDebug(OkularDviDebug) << "dviRenderer::embedPostScript()";
 #endif
 
   if (!dviFile)
     return;
 
-/*  embedPS_progress = new KProgressDialog(parentWidget,
-                                         i18n("Embedding PostScript Files"), QString(), true); */
+/*  embedPS_progress = new QProgressDialog(parentWidget);
+embedPS_progress->setWindowTitle(i18n("Embedding PostScript Files"));
+embedPS_progress->setLabelText(QString());
+*/
   if (!embedPS_progress)
     return;
-  embedPS_progress->setAllowCancel(false);
-  embedPS_progress->showCancelButton(false);
+  embedPS_progress->setCancelButton(nullptr);
+  embedPS_progress->setCancelButton(nullptr);
   embedPS_progress->setMinimumDuration(400);
-  embedPS_progress->progressBar()->setMaximum(dviFile->numberOfExternalPSFiles);
-  embedPS_progress->progressBar()->setValue(0);
+  embedPS_progress->setMaximum(dviFile->numberOfExternalPSFiles);
+  embedPS_progress->setValue(0);
   embedPS_numOfProgressedFiles = 0;
 
   quint16 currPageSav = current_page;
@@ -347,16 +350,16 @@ void dviRenderer::embedPostScript()
       command_pointer = dviFile->dvi_Data() + dviFile->page_offset[int(current_page)];
       end_pointer     = dviFile->dvi_Data() + dviFile->page_offset[int(current_page+1)];
     } else
-      command_pointer = end_pointer = 0;
+      command_pointer = end_pointer = nullptr;
 
     memset((char *) &currinf.data, 0, sizeof(currinf.data));
     currinf.fonttable = &(dviFile->tn_table);
-    currinf._virtual  = NULL;
+    currinf._virtual  = nullptr;
     prescan(&dviRenderer::prescan_embedPS);
   }
 
   delete embedPS_progress;
-  embedPS_progress = 0;
+  embedPS_progress = nullptr;
 
   if (!errorMsg.isEmpty()) {
     emit warning(i18n("Not all PostScript files could be embedded into your document. %1", errorMsg), -1);
@@ -368,7 +371,7 @@ void dviRenderer::embedPostScript()
 
   // Prescan phase starts here
 #ifdef PERFORMANCE_MEASUREMENT
-  //kDebug(kvs::dvi) << "Time elapsed till prescan phase starts " << performanceTimer.elapsed() << "ms";
+  //qCDebug(OkularDviDebug) << "Time elapsed till prescan phase starts " << performanceTimer.elapsed() << "ms";
   //QTime preScanTimer;
   //preScanTimer.start();
 #endif
@@ -381,11 +384,11 @@ void dviRenderer::embedPostScript()
       command_pointer = dviFile->dvi_Data() + dviFile->page_offset[int(current_page)];
       end_pointer     = dviFile->dvi_Data() + dviFile->page_offset[int(current_page+1)];
     } else
-      command_pointer = end_pointer = 0;
+      command_pointer = end_pointer = nullptr;
 
     memset((char *) &currinf.data, 0, sizeof(currinf.data));
     currinf.fonttable = &(dviFile->tn_table);
-    currinf._virtual  = NULL;
+    currinf._virtual  = nullptr;
 
     prescan(&dviRenderer::prescan_parseSpecials);
 
@@ -393,11 +396,11 @@ void dviRenderer::embedPostScript()
       PS_interface->setPostScript(current_page, *PostScriptOutPutString);
     delete PostScriptOutPutString;
   }
-  PostScriptOutPutString = NULL;
+  PostScriptOutPutString = nullptr;
 
 
 #ifdef PERFORMANCE_MEASUREMENT
-  //kDebug(kvs::dvi) << "Time required for prescan phase: " << preScanTimer.restart() << "ms";
+  //qCDebug(OkularDviDebug) << "Time required for prescan phase: " << preScanTimer.restart() << "ms";
 #endif
   current_page = currPageSav;
   _isModified = true;
@@ -427,10 +430,10 @@ bool dviRenderer::isValidFile(const QString& filename) const
   return true;
 }
 
-bool dviRenderer::setFile(const QString &fname, const KUrl &base)
+bool dviRenderer::setFile(const QString &fname, const QUrl &base)
 {
 #ifdef DEBUG_DVIRENDERER
-  kDebug(kvs::dvi) << "dviRenderer::setFile( fname='" << fname << "' )"; //, ref='" << ref << "', sourceMarker=" << sourceMarker << " )";
+  qCDebug(OkularDviDebug) << "dviRenderer::setFile( fname='" << fname << "' )"; //, ref='" << ref << "', sourceMarker=" << sourceMarker << " )";
 #endif
 
   //QMutexLocker lock(&mutex);
@@ -443,7 +446,7 @@ bool dviRenderer::setFile(const QString &fname, const KUrl &base)
   if (fname.isEmpty()) {
     // Delete DVI file
     delete dviFile;
-    dviFile = 0;
+    dviFile = nullptr;
     return true;
   }
 
@@ -457,12 +460,12 @@ bool dviRenderer::setFile(const QString &fname, const KUrl &base)
   QApplication::setOverrideCursor( Qt::WaitCursor );
   dvifile *dviFile_new = new dvifile(filename, &font_pool);
 
-  if ((dviFile == 0) || (dviFile->filename != filename))
+  if ((dviFile == nullptr) || (dviFile->filename != filename))
     dviFile_new->sourceSpecialMarker = true;
   else
     dviFile_new->sourceSpecialMarker = false;
 
-  if ((dviFile_new->dvi_Data() == NULL)||(dviFile_new->errorMsg.isEmpty() != true)) {
+  if ((dviFile_new->dvi_Data() == nullptr)||(dviFile_new->errorMsg.isEmpty() != true)) {
     QApplication::restoreOverrideCursor();
     if (dviFile_new->errorMsg.isEmpty() != true)
       emit error(i18n("File corruption. %1", dviFile_new->errorMsg), -1);
@@ -491,7 +494,7 @@ bool dviRenderer::setFile(const QString &fname, const KUrl &base)
   QString includePath;
   if (!baseURL.isLocalFile()) {
     includePath = filename;
-    includePath.truncate(includePath.lastIndexOf('/'));
+    includePath.truncate(includePath.lastIndexOf(QLatin1Char('/')));
   }
   PS_interface->setIncludePath(includePath);
 
@@ -510,7 +513,7 @@ bool dviRenderer::setFile(const QString &fname, const KUrl &base)
 
   // PRESCAN STARTS HERE
 #ifdef PERFORMANCE_MEASUREMENT
-  //kDebug(kvs::dvi) << "Time elapsed till prescan phase starts " << performanceTimer.elapsed() << "ms";
+  //qCDebug(OkularDviDebug) << "Time elapsed till prescan phase starts " << performanceTimer.elapsed() << "ms";
   //QTime preScanTimer;
   //preScanTimer.start();
 #endif
@@ -525,18 +528,18 @@ bool dviRenderer::setFile(const QString &fname, const KUrl &base)
       command_pointer = dviFile->dvi_Data() + dviFile->page_offset[int(current_page)];
       end_pointer     = dviFile->dvi_Data() + dviFile->page_offset[int(current_page+1)];
     } else
-      command_pointer = end_pointer = 0;
+      command_pointer = end_pointer = nullptr;
 
     memset((char *) &currinf.data, 0, sizeof(currinf.data));
     currinf.fonttable = &(dviFile->tn_table);
-    currinf._virtual  = NULL;
+    currinf._virtual  = nullptr;
     prescan(&dviRenderer::prescan_parseSpecials);
 
     if (!PostScriptOutPutString->isEmpty())
       PS_interface->setPostScript(current_page, *PostScriptOutPutString);
     delete PostScriptOutPutString;
   }
-  PostScriptOutPutString = NULL;
+  PostScriptOutPutString = nullptr;
 
 #if 0
   // Generate the list of bookmarks
@@ -559,13 +562,13 @@ bool dviRenderer::setFile(const QString &fname, const KUrl &base)
 #endif
 
 #ifdef PERFORMANCE_MEASUREMENT
-  //kDebug(kvs::dvi) << "Time required for prescan phase: " << preScanTimer.restart() << "ms";
+  //qCDebug(OkularDviDebug) << "Time required for prescan phase: " << preScanTimer.restart() << "ms";
 #endif
   current_page = currPageSav;
   // PRESCAN ENDS HERE
 
   pageSizes.resize(0);
-  if (dviFile->suggestedPageSize != 0) {
+  if (dviFile->suggestedPageSize != nullptr) {
     // Fill the vector pageSizes with total_pages identical entries
     pageSizes.fill(*(dviFile->suggestedPageSize), dviFile->total_pages);
   }
@@ -578,10 +581,10 @@ Anchor dviRenderer::parseReference(const QString &reference)
   QMutexLocker locker(&mutex);
 
 #ifdef DEBUG_DVIRENDERER
-  kError(kvs::dvi) << "dviRenderer::parseReference( " << reference << " ) called" << endl;
+  qCCritical(OkularDviDebug) << "dviRenderer::parseReference( " << reference << " ) called" << endl;
 #endif
 
-  if (dviFile == 0)
+  if (dviFile == nullptr)
     return Anchor();
 
   // case 1: The reference is a number, which we'll interpret as a
@@ -601,7 +604,7 @@ Anchor dviRenderer::parseReference(const QString &reference)
   // points to line number 1111 in the file "Filename". KDVI then
   // looks for source specials of the form "src:xxxxFilename", and
   // tries to find the special with the biggest xxxx
-  if (reference.indexOf("src:", 0, Qt::CaseInsensitive) == 0) {
+  if (reference.indexOf(QStringLiteral("src:"), 0, Qt::CaseInsensitive) == 0) {
 
     // Extract the file name and the numeral part from the reference string
     DVI_SourceFileSplitter splitter(reference, dviFile->filename);
@@ -635,7 +638,7 @@ Anchor dviRenderer::parseReference(const QString &reference)
     QVector<DVI_SourceFileAnchor>::iterator it;
     for( it = sourceHyperLinkAnchors.begin(); it != sourceHyperLinkAnchors.end(); ++it )
       if (refFileName.trimmed() == it->fileName.trimmed()
-      || refFileName.trimmed() == it->fileName.trimmed() + ".tex"
+      || refFileName.trimmed() == it->fileName.trimmed() + QStringLiteral(".tex")
       ) {
         anchorForRefFileFound = true;
 
@@ -683,7 +686,7 @@ void dviRenderer::handleSRCLink(const QString &linkText, const QPoint& point, Do
   Q_UNUSED( point );
   Q_UNUSED( win );
 #if 0
-  KSharedPtr<DVISourceEditor> editor(new DVISourceEditor(*this, parentWidget, linkText, point, win));
+  QExplicitlySharedDataPointer<DVISourceEditor> editor(new DVISourceEditor(*this, parentWidget, linkText, point, win));
   if (editor->started())
     editor_ = editor;
 #endif
@@ -696,27 +699,27 @@ QString dviRenderer::PDFencodingToQString(const QString& _pdfstring)
   // replaces them by UTF8. See Section 3.2.3 of the PDF reference
   // guide for information.
   QString pdfstring = _pdfstring;
-  pdfstring = pdfstring.replace("\\n", "\n");
-  pdfstring = pdfstring.replace("\\r", "\n");
-  pdfstring = pdfstring.replace("\\t", "\t");
-  pdfstring = pdfstring.replace("\\f", "\f");
-  pdfstring = pdfstring.replace("\\(", "(");
-  pdfstring = pdfstring.replace("\\)", ")");
-  pdfstring = pdfstring.replace("\\\\", "\\");
+  pdfstring = pdfstring.replace(QLatin1String("\\n"), QLatin1String("\n"));
+  pdfstring = pdfstring.replace(QLatin1String("\\r"), QLatin1String("\n"));
+  pdfstring = pdfstring.replace(QLatin1String("\\t"), QLatin1String("\t"));
+  pdfstring = pdfstring.replace(QLatin1String("\\f"), QLatin1String("\f"));
+  pdfstring = pdfstring.replace(QLatin1String("\\("), QLatin1String("("));
+  pdfstring = pdfstring.replace(QLatin1String("\\)"), QLatin1String(")"));
+  pdfstring = pdfstring.replace(QLatin1String("\\\\"), QLatin1String("\\"));
 
   // Now replace octal character codes with the characters they encode
   int pos;
-  QRegExp rx( "(\\\\)(\\d\\d\\d)" );  // matches "\xyz" where x,y,z are numbers
+  QRegExp rx( QStringLiteral("(\\\\)(\\d\\d\\d)") );  // matches "\xyz" where x,y,z are numbers
   while((pos = rx.indexIn( pdfstring )) != -1) {
-    pdfstring = pdfstring.replace(pos, 4, QChar(rx.cap(2).toInt(0,8)));
+    pdfstring = pdfstring.replace(pos, 4, QChar(rx.cap(2).toInt(nullptr,8)));
   }
-  rx.setPattern( "(\\\\)(\\d\\d)" );  // matches "\xy" where x,y are numbers
+  rx.setPattern( QStringLiteral("(\\\\)(\\d\\d)") );  // matches "\xy" where x,y are numbers
   while((pos = rx.indexIn( pdfstring )) != -1) {
-    pdfstring = pdfstring.replace(pos, 3, QChar(rx.cap(2).toInt(0,8)));
+    pdfstring = pdfstring.replace(pos, 3, QChar(rx.cap(2).toInt(nullptr,8)));
   }
-  rx.setPattern( "(\\\\)(\\d)" );  // matches "\x" where x is a number
+  rx.setPattern( QStringLiteral("(\\\\)(\\d)") );  // matches "\x" where x is a number
   while((pos = rx.indexIn( pdfstring )) != -1) {
-    pdfstring = pdfstring.replace(pos, 4, QChar(rx.cap(2).toInt(0,8)));
+    pdfstring = pdfstring.replace(pos, 4, QChar(rx.cap(2).toInt(nullptr,8)));
   }
   return pdfstring;
 }
@@ -725,7 +728,7 @@ QString dviRenderer::PDFencodingToQString(const QString& _pdfstring)
 void dviRenderer::exportPDF()
 {
 /*
-  KSharedPtr<DVIExport> exporter(new DVIExportToPDF(*this, parentWidget));
+  QExplicitlySharedDataPointer<DVIExport> exporter(new DVIExportToPDF(*this, parentWidget));
   if (exporter->started())
     all_exports_[exporter.data()] = exporter;
 */
@@ -734,7 +737,7 @@ void dviRenderer::exportPDF()
 
 void dviRenderer::exportPS(const QString& fname, const QStringList& options, QPrinter* printer, QPrinter::Orientation orientation)
 {
-  KSharedPtr<DVIExport> exporter(new DVIExportToPS(*this, fname, options, printer, font_pool.getUseFontHints(), orientation));
+  QExplicitlySharedDataPointer<DVIExport> exporter(new DVIExportToPS(*this, fname, options, printer, font_pool.getUseFontHints(), orientation));
   if (exporter->started())
     all_exports_[exporter.data()] = exporter;
 }
@@ -748,7 +751,7 @@ void dviRenderer::editor_finished(const DVISourceEditor*)
 
 void dviRenderer::export_finished(const DVIExport* key)
 {
-  typedef QMap<const DVIExport*, KSharedPtr<DVIExport> > ExportMap;
+  typedef QMap<const DVIExport*, QExplicitlySharedDataPointer<DVIExport> > ExportMap;
   ExportMap::iterator it = all_exports_.find(key);
   if (it != all_exports_.end())
     all_exports_.remove(key);
@@ -756,13 +759,12 @@ void dviRenderer::export_finished(const DVIExport* key)
 
 void dviRenderer::setEventLoop(QEventLoop *el) 
 {
-  if (el == NULL)
+  if (el == nullptr)
   {
      delete m_eventLoop;
-     m_eventLoop = NULL; 
+     m_eventLoop = nullptr; 
   }
   else
      m_eventLoop = el;
 }
 
-#include "dviRenderer.moc"

@@ -71,9 +71,9 @@ void PageItemDelegate::drawDisplay( QPainter *painter, const QStyleOptionViewIte
     else
         pageRect.translate( newRect.width() + PAGEITEMDELEGATE_INTERNALMARGIN - 2 * margindelta, 0 );
     QItemDelegate::drawDisplay( painter, option, newRect, text );
-    QStyleOptionViewItemV2 newoption( option );
+    QStyleOptionViewItem newoption( option );
     newoption.displayAlignment = ( option.displayAlignment & ~Qt::AlignHorizontal_Mask ) | Qt::AlignRight;
     QItemDelegate::drawDisplay( painter, newoption, pageRect, page );
 }
 
-#include "pageitemdelegate.moc"
+#include "moc_pageitemdelegate.cpp"

@@ -19,11 +19,13 @@ namespace FictionBook {
 
 class Converter : public Okular::TextDocumentConverter
 {
+    Q_OBJECT
+
     public:
         Converter();
         ~Converter();
 
-        virtual QTextDocument *convert( const QString &fileName );
+        QTextDocument *convert( const QString &fileName ) override;
 
     private:
         bool convertBody( const QDomElement &element );

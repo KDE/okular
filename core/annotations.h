@@ -18,7 +18,7 @@
 #include <QtXml/QDomDocument>
 #include <QtXml/QDomElement>
 
-#include "okular_export.h"
+#include "okularcore_export.h"
 #include "area.h"
 
 namespace Okular {
@@ -45,11 +45,12 @@ class SoundAnnotationPrivate;
 class MovieAnnotationPrivate;
 class ScreenAnnotationPrivate;
 class WidgetAnnotationPrivate;
+class RichMediaAnnotationPrivate;
 
 /**
  * @short Helper class for (recursive) annotation retrieval/storage.
  */
-class OKULAR_EXPORT AnnotationUtils
+class OKULARCORE_EXPORT AnnotationUtils
 {
     public:
         /**
@@ -87,7 +88,7 @@ class OKULAR_EXPORT AnnotationUtils
  * An Annotation is an object (text note, highlight, sound, popup window, ..)
  * contained by a Page in the document.
  */
-class OKULAR_EXPORT Annotation
+class OKULARCORE_EXPORT Annotation
 {
     /// @cond PRIVATE
     friend class AnnotationObjectRect;
@@ -116,6 +117,7 @@ class OKULAR_EXPORT Annotation
             AMovie = 11,    ///< A movie annotation
             AScreen = 12,   ///< A screen annotation
             AWidget = 13,   ///< A widget annotation
+            ARichMedia = 14,///< A rich media annotation
             A_BASE = 0      ///< The annotation base class
         };
 
@@ -133,7 +135,8 @@ class OKULAR_EXPORT Annotation
             ToggleHidingOnMouse = 64, ///< Can be hidden/shown by mouse click
             External = 128,           ///< Is stored external
             ExternallyDrawn = 256,    ///< Is drawn externally (by the generator which provided it) @since 0.10 (KDE 4.4)
-            BeingMoved = 512          ///< Is being moved (mouse drag and drop). If ExternallyDrawn, the generator must not draw it @since 0.15 (KDE 4.9)
+            BeingMoved = 512,         ///< Is being moved (mouse drag and drop). If ExternallyDrawn, the generator must not draw it @since 0.15 (KDE 4.9)
+            BeingResized = 1024       ///< Is being resized (mouse drag and drop). If ExternallyDrawn, the generator must not draw it @since 1.1.0
         };
 
         /**
@@ -299,10 +302,19 @@ class OKULAR_EXPORT Annotation
         void translate( const NormalizedPoint &coord );
 
         /**
+         * Adjust the annotation by the specified coordinates.
+         * Adds coordinates of @p deltaCoord1 to annotations top left corner,
+         * and @p deltaCoord2 to the bottom right.
+         *
+         * @see canBeResized()
+         */
+        void adjust( const NormalizedPoint & deltaCoord1, const NormalizedPoint & deltaCoord2 );
+
+        /**
          * The Style class contains all information about style of the
          * annotation.
          */
-        class OKULAR_EXPORT Style
+        class OKULARCORE_EXPORT Style
         {
             public:
                 /**
@@ -437,7 +449,7 @@ class OKULAR_EXPORT Annotation
          * The Window class contains all information about the popup window
          * of the annotation that is used to edit the content and properties.
          */
-        class OKULAR_EXPORT Window
+        class OKULARCORE_EXPORT Window
         {
             public:
                 /**
@@ -633,6 +645,11 @@ class OKULAR_EXPORT Annotation
         bool canBeMoved() const;
 
         /**
+         * Returns whether the annotation can be resized.
+         */
+        bool canBeResized() const;
+
+        /**
          * Returns whether the annotation dialog should be open after creation of the annotation or not
          *
          * @since 0.13 (KDE 4.7)
@@ -683,7 +700,7 @@ class OKULAR_EXPORT Annotation
  *
  * @since 0.15 (KDE 4.9)
  */
-class OKULAR_EXPORT AnnotationProxy
+class OKULARCORE_EXPORT AnnotationProxy
 {
     public:
         enum Capability
@@ -728,7 +745,7 @@ class OKULAR_EXPORT AnnotationProxy
         virtual void notifyRemoval( Annotation *annotation, int page ) = 0;
 };
 
-class OKULAR_EXPORT TextAnnotation : public Annotation
+class OKULARCORE_EXPORT TextAnnotation : public Annotation
 {
     public:
         /**
@@ -841,19 +858,19 @@ class OKULAR_EXPORT TextAnnotation : public Annotation
         /**
          * Returns the sub type of the text annotation.
          */
-        SubType subType() const;
+        SubType subType() const override;
 
         /**
          * Stores the text annotation as xml in @p document under the given parent @p node.
          */
-        void store( QDomNode &node, QDomDocument &document ) const;
+        void store( QDomNode &node, QDomDocument &document ) const override;
 
     private:
         Q_DECLARE_PRIVATE( TextAnnotation )
         Q_DISABLE_COPY( TextAnnotation )
 };
 
-class OKULAR_EXPORT LineAnnotation : public Annotation
+class OKULARCORE_EXPORT LineAnnotation : public Annotation
 {
     public:
         /**
@@ -1001,19 +1018,19 @@ class OKULAR_EXPORT LineAnnotation : public Annotation
         /**
          * Returns the sub type of the line annotation.
          */
-        SubType subType() const;
+        SubType subType() const override;
 
         /**
          * Stores the line annotation as xml in @p document under the given parent @p node.
          */
-        void store( QDomNode &node, QDomDocument &document ) const;
+        void store( QDomNode &node, QDomDocument &document ) const override;
 
     private:
         Q_DECLARE_PRIVATE( LineAnnotation )
         Q_DISABLE_COPY( LineAnnotation )
 };
 
-class OKULAR_EXPORT GeomAnnotation : public Annotation
+class OKULARCORE_EXPORT GeomAnnotation : public Annotation
 {
     public:
         // common enums
@@ -1062,20 +1079,20 @@ class OKULAR_EXPORT GeomAnnotation : public Annotation
         /**
          * Returns the sub type of the geometrical annotation.
          */
-        SubType subType() const;
+        SubType subType() const override;
 
         /**
          * Stores the geometrical annotation as xml in @p document
          * under the given parent @p node.
          */
-        void store( QDomNode &node, QDomDocument &document ) const;
+        void store( QDomNode &node, QDomDocument &document ) const override;
 
     private:
         Q_DECLARE_PRIVATE( GeomAnnotation )
         Q_DISABLE_COPY( GeomAnnotation )
 };
 
-class OKULAR_EXPORT HighlightAnnotation : public Annotation
+class OKULARCORE_EXPORT HighlightAnnotation : public Annotation
 {
     public:
         /**
@@ -1119,7 +1136,7 @@ class OKULAR_EXPORT HighlightAnnotation : public Annotation
          * The Quad class contains 8 coordinates and style definitions
          * which describe a line part of the whole highlight annotation.
          */
-        class OKULAR_EXPORT Quad
+        class OKULARCORE_EXPORT Quad
         {
             public:
                 /**
@@ -1205,20 +1222,20 @@ class OKULAR_EXPORT HighlightAnnotation : public Annotation
         /**
          * Returns the sub type of the highlight annotation.
          */
-        SubType subType() const;
+        SubType subType() const override;
 
         /**
          * Stores the highlight annotation as xml in @p document
          * under the given parent @p node.
          */
-        void store( QDomNode &node, QDomDocument &document ) const;
+        void store( QDomNode &node, QDomDocument &document ) const override;
 
     private:
         Q_DECLARE_PRIVATE( HighlightAnnotation )
         Q_DISABLE_COPY( HighlightAnnotation )
 };
 
-class OKULAR_EXPORT StampAnnotation : public Annotation
+class OKULARCORE_EXPORT StampAnnotation : public Annotation
 {
     public:
         /**
@@ -1249,20 +1266,20 @@ class OKULAR_EXPORT StampAnnotation : public Annotation
         /**
          * Returns the sub type of the stamp annotation.
          */
-        SubType subType() const;
+        SubType subType() const override;
 
         /**
          * Stores the stamp annotation as xml in @p document
          * under the given parent @p node.
          */
-        void store( QDomNode &node, QDomDocument &document ) const;
+        void store( QDomNode &node, QDomDocument &document ) const override;
 
     private:
         Q_DECLARE_PRIVATE( StampAnnotation )
         Q_DISABLE_COPY( StampAnnotation )
 };
 
-class OKULAR_EXPORT InkAnnotation : public Annotation
+class OKULARCORE_EXPORT InkAnnotation : public Annotation
 {
     public:
         /**
@@ -1299,20 +1316,20 @@ class OKULAR_EXPORT InkAnnotation : public Annotation
         /**
          * Returns the sub type of the ink annotation.
          */
-        SubType subType() const;
+        SubType subType() const override;
 
         /**
          * Stores the ink annotation as xml in @p document
          * under the given parent @p node.
          */
-        void store( QDomNode &node, QDomDocument &document ) const;
+        void store( QDomNode &node, QDomDocument &document ) const override;
 
     private:
         Q_DECLARE_PRIVATE( InkAnnotation )
         Q_DISABLE_COPY( InkAnnotation )
 };
 
-class OKULAR_EXPORT CaretAnnotation : public Annotation
+class OKULARCORE_EXPORT CaretAnnotation : public Annotation
 {
     public:
         /**
@@ -1352,20 +1369,20 @@ class OKULAR_EXPORT CaretAnnotation : public Annotation
         /**
          * Returns the sub type of the caret annotation.
          */
-        SubType subType() const;
+        SubType subType() const override;
 
         /**
          * Stores the caret annotation as xml in @p document
          * under the given parent @p node.
          */
-        void store( QDomNode &node, QDomDocument &document ) const;
+        void store( QDomNode &node, QDomDocument &document ) const override;
 
     private:
         Q_DECLARE_PRIVATE( CaretAnnotation )
         Q_DISABLE_COPY( CaretAnnotation )
 };
 
-class OKULAR_EXPORT FileAttachmentAnnotation : public Annotation
+class OKULARCORE_EXPORT FileAttachmentAnnotation : public Annotation
 {
     public:
         /**
@@ -1405,13 +1422,13 @@ class OKULAR_EXPORT FileAttachmentAnnotation : public Annotation
         /**
          * Returns the sub type of the file attachment annotation.
          */
-        SubType subType() const;
+        SubType subType() const override;
 
         /**
          * Stores the file attachment annotation as xml in @p document
          * under the given parent @p node.
          */
-        void store( QDomNode &node, QDomDocument &document ) const;
+        void store( QDomNode &node, QDomDocument &document ) const override;
 
     private:
         Q_DECLARE_PRIVATE( FileAttachmentAnnotation )
@@ -1425,7 +1442,7 @@ class OKULAR_EXPORT FileAttachmentAnnotation : public Annotation
  *
  * @since 0.7 (KDE 4.1)
  */
-class OKULAR_EXPORT SoundAnnotation : public Annotation
+class OKULARCORE_EXPORT SoundAnnotation : public Annotation
 {
     public:
         /**
@@ -1465,13 +1482,13 @@ class OKULAR_EXPORT SoundAnnotation : public Annotation
         /**
          * Returns the sub type of the sound annotation.
          */
-        SubType subType() const;
+        SubType subType() const override;
 
         /**
          * Stores the sound annotation as xml in @p document
          * under the given parent @p node.
          */
-        void store( QDomNode &node, QDomDocument &document ) const;
+        void store( QDomNode &node, QDomDocument &document ) const override;
 
     private:
         Q_DECLARE_PRIVATE( SoundAnnotation )
@@ -1485,7 +1502,7 @@ class OKULAR_EXPORT SoundAnnotation : public Annotation
  *
  * @since 0.8 (KDE 4.2)
  */
-class OKULAR_EXPORT MovieAnnotation : public Annotation
+class OKULARCORE_EXPORT MovieAnnotation : public Annotation
 {
     public:
         /**
@@ -1511,12 +1528,12 @@ class OKULAR_EXPORT MovieAnnotation : public Annotation
         /**
          * Returns the sub type of the movie annotation.
          */
-        SubType subType() const;
+        SubType subType() const override;
         /**
          * Stores the movie annotation as xml in @p document
          * under the given @p parentNode.
          */
-        void store( QDomNode &parentNode, QDomDocument &document ) const;
+        void store( QDomNode &parentNode, QDomDocument &document ) const override;
 
     private:
         Q_DECLARE_PRIVATE( MovieAnnotation )
@@ -1531,7 +1548,7 @@ class OKULAR_EXPORT MovieAnnotation : public Annotation
  *
  * @since 0.16 (KDE 4.10)
  */
-class OKULAR_EXPORT ScreenAnnotation : public Annotation
+class OKULARCORE_EXPORT ScreenAnnotation : public Annotation
 {
     public:
         /**
@@ -1552,13 +1569,13 @@ class OKULAR_EXPORT ScreenAnnotation : public Annotation
         /**
          * Returns the sub type of the screen annotation.
          */
-        SubType subType() const;
+        SubType subType() const override;
 
         /**
          * Stores the screen annotation as xml in @p document
          * under the given @p parentNode.
          */
-        void store( QDomNode &parentNode, QDomDocument &document ) const;
+        void store( QDomNode &parentNode, QDomDocument &document ) const override;
 
         /**
          * Sets the @p action that is executed when the annotation is triggered.
@@ -1600,7 +1617,7 @@ class OKULAR_EXPORT ScreenAnnotation : public Annotation
  *
  * @since 0.16 (KDE 4.10)
  */
-class OKULAR_EXPORT WidgetAnnotation : public Annotation
+class OKULARCORE_EXPORT WidgetAnnotation : public Annotation
 {
     public:
         /**
@@ -1621,13 +1638,13 @@ class OKULAR_EXPORT WidgetAnnotation : public Annotation
         /**
          * Returns the sub type of the widget annotation.
          */
-        SubType subType() const;
+        SubType subType() const override;
 
         /**
          * Stores the widget annotation as xml in @p document
          * under the given @p parentNode.
          */
-        void store( QDomNode &parentNode, QDomDocument &document ) const;
+        void store( QDomNode &parentNode, QDomDocument &document ) const override;
 
         /**
          * Sets the additional @p action of the given @p type.
@@ -1646,6 +1663,67 @@ class OKULAR_EXPORT WidgetAnnotation : public Annotation
     private:
         Q_DECLARE_PRIVATE( WidgetAnnotation )
         Q_DISABLE_COPY( WidgetAnnotation )
+};
+
+/**
+ * \short RichMedia annotation.
+ *
+ * The rich media annotation represents an video or sound on a page.
+ *
+ * @since 1.0
+ */
+class OKULARCORE_EXPORT RichMediaAnnotation : public Annotation
+{
+    public:
+        /**
+         * Creates a new rich media annotation.
+         */
+        RichMediaAnnotation();
+
+        /**
+         * Creates a new rich media annotation from the xml @p description
+         */
+        RichMediaAnnotation( const QDomNode &description );
+
+        /**
+         * Destroys the rich media annotation.
+         */
+        virtual ~RichMediaAnnotation();
+
+        /**
+         * Returns the sub type of the rich media annotation.
+         */
+        SubType subType() const override;
+
+        /**
+         * Stores the rich media annotation as xml in @p document
+         * under the given @p parentNode.
+         */
+        void store( QDomNode &parentNode, QDomDocument &document ) const override;
+
+        /**
+         * Gets the movie object.
+         */
+        Movie* movie() const;
+
+        /**
+         * Sets the new @p movie object.
+         */
+        void setMovie( Movie *movie );
+
+        /**
+         * Sets the @p object representing the embedded file.
+         */
+        void setEmbeddedFile( EmbeddedFile *object );
+
+        /**
+         * Gets the embedded file object.
+         */
+        EmbeddedFile* embeddedFile() const;
+
+    private:
+        Q_DECLARE_PRIVATE( RichMediaAnnotation )
+        Q_DISABLE_COPY( RichMediaAnnotation )
 };
 
 }

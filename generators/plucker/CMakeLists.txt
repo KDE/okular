@@ -1,5 +1,7 @@
+remove_definitions(-DTRANSLATION_DOMAIN="okular")
+add_definitions(-DTRANSLATION_DOMAIN="okular_plucker")
+
 include_directories(
-   ${CMAKE_BINARY_DIR}/okular
    ${CMAKE_CURRENT_SOURCE_DIR}/../..
    ${CMAKE_CURRENT_SOURCE_DIR}/../../generators/plucker/unpluck
    ${JPEG_INCLUDE_DIR}
@@ -20,16 +22,11 @@ set(okularGenerator_plucker_SRCS
   generator_plucker.cpp
 )
 
+okular_add_generator(okularGenerator_plucker ${okularGenerator_plucker_SRCS} ${qunpluck_SRCS})
 
-kde4_add_plugin(okularGenerator_plucker ${okularGenerator_plucker_SRCS} ${qunpluck_SRCS})
-
-target_link_libraries(okularGenerator_plucker okularcore ${KDE4_KIO_LIBS} ${MATH_LIB} ${JPEG_LIBRARY} ${ZLIB_LIBRARY})
-
-install(TARGETS okularGenerator_plucker DESTINATION ${PLUGIN_INSTALL_DIR})
-
+target_link_libraries(okularGenerator_plucker okularcore KF5::KIOCore KF5::I18n ${MATH_LIB} ${JPEG_LIBRARY} ${ZLIB_LIBRARY})
 
 ########### install files ###############
-
-install( FILES libokularGenerator_plucker.desktop okularPlucker.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
-install( PROGRAMS okularApplication_plucker.desktop active-documentviewer_plucker.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
-
+install( FILES okularPlucker.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
+install( PROGRAMS okularApplication_plucker.desktop org.kde.mobile.okular_plucker.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
+install( FILES org.kde.okular-plucker.metainfo.xml DESTINATION ${KDE_INSTALL_METAINFODIR} )

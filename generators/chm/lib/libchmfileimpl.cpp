@@ -77,7 +77,7 @@ bool LCHMFileImpl::loadFile( const QString & archiveName )
 	QString filename;
 			
 	// If the file has a file:// prefix, remove it
-	if ( archiveName.startsWith( "file://" ) )
+	if ( archiveName.startsWith( QLatin1String("file://") ) )
 		filename = archiveName.mid( 7 ); // strip it
 	else
 		filename = archiveName;
@@ -85,7 +85,7 @@ bool LCHMFileImpl::loadFile( const QString & archiveName )
 	if( m_chmFile )
 		closeAll();
 
-	m_chmFile = chm_open( QFile::encodeName(filename) );
+	m_chmFile = chm_open( QFile::encodeName(filename).constData() );
 	
 	if ( m_chmFile == NULL )
 		return false;
@@ -101,13 +101,14 @@ bool LCHMFileImpl::loadFile( const QString & archiveName )
 	// and guess the encoding
 	getInfoFromWindows();
 	getInfoFromSystem();
-	guessTextEncoding();
+	if ( !guessTextEncoding() )
+		return false;
 
 	// Check whether the search tables are present
-	if ( ResolveObject("/#TOPICS", &m_chmTOPICS)
-			&& ResolveObject("/#STRINGS", &m_chmSTRINGS)
-			&& ResolveObject("/#URLTBL", &m_chmURLTBL)
-			&& ResolveObject("/#URLSTR", &m_chmURLSTR) )
+	if ( ResolveObject(QStringLiteral("/#TOPICS"), &m_chmTOPICS)
+			&& ResolveObject(QStringLiteral("/#STRINGS"), &m_chmSTRINGS)
+			&& ResolveObject(QStringLiteral("/#URLTBL"), &m_chmURLTBL)
+			&& ResolveObject(QStringLiteral("/#URLSTR"), &m_chmURLSTR) )
 	{
 		m_lookupTablesValid = true;
 		fillTopicsUrlMap();
@@ -115,7 +116,7 @@ bool LCHMFileImpl::loadFile( const QString & archiveName )
 	else
 		m_lookupTablesValid = false;
 
-	if ( m_lookupTablesValid && ResolveObject ("/$FIftiMain", &m_chmFIftiMain) )
+	if ( m_lookupTablesValid && ResolveObject (QStringLiteral("/$FIftiMain"), &m_chmFIftiMain) )
 		m_searchAvailable = true;
 	else
 		m_searchAvailable = false;
@@ -124,10 +125,10 @@ bool LCHMFileImpl::loadFile( const QString & archiveName )
 	// Some heuristics here.
 	chmUnitInfo tui;
 	
-	if ( m_topicsFile.isEmpty() && ResolveObject("/toc.hhc", &tui) )
+	if ( m_topicsFile.isEmpty() && ResolveObject(QStringLiteral("/toc.hhc"), &tui) )
 		m_topicsFile = "/toc.hhc";
 	
-	if ( m_indexFile.isEmpty() && ResolveObject("/index.hhk", &tui) )
+	if ( m_indexFile.isEmpty() && ResolveObject(QStringLiteral("/index.hhk"), &tui) )
 		m_indexFile = "/index.hhk";
 	
 	return true;
@@ -161,170 +162,170 @@ QString LCHMFileImpl::decodeEntity( const QString & entity )
 	// Set up m_entityDecodeMap characters according to current textCodec
 	if ( m_entityDecodeMap.isEmpty() )
 	{
-		m_entityDecodeMap["AElig"]	= encodeWithCurrentCodec ("\306"); // capital AE diphthong (ligature)
-		m_entityDecodeMap["Aacute"]	= encodeWithCurrentCodec ("\301"); // capital A, acute accent
-		m_entityDecodeMap["Acirc"]	= encodeWithCurrentCodec ("\302"); // capital A, circumflex accent
-		m_entityDecodeMap["Agrave"]	= encodeWithCurrentCodec ("\300"); // capital A, grave accent
-		m_entityDecodeMap["Aring"]	= encodeWithCurrentCodec ("\305"); // capital A, ring
-		m_entityDecodeMap["Atilde"]	= encodeWithCurrentCodec ("\303"); // capital A, tilde
-		m_entityDecodeMap["Auml"]	= encodeWithCurrentCodec ("\304"); // capital A, dieresis or umlaut mark
-		m_entityDecodeMap["Ccedil"]	= encodeWithCurrentCodec ("\307"); // capital C, cedilla
-		m_entityDecodeMap["Dstrok"]	= encodeWithCurrentCodec ("\320"); // whatever
-		m_entityDecodeMap["ETH"]	= encodeWithCurrentCodec ("\320"); // capital Eth, Icelandic
-		m_entityDecodeMap["Eacute"]	= encodeWithCurrentCodec ("\311"); // capital E, acute accent
-		m_entityDecodeMap["Ecirc"]	= encodeWithCurrentCodec ("\312"); // capital E, circumflex accent
-		m_entityDecodeMap["Egrave"]	= encodeWithCurrentCodec ("\310"); // capital E, grave accent
-		m_entityDecodeMap["Euml"]	= encodeWithCurrentCodec ("\313"); // capital E, dieresis or umlaut mark
-		m_entityDecodeMap["Iacute"]	= encodeWithCurrentCodec ("\315"); // capital I, acute accent
-		m_entityDecodeMap["Icirc"]	= encodeWithCurrentCodec ("\316"); // capital I, circumflex accent
-		m_entityDecodeMap["Igrave"]	= encodeWithCurrentCodec ("\314"); // capital I, grave accent
-		m_entityDecodeMap["Iuml"]	= encodeWithCurrentCodec ("\317"); // capital I, dieresis or umlaut mark
-		m_entityDecodeMap["Ntilde"]	= encodeWithCurrentCodec ("\321"); // capital N, tilde
-		m_entityDecodeMap["Oacute"]	= encodeWithCurrentCodec ("\323"); // capital O, acute accent
-		m_entityDecodeMap["Ocirc"]	= encodeWithCurrentCodec ("\324"); // capital O, circumflex accent
-		m_entityDecodeMap["Ograve"]	= encodeWithCurrentCodec ("\322"); // capital O, grave accent
-		m_entityDecodeMap["Oslash"]	= encodeWithCurrentCodec ("\330"); // capital O, slash
-		m_entityDecodeMap["Otilde"]	= encodeWithCurrentCodec ("\325"); // capital O, tilde
-		m_entityDecodeMap["Ouml"]	= encodeWithCurrentCodec ("\326"); // capital O, dieresis or umlaut mark
-		m_entityDecodeMap["THORN"]	= encodeWithCurrentCodec ("\336"); // capital THORN, Icelandic
-		m_entityDecodeMap["Uacute"]	= encodeWithCurrentCodec ("\332"); // capital U, acute accent
-		m_entityDecodeMap["Ucirc"]	= encodeWithCurrentCodec ("\333"); // capital U, circumflex accent
-		m_entityDecodeMap["Ugrave"]	= encodeWithCurrentCodec ("\331"); // capital U, grave accent
-		m_entityDecodeMap["Uuml"]	= encodeWithCurrentCodec ("\334"); // capital U, dieresis or umlaut mark
-		m_entityDecodeMap["Yacute"]	= encodeWithCurrentCodec ("\335"); // capital Y, acute accent
-		m_entityDecodeMap["OElig"]	= encodeWithCurrentCodec ("\338"); // capital Y, acute accent
-		m_entityDecodeMap["oelig"]	= encodeWithCurrentCodec ("\339"); // capital Y, acute accent
+		m_entityDecodeMap[QStringLiteral("AElig")]	= encodeWithCurrentCodec ("\306"); // capital AE diphthong (ligature)
+		m_entityDecodeMap[QStringLiteral("Aacute")]	= encodeWithCurrentCodec ("\301"); // capital A, acute accent
+		m_entityDecodeMap[QStringLiteral("Acirc")]	= encodeWithCurrentCodec ("\302"); // capital A, circumflex accent
+		m_entityDecodeMap[QStringLiteral("Agrave")]	= encodeWithCurrentCodec ("\300"); // capital A, grave accent
+		m_entityDecodeMap[QStringLiteral("Aring")]	= encodeWithCurrentCodec ("\305"); // capital A, ring
+		m_entityDecodeMap[QStringLiteral("Atilde")]	= encodeWithCurrentCodec ("\303"); // capital A, tilde
+		m_entityDecodeMap[QStringLiteral("Auml")]	= encodeWithCurrentCodec ("\304"); // capital A, dieresis or umlaut mark
+		m_entityDecodeMap[QStringLiteral("Ccedil")]	= encodeWithCurrentCodec ("\307"); // capital C, cedilla
+		m_entityDecodeMap[QStringLiteral("Dstrok")]	= encodeWithCurrentCodec ("\320"); // whatever
+		m_entityDecodeMap[QStringLiteral("ETH")]	= encodeWithCurrentCodec ("\320"); // capital Eth, Icelandic
+		m_entityDecodeMap[QStringLiteral("Eacute")]	= encodeWithCurrentCodec ("\311"); // capital E, acute accent
+		m_entityDecodeMap[QStringLiteral("Ecirc")]	= encodeWithCurrentCodec ("\312"); // capital E, circumflex accent
+		m_entityDecodeMap[QStringLiteral("Egrave")]	= encodeWithCurrentCodec ("\310"); // capital E, grave accent
+		m_entityDecodeMap[QStringLiteral("Euml")]	= encodeWithCurrentCodec ("\313"); // capital E, dieresis or umlaut mark
+		m_entityDecodeMap[QStringLiteral("Iacute")]	= encodeWithCurrentCodec ("\315"); // capital I, acute accent
+		m_entityDecodeMap[QStringLiteral("Icirc")]	= encodeWithCurrentCodec ("\316"); // capital I, circumflex accent
+		m_entityDecodeMap[QStringLiteral("Igrave")]	= encodeWithCurrentCodec ("\314"); // capital I, grave accent
+		m_entityDecodeMap[QStringLiteral("Iuml")]	= encodeWithCurrentCodec ("\317"); // capital I, dieresis or umlaut mark
+		m_entityDecodeMap[QStringLiteral("Ntilde")]	= encodeWithCurrentCodec ("\321"); // capital N, tilde
+		m_entityDecodeMap[QStringLiteral("Oacute")]	= encodeWithCurrentCodec ("\323"); // capital O, acute accent
+		m_entityDecodeMap[QStringLiteral("Ocirc")]	= encodeWithCurrentCodec ("\324"); // capital O, circumflex accent
+		m_entityDecodeMap[QStringLiteral("Ograve")]	= encodeWithCurrentCodec ("\322"); // capital O, grave accent
+		m_entityDecodeMap[QStringLiteral("Oslash")]	= encodeWithCurrentCodec ("\330"); // capital O, slash
+		m_entityDecodeMap[QStringLiteral("Otilde")]	= encodeWithCurrentCodec ("\325"); // capital O, tilde
+		m_entityDecodeMap[QStringLiteral("Ouml")]	= encodeWithCurrentCodec ("\326"); // capital O, dieresis or umlaut mark
+		m_entityDecodeMap[QStringLiteral("THORN")]	= encodeWithCurrentCodec ("\336"); // capital THORN, Icelandic
+		m_entityDecodeMap[QStringLiteral("Uacute")]	= encodeWithCurrentCodec ("\332"); // capital U, acute accent
+		m_entityDecodeMap[QStringLiteral("Ucirc")]	= encodeWithCurrentCodec ("\333"); // capital U, circumflex accent
+		m_entityDecodeMap[QStringLiteral("Ugrave")]	= encodeWithCurrentCodec ("\331"); // capital U, grave accent
+		m_entityDecodeMap[QStringLiteral("Uuml")]	= encodeWithCurrentCodec ("\334"); // capital U, dieresis or umlaut mark
+		m_entityDecodeMap[QStringLiteral("Yacute")]	= encodeWithCurrentCodec ("\335"); // capital Y, acute accent
+		m_entityDecodeMap[QStringLiteral("OElig")]	= encodeWithCurrentCodec ("\338"); // capital Y, acute accent
+		m_entityDecodeMap[QStringLiteral("oelig")]	= encodeWithCurrentCodec ("\339"); // capital Y, acute accent
 						
-		m_entityDecodeMap["aacute"]	= encodeWithCurrentCodec ("\341"); // small a, acute accent
-		m_entityDecodeMap["acirc"]	= encodeWithCurrentCodec ("\342"); // small a, circumflex accent
-		m_entityDecodeMap["aelig"]	= encodeWithCurrentCodec ("\346"); // small ae diphthong (ligature)
-		m_entityDecodeMap["agrave"]	= encodeWithCurrentCodec ("\340"); // small a, grave accent
-		m_entityDecodeMap["aring"]	= encodeWithCurrentCodec ("\345"); // small a, ring
-		m_entityDecodeMap["atilde"]	= encodeWithCurrentCodec ("\343"); // small a, tilde
-		m_entityDecodeMap["auml"]	= encodeWithCurrentCodec ("\344"); // small a, dieresis or umlaut mark
-		m_entityDecodeMap["ccedil"]	= encodeWithCurrentCodec ("\347"); // small c, cedilla
-		m_entityDecodeMap["eacute"]	= encodeWithCurrentCodec ("\351"); // small e, acute accent
-		m_entityDecodeMap["ecirc"]	= encodeWithCurrentCodec ("\352"); // small e, circumflex accent
-		m_entityDecodeMap["Scaron"]	= encodeWithCurrentCodec ("\352"); // small e, circumflex accent
-		m_entityDecodeMap["egrave"]	= encodeWithCurrentCodec ("\350"); // small e, grave accent
-		m_entityDecodeMap["eth"]	= encodeWithCurrentCodec ("\360"); // small eth, Icelandic
-		m_entityDecodeMap["euml"]	= encodeWithCurrentCodec ("\353"); // small e, dieresis or umlaut mark
-		m_entityDecodeMap["iacute"]	= encodeWithCurrentCodec ("\355"); // small i, acute accent
-		m_entityDecodeMap["icirc"]	= encodeWithCurrentCodec ("\356"); // small i, circumflex accent
-		m_entityDecodeMap["igrave"]	= encodeWithCurrentCodec ("\354"); // small i, grave accent
-		m_entityDecodeMap["iuml"]	= encodeWithCurrentCodec ("\357"); // small i, dieresis or umlaut mark
-		m_entityDecodeMap["ntilde"]	= encodeWithCurrentCodec ("\361"); // small n, tilde
-		m_entityDecodeMap["oacute"]	= encodeWithCurrentCodec ("\363"); // small o, acute accent
-		m_entityDecodeMap["ocirc"]	= encodeWithCurrentCodec ("\364"); // small o, circumflex accent
-		m_entityDecodeMap["ograve"]	= encodeWithCurrentCodec ("\362"); // small o, grave accent
-		m_entityDecodeMap["oslash"]	= encodeWithCurrentCodec ("\370"); // small o, slash
-		m_entityDecodeMap["otilde"]	= encodeWithCurrentCodec ("\365"); // small o, tilde
-		m_entityDecodeMap["ouml"]	= encodeWithCurrentCodec ("\366"); // small o, dieresis or umlaut mark
-		m_entityDecodeMap["szlig"]	= encodeWithCurrentCodec ("\337"); // small sharp s, German (sz ligature)
-		m_entityDecodeMap["thorn"]	= encodeWithCurrentCodec ("\376"); // small thorn, Icelandic
-		m_entityDecodeMap["uacute"]	= encodeWithCurrentCodec ("\372"); // small u, acute accent
-		m_entityDecodeMap["ucirc"]	= encodeWithCurrentCodec ("\373"); // small u, circumflex accent
-		m_entityDecodeMap["ugrave"]	= encodeWithCurrentCodec ("\371"); // small u, grave accent
-		m_entityDecodeMap["uuml"]	= encodeWithCurrentCodec ("\374"); // small u, dieresis or umlaut mark
-		m_entityDecodeMap["yacute"]	= encodeWithCurrentCodec ("\375"); // small y, acute accent
-		m_entityDecodeMap["yuml"]	= encodeWithCurrentCodec ("\377"); // small y, dieresis or umlaut mark
+		m_entityDecodeMap[QStringLiteral("aacute")]	= encodeWithCurrentCodec ("\341"); // small a, acute accent
+		m_entityDecodeMap[QStringLiteral("acirc")]	= encodeWithCurrentCodec ("\342"); // small a, circumflex accent
+		m_entityDecodeMap[QStringLiteral("aelig")]	= encodeWithCurrentCodec ("\346"); // small ae diphthong (ligature)
+		m_entityDecodeMap[QStringLiteral("agrave")]	= encodeWithCurrentCodec ("\340"); // small a, grave accent
+		m_entityDecodeMap[QStringLiteral("aring")]	= encodeWithCurrentCodec ("\345"); // small a, ring
+		m_entityDecodeMap[QStringLiteral("atilde")]	= encodeWithCurrentCodec ("\343"); // small a, tilde
+		m_entityDecodeMap[QStringLiteral("auml")]	= encodeWithCurrentCodec ("\344"); // small a, dieresis or umlaut mark
+		m_entityDecodeMap[QStringLiteral("ccedil")]	= encodeWithCurrentCodec ("\347"); // small c, cedilla
+		m_entityDecodeMap[QStringLiteral("eacute")]	= encodeWithCurrentCodec ("\351"); // small e, acute accent
+		m_entityDecodeMap[QStringLiteral("ecirc")]	= encodeWithCurrentCodec ("\352"); // small e, circumflex accent
+		m_entityDecodeMap[QStringLiteral("Scaron")]	= encodeWithCurrentCodec ("\352"); // small e, circumflex accent
+		m_entityDecodeMap[QStringLiteral("egrave")]	= encodeWithCurrentCodec ("\350"); // small e, grave accent
+		m_entityDecodeMap[QStringLiteral("eth")]	= encodeWithCurrentCodec ("\360"); // small eth, Icelandic
+		m_entityDecodeMap[QStringLiteral("euml")]	= encodeWithCurrentCodec ("\353"); // small e, dieresis or umlaut mark
+		m_entityDecodeMap[QStringLiteral("iacute")]	= encodeWithCurrentCodec ("\355"); // small i, acute accent
+		m_entityDecodeMap[QStringLiteral("icirc")]	= encodeWithCurrentCodec ("\356"); // small i, circumflex accent
+		m_entityDecodeMap[QStringLiteral("igrave")]	= encodeWithCurrentCodec ("\354"); // small i, grave accent
+		m_entityDecodeMap[QStringLiteral("iuml")]	= encodeWithCurrentCodec ("\357"); // small i, dieresis or umlaut mark
+		m_entityDecodeMap[QStringLiteral("ntilde")]	= encodeWithCurrentCodec ("\361"); // small n, tilde
+		m_entityDecodeMap[QStringLiteral("oacute")]	= encodeWithCurrentCodec ("\363"); // small o, acute accent
+		m_entityDecodeMap[QStringLiteral("ocirc")]	= encodeWithCurrentCodec ("\364"); // small o, circumflex accent
+		m_entityDecodeMap[QStringLiteral("ograve")]	= encodeWithCurrentCodec ("\362"); // small o, grave accent
+		m_entityDecodeMap[QStringLiteral("oslash")]	= encodeWithCurrentCodec ("\370"); // small o, slash
+		m_entityDecodeMap[QStringLiteral("otilde")]	= encodeWithCurrentCodec ("\365"); // small o, tilde
+		m_entityDecodeMap[QStringLiteral("ouml")]	= encodeWithCurrentCodec ("\366"); // small o, dieresis or umlaut mark
+		m_entityDecodeMap[QStringLiteral("szlig")]	= encodeWithCurrentCodec ("\337"); // small sharp s, German (sz ligature)
+		m_entityDecodeMap[QStringLiteral("thorn")]	= encodeWithCurrentCodec ("\376"); // small thorn, Icelandic
+		m_entityDecodeMap[QStringLiteral("uacute")]	= encodeWithCurrentCodec ("\372"); // small u, acute accent
+		m_entityDecodeMap[QStringLiteral("ucirc")]	= encodeWithCurrentCodec ("\373"); // small u, circumflex accent
+		m_entityDecodeMap[QStringLiteral("ugrave")]	= encodeWithCurrentCodec ("\371"); // small u, grave accent
+		m_entityDecodeMap[QStringLiteral("uuml")]	= encodeWithCurrentCodec ("\374"); // small u, dieresis or umlaut mark
+		m_entityDecodeMap[QStringLiteral("yacute")]	= encodeWithCurrentCodec ("\375"); // small y, acute accent
+		m_entityDecodeMap[QStringLiteral("yuml")]	= encodeWithCurrentCodec ("\377"); // small y, dieresis or umlaut mark
 	
-		m_entityDecodeMap["iexcl"]	= encodeWithCurrentCodec ("\241");
-		m_entityDecodeMap["cent"]	= encodeWithCurrentCodec ("\242");
-		m_entityDecodeMap["pound"]	= encodeWithCurrentCodec ("\243");
-		m_entityDecodeMap["curren"]	= encodeWithCurrentCodec ("\244");
-		m_entityDecodeMap["yen"]	= encodeWithCurrentCodec ("\245");
-		m_entityDecodeMap["brvbar"]	= encodeWithCurrentCodec ("\246");
-		m_entityDecodeMap["sect"]	= encodeWithCurrentCodec ("\247");
-		m_entityDecodeMap["uml"]	= encodeWithCurrentCodec ("\250");
-		m_entityDecodeMap["ordf"]	= encodeWithCurrentCodec ("\252");
-		m_entityDecodeMap["laquo"]	= encodeWithCurrentCodec ("\253");
-		m_entityDecodeMap["not"]	= encodeWithCurrentCodec ("\254");
-		m_entityDecodeMap["shy"]	= encodeWithCurrentCodec ("\255");
-		m_entityDecodeMap["macr"]	= encodeWithCurrentCodec ("\257");
-		m_entityDecodeMap["deg"]	= encodeWithCurrentCodec ("\260");
-		m_entityDecodeMap["plusmn"]	= encodeWithCurrentCodec ("\261");
-		m_entityDecodeMap["sup1"]	= encodeWithCurrentCodec ("\271");
-		m_entityDecodeMap["sup2"]	= encodeWithCurrentCodec ("\262");
-		m_entityDecodeMap["sup3"]	= encodeWithCurrentCodec ("\263");
-		m_entityDecodeMap["acute"]	= encodeWithCurrentCodec ("\264");
-		m_entityDecodeMap["micro"]	= encodeWithCurrentCodec ("\265");
-		m_entityDecodeMap["para"]	= encodeWithCurrentCodec ("\266");
-		m_entityDecodeMap["middot"]	= encodeWithCurrentCodec ("\267");
-		m_entityDecodeMap["cedil"]	= encodeWithCurrentCodec ("\270");
-		m_entityDecodeMap["ordm"]	= encodeWithCurrentCodec ("\272");
-		m_entityDecodeMap["raquo"]	= encodeWithCurrentCodec ("\273");
-		m_entityDecodeMap["frac14"]	= encodeWithCurrentCodec ("\274");
-		m_entityDecodeMap["frac12"]	= encodeWithCurrentCodec ("\275");
-		m_entityDecodeMap["frac34"]	= encodeWithCurrentCodec ("\276");
-		m_entityDecodeMap["iquest"]	= encodeWithCurrentCodec ("\277");
-		m_entityDecodeMap["times"]	= encodeWithCurrentCodec ("\327");
-		m_entityDecodeMap["divide"]	= encodeWithCurrentCodec ("\367");
+		m_entityDecodeMap[QStringLiteral("iexcl")]	= encodeWithCurrentCodec ("\241");
+		m_entityDecodeMap[QStringLiteral("cent")]	= encodeWithCurrentCodec ("\242");
+		m_entityDecodeMap[QStringLiteral("pound")]	= encodeWithCurrentCodec ("\243");
+		m_entityDecodeMap[QStringLiteral("curren")]	= encodeWithCurrentCodec ("\244");
+		m_entityDecodeMap[QStringLiteral("yen")]	= encodeWithCurrentCodec ("\245");
+		m_entityDecodeMap[QStringLiteral("brvbar")]	= encodeWithCurrentCodec ("\246");
+		m_entityDecodeMap[QStringLiteral("sect")]	= encodeWithCurrentCodec ("\247");
+		m_entityDecodeMap[QStringLiteral("uml")]	= encodeWithCurrentCodec ("\250");
+		m_entityDecodeMap[QStringLiteral("ordf")]	= encodeWithCurrentCodec ("\252");
+		m_entityDecodeMap[QStringLiteral("laquo")]	= encodeWithCurrentCodec ("\253");
+		m_entityDecodeMap[QStringLiteral("not")]	= encodeWithCurrentCodec ("\254");
+		m_entityDecodeMap[QStringLiteral("shy")]	= encodeWithCurrentCodec ("\255");
+		m_entityDecodeMap[QStringLiteral("macr")]	= encodeWithCurrentCodec ("\257");
+		m_entityDecodeMap[QStringLiteral("deg")]	= encodeWithCurrentCodec ("\260");
+		m_entityDecodeMap[QStringLiteral("plusmn")]	= encodeWithCurrentCodec ("\261");
+		m_entityDecodeMap[QStringLiteral("sup1")]	= encodeWithCurrentCodec ("\271");
+		m_entityDecodeMap[QStringLiteral("sup2")]	= encodeWithCurrentCodec ("\262");
+		m_entityDecodeMap[QStringLiteral("sup3")]	= encodeWithCurrentCodec ("\263");
+		m_entityDecodeMap[QStringLiteral("acute")]	= encodeWithCurrentCodec ("\264");
+		m_entityDecodeMap[QStringLiteral("micro")]	= encodeWithCurrentCodec ("\265");
+		m_entityDecodeMap[QStringLiteral("para")]	= encodeWithCurrentCodec ("\266");
+		m_entityDecodeMap[QStringLiteral("middot")]	= encodeWithCurrentCodec ("\267");
+		m_entityDecodeMap[QStringLiteral("cedil")]	= encodeWithCurrentCodec ("\270");
+		m_entityDecodeMap[QStringLiteral("ordm")]	= encodeWithCurrentCodec ("\272");
+		m_entityDecodeMap[QStringLiteral("raquo")]	= encodeWithCurrentCodec ("\273");
+		m_entityDecodeMap[QStringLiteral("frac14")]	= encodeWithCurrentCodec ("\274");
+		m_entityDecodeMap[QStringLiteral("frac12")]	= encodeWithCurrentCodec ("\275");
+		m_entityDecodeMap[QStringLiteral("frac34")]	= encodeWithCurrentCodec ("\276");
+		m_entityDecodeMap[QStringLiteral("iquest")]	= encodeWithCurrentCodec ("\277");
+		m_entityDecodeMap[QStringLiteral("times")]	= encodeWithCurrentCodec ("\327");
+		m_entityDecodeMap[QStringLiteral("divide")]	= encodeWithCurrentCodec ("\367");
 				
-		m_entityDecodeMap["copy"]	= encodeWithCurrentCodec ("\251"); // copyright sign
-		m_entityDecodeMap["reg"]	= encodeWithCurrentCodec ("\256"); // registered sign
-		m_entityDecodeMap["nbsp"]	= encodeWithCurrentCodec ("\240"); // non breaking space
+		m_entityDecodeMap[QStringLiteral("copy")]	= encodeWithCurrentCodec ("\251"); // copyright sign
+		m_entityDecodeMap[QStringLiteral("reg")]	= encodeWithCurrentCodec ("\256"); // registered sign
+		m_entityDecodeMap[QStringLiteral("nbsp")]	= encodeWithCurrentCodec ("\240"); // non breaking space
 
-		m_entityDecodeMap["fnof"]	= QChar((unsigned short) 402);
+		m_entityDecodeMap[QStringLiteral("fnof")]	= QChar((unsigned short) 402);
 				
-		m_entityDecodeMap["Delta"]	= QChar((unsigned short) 916);
-		m_entityDecodeMap["Pi"]	= QChar((unsigned short) 928);
-		m_entityDecodeMap["Sigma"]	= QChar((unsigned short) 931);
+		m_entityDecodeMap[QStringLiteral("Delta")]	= QChar((unsigned short) 916);
+		m_entityDecodeMap[QStringLiteral("Pi")]	= QChar((unsigned short) 928);
+		m_entityDecodeMap[QStringLiteral("Sigma")]	= QChar((unsigned short) 931);
 		
-		m_entityDecodeMap["beta"]	= QChar((unsigned short) 946);
-		m_entityDecodeMap["gamma"]	= QChar((unsigned short) 947);
-		m_entityDecodeMap["delta"]	= QChar((unsigned short) 948);
-		m_entityDecodeMap["eta"]	= QChar((unsigned short) 951);
-		m_entityDecodeMap["theta"]	= QChar((unsigned short) 952);
-		m_entityDecodeMap["lambda"]	= QChar((unsigned short) 955);
-		m_entityDecodeMap["mu"]	= QChar((unsigned short) 956);
-		m_entityDecodeMap["nu"]	= QChar((unsigned short) 957);
-		m_entityDecodeMap["pi"]	= QChar((unsigned short) 960);
-		m_entityDecodeMap["rho"]	= QChar((unsigned short) 961);
+		m_entityDecodeMap[QStringLiteral("beta")]	= QChar((unsigned short) 946);
+		m_entityDecodeMap[QStringLiteral("gamma")]	= QChar((unsigned short) 947);
+		m_entityDecodeMap[QStringLiteral("delta")]	= QChar((unsigned short) 948);
+		m_entityDecodeMap[QStringLiteral("eta")]	= QChar((unsigned short) 951);
+		m_entityDecodeMap[QStringLiteral("theta")]	= QChar((unsigned short) 952);
+		m_entityDecodeMap[QStringLiteral("lambda")]	= QChar((unsigned short) 955);
+		m_entityDecodeMap[QStringLiteral("mu")]	= QChar((unsigned short) 956);
+		m_entityDecodeMap[QStringLiteral("nu")]	= QChar((unsigned short) 957);
+		m_entityDecodeMap[QStringLiteral("pi")]	= QChar((unsigned short) 960);
+		m_entityDecodeMap[QStringLiteral("rho")]	= QChar((unsigned short) 961);
 		
-		m_entityDecodeMap["lsquo"]	= QChar((unsigned short) 8216);
-		m_entityDecodeMap["rsquo"]	= QChar((unsigned short) 8217);
-		m_entityDecodeMap["rdquo"]	= QChar((unsigned short) 8221);
-		m_entityDecodeMap["bdquo"]	= QChar((unsigned short) 8222);
-		m_entityDecodeMap["trade"]  = QChar((unsigned short) 8482);
-		m_entityDecodeMap["ldquo"]  = QChar((unsigned short) 8220);
-		m_entityDecodeMap["ndash"]  = QChar((unsigned short) 8211);
-		m_entityDecodeMap["mdash"]  = QChar((unsigned short) 8212);
-		m_entityDecodeMap["bull"]  = QChar((unsigned short) 8226);
-		m_entityDecodeMap["hellip"]  = QChar((unsigned short) 8230);
-		m_entityDecodeMap["emsp"]  = QChar((unsigned short) 8195);
-		m_entityDecodeMap["rarr"]  = QChar((unsigned short) 8594);
-		m_entityDecodeMap["rArr"]  = QChar((unsigned short) 8658);
-		m_entityDecodeMap["crarr"]  = QChar((unsigned short) 8629);
-		m_entityDecodeMap["le"]  = QChar((unsigned short) 8804);
-		m_entityDecodeMap["ge"]  = QChar((unsigned short) 8805);
-		m_entityDecodeMap["lte"]  = QChar((unsigned short) 8804); // wrong, but used somewhere
-		m_entityDecodeMap["gte"]  = QChar((unsigned short) 8805); // wrong, but used somewhere
-		m_entityDecodeMap["dagger"]  = QChar((unsigned short) 8224);
-		m_entityDecodeMap["Dagger"]  = QChar((unsigned short) 8225);
-		m_entityDecodeMap["euro"]  = QChar((unsigned short) 8364);
-		m_entityDecodeMap["asymp"]  = QChar((unsigned short) 8776);
-		m_entityDecodeMap["isin"]  = QChar((unsigned short) 8712);
-		m_entityDecodeMap["notin"]  = QChar((unsigned short) 8713);
-		m_entityDecodeMap["prod"]  = QChar((unsigned short) 8719);
-		m_entityDecodeMap["ne"]  = QChar((unsigned short) 8800);
+		m_entityDecodeMap[QStringLiteral("lsquo")]	= QChar((unsigned short) 8216);
+		m_entityDecodeMap[QStringLiteral("rsquo")]	= QChar((unsigned short) 8217);
+		m_entityDecodeMap[QStringLiteral("rdquo")]	= QChar((unsigned short) 8221);
+		m_entityDecodeMap[QStringLiteral("bdquo")]	= QChar((unsigned short) 8222);
+		m_entityDecodeMap[QStringLiteral("trade")]  = QChar((unsigned short) 8482);
+		m_entityDecodeMap[QStringLiteral("ldquo")]  = QChar((unsigned short) 8220);
+		m_entityDecodeMap[QStringLiteral("ndash")]  = QChar((unsigned short) 8211);
+		m_entityDecodeMap[QStringLiteral("mdash")]  = QChar((unsigned short) 8212);
+		m_entityDecodeMap[QStringLiteral("bull")]  = QChar((unsigned short) 8226);
+		m_entityDecodeMap[QStringLiteral("hellip")]  = QChar((unsigned short) 8230);
+		m_entityDecodeMap[QStringLiteral("emsp")]  = QChar((unsigned short) 8195);
+		m_entityDecodeMap[QStringLiteral("rarr")]  = QChar((unsigned short) 8594);
+		m_entityDecodeMap[QStringLiteral("rArr")]  = QChar((unsigned short) 8658);
+		m_entityDecodeMap[QStringLiteral("crarr")]  = QChar((unsigned short) 8629);
+		m_entityDecodeMap[QStringLiteral("le")]  = QChar((unsigned short) 8804);
+		m_entityDecodeMap[QStringLiteral("ge")]  = QChar((unsigned short) 8805);
+		m_entityDecodeMap[QStringLiteral("lte")]  = QChar((unsigned short) 8804); // wrong, but used somewhere
+		m_entityDecodeMap[QStringLiteral("gte")]  = QChar((unsigned short) 8805); // wrong, but used somewhere
+		m_entityDecodeMap[QStringLiteral("dagger")]  = QChar((unsigned short) 8224);
+		m_entityDecodeMap[QStringLiteral("Dagger")]  = QChar((unsigned short) 8225);
+		m_entityDecodeMap[QStringLiteral("euro")]  = QChar((unsigned short) 8364);
+		m_entityDecodeMap[QStringLiteral("asymp")]  = QChar((unsigned short) 8776);
+		m_entityDecodeMap[QStringLiteral("isin")]  = QChar((unsigned short) 8712);
+		m_entityDecodeMap[QStringLiteral("notin")]  = QChar((unsigned short) 8713);
+		m_entityDecodeMap[QStringLiteral("prod")]  = QChar((unsigned short) 8719);
+		m_entityDecodeMap[QStringLiteral("ne")]  = QChar((unsigned short) 8800);
 				
-		m_entityDecodeMap["amp"]	= "&";	// ampersand
-		m_entityDecodeMap["gt"] = ">";	// greater than
-		m_entityDecodeMap["lt"] = "<"; 	// less than
-		m_entityDecodeMap["quot"] = "\""; // double quote
-		m_entityDecodeMap["apos"] = "'"; 	// single quote
-		m_entityDecodeMap["frasl"]  = "/";
-		m_entityDecodeMap["minus"]  = "-";
-		m_entityDecodeMap["oplus"] = "+";
-		m_entityDecodeMap["Prime"] = "\"";
+		m_entityDecodeMap[QStringLiteral("amp")]	= QStringLiteral("&");	// ampersand
+		m_entityDecodeMap[QStringLiteral("gt")] = QStringLiteral(">");	// greater than
+		m_entityDecodeMap[QStringLiteral("lt")] = QStringLiteral("<"); 	// less than
+		m_entityDecodeMap[QStringLiteral("quot")] = QStringLiteral("\""); // double quote
+		m_entityDecodeMap[QStringLiteral("apos")] = QStringLiteral("'"); 	// single quote
+		m_entityDecodeMap[QStringLiteral("frasl")]  = QStringLiteral("/");
+		m_entityDecodeMap[QStringLiteral("minus")]  = QStringLiteral("-");
+		m_entityDecodeMap[QStringLiteral("oplus")] = QStringLiteral("+");
+		m_entityDecodeMap[QStringLiteral("Prime")] = QStringLiteral("\"");
 	}
 
 	// If entity is an ASCII code like &#12349; - just decode it
-	if ( entity[0] == '#' )
+    if ( entity[0] == QLatin1Char('#') )
 	{
 		bool valid;
-		unsigned int ascode = entity.mid(1).toUInt( &valid );
+		unsigned int ascode = entity.midRef(1).toUInt( &valid );
 						
 		if ( !valid )
 		{
@@ -351,12 +352,12 @@ QString LCHMFileImpl::decodeEntity( const QString & entity )
 
 inline int LCHMFileImpl::findStringInQuotes (const QString& tag, int offset, QString& value, bool firstquote, bool decodeentities)
 {
-	int qbegin = tag.indexOf ('"', offset);
+    int qbegin = tag.indexOf (QLatin1Char('"'), offset);
 	
 	if ( qbegin == -1 )
 		qFatal ("LCHMFileImpl::findStringInQuotes: cannot find first quote in <param> tag: '%s'", qPrintable( tag ));
 
-	int qend = firstquote ? tag.indexOf ('"', qbegin + 1) : tag.lastIndexOf ('"');
+    int qend = firstquote ? tag.indexOf (QLatin1Char('"'), qbegin + 1) : tag.lastIndexOf (QLatin1Char('"'));
 
 	if ( qend == -1 || qend <= qbegin )
 		qFatal ("LCHMFileImpl::findStringInQuotes: cannot find last quote in <param> tag: '%s'", qPrintable( tag ));
@@ -373,14 +374,14 @@ inline int LCHMFileImpl::findStringInQuotes (const QString& tag, int offset, QSt
 		{
 			if ( !fill_entity )
 			{
-				if ( tag[i] == '&' ) // HTML entity starts
+                if ( tag[i] == QLatin1Char('&') ) // HTML entity starts
 					fill_entity = true;
 				else
 					value.append (tag[i]);
 			}
 			else
 			{
-				if ( tag[i] == ';' ) // HTML entity ends
+                if ( tag[i] == QLatin1Char(';') ) // HTML entity ends
 				{
 					// If entity is an ASCII code, just decode it
 					QString decode = decodeEntity( htmlentity );
@@ -415,7 +416,7 @@ bool LCHMFileImpl::searchWord (const QString& text,
 	if ( text.isEmpty() || !m_searchAvailable )
 		return false;
 
-	QString searchword = (QString) convertSearchWord (text);
+    QString searchword = QString::fromLocal8Bit( convertSearchWord (text) );
 
 #define FTS_HEADER_LEN 0x32
 	unsigned char header[FTS_HEADER_LEN];
@@ -477,9 +478,9 @@ bool LCHMFileImpl::searchWord (const QString& text,
 			wrd_buf[word_len - 1] = 0;
 
 			if ( pos == 0 )
-				word = wrd_buf;
+                word = QString::fromLocal8Bit(wrd_buf, word_len);
 			else
-				word = word.mid (0, pos) + (const char*) wrd_buf;
+                word = word.mid (0, pos) + QString::fromLocal8Bit((const char*) wrd_buf, word_len);
 
 			delete[] wrd_buf;
 
@@ -584,9 +585,9 @@ inline uint32_t LCHMFileImpl::GetLeafNodeOffset(const QString& text,
 			wrd_buf[word_len - 1] = 0;
 
 			if ( pos == 0 )
-				word = wrd_buf;
+                word = QString::fromLocal8Bit(wrd_buf, word_len);
 			else
-				word = word.mid(0, pos) + (const char*) wrd_buf;
+                word = word.mid(0, pos) + QString::fromLocal8Bit((const char*) wrd_buf, word_len);
 
 			delete[] wrd_buf;
 
@@ -687,7 +688,7 @@ bool LCHMFileImpl::getInfoFromWindows()
 	chmUnitInfo ui;
 	long size = 0;
 
-	if ( ResolveObject("/#WINDOWS", &ui) )
+	if ( ResolveObject(QStringLiteral("/#WINDOWS"), &ui) )
 	{
 		if ( !RetrieveObject(&ui, buffer, 0, WIN_HEADER_LEN) )
 			return false;
@@ -701,7 +702,7 @@ bool LCHMFileImpl::getInfoFromWindows()
 		if ( !RetrieveObject (&ui, raw, 8, entries * entry_size) )
 			return false;
 
-		if( !ResolveObject ("/#STRINGS", &ui) )
+		if( !ResolveObject (QStringLiteral("/#STRINGS"), &ui) )
 			return false;
 
 		for ( uint32_t i = 0; i < entries; ++i )
@@ -766,7 +767,7 @@ bool LCHMFileImpl::getInfoFromSystem()
 
 	// Run the first loop to detect the encoding. We need this, because title could be
 	// already encoded in user encoding. Same for file names
-	if ( !ResolveObject ("/#SYSTEM", &ui) )
+	if ( !ResolveObject (QStringLiteral("/#SYSTEM"), &ui) )
 		return false;
 
 	// Can we pull BUFF_SIZE bytes of the #SYSTEM file?
@@ -829,15 +830,15 @@ bool LCHMFileImpl::getInfoFromSystem()
 
 				if ( m_topicsFile.isEmpty() )
 				{
-					QString topicAttempt = "/", tmp;
-					topicAttempt += QString ((const char*) buffer +index +2);
+					QString topicAttempt = QStringLiteral("/"), tmp;
+                    topicAttempt += QString::fromLocal8Bit ((const char*) buffer +index +2);
 
-					tmp = topicAttempt + ".hhc";
+                    tmp = topicAttempt + QStringLiteral(".hhc");
 				
 					if ( ResolveObject( tmp, &ui) )
 						m_topicsFile = qPrintable( tmp );
 
-					tmp = topicAttempt + ".hhk";
+                    tmp = topicAttempt + QStringLiteral(".hhk");
 				
 					if ( ResolveObject( tmp, &ui) )
 						m_indexFile = qPrintable( tmp );
@@ -848,7 +849,7 @@ bool LCHMFileImpl::getInfoFromSystem()
 				index += 2;
 				cursor = buffer + index;
 
-				m_font = QString ((const char*) buffer + index + 2);
+                m_font = QString::fromLocal8Bit ((const char*) buffer + index + 2);
 				break;
 			
 			default:
@@ -918,7 +919,7 @@ void LCHMFileImpl::getSearchResults( const LCHMSearchProgressResults& tempres,
 			continue;
 
 		combuf[COMMON_BUF_LEN - 1] = 0;
-		results->push_back( LCHMUrlFactory::makeURLabsoluteIfNeeded( (const char*) combuf ) );
+        results->push_back( LCHMUrlFactory::makeURLabsoluteIfNeeded( QString::fromLocal8Bit((const char*) combuf) ) );
 		
 		if ( --limit_results == 0 )
 			break;
@@ -928,7 +929,7 @@ void LCHMFileImpl::getSearchResults( const LCHMSearchProgressResults& tempres,
 
 QString LCHMFileImpl::normalizeUrl( const QString & path ) const
 {
-	int pos = path.indexOf ('#');
+    int pos = path.indexOf (QLatin1Char('#'));
 	QString fixedpath = pos == -1 ? path : path.left (pos);
 	
 	return LCHMUrlFactory::makeURLabsoluteIfNeeded( fixedpath );
@@ -971,18 +972,18 @@ bool LCHMFileImpl::parseFileAndFillArray( const QString & file, QVector< LCHMPar
 	// Split the HHC file by HTML tags
 	int stringlen = src.length();
 	
-	while ( pos < stringlen && (pos = src.indexOf ('<', pos)) != -1 )
+    while ( pos < stringlen && (pos = src.indexOf (QLatin1Char('<'), pos)) != -1 )
 	{
 		int i, word_end = 0;
 		
 		for ( i = ++pos; i < stringlen; i++ )
 		{
 			// If a " or ' is found, skip to the next one.
-			if ( (src[i] == '"' || src[i] == '\'') )
+            if ( (src[i] == QLatin1Char('"') || src[i] == QLatin1Char('\'')) )
 			{
 				// find where quote ends, either by another quote, or by '>' symbol (some people don't know HTML)
 				int nextpos = src.indexOf (src[i], i+1);
-				if ( nextpos == -1 	&& (nextpos = src.indexOf ('>', i+1)) == -1 )
+                if ( nextpos == -1 	&& (nextpos = src.indexOf (QLatin1Char('>'), i+1)) == -1 )
 				{
 					qWarning ("LCHMFileImpl::ParseHhcAndFillTree: corrupted TOC: %s", qPrintable( src.mid(i) ));
 					return false;
@@ -990,9 +991,9 @@ bool LCHMFileImpl::parseFileAndFillArray( const QString & file, QVector< LCHMPar
 
 				i =  nextpos;
 			}
-			else if ( src[i] == '>'  )
+            else if ( src[i] == QLatin1Char('>')  )
 				break;
-			else if ( !src[i].isLetterOrNumber() && src[i] != '/' && !word_end )
+            else if ( !src[i].isLetterOrNumber() && src[i] != QLatin1Char('/') && !word_end )
 				word_end = i;
 		}
 		
@@ -1006,9 +1007,9 @@ bool LCHMFileImpl::parseFileAndFillArray( const QString & file, QVector< LCHMPar
 		//qDebug ("tag: '%s', tagword: '%s'\n", qPrintable( tag ), qPrintable( tagword ) );
 						
 		// <OBJECT type="text/sitemap"> - a topic entry
-		if ( tagword == "object" && tag.indexOf ("text/sitemap", 0, Qt::CaseInsensitive ) != -1 )
+		if ( tagword == QLatin1String("object") && tag.indexOf (QStringLiteral("text/sitemap"), 0, Qt::CaseInsensitive ) != -1 )
 			in_object = true;
-		else if ( tagword == "/object" && in_object ) 
+		else if ( tagword == QLatin1String("/object") && in_object ) 
 		{
 			// a topic entry closed. Add a tree item
 			if ( !entry.name.isEmpty() )
@@ -1043,35 +1044,35 @@ bool LCHMFileImpl::parseFileAndFillArray( const QString & file, QVector< LCHMPar
 			entry.imageid = defaultimagenum;
 			in_object = false;
 		}
-		else if ( tagword == "param" && in_object )
+		else if ( tagword == QLatin1String("param") && in_object )
 		{
 			// <param name="Name" value="First Page">
 			int offset; // strlen("param ")
-			QString name_pattern = "name=", value_pattern = "value=";
+			QString name_pattern = QStringLiteral("name="), value_pattern = QStringLiteral("value=");
 			QString pname, pvalue;
 
 			if ( (offset = tag.indexOf (name_pattern, 0, Qt::CaseInsensitive )) == -1 )
 				qFatal ("LCHMFileImpl::ParseAndFillTopicsTree: bad <param> tag '%s': no name=\n", qPrintable( tag ));
 
 			// offset+5 skips 'name='
-			offset = findStringInQuotes (tag, offset + name_pattern.length(), pname, TRUE, FALSE);
+			offset = findStringInQuotes (tag, offset + name_pattern.length(), pname, true, false);
 			pname = pname.toLower();
 
 			if ( (offset = tag.indexOf(value_pattern, offset, Qt::CaseInsensitive )) == -1 )
 				qFatal ("LCHMFileImpl::ParseAndFillTopicsTree: bad <param> tag '%s': no value=\n", qPrintable( tag ));
 
 			// offset+6 skips 'value='
-			findStringInQuotes (tag, offset + value_pattern.length(), pvalue, FALSE, TRUE);
+			findStringInQuotes (tag, offset + value_pattern.length(), pvalue, false, true);
 
 			//qDebug ("<param>: name '%s', value '%s'", qPrintable( pname ), qPrintable( pvalue ));
 
-			if ( pname == "name" )
+			if ( pname == QLatin1String("name") )
 			{
 				// Some help files contain duplicate names, where the second name is empty. Work it around by keeping the first one
 				if ( !pvalue.isEmpty() )
 					entry.name = pvalue;
 			}
-			else if ( pname == "local" )
+			else if ( pname == QLatin1String("local") )
 			{
 				// Check for URL duplication
 				QString url = LCHMUrlFactory::makeURLabsoluteIfNeeded( pvalue );
@@ -1079,9 +1080,9 @@ bool LCHMFileImpl::parseFileAndFillArray( const QString & file, QVector< LCHMPar
 				if ( !entry.urls.contains( url ) )
 					entry.urls.push_back( url );
 			}
-			else if ( pname == "see also" && asIndex && entry.name != pvalue )
-				entry.urls.push_back (":" + pvalue);
-			else if ( pname == "imagenumber" )
+			else if ( pname == QLatin1String("see also") && asIndex && entry.name != pvalue )
+                entry.urls.push_back (QLatin1Char(':') + pvalue);
+			else if ( pname == QLatin1String("imagenumber") )
 			{
 				bool bok;
 				int imgnum = pvalue.toInt (&bok);
@@ -1090,7 +1091,7 @@ bool LCHMFileImpl::parseFileAndFillArray( const QString & file, QVector< LCHMPar
 					entry.imageid = imgnum;
 			}
 		}
-		else if ( tagword == "ul" ) // increase indent level
+		else if ( tagword == QLatin1String("ul") ) // increase indent level
 		{
 			// Fix for buggy help files		
 			if ( ++indent >= MAX_NEST_DEPTH )
@@ -1099,7 +1100,7 @@ bool LCHMFileImpl::parseFileAndFillArray( const QString & file, QVector< LCHMPar
 			// This intended to fix <ul><ul>, which was seen in some buggy chm files,
 			// and brokes rootentry[indent-1] check
 		}
-		else if ( tagword == "/ul" ) // decrease indent level
+		else if ( tagword == QLatin1String("/ul") ) // decrease indent level
 		{
 			if ( --indent < root_indent_offset )
 				indent = root_indent_offset;
@@ -1141,9 +1142,9 @@ bool LCHMFileImpl::getFileContentAsString( QString * str, const QString & url, b
 		if ( length > 0 )
 		{
 			buf.resize( length + 1 );
-			buf [length] = '\0';
+            buf [length] = '\0';
 			
-			*str = internal_encoding ? (QString)( buf.constData() ) :  encodeWithCurrentCodec( buf.constData() );
+            *str = internal_encoding ? QString::fromLocal8Bit( buf.constData() ) :  encodeWithCurrentCodec( buf.constData() );
 			return true;
 		}
 	}
@@ -1165,7 +1166,7 @@ QString LCHMFileImpl::getTopicByUrl( const QString & url ) const
 
 extern "C" int chm_enumerator_callback( struct chmFile*, struct chmUnitInfo *ui, void *context )
 {
-	((QStringList*) context)->push_back( ui->path );
+    ((QStringList*) context)->push_back(QString::fromLocal8Bit( ui->path ) );
 	return CHM_ENUMERATOR_CONTINUE;
 }
 
@@ -1192,8 +1193,11 @@ bool LCHMFileImpl::guessTextEncoding( )
 	const LCHMTextEncoding * enc = 0;
 
 	if ( !m_detectedLCID || (enc = lookupByLCID (m_detectedLCID)) == 0 )
-		qFatal ("Could not detect text encoding by LCID");
-	
+    {
+		qWarning ("Could not detect text encoding by LCID");
+		return false;
+    }
+
 	if ( changeFileEncoding (enc->qtcodec) )
 	{
 		m_currentEncoding = enc;
@@ -1266,12 +1270,12 @@ void LCHMFileImpl::fillTopicsUrlMap()
 		uint32_t off_url = get_int32_le( (uint32_t *)(topics.data() + i + 8) );
 		off_url = get_int32_le( (uint32_t *)( urltbl.data() + off_url + 8) ) + 8;
 
-		QString url = LCHMUrlFactory::makeURLabsoluteIfNeeded( (const char*) urlstr.data() + off_url );
+        QString url = LCHMUrlFactory::makeURLabsoluteIfNeeded( QString::fromLocal8Bit ( (const char*) urlstr.data() + off_url ) );
 
 		if ( off_title < (uint32_t)strings.size() )
 			m_url2topics[url] = encodeWithCurrentCodec ( (const char*) strings.data() + off_title );
 		else
-			m_url2topics[url] = "Untitled";
+			m_url2topics[url] = QStringLiteral("Untitled");
 	}
 }
 

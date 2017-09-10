@@ -25,7 +25,7 @@
 #include <core/document.h>
 #include <core/utils.h>
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include "document.h"
 #include "styleinformation.h"
@@ -63,8 +63,8 @@ QTextCharFormat Style::textFormat() const
 }
 
 Converter::Converter()
-  : mTextDocument( 0 ), mCursor( 0 ),
-    mStyleInformation( 0 )
+  : mTextDocument( nullptr ), mCursor( nullptr ),
+    mStyleInformation( nullptr )
 {
 }
 
@@ -132,8 +132,9 @@ Okular::Document::OpenResult Converter::convertWithPassword( const QString &file
   const QString masterLayout = mStyleInformation->masterPageName();
   const PageFormatProperty property = mStyleInformation->pageProperty( masterLayout );
 
-  int pageWidth = qRound(property.width() / 72.0 * Okular::Utils::dpiX());
-  int pageHeight = qRound(property.height() / 72.0 * Okular::Utils::dpiY());
+  const QSizeF dpi = Okular::Utils::realDpi(nullptr);
+  int pageWidth = qRound(property.width() / 72.0 * dpi.width());
+  int pageHeight = qRound(property.height() / 72.0 * dpi.height());
 
   if ( pageWidth == 0 )
       pageWidth = 600;
@@ -176,7 +177,7 @@ Okular::Document::OpenResult Converter::convertWithPassword( const QString &file
 
   delete mCursor;
   delete mStyleInformation;
-  mStyleInformation = 0;
+  mStyleInformation = nullptr;
 
   setDocument( mTextDocument );
   return Okular::Document::OpenSuccess;
@@ -225,7 +226,7 @@ bool Converter::convertText( const QDomElement &element )
 
 bool Converter::convertHeader( QTextCursor *cursor, const QDomElement &element )
 {
-  const QString styleName = element.attribute( "style-name" );
+  const QString styleName = element.attribute( QStringLiteral("style-name") );
   const StyleFormatProperty property = mStyleInformation->styleProperty( styleName );
 
   QTextBlockFormat blockFormat;
@@ -252,14 +253,14 @@ bool Converter::convertHeader( QTextCursor *cursor, const QDomElement &element )
     child = child.nextSibling();
   }
 
-  emit addTitle( element.attribute( "outline-level", 0 ).toInt(), element.text(), cursor->block() );
+  emit addTitle( element.attribute( QStringLiteral("outline-level"), QStringLiteral("0") ).toInt(), element.text(), cursor->block() );
 
   return true;
 }
 
 bool Converter::convertParagraph( QTextCursor *cursor, const QDomElement &element, const QTextBlockFormat &parentFormat, bool merge )
 {
-  const QString styleName = element.attribute( "style-name" );
+  const QString styleName = element.attribute( QStringLiteral("style-name") );
   const StyleFormatProperty property = mStyleInformation->styleProperty( styleName );
 
   QTextBlockFormat blockFormat( parentFormat );
@@ -280,10 +281,10 @@ bool Converter::convertParagraph( QTextCursor *cursor, const QDomElement &elemen
         if ( !convertSpan( cursor, childElement, textFormat ) )
           return false;
       } else if ( childElement.tagName() == QLatin1String( "tab" ) ) {
-        mCursor->insertText( "    " );
+        mCursor->insertText( QStringLiteral("    ") );
       } else if ( childElement.tagName() == QLatin1String( "s" ) ) {
         QString spaces;
-        spaces.fill( ' ', childElement.attribute( "c" ).toInt() );
+        spaces.fill( QLatin1Char(' '), childElement.attribute( QStringLiteral("c") ).toInt() );
         mCursor->insertText( spaces );
       } else if ( childElement.tagName() == QLatin1String( "frame" ) ) {
         if ( !convertFrame( childElement ) )
@@ -316,7 +317,7 @@ bool Converter::convertTextNode( QTextCursor *cursor, const QDomText &element, c
 
 bool Converter::convertSpan( QTextCursor *cursor, const QDomElement &element, const QTextCharFormat &format )
 {
-  const QString styleName = element.attribute( "style-name" );
+  const QString styleName = element.attribute( QStringLiteral("style-name") );
   const StyleFormatProperty property = mStyleInformation->styleProperty( styleName );
 
   QTextCharFormat textFormat( format );
@@ -338,7 +339,7 @@ bool Converter::convertSpan( QTextCursor *cursor, const QDomElement &element, co
 
 bool Converter::convertList( QTextCursor *cursor, const QDomElement &element )
 {
-  const QString styleName = element.attribute( "style-name" );
+  const QString styleName = element.attribute( QStringLiteral("style-name") );
   const ListFormatProperty property = mStyleInformation->listProperty( styleName );
 
   QTextListFormat format;
@@ -458,7 +459,7 @@ bool Converter::convertTable( const QDomElement &element )
       QDomElement columnElement = el.firstChildElement();
       while ( !columnElement.isNull() ) {
         if ( columnElement.tagName() == QLatin1String( "table-cell" ) ) {
-          const StyleFormatProperty property = mStyleInformation->styleProperty( columnElement.attribute( "style-name" ) );
+          const StyleFormatProperty property = mStyleInformation->styleProperty( columnElement.attribute( QStringLiteral("style-name") ) );
 
           QTextBlockFormat format;
           property.applyTableCell( &format );
@@ -496,8 +497,8 @@ bool Converter::convertTable( const QDomElement &element )
 
       rowCounter++;
     } else if ( el.tagName() == QLatin1String( "table-column" ) ) {
-      const StyleFormatProperty property = mStyleInformation->styleProperty( el.attribute( "style-name" ) );
-      const QString tableColumnNumColumnsRepeated = el.attribute( "number-columns-repeated", "1" );
+      const StyleFormatProperty property = mStyleInformation->styleProperty( el.attribute( QStringLiteral("style-name") ) );
+      const QString tableColumnNumColumnsRepeated = el.attribute( QStringLiteral("number-columns-repeated"), QStringLiteral("1") );
       int numColumnsToApplyTo = tableColumnNumColumnsRepeated.toInt();
       for (int i = 0; i < numColumnsToApplyTo; ++i) {
         property.applyTableColumn( &tableFormat );
@@ -515,10 +516,10 @@ bool Converter::convertFrame( const QDomElement &element )
   QDomElement child = element.firstChildElement();
   while ( !child.isNull() ) {
     if ( child.tagName() == QLatin1String( "image" ) ) {
-      const QString href = child.attribute( "href" );
+      const QString href = child.attribute( QStringLiteral("href") );
       QTextImageFormat format;
-      format.setWidth( StyleParser::convertUnit( element.attribute( "width" ) ) );
-      format.setHeight( StyleParser::convertUnit( element.attribute( "height" ) ) );
+      format.setWidth( StyleParser::convertUnit( element.attribute( QStringLiteral("width") ) ) );
+      format.setHeight( StyleParser::convertUnit( element.attribute( QStringLiteral("height") ) ) );
       format.setName( href );
 
       mCursor->insertImage( format );
@@ -553,7 +554,7 @@ bool Converter::convertLink( QTextCursor *cursor, const QDomElement &element, co
 
   int endPosition = cursor->position();
 
-  Okular::Action *action = new Okular::BrowseAction( element.attribute( "href" ) );
+  Okular::Action *action = new Okular::BrowseAction( QUrl(element.attribute( QStringLiteral("href") )) );
   emit addAction( action, startPosition, endPosition );
 
   return true;
@@ -582,7 +583,7 @@ bool Converter::convertAnnotation( QTextCursor *cursor, const QDomElement &eleme
 
   Okular::TextAnnotation *annotation = new Okular::TextAnnotation;
   annotation->setAuthor( creator );
-  annotation->setContents( contents.join( "\n" ) );
+  annotation->setContents( contents.join( QStringLiteral("\n") ) );
   annotation->setCreationDate( dateTime );
   annotation->style().setColor( QColor( "#ffff00" ) );
   annotation->style().setOpacity( 0.5 );

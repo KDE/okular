@@ -20,19 +20,19 @@ class PopplerFormFieldButton : public Okular::FormFieldButton
         virtual ~PopplerFormFieldButton();
 
         // inherited from Okular::FormField
-        virtual Okular::NormalizedRect rect() const;
-        virtual int id() const;
-        virtual QString name() const;
-        virtual QString uiName() const;
-        virtual bool isReadOnly() const;
-        virtual bool isVisible() const;
+        Okular::NormalizedRect rect() const override;
+        int id() const override;
+        QString name() const override;
+        QString uiName() const override;
+        bool isReadOnly() const override;
+        bool isVisible() const override;
 
         // inherited from Okular::FormFieldButton
-        virtual ButtonType buttonType() const;
-        virtual QString caption() const;
-        virtual bool state() const;
-        virtual void setState( bool state );
-        virtual QList< int > siblings() const;
+        ButtonType buttonType() const override;
+        QString caption() const override;
+        bool state() const override;
+        void setState( bool state ) override;
+        QList< int > siblings() const override;
 
     private:
         Poppler::FormFieldButton * m_field;
@@ -47,22 +47,22 @@ class PopplerFormFieldText : public Okular::FormFieldText
         virtual ~PopplerFormFieldText();
 
         // inherited from Okular::FormField
-        virtual Okular::NormalizedRect rect() const;
-        virtual int id() const;
-        virtual QString name() const;
-        virtual QString uiName() const;
-        virtual bool isReadOnly() const;
-        virtual bool isVisible() const;
+        Okular::NormalizedRect rect() const override;
+        int id() const override;
+        QString name() const override;
+        QString uiName() const override;
+        bool isReadOnly() const override;
+        bool isVisible() const override;
 
         // inherited from Okular::FormFieldText
-        virtual Okular::FormFieldText::TextType textType() const;
-        virtual QString text() const;
-        virtual void setText( const QString& text );
-        virtual bool isPassword() const;
-        virtual bool isRichText() const;
-        virtual int maximumLength() const;
-        virtual Qt::Alignment textAlignment() const;
-        virtual bool canBeSpellChecked() const;
+        Okular::FormFieldText::TextType textType() const override;
+        QString text() const override;
+        void setText( const QString& text ) override;
+        bool isPassword() const override;
+        bool isRichText() const override;
+        int maximumLength() const override;
+        Qt::Alignment textAlignment() const override;
+        bool canBeSpellChecked() const override;
 
     private:
         Poppler::FormFieldText * m_field;
@@ -77,24 +77,24 @@ class PopplerFormFieldChoice : public Okular::FormFieldChoice
         virtual ~PopplerFormFieldChoice();
 
         // inherited from Okular::FormField
-        virtual Okular::NormalizedRect rect() const;
-        virtual int id() const;
-        virtual QString name() const;
-        virtual QString uiName() const;
-        virtual bool isReadOnly() const;
-        virtual bool isVisible() const;
+        Okular::NormalizedRect rect() const override;
+        int id() const override;
+        QString name() const override;
+        QString uiName() const override;
+        bool isReadOnly() const override;
+        bool isVisible() const override;
 
         // inherited from Okular::FormFieldChoice
-        virtual ChoiceType choiceType() const;
-        virtual QStringList choices() const;
-        virtual bool isEditable() const;
-        virtual bool multiSelect() const;
-        virtual QList<int> currentChoices() const;
-        virtual void setCurrentChoices( const QList<int>& choices );
-        virtual QString editChoice() const;
-        virtual void setEditChoice( const QString& text );
-        virtual Qt::Alignment textAlignment() const;
-        virtual bool canBeSpellChecked() const;
+        ChoiceType choiceType() const override;
+        QStringList choices() const override;
+        bool isEditable() const override;
+        bool multiSelect() const override;
+        QList<int> currentChoices() const override;
+        void setCurrentChoices( const QList<int>& choices ) override;
+        QString editChoice() const override;
+        void setEditChoice( const QString& text ) override;
+        Qt::Alignment textAlignment() const override;
+        bool canBeSpellChecked() const override;
 
     private:
         Poppler::FormFieldChoice * m_field;

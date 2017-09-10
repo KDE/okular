@@ -9,13 +9,13 @@
 
 #include "document.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kzip.h>
 
 using namespace OOO;
 
 Document::Document( const QString &fileName )
-  : mFileName( fileName ), mManifest( 0 ), mAnyEncrypted( false )
+  : mFileName( fileName ), mManifest( nullptr ), mAnyEncrypted( false )
 {
 }
 
@@ -37,62 +37,62 @@ bool Document::open( const QString &password )
   }
 
   const QStringList entries = directory->entries();
-  if ( !entries.contains( "META-INF" ) ) {
+  if ( !entries.contains( QStringLiteral("META-INF") ) ) {
     setError( i18n( "Invalid document structure (META-INF directory is missing)" ) );
     return false;
   }
-  const KArchiveDirectory *metaInfDirectory = static_cast<const KArchiveDirectory*>( directory->entry( "META-INF" ) );
-  if ( !(metaInfDirectory->entries().contains( "manifest.xml" ) ) ) {
+  const KArchiveDirectory *metaInfDirectory = static_cast<const KArchiveDirectory*>( directory->entry( QStringLiteral("META-INF") ) );
+  if ( !(metaInfDirectory->entries().contains( QStringLiteral("manifest.xml") ) ) ) {
     setError( i18n( "Invalid document structure (META-INF/manifest.xml is missing)" ) );
     return false;
   }
 
-  const KArchiveFile *file = static_cast<const KArchiveFile*>( metaInfDirectory->entry( "manifest.xml" ) );
+  const KArchiveFile *file = static_cast<const KArchiveFile*>( metaInfDirectory->entry( QStringLiteral("manifest.xml") ) );
   mManifest = new Manifest( mFileName, file->data(), password );
 
   // we should really get the file names from the manifest, but for now, we only care
   // if the manifest says the files are encrypted.
 
-  if ( !entries.contains( "content.xml" ) ) {
+  if ( !entries.contains( QStringLiteral("content.xml") ) ) {
     setError( i18n( "Invalid document structure (content.xml is missing)" ) );
     return false;
   }
 
-  file = static_cast<const KArchiveFile*>( directory->entry( "content.xml" ) );
-  if ( mManifest->testIfEncrypted( "content.xml" )  ) {
+  file = static_cast<const KArchiveFile*>( directory->entry( QStringLiteral("content.xml") ) );
+  if ( mManifest->testIfEncrypted( QStringLiteral("content.xml") )  ) {
     mAnyEncrypted = true;
-    mContent = mManifest->decryptFile( "content.xml", file->data() );
+    mContent = mManifest->decryptFile( QStringLiteral("content.xml"), file->data() );
   } else {
     mContent = file->data();
   }
 
-  if ( entries.contains( "styles.xml" ) ) {
-    file = static_cast<const KArchiveFile*>( directory->entry( "styles.xml" ) );
-    if ( mManifest->testIfEncrypted( "styles.xml" )  ) {
+  if ( entries.contains( QStringLiteral("styles.xml") ) ) {
+    file = static_cast<const KArchiveFile*>( directory->entry( QStringLiteral("styles.xml") ) );
+    if ( mManifest->testIfEncrypted( QStringLiteral("styles.xml") )  ) {
       mAnyEncrypted = true;
-      mStyles = mManifest->decryptFile( "styles.xml", file->data() );
+      mStyles = mManifest->decryptFile( QStringLiteral("styles.xml"), file->data() );
     } else {
       mStyles = file->data();
     }
   }
 
-  if ( entries.contains( "meta.xml" ) ) {
-    file = static_cast<const KArchiveFile*>( directory->entry( "meta.xml" ) );
-    if ( mManifest->testIfEncrypted( "meta.xml" )  ) {
+  if ( entries.contains( QStringLiteral("meta.xml") ) ) {
+    file = static_cast<const KArchiveFile*>( directory->entry( QStringLiteral("meta.xml") ) );
+    if ( mManifest->testIfEncrypted( QStringLiteral("meta.xml") )  ) {
       mAnyEncrypted = true;
-      mMeta = mManifest->decryptFile( "meta.xml", file->data() );
+      mMeta = mManifest->decryptFile( QStringLiteral("meta.xml"), file->data() );
     } else {
       mMeta = file->data();
     }
   }
 
-  if ( entries.contains( "Pictures" ) ) {
-    const KArchiveDirectory *imagesDirectory = static_cast<const KArchiveDirectory*>( directory->entry( "Pictures" ) );
+  if ( entries.contains( QStringLiteral("Pictures") ) ) {
+    const KArchiveDirectory *imagesDirectory = static_cast<const KArchiveDirectory*>( directory->entry( QStringLiteral("Pictures") ) );
 
     const QStringList imagesEntries = imagesDirectory->entries();
     for ( int i = 0; i < imagesEntries.count(); ++i ) {
       file = static_cast<const KArchiveFile*>( imagesDirectory->entry( imagesEntries[ i ] ) );
-      QString fullPath = QString( "Pictures/%1" ).arg( imagesEntries[ i ] );
+      QString fullPath = QStringLiteral( "Pictures/%1" ).arg( imagesEntries[ i ] );
       if ( mManifest->testIfEncrypted( fullPath ) ) {
         mAnyEncrypted = true;
         mImages.insert( fullPath, mManifest->decryptFile( fullPath, file->data() ) );

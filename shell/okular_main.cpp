@@ -15,8 +15,8 @@
 #include "okular_main.h"
 
 #include "shell.h"
-#include <kapplication.h>
-#include <klocale.h>
+#include <QtWidgets/qapplication.h>
+#include <KLocalizedString>
 #include <QtDBus/qdbusinterface.h>
 #include <QTextStream>
 #include <kwindowsystem.h>
@@ -28,14 +28,14 @@ static bool attachUniqueInstance(const QStringList &paths, const QString &serial
     if (!ShellUtils::unique(serializedOptions) || paths.count() != 1)
         return false;
 
-    QDBusInterface iface("org.kde.okular", "/okularshell", "org.kde.okular");
+    QDBusInterface iface(QStringLiteral("org.kde.okular"), QStringLiteral("/okularshell"), QStringLiteral("org.kde.okular"));
     if (!iface.isValid())
         return false;
 
     const QString page = ShellUtils::page(serializedOptions);
-    iface.call("openDocument", ShellUtils::urlFromArg(paths[0], ShellUtils::qfileExistFunc(), page).url(), serializedOptions);
+    iface.call(QStringLiteral("openDocument"), ShellUtils::urlFromArg(paths[0], ShellUtils::qfileExistFunc(), page).url(), serializedOptions);
     if (!ShellUtils::noRaise(serializedOptions)) {
-        iface.call("tryRaise");
+        iface.call(QStringLiteral("tryRaise"));
     }
 
     return true;
@@ -50,8 +50,8 @@ static bool attachExistingInstance(const QStringList &paths, const QString &seri
     const QStringList services = QDBusConnection::sessionBus().interface()->registeredServiceNames().value();
 
     // Don't match the service without trailing "-" (unique instance)
-    const QString pattern = "org.kde.okular-";
-    const QString myPid = QString::number( kapp->applicationPid() );
+    const QString pattern = QStringLiteral("org.kde.okular-");
+    const QString myPid = QString::number( qApp->applicationPid() );
     QScopedPointer<QDBusInterface> bestService;
     const int desktop = KWindowSystem::currentDesktop();
 
@@ -60,10 +60,10 @@ static bool attachExistingInstance(const QStringList &paths, const QString &seri
     {
         if ( service.startsWith(pattern) && !service.endsWith( myPid ) )
         {
-            bestService.reset( new QDBusInterface(service, "/okularshell", "org.kde.okular") );
+            bestService.reset( new QDBusInterface(service, QStringLiteral("/okularshell"), QStringLiteral("org.kde.okular")) );
 
             // Find a window that can handle our documents
-            const QDBusReply<bool> reply = bestService->call( "canOpenDocs", paths.count(), desktop );
+            const QDBusReply<bool> reply = bestService->call( QStringLiteral("canOpenDocs"), paths.count(), desktop );
             if( reply.isValid() && reply.value() )
                 break;
 
@@ -81,7 +81,7 @@ static bool attachExistingInstance(const QStringList &paths, const QString &seri
         // opened. Not sure if this behavior is safe on all platforms.
         QScopedPointer<QTemporaryFile> tempFile;
         QString path;
-        if( arg == "-" )
+        if( arg == QLatin1String("-") )
         {
             tempFile.reset( new QTemporaryFile );
             QFile stdinFile;
@@ -107,12 +107,12 @@ static bool attachExistingInstance(const QStringList &paths, const QString &seri
         }
 
         // Returns false if it can't fit another document
-        const QDBusReply<bool> reply = bestService->call( "openDocument", path, serializedOptions );
+        const QDBusReply<bool> reply = bestService->call( QStringLiteral("openDocument"), path, serializedOptions );
         if( !reply.isValid() || !reply.value() )
         return false;
     }
 
-    bestService->call( "tryRaise" );
+    bestService->call( QStringLiteral("tryRaise") );
 
     return true;
 }
@@ -138,14 +138,14 @@ Status main(const QStringList &paths, const QString &serializedOptions)
     if (ShellUtils::showPrintDialog(serializedOptions) && paths.count() > 1)
     {
         QTextStream stream(stderr);
-        stream << i18n( "Error: Can't open more than one document with the --presentation switch" ) << endl;
+        stream << i18n( "Error: Can't open more than one document with the --print switch" ) << endl;
         return Error;
     }
 
     if (!ShellUtils::page(serializedOptions).isEmpty() && paths.count() > 1)
     {
         QTextStream stream(stderr);
-        stream << i18n( "Error: Can't open more than one document with the --presentation switch" ) << endl;
+        stream << i18n( "Error: Can't open more than one document with the --page switch" ) << endl;
         return Error;
     }
 
@@ -156,18 +156,28 @@ Status main(const QStringList &paths, const QString &serializedOptions)
     }
 
     Shell* shell = new Shell( serializedOptions );
+    if ( !shell->isValid() )
+    {
+        return Error;
+    }
+
     shell->show();
     for ( int i = 0; i < paths.count(); )
     {
         // Page only makes sense if we are opening one file
         const QString page = ShellUtils::page(serializedOptions);
-        if ( shell->openDocument( ShellUtils::urlFromArg(paths[i], ShellUtils::qfileExistFunc(), page).url(), serializedOptions) )
+        const QUrl url = ShellUtils::urlFromArg(paths[i], ShellUtils::qfileExistFunc(), page);
+        if ( shell->openDocument( url, serializedOptions) )
         {
             ++i;
         }
         else
         {
             shell = new Shell( serializedOptions );
+            if ( !shell->isValid() )
+            {
+                return Error;
+            }
             shell->show();
         }
     }

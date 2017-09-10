@@ -31,30 +31,31 @@ class Node;
 class CHMGenerator : public Okular::Generator
 {
     Q_OBJECT
+    Q_INTERFACES( Okular::Generator )
     public:
         CHMGenerator( QObject *parent, const QVariantList &args );
         ~CHMGenerator();
-        bool loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector );
+        bool loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector ) override;
 
-        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const;
-        const Okular::DocumentSynopsis * generateDocumentSynopsis();
+        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const override;
+        const Okular::DocumentSynopsis * generateDocumentSynopsis() override;
 
-        bool canGeneratePixmap() const;
-        void generatePixmap( Okular::PixmapRequest * request );
+        bool canGeneratePixmap() const override;
+        void generatePixmap( Okular::PixmapRequest * request ) override;
 
-        QVariant metaData( const QString & key, const QVariant & option ) const;
+        QVariant metaData( const QString & key, const QVariant & option ) const override;
 
-    public slots:
+    public Q_SLOTS:
         void slotCompleted();
 
     protected:
-        bool doCloseDocument();
-        Okular::TextPage* textPage( Okular::Page *page );
+        bool doCloseDocument() override;
+        Okular::TextPage* textPage( Okular::Page *page ) override;
 
     private:
         void additionalRequestData();
         void recursiveExploreNodes( DOM::Node node, Okular::TextPage *tp );
-        void preparePageForSyncOperation( int zoom , const QString &url );
+        void preparePageForSyncOperation( const QString &url );
         QMap<QString, int> m_urlPage;
         QVector<QString> m_pageUrl;
         Okular::DocumentSynopsis m_docSyn;
@@ -63,7 +64,6 @@ class CHMGenerator : public Okular::Generator
         QString m_fileName;
         QString m_chmUrl;
         Okular::PixmapRequest* m_request;
-        int m_pixmapRequestZoom;
         QBitArray m_textpageAddedList;
         QBitArray m_rectsGenerated;
 };

@@ -13,7 +13,7 @@
 #include <QtCore/QList>
 #include <QtCore/QString>
 
-#include "okular_export.h"
+#include "okularcore_export.h"
 #include "global.h"
 
 class QTransform;
@@ -41,7 +41,7 @@ class RegularAreaRect;
  * Also some document types have glyphes - sets of characters rendered as one, so in search they should
  * appear as a text but are only one character when drawn on screen. We need to allow this.
  */
-class OKULAR_EXPORT TextEntity
+class OKULARCORE_EXPORT TextEntity
 {
     public:
         typedef QList<TextEntity*> List;
@@ -87,7 +87,7 @@ class OKULAR_EXPORT TextEntity
  * providing @see TextEntity items for every word/character of
  * the page.
  */
-class OKULAR_EXPORT TextPage
+class OKULARCORE_EXPORT TextPage
 {
     /// @cond PRIVATE
     friend class Page;
@@ -150,7 +150,7 @@ class OKULAR_EXPORT TextPage
          * - the text which is included by rectangular area @p rect otherwise
          * Uses AnyPixelTextAreaInclusionBehaviour
          */
-        QString text( const RegularAreaRect *rect = 0 ) const;
+        QString text( const RegularAreaRect *rect = nullptr ) const;
 
         /**
          * Text extraction function.
@@ -177,7 +177,7 @@ class OKULAR_EXPORT TextPage
          * Note that ownership of the returned area belongs to the caller.
          * @since 0.15 (KDE 4.9)
          */
-        RegularAreaRect * wordAt( const NormalizedPoint &p, QString *word = 0 ) const;
+        RegularAreaRect * wordAt( const NormalizedPoint &p, QString *word = nullptr ) const;
 
         /**
          * Returns the rectangular area of the given @p selection.

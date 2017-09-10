@@ -12,9 +12,10 @@
 
 #include <qwidget.h>
 #include "core/observer.h"
+#include "core/document.h"
 #include <QModelIndex>
 
-#include "okular_part_export.h"
+#include "okularpart_export.h"
 
 class QDomNode;
 class QModelIndex;
@@ -27,7 +28,7 @@ class Document;
 class PartTest;
 }
 
-class OKULAR_PART_EXPORT TOC : public QWidget, public Okular::DocumentObserver
+class OKULARPART_EXPORT TOC : public QWidget, public Okular::DocumentObserver
 {
 Q_OBJECT
     friend class Okular::PartTest;
@@ -37,8 +38,8 @@ Q_OBJECT
         ~TOC();
 
         // inherited from DocumentObserver
-        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags );
-        void notifyCurrentPageChanged( int previous, int current );
+        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) override;
+        void notifyCurrentPageChanged( int previous, int current ) override;
 
         void reparseConfig();
 
@@ -46,12 +47,16 @@ Q_OBJECT
         void rollbackReload();
         void finishReload();
 
-    signals:
+    Q_SIGNALS:
         void hasTOC(bool has);
+        void rightClick( const Okular::DocumentViewport &, const QPoint &, const QString & );
 
-    private slots:
+    private Q_SLOTS:
         void slotExecuted( const QModelIndex & );
         void saveSearchOptions();
+
+    protected:
+        void contextMenuEvent( QContextMenuEvent * e ) override;
 
     private:
         QVector<QModelIndex> expandedNodes( const QModelIndex & parent=QModelIndex() ) const;

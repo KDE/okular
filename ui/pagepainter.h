@@ -26,7 +26,7 @@ namespace Okular {
 /**
  * @short Paints a Okular::Page to an open painter using given flags.
  */
-class PagePainter
+class Q_DECL_EXPORT PagePainter
 {
     public:
         // list of flags passed to the painting function. by OR-ing those flags
@@ -54,6 +54,7 @@ class PagePainter
 
     private:
         static void cropPixmapOnImage( QImage & dest, const QPixmap * src, const QRect & r );
+        static void recolor(QImage *image, const QColor &foreground, const QColor &background);
 
         // create an image taking the 'cropRect' portion of an image scaled
         // to 'scaledWidth' by 'scaledHeight' pixels. cropRect must be inside
@@ -70,8 +71,8 @@ class PagePainter
         static void drawShapeOnImage(
             QImage & image,
             const NormalizedPath & imagePoints,
-            bool closeShape = true,
-            const QPen & pen = QPen(),
+            bool closeShape,
+            const QPen & pen,
             const QBrush & brush = QBrush(),
             double penWidthMultiplier = 1.0,
             RasterOperation op = Normal

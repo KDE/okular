@@ -1,3 +1,6 @@
+remove_definitions(-DTRANSLATION_DOMAIN="okular")
+add_definitions(-DTRANSLATION_DOMAIN="okular_chm")
+
 add_subdirectory( kio-msits )
 
 include_directories(
@@ -19,15 +22,20 @@ set(okularGenerator_chmlib_SRCS
    generator_chm.cpp
 )
 
-kde4_add_plugin(okularGenerator_chmlib ${okularGenerator_chmlib_SRCS})
+okular_add_generator(okularGenerator_chmlib ${okularGenerator_chmlib_SRCS})
+target_link_libraries(okularGenerator_chmlib  okularcore ${CHM_LIBRARY} KF5::KHtml)
 
-target_link_libraries(okularGenerator_chmlib  okularcore ${CHM_LIBRARY} ${KDE4_KHTML_LIBS} )
+########### autotests ###############
 
-install(TARGETS okularGenerator_chmlib DESTINATION ${PLUGIN_INSTALL_DIR})
+add_definitions( -DKDESRCDIR="${CMAKE_CURRENT_SOURCE_DIR}/" )
+ecm_add_test(autotests/chmgeneratortest.cpp
+    TEST_NAME "chmgeneratortest"
+    LINK_LIBRARIES Qt5::Test KF5::CoreAddons okularcore
+)
 
+target_compile_definitions(chmgeneratortest PRIVATE -DGENERATOR_PATH="$<TARGET_FILE:okularGenerator_chmlib>")
 
 ########### install files ###############
-
-install( FILES libokularGenerator_chmlib.desktop okularChm.desktop  DESTINATION  ${SERVICES_INSTALL_DIR} )
-install( PROGRAMS okularApplication_chm.desktop active-documentviewer_chm.desktop  DESTINATION  ${XDG_APPS_INSTALL_DIR} )
-
+install( FILES okularChm.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
+install( PROGRAMS okularApplication_chm.desktop org.kde.mobile.okular_chm.desktop  DESTINATION  ${KDE_INSTALL_APPDIR} )
+install( FILES org.kde.okular-chm.metainfo.xml DESTINATION ${KDE_INSTALL_METAINFODIR} )

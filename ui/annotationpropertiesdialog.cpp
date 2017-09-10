@@ -14,11 +14,11 @@
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qheaderview.h>
+#include <QtWidgets/qpushbutton.h>
 #include <qtextedit.h>
-#include <kicon.h>
+#include <QIcon>
 #include <klineedit.h>
-#include <klocale.h>
-#include <kglobal.h>
+#include <KLocalizedString>
 
 // local includes
 #include "core/document.h"
@@ -36,15 +36,15 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     setCaptionTextbyAnnotType();
     if ( canEditAnnotations )
     {
-        setButtons( Ok | Apply | Cancel );
-        enableButton( Apply, false );
-        connect( this, SIGNAL(applyClicked()), this, SLOT(slotapply()) );
-        connect( this, SIGNAL(okClicked()), this, SLOT(slotapply()) );
+        setStandardButtons( QDialogButtonBox::Ok | QDialogButtonBox::Apply | QDialogButtonBox::Cancel );
+        button( QDialogButtonBox::Apply )->setEnabled( false );
+        connect( button( QDialogButtonBox::Apply ), &QPushButton::clicked, this, &AnnotsPropertiesDialog::slotapply);
+        connect( button( QDialogButtonBox::Ok ), &QPushButton::clicked, this, &AnnotsPropertiesDialog::slotapply);
     }
     else
     {
-        setButtons( Close );
-        setDefaultButton( Close );
+        setStandardButtons( QDialogButtonBox::Close );
+        button( QDialogButtonBox::Close )->setDefault( true );
     }
 
     m_annotWidget = AnnotationWidgetFactory::widgetFor( ann );
@@ -60,7 +60,7 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     //BEGIN tab 2
     QFrame* page = new QFrame( this );
     addPage( page, i18n( "&General" ) );
-//    m_tabitem[1]->setIcon( KIcon( "fonts" ) );
+//    m_tabitem[1]->setIcon( QIcon::fromTheme( "fonts" ) );
     QGridLayout* gridlayout = new QGridLayout( page );
     tmplabel = new QLabel( i18n( "&Author:" ), page );
     AuthorEdit = new KLineEdit( ann->author(), page );
@@ -70,12 +70,12 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     gridlayout->addWidget( AuthorEdit, 0, 1 );
 
     tmplabel = new QLabel( page );
-    tmplabel->setText( i18n( "Created: %1", KGlobal::locale()->formatDateTime( ann->creationDate(), KLocale::LongDate, true ) ) );
+    tmplabel->setText( i18n( "Created: %1", QLocale().toString( ann->creationDate(), QLocale::LongFormat ) ) );
     tmplabel->setTextInteractionFlags( Qt::TextSelectableByMouse );
     gridlayout->addWidget( tmplabel, 1, 0, 1, 2 );
 
     m_modifyDateLabel = new QLabel( page );
-    m_modifyDateLabel->setText( i18n( "Modified: %1", KGlobal::locale()->formatDateTime( ann->modificationDate(), KLocale::LongDate, true ) ) );
+    m_modifyDateLabel->setText( i18n( "Modified: %1", QLocale().toString( ann->modificationDate(), QLocale::LongFormat ) ) );
     m_modifyDateLabel->setTextInteractionFlags( Qt::TextSelectableByMouse );
     gridlayout->addWidget( m_modifyDateLabel, 2, 0, 1, 2 );
 
@@ -89,14 +89,14 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     }
 
     //BEGIN connections
-    connect( AuthorEdit, SIGNAL(textChanged(QString)), this, SLOT(setModified()) );
-    connect( m_annotWidget, SIGNAL(dataChanged()), this, SLOT(setModified()) );
+    connect(AuthorEdit, &QLineEdit::textChanged, this, &AnnotsPropertiesDialog::setModified);
+    connect(m_annotWidget, &AnnotationWidget::dataChanged, this, &AnnotsPropertiesDialog::setModified);
     //END
 
 #if 0
-    kDebug() << "Annotation details:";
-    kDebug().nospace() << " => unique name: '" << ann->uniqueName() << "'";
-    kDebug() << " => flags:" << QString::number( m_annot->flags(), 2 );
+    qCDebug(OkularUiDebug) << "Annotation details:";
+    qCDebug(OkularUiDebug).nospace() << " => unique name: '" << ann->uniqueName() << "'";
+    qCDebug(OkularUiDebug) << " => flags:" << QString::number( m_annot->flags(), 2 );
 #endif
 
     resize( sizeHint() );
@@ -153,13 +153,13 @@ void AnnotsPropertiesDialog::setCaptionTextbyAnnotType()
             captiontext = i18n( "Annotation Properties" );
             break;
     }
-        setCaption( captiontext );
+        setWindowTitle( captiontext );
 }
 
 void AnnotsPropertiesDialog::setModified()
 {
     modified = true;
-    enableButton( Apply, true );
+    button( QDialogButtonBox::Apply )->setEnabled( true );
 }
 
 void AnnotsPropertiesDialog::slotapply()
@@ -175,11 +175,11 @@ void AnnotsPropertiesDialog::slotapply()
 
     m_document->modifyPageAnnotationProperties( m_page, m_annot );
 
-    m_modifyDateLabel->setText( i18n( "Modified: %1", KGlobal::locale()->formatDateTime( m_annot->modificationDate(), KLocale::LongDate, true ) ) );
+    m_modifyDateLabel->setText( i18n( "Modified: %1", QLocale().toString( m_annot->modificationDate(), QLocale::LongFormat ) ) );
 
     modified = false;
-    enableButton( Apply, false );
+    button( QDialogButtonBox::Apply )->setEnabled( false );
 }
 
-#include "annotationpropertiesdialog.moc"
+#include "moc_annotationpropertiesdialog.cpp"
 

@@ -11,8 +11,6 @@
 #ifndef SIMPLEPAGESIZE_H
 #define SIMPLEPAGESIZE_H
 
-#include "kviewshell_export.h"
-
 #include "length.h"
 
 #include <QSize>
@@ -34,7 +32,7 @@ about standard paper sizes.
 @version 1.0 0
 */
 
-class KDE_EXPORT SimplePageSize
+class SimplePageSize
 {
  public:
   /** Constructs an invalid SimplePageSize, with size 0x0mm */

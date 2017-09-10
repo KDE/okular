@@ -1,10 +1,10 @@
 ClassName=Settings
-Namespace=Okular
+NameSpace=Okular
 File=okular.kcfg
 Inherits=SettingsCore
 Mutators=true
 Singleton=true
-Visibility=OKULAR_PART_EXPORT
-IncludeFiles=settings_core.h,okular_part_export.h
-SourceIncludeFiles=kstandarddirs.h,qdom.h
+Visibility=OKULARPART_EXPORT
+IncludeFiles=settings_core.h,okularpart_export.h
+SourceIncludeFiles=qdom.h,QStandardPaths
 MemberVariables=dpointer

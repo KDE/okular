@@ -17,19 +17,22 @@
 #define _OKULAR_SHELL_H_
 
 #include <kparts/mainwindow.h>
-#include <kmimetype.h>
+#include <kparts/readwritepart.h>
+#include <QMimeType>
+#include <QMimeDatabase>
+#include <qaction.h>
 
 #include <QtDBus/QtDBus>
 
 class KRecentFilesAction;
 class KToggleAction;
-class KTabWidget;
+class QTabWidget;
 class KPluginFactory;
 
 class KDocumentViewer;
 class Part;
 
-#ifdef KActivities_FOUND
+#ifndef Q_OS_WIN
 namespace KActivities { class ResourceInstance; }
 #endif
 
@@ -59,12 +62,18 @@ public:
    */
   virtual ~Shell();
 
-  QSize sizeHint() const;
-public slots:
-  void slotQuit();
-  
+  QSize sizeHint() const override;
+
+  /**
+   * Returns false if Okular component wasn't found
+   **/
+  bool isValid() const;
+
+  bool openDocument(const QUrl &url, const QString &serializedOptions);
+
+public Q_SLOTS:
   Q_SCRIPTABLE Q_NOREPLY void tryRaise();
-  Q_SCRIPTABLE bool openDocument( const QString& url, const QString &serializedOptions = QString() );
+  Q_SCRIPTABLE bool openDocument(const QString &urlString, const QString &serializedOptions = QString() );
   Q_SCRIPTABLE bool canOpenDocs( int numDocs, int desktop );
 
 protected:
@@ -72,73 +81,82 @@ protected:
    * This method is called when it is time for the app to save its
    * properties for session management purposes.
    */
-  void saveProperties(KConfigGroup&);
+  void saveProperties(KConfigGroup&) override;
 
   /**
    * This method is called when this app is restored.  The KConfig
    * object points to the session management config file that was saved
    * with @ref saveProperties
    */
-  void readProperties(const KConfigGroup&);
+  void readProperties(const KConfigGroup&) override;
+
+  /**
+   * Expose internal functions for session restore testing
+   */
+  void savePropertiesInternal(KConfig* config, int num) {KMainWindow::savePropertiesInternal(config,num);}
+  void readPropertiesInternal(KConfig* config, int num) {KMainWindow::readPropertiesInternal(config,num);}
+
   void readSettings();
   void writeSettings();
   void setFullScreen( bool );
 
   using KParts::MainWindow::setCaption;
-  void setCaption( const QString &caption );
+  void setCaption( const QString &caption ) override;
 
-  bool queryClose();
-  void showEvent(QShowEvent *event);
+  bool queryClose() override;
 
-private slots:
+  void showEvent(QShowEvent *event) override;
+
+private Q_SLOTS:
   void fileOpen();
 
   void slotUpdateFullScreen();
   void slotShowMenubar();
 
-  void openUrl( const KUrl & url, const QString &serializedOptions = QString() );
+  void openUrl( const QUrl & url, const QString &serializedOptions = QString() );
   void showOpenRecentMenu();
   void closeUrl();
   void print();
   void setPrintEnabled( bool enabled );
   void setCloseEnabled( bool enabled );
-  void setTabIcon( KMimeType::Ptr mimeType );
-  void handleDroppedUrls( const KUrl::List& urls );
+  void setTabIcon(const QMimeType& mimeType );
+  void handleDroppedUrls( const QList<QUrl>& urls );
 
   // Tab event handlers
   void setActiveTab( int tab );
   void closeTab( int tab );
   void activateNextTab();
   void activatePrevTab();
-  void testTabDrop( const QDragMoveEvent* event, bool& accept );
-  void handleTabDrop( QDropEvent* event );
   void moveTabData( int from, int to );
 
-signals:
-  void restoreDocument(const KConfigGroup &group);
-  void saveDocumentRestoreInfo(KConfigGroup &group);
+  void slotFitWindowToPage( const QSize& pageViewSize, const QSize& pageSize );
+
+Q_SIGNALS:
+  void moveSplitter(int sideWidgetSize);
 
 private:
   void setupAccel();
   void setupActions();
   QStringList fileFormats() const;
-  void openNewTab( const KUrl& url, const QString &serializedOptions );
+  void openNewTab( const QUrl& url, const QString &serializedOptions );
   void applyOptionsToPart( QObject* part, const QString &serializedOptions );
   void connectPart( QObject* part );
   int  findTabIndex( QObject* sender );
 
 private:
+  bool eventFilter(QObject *obj, QEvent *event) override;
+
   KPluginFactory* m_partFactory;
   KRecentFilesAction* m_recent;
   QStringList m_fileformats;
   bool m_fileformatsscanned;
-  KAction* m_printAction;
-  KAction* m_closeAction;
+  QAction* m_printAction;
+  QAction* m_closeAction;
   KToggleAction* m_fullScreenAction;
   KToggleAction* m_showMenuBarAction;
   bool m_menuBarWasShown, m_toolBarWasShown;
   bool m_unique;
-  KTabWidget* m_tabWidget;
+  QTabWidget* m_tabWidget;
   KToggleAction* m_openInTab;
 
   struct TabState
@@ -153,12 +171,13 @@ private:
     bool closeEnabled;
   };
   QList<TabState> m_tabs;
-  KAction* m_nextTabAction;
-  KAction* m_prevTabAction;
+  QAction* m_nextTabAction;
+  QAction* m_prevTabAction;
 
-#ifdef KActivities_FOUND
+#ifndef Q_OS_WIN
   KActivities::ResourceInstance* m_activityResource;
 #endif
+  bool m_isValid;
 };
 
 #endif

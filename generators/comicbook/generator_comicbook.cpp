@@ -10,32 +10,18 @@
 #include "generator_comicbook.h"
 
 #include <QtGui/QPainter>
-#include <QtGui/QPrinter>
+#include <QtPrintSupport/QPrinter>
 
-#include <kaboutdata.h>
-#include <klocale.h>
+#include <KAboutData>
+#include <KLocalizedString>
 
 #include <core/document.h>
 #include <core/page.h>
 #include <core/fileprinter.h>
 
-static KAboutData createAboutData()
-{
-    KAboutData aboutData(
-         "okular_comicbook",
-         "okular_comicbook",
-         ki18n( "ComicBook Backend" ),
-         "0.4",
-         ki18n( "A renderer for various comic book formats" ),
-         KAboutData::License_GPL,
-         ki18n( "© 2007-2008 Tobias Koenig" )
-    );
-    aboutData.addAuthor( ki18n( "Tobias Koenig" ), KLocalizedString(), "tokoe@kde.org" );
+#include "debug_comicbook.h"
 
-    return aboutData;
-}
-
-OKULAR_EXPORT_PLUGIN( ComicBookGenerator, createAboutData() )
+OKULAR_EXPORT_PLUGIN(ComicBookGenerator, "libokularGenerator_comicbook.json")
 
 ComicBookGenerator::ComicBookGenerator( QObject *parent, const QVariantList &args )
     : Generator( parent, args )
@@ -105,6 +91,8 @@ bool ComicBookGenerator::print( QPrinter& printer )
 
     return true;
 }
+
+Q_LOGGING_CATEGORY(OkularComicbookDebug, "org.kde.okular.generators.comicbook", QtWarningMsg)
 
 #include "generator_comicbook.moc"
 

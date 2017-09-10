@@ -12,7 +12,7 @@
 #ifndef _OKULAR_GENERATOR_H_
 #define _OKULAR_GENERATOR_H_
 
-#include "okular_export.h"
+#include "okularcore_export.h"
 #include "document.h"
 #include "fontinfo.h"
 #include "global.h"
@@ -26,21 +26,22 @@
 #include <QtCore/QVariant>
 #include <QtCore/QVector>
 
-#include <kmimetype.h>
+#include <QMimeType>
 #include <kpluginfactory.h>
 
-#define OKULAR_EXPORT_PLUGIN( classname, aboutdata ) \
-    K_PLUGIN_FACTORY( classname ## Factory, registerPlugin< classname >(); ) \
-    K_EXPORT_PLUGIN( classname ## Factory( aboutdata ) )
+#define OKULAR_EXPORT_PLUGIN(classname, json ) \
+    static_assert(json[0] != '\0', "arg2 must be a string literal"); \
+    K_PLUGIN_FACTORY_WITH_JSON(classname ## Factory, json, registerPlugin<classname >();)
 
 class QByteArray;
 class QMutex;
 class QPrinter;
 class QPrintDialog;
-class KIcon;
+class QIcon;
 
 namespace Okular {
 
+class BackendOpaqueAction;
 class DocumentFonts;
 class DocumentInfo;
 class DocumentObserver;
@@ -73,7 +74,7 @@ class SourceReference;
  * Every Generator can support 0 or more export formats which can be
  * queried with @ref Generator::exportFormats().
  */
-class OKULAR_EXPORT ExportFormat
+class OKULARCORE_EXPORT ExportFormat
 {
     public:
         typedef QList<ExportFormat> List;
@@ -91,7 +92,7 @@ class OKULAR_EXPORT ExportFormat
          * @param description The i18n'ed description of the format.
          * @param mimeType The supported mime type of the format.
          */
-        ExportFormat( const QString &description, const KMimeType::Ptr &mimeType );
+        ExportFormat( const QString &description, const QMimeType &mimeType );
 
         /**
          * Creates a new export format.
@@ -100,7 +101,7 @@ class OKULAR_EXPORT ExportFormat
          * @param description The i18n'ed description of the format.
          * @param mimeType The supported mime type of the format.
          */
-        ExportFormat( const KIcon &icon, const QString &description, const KMimeType::Ptr &mimeType );
+        ExportFormat( const QIcon &icon, const QString &description, const QMimeType &mimeType );
 
         /**
          * Destroys the export format.
@@ -125,12 +126,12 @@ class OKULAR_EXPORT ExportFormat
         /**
          * Returns the mime type of the format.
          */
-        KMimeType::Ptr mimeType() const;
+        QMimeType mimeType() const;
 
         /**
          * Returns the icon for GUI representations of the format.
          */
-        KIcon icon() const;
+        QIcon icon() const;
 
         /**
          * Returns whether the export format is null/valid.
@@ -183,7 +184,7 @@ class OKULAR_EXPORT ExportFormat
  *
  * @see PrintInterface, ConfigInterface, GuiInterface
  */
-class OKULAR_EXPORT Generator : public QObject
+class OKULARCORE_EXPORT Generator : public QObject
 {
     /// @cond PRIVATE
     friend class PixmapGenerationThread;
@@ -214,7 +215,7 @@ class OKULAR_EXPORT Generator : public QObject
         /**
          * Creates a new generator.
          */
-        Generator( QObject *parent, const QVariantList &args );
+        Generator(QObject* parent = nullptr, const QVariantList& args = QVariantList());
 
         /**
          * Destroys the generator.
@@ -321,6 +322,8 @@ class OKULAR_EXPORT Generator : public QObject
 
         /**
          * Returns the general information object of the document.
+         *
+         * Changed signature in okular version 0.21
          */
         virtual DocumentInfo generateDocumentInfo( const QSet<DocumentInfo::Key> &keys ) const;
 
@@ -442,6 +445,19 @@ class OKULAR_EXPORT Generator : public QObject
          */
         void setDPI(const QSizeF &dpi);
 
+        /**
+         * Returns the 'layers model' object of the document or NULL if
+         * layers model is not available.
+         *
+         * @since 0.24
+         */
+        virtual QAbstractItemModel * layersModel() const;
+
+        /**
+         * Calls the backend to execute an BackendOpaqueAction
+         */
+        virtual void opaqueAction( const BackendOpaqueAction *action );
+
     Q_SIGNALS:
         /**
          * This signal should be emitted whenever an error occurred in the generator.
@@ -515,10 +531,28 @@ class OKULAR_EXPORT Generator : public QObject
         void setFeature( GeneratorFeature feature, bool on = true );
 
         /**
+         * Internal document setting
+         */
+        enum DocumentMetaDataKey {
+            PaperColorMetaData,         ///< Returns (QColor) the paper color if set in Settings or the default color (white) if option is true (otherwise returns a non initialized QColor)
+            TextAntialiasMetaData,      ///< Returns (bool) text antialias from Settings (option is not used)
+            GraphicsAntialiasMetaData,  ///< Returns (bool)graphic antialias from Settings (option is not used)
+            TextHintingMetaData         ///< Returns (bool)text hinting from Settings (option is not used)
+        };
+
+        /**
+         * Request a meta data of the Document, if available, like an internal
+         * setting.
+         *
+         * @since 1.1
+         */
+        QVariant documentMetaData( const DocumentMetaDataKey key, const QVariant &option = QVariant() ) const;
+
+        /**
          * Request a meta data of the Document, if available, like an internal
          * setting.
          */
-        QVariant documentMetaData( const QString &key, const QVariant &option = QVariant() ) const;
+        OKULARCORE_DEPRECATED QVariant documentMetaData( const QString &key, const QVariant &option = QVariant() ) const;
 
         /**
          * Return the pointer to a mutex the generator can use freely.
@@ -549,15 +583,6 @@ class OKULAR_EXPORT Generator : public QObject
         void requestFontData(const Okular::FontInfo &font, QByteArray *data);
 
         /**
-        * Asks the generator to dynamically generate a SourceReference for a given
-        * page number and absolute X and Y position on this page.
-        *
-        * @attention Ownership of the returned SourceReference is transferred to the caller.
-        * @since 0.10 (KDE 4.4)
-        */
-        const SourceReference * dynamicSourceReference( int pageNr, double absX, double absY );
-        
-        /**
          * Returns the last print error in case print() failed
          * @since 0.11 (KDE 4.5)
          */
@@ -565,7 +590,7 @@ class OKULAR_EXPORT Generator : public QObject
 
     protected:
         /// @cond PRIVATE
-        Generator( GeneratorPrivate &dd, QObject *parent, const QVariantList &args );
+        Generator(GeneratorPrivate &dd, QObject *parent, const QVariantList &args);
         Q_DECLARE_PRIVATE( Generator )
         GeneratorPrivate *d_ptr;
 
@@ -583,7 +608,7 @@ class OKULAR_EXPORT Generator : public QObject
 /**
  * @short Describes a pixmap type request.
  */
-class OKULAR_EXPORT PixmapRequest
+class OKULARCORE_EXPORT PixmapRequest
 {
     friend class Document;
     friend class DocumentPrivate;
@@ -701,8 +726,11 @@ class OKULAR_EXPORT PixmapRequest
 
 Q_DECLARE_METATYPE(Okular::Generator::PrintError)
 
+#define OkularGeneratorInterface_iid "org.kde.okular.Generator"
+Q_DECLARE_INTERFACE(Okular::Generator, OkularGeneratorInterface_iid)
+
 #ifndef QT_NO_DEBUG_STREAM
-OKULAR_EXPORT QDebug operator<<( QDebug str, const Okular::PixmapRequest &req );
+OKULARCORE_EXPORT QDebug operator<<( QDebug str, const Okular::PixmapRequest &req );
 #endif
 
 #endif

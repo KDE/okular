@@ -10,7 +10,7 @@
 #ifndef _OKULAR_PRINTINTERFACE_H_
 #define _OKULAR_PRINTINTERFACE_H_
 
-#include "../core/okular_export.h"
+#include "../core/okularcore_export.h"
 
 #include <QtCore/QObject>
 
@@ -36,7 +36,7 @@ namespace Okular {
  * @endcode
  * and - of course - implementing its methods.
  */
-class OKULAR_EXPORT PrintInterface
+class OKULARCORE_EXPORT PrintInterface
 {
     public:
         /**

@@ -21,11 +21,24 @@
 
 */
 
-#include <stdint.h>
 
-#define UINT16ARRAY(x) ((unsigned char)(x)[0] | ((uint16_t)(x)[1] << 8))
-#define UINT32ARRAY(x) (UINT16ARRAY(x) | ((uint32_t)(x)[2] << 16) \
-		| ((uint32_t)(x)[3] << 24))
+inline unsigned short UINT16ARRAY( const void * x )
+{
+	unsigned char * p = (unsigned char *) x;
+	return p[0] | (p[1] << 8);
+}
+
+inline unsigned int UINT32ARRAY( const void * x )
+{
+	unsigned char * p = (unsigned char *) x;
+	return p[0] | (p[1] << 8) | (p[2] << 16) | (p[3] << 24);
+}
+
+inline int INT32ARRAY( const void * x )
+{
+	char * p = (char *) x;
+	return p[0] | (p[1] << 8) | (p[2] << 16) | (p[3] << 24);
+}
 
 inline unsigned int get_int32_le( void *addr)
 {
@@ -34,9 +47,9 @@ inline unsigned int get_int32_le( void *addr)
 }
 
 
-inline uint64_t be_encint(unsigned char* buffer, size_t& length)
+inline quint64 be_encint(unsigned char* buffer, size_t& length)
 {
-	uint64_t result = 0;
+	quint64 result = 0;
 	int shift=0;
 	length = 0;
 
@@ -82,17 +95,17 @@ inline int ffus(unsigned char* byte, int* bit, size_t& length)
 }
 
 
-inline uint64_t sr_int(unsigned char* byte, int* bit,
+inline quint64 sr_int(unsigned char* byte, int* bit,
 			unsigned char s, unsigned char r, size_t& length)
 {
-	uint64_t ret; 
+	quint64 ret;
 	unsigned char mask;
 	int n, n_bits, num_bits, base, count;
 	length = 0;
 	size_t fflen;
 
 	if(!bit || *bit > 7 || s != 2)
-		return ~(uint64_t)0;
+		return ~(quint64)0;
 	ret = 0;
 
 	count = ffus(byte, bit, fflen);
@@ -137,7 +150,7 @@ inline uint64_t sr_int(unsigned char* byte, int* bit,
 
 		mask <<= base;
 		ret = (ret << (num_bits+1)) | 
-			(uint64_t)((*byte & mask) >> base);
+			(quint64)((*byte & mask) >> base);
 		
 		if( n > *bit ){
 			++byte;
@@ -151,7 +164,7 @@ inline uint64_t sr_int(unsigned char* byte, int* bit,
 	}
 
 	if(count) 
-		ret |= (uint64_t)1 << n_bits;
+		ret |= (quint64)1 << n_bits;
 
 	return ret;
 }

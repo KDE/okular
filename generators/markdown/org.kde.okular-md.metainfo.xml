@@ -9,6 +9,7 @@
   <name xml:lang="ca-valencia">Markdown</name>
   <name xml:lang="cs">Markdown</name>
   <name xml:lang="es">Markdown</name>
+  <name xml:lang="fr">Markdown</name>
   <name xml:lang="nl">Markdown</name>
   <name xml:lang="nn">Markdown</name>
   <name xml:lang="pl">Markdown</name>
@@ -27,6 +28,7 @@
   <summary xml:lang="ca-valencia">Afig la implementació per a llegir documents de Markdown</summary>
   <summary xml:lang="cs">Přidává podporu pro čtení dokumentů Markdown</summary>
   <summary xml:lang="es">Permite la lectura de documentos Markdown</summary>
+  <summary xml:lang="fr">Permet la lecture des documents Markdown</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van Markdown-documenten toe</summary>
   <summary xml:lang="nn">Legg til støtte for å lesa Markdown-dokument</summary>
   <summary xml:lang="pl">Dodaje obsługę odczytu dokumentów Markdown</summary>

@@ -2,18 +2,19 @@ _vscprintf() is specific for MSVC; thus in _synctex_error(), for any other
 compiler on Windows, use _vsnprintf() and grow the buffer until necessary.
 
 Patch provided by Patrick Spendrin <ps_ml@gmx.de>.
-diff --git a/generators/poppler/synctex/synctex_parser_utils.c b/generators/poppler/synctex/synctex_parser_utils.c
-index e85ca73..ef1645e 100644
---- a/generators/poppler/synctex/synctex_parser_utils.c
-+++ b/generators/poppler/synctex/synctex_parser_utils.c
-@@ -90,8 +90,26 @@ int _synctex_error(const char * reason,...) {
+
+Index: synctex/synctex_parser_utils.c
+===================================================================
+--- synctex.orig/synctex_parser_utils.c
++++ synctex/synctex_parser_utils.c
+@@ -101,8 +101,26 @@ int _synctex_log(int level, const char *
  		char *buff;
  		size_t len;
- 		OutputDebugStringA("SyncTeX ERROR: ");
+ 		OutputDebugStringA(prompt);
 +#	ifdef _MSC_VER
  		len = _vscprintf(reason, arg) + 1;
  		buff = (char*)malloc( len * sizeof(char) );
-+#else  /* MinGW */
++#	else  /* MinGW */
 +		size_t buffersize = 1024;
 +		size_t max_buffersize = 1024 * buffersize;
 +		int result;
@@ -29,7 +30,7 @@ index e85ca73..ef1645e 100644
 +			free(buff);
 +			return -1;
 +		}
-+#endif
- 		result = vsprintf(buff, reason, arg) +strlen("SyncTeX ERROR: ");
++#	endif
+ 		result = vsprintf(buff, reason, arg) +strlen(prompt);
  		OutputDebugStringA(buff);
  		OutputDebugStringA("\n");

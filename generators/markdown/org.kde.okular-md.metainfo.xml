@@ -41,6 +41,7 @@
   <summary xml:lang="sv">Lägger till stöd för att läsa Markdown-dokument</summary>
   <summary xml:lang="uk">Додає підтримку читання документів Markdown</summary>
   <summary xml:lang="x-test">xxAdds support for reading Markdown documentsxx</summary>
+  <summary xml:lang="zh-CN">添加阅读 Markdown 文档的支持</summary>
   <mimetypes>
     <mimetype>text/markdown</mimetype>
   </mimetypes>

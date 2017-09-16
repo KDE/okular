@@ -189,6 +189,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         void slotHistoryNext();
         void slotAddBookmark();
         void slotRenameBookmarkFromMenu();
+        void slotRemoveBookmarkFromMenu();
         void slotRenameCurrentViewportBookmark();
         void slotPreviousBookmark();
         void slotNextBookmark();
@@ -256,6 +257,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         void updateAboutBackendAction();
         void unsetDummyMode();
         void slotRenameBookmark( const DocumentViewport &viewport );
+        void slotRemoveBookmark( const DocumentViewport &viewport );
         void resetStartArguments();
 
         static int numberOfParts;

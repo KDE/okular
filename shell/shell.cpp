@@ -561,7 +561,7 @@ bool Shell::queryClose()
 
             bool checkboxResult = true;
             const int result = KMessageBox::createKMessageBox(dialog, buttonBox, QMessageBox::Question,
-                                                i18n("You have about to close %1 tabs. Are you sure you want to continue?", m_tabs.count()), QStringList(),
+                                                i18n("You are about to close %1 tabs. Are you sure you want to continue?", m_tabs.count()), QStringList(),
                                                 i18n("Warn me when I attempt to close multiple tabs"),
                                                 &checkboxResult, KMessageBox::Notify);
 

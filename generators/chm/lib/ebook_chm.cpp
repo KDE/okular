@@ -784,9 +784,9 @@ bool EBook_CHM::getInfoFromSystem()
 
 QString EBook_CHM::getTopicByUrl( const QUrl& url )
 {
-	QMap< QUrl, QString >::const_iterator it = m_url2topics.find( url );
+	QMap< QUrl, QString >::const_iterator it = m_url2topics.constFind( url );
 
-	if ( it == m_url2topics.end() )
+	if ( it == m_url2topics.constEnd() )
 		return QString::null;
 
 	return it.value();

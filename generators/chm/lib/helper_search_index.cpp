@@ -84,7 +84,7 @@ bool Index::makeIndex(const QList< QUrl >& docs, EBook *chmFile )
 	if ( chmFile->hasFeature( EBook::FEATURE_ENCODING ) )
 		entityDecoder.changeEncoding( QTextCodec::codecForName( chmFile->currentEncoding().toUtf8() ) );
 	
-	QList< QUrl >::ConstIterator it = docList.begin();
+	QList< QUrl >::ConstIterator it = docList.constBegin();
 	int steps = docList.count() / 100;
 	
 	if ( !steps )
@@ -92,7 +92,7 @@ bool Index::makeIndex(const QList< QUrl >& docs, EBook *chmFile )
 	
 	int prog = 0;
 	
-	for ( int i = 0; it != docList.end(); ++it, ++i )
+	for ( int i = 0; it != docList.constEnd(); ++it, ++i )
 	{
 		if ( lastWindowClosed )
 			return false;
@@ -102,7 +102,7 @@ bool Index::makeIndex(const QList< QUrl >& docs, EBook *chmFile )
 		
 		if ( parseDocumentToStringlist( chmFile, filename, terms ) )
 		{
-			for ( QStringList::ConstIterator tit = terms.begin(); tit != terms.end(); ++tit )
+			for ( QStringList::ConstIterator tit = terms.constBegin(); tit != terms.constEnd(); ++tit )
 				insertInDict( *tit, i );
 		}
 		
@@ -314,7 +314,7 @@ void Index::writeDict( QDataStream& stream )
 	stream << docList;
 	
 	// Dictionary
-	for( QHash<QString, Entry *>::ConstIterator it = dict.begin(); it != dict.end(); ++it )
+	for( QHash<QString, Entry *>::ConstIterator it = dict.constBegin(); it != dict.constEnd(); ++it )
 	{
 		stream << it.key();
 		stream << (int) it.value()->documents.count();
@@ -436,7 +436,7 @@ bool Index::searchForPhrases( const QStringList &phrases, const QStringList &wor
 
 	// Fill the dictionary with the words from the document
 	unsigned int word_offset = 3;
-	for ( QStringList::ConstIterator it = parsed_document.begin(); it != parsed_document.end(); it++, word_offset++ )
+	for ( QStringList::ConstIterator it = parsed_document.constBegin(); it != parsed_document.constEnd(); it++, word_offset++ )
 	{
 		PosEntry * entry = miniDict[ *it ];
 		
@@ -460,7 +460,7 @@ bool Index::searchForPhrases( const QStringList &phrases, const QStringList &wor
 	
 	QList<uint> first_word_positions;
 	
-	for ( QStringList::ConstIterator phrase_it = phrases.begin(); phrase_it != phrases.end(); phrase_it++ )
+	for ( QStringList::ConstIterator phrase_it = phrases.constBegin(); phrase_it != phrases.constEnd(); phrase_it++ )
 	{
 		QStringList phrasewords = phrase_it->split( ' ' );
 		first_word_positions = miniDict[ phrasewords[0] ]->positions;

@@ -57,7 +57,7 @@ QTextDocument* Converter::convert( const QString &fileName )
     MMIOT *markdownHandle = mkd_in( markdownFile, 0 );
     
     if ( !mkd_compile( markdownHandle, MKD_FENCEDCODE | MKD_GITHUBTAGS | MKD_AUTOLINK ) ) {
-        emit error( i18n( "Failed to compile markdown document!" ), -1 );
+        emit error( i18n( "Failed to compile the Markdown document." ), -1 );
         return 0;
     }
     

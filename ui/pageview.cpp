@@ -236,6 +236,9 @@ public:
     bool rtl_Mode;
     // Keep track of whether tablet pen is currently pressed down
     bool penDown;
+
+    // Keep track of mouse over link object
+    const Okular::ObjectRect * mouseOverLinkObject;
 };
 
 PageViewPrivate::PageViewPrivate( PageView *qq )
@@ -2148,8 +2151,11 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
         case Okular::Settings::EnumMouseMode::TableSelect:
         case Okular::Settings::EnumMouseMode::TrimSelect:
             // set second corner of selection
-            if ( d->mouseSelecting )
+            if ( d->mouseSelecting ) {
                 updateSelection( eventPos );
+                d->mouseOverLinkObject = nullptr;
+            }
+            updateCursor();
             break;
 
         case Okular::Settings::EnumMouseMode::Magnifier:
@@ -2459,18 +2465,11 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
             if ( leftButton && pageItem && pageItem == pageItemPressPos &&
                  ( (d->mousePressPos - e->globalPos()).manhattanLength() < QApplication::startDragDistance() ) )
             {
-                double nX = pageItem->absToPageX(eventPos.x());
-                double nY = pageItem->absToPageY(eventPos.y());
-                const Okular::ObjectRect * rect;
-                rect = pageItem->page()->objectRect( Okular::ObjectRect::Action, nX, nY, pageItem->uncroppedWidth(), pageItem->uncroppedHeight() );
-                if ( rect )
+                if ( !mouseReleaseOverLink( d->mouseOverLinkObject ) && ( e->modifiers() == Qt::ShiftModifier ) )
                 {
-                    // handle click over a link
-                    const Okular::Action * action = static_cast< const Okular::Action * >( rect->object() );
-                    d->document->processAction( action );
-                }
-                else if ( e->modifiers() == Qt::ShiftModifier )
-                {
+                    const double nX = pageItem->absToPageX(eventPos.x());
+                    const double nY = pageItem->absToPageY(eventPos.y());
+                    const Okular::ObjectRect * rect;
                     // TODO: find a better way to activate the source reference "links"
                     // for the moment they are activated with Shift + left click
                     // Search the nearest source reference.
@@ -2525,53 +2524,19 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                 if ( pageItem && pageItem == pageItemPressPos &&
                      ( (d->mousePressPos - e->globalPos()).manhattanLength() < QApplication::startDragDistance() ) )
                 {
-                    double nX = pageItem->absToPageX(eventPos.x());
-                    double nY = pageItem->absToPageY(eventPos.y());
-                    const Okular::ObjectRect * rect;
-                    rect = pageItem->page()->objectRect( Okular::ObjectRect::Action, nX, nY, pageItem->uncroppedWidth(), pageItem->uncroppedHeight() );
-                    if ( rect )
+                    QMenu * menu = createProcessLinkMenu(pageItem, eventPos );
+                    if ( menu )
                     {
-                        // handle right click over a link
-                        const Okular::Action * link = static_cast< const Okular::Action * >( rect->object() );
-                        // creating the menu and its actions
-                        QMenu menu( this );
-                        QAction * actProcessLink = menu.addAction( i18n( "Follow This Link" ) );
-                        QAction * actStopSound = nullptr;
-                        if ( link->actionType() == Okular::Action::Sound ) {
-                            actProcessLink->setText( i18n( "Play this Sound" ) );
-                            if ( Okular::AudioPlayer::instance()->state() == Okular::AudioPlayer::PlayingState ) {
-                                actStopSound = menu.addAction( i18n( "Stop Sound" ) );
-                            }
-                        }
-                        QAction * actCopyLinkLocation = nullptr;
-                        if ( dynamic_cast< const Okular::BrowseAction * >( link ) )
-                            actCopyLinkLocation = menu.addAction( QIcon::fromTheme( QStringLiteral("edit-copy") ), i18n( "Copy Link Address" ) );
-                        QAction * res = menu.exec( e->globalPos() );
-                        if ( res )
-                        {
-                            if ( res == actProcessLink )
-                            {
-                                d->document->processAction( link );
-                            }
-                            else if ( res == actCopyLinkLocation )
-                            {
-                                const Okular::BrowseAction * browseLink = static_cast< const Okular::BrowseAction * >( link );
-                                QClipboard *cb = QApplication::clipboard();
-                                cb->setText( browseLink->url().toDisplayString(), QClipboard::Clipboard );
-                                if ( cb->supportsSelection() )
-                                    cb->setText( browseLink->url().toDisplayString(), QClipboard::Selection );
-                            }
-                            else if ( res == actStopSound )
-                            {
-                                Okular::AudioPlayer::instance()->stopPlaybacks();
-                            }
-                        }
+                        menu->exec( e->globalPos() );
+                        menu->deleteLater();
                     }
                     else
                     {
+                        const double nX = pageItem->absToPageX(eventPos.x());
+                        const double nY = pageItem->absToPageY(eventPos.y());
                         // a link can move us to another page or even to another document, there's no point in trying to
                         //  process the click on the image once we have processes the click on the link
-                        rect = pageItem->page()->objectRect( Okular::ObjectRect::Image, nX, nY, pageItem->uncroppedWidth(), pageItem->uncroppedHeight() );
+                        const Okular::ObjectRect * rect = pageItem->page()->objectRect( Okular::ObjectRect::Image, nX, nY, pageItem->uncroppedWidth(), pageItem->uncroppedHeight() );
                         if ( rect )
                         {
                             // handle right click over a image
@@ -2633,6 +2598,12 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
 
         case Okular::Settings::EnumMouseMode::TrimSelect:
         {
+            // if it is a left release checks if is over a previous link press
+            if ( leftButton && mouseReleaseOverLink ( d->mouseOverLinkObject ) ) {
+                selectionClear();
+                break;
+            }
+
             // if mouse is released and selection is null this is a rightClick
             if ( rightButton && !d->mouseSelecting )
             {
@@ -2681,6 +2652,12 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
         }
         case Okular::Settings::EnumMouseMode::RectSelect:
         {
+            // if it is a left release checks if is over a previous link press
+            if ( leftButton && mouseReleaseOverLink ( d->mouseOverLinkObject ) ) {
+                selectionClear();
+                break;
+            }
+
             // if mouse is released and selection is null this is a rightClick
             if ( rightButton && !d->mouseSelecting )
             {
@@ -2739,6 +2716,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
 
             // popup that ask to copy:text and copy/save:image
             QMenu menu( this );
+            menu.setObjectName("PopupMenu");
             QAction *textToClipboard = nullptr;
 #ifdef HAVE_SPEECH
             QAction *speakText = nullptr;
@@ -2749,6 +2727,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
             {
                 menu.addAction( new OKMenuTitle( &menu, i18np( "Text (1 character)", "Text (%1 characters)", selectedText.length() ) ) );
                 textToClipboard = menu.addAction( QIcon::fromTheme(QStringLiteral("edit-copy")), i18n( "Copy to Clipboard" ) );
+                textToClipboard->setObjectName("CopyTextToClipboard");
                 bool copyAllowed = d->document->isAllowed( Okular::AllowCopy );
                 if ( !copyAllowed )
                 {
@@ -2843,6 +2822,12 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
 
         case Okular::Settings::EnumMouseMode::TableSelect:
         {
+            // if it is a left release checks if is over a previous link press
+            if ( leftButton && mouseReleaseOverLink ( d->mouseOverLinkObject ) ) {
+                selectionClear();
+                break;
+            }
+
             // if mouse is released and selection is null this is a rightClick
             if ( rightButton && !d->mouseSelecting )
             {
@@ -2984,6 +2969,12 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
 
         }break;
             case Okular::Settings::EnumMouseMode::TextSelect:
+                // if it is a left release checks if is over a previous link press
+                if ( leftButton && mouseReleaseOverLink ( d->mouseOverLinkObject ) ) {
+                    selectionClear();
+                    break;
+                }
+
                 if ( d->mouseTextSelecting )
                 {
                     d->mouseTextSelecting = false;
@@ -3004,46 +2995,74 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                     PageViewItem* item = pickItemOnPoint(eventPos.x(),eventPos.y());
                     const Okular::Page *page;
                     //if there is text selected in the page
-                    if (item && (page = item->page())->textSelection())
+                    if (item)
                     {
-                        QMenu menu( this );
-                        QAction *textToClipboard = menu.addAction( QIcon::fromTheme( QStringLiteral("edit-copy") ), i18n( "Copy Text" ) );
-                        QAction *httpLink = nullptr;
+                        QAction * httpLink = nullptr;
+                        QAction * textToClipboard = nullptr;
+                        QString url;
+
+                        QMenu * menu = createProcessLinkMenu( item, eventPos );
+                        const bool mouseClickOverLink = (menu != nullptr);
 #ifdef HAVE_SPEECH
                         QAction *speakText = nullptr;
-                        if ( Okular::Settings::useTTS() )
-                            speakText = menu.addAction( QIcon::fromTheme( QStringLiteral("text-speak") ), i18n( "Speak Text" ) );
 #endif
-                        if ( !d->document->isAllowed( Okular::AllowCopy ) )
+                        if ( (page = item->page())->textSelection() )
                         {
-                            textToClipboard->setEnabled( false );
-                            textToClipboard->setText( i18n("Copy forbidden by DRM") );
-                        }
-                        else
-                        {
-                            addWebShortcutsMenu( &menu, d->selectedText() );
-                        }
-                        const QString url = UrlUtils::getUrl( d->selectedText() );
-                        if ( !url.isEmpty() )
-                        {
-                            const QString squeezedText = KStringHandler::rsqueeze( url, 30 );
-                            httpLink = menu.addAction( i18n( "Go to '%1'", squeezedText ) );
-                        }
-                        QAction *choice = menu.exec( e->globalPos() );
-                        // check if the user really selected an action
-                        if ( choice )
-                        {
-                            if ( choice == textToClipboard )
-                                copyTextSelection();
-#ifdef HAVE_SPEECH
-                            else if ( choice == speakText )
+                            if ( !menu )
                             {
-                                const QString text = d->selectedText();
-                                d->tts()->say( text );
+                                menu = new QMenu(this);
                             }
+                            textToClipboard = menu->addAction( QIcon::fromTheme( QStringLiteral("edit-copy") ), i18n( "Copy Text" ) );
+
+#ifdef HAVE_SPEECH
+                            if ( Okular::Settings::useTTS() )
+                                speakText = menu->addAction( QIcon::fromTheme( QStringLiteral("text-speak") ), i18n( "Speak Text" ) );
 #endif
-                            else if ( choice == httpLink )
-                                new KRun( QUrl( url ), this );
+                            if ( !d->document->isAllowed( Okular::AllowCopy ) )
+                            {
+                                textToClipboard->setEnabled( false );
+                                textToClipboard->setText( i18n("Copy forbidden by DRM") );
+                            }
+                            else
+                            {
+                                addWebShortcutsMenu( menu, d->selectedText() );
+                            }
+
+                            // if the right-click was over a link add "Follow This link" instead of "Go to"
+                            if (!mouseClickOverLink)
+                            {
+                                url = UrlUtils::getUrl( d->selectedText() );
+                                if ( !url.isEmpty() )
+                                {
+                                    const QString squeezedText = KStringHandler::rsqueeze( url, 30 );
+                                    httpLink = menu->addAction( i18n( "Go to '%1'", squeezedText ) );
+                                    httpLink->setObjectName("GoToAction");
+                                }
+                            }
+                        }
+
+                        if ( menu ) {
+                            menu->setObjectName("PopupMenu");
+
+                            QAction *choice = menu->exec( e->globalPos() );
+                            // check if the user really selected an action
+                            if ( choice )
+                            {
+                                if ( choice == textToClipboard )
+                                    copyTextSelection();
+#ifdef HAVE_SPEECH
+                                else if ( choice == speakText )
+                                {
+                                    const QString text = d->selectedText();
+                                    d->tts()->say( text );
+                                }
+#endif
+                                else if ( choice == httpLink ) {
+                                    new KRun( QUrl( url ), this );
+                                }
+                            }
+
+                            menu->deleteLater();
                         }
                     }
                 }
@@ -4004,6 +4023,9 @@ void PageView::updateCursor()
 
 void PageView::updateCursor( const QPoint &p )
 {
+    // reset mouse over link it will be re-set if that still valid
+    d->mouseOverLinkObject = nullptr;
+
     // detect the underlaying page (if present)
     PageViewItem * pageItem = pickItemOnPoint( p.x(), p.y() );
 
@@ -4018,41 +4040,59 @@ void PageView::updateCursor( const QPoint &p )
     {
         double nX = pageItem->absToPageX(p.x());
         double nY = pageItem->absToPageY(p.y());
+        Qt::CursorShape cursorShapeFallback;
 
         // if over a ObjectRect (of type Link) change cursor to hand
-        if ( d->mouseMode == Okular::Settings::EnumMouseMode::TextSelect )
-            setCursor( Qt::IBeamCursor );
-        else if ( d->mouseMode == Okular::Settings::EnumMouseMode::Magnifier )
-            setCursor( Qt::CrossCursor );
-        else if ( d->mouseMode == Okular::Settings::EnumMouseMode::RectSelect )
-            setCursor( Qt::CrossCursor );
-        else if ( d->mouseMode == Okular::Settings::EnumMouseMode::TrimSelect )
-            setCursor( Qt::CrossCursor );
-        else if ( d->mouseMode == Okular::Settings::EnumMouseMode::Browse )
+        switch ( d->mouseMode )
         {
+        case Okular::Settings::EnumMouseMode::TextSelect:
+            if (d->mouseTextSelecting)
+            {
+                setCursor( Qt::IBeamCursor );
+                return;
+            }
+            cursorShapeFallback = Qt::IBeamCursor;
+            break;
+        case Okular::Settings::EnumMouseMode::Magnifier:
+            setCursor( Qt::CrossCursor );
+            return;
+        case Okular::Settings::EnumMouseMode::RectSelect:
+        case Okular::Settings::EnumMouseMode::TrimSelect:
+            if (d->mouseSelecting)
+            {
+                setCursor( Qt::CrossCursor );
+                return;
+            }
+            cursorShapeFallback = Qt::CrossCursor;
+            break;
+        case Okular::Settings::EnumMouseMode::Browse:
             d->mouseOnRect = false;
             if ( d->mouseAnnotation->isMouseOver() )
             {
                 d->mouseOnRect = true;
                 setCursor( d->mouseAnnotation->cursor() );
+                return;
             }
             else
             {
-                const Okular::ObjectRect * linkobj = pageItem->page()->objectRect( Okular::ObjectRect::Action, nX, nY, pageItem->uncroppedWidth(), pageItem->uncroppedHeight() );
-                if ( linkobj )
-                {
-                    d->mouseOnRect = true;
-                    setCursor( Qt::PointingHandCursor );
-                }
-                else
-                {
-                    setCursor( Qt::OpenHandCursor );
-                }
+                cursorShapeFallback = Qt::OpenHandCursor;
             }
+            break;
+        default:
+            setCursor( Qt::ArrowCursor );
+            return;
+        }
+
+        const Okular::ObjectRect * linkobj = pageItem->page()->objectRect( Okular::ObjectRect::Action, nX, nY, pageItem->uncroppedWidth(), pageItem->uncroppedHeight() );
+        if ( linkobj )
+        {
+            d->mouseOverLinkObject = linkobj;
+            d->mouseOnRect = true;
+            setCursor( Qt::PointingHandCursor );
         }
         else
         {
-            setCursor( Qt::ArrowCursor );
+            setCursor(cursorShapeFallback);
         }
     }
     else
@@ -4260,6 +4300,51 @@ void PageView::addWebShortcutsMenu( QMenu * menu, const QString & text )
             menu->addMenu(webShortcutsMenu);
         }
     }
+}
+
+QMenu* PageView::createProcessLinkMenu(PageViewItem *item, const QPoint &eventPos)
+{
+    // check if the right-click was over a link
+    const double nX = item->absToPageX(eventPos.x());
+    const double nY = item->absToPageY(eventPos.y());
+    const Okular::ObjectRect * rect = item->page()->objectRect( Okular::ObjectRect::Action, nX, nY, item->uncroppedWidth(), item->uncroppedHeight() );
+    if ( rect )
+    {
+        QMenu *menu = new QMenu(this);
+        const Okular::Action * link = static_cast< const Okular::Action * >( rect->object() );
+        // creating the menu and its actions
+        QAction * processLink = menu->addAction( i18n( "Follow This Link" ) );
+        processLink->setObjectName("ProcessLinkAction");
+        if ( link->actionType() == Okular::Action::Sound ) {
+            processLink->setText( i18n( "Play this Sound" ) );
+            if ( Okular::AudioPlayer::instance()->state() == Okular::AudioPlayer::PlayingState ) {
+                QAction * actStopSound = menu->addAction( i18n( "Stop Sound" ) );
+                connect( actStopSound, &QAction::triggered, []() {
+                    Okular::AudioPlayer::instance()->stopPlaybacks();
+                });
+            }
+        }
+
+
+        if ( dynamic_cast< const Okular::BrowseAction * >( link ) )
+        {
+            QAction * actCopyLinkLocation = menu->addAction( QIcon::fromTheme( QStringLiteral("edit-copy") ), i18n( "Copy Link Address" ) );
+            actCopyLinkLocation->setObjectName("CopyLinkLocationAction");
+            connect( actCopyLinkLocation, &QAction::triggered, [ link ]() {
+                const Okular::BrowseAction * browseLink = static_cast< const Okular::BrowseAction * >( link );
+                QClipboard *cb = QApplication::clipboard();
+                cb->setText( browseLink->url().toDisplayString(), QClipboard::Clipboard );
+                if ( cb->supportsSelection() )
+                    cb->setText( browseLink->url().toDisplayString(), QClipboard::Selection );
+            } );
+        }
+
+        connect( processLink, &QAction::triggered, [this, link]() {
+            d->document->processAction( link );
+        });
+        return menu;
+    }
+    return nullptr;
 }
 
 //BEGIN private SLOTS
@@ -5091,6 +5176,18 @@ void PageView::updateTrimMode( int except_id ) {
         if (trimModeAction->data().toInt() != except_id)
             trimModeAction->setChecked( false );
     }
+}
+
+bool PageView::mouseReleaseOverLink( const Okular::ObjectRect * rect ) const
+{
+    if ( rect )
+    {
+        // handle click over a link
+        const Okular::Action * action = static_cast< const Okular::Action * >( rect->object() );
+        d->document->processAction( action );
+        return true;
+    }
+    return false;
 }
 
 void PageView::slotTrimMarginsToggled( bool on )

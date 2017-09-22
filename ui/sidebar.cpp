@@ -138,15 +138,20 @@ void SidebarDelegate::paint( QPainter *painter, const QStyleOptionViewItem &opti
         foreColor = m_windowForeground->brush(QPalette::Disabled).color();
         disabled = true;
     }
-    else if ( option.state & ( QStyle::State_HasFocus | QStyle::State_Selected ) )
+    else if ( option.state & QStyle::State_HasFocus )
     {
         backBrush = m_selectionBackground->brush(option.palette);
         foreColor = m_selectionForeground->brush(option.palette).color();
     }
+    else if ( option.state & QStyle::State_Selected )
+    {
+        backBrush = m_selectionBackground->brush(option.palette);
+        foreColor = m_windowForeground->brush(option.palette).color();
+    }
     else if ( option.state & QStyle::State_MouseOver )
     {
         backBrush = m_selectionBackground->brush(option.palette).color().light( 115 );
-        foreColor = m_selectionForeground->brush(option.palette).color();
+        foreColor = m_windowForeground->brush(option.palette).color();
         hover = true;
     }
     else /*if ( option.state & QStyle::State_Enabled )*/

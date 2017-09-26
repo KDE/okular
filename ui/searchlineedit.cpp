@@ -271,15 +271,6 @@ void SearchLineEdit::searchFinished( int id, Okular::Document::SearchStatus endS
         setPalette( pal );
     }
 
-    if ( endStatus == Okular::Document::EndOfDocumentReached ) {
-        const bool forward = m_searchType == Okular::Document::NextMatch;
-        const QString question = forward ? i18n("End of document reached.\nContinue from the beginning?") : i18n("Beginning of document reached.\nContinue from the bottom?");
-        if ( KMessageBox::questionYesNo(window(), question, QString(), KStandardGuiItem::cont(), KStandardGuiItem::cancel()) == KMessageBox::Yes ) {
-            m_document->continueSearch( m_id, m_searchType );
-            return;
-        }
-    }
-
     m_searchRunning = false;
     emit searchStopped();
 }

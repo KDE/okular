@@ -1609,13 +1609,15 @@ void DocumentPrivate::doContinueDirectionMatchSearch(void *doContinueDirectionMa
         if (search->pagesDone < pageCount)
         {
             doContinue = true;
-            if ( searchStruct->currentPage >= pageCount || searchStruct->currentPage < 0 )
+            if ( searchStruct->currentPage >= pageCount )
             {
-                doContinue = false;
-                search->isCurrentlySearching = false;
-                search->continueOnPage = forward ? 0 : pageCount - 1;
-                search->continueOnMatch = RegularAreaRect();
-                emit m_parent->searchFinished ( searchStruct->searchID, Document::EndOfDocumentReached );
+                searchStruct->currentPage = 0;
+                emit m_parent->notice(i18n("Continuing search from beginning"), 3000);
+            }
+            else if ( searchStruct->currentPage < 0 )
+            {
+                searchStruct->currentPage = pageCount - 1;
+                emit m_parent->notice(i18n("Continuing search from bottom"), 3000);
             }
         }
     }

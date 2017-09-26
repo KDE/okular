@@ -18,6 +18,7 @@
 #include <qlayout.h>
 #include <qtimer.h>
 #include <kcolorscheme.h>
+#include <kiconloader.h>
 #include <kpixmapsequence.h>
 #include <kpixmapsequencewidget.h>
 #include <kmessagebox.h>
@@ -327,7 +328,7 @@ void SearchLineWidget::slotTimedout()
 {
     if ( m_anim->sequence().isEmpty() )
     {
-        const KPixmapSequence seq( QStringLiteral("process-working"), 22 );
+        const KPixmapSequence seq = KIconLoader::global()->loadPixmapSequence(QStringLiteral("process-working"), 22);
         if ( seq.frameCount() > 0 )
         {
             m_anim->setInterval( 1000 / seq.frameCount() );

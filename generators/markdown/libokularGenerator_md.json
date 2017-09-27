@@ -46,6 +46,7 @@
         "Name[uk]": "Модуль Markdown",
         "Name[x-test]": "xxMarkdown Backendxx",
         "Name[zh_CN]": "Markdown 后端",
+        "Name[zh_TW]": "Markdown 後端介面",
         "ServiceTypes": [
             "okular/Generator"
         ],

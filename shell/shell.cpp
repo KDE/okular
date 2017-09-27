@@ -559,6 +559,39 @@ QSize Shell::sizeHint() const
 
 bool Shell::queryClose()
 {
+    if (m_tabs.count() > 1)
+    {
+        const QString dontAskAgainName = "ShowTabWarning";
+        KMessageBox::ButtonCode dummy;
+        if (shouldBeShownYesNo(dontAskAgainName, dummy))
+        {
+            QDialog *dialog = new QDialog(this);
+            dialog->setWindowTitle(i18n("Confirm Close"));
+
+            QDialogButtonBox *buttonBox = new QDialogButtonBox(dialog);
+            buttonBox->setStandardButtons(QDialogButtonBox::Yes | QDialogButtonBox::No);
+            KGuiItem::assign(buttonBox->button(QDialogButtonBox::Yes), KGuiItem(i18n("Close Tabs"), "tab-close"));
+            KGuiItem::assign(buttonBox->button(QDialogButtonBox::No), KStandardGuiItem::cancel());
+
+
+            bool checkboxResult = true;
+            const int result = KMessageBox::createKMessageBox(dialog, buttonBox, QMessageBox::Question,
+                                                i18n("You are about to close %1 tabs. Are you sure you want to continue?", m_tabs.count()), QStringList(),
+                                                i18n("Warn me when I attempt to close multiple tabs"),
+                                                &checkboxResult, KMessageBox::Notify);
+
+            if (!checkboxResult)
+            {
+                saveDontShowAgainYesNo(dontAskAgainName, dummy);
+            }
+
+            if (result != QDialogButtonBox::Yes)
+            {
+                return false;
+            }
+        }
+    }
+
     for( int i = 0; i < m_tabs.size(); ++i )
     {
         KParts::ReadWritePart* const part = m_tabs[i].part;

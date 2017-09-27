@@ -35,8 +35,8 @@ class PartTest
         void testReload();
         void testCanceledReload();
         void testTOCReload();
-        void testFowardPDF();
-        void testFowardPDF_data();
+        void testForwardPDF();
+        void testForwardPDF_data();
         void testGeneratorPreferences();
         void testSelectText();
         void testClickInternalLink();
@@ -116,7 +116,7 @@ void PartTest::testTOCReload()
     QCOMPARE(part.m_toc->expandedNodes().count(), 3);
 }
 
-void PartTest::testFowardPDF()
+void PartTest::testForwardPDF()
 {
     QFETCH(QString, dir);
 
@@ -164,7 +164,7 @@ void PartTest::testFowardPDF()
     QCOMPARE(part.m_document->currentPage(), 1u);
 }
 
-void PartTest::testFowardPDF_data()
+void PartTest::testForwardPDF_data()
 {
     QTest::addColumn<QString>("dir");
 

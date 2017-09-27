@@ -298,7 +298,7 @@ class DocumentPrivate
         // for the current document contains any annotation or form.
         bool m_docdataMigrationNeeded;
 
-        synctex_scanner_t m_synctex_scanner;
+        synctex_scanner_p m_synctex_scanner;
 
         // generator selection
         static QVector<KPluginMetaData> availableGenerators();

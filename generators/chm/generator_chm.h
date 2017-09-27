@@ -14,7 +14,7 @@
 #include <core/document.h>
 #include <core/generator.h>
 
-#include "lib/libchmfile.h"
+#include "lib/ebook_chm.h"
 
 #include <qbitarray.h>
 
@@ -59,7 +59,7 @@ class CHMGenerator : public Okular::Generator
         QMap<QString, int> m_urlPage;
         QVector<QString> m_pageUrl;
         Okular::DocumentSynopsis m_docSyn;
-        LCHMFile* m_file;
+        EBook* m_file;
         KHTMLPart *m_syncGen;
         QString m_fileName;
         QString m_chmUrl;

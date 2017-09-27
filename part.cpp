@@ -2238,6 +2238,26 @@ void Part::slotRenameBookmarkFromMenu()
     }
 }
 
+void Part::slotRemoveBookmarkFromMenu()
+{
+    QAction *action = dynamic_cast<QAction *>(sender());
+    Q_ASSERT( action );
+    if ( action )
+    {
+        DocumentViewport vp ( action->data().toString() );
+        slotRemoveBookmark( vp );
+    }
+}
+
+void Part::slotRemoveBookmark(const DocumentViewport &viewport)
+{
+    Q_ASSERT(m_document->bookmarkManager()->isBookmarked( viewport ));
+    if ( m_document->bookmarkManager()->isBookmarked( viewport ) )
+    {
+        m_document->bookmarkManager()->removeBookmark( viewport );
+    }
+}
+
 void Part::slotRenameCurrentViewportBookmark()
 {
     slotRenameBookmark( m_document->viewport() );
@@ -2253,6 +2273,9 @@ bool Part::aboutToShowContextMenu(QMenu * /*menu*/, QAction *action, QMenu *cont
         QAction *renameAction = contextMenu->addAction( QIcon::fromTheme( QStringLiteral("edit-rename") ), i18n( "Rename this Bookmark" ), this, SLOT(slotRenameBookmarkFromMenu()) );
         renameAction->setData(ba->property("htmlRef").toString());
         renameAction->setObjectName(QStringLiteral("OkularPrivateRenameBookmarkActions"));
+        QAction *deleteAction = contextMenu->addAction( QIcon::fromTheme( QStringLiteral("list-remove") ), i18n("Remove this Bookmark"), this, SLOT(slotRemoveBookmarkFromMenu()));
+        deleteAction->setData(ba->property("htmlRef").toString());
+        deleteAction->setObjectName(QStringLiteral("OkularPrivateRenameBookmarkActions"));
     }
     return ba;
 }

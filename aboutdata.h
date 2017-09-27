@@ -27,7 +27,7 @@ inline KAboutData okularAboutData()
         i18n("(C) 2002 Wilco Greven, Christophe Devriese\n"
               "(C) 2004-2005 Enrico Ros\n"
               "(C) 2005 Piotr Szymanski\n"
-              "(C) 2004-2009 Albert Astals Cid\n"
+              "(C) 2004-2017 Albert Astals Cid\n"
               "(C) 2006-2009 Pino Toscano"),
         QString(),
         QStringLiteral("http://okular.kde.org")

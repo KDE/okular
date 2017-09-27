@@ -40,6 +40,13 @@ set_package_properties("KF5KHtml" PROPERTIES
         TYPE RECOMMENDED
         PURPOSE "Support CHM files in okular.")
 
+find_package(LibZip)
+set_package_properties("LibZip" PROPERTIES
+        DESCRIPTION  "A library for dealing with Microsoft ITSS/CHM format files"
+        URL "http://www.jedrea.com/chmlib"
+        TYPE RECOMMENDED
+        PURPOSE "Support CHM files in okular.")
+
 find_package(DjVuLibre "3.5.17")
 set_package_properties("DjVuLibre" PROPERTIES
         DESCRIPTION  "A library for dealing with DjVu formatted files"
@@ -110,7 +117,7 @@ if(KF5KExiv2_FOUND)
   add_subdirectory( kimgio )
 endif()
 
-if(CHM_FOUND AND KF5KHtml_FOUND)
+if(CHM_FOUND AND KF5KHtml_FOUND AND LIBZIP_FOUND)
   add_subdirectory( chm )
 endif()
 

@@ -1596,13 +1596,15 @@ void DocumentPrivate::doContinueDirectionMatchSearch(void *doContinueDirectionMa
         if (search->pagesDone < pageCount)
         {
             doContinue = true;
-            if ( searchStruct->currentPage >= pageCount || searchStruct->currentPage < 0 )
+            if ( searchStruct->currentPage >= pageCount )
             {
-                doContinue = false;
-                search->isCurrentlySearching = false;
-                search->continueOnPage = forward ? 0 : pageCount - 1;
-                search->continueOnMatch = RegularAreaRect();
-                emit m_parent->searchFinished ( searchStruct->searchID, Document::EndOfDocumentReached );
+                searchStruct->currentPage = 0;
+                emit m_parent->notice(i18n("Continuing search from beginning"), 3000);
+            }
+            else if ( searchStruct->currentPage < 0 )
+            {
+                searchStruct->currentPage = pageCount - 1;
+                emit m_parent->notice(i18n("Continuing search from bottom"), 3000);
             }
         }
     }
@@ -3018,12 +3020,12 @@ QVariant Document::metaData( const QString & key, const QVariant & option ) cons
         if (!ok) line = -1;
 
         // Use column == -1 for now.
-        if( synctex_display_query( d->m_synctex_scanner, QFile::encodeName(name).constData(), line, -1 ) > 0 )
+        if( synctex_display_query( d->m_synctex_scanner, QFile::encodeName(name).constData(), line, -1, 0 ) > 0 )
         {
-            synctex_node_t node;
+            synctex_node_p node;
             // For now use the first hit. Could possibly be made smarter
             // in case there are multiple hits.
-            while( ( node = synctex_next_result( d->m_synctex_scanner ) ) )
+            while( ( node = synctex_scanner_next_result( d->m_synctex_scanner ) ) )
             {
                 Okular::DocumentViewport viewport;
 
@@ -4138,9 +4140,9 @@ const SourceReference * Document::dynamicSourceReference( int pageNr, double abs
 
     if (synctex_edit_query(d->m_synctex_scanner, pageNr + 1, absX * 72. / dpi.width(), absY * 72. / dpi.height()) > 0)
     {
-        synctex_node_t node;
+        synctex_node_p node;
         // TODO what should we do if there is really more than one node?
-        while (( node = synctex_next_result( d->m_synctex_scanner ) ))
+        while (( node = synctex_scanner_next_result( d->m_synctex_scanner ) ))
         {
             int line = synctex_node_line(node);
             int col = synctex_node_column(node);

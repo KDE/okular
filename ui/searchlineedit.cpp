@@ -18,6 +18,7 @@
 #include <qlayout.h>
 #include <qtimer.h>
 #include <kcolorscheme.h>
+#include <kiconloader.h>
 #include <kpixmapsequence.h>
 #include <kpixmapsequencewidget.h>
 #include <kmessagebox.h>
@@ -271,15 +272,6 @@ void SearchLineEdit::searchFinished( int id, Okular::Document::SearchStatus endS
         setPalette( pal );
     }
 
-    if ( endStatus == Okular::Document::EndOfDocumentReached ) {
-        const bool forward = m_searchType == Okular::Document::NextMatch;
-        const QString question = forward ? i18n("End of document reached.\nContinue from the beginning?") : i18n("Beginning of document reached.\nContinue from the bottom?");
-        if ( KMessageBox::questionYesNo(window(), question, QString(), KStandardGuiItem::cont(), KStandardGuiItem::cancel()) == KMessageBox::Yes ) {
-            m_document->continueSearch( m_id, m_searchType );
-            return;
-        }
-    }
-
     m_searchRunning = false;
     emit searchStopped();
 }
@@ -327,7 +319,7 @@ void SearchLineWidget::slotTimedout()
 {
     if ( m_anim->sequence().isEmpty() )
     {
-        const KPixmapSequence seq( QStringLiteral("process-working"), 22 );
+        const KPixmapSequence seq = KIconLoader::global()->loadPixmapSequence(QStringLiteral("process-working"), 22);
         if ( seq.frameCount() > 0 )
         {
             m_anim->setInterval( 1000 / seq.frameCount() );

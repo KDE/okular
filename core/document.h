@@ -608,12 +608,13 @@ class OKULARCORE_EXPORT Document : public QObject
         /**
          * Describes how search ended
          */
+        // TODO remove EndOfDocumentReached when we break API
         enum SearchStatus
         {
             MatchFound,           ///< Any match was found
             NoMatchFound,         ///< No match was found
             SearchCancelled,      ///< The search was cancelled
-            EndOfDocumentReached  ///< The end of document was reached without any match @since 0.20 (KDE 4.14)
+            EndOfDocumentReached  ///< This is not ever emitted since 1.3. The end of document was reached without any match @since 0.20 (KDE 4.14)
         };
 
         /**

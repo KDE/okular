@@ -207,9 +207,15 @@ IF(APPLE)
     SET(OKULAR_IOKIT "-framework IOKit" CACHE STRING "Apple IOKit framework")
 ENDIF(APPLE)
 
+# Extra library needed by imported synctex code on Windows
+if(WIN32)
+    set(SHLWAPI shlwapi)
+endif(WIN32)
+
 target_link_libraries(okularcore
 PRIVATE
     ${OKULAR_IOKIT}
+    ${SHLWAPI}
     KF5::Archive
     KF5::JS
     KF5::JSApi

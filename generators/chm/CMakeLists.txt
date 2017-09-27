@@ -7,23 +7,28 @@ include_directories(
    ${CMAKE_CURRENT_SOURCE_DIR}/../..
    ${CHM_INCLUDE_DIR}
    ${CMAKE_CURRENT_SOURCE_DIR}/lib
+   ${LIBZIP_INCLUDE_DIR}
 )
 
 
 ########### next target ###############
 
 set(okularGenerator_chmlib_SRCS
-   lib/lchmurlhandler.cpp
-   lib/libchmfile.cpp
-   lib/libchmfileimpl.cpp
-   lib/libchmfile_search.cpp
-   lib/libchmtextencoding.cpp
-   lib/libchmtocimage.cpp
+   lib/ebook_chm.cpp
+   lib/ebook_epub.cpp
+   lib/ebook.cpp
+   lib/ebook_chm_encoding.cpp
+   lib/ebook_search.cpp
+   lib/helper_entitydecoder.cpp
+   lib/helper_search_index.cpp
+   lib/helperxmlhandler_epubcontainer.cpp
+   lib/helperxmlhandler_epubcontent.cpp
+   lib/helperxmlhandler_epubtoc.cpp
    generator_chm.cpp
 )
 
 okular_add_generator(okularGenerator_chmlib ${okularGenerator_chmlib_SRCS})
-target_link_libraries(okularGenerator_chmlib  okularcore ${CHM_LIBRARY} KF5::KHtml)
+target_link_libraries(okularGenerator_chmlib  okularcore ${CHM_LIBRARY} ${LIBZIP_LIBRARY} KF5::KHtml)
 
 ########### autotests ###############
 

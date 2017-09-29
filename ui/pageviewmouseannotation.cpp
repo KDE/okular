@@ -232,26 +232,21 @@ void MouseAnnotation::routeKeyPressEvent( const QKeyEvent * e )
 void MouseAnnotation::routeTooltipEvent( const QHelpEvent * helpEvent )
 {
     /* qDebug() << "MouseAnnotation::routeTooltipEvent, event " << helpEvent; */
-    const QPoint eventPos = m_pageView->contentAreaPoint( helpEvent->pos() );
     if ( m_mouseOverAnnotation.isValid() &&
             m_mouseOverAnnotation.annotation->subType() != Okular::Annotation::AWidget )
     {
-        const ResizeHandle handle = getHandleAt( eventPos - m_mouseOverAnnotation.pageViewItem->uncroppedGeometry().topLeft(), m_mouseOverAnnotation );
-        if ( handle != RH_None )
-        {
-            /* get boundingRect in uncropped page coordinates */
-            QRect boundingRect = Okular::AnnotationUtils::annotationGeometry(
-                    m_mouseOverAnnotation.annotation, m_mouseOverAnnotation.pageViewItem->uncroppedWidth(),
-                    m_mouseOverAnnotation.pageViewItem->uncroppedHeight() );
+        /* get boundingRect in uncropped page coordinates */
+        QRect boundingRect = Okular::AnnotationUtils::annotationGeometry(
+                m_mouseOverAnnotation.annotation, m_mouseOverAnnotation.pageViewItem->uncroppedWidth(),
+                m_mouseOverAnnotation.pageViewItem->uncroppedHeight() );
 
-            /* uncropped page to content area */
-            boundingRect.translate( m_mouseOverAnnotation.pageViewItem->uncroppedGeometry().topLeft() );
-            /* content area to viewport */
-            boundingRect.translate( -m_pageView->contentAreaPosition() );
+        /* uncropped page to content area */
+        boundingRect.translate( m_mouseOverAnnotation.pageViewItem->uncroppedGeometry().topLeft() );
+        /* content area to viewport */
+        boundingRect.translate( -m_pageView->contentAreaPosition() );
 
-            QString tip = GuiUtils::prettyToolTip( m_mouseOverAnnotation.annotation );
-            QToolTip::showText( helpEvent->globalPos(), tip, m_pageView->viewport(), boundingRect );
-        }
+        const QString tip = GuiUtils::prettyToolTip( m_mouseOverAnnotation.annotation );
+        QToolTip::showText( helpEvent->globalPos(), tip, m_pageView->viewport(), boundingRect );
     }
 }
 

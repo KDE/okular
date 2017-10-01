@@ -3416,12 +3416,7 @@ QList< Okular::RegularAreaRect * > PageView::textSelections( const QPoint& start
 
 void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
 {
-    QColor backColor;
-
-    if ( Okular::Settings::useCustomBackgroundColor() )
-        backColor = Okular::Settings::backgroundColor();
-    else
-        backColor = viewport()->palette().color( QPalette::Dark );
+    QColor backColor = viewport()->palette().color( QPalette::Dark );
 
     // when checking if an Item is contained in contentsRect, instead of
     // growing PageViewItems rects (for keeping outline into account), we

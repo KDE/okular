@@ -14,15 +14,12 @@
 #include <config-okular.h>
 
 #include "ui_dlggeneralbase.h"
-#include "settings.h"
 
 DlgGeneral::DlgGeneral( QWidget * parent, Okular::EmbedMode embedMode )
     : QWidget( parent )
 {
     m_dlg = new Ui_DlgGeneralBase();
     m_dlg->setupUi( this );
-
-    setCustomBackgroundColorButton( Okular::Settings::useCustomBackgroundColor() );
 
     if( embedMode == Okular::ViewerWidgetMode )
     {
@@ -51,7 +48,3 @@ void DlgGeneral::showEvent( QShowEvent * )
 #endif
 }
 
-void DlgGeneral::setCustomBackgroundColorButton( bool value )
-{
-    m_dlg->kcfg_BackgroundColor->setEnabled( value );
-}

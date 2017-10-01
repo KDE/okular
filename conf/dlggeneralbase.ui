@@ -2,12 +2,15 @@
 <ui version="4.0">
  <class>DlgGeneralBase</class>
  <widget class="QWidget" name="DlgGeneralBase">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>558</width>
-    <height>575</height>
+    <height>632</height>
    </rect>
   </property>
   <layout class="QVBoxLayout">
@@ -139,6 +142,30 @@
            </item>
           </layout>
          </widget>
+        </item>
+        <item>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <property name="horizontalSpacing">
+           <number>6</number>
+          </property>
+          <property name="verticalSpacing">
+           <number>0</number>
+          </property>
+          <item row="1" column="1">
+           <widget class="KColorButton" name="kcfg_BackgroundColor">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="kcfg_UseCustomBackgroundColor">
+            <property name="text">
+             <string>Use custom background color</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item>
          <layout class="QVBoxLayout" name="verticalLayout">
@@ -439,9 +466,39 @@ For files which were opened before the previous zoom is applied.</string>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KColorButton</class>
+   <extends>QPushButton</extends>
+   <header>kcolorbutton.h</header>
+   <slots>
+    <slot>useDefaultBackgroundColor()</slot>
+   </slots>
+  </customwidget>
+ </customwidgets>
  <includes>
   <include location="global">kiconloader.h</include>
  </includes>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>kcfg_UseCustomBackgroundColor</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>DlgGeneralBase</receiver>
+   <slot>setCustomBackgroundColorButton(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>130</x>
+     <y>229</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>203</x>
+     <y>-9</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>setCustomBackgroundColorButton(bool)</slot>
+ </slots>
 </ui>

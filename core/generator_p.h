@@ -1,5 +1,8 @@
 /***************************************************************************
  *   Copyright (C) 2007  Tobias Koenig <tokoe@kde.org>                     *
+ *   Copyright (C) 2017  Klarälvdalens Datakonsult AB, a KDAB Group        *
+ *                       company, info@kdab.com. Work sponsored by the     *
+ *                       LiMux project of the city of Munich               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -85,6 +88,7 @@ class PixmapRequestPrivate
         int mFeatures;
         bool mForce : 1;
         bool mTile : 1;
+        bool mPartialUpdatesWanted : 1;
         Page *mPage;
         NormalizedRect mNormalizedRect;
 };

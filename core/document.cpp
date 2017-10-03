@@ -1,6 +1,9 @@
 /***************************************************************************
  *   Copyright (C) 2004-2005 by Enrico Ros <eros.kde@email.it>             *
  *   Copyright (C) 2004-2008 by Albert Astals Cid <aacid@kde.org>          *
+ *   Copyright (C) 2017 Klarälvdalens Datakonsult AB, a KDAB Group         *
+ *                      company, info@kdab.com. Work sponsored by the      *
+ *                      LiMux project of the city of Munich                *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -1425,6 +1428,8 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
         if ( m_rotation != Rotation0 && !request->normalizedRect().isNull() )
             request->setNormalizedRect( TilesManager::fromRotatedRect(
                         request->normalizedRect(), m_rotation ) );
+
+        request->setPartialUpdatesWanted( request->asynchronous() && !request->page()->hasPixmap( request->observer() ) );
 
         // we always have to unlock _before_ the generatePixmap() because
         // a sync generation would end with requestDone() -> deadlock, and

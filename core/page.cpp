@@ -1,5 +1,9 @@
 /***************************************************************************
  *   Copyright (C) 2004 by Enrico Ros <eros.kde@email.it>                  *
+ *   Copyright (C) 2017    Klarälvdalens Datakonsult AB, a KDAB Group      *
+ *                         company, info@kdab.com. Work sponsored by the   *
+ *                         LiMux project of the city of Munich             *
+ *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
  *   the Free Software Foundation; either version 2 of the License, or     *
@@ -210,7 +214,11 @@ bool Page::hasPixmap( DocumentObserver *observer, int width, int height, const N
     {
         if ( width != tm->width() || height != tm->height() )
         {
-            tm->setSize( width, height );
+            // FIXME hasPixmap should not be calling setSize on the TilesManager this is not very "const"
+            // as this function claims to be
+            if ( width != -1 && height != -1 ) {
+                tm->setSize( width, height );
+            }
             return false;
         }
 
@@ -531,10 +539,14 @@ void Page::setPixmap( DocumentObserver *observer, QPixmap *pixmap, const Normali
         it.value().m_pixmap = pixmap;
         it.value().m_rotation = d->m_rotation;
     } else {
-        RotationJob *job = new RotationJob( pixmap->toImage(), Rotation0, d->m_rotation, observer );
-        job->setPage( d );
-        job->setRect( TilesManager::toRotatedRect( rect, d->m_rotation ) );
-        d->m_doc->m_pageController->addRotationJob(job);
+        // it can happen that we get a setPixmap while closing and thus the page controller is gone
+        if ( d->m_doc->m_pageController )
+        {
+            RotationJob *job = new RotationJob( pixmap->toImage(), Rotation0, d->m_rotation, observer );
+            job->setPage( d );
+            job->setRect( TilesManager::toRotatedRect( rect, d->m_rotation ) );
+            d->m_doc->m_pageController->addRotationJob(job);
+        }
 
         delete pixmap;
     }

@@ -2,6 +2,9 @@
  *   Copyright (C) 2004-5 by Enrico Ros <eros.kde@email.it>                *
  *   Copyright (C) 2005   by Piotr Szymanski <niedakh@gmail.com>           *
  *   Copyright (C) 2008   by Albert Astals Cid <aacid@kde.org>             *
+ *   Copyright (C) 2017   Klarälvdalens Datakonsult AB, a KDAB Group       *
+ *                        company, info@kdab.com. Work sponsored by the    *
+ *                        LiMux project of the city of Munich              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -576,6 +579,13 @@ class OKULARCORE_EXPORT Generator : public QObject
          */
         Okular::Generator::PrintError printError() const;
 
+        /**
+         * This method can be called to trigger a partial pixmap update for the given request
+         * Make sure you call it in a way it's executed in the main thread.
+         * @since 1.3
+         */
+        void signalPartialPixmapRequest( Okular::PixmapRequest *request, const QImage &image );
+
     protected:
         /// @cond PRIVATE
         Generator(GeneratorPrivate &dd, QObject *parent, const QVariantList &args);
@@ -703,6 +713,20 @@ class OKULARCORE_EXPORT PixmapRequest
          */
         const NormalizedRect& normalizedRect() const;
 
+        /**
+         * Sets whether the request should report back updates if possible
+         *
+         * @since 1.3
+         */
+        void setPartialUpdatesWanted(bool partialUpdatesWanted);
+
+        /**
+         * Should the request report back updates if possible?
+         *
+         * @since 1.3
+         */
+        bool partialUpdatesWanted() const;
+
     private:
         Q_DISABLE_COPY( PixmapRequest )
 
@@ -713,6 +737,7 @@ class OKULARCORE_EXPORT PixmapRequest
 }
 
 Q_DECLARE_METATYPE(Okular::Generator::PrintError)
+Q_DECLARE_METATYPE(Okular::PixmapRequest*)
 
 #define OkularGeneratorInterface_iid "org.kde.okular.Generator"
 Q_DECLARE_INTERFACE(Okular::Generator, OkularGeneratorInterface_iid)

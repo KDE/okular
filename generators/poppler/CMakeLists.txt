@@ -19,7 +19,7 @@ if (Poppler_VERSION VERSION_GREATER "0.36.99")
   set (HAVE_POPPLER_0_37 1)
 endif()
 
-set(CMAKE_REQUIRED_LIBRARIES Poppler::Qt5 Qt5::Core)
+set(CMAKE_REQUIRED_LIBRARIES Poppler::Qt5 Qt5::Core Qt5::Gui)
 
 check_cxx_source_compiles("
 #include <poppler-qt5.h>
@@ -49,6 +49,17 @@ int main()
   return 0;
 }
 " HAVE_POPPLER_0_60)
+
+check_cxx_source_compiles("
+#include <poppler-qt5.h>
+#include <QImage>
+int main()
+{
+  Poppler::Page *p;
+  p->renderToImage(0, 0, 0, 0, 0, 0, Poppler::Page::Rotate0, nullptr, nullptr, QVariant());
+  return 0;
+}
+" HAVE_POPPLER_0_62)
 
 configure_file(
    ${CMAKE_CURRENT_SOURCE_DIR}/config-okular-poppler.h.cmake

@@ -35,6 +35,7 @@
         "Description[fi]": "Spectre-kirjastoon pohjautuva PostScript-tiedostohahmonnin",
         "Description[fr]": "Système de rendu pour les fichiers « PostScript » utilisant la librairie Spectre",
         "Description[gl]": "Un renderizador de ficheiros PostScript baseado na biblioteca Spectre.",
+        "Description[ia]": "Un renditor de file Postscript basate sur bibliotheca Spectre",
         "Description[it]": "Un visualizzatore di file PostScript basato sulla libreria Spectre",
         "Description[ko]": "Spectre 라이브러리를 사용하는 포스트스크립트 파일 렌더러",
         "Description[nl]": "Een renderer van PostScript bestanden gebaseerd op de bibliotheek Spectre",

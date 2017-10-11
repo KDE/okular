@@ -22,6 +22,7 @@
   <name xml:lang="nn">Teikneseriar</name>
   <name xml:lang="pl">Komiksy</name>
   <name xml:lang="pt">Banda Desenhada</name>
+  <name xml:lang="ru">Комиксы</name>
   <name xml:lang="sk">Knihy komiksov</name>
   <name xml:lang="sl">Stripi</name>
   <name xml:lang="sr">Стрипови</name>
@@ -52,6 +53,7 @@
   <summary xml:lang="nn">Legg til støtte for å lesa teikneseriefiler</summary>
   <summary xml:lang="pl">Dodaje obsługę komiksów</summary>
   <summary xml:lang="pt">Adiciona o suporte para ler livros de banda desenhada</summary>
+  <summary xml:lang="ru">Поддержка чтения комиксов</summary>
   <summary xml:lang="sk">Pridá podporu pre čítanie komiksov</summary>
   <summary xml:lang="sl">Doda podporo za branje stripov</summary>
   <summary xml:lang="sr">Подршка за читање стрипова</summary>

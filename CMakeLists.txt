@@ -68,6 +68,17 @@ set_package_properties(KF5Kirigami2 PROPERTIES
     TYPE RUNTIME
 )
 find_package(Phonon4Qt5 CONFIG REQUIRED)
+find_package(KDEExperimentalPurpose)
+set_package_properties(KDEExperimentalPurpose PROPERTIES
+    DESCRIPTION "A framework for services and actions integration"
+    PURPOSE "Required for enabling the share menu in Okular"
+    TYPE OPTIONAL
+)
+if (KDEExperimentalPurpose_FOUND)
+    set(PURPOSE_FOUND 1)
+else()
+    set(PURPOSE_FOUND 0)
+endif()
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake/modules)
 
@@ -346,6 +357,10 @@ target_link_libraries(okularpart okularcore
     KF5::Wallet
     KF5::WindowSystem
 )
+
+if (KDEExperimentalPurpose_FOUND)
+    target_link_libraries(okularpart KDEExperimental::PurposeWidgets)
+endif()
 
 set_target_properties(okularpart PROPERTIES PREFIX "")
 

@@ -1651,8 +1651,10 @@ void PageView::paintEvent(QPaintEvent *pe)
             if ( wantCompositing && Okular::Settings::enableCompositing() )
             {
                 // create pixmap and open a painter over it (contents{left,top} becomes pixmap {0,0})
-                QPixmap doubleBuffer( contentsRect.size() );
+                QPixmap doubleBuffer( contentsRect.size() * devicePixelRatioF() );
+                doubleBuffer.setDevicePixelRatio(devicePixelRatioF());
                 QPainter pixmapPainter( &doubleBuffer );
+
                 pixmapPainter.translate( -contentsRect.left(), -contentsRect.top() );
 
                 // 1) Layer 0: paint items and clear bg on unpainted rects
@@ -1666,11 +1668,12 @@ void PageView::paintEvent(QPaintEvent *pe)
                     if ( blendRect.isValid() )
                     {
                         // grab current pixmap into a new one to colorize contents
-                        QPixmap blendedPixmap( blendRect.width(), blendRect.height() );
+                        QPixmap blendedPixmap( blendRect.width() * devicePixelRatioF(), blendRect.height() * devicePixelRatioF() );
+                        blendedPixmap.setDevicePixelRatio(devicePixelRatioF());
                         QPainter p( &blendedPixmap );
                         p.drawPixmap( 0, 0, doubleBuffer,
                                     blendRect.left() - contentsRect.left(), blendRect.top() - contentsRect.top(),
-                                    blendRect.width(), blendRect.height() );
+                                    blendRect.width() * devicePixelRatioF(), blendRect.height() * devicePixelRatioF() );
 
                         QColor blCol = selBlendColor.dark( 140 );
                         blCol.setAlphaF( 0.2 );
@@ -1697,11 +1700,12 @@ void PageView::paintEvent(QPaintEvent *pe)
                         if ( blendRect.isValid() )
                         {
                             // grab current pixmap into a new one to colorize contents
-                            QPixmap blendedPixmap( blendRect.width(), blendRect.height() );
+                            QPixmap blendedPixmap( blendRect.width()  * devicePixelRatioF(), blendRect.height()  * devicePixelRatioF() );
+                            blendedPixmap.setDevicePixelRatio(devicePixelRatioF());
                             QPainter p( &blendedPixmap );
                             p.drawPixmap( 0, 0, doubleBuffer,
                                         blendRect.left() - contentsRect.left(), blendRect.top() - contentsRect.top(),
-                                        blendRect.width(), blendRect.height() );
+                                        blendRect.width() * devicePixelRatioF(), blendRect.height() * devicePixelRatioF() );
 
                             QColor blCol = d->mouseSelectionColor.dark( 140 );
                             blCol.setAlphaF( 0.2 );

@@ -36,6 +36,7 @@ class DocumentViewport;
 class Annotation;
 class MovieAction;
 class RenditionAction;
+class PixmapRequest;
 }
 
 class FormWidgetIface;

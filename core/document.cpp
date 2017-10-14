@@ -1525,7 +1525,7 @@ void DocumentPrivate::refreshPixmaps( int pageNumber )
     for ( ; it != itEnd; ++it )
     {
         QSize size = (*it).m_pixmap->size();
-        PixmapRequest * p = new PixmapRequest( it.key(), pageNumber, size.width(), size.height(), 1, PixmapRequest::Asynchronous );
+        PixmapRequest * p = new PixmapRequest( it.key(), pageNumber, size.width() / qApp->devicePixelRatio(), size.height() / qApp->devicePixelRatio(), 1, PixmapRequest::Asynchronous );
         p->d->mForce = true;
         requestedPixmaps.push_back( p );
     }
@@ -1537,7 +1537,7 @@ void DocumentPrivate::refreshPixmaps( int pageNumber )
         {
             tilesManager->markDirty();
 
-            PixmapRequest * p = new PixmapRequest( observer, pageNumber, tilesManager->width(), tilesManager->height(), 1, PixmapRequest::Asynchronous );
+            PixmapRequest * p = new PixmapRequest( observer, pageNumber, tilesManager->width() / qApp->devicePixelRatio(), tilesManager->height() / qApp->devicePixelRatio(), 1, PixmapRequest::Asynchronous );
 
             NormalizedRect tilesRect;
 

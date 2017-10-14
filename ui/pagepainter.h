@@ -56,12 +56,6 @@ class Q_DECL_EXPORT PagePainter
         static void cropPixmapOnImage( QImage & dest, const QPixmap * src, const QRect & r );
         static void recolor(QImage *image, const QColor &foreground, const QColor &background);
 
-        // create an image taking the 'cropRect' portion of an image scaled
-        // to 'scaledWidth' by 'scaledHeight' pixels. cropRect must be inside
-        // the QRect(0,0, scaledWidth,scaledHeight)
-        static void scalePixmapOnImage( QImage & dest, const QPixmap *src,
-            int scaledWidth, int scaledHeight, const QRect & cropRect, QImage::Format format = QImage::Format_ARGB32_Premultiplied );
-
         // set the alpha component of the image to a given value
         static void changeImageAlpha( QImage & image, unsigned int alpha );
 

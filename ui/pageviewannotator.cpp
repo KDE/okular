@@ -1111,11 +1111,18 @@ QString PageViewAnnotator::defaultToolName( const QDomElement &toolElement )
 
 QPixmap PageViewAnnotator::makeToolPixmap( const QDomElement &toolElement )
 {
-    QPixmap pixmap( 32, 32 );
+    QPixmap pixmap( 32 * qApp->devicePixelRatio(), 32 * qApp->devicePixelRatio() );
+    pixmap.setDevicePixelRatio( qApp->devicePixelRatio() );
     const QString annotType = toolElement.attribute( QStringLiteral("type") );
 
+    // Load HiDPI variant on HiDPI screen
+    QString imageVariant;
+    if ( qApp->devicePixelRatio() > 1.05 ) {
+        imageVariant = "@2x";
+    }
+
     // Load base pixmap. We'll draw on top of it
-    pixmap.load( QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("okular/pics/tool-base-okular.png") ) );
+    pixmap.load( QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString("okular/pics/tool-base-okular" + imageVariant + ".png") ) );
 
     /* Parse color, innerColor and icon (if present) */
     QColor engineColor, innerColor;
@@ -1149,7 +1156,7 @@ QPixmap PageViewAnnotator::makeToolPixmap( const QDomElement &toolElement )
     }
     else if ( annotType == QLatin1String("highlight") )
     {
-        QImage overlay( QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("okular/pics/tool-highlighter-okular-colorizable.png") ) );
+        QImage overlay( QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString("okular/pics/tool-highlighter-okular-colorizable" + imageVariant + ".png") ) );
         QImage colorizedOverlay = overlay;
         GuiUtils::colorizeImage( colorizedOverlay, engineColor );
 
@@ -1159,7 +1166,7 @@ QPixmap PageViewAnnotator::makeToolPixmap( const QDomElement &toolElement )
     }
     else if ( annotType == QLatin1String("ink") )
     {
-        QImage overlay( QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("okular/pics/tool-ink-okular-colorizable.png") ) );
+        QImage overlay( QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString("okular/pics/tool-ink-okular-colorizable" + imageVariant + ".png") ) );
         QImage colorizedOverlay = overlay;
         GuiUtils::colorizeImage( colorizedOverlay, engineColor );
 
@@ -1169,13 +1176,13 @@ QPixmap PageViewAnnotator::makeToolPixmap( const QDomElement &toolElement )
     }
     else if ( annotType == QLatin1String("note-inline") )
     {
-        QImage overlay( QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("okular/pics/tool-note-inline-okular-colorizable.png") ) );
+        QImage overlay( QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString("okular/pics/tool-note-inline-okular-colorizable" + imageVariant + ".png") ) );
         GuiUtils::colorizeImage( overlay, engineColor );
         p.drawImage( QPoint(0,0), overlay );
     }
     else if ( annotType == QLatin1String("note-linked") )
     {
-        QImage overlay( QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("okular/pics/tool-note-okular-colorizable.png") ) );
+        QImage overlay( QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString("okular/pics/tool-note-okular-colorizable.png" + imageVariant + ".png") ) );
         GuiUtils::colorizeImage( overlay, engineColor );
         p.drawImage( QPoint(0,0), overlay );
     }

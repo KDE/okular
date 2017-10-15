@@ -341,11 +341,11 @@ void PartTest::testeTextSelectionOverAndAcrossLinks_data()
     QTest::addColumn<QString>("expectedResult");
 
     // can text-select "over and across" hyperlink.
-    QTest::addRow("start selection before link") << 0.1564 << 0.2943 << QStringLiteral(" a link: foo@foo.b");
+    QTest::newRow("start selection before link") << 0.1564 << 0.2943 << QStringLiteral(" a link: foo@foo.b");
     // can text-select starting at text and ending selection in middle of hyperlink.
-    QTest::addRow("start selection in the middle of the link") << 0.28 << 0.382 << QStringLiteral("o.bar\n");
+    QTest::newRow("start selection in the middle of the link") << 0.28 << 0.382 << QStringLiteral("o.bar\n");
     // text selection works when selecting left to right or right to left
-    QTest::addRow("start selection after link") << 0.40 << 0.05 << QStringLiteral("This is a link: foo@foo.bar\n");
+    QTest::newRow("start selection after link") << 0.40 << 0.05 << QStringLiteral("This is a link: foo@foo.bar\n");
 }
 
 // can text-select "over and across" hyperlink.

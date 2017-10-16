@@ -1114,6 +1114,19 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term>
 						<menuchoice>
+							<guimenu>File</guimenu>
+							<guisubmenu>Share</guisubmenu>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para>This item contains the services which can be used to share the current document with other people or send it to your devices.
+						The entries in this sub-menu are controlled by the system. They depend on the current document format and the installed KPurpose plugins.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice>
 							<shortcut><keycombo action="simul">&Ctrl;<keycap>Q</keycap></keycombo></shortcut>
 							<guimenu>File</guimenu>
 							<guimenuitem>Quit</guimenuitem>

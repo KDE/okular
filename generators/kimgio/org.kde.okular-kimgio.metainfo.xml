@@ -17,6 +17,7 @@
   <name xml:lang="fi">Kuvat</name>
   <name xml:lang="fr">Images</name>
   <name xml:lang="gl">Imaxes</name>
+  <name xml:lang="ia">Images</name>
   <name xml:lang="it">Immagini</name>
   <name xml:lang="ko">그림</name>
   <name xml:lang="nl">Afbeeldingen</name>
@@ -49,6 +50,7 @@
   <summary xml:lang="fi">Lisää monien kuvatiedostomuotojen lukutuen</summary>
   <summary xml:lang="fr">Permet la lecture de nombreux formats d'images</summary>
   <summary xml:lang="gl">Permite ler moitos formatos de imaxe.</summary>
+  <summary xml:lang="ia">Adde supporto per leger formatos de image</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di vari formati di immagini</summary>
   <summary xml:lang="ko">다양한 그림 형식 읽기 지원 추가</summary>
   <summary xml:lang="nl">Ondersteuning toevoegen om vele afbeeldingsformaten te lezen</summary>

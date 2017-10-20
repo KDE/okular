@@ -48,6 +48,7 @@
   <summary xml:lang="fi">Asiakirjakatselin</summary>
   <summary xml:lang="fr">Afficheur de documents</summary>
   <summary xml:lang="gl">Visor de documentos</summary>
+  <summary xml:lang="ia">Visor de documento</summary>
   <summary xml:lang="it">Visore di documenti</summary>
   <summary xml:lang="ko">문서 뷰어</summary>
   <summary xml:lang="nl">Documentenviewer</summary>
@@ -113,6 +114,7 @@
     <p xml:lang="fi">Ominaisuuksia:</p>
     <p xml:lang="fr">Fonctionnalités :</p>
     <p xml:lang="gl">Funcionalidades:</p>
+    <p xml:lang="ia">Characteristicas:</p>
     <p xml:lang="it">Funzionalità:</p>
     <p xml:lang="ko">기능:</p>
     <p xml:lang="nl">Kenmerken:</p>

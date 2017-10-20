@@ -17,6 +17,7 @@
   <name xml:lang="fi">Teksti</name>
   <name xml:lang="fr">Text</name>
   <name xml:lang="gl">Texto</name>
+  <name xml:lang="ia">Texto</name>
   <name xml:lang="it">Testo</name>
   <name xml:lang="ko">텍스트</name>
   <name xml:lang="nl">Tekst</name>
@@ -49,6 +50,7 @@
   <summary xml:lang="fi">Lisää paljaiden tekstitiedostojen lukutuen</summary>
   <summary xml:lang="fr">Permet la lecture des fichiers texte</summary>
   <summary xml:lang="gl">Permite ler documentos de texto simple.</summary>
+  <summary xml:lang="ia">Adde supporto per leger documentos plan</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti in testo semplice</summary>
   <summary xml:lang="ko">일반 텍스트 문서 읽기 지원 추가</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van gewone tekstdocumenten toe</summary>

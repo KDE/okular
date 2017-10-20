@@ -252,7 +252,8 @@ void Generator::generatePixmap( PixmapRequest *request )
          */
         if ( hasFeature( TextExtraction ) && !request->page()->hasTextPage() && canGenerateTextPage() && !d->m_closing ) {
             d->mTextPageReady = false;
-            d->textPageGenerationThread()->startGeneration( request->page() );
+            // Queue the text generation request so that pixmap generation gets a chance to start before the text generation
+            QMetaObject::invokeMethod(d->textPageGenerationThread(), "startGeneration", Qt::QueuedConnection, Q_ARG(Okular::Page*, request->page()));
         }
 
         return;

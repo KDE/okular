@@ -19,6 +19,8 @@
 class QEventLoop;
 class QMutex;
 
+#include "page.h"
+
 namespace Okular {
 
 class DocumentObserver;
@@ -124,13 +126,14 @@ class TextPageGenerationThread : public QThread
     public:
         TextPageGenerationThread( Generator *generator );
 
-        void startGeneration( Page *page );
-
         void endGeneration();
 
         Page *page() const;
 
         TextPage* textPage() const;
+
+    public slots:
+        void startGeneration( Okular::Page *page );
 
     protected:
         void run() override;
@@ -165,5 +168,7 @@ class FontExtractionThread : public QThread
 };
 
 }
+
+Q_DECLARE_METATYPE(Okular::Page*)
 
 #endif

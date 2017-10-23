@@ -36,6 +36,8 @@
 
 #include "okularpart_export.h"
 
+#include <config-okular.h>
+
 class QAction;
 class QWidget;
 class QPrinter;
@@ -50,6 +52,7 @@ class KSelectAction;
 class KAboutData;
 class QTemporaryFile;
 class QAction;
+class QJsonObject;
 namespace KParts { class GUIActivateEvent; }
 
 class FindBar;
@@ -68,6 +71,10 @@ class Reviews;
 class BookmarkList;
 class DrawingToolActions;
 class Layers;
+
+#if PURPOSE_FOUND
+namespace Purpose { class Menu; }
+#endif
 
 namespace Okular
 {
@@ -274,6 +281,10 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         void setFileToWatch( const QString &filePath );
         void unsetFileToWatch();
 
+#if PURPOSE_FOUND
+        void slotShareActionFinished(const QJsonObject &output, int error, const QString &message);
+#endif
+
         static int numberOfParts;
 
         QTemporaryFile *m_tempfile;
@@ -349,6 +360,9 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         QAction *m_exportAs;
         QAction *m_exportAsText;
         QAction *m_exportAsDocArchive;
+#if PURPOSE_FOUND
+        QAction *m_share;
+#endif
         QAction *m_showPresentation;
         KToggleAction* m_showMenuBarAction;
         KToggleAction* m_showLeftPanel;
@@ -357,6 +371,9 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         QAction *m_aboutBackend;
         QAction *m_reload;
         QMenu *m_exportAsMenu;
+#if PURPOSE_FOUND
+        Purpose::Menu *m_shareMenu;
+#endif
         QAction *m_closeFindBar;
         DrawingToolActions *m_presentationDrawingActions;
 

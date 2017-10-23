@@ -68,6 +68,17 @@ set_package_properties(KF5Kirigami2 PROPERTIES
     TYPE RUNTIME
 )
 find_package(Phonon4Qt5 CONFIG REQUIRED)
+find_package(KDEExperimentalPurpose)
+set_package_properties(KDEExperimentalPurpose PROPERTIES
+    DESCRIPTION "A framework for services and actions integration"
+    PURPOSE "Required for enabling the share menu in Okular"
+    TYPE OPTIONAL
+)
+if (KDEExperimentalPurpose_FOUND)
+    set(PURPOSE_FOUND 1)
+else()
+    set(PURPOSE_FOUND 0)
+endif()
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake/modules)
 
@@ -197,7 +208,7 @@ ki18n_wrap_ui(okularcore_SRCS
    core/chooseenginewidget.ui
 )
 
-kconfig_add_kcfg_files(okularcore_SRCS conf/settings_core.kcfgc )
+kconfig_add_kcfg_files(okularcore_SRCS conf/settings_core.kcfgc)
 
 add_library(okularcore SHARED ${okularcore_SRCS})
 generate_export_header(okularcore BASE_NAME okularcore EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/core/okularcore_export.h")
@@ -323,7 +334,7 @@ ki18n_wrap_ui(okularpart_SRCS
    conf/dlgpresentationbase.ui
 )
 
-kconfig_add_kcfg_files(okularpart_SRCS conf/settings.kcfgc )
+kconfig_add_kcfg_files(okularpart_SRCS conf/settings.kcfgc)
 
 add_library(okularpart SHARED ${okularpart_SRCS})
 generate_export_header(okularpart BASE_NAME okularpart)
@@ -346,6 +357,10 @@ target_link_libraries(okularpart okularcore
     KF5::Wallet
     KF5::WindowSystem
 )
+
+if (KDEExperimentalPurpose_FOUND)
+    target_link_libraries(okularpart KDEExperimental::PurposeWidgets)
+endif()
 
 set_target_properties(okularpart PROPERTIES PREFIX "")
 

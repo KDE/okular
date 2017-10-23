@@ -21,6 +21,9 @@
 #include <QScrollBar>
 #include <QTemporaryDir>
 #include <QTreeView>
+#include <QUrl>
+#include <QDesktopServices>
+#include <QMenu>
 
 namespace Okular
 {
@@ -30,6 +33,9 @@ class PartTest
     Q_OBJECT
 
         static bool openDocument(Okular::Part *part, const QString &filePath);
+
+    signals:
+        void urlHandler(const QUrl &url);
 
     private slots:
         void testReload();
@@ -42,6 +48,19 @@ class PartTest
         void testClickInternalLink();
         void testSaveAs();
         void testSaveAs_data();
+        void testMouseMoveOverLinkWhileInSelectionMode();
+        void testClickUrlLinkWhileInSelectionMode();
+        void testeTextSelectionOverAndAcrossLinks_data();
+        void testeTextSelectionOverAndAcrossLinks();
+        void testClickUrlLinkWhileLinkTextIsSelected();
+        void testRClickWhileLinkTextIsSelected();
+        void testRClickOverLinkWhileLinkTextIsSelected();
+        void testRClickOnSelectionModeShoulShowFollowTheLinkMenu();
+        void testClickAnywhereAfterSelectionShouldUnselect();
+        void testeRectSelectionStartingOnLinks();
+
+    private:
+        void simulateMouseSelection(double startX, double startY, double endX, double endY, QWidget *target);
 };
 
 class PartThatHijacksQueryClose : public Okular::Part
@@ -70,6 +89,7 @@ class PartThatHijacksQueryClose : public Okular::Part
     private:
         Behavior behavior;
 };
+
 
 bool PartTest::openDocument(Okular::Part *part, const QString &filePath)
 {
@@ -214,13 +234,7 @@ void PartTest::testSelectText()
     const int mouseStartX = width * 0.12;
     const int mouseEndX = width * 0.7;
 
-    QTest::mouseMove(part.m_pageView->viewport(), QPoint(mouseStartX, mouseY));
-    QTest::mousePress(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, QPoint(mouseStartX, mouseY));
-    QTest::mouseMove(part.m_pageView->viewport(), QPoint(mouseEndX, mouseY));
-    // without this wait the test fails. 100ms were enough on my local system, but when running under valgrind
-    // or on the CI server we need to wait longer.
-    QTest::qWait(1000);
-    QTest::mouseRelease(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, QPoint(mouseEndX, mouseY));
+    simulateMouseSelection(mouseStartX, mouseY, mouseEndX, mouseY, part.m_pageView->viewport());
 
     QApplication::clipboard()->clear();
     QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "copyTextSelection"));
@@ -244,14 +258,474 @@ void PartTest::testClickInternalLink()
     part.m_document->setViewportPage(0);
 
     // wait for pixmap
-    while (!part.m_document->page(0)->hasPixmap(part.m_pageView))
-        QTest::qWait(100);
+    QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
 
     QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseNormal");
 
     QCOMPARE(part.m_document->currentPage(), 0u);
+    QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * 0.17, height * 0.05));
     QTest::mouseClick(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, QPoint(width * 0.17, height * 0.05));
-    QCOMPARE(part.m_document->currentPage(), 1u);
+    QTRY_COMPARE(part.m_document->currentPage(), 1u);
+}
+
+// cursor switches to Hand when hovering over link in TextSelect mode.
+void PartTest::testMouseMoveOverLinkWhileInSelectionMode()
+{
+    QVariantList dummyArgs;
+    Okular::Part part(nullptr, nullptr, dummyArgs);
+    QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/pdf_with_links.pdf")));
+    // resize window to avoid problem with selection areas
+    part.widget()->resize(800, 600);
+    part.widget()->show();
+    QTest::qWaitForWindowExposed(part.widget());
+
+    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
+                      part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->verticalScrollBar()->maximum() +
+                       part.m_pageView->viewport()->height();
+
+    part.m_document->setViewportPage(0);
+
+    // wait for pixmap
+    QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
+
+    // enter text-selection mode
+    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseTextSelect"));
+
+    // move mouse over link
+    QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * 0.250, height * 0.127));
+
+    // check if mouse icon changed to proper icon
+    QTRY_COMPARE(part.m_pageView->cursor().shape(), Qt::PointingHandCursor);
+}
+
+// clicking on hyperlink jumps to destination in TextSelect mode.
+void PartTest::testClickUrlLinkWhileInSelectionMode()
+{
+    QVariantList dummyArgs;
+    Okular::Part part(nullptr, nullptr, dummyArgs);
+    QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/pdf_with_links.pdf")));
+    // resize window to avoid problem with selection areas
+    part.widget()->resize(800, 600);
+    part.widget()->show();
+    QTest::qWaitForWindowExposed(part.widget());
+
+    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
+                      part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->verticalScrollBar()->maximum() +
+                       part.m_pageView->viewport()->height();
+
+    part.m_document->setViewportPage(0);
+
+    // wait for pixmap
+    QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
+
+    // enter text-selection mode
+    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseTextSelect"));
+
+    // overwrite urlHandler for 'mailto' urls
+    QDesktopServices::setUrlHandler("mailto", this, "urlHandler");
+    QSignalSpy openUrlSignalSpy(this, SIGNAL(urlHandler(QUrl)));
+
+    // click on url
+    QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * 0.250, height * 0.127));
+    QTest::mouseClick(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, QPoint(width * 0.250, height * 0.127));
+
+    // expect that the urlHandler signal was called
+    QTRY_COMPARE(openUrlSignalSpy.count(), 1);
+    QList<QVariant> arguments = openUrlSignalSpy.takeFirst();
+    QCOMPARE(arguments.at(0).value<QUrl>(), QUrl("mailto:foo@foo.bar"));
+}
+
+void PartTest::testeTextSelectionOverAndAcrossLinks_data()
+{
+    QTest::addColumn<double>("mouseStartX");
+    QTest::addColumn<double>("mouseEndX");
+    QTest::addColumn<QString>("expectedResult");
+
+    // can text-select "over and across" hyperlink.
+    QTest::newRow("start selection before link") << 0.1564 << 0.2943 << QStringLiteral(" a link: foo@foo.b");
+    // can text-select starting at text and ending selection in middle of hyperlink.
+    QTest::newRow("start selection in the middle of the link") << 0.28 << 0.382 << QStringLiteral("o.bar\n");
+    // text selection works when selecting left to right or right to left
+    QTest::newRow("start selection after link") << 0.40 << 0.05 << QStringLiteral("This is a link: foo@foo.bar\n");
+}
+
+// can text-select "over and across" hyperlink.
+void PartTest::testeTextSelectionOverAndAcrossLinks()
+{
+    QVariantList dummyArgs;
+    Okular::Part part(nullptr, nullptr, dummyArgs);
+    QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/pdf_with_links.pdf")));
+    // resize window to avoid problem with selection areas
+    part.widget()->resize(800, 600);
+    part.widget()->show();
+    QTest::qWaitForWindowExposed(part.widget());
+
+    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
+                      part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->verticalScrollBar()->maximum() +
+                       part.m_pageView->viewport()->height();
+
+    part.m_document->setViewportPage(0);
+
+    // wait for pixmap
+    QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
+
+    // enter text-selection mode
+    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseTextSelect"));
+
+    const double mouseY = height * 0.127;
+    QFETCH(double, mouseStartX);
+    QFETCH(double, mouseEndX);
+
+    mouseStartX = width * mouseStartX;
+    mouseEndX = width * mouseEndX;
+
+    simulateMouseSelection(mouseStartX, mouseY, mouseEndX, mouseY, part.m_pageView->viewport());
+
+    QApplication::clipboard()->clear();
+    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "copyTextSelection"));
+
+    QFETCH(QString, expectedResult);
+    QCOMPARE(QApplication::clipboard()->text(), expectedResult);
+}
+
+// can jump to link while there's an active selection of text.
+void PartTest::testClickUrlLinkWhileLinkTextIsSelected()
+{
+    QVariantList dummyArgs;
+    Okular::Part part(nullptr, nullptr, dummyArgs);
+    QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/pdf_with_links.pdf")));
+    // resize window to avoid problem with selection areas
+    part.widget()->resize(800, 600);
+    part.widget()->show();
+    QTest::qWaitForWindowExposed(part.widget());
+
+    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
+                      part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->verticalScrollBar()->maximum() +
+                       part.m_pageView->viewport()->height();
+
+    part.m_document->setViewportPage(0);
+
+    // wait for pixmap
+    QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
+
+    // enter text-selection mode
+    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseTextSelect"));
+
+    const double mouseY = height * 0.127;
+    const double mouseStartX = width * 0.13;
+    const double mouseEndX = width * 0.40;
+
+    simulateMouseSelection(mouseStartX, mouseY, mouseEndX, mouseY, part.m_pageView->viewport());
+
+    // overwrite urlHandler for 'mailto' urls
+    QDesktopServices::setUrlHandler("mailto", this, "urlHandler");
+    QSignalSpy openUrlSignalSpy(this, SIGNAL(urlHandler(QUrl)));
+
+    // click on url
+    const double mouseClickX = width * 0.2997;
+    const double mouseClickY = height * 0.1293;
+
+    QTest::mouseMove(part.m_pageView->viewport(), QPoint(mouseClickX, mouseClickY));
+    QTest::mouseClick(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, QPoint(mouseClickX, mouseClickY), 1000);
+
+    // expect that the urlHandler signal was called
+    QTRY_COMPARE(openUrlSignalSpy.count(), 1);
+    QList<QVariant> arguments = openUrlSignalSpy.takeFirst();
+    QCOMPARE(arguments.at(0).value<QUrl>(), QUrl("mailto:foo@foo.bar"));
+}
+
+// r-click on the selected text gives the "Go To:" content menu option
+void PartTest::testRClickWhileLinkTextIsSelected()
+{
+    QVariantList dummyArgs;
+    Okular::Part part(nullptr, nullptr, dummyArgs);
+    QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/pdf_with_links.pdf")));
+    // resize window to avoid problem with selection areas
+    part.widget()->resize(800, 600);
+    part.widget()->show();
+    QTest::qWaitForWindowExposed(part.widget());
+
+    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
+                      part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->verticalScrollBar()->maximum() +
+                       part.m_pageView->viewport()->height();
+
+    part.m_document->setViewportPage(0);
+
+    // wait for pixmap
+    QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
+
+    // enter text-selection mode
+    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseTextSelect"));
+
+    const double mouseY = height * 0.162;
+    const double mouseStartX = width * 0.42;
+    const double mouseEndX = width * 0.60;
+
+    simulateMouseSelection(mouseStartX, mouseY, mouseEndX, mouseY, part.m_pageView->viewport());
+
+    // Need to do this because the pop-menu will have his own mainloop and will block tests until
+    // the menu disappear
+    PageView *view = part.m_pageView;
+    QTimer::singleShot(2000, [view]() {
+        // check if popup menu is active and visible
+        QMenu *menu = qobject_cast<QMenu*>(view->findChild<QMenu*>("PopupMenu"));
+        QVERIFY(menu);
+        QVERIFY(menu->isVisible());
+
+        // check if the menu contains go-to link action
+        QAction *goToAction = qobject_cast<QAction*>(menu->findChild<QAction*>("GoToAction"));
+        QVERIFY(goToAction);
+
+        // check if the "follow this link" action is not visible
+        QAction *processLinkAction = qobject_cast<QAction*>(menu->findChild<QAction*>("ProcessLinkAction"));
+        QVERIFY(!processLinkAction);
+
+        // check if the "copy link address" action is not visible
+        QAction *copyLinkLocation = qobject_cast<QAction*>(menu->findChild<QAction*>("CopyLinkLocationAction"));
+        QVERIFY(!copyLinkLocation);
+
+        // close menu to continue test
+        menu->close();
+    });
+
+    // click on url
+    const double mouseClickX = width * 0.425;
+    const double mouseClickY = height * 0.162;
+
+    QTest::mouseMove(part.m_pageView->viewport(), QPoint(mouseClickX, mouseClickY));
+    QTest::mouseClick(part.m_pageView->viewport(), Qt::RightButton, Qt::NoModifier, QPoint(mouseClickX, mouseClickY), 1000);
+
+    // will continue after pop-menu get closed
+}
+
+
+// r-click on the link gives the "follow this link" content menu option
+void PartTest::testRClickOverLinkWhileLinkTextIsSelected()
+{
+    QVariantList dummyArgs;
+    Okular::Part part(nullptr, nullptr, dummyArgs);
+    QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/pdf_with_links.pdf")));
+    // resize window to avoid problem with selection areas
+    part.widget()->resize(800, 600);
+    part.widget()->show();
+    QTest::qWaitForWindowExposed(part.widget());
+
+    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
+                      part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->verticalScrollBar()->maximum() +
+                       part.m_pageView->viewport()->height();
+
+    part.m_document->setViewportPage(0);
+
+    // wait for pixmap
+    QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
+
+    // enter text-selection mode
+    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseTextSelect"));
+
+    const double mouseY = height * 0.162;
+    const double mouseStartX = width * 0.42;
+    const double mouseEndX = width * 0.60;
+
+    simulateMouseSelection(mouseStartX, mouseY, mouseEndX, mouseY, part.m_pageView->viewport());
+
+    // Need to do this because the pop-menu will have his own mainloop and will block tests until
+    // the menu disappear
+    PageView *view = part.m_pageView;
+    QTimer::singleShot(2000, [view]() {
+        // check if popup menu is active and visible
+        QMenu *menu = qobject_cast<QMenu*>(view->findChild<QMenu*>("PopupMenu"));
+        QVERIFY(menu);
+        QVERIFY(menu->isVisible());
+
+        // check if the menu contains "follow this link" action
+        QAction *processLinkAction = qobject_cast<QAction*>(menu->findChild<QAction*>("ProcessLinkAction"));
+        QVERIFY(processLinkAction);
+
+        // check if the menu contains "copy link address" action
+        QAction *copyLinkLocation = qobject_cast<QAction*>(menu->findChild<QAction*>("CopyLinkLocationAction"));
+        QVERIFY(copyLinkLocation);
+
+        // close menu to continue test
+        menu->close();
+    });
+
+    // click on url
+    const double mouseClickX = width * 0.593;
+    const double mouseClickY = height * 0.162;
+
+    QTest::mouseMove(part.m_pageView->viewport(), QPoint(mouseClickX, mouseClickY));
+    QTest::mouseClick(part.m_pageView->viewport(), Qt::RightButton, Qt::NoModifier, QPoint(mouseClickX, mouseClickY), 1000);
+
+    // will continue after pop-menu get closed
+}
+
+void PartTest::testRClickOnSelectionModeShoulShowFollowTheLinkMenu()
+{
+    QVariantList dummyArgs;
+    Okular::Part part(nullptr, nullptr, dummyArgs);
+    QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/pdf_with_links.pdf")));
+    // resize window to avoid problem with selection areas
+    part.widget()->resize(800, 600);
+    part.widget()->show();
+    QTest::qWaitForWindowExposed(part.widget());
+
+    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
+                      part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->verticalScrollBar()->maximum() +
+                       part.m_pageView->viewport()->height();
+
+    part.m_document->setViewportPage(0);
+
+    // wait for pixmap
+    QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
+
+    // enter text-selection mode
+    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseTextSelect"));
+
+    // Need to do this because the pop-menu will have his own mainloop and will block tests until
+    // the menu disappear
+    PageView *view = part.m_pageView;
+    QTimer::singleShot(2000, [view]() {
+        // check if popup menu is active and visible
+        QMenu *menu = qobject_cast<QMenu*>(view->findChild<QMenu*>("PopupMenu"));
+        QVERIFY(menu);
+        QVERIFY(menu->isVisible());
+
+        // check if the menu contains "Follow this link" action
+        QAction *processLink = qobject_cast<QAction*>(menu->findChild<QAction*>("ProcessLinkAction"));
+        QVERIFY(processLink);
+
+        // chek if the menu contains  "Copy Link Address" action
+        QAction *actCopyLinkLocation = qobject_cast<QAction*>(menu->findChild<QAction*>("CopyLinkLocationAction"));
+        QVERIFY(actCopyLinkLocation);
+
+        // close menu to continue test
+        menu->close();
+    });
+
+    // r-click on url
+    const double mouseClickX = width * 0.604;
+    const double mouseClickY = height * 0.162;
+
+    QTest::mouseMove(part.m_pageView->viewport(), QPoint(mouseClickX, mouseClickY));
+    QTest::mouseClick(part.m_pageView->viewport(), Qt::RightButton, Qt::NoModifier, QPoint(mouseClickX, mouseClickY), 1000);
+    QTest::qWait(3000);
+
+    // will continue after pop-menu get closed
+}
+
+void PartTest::testClickAnywhereAfterSelectionShouldUnselect()
+{
+    QVariantList dummyArgs;
+    Okular::Part part(nullptr, nullptr, dummyArgs);
+    QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/pdf_with_links.pdf")));
+    // resize window to avoid problem with selection areas
+    part.widget()->resize(800, 600);
+    part.widget()->show();
+    QTest::qWaitForWindowExposed(part.widget());
+
+    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
+                      part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->verticalScrollBar()->maximum() +
+                       part.m_pageView->viewport()->height();
+
+    part.m_document->setViewportPage(0);
+
+    // wait for pixmap
+    QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
+
+    // enter text-selection mode
+    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseTextSelect"));
+
+    const double mouseY = height * 0.162;
+    const double mouseStartX = width * 0.42;
+    const double mouseEndX = width * 0.60;
+
+    simulateMouseSelection(mouseStartX, mouseY, mouseEndX, mouseY, part.m_pageView->viewport());
+
+    // click on url
+    const double mouseClickX = width * 0.10;
+
+    QTest::mouseMove(part.m_pageView->viewport(), QPoint(mouseClickX, mouseY));
+    QTest::mouseClick(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, QPoint(mouseClickX, mouseY), 1000);
+
+    QApplication::clipboard()->clear();
+    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "copyTextSelection"));
+
+    // check if copied text is empty what means no text selected
+    QVERIFY(QApplication::clipboard()->text().isEmpty());
+}
+
+void PartTest::testeRectSelectionStartingOnLinks()
+{
+    QVariantList dummyArgs;
+    Okular::Part part(nullptr, nullptr, dummyArgs);
+    QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/pdf_with_links.pdf")));
+    // resize window to avoid problem with selection areas
+    part.widget()->resize(800, 600);
+    part.widget()->show();
+    QTest::qWaitForWindowExposed(part.widget());
+
+    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
+                      part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->verticalScrollBar()->maximum() +
+                       part.m_pageView->viewport()->height();
+
+    part.m_document->setViewportPage(0);
+
+    // wait for pixmap
+    QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
+
+    // enter text-selection mode
+    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseSelect"));
+
+    const double mouseStartY = height * 0.127;
+    const double mouseEndY = height * 0.127;
+    const double mouseStartX = width *  0.28;
+    const double mouseEndX = width *  0.382;
+
+    // Need to do this because the pop-menu will have his own mainloop and will block tests until
+    // the menu disappear
+    PageView *view = part.m_pageView;
+    QTimer::singleShot(2000, [view]() {
+        QApplication::clipboard()->clear();
+
+        // check if popup menu is active and visible
+        QMenu *menu = qobject_cast<QMenu*>(view->findChild<QMenu*>("PopupMenu"));
+        QVERIFY(menu);
+        QVERIFY(menu->isVisible());
+
+        // check if the copy selected text to clipboard is present
+        QAction *copyAct = qobject_cast<QAction*>(menu->findChild<QAction*>("CopyTextToClipboard"));
+        QVERIFY(copyAct);
+
+        menu->close();
+    });
+
+    simulateMouseSelection(mouseStartX, mouseStartY, mouseEndX, mouseEndY, part.m_pageView->viewport());
+
+    // wait menu get closed
+}
+
+
+void PartTest::simulateMouseSelection(double startX, double startY, double endX, double endY, QWidget *target)
+{
+    QTestEventList events;
+    events.addMouseMove(QPoint(startX, startY));
+    events.addMousePress(Qt::LeftButton, Qt::NoModifier, QPoint(startX, startY));
+    events.addMouseMove(QPoint(endX, endY));
+    // without this wait the test fails. 100ms were enough on my local system, but when running under valgrind
+    // or on the CI server we need to wait longer.
+    events.addDelay(1000);
+    events.addMouseRelease(Qt::LeftButton, Qt::NoModifier, QPoint(endX, endY));
+
+    events.simulate(target);
 }
 
 void PartTest::testSaveAs()

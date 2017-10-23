@@ -69,6 +69,12 @@
 #include <KXMLGUIClient>
 #include <KXMLGUIFactory>
 
+
+#if PURPOSE_FOUND
+#include <Purpose/AlternativesModel>
+#include <PurposeWidgets/Menu>
+#endif
+
 #if 0
 #include <knewstuff2/engine.h>
 #endif
@@ -745,6 +751,13 @@ void Part::setupViewerActions()
     m_exportAs = nullptr;
     m_exportAsMenu = nullptr;
     m_exportAsText = nullptr;
+    m_exportAsDocArchive = nullptr;
+
+#if PURPOSE_FOUND
+    m_share = nullptr;
+    m_shareMenu = nullptr;
+#endif
+
     m_presentationDrawingActions = nullptr;
 
     m_aboutBackend = ac->addAction(QStringLiteral("help_about_backend"));
@@ -840,6 +853,16 @@ void Part::setupActions()
     m_exportAs->setEnabled( false );
     m_exportAsText->setEnabled( false );
 
+#if PURPOSE_FOUND
+    m_share = ac->addAction( QStringLiteral("file_share") );
+    m_share->setText( i18n("S&hare") );
+    m_share->setIcon( QIcon::fromTheme( QStringLiteral("document-share") ) );
+    m_share->setEnabled( false );
+    m_shareMenu = new Purpose::Menu();
+    connect(m_shareMenu, &Purpose::Menu::finished, this, &Part::slotShareActionFinished);
+    m_share->setMenu( m_shareMenu );
+#endif
+
     m_showPresentation = ac->addAction(QStringLiteral("presentation"));
     m_showPresentation->setText(i18n("P&resentation"));
     m_showPresentation->setIcon( QIcon::fromTheme( QStringLiteral("view-presentation") ) );
@@ -914,6 +937,9 @@ Part::~Part()
     qDeleteAll( m_bookmarkActions );
 
     delete m_exportAsMenu;
+#if PURPOSE_FOUND
+    delete m_shareMenu;
+#endif
 
 #ifdef OKULAR_KEEP_FILE_OPEN
     delete m_keeper;
@@ -1528,6 +1554,17 @@ bool Part::openFile()
                 menu->addAction( actionForExportFormat( *it ) );
             }
         }
+#if PURPOSE_FOUND
+        if ( m_share )
+        {
+            m_shareMenu->model()->setInputData(QJsonObject{
+                { QStringLiteral("mimeType"), mime.name() },
+                { QStringLiteral("urls"), QJsonArray{ url().toString() } }
+            });
+            m_shareMenu->model()->setPluginType( QStringLiteral("Export") );
+            m_shareMenu->reload();
+        }
+#endif
         if ( isCompressedFile )
         {
             m_realUrl = url();
@@ -1539,6 +1576,9 @@ bool Part::openFile()
     }
     if ( m_exportAsText ) m_exportAsText->setEnabled( ok && m_document->canExportToText() );
     if ( m_exportAs ) m_exportAs->setEnabled( ok );
+#if PURPOSE_FOUND
+    if ( m_share ) m_share->setEnabled( ok );
+#endif
 
     // update viewing actions
     updateViewActions();
@@ -1716,6 +1756,13 @@ bool Part::closeUrl(bool promptToSave)
             delete acts.at(i);
         }
     }
+#if PURPOSE_FOUND
+    if ( m_share )
+    {
+        m_share->setEnabled(false);
+        m_shareMenu->clear();
+    }
+#endif
     if ( m_showPresentation ) m_showPresentation->setEnabled( false );
     emit setWindowCaption(QLatin1String(""));
     emit enablePrintAction(false);
@@ -3322,6 +3369,25 @@ void Part::resetStartArguments()
 {
     m_cliPrint = false;
 }
+
+#if PURPOSE_FOUND
+void Part::slotShareActionFinished(const QJsonObject &output, int error, const QString &message)
+{
+    if (error) {
+        KMessageBox::error(widget(), i18n("There was a problem sharing the document: %1", message),
+                           i18n("Share"));
+    } else {
+        const QString url = output["url"].toString();
+        if (url.isEmpty()) {
+            m_pageView->displayMessage(i18n("Document shared successfully"));
+        } else {
+            KMessageBox::information(widget(), i18n("You can find the shared document at: <a href=\"%1\">%1</a>", url),
+                                     i18n("Share"), QString(),
+                                     KMessageBox::Notify | KMessageBox::AllowLink);
+        }
+    }
+}
+#endif
 
 void Part::setReadWrite(bool readwrite)
 {

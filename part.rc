@@ -12,6 +12,7 @@
     <Action name="properties" group="file_print"/>
     <Action name="embedded_files" group="file_print"/>
     <Action name="file_export_as" group="file_print"/>
+    <Action name="file_share" group="file_print"/>
   </Menu>
   <Menu name="edit"><text>&amp;Edit</text>
     <Action name="edit_undo"/>

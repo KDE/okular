@@ -36,6 +36,7 @@ class DocumentViewport;
 class Annotation;
 class MovieAction;
 class RenditionAction;
+class PixmapRequest;
 }
 
 class FormWidgetIface;
@@ -188,11 +189,15 @@ Q_OBJECT
         void updatePageStep();
 
         void addWebShortcutsMenu( QMenu * menu, const QString & text );
+        QMenu* createProcessLinkMenu( PageViewItem *item, const QPoint & eventPos );
         // used when selecting stuff, makes the view scroll as necessary to keep the mouse inside the view
         void scrollPosIntoView( const QPoint & pos );
 
         // called from slots to turn off trim modes mutually exclusive to id
         void updateTrimMode( int except_id );
+
+        // handle link clicked
+        bool mouseReleaseOverLink( const Okular::ObjectRect * rect ) const;
 
         // don't want to expose classes in here
         class PageViewPrivate * d;

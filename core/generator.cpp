@@ -12,6 +12,7 @@
 #include "generator_p.h"
 #include "observer.h"
 
+#include <QApplication>
 #include <qeventloop.h>
 #include <QtPrintSupport/QPrinter>
 
@@ -495,8 +496,8 @@ PixmapRequest::PixmapRequest( DocumentObserver *observer, int pageNumber, int wi
 {
     d->mObserver = observer;
     d->mPageNumber = pageNumber;
-    d->mWidth = width;
-    d->mHeight = height;
+    d->mWidth = ceil(width * qApp->devicePixelRatio());
+    d->mHeight = ceil(height * qApp->devicePixelRatio());
     d->mPriority = priority;
     d->mFeatures = features;
     d->mForce = false;

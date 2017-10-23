@@ -818,7 +818,6 @@ void Part::setupActions()
     m_save->setEnabled( false );
 
     m_saveAs = KStandardAction::saveAs( this, SLOT(slotSaveFileAs()), ac );
-    ac->setDefaultShortcuts(m_saveAs, KStandardShortcut::shortcut(KStandardShortcut::Save));
     m_saveAs->setEnabled( false );
     m_migrationMessage->addAction( m_saveAs );
 

@@ -2592,23 +2592,20 @@ bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
 
     bool reloadedCorrectly = true;
 
-    // Load new file instead of the old one
-    if ( url() != saveUrl )
+    // Make the generator use the new new file instead of the old one
+    if ( m_document->canSwapBackingFile() )
     {
-        if ( m_document->canSwapBackingFile() )
-        {
-            // this calls openFile internally, which in turn actually calls
-            // m_document->swapBackingFile() instead of the regular loadDocument
-            if ( !openUrl( saveUrl, true /* swapInsteadOfOpening */ ) )
-                reloadedCorrectly = false;
-        }
-        else
-        {
-            // If the generator doesn't support swapping file, then just reload
-            // the document from the new location
-            if ( !slotAttemptReload( true, saveUrl ) )
-                reloadedCorrectly = false;
-        }
+        // this calls openFile internally, which in turn actually calls
+        // m_document->swapBackingFile() instead of the regular loadDocument
+        if ( !openUrl( saveUrl, true /* swapInsteadOfOpening */ ) )
+            reloadedCorrectly = false;
+    }
+    else
+    {
+        // If the generator doesn't support swapping file, then just reload
+        // the document from the new location
+        if ( !slotAttemptReload( true, saveUrl ) )
+            reloadedCorrectly = false;
     }
 
     // In case of file swapping errors, close the document to avoid inconsistencies

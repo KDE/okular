@@ -56,7 +56,7 @@ class FormWidgetsController : public QObject
 
         void signalAction( Okular::Action *action );
 
-        QButtonGroup* registerRadioButton( QAbstractButton *button, Okular::FormFieldButton *formButton );
+        void registerRadioButton( FormWidgetIface *fwButton, Okular::FormFieldButton *formButton );
         void dropRadioButtons();
         bool canUndo();
         bool canRedo();
@@ -123,7 +123,6 @@ class FormWidgetsController : public QObject
         friend class ComboEdit;
 
         QList< RadioData > m_radios;
-        QHash< int, Okular::FormFieldButton* > m_formButtons;
         QHash< int, QAbstractButton* > m_buttons;
         Okular::Document* m_doc;
 };
@@ -153,7 +152,6 @@ class FormWidgetIface
         PageViewItem* pageItem() const;
 
         virtual void setFormWidgetsController( FormWidgetsController *controller );
-        virtual QAbstractButton* button();
 
     protected:
         FormWidgetsController * m_controller;
@@ -186,7 +184,6 @@ class CheckBoxEdit : public QCheckBox, public FormWidgetIface
 
         // reimplemented from FormWidgetIface
         void setFormWidgetsController( FormWidgetsController *controller ) override;
-        QAbstractButton* button() override;
 
     private Q_SLOTS:
         void slotStateChanged( int state );
@@ -201,7 +198,6 @@ class RadioButtonEdit : public QRadioButton, public FormWidgetIface
 
         // reimplemented from FormWidgetIface
         void setFormWidgetsController( FormWidgetsController *controller ) override;
-        QAbstractButton* button() override;
 };
 
 class FormLineEdit : public QLineEdit, public FormWidgetIface

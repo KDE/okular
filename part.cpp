@@ -2469,7 +2469,7 @@ bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
         QStringList listOfwontSaves;
         if ( wontSaveForms ) listOfwontSaves << i18n( "Filled form contents" );
         if ( wontSaveAnnotations ) listOfwontSaves << i18n( "User annotations" );
-        if ( !listOfwontSaves.isEmpty() && !( flags && SaveAsDontShowWarning ) )
+        if ( !listOfwontSaves.isEmpty() && !( flags & SaveAsDontShowWarning ) )
         {
             int result = KMessageBox::warningYesNoCancelList( widget(),
                   i18n( "The following elements <b>cannot be saved</b> in this format and will be lost.<br>If you want to preserve them, please use the <i>Okular document archive</i> format." ),

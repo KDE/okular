@@ -488,6 +488,16 @@ QLinkedList< Annotation* > Page::annotations() const
     return m_annotations;
 }
 
+Annotation * Page::annotation( const QString & uniqueName ) const
+{
+    foreach(Annotation *a, m_annotations)
+    {
+        if ( a->uniqueName() == uniqueName )
+            return a;
+    }
+    return nullptr;
+}
+
 const Action * Page::pageAction( PageAction action ) const
 {
     switch ( action )

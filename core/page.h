@@ -250,6 +250,12 @@ class OKULARCORE_EXPORT Page
         QLinkedList< Annotation* > annotations() const;
 
         /**
+         * Returns the annotation with the given unique name.
+         * @since TODO
+         */
+        Annotation * annotation( const QString & uniqueName ) const;
+
+        /**
          * Returns the @ref Action object which is associated with the given page @p action
          * or 0 if no page action is set.
          */

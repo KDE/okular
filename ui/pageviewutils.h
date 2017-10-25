@@ -47,7 +47,7 @@ class PageViewItem
         int pageNumber() const;
         double zoomFactor() const;
         bool isVisible() const;
-        QHash<int, FormWidgetIface*>& formWidgets();
+        QSet<FormWidgetIface*>& formWidgets();
         QHash< Okular::Movie *, VideoWidget * >& videoWidgets();
 
         /* The page is cropped as follows: */
@@ -87,7 +87,7 @@ class PageViewItem
         QRect m_croppedGeometry;
         QRect m_uncroppedGeometry;
         Okular::NormalizedRect m_crop;
-        QHash<int, FormWidgetIface*> m_formWidgets;
+        QSet<FormWidgetIface*> m_formWidgets;
         QHash< Okular::Movie *, VideoWidget * > m_videoWidgets;
 };
 

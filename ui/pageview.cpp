@@ -1016,7 +1016,7 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
                 w->setFormWidgetsController( d->formWidgetsController() );
                 w->setVisibility( false );
                 w->setCanBeFilled( allowfillforms );
-                item->formWidgets().insert( ff->id(), w );
+                item->formWidgets().insert( w );
                 hasformwidgets = true;
             }
         }

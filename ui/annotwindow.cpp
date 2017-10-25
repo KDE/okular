@@ -241,6 +241,11 @@ AnnotWindow::~AnnotWindow()
     delete m_latexRenderer;
 }
 
+Okular::Annotation * AnnotWindow::annotation() const
+{
+    return m_annot;
+}
+
 void AnnotWindow::reloadInfo()
 {
     const QColor newcolor = m_annot->style().color().isValid() ? m_annot->style().color() : Qt::yellow;

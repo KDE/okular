@@ -36,6 +36,8 @@ class AnnotWindow : public QFrame
 
         void reloadInfo();
 
+        Okular::Annotation * annotation() const;
+
     private:
         MovableTitle * m_title;
         KTextEdit *textEdit;

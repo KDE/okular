@@ -2460,6 +2460,8 @@ bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
         }
     }
 
+    bool setModifiedAfterSave = false;
+
     QTemporaryFile tf;
     QString fileName;
     if ( !tf.open() )
@@ -2528,6 +2530,7 @@ bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
                 case KMessageBox::Yes: // -> Save as Okular document archive
                     return slotSaveFileAs( true /* showOkularArchiveAsDefaultFormat */ );
                 case KMessageBox::No: // -> Continue
+                    setModifiedAfterSave = m_document->canSwapBackingFile();
                     break;
                 case KMessageBox::Cancel:
                     return false;
@@ -2643,8 +2646,18 @@ bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
     {
         // this calls openFile internally, which in turn actually calls
         // m_document->swapBackingFile() instead of the regular loadDocument
-        if ( !openUrl( saveUrl, true /* swapInsteadOfOpening */ ) )
+        if ( openUrl( saveUrl, true /* swapInsteadOfOpening */ ) )
+        {
+            if ( setModifiedAfterSave )
+            {
+                setModified();
+                setWindowTitleFromDocument();
+            }
+        }
+        else
+        {
             reloadedCorrectly = false;
+        }
     }
     else
     {

@@ -596,9 +596,6 @@ Okular::Document::OpenResult PDFGenerator::init(QVector<Okular::Page*> & pagesVe
 PDFGenerator::SwapBackingFileResult PDFGenerator::swapBackingFile( QString const &newFileName, QVector<Okular::Page*> & newPagesVector )
 {
     doCloseDocument();
-    // TODO For files with password we need to figure out a way to return false but that doesn't
-    // end in error but that ends up in a reload.
-    // Probably hijacking at the canSwapBackingFile level
     auto openResult = loadDocumentWithPassword(newFileName, newPagesVector, QString());
     if (openResult != Okular::Document::OpenSuccess)
         return SwapBackingFileError;

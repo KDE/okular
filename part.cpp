@@ -300,7 +300,7 @@ Part::Part(QWidget *parentWidget,
 QObject *parent,
 const QVariantList &args)
 : KParts::ReadWritePart(parent),
-m_tempfile( nullptr ), m_swapInsteadOfOpening( false ), m_isReloading( false ), m_fileWasRemoved( false ), m_showMenuBarAction( nullptr ), m_showFullScreenAction( nullptr ), m_actionsSearched( false ),
+m_tempfile( nullptr ), m_documentOpenWithPassword( false ), m_swapInsteadOfOpening( false ), m_isReloading( false ), m_fileWasRemoved( false ), m_showMenuBarAction( nullptr ), m_showFullScreenAction( nullptr ), m_actionsSearched( false ),
 m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentWidget, parent, args)), m_generatorGuiClient(nullptr), m_keeper( nullptr )
 {
     // make sure that the component name is okular otherwise the XMLGUI .rc files are not found
@@ -1377,6 +1377,7 @@ Document::OpenResult Part::doOpenFile( const QMimeType &mimeA, const QString &fi
         {
             openResult = m_document->openDocument( fileNameToOpen,  url(), mime );
         }
+        m_documentOpenWithPassword = false;
 
         // if the file didn't open correctly it might be encrypted, so ask for a pass
         QString walletName, walletFolder, walletKey;
@@ -1441,10 +1442,15 @@ Document::OpenResult Part::doOpenFile( const QMimeType &mimeA, const QString &fi
                 openResult = m_document->openDocument( fileNameToOpen,  url(), mime, password );
             }
 
-            // 3. if the password is correct and the user chose to remember it, store it to the wallet
-            if ( openResult == Document::OpenSuccess && wallet && /*safety check*/ wallet->isOpen() && keep )
+            if ( openResult == Document::OpenSuccess )
             {
-                wallet->writePassword( walletKey, password );
+                m_documentOpenWithPassword = true;
+
+                // 3. if the password is correct and the user chose to remember it, store it to the wallet
+                if (wallet && /*safety check*/ wallet->isOpen() && keep )
+                {
+                    wallet->writePassword( walletKey, password );
+                }
             }
         }
     }
@@ -2436,6 +2442,24 @@ bool Part::saveAs(const QUrl & saveUrl)
 
 bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
 {
+    bool hasUserAcceptedReload = false;
+    if ( m_documentOpenWithPassword )
+    {
+        const int res = KMessageBox::warningYesNo( widget(),
+                    i18n( "The current document has password.<br />When saving we need to reload the file so you will get the password asked again and the undo/redo stack will be lost.<br />Do you want to continue?" ),
+                    i18n( "Save - Warning" ) );
+
+        switch ( res )
+        {
+            case KMessageBox::Yes:
+                hasUserAcceptedReload = true;
+                // do nothing
+                break;
+            case KMessageBox::No: // User said no to continue, so return true even if save didn't happen otherwise we will get an error
+                return true;
+        }
+    }
+
     QTemporaryFile tf;
     QString fileName;
     if ( !tf.open() )
@@ -2452,6 +2476,22 @@ bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
     // Does the user want a .okular archive?
     if ( flags & SaveAsOkularArchive )
     {
+        if ( !hasUserAcceptedReload && !m_document->canSwapBackingFile() )
+        {
+            const int res = KMessageBox::warningYesNo( widget(),
+                        i18n( "The current document format backend doesn't support internal reload on save so we will close and open the file again.<br />This means that the undo/redo stack will be lost.<br />Do you want to continue?" ),
+                        i18n( "Save - Warning" ) );
+
+            switch ( res )
+            {
+                case KMessageBox::Yes:
+                    // do nothing
+                    break;
+                case KMessageBox::No: // User said no to continue, so return true even if save didn't happen otherwise we will get an error
+                    return true;
+            }
+        }
+
         if ( !m_document->saveDocumentArchive( fileName ) )
         {
             KMessageBox::information( widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", fileName ) );
@@ -2471,11 +2511,17 @@ bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
         if ( wontSaveAnnotations ) listOfwontSaves << i18n( "User annotations" );
         if ( !listOfwontSaves.isEmpty() && !( flags & SaveAsDontShowWarning ) )
         {
-            int result = KMessageBox::warningYesNoCancelList( widget(),
-                  i18n( "The following elements <b>cannot be saved</b> in this format and will be lost.<br>If you want to preserve them, please use the <i>Okular document archive</i> format." ),
+            const QString warningMessage = m_document->canSwapBackingFile() ?
+                        i18n( "The following elements <b>cannot be saved</b> in this format.<br>If you want to preserve them, please use the <i>Okular document archive</i> format." ) :
+                        i18n( "The following elements <b>cannot be saved</b> in this format and will be lost (as well as the undo/redo stack).<br>If you want to preserve them, please use the <i>Okular document archive</i> format." );
+            const QString continueMessage = m_document->canSwapBackingFile() ?
+                        i18n( "Continue" ) :
+                        i18n( "Continue losing changes" );
+            const int result = KMessageBox::warningYesNoCancelList( widget(),
+                  warningMessage,
                   listOfwontSaves, i18n( "Warning" ),
                   KGuiItem( i18n( "Save as Okular document archive..." ), "document-save-as" ), // <- KMessageBox::Yes
-                  KGuiItem( i18n( "Continue losing changes..." ), "arrow-right" ) ); // <- KMessageBox::NO
+                  KGuiItem( continueMessage, "arrow-right" ) ); // <- KMessageBox::NO
 
             switch (result)
             {
@@ -2593,7 +2639,7 @@ bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
     bool reloadedCorrectly = true;
 
     // Make the generator use the new new file instead of the old one
-    if ( m_document->canSwapBackingFile() )
+    if ( m_document->canSwapBackingFile() && !m_documentOpenWithPassword )
     {
         // this calls openFile internally, which in turn actually calls
         // m_document->swapBackingFile() instead of the regular loadDocument

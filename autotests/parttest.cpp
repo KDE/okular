@@ -739,7 +739,7 @@ void PartTest::testSaveAs()
     // user to confirm. On the other end, if we expect annotations to be
     // preserved (and thus no warning), we keep the warning on so that if it
     // shows the test timeouts and we can notice that something is wrong.
-    const Part::SaveAsFlags saveAsNativeFlags = nativelySupportsAnnotations ?
+    const Part::SaveAsFlags extraSaveAsFlags = nativelySupportsAnnotations ?
         Part::NoSaveAsFlags : Part::SaveAsDontShowWarning;
 
     QString annotName;
@@ -761,8 +761,8 @@ void PartTest::testSaveAs()
         part.m_document->addPageAnnotation( 0, annot );
         annotName = annot->uniqueName();
 
-        QVERIFY( part.saveAs( QUrl::fromLocalFile( archiveSave.fileName() ), Part::SaveAsOkularArchive ) );
-        QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), saveAsNativeFlags ) );
+        QVERIFY( part.saveAs( QUrl::fromLocalFile( archiveSave.fileName() ), extraSaveAsFlags | Part::SaveAsOkularArchive ) );
+        QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), extraSaveAsFlags ) );
 
         part.closeUrl();
     }
@@ -775,7 +775,7 @@ void PartTest::testSaveAs()
         QCOMPARE( part.m_document->page( 0 )->annotations().size(), 1 );
         QCOMPARE( part.m_document->page( 0 )->annotations().first()->uniqueName(), annotName );
 
-        QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeFromArchiveFile.fileName() ), saveAsNativeFlags ) );
+        QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeFromArchiveFile.fileName() ), extraSaveAsFlags ) );
 
         part.closeUrl();
     }

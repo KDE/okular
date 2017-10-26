@@ -2478,7 +2478,7 @@ bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
     // Does the user want a .okular archive?
     if ( flags & SaveAsOkularArchive )
     {
-        if ( !hasUserAcceptedReload && !m_document->canSwapBackingFile() )
+        if ( !hasUserAcceptedReload && !m_document->canSwapBackingFile() && !( flags & SaveAsDontShowWarning ) )
         {
             const int res = KMessageBox::warningYesNo( widget(),
                         i18n( "The current document format backend doesn't support internal reload on save so we will close and open the file again.<br />This means that the undo/redo stack will be lost.<br />Do you want to continue?" ),

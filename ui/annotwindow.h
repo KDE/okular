@@ -37,6 +37,9 @@ class AnnotWindow : public QFrame
         void reloadInfo();
 
         Okular::Annotation * annotation() const;
+        int pageNumber() const;
+
+        void updateAnnotation( Okular::Annotation * a );
 
     private:
         MovableTitle * m_title;

@@ -27,7 +27,7 @@ class KIMGIOGenerator : public Okular::Generator
         // [INHERITED] load a document and fill up the pagesVector
         bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector ) override;
         bool loadDocumentFromData( const QByteArray & fileData, QVector<Okular::Page*> & pagesVector ) override;
-        bool swapBackingFile( QString const &newFileName ) override;
+        SwapBackingFileResult swapBackingFile( QString const &newFileName, QVector<Okular::Page*> & newPagesVector ) override;
 
         // [INHERITED] print document using already configured kprinter
         bool print( QPrinter& printer ) override;

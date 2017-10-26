@@ -4359,13 +4359,80 @@ bool Document::swapBackingFile( const QString &newFileName, const QUrl & url )
     d->saveDocumentInfo();
 
     qCDebug(OkularCoreDebug) << "Swapping backing file to" << newFileName;
-    if (genIt->generator->swapBackingFile( newFileName ))
+    QVector< Page * > newPagesVector;
+    Generator::SwapBackingFileResult result = genIt->generator->swapBackingFile( newFileName, newPagesVector );
+    if (result != Generator::SwapBackingFileError)
     {
+        QLinkedList< ObjectRect* > rectsToDelete;
+        QLinkedList< Annotation* > annotationsToDelete;
+        QSet< PagePrivate* > pagePrivatesToDelete;
+
+        if (result == Generator::SwapBackingFileReloadInternalData)
+        {
+            // Here we need to replace everything that the old generator
+            // had created with what the new one has without making it look like
+            // we have actually closed and opened the file again
+
+            // Simple sanity check
+            if (newPagesVector.count() != d->m_pagesVector.count())
+                return false;
+
+            // Update the undo stack contents
+            for (int i = 0; i < d->m_undoStack->count(); ++i)
+            {
+                // Trust me on the const_cast ^_^
+                QUndoCommand *uc = const_cast<QUndoCommand *>( d->m_undoStack->command( i ) );
+                if (OkularUndoCommand *ouc = dynamic_cast<OkularUndoCommand*>( uc )) ouc->refreshInternalPageReferences( newPagesVector );
+                else
+                {
+                    qWarning() << "Unhandled undo command" << uc;
+                }
+            }
+
+            for (int i = 0; i < d->m_pagesVector.count(); ++i)
+            {
+                // switch the PagePrivate* from newPage to oldPage
+                // this way everyone still holding Page* doesn't get
+                // disturbed by it
+                Page *oldPage = d->m_pagesVector[i];
+                Page *newPage = newPagesVector[i];
+                newPage->d->adoptGeneratedContents(oldPage->d);
+
+                pagePrivatesToDelete << oldPage->d;
+                oldPage->d = newPage->d;
+                oldPage->d->m_page = oldPage;
+                oldPage->d->m_doc = d;
+                newPage->d = nullptr;
+
+                annotationsToDelete << oldPage->m_annotations;
+                rectsToDelete << oldPage->m_rects;
+                oldPage->m_annotations = newPage->m_annotations;
+                oldPage->m_rects = newPage->m_rects;
+            }
+            qDeleteAll( newPagesVector );
+        }
+
         d->m_url = url;
         d->m_docFileName = newFileName;
         d->updateMetadataXmlNameAndDocSize();
         d->m_bookmarkManager->setUrl( d->m_url );
+
+        if ( d->m_synctex_scanner )
+        {
+            synctex_scanner_free( d->m_synctex_scanner );
+            d->m_synctex_scanner = synctex_scanner_new_with_output_file( QFile::encodeName( newFileName ).constData(), nullptr, 1);
+            if ( !d->m_synctex_scanner && QFile::exists(newFileName + QLatin1String( "sync" ) ) )
+            {
+                d->loadSyncFile(newFileName);
+            }
+        }
+
         foreachObserver( notifySetup( d->m_pagesVector, DocumentObserver::UrlChanged ) );
+
+        qDeleteAll( annotationsToDelete );
+        qDeleteAll( rectsToDelete );
+        qDeleteAll( pagePrivatesToDelete );
+
         return true;
     }
     else
@@ -4398,8 +4465,11 @@ bool Document::swapBackingFileArchive( const QString &newFileName, const QUrl & 
     const QString tempFileName = newArchive->document.fileName();
 
     qCDebug(OkularCoreDebug) << "Swapping backing file to" << tempFileName;
-    if (genIt->generator->swapBackingFile( tempFileName ))
+    QVector< Page * > newPagesVector;
+    if (genIt->generator->swapBackingFile( newFileName, newPagesVector ))
     {
+        // TODO Do the same we do in the other swapBackingFile call
+
         delete d->m_archiveData;
         d->m_archiveData = newArchive;
         d->m_url = url;

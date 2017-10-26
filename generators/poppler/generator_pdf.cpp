@@ -512,6 +512,7 @@ PDFGenerator::PDFGenerator( QObject *parent, const QVariantList &args )
         setFeature( PrintToFile );
     setFeature( ReadRawData );
     setFeature( TiledRendering );
+    setFeature( SwapBackingFile );
 
     // You only need to do it once not for each of the documents but it is cheap enough
     // so doing it all the time won't hurt either
@@ -590,6 +591,19 @@ Okular::Document::OpenResult PDFGenerator::init(QVector<Okular::Page*> & pagesVe
 
     // the file has been loaded correctly
     return Okular::Document::OpenSuccess;
+}
+
+PDFGenerator::SwapBackingFileResult PDFGenerator::swapBackingFile( QString const &newFileName, QVector<Okular::Page*> & newPagesVector )
+{
+    doCloseDocument();
+    // TODO For files with password we need to figure out a way to return false but that doesn't
+    // end in error but that ends up in a reload.
+    // Probably hijacking at the canSwapBackingFile level
+    auto openResult = loadDocumentWithPassword(newFileName, newPagesVector, QString());
+    if (openResult != Okular::Document::OpenSuccess)
+        return SwapBackingFileError;
+
+    return SwapBackingFileReloadInternalData;
 }
 
 bool PDFGenerator::doCloseDocument()

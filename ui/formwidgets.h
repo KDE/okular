@@ -148,8 +148,9 @@ class FormWidgetIface
         void setCanBeFilled( bool fill );
 
         void setPageItem( PageViewItem *pageItem );
-        Okular::FormField* formField() const;
         PageViewItem* pageItem() const;
+        void setFormField( Okular::FormField *field );
+        Okular::FormField* formField() const;
 
         virtual void setFormWidgetsController( FormWidgetsController *controller );
 

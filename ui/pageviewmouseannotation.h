@@ -113,6 +113,9 @@ public:
 
     Qt::CursorShape cursor() const;
 
+    // needs to be called after document save
+    void updateAnnotationPointers();
+
     enum MouseAnnotationState {
         StateInactive,
         StateFocused,

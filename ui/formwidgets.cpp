@@ -309,6 +309,11 @@ void FormWidgetIface::setPageItem( PageViewItem *pageItem )
     m_pageItem = pageItem;
 }
 
+void FormWidgetIface::setFormField( Okular::FormField *field )
+{
+    m_ff = field;
+}
+
 Okular::FormField* FormWidgetIface::formField() const
 {
     return m_ff;

@@ -105,10 +105,32 @@ AnnotationModelPrivate::~AnnotationModelPrivate()
     delete root;
 }
 
+static void updateAnnotationPointer( AnnItem *item, const QVector< Okular::Page * > &pages )
+{
+    if ( item->annotation ) {
+        item->annotation = pages[ item->page ]->annotation( item->annotation->uniqueName() );
+        if ( !item->annotation )
+            qWarning() << "Lost annotation on document save, something went wrong";
+    }
+
+    foreach ( AnnItem *child, item->children )
+        updateAnnotationPointer( child, pages );
+}
+
 void AnnotationModelPrivate::notifySetup( const QVector< Okular::Page * > &pages, int setupFlags )
 {
     if ( !( setupFlags & Okular::DocumentObserver::DocumentChanged ) )
+    {
+        if ( setupFlags & Okular::DocumentObserver::UrlChanged )
+        {
+            // Here with UrlChanged and no document changed it means we
+            // need to update all the Annotation* otherwise
+            // they still point to the old document ones, luckily the old ones are still
+            // around so we can look for the new ones using unique ids, etc
+            updateAnnotationPointer( root, pages );
+        }
         return;
+    }
 
     q->beginResetModel();
     qDeleteAll( root->children );

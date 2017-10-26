@@ -271,16 +271,26 @@ class OKULARCORE_EXPORT Generator : public QObject
         virtual Document::OpenResult loadDocumentFromDataWithPassword( const QByteArray & fileData, QVector< Page * > & pagesVector, const QString &password );
 
         /**
+         * Describes the result of an swap file operation.
+         *
+         * @since 1.3
+         */
+        enum SwapBackingFileResult
+        {
+            SwapBackingFileError,               //< The document could not be swapped
+            SwapBackingFileNoOp,                //< The document was swapped and nothing needs to be done
+            SwapBackingFileReloadInternalData   //< The document was swapped and internal data (forms, annotations, etc) needs to be reloaded
+        };
+
+        /**
          * Changes the path of the file we are reading from. The new path must
          * point to a copy of the same document.
          *
          * @note the Generator has to have the feature @ref SwapBackingFile enabled
          *
-         * @since 0.20 (KDE 4.14)
-         *
-         * @returns true on success, false otherwise.
+         * @since 1.3
          */
-        virtual bool swapBackingFile( const QString &newFileName );
+        virtual SwapBackingFileResult swapBackingFile( const QString &newFileName, QVector<Okular::Page*> & newPagesVector );
 
         /**
          * This method is called when the document is closed and not used

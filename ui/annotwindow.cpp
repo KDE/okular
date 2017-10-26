@@ -246,6 +246,11 @@ Okular::Annotation * AnnotWindow::annotation() const
     return m_annot;
 }
 
+void AnnotWindow::updateAnnotation( Okular::Annotation * a )
+{
+    m_annot = a;
+}
+
 void AnnotWindow::reloadInfo()
 {
     const QColor newcolor = m_annot->style().color().isValid() ? m_annot->style().color() : Qt::yellow;
@@ -259,6 +264,11 @@ void AnnotWindow::reloadInfo()
     }
     m_title->setAuthor( m_annot->author() );
     m_title->setDate( m_annot->modificationDate() );
+}
+
+int AnnotWindow::pageNumber() const
+{
+    return m_page;
 }
 
 void AnnotWindow::showEvent( QShowEvent * event )

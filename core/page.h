@@ -392,7 +392,7 @@ class OKULARCORE_EXPORT Page
         QList<Tile> tilesAt( const DocumentObserver *observer, const NormalizedRect &rect ) const;
 
     private:
-        PagePrivate* const d;
+        PagePrivate* d;
         /// @cond PRIVATE
         friend class PagePrivate;
         friend class Document;

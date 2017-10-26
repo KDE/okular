@@ -23,8 +23,15 @@ class DocumentPrivate;
 class FormFieldText;
 class FormFieldButton;
 class FormFieldChoice;
+class Page;
 
-class AddAnnotationCommand : public QUndoCommand
+class OkularUndoCommand : public QUndoCommand
+{
+    public:
+        virtual void refreshInternalPageReferences( const QVector< Okular::Page * > &newPagesVector ) = 0;
+};
+
+class AddAnnotationCommand : public OkularUndoCommand
 {
     public:
         AddAnnotationCommand(Okular::DocumentPrivate * docPriv,  Okular::Annotation* annotation, int pageNumber);
@@ -35,6 +42,8 @@ class AddAnnotationCommand : public QUndoCommand
 
         void redo() override;
 
+        void refreshInternalPageReferences( const QVector< Okular::Page * > &newPagesVector ) override;
+
     private:
         Okular::DocumentPrivate * m_docPriv;
         Okular::Annotation* m_annotation;
@@ -42,7 +51,7 @@ class AddAnnotationCommand : public QUndoCommand
         bool m_done;
 };
 
-class RemoveAnnotationCommand : public QUndoCommand
+class RemoveAnnotationCommand : public OkularUndoCommand
 {
     public:
         RemoveAnnotationCommand(Okular::DocumentPrivate * doc,  Okular::Annotation* annotation, int pageNumber);
@@ -50,6 +59,8 @@ class RemoveAnnotationCommand : public QUndoCommand
         void undo() override;
         void redo() override;
 
+        void refreshInternalPageReferences( const QVector< Okular::Page * > &newPagesVector ) override;
+
     private:
         Okular::DocumentPrivate * m_docPriv;
         Okular::Annotation* m_annotation;
@@ -57,7 +68,7 @@ class RemoveAnnotationCommand : public QUndoCommand
         bool m_done;
 };
 
-class ModifyAnnotationPropertiesCommand : public QUndoCommand
+class ModifyAnnotationPropertiesCommand : public OkularUndoCommand
 {
     public:
         ModifyAnnotationPropertiesCommand( Okular::DocumentPrivate* docPriv,  Okular::Annotation*  annotation,
@@ -68,6 +79,8 @@ class ModifyAnnotationPropertiesCommand : public QUndoCommand
         void undo() override;
         void redo() override;
 
+        void refreshInternalPageReferences( const QVector< Okular::Page * > &newPagesVector ) override;
+
     private:
         Okular::DocumentPrivate * m_docPriv;
         Okular::Annotation* m_annotation;
@@ -76,7 +89,7 @@ class ModifyAnnotationPropertiesCommand : public QUndoCommand
         QDomNode m_newProperties;
 };
 
-class TranslateAnnotationCommand : public QUndoCommand
+class TranslateAnnotationCommand : public OkularUndoCommand
 {
     public:
         TranslateAnnotationCommand(Okular::DocumentPrivate* docPriv,
@@ -92,6 +105,8 @@ class TranslateAnnotationCommand : public QUndoCommand
         Okular::NormalizedPoint minusDelta();
         Okular::NormalizedRect translateBoundingRectangle( const Okular::NormalizedPoint & delta );
 
+        void refreshInternalPageReferences( const QVector< Okular::Page * > &newPagesVector ) override;
+
     private:
         Okular::DocumentPrivate * m_docPriv;
         Okular::Annotation* m_annotation;
@@ -100,7 +115,7 @@ class TranslateAnnotationCommand : public QUndoCommand
         bool m_completeDrag;
 };
 
-class AdjustAnnotationCommand : public QUndoCommand
+class AdjustAnnotationCommand : public OkularUndoCommand
 {
     public:
         AdjustAnnotationCommand(Okular::DocumentPrivate * docPriv,
@@ -117,6 +132,8 @@ class AdjustAnnotationCommand : public QUndoCommand
         Okular::NormalizedRect adjustBoundingRectangle(
                 const Okular::NormalizedPoint & delta1, const Okular::NormalizedPoint & delta2 );
 
+        void refreshInternalPageReferences( const QVector< Okular::Page * > &newPagesVector ) override;
+
     private:
         Okular::DocumentPrivate * m_docPriv;
         Okular::Annotation* m_annotation;
@@ -126,7 +143,7 @@ class AdjustAnnotationCommand : public QUndoCommand
         bool m_completeDrag;
 };
 
-class EditTextCommand : public QUndoCommand
+class EditTextCommand : public OkularUndoCommand
 {
     public:
         EditTextCommand( const QString & newContents,
@@ -182,6 +199,8 @@ class EditAnnotationContentsCommand : public EditTextCommand
         int id() const override;
         bool mergeWith(const QUndoCommand *uc) override;
 
+        void refreshInternalPageReferences( const QVector< Okular::Page * > &newPagesVector ) override;
+
     private:
         Okular::DocumentPrivate * m_docPriv;
         Okular::Annotation* m_annotation;
@@ -203,13 +222,16 @@ class EditFormTextCommand : public EditTextCommand
         void redo() override;
         int id() const override;
         bool mergeWith( const QUndoCommand *uc ) override;
+
+        void refreshInternalPageReferences( const QVector< Okular::Page * > &newPagesVector ) override;
+
     private:
         Okular::DocumentPrivate* m_docPriv;
         Okular::FormFieldText* m_form;
         int m_pageNumber;
 };
 
-class EditFormListCommand : public QUndoCommand
+class EditFormListCommand : public OkularUndoCommand
 {
     public:
         EditFormListCommand( Okular::DocumentPrivate* docPriv,
@@ -221,6 +243,8 @@ class EditFormListCommand : public QUndoCommand
 
         void undo() override;
         void redo() override;
+
+        void refreshInternalPageReferences( const QVector< Okular::Page * > &newPagesVector ) override;
 
     private:
         Okular::DocumentPrivate* m_docPriv;
@@ -248,6 +272,8 @@ class EditFormComboCommand : public EditTextCommand
         int id() const override;
         bool mergeWith( const QUndoCommand *uc ) override;
 
+        void refreshInternalPageReferences( const QVector< Okular::Page * > &newPagesVector ) override;
+
     private:
         Okular::DocumentPrivate* m_docPriv;
         FormFieldChoice* m_form;
@@ -256,7 +282,7 @@ class EditFormComboCommand : public EditTextCommand
         int m_prevIndex;
 };
 
-class EditFormButtonsCommand : public QUndoCommand
+class EditFormButtonsCommand : public OkularUndoCommand
 {
     public:
         EditFormButtonsCommand( Okular::DocumentPrivate* docPriv,
@@ -267,6 +293,8 @@ class EditFormButtonsCommand : public QUndoCommand
 
         void undo() override;
         void redo() override;
+
+        void refreshInternalPageReferences( const QVector< Okular::Page * > &newPagesVector ) override;
 
     private:
         void clearFormButtonStates();

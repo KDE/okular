@@ -120,6 +120,17 @@ class PagePrivate
          */
         void setTilesManager( const DocumentObserver *observer, TilesManager *tm );
 
+        /**
+         * Moves contents that are generated from oldPage to this. And clears them from page
+         * so it can be deleted fine.
+         */
+        void adoptGeneratedContents( PagePrivate *oldPage );
+
+        /*
+         * Tries to find an equivalent form field to oldField by looking into the rect, type and name
+         */
+        OKULARCORE_EXPORT static FormField *findEquivalentForm( const Page *p, FormField *oldField );
+
         class PixmapObject
         {
             public:

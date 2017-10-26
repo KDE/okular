@@ -400,6 +400,19 @@ Qt::CursorShape MouseAnnotation::cursor() const
     return Qt::ArrowCursor;
 }
 
+void MouseAnnotation::updateAnnotationPointers()
+{
+    if (m_focusedAnnotation.annotation)
+    {
+        m_focusedAnnotation.annotation = m_document->page( m_focusedAnnotation.pageNumber )->annotation( m_focusedAnnotation.annotation->uniqueName() );
+    }
+
+    if (m_mouseOverAnnotation.annotation)
+    {
+        m_mouseOverAnnotation.annotation = m_document->page( m_mouseOverAnnotation.pageNumber )->annotation( m_mouseOverAnnotation.annotation->uniqueName() );
+    }
+}
+
 void MouseAnnotation::cancel()
 {
     if ( isActive() )

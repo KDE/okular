@@ -135,14 +135,17 @@ Page::Page( uint page, double w, double h, Rotation o )
 
 Page::~Page()
 {
-    deletePixmaps();
-    deleteRects();
-    d->deleteHighlights();
-    deleteAnnotations();
-    d->deleteTextSelections();
-    deleteSourceReferences();
+    if (d)
+    {
+        deletePixmaps();
+        deleteRects();
+        d->deleteHighlights();
+        deleteAnnotations();
+        d->deleteTextSelections();
+        deleteSourceReferences();
 
-    delete d;
+        delete d;
+    }
 }
 
 int Page::number() const
@@ -1049,4 +1052,60 @@ void PagePrivate::setTilesManager( const DocumentObserver *observer, TilesManage
     delete old;
 
     m_tilesManagers.insert(observer, tm);
+}
+
+void PagePrivate::adoptGeneratedContents( PagePrivate *oldPage )
+{
+    rotateAt( oldPage->m_rotation );
+
+    m_pixmaps = oldPage->m_pixmaps;
+    oldPage->m_pixmaps.clear();
+
+    m_tilesManagers = oldPage->m_tilesManagers;
+    oldPage->m_tilesManagers.clear();
+
+    m_boundingBox = oldPage->m_boundingBox;
+    m_isBoundingBoxKnown = oldPage->m_isBoundingBoxKnown;
+    m_text = oldPage->m_text;
+    oldPage->m_text = nullptr;
+
+    m_textSelections = oldPage->m_textSelections;
+    oldPage->m_textSelections = nullptr;
+
+    restoredLocalAnnotationList = oldPage->restoredLocalAnnotationList;
+    restoredFormFieldList = oldPage->restoredFormFieldList;
+}
+
+FormField *PagePrivate::findEquivalentForm( const Page *p, FormField *oldField )
+{
+    // given how id is not very good of id (at least for pdf) we do a few passes
+    // same rect, type and id
+    foreach(FormField *f, p->d->formfields)
+    {
+        if (f->rect() == oldField->rect() && f->type() == oldField->type() && f->id() == oldField->id())
+            return f;
+    }
+    // same rect and type
+    foreach(FormField *f, p->d->formfields)
+    {
+        if (f->rect() == oldField->rect() && f->type() == oldField->type())
+            return f;
+    }
+    // fuzzy rect, same type and id
+    foreach(FormField *f, p->d->formfields)
+    {
+        if (f->type() == oldField->type() && f->id() == oldField->id() && qFuzzyCompare(f->rect().left, oldField->rect().left) && qFuzzyCompare(f->rect().top, oldField->rect().top) && qFuzzyCompare(f->rect().right, oldField->rect().right) && qFuzzyCompare(f->rect().bottom, oldField->rect().bottom))
+        {
+            return f;
+        }
+    }
+    // fuzzy rect and same type
+    foreach(FormField *f, p->d->formfields)
+    {
+        if (f->type() == oldField->type() && qFuzzyCompare(f->rect().left, oldField->rect().left) && qFuzzyCompare(f->rect().top, oldField->rect().top) && qFuzzyCompare(f->rect().right, oldField->rect().right) && qFuzzyCompare(f->rect().bottom, oldField->rect().bottom))
+        {
+            return f;
+        }
+    }
+    return nullptr;
 }

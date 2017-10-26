@@ -91,11 +91,11 @@ bool KIMGIOGenerator::loadDocumentInternal(const QByteArray & fileData, const QS
     return true;
 }
 
-bool KIMGIOGenerator::swapBackingFile( QString const &/*newFileName*/ )
+KIMGIOGenerator::SwapBackingFileResult KIMGIOGenerator::swapBackingFile( QString const &/*newFileName*/, QVector<Okular::Page*> & /*newPagesVector*/ )
 {
     // NOP: We don't actually need to do anything because all data has already
     // been loaded in RAM
-    return true;
+    return SwapBackingFileNoOp;
 }
 
 bool KIMGIOGenerator::doCloseDocument()

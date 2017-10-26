@@ -81,6 +81,7 @@
 #include "core/document_p.h"
 #include "core/form.h"
 #include "core/page.h"
+#include "core/page_p.h"
 #include "core/misc.h"
 #include "core/generator.h"
 #include "core/movie.h"
@@ -937,6 +938,43 @@ void PageView::selectAll()
     }
 }
 
+void PageView::createAnnotationsVideoWidgets(PageViewItem *item, const QLinkedList< Okular::Annotation * > &annotations)
+{
+    qDeleteAll( item->videoWidgets() );
+    item->videoWidgets().clear();
+
+    QLinkedList< Okular::Annotation * >::const_iterator aIt = annotations.constBegin(), aEnd = annotations.constEnd();
+    for ( ; aIt != aEnd; ++aIt )
+    {
+        Okular::Annotation * a = *aIt;
+        if ( a->subType() == Okular::Annotation::AMovie )
+        {
+            Okular::MovieAnnotation * movieAnn = static_cast< Okular::MovieAnnotation * >( a );
+            VideoWidget * vw = new VideoWidget( movieAnn, movieAnn->movie(), d->document, viewport() );
+            item->videoWidgets().insert( movieAnn->movie(), vw );
+            vw->pageInitialized();
+        }
+        else if ( a->subType() == Okular::Annotation::ARichMedia )
+        {
+            Okular::RichMediaAnnotation * richMediaAnn = static_cast< Okular::RichMediaAnnotation * >( a );
+            VideoWidget * vw = new VideoWidget( richMediaAnn, richMediaAnn->movie(), d->document, viewport() );
+            item->videoWidgets().insert( richMediaAnn->movie(), vw );
+            vw->pageInitialized();
+        }
+        else if ( a->subType() == Okular::Annotation::AScreen )
+        {
+            const Okular::ScreenAnnotation * screenAnn = static_cast< Okular::ScreenAnnotation * >( a );
+            Okular::Movie *movie = GuiUtils::renditionMovieFromScreenAnnotation( screenAnn );
+            if ( movie )
+            {
+                VideoWidget * vw = new VideoWidget( screenAnn, movie, d->document, viewport() );
+                item->videoWidgets().insert( movie, vw );
+                vw->pageInitialized();
+            }
+        }
+    }
+}
+
 //BEGIN DocumentObserver inherited methods
 void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setupFlags )
 {
@@ -966,8 +1004,66 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
                     w->setCanBeFilled( allowfillforms );
             }
         }
+
         if ( !documentChanged )
+        {
+            if ( setupFlags & Okular::DocumentObserver::UrlChanged )
+            {
+                // Here with UrlChanged and no document changed it means we
+                // need to update all the Annotation* and Form* otherwise
+                // they still point to the old document ones, luckily the old ones are still
+                // around so we can look for the new ones using unique ids, etc
+                d->mouseAnnotation->updateAnnotationPointers();
+
+                foreach(AnnotWindow *aw, d->m_annowindows)
+                {
+                    Okular::Annotation *newA = d->document->page( aw->pageNumber() )->annotation( aw->annotation()->uniqueName() );
+                    aw->updateAnnotation( newA );
+                }
+
+                const QRect viewportRect( horizontalScrollBar()->value(), verticalScrollBar()->value(),
+                                          viewport()->width(), viewport()->height() );
+                for ( int i = 0; i < count; i++ )
+                {
+                    PageViewItem *item = d->items[i];
+                    const QSet<FormWidgetIface*> fws = item->formWidgets();
+                    foreach ( FormWidgetIface * w, fws )
+                    {
+                        Okular::FormField *f = Okular::PagePrivate::findEquivalentForm( d->document->page( i ), w->formField() );
+                        if (f)
+                        {
+                            w->setFormField( f );
+                        }
+                        else
+                        {
+                            qWarning() << "Lost form field on document save, something is wrong";
+                            item->formWidgets().remove(w);
+                            delete w;
+                        }
+                    }
+
+                    // For the video widgets we don't really care about reusing them since they don't contain much info so just
+                    // create them again
+                    createAnnotationsVideoWidgets( item, pageSet[i]->annotations() );
+                    Q_FOREACH ( VideoWidget *vw, item->videoWidgets() )
+                    {
+                        const Okular::NormalizedRect r = vw->normGeometry();
+                        vw->setGeometry(
+                            qRound( item->uncroppedGeometry().left() + item->uncroppedWidth() * r.left ) + 1 - viewportRect.left(),
+                            qRound( item->uncroppedGeometry().top() + item->uncroppedHeight() * r.top ) + 1 - viewportRect.top(),
+                            qRound( fabs( r.right - r.left ) * item->uncroppedGeometry().width() ),
+                            qRound( fabs( r.bottom - r.top ) * item->uncroppedGeometry().height() ) );
+
+                        // Workaround, otherwise the size somehow gets lost
+                        vw->show();
+                        vw->hide();
+                    }
+
+                }
+            }
+
             return;
+        }
     }
 
     // mouseAnnotation must not access our PageViewItem widgets any longer
@@ -1011,37 +1107,8 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
                 hasformwidgets = true;
             }
         }
-        const QLinkedList< Okular::Annotation * > annotations = (*setIt)->annotations();
-        QLinkedList< Okular::Annotation * >::const_iterator aIt = annotations.constBegin(), aEnd = annotations.constEnd();
-        for ( ; aIt != aEnd; ++aIt )
-        {
-            Okular::Annotation * a = *aIt;
-            if ( a->subType() == Okular::Annotation::AMovie )
-            {
-                Okular::MovieAnnotation * movieAnn = static_cast< Okular::MovieAnnotation * >( a );
-                VideoWidget * vw = new VideoWidget( movieAnn, movieAnn->movie(), d->document, viewport() );
-                item->videoWidgets().insert( movieAnn->movie(), vw );
-                vw->pageInitialized();
-            }
-            else if ( a->subType() == Okular::Annotation::ARichMedia )
-            {
-                Okular::RichMediaAnnotation * richMediaAnn = static_cast< Okular::RichMediaAnnotation * >( a );
-                VideoWidget * vw = new VideoWidget( richMediaAnn, richMediaAnn->movie(), d->document, viewport() );
-                item->videoWidgets().insert( richMediaAnn->movie(), vw );
-                vw->pageInitialized();
-            }
-            else if ( a->subType() == Okular::Annotation::AScreen )
-            {
-                const Okular::ScreenAnnotation * screenAnn = static_cast< Okular::ScreenAnnotation * >( a );
-                Okular::Movie *movie = GuiUtils::renditionMovieFromScreenAnnotation( screenAnn );
-                if ( movie )
-                {
-                    VideoWidget * vw = new VideoWidget( screenAnn, movie, d->document, viewport() );
-                    item->videoWidgets().insert( movie, vw );
-                    vw->pageInitialized();
-                }
-            }
-        }
+
+        createAnnotationsVideoWidgets( item, (*setIt)->annotations() );
     }
 
     // invalidate layout so relayout/repaint will happen on next viewport change

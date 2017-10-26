@@ -4466,7 +4466,7 @@ bool Document::swapBackingFileArchive( const QString &newFileName, const QUrl & 
 
     qCDebug(OkularCoreDebug) << "Swapping backing file to" << tempFileName;
     QVector< Page * > newPagesVector;
-    if (genIt->generator->swapBackingFile( newFileName, newPagesVector ))
+    if (genIt->generator->swapBackingFile( tempFileName, newPagesVector ))
     {
         // TODO Do the same we do in the other swapBackingFile call
 

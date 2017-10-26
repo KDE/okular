@@ -2475,7 +2475,7 @@ bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
                   i18n( "The following elements <b>cannot be saved</b> in this format and will be lost.<br>If you want to preserve them, please use the <i>Okular document archive</i> format." ),
                   listOfwontSaves, i18n( "Warning" ),
                   KGuiItem( i18n( "Save as Okular document archive..." ), "document-save-as" ), // <- KMessageBox::Yes
-                  KStandardGuiItem::cont() ); // <- KMessageBox::NO
+                  KGuiItem( i18n( "Continue losing changes..." ), "arrow-right" ) ); // <- KMessageBox::NO
 
             switch (result)
             {

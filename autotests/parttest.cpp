@@ -48,6 +48,8 @@ class PartTest
         void testClickInternalLink();
         void testSaveAs();
         void testSaveAs_data();
+        void testSaveAsUndoStackAnnotations();
+        void testSaveAsUndoStackAnnotations_data();
         void testMouseMoveOverLinkWhileInSelectionMode();
         void testClickUrlLinkWhileInSelectionMode();
         void testeTextSelectionOverAndAcrossLinks_data();
@@ -811,6 +813,165 @@ void PartTest::testSaveAs()
 }
 
 void PartTest::testSaveAs_data()
+{
+    QTest::addColumn<QString>("file");
+    QTest::addColumn<QString>("extension");
+    QTest::addColumn<bool>("nativelySupportsAnnotations");
+    QTest::addColumn<bool>("canSwapBackingFile");
+
+    QTest::newRow("pdf") << KDESRCDIR "data/file1.pdf" << "pdf" << true << true;
+    QTest::newRow("epub") << KDESRCDIR "data/contents.epub" << "epub" << false << false;
+    QTest::newRow("jpg") << KDESRCDIR "data/potato.jpg" << "jpg" << false << true;
+}
+
+void PartTest::testSaveAsUndoStackAnnotations()
+{
+    QFETCH(QString, file);
+    QFETCH(QString, extension);
+    QFETCH(bool, nativelySupportsAnnotations);
+    QFETCH(bool, canSwapBackingFile);
+
+    // If we expect not to be able to preserve annotations when we write a
+    // native file, disable the warning otherwise the test will wait for the
+    // user to confirm. On the other end, if we expect annotations to be
+    // preserved (and thus no warning), we keep the warning on so that if it
+    // shows the test timeouts and we can notice that something is wrong.
+    const Part::SaveAsFlags extraSaveAsFlags = nativelySupportsAnnotations ?
+        Part::NoSaveAsFlags : Part::SaveAsDontShowWarning;
+
+    QTemporaryFile nativeDirectSave( QString( "%1/okrXXXXXX.%2" ).arg( QDir::tempPath() ).arg ( extension ) );
+    QVERIFY( nativeDirectSave.open() ); nativeDirectSave.close();
+
+    Okular::Part part(nullptr, nullptr, QVariantList());
+    part.openDocument( file );
+
+    QCOMPARE(part.m_document->canSwapBackingFile(), canSwapBackingFile);
+
+    Okular::Annotation *annot = new Okular::TextAnnotation();
+    annot->setBoundingRectangle( Okular::NormalizedRect( 0.1, 0.1, 0.15, 0.15 ) );
+    annot->setContents( "annot contents" );
+    part.m_document->addPageAnnotation( 0, annot );
+    QString annotName = annot->uniqueName();
+
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), extraSaveAsFlags ) );
+
+    if (!canSwapBackingFile) {
+        // The undo/redo stack gets lost if you can not swap the backing file
+        QVERIFY( !part.m_document->canUndo() );
+        QVERIFY( !part.m_document->canRedo() );
+        return;
+    }
+
+    // Check we can still undo the annot add after save
+    QVERIFY( part.m_document->canUndo() );
+    part.m_document->undo();
+    QVERIFY( !part.m_document->canUndo() );
+
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), extraSaveAsFlags ) );
+    QVERIFY( part.m_document->page( 0 )->annotations().isEmpty() );
+
+    // Check we can redo the annot add after save
+    QVERIFY( part.m_document->canRedo() );
+    part.m_document->redo();
+    QVERIFY( !part.m_document->canRedo() );
+
+    if ( nativelySupportsAnnotations ) {
+        // If the annots are provived by the backend we need to refetch the pointer after save
+        annot = part.m_document->page( 0 )->annotation( annotName );
+        QVERIFY( annot );
+    }
+
+
+
+    // Remove the annotation, creates another undo command
+    QVERIFY( part.m_document->canRemovePageAnnotation( annot ) );
+    part.m_document->removePageAnnotation( 0, annot );
+    QVERIFY( part.m_document->page( 0 )->annotations().isEmpty() );
+
+    // Check we can still undo the annot remove after save
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), extraSaveAsFlags ) );
+    QVERIFY( part.m_document->canUndo() );
+    part.m_document->undo();
+    QVERIFY( part.m_document->canUndo() );
+    QCOMPARE( part.m_document->page( 0 )->annotations().count(), 1 );
+
+    // Check we can still undo the annot add after save
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), extraSaveAsFlags ) );
+    QVERIFY( part.m_document->canUndo() );
+    part.m_document->undo();
+    QVERIFY( !part.m_document->canUndo() );
+    QVERIFY( part.m_document->page( 0 )->annotations().isEmpty() );
+
+
+    // Redo the add annotation
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), extraSaveAsFlags ) );
+    QVERIFY( part.m_document->canRedo() );
+    part.m_document->redo();
+    QVERIFY( part.m_document->canUndo() );
+    QVERIFY( part.m_document->canRedo() );
+
+    if ( nativelySupportsAnnotations ) {
+        // If the annots are provived by the backend we need to refetch the pointer after save
+        annot = part.m_document->page( 0 )->annotation( annotName );
+        QVERIFY( annot );
+    }
+
+
+    // Add translate, adjust and modify commands
+    part.m_document->translatePageAnnotation( 0, annot, Okular::NormalizedPoint( 0.1, 0.1 ) );
+    part.m_document->adjustPageAnnotation( 0, annot, Okular::NormalizedPoint( 0.1, 0.1 ), Okular::NormalizedPoint( 0.1, 0.1 ) );
+    part.m_document->prepareToModifyAnnotationProperties( annot );
+    part.m_document->modifyPageAnnotationProperties( 0, annot );
+
+    // Now check we can still undo/redo/save at all the intermediate states and things still work
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), extraSaveAsFlags ) );
+    QVERIFY( part.m_document->canUndo() );
+    part.m_document->undo();
+    QVERIFY( part.m_document->canUndo() );
+
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), extraSaveAsFlags ) );
+    QVERIFY( part.m_document->canUndo() );
+    part.m_document->undo();
+    QVERIFY( part.m_document->canUndo() );
+
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), extraSaveAsFlags ) );
+    QVERIFY( part.m_document->canUndo() );
+    part.m_document->undo();
+    QVERIFY( part.m_document->canUndo() );
+
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), extraSaveAsFlags ) );
+    QVERIFY( part.m_document->canUndo() );
+    part.m_document->undo();
+    QVERIFY( !part.m_document->canUndo() );
+    QVERIFY( part.m_document->canRedo() );
+    QVERIFY( part.m_document->page( 0 )->annotations().isEmpty() );
+
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), extraSaveAsFlags ) );
+    QVERIFY( part.m_document->canRedo() );
+    part.m_document->redo();
+    QVERIFY( part.m_document->canRedo() );
+
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), extraSaveAsFlags ) );
+    QVERIFY( part.m_document->canRedo() );
+    part.m_document->redo();
+    QVERIFY( part.m_document->canRedo() );
+
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), extraSaveAsFlags ) );
+    QVERIFY( part.m_document->canRedo() );
+    part.m_document->redo();
+    QVERIFY( part.m_document->canRedo() );
+
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), extraSaveAsFlags ) );
+    QVERIFY( part.m_document->canRedo() );
+    part.m_document->redo();
+    QVERIFY( !part.m_document->canRedo() );
+
+    // Do a last save as so that close url doesn't popup the "You have changes. Do you want to save?" dialog
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), extraSaveAsFlags ) );
+    part.closeUrl();
+}
+
+void PartTest::testSaveAsUndoStackAnnotations_data()
 {
     QTest::addColumn<QString>("file");
     QTest::addColumn<QString>("extension");

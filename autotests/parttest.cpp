@@ -733,6 +733,7 @@ void PartTest::testSaveAs()
     QFETCH(QString, file);
     QFETCH(QString, extension);
     QFETCH(bool, nativelySupportsAnnotations);
+    QFETCH(bool, canSwapBackingFile);
 
     // If we expect not to be able to preserve annotations when we write a
     // native file, disable the warning otherwise the test will wait for the
@@ -754,6 +755,8 @@ void PartTest::testSaveAs()
     {
         Okular::Part part(nullptr, nullptr, QVariantList());
         part.openDocument( file );
+
+        QCOMPARE(part.m_document->canSwapBackingFile(), canSwapBackingFile);
 
         Okular::Annotation *annot = new Okular::TextAnnotation();
         annot->setBoundingRectangle( Okular::NormalizedRect( 0.1, 0.1, 0.15, 0.15 ) );
@@ -812,9 +815,11 @@ void PartTest::testSaveAs_data()
     QTest::addColumn<QString>("file");
     QTest::addColumn<QString>("extension");
     QTest::addColumn<bool>("nativelySupportsAnnotations");
+    QTest::addColumn<bool>("canSwapBackingFile");
 
-    QTest::newRow("pdf") << KDESRCDIR "data/file1.pdf" << "pdf" << true;
-    QTest::newRow("epub") << KDESRCDIR "data/contents.epub" << "epub" << false;
+    QTest::newRow("pdf") << KDESRCDIR "data/file1.pdf" << "pdf" << true << true;
+    QTest::newRow("epub") << KDESRCDIR "data/contents.epub" << "epub" << false << false;
+    QTest::newRow("jpg") << KDESRCDIR "data/potato.jpg" << "jpg" << false << true;
 }
 
 }

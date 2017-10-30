@@ -10,6 +10,7 @@
 #include <QtTest>
 
 #include "../core/annotations.h"
+#include "../core/form.h"
 #include "../core/page.h"
 #include "../part.h"
 #include "../ui/toc.h"
@@ -86,6 +87,7 @@ class PartTest
         void testSaveAs_data();
         void testSaveAsUndoStackAnnotations();
         void testSaveAsUndoStackAnnotations_data();
+        void testSaveAsUndoStackForms();
         void testMouseMoveOverLinkWhileInSelectionMode();
         void testClickUrlLinkWhileInSelectionMode();
         void testeTextSelectionOverAndAcrossLinks_data();
@@ -1068,6 +1070,81 @@ void PartTest::testSaveAsUndoStackAnnotations_data()
     QTest::newRow("pdf") << KDESRCDIR "data/file1.pdf" << "pdf" << true << true;
     QTest::newRow("epub") << KDESRCDIR "data/contents.epub" << "epub" << false << false;
     QTest::newRow("jpg") << KDESRCDIR "data/potato.jpg" << "jpg" << false << true;
+}
+
+void PartTest::testSaveAsUndoStackForms()
+{
+    QTemporaryFile nativeDirectSave( QString( "%1/okrXXXXXX.pdf" ).arg( QDir::tempPath() ) );
+    QVERIFY( nativeDirectSave.open() ); nativeDirectSave.close();
+
+    Okular::Part part(nullptr, nullptr, QVariantList());
+    part.openDocument( KDESRCDIR "data/formSamples.pdf" );
+
+    for ( FormField *ff : part.m_document->page( 0 )->formFields() )
+    {
+        if ( ff->id() == 65537 )
+        {
+            QCOMPARE( ff->type(), FormField::FormText );
+            FormFieldText *fft = static_cast<FormFieldText *>( ff );
+            part.m_document->editFormText( 0, fft, "BlaBla", 6, 0, 0 );
+        }
+        else if ( ff->id() == 65538 )
+        {
+            QCOMPARE( ff->type(), FormField::FormButton );
+            FormFieldButton *ffb = static_cast<FormFieldButton *>( ff );
+            QCOMPARE( ffb->buttonType(), FormFieldButton::Radio );
+            part.m_document->editFormButtons( 0, QList< FormFieldButton* >() << ffb, QList< bool >() << true );
+        }
+        else if ( ff->id() == 65542 )
+        {
+            QCOMPARE( ff->type(), FormField::FormChoice );
+            FormFieldChoice *ffc = static_cast<FormFieldChoice *>( ff );
+            QCOMPARE( ffc->choiceType(), FormFieldChoice::ListBox );
+            part.m_document->editFormList( 0, ffc, QList< int >() << 1 );
+        }
+        else if ( ff->id() == 65543 )
+        {
+            QCOMPARE( ff->type(), FormField::FormChoice );
+            FormFieldChoice *ffc = static_cast<FormFieldChoice *>( ff );
+            QCOMPARE( ffc->choiceType(), FormFieldChoice::ComboBox );
+            part.m_document->editFormCombo( 0, ffc, "combo2", 3, 0, 0);
+        }
+    }
+
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
+
+    QVERIFY( part.m_document->canUndo() );
+    part.m_document->undo();
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
+
+    QVERIFY( part.m_document->canUndo() );
+    part.m_document->undo();
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
+
+    QVERIFY( part.m_document->canUndo() );
+    part.m_document->undo();
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
+
+    QVERIFY( part.m_document->canUndo() );
+    part.m_document->undo();
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
+    QVERIFY( !part.m_document->canUndo() );
+
+    QVERIFY( part.m_document->canRedo() );
+    part.m_document->redo();
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
+
+    QVERIFY( part.m_document->canRedo() );
+    part.m_document->redo();
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
+
+    QVERIFY( part.m_document->canRedo() );
+    part.m_document->redo();
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
+
+    QVERIFY( part.m_document->canRedo() );
+    part.m_document->redo();
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
 }
 
 }

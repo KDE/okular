@@ -88,6 +88,7 @@ class PartTest
         void testSaveAsUndoStackAnnotations();
         void testSaveAsUndoStackAnnotations_data();
         void testSaveAsUndoStackForms();
+        void testSaveAsUndoStackForms_data();
         void testMouseMoveOverLinkWhileInSelectionMode();
         void testClickUrlLinkWhileInSelectionMode();
         void testeTextSelectionOverAndAcrossLinks_data();
@@ -898,11 +899,14 @@ void PartTest::testSaveAsUndoStackAnnotations()
     QFETCH(QString, extension);
     QFETCH(bool, nativelySupportsAnnotations);
     QFETCH(bool, canSwapBackingFile);
+    QFETCH(bool, saveToArchive);
+
+    const Part::SaveAsFlag saveFlags = saveToArchive ? Part::SaveAsOkularArchive : Part::NoSaveAsFlags;
 
     QScopedPointer<CloseDialogHelper> closeDialogHelper;
 
-    QTemporaryFile nativeDirectSave( QString( "%1/okrXXXXXX.%2" ).arg( QDir::tempPath() ).arg ( extension ) );
-    QVERIFY( nativeDirectSave.open() ); nativeDirectSave.close();
+    QTemporaryFile saveFile( QString( "%1/okrXXXXXX.%2" ).arg( QDir::tempPath() ).arg ( extension ) );
+    QVERIFY( saveFile.open() ); saveFile.close();
 
     Okular::Part part(nullptr, nullptr, QVariantList());
     part.openDocument( file );
@@ -915,11 +919,11 @@ void PartTest::testSaveAsUndoStackAnnotations()
     part.m_document->addPageAnnotation( 0, annot );
     QString annotName = annot->uniqueName();
 
-    if (!nativelySupportsAnnotations) {
+    if ( !nativelySupportsAnnotations && !saveToArchive ) {
         closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
 
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), saveFlags ) );
 
     if (!canSwapBackingFile) {
         // The undo/redo stack gets lost if you can not swap the backing file
@@ -933,7 +937,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
     part.m_document->undo();
     QVERIFY( !part.m_document->canUndo() );
 
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->page( 0 )->annotations().isEmpty() );
 
     // Check we can redo the annot add after save
@@ -955,17 +959,17 @@ void PartTest::testSaveAsUndoStackAnnotations()
     QVERIFY( part.m_document->page( 0 )->annotations().isEmpty() );
 
     // Check we can still undo the annot remove after save
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canUndo() );
     part.m_document->undo();
     QVERIFY( part.m_document->canUndo() );
     QCOMPARE( part.m_document->page( 0 )->annotations().count(), 1 );
 
     // Check we can still undo the annot add after save
-    if (!nativelySupportsAnnotations) {
+    if ( !nativelySupportsAnnotations && !saveToArchive ) {
         closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canUndo() );
     part.m_document->undo();
     QVERIFY( !part.m_document->canUndo() );
@@ -973,7 +977,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
 
 
     // Redo the add annotation
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canRedo() );
     part.m_document->redo();
     QVERIFY( part.m_document->canUndo() );
@@ -993,65 +997,65 @@ void PartTest::testSaveAsUndoStackAnnotations()
     part.m_document->modifyPageAnnotationProperties( 0, annot );
 
     // Now check we can still undo/redo/save at all the intermediate states and things still work
-        if (!nativelySupportsAnnotations) {
+    if ( !nativelySupportsAnnotations && !saveToArchive ) {
         closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canUndo() );
     part.m_document->undo();
     QVERIFY( part.m_document->canUndo() );
 
-    if (!nativelySupportsAnnotations) {
+    if ( !nativelySupportsAnnotations && !saveToArchive ) {
         closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canUndo() );
     part.m_document->undo();
     QVERIFY( part.m_document->canUndo() );
 
-    if (!nativelySupportsAnnotations) {
+    if ( !nativelySupportsAnnotations && !saveToArchive ) {
         closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canUndo() );
     part.m_document->undo();
     QVERIFY( part.m_document->canUndo() );
 
-    if (!nativelySupportsAnnotations) {
+    if ( !nativelySupportsAnnotations && !saveToArchive ) {
         closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canUndo() );
     part.m_document->undo();
     QVERIFY( !part.m_document->canUndo() );
     QVERIFY( part.m_document->canRedo() );
     QVERIFY( part.m_document->page( 0 )->annotations().isEmpty() );
 
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canRedo() );
     part.m_document->redo();
     QVERIFY( part.m_document->canRedo() );
 
-    if (!nativelySupportsAnnotations) {
+    if ( !nativelySupportsAnnotations && !saveToArchive ) {
         closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canRedo() );
     part.m_document->redo();
     QVERIFY( part.m_document->canRedo() );
 
-    if (!nativelySupportsAnnotations) {
+    if ( !nativelySupportsAnnotations && !saveToArchive ) {
         closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canRedo() );
     part.m_document->redo();
     QVERIFY( part.m_document->canRedo() );
 
-    if (!nativelySupportsAnnotations) {
+    if ( !nativelySupportsAnnotations && !saveToArchive ) {
         closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canRedo() );
     part.m_document->redo();
     QVERIFY( !part.m_document->canRedo() );
@@ -1066,19 +1070,28 @@ void PartTest::testSaveAsUndoStackAnnotations_data()
     QTest::addColumn<QString>("extension");
     QTest::addColumn<bool>("nativelySupportsAnnotations");
     QTest::addColumn<bool>("canSwapBackingFile");
+    QTest::addColumn<bool>("saveToArchive");
 
-    QTest::newRow("pdf") << KDESRCDIR "data/file1.pdf" << "pdf" << true << true;
-    QTest::newRow("epub") << KDESRCDIR "data/contents.epub" << "epub" << false << false;
-    QTest::newRow("jpg") << KDESRCDIR "data/potato.jpg" << "jpg" << false << true;
+    QTest::newRow("pdf") << KDESRCDIR "data/file1.pdf" << "pdf" << true << true << false;
+    QTest::newRow("epub") << KDESRCDIR "data/contents.epub" << "epub" << false << false << false;
+    QTest::newRow("jpg") << KDESRCDIR "data/potato.jpg" << "jpg" << false << true << false;
+    QTest::newRow("pdfarchive") << KDESRCDIR "data/file1.pdf" << "okular" << true << true << true;
+    QTest::newRow("jpgarchive") << KDESRCDIR "data/potato.jpg" << "okular" << false << true << true;
 }
 
 void PartTest::testSaveAsUndoStackForms()
 {
-    QTemporaryFile nativeDirectSave( QString( "%1/okrXXXXXX.pdf" ).arg( QDir::tempPath() ) );
-    QVERIFY( nativeDirectSave.open() ); nativeDirectSave.close();
+    QFETCH(QString, file);
+    QFETCH(QString, extension);
+    QFETCH(bool, saveToArchive);
+
+    const Part::SaveAsFlag saveFlags = saveToArchive ? Part::SaveAsOkularArchive : Part::NoSaveAsFlags;
+
+    QTemporaryFile saveFile( QString( "%1/okrXXXXXX.%2" ).arg( QDir::tempPath(), extension ) );
+    QVERIFY( saveFile.open() ); saveFile.close();
 
     Okular::Part part(nullptr, nullptr, QVariantList());
-    part.openDocument( KDESRCDIR "data/formSamples.pdf" );
+    part.openDocument( file );
 
     for ( FormField *ff : part.m_document->page( 0 )->formFields() )
     {
@@ -1111,40 +1124,50 @@ void PartTest::testSaveAsUndoStackForms()
         }
     }
 
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), saveFlags ) );
 
     QVERIFY( part.m_document->canUndo() );
     part.m_document->undo();
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), saveFlags ) );
 
     QVERIFY( part.m_document->canUndo() );
     part.m_document->undo();
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), saveFlags ) );
 
     QVERIFY( part.m_document->canUndo() );
     part.m_document->undo();
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), saveFlags ) );
 
     QVERIFY( part.m_document->canUndo() );
     part.m_document->undo();
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), saveFlags ) );
     QVERIFY( !part.m_document->canUndo() );
 
     QVERIFY( part.m_document->canRedo() );
     part.m_document->redo();
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), saveFlags ) );
 
     QVERIFY( part.m_document->canRedo() );
     part.m_document->redo();
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), saveFlags ) );
 
     QVERIFY( part.m_document->canRedo() );
     part.m_document->redo();
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), saveFlags ) );
 
     QVERIFY( part.m_document->canRedo() );
     part.m_document->redo();
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), saveFlags ) );
+}
+
+void PartTest::testSaveAsUndoStackForms_data()
+{
+    QTest::addColumn<QString>("file");
+    QTest::addColumn<QString>("extension");
+    QTest::addColumn<bool>("saveToArchive");
+
+    QTest::newRow("pdf") << KDESRCDIR "data/formSamples.pdf" << "pdf" << false;
+    QTest::newRow("pdfarchive") << KDESRCDIR "data/formSamples.pdf" << "okular" << true;
 }
 
 }

@@ -2478,7 +2478,7 @@ bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
     // Does the user want a .okular archive?
     if ( flags & SaveAsOkularArchive )
     {
-        if ( !hasUserAcceptedReload && !m_document->canSwapBackingFile() && !( flags & SaveAsDontShowWarning ) )
+        if ( !hasUserAcceptedReload && !m_document->canSwapBackingFile() )
         {
             const int res = KMessageBox::warningYesNo( widget(),
                         i18n( "The current document format backend doesn't support internal reload on save so we will close and open the file again.<br />This means that the undo/redo stack will be lost.<br />Do you want to continue?" ),
@@ -2511,7 +2511,7 @@ bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
         QStringList listOfwontSaves;
         if ( wontSaveForms ) listOfwontSaves << i18n( "Filled form contents" );
         if ( wontSaveAnnotations ) listOfwontSaves << i18n( "User annotations" );
-        if ( !listOfwontSaves.isEmpty() && !( flags & SaveAsDontShowWarning ) )
+        if ( !listOfwontSaves.isEmpty() )
         {
             const QString warningMessage = m_document->canSwapBackingFile() ?
                         i18n( "The following elements <b>cannot be saved</b> in this format.<br>If you want to preserve them, please use the <i>Okular document archive</i> format." ) :

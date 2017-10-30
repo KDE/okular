@@ -271,8 +271,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         enum SaveAsFlag
         {
             NoSaveAsFlags = 0,         ///< No options
-            SaveAsOkularArchive = 1,   ///< Save as Okular Archive (.okular) instead of document's native format
-            SaveAsDontShowWarning = 2, ///< Don't show warning for unsupported save features
+            SaveAsOkularArchive = 1    ///< Save as Okular Archive (.okular) instead of document's native format
         };
         Q_DECLARE_FLAGS( SaveAsFlags, SaveAsFlag )
 

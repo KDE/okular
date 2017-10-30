@@ -18,12 +18,48 @@
 #include <KConfigDialog>
 
 #include <QClipboard>
+#include <QMessageBox>
+#include <QPushButton>
 #include <QScrollBar>
 #include <QTemporaryDir>
 #include <QTreeView>
 #include <QUrl>
 #include <QDesktopServices>
 #include <QMenu>
+
+class CloseDialogHelper : public QObject
+{
+    Q_OBJECT
+
+public:
+    CloseDialogHelper(Okular::Part *p, QDialogButtonBox::StandardButton b) : m_part(p), m_button(b), m_clicked(false)
+    {
+        QTimer::singleShot(0, this, &CloseDialogHelper::closeDialog);
+    }
+
+    ~CloseDialogHelper()
+    {
+        QVERIFY(m_clicked);
+    }
+
+private slots:
+    void closeDialog()
+    {
+        QDialog *dialog = m_part->widget()->findChild<QDialog*>();
+        if (!dialog) {
+            QTimer::singleShot(0, this, &CloseDialogHelper::closeDialog);
+            return;
+        }
+        QDialogButtonBox *buttonBox = dialog->findChild<QDialogButtonBox*>();
+        buttonBox->button(m_button)->click();
+        m_clicked = true;
+    }
+
+private:
+    Okular::Part *m_part;
+    QDialogButtonBox::StandardButton m_button;
+    bool m_clicked;
+};
 
 namespace Okular
 {
@@ -737,13 +773,7 @@ void PartTest::testSaveAs()
     QFETCH(bool, nativelySupportsAnnotations);
     QFETCH(bool, canSwapBackingFile);
 
-    // If we expect not to be able to preserve annotations when we write a
-    // native file, disable the warning otherwise the test will wait for the
-    // user to confirm. On the other end, if we expect annotations to be
-    // preserved (and thus no warning), we keep the warning on so that if it
-    // shows the test timeouts and we can notice that something is wrong.
-    const Part::SaveAsFlags extraSaveAsFlags = nativelySupportsAnnotations ?
-        Part::NoSaveAsFlags : Part::SaveAsDontShowWarning;
+    QScopedPointer<CloseDialogHelper> closeDialogHelper;
 
     QString annotName;
     QTemporaryFile archiveSave( QString( "%1/okrXXXXXX.okular" ).arg( QDir::tempPath() ) );
@@ -766,8 +796,32 @@ void PartTest::testSaveAs()
         part.m_document->addPageAnnotation( 0, annot );
         annotName = annot->uniqueName();
 
-        QVERIFY( part.saveAs( QUrl::fromLocalFile( archiveSave.fileName() ), extraSaveAsFlags | Part::SaveAsOkularArchive ) );
-        QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), extraSaveAsFlags ) );
+        if ( canSwapBackingFile )
+        {
+            if ( !nativelySupportsAnnotations )
+            {
+                closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+            }
+            QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
+            // For backends that don't support annotations natively we mark the part as still modified
+            // after a save because we keep the annotation around but it will get lost if the user closes the app
+            // so we want to give her a last chance to save on close with the "you have changes dialog"
+            QCOMPARE( part.isModified(), !nativelySupportsAnnotations );
+            QVERIFY( part.saveAs( QUrl::fromLocalFile( archiveSave.fileName() ), Part::SaveAsOkularArchive ) );
+        }
+        else
+        {
+            // We need to save to archive first otherwise we lose the annotation
+
+            closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::Yes )); // this is the "you're going to lose the undo/redo stack" dialog
+            QVERIFY( part.saveAs( QUrl::fromLocalFile( archiveSave.fileName() ), Part::SaveAsOkularArchive ) );
+
+            if ( !nativelySupportsAnnotations )
+            {
+                closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+            }
+            QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
+        }
 
         part.closeUrl();
     }
@@ -780,7 +834,19 @@ void PartTest::testSaveAs()
         QCOMPARE( part.m_document->page( 0 )->annotations().size(), 1 );
         QCOMPARE( part.m_document->page( 0 )->annotations().first()->uniqueName(), annotName );
 
-        QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeFromArchiveFile.fileName() ), extraSaveAsFlags ) );
+        if ( !nativelySupportsAnnotations )
+        {
+            closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+        }
+        QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeFromArchiveFile.fileName() ), Part::NoSaveAsFlags ) );
+
+        if ( canSwapBackingFile && !nativelySupportsAnnotations )
+        {
+            // For backends that don't support annotations natively we mark the part as still modified
+            // after a save because we keep the annotation around but it will get lost if the user closes the app
+            // so we want to give her a last chance to save on close with the "you have changes dialog"
+            closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "do you want to save or discard" dialog
+        }
 
         part.closeUrl();
     }
@@ -831,13 +897,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
     QFETCH(bool, nativelySupportsAnnotations);
     QFETCH(bool, canSwapBackingFile);
 
-    // If we expect not to be able to preserve annotations when we write a
-    // native file, disable the warning otherwise the test will wait for the
-    // user to confirm. On the other end, if we expect annotations to be
-    // preserved (and thus no warning), we keep the warning on so that if it
-    // shows the test timeouts and we can notice that something is wrong.
-    const Part::SaveAsFlags extraSaveAsFlags = nativelySupportsAnnotations ?
-        Part::NoSaveAsFlags : Part::SaveAsDontShowWarning;
+    QScopedPointer<CloseDialogHelper> closeDialogHelper;
 
     QTemporaryFile nativeDirectSave( QString( "%1/okrXXXXXX.%2" ).arg( QDir::tempPath() ).arg ( extension ) );
     QVERIFY( nativeDirectSave.open() ); nativeDirectSave.close();
@@ -853,7 +913,11 @@ void PartTest::testSaveAsUndoStackAnnotations()
     part.m_document->addPageAnnotation( 0, annot );
     QString annotName = annot->uniqueName();
 
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), extraSaveAsFlags ) );
+    if (!nativelySupportsAnnotations) {
+        closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+    }
+
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
 
     if (!canSwapBackingFile) {
         // The undo/redo stack gets lost if you can not swap the backing file
@@ -867,7 +931,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
     part.m_document->undo();
     QVERIFY( !part.m_document->canUndo() );
 
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), extraSaveAsFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
     QVERIFY( part.m_document->page( 0 )->annotations().isEmpty() );
 
     // Check we can redo the annot add after save
@@ -889,14 +953,17 @@ void PartTest::testSaveAsUndoStackAnnotations()
     QVERIFY( part.m_document->page( 0 )->annotations().isEmpty() );
 
     // Check we can still undo the annot remove after save
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), extraSaveAsFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
     QVERIFY( part.m_document->canUndo() );
     part.m_document->undo();
     QVERIFY( part.m_document->canUndo() );
     QCOMPARE( part.m_document->page( 0 )->annotations().count(), 1 );
 
     // Check we can still undo the annot add after save
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), extraSaveAsFlags ) );
+    if (!nativelySupportsAnnotations) {
+        closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+    }
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
     QVERIFY( part.m_document->canUndo() );
     part.m_document->undo();
     QVERIFY( !part.m_document->canUndo() );
@@ -904,7 +971,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
 
 
     // Redo the add annotation
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), extraSaveAsFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
     QVERIFY( part.m_document->canRedo() );
     part.m_document->redo();
     QVERIFY( part.m_document->canUndo() );
@@ -924,50 +991,70 @@ void PartTest::testSaveAsUndoStackAnnotations()
     part.m_document->modifyPageAnnotationProperties( 0, annot );
 
     // Now check we can still undo/redo/save at all the intermediate states and things still work
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), extraSaveAsFlags ) );
+        if (!nativelySupportsAnnotations) {
+        closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+    }
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
     QVERIFY( part.m_document->canUndo() );
     part.m_document->undo();
     QVERIFY( part.m_document->canUndo() );
 
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), extraSaveAsFlags ) );
+    if (!nativelySupportsAnnotations) {
+        closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+    }
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
     QVERIFY( part.m_document->canUndo() );
     part.m_document->undo();
     QVERIFY( part.m_document->canUndo() );
 
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), extraSaveAsFlags ) );
+    if (!nativelySupportsAnnotations) {
+        closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+    }
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
     QVERIFY( part.m_document->canUndo() );
     part.m_document->undo();
     QVERIFY( part.m_document->canUndo() );
 
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), extraSaveAsFlags ) );
+    if (!nativelySupportsAnnotations) {
+        closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+    }
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
     QVERIFY( part.m_document->canUndo() );
     part.m_document->undo();
     QVERIFY( !part.m_document->canUndo() );
     QVERIFY( part.m_document->canRedo() );
     QVERIFY( part.m_document->page( 0 )->annotations().isEmpty() );
 
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), extraSaveAsFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
     QVERIFY( part.m_document->canRedo() );
     part.m_document->redo();
     QVERIFY( part.m_document->canRedo() );
 
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), extraSaveAsFlags ) );
+    if (!nativelySupportsAnnotations) {
+        closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+    }
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
     QVERIFY( part.m_document->canRedo() );
     part.m_document->redo();
     QVERIFY( part.m_document->canRedo() );
 
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), extraSaveAsFlags ) );
+    if (!nativelySupportsAnnotations) {
+        closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+    }
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
     QVERIFY( part.m_document->canRedo() );
     part.m_document->redo();
     QVERIFY( part.m_document->canRedo() );
 
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), extraSaveAsFlags ) );
+    if (!nativelySupportsAnnotations) {
+        closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+    }
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
     QVERIFY( part.m_document->canRedo() );
     part.m_document->redo();
     QVERIFY( !part.m_document->canRedo() );
 
-    // Do a last save as so that close url doesn't popup the "You have changes. Do you want to save?" dialog
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), extraSaveAsFlags ) );
+    closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "do you want to save or discard" dialog
     part.closeUrl();
 }
 

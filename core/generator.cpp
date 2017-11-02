@@ -38,6 +38,7 @@ GeneratorPrivate::GeneratorPrivate()
       m_closing( false ), m_closingLoop( nullptr ),
       m_dpi(72.0, 72.0)
 {
+    qRegisterMetaType<Okular::Page*>();
 }
 
 GeneratorPrivate::~GeneratorPrivate()

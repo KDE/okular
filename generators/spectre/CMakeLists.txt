@@ -24,7 +24,7 @@ ki18n_wrap_ui(okularGenerator_ghostview_SRCS
 kconfig_add_kcfg_files(okularGenerator_ghostview_SRCS conf/gssettings.kcfgc )
 
 
-okular_add_generator(okularGenerator_ghostview MODULE ${okularGenerator_ghostview_SRCS})
+okular_add_generator(okularGenerator_ghostview ${okularGenerator_ghostview_SRCS})
 
 target_link_libraries(okularGenerator_ghostview okularcore ${LIBSPECTRE_LIBRARY} KF5::I18n Qt5::Xml)
 

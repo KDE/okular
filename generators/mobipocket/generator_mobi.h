@@ -20,7 +20,7 @@ class MobiGenerator : public Okular::TextDocumentGenerator
   ~MobiGenerator() {}
   
   // [INHERITED] reparse configuration
-  void addPages( KConfigDialog* dlg );
+  void addPages( KConfigDialog* dlg ) override;
 };
 
 #endif

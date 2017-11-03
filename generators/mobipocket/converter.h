@@ -23,7 +23,7 @@ namespace Mobi {
       Converter();
       ~Converter();
       
-      virtual QTextDocument *convert( const QString &fileName );
+      QTextDocument *convert( const QString &fileName ) override;
     private:
       void handleMetadata(const QMap<Mobipocket::Document::MetaKey, QString> metadata);
     };

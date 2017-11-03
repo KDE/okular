@@ -4257,6 +4257,9 @@ int PageView::viewColumns() const
     if (vm == Okular::Settings::EnumViewMode::Single) return 1;
     else if (vm == Okular::Settings::EnumViewMode::Facing ||
              vm == Okular::Settings::EnumViewMode::FacingFirstCentered) return 2;
+    else if (vm == Okular::Settings::EnumViewMode::Summary
+            && d->document->pages() < Okular::Settings::viewColumns() ) 
+            return d->document->pages();
     else return Okular::Settings::viewColumns();
 }
 

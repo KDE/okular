@@ -1,5 +1,7 @@
 @PACKAGE_INIT@
 
+include(CMakeFindDependencyMacro)
+
 find_dependency(Qt5Core @QT_REQUIRED_VERSION@)
 find_dependency(Qt5PrintSupport @QT_REQUIRED_VERSION@)
 find_dependency(Qt5Widgets @QT_REQUIRED_VERSION@)

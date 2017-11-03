@@ -30,7 +30,7 @@ namespace Mobi {
     Mobipocket::Document* mobi() const { return doc; }
     
   protected:
-    virtual QVariant loadResource(int type, const QUrl &name);
+    QVariant loadResource(int type, const QUrl &name) override;
     
   private:
     QString fixMobiMarkup(const QString& data);

@@ -145,6 +145,7 @@ cd %{buildroot}/../../BUILD/*.obs
 
 rm -rfv %{buildroot}/%{_kf5_applicationsdir}/org.kde.mobile*
 
+
 %post   -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 

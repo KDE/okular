@@ -139,10 +139,10 @@ cd %{buildroot}/../../BUILD/*.obs
 ## \\ In4 //
 
 %make_install -C build
-%if %{with lang}
-  %find_lang %{name} --with-man --all-name
-  %kf5_find_htmldocs
-%endif
+# %if %{with lang}
+#   %find_lang %{name} --with-man --all-name
+#   %kf5_find_htmldocs
+# %endif
 
 rm -rfv %{buildroot}/%{_kf5_applicationsdir}/org.kde.mobile*
 

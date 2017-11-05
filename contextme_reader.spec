@@ -151,7 +151,6 @@ rm -rfv %{buildroot}/%{_kf5_applicationsdir}/org.kde.mobile*
 
 %files
 %defattr(-,root,root)
-%doc COPYING*
 %config %{_kf5_configdir}/okular.categories
 %dir %{_kf5_appstreamdir}
 %dir %{_kf5_htmldir}
@@ -175,14 +174,12 @@ rm -rfv %{buildroot}/%{_kf5_applicationsdir}/org.kde.mobile*
 
 %files devel
 %defattr(-,root,root)
-%doc COPYING*
 %{_kf5_cmakedir}/Okular5/
 %{_kf5_libdir}/libOkular5Core.so
 %{_kf5_prefix}/include/okular/
 
 %if %{with lang}
 %files lang -f %{name}.lang
-%doc COPYING*
 %endif
 
 %changelog

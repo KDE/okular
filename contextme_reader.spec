@@ -41,7 +41,6 @@ Summary:        Document Viewer
 License:        GPL-2.0+
 Group:          Productivity/Office/Other
 Url:            http://www.kde.org
-Source:         %{name}-%{version}.tar.xz
 BuildRequires:  chmlib-devel
 BuildRequires:  extra-cmake-modules
 BuildRequires:  freetype2-devel

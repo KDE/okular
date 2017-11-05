@@ -3,11 +3,11 @@
         <param name="protocol">https</param>
         <param name="host">raw.githubusercontent.com</param>
         <param name="port">443</param>
-        <param name="path">/ArchDelivery/ConTextMe_reader/master/contextme_reader.spec</param>
+        <param name="path">/ArchDelivery/contextme_reader/master/contextme_reader.spec</param>
     </service>
 
     <service name="obs_scm">
-        <param name="url">https://github.com/ArchDelivery/ConTextMe_reader.git</param>
+        <param name="url">https://github.com/ArchDelivery/contextme_reader.git</param>
         <param name="revision">master</param>
         <param name="scm">git</param>
         <param name="versionformat">__Ver@@PARENT_TAG@__RelDate@%cd__Hash@git+%h__.obs</param>

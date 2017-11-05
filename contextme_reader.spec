@@ -31,7 +31,8 @@ Release: 1
 #Patch0:        
 ##
 
-%bcond_without lang
+#%bcond_without lang # BUG  - fix
+
 %define kf5_version 5.26.0
 # Latest stable Applications (e.g. 17.08 in KA, but 17.11.80 in KUA)
 %{!?_kapp_version: %global _kapp_version %(echo %{version}| awk -F. '{print $1"."$2}')}

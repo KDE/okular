@@ -83,7 +83,7 @@ BuildRequires:  pkgconfig(Qt5Qml) >= 5.6.0
 BuildRequires:  pkgconfig(Qt5Quick) >= 5.6.0
 BuildRequires:  pkgconfig(Qt5Svg) >= 5.6.0
 BuildRequires:  pkgconfig(Qt5Test) >= 5.6.0
-BuildRequires:  pkgconfig(Qt5TextToSpeech) >= 5.6.0
+#BuildRequires:  pkgconfig(Qt5TextToSpeech) >= 5.6.0
 BuildRequires:  pkgconfig(Qt5Widgets) >= 5.6.0
 Obsoletes:      okular5 < %{version}
 Provides:       okular5 = %{version}

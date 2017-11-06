@@ -2473,7 +2473,7 @@ bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
     tf.close();
 
     QScopedPointer<QTemporaryFile> tempFile;
-    KIO::Job *copyJob; // this will be filled with the job that writes to saveUrl
+    KIO::Job *copyJob = nullptr; // this will be filled with the job that writes to saveUrl
 
     // Does the user want a .okular archive?
     if ( flags & SaveAsOkularArchive )

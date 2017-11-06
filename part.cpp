@@ -563,7 +563,7 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     connect( m_watcher, &KDirWatch::deleted, this, &Part::slotFileDirty );
     m_dirtyHandler = new QTimer( this );
     m_dirtyHandler->setSingleShot( true );
-    connect( m_dirtyHandler, SIGNAL(timeout()),this, SLOT(slotAttemptReload()) );
+    connect( m_dirtyHandler, &QTimer::timeout, this, [this] { slotAttemptReload(); } );
 
     slotNewConfig();
 
@@ -814,7 +814,7 @@ void Part::setupActions()
 
     m_selectAll = KStandardAction::selectAll( m_pageView, SLOT(selectAll()), ac );
 
-    m_save = KStandardAction::save( this, SLOT(saveFile()), ac );
+    m_save = KStandardAction::save( this, [this] { saveFile(); }, ac );
     m_save->setEnabled( false );
 
     m_saveAs = KStandardAction::saveAs( this, SLOT(slotSaveFileAs()), ac );

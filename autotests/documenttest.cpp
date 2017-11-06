@@ -61,6 +61,8 @@ void DocumentTest::testCloseDuringRotationJob()
     ThreadWeaver::Queue::instance()->resume();
     ThreadWeaver::Queue::instance()->finish();
     qApp->processEvents();
+
+    delete dummyDocumentObserver;
 }
 
 // Test that, if there's a XML file in docdata referring to a document, we
@@ -110,6 +112,8 @@ void DocumentTest::testDocdataMigration()
     QCOMPARE( m_document->page( 0 )->annotations().size(), 0 );
     QCOMPARE( m_document->isDocdataMigrationNeeded(), false );
     m_document->closeDocument();
+
+    delete m_document;
 }
 
 QTEST_MAIN( DocumentTest )

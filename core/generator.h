@@ -209,7 +209,7 @@ class OKULARCORE_EXPORT Generator : public QObject
             PrintPostscript,   ///< Whether the Generator supports postscript-based file printing.
             PrintToFile,       ///< Whether the Generator supports export to PDF & PS through the Print Dialog
             TiledRendering,    ///< Whether the Generator can render tiles @since 0.16 (KDE 4.10)
-            SwapBackingFile    ///< Whether the Generator can hot-swap the file it's reading from @since 0.20 (KDE 4.14)
+            SwapBackingFile    ///< Whether the Generator can hot-swap the file it's reading from @since 1.3
         };
 
         /**

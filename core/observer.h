@@ -54,7 +54,7 @@ class OKULARCORE_EXPORT DocumentObserver
         enum SetupFlags {
             DocumentChanged = 1,    ///< The document is a new document.
             NewLayoutForPages = 2,  ///< All the pages have
-            UrlChanged = 4          ///< The URL has changed @since 0.20 (KDE 4.14)
+            UrlChanged = 4          ///< The URL has changed @since 1.3
         };
 
         /**

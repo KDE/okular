@@ -741,7 +741,7 @@ class OKULARCORE_EXPORT Document : public QObject
          * Returns whether the generator supports hot-swapping the current file
          * with another identical file
          *
-         * @since 0.20 (KDE 4.14)
+         * @since 1.3
          */
         bool canSwapBackingFile() const;
 
@@ -755,7 +755,7 @@ class OKULARCORE_EXPORT Document : public QObject
          * saveChanges first to write changes to a file and then swapBackingFile
          * to switch to the new location.
          *
-         * @since 0.20 (KDE 4.14)
+         * @since 1.3
          */
         bool swapBackingFile( const QString &newFileName, const QUrl & url );
 
@@ -768,7 +768,7 @@ class OKULARCORE_EXPORT Document : public QObject
          * saveDocumentArchive first to write changes to a file and then
          * swapBackingFileArchive to switch to the new location.
          *
-         * @since 0.20 (KDE 4.14)
+         * @since 1.3
          */
         bool swapBackingFileArchive( const QString &newFileName, const QUrl & url );
 
@@ -862,7 +862,7 @@ class OKULARCORE_EXPORT Document : public QObject
          *
          * @warning This function only works if the current file is a document archive
          *
-         * @since 0.14 (KDE 4.20)
+         * @since 1.3
          */
         bool extractArchivedFile( const QString &destFileName );
 
@@ -907,7 +907,7 @@ class OKULARCORE_EXPORT Document : public QObject
          * okular versions did by default).
          * If this flag is set, then annotations and forms cannot be edited.
          *
-         * @since 0.21
+         * @since 1.3
         */
         bool isDocdataMigrationNeeded() const;
 
@@ -916,7 +916,7 @@ class OKULARCORE_EXPORT Document : public QObject
          * isDocdataMigrationNeeded() was true and you've just saved them to an
          * external file.
          *
-         * @since 0.21
+         * @since 1.3
         */
         void docdataMigrationDone();
 

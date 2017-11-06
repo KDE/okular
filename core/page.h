@@ -251,7 +251,7 @@ class OKULARCORE_EXPORT Page
 
         /**
          * Returns the annotation with the given unique name.
-         * @since TODO
+         * @since 1.3
          */
         Annotation * annotation( const QString & uniqueName ) const;
 

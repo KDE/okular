@@ -782,9 +782,12 @@ void PartTest::testSaveAs()
     QTemporaryFile archiveSave( QString( "%1/okrXXXXXX.okular" ).arg( QDir::tempPath() ) );
     QTemporaryFile nativeDirectSave( QString( "%1/okrXXXXXX.%2" ).arg( QDir::tempPath() ).arg ( extension ) );
     QTemporaryFile nativeFromArchiveFile( QString( "%1/okrXXXXXX.%2" ).arg( QDir::tempPath() ).arg ( extension ) );
-    QVERIFY( archiveSave.open() ); archiveSave.close();
-    QVERIFY( nativeDirectSave.open() ); nativeDirectSave.close();
-    QVERIFY( nativeFromArchiveFile.open() ); nativeFromArchiveFile.close();
+    QVERIFY( archiveSave.open() );
+    archiveSave.close();
+    QVERIFY( nativeDirectSave.open() );
+    nativeDirectSave.close();
+    QVERIFY( nativeFromArchiveFile.open() );
+    nativeFromArchiveFile.close();
 
     qDebug() << "Open file, add annotation and save both natively and to .okular";
     {
@@ -906,7 +909,8 @@ void PartTest::testSaveAsUndoStackAnnotations()
     QScopedPointer<CloseDialogHelper> closeDialogHelper;
 
     QTemporaryFile saveFile( QString( "%1/okrXXXXXX.%2" ).arg( QDir::tempPath() ).arg ( extension ) );
-    QVERIFY( saveFile.open() ); saveFile.close();
+    QVERIFY( saveFile.open() );
+    saveFile.close();
 
     Okular::Part part(nullptr, nullptr, QVariantList());
     part.openDocument( file );
@@ -1088,7 +1092,8 @@ void PartTest::testSaveAsUndoStackForms()
     const Part::SaveAsFlag saveFlags = saveToArchive ? Part::SaveAsOkularArchive : Part::NoSaveAsFlags;
 
     QTemporaryFile saveFile( QString( "%1/okrXXXXXX.%2" ).arg( QDir::tempPath(), extension ) );
-    QVERIFY( saveFile.open() ); saveFile.close();
+    QVERIFY( saveFile.open() );
+    saveFile.close();
 
     Okular::Part part(nullptr, nullptr, QVariantList());
     part.openDocument( file );

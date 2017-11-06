@@ -757,7 +757,7 @@ class OKULARCORE_EXPORT Document : public QObject
          *
          * @since 1.3
          */
-        bool swapBackingFile( const QString &newFileName, const QUrl & url );
+        bool swapBackingFile( const QString &newFileName, const QUrl &url );
 
         /**
          * Same as swapBackingFile, but newFileName must be a .okular file.
@@ -770,7 +770,7 @@ class OKULARCORE_EXPORT Document : public QObject
          *
          * @since 1.3
          */
-        bool swapBackingFileArchive( const QString &newFileName, const QUrl & url );
+        bool swapBackingFileArchive( const QString &newFileName, const QUrl &url );
 
         /**
          * Saving capabilities. Their availability varies according to the

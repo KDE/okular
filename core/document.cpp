@@ -4343,7 +4343,7 @@ bool Document::canSwapBackingFile() const
     return genIt->generator->hasFeature( Generator::SwapBackingFile );
 }
 
-bool Document::swapBackingFile( const QString &newFileName, const QUrl & url )
+bool Document::swapBackingFile( const QString &newFileName, const QUrl &url )
 {
     if ( !d->m_generator )
         return false;
@@ -4441,7 +4441,7 @@ bool Document::swapBackingFile( const QString &newFileName, const QUrl & url )
     }
 }
 
-bool Document::swapBackingFileArchive( const QString &newFileName, const QUrl & url )
+bool Document::swapBackingFileArchive( const QString &newFileName, const QUrl &url )
 {
     if ( !d->m_generator )
         return false;

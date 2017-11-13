@@ -1717,6 +1717,18 @@ bool PDFGenerator::save( const QString &fileName, SaveOptions options, QString *
         pdfConv->setPDFOptions( pdfConv->pdfOptions() | Poppler::PDFConverter::WithChanges );
 
     QMutexLocker locker( userMutex() );
+
+    QHashIterator<Okular::Annotation*, Poppler::Annotation*> it( annotationsHash );
+    while ( it.hasNext() )
+    {
+        it.next();
+
+        if ( it.value()->uniqueName().isEmpty() )
+        {
+            it.value()->setUniqueName( it.key()->uniqueName() );
+        }
+    }
+
     bool success = pdfConv->convert();
     if (!success)
     {

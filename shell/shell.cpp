@@ -503,8 +503,15 @@ void Shell::setCaption( const QString &caption )
     if ( activeTab >= 0 && activeTab < m_tabs.size() )
     {
         KParts::ReadWritePart* const activePart = m_tabs[activeTab].part;
-        if ( activePart->isModified() )
+        QString tabCaption = activePart->url().fileName();
+        if ( activePart->isModified() ) {
             modified = true;
+            if ( !tabCaption.isEmpty() ) {
+                tabCaption.append( QStringLiteral( " *" ) );
+            }
+        }
+
+        m_tabWidget->setTabText( activeTab, tabCaption );
     }
 
     setCaption( caption, modified );

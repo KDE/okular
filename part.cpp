@@ -2516,8 +2516,8 @@ bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
         if ( !listOfwontSaves.isEmpty() )
         {
             const QString warningMessage = m_document->canSwapBackingFile() ?
-                        i18n( "The following elements <b>cannot be saved</b> in this format.<br>If you want to preserve them, please use the <i>Okular document archive</i> format." ) :
-                        i18n( "The following elements <b>cannot be saved</b> in this format and will be lost (as well as the undo/redo stack).<br>If you want to preserve them, please use the <i>Okular document archive</i> format." );
+                        i18n( "You are about to save changes, but the current file format does not support saving the following elements. Please use the <i>Okular document archive</i> format to preserve them. Click <i>Continue</i> to save ignoring these elements." ) :
+                        i18n( "You are about to save changes, but the current file format does not support saving the following elements. Please use the <i>Okular document archive</i> format to preserve them. Click <i>Continue</i> to save but you will lose these elements (as well as the undo/redo history)." );
             const QString continueMessage = m_document->canSwapBackingFile() ?
                         i18n( "Continue" ) :
                         i18n( "Continue losing changes" );

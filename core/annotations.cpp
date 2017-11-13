@@ -542,10 +542,23 @@ void Annotation::setContents( const QString &contents )
     d->m_contents = contents;
 }
 
+void Annotation::setKey( const QString &key )
+{
+    Q_D( Annotation );
+    d->m_key = key;
+}
+
+
 QString Annotation::contents() const
 {
     Q_D( const Annotation );
     return d->m_contents;
+}
+
+QString Annotation::key() const
+{
+    Q_D( const Annotation );
+    return d->m_key;
 }
 
 void Annotation::setUniqueName( const QString &name )
@@ -741,6 +754,8 @@ void Annotation::store( QDomNode & annNode, QDomDocument & document ) const
         e.setAttribute( QStringLiteral("contents"), d->m_contents );
     if ( !d->m_uniqueName.isEmpty() )
         e.setAttribute( QStringLiteral("uniqueName"), d->m_uniqueName );
+    if ( !d->m_key.isEmpty() )
+        e.setAttribute( QStringLiteral("key"), d->m_key );    
     if ( d->m_modifyDate.isValid() )
         e.setAttribute( QStringLiteral("modifyDate"), d->m_modifyDate.toString(Qt::ISODate) );
     if ( d->m_creationDate.isValid() )
@@ -916,6 +931,8 @@ void AnnotationPrivate::setAnnotationProperties( const QDomNode& node )
         m_contents = e.attribute( QStringLiteral("contents") );
     if ( e.hasAttribute( QStringLiteral("uniqueName") ) )
         m_uniqueName = e.attribute( QStringLiteral("uniqueName") );
+    if ( e.hasAttribute( QStringLiteral("key") ) )
+         m_key = e.attribute( QStringLiteral("key") );    
     if ( e.hasAttribute( QStringLiteral("modifyDate") ) )
         m_modifyDate = QDateTime::fromString( e.attribute(QStringLiteral("modifyDate")), Qt::ISODate );
     if ( e.hasAttribute( QStringLiteral("creationDate") ) )

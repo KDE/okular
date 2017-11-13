@@ -577,7 +577,8 @@ class TextSelectorEngine : public AnnotatorEngine
             // find out annotation's type
             Okular::Annotation * ann = nullptr;
             const QString typeString = m_annotElement.attribute( QStringLiteral("type") );
-
+            const QString keyString = m_annotElement.attribute( QStringLiteral("key") );
+            
             Okular::HighlightAnnotation::HighlightType type = Okular::HighlightAnnotation::Highlight;
             bool typevalid = false;
             // create HighlightAnnotation's from the selected area
@@ -623,6 +624,7 @@ class TextSelectorEngine : public AnnotatorEngine
 
             text = item()->page()->text(selection, Okular::TextPage::CentralPixelTextAreaInclusionBehaviour);
             text.remove(QChar('\n'));
+
  
             delete selection;
             selection = nullptr;
@@ -638,6 +640,7 @@ class TextSelectorEngine : public AnnotatorEngine
                 ann->style().setOpacity( m_annotElement.attribute( QStringLiteral("opacity"), QStringLiteral("1.0") ).toDouble() );
 
             ann->setContents(text);
+            ann->setKey(keyString);
             // return annotations
             return QList< Okular::Annotation* >() << ann;
         }

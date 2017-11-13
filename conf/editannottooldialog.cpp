@@ -55,6 +55,15 @@ EditAnnotToolDialog::EditAnnotToolDialog( QWidget *parent, const QDomElement &in
     tmplabel->setBuddy( m_name );
     widgetLayout->addWidget( tmplabel, 0, 0, Qt::AlignRight );
     widgetLayout->addWidget( m_name, 0, 1 );
+    
+    m_key = new KLineEdit( widget );
+    mainLayout->addWidget(m_key);
+    tmplabel = new QLabel("Key:", widget );
+    mainLayout->addWidget(tmplabel);
+    tmplabel->setBuddy( m_key );
+    widgetLayout->addWidget( tmplabel, 1, 0, Qt::AlignRight );
+    widgetLayout->addWidget( m_key, 1, 1 );  
+    
 
     m_type = new KComboBox( false, widget );
     mainLayout->addWidget(m_type);
@@ -62,8 +71,8 @@ EditAnnotToolDialog::EditAnnotToolDialog( QWidget *parent, const QDomElement &in
     tmplabel = new QLabel( i18n( "&Type:" ), widget );
     mainLayout->addWidget(tmplabel);
     tmplabel->setBuddy( m_type );
-    widgetLayout->addWidget( tmplabel, 1, 0, Qt::AlignRight );
-    widgetLayout->addWidget( m_type, 1, 1 );
+    widgetLayout->addWidget( tmplabel, 2, 0, Qt::AlignRight );
+    widgetLayout->addWidget( m_type, 2, 1 );
 
     m_toolIcon = new QLabel( widget );
     mainLayout->addWidget(m_toolIcon);
@@ -74,7 +83,7 @@ EditAnnotToolDialog::EditAnnotToolDialog( QWidget *parent, const QDomElement &in
     m_appearanceBox = new QGroupBox( i18n( "Appearance" ), widget );
     mainLayout->addWidget(m_appearanceBox);
     m_appearanceBox->setLayout( new QVBoxLayout( m_appearanceBox ) );
-    widgetLayout->addWidget( m_appearanceBox, 2, 0, 1, 3 );
+    widgetLayout->addWidget( m_appearanceBox, 3, 0, 1, 3 );
 
     // Populate combobox with annotation types
     m_type->addItem( i18n("Pop-up Note"), qVariantFromValue( ToolNoteLinked ) );
@@ -85,7 +94,7 @@ EditAnnotToolDialog::EditAnnotToolDialog( QWidget *parent, const QDomElement &in
     m_type->addItem( i18n("Text markup"), qVariantFromValue( ToolTextMarkup ) );
     m_type->addItem( i18n("Geometrical shape"), qVariantFromValue( ToolGeometricalShape ) );
     m_type->addItem( i18n("Stamp"), qVariantFromValue( ToolStamp ) );
-
+    
     createStubAnnotation();
 
     if ( initialState.isNull() )
@@ -112,6 +121,11 @@ QString EditAnnotToolDialog::name() const
     return m_name->text();
 }
 
+ QString EditAnnotToolDialog::key() const
+ {
+     return m_key->text();
+ }
+
 QDomDocument EditAnnotToolDialog::toolXml() const
 {
     const ToolType toolType = m_type->itemData( m_type->currentIndex() ).value<ToolType>();
@@ -125,6 +139,7 @@ QDomDocument EditAnnotToolDialog::toolXml() const
     engineElement.appendChild( annotationElement );
 
     const QString color = m_stubann->style().color().name();
+    const QString key = m_key->text();
     const QString opacity = QString::number( m_stubann->style().opacity() );
     const QString width = QString::number( m_stubann->style().width() );
 
@@ -261,6 +276,8 @@ QDomDocument EditAnnotToolDialog::toolXml() const
 
     if ( opacity != QStringLiteral("1") )
         annotationElement.setAttribute( QStringLiteral("opacity"), opacity );
+    
+    annotationElement.setAttribute( QStringLiteral("key"), key );      
 
     return doc;
 }
@@ -377,7 +394,7 @@ void EditAnnotToolDialog::loadTool( const QDomElement &toolElement )
 {
     const QDomElement engineElement = toolElement.elementsByTagName( QStringLiteral("engine") ).item( 0 ).toElement();
     const QDomElement annotationElement = engineElement.elementsByTagName( QStringLiteral("annotation") ).item( 0 ).toElement();
-    const QString annotType = toolElement.attribute( QStringLiteral("type") );
+    const QString annotType = toolElement.attribute( QStringLiteral("type") );    
 
     if ( annotType == QLatin1String("ellipse") )
     {
@@ -474,7 +491,10 @@ void EditAnnotToolDialog::loadTool( const QDomElement &toolElement )
         m_stubann->style().setWidth( annotationElement.attribute( QStringLiteral("width") ).toDouble() );
 
     if ( toolElement.hasAttribute( QStringLiteral("name") ) )
-        m_name->setText( toolElement.attribute( QStringLiteral("name") ) );
+        m_name->setText( toolElement.attribute( QStringLiteral("name") ) ); 
+    if ( annotationElement.hasAttribute( QStringLiteral("key") ) )
+        m_key->setText( annotationElement.attribute( QStringLiteral("key") ) );     
+    
 }
 
 void EditAnnotToolDialog::slotTypeChanged()

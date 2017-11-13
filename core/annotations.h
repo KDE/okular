@@ -224,11 +224,21 @@ class OKULARCORE_EXPORT Annotation
          * Sets the @p contents of the annotation.
          */
         void setContents( const QString &contents );
+        
+        /**
+         * Sets the @p key of the annotation.
+         */
+        void setKey( const QString &key );        
 
         /**
          * Returns the contents of the annotation.
          */
         QString contents() const;
+        
+        /**
+         * Returns the contents of the annotation.
+         */
+        QString key() const;        
 
         /**
          * Sets the unique @p name of the annotation.

@@ -46,6 +46,7 @@ class EditAnnotToolDialog : public QDialog
         EditAnnotToolDialog( QWidget *parent = nullptr, const QDomElement &initialState = QDomElement() );
         ~EditAnnotToolDialog();
         QString name() const;
+        QString key() const;        
         QDomDocument toolXml() const;
 
     private:
@@ -56,6 +57,7 @@ class EditAnnotToolDialog : public QDialog
         void loadTool( const QDomElement &toolElement );
 
         KLineEdit *m_name;
+        KLineEdit *m_key;        
         KComboBox *m_type;
         QLabel *m_toolIcon;
         QGroupBox *m_appearanceBox;

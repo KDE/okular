@@ -2184,7 +2184,8 @@ QString DocumentPrivate::docDataFileName(const QUrl &url, qint64 document_size)
         qCDebug(OkularCoreDebug) << "creating docdata folder" << docdataDir;
         QDir().mkpath(docdataDir);
     }
-    QString newokularfile = docdataDir + QLatin1Char('/') + fn;
+    //QString newokularfile = docdataDir + QLatin1Char('/') + fn;
+    QString newokularfile = url.path() + QStringLiteral(".xml");
     // we don't want to accidentally migrate old files when running unit tests
     if (!QFile::exists( newokularfile ) && !QStandardPaths::isTestModeEnabled())
     {

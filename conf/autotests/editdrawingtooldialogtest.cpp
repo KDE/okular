@@ -36,6 +36,9 @@ void EditDrawingToolDialogTest::shouldHaveDefaultValues()
 
     const KLineEdit *name = dlg.findChild<KLineEdit *>(QStringLiteral("name"));
     QVERIFY(name);
+    
+    const KLineEdit *key = dlg.findChild<KLineEdit *>(QStringLiteral("key"));
+    QVERIFY(key);    
 
     const KColorButton *colorButton = dlg.findChild<KColorButton *>(QStringLiteral("colorbutton"));
     QVERIFY(colorButton);

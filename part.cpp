@@ -1700,14 +1700,14 @@ bool Part::queryClose()
         return true;
 
     const int res = KMessageBox::warningYesNoCancel( widget(),
-                        i18n( "Do you want to save your changes or discard them?" ),
+                        i18n( "Do you want to save your changes to \"%1\" or discard them?", url().toDisplayString() ),
                         i18n( "Close Document" ),
                         KStandardGuiItem::save(),
                         KStandardGuiItem::discard() );
 
     switch ( res )
     {
-        case KMessageBox::Yes: // Save as
+        case KMessageBox::Yes: // Save
             saveFile();
             return !isModified(); // Only allow closing if file was really saved
         case KMessageBox::No: // Discard

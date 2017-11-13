@@ -2412,9 +2412,11 @@ bool Part::slotSaveFileAs( bool showOkularArchiveAsDefaultFormat )
     bool wontSaveForms, wontSaveAnnotations;
     checkNativeSaveDataLoss(&wontSaveForms, &wontSaveAnnotations);
 
+    const QMimeType okularArchiveMimeType =  db.mimeTypeForName( QStringLiteral("application/vnd.kde.okular-archive") );
+
     // Prepare "Save As" dialog
     const QString originalMimeTypeFilter = i18nc("File type name and pattern", "%1 (%2)", originalMimeType.comment(), originalMimeType.globPatterns().join(QLatin1Char(' ')));
-    const QString okularArchiveMimeTypeFilter = i18n("Okular Archive (*.okular)");
+    const QString okularArchiveMimeTypeFilter = i18nc("File type name and pattern", "%1 (%2)", okularArchiveMimeType.comment(), okularArchiveMimeType.globPatterns().join(QLatin1Char(' ')));
 
     // What format choice should we show as default?
     QString selectedFilter = (isDocumentArchive || showOkularArchiveAsDefaultFormat ||

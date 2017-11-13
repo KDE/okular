@@ -2446,7 +2446,7 @@ bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
     if ( m_documentOpenWithPassword )
     {
         const int res = KMessageBox::warningYesNo( widget(),
-                    i18n( "The current document has password.<br />When saving we need to reload the file so you will get the password asked again and the undo/redo stack will be lost.<br />Do you want to continue?" ),
+                    i18n( "The current document is protected with a password.<br />In order to save, the file needs to be reloaded. You will be asked for the password again and your undo/redo history will be lost.<br />Do you want to continue?" ),
                     i18n( "Save - Warning" ) );
 
         switch ( res )

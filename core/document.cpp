@@ -4322,6 +4322,9 @@ QStringList Document::supportedMimeTypes() const
             result.append(mimeType.name());
         }
 
+        // Add the Okular archive mimetype
+        result << QStringLiteral("application/vnd.kde.okular-archive");
+
         // Sorting by mimetype name doesn't make a ton of sense,
         // but ensures that the list is ordered the same way every time
         qSort(result);

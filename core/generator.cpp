@@ -1,6 +1,9 @@
 /***************************************************************************
  *   Copyright (C) 2005   by Piotr Szymanski <niedakh@gmail.com>           *
  *   Copyright (C) 2008   by Albert Astals Cid <aacid@kde.org>             *
+ *   Copyright (C) 2017   Klarälvdalens Datakonsult AB, a KDAB Group       *
+ *                        company, info@kdab.com. Work sponsored by the    *
+ *                        LiMux project of the city of Munich              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -403,6 +406,14 @@ void Generator::signalTextGenerationDone( Page *page, TextPage *textPage )
         delete textPage;
 }
 
+void Generator::signalPartialPixmapRequest( PixmapRequest *request, const QImage &image )
+{
+    request->page()->setPixmap( request->observer(), new QPixmap( QPixmap::fromImage( image ) ), request->normalizedRect() );
+
+    const int pageNumber = request->page()->number();
+    request->observer()->notifyPageChanged( pageNumber, Okular::DocumentObserver::Pixmap );
+}
+
 const Document * Generator::document() const
 {
     Q_D( const Generator );
@@ -500,6 +511,7 @@ PixmapRequest::PixmapRequest( DocumentObserver *observer, int pageNumber, int wi
     d->mForce = false;
     d->mTile = false;
     d->mNormalizedRect = NormalizedRect();
+    d->mPartialUpdatesWanted = false;
 }
 
 PixmapRequest::~PixmapRequest()
@@ -568,6 +580,16 @@ void PixmapRequest::setNormalizedRect( const NormalizedRect &rect )
 const NormalizedRect& PixmapRequest::normalizedRect() const
 {
     return d->mNormalizedRect;
+}
+
+void PixmapRequest::setPartialUpdatesWanted(bool partialUpdatesWanted)
+{
+    d->mPartialUpdatesWanted = partialUpdatesWanted;
+}
+
+bool PixmapRequest::partialUpdatesWanted() const
+{
+    return d->mPartialUpdatesWanted;
 }
 
 Okular::TilesManager* PixmapRequestPrivate::tilesManager() const

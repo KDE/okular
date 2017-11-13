@@ -2,6 +2,9 @@
  *   Copyright (C) 2004-2008 by Albert Astals Cid <aacid@kde.org>          *
  *   Copyright (C) 2004 by Enrico Ros <eros.kde@email.it>                  *
  *   Copyright (C) 2012 by Guillermo A. Amaral B. <gamaral@kde.org>        *
+ *   Copyright (C) 2017    Klarälvdalens Datakonsult AB, a KDAB Group      *
+ *                         company, info@kdab.com. Work sponsored by the   *
+ *                         LiMux project of the city of Munich             *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -25,6 +28,7 @@
 #include <qtextstream.h>
 #include <QPrinter>
 #include <QPainter>
+#include <QTimer>
 #include <QtCore/QDebug>
 
 #include <KAboutData>
@@ -894,6 +898,44 @@ bool PDFGenerator::isAllowed( Okular::Permission permission ) const
     return b;
 }
 
+#ifdef HAVE_POPPLER_0_62
+struct PartialUpdatePayload
+{
+    PartialUpdatePayload(PDFGenerator *g, Okular::PixmapRequest *r) :
+        generator(g), request(r)
+    {
+        // Don't report partial updates for the first 500 ms
+        timer.setInterval(500);
+        timer.setSingleShot(true);
+        timer.start();
+    }
+
+    PDFGenerator *generator;
+    Okular::PixmapRequest *request;
+    QTimer timer;
+};
+Q_DECLARE_METATYPE(PartialUpdatePayload*)
+
+static bool shouldDoPartialUpdateCallback(const QVariant &vPayload)
+{
+    auto payload = vPayload.value<PartialUpdatePayload *>();
+
+    // Since the timer lives in a thread without an event loop we need to stop it ourselves
+    // when the remaining time has reached 0
+    if (payload->timer.isActive() && payload->timer.remainingTime() == 0) {
+        payload->timer.stop();
+    }
+
+    return !payload->timer.isActive();
+}
+
+static void partialUpdateCallback(const QImage &image, const QVariant &vPayload)
+{
+    auto payload = vPayload.value<PartialUpdatePayload *>();
+    QMetaObject::invokeMethod(payload->generator, "signalPartialPixmapRequest", Qt::QueuedConnection, Q_ARG(Okular::PixmapRequest*, payload->request), Q_ARG(QImage, image));
+}
+#endif
+
 QImage PDFGenerator::image( Okular::PixmapRequest * request )
 {
     // debug requests to this (xpdf) generator
@@ -928,11 +970,33 @@ QImage PDFGenerator::image( Okular::PixmapRequest * request )
         if ( request->isTile() )
         {
             QRect rect = request->normalizedRect().geometry( request->width(), request->height() );
-            img = p->renderToImage( fakeDpiX, fakeDpiY, rect.x(), rect.y(), rect.width(), rect.height(), Poppler::Page::Rotate0 );
+#ifdef HAVE_POPPLER_0_62
+            if ( request->partialUpdatesWanted() )
+            {
+                PartialUpdatePayload payload( this, request );
+                img = p->renderToImage( fakeDpiX, fakeDpiY, rect.x(), rect.y(), rect.width(), rect.height(), Poppler::Page::Rotate0,
+                                        partialUpdateCallback, shouldDoPartialUpdateCallback, QVariant::fromValue( &payload ) );
+            }
+            else
+#endif
+            {
+                img = p->renderToImage( fakeDpiX, fakeDpiY, rect.x(), rect.y(), rect.width(), rect.height(), Poppler::Page::Rotate0 );
+            }
         }
         else
         {
-            img = p->renderToImage(fakeDpiX, fakeDpiY, -1, -1, -1, -1, Poppler::Page::Rotate0 );
+#ifdef HAVE_POPPLER_0_62
+            if ( request->partialUpdatesWanted() )
+            {
+                PartialUpdatePayload payload(this, request);
+                img = p->renderToImage( fakeDpiX, fakeDpiY, -1, -1, -1, -1, Poppler::Page::Rotate0,
+                                        partialUpdateCallback, shouldDoPartialUpdateCallback, QVariant::fromValue( &payload ) );
+            }
+            else
+#endif
+            {
+                img = p->renderToImage(fakeDpiX, fakeDpiY, -1, -1, -1, -1, Poppler::Page::Rotate0 );
+            }
         }
     }
     else

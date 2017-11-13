@@ -34,7 +34,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2017-10-02</date>
+		<date>2017-11-06</date>
 		<releaseinfo>1.3 (Applications 17.12)</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
@@ -775,7 +775,7 @@ Context menu actions like Rename Bookmarks etc.)
 				<title>Removing annotations</title>
 				<para>
 					To remove an annotation, just click on it with the &RMB;, and select
-					<guimenuitem>Delete</guimenuitem>.
+					<guimenuitem>Delete</guimenuitem> or select an annotation using the &LMB; and press the &Del; key.
 				</para>
 				<para>
 					When removing the annotation, its window will be closed if open.
@@ -810,6 +810,14 @@ Context menu actions like Rename Bookmarks etc.)
 					To move an annotation, hold down the &Ctrl; key, move the mouse pointer on it and
 					then start dragging with the &LMB;.
 				</para>
+				<para>If you click with the &LMB; on an annotation, it gets selected. Resize handles appear on the
+					selection rectangle. When the cursor is moved over one of the 8 resize handles on
+					the corners or edges, the cursor shape changes to indicate the resize mode. Click anywhere
+					else on the annotation to move it.
+					Pressing &Esc; or clicking an area outside the annotation cancels a selection.
+				</para>
+				<para>Resizing is only applicable for annotation types Inline Note, Stamp and Ellipse.</para>
+
 				<note>
 					<para>
 						Depending on the document permissions (typically with &PDF; documents), some options
@@ -850,13 +858,16 @@ Context menu actions like Rename Bookmarks etc.)
 				  The list pane permits to view the bookmark list in a tree-like fashion: each document in the list can be <quote>expanded</quote> or <quote>collapsed</quote> by clicking on the <guiicon>&lt;</guiicon> or <guiicon>v</guiicon> icon next to it.
 				</para>
 				<para>
-				  Click on <inlinemediaobject><imageobject><imagedata fileref="rating.png" format="PNG"/></imageobject></inlinemediaobject> icon below the list to show only the bookmarks from the current document.
+				  Click on <inlinemediaobject><imageobject><imagedata fileref="bookmarks.png" format="PNG"/></imageobject></inlinemediaobject> icon below the list to show only the bookmarks from the current document.
 				</para>
 				<para>
 				  Right-click menu of document item can be used to open document, rename its item or remove it from the list. Remember that the removal of a document item leads to the removal of all bookmarks in the corresponding document.
 				</para>
 				<para>
 				  Right-click menus of individual bookmark items allow you to go to the bookmark, rename or remove it.
+				</para>
+				<para>
+				  The Right-click menu of items in the table of contents can be used to create bookmarks or go to the next or previous bookmark.
 				</para>
 		      </sect2>
 		</sect1>

@@ -2663,16 +2663,16 @@ void Part::showMenu(const Okular::Page *page, const QPoint &point, const QString
 void Part::slotShowProperties()
 {
     PropertiesDialog *d = new PropertiesDialog(widget(), m_document);
-    d->exec();
-    delete d;
+    connect(d, &QDialog::finished, d, &QObject::deleteLater);
+    d->open();
 }
 
 
 void Part::slotShowEmbeddedFiles()
 {
     EmbeddedFilesDialog *d = new EmbeddedFilesDialog(widget(), m_document);
-    d->exec();
-    delete d;
+    connect(d, &QDialog::finished, d, &QObject::deleteLater);
+    d->open();
 }
 
 

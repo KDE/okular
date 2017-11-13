@@ -469,7 +469,7 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     m_migrationMessage->setVisible( false );
     m_migrationMessage->setWordWrap( true );
     m_migrationMessage->setMessageType( KMessageWidget::Warning );
-    m_migrationMessage->setText( i18n( "This document contains annotations or form data that were saved internally by a previous Okular version. Internal storage is <b>no longer supported</b>.<br/>Please save to a file in order to move them and continue editing the document." ) );
+    m_migrationMessage->setText( i18n( "This document contains annotations or form data that were saved internally by a previous Okular version. Internal storage is <b>no longer supported</b>.<br/>Please save to a file in order to move them if you want to continue to edit the document." ) );
     rightLayout->addWidget( m_migrationMessage );
     m_topMessage = new KMessageWidget( rightContainer );
     m_topMessage->setVisible( false );

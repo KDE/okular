@@ -4385,10 +4385,19 @@ bool Document::swapBackingFile( const QString &newFileName, const QUrl &url )
             {
                 // Trust me on the const_cast ^_^
                 QUndoCommand *uc = const_cast<QUndoCommand *>( d->m_undoStack->command( i ) );
-                if (OkularUndoCommand *ouc = dynamic_cast<OkularUndoCommand*>( uc )) ouc->refreshInternalPageReferences( newPagesVector );
+                if (OkularUndoCommand *ouc = dynamic_cast<OkularUndoCommand*>( uc ))
+                {
+                    const bool success = ouc->refreshInternalPageReferences( newPagesVector );
+                    if ( !success )
+                    {
+                        qWarning() << "Document::swapBackingFile: refreshInternalPageReferences failed" << ouc;
+                        return false;
+                    }
+                }
                 else
                 {
-                    qWarning() << "Unhandled undo command" << uc;
+                    qWarning() << "Document::swapBackingFile: Unhandled undo command" << uc;
+                    return false;
                 }
             }
 

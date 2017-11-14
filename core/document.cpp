@@ -2124,6 +2124,7 @@ Document::Document( QWidget *widget )
     connect( SettingsCore::self(), SIGNAL(configChanged()), this, SLOT(_o_configChanged()) );
     connect(d->m_undoStack, &QUndoStack::canUndoChanged, this, &Document::canUndoChanged);
     connect(d->m_undoStack, &QUndoStack::canRedoChanged, this, &Document::canRedoChanged);
+    connect(d->m_undoStack, &QUndoStack::cleanChanged, this, &Document::undoHistoryCleanChanged);
 
     qRegisterMetaType<Okular::FontInfo>();
 }
@@ -3212,24 +3213,11 @@ void Document::requestTextPage( uint page )
 
 void DocumentPrivate::notifyAnnotationChanges( int page )
 {
-    int flags = DocumentObserver::Annotations;
-
-    // Unless we're still loading initial annotations from metadata, the user
-    // now needs to save or annotation changes will be lost
-    if ( m_metadataLoadingCompleted )
-        flags |= DocumentObserver::NeedSaveAs;
-
-    foreachObserverD( notifyPageChanged( page, flags ) );
+    foreachObserverD( notifyPageChanged( page, DocumentObserver::Annotations ) );
 }
 
-void DocumentPrivate::notifyFormChanges( int page )
+void DocumentPrivate::notifyFormChanges( int /*page*/ )
 {
-    // Unless we're still loading initial form contents from metadata, the user
-    // now needs to save or form changes will be lost
-    if ( !m_metadataLoadingCompleted )
-        return;
-
-    foreachObserverD( notifyPageChanged( page, DocumentObserver::NeedSaveAs ) );
 }
 
 void Document::addPageAnnotation( int page, Annotation * annotation )
@@ -4472,6 +4460,14 @@ bool Document::swapBackingFileArchive( const QString &newFileName, const QUrl &u
     }
 
     return success;
+}
+
+void Document::setHistoryClean( bool clean )
+{
+    if ( clean )
+        d->m_undoStack->setClean();
+    else
+        d->m_undoStack->resetClean();
 }
 
 bool Document::canSaveChanges() const

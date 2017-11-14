@@ -45,7 +45,7 @@ class OKULARCORE_EXPORT DocumentObserver
             TextSelection = 8,    ///< Text selection has been changed
             Annotations = 16,     ///< Annotations have been changed
             BoundingBox = 32,     ///< Bounding boxes have been changed
-            NeedSaveAs = 64       ///< Set when "Save" is needed or annotation/form changes will be lost @since 0.15 (KDE 4.9)
+            NeedSaveAs = 64       ///< Set when "Save" is needed or annotation/form changes will be lost @since 0.15 (KDE 4.9) @deprecated
         };
 
         /**

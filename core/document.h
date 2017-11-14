@@ -773,6 +773,13 @@ class OKULARCORE_EXPORT Document : public QObject
         bool swapBackingFileArchive( const QString &newFileName, const QUrl &url );
 
         /**
+         * Sets the history to be clean
+         *
+         * @since 1.3
+         */
+        void setHistoryClean( bool clean );
+
+        /**
          * Saving capabilities. Their availability varies according to the
          * underlying generator and/or the document type.
          *
@@ -1128,6 +1135,12 @@ class OKULARCORE_EXPORT Document : public QObject
          * @since 0.17 (KDE 4.11)
          */
         void canRedoChanged( bool redoAvailable );
+
+        /**
+         * This signal is emmitted whenever the undo history is clean (i.e. the same status the last time it was saved)
+         * @since 1.3
+         */
+        void undoHistoryCleanChanged( bool clean );
 
         /**
          * This signal is emitted whenever an rendition action is triggered and the UI should process it.

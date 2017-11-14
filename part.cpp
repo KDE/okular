@@ -389,6 +389,13 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     connect( m_document, &Document::openUrl, this, &Part::openUrlFromDocument );
     connect( m_document->bookmarkManager(), &BookmarkManager::openUrl, this, &Part::openUrlFromBookmarks );
     connect( m_document, &Document::close, this, &Part::close );
+    connect( m_document, &Document::undoHistoryCleanChanged, this,
+            [this](bool clean)
+            {
+                setModified( !clean );
+                setWindowTitleFromDocument();
+            }
+    );
 
     if ( parent && parent->metaObject()->indexOfSlot( QMetaObject::normalizedSignature( "slotQuit()" ).constData() ) != -1 )
         connect( m_document, SIGNAL(quit()), parent, SLOT(slotQuit()) );
@@ -1198,12 +1205,6 @@ void Part::notifyViewportChanged( bool /*smoothMove*/ )
 
 void Part::notifyPageChanged( int page, int flags )
 {
-    if ( flags & Okular::DocumentObserver::NeedSaveAs )
-    {
-        setModified();
-        setWindowTitleFromDocument();
-    }
-
     if ( !(flags & Okular::DocumentObserver::Bookmark ) )
         return;
 
@@ -1728,8 +1729,6 @@ bool Part::closeUrl(bool promptToSave)
         // current one when openUrl() calls us internally
         return true; // pretend it worked
     }
-
-    setModified( false );
 
     if (!m_temporaryLocalFile.isNull() && m_temporaryLocalFile != localFilePath())
     {
@@ -2636,8 +2635,8 @@ bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
         return false;
     }
 
-    setModified( false );
-    setWindowTitleFromDocument();
+    m_document->setHistoryClean( true );
+
     if ( m_document->isDocdataMigrationNeeded() )
         m_document->docdataMigrationDone();
 
@@ -2652,8 +2651,7 @@ bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
         {
             if ( setModifiedAfterSave )
             {
-                setModified();
-                setWindowTitleFromDocument();
+                m_document->setHistoryClean( false );
             }
         }
         else

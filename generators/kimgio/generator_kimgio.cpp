@@ -69,8 +69,12 @@ bool KIMGIOGenerator::loadDocumentInternal(const QByteArray & fileData, const QS
     QImageReader reader( &buffer, QImageReader::imageFormat( &buffer ) );
     reader.setAutoDetectImageFormat( true );
     if ( !reader.read( &m_img ) ) {
-        emit error( i18n( "Unable to load document: %1", reader.errorString() ), -1 );
-        return false;
+        if (!m_img.isNull()) {
+            emit warning( i18n( "This document appears malformed. Here is a best approximation of the document's intended appearance." ), -1 );
+        } else {
+            emit error( i18n( "Unable to load document: %1", reader.errorString() ), -1 );
+            return false;
+        }
     }
     QMimeDatabase db;
     auto mime = db.mimeTypeForFileNameAndData( fileName, fileData );

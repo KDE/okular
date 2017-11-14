@@ -3,7 +3,7 @@
         <param name="protocol">https</param>
         <param name="host">raw.githubusercontent.com</param>
         <param name="port">443</param>
-        <param name="path">/ConTextMe/digest/master/digest.spec</param>
+        <param name="path">/ConTextMe/digest/master/_build/digest.spec</param>
     </service>
 
     <service name="obs_scm">

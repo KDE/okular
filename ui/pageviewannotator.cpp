@@ -578,6 +578,8 @@ class TextSelectorEngine : public AnnotatorEngine
             Okular::Annotation * ann = nullptr;
             const QString typeString = m_annotElement.attribute( QStringLiteral("type") );
             const QString keyString = m_annotElement.attribute( QStringLiteral("key") );
+            const QString context = Okular::Settings::context();
+
             
             Okular::HighlightAnnotation::HighlightType type = Okular::HighlightAnnotation::Highlight;
             bool typevalid = false;
@@ -641,6 +643,7 @@ class TextSelectorEngine : public AnnotatorEngine
 
             ann->setContents(text);
             ann->setKey(keyString);
+            ann->setContext(context);
             // return annotations
             return QList< Okular::Annotation* >() << ann;
         }

@@ -548,6 +548,11 @@ void Annotation::setKey( const QString &key )
     d->m_key = key;
 }
 
+void Annotation::setContext( const QString &context )
+{
+    Q_D( Annotation );
+    d->m_context = context;
+}
 
 QString Annotation::contents() const
 {
@@ -559,6 +564,12 @@ QString Annotation::key() const
 {
     Q_D( const Annotation );
     return d->m_key;
+}
+
+QString Annotation::context() const
+{
+    Q_D( const Annotation );
+    return d->m_context;
 }
 
 void Annotation::setUniqueName( const QString &name )
@@ -756,6 +767,8 @@ void Annotation::store( QDomNode & annNode, QDomDocument & document ) const
         e.setAttribute( QStringLiteral("uniqueName"), d->m_uniqueName );
     if ( !d->m_key.isEmpty() )
         e.setAttribute( QStringLiteral("key"), d->m_key );    
+    if ( !d->m_context.isEmpty() )
+        e.setAttribute( QStringLiteral("context"), d->m_context );    
     if ( d->m_modifyDate.isValid() )
         e.setAttribute( QStringLiteral("modifyDate"), d->m_modifyDate.toString(Qt::ISODate) );
     if ( d->m_creationDate.isValid() )

@@ -35,6 +35,9 @@
   </entry>
  </group>
  <group name="Reviews" >
+  <entry key="Context" type="String">
+   <default>false</default>
+  </entry>   
   <entry key="ReviewsSearchCaseSensitive" type="Bool">
    <default>false</default>
   </entry>

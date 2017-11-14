@@ -60,6 +60,7 @@ class AnnotationPrivate
         QString m_author;
         QString m_contents;
         QString m_key;        
+        QString m_context;                
         QString m_uniqueName;
         QDateTime m_modifyDate;
         QDateTime m_creationDate;

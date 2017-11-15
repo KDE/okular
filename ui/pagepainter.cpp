@@ -153,10 +153,10 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
     if ( canDrawHighlights || canDrawTextSelection || canDrawAnnotations )
     {
         // precalc normalized 'limits rect' for intersection
-        double nXMin = ( (double)limits.left() / dScaledWidth ) + crop.left,
-               nXMax = ( (double)limits.right() / dScaledWidth )  + crop.left,
-               nYMin = ( (double)limits.top() / dScaledHeight ) + crop.top,
-               nYMax = ( (double)limits.bottom() / dScaledHeight ) + crop.top;
+        double nXMin = ( (double)limits.left() / scaledWidth ) + crop.left,
+               nXMax = ( (double)limits.right() / scaledWidth )  + crop.left,
+               nYMin = ( (double)limits.top() / scaledHeight ) + crop.top,
+               nYMax = ( (double)limits.bottom() / scaledHeight ) + crop.top;
         // append all highlights inside limits to their list
         if ( canDrawHighlights )
         {

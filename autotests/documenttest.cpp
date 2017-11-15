@@ -102,7 +102,11 @@ void DocumentTest::testDocdataMigration()
     QCOMPARE( m_document->page( 0 )->annotations().first()->uniqueName(), QString("testannot") );
     QCOMPARE( m_document->isDocdataMigrationNeeded(), true );
 
-    // Pretend the user has done the migration
+    // Do the migration
+    QTemporaryFile migratedSaveFile( QString( "%1/okrXXXXXX.pdf" ).arg( QDir::tempPath() ) );
+    QVERIFY( migratedSaveFile.open() );
+    migratedSaveFile.close();
+    QVERIFY( m_document->saveChanges( migratedSaveFile.fileName() ) );
     m_document->docdataMigrationDone();
     QCOMPARE( m_document->isDocdataMigrationNeeded(), false );
     m_document->closeDocument();
@@ -110,6 +114,12 @@ void DocumentTest::testDocdataMigration()
     // Now the docdata file should have no annotations, let's check
     QCOMPARE( m_document->openDocument( testFilePath, testFileUrl, mime ), Okular::Document::OpenSuccess );
     QCOMPARE( m_document->page( 0 )->annotations().size(), 0 );
+    QCOMPARE( m_document->isDocdataMigrationNeeded(), false );
+    m_document->closeDocument();
+
+    // And the new file should have 1 annotation, let's check
+    QCOMPARE( m_document->openDocument( migratedSaveFile.fileName(), migratedSaveFile.fileName(), mime ), Okular::Document::OpenSuccess );
+    QCOMPARE( m_document->page( 0 )->annotations().size(), 1 );
     QCOMPARE( m_document->isDocdataMigrationNeeded(), false );
     m_document->closeDocument();
 

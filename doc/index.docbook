@@ -989,7 +989,7 @@ Context menu actions like Rename Bookmarks etc.)
 						</menuchoice>
 					</term>
 					<listitem>
-					  <para><action>Saves</action> the document including all the changes (annotations, form contents, &etc;), provided the document backend supports saving those changes, if the backend does not support saving the changes the user will be give the option to lose them or to save as &okular; document archive.</para>
+					  <para><action>Saves</action> the document including all the changes (annotations, form contents, &etc;), provided the document backend supports saving those changes. If the backend does not support saving the changes, the user will be given the option to either discard or to save them together with the document in an &okular; document archive.</para>
 					</listitem>
 				</varlistentry>
 
@@ -1004,7 +1004,7 @@ Context menu actions like Rename Bookmarks etc.)
 						</menuchoice>
 					</term>
 					<listitem>
-					  <para><action>Saves</action> the document under a new name including all the changes (annotations, form contents, &etc;), provided the document backend supports saving changes, if the backend does not support saving the changes the user will be give the option to lose them or to save as &okular; document archive.</para>
+					  <para><action>Saves</action> the document under a new name including all the changes (annotations, form contents, &etc;), provided the document backend supports saving changes. If the backend does not support saving the changes, the user will be given the option to either discard or to save them together with the document in an &okular; document archive.</para>
                                         <note>
                                         <para>
                                             Note that, due to the way this is implemented, even if there are no changes to the file, the new file need not to be an exact bit-for-bit copy of the original file (&eg; can have a different SHA-1 hash, &etc;).

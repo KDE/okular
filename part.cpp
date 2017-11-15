@@ -2484,7 +2484,7 @@ bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
         if ( !hasUserAcceptedReload && !m_document->canSwapBackingFile() )
         {
             const int res = KMessageBox::warningYesNo( widget(),
-                        i18n( "The current document format backend doesn't support internal reload on save so we will close and open the file again.<br />This means that the undo/redo stack will be lost.<br />Do you want to continue?" ),
+                        i18n( "After saving, the current document format requires the file to be reloaded. Your undo/redo history will be lost.<br />Do you want to continue?" ),
                         i18n( "Save - Warning" ) );
 
             switch ( res )
@@ -2517,8 +2517,8 @@ bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
         if ( !listOfwontSaves.isEmpty() )
         {
             const QString warningMessage = m_document->canSwapBackingFile() ?
-                        i18n( "You are about to save changes, but the current file format does not support saving the following elements. Please use the <i>Okular document archive</i> format to preserve them. Click <i>Continue</i> to save ignoring these elements." ) :
-                        i18n( "You are about to save changes, but the current file format does not support saving the following elements. Please use the <i>Okular document archive</i> format to preserve them. Click <i>Continue</i> to save but you will lose these elements (as well as the undo/redo history)." );
+                        i18n( "You are about to save changes, but the current file format does not support saving the following elements. Please use the <i>Okular document archive</i> format to preserve them. Click <i>Continue</i> to save the document and discard these elements." ) :
+                        i18n( "You are about to save changes, but the current file format does not support saving the following elements. Please use the <i>Okular document archive</i> format to preserve them. Click <i>Continue</i> to save, but you will lose these elements as well as the undo/redo history." );
             const QString continueMessage = m_document->canSwapBackingFile() ?
                         i18n( "Continue" ) :
                         i18n( "Continue losing changes" );

@@ -23,7 +23,7 @@ extern Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annot
 class PopplerAnnotationProxy : public Okular::AnnotationProxy
 {
     public:
-        PopplerAnnotationProxy( Poppler::Document *doc, QMutex *userMutex );
+        PopplerAnnotationProxy( Poppler::Document *doc, QMutex *userMutex, QHash<Okular::Annotation*, Poppler::Annotation*> *annotsOnOpenHash );
         ~PopplerAnnotationProxy();
 
         bool supports( Capability capability ) const override;
@@ -33,6 +33,7 @@ class PopplerAnnotationProxy : public Okular::AnnotationProxy
     private:
         Poppler::Document *ppl_doc;
         QMutex *mutex;
+        QHash<Okular::Annotation*, Poppler::Annotation*> *annotationsOnOpenHash;
 };
 
 #endif

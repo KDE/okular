@@ -137,7 +137,9 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         mutable QList<Okular::EmbeddedFile*> docEmbeddedFiles;
         int nextFontPage;
         PopplerAnnotationProxy *annotProxy;
-        QHash<Okular::Annotation*, Poppler::Annotation*> annotationsHash;
+        // the hash below only contains annotations that were present on the file at open time
+        // this is enough for what we use it for
+        QHash<Okular::Annotation*, Poppler::Annotation*> annotationsOnOpenHash;
 
         QBitArray rectsGenerated;
 

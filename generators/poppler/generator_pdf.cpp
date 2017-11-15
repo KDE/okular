@@ -579,7 +579,7 @@ Okular::Document::OpenResult PDFGenerator::init(QVector<Okular::Page*> & pagesVe
     pagesVector.resize(pageCount);
     rectsGenerated.fill(false, pageCount);
 
-    annotationsHash.clear();
+    annotationsOnOpenHash.clear();
 
     loadPages(pagesVector, 0, false);
 
@@ -587,7 +587,7 @@ Okular::Document::OpenResult PDFGenerator::init(QVector<Okular::Page*> & pagesVe
     reparseConfig();
 
     // create annotation proxy
-    annotProxy = new PopplerAnnotationProxy( pdfdoc, userMutex() );
+    annotProxy = new PopplerAnnotationProxy( pdfdoc, userMutex(), &annotationsOnOpenHash );
 
     // the file has been loaded correctly
     return Okular::Document::OpenSuccess;
@@ -1006,8 +1006,8 @@ void PDFGenerator::resolveMediaLinkReference( Okular::Action *action )
     if ( (action->actionType() != Okular::Action::Movie) && (action->actionType() != Okular::Action::Rendition) )
         return;
 
-    resolveMediaLinks<Poppler::LinkMovie, Okular::MovieAction, Poppler::MovieAnnotation, Okular::MovieAnnotation>( action, Okular::Annotation::AMovie, annotationsHash );
-    resolveMediaLinks<Poppler::LinkRendition, Okular::RenditionAction, Poppler::ScreenAnnotation, Okular::ScreenAnnotation>( action, Okular::Annotation::AScreen, annotationsHash );
+    resolveMediaLinks<Poppler::LinkMovie, Okular::MovieAction, Poppler::MovieAnnotation, Okular::MovieAnnotation>( action, Okular::Annotation::AMovie, annotationsOnOpenHash );
+    resolveMediaLinks<Poppler::LinkRendition, Okular::RenditionAction, Poppler::ScreenAnnotation, Okular::ScreenAnnotation>( action, Okular::Annotation::AScreen, annotationsOnOpenHash );
 }
 
 void PDFGenerator::resolveMediaLinkReferences( Okular::Page *page )
@@ -1564,7 +1564,7 @@ void PDFGenerator::addAnnotations( Poppler::Page * popplerPage, Okular::Page * p
             }
 
             if ( !doDelete )
-                annotationsHash.insert( newann, a );
+                annotationsOnOpenHash.insert( newann, a );
         }
         if ( doDelete )
             delete a;
@@ -1718,7 +1718,7 @@ bool PDFGenerator::save( const QString &fileName, SaveOptions options, QString *
 
     QMutexLocker locker( userMutex() );
 
-    QHashIterator<Okular::Annotation*, Poppler::Annotation*> it( annotationsHash );
+    QHashIterator<Okular::Annotation*, Poppler::Annotation*> it( annotationsOnOpenHash );
     while ( it.hasNext() )
     {
         it.next();

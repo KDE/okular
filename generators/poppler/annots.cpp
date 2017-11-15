@@ -62,8 +62,8 @@ static int maskExportedFlags(int flags)
 }
 
 //BEGIN PopplerAnnotationProxy implementation
-PopplerAnnotationProxy::PopplerAnnotationProxy( Poppler::Document *doc, QMutex *userMutex )
-    : ppl_doc ( doc ), mutex ( userMutex )
+PopplerAnnotationProxy::PopplerAnnotationProxy( Poppler::Document *doc, QMutex *userMutex, QHash<Okular::Annotation*, Poppler::Annotation*> *annotsOnOpenHash )
+    : ppl_doc ( doc ), mutex ( userMutex ), annotationsOnOpenHash( annotsOnOpenHash )
 {
 }
 
@@ -254,6 +254,7 @@ void PopplerAnnotationProxy::notifyRemoval( Okular::Annotation *okl_ann, int pag
     QMutexLocker ml(mutex);
 
     Poppler::Page *ppl_page = ppl_doc->page( page );
+    annotationsOnOpenHash->remove( okl_ann );
     ppl_page->removeAnnotation( ppl_ann ); // Also destroys ppl_ann
     delete ppl_page;
 

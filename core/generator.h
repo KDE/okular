@@ -290,7 +290,7 @@ class OKULARCORE_EXPORT Generator : public QObject
          *
          * @since 1.3
          */
-        virtual SwapBackingFileResult swapBackingFile( const QString &newFileName, QVector<Okular::Page*> & newPagesVector );
+        virtual SwapBackingFileResult swapBackingFile( const QString & newFileName, QVector<Okular::Page*> & newPagesVector );
 
         /**
          * This method is called when the document is closed and not used

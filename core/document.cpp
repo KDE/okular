@@ -1156,7 +1156,7 @@ void DocumentPrivate::saveDocumentInfo() const
     doc.appendChild( root );
 
     // 2.1. Save page attributes (bookmark state, annotations, ... ) to DOM
-    //  -> do this there are not-yet-migrated annots or forms in docdata/
+    //  -> do this if there are not-yet-migrated annots or forms in docdata/
     if ( m_docdataMigrationNeeded )
     {
         QDomElement pageList = doc.createElement( "pageList" );
@@ -1164,7 +1164,7 @@ void DocumentPrivate::saveDocumentInfo() const
         // OriginalAnnotationPageItems and OriginalFormFieldPageItems tell to
         // store the same unmodified annotation list and form contents that we
         // read when we opened the file and ignore any change made by the user.
-        // Since we don't store annotations and forms docdata/ any more, this is
+        // Since we don't store annotations and forms in docdata/ any more, this is
         // necessary to preserve annotations/forms that previous Okular version
         // had stored there.
         const PageItems saveWhat = AllPageItems | OriginalAnnotationPageItems | OriginalFormFieldPageItems;

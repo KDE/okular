@@ -1730,6 +1730,8 @@ bool Part::closeUrl(bool promptToSave)
         return true; // pretend it worked
     }
 
+    m_document->setHistoryClean( true );
+
     if (!m_temporaryLocalFile.isNull() && m_temporaryLocalFile != localFilePath())
     {
         QFile::remove( m_temporaryLocalFile );

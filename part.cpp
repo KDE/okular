@@ -1704,7 +1704,7 @@ bool Part::queryClose()
         return true;
 
     const int res = KMessageBox::warningYesNoCancel( widget(),
-                        i18n( "Do you want to save your changes to \"%1\" or discard them?", url().toDisplayString() ),
+                        i18n( "Do you want to save your changes to \"%1\" or discard them?", url().fileName() ),
                         i18n( "Close Document" ),
                         KStandardGuiItem::save(),
                         KStandardGuiItem::discard() );

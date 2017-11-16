@@ -211,7 +211,8 @@ class OKULARCORE_EXPORT Generator : public QObject
             PrintNative,       ///< Whether the Generator supports native cross-platform printing (QPainter-based).
             PrintPostscript,   ///< Whether the Generator supports postscript-based file printing.
             PrintToFile,       ///< Whether the Generator supports export to PDF & PS through the Print Dialog
-            TiledRendering     ///< Whether the Generator can render tiles @since 0.16 (KDE 4.10)
+            TiledRendering,    ///< Whether the Generator can render tiles @since 0.16 (KDE 4.10)
+            SwapBackingFile    ///< Whether the Generator can hot-swap the file it's reading from @since 1.3
         };
 
         /**
@@ -272,6 +273,27 @@ class OKULARCORE_EXPORT Generator : public QObject
          */
         virtual Document::OpenResult loadDocumentFromDataWithPassword( const QByteArray & fileData, QVector< Page * > & pagesVector, const QString &password );
 
+        /**
+         * Describes the result of an swap file operation.
+         *
+         * @since 1.3
+         */
+        enum SwapBackingFileResult
+        {
+            SwapBackingFileError,               //< The document could not be swapped
+            SwapBackingFileNoOp,                //< The document was swapped and nothing needs to be done
+            SwapBackingFileReloadInternalData   //< The document was swapped and internal data (forms, annotations, etc) needs to be reloaded
+        };
+
+        /**
+         * Changes the path of the file we are reading from. The new path must
+         * point to a copy of the same document.
+         *
+         * @note the Generator has to have the feature @ref SwapBackingFile enabled
+         *
+         * @since 1.3
+         */
+        virtual SwapBackingFileResult swapBackingFile( const QString & newFileName, QVector<Okular::Page*> & newPagesVector );
 
         /**
          * This method is called when the document is closed and not used

@@ -1,5 +1,8 @@
 /***************************************************************************
  *   Copyright (C) 2012 by Fabio D'Urso <fabiodurso@hotmail.it>            *
+ *   Copyright (C) 2017    Klarälvdalens Datakonsult AB, a KDAB Group      *
+ *                         company, info@kdab.com. Work sponsored by the   *
+ *                         LiMux project of the city of Munich             *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -23,7 +26,7 @@ extern Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annot
 class PopplerAnnotationProxy : public Okular::AnnotationProxy
 {
     public:
-        PopplerAnnotationProxy( Poppler::Document *doc, QMutex *userMutex );
+        PopplerAnnotationProxy( Poppler::Document *doc, QMutex *userMutex, QHash<Okular::Annotation*, Poppler::Annotation*> *annotsOnOpenHash );
         ~PopplerAnnotationProxy();
 
         bool supports( Capability capability ) const override;
@@ -33,6 +36,7 @@ class PopplerAnnotationProxy : public Okular::AnnotationProxy
     private:
         Poppler::Document *ppl_doc;
         QMutex *mutex;
+        QHash<Okular::Annotation*, Poppler::Annotation*> *annotationsOnOpenHash;
 };
 
 #endif

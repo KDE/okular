@@ -1,6 +1,9 @@
 /***************************************************************************
  *   Copyright (C) 2004-2005 by Enrico Ros <eros.kde@email.it>             *
  *   Copyright (C) 2004-2008 by Albert Astals Cid <aacid@kde.org>          *
+ *   Copyright (C) 2017      Klarälvdalens Datakonsult AB, a KDAB Group    *
+ *                           company, info@kdab.com. Work sponsored by the *
+ *                           LiMux project of the city of Munich           *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -738,6 +741,48 @@ class OKULARCORE_EXPORT Document : public QObject
         KPluginMetaData generatorInfo() const;
 
         /**
+         * Returns whether the generator supports hot-swapping the current file
+         * with another identical file
+         *
+         * @since 1.3
+         */
+        bool canSwapBackingFile() const;
+
+        /**
+         * Reload the document from a new location, without any visible effect
+         * to the user.
+         *
+         * The new file must be identical to the current one or, if the document
+         * has been modified (eg the user edited forms and annotations), the new
+         * document must have these changes too. For example, you can call
+         * saveChanges first to write changes to a file and then swapBackingFile
+         * to switch to the new location.
+         *
+         * @since 1.3
+         */
+        bool swapBackingFile( const QString &newFileName, const QUrl &url );
+
+        /**
+         * Same as swapBackingFile, but newFileName must be a .okular file.
+         *
+         * The new file must be identical to the current one or, if the document
+         * has been modified (eg the user edited forms and annotations), the new
+         * document must have these changes too. For example, you can call
+         * saveDocumentArchive first to write changes to a file and then
+         * swapBackingFileArchive to switch to the new location.
+         *
+         * @since 1.3
+         */
+        bool swapBackingFileArchive( const QString &newFileName, const QUrl &url );
+
+        /**
+         * Sets the history to be clean
+         *
+         * @since 1.3
+         */
+        void setHistoryClean( bool clean );
+
+        /**
          * Saving capabilities. Their availability varies according to the
          * underlying generator and/or the document type.
          *
@@ -823,6 +868,15 @@ class OKULARCORE_EXPORT Document : public QObject
         bool saveDocumentArchive( const QString &fileName );
 
         /**
+         * Extract the document file from the current archive.
+         *
+         * @warning This function only works if the current file is a document archive
+         *
+         * @since 1.3
+         */
+        bool extractArchivedFile( const QString &destFileName );
+
+        /**
          * Asks the generator to dynamically generate a SourceReference for a given
          * page number and absolute X and Y position on this page.
          *
@@ -856,6 +910,25 @@ class OKULARCORE_EXPORT Document : public QObject
          * @since 0.20 (KDE 4.14)
         */
         void walletDataForFile( const QString &fileName, QString *walletName, QString *walletFolder, QString *walletKey ) const;
+
+        /**
+         * Since version 0.21, okular does not allow editing annotations and
+         * form data if they are stored in the docdata directory (like older
+         * okular versions did by default).
+         * If this flag is set, then annotations and forms cannot be edited.
+         *
+         * @since 1.3
+        */
+        bool isDocdataMigrationNeeded() const;
+
+        /**
+         * Delete annotations and form data from the docdata folder. Call it if
+         * isDocdataMigrationNeeded() was true and you've just saved them to an
+         * external file.
+         *
+         * @since 1.3
+        */
+        void docdataMigrationDone();
 
         /**
          * Returns the model for rendering layers (NULL if the document has no layers)
@@ -1065,6 +1138,12 @@ class OKULARCORE_EXPORT Document : public QObject
          * @since 0.17 (KDE 4.11)
          */
         void canRedoChanged( bool redoAvailable );
+
+        /**
+         * This signal is emmitted whenever the undo history is clean (i.e. the same status the last time it was saved)
+         * @since 1.3
+         */
+        void undoHistoryCleanChanged( bool clean );
 
         /**
          * This signal is emitted whenever an rendition action is triggered and the UI should process it.

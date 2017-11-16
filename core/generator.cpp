@@ -203,6 +203,11 @@ Document::OpenResult Generator::loadDocumentFromDataWithPassword( const QByteArr
     return loadDocumentFromData( fileData, pagesVector ) ? Document::OpenSuccess : Document::OpenError;
 }
 
+Generator::SwapBackingFileResult Generator::swapBackingFile( QString const &/*newFileName */, QVector<Okular::Page*> & /*newPagesVector*/ )
+{
+    return SwapBackingFileError;
+}
+
 bool Generator::closeDocument()
 {
     Q_D( Generator );

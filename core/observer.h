@@ -1,6 +1,9 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Enrico Ros <eros.kde@email.it>                  *
  *   Copyright (C) 2005 by Albert Astals Cid <aacid@kde.org>               *
+ *   Copyright (C) 2017    Klarälvdalens Datakonsult AB, a KDAB Group      *
+ *                         company, info@kdab.com. Work sponsored by the   *
+ *                         LiMux project of the city of Munich             *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -45,7 +48,7 @@ class OKULARCORE_EXPORT DocumentObserver
             TextSelection = 8,    ///< Text selection has been changed
             Annotations = 16,     ///< Annotations have been changed
             BoundingBox = 32,     ///< Bounding boxes have been changed
-            NeedSaveAs = 64       ///< Set along with Annotations when Save As is needed or annotation changes will be lost @since 0.15 (KDE 4.9)
+            NeedSaveAs = 64       ///< Set when "Save" is needed or annotation/form changes will be lost @since 0.15 (KDE 4.9) @deprecated
         };
 
         /**
@@ -53,7 +56,8 @@ class OKULARCORE_EXPORT DocumentObserver
          */
         enum SetupFlags {
             DocumentChanged = 1,    ///< The document is a new document.
-            NewLayoutForPages = 2   ///< All the pages have
+            NewLayoutForPages = 2,  ///< All the pages have
+            UrlChanged = 4          ///< The URL has changed @since 1.3
         };
 
         /**

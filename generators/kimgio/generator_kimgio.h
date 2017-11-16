@@ -1,5 +1,8 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Albert Astals Cid <aacid@kde.org>               *
+ *   Copyright (C) 2017    Klarälvdalens Datakonsult AB, a KDAB Group      *
+ *                         company, info@kdab.com. Work sponsored by the   *
+ *                         LiMux project of the city of Munich             *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -27,6 +30,7 @@ class KIMGIOGenerator : public Okular::Generator
         // [INHERITED] load a document and fill up the pagesVector
         bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector ) override;
         bool loadDocumentFromData( const QByteArray & fileData, QVector<Okular::Page*> & pagesVector ) override;
+        SwapBackingFileResult swapBackingFile( QString const &newFileName, QVector<Okular::Page*> & newPagesVector ) override;
 
         // [INHERITED] print document using already configured kprinter
         bool print( QPrinter& printer ) override;

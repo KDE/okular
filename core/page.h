@@ -1,5 +1,8 @@
 /***************************************************************************
  *   Copyright (C) 2004 by Enrico Ros <eros.kde@email.it>                  *
+ *   Copyright (C) 2017    Klarälvdalens Datakonsult AB, a KDAB Group      *
+ *                         company, info@kdab.com. Work sponsored by the   *
+ *                         LiMux project of the city of Munich             *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -250,6 +253,12 @@ class OKULARCORE_EXPORT Page
         QLinkedList< Annotation* > annotations() const;
 
         /**
+         * Returns the annotation with the given unique name.
+         * @since 1.3
+         */
+        Annotation * annotation( const QString & uniqueName ) const;
+
+        /**
          * Returns the @ref Action object which is associated with the given page @p action
          * or 0 if no page action is set.
          */
@@ -386,7 +395,7 @@ class OKULARCORE_EXPORT Page
         QList<Tile> tilesAt( const DocumentObserver *observer, const NormalizedRect &rect ) const;
 
     private:
-        PagePrivate* const d;
+        PagePrivate* d;
         /// @cond PRIVATE
         friend class PagePrivate;
         friend class Document;

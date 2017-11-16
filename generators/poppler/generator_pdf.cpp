@@ -516,6 +516,7 @@ PDFGenerator::PDFGenerator( QObject *parent, const QVariantList &args )
         setFeature( PrintToFile );
     setFeature( ReadRawData );
     setFeature( TiledRendering );
+    setFeature( SwapBackingFile );
 
     // You only need to do it once not for each of the documents but it is cheap enough
     // so doing it all the time won't hurt either
@@ -582,7 +583,7 @@ Okular::Document::OpenResult PDFGenerator::init(QVector<Okular::Page*> & pagesVe
     pagesVector.resize(pageCount);
     rectsGenerated.fill(false, pageCount);
 
-    annotationsHash.clear();
+    annotationsOnOpenHash.clear();
 
     loadPages(pagesVector, 0, false);
 
@@ -590,10 +591,20 @@ Okular::Document::OpenResult PDFGenerator::init(QVector<Okular::Page*> & pagesVe
     reparseConfig();
 
     // create annotation proxy
-    annotProxy = new PopplerAnnotationProxy( pdfdoc, userMutex() );
+    annotProxy = new PopplerAnnotationProxy( pdfdoc, userMutex(), &annotationsOnOpenHash );
 
     // the file has been loaded correctly
     return Okular::Document::OpenSuccess;
+}
+
+PDFGenerator::SwapBackingFileResult PDFGenerator::swapBackingFile( QString const &newFileName, QVector<Okular::Page*> & newPagesVector )
+{
+    doCloseDocument();
+    auto openResult = loadDocumentWithPassword(newFileName, newPagesVector, QString());
+    if (openResult != Okular::Document::OpenSuccess)
+        return SwapBackingFileError;
+
+    return SwapBackingFileReloadInternalData;
 }
 
 bool PDFGenerator::doCloseDocument()
@@ -1059,8 +1070,8 @@ void PDFGenerator::resolveMediaLinkReference( Okular::Action *action )
     if ( (action->actionType() != Okular::Action::Movie) && (action->actionType() != Okular::Action::Rendition) )
         return;
 
-    resolveMediaLinks<Poppler::LinkMovie, Okular::MovieAction, Poppler::MovieAnnotation, Okular::MovieAnnotation>( action, Okular::Annotation::AMovie, annotationsHash );
-    resolveMediaLinks<Poppler::LinkRendition, Okular::RenditionAction, Poppler::ScreenAnnotation, Okular::ScreenAnnotation>( action, Okular::Annotation::AScreen, annotationsHash );
+    resolveMediaLinks<Poppler::LinkMovie, Okular::MovieAction, Poppler::MovieAnnotation, Okular::MovieAnnotation>( action, Okular::Annotation::AMovie, annotationsOnOpenHash );
+    resolveMediaLinks<Poppler::LinkRendition, Okular::RenditionAction, Poppler::ScreenAnnotation, Okular::ScreenAnnotation>( action, Okular::Annotation::AScreen, annotationsOnOpenHash );
 }
 
 void PDFGenerator::resolveMediaLinkReferences( Okular::Page *page )
@@ -1617,7 +1628,7 @@ void PDFGenerator::addAnnotations( Poppler::Page * popplerPage, Okular::Page * p
             }
 
             if ( !doDelete )
-                annotationsHash.insert( newann, a );
+                annotationsOnOpenHash.insert( newann, a );
         }
         if ( doDelete )
             delete a;
@@ -1770,6 +1781,18 @@ bool PDFGenerator::save( const QString &fileName, SaveOptions options, QString *
         pdfConv->setPDFOptions( pdfConv->pdfOptions() | Poppler::PDFConverter::WithChanges );
 
     QMutexLocker locker( userMutex() );
+
+    QHashIterator<Okular::Annotation*, Poppler::Annotation*> it( annotationsOnOpenHash );
+    while ( it.hasNext() )
+    {
+        it.next();
+
+        if ( it.value()->uniqueName().isEmpty() )
+        {
+            it.value()->setUniqueName( it.key()->uniqueName() );
+        }
+    }
+
     bool success = pdfConv->convert();
     if (!success)
     {

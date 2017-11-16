@@ -1,6 +1,9 @@
 /***************************************************************************
  *   Copyright (C) 2004 by Enrico Ros <eros.kde@email.it>                  *
  *   Copyright (C) 2007 by Pino Toscano <pino@kde.org>                     *
+ *   Copyright (C) 2017    Klarälvdalens Datakonsult AB, a KDAB Group      *
+ *                         company, info@kdab.com. Work sponsored by the   *
+ *                         LiMux project of the city of Munich             *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -48,7 +51,11 @@ enum PageItem
 
     /* If set along with AnnotationPageItems, tells saveLocalContents to save
      * the original annotations (if any) instead of the modified ones */
-    OriginalAnnotationPageItems = 0x100
+    OriginalAnnotationPageItems = 0x100,
+
+    /* If set along with FormFieldPageItems, tells saveLocalContents to save
+     * the original form contents (if any) instead of the modified one */
+    OriginalFormFieldPageItems = 0x200
 };
 Q_DECLARE_FLAGS(PageItems, PageItem)
 
@@ -66,7 +73,7 @@ class PagePrivate
         /**
          * Loads the local contents (e.g. annotations) of the page.
          */
-        void restoreLocalContents( const QDomNode & pageNode );
+        bool restoreLocalContents( const QDomNode & pageNode );
 
         /**
          * Saves the local contents (e.g. annotations) of the page.
@@ -116,6 +123,17 @@ class PagePrivate
          */
         void setTilesManager( const DocumentObserver *observer, TilesManager *tm );
 
+        /**
+         * Moves contents that are generated from oldPage to this. And clears them from page
+         * so it can be deleted fine.
+         */
+        void adoptGeneratedContents( PagePrivate *oldPage );
+
+        /*
+         * Tries to find an equivalent form field to oldField by looking into the rect, type and name
+         */
+        OKULARCORE_EXPORT static FormField *findEquivalentForm( const Page *p, FormField *oldField );
+
         class PixmapObject
         {
             public:
@@ -144,6 +162,7 @@ class PagePrivate
 
         bool m_isBoundingBoxKnown : 1;
         QDomDocument restoredLocalAnnotationList; // <annotationList>...</annotationList>
+        QDomDocument restoredFormFieldList; // <forms>...</forms>
 };
 
 }

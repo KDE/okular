@@ -1,6 +1,9 @@
 /***************************************************************************
  *   Copyright (C) 2006 by Chu Xiaodong <xiaodongchu@gmail.com>            *
  *   Copyright (C) 2006 by Pino Toscano <pino@kde.org>                     *
+ *   Copyright (C) 2017    Klarälvdalens Datakonsult AB, a KDAB Group      *
+ *                         company, info@kdab.com. Work sponsored by the   *
+ *                         LiMux project of the city of Munich             *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -241,6 +244,16 @@ AnnotWindow::~AnnotWindow()
     delete m_latexRenderer;
 }
 
+Okular::Annotation * AnnotWindow::annotation() const
+{
+    return m_annot;
+}
+
+void AnnotWindow::updateAnnotation( Okular::Annotation * a )
+{
+    m_annot = a;
+}
+
 void AnnotWindow::reloadInfo()
 {
     const QColor newcolor = m_annot->style().color().isValid() ? m_annot->style().color() : Qt::yellow;
@@ -254,6 +267,11 @@ void AnnotWindow::reloadInfo()
     }
     m_title->setAuthor( m_annot->author() );
     m_title->setDate( m_annot->modificationDate() );
+}
+
+int AnnotWindow::pageNumber() const
+{
+    return m_page;
 }
 
 void AnnotWindow::showEvent( QShowEvent * event )

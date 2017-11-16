@@ -1,6 +1,9 @@
 /***************************************************************************
  *   Copyright (C) 2004-2008 by Albert Astals Cid <aacid@kde.org>          *
  *   Copyright (C) 2004 by Enrico Ros <eros.kde@email.it>                  *
+ *   Copyright (C) 2017    Klarälvdalens Datakonsult AB, a KDAB Group      *
+ *                         company, info@kdab.com. Work sponsored by the   *
+ *                         LiMux project of the city of Munich             *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -99,6 +102,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         Okular::AnnotationProxy* annotationProxy() const override;
 
     protected:
+        SwapBackingFileResult swapBackingFile( QString const &newFileName, QVector<Okular::Page*> & newPagesVector ) override;
         bool doCloseDocument() override;
         Okular::TextPage* textPage( Okular::Page *page ) override;
 
@@ -136,7 +140,9 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         mutable QList<Okular::EmbeddedFile*> docEmbeddedFiles;
         int nextFontPage;
         PopplerAnnotationProxy *annotProxy;
-        QHash<Okular::Annotation*, Poppler::Annotation*> annotationsHash;
+        // the hash below only contains annotations that were present on the file at open time
+        // this is enough for what we use it for
+        QHash<Okular::Annotation*, Poppler::Annotation*> annotationsOnOpenHash;
 
         QBitArray rectsGenerated;
 

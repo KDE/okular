@@ -1,5 +1,8 @@
 /***************************************************************************
  *   Copyright (C) 2004-2005 by Enrico Ros <eros.kde@email.it>             *
+ *   Copyright (C) 2017    Klarälvdalens Datakonsult AB, a KDAB Group      *
+ *                         company, info@kdab.com. Work sponsored by the   *
+ *                         LiMux project of the city of Munich             *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -51,9 +54,7 @@ PageViewItem::PageViewItem( const Okular::Page * page )
 
 PageViewItem::~PageViewItem()
 {
-    QHash<int, FormWidgetIface*>::iterator it = m_formWidgets.begin(), itEnd = m_formWidgets.end();
-    for ( ; it != itEnd; ++it )
-        delete *it;
+    qDeleteAll( m_formWidgets );
     qDeleteAll( m_videoWidgets );
 }
 
@@ -122,7 +123,7 @@ bool PageViewItem::isVisible() const
     return m_visible;
 }
 
-QHash<int, FormWidgetIface*>& PageViewItem::formWidgets()
+QSet<FormWidgetIface*>& PageViewItem::formWidgets()
 {
     return m_formWidgets;
 }
@@ -163,7 +164,7 @@ void PageViewItem::moveTo( int x, int y )
     m_croppedGeometry.moveTop( y );
     m_uncroppedGeometry.moveLeft( qRound( x - m_crop.left * m_uncroppedGeometry.width() ) );
     m_uncroppedGeometry.moveTop( qRound( y - m_crop.top * m_uncroppedGeometry.height() ) );
-    QHash<int, FormWidgetIface*>::iterator it = m_formWidgets.begin(), itEnd = m_formWidgets.end();
+    QSet<FormWidgetIface*>::iterator it = m_formWidgets.begin(), itEnd = m_formWidgets.end();
     for ( ; it != itEnd; ++it )
     {
         Okular::NormalizedRect r = (*it)->rect();
@@ -200,7 +201,7 @@ bool PageViewItem::setFormWidgetsVisible( bool visible )
         return false;
 
     bool somehadfocus = false;
-    QHash<int, FormWidgetIface*>::iterator it = m_formWidgets.begin(), itEnd = m_formWidgets.end();
+    QSet<FormWidgetIface*>::iterator it = m_formWidgets.begin(), itEnd = m_formWidgets.end();
     for ( ; it != itEnd; ++it )
     {
         bool hadfocus = (*it)->setVisibility( visible && (*it)->formField()->isVisible() );

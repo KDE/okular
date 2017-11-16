@@ -74,6 +74,15 @@ struct DoContinueDirectionMatchSearchStruct
     int searchID;
 };
 
+enum LoadDocumentInfoFlag
+{
+    LoadNone = 0,
+    LoadPageInfo = 1,    // Load annotations and forms
+    LoadGeneralInfo = 2, // History, rotation, ...
+    LoadAllInfo = 0xff
+};
+Q_DECLARE_FLAGS(LoadDocumentInfoFlags, LoadDocumentInfoFlag)
+
 class DocumentPrivate
 {
     public:
@@ -99,12 +108,14 @@ class DocumentPrivate
             m_fontsCached( false ),
             m_annotationEditingEnabled ( true ),
             m_annotationBeingModified( false ),
+            m_docdataMigrationNeeded( false ),
             m_synctex_scanner( nullptr )
         {
             calculateMaxTextPages();
         }
 
         // private methods
+        bool updateMetadataXmlNameAndDocSize();
         QString pagesSizeString() const;
         QString namePaperSize(double inchesWidth, double inchesHeight) const;
         QString localizedSize(const QSizeF &size) const;
@@ -115,8 +126,8 @@ class DocumentPrivate
         void calculateMaxTextPages();
         qulonglong getTotalMemory();
         qulonglong getFreeMemory( qulonglong *freeSwap = nullptr );
-        void loadDocumentInfo();
-        void loadDocumentInfo( QFile &infoFile );
+        bool loadDocumentInfo( LoadDocumentInfoFlags loadWhat );
+        bool loadDocumentInfo( QFile &infoFile, LoadDocumentInfoFlags loadWhat );
         void loadViewsInfo( View *view, const QDomElement &e );
         void saveViewsInfo( View *view, QDomElement &e ) const;
         QUrl giveAbsoluteUrl( const QString & fileName ) const;
@@ -130,13 +141,14 @@ class DocumentPrivate
         ConfigInterface* generatorConfig( GeneratorInfo& info );
         SaveInterface* generatorSave( GeneratorInfo& info );
         Document::OpenResult openDocumentInternal( const KPluginMetaData& offer, bool isstdin, const QString& docFile, const QByteArray& filedata, const QString& password );
+        static ArchiveData *unpackDocumentArchive( const QString &archivePath );
         bool savePageDocumentInfo( QTemporaryFile *infoFile, int what ) const;
         DocumentViewport nextDocumentViewport() const;
         void notifyAnnotationChanges( int page );
+        void notifyFormChanges( int page );
         bool canAddAnnotationsNatively() const;
         bool canModifyExternalAnnotations() const;
         bool canRemoveExternalAnnotations() const;
-        void warnLimitedAnnotSupport();
         OKULARCORE_EXPORT static QString docDataFileName(const QUrl &url, qint64 document_size);
 
         // Methods that implement functionality needed by undo commands
@@ -273,12 +285,18 @@ class DocumentPrivate
         QSet< View * > m_views;
 
         bool m_annotationEditingEnabled;
-        bool m_annotationsNeedSaveAs;
         bool m_annotationBeingModified; // is an annotation currently being moved or resized?
-        bool m_showWarningLimitedAnnotSupport;
+        bool m_metadataLoadingCompleted;
 
         QUndoStack *m_undoStack;
         QDomNode m_prevPropsOfAnnotBeingModified;
+
+        // Since 0.21, we no longer support saving annotations and form data in
+        // the docdata/ directory and we ask the user to migrate them to an
+        // external file as soon as possible, otherwise the document will be
+        // shown in read-only mode. This flag is set if the docdata/ XML file
+        // for the current document contains any annotation or form.
+        bool m_docdataMigrationNeeded;
 
         synctex_scanner_p m_synctex_scanner;
 

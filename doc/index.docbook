@@ -438,9 +438,6 @@ Context menu actions like Rename Bookmarks etc.)
 			<title>Annotations</title>
 			<para>
 				&okular; allows you to review and annotate your documents.
-				Annotations created in &okular; are automatically saved in the internal local data folder
-				for each user.
-				&okular; does not implicitly change any document it opens.
 			</para>
 			<screenshot>
 			<screeninfo>&okular;'s Annotations</screeninfo>
@@ -460,22 +457,11 @@ Context menu actions like Rename Bookmarks etc.)
 			<para>Using the context menu either in the <guilabel>Reviews</guilabel> view of the navigation panel or in the main window you can open a <guilabel>Pop up Note</guilabel> for any kind of annotation and add or edit comments.</para>
 			<para>Annotations are not only limited to &PDF; files, they can be used for any format &okular; supports.</para>
 			<para>
-				Since &kde; 4.2, &okular; has the "document archiving" feature. This is an &okular;-specific format for carrying the document plus various metadata related to it (currently only annotations). You can save a "document archive" from the open document by choosing <menuchoice><guimenu>File</guimenu><guisubmenu>Export As</guisubmenu><guimenuitem>Document Archive</guimenuitem></menuchoice>. To open an &okular; document archive, just open it with &okular; as it would be &eg; a &PDF; document.
+                &okular; has the "document archiving" feature. This is an &okular;-specific format for carrying the document plus various metadata related to it (currently only annotations). You can save a "document archive" from the open document by choosing <menuchoice><guimenu>File</guimenu><guisubmenu>Save As</guisubmenu></menuchoice> and selecting <guilabel>Okular document archive</guilabel> in the <guilabel>Filter</guilabel> selector. To open an &okular; document archive, just open it with &okular; as it would be &eg; a &PDF; document.
 			</para>
 			<para>
-			  Since &okular; 0.15 you can <emphasis>also</emphasis> save annotations directly into &PDF; files. This feature is only available if &okular; has been built with version 0.20 or later of <ulink url="http://poppler.freedesktop.org/">Poppler rendering library</ulink>. You can use <menuchoice><guimenu>File</guimenu> <guimenuitem>Save As...</guimenuitem></menuchoice> to save the copy of &PDF; file with annotations.
+			  You can <emphasis>also</emphasis> save annotations directly into &PDF; files. You can use <menuchoice><guimenu>File</guimenu> <guimenuitem>Save</guimenuitem></menuchoice> to save it over the current file or <menuchoice><guimenu>File</guimenu> <guimenuitem>Save As...</guimenuitem></menuchoice> to save it to a new file.
 			</para>
-				<note>
-					<para>
-						It is not possible to save annotations into &PDF; file if original file was encrypted and &okular; uses Poppler libraries of version which is lower than 0.22.
-					</para>
-				</note>
-				<note>
-				  <para>
-				    If you open a &PDF; with existing annotations, your annotation changes are not automatically saved in the internal local data folder, and you need to save the modified document (using <menuchoice><guimenu>File</guimenu><guimenuitem>Save As...</guimenuitem></menuchoice>) before closing it. Should you forget to do this &okular; will show confirmation window that allows you to save the document.
-				  </para>
-				</note>
-
 				<note>
 					<para>
 						Due to DRM limitations (typically with &PDF; documents), adding, editing some properties
@@ -488,7 +474,7 @@ Context menu actions like Rename Bookmarks etc.)
 				  </para>
 				</note>
 			<para>
-			  Since &okular; 0.17 you can configure the default properties and appearance of each annotating tool. Please refer to the <link linkend="configannotations">corresponding section in this documentation</link>.
+			  You can configure the default properties and appearance of each annotating tool. Please refer to the <link linkend="configannotations">corresponding section in this documentation</link>.
 			</para>
 			<sect2 id="annotations-add">
 				<title>Adding annotations</title>
@@ -954,7 +940,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</term>
 					<listitem>
 						<para>
-							<action>Open</action> a supported file or &okular; archive. If there is already an opened file it will be closed. For more information, see the section about <link linkend="opening">Opening Files</link>.
+							<action>Open</action> a supported file or &okular; document archive. If there is already an opened file it will be closed. For more information, see the section about <link linkend="opening">Opening Files</link>.
 						</para>
 					</listitem>
 				</varlistentry>
@@ -1010,31 +996,31 @@ Context menu actions like Rename Bookmarks etc.)
 							<keycombo action="simul">&Ctrl;<keycap>S</keycap></keycombo>
 							</shortcut>
 							<guimenu>File</guimenu>
-							<guimenuitem>Save As...</guimenuitem>
+							<guimenuitem>Save</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
-					  <para><action>Saves</action> the document under a new name including all the changes (annotations, form contents, &etc;), provided the document backend supports saving changes. With the &PDF; backend it is possible to save the document with the changed values of the form fields.<!--Only useful for pdf? what happens with other formats/backends?--> It can be possible (provided that the data were not secured using DRM) to save annotations with &PDF; files.</para>
-                                        <note>
-                                        <para>
-                                            Note that, due to the way this is implemented, even if there are no changes to the file, the new file need not to be an exact bit-for-bit copy of the original file (&eg; can have a different SHA-1 hash, &etc;).
-                                        </para>
-                                        </note>
+					  <para><action>Saves</action> the document including all the changes (annotations, form contents, &etc;), provided the document backend supports saving those changes. If the backend does not support saving the changes, the user will be given the option to either discard or to save them together with the document in an &okular; document archive.</para>
 					</listitem>
 				</varlistentry>
 
-				<varlistentry>
+                <varlistentry>
 					<term>
 						<menuchoice>
 							<shortcut>
 							<keycombo action="simul">&Ctrl;&Shift;<keycap>S</keycap></keycombo>
 							</shortcut>
 							<guimenu>File</guimenu>
-							<guimenuitem>Save Copy As...</guimenuitem>
+							<guimenuitem>Save As...</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
-						<para><action>Saves</action> a copy of the original document under a new name (completely bypassing the document backend). The saved document will be a bit-for-bit copy of the original.</para>
+					  <para><action>Saves</action> the document under a new name including all the changes (annotations, form contents, &etc;), provided the document backend supports saving changes. If the backend does not support saving the changes, the user will be given the option to either discard or to save them together with the document in an &okular; document archive.</para>
+                                        <note>
+                                        <para>
+                                            Note that, due to the way this is implemented, even if there are no changes to the file, the new file need not to be an exact bit-for-bit copy of the original file (&eg; can have a different SHA-1 hash, &etc;).
+                                        </para>
+                                        </note>
 					</listitem>
 				</varlistentry>
 

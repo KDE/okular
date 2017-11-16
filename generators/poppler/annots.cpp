@@ -1,6 +1,9 @@
 /***************************************************************************
  *   Copyright (C) 2008 by Pino Toscano <pino@kde.org>                     *
  *   Copyright (C) 2012 by Guillermo A. Amaral B. <gamaral@kde.org>        *
+ *   Copyright (C) 2017    Klarälvdalens Datakonsult AB, a KDAB Group      *
+ *                         company, info@kdab.com. Work sponsored by the   *
+ *                         LiMux project of the city of Munich             *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -62,8 +65,8 @@ static int maskExportedFlags(int flags)
 }
 
 //BEGIN PopplerAnnotationProxy implementation
-PopplerAnnotationProxy::PopplerAnnotationProxy( Poppler::Document *doc, QMutex *userMutex )
-    : ppl_doc ( doc ), mutex ( userMutex )
+PopplerAnnotationProxy::PopplerAnnotationProxy( Poppler::Document *doc, QMutex *userMutex, QHash<Okular::Annotation*, Poppler::Annotation*> *annotsOnOpenHash )
+    : ppl_doc ( doc ), mutex ( userMutex ), annotationsOnOpenHash( annotsOnOpenHash )
 {
 }
 
@@ -254,6 +257,7 @@ void PopplerAnnotationProxy::notifyRemoval( Okular::Annotation *okl_ann, int pag
     QMutexLocker ml(mutex);
 
     Poppler::Page *ppl_page = ppl_doc->page( page );
+    annotationsOnOpenHash->remove( okl_ann );
     ppl_page->removeAnnotation( ppl_ann ); // Also destroys ppl_ann
     delete ppl_page;
 

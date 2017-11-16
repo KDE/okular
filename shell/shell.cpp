@@ -10,6 +10,9 @@
  *   Copyright (C) 2003 by Malcolm Hunter <malcolm.hunter@gmx.co.uk>       *
  *   Copyright (C) 2004 by Dominique Devriese <devriese@kde.org>           *
  *   Copyright (C) 2004 by Dirk Mueller <mueller@kde.org>                  *
+ *   Copyright (C) 2017    Klarälvdalens Datakonsult AB, a KDAB Group      *
+ *                         company, info@kdab.com. Work sponsored by the   *
+ *                         LiMux project of the city of Munich             *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -265,8 +268,8 @@ void Shell::openUrl( const QUrl & url, const QString &serializedOptions )
                 else
                 {
                     Shell* newShell = new Shell( serializedOptions );
-                    newShell->openUrl( url, serializedOptions );
                     newShell->show();
+                    newShell->openUrl( url, serializedOptions );
                 }
             }
         }
@@ -493,6 +496,28 @@ void Shell::setFullScreen( bool useFullScreen )
         setWindowState( windowState() | Qt::WindowFullScreen ); // set
     else
         setWindowState( windowState() & ~Qt::WindowFullScreen ); // reset
+}
+
+void Shell::setCaption( const QString &caption )
+{
+    bool modified = false;
+
+    const int activeTab = m_tabWidget->currentIndex();
+    if ( activeTab >= 0 && activeTab < m_tabs.size() )
+    {
+        KParts::ReadWritePart* const activePart = m_tabs[activeTab].part;
+        QString tabCaption = activePart->url().fileName();
+        if ( activePart->isModified() ) {
+            modified = true;
+            if ( !tabCaption.isEmpty() ) {
+                tabCaption.append( QStringLiteral( " *" ) );
+            }
+        }
+
+        m_tabWidget->setTabText( activeTab, tabCaption );
+    }
+
+    setCaption( caption, modified );
 }
 
 void Shell::showEvent(QShowEvent *e)

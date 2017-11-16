@@ -2,6 +2,9 @@
  *   Copyright (C) 2017 by Tobias Deiminger <haxtibal@t-online.de>         *
  *   Copyright (C) 2004-2005 by Enrico Ros <eros.kde@email.it>             *
  *   Copyright (C) 2004-2006 by Albert Astals Cid <aacid@kde.org>          *
+ *   Copyright (C) 2017    Klarälvdalens Datakonsult AB, a KDAB Group      *
+ *                         company, info@kdab.com. Work sponsored by the   *
+ *                         LiMux project of the city of Munich             *
  *                                                                         *
  *   With portions of code from kpdf/kpdf_pagewidget.cc by:                *
  *     Copyright (C) 2002 by Wilco Greven <greven@kde.org>                 *

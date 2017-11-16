@@ -6,6 +6,9 @@
  *   Copyright (C) 2003 by Laurent Montel <montel@kde.org>                 *
  *   Copyright (C) 2004 by Dominique Devriese <devriese@kde.org>           *
  *   Copyright (C) 2004-2007 by Albert Astals Cid <aacid@kde.org>          *
+ *   Copyright (C) 2017    Klarälvdalens Datakonsult AB, a KDAB Group      *
+ *                         company, info@kdab.com. Work sponsored by the   *
+ *                         LiMux project of the city of Munich             *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *

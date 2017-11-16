@@ -2,6 +2,9 @@
  *   Copyright (C) 2005 by Albert Astals Cid <aacid@kde.org>               *
  *   Copyright (C) 2006-2007 by Pino Toscano <pino@kde.org>                *
  *   Copyright (C) 2006-2007 by Tobias Koenig <tokoe@kde.org>              *
+ *   Copyright (C) 2017      Klarälvdalens Datakonsult AB, a KDAB Group    *
+ *                           company, info@kdab.com. Work sponsored by the *
+ *                           LiMux project of the city of Munich           *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *

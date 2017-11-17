@@ -6,6 +6,9 @@
  *   Copyright (C) 2003 by Laurent Montel <montel@kde.org>                 *
  *   Copyright (C) 2004 by Dominique Devriese <devriese@kde.org>           *
  *   Copyright (C) 2004-2007 by Albert Astals Cid <aacid@kde.org>          *
+ *   Copyright (C) 2017    Klarälvdalens Datakonsult AB, a KDAB Group      *
+ *                         company, info@kdab.com. Work sponsored by the   *
+ *                         LiMux project of the city of Munich             *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -179,7 +182,6 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         void guiActivateEvent(KParts::GUIActivateEvent *event) override;
         void displayInfoMessage( const QString &message, KMessageWidget::MessageType messageType = KMessageWidget::Information, int duration = -1 );
     public:
-        bool saveFile() override;
         bool queryClose() override;
         bool closeUrl() override;
         bool closeUrl(bool promptToSave) override;
@@ -202,8 +204,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         void slotNextBookmark();
         void slotFindNext();
         void slotFindPrev();
-        void slotSaveFileAs();
-        void slotSaveCopyAs();
+        bool slotSaveFileAs(bool showOkularArchiveAsDefaultFormat = false);
         void slotGetNewStuff();
         void slotNewConfig();
         void slotShowMenu(const Okular::Page *page, const QPoint &point);
@@ -234,10 +235,11 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         void enableLayers( bool enable );
 
     public Q_SLOTS:
+        bool saveFile() override;
         // connected to Shell action (and browserExtension), not local one
         void slotPrint();
         void slotFileDirty( const QString& );
-        void slotDoFileDirty();
+        bool slotAttemptReload( bool oneShot = false, const QUrl &newUrl = QUrl() );
         void psTransformEnded(int, QProcess::ExitStatus);
         KConfigDialog * slotGeneratorPreferences();
 
@@ -252,6 +254,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         void showMenu(const Okular::Page *page, const QPoint &point, const QString &bookmarkTitle = QString(), const Okular::DocumentViewport &vp = DocumentViewport());
         bool eventFilter(QObject * watched, QEvent * event) override;
         Document::OpenResult doOpenFile(const QMimeType &mime, const QString &fileNameToOpen, bool *isCompressedFile);
+        bool openUrl( const QUrl &url, bool swapInsteadOfOpening );
 
         void setupViewerActions();
         void setViewerShortcuts();
@@ -266,6 +269,19 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         void slotRenameBookmark( const DocumentViewport &viewport );
         void slotRemoveBookmark( const DocumentViewport &viewport );
         void resetStartArguments();
+        void checkNativeSaveDataLoss(bool *out_wontSaveForms, bool *out_wontSaveAnnotations) const;
+
+        enum SaveAsFlag
+        {
+            NoSaveAsFlags = 0,         ///< No options
+            SaveAsOkularArchive = 1    ///< Save as Okular Archive (.okular) instead of document's native format
+        };
+        Q_DECLARE_FLAGS( SaveAsFlags, SaveAsFlag )
+
+        bool saveAs( const QUrl & saveUrl, SaveAsFlags flags );
+
+        void setFileToWatch( const QString &filePath );
+        void unsetFileToWatch();
 
 #if PURPOSE_FOUND
         void slotShareActionFinished(const QJsonObject &output, int error, const QString &message);
@@ -279,11 +295,14 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         Okular::Document * m_document;
         QString m_temporaryLocalFile;
         bool isDocumentArchive;
+        bool m_documentOpenWithPassword;
+        bool m_swapInsteadOfOpening; // if set, the next open operation will replace the backing file (used when reloading just saved files)
 
         // main widgets
         Sidebar *m_sidebar;
         SearchWidget *m_searchWidget;
         FindBar * m_findBar;
+        KMessageWidget * m_migrationMessage;
         KMessageWidget * m_topMessage;
         KMessageWidget * m_formsMessage;
         KMessageWidget * m_infoMessage;
@@ -303,6 +322,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
 
         // document watcher (and reloader) variables
         KDirWatch *m_watcher;
+        QString m_watchedFilePath, m_watchedFileSymlinkTarget;
         QTimer *m_dirtyHandler;
         QUrl m_oldUrl;
         Okular::DocumentViewport m_viewportDirty;
@@ -334,6 +354,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         QAction *m_find;
         QAction *m_findNext;
         QAction *m_findPrev;
+        QAction *m_save;
         QAction *m_saveAs;
         QAction *m_saveCopyAs;
         QAction *m_printPreview;

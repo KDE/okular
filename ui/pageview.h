@@ -1,6 +1,9 @@
 /***************************************************************************
  *   Copyright (C) 2004 by Enrico Ros <eros.kde@email.it>                  *
  *   Copyright (C) 2004 by Albert Astals Cid <aacid@kde.org>               *
+ *   Copyright (C) 2017    Klarälvdalens Datakonsult AB, a KDAB Group      *
+ *                         company, info@kdab.com. Work sponsored by the   *
+ *                         LiMux project of the city of Munich             *
  *                                                                         *
  *   With portions of code from kpdf/kpdf_pagewidget.h by:                 *
  *     Copyright (C) 2002 by Wilco Greven <greven@kde.org>                 *
@@ -198,6 +201,8 @@ Q_OBJECT
 
         // handle link clicked
         bool mouseReleaseOverLink( const Okular::ObjectRect * rect ) const;
+
+        void createAnnotationsVideoWidgets(PageViewItem *item, const QLinkedList< Okular::Annotation * > &annotations);
 
         // don't want to expose classes in here
         class PageViewPrivate * d;

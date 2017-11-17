@@ -99,6 +99,10 @@ protected:
   void readSettings();
   void writeSettings();
   void setFullScreen( bool );
+
+  using KParts::MainWindow::setCaption;
+  void setCaption( const QString &caption ) override;
+
   bool queryClose() override;
 
   void showEvent(QShowEvent *event) override;

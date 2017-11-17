@@ -139,14 +139,17 @@ Page::Page( uint page, double w, double h, Rotation o )
 
 Page::~Page()
 {
-    deletePixmaps();
-    deleteRects();
-    d->deleteHighlights();
-    deleteAnnotations();
-    d->deleteTextSelections();
-    deleteSourceReferences();
+    if (d)
+    {
+        deletePixmaps();
+        deleteRects();
+        d->deleteHighlights();
+        deleteAnnotations();
+        d->deleteTextSelections();
+        deleteSourceReferences();
 
-    delete d;
+        delete d;
+    }
 }
 
 int Page::number() const
@@ -496,6 +499,16 @@ QLinkedList< Annotation* > Page::annotations() const
     return m_annotations;
 }
 
+Annotation * Page::annotation( const QString & uniqueName ) const
+{
+    foreach(Annotation *a, m_annotations)
+    {
+        if ( a->uniqueName() == uniqueName )
+            return a;
+    }
+    return nullptr;
+}
+
 const Action * Page::pageAction( PageAction action ) const
 {
     switch ( action )
@@ -801,8 +814,10 @@ void Page::deleteAnnotations()
     m_annotations.clear();
 }
 
-void PagePrivate::restoreLocalContents( const QDomNode & pageNode )
+bool PagePrivate::restoreLocalContents( const QDomNode & pageNode )
 {
+    bool loadedAnything = false; // set if something actually gets loaded
+
     // iterate over all chilren (annotationList, ...)
     QDomNode childNode = pageNode.firstChild();
     while ( childNode.isElement() )
@@ -837,6 +852,7 @@ void PagePrivate::restoreLocalContents( const QDomNode & pageNode )
                 {
                     m_doc->performAddPageAnnotation(m_number, annotation);
                     qCDebug(OkularCoreDebug) << "restored annot:" << annotation->uniqueName();
+                    loadedAnything = true;
                 }
                 else
                     qCWarning(OkularCoreDebug).nospace() << "page (" << m_number << "): can't restore an annotation from XML.";
@@ -848,6 +864,10 @@ void PagePrivate::restoreLocalContents( const QDomNode & pageNode )
         // parse formList child element
         else if ( childElement.tagName() == QLatin1String("forms") )
         {
+            // Clone forms as root node in restoredFormFieldList
+            const QDomNode clonedNode = restoredFormFieldList.importNode( childElement, true );
+            restoredFormFieldList.appendChild( clonedNode );
+
             if ( formfields.isEmpty() )
                 continue;
 
@@ -880,9 +900,12 @@ void PagePrivate::restoreLocalContents( const QDomNode & pageNode )
 
                 QString value = formElement.attribute( QStringLiteral("value") );
                 (*wantedIt)->d_ptr->setValue( value );
+                loadedAnything = true;
             }
         }
     }
+
+    return loadedAnything;
 }
 
 void PagePrivate::saveLocalContents( QDomNode & parentNode, QDomDocument & document, PageItems what ) const
@@ -943,7 +966,17 @@ void PagePrivate::saveLocalContents( QDomNode & parentNode, QDomDocument & docum
     }
 
     // add forms info if has got any
-    if ( ( what & FormFieldPageItems ) && !formfields.isEmpty() )
+    if ( ( what & FormFieldPageItems ) && ( what & OriginalFormFieldPageItems ) )
+    {
+        const QDomElement savedDocRoot = restoredFormFieldList.documentElement();
+        if ( !savedDocRoot.isNull() )
+        {
+            // Import and append node in target document
+            const QDomNode importedNode = document.importNode( savedDocRoot, true );
+            pageElement.appendChild( importedNode );
+        }
+    }
+    else if ( ( what & FormFieldPageItems ) && !formfields.isEmpty() )
     {
         // create the formList
         QDomElement formListElement = document.createElement( QStringLiteral("forms") );
@@ -1031,4 +1064,60 @@ void PagePrivate::setTilesManager( const DocumentObserver *observer, TilesManage
     delete old;
 
     m_tilesManagers.insert(observer, tm);
+}
+
+void PagePrivate::adoptGeneratedContents( PagePrivate *oldPage )
+{
+    rotateAt( oldPage->m_rotation );
+
+    m_pixmaps = oldPage->m_pixmaps;
+    oldPage->m_pixmaps.clear();
+
+    m_tilesManagers = oldPage->m_tilesManagers;
+    oldPage->m_tilesManagers.clear();
+
+    m_boundingBox = oldPage->m_boundingBox;
+    m_isBoundingBoxKnown = oldPage->m_isBoundingBoxKnown;
+    m_text = oldPage->m_text;
+    oldPage->m_text = nullptr;
+
+    m_textSelections = oldPage->m_textSelections;
+    oldPage->m_textSelections = nullptr;
+
+    restoredLocalAnnotationList = oldPage->restoredLocalAnnotationList;
+    restoredFormFieldList = oldPage->restoredFormFieldList;
+}
+
+FormField *PagePrivate::findEquivalentForm( const Page *p, FormField *oldField )
+{
+    // given how id is not very good of id (at least for pdf) we do a few passes
+    // same rect, type and id
+    foreach(FormField *f, p->d->formfields)
+    {
+        if (f->rect() == oldField->rect() && f->type() == oldField->type() && f->id() == oldField->id())
+            return f;
+    }
+    // same rect and type
+    foreach(FormField *f, p->d->formfields)
+    {
+        if (f->rect() == oldField->rect() && f->type() == oldField->type())
+            return f;
+    }
+    // fuzzy rect, same type and id
+    foreach(FormField *f, p->d->formfields)
+    {
+        if (f->type() == oldField->type() && f->id() == oldField->id() && qFuzzyCompare(f->rect().left, oldField->rect().left) && qFuzzyCompare(f->rect().top, oldField->rect().top) && qFuzzyCompare(f->rect().right, oldField->rect().right) && qFuzzyCompare(f->rect().bottom, oldField->rect().bottom))
+        {
+            return f;
+        }
+    }
+    // fuzzy rect and same type
+    foreach(FormField *f, p->d->formfields)
+    {
+        if (f->type() == oldField->type() && qFuzzyCompare(f->rect().left, oldField->rect().left) && qFuzzyCompare(f->rect().top, oldField->rect().top) && qFuzzyCompare(f->rect().right, oldField->rect().right) && qFuzzyCompare(f->rect().bottom, oldField->rect().bottom))
+        {
+            return f;
+        }
+    }
+    return nullptr;
 }

@@ -12,6 +12,7 @@
             }
         ],
         "Copyright": "© 2017 Julian Wolff",
+        "Copyright[ru]": "© Julian Wolff, 2017",
         "Copyright[sr@ijekavian]": "© 2017, Јулијан Волф",
         "Copyright[sr@ijekavianlatin]": "© 2017, Julijan Volf",
         "Copyright[sr@latin]": "© 2017, Julijan Volf",
@@ -38,6 +39,7 @@
         "Name[nn]": "Markdown-motor",
         "Name[pl]": "Silnik Markdown",
         "Name[pt]": "Infra-Estrutura de Markdown",
+        "Name[ru]": "Модуль поддержки формата Markdown",
         "Name[sk]": "Markdown backend",
         "Name[sr@ijekavian]": "Позадина за маркдаун",
         "Name[sr@ijekavianlatin]": "Pozadina za Markdown",

@@ -625,7 +625,7 @@ class TextSelectorEngine : public AnnotatorEngine
             }
 
             text = item()->page()->text(selection, Okular::TextPage::CentralPixelTextAreaInclusionBehaviour);
-            text.remove(QChar('\n'));
+            text.replace(QChar('\n'), QChar(' '));
 
  
             delete selection;

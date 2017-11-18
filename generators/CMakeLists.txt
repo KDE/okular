@@ -42,8 +42,8 @@ set_package_properties("KF5KHtml" PROPERTIES
 
 find_package(LibZip)
 set_package_properties("LibZip" PROPERTIES
-        DESCRIPTION  "A library for dealing with Microsoft ITSS/CHM format files"
-        URL "http://www.jedrea.com/chmlib"
+        DESCRIPTION  "A library for reading, creating, and modifying zip archives"
+        URL "https://libzip.org/"
         TYPE RECOMMENDED
         PURPOSE "Support CHM files in okular.")
 

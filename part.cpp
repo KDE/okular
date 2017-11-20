@@ -1366,6 +1366,7 @@ Document::OpenResult Part::doOpenFile( const QMimeType &mimeA, const QString &fi
                 return Document::OpenError;
         }
 
+        m_fileLastModified = QFileInfo( fileNameToOpen ).lastModified();
         return Document::OpenSuccess;
     }
 
@@ -1459,6 +1460,10 @@ Document::OpenResult Part::doOpenFile( const QMimeType &mimeA, const QString &fi
         }
     }
 
+    if ( openResult == Document::OpenSuccess )
+    {
+        m_fileLastModified = QFileInfo( fileNameToOpen ).lastModified();
+    }
     return openResult;
 }
 
@@ -1703,6 +1708,31 @@ bool Part::queryClose()
     if ( !isReadWrite() || !isModified() )
         return true;
 
+    // TODO When we get different saving backends we need to query the backend
+    // as to if it can save changes even if the open file has been modified,
+    // since we only have poppler as saving backend for now we're skipping that check
+    if ( m_fileLastModified != QFileInfo( localFilePath() ).lastModified() )
+    {
+        int res;
+        if ( m_isReloading )
+        {
+            res = KMessageBox::warningYesNo( widget(),
+                                             i18n( "There are unsaved changes, and the file '%1' has been modified by another program. Your changes will be lost, because the file can no longer be saved.<br>Do you want to continue reloading the file?", url().fileName() ),
+                                             i18n( "File Changed" ),
+                                             KGuiItem( i18n( "Continue Reloading" ) ), // <- KMessageBox::Yes
+                                             KGuiItem( i18n( "Abort Reloading" ) ));
+        }
+        else
+        {
+            res = KMessageBox::warningYesNo( widget(),
+                                        i18n( "There are unsaved changes, and the file '%1' has been modified by another program. Your changes will be lost, because the file can no longer be saved.<br>Do you want to continue closing the file?", url().fileName() ),
+                                        i18n( "File Changed" ),
+                                        KGuiItem( i18n( "Continue Closing" ) ), // <- KMessageBox::Yes
+                                        KGuiItem( i18n( "Abort Closing" ) ));
+        }
+        return res == KMessageBox::Yes;
+    }
+
     const int res = KMessageBox::warningYesNoCancel( widget(),
                         i18n( "Do you want to save your changes to \"%1\" or discard them?", url().fileName() ),
                         i18n( "Close Document" ),
@@ -1783,6 +1813,7 @@ bool Part::closeUrl(bool promptToSave)
         factory()->removeClient( m_generatorGuiClient );
     m_generatorGuiClient = nullptr;
     m_document->closeDocument();
+    m_fileLastModified = QDateTime();
     updateViewActions();
     delete m_tempfile;
     m_tempfile = nullptr;
@@ -2448,6 +2479,17 @@ bool Part::saveAs(const QUrl & saveUrl)
 
 bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
 {
+    // TODO When we get different saving backends we need to query the backend
+    // as to if it can save changes even if the open file has been modified,
+    // since we only have poppler as saving backend for now we're skipping that check
+    if ( m_fileLastModified != QFileInfo( localFilePath() ).lastModified() )
+    {
+        QMessageBox::warning( widget(),
+                              i18n( "File Changed" ),
+                              i18n( "The file '%1' has been modified by another program, which means it can no longer be saved.", url().fileName() ) );
+        return false;
+    }
+
     bool hasUserAcceptedReload = false;
     if ( m_documentOpenWithPassword )
     {

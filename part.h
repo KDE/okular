@@ -293,6 +293,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
 
         // the document
         Okular::Document * m_document;
+        QDateTime m_fileLastModified;
         QString m_temporaryLocalFile;
         bool isDocumentArchive;
         bool m_documentOpenWithPassword;

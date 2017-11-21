@@ -89,6 +89,7 @@
     <p xml:lang="nn">Okular er ein dokumentvisar for mange ulike filformat, og er utvikla av KDE. Okular køyrer på fleire plattformer, blant anna Linux, Windows, Mac OS X og *BSD.</p>
     <p xml:lang="pl">Okular jest wszechstronną przeglądarką dokumentów opracowaną przez KDE. Okular działa na wielu platformach takich jak Linux, Windows, Mac OS X, *BSD, itp.</p>
     <p xml:lang="pt">O Okular é um visualizador universal de documentos desenvolvido pelo KDE. O Okular funciona em diversas plataformas, incluindo mas não se limitando ao Linux, Windows, Mac OS X, *BSD, etc.</p>
+    <p xml:lang="ru">Okular — универсальная программа просмотра документов от KDE. Okular работает на многих платформах: Linux, Windows, Mac OS X, *BSD и других.</p>
     <p xml:lang="sk">Okular je univerzálny prehliadač dokumentov vyvinutý v KDE. Okular beží na mnohých platformách, vrátane Linux, Windows, Mac OS X, *BSD, atď.</p>
     <p xml:lang="sl">Okular je univerzalni pregledovalnik dokumentov, ki so ga razvili pri KDE. Dela v več okoljih vključno s sistemi Linux, Windows, Mac OS X in *BSD.</p>
     <p xml:lang="sr">Окулар је универзални приказивач докумената, који развија КДЕ. Ради на већем броју платформи, укључујући Линукс, Виндоуз, МекОС X, БСД‑ове, итд.</p>
@@ -154,6 +155,7 @@
       <li xml:lang="nn">Støtta format: PDF, PS, Tiff, CHM, DjVu, bilete, DVI, XPS, ODT, e-bøker, teikneseriar, Plucker, EPub, Fax</li>
       <li xml:lang="pl">Obsługa formatów: PDF, PS, Tiff, CHM, DjVu, Obrazy, DVI, XPS, ODT, Fikcja, Komiksy, Plucker, EPub, Fax</li>
       <li xml:lang="pt">Formatos Suportados: PDF, PS, Tiff, CHM, DjVu, Imagens, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
+      <li xml:lang="ru">Поддержка форматов PDF, PS, Tiff, CHM, DjVu, изображений, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, факсов;</li>
       <li xml:lang="sk">Podporované formáty: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="sl">Podprte vrste: PDF, PS, Tiff, CHM, DjVu, slike, DVI, XPS, ODT, Fiction Book, stripi, Plucker, EPub, faks</li>
       <li xml:lang="sr">Подржани формати: ПДФ, постскрипт, ТИФФ, ЦХМ, ДјВу, слике, ДВИ, ИксПС, ОДТ, фикшнбук, стрипови, Плакер, ЕПУБ, факс.</li>
@@ -184,6 +186,7 @@
       <li xml:lang="nn">Sidestolpe med innhaldsliste, miniatyrbilete, omtalar og bokmerke</li>
       <li xml:lang="pl">Pasek boczny z treścią, miniaturami, recenzją i zakładkami</li>
       <li xml:lang="pt">Barra lateral com o conteúdo, miniaturas, revisões e marcação de favoritos</li>
+      <li xml:lang="ru">Боковая панель с содержанием, миниатюрами страниц, комментариями и закладками;</li>
       <li xml:lang="sk">Posuvník s obsahom, miniatúrami, revíziami a záložkami</li>
       <li xml:lang="sl">Stranska vrstica z vsebino, sličicami, ocenami in zaznamki</li>
       <li xml:lang="sr">Бочна трака са садржајем, сличицама, рецензијама и обележивачима.</li>
@@ -214,6 +217,7 @@
       <li xml:lang="nn">Støtte for merknadar</li>
       <li xml:lang="pl">Obsługa przypisów</li>
       <li xml:lang="pt">Suporte para anotações</li>
+      <li xml:lang="ru">Поддержка комментариев.</li>
       <li xml:lang="sk">Podpora anotácií</li>
       <li xml:lang="sl">Podpora zabeležkam</li>
       <li xml:lang="sr">Подршка за тумачења.</li>

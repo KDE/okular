@@ -24,6 +24,7 @@
   <name xml:lang="nn">Bilete</name>
   <name xml:lang="pl">Obrazy</name>
   <name xml:lang="pt">Imagens</name>
+  <name xml:lang="pt-BR">Imagens</name>
   <name xml:lang="ru">Изображения</name>
   <name xml:lang="sk">Obrázky</name>
   <name xml:lang="sl">Slike</name>
@@ -57,6 +58,7 @@
   <summary xml:lang="nn">Legg til støtte for å lesa mange ulike biletformat</summary>
   <summary xml:lang="pl">Dodaje obsługę czytania wielu formatów obrazów</summary>
   <summary xml:lang="pt">Adiciona o suporte para ler muitos formatos de imagem</summary>
+  <summary xml:lang="pt-BR">Adiciona o suporte para ler vários formatos de imagem</summary>
   <summary xml:lang="ru">Поддержка чтения многих форматов изображений</summary>
   <summary xml:lang="sk">Pridá podporu pre čítanie mnohých obrazových formátov</summary>
   <summary xml:lang="sl">Doda podporo za branje številnih slikovnih vrst</summary>

@@ -25,6 +25,7 @@
   <name xml:lang="nn">PostScript</name>
   <name xml:lang="pl">PostScript</name>
   <name xml:lang="pt">PostScript</name>
+  <name xml:lang="pt-BR">PostScript</name>
   <name xml:lang="ru">PostScript</name>
   <name xml:lang="sk">PostScript</name>
   <name xml:lang="sl">PostScript</name>
@@ -59,6 +60,7 @@
   <summary xml:lang="nn">Legg til støtte for å lesa PostScript-dokument</summary>
   <summary xml:lang="pl">Dodaje obsługę czytania dokumentów PostScript</summary>
   <summary xml:lang="pt">Adiciona o suporte para ler documentos em PostScript</summary>
+  <summary xml:lang="pt-BR">Adiciona suporte para ler documentos PostScript</summary>
   <summary xml:lang="ru">Поддержка чтения документов PostScript</summary>
   <summary xml:lang="sk">Pridá podporu pre čítanie dokumentov PostScript</summary>
   <summary xml:lang="sl">Doda podporo za branje dokumentov PostScript</summary>

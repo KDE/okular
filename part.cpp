@@ -422,7 +422,7 @@ m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentW
     // [left toolbox: Layers] | []
     m_layers = new Layers( nullptr, m_document );
     connect( m_layers.data(), &Layers::hasLayers, this, &Part::enableLayers );
-    m_sidebar->addItem( m_layers, QIcon::fromTheme( QStringLiteral("draw-freehand") ), i18n( "Layers" ) );
+    m_sidebar->addItem( m_layers, QIcon::fromTheme( QStringLiteral("format-list-unordered") ), i18n( "Layers" ) );
     enableLayers( false );
 
     // [left toolbox: Thumbnails and Bookmarks] | []

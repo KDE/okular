@@ -6,7 +6,7 @@ Index: synctex/synctex_parser_utils.c
 ===================================================================
 --- synctex.orig/synctex_parser_utils.c
 +++ synctex/synctex_parser_utils.c
-@@ -406,7 +406,7 @@ char * _synctex_merge_strings(const char
+@@ -408,7 +408,7 @@ char * _synctex_merge_strings(const char
  
  /*  The purpose of _synctex_get_name is to find the name of the synctex file.
   *  There is a list of possible filenames from which we return the most recent one and try to remove all the others.

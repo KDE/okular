@@ -27,7 +27,7 @@ Index: synctex/synctex_parser_utils.c
 ===================================================================
 --- synctex.orig/synctex_parser_utils.c
 +++ synctex/synctex_parser_utils.c
-@@ -583,6 +583,6 @@ int _synctex_get_name(const char * outpu
+@@ -585,6 +585,6 @@ int _synctex_get_name(const char * outpu
  
  const char * _synctex_get_io_mode_name(synctex_io_mode_t io_mode) {
      static const char * synctex_io_modes[4] = {"r","rb","a","ab"}; 

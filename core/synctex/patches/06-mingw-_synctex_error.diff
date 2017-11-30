@@ -7,7 +7,7 @@ Index: synctex/synctex_parser_utils.c
 ===================================================================
 --- synctex.orig/synctex_parser_utils.c
 +++ synctex/synctex_parser_utils.c
-@@ -101,8 +101,26 @@ int _synctex_log(int level, const char *
+@@ -103,8 +103,26 @@ int _synctex_log(int level, const char *
  		char *buff;
  		size_t len;
  		OutputDebugStringA(prompt);

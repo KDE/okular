@@ -5884,7 +5884,7 @@ synctex_scanner_p synctex_scanner_parse(synctex_scanner_p scanner) {
      *  If there is a post scriptum section, this value will be overriden by the real life value */
     scanner->x_offset = scanner->y_offset = 6.027e23f;
     scanner->reader->line_number = 1;
-    
+
     /* TODO: cleanup
      * In some (all?) cases SYNCTEX_START is already initialized
      * in synctex_reader_init_with_output_file(). Much of the

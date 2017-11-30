@@ -24,6 +24,7 @@
   <name xml:lang="nn">Plucker</name>
   <name xml:lang="pl">Plucker</name>
   <name xml:lang="pt">Plucker</name>
+  <name xml:lang="pt-BR">Plucker</name>
   <name xml:lang="ru">Plucker</name>
   <name xml:lang="sk">Plucker</name>
   <name xml:lang="sl">Plucker</name>
@@ -57,6 +58,7 @@
   <summary xml:lang="nn">Legg til støtte for å lesa Plucker-dokument</summary>
   <summary xml:lang="pl">Dodaje obsługę czytania dokumnetów Plucker</summary>
   <summary xml:lang="pt">Adiciona o suporte para ler documentos do Plucker</summary>
+  <summary xml:lang="pt-BR">Adiciona suporte para ler documentos Plucker</summary>
   <summary xml:lang="ru">Поддержка чтения документов Plucker</summary>
   <summary xml:lang="sk">Pridá podporu pre čítanie dokumentov Plucker</summary>
   <summary xml:lang="sl">Doda podporo za branje dokumentov Plucker</summary>

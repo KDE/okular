@@ -91,6 +91,7 @@ int _synctex_log(int level, const char * prompt, const char * reason, ...) SYNCT
 int _synctex_log(int level, const char * prompt, const char * reason, ...) {
     va_list arg;
 	int result;
+    va_start(arg, reason);
 #	ifdef SYNCTEX_RECENT_WINDOWS
 	{/*	This code is contributed by William Blum.
         As it does not work on some older computers,
@@ -150,6 +151,7 @@ int _synctex_log(int level, const char * prompt, const char * reason, ...) {
     result += vfprintf(where, reason, arg);
     result += fprintf(where,"\n");
 #   endif
+    va_end(arg);
 	return result;
 }
 

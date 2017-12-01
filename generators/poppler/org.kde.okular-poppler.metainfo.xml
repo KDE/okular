@@ -24,7 +24,6 @@
   <name xml:lang="nn">PDF</name>
   <name xml:lang="pl">PDF</name>
   <name xml:lang="pt">PDF</name>
-  <name xml:lang="pt-BR">PDF</name>
   <name xml:lang="ru">PDF</name>
   <name xml:lang="sk">PDF</name>
   <name xml:lang="sl">PDF</name>
@@ -58,7 +57,6 @@
   <summary xml:lang="nn">Legg til støtte for å lesa PDF-dokument</summary>
   <summary xml:lang="pl">Dodaje obsługę czytania PDFów</summary>
   <summary xml:lang="pt">Adiciona o suporte para ler documentos em PDF</summary>
-  <summary xml:lang="pt-BR">Adiciona suporte para ler documentos PDF</summary>
   <summary xml:lang="ru">Поддержка чтения документов PDF</summary>
   <summary xml:lang="sk">Pridá podporu pre čítanie PDF dokumentov</summary>
   <summary xml:lang="sl">Doda podporo za branje dokumentov PDF</summary>

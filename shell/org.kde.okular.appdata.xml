@@ -22,7 +22,6 @@
   <name xml:lang="nn">Okular</name>
   <name xml:lang="pl">Okular</name>
   <name xml:lang="pt">Okular</name>
-  <name xml:lang="pt-BR">Okular</name>
   <name xml:lang="ru">Okular</name>
   <name xml:lang="sk">Okular</name>
   <name xml:lang="sl">Okular</name>
@@ -56,7 +55,6 @@
   <summary xml:lang="nn">Dokumentvisar</summary>
   <summary xml:lang="pl">Przeglądarka dokumentów</summary>
   <summary xml:lang="pt">Visualizador do Documento</summary>
-  <summary xml:lang="pt-BR">Visualizador de documentos</summary>
   <summary xml:lang="ru">Просмотр документов</summary>
   <summary xml:lang="sk">Prehliadač dokumentov</summary>
   <summary xml:lang="sl">Pregledovalnik dokumentov</summary>
@@ -124,7 +122,6 @@
     <p xml:lang="nn">Funksjonar:</p>
     <p xml:lang="pl">Możliwości:</p>
     <p xml:lang="pt">Funcionalidades:</p>
-    <p xml:lang="pt-BR">Recursos:</p>
     <p xml:lang="ru">Возможности:</p>
     <p xml:lang="sk">Funkcie:</p>
     <p xml:lang="sl">Zmožnosti:</p>

@@ -19,7 +19,6 @@
   <name xml:lang="nn">Markdown</name>
   <name xml:lang="pl">Markdown</name>
   <name xml:lang="pt">Markdown</name>
-  <name xml:lang="pt-BR">Markdown</name>
   <name xml:lang="ru">Markdown</name>
   <name xml:lang="sk">Zrážka</name>
   <name xml:lang="sr">Маркдаун</name>
@@ -45,7 +44,6 @@
   <summary xml:lang="nn">Legg til støtte for å lesa Markdown-dokument</summary>
   <summary xml:lang="pl">Dodaje obsługę odczytu dokumentów Markdown</summary>
   <summary xml:lang="pt">Adiciona o suporte para a leitura de documentos em Markdown</summary>
-  <summary xml:lang="pt-BR">Adiciona suporte para ler documentos Markdown</summary>
   <summary xml:lang="ru">Поддержка чтения документов Markdown</summary>
   <summary xml:lang="sk">Pridá podporu pre čítanie dokumentov Markdown</summary>
   <summary xml:lang="sr">Подршка за читање маркдаун докумената</summary>

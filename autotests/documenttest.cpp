@@ -121,7 +121,7 @@ void DocumentTest::testDocdataMigration()
     m_document->closeDocument();
 
     // And the new file should have 1 annotation, let's check
-    QCOMPARE( m_document->openDocument( migratedSaveFile.fileName(), migratedSaveFile.fileName(), mime ), Okular::Document::OpenSuccess );
+    QCOMPARE( m_document->openDocument( migratedSaveFile.fileName(), QUrl::fromLocalFile(migratedSaveFile.fileName()), mime ), Okular::Document::OpenSuccess );
     QCOMPARE( m_document->page( 0 )->annotations().size(), 1 );
     QCOMPARE( m_document->isDocdataMigrationNeeded(), false );
     m_document->closeDocument();

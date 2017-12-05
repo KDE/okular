@@ -96,7 +96,7 @@ PagePrivate::~PagePrivate()
 
 PagePrivate *PagePrivate::get( Page * page )
 {
-    return page->d;
+    return page ? page->d : nullptr;
 }
 
 void PagePrivate::imageRotationDone( RotationJob * job )
@@ -572,7 +572,7 @@ void Page::setTextPage( TextPage * textPage )
     d->m_text = textPage;
     if ( d->m_text )
     {
-        d->m_text->d->m_page = d;
+        d->m_text->d->m_page = this;
         /**
          * Correct text order for before text selection
          */

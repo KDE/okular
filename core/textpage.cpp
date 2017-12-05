@@ -349,7 +349,8 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 */
     RegularAreaRect * ret= new RegularAreaRect;
 
-    const QTransform matrix = d->m_page ? d->m_page->rotationMatrix() : QTransform();
+    PagePrivate *pagePrivate = PagePrivate::get(d->m_page);
+    const QTransform matrix = pagePrivate ? pagePrivate->rotationMatrix() : QTransform();
 #if 0
     int it = -1;
     int itB = -1;
@@ -449,8 +450,8 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
         }
     }
 #else
-    const double scaleX = d->m_page->m_page->width();
-    const double scaleY = d->m_page->m_page->height();
+    const double scaleX = d->m_page->width();
+    const double scaleY = d->m_page->height();
 
     NormalizedPoint startC = sel->start();
     NormalizedPoint endC = sel->end();
@@ -465,7 +466,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
     }
 
     // minX,maxX,minY,maxY gives the bounding rectangle coordinates of the document
-    const NormalizedRect boundingRect = d->m_page->m_page->boundingBox();
+    const NormalizedRect boundingRect = d->m_page->boundingBox();
     const QRect content = boundingRect.geometry(scaleX,scaleY);
     const double minX = content.left();
     const double maxX = content.right();
@@ -533,7 +534,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
 
     TextList::ConstIterator it = d->m_words.constBegin(), itEnd = d->m_words.constEnd();
     TextList::ConstIterator start = it, end = itEnd, tmpIt = it; //, tmpItEnd = itEnd;
-    const MergeSide side = d->m_page ? (MergeSide)d->m_page->m_page->totalOrientation() : MergeRight;
+    const MergeSide side = d->m_page ? (MergeSide)d->m_page->totalOrientation() : MergeRight;
 
     NormalizedRect tmp;
     //case 2(a)
@@ -820,7 +821,8 @@ static int stringLengthAdaptedWithHyphen(const QString &str, const TextList::Con
 
 RegularAreaRect* TextPagePrivate::searchPointToArea(const SearchPoint* sp)
 {
-    const QTransform matrix = m_page ? m_page->rotationMatrix() : QTransform();
+    PagePrivate *pagePrivate = PagePrivate::get(m_page);
+    const QTransform matrix = pagePrivate ? pagePrivate->rotationMatrix() : QTransform();
     RegularAreaRect* ret=new RegularAreaRect;
 
     for (TextList::ConstIterator it = sp->it_begin; ; it++)
@@ -1879,9 +1881,9 @@ void TextPagePrivate::correctTextOrder()
     //100% zoom level, and thus depend on display DPI. We scale pageWidth and
     //pageHeight to remove the dependence. Otherwise bugs would be more difficult
     //to reproduce and Okular could fail in extreme cases like a large TV with low DPI.
-    const double scalingFactor = 2000.0 / (m_page->m_page->width() + m_page->m_page->height());
-    const int pageWidth  = (int) (scalingFactor * m_page->m_page->width() );
-    const int pageHeight = (int) (scalingFactor * m_page->m_page->height());
+    const double scalingFactor = 2000.0 / (m_page->width() + m_page->height());
+    const int pageWidth  = (int) (scalingFactor * m_page->width() );
+    const int pageHeight = (int) (scalingFactor * m_page->height());
 
     TextList characters = m_words;
 
@@ -1898,7 +1900,7 @@ void TextPagePrivate::correctTextOrder()
     /**
      * Make a XY Cut tree for segmentation of the texts
      */
-    const RegionTextList tree = XYCutForBoundingBoxes(wordsWithCharacters, m_page->m_page->boundingBox(), pageWidth, pageHeight);
+    const RegionTextList tree = XYCutForBoundingBoxes(wordsWithCharacters, m_page->boundingBox(), pageWidth, pageHeight);
 
     /**
      * Add spaces to the word

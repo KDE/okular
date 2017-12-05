@@ -86,7 +86,6 @@ find_package(ZLIB REQUIRED)
 
 add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 add_definitions(-DTRANSLATION_DOMAIN="okular")
-add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${PHONON_INCLUDES} core/synctex ${ZLIB_INCLUDE_DIR} ${CMAKE_BINARY_DIR}/core)
 
@@ -248,7 +247,7 @@ PUBLIC  # these are included from the installed headers
     Qt5::Widgets
 )
 
-set_target_properties(okularcore PROPERTIES VERSION 7.0.0 SOVERSION 7 OUTPUT_NAME Okular5Core EXPORT_NAME Core)
+set_target_properties(okularcore PROPERTIES VERSION 8.0.0 SOVERSION 8 OUTPUT_NAME Okular5Core EXPORT_NAME Core)
 
 install(TARGETS okularcore EXPORT Okular5Targets ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 

@@ -102,8 +102,8 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
     // fill m_urlPage and m_pageUrl
     QList<QUrl> pageList;
     m_file->enumerateFiles(pageList);
-    const QString home = m_file->homeUrl().toString();
-    if (home != QLatin1String("/"))
+    const QUrl home = m_file->homeUrl();
+    if (home.path() != QLatin1String("/"))
         pageList.prepend(home);
     m_pageUrl.resize(pageNum);
 

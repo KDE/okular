@@ -4331,24 +4331,16 @@ bool Document::canSwapBackingFile() const
 {
     if ( !d->m_generator )
         return false;
-    Q_ASSERT( !d->m_generatorName.isEmpty() );
 
-    QHash< QString, GeneratorInfo >::iterator genIt = d->m_loadedGenerators.find( d->m_generatorName );
-    Q_ASSERT( genIt != d->m_loadedGenerators.end() );
-
-    return genIt->generator->hasFeature( Generator::SwapBackingFile );
+    return d->m_generator->hasFeature( Generator::SwapBackingFile );
 }
 
 bool Document::swapBackingFile( const QString &newFileName, const QUrl &url )
 {
     if ( !d->m_generator )
         return false;
-    Q_ASSERT( !d->m_generatorName.isEmpty() );
 
-    QHash< QString, GeneratorInfo >::iterator genIt = d->m_loadedGenerators.find( d->m_generatorName );
-    Q_ASSERT( genIt != d->m_loadedGenerators.end() );
-
-    if ( !genIt->generator->hasFeature( Generator::SwapBackingFile ) )
+    if ( !d->m_generator->hasFeature( Generator::SwapBackingFile ) )
         return false;
 
     // Save metadata about the file we're about to close
@@ -4356,7 +4348,7 @@ bool Document::swapBackingFile( const QString &newFileName, const QUrl &url )
 
     qCDebug(OkularCoreDebug) << "Swapping backing file to" << newFileName;
     QVector< Page * > newPagesVector;
-    Generator::SwapBackingFileResult result = genIt->generator->swapBackingFile( newFileName, newPagesVector );
+    Generator::SwapBackingFileResult result = d->m_generator->swapBackingFile( newFileName, newPagesVector );
     if (result != Generator::SwapBackingFileError)
     {
         QLinkedList< ObjectRect* > rectsToDelete;

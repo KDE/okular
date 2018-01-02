@@ -911,9 +911,16 @@ void PartTest::testSaveAsUndoStackAnnotations()
 
     QScopedPointer<CloseDialogHelper> closeDialogHelper;
 
-    QTemporaryFile saveFile( QString( "%1/okrXXXXXX.%2" ).arg( QDir::tempPath() ).arg ( extension ) );
-    QVERIFY( saveFile.open() );
-    saveFile.close();
+    // closeDialogHelper relies on the availability of the "Continue" button to drop changes
+    // when saving to a file format not supporting those. However, this button is only sensible
+    // and available for "Save As", but not for "Save". By alternately saving to saveFile1 and
+    // saveFile2 we always force "Save As", so closeDialogHelper keeps working.
+    QTemporaryFile saveFile1( QString( "%1/okrXXXXXX_1.%2" ).arg( QDir::tempPath() ).arg ( extension ) );
+    QVERIFY( saveFile1.open() );
+    saveFile1.close();
+    QTemporaryFile saveFile2( QString( "%1/okrXXXXXX_2.%2" ).arg( QDir::tempPath() ).arg ( extension ) );
+    QVERIFY( saveFile2.open() );
+    saveFile2.close();
 
     Okular::Part part(nullptr, nullptr, QVariantList());
     part.openDocument( file );
@@ -930,7 +937,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
         closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
 
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), saveFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile1.fileName() ), saveFlags ) );
 
     if (!canSwapBackingFile) {
         // The undo/redo stack gets lost if you can not swap the backing file
@@ -944,7 +951,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
     part.m_document->undo();
     QVERIFY( !part.m_document->canUndo() );
 
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), saveFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile1.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->page( 0 )->annotations().isEmpty() );
 
     // Check we can redo the annot add after save
@@ -966,7 +973,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
     QVERIFY( part.m_document->page( 0 )->annotations().isEmpty() );
 
     // Check we can still undo the annot remove after save
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), saveFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile1.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canUndo() );
     part.m_document->undo();
     QVERIFY( part.m_document->canUndo() );
@@ -976,7 +983,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
     if ( !nativelySupportsAnnotations && !saveToArchive ) {
         closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), saveFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile2.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canUndo() );
     part.m_document->undo();
     QVERIFY( !part.m_document->canUndo() );
@@ -984,7 +991,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
 
 
     // Redo the add annotation
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), saveFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile1.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canRedo() );
     part.m_document->redo();
     QVERIFY( part.m_document->canUndo() );
@@ -1007,7 +1014,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
     if ( !nativelySupportsAnnotations && !saveToArchive ) {
         closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), saveFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile2.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canUndo() );
     part.m_document->undo();
     QVERIFY( part.m_document->canUndo() );
@@ -1015,7 +1022,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
     if ( !nativelySupportsAnnotations && !saveToArchive ) {
         closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), saveFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile1.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canUndo() );
     part.m_document->undo();
     QVERIFY( part.m_document->canUndo() );
@@ -1023,7 +1030,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
     if ( !nativelySupportsAnnotations && !saveToArchive ) {
         closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), saveFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile2.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canUndo() );
     part.m_document->undo();
     QVERIFY( part.m_document->canUndo() );
@@ -1031,14 +1038,14 @@ void PartTest::testSaveAsUndoStackAnnotations()
     if ( !nativelySupportsAnnotations && !saveToArchive ) {
         closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), saveFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile1.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canUndo() );
     part.m_document->undo();
     QVERIFY( !part.m_document->canUndo() );
     QVERIFY( part.m_document->canRedo() );
     QVERIFY( part.m_document->page( 0 )->annotations().isEmpty() );
 
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), saveFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile1.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canRedo() );
     part.m_document->redo();
     QVERIFY( part.m_document->canRedo() );
@@ -1046,7 +1053,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
     if ( !nativelySupportsAnnotations && !saveToArchive ) {
         closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), saveFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile2.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canRedo() );
     part.m_document->redo();
     QVERIFY( part.m_document->canRedo() );
@@ -1054,7 +1061,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
     if ( !nativelySupportsAnnotations && !saveToArchive ) {
         closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), saveFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile1.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canRedo() );
     part.m_document->redo();
     QVERIFY( part.m_document->canRedo() );
@@ -1062,7 +1069,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
     if ( !nativelySupportsAnnotations && !saveToArchive ) {
         closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
-    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), saveFlags ) );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile2.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canRedo() );
     part.m_document->redo();
     QVERIFY( !part.m_document->canRedo() );

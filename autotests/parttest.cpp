@@ -197,7 +197,12 @@ void PartTest::testForwardPDF()
     QVERIFY(f.copy(texDestination));
     QProcess process;
     process.setWorkingDirectory(workDir.path());
-    process.start(QStringLiteral("pdflatex"), QStringList() << QStringLiteral("-synctex=1") << QStringLiteral("-interaction=nonstopmode") << texDestination);
+
+    const QString pdflatexPath(QStandardPaths::findExecutable("pdflatex"));
+    if (pdflatexPath.isEmpty()) {
+        QFAIL("pdflatex executable not found, but needed for the test. Try installing the respective TeXLive packages.");
+    }
+    process.start(pdflatexPath, QStringList() << QStringLiteral("-synctex=1") << QStringLiteral("-interaction=nonstopmode") << texDestination);
     bool started = process.waitForStarted();
     if (!started) {
         qDebug() << "start error:" << process.error();

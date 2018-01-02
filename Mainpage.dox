@@ -299,7 +299,6 @@ with the following content:
 
 \verbatim
 [Desktop Entry]
-Encoding=UTF-8
 Type=Service
 Name=Magic Document
 Comment=Magic Document backend for okular
@@ -324,7 +323,6 @@ The second .desktop file has the following content:
 
 \verbatim
 [Desktop Entry]
-Encoding=UTF-8
 MimeType=application/x-magic;
 Terminal=false
 Name=okular
@@ -344,7 +342,6 @@ The third .desktop file looks like this:
 
 \verbatim
 [Desktop Entry]
-Encoding=UTF-8
 Icon=okular
 Name=okular
 ServiceTypes=KParts/ReadOnlyPart

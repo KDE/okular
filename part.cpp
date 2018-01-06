@@ -1624,11 +1624,11 @@ bool Part::openFile()
         bool goAheadWithPresentationMode = true;
         if ( !m_cliPresentation )
         {
-            const QString text = i18n( "The document requested to be launched in presentation mode.\n"
-                                       "Do you want to allow it?" );
-            const QString caption = i18n( "Presentation Mode" );
-            const KGuiItem yesItem = KGuiItem( i18n( "Allow" ), QStringLiteral("dialog-ok"), i18n( "Allow the presentation mode" ) );
-            const KGuiItem noItem = KGuiItem( i18n( "Do Not Allow" ), QStringLiteral("process-stop"), i18n( "Do not allow the presentation mode" ) );
+            const QString text = i18n( "This document wants to be shown full screen.\n"
+                                       "Leave normal mode and enter presentation mode?" );
+            const QString caption = i18n( "Request to Change Viewing Mode" );
+            const KGuiItem yesItem = KGuiItem( i18n( "Enter Presentation Mode" ), QStringLiteral("dialog-ok") );
+            const KGuiItem noItem = KGuiItem( i18n( "Deny Request" ), QStringLiteral("dialog-cancel") );
             const int result = KMessageBox::questionYesNo( widget(), text, caption, yesItem, noItem );
             if ( result == KMessageBox::No )
                 goAheadWithPresentationMode = false;

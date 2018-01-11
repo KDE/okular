@@ -108,7 +108,6 @@ GenericName[uk]=Переглядач документів
 GenericName[x-test]=xxDocument viewerxx
 GenericName[zh_CN]=文档查看器
 GenericName[zh_TW]=文件檢視器
-Encoding=UTF-8
 Type=Application
 Exec=kpackagelauncherqml -a org.kde.mobile.okular %u
 Icon=okular

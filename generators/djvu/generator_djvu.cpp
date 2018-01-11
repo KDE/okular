@@ -175,6 +175,7 @@ bool DjVuGenerator::print( QPrinter& printer )
     QTemporaryFile tf(QDir::tempPath() + QLatin1String("/okular_XXXXXX.ps"));
     if ( !tf.open() )
         return false;
+    const QString fileName = tf.fileName();
 
     QMutexLocker locker( userMutex() );
     QList<int> pageList = Okular::FilePrinter::pageList( printer, m_djvu->pages().count(),
@@ -184,7 +185,6 @@ bool DjVuGenerator::print( QPrinter& printer )
     if ( m_djvu->exportAsPostScript( &tf, pageList ) )
     {
         tf.setAutoRemove( false );
-        const QString fileName = tf.fileName();
         tf.close();
         int ret = Okular::FilePrinter::printFile( printer, fileName, document()->orientation(),
                                                   Okular::FilePrinter::SystemDeletesFiles,

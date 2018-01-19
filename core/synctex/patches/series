@@ -8,3 +8,4 @@
 13-fix-Wundef-warnings.diff
 14-fix-misc-compiler-warnings.diff
 15-prevent-leaks-and-segfault.diff
+16-use-windows-ansi-api-path-find.diff

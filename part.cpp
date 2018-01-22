@@ -3110,7 +3110,7 @@ void Part::slotExportAs(QAction * act)
             mimeType = mimeDatabase.mimeTypeForName(QStringLiteral("text/plain"));
             break;
         default:
-            mimeType = m_exportFormats.at( id - 2 ).mimeType();
+            mimeType = m_exportFormats.at( id - 1 ).mimeType();
             break;
     }
     QString filter = i18nc("File type name and pattern", "%1 (%2)", mimeType.comment(), mimeType.globPatterns().join(QLatin1Char(' ')));

@@ -174,9 +174,9 @@ QString DocumentPrivate::namePaperSize(double inchesWidth, double inchesHeight) 
     const QString paperName = QPageSize::name(paperSize);
 
     if (orientation == QPrinter::Portrait) {
-        return i18nc("paper type and orientation (eg: Portrait A4)", "Portrait %0").arg(paperName);
+        return i18nc("paper type and orientation (eg: Portrait A4)", "Portrait %1", paperName);
     } else {
-        return i18nc("paper type and orientation (eg: Portrait A4)", "Landscape %0").arg(paperName);
+        return i18nc("paper type and orientation (eg: Portrait A4)", "Landscape %1", paperName);
     }
 }
 

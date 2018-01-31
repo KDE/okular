@@ -55,6 +55,7 @@ public:
         setIcon( style()->standardIcon( QStyle::SP_DockWidgetCloseButton ) );
         setIconSize( size );
         setToolTip( i18n( "Close this note" ) );
+        setCursor( Qt::ArrowCursor );
     }
 };
 

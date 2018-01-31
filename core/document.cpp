@@ -2414,6 +2414,8 @@ Document::OpenResult Document::openDocument(const QString & docFile, const QUrl 
     // 2. load Additional Data (bookmarks, local annotations and metadata) about the document
     if ( d->m_archiveData )
     {
+        // QTemporaryFile is weird and will return false in exists if fileName wasn't called before
+        d->m_archiveData->metadataFile.fileName();
         d->loadDocumentInfo( d->m_archiveData->metadataFile, LoadPageInfo );
         d->loadDocumentInfo( LoadGeneralInfo );
     }
@@ -4734,12 +4736,14 @@ bool Document::saveDocumentArchive( const QString &fileName )
         if ( !modifiedFile.open() )
             return false;
 
+        const QString modifiedFileName = modifiedFile.fileName();
+
         modifiedFile.close(); // We're only interested in the file name
 
         QString errorText;
-        if ( saveChanges( modifiedFile.fileName(), &errorText ) )
+        if ( saveChanges( modifiedFileName, &errorText ) )
         {
-            docPath = modifiedFile.fileName(); // Save this instead of the original file
+            docPath = modifiedFileName; // Save this instead of the original file
             annotationsSavedNatively = d->canAddAnnotationsNatively();
             formsSavedNatively = canSaveChanges( SaveFormsCapability );
         }

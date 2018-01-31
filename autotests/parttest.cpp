@@ -260,7 +260,7 @@ void PartTest::testSelectText()
     Okular::Part part(nullptr, nullptr, dummyArgs);
     QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/file2.pdf")));
     part.widget()->show();
-    QTest::qWaitForWindowExposed(part.widget());
+    QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
     const int width = part.m_pageView->horizontalScrollBar()->maximum() +
                       part.m_pageView->viewport()->width();
@@ -292,7 +292,7 @@ void PartTest::testClickInternalLink()
     Okular::Part part(nullptr, nullptr, dummyArgs);
     QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/file2.pdf")));
     part.widget()->show();
-    QTest::qWaitForWindowExposed(part.widget());
+    QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
     const int width = part.m_pageView->horizontalScrollBar()->maximum() +
                       part.m_pageView->viewport()->width();
@@ -321,7 +321,7 @@ void PartTest::testMouseMoveOverLinkWhileInSelectionMode()
     // resize window to avoid problem with selection areas
     part.widget()->resize(800, 600);
     part.widget()->show();
-    QTest::qWaitForWindowExposed(part.widget());
+    QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
     const int width = part.m_pageView->horizontalScrollBar()->maximum() +
                       part.m_pageView->viewport()->width();
@@ -352,7 +352,7 @@ void PartTest::testClickUrlLinkWhileInSelectionMode()
     // resize window to avoid problem with selection areas
     part.widget()->resize(800, 600);
     part.widget()->show();
-    QTest::qWaitForWindowExposed(part.widget());
+    QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
     const int width = part.m_pageView->horizontalScrollBar()->maximum() +
                       part.m_pageView->viewport()->width();
@@ -404,7 +404,7 @@ void PartTest::testeTextSelectionOverAndAcrossLinks()
     // resize window to avoid problem with selection areas
     part.widget()->resize(800, 600);
     part.widget()->show();
-    QTest::qWaitForWindowExposed(part.widget());
+    QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
     const int width = part.m_pageView->horizontalScrollBar()->maximum() +
                       part.m_pageView->viewport()->width();
@@ -444,7 +444,7 @@ void PartTest::testClickUrlLinkWhileLinkTextIsSelected()
     // resize window to avoid problem with selection areas
     part.widget()->resize(800, 600);
     part.widget()->show();
-    QTest::qWaitForWindowExposed(part.widget());
+    QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
     const int width = part.m_pageView->horizontalScrollBar()->maximum() +
                       part.m_pageView->viewport()->width();
@@ -491,7 +491,7 @@ void PartTest::testRClickWhileLinkTextIsSelected()
     // resize window to avoid problem with selection areas
     part.widget()->resize(800, 600);
     part.widget()->show();
-    QTest::qWaitForWindowExposed(part.widget());
+    QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
     const int width = part.m_pageView->horizontalScrollBar()->maximum() +
                       part.m_pageView->viewport()->width();
@@ -515,7 +515,8 @@ void PartTest::testRClickWhileLinkTextIsSelected()
     // Need to do this because the pop-menu will have his own mainloop and will block tests until
     // the menu disappear
     PageView *view = part.m_pageView;
-    QTimer::singleShot(2000, [view]() {
+    bool menuClosed = false;
+    QTimer::singleShot(2000, [view, &menuClosed]() {
         // check if popup menu is active and visible
         QMenu *menu = qobject_cast<QMenu*>(view->findChild<QMenu*>("PopupMenu"));
         QVERIFY(menu);
@@ -535,6 +536,7 @@ void PartTest::testRClickWhileLinkTextIsSelected()
 
         // close menu to continue test
         menu->close();
+        menuClosed = true;
     });
 
     // click on url
@@ -545,6 +547,7 @@ void PartTest::testRClickWhileLinkTextIsSelected()
     QTest::mouseClick(part.m_pageView->viewport(), Qt::RightButton, Qt::NoModifier, QPoint(mouseClickX, mouseClickY), 1000);
 
     // will continue after pop-menu get closed
+    QTRY_VERIFY(menuClosed);
 }
 
 
@@ -557,7 +560,7 @@ void PartTest::testRClickOverLinkWhileLinkTextIsSelected()
     // resize window to avoid problem with selection areas
     part.widget()->resize(800, 600);
     part.widget()->show();
-    QTest::qWaitForWindowExposed(part.widget());
+    QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
     const int width = part.m_pageView->horizontalScrollBar()->maximum() +
                       part.m_pageView->viewport()->width();
@@ -581,7 +584,8 @@ void PartTest::testRClickOverLinkWhileLinkTextIsSelected()
     // Need to do this because the pop-menu will have his own mainloop and will block tests until
     // the menu disappear
     PageView *view = part.m_pageView;
-    QTimer::singleShot(2000, [view]() {
+    bool menuClosed = false;
+    QTimer::singleShot(2000, [view, &menuClosed]() {
         // check if popup menu is active and visible
         QMenu *menu = qobject_cast<QMenu*>(view->findChild<QMenu*>("PopupMenu"));
         QVERIFY(menu);
@@ -597,6 +601,7 @@ void PartTest::testRClickOverLinkWhileLinkTextIsSelected()
 
         // close menu to continue test
         menu->close();
+        menuClosed = true;
     });
 
     // click on url
@@ -607,6 +612,7 @@ void PartTest::testRClickOverLinkWhileLinkTextIsSelected()
     QTest::mouseClick(part.m_pageView->viewport(), Qt::RightButton, Qt::NoModifier, QPoint(mouseClickX, mouseClickY), 1000);
 
     // will continue after pop-menu get closed
+    QTRY_VERIFY(menuClosed);
 }
 
 void PartTest::testRClickOnSelectionModeShoulShowFollowTheLinkMenu()
@@ -617,7 +623,7 @@ void PartTest::testRClickOnSelectionModeShoulShowFollowTheLinkMenu()
     // resize window to avoid problem with selection areas
     part.widget()->resize(800, 600);
     part.widget()->show();
-    QTest::qWaitForWindowExposed(part.widget());
+    QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
     const int width = part.m_pageView->horizontalScrollBar()->maximum() +
                       part.m_pageView->viewport()->width();
@@ -635,7 +641,8 @@ void PartTest::testRClickOnSelectionModeShoulShowFollowTheLinkMenu()
     // Need to do this because the pop-menu will have his own mainloop and will block tests until
     // the menu disappear
     PageView *view = part.m_pageView;
-    QTimer::singleShot(2000, [view]() {
+    bool menuClosed = false;
+    QTimer::singleShot(2000, [view, &menuClosed]() {
         // check if popup menu is active and visible
         QMenu *menu = qobject_cast<QMenu*>(view->findChild<QMenu*>("PopupMenu"));
         QVERIFY(menu);
@@ -651,6 +658,7 @@ void PartTest::testRClickOnSelectionModeShoulShowFollowTheLinkMenu()
 
         // close menu to continue test
         menu->close();
+        menuClosed = true;
     });
 
     // r-click on url
@@ -659,9 +667,9 @@ void PartTest::testRClickOnSelectionModeShoulShowFollowTheLinkMenu()
 
     QTest::mouseMove(part.m_pageView->viewport(), QPoint(mouseClickX, mouseClickY));
     QTest::mouseClick(part.m_pageView->viewport(), Qt::RightButton, Qt::NoModifier, QPoint(mouseClickX, mouseClickY), 1000);
-    QTest::qWait(3000);
 
     // will continue after pop-menu get closed
+    QTRY_VERIFY(menuClosed);
 }
 
 void PartTest::testClickAnywhereAfterSelectionShouldUnselect()
@@ -672,7 +680,7 @@ void PartTest::testClickAnywhereAfterSelectionShouldUnselect()
     // resize window to avoid problem with selection areas
     part.widget()->resize(800, 600);
     part.widget()->show();
-    QTest::qWaitForWindowExposed(part.widget());
+    QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
     const int width = part.m_pageView->horizontalScrollBar()->maximum() +
                       part.m_pageView->viewport()->width();
@@ -714,7 +722,7 @@ void PartTest::testeRectSelectionStartingOnLinks()
     // resize window to avoid problem with selection areas
     part.widget()->resize(800, 600);
     part.widget()->show();
-    QTest::qWaitForWindowExposed(part.widget());
+    QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
     const int width = part.m_pageView->horizontalScrollBar()->maximum() +
                       part.m_pageView->viewport()->width();
@@ -737,7 +745,8 @@ void PartTest::testeRectSelectionStartingOnLinks()
     // Need to do this because the pop-menu will have his own mainloop and will block tests until
     // the menu disappear
     PageView *view = part.m_pageView;
-    QTimer::singleShot(2000, [view]() {
+    bool menuClosed = false;
+    QTimer::singleShot(2000, [view, &menuClosed]() {
         QApplication::clipboard()->clear();
 
         // check if popup menu is active and visible
@@ -750,11 +759,13 @@ void PartTest::testeRectSelectionStartingOnLinks()
         QVERIFY(copyAct);
 
         menu->close();
+        menuClosed = true;
     });
 
     simulateMouseSelection(mouseStartX, mouseStartY, mouseEndX, mouseEndY, part.m_pageView->viewport());
 
     // wait menu get closed
+    QTRY_VERIFY(menuClosed);
 }
 
 

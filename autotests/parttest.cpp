@@ -776,13 +776,21 @@ void PartTest::testeRectSelectionStartingOnLinks()
 
 void PartTest::simulateMouseSelection(double startX, double startY, double endX, double endY, QWidget *target)
 {
+    const int steps = 5;
+    const double diffX = endX - startX;
+    const double diffY = endY - startY;
+    const double diffXStep = diffX / steps;
+    const double diffYStep = diffY / steps;
+
     QTestEventList events;
     events.addMouseMove(QPoint(startX, startY));
     events.addMousePress(Qt::LeftButton, Qt::NoModifier, QPoint(startX, startY));
+    for (int i = 0; i < steps - 1; ++i) {
+        events.addMouseMove(QPoint(startX + i * diffXStep, startY + i * diffYStep));
+        events.addDelay(100);
+    }
     events.addMouseMove(QPoint(endX, endY));
-    // without this wait the test fails. 100ms were enough on my local system, but when running under valgrind
-    // or on the CI server we need to wait longer.
-    events.addDelay(1000);
+    events.addDelay(100);
     events.addMouseRelease(Qt::LeftButton, Qt::NoModifier, QPoint(endX, endY));
 
     events.simulate(target);

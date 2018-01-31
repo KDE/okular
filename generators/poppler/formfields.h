@@ -37,6 +37,7 @@ class PopplerFormFieldButton : public Okular::FormFieldButton
     private:
         Poppler::FormFieldButton * m_field;
         Okular::NormalizedRect m_rect;
+        int m_id;
 
 };
 
@@ -67,6 +68,7 @@ class PopplerFormFieldText : public Okular::FormFieldText
     private:
         Poppler::FormFieldText * m_field;
         Okular::NormalizedRect m_rect;
+        int m_id;
 
 };
 
@@ -99,6 +101,7 @@ class PopplerFormFieldChoice : public Okular::FormFieldChoice
     private:
         Poppler::FormFieldChoice * m_field;
         Okular::NormalizedRect m_rect;
+        int m_id;
 
 };
 

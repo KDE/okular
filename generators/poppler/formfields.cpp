@@ -33,6 +33,7 @@ PopplerFormFieldButton::PopplerFormFieldButton( Poppler::FormFieldButton * field
     : Okular::FormFieldButton(), m_field( field )
 {
     m_rect = Okular::NormalizedRect::fromQRectF( m_field->rect() );
+    m_id = m_field->id();
     SET_ACTIONS
 }
 
@@ -48,7 +49,7 @@ Okular::NormalizedRect PopplerFormFieldButton::rect() const
 
 int PopplerFormFieldButton::id() const
 {
-    return m_field->id();
+    return m_id;
 }
 
 QString PopplerFormFieldButton::name() const
@@ -110,6 +111,7 @@ PopplerFormFieldText::PopplerFormFieldText( Poppler::FormFieldText * field )
     : Okular::FormFieldText(), m_field( field )
 {
     m_rect = Okular::NormalizedRect::fromQRectF( m_field->rect() );
+    m_id = m_field->id();
     SET_ACTIONS
 }
 
@@ -125,7 +127,7 @@ Okular::NormalizedRect PopplerFormFieldText::rect() const
 
 int PopplerFormFieldText::id() const
 {
-    return m_field->id();
+    return m_id;
 }
 
 QString PopplerFormFieldText::name() const
@@ -202,6 +204,7 @@ PopplerFormFieldChoice::PopplerFormFieldChoice( Poppler::FormFieldChoice * field
     : Okular::FormFieldChoice(), m_field( field )
 {
     m_rect = Okular::NormalizedRect::fromQRectF( m_field->rect() );
+    m_id = m_field->id();
     SET_ACTIONS
 }
 
@@ -217,7 +220,7 @@ Okular::NormalizedRect PopplerFormFieldChoice::rect() const
 
 int PopplerFormFieldChoice::id() const
 {
-    return m_field->id();
+    return m_id;
 }
 
 QString PopplerFormFieldChoice::name() const

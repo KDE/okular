@@ -206,9 +206,10 @@ QVariant DjVuGenerator::metaData( const QString &key, const QVariant &option ) c
     return QVariant();
 }
 
-Okular::TextPage* DjVuGenerator::textPage( Okular::Page *page )
+Okular::TextPage* DjVuGenerator::textPage( Okular::TextRequest *request )
 {
     userMutex()->lock();
+    const Okular::Page *page = request->page();
     QList<KDjVu::TextEntity> te;
 #if 0
     m_djvu->textEntities( page->number(), "char" );

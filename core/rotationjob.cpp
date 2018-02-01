@@ -17,6 +17,7 @@ RotationJob::RotationJob( const QImage &image, Rotation oldRotation, Rotation ne
     : ThreadWeaver::QObjectDecorator( new RotationJobInternal( image, oldRotation, newRotation ) )
     , mObserver( observer ), m_pd( nullptr )
     , mRect( NormalizedRect() )
+    , mIsPartialUpdate( false )
 {
 }
 
@@ -28,6 +29,11 @@ void RotationJob::setPage( PagePrivate * pd )
 void RotationJob::setRect( const NormalizedRect &rect )
 {
     mRect = rect;
+}
+
+void RotationJob::setIsPartialUpdate( bool partialUpdate )
+{
+    mIsPartialUpdate = partialUpdate;
 }
 
 DocumentObserver * RotationJob::observer() const
@@ -43,6 +49,11 @@ PagePrivate * RotationJob::page() const
 NormalizedRect RotationJob::rect() const
 {
     return mRect;
+}
+
+bool RotationJob::isPartialUpdate() const
+{
+    return mIsPartialUpdate;
 }
 
 QTransform RotationJob::rotationMatrix( Rotation from, Rotation to )

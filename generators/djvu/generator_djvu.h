@@ -43,7 +43,7 @@ class DjVuGenerator : public Okular::Generator
         bool doCloseDocument() override;
         // pixmap generation
         QImage image( Okular::PixmapRequest *request ) override;
-        Okular::TextPage* textPage( Okular::Page *page ) override;
+        Okular::TextPage* textPage( Okular::TextRequest *request ) override;
 
     private:
         void loadPages( QVector<Okular::Page*> & pagesVector, int rotation );

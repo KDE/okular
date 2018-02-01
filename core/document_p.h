@@ -150,6 +150,7 @@ class DocumentPrivate
         bool canModifyExternalAnnotations() const;
         bool canRemoveExternalAnnotations() const;
         OKULARCORE_EXPORT static QString docDataFileName(const QUrl &url, qint64 document_size);
+        bool cancelRenderingBecauseOf( PixmapRequest *executingRequest, PixmapRequest *newRequest );
 
         // Methods that implement functionality needed by undo commands
         void performAddPageAnnotation( int page, Annotation *annotation );

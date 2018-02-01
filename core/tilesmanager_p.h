@@ -116,7 +116,7 @@ class TilesManager
          * Also it checks the dimensions of the given parameters against the
          * current request as to avoid setting pixmaps of late requests.
          */
-        void setPixmap( const QPixmap *pixmap, const NormalizedRect &rect );
+        void setPixmap( const QPixmap *pixmap, const NormalizedRect &rect, bool isPartialPixmap );
 
         /**
          * Checks whether all tiles intersecting with @p rect are available.

@@ -22,6 +22,7 @@
 class QEventLoop;
 class QMutex;
 
+#include "generator.h"
 #include "page.h"
 
 namespace Okular {
@@ -80,6 +81,8 @@ class PixmapRequestPrivate
         void swap();
         TilesManager *tilesManager() const;
 
+        static PixmapRequestPrivate *get(const PixmapRequest *req);
+
         DocumentObserver *mObserver;
         int mPageNumber;
         int mWidth;
@@ -91,6 +94,18 @@ class PixmapRequestPrivate
         bool mPartialUpdatesWanted : 1;
         Page *mPage;
         NormalizedRect mNormalizedRect;
+        QAtomicInt mShouldAbortRender;
+        QImage mResultImage;
+};
+
+
+class TextRequestPrivate
+{
+    public:
+        static TextRequestPrivate *get(const TextRequest *req);
+
+        Page *mPage;
+        QAtomicInt mShouldAbortExtraction;
 };
 
 
@@ -117,7 +132,6 @@ class PixmapGenerationThread : public QThread
     private:
         Generator *mGenerator;
         PixmapRequest *mRequest;
-        QImage mImage;
         NormalizedRect mBoundingBox;
         bool mCalcBoundingBox : 1;
 };
@@ -132,20 +146,24 @@ class TextPageGenerationThread : public QThread
 
         void endGeneration();
 
+        void setPage( Page *page );
         Page *page() const;
 
         TextPage* textPage() const;
 
+        void abortExtraction();
+        bool shouldAbortExtraction() const;
+
     public slots:
-        void startGeneration( Okular::Page *page );
+        void startGeneration();
 
     protected:
         void run() override;
 
     private:
         Generator *mGenerator;
-        Page *mPage;
         TextPage *mTextPage;
+        TextRequest mTextRequest;
 };
 
 class FontExtractionThread : public QThread

@@ -42,7 +42,7 @@ PixmapRequest *PixmapGenerationThread::request() const
 
 QImage PixmapGenerationThread::image() const
 {
-    return mImage;
+    return mRequest ? PixmapRequestPrivate::get(mRequest)->mResultImage : QImage();
 }
 
 bool PixmapGenerationThread::calcBoundingBox() const
@@ -57,37 +57,49 @@ NormalizedRect PixmapGenerationThread::boundingBox() const
 
 void PixmapGenerationThread::run()
 {
-    mImage = QImage();
-
     if ( mRequest )
     {
-        mImage = mGenerator->image( mRequest );
+        PixmapRequestPrivate::get(mRequest)->mResultImage = mGenerator->image( mRequest );
+
         if ( mCalcBoundingBox )
-            mBoundingBox = Utils::imageBoundingBox( &mImage );
+            mBoundingBox = Utils::imageBoundingBox( &PixmapRequestPrivate::get(mRequest)->mResultImage );
     }
 }
 
 
 TextPageGenerationThread::TextPageGenerationThread( Generator *generator )
-    : mGenerator( generator ), mPage( nullptr )
+    : mGenerator( generator ), mTextPage( nullptr )
 {
+    TextRequestPrivate *treqPriv = TextRequestPrivate::get( &mTextRequest );
+    treqPriv->mPage = nullptr;
+    treqPriv->mShouldAbortExtraction = 0;
 }
 
-void TextPageGenerationThread::startGeneration( Page *page )
+void TextPageGenerationThread::startGeneration()
 {
-    mPage = page;
-
-    start( QThread::InheritPriority );
+    if ( page() )
+    {
+        start( QThread::InheritPriority );
+    }
 }
 
 void TextPageGenerationThread::endGeneration()
 {
-    mPage = nullptr;
+    TextRequestPrivate *treqPriv = TextRequestPrivate::get( &mTextRequest );
+    treqPriv->mPage = nullptr;
+    treqPriv->mShouldAbortExtraction = 0;
+}
+
+void TextPageGenerationThread::setPage( Page *page )
+{
+    TextRequestPrivate *treqPriv = TextRequestPrivate::get( &mTextRequest );
+    treqPriv->mPage = page;
+    treqPriv->mShouldAbortExtraction = 0;
 }
 
 Page *TextPageGenerationThread::page() const
 {
-    return mPage;
+    return mTextRequest.page();
 }
 
 TextPage* TextPageGenerationThread::textPage() const
@@ -95,12 +107,34 @@ TextPage* TextPageGenerationThread::textPage() const
     return mTextPage;
 }
 
+void TextPageGenerationThread::abortExtraction()
+{
+    // If extraction already finished no point in aborting
+    if ( !mTextPage )
+    {
+        TextRequestPrivate *treqPriv = TextRequestPrivate::get( &mTextRequest );
+        treqPriv->mShouldAbortExtraction = 1;
+    }
+}
+
+bool TextPageGenerationThread::shouldAbortExtraction() const
+{
+    return mTextRequest.shouldAbortExtraction();
+}
+
 void TextPageGenerationThread::run()
 {
     mTextPage = nullptr;
 
-    if ( mPage )
-        mTextPage = mGenerator->textPage( mPage );
+    Q_ASSERT ( page() );
+
+    mTextPage = mGenerator->textPage( &mTextRequest );
+
+    if ( mTextRequest.shouldAbortExtraction() )
+    {
+        delete mTextPage;
+        mTextPage = nullptr;
+    }
 }
 
 

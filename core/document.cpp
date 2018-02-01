@@ -1307,7 +1307,7 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
             if ( pixmap )
             {
                 tilesManager = new TilesManager( r->pageNumber(), pixmap->width(), pixmap->height(), r->page()->rotation() );
-                tilesManager->setPixmap( pixmap, NormalizedRect( 0, 0, 1, 1 ) );
+                tilesManager->setPixmap( pixmap, NormalizedRect( 0, 0, 1, 1 ), true /*isPartialPixmap*/ );
                 tilesManager->setSize( r->width(), r->height() );
             }
             else
@@ -1416,7 +1416,11 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
             request->setNormalizedRect( TilesManager::fromRotatedRect(
                         request->normalizedRect(), m_rotation ) );
 
-        request->setPartialUpdatesWanted( request->asynchronous() && !request->page()->hasPixmap( request->observer() ) );
+        // If set elsewhere we already know we want it to be partial
+        if ( !request->partialUpdatesWanted() )
+        {
+            request->setPartialUpdatesWanted( request->asynchronous() && !request->page()->hasPixmap( request->observer() ) );
+        }
 
         // we always have to unlock _before_ the generatePixmap() because
         // a sync generation would end with requestDone() -> deadlock, and
@@ -1512,18 +1516,29 @@ void DocumentPrivate::refreshPixmaps( int pageNumber )
     if ( !page )
         return;
 
-    QLinkedList< Okular::PixmapRequest * > requestedPixmaps;
     QMap< DocumentObserver*, PagePrivate::PixmapObject >::ConstIterator it = page->d->m_pixmaps.constBegin(), itEnd = page->d->m_pixmaps.constEnd();
+    QVector< Okular::PixmapRequest * > pixmapsToRequest;
     for ( ; it != itEnd; ++it )
     {
-        QSize size = (*it).m_pixmap->size();
+        const QSize size = (*it).m_pixmap->size();
         PixmapRequest * p = new PixmapRequest( it.key(), pageNumber, size.width() / qApp->devicePixelRatio(), size.height() / qApp->devicePixelRatio(), 1, PixmapRequest::Asynchronous );
         p->d->mForce = true;
-        requestedPixmaps.push_back( p );
+        pixmapsToRequest << p;
+    }
+
+    // Need to do this ↑↓ in two steps since requestPixmaps can end up calling cancelRenderingBecauseOf
+    // which changes m_pixmaps and thus breaks the loop above
+    for ( PixmapRequest *pr : qAsConst( pixmapsToRequest ) )
+    {
+        QLinkedList< Okular::PixmapRequest * > requestedPixmaps;
+        pixmapsToRequest.push_back( pr );
+        m_parent->requestPixmaps( requestedPixmaps, Okular::Document::NoOption );
     }
 
     foreach (DocumentObserver *observer, m_observers)
     {
+        QLinkedList< Okular::PixmapRequest * > requestedPixmaps;
+
         TilesManager *tilesManager = page->d->tilesManager( observer );
         if ( tilesManager )
         {
@@ -1557,10 +1572,10 @@ void DocumentPrivate::refreshPixmaps( int pageNumber )
                 delete p;
             }
         }
+
+        m_parent->requestPixmaps( requestedPixmaps, Okular::Document::NoOption );
     }
 
-    if ( !requestedPixmaps.isEmpty() )
-        m_parent->requestPixmaps( requestedPixmaps, Okular::Document::NoOption );
 }
 
 void DocumentPrivate::_o_configChanged()
@@ -2547,6 +2562,16 @@ void Document::closeDocument()
     {
         d->m_pixmapRequestsMutex.lock();
         startEventLoop = !d->m_executingPixmapRequests.isEmpty();
+
+        if ( d->m_generator->hasFeature( Generator::SupportsCancelling ) )
+        {
+            for ( PixmapRequest *executingRequest : qAsConst( d->m_executingPixmapRequests ) )
+                executingRequest->d->mShouldAbortRender = 1;
+
+            if ( d->m_generator->d_ptr->mTextPageGenerationThread )
+                d->m_generator->d_ptr->mTextPageGenerationThread->abortExtraction();
+        }
+
         d->m_pixmapRequestsMutex.unlock();
         if ( startEventLoop )
         {
@@ -3095,6 +3120,82 @@ QString Document::pageSizeString(int page) const
     return QString();
 }
 
+static bool shouldCancelRenderingBecauseOf( const PixmapRequest & executingRequest, const PixmapRequest & otherRequest )
+{
+    // New request has higher priority -> cancel
+    if ( executingRequest.priority() > otherRequest.priority() )
+        return true;
+
+    // New request has lower priority -> don't cancel
+    if ( executingRequest.priority() < otherRequest.priority() )
+        return false;
+
+    // New request has same priority and is from a different observer -> don't cancel
+    // AFAIK this never happens since all observers have different priorities
+    if ( executingRequest.observer() != otherRequest.observer() )
+        return false;
+
+    // Same priority and observer, different page number -> don't cancel
+    // may still end up cancelled later in the parent caller if none of the requests
+    // is of the executingRequest page and RemoveAllPrevious is specified
+    if ( executingRequest.pageNumber() != otherRequest.pageNumber() )
+        return false;
+
+    // Same priority, observer, page, different size -> cancel
+    if ( executingRequest.width() != otherRequest.width() )
+        return true;
+
+    // Same priority, observer, page, different size -> cancel
+    if ( executingRequest.height() != otherRequest.height() )
+        return true;
+
+    // Same priority, observer, page, different tiling -> cancel
+    if ( executingRequest.isTile() != otherRequest.isTile() )
+        return true;
+
+    // Same priority, observer, page, different tiling -> cancel
+    if ( executingRequest.isTile() )
+    {
+        const NormalizedRect bothRequestsRect = executingRequest.normalizedRect() | otherRequest.normalizedRect();
+        if ( !( bothRequestsRect == executingRequest.normalizedRect() ) )
+            return true;
+    }
+
+    return false;
+}
+
+bool DocumentPrivate::cancelRenderingBecauseOf( PixmapRequest *executingRequest, PixmapRequest *newRequest )
+{
+    // No point in aborting the rendering already finished, let it go through
+    if ( !executingRequest->d->mResultImage.isNull() )
+        return false;
+
+    if ( newRequest && executingRequest->partialUpdatesWanted() ) {
+        newRequest->setPartialUpdatesWanted( true );
+    }
+
+    TilesManager *tm = executingRequest->d->tilesManager();
+    if ( tm )
+    {
+        tm->setPixmap( nullptr, executingRequest->normalizedRect(), true /*isPartialPixmap*/ );
+        tm->setRequest( NormalizedRect(), 0, 0 );
+    }
+    PagePrivate::PixmapObject object = executingRequest->page()->d->m_pixmaps.take( executingRequest->observer() );
+    delete object.m_pixmap;
+
+    if ( executingRequest->d->mShouldAbortRender != 0)
+        return false;
+
+    executingRequest->d->mShouldAbortRender = 1;
+
+    if ( m_generator->d_ptr->mTextPageGenerationThread && m_generator->d_ptr->mTextPageGenerationThread->page() == executingRequest->page() )
+    {
+        m_generator->d_ptr->mTextPageGenerationThread->abortExtraction();
+    }
+
+    return true;
+}
+
 void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests )
 {
     requestPixmaps( requests, RemoveAllPrevious );
@@ -3115,14 +3216,18 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests, 
         return;
     }
 
+    QSet< DocumentObserver * > observersPixmapCleared;
+
     // 1. [CLEAN STACK] remove previous requests of requesterID
-    // FIXME This assumes all requests come from the same observer, that is true atm but not enforced anywhere
     DocumentObserver *requesterObserver = requests.first()->observer();
     QSet< int > requestedPages;
     {
         QLinkedList< PixmapRequest * >::const_iterator rIt = requests.constBegin(), rEnd = requests.constEnd();
         for ( ; rIt != rEnd; ++rIt )
+        {
+            Q_ASSERT( (*rIt)->observer() == requesterObserver );
             requestedPages.insert( (*rIt)->pageNumber() );
+        }
     }
     const bool removeAllPrevious = reqOptions & RemoveAllPrevious;
     d->m_pixmapRequestsMutex.lock();
@@ -3140,12 +3245,10 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests, 
             ++sIt;
     }
 
-    // 2. [ADD TO STACK] add requests to stack
-    QLinkedList< PixmapRequest * >::const_iterator rIt = requests.constBegin(), rEnd = requests.constEnd();
-    for ( ; rIt != rEnd; ++rIt )
+    // 1.B [PREPROCESS REQUESTS] tweak some values of the requests
+    for ( PixmapRequest *request : requests )
     {
         // set the 'page field' (see PixmapRequest) and check if it is valid
-        PixmapRequest * request = *rIt;
         qCDebug(OkularCoreDebug).nospace() << "request observer=" << request->observer() << " " <<request->width() << "x" << request->height() << "@" << request->pageNumber();
         if ( d->m_pagesVector.value( request->pageNumber() ) == 0 )
         {
@@ -3182,7 +3285,44 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests, 
 
         if ( !request->asynchronous() )
             request->d->mPriority = 0;
+    }
 
+    // 1.C [CANCEL REQUESTS] cancel those requests that are running and should be cancelled because of the new requests coming in
+    if ( d->m_generator->hasFeature( Generator::SupportsCancelling ) )
+    {
+        for ( PixmapRequest *executingRequest : qAsConst( d->m_executingPixmapRequests ) )
+        {
+            bool newRequestsContainExecutingRequestPage = false;
+            bool requestCancelled = false;
+            for ( PixmapRequest *newRequest : requests )
+            {
+                if ( newRequest->pageNumber() == executingRequest->pageNumber() && requesterObserver == executingRequest->observer())
+                {
+                    newRequestsContainExecutingRequestPage = true;
+                }
+
+                if ( shouldCancelRenderingBecauseOf( *executingRequest, *newRequest ) )
+                {
+                    requestCancelled = d->cancelRenderingBecauseOf( executingRequest, newRequest );
+                }
+            }
+
+            // If we were told to remove all the previous requests and the executing request page is not part of the new requests, cancel it
+            if ( !requestCancelled && removeAllPrevious && requesterObserver == executingRequest->observer() && !newRequestsContainExecutingRequestPage )
+            {
+                requestCancelled = d->cancelRenderingBecauseOf( executingRequest, nullptr );
+            }
+
+            if ( requestCancelled )
+            {
+                observersPixmapCleared << executingRequest->observer();
+            }
+        }
+    }
+
+    // 2. [ADD TO STACK] add requests to stack
+    for ( PixmapRequest *request : requests )
+    {
         // add request to the 'stack' at the right place
         if ( !request->priority() )
             // add priority zero requests to the top of the stack
@@ -3205,6 +3345,9 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests, 
     // all handling of requests put into sendGeneratorPixmapRequest
     //    if ( generator->canRequestPixmap() )
         d->sendGeneratorPixmapRequest();
+
+    for ( DocumentObserver *o : qAsConst( observersPixmapCleared ) )
+        o->notifyContentsCleared( Okular::DocumentObserver::Pixmap );
 }
 
 void Document::requestTextPage( uint page )
@@ -4859,41 +5002,44 @@ void DocumentPrivate::requestDone( PixmapRequest * req )
         qCDebug(OkularCoreDebug) << "requestDone with generator not in READY state.";
 #endif
 
-    // [MEM] 1.1 find and remove a previous entry for the same page and id
-    QLinkedList< AllocatedPixmap * >::iterator aIt = m_allocatedPixmaps.begin();
-    QLinkedList< AllocatedPixmap * >::iterator aEnd = m_allocatedPixmaps.end();
-    for ( ; aIt != aEnd; ++aIt )
-        if ( (*aIt)->page == req->pageNumber() && (*aIt)->observer == req->observer() )
-        {
-            AllocatedPixmap * p = *aIt;
-            m_allocatedPixmaps.erase( aIt );
-            m_allocatedPixmapsTotalMemory -= p->memory;
-            delete p;
-            break;
-        }
-
-    DocumentObserver *observer = req->observer();
-    if ( m_observers.contains(observer) )
+    if ( !req->shouldAbortRender() )
     {
-        // [MEM] 1.2 append memory allocation descriptor to the FIFO
-        qulonglong memoryBytes = 0;
-        const TilesManager *tm = req->d->tilesManager();
-        if ( tm )
-            memoryBytes = tm->totalMemory();
-        else
-            memoryBytes = 4 * req->width() * req->height();
+        // [MEM] 1.1 find and remove a previous entry for the same page and id
+        QLinkedList< AllocatedPixmap * >::iterator aIt = m_allocatedPixmaps.begin();
+        QLinkedList< AllocatedPixmap * >::iterator aEnd = m_allocatedPixmaps.end();
+        for ( ; aIt != aEnd; ++aIt )
+            if ( (*aIt)->page == req->pageNumber() && (*aIt)->observer == req->observer() )
+            {
+                AllocatedPixmap * p = *aIt;
+                m_allocatedPixmaps.erase( aIt );
+                m_allocatedPixmapsTotalMemory -= p->memory;
+                delete p;
+                break;
+            }
 
-        AllocatedPixmap * memoryPage = new AllocatedPixmap( req->observer(), req->pageNumber(), memoryBytes );
-        m_allocatedPixmaps.append( memoryPage );
-        m_allocatedPixmapsTotalMemory += memoryBytes;
+        DocumentObserver *observer = req->observer();
+        if ( m_observers.contains(observer) )
+        {
+            // [MEM] 1.2 append memory allocation descriptor to the FIFO
+            qulonglong memoryBytes = 0;
+            const TilesManager *tm = req->d->tilesManager();
+            if ( tm )
+                memoryBytes = tm->totalMemory();
+            else
+                memoryBytes = 4 * req->width() * req->height();
 
-        // 2. notify an observer that its pixmap changed
-        observer->notifyPageChanged( req->pageNumber(), DocumentObserver::Pixmap );
-    }
+            AllocatedPixmap * memoryPage = new AllocatedPixmap( req->observer(), req->pageNumber(), memoryBytes );
+            m_allocatedPixmaps.append( memoryPage );
+            m_allocatedPixmapsTotalMemory += memoryBytes;
+
+            // 2. notify an observer that its pixmap changed
+            observer->notifyPageChanged( req->pageNumber(), DocumentObserver::Pixmap );
+        }
 #ifndef NDEBUG
-    else
-        qCWarning(OkularCoreDebug) << "Receiving a done request for the defunct observer" << observer;
+        else
+            qCWarning(OkularCoreDebug) << "Receiving a done request for the defunct observer" << observer;
 #endif
+    }
 
     // 3. delete request
     m_pixmapRequestsMutex.lock();

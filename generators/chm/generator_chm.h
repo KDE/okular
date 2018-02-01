@@ -50,7 +50,7 @@ class CHMGenerator : public Okular::Generator
 
     protected:
         bool doCloseDocument() override;
-        Okular::TextPage* textPage( Okular::Page *page ) override;
+        Okular::TextPage* textPage( Okular::TextRequest *request ) override;
 
     private:
         void additionalRequestData();

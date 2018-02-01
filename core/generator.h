@@ -57,6 +57,8 @@ class Page;
 class PixmapRequest;
 class PixmapRequestPrivate;
 class TextPage;
+class TextRequest;
+class TextRequestPrivate;
 class NormalizedRect;
 class SourceReference;
 
@@ -212,7 +214,8 @@ class OKULARCORE_EXPORT Generator : public QObject
             PrintPostscript,   ///< Whether the Generator supports postscript-based file printing.
             PrintToFile,       ///< Whether the Generator supports export to PDF & PS through the Print Dialog
             TiledRendering,    ///< Whether the Generator can render tiles @since 0.16 (KDE 4.10)
-            SwapBackingFile    ///< Whether the Generator can hot-swap the file it's reading from @since 1.3
+            SwapBackingFile,   ///< Whether the Generator can hot-swap the file it's reading from @since 1.3
+            SupportsCancelling ///< Whether the Generator can cancel requests @since 1.4
         };
 
         /**
@@ -325,13 +328,11 @@ class OKULARCORE_EXPORT Generator : public QObject
          * This method can be called to trigger the generation of
          * a text page for the given @p page.
          *
-         * The generation is done synchronous or asynchronous, depending
-         * on the @p type parameter and the capabilities of the
-         * generator (e.g. multithreading).
+         * The generation is done in the calling thread.
          *
          * @see TextPage
          */
-        virtual void generateTextPage( Page * page );
+        void generateTextPage( Page * page );
 
         /**
          * Returns the general information object of the document.
@@ -520,18 +521,24 @@ class OKULARCORE_EXPORT Generator : public QObject
          * Returns the image of the page as specified in
          * the passed pixmap @p request.
          *
+         * Must return a null image if the request was cancelled and the generator supports cancelling
+         *
          * @warning this method may be executed in its own separated thread if the
          * @ref Threaded is enabled!
          */
         virtual QImage image( PixmapRequest *page );
 
         /**
-         * Returns the text page for the given @p page.
+         * Returns the text page for the given @p request.
+         *
+         * Must return a null pointer if the request was cancelled and the generator supports cancelling
          *
          * @warning this method may be executed in its own separated thread if the
          * @ref Threaded is enabled!
+         *
+         * @since 1.4
          */
-        virtual TextPage* textPage( Page *page );
+        virtual TextPage* textPage( TextRequest *request );
 
         /**
          * Returns a pointer to the document.
@@ -749,11 +756,55 @@ class OKULARCORE_EXPORT PixmapRequest
          */
         bool partialUpdatesWanted() const;
 
+        /**
+         * Should the request be aborted if possible?
+         *
+         * @since 1.4
+         */
+        bool shouldAbortRender() const;
+
     private:
         Q_DISABLE_COPY( PixmapRequest )
 
         friend class PixmapRequestPrivate;
         PixmapRequestPrivate* const d;
+};
+
+/**
+ * @short Describes a text request.
+ *
+ * @since 1.4
+ */
+class OKULARCORE_EXPORT TextRequest
+{
+    public:
+        /**
+         * Creates a new text request.
+         */
+        TextRequest( Page *page );
+
+        TextRequest();
+
+        /**
+         * Destroys the pixmap request.
+         */
+        ~TextRequest();
+
+        /**
+         * Returns a pointer to the page where the pixmap shall be generated for.
+         */
+        Page *page() const;
+
+        /**
+         * Should the request be aborted if possible?
+         */
+        bool shouldAbortExtraction() const;
+
+    private:
+        Q_DISABLE_COPY( TextRequest )
+
+        friend TextRequestPrivate;
+        TextRequestPrivate* const d;
 };
 
 }

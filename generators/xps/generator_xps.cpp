@@ -2117,10 +2117,10 @@ QImage XpsGenerator::image( Okular::PixmapRequest * request )
     return image;
 }
 
-Okular::TextPage* XpsGenerator::textPage( Okular::Page * page )
+Okular::TextPage* XpsGenerator::textPage( Okular::TextRequest * request )
 {
     QMutexLocker lock( userMutex() );
-    XpsPage * xpsPage = m_xpsFile->page( page->number() );
+    XpsPage * xpsPage = m_xpsFile->page( request->page()->number() );
     return xpsPage->textPage();
 }
 

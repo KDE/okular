@@ -208,7 +208,7 @@ class OKULARCORE_EXPORT TextDocumentGenerator : public Generator, public Okular:
 
     protected:
         bool doCloseDocument() override;
-        Okular::TextPage* textPage( Okular::Page *page ) override;
+        Okular::TextPage* textPage( Okular::TextRequest *request ) override;
 
     private:
         Q_DECLARE_PRIVATE( TextDocumentGenerator )

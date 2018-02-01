@@ -134,10 +134,12 @@ class PagePrivate
          */
         OKULARCORE_EXPORT static FormField *findEquivalentForm( const Page *p, FormField *oldField );
 
+        void setPixmap( DocumentObserver *observer, QPixmap *pixmap, const NormalizedRect &rect, bool isPartialPixmap );
+
         class PixmapObject
         {
             public:
-                QPixmap *m_pixmap;
+                QPixmap *m_pixmap = nullptr;
                 Rotation m_rotation;
         };
         QMap< DocumentObserver*, PixmapObject > m_pixmaps;

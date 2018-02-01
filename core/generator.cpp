@@ -22,6 +22,7 @@
 #include <QtCore/QDebug>
 #include <QIcon>
 #include <QMimeDatabase>
+#include <QTimer>
 #include <KLocalizedString>
 #include <kwallet.h>
 
@@ -90,13 +91,14 @@ void GeneratorPrivate::pixmapGenerationFinished()
 {
     Q_Q( Generator );
     PixmapRequest *request = mPixmapGenerationThread->request();
+    const QImage& img = mPixmapGenerationThread->image();
     mPixmapGenerationThread->endGeneration();
 
     QMutexLocker locker( threadsLock() );
-    mPixmapReady = true;
 
     if ( m_closing )
     {
+        mPixmapReady = true;
         delete request;
         if ( mTextPageReady )
         {
@@ -106,12 +108,25 @@ void GeneratorPrivate::pixmapGenerationFinished()
         return;
     }
 
-    const QImage& img = mPixmapGenerationThread->image();
-    request->page()->setPixmap( request->observer(), new QPixmap( QPixmap::fromImage( img ) ), request->normalizedRect() );
-    const int pageNumber = request->page()->number();
 
-    if ( mPixmapGenerationThread->calcBoundingBox() )
-        q->updatePageBoundingBox( pageNumber, mPixmapGenerationThread->boundingBox() );
+    if ( !request->shouldAbortRender() )
+    {
+        request->page()->setPixmap( request->observer(), new QPixmap( QPixmap::fromImage( img ) ), request->normalizedRect() );
+        const int pageNumber = request->page()->number();
+
+        if ( mPixmapGenerationThread->calcBoundingBox() )
+            q->updatePageBoundingBox( pageNumber, mPixmapGenerationThread->boundingBox() );
+    }
+    else
+    {
+        // Cancel the text page generation too if it's still running
+        if ( mTextPageGenerationThread && mTextPageGenerationThread->isRunning() ) {
+            mTextPageGenerationThread->abortExtraction();
+            mTextPageGenerationThread->wait();
+        }
+    }
+
+    mPixmapReady = true;
     q->signalPixmapRequestDone( request );
 }
 
@@ -161,11 +176,10 @@ QImage GeneratorPrivate::image( PixmapRequest * )
 }
 
 
-Generator::Generator(QObject* parent, const QVariantList&)
-    : QObject(parent)
-    , d_ptr( new GeneratorPrivate() )
+Generator::Generator(QObject* parent, const QVariantList &args)
+    : Generator( *new GeneratorPrivate(), parent, args )
 {
-    d_ptr->q_ptr = this;
+    // the delegated constructor does it all
 }
 
 Generator::Generator(GeneratorPrivate &dd, QObject *parent, const QVariantList &args)
@@ -253,6 +267,15 @@ void Generator::generatePixmap( PixmapRequest *request )
 
     if ( request->asynchronous() && hasFeature( Threaded ) )
     {
+        if ( d->textPageGenerationThread()->isFinished() && !canGenerateTextPage() )
+        {
+            // It can happen that the text generation has already finished but
+            // mTextPageReady is still false because textpageGenerationFinished
+            // didn't have time to run, if so queue ourselves
+            QTimer::singleShot(0, this, [this, request] { generatePixmap(request); });
+            return;
+        }
+
         d->pixmapGenerationThread()->startGeneration( request, calcBoundingBox );
 
         /**
@@ -261,8 +284,15 @@ void Generator::generatePixmap( PixmapRequest *request )
          */
         if ( hasFeature( TextExtraction ) && !request->page()->hasTextPage() && canGenerateTextPage() && !d->m_closing ) {
             d->mTextPageReady = false;
-            // Queue the text generation request so that pixmap generation gets a chance to start before the text generation
-            QMetaObject::invokeMethod(d->textPageGenerationThread(), "startGeneration", Qt::QueuedConnection, Q_ARG(Okular::Page*, request->page()));
+            d->textPageGenerationThread()->setPage( request->page() );
+
+            // dummy is used as a way to make sure the lambda gets disconnected each time it is executed
+            // since not all the times the pixmap generation thread starts we want the text generation thread to also start
+            QObject *dummy = new QObject();
+            connect(d_ptr->pixmapGenerationThread(), &QThread::started, dummy, [this, dummy] {
+                delete dummy;
+                d_ptr->textPageGenerationThread()->startGeneration();
+            });
         }
 
         return;
@@ -287,7 +317,8 @@ bool Generator::canGenerateTextPage() const
 
 void Generator::generateTextPage( Page *page )
 {
-    TextPage *tp = textPage( page );
+    TextRequest treq( page );
+    TextPage *tp = textPage( &treq );
     page->setTextPage( tp );
     signalTextGenerationDone( page, tp );
 }
@@ -298,7 +329,7 @@ QImage Generator::image( PixmapRequest *request )
     return d->image( request );
 }
 
-TextPage* Generator::textPage( Page* )
+TextPage* Generator::textPage( TextRequest * )
 {
     return nullptr;
 }
@@ -413,7 +444,11 @@ void Generator::signalTextGenerationDone( Page *page, TextPage *textPage )
 
 void Generator::signalPartialPixmapRequest( PixmapRequest *request, const QImage &image )
 {
-    request->page()->setPixmap( request->observer(), new QPixmap( QPixmap::fromImage( image ) ), request->normalizedRect() );
+    if ( request->shouldAbortRender() )
+        return;
+
+    PagePrivate *pagePrivate = PagePrivate::get( request->page() );
+    pagePrivate->setPixmap( request->observer(), new QPixmap( QPixmap::fromImage( image ) ), request->normalizedRect(), true /* isPartialPixmap */ );
 
     const int pageNumber = request->page()->number();
     request->observer()->notifyPageChanged( pageNumber, Okular::DocumentObserver::Pixmap );
@@ -504,6 +539,40 @@ QAbstractItemModel * Generator::layersModel() const
     return nullptr;
 }
 
+TextRequest::TextRequest()
+: d( new TextRequestPrivate )
+{
+    d->mPage = nullptr;
+    d->mShouldAbortExtraction = 0;
+}
+
+TextRequest::TextRequest( Page *page )
+: d( new TextRequestPrivate )
+{
+    d->mPage = page;
+    d->mShouldAbortExtraction = 0;
+}
+
+TextRequest::~TextRequest()
+{
+    delete d;
+}
+
+Page *TextRequest::page() const
+{
+    return d->mPage;
+}
+
+bool TextRequest::shouldAbortExtraction() const
+{
+    return d->mShouldAbortExtraction != 0;
+}
+
+TextRequestPrivate *TextRequestPrivate::get(const TextRequest *req)
+{
+    return req->d;
+}
+
 PixmapRequest::PixmapRequest( DocumentObserver *observer, int pageNumber, int width, int height, int priority, PixmapRequestFeatures features )
   : d( new PixmapRequestPrivate )
 {
@@ -517,6 +586,7 @@ PixmapRequest::PixmapRequest( DocumentObserver *observer, int pageNumber, int wi
     d->mTile = false;
     d->mNormalizedRect = NormalizedRect();
     d->mPartialUpdatesWanted = false;
+    d->mShouldAbortRender = 0;
 }
 
 PixmapRequest::~PixmapRequest()
@@ -597,9 +667,19 @@ bool PixmapRequest::partialUpdatesWanted() const
     return d->mPartialUpdatesWanted;
 }
 
+bool PixmapRequest::shouldAbortRender() const
+{
+    return d->mShouldAbortRender != 0;
+}
+
 Okular::TilesManager* PixmapRequestPrivate::tilesManager() const
 {
     return mPage->d->tilesManager(mObserver);
+}
+
+PixmapRequestPrivate *PixmapRequestPrivate::get(const PixmapRequest *req)
+{
+    return req->d;
 }
 
 void PixmapRequestPrivate::swap()
@@ -713,14 +793,21 @@ bool ExportFormat::operator!=( const ExportFormat &other ) const
 
 QDebug operator<<( QDebug str, const Okular::PixmapRequest &req )
 {
-    QString s = QStringLiteral( "PixmapRequest(#%2, %1, %3x%4, page %6, prio %5)" )
-        .arg( QString( req.asynchronous() ? QStringLiteral ( "async" ) : QStringLiteral ( "sync" ) ) )
-        .arg( (qulonglong)req.observer() )
-        .arg( req.width() )
-        .arg( req.height() )
-        .arg( req.priority() )
-        .arg( req.pageNumber() );
-    str << qPrintable( s );
+    PixmapRequestPrivate *reqPriv = PixmapRequestPrivate::get(&req);
+
+    str << "PixmapRequest:" << &req;
+    str << "- observer:" << (qulonglong)req.observer();
+    str << "- page:" << req.pageNumber();
+    str << "- width:" << req.width();
+    str << "- height:" << req.height();
+    str << "- priority:" << req.priority();
+    str << "- async:" << ( req.asynchronous() ? "true" : "false" );
+    str << "- tile:" << ( req.isTile() ? "true" : "false" );
+    str << "- rect:" << req.normalizedRect();
+    str << "- preload:" << ( req.preload() ? "true" : "false" );
+    str << "- partialUpdates:" << ( req.partialUpdatesWanted() ? "true" : "false" );
+    str << "- shouldAbort:" << ( req.shouldAbortRender() ? "true" : "false" );
+    str << "- force:" << ( reqPriv->mForce ? "true" : "false" );
     return str;
 }
 

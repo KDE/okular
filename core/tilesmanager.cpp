@@ -35,7 +35,7 @@ class TilesManager::Private
 
         bool hasPixmap( const NormalizedRect &rect, const TileNode &tile ) const;
         void tilesAt( const NormalizedRect &rect, TileNode &tile, QList<Tile> &result, TileLeaf tileLeaf );
-        void setPixmap( const QPixmap *pixmap, const NormalizedRect &rect, TileNode &tile );
+        void setPixmap( const QPixmap *pixmap, const NormalizedRect &rect, TileNode &tile, bool isPartialPixmap );
 
         /**
          * Mark @p tile and all its children as dirty
@@ -185,42 +185,45 @@ void TilesManager::Private::markDirty( TileNode &tile )
     }
 }
 
-void TilesManager::setPixmap( const QPixmap *pixmap, const NormalizedRect &rect )
+void TilesManager::setPixmap( const QPixmap *pixmap, const NormalizedRect &rect, bool isPartialPixmap )
 {
-    NormalizedRect rotatedRect = TilesManager::fromRotatedRect( rect, d->rotation );
+    const NormalizedRect rotatedRect = TilesManager::fromRotatedRect( rect, d->rotation );
     if ( !d->requestRect.isNull() )
     {
         if ( !(d->requestRect == rect) )
             return;
 
-        // Check whether the pixmap has the same absolute size of the expected
-        // request.
-        // If the document is rotated, rotate requestRect back to the original
-        // rotation before comparing to pixmap's size. This is to avoid
-        // conversion issues. The pixmap request was made using an unrotated
-        // rect.
-        QSize pixmapSize = pixmap->size();
-        int w = width();
-        int h = height();
-        if ( d->rotation % 2 )
+        if ( pixmap )
         {
-            qSwap(w, h);
-            pixmapSize.transpose();
-        }
+            // Check whether the pixmap has the same absolute size of the expected
+            // request.
+            // If the document is rotated, rotate requestRect back to the original
+            // rotation before comparing to pixmap's size. This is to avoid
+            // conversion issues. The pixmap request was made using an unrotated
+            // rect.
+            QSize pixmapSize = pixmap->size();
+            int w = width();
+            int h = height();
+            if ( d->rotation % 2 )
+            {
+                qSwap(w, h);
+                pixmapSize.transpose();
+            }
 
-        if ( rotatedRect.geometry( w, h ).size() != pixmapSize )
-            return;
+            if ( rotatedRect.geometry( w, h ).size() != pixmapSize )
+                return;
+        }
 
         d->requestRect = NormalizedRect();
     }
 
     for ( int i = 0; i < 16; ++i )
     {
-        d->setPixmap( pixmap, rotatedRect, d->tiles[ i ] );
+        d->setPixmap( pixmap, rotatedRect, d->tiles[ i ], isPartialPixmap );
     }
 }
 
-void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRect &rect, TileNode &tile )
+void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRect &rect, TileNode &tile, bool isPartialPixmap )
 {
     QRect pixmapRect = TilesManager::toRotatedRect( rect, rotation ).geometry( width, height );
 
@@ -236,7 +239,7 @@ void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRe
         if ( tile.nTiles > 0 )
         {
             for ( int i = 0; i < tile.nTiles; ++i )
-                setPixmap( pixmap, rect, tile.tiles[ i ] );
+                setPixmap( pixmap, rect, tile.tiles[ i ], isPartialPixmap );
 
             delete tile.pixmap;
             tile.pixmap = nullptr;
@@ -248,7 +251,7 @@ void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRe
     // the tile lies entirely within the viewport
     if ( tile.nTiles == 0 )
     {
-        tile.dirty = false;
+        tile.dirty = isPartialPixmap;
 
         // check whether the tile size is big and split it if necessary
         if ( !splitBigTiles( tile, rect ) )
@@ -258,10 +261,17 @@ void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRe
                 totalPixels -= tile.pixmap->width()*tile.pixmap->height();
                 delete tile.pixmap;
             }
-            NormalizedRect rotatedRect = TilesManager::toRotatedRect( tile.rect, rotation );
-            tile.pixmap = new QPixmap( pixmap->copy( rotatedRect.geometry( width, height ).translated( -pixmapRect.topLeft() ) ) );
             tile.rotation = rotation;
-            totalPixels += tile.pixmap->width()*tile.pixmap->height();
+            if ( pixmap )
+            {
+                const NormalizedRect rotatedRect = TilesManager::toRotatedRect( tile.rect, rotation );
+                tile.pixmap = new QPixmap( pixmap->copy( rotatedRect.geometry( width, height ).translated( -pixmapRect.topLeft() ) ) );
+                totalPixels += tile.pixmap->width()*tile.pixmap->height();
+            }
+            else
+            {
+                tile.pixmap = nullptr;
+            }
         }
         else
         {
@@ -273,7 +283,7 @@ void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRe
             }
 
             for ( int i = 0; i < tile.nTiles; ++i )
-                setPixmap( pixmap, rect, tile.tiles[ i ] );
+                setPixmap( pixmap, rect, tile.tiles[ i ], isPartialPixmap );
         }
     }
     else
@@ -283,7 +293,7 @@ void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRe
         // small, discards the children tiles and use the current one
         if ( tileRect.width()*tileRect.height() >= TILES_MAXSIZE )
         {
-            tile.dirty = false;
+            tile.dirty = isPartialPixmap;
             if ( tile.pixmap )
             {
                 totalPixels -= tile.pixmap->width()*tile.pixmap->height();
@@ -292,7 +302,7 @@ void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRe
             }
 
             for ( int i = 0; i < tile.nTiles; ++i )
-                setPixmap( pixmap, rect, tile.tiles[ i ] );
+                setPixmap( pixmap, rect, tile.tiles[ i ], isPartialPixmap );
         }
         else
         {
@@ -313,11 +323,18 @@ void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRe
                 totalPixels -= tile.pixmap->width()*tile.pixmap->height();
                 delete tile.pixmap;
             }
-            NormalizedRect rotatedRect = TilesManager::toRotatedRect( tile.rect, rotation );
-            tile.pixmap = new QPixmap( pixmap->copy( rotatedRect.geometry( width, height ).translated( -pixmapRect.topLeft() ) ) );
             tile.rotation = rotation;
-            totalPixels += tile.pixmap->width()*tile.pixmap->height();
-            tile.dirty = false;
+            if ( pixmap )
+            {
+                const NormalizedRect rotatedRect = TilesManager::toRotatedRect( tile.rect, rotation );
+                tile.pixmap = new QPixmap( pixmap->copy( rotatedRect.geometry( width, height ).translated( -pixmapRect.topLeft() ) ) );
+                totalPixels += tile.pixmap->width()*tile.pixmap->height();
+            }
+            else
+            {
+                tile.pixmap = nullptr;
+            }
+            tile.dirty = isPartialPixmap;
         }
     }
 }
@@ -336,7 +353,8 @@ bool TilesManager::hasPixmap( const NormalizedRect &rect )
 
 bool TilesManager::Private::hasPixmap( const NormalizedRect &rect, const TileNode &tile ) const
 {
-    if ( !tile.rect.intersects( rect ) )
+    const NormalizedRect rectIntersection = tile.rect & rect;
+    if ( rectIntersection.width() <= 0 || rectIntersection.height() <= 0 )
         return true;
 
     if ( tile.nTiles == 0 )

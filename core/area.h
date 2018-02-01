@@ -300,6 +300,18 @@ class OKULARCORE_EXPORT NormalizedRect
             return pow( distX * xScale, 2 ) + pow( distY * yScale, 2 );
         }
 
+        /// @since 1.4
+        double width() const
+        {
+            return right - left;
+        }
+
+        /// @since 1.4
+        double height() const
+        {
+            return bottom - top;
+        }
+
         /**
          * The normalized left coordinate.
          */

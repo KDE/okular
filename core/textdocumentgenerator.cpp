@@ -426,10 +426,10 @@ QImage TextDocumentGeneratorPrivate::image( PixmapRequest * request )
     return image;
 }
 
-Okular::TextPage* TextDocumentGenerator::textPage( Okular::Page * page )
+Okular::TextPage* TextDocumentGenerator::textPage( Okular::TextRequest * request )
 {
     Q_D( TextDocumentGenerator );
-    return d->createTextPage( page->number() );
+    return d->createTextPage( request->page()->number() );
 }
 
 bool TextDocumentGenerator::print( QPrinter& printer )

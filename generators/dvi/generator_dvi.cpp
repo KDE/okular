@@ -247,8 +247,10 @@ QImage DviGenerator::image( Okular::PixmapRequest *request )
     return ret;
 }
 
-Okular::TextPage* DviGenerator::textPage( Okular::Page *page )
+Okular::TextPage* DviGenerator::textPage( Okular::TextRequest *request )
 {
+    const Okular::Page *page = request->page();
+
     qCDebug(OkularDviDebug);
     dviPageInfo *pageInfo = new dviPageInfo();
     pageSize ps;

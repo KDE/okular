@@ -408,10 +408,11 @@ void CHMGenerator::additionalRequestData()
     }
 }
 
-Okular::TextPage* CHMGenerator::textPage( Okular::Page * page )
+Okular::TextPage* CHMGenerator::textPage( Okular::TextRequest * request )
 {
     userMutex()->lock();
 
+    const Okular::Page *page = request->page();
     m_syncGen->view()->resize(page->width(), page->height());
     
     preparePageForSyncOperation(m_pageUrl[page->number()]);

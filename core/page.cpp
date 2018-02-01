@@ -105,7 +105,7 @@ void PagePrivate::imageRotationDone( RotationJob * job )
     if ( tm )
     {
         QPixmap *pixmap = new QPixmap( QPixmap::fromImage( job->image() ) );
-        tm->setPixmap( pixmap, job->rect() );
+        tm->setPixmap( pixmap, job->rect(), job->isPartialUpdate() );
         delete pixmap;
         return;
     }
@@ -531,34 +531,40 @@ QLinkedList< FormField * > Page::formFields() const
 
 void Page::setPixmap( DocumentObserver *observer, QPixmap *pixmap, const NormalizedRect &rect )
 {
-    if ( d->m_rotation == Rotation0 ) {
-        TilesManager *tm = d->tilesManager( observer );
+    d->setPixmap( observer, pixmap, rect, false /*isPartialPixmap*/ );
+}
+
+void PagePrivate::setPixmap( DocumentObserver *observer, QPixmap *pixmap, const NormalizedRect &rect, bool isPartialPixmap )
+{
+    if ( m_rotation == Rotation0 ) {
+        TilesManager *tm = tilesManager( observer );
         if ( tm )
         {
-            tm->setPixmap( pixmap, rect );
+            tm->setPixmap( pixmap, rect, isPartialPixmap );
             delete pixmap;
             return;
         }
 
-        QMap< DocumentObserver*, PagePrivate::PixmapObject >::iterator it = d->m_pixmaps.find( observer );
-        if ( it != d->m_pixmaps.end() )
+        QMap< DocumentObserver*, PagePrivate::PixmapObject >::iterator it = m_pixmaps.find( observer );
+        if ( it != m_pixmaps.end() )
         {
             delete it.value().m_pixmap;
         }
         else
         {
-            it = d->m_pixmaps.insert( observer, PagePrivate::PixmapObject() );
+            it = m_pixmaps.insert( observer, PagePrivate::PixmapObject() );
         }
         it.value().m_pixmap = pixmap;
-        it.value().m_rotation = d->m_rotation;
+        it.value().m_rotation = m_rotation;
     } else {
         // it can happen that we get a setPixmap while closing and thus the page controller is gone
-        if ( d->m_doc->m_pageController )
+        if ( m_doc->m_pageController )
         {
-            RotationJob *job = new RotationJob( pixmap->toImage(), Rotation0, d->m_rotation, observer );
-            job->setPage( d );
-            job->setRect( TilesManager::toRotatedRect( rect, d->m_rotation ) );
-            d->m_doc->m_pageController->addRotationJob(job);
+            RotationJob *job = new RotationJob( pixmap->toImage(), Rotation0, m_rotation, observer );
+            job->setPage( this );
+            job->setRect( TilesManager::toRotatedRect( rect, m_rotation ) );
+            job->setIsPartialUpdate( isPartialPixmap );
+            m_doc->m_pageController->addRotationJob(job);
         }
 
         delete pixmap;

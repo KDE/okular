@@ -47,7 +47,7 @@ class DviGenerator : public Okular::Generator
     protected:
         bool doCloseDocument() override;
         QImage image( Okular::PixmapRequest * request ) override;
-        Okular::TextPage* textPage( Okular::Page *page ) override;
+        Okular::TextPage* textPage( Okular::TextRequest *request ) override;
 
     private:
         double m_resolution;

@@ -104,7 +104,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
     protected:
         SwapBackingFileResult swapBackingFile( QString const &newFileName, QVector<Okular::Page*> & newPagesVector ) override;
         bool doCloseDocument() override;
-        Okular::TextPage* textPage( Okular::Page *page ) override;
+        Okular::TextPage* textPage( Okular::TextRequest *request ) override;
 
     protected Q_SLOTS:
         void requestFontData(const Okular::FontInfo &font, QByteArray *data);

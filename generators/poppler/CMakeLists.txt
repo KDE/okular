@@ -61,6 +61,17 @@ int main()
 }
 " HAVE_POPPLER_0_62)
 
+check_cxx_source_compiles("
+#include <poppler-qt5.h>
+#include <QImage>
+int main()
+{
+  Poppler::Page *p;
+  p->renderToImage(0, 0, 0, 0, 0, 0, Poppler::Page::Rotate0, nullptr, nullptr, nullptr, QVariant());
+  return 0;
+}
+" HAVE_POPPLER_0_63)
+
 configure_file(
    ${CMAKE_CURRENT_SOURCE_DIR}/config-okular-poppler.h.cmake
    ${CMAKE_CURRENT_BINARY_DIR}/config-okular-poppler.h

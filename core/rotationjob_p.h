@@ -53,12 +53,14 @@ class RotationJob : public ThreadWeaver::QObjectDecorator
 
         void setPage( PagePrivate * pd );
         void setRect( const NormalizedRect &rect );
+        void setIsPartialUpdate( bool partialUpdate );
 
         QImage image() const { return static_cast<const RotationJobInternal*>(job())->image(); }
         Rotation rotation() const { return static_cast<const RotationJobInternal*>(job())->rotation(); }
         DocumentObserver *observer() const;
         PagePrivate * page() const;
         NormalizedRect rect() const;
+        bool isPartialUpdate() const;
 
         static QTransform rotationMatrix( Rotation from, Rotation to );
 
@@ -66,6 +68,7 @@ class RotationJob : public ThreadWeaver::QObjectDecorator
         DocumentObserver *mObserver;
         PagePrivate * m_pd;
         NormalizedRect mRect;
+        bool mIsPartialUpdate;
 };
 
 }

@@ -1366,7 +1366,7 @@ Document::OpenResult Part::doOpenFile( const QMimeType &mimeA, const QString &fi
                 return Document::OpenError;
         }
 
-        m_fileLastModified = QFileInfo( fileNameToOpen ).lastModified();
+        m_fileLastModified = QFileInfo( localFilePath() ).lastModified();
         return Document::OpenSuccess;
     }
 
@@ -1462,7 +1462,7 @@ Document::OpenResult Part::doOpenFile( const QMimeType &mimeA, const QString &fi
 
     if ( openResult == Document::OpenSuccess )
     {
-        m_fileLastModified = QFileInfo( fileNameToOpen ).lastModified();
+        m_fileLastModified = QFileInfo( localFilePath() ).lastModified();
     }
     return openResult;
 }

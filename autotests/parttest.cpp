@@ -919,6 +919,7 @@ void PartTest::testSaveAs_data()
     QTest::addColumn<bool>("canSwapBackingFile");
 
     QTest::newRow("pdf") << KDESRCDIR "data/file1.pdf" << "pdf" << true << true;
+    QTest::newRow("pdf.gz") << KDESRCDIR "data/file1.pdf.gz" << "pdf" << true << true;
     QTest::newRow("epub") << KDESRCDIR "data/contents.epub" << "epub" << false << false;
     QTest::newRow("jpg") << KDESRCDIR "data/potato.jpg" << "jpg" << false << true;
 }

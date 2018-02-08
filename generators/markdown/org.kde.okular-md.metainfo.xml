@@ -12,6 +12,7 @@
   <name xml:lang="el">Markdown</name>
   <name xml:lang="en-GB">Markdown</name>
   <name xml:lang="es">Markdown</name>
+  <name xml:lang="fi">Markdown</name>
   <name xml:lang="fr">Markdown</name>
   <name xml:lang="ia">Markdown</name>
   <name xml:lang="it">Markdown</name>
@@ -39,6 +40,7 @@
   <summary xml:lang="el">Προσθέτει υποστήριξη για ανάγνωση Markdown εγγράφων</summary>
   <summary xml:lang="en-GB">Adds support for reading Markdown documents</summary>
   <summary xml:lang="es">Permite la lectura de documentos Markdown</summary>
+  <summary xml:lang="fi">Lisää Markdown-tiedostojen lukutuen</summary>
   <summary xml:lang="fr">Permet la lecture des documents Markdown</summary>
   <summary xml:lang="ia">Adde supporto per leger documentos Markdown</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti Markdown</summary>

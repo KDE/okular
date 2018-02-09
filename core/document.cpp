@@ -1531,7 +1531,7 @@ void DocumentPrivate::refreshPixmaps( int pageNumber )
     for ( PixmapRequest *pr : qAsConst( pixmapsToRequest ) )
     {
         QLinkedList< Okular::PixmapRequest * > requestedPixmaps;
-        pixmapsToRequest.push_back( pr );
+        requestedPixmaps.push_back( pr );
         m_parent->requestPixmaps( requestedPixmaps, Okular::Document::NoOption );
     }
 

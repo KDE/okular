@@ -1108,24 +1108,22 @@ Okular::TextPage* PDFGenerator::textPage( Okular::Page *page )
     // build a TextList...
     QList<Poppler::TextBox*> textList;
     double pageWidth, pageHeight;
+    userMutex()->lock();
     Poppler::Page *pp = pdfdoc->page( page->number() );
     if (pp)
     {
-        userMutex()->lock();
         textList = pp->textList();
-        userMutex()->unlock();
-
-        QSizeF s = pp->pageSizeF();
+        const QSizeF s = pp->pageSizeF();
         pageWidth = s.width();
         pageHeight = s.height();
-
-        delete pp;
     }
     else
     {
         pageWidth = defaultPageWidth;
         pageHeight = defaultPageHeight;
     }
+    delete pp;
+    userMutex()->unlock();
 
     Okular::TextPage *tp = abstractTextPage(textList, pageHeight, pageWidth, (Poppler::Page::Rotation)page->orientation());
     qDeleteAll(textList);

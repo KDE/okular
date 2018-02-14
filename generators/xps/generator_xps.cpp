@@ -474,7 +474,7 @@ static QString absolutePath( const QString &path, const QString &location )
         retPath = location;
     } else {
         QUrl u = QUrl::fromLocalFile(path);
-        QUrl u2 = QUrl::fromLocalFile(location);
+        QUrl u2 = QUrl(location);
         retPath = u.resolved(u2).toDisplayString(QUrl::PreferLocalFile);
     }
     // it seems paths & file names can also be percent-encoded

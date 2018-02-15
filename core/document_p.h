@@ -203,6 +203,8 @@ class DocumentPrivate
         // For sync files
         void loadSyncFile( const QString & filePath );
 
+        void clearAndWaitForRequests();
+
         // member variables
         Document *m_parent;
         QPointer<QWidget> m_widget;

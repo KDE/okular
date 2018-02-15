@@ -2133,6 +2133,43 @@ void DocumentPrivate::loadSyncFile( const QString & filePath )
             m_pagesVector[i]->setSourceReferences( refRects.at(i) );
 }
 
+void DocumentPrivate::clearAndWaitForRequests()
+{
+    m_pixmapRequestsMutex.lock();
+    QLinkedList< PixmapRequest * >::const_iterator sIt = m_pixmapRequestsStack.constBegin();
+    QLinkedList< PixmapRequest * >::const_iterator sEnd = m_pixmapRequestsStack.constEnd();
+    for ( ; sIt != sEnd; ++sIt )
+        delete *sIt;
+    m_pixmapRequestsStack.clear();
+    m_pixmapRequestsMutex.unlock();
+
+    QEventLoop loop;
+    bool startEventLoop = false;
+    do
+    {
+        m_pixmapRequestsMutex.lock();
+        startEventLoop = !m_executingPixmapRequests.isEmpty();
+
+        if ( m_generator->hasFeature( Generator::SupportsCancelling ) )
+        {
+            for ( PixmapRequest *executingRequest : qAsConst( m_executingPixmapRequests ) )
+                executingRequest->d->mShouldAbortRender = 1;
+
+            if ( m_generator->d_ptr->mTextPageGenerationThread )
+                m_generator->d_ptr->mTextPageGenerationThread->abortExtraction();
+        }
+
+        m_pixmapRequestsMutex.unlock();
+        if ( startEventLoop )
+        {
+            m_closingLoop = &loop;
+            loop.exec();
+            m_closingLoop = nullptr;
+        }
+    }
+    while ( startEventLoop );
+}
+
 Document::Document( QWidget *widget )
     : QObject( nullptr ), d( new DocumentPrivate( this ) )
 {
@@ -2548,39 +2585,7 @@ void Document::closeDocument()
     d->m_scripter = nullptr;
 
      // remove requests left in queue
-    d->m_pixmapRequestsMutex.lock();
-    QLinkedList< PixmapRequest * >::const_iterator sIt = d->m_pixmapRequestsStack.constBegin();
-    QLinkedList< PixmapRequest * >::const_iterator sEnd = d->m_pixmapRequestsStack.constEnd();
-    for ( ; sIt != sEnd; ++sIt )
-        delete *sIt;
-    d->m_pixmapRequestsStack.clear();
-    d->m_pixmapRequestsMutex.unlock();
-
-    QEventLoop loop;
-    bool startEventLoop = false;
-    do
-    {
-        d->m_pixmapRequestsMutex.lock();
-        startEventLoop = !d->m_executingPixmapRequests.isEmpty();
-
-        if ( d->m_generator->hasFeature( Generator::SupportsCancelling ) )
-        {
-            for ( PixmapRequest *executingRequest : qAsConst( d->m_executingPixmapRequests ) )
-                executingRequest->d->mShouldAbortRender = 1;
-
-            if ( d->m_generator->d_ptr->mTextPageGenerationThread )
-                d->m_generator->d_ptr->mTextPageGenerationThread->abortExtraction();
-        }
-
-        d->m_pixmapRequestsMutex.unlock();
-        if ( startEventLoop )
-        {
-            d->m_closingLoop = &loop;
-            loop.exec();
-            d->m_closingLoop = nullptr;
-        }
-    }
-    while ( startEventLoop );
+    d->clearAndWaitForRequests();
 
     if ( d->m_fontThread )
     {
@@ -4490,6 +4495,8 @@ bool Document::swapBackingFile( const QString &newFileName, const QUrl &url )
 
     // Save metadata about the file we're about to close
     d->saveDocumentInfo();
+
+    d->clearAndWaitForRequests();
 
     qCDebug(OkularCoreDebug) << "Swapping backing file to" << newFileName;
     QVector< Page * > newPagesVector;

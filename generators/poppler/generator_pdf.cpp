@@ -1187,29 +1187,27 @@ Okular::TextPage* PDFGenerator::textPage( Okular::TextRequest *request )
     // build a TextList...
     QList<Poppler::TextBox*> textList;
     double pageWidth, pageHeight;
+    userMutex()->lock();
     Poppler::Page *pp = pdfdoc->page( page->number() );
     if (pp)
     {
-        userMutex()->lock();
 #ifdef HAVE_POPPLER_0_63
         TextExtractionPayload payload(request);
         textList = pp->textList( Poppler::Page::Rotate0, shouldAbortTextExtractionCallback, QVariant::fromValue( &payload ) );
 #else
         textList = pp->textList();
 #endif
-        userMutex()->unlock();
-
-        QSizeF s = pp->pageSizeF();
+        const QSizeF s = pp->pageSizeF();
         pageWidth = s.width();
         pageHeight = s.height();
-
-        delete pp;
     }
     else
     {
         pageWidth = defaultPageWidth;
         pageHeight = defaultPageHeight;
     }
+    delete pp;
+    userMutex()->unlock();
 
     if ( textList.isEmpty() && request->shouldAbortExtraction() )
         return nullptr;

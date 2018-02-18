@@ -179,20 +179,13 @@ void SearchTest::test311232()
     
     const int searchId = 0;
     d.searchText(searchId, QStringLiteral(" i "), true, Qt::CaseSensitive, Okular::Document::NextMatch, false, QColor());
-    QTime t;
-    t.start();
-    while (spy.count() != 1 && t.elapsed() < 500)
-        qApp->processEvents();
-    QCOMPARE(spy.count(), 1);
+    QTRY_COMPARE(spy.count(), 1);
     QCOMPARE(receiver.m_id, searchId);
     QCOMPARE(receiver.m_status, Okular::Document::MatchFound);
     
     
     d.continueSearch( searchId, Okular::Document::PreviousMatch );
-    t.start();
-    while (spy.count() != 2 && t.elapsed() < 500)
-        qApp->processEvents();
-    QCOMPARE(spy.count(), 2);
+    QTRY_COMPARE(spy.count(), 2);
     QCOMPARE(receiver.m_id, searchId);
     QCOMPARE(receiver.m_status, Okular::Document::NoMatchFound);
 }

@@ -22,11 +22,6 @@
 #include <QWindow>
 #include <QScreen>
 
-#ifdef Q_OS_MAC
-#include <ApplicationServices/ApplicationServices.h>
-#include <IOKit/graphics/IOGraphicsLib.h>
-#endif
-
 
 
 using namespace Okular;
@@ -58,8 +53,6 @@ QRect Utils::rotateRect( const QRect & source, int width, int height, int orient
     return ret;
 }
 
-#if !defined(Q_OS_MAC)
-
 QSizeF Utils::realDpi(QWidget* widgetOnScreen)
 {
     const QScreen* screen = widgetOnScreen && widgetOnScreen->window() && widgetOnScreen->window()->windowHandle()
@@ -79,86 +72,6 @@ QSizeF Utils::realDpi(QWidget* widgetOnScreen)
     }
     return QSizeF(72, 72);
 }
-
-#else
-    /*
-     * Code copied from http://developer.apple.com/qa/qa2001/qa1217.html
-     */
-    //    Handy utility function for retrieving an int from a CFDictionaryRef
-    static int GetIntFromDictionaryForKey( CFDictionaryRef desc, CFStringRef key )
-    {
-        CFNumberRef value;
-        int num = 0;
-        if ( (value = (CFNumberRef)CFDictionaryGetValue(desc, key)) == NULL || CFGetTypeID(value) != CFNumberGetTypeID())
-            return 0;
-        CFNumberGetValue(value, kCFNumberIntType, &num);
-        return num;
-    }
-
-    static CGDisplayErr GetDisplayDPI( CFDictionaryRef displayModeDict, CGDirectDisplayID displayID,
-                                       double *horizontalDPI, double *verticalDPI )
-    {
-        CGDisplayErr err = kCGErrorFailure;
-        io_connect_t displayPort;
-        CFDictionaryRef displayDict;
-
-        //    Grab a connection to IOKit for the requested display
-        displayPort = CGDisplayIOServicePort( displayID );
-        if ( displayPort != MACH_PORT_NULL )
-        {
-            //    Find out what IOKit knows about this display
-            displayDict = IODisplayCreateInfoDictionary(displayPort, 0);
-            if ( displayDict != NULL )
-            {
-                const double mmPerInch = 25.4;
-                double horizontalSizeInInches =
-                    (double)GetIntFromDictionaryForKey(displayDict,
-                                                       CFSTR(kDisplayHorizontalImageSize)) / mmPerInch;
-                double verticalSizeInInches =
-                    (double)GetIntFromDictionaryForKey(displayDict,
-                                                       CFSTR(kDisplayVerticalImageSize)) / mmPerInch;
-
-                //    Make sure to release the dictionary we got from IOKit
-                CFRelease(displayDict);
-
-                // Now we can calculate the actual DPI
-                // with information from the displayModeDict
-                *horizontalDPI =
-                    (double)GetIntFromDictionaryForKey( displayModeDict, kCGDisplayWidth )
-                    / horizontalSizeInInches;
-                *verticalDPI = (double)GetIntFromDictionaryForKey( displayModeDict,
-                        kCGDisplayHeight ) / verticalSizeInInches;
-                err = CGDisplayNoErr;
-            }
-        }
-        return err;
-    }
-
-double Utils::realDpiX()
-{
-    double x,y;
-    CGDisplayErr err = GetDisplayDPI( CGDisplayCurrentMode(kCGDirectMainDisplay),
-                                      kCGDirectMainDisplay,
-                                      &x, &y );
-
-    return err == CGDisplayNoErr ? x : 72.0;
-}
-
-double Utils::realDpiY()
-{
-    double x,y;
-    CGDisplayErr err = GetDisplayDPI( CGDisplayCurrentMode(kCGDirectMainDisplay),
-                                      kCGDirectMainDisplay,
-                                      &x, &y );
-
-    return err == CGDisplayNoErr ? y : 72.0;
-}
-
-QSizeF Utils::realDpi(QWidget*)
-{
-    return QSizeF(realDpiX(), realDpiY());
-}
-#endif
 
 inline static bool isPaperColor( QRgb argb, QRgb paperColor ) {
     return ( argb & 0xFFFFFF ) == ( paperColor & 0xFFFFFF); // ignore alpha

@@ -422,6 +422,9 @@ bool Converter::convertSection( const QDomElement &element )
         } else if ( child.tagName() == QLatin1String( "empty-line" ) ) {
             if ( !convertEmptyLine( child ) )
                 return false;
+        } else if ( child.tagName() == QLatin1String( "code" ) ) {
+            if( !convertCode( child ) )
+                return false;
         }
 
         child = child.nextSiblingElement();
@@ -504,6 +507,15 @@ bool Converter::convertParagraph( const QDomElement &element )
                     return false;
             } else if ( childElement.tagName() == QLatin1String( "strikethrough" ) ) {
                 if ( !convertStrikethrough( childElement ) )
+                    return false;
+            } else if ( childElement.tagName() == QLatin1String( "code" ) ) {
+                if( !convertCode( childElement ) )
+                    return false;
+            } else if ( childElement.tagName() == QLatin1String( "sup" ) ) {
+                if( !convertSuperScript( childElement ) )
+                    return false;
+            } else if ( childElement.tagName() == QLatin1String( "sub" ) ) {
+                if( !convertSubScript( childElement ) )
                     return false;
             }
         } else if ( child.isText() ) {
@@ -788,6 +800,54 @@ bool Converter::convertStanza( const QDomElement &element )
 
         child = child.nextSiblingElement();
     }
+
+    return true;
+}
+
+bool Converter::convertCode( const QDomElement &element )
+{
+    QTextCharFormat origFormat = mCursor->charFormat();
+
+    QTextCharFormat codeFormat( origFormat );
+    codeFormat.setFontFamily( QStringLiteral( "monospace" ) );
+    mCursor->setCharFormat( codeFormat );
+
+    if ( !convertParagraph( element ) )
+        return false;
+
+    mCursor->setCharFormat( origFormat );
+
+    return true;
+}
+
+bool Converter::convertSuperScript( const QDomElement &element )
+{
+    QTextCharFormat origFormat = mCursor->charFormat();
+
+    QTextCharFormat superScriptFormat( origFormat );
+    superScriptFormat.setVerticalAlignment( QTextCharFormat::AlignSuperScript );
+    mCursor->setCharFormat( superScriptFormat );
+
+    if ( !convertParagraph( element ) )
+        return false;
+
+    mCursor->setCharFormat( origFormat );
+
+    return true;
+}
+
+bool Converter::convertSubScript( const QDomElement &element )
+{
+    QTextCharFormat origFormat = mCursor->charFormat();
+
+    QTextCharFormat subScriptFormat( origFormat );
+    subScriptFormat.setVerticalAlignment( QTextCharFormat::AlignSubScript );
+    mCursor->setCharFormat( subScriptFormat );
+
+    if ( !convertParagraph( element ) )
+        return false;
+
+    mCursor->setCharFormat( origFormat );
 
     return true;
 }

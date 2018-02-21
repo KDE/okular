@@ -20,7 +20,7 @@ class Okular::ScripterPrivate
 {
     public:
         ScripterPrivate( DocumentPrivate *doc )
-            : m_doc( doc ), m_kjs( nullptr )
+            : m_doc( doc ), m_kjs( nullptr ), m_event( nullptr )
         {
         }
 
@@ -31,6 +31,7 @@ class Okular::ScripterPrivate
 
         DocumentPrivate *m_doc;
         ExecutorKJS *m_kjs;
+        Event *m_event;
 };
 
 Scripter::Scripter( DocumentPrivate *doc )
@@ -59,8 +60,18 @@ QString Scripter::execute( ScriptType type, const QString &script )
             {
                 d->m_kjs = new ExecutorKJS( d->m_doc );
             }
-            d->m_kjs->execute( script );
+            d->m_kjs->execute( script, d->m_event );
             break;
     }
     return QString();
+}
+
+void Scripter::setEvent( Event *event )
+{
+    d->m_event = event;
+}
+
+Event *Scripter::event() const
+{
+    return d->m_event;
 }

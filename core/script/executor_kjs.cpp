@@ -20,10 +20,12 @@
 #include "../debug_p.h"
 #include "../document_p.h"
 
+#include "event_p.h"
 #include "kjs_app_p.h"
 #include "kjs_console_p.h"
 #include "kjs_data_p.h"
 #include "kjs_document_p.h"
+#include "kjs_event_p.h"
 #include "kjs_field_p.h"
 #include "kjs_fullscreen_p.h"
 #include "kjs_spell_p.h"
@@ -63,6 +65,7 @@ void ExecutorKJSPrivate::initTypes()
     JSConsole::initType( ctx );
     JSData::initType( ctx );
     JSDocument::initType( ctx );
+    JSEvent::initType( ctx );
     JSField::initType( ctx );
     JSSpell::initType( ctx );
     JSUtil::initType( ctx );
@@ -84,7 +87,7 @@ ExecutorKJS::~ExecutorKJS()
     delete d;
 }
 
-void ExecutorKJS::execute( const QString &script )
+void ExecutorKJS::execute( const QString &script, Event *event )
 {
 #if 0
     QString script2;
@@ -97,9 +100,12 @@ void ExecutorKJS::execute( const QString &script )
     }
 #endif
 
+    KJSContext* ctx = d->m_interpreter->globalContext();
+
+    d->m_docObject.setProperty( ctx, QStringLiteral("event"), event ? JSEvent::wrapEvent( ctx, event ) : KJSUndefined() );
+
     KJSResult result = d->m_interpreter->evaluate( QStringLiteral("okular.js"), 1,
                                                    script, &d->m_docObject );
-    KJSContext* ctx = d->m_interpreter->globalContext();
     if ( result.isException() || ctx->hasException() )
     {
         qCDebug(OkularCoreDebug) << "JS exception" << result.errorMessage();
@@ -107,6 +113,12 @@ void ExecutorKJS::execute( const QString &script )
     else
     {
         qCDebug(OkularCoreDebug) << "result:" << result.value().toString( ctx );
+
+        if (event)
+        {
+            qCDebug(OkularCoreDebug) << "Event Result:" << event->name()
+                                     << event->type() << "value:" << event->value();
+        }
     }
     JSField::clearCachedFields();
 }

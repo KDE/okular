@@ -19,6 +19,7 @@ namespace Okular {
 
 class Document;
 class DocumentPrivate;
+class Event;
 class ScripterPrivate;
 
 class Scripter
@@ -30,6 +31,9 @@ class Scripter
         ~Scripter();
 
         QString execute( ScriptType type, const QString &script );
+
+        void setEvent( Event *event );
+        Event *event() const;
 
     private:
         friend class ScripterPrivate;

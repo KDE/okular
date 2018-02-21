@@ -160,11 +160,13 @@ set(okularcore_SRCS
    core/utils.cpp
    core/view.cpp
    core/fileprinter.cpp
+   core/script/event.cpp
    core/script/executor_kjs.cpp
    core/script/kjs_app.cpp
    core/script/kjs_console.cpp
    core/script/kjs_data.cpp
    core/script/kjs_document.cpp
+   core/script/kjs_event.cpp
    core/script/kjs_fullscreen.cpp
    core/script/kjs_field.cpp
    core/script/kjs_spell.cpp

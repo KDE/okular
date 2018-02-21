@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2008 by Pino Toscano <pino@kde.org>                     *
+ *   Copyright (C) 2018 by Intevation GmbH <intevation@intevation.de>      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -7,28 +7,22 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef OKULAR_SCRIPT_EXECUTOR_KJS_P_H
-#define OKULAR_SCRIPT_EXECUTOR_KJS_P_H
+#ifndef OKULAR_SCRIPT_KJS_EVENT_P_H
+#define OKULAR_SCRIPT_KJS_EVENT_P_H
 
-class QString;
+class KJSContext;
+class KJSObject;
 
 namespace Okular {
 
-class DocumentPrivate;
-class ExecutorKJSPrivate;
 class Event;
 
-class ExecutorKJS
+class JSEvent
 {
     public:
-        ExecutorKJS( DocumentPrivate *doc );
-        ~ExecutorKJS();
-
-        void execute( const QString &script, Event *event );
-
-    private:
-        friend class ExecutorKJSPrivate;
-        ExecutorKJSPrivate* d;
+        static void initType( KJSContext *ctx );
+        static KJSObject wrapEvent( KJSContext *ctx, Event *event );
+        static void clearCachedFields();
 };
 
 }

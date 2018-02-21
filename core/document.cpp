@@ -3406,6 +3406,7 @@ void DocumentPrivate::notifyAnnotationChanges( int page )
 
 void DocumentPrivate::notifyFormChanges( int /*page*/ )
 {
+    recalculateForms();
 }
 
 void Document::addPageAnnotation( int page, Annotation * annotation )

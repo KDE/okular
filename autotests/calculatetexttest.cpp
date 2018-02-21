@@ -91,6 +91,15 @@ void CalculateTextTest::testSimpleCalculate()
 
     // Test that updating the field also worked with sum
     QCOMPARE (fields[QStringLiteral ("Sum")]->text(), QStringLiteral( "40" ));
+
+    // Test that undo / redo works
+    QVERIFY( m_document->canUndo() );
+    m_document->undo();
+    QCOMPARE( fields[QStringLiteral ("Sum")]->text(), QStringLiteral( "60" ) );
+
+    QVERIFY( m_document->canRedo() );
+    m_document->redo();
+    QCOMPARE( fields[QStringLiteral ("Sum")]->text(), QStringLiteral( "40" ) );
 }
 
 QTEST_MAIN( CalculateTextTest )

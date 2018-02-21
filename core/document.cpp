@@ -16,6 +16,7 @@
 #include "documentcommands_p.h"
 
 #include <limits.h>
+#include <memory>
 #ifdef Q_OS_WIN
 #define _WIN32_WINNT 0x0500
 #include <windows.h>
@@ -80,6 +81,7 @@
 #include "page_p.h"
 #include "pagecontroller_p.h"
 #include "scripter.h"
+#include "script/event_p.h"
 #include "settings_core.h"
 #include "sourcereference.h"
 #include "sourcereference_p.h"
@@ -1118,19 +1120,50 @@ void DocumentPrivate::recalculateForms()
             const Page *p = m_parent->page( pageIdx );
             if (p)
             {
+                bool pageNeedsRefresh = false;
                 foreach( FormField *form, p->formFields() )
                 {
                     if ( form->id() == formId ) {
                         Action *action = form->additionalAction( FormField::CalculateField );
                         if (action)
                         {
+                            FormFieldText *fft = dynamic_cast< FormFieldText * >( form );
+                            std::shared_ptr<Event> event;
+                            QString oldVal;
+                            if ( fft )
+                            {
+                                // Pepare text calculate event
+                                event = Event::createFormCalculateEvent( fft, m_pagesVector[pageIdx] );
+                                if ( !m_scripter )
+                                    m_scripter = new Scripter( this );
+                                m_scripter->setEvent( event.get() );
+                                // The value maybe changed in javascript so save it first.
+                                oldVal = fft->text();
+                            }
+
                             m_parent->processAction( action );
+                            if ( event && fft )
+                            {
+                                // Update text field from calculate
+                                m_scripter->setEvent( nullptr );
+                                const QString newVal = event->value().toString();
+                                if ( newVal != oldVal )
+                                {
+                                    fft->setText( newVal );
+                                    emit m_parent->refreshFormWidget( fft );
+                                    pageNeedsRefresh = true;
+                                }
+                            }
                         }
                         else
                         {
                             qWarning() << "Form that is part of calculate order doesn't have a calculate action";
                         }
                     }
+                }
+                if ( pageNeedsRefresh )
+                {
+                    refreshPixmaps( p->number() );
                 }
             }
         }

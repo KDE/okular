@@ -70,6 +70,10 @@ FormWidgetsController::FormWidgetsController( Okular::Document *doc )
              this, &FormWidgetsController::canUndoChanged );
     connect( doc, &Okular::Document::canRedoChanged,
              this, &FormWidgetsController::canRedoChanged );
+
+    // Connect the generic formWidget refresh signal
+    connect( doc, &Okular::Document::refreshFormWidget,
+             this, &FormWidgetsController::refreshFormWidget );
 }
 
 FormWidgetsController::~FormWidgetsController()
@@ -419,6 +423,8 @@ void FormLineEdit::setFormWidgetsController(FormWidgetsController* controller)
     FormWidgetIface::setFormWidgetsController(controller);
     connect( m_controller, &FormWidgetsController::formTextChangedByUndoRedo,
              this, &FormLineEdit::slotHandleTextChangedByUndoRedo );
+    connect( m_controller, &FormWidgetsController::refreshFormWidget,
+             this, &FormLineEdit::slotRefresh );
 }
 
 bool FormLineEdit::event( QEvent* e )
@@ -515,6 +521,17 @@ void FormLineEdit::slotHandleTextChangedByUndoRedo( int pageNumber,
     setFocus();
 }
 
+void FormLineEdit::slotRefresh( Okular::FormField *form )
+{
+    if (form != m_ff)
+    {
+        return;
+    }
+    Okular::FormFieldText *text = static_cast<Okular::FormFieldText *> ( form );
+
+    setText( text->text() );
+}
+
 TextAreaEdit::TextAreaEdit( Okular::FormFieldText * text, QWidget * parent )
 : KTextEdit( parent ), FormWidgetIface( this, text, true )
 {
@@ -582,6 +599,8 @@ void TextAreaEdit::setFormWidgetsController( FormWidgetsController* controller )
     FormWidgetIface::setFormWidgetsController( controller );
     connect( m_controller, &FormWidgetsController::formTextChangedByUndoRedo,
              this, &TextAreaEdit::slotHandleTextChangedByUndoRedo );
+    connect( m_controller, &FormWidgetsController::refreshFormWidget,
+             this, &TextAreaEdit::slotRefresh );
 }
 
 void TextAreaEdit::slotHandleTextChangedByUndoRedo( int pageNumber,
@@ -623,6 +642,16 @@ void TextAreaEdit::slotChanged()
     m_prevAnchorPos = textCursor().anchor();
 }
 
+void TextAreaEdit::slotRefresh( Okular::FormField *form )
+{
+    if (form != m_ff)
+    {
+        return;
+    }
+    Okular::FormFieldText *text = static_cast<Okular::FormFieldText *> ( form );
+
+    setPlainText( text->text() );
+}
 
 FileEdit::FileEdit( Okular::FormFieldText * text, QWidget * parent )
     : KUrlRequester( parent ), FormWidgetIface( this, text, !text->isReadOnly() )

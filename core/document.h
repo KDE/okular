@@ -48,6 +48,7 @@ class DocumentViewport;
 class EmbeddedFile;
 class ExportFormat;
 class FontInfo;
+class FormField;
 class FormFieldText;
 class FormFieldButton;
 class FormFieldChoice;
@@ -1192,6 +1193,13 @@ class OKULARCORE_EXPORT Document : public QObject
          * @since 0.17 (KDE 4.11)
          */
         void formButtonsChangedByUndoRedo( int page, const QList< Okular::FormFieldButton* > & formButtons );
+
+        /**
+         * This signal is emmitted whenever a FormField was changed programatically and the
+         * according widget should be updated.
+         * @since 1.4
+         */
+        void refreshFormWidget( Okular::FormField *field );
     private:
         /// @cond PRIVATE
         friend class DocumentPrivate;

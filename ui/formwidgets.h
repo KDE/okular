@@ -113,6 +113,8 @@ class FormWidgetsController : public QObject
 
         void action( Okular::Action *action );
 
+        void refreshFormWidget( Okular::FormField * form );
+
     private Q_SLOTS:
         void slotButtonClicked( QAbstractButton *button );
         void slotFormButtonsChangedByUndoRedo( int pageNumber,
@@ -223,6 +225,7 @@ class FormLineEdit : public QLineEdit, public FormWidgetIface
                                               int anchorPos );
     private Q_SLOTS:
         void slotChanged();
+        void slotRefresh(Okular::FormField* form);
 
     private:
         int m_prevCursorPos;
@@ -249,6 +252,7 @@ class TextAreaEdit : public KTextEdit, public FormWidgetIface
 
     private Q_SLOTS:
         void slotChanged();
+        void slotRefresh(Okular::FormField* form);
 
     private:
         int m_prevCursorPos;

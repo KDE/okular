@@ -175,6 +175,10 @@ set(okularcore_SRCS
    core/synctex/synctex_parser_utils.c
 )
 
+qt5_add_resources(okularcore_SRCS
+   core/script/builtin.qrc
+)
+
 ki18n_wrap_ui(okularcore_SRCS
    conf/textdocumentsettings.ui
 )

@@ -10,6 +10,7 @@
 #include "scripter.h"
 
 #include <QtCore/QDebug>
+#include <QFile>
 
 #include "debug_p.h"
 #include "script/executor_kjs_p.h"
@@ -53,6 +54,21 @@ QString Scripter::execute( ScriptType type, const QString &script )
     else
         qDebug() << script.left( 1000 ) << "[...]";
 #endif
+    static QString builtInScript;
+    if ( builtInScript.isNull() )
+    {
+        QFile builtInResource ( ":/script/builtin.js" );
+        if (!builtInResource.open( QIODevice::ReadOnly ))
+        {
+            qCDebug(OkularCoreDebug) << "failed to load builtin script";
+        }
+        else
+        {
+            builtInScript = QString::fromUtf8( builtInResource.readAll() );
+            builtInResource.close();
+        }
+    }
+
     switch ( type )
     {
         case JavaScript:
@@ -60,7 +76,7 @@ QString Scripter::execute( ScriptType type, const QString &script )
             {
                 d->m_kjs = new ExecutorKJS( d->m_doc );
             }
-            d->m_kjs->execute( script, d->m_event );
+            d->m_kjs->execute( builtInScript + script, d->m_event );
             break;
     }
     return QString();

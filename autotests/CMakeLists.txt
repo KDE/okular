@@ -57,6 +57,11 @@ ecm_add_test(editformstest.cpp
     LINK_LIBRARIES Qt5::Widgets Qt5::Test okularcore
 )
 
+ecm_add_test(calculatetexttest.cpp
+    TEST_NAME "calculatetexttest"
+    LINK_LIBRARIES Qt5::Widgets Qt5::Test okularcore
+)
+
 if(NOT WIN32)
 	ecm_add_test(mainshelltest.cpp ../shell/okular_main.cpp ../shell/shellutils.cpp ../shell/shell.cpp
 		TEST_NAME "mainshelltest"

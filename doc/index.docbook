@@ -727,6 +727,11 @@ Context menu actions like Rename Bookmarks etc.)
 				      </tbody>
 				    </tgroup>
 				  </informaltable>
+                                  <note>
+                                      <para>
+                                          It is possible to add &latex; code into the text of annotations. Please add <userinput>$$<replaceable>code</replaceable>$$</userinput> to the text of annotation, where <replaceable>code</replaceable> is any valid &latex; equation, and follow instructions on the screen to make it render by a &latex; distribution installed in your system.
+                                      </para>
+                                  </note>
 				  <para>
 				    The contents of the annotating toolbar can be configured using the <link linkend="configannotations">Annotations page of &okular; configuration dialog</link>. This page can be opened with &RMB; clicking on the annotating toolbar then choosing <guimenuitem>Configure Annotations...</guimenuitem> from the context menu.
 				</para>

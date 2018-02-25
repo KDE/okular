@@ -1256,10 +1256,10 @@ void PartTest::test388288()
                        part.m_pageView->viewport()->height();
 
     QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * 0.5, height * 0.5));
-    QTRY_COMPARE(part.m_pageView->cursor(), Qt::OpenHandCursor);
+    QTRY_COMPARE(part.m_pageView->cursor().shape(), Qt::OpenHandCursor);
 
     QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * 0.4, height * 0.165));
-    QTRY_COMPARE(part.m_pageView->cursor(), Qt::ArrowCursor);
+    QTRY_COMPARE(part.m_pageView->cursor().shape(), Qt::ArrowCursor);
 
     QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * 0.1, height * 0.165));
 
@@ -1273,7 +1273,7 @@ void PartTest::test388288()
     part.m_document->addPageAnnotation( 0, annot );
 
     QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * 0.5, height * 0.5));
-    QTRY_COMPARE(part.m_pageView->cursor(), Qt::OpenHandCursor);
+    QTRY_COMPARE(part.m_pageView->cursor().shape(), Qt::OpenHandCursor);
 }
 
 }

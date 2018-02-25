@@ -20,6 +20,7 @@
 #include "../ui/pageview.h"
 
 #include <KConfigDialog>
+#include <KParts/OpenUrlArguments>
 
 #include <QClipboard>
 #include <QMessageBox>
@@ -86,6 +87,7 @@ class PartTest
         void testGeneratorPreferences();
         void testSelectText();
         void testClickInternalLink();
+        void testOpenUrlArguments();
         void testSaveAs();
         void testSaveAs_data();
         void testSaveAsUndoStackAnnotations();
@@ -1203,6 +1205,21 @@ void PartTest::testSaveAsUndoStackForms_data()
 
     QTest::newRow("pdf") << KDESRCDIR "data/formSamples.pdf" << "pdf" << false;
     QTest::newRow("pdfarchive") << KDESRCDIR "data/formSamples.pdf" << "okular" << true;
+}
+
+void PartTest::testOpenUrlArguments()
+{
+    QVariantList dummyArgs;
+    Okular::Part part(NULL, NULL, dummyArgs);
+
+    KParts::OpenUrlArguments args;
+    args.setMimeType(QStringLiteral("text/rtf"));
+
+    part.setArguments(args);
+
+    part.openUrl(QStringLiteral(KDESRCDIR "data/file1.pdf"));
+
+    QCOMPARE( part.arguments().mimeType(), QStringLiteral("text/rtf") );
 }
 
 }

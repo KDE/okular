@@ -1222,7 +1222,7 @@ void PartTest::testOpenUrlArguments()
 
     part.setArguments(args);
 
-    part.openUrl(QStringLiteral(KDESRCDIR "data/file1.pdf"));
+    part.openUrl(QUrl::fromLocalFile(QStringLiteral(KDESRCDIR "data/file1.pdf")));
 
     QCOMPARE( part.arguments().mimeType(), QStringLiteral("text/rtf") );
 }

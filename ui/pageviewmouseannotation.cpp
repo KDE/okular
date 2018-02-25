@@ -42,6 +42,23 @@ bool AnnotationDescription::isValid() const
     return ( annotation != nullptr );
 }
 
+bool AnnotationDescription::isContainedInPage( const Okular::Document * document, int pageNumber ) const
+{
+    if ( AnnotationDescription::pageNumber == pageNumber )
+    {
+        /* Don't access page via pageViewItem here. pageViewItem might have been deleted. */
+        const Okular::Page * page = document->page( pageNumber );
+        if ( page != nullptr )
+        {
+            if ( page->annotations().contains( annotation ) )
+            {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 void AnnotationDescription::invalidate()
 {
     annotation = nullptr;
@@ -403,6 +420,24 @@ Qt::CursorShape MouseAnnotation::cursor() const
     return Qt::ArrowCursor;
 }
 
+void MouseAnnotation::notifyAnnotationChanged( int pageNumber )
+{
+    const AnnotationDescription emptyAd;
+
+    if ( m_focusedAnnotation.isValid() &&
+            ! m_focusedAnnotation.isContainedInPage( m_document, pageNumber ) )
+    {
+        setState( StateInactive, emptyAd );
+    }
+
+    if ( m_mouseOverAnnotation.isValid() &&
+            ! m_mouseOverAnnotation.isContainedInPage( m_document, pageNumber ) )
+    {
+        m_mouseOverAnnotation = emptyAd;
+        m_pageView->updateCursor();
+    }
+}
+
 void MouseAnnotation::updateAnnotationPointers()
 {
     if (m_focusedAnnotation.annotation)
@@ -552,9 +587,12 @@ void MouseAnnotation::finishCommand()
 void MouseAnnotation::updateViewport( const AnnotationDescription & ad ) const
 {
     const QRect & changedPageViewItemRect = getFullBoundingRect( ad );
-    m_pageView->viewport()->update( changedPageViewItemRect
-            .translated( ad.pageViewItem->uncroppedGeometry().topLeft() )
-            .translated( -m_pageView->contentAreaPosition() ) );
+    if ( changedPageViewItemRect.isValid() )
+    {
+        m_pageView->viewport()->update( changedPageViewItemRect
+                .translated( ad.pageViewItem->uncroppedGeometry().topLeft() )
+                .translated( -m_pageView->contentAreaPosition() ) );
+    }
 }
 
 /* eventPos: Mouse position in uncropped page coordinates.

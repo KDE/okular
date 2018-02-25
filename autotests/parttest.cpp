@@ -88,6 +88,7 @@ class PartTest
         void testSelectText();
         void testClickInternalLink();
         void testOpenUrlArguments();
+        void test388288();
         void testSaveAs();
         void testSaveAs_data();
         void testSaveAsUndoStackAnnotations();
@@ -1220,6 +1221,59 @@ void PartTest::testOpenUrlArguments()
     part.openUrl(QUrl::fromLocalFile(QStringLiteral(KDESRCDIR "data/file1.pdf")));
 
     QCOMPARE( part.arguments().mimeType(), QStringLiteral("text/rtf") );
+}
+
+void PartTest::test388288()
+{
+    Okular::Part part(nullptr, nullptr, QVariantList());
+
+    part.openUrl(QUrl::fromLocalFile(QStringLiteral(KDESRCDIR "data/file1.pdf")));
+
+    part.widget()->show();
+    QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
+
+    QMetaObject::invokeMethod(part.m_pageView, "slotToggleAnnotator", Q_ARG( bool, true ));
+
+    auto annot = new Okular::HighlightAnnotation();
+    annot->setHighlightType( Okular::HighlightAnnotation::Highlight );
+    const Okular::NormalizedRect r(0.36, 0.16, 0.51, 0.17);
+    annot->setBoundingRectangle( r );
+    Okular::HighlightAnnotation::Quad q;
+    q.setCapStart( false );
+    q.setCapEnd( false );
+    q.setFeather( 1.0 );
+    q.setPoint( Okular::NormalizedPoint( r.left, r.bottom ), 0 );
+    q.setPoint( Okular::NormalizedPoint( r.right, r.bottom ), 1 );
+    q.setPoint( Okular::NormalizedPoint( r.right, r.top ), 2 );
+    q.setPoint( Okular::NormalizedPoint( r.left, r.top ), 3 );
+    annot->highlightQuads().append( q );
+
+    part.m_document->addPageAnnotation( 0, annot );
+
+    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
+                      part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->verticalScrollBar()->maximum() +
+                       part.m_pageView->viewport()->height();
+
+    QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * 0.5, height * 0.5));
+    QTRY_COMPARE(part.m_pageView->cursor(), Qt::OpenHandCursor);
+
+    QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * 0.4, height * 0.165));
+    QTRY_COMPARE(part.m_pageView->cursor(), Qt::ArrowCursor);
+
+    QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * 0.1, height * 0.165));
+
+    part.m_document->undo();
+
+    annot = new Okular::HighlightAnnotation();
+    annot->setHighlightType( Okular::HighlightAnnotation::Highlight );
+    annot->setBoundingRectangle( r );
+    annot->highlightQuads().append( q );
+
+    part.m_document->addPageAnnotation( 0, annot );
+
+    QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * 0.5, height * 0.5));
+    QTRY_COMPARE(part.m_pageView->cursor(), Qt::OpenHandCursor);
 }
 
 }

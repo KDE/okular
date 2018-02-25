@@ -46,9 +46,10 @@ class AnnotationDescription
 {
 public:
     AnnotationDescription()
-        : annotation( nullptr ), pageViewItem( nullptr ), pageNumber( 0 ) {}
+        : annotation( nullptr ), pageViewItem( nullptr ), pageNumber( -1 ) {}
     AnnotationDescription( PageViewItem * newPageViewItem, const QPoint& eventPos );
     bool isValid() const;
+    bool isContainedInPage( const Okular::Document * document, int pageNumber ) const;
     void invalidate();
     bool operator==( const AnnotationDescription & rhs ) const
     {
@@ -116,7 +117,10 @@ public:
 
     Qt::CursorShape cursor() const;
 
-    // needs to be called after document save
+    /* Forward DocumentObserver::notifyPageChanged to this method. */
+    void notifyAnnotationChanged( int pageNumber );
+
+    /* Forward DocumentObserver::notifySetup to this method. */
     void updateAnnotationPointers();
 
     enum MouseAnnotationState {

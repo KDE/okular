@@ -1411,11 +1411,7 @@ void PageView::notifyPageChanged( int pageNumber, int changedFlags )
             }
         }
 
-        QLinkedList< Okular::Annotation * >::ConstIterator annIt = qFind( annots, d->mouseAnnotation->annotation() );
-        if ( annIt == annItEnd )
-        {
-            d->mouseAnnotation->cancel();
-        }
+        d->mouseAnnotation->notifyAnnotationChanged( pageNumber );
     }
 
     if ( changedFlags & DocumentObserver::BoundingBox )

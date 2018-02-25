@@ -1659,9 +1659,15 @@ bool Part::openUrl( const QUrl &_url, bool swapInsteadOfOpening )
      * to read it */
     m_swapInsteadOfOpening = swapInsteadOfOpening;
 
+    // The subsequent call to closeUrl clears the arguments.
+    // We want to save them and restore them later.
+    const KParts::OpenUrlArguments args = arguments();
+
     // Close current document if any
     if ( !closeUrl() )
         return false;
+
+    setArguments(args);
 
     QUrl url( _url );
     if ( url.hasFragment() )

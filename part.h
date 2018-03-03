@@ -165,6 +165,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         Q_SCRIPTABLE void slotTogglePresentation();
         Q_SCRIPTABLE Q_NOREPLY void reload();
         Q_SCRIPTABLE Q_NOREPLY void enableStartWithPrint();
+        Q_SCRIPTABLE Q_NOREPLY void enableExitAfterPrint();
 
     Q_SIGNALS:
         void enablePrintAction(bool enable);
@@ -261,7 +262,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         void setupActions();
 
         void setupPrint( QPrinter &printer );
-        void doPrint( QPrinter &printer );
+        bool doPrint( QPrinter &printer );
         bool handleCompressed(QString &destpath, const QString &path, KCompressionDevice::CompressionType compressionType );
         void rebuildBookmarkMenu( bool unplugActions = true );
         void updateAboutBackendAction();
@@ -388,6 +389,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         QList<QAction*> m_bookmarkActions;
         bool m_cliPresentation;
         bool m_cliPrint;
+        bool m_cliPrintAndExit;
         QString m_addBookmarkText;
         QIcon m_addBookmarkIcon;
 

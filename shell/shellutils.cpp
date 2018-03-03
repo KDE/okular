@@ -66,28 +66,30 @@ QString serializeOptions(const QCommandLineParser &args)
 {
     const bool startInPresentation = args.isSet( QStringLiteral("presentation") );
     const bool showPrintDialog = args.isSet( QStringLiteral("print") );
+    const bool showPrintDialogAndExit = args.isSet( QStringLiteral("print-and-exit") );
     const bool unique = args.isSet(QStringLiteral("unique")) && args.positionalArguments().count() <= 1;
     const bool noRaise = args.isSet(QStringLiteral("noraise"));
     const QString page = args.value(QStringLiteral("page"));
 
-    return serializeOptions(startInPresentation, showPrintDialog, unique, noRaise, page);
+    return serializeOptions(startInPresentation, showPrintDialog, showPrintDialogAndExit, unique, noRaise, page);
 }
 
-QString serializeOptions(bool startInPresentation, bool showPrintDialog, bool unique, bool noRaise, const QString &page)
+QString serializeOptions(bool startInPresentation, bool showPrintDialog, bool showPrintDialogAndExit, bool unique, bool noRaise, const QString &page)
 {
-    return QStringLiteral("%1:%2:%3:%4:%5").arg(startInPresentation).arg(showPrintDialog).arg(unique).arg(noRaise).arg(page);
+    return QStringLiteral("%1:%2:%3:%4:%5:%6").arg(startInPresentation).arg(showPrintDialog).arg(showPrintDialogAndExit).arg(unique).arg(noRaise).arg(page);
 }
 
-bool unserializeOptions(const QString &serializedOptions, bool *presentation, bool *print, bool *unique, bool *noraise, QString *page)
+bool unserializeOptions(const QString &serializedOptions, bool *presentation, bool *print, bool *print_and_exit, bool *unique, bool *noraise, QString *page)
 {
     const QStringList args = serializedOptions.split(QStringLiteral(":"));
-    if (args.count() == 5)
+    if (args.count() == 6)
     {
         *presentation = args[0] == QLatin1String("1");
         *print = args[1] == QLatin1String("1");
-        *unique = args[2] == QLatin1String("1");
-        *noraise = args[3] == QLatin1String("1");
-        *page = args[4];
+        *print_and_exit = args[2] == QLatin1String("1");
+        *unique = args[3] == QLatin1String("1");
+        *noraise = args[4] == QLatin1String("1");
+        *page = args[5];
         return true;
     }
     return false;
@@ -97,35 +99,42 @@ bool startInPresentation(const QString &serializedOptions)
 {
     bool result, dummy;
     QString dummyString;
-    return unserializeOptions(serializedOptions, &result, &dummy, &dummy, &dummy, &dummyString) && result;
+    return unserializeOptions(serializedOptions, &result, &dummy, &dummy, &dummy, &dummy, &dummyString) && result;
 }
 
 bool showPrintDialog(const QString &serializedOptions)
 {
     bool result, dummy;
     QString dummyString;
-    return unserializeOptions(serializedOptions, &dummy, &result, &dummy, &dummy, &dummyString) && result;
+    return unserializeOptions(serializedOptions, &dummy, &result, &dummy, &dummy, &dummy, &dummyString) && result;
+}
+
+bool showPrintDialogAndExit(const QString &serializedOptions)
+{
+    bool result, dummy;
+    QString dummyString;
+    return unserializeOptions(serializedOptions, &dummy, &dummy, &result, &dummy, &dummy, &dummyString) && result;
 }
 
 bool unique(const QString &serializedOptions)
 {
     bool result, dummy;
     QString dummyString;
-    return unserializeOptions(serializedOptions, &dummy, &dummy, &result, &dummy, &dummyString) && result;
+    return unserializeOptions(serializedOptions, &dummy, &dummy, &dummy, &result, &dummy, &dummyString) && result;
 }
 
 bool noRaise(const QString &serializedOptions)
 {
     bool result, dummy;
     QString dummyString;
-    return unserializeOptions(serializedOptions, &dummy, &dummy, &dummy, &result, &dummyString) && result;
+    return unserializeOptions(serializedOptions, &dummy, &dummy, &dummy, &dummy, &result, &dummyString) && result;
 }
 
 QString page(const QString &serializedOptions)
 {
     QString result;
     bool dummy;
-    unserializeOptions(serializedOptions, &dummy, &dummy, &dummy, &dummy, &result);
+    unserializeOptions(serializedOptions, &dummy, &dummy, &dummy, &dummy, &dummy, &result);
     return result;
 }
 

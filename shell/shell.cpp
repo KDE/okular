@@ -684,6 +684,8 @@ void Shell::applyOptionsToPart( QObject* part, const QString &serializedOptions 
         doc->startPresentation();
     if ( ShellUtils::showPrintDialog(serializedOptions) )
         QMetaObject::invokeMethod( part, "enableStartWithPrint" );
+    if ( ShellUtils::showPrintDialogAndExit(serializedOptions) )
+        QMetaObject::invokeMethod( part, "enableExitAfterPrint" );
 }
 
 void Shell::connectPart( QObject* part )

@@ -304,7 +304,7 @@ QObject *parent,
 const QVariantList &args)
 : KParts::ReadWritePart(parent),
 m_tempfile( nullptr ), m_documentOpenWithPassword( false ), m_swapInsteadOfOpening( false ), m_isReloading( false ), m_fileWasRemoved( false ), m_showMenuBarAction( nullptr ), m_showFullScreenAction( nullptr ), m_actionsSearched( false ),
-m_cliPresentation(false), m_cliPrint(false), m_embedMode(detectEmbedMode(parentWidget, parent, args)), m_generatorGuiClient(nullptr), m_keeper( nullptr )
+m_cliPresentation(false), m_cliPrint(false), m_cliPrintAndExit(false), m_embedMode(detectEmbedMode(parentWidget, parent, args)), m_generatorGuiClient(nullptr), m_keeper( nullptr )
 {
     // make sure that the component name is okular otherwise the XMLGUI .rc files are not found
     // when this part is used in an application other than okular (e.g. unit tests)
@@ -1643,6 +1643,10 @@ bool Part::openFile()
     if ( m_cliPrint )
     {
         m_cliPrint = false;
+        slotPrint();
+    }
+    else if ( m_cliPrintAndExit )
+    {
         slotPrint();
     }
     return true;
@@ -3068,6 +3072,11 @@ void Part::enableStartWithPrint()
     m_cliPrint = true;
 }
 
+void Part::enableExitAfterPrint()
+{
+    m_cliPrintAndExit = true;
+}
+
 void Part::slotAboutBackend()
 {
     const KPluginMetaData data = m_document->generatorInfo();
@@ -3206,9 +3215,12 @@ void Part::slotPrint()
             printDialog->setOption( QAbstractPrintDialog::PrintCurrentPage );
         }
 
+        bool success = true;
         if ( printDialog->exec() )
-            doPrint( printer );
+            success = doPrint( printer );
         delete printDialog;
+        if ( m_cliPrintAndExit )
+            exit ( success ? EXIT_SUCCESS : EXIT_FAILURE );
     }
 }
 
@@ -3230,12 +3242,12 @@ void Part::setupPrint( QPrinter &printer )
 }
 
 
-void Part::doPrint(QPrinter &printer)
+bool Part::doPrint(QPrinter &printer)
 {
     if (!m_document->isAllowed(Okular::AllowPrint))
     {
         KMessageBox::error(widget(), i18n("Printing this document is not allowed."));
-        return;
+        return false;
     }
 
     if (!m_document->print(printer))
@@ -3249,7 +3261,9 @@ void Part::doPrint(QPrinter &printer)
         {
             KMessageBox::error(widget(), i18n("Could not print the document. Detailed error is \"%1\". Please report to bugs.kde.org", error));
         }
+        return false;
     }
+    return true;
 }
 
 void Part::psTransformEnded(int exit, QProcess::ExitStatus status)
@@ -3497,6 +3511,7 @@ void Part::updateAboutBackendAction()
 void Part::resetStartArguments()
 {
     m_cliPrint = false;
+    m_cliPrintAndExit = false;
 }
 
 #if PURPOSE_FOUND

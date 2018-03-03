@@ -10,8 +10,8 @@
 <author><firstname>Yuri</firstname><surname>Chornoivan</surname>
 <contrib>Okular man page.</contrib>
 <email>yurchor@ukr.net</email></author>
-<date>2016-11-04</date>
-<releaseinfo>Okular 1.0</releaseinfo>
+<date>2018-02-03</date>
+<releaseinfo>Okular 1.4</releaseinfo>
 <productname>KDE Applications</productname>
 </refentryinfo>
 
@@ -58,6 +58,12 @@ is aimed to show documents in different formats.</para>
     <term><option>--print</option></term>
   <listitem>
 <para>Start with print dialog.</para>
+  </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><option>--print-and-exit</option></term>
+  <listitem>
+<para>Start with print dialog and exit after printing.</para>
   </listitem>
   </varlistentry>
   <varlistentry>

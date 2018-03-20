@@ -7,11 +7,6 @@ function(okular_add_generator _target)
   )
 endfunction()
 
-find_package(Poppler "0.12.1" COMPONENTS Qt5)
-set_package_properties("Poppler" PROPERTIES
-        TYPE RECOMMENDED
-        PURPOSE "Support for PDF files in okular.")
-
 set(LIBSPECTRE_MINIMUM_VERSION "0.2")
 find_package(LibSpectre "${LIBSPECTRE_MINIMUM_VERSION}")
 set_package_properties(LibSpectre PROPERTIES

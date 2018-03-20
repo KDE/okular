@@ -192,8 +192,10 @@ class CheckBoxEdit : public QCheckBox, public FormWidgetIface
         // reimplemented from FormWidgetIface
         void setFormWidgetsController( FormWidgetsController *controller ) override;
 
-    private Q_SLOTS:
-        void slotStateChanged( int state );
+        void doActivateAction();
+
+    protected:
+        void slotRefresh( Okular::FormField *form ) override;
 };
 
 class RadioButtonEdit : public QRadioButton, public FormWidgetIface

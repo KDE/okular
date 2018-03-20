@@ -154,7 +154,8 @@ bool FormWidgetsController::canRedo()
 void FormWidgetsController::slotButtonClicked( QAbstractButton *button )
 {
     int pageNumber = -1;
-    if ( CheckBoxEdit *check = qobject_cast< CheckBoxEdit * >( button ) )
+    CheckBoxEdit *check = qobject_cast< CheckBoxEdit * >( button );
+    if ( check )
     {
         // Checkboxes need to be uncheckable so if clicking a checked one
         // disable the exclusive status temporarily and uncheck it
@@ -186,6 +187,13 @@ void FormWidgetsController::slotButtonClicked( QAbstractButton *button )
     }
     if (checked != prevChecked)
         emit formButtonsChangedByWidget( pageNumber, formButtons, checked );
+    if ( check )
+    {
+        // The formButtonsChangedByWidget signal changes the value of the underlying
+        // Okular::FormField of the checkbox. We need to execute the activiation
+        // action after this.
+        check->doActivateAction();
+    }
 }
 
 void FormWidgetsController::slotFormButtonsChangedByUndoRedo( int pageNumber, const QList< Okular::FormFieldButton* > & formButtons)
@@ -194,6 +202,11 @@ void FormWidgetsController::slotFormButtonsChangedByUndoRedo( int pageNumber, co
     {
         int id = formButton->id();
         QAbstractButton* button = m_buttons[id];
+        CheckBoxEdit *check = qobject_cast< CheckBoxEdit * >( button );
+        if ( check )
+        {
+            emit refreshFormWidget( check->formField() );
+        }
         // temporarily disable exclusiveness of the button group
         // since it breaks doing/redoing steps into which all the checkboxes
         // are unchecked
@@ -384,14 +397,31 @@ void CheckBoxEdit::setFormWidgetsController( FormWidgetsController *controller )
     FormWidgetIface::setFormWidgetsController( controller );
     m_controller->registerRadioButton( this, form );
     setChecked( form->state() );
-    connect( this, &QCheckBox::stateChanged, this, &CheckBoxEdit::slotStateChanged );
 }
 
-void CheckBoxEdit::slotStateChanged( int state )
+void CheckBoxEdit::doActivateAction()
 {
     Okular::FormFieldButton *form = static_cast<Okular::FormFieldButton *>(m_ff);
-    if ( state == Qt::Checked && form->activationAction() )
+    if ( form->activationAction() )
         m_controller->signalAction( form->activationAction() );
+}
+
+void CheckBoxEdit::slotRefresh( Okular::FormField * form )
+{
+    if ( form != m_ff )
+    {
+        return;
+    }
+    FormWidgetIface::slotRefresh( form );
+
+    Okular::FormFieldButton *button = static_cast<Okular::FormFieldButton *>(m_ff);
+    bool oldState = isChecked();
+    bool newState = button->state();
+    if ( oldState != newState )
+    {
+        setChecked( button->state() );
+        doActivateAction();
+    }
 }
 
 

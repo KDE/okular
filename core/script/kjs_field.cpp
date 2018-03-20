@@ -134,8 +134,11 @@ static KJSObject fieldGetValue( KJSContext */*context*/, void *object )
         case FormField::FormButton:
         {
             const FormFieldButton *button = static_cast< const FormFieldButton * >( field );
-            Q_UNUSED( button ); // ###
-            break;
+            if ( button->state() )
+            {
+                return KJSString( QStringLiteral( "Yes" ) );
+            }
+            return KJSString( QStringLiteral( "Off" ) );
         }
         case FormField::FormText:
         {
@@ -167,7 +170,17 @@ static void fieldSetValue( KJSContext *context, void *object, KJSObject value )
         case FormField::FormButton:
         {
             FormFieldButton *button = static_cast< FormFieldButton * >( field );
-            Q_UNUSED( button ); // ###
+            const QString text = value.toString( context );
+            if ( text == QStringLiteral( "Yes" ) )
+            {
+                button->setState( true );
+                updateField( field );
+            }
+            else if ( text == QStringLiteral( "Off" ) )
+            {
+                button->setState( false );
+                updateField( field );
+            }
             break;
         }
         case FormField::FormText:

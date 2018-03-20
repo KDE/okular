@@ -211,9 +211,6 @@ FormWidgetIface * FormWidgetFactory::createWidget( Okular::FormField * ff, QWidg
 {
     FormWidgetIface * widget = nullptr;
 
-    if (ff->isReadOnly())
-        return nullptr;
-
     switch ( ff->type() )
     {
         case Okular::FormField::FormButton:
@@ -267,15 +264,17 @@ FormWidgetIface * FormWidgetFactory::createWidget( Okular::FormField * ff, QWidg
         }
         default: ;
     }
+
+    if ( ff->isReadOnly() )
+        widget->setVisibility( false );
+
     return widget;
 }
 
 
-FormWidgetIface::FormWidgetIface( QWidget * w, Okular::FormField * ff, bool canBeEnabled )
-    : m_controller( nullptr ), m_ff( ff ), m_widget( w ), m_pageItem( nullptr ),
-      m_canBeEnabled( canBeEnabled )
+FormWidgetIface::FormWidgetIface( QWidget * w, Okular::FormField * ff )
+    : m_controller( nullptr ), m_ff( ff ), m_widget( w ), m_pageItem( nullptr )
 {
-    m_widget->setEnabled( m_canBeEnabled );
 }
 
 FormWidgetIface::~FormWidgetIface()
@@ -308,7 +307,7 @@ bool FormWidgetIface::setVisibility( bool visible )
 
 void FormWidgetIface::setCanBeFilled( bool fill )
 {
-    m_widget->setEnabled( fill && m_canBeEnabled );
+    m_widget->setEnabled( fill );
 }
 
 void FormWidgetIface::setPageItem( PageViewItem *pageItem )
@@ -338,7 +337,7 @@ void FormWidgetIface::setFormWidgetsController( FormWidgetsController *controlle
 
 
 PushButtonEdit::PushButtonEdit( Okular::FormFieldButton * button, QWidget * parent )
-    : QPushButton( parent ), FormWidgetIface( this, button, !button->isReadOnly() )
+    : QPushButton( parent ), FormWidgetIface( this, button )
 {
     setText( button->caption() );
     setVisible( button->isVisible() );
@@ -355,7 +354,7 @@ void PushButtonEdit::slotClicked()
 
 
 CheckBoxEdit::CheckBoxEdit( Okular::FormFieldButton * button, QWidget * parent )
-    : QCheckBox( parent ), FormWidgetIface( this, button, !button->isReadOnly() )
+    : QCheckBox( parent ), FormWidgetIface( this, button )
 {
     setText( button->caption() );
 
@@ -381,7 +380,7 @@ void CheckBoxEdit::slotStateChanged( int state )
 
 
 RadioButtonEdit::RadioButtonEdit( Okular::FormFieldButton * button, QWidget * parent )
-    : QRadioButton( parent ), FormWidgetIface( this, button, !button->isReadOnly() )
+    : QRadioButton( parent ), FormWidgetIface( this, button )
 {
     setText( button->caption() );
 
@@ -399,7 +398,7 @@ void RadioButtonEdit::setFormWidgetsController( FormWidgetsController *controlle
 
 
 FormLineEdit::FormLineEdit( Okular::FormFieldText * text, QWidget * parent )
-    : QLineEdit( parent ), FormWidgetIface( this, text, true )
+    : QLineEdit( parent ), FormWidgetIface( this, text )
 {
     int maxlen = text->maximumLength();
     if ( maxlen >= 0 )
@@ -533,7 +532,7 @@ void FormLineEdit::slotRefresh( Okular::FormField *form )
 }
 
 TextAreaEdit::TextAreaEdit( Okular::FormFieldText * text, QWidget * parent )
-: KTextEdit( parent ), FormWidgetIface( this, text, true )
+: KTextEdit( parent ), FormWidgetIface( this, text )
 {
     setAcceptRichText( text->isRichText() );
     setCheckSpellingEnabled( text->canBeSpellChecked() );
@@ -654,7 +653,7 @@ void TextAreaEdit::slotRefresh( Okular::FormField *form )
 }
 
 FileEdit::FileEdit( Okular::FormFieldText * text, QWidget * parent )
-    : KUrlRequester( parent ), FormWidgetIface( this, text, !text->isReadOnly() )
+    : KUrlRequester( parent ), FormWidgetIface( this, text )
 {
     setMode( KFile::File | KFile::ExistingOnly | KFile::LocalOnly );
     setFilter( i18n( "*|All Files" ) );
@@ -780,7 +779,7 @@ void FileEdit::slotHandleFileChangedByUndoRedo( int pageNumber,
 }
 
 ListEdit::ListEdit( Okular::FormFieldChoice * choice, QWidget * parent )
-    : QListWidget( parent ), FormWidgetIface( this, choice, !choice->isReadOnly() )
+    : QListWidget( parent ), FormWidgetIface( this, choice )
 {
     addItems( choice->choices() );
     setSelectionMode( choice->multiSelect() ? QAbstractItemView::ExtendedSelection : QAbstractItemView::SingleSelection );
@@ -850,7 +849,7 @@ void ListEdit::slotHandleFormListChangedByUndoRedo( int pageNumber,
 }
 
 ComboEdit::ComboEdit( Okular::FormFieldChoice * choice, QWidget * parent )
-    : QComboBox( parent ), FormWidgetIface( this, choice, !choice->isReadOnly() )
+    : QComboBox( parent ), FormWidgetIface( this, choice )
 {
     addItems( choice->choices() );
     setEditable( true );

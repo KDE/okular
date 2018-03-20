@@ -90,6 +90,12 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake/modules)
 
 find_package(ZLIB REQUIRED)
 
+# This is here instead of in generators since we use if(Poppler_Qt5_FOUND) in autotests/
+find_package(Poppler "0.12.1" COMPONENTS Qt5)
+set_package_properties("Poppler" PROPERTIES
+        TYPE RECOMMENDED
+        PURPOSE "Support for PDF files in okular.")
+
 add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 add_definitions(-DTRANSLATION_DOMAIN="okular")
 add_definitions(-DQT_NO_URL_CAST_FROM_STRING)

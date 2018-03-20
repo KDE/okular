@@ -7,10 +7,12 @@ ecm_add_test(shelltest.cpp ../shell/shellutils.cpp
     LINK_LIBRARIES Qt5::Test okularcore
 )
 
-ecm_add_test(parttest.cpp
-    TEST_NAME "parttest"
-    LINK_LIBRARIES Qt5::Widgets Qt5::Test Qt5::Xml okularcore okularpart
-)
+if(Poppler_Qt5_FOUND)
+    ecm_add_test(parttest.cpp
+        TEST_NAME "parttest"
+        LINK_LIBRARIES Qt5::Widgets Qt5::Test Qt5::Xml okularcore okularpart
+    )
+endif()
 
 ecm_add_test(documenttest.cpp
     TEST_NAME "documenttest"

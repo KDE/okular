@@ -19,6 +19,8 @@
 #include "../ui/toc.h"
 #include "../ui/pageview.h"
 
+#include "../generators/poppler/config-okular-poppler.h"
+
 #include <KConfigDialog>
 #include <KParts/OpenUrlArguments>
 
@@ -105,6 +107,7 @@ class PartTest
         void testRClickOnSelectionModeShoulShowFollowTheLinkMenu();
         void testClickAnywhereAfterSelectionShouldUnselect();
         void testeRectSelectionStartingOnLinks();
+        void testCheckBoxReadOnly();
 
     private:
         void simulateMouseSelection(double startX, double startY, double endX, double endY, QWidget *target);
@@ -1279,6 +1282,121 @@ void PartTest::test388288()
 
     QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * 0.5, height * 0.5));
     QTRY_COMPARE(part.m_pageView->cursor().shape(), Qt::OpenHandCursor);
+}
+
+void PartTest::testCheckBoxReadOnly()
+{
+#ifndef HAVE_POPPLER_0_64
+    return;
+#endif
+
+    const QString testFile = QStringLiteral( KDESRCDIR "data/checkbox_ro.pdf" );
+    Okular::Part part( nullptr, nullptr, QVariantList() );
+    part.openDocument( testFile );
+
+    // The test document uses the activation action of checkboxes
+    // to update the read only state. For this we need the part so that
+    // undo / redo activates the activation action.
+
+    QVERIFY( part.m_document->isOpened() );
+
+    const Okular::Page* page = part.m_document->page( 0 );
+
+    QMap<QString, Okular::FormField *> fields;
+
+    // Field names in test document are:
+    // CBMakeRW, CBMakeRO, TargetDefaultRO, TargetDefaultRW
+
+    for ( Okular::FormField *ff: page->formFields() )
+    {
+        fields.insert( ff->name(), static_cast< Okular::FormField* >( ff ) );
+    }
+
+    // First grab all fields and check that the setup is as expected.
+    auto cbMakeRW = dynamic_cast< Okular::FormFieldButton* > ( fields[QStringLiteral( "CBMakeRW" )] );
+    auto cbMakeRO = dynamic_cast< Okular::FormFieldButton* > ( fields[QStringLiteral( "CBMakeRO" )] );
+
+    auto targetDefaultRW = dynamic_cast< Okular::FormFieldText* > ( fields[QStringLiteral( "TargetDefaultRw" )] );
+    auto targetDefaultRO = dynamic_cast< Okular::FormFieldText* > ( fields[QStringLiteral( "TargetDefaultRo" )] );
+
+    QVERIFY( cbMakeRW );
+    QVERIFY( cbMakeRO );
+    QVERIFY( targetDefaultRW );
+    QVERIFY( targetDefaultRO );
+
+    QVERIFY( !cbMakeRW->state() );
+    QVERIFY( !cbMakeRO->state() );
+
+    QVERIFY( !targetDefaultRW->isReadOnly() );
+    QVERIFY( targetDefaultRO->isReadOnly() );
+
+    QList< Okular::FormFieldButton* > btns;
+    btns << cbMakeRW << cbMakeRO;
+
+    // Now check both boxes
+    QList< bool > btnStates;
+    btnStates << true << true;
+
+    part.m_document->editFormButtons( 0, btns, btnStates );
+
+    // Read only should be inverted
+    QVERIFY( targetDefaultRW->isReadOnly() );
+    QVERIFY( !targetDefaultRO->isReadOnly() );
+
+    // Test that undo / redo works
+    QVERIFY( part.m_document->canUndo() );
+    part.m_document->undo();
+    QVERIFY( !targetDefaultRW->isReadOnly() );
+    QVERIFY( targetDefaultRO->isReadOnly() );
+
+    part.m_document->redo();
+    QVERIFY( targetDefaultRW->isReadOnly() );
+    QVERIFY( !targetDefaultRO->isReadOnly() );
+
+    btnStates.clear();
+    btnStates << false << true;
+
+    part.m_document->editFormButtons( 0, btns, btnStates );
+    QVERIFY( targetDefaultRW->isReadOnly() );
+    QVERIFY( targetDefaultRO->isReadOnly() );
+
+    // Now set both to checked again and confirm that
+    // save / load works.
+    btnStates.clear();
+    btnStates << true << true;
+    part.m_document->editFormButtons( 0, btns, btnStates );
+
+    QTemporaryFile saveFile( QString( "%1/okrXXXXXX.pdf" ).arg( QDir::tempPath() ) );
+    QVERIFY( saveFile.open() );
+    saveFile.close();
+
+    // Save
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile.fileName() ), Part::NoSaveAsFlags ) );
+    part.closeUrl();
+
+    // Load
+    part.openDocument( saveFile.fileName() );
+    QVERIFY( part.m_document->isOpened() );
+
+    page = part.m_document->page( 0 );
+
+    fields.clear();
+
+    for ( Okular::FormField *ff: page->formFields() )
+    {
+        fields.insert( ff->name(), static_cast< Okular::FormField* >( ff ) );
+    }
+
+    cbMakeRW = dynamic_cast< Okular::FormFieldButton* > ( fields[QStringLiteral( "CBMakeRW" )] );
+    cbMakeRO = dynamic_cast< Okular::FormFieldButton* > ( fields[QStringLiteral( "CBMakeRO" )] );
+
+    targetDefaultRW = dynamic_cast< Okular::FormFieldText* > ( fields[QStringLiteral( "TargetDefaultRw" )] );
+    targetDefaultRO = dynamic_cast< Okular::FormFieldText* > ( fields[QStringLiteral( "TargetDefaultRo" )] );
+
+    QVERIFY( cbMakeRW->state() );
+    QVERIFY( cbMakeRO->state() );
+    QVERIFY( targetDefaultRW->isReadOnly() );
+    QVERIFY( !targetDefaultRO->isReadOnly() );
 }
 
 }

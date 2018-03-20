@@ -87,6 +87,13 @@ class OKULARCORE_EXPORT FormField
         virtual bool isReadOnly() const;
 
         /**
+         * Whether the field is read-only.
+         *
+         * @since 1.4
+         */
+        virtual void setReadOnly( bool value );
+
+        /**
          * Whether this form field is visible.
          */
         virtual bool isVisible() const;

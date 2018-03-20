@@ -143,7 +143,7 @@ class FormWidgetFactory
 class FormWidgetIface
 {
     public:
-        FormWidgetIface( QWidget * w, Okular::FormField * ff, bool canBeEnabled );
+        FormWidgetIface( QWidget * w, Okular::FormField * ff );
         virtual ~FormWidgetIface();
 
         Okular::NormalizedRect rect() const;
@@ -160,13 +160,14 @@ class FormWidgetIface
         virtual void setFormWidgetsController( FormWidgetsController *controller );
 
     protected:
+        virtual void slotRefresh( Okular::FormField *form );
+
         FormWidgetsController * m_controller;
         Okular::FormField * m_ff;
 
     private:
         QWidget * m_widget;
         PageViewItem * m_pageItem;
-        bool m_canBeEnabled;
 };
 
 
@@ -191,8 +192,10 @@ class CheckBoxEdit : public QCheckBox, public FormWidgetIface
         // reimplemented from FormWidgetIface
         void setFormWidgetsController( FormWidgetsController *controller ) override;
 
-    private Q_SLOTS:
-        void slotStateChanged( int state );
+        void doActivateAction();
+
+    protected:
+        void slotRefresh( Okular::FormField *form ) override;
 };
 
 class RadioButtonEdit : public QRadioButton, public FormWidgetIface
@@ -225,7 +228,9 @@ class FormLineEdit : public QLineEdit, public FormWidgetIface
                                               int anchorPos );
     private Q_SLOTS:
         void slotChanged();
-        void slotRefresh(Okular::FormField* form);
+
+    protected:
+        void slotRefresh( Okular::FormField* form ) override;
 
     private:
         int m_prevCursorPos;
@@ -252,7 +257,9 @@ class TextAreaEdit : public KTextEdit, public FormWidgetIface
 
     private Q_SLOTS:
         void slotChanged();
-        void slotRefresh(Okular::FormField* form);
+
+    protected:
+        void slotRefresh( Okular::FormField* form ) override;
 
     private:
         int m_prevCursorPos;

@@ -72,6 +72,16 @@ int main()
 }
 " HAVE_POPPLER_0_63)
 
+check_cxx_source_compiles("
+#include <poppler-qt5.h>
+#include <poppler-form.h>
+int main()
+{
+  Poppler::FormField *f;
+  f->setReadOnly(true);
+}
+" HAVE_POPPLER_0_64)
+
 configure_file(
    ${CMAKE_CURRENT_SOURCE_DIR}/config-okular-poppler.h.cmake
    ${CMAKE_CURRENT_BINARY_DIR}/config-okular-poppler.h

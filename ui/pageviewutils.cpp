@@ -204,7 +204,8 @@ bool PageViewItem::setFormWidgetsVisible( bool visible )
     QSet<FormWidgetIface*>::iterator it = m_formWidgets.begin(), itEnd = m_formWidgets.end();
     for ( ; it != itEnd; ++it )
     {
-        bool hadfocus = (*it)->setVisibility( visible && (*it)->formField()->isVisible() );
+        bool hadfocus = (*it)->setVisibility( visible && (*it)->formField()->isVisible() &&
+                                              !(*it)->formField()->isReadOnly() );
         somehadfocus = somehadfocus || hadfocus;
     }
     return somehadfocus;
@@ -214,7 +215,7 @@ void PageViewItem::reloadFormWidgetsState()
 {
     foreach(FormWidgetIface *fwi, m_formWidgets)
     {
-        fwi->setVisibility( fwi->formField()->isVisible() );
+        fwi->setVisibility( fwi->formField()->isVisible() && !fwi->formField()->isReadOnly() );
     }
 }
 

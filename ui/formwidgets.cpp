@@ -333,6 +333,22 @@ PageViewItem* FormWidgetIface::pageItem() const
 void FormWidgetIface::setFormWidgetsController( FormWidgetsController *controller )
 {
     m_controller = controller;
+    QObject *obj = dynamic_cast< QObject * > ( this );
+    QObject::connect( m_controller, &FormWidgetsController::refreshFormWidget, obj,
+                      [this] ( Okular::FormField *form ) {
+                          slotRefresh ( form );
+                      });
+}
+
+void FormWidgetIface::slotRefresh( Okular::FormField * form )
+{
+    if ( m_ff != form )
+    {
+        return;
+    }
+    setVisibility( form->isVisible() && !form->isReadOnly() );
+
+    m_widget->setEnabled( !form->isReadOnly() );
 }
 
 
@@ -422,8 +438,6 @@ void FormLineEdit::setFormWidgetsController(FormWidgetsController* controller)
     FormWidgetIface::setFormWidgetsController(controller);
     connect( m_controller, &FormWidgetsController::formTextChangedByUndoRedo,
              this, &FormLineEdit::slotHandleTextChangedByUndoRedo );
-    connect( m_controller, &FormWidgetsController::refreshFormWidget,
-             this, &FormLineEdit::slotRefresh );
 }
 
 bool FormLineEdit::event( QEvent* e )
@@ -526,8 +540,9 @@ void FormLineEdit::slotRefresh( Okular::FormField *form )
     {
         return;
     }
-    Okular::FormFieldText *text = static_cast<Okular::FormFieldText *> ( form );
+    FormWidgetIface::slotRefresh( form );
 
+    Okular::FormFieldText *text = static_cast<Okular::FormFieldText *> ( form );
     setText( text->text() );
 }
 
@@ -598,8 +613,6 @@ void TextAreaEdit::setFormWidgetsController( FormWidgetsController* controller )
     FormWidgetIface::setFormWidgetsController( controller );
     connect( m_controller, &FormWidgetsController::formTextChangedByUndoRedo,
              this, &TextAreaEdit::slotHandleTextChangedByUndoRedo );
-    connect( m_controller, &FormWidgetsController::refreshFormWidget,
-             this, &TextAreaEdit::slotRefresh );
 }
 
 void TextAreaEdit::slotHandleTextChangedByUndoRedo( int pageNumber,
@@ -647,8 +660,9 @@ void TextAreaEdit::slotRefresh( Okular::FormField *form )
     {
         return;
     }
-    Okular::FormFieldText *text = static_cast<Okular::FormFieldText *> ( form );
+    FormWidgetIface::slotRefresh( form );
 
+    Okular::FormFieldText *text = static_cast<Okular::FormFieldText *> ( form );
     setPlainText( text->text() );
 }
 

@@ -160,6 +160,8 @@ class FormWidgetIface
         virtual void setFormWidgetsController( FormWidgetsController *controller );
 
     protected:
+        virtual void slotRefresh( Okular::FormField *form );
+
         FormWidgetsController * m_controller;
         Okular::FormField * m_ff;
 
@@ -224,7 +226,9 @@ class FormLineEdit : public QLineEdit, public FormWidgetIface
                                               int anchorPos );
     private Q_SLOTS:
         void slotChanged();
-        void slotRefresh(Okular::FormField* form);
+
+    protected:
+        void slotRefresh( Okular::FormField* form ) override;
 
     private:
         int m_prevCursorPos;
@@ -251,7 +255,9 @@ class TextAreaEdit : public KTextEdit, public FormWidgetIface
 
     private Q_SLOTS:
         void slotChanged();
-        void slotRefresh(Okular::FormField* form);
+
+    protected:
+        void slotRefresh( Okular::FormField* form ) override;
 
     private:
         int m_prevCursorPos;

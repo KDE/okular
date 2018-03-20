@@ -31,6 +31,23 @@ static KJSPrototype *g_fieldProto;
 typedef QHash< FormField *, Page * > FormCache;
 Q_GLOBAL_STATIC( FormCache, g_fieldCache )
 
+
+// Helper for modified fields
+static void updateField( FormField *field )
+{
+    Page *page = g_fieldCache->value( field );
+    if (page)
+    {
+        Document *doc = PagePrivate::get( page )->m_doc->m_parent;
+        QMetaObject::invokeMethod( doc, "refreshPixmaps", Qt::QueuedConnection, Q_ARG( int, page->number() ) );
+        emit doc->refreshFormWidget( field );
+    }
+    else
+    {
+        qWarning() << "Could not get page of field" << field;
+    }
+}
+
 // Field.doc
 static KJSObject fieldGetDoc( KJSContext *context, void *  )
 {
@@ -54,16 +71,11 @@ static KJSObject fieldGetReadOnly( KJSContext *, void *object )
 // Field.readonly (setter)
 static void fieldSetReadOnly( KJSContext *context, void *object, KJSObject value )
 {
-#if 0
     FormField *field = reinterpret_cast< FormField * >( object );
     bool b = value.toBoolean( context );
     field->setReadOnly( b );
-#else
-    Q_UNUSED( context );
-    Q_UNUSED( object );
-    Q_UNUSED( value );
-    qCDebug(OkularCoreDebug) << "Not implemented: setting readonly property";
-#endif
+
+    updateField( field );
 }
 
 static QString fieldGetTypeHelper( const FormField *field )
@@ -165,18 +177,7 @@ static void fieldSetValue( KJSContext *context, void *object, KJSObject value )
             if ( text != textField->text() )
             {
                 textField->setText( text );
-
-                Page *page = g_fieldCache->value( field );
-                if (page)
-                {
-                    Document *doc = PagePrivate::get( page )->m_doc->m_parent;
-                    QMetaObject::invokeMethod( doc, "refreshPixmaps", Qt::QueuedConnection, Q_ARG( int, page->number() ) );
-                    emit doc->refreshFormWidget( field );
-                }
-                else
-                {
-                    qWarning() << "Could not get page of field" << field;
-                }
+                updateField( field );
             }
             break;
         }

@@ -67,6 +67,15 @@ bool PopplerFormFieldButton::isReadOnly() const
     return m_field->isReadOnly();
 }
 
+void PopplerFormFieldButton::setReadOnly( bool value )
+{
+#ifdef HAVE_POPPLER_0_64
+    m_field->setReadOnly( value );
+#else
+    Q_UNUSED( value );
+#endif
+}
+
 bool PopplerFormFieldButton::isVisible() const
 {
     return m_field->isVisible();
@@ -143,6 +152,15 @@ QString PopplerFormFieldText::uiName() const
 bool PopplerFormFieldText::isReadOnly() const
 {
     return m_field->isReadOnly();
+}
+
+void PopplerFormFieldText::setReadOnly( bool value )
+{
+#ifdef HAVE_POPPLER_0_64
+    m_field->setReadOnly( value );
+#else
+    Q_UNUSED( value );
+#endif
 }
 
 bool PopplerFormFieldText::isVisible() const
@@ -236,6 +254,15 @@ QString PopplerFormFieldChoice::uiName() const
 bool PopplerFormFieldChoice::isReadOnly() const
 {
     return m_field->isReadOnly();
+}
+
+void PopplerFormFieldChoice::setReadOnly( bool value )
+{
+#ifdef HAVE_POPPLER_0_64
+    m_field->setReadOnly( value );
+#else
+    Q_UNUSED( value );
+#endif
 }
 
 bool PopplerFormFieldChoice::isVisible() const

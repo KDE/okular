@@ -232,7 +232,7 @@ VideoWidget::VideoWidget( const Okular::Annotation *annotation, Okular::Movie *m
     setAttribute( Qt::WA_NoMousePropagation );
 
     // Setup player page
-    QWidget *playerPage = new QWidget;
+    QWidget *playerPage = new QWidget( this );
 
     QVBoxLayout *mainlay = new QVBoxLayout( playerPage );
     mainlay->setMargin( 0 );

@@ -3208,7 +3208,7 @@ bool DocumentPrivate::cancelRenderingBecauseOf( PixmapRequest *executingRequest,
     if ( !executingRequest->d->mResultImage.isNull() )
         return false;
 
-    if ( newRequest && executingRequest->partialUpdatesWanted() ) {
+    if ( newRequest && newRequest->asynchronous() && executingRequest->partialUpdatesWanted() ) {
         newRequest->setPartialUpdatesWanted( true );
     }
 

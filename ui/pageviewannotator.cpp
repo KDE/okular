@@ -1182,7 +1182,7 @@ QPixmap PageViewAnnotator::makeToolPixmap( const QDomElement &toolElement )
     }
     else if ( annotType == QLatin1String("note-linked") )
     {
-        QImage overlay( QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString("okular/pics/tool-note-okular-colorizable.png" + imageVariant + ".png") ) );
+        QImage overlay( QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString("okular/pics/tool-note-okular-colorizable" + imageVariant + ".png") ) );
         GuiUtils::colorizeImage( overlay, engineColor );
         p.drawImage( QPoint(0,0), overlay );
     }

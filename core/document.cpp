@@ -1,7 +1,7 @@
 /***************************************************************************
  *   Copyright (C) 2004-2005 by Enrico Ros <eros.kde@email.it>             *
  *   Copyright (C) 2004-2008 by Albert Astals Cid <aacid@kde.org>          *
- *   Copyright (C) 2017 Klarälvdalens Datakonsult AB, a KDAB Group         *
+ *   Copyright (C) 2017, 2018 Klarälvdalens Datakonsult AB, a KDAB Group         *
  *                      company, info@kdab.com. Work sponsored by the      *
  *                      LiMux project of the city of Munich                *
  *                                                                         *
@@ -2741,7 +2741,7 @@ void Document::addObserver( DocumentObserver * pObserver )
 
 void Document::removeObserver( DocumentObserver * pObserver )
 {
-    // remove observer from the map. it won't receive notifications anymore
+    // remove observer from the set. it won't receive notifications anymore
     if ( d->m_observers.contains( pObserver ) )
     {
         // free observer's pixmap data
@@ -2764,7 +2764,14 @@ void Document::removeObserver( DocumentObserver * pObserver )
                 ++aIt;
         }
 
-        // delete observer entry from the map
+        for ( PixmapRequest *executingRequest : qAsConst( d->m_executingPixmapRequests ) )
+        {
+            if ( executingRequest->observer() == pObserver ) {
+                d->cancelRenderingBecauseOf( executingRequest, nullptr );
+            }
+        }
+
+        // remove observer entry from the set
         d->m_observers.remove( pObserver );
     }
 }

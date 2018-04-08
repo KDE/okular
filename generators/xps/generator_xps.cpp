@@ -1880,8 +1880,9 @@ XpsFile::XpsFile()
 
 XpsFile::~XpsFile()
 {
-    m_fontCache.clear();
-    m_fontDatabase.removeAllApplicationFonts();
+    for(int fontId : qAsConst(m_fontCache)) {
+        m_fontDatabase.removeApplicationFont(fontId);
+    }
 }
 
 

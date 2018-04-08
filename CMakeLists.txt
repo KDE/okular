@@ -53,6 +53,7 @@ find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS
     Config
     ConfigWidgets
     CoreAddons
+    Crash
     DocTools
     IconThemes
     JS

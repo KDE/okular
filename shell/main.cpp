@@ -20,6 +20,7 @@
 #include <kwindowsystem.h>
 #include <QApplication>
 #include <KAboutData>
+#include <KCrash>
 #include <KMessageBox>
 #include <QCommandLineParser>
 #include <QCommandLineOption>
@@ -38,6 +39,8 @@ int main(int argc, char** argv)
     KAboutData::setApplicationData(aboutData);
     // set icon for shells which do not use desktop file metadata
     QApplication::setWindowIcon(QIcon::fromTheme(QStringLiteral("okular")));
+
+    KCrash::initialize();
 
     QCommandLineParser parser;
     // The KDE4 version accepted flags such as -unique with a single dash -> preserve compatibility

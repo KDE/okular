@@ -159,6 +159,7 @@ public:
     Okular::TextPage* textPage();
 
     QImage loadImageFromFile( const QString &filename );
+    QString fileName() const { return m_fileName; }
 
 private:
     XpsFile *m_file;

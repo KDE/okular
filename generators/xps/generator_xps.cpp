@@ -447,11 +447,14 @@ static QPainterPath parseRscRefPath( const QString &data )
 */
 static QString entryPath( const QString &entry )
 {
-    const int index = entry.lastIndexOf( QChar::fromLatin1( '/' ) );
-    QString ret = QLatin1String( "/" ) + entry.mid( 0, index );
+    const QChar slash = QChar::fromLatin1( '/' );
+    const int index = entry.lastIndexOf( slash  );
+    QString ret = entry.mid( 0, index );
     if ( index > 0 ) {
-        ret.append( QChar::fromLatin1( '/' ) );
+        ret.append( slash );
     }
+    if ( !ret.startsWith( slash ) )
+        ret.prepend( slash );
     return ret;
 }
 
@@ -797,7 +800,8 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
         m_painter->restore();
         return;
     }
-    QFont font = m_page->m_file->getFontByName( node.attributes.value(QStringLiteral("FontUri")), fontSize );
+    const QString absoluteFileName = absolutePath( entryPath( m_page->fileName() ), node.attributes.value(QStringLiteral("FontUri")) );
+    QFont font = m_page->m_file->getFontByName( absoluteFileName, fontSize );
     att = node.attributes.value( QStringLiteral("StyleSimulations") );
     if  ( !att.isEmpty() ) {
         if ( att == QLatin1String( "ItalicSimulation" ) ) {
@@ -1456,41 +1460,41 @@ QSizeF XpsPage::size() const
     return m_pageSize;
 }
 
-QFont XpsFile::getFontByName( const QString &fileName, float size )
+QFont XpsFile::getFontByName( const QString &absoluteFileName, float size )
 {
     // qCWarning(OkularXpsDebug) << "trying to get font: " << fileName << ", size: " << size;
 
-    int index = m_fontCache.value(fileName, -1);
+    int index = m_fontCache.value(absoluteFileName, -1);
     if (index == -1)
     {
-        index = loadFontByName(fileName);
-        m_fontCache[fileName] = index;
+        index = loadFontByName(absoluteFileName);
+        m_fontCache[absoluteFileName] = index;
     }
     if ( index == -1 ) {
-        qCWarning(OkularXpsDebug) << "Requesting uknown font:" << fileName;
+        qCWarning(OkularXpsDebug) << "Requesting uknown font:" << absoluteFileName;
         return QFont();
     }
 
     const QStringList fontFamilies = m_fontDatabase.applicationFontFamilies( index );
     if ( fontFamilies.isEmpty() ) {
-      qCWarning(OkularXpsDebug) << "The unexpected has happened. No font family for a known font:" << fileName << index;
+      qCWarning(OkularXpsDebug) << "The unexpected has happened. No font family for a known font:" << absoluteFileName << index;
       return QFont();
     }
     const QString fontFamily = fontFamilies[0];
     const QStringList fontStyles = m_fontDatabase.styles( fontFamily );
     if ( fontStyles.isEmpty() ) {
-      qCWarning(OkularXpsDebug) << "The unexpected has happened. No font style for a known font family:" << fileName << index << fontFamily ;
+      qCWarning(OkularXpsDebug) << "The unexpected has happened. No font style for a known font family:" << absoluteFileName << index << fontFamily ;
       return QFont();
     }
     const QString fontStyle =  fontStyles[0];
     return m_fontDatabase.font(fontFamily, fontStyle, qRound(size));
 }
 
-int XpsFile::loadFontByName( const QString &fileName )
+int XpsFile::loadFontByName( const QString &absoluteFileName )
 {
-    // qCWarning(OkularXpsDebug) << "font file name: " << fileName;
+    // qCWarning(OkularXpsDebug) << "font file name: " << absoluteFileName;
 
-    const KArchiveEntry* fontFile = loadEntry( m_xpsArchive, fileName, Qt::CaseInsensitive );
+    const KArchiveEntry* fontFile = loadEntry( m_xpsArchive, absoluteFileName, Qt::CaseInsensitive );
     if ( !fontFile ) {
         return -1;
     }
@@ -1502,7 +1506,7 @@ int XpsFile::loadFontByName( const QString &fileName )
         // Try to deobfuscate font
        // TODO Use deobfuscation depending on font content type, don't do it always when standard loading fails
 
-        const QString baseName = resourceName( fileName );
+        const QString baseName = resourceName( absoluteFileName );
 
         unsigned short guid[16];
         if (!parseGUID(baseName, guid))
@@ -1644,7 +1648,8 @@ Okular::TextPage* XpsPage::textPage()
                 QString text = unicodeString( glyphsAtts.value( QStringLiteral("UnicodeString") ).toString() );
 
                 // Get font (doesn't work well because qt doesn't allow to load font from file)
-                QFont font = m_file->getFontByName( glyphsAtts.value( QStringLiteral("FontUri") ).toString(),
+                const QString absoluteFileName = absolutePath( entryPath( m_fileName ), glyphsAtts.value( QStringLiteral("FontUri") ).toString() );
+                QFont font = m_file->getFontByName( absoluteFileName,
                                                     glyphsAtts.value(QStringLiteral("FontRenderingEmSize")).toString().toFloat() * 72 / 96 );
                 QFontMetrics metrics = QFontMetrics( font );
                 // Origin

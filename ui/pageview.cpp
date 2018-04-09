@@ -1746,8 +1746,9 @@ void PageView::paintEvent(QPaintEvent *pe)
                         QPixmap blendedPixmap( blendRect.width() * devicePixelRatioF(), blendRect.height() * devicePixelRatioF() );
                         blendedPixmap.setDevicePixelRatio(devicePixelRatioF());
                         QPainter p( &blendedPixmap );
+
                         p.drawPixmap( 0, 0, doubleBuffer,
-                                    blendRect.left() - contentsRect.left(), blendRect.top() - contentsRect.top(),
+                                    (blendRect.left() - contentsRect.left()) * devicePixelRatioF(), (blendRect.top() - contentsRect.top()) * devicePixelRatioF(),
                                     blendRect.width() * devicePixelRatioF(), blendRect.height() * devicePixelRatioF() );
 
                         QColor blCol = selBlendColor.dark( 140 );
@@ -1779,7 +1780,7 @@ void PageView::paintEvent(QPaintEvent *pe)
                             blendedPixmap.setDevicePixelRatio(devicePixelRatioF());
                             QPainter p( &blendedPixmap );
                             p.drawPixmap( 0, 0, doubleBuffer,
-                                        blendRect.left() - contentsRect.left(), blendRect.top() - contentsRect.top(),
+                                        (blendRect.left() - contentsRect.left()) * devicePixelRatioF(), (blendRect.top() - contentsRect.top()) * devicePixelRatioF(),
                                         blendRect.width() * devicePixelRatioF(), blendRect.height() * devicePixelRatioF() );
 
                             QColor blCol = d->mouseSelectionColor.dark( 140 );

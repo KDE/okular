@@ -1617,9 +1617,10 @@ bool Part::openFile()
     {
         m_sidebar->setCurrentItem( m_toc, Sidebar::DoNotUncollapseIfCollapsed );
     }
-    // if the 'StartFullScreen' flag is set, or the command line flag was
+    // if the 'StartFullScreen' flag is set and we're not in viewer widget mode, or the command line flag was
     // specified, start presentation
-    if ( m_document->metaData( QStringLiteral("StartFullScreen") ).toBool() || m_cliPresentation )
+    const bool presentationBecauseOfDocumentMetadata = ( m_embedMode != ViewerWidgetMode ) && m_document->metaData( QStringLiteral("StartFullScreen") ).toBool();
+    if ( presentationBecauseOfDocumentMetadata || m_cliPresentation )
     {
         bool goAheadWithPresentationMode = true;
         if ( !m_cliPresentation )

@@ -115,6 +115,7 @@
 #include "core/fileprinter.h"
 #include <memory>
 
+#ifdef OKULAR_KEEP_FILE_OPEN
 class FileKeeper
 {
     public:
@@ -170,6 +171,7 @@ class FileKeeper
     private:
         std::FILE * m_handle;
 };
+#endif
 
 K_PLUGIN_FACTORY(OkularPartFactory, registerPlugin<Okular::Part>();)
 

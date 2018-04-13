@@ -113,7 +113,6 @@
 #include "core/generator.h"
 #include "core/page.h"
 #include "core/fileprinter.h"
-#include <cstdio>
 #include <memory>
 
 class FileKeeper

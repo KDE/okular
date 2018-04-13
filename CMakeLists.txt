@@ -371,7 +371,6 @@ target_link_libraries(okularpart okularcore
     KF5::KIOCore
     KF5::KIOFileWidgets
     KF5::KIOWidgets
-    KF5::KIONTLM
     KF5::Parts
     KF5::Solid
     KF5::Wallet

@@ -18,9 +18,6 @@
 #include <QHash>
 #include <QtCore/qstring.h>
 
-#include <cstdio>
-#include <stdio.h>
-
 class dviRenderer;
 class TeXFont;
 

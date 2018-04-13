@@ -17,7 +17,7 @@
 #include <QTemporaryDir>
 
 #include <QtCore/qloggingcategory.h>
-#if !defined(Q_OS_WIN)
+#if defined(WITH_KPTY)
 #include <KPty/kptyprocess.h>
 #include <KPty/kptydevice.h>
 #endif
@@ -218,7 +218,7 @@ int Unrar::startSyncProcess( const QStringList &args )
 {
     int ret = 0;
 
-#if defined(Q_OS_WIN)
+#if !defined(WITH_KPTY)
     mProcess = new QProcess( this );    
     connect(mProcess, &QProcess::readyReadStandardOutput, this, &Unrar::readFromStdout);
     connect(mProcess, &QProcess::readyReadStandardError, this, &Unrar::readFromStderr);
@@ -233,7 +233,7 @@ int Unrar::startSyncProcess( const QStringList &args )
 
 #endif
 
-#if defined(Q_OS_WIN)
+#if !defined(WITH_KPTY)
     mProcess->start( helper->unrarPath, args, QIODevice::ReadWrite | QIODevice::Unbuffered );
     ret = mProcess->waitForFinished( -1 ) ? 0 : 1;
 #else
@@ -257,7 +257,7 @@ void Unrar::writeToProcess( const QByteArray &data )
     if ( !mProcess || data.isNull() )
         return;
 
-#if defined(Q_OS_WIN)
+#if !defined(WITH_KPTY)
     mProcess->write( data );
 #else
     mProcess->pty()->write( data );

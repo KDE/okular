@@ -16,7 +16,10 @@
 
 class QEventLoop;
 class QTemporaryDir;
+
+#if defined(WITH_KPTY)
 class KPtyProcess;
+#endif
 
 class Unrar : public QObject
 {
@@ -65,10 +68,10 @@ class Unrar : public QObject
         int startSyncProcess( const QStringList &args );
         void writeToProcess( const QByteArray &data );
 
-#if defined(Q_OS_WIN)
-        QProcess *mProcess;
-#else
+#if defined(WITH_KPTY)
         KPtyProcess *mProcess;
+#else
+        QProcess *mProcess;
 #endif
         QEventLoop *mLoop;
         QString mFileName;

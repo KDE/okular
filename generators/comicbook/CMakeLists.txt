@@ -19,10 +19,11 @@ set( okularGenerator_comicbook_PART_SRCS
 
 okular_add_generator(okularGenerator_comicbook ${okularGenerator_comicbook_PART_SRCS})
 target_link_libraries(okularGenerator_comicbook okularcore KF5::KIOCore KF5::I18n KF5::Archive)
-if (UNIX)
-   find_package(KF5 REQUIRED Pty)
+if (UNIX AND NOT ANDROID)
+   find_package(KF5Pty REQUIRED)
+   target_compile_definitions(okularGenerator_comicbook PRIVATE -DWITH_KPTY=1)
    target_link_libraries(okularGenerator_comicbook KF5::Pty)
-endif (UNIX)
+endif ()
 
 ########### install files ###############
 install( FILES okularComicbook.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )

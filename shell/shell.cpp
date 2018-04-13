@@ -49,7 +49,7 @@
 #include <KLocalizedString>
 #include <KSharedConfig>
 #include <KIO/Global>
-#ifndef Q_OS_WIN
+#ifdef WITH_KACTIVITIES
 #include <KActivities/ResourceInstance>
 #endif
 
@@ -283,7 +283,7 @@ void Shell::openUrl( const QUrl & url, const QString &serializedOptions )
             {
                 if ( openOk )
                 {
-#ifndef Q_OS_WIN
+#ifdef WITH_KACTIVITIES
                     if ( !m_activityResource )
                         m_activityResource = new KActivities::ResourceInstance( window()->winId(), this );
 

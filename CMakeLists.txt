@@ -63,10 +63,15 @@ find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS
     Wallet
     WindowSystem
 )
-if(NOT WIN32)
+if(NOT WIN32 AND NOT ANDROID)
     find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS
         Activities
     )
+    set_package_properties("KF5Activities" PROPERTIES
+        DESCRIPTION  "Activities interface library"
+        URL "https://api.kde.org/frameworks/kactivities/html/"
+        TYPE RECOMMENDED
+        PURPOSE "Required for Activities integration.")
 endif()
 find_package(KF5Kirigami2)
 set_package_properties(KF5Kirigami2 PROPERTIES

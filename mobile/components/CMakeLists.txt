@@ -29,8 +29,10 @@ target_link_libraries(okularplugin
         Qt5::Core
         Qt5::Xml
         Qt5::Svg
+        KF5::Bookmarks
+        KF5::IconThemes
+        KF5::I18n
         okularcore
-        okularpart
         )
 
 install(TARGETS okularplugin DESTINATION ${KDE_INSTALL_QMLDIR}/org/kde/okular)

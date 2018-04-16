@@ -368,7 +368,6 @@ void PagePrivate::rotateAt( Rotation orientation )
     if ( orientation == m_rotation )
         return;
 
-    deleteHighlights();
     deleteTextSelections();
 
     if ( ( (int)m_orientation + (int)m_rotation ) % 2 != ( (int)m_orientation + (int)orientation ) % 2 )
@@ -411,10 +410,11 @@ void PagePrivate::rotateAt( Rotation orientation )
     for ( ; objectIt != end; ++objectIt )
         (*objectIt)->transform( matrix );
 
+    const QTransform highlightRotationMatrix = Okular::buildRotationMatrix( (Rotation)(((int)m_rotation - (int)oldRotation + 4) % 4) );
     QLinkedList< HighlightAreaRect* >::const_iterator hlIt = m_page->m_highlights.begin(), hlItEnd = m_page->m_highlights.end();
     for ( ; hlIt != hlItEnd; ++hlIt )
     {
-        (*hlIt)->transform( RotationJob::rotationMatrix( oldRotation, m_rotation ) );
+        (*hlIt)->transform( highlightRotationMatrix );
     }
 }
 

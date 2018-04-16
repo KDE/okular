@@ -46,6 +46,13 @@ if(NOT CMAKE_VERSION VERSION_LESS "3.10.0")
   list(APPEND CMAKE_AUTOMOC_MACRO_NAMES "OKULAR_EXPORT_PLUGIN")
 endif()
 
+set(optionalComponents)
+if (ANDROID)
+#   we want to make sure that generally all components are found
+
+    set(optionalComponents "OPTIONAL_COMPONENTS")
+endif()
+
 find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS
     Archive
     Bookmarks
@@ -54,15 +61,24 @@ find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS
     ConfigWidgets
     CoreAddons
     Crash
-    DocTools
     IconThemes
-    JS
     KIO
     Parts
     ThreadWeaver
-    Wallet
     WindowSystem
+    ${optionalComponents}
+    DocTools
+    JS
+    Wallet
 )
+
+if(KF5Wallet_FOUND)
+    add_definitions(-DWITH_KWALLET=1)
+endif()
+if(KF5JS_FOUND)
+    add_definitions(-DWITH_KJS=1)
+endif()
+
 if(NOT WIN32 AND NOT ANDROID)
     find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS
         Activities
@@ -128,7 +144,9 @@ add_subdirectory( generators )
 add_subdirectory( autotests )
 add_subdirectory( conf/autotests )
 
-add_subdirectory(doc)
+if(KF5DocTools_FOUND)
+    add_subdirectory(doc)
+endif()
 
 include(OkularConfigureChecks.cmake)
 
@@ -173,20 +191,9 @@ set(okularcore_SRCS
    core/view.cpp
    core/fileprinter.cpp
    core/script/event.cpp
-   core/script/executor_kjs.cpp
-   core/script/kjs_app.cpp
-   core/script/kjs_console.cpp
-   core/script/kjs_data.cpp
-   core/script/kjs_document.cpp
-   core/script/kjs_event.cpp
-   core/script/kjs_fullscreen.cpp
-   core/script/kjs_field.cpp
-   core/script/kjs_spell.cpp
-   core/script/kjs_util.cpp
    core/synctex/synctex_parser.c
    core/synctex/synctex_parser_utils.c
 )
-
 qt5_add_resources(okularcore_SRCS
    core/script/builtin.qrc
 )
@@ -253,13 +260,10 @@ PRIVATE
     ${OKULAR_IOKIT}
     ${SHLWAPI}
     KF5::Archive
-    KF5::JS
-    KF5::JSApi
     KF5::KIOCore
     KF5::KIOWidgets
     KF5::I18n
     KF5::ThreadWeaver
-    KF5::Wallet
     KF5::Bookmarks
     Phonon::phonon4qt5
     ${MATH_LIB}
@@ -271,6 +275,27 @@ PUBLIC  # these are included from the installed headers
     Qt5::PrintSupport
     Qt5::Widgets
 )
+
+
+if (KF5Wallet_FOUND)
+    target_link_libraries(okularcore PRIVATE KF5::Wallet)
+endif()
+if (KF5JS_FOUND)
+    target_sources(okularcore PRIVATE
+            core/script/executor_kjs.cpp
+            core/script/kjs_app.cpp
+            core/script/kjs_console.cpp
+            core/script/kjs_data.cpp
+            core/script/kjs_document.cpp
+            core/script/kjs_field.cpp
+            core/script/kjs_fullscreen.cpp
+            core/script/kjs_field.cpp
+            core/script/kjs_spell.cpp
+            core/script/kjs_util.cpp
+            core/script/kjs_event.cpp
+    )
+    target_link_libraries(okularcore PRIVATE KF5::JS KF5::JSApi)
+endif()
 
 set_target_properties(okularcore PROPERTIES VERSION 9.0.0 SOVERSION 9 OUTPUT_NAME Okular5Core EXPORT_NAME Core)
 
@@ -378,9 +403,12 @@ target_link_libraries(okularpart okularcore
     KF5::KIOWidgets
     KF5::Parts
     KF5::Solid
-    KF5::Wallet
     KF5::WindowSystem
 )
+
+if(KF5Wallet_FOUND)
+    target_link_libraries(okularpart KF5::Wallet)
+endif()
 
 if (KDEExperimentalPurpose_FOUND)
     target_link_libraries(okularpart KDEExperimental::PurposeWidgets)

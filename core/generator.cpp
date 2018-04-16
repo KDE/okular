@@ -24,7 +24,10 @@
 #include <QMimeDatabase>
 #include <QTimer>
 #include <KLocalizedString>
+
+#ifdef WITH_KWALLET
 #include <kwallet.h>
+#endif
 
 #include "document.h"
 #include "document_p.h"
@@ -411,9 +414,11 @@ bool Generator::exportTo( const QString&, const ExportFormat& )
 
 void Generator::walletDataForFile( const QString &fileName, QString *walletName, QString *walletFolder, QString *walletKey ) const
 {
+#ifdef WITH_KWALLET
     *walletKey = fileName.section( QLatin1Char('/'), -1, -1);
     *walletName = KWallet::Wallet::NetworkWallet();
     *walletFolder = QStringLiteral("KPdf");
+#endif
 }
 
 bool Generator::hasFeature( GeneratorFeature feature ) const

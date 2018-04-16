@@ -64,7 +64,7 @@ ecm_add_test(calculatetexttest.cpp
     LINK_LIBRARIES Qt5::Widgets Qt5::Test okularcore
 )
 
-if(NOT WIN32)
+if(KF5Activities_FOUND)
 	ecm_add_test(mainshelltest.cpp ../shell/okular_main.cpp ../shell/shellutils.cpp ../shell/shell.cpp
 		TEST_NAME "mainshelltest"
 		LINK_LIBRARIES Qt5::Test KF5::Activities okularpart okularcore

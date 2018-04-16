@@ -21,17 +21,18 @@ class Okular::ScripterPrivate
 {
     public:
         ScripterPrivate( DocumentPrivate *doc )
-            : m_doc( doc ), m_kjs( nullptr ), m_event( nullptr )
+            : m_doc( doc )
+#ifdef WITH_KJS
+            , m_kjs( nullptr )
+#endif
+            , m_event( nullptr )
         {
-        }
-
-        ~ScripterPrivate()
-        {
-            delete m_kjs;
         }
 
         DocumentPrivate *m_doc;
-        ExecutorKJS *m_kjs;
+#ifdef WITH_KJS
+        QScopedPointer<ExecutorKJS> m_kjs;
+#endif
         Event *m_event;
 };
 
@@ -48,6 +49,7 @@ Scripter::~Scripter()
 QString Scripter::execute( ScriptType type, const QString &script )
 {
     qCDebug(OkularCoreDebug) << "executing the script:";
+#ifdef WITH_KJS
 #if 0
     if ( script.length() < 1000 )
         qDebug() << script;
@@ -74,11 +76,12 @@ QString Scripter::execute( ScriptType type, const QString &script )
         case JavaScript:
             if ( !d->m_kjs )
             {
-                d->m_kjs = new ExecutorKJS( d->m_doc );
+                d->m_kjs.reset(new ExecutorKJS( d->m_doc ));
             }
             d->m_kjs->execute( builtInScript + script, d->m_event );
             break;
     }
+#endif
     return QString();
 }
 

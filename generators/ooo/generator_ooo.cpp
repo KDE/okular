@@ -14,7 +14,9 @@
 #include <KAboutData>
 #include <KLocalizedString>
 #include <kconfigdialog.h>
-#include <kwallet.h>
+#ifdef WITH_KWALLET
+#   include <kwallet.h>
+#endif
 
 OKULAR_EXPORT_PLUGIN(KOOOGenerator, "libokularGenerator_ooo.json")
 
@@ -33,7 +35,9 @@ void KOOOGenerator::addPages( KConfigDialog* dlg )
 void KOOOGenerator::walletDataForFile( const QString &fileName, QString *walletName, QString *walletFolder, QString *walletKey ) const
 {
     *walletKey = fileName + QStringLiteral("/opendocument");
+#ifdef WITH_KWALLET
     *walletName = KWallet::Wallet::LocalWallet();
     *walletFolder = KWallet::Wallet::PasswordFolder();
+#endif
 }
 #include "generator_ooo.moc"

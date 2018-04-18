@@ -23,6 +23,7 @@
 #include <QPainter>
 #include <QTimer>
 #include <QStyleOptionGraphicsItem>
+#include <QQuickWindow>
 
 #include <core/bookmarkmanager.h>
 #include <core/document.h>
@@ -279,8 +280,6 @@ void PageItem::removeBookmark(const QString &bookmark)
 void PageItem::geometryChanged(const QRectF &newGeometry,
                                const QRectF &oldGeometry)
 {
-    setContentsSize(newGeometry.size().toSize());
-
     if (newGeometry.size().isEmpty()) {
         return;
     }
@@ -310,9 +309,11 @@ void PageItem::paint(QPainter *painter)
     Observer *observer = m_isThumbnail ? m_documentItem.data()->thumbnailObserver() : m_documentItem.data()->pageviewObserver();
     const int priority = m_isThumbnail ? THUMBNAILS_PRIO : PAGEVIEW_PRIO;
 
+    qreal dpr = window()->devicePixelRatio();
+
     if (m_intentionalDraw) {
         QLinkedList<Okular::PixmapRequest *> requestedPixmaps;
-        requestedPixmaps.push_back(new Okular::PixmapRequest(observer, m_viewPort.pageNumber, width(), height(), priority, Okular::PixmapRequest::Asynchronous));
+        requestedPixmaps.push_back(new Okular::PixmapRequest(observer, m_viewPort.pageNumber, width() * dpr, height() * dpr, priority, Okular::PixmapRequest::Asynchronous));
         const Okular::Document::PixmapRequestFlag prf = m_isThumbnail ? Okular::Document::NoOption : Okular::Document::RemoveAllPrevious;
         m_documentItem.data()->document()->requestPixmaps(requestedPixmaps, prf);
         m_intentionalDraw = false;
@@ -325,7 +326,13 @@ void PageItem::paint(QPainter *painter)
         limits.setWidth(width());
     if(limits.height() > height())
         limits.setHeight(height());
-    PagePainter::paintPageOnPainter(painter, m_page, observer, flags, width(), height(), limits);
+
+    QPixmap pix(width()*dpr, height()*dpr);
+    pix.setDevicePixelRatio(dpr);
+    QPainter p(&pix);
+    PagePainter::paintPageOnPainter(&p, m_page, observer, flags, width(), height(), limits);
+    p.end();
+    painter->drawPixmap(QPoint(), pix);
 
     if (setAA) {
         painter->restore();

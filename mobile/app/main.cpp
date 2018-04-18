@@ -26,6 +26,7 @@
 #include <QQmlEngine>
 #include <QQmlContext>
 #include <QQmlApplicationEngine>
+#include <QCommandLineParser>
 #include <QIcon>
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
@@ -37,8 +38,23 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     QApplication app(argc, argv);
     app.setApplicationName(QStringLiteral("okularmobile"));
 
+    QCommandLineParser parser;
+    parser.addVersionOption();
+    parser.addHelpOption();
+    //parser.setApplicationDescription(i18n("Okular mobile"));
+    parser.process(app);
+
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
+    engine.rootContext()->setContextProperty(QStringLiteral("commandlineArguments"), parser.positionalArguments());
+    QVariantMap paths;
+    paths[QStringLiteral("desktop")] = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+    paths[QStringLiteral("documents")] = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    paths[QStringLiteral("music")] = QStandardPaths::writableLocation(QStandardPaths::MusicLocation);
+    paths[QStringLiteral("movies")] = QStandardPaths::writableLocation(QStandardPaths::MoviesLocation);
+    paths[QStringLiteral("pictures")] = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
+    paths[QStringLiteral("home")] = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    engine.rootContext()->setContextProperty(QStringLiteral("userPaths"), paths);
 
     engine.setBaseUrl(QUrl("qrc:/package/contents/ui/"));
     engine.load(QUrl("qrc:/package/contents/ui/main.qml"));

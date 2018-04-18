@@ -36,7 +36,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 #endif
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication app(argc, argv);
-    app.setApplicationName(QStringLiteral("okularmobile"));
+    app.setApplicationName(QStringLiteral("okularkirigami"));
 
     QCommandLineParser parser;
     parser.addVersionOption();

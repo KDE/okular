@@ -245,6 +245,15 @@ kconfig_add_kcfg_files(okularcore_SRCS conf/settings_core.kcfgc)
 add_library(okularcore SHARED ${okularcore_SRCS})
 generate_export_header(okularcore BASE_NAME okularcore EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/core/okularcore_export.h")
 
+if (ANDROID)
+    set(fileName ${CMAKE_BINARY_DIR}/Okular5Core-android-dependencies.xml)
+    file(WRITE "${fileName}" "<rules><dependencies><lib name='Okular5Core'><depends>\n"
+                                "<bundled file='${KDE_INSTALL_PLUGINDIR}/okular/generators' />\n"
+                             "</depends></lib></dependencies></rules>\n")
+    install(FILES ${fileName} DESTINATION ${KDE_INSTALL_LIBDIR})
+endif()
+
+
 # Special handling for linking okularcore on OSX/Apple
 IF(APPLE)
     SET(OKULAR_IOKIT "-framework IOKit" CACHE STRING "Apple IOKit framework")

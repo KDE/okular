@@ -124,7 +124,10 @@ add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${PHONON_INCLUDES} core/synctex ${ZLIB_INCLUDE_DIR} ${CMAKE_BINARY_DIR}/core)
 
-add_subdirectory( mobile )
+option(BUILD_OKULARKIRIGAMI "Builds the touch-friendly frontend" ON)
+if (BUILD_OKULARKIRIGAMI)
+    add_subdirectory( mobile )
+endif()
 option(BUILD_COVERAGE "Build the project with gcov support" OFF)
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")

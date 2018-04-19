@@ -18,10 +18,13 @@
  */
 
 import QtQuick 2.1
+import QtQuick.Dialogs 1.3
 import QtQuick.Controls 1.3
+import QtQuick.Layouts 1.0
 import QtQuick.Controls 2.0 as QQC2
 import org.kde.kirigami 2.0 as Kirigami
 import Qt.labs.folderlistmodel 2.1
+import Qt.labs.platform 1.0
 
 Item {
     id: root
@@ -43,17 +46,24 @@ Item {
         }
     }
 
-    Kirigami.Label {
+    ColumnLayout {
         z: 2
         visible: filesView.count == 0
         anchors {
             fill: parent
             margins: Kirigami.Units.gridUnit
         }
-        text: i18n("No Documents found. To start to read, put some files in the Documents folder of your device.")
-        wrapMode: Text.WordWrap
-        horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignVCenter
+        Kirigami.Label {
+            text: i18n("No Documents found. To start to read, put some files in the Documents folder of your device.")
+            wrapMode: Text.WordWrap
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+        Button {
+            text: i18n("Open")
+//             FileDialog {}
+//             onClicked:
+        }
     }
 
     ScrollView {
@@ -67,11 +77,17 @@ Item {
             id: filesView
             anchors.fill: parent
 
+            header: Kirigami.Label {
+                Layout.fillWidth: true
+                text: folderModel.folder
+            }
+
             model:  FolderListModel {
                 id: folderModel
-                folder: userPaths.documents
+                folder: StandardPaths.writableLocation(StandardPaths.DocumentsLocation)
                 nameFilters: ["*.pdf", "*.txt", "*.chm", "*.epub"]
-                showDirs: false
+                showDotAndDotDot: true
+//                 showDirs: false
             }
 
             delegate: Kirigami.BasicListItem {
@@ -79,6 +95,11 @@ Item {
                 visible: model.fileName.indexOf(searchField.text) !== -1
                 height: visible ? implicitHeight : 0
                 onClicked: {
+                    if (fileIsDir) {
+                        ListView.view.model.folder = fileURL
+                        return;
+                    }
+
                     documentItem.path = model.filePath;
                     globalDrawer.close();
                     applicationWindow().controlsVisible = false;

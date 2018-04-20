@@ -206,6 +206,7 @@ void PageGroupProxyModel::setSourceModel( QAbstractItemModel *model )
     disconnect( sourceModel(), &QAbstractItemModel::modelReset, this, &PageGroupProxyModel::rebuildIndexes );
     disconnect( sourceModel(), &QAbstractItemModel::rowsInserted, this, &PageGroupProxyModel::rebuildIndexes );
     disconnect( sourceModel(), &QAbstractItemModel::rowsRemoved, this, &PageGroupProxyModel::rebuildIndexes );
+    disconnect( sourceModel(), &QAbstractItemModel::dataChanged, this, &PageGroupProxyModel::sourceDataChanged );
   }
 
   QAbstractProxyModel::setSourceModel( model );
@@ -214,6 +215,7 @@ void PageGroupProxyModel::setSourceModel( QAbstractItemModel *model )
   connect( sourceModel(), &QAbstractItemModel::modelReset, this, &PageGroupProxyModel::rebuildIndexes );
   connect( sourceModel(), &QAbstractItemModel::rowsInserted, this, &PageGroupProxyModel::rebuildIndexes );
   connect( sourceModel(), &QAbstractItemModel::rowsRemoved, this, &PageGroupProxyModel::rebuildIndexes );
+  connect( sourceModel(), &QAbstractItemModel::dataChanged, this, &PageGroupProxyModel::sourceDataChanged );
 
   rebuildIndexes();
 }
@@ -247,6 +249,11 @@ void PageGroupProxyModel::rebuildIndexes()
   }
 
   endResetModel();
+}
+
+void PageGroupProxyModel::sourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles)
+{
+    emit dataChanged(mapFromSource(topLeft), mapFromSource(bottomRight), roles);
 }
 
 void PageGroupProxyModel::groupByPage( bool value )
@@ -313,7 +320,7 @@ class AuthorGroupItem
         int row() const
         {
             return ( mParent ? mParent->mChilds.indexOf( const_cast<AuthorGroupItem*>( this ) ) : 0 );
-        }   
+        }
 
         Type type() const { return mType; }
         QModelIndex index() const { return mIndex; }
@@ -435,6 +442,7 @@ void AuthorGroupProxyModel::setSourceModel( QAbstractItemModel *model )
         disconnect( sourceModel(), &QAbstractItemModel::modelReset, this, &AuthorGroupProxyModel::rebuildIndexes );
         disconnect( sourceModel(), &QAbstractItemModel::rowsInserted, this, &AuthorGroupProxyModel::rebuildIndexes );
         disconnect( sourceModel(), &QAbstractItemModel::rowsRemoved, this, &AuthorGroupProxyModel::rebuildIndexes );
+        disconnect( sourceModel(), &QAbstractItemModel::dataChanged, this, &AuthorGroupProxyModel::sourceDataChanged );
     }
 
     QAbstractProxyModel::setSourceModel( model );
@@ -443,6 +451,7 @@ void AuthorGroupProxyModel::setSourceModel( QAbstractItemModel *model )
     connect( sourceModel(), &QAbstractItemModel::modelReset, this, &AuthorGroupProxyModel::rebuildIndexes );
     connect( sourceModel(), &QAbstractItemModel::rowsInserted, this, &AuthorGroupProxyModel::rebuildIndexes );
     connect( sourceModel(), &QAbstractItemModel::rowsRemoved, this, &AuthorGroupProxyModel::rebuildIndexes );
+    connect( sourceModel(), &QAbstractItemModel::dataChanged, this, &AuthorGroupProxyModel::sourceDataChanged );
 
     rebuildIndexes();
 }
@@ -599,6 +608,11 @@ void AuthorGroupProxyModel::rebuildIndexes()
     }
 
     endResetModel();
+}
+
+void AuthorGroupProxyModel::sourceDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles)
+{
+    emit dataChanged(mapFromSource(topLeft), mapFromSource(bottomRight), roles);
 }
 
 #include "moc_annotationproxymodels.cpp"

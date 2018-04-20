@@ -64,6 +64,8 @@ QString captionForAnnotation( const Okular::Annotation * ann )
 {
     Q_ASSERT( ann );
 
+    const bool hasComment = !ann->contents().isEmpty();
+
     QString ret;
     switch( ann->subType() )
     {
@@ -75,35 +77,35 @@ QString captionForAnnotation( const Okular::Annotation * ann )
             break;
         case Okular::Annotation::ALine:
             if( ( (Okular::LineAnnotation*)ann )->linePoints().count() == 2 )
-                ret = i18n( "Straight Line" );
+                ret = hasComment ? i18n( "Straight Line with Comment" ) : i18n( "Straight Line" );
             else
-                ret = i18n( "Polygon" );
+                ret = hasComment ? i18n( "Polygon with Comment" ) : i18n( "Polygon" );
             break;
         case Okular::Annotation::AGeom:
-            ret = i18n( "Geometry" );
+            ret = hasComment ? i18n( "Geometry with Comment" ) : i18n( "Geometry" );
             break;
         case Okular::Annotation::AHighlight:
             switch ( ( (Okular::HighlightAnnotation*)ann )->highlightType() )
             {
                 case Okular::HighlightAnnotation::Highlight:
-                    ret = i18n( "Highlight" );
+                    ret = hasComment ? i18n( "Highlight with Comment" ) : i18n( "Highlight" );
                     break;
                 case Okular::HighlightAnnotation::Squiggly:
-                    ret = i18n( "Squiggle" );
+                    ret = hasComment ? i18n( "Squiggle with Comment" ) : i18n( "Squiggle" );
                     break;
                 case Okular::HighlightAnnotation::Underline:
-                    ret = i18n( "Underline" );
+                    ret = hasComment ? i18n( "Underline with Comment" ) : i18n( "Underline" );
                     break;
                 case Okular::HighlightAnnotation::StrikeOut:
-                    ret = i18n( "Strike Out" );
+                    ret = hasComment ? i18n( "Strike Out with Comment" ) : i18n( "Strike Out" );
                     break;
             }
             break;
         case Okular::Annotation::AStamp:
-            ret = i18n( "Stamp" );
+            ret = hasComment ? i18n( "Stamp with Comment" ) : i18n( "Stamp" );
             break;
         case Okular::Annotation::AInk:
-            ret = i18n( "Freehand Line" );
+            ret = hasComment ? i18n( "Freehand Line with Comment" ) : i18n( "Freehand Line" );
             break;
         case Okular::Annotation::ACaret:
             ret = i18n( "Caret" );

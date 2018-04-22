@@ -21,6 +21,7 @@
 
 #include "../generators/poppler/config-okular-poppler.h"
 
+#include <KActionCollection>
 #include <KConfigDialog>
 #include <KParts/OpenUrlArguments>
 
@@ -29,6 +30,7 @@
 #include <QPushButton>
 #include <QScrollBar>
 #include <QTemporaryDir>
+#include <QTextEdit>
 #include <QTreeView>
 #include <QUrl>
 #include <QDesktopServices>
@@ -108,6 +110,7 @@ class PartTest
         void testClickAnywhereAfterSelectionShouldUnselect();
         void testeRectSelectionStartingOnLinks();
         void testCheckBoxReadOnly();
+        void testCrashTextEditDestroy();
 
     private:
         void simulateMouseSelection(double startX, double startY, double endX, double endY, QWidget *target);
@@ -1397,6 +1400,18 @@ void PartTest::testCheckBoxReadOnly()
     QVERIFY( cbMakeRO->state() );
     QVERIFY( targetDefaultRW->isReadOnly() );
     QVERIFY( !targetDefaultRO->isReadOnly() );
+}
+
+void PartTest::testCrashTextEditDestroy()
+{
+    const QString testFile = QStringLiteral( KDESRCDIR "data/formSamples.pdf" );
+    Okular::Part part( nullptr, nullptr, QVariantList() );
+    part.openDocument( testFile );
+    part.widget()->show();
+    QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
+
+    part.widget()->findChild<QTextEdit*>()->setText("HOLA");
+    part.actionCollection()->action(QStringLiteral("view_toggle_forms"))->trigger();
 }
 
 }

@@ -59,11 +59,6 @@ Item {
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
         }
-        Button {
-            text: i18n("Open")
-//             FileDialog {}
-//             onClicked:
-        }
     }
 
     ScrollView {
@@ -86,8 +81,7 @@ Item {
                 id: folderModel
                 folder: StandardPaths.writableLocation(StandardPaths.DocumentsLocation)
                 nameFilters: ["*.pdf", "*.txt", "*.chm", "*.epub"]
-                showDotAndDotDot: true
-//                 showDirs: false
+                showDirs: false
             }
 
             delegate: Kirigami.BasicListItem {

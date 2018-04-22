@@ -23,6 +23,7 @@ import QtQuick.Controls 1.3
 import QtQuick.Layouts 1.0
 import QtQuick.Controls 2.0 as QQC2
 import org.kde.kirigami 2.0 as Kirigami
+import org.kde.okular 2.0 as Okular
 import Qt.labs.folderlistmodel 2.1
 import Qt.labs.platform 1.0
 
@@ -80,7 +81,8 @@ Item {
             model:  FolderListModel {
                 id: folderModel
                 folder: StandardPaths.writableLocation(StandardPaths.DocumentsLocation)
-                nameFilters: ["*.pdf", "*.txt", "*.chm", "*.epub"]
+                nameFilters: Okular.Okular.nameFilters
+                showDotAndDotDot: true
                 showDirs: false
             }
 

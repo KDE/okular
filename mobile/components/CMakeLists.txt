@@ -17,6 +17,7 @@ set(okular_SRCS
     pageitem.cpp
     documentitem.cpp
     thumbnailitem.cpp
+    okularsingleton.cpp
     )
 
 kconfig_add_kcfg_files(okular_SRCS ${CMAKE_SOURCE_DIR}/conf/settings.kcfgc )
@@ -32,6 +33,7 @@ target_link_libraries(okularplugin
         KF5::Bookmarks
         KF5::IconThemes
         KF5::I18n
+        KF5::Service
         okularcore
         )
 

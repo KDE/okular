@@ -292,6 +292,7 @@ FormWidgetIface::FormWidgetIface( QWidget * w, Okular::FormField * ff )
 
 FormWidgetIface::~FormWidgetIface()
 {
+    m_ff = nullptr;
 }
 
 Okular::NormalizedRect FormWidgetIface::rect() const
@@ -668,6 +669,10 @@ void TextAreaEdit::slotHandleTextChangedByUndoRedo( int pageNumber,
 
 void TextAreaEdit::slotChanged()
 {
+    // happens on destruction
+    if (!m_ff)
+        return;
+
     Okular::FormFieldText *form = static_cast<Okular::FormFieldText *>(m_ff);
     QString contents = toPlainText();
     int cursorPos = textCursor().position();

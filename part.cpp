@@ -2766,7 +2766,7 @@ bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
         const mode_t mask = umask( 0 );
         umask( mask );
         const mode_t fileMode = 0666 & ~mask;
-        chmod( saveFilePath.toUtf8().constData(), fileMode );
+        chmod( saveFilePath.toLocal8Bit().constData(), fileMode );
     }
 #endif
 

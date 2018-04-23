@@ -98,6 +98,13 @@ class OKULARCORE_EXPORT FormField
          */
         virtual bool isVisible() const;
 
+        /**
+         * Whether the field is visible.
+         *
+         * @since 1.5
+         */
+        virtual void setVisible( bool value );
+
         Action* activationAction() const;
 
         /**

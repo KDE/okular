@@ -446,6 +446,20 @@ Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink)
             link = movieAction;
         }
         break;
+
+#ifdef HAVE_POPPLER_0_64
+        case Poppler::Link::Hide:
+        {
+            const Poppler::LinkHide * l = static_cast<const Poppler::LinkHide *>( popplerLink );
+            QStringList scripts;
+            for ( const QString &target: l->targets() )
+            {
+                scripts << QStringLiteral( "getField(\"%1\").hidden = %2;" ).arg( target ).arg( l->isShowAction() ? QLatin1String( "false" ) : QLatin1String( "true" ) );
+            }
+            link = new Okular::ScriptAction( Okular::JavaScript, scripts.join( QLatin1Char( '\n' ) ) );
+        }
+        break;
+#endif
     }
 
     if ( deletePopplerLink )

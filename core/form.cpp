@@ -64,6 +64,10 @@ bool FormField::isVisible() const
     return true;
 }
 
+void FormField::setVisible( bool )
+{
+}
+
 Action* FormField::activationAction() const
 {
     Q_D( const FormField );

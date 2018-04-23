@@ -27,6 +27,7 @@ class PopplerFormFieldButton : public Okular::FormFieldButton
         bool isReadOnly() const override;
         void setReadOnly( bool value ) override;
         bool isVisible() const override;
+        void setVisible( bool value ) override;
 
         // inherited from Okular::FormFieldButton
         ButtonType buttonType() const override;
@@ -56,6 +57,7 @@ class PopplerFormFieldText : public Okular::FormFieldText
         bool isReadOnly() const override;
         void setReadOnly( bool value ) override;
         bool isVisible() const override;
+        void setVisible( bool value ) override;
 
         // inherited from Okular::FormFieldText
         Okular::FormFieldText::TextType textType() const override;
@@ -88,6 +90,7 @@ class PopplerFormFieldChoice : public Okular::FormFieldChoice
         bool isReadOnly() const override;
         void setReadOnly( bool value ) override;
         bool isVisible() const override;
+        void setVisible( bool value ) override;
 
         // inherited from Okular::FormFieldChoice
         ChoiceType choiceType() const override;

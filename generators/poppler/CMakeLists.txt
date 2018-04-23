@@ -79,6 +79,7 @@ int main()
 {
   Poppler::FormField *f;
   f->setReadOnly(true);
+  f->setVisible(true);
 }
 " HAVE_POPPLER_0_64)
 

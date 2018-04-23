@@ -2758,6 +2758,18 @@ bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
     if ( url().isLocalFile() )
         setFileToWatch( localFilePath() );
 
+    //Set correct permission taking into account the umask value
+#ifndef Q_OS_WIN
+    const QString saveFilePath = saveUrl.toLocalFile();
+    if ( QFile::exists( saveFilePath ) )
+    {
+        const mode_t mask = umask( 0 );
+        umask( mask );
+        const mode_t fileMode = 0666 & ~mask;
+        chmod( saveFilePath.toUtf8().constData(), fileMode );
+    }
+#endif
+
     return true;
 }
 

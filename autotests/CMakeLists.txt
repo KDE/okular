@@ -64,6 +64,11 @@ ecm_add_test(calculatetexttest.cpp
     LINK_LIBRARIES Qt5::Widgets Qt5::Test okularcore
 )
 
+ecm_add_test(visibilitytest.cpp
+    TEST_NAME "visibilitytest"
+    LINK_LIBRARIES Qt5::Widgets Qt5::Test okularcore
+)
+
 if(KF5Activities_FOUND)
 	ecm_add_test(mainshelltest.cpp ../shell/okular_main.cpp ../shell/shellutils.cpp ../shell/shell.cpp
 		TEST_NAME "mainshelltest"

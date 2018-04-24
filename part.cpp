@@ -2771,7 +2771,7 @@ bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
         const mode_t mask = umask( 0 );
         umask( mask );
         const mode_t fileMode = 0666 & ~mask;
-        chmod( saveFilePath.toLocal8Bit().constData(), fileMode );
+        chmod( QFile::encodeName( saveFilePath ).constData(), fileMode );
     }
 #endif
 

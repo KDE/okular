@@ -12,6 +12,11 @@ if(Poppler_Qt5_FOUND)
         TEST_NAME "parttest"
         LINK_LIBRARIES Qt5::Widgets Qt5::Test Qt5::Xml okularcore okularpart
     )
+
+    ecm_add_test(visibilitytest.cpp
+        TEST_NAME "visibilitytest"
+        LINK_LIBRARIES Qt5::Widgets Qt5::Test okularcore
+    )
 endif()
 
 ecm_add_test(documenttest.cpp
@@ -61,11 +66,6 @@ ecm_add_test(editformstest.cpp
 
 ecm_add_test(calculatetexttest.cpp
     TEST_NAME "calculatetexttest"
-    LINK_LIBRARIES Qt5::Widgets Qt5::Test okularcore
-)
-
-ecm_add_test(visibilitytest.cpp
-    TEST_NAME "visibilitytest"
     LINK_LIBRARIES Qt5::Widgets Qt5::Test okularcore
 )
 

@@ -20,6 +20,7 @@
 import QtQuick 2.2
 import QtGraphicalEffects 1.0
 import org.kde.okular 2.0
+import org.kde.kirigami 2.2 as Kirigami
 
 Item {
     width: parent.width
@@ -41,12 +42,6 @@ Item {
         document: null
     }
 
-    //FIXME: this should use units, but can't depend from plasma from here
-    Text {
-        id: unit
-        text: "M"
-        visible: false
-    }
     Rectangle {
         id: backgroundRectangle
         anchors {
@@ -54,21 +49,21 @@ Item {
             bottom: parent.bottom
             left: page.left
             right: page.right
-            topMargin: -unit.height * 10
-            bottomMargin: -unit.height * 10
+            topMargin: -Kirigami.Units.gridUnit
+            bottomMargin: -Kirigami.Units.gridUnit
         }
         z: -1
         color: "white"
 
         LinearGradient {
-            width: unit.width
+            width: Kirigami.Units.gridUnit
             anchors {
                 right: parent.left
                 top: parent.top
                 bottom: parent.bottom
             }
             start: Qt.point(0, 0)
-            end: Qt.point(unit.width, 0)
+            end: Qt.point(Kirigami.Units.gridUnit, 0)
             gradient: Gradient {
                 GradientStop {
                     position: 0.0
@@ -86,14 +81,14 @@ Item {
         }
 
         LinearGradient {
-            width: unit.width
+            width: Kirigami.Units.gridUnit
             anchors {
                 left: parent.right
                 top: parent.top
                 bottom: parent.bottom
             }
             start: Qt.point(0, 0)
-            end: Qt.point(unit.width, 0)
+            end: Qt.point(Kirigami.Units.gridUnit, 0)
             gradient: Gradient {
                 GradientStop {
                     position: 0.0

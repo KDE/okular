@@ -293,14 +293,19 @@ void PageItem::geometryChanged(const QRectF &newGeometry,
         return;
     }
 
+    bool changed = false;
     if (newGeometry.size() != oldGeometry.size()) {
+        changed = true;
         m_redrawTimer->start();
     }
 
     QQuickItem::geometryChanged(newGeometry, oldGeometry);
-    //Why aren't they automatically emuitted?
-    emit widthChanged();
-    emit heightChanged();
+
+    if (changed) {
+        //Why aren't they automatically emuitted?
+        emit widthChanged();
+        emit heightChanged();
+    }
 }
 
 void PageItem::paint(QPainter *painter)

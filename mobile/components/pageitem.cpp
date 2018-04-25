@@ -53,6 +53,7 @@ PageItem::PageItem(QQuickItem *parent)
     m_redrawTimer->setInterval(REDRAW_TIMEOUT);
     m_redrawTimer->setSingleShot(true);
     connect(m_redrawTimer, &QTimer::timeout, this, &PageItem::paint);
+    connect(this, &QQuickItem::windowChanged, m_redrawTimer, [this]() {m_redrawTimer->start(); });
 }
 
 

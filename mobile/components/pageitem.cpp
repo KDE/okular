@@ -24,6 +24,7 @@
 #include <QTimer>
 #include <QStyleOptionGraphicsItem>
 #include <QQuickWindow>
+#include <QSGSimpleTextureNode>
 
 #include <core/bookmarkmanager.h>
 #include <core/document.h>
@@ -37,7 +38,7 @@
 #define REDRAW_TIMEOUT 250
 
 PageItem::PageItem(QQuickItem *parent)
-    : QQuickPaintedItem(parent),
+    : QQuickItem(parent),
       Okular::View( QLatin1String( "PageView" ) ),
       m_page(nullptr),
       m_smooth(false),
@@ -308,16 +309,27 @@ void PageItem::geometryChanged(const QRectF &newGeometry,
     }
 }
 
-void PageItem::paint(QPainter *painter)
+QSGNode * PageItem::updatePaintNode(QSGNode* node, QQuickItem::UpdatePaintNodeData* /*data*/)
 {
-    if (!m_documentItem || !m_page) {
-        return;
+    if (!window() || m_buffer.isNull()) {
+        delete node;
+        return nullptr;
+    }
+    QSGSimpleTextureNode *n = static_cast<QSGSimpleTextureNode *>(node);
+    if (!n) {
+        n = new QSGSimpleTextureNode();
+        n->setOwnsTexture(true);
     }
 
-    const bool setAA = m_smooth && !(painter->renderHints() & QPainter::Antialiasing);
-    if (setAA) {
-        painter->save();
-        painter->setRenderHint(QPainter::Antialiasing, true);
+    n->setTexture(window()->createTextureFromImage(m_buffer));
+    n->setRect(boundingRect());
+    return n;
+}
+
+void PageItem::paint()
+{
+    if (!m_documentItem || !m_page || !window()) {
+        return;
     }
 
     Observer *observer = m_isThumbnail ? m_documentItem.data()->thumbnailObserver() : m_documentItem.data()->pageviewObserver();
@@ -334,22 +346,27 @@ void PageItem::paint(QPainter *painter)
     const int flags = PagePainter::Accessibility | PagePainter::Highlights | PagePainter::Annotations;
     // Simply using the limits as described by textureSize will, at times, result in the page painter
     // attempting to write outside the data area, unsurprisingly resulting in a crash.
-    QRect limits(QPoint(0, 0), textureSize().isValid() ? textureSize() : QSize(width(), height()));
+    QRect limits(QPoint(0, 0), QSize(width(), height()));
     if(limits.width() > width())
         limits.setWidth(width());
     if(limits.height() > height())
         limits.setHeight(height());
 
-    QPixmap pix(width()*dpr, height()*dpr);
+    QSize size(width()*dpr, height()*dpr);
+    if (size.isNull()) {
+        return;
+    }
+
+    QPixmap pix(size);
     pix.setDevicePixelRatio(dpr);
     QPainter p(&pix);
+    p.setRenderHint(QPainter::Antialiasing, m_smooth);
     PagePainter::paintPageOnPainter(&p, m_page, observer, flags, width(), height(), limits);
     p.end();
-    painter->drawPixmap(QPoint(), pix);
 
-    if (setAA) {
-        painter->restore();
-    }
+    m_buffer = pix.toImage();
+
+    update();
 }
 
 //Protected slots
@@ -357,7 +374,7 @@ void PageItem::delayedRedraw()
 {
     if (m_documentItem && m_page) {
         m_intentionalDraw = true;
-        update();
+        paint();
     }
 }
 

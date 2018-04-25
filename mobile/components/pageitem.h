@@ -20,13 +20,15 @@
 #ifndef QPAGEITEM_H
 #define QPAGEITEM_H
 
-#include <QQuickPaintedItem>
+#include <QQuickItem>
 #include <QPointer>
+#include <QImage>
 
 #include <core/document.h>
 #include <core/view.h>
 
 class QTimer;
+class QSGTexture;
 
 class DocumentItem;
 
@@ -35,7 +37,7 @@ namespace Okular {
     class Page;
 }
 
-class PageItem : public QQuickPaintedItem, public Okular::View
+class PageItem : public QQuickItem, public Okular::View
 {
     Q_OBJECT
 
@@ -105,6 +107,7 @@ public:
     void setBookmarked(bool bookmarked);
 
     QStringList bookmarks() const;
+    void paint();
 
     /**
      * loads a page bookmark and tries to ensure the bookmarked position is visible
@@ -135,10 +138,10 @@ public:
      */
     Q_INVOKABLE void removeBookmark(const QString &bookmark);
 
-    void paint(QPainter *painter) override;
-
     void geometryChanged(const QRectF &newGeometry,
                          const QRectF &oldGeometry) override;
+
+    QSGNode * updatePaintNode(QSGNode * , QQuickItem::UpdatePaintNodeData * ) override;
 
 Q_SIGNALS:
     void flickableChanged();
@@ -171,6 +174,7 @@ private:
     QTimer *m_redrawTimer;
     QPointer<QQuickItem> m_flickable;
     Okular::DocumentViewport m_viewPort;
+    QImage m_buffer;
 };
 
 #endif

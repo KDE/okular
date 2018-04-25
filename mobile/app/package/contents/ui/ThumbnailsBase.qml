@@ -93,7 +93,7 @@ Kirigami.Page {
                             resultsGrid.currentIndex = index
                             documentItem.currentPage = modelData
 
-                            contextDrawer.opened = false
+                            contextDrawer.drawerOpen = false
                             root.pageClicked(modelData)
                         }
                     }

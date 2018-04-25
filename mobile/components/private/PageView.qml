@@ -25,13 +25,13 @@ import org.kde.kirigami 2.2 as Kirigami
 Item {
     width: parent.width
     height: parent.height
-    property PageItem pageItem: page
+    readonly property PageItem pageItem: page
     property alias document: page.document
     property alias pageNumber: page.pageNumber
     implicitWidth: page.implicitWidth
     implicitHeight: page.implicitHeight
-    property real pageRatio: page.implicitWidth / page.implicitHeight
-    property real scaleFactor: page.width / page.implicitWidth
+    readonly property real pageRatio: page.implicitWidth / page.implicitHeight
+    readonly property real scaleFactor: page.width / page.implicitWidth
 
     PageItem {
         id: page

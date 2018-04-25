@@ -46,6 +46,7 @@ Kirigami.AbstractApplicationWindow {
 
     Okular.DocumentItem {
         id: documentItem
+        onPathChanged: currentPage = 0
         onWindowTitleForDocumentChanged: {
             fileBrowserRoot.title = windowTitleForDocument
         }

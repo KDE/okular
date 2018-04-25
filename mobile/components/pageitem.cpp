@@ -120,7 +120,7 @@ void PageItem::setDocument(DocumentItem *doc)
     emit documentChanged();
     m_redrawTimer->start();
 
-    connect(doc, &DocumentItem::pathChanged, this, &PageItem::documentPathChanged);
+    connect(doc, &DocumentItem::pathChanged, this, &PageItem::refreshPage);
 }
 
 int PageItem::pageNumber() const
@@ -133,18 +133,27 @@ void PageItem::setPageNumber(int number)
     if ((m_page && m_viewPort.pageNumber == number) ||
         !m_documentItem ||
         !m_documentItem.data()->isOpened() ||
-        number < 0 ||
-        (uint)number >= m_documentItem.data()->document()->pages()) {
+        number < 0) {
         return;
     }
 
     m_viewPort.pageNumber = number;
-    m_page = m_documentItem.data()->document()->page(number);
-
+    refreshPage();
     emit pageNumberChanged();
+    checkBookmarksChanged();
+}
+
+void PageItem::refreshPage()
+{
+    if (uint(m_viewPort.pageNumber) < m_documentItem.data()->document()->pages()) {
+        m_page = m_documentItem.data()->document()->page(m_viewPort.pageNumber);
+    } else {
+        m_page = nullptr;
+    }
+
     emit implicitWidthChanged();
     emit implicitHeightChanged();
-    checkBookmarksChanged();
+
     m_redrawTimer->start();
 }
 
@@ -395,15 +404,6 @@ void PageItem::contentYChanged()
 
     m_viewPort.rePos.normalizedY = m_flickable.data()->property("contentY").toReal() / (height() - m_flickable.data()->height());
 }
-
-void PageItem::documentPathChanged()
-{
-    m_page = nullptr;
-    setPageNumber(0);
-
-    m_redrawTimer->start();
-}
-
 
 void PageItem::setIsThumbnail(bool thumbnail)
 {

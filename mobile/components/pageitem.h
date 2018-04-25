@@ -154,13 +154,14 @@ protected:
 
 private Q_SLOTS:
     void delayedRedraw();
-    void documentPathChanged();
     void pageHasChanged(int page, int flags);
     void checkBookmarksChanged();
     void contentXChanged();
     void contentYChanged();
 
 private:
+    void refreshPage();
+
     const Okular::Page *m_page;
     bool m_smooth;
     bool m_intentionalDraw;

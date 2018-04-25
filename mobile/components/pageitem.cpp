@@ -319,9 +319,9 @@ void PageItem::paint(QPainter *painter)
         m_intentionalDraw = false;
     }
     const int flags = PagePainter::Accessibility | PagePainter::Highlights | PagePainter::Annotations;
-    // Simply using the limits as described by contentsSize will, at times, result in the page painter
+    // Simply using the limits as described by textureSize will, at times, result in the page painter
     // attempting to write outside the data area, unsurprisingly resulting in a crash.
-    QRect limits(QPoint(0, 0), contentsSize());
+    QRect limits(QPoint(0, 0), textureSize().isValid() ? textureSize() : QSize(width(), height()));
     if(limits.width() > width())
         limits.setWidth(width());
     if(limits.height() > height())

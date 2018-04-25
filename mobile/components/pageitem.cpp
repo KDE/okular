@@ -312,10 +312,9 @@ void PageItem::paint(QPainter *painter)
     qreal dpr = window()->devicePixelRatio();
 
     if (m_intentionalDraw) {
-        QLinkedList<Okular::PixmapRequest *> requestedPixmaps;
-        requestedPixmaps.push_back(new Okular::PixmapRequest(observer, m_viewPort.pageNumber, width() * dpr, height() * dpr, priority, Okular::PixmapRequest::Asynchronous));
+        auto request = new Okular::PixmapRequest(observer, m_viewPort.pageNumber, width() * dpr, height() * dpr, priority, Okular::PixmapRequest::NoFeature);
         const Okular::Document::PixmapRequestFlag prf = m_isThumbnail ? Okular::Document::NoOption : Okular::Document::RemoveAllPrevious;
-        m_documentItem.data()->document()->requestPixmaps(requestedPixmaps, prf);
+        m_documentItem.data()->document()->requestPixmaps({request}, prf);
         m_intentionalDraw = false;
     }
     const int flags = PagePainter::Accessibility | PagePainter::Highlights | PagePainter::Annotations;

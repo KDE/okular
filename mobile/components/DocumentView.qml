@@ -91,6 +91,7 @@ QtControls.ScrollView {
                 flick.resizeContent(Math.max(flick.width+1, initialWidth * mouseArea.scale), Math.max(flick.height, initialHeight * mouseArea.scale), pinch.center);
                 mouseArea.scale = 1;
 
+                resizeTimer.stop()
                 flick.returnToBounds();
             }
             MouseArea {

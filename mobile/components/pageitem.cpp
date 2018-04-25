@@ -344,18 +344,14 @@ void PageItem::paint()
     const int flags = PagePainter::Accessibility | PagePainter::Highlights | PagePainter::Annotations;
     // Simply using the limits as described by textureSize will, at times, result in the page painter
     // attempting to write outside the data area, unsurprisingly resulting in a crash.
-    QRect limits(QPoint(0, 0), QSize(width(), height()));
-    if(limits.width() > width())
-        limits.setWidth(width());
-    if(limits.height() > height())
-        limits.setHeight(height());
 
-    QSize size(width()*dpr, height()*dpr);
-    if (size.isNull()) {
+    if (width() <= 0 || height() < 0) {
+        update();
         return;
     }
 
-    QPixmap pix(size);
+    const QRect limits(QPoint(0, 0), QSize(width()*dpr, height()*dpr));
+    QPixmap pix(limits.size());
     pix.setDevicePixelRatio(dpr);
     QPainter p(&pix);
     p.setRenderHint(QPainter::Antialiasing, m_smooth);

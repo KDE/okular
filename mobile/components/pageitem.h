@@ -156,7 +156,6 @@ protected:
     void setIsThumbnail(bool thumbnail);
 
 private Q_SLOTS:
-    void delayedRedraw();
     void pageHasChanged(int page, int flags);
     void checkBookmarksChanged();
     void contentXChanged();
@@ -167,7 +166,6 @@ private:
 
     const Okular::Page *m_page;
     bool m_smooth;
-    bool m_intentionalDraw;
     bool m_bookmarked;
     bool m_isThumbnail;
     QPointer<DocumentItem> m_documentItem;

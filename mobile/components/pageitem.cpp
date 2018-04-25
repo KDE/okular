@@ -42,7 +42,6 @@ PageItem::PageItem(QQuickItem *parent)
       Okular::View( QLatin1String( "PageView" ) ),
       m_page(nullptr),
       m_smooth(false),
-      m_intentionalDraw(false),
       m_bookmarked(false),
       m_isThumbnail(false)
 {
@@ -53,7 +52,7 @@ PageItem::PageItem(QQuickItem *parent)
     m_redrawTimer = new QTimer(this);
     m_redrawTimer->setInterval(REDRAW_TIMEOUT);
     m_redrawTimer->setSingleShot(true);
-    connect(m_redrawTimer, &QTimer::timeout, this, &PageItem::delayedRedraw);
+    connect(m_redrawTimer, &QTimer::timeout, this, &PageItem::paint);
 }
 
 
@@ -337,11 +336,10 @@ void PageItem::paint()
 
     qreal dpr = window()->devicePixelRatio();
 
-    if (m_intentionalDraw) {
+    {
         auto request = new Okular::PixmapRequest(observer, m_viewPort.pageNumber, width() * dpr, height() * dpr, priority, Okular::PixmapRequest::NoFeature);
         const Okular::Document::PixmapRequestFlag prf = m_isThumbnail ? Okular::Document::NoOption : Okular::Document::RemoveAllPrevious;
         m_documentItem.data()->document()->requestPixmaps({request}, prf);
-        m_intentionalDraw = false;
     }
     const int flags = PagePainter::Accessibility | PagePainter::Highlights | PagePainter::Annotations;
     // Simply using the limits as described by textureSize will, at times, result in the page painter
@@ -370,14 +368,6 @@ void PageItem::paint()
 }
 
 //Protected slots
-void PageItem::delayedRedraw()
-{
-    if (m_documentItem && m_page) {
-        m_intentionalDraw = true;
-        paint();
-    }
-}
-
 void PageItem::pageHasChanged(int page, int flags)
 {
     if (m_viewPort.pageNumber == page) {

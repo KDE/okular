@@ -10,6 +10,7 @@
   <name xml:lang="gl">Okular Mobile</name>
   <name xml:lang="nl">Okular mobiel</name>
   <name xml:lang="pt">Okular Móvel</name>
+  <name xml:lang="sk">Okular Mobile</name>
   <name xml:lang="uk">Мобільний Okular</name>
   <name xml:lang="x-test">xxOkular Mobilexx</name>
   <summary>Document Viewer</summary>
@@ -20,6 +21,7 @@
   <summary xml:lang="gl">Visor de documentos.</summary>
   <summary xml:lang="nl">Documentenviewer</summary>
   <summary xml:lang="pt">Visualizador do Documento</summary>
+  <summary xml:lang="sk">Prehliadač dokumentov</summary>
   <summary xml:lang="uk">Перегляд документів</summary>
   <summary xml:lang="x-test">xxDocument Viewerxx</summary>
   <description>
@@ -43,6 +45,7 @@
     <p xml:lang="gl">Funcionalidades:</p>
     <p xml:lang="nl">Kenmerken:</p>
     <p xml:lang="pt">Funcionalidades:</p>
+    <p xml:lang="sk">Funkcie:</p>
     <p xml:lang="uk">Можливості:</p>
     <p xml:lang="x-test">xxFeatures:xx</p>
     <ul>

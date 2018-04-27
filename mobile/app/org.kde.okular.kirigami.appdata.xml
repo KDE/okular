@@ -24,6 +24,7 @@
   <summary xml:lang="sk">Prehliadač dokumentov</summary>
   <summary xml:lang="uk">Перегляд документів</summary>
   <summary xml:lang="x-test">xxDocument Viewerxx</summary>
+  <summary xml:lang="zh-CN">文档查看器</summary>
   <description>
     <p>
    Okular is a universal document viewer developed by KDE. Okular works on multiple platforms, including but not limited to Linux, Windows, Mac OS X, *BSD, etc.
@@ -37,6 +38,7 @@
     <p xml:lang="pt">O Okular é um visualizador universal de documentos desenvolvido pelo KDE. O Okular funciona em diversas plataformas, incluindo mas não se limitando ao Linux, Windows, Mac OS X, *BSD, etc.</p>
     <p xml:lang="uk">Okular є універсальною програмою для перегляду документів, розробленою KDE. Okular може працювати на багатьох програмних платформах, зокрема Linux, Windows, Mac OS X, *BSD тощо.</p>
     <p xml:lang="x-test">xxOkular is a universal document viewer developed by KDE. Okular works on multiple platforms, including but not limited to Linux, Windows, Mac OS X, *BSD, etc.xx</p>
+    <p xml:lang="zh-CN">Okular 是由 KDE 开发的通用文档查看器。Okular 可在多个平台上运行，包括但不是限于 Linux，Windows，Mac OS X，* BSD，等。</p>
     <p>Features:</p>
     <p xml:lang="ca">Característiques:</p>
     <p xml:lang="en-GB">Features:</p>
@@ -48,6 +50,7 @@
     <p xml:lang="sk">Funkcie:</p>
     <p xml:lang="uk">Можливості:</p>
     <p xml:lang="x-test">xxFeatures:xx</p>
+    <p xml:lang="zh-CN">功能：</p>
     <ul>
       <li>Supported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="ca">Formats acceptats: PDF, PS, Tiff, CHM, DjVu, imatges, DVI, XPS, ODT, Fiction Book, llibres de còmic, Plucker, EPub, Fax</li>
@@ -59,6 +62,7 @@
       <li xml:lang="pt">Formatos Suportados: PDF, PS, Tiff, CHM, DjVu, Imagens, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="uk">Підтримувані формати: PDF, PS, Tiff, CHM, DjVu, зображення, DVI, XPS, ODT, Fiction Book, комікси, Plucker, EPub, факси.</li>
       <li xml:lang="x-test">xxSupported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Faxxx</li>
+      <li xml:lang="zh-CN">支持的格式︰ PDF，PS，Tiff，CHM，DjVu，图片，DVI，XPS，ODT，FictionBook，漫画书，Plucker，EPub，传真</li>
       <li>Sidebar with contents, thumbnails, reviews and bookmarks</li>
       <li xml:lang="ca">Barra lateral amb el contingut, miniatures, revisions i punts</li>
       <li xml:lang="en-GB">Sidebar with contents, thumbnails, reviews and bookmarks</li>
@@ -69,6 +73,7 @@
       <li xml:lang="pt">Barra lateral com o conteúdo, miniaturas, revisões e marcação de favoritos</li>
       <li xml:lang="uk">Бічні панелі зі списками змісту, мініатюрами сторінок, можливість рецензування та додавання закладок.</li>
       <li xml:lang="x-test">xxSidebar with contents, thumbnails, reviews and bookmarksxx</li>
+      <li xml:lang="zh-CN">目录，缩略图，批注和书签侧边栏</li>
       <li>Annotations support</li>
       <li xml:lang="ca">Admet anotacions</li>
       <li xml:lang="en-GB">Annotations support</li>
@@ -79,6 +84,7 @@
       <li xml:lang="pt">Suporte para anotações</li>
       <li xml:lang="uk">Підтримка анотування.</li>
       <li xml:lang="x-test">xxAnnotations supportxx</li>
+      <li xml:lang="zh-CN">支持批注</li>
     </ul>
   </description>
   <screenshots>

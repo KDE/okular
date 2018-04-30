@@ -311,7 +311,7 @@ QPair<Okular::Movie*, Okular::EmbeddedFile*> createMovieFromPopplerRichMedia( co
 /**
  * Note: the function will take ownership of the popplerLink object.
  */
-Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink)
+Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink, bool deletePopplerLink = true)
 {
     if (!popplerLink)
         return nullptr;
@@ -326,8 +326,6 @@ Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink)
     const Poppler::LinkMovie *popplerLinkMovie;
     const Poppler::LinkRendition *popplerLinkRendition;
     Okular::DocumentViewport viewport;
-
-    bool deletePopplerLink = true;
 
     switch(popplerLink->linkType())
     {
@@ -384,6 +382,17 @@ Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink)
 
         case Poppler::Link::Rendition:
         {
+            if (!deletePopplerLink)
+            {
+                // If links should not be deleted it probably means that they
+                // are part of a nextActions chain. There is no support
+                // to resolveMediaLinkReferences on nextActions. It would also
+                // be neccessary to ensure that resolveMediaLinkReferences does
+                // not delete the Links which are part of a nextActions list
+                // to avoid a double deletion.
+                qCDebug(OkularPdfDebug) << "parsing rendition link without deletion is not supported. Action chain might be broken.";
+                break;
+            }
             deletePopplerLink = false; // we'll delete it inside resolveMediaLinkReferences() after we have resolved all references
 
             popplerLinkRendition = static_cast<const Poppler::LinkRendition *>( popplerLink );
@@ -420,6 +429,12 @@ Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink)
 
         case Poppler::Link::Movie:
         {
+            if (!deletePopplerLink)
+            {
+                // See comment above in Link::Rendition
+                qCDebug(OkularPdfDebug) << "parsing movie link without deletion is not supported. Action chain might be broken.";
+                break;
+            }
             deletePopplerLink = false; // we'll delete it inside resolveMediaLinkReferences() after we have resolved all references
 
             popplerLinkMovie = static_cast<const Poppler::LinkMovie *>( popplerLink );
@@ -461,6 +476,18 @@ Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink)
         break;
 #endif
     }
+
+#ifdef HAVE_POPPLER_0_64
+    if (link)
+    {
+        QVector< Okular::Action * > nextActions;
+        for ( const Poppler::Link *nl : popplerLink->nextLinks() )
+        {
+            nextActions << createLinkFromPopplerLink( nl, false );
+        }
+        link->setNextActions( nextActions );
+    }
+#endif
 
     if ( deletePopplerLink )
         delete popplerLink;

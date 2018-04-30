@@ -97,6 +97,21 @@ class OKULARCORE_EXPORT Action
          */
         QVariant nativeId() const;
 
+        /**
+         * Returns the next actions to be executed after.
+         *
+         * @since 1.5
+         */
+        QVector< Action * > nextActions() const;
+
+        /**
+         * Sets the next actions.
+         *
+         * Takes ownership of the objects in the actions vector.
+         * @since 1.5
+         */
+        void setNextActions( const QVector< Action * > &actions );
+
     protected:
         /// @cond PRIVATE
         Action( ActionPrivate &dd );

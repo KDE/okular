@@ -166,15 +166,7 @@ void VisibilityTest::testActionVisibility()
 
     m_document->processAction( hideBtn->activationAction() );
 
-    // XXX For now poppler only provides the first action
-    // in a chain. So only the first hide action is executed.
-    // The first hide action targets the Button. So for now
-    // only check this.
-    //
-    // This should work in principle:
-    // verifyTargetStates( false );
-
-    QCOMPARE( m_fields[QStringLiteral( "TargetButton" )]->isVisible(), false );
+    verifyTargetStates( false );
 
     m_document->processAction( showBtn->activationAction() );
 

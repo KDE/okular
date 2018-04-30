@@ -4074,14 +4074,14 @@ void Document::processAction( const Action * action )
             if ( go->isExternal() && !d->openRelativeFile( go->fileName() ) )
             {
                 qCWarning(OkularCoreDebug).nospace() << "Action: Error opening '" << go->fileName() << "'.";
-                return;
+                break;
             }
             else
             {
                 const DocumentViewport nextViewport = d->nextDocumentViewport();
                 // skip local links that point to nowhere (broken ones)
                 if ( !nextViewport.isValid() )
-                    return;
+                    break;
 
                 setViewport( nextViewport, nullptr, true );
                 d->m_nextDocumentViewport = DocumentViewport();
@@ -4096,7 +4096,7 @@ void Document::processAction( const Action * action )
             if ( fileName.endsWith( QLatin1String(".pdf"), Qt::CaseInsensitive ) )
             {
                 d->openRelativeFile( fileName );
-                return;
+                break;
             }
 
             // Albert: the only pdf i have that has that kind of link don't define
@@ -4118,7 +4118,7 @@ void Document::processAction( const Action * action )
                         // this case is a link pointing to an executable with a parameter
                         // that also is an executable, possibly a hand-crafted pdf
                         KMessageBox::information( d->m_widget, i18n("The document is trying to execute an external application and, for your safety, Okular does not allow that.") );
-                        return;
+                        break;
                     }
                 }
                 else
@@ -4126,7 +4126,7 @@ void Document::processAction( const Action * action )
                     // this case is a link pointing to an executable with no parameters
                     // core developers find unacceptable executing it even after asking the user
                     KMessageBox::information( d->m_widget, i18n("The document is trying to execute an external application and, for your safety, Okular does not allow that.") );
-                    return;
+                    break;
                 }
             }
 
@@ -4208,7 +4208,7 @@ void Document::processAction( const Action * action )
                 if ((url.scheme() == "http") && url.host().isEmpty() && url.fileName().endsWith("pdf"))
                 {
                     d->openRelativeFile(url.fileName());
-                    return;
+                    break;
                 }
 
                 // handle documents with relative path
@@ -4251,6 +4251,11 @@ void Document::processAction( const Action * action )
             d->m_generator->opaqueAction( static_cast< const BackendOpaqueAction * >( action ) );
             } break;
 
+    }
+
+    for ( const Action *a : action->nextActions() )
+    {
+        processAction( a );
     }
 }
 

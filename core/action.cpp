@@ -29,9 +29,11 @@ class Okular::ActionPrivate
 
         virtual ~ActionPrivate()
         {
+            qDeleteAll( m_nextActions );
         }
 
         QVariant m_nativeId;
+        QVector< Action * > m_nextActions;
 };
 
 Action::Action( ActionPrivate &dd )
@@ -59,6 +61,18 @@ QVariant Action::nativeId() const
 {
     Q_D( const Action );
     return d->m_nativeId;
+}
+
+QVector< Action * > Action::nextActions() const
+{
+    Q_D( const Action );
+    return d->m_nextActions;
+}
+
+void Action::setNextActions( const QVector< Action * > &actions )
+{
+    Q_D( Action );
+    d->m_nextActions = actions;
 }
 
 // GotoAction

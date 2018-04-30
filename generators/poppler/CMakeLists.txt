@@ -75,11 +75,14 @@ int main()
 check_cxx_source_compiles("
 #include <poppler-qt5.h>
 #include <poppler-form.h>
+#include <poppler-link.h>
 int main()
 {
   Poppler::FormField *f;
   f->setReadOnly(true);
   f->setVisible(true);
+  Poppler::Link *l;
+  l->nextLinks();
 }
 " HAVE_POPPLER_0_64)
 

@@ -15,7 +15,7 @@
 
 #include <config-okular-poppler.h>
 
-extern Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink);
+extern Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink, bool deletePopplerLink = true);
 
 #ifdef HAVE_POPPLER_0_53
 #define SET_ACTIONS \

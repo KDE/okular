@@ -72,6 +72,7 @@ QVector< Action * > Action::nextActions() const
 void Action::setNextActions( const QVector< Action * > &actions )
 {
     Q_D( Action );
+    qDeleteAll( d->m_nextActions );
     d->m_nextActions = actions;
 }
 

@@ -52,6 +52,11 @@ Converter::~Converter()
 QTextDocument* Converter::convert( const QString &fileName )
 {
     FILE *markdownFile = fopen( fileName.toLocal8Bit(), "rb" );
+    if ( !markdownFile ) {
+        emit error( i18n( "Failed to open the document" ), -1 );
+        return nullptr;
+    }
+
     const QDir dir = QDir( fileName.left( fileName.lastIndexOf( '/' ) ) );
     
     MMIOT *markdownHandle = mkd_in( markdownFile, 0 );

@@ -7,6 +7,7 @@
 #  discount_INCLUDE_DIR - the include path of the discount library
 
 # Copyright (c) 2017, Julian Wolff, <wolff@julianwolff.de>
+# Copyright (c) 2018, Sune Vuorela, <sune@kde.org>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
@@ -34,3 +35,7 @@ endif (discount_INCLUDE_DIR AND discount_LIBRARIES)
 
 mark_as_advanced(discount_INCLUDE_DIR discount_LIBRARIES)
 
+if (discount_FOUND)
+   add_library(discount::Lib UNKNOWN IMPORTED)
+   set_target_properties(discount::Lib PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${discount_INCLUDE_DIR} IMPORTED_LOCATION ${discount_LIBRARIES})
+endif()

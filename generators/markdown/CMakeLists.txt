@@ -16,7 +16,7 @@ set(okularGenerator_md_PART_SRCS
 
 okular_add_generator(okularGenerator_md ${okularGenerator_md_PART_SRCS})
 
-target_link_libraries(okularGenerator_md okularcore KF5::I18n KF5::KIOCore ${discount_LIBRARIES})
+target_link_libraries(okularGenerator_md PRIVATE okularcore KF5::I18n KF5::KIOCore discount::Lib)
 
 ########### install files ###############
 install( FILES okularMd.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )

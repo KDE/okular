@@ -278,7 +278,7 @@ void Shell::openUrl( const QUrl & url, const QString &serializedOptions )
             m_tabWidget->setTabText( activeTab, url.fileName() );
             applyOptionsToPart( activePart, serializedOptions );
             bool openOk = activePart->openUrl( url );
-            const bool isstdin = url.fileName() == QLatin1String( "-" );
+            const bool isstdin = url.fileName() == QLatin1String( "-" ) || url.scheme() == QLatin1String( "fd" );
             if ( !isstdin )
             {
                 if ( openOk )

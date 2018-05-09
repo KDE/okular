@@ -24,7 +24,6 @@ import org.kde.kirigami 2.0 as Kirigami
 
 Kirigami.AbstractApplicationWindow {
     id: fileBrowserRoot
-    objectName: "fileBrowserRoot"
     visible: true
 
     /*TODO: port ResourceInstance
@@ -44,11 +43,11 @@ Kirigami.AbstractApplicationWindow {
         drawerOpen: false
     }
 
+    title: documentItem.windowTitleForDocument
     Okular.DocumentItem {
         id: documentItem
-        onPathChanged: currentPage = 0
+        onUrlChanged: { currentPage = 0 }
         onWindowTitleForDocumentChanged: {
-            fileBrowserRoot.title = windowTitleForDocument
         }
     }
 
@@ -63,11 +62,9 @@ Kirigami.AbstractApplicationWindow {
         interval: 100
         running: true
         onTriggered: {
-            if (commandlineArguments.length > 0) {
-                documentItem.path = commandlineArguments[0]
-            }
-
-            if (commandlineArguments.length == 0) {
+            if (uri) {
+                documentItem.url = uri
+            } else {
                 globalDrawer.open();
             }
         }

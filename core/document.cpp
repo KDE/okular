@@ -2363,9 +2363,22 @@ Document::OpenResult Document::openDocument(const QString & docFile, const QUrl 
     QMimeDatabase db;
     QMimeType mime = _mime;
     QByteArray filedata;
-    bool isstdin = url.fileName() == QLatin1String( "-" );
+    int fd = -1;
+    if (url.scheme() == QLatin1String("fd"))
+    {
+        bool ok;
+        fd = url.path().mid(1).toInt(&ok);
+        if (!ok)
+        {
+            return OpenError;
+        }
+    }
+    else if (url.fileName() == QLatin1String( "-" ))
+    {
+        fd = 0;
+    }
     bool triedMimeFromFileContent = false;
-    if ( !isstdin )
+    if ( fd < 0 )
     {
         if ( !mime.isValid() )
             return OpenError;
@@ -2379,7 +2392,12 @@ Document::OpenResult Document::openDocument(const QString & docFile, const QUrl 
     else
     {
         QFile qstdin;
-        qstdin.open( stdin, QIODevice::ReadOnly );
+        const bool ret = qstdin.open( fd, QIODevice::ReadOnly, QFileDevice::AutoCloseHandle );
+        if (!ret) {
+            qWarning() << "failed to read" << url << filedata;
+            return OpenError;
+        }
+
         filedata = qstdin.readAll();
         mime = db.mimeTypeForData( filedata );
         if ( !mime.isValid() || mime.isDefault() )
@@ -2387,6 +2405,8 @@ Document::OpenResult Document::openDocument(const QString & docFile, const QUrl 
         d->m_docSize = filedata.size();
         triedMimeFromFileContent = true;
     }
+
+    const bool fromFileDescriptor = fd >= 0;
 
     // 0. load Generator
     // request only valid non-disabled plugins suitable for the mimetype
@@ -2422,7 +2442,7 @@ Document::OpenResult Document::openDocument(const QString & docFile, const QUrl 
     }
 
     // 1. load Document
-    OpenResult openResult = d->openDocumentInternal( offer, isstdin, docFile, filedata, password );
+    OpenResult openResult = d->openDocumentInternal( offer, fromFileDescriptor, docFile, filedata, password );
     if ( openResult == OpenError )
     {
         QVector<KPluginMetaData> triedOffers;
@@ -2431,7 +2451,7 @@ Document::OpenResult Document::openDocument(const QString & docFile, const QUrl 
 
         while ( offer.isValid() )
         {
-            openResult = d->openDocumentInternal( offer, isstdin, docFile, filedata, password );
+            openResult = d->openDocumentInternal( offer, fromFileDescriptor, docFile, filedata, password );
 
             if ( openResult == OpenError )
             {
@@ -2451,7 +2471,7 @@ Document::OpenResult Document::openDocument(const QString & docFile, const QUrl 
                 offer = DocumentPrivate::generatorForMimeType(mime, d->m_widget, triedOffers);
                 while ( offer.isValid() )
                 {
-                    openResult = d->openDocumentInternal( offer, isstdin, docFile, filedata, password );
+                    openResult = d->openDocumentInternal( offer, fromFileDescriptor, docFile, filedata, password );
 
                     if ( openResult == OpenError )
                     {
@@ -2553,7 +2573,7 @@ Document::OpenResult Document::openDocument(const QString & docFile, const QUrl 
         d->m_nextDocumentDestination = QString();
     }
 
-    AudioPlayer::instance()->d->m_currentDocument = isstdin ? QUrl() : d->m_url;
+    AudioPlayer::instance()->d->m_currentDocument = fromFileDescriptor ? QUrl() : d->m_url;
 
     const QStringList docScripts = d->m_generator->metaData( QStringLiteral("DocumentScripts"), QStringLiteral ( "JavaScript" ) ).toStringList();
     if ( !docScripts.isEmpty() )

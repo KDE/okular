@@ -39,9 +39,9 @@ class DocumentItem : public QObject
     Q_OBJECT
 
     /**
-     * Absolute path of the document file to open
+     * Absolute URI to document file to open
      */
-    Q_PROPERTY(QString path READ path WRITE setPath NOTIFY pathChanged)
+    Q_PROPERTY(QUrl url READ url WRITE setUrl NOTIFY urlChanged)
 
     /**
      * Suggested window title if a window represents this document. may be pathname or document title, dependeing from Okular settings.
@@ -98,8 +98,8 @@ public:
     explicit DocumentItem(QObject *parent=nullptr);
     ~DocumentItem();
 
-    void setPath(const QString &path);
-    QString path() const;
+    void setUrl(const QUrl &url);
+    QUrl url() const;
 
     QString windowTitleForDocument() const;
 
@@ -141,7 +141,7 @@ public:
     Observer *thumbnailObserver();
 
 Q_SIGNALS:
-    void pathChanged();
+    void urlChanged();
     void pageCountChanged();
     void openedChanged();
     void searchInProgressChanged();

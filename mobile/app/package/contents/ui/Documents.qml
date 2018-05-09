@@ -96,7 +96,7 @@ Item {
                         return;
                     }
 
-                    documentItem.path = model.filePath;
+                    documentItem.url = model.fileURL;
                     globalDrawer.close();
                     applicationWindow().controlsVisible = false;
                 }

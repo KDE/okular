@@ -28,12 +28,40 @@
 #include <QQmlApplicationEngine>
 #include <QCommandLineParser>
 #include <QIcon>
+#include <QTimer>
 
-Q_DECL_EXPORT int main(int argc, char *argv[])
-{
 #ifdef __ANDROID__
-    qputenv("QT_QUICK_CONTROLS_STYLE", "material");
+#include <jni.h>
+
+class URIHandler : public QObject {
+public:
+    void openUri(const QString &uri) {
+        m_lastUrl = uri;
+    }
+
+    QString m_lastUrl;
+} handler;
+
+extern "C" {
+
+JNIEXPORT void JNICALL
+  Java_org_kde_something_FileClass_openUri(JNIEnv *env,
+                                                    jobject /*obj*/,
+                                                    jstring uri)
+{
+    jboolean isCopy = false;
+    const char* utf = env->GetStringUTFChars(uri, &isCopy);
+    handler.openUri(QString::fromUtf8(utf));
+    env->ReleaseStringUTFChars(uri, utf);
+
+}
+
+}
+
+Q_DECL_EXPORT
 #endif
+int main(int argc, char *argv[])
+{
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication app(argc, argv);
     app.setApplicationName(QStringLiteral("okularkirigami"));
@@ -43,10 +71,17 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     parser.addHelpOption();
     //parser.setApplicationDescription(i18n("Okular mobile"));
     parser.process(app);
-
     QQmlApplicationEngine engine;
+
+#ifdef __ANDROID__
+    const QString uri = handler.m_lastUrl;
+#else
+    const QString uri = parser.positionalArguments().count() == 1
+                      ? QUrl::fromUserInput(parser.positionalArguments().constFirst(), {}, QUrl::AssumeLocalFile).toString()
+                      : QString();
+#endif
     engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
-    engine.rootContext()->setContextProperty(QStringLiteral("commandlineArguments"), parser.positionalArguments());
+    engine.rootContext()->setContextProperty(QStringLiteral("uri"), uri);
     QVariantMap paths;
     paths[QStringLiteral("desktop")] = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
     paths[QStringLiteral("documents")] = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);

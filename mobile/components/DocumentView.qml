@@ -50,7 +50,7 @@ QtControls.ScrollView {
         }
         Connections {
             target: root.document
-            onPathChanged: resizeTimer.restart()
+            onUrlChanged: resizeTimer.restart()
         }
         Timer {
             id: resizeTimer

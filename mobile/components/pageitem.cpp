@@ -121,7 +121,7 @@ void PageItem::setDocument(DocumentItem *doc)
     emit documentChanged();
     m_redrawTimer->start();
 
-    connect(doc, &DocumentItem::pathChanged, this, &PageItem::refreshPage);
+    connect(doc, &DocumentItem::urlChanged, this, &PageItem::refreshPage);
 }
 
 int PageItem::pageNumber() const

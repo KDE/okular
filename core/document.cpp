@@ -1310,7 +1310,6 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
             delete r;
         }
         // request only if page isn't already present and request has valid id
-        // request only if page isn't already present and request has valid id
         else if ( ( !r->d->mForce && r->page()->hasPixmap( r->observer(), r->width(), r->height(), r->normalizedRect() ) ) || !m_observers.contains(r->observer()) )
         {
             m_pixmapRequestsStack.pop_back();

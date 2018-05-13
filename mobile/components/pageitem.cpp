@@ -339,6 +339,7 @@ void PageItem::paint()
 
     {
         auto request = new Okular::PixmapRequest(observer, m_viewPort.pageNumber, width() * dpr, height() * dpr, priority, Okular::PixmapRequest::NoFeature);
+        request->setNormalizedRect(Okular::NormalizedRect(0,0,1,1));
         const Okular::Document::PixmapRequestFlag prf = m_isThumbnail ? Okular::Document::NoOption : Okular::Document::RemoveAllPrevious;
         m_documentItem.data()->document()->requestPixmaps({request}, prf);
     }

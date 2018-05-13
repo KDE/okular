@@ -328,7 +328,11 @@ QSGNode * PageItem::updatePaintNode(QSGNode* node, QQuickItem::UpdatePaintNodeDa
 
 void PageItem::paint()
 {
-    if (!m_documentItem || !m_page || !window()) {
+    if (!m_documentItem || !m_page || !window() || width() <= 0 || height() < 0) {
+        if (!m_buffer.isNull()) {
+            m_buffer = QImage();
+            update();
+        }
         return;
     }
 
@@ -347,10 +351,6 @@ void PageItem::paint()
     // Simply using the limits as described by textureSize will, at times, result in the page painter
     // attempting to write outside the data area, unsurprisingly resulting in a crash.
 
-    if (width() <= 0 || height() < 0) {
-        update();
-        return;
-    }
 
     const QRect limits(QPoint(0, 0), QSize(width()*dpr, height()*dpr));
     QPixmap pix(limits.size());

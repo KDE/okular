@@ -269,8 +269,8 @@ QtControls.ScrollView {
                             } else {
                                 root.document.currentPage--;
                                 mouseArea.currPageDelegate = oldPrev;
-                                mouseArea.prevPageDelegate = oldCur;
-                                mouseArea. nextPageDelegate = oldNext;
+                                mouseArea.nextPageDelegate = oldCur;
+                                mouseArea.prevPageDelegate = oldNext;
                             }
                             mouseArea.currPageDelegate.z = 2;
                             mouseArea.prevPageDelegate.z = 1;

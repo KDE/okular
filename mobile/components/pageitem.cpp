@@ -52,7 +52,7 @@ PageItem::PageItem(QQuickItem *parent)
     m_redrawTimer = new QTimer(this);
     m_redrawTimer->setInterval(REDRAW_TIMEOUT);
     m_redrawTimer->setSingleShot(true);
-    connect(m_redrawTimer, &QTimer::timeout, this, &PageItem::paint);
+    connect(m_redrawTimer, &QTimer::timeout, this, &PageItem::requestPixmap);
     connect(this, &QQuickItem::windowChanged, m_redrawTimer, [this]() {m_redrawTimer->start(); });
 }
 
@@ -326,7 +326,7 @@ QSGNode * PageItem::updatePaintNode(QSGNode* node, QQuickItem::UpdatePaintNodeDa
     return n;
 }
 
-void PageItem::paint()
+void PageItem::requestPixmap()
 {
     if (!m_documentItem || !m_page || !window() || width() <= 0 || height() < 0) {
         if (!m_buffer.isNull()) {
@@ -339,19 +339,29 @@ void PageItem::paint()
     Observer *observer = m_isThumbnail ? m_documentItem.data()->thumbnailObserver() : m_documentItem.data()->pageviewObserver();
     const int priority = m_isThumbnail ? THUMBNAILS_PRIO : PAGEVIEW_PRIO;
 
-    qreal dpr = window()->devicePixelRatio();
+    const qreal dpr = window()->devicePixelRatio();
 
+    // Here we want to request the pixmap for the page, but it may happen that the page
+    // already has the pixmap, thus requestPixmaps would not trigger pageHasChanged
+    // and we would not call paint. Always call paint, if we don't have a pixmap
+    // it's a noop. Requesting a page that already has a pixmap is also
+    // almost a noop.
+    // Ideally we would do one or the other but for now this is good enough
+    paint();
     {
-        auto request = new Okular::PixmapRequest(observer, m_viewPort.pageNumber, width() * dpr, height() * dpr, priority, Okular::PixmapRequest::NoFeature);
+        auto request = new Okular::PixmapRequest(observer, m_viewPort.pageNumber, width() * dpr, height() * dpr, priority, Okular::PixmapRequest::Asynchronous);
         request->setNormalizedRect(Okular::NormalizedRect(0,0,1,1));
-        const Okular::Document::PixmapRequestFlag prf = m_isThumbnail ? Okular::Document::NoOption : Okular::Document::RemoveAllPrevious;
+        const Okular::Document::PixmapRequestFlag prf = Okular::Document::NoOption;
         m_documentItem.data()->document()->requestPixmaps({request}, prf);
     }
+}
+
+void PageItem::paint()
+{
+    Observer *observer = m_isThumbnail ? m_documentItem.data()->thumbnailObserver() : m_documentItem.data()->pageviewObserver();
     const int flags = PagePainter::Accessibility | PagePainter::Highlights | PagePainter::Annotations;
-    // Simply using the limits as described by textureSize will, at times, result in the page painter
-    // attempting to write outside the data area, unsurprisingly resulting in a crash.
 
-
+    const qreal dpr = window()->devicePixelRatio();
     const QRect limits(QPoint(0, 0), QSize(width()*dpr, height()*dpr));
     QPixmap pix(limits.size());
     pix.setDevicePixelRatio(dpr);
@@ -369,12 +379,12 @@ void PageItem::paint()
 void PageItem::pageHasChanged(int page, int flags)
 {
     if (m_viewPort.pageNumber == page) {
-        if (flags == 32) {
+        if (flags == Okular::DocumentObserver::BoundingBox) {
             // skip bounding box updates
             //kDebug() << "32" << m_page->boundingBox();
         } else if (flags == Okular::DocumentObserver::Pixmap) {
             // if pixmaps have updated, just repaint .. don't bother updating pixmaps AGAIN
-            update();
+            paint();
         } else {
             m_redrawTimer->start();
         }

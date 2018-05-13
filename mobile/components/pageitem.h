@@ -107,7 +107,7 @@ public:
     void setBookmarked(bool bookmarked);
 
     QStringList bookmarks() const;
-    void paint();
+    void requestPixmap();
 
     /**
      * loads a page bookmark and tries to ensure the bookmarked position is visible
@@ -162,6 +162,7 @@ private Q_SLOTS:
     void contentYChanged();
 
 private:
+    void paint();
     void refreshPage();
 
     const Okular::Page *m_page;

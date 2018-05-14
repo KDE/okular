@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
 <manifest package="org.kde.okularkirigami" xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="1.3.0" android:versionCode="9" android:installLocation="auto">
-    <application android:name="org.qtproject.qt5.android.bindings.QtApplication" android:label="@string/app_name" android:icon="@drawable/icon">
+    <application android:name="org.qtproject.qt5.android.bindings.QtApplication" android:label="Okular" android:icon="@drawable/icon">
         <activity android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|locale|fontScale|keyboard|keyboardHidden|navigation"
                   android:name="org.qtproject.qt5.android.bindings.QtActivity"
-                  android:label="@string/app_name"
+                  android:label="Okular"
                   android:hardwareAccelerated="true"
                   android:screenOrientation="unspecified">
             <intent-filter>
@@ -34,7 +34,7 @@
         </activity>
         <activity android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|locale|fontScale|keyboard|keyboardHidden|navigation"
                   android:name="org.kde.something.OpenFileActivity"
-                  android:label="@string/app_name"
+                  android:label="Okular"
                   android:hardwareAccelerated="true"
                   android:screenOrientation="unspecified">
 

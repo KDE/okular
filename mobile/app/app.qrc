@@ -1,7 +1,6 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource>
 <file>package/contents/ui/Bookmarks.qml</file>
-<file>package/contents/ui/Documents.qml</file>
 <file>package/contents/ui/main.qml</file>
 <file>package/contents/ui/MainView.qml</file>
 <file>package/contents/ui/OkularDrawer.qml</file>

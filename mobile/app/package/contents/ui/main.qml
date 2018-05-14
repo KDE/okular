@@ -18,7 +18,7 @@
  */
 
 import QtQuick 2.1
-import QtQuick.Controls 1.3
+import QtQuick.Dialogs 1.3 as QQD
 import org.kde.okular 2.0 as Okular
 import org.kde.kirigami 2.0 as Kirigami
 
@@ -26,22 +26,31 @@ Kirigami.AbstractApplicationWindow {
     id: fileBrowserRoot
     visible: true
 
-    /*TODO: port ResourceInstance
-    PlasmaExtras.ResourceInstance {
-        id: resourceInstance
-        uri: documentItem.path
-    }*/
-
     header: null
-    globalDrawer: Kirigami.OverlayDrawer {
-        edge: Qt.LeftEdge
-        contentItem: Documents {
-            implicitWidth: Kirigami.Units.gridUnit * 20
+    globalDrawer: Kirigami.GlobalDrawer {
+        title: i18n("Okular")
+        titleIcon: "okular"
+
+        QQD.FileDialog {
+            id: fileDialog
+            nameFilters: Okular.Okular.nameFilters
+            folder: "file://" + userPaths.documents
+            onAccepted: {
+                documentItem.url = fileDialog.fileUrl
+            }
         }
+
+        actions: [
+            Kirigami.Action {
+                text: i18n("Open...")
+                icon.name: "document-open"
+                onTriggered: {
+                    fileDialog.open()
+                }
+            }
+        ]
     }
-    contextDrawer: OkularDrawer {
-        drawerOpen: false
-    }
+    contextDrawer: OkularDrawer {}
 
     title: documentItem.windowTitleForDocument
     Okular.DocumentItem {

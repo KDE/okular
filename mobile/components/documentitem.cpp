@@ -55,6 +55,7 @@ DocumentItem::~DocumentItem()
 
 void DocumentItem::setUrl(const QUrl & url)
 {
+    m_document->closeDocument();
     //TODO: password
     QMimeDatabase db;
 

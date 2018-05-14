@@ -31,7 +31,7 @@ ThumbnailsBase {
         height: searchField.height
         TextField {
             id: searchField
-            enabled: documentItem ? documentItem.supportsSearch : false
+            enabled: documentItem ? documentItem.supportsSearching : false
             anchors.centerIn: parent
             onTextChanged: {
                 if (text.length > 2) {

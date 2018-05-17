@@ -19,7 +19,8 @@
 #ifndef ANDROID_H
 #define ANDROID_H
 
-#include <QString>
+#include <QObject>
+#include <QUrl>
 #include <jni.h>
 
 class URIHandler {
@@ -32,6 +33,16 @@ public:
 };
 
 static URIHandler handler;
+
+class AndroidInstance : public QObject
+{
+    Q_OBJECT
+public:
+    Q_SCRIPTABLE void openFile(const QString &title, const QStringList &mimes);
+
+Q_SIGNALS:
+    void openUri(const QUrl &uri);
+};
 
 extern "C" {
 

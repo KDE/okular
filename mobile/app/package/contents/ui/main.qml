@@ -21,6 +21,7 @@ import QtQuick 2.1
 import QtQuick.Dialogs 1.3 as QQD
 import org.kde.okular 2.0 as Okular
 import org.kde.kirigami 2.0 as Kirigami
+import org.kde.okular.app 2.0
 
 Kirigami.AbstractApplicationWindow {
     id: fileBrowserRoot
@@ -46,6 +47,22 @@ Kirigami.AbstractApplicationWindow {
                 icon.name: "document-open"
                 onTriggered: {
                     fileDialog.open()
+                }
+            },
+            Kirigami.Action {
+                text: i18n("Open Android...")
+                icon.name: "document-open"
+                readonly property var p0: Connections {
+                    target: AndroidInstance
+                    enabled: AndroidInstance.hasOwnProperty("openFile")
+                    onOpenUri: {
+                        console.log("open uri!", uri)
+                        documentItem.url = uri
+                    }
+                }
+                onTriggered: {
+//                     var mimetypes = Okular.Okular.mimeTypes.join(",")
+                    AndroidInstance.openFile(i18n("Document to open..."), "*/*")
                 }
             }
         ]

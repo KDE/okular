@@ -49,8 +49,10 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
 
 #ifdef __ANDROID__
+    qmlRegisterSingletonType<QObject>("org.kde.okular.app", 2, 0, "AndroidInstance", [](QQmlEngine*, QJSEngine*) -> QObject* { return new AndroidInstance; });
     const QString uri = handler.m_lastUrl;
 #else
+    qmlRegisterSingletonType<QObject>("org.kde.okular.app", 2, 0, "AndroidInstance", [](QQmlEngine*, QJSEngine*) -> QObject* { return new QObject; });
     const QString uri = parser.positionalArguments().count() == 1
                       ? QUrl::fromUserInput(parser.positionalArguments().constFirst(), {}, QUrl::AssumeLocalFile).toString()
                       : QString();

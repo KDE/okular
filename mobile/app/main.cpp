@@ -31,32 +31,7 @@
 #include <QTimer>
 
 #ifdef __ANDROID__
-#include <jni.h>
-
-class URIHandler : public QObject {
-public:
-    void openUri(const QString &uri) {
-        m_lastUrl = uri;
-    }
-
-    QString m_lastUrl;
-} handler;
-
-extern "C" {
-
-JNIEXPORT void JNICALL
-  Java_org_kde_something_FileClass_openUri(JNIEnv *env,
-                                                    jobject /*obj*/,
-                                                    jstring uri)
-{
-    jboolean isCopy = false;
-    const char* utf = env->GetStringUTFChars(uri, &isCopy);
-    handler.openUri(QString::fromUtf8(utf));
-    env->ReleaseStringUTFChars(uri, utf);
-
-}
-
-}
+#include "android.h"
 
 Q_DECL_EXPORT
 #endif

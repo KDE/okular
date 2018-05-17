@@ -56,8 +56,6 @@ Kirigami.AbstractApplicationWindow {
     Okular.DocumentItem {
         id: documentItem
         onUrlChanged: { currentPage = 0 }
-        onWindowTitleForDocumentChanged: {
-        }
     }
 
     MainView {

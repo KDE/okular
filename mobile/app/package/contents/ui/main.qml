@@ -45,13 +45,15 @@ Kirigami.AbstractApplicationWindow {
             Kirigami.Action {
                 text: i18n("Open...")
                 icon.name: "document-open"
+                visible: Qt.platform.os !== "android"
                 onTriggered: {
                     fileDialog.open()
                 }
             },
             Kirigami.Action {
-                text: i18n("Open Android...")
+                text: i18n("Open...")
                 icon.name: "document-open"
+                visible: p0.enabled
                 readonly property var p0: Connections {
                     target: AndroidInstance
                     enabled: AndroidInstance.hasOwnProperty("openFile")

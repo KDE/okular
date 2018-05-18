@@ -410,6 +410,11 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                 QPainter painter(&backImage);
                 painter.setCompositionMode(QPainter::CompositionMode_Multiply);
                 painter.fillRect(highlightRect, highlightColor);
+
+                auto frameColor = highlightColor.darker(150);
+                const QRect frameRect = r.geometry( scaledWidth, scaledHeight ).translated( -scaledCrop.topLeft() ).translated( -limits.left(), -limits.top() );
+                painter.setPen(frameColor);
+                painter.drawRect(frameRect);
             }
         }
 

@@ -141,6 +141,7 @@ public:
             case QEvent::MouseButtonPress:
                 me = (QMouseEvent*)e;
                 mousePressPos = me->pos();
+                parentWidget()->raise();
                 break;
             case QEvent::MouseButtonRelease:
                 mousePressPos = QPoint();
@@ -197,6 +198,7 @@ AnnotWindow::AnnotWindow( QWidget * parent, Okular::Annotation * annot, Okular::
     setAutoFillBackground( true );
     setFrameStyle( Panel | Raised );
     setAttribute( Qt::WA_DeleteOnClose );
+    setObjectName("AnnotWindow");
 
     const bool canEditAnnotation = m_document->canModifyPageAnnotation( annot );
 
@@ -307,6 +309,10 @@ bool AnnotWindow::eventFilter(QObject *, QEvent *e)
             m_document->redo();
             return true;
         }
+    }
+    else if (e->type() == QEvent::FocusIn)
+    {
+        raise();
     }
     return false;
 }

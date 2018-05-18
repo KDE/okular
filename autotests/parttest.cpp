@@ -111,6 +111,7 @@ class PartTest
         void testeRectSelectionStartingOnLinks();
         void testCheckBoxReadOnly();
         void testCrashTextEditDestroy();
+        void testAnnotWindow();
 
     private:
         void simulateMouseSelection(double startX, double startY, double endX, double endY, QWidget *target);
@@ -228,14 +229,14 @@ void PartTest::testForwardPDF()
     }
 
     const QString pdfResult = workDir.path() + QStringLiteral("/synctextest.pdf");
-    
+
     QVERIFY(QFile::exists(pdfResult));
-    
+
     QVERIFY( openDocument(&part, pdfResult) );
     part.m_document->setViewportPage(0);
     QCOMPARE(part.m_document->currentPage(), 0u);
     part.closeUrl();
-    
+
     QUrl u(QUrl::fromLocalFile(pdfResult));
     u.setFragment(QStringLiteral("src:100") + texDestination);
     part.openUrl(u);
@@ -1412,6 +1413,91 @@ void PartTest::testCrashTextEditDestroy()
 
     part.widget()->findChild<QTextEdit*>()->setText("HOLA");
     part.actionCollection()->action(QStringLiteral("view_toggle_forms"))->trigger();
+}
+
+void PartTest::testAnnotWindow()
+{
+    QVariantList dummyArgs;
+    Okular::Part part(nullptr, nullptr, dummyArgs);
+    QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/file1.pdf")));
+    part.widget()->show();
+    part.widget()->resize(800, 600);
+    QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
+
+    const int width =  part.m_pageView->horizontalScrollBar()->maximum() +
+                       part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->verticalScrollBar()->maximum() +
+                       part.m_pageView->viewport()->height();
+
+    part.m_document->setViewportPage(0);
+
+    // wait for pixmap
+    QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
+
+    QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseNormal");
+
+    QCOMPARE(part.m_document->currentPage(), 0u);
+
+    // Create two distinct text annotations
+    Okular::Annotation * annot1 = new Okular::TextAnnotation();
+    annot1->setBoundingRectangle( Okular::NormalizedRect( 0.8, 0.1, 0.85, 0.15 ) );
+    annot1->setContents( QStringLiteral("Annot contents 111111") );
+
+    Okular::Annotation *annot2 = new Okular::TextAnnotation();
+    annot2->setBoundingRectangle( Okular::NormalizedRect(  0.8, 0.3, 0.85, 0.35 ) );
+    annot2->setContents( QStringLiteral("Annot contents 222222") );
+
+    // Add annot1 and annot2 to document
+    part.m_document->addPageAnnotation( 0, annot1 );
+    QTest::qWait(100);
+    part.m_document->addPageAnnotation( 0, annot2 );
+    QTest::qWait(100);
+    QVERIFY( part.m_document->page( 0 )->annotations().size() == 2 );
+
+    // Double click the first annotation to open its window (move mouse for visual feedback)
+    const NormalizedPoint annot1pt = annot1->boundingRectangle().center();
+    QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * annot1pt.x, height * annot1pt.y));
+    QTest::mouseDClick(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, QPoint(width * annot1pt.x, height * annot1pt.y));
+    QTRY_COMPARE( part.m_pageView->findChildren<QFrame *>("AnnotWindow").size(), 1 );
+    // Verify that the window is visible
+    QFrame* win1 = part.m_pageView->findChild<QFrame *>("AnnotWindow");
+    QVERIFY( !win1->visibleRegion().isEmpty() );
+
+    // Double click the second annotation to open its window (move mouse for visual feedback)
+    const NormalizedPoint annot2pt = annot2->boundingRectangle().center();
+    QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * annot2pt.x, height * annot2pt.y));
+    QTest::mouseDClick(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, QPoint(width * annot2pt.x, height * annot2pt.y));
+    QTRY_COMPARE( part.m_pageView->findChildren<QFrame *>("AnnotWindow").size(), 2 );
+    // Verify that the first window is hidden covered by the second, which is visible
+    QList<QFrame *> lstWin = part.m_pageView->findChildren<QFrame *>("AnnotWindow");
+    QFrame * win2;
+    if (lstWin[0] == win1) {
+        win2 = lstWin[1];
+    } else {
+        win2 = lstWin[0];
+    }
+    QVERIFY( win1->visibleRegion().isEmpty() );
+    QVERIFY( !win2->visibleRegion().isEmpty() );
+
+    // Double click the first annotation to raise its window (move mouse for visual feedback)
+    QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * annot1pt.x, height * annot1pt.y));
+    QTest::mouseDClick(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, QPoint(width * annot1pt.x, height * annot1pt.y));
+    // Verify that the second window is hidden covered by the first, which is visible
+    QVERIFY( !win1->visibleRegion().isEmpty() );
+    QVERIFY( win2->visibleRegion().isEmpty() );
+
+    // Move annotation window 1 to partially show annotation window 2
+    win1->move(QPoint(win2->pos().x(),  win2->pos().y() + 50));
+    // Verify that both windows are partially visible
+    QVERIFY( !win1->visibleRegion().isEmpty() );
+    QVERIFY( !win2->visibleRegion().isEmpty() );
+
+    // Click the second annotation window to raise it (move mouse for visual feedback)
+    auto widget = win2->window()->childAt(win2->mapTo(win2->window(), QPoint(10,  10)));
+    QTest::mouseMove(win2->window(), win2->mapTo(win2->window(), QPoint(10,  10)));
+    QTest::mouseClick(widget, Qt::LeftButton, Qt::NoModifier, widget->mapFrom(win2, QPoint(10,  10)));
+    QVERIFY( win1->visibleRegion().rects().count() == 3);
+    QVERIFY( win2->visibleRegion().rects().count() == 4);
 }
 
 }

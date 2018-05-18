@@ -775,6 +775,9 @@ void PageView::openAnnotationWindow( Okular::Annotation * annotation, int pageNu
         connect(existWindow, &QObject::destroyed, this, &PageView::slotAnnotationWindowDestroyed);
 
         d->m_annowindows << existWindow;
+    } else {
+        existWindow->raise();
+        existWindow->findChild<KTextEdit *>()->setFocus();
     }
 
     existWindow->show();
@@ -4258,7 +4261,7 @@ int PageView::viewColumns() const
     else if (vm == Okular::Settings::EnumViewMode::Facing ||
              vm == Okular::Settings::EnumViewMode::FacingFirstCentered) return 2;
     else if (vm == Okular::Settings::EnumViewMode::Summary
-            && d->document->pages() < Okular::Settings::viewColumns() ) 
+            && d->document->pages() < Okular::Settings::viewColumns() )
             return d->document->pages();
     else return Okular::Settings::viewColumns();
 }

@@ -727,6 +727,10 @@ Context menu actions like Rename Bookmarks etc.)
 				      </tbody>
 				    </tgroup>
 				  </informaltable>
+                                  <para>These are the default annotations provided by &okular;. Using the <link linkend="configannotations">Annotations page</link> of the configuration dialog
+                                    you can add your own annotations like custom stamps, text markup with <guilabel>Squiggle</guilabel> or <guilabel>Strike out</guilabel>, a geometrical shape
+                                    like a <guilabel>Rectangle</guilabel> with inner color to highlight regions &etc;
+                                  </para>
                                   <note>
                                       <para>
                                           It is possible to add &latex; code into the text of annotations. Please add <userinput>$$<replaceable>code</replaceable>$$</userinput> to the text of annotation, where <replaceable>code</replaceable> is any valid &latex; equation, and follow instructions on the screen to make it render by a &latex; distribution installed in your system.

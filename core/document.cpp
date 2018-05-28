@@ -3948,8 +3948,6 @@ void Document::editFormText( int pageNumber,
 {
     QUndoCommand *uc = new EditFormTextCommand( this->d, form, pageNumber, newContents, newCursorPos, form->text(), prevCursorPos, prevAnchorPos );
     d->m_undoStack->push( uc );
-
-    d->recalculateForms();
 }
 
 void Document::editFormList( int pageNumber,
@@ -3959,8 +3957,6 @@ void Document::editFormList( int pageNumber,
     const QList< int > prevChoices = form->currentChoices();
     QUndoCommand *uc = new EditFormListCommand( this->d, form, pageNumber, newChoices, prevChoices );
     d->m_undoStack->push( uc );
-
-    d->recalculateForms();
 }
 
 void Document::editFormCombo( int pageNumber,
@@ -3983,8 +3979,6 @@ void Document::editFormCombo( int pageNumber,
 
     QUndoCommand *uc = new EditFormComboCommand( this->d, form, pageNumber, newText, newCursorPos, prevText, prevCursorPos, prevAnchorPos );
     d->m_undoStack->push( uc );
-
-    d->recalculateForms();
 }
 
 void Document::editFormButtons( int pageNumber, const QList< FormFieldButton* >& formButtons, const QList< bool >& newButtonStates )

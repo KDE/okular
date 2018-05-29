@@ -92,6 +92,7 @@ protected:
     virtual QWidget * createExtraWidget();
 
     Okular::Annotation * m_ann;
+    Okular::TextAnnotation * m_textAnn;
     QWidget * m_appearanceWidget;
     QWidget * m_extraWidget;
     KColorButton *m_colorBn;

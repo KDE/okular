@@ -159,6 +159,7 @@ AnnotationWidget * AnnotationWidgetFactory::widgetFor( Okular::Annotation * ann 
 AnnotationWidget::AnnotationWidget( Okular::Annotation * ann )
     : QObject(), m_ann( ann ), m_appearanceWidget( nullptr ), m_extraWidget( nullptr )
 {
+	m_textAnn = static_cast< Okular::TextAnnotation * >( ann );
 }
 
 AnnotationWidget::~AnnotationWidget()
@@ -190,6 +191,8 @@ QWidget * AnnotationWidget::extraWidget()
 
 void AnnotationWidget::applyChanges()
 {
+    if ( m_textAnn->inplaceIntent() == Okular::TextAnnotation::TypeWriter )
+        return;
     m_ann->style().setColor( m_colorBn->color() );
     m_ann->style().setOpacity( (double)m_opacity->value() / 100.0 );
 }
@@ -198,31 +201,33 @@ QWidget * AnnotationWidget::createAppearanceWidget()
 {
     QWidget * widget = new QWidget();
     QGridLayout * gridlayout = new QGridLayout( widget );
+    if ( m_textAnn->inplaceIntent() == Okular::TextAnnotation::Unknown )
+    {
+        QLabel * tmplabel = new QLabel( i18n( "&Color:" ), widget );
+        gridlayout->addWidget( tmplabel, 0, 0, Qt::AlignRight );
+        m_colorBn = new KColorButton( widget );
+        m_colorBn->setColor( m_ann->style().color() );
+        tmplabel->setBuddy( m_colorBn );
+        gridlayout->addWidget( m_colorBn, 0, 1 );
 
-    QLabel * tmplabel = new QLabel( i18n( "&Color:" ), widget );
-    gridlayout->addWidget( tmplabel, 0, 0, Qt::AlignRight );
-    m_colorBn = new KColorButton( widget );
-    m_colorBn->setColor( m_ann->style().color() );
-    tmplabel->setBuddy( m_colorBn );
-    gridlayout->addWidget( m_colorBn, 0, 1 );
+        tmplabel = new QLabel( i18n( "&Opacity:" ), widget );
+        gridlayout->addWidget( tmplabel, 1, 0, Qt::AlignRight );
+        m_opacity = new QSpinBox( widget );
+        m_opacity->setRange( 0, 100 );
+        m_opacity->setValue( (int)( m_ann->style().opacity() * 100 ) );
+        m_opacity->setSuffix( i18nc( "Suffix for the opacity level, eg '80 %'", " %" ) );
+        tmplabel->setBuddy( m_opacity );
+        gridlayout->addWidget( m_opacity, 1, 1 );
 
-    tmplabel = new QLabel( i18n( "&Opacity:" ), widget );
-    gridlayout->addWidget( tmplabel, 1, 0, Qt::AlignRight );
-    m_opacity = new QSpinBox( widget );
-    m_opacity->setRange( 0, 100 );
-    m_opacity->setValue( (int)( m_ann->style().opacity() * 100 ) );
-    m_opacity->setSuffix( i18nc( "Suffix for the opacity level, eg '80 %'", " %" ) );
-    tmplabel->setBuddy( m_opacity );
-    gridlayout->addWidget( m_opacity, 1, 1 );
+        connect( m_colorBn, &KColorButton::changed, this, &AnnotationWidget::dataChanged );
+        connect( m_opacity, SIGNAL(valueChanged(int)), this, SIGNAL(dataChanged()) );
+    }
 
     QWidget * styleWidget = createStyleWidget();
     if ( styleWidget )
         gridlayout->addWidget( styleWidget, 2, 0, 1, 2 );
 
     gridlayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::MinimumExpanding ), 3, 0 );
-
-    connect( m_colorBn, &KColorButton::changed, this, &AnnotationWidget::dataChanged );
-    connect( m_opacity, SIGNAL(valueChanged(int)), this, SIGNAL(dataChanged()) );
 
     return widget;
 }
@@ -281,6 +286,10 @@ QWidget * TextAnnotationWidget::createStyleWidget()
         innerlay->addWidget( m_fontReq, 0, 1 );
         m_fontReq->setFont( m_textAnn->textFont() );
 
+        connect( m_fontReq, &KFontRequester::fontSelected, this, &AnnotationWidget::dataChanged );
+
+        if ( m_textAnn->inplaceIntent() == Okular::TextAnnotation::TypeWriter )
+            return widget;
         tmplabel = new QLabel( i18n( "Align:" ), widget );
         innerlay->addWidget( tmplabel, 1, 0 );
         m_textAlign = new KComboBox( widget );
@@ -299,8 +308,6 @@ QWidget * TextAnnotationWidget::createStyleWidget()
         m_spinWidth->setValue( m_textAnn->style().width() );
         m_spinWidth->setSingleStep( 0.1 );
 
-        connect( m_fontReq, &KFontRequester::fontSelected, this, &AnnotationWidget::dataChanged );
-
         connect( m_textAlign, SIGNAL(currentIndexChanged(int)), this, SIGNAL(dataChanged()) );
         connect( m_spinWidth, SIGNAL(valueChanged(double)), this, SIGNAL(dataChanged()) );
     }
@@ -318,6 +325,8 @@ void TextAnnotationWidget::applyChanges()
     else if ( m_textAnn->textType() == Okular::TextAnnotation::InPlace )
     {
         m_textAnn->setTextFont( m_fontReq->font() );
+        if ( m_textAnn->inplaceIntent() == Okular::TextAnnotation::TypeWriter )
+            return;
         m_textAnn->setInplaceAlignment( m_textAlign->currentIndex() );
         m_textAnn->style().setWidth( m_spinWidth->value() );
     }

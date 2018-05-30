@@ -98,6 +98,10 @@
 
 #include <config-okular.h>
 
+#if HAVE_MALLOC_TRIM
+#include "malloc.h"
+#endif
+
 using namespace Okular;
 
 struct AllocatedPixmap
@@ -2743,6 +2747,13 @@ void Document::closeDocument()
 
     d->m_undoStack->clear();
     d->m_docdataMigrationNeeded = false;
+
+#if HAVE_MALLOC_TRIM
+    // trim unused memory, glibc should do this but it seems it does not
+    // this can greatly decrease the [perceived] memory consumption of okular
+    // see: https://sourceware.org/bugzilla/show_bug.cgi?id=14827
+    malloc_trim(0);
+#endif
 }
 
 void Document::addObserver( DocumentObserver * pObserver )

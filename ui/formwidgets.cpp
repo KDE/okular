@@ -3,6 +3,7 @@
  *   Copyright (C) 2017    Klarälvdalens Datakonsult AB, a KDAB Group      *
  *                         company, info@kdab.com. Work sponsored by the   *
  *                         LiMux project of the city of Munich             *
+ *   Copyright (C) 2018    Intevation GmbH <intevation@intevation.de>      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -372,14 +373,6 @@ PushButtonEdit::PushButtonEdit( Okular::FormFieldButton * button, QWidget * pare
     setText( button->caption() );
     setVisible( button->isVisible() );
     setCursor( Qt::ArrowCursor );
-
-    connect( this, &QAbstractButton::clicked, this, &PushButtonEdit::slotClicked );
-}
-
-void PushButtonEdit::slotClicked()
-{
-    if ( m_ff->activationAction() )
-        m_controller->signalAction( m_ff->activationAction() );
 }
 
 
@@ -1055,5 +1048,93 @@ bool ComboEdit::event( QEvent* e )
     }
     return QComboBox::event( e );
 }
+
+// Code for additional action handling.
+// Challenge: Change preprocessor magic to C++ magic!
+//
+// The mouseRelease event is special because the PDF spec
+// says that the activation action takes precedence over this.
+// So the mouse release action is only signaled if no activation
+// action exists.
+//
+// For checkboxes the activation action is not triggered as
+// they are still triggered from the clicked signal and additionally
+// when the checked state changes.
+
+#define DEFINE_ADDITIONAL_ACTIONS(FormClass, BaseClass) \
+    void FormClass::mousePressEvent( QMouseEvent *event ) \
+    { \
+        Okular::Action *act = m_ff->additionalAction( Okular::Annotation::MousePressed ); \
+        if ( act ) \
+        { \
+            m_controller->signalAction( act ); \
+        } \
+        BaseClass::mousePressEvent( event ); \
+    } \
+    void FormClass::mouseReleaseEvent( QMouseEvent *event ) \
+    { \
+        if ( !QWidget::rect().contains( event->localPos().toPoint() ) ) \
+        { \
+            BaseClass::mouseReleaseEvent( event ); \
+            return; \
+        } \
+        Okular::Action *act = m_ff->activationAction(); \
+        if ( act && !qobject_cast< CheckBoxEdit* > ( this ) ) \
+        { \
+            m_controller->signalAction( act ); \
+        } \
+        else if ( ( act = m_ff->additionalAction( Okular::Annotation::MouseReleased ) ) ) \
+        { \
+            m_controller->signalAction( act ); \
+        } \
+        BaseClass::mouseReleaseEvent( event ); \
+    } \
+    void FormClass::focusInEvent( QFocusEvent *event ) \
+    { \
+        Okular::Action *act = m_ff->additionalAction( Okular::Annotation::FocusIn ); \
+        if ( act ) \
+        { \
+            m_controller->signalAction( act ); \
+        } \
+        BaseClass::focusInEvent( event ); \
+    } \
+    void FormClass::focusOutEvent( QFocusEvent *event ) \
+    { \
+        Okular::Action *act = m_ff->additionalAction( Okular::Annotation::FocusOut ); \
+        if ( act ) \
+        { \
+            m_controller->signalAction( act ); \
+        } \
+        BaseClass::focusOutEvent( event ); \
+    } \
+    void FormClass::leaveEvent( QEvent *event ) \
+    { \
+        Okular::Action *act = m_ff->additionalAction( Okular::Annotation::CursorLeaving ); \
+        if ( act ) \
+        { \
+            m_controller->signalAction( act ); \
+        } \
+        BaseClass::leaveEvent( event ); \
+    } \
+    void FormClass::enterEvent( QEvent *event ) \
+    { \
+        Okular::Action *act = m_ff->additionalAction( Okular::Annotation::CursorEntering ); \
+        if ( act ) \
+        { \
+            m_controller->signalAction( act ); \
+        } \
+        BaseClass::enterEvent( event ); \
+    }
+
+DEFINE_ADDITIONAL_ACTIONS( PushButtonEdit, QPushButton )
+DEFINE_ADDITIONAL_ACTIONS( CheckBoxEdit, QCheckBox )
+DEFINE_ADDITIONAL_ACTIONS( RadioButtonEdit, QRadioButton )
+DEFINE_ADDITIONAL_ACTIONS( FormLineEdit, QLineEdit )
+DEFINE_ADDITIONAL_ACTIONS( TextAreaEdit, KTextEdit )
+DEFINE_ADDITIONAL_ACTIONS( FileEdit, KUrlRequester )
+DEFINE_ADDITIONAL_ACTIONS( ListEdit, QListWidget )
+DEFINE_ADDITIONAL_ACTIONS( ComboEdit, QComboBox )
+
+#undef DEFINE_ADDITIONAL_ACTIONS
 
 #include "moc_formwidgets.cpp"

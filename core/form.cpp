@@ -25,6 +25,8 @@ FormFieldPrivate::FormFieldPrivate( FormField::FieldType type )
 FormFieldPrivate::~FormFieldPrivate()
 {
     delete m_activateAction;
+    qDeleteAll( m_additionalActions.values() );
+    qDeleteAll( m_additionalAnnotActions.values() );
 }
 
 void FormFieldPrivate::setDefault()
@@ -92,6 +94,19 @@ void FormField::setAdditionalAction( AdditionalActionType type, Action *action )
     Q_D( FormField );
     delete d->m_additionalActions.value(type);
     d->m_additionalActions[type] = action;
+}
+
+Action* FormField::additionalAction( Annotation::AdditionalActionType type ) const
+{
+    Q_D( const FormField );
+    return d->m_additionalAnnotActions.value(type);
+}
+
+void FormField::setAdditionalAction( Annotation::AdditionalActionType type, Action *action )
+{
+    Q_D( FormField );
+    delete d->m_additionalAnnotActions.value(type);
+    d->m_additionalAnnotActions[type] = action;
 }
 
 

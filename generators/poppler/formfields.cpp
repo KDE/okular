@@ -1,5 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2007 by Pino Toscano <pino@kde.org>                     *
+ *   Copyright (C) 2018 by Intevation GmbH <intevation@intevation.de>      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -16,6 +17,17 @@
 #include <config-okular-poppler.h>
 
 extern Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink, bool deletePopplerLink = true);
+#ifdef HAVE_POPPLER_0_65
+# define SET_ANNOT_ACTIONS \
+    setAdditionalAction( Okular::Annotation::CursorEntering, createLinkFromPopplerLink( field->additionalAction( Poppler::Annotation::CursorEnteringAction ) ) ); \
+    setAdditionalAction( Okular::Annotation::CursorLeaving, createLinkFromPopplerLink( field->additionalAction( Poppler::Annotation::CursorLeavingAction ) ) ); \
+    setAdditionalAction( Okular::Annotation::MousePressed, createLinkFromPopplerLink( field->additionalAction( Poppler::Annotation::MousePressedAction ) ) ); \
+    setAdditionalAction( Okular::Annotation::MouseReleased, createLinkFromPopplerLink( field->additionalAction( Poppler::Annotation::MouseReleasedAction ) ) ); \
+    setAdditionalAction( Okular::Annotation::FocusIn, createLinkFromPopplerLink( field->additionalAction( Poppler::Annotation::FocusInAction ) ) ); \
+    setAdditionalAction( Okular::Annotation::FocusOut, createLinkFromPopplerLink( field->additionalAction( Poppler::Annotation::FocusOutAction ) ) );
+#else
+# define SET_ANNOT_ACTIONS
+#endif
 
 #ifdef HAVE_POPPLER_0_53
 #define SET_ACTIONS \
@@ -23,7 +35,8 @@ extern Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLin
     setAdditionalAction( Okular::FormField::FieldModified, createLinkFromPopplerLink( field->additionalAction( Poppler::FormField::FieldModified ) ) ); \
     setAdditionalAction( Okular::FormField::FormatField, createLinkFromPopplerLink( field->additionalAction( Poppler::FormField::FormatField ) ) ); \
     setAdditionalAction( Okular::FormField::ValidateField, createLinkFromPopplerLink( field->additionalAction( Poppler::FormField::ValidateField ) ) ); \
-    setAdditionalAction( Okular::FormField::CalculateField, createLinkFromPopplerLink( field->additionalAction( Poppler::FormField::CalculateField ) ) );
+    setAdditionalAction( Okular::FormField::CalculateField, createLinkFromPopplerLink( field->additionalAction( Poppler::FormField::CalculateField ) ) ); \
+    SET_ANNOT_ACTIONS
 #else
 #define SET_ACTIONS \
     setActivationAction( createLinkFromPopplerLink( field->activationAction() ) );

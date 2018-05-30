@@ -34,6 +34,7 @@ class FormFieldPrivate
         QString m_default;
         Action *m_activateAction;
         QHash<int, Action*> m_additionalActions;
+        QHash<int, Action*> m_additionalAnnotActions;
 
         Q_DECLARE_PUBLIC( FormField )
         FormField *q_ptr;

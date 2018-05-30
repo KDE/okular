@@ -191,8 +191,14 @@ class OKULARCORE_EXPORT Annotation
          */
         enum AdditionalActionType
         {
-            PageOpening, ///< Performed when the page containing the annotation is opened.
-            PageClosing  ///< Performed when the page containing the annotation is closed.
+            PageOpening,    ///< Performed when the page containing the annotation is opened.
+            PageClosing,    ///< Performed when the page containing the annotation is closed.
+            CursorEntering, ///< Performed when the cursor enters the annotation's active area @since 1.5
+            CursorLeaving,  ///< Performed when the cursor exists the annotation's active area @since 1.5
+            MousePressed,   ///< Performed when the mouse button is pressed inside the annotation's active area @since 1.5
+            MouseReleased,  ///< Performed when the mouse button is released inside the annotation's active area @since 1.5
+            FocusIn,        ///< Performed when the annotation receives the input focus @since 1.5
+            FocusOut,       ///< Performed when the annotation loses the input focus @since 1.5
         };
 
         /**

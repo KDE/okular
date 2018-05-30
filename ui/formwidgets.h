@@ -170,6 +170,14 @@ class FormWidgetIface
         PageViewItem * m_pageItem;
 };
 
+#define DECLARE_ADDITIONAL_ACTIONS \
+    protected: \
+    virtual void mousePressEvent( QMouseEvent *event ) override; \
+    virtual void mouseReleaseEvent( QMouseEvent *event ) override; \
+    virtual void focusInEvent( QFocusEvent *event ) override; \
+    virtual void focusOutEvent( QFocusEvent *event ) override; \
+    virtual void leaveEvent( QEvent *event ) override; \
+    virtual void enterEvent( QEvent *event ) override;
 
 class PushButtonEdit : public QPushButton, public FormWidgetIface
 {
@@ -178,8 +186,7 @@ class PushButtonEdit : public QPushButton, public FormWidgetIface
     public:
         explicit PushButtonEdit( Okular::FormFieldButton * button, QWidget * parent = nullptr );
 
-    private Q_SLOTS:
-        void slotClicked();
+    DECLARE_ADDITIONAL_ACTIONS
 };
 
 class CheckBoxEdit : public QCheckBox, public FormWidgetIface
@@ -196,6 +203,7 @@ class CheckBoxEdit : public QCheckBox, public FormWidgetIface
 
     protected:
         void slotRefresh( Okular::FormField *form ) override;
+    DECLARE_ADDITIONAL_ACTIONS
 };
 
 class RadioButtonEdit : public QRadioButton, public FormWidgetIface
@@ -207,6 +215,7 @@ class RadioButtonEdit : public QRadioButton, public FormWidgetIface
 
         // reimplemented from FormWidgetIface
         void setFormWidgetsController( FormWidgetsController *controller ) override;
+    DECLARE_ADDITIONAL_ACTIONS
 };
 
 class FormLineEdit : public QLineEdit, public FormWidgetIface
@@ -235,6 +244,7 @@ class FormLineEdit : public QLineEdit, public FormWidgetIface
     private:
         int m_prevCursorPos;
         int m_prevAnchorPos;
+    DECLARE_ADDITIONAL_ACTIONS
 };
 
 class TextAreaEdit : public KTextEdit, public FormWidgetIface
@@ -264,6 +274,7 @@ class TextAreaEdit : public KTextEdit, public FormWidgetIface
     private:
         int m_prevCursorPos;
         int m_prevAnchorPos;
+    DECLARE_ADDITIONAL_ACTIONS
 };
 
 
@@ -289,6 +300,7 @@ class FileEdit : public KUrlRequester, public FormWidgetIface
     private:
         int m_prevCursorPos;
         int m_prevAnchorPos;
+    DECLARE_ADDITIONAL_ACTIONS
 };
 
 
@@ -305,6 +317,7 @@ class ListEdit : public QListWidget, public FormWidgetIface
         void slotHandleFormListChangedByUndoRedo( int pageNumber,
                                                   Okular::FormFieldChoice * listForm,
                                                   const QList< int > & choices );
+    DECLARE_ADDITIONAL_ACTIONS
 };
 
 
@@ -330,6 +343,9 @@ class ComboEdit : public QComboBox, public FormWidgetIface
     private:
         int m_prevCursorPos;
         int m_prevAnchorPos;
+    DECLARE_ADDITIONAL_ACTIONS
 };
+
+#undef DECLARE_ADDITIONAL_ACTIONS
 
 #endif

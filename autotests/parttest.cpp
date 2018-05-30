@@ -112,6 +112,7 @@ class PartTest
         void testCheckBoxReadOnly();
         void testCrashTextEditDestroy();
         void testAnnotWindow();
+        void testAdditionalActionTriggers();
 
     private:
         void simulateMouseSelection(double startX, double startY, double endX, double endY, QWidget *target);
@@ -1500,7 +1501,145 @@ void PartTest::testAnnotWindow()
     QVERIFY( win2->visibleRegion().rects().count() == 4);
 }
 
+// Helper for testAdditionalActionTriggers
+static void verifyTargetStates( const QString & triggerName,
+                                const QMap<QString, Okular::FormField *> &fields,
+                                bool focusVisible, bool cursorVisible, bool mouseVisible,
+                                int line)
+{
+    Okular::FormField *focusTarget = fields.value( triggerName + QStringLiteral ("_focus_target") );
+    Okular::FormField *cursorTarget = fields.value( triggerName + QStringLiteral ("_cursor_target") );
+    Okular::FormField *mouseTarget = fields.value( triggerName + QStringLiteral ("_mouse_target") );
+
+    QVERIFY( focusTarget );
+    QVERIFY( cursorTarget );
+    QVERIFY( mouseTarget );
+
+    QTRY_VERIFY2( focusTarget->isVisible() == focusVisible,
+                  QStringLiteral ("line: %1 focus for %2 not matched. Expected %3 Actual %4").
+                  arg( line ).arg( triggerName ).arg( focusTarget->isVisible() ).arg( focusVisible ).toUtf8().constData() );
+    QTRY_VERIFY2( cursorTarget->isVisible() == cursorVisible,
+                  QStringLiteral ("line: %1 cursor for %2 not matched. Actual %3 Expected %4").
+                  arg( line ).arg( triggerName ).arg( cursorTarget->isVisible() ).arg( cursorVisible ).toUtf8().constData() );
+    QTRY_VERIFY2( mouseTarget->isVisible() == mouseVisible,
+                  QStringLiteral ("line: %1 mouse for %2 not matched. Expected %3 Actual %4").
+                  arg( line ).arg( triggerName ).arg( mouseTarget->isVisible() ).arg( mouseVisible ).toUtf8().constData() );
 }
+
+void PartTest::testAdditionalActionTriggers()
+{
+#ifndef HAVE_POPPLER_0_65
+    return;
+#endif
+    const QString testFile = QStringLiteral( KDESRCDIR "data/additionalFormActions.pdf" );
+    Okular::Part part( nullptr, nullptr, QVariantList() );
+    part.openDocument( testFile );
+    part.widget()->resize(800, 600);
+
+    part.widget()->show();
+    QVERIFY( QTest::qWaitForWindowExposed( part.widget() ) );
+
+    QMap<QString, Okular::FormField *> fields;
+    // Field names in test document are:
+    // For trigger fields: tf, cb, rb, dd, pb
+    // For target fields: <trigger_name>_focus_target, <trigger_name>_cursor_target,
+    // <trigger_name>_mouse_target
+    const Okular::Page* page = part.m_document->page( 0 );
+    for ( Okular::FormField *ff: page->formFields() )
+    {
+        fields.insert( ff->name(), static_cast< Okular::FormField* >( ff ) );
+    }
+
+    // Verify that everything is set up.
+    verifyTargetStates( QStringLiteral( "tf" ), fields, true, true, true, __LINE__ );
+    verifyTargetStates( QStringLiteral( "cb" ), fields, true, true, true, __LINE__ );
+    verifyTargetStates( QStringLiteral( "rb" ), fields, true, true, true, __LINE__ );
+    verifyTargetStates( QStringLiteral( "dd" ), fields, true, true, true, __LINE__ );
+    verifyTargetStates( QStringLiteral( "pb" ), fields, true, true, true, __LINE__ );
+
+    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
+                      part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->verticalScrollBar()->maximum() +
+                       part.m_pageView->viewport()->height();
+
+    part.m_document->setViewportPage( 0 );
+
+    // wait for pixmap
+    QTRY_VERIFY( part.m_document->page( 0 )->hasPixmap( part.m_pageView) );
+
+    part.actionCollection()->action( QStringLiteral( "view_toggle_forms" ) )->trigger();
+
+    QPoint tfPos( width * 0.045, height * 0.05 );
+    QPoint cbPos( width * 0.045, height * 0.08 );
+    QPoint rbPos( width * 0.045, height * 0.12 );
+    QPoint ddPos( width * 0.045, height * 0.16 );
+    QPoint pbPos( width * 0.045, height * 0.26 );
+
+    // Test text field
+    auto widget = part.m_pageView->viewport()->childAt( tfPos );
+    QVERIFY( widget );
+
+    QTest::mouseMove( part.m_pageView->viewport(), QPoint( tfPos ));
+    verifyTargetStates( QStringLiteral( "tf" ), fields, true, false, true, __LINE__ );
+    QTest::mousePress( widget, Qt::LeftButton, Qt::NoModifier, QPoint( 5, 5 ) );
+    verifyTargetStates( QStringLiteral( "tf" ), fields, false, false, false, __LINE__ );
+    QTest::mouseRelease( widget, Qt::LeftButton, Qt::NoModifier, QPoint( 5, 5 ) );
+    verifyTargetStates( QStringLiteral( "tf" ), fields, false, false, true, __LINE__ );
+
+    // Checkbox
+    widget = part.m_pageView->viewport()->childAt( cbPos );
+    QVERIFY( widget );
+
+    QTest::mouseMove( part.m_pageView->viewport(), QPoint( cbPos ) );
+    verifyTargetStates( QStringLiteral( "cb" ), fields, true, false, true, __LINE__ );
+    QTest::mousePress( widget, Qt::LeftButton, Qt::NoModifier, QPoint( 5, 5 ) );
+    verifyTargetStates( QStringLiteral( "cb" ), fields, false, false, false, __LINE__ );
+    // Confirm that the textfield no longer has any invisible
+    verifyTargetStates( QStringLiteral( "tf" ), fields, true, true, true, __LINE__ );
+    QTest::mouseRelease( widget, Qt::LeftButton, Qt::NoModifier, QPoint( 5, 5 ) );
+    verifyTargetStates( QStringLiteral( "cb" ), fields, false, false, true, __LINE__ );
+
+    // Radio
+    widget = part.m_pageView->viewport()->childAt( rbPos );
+    QVERIFY( widget );
+
+    QTest::mouseMove( part.m_pageView->viewport(), QPoint( rbPos ) );
+    verifyTargetStates( QStringLiteral( "rb" ), fields, true, false, true, __LINE__ );
+    QTest::mousePress( widget, Qt::LeftButton, Qt::NoModifier, QPoint( 5, 5 ) );
+    verifyTargetStates( QStringLiteral( "rb" ), fields, false, false, false, __LINE__ );
+    QTest::mouseRelease( widget, Qt::LeftButton, Qt::NoModifier, QPoint( 5, 5 ) );
+    verifyTargetStates( QStringLiteral( "rb" ), fields, false, false, true, __LINE__ );
+
+    // Dropdown
+    widget = part.m_pageView->viewport()->childAt( ddPos );
+    QVERIFY( widget );
+
+    QTest::mouseMove( part.m_pageView->viewport(), QPoint( ddPos ) );
+    verifyTargetStates( QStringLiteral( "dd" ), fields, true, false, true, __LINE__ );
+    QTest::mousePress( widget, Qt::LeftButton, Qt::NoModifier, QPoint( 5, 5 ) );
+    verifyTargetStates( QStringLiteral( "dd" ), fields, false, false, false, __LINE__ );
+    QTest::mouseRelease( widget, Qt::LeftButton, Qt::NoModifier, QPoint( 5, 5 ) );
+    verifyTargetStates( QStringLiteral( "dd" ), fields, false, false, true, __LINE__ );
+
+    // Pushbutton
+    widget = part.m_pageView->viewport()->childAt( pbPos );
+    QVERIFY( widget );
+
+    QTest::mouseMove( part.m_pageView->viewport(), QPoint( pbPos ) );
+    verifyTargetStates( QStringLiteral( "pb" ), fields, true, false, true, __LINE__ );
+    QTest::mousePress( widget, Qt::LeftButton, Qt::NoModifier, QPoint( 5, 5 ) );
+    verifyTargetStates( QStringLiteral( "pb" ), fields, false, false, false, __LINE__ );
+    QTest::mouseRelease( widget, Qt::LeftButton, Qt::NoModifier, QPoint( 5, 5 ) );
+    verifyTargetStates( QStringLiteral( "pb" ), fields, false, false, true, __LINE__ );
+
+    // Confirm that a mouse release outside does not trigger the show action.
+    QTest::mousePress( widget, Qt::LeftButton, Qt::NoModifier, QPoint( 5, 5 ) );
+    verifyTargetStates( QStringLiteral( "pb" ), fields, false, false, false, __LINE__ );
+    QTest::mouseRelease( part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, tfPos );
+    verifyTargetStates( QStringLiteral( "pb" ), fields, false, false, false, __LINE__ );
+}
+
+} // namespace Okular
 
 int main(int argc, char *argv[])
 {

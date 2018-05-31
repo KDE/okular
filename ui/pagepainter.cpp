@@ -656,7 +656,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
             Okular::Annotation * a = *aIt;
 
             // honor opacity settings on supported types
-            unsigned int opacity = (unsigned int)( 255.0 * a->style().opacity() );
+            unsigned int opacity = (unsigned int)( a->style().color().alpha() * a->style().opacity() );
             // skip the annotation drawing if all the annotation is fully
             // transparent, but not with text annotations
             if ( opacity <= 0 && a->subType() != Okular::Annotation::AText )

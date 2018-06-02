@@ -259,7 +259,7 @@ void AnnotWindow::updateAnnotation( Okular::Annotation * a )
 
 void AnnotWindow::reloadInfo()
 {
-    const QColor newcolor = m_annot->style().color().isValid() ? QColor(m_annot->style().color().name()) : Qt::yellow;
+    const QColor newcolor = m_annot->style().color().isValid() ? QColor(m_annot->style().color().red(), m_annot->style().color().green(), m_annot->style().color().blue(), 255) : Qt::yellow;
     if ( newcolor != m_color )
     {
         m_color = newcolor;

@@ -31,6 +31,7 @@
 #include <QScrollBar>
 #include <QTemporaryDir>
 #include <QTextEdit>
+#include <QToolButton>
 #include <QTreeView>
 #include <QUrl>
 #include <QDesktopServices>
@@ -112,6 +113,7 @@ class PartTest
         void testCheckBoxReadOnly();
         void testCrashTextEditDestroy();
         void testAnnotWindow();
+        void testTypewriterAnnotTool();
 
     private:
         void simulateMouseSelection(double startX, double startY, double endX, double endY, QWidget *target);
@@ -1500,6 +1502,22 @@ void PartTest::testAnnotWindow()
     QVERIFY( win2->visibleRegion().rects().count() == 4);
 }
 
+void PartTest::testTypewriterAnnotTool()
+{
+	Okular::Part part(nullptr, nullptr, QVariantList());
+
+	part.openUrl(QUrl::fromLocalFile(QStringLiteral(KDESRCDIR "data/file1.pdf")));
+
+	part.widget()->show();
+	QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
+
+	QMetaObject::invokeMethod(part.m_pageView, "slotToggleAnnotator", Q_ARG( bool, true ));
+
+	QList<QToolButton *> toolbuttonList = part.m_pageView->findChildren<QToolButton *>();
+	// Check if the tooltip of 10th button is "Typewriter"
+	QToolButton* typewriterButton = toolbuttonList.at(9);
+	QCOMPARE( typewriterButton->toolTip(), QStringLiteral("Typewriter") );
+}
 }
 
 int main(int argc, char *argv[])

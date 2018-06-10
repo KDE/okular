@@ -31,6 +31,7 @@
 #include <QScrollBar>
 #include <QTemporaryDir>
 #include <QTextEdit>
+#include <QTimer>
 #include <QToolButton>
 #include <QTreeView>
 #include <QUrl>
@@ -114,6 +115,7 @@ class PartTest
         void testCrashTextEditDestroy();
         void testAnnotWindow();
         void testTypewriterAnnotTool();
+        void testDialogClosed();
 
     private:
         void simulateMouseSelection(double startX, double startY, double endX, double endY, QWidget *target);
@@ -1511,12 +1513,44 @@ void PartTest::testTypewriterAnnotTool()
 	part.widget()->show();
 	QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
+	const int width = part.m_pageView->horizontalScrollBar()->maximum() +
+                         part.m_pageView->viewport()->width();
+	const int height = part.m_pageView->verticalScrollBar()->maximum() +
+                          part.m_pageView->viewport()->height();
+
+	part.m_document->setViewportPage(0);
+
+	QTimer * m_timer = new QTimer(this);
+	m_timer->setSingleShot(true);
+	connect(m_timer, SIGNAL(timeout()), SLOT(testDialogClosed()));
+
 	QMetaObject::invokeMethod(part.m_pageView, "slotToggleAnnotator", Q_ARG( bool, true ));
 
 	QList<QToolButton *> toolbuttonList = part.m_pageView->findChildren<QToolButton *>();
 	// Check if the tooltip of 10th button is "Typewriter"
 	QToolButton* typewriterButton = toolbuttonList.at(9);
 	QCOMPARE( typewriterButton->toolTip(), QStringLiteral("Typewriter") );
+
+	typewriterButton->click();
+
+	m_timer->start(1000);
+
+	QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * 0.5, height * 0.2));
+	QTest::mouseClick(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, QPoint(width * 0.5, height * 0.2));
+}
+
+void PartTest::testDialogClosed()
+{
+	// Verify and close the QInputDialog appeared
+	bool m_clicked = false;
+	QWidget * inputDialog = qApp->activeModalWidget();
+	if(inputDialog)
+	{
+		QDialogButtonBox *buttonBox = inputDialog->findChild<QDialogButtonBox*>();
+		buttonBox->button(QDialogButtonBox::Cancel)->click();
+		m_clicked = true;
+	}
+	QVERIFY(m_clicked);
 }
 }
 

@@ -31,8 +31,6 @@
 #include <QScrollBar>
 #include <QTemporaryDir>
 #include <QTextEdit>
-#include <QTimer>
-#include <QToolButton>
 #include <QTreeView>
 #include <QUrl>
 #include <QDesktopServices>
@@ -43,7 +41,7 @@ class CloseDialogHelper : public QObject
     Q_OBJECT
 
 public:
-    CloseDialogHelper(Okular::Part *p, QDialogButtonBox::StandardButton b) : m_part(p), m_button(b), m_clicked(false)
+    CloseDialogHelper(QDialogButtonBox::StandardButton b) : m_button(b), m_clicked(false)
     {
         QTimer::singleShot(0, this, &CloseDialogHelper::closeDialog);
     }
@@ -56,7 +54,8 @@ public:
 private slots:
     void closeDialog()
     {
-        QDialog *dialog = m_part->widget()->findChild<QDialog*>();
+        //QDialog *dialog = m_part->widget()->findChild<QDialog*>();
+        QWidget *dialog = qApp->activeModalWidget();
         if (!dialog) {
             QTimer::singleShot(0, this, &CloseDialogHelper::closeDialog);
             return;
@@ -67,7 +66,6 @@ private slots:
     }
 
 private:
-    Okular::Part *m_part;
     QDialogButtonBox::StandardButton m_button;
     bool m_clicked;
 };
@@ -114,6 +112,7 @@ class PartTest
         void testCheckBoxReadOnly();
         void testCrashTextEditDestroy();
         void testAnnotWindow();
+        void testAdditionalActionTriggers();
         void testTypewriterAnnotTool();
         void testDialogClosed();
 
@@ -847,7 +846,7 @@ void PartTest::testSaveAs()
         {
             if ( !nativelySupportsAnnotations )
             {
-                closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+                closeDialogHelper.reset(new CloseDialogHelper( QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
             }
             QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
             // For backends that don't support annotations natively we mark the part as still modified
@@ -860,12 +859,12 @@ void PartTest::testSaveAs()
         {
             // We need to save to archive first otherwise we lose the annotation
 
-            closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::Yes )); // this is the "you're going to lose the undo/redo stack" dialog
+            closeDialogHelper.reset(new CloseDialogHelper( QDialogButtonBox::Yes )); // this is the "you're going to lose the undo/redo stack" dialog
             QVERIFY( part.saveAs( QUrl::fromLocalFile( archiveSave.fileName() ), Part::SaveAsOkularArchive ) );
 
             if ( !nativelySupportsAnnotations )
             {
-                closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+                closeDialogHelper.reset(new CloseDialogHelper( QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
             }
             QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
         }
@@ -883,7 +882,7 @@ void PartTest::testSaveAs()
 
         if ( !nativelySupportsAnnotations )
         {
-            closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+            closeDialogHelper.reset(new CloseDialogHelper( QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
         }
         QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeFromArchiveFile.fileName() ), Part::NoSaveAsFlags ) );
 
@@ -892,7 +891,7 @@ void PartTest::testSaveAs()
             // For backends that don't support annotations natively we mark the part as still modified
             // after a save because we keep the annotation around but it will get lost if the user closes the app
             // so we want to give her a last chance to save on close with the "you have changes dialog"
-            closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "do you want to save or discard" dialog
+            closeDialogHelper.reset(new CloseDialogHelper( QDialogButtonBox::No  )); // this is the "do you want to save or discard" dialog
         }
 
         part.closeUrl();
@@ -973,7 +972,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
     QString annotName = annot->uniqueName();
 
     if ( !nativelySupportsAnnotations && !saveToArchive ) {
-        closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+        closeDialogHelper.reset(new CloseDialogHelper( QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
 
     QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile1.fileName() ), saveFlags ) );
@@ -1020,7 +1019,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
 
     // Check we can still undo the annot add after save
     if ( !nativelySupportsAnnotations && !saveToArchive ) {
-        closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+        closeDialogHelper.reset(new CloseDialogHelper( QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
     QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile2.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canUndo() );
@@ -1051,7 +1050,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
 
     // Now check we can still undo/redo/save at all the intermediate states and things still work
     if ( !nativelySupportsAnnotations && !saveToArchive ) {
-        closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+        closeDialogHelper.reset(new CloseDialogHelper( QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
     QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile2.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canUndo() );
@@ -1059,7 +1058,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
     QVERIFY( part.m_document->canUndo() );
 
     if ( !nativelySupportsAnnotations && !saveToArchive ) {
-        closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+        closeDialogHelper.reset(new CloseDialogHelper( QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
     QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile1.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canUndo() );
@@ -1067,7 +1066,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
     QVERIFY( part.m_document->canUndo() );
 
     if ( !nativelySupportsAnnotations && !saveToArchive ) {
-        closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+        closeDialogHelper.reset(new CloseDialogHelper( QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
     QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile2.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canUndo() );
@@ -1075,7 +1074,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
     QVERIFY( part.m_document->canUndo() );
 
     if ( !nativelySupportsAnnotations && !saveToArchive ) {
-        closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+        closeDialogHelper.reset(new CloseDialogHelper( QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
     QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile1.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canUndo() );
@@ -1090,7 +1089,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
     QVERIFY( part.m_document->canRedo() );
 
     if ( !nativelySupportsAnnotations && !saveToArchive ) {
-        closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+        closeDialogHelper.reset(new CloseDialogHelper( QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
     QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile2.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canRedo() );
@@ -1098,7 +1097,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
     QVERIFY( part.m_document->canRedo() );
 
     if ( !nativelySupportsAnnotations && !saveToArchive ) {
-        closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+        closeDialogHelper.reset(new CloseDialogHelper( QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
     QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile1.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canRedo() );
@@ -1106,14 +1105,14 @@ void PartTest::testSaveAsUndoStackAnnotations()
     QVERIFY( part.m_document->canRedo() );
 
     if ( !nativelySupportsAnnotations && !saveToArchive ) {
-        closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+        closeDialogHelper.reset(new CloseDialogHelper( QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
     QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile2.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canRedo() );
     part.m_document->redo();
     QVERIFY( !part.m_document->canRedo() );
 
-    closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "do you want to save or discard" dialog
+    closeDialogHelper.reset(new CloseDialogHelper( QDialogButtonBox::No  )); // this is the "do you want to save or discard" dialog
     part.closeUrl();
 }
 
@@ -1504,6 +1503,144 @@ void PartTest::testAnnotWindow()
     QVERIFY( win2->visibleRegion().rects().count() == 4);
 }
 
+// Helper for testAdditionalActionTriggers
+static void verifyTargetStates( const QString & triggerName,
+                                const QMap<QString, Okular::FormField *> &fields,
+                                bool focusVisible, bool cursorVisible, bool mouseVisible,
+                                int line)
+{
+    Okular::FormField *focusTarget = fields.value( triggerName + QStringLiteral ("_focus_target") );
+    Okular::FormField *cursorTarget = fields.value( triggerName + QStringLiteral ("_cursor_target") );
+    Okular::FormField *mouseTarget = fields.value( triggerName + QStringLiteral ("_mouse_target") );
+
+    QVERIFY( focusTarget );
+    QVERIFY( cursorTarget );
+    QVERIFY( mouseTarget );
+
+    QTRY_VERIFY2( focusTarget->isVisible() == focusVisible,
+                  QStringLiteral ("line: %1 focus for %2 not matched. Expected %3 Actual %4").
+                  arg( line ).arg( triggerName ).arg( focusTarget->isVisible() ).arg( focusVisible ).toUtf8().constData() );
+    QTRY_VERIFY2( cursorTarget->isVisible() == cursorVisible,
+                  QStringLiteral ("line: %1 cursor for %2 not matched. Actual %3 Expected %4").
+                  arg( line ).arg( triggerName ).arg( cursorTarget->isVisible() ).arg( cursorVisible ).toUtf8().constData() );
+    QTRY_VERIFY2( mouseTarget->isVisible() == mouseVisible,
+                  QStringLiteral ("line: %1 mouse for %2 not matched. Expected %3 Actual %4").
+                  arg( line ).arg( triggerName ).arg( mouseTarget->isVisible() ).arg( mouseVisible ).toUtf8().constData() );
+}
+
+void PartTest::testAdditionalActionTriggers()
+{
+#ifndef HAVE_POPPLER_0_65
+    return;
+#endif
+    const QString testFile = QStringLiteral( KDESRCDIR "data/additionalFormActions.pdf" );
+    Okular::Part part( nullptr, nullptr, QVariantList() );
+    part.openDocument( testFile );
+    part.widget()->resize(800, 600);
+
+    part.widget()->show();
+    QVERIFY( QTest::qWaitForWindowExposed( part.widget() ) );
+
+    QMap<QString, Okular::FormField *> fields;
+    // Field names in test document are:
+    // For trigger fields: tf, cb, rb, dd, pb
+    // For target fields: <trigger_name>_focus_target, <trigger_name>_cursor_target,
+    // <trigger_name>_mouse_target
+    const Okular::Page* page = part.m_document->page( 0 );
+    for ( Okular::FormField *ff: page->formFields() )
+    {
+        fields.insert( ff->name(), static_cast< Okular::FormField* >( ff ) );
+    }
+
+    // Verify that everything is set up.
+    verifyTargetStates( QStringLiteral( "tf" ), fields, true, true, true, __LINE__ );
+    verifyTargetStates( QStringLiteral( "cb" ), fields, true, true, true, __LINE__ );
+    verifyTargetStates( QStringLiteral( "rb" ), fields, true, true, true, __LINE__ );
+    verifyTargetStates( QStringLiteral( "dd" ), fields, true, true, true, __LINE__ );
+    verifyTargetStates( QStringLiteral( "pb" ), fields, true, true, true, __LINE__ );
+
+    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
+                      part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->verticalScrollBar()->maximum() +
+                       part.m_pageView->viewport()->height();
+
+    part.m_document->setViewportPage( 0 );
+
+    // wait for pixmap
+    QTRY_VERIFY( part.m_document->page( 0 )->hasPixmap( part.m_pageView) );
+
+    part.actionCollection()->action( QStringLiteral( "view_toggle_forms" ) )->trigger();
+
+    QPoint tfPos( width * 0.045, height * 0.05 );
+    QPoint cbPos( width * 0.045, height * 0.08 );
+    QPoint rbPos( width * 0.045, height * 0.12 );
+    QPoint ddPos( width * 0.045, height * 0.16 );
+    QPoint pbPos( width * 0.045, height * 0.26 );
+
+    // Test text field
+    auto widget = part.m_pageView->viewport()->childAt( tfPos );
+    QVERIFY( widget );
+
+    QTest::mouseMove( part.m_pageView->viewport(), QPoint( tfPos ));
+    verifyTargetStates( QStringLiteral( "tf" ), fields, true, false, true, __LINE__ );
+    QTest::mousePress( widget, Qt::LeftButton, Qt::NoModifier, QPoint( 5, 5 ) );
+    verifyTargetStates( QStringLiteral( "tf" ), fields, false, false, false, __LINE__ );
+    QTest::mouseRelease( widget, Qt::LeftButton, Qt::NoModifier, QPoint( 5, 5 ) );
+    verifyTargetStates( QStringLiteral( "tf" ), fields, false, false, true, __LINE__ );
+
+    // Checkbox
+    widget = part.m_pageView->viewport()->childAt( cbPos );
+    QVERIFY( widget );
+
+    QTest::mouseMove( part.m_pageView->viewport(), QPoint( cbPos ) );
+    verifyTargetStates( QStringLiteral( "cb" ), fields, true, false, true, __LINE__ );
+    QTest::mousePress( widget, Qt::LeftButton, Qt::NoModifier, QPoint( 5, 5 ) );
+    verifyTargetStates( QStringLiteral( "cb" ), fields, false, false, false, __LINE__ );
+    // Confirm that the textfield no longer has any invisible
+    verifyTargetStates( QStringLiteral( "tf" ), fields, true, true, true, __LINE__ );
+    QTest::mouseRelease( widget, Qt::LeftButton, Qt::NoModifier, QPoint( 5, 5 ) );
+    verifyTargetStates( QStringLiteral( "cb" ), fields, false, false, true, __LINE__ );
+
+    // Radio
+    widget = part.m_pageView->viewport()->childAt( rbPos );
+    QVERIFY( widget );
+
+    QTest::mouseMove( part.m_pageView->viewport(), QPoint( rbPos ) );
+    verifyTargetStates( QStringLiteral( "rb" ), fields, true, false, true, __LINE__ );
+    QTest::mousePress( widget, Qt::LeftButton, Qt::NoModifier, QPoint( 5, 5 ) );
+    verifyTargetStates( QStringLiteral( "rb" ), fields, false, false, false, __LINE__ );
+    QTest::mouseRelease( widget, Qt::LeftButton, Qt::NoModifier, QPoint( 5, 5 ) );
+    verifyTargetStates( QStringLiteral( "rb" ), fields, false, false, true, __LINE__ );
+
+    // Dropdown
+    widget = part.m_pageView->viewport()->childAt( ddPos );
+    QVERIFY( widget );
+
+    QTest::mouseMove( part.m_pageView->viewport(), QPoint( ddPos ) );
+    verifyTargetStates( QStringLiteral( "dd" ), fields, true, false, true, __LINE__ );
+    QTest::mousePress( widget, Qt::LeftButton, Qt::NoModifier, QPoint( 5, 5 ) );
+    verifyTargetStates( QStringLiteral( "dd" ), fields, false, false, false, __LINE__ );
+    QTest::mouseRelease( widget, Qt::LeftButton, Qt::NoModifier, QPoint( 5, 5 ) );
+    verifyTargetStates( QStringLiteral( "dd" ), fields, false, false, true, __LINE__ );
+
+    // Pushbutton
+    widget = part.m_pageView->viewport()->childAt( pbPos );
+    QVERIFY( widget );
+
+    QTest::mouseMove( part.m_pageView->viewport(), QPoint( pbPos ) );
+    verifyTargetStates( QStringLiteral( "pb" ), fields, true, false, true, __LINE__ );
+    QTest::mousePress( widget, Qt::LeftButton, Qt::NoModifier, QPoint( 5, 5 ) );
+    verifyTargetStates( QStringLiteral( "pb" ), fields, false, false, false, __LINE__ );
+    QTest::mouseRelease( widget, Qt::LeftButton, Qt::NoModifier, QPoint( 5, 5 ) );
+    verifyTargetStates( QStringLiteral( "pb" ), fields, false, false, true, __LINE__ );
+
+    // Confirm that a mouse release outside does not trigger the show action.
+    QTest::mousePress( widget, Qt::LeftButton, Qt::NoModifier, QPoint( 5, 5 ) );
+    verifyTargetStates( QStringLiteral( "pb" ), fields, false, false, false, __LINE__ );
+    QTest::mouseRelease( part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, tfPos );
+    verifyTargetStates( QStringLiteral( "pb" ), fields, false, false, false, __LINE__ );
+}
+
 void PartTest::testTypewriterAnnotTool()
 {
 	Okular::Part part(nullptr, nullptr, QVariantList());
@@ -1514,9 +1651,9 @@ void PartTest::testTypewriterAnnotTool()
 	QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
 	const int width = part.m_pageView->horizontalScrollBar()->maximum() +
-                         part.m_pageView->viewport()->width();
+	                         part.m_pageView->viewport()->width();
 	const int height = part.m_pageView->verticalScrollBar()->maximum() +
-                          part.m_pageView->viewport()->height();
+	                          part.m_pageView->viewport()->height();
 
 	part.m_document->setViewportPage(0);
 
@@ -1541,18 +1678,11 @@ void PartTest::testTypewriterAnnotTool()
 
 void PartTest::testDialogClosed()
 {
-	// Verify and close the QInputDialog appeared
-	bool m_clicked = false;
-	QWidget * inputDialog = qApp->activeModalWidget();
-	if(inputDialog)
-	{
-		QDialogButtonBox *buttonBox = inputDialog->findChild<QDialogButtonBox*>();
-		buttonBox->button(QDialogButtonBox::Cancel)->click();
-		m_clicked = true;
-	}
-	QVERIFY(m_clicked);
+	QScopedPointer<CloseDialogHelper> closeDialogHelper;
+	closeDialogHelper.reset(new CloseDialogHelper( QDialogButtonBox::Ok  )); // this is the "add new note" dialog
 }
-}
+
+} // namespace Okular
 
 int main(int argc, char *argv[])
 {

@@ -54,14 +54,14 @@ public:
 private slots:
     void closeDialog()
     {
-        //QDialog *dialog = m_part->widget()->findChild<QDialog*>();
         QWidget *dialog = qApp->activeModalWidget();
         if (!dialog) {
             QTimer::singleShot(0, this, &CloseDialogHelper::closeDialog);
             return;
         }
         QDialogButtonBox *buttonBox = dialog->findChild<QDialogButtonBox*>();
-        buttonBox->button(m_button)->click();
+        QPushButton *button = buttonBox->button(m_button);
+        QMetaObject::invokeMethod(button, "click", Qt::QueuedConnection);
         m_clicked = true;
     }
 
@@ -114,7 +114,6 @@ class PartTest
         void testAnnotWindow();
         void testAdditionalActionTriggers();
         void testTypewriterAnnotTool();
-        void testDialogClosed();
 
     private:
         void simulateMouseSelection(double startX, double startY, double endX, double endY, QWidget *target);
@@ -1643,6 +1642,7 @@ void PartTest::testAdditionalActionTriggers()
 
 void PartTest::testTypewriterAnnotTool()
 {
+	QScopedPointer<CloseDialogHelper> closeDialogHelper;
 	Okular::Part part(nullptr, nullptr, QVariantList());
 
 	part.openUrl(QUrl::fromLocalFile(QStringLiteral(KDESRCDIR "data/file1.pdf")));
@@ -1651,15 +1651,11 @@ void PartTest::testTypewriterAnnotTool()
 	QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
 	const int width = part.m_pageView->horizontalScrollBar()->maximum() +
-	                         part.m_pageView->viewport()->width();
+	                  part.m_pageView->viewport()->width();
 	const int height = part.m_pageView->verticalScrollBar()->maximum() +
-	                          part.m_pageView->viewport()->height();
+	                   part.m_pageView->viewport()->height();
 
 	part.m_document->setViewportPage(0);
-
-	QTimer * m_timer = new QTimer(this);
-	m_timer->setSingleShot(true);
-	connect(m_timer, SIGNAL(timeout()), SLOT(testDialogClosed()));
 
 	QMetaObject::invokeMethod(part.m_pageView, "slotToggleAnnotator", Q_ARG( bool, true ));
 
@@ -1670,16 +1666,18 @@ void PartTest::testTypewriterAnnotTool()
 
 	typewriterButton->click();
 
-	m_timer->start(1000);
-
 	QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * 0.5, height * 0.2));
+	closeDialogHelper.reset(new CloseDialogHelper( QDialogButtonBox::Ok ));
 	QTest::mouseClick(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, QPoint(width * 0.5, height * 0.2));
-}
 
-void PartTest::testDialogClosed()
-{
-	QScopedPointer<CloseDialogHelper> closeDialogHelper;
-	closeDialogHelper.reset(new CloseDialogHelper( QDialogButtonBox::Ok  )); // this is the "add new note" dialog
+	Annotation* annot = part.m_document->page(0)->annotations().first();
+	TextAnnotation* ta = static_cast<TextAnnotation*>( annot );
+	QVERIFY( annot );
+	QVERIFY( ta );
+	QCOMPARE( annot->subType(), Okular::Annotation::AText );
+	QCOMPARE( annot->style().color(), QColor(255,255,255,0) );
+	QCOMPARE( ta->textType(), Okular::TextAnnotation::InPlace );
+	QCOMPARE( ta->inplaceIntent(), Okular::TextAnnotation::TypeWriter );
 }
 
 } // namespace Okular

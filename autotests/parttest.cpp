@@ -1667,7 +1667,7 @@ void PartTest::testTypewriterAnnotTool()
 	typewriterButton->click();
 
 	QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * 0.5, height * 0.2));
-	closeDialogHelper.reset(new CloseDialogHelper( QDialogButtonBox::Ok ));
+	closeDialogHelper.reset(new CloseDialogHelper( QDialogButtonBox::Ok )); // this is the "add new note" dialog
 	QTest::mouseClick(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, QPoint(width * 0.5, height * 0.2));
 
 	Annotation* annot = part.m_document->page(0)->annotations().first();

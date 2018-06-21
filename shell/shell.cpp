@@ -442,6 +442,7 @@ void Shell::fileOpen()
     dlg->setDirectoryUrl( startDir );
     dlg->setAcceptMode( QFileDialog::AcceptOpen );
     dlg->setOption( QFileDialog::HideNameFilterDetails, true );
+    dlg->setFileMode( QFileDialog::ExistingFiles );   // Allow selection of more than one file
 
     QMimeDatabase mimeDatabase;
     QSet<QString> globPatterns;

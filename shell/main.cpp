@@ -45,8 +45,6 @@ int main(int argc, char** argv)
     QCommandLineParser parser;
     // The KDE4 version accepted flags such as -unique with a single dash -> preserve compatibility
     parser.setSingleDashWordOptionMode(QCommandLineParser::ParseAsLongOptions);
-    parser.addVersionOption();
-    parser.addHelpOption();
     aboutData.setupCommandLine(&parser);
 
     parser.addOption(QCommandLineOption(QStringList() << QStringLiteral("p") << QStringLiteral("page"), i18n("Page of the document to be shown"), QStringLiteral("number")));

@@ -163,6 +163,8 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         Q_SCRIPTABLE void slotGotoFirst();
         Q_SCRIPTABLE void slotGotoLast();
         Q_SCRIPTABLE void slotTogglePresentation();
+        Q_SCRIPTABLE void slotToggleChangeColors();
+        Q_SCRIPTABLE void slotSetChangeColors(bool active);
         Q_SCRIPTABLE Q_NOREPLY void reload();
         Q_SCRIPTABLE Q_NOREPLY void enableStartWithPrint();
         Q_SCRIPTABLE Q_NOREPLY void enableExitAfterPrint();

@@ -5498,11 +5498,16 @@ void PageView::slotProcessRenditionAction( const Okular::RenditionAction *action
     };
 }
 
-void PageView::slotToggleChangeColors()
+void PageView::slotSetChangeColors(bool active)
 {
-    Okular::SettingsCore::setChangeColors( !Okular::SettingsCore::changeColors() );
+    Okular::SettingsCore::setChangeColors(active);
     Okular::Settings::self()->save();
     viewport()->update();
+}
+
+void PageView::slotToggleChangeColors()
+{
+    slotSetChangeColors( !Okular::SettingsCore::changeColors() );
 }
 
 void PageView::slotFitWindowToPage()

@@ -2848,6 +2848,15 @@ void Part::slotPreferences()
     dialog->show();
 }
 
+void Part::slotToggleChangeColors()
+{
+  m_pageView->slotToggleChangeColors();
+}
+
+void Part::slotSetChangeColors(bool active)
+{
+  m_pageView->slotSetChangeColors(active);
+}
 
 void Part::slotAnnotationPreferences()
 {

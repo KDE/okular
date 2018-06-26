@@ -124,6 +124,9 @@ Q_OBJECT
         void openAnnotationWindow( Okular::Annotation *annotation, int pageNumber );
         void reloadForms();
 
+        void slotToggleChangeColors();
+        void slotSetChangeColors(bool active);
+
     Q_SIGNALS:
         void rightClick( const Okular::Page *, const QPoint & );
         void mouseBackButtonClick();
@@ -269,7 +272,6 @@ Q_OBJECT
         void slotAnnotationWindowDestroyed( QObject *window );
         void slotProcessMovieAction( const Okular::MovieAction *action );
         void slotProcessRenditionAction( const Okular::RenditionAction *action );
-        void slotToggleChangeColors();
         void slotFitWindowToPage();
 };
 

@@ -236,6 +236,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         void enableTOC(bool enable);
         void slotRebuildBookmarkMenu();
         void enableLayers( bool enable );
+        void slotShowSigStatus( bool allSignaturesValid );
 
     public Q_SLOTS:
         bool saveFile() override;

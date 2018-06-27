@@ -235,6 +235,7 @@ public:
     KActionCollection * actionCollection;
     QActionGroup * mouseModeActionGroup;
     QAction * aFitWindowToPage;
+    QAction * aValidateSignatures;
 
     int setting_viewCols;
     bool rtl_Mode;
@@ -363,6 +364,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->aMouseMagnifier = nullptr;
     d->aFitWindowToPage = nullptr;
     d->trimBoundingBox = Okular::NormalizedRect(); // Null box
+    d->aValidateSignatures = nullptr;
 
     switch( Okular::Settings::zoomMode() )
     {
@@ -722,6 +724,12 @@ void PageView::setupActions( KActionCollection * ac )
     d->aToggleForms->setEnabled( false );
     toggleFormWidgets( false );
 
+    d->aValidateSignatures = new QAction( this );
+    ac->addAction( QStringLiteral("validate_signatures"), d->aValidateSignatures );
+    connect( d->aValidateSignatures, &QAction::triggered, this, &PageView::slotValidateSignatures );
+    d->aValidateSignatures->setText( i18n("Validate All signatures"));
+    d->aValidateSignatures->setEnabled( false );
+
     // Setup undo and redo actions
     QAction *kundo = KStandardAction::create( KStandardAction::Undo, d->document, SLOT(undo()), ac );
     QAction *kredo = KStandardAction::create( KStandardAction::Redo, d->document, SLOT(redo()), ac );
@@ -866,6 +874,11 @@ KActionCollection *PageView::actionCollection() const
 QAction *PageView::toggleFormsAction() const
 {
     return d->aToggleForms;
+}
+
+QAction *PageView::validateSignaturesAction() const
+{
+    return d->aValidateSignatures;
 }
 
 int PageView::contentAreaWidth() const
@@ -1088,6 +1101,7 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
 
     bool haspages = !pageSet.isEmpty();
     bool hasformwidgets = false;
+    bool hassignatureforms = false;
     // create children widgets
     QVector< Okular::Page * >::const_iterator setIt = pageSet.constBegin(), setEnd = pageSet.constEnd();
     for ( ; setIt != setEnd; ++setIt )
@@ -1111,6 +1125,8 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
                 w->setCanBeFilled( allowfillforms );
                 item->formWidgets().insert( w );
                 hasformwidgets = true;
+                if ( w->formField()->type() == Okular::FormField::FormSignature )
+                    hassignatureforms = true;
             }
         }
 
@@ -1147,7 +1163,7 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
             QString(),
             PageViewMessage::Info, 4000 );
 
-    updateActionState( haspages, documentChanged, hasformwidgets );
+    updateActionState( haspages, documentChanged, hasformwidgets, hassignatureforms );
 
     // We need to assign it to a different list otherwise slotAnnotationWindowDestroyed
     // will bite us and clear d->m_annowindows
@@ -1158,7 +1174,7 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
     selectionClear();
 }
 
-void PageView::updateActionState( bool haspages, bool documentChanged, bool hasformwidgets )
+void PageView::updateActionState(bool haspages, bool documentChanged, bool hasformwidgets, bool hassignatureforms )
 {
     if ( d->aPageSizes )
     { // may be null if dummy mode is on
@@ -1245,6 +1261,8 @@ void PageView::updateActionState( bool haspages, bool documentChanged, bool hasf
         d->aMouseMagnifier->setEnabled(d->document->supportsTiles());
     if ( d->aFitWindowToPage )
         d->aFitWindowToPage->setEnabled( haspages && !Okular::Settings::viewContinuous() );
+    if ( d->aValidateSignatures )
+        d->aValidateSignatures->setEnabled( haspages && hasformwidgets && hassignatureforms );
 }
 
 bool PageView::areSourceLocationsShownGraphically() const
@@ -5528,6 +5546,25 @@ void PageView::slotFitWindowToPage()
     if ( horizontalScrollBar()->isVisible() )
         viewportSize.setHeight( viewportSize.height() + horizontalScrollBar()->height() );
     emit fitWindowToPage( viewportSize, pageSize );
+}
+
+void PageView::slotValidateSignatures()
+{
+    bool allSignaturesValid = true;
+    foreach ( PageViewItem * item, d->items )
+    {
+        foreach ( FormWidgetIface * w, item->formWidgets() )
+        {
+            if ( w->formField()->type() == Okular::FormField::FormSignature )
+            {
+                Okular::SignatureInfo sigInfo = static_cast< SignatureEdit * >( w )->validate();
+                if ( sigInfo.signatureStatus() != Okular::SignatureInfo::SignatureValid )
+                    allSignaturesValid = false;
+            }
+        }
+    }
+    d->aValidateSignatures->setEnabled( false );
+    emit signatureValidationComplete( allSignaturesValid );
 }
 
 //END private SLOTS

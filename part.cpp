@@ -540,6 +540,7 @@ m_cliPresentation(false), m_cliPrint(false), m_cliPrintAndExit(false), m_embedMo
 
     connect( m_reviewsWidget.data(), &Reviews::openAnnotationWindow,
         m_pageView.data(), &PageView::openAnnotationWindow );
+    connect( m_pageView, &PageView::signatureValidationComplete, this, &Part::slotShowSigStatus );
 
     // add document observers
     m_document->addObserver( this );
@@ -619,7 +620,7 @@ m_cliPresentation(false), m_cliPrint(false), m_cliPrintAndExit(false), m_embedMo
     updateViewActions();
 
     // also update the state of the actions in the page view
-    m_pageView->updateActionState( false, false, false );
+    m_pageView->updateActionState( false, false, false, false );
 
     if ( m_embedMode == NativeShellMode )
         m_sidebar->setAutoFillBackground( false );
@@ -1550,7 +1551,15 @@ bool Part::openFile()
     // m_pageView->toggleFormsAction() may be null on dummy mode
     else if ( ok && m_pageView->toggleFormsAction() && m_pageView->toggleFormsAction()->isEnabled() )
     {
-        m_formsMessage->setText( i18n( "This document has forms. Click on the button to interact with them, or use View -> Show Forms." ) );
+        if ( m_pageView->validateSignaturesAction() && m_pageView->validateSignaturesAction()->isEnabled() )
+        {
+            m_formsMessage->addAction( m_pageView->validateSignaturesAction() );
+            m_formsMessage->setText( i18n( "This document has forms of which atleast one is a signature form. Click on the buttons to interact with them." ) );
+        }
+        else
+        {
+            m_formsMessage->setText( i18n( "This document has forms. Click on the button to interact with them, or use View -> Show Forms." ) );
+        }
         m_formsMessage->setMessageType( KMessageWidget::Information );
         m_formsMessage->setVisible( true );
     }
@@ -3564,6 +3573,12 @@ void Part::setReadWrite(bool readwrite)
 {
     m_document->setAnnotationEditingEnabled( readwrite );
     ReadWritePart::setReadWrite( readwrite );
+}
+
+void Part::slotShowSigStatus( bool allSignaturesValid )
+{
+    const QString message = allSignaturesValid ? i18n( "All signatures are valid." ) : i18n( "Atleast one signature has problem." );
+    m_pageView->displayMessage( message, QString(), allSignaturesValid ? PageViewMessage::Info : PageViewMessage::Error, 10000 );
 }
 
 } // namespace Okular

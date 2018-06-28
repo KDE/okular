@@ -13,7 +13,7 @@
 #include "okularcore_export.h"
 #include "area.h"
 #include "annotations.h"
-#include "signatureinfo.h"
+#include "signatureutils.h"
 
 #include <QtCore/QStringList>
 

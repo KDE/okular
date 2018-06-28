@@ -8,7 +8,6 @@
  ***************************************************************************/
 
 #include "signaturewidgets.h"
-#include "core/signatureinfo.h"
 #include <KLocalizedString>
 
 #include <QDebug>

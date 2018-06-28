@@ -193,7 +193,7 @@ set(okularcore_SRCS
    core/utils.cpp
    core/view.cpp
    core/fileprinter.cpp
-   core/signatureinfo.cpp
+   core/signatureutils.cpp
    core/script/event.cpp
    core/synctex/synctex_parser.c
    core/synctex/synctex_parser_utils.c
@@ -218,7 +218,7 @@ install( FILES
            core/page.h
            core/pagesize.h
            core/pagetransition.h
-           core/signatureinfo.h
+           core/signatureutils.h
            core/sound.h
            core/sourcereference.h
            core/textdocumentgenerator.h

@@ -7,7 +7,7 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include "signatureinfo.h"
+#include "signatureutils.h".h"
 
 using namespace Okular;
 
@@ -35,6 +35,7 @@ class Okular::CertificateInfoPrivate
         QString issuerDN;
         int pkStrength;
 };
+
 
 CertificateInfo::CertificateInfo( CertificateInfoPrivate *priv )
     : d_ptr( priv )

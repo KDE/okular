@@ -7,7 +7,7 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include "pdfsignatureinfo.h"
+#include "pdfsignatureutils.h"
 
 PopplerCertificateInfo::PopplerCertificateInfo( const Poppler::CertificateInfo &info )
     : Okular::CertificateInfo()

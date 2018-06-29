@@ -118,7 +118,7 @@ set_package_properties("Poppler" PROPERTIES
         TYPE RECOMMENDED
         PURPOSE "Support for PDF files in okular.")
 
-add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
+add_definitions(-DQT_USE_FAST_OPERATOR_PLUS)
 add_definitions(-DTRANSLATION_DOMAIN="okular")
 add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
 

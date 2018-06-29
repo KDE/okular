@@ -192,7 +192,10 @@ QWidget * AnnotationWidget::extraWidget()
 void AnnotationWidget::applyChanges()
 {
     if ( m_textAnn->inplaceIntent() == Okular::TextAnnotation::TypeWriter )
+    {
+        m_textAnn->setTextColor( m_colorBn->color() );
         return;
+    }
     m_ann->style().setColor( m_colorBn->color() );
     m_ann->style().setOpacity( (double)m_opacity->value() / 100.0 );
 }
@@ -222,7 +225,17 @@ QWidget * AnnotationWidget::createAppearanceWidget()
         connect( m_colorBn, &KColorButton::changed, this, &AnnotationWidget::dataChanged );
         connect( m_opacity, SIGNAL(valueChanged(int)), this, SIGNAL(dataChanged()) );
     }
+    else if ( m_textAnn->inplaceIntent() == Okular::TextAnnotation::TypeWriter )
+    {
+        QLabel * tmplabel = new QLabel( i18n( "&Font Color:" ), widget );
+        gridlayout->addWidget( tmplabel, 0, 0, Qt::AlignRight );
+        m_colorBn = new KColorButton( widget );
+        m_colorBn->setColor( m_textAnn->textColor() );
+        tmplabel->setBuddy( m_colorBn );
+        gridlayout->addWidget( m_colorBn, 0, 1 );
 
+        connect( m_colorBn, &KColorButton::changed, this, &AnnotationWidget::dataChanged );
+    }
     QWidget * styleWidget = createStyleWidget();
     if ( styleWidget )
         gridlayout->addWidget( styleWidget, 2, 0, 1, 2 );

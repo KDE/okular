@@ -1028,6 +1028,7 @@ class Okular::TextAnnotationPrivate : public Okular::AnnotationPrivate
         TextAnnotation::TextType m_textType;
         QString m_textIcon;
         QFont m_textFont;
+        QColor m_textColor;
         int m_inplaceAlign;
         NormalizedPoint m_inplaceCallout[3];
         NormalizedPoint m_transformedInplaceCallout[3];
@@ -1085,6 +1086,18 @@ QFont TextAnnotation::textFont() const
 {
     Q_D( const TextAnnotation );
     return d->m_textFont;
+}
+
+void TextAnnotation::setTextColor( const QColor &color )
+{
+	Q_D( TextAnnotation );
+	d->m_textColor = color;
+}
+
+QColor TextAnnotation::textColor() const
+{
+	Q_D( const TextAnnotation );
+	return d->m_textColor;
 }
 
 void TextAnnotation::setInplaceAlignment( int alignment )

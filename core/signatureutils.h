@@ -115,6 +115,11 @@ class OKULARCORE_EXPORT CertificateInfo
         virtual int publicKeyStrength() const;
 
         /**
+         * Returns true if certificate is self signed; otherwise returns false.
+         */
+        virtual bool isSelfSigned() const;
+
+        /**
          * The DER encoded certificate.
          */
         virtual QByteArray certificateData() const;

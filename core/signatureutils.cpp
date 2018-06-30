@@ -71,6 +71,11 @@ int CertificateInfo::publicKeyStrength() const
     return -1;
 }
 
+bool CertificateInfo::isSelfSigned() const
+{
+    return false;
+}
+
 QByteArray CertificateInfo::certificateData() const
 {
     return QByteArray();

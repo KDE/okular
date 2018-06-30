@@ -30,6 +30,7 @@ class PopplerCertificateInfo : public Okular::CertificateInfo
         QByteArray publicKey() const override;
         PublicKeyType publicKeyType() const override;
         int publicKeyStrength() const override;
+        bool isSelfSigned() const override;
         QByteArray certificateData() const override;
 
     private:

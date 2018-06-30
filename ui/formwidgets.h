@@ -14,7 +14,6 @@
 #define _OKULAR_FORMWIDGETS_H_
 
 #include "core/area.h"
-#include "core/signatureutils.h"
 
 #include <qcheckbox.h>
 #include <qcombobox.h>
@@ -41,6 +40,7 @@ class FormFieldChoice;
 class FormFieldText;
 class FormFieldSignature;
 class Document;
+class SignatureInfo;
 }
 
 struct RadioData
@@ -354,7 +354,7 @@ class SignatureEdit : public QAbstractButton, public FormWidgetIface
 
     public:
         explicit SignatureEdit( Okular::FormFieldSignature * signature, QWidget * parent = nullptr );
-        Okular::SignatureInfo validate();
+        Okular::SignatureInfo *validate();
 
     protected:
         bool event( QEvent * e ) override;
@@ -366,7 +366,7 @@ class SignatureEdit : public QAbstractButton, public FormWidgetIface
         void slotShowProperties();
 
     private:
-        Okular::SignatureInfo m_sigInfo;
+        Okular::SignatureInfo *m_sigInfo;
         bool m_leftMouseButtonPressed;
         bool m_signatureValidated;
 

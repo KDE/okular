@@ -128,7 +128,7 @@ class PopplerFormFieldSignature : public Okular::FormFieldSignature
 
         // inherited from Okular::FormFieldSignature
         SignatureType signatureType() const override;
-        Okular::SignatureInfo validate() const override;
+        Okular::SignatureInfo *validate() const override;
 
     private:
         Poppler::FormFieldSignature * m_field;

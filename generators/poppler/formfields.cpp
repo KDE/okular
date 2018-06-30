@@ -427,8 +427,8 @@ PopplerFormFieldSignature::SignatureType PopplerFormFieldSignature::signatureTyp
     }
 }
 
-Okular::SignatureInfo PopplerFormFieldSignature::validate() const
+Okular::SignatureInfo *PopplerFormFieldSignature::validate() const
 {
     auto sigInfo = m_field->validate( Poppler::FormFieldSignature::ValidateVerifyCertificate );
-    return PopplerSignatureInfo( sigInfo );
+    return ( new PopplerSignatureInfo( sigInfo ) );
 }

@@ -5557,8 +5557,8 @@ void PageView::slotValidateSignatures()
         {
             if ( w->formField()->type() == Okular::FormField::FormSignature )
             {
-                Okular::SignatureInfo sigInfo = static_cast< SignatureEdit * >( w )->validate();
-                if ( sigInfo.signatureStatus() != Okular::SignatureInfo::SignatureValid )
+                Okular::SignatureInfo *sigInfo = static_cast< SignatureEdit * >( w )->validate();
+                if ( sigInfo->signatureStatus() != Okular::SignatureInfo::SignatureValid )
                     allSignaturesValid = false;
             }
         }

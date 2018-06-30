@@ -418,7 +418,7 @@ class OKULARCORE_EXPORT FormFieldSignature : public FormField
          * Validate the signature with 'now' as validation time.
          *
          */
-        virtual SignatureInfo validate() const = 0;
+        virtual SignatureInfo *validate() const = 0;
 
 
     protected:

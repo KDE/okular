@@ -235,11 +235,6 @@ class OKULARCORE_EXPORT SignatureInfo
         virtual bool signsTotalDocument() const;
 
         /**
-         * Get contact information.
-         */
-        virtual QString contactInfo() const;
-
-        /**
          * Get location.
          */
         virtual QString location() const;

@@ -69,33 +69,9 @@ PopplerCertificateInfo::PublicKeyType PopplerCertificateInfo::convertToOkularPub
 }
 
 
-class PopplerSignatureInfoPrivate
-{
-    public:
-        QList<qint64> rangeBounds;
-        QDateTime signingTime;
-        QByteArray signature;
-        QString subjectCN;
-        QString subjectDN;
-        int signatureStatus;
-        int certficateStatus;
-        int hashAlgorithm;
-        bool signsTotalDoc;
-};
-
 PopplerSignatureInfo::PopplerSignatureInfo( const Poppler::SignatureValidationInfo &info )
-    : d_ptr( new PopplerSignatureInfoPrivate() )
+    : m_info( new Poppler::SignatureValidationInfo( nullptr ) )
 {
-    Q_D( PopplerSignatureInfo );
-    d->signatureStatus = info.signatureStatus();
-    d->certficateStatus = info.certificateStatus();
-    d->subjectCN = info.signerName();
-    d->subjectDN = info.signerSubjectDN();
-    d->hashAlgorithm = info.hashAlgorithm();
-    d->signingTime = QDateTime::fromTime_t( info.signingTime() );
-    d->signature = info.signature();
-    d->rangeBounds = info.signedRangeBounds();
-    d->signsTotalDoc = info.signsTotalDocument();
 }
 
 PopplerSignatureInfo::~PopplerSignatureInfo()
@@ -104,8 +80,7 @@ PopplerSignatureInfo::~PopplerSignatureInfo()
 
 PopplerSignatureInfo::SignatureStatus PopplerSignatureInfo::signatureStatus() const
 {
-    Q_D( const PopplerSignatureInfo );
-    switch ( d->signatureStatus )
+    switch ( m_info->signatureStatus() )
     {
         case Poppler::SignatureValidationInfo::SignatureValid:
             return SignatureValid;
@@ -128,8 +103,7 @@ PopplerSignatureInfo::SignatureStatus PopplerSignatureInfo::signatureStatus() co
 
 PopplerSignatureInfo::CertificateStatus PopplerSignatureInfo::certificateStatus() const
 {
-    Q_D( const PopplerSignatureInfo );
-    switch ( d->certficateStatus )
+    switch ( m_info->certificateStatus() )
     {
         case Poppler::SignatureValidationInfo::CertificateTrusted:
             return CertificateTrusted;
@@ -152,8 +126,7 @@ PopplerSignatureInfo::CertificateStatus PopplerSignatureInfo::certificateStatus(
 
 PopplerSignatureInfo::HashAlgorithm PopplerSignatureInfo::hashAlgorithm() const
 {
-    Q_D( const PopplerSignatureInfo );
-    switch ( d->hashAlgorithm )
+    switch ( m_info->hashAlgorithm() )
     {
         case Poppler::SignatureValidationInfo::HashAlgorithmMd2:
             return HashAlgorithmMd2;
@@ -176,37 +149,31 @@ PopplerSignatureInfo::HashAlgorithm PopplerSignatureInfo::hashAlgorithm() const
 
 QString PopplerSignatureInfo::subjectName() const
 {
-    Q_D( const PopplerSignatureInfo );
-    return d->subjectCN;
+    return m_info->signerName();
 }
 QString PopplerSignatureInfo::subjectDN() const
 {
-    Q_D( const PopplerSignatureInfo );
-    return d->subjectDN;
+    return m_info->signerSubjectDN();
 }
 
 QDateTime PopplerSignatureInfo::signingTime() const
 {
-    Q_D( const PopplerSignatureInfo );
-    return d->signingTime;
+    return QDateTime::fromTime_t( m_info->signingTime() );
 }
 
 QByteArray PopplerSignatureInfo::signature() const
 {
-    Q_D( const PopplerSignatureInfo );
-    return d->signature;
+    return m_info->signature();
 }
 
 QList<qint64> PopplerSignatureInfo::signedRangeBounds() const
 {
-    Q_D( const PopplerSignatureInfo );
-    return d->rangeBounds;
+    return m_info->signedRangeBounds();
 }
 
 bool PopplerSignatureInfo::signsTotalDocument() const
 {
-    Q_D( const PopplerSignatureInfo );
-    return d->signsTotalDoc;
+    return m_info->signsTotalDocument();
 }
 
 Okular::CertificateInfo PopplerSignatureInfo::certificateInfo() const

@@ -45,8 +45,7 @@ class PopplerSignatureInfo : public Okular::SignatureInfo
         Okular::CertificateInfo certificateInfo() const override;
 
     private:
-        QScopedPointer<PopplerSignatureInfoPrivate> d_ptr;
-        Q_DECLARE_PRIVATE( PopplerSignatureInfo )
+        Poppler::SignatureValidationInfo *m_info;
 };
 
 #endif

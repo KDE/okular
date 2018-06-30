@@ -52,6 +52,9 @@ class PopplerSignatureInfo : public Okular::SignatureInfo
         QByteArray signature() const override;
         QList<qint64> signedRangeBounds() const override;
         bool signsTotalDocument() const override;
+        QString contactInfo() const override;
+        QString location() const override;
+        QString reason() const override;
         Okular::CertificateInfo *certificateInfo() const override;
 
     private:

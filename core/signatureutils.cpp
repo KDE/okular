@@ -136,6 +136,21 @@ bool SignatureInfo::signsTotalDocument() const
     return false;
 }
 
+QString SignatureInfo::contactInfo() const
+{
+    return QString();
+}
+
+QString SignatureInfo::location() const
+{
+    return QString();
+}
+
+QString SignatureInfo::reason() const
+{
+    return QString();
+}
+
 CertificateInfo *SignatureInfo::certificateInfo() const
 {
     return nullptr;

@@ -20,18 +20,27 @@ class PopplerCertificateInfo : public Okular::CertificateInfo
         PopplerCertificateInfo(const Poppler::CertificateInfo &info);
         ~PopplerCertificateInfo();
 
-    private:
-        KeyUsages convertToOkularKeyUsages( Poppler::CertificateInfo::KeyUsages );
-        PublicKeyType convertToOkularPublicKeyType( Poppler::CertificateInfo::PublicKeyType );
-};
+        QByteArray version() const override;
+        QString issuerName() const override;
+        QString issuerDN() const override;
+        QByteArray serialNumber() const override;
+        QDateTime validityStart() const override;
+        QDateTime validityEnd() const override;
+        KeyUsages keyUsages() const override;
+        QByteArray publicKey() const override;
+        PublicKeyType publicKeyType() const override;
+        int publicKeyStrength() const override;
+        QByteArray certificateData() const override;
 
-class PopplerSignatureInfoPrivate;
+    private:
+        Poppler::CertificateInfo *m_info;
+};
 
 class PopplerSignatureInfo : public Okular::SignatureInfo
 {
     public:
         PopplerSignatureInfo( const Poppler::SignatureValidationInfo &info );
-        virtual ~PopplerSignatureInfo();
+        ~PopplerSignatureInfo();
 
         SignatureStatus signatureStatus() const override;
         CertificateStatus certificateStatus() const override;
@@ -42,7 +51,7 @@ class PopplerSignatureInfo : public Okular::SignatureInfo
         QByteArray signature() const override;
         QList<qint64> signedRangeBounds() const override;
         bool signsTotalDocument() const override;
-        Okular::CertificateInfo certificateInfo() const override;
+        Okular::CertificateInfo *certificateInfo() const override;
 
     private:
         Poppler::SignatureValidationInfo *m_info;

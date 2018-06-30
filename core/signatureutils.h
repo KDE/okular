@@ -59,19 +59,9 @@ class OKULARCORE_EXPORT CertificateInfo
         Q_DECLARE_FLAGS( KeyUsages, KeyUsage )
 
         /**
-         * Conclassor.
-         */
-        CertificateInfo( CertificateInfoPrivate *priv = nullptr );
-
-        /**
-         * Declassor
+         * Destructor
          */
         virtual ~CertificateInfo();
-
-        /**
-         * Returns true if d_ptr is not null.
-         */
-        bool isValid() const;
 
         /**
          * The certificate version string in hex encoding.
@@ -129,27 +119,11 @@ class OKULARCORE_EXPORT CertificateInfo
          */
         virtual QByteArray certificateData() const;
 
-        CertificateInfo( const CertificateInfo &other );
-        virtual CertificateInfo &operator=( const CertificateInfo &other );
-
     protected:
-        void initPrivate();
-        void setVersion( const QByteArray & );
-        void setIssuerName( const QString & );
-        void setIssuerDN( const QString & );
-        void setSerialNumber( const QByteArray & );
-        void setValidityStart( const QDateTime & );
-        void setValidityEnd( const QDateTime & );
-        void setKeyUsages( KeyUsages );
-        void setPublicKey( const QByteArray & );
-        void setPublicKeyType( PublicKeyType );
-        void setPublicKeyStrength( int );
-        void setCertificateData( const QByteArray & );
+        CertificateInfo();
 
     private:
-        Q_DECLARE_PRIVATE( CertificateInfo )
-
-        QSharedPointer<CertificateInfoPrivate> d_ptr;
+        Q_DISABLE_COPY( CertificateInfo )
 };
 
 /**
@@ -258,7 +232,7 @@ class OKULARCORE_EXPORT SignatureInfo
         /**
          * Get certificate details.
          */
-        virtual CertificateInfo certificateInfo() const;
+        virtual CertificateInfo *certificateInfo() const;
 
     protected:
         SignatureInfo();

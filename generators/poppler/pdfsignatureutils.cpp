@@ -10,29 +10,48 @@
 #include "pdfsignatureutils.h"
 
 PopplerCertificateInfo::PopplerCertificateInfo( const Poppler::CertificateInfo &info )
-    : Okular::CertificateInfo()
+    : m_info( new Poppler::CertificateInfo( nullptr ) )
 {
-    initPrivate();
-
-    setVersion( info.version() );
-    setIssuerName( info.issuerName() );
-    setIssuerDN( info.issuerDN() );
-    setSerialNumber( info.serialNumber() );
-    setValidityStart( info.validityStart() );
-    setValidityEnd( info.validityEnd() );
-    setKeyUsages( convertToOkularKeyUsages( info.keyUsages() ) );
-    setPublicKey( info.publicKey() );
-    setPublicKeyStrength( info.publicKeyStrength() );
-    setPublicKeyType( convertToOkularPublicKeyType( info.publicKeyType() ) );
-    setCertificateData( info.certificateData() );
+    *m_info = info;
 }
 
 PopplerCertificateInfo::~PopplerCertificateInfo()
 {
 }
 
-PopplerCertificateInfo::KeyUsages PopplerCertificateInfo::convertToOkularKeyUsages( Poppler::CertificateInfo::KeyUsages popplerKu )
+QByteArray PopplerCertificateInfo::version() const
 {
+    return m_info->version();
+}
+
+QString PopplerCertificateInfo::issuerName() const
+{
+    return m_info->issuerName();
+}
+
+QString PopplerCertificateInfo::issuerDN() const
+{
+    return m_info->issuerDN();
+}
+
+QByteArray PopplerCertificateInfo::serialNumber() const
+{
+    return m_info->serialNumber();
+}
+
+QDateTime PopplerCertificateInfo::validityStart() const
+{
+    return m_info->validityStart();
+}
+
+QDateTime PopplerCertificateInfo::validityEnd() const
+{
+    return m_info->validityEnd();
+}
+
+PopplerCertificateInfo::KeyUsages PopplerCertificateInfo::keyUsages() const
+{
+    Poppler::CertificateInfo::KeyUsages popplerKu = m_info->keyUsages();
     KeyUsages ku = KuNone;
     if ( popplerKu.testFlag( Poppler::CertificateInfo::KuDigitalSignature ) )
         ku |= KuDigitalSignature;
@@ -53,9 +72,14 @@ PopplerCertificateInfo::KeyUsages PopplerCertificateInfo::convertToOkularKeyUsag
     return ku;
 }
 
-PopplerCertificateInfo::PublicKeyType PopplerCertificateInfo::convertToOkularPublicKeyType( Poppler::CertificateInfo::PublicKeyType popplerPkType )
+QByteArray PopplerCertificateInfo::publicKey() const
 {
-    switch ( popplerPkType )
+    return m_info->publicKey();
+}
+
+PopplerCertificateInfo::PublicKeyType PopplerCertificateInfo::publicKeyType() const
+{
+    switch ( m_info->publicKeyType() )
     {
         case Poppler::CertificateInfo::RsaKey:
             return RsaKey;
@@ -68,10 +92,21 @@ PopplerCertificateInfo::PublicKeyType PopplerCertificateInfo::convertToOkularPub
     }
 }
 
+int PopplerCertificateInfo::publicKeyStrength() const
+{
+    return m_info->publicKeyStrength();
+}
+
+QByteArray PopplerCertificateInfo::certificateData() const
+{
+    return m_info->certificateData();
+}
+
 
 PopplerSignatureInfo::PopplerSignatureInfo( const Poppler::SignatureValidationInfo &info )
     : m_info( new Poppler::SignatureValidationInfo( nullptr ) )
 {
+    *m_info = info;
 }
 
 PopplerSignatureInfo::~PopplerSignatureInfo()
@@ -176,7 +211,7 @@ bool PopplerSignatureInfo::signsTotalDocument() const
     return m_info->signsTotalDocument();
 }
 
-Okular::CertificateInfo PopplerSignatureInfo::certificateInfo() const
+Okular::CertificateInfo *PopplerSignatureInfo::certificateInfo() const
 {
-    return Okular::CertificateInfo();
+    return ( new PopplerCertificateInfo( m_info->certificateInfo() ) );
 }

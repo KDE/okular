@@ -147,7 +147,7 @@ class OKULARCORE_EXPORT SignatureInfo
             SignatureValid,          ///< The signature is cryptographically valid.
             SignatureInvalid,        ///< The signature is cryptographically invalid.
             SignatureDigestMismatch, ///< The document content was changed after the signature was applied.
-            SignatureDecodingError,  ///< The signature CMS/PKCS7 classure is malformed.
+            SignatureDecodingError,  ///< The signature CMS/PKCS7 structure is malformed.
             SignatureGenericError,   ///< The signature could not be verified.
             SignatureNotFound,       ///< The requested signature is not present in the document.
             SignatureNotVerified     ///< The signature is not yet verified.

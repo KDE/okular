@@ -66,7 +66,8 @@ class SignatureSummaryDialog : public QDialog
         SignatureSummaryDialog( Okular::SignatureInfo *sigInfo, QWidget *parent );
 
     private Q_SLOTS:
-        void showSignatureProperties();
+        void viewSignedVersion();
+        void viewCertificateProperties();
 
     private:
         Okular::SignatureInfo *m_sigInfo;

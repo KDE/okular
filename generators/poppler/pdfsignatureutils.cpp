@@ -7,6 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include <QFile>
+
 #include "pdfsignatureutils.h"
 
 PopplerCertificateInfo::PopplerCertificateInfo( const Poppler::CertificateInfo &info )
@@ -109,7 +111,7 @@ QByteArray PopplerCertificateInfo::certificateData() const
 
 
 PopplerSignatureInfo::PopplerSignatureInfo( const Poppler::SignatureValidationInfo &info )
-    : m_info( new Poppler::SignatureValidationInfo( nullptr ) )
+    : m_info( new Poppler::SignatureValidationInfo( nullptr ) ), m_revisionData( new QByteArray )
 {
     *m_info = info;
 }
@@ -225,6 +227,18 @@ QString PopplerSignatureInfo::location() const
 QString PopplerSignatureInfo::reason() const
 {
     return m_info->reason();
+}
+
+QByteArray *PopplerSignatureInfo::signedVersion( const QString &origFile )
+{
+    auto byteRange = signedRangeBounds();
+    QFile f( origFile );
+    if ( f.open( QIODevice::ReadOnly ) && f.seek( byteRange.first() ) )
+    {
+        const qint64 maxSize = byteRange.last() - byteRange.first();
+        m_revisionData->append( f.read( maxSize ) );
+    }
+    return m_revisionData.data();
 }
 
 Okular::CertificateInfo *PopplerSignatureInfo::certificateInfo() const

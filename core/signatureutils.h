@@ -245,6 +245,11 @@ class OKULARCORE_EXPORT SignatureInfo
         virtual QString reason() const;
 
         /**
+         * Get signed version.
+         */
+        virtual QByteArray *signedVersion( const QString &origFile );
+
+        /**
          * Get certificate details.
          */
         virtual CertificateInfo *certificateInfo() const;

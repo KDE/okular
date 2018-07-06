@@ -62,8 +62,6 @@ class FormWidgetsController : public QObject
         void signalAction( Okular::Action *action );
 
         void registerRadioButton( FormWidgetIface *fwButton, Okular::FormFieldButton *formButton );
-        void registerSignatureField( Okular::FormFieldSignature *formSignature );
-        int totalSignatures();
         void dropRadioButtons();
         bool canUndo();
         bool canRedo();
@@ -134,7 +132,6 @@ class FormWidgetsController : public QObject
         QList< RadioData > m_radios;
         QHash< int, QAbstractButton* > m_buttons;
         Okular::Document* m_doc;
-        QList< int > m_signatures;
 };
 
 
@@ -358,8 +355,6 @@ class SignatureEdit : public QAbstractButton, public FormWidgetIface
     public:
         explicit SignatureEdit( Okular::FormFieldSignature * signature, QWidget * parent = nullptr );
         Okular::SignatureInfo *validate();
-        void setFormWidgetsController( FormWidgetsController *controller ) override;
-        QByteArray *signedVersion( const QString &origFile );
 
     protected:
         bool event( QEvent * e ) override;

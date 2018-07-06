@@ -146,12 +146,6 @@ QString SignatureInfo::reason() const
     return QString();
 }
 
-QByteArray *SignatureInfo::signedVersion( const QString &origFile )
-{
-    Q_UNUSED( origFile );
-    return nullptr;
-}
-
 CertificateInfo *SignatureInfo::certificateInfo() const
 {
     return nullptr;

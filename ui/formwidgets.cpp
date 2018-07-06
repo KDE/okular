@@ -1144,13 +1144,13 @@ Okular::SignatureInfo *SignatureEdit::validate()
 
 void SignatureEdit::slotShowSummary()
 {
-    SignatureSummaryDialog sigSummaryDlg( m_sigInfo, this );
+    SignaturePropertiesDialog sigSummaryDlg( m_sigInfo, this );
     sigSummaryDlg.exec();
 }
 
 void SignatureEdit::slotShowProperties()
 {
-    SignaturePropertiesDialog sigPropDlg( m_sigInfo, this );
+    CertificateViewer sigPropDlg( m_sigInfo, this );
     sigPropDlg.exec();
 }
 

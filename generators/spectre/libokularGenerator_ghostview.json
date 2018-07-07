@@ -43,6 +43,7 @@
         "Description[nn]": "Ein gjengjevar for PostScript-filer, basert på Spectre-biblioteket",
         "Description[pl]": "Wyświetlanie plików PostScript oparte o bibliotekę Spectre",
         "Description[pt]": "Um visualzador de ficheiros PostScript com base na biblioteca Spectre",
+        "Description[pt_BR]": "Um interpretador de arquivos PostScript com base na biblioteca Spectre",
         "Description[ru]": "Модуль поддержки формата PostScript на основе библиотеки Spectre",
         "Description[sk]": "Renderovač PostScript súborov založený na knižnici Spectre",
         "Description[sl]": "Izrisovalnik datotek PostScript, ki temelji na knjižnici Spectre",

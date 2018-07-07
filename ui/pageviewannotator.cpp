@@ -175,6 +175,14 @@ class PickPointEngine : public AnnotatorEngine
                 {
                     ta->style().setWidth( m_annotElement.attribute( QStringLiteral ( "width" ) ).toDouble() );
                 }
+                // set font color
+                if ( m_engineElement.hasAttribute( QStringLiteral("color") ) )
+                {
+                    if ( inplaceIntent == Okular::TextAnnotation::TypeWriter )
+                        ta->setTextColor( m_engineElement.attribute( QStringLiteral("color") ) );
+                    else
+                        ta->setTextColor( Qt::black );
+                }
                 //set boundary
                 rect.left = qMin(startpoint.x,point.x);
                 rect.top = qMin(startpoint.y,point.y);

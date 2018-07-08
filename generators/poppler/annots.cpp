@@ -178,7 +178,8 @@ void PopplerAnnotationProxy::notifyModification( const Okular::Annotation *okl_a
             const Okular::TextAnnotation * okl_txtann = static_cast<const Okular::TextAnnotation*>(okl_ann);
             Poppler::TextAnnotation * ppl_txtann = static_cast<Poppler::TextAnnotation*>(ppl_ann);
             ppl_txtann->setTextIcon( okl_txtann->textIcon() );
-            ppl_txtann->setTextFont( okl_txtann->textFont(), okl_txtann->textColor() );
+            ppl_txtann->setTextFont( okl_txtann->textFont() );
+            ppl_txtann->setTextColor( okl_txtann->textColor() );
             ppl_txtann->setInplaceAlign( okl_txtann->inplaceAlignment() );
             ppl_txtann->setCalloutPoints( QVector<QPointF>() );
             ppl_txtann->setInplaceIntent( (Poppler::TextAnnotation::InplaceIntent)okl_txtann->inplaceIntent() );

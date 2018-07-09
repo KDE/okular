@@ -144,8 +144,10 @@ endif()
 add_subdirectory( ui )
 add_subdirectory( shell )
 add_subdirectory( generators )
-add_subdirectory( autotests )
-add_subdirectory( conf/autotests )
+if(BUILD_TESTING)
+   add_subdirectory( autotests )
+   add_subdirectory( conf/autotests )
+endif
 
 if(KF5DocTools_FOUND)
     add_subdirectory(doc)

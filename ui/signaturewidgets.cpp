@@ -8,6 +8,7 @@
  ***************************************************************************/
 
 #include "signaturewidgets.h"
+
 #include <KLocalizedString>
 
 #include <QDebug>
@@ -19,8 +20,41 @@
 #include <QDialogButtonBox>
 #include <QGroupBox>
 #include <QFormLayout>
-
+#include <QTreeView>
+#include <QTextDocument>
 #include <KIconLoader>
+#include <QPainter>
+#include <QPaintEvent>
+#include <QHeaderView>
+#include <QVector>
+#include <QStandardPaths>
+#include <QTemporaryFile>
+#include <KMessageBox>
+#include <KMessageWidget>
+
+#include "core/form.h"
+#include "core/page.h"
+#include "core/document.h"
+#include "core/sourcereference.h"
+#include "core/form.h"
+#include "settings.h"
+
+static QVector<Okular::FormFieldSignature*> getSignatureFormFields( Okular::Document *doc )
+{
+    QVector<Okular::FormFieldSignature*> signatureFormFields;
+    uint pageCount = doc->pages();
+    for ( uint i=0; i<pageCount; i++ )
+    {
+        foreach ( Okular::FormField *f, doc->page( i )->formFields() )
+        {
+            if ( f->type() == Okular::FormField::FormSignature )
+            {
+                signatureFormFields.append( static_cast<Okular::FormFieldSignature*>( f ) );
+            }
+        }
+    }
+    return signatureFormFields;
+}
 
 static QString getReadableSigState( Okular::SignatureInfo::SignatureStatus sigStatus )
 {
@@ -202,14 +236,16 @@ void CertificateViewer::updateText( const QModelIndex &index )
 {
     m_sigPropText->setText( m_sigPropModel->data( index, CertificateViewerModel::PropertyValueRole ).toString() );
 }
-SignaturePropertiesDialog::SignaturePropertiesDialog( Okular::SignatureInfo *sigInfo, QWidget *parent )
-    : QDialog( parent ), m_sigInfo( sigInfo )
+
+SignaturePropertiesDialog::SignaturePropertiesDialog( Okular::Document *doc, Okular::FormFieldSignature *form, QWidget *parent )
+    : QDialog( parent ), m_doc( doc ), m_signatureForm( form )
 {
     setModal( true );
     setWindowTitle( i18n("Signature Properties") );
 
-    auto mainLayout = new QVBoxLayout;
+    m_signatureInfo = m_signatureForm->validate();
 
+    auto mainLayout = new QVBoxLayout;
     // signature validation status
     auto sigStatusBox = new QGroupBox( i18n("Validity Status") );
     auto hBoxLayout = new QHBoxLayout;
@@ -219,13 +255,12 @@ SignaturePropertiesDialog::SignaturePropertiesDialog( Okular::SignatureInfo *sig
     hBoxLayout->addWidget( pixmapLabel );
 
     auto sigStatusFormLayout = new QFormLayout;
-    const Okular::SignatureInfo::SignatureStatus sigStatus = m_sigInfo->signatureStatus();
+    const Okular::SignatureInfo::SignatureStatus sigStatus = m_signatureInfo->signatureStatus();
     sigStatusFormLayout->addRow( i18n("Signature Validity:"), new QLabel( getReadableSigState( sigStatus ) ) );
     QString modString;
     if ( sigStatus == Okular::SignatureInfo::SignatureValid )
     {
-        const bool signsTotalDoc = m_sigInfo->signsTotalDocument();
-        if ( signsTotalDoc )
+        if ( m_signatureInfo->signsTotalDocument() )
         {
             modString = i18n("The document has not been modified since it was signed.");
         }
@@ -251,25 +286,29 @@ SignaturePropertiesDialog::SignaturePropertiesDialog( Okular::SignatureInfo *sig
 
     // additional information
     auto extraInfoBox = new QGroupBox( i18n("Additional Information") );
+
     auto extraInfoFormLayout = new QFormLayout;
-    extraInfoFormLayout->addRow( i18n("Signed By:"), new QLabel( m_sigInfo->subjectName() ) );
-    extraInfoFormLayout->addRow( i18n("Signing Time:"), new QLabel( m_sigInfo->signingTime().toString( QStringLiteral("MMM dd yyyy hh:mm:ss") ) ) );
+    extraInfoFormLayout->addRow( i18n("Signed By:"), new QLabel( m_signatureInfo->subjectName() ) );
+    extraInfoFormLayout->addRow( i18n("Signing Time:"), new QLabel( m_signatureInfo->signingTime().toString( QStringLiteral("MMM dd yyyy hh:mm:ss") ) ) );
     auto getValidString = [=]( const QString &str ) -> QString {
         return !str.isEmpty() ?  str : i18n("Not Available");
     };
     // optional info
-    extraInfoFormLayout->addRow( i18n("Reason:"), new QLabel( getValidString( m_sigInfo->reason() ) ) );
-    extraInfoFormLayout->addRow( i18n("Location:"), new QLabel( getValidString( m_sigInfo->location() ) ) );
+    extraInfoFormLayout->addRow( i18n("Reason:"), new QLabel( getValidString( m_signatureInfo->reason() ) ) );
+    extraInfoFormLayout->addRow( i18n("Location:"), new QLabel( getValidString( m_signatureInfo->location() ) ) );
     extraInfoBox->setLayout( extraInfoFormLayout );
     mainLayout->addWidget( extraInfoBox );
 
     // document version
     auto revisionBox = new QGroupBox( i18n("Document Version") );
     auto revisionLayout = new QHBoxLayout;
-    revisionLayout->addWidget( new QLabel( i18n("Document Revision 1 of 1") ) );
+    QVector<Okular::FormFieldSignature*> signatureFormFields = getSignatureFormFields( m_doc );
+    revisionLayout->addWidget( new QLabel( i18nc("Document Revision <current> of <total>", "Document Revision %1 of %2",
+                                                signatureFormFields.indexOf( m_signatureForm ) + 1, signatureFormFields.size() ) ) );
     revisionLayout->addStretch();
     auto revisionBtn = new QPushButton( i18n( "View Signed Version...") );
-    connect( revisionBtn, &QPushButton::clicked, this, &SignaturePropertiesDialog::reject );
+    revisionBtn->setEnabled( !m_signatureInfo->signsTotalDocument() );
+    connect( revisionBtn, &QPushButton::clicked, this, &SignaturePropertiesDialog::viewSignedVersion );
     revisionLayout->addWidget( revisionBtn );
     revisionBox->setLayout( revisionLayout );
     mainLayout->addWidget( revisionBox );
@@ -289,13 +328,107 @@ SignaturePropertiesDialog::SignaturePropertiesDialog( Okular::SignatureInfo *sig
 
 void SignaturePropertiesDialog::viewCertificateProperties()
 {
-    CertificateViewer sigPropDlg( m_sigInfo, this );
+    CertificateViewer sigPropDlg( m_signatureInfo, this );
     sigPropDlg.exec();
 }
 
 void SignaturePropertiesDialog::viewSignedVersion()
 {
-    reject();
+    QByteArray data;
+    m_doc->requestSignedRevisionData( m_signatureInfo, &data );
+    const QString tmpDir = QStandardPaths::writableLocation( QStandardPaths::TempLocation );
+    QTemporaryFile tf( tmpDir + "/revision_XXXXXX.pdf" );
+    if ( !tf.open() )
+    {
+        KMessageBox::error( this, i18n("Could not open revision for preview" ) );
+        return;
+    }
+    tf.write(data);
+    RevisionViewer view( tf.fileName(), this);
+    view.exec();
+    tf.close();
+}
+
+TreeView1::TreeView1(Okular::Document *document, QWidget *parent)
+    : QTreeView( parent ), m_document( document )
+{
+}
+
+void TreeView1::paintEvent( QPaintEvent *event )
+{
+  bool hasSignatures = false;
+  for ( int i = 0; i < m_document->pages(); i++ )
+  {
+      foreach (Okular::FormField *f, m_document->page( i )->formFields() )
+      {
+          if ( f->type() == Okular::FormField::FormSignature )
+          {
+              hasSignatures = true;
+              break;
+          }
+      }
+  }
+
+  if ( !hasSignatures )
+  {
+      QPainter p( viewport() );
+      p.setRenderHint( QPainter::Antialiasing, true );
+      p.setClipRect( event->rect() );
+
+      QTextDocument document;
+      document.setHtml( i18n( "<div align=center><h3>No Signatures</h3>"
+                            "To create new annotations press F6 or select <i>Tools -&gt; Review</i>"
+                            " from the menu.</div>" ) );
+      document.setTextWidth( width() - 50 );
+
+      const uint w = document.size().width() + 20;
+      const uint h = document.size().height() + 20;
+      p.setBrush( palette().background() );
+      p.translate( 0.5, 0.5 );
+      p.drawRoundRect( 15, 15, w, h, (8*200)/w, (8*200)/h );
+
+      p.translate( 20, 20 );
+      document.drawContents( &p );
+
+  }
+  else
+  {
+      QTreeView::paintEvent( event );
+  }
+}
+
+SignaturePanel::SignaturePanel( QWidget *parent, Okular::Document *document )
+    : QWidget( parent ), m_document( document )
+{
+    auto vLayout = new QVBoxLayout( this );
+    vLayout->setMargin( 0 );
+    vLayout->setSpacing( 6 );
+
+    m_view = new TreeView1( m_document, this );
+    m_view->setAlternatingRowColors( true );
+    m_view->setSelectionMode( QAbstractItemView::ExtendedSelection );
+    m_view->header()->hide();
+
+    vLayout->addWidget( m_view );
+}
+
+SignaturePanel::~SignaturePanel()
+{
+}
+
+void SignaturePanel::notifySetup(const QVector<Okular::Page *> &pages, int setupFlags)
+{
+}
+
+RevisionViewer::RevisionViewer( const QString &filename, QWidget *parent )
+    : FilePrinterPreview( filename, parent )
+{
+    setWindowTitle( i18n("Revision Preview") );
+}
+
+RevisionViewer::~RevisionViewer()
+{
 }
 
 #include "moc_signaturewidgets.cpp"
+

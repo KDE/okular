@@ -31,6 +31,7 @@
 namespace Okular {
 class ObjectRect;
 class SourceReference;
+class SignatureInfo;
 }
 
 class PDFOptionsPage;
@@ -105,6 +106,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         SwapBackingFileResult swapBackingFile( QString const &newFileName, QVector<Okular::Page*> & newPagesVector ) override;
         bool doCloseDocument() override;
         Okular::TextPage* textPage( Okular::TextRequest *request ) override;
+        void requestSignedRevisionData( Okular::SignatureInfo *info, QByteArray *buffer ) override;
 
     protected Q_SLOTS:
         void requestFontData(const Okular::FontInfo &font, QByteArray *data);

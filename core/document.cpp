@@ -2965,7 +2965,7 @@ const QList<EmbeddedFile*> *Document::embeddedFiles() const
 
 const Page * Document::page( int n ) const
 {
-    return ( n < d->m_pagesVector.count() ) ? d->m_pagesVector.at(n) : 0;
+    return ( n >= 0 && n < d->m_pagesVector.count() ) ? d->m_pagesVector.at(n) : nullptr;
 }
 
 const DocumentViewport & Document::viewport() const

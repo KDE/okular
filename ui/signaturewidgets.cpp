@@ -341,11 +341,38 @@ SignaturePanel::SignaturePanel( QWidget *parent, Okular::Document *document )
     m_view->setSelectionMode( QAbstractItemView::ExtendedSelection );
     m_view->header()->hide();
 
-    //m_model = new SignatureModel( m_document, this );
+    m_model = new SignatureModel( m_document, this );
 
-    //m_view->setModel( m_model );
+    m_view->setModel( m_model );
+    connect(m_view, &TreeView1::activated, this, &SignaturePanel::activated);
 
     vLayout->addWidget( m_view );
+}
+
+void SignaturePanel::activated( const QModelIndex &index )
+{
+    int formId = m_model->data( index, SignatureModel::FormRole ).toInt();
+    auto formFields = GuiUtils::getSignatureFormFields( m_document );
+    Okular::FormFieldSignature *sf;
+    foreach( auto f, formFields )
+    {
+        if ( f->id() == formId )
+        {
+            sf = f;
+            break;
+        }
+    }
+    if ( !sf )
+      return;
+
+    Okular::NormalizedRect nr = sf->rect();
+    Okular::DocumentViewport vp;
+    vp.pageNumber = m_model->data( index, SignatureModel::PageRole ).toInt();
+    vp.rePos.enabled = true;
+    vp.rePos.pos = Okular::DocumentViewport::Center;
+    vp.rePos.normalizedX = ( nr.right + nr.left ) / 2.0;
+    vp.rePos.normalizedY = ( nr.bottom + nr.top ) / 2.0;
+    m_document->setViewport( vp, nullptr, true );
 }
 
 SignaturePanel::~SignaturePanel()
@@ -353,9 +380,5 @@ SignaturePanel::~SignaturePanel()
     m_document->removeObserver( this );
 }
 
-void SignaturePanel::notifySetup(const QVector<Okular::Page *> &, int )
-{
-
-}
 #include "moc_signaturewidgets.cpp"
 

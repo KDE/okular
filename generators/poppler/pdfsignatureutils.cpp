@@ -17,6 +17,7 @@ PopplerCertificateInfo::PopplerCertificateInfo( const Poppler::CertificateInfo &
 
 PopplerCertificateInfo::~PopplerCertificateInfo()
 {
+    delete m_info;
 }
 
 QByteArray PopplerCertificateInfo::version() const
@@ -116,6 +117,7 @@ PopplerSignatureInfo::PopplerSignatureInfo( const Poppler::SignatureValidationIn
 
 PopplerSignatureInfo::~PopplerSignatureInfo()
 {
+    delete m_info;
 }
 
 PopplerSignatureInfo::SignatureStatus PopplerSignatureInfo::signatureStatus() const

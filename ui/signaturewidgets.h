@@ -17,6 +17,7 @@
 #include "core/signatureutils.h"
 #include "core/observer.h"
 #include "fileprinterpreview.h"
+//#include "signaturemodel.h"
 
 class QTextEdit;
 
@@ -25,19 +26,6 @@ namespace Okular {
     class FormFieldSignature;
     class SignatureInfo;
 }
-
-class TreeView1 : public QTreeView
-{
-  Q_OBJECT
-
-  public:
-    TreeView1( Okular::Document *document, QWidget *parent = Q_NULLPTR );
-  protected:
-    void paintEvent( QPaintEvent *event ) override;
-
-  private:
-    Okular::Document *m_document;
-};
 
 class CertificateViewerModel : public QAbstractTableModel
 {
@@ -92,6 +80,27 @@ class SignaturePropertiesDialog : public QDialog
         Okular::SignatureInfo *m_signatureInfo;
 };
 
+class RevisionViewer : public Okular::FilePrinterPreview
+{
+    Q_OBJECT
+    public:
+        RevisionViewer( const QString &filename, QWidget *parent = nullptr );
+        ~RevisionViewer();
+};
+
+class TreeView1 : public QTreeView
+{
+  Q_OBJECT
+
+  public:
+    TreeView1( Okular::Document *document, QWidget *parent = Q_NULLPTR );
+  protected:
+    void paintEvent( QPaintEvent *event ) override;
+
+  private:
+    Okular::Document *m_document;
+};
+
 class SignaturePanel : public QWidget, public Okular::DocumentObserver
 {
     Q_OBJECT
@@ -104,14 +113,8 @@ class SignaturePanel : public QWidget, public Okular::DocumentObserver
     private:
          Okular::Document *m_document;
          TreeView1 *m_view;
+         //SignatureModel *m_model;
 };
 
-class RevisionViewer : public Okular::FilePrinterPreview
-{
-    Q_OBJECT
-    public:
-        RevisionViewer( const QString &filename, QWidget *parent = nullptr );
-        ~RevisionViewer();
-};
 
 #endif

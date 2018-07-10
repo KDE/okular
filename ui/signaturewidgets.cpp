@@ -38,86 +38,8 @@
 #include "core/sourcereference.h"
 #include "core/form.h"
 #include "settings.h"
+#include "guiutils.h"
 
-static QVector<Okular::FormFieldSignature*> getSignatureFormFields( Okular::Document *doc )
-{
-    QVector<Okular::FormFieldSignature*> signatureFormFields;
-    uint pageCount = doc->pages();
-    for ( uint i=0; i<pageCount; i++ )
-    {
-        foreach ( Okular::FormField *f, doc->page( i )->formFields() )
-        {
-            if ( f->type() == Okular::FormField::FormSignature )
-            {
-                signatureFormFields.append( static_cast<Okular::FormFieldSignature*>( f ) );
-            }
-        }
-    }
-    return signatureFormFields;
-}
-
-static QString getReadableSigState( Okular::SignatureInfo::SignatureStatus sigStatus )
-{
-    switch ( sigStatus )
-    {
-        case Okular::SignatureInfo::SignatureValid:
-            return i18n("The signature is cryptographically valid.");
-        case Okular::SignatureInfo::SignatureInvalid:
-            return i18n("The signature is cryptographically invalid.");
-        case Okular::SignatureInfo::SignatureDigestMismatch:
-            return i18n("Digest Mismatch occurred.");
-        case Okular::SignatureInfo::SignatureDecodingError:
-            return i18n("The signature CMS/PKCS7 structure is malformed.");
-        case Okular::SignatureInfo::SignatureNotFound:
-            return i18n("The requested signature is not present in the document.");
-        default:
-            return i18n("The signature could not be verified.");
-    }
-}
-
-static QString getReadableCertState( Okular::SignatureInfo::CertificateStatus certStatus )
-{
-    switch ( certStatus )
-    {
-        case Okular::SignatureInfo::CertificateTrusted:
-            return i18n("Certificate is Trusted.");
-        case Okular::SignatureInfo::CertificateUntrustedIssuer:
-            return i18n("Certificate issuer isn't Trusted.");
-        case Okular::SignatureInfo::CertificateUnknownIssuer:
-            return i18n("Certificate issuer is unknown.");
-        case Okular::SignatureInfo::CertificateRevoked:
-            return i18n("Certificate has been Revoked.");
-        case Okular::SignatureInfo::CertificateExpired:
-            return i18n("Certificate has Expired.");
-        case Okular::SignatureInfo::CertificateNotVerified:
-            return i18n("Certificate has not yet been verified.");
-        default:
-            return i18n("Unknown issue with Certificate or corrupted data.");
-    }
-}
-
-static QString getReadableHashAlgorithm( Okular::SignatureInfo::HashAlgorithm hashAlg )
-{
-    switch ( hashAlg )
-    {
-        case Okular::SignatureInfo::HashAlgorithmMd2:
-            return i18n("MD2");
-        case Okular::SignatureInfo::HashAlgorithmMd5:
-            return i18n("MD5");
-        case Okular::SignatureInfo::HashAlgorithmSha1:
-            return i18n("SHA1");
-        case Okular::SignatureInfo::HashAlgorithmSha256:
-            return i18n("SHA256");
-        case Okular::SignatureInfo::HashAlgorithmSha384:
-            return i18n("SHA384");
-        case Okular::SignatureInfo::HashAlgorithmSha512:
-            return i18n("SHA512");
-        case Okular::SignatureInfo::HashAlgorithmSha224:
-            return i18n("SHA224");
-        default:
-            return i18n("Unknown");
-    }
-}
 
 CertificateViewerModel::CertificateViewerModel( Okular::SignatureInfo *sigInfo, QObject * parent )
   : QAbstractTableModel( parent )
@@ -125,9 +47,9 @@ CertificateViewerModel::CertificateViewerModel( Okular::SignatureInfo *sigInfo, 
     m_sigProperties.append( qMakePair( i18n("Subject Name"), sigInfo->subjectName() ) );
     m_sigProperties.append( qMakePair( i18n("Subject Distinguished Name"), sigInfo->subjectDN() ) );
     m_sigProperties.append( qMakePair( i18n("Signing Time"), sigInfo->signingTime().toString( QStringLiteral("MMM dd yyyy hh:mm:ss") ) ) );
-    m_sigProperties.append( qMakePair( i18n("Hash Algorithm"), getReadableHashAlgorithm( sigInfo->hashAlgorithm() ) ) );
-    m_sigProperties.append( qMakePair( i18n("Signature Status"), getReadableSigState( sigInfo->signatureStatus() ) ) );
-    m_sigProperties.append( qMakePair( i18n("Certificate Status"), getReadableCertState( sigInfo->certificateStatus() ) ) );
+    m_sigProperties.append( qMakePair( i18n("Hash Algorithm"), GuiUtils::getReadableHashAlgorithm( sigInfo->hashAlgorithm() ) ) );
+    m_sigProperties.append( qMakePair( i18n("Signature Status"), GuiUtils::getReadableSigState( sigInfo->signatureStatus() ) ) );
+    m_sigProperties.append( qMakePair( i18n("Certificate Status"), GuiUtils::getReadableCertState( sigInfo->certificateStatus() ) ) );
     m_sigProperties.append( qMakePair( i18n("Signature Data"), QString::fromUtf8( sigInfo->signature().toHex(' ') ) ) );
     m_sigProperties.append( qMakePair( i18n("Location"), QString( sigInfo->location() ) ) );
     m_sigProperties.append( qMakePair( i18n("Reason"), QString( sigInfo->reason() ) ) );
@@ -145,14 +67,14 @@ CertificateViewerModel::CertificateViewerModel( Okular::SignatureInfo *sigInfo, 
 }
 
 
-int CertificateViewerModel::columnCount( const QModelIndex &parent ) const
+int CertificateViewerModel::columnCount( const QModelIndex & ) const
 {
-    return parent.isValid() ? 0 : 2;
+    return 2;
 }
 
-int CertificateViewerModel::rowCount( const QModelIndex &parent ) const
+int CertificateViewerModel::rowCount( const QModelIndex & ) const
 {
-    return parent.isValid() ? 0 : m_sigProperties.size();
+    return m_sigProperties.size();
 }
 
 QVariant CertificateViewerModel::data( const QModelIndex &index, int role ) const
@@ -256,7 +178,7 @@ SignaturePropertiesDialog::SignaturePropertiesDialog( Okular::Document *doc, Oku
 
     auto sigStatusFormLayout = new QFormLayout;
     const Okular::SignatureInfo::SignatureStatus sigStatus = m_signatureInfo->signatureStatus();
-    sigStatusFormLayout->addRow( i18n("Signature Validity:"), new QLabel( getReadableSigState( sigStatus ) ) );
+    sigStatusFormLayout->addRow( i18n("Signature Validity:"), new QLabel( GuiUtils::getReadableSigState( sigStatus ) ) );
     QString modString;
     if ( sigStatus == Okular::SignatureInfo::SignatureValid )
     {
@@ -302,7 +224,7 @@ SignaturePropertiesDialog::SignaturePropertiesDialog( Okular::Document *doc, Oku
     // document version
     auto revisionBox = new QGroupBox( i18n("Document Version") );
     auto revisionLayout = new QHBoxLayout;
-    QVector<Okular::FormFieldSignature*> signatureFormFields = getSignatureFormFields( m_doc );
+    QVector<Okular::FormFieldSignature*> signatureFormFields = GuiUtils::getSignatureFormFields( m_doc );
     revisionLayout->addWidget( new QLabel( i18nc("Document Revision <current> of <total>", "Document Revision %1 of %2",
                                                 signatureFormFields.indexOf( m_signatureForm ) + 1, signatureFormFields.size() ) ) );
     revisionLayout->addStretch();
@@ -349,6 +271,16 @@ void SignaturePropertiesDialog::viewSignedVersion()
     tf.close();
 }
 
+RevisionViewer::RevisionViewer( const QString &filename, QWidget *parent )
+    : FilePrinterPreview( filename, parent )
+{
+    setWindowTitle( i18n("Revision Preview") );
+}
+
+RevisionViewer::~RevisionViewer()
+{
+}
+
 TreeView1::TreeView1(Okular::Document *document, QWidget *parent)
     : QTreeView( parent ), m_document( document )
 {
@@ -357,7 +289,7 @@ TreeView1::TreeView1(Okular::Document *document, QWidget *parent)
 void TreeView1::paintEvent( QPaintEvent *event )
 {
   bool hasSignatures = false;
-  for ( int i = 0; i < m_document->pages(); i++ )
+  for ( uint i = 0; i < m_document->pages(); i++ )
   {
       foreach (Okular::FormField *f, m_document->page( i )->formFields() )
       {
@@ -409,26 +341,21 @@ SignaturePanel::SignaturePanel( QWidget *parent, Okular::Document *document )
     m_view->setSelectionMode( QAbstractItemView::ExtendedSelection );
     m_view->header()->hide();
 
+    //m_model = new SignatureModel( m_document, this );
+
+    //m_view->setModel( m_model );
+
     vLayout->addWidget( m_view );
 }
 
 SignaturePanel::~SignaturePanel()
 {
+    m_document->removeObserver( this );
 }
 
-void SignaturePanel::notifySetup(const QVector<Okular::Page *> &pages, int setupFlags)
+void SignaturePanel::notifySetup(const QVector<Okular::Page *> &, int )
 {
-}
 
-RevisionViewer::RevisionViewer( const QString &filename, QWidget *parent )
-    : FilePrinterPreview( filename, parent )
-{
-    setWindowTitle( i18n("Revision Preview") );
 }
-
-RevisionViewer::~RevisionViewer()
-{
-}
-
 #include "moc_signaturewidgets.cpp"
 

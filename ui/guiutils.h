@@ -11,6 +11,9 @@
 #define OKULAR_GUIUTILS_H
 
 #include <QString>
+#include <QVector>
+
+#include "core/signatureutils.h"
 
 class QColor;
 class QImage;
@@ -25,6 +28,9 @@ class Annotation;
 class EmbeddedFile;
 class Movie;
 class ScreenAnnotation;
+class Document;
+class Page;
+class FormFieldSignature;
 }
 
 namespace GuiUtils
@@ -57,6 +63,12 @@ namespace GuiUtils
 
     // colorize a gray image to the given color
     void colorizeImage( QImage & image, const QColor & color, unsigned int alpha = 255 );
+
+    //for digital signature
+    QVector<Okular::FormFieldSignature*> getSignatureFormFields( Okular::Document *doc );
+    QString getReadableSigState( Okular::SignatureInfo::SignatureStatus sigStatus );
+    QString getReadableCertState( Okular::SignatureInfo::CertificateStatus certStatus );
+    QString getReadableHashAlgorithm( Okular::SignatureInfo::HashAlgorithm hashAlg );
 }
 
 

@@ -265,7 +265,13 @@ QVariant SignatureModel::data( const QModelIndex &index, int role ) const
             case Qt::DecorationRole:
                 if ( item->itemData == SignatureItem::RevisionInfo )
                     return QIcon::fromTheme( QStringLiteral("application-pkcs7-signature") );
-                break;
+                return QIcon();
+            case FormRole:
+                if ( item->itemData == SignatureItem::RevisionInfo )
+                    return item->signatureForm->id();
+                return -1;
+            case PageRole:
+                return item->page;
         }
     }
 

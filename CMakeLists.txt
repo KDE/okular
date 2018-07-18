@@ -383,6 +383,7 @@ set(okularpart_SRCS
    ui/videowidget.cpp
    ui/layers.cpp
    ui/signaturemodel.cpp
+   ui/signaturepanel.cpp
    ui/signaturewidgets.cpp
 )
 

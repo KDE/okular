@@ -1,4 +1,4 @@
-/***************************************************************************
+﻿/***************************************************************************
  *   Copyright (C) 2018 by Chinmoy Ranjan Pradhan <chinmoyrp65@gmail.com>  *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -44,8 +44,8 @@
 CertificateViewerModel::CertificateViewerModel( Okular::SignatureInfo *sigInfo, QObject * parent )
   : QAbstractTableModel( parent )
 {
-    m_sigProperties.append( qMakePair( i18n("Subject Name"), sigInfo->subjectName() ) );
-    m_sigProperties.append( qMakePair( i18n("Subject Distinguished Name"), sigInfo->subjectDN() ) );
+    m_sigProperties.append( qMakePair( i18n("Subject Name"), sigInfo->signerName() ) );
+    m_sigProperties.append( qMakePair( i18n("Subject Distinguished Name"), sigInfo->signerSubjectDN() ) );
     m_sigProperties.append( qMakePair( i18n("Signing Time"), sigInfo->signingTime().toString( QStringLiteral("MMM dd yyyy hh:mm:ss") ) ) );
     m_sigProperties.append( qMakePair( i18n("Hash Algorithm"), GuiUtils::getReadableHashAlgorithm( sigInfo->hashAlgorithm() ) ) );
     m_sigProperties.append( qMakePair( i18n("Signature Status"), GuiUtils::getReadableSigState( sigInfo->signatureStatus() ) ) );
@@ -56,13 +56,13 @@ CertificateViewerModel::CertificateViewerModel( Okular::SignatureInfo *sigInfo, 
     m_sigProperties.append( qMakePair( QStringLiteral("----------"), QString("------Certificate Properties--------") ) );
 
     Okular::CertificateInfo *certInfo = sigInfo->certificateInfo();
-    m_sigProperties.append( qMakePair( i18n("Version"), certInfo->version() ) );
-    m_sigProperties.append( qMakePair( i18n("Issuer Name"), certInfo->issuerName() ) );
-    m_sigProperties.append( qMakePair( i18n("Issuer Distinguished Name"), certInfo->issuerDN() ) );
-    m_sigProperties.append( qMakePair( i18n("Serial Number"), certInfo->serialNumber() ) );
+    m_sigProperties.append( qMakePair( i18n("Version"), QString("V" + QString::number(certInfo->version()) ) ) );
+    m_sigProperties.append( qMakePair( i18n("Issuer Name"), certInfo->issuerInfo(Okular::CertificateInfo::CommonName) ) );
+    m_sigProperties.append( qMakePair( i18n("Issuer Distinguished Name"), certInfo->issuerInfo(Okular::CertificateInfo::DistinguishedName) ) );
+    m_sigProperties.append( qMakePair( i18n("Serial Number"), certInfo->serialNumber().toHex(' ') ) );
     m_sigProperties.append( qMakePair( i18n("Validity Start"), certInfo->validityStart().toString( QStringLiteral("MMM dd yyyy hh:mm:ss") ) ) );
     m_sigProperties.append( qMakePair( i18n("Validity End"), certInfo->validityEnd().toString( QStringLiteral("MMM dd yyyy hh:mm:ss") ) ) );
-    m_sigProperties.append( qMakePair( i18n("Public Key"), certInfo->publicKey() ) );
+    m_sigProperties.append( qMakePair( i18n("Public Key"), certInfo->publicKey().toHex(' ') ) );
     m_sigProperties.append( qMakePair( i18n("Is Self Signed"), certInfo->isSelfSigned() ? QString("true") : QString("false") ) );
 }
 
@@ -210,7 +210,7 @@ SignaturePropertiesDialog::SignaturePropertiesDialog( Okular::Document *doc, Oku
     auto extraInfoBox = new QGroupBox( i18n("Additional Information") );
 
     auto extraInfoFormLayout = new QFormLayout;
-    extraInfoFormLayout->addRow( i18n("Signed By:"), new QLabel( m_signatureInfo->subjectName() ) );
+    extraInfoFormLayout->addRow( i18n("Signed By:"), new QLabel( m_signatureInfo->signerName() ) );
     extraInfoFormLayout->addRow( i18n("Signing Time:"), new QLabel( m_signatureInfo->signingTime().toString( QStringLiteral("MMM dd yyyy hh:mm:ss") ) ) );
     auto getValidString = [=]( const QString &str ) -> QString {
         return !str.isEmpty() ?  str : i18n("Not Available");
@@ -238,6 +238,7 @@ SignaturePropertiesDialog::SignaturePropertiesDialog( Okular::Document *doc, Oku
     // button box
     auto btnBox = new QDialogButtonBox( QDialogButtonBox::Close, this );
     auto certPropBtn = new QPushButton( i18n( "Vew Certificate..."), this );
+    certPropBtn->setVisible(m_signatureInfo->certificateInfo()->isNull());
     btnBox->button( QDialogButtonBox::Close )->setDefault( true );
     btnBox->addButton( certPropBtn, QDialogButtonBox::ActionRole );
     connect( btnBox, &QDialogButtonBox::rejected, this, &SignaturePropertiesDialog::reject );
@@ -279,108 +280,6 @@ RevisionViewer::RevisionViewer( const QString &filename, QWidget *parent )
 
 RevisionViewer::~RevisionViewer()
 {
-}
-
-TreeView1::TreeView1(Okular::Document *document, QWidget *parent)
-    : QTreeView( parent ), m_document( document )
-{
-}
-
-void TreeView1::paintEvent( QPaintEvent *event )
-{
-  bool hasSignatures = false;
-  for ( uint i = 0; i < m_document->pages(); i++ )
-  {
-      foreach (Okular::FormField *f, m_document->page( i )->formFields() )
-      {
-          if ( f->type() == Okular::FormField::FormSignature )
-          {
-              hasSignatures = true;
-              break;
-          }
-      }
-  }
-
-  if ( !hasSignatures )
-  {
-      QPainter p( viewport() );
-      p.setRenderHint( QPainter::Antialiasing, true );
-      p.setClipRect( event->rect() );
-
-      QTextDocument document;
-      document.setHtml( i18n( "<div align=center>"
-                            "This document does not contain any digital signature."
-                            "</div>" ) );
-      document.setTextWidth( width() - 50 );
-
-      const uint w = document.size().width() + 20;
-      const uint h = document.size().height() + 20;
-      p.setBrush( palette().background() );
-      p.translate( 0.5, 0.5 );
-      p.drawRoundRect( 15, 15, w, h, (8*200)/w, (8*200)/h );
-
-      p.translate( 20, 20 );
-      document.drawContents( &p );
-
-  }
-  else
-  {
-      QTreeView::paintEvent( event );
-  }
-}
-
-SignaturePanel::SignaturePanel( QWidget *parent, Okular::Document *document )
-    : QWidget( parent ), m_document( document )
-{
-    auto vLayout = new QVBoxLayout( this );
-    vLayout->setMargin( 0 );
-    vLayout->setSpacing( 6 );
-
-    m_view = new TreeView1( m_document, this );
-    m_view->setAlternatingRowColors( true );
-    m_view->setSelectionMode( QAbstractItemView::ExtendedSelection );
-    m_view->header()->hide();
-
-    m_model = new SignatureModel( m_document, this );
-
-    m_view->setModel( m_model );
-    connect(m_view, &TreeView1::activated, this, &SignaturePanel::activated);
-
-    vLayout->addWidget( m_view );
-}
-
-void SignaturePanel::activated( const QModelIndex &index )
-{
-    int formId = m_model->data( index, SignatureModel::FormRole ).toInt();
-    if ( formId == -1 )
-        return;
-
-    auto formFields = GuiUtils::getSignatureFormFields( m_document );
-    Okular::FormFieldSignature *sf;
-    foreach( auto f, formFields )
-    {
-        if ( f->id() == formId )
-        {
-            sf = f;
-            break;
-        }
-    }
-    if ( !sf )
-      return;
-
-    Okular::NormalizedRect nr = sf->rect();
-    Okular::DocumentViewport vp;
-    vp.pageNumber = m_model->data( index, SignatureModel::PageRole ).toInt();
-    vp.rePos.enabled = true;
-    vp.rePos.pos = Okular::DocumentViewport::Center;
-    vp.rePos.normalizedX = ( nr.right + nr.left ) / 2.0;
-    vp.rePos.normalizedY = ( nr.bottom + nr.top ) / 2.0;
-    m_document->setViewport( vp, nullptr, true );
-}
-
-SignaturePanel::~SignaturePanel()
-{
-    m_document->removeObserver( this );
 }
 
 #include "moc_signaturewidgets.cpp"

@@ -42,21 +42,32 @@ class OKULARCORE_EXPORT CertificateInfo
         };
 
         /**
-         * Certificate key usage.
+         * Certificate key usage extensions.
          */
-        enum KeyUsage
+        enum KeyUsageExtension
         {
-            KuNone = 0,
-            KuDigitalSignature = 1,
-            KuNonRepudiation = 2,
-            KuKeyEncipherment = 4,
-            KuDataEncipherment = 8,
-            KuKeyAgreement = 16,
-            KuKeyCertSign = 32,
-            KuClrSign = 64,
-            KuEncipherOnly = 128
+            KuDigitalSignature = 0x80,
+            KuNonRepudiation   = 0x40,
+            KuKeyEncipherment  = 0x20,
+            KuDataEncipherment = 0x10,
+            KuKeyAgreement     = 0x08,
+            KuKeyCertSign      = 0x04,
+            KuClrSign          = 0x02,
+            KuEncipherOnly     = 0x01,
+            KuNone             = 0x00
         };
-        Q_DECLARE_FLAGS( KeyUsages, KeyUsage )
+        Q_DECLARE_FLAGS( KeyUsageExtensions, KeyUsageExtension )
+
+        /**
+         * Predefined keys for elements in an entity's distinguished name.
+         */
+        enum EntityInfoKey
+        {
+            CommonName,
+            DistinguishedName,
+            EmailAddress,
+            Organization,
+        };
 
         /**
          * Destructor
@@ -64,28 +75,33 @@ class OKULARCORE_EXPORT CertificateInfo
         virtual ~CertificateInfo();
 
         /**
-         * The certificate version string in hex encoding.
+         * Returns true if certificate has no contents otherwise returns false.
          */
-        virtual QByteArray version() const;
+        virtual bool isNull() const;
 
         /**
-         * The common name of certificate issuer.
+         * The certificate version string.
          */
-        virtual QString issuerName() const;
+        virtual int version() const;
 
         /**
-         * The distinguished name of certificate issuer.
-         */
-        virtual QString issuerDN() const;
-
-        /**
-        The hex encoded certificate serial number.
+         * The certificate serial number.
          */
         virtual QByteArray serialNumber() const;
 
         /**
-        The date-time when certificate becomes valid.
-          */
+         * Information about the issuer.
+         */
+        virtual QString issuerInfo(EntityInfoKey key) const;
+
+        /**
+         * Information about the subject
+         */
+        virtual QString subjectInfo(EntityInfoKey key) const;
+
+        /**
+         * The date-time when certificate becomes valid.
+         */
         virtual QDateTime validityStart() const;
 
         /**
@@ -94,9 +110,9 @@ class OKULARCORE_EXPORT CertificateInfo
         virtual QDateTime validityEnd() const;
 
         /**
-         * The key usages of certificate.
+         * The uses allowed for the certificate.
          */
-        virtual KeyUsages keyUsages() const;
+        virtual KeyUsageExtensions keyUsageExtensions() const;
 
         /**
          * The public key value.
@@ -109,13 +125,12 @@ class OKULARCORE_EXPORT CertificateInfo
         virtual PublicKeyType publicKeyType() const;
 
         /**
-         * The strength of public key in bits or -1 in case
-         * key type is 'OtherKey'.
+         * The strength of public key in bits.
          */
         virtual int publicKeyStrength() const;
 
         /**
-         * Returns true if certificate is self signed; otherwise returns false.
+         * Returns true if certificate is self-signed otherwise returns false.
          */
         virtual bool isSelfSigned() const;
 
@@ -201,12 +216,22 @@ class OKULARCORE_EXPORT SignatureInfo
         /**
          * The signer subject common name associated with the signature.
          */
-        virtual QString subjectName() const;
+        virtual QString signerName() const;
 
         /**
          * The signer subject distinguished name associated with the signature.
          */
-        virtual QString subjectDN() const;
+        virtual QString signerSubjectDN() const;
+
+        /**
+         * Get signing location.
+         */
+        virtual QString location() const;
+
+        /**
+         * Get signing reason.
+         */
+        virtual QString reason() const;
 
         /**
          * The the hash algorithm used for the signature.
@@ -233,16 +258,6 @@ class OKULARCORE_EXPORT SignatureInfo
          * except for the signature itself.
          */
         virtual bool signsTotalDocument() const;
-
-        /**
-         * Get location.
-         */
-        virtual QString location() const;
-
-        /**
-         * Get signing reason.
-         */
-        virtual QString reason() const;
 
         /**
          * Get certificate details.

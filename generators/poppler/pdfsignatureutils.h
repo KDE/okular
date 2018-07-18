@@ -20,13 +20,14 @@ class PopplerCertificateInfo : public Okular::CertificateInfo
         PopplerCertificateInfo(const Poppler::CertificateInfo &info);
         ~PopplerCertificateInfo();
 
-        QByteArray version() const override;
-        QString issuerName() const override;
-        QString issuerDN() const override;
+        bool isNull() const override;
+        int version() const override;
         QByteArray serialNumber() const override;
+        QString issuerInfo(EntityInfoKey) const override;
+        QString subjectInfo(EntityInfoKey) const override;
         QDateTime validityStart() const override;
         QDateTime validityEnd() const override;
-        KeyUsages keyUsages() const override;
+        KeyUsageExtensions keyUsageExtensions() const override;
         QByteArray publicKey() const override;
         PublicKeyType publicKeyType() const override;
         int publicKeyStrength() const override;
@@ -45,15 +46,15 @@ class PopplerSignatureInfo : public Okular::SignatureInfo
 
         SignatureStatus signatureStatus() const override;
         CertificateStatus certificateStatus() const override;
-        QString subjectName() const override;
-        QString subjectDN() const override;
+        QString signerName() const override;
+        QString signerSubjectDN() const override;
+        QString location() const override;
+        QString reason() const override;
         HashAlgorithm hashAlgorithm() const override;
         QDateTime signingTime() const override;
         QByteArray signature() const override;
         QList<qint64> signedRangeBounds() const override;
         bool signsTotalDocument() const override;
-        QString location() const override;
-        QString reason() const override;
         Okular::CertificateInfo *certificateInfo() const override;
 
     private:

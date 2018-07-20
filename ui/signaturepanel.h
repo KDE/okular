@@ -10,7 +10,7 @@
 #ifndef OKULAR_SIGNATUREPANEL_H
 #define OKULAR_SIGNATUREPANEL_H
 
-#include <QTreeView>
+#include <QWidget>
 
 #include "core/observer.h"
 
@@ -18,22 +18,10 @@ namespace Okular {
 class Document;
 }
 
+class QTreeView;
 class SignatureModel;
 
-class TreeView1 : public QTreeView
-{
-  Q_OBJECT
-
-  public:
-    TreeView1( Okular::Document *document, QWidget *parent = Q_NULLPTR );
-  protected:
-    void paintEvent( QPaintEvent *event ) override;
-
-  private:
-    Okular::Document *m_document;
-};
-
-class SignaturePanel : public QWidget
+class SignaturePanel : public QWidget, public Okular::DocumentObserver
 {
     Q_OBJECT
     public:
@@ -45,7 +33,7 @@ class SignaturePanel : public QWidget
 
     private:
          Okular::Document *m_document;
-         TreeView1 *m_view;
+         QTreeView *m_view;
          SignatureModel *m_model;
 };
 

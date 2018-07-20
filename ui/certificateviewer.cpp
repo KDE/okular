@@ -22,22 +22,14 @@
 #include <QGroupBox>
 #include <QFormLayout>
 #include <QTextDocument>
-#include <KIconLoader>
-#include <QPainter>
-#include <QPaintEvent>
 #include <QHeaderView>
 #include <QVector>
 #include <KMessageBox>
 #include <KMessageWidget>
-#include <QFrame>
 #include <QCryptographicHash>
+#include <QFileDialog>
 
 #include "core/form.h"
-#include "core/page.h"
-#include "core/document.h"
-#include "core/sourcereference.h"
-#include "core/form.h"
-#include "settings.h"
 #include "guiutils.h"
 
 
@@ -126,11 +118,21 @@ CertificateViewer::CertificateViewer( Okular::SignatureInfo *sigInfo, QWidget *p
     setWindowTitle( i18n("Certificate Viewer") );
     setStandardButtons( QDialogButtonBox::Close );
 
+    auto certInfo = sigInfo->certificateInfo();
     auto exportBtn = new QPushButton( i18n("Export...") );
+    connect( exportBtn, &QPushButton::clicked, this, [=]{
+        QString filename = QDir::homePath() + i18n("/Certificate.cer");
+        const QString caption = i18n( "Where do you want to save %1?", filename );
+        const QString path = QFileDialog::getSaveFileName( this, caption, filename, i18n("Certificate File (*.cer)") );
+
+        QFile targetFile( path );
+        targetFile.open( QIODevice::WriteOnly );
+        qWarning() << targetFile.write( certInfo->certificateData() );
+        targetFile.close();
+    } );
     addActionButton( exportBtn );
 
     // General tab
-    auto certInfo = sigInfo->certificateInfo();
     auto generalPage = new QFrame( this );
     addPage( generalPage, i18n("General") );
 

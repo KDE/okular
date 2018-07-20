@@ -22,6 +22,7 @@
 #include "core/form.h"
 #include "guiutils.h"
 #include "signaturemodel.h"
+#include <QDebug>
 
 TreeView1::TreeView1(Okular::Document *document, QWidget *parent)
     : QTreeView( parent ), m_document( document )
@@ -122,7 +123,7 @@ void SignaturePanel::activated( const QModelIndex &index )
 
 SignaturePanel::~SignaturePanel()
 {
-    m_document->removeObserver( this );
+    delete m_model;
 }
 
 #include "moc_signaturepanel.cpp"

@@ -562,7 +562,6 @@ m_cliPresentation(false), m_cliPrint(false), m_cliPrintAndExit(false), m_embedMo
     m_document->addObserver( m_reviewsWidget );
     m_document->addObserver( m_pageSizeLabel );
     m_document->addObserver( m_bookmarkList );
-    m_document->addObserver( m_signaturePanel );
 
     connect( m_document->bookmarkManager(), &BookmarkManager::saved,
         this, &Part::slotRebuildBookmarkMenu );

@@ -11,13 +11,8 @@
 #define OKULAR_SIGNATUREWIDGETS_H
 
 #include <QDialog>
-#include <QVector>
-#include <QAbstractTableModel>
-#include <QTreeView>
-#include "core/signatureutils.h"
-#include "core/observer.h"
+#include <QScopedPointer>
 #include "fileprinterpreview.h"
-#include "signaturemodel.h"
 
 class QTextEdit;
 
@@ -47,6 +42,7 @@ class SignaturePropertiesDialog : public QDialog
 class RevisionViewer : public Okular::FilePrinterPreview
 {
     Q_OBJECT
+
     public:
         RevisionViewer( const QString &filename, QWidget *parent = nullptr );
         ~RevisionViewer();

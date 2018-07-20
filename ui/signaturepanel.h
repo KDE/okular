@@ -33,14 +33,13 @@ class TreeView1 : public QTreeView
     Okular::Document *m_document;
 };
 
-class SignaturePanel : public QWidget, public Okular::DocumentObserver
+class SignaturePanel : public QWidget
 {
     Q_OBJECT
     public:
         SignaturePanel( QWidget * parent, Okular::Document * document );
         ~SignaturePanel();
 
-         //void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) override;
     private Q_SLOTS:
         void activated( const QModelIndex& );
 

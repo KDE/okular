@@ -17,20 +17,20 @@
 #include <QTreeView>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <QHBoxLayout>
 #include <QDialogButtonBox>
 #include <QGroupBox>
 #include <QFormLayout>
-#include <QTreeView>
 #include <QTextDocument>
 #include <KIconLoader>
 #include <QPainter>
 #include <QPaintEvent>
 #include <QHeaderView>
 #include <QVector>
-#include <QStandardPaths>
-#include <QTemporaryFile>
 #include <KMessageBox>
 #include <KMessageWidget>
+#include <QFrame>
+#include <QCryptographicHash>
 
 #include "core/form.h"
 #include "core/page.h"
@@ -41,46 +41,37 @@
 #include "guiutils.h"
 
 
-CertificateViewerModel::CertificateViewerModel( Okular::SignatureInfo *sigInfo, QObject * parent )
+CertificateModel::CertificateModel( Okular::SignatureInfo *sigInfo, QObject * parent )
   : QAbstractTableModel( parent )
 {
-    m_sigProperties.append( qMakePair( i18n("Subject Name"), sigInfo->signerName() ) );
-    m_sigProperties.append( qMakePair( i18n("Subject Distinguished Name"), sigInfo->signerSubjectDN() ) );
-    m_sigProperties.append( qMakePair( i18n("Signing Time"), sigInfo->signingTime().toString( QStringLiteral("MMM dd yyyy hh:mm:ss") ) ) );
-    m_sigProperties.append( qMakePair( i18n("Hash Algorithm"), GuiUtils::getReadableHashAlgorithm( sigInfo->hashAlgorithm() ) ) );
-    m_sigProperties.append( qMakePair( i18n("Signature Status"), GuiUtils::getReadableSigState( sigInfo->signatureStatus() ) ) );
-    m_sigProperties.append( qMakePair( i18n("Certificate Status"), GuiUtils::getReadableCertState( sigInfo->certificateStatus() ) ) );
-    m_sigProperties.append( qMakePair( i18n("Signature Data"), QString::fromUtf8( sigInfo->signature().toHex(' ') ) ) );
-    m_sigProperties.append( qMakePair( i18n("Location"), QString( sigInfo->location() ) ) );
-    m_sigProperties.append( qMakePair( i18n("Reason"), QString( sigInfo->reason() ) ) );
-    m_sigProperties.append( qMakePair( QStringLiteral("----------"), QString("------Certificate Properties--------") ) );
-
-    Okular::CertificateInfo *certInfo = sigInfo->certificateInfo();
-    m_sigProperties.append( qMakePair( i18n("Version"), QString("V" + QString::number(certInfo->version()) ) ) );
-    m_sigProperties.append( qMakePair( i18n("Issuer Name"), certInfo->issuerInfo(Okular::CertificateInfo::CommonName) ) );
-    m_sigProperties.append( qMakePair( i18n("Issuer Distinguished Name"), certInfo->issuerInfo(Okular::CertificateInfo::DistinguishedName) ) );
-    m_sigProperties.append( qMakePair( i18n("Serial Number"), certInfo->serialNumber().toHex(' ') ) );
-    m_sigProperties.append( qMakePair( i18n("Validity Start"), certInfo->validityStart().toString( QStringLiteral("MMM dd yyyy hh:mm:ss") ) ) );
-    m_sigProperties.append( qMakePair( i18n("Validity End"), certInfo->validityEnd().toString( QStringLiteral("MMM dd yyyy hh:mm:ss") ) ) );
-    m_sigProperties.append( qMakePair( i18n("Public Key"), certInfo->publicKey().toHex(' ') ) );
-    m_sigProperties.append( qMakePair( i18n("Is Self Signed"), certInfo->isSelfSigned() ? QString("true") : QString("false") ) );
+    certInfo = sigInfo->certificateInfo();
+    m_certificateProperties.append( qMakePair( i18n("Version"), i18n("V%1", QString::number( certInfo->version() )) ) );
+    m_certificateProperties.append( qMakePair( i18n("Serial Number"), certInfo->serialNumber().toHex(' ') ) );
+    m_certificateProperties.append( qMakePair( i18n("Hash Algorithm"), GuiUtils::getReadableHashAlgorithm( sigInfo->hashAlgorithm() ) ) );
+    m_certificateProperties.append( qMakePair( i18n("Issuer"), certInfo->issuerInfo(Okular::CertificateInfo::DistinguishedName) ) );
+    m_certificateProperties.append( qMakePair( i18n("Issued On"), certInfo->validityStart().toString( QStringLiteral("MMM dd yyyy hh:mm:ss") ) ) );
+    m_certificateProperties.append( qMakePair( i18n("Expires On"), certInfo->validityEnd().toString( QStringLiteral("MMM dd yyyy hh:mm:ss") ) ) );
+    m_certificateProperties.append( qMakePair( i18n("Subject"), certInfo->subjectInfo(Okular::CertificateInfo::DistinguishedName) ) );
+    m_certificateProperties.append( qMakePair( i18n("Public Key"), i18n("%1 (%2 bits)", GuiUtils::getReadablePublicKeyType( certInfo->publicKeyType() ),
+                                                                        certInfo->publicKeyStrength()) ) );
+    m_certificateProperties.append( qMakePair( i18n("Key Usage"), GuiUtils::getReadableKeyUsage( certInfo->keyUsageExtensions() ) ) );
 }
 
 
-int CertificateViewerModel::columnCount( const QModelIndex & ) const
+int CertificateModel::columnCount( const QModelIndex & ) const
 {
     return 2;
 }
 
-int CertificateViewerModel::rowCount( const QModelIndex & ) const
+int CertificateModel::rowCount( const QModelIndex & ) const
 {
-    return m_sigProperties.size();
+    return m_certificateProperties.size();
 }
 
-QVariant CertificateViewerModel::data( const QModelIndex &index, int role ) const
+QVariant CertificateModel::data( const QModelIndex &index, int role ) const
 {
     int row = index.row();
-    if ( !index.isValid() || row < 0 || row >= m_sigProperties.count() )
+    if ( !index.isValid() || row < 0 || row >= m_certificateProperties.count() )
         return QVariant();
 
     switch ( role )
@@ -90,20 +81,24 @@ QVariant CertificateViewerModel::data( const QModelIndex &index, int role ) cons
         switch ( index.column() )
         {
             case 0:
-                return m_sigProperties[row].first;
+                return m_certificateProperties[row].first;
             case 1:
-                return m_sigProperties[row].second;
+                    return m_certificateProperties[row].second;
             default:
                 return QString();
         }
+        case PropertyKeyRole:
+            return m_certificateProperties[row].first;
         case PropertyValueRole:
-            return m_sigProperties[row].second;
+            return m_certificateProperties[row].second;
+        case PublicKeyRole:
+            return QString( certInfo->publicKey().toHex(' ') );
     }
 
     return QVariant();
 }
 
-QVariant CertificateViewerModel::headerData( int section, Qt::Orientation orientation, int role ) const
+QVariant CertificateModel::headerData( int section, Qt::Orientation orientation, int role ) const
 {
     if ( role == Qt::TextAlignmentRole )
         return QVariant( Qt::AlignLeft );
@@ -122,39 +117,101 @@ QVariant CertificateViewerModel::headerData( int section, Qt::Orientation orient
     }
 }
 
-
 CertificateViewer::CertificateViewer( Okular::SignatureInfo *sigInfo, QWidget *parent )
-    : QDialog( parent ), m_sigInfo( sigInfo )
+    : KPageDialog( parent ), m_sigInfo( sigInfo )
 {
     setModal( true );
-    setFixedSize( QSize( 450, 500 ));
-    setWindowTitle( i18n("Signature Properties") );
+    setMinimumSize( QSize( 500, 550 ));
+    setFaceType( Tabbed );
+    setWindowTitle( i18n("Certificate Viewer") );
+    setStandardButtons( QDialogButtonBox::Close );
 
-    auto sigPropLabel = new QLabel( this );
-    sigPropLabel->setText( i18n("Signature Properties:") );
+    auto exportBtn = new QPushButton( i18n("Export...") );
+    addActionButton( exportBtn );
 
-    auto sigPropTree = new QTreeView( this );
-    sigPropTree->setIndentation( 0 );
-    m_sigPropModel = new CertificateViewerModel( m_sigInfo, this );
-    sigPropTree->setModel( m_sigPropModel );
-    connect( sigPropTree, &QTreeView::clicked, this, &CertificateViewer::updateText );
+    // General tab
+    auto certInfo = sigInfo->certificateInfo();
+    auto generalPage = new QFrame( this );
+    addPage( generalPage, i18n("General") );
 
-    m_sigPropText = new QTextEdit( this );
-    m_sigPropText->setReadOnly( true );
+    auto issuerBox = new QGroupBox( i18n("Issued By"), generalPage );
+    auto issuerFormLayout = new QFormLayout( issuerBox );
+    issuerFormLayout->setLabelAlignment( Qt::AlignLeft );
+    issuerFormLayout->setHorizontalSpacing( 50 );
+    issuerFormLayout->addRow( i18n("Common Name(CN)"), new QLabel( certInfo->issuerInfo( Okular::CertificateInfo::CommonName ) ) );
+    issuerFormLayout->addRow( i18n("EMail"), new QLabel( certInfo->issuerInfo( Okular::CertificateInfo::EmailAddress ) ) );
+    issuerFormLayout->addRow( i18n("Organization(O)"), new QLabel( certInfo->issuerInfo( Okular::CertificateInfo::Organization ) ) );
 
-    auto btnBox = new QDialogButtonBox( QDialogButtonBox::Close, this );
-    btnBox->button( QDialogButtonBox::Close )->setDefault( true );
-    connect( btnBox, &QDialogButtonBox::rejected, this, &CertificateViewer::reject );
+    auto subjectBox = new QGroupBox( i18n("Issued To"), generalPage );
+    auto subjectFormLayout = new QFormLayout( subjectBox );
+    subjectFormLayout->setLabelAlignment( Qt::AlignLeft );
+    subjectFormLayout->setHorizontalSpacing( 50 );
+    subjectFormLayout->addRow( i18n("Common Name(CN)"), new QLabel( certInfo->subjectInfo( Okular::CertificateInfo::CommonName ) ) );
+    subjectFormLayout->addRow( i18n("EMail"), new QLabel( certInfo->subjectInfo( Okular::CertificateInfo::EmailAddress ) ) );
+    subjectFormLayout->addRow( i18n("Organization(O)"), new QLabel( certInfo->subjectInfo( Okular::CertificateInfo::Organization ) ) );
 
-    auto mainLayout = new QVBoxLayout( this );
-    mainLayout->addWidget( sigPropLabel );
-    mainLayout->addWidget( sigPropTree );
-    mainLayout->addWidget( m_sigPropText );
-    mainLayout->addWidget( btnBox );
-    setLayout( mainLayout );
+    auto validityBox = new QGroupBox( i18n("Validity"), generalPage );
+    auto validityFormLayout = new QFormLayout( validityBox );
+    validityFormLayout->setLabelAlignment( Qt::AlignLeft );
+    validityFormLayout->setHorizontalSpacing( 100 );
+    validityFormLayout->addRow( i18n("Issued On"), new QLabel( certInfo->validityStart().toString( QStringLiteral("MMM dd yyyy hh:mm:ss") ) ) );
+    validityFormLayout->addRow( i18n("Expires On"), new QLabel( certInfo->validityEnd().toString( QStringLiteral("MMM dd yyyy hh:mm:ss") ) ) );
+
+    auto fingerprintBox = new QGroupBox( i18n("Fingerprints"), generalPage );
+    auto fingerprintFormLayout = new QFormLayout( fingerprintBox );
+    fingerprintFormLayout->setLabelAlignment( Qt::AlignLeft );
+    fingerprintFormLayout->setHorizontalSpacing( 50 );
+    QByteArray certData = certInfo->certificateData();
+    auto sha1Label = new QLabel( QString( QCryptographicHash::hash( certData, QCryptographicHash::Sha1 ).toHex(' ') ) );
+    sha1Label->setWordWrap( true );
+    auto sha256Label = new QLabel( QString( QCryptographicHash::hash( certData, QCryptographicHash::Sha256 ).toHex(' ') ) );
+    sha256Label->setWordWrap( true );
+    fingerprintFormLayout->addRow( i18n("SHA-1 Fingerprint"), sha1Label );
+    fingerprintFormLayout->addRow( i18n("SHA-256 Fingerprint"), sha256Label );
+
+    auto generalPageLayout = new QVBoxLayout( generalPage );
+    generalPageLayout->addWidget( issuerBox );
+    generalPageLayout->addWidget( subjectBox );
+    generalPageLayout->addWidget( validityBox );
+    generalPageLayout->addWidget( fingerprintBox );
+
+    // Details tab
+    auto detailsFrame = new QFrame( this );
+    addPage( detailsFrame, i18n("Details") );
+    auto certDataLabel = new QLabel( i18n("Certificate Data:") );
+    auto certTree = new QTreeView( this );
+    certTree->setIndentation( 0 );
+    m_certModel = new CertificateModel( m_sigInfo, this );
+    certTree->setModel( m_certModel );
+    connect( certTree, &QTreeView::activated, this, &CertificateViewer::updateText );
+    m_propertyText = new QTextEdit( this );
+    m_propertyText->setReadOnly( true );
+
+    auto detailsPageLayout = new QVBoxLayout( detailsFrame );
+    detailsPageLayout->addWidget( certDataLabel );
+    detailsPageLayout->addWidget( certTree );
+    detailsPageLayout->addWidget( m_propertyText );
+
+    //mainLayout->addWidget( btnBox );
+    //setLayout( mainLayout );
 }
 
 void CertificateViewer::updateText( const QModelIndex &index )
 {
-    m_sigPropText->setText( m_sigPropModel->data( index, CertificateViewerModel::PropertyValueRole ).toString() );
+    QString key = m_certModel->data( index, CertificateModel::PropertyKeyRole ).toString();
+    if ( key == QLatin1String("Public Key") )
+        m_propertyText->setText( m_certModel->data( index, CertificateModel::PublicKeyRole ).toString() );
+    else
+    {
+        QString textToView;
+        QString propertyValue = m_certModel->data( index, CertificateModel::PropertyValueRole ).toString();
+        foreach ( auto c, propertyValue )
+        {
+            if ( c == ',' )
+                textToView += '\n';
+            else
+                textToView += c;
+        }
+        m_propertyText->setText( textToView );
+    }
 }

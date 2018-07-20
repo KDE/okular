@@ -10,14 +10,11 @@
 #ifndef OKULAR_CERTIFICATEVIEWER_H
 #define OKULAR_CERTIFICATEVIEWER_H
 
-#include <QDialog>
+#include <KPageDialog>
 #include <QVector>
 #include <QAbstractTableModel>
-#include <QTreeView>
 #include "core/signatureutils.h"
-#include "core/observer.h"
-#include "fileprinterpreview.h"
-#include "signaturemodel.h"
+
 
 class QTextEdit;
 
@@ -27,15 +24,17 @@ namespace Okular {
     class SignatureInfo;
 }
 
-class CertificateViewerModel : public QAbstractTableModel
+class CertificateModel : public QAbstractTableModel
 {
     Q_OBJECT
 
     public:
-        explicit CertificateViewerModel( Okular::SignatureInfo *sigInfo, QObject * parent = nullptr );
+        explicit CertificateModel( Okular::SignatureInfo *sigInfo, QObject * parent = nullptr );
 
         enum {
-            PropertyValueRole = Qt::UserRole
+            PropertyKeyRole = Qt::UserRole,
+            PropertyValueRole,
+            PublicKeyRole
         };
 
         int columnCount( const QModelIndex &parent = QModelIndex() ) const override;
@@ -44,10 +43,11 @@ class CertificateViewerModel : public QAbstractTableModel
         QVariant headerData( int section, Qt::Orientation orientation, int role ) const override;
 
     private:
-        QVector< QPair<QString, QString> > m_sigProperties;
+        QVector< QPair<QString, QString> > m_certificateProperties;
+        Okular::CertificateInfo *certInfo;
 };
 
-class CertificateViewer : public QDialog
+class CertificateViewer : public KPageDialog
 {
     Q_OBJECT
 
@@ -58,8 +58,8 @@ class CertificateViewer : public QDialog
         void updateText( const QModelIndex &index );
 
     private:
-        CertificateViewerModel  *m_sigPropModel;
-        QTextEdit *m_sigPropText;
+        CertificateModel  *m_certModel;
+        QTextEdit *m_propertyText;
         Okular::SignatureInfo *m_sigInfo;
 };
 

@@ -358,4 +358,43 @@ QString getReadableHashAlgorithm( Okular::SignatureInfo::HashAlgorithm hashAlg )
     }
 }
 
+QString getReadablePublicKeyType( Okular::CertificateInfo::PublicKeyType type )
+{
+    switch ( type )
+    {
+        case Okular::CertificateInfo::RsaKey:
+            return i18n("RSA");
+        case Okular::CertificateInfo::DsaKey:
+            return i18n("DSA");
+        case Okular::CertificateInfo::EcKey:
+            return i18n("EC");
+        case Okular::CertificateInfo::OtherKey:
+            return i18n("Unknown Type");
+    }
+}
+
+QString getReadableKeyUsage( Okular::CertificateInfo::KeyUsageExtensions kuExtensions )
+{
+    QStringList ku;
+    if ( kuExtensions.testFlag( Okular::CertificateInfo::KuDigitalSignature ) )
+        ku << i18n("Digital Signature");
+    if ( kuExtensions.testFlag( Okular::CertificateInfo::KuNonRepudiation ) )
+        ku << i18n("Non-Repudiation");
+    if ( kuExtensions.testFlag( Okular::CertificateInfo::KuKeyEncipherment ) )
+        ku << i18n("Encrypt Keys");
+    if ( kuExtensions.testFlag( Okular::CertificateInfo::KuDataEncipherment ) )
+        ku << i18n("Decrypt Keys");
+    if ( kuExtensions.testFlag( Okular::CertificateInfo::KuKeyAgreement ) )
+        ku << i18n("Key Agreement");
+    if ( kuExtensions.testFlag( Okular::CertificateInfo::KuKeyCertSign ) )
+        ku << i18n("Sign Certificate");
+    if ( kuExtensions.testFlag( Okular::CertificateInfo::KuClrSign ) )
+        ku << i18n("Sign CRL");
+    if ( kuExtensions.testFlag( Okular::CertificateInfo::KuEncipherOnly ) )
+        ku << i18n("Encrypt Only");
+    if ( ku.isEmpty() )
+        ku << i18n("No Usage Specified");
+    return ku.join(',');
+}
+
 }

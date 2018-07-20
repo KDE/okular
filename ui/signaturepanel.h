@@ -30,6 +30,9 @@ class SignaturePanel : public QWidget, public Okular::DocumentObserver
 
     private Q_SLOTS:
         void activated( const QModelIndex& );
+        void showContextMenu( const QModelIndex& );
+        //void slotShowRevision();
+        //void slotShowProperties();
 
     private:
          Okular::Document *m_document;

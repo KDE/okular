@@ -12,6 +12,8 @@
 
 #include <QDialog>
 #include <QScopedPointer>
+#include <QStandardPaths>
+#include <QTemporaryFile>
 #include "fileprinterpreview.h"
 
 class QTextEdit;
@@ -29,7 +31,7 @@ class SignaturePropertiesDialog : public QDialog
     public:
         SignaturePropertiesDialog( Okular::Document *doc, Okular::FormFieldSignature *form, QWidget *parent );
 
-    private Q_SLOTS:
+    public Q_SLOTS:
         void viewSignedVersion();
         void viewCertificateProperties();
 

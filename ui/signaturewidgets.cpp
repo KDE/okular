@@ -120,7 +120,7 @@ SignaturePropertiesDialog::SignaturePropertiesDialog( Okular::Document *doc, Oku
     // button box
     auto btnBox = new QDialogButtonBox( QDialogButtonBox::Close, this );
     auto certPropBtn = new QPushButton( i18n( "Vew Certificate..."), this );
-    certPropBtn->setVisible(m_signatureInfo->certificateInfo()->isNull());
+    //certPropBtn->setVisible(m_signatureInfo->certificateInfo()->isNull());
     btnBox->button( QDialogButtonBox::Close )->setDefault( true );
     btnBox->addButton( certPropBtn, QDialogButtonBox::ActionRole );
     connect( btnBox, &QDialogButtonBox::rejected, this, &SignaturePropertiesDialog::reject );

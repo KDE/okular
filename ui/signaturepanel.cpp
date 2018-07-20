@@ -9,13 +9,14 @@
 
 #include "signaturepanel.h"
 
+#include <QApplication>
 #include <QPainter>
 #include <QPaintEvent>
 #include <QTextDocument>
 #include <QVBoxLayout>
 #include <QHeaderView>
 #include <QTreeView>
-
+#include <QMenu>
 #include <KLocalizedString>
 
 #include "core/document.h"
@@ -23,6 +24,7 @@
 #include "core/form.h"
 #include "guiutils.h"
 #include "signaturemodel.h"
+#include "signaturewidgets.h"
 #include <QDebug>
 
 SignaturePanel::SignaturePanel( QWidget *parent, Okular::Document *document )
@@ -40,9 +42,23 @@ SignaturePanel::SignaturePanel( QWidget *parent, Okular::Document *document )
     m_model = new SignatureModel( m_document, this );
 
     m_view->setModel( m_model );
-    connect(m_view, &QTreeView::activated, this, &SignaturePanel::activated);
+    connect( m_view, &QTreeView::activated, this, &SignaturePanel::activated );
+    connect( m_view, &QTreeView::pressed, this, &SignaturePanel::showContextMenu );
 
     vLayout->addWidget( m_view );
+}
+
+static Okular::FormFieldSignature *getSignatureFromId( int formId, Okular::Document *doc )
+{
+    auto formFields = GuiUtils::getSignatureFormFields( doc );
+    foreach( auto f, formFields )
+    {
+        if ( f->id() == formId )
+        {
+            return f;
+        }
+    }
+    return nullptr;
 }
 
 void SignaturePanel::activated( const QModelIndex &index )
@@ -51,16 +67,7 @@ void SignaturePanel::activated( const QModelIndex &index )
     if ( formId == -1 )
         return;
 
-    auto formFields = GuiUtils::getSignatureFormFields( m_document );
-    Okular::FormFieldSignature *sf;
-    foreach( auto f, formFields )
-    {
-        if ( f->id() == formId )
-        {
-            sf = f;
-            break;
-        }
-    }
+    Okular::FormFieldSignature *sf = getSignatureFromId( formId, m_document );
     if ( !sf )
       return;
 
@@ -72,6 +79,44 @@ void SignaturePanel::activated( const QModelIndex &index )
     vp.rePos.normalizedX = ( nr.right + nr.left ) / 2.0;
     vp.rePos.normalizedY = ( nr.bottom + nr.top ) / 2.0;
     m_document->setViewport( vp, nullptr, true );
+}
+
+void SignaturePanel::showContextMenu( const QModelIndex &index )
+{
+    Qt::MouseButtons buttons = QApplication::mouseButtons();
+    if ( buttons == Qt::RightButton )
+    {
+        int formId = m_model->data( index, SignatureModel::FormRole ).toInt();
+        if ( formId == -1 )
+            return;
+
+        Okular::FormFieldSignature *sf = getSignatureFromId( formId, m_document );
+        if ( !sf )
+          return;
+
+        QMenu *menu = new QMenu( this );
+        QAction *sigProp = new QAction( i18n("Validate Signature"), this );
+        menu->addAction( sigProp );
+        connect( sigProp, &QAction::triggered, this, [=]{
+            SignaturePropertiesDialog sigSummaryDlg( m_document, sf, this );
+            sigSummaryDlg.exec();
+        } );
+        QAction *sigRev = new QAction( i18n("View Revision"), this );
+        menu->addAction( sigRev );
+        connect( sigRev, &QAction::triggered, this, [=]{
+            QByteArray data;
+            m_document->requestSignedRevisionData( sf->validate(), &data );
+            const QString tmpDir = QStandardPaths::writableLocation( QStandardPaths::TempLocation );
+            QTemporaryFile tf( tmpDir + "/revision_XXXXXX.pdf" );
+            tf.open();
+            tf.write(data);
+            RevisionViewer view( tf.fileName(), this);
+            view.exec();
+            tf.close();
+        } );
+        menu->exec( QCursor::pos() );
+        delete menu;
+    }
 }
 
 SignaturePanel::~SignaturePanel()

@@ -14,24 +14,19 @@
 
 #include <QDebug>
 #include <QLabel>
-#include <QTextEdit>
-#include <QTreeView>
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QDialogButtonBox>
 #include <QGroupBox>
 #include <QFormLayout>
-#include <QTreeView>
 #include <QTextDocument>
 #include <KIconLoader>
-#include <QPainter>
-#include <QPaintEvent>
-#include <QHeaderView>
 #include <QVector>
 #include <QStandardPaths>
 #include <QTemporaryFile>
 #include <KMessageBox>
 #include <KMessageWidget>
+#include <QFileDialog>
 
 #include "core/form.h"
 #include "core/page.h"
@@ -154,14 +149,47 @@ void SignaturePropertiesDialog::viewSignedVersion()
     tf.close();
 }
 
+static void clearLayout( QLayout* layout )
+{
+    while ( QLayoutItem* item = layout->takeAt(0) )
+    {
+        if ( QLayout* childLayout = item->layout() )
+            clearLayout( childLayout );
+        delete item;
+    }
+}
+
 RevisionViewer::RevisionViewer( const QString &filename, QWidget *parent )
     : FilePrinterPreview( filename, parent )
 {
     setWindowTitle( i18n("Revision Preview") );
+
+    auto mainLayout = static_cast<QVBoxLayout*>(layout());
+    clearLayout(mainLayout);
+    auto btnBox = new QDialogButtonBox( QDialogButtonBox::Close, this );
+    auto certPropBtn = new QPushButton( i18n( "Save As"), this );
+    btnBox->button( QDialogButtonBox::Close )->setDefault( true );
+    btnBox->addButton( certPropBtn, QDialogButtonBox::ActionRole );
+    connect( btnBox, &QDialogButtonBox::rejected, this, &RevisionViewer::reject );
+    connect( certPropBtn, &QPushButton::clicked, this, [=]{
+        doSave( filename );
+    } );
+    mainLayout->addWidget( btnBox );
+    setLayout( mainLayout );
 }
 
 RevisionViewer::~RevisionViewer()
 {
+}
+
+void RevisionViewer::doSave( const QString &filename )
+{
+    const QString caption = i18n( "Where do you want to save %1?", filename );
+    const QString path = QFileDialog::getSaveFileName( this, caption, filename );
+    if ( path.isEmpty() )
+        return;
+    QFile targetFile( filename );
+    targetFile.copy( path );
 }
 
 #include "moc_signaturewidgets.cpp"

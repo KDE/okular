@@ -312,7 +312,6 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         KMessageWidget * m_topMessage;
         KMessageWidget * m_formsMessage;
         KMessageWidget * m_infoMessage;
-        KMessageWidget * m_signatureMessage;
         QPointer<ThumbnailList> m_thumbnailList;
         QPointer<PageView> m_pageView;
         QPointer<TOC> m_toc;

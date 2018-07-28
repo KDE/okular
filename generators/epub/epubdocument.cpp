@@ -86,9 +86,9 @@ QVariant EpubDocument::loadResource(int type, const QUrl &name)
       const int maxHeight = maxContentHeight();
       const int maxWidth = maxContentWidth();
       if(img.height() > maxHeight)
-        img = img.scaledToHeight(maxHeight);
+        img = img.scaledToHeight(maxHeight, Qt::SmoothTransformation);
       if(img.width() > maxWidth)
-        img = img.scaledToWidth(maxWidth);
+        img = img.scaledToWidth(maxWidth, Qt::SmoothTransformation);
       resource.setValue(img);
       break;
     }

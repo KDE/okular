@@ -293,7 +293,6 @@ FormWidgetIface::FormWidgetIface( QWidget * w, Okular::FormField * ff )
 
 FormWidgetIface::~FormWidgetIface()
 {
-    m_ff = nullptr;
 }
 
 Okular::NormalizedRect FormWidgetIface::rect() const
@@ -588,6 +587,14 @@ TextAreaEdit::TextAreaEdit( Okular::FormFieldText * text, QWidget * parent )
     setVisible( text->isVisible() );
 }
 
+TextAreaEdit::~TextAreaEdit()
+{
+    // We need this because otherwise on destruction we destruct the syntax highlighter
+    // that ends up calling text changed but then we go to slotChanged and we're already
+    // half destructed and all is bad
+    disconnect( this, &QTextEdit::textChanged, this, &TextAreaEdit::slotChanged );
+}
+
 bool TextAreaEdit::event( QEvent* e )
 {
     if ( e->type() == QEvent::KeyPress )
@@ -662,10 +669,6 @@ void TextAreaEdit::slotHandleTextChangedByUndoRedo( int pageNumber,
 
 void TextAreaEdit::slotChanged()
 {
-    // happens on destruction
-    if (!m_ff)
-        return;
-
     Okular::FormFieldText *form = static_cast<Okular::FormFieldText *>(m_ff);
     QString contents = toPlainText();
     int cursorPos = textCursor().position();

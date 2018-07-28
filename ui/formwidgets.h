@@ -253,6 +253,7 @@ class TextAreaEdit : public KTextEdit, public FormWidgetIface
 
     public:
         explicit TextAreaEdit( Okular::FormFieldText * text, QWidget * parent = nullptr );
+        ~TextAreaEdit();
         void setFormWidgetsController( FormWidgetsController *controller ) override;
         bool event ( QEvent * e ) override;
 

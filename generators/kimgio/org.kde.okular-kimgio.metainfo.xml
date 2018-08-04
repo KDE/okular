@@ -14,6 +14,7 @@
   <name xml:lang="en-GB">Images</name>
   <name xml:lang="es">Imágenes</name>
   <name xml:lang="et">Pildid</name>
+  <name xml:lang="eu">Irudiak</name>
   <name xml:lang="fi">Kuvat</name>
   <name xml:lang="fr">Images</name>
   <name xml:lang="gl">Imaxes</name>
@@ -48,6 +49,7 @@
   <summary xml:lang="en-GB">Adds support for reading many image formats</summary>
   <summary xml:lang="es">Permite la lectura de diversos formatos de imagen</summary>
   <summary xml:lang="et">Paljude pildivormingute lugemise toetus</summary>
+  <summary xml:lang="eu">Irudi formatu ugari irakurtzeko euskarria gehitzen du</summary>
   <summary xml:lang="fi">Lisää monien kuvatiedostomuotojen lukutuen</summary>
   <summary xml:lang="fr">Permet la lecture de nombreux formats d'images</summary>
   <summary xml:lang="gl">Permite ler moitos formatos de imaxe</summary>

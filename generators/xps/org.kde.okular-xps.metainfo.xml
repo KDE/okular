@@ -14,6 +14,7 @@
   <name xml:lang="en-GB">XPS</name>
   <name xml:lang="es">XPS</name>
   <name xml:lang="et">XPS</name>
+  <name xml:lang="eu">XPS</name>
   <name xml:lang="fi">XPS</name>
   <name xml:lang="fr">XPS</name>
   <name xml:lang="gl">XPS</name>
@@ -48,6 +49,7 @@
   <summary xml:lang="en-GB">Adds support for reading XPS documents</summary>
   <summary xml:lang="es">Permite la lectura de documentos XPS</summary>
   <summary xml:lang="et">XPS-dokumentide lugemise toetus</summary>
+  <summary xml:lang="eu">XPS dokumentuak irakurtzeko euskarria gehitzen du</summary>
   <summary xml:lang="fi">Lisää XPS-tiedostojen lukutuen</summary>
   <summary xml:lang="fr">Permet la lecture des documents XPS</summary>
   <summary xml:lang="gl">Permite ler documentos XPS</summary>

@@ -13,6 +13,7 @@
   <name xml:lang="en-GB">Okular</name>
   <name xml:lang="es">Okular</name>
   <name xml:lang="et">Okular</name>
+  <name xml:lang="eu">Okular</name>
   <name xml:lang="fi">Okular</name>
   <name xml:lang="fr">Okular</name>
   <name xml:lang="gl">Okular</name>
@@ -46,6 +47,7 @@
   <summary xml:lang="en-GB">Document Viewer</summary>
   <summary xml:lang="es">Visor de documentos</summary>
   <summary xml:lang="et">Dokumendinäitaja</summary>
+  <summary xml:lang="eu">Dokumentu erakuslea</summary>
   <summary xml:lang="fi">Asiakirjakatselin</summary>
   <summary xml:lang="fr">Afficheur de documents</summary>
   <summary xml:lang="gl">Visor de documentos</summary>
@@ -82,6 +84,7 @@
     <p xml:lang="en-GB">Okular is a universal document viewer developed by KDE. Okular works on multiple platforms, including but not limited to Linux, Windows, Mac OS X, *BSD, etc.</p>
     <p xml:lang="es">Okular es un visor universal de documentos desarrollado por KDE. Okular funciona en diversas plataformas, incluidas Linux, Windows, Mac OS X, *BSD, etc.</p>
     <p xml:lang="et">Okular on KDE välja töötatud universaalne dokumentide näitaja. Okular võib töötada eri platvormidel, kaasa arvatud Linux, Windows, Mac OS X, *BSD jne.</p>
+    <p xml:lang="eu">Okular KDEk garatutako dokumentu erakusle unibertsal bat da. Okular hainbat  plataformatan dabil, haien artean baino ez soilik haietara mugatua, Linux,  windows, Mac OS X, *BSD, etab.</p>
     <p xml:lang="fi">Okular on KDE:n kehittämä yleiskäyttöinen asiakirjakatselin. Okular toimii useissa ympäristöissä kuten Linuxissa, Windowsissa, Mac OS X:ssä, *BSD:ssä jne.</p>
     <p xml:lang="fr">Okular est un afficheur universel de documents développé par KDE. Okular fonctionne sur de multiples plate-formes, comme Linux, Windows, Mac OS X, etc.</p>
     <p xml:lang="gl">Okular é un visor de documentos universal desenvolvido por KDE. Okular funciona en varias plataformas, entre elas Linux, Windows, Mac OS X, *BSD, etc.</p>
@@ -115,6 +118,7 @@
     <p xml:lang="en-GB">Features:</p>
     <p xml:lang="es">Funciones:</p>
     <p xml:lang="et">Omadused:</p>
+    <p xml:lang="eu">Eginbideak:</p>
     <p xml:lang="fi">Ominaisuuksia:</p>
     <p xml:lang="fr">Fonctionnalités :</p>
     <p xml:lang="gl">Funcionalidades:</p>
@@ -150,6 +154,7 @@
       <li xml:lang="en-GB">Supported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="es">Formatos permitidos: PDF, PS, Tiff, CHM, DjVu, imágenes, DVI, XPS, ODT, Fiction Book, libros de cómics, Plucker, EPub, Fax</li>
       <li xml:lang="et">Toetatud vormingud: PDF, PS, Tiff, CHM, DjVu, pildid, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, faks</li>
+      <li xml:lang="eu">Onartutako formatuak: PDF, PS, Tiff, CHM, DjVu, irudiak, DVI, XPS, ODT,  FictionBook, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="fi">Tuetut tiedostomuodot: PDF, PS, TIFF, CHM, DjVu, kuvatiedostot, DVI, XPS, ODT, FictionBook, sarjakuvakirjat, Plucker, EPub, faksit</li>
       <li xml:lang="fr">Formats de fichiers gérés : PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="gl">Formatos compatíbeis: PDF, PS, Tiff, CHM, DjVu, imaxes, DVI, XPS, ODT, FictionBook, banda deseñada, Plucker, EPub e fax.</li>
@@ -182,6 +187,7 @@
       <li xml:lang="en-GB">Sidebar with contents, thumbnails, reviews and bookmarks</li>
       <li xml:lang="es">Barra lateral con contenido, miniaturas, revisiones y marcadores</li>
       <li xml:lang="et">Külgriba sisukorra, pisipiltide, annotatsioonide ja järjehoidjatega</li>
+      <li xml:lang="eu">Alboko-barra edukiekin, koadro-txikiekin, iritziekin eta laster-markekin</li>
       <li xml:lang="fi">Sivupaneeli, jossa sisältö, pienoiskuvat, tarkastelut ja kirjanmerkit</li>
       <li xml:lang="fr">Barre latérale montrant les contenus, miniatures, informations de relecture et signets</li>
       <li xml:lang="gl">Barra lateral con contido, miniaturas, revisións e marcadores.</li>
@@ -214,6 +220,7 @@
       <li xml:lang="en-GB">Annotations support</li>
       <li xml:lang="es">Permite el uso de notas</li>
       <li xml:lang="et">Annotatsioonide toetus</li>
+      <li xml:lang="eu">Idatzoharrak onartzen ditu</li>
       <li xml:lang="fi">Merkintöjen tuki</li>
       <li xml:lang="fr">Gestion des annotations</li>
       <li xml:lang="gl">Funcionalidade de anotacións.</li>

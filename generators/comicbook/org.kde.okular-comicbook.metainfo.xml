@@ -14,6 +14,7 @@
   <name xml:lang="en-GB">Comic Books</name>
   <name xml:lang="es">Libros de cómics</name>
   <name xml:lang="et">Koomiksid</name>
+  <name xml:lang="eu">Komiki-liburuak</name>
   <name xml:lang="fi">Sarjakuvakirjat</name>
   <name xml:lang="fr">Bandes dessinées</name>
   <name xml:lang="gl">Libros de banda deseñada</name>
@@ -48,6 +49,7 @@
   <summary xml:lang="en-GB">Adds support for reading comic books</summary>
   <summary xml:lang="es">Permite la lectura de libros de cómics</summary>
   <summary xml:lang="et">Koomiksite lugemise toetus</summary>
+  <summary xml:lang="eu">Komiki-liburuak irakurtzeko euskarria gehitzen du</summary>
   <summary xml:lang="fi">Lisää sarjakuvakirjojen lukutuen</summary>
   <summary xml:lang="fr">Permet la lecture des bandes dessinées</summary>
   <summary xml:lang="gl">Permite ler libros de banda deseñada</summary>

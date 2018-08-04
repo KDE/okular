@@ -14,6 +14,7 @@
   <name xml:lang="en-GB">Plucker</name>
   <name xml:lang="es">Plucker</name>
   <name xml:lang="et">Plucker</name>
+  <name xml:lang="eu">Plucker</name>
   <name xml:lang="fi">Plucker</name>
   <name xml:lang="fr">Plucker</name>
   <name xml:lang="gl">Plucker</name>
@@ -48,6 +49,7 @@
   <summary xml:lang="en-GB">Adds support for reading Plucker documents</summary>
   <summary xml:lang="es">Permite la lectura de documentos en formato Plucker</summary>
   <summary xml:lang="et">Pluckeri dokumentide lugemise toetus</summary>
+  <summary xml:lang="eu">Plucker dokumentuak irakurtzeko euskarria gehitzen du</summary>
   <summary xml:lang="fi">Lisää Plucker-tiedostojen lukutuen</summary>
   <summary xml:lang="fr">Permet la lecture des documents Plucker</summary>
   <summary xml:lang="gl">Permite ler documentos de Plucker</summary>

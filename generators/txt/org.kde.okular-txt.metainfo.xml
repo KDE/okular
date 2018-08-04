@@ -14,6 +14,7 @@
   <name xml:lang="en-GB">Text</name>
   <name xml:lang="es">Texto</name>
   <name xml:lang="et">Tekst</name>
+  <name xml:lang="eu">Testua</name>
   <name xml:lang="fi">Teksti</name>
   <name xml:lang="fr">Text</name>
   <name xml:lang="gl">Texto</name>
@@ -48,6 +49,7 @@
   <summary xml:lang="en-GB">Adds support for reading plain text documents</summary>
   <summary xml:lang="es">Permite la lectura de documentos de texto sin formato</summary>
   <summary xml:lang="et">Lihttekstidokumentide lugemise toetus</summary>
+  <summary xml:lang="eu">Testu arrunteko dokumentuak irakurtzeko euskarria gehitzen du </summary>
   <summary xml:lang="fi">Lisää paljaiden tekstitiedostojen lukutuen</summary>
   <summary xml:lang="fr">Permet la lecture des fichiers texte</summary>
   <summary xml:lang="gl">Permite ler documentos de texto simple</summary>

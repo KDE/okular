@@ -1857,6 +1857,10 @@ void PDFGenerator::addFormFields( Poppler::Page * popplerPage, Okular::Page * pa
             case Poppler::FormField::FormChoice:
                 of = new PopplerFormFieldChoice( static_cast<Poppler::FormFieldChoice*>( f ) );
                 break;
+            case Poppler::FormField::FormSignature: {
+                of = new PopplerFormFieldSignature( static_cast<Poppler::FormFieldSignature*>( f ) );
+                break;
+            }
             default: ;
         }
         if ( of )

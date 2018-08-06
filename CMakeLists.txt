@@ -383,6 +383,7 @@ set(okularpart_SRCS
    ui/toolaction.cpp
    ui/videowidget.cpp
    ui/layers.cpp
+   ui/signatureguiutils.cpp
 )
 
 if (Qt5TextToSpeech_FOUND)

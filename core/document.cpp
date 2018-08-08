@@ -4635,6 +4635,8 @@ bool Document::swapBackingFile( const QString &newFileName, const QUrl &url )
         d->m_docFileName = newFileName;
         d->updateMetadataXmlNameAndDocSize();
         d->m_bookmarkManager->setUrl( d->m_url );
+        d->m_documentInfo = DocumentInfo();
+        d->m_documentInfoAskedKeys.clear();
 
         if ( d->m_synctex_scanner )
         {

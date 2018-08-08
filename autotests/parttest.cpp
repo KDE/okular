@@ -831,6 +831,7 @@ void PartTest::testSaveAs()
     {
         Okular::Part part(nullptr, nullptr, QVariantList());
         part.openDocument( file );
+        part.m_document->documentInfo();
 
         QCOMPARE(part.m_document->canSwapBackingFile(), canSwapBackingFile);
 
@@ -867,6 +868,7 @@ void PartTest::testSaveAs()
             QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
         }
 
+        QCOMPARE( part.m_document->documentInfo().get( Okular::DocumentInfo::FilePath ), part.m_document->currentDocument().toDisplayString() );
         part.closeUrl();
     }
 
@@ -874,6 +876,7 @@ void PartTest::testSaveAs()
     {
         Okular::Part part(nullptr, nullptr, QVariantList());
         part.openDocument( archiveSave.fileName() );
+        part.m_document->documentInfo();
 
         QCOMPARE( part.m_document->page( 0 )->annotations().size(), 1 );
         QCOMPARE( part.m_document->page( 0 )->annotations().first()->uniqueName(), annotName );
@@ -892,6 +895,7 @@ void PartTest::testSaveAs()
             closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "do you want to save or discard" dialog
         }
 
+        QCOMPARE( part.m_document->documentInfo().get( Okular::DocumentInfo::FilePath ), part.m_document->currentDocument().toDisplayString() );
         part.closeUrl();
     }
 

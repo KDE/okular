@@ -1264,6 +1264,26 @@ void PDFGenerator::requestFontData(const Okular::FontInfo &font, QByteArray *dat
     *data = pdfdoc->fontData(fi);
 }
 
+void PDFGenerator::requestSignedRevisionData( Okular::SignatureInfo *info, QByteArray *buffer )
+{
+    Q_ASSERT( info );
+    Q_ASSERT( buffer );
+
+    const QUrl docUrl = document()->currentDocument();
+    QFile f( docUrl.toLocalFile() );
+    if ( !f.open( QIODevice::ReadOnly ) )
+    {
+        KMessageBox::error( nullptr, i18n("Could not open '%1'. File does not exist", docUrl.toDisplayString() ) );
+        return;
+    }
+
+    QList<qint64> byteRange = info->signedRangeBounds();
+    f.seek( byteRange.first() );
+    QDataStream stream( buffer, QIODevice::WriteOnly );
+    stream << f.read( byteRange.last() - byteRange.first() );
+    f.close();
+}
+
 #define DUMMY_QPRINTER_COPY
 bool PDFGenerator::print( QPrinter& printer )
 {
@@ -1472,6 +1492,20 @@ QVariant PDFGenerator::metaData( const QString & key, const QVariant & option ) 
         QMutexLocker ml(userMutex());
         return QVariant::fromValue<QVector<int>>(pdfdoc->formCalculateOrder());
 #endif
+    }
+    else if ( key == QLatin1String("IsDigitallySigned") )
+    {
+        const Okular::Document *doc = document();
+        uint numPages = doc->pages();
+        for ( uint i = 0; i < numPages; i++ )
+        {
+            foreach ( Okular::FormField *f, doc->page( i )->formFields() )
+            {
+                if ( f->type() == Okular::FormField::FormSignature )
+                    return true;
+            }
+        }
+        return false;
     }
     return QVariant();
 }

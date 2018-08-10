@@ -5058,6 +5058,11 @@ QAbstractItemModel * Document::layersModel() const
     return d->m_generator ? d->m_generator->layersModel() : nullptr;
 }
 
+void Document::requestSignedRevisionData( Okular::SignatureInfo *info, QByteArray *buffer )
+{
+    d->m_generator->requestSignedRevisionData( info, buffer );
+}
+
 void DocumentPrivate::requestDone( PixmapRequest * req )
 {
     if ( !req )

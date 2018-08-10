@@ -527,6 +527,10 @@ void Generator::requestFontData(const Okular::FontInfo & /*font*/, QByteArray * 
 
 }
 
+void Generator::requestSignedRevisionData( SignatureInfo *, QByteArray * )
+{
+}
+
 void Generator::setDPI(const QSizeF & dpi)
 {
      Q_D( Generator );

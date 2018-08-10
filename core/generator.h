@@ -61,6 +61,7 @@ class TextRequest;
 class TextRequestPrivate;
 class NormalizedRect;
 class SourceReference;
+class SignatureInfo;
 
 /* Note: on contents generation and asynchronous queries.
  * Many observers may want to request data syncronously or asynchronously.
@@ -593,6 +594,13 @@ class OKULARCORE_EXPORT Generator : public QObject
          * @since 0.19 (KDE 4.13)
          */
         QSizeF dpi() const;
+
+        /**
+         * Creates a signed revision using information from @p info and stores the data
+         * in @p buffer.
+         * @since 1.4
+         */
+        virtual void requestSignedRevisionData( SignatureInfo *info, QByteArray *buffer );
 
     protected Q_SLOTS:
         /**

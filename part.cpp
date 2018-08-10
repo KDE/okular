@@ -1554,6 +1554,12 @@ bool Part::openFile()
         m_formsMessage->setMessageType( KMessageWidget::Information );
         m_formsMessage->setVisible( true );
     }
+    else if ( ok && m_document->metaData( QStringLiteral("IsDigitallySigned") ).toBool() && m_embedMode == PrintPreviewMode )
+    {
+        m_formsMessage->setText( i18n( "All editing and interactive features for this document are disabled. Please save a copy and reopen to edit this document." ) );
+        m_formsMessage->setMessageType( KMessageWidget::Information );
+        m_formsMessage->setVisible( true );
+    }
     else
     {
         m_formsMessage->setVisible( false );

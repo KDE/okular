@@ -38,6 +38,7 @@ class FormField;
 class FormFieldButton;
 class FormFieldChoice;
 class FormFieldText;
+class FormFieldSignature;
 class Document;
 }
 
@@ -126,6 +127,7 @@ class FormWidgetsController : public QObject
         friend class FileEdit;
         friend class ListEdit;
         friend class ComboEdit;
+        friend class SignatureEdit;
 
         QList< RadioData > m_radios;
         QHash< int, QAbstractButton* > m_buttons;
@@ -344,6 +346,28 @@ class ComboEdit : public QComboBox, public FormWidgetIface
     private:
         int m_prevCursorPos;
         int m_prevAnchorPos;
+    DECLARE_ADDITIONAL_ACTIONS
+};
+
+class SignatureEdit : public QAbstractButton, public FormWidgetIface
+{
+    Q_OBJECT
+
+    public:
+        explicit SignatureEdit( Okular::FormFieldSignature * signature, QWidget * parent = nullptr );
+
+    protected:
+        bool event( QEvent * e ) override;
+        void contextMenuEvent( QContextMenuEvent * event ) override;
+        void paintEvent( QPaintEvent * event ) override;
+
+    private Q_SLOTS:
+        void slotViewRevision();
+        void slotViewProperties();
+
+    private:
+        bool m_lefMouseButtonPressed;
+
     DECLARE_ADDITIONAL_ACTIONS
 };
 

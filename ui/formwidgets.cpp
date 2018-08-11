@@ -13,6 +13,8 @@
 
 #include "formwidgets.h"
 #include "pageviewutils.h"
+#include "revisionviewer.h"
+#include "signaturepropertiesdialog.h"
 
 #include <qbuttongroup.h>
 #include <QKeyEvent>
@@ -23,6 +25,7 @@
 #include <kstandardaction.h>
 #include <qaction.h>
 #include <QUrl>
+#include <QPainter>
 
 // local includes
 #include "core/form.h"
@@ -274,6 +277,13 @@ FormWidgetIface * FormWidgetFactory::createWidget( Okular::FormField * ff, QWidg
                     widget = new ComboEdit( ffc, parent );
                     break;
             }
+            break;
+        }
+        case Okular::FormField::FormSignature:
+        {
+            Okular::FormFieldSignature * ffs = static_cast< Okular::FormFieldSignature * >( ff );
+            if ( ffs->isVisible() && ffs->signatureType() != Okular::FormFieldSignature::UnknownType )
+                widget = new SignatureEdit( ffs, parent );
             break;
         }
         default: ;
@@ -1052,6 +1062,93 @@ bool ComboEdit::event( QEvent* e )
     return QComboBox::event( e );
 }
 
+SignatureEdit::SignatureEdit( Okular::FormFieldSignature * signature, QWidget * parent )
+    : QAbstractButton( parent ), FormWidgetIface( this, signature ), m_lefMouseButtonPressed( false )
+{
+    setCheckable( false );
+    setCursor( Qt::PointingHandCursor );
+    connect( this, &SignatureEdit::clicked, this, &SignatureEdit::slotViewProperties );
+}
+
+bool SignatureEdit::event( QEvent * e )
+{
+    switch ( e->type() )
+    {
+        case QEvent::MouseButtonPress:
+        {
+            QMouseEvent *ev = static_cast< QMouseEvent * >( e );
+            if ( ev->button() == Qt::LeftButton )
+            {
+                m_lefMouseButtonPressed = true;
+                update();
+            }
+            mousePressEvent( ev );
+            break;
+        }
+        case QEvent::MouseButtonRelease:
+        {
+            QMouseEvent *ev = static_cast< QMouseEvent * >( e );
+            m_lefMouseButtonPressed = false;
+            if ( ev->button() == Qt::LeftButton)
+            {
+                update();
+            }
+            mouseReleaseEvent( ev );
+            break;
+        }
+        default:
+            break;
+    }
+
+    return QAbstractButton::event( e );
+}
+
+void SignatureEdit::contextMenuEvent( QContextMenuEvent * event )
+{
+    QMenu *menu = new QMenu( this );
+    QAction *viewRevision = new QAction( i18n("View Revision"), menu );
+    QAction *signatureProperties = new QAction( i18n("Signature Properties"), menu );
+    connect( viewRevision, &QAction::triggered, this, &SignatureEdit::slotViewRevision );
+    connect( signatureProperties, &QAction::triggered, this, &SignatureEdit::slotViewProperties );
+    menu->addAction( viewRevision );
+    menu->addAction( signatureProperties );
+    menu->exec( event->globalPos() );
+    delete menu;
+}
+
+void SignatureEdit::paintEvent( QPaintEvent * )
+{
+    QPainter painter( this );
+    painter.setPen( Qt::black );
+    if ( m_lefMouseButtonPressed )
+    {
+        QColor col = palette().color( QPalette::Active, QPalette::Highlight );
+        col.setAlpha(50);
+        painter.setBrush( col );
+    }
+    else
+    {
+        painter.setBrush( Qt::transparent );
+    }
+    painter.drawRect( 0, 0, width()-2, height()-2 );
+}
+
+void SignatureEdit::slotViewRevision()
+{
+    QByteArray revisionData;
+    Okular::FormFieldSignature *formSignature = static_cast< Okular::FormFieldSignature * >( formField() );
+    m_controller->m_doc->requestSignedRevisionData( formSignature->validate(), &revisionData );
+    RevisionViewer viewer( revisionData, this );
+    viewer.viewRevision();
+}
+
+void SignatureEdit::slotViewProperties()
+{
+    Okular::FormFieldSignature *formSignature = static_cast< Okular::FormFieldSignature * >( formField() );
+    SignaturePropertiesDialog propDlg( m_controller->m_doc, formSignature, this );
+    propDlg.exec();
+}
+
 // Code for additional action handling.
 // Challenge: Change preprocessor magic to C++ magic!
 //
@@ -1137,6 +1234,7 @@ DEFINE_ADDITIONAL_ACTIONS( TextAreaEdit, KTextEdit )
 DEFINE_ADDITIONAL_ACTIONS( FileEdit, KUrlRequester )
 DEFINE_ADDITIONAL_ACTIONS( ListEdit, QListWidget )
 DEFINE_ADDITIONAL_ACTIONS( ComboEdit, QComboBox )
+DEFINE_ADDITIONAL_ACTIONS( SignatureEdit, QAbstractButton )
 
 #undef DEFINE_ADDITIONAL_ACTIONS
 

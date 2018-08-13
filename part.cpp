@@ -2730,6 +2730,7 @@ bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
     // Make the generator use the new new file instead of the old one
     if ( m_document->canSwapBackingFile() && !m_documentOpenWithPassword )
     {
+        QWidget *currentSidebarItem = m_sidebar->currentItem();
         // this calls openFile internally, which in turn actually calls
         // m_document->swapBackingFile() instead of the regular loadDocument
         if ( openUrl( saveUrl, true /* swapInsteadOfOpening */ ) )
@@ -2743,6 +2744,9 @@ bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
         {
             reloadedCorrectly = false;
         }
+
+        if ( m_sidebar->currentItem() != currentSidebarItem )
+            m_sidebar->setCurrentItem( currentSidebarItem );
     }
     else
     {

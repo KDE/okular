@@ -17,6 +17,7 @@
 #include "../core/page.h"
 #include "../part.h"
 #include "../ui/toc.h"
+#include "../ui/sidebar.h"
 #include "../ui/pageview.h"
 
 #include "../generators/poppler/config-okular-poppler.h"
@@ -95,6 +96,7 @@ class PartTest
         void test388288();
         void testSaveAs();
         void testSaveAs_data();
+        void testSidebarItemAfterSaving();
         void testSaveAsUndoStackAnnotations();
         void testSaveAsUndoStackAnnotations_data();
         void testSaveAsUndoStackForms();
@@ -937,6 +939,23 @@ void PartTest::testSaveAs_data()
     QTest::newRow("pdf.gz") << KDESRCDIR "data/file1.pdf.gz" << "pdf" << true << true;
     QTest::newRow("epub") << KDESRCDIR "data/contents.epub" << "epub" << false << false;
     QTest::newRow("jpg") << KDESRCDIR "data/potato.jpg" << "jpg" << false << true;
+}
+
+void PartTest::testSidebarItemAfterSaving()
+{
+    QVariantList dummyArgs;
+    Okular::Part part(nullptr, nullptr, dummyArgs);
+    QWidget *currentSidebarItem = part.m_sidebar->currentItem(); // thumbnails
+    openDocument(&part, QStringLiteral(KDESRCDIR "data/tocreload.pdf"));
+    // since it has TOC it changes to TOC
+    QVERIFY(currentSidebarItem != part.m_sidebar->currentItem());
+    // now change back to thumbnails
+    part.m_sidebar->setCurrentItem(currentSidebarItem);
+
+    part.saveAs(QUrl::fromLocalFile(QStringLiteral(KDESRCDIR "data/tocreload.pdf")));
+
+    // Check it is still thumbnails after saving
+    QCOMPARE(currentSidebarItem, part.m_sidebar->currentItem());
 }
 
 void PartTest::testSaveAsUndoStackAnnotations()

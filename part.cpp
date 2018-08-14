@@ -107,7 +107,6 @@
 #include "ui/layers.h"
 #include "ui/okmenutitle.h"
 #include "ui/signaturewidgets.h"
-#include "ui/signaturepanel.h"
 #include "conf/preferencesdialog.h"
 #include "settings.h"
 #include "core/action.h"

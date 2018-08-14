@@ -97,11 +97,6 @@ int PopplerCertificateInfo::publicKeyStrength() const
     return m_info->publicKeyStrength();
 }
 
-bool PopplerCertificateInfo::isSelfSigned() const
-{
-    return m_info->isSelfSigned();
-}
-
 QByteArray PopplerCertificateInfo::certificateData() const
 {
     return m_info->certificateData();
@@ -191,7 +186,6 @@ QString PopplerSignatureInfo::subjectName() const
 {
     return m_info->signerName();
 }
-
 QString PopplerSignatureInfo::subjectDN() const
 {
     return m_info->signerSubjectDN();

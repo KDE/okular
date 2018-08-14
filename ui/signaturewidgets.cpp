@@ -101,7 +101,6 @@ SignaturePropertiesModel::SignaturePropertiesModel( Okular::SignatureInfo *sigIn
     m_sigProperties.append( qMakePair( i18n("Validity Start"), certInfo->validityStart().toString( QStringLiteral("MMM dd yyyy hh:mm:ss") ) ) );
     m_sigProperties.append( qMakePair( i18n("Validity End"), certInfo->validityEnd().toString( QStringLiteral("MMM dd yyyy hh:mm:ss") ) ) );
     m_sigProperties.append( qMakePair( i18n("Public Key"), certInfo->publicKey() ) );
-    m_sigProperties.append( qMakePair( i18n("Is Self Signed"), certInfo->isSelfSigned() ? QString("true") : QString("false") ) );
 }
 
 

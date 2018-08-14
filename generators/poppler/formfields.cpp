@@ -370,7 +370,7 @@ bool PopplerFormFieldChoice::canBeSpellChecked() const
 }
 
 PopplerFormFieldSignature::PopplerFormFieldSignature( Poppler::FormFieldSignature * field )
-    : Okular::FormFieldSignature(), m_field( field ), m_info( nullptr )
+    : Okular::FormFieldSignature(), m_field( field )
 {
     m_rect = Okular::NormalizedRect::fromQRectF( m_field->rect() );
     m_id = m_field->id();
@@ -380,7 +380,6 @@ PopplerFormFieldSignature::PopplerFormFieldSignature( Poppler::FormFieldSignatur
 PopplerFormFieldSignature::~PopplerFormFieldSignature()
 {
     delete m_field;
-    delete m_info;
 }
 
 Okular::NormalizedRect PopplerFormFieldSignature::rect() const
@@ -430,8 +429,6 @@ PopplerFormFieldSignature::SignatureType PopplerFormFieldSignature::signatureTyp
 
 Okular::SignatureInfo *PopplerFormFieldSignature::validate() const
 {
-    if ( !m_info )
-        m_info = new PopplerSignatureInfo( m_field->validate( Poppler::FormFieldSignature::ValidateVerifyCertificate ) );
-
-    return m_info;
+    auto sigInfo = m_field->validate( Poppler::FormFieldSignature::ValidateVerifyCertificate );
+    return ( new PopplerSignatureInfo( sigInfo ) );
 }

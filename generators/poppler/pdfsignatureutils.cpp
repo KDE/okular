@@ -22,7 +22,7 @@ PopplerCertificateInfo::~PopplerCertificateInfo()
 
 bool PopplerCertificateInfo::isNull() const
 {
-    return true;
+    return m_info->isNull();
 }
 
 int PopplerCertificateInfo::version() const

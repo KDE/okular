@@ -26,8 +26,7 @@ class SignatureModel : public QAbstractItemModel
 
     public:
         enum {
-            FormRole = Qt::UserRole + 1000,
-            PageRole
+            RevisionRole = Qt::UserRole + 1000
         };
 
         explicit SignatureModel( Okular::Document *doc, QObject *parent = nullptr );
@@ -40,8 +39,6 @@ class SignatureModel : public QAbstractItemModel
         QModelIndex index( int row, int column, const QModelIndex &parent = QModelIndex() ) const override;
         QModelIndex parent( const QModelIndex &index ) const override;
         int rowCount( const QModelIndex &parent = QModelIndex() ) const override;
-
-        Okular::FormFieldSignature* formFieldSignatureForIndex( const QModelIndex &index ) const;
 
     private:
         Q_DECLARE_PRIVATE( SignatureModel )

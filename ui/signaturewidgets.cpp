@@ -85,7 +85,7 @@ static QString getReadableHashAlgorithm( Okular::SignatureInfo::HashAlgorithm ha
     }
 }
 
-CertificateViewerModel::CertificateViewerModel( Okular::SignatureInfo *sigInfo, QObject * parent )
+SignaturePropertiesModel::SignaturePropertiesModel( Okular::SignatureInfo *sigInfo, QObject * parent )
   : QAbstractTableModel( parent )
 {
     m_sigProperties.append( qMakePair( i18n("Subject Name"), sigInfo->subjectName() ) );
@@ -111,17 +111,17 @@ CertificateViewerModel::CertificateViewerModel( Okular::SignatureInfo *sigInfo, 
 }
 
 
-int CertificateViewerModel::columnCount( const QModelIndex &parent ) const
+int SignaturePropertiesModel::columnCount( const QModelIndex &parent ) const
 {
     return parent.isValid() ? 0 : 2;
 }
 
-int CertificateViewerModel::rowCount( const QModelIndex &parent ) const
+int SignaturePropertiesModel::rowCount( const QModelIndex &parent ) const
 {
     return parent.isValid() ? 0 : m_sigProperties.size();
 }
 
-QVariant CertificateViewerModel::data( const QModelIndex &index, int role ) const
+QVariant SignaturePropertiesModel::data( const QModelIndex &index, int role ) const
 {
     int row = index.row();
     if ( !index.isValid() || row < 0 || row >= m_sigProperties.count() )
@@ -147,7 +147,7 @@ QVariant CertificateViewerModel::data( const QModelIndex &index, int role ) cons
     return QVariant();
 }
 
-QVariant CertificateViewerModel::headerData( int section, Qt::Orientation orientation, int role ) const
+QVariant SignaturePropertiesModel::headerData( int section, Qt::Orientation orientation, int role ) const
 {
     if ( role == Qt::TextAlignmentRole )
         return QVariant( Qt::AlignLeft );
@@ -167,7 +167,7 @@ QVariant CertificateViewerModel::headerData( int section, Qt::Orientation orient
 }
 
 
-CertificateViewer::CertificateViewer( Okular::SignatureInfo *sigInfo, QWidget *parent )
+SignaturePropertiesDialog::SignaturePropertiesDialog( Okular::SignatureInfo *sigInfo, QWidget *parent )
     : QDialog( parent ), m_sigInfo( sigInfo )
 {
     setModal( true );
@@ -179,16 +179,16 @@ CertificateViewer::CertificateViewer( Okular::SignatureInfo *sigInfo, QWidget *p
 
     auto sigPropTree = new QTreeView( this );
     sigPropTree->setIndentation( 0 );
-    m_sigPropModel = new CertificateViewerModel( m_sigInfo, this );
+    m_sigPropModel = new SignaturePropertiesModel( m_sigInfo, this );
     sigPropTree->setModel( m_sigPropModel );
-    connect( sigPropTree, &QTreeView::clicked, this, &CertificateViewer::updateText );
+    connect( sigPropTree, &QTreeView::clicked, this, &SignaturePropertiesDialog::updateText );
 
     m_sigPropText = new QTextEdit( this );
     m_sigPropText->setReadOnly( true );
 
     auto btnBox = new QDialogButtonBox( QDialogButtonBox::Close, this );
     btnBox->button( QDialogButtonBox::Close )->setDefault( true );
-    connect( btnBox, &QDialogButtonBox::rejected, this, &SignaturePropertiesDialog::reject );
+    connect( btnBox, &QDialogButtonBox::rejected, this, &SignatureSummaryDialog::reject );
 
     auto mainLayout = new QVBoxLayout( this );
     mainLayout->addWidget( sigPropLabel );
@@ -198,11 +198,11 @@ CertificateViewer::CertificateViewer( Okular::SignatureInfo *sigInfo, QWidget *p
     setLayout( mainLayout );
 }
 
-void CertificateViewer::updateText( const QModelIndex &index )
+void SignaturePropertiesDialog::updateText( const QModelIndex &index )
 {
-    m_sigPropText->setText( m_sigPropModel->data( index, CertificateViewerModel::PropertyValueRole ).toString() );
+    m_sigPropText->setText( m_sigPropModel->data( index, SignaturePropertiesModel::PropertyValueRole ).toString() );
 }
-SignaturePropertiesDialog::SignaturePropertiesDialog( Okular::SignatureInfo *sigInfo, QWidget *parent )
+SignatureSummaryDialog::SignatureSummaryDialog( Okular::SignatureInfo *sigInfo, QWidget *parent )
     : QDialog( parent ), m_sigInfo( sigInfo )
 {
     setModal( true );
@@ -269,7 +269,7 @@ SignaturePropertiesDialog::SignaturePropertiesDialog( Okular::SignatureInfo *sig
     revisionLayout->addWidget( new QLabel( i18n("Document Revision 1 of 1") ) );
     revisionLayout->addStretch();
     auto revisionBtn = new QPushButton( i18n( "View Signed Version...") );
-    connect( revisionBtn, &QPushButton::clicked, this, &SignaturePropertiesDialog::reject );
+    connect( revisionBtn, &QPushButton::clicked, this, &SignatureSummaryDialog::reject );
     revisionLayout->addWidget( revisionBtn );
     revisionBox->setLayout( revisionLayout );
     mainLayout->addWidget( revisionBox );
@@ -279,21 +279,21 @@ SignaturePropertiesDialog::SignaturePropertiesDialog( Okular::SignatureInfo *sig
     auto certPropBtn = new QPushButton( i18n( "Vew Certificate..."), this );
     btnBox->button( QDialogButtonBox::Close )->setDefault( true );
     btnBox->addButton( certPropBtn, QDialogButtonBox::ActionRole );
-    connect( btnBox, &QDialogButtonBox::rejected, this, &SignaturePropertiesDialog::reject );
-    connect( certPropBtn, &QPushButton::clicked, this, &SignaturePropertiesDialog::viewCertificateProperties );
+    connect( btnBox, &QDialogButtonBox::rejected, this, &SignatureSummaryDialog::reject );
+    connect( certPropBtn, &QPushButton::clicked, this, &SignatureSummaryDialog::viewCertificateProperties );
     mainLayout->addWidget( btnBox );
 
     setLayout( mainLayout );
     resize( mainLayout->sizeHint() );
 }
 
-void SignaturePropertiesDialog::viewCertificateProperties()
+void SignatureSummaryDialog::viewCertificateProperties()
 {
-    CertificateViewer sigPropDlg( m_sigInfo, this );
+    SignaturePropertiesDialog sigPropDlg( m_sigInfo, this );
     sigPropDlg.exec();
 }
 
-void SignaturePropertiesDialog::viewSignedVersion()
+void SignatureSummaryDialog::viewSignedVersion()
 {
     reject();
 }

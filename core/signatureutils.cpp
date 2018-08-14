@@ -7,12 +7,52 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include "signatureutils.h"
+#include "signatureutils.h".h"
 
 using namespace Okular;
 
-CertificateInfo::CertificateInfo()
+class Okular::CertificateInfoPrivate
 {
+    public:
+        CertificateInfoPrivate()
+            : pkType( CertificateInfo::OtherKey ), keyUsages( CertificateInfo::KuNone ),
+              certificateDer( QByteArray() ), serialNumber( QByteArray() ), publicKey( QByteArray() ),
+              version( QByteArray() ), validityStart( QDateTime() ), validityEnd( QDateTime() ),
+              issuerName( QString() ), issuerDN( QString() ), pkStrength( -1 )
+        {
+        }
+
+        CertificateInfo::PublicKeyType pkType;
+        CertificateInfo::KeyUsages keyUsages;
+
+        QByteArray certificateDer;
+        QByteArray serialNumber;
+        QByteArray publicKey;
+        QByteArray version;
+        QDateTime validityStart;
+        QDateTime validityEnd;
+        QString issuerName;
+        QString issuerDN;
+        int pkStrength;
+};
+
+
+CertificateInfo::CertificateInfo( CertificateInfoPrivate *priv )
+    : d_ptr( priv )
+{
+}
+
+CertificateInfo::CertificateInfo( const CertificateInfo &other )
+    : d_ptr( other.d_ptr )
+{
+}
+
+CertificateInfo &CertificateInfo::operator=( const CertificateInfo &other )
+{
+    if ( this != &other )
+        d_ptr = other.d_ptr;
+
+    return *this;
 }
 
 CertificateInfo::~CertificateInfo()
@@ -21,59 +61,148 @@ CertificateInfo::~CertificateInfo()
 
 Q_DECLARE_OPERATORS_FOR_FLAGS( CertificateInfo::KeyUsages )
 
+bool CertificateInfo::isValid() const
+{
+    return d_ptr.data() != nullptr;
+}
+
 QByteArray CertificateInfo::version() const
 {
-    return QByteArray();
+    Q_D( const CertificateInfo );
+    return d->version;
 }
 
 QString CertificateInfo::issuerName() const
 {
-    return QString();
+    Q_D( const CertificateInfo );
+    return d->issuerName;
 }
 
 QString CertificateInfo::issuerDN() const
 {
-    return QString();
+    Q_D( const CertificateInfo );
+    return d->issuerDN;
 }
 
 QByteArray CertificateInfo::serialNumber() const
 {
-    return QByteArray();
+    Q_D( const CertificateInfo );
+    return d->serialNumber;
 }
 
 QDateTime CertificateInfo::validityStart() const
 {
-    return QDateTime();
+    Q_D( const CertificateInfo );
+    return d->validityStart;
 }
 
 QDateTime CertificateInfo::validityEnd() const
 {
-    return QDateTime();
+    Q_D( const CertificateInfo );
+    return d->validityEnd;
 }
 
 CertificateInfo::KeyUsages CertificateInfo::keyUsages() const
 {
-    return KuNone;
+    Q_D( const CertificateInfo );
+    return d->keyUsages;
 }
 
 QByteArray CertificateInfo::publicKey() const
 {
-    return QByteArray();
+    Q_D( const CertificateInfo );
+    return d->publicKey;
 }
+
 
 CertificateInfo::PublicKeyType CertificateInfo::publicKeyType() const
 {
-    return OtherKey;
+    Q_D( const CertificateInfo );
+    return d->pkType;
 }
 
 int CertificateInfo::publicKeyStrength() const
 {
-    return -1;
+    Q_D( const CertificateInfo );
+    return d->pkStrength;
 }
 
 QByteArray CertificateInfo::certificateData() const
 {
-    return QByteArray();
+    Q_D( const CertificateInfo );
+    return d->certificateDer;
+}
+
+void CertificateInfo::initPrivate()
+{
+    if ( d_ptr.isNull() )
+        d_ptr = QSharedPointer<CertificateInfoPrivate>( new CertificateInfoPrivate );
+}
+
+void CertificateInfo::setVersion( const QByteArray &version )
+{
+    Q_D( CertificateInfo );
+    d->version = version;
+}
+
+void CertificateInfo::setIssuerName( const QString &issuerName )
+{
+    Q_D( CertificateInfo );
+    d->issuerName = issuerName;
+}
+
+void CertificateInfo::setIssuerDN( const QString &issuerDN )
+{
+    Q_D( CertificateInfo );
+    d->issuerDN = issuerDN;
+}
+
+void CertificateInfo::setSerialNumber( const QByteArray &serialNumber )
+{
+    Q_D( CertificateInfo );
+    d->serialNumber = serialNumber;
+}
+
+void CertificateInfo::setValidityStart( const QDateTime &validityStart )
+{
+    Q_D( CertificateInfo );
+    d->validityStart = validityStart;
+}
+
+void CertificateInfo::setValidityEnd( const QDateTime & validityEnd )
+{
+    Q_D( CertificateInfo );
+    d->validityEnd = validityEnd;
+}
+
+void CertificateInfo::setKeyUsages( KeyUsages ku )
+{
+    Q_D( CertificateInfo );
+    d->keyUsages = ku;
+}
+
+void CertificateInfo::setPublicKey( const QByteArray &publicKey )
+{
+    Q_D( CertificateInfo );
+    d->publicKey = publicKey;
+}
+
+void CertificateInfo::setPublicKeyType( PublicKeyType pkType )
+{
+    Q_D( CertificateInfo );
+    d->pkType = pkType;
+}
+
+void CertificateInfo::setPublicKeyStrength( int pkStrength )
+{
+    Q_D( CertificateInfo );
+    d->pkStrength = pkStrength;
+}
+
+void CertificateInfo::setCertificateData( const QByteArray &data )
+{
+    Q_D( CertificateInfo );
+    d->certificateDer = data;
 }
 
 
@@ -131,7 +260,7 @@ bool SignatureInfo::signsTotalDocument() const
     return false;
 }
 
-CertificateInfo *SignatureInfo::certificateInfo() const
+CertificateInfo SignatureInfo::certificateInfo() const
 {
-    return nullptr;
+    return CertificateInfo();
 }

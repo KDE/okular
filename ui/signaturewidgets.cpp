@@ -93,14 +93,14 @@ SignaturePropertiesModel::SignaturePropertiesModel( Okular::SignatureInfo *sigIn
     m_sigProperties.append( qMakePair( i18n("Signature Data"), QString::fromUtf8( sigInfo->signature().toHex(' ') ) ) );
     m_sigProperties.append( qMakePair( QStringLiteral("----------"), QString("------Certificate Properties--------") ) );
 
-    Okular::CertificateInfo *certInfo = sigInfo->certificateInfo();
-    m_sigProperties.append( qMakePair( i18n("Version"), certInfo->version() ) );
-    m_sigProperties.append( qMakePair( i18n("Issuer Name"), certInfo->issuerName() ) );
-    m_sigProperties.append( qMakePair( i18n("Issuer Distinguished Name"), certInfo->issuerDN() ) );
-    m_sigProperties.append( qMakePair( i18n("Serial Number"), certInfo->serialNumber() ) );
-    m_sigProperties.append( qMakePair( i18n("Validity Start"), certInfo->validityStart().toString( QStringLiteral("MMM dd yyyy hh:mm:ss") ) ) );
-    m_sigProperties.append( qMakePair( i18n("Validity End"), certInfo->validityEnd().toString( QStringLiteral("MMM dd yyyy hh:mm:ss") ) ) );
-    m_sigProperties.append( qMakePair( i18n("Public Key"), certInfo->publicKey() ) );
+    Okular::CertificateInfo certInfo = sigInfo->certificateInfo();
+    m_sigProperties.append( qMakePair( i18n("Version"), certInfo.version() ) );
+    m_sigProperties.append( qMakePair( i18n("Issuer Name"), certInfo.issuerName() ) );
+    m_sigProperties.append( qMakePair( i18n("Issuer Distinguished Name"), certInfo.issuerDN() ) );
+    m_sigProperties.append( qMakePair( i18n("Serial Number"), certInfo.serialNumber() ) );
+    m_sigProperties.append( qMakePair( i18n("Validity Start"), certInfo.validityStart().toString( QStringLiteral("MMM dd yyyy hh:mm:ss") ) ) );
+    m_sigProperties.append( qMakePair( i18n("Validity End"), certInfo.validityEnd().toString( QStringLiteral("MMM dd yyyy hh:mm:ss") ) ) );
+    m_sigProperties.append( qMakePair( i18n("Public Key"), certInfo.publicKey() ) );
 }
 
 

@@ -1140,15 +1140,9 @@ Okular::SignatureInfo *SignatureEdit::validate()
 
 void SignatureEdit::slotShowRevision()
 {
-    QByteArray data;
-    m_controller->m_doc->requestSignedRevisionData( validate(), &data );
-    const QString tmpDir = QStandardPaths::writableLocation( QStandardPaths::TempLocation );
-    QTemporaryFile tf( tmpDir + "/revision_XXXXXX.pdf" );
-    tf.open();
-    tf.write(data);
-    RevisionViewer view( tf.fileName(), this);
-    view.exec();
-    tf.close();
+    Okular::FormFieldSignature *signatureForm = static_cast< Okular::FormFieldSignature * >( formField() );
+    SignaturePropertiesDialog sigSummaryDlg( m_controller->m_doc, signatureForm, this );
+    sigSummaryDlg.exec();
 }
 
 void SignatureEdit::slotShowProperties()

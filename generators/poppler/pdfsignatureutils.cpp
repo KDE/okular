@@ -217,22 +217,6 @@ bool PopplerSignatureInfo::signsTotalDocument() const
     return m_info->signsTotalDocument();
 }
 
-QString PopplerSignatureInfo::contactInfo() const
-{
-    return m_info->contactInfo();
-}
-
-QString PopplerSignatureInfo::location() const
-{
-    return m_info->location();
-}
-
-QString PopplerSignatureInfo::reason() const
-{
-    return m_info->reason();
-}
-
-
 Okular::CertificateInfo *PopplerSignatureInfo::certificateInfo() const
 {
     return ( new PopplerCertificateInfo( m_info->certificateInfo() ) );

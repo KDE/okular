@@ -81,19 +81,19 @@ static QString getReadableHashAlgorithm( Okular::SignatureInfo::HashAlgorithm ha
     }
 }
 
-SignaturePropertiesModel::SignaturePropertiesModel( Okular::SignatureInfo *sigInfo, QObject * parent )
+SignaturePropertiesModel::SignaturePropertiesModel( const Okular::SignatureInfo sigInfo, QObject * parent )
   : QAbstractTableModel( parent )
 {
-    m_sigProperties.append( qMakePair( i18n("Subject Name"), sigInfo->subjectName() ) );
-    m_sigProperties.append( qMakePair( i18n("Subject Distinguished Name"), sigInfo->subjectDN() ) );
-    m_sigProperties.append( qMakePair( i18n("Signing Time"), sigInfo->signingTime().toString( QStringLiteral("MMM dd yyyy hh:mm:ss") ) ) );
-    m_sigProperties.append( qMakePair( i18n("Hash Algorithm"), getReadableHashAlgorithm( sigInfo->hashAlgorithm() ) ) );
-    m_sigProperties.append( qMakePair( i18n("Signature Status"), getReadableSigState( sigInfo->signatureStatus() ) ) );
-    m_sigProperties.append( qMakePair( i18n("Certificate Status"), getReadableCertState( sigInfo->certificateStatus() ) ) );
-    m_sigProperties.append( qMakePair( i18n("Signature Data"), QString::fromUtf8( sigInfo->signature().toHex(' ') ) ) );
+    m_sigProperties.append( qMakePair( i18n("Subject Name"), sigInfo.subjectName() ) );
+    m_sigProperties.append( qMakePair( i18n("Subject Distinguished Name"), sigInfo.subjectDN() ) );
+    m_sigProperties.append( qMakePair( i18n("Signing Time"), sigInfo.signingTime().toString( QStringLiteral("MMM dd yyyy hh:mm:ss") ) ) );
+    m_sigProperties.append( qMakePair( i18n("Hash Algorithm"), getReadableHashAlgorithm( sigInfo.hashAlgorithm() ) ) );
+    m_sigProperties.append( qMakePair( i18n("Signature Status"), getReadableSigState( sigInfo.signatureStatus() ) ) );
+    m_sigProperties.append( qMakePair( i18n("Certificate Status"), getReadableCertState( sigInfo.certificateStatus() ) ) );
+    m_sigProperties.append( qMakePair( i18n("Signature Data"), QString::fromUtf8( sigInfo.signature().toHex(' ') ) ) );
     m_sigProperties.append( qMakePair( QStringLiteral("----------"), QString("------Certificate Properties--------") ) );
 
-    Okular::CertificateInfo certInfo = sigInfo->certificateInfo();
+    Okular::CertificateInfo certInfo = sigInfo.certificateInfo();
     m_sigProperties.append( qMakePair( i18n("Version"), certInfo.version() ) );
     m_sigProperties.append( qMakePair( i18n("Issuer Name"), certInfo.issuerName() ) );
     m_sigProperties.append( qMakePair( i18n("Issuer Distinguished Name"), certInfo.issuerDN() ) );
@@ -160,7 +160,7 @@ QVariant SignaturePropertiesModel::headerData( int section, Qt::Orientation orie
 }
 
 
-SignaturePropertiesDialog::SignaturePropertiesDialog( Okular::SignatureInfo *sigInfo, QWidget *parent )
+SignaturePropertiesDialog::SignaturePropertiesDialog( const Okular::SignatureInfo &sigInfo, QWidget *parent )
     : QDialog( parent ), m_sigInfo( sigInfo )
 {
     setModal( true );
@@ -195,7 +195,7 @@ void SignaturePropertiesDialog::updateText( const QModelIndex &index )
 {
     m_sigPropText->setText( m_sigPropModel->data( index, SignaturePropertiesModel::PropertyValueRole ).toString() );
 }
-SignatureSummaryDialog::SignatureSummaryDialog( Okular::SignatureInfo *sigInfo, QWidget *parent )
+SignatureSummaryDialog::SignatureSummaryDialog( const Okular::SignatureInfo &sigInfo, QWidget *parent )
     : QDialog( parent ), m_sigInfo( sigInfo )
 {
     setModal( true );
@@ -203,7 +203,7 @@ SignatureSummaryDialog::SignatureSummaryDialog( Okular::SignatureInfo *sigInfo, 
     setWindowTitle( i18n("Signature Validation Status") );
 
     auto sigStatusLabel = new QLabel( this );
-    sigStatusLabel->setText( getReadableSigState( m_sigInfo->signatureStatus() ) );
+    sigStatusLabel->setText( getReadableSigState( m_sigInfo.signatureStatus() ) );
 
     auto btnBox = new QDialogButtonBox( QDialogButtonBox::Close, this );
     auto sigPropBtn = new QPushButton( i18n( "Signature Properties"), this );

@@ -206,61 +206,181 @@ void CertificateInfo::setCertificateData( const QByteArray &data )
 }
 
 
-SignatureInfo::SignatureInfo()
+class Okular::SignatureInfoPrivate
 {
+    public:
+        SignatureInfoPrivate()
+            : signatureStatus( SignatureInfo::SignatureStatusUnknown ),
+              certificateStatus( SignatureInfo::CertificateStatusUnknown ),
+              hashAlgorithm( SignatureInfo::HashAlgorithmUnknown ),
+              rangeBounds( QList<qint64>() ), signingTime( QDateTime() ), signature( QByteArray() ),
+              subjectName( QString() ), subjectDN( QString() ), signsTotalDoc( false )
+        {
+        }
+
+        SignatureInfo::SignatureStatus signatureStatus;
+        SignatureInfo::CertificateStatus certificateStatus;
+        SignatureInfo::HashAlgorithm hashAlgorithm;
+
+        CertificateInfo certInfo;
+        QList<qint64> rangeBounds;
+        QDateTime signingTime;
+        QByteArray signature;
+        QString subjectName;
+        QString subjectDN;
+        bool signsTotalDoc;
+};
+
+SignatureInfo::SignatureInfo( SignatureInfoPrivate *priv )
+    : d_ptr( priv )
+{
+}
+
+SignatureInfo::SignatureInfo( const SignatureInfo &other )
+    : d_ptr( other.d_ptr )
+{
+}
+
+SignatureInfo &SignatureInfo::operator=( const SignatureInfo &other )
+{
+    if ( this != &other )
+        d_ptr = other.d_ptr;
+
+    return *this;
 }
 
 SignatureInfo::~SignatureInfo()
 {
 }
 
+bool SignatureInfo::isValid() const
+{
+    return d_ptr.data() != nullptr;
+}
+
 SignatureInfo::SignatureStatus SignatureInfo::signatureStatus() const
 {
-    return SignatureStatusUnknown;
+    Q_D( const SignatureInfo );
+    return d->signatureStatus;
 }
 
 SignatureInfo::CertificateStatus SignatureInfo::certificateStatus() const
 {
-    return CertificateStatusUnknown;
+    Q_D( const SignatureInfo);
+    return d->certificateStatus;
 
 }
 
 SignatureInfo::HashAlgorithm SignatureInfo::hashAlgorithm() const
 {
-    return HashAlgorithmUnknown;
+    Q_D( const SignatureInfo );
+    return d->hashAlgorithm;
 }
 
 QString SignatureInfo::subjectName() const
 {
-    return QString();
+    Q_D( const SignatureInfo );
+    return d->subjectName;
 }
 
 QString SignatureInfo::subjectDN() const
 {
-    return QString();
+    Q_D( const SignatureInfo );
+    return d->subjectDN;
 }
 
 QDateTime SignatureInfo::signingTime() const
 {
-    return QDateTime();
+    Q_D( const SignatureInfo );
+    return d->signingTime;
 }
 
 QByteArray SignatureInfo::signature() const
 {
-    return QByteArray();
+    Q_D( const SignatureInfo );
+    return d->signature;
 }
 
 QList<qint64> SignatureInfo::signedRangeBounds() const
 {
-    return QList<qint64>();
+    Q_D( const SignatureInfo );
+    return d->rangeBounds;
 }
 
 bool SignatureInfo::signsTotalDocument() const
 {
-    return false;
+    Q_D( const SignatureInfo );
+    return d->signsTotalDoc;
 }
 
 CertificateInfo SignatureInfo::certificateInfo() const
 {
-    return CertificateInfo();
+    Q_D( const SignatureInfo );
+    return d->certInfo;
+}
+
+void SignatureInfo::initPrivate()
+{
+    if ( d_ptr.isNull() )
+        d_ptr = QSharedPointer<SignatureInfoPrivate>( new SignatureInfoPrivate );
+}
+
+void SignatureInfo::setSignatureStatus( SignatureStatus sigStatus )
+{
+    Q_D( SignatureInfo );
+    d->signatureStatus = sigStatus;
+}
+
+void SignatureInfo::setCertificateStatus( CertificateStatus certStatus )
+{
+    Q_D( SignatureInfo );
+    d->certificateStatus = certStatus;
+}
+
+void SignatureInfo::setSubjectName( const QString &subjectName )
+{
+    Q_D( SignatureInfo );
+    d->subjectName = subjectName;
+}
+
+void SignatureInfo::setSubjectDN( const QString &subjectDN )
+{
+    Q_D( SignatureInfo );
+    d->subjectDN = subjectDN;
+}
+
+void SignatureInfo::setHashAlgorithm( HashAlgorithm hashAlgorithm )
+{
+    Q_D( SignatureInfo );
+    d->hashAlgorithm = hashAlgorithm;
+}
+
+void SignatureInfo::setSigningTime( const QDateTime & signingTime)
+{
+    Q_D( SignatureInfo );
+    d->signingTime = signingTime;
+}
+
+void SignatureInfo::setSignature( const QByteArray &data )
+{
+    Q_D( SignatureInfo );
+    d->signature = data;
+}
+
+void SignatureInfo::setSignedRangeBounds( const QList<qint64> &rangeBounds )
+{
+    Q_D( SignatureInfo );
+    d->rangeBounds = rangeBounds;
+}
+
+void SignatureInfo::setSignsTotalDocument( bool signsTotalDoc )
+{
+    Q_D( SignatureInfo );
+    d->signsTotalDoc = signsTotalDoc;
+}
+
+void SignatureInfo::setCertificateInfo( CertificateInfo certInfo )
+{
+    Q_D( SignatureInfo );
+    d->certInfo = certInfo;
 }

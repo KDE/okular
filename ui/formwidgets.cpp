@@ -29,7 +29,6 @@
 // local includes
 #include "core/form.h"
 #include "core/document.h"
-#include "core/signatureutils.h"
 #include "debug_ui.h"
 
 FormWidgetsController::FormWidgetsController( Okular::Document *doc )
@@ -1134,10 +1133,8 @@ void SignatureEdit::paintEvent( QPaintEvent * )
     painter.drawRect( 0, 0, width()-2, height()-2 );
 }
 
-Okular::SignatureInfo *SignatureEdit::validate()
+Okular::SignatureInfo SignatureEdit::validate()
 {
-    Okular::FormFieldSignature *sigField = static_cast< Okular::FormFieldSignature * >( formField() );
-    m_sigInfo = sigField->validate();
     m_signatureValidated = true;
     return m_sigInfo;
 }

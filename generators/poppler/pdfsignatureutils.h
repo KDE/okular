@@ -23,30 +23,21 @@ class PopplerCertificateInfo : public Okular::CertificateInfo
     private:
         KeyUsages convertToOkularKeyUsages( Poppler::CertificateInfo::KeyUsages );
         PublicKeyType convertToOkularPublicKeyType( Poppler::CertificateInfo::PublicKeyType );
-};
 
-class PopplerSignatureInfoPrivate;
+        Poppler::CertificateInfo *info;
+};
 
 class PopplerSignatureInfo : public Okular::SignatureInfo
 {
     public:
-        PopplerSignatureInfo( const Poppler::SignatureValidationInfo &info );
-        virtual ~PopplerSignatureInfo();
-
-        SignatureStatus signatureStatus() const override;
-        CertificateStatus certificateStatus() const override;
-        QString subjectName() const override;
-        QString subjectDN() const override;
-        HashAlgorithm hashAlgorithm() const override;
-        QDateTime signingTime() const override;
-        QByteArray signature() const override;
-        QList<qint64> signedRangeBounds() const override;
-        bool signsTotalDocument() const override;
-        Okular::CertificateInfo certificateInfo() const override;
+        PopplerSignatureInfo(const Poppler::SignatureValidationInfo &info);
+        ~PopplerSignatureInfo();
 
     private:
-        QScopedPointer<PopplerSignatureInfoPrivate> d_ptr;
-        Q_DECLARE_PRIVATE( PopplerSignatureInfo )
+        SignatureStatus convertToOkularSigStatus( Poppler::SignatureValidationInfo::SignatureStatus );
+        CertificateStatus convertToOkularCertStatus( Poppler::SignatureValidationInfo::CertificateStatus );
+        HashAlgorithm convertToOkularHashAlg( Poppler::SignatureValidationInfo::HashAlgorithm );
+
 };
 
 #endif

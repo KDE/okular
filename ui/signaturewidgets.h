@@ -27,7 +27,7 @@ class SignaturePropertiesModel : public QAbstractTableModel
     Q_OBJECT
 
     public:
-        explicit SignaturePropertiesModel( Okular::SignatureInfo *sigInfo, QObject * parent = nullptr );
+        explicit SignaturePropertiesModel( const Okular::SignatureInfo sigInfo, QObject * parent = nullptr );
 
         enum {
             PropertyValueRole = Qt::UserRole
@@ -47,7 +47,7 @@ class SignaturePropertiesDialog : public QDialog
     Q_OBJECT
 
     public:
-        SignaturePropertiesDialog( Okular::SignatureInfo *sigInfo, QWidget *parent );
+        SignaturePropertiesDialog( const Okular::SignatureInfo &sigInfo, QWidget *parent );
 
     private Q_SLOTS:
         void updateText( const QModelIndex &index );
@@ -55,7 +55,7 @@ class SignaturePropertiesDialog : public QDialog
     private:
         SignaturePropertiesModel  *m_sigPropModel;
         QTextEdit *m_sigPropText;
-        Okular::SignatureInfo *m_sigInfo;
+        Okular::SignatureInfo m_sigInfo;
 };
 
 class SignatureSummaryDialog : public QDialog
@@ -63,13 +63,13 @@ class SignatureSummaryDialog : public QDialog
     Q_OBJECT
 
     public:
-        SignatureSummaryDialog( Okular::SignatureInfo *sigInfo, QWidget *parent );
+        SignatureSummaryDialog( const Okular::SignatureInfo &sigInfo, QWidget *parent );
 
     private Q_SLOTS:
         void showSignatureProperties();
 
     private:
-        Okular::SignatureInfo *m_sigInfo;
+        Okular::SignatureInfo m_sigInfo;
 };
 
 #endif

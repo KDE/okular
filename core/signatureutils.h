@@ -205,9 +205,19 @@ class OKULARCORE_EXPORT SignatureInfo
         };
 
         /**
-         * Destructor.
+         * Conclassor.
+         */
+        SignatureInfo( SignatureInfoPrivate *priv = nullptr );
+
+        /**
+         * Declassor.
          */
         virtual ~SignatureInfo();
+
+        /**
+         * Returns true if d_ptr is not null.
+         */
+        bool isValid() const;
 
         /**
          * The signature status of the signature.
@@ -260,11 +270,26 @@ class OKULARCORE_EXPORT SignatureInfo
          */
         virtual CertificateInfo certificateInfo() const;
 
+        SignatureInfo( const SignatureInfo &other );
+        SignatureInfo &operator=( const SignatureInfo &other );
+
     protected:
-        SignatureInfo();
+        void initPrivate();
+        void setSignatureStatus( SignatureStatus );
+        void setCertificateStatus( CertificateStatus );
+        void setSubjectName( const QString & );
+        void setSubjectDN( const QString & );
+        void setHashAlgorithm( HashAlgorithm );
+        void setSigningTime( const QDateTime & );
+        void setSignature( const QByteArray & );
+        void setSignedRangeBounds( const QList<qint64> & );
+        void setSignsTotalDocument( bool );
+        void setCertificateInfo( CertificateInfo );
 
     private:
-        Q_DISABLE_COPY( SignatureInfo )
+        Q_DECLARE_PRIVATE( SignatureInfo )
+
+        QSharedPointer<SignatureInfoPrivate> d_ptr;
 };
 
 }

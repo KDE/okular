@@ -17,27 +17,23 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QDialogButtonBox>
-#include <QGroupBox>
-#include <QFormLayout>
-
-#include <KIconLoader>
 
 static QString getReadableSigState( Okular::SignatureInfo::SignatureStatus sigStatus )
 {
     switch ( sigStatus )
     {
         case Okular::SignatureInfo::SignatureValid:
-            return i18n("The signature is cryptographically valid.");
+            return i18n("Signature is Valid.");
         case Okular::SignatureInfo::SignatureInvalid:
-            return i18n("The signature is cryptographically invalid.");
+            return i18n("Signature is Invalid.");
         case Okular::SignatureInfo::SignatureDigestMismatch:
-            return i18n("Digest Mismatch occurred.");
+            return i18n("Digest Mismatch.");
         case Okular::SignatureInfo::SignatureDecodingError:
-            return i18n("The signature CMS/PKCS7 structure is malformed.");
-        case Okular::SignatureInfo::SignatureNotFound:
-            return i18n("The requested signature is not present in the document.");
+            return i18n("Document isn't signed or corrupted data.");
+        case Okular::SignatureInfo::SignatureNotVerified:
+            return i18n("Signature has not yet been verified.");
         default:
-            return i18n("The signature could not be verified.");
+            return i18n("Unknown Validation Failure.");
     }
 }
 
@@ -95,8 +91,6 @@ SignaturePropertiesModel::SignaturePropertiesModel( Okular::SignatureInfo *sigIn
     m_sigProperties.append( qMakePair( i18n("Signature Status"), getReadableSigState( sigInfo->signatureStatus() ) ) );
     m_sigProperties.append( qMakePair( i18n("Certificate Status"), getReadableCertState( sigInfo->certificateStatus() ) ) );
     m_sigProperties.append( qMakePair( i18n("Signature Data"), QString::fromUtf8( sigInfo->signature().toHex(' ') ) ) );
-    m_sigProperties.append( qMakePair( i18n("Location"), QString( sigInfo->location() ) ) );
-    m_sigProperties.append( qMakePair( i18n("Reason"), QString( sigInfo->reason() ) ) );
     m_sigProperties.append( qMakePair( QStringLiteral("----------"), QString("------Certificate Properties--------") ) );
 
     Okular::CertificateInfo *certInfo = sigInfo->certificateInfo();
@@ -206,96 +200,30 @@ SignatureSummaryDialog::SignatureSummaryDialog( Okular::SignatureInfo *sigInfo, 
     : QDialog( parent ), m_sigInfo( sigInfo )
 {
     setModal( true );
-    setWindowTitle( i18n("Signature Properties") );
+    setFixedSize( QSize(250, 100) );
+    setWindowTitle( i18n("Signature Validation Status") );
 
-    auto mainLayout = new QVBoxLayout;
+    auto sigStatusLabel = new QLabel( this );
+    sigStatusLabel->setText( getReadableSigState( m_sigInfo->signatureStatus() ) );
 
-    // signature validation status
-    auto sigStatusBox = new QGroupBox( i18n("Validity Status") );
-    auto hBoxLayout = new QHBoxLayout;
-    auto pixmapLabel = new QLabel;
-    pixmapLabel->setPixmap( KIconLoader::global()->loadIcon( QLatin1String("application-certificate"),
-                                                             KIconLoader::Desktop, KIconLoader::SizeSmallMedium ) );
-    hBoxLayout->addWidget( pixmapLabel );
-
-    auto sigStatusFormLayout = new QFormLayout;
-    const Okular::SignatureInfo::SignatureStatus sigStatus = m_sigInfo->signatureStatus();
-    sigStatusFormLayout->addRow( i18n("Signature Validity:"), new QLabel( getReadableSigState( sigStatus ) ) );
-    QString modString;
-    if ( sigStatus == Okular::SignatureInfo::SignatureValid )
-    {
-        const bool signsTotalDoc = m_sigInfo->signsTotalDocument();
-        if ( signsTotalDoc )
-        {
-            modString = i18n("The document has not been modified since it was signed.");
-        }
-        else
-        {
-            modString = i18n("The revision of the document that was covered by this signature has not been modified;\n"
-                             "however there have been subsequent changes to the document.");
-        }
-
-    }
-    else if ( sigStatus == Okular::SignatureInfo::SignatureDigestMismatch )
-    {
-        modString = i18n("The document has been modified in a way not permitted by a previous signer.");
-    }
-    else
-    {
-        modString = i18n("The document integrity verification could not be completed.");
-    }
-    sigStatusFormLayout->addRow( i18n("Document Modifications:"), new QLabel( modString ) );
-    hBoxLayout->addLayout( sigStatusFormLayout );
-    sigStatusBox->setLayout( hBoxLayout );
-    mainLayout->addWidget( sigStatusBox );
-
-    // additional information
-    auto extraInfoBox = new QGroupBox( i18n("Additional Information") );
-    auto extraInfoFormLayout = new QFormLayout;
-    extraInfoFormLayout->addRow( i18n("Signed By:"), new QLabel( m_sigInfo->subjectName() ) );
-    extraInfoFormLayout->addRow( i18n("Signing Time:"), new QLabel( m_sigInfo->signingTime().toString( QStringLiteral("MMM dd yyyy hh:mm:ss") ) ) );
-    auto getValidString = [=]( const QString &str ) -> QString {
-        return !str.isEmpty() ?  str : i18n("Not Available");
-    };
-    // optional info
-    extraInfoFormLayout->addRow( i18n("Reason:"), new QLabel( getValidString( m_sigInfo->reason() ) ) );
-    extraInfoFormLayout->addRow( i18n("Location:"), new QLabel( getValidString( m_sigInfo->location() ) ) );
-    extraInfoBox->setLayout( extraInfoFormLayout );
-    mainLayout->addWidget( extraInfoBox );
-
-    // document version
-    auto revisionBox = new QGroupBox( i18n("Document Version") );
-    auto revisionLayout = new QHBoxLayout;
-    revisionLayout->addWidget( new QLabel( i18n("Document Revision 1 of 1") ) );
-    revisionLayout->addStretch();
-    auto revisionBtn = new QPushButton( i18n( "View Signed Version...") );
-    connect( revisionBtn, &QPushButton::clicked, this, &SignatureSummaryDialog::reject );
-    revisionLayout->addWidget( revisionBtn );
-    revisionBox->setLayout( revisionLayout );
-    mainLayout->addWidget( revisionBox );
-
-    // button box
     auto btnBox = new QDialogButtonBox( QDialogButtonBox::Close, this );
-    auto certPropBtn = new QPushButton( i18n( "Vew Certificate..."), this );
+    auto sigPropBtn = new QPushButton( i18n( "Signature Properties"), this );
     btnBox->button( QDialogButtonBox::Close )->setDefault( true );
-    btnBox->addButton( certPropBtn, QDialogButtonBox::ActionRole );
+    btnBox->addButton( sigPropBtn, QDialogButtonBox::ActionRole );
     connect( btnBox, &QDialogButtonBox::rejected, this, &SignatureSummaryDialog::reject );
-    connect( certPropBtn, &QPushButton::clicked, this, &SignatureSummaryDialog::viewCertificateProperties );
+    connect( sigPropBtn, &QPushButton::clicked, this, &SignatureSummaryDialog::showSignatureProperties );
+
+    auto mainLayout = new QVBoxLayout( this );
+    mainLayout->addWidget( sigStatusLabel );
     mainLayout->addWidget( btnBox );
-
     setLayout( mainLayout );
-    resize( mainLayout->sizeHint() );
 }
 
-void SignatureSummaryDialog::viewCertificateProperties()
-{
-    SignaturePropertiesDialog sigPropDlg( m_sigInfo, this );
-    sigPropDlg.exec();
-}
-
-void SignatureSummaryDialog::viewSignedVersion()
+void SignatureSummaryDialog::showSignatureProperties()
 {
     reject();
+    SignaturePropertiesDialog sigPropDlg( m_sigInfo, this );
+    sigPropDlg.exec();
 }
 
 #include "moc_signaturewidgets.cpp"

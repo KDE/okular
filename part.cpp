@@ -1,4 +1,4 @@
-/***************************************************************************
+﻿/***************************************************************************
  *   Copyright (C) 2002 by Wilco Greven <greven@kde.org>                   *
  *   Copyright (C) 2002 by Chris Cheney <ccheney@cheney.cx>                *
  *   Copyright (C) 2002 by Malcolm Hunter <malcolm.hunter@gmx.co.uk>       *
@@ -511,6 +511,11 @@ m_cliPresentation(false), m_cliPrint(false), m_cliPrintAndExit(false), m_embedMo
     m_infoTimer = new QTimer();
     m_infoTimer->setSingleShot( true );
     connect( m_infoTimer, &QTimer::timeout, m_infoMessage, &KMessageWidget::animatedHide );
+    m_signatureMessage = new KMessageWidget( rightContainer );
+    m_signatureMessage->setVisible( false );
+    m_signatureMessage->setWordWrap( true );
+    m_signatureMessage->setMessageType( KMessageWidget::Information );
+    rightLayout->addWidget( m_signatureMessage );
     m_pageView = new PageView( rightContainer, m_document );
     QMetaObject::invokeMethod( m_pageView, "setFocus", Qt::QueuedConnection );      //usability setting
 //    m_splitter->setFocusProxy(m_pageView);
@@ -759,6 +764,7 @@ void Part::setupViewerActions()
 
     m_showLeftPanel = nullptr;
     m_showBottomBar = nullptr;
+    m_showSignaturePanel = nullptr;
 
     m_showProperties = ac->addAction(QStringLiteral("properties"));
     m_showProperties->setText(i18n("&Properties"));
@@ -855,6 +861,13 @@ void Part::setupActions()
     connect( m_showBottomBar, &QAction::toggled, this, &Part::slotShowBottomBar );
     m_showBottomBar->setChecked( Okular::Settings::showBottomBar() );
     slotShowBottomBar();
+
+    m_showSignaturePanel = ac->add<KToggleAction>(QStringLiteral("show_signatures"));
+    m_showSignaturePanel->setText(i18n("Show &Signatures"));
+    m_showSignaturePanel->setChecked( m_sidebar->isSidebarVisible() && m_sidebar->currentItem()->inherits("SignaturePanel") );
+    connect( m_showSignaturePanel, &QAction::triggered, this, &Part::slotShowSignatures );
+    connect( m_panel, &SignaturePanel::signaturePanelVisible, m_showSignaturePanel, &KToggleAction::setChecked );
+    slotShowSignatures();
 
     m_showEmbeddedFiles = ac->addAction(QStringLiteral("embedded_files"));
     m_showEmbeddedFiles->setText(i18n("&Embedded Files"));
@@ -1563,15 +1576,22 @@ bool Part::openFile()
         m_formsMessage->setMessageType( KMessageWidget::Information );
         m_formsMessage->setVisible( true );
     }
-    else if ( ok && m_document->metaData( QStringLiteral("IsDigitallySigned") ).toBool() && m_embedMode == PrintPreviewMode )
-    {
-        m_formsMessage->setText( i18n( "All editing and interactive features for this document are disabled. Please save a copy and reopen to edit this document." ) );
-        m_formsMessage->setMessageType( KMessageWidget::Information );
-        m_formsMessage->setVisible( true );
-    }
     else
     {
         m_formsMessage->setVisible( false );
+    }
+
+    if ( ok && m_document->metaData( QStringLiteral("IsDigitallySigned") ).toBool() )
+    {
+        if ( m_embedMode == PrintPreviewMode )
+        {
+            m_signatureMessage->setText( i18n( "All editing and interactive features for this document are disabled. Please save a copy and reopen to edit this document." ) );
+        }
+        else
+        {
+            m_signatureMessage->setText( i18n( "This document is digitally signed." ) );
+        }
+        m_signatureMessage->setVisible( true );
     }
 
     if ( m_showPresentation ) m_showPresentation->setEnabled( ok );
@@ -1854,6 +1874,7 @@ bool Part::closeUrl(bool promptToSave)
         m_migrationMessage->setVisible( false );
         m_topMessage->setVisible( false );
         m_formsMessage->setVisible( false );
+        m_signatureMessage->setVisible( false );
     }
 #ifdef OKULAR_KEEP_FILE_OPEN
     m_keeper->close();
@@ -1910,6 +1931,23 @@ void Part::slotShowBottomBar()
     Okular::Settings::self()->save();
     // show/hide bottom bar
     m_bottomBar->setVisible( showBottom );
+}
+
+void Part::slotShowSignatures()
+{
+   bool showSignaturePanel = m_showSignaturePanel->isChecked();
+   bool signaturePanelVisible = m_panel->isVisible();
+   if ( showSignaturePanel )
+   {
+       if ( !m_sidebar->isSidebarVisible() )
+            m_sidebar->setSidebarVisibility( true );
+       if ( !signaturePanelVisible )
+            m_sidebar->setCurrentItem( m_panel );
+    }
+    else
+    {
+        m_sidebar->setCollapsed( signaturePanelVisible );
+    }
 }
 
 void Part::slotFileDirty( const QString& path )
@@ -2044,7 +2082,7 @@ bool Part::slotAttemptReload( bool oneShot, const QUrl &newUrl )
     }
     else if ( !oneShot )
     {
-        // start watching the file again (since we dropped it on close) 
+        // start watching the file again (since we dropped it on close)
         setFileToWatch( localFilePath() );
         m_dirtyHandler->start( 750 );
     }
@@ -3399,6 +3437,8 @@ void Part::unsetDummyMode()
 
     // attach the actions of the children widgets too
     m_formsMessage->addAction( m_pageView->toggleFormsAction() );
+
+    m_signatureMessage->addAction( m_showSignaturePanel );
 
     // ensure history actions are in the correct state
     updateViewActions();

@@ -35,8 +35,13 @@ class SignaturePanel : public QWidget, public Okular::DocumentObserver
 
         // inherited from DocumentObserver
         void notifySetup( const QVector<Okular::Page *> &pages, int setupFlags ) override;
+        // inherited from QWidget
+        bool event( QEvent *event ) override;
 
         void setPageView( PageView *pv );
+
+    Q_SIGNALS:
+        void signaturePanelVisible( bool visible );
 
     private Q_SLOTS:
         void activated( const QModelIndex& );

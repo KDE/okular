@@ -14,7 +14,6 @@
 #include <QTextDocument>
 #include <QVBoxLayout>
 #include <QHeaderView>
-#include <QTreeView>
 
 #include <KLocalizedString>
 
@@ -25,6 +24,54 @@
 #include "signaturemodel.h"
 #include <QDebug>
 
+TreeView1::TreeView1(Okular::Document *document, QWidget *parent)
+    : QTreeView( parent ), m_document( document )
+{
+}
+
+void TreeView1::paintEvent( QPaintEvent *event )
+{
+  bool hasSignatures = false;
+  for ( uint i = 0; i < m_document->pages(); i++ )
+  {
+      foreach (Okular::FormField *f, m_document->page( i )->formFields() )
+      {
+          if ( f->type() == Okular::FormField::FormSignature )
+          {
+              hasSignatures = true;
+              break;
+          }
+      }
+  }
+
+  if ( !hasSignatures )
+  {
+      QPainter p( viewport() );
+      p.setRenderHint( QPainter::Antialiasing, true );
+      p.setClipRect( event->rect() );
+
+      QTextDocument document;
+      document.setHtml( i18n( "<div align=center>"
+                            "This document does not contain any digital signature."
+                            "</div>" ) );
+      document.setTextWidth( width() - 50 );
+
+      const uint w = document.size().width() + 20;
+      const uint h = document.size().height() + 20;
+      p.setBrush( palette().background() );
+      p.translate( 0.5, 0.5 );
+      p.drawRoundRect( 15, 15, w, h, (8*200)/w, (8*200)/h );
+
+      p.translate( 20, 20 );
+      document.drawContents( &p );
+
+  }
+  else
+  {
+      QTreeView::paintEvent( event );
+  }
+}
+
 SignaturePanel::SignaturePanel( QWidget *parent, Okular::Document *document )
     : QWidget( parent ), m_document( document )
 {
@@ -32,7 +79,7 @@ SignaturePanel::SignaturePanel( QWidget *parent, Okular::Document *document )
     vLayout->setMargin( 0 );
     vLayout->setSpacing( 6 );
 
-    m_view = new QTreeView( this );
+    m_view = new TreeView1( m_document, this );
     m_view->setAlternatingRowColors( true );
     m_view->setSelectionMode( QAbstractItemView::ExtendedSelection );
     m_view->header()->hide();
@@ -40,7 +87,7 @@ SignaturePanel::SignaturePanel( QWidget *parent, Okular::Document *document )
     m_model = new SignatureModel( m_document, this );
 
     m_view->setModel( m_model );
-    connect(m_view, &QTreeView::activated, this, &SignaturePanel::activated);
+    connect(m_view, &TreeView1::activated, this, &SignaturePanel::activated);
 
     vLayout->addWidget( m_view );
 }

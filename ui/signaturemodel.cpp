@@ -285,7 +285,7 @@ QVariant SignatureModel::data( const QModelIndex &index, int role ) const
                 }
                 return QIcon();
             case FormRole:
-                if ( item->itemData == SignatureItem::RevisionInfo || item->itemData == SignatureItem::FieldInfo )
+                if ( item->itemData == SignatureItem::RevisionInfo )
                     return item->signatureForm->id();
                 return -1;
             case PageRole:

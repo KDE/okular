@@ -106,7 +106,6 @@
 #include "ui/guiutils.h"
 #include "ui/layers.h"
 #include "ui/okmenutitle.h"
-#include "ui/signaturewidgets.h"
 #include "conf/preferencesdialog.h"
 #include "settings.h"
 #include "core/action.h"
@@ -452,11 +451,6 @@ m_cliPresentation(false), m_cliPrint(false), m_cliPrintAndExit(false), m_embedMo
     m_sidebar->addItem( m_bookmarkList, QIcon::fromTheme(QStringLiteral("bookmarks")), i18n("Bookmarks") );
     m_sidebar->setItemEnabled( m_bookmarkList, false );
 
-    // [left toolbox: Signatures] | []
-    m_signaturePanel = new SignaturePanel( nullptr, m_document );
-    m_sidebar->addItem( m_signaturePanel, QIcon::fromTheme(QStringLiteral("application-pkcs7-signature")), i18n("Signatures") );
-    m_sidebar->setItemEnabled( m_signaturePanel, false );
-
     // widgets: [../miniBarContainer] | []
 #ifdef OKULAR_ENABLE_MINIBAR
     QWidget * miniBarContainer = new QWidget( 0 );
@@ -561,7 +555,6 @@ m_cliPresentation(false), m_cliPrint(false), m_cliPrintAndExit(false), m_embedMo
     m_document->addObserver( m_reviewsWidget );
     m_document->addObserver( m_pageSizeLabel );
     m_document->addObserver( m_bookmarkList );
-    m_document->addObserver( m_signaturePanel );
 
     connect( m_document->bookmarkManager(), &BookmarkManager::saved,
         this, &Part::slotRebuildBookmarkMenu );
@@ -964,8 +957,6 @@ Part::~Part()
 #ifdef OKULAR_KEEP_FILE_OPEN
     delete m_keeper;
 #endif
-
-    delete m_signaturePanel;
 }
 
 
@@ -3385,7 +3376,6 @@ void Part::unsetDummyMode()
        return;
 
     m_sidebar->setItemEnabled( m_reviewsWidget, true );
-    m_sidebar->setItemEnabled( m_signaturePanel, true );
     m_sidebar->setItemEnabled( m_bookmarkList, true );
     m_sidebar->setSidebarVisibility( Okular::Settings::showLeftPanel() );
 

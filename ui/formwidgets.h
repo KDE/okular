@@ -128,7 +128,6 @@ class FormWidgetsController : public QObject
         friend class FileEdit;
         friend class ListEdit;
         friend class ComboEdit;
-        friend class SignatureEdit;
 
         QList< RadioData > m_radios;
         QHash< int, QAbstractButton* > m_buttons;

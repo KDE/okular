@@ -1063,8 +1063,9 @@ SignatureEdit::SignatureEdit( Okular::FormFieldSignature * signature, QWidget * 
     : QAbstractButton( parent ), FormWidgetIface( this, signature ),
       m_leftMouseButtonPressed( false )
 {
-   // Okular::FormFieldSignature *sigField = static_cast< Okular::FormFieldSignature * >( formField() );
-  //  m_sigInfo = sigField->validate();
+    Okular::FormFieldSignature *sigField = static_cast< Okular::FormFieldSignature * >( formField() );
+    m_sigInfo = sigField->validate();
+
     setCheckable( false );
     setCursor( Qt::PointingHandCursor );
     connect( this, &SignatureEdit::clicked, this, &SignatureEdit::slotShowSummary );
@@ -1143,8 +1144,7 @@ Okular::SignatureInfo *SignatureEdit::validate()
 
 void SignatureEdit::slotShowSummary()
 {
-    Okular::FormFieldSignature *signatureForm = static_cast< Okular::FormFieldSignature * >( formField() );
-    SignaturePropertiesDialog sigSummaryDlg( m_controller->m_doc, signatureForm, this );
+    SignaturePropertiesDialog sigSummaryDlg( m_sigInfo, this );
     sigSummaryDlg.exec();
 }
 

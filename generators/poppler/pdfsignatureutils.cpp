@@ -9,9 +9,6 @@
 
 #include "pdfsignatureutils.h"
 
-#include <KLocalizedString>
-#include <QDebug>
-
 PopplerCertificateInfo::PopplerCertificateInfo( const Poppler::CertificateInfo &info )
     : m_info( new Poppler::CertificateInfo( nullptr ) )
 {
@@ -40,14 +37,12 @@ QByteArray PopplerCertificateInfo::serialNumber() const
 
 QString PopplerCertificateInfo::issuerInfo( PopplerCertificateInfo::EntityInfoKey key ) const
 {
-    QString str = m_info->issuerInfo(static_cast<Poppler::CertificateInfo::EntityInfoKey>( key ));
-    return !str.isEmpty() ? str : i18n("Not Available");
+    return m_info->issuerInfo(static_cast<Poppler::CertificateInfo::EntityInfoKey>( key ));
 }
 
 QString PopplerCertificateInfo::subjectInfo( PopplerCertificateInfo::EntityInfoKey key ) const
 {
-    QString str = m_info->subjectInfo(static_cast<Poppler::CertificateInfo::EntityInfoKey>( key ));
-    return !str.isEmpty() ? str : i18n("Not Available");
+    return m_info->subjectInfo(static_cast<Poppler::CertificateInfo::EntityInfoKey>( key ));
 }
 
 QDateTime PopplerCertificateInfo::validityStart() const

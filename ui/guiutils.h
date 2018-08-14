@@ -69,8 +69,6 @@ namespace GuiUtils
     QString getReadableSigState( Okular::SignatureInfo::SignatureStatus sigStatus );
     QString getReadableCertState( Okular::SignatureInfo::CertificateStatus certStatus );
     QString getReadableHashAlgorithm( Okular::SignatureInfo::HashAlgorithm hashAlg );
-    QString getReadablePublicKeyType( Okular::CertificateInfo::PublicKeyType type );
-    QString getReadableKeyUsage( Okular::CertificateInfo::KeyUsageExtensions kuExtensions );
 }
 
 

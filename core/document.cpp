@@ -4463,12 +4463,23 @@ void Document::fillConfigDialog( KConfigDialog * dialog )
     QVector<KPluginMetaData> offers = DocumentPrivate::configurableGenerators();
     d->loadServiceList( offers );
 
-    bool pagesAdded = false;
+    // We want the generators to be sorted by name so let's fill in a QMap
+    // this sorts by internal id which is not awesome, but at least the sorting
+    // is stable between runs that before it wasn't
+    QMap<QString, GeneratorInfo> sortedGenerators;
     QHash< QString, GeneratorInfo >::iterator it = d->m_loadedGenerators.begin();
     QHash< QString, GeneratorInfo >::iterator itEnd = d->m_loadedGenerators.end();
     for ( ; it != itEnd; ++it )
     {
-        Okular::ConfigInterface * iface = d->generatorConfig( it.value() );
+        sortedGenerators.insert(it.key(), it.value());
+    }
+
+    bool pagesAdded = false;
+    QMap< QString, GeneratorInfo >::iterator sit = sortedGenerators.begin();
+    QMap< QString, GeneratorInfo >::iterator sitEnd = sortedGenerators.end();
+    for ( ; sit != sitEnd; ++sit )
+    {
+        Okular::ConfigInterface * iface = d->generatorConfig( sit.value() );
         if ( iface )
         {
             iface->addPages( dialog );

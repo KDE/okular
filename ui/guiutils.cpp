@@ -23,8 +23,7 @@
 #include "core/action.h"
 #include "core/annotations.h"
 #include "core/document.h"
-#include "core/page.h"
-#include "core/form.h"
+
 #include <memory>
 
 
@@ -275,86 +274,6 @@ void colorizeImage( QImage & grayImage, const QColor & color, unsigned int destA
                 sourceAlpha = qt_div_255( destAlpha * sourceAlpha );
             data[i] = qRgba( newR, newG, newB, sourceAlpha );
         }
-    }
-}
-
-QVector<Okular::FormFieldSignature*> getSignatureFormFields( Okular::Document *doc )
-{
-    QVector<Okular::FormFieldSignature*> signatureFormFields;
-    uint pageCount = doc->pages();
-    for ( uint i=0; i<pageCount; i++ )
-    {
-        foreach ( Okular::FormField *f, doc->page( i )->formFields() )
-        {
-            if ( f->type() == Okular::FormField::FormSignature )
-            {
-                signatureFormFields.append( static_cast<Okular::FormFieldSignature*>( f ) );
-            }
-        }
-    }
-    return signatureFormFields;
-}
-
-QString getReadableSigState( Okular::SignatureInfo::SignatureStatus sigStatus )
-{
-    switch ( sigStatus )
-    {
-        case Okular::SignatureInfo::SignatureValid:
-            return i18n("The signature is cryptographically valid.");
-        case Okular::SignatureInfo::SignatureInvalid:
-            return i18n("The signature is cryptographically invalid.");
-        case Okular::SignatureInfo::SignatureDigestMismatch:
-            return i18n("Digest Mismatch occurred.");
-        case Okular::SignatureInfo::SignatureDecodingError:
-            return i18n("The signature CMS/PKCS7 structure is malformed.");
-        case Okular::SignatureInfo::SignatureNotFound:
-            return i18n("The requested signature is not present in the document.");
-        default:
-            return i18n("The signature could not be verified.");
-    }
-}
-
-QString getReadableCertState( Okular::SignatureInfo::CertificateStatus certStatus )
-{
-    switch ( certStatus )
-    {
-        case Okular::SignatureInfo::CertificateTrusted:
-            return i18n("Certificate is Trusted.");
-        case Okular::SignatureInfo::CertificateUntrustedIssuer:
-            return i18n("Certificate issuer isn't Trusted.");
-        case Okular::SignatureInfo::CertificateUnknownIssuer:
-            return i18n("Certificate issuer is unknown.");
-        case Okular::SignatureInfo::CertificateRevoked:
-            return i18n("Certificate has been Revoked.");
-        case Okular::SignatureInfo::CertificateExpired:
-            return i18n("Certificate has Expired.");
-        case Okular::SignatureInfo::CertificateNotVerified:
-            return i18n("Certificate has not yet been verified.");
-        default:
-            return i18n("Unknown issue with Certificate or corrupted data.");
-    }
-}
-
-QString getReadableHashAlgorithm( Okular::SignatureInfo::HashAlgorithm hashAlg )
-{
-    switch ( hashAlg )
-    {
-        case Okular::SignatureInfo::HashAlgorithmMd2:
-            return i18n("MD2");
-        case Okular::SignatureInfo::HashAlgorithmMd5:
-            return i18n("MD5");
-        case Okular::SignatureInfo::HashAlgorithmSha1:
-            return i18n("SHA1");
-        case Okular::SignatureInfo::HashAlgorithmSha256:
-            return i18n("SHA256");
-        case Okular::SignatureInfo::HashAlgorithmSha384:
-            return i18n("SHA384");
-        case Okular::SignatureInfo::HashAlgorithmSha512:
-            return i18n("SHA512");
-        case Okular::SignatureInfo::HashAlgorithmSha224:
-            return i18n("SHA224");
-        default:
-            return i18n("Unknown");
     }
 }
 

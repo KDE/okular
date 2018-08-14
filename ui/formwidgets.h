@@ -14,7 +14,7 @@
 #define _OKULAR_FORMWIDGETS_H_
 
 #include "core/area.h"
-#include "core/signatureutils.h"
+#include "core/signatureinfo.h"
 
 #include <qcheckbox.h>
 #include <qcombobox.h>

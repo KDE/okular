@@ -12,7 +12,7 @@
 
 #include <poppler-form.h>
 #include "core/form.h"
-#include "core/signatureutils.h"
+#include "core/signatureinfo.h"
 
 class PopplerFormFieldButton : public Okular::FormFieldButton
 {

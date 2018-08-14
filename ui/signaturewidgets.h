@@ -14,7 +14,7 @@
 #include <QVector>
 #include <QAbstractTableModel>
 
-#include "core/signatureutils.h"
+#include "core/signatureinfo.h"
 
 class QTextEdit;
 

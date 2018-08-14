@@ -12,7 +12,7 @@
 
 #include <poppler-form.h>
 
-#include "core/signatureutils.h"
+#include "core/signatureinfo.h"
 
 class PopplerCertificateInfo : public Okular::CertificateInfo
 {
@@ -23,8 +23,6 @@ class PopplerCertificateInfo : public Okular::CertificateInfo
     private:
         KeyUsages convertToOkularKeyUsages( Poppler::CertificateInfo::KeyUsages );
         PublicKeyType convertToOkularPublicKeyType( Poppler::CertificateInfo::PublicKeyType );
-
-        Poppler::CertificateInfo *info;
 };
 
 class PopplerSignatureInfo : public Okular::SignatureInfo

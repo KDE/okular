@@ -106,6 +106,7 @@
 #include "ui/guiutils.h"
 #include "ui/layers.h"
 #include "ui/okmenutitle.h"
+#include "ui/signaturepanel.h"
 #include "conf/preferencesdialog.h"
 #include "settings.h"
 #include "core/action.h"
@@ -451,6 +452,11 @@ m_cliPresentation(false), m_cliPrint(false), m_cliPrintAndExit(false), m_embedMo
     m_sidebar->addItem( m_bookmarkList, QIcon::fromTheme(QStringLiteral("bookmarks")), i18n("Bookmarks") );
     m_sidebar->setItemEnabled( m_bookmarkList, false );
 
+    // [left toolbox: Signature Panel] | []
+    m_panel = new SignaturePanel( nullptr, m_document );
+    m_sidebar->addItem( m_panel, QIcon::fromTheme(QStringLiteral("application-pkcs7-signature")), i18n("Signatures") );
+    m_sidebar->setItemEnabled( m_panel, false );
+
     // widgets: [../miniBarContainer] | []
 #ifdef OKULAR_ENABLE_MINIBAR
     QWidget * miniBarContainer = new QWidget( 0 );
@@ -516,6 +522,7 @@ m_cliPresentation(false), m_cliPrint(false), m_cliPrintAndExit(false), m_embedMo
     connect( m_pageView.data(), &PageView::fitWindowToPage, this, &Part::fitWindowToPage );
     rightLayout->addWidget( m_pageView );
     m_layers->setPageView( m_pageView );
+    m_panel->setPageView( m_pageView );
     m_findBar = new FindBar( m_document, rightContainer );
     rightLayout->addWidget( m_findBar );
     m_bottomBar = new QWidget( rightContainer );
@@ -554,6 +561,7 @@ m_cliPresentation(false), m_cliPrint(false), m_cliPrintAndExit(false), m_embedMo
     m_document->addObserver( m_reviewsWidget );
     m_document->addObserver( m_pageSizeLabel );
     m_document->addObserver( m_bookmarkList );
+    m_document->addObserver( m_panel );
 
     connect( m_document->bookmarkManager(), &BookmarkManager::saved,
         this, &Part::slotRebuildBookmarkMenu );
@@ -941,6 +949,7 @@ Part::~Part()
     delete m_reviewsWidget;
     delete m_bookmarkList;
     delete m_infoTimer;
+    delete m_panel;
 
     delete m_document;
 
@@ -3374,6 +3383,7 @@ void Part::unsetDummyMode()
 
     m_sidebar->setItemEnabled( m_reviewsWidget, true );
     m_sidebar->setItemEnabled( m_bookmarkList, true );
+    m_sidebar->setItemEnabled( m_panel, true );
     m_sidebar->setSidebarVisibility( Okular::Settings::showLeftPanel() );
 
     // add back and next in history

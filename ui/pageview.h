@@ -117,6 +117,8 @@ Q_OBJECT
 
         void updateCursor();
 
+        void highlightSignatureFormWidget( int formId );
+
     public Q_SLOTS:
         void copyTextSelection() const;
         void selectAll();

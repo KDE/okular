@@ -5530,6 +5530,33 @@ void PageView::slotFitWindowToPage()
     emit fitWindowToPage( viewportSize, pageSize );
 }
 
+void PageView::highlightSignatureFormWidget( int formId )
+{
+    QVector< PageViewItem * >::const_iterator dIt = d->items.constBegin(), dEnd = d->items.constEnd();
+    for ( ; dIt != dEnd; ++dIt )
+    {
+        foreach ( auto fw, (*dIt)->formWidgets() )
+        {
+            if ( fw->formField()->id() == formId )
+            {
+                SignatureEdit *widget = static_cast< SignatureEdit * >( fw );
+                if ( !widget )
+                    return;
+                widget->setDummyMode( true );
+                QTimer *timer = new QTimer( this );
+                timer->setSingleShot( true );
+                timer->start( 250 );
+                connect(timer, &QTimer::timeout, this, [=]{
+                    widget->setDummyMode( false );
+                    timer->stop();
+                    delete timer;
+                });
+                return;
+            }
+        }
+    }
+}
+
 //END private SLOTS
 
 #include "moc_pageview.cpp"

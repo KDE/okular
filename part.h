@@ -74,6 +74,7 @@ class Reviews;
 class BookmarkList;
 class DrawingToolActions;
 class Layers;
+class SignaturePanel;
 
 #if PURPOSE_FOUND
 namespace Purpose { class Menu; }
@@ -323,6 +324,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         QPointer<Reviews> m_reviewsWidget;
         QPointer<BookmarkList> m_bookmarkList;
         QPointer<Layers> m_layers;
+        QPointer<SignaturePanel> m_panel;
 
         // document watcher (and reloader) variables
         KDirWatch *m_watcher;

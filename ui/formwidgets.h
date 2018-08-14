@@ -355,6 +355,12 @@ class SignatureEdit : public QAbstractButton, public FormWidgetIface
     public:
         explicit SignatureEdit( Okular::FormFieldSignature * signature, QWidget * parent = nullptr );
 
+        // This will be called when an item in signature panel is clicked. Calling it will change this
+        // widget's state for sometime. If this widget was visible prior to calling this then background
+        // color will change and borders will remain otherwise visibility of this widget will change.
+        // During the change all interactions will be disabled.
+        void setDummyMode( bool set );
+
     protected:
         bool event( QEvent * e ) override;
         void contextMenuEvent( QContextMenuEvent * event ) override;
@@ -365,7 +371,9 @@ class SignatureEdit : public QAbstractButton, public FormWidgetIface
         void slotViewProperties();
 
     private:
-        bool m_lefMouseButtonPressed;
+        bool m_widgetPressed;
+        bool m_dummyMode;
+        bool m_wasVisible; // this will help in deciding whether or not to paint border for this widget
 
     DECLARE_ADDITIONAL_ACTIONS
 };

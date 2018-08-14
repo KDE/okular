@@ -1060,15 +1060,43 @@ bool ComboEdit::event( QEvent* e )
 }
 
 SignatureEdit::SignatureEdit( Okular::FormFieldSignature * signature, QWidget * parent )
-    : QAbstractButton( parent ), FormWidgetIface( this, signature ), m_lefMouseButtonPressed( false )
+    : QAbstractButton( parent ), FormWidgetIface( this, signature ),
+      m_widgetPressed( false ), m_dummyMode( false ), m_wasVisible( false )
 {
     setCheckable( false );
     setCursor( Qt::PointingHandCursor );
     connect( this, &SignatureEdit::clicked, this, &SignatureEdit::slotViewProperties );
 }
 
+void SignatureEdit::setDummyMode( bool set )
+{
+    m_dummyMode = set;
+    if ( m_dummyMode )
+    {
+        m_wasVisible = isVisible();
+        //if widget was hidden then show it.
+        //even if it wasn't hidden calling this will still update the background.
+        setVisibility( true );
+    }
+    else
+    {
+        //forms were not visible before this call so hide this widget.
+        if ( !m_wasVisible )
+            setVisibility( false );
+        //forms were visible even before this call so only update the background color.
+        else
+            update();
+    }
+}
+
 bool SignatureEdit::event( QEvent * e )
 {
+    if ( m_dummyMode && e->type() != QEvent::Paint )
+    {
+        e->accept();
+        return true;
+    }
+
     switch ( e->type() )
     {
         case QEvent::MouseButtonPress:
@@ -1076,7 +1104,7 @@ bool SignatureEdit::event( QEvent * e )
             QMouseEvent *ev = static_cast< QMouseEvent * >( e );
             if ( ev->button() == Qt::LeftButton )
             {
-                m_lefMouseButtonPressed = true;
+                m_widgetPressed = true;
                 update();
             }
             mousePressEvent( ev );
@@ -1085,7 +1113,7 @@ bool SignatureEdit::event( QEvent * e )
         case QEvent::MouseButtonRelease:
         {
             QMouseEvent *ev = static_cast< QMouseEvent * >( e );
-            m_lefMouseButtonPressed = false;
+            m_widgetPressed = false;
             if ( ev->button() == Qt::LeftButton)
             {
                 update();
@@ -1116,8 +1144,17 @@ void SignatureEdit::contextMenuEvent( QContextMenuEvent * event )
 void SignatureEdit::paintEvent( QPaintEvent * )
 {
     QPainter painter( this );
-    painter.setPen( Qt::black );
-    if ( m_lefMouseButtonPressed )
+    //no borders when user hasn't allowed the forms to be shown
+    if ( m_dummyMode && !m_wasVisible )
+    {
+        painter.setPen( Qt::transparent );
+    }
+    else
+    {
+        painter.setPen( Qt::black );
+    }
+
+    if ( m_widgetPressed || m_dummyMode )
     {
         QColor col = palette().color( QPalette::Active, QPalette::Highlight );
         col.setAlpha(50);
@@ -1132,6 +1169,9 @@ void SignatureEdit::paintEvent( QPaintEvent * )
 
 void SignatureEdit::slotViewRevision()
 {
+    if ( m_dummyMode )
+        return;
+
     QByteArray revisionData;
     Okular::FormFieldSignature *formSignature = static_cast< Okular::FormFieldSignature * >( formField() );
     m_controller->m_doc->requestSignedRevisionData( formSignature->validate(), &revisionData );
@@ -1141,6 +1181,9 @@ void SignatureEdit::slotViewRevision()
 
 void SignatureEdit::slotViewProperties()
 {
+    if ( m_dummyMode )
+        return;
+
     Okular::FormFieldSignature *formSignature = static_cast< Okular::FormFieldSignature * >( formField() );
     SignaturePropertiesDialog propDlg( m_controller->m_doc, formSignature, this );
     propDlg.exec();

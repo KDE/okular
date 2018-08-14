@@ -76,7 +76,7 @@ SignatureItem::SignatureItem(SignatureItem *_parent, Okular::FormFieldSignature 
     switch ( itemData )
     {
         case RevisionInfo:
-            displayString = i18n("Rev. %1: Signed By %2", pos, info->signerName() );
+            displayString = i18n("Rev. %1: Signed By %2", pos, info->subjectName() );
             break;
         case SignatureValidity:
             displayString = GuiUtils::getReadableSigState( info->signatureStatus() );
@@ -264,7 +264,7 @@ QVariant SignatureModel::data( const QModelIndex &index, int role ) const
                 return item->displayString;
             case Qt::DecorationRole:
                 if ( item->itemData == SignatureItem::RevisionInfo )
-                    return QIcon::fromTheme( QStringLiteral("dialog-yes") );
+                    return QIcon::fromTheme( QStringLiteral("application-pkcs7-signature") );
                 return QIcon();
             case FormRole:
                 if ( item->itemData == SignatureItem::RevisionInfo )
@@ -285,6 +285,17 @@ bool SignatureModel::hasChildren( const QModelIndex &parent ) const
 
     SignatureItem *item = static_cast<SignatureItem*>( parent.internalPointer() );
     return !item->children.isEmpty();
+}
+
+QVariant SignatureModel::headerData( int section, Qt::Orientation orientation, int role ) const
+{
+    if ( orientation != Qt::Horizontal )
+        return QVariant();
+
+    if ( section == 0 && role == Qt::DisplayRole )
+        return QString::fromLocal8Bit("Signatures");
+
+    return QVariant();
 }
 
 QModelIndex SignatureModel::index( int row, int column, const QModelIndex &parent ) const

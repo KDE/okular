@@ -20,29 +20,24 @@ PopplerCertificateInfo::~PopplerCertificateInfo()
     delete m_info;
 }
 
-bool PopplerCertificateInfo::isNull() const
-{
-    return m_info->isNull();
-}
-
-int PopplerCertificateInfo::version() const
+QByteArray PopplerCertificateInfo::version() const
 {
     return m_info->version();
+}
+
+QString PopplerCertificateInfo::issuerName() const
+{
+    return m_info->issuerName();
+}
+
+QString PopplerCertificateInfo::issuerDN() const
+{
+    return m_info->issuerDN();
 }
 
 QByteArray PopplerCertificateInfo::serialNumber() const
 {
     return m_info->serialNumber();
-}
-
-QString PopplerCertificateInfo::issuerInfo( PopplerCertificateInfo::EntityInfoKey key ) const
-{
-    return m_info->issuerInfo(static_cast<Poppler::CertificateInfo::EntityInfoKey>( key ));
-}
-
-QString PopplerCertificateInfo::subjectInfo( PopplerCertificateInfo::EntityInfoKey key ) const
-{
-    return m_info->subjectInfo(static_cast<Poppler::CertificateInfo::EntityInfoKey>( key ));
 }
 
 QDateTime PopplerCertificateInfo::validityStart() const
@@ -55,10 +50,10 @@ QDateTime PopplerCertificateInfo::validityEnd() const
     return m_info->validityEnd();
 }
 
-PopplerCertificateInfo::KeyUsageExtensions PopplerCertificateInfo::keyUsageExtensions() const
+PopplerCertificateInfo::KeyUsages PopplerCertificateInfo::keyUsages() const
 {
-    Poppler::CertificateInfo::KeyUsageExtensions popplerKu = m_info->keyUsageExtensions();
-    KeyUsageExtensions ku = KuNone;
+    Poppler::CertificateInfo::KeyUsages popplerKu = m_info->keyUsages();
+    KeyUsages ku = KuNone;
     if ( popplerKu.testFlag( Poppler::CertificateInfo::KuDigitalSignature ) )
         ku |= KuDigitalSignature;
     if ( popplerKu.testFlag( Poppler::CertificateInfo::KuNonRepudiation ) )
@@ -194,24 +189,14 @@ PopplerSignatureInfo::HashAlgorithm PopplerSignatureInfo::hashAlgorithm() const
     }
 }
 
-QString PopplerSignatureInfo::signerName() const
+QString PopplerSignatureInfo::subjectName() const
 {
     return m_info->signerName();
 }
 
-QString PopplerSignatureInfo::signerSubjectDN() const
+QString PopplerSignatureInfo::subjectDN() const
 {
     return m_info->signerSubjectDN();
-}
-
-QString PopplerSignatureInfo::location() const
-{
-    return m_info->location();
-}
-
-QString PopplerSignatureInfo::reason() const
-{
-    return m_info->reason();
 }
 
 QDateTime PopplerSignatureInfo::signingTime() const
@@ -232,6 +217,16 @@ QList<qint64> PopplerSignatureInfo::signedRangeBounds() const
 bool PopplerSignatureInfo::signsTotalDocument() const
 {
     return m_info->signsTotalDocument();
+}
+
+QString PopplerSignatureInfo::location() const
+{
+    return m_info->location();
+}
+
+QString PopplerSignatureInfo::reason() const
+{
+    return m_info->reason();
 }
 
 Okular::CertificateInfo *PopplerSignatureInfo::certificateInfo() const

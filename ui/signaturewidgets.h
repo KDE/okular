@@ -88,4 +88,35 @@ class RevisionViewer : public Okular::FilePrinterPreview
         ~RevisionViewer();
 };
 
+class TreeView1 : public QTreeView
+{
+  Q_OBJECT
+
+  public:
+    TreeView1( Okular::Document *document, QWidget *parent = Q_NULLPTR );
+  protected:
+    void paintEvent( QPaintEvent *event ) override;
+
+  private:
+    Okular::Document *m_document;
+};
+
+class SignaturePanel : public QWidget, public Okular::DocumentObserver
+{
+    Q_OBJECT
+    public:
+        SignaturePanel( QWidget * parent, Okular::Document * document );
+        ~SignaturePanel();
+
+         //void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) override;
+    private Q_SLOTS:
+        void activated( const QModelIndex& );
+
+    private:
+         Okular::Document *m_document;
+         TreeView1 *m_view;
+         SignatureModel *m_model;
+};
+
+
 #endif

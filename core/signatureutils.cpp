@@ -19,31 +19,26 @@ CertificateInfo::~CertificateInfo()
 {
 }
 
-Q_DECLARE_OPERATORS_FOR_FLAGS( CertificateInfo::KeyUsageExtensions )
+Q_DECLARE_OPERATORS_FOR_FLAGS( CertificateInfo::KeyUsages )
 
-bool CertificateInfo::isNull() const
+QByteArray CertificateInfo::version() const
 {
-    return true;
+    return QByteArray();
 }
 
-int CertificateInfo::version() const
+QString CertificateInfo::issuerName() const
 {
-    return -1;
+    return QString();
+}
+
+QString CertificateInfo::issuerDN() const
+{
+    return QString();
 }
 
 QByteArray CertificateInfo::serialNumber() const
 {
     return QByteArray();
-}
-
-QString CertificateInfo::issuerInfo(EntityInfoKey) const
-{
-    return QString();
-}
-
-QString CertificateInfo::subjectInfo(EntityInfoKey) const
-{
-    return QString();
 }
 
 QDateTime CertificateInfo::validityStart() const
@@ -56,7 +51,7 @@ QDateTime CertificateInfo::validityEnd() const
     return QDateTime();
 }
 
-CertificateInfo::KeyUsageExtensions CertificateInfo::keyUsageExtensions() const
+CertificateInfo::KeyUsages CertificateInfo::keyUsages() const
 {
     return KuNone;
 }
@@ -111,22 +106,12 @@ SignatureInfo::HashAlgorithm SignatureInfo::hashAlgorithm() const
     return HashAlgorithmUnknown;
 }
 
-QString SignatureInfo::signerName() const
+QString SignatureInfo::subjectName() const
 {
     return QString();
 }
 
-QString SignatureInfo::signerSubjectDN() const
-{
-    return QString();
-}
-
-QString SignatureInfo::location() const
-{
-    return QString();
-}
-
-QString SignatureInfo::reason() const
+QString SignatureInfo::subjectDN() const
 {
     return QString();
 }
@@ -149,6 +134,16 @@ QList<qint64> SignatureInfo::signedRangeBounds() const
 bool SignatureInfo::signsTotalDocument() const
 {
     return false;
+}
+
+QString SignatureInfo::location() const
+{
+    return QString();
+}
+
+QString SignatureInfo::reason() const
+{
+    return QString();
 }
 
 CertificateInfo *SignatureInfo::certificateInfo() const

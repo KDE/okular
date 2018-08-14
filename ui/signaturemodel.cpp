@@ -264,25 +264,7 @@ QVariant SignatureModel::data( const QModelIndex &index, int role ) const
                 return item->displayString;
             case Qt::DecorationRole:
                 if ( item->itemData == SignatureItem::RevisionInfo )
-                {
-                    Okular::SignatureInfo *info = item->signatureForm->validate();
-                    Okular::SignatureInfo::SignatureStatus signatureStatus = info->signatureStatus();
-                    if ( signatureStatus == Okular::SignatureInfo::SignatureValid )
-                    {
-                        if ( info->signsTotalDocument() )
-                            return QIcon::fromTheme( QStringLiteral("dialog-ok") );
-                        else
-                            return QIcon::fromTheme( QStringLiteral("dialog-warning") );
-                    }
-                    else if ( signatureStatus == Okular::SignatureInfo::SignatureNotVerified )
-                    {
-                        return QIcon::fromTheme( QStringLiteral("dialog-question") );
-                    }
-                    else
-                    {
-                        return QIcon::fromTheme( QStringLiteral("dialog-error") );
-                    }
-                }
+                    return QIcon::fromTheme( QStringLiteral("dialog-yes") );
                 return QIcon();
             case FormRole:
                 if ( item->itemData == SignatureItem::RevisionInfo )

@@ -280,7 +280,7 @@ QVariant SignatureModel::data( const QModelIndex &index, int role ) const
                     }
                     else
                     {
-                        return QIcon::fromTheme( QStringLiteral("dialog-close") );
+                        return QIcon::fromTheme( QStringLiteral("dialog-error") );
                     }
                 }
                 return QIcon();

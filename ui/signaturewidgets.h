@@ -48,9 +48,6 @@ class RevisionViewer : public Okular::FilePrinterPreview
     public:
         RevisionViewer( const QString &filename, QWidget *parent = nullptr );
         ~RevisionViewer();
-
-    private Q_SLOTS:
-        void doSave( const QString &filename);
 };
 
 #endif

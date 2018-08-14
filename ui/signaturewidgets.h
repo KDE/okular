@@ -17,7 +17,7 @@
 #include "core/signatureutils.h"
 #include "core/observer.h"
 #include "fileprinterpreview.h"
-#include "signaturemodel.h"
+//#include "signaturemodel.h"
 
 class QTextEdit;
 
@@ -108,14 +108,12 @@ class SignaturePanel : public QWidget, public Okular::DocumentObserver
         SignaturePanel( QWidget * parent, Okular::Document * document );
         ~SignaturePanel();
 
-         //void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) override;
-    private Q_SLOTS:
-        void activated( const QModelIndex& );
+         void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) override;
 
     private:
          Okular::Document *m_document;
          TreeView1 *m_view;
-         SignatureModel *m_model;
+         //SignatureModel *m_model;
 };
 
 

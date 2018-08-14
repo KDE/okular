@@ -374,7 +374,6 @@ PopplerFormFieldSignature::PopplerFormFieldSignature( Poppler::FormFieldSignatur
 {
     m_rect = Okular::NormalizedRect::fromQRectF( m_field->rect() );
     m_id = m_field->id();
-    m_info = new PopplerSignatureInfo( m_field->validate( Poppler::FormFieldSignature::ValidateVerifyCertificate ) );
     SET_ACTIONS
 }
 
@@ -431,5 +430,8 @@ PopplerFormFieldSignature::SignatureType PopplerFormFieldSignature::signatureTyp
 
 Okular::SignatureInfo *PopplerFormFieldSignature::validate() const
 {
+    if ( !m_info )
+        m_info = new PopplerSignatureInfo( m_field->validate( Poppler::FormFieldSignature::ValidateVerifyCertificate ) );
+
     return m_info;
 }

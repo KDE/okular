@@ -24,7 +24,7 @@ class CertificateInfoPrivate;
 class SignatureInfoPrivate;
 
 /**
- * @short A helper class to store information x509 digital certificate
+ * @short A helper class to store information about x509 certificate
  */
 class OKULARCORE_EXPORT CertificateInfo
 {
@@ -42,60 +42,66 @@ class OKULARCORE_EXPORT CertificateInfo
         };
 
         /**
-         * Certificate key usage.
+         * Certificate key usage extensions.
          */
-        enum KeyUsage
+        enum KeyUsageExtension
         {
-            KuNone = 0,
-            KuDigitalSignature = 1,
-            KuNonRepudiation = 2,
-            KuKeyEncipherment = 4,
-            KuDataEncipherment = 8,
-            KuKeyAgreement = 16,
-            KuKeyCertSign = 32,
-            KuClrSign = 64,
-            KuEncipherOnly = 128
+            KuDigitalSignature = 0x80,
+            KuNonRepudiation   = 0x40,
+            KuKeyEncipherment  = 0x20,
+            KuDataEncipherment = 0x10,
+            KuKeyAgreement     = 0x08,
+            KuKeyCertSign      = 0x04,
+            KuClrSign          = 0x02,
+            KuEncipherOnly     = 0x01,
+            KuNone             = 0x00
         };
-        Q_DECLARE_FLAGS( KeyUsages, KeyUsage )
+        Q_DECLARE_FLAGS( KeyUsageExtensions, KeyUsageExtension )
 
         /**
-         * Conclassor.
+         * Predefined keys for elements in an entity's distinguished name.
          */
-        CertificateInfo( CertificateInfoPrivate *priv = nullptr );
+        enum EntityInfoKey
+        {
+            CommonName,
+            DistinguishedName,
+            EmailAddress,
+            Organization,
+        };
 
         /**
-         * Declassor
+         * Destructor
          */
         virtual ~CertificateInfo();
 
         /**
-         * Returns true if d_ptr is not null.
+         * Returns true if certificate has no contents; otherwise returns false.
          */
-        bool isValid() const;
+        virtual bool isNull() const;
 
         /**
-         * The certificate version string in hex encoding.
+         * The certificate version string.
          */
-        virtual QByteArray version() const;
+        virtual int version() const;
 
         /**
-         * The common name of certificate issuer.
-         */
-        virtual QString issuerName() const;
-
-        /**
-         * The distinguished name of certificate issuer.
-         */
-        virtual QString issuerDN() const;
-
-        /**
-        The hex encoded certificate serial number.
+         * The certificate serial number.
          */
         virtual QByteArray serialNumber() const;
 
         /**
-        The date-time when certificate becomes valid.
-          */
+         * Information about the issuer.
+         */
+        virtual QString issuerInfo(EntityInfoKey key) const;
+
+        /**
+         * Information about the subject
+         */
+        virtual QString subjectInfo(EntityInfoKey key) const;
+
+        /**
+         * The date-time when certificate becomes valid.
+         */
         virtual QDateTime validityStart() const;
 
         /**
@@ -104,9 +110,9 @@ class OKULARCORE_EXPORT CertificateInfo
         virtual QDateTime validityEnd() const;
 
         /**
-         * The key usages of certificate.
+         * The uses allowed for the certificate.
          */
-        virtual KeyUsages keyUsages() const;
+        virtual KeyUsageExtensions keyUsageExtensions() const;
 
         /**
          * The public key value.
@@ -119,37 +125,25 @@ class OKULARCORE_EXPORT CertificateInfo
         virtual PublicKeyType publicKeyType() const;
 
         /**
-         * The strength of public key in bits or -1 in case
-         * key type is 'OtherKey'.
+         * The strength of public key in bits.
          */
         virtual int publicKeyStrength() const;
+
+        /**
+         * Returns true if certificate is self-signed otherwise returns false.
+         */
+        virtual bool isSelfSigned() const;
 
         /**
          * The DER encoded certificate.
          */
         virtual QByteArray certificateData() const;
 
-        CertificateInfo( const CertificateInfo &other );
-        virtual CertificateInfo &operator=( const CertificateInfo &other );
-
     protected:
-        void initPrivate();
-        void setVersion( const QByteArray & );
-        void setIssuerName( const QString & );
-        void setIssuerDN( const QString & );
-        void setSerialNumber( const QByteArray & );
-        void setValidityStart( const QDateTime & );
-        void setValidityEnd( const QDateTime & );
-        void setKeyUsages( KeyUsages );
-        void setPublicKey( const QByteArray & );
-        void setPublicKeyType( PublicKeyType );
-        void setPublicKeyStrength( int );
-        void setCertificateData( const QByteArray & );
+        CertificateInfo();
 
     private:
-        Q_DECLARE_PRIVATE( CertificateInfo )
-
-        QSharedPointer<CertificateInfoPrivate> d_ptr;
+        Q_DISABLE_COPY( CertificateInfo )
 };
 
 /**
@@ -168,7 +162,7 @@ class OKULARCORE_EXPORT SignatureInfo
             SignatureValid,          ///< The signature is cryptographically valid.
             SignatureInvalid,        ///< The signature is cryptographically invalid.
             SignatureDigestMismatch, ///< The document content was changed after the signature was applied.
-            SignatureDecodingError,  ///< The signature CMS/PKCS7 classure is malformed.
+            SignatureDecodingError,  ///< The signature CMS/PKCS7 structure is malformed.
             SignatureGenericError,   ///< The signature could not be verified.
             SignatureNotFound,       ///< The requested signature is not present in the document.
             SignatureNotVerified     ///< The signature is not yet verified.
@@ -205,19 +199,9 @@ class OKULARCORE_EXPORT SignatureInfo
         };
 
         /**
-         * Conclassor.
-         */
-        SignatureInfo( SignatureInfoPrivate *priv = nullptr );
-
-        /**
-         * Declassor.
+         * Destructor.
          */
         virtual ~SignatureInfo();
-
-        /**
-         * Returns true if d_ptr is not null.
-         */
-        bool isValid() const;
 
         /**
          * The signature status of the signature.
@@ -232,12 +216,22 @@ class OKULARCORE_EXPORT SignatureInfo
         /**
          * The signer subject common name associated with the signature.
          */
-        virtual QString subjectName() const;
+        virtual QString signerName() const;
 
         /**
          * The signer subject distinguished name associated with the signature.
          */
-        virtual QString subjectDN() const;
+        virtual QString signerSubjectDN() const;
+
+        /**
+         * Get signing location.
+         */
+        virtual QString location() const;
+
+        /**
+         * Get signing reason.
+         */
+        virtual QString reason() const;
 
         /**
          * The the hash algorithm used for the signature.
@@ -268,28 +262,13 @@ class OKULARCORE_EXPORT SignatureInfo
         /**
          * Get certificate details.
          */
-        virtual CertificateInfo certificateInfo() const;
-
-        SignatureInfo( const SignatureInfo &other );
-        SignatureInfo &operator=( const SignatureInfo &other );
+        virtual CertificateInfo *certificateInfo() const;
 
     protected:
-        void initPrivate();
-        void setSignatureStatus( SignatureStatus );
-        void setCertificateStatus( CertificateStatus );
-        void setSubjectName( const QString & );
-        void setSubjectDN( const QString & );
-        void setHashAlgorithm( HashAlgorithm );
-        void setSigningTime( const QDateTime & );
-        void setSignature( const QByteArray & );
-        void setSignedRangeBounds( const QList<qint64> & );
-        void setSignsTotalDocument( bool );
-        void setCertificateInfo( CertificateInfo );
+        SignatureInfo();
 
     private:
-        Q_DECLARE_PRIVATE( SignatureInfo )
-
-        QSharedPointer<SignatureInfoPrivate> d_ptr;
+        Q_DISABLE_COPY( SignatureInfo )
 };
 
 }

@@ -14,6 +14,7 @@
   <name xml:lang="en-GB">Mobipocket</name>
   <name xml:lang="es">Mobipocket</name>
   <name xml:lang="et">Mobipocket</name>
+  <name xml:lang="eu">Mobipocket</name>
   <name xml:lang="fi">Mobipocket</name>
   <name xml:lang="fr">Mobipocket</name>
   <name xml:lang="gl">Mobipocket</name>
@@ -24,6 +25,7 @@
   <name xml:lang="nn">Mobipocket</name>
   <name xml:lang="pl">Mobipocket</name>
   <name xml:lang="pt">Mobipocket</name>
+  <name xml:lang="pt-BR">Mobipocket</name>
   <name xml:lang="ru">Mobipocket</name>
   <name xml:lang="sk">Mobipocket</name>
   <name xml:lang="sl">Mobipocket</name>
@@ -47,6 +49,7 @@
   <summary xml:lang="en-GB">Adds support for reading Mobipocket E-books</summary>
   <summary xml:lang="es">Permite la lectura de libros electrónicos en formato Mobipocket</summary>
   <summary xml:lang="et">Mobipocketi e-raamatute lugemise toetus</summary>
+  <summary xml:lang="eu">Mobipocket e-liburuak irakurtzeko euskarria gehitzen du</summary>
   <summary xml:lang="fi">Lisää MobiPocket-e-kirjojen lukutuen</summary>
   <summary xml:lang="fr">Ajouter la gestion en lecture des livres électroniques Mobipocket</summary>
   <summary xml:lang="gl">Permite ler libros electrónicos Mobipocket</summary>
@@ -57,6 +60,7 @@
   <summary xml:lang="nn">Legg til støtte for å lesa e-bøker i Mobipocket-formatet</summary>
   <summary xml:lang="pl">Dodaje obsługę czytania ebooków Mobipocket</summary>
   <summary xml:lang="pt">Adiciona o suporte para ler E-books da Mobipocket</summary>
+  <summary xml:lang="pt-BR">Adiciona o suporte para leitura de E-books da Mobipocket</summary>
   <summary xml:lang="ru">Поддержка чтения электронных книг Mobipocket</summary>
   <summary xml:lang="sk">Pridá podporu pre čítanie e-kníh Mobipocket</summary>
   <summary xml:lang="sl">Doda podporo za branje e-knjig Mobipocket</summary>

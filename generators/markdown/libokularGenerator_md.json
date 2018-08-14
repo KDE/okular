@@ -4,6 +4,7 @@
             {
                 "Email": "wolff@julianwolff.de",
                 "Name": "Julian Wolff",
+                "Name[pt_BR]": "Juliano",
                 "Name[sr@ijekavian]": "Јулијан Волф",
                 "Name[sr@ijekavianlatin]": "Julijan Volf",
                 "Name[sr@latin]": "Julijan Volf",
@@ -33,6 +34,7 @@
         "Name[de]": "Anzeigemodul für Markdown",
         "Name[el]": "Σύστημα υποστήριξης markdown",
         "Name[es]": "Motor para Markdown",
+        "Name[eu]": "Markdown-en bizkarraldekoa",
         "Name[fi]": "Markdown-taustaosa",
         "Name[fr]": "Moteur de markdown",
         "Name[gl]": "Infraestrutura de Markdown",
@@ -43,6 +45,7 @@
         "Name[nn]": "Markdown-motor",
         "Name[pl]": "Silnik Markdown",
         "Name[pt]": "Infra-Estrutura de Markdown",
+        "Name[pt_BR]": "Infraestrutura Markdown",
         "Name[ru]": "Модуль поддержки формата Markdown",
         "Name[sk]": "Markdown backend",
         "Name[sl]": "Zaledje za Markdown",

@@ -2,11 +2,11 @@ cmake_minimum_required(VERSION 3.0)
 
 # KDE Application Version, managed by release script
 set (KDE_APPLICATIONS_VERSION_MAJOR "18")
-set (KDE_APPLICATIONS_VERSION_MINOR "07")
+set (KDE_APPLICATIONS_VERSION_MINOR "11")
 set (KDE_APPLICATIONS_VERSION_MICRO "70")
 set (KDE_APPLICATIONS_VERSION "${KDE_APPLICATIONS_VERSION_MAJOR}.${KDE_APPLICATIONS_VERSION_MINOR}.${KDE_APPLICATIONS_VERSION_MICRO}")
 
-project(okular VERSION 1.4.${KDE_APPLICATIONS_VERSION_MICRO})
+project(okular VERSION 1.5.${KDE_APPLICATIONS_VERSION_MICRO})
 
 set(QT_REQUIRED_VERSION "5.8.0")
 set(KF5_REQUIRED_VERSION "5.33.0")
@@ -118,7 +118,7 @@ set_package_properties("Poppler" PROPERTIES
         TYPE RECOMMENDED
         PURPOSE "Support for PDF files in okular.")
 
-add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
+add_definitions(-DQT_USE_FAST_OPERATOR_PLUS)
 add_definitions(-DTRANSLATION_DOMAIN="okular")
 add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
 
@@ -144,8 +144,10 @@ endif()
 add_subdirectory( ui )
 add_subdirectory( shell )
 add_subdirectory( generators )
-add_subdirectory( autotests )
-add_subdirectory( conf/autotests )
+if(BUILD_TESTING)
+   add_subdirectory( autotests )
+   add_subdirectory( conf/autotests )
+endif()
 
 if(KF5DocTools_FOUND)
     add_subdirectory(doc)
@@ -193,7 +195,7 @@ set(okularcore_SRCS
    core/utils.cpp
    core/view.cpp
    core/fileprinter.cpp
-   core/signatureinfo.cpp
+   core/signatureutils.cpp
    core/script/event.cpp
    core/synctex/synctex_parser.c
    core/synctex/synctex_parser_utils.c
@@ -218,7 +220,7 @@ install( FILES
            core/page.h
            core/pagesize.h
            core/pagetransition.h
-           core/signatureinfo.h
+           core/signatureutils.h
            core/sound.h
            core/sourcereference.h
            core/textdocumentgenerator.h

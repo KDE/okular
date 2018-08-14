@@ -14,6 +14,7 @@
   <name xml:lang="en-GB">Text</name>
   <name xml:lang="es">Texto</name>
   <name xml:lang="et">Tekst</name>
+  <name xml:lang="eu">Testua</name>
   <name xml:lang="fi">Teksti</name>
   <name xml:lang="fr">Text</name>
   <name xml:lang="gl">Texto</name>
@@ -24,6 +25,7 @@
   <name xml:lang="nn">Tekst</name>
   <name xml:lang="pl">Tekst</name>
   <name xml:lang="pt">Texto</name>
+  <name xml:lang="pt-BR">Texto</name>
   <name xml:lang="ru">Текст</name>
   <name xml:lang="sk">Text</name>
   <name xml:lang="sl">Besedilo</name>
@@ -47,6 +49,7 @@
   <summary xml:lang="en-GB">Adds support for reading plain text documents</summary>
   <summary xml:lang="es">Permite la lectura de documentos de texto sin formato</summary>
   <summary xml:lang="et">Lihttekstidokumentide lugemise toetus</summary>
+  <summary xml:lang="eu">Testu arrunteko dokumentuak irakurtzeko euskarria gehitzen du </summary>
   <summary xml:lang="fi">Lisää paljaiden tekstitiedostojen lukutuen</summary>
   <summary xml:lang="fr">Permet la lecture des fichiers texte</summary>
   <summary xml:lang="gl">Permite ler documentos de texto simple</summary>
@@ -57,6 +60,7 @@
   <summary xml:lang="nn">Legg til støtte for å lesa reintekstdokument</summary>
   <summary xml:lang="pl">Dodaje obsługę czytania zwykłych plików tekstowych</summary>
   <summary xml:lang="pt">Adiciona o suporte para ler documentos em texto simples</summary>
+  <summary xml:lang="pt-BR">Adiciona o suporte para leitura de documentos em texto simples</summary>
   <summary xml:lang="ru">Поддержка чтения простых текстовых документов</summary>
   <summary xml:lang="sk">Pridá podporu pre čítanie čistých textových dokumentov</summary>
   <summary xml:lang="sl">Doda podporo za branje besedilnih dokumentov</summary>

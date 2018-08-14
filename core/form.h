@@ -13,7 +13,7 @@
 #include "okularcore_export.h"
 #include "area.h"
 #include "annotations.h"
-#include "signatureinfo.h"
+#include "signatureutils.h"
 
 #include <QtCore/QStringList>
 
@@ -418,8 +418,7 @@ class OKULARCORE_EXPORT FormFieldSignature : public FormField
          * Validate the signature with 'now' as validation time.
          *
          */
-        virtual SignatureInfo validate() const = 0;
-
+        virtual SignatureInfo *validate() const = 0;
 
     protected:
         FormFieldSignature();

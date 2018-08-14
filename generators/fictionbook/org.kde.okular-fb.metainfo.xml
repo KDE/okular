@@ -14,6 +14,7 @@
   <name xml:lang="en-GB">FictionBook</name>
   <name xml:lang="es">FictionBook</name>
   <name xml:lang="et">FictionBook</name>
+  <name xml:lang="eu">FictionBook</name>
   <name xml:lang="fi">FictionBook</name>
   <name xml:lang="fr">FictionBook</name>
   <name xml:lang="gl">FictionBook</name>
@@ -24,6 +25,7 @@
   <name xml:lang="nn">FictionBook</name>
   <name xml:lang="pl">Fikcja</name>
   <name xml:lang="pt">FictionBook</name>
+  <name xml:lang="pt-BR">FictionBook</name>
   <name xml:lang="ru">FictionBook</name>
   <name xml:lang="sk">FictionBook</name>
   <name xml:lang="sl">FictionBook</name>
@@ -47,6 +49,7 @@
   <summary xml:lang="en-GB">Adds support for reading FictionBooks</summary>
   <summary xml:lang="es">Permite la lectura de libros en formato FictionBook</summary>
   <summary xml:lang="et">FictionBooki lugemise toetus</summary>
+  <summary xml:lang="eu">FictionBooks irakurtzeko euskarria gehitzen du</summary>
   <summary xml:lang="fi">Lisää FictionBook-lukutuen</summary>
   <summary xml:lang="fr">Permet la lecture des fichiers FictionBooks</summary>
   <summary xml:lang="gl">Permite ler libros FictionBook</summary>
@@ -57,6 +60,7 @@
   <summary xml:lang="nn">Legg til støtte for å lesa e-bøker i FictionBook-formatet</summary>
   <summary xml:lang="pl">Dodaje obsługę czytania fikcji</summary>
   <summary xml:lang="pt">Adiciona o suporte para a leitura de livros no formato FictionBooks</summary>
+  <summary xml:lang="pt-BR">Adiciona o suporte para leitura de FictionBooks</summary>
   <summary xml:lang="ru">Поддержка чтения электронных книг FictionBook</summary>
   <summary xml:lang="sk">Pridá podporu pre čítanie FictionBook</summary>
   <summary xml:lang="sl">Doda podporo za branje dokumentov FictionBook</summary>

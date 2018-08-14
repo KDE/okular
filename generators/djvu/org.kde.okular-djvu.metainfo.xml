@@ -14,6 +14,7 @@
   <name xml:lang="en-GB">DjVu Documents</name>
   <name xml:lang="es">Documentos DjVu</name>
   <name xml:lang="et">DjVu dokumendid</name>
+  <name xml:lang="eu">DjVu dokumentuak</name>
   <name xml:lang="fi">DjVu-tiedostot</name>
   <name xml:lang="fr">Documents DjVu</name>
   <name xml:lang="gl">Documentos DjVu</name>
@@ -24,6 +25,7 @@
   <name xml:lang="nn">DjVu-dokument</name>
   <name xml:lang="pl">Dokumenty DjVu</name>
   <name xml:lang="pt">Documentos DjVu</name>
+  <name xml:lang="pt-BR">Documentos DjVu</name>
   <name xml:lang="ru">Документы DjVu</name>
   <name xml:lang="sk">DjVu dokumenty</name>
   <name xml:lang="sl">Dokumenti DjVu</name>
@@ -47,6 +49,7 @@
   <summary xml:lang="en-GB">Adds support for reading DjVu documents</summary>
   <summary xml:lang="es">Permite la lectura de documentos DjVu</summary>
   <summary xml:lang="et">DjVu dokumentide lugemise toetus</summary>
+  <summary xml:lang="eu">DjVu dokumentuak irakurtzeko euskarria gehitzen du</summary>
   <summary xml:lang="fi">Lisää DjVu-tiedostojen lukutuen</summary>
   <summary xml:lang="fr">Permet la lecture des documents DjVu</summary>
   <summary xml:lang="gl">Permite ler documentos de DjVu</summary>
@@ -57,6 +60,7 @@
   <summary xml:lang="nn">Legg til støtte for å lesa DjVu-dokument</summary>
   <summary xml:lang="pl">Dodaje obsługę czytania dokumentów DjVu</summary>
   <summary xml:lang="pt">Adiciona o suporte para a leitura de documentos DjVu</summary>
+  <summary xml:lang="pt-BR">Adiciona o suporte para leitura de documentos DjVu</summary>
   <summary xml:lang="ru">Поддержка чтения документов DjVu</summary>
   <summary xml:lang="sk">Pridá podporu pre čítanie DjVu dokumentov</summary>
   <summary xml:lang="sl">Doda podporo za branje dokumentov DjVu</summary>

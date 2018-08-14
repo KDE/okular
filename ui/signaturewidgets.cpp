@@ -308,9 +308,9 @@ void TreeView1::paintEvent( QPaintEvent *event )
       p.setClipRect( event->rect() );
 
       QTextDocument document;
-      document.setHtml( i18n( "<div align=center>"
-                            "This document does not contain any digital signature."
-                            "</div>" ) );
+      document.setHtml( i18n( "<div align=center><h3>No Signatures</h3>"
+                            "To create new annotations press F6 or select <i>Tools -&gt; Review</i>"
+                            " from the menu.</div>" ) );
       document.setTextWidth( width() - 50 );
 
       const uint w = document.size().width() + 20;

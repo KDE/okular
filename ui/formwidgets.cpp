@@ -13,7 +13,6 @@
 
 #include "formwidgets.h"
 #include "pageviewutils.h"
-#include "signaturewidgets.h"
 
 #include <qbuttongroup.h>
 #include <QKeyEvent>
@@ -24,7 +23,6 @@
 #include <kstandardaction.h>
 #include <qaction.h>
 #include <QUrl>
-#include <QPainter>
 
 // local includes
 #include "core/form.h"
@@ -276,13 +274,6 @@ FormWidgetIface * FormWidgetFactory::createWidget( Okular::FormField * ff, QWidg
                     widget = new ComboEdit( ffc, parent );
                     break;
             }
-            break;
-        }
-        case Okular::FormField::FormSignature:
-        {
-            Okular::FormFieldSignature * ffs = static_cast< Okular::FormFieldSignature * >( ff );
-            if ( ffs->isVisible() && ffs->signatureType() != Okular::FormFieldSignature::UnknownType )
-                widget = new SignatureEdit( ffs, parent );
             break;
         }
         default: ;
@@ -1058,99 +1049,6 @@ bool ComboEdit::event( QEvent* e )
     return QComboBox::event( e );
 }
 
-SignatureEdit::SignatureEdit( Okular::FormFieldSignature * signature, QWidget * parent )
-    : QAbstractButton( parent ), FormWidgetIface( this, signature ),
-      m_leftMouseButtonPressed( false )
-{
-    Okular::FormFieldSignature *sigField = static_cast< Okular::FormFieldSignature * >( formField() );
-    m_sigInfo = sigField->validate();
-
-    setCheckable( false );
-    setCursor( Qt::PointingHandCursor );
-    connect( this, &SignatureEdit::clicked, this, &SignatureEdit::slotShowSummary );
-}
-
-bool SignatureEdit::event( QEvent * e )
-{
-    switch ( e->type() )
-    {
-        case QEvent::MouseButtonPress:
-        {
-            QMouseEvent *ev = static_cast< QMouseEvent * >( e );
-            if ( ev->button() == Qt::LeftButton )
-            {
-                m_leftMouseButtonPressed = true;
-                update();
-            }
-            mousePressEvent( ev );
-            break;
-        }
-        case QEvent::MouseButtonRelease:
-        {
-            QMouseEvent *ev = static_cast< QMouseEvent * >( e );
-            m_leftMouseButtonPressed = false;
-            if ( ev->button() == Qt::LeftButton)
-            {
-                update();
-            }
-            mouseReleaseEvent( ev );
-            break;
-        }
-        default:
-            break;
-    }
-
-    return QAbstractButton::event( e );
-}
-
-void SignatureEdit::contextMenuEvent( QContextMenuEvent * event )
-{
-    QMenu *menu = new QMenu( this );
-    QAction *sigVal = new QAction( i18n("Validate Signature"), this );
-    menu->addAction( sigVal );
-    connect( sigVal, &QAction::triggered, this, &SignatureEdit::slotShowSummary );
-    QAction *sigProp = new QAction( i18n("Show Signature Properties"), this );
-    menu->addAction( sigProp );
-    connect( sigProp, &QAction::triggered, this, &SignatureEdit::slotShowProperties );
-    menu->exec( event->globalPos() );
-    delete menu;
-}
-
-void SignatureEdit::paintEvent( QPaintEvent * )
-{
-    QPainter painter( this );
-    painter.setPen( Qt::black );
-    if ( m_leftMouseButtonPressed )
-    {
-        QColor col = palette().color( QPalette::Active, QPalette::Highlight );
-        col.setAlpha(50);
-        painter.setBrush( col );
-    }
-    else
-    {
-        painter.setBrush( Qt::transparent );
-    }
-    painter.drawRect( 0, 0, width()-2, height()-2 );
-}
-
-Okular::SignatureInfo SignatureEdit::validate()
-{
-    m_signatureValidated = true;
-    return m_sigInfo;
-}
-
-void SignatureEdit::slotShowSummary()
-{
-    SignatureSummaryDialog sigSummaryDlg( m_sigInfo, this );
-    sigSummaryDlg.exec();
-}
-
-void SignatureEdit::slotShowProperties()
-{
-    SignaturePropertiesDialog sigPropDlg( m_sigInfo, this );
-    sigPropDlg.exec();
-}
-
 // Code for additional action handling.
 // Challenge: Change preprocessor magic to C++ magic!
 //
@@ -1236,7 +1134,6 @@ DEFINE_ADDITIONAL_ACTIONS( TextAreaEdit, KTextEdit )
 DEFINE_ADDITIONAL_ACTIONS( FileEdit, KUrlRequester )
 DEFINE_ADDITIONAL_ACTIONS( ListEdit, QListWidget )
 DEFINE_ADDITIONAL_ACTIONS( ComboEdit, QComboBox )
-DEFINE_ADDITIONAL_ACTIONS( SignatureEdit, QAbstractButton )
 
 #undef DEFINE_ADDITIONAL_ACTIONS
 

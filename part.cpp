@@ -512,11 +512,6 @@ m_cliPresentation(false), m_cliPrint(false), m_cliPrintAndExit(false), m_embedMo
     m_infoTimer = new QTimer();
     m_infoTimer->setSingleShot( true );
     connect( m_infoTimer, &QTimer::timeout, m_infoMessage, &KMessageWidget::animatedHide );
-    m_signatureMessage = new KMessageWidget( rightContainer );
-    m_signatureMessage->setVisible( false );
-    m_signatureMessage->setWordWrap( true );
-    m_signatureMessage->setMessageType( KMessageWidget::Information );
-    rightLayout->addWidget( m_signatureMessage );
     m_pageView = new PageView( rightContainer, m_document );
     QMetaObject::invokeMethod( m_pageView, "setFocus", Qt::QueuedConnection );      //usability setting
 //    m_splitter->setFocusProxy(m_pageView);
@@ -1566,20 +1561,21 @@ bool Part::openFile()
     // m_pageView->toggleFormsAction() may be null on dummy mode
     else if ( ok && m_pageView->toggleFormsAction() && m_pageView->toggleFormsAction()->isEnabled() )
     {
-        m_formsMessage->setText( i18n( "This document has forms. Click on the button to interact with them, or use View -> Show Forms." ) );
+        if ( m_pageView->validateSignaturesAction() && m_pageView->validateSignaturesAction()->isEnabled() )
+        {
+            m_formsMessage->addAction( m_pageView->validateSignaturesAction() );
+            m_formsMessage->setText( i18n( "This document has forms of which atleast one is a signature form. Click on the buttons to interact with them." ) );
+        }
+        else
+        {
+            m_formsMessage->setText( i18n( "This document has forms. Click on the button to interact with them, or use View -> Show Forms." ) );
+        }
         m_formsMessage->setMessageType( KMessageWidget::Information );
         m_formsMessage->setVisible( true );
     }
     else
     {
         m_formsMessage->setVisible( false );
-    }
-
-    if ( ok && m_pageView->validateSignaturesAction() && m_pageView->validateSignaturesAction()->isEnabled() )
-    {
-        m_signatureMessage->setText( i18n( "This document is digitally signed." ) );
-        m_signatureMessage->setMessageType( KMessageWidget::Information );
-        m_signatureMessage->setVisible( true );
     }
 
     if ( m_showPresentation ) m_showPresentation->setEnabled( ok );
@@ -1862,7 +1858,6 @@ bool Part::closeUrl(bool promptToSave)
         m_migrationMessage->setVisible( false );
         m_topMessage->setVisible( false );
         m_formsMessage->setVisible( false );
-        m_signatureMessage->setVisible( false );
     }
 #ifdef OKULAR_KEEP_FILE_OPEN
     m_keeper->close();
@@ -3409,8 +3404,6 @@ void Part::unsetDummyMode()
     // attach the actions of the children widgets too
     m_formsMessage->addAction( m_pageView->toggleFormsAction() );
 
-    m_signatureMessage->addAction( m_pageView->validateSignaturesAction() );
-
     // ensure history actions are in the correct state
     updateViewActions();
 }
@@ -3593,9 +3586,10 @@ void Part::setReadWrite(bool readwrite)
     ReadWritePart::setReadWrite( readwrite );
 }
 
-void Part::slotShowSigStatus( bool  )
+void Part::slotShowSigStatus( bool allSignaturesValid )
 {
-    m_sidebar->setCurrentItem( m_signaturePanel );
+    const QString message = allSignaturesValid ? i18n( "All signatures are valid." ) : i18n( "Atleast one signature has problem." );
+    m_pageView->displayMessage( message, QString(), allSignaturesValid ? PageViewMessage::Info : PageViewMessage::Error, 10000 );
 }
 
 } // namespace Okular

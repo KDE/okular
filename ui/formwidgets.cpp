@@ -134,16 +134,6 @@ void FormWidgetsController::registerRadioButton( FormWidgetIface *fwButton, Okul
     m_radios.append( newdata );
 }
 
-void FormWidgetsController::registerSignatureField(Okular::FormFieldSignature *formSignature)
-{
-    m_signatures.append(formSignature->id());
-}
-
-int FormWidgetsController::totalSignatures()
-{
-    return m_signatures.count();
-}
-
 void FormWidgetsController::dropRadioButtons()
 {
     QList< RadioData >::iterator it = m_radios.begin(), itEnd = m_radios.end();
@@ -1151,19 +1141,6 @@ Okular::SignatureInfo *SignatureEdit::validate()
     m_signatureValidated = true;
     return m_sigInfo;
 }
-
-QByteArray *SignatureEdit::signedVersion( const QString &origFile )
-{
-    return m_sigInfo->signedVersion( origFile );
-}
-
-void SignatureEdit::setFormWidgetsController( FormWidgetsController *controller )
-{
-    Okular::FormFieldSignature *form = static_cast<Okular::FormFieldSignature *>(m_ff);
-    FormWidgetIface::setFormWidgetsController( controller );
-    m_controller->registerSignatureField( form );
-}
-
 
 void SignatureEdit::slotShowSummary()
 {

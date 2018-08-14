@@ -54,12 +54,10 @@ class PopplerSignatureInfo : public Okular::SignatureInfo
         bool signsTotalDocument() const override;
         QString location() const override;
         QString reason() const override;
-        QByteArray *signedVersion( const QString &origFile ) override;
         Okular::CertificateInfo *certificateInfo() const override;
 
     private:
         Poppler::SignatureValidationInfo *m_info;
-        QScopedPointer<QByteArray> m_revisionData;
 };
 
 #endif

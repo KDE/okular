@@ -352,9 +352,6 @@ SignaturePanel::SignaturePanel( QWidget *parent, Okular::Document *document )
 void SignaturePanel::activated( const QModelIndex &index )
 {
     int formId = m_model->data( index, SignatureModel::FormRole ).toInt();
-    if ( formId == -1 )
-        return;
-
     auto formFields = GuiUtils::getSignatureFormFields( m_document );
     Okular::FormFieldSignature *sf;
     foreach( auto f, formFields )

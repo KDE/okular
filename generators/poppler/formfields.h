@@ -12,7 +12,6 @@
 
 #include <poppler-form.h>
 #include "core/form.h"
-#include "core/signatureinfo.h"
 
 class PopplerFormFieldButton : public Okular::FormFieldButton
 {
@@ -110,30 +109,6 @@ class PopplerFormFieldChoice : public Okular::FormFieldChoice
         Okular::NormalizedRect m_rect;
         int m_id;
 
-};
-
-class PopplerFormFieldSignature : public Okular::FormFieldSignature
-{
-    public:
-        PopplerFormFieldSignature( Poppler::FormFieldSignature * field );
-        virtual ~PopplerFormFieldSignature();
-
-        // inherited from Okular::FormField
-        Okular::NormalizedRect rect() const override;
-        int id() const override;
-        QString name() const override;
-        QString uiName() const override;
-        bool isReadOnly() const override;
-        bool isVisible() const override;
-
-        // inherited from Okular::FormFieldSignature
-        SignatureType signatureType() const override;
-        Okular::SignatureInfo validate() const override;
-
-    private:
-        Poppler::FormFieldSignature * m_field;
-        Okular::NormalizedRect m_rect;
-        int m_id;
 };
 
 #endif

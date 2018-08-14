@@ -12,8 +12,6 @@
 
 #include "core/action.h"
 
-#include "pdfsignatureinfo.h"
-
 #include <poppler-qt5.h>
 
 #include <config-okular-poppler.h>
@@ -369,66 +367,4 @@ bool PopplerFormFieldChoice::canBeSpellChecked() const
     return m_field->canBeSpellChecked();
 }
 
-PopplerFormFieldSignature::PopplerFormFieldSignature( Poppler::FormFieldSignature * field )
-    : Okular::FormFieldSignature(), m_field( field )
-{
-    m_rect = Okular::NormalizedRect::fromQRectF( m_field->rect() );
-    m_id = m_field->id();
-    SET_ACTIONS
-}
 
-PopplerFormFieldSignature::~PopplerFormFieldSignature()
-{
-    delete m_field;
-}
-
-Okular::NormalizedRect PopplerFormFieldSignature::rect() const
-{
-    return m_rect;
-}
-
-int PopplerFormFieldSignature::id() const
-{
-    return m_id;
-}
-
-QString PopplerFormFieldSignature::name() const
-{
-    return m_field->name();
-}
-
-QString PopplerFormFieldSignature::uiName() const
-{
-    return m_field->uiName();
-}
-
-bool PopplerFormFieldSignature::isReadOnly() const
-{
-    return m_field->isReadOnly();
-}
-
-bool PopplerFormFieldSignature::isVisible() const
-{
-    return m_field->isVisible();
-}
-
-PopplerFormFieldSignature::SignatureType PopplerFormFieldSignature::signatureType() const
-{
-    switch ( m_field->signatureType() )
-    {
-        case Poppler::FormFieldSignature::AdbePkcs7sha1:
-            return Okular::FormFieldSignature::AdbePkcs7sha1;
-        case Poppler::FormFieldSignature::AdbePkcs7detached:
-            return Okular::FormFieldSignature::AdbePkcs7detached;
-        case Poppler::FormFieldSignature::EtsiCAdESdetached:
-            return Okular::FormFieldSignature::EtsiCAdESdetached;
-        default:
-            return Okular::FormFieldSignature::UnknownType;
-    }
-}
-
-Okular::SignatureInfo PopplerFormFieldSignature::validate() const
-{
-    auto sigInfo = m_field->validate( Poppler::FormFieldSignature::ValidateVerifyCertificate );
-    return PopplerSignatureInfo( sigInfo );
-}

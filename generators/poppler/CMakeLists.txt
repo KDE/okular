@@ -111,7 +111,6 @@ set(okularGenerator_poppler_PART_SRCS
    generator_pdf.cpp
    formfields.cpp
    annots.cpp
-   pdfsignatureinfo.cpp
 )
 
 ki18n_wrap_ui(okularGenerator_poppler_PART_SRCS

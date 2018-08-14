@@ -14,7 +14,6 @@
 #include "formwidgets.h"
 #include "pageviewutils.h"
 #include "signaturewidgets.h"
-#include "certificateviewer.h"
 
 #include <qbuttongroup.h>
 #include <QKeyEvent>

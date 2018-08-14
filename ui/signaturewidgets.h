@@ -27,6 +27,42 @@ namespace Okular {
     class SignatureInfo;
 }
 
+class CertificateViewerModel : public QAbstractTableModel
+{
+    Q_OBJECT
+
+    public:
+        explicit CertificateViewerModel( Okular::SignatureInfo *sigInfo, QObject * parent = nullptr );
+
+        enum {
+            PropertyValueRole = Qt::UserRole
+        };
+
+        int columnCount( const QModelIndex &parent = QModelIndex() ) const override;
+        int rowCount( const QModelIndex &parent = QModelIndex() ) const override;
+        QVariant data( const QModelIndex &index, int role = Qt::DisplayRole ) const override;
+        QVariant headerData( int section, Qt::Orientation orientation, int role ) const override;
+
+    private:
+        QVector< QPair<QString, QString> > m_sigProperties;
+};
+
+class CertificateViewer : public QDialog
+{
+    Q_OBJECT
+
+    public:
+        CertificateViewer( Okular::SignatureInfo *sigInfo, QWidget *parent );
+
+    private Q_SLOTS:
+        void updateText( const QModelIndex &index );
+
+    private:
+        CertificateViewerModel  *m_sigPropModel;
+        QTextEdit *m_sigPropText;
+        Okular::SignatureInfo *m_sigInfo;
+};
+
 class SignaturePropertiesDialog : public QDialog
 {
     Q_OBJECT

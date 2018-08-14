@@ -350,7 +350,6 @@ set(okularpart_SRCS
    ui/annotationtools.cpp
    ui/annotationwidgets.cpp
    ui/bookmarklist.cpp
-   ui/certificateviewer.cpp
    ui/debug_ui.cpp
    ui/drawingtoolactions.cpp
    ui/fileprinterpreview.cpp

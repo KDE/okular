@@ -1064,9 +1064,11 @@ SignatureEdit::SignatureEdit( Okular::FormFieldSignature * signature, QWidget * 
     : QAbstractButton( parent ), FormWidgetIface( this, signature ),
       m_leftMouseButtonPressed( false )
 {
+   // Okular::FormFieldSignature *sigField = static_cast< Okular::FormFieldSignature * >( formField() );
+  //  m_sigInfo = sigField->validate();
     setCheckable( false );
     setCursor( Qt::PointingHandCursor );
-    connect( this, &SignatureEdit::clicked, this, &SignatureEdit::slotShowProperties );
+    connect( this, &SignatureEdit::clicked, this, &SignatureEdit::slotShowSummary );
 }
 
 bool SignatureEdit::event( QEvent * e )
@@ -1105,12 +1107,12 @@ bool SignatureEdit::event( QEvent * e )
 void SignatureEdit::contextMenuEvent( QContextMenuEvent * event )
 {
     QMenu *menu = new QMenu( this );
-    QAction *sigProp = new QAction( i18n("Validate Signature"), this );
+    QAction *sigVal = new QAction( i18n("Validate Signature"), this );
+    menu->addAction( sigVal );
+    connect( sigVal, &QAction::triggered, this, &SignatureEdit::slotShowSummary );
+    QAction *sigProp = new QAction( i18n("Show Signature Properties"), this );
     menu->addAction( sigProp );
     connect( sigProp, &QAction::triggered, this, &SignatureEdit::slotShowProperties );
-    QAction *sigRev = new QAction( i18n("View Revision"), this );
-    menu->addAction( sigRev );
-    connect( sigRev, &QAction::triggered, this, &SignatureEdit::slotShowRevision );
     menu->exec( event->globalPos() );
     delete menu;
 }
@@ -1135,10 +1137,12 @@ void SignatureEdit::paintEvent( QPaintEvent * )
 Okular::SignatureInfo *SignatureEdit::validate()
 {
     Okular::FormFieldSignature *sigField = static_cast< Okular::FormFieldSignature * >( formField() );
-    return sigField->validate();
+    m_sigInfo = sigField->validate();
+    m_signatureValidated = true;
+    return m_sigInfo;
 }
 
-void SignatureEdit::slotShowRevision()
+void SignatureEdit::slotShowSummary()
 {
     Okular::FormFieldSignature *signatureForm = static_cast< Okular::FormFieldSignature * >( formField() );
     SignaturePropertiesDialog sigSummaryDlg( m_controller->m_doc, signatureForm, this );
@@ -1147,8 +1151,7 @@ void SignatureEdit::slotShowRevision()
 
 void SignatureEdit::slotShowProperties()
 {
-    Okular::FormFieldSignature *signatureForm = static_cast< Okular::FormFieldSignature * >( formField() );
-    SignaturePropertiesDialog sigPropDlg( m_controller->m_doc, signatureForm, this );
+    CertificateViewer sigPropDlg( m_sigInfo, this );
     sigPropDlg.exec();
 }
 

@@ -363,11 +363,13 @@ class SignatureEdit : public QAbstractButton, public FormWidgetIface
         void paintEvent( QPaintEvent * event ) override;
 
     private Q_SLOTS:
-        void slotShowRevision();
+        void slotShowSummary();
         void slotShowProperties();
 
     private:
+        Okular::SignatureInfo *m_sigInfo;
         bool m_leftMouseButtonPressed;
+        bool m_signatureValidated;
 
     DECLARE_ADDITIONAL_ACTIONS
 };

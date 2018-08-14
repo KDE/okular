@@ -136,6 +136,14 @@ void SignaturePanel::notifySetup( const QVector<Okular::Page *> &/*pages*/, int 
     }
 }
 
+bool SignaturePanel::event( QEvent *e )
+{
+    if ( e->type() == QEvent::Show || e->type() == QEvent::Hide )
+        emit signaturePanelVisible( isVisible() );
+
+    return QWidget::event( e );
+}
+
 SignaturePanel::~SignaturePanel()
 {
     Q_D( SignaturePanel );

@@ -237,6 +237,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         void enableTOC(bool enable);
         void slotRebuildBookmarkMenu();
         void enableLayers( bool enable );
+        void slotShowSignatures();
 
     public Q_SLOTS:
         bool saveFile() override;
@@ -311,6 +312,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         KMessageWidget * m_topMessage;
         KMessageWidget * m_formsMessage;
         KMessageWidget * m_infoMessage;
+        KMessageWidget * m_signatureMessage;
         QPointer<ThumbnailList> m_thumbnailList;
         QPointer<PageView> m_pageView;
         QPointer<TOC> m_toc;
@@ -376,6 +378,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         KToggleAction* m_showMenuBarAction;
         KToggleAction* m_showLeftPanel;
         KToggleAction* m_showBottomBar;
+        KToggleAction* m_showSignaturePanel;
         KToggleFullScreenAction* m_showFullScreenAction;
         QAction *m_aboutBackend;
         QAction *m_reload;

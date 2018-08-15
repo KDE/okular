@@ -14,6 +14,7 @@
   <name xml:lang="fr">Okular Mobile</name>
   <name xml:lang="gl">Okular Mobile</name>
   <name xml:lang="it">Okular Mobile</name>
+  <name xml:lang="ko">Okular 모바일</name>
   <name xml:lang="nl">Okular mobiel</name>
   <name xml:lang="nn">Okular mobil</name>
   <name xml:lang="pt">Okular Móvel</name>
@@ -34,6 +35,7 @@
   <summary xml:lang="fr">Afficheur de document</summary>
   <summary xml:lang="gl">Visor de documentos</summary>
   <summary xml:lang="it">Visore di documenti</summary>
+  <summary xml:lang="ko">문서 뷰어</summary>
   <summary xml:lang="nl">Documentenviewer</summary>
   <summary xml:lang="nn">Dokumentvisar</summary>
   <summary xml:lang="pt">Visualizador do Documento</summary>
@@ -56,6 +58,7 @@
     <p xml:lang="fr">Okular est un afficheur universel de documents développé par KDE. Okular fonctionne sur de multiples plate-formes, comme Linux, Windows, Mac OS X, etc.</p>
     <p xml:lang="gl">Okular é un visor de documentos universal desenvolvido por KDE. Okular funciona en varias plataformas, entre elas Linux, Windows, Mac OS X, *BSD, etc.</p>
     <p xml:lang="it">Okular è un lettore universale di documenti sviluppato da KDE. Okular funziona su varie piattaforme, incluse (ma non solo) Linux, Windows, Mac OS X, *BSD, ecc.</p>
+    <p xml:lang="ko">Okular는 KDE에서 개발한 문서 뷰어입니다. 리눅스, Windows, macOS, *BSD 등 다양한 플랫폼에서 사용할 수 있습니다.</p>
     <p xml:lang="nl">Okular is een universele documentviewer ontwikkeld door KDE. Okular werkt op meerdere platforms, inclusief, maar niet beperkt tot Linux, Windows, Mac OS X, *BSD, etc.</p>
     <p xml:lang="nn">Okular er ein dokumentvisar for mange ulike filformat, og er utvikla av KDE. Okular køyrer på fleire plattformer, blant anna Linux, Windows, Mac OS X og *BSD.</p>
     <p xml:lang="pt">O Okular é um visualizador universal de documentos desenvolvido pelo KDE. O Okular funciona em diversas plataformas, incluindo mas não se limitando ao Linux, Windows, Mac OS X, *BSD, etc.</p>
@@ -75,6 +78,7 @@
     <p xml:lang="fr">Fonctionnalités :</p>
     <p xml:lang="gl">Funcionalidades:</p>
     <p xml:lang="it">Funzionalità:</p>
+    <p xml:lang="ko">기능:</p>
     <p xml:lang="nl">Kenmerken:</p>
     <p xml:lang="nn">Funksjonar:</p>
     <p xml:lang="pt">Funcionalidades:</p>
@@ -96,6 +100,7 @@
       <li xml:lang="fr">Formats de fichiers gérés : PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="gl">Formatos compatíbeis: PDF, PS, Tiff, CHM, DjVu, imaxes, DVI, XPS, ODT, FictionBook, banda deseñada, Plucker, EPub e fax.</li>
       <li xml:lang="it">Formati supportati: PDF, PS, Tiff, CHM, DjVu, immagini, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
+      <li xml:lang="ko">지원하는 형식: PDF, PS, Tiff, CHM, DjVu, 그림, DVI, XPS, ODT, Fiction Book, 만화책, Plucker, EPub, 팩스</li>
       <li xml:lang="nl">Ondersteunde formaten: PDF, PS, Tiff, CHM, DjVu, Afbeeldingen, DVI, XPS, ODT, Fictie boek, Stripboek, Plucker, EPub, Fax</li>
       <li xml:lang="nn">Støtta format: PDF, PS, Tiff, CHM, DjVu, bilete, DVI, XPS, ODT, e-bøker, teikneseriar, Plucker, EPub, Fax</li>
       <li xml:lang="pt">Formatos Suportados: PDF, PS, Tiff, CHM, DjVu, Imagens, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
@@ -114,6 +119,7 @@
       <li xml:lang="fr">Barre latérale montrant les contenus, miniatures, informations de relecture et signets</li>
       <li xml:lang="gl">Barra lateral con contido, miniaturas, revisións e marcadores.</li>
       <li xml:lang="it">Barra laterale con contenuti, miniature, revisioni e segnalibri</li>
+      <li xml:lang="ko">목차, 미리 보기 그림, 검토 및 책갈피 도구가 있는 사이드바</li>
       <li xml:lang="nl">Zijbalk met inhoud, miniaturen, reviews en bladwijzers</li>
       <li xml:lang="nn">Sidestolpe med innhaldsliste, miniatyrbilete, omtalar og bokmerke</li>
       <li xml:lang="pt">Barra lateral com o conteúdo, miniaturas, revisões e marcação de favoritos</li>
@@ -132,6 +138,7 @@
       <li xml:lang="fr">Gestion des annotations</li>
       <li xml:lang="gl">Funcionalidade de anotacións.</li>
       <li xml:lang="it">Supporto per annotazioni</li>
+      <li xml:lang="ko">주석 지원</li>
       <li xml:lang="nl">Ondersteuning van annotaties</li>
       <li xml:lang="nn">Støtte for merknadar</li>
       <li xml:lang="pt">Suporte para anotações</li>

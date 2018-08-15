@@ -379,7 +379,11 @@ QTextDocument* Converter::convert( const QString &fileName )
           block = mSectionMap.value(link);
         } else { // load missing resource
           char *data = 0;
-          int size = epub_get_data(mTextDocument->getEpub(), clink, &data);
+          //epub_get_data can't handle whitespace url encodings
+          QByteArray ba = link.replace("%20", " ").toLatin1();
+          const char *clinkClean = ba.data(); 
+          int size = epub_get_data(mTextDocument->getEpub(), clinkClean, &data);
+
           if (data) {
             _cursor->insertBlock();
 

@@ -9,8 +9,8 @@
 
 #include "annotationproxymodels.h"
 
-#include <QtCore/QList>
-#include <QtCore/QItemSelection>
+#include <QList>
+#include <QItemSelection>
 
 #include <QIcon>
 

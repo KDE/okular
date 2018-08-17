@@ -12,7 +12,7 @@
 
 #include "okularpart_export.h"
 
-#include <QtCore/QStringList>
+#include <QStringList>
 
 class QUrl;
 

@@ -16,7 +16,7 @@
 #include <qpixmap.h>
 #include <qvarlengtharray.h>
 #include <kiconloader.h>
-#include <QtCore/QDebug>
+#include <QDebug>
 #include <QApplication>
 #include <QIcon>
 

@@ -19,8 +19,6 @@
 #include <QtXml/QDomElement>
 #include <KConfigGroup>
 #include <QDialogButtonBox>
-#include <QPushButton>
-#include <QVBoxLayout>
 
 #include "core/annotations.h"
 #include "ui/annotationwidgets.h"

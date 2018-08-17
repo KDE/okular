@@ -10,15 +10,15 @@
 #include "side_reviews.h"
 
 // qt/kde includes
-#include <QtCore/QStringList>
-#include <QtWidgets/QHeaderView>
-#include <QtWidgets/QLayout>
-#include <QtGui/QPaintEvent>
-#include <QtGui/QPainter>
-#include <QtWidgets/QSizePolicy>
-#include <QtGui/QTextDocument>
-#include <QtWidgets/QToolBar>
-#include <QtWidgets/QTreeView>
+#include <QStringList>
+#include <QHeaderView>
+#include <QLayout>
+#include <QPaintEvent>
+#include <QPainter>
+#include <QSizePolicy>
+#include <QTextDocument>
+#include <QToolBar>
+#include <QTreeView>
 
 #include <qaction.h>
 #include <KLocalizedString>

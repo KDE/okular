@@ -10,7 +10,7 @@
 #include "presentationwidget.h"
 
 // qt/kde includes
-#include <QtCore/qloggingcategory.h>
+#include <qloggingcategory.h>
 #include <QtDBus/QDBusConnection>
 #include <QtDBus/QDBusMessage>
 #include <QtDBus/QDBusReply>

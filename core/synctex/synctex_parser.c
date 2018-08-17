@@ -660,12 +660,12 @@ static synctex_open_s __synctex_open_v2(const char * output, synctex_io_mode_t i
             quoteless_synctex_name = NULL;
         }
     }
-    /*  The operation is successfull, return the arguments by value.    */
+    /*  The operation is successful, return the arguments by value.    */
     open.status = SYNCTEX_STATUS_OK;
     return open;
 }
 
-/*	Opens the ouput file, taking into account the eventual build_directory.
+/*	Opens the output file, taking into account the eventual build_directory.
  *	- returns: an open structure which status is
  *      SYNCTEX_STATUS_OK on success,
  *      SYNCTEX_STATUS_ERROR on failure.
@@ -5881,7 +5881,7 @@ synctex_scanner_p synctex_scanner_parse(synctex_scanner_p scanner) {
     scanner->pre_unit = 8192;
     scanner->pre_x_offset = scanner->pre_y_offset = 578;
     /*  initialize the offset with a fake unprobable value,
-     *  If there is a post scriptum section, this value will be overriden by the real life value */
+     *  If there is a post scriptum section, this value will be overridden by the real life value */
     scanner->x_offset = scanner->y_offset = 6.027e23f;
     scanner->reader->line_number = 1;
 
@@ -7368,7 +7368,7 @@ static synctex_nd_s _synctex_point_h_ordered_distance_v2
                 width = _synctex_data_width(node);
                 min = _synctex_data_h(node);
                 max = min + (width>0?width:-width);
-                /*  We allways have min <= max */
+                /*  We always have min <= max */
                 if (hit->h<min) {
                     nd.distance = min - hit->h; /*  regions 1+4+7, result is > 0 */
                 } else if (hit->h>max) {
@@ -7382,7 +7382,7 @@ static synctex_nd_s _synctex_point_h_ordered_distance_v2
                 width = synctex_node_width(node);
                 min = synctex_node_h(node);
                 max = min + (width>0?width:-width);
-                /*  We allways have min <= max */
+                /*  We always have min <= max */
                 if (hit->h<min) {
                     nd.distance = min - hit->h; /*  regions 1+4+7, result is > 0 */
                 } else if (hit->h>max) {
@@ -7397,7 +7397,7 @@ static synctex_nd_s _synctex_point_h_ordered_distance_v2
                 width = synctex_node_hbox_width(node);
                 min = synctex_node_hbox_h(node);
                 max = min + (width>0?width:-width);
-                /*  We allways have min <= max */
+                /*  We always have min <= max */
                 if (hit->h<min) {
                     nd.distance = min - hit->h; /*  regions 1+4+7, result is > 0 */
                 } else if (hit->h>max) {
@@ -7509,7 +7509,7 @@ static synctex_nd_s _synctex_point_v_ordered_distance_v2
             min = synctex_node_v(node);
             max = min + _synctex_abs(_synctex_data_depth(node));
             min -= _synctex_abs(_synctex_data_height(node));
-            /*  We allways have min <= max */
+            /*  We always have min <= max */
             if (hit->v<min) {
                 nd.distance = min - hit->v; /*  regions 1+2+3, result is > 0 */
             } else if (hit->v>max) {
@@ -7523,7 +7523,7 @@ static synctex_nd_s _synctex_point_v_ordered_distance_v2
             min = synctex_node_v(node);
             max = min + _synctex_abs(synctex_node_depth(node));
             min -= _synctex_abs(synctex_node_height(node));
-            /*  We allways have min <= max */
+            /*  We always have min <= max */
             if (hit->v<min) {
                 nd.distance = min - hit->v; /*  regions 1+2+3, result is > 0 */
             } else if (hit->v>max) {
@@ -7540,7 +7540,7 @@ static synctex_nd_s _synctex_point_v_ordered_distance_v2
             max = min + (depth>0?depth:-depth);
             height = synctex_node_hbox_height(node);
             min -= (height>0?height:-height);
-            /*  We allways have min <= max */
+            /*  We always have min <= max */
             if (hit->v<min) {
                 nd.distance = min - hit->v; /*  regions 1+2+3, result is > 0 */
             } else if (hit->v>max) {
@@ -7556,7 +7556,7 @@ static synctex_nd_s _synctex_point_v_ordered_distance_v2
             min = _synctex_data_v(node);
             max = min + _synctex_abs(_synctex_data_depth(_synctex_tree_parent(node)));
             min -= _synctex_abs(_synctex_data_height(_synctex_tree_parent(node)));
-            /*  We allways have min <= max */
+            /*  We always have min <= max */
             if (hit->v<min) {
                 nd.distance = min - hit->v; /*  regions 1+2+3, result is > 0 */
             } else if (hit->v>max) {

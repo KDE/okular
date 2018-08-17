@@ -10,9 +10,9 @@
 #ifndef _OKULAR_SIDE_REVIEWS_H_
 #define _OKULAR_SIDE_REVIEWS_H_
 
-#include <QtCore/QModelIndexList>
-#include <QtCore/QVector>
-#include <QtWidgets/QWidget>
+#include <QModelIndexList>
+#include <QVector>
+#include <QWidget>
 
 #include "core/observer.h"
 

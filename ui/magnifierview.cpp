@@ -175,7 +175,7 @@ void MagnifierView::drawTicks( QPainter *p )
   p->drawLine(0, height() - 1, 0, 0);
 
   // ticks
-  // TODO posibility to switch units (pt, mm, cc, in, printing dots)
+  // TODO possibility to switch units (pt, mm, cc, in, printing dots)
   float ps = (float)SCALE * 5;// how much pixels in widget is one pixel in document * how often
   int tw = 10; // tick size in pixels
 

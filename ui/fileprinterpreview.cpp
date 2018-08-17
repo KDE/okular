@@ -27,7 +27,7 @@
 #include <kpluginfactory.h>
 #include <kpluginloader.h>
 #include <ksharedconfig.h>
-#include <QtCore/qloggingcategory.h>
+#include <qloggingcategory.h>
 
 #include "debug_ui.h"
 

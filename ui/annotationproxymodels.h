@@ -10,8 +10,8 @@
 #ifndef ANNOTATIONPROXYMODEL_H
 #define ANNOTATIONPROXYMODEL_H
 
-#include <QtCore/QSortFilterProxyModel>
-#include <QtCore/QPair>
+#include <QSortFilterProxyModel>
+#include <QPair>
 
 /**
  * A proxy model, which filters out all pages except the

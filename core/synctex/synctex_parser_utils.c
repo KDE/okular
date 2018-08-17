@@ -323,7 +323,7 @@ int _synctex_copy_with_quoting_last_path_component(const char * src, char ** des
   if(src && dest_ref) {
       const char * lpc;
 #		define dest (*dest_ref)
-		dest = NULL;	/*	Default behavior: no change and sucess. */
+		dest = NULL;	/*	Default behavior: no change and success. */
 		lpc = _synctex_last_path_component(src);
 		if(strlen(lpc)) {
 			if(strchr(lpc,' ') && lpc[0]!='"' && lpc[strlen(lpc)-1]!='"') {

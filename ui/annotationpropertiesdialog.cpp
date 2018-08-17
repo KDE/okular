@@ -14,7 +14,7 @@
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qheaderview.h>
-#include <QtWidgets/qpushbutton.h>
+#include <qpushbutton.h>
 #include <qtextedit.h>
 #include <QIcon>
 #include <klineedit.h>

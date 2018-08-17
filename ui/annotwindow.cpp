@@ -28,7 +28,7 @@
 #include <qtoolbutton.h>
 #include <KLocalizedString>
 #include <ktextedit.h>
-#include <QtCore/QDebug>
+#include <QDebug>
 #include <qaction.h>
 #include <kstandardaction.h>
 #include <qmenu.h>

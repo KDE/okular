@@ -12,7 +12,7 @@
 #include <phonon/mediaobject.h>
 #include <phonon/videowidget.h>
 
-#include <QtGui/QImage>
+#include <QImage>
 
 SnapshotTaker::SnapshotTaker(const QUrl &url, QObject *parent )
     : QObject( parent )

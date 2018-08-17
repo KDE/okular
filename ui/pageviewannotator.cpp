@@ -10,7 +10,7 @@
 #include "pageviewannotator.h"
 
 // qt / kde includes
-#include <QtCore/qloggingcategory.h>
+#include <qloggingcategory.h>
 #include <qapplication.h>
 #include <qfile.h>
 #include <qcolor.h>
@@ -24,7 +24,7 @@
 #include <KLocalizedString>
 
 #include <kuser.h>
-#include <QtCore/QDebug>
+#include <QDebug>
 #include <qmenu.h>
 
 // system includes

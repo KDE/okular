@@ -143,7 +143,7 @@ bool RemoveAnnotationCommand::refreshInternalPageReferences( const QVector< Okul
     if ( !m_done )
     {
         // We don't always update m_annotation because it can happen that the annotation remove has been undo
-        // and that annotation addition has also been undone so the the annotation pointer is stored inside
+        // and that annotation addition has also been undone so the annotation pointer is stored inside
         // a previous AddAnnotationCommand and thus doesn't need updating because it didn't change
         // because of the document reload
         auto a = newPagesVector[m_pageNumber]->annotation( m_annotation->uniqueName() );

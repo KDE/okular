@@ -47,6 +47,12 @@ Q_OBJECT
         void rollbackReload();
         void finishReload();
 
+    public Q_SLOTS:
+        void expandRecursively();
+        void collapseRecursively();
+        void expandAll();
+        void collapseAll();
+
     Q_SIGNALS:
         void hasTOC(bool has);
         void rightClick( const Okular::DocumentViewport &, const QPoint &, const QString & );

@@ -187,4 +187,50 @@ void TOC::contextMenuEvent(QContextMenuEvent* e)
     emit rightClick(viewport, e->globalPos(), m_model->data(index).toString());
 }
 
+void TOC::expandRecursively()
+{
+    QList<QModelIndex> worklist = { m_treeView->currentIndex() };
+    if ( !worklist[0].isValid() )
+    {
+        return;
+    }
+    while ( !worklist.isEmpty() )
+    {
+        QModelIndex index = worklist.takeLast();
+        m_treeView->expand( index );
+        for ( int i = 0; i < m_model->rowCount(index); i++ )
+        {
+            worklist += m_model->index( i, 0, index );
+        }
+    }
+}
+
+void TOC::collapseRecursively()
+{
+    QList<QModelIndex> worklist = { m_treeView->currentIndex() };
+    if ( !worklist[0].isValid() )
+    {
+        return;
+    }
+    while ( !worklist.isEmpty() )
+    {
+        QModelIndex index = worklist.takeLast();
+        m_treeView->collapse( index );
+        for ( int i = 0; i < m_model->rowCount(index); i++ )
+        {
+            worklist += m_model->index( i, 0, index );
+        }
+    }
+}
+
+void TOC::expandAll()
+{
+    m_treeView->expandAll();
+}
+
+void TOC::collapseAll()
+{
+    m_treeView->collapseAll();
+}
+
 #include "moc_toc.cpp"

@@ -2948,7 +2948,7 @@ void Part::slotPrintPreview()
 
 void Part::slotShowTOCMenu(const Okular::DocumentViewport &vp, const QPoint &point, const QString &title)
 {
-    showMenu(m_document->page(vp.pageNumber), point, title, vp);
+    showMenu(m_document->page(vp.pageNumber), point, title, vp, true);
 }
 
 void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
@@ -2956,7 +2956,7 @@ void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
     showMenu(page, point);
 }
 
-void Part::showMenu(const Okular::Page *page, const QPoint &point, const QString &bookmarkTitle, const Okular::DocumentViewport &vp)
+void Part::showMenu(const Okular::Page *page, const QPoint &point, const QString &bookmarkTitle, const Okular::DocumentViewport &vp, bool showTOCActions)
 {
     if ( m_embedMode == PrintPreviewMode )
        return;
@@ -2990,6 +2990,19 @@ void Part::showMenu(const Okular::Page *page, const QPoint &point, const QString
     }
 
     QMenu *popup = new QMenu( widget() );
+    if (showTOCActions)
+    {
+        popup->addAction( i18n("Expand whole section"),
+                          m_toc.data(), &TOC::expandRecursively );
+        popup->addAction( i18n("Collapse whole section"),
+                          m_toc.data(), &TOC::collapseRecursively );
+        popup->addAction( i18n("Expand all"),
+                          m_toc.data(), &TOC::expandAll );
+        popup->addAction( i18n("Collapse all"),
+                          m_toc.data(), &TOC::collapseAll );
+        reallyShow = true;
+    }
+
     QAction *addBookmark = nullptr;
     QAction *removeBookmark = nullptr;
     QAction *fitPageWidth = nullptr;

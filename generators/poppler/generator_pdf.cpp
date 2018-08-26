@@ -643,10 +643,29 @@ Okular::Document::OpenResult PDFGenerator::init(QVector<Okular::Page*> & pagesVe
 
 PDFGenerator::SwapBackingFileResult PDFGenerator::swapBackingFile( QString const &newFileName, QVector<Okular::Page*> & newPagesVector )
 {
+    const QBitArray oldRectsGenerated = rectsGenerated;
+
     doCloseDocument();
     auto openResult = loadDocumentWithPassword(newFileName, newPagesVector, QString());
     if (openResult != Okular::Document::OpenSuccess)
         return SwapBackingFileError;
+
+    // Recreate links if needed since they are done on image() and image() is not called when swapping the file
+    // since the page is already rendered
+    if (oldRectsGenerated.count() == rectsGenerated.count()) {
+        for (int i = 0; i < oldRectsGenerated.count(); ++i) {
+            if (oldRectsGenerated[i]) {
+                Okular::Page *page = newPagesVector[i];
+                Poppler::Page *pp = pdfdoc->page( i );
+                if (pp) {
+                    page->setObjectRects(generateLinks(pp->links()));
+                    rectsGenerated[i] = true;
+                    resolveMediaLinkReferences(page);
+                    delete pp;
+                }
+            }
+        }
+    }
 
     return SwapBackingFileReloadInternalData;
 }

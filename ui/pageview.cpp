@@ -3385,7 +3385,13 @@ void PageView::wheelEvent( QWheelEvent *e )
 
 bool PageView::viewportEvent( QEvent * e )
 {
-    if ( e->type() == QEvent::ToolTip && d->mouseMode == Okular::Settings::EnumMouseMode::Browse )
+    if ( e->type() == QEvent::ToolTip
+        // Show tool tips only for those modes that change the cursor
+        // to a hand when hovering over the link.
+        && ( d->mouseMode == Okular::Settings::EnumMouseMode::Browse
+          || d->mouseMode == Okular::Settings::EnumMouseMode::RectSelect
+          || d->mouseMode == Okular::Settings::EnumMouseMode::TextSelect
+          || d->mouseMode == Okular::Settings::EnumMouseMode::TrimSelect ) )
     {
         QHelpEvent * he = static_cast< QHelpEvent* >( e );
         if ( d->mouseAnnotation->isMouseOver() )

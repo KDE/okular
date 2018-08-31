@@ -18,17 +18,17 @@
 #include <core/utils.h>
 #include <core/fileprinter.h>
 
-#include <qdom.h>
-#include <qmutex.h>
-#include <qpixmap.h>
-#include <qstring.h>
-#include <quuid.h>
+#include <QDomDocument>
+#include <QMutex>
+#include <QPixmap>
+#include <QString>
+#include <QUuid>
 #include <QPrinter>
 
 #include <KAboutData>
-#include <QtCore/QDebug>
+#include <QDebug>
 #include <KLocalizedString>
-#include <qtemporaryfile.h>
+#include <QTemporaryFile>
 #include <QDir>
 
 static void recurseCreateTOC( QDomDocument &maindoc, const QDomNode &parent, QDomNode &parentDestination, KDjVu *djvu )

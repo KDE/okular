@@ -12,7 +12,7 @@
 
 #include "okularcore_export.h"
 
-#include <QtCore/QObject>
+#include <QObject>
 
 namespace Okular {
 

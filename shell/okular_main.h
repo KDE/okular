@@ -12,6 +12,9 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#ifndef _OKULAR_MAIN_H_
+#define _OKULAR_MAIN_H_
+
 class QString;
 class QStringList;
 
@@ -23,5 +26,7 @@ enum Status { Error, AttachedOtherProcess, Success };
 Status main(const QStringList &paths, const QString &serializedOptions);
 
 }
+
+#endif
 
 /* kate: replace-tabs on; indent-width 4; */

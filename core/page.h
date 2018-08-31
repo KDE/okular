@@ -13,7 +13,7 @@
 #ifndef _OKULAR_PAGE_H_
 #define _OKULAR_PAGE_H_
 
-#include <QtCore/QLinkedList>
+#include <QLinkedList>
 
 #include "okularcore_export.h"
 #include "area.h"

@@ -7,15 +7,15 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "document.h"
 
 #include <QFile>
 #include <QDataStream>
 #include <QTextCodec>
 
 #include <kencodingprober.h>
-#include <QtCore/QDebug>
+#include <QDebug>
 
-#include "document.h"
 #include "debug_txt.h"
 
 using namespace Txt;

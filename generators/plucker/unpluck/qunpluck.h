@@ -12,9 +12,10 @@
 #ifndef QUNPLUCK_H
 #define QUNPLUCK_H
 
-#include <QtCore/QList>
-#include <QtCore/QMap>
-#include <QtGui/QImage>
+#include <QList>
+#include <QMap>
+#include <QImage>
+#include <QTextBlock>
 
 #include "unpluck.h"
 

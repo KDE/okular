@@ -9,14 +9,14 @@
 
 #include "converter.h"
 
-#include <QtGui/QAbstractTextDocumentLayout>
-#include <QtGui/QTextDocument>
-#include <QtGui/QTextFrame>
+#include <QAbstractTextDocumentLayout>
+#include <QTextDocument>
+#include <QTextFrame>
 #include <QTextDocumentFragment>
 #include <QFileInfo>
 #include <QApplication> // Because of the HACK
 
-#include <QtCore/QDebug>
+#include <QDebug>
 #include <KLocalizedString>
 
 

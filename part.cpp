@@ -2500,9 +2500,10 @@ bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
     // since we only have poppler as saving backend for now we're skipping that check
     if ( m_fileLastModified != QFileInfo( localFilePath() ).lastModified() )
     {
-        QMessageBox::warning( widget(),
-                              i18n( "File Changed" ),
-                              i18n( "The file '%1' has been modified by another program, which means it can no longer be saved.", url().fileName() ) );
+        KMessageBox::sorry( widget(),
+                              i18n( "The file '%1' has been modified by another program, which means it can no longer be saved.", url().fileName() ),
+                              i18n( "File Changed" )
+                          );
         return false;
     }
 

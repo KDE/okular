@@ -61,7 +61,7 @@
 
 #include <cstdlib>
 
-#include <QtCore/qloggingcategory.h>
+#include <QLoggingCategory>
 
 /*
  *   General utility routines.

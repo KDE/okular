@@ -14,7 +14,7 @@
 #include <kjs/kjsprototype.h>
 #include <kjs/kjsarguments.h>
 
-#include <QtCore/QDebug>
+#include <QDebug>
 
 #include "../debug_p.h"
 

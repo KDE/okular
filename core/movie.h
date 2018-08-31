@@ -14,7 +14,7 @@
 #include "global.h"
 #include "okularcore_export.h"
 
-#include <QtCore/QSize>
+#include <QSize>
 
 class QImage;
 

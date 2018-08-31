@@ -15,7 +15,7 @@
 #include "shell.h"
 
 #include <KLocalizedString>
-#include <QtDBus/qdbusinterface.h>
+#include <QDBusInterface>
 #include <QTextStream>
 #include <kwindowsystem.h>
 #include <QApplication>

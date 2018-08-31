@@ -15,9 +15,9 @@
 #include "okular_main.h"
 
 #include "shell.h"
-#include <QtWidgets/qapplication.h>
+#include <QApplication>
 #include <KLocalizedString>
-#include <QtDBus/qdbusinterface.h>
+#include <QDBusInterface>
 #include <QTextStream>
 #include <kwindowsystem.h>
 #include "aboutdata.h"

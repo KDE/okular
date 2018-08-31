@@ -23,7 +23,7 @@
 #include "pageview.h"
 
 // qt/kde includes
-#include <QtCore/qloggingcategory.h>
+#include <qloggingcategory.h>
 #include <qcursor.h>
 #include <qevent.h>
 #include <qimage.h>
@@ -49,7 +49,7 @@
 #include <KLocalizedString>
 #include <kselectaction.h>
 #include <ktoggleaction.h>
-#include <QtCore/QDebug>
+#include <QDebug>
 #include <kmessagebox.h>
 #include <QIcon>
 #include <kurifilter.h>

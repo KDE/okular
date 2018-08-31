@@ -12,7 +12,7 @@
 
 #include "../core/okularcore_export.h"
 
-#include <QtCore/QObject>
+#include <QObject>
 
 #include <kxmlguiclient.h>
 

@@ -9,16 +9,16 @@
 
 #include "kdjvu.h"
 
-#include <qbytearray.h>
-#include <qdom.h>
-#include <qfile.h>
-#include <qhash.h>
-#include <qlist.h>
-#include <qpainter.h>
-#include <qqueue.h>
-#include <qstring.h>
+#include <QByteArray>
+#include <QDomDocument>
+#include <QFile>
+#include <QHash>
+#include <QList>
+#include <QPainter>
+#include <QQueue>
+#include <QString>
 
-#include <QtCore/QDebug>
+#include <QDebug>
 #include <KLocalizedString>
 
 #include <libdjvu/ddjvuapi.h>

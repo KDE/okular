@@ -17,9 +17,9 @@
 
 #include <QApplication>
 #include <qeventloop.h>
-#include <QtPrintSupport/QPrinter>
+#include <QPrinter>
 
-#include <QtCore/QDebug>
+#include <QDebug>
 #include <QIcon>
 #include <QMimeDatabase>
 #include <QTimer>

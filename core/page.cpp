@@ -14,16 +14,16 @@
 #include "page_p.h"
 
 // qt/kde includes
-#include <QtCore/QHash>
-#include <QtCore/QSet>
-#include <QtCore/QString>
-#include <QtCore/QVariant>
-#include <QtCore/QUuid>
-#include <QtGui/QPixmap>
-#include <QtXml/QDomDocument>
-#include <QtXml/QDomElement>
+#include <QHash>
+#include <QSet>
+#include <QString>
+#include <QVariant>
+#include <QUuid>
+#include <QPixmap>
+#include <QDomDocument>
+#include <QDomElement>
 
-#include <QtCore/QDebug>
+#include <QDebug>
 
 // local includes
 #include "action.h"
@@ -49,7 +49,7 @@
 #include <limits>
 
 #ifdef PAGE_PROFILE
-#include <QtCore/QTime>
+#include <QTime>
 #endif
 
 using namespace Okular;

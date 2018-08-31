@@ -21,7 +21,7 @@
 #include <qtemporaryfile.h>
 #include <QUrl>
 
-#include <QtCore/qloggingcategory.h>
+#include <QLoggingCategory>
 #include <QDir>
 #include <QPainter>
 #include <QPixmap>

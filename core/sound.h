@@ -12,8 +12,8 @@
 
 #include "okularcore_export.h"
 
-#include <QtCore/QByteArray>
-#include <QtCore/QString>
+#include <QByteArray>
+#include <QString>
 
 namespace Okular {
 

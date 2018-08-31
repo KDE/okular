@@ -10,8 +10,8 @@
 #ifndef OOO_FORMATPROPERTY_H
 #define OOO_FORMATPROPERTY_H
 
-#include <QtCore/QVector>
-#include <QtGui/QColor>
+#include <QVector>
+#include <QColor>
 
 class QTextBlockFormat;
 class QTextCharFormat;

@@ -23,7 +23,7 @@
 #endif
 
 #include <QMessageBox>
-#include <QtXml/QXmlSimpleReader>
+#include <QXmlSimpleReader>
 
 #include "ebook_epub.h"
 #include "helperxmlhandler_epubcontainer.h"

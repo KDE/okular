@@ -13,7 +13,7 @@
 #include "fontEncoding.h"
 #include "debug_dvi.h"
 
-#include <QtCore/qloggingcategory.h>
+#include <QLoggingCategory>
 #include <QFile>
 #include <QProcess>
 #include <QTextStream>

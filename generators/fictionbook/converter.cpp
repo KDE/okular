@@ -9,14 +9,14 @@
 
 #include "converter.h"
 
-#include <QtCore/QDate>
-#include <QtCore/QUrl>
-#include <QtGui/QAbstractTextDocumentLayout>
-#include <QtGui/QTextCursor>
-#include <QtGui/QTextDocument>
-#include <QtGui/QTextFrame>
-#include <QtXml/QDomElement>
-#include <QtXml/QDomText>
+#include <QDate>
+#include <QUrl>
+#include <QAbstractTextDocumentLayout>
+#include <QTextCursor>
+#include <QTextDocument>
+#include <QTextFrame>
+#include <QDomElement>
+#include <QDomText>
 
 #include <KLocalizedString>
 

@@ -12,7 +12,7 @@
 
 #include "latexrenderer.h"
 
-#include <QtCore/QDebug>
+#include <QDebug>
 
 #include <kprocess.h>
 

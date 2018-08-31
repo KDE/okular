@@ -14,9 +14,9 @@
 #ifndef FILEPRINTER_H
 #define FILEPRINTER_H
 
-#include <QtCore/QList>
-#include <QtCore/QString>
-#include <QtPrintSupport/QPrinter>
+#include <QList>
+#include <QString>
+#include <QPrinter>
 
 #include "okularcore_export.h"
 #include "generator.h"

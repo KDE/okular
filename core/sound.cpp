@@ -9,7 +9,7 @@
 
 #include "sound.h"
 
-#include <QtCore/QVariant>
+#include <QVariant>
 
 using namespace Okular;
 

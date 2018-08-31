@@ -10,7 +10,7 @@
 #include "textpage.h"
 #include "textpage_p.h"
 
-#include <QtCore/QDebug>
+#include <QDebug>
 
 #include "area.h"
 #include "debug_p.h"

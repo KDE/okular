@@ -15,7 +15,7 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QDebug>
-#include <QtCore/qcommandlineparser.h>
+#include <QCommandLineParser>
 
 namespace ShellUtils
 {

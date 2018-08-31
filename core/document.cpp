@@ -27,18 +27,18 @@
 #endif
 
 // qt/kde/system includes
-#include <QtCore/QtAlgorithms>
-#include <QtCore/QDir>
-#include <QtCore/QFile>
-#include <QtCore/QFileInfo>
-#include <QtCore/QMap>
-#include <QtCore/qtemporaryfile.h>
-#include <QtCore/QTextStream>
-#include <QtCore/QTimer>
-#include <QtWidgets/QApplication>
-#include <QtWidgets/QLabel>
-#include <QtPrintSupport/QPrinter>
-#include <QtPrintSupport/QPrintDialog>
+#include <QtAlgorithms>
+#include <QDir>
+#include <QFile>
+#include <QFileInfo>
+#include <QMap>
+#include <qtemporaryfile.h>
+#include <QTextStream>
+#include <QTimer>
+#include <QApplication>
+#include <QLabel>
+#include <QPrinter>
+#include <QPrintDialog>
 #include <QStack>
 #include <QUndoCommand>
 #include <QMimeDatabase>
@@ -93,8 +93,6 @@
 #include "view_p.h"
 #include "form.h"
 #include "utils.h"
-
-#include <memory>
 
 #include <config-okular.h>
 

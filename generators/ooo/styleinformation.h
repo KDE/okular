@@ -10,7 +10,7 @@
 #ifndef OOO_STYLEINFORMATION_H
 #define OOO_STYLEINFORMATION_H
 
-#include <QtCore/QMap>
+#include <QMap>
 
 #include "formatproperty.h"
 

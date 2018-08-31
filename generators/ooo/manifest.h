@@ -10,15 +10,15 @@
 #ifndef OOO_MANIFEST_H
 #define OOO_MANIFEST_H
 
-#include <QtCore/QByteArray>
-#include <QtCore/QMap>
-#include <QtCore/QString>
+#include <QByteArray>
+#include <QMap>
+#include <QString>
 
 #ifdef QCA2
 #include <QtCrypto>
 #endif
 
-#include <QtCore/qloggingcategory.h>
+#include <QLoggingCategory>
 
 Q_DECLARE_LOGGING_CATEGORY(OkularOooDebug)
 

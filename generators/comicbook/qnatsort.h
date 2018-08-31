@@ -22,7 +22,7 @@
 #ifndef QNATSORT_H
 #define QNATSORT_H
 
-#include <QtCore/QString>
+#include <QString>
 
 /**
  * The two methods can be used in qSort to sort strings which contain

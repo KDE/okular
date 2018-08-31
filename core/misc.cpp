@@ -9,7 +9,7 @@
 
 #include "core/misc.h"
 
-#include <QtCore/QDebug>
+#include <QDebug>
 
 #include "debug_p.h"
 

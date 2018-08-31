@@ -16,7 +16,7 @@
 #include <core/generator.h>
 #include <core/document.h>
 
-#include <QtGui/QImage>
+#include <QImage>
 
 class KIMGIOGenerator : public Okular::Generator
 {

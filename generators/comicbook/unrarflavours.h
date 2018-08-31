@@ -10,7 +10,7 @@
 #ifndef UNRARFLAVOURS_H
 #define UNRARFLAVOURS_H
 
-#include <QtCore/QString>
+#include <QString>
 
 class QStringList;
 

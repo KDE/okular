@@ -13,7 +13,7 @@
 #include <kjs/kjsobject.h>
 #include <kjs/kjsprototype.h>
 
-#include <QtCore/QString>
+#include <QString>
 
 using namespace Okular;
 

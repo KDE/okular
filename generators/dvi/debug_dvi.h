@@ -11,7 +11,7 @@
 #ifndef OKULAR_DVI_DEBUG_P_H
 #define OKULAR_DVI_DEBUG_P_H
 
-#include <QtCore/qloggingcategory.h>
+#include <QLoggingCategory>
 
 Q_DECLARE_LOGGING_CATEGORY(OkularDviDebug)
 Q_DECLARE_LOGGING_CATEGORY(OkularDviShellDebug)

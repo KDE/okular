@@ -12,11 +12,11 @@
 
 #include <math.h>
 
-#include <QtCore/QList>
-#include <QtGui/QColor>
-#include <QtGui/QPainterPath>
-#include <QtGui/QTransform>
-#include <QtCore/QDebug>
+#include <QList>
+#include <QColor>
+#include <QPainterPath>
+#include <QTransform>
+#include <QDebug>
 
 #include "global.h"
 #include "okularcore_export.h"

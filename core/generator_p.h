@@ -15,9 +15,9 @@
 
 #include "area.h"
 
-#include <QtCore/QSet>
-#include <QtCore/QThread>
-#include <QtGui/QImage>
+#include <QSet>
+#include <QThread>
+#include <QImage>
 
 class QEventLoop;
 class QMutex;

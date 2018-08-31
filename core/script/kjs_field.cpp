@@ -16,7 +16,7 @@
 
 #include <qhash.h>
 
-#include <QtCore/QDebug>
+#include <QDebug>
 
 #include "../debug_p.h"
 #include "../document_p.h"

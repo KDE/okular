@@ -13,7 +13,7 @@
 #include <core/document.h>
 #include <core/generator.h>
 
-#include <QtGui/QTextBlock>
+#include <QTextBlock>
 
 #include "qunpluck.h"
 

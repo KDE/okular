@@ -21,13 +21,13 @@
 #include "global.h"
 #include "pagesize.h"
 
-#include <QtCore/QList>
-#include <QtCore/QObject>
-#include <QtCore/QSharedDataPointer>
-#include <QtCore/QSizeF>
-#include <QtCore/QString>
-#include <QtCore/QVariant>
-#include <QtCore/QVector>
+#include <QList>
+#include <QObject>
+#include <QSharedDataPointer>
+#include <QSizeF>
+#include <QString>
+#include <QVariant>
+#include <QVector>
 
 #include <QMimeType>
 #include <kpluginfactory.h>

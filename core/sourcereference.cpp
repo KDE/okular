@@ -10,8 +10,8 @@
 #include "sourcereference.h"
 #include "sourcereference_p.h"
 
-#include <QtCore/QString>
-#include <QtCore/QUrl>
+#include <QString>
+#include <QUrl>
 #include <KLocalizedString>
 
 using namespace Okular;

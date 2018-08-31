@@ -9,8 +9,8 @@
 
 #include "chooseenginedialog_p.h"
 
-#include <QtWidgets/QComboBox>
-#include <QtWidgets/QLabel>
+#include <QComboBox>
+#include <QLabel>
 
 #include <KLocalizedString>
 #include <QDialogButtonBox>

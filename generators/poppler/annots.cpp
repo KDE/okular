@@ -11,16 +11,17 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "annots.h"
+
 #include <poppler-annotation.h>
 
 // qt/kde includes
-#include <QtCore/qloggingcategory.h>
-#include <qvariant.h>
+#include <QLoggingCategory>
+#include <QVariant>
 
 #include <core/annotations.h>
 #include <core/area.h>
 
-#include "annots.h"
 #include "debug_pdf.h"
 #include "generator_pdf.h"
 #include "popplerembeddedfile.h"

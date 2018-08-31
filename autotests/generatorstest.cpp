@@ -7,7 +7,7 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <QtTest/QTest>
+#include <QTest>
 #include <QDirIterator>
 #include <QDebug>
 #include <QStringList>

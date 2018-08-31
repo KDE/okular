@@ -10,8 +10,8 @@
 #ifndef OKULAR_VIEW_P_H
 #define OKULAR_VIEW_P_H
 
-#include <QtCore/QHash>
-#include <QtCore/QString>
+#include <QHash>
+#include <QString>
 
 namespace Okular {
 

@@ -9,9 +9,9 @@
 
 #include "area.h"
 
-#include <QtCore/QRect>
-#include <QtGui/QPolygonF>
-#include <QtCore/QDebug>
+#include <QRect>
+#include <QPolygonF>
+#include <QDebug>
 
 #include <math.h>
 

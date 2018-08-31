@@ -9,8 +9,8 @@
 
 #include "generator_comicbook.h"
 
-#include <QtGui/QPainter>
-#include <QtPrintSupport/QPrinter>
+#include <QPainter>
+#include <QPrinter>
 
 #include <KAboutData>
 #include <KLocalizedString>

@@ -14,7 +14,7 @@
 #include "debug_p.h"
 #include "settings_core.h"
 
-#include <QtCore/QRect>
+#include <QRect>
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QImage>

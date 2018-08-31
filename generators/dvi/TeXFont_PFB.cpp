@@ -20,7 +20,7 @@
 
 #include <KLocalizedString>
 
-#include <QtCore/qloggingcategory.h>
+#include <QLoggingCategory>
 #include <QImage>
 
 //#define DEBUG_PFB 1

@@ -14,10 +14,10 @@
 #include "annotations.h"
 
 // qt/kde includes
-#include <QtCore/QDateTime>
-#include <QtCore/QString>
-#include <QtCore/QVariant>
-#include <QtGui/QColor>
+#include <QDateTime>
+#include <QString>
+#include <QVariant>
+#include <QColor>
 
 class QTransform;
 

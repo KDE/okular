@@ -10,13 +10,13 @@
 #ifndef _OKULAR_ANNOTATIONS_H_
 #define _OKULAR_ANNOTATIONS_H_
 
-#include <QtCore/QString>
-#include <QtCore/QDateTime>
-#include <QtCore/QLinkedList>
-#include <QtCore/QRect>
-#include <QtGui/QFont>
-#include <QtXml/QDomDocument>
-#include <QtXml/QDomElement>
+#include <QString>
+#include <QDateTime>
+#include <QLinkedList>
+#include <QRect>
+#include <QFont>
+#include <QDomDocument>
+#include <QDomElement>
 
 #include "okularcore_export.h"
 #include "area.h"

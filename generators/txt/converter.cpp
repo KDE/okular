@@ -7,10 +7,10 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-
-#include <QtGui/QTextFrame>
-
 #include "converter.h"
+
+#include <QTextFrame>
+
 #include "document.h"
 
 using namespace Txt;

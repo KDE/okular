@@ -23,17 +23,17 @@
 #include "dviexport.h"
 #include "TeXFont.h"
 
-#include <qapplication.h>
-#include <qdir.h>
-#include <qstring.h>
-#include <qurl.h>
-#include <qvector.h>
-#include <qstack.h>
-#include <qtemporaryfile.h>
-#include <qmutex.h>
+#include <QApplication>
+#include <QDir>
+#include <QString>
+#include <QUrl>
+#include <QVector>
+#include <QStack>
+#include <QTemporaryFile>
+#include <QMutex>
 
 #include <KAboutData>
-#include <QtCore/QDebug>
+#include <QDebug>
 #include <KLocalizedString>
 
 #ifdef DVI_OPEN_BUSYLOOP

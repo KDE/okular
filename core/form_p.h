@@ -12,7 +12,7 @@
 
 #include "form.h"
 
-#include <QtCore/QString>
+#include <QString>
 
 namespace Okular {
 

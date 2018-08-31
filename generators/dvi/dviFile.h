@@ -16,7 +16,7 @@
 #include <QHash>
 #include <QMap>
 #include <QVector>
-#include <QtCore/qstring.h>
+#include <QString>
 
 class fontPool;
 class pageSize;

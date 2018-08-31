@@ -9,8 +9,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <QtCore/QTemporaryFile>
-#include <QtGui/QImage>
+#include <QTemporaryFile>
+#include <QImage>
 
 #include <stdio.h>
 #include <stdlib.h>

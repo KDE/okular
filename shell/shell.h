@@ -22,7 +22,7 @@
 #include <QMimeDatabase>
 #include <qaction.h>
 
-#include <QtDBus/QtDBus>
+#include <QtDBus>
 
 class KRecentFilesAction;
 class KToggleAction;

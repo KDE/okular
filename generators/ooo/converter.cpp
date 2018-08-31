@@ -9,16 +9,16 @@
 
 #include "converter.h"
 
-#include <QtCore/QQueue>
-#include <QtCore/QUrl>
-#include <QtGui/QTextCursor>
-#include <QtGui/QTextDocument>
-#include <QtGui/QTextFrame>
-#include <QtGui/QTextList>
-#include <QtGui/QTextTableCell>
-#include <QtXml/QDomElement>
-#include <QtXml/QDomText>
-#include <QtXml/QXmlSimpleReader>
+#include <QQueue>
+#include <QUrl>
+#include <QTextCursor>
+#include <QTextDocument>
+#include <QTextFrame>
+#include <QTextList>
+#include <QTextTableCell>
+#include <QDomElement>
+#include <QDomText>
+#include <QXmlSimpleReader>
 
 #include <core/action.h>
 #include <core/annotations.h>

@@ -9,8 +9,8 @@
 
 #include "unrarflavours.h"
 
-#include <QtCore/QRegExp>
-#include <QtCore/QStringList>
+#include <QRegExp>
+#include <QStringList>
 
 UnrarFlavour::UnrarFlavour()
 {

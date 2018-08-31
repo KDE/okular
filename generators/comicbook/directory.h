@@ -11,7 +11,7 @@
 #ifndef DIRECTORY_H
 #define DIRECTORY_H
 
-#include <QtCore/QStringList>
+#include <QStringList>
 
 class QIODevice;
 

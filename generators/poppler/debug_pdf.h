@@ -7,10 +7,10 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef OKULAR_DEBUG_P_H
-#define OKULAR_DEBUG_P_H
+#ifndef OKULAR_DEBUG_PDF_H
+#define OKULAR_DEBUG_PDF_H
 
-#include <QtCore/qloggingcategory.h>
+#include <QLoggingCategory>
 
 Q_DECLARE_LOGGING_CATEGORY(OkularPdfDebug)
 

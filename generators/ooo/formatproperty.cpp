@@ -9,7 +9,7 @@
 
 #include "formatproperty.h"
 
-#include <QtGui/QTextFormat>
+#include <QTextFormat>
 
 #include "styleinformation.h"
 

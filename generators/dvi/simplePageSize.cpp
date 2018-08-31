@@ -11,7 +11,7 @@
 #include "simplePageSize.h"
 #include "debug_dvi.h"
 
-#include <QtCore/qloggingcategory.h>
+#include <QLoggingCategory>
 #include <QPaintDevice>
 
 

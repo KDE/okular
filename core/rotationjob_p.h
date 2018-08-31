@@ -10,8 +10,8 @@
 #ifndef _OKULAR_ROTATIONJOB_P_H_
 #define _OKULAR_ROTATIONJOB_P_H_
 
-#include <QtGui/QImage>
-#include <QtGui/QTransform>
+#include <QImage>
+#include <QTransform>
 
 #include <threadweaver/qobjectdecorator.h>
 #include <threadweaver/job.h>

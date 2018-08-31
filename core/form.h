@@ -14,7 +14,7 @@
 #include "area.h"
 #include "annotations.h"
 
-#include <QtCore/QStringList>
+#include <QStringList>
 
 namespace Okular {
 

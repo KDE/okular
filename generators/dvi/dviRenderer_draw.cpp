@@ -69,7 +69,7 @@
 #include <KLocalizedString>
 
 #include <QPainter>
-#include <QtCore/qloggingcategory.h>
+#include <QLoggingCategory>
 
 
 

@@ -31,7 +31,7 @@
 #include <QXmlDefaultHandler>
 #include <QStack>
 #include <QVariant>
-#include <QtCore/qloggingcategory.h>
+#include <QLoggingCategory>
 
 #include <kzip.h>
 

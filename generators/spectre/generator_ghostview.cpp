@@ -11,18 +11,18 @@
 
 #include <math.h>
 
-#include <qfile.h>
-#include <qpainter.h>
-#include <qpixmap.h>
-#include <qsize.h>
+#include <QFile>
+#include <QPainter>
+#include <QPixmap>
+#include <QSize>
 #include <QPrinter>
 
 #include <KAboutData>
 #include <kconfigdialog.h>
-#include <QtCore/QDebug>
+#include <QDebug>
 #include <QMimeType>
 #include <QMimeDatabase>
-#include <qtemporaryfile.h>
+#include <QTemporaryFile>
 #include <QDir>
 #include <KLocalizedString>
 

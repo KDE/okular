@@ -9,7 +9,7 @@
 
 #include "document.h"
 
-#include <QtCore/QFile>
+#include <QFile>
 
 #include <KLocalizedString>
 #include <kzip.h>

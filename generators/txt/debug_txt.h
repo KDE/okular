@@ -8,10 +8,10 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef OKULAR_TXT_DEBUG_P_H
-#define OKULAR_TXT_DEBUG_P_H
+#ifndef OKULAR_DEBUG_TXT_H
+#define OKULAR_DEBUG_TXT_H
 
-#include <QtCore/qloggingcategory.h>
+#include <QLoggingCategory>
 
 Q_DECLARE_LOGGING_CATEGORY(OkularTxtDebug)
 

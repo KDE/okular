@@ -16,7 +16,7 @@
 #define _FONT_H
 
 #include <QHash>
-#include <QtCore/qstring.h>
+#include <QString>
 
 class dviRenderer;
 class TeXFont;

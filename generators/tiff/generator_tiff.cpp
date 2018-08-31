@@ -16,10 +16,10 @@
 #include <qimage.h>
 #include <qlist.h>
 #include <qpainter.h>
-#include <QtPrintSupport/QPrinter>
+#include <QPrinter>
 
 #include <kaboutdata.h>
-#include <QtCore/QDebug>
+#include <QDebug>
 #include <KLocalizedString>
 
 #include <core/document.h>

@@ -8,8 +8,8 @@
  ***************************************************************************/
 
 
-#ifndef _TXT_GENERATOR_H_
-#define _TXT_GENERATOR_H_
+#ifndef _GENERATOR_TXT_H_
+#define _GENERATOR_TXT_H_
 
 
 #include <core/textdocumentgenerator.h>

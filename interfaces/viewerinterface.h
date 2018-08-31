@@ -17,8 +17,8 @@
 #define VIEWERINTERFACE_EXPORT OKULARCORE_EXPORT
 #endif
 
-#include <QtCore/QObject>
-#include <QtCore/QString>
+#include <QObject>
+#include <QString>
 
 namespace Okular {
 

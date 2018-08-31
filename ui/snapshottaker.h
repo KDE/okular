@@ -12,7 +12,7 @@
 
 #include <phonon/videoplayer.h>
 
-#include <QtCore/QObject>
+#include <QObject>
 
 class QImage;
 

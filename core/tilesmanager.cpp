@@ -9,7 +9,7 @@
 #include "tilesmanager_p.h"
 
 #include <QPixmap>
-#include <QtCore/qmath.h>
+#include <qmath.h>
 #include <QList>
 #include <QPainter>
 

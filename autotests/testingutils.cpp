@@ -36,7 +36,7 @@ namespace TestingUtils
         return !it1.hasNext() && !it2.hasNext();
     }
 
-    QString AnnotationDisposeWatcher::m_disposedAnnotationName = QString();
+    QString AnnotationDisposeWatcher::m_disposedAnnotationName = QString(); //krazy:exclude=nullstrassign
 
     QString AnnotationDisposeWatcher::disposedAnnotationName() {
         return m_disposedAnnotationName;

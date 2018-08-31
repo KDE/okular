@@ -9,9 +9,9 @@
 
 #include "document.h"
 
-#include <QtCore/QScopedPointer>
-#include <QtGui/QImage>
-#include <QtGui/QImageReader>
+#include <QScopedPointer>
+#include <QImage>
+#include <QImageReader>
 
 #include <KLocalizedString>
 #include <QMimeType>

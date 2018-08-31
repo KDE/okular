@@ -9,7 +9,7 @@
 
 #include "rotationjob_p.h"
 
-#include <QtGui/QTransform>
+#include <QTransform>
 
 using namespace Okular;
 

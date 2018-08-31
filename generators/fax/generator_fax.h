@@ -12,7 +12,7 @@
 
 #include <core/generator.h>
 
-#include <QtGui/QImage>
+#include <QImage>
 
 #include "faxdocument.h"
 

@@ -10,9 +10,9 @@
 #ifndef _OKULAR_PAGESIZE_H_
 #define _OKULAR_PAGESIZE_H_
 
-#include <QtCore/QList>
-#include <QtCore/QSharedDataPointer>
-#include <QtCore/QString>
+#include <QList>
+#include <QSharedDataPointer>
+#include <QString>
 
 #include "okularcore_export.h"
 

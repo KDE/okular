@@ -16,11 +16,11 @@
 #include "synctex/synctex_parser.h"
 
 // qt/kde/system includes
-#include <QtCore/QHash>
-#include <QtCore/QLinkedList>
-#include <QtCore/QMap>
-#include <QtCore/QMutex>
-#include <QtCore/QPointer>
+#include <QHash>
+#include <QLinkedList>
+#include <QMap>
+#include <QMutex>
+#include <QPointer>
 #include <QUrl>
 #include <KPluginMetaData>
 

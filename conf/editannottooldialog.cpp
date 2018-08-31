@@ -15,8 +15,8 @@
 #include <QListWidgetItem>
 #include <QPushButton>
 #include <QStackedWidget>
-#include <QtXml/QDomDocument>
-#include <QtXml/QDomElement>
+#include <QDomDocument>
+#include <QDomElement>
 #include <KConfigGroup>
 #include <QDialogButtonBox>
 

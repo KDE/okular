@@ -10,7 +10,7 @@
 #ifndef COMICBOOK_DOCUMENT_H
 #define COMICBOOK_DOCUMENT_H
 
-#include <QtCore/QStringList>
+#include <QStringList>
 
 class KArchiveDirectory;
 class KArchive;

@@ -10,7 +10,7 @@
 #ifndef FAXDOCUMENT_H
 #define FAXDOCUMENT_H
 
-#include <QtGui/QImage>
+#include <QImage>
 
 /**
  * Loads a G3/G4 fax document and provides methods

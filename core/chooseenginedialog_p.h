@@ -10,7 +10,7 @@
 #ifndef _CHOOSEENGINEDIALOG_H
 #define _CHOOSEENGINEDIALOG_H
 
-#include <QtCore/QStringList>
+#include <QStringList>
 
 #include <QDialog>
 #include <QMimeType>

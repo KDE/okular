@@ -10,7 +10,7 @@
 #ifndef OKULAR_GLOBAL_H
 #define OKULAR_GLOBAL_H
 
-#include <QtCore/QGlobalStatic>
+#include <QGlobalStatic>
 
 namespace Okular {
 

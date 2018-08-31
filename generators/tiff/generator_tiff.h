@@ -12,8 +12,8 @@
 
 #include <core/generator.h>
 
-#include <QtCore/qloggingcategory.h>
-#include <qhash.h>
+#include <QLoggingCategory>
+#include <QHash>
 
 class TIFFGenerator : public Okular::Generator
 {

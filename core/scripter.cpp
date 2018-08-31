@@ -9,7 +9,7 @@
 
 #include "scripter.h"
 
-#include <QtCore/QDebug>
+#include <QDebug>
 #include <QFile>
 
 #include "debug_p.h"

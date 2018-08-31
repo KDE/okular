@@ -14,7 +14,7 @@
 
 #include <KLocalizedString>
 
-#include <QtCore/qloggingcategory.h>
+#include <QLoggingCategory>
 #include <QFile>
 
 extern const int MFResolutions[];

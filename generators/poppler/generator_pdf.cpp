@@ -29,7 +29,7 @@
 #include <QPrinter>
 #include <QPainter>
 #include <QTimer>
-#include <QtCore/QDebug>
+#include <QDebug>
 
 #include <KAboutData>
 #include <kconfigdialog.h>

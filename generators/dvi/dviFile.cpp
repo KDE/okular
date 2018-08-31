@@ -61,7 +61,7 @@
 
 #include <KLocalizedString>
 
-#include <QtCore/qloggingcategory.h>
+#include <QLoggingCategory>
 #include <QProcess>
 #include <QSysInfo>
 #include <QTemporaryFile>

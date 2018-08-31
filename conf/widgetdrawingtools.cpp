@@ -12,11 +12,11 @@
 #include "editdrawingtooldialog.h"
 
 #include <KLocalizedString>
+#include <KMessageBox>
 
 #include <QDebug>
 #include <QDomElement>
 #include <QListWidgetItem>
-#include <QMessageBox>
 #include <QPainter>
 
 // Used to store tools' XML description in m_list's items
@@ -145,7 +145,7 @@ void WidgetDrawingTools::slotAdd()
     {
         QListWidgetItem * listEntry = m_list->item( i );
         if (itemText == listEntry->text()) {
-            QMessageBox::information( this, i18n("Duplicated Name"), i18n("There's already a tool with that name. Using a default one") );
+            KMessageBox::information( this, i18n("There's already a tool with that name. Using a default one"), i18n("Duplicated Name") );
             itemText = defaultName();
             break;
         }
@@ -189,7 +189,7 @@ void WidgetDrawingTools::slotEdit()
     {
         QListWidgetItem * auxListEntry = m_list->item( i );
         if (itemText == auxListEntry->text() && auxListEntry != listEntry) {
-            QMessageBox::information( this, i18n("Duplicated Name"), i18n("There's already a tool with that name. Using a default one") );
+            KMessageBox::information( this, i18n("There's already a tool with that name. Using a default one"), i18n("Duplicated Name") );
             itemText = defaultName();
             break;
         }

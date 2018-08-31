@@ -9,7 +9,7 @@
 
 #include "generator_p.h"
 
-#include <QtCore/QDebug>
+#include <QDebug>
 
 #include "fontinfo.h"
 #include "generator.h"

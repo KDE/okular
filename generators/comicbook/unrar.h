@@ -10,9 +10,9 @@
 #ifndef UNRAR_H
 #define UNRAR_H
 
-#include <QtCore/QObject>
-#include <QtCore/QProcess>
-#include <QtCore/QStringList>
+#include <QObject>
+#include <QProcess>
+#include <QStringList>
 
 class QEventLoop;
 class QTemporaryDir;

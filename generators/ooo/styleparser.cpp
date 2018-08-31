@@ -9,11 +9,11 @@
 
 #include "styleparser.h"
 
-#include <QtCore/QDateTime>
-#include <QtGui/QFont>
-#include <QtXml/QDomDocument>
-#include <QtXml/QDomElement>
-#include <QtXml/QXmlSimpleReader>
+#include <QDateTime>
+#include <QFont>
+#include <QDomDocument>
+#include <QDomElement>
+#include <QXmlSimpleReader>
 
 #include <KLocalizedString>
 

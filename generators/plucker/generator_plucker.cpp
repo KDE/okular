@@ -9,11 +9,11 @@
 
 #include "generator_plucker.h"
 
-#include <QtCore/QFile>
-#include <QtGui/QAbstractTextDocumentLayout>
-#include <QtGui/QPainter>
-#include <QtPrintSupport/QPrinter>
-#include <QtGui/QTextDocument>
+#include <QFile>
+#include <QAbstractTextDocumentLayout>
+#include <QPainter>
+#include <QPrinter>
+#include <QTextDocument>
 
 #include <KAboutData>
 #include <KLocalizedString>

@@ -10,7 +10,7 @@
 #ifndef _OKULAR_PAGECONTROLLER_P_H_
 #define _OKULAR_PAGECONTROLLER_P_H_
 
-#include <QtCore/QObject>
+#include <QObject>
 
 #include <threadweaver/queue.h>
 

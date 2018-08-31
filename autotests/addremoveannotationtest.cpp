@@ -182,7 +182,7 @@ void AddRemoveAnnotationTest::testRemoveAnnotations()
     QString annot1Name = annot1->uniqueName();
     annot1->setDisposeDataFunction( TestingUtils::AnnotationDisposeWatcher::disposeAnnotation );
     TestingUtils::AnnotationDisposeWatcher::resetDisposedAnnotationName();
-    QVERIFY( TestingUtils::AnnotationDisposeWatcher::disposedAnnotationName() == QString() );
+    QVERIFY( TestingUtils::AnnotationDisposeWatcher::disposedAnnotationName().isEmpty() );
     m_document->closeDocument();
     QVERIFY( TestingUtils::AnnotationDisposeWatcher::disposedAnnotationName() == annot1Name );
 }

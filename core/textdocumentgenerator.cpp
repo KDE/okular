@@ -10,16 +10,16 @@
 #include "textdocumentgenerator.h"
 #include "textdocumentgenerator_p.h"
 
-#include <QtCore/QFile>
-#include <QtCore/QMutex>
-#include <QtCore/QStack>
-#include <QtCore/QTextStream>
-#include <QtCore/QVector>
-#include <QtGui/QFontDatabase>
-#include <QtGui/QImage>
-#include <QtGui/QPainter>
-#include <QtPrintSupport/QPrinter>
-#include <QtGui/QTextDocumentWriter>
+#include <QFile>
+#include <QMutex>
+#include <QStack>
+#include <QTextStream>
+#include <QVector>
+#include <QFontDatabase>
+#include <QImage>
+#include <QPainter>
+#include <QPrinter>
+#include <QTextDocumentWriter>
 
 #include "action.h"
 #include "annotations.h"

@@ -9,27 +9,26 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <QtCore/QDateTime>
-#include <QtCore/QFile>
-#include <QtCore/QHash>
-#include <QtCore/QStack>
-#include <QtCore/QString>
-#include <QtCore/QUrl>
-#include <QtCore/QDateTime>
-#include <QtGui/QAbstractTextDocumentLayout>
-#include <QtGui/QFont>
-#include <QtGui/QTextBlock>
-#include <QtGui/QTextCharFormat>
-#include <QtGui/QTextCursor>
-#include <QtGui/QTextDocument>
-#include <QtGui/QTextFrame>
+#include "qunpluck.h"
 
-#include <QtWidgets/QLabel>
+#include <QDateTime>
+#include <QFile>
+#include <QHash>
+#include <QStack>
+#include <QString>
+#include <QUrl>
+#include <QDateTime>
+#include <QAbstractTextDocumentLayout>
+#include <QFont>
+#include <QTextCharFormat>
+#include <QTextCursor>
+#include <QTextDocument>
+#include <QTextFrame>
+#include <QLabel>
 
 #include <core/action.h>
 #include <core/document.h>
 
-#include "qunpluck.h"
 #include "image.h"
 
 #define GET_FUNCTION_CODE_TYPE(x)    (((x)>>3) & 0x1F)

@@ -10,10 +10,10 @@
 #ifndef _OKULAR_FONTINFO_H_
 #define _OKULAR_FONTINFO_H_
 
-#include <QtCore/QList>
-#include <QtCore/QMetaType>
-#include <QtCore/QSharedDataPointer>
-#include <QtCore/QString>
+#include <QList>
+#include <QMetaType>
+#include <QSharedDataPointer>
+#include <QString>
 
 #include "okularcore_export.h"
 

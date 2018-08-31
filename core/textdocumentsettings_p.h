@@ -33,6 +33,8 @@ class TextDocumentSettingsWidgetPrivate
 
 class TextDocumentSettingsPrivate : public QObject
 {
+    Q_OBJECT
+
     public:
         TextDocumentSettingsPrivate(QObject *parent)
             : QObject(parent)

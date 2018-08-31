@@ -10,9 +10,9 @@
 #ifndef OOO_DOCUMENT_H
 #define OOO_DOCUMENT_H
 
-#include <QtCore/QByteArray>
-#include <QtCore/QMap>
-#include <QtCore/QString>
+#include <QByteArray>
+#include <QMap>
+#include <QString>
 
 #include "manifest.h"
 

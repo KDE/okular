@@ -18,8 +18,8 @@
 #include <QHBoxLayout>
 #include <QListWidget>
 #include <QListWidgetItem>
-#include <QtXml/QDomDocument>
-#include <QtXml/QDomElement>
+#include <QDomDocument>
+#include <QDomElement>
 #include <KConfigGroup>
 #include <QDialogButtonBox>
 #include <QPushButton>

@@ -19,11 +19,11 @@
 #include "global.h"
 #include "pagesize.h"
 
-#include <QtCore/QObject>
-#include <QtCore/QStringList>
-#include <QtCore/QVector>
-#include <QtPrintSupport/QPrinter>
-#include <QtXml/QDomDocument>
+#include <QObject>
+#include <QStringList>
+#include <QVector>
+#include <QPrinter>
+#include <QDomDocument>
 
 #include <QMimeType>
 #include <QUrl>

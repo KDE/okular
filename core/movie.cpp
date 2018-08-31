@@ -16,7 +16,7 @@
 #include <qstring.h>
 #include <qtemporaryfile.h>
 
-#include <QtCore/QDebug>
+#include <QDebug>
 
 #include "debug_p.h"
 

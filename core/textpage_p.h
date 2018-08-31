@@ -11,10 +11,10 @@
 #ifndef _OKULAR_TEXTPAGE_P_H_
 #define _OKULAR_TEXTPAGE_P_H_
 
-#include <QtCore/QList>
-#include <QtCore/QMap>
-#include <QtCore/QPair>
-#include <QtGui/QTransform>
+#include <QList>
+#include <QMap>
+#include <QPair>
+#include <QTransform>
 
 class SearchPoint;
 class TinyTextEntity;

@@ -10,8 +10,8 @@
 #ifndef _OKULAR_TEXTPAGE_H_
 #define _OKULAR_TEXTPAGE_H_
 
-#include <QtCore/QList>
-#include <QtCore/QString>
+#include <QList>
+#include <QString>
 
 #include "okularcore_export.h"
 #include "global.h"

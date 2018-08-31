@@ -11,9 +11,9 @@
 
 // qt/kde includes
 #include <qloggingcategory.h>
-#include <QtDBus/QDBusConnection>
-#include <QtDBus/QDBusMessage>
-#include <QtDBus/QDBusReply>
+#include <QDBusConnection>
+#include <QDBusMessage>
+#include <QDBusReply>
 
 #include <qevent.h>
 #include <qfontmetrics.h>

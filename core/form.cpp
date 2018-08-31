@@ -11,7 +11,7 @@
 #include "form_p.h"
 
 // qt includes
-#include <QtCore/QVariant>
+#include <QVariant>
 
 #include "action.h"
 

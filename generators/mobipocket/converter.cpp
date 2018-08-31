@@ -9,13 +9,13 @@
 
 #include "converter.h"
 
-#include <QtGui/QAbstractTextDocumentLayout>
-#include <QtGui/QTextDocument>
-#include <QtGui/QTextBlock>
-#include <QtGui/QTextFrame>
-#include <QtGui/QTextDocumentFragment>
-#include <QtCore/QDebug>
-#include <QtCore/QFile>
+#include <QAbstractTextDocumentLayout>
+#include <QTextDocument>
+#include <QTextBlock>
+#include <QTextFrame>
+#include <QTextDocumentFragment>
+#include <QDebug>
+#include <QFile>
 
 #include <KLocalizedString>
 #include <core/action.h>

@@ -7,12 +7,13 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include "faxdocument.h"
+
 #include <stdlib.h>
 
-#include <QtCore/QFile>
+#include <QFile>
 
 #include "faxexpand.h"
-#include "faxdocument.h"
 
 static const char FAXMAGIC[]   = "\000PC Research, Inc\000\000\000\000\000\000";
 

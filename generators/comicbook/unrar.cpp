@@ -9,14 +9,14 @@
 
 #include "unrar.h"
 
-#include <QtCore/QEventLoop>
-#include <QtCore/QFile>
-#include <QtCore/QFileInfo>
-#include <QtCore/QRegExp>
-#include <QtCore/QGlobalStatic>
+#include <QEventLoop>
+#include <QFile>
+#include <QFileInfo>
+#include <QRegExp>
+#include <QGlobalStatic>
 #include <QTemporaryDir>
 
-#include <QtCore/qloggingcategory.h>
+#include <QLoggingCategory>
 #if defined(WITH_KPTY)
 #include <KPty/kptyprocess.h>
 #include <KPty/kptydevice.h>

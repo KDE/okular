@@ -9,10 +9,10 @@
 #include "mobidocument.h"
 #include <qmobipocket/mobipocket.h>
 #include <qmobipocket/qfilestream.h>
-#include <QtGui/QColor>
-#include <QtCore/QFile>
-#include <QtCore/QRegExp>
-#include <QtCore/QDebug>
+#include <QColor>
+#include <QFile>
+#include <QRegExp>
+#include <QDebug>
 #include <QApplication> // Because of the HACK
 #include <QPalette> // Because of the HACK
 

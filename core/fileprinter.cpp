@@ -12,19 +12,19 @@
 
 #include "fileprinter.h"
 
-#include <QtPrintSupport/QPrinter>
+#include <QPrinter>
 #include <QPrintEngine>
 #include <QStringList>
 #include <QSize>
-#include <QtCore/QFile>
-#include <QtCore/QFileInfo>
-#include <QtWidgets/QLabel>
-#include <QtGui/QShowEvent>
-#include <QtNetwork/QTcpSocket>
+#include <QFile>
+#include <QFileInfo>
+#include <QLabel>
+#include <QShowEvent>
+#include <QTcpSocket>
 
 #include <KProcess>
 #include <KShell>
-#include <QtCore/QDebug>
+#include <QDebug>
 #include <QStandardPaths>
 
 #include "debug_p.h"

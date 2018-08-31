@@ -33,7 +33,7 @@
 #include <QEventLoop>
 #include <QFileInfo>
 #include <QLabel>
-#include <QtPrintSupport/QPrinter>
+#include <QPrinter>
 #include <QTemporaryFile>
 
 #include <cassert>

@@ -32,7 +32,7 @@ class Page;
 class AnnotatorEngine
 {
     public:
-        AnnotatorEngine( const QDomElement & engineElement );
+        explicit AnnotatorEngine( const QDomElement & engineElement );
         virtual ~AnnotatorEngine();
 
         // enum definitions
@@ -87,7 +87,7 @@ class SmoothPathEngine
     : public AnnotatorEngine
 {
     public:
-        SmoothPathEngine( const QDomElement & engineElement );
+        explicit SmoothPathEngine( const QDomElement & engineElement );
 
         QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale, const Okular::Page * /*page*/ ) override;
 

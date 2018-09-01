@@ -54,7 +54,7 @@ class FormWidgetsController : public QObject
     Q_OBJECT
 
     public:
-        FormWidgetsController( Okular::Document *doc );
+        explicit FormWidgetsController( Okular::Document *doc );
         virtual ~FormWidgetsController();
 
         void signalAction( Okular::Action *action );

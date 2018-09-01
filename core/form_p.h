@@ -22,7 +22,7 @@ class FormField;
 class FormFieldPrivate
 {
     public:
-        FormFieldPrivate( FormField::FieldType type );
+        explicit FormFieldPrivate( FormField::FieldType type );
         virtual ~FormFieldPrivate();
 
         void setDefault();

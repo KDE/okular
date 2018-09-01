@@ -32,7 +32,7 @@ class PagesEdit : public KLineEdit
     Q_OBJECT
 
     public:
-        PagesEdit( MiniBar * parent );
+        explicit PagesEdit( MiniBar * parent );
         void setText( const QString & ) override;
 
     protected:
@@ -54,7 +54,7 @@ class PageNumberEdit : public PagesEdit
     Q_OBJECT
 
     public:
-        PageNumberEdit( MiniBar * parent );
+        explicit PageNumberEdit( MiniBar * parent );
         void setPagesNumber( int pages );
 
     private:
@@ -65,7 +65,7 @@ class PageLabelEdit : public PagesEdit
 {
   Q_OBJECT
     public:
-        PageLabelEdit( MiniBar * parent );
+        explicit PageLabelEdit( MiniBar * parent );
         void setText( const QString & newText ) override;
         void setPageLabels( const QVector< Okular::Page * > & pageVector );
 

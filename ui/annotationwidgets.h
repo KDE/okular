@@ -72,7 +72,7 @@ class AnnotationWidget
     Q_OBJECT
 
 public:
-    AnnotationWidget( Okular::Annotation * ann );
+    explicit AnnotationWidget( Okular::Annotation * ann );
     virtual ~AnnotationWidget();
 
     virtual Okular::Annotation::SubType annotationType() const;

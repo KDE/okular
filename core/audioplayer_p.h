@@ -26,7 +26,7 @@ class AudioPlayer;
 class AudioPlayerPrivate
 {
 public:
-    AudioPlayerPrivate( AudioPlayer * qq );
+    explicit AudioPlayerPrivate( AudioPlayer * qq );
 
     ~AudioPlayerPrivate();
 

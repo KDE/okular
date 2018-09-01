@@ -86,7 +86,7 @@ Q_DECLARE_FLAGS(LoadDocumentInfoFlags, LoadDocumentInfoFlag)
 class DocumentPrivate
 {
     public:
-        DocumentPrivate( Document *parent )
+        explicit DocumentPrivate( Document *parent )
           : m_parent( parent ),
             m_tempFile( nullptr ),
             m_docSize( -1 ),

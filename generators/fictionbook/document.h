@@ -20,7 +20,7 @@ namespace FictionBook {
 class Document
 {
     public:
-        Document( const QString &fileName );
+        explicit Document( const QString &fileName );
 
         bool open();
 

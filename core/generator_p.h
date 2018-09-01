@@ -114,7 +114,7 @@ class PixmapGenerationThread : public QThread
     Q_OBJECT
 
     public:
-        PixmapGenerationThread( Generator *generator );
+        explicit PixmapGenerationThread( Generator *generator );
 
         void startGeneration( PixmapRequest *request, bool calcBoundingRect );
 
@@ -142,7 +142,7 @@ class TextPageGenerationThread : public QThread
     Q_OBJECT
 
     public:
-        TextPageGenerationThread( Generator *generator );
+        explicit TextPageGenerationThread( Generator *generator );
 
         void endGeneration();
 

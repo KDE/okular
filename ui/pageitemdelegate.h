@@ -17,7 +17,7 @@ class PageItemDelegate : public QItemDelegate
     Q_OBJECT
 
     public:
-        PageItemDelegate( QObject * parent = nullptr );
+        explicit PageItemDelegate( QObject * parent = nullptr );
         virtual ~PageItemDelegate();
 
         static const int PageRole = 0x000f0001;

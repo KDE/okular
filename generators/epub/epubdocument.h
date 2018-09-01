@@ -24,7 +24,7 @@ namespace Epub {
     Q_OBJECT
 
   public:
-    EpubDocument(const QString &fileName);
+    explicit EpubDocument(const QString &fileName);
     bool isValid();
     ~EpubDocument();
     struct epub *getEpub();

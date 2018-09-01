@@ -107,7 +107,7 @@ class PageViewMessage : public QWidget
     Q_OBJECT
 
     public:
-        PageViewMessage( QWidget * parent );
+        explicit PageViewMessage( QWidget * parent );
 
         enum Icon { None, Info, Warning, Error, Find, Annotation };
         void display( const QString & message, const QString & details = QString(), Icon icon = Info, int durationMs = 4000 );

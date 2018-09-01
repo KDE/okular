@@ -16,7 +16,7 @@
 class PopplerFormFieldButton : public Okular::FormFieldButton
 {
     public:
-        PopplerFormFieldButton( Poppler::FormFieldButton * field );
+        explicit PopplerFormFieldButton( Poppler::FormFieldButton * field );
         virtual ~PopplerFormFieldButton();
 
         // inherited from Okular::FormField
@@ -46,7 +46,7 @@ class PopplerFormFieldButton : public Okular::FormFieldButton
 class PopplerFormFieldText : public Okular::FormFieldText
 {
     public:
-        PopplerFormFieldText( Poppler::FormFieldText * field );
+        explicit PopplerFormFieldText( Poppler::FormFieldText * field );
         virtual ~PopplerFormFieldText();
 
         // inherited from Okular::FormField
@@ -79,7 +79,7 @@ class PopplerFormFieldText : public Okular::FormFieldText
 class PopplerFormFieldChoice : public Okular::FormFieldChoice
 {
     public:
-        PopplerFormFieldChoice( Poppler::FormFieldChoice * field );
+        explicit PopplerFormFieldChoice( Poppler::FormFieldChoice * field );
         virtual ~PopplerFormFieldChoice();
 
         // inherited from Okular::FormField

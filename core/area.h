@@ -448,7 +448,7 @@ class OKULARCORE_EXPORT AnnotationObjectRect : public ObjectRect
          * Creates a new annotation object rectangle with the
          * given @p annotation.
          */
-        AnnotationObjectRect( Annotation *annotation );
+        explicit AnnotationObjectRect( Annotation *annotation );
 
         /**
          * Destroys the annotation object rectangle.
@@ -871,7 +871,7 @@ class HighlightAreaRect : public RegularAreaRect
          * Creates a new highlight area rect with the coordinates of
          * the given @p area.
          */
-        HighlightAreaRect( const RegularAreaRect *area = nullptr );
+        explicit HighlightAreaRect( const RegularAreaRect *area = nullptr );
 
         /**
          * The search ID of the highlight owner.

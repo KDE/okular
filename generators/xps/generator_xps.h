@@ -110,7 +110,7 @@ class XpsFile;
 class XpsHandler: public QXmlDefaultHandler
 {
 public:
-    XpsHandler( XpsPage *page );
+    explicit XpsHandler( XpsPage *page );
     ~XpsHandler();
 
     bool startElement( const QString & nameSpace,

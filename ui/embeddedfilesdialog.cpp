@@ -183,7 +183,7 @@ void EmbeddedFilesDialog::viewFile( Okular::EmbeddedFile* ef )
 		+ QDir::separator()
 		+ fileInfo.baseName()
 		+ ".XXXXXX"
-		+ (fileInfo.completeSuffix().isEmpty() ? QString("") : "." + fileInfo.completeSuffix())
+		+ (fileInfo.completeSuffix().isEmpty() ? QString("") : "." + fileInfo.completeSuffix()) // krazy:exclude=doublequote_chars
 	);
 	GuiUtils::writeEmbeddedFile( ef, this, *tmpFile );
 

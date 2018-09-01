@@ -23,7 +23,7 @@
 #include <QList>
 #include <QPointer>
 #include <QProcess>
-#include <QtDBus>
+#include <QtDBus> // krazy:exclude=includes
 #include <QUrl>
 
 #include <KCompressionDevice>

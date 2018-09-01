@@ -24,7 +24,7 @@ namespace Mobi {
   class MobiDocument : public QTextDocument {
       
   public:
-    MobiDocument(const QString &fileName);  
+    explicit MobiDocument(const QString &fileName);  
     ~MobiDocument();   
     
     Mobipocket::Document* mobi() const { return doc; }

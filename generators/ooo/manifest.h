@@ -45,7 +45,7 @@ class ManifestEntry
     /**
        Create a new manifest entry
     */
-    ManifestEntry( const QString &fileName );
+    explicit ManifestEntry( const QString &fileName );
 
     /**
        Set the mimetype of the file.

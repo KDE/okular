@@ -221,7 +221,7 @@ class OKULARCORE_EXPORT Generator : public QObject
         /**
          * Creates a new generator.
          */
-        Generator(QObject* parent = nullptr, const QVariantList& args = QVariantList());
+        explicit Generator(QObject* parent = nullptr, const QVariantList& args = QVariantList());
 
         /**
          * Destroys the generator.
@@ -781,7 +781,7 @@ class OKULARCORE_EXPORT TextRequest
         /**
          * Creates a new text request.
          */
-        TextRequest( Page *page );
+        explicit TextRequest( Page *page );
 
         TextRequest();
 

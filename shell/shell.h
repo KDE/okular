@@ -20,9 +20,9 @@
 #include <kparts/readwritepart.h>
 #include <QMimeType>
 #include <QMimeDatabase>
-#include <qaction.h>
+#include <QAction>
 
-#include <QtDBus>
+#include <QtDBus> // krazy:exclude=includes
 
 class KRecentFilesAction;
 class KToggleAction;

@@ -70,7 +70,7 @@ class Event
             PageClose,       /// < Not implemented.
         };
 
-        Event(EventType type);
+        explicit Event(EventType type);
 
         /** One of the defined EventTypes */
         EventType eventType() const;

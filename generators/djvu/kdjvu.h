@@ -157,7 +157,7 @@ class KDjVu
                 bool inlineText() const;
 
             private:
-                TextAnnotation( miniexp_t anno );
+                explicit TextAnnotation( miniexp_t anno );
                 QSize m_size;
                 bool m_inlineText;
         };
@@ -179,7 +179,7 @@ class KDjVu
                 void setWidth( int width );
 
             private:
-                LineAnnotation( miniexp_t anno );
+                explicit LineAnnotation( miniexp_t anno );
                 QPoint m_point2;
                 bool m_isArrow;
                 miniexp_t m_width;

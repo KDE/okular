@@ -21,7 +21,7 @@ namespace OOO {
 class Document
 {
   public:
-    Document( const QString &fileName );
+    explicit Document( const QString &fileName );
     ~Document();
 
     bool open( const QString &password );

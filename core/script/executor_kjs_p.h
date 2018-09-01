@@ -21,7 +21,7 @@ class Event;
 class ExecutorKJS
 {
     public:
-        ExecutorKJS( DocumentPrivate *doc );
+        explicit ExecutorKJS( DocumentPrivate *doc );
         ~ExecutorKJS();
 
         void execute( const QString &script, Event *event );

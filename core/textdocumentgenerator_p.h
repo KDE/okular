@@ -115,7 +115,7 @@ class TextDocumentGeneratorPrivate : public GeneratorPrivate
     friend class TextDocumentConverter;
 
     public:
-        TextDocumentGeneratorPrivate( TextDocumentConverter *converter )
+        explicit TextDocumentGeneratorPrivate( TextDocumentConverter *converter )
             : mConverter( converter ), mDocument( nullptr ), mGeneralSettings( nullptr )
         {
         }

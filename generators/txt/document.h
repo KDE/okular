@@ -19,7 +19,7 @@ namespace Txt
         Q_OBJECT
 
         public:
-            Document( const QString &fileName );
+            explicit Document( const QString &fileName );
             ~Document();
 
         private:

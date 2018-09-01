@@ -19,7 +19,7 @@
 
 #include "documentitem.h"
 
-#include <QtQml>
+#include <QtQml> // krazy:exclude=includes
 #include <QMimeDatabase>
 
 #include <core/document_p.h>

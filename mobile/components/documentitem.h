@@ -169,7 +169,7 @@ class Observer : public QObject, public Okular::DocumentObserver
     Q_OBJECT
 
 public:
-    Observer(DocumentItem *parent);
+    explicit Observer(DocumentItem *parent);
     ~Observer();
 
     // inherited from DocumentObserver

@@ -21,7 +21,7 @@ class SnapshotTaker : public QObject
     Q_OBJECT
 
     public:
-        SnapshotTaker( const QUrl &url, QObject *parent = nullptr );
+        explicit SnapshotTaker( const QUrl &url, QObject *parent = nullptr );
         ~SnapshotTaker();
 
     Q_SIGNALS:

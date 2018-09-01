@@ -14,7 +14,7 @@
 #include <klocalizedstring.h>
 
 
-#include <QtWidgets/QApplication>
+#include <QApplication>
 #include <QHBoxLayout>
 #include <QListWidget>
 #include <QListWidgetItem>

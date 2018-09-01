@@ -24,7 +24,7 @@ class BrowserExtension : public KParts::BrowserExtension
     Q_OBJECT
 
     public:
-        BrowserExtension(Part*);
+        explicit BrowserExtension(Part*);
 
     public Q_SLOTS:
         // Automatically detected by the host.
@@ -39,7 +39,7 @@ class OkularLiveConnectExtension : public KParts::LiveConnectExtension
     Q_OBJECT
 
     public:
-        OkularLiveConnectExtension( Part *parent );
+        explicit OkularLiveConnectExtension( Part *parent );
 
         // from LiveConnectExtension
         bool get( const unsigned long objid, const QString &field, Type &type,

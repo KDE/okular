@@ -237,7 +237,7 @@ class OKULARCORE_EXPORT ExecuteAction : public Action
 
 /**
  * The Browse action browses an url by opening a web browser or
- * email client, depedning on the url protocol (e.g. http, mailto, etc.).
+ * email client, depending on the url protocol (e.g. http, mailto, etc.).
  */
 class OKULARCORE_EXPORT BrowseAction : public Action
 {
@@ -247,7 +247,7 @@ class OKULARCORE_EXPORT BrowseAction : public Action
          *
          * @param url The url to browse.
          */
-        BrowseAction( const QUrl &url );
+        explicit BrowseAction( const QUrl &url );
 
         /**
          * Destroys the browse action.
@@ -461,7 +461,7 @@ class OKULARCORE_EXPORT MovieAction : public Action
         /**
          * Creates a new movie action.
          */
-        MovieAction( OperationType operation );
+        explicit MovieAction( OperationType operation );
 
         /**
          * Destroys the movie action.

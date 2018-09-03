@@ -4819,6 +4819,18 @@ ArchiveData *DocumentPrivate::unpackDocumentArchive( const QString &archivePath 
         return nullptr;
 
     const KArchiveDirectory * mainDir = okularArchive.directory();
+
+    // Check the archive doesn't have folders, we don't create them when saving the archive
+    // and folders mean paths and paths mean path traversal issues
+    for ( const QString &entry : mainDir->entries() )
+    {
+        if ( mainDir->entry( entry )->isDirectory() )
+        {
+            qWarning() << "Warning: Found a directory inside" << archivePath << " - Okular does not create files like that so it is most probably forged.";
+            return nullptr;
+        }
+    }
+
     const KArchiveEntry * mainEntry = mainDir->entry( QStringLiteral("content.xml") );
     if ( !mainEntry || !mainEntry->isFile() )
         return nullptr;

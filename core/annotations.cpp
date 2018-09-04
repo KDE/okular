@@ -750,7 +750,7 @@ void Annotation::store( QDomNode & annNode, QDomDocument & document ) const
     if ( d->m_flags ) // Strip internal flags
         e.setAttribute( QStringLiteral("flags"), d->m_flags & ~(External | ExternallyDrawn | BeingMoved | BeingResized ) );
     if ( d->m_style.color().isValid() )
-        e.setAttribute( QStringLiteral("color"), d->m_style.color().name() );
+        e.setAttribute( QStringLiteral("color"), d->m_style.color().name( QColor::HexArgb ) );
     if ( d->m_style.opacity() != 1.0 )
         e.setAttribute( QStringLiteral("opacity"), QString::number( d->m_style.opacity() ) );
 

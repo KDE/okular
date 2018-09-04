@@ -131,7 +131,7 @@ QDomDocument EditAnnotToolDialog::toolXml() const
     toolElement.appendChild( engineElement );
     engineElement.appendChild( annotationElement );
 
-    const QString color = m_stubann->style().color().name();
+    const QString color = m_stubann->style().color().name( QColor::HexArgb );
     const QString opacity = QString::number( m_stubann->style().opacity() );
     const QString width = QString::number( m_stubann->style().width() );
 

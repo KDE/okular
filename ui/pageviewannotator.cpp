@@ -29,6 +29,7 @@
 
 // system includes
 #include <math.h>
+#include <memory>
 #include <QStandardPaths>
 
 // local includes
@@ -47,7 +48,7 @@ class PickPointEngine : public AnnotatorEngine
 {
     public:
         PickPointEngine( const QDomElement & engineElement )
-            : AnnotatorEngine( engineElement ), clicked( false ), pixmap( nullptr ),
+            : AnnotatorEngine( engineElement ), clicked( false ),
               xscale( 1.0 ), yscale( 1.0 )
         {
             // parse engine specific attributes
@@ -64,12 +65,7 @@ class PickPointEngine : public AnnotatorEngine
 
             // create engine objects
             if ( !hoverIconName.simplified().isEmpty() )
-                pixmap = new QPixmap( GuiUtils::loadStamp( hoverIconName, QSize( size, size ) ) );
-        }
-
-        ~PickPointEngine() override
-        {
-            delete pixmap;
+                pixmap = GuiUtils::loadStamp( hoverIconName, QSize( size, size ) );
         }
 
         QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale, const Okular::Page * page ) override
@@ -140,8 +136,8 @@ class PickPointEngine : public AnnotatorEngine
                     painter->drawRect( realrect );
                     painter->setPen( origpen );
                 }
-                if ( pixmap )
-                    painter->drawPixmap( QPointF( rect.left * xScale, rect.top * yScale ), *pixmap );
+                if ( !pixmap.isNull() )
+                    painter->drawPixmap( QPointF( rect.left * xScale, rect.top * yScale ), pixmap );
             }
         }
 
@@ -305,7 +301,7 @@ class PickPointEngine : public AnnotatorEngine
         Okular::NormalizedRect rect;
         Okular::NormalizedPoint startpoint;
         Okular::NormalizedPoint point;
-        QPixmap * pixmap;
+        QPixmap pixmap;
         QString hoverIconName, iconName;
         int size;
         double xscale,yscale;
@@ -490,15 +486,9 @@ class TextSelectorEngine : public AnnotatorEngine
 {
     public:
         TextSelectorEngine( const QDomElement & engineElement, PageView * pageView )
-            : AnnotatorEngine( engineElement ), m_pageView( pageView ),
-            selection( nullptr )
+            : AnnotatorEngine( engineElement ), m_pageView( pageView )
         {
             // parse engine specific attributes
-        }
-
-        ~TextSelectorEngine() override
-        {
-            delete selection;
         }
 
         QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale, const Okular::Page * /*page*/ ) override
@@ -521,9 +511,8 @@ class TextSelectorEngine : public AnnotatorEngine
                 {
                     const QPoint start( (int)( lastPoint.x * item()->uncroppedWidth() ), (int)( lastPoint.y * item()->uncroppedHeight() ) );
                     const QPoint end( (int)( nX * item()->uncroppedWidth() ), (int)( nY * item()->uncroppedHeight() ) );
-                    delete selection;
-                    selection = nullptr;
-                    Okular::RegularAreaRect * newselection = m_pageView->textSelectionForItem( item(), start, end );
+                    selection.reset();
+                    std::unique_ptr<Okular::RegularAreaRect> newselection( m_pageView->textSelectionForItem( item(), start, end ) );
                     if ( newselection && !newselection->isEmpty() )
                     {
                         const QList<QRect> geom = newselection->geometry( (int)xScale, (int)yScale );
@@ -536,11 +525,7 @@ class TextSelectorEngine : public AnnotatorEngine
                                 newrect |= r;
                         }
                         rect |= newrect;
-                        selection = newselection;
-                    }
-                    else
-                    {
-                        delete newselection;
+                        selection = std::move(newselection);
                     }
                 }
             }
@@ -621,8 +606,7 @@ class TextSelectorEngine : public AnnotatorEngine
                 ann = ha;
             }
 
-            delete selection;
-            selection = nullptr;
+            selection.reset();
 
             // safety check
             if ( !ann )
@@ -647,7 +631,7 @@ class TextSelectorEngine : public AnnotatorEngine
         // data
         PageView * m_pageView;
         // TODO: support more pages
-        Okular::RegularAreaRect * selection;
+        std::unique_ptr<Okular::RegularAreaRect> selection;
         Okular::NormalizedPoint lastPoint;
         QRect rect;
 };

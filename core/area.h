@@ -669,7 +669,7 @@ template <class NormalizedShape, class Shape>
 bool RegularArea<NormalizedShape, Shape>::isNull() const
 {
     if ( this->isEmpty() )
-        return false;
+        return true;
 
     typename QList<NormalizedShape>::const_iterator it = this->begin(), itEnd = this->end();
     for ( ; it != itEnd; ++it )

@@ -142,7 +142,7 @@ class PresentationToolBar : public QToolBar
 PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc, DrawingToolActions * drawingToolActions, KActionCollection * collection )
     : QWidget( nullptr /* must be null, to have an independent widget */, Qt::FramelessWindowHint ),
     m_pressedLink( nullptr ), m_handCursor( false ), m_drawingEngine( nullptr ),
-    m_screenInhibitCookie(0), m_sleepInhibitCookie(0),
+    m_screenInhibitCookie(0), m_sleepInhibitFd(-1),
     m_parentWidget( parent ),
     m_document( doc ), m_frameIndex( -1 ), m_topBar( nullptr ), m_pagesEdit( nullptr ), m_searchBar( nullptr ),
     m_ac( collection ), m_screenSelect( nullptr ), m_isSetup( false ), m_blockNotifications( false ), m_inBlackScreenMode( false ),
@@ -1735,7 +1735,7 @@ void PresentationWidget::inhibitPowerManagement()
         }
     }
 
-    if (!m_sleepInhibitCookie) {
+    if (m_sleepInhibitFd != -1) {
         QDBusMessage message = QDBusMessage::createMethodCall(QStringLiteral("org.freedesktop.login1"),
                                                               QStringLiteral("/org/freedesktop/login1"),
                                                               QStringLiteral("org.freedesktop.login1.Manager"),
@@ -1749,7 +1749,7 @@ void PresentationWidget::inhibitPowerManagement()
         QDBusPendingReply<QDBusUnixFileDescriptor> reply = QDBusConnection::systemBus().asyncCall(message);
         reply.waitForFinished();
         if (reply.isValid()) {
-            m_sleepInhibitCookie = reply.value().fileDescriptor();
+            m_sleepInhibitFd = dup(reply.value().fileDescriptor());
         } else {
             qCWarning(OkularUiDebug) << "Unable to inhibit sleep" << reply.error();
         }
@@ -1760,9 +1760,9 @@ void PresentationWidget::inhibitPowerManagement()
 void PresentationWidget::allowPowerManagement()
 {
 #ifdef Q_OS_LINUX
-    if (m_sleepInhibitCookie) {
-        ::close(m_sleepInhibitCookie);
-        m_sleepInhibitCookie = 0;
+    if (m_sleepInhibitFd != -1) {
+        ::close(m_sleepInhibitFd);
+        m_sleepInhibitFd = -1;
     }
 
     if (m_screenInhibitCookie) {

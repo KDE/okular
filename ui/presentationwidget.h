@@ -114,7 +114,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         QRect m_drawingRect;
         int m_screen;
         uint m_screenInhibitCookie;
-        int m_sleepInhibitCookie;
+        int m_sleepInhibitFd;
 
         // transition related
         QTimer * m_transitionTimer;

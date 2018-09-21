@@ -21,6 +21,8 @@ install(FILES
    tool-note-inline.png
    tool-note-inline-okular-colorizable.png
    tool-note-inline-okular-colorizable@2x.png
+   tool-typewriter-okular-colorizable.png
+   tool-typewriter-okular-colorizable@2x.png
    DESTINATION ${KDE_INSTALL_DATADIR}/okular/pics)
 # install annotation page images
 install(FILES

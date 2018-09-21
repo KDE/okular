@@ -91,12 +91,19 @@ protected:
     virtual QWidget * createStyleWidget();
     virtual QWidget * createExtraWidget();
 
+private:
+    virtual bool hasColorButton() const { return true; }
+    virtual bool hasOpacityBox() const { return true; }
+
     Okular::Annotation * m_ann;
-    QWidget * m_appearanceWidget;
-    QWidget * m_extraWidget;
-    KColorButton *m_colorBn;
-    QSpinBox *m_opacity;
+    QWidget * m_appearanceWidget { nullptr };
+    QWidget * m_extraWidget { nullptr };
+    KColorButton *m_colorBn { nullptr };
+    QSpinBox *m_opacity { nullptr };
 };
+
+class QVBoxLayout;
+class QGridLayout;
 
 class TextAnnotationWidget
   : public AnnotationWidget
@@ -112,11 +119,24 @@ protected:
     QWidget * createStyleWidget() override;
 
 private:
+    virtual bool hasColorButton() const override;
+    virtual bool hasOpacityBox() const override;
+
+    void createPopupNoteStyleUi( QWidget * widget, QVBoxLayout * layout );
+    void createInlineNoteStyleUi( QWidget * widget, QVBoxLayout * layout );
+    void createTypewriterStyleUi( QWidget * widget, QVBoxLayout * layout );
+    void addPixmapSelector( QWidget * widget, QLayout * layout );
+    void addFontRequester( QWidget * widget, QGridLayout * layout );
+    void addTextAlignComboBox( QWidget * widget, QGridLayout * layout );
+    void addWidthSpinBox( QWidget * widget, QGridLayout * layout );
+
+    inline bool isTypewriter() const { return ( m_textAnn->inplaceIntent() == Okular::TextAnnotation::TypeWriter ); }
+
     Okular::TextAnnotation * m_textAnn;
-    PixmapPreviewSelector * m_pixmapSelector;
-    KFontRequester * m_fontReq;
-    QComboBox * m_textAlign;
-    QDoubleSpinBox * m_spinWidth;
+    PixmapPreviewSelector * m_pixmapSelector { nullptr };
+    KFontRequester * m_fontReq { nullptr };
+    QComboBox * m_textAlign { nullptr };
+    QDoubleSpinBox * m_spinWidth { nullptr };
 };
 
 class StampAnnotationWidget

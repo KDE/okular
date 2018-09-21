@@ -157,7 +157,7 @@ AnnotationWidget * AnnotationWidgetFactory::widgetFor( Okular::Annotation * ann 
 
 
 AnnotationWidget::AnnotationWidget( Okular::Annotation * ann )
-    : QObject(), m_ann( ann ), m_appearanceWidget( nullptr ), m_extraWidget( nullptr )
+    : m_ann( ann )
 {
 }
 
@@ -190,30 +190,36 @@ QWidget * AnnotationWidget::extraWidget()
 
 void AnnotationWidget::applyChanges()
 {
-    m_ann->style().setColor( m_colorBn->color() );
-    m_ann->style().setOpacity( (double)m_opacity->value() / 100.0 );
+    if (m_colorBn)
+        m_ann->style().setColor( m_colorBn->color() );
+    if (m_opacity)
+        m_ann->style().setOpacity( (double)m_opacity->value() / 100.0 );
 }
 
 QWidget * AnnotationWidget::createAppearanceWidget()
 {
     QWidget * widget = new QWidget();
     QGridLayout * gridlayout = new QGridLayout( widget );
-
-    QLabel * tmplabel = new QLabel( i18n( "&Color:" ), widget );
-    gridlayout->addWidget( tmplabel, 0, 0, Qt::AlignRight );
-    m_colorBn = new KColorButton( widget );
-    m_colorBn->setColor( m_ann->style().color() );
-    tmplabel->setBuddy( m_colorBn );
-    gridlayout->addWidget( m_colorBn, 0, 1 );
-
-    tmplabel = new QLabel( i18n( "&Opacity:" ), widget );
-    gridlayout->addWidget( tmplabel, 1, 0, Qt::AlignRight );
-    m_opacity = new QSpinBox( widget );
-    m_opacity->setRange( 0, 100 );
-    m_opacity->setValue( (int)( m_ann->style().opacity() * 100 ) );
-    m_opacity->setSuffix( i18nc( "Suffix for the opacity level, eg '80 %'", " %" ) );
-    tmplabel->setBuddy( m_opacity );
-    gridlayout->addWidget( m_opacity, 1, 1 );
+    if ( hasColorButton() )
+    {
+        QLabel * tmplabel = new QLabel( i18n( "&Color:" ), widget );
+        gridlayout->addWidget( tmplabel, 0, 0, Qt::AlignRight );
+        m_colorBn = new KColorButton( widget );
+        m_colorBn->setColor( m_ann->style().color() );
+        tmplabel->setBuddy( m_colorBn );
+        gridlayout->addWidget( m_colorBn, 0, 1 );
+    }
+    if ( hasOpacityBox() )
+    {
+        QLabel * tmplabel = new QLabel( i18n( "&Opacity:" ), widget );
+        gridlayout->addWidget( tmplabel, 1, 0, Qt::AlignRight );
+        m_opacity = new QSpinBox( widget );
+        m_opacity->setRange( 0, 100 );
+        m_opacity->setValue( (int)( m_ann->style().opacity() * 100 ) );
+        m_opacity->setSuffix( i18nc( "Suffix for the opacity level, eg '80 %'", " %" ) );
+        tmplabel->setBuddy( m_opacity );
+        gridlayout->addWidget( m_opacity, 1, 1 );
+    }
 
     QWidget * styleWidget = createStyleWidget();
     if ( styleWidget )
@@ -221,8 +227,10 @@ QWidget * AnnotationWidget::createAppearanceWidget()
 
     gridlayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::MinimumExpanding ), 3, 0 );
 
-    connect( m_colorBn, &KColorButton::changed, this, &AnnotationWidget::dataChanged );
-    connect( m_opacity, SIGNAL(valueChanged(int)), this, SIGNAL(dataChanged()) );
+    if ( m_colorBn )
+        connect( m_colorBn, &KColorButton::changed, this, &AnnotationWidget::dataChanged );
+    if ( m_opacity )
+        connect( m_opacity, SIGNAL(valueChanged(int)), this, SIGNAL(dataChanged()) );
 
     return widget;
 }
@@ -239,7 +247,7 @@ QWidget * AnnotationWidget::createExtraWidget()
 
 
 TextAnnotationWidget::TextAnnotationWidget( Okular::Annotation * ann )
-    : AnnotationWidget( ann ), m_pixmapSelector( nullptr )
+    : AnnotationWidget( ann )
 {
     m_textAnn = static_cast< Okular::TextAnnotation * >( ann );
 }
@@ -247,65 +255,30 @@ TextAnnotationWidget::TextAnnotationWidget( Okular::Annotation * ann )
 QWidget * TextAnnotationWidget::createStyleWidget()
 {
     QWidget * widget = new QWidget();
-    QVBoxLayout * lay = new QVBoxLayout( widget );
-    lay->setMargin( 0 );
+    QVBoxLayout * layout = new QVBoxLayout( widget );
+    layout->setMargin( 0 );
 
     if ( m_textAnn->textType() == Okular::TextAnnotation::Linked )
     {
-        QGroupBox * gb = new QGroupBox( widget );
-        lay->addWidget( gb );
-        gb->setTitle( i18n( "Icon" ) );
-        QHBoxLayout * gblay = new QHBoxLayout( gb );
-        m_pixmapSelector = new PixmapPreviewSelector( gb );
-        gblay->addWidget( m_pixmapSelector );
-
-        m_pixmapSelector->addItem( i18n( "Comment" ), QStringLiteral("Comment") );
-        m_pixmapSelector->addItem( i18n( "Help" ), QStringLiteral("Help") );
-        m_pixmapSelector->addItem( i18n( "Insert" ), QStringLiteral("Insert") );
-        m_pixmapSelector->addItem( i18n( "Key" ), QStringLiteral("Key") );
-        m_pixmapSelector->addItem( i18n( "New Paragraph" ), QStringLiteral("NewParagraph") );
-        m_pixmapSelector->addItem( i18n( "Note" ), QStringLiteral("Note") );
-        m_pixmapSelector->addItem( i18n( "Paragraph" ), QStringLiteral("Paragraph") );
-        m_pixmapSelector->setIcon( m_textAnn->textIcon() );
-
-        connect( m_pixmapSelector, &PixmapPreviewSelector::iconChanged, this, &AnnotationWidget::dataChanged );
+        createPopupNoteStyleUi( widget, layout );
     }
     else if ( m_textAnn->textType() == Okular::TextAnnotation::InPlace )
     {
-        QGridLayout * innerlay = new QGridLayout();
-        lay->addLayout( innerlay );
-
-        QLabel * tmplabel = new QLabel( i18n( "Font:" ), widget );
-        innerlay->addWidget( tmplabel, 0, 0 );
-        m_fontReq = new KFontRequester( widget );
-        innerlay->addWidget( m_fontReq, 0, 1 );
-        m_fontReq->setFont( m_textAnn->textFont() );
-
-        tmplabel = new QLabel( i18n( "Align:" ), widget );
-        innerlay->addWidget( tmplabel, 1, 0 );
-        m_textAlign = new KComboBox( widget );
-        innerlay->addWidget( m_textAlign, 1, 1 );
-        m_textAlign->addItem( i18n("Left") );
-        m_textAlign->addItem( i18n("Center") );
-        m_textAlign->addItem( i18n("Right") );
-        m_textAlign->setCurrentIndex( m_textAnn->inplaceAlignment() );
-
-        tmplabel = new QLabel( i18n( "Border Width:" ), widget );
-        innerlay->addWidget( tmplabel, 2, 0, Qt::AlignRight );
-        m_spinWidth = new QDoubleSpinBox( widget );
-        innerlay->addWidget( m_spinWidth, 2, 1 );
-        tmplabel->setBuddy( m_spinWidth );
-        m_spinWidth->setRange( 0, 100 );
-        m_spinWidth->setValue( m_textAnn->style().width() );
-        m_spinWidth->setSingleStep( 0.1 );
-
-        connect( m_fontReq, &KFontRequester::fontSelected, this, &AnnotationWidget::dataChanged );
-
-        connect( m_textAlign, SIGNAL(currentIndexChanged(int)), this, SIGNAL(dataChanged()) );
-        connect( m_spinWidth, SIGNAL(valueChanged(double)), this, SIGNAL(dataChanged()) );
+        if ( isTypewriter() )
+            createTypewriterStyleUi( widget, layout );
+        else
+            createInlineNoteStyleUi( widget, layout );
     }
 
     return widget;
+}
+
+bool TextAnnotationWidget::hasColorButton() const {
+    return !isTypewriter();
+}
+
+bool TextAnnotationWidget::hasOpacityBox() const {
+    return !isTypewriter();
 }
 
 void TextAnnotationWidget::applyChanges()
@@ -318,11 +291,86 @@ void TextAnnotationWidget::applyChanges()
     else if ( m_textAnn->textType() == Okular::TextAnnotation::InPlace )
     {
         m_textAnn->setTextFont( m_fontReq->font() );
-        m_textAnn->setInplaceAlignment( m_textAlign->currentIndex() );
-        m_textAnn->style().setWidth( m_spinWidth->value() );
+        if ( !isTypewriter() )
+        {
+            m_textAnn->setInplaceAlignment( m_textAlign->currentIndex() );
+            m_textAnn->style().setWidth( m_spinWidth->value() );
+        }
     }
 }
 
+void TextAnnotationWidget::createPopupNoteStyleUi( QWidget * widget, QVBoxLayout * layout  ) {
+    QGroupBox * gb = new QGroupBox( widget );
+    layout->addWidget( gb );
+    QHBoxLayout * gblay = new QHBoxLayout( gb );
+    gb->setTitle( i18n( "Icon" ) );
+    addPixmapSelector( gb, gblay );
+}
+
+void TextAnnotationWidget::createInlineNoteStyleUi( QWidget * widget, QVBoxLayout * layout  ) {
+    QGridLayout * innerlay = new QGridLayout();
+    layout->addLayout( innerlay );
+    addFontRequester(widget, innerlay);
+    addTextAlignComboBox(widget, innerlay);
+    addWidthSpinBox(widget, innerlay);
+}
+
+void TextAnnotationWidget::createTypewriterStyleUi( QWidget * widget, QVBoxLayout * layout  ) {
+    QGridLayout * innerlay = new QGridLayout();
+    layout->addLayout( innerlay );
+    addFontRequester(widget, innerlay);
+}
+
+void TextAnnotationWidget::addPixmapSelector( QWidget * widget, QLayout * layout )
+{
+  m_pixmapSelector = new PixmapPreviewSelector( widget );
+  layout->addWidget( m_pixmapSelector );
+  m_pixmapSelector->addItem( i18n( "Comment" ), QStringLiteral("Comment") );
+  m_pixmapSelector->addItem( i18n( "Help" ), QStringLiteral("Help") );
+  m_pixmapSelector->addItem( i18n( "Insert" ), QStringLiteral("Insert") );
+  m_pixmapSelector->addItem( i18n( "Key" ), QStringLiteral("Key") );
+  m_pixmapSelector->addItem( i18n( "New Paragraph" ), QStringLiteral("NewParagraph") );
+  m_pixmapSelector->addItem( i18n( "Note" ), QStringLiteral("Note") );
+  m_pixmapSelector->addItem( i18n( "Paragraph" ), QStringLiteral("Paragraph") );
+  m_pixmapSelector->setIcon( m_textAnn->textIcon() );
+  connect( m_pixmapSelector, &PixmapPreviewSelector::iconChanged, this, &AnnotationWidget::dataChanged );
+}
+
+void TextAnnotationWidget::addFontRequester( QWidget * widget, QGridLayout * layout )
+{
+    QLabel * tmplabel = new QLabel( i18n( "Font:" ), widget );
+    layout->addWidget( tmplabel, 0, 0 );
+    m_fontReq = new KFontRequester( widget );
+    layout->addWidget( m_fontReq, 0, 1 );
+    m_fontReq->setFont( m_textAnn->textFont() );
+    connect( m_fontReq, &KFontRequester::fontSelected, this, &AnnotationWidget::dataChanged );
+}
+
+void TextAnnotationWidget::addTextAlignComboBox( QWidget * widget, QGridLayout * layout )
+{
+    QLabel * tmplabel = new QLabel( i18n( "Align:" ), widget );
+    layout->addWidget( tmplabel, 1, 0 );
+    m_textAlign = new KComboBox( widget );
+    layout->addWidget( m_textAlign, 1, 1 );
+    m_textAlign->addItem( i18n("Left") );
+    m_textAlign->addItem( i18n("Center") );
+    m_textAlign->addItem( i18n("Right") );
+    m_textAlign->setCurrentIndex( m_textAnn->inplaceAlignment() );
+    connect( m_textAlign, SIGNAL(currentIndexChanged(int)), this, SIGNAL(dataChanged()) );
+}
+
+void TextAnnotationWidget::addWidthSpinBox( QWidget * widget, QGridLayout * layout )
+{
+    QLabel * tmplabel = new QLabel( i18n( "Border Width:" ), widget );
+    layout->addWidget( tmplabel, 2, 0, Qt::AlignRight );
+    m_spinWidth = new QDoubleSpinBox( widget );
+    layout->addWidget( m_spinWidth, 2, 1 );
+    tmplabel->setBuddy( m_spinWidth );
+    m_spinWidth->setRange( 0, 100 );
+    m_spinWidth->setValue( m_textAnn->style().width() );
+    m_spinWidth->setSingleStep( 0.1 );
+    connect( m_spinWidth, SIGNAL(valueChanged(double)), this, SIGNAL(dataChanged()) );
+}
 
 StampAnnotationWidget::StampAnnotationWidget( Okular::Annotation * ann )
     : AnnotationWidget( ann ), m_pixmapSelector( nullptr )

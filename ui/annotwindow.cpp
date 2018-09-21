@@ -259,7 +259,15 @@ void AnnotWindow::updateAnnotation( Okular::Annotation * a )
 
 void AnnotWindow::reloadInfo()
 {
-    const QColor newcolor = m_annot->style().color().isValid() ? m_annot->style().color() : Qt::yellow;
+    QColor newcolor;
+    if ( m_annot->subType() == Okular::Annotation::AText )
+    {
+        Okular::TextAnnotation * textAnn = static_cast< Okular::TextAnnotation * >( m_annot );
+        if ( textAnn->textType() == Okular::TextAnnotation::InPlace && textAnn->inplaceIntent() == Okular::TextAnnotation::TypeWriter )
+            newcolor = QColor("#fdfd96");
+    }
+    if ( !newcolor.isValid() )
+        newcolor = m_annot->style().color().isValid() ? QColor(m_annot->style().color().red(), m_annot->style().color().green(), m_annot->style().color().blue(), 255) : Qt::yellow;
     if ( newcolor != m_color )
     {
         m_color = newcolor;

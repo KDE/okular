@@ -40,7 +40,8 @@ class EditAnnotToolDialog : public QDialog
             ToolPolygon,
             ToolTextMarkup,
             ToolGeometricalShape,
-            ToolStamp
+            ToolStamp,
+            ToolTypewriter
         };
 
         explicit EditAnnotToolDialog( QWidget *parent = nullptr, const QDomElement &initialState = QDomElement() );

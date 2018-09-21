@@ -73,7 +73,12 @@ QString captionForAnnotation( const Okular::Annotation * ann )
             if( ( (Okular::TextAnnotation*)ann )->textType() == Okular::TextAnnotation::Linked )
                 ret = i18n( "Pop-up Note" );
             else
-                ret = i18n( "Inline Note" );
+            {
+                if( ( (Okular::TextAnnotation*)ann )->inplaceIntent() == Okular::TextAnnotation::TypeWriter )
+                    ret = i18n( "Typewriter" );
+                else
+                    ret = i18n( "Inline Note" );
+            }
             break;
         case Okular::Annotation::ALine:
             if( ( (Okular::LineAnnotation*)ann )->linePoints().count() == 2 )

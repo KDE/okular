@@ -26,6 +26,7 @@
 #include <qstack.h>
 #include <qtemporaryfile.h>
 #include <qtextstream.h>
+#include <QComboBox>
 #include <QPrinter>
 #include <QPainter>
 #include <QTimer>
@@ -76,8 +77,26 @@ static const int defaultPageHeight = 842;
 class PDFOptionsPage : public QWidget
 {
     Q_OBJECT
+public slots:
+       void enableOrDisableScaleMode()
+       {
+           m_scaleMode->setEnabled ( m_forceRaster->isChecked() );
+
+           if ( m_forceRaster->isChecked() ) {
+               m_scaleMode->setToolTip( i18n( "Scaling mode for the printed pages" ) );
+           } else {
+               m_scaleMode->setToolTip( i18n( "Select rasterization to enable this!" ) );
+           }
+       }
 
    public:
+       enum ScaleMode {
+            FitToPrintableArea,
+            FitToPage,
+            None
+       };
+       Q_ENUM(ScaleMode)
+
        PDFOptionsPage()
        {
            setWindowTitle( i18n( "PDF Options" ) );
@@ -90,7 +109,25 @@ class PDFOptionsPage : public QWidget
            m_forceRaster->setToolTip(i18n("Rasterize into an image before printing"));
            m_forceRaster->setWhatsThis(i18n("Forces the rasterization of each page into an image before printing it. This usually gives somewhat worse results, but is useful when printing documents that appear to print incorrectly."));
            layout->addWidget(m_forceRaster);
+
+           QWidget* formWidget = new QWidget(this);
+           QFormLayout* printBackendLayout = new QFormLayout(formWidget);
+
+           m_scaleMode = new QComboBox;
+           m_scaleMode->insertItem(FitToPrintableArea, i18n("Fit to printable area"), FitToPrintableArea);
+           m_scaleMode->insertItem(FitToPage, i18n("Fit to full page"), FitToPage);
+           m_scaleMode->insertItem(None, i18n("None; print original size"), None);
+           m_scaleMode->setToolTip(i18n("Select rasterization to enable this!"));
+           printBackendLayout->addRow(i18n("Scale mode:"), m_scaleMode);
+
+           layout->addWidget(formWidget);
+
            layout->addStretch(1);
+
+           // Enable scaleMode only if the file is to be rasterized before printing
+           m_scaleMode->setEnabled( false );
+
+           connect( m_forceRaster, &QCheckBox::stateChanged, this, &PDFOptionsPage::enableOrDisableScaleMode );
 
 #if defined(Q_OS_WIN) && !defined HAVE_POPPLER_0_60
            m_printAnnots->setVisible( false );
@@ -118,9 +155,15 @@ class PDFOptionsPage : public QWidget
            m_forceRaster->setChecked( forceRaster );
        }
 
+       ScaleMode scaleMode() const
+       {
+           return m_scaleMode->currentData().value<ScaleMode>();
+       }
+
     private:
         QCheckBox *m_printAnnots;
         QCheckBox *m_forceRaster;
+        QComboBox *m_scaleMode;
 };
 
 
@@ -1291,11 +1334,13 @@ bool PDFGenerator::print( QPrinter& printer )
 {
     bool printAnnots = true;
     bool forceRasterize = false;
+    PDFOptionsPage::ScaleMode scaleMode = PDFOptionsPage::FitToPrintableArea;
 
     if ( pdfOptionsPage )
     {
         printAnnots = pdfOptionsPage->printAnnots();
         forceRasterize = pdfOptionsPage->printForceRaster();
+        scaleMode = pdfOptionsPage->scaleMode();
     }
 
 #ifdef Q_OS_WIN
@@ -1317,6 +1362,11 @@ bool PDFGenerator::print( QPrinter& printer )
     if ( forceRasterize && printAnnots)
     {
 #endif
+
+        // If requested, scale to full page instead of the printable area
+        if ( scaleMode == PDFOptionsPage::FitToPage )
+            printer.setFullPage( true );
+
     QPainter painter;
     painter.begin(&printer);
 
@@ -1333,13 +1383,30 @@ bool PDFGenerator::print( QPrinter& printer )
         Poppler::Page *pp = pdfdoc->page( page );
         if (pp)
         {
+                QSizeF pageSize = pp->pageSizeF();        // Unit is 'points' (i.e., 1/72th of an inch)
+                QRect painterWindow = painter.window();   // Unit is 'QPrinter::DevicePixel'
+
+                // Default: no scaling at all, but we need to go from DevicePixel units to 'points'
+                // Warning: We compute the horizontal scaling, and later assume that the vertical scaling will be the same.
+                double scaling = printer.paperRect(QPrinter::DevicePixel).width() / printer.paperRect(QPrinter::Point).width();
+
+                if ( scaleMode != PDFOptionsPage::None )
+                {
+                     // Get the two scaling factors needed to fit the page onto paper horizontally or vertically
+                     auto horizontalScaling = painterWindow.width() / pageSize.width();
+                     auto verticalScaling   = painterWindow.height() / pageSize.height();
+
+                     // We use the smaller of the two for both directions, to keep the aspect ratio
+                     scaling = std::min(horizontalScaling, verticalScaling);
+                }
+
 #ifdef Q_OS_WIN
             QImage img = pp->renderToImage(  printer.physicalDpiX(), printer.physicalDpiY() );
 #else
             // UNIX: Same resolution as the postscript rasterizer; see discussion at https://git.reviewboard.kde.org/r/130218/
             QImage img = pp->renderToImage( 300, 300 );
 #endif
-            painter.drawImage( painter.window(), img, QRectF(0, 0, img.width(), img.height()) );
+            painter.drawImage( QRectF( QPointF( 0, 0 ), scaling * pp->pageSizeF() ), img );
             delete pp;
         }
         userMutex()->unlock();

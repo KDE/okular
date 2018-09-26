@@ -34,8 +34,8 @@ Context menu actions like Rename Bookmarks etc.)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2018-02-04</date>
-		<releaseinfo>1.4 (Applications 18.04)</releaseinfo>
+		<date>2018-09-26</date>
+		<releaseinfo>1.6 (Applications 18.12)</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
 			<para>&okular; is a &kde; universal document viewer based on &kpdf; code.</para>
@@ -453,7 +453,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<para>&okular; has two different kind of annotations:</para>
 			<para>Text annotations like <guilabel>Yellow Highlighter</guilabel> and <guilabel>Black Underlining</guilabel>
 			for files with text like &eg; &PDF;.</para>
-		      <para>Graphic annotations like <guilabel>Pop-up Note</guilabel>, <guilabel>Inline Note</guilabel>, <guilabel>Freehand Line</guilabel>, <guilabel>Highlighter</guilabel>, <guilabel>Straight Line</guilabel>, <guilabel>Polygon</guilabel>, <guilabel>Stamp</guilabel>, <guilabel>Underline</guilabel>, and <guilabel>Ellipse</guilabel> for all formats supported by &okular;.</para>
+		      <para>Graphic annotations like <guilabel>Pop-up Note</guilabel>, <guilabel>Inline Note</guilabel>, <guilabel>Freehand Line</guilabel>, <guilabel>Highlighter</guilabel>, <guilabel>Straight Line</guilabel>, <guilabel>Polygon</guilabel>, <guilabel>Stamp</guilabel>, <guilabel>Underline</guilabel>, <guilabel>Ellipse</guilabel>, and <guilabel>Typewriter</guilabel> for all formats supported by &okular;.</para>
 			<para>Using the context menu either in the <guilabel>Reviews</guilabel> view of the navigation panel or in the main window you can open a <guilabel>Pop up Note</guilabel> for any kind of annotation and add or edit comments.</para>
 			<para>Annotations are not only limited to &PDF; files, they can be used for any format &okular; supports.</para>
 			<para>
@@ -724,6 +724,30 @@ Context menu actions like Rename Bookmarks etc.)
 					  </para>
 					</entry>
 				      </row>
+                                      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-typewriter-okular.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    Typewriter
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    Typewriter features opaque letters on transparent background, so that it is useful to fill noninteractive forms.
+					  </para>
+					  <para>
+					    Click on the tool button, then click with the &LMB; and hold to place the top-left corner of the note, then drag to place the bottom-right one. Enter the text of the note then click on the <guibutton>OK</guibutton> to save the note, <guibutton>Cancel</guibutton> to cancel note entering or <guibutton>Clear</guibutton> to clear the note.
+					  </para>
+					</entry>
+				      </row>
 				      </tbody>
 				    </tgroup>
 				  </informaltable>
@@ -811,7 +835,7 @@ Context menu actions like Rename Bookmarks etc.)
 					else on the annotation to move it.
 					Pressing &Esc; or clicking an area outside the annotation cancels a selection.
 				</para>
-				<para>Resizing is only applicable for annotation types Inline Note, Stamp and Ellipse.</para>
+				<para>Resizing is only applicable for annotation types Inline Note, Typewriter, Stamp and Ellipse.</para>
 
 				<note>
 					<para>

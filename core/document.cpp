@@ -2414,7 +2414,7 @@ Document::OpenResult Document::openDocument(const QString & docFile, const QUrl 
     KPluginMetaData offer = DocumentPrivate::generatorForMimeType(mime, d->m_widget);
     if ( !offer.isValid() && !triedMimeFromFileContent )
     {
-        QMimeType newmime = db.mimeTypeForFile(docFile, QMimeDatabase::MatchExtension);
+        QMimeType newmime = db.mimeTypeForFile(docFile, QMimeDatabase::MatchContent);
         triedMimeFromFileContent = true;
         if ( newmime != mime )
         {
@@ -2464,7 +2464,7 @@ Document::OpenResult Document::openDocument(const QString & docFile, const QUrl 
 
         if (openResult == OpenError && !triedMimeFromFileContent )
         {
-            QMimeType newmime = db.mimeTypeForFile(docFile, QMimeDatabase::MatchExtension);
+            QMimeType newmime = db.mimeTypeForFile(docFile, QMimeDatabase::MatchContent);
             triedMimeFromFileContent = true;
             if ( newmime != mime )
             {

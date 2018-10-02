@@ -4907,7 +4907,7 @@ Document::OpenResult Document::openDocumentArchive( const QString & docFile, con
 
     const QString tempFileName = d->m_archiveData->document.fileName();
     QMimeDatabase db;
-    const QMimeType docMime = db.mimeTypeForFile( tempFileName, QMimeDatabase::MatchContent );
+    const QMimeType docMime = db.mimeTypeForFile( tempFileName, QMimeDatabase::MatchExtension );
     const OpenResult ret = openDocument( tempFileName, url, docMime, password );
 
     if ( ret != OpenSuccess )

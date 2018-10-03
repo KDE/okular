@@ -127,6 +127,7 @@ private:
     void createTypewriterStyleUi( QWidget * widget, QVBoxLayout * layout );
     void addPixmapSelector( QWidget * widget, QLayout * layout );
     void addFontRequester( QWidget * widget, QGridLayout * layout );
+    void addTextColorButton( QWidget * widget, QGridLayout * layout );
     void addTextAlignComboBox( QWidget * widget, QGridLayout * layout );
     void addWidthSpinBox( QWidget * widget, QGridLayout * layout );
 
@@ -135,6 +136,7 @@ private:
     Okular::TextAnnotation * m_textAnn;
     PixmapPreviewSelector * m_pixmapSelector { nullptr };
     KFontRequester * m_fontReq { nullptr };
+    KColorButton *m_textColorBn { nullptr };
     QComboBox * m_textAlign { nullptr };
     QDoubleSpinBox * m_spinWidth { nullptr };
 };

@@ -180,6 +180,9 @@ void PopplerAnnotationProxy::notifyModification( const Okular::Annotation *okl_a
             Poppler::TextAnnotation * ppl_txtann = static_cast<Poppler::TextAnnotation*>(ppl_ann);
             ppl_txtann->setTextIcon( okl_txtann->textIcon() );
             ppl_txtann->setTextFont( okl_txtann->textFont() );
+            #ifdef HAVE_POPPLER_0_69
+            ppl_txtann->setTextColor( okl_txtann->textColor() );
+            #endif //HAVE_POPPLER_0_69
             ppl_txtann->setInplaceAlign( okl_txtann->inplaceAlignment() );
             ppl_txtann->setCalloutPoints( QVector<QPointF>() );
             ppl_txtann->setInplaceIntent( (Poppler::TextAnnotation::InplaceIntent)okl_txtann->inplaceIntent() );

@@ -73,7 +73,7 @@ Engine/Annotation Types [specific attributes]:
     </tool>
     <tool id="10" type="typewriter">
         <engine type="PickPoint" block="true">
-            <annotation type="Typewriter" color="#00ffffff" width="0" />
+            <annotation type="Typewriter" color="#00ffffff" textColor="#ff000000" width="0" />
         </engine>
     </tool>
 </annotatingTools>

@@ -159,6 +159,14 @@ class PickPointEngine : public AnnotatorEngine
                 f.fromString( m_annotElement.attribute( QStringLiteral("font") ) );
                 ta->setTextFont( f );
             }
+            // set font color
+            if ( m_annotElement.hasAttribute( QStringLiteral("textColor") ) )
+            {
+                if ( inplaceIntent == Okular::TextAnnotation::TypeWriter )
+                    ta->setTextColor( m_annotElement.attribute( QStringLiteral("textColor") ) );
+                else
+                    ta->setTextColor( Qt::black );
+            }
             //set width
             if ( m_annotElement.hasAttribute( QStringLiteral ( "width" ) ) )
             {
@@ -1121,7 +1129,7 @@ QPixmap PageViewAnnotator::makeToolPixmap( const QDomElement &toolElement )
     pixmap.load( QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString("okular/pics/tool-base-okular" + imageVariant + ".png") ) );
 
     /* Parse color, innerColor and icon (if present) */
-    QColor engineColor, innerColor, annotColor;
+    QColor engineColor, innerColor, textColor, annotColor;
     QString icon;
     QDomNodeList engineNodeList = toolElement.elementsByTagName( QStringLiteral("engine") );
     if ( engineNodeList.size() > 0 )
@@ -1134,12 +1142,17 @@ QPixmap PageViewAnnotator::makeToolPixmap( const QDomElement &toolElement )
     if ( annotationNodeList.size() > 0 )
     {
         QDomElement annotationEl = annotationNodeList.item( 0 ).toElement();
-        if ( !annotationEl.isNull() && annotationEl.hasAttribute( QStringLiteral("color") ) )
-            annotColor = annotationEl.attribute( QStringLiteral("color") );
-        if ( !annotationEl.isNull() && annotationEl.hasAttribute( QStringLiteral("innerColor") ) )
-            innerColor = QColor( annotationEl.attribute( QStringLiteral("innerColor") ) );
-        if ( !annotationEl.isNull() && annotationEl.hasAttribute( QStringLiteral("icon") ) )
-            icon = annotationEl.attribute( QStringLiteral("icon") );
+        if ( !annotationEl.isNull() )
+        {
+            if ( annotationEl.hasAttribute( QStringLiteral("color") ) )
+                annotColor = annotationEl.attribute( QStringLiteral("color") );
+            if ( annotationEl.hasAttribute( QStringLiteral("innerColor") ) )
+                innerColor = QColor( annotationEl.attribute( QStringLiteral("innerColor") ) );
+            if ( annotationEl.hasAttribute( QStringLiteral("textColor") ) )
+                textColor = QColor( annotationEl.attribute( QStringLiteral("textColor") ) );
+            if ( annotationEl.hasAttribute( QStringLiteral("icon") ) )
+                icon = annotationEl.attribute( QStringLiteral("icon") );
+        }
     }
 
     QPainter p( &pixmap );
@@ -1248,8 +1261,7 @@ QPixmap PageViewAnnotator::makeToolPixmap( const QDomElement &toolElement )
     else if ( annotType == QLatin1String("typewriter") )
     {
         QImage overlay( QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString("okular/pics/tool-typewriter-okular-colorizable" + imageVariant + ".png") ) );
-        /* Here we want to colorize the icon with font color instead of background color. Font color is black a.t.m. */
-        GuiUtils::colorizeImage( overlay, Qt::black );
+        GuiUtils::colorizeImage( overlay, textColor );
         p.drawImage( QPoint(-2,2), overlay );
     }
     else

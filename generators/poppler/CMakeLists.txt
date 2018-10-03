@@ -96,6 +96,17 @@ int main()
 }
 " HAVE_POPPLER_0_65)
 
+check_cxx_source_compiles("
+#include <poppler-qt5.h>
+#include <QColor>
+int main()
+{
+    Poppler::TextAnnotation *annot = new Poppler::TextAnnotation( Poppler::TextAnnotation::InPlace );
+    annot->setTextColor( Qt::blue );
+    return 0;
+}
+" HAVE_POPPLER_0_69)
+
 configure_file(
    ${CMAKE_CURRENT_SOURCE_DIR}/config-okular-poppler.h.cmake
    ${CMAKE_CURRENT_BINARY_DIR}/config-okular-poppler.h

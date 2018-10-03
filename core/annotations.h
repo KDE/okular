@@ -820,6 +820,20 @@ class OKULARCORE_EXPORT TextAnnotation : public Annotation
         QFont textFont() const;
 
         /**
+         * Sets the @p color of inplace text.
+         *
+         * @since 1.6
+         */
+        void setTextColor( const QColor &color );
+
+        /**
+         * Returns the color of inplace text.
+         *
+         * @since 1.6
+         */
+        QColor textColor() const;
+
+        /**
          * Sets the inplace @p alignment of the text annotation.
          */
         void setInplaceAlignment( int alignment );

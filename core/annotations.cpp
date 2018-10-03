@@ -1028,6 +1028,7 @@ class Okular::TextAnnotationPrivate : public Okular::AnnotationPrivate
         TextAnnotation::TextType m_textType;
         QString m_textIcon;
         QFont m_textFont;
+        QColor m_textColor;
         int m_inplaceAlign;
         NormalizedPoint m_inplaceCallout[3];
         NormalizedPoint m_transformedInplaceCallout[3];
@@ -1085,6 +1086,18 @@ QFont TextAnnotation::textFont() const
 {
     Q_D( const TextAnnotation );
     return d->m_textFont;
+}
+
+void TextAnnotation::setTextColor( const QColor &color )
+{
+	Q_D( TextAnnotation );
+	d->m_textColor = color;
+}
+
+QColor TextAnnotation::textColor() const
+{
+	Q_D( const TextAnnotation );
+	return d->m_textColor;
 }
 
 void TextAnnotation::setInplaceAlignment( int alignment )
@@ -1160,6 +1173,8 @@ void TextAnnotation::store( QDomNode & node, QDomDocument & document ) const
         textElement.setAttribute( QStringLiteral("icon"), d->m_textIcon );
     if ( d->m_textFont != QApplication::font() )
         textElement.setAttribute( QStringLiteral("font"), d->m_textFont.toString() );
+    if ( d->m_textColor.isValid() )
+        textElement.setAttribute( QStringLiteral("fontColor"), d->m_textColor.name() );
     if ( d->m_inplaceAlign )
         textElement.setAttribute( QStringLiteral("align"), d->m_inplaceAlign );
     if ( d->m_inplaceIntent != Unknown )
@@ -1246,6 +1261,8 @@ void TextAnnotationPrivate::setAnnotationProperties( const QDomNode& node )
             m_textIcon = e.attribute( QStringLiteral("icon") );
         if ( e.hasAttribute( QStringLiteral("font") ) )
             m_textFont.fromString( e.attribute( QStringLiteral("font") ) );
+        if ( e.hasAttribute( QStringLiteral("fontColor") ) )
+            m_textColor = QColor( e.attribute( QStringLiteral("fontColor") ) );
         if ( e.hasAttribute( QStringLiteral("align") ) )
             m_inplaceAlign = e.attribute( QStringLiteral("align") ).toInt();
         if ( e.hasAttribute( QStringLiteral("intent") ) )

@@ -133,6 +133,7 @@ QDomDocument EditAnnotToolDialog::toolXml() const
     engineElement.appendChild( annotationElement );
 
     const QString color = m_stubann->style().color().name( QColor::HexArgb );
+    const QString textColor = static_cast< Okular::TextAnnotation * >( m_stubann )->textColor().name();
     const QString opacity = QString::number( m_stubann->style().opacity() );
     const QString width = QString::number( m_stubann->style().width() );
 
@@ -271,10 +272,10 @@ QDomDocument EditAnnotToolDialog::toolXml() const
         Okular::TextAnnotation * ta = static_cast<Okular::TextAnnotation*>( m_stubann );
         toolElement.setAttribute( QStringLiteral("type"), QStringLiteral("typewriter") );
         engineElement.setAttribute( QStringLiteral("type"), QStringLiteral("PickPoint") );
-        engineElement.setAttribute( QStringLiteral("color"), color );
         engineElement.setAttribute( QStringLiteral("block"), QStringLiteral("true") );
         annotationElement.setAttribute( QStringLiteral("type"), QStringLiteral("Typewriter") );
         annotationElement.setAttribute( QStringLiteral("color"), color );
+        annotationElement.setAttribute( QStringLiteral("textColor"), textColor );
         annotationElement.setAttribute( QStringLiteral("width"), width );
         if ( ta->textFont() != QApplication::font() )
             annotationElement.setAttribute( QStringLiteral("font"), ta->textFont().toString() );
@@ -362,6 +363,7 @@ void EditAnnotToolDialog::createStubAnnotation()
         ta->setInplaceIntent( Okular::TextAnnotation::TypeWriter );
         ta->style().setWidth( 0.0 );
         ta->style().setColor( QColor(255,255,255,0) );
+        ta->setTextColor( Qt::black );
         m_stubann = ta;
     }
 }
@@ -504,6 +506,8 @@ void EditAnnotToolDialog::loadTool( const QDomElement &toolElement )
             f.fromString( annotationElement.attribute( QStringLiteral("font") ) );
             ta->setTextFont( f );
         }
+        if ( annotationElement.hasAttribute( QStringLiteral("textColor") ) )
+            ta->setTextColor( QColor( annotationElement.attribute( QStringLiteral("textColor") ) ) );
     }
 
     // Common properties

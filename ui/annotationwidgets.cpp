@@ -286,15 +286,23 @@ void TextAnnotationWidget::applyChanges()
     AnnotationWidget::applyChanges();
     if ( m_textAnn->textType() == Okular::TextAnnotation::Linked )
     {
+        Q_ASSERT( m_pixmapSelector );
         m_textAnn->setTextIcon( m_pixmapSelector->icon() );
     }
     else if ( m_textAnn->textType() == Okular::TextAnnotation::InPlace )
     {
+        Q_ASSERT( m_fontReq );
         m_textAnn->setTextFont( m_fontReq->font() );
         if ( !isTypewriter() )
         {
+            Q_ASSERT( m_textAlign && m_spinWidth );
             m_textAnn->setInplaceAlignment( m_textAlign->currentIndex() );
             m_textAnn->style().setWidth( m_spinWidth->value() );
+        }
+        else
+        {
+            Q_ASSERT( m_textColorBn );
+            m_textAnn->setTextColor( m_textColorBn->color() );
         }
     }
 }
@@ -310,15 +318,16 @@ void TextAnnotationWidget::createPopupNoteStyleUi( QWidget * widget, QVBoxLayout
 void TextAnnotationWidget::createInlineNoteStyleUi( QWidget * widget, QVBoxLayout * layout  ) {
     QGridLayout * innerlay = new QGridLayout();
     layout->addLayout( innerlay );
-    addFontRequester(widget, innerlay);
-    addTextAlignComboBox(widget, innerlay);
-    addWidthSpinBox(widget, innerlay);
+    addFontRequester( widget, innerlay );
+    addTextAlignComboBox( widget, innerlay );
+    addWidthSpinBox( widget, innerlay );
 }
 
 void TextAnnotationWidget::createTypewriterStyleUi( QWidget * widget, QVBoxLayout * layout  ) {
     QGridLayout * innerlay = new QGridLayout();
     layout->addLayout( innerlay );
-    addFontRequester(widget, innerlay);
+    addFontRequester( widget, innerlay );
+    addTextColorButton( widget, innerlay );
 }
 
 void TextAnnotationWidget::addPixmapSelector( QWidget * widget, QLayout * layout )
@@ -338,20 +347,34 @@ void TextAnnotationWidget::addPixmapSelector( QWidget * widget, QLayout * layout
 
 void TextAnnotationWidget::addFontRequester( QWidget * widget, QGridLayout * layout )
 {
+    const int row = layout->rowCount();
     QLabel * tmplabel = new QLabel( i18n( "Font:" ), widget );
-    layout->addWidget( tmplabel, 0, 0 );
+    layout->addWidget( tmplabel, row, 0 );
     m_fontReq = new KFontRequester( widget );
-    layout->addWidget( m_fontReq, 0, 1 );
+    layout->addWidget( m_fontReq, row, 1 );
     m_fontReq->setFont( m_textAnn->textFont() );
     connect( m_fontReq, &KFontRequester::fontSelected, this, &AnnotationWidget::dataChanged );
 }
 
+void TextAnnotationWidget::addTextColorButton( QWidget * widget, QGridLayout * layout )
+{
+    const int row = layout->rowCount();
+    QLabel * tmplabel = new QLabel( i18n( "&Text Color:" ), widget );
+    layout->addWidget( tmplabel, row, 0, Qt::AlignRight );
+    m_textColorBn = new KColorButton( widget );
+    m_textColorBn->setColor( m_textAnn->textColor() );
+    tmplabel->setBuddy( m_textColorBn );
+    layout->addWidget( m_textColorBn, row, 1 );
+    connect( m_textColorBn, &KColorButton::changed, this, &AnnotationWidget::dataChanged );
+}
+
 void TextAnnotationWidget::addTextAlignComboBox( QWidget * widget, QGridLayout * layout )
 {
+    const int row = layout->rowCount();
     QLabel * tmplabel = new QLabel( i18n( "Align:" ), widget );
-    layout->addWidget( tmplabel, 1, 0 );
+    layout->addWidget( tmplabel, row, 0 );
     m_textAlign = new KComboBox( widget );
-    layout->addWidget( m_textAlign, 1, 1 );
+    layout->addWidget( m_textAlign, row, 1 );
     m_textAlign->addItem( i18n("Left") );
     m_textAlign->addItem( i18n("Center") );
     m_textAlign->addItem( i18n("Right") );
@@ -361,10 +384,11 @@ void TextAnnotationWidget::addTextAlignComboBox( QWidget * widget, QGridLayout *
 
 void TextAnnotationWidget::addWidthSpinBox( QWidget * widget, QGridLayout * layout )
 {
+    const int row = layout->rowCount();
     QLabel * tmplabel = new QLabel( i18n( "Border Width:" ), widget );
-    layout->addWidget( tmplabel, 2, 0, Qt::AlignRight );
+    layout->addWidget( tmplabel, row, 0, Qt::AlignRight );
     m_spinWidth = new QDoubleSpinBox( widget );
-    layout->addWidget( m_spinWidth, 2, 1 );
+    layout->addWidget( m_spinWidth, row, 1 );
     tmplabel->setBuddy( m_spinWidth );
     m_spinWidth->setRange( 0, 100 );
     m_spinWidth->setValue( m_textAnn->style().width() );

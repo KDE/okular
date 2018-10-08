@@ -22,6 +22,7 @@
 #include <QMutex>
 #include <QPointer>
 #include <QUrl>
+#include <KConfigDialog>
 #include <KPluginMetaData>
 
 // local includes
@@ -63,6 +64,20 @@ struct GeneratorInfo
 };
 
 namespace Okular {
+
+class BackendConfigDialog : public KConfigDialog
+{
+public:
+    BackendConfigDialog(QWidget *parent, const QString &name, KCoreConfigSkeleton *config)
+     : KConfigDialog(parent, name, config)
+    {
+    }
+
+    KPageWidget *thePageWidget()
+    {
+        return pageWidget();
+    }
+};
 
 class FontExtractionThread;
 

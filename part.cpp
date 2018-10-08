@@ -112,6 +112,7 @@
 #include "core/annotations.h"
 #include "core/bookmarkmanager.h"
 #include "core/document.h"
+#include "core/document_p.h"
 #include "core/generator.h"
 #include "core/page.h"
 #include "core/fileprinter.h"
@@ -1166,7 +1167,7 @@ void Part::setWindowTitleFromDocument()
 KConfigDialog * Part::slotGeneratorPreferences( )
 {
     // Create dialog
-    KConfigDialog * dialog = new KConfigDialog( m_pageView, QStringLiteral("generator_prefs"), Okular::Settings::self() );
+    KConfigDialog * dialog = new Okular::BackendConfigDialog( m_pageView, QStringLiteral("generator_prefs"), Okular::Settings::self() );
     dialog->setAttribute( Qt::WA_DeleteOnClose );
 
     if( m_embedMode == ViewerWidgetMode )

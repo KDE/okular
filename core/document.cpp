@@ -4457,6 +4457,11 @@ void Document::fillConfigDialog( KConfigDialog * dialog )
     if ( !dialog )
         return;
 
+    // We know it's a BackendConfigDialog, but check anyway
+    BackendConfigDialog *bcd = dynamic_cast<BackendConfigDialog*>( dialog );
+    if ( !bcd )
+        return;
+
     // ensure that we have all the generators with settings loaded
     QVector<KPluginMetaData> offers = DocumentPrivate::configurableGenerators();
     d->loadServiceList( offers );
@@ -4482,6 +4487,13 @@ void Document::fillConfigDialog( KConfigDialog * dialog )
         {
             iface->addPages( dialog );
             pagesAdded = true;
+
+            if ( sit.value().generator == d->m_generator )
+            {
+                const int rowCount = bcd->thePageWidget()->model()->rowCount();
+                KPageView *view = bcd->thePageWidget();
+                view->setCurrentPage( view->model()->index( rowCount - 1, 0 ) );
+            }
         }
     }
     if ( pagesAdded )

@@ -1754,8 +1754,9 @@ Context menu actions like Rename Bookmarks etc.)
 						</menuchoice>
 					</term>
 					<listitem>
-						<para>These items allow you to speak the whole document or just the current page and stop speaking using the &kde; Text-to-Speech system &jovie;.</para>
-						<para>The <guilabel>Speak ...</guilabel> actions are enabled only if &jovie; is available in the system.</para>
+						<para>These items allow you to speak the whole document or just the current page and stop speaking using the system speech service.
+						This service is provided by a &Qt; library which wraps speech-dispatcher on &Linux;, and native speech systems on other platforms.</para>
+						<para>The <guilabel>Speak ...</guilabel> actions are enabled only if a speech service is available in the system.</para>
 					</listitem>
 				</varlistentry>
 			</variablelist>

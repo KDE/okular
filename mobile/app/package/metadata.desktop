@@ -1,7 +1,6 @@
 [Desktop Entry]
 Name=Okular
 Name[ar]=اوكلار
-Name[ast]=Okular
 Name[bg]=Okular
 Name[bs]=Okular
 Name[ca]=Okular
@@ -61,7 +60,6 @@ Name[zh_CN]=Okular
 Name[zh_TW]=文件檢視_Okular
 GenericName=Document viewer
 GenericName[ar]=عارض المستندات
-GenericName[ast]=Visor de documentos
 GenericName[bg]=Преглед на документи
 GenericName[bs]=Prikazivač dokumenata
 GenericName[ca]=Visualitzador de documents

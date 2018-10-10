@@ -5,7 +5,6 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+ and GFDL-1.3</project_license>
   <name>FictionBook</name>
-  <name xml:lang="ast">FictionBook</name>
   <name xml:lang="ca">FictionBook</name>
   <name xml:lang="ca-valencia">FictionBook</name>
   <name xml:lang="cs">FictionBook</name>
@@ -40,7 +39,6 @@
   <name xml:lang="zh-CN">FictionBook</name>
   <name xml:lang="zh-TW">FictionBook</name>
   <summary>Adds support for reading FictionBooks</summary>
-  <summary xml:lang="ast">Amiesta sofitu pa la llectura de FictionBooks</summary>
   <summary xml:lang="ca">Afegeix la implementació per a llegir FictionBooks</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per a llegir FictionBooks</summary>
   <summary xml:lang="cs">Přidává podporu pro čtení formátu FictionBook</summary>

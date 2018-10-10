@@ -5,7 +5,6 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+ and GFDL-1.3</project_license>
   <name>DVI Documents</name>
-  <name xml:lang="ast">Documentos DVI</name>
   <name xml:lang="ca">Documents DVI</name>
   <name xml:lang="ca-valencia">Documents DVI</name>
   <name xml:lang="cs">Dokumenty DVI</name>
@@ -40,7 +39,6 @@
   <name xml:lang="zh-CN">DVI 文档</name>
   <name xml:lang="zh-TW">DVI 文件</name>
   <summary>Adds support for reading DVI documents</summary>
-  <summary xml:lang="ast">Amiesta sofitu pa la llectura de documentos DVI</summary>
   <summary xml:lang="ca">Afegeix la implementació per a llegir documents DVI</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per a llegir documents DVI</summary>
   <summary xml:lang="cs">Přidává podporu pro čtení dokumentů DVI</summary>

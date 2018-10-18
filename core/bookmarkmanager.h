@@ -91,7 +91,7 @@ class OKULARCORE_EXPORT BookmarkManager : public QObject
          * Adds a new bookmark for the @p referurl at the specified viewport @p vp,
          * with an optional @p title.
          *
-         * If no @p title is specified, then \em #n will be used.
+         * If no @p title is specified, then \em \#n will be used.
          */
         bool addBookmark( const QUrl& referurl, const Okular::DocumentViewport& vp, const QString& title = QString() );
 

@@ -114,12 +114,12 @@ class PagePrivate
         void deleteTextSelections();
 
         /**
-         * Get the tiles manager for the tiled @observer
+         * Get the tiles manager for the tiled @p observer
          */
         TilesManager *tilesManager( const DocumentObserver *observer ) const;
 
         /**
-         * Set the tiles manager for the tiled @observer
+         * Set the tiles manager for the tiled @p observer
          */
         void setTilesManager( const DocumentObserver *observer, TilesManager *tm );
 

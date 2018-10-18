@@ -114,7 +114,7 @@ public:
 
   /** This method will try to parse the reference part of the DVI
       file's URL, (either a number, which is supposed to be a page
-      number, or src:<line><filename>) and see if a corresponding
+      number, or src:\<line\>\<filename\>) and see if a corresponding
       section of the DVI file can be found. If so, it returns an
       anchor to that section. If not, it returns an invalid anchor. */
   virtual Anchor parseReference(const QString &reference);

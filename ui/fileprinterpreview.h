@@ -29,7 +29,7 @@ public:
     /**
      * Create a Print Preview dialog for a given file.
      *
-     * @param printer file to print preview
+     * @param filename file to print preview
      * @param parent  pointer to the parent widget for the dialog
      */
     explicit FilePrinterPreview( const QString &filename, QWidget *parent = nullptr );

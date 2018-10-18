@@ -707,7 +707,7 @@ static void applySpreadStyleToQGradient( const QString &style, QGradient *qgrad 
 
 /**
     Read an UnicodeString
-    \param string the raw value of UnicodeString
+    \param raw the raw value of UnicodeString
 
     \see XPS specification 5.1.4
 */

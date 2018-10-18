@@ -526,7 +526,7 @@ class OKULARCORE_EXPORT Document : public QObject
          * Translates the position of the given @p annotation on the given @p page by a distance @p delta in normalized coordinates.
          *
          * Consecutive translations applied to the same @p annotation are merged together on the undo stack if the
-         * BeingMoved flag is set on the @P annotation.
+         * BeingMoved flag is set on the @p annotation.
          *
          * @since 0.17 (KDE 4.11)
          */
@@ -540,7 +540,7 @@ class OKULARCORE_EXPORT Document : public QObject
          * @p delta2 in normalized coordinates is added to bottom-right.
          *
          * Consecutive adjustments applied to the same @p annotation are merged together on the undo stack if the
-         * BeingResized flag is set on the @P annotation.
+         * BeingResized flag is set on the @p annotation.
          *
          * @since 1.1.0
          */

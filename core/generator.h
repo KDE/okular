@@ -348,7 +348,7 @@ class OKULARCORE_EXPORT Generator : public QObject
         virtual const DocumentSynopsis * generateDocumentSynopsis();
 
         /**
-         * Returns the 'list of embedded fonts' object of the specified \page
+         * Returns the 'list of embedded fonts' object of the specified \p page
          * of the document.
          *
          * \param page a page of the document, starting from 0 - -1 indicates all
@@ -378,7 +378,7 @@ class OKULARCORE_EXPORT Generator : public QObject
         virtual PageSizeMetric pagesSizeMetric() const;
 
         /**
-         * This method returns whether given @p action (@ref Permission) is
+         * This method returns whether given @p action (@ref Permission ) is
          * allowed in this document.
          */
         virtual bool isAllowed( Permission action ) const;

@@ -75,7 +75,7 @@ extern "C" {
      *      to the synctex file.
      *      If necessary, it can be the tex file that
      *      originated the synctex file but this might cause
-     *      problems if the \jobname has a custom value.
+     *      problems if the \\jobname has a custom value.
      *      Despite this method can accept a relative path
      *      in practice, you should only pass full paths.
      *      The path should be encoded by the underlying
@@ -231,7 +231,7 @@ extern "C" {
      *      );
      *  The visible dimensions are bigger than real ones
      *  to compensate 0 width boxes or nodes intentionnaly
-     *  put outside the box (using \kern for example).
+     *  put outside the box (using \\kern for example).
      *  - parameter node: a node.
      *  - returns: a float.
      *  - author: JL
@@ -249,7 +249,7 @@ extern "C" {
      *  The origin is at the top left corner of the page.
      *  The visible dimensions are bigger than real ones
      *  to compensate 0 width boxes or nodes intentionnaly
-     *  put outside the box (using \kern for example).
+     *  put outside the box (using \\kern for example).
      *  All nodes have coordinates, but all nodes don't
      *  have non null size. For example, math nodes
      *  have no width according to TeX, and in that case

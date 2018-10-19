@@ -420,6 +420,7 @@ class OKULARCORE_EXPORT Document : public QObject
         /**
          * Sets the current document viewport to the given @p page.
          *
+         * @param page The number of the page.
          * @param excludeObserver The observer ids which shouldn't be effected by this change.
          * @param smoothMove Whether the move shall be animated smoothly.
          */
@@ -428,6 +429,7 @@ class OKULARCORE_EXPORT Document : public QObject
         /**
          * Sets the current document viewport to the given @p viewport.
          *
+         * @param viewport The document viewport.
          * @param excludeObserver The observer which shouldn't be effected by this change.
          * @param smoothMove Whether the move shall be animated smoothly.
          */
@@ -482,6 +484,7 @@ class OKULARCORE_EXPORT Document : public QObject
         /**
          * Sends @p requests for pixmap generation.
          *
+         * @param requests the linked list of requests
          * @param reqOptions the options for the request
          *
          * @since 0.7 (KDE 4.1)
@@ -580,6 +583,7 @@ class OKULARCORE_EXPORT Document : public QObject
         /**
          * Sets the text selection for the given @p page.
          *
+         * @param page The number of the page.
          * @param rect The rectangle of the selection.
          * @param color The color of the selection.
          */
@@ -625,6 +629,7 @@ class OKULARCORE_EXPORT Document : public QObject
          * Searches the given @p text in the document.
          *
          * @param searchID The unique id for this search request.
+         * @param text The text to be searched.
          * @param fromStart Whether the search should be started at begin of the document.
          * @param caseSensitivity Whether the search is case sensitive.
          * @param type The type of the search. @ref SearchType
@@ -1115,6 +1120,9 @@ class OKULARCORE_EXPORT Document : public QObject
          * This signal is emitted whenever a source reference with the given parameters has been
          * activated.
          *
+         * \param absFileName absolute name of the file.
+         * \param line line number.
+         * \param col column number.
          * \param handled should be set to 'true' if a slot handles this source reference; the
          *                default action to launch the configured editor will then not be performed
          *                by the document
@@ -1129,19 +1137,19 @@ class OKULARCORE_EXPORT Document : public QObject
         void processMovieAction( const Okular::MovieAction *action );
 
         /**
-         * This signal is emmitted whenever the availability of the undo function changes
+         * This signal is emitted whenever the availability of the undo function changes
          * @since 0.17 (KDE 4.11)
          */
         void canUndoChanged( bool undoAvailable );
 
         /**
-         * This signal is emmitted whenever the availability of the redo function changes
+         * This signal is emitted whenever the availability of the redo function changes
          * @since 0.17 (KDE 4.11)
          */
         void canRedoChanged( bool redoAvailable );
 
         /**
-         * This signal is emmitted whenever the undo history is clean (i.e. the same status the last time it was saved)
+         * This signal is emitted whenever the undo history is clean (i.e. the same status the last time it was saved)
          * @since 1.3
          */
         void undoHistoryCleanChanged( bool clean );
@@ -1154,7 +1162,7 @@ class OKULARCORE_EXPORT Document : public QObject
         void processRenditionAction( const Okular::RenditionAction *action );
 
         /**
-         * This signal is emmitted whenever the contents of the given @p annotation are changed by an undo
+         * This signal is emitted whenever the contents of the given @p annotation are changed by an undo
          * or redo action.
          *
          * The new contents (@p contents), cursor position (@p cursorPos), and anchor position (@p anchorPos) are
@@ -1164,7 +1172,7 @@ class OKULARCORE_EXPORT Document : public QObject
         void annotationContentsChangedByUndoRedo( Okular::Annotation* annotation, const QString & contents, int cursorPos, int anchorPos );
 
         /**
-         * This signal is emmitted whenever the text contents of the given text @p form on the given @p page
+         * This signal is emitted whenever the text contents of the given text @p form on the given @p page
          * are changed by an undo or redo action.
          *
          * The new text contents (@p contents), cursor position (@p cursorPos), and anchor position (@p anchorPos) are
@@ -1174,28 +1182,28 @@ class OKULARCORE_EXPORT Document : public QObject
         void formTextChangedByUndoRedo( int page, Okular::FormFieldText* form, const QString & contents, int cursorPos, int anchorPos );
 
         /**
-         * This signal is emmitted whenever the selected @p choices for the given list @p form on the
+         * This signal is emitted whenever the selected @p choices for the given list @p form on the
          * given @p page are changed by an undo or redo action.
          * @since 0.17 (KDE 4.11)
          */
         void formListChangedByUndoRedo( int page, Okular::FormFieldChoice* form, const QList< int > & choices );
 
         /**
-         * This signal is emmitted whenever the active @p text for the given combo @p form on the
+         * This signal is emitted whenever the active @p text for the given combo @p form on the
          * given @p page is changed by an undo or redo action.
          * @since 0.17 (KDE 4.11)
          */
         void formComboChangedByUndoRedo( int page, Okular::FormFieldChoice* form, const QString & text, int cursorPos, int anchorPos );
 
         /**
-         * This signal is emmitted whenever the state of the specified group of form buttons (@p formButtons) on the
+         * This signal is emitted whenever the state of the specified group of form buttons (@p formButtons) on the
          * given @p page is changed by an undo or redo action.
          * @since 0.17 (KDE 4.11)
          */
         void formButtonsChangedByUndoRedo( int page, const QList< Okular::FormFieldButton* > & formButtons );
 
         /**
-         * This signal is emmitted whenever a FormField was changed programatically and the
+         * This signal is emitted whenever a FormField was changed programmatically and the
          * according widget should be updated.
          * @since 1.4
          */
@@ -1293,7 +1301,7 @@ class OKULARCORE_EXPORT DocumentViewport
         } rePos;
 
         /**
-         * If 'autoFit.enabled == true' then the page must be autofitted in the viewport.
+         * If 'autoFit.enabled == true' then the page must be autofit in the viewport.
          */
         struct {
             bool enabled;

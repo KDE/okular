@@ -163,7 +163,10 @@ class OKULARCORE_EXPORT TextDocumentGenerator : public Generator, public Okular:
         /**
          * Creates a new generator that uses the specified @p converter.
          *
+         * @param converter The text document converter.
          * @param configName - see Okular::TextDocumentSettings
+         * @param parent The parent object.
+         * @param args The arguments.
          *
          * @note the generator will take ownership of the converter, so you
          *       don't have to delete it yourself
@@ -197,7 +200,7 @@ class OKULARCORE_EXPORT TextDocumentGenerator : public Generator, public Okular:
          * Config skeleton for TextDocumentSettingsWidget
          *
          * You must use new construtor to initialize TextDocumentSettings,
-         * that contain @param configName.
+         * that contain @p configName .
          *
          * @since 0.17 (KDE 4.11)
          */

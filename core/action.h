@@ -406,6 +406,7 @@ class OKULARCORE_EXPORT ScriptAction : public Action
         /**
          * Creates a new Script action.
          *
+         * @param type The type of the script (for now, only JavaScript = 0 is implemented).
          * @param script The code to execute.
          */
         ScriptAction( enum ScriptType type, const QString &script );

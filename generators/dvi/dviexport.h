@@ -118,6 +118,7 @@ public:
    *  passed to the external process's argv command line.
    *  @param printer having generated the PostScript file, it is passed
    *  to @c printer (if not null).
+   *  @param useFontHinting boolean that defines whether to use font hinting.
    *  @param orientation the original orientation of the document
    */
   DVIExportToPS(dviRenderer& parent,

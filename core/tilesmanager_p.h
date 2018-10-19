@@ -131,6 +131,7 @@ class TilesManager
          * As to avoid requests of big areas, each traversed tile is checked
          * for its size and split if necessary.
          *
+         * @param rect The normalized rectangular area
          * @param tileLeaf Indicate the type of tile to return
          */
         QList<Tile> tilesAt( const NormalizedRect &rect, TileLeaf tileLeaf );

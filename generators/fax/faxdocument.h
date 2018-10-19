@@ -31,6 +31,7 @@ class FaxDocument
     /**
      * Creates a new fax document from the given @p fileName.
      *
+     * @param fileName The name of the fax file.
      * @param type The type of the fax document.
      */
     explicit FaxDocument( const QString &fileName, DocumentType type = G3 );

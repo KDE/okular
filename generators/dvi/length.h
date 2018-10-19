@@ -79,7 +79,7 @@ class Length
   /** sets the length in scaled points (1 scaled point = 65536 TeX points) */
   void setLength_in_scaledPoints(double l) {length_in_mm = l*mm_per_scaledPoint;}
 
-  /** sets the length in pixel. The parameter @param res is the resolution of the
+  /** sets the length (@param l ) in pixels. The parameter @param res is the resolution of the
       used device in DPI. */
   void setLength_in_pixel(int l, double res) { setLength_in_inch(l / res); }
 

@@ -1023,6 +1023,12 @@ class OKULARCORE_EXPORT Document : public QObject
 
     Q_SIGNALS:
         /**
+         * This signal is emitted whenever the document is about to close.
+         * @since 1.5.3
+         */
+        void aboutToClose();
+
+        /**
          * This signal is emitted whenever an action requests a
          * document close operation.
          */

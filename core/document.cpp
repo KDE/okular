@@ -2632,6 +2632,8 @@ void Document::closeDocument()
     if ( !d->m_generator )
         return;
 
+    emit aboutToClose();
+
     delete d->m_pageController;
     d->m_pageController = nullptr;
 
@@ -4077,6 +4079,10 @@ void Document::processAction( const Action * action )
     if ( !action )
         return;
 
+    // Don't execute next actions if the action itself caused the closing of the document
+    bool executeNextActions = true;
+    auto connectionId = connect( this, &Document::aboutToClose, [&executeNextActions] { executeNextActions = false; } );
+
     switch( action->actionType() )
     {
         case Action::Goto: {
@@ -4275,9 +4281,14 @@ void Document::processAction( const Action * action )
 
     }
 
-    for ( const Action *a : action->nextActions() )
+    disconnect( connectionId );
+
+    if ( executeNextActions )
     {
-        processAction( a );
+        for ( const Action *a : action->nextActions() )
+        {
+            processAction( a );
+        }
     }
 }
 

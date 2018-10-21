@@ -222,6 +222,7 @@ public:
     KSelectAction * aZoom;
     QAction * aZoomIn;
     QAction * aZoomOut;
+    QAction * aZoomActual;
     KToggleAction * aZoomFitWidth;
     KToggleAction * aZoomFitPage;
     KToggleAction * aZoomAutoFit;
@@ -483,6 +484,9 @@ void PageView::setupBaseActions( KActionCollection * ac )
     d->aZoomIn = KStandardAction::zoomIn( this, SLOT(slotZoomIn()), ac );
 
     d->aZoomOut = KStandardAction::zoomOut( this, SLOT(slotZoomOut()), ac );
+
+    d->aZoomActual = KStandardAction::actualSize( this, &PageView::slotZoomActual, ac );
+    d->aZoomActual->setText(i18n("Zoom to 100%"));
 }
 
 void PageView::setupViewerActions( KActionCollection * ac )
@@ -1204,6 +1208,8 @@ void PageView::updateActionState( bool haspages, bool documentChanged, bool hasf
         d->aZoomIn->setEnabled( haspages );
     if ( d->aZoomOut )
         d->aZoomOut->setEnabled( haspages );
+    if ( d->aZoomActual )
+        d->aZoomActual->setEnabled( haspages && d->zoomFactor != 1.0 );
 
     if ( d->mouseModeActionGroup )
         d->mouseModeActionGroup->setEnabled( haspages );
@@ -4001,6 +4007,10 @@ void PageView::updateZoom( ZoomMode newZoomMode )
             }
             }
             break;
+        case ZoomActual:
+            newZoomMode = ZoomFixed;
+            newFactor = 1.0;
+            break;
         case ZoomFitWidth:
             checkedZoomAction = d->aZoomFitWidth;
             break;
@@ -4048,6 +4058,7 @@ void PageView::updateZoom( ZoomMode newZoomMode )
 
     d->aZoomIn->setEnabled( d->zoomFactor < upperZoomLimit-0.001 );
     d->aZoomOut->setEnabled( d->zoomFactor > 0.101 );
+    d->aZoomActual->setEnabled( d->zoomFactor != 1.0 );
 }
 
 void PageView::updateZoomText()
@@ -4976,6 +4987,11 @@ void PageView::slotZoomIn()
 void PageView::slotZoomOut()
 {
     updateZoom( ZoomOut );
+}
+
+void PageView::slotZoomActual()
+{
+    updateZoom( ZoomActual );
 }
 
 void PageView::slotFitToWidthToggled( bool on )

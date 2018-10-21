@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="okular_part_viewermode" version="3">
+<kpartgui name="okular_part_viewermode" version="4">
 
 <MenuBar>
   <Menu name="file"><text>&amp;File</text>
@@ -22,6 +22,7 @@
   <Separator group="viewer_menu_merge"/>
   <Action name="view_zoom_in" group="viewer_menu_merge"/>
   <Action name="view_zoom_out" group="viewer_menu_merge"/>
+  <Action name="view_actual_size" group="viewer_menu_merge"/>
   <Action name="view_fit_to_width" group="viewer_menu_merge"/>
   <Action name="view_fit_to_page" group="viewer_menu_merge"/>
   <Separator group="viewer_menu_merge"/>

@@ -62,9 +62,9 @@ Q_OBJECT
         PageView( QWidget *parent, Okular::Document *document );
         ~PageView();
 
-        // Zoom mode ( last 3 are internally used only! )
+        // Zoom mode ( last 4 are internally used only! )
         enum ZoomMode { ZoomFixed = 0, ZoomFitWidth = 1, ZoomFitPage = 2, ZoomFitAuto = 3,
-                        ZoomIn, ZoomOut, ZoomRefreshCurrent };
+                        ZoomIn, ZoomOut, ZoomRefreshCurrent, ZoomActual };
 
         enum ClearMode { ClearAllSelection, ClearOnlyDividers };
 
@@ -237,6 +237,7 @@ Q_OBJECT
         void slotZoom();
         void slotZoomIn();
         void slotZoomOut();
+        void slotZoomActual();
         void slotFitToWidthToggled( bool );
         void slotFitToPageToggled( bool );
         void slotAutoFitToggled( bool );

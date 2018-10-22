@@ -2538,6 +2538,10 @@ bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
     fileName = tf.fileName();
     tf.close();
 
+    // Figure out the real save url, for symlinks we don't want to copy over the symlink but over the target file
+    const QUrl realSaveUrl = saveUrl.isLocalFile() ? QUrl::fromLocalFile( QFileInfo( saveUrl.toLocalFile() ).canonicalFilePath() )
+                                                   : saveUrl;
+
     QScopedPointer<QTemporaryFile> tempFile;
     KIO::Job *copyJob = nullptr; // this will be filled with the job that writes to saveUrl
 
@@ -2566,7 +2570,7 @@ bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
             return false;
         }
 
-        copyJob = KIO::file_copy( QUrl::fromLocalFile( fileName ), saveUrl, -1, KIO::Overwrite );
+        copyJob = KIO::file_copy( QUrl::fromLocalFile( fileName ), realSaveUrl, -1, KIO::Overwrite );
     }
     else
     {
@@ -2640,7 +2644,7 @@ bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
                 return false;
             }
 
-            copyJob = KIO::file_copy( QUrl::fromLocalFile( fileName ), saveUrl, -1, KIO::Overwrite );
+            copyJob = KIO::file_copy( QUrl::fromLocalFile( fileName ), realSaveUrl, -1, KIO::Overwrite );
         }
         else
         {
@@ -2660,7 +2664,7 @@ bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
                     return false;
                 }
 
-                copyJob = KIO::file_copy( QUrl::fromLocalFile( fileName ), saveUrl, -1, KIO::Overwrite );
+                copyJob = KIO::file_copy( QUrl::fromLocalFile( fileName ), realSaveUrl, -1, KIO::Overwrite );
             }
             else
             {
@@ -2694,12 +2698,12 @@ bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
 
                 if ( srcUrl != saveUrl )
                 {
-                    copyJob = KIO::file_copy( srcUrl, saveUrl, -1, KIO::Overwrite );
+                    copyJob = KIO::file_copy( srcUrl, realSaveUrl, -1, KIO::Overwrite );
                 }
                 else
                 {
                     // Don't do a real copy in this case, just update the timestamps
-                    copyJob = KIO::setModificationTime( saveUrl, QDateTime::currentDateTime() );
+                    copyJob = KIO::setModificationTime( realSaveUrl, QDateTime::currentDateTime() );
                 }
             }
         }

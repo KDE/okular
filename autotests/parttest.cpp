@@ -96,6 +96,9 @@ class PartTest
         void test388288();
         void testSaveAs();
         void testSaveAs_data();
+        void testSaveAsToNonExistingPath();
+        void testSaveAsToSymlink();
+        void testSaveIsSymlink();
         void testSidebarItemAfterSaving();
         void testSaveAsUndoStackAnnotations();
         void testSaveAsUndoStackAnnotations_data();
@@ -807,6 +810,92 @@ void PartTest::simulateMouseSelection(double startX, double startY, double endX,
     events.addMouseRelease(Qt::LeftButton, Qt::NoModifier, QPoint(endX, endY));
 
     events.simulate(target);
+}
+
+void PartTest::testSaveAsToNonExistingPath()
+{
+    Okular::Part part(nullptr, nullptr, QVariantList());
+    part.openDocument( KDESRCDIR "data/file1.pdf" );
+
+    QString saveFilePath;
+    {
+        QTemporaryFile saveFile( QString( "%1/okrXXXXXX.pdf" ).arg( QDir::tempPath() ) );
+        saveFile.open();
+        saveFilePath = saveFile.fileName();
+        // QTemporaryFile is destroyed and the file it created is gone, this is a TOCTOU but who cares
+    }
+
+    QVERIFY( !QFileInfo::exists( saveFilePath ) );
+
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFilePath ), Part::NoSaveAsFlags ) );
+
+    QFile::remove( saveFilePath );
+}
+
+void PartTest::testSaveAsToSymlink()
+{
+#ifdef Q_OS_UNIX
+    Okular::Part part(nullptr, nullptr, QVariantList());
+    part.openDocument( KDESRCDIR "data/file1.pdf" );
+
+    QTemporaryFile newFile( QString( "%1/okrXXXXXX.pdf" ).arg( QDir::tempPath() ) );
+    newFile.open();
+
+    QString linkFilePath;
+    {
+        QTemporaryFile linkFile( QString( "%1/okrXXXXXX.pdf" ).arg( QDir::tempPath() ) );
+        linkFile.open();
+        linkFilePath = linkFile.fileName();
+        // QTemporaryFile is destroyed and the file it created is gone, this is a TOCTOU but who cares
+    }
+
+    QFile::link( newFile.fileName(), linkFilePath );
+
+    QVERIFY( QFileInfo( linkFilePath ).isSymLink() );
+
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( linkFilePath ), Part::NoSaveAsFlags ) );
+
+    QVERIFY( QFileInfo( linkFilePath ).isSymLink() );
+
+    QFile::remove( linkFilePath );
+#endif
+}
+
+void PartTest::testSaveIsSymlink()
+{
+#ifdef Q_OS_UNIX
+    Okular::Part part(nullptr, nullptr, QVariantList());
+
+    QString newFilePath;
+    {
+        QTemporaryFile newFile( QString( "%1/okrXXXXXX.pdf" ).arg( QDir::tempPath() ) );
+        newFile.open();
+        newFilePath = newFile.fileName();
+        // QTemporaryFile is destroyed and the file it created is gone, this is a TOCTOU but who cares
+    }
+
+    QFile::copy( KDESRCDIR "data/file1.pdf", newFilePath );
+
+    QString linkFilePath;
+    {
+        QTemporaryFile linkFile( QString( "%1/okrXXXXXX.pdf" ).arg( QDir::tempPath() ) );
+        linkFile.open();
+        linkFilePath = linkFile.fileName();
+        // QTemporaryFile is destroyed and the file it created is gone, this is a TOCTOU but who cares
+    }
+
+    QFile::link( newFilePath, linkFilePath );
+
+    QVERIFY( QFileInfo( linkFilePath ).isSymLink() );
+
+    part.openDocument( linkFilePath );
+    QVERIFY( part.saveAs( QUrl::fromLocalFile( linkFilePath ), Part::NoSaveAsFlags ) );
+
+    QVERIFY( QFileInfo( linkFilePath ).isSymLink() );
+
+    QFile::remove( newFilePath );
+    QFile::remove( linkFilePath );
+#endif
 }
 
 void PartTest::testSaveAs()

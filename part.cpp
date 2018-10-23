@@ -2494,6 +2494,19 @@ bool Part::saveAs(const QUrl & saveUrl)
     return saveAs( saveUrl, isDocumentArchive ? SaveAsOkularArchive : NoSaveAsFlags );
 }
 
+static QUrl resolveSymlinksIfFileExists( const QUrl &saveUrl )
+{
+    if ( saveUrl.isLocalFile() )
+    {
+        const QFileInfo fi( saveUrl.toLocalFile() );
+        return fi.exists() ? QUrl::fromLocalFile( fi.canonicalFilePath() ) : saveUrl;
+    }
+    else
+    {
+        return saveUrl;
+    }
+}
+
 bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
 {
     // TODO When we get different saving backends we need to query the backend
@@ -2539,8 +2552,7 @@ bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
     tf.close();
 
     // Figure out the real save url, for symlinks we don't want to copy over the symlink but over the target file
-    const QUrl realSaveUrl = saveUrl.isLocalFile() ? QUrl::fromLocalFile( QFileInfo( saveUrl.toLocalFile() ).canonicalFilePath() )
-                                                   : saveUrl;
+    const QUrl realSaveUrl = resolveSymlinksIfFileExists( saveUrl );
 
     QScopedPointer<QTemporaryFile> tempFile;
     KIO::Job *copyJob = nullptr; // this will be filled with the job that writes to saveUrl

@@ -4719,16 +4719,8 @@ void Document::setHistoryClean( bool clean )
 {
     if ( clean )
         d->m_undoStack->setClean();
-    // Since we only use the resetClean
-    // in some cases and we're past the dependency freeze
-    // if you happen to compile with an old Qt you will miss
-    // some extra nicety when saving an okular file with annotations to png file
-    // it's quite corner case compared to how important the whole save feature
-    // is so you'll have to live without it
-#if QT_VERSION > QT_VERSION_CHECK(5, 8, 0)
     else
         d->m_undoStack->resetClean();
-#endif
 }
 
 bool Document::canSaveChanges() const

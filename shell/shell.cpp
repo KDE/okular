@@ -383,13 +383,13 @@ void Shell::readProperties(const KConfigGroup &group)
 {
     // Reopen documents based on saved settings
     QStringList urls = group.readPathEntry( SESSION_URL_KEY, QStringList() );
+    int desiredTab = group.readEntry<int>( SESSION_TAB_KEY, 0 );
 
     while( !urls.isEmpty() )
     {
         openUrl( QUrl(urls.takeFirst()) );
     }
 
-    int desiredTab = group.readEntry<int>( SESSION_TAB_KEY, 0 );
     if( desiredTab < m_tabs.size() )
     {
         setActiveTab( desiredTab );

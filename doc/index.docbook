@@ -34,7 +34,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2018-09-26</date>
+		<date>2018-10-28</date>
 		<releaseinfo>1.6 (Applications 18.12)</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
@@ -1321,6 +1321,17 @@ Context menu actions like Rename Bookmarks etc.)
 					</term>
 					<listitem>
 						<para><action>Decrease the magnification</action> of the document view.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<guimenu>View</guimenu>
+							<guimenuitem>Zoom to 100%</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para><action>Zoom the document image to the actual size</action> as prescribed by the document parameters.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>

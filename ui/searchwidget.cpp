@@ -36,7 +36,7 @@ SearchWidget::SearchWidget( QWidget * parent, Okular::Document * document )
 
     // 2. text line
     m_lineEdit = new SearchLineEdit( this, document );
-    m_lineEdit->setClearButtonShown( true );
+    m_lineEdit->setClearButtonEnabled( true );
     m_lineEdit->setToolTip(i18n( "Enter at least 3 letters to filter pages" ));
     m_lineEdit->setSearchCaseSensitivity( Qt::CaseInsensitive );
     m_lineEdit->setSearchMinimumLength( 3 );

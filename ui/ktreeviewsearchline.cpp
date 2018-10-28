@@ -159,7 +159,7 @@ KTreeViewSearchLine::KTreeViewSearchLine( QWidget *parent, QTreeView *treeView )
 {
   connect(this, &KTreeViewSearchLine::textChanged, this, &KTreeViewSearchLine::queueSearch);
 
-  setClearButtonShown( true );
+  setClearButtonEnabled( true );
   setTreeView( treeView );
 
   if ( !treeView ) {

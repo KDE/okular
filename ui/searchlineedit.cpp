@@ -32,7 +32,7 @@ SearchLineEdit::SearchLineEdit( QWidget * parent, Okular::Document * document )
       m_findAsYouType( true ), m_searchRunning( false )
 {
     setObjectName( QStringLiteral( "SearchLineEdit" ) );
-    setClearButtonShown( true );
+    setClearButtonEnabled( true );
 
     // a timer to ensure that we don't flood the document with requests to search
     m_inputDelayTimer = new QTimer(this);

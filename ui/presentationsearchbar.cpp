@@ -68,7 +68,7 @@ PresentationSearchBar::PresentationSearchBar( Okular::Document *document, QWidge
     lay->addWidget( closeBtn );
 
     m_search = new SearchLineEdit( this, document );
-    m_search->setClearButtonShown( true );
+    m_search->setClearButtonEnabled( true );
     m_search->setSearchCaseSensitivity( Qt::CaseInsensitive );
     m_search->setSearchMinimumLength( 0 );
     m_search->setSearchType( Okular::Document::NextMatch );

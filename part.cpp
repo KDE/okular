@@ -1015,19 +1015,25 @@ void Part::clearLastShownSourceLocation()
 
 bool Part::isWatchFileModeEnabled() const
 {
-    return !m_watcher->isStopped();
+    return !m_watcher->signalsBlocked();
 }
 
 void Part::setWatchFileModeEnabled(bool enabled)
 {
-    if ( enabled && m_watcher->isStopped() )
+    // Don't call 'KDirWatch::stopScan()' in here (as of KDE Frameworks 5.51.0)!
+    // KDirWatch maintains one global watch list per application only. Calling 'stopScan'
+    // could therefore affect other code paths that make use of KDirWatch
+    // (other loaded KParts, for example).
+    if( isWatchFileModeEnabled() == enabled )
     {
-        m_watcher->startScan();
+        return;
     }
-    else if( !enabled && !m_watcher->isStopped() )
+
+    m_watcher->blockSignals(!enabled);
+
+    if( !enabled )
     {
         m_dirtyHandler->stop();
-        m_watcher->stopScan();
     }
 }
 

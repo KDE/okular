@@ -158,6 +158,12 @@
   <screenshots>
     <screenshot type="default">
       <caption>Reading manual in Okular</caption>
+      <caption xml:lang="ca">Lectura de manuals a l'Okular</caption>
+      <caption xml:lang="es">Lectura del manual en Okular</caption>
+      <caption xml:lang="nl">Handleiding wordt gelezen in Okular</caption>
+      <caption xml:lang="sv">Läsa handbok i Okular</caption>
+      <caption xml:lang="uk">Читання підручника в Okular</caption>
+      <caption xml:lang="x-test">xxReading manual in Okularxx</caption>
       <image>https://www.kde.org/images/screenshots/okular.png</image>
     </screenshot>
   </screenshots>

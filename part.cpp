@@ -1020,9 +1020,8 @@ bool Part::isWatchFileModeEnabled() const
 
 void Part::setWatchFileModeEnabled(bool enabled)
 {
-    // Don't call 'KDirWatch::stopScan()' in here (as of KDE Frameworks 5.51.0)!
-    // KDirWatch maintains one global watch list per application only. Calling 'stopScan'
-    // could therefore affect other code paths that make use of KDirWatch
+    // Don't call 'KDirWatch::stopScan()' in here (as of KDE Frameworks 5.51.0, see bug 400541)!
+    // 'KDirWatch::stopScan' has a bug that may affect other code paths that make use of KDirWatch
     // (other loaded KParts, for example).
     if( isWatchFileModeEnabled() == enabled )
     {

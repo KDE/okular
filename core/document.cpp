@@ -563,7 +563,6 @@ bool DocumentPrivate::loadDocumentInfo( QFile &infoFile, LoadDocumentInfoFlags l
     if ( root.tagName() != QLatin1String("documentInfo") )
         return false;
 
-    QUrl documentUrl( root.attribute( "url" ) );
     bool loadedAnything = false; // set if something gets actually loaded
 
     // Parse the DOM tree
@@ -1579,8 +1578,6 @@ void DocumentPrivate::refreshPixmaps( int pageNumber )
             tilesManager->markDirty();
 
             PixmapRequest * p = new PixmapRequest( observer, pageNumber, tilesManager->width() / qApp->devicePixelRatio(), tilesManager->height() / qApp->devicePixelRatio(), 1, PixmapRequest::Asynchronous );
-
-            NormalizedRect tilesRect;
 
             // Get the visible page rect
             NormalizedRect visibleRect;

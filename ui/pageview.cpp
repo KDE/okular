@@ -4477,7 +4477,6 @@ void PageView::slotRelayoutPages()
         viewportHeight = viewport()->height(),
         fullWidth = 0,
         fullHeight = 0;
-    QRect viewportRect( horizontalScrollBar()->value(), verticalScrollBar()->value(), viewportWidth, viewportHeight );
 
     // handle the 'center first page in row' stuff
     const bool facing = Okular::Settings::viewMode() == Okular::Settings::EnumViewMode::Facing && pageCount > 1;

@@ -822,7 +822,6 @@ void Part::setViewerShortcuts()
 void Part::setupActions()
 {
     KActionCollection * ac = actionCollection();
-    QMimeDatabase db;
 
     m_copy = KStandardAction::create( KStandardAction::Copy, m_pageView, SLOT(copyTextSelection()), ac );
 

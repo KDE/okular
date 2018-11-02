@@ -251,7 +251,6 @@ void MainShellTest::testShell()
     {
         if (useTabs)
         {
-            QSet<QString> openUrls;
             Shell *s = findShell();
             QVERIFY(s);
             Okular::Part *part = dynamic_cast<Okular::Part*>(s->m_tabs[0].part);
@@ -474,7 +473,6 @@ void MainShellTest::test2FilesError()
     Okular::Status status = Okular::main(paths, serializedOptions);
     QCOMPARE(status, Okular::Error);
 
-    QSet<QString> openUrls;
     Shell *s = findShell();
     QVERIFY(!s);
 }

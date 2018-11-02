@@ -286,7 +286,6 @@ Okular::TextPage *DviGenerator::extractTextFromPage( dviPageInfo *pageInfo )
 
     QVector<TextBox>::ConstIterator it = pageInfo->textBoxList.constBegin();
     QVector<TextBox>::ConstIterator itEnd = pageInfo->textBoxList.constEnd();
-    QRect tmpRect;
 
     int pageWidth = pageInfo->width, pageHeight = pageInfo->height;
 
@@ -297,7 +296,6 @@ Okular::TextPage *DviGenerator::extractTextFromPage( dviPageInfo *pageInfo )
 #if 0
         qCDebug(OkularDviDebug) << "orientation: " << orientation
                  << ", curTB.box: " << curTB.box
-                 << ", tmpRect: " << tmpRect 
                  << ", ( " << pageWidth << "," << pageHeight << " )" 
                <<endl;
 #endif

@@ -21,7 +21,7 @@
 
 #include <QMap>
 #include <QString>
-#include <QtXml/QXmlDefaultHandler>
+#include <QXmlDefaultHandler>
 
 class HelperXmlHandler_EpubContent : public QXmlDefaultHandler
 {

@@ -14,6 +14,8 @@
 #include <QProcess>
 #include <QStringList>
 
+#include <unrarflavours.h>
+
 class QEventLoop;
 class QTemporaryDir;
 
@@ -65,7 +67,7 @@ class Unrar : public QObject
         void finished( int exitCode, QProcess::ExitStatus exitStatus );
 
     private:
-        int startSyncProcess( const QStringList &args );
+        int startSyncProcess( const ProcessArgs &args );
         void writeToProcess( const QByteArray &data );
 
 #if defined(WITH_KPTY)

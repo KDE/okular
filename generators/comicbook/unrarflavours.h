@@ -11,6 +11,16 @@
 #define UNRARFLAVOURS_H
 
 #include <QString>
+#include <QStringList>
+
+struct ProcessArgs
+{
+    ProcessArgs();
+    ProcessArgs( const QStringList &appArgs, bool useLsar );
+
+    QStringList appArgs;
+    bool useLsar;
+};
 
 class QStringList;
 
@@ -21,6 +31,9 @@ class UnrarFlavour
 
         virtual QStringList processListing( const QStringList &data ) = 0;
         virtual QString name() const = 0;
+
+        virtual ProcessArgs processListArgs( const QString &fileName ) const = 0;
+        virtual ProcessArgs processOpenArchiveArgs( const QString &fileName, const QString &path ) const = 0;
 
         void setFileName( const QString &fileName );
 
@@ -40,6 +53,9 @@ class NonFreeUnrarFlavour : public UnrarFlavour
 
         QStringList processListing( const QStringList &data ) override;
         QString name() const override;
+
+        ProcessArgs processListArgs( const QString &fileName ) const override;
+        ProcessArgs processOpenArchiveArgs( const QString &fileName, const QString &path ) const override;
 };
 
 class FreeUnrarFlavour : public UnrarFlavour
@@ -49,6 +65,21 @@ class FreeUnrarFlavour : public UnrarFlavour
 
         QStringList processListing( const QStringList &data ) override;
         QString name() const override;
+
+        ProcessArgs processListArgs( const QString &fileName ) const override;
+        ProcessArgs processOpenArchiveArgs( const QString &fileName, const QString &path ) const override;
+};
+
+class UnarFlavour : public UnrarFlavour
+{
+    public:
+        UnarFlavour();
+
+        QStringList processListing( const QStringList &data ) override;
+        QString name() const override;
+
+        ProcessArgs processListArgs( const QString &fileName ) const override;
+        ProcessArgs processOpenArchiveArgs( const QString &fileName, const QString &path ) const override;
 };
 
 #endif

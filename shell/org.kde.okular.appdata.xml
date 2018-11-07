@@ -258,6 +258,7 @@
   </screenshots>
   <url type="homepage">https://okular.kde.org/</url>
   <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=okular</url>
+  <url type="donation">https://www.kde.org/community/donations/?app=okular</url>
   <project_group>KDE</project_group>
   <provides>
     <binary>okular</binary>

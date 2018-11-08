@@ -695,7 +695,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                     painter.drawText( borderWidth * invXScale, borderWidth * invYScale,
                                       (image.width() - 2 * borderWidth) * invXScale,
                                       (image.height() - 2 * borderWidth) * invYScale,
-                                      Qt::AlignTop | halign | Qt::TextWrapAnywhere,
+                                      Qt::AlignTop | halign | Qt::TextWordWrap,
                                       text->contents() );
                     painter.resetTransform();
                     //Required as asking for a zero width pen results

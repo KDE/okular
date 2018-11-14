@@ -555,7 +555,7 @@ RegularAreaRect * TextPage::textArea ( TextSelection * sel) const
     {
         for ( ; it != itEnd; ++it )
         {
-            // is there any text reactangle within the start_end rect
+            // is there any text rectangle within the start_end rect
             tmp = (*it)->area;
             if(start_end.intersects(tmp))
                 break;

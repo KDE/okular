@@ -767,7 +767,7 @@ void KDjVu::closeFile()
     d->mImgCache.clear();
     // clearing the old metadata
     d->m_metaData.clear();
-    // cleaing the page names mapping
+    // cleaning the page names mapping
     d->m_pageNamesCache.clear();
     // releasing the old document
     if ( d->m_djvu_document )

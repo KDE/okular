@@ -2104,7 +2104,7 @@ void PresentationWidget::initTransition( const Okular::PageTransition *transitio
                 int L = 0, T = 0, R = m_width, B = m_height;
                 for ( int i = 0; i < steps; i++ )
                 {
-                    // compure shrinked box coords
+                    // compute shrunk box coords
                     int newL = ((i + 1) * m_width) / (2 * steps);
                     int newT = ((i + 1) * m_height) / (2 * steps);
                     int newR = m_width - newL;
@@ -2122,7 +2122,7 @@ void PresentationWidget::initTransition( const Okular::PageTransition *transitio
                 int L = m_width / 2, T = m_height / 2, R = L, B = T;
                 for ( int i = 0; i < steps; i++ )
                 {
-                    // compure shrinked box coords
+                    // compute shrunk box coords
                     int newL = ((steps - (i + 1)) * m_width) / (2 * steps);
                     int newT = ((steps - (i + 1)) * m_height) / (2 * steps);
                     int newR = m_width - newL;

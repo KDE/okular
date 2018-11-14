@@ -139,7 +139,7 @@ class SimplePageSize
 
   @param size pageSize object to compare this object with
 
-  @returns 'True' if height and width of the two obejcts differ by at
+  @returns 'True' if height and width of the two objects differ by at
       most 2mm, 'false' otherwise
   */
   bool isNearlyEqual(const SimplePageSize &size) const {return (pageWidth.isNearlyEqual(size.pageWidth) && pageHeight.isNearlyEqual(size.pageHeight)); }

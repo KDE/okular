@@ -40,7 +40,7 @@ Q_OBJECT
         void notifyCurrentPageChanged( int previous, int current ) override;
         // inherited: redraw thumbnail ( inherited as DocumentObserver )
         void notifyPageChanged( int pageNumber, int changedFlags ) override;
-        // inherited: request all visible pixmap (due to a global shange or so..)
+        // inherited: request all visible pixmap (due to a global change or so..)
         void notifyContentsCleared( int changedFlags ) override;
         // inherited: the visible areas of the page have changed
         void notifyVisibleRectsChanged() override;

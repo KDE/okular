@@ -181,7 +181,7 @@ class OKULARCORE_EXPORT DocumentInfo
  *
  * It is designed to keep it detached from the document type (pdf, ps, you
  * name it..) so whenever you want to get some data, it asks its internal
- * generators to do the job and return results in a format-indepedent way.
+ * generators to do the job and return results in a format-independent way.
  *
  * Apart from the generator (the currently running one) the document stores
  * all the Pages ('Page' class) of the current document in a vector and

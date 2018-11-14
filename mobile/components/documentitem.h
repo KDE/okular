@@ -44,7 +44,7 @@ class DocumentItem : public QObject
     Q_PROPERTY(QUrl url READ url WRITE setUrl NOTIFY urlChanged)
 
     /**
-     * Suggested window title if a window represents this document. may be pathname or document title, dependeing from Okular settings.
+     * Suggested window title if a window represents this document. may be pathname or document title, depending on Okular settings.
      */
     Q_PROPERTY(QString windowTitleForDocument READ windowTitleForDocument NOTIFY windowTitleForDocumentChanged)
 

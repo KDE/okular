@@ -35,7 +35,7 @@ class fontMapEntry {
   // explanation), this string is not empty and contains the name of
   // the encoding, e.g. '8r'. The path of the associated encoding file
   // (on the author's machine: /usr/share/texmf/dvips/psnfss/8r.enc)
-  // must be looked up using the kpsewhich comman.
+  // must be looked up using the kpsewhich command.
   QString fontEncoding;
 
   // Some fonts need to be slanted, and the font map file defines by

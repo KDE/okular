@@ -171,7 +171,7 @@ glyph* TeXFont_PK::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCol
     //
     // If we would just divide the size of the character and the
     // coordinates by the shrink factor, then the result would look
-    // quite ugly: due to the ineviatable rounding errors in the
+    // quite ugly: due to the inevitable rounding errors in the
     // integer arithmetic, the characters would be displaced by up to
     // a pixel. That doesn't sound much, but on low-resolution
     // devices, such as a notebook screen, the effect would be a
@@ -194,7 +194,7 @@ glyph* TeXFont_PK::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCol
 
     // How big will the shrunken bitmap then become? If shrunk_width
     // denotes that width of the scaled image, and
-    // characterBitmaps[ch]->w the width of the orininal image, we
+    // characterBitmaps[ch]->w the width of the original image, we
     // need to make sure that the following inequality holds:
     //
     // shrunk_width*shrinkFactor+srcXTrans >= characterBitmaps[ch]->w

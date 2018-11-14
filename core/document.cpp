@@ -1133,7 +1133,7 @@ void DocumentPrivate::recalculateForms()
                             QString oldVal;
                             if ( fft )
                             {
-                                // Pepare text calculate event
+                                // Prepare text calculate event
                                 event = Event::createFormCalculateEvent( fft, m_pagesVector[pageIdx] );
                                 if ( !m_scripter )
                                     m_scripter = new Scripter( this );
@@ -1267,7 +1267,7 @@ void DocumentPrivate::saveDocumentInfo() const
 
 void DocumentPrivate::slotTimedMemoryCheck()
 {
-    // [MEM] clean memory (for 'free mem dependant' profiles only)
+    // [MEM] clean memory (for 'free mem dependent' profiles only)
     if ( SettingsCore::memoryLevel() != SettingsCore::EnumMemoryLevel::Low &&
          m_allocatedPixmapsTotalMemory > 1024*1024 )
         cleanupPixmapMemory();
@@ -2532,7 +2532,7 @@ Document::OpenResult Document::openDocument(const QString & docFile, const QUrl 
     d->m_metadataLoadingCompleted = true;
     d->m_bookmarkManager->setUrl( d->m_url );
 
-    // 3. setup observers inernal lists and data
+    // 3. setup observers internal lists and data
     foreachObserver( notifySetup( d->m_pagesVector, DocumentObserver::DocumentChanged | DocumentObserver::UrlChanged ) );
 
     // 4. set initial page (restoring the page saved in xml if loaded)
@@ -3812,7 +3812,7 @@ void Document::searchText( int searchID, const QString & text, bool fromStart, Q
     // set hourglass cursor
     QApplication::setOverrideCursor( Qt::WaitCursor );
 
-    // 1. ALLDOC - proces all document marking pages
+    // 1. ALLDOC - process all document marking pages
     if ( type == AllDocument )
     {
         QMap< Page *, QVector<RegularAreaRect *> > *pageMatches = new QMap< Page *, QVector<RegularAreaRect *> >;
@@ -3927,7 +3927,7 @@ void Document::resetSearch( int searchID )
     // send the setup signal too (to update views that filter on matches)
     foreachObserver( notifySetup( d->m_pagesVector, 0 ) );
 
-    // remove serch from the runningSearches list and delete it
+    // remove search from the runningSearches list and delete it
     d->m_searches.erase( searchIt );
     delete s;
 }
@@ -4090,7 +4090,7 @@ void Document::processAction( const Action * action )
             // Explanation of why d->m_nextDocumentViewport is needed:
             // all openRelativeFile does is launch a signal telling we
             // want to open another URL, the problem is that when the file is
-            // non local, the loading is done assynchronously so you can't
+            // non local, the loading is done asynchronously so you can't
             // do a setViewport after the if as it was because you are doing the setViewport
             // on the old file and when the new arrives there is no setViewport for it and
             // it does not show anything

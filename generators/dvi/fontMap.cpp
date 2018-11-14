@@ -26,7 +26,7 @@ fontMap::fontMap()
   // dictionary "TeX Font names" <-> "Name of font files, Font Names
   // and Encodings" (example: the font "Times-Roman" is called
   // "ptmr8y" in the DVI file, but the Type1 font file name is
-  // "utmr8a.pfb". We use the map file of "ps2pk" because that progam
+  // "utmr8a.pfb". We use the map file of "ps2pk" because that program
   // has, like kdvi (and unlike dvips), no built-in fonts.
 
   // Finding ps2pk.map is not easy. In teTeX < 3.0, the kpsewhich

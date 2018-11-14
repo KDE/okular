@@ -61,7 +61,7 @@ class OKULARCORE_EXPORT FormField
         FieldType type() const;
 
         /**
-         * The bouding rect of the field, in normalized coordinates.
+         * The bounding rect of the field, in normalized coordinates.
          */
         virtual NormalizedRect rect() const = 0;
 

@@ -824,7 +824,7 @@ bool PagePrivate::restoreLocalContents( const QDomNode & pageNode )
 {
     bool loadedAnything = false; // set if something actually gets loaded
 
-    // iterate over all chilren (annotationList, ...)
+    // iterate over all children (annotationList, ...)
     QDomNode childNode = pageNode.firstChild();
     while ( childNode.isElement() )
     {

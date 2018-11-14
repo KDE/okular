@@ -810,7 +810,7 @@ void PageView::displayMessage( const QString & message, const QString & details,
     if ( message.isEmpty() )
         return d->messageWindow->hide();
 
-    // display message (duration is length dependant)
+    // display message (duration is length dependent)
     if (duration==-1)
     {
         duration = 500 + 100 * message.length();
@@ -1299,7 +1299,7 @@ void PageView::notifyViewportChanged( bool smoothMove )
 
 void PageView::slotRealNotifyViewportChanged( bool smoothMove )
 {
-    // if we are the one changing viewport, skip this nofity
+    // if we are the one changing viewport, skip this notify
     if ( d->blockViewport )
         return;
 
@@ -2319,7 +2319,7 @@ void PageView::mousePressEvent( QMouseEvent * e )
     // update press / 'start drag' mouse position
     d->mousePressPos = e->globalPos();
 
-    // handle mode dependant mouse press actions
+    // handle mode dependent mouse press actions
     bool leftButton = e->button() == Qt::LeftButton,
          rightButton = e->button() == Qt::RightButton;
 
@@ -2521,7 +2521,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
 
     const QPoint eventPos = contentAreaPoint( e->pos() );
 
-    // handle mode indepent mid buttom zoom
+    // handle mode independent mid bottom zoom
     if ( e->button() == Qt::MidButton )
     {
         // request pixmaps since it was disabled during drag
@@ -3928,7 +3928,7 @@ double PageView::zoomFactorFitMode( ZoomMode mode )
     const double colWidth = viewport()->width() / nCols - kcolWidthMargin;
     const double rowHeight = viewport()->height() - krowHeightMargin;
     const PageViewItem * currentItem = d->items[ qMax( 0, (int)d->document->currentPage()) ];
-    // prevent segmentation fault when openning a new document;
+    // prevent segmentation fault when opening a new document;
     if ( !currentItem )
         return 0;
     const Okular::Page * okularPage = currentItem->page();

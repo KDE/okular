@@ -39,7 +39,7 @@ class PopplerAnnotationProxy;
 /**
  * @short A generator that builds contents from a PDF document.
  *
- * All Generator features are supported and implented by this one.
+ * All Generator features are supported and implemented by this one.
  * Internally this holds a reference to xpdf's core objects and provides
  * contents generation using the PDFDoc object and a couple of OutputDevices
  * called Okular::OutputDev and Okular::TextDev (both defined in gp_outputdev.h).
@@ -129,7 +129,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
 
         bool setDocumentRenderHints();
 
-        // poppler dependant stuff
+        // poppler dependent stuff
         Poppler::Document *pdfdoc;
 
 

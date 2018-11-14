@@ -1108,7 +1108,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
     QVERIFY( !part.m_document->canRedo() );
 
     if ( nativelySupportsAnnotations ) {
-        // If the annots are provived by the backend we need to refetch the pointer after save
+        // If the annots are provided by the backend we need to refetch the pointer after save
         annot = part.m_document->page( 0 )->annotation( annotName );
         QVERIFY( annot );
     }
@@ -1146,7 +1146,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
     QVERIFY( part.m_document->canRedo() );
 
     if ( nativelySupportsAnnotations ) {
-        // If the annots are provived by the backend we need to refetch the pointer after save
+        // If the annots are provided by the backend we need to refetch the pointer after save
         annot = part.m_document->page( 0 )->annotation( annotName );
         QVERIFY( annot );
     }

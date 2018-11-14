@@ -21,7 +21,7 @@
 #include "ebook.h"
 #include "ebook_search.h"
 
-// Helper class to simplity state management and data keeping
+// Helper class to simplicity state management and data keeping
 class SearchDataKeeper
 {
 	public:

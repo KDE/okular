@@ -70,7 +70,7 @@ protected:
 
   /** The real implementation of the finished() slot that is called
    *  when the external process finishes.
-   *  @param exit_code the exit code retuned by the external process.
+   *  @param exit_code the exit code returned by the external process.
    */
   virtual void finished_impl(int exit_code);
 

@@ -191,7 +191,7 @@ void FormWidgetsController::slotButtonClicked( QAbstractButton *button )
     if ( check )
     {
         // The formButtonsChangedByWidget signal changes the value of the underlying
-        // Okular::FormField of the checkbox. We need to execute the activiation
+        // Okular::FormField of the checkbox. We need to execute the activation
         // action after this.
         check->doActivateAction();
     }

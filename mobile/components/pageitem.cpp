@@ -303,7 +303,7 @@ void PageItem::geometryChanged(const QRectF &newGeometry,
     QQuickItem::geometryChanged(newGeometry, oldGeometry);
 
     if (changed) {
-        //Why aren't they automatically emuitted?
+        //Why aren't they automatically emitted?
         emit widthChanged();
         emit heightChanged();
     }

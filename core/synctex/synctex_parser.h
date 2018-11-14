@@ -230,7 +230,7 @@ extern "C" {
      *          synctex_node_box_visible_depth(node)
      *      );
      *  The visible dimensions are bigger than real ones
-     *  to compensate 0 width boxes or nodes intentionnaly
+     *  to compensate 0 width boxes or nodes intentionally
      *  put outside the box (using \\kern for example).
      *  - parameter node: a node.
      *  - returns: a float.
@@ -248,7 +248,7 @@ extern "C" {
      *  as opposite to TeX coordinates.
      *  The origin is at the top left corner of the page.
      *  The visible dimensions are bigger than real ones
-     *  to compensate 0 width boxes or nodes intentionnaly
+     *  to compensate 0 width boxes or nodes intentionally
      *  put outside the box (using \\kern for example).
      *  All nodes have coordinates, but all nodes don't
      *  have non null size. For example, math nodes

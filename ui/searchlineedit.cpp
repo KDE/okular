@@ -70,7 +70,7 @@ void SearchLineEdit::setSearchType( Okular::Document::SearchType type )
     m_searchType = type;
 
     // Only connect Enter for next/prev searches, the rest of searches are document global so
-    // next/prev serach does not make sense for them
+    // next/prev search does not make sense for them
     if (m_searchType == Okular::Document::NextMatch || m_searchType == Okular::Document::PreviousMatch) {
         connect(this, &SearchLineEdit::returnPressed, this, &SearchLineEdit::slotReturnPressed);
     }

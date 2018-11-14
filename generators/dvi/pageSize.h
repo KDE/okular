@@ -23,7 +23,7 @@ class QStringList;
 The main difference to the SimplePageSize class are the following.
 
 - This class knows about standard page sizes and accepts page sizes in
-  various formats, e.g. as a string "DIN A4", or by specifiying the
+  various formats, e.g. as a string "DIN A4", or by specifying the
   page width and height. Several units (inch, millimeters,
   centimeters) are possible.
 
@@ -70,7 +70,7 @@ public:
 
   Acceptable strings are
 
-  (1) a name from the list retured by pageSizeNames(), such as "DIN
+  (1) a name from the list returned by pageSizeNames(), such as "DIN
       A4"
 
   (2) a string like "500x300", which describes a page of width 500mm
@@ -101,7 +101,7 @@ public:
 
   Sets the page size to "width" and "height", given in the associated
   units. Currently, "mm", "cm" and "in" are supported. If a unit is
-  not recognized, "mm" is siliently assumed, and error message is
+  not recognized, "mm" is silently assumed, and error message is
   printed to stderr using kError(). If the page size set matches one
   of the standard sizes by an error of no more than 2mm, the standard
   page size will be set.  If width or height does not contain a

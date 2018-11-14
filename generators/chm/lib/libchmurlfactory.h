@@ -98,8 +98,8 @@ static inline QString makeURLabsoluteIfNeeded( const QString & url )
 }
 
 
-// Returns a special string, which allows the kio-slave, or viewwindow-browser iteraction 
-// to regognize our own internal urls, which is necessary to show image-only pages.
+// Returns a special string, which allows the kio-slave, or viewwindow-browser interaction 
+// to recognize our own internal urls, which is necessary to show image-only pages.
 static inline QString getInternalUriExtension()
 {
 	return QStringLiteral(".KCHMVIEWER_SPECIAL_HANDLER");

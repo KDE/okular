@@ -123,7 +123,7 @@ void KTreeViewSearchLine::Private::slotRegularExpression()
 // private methods
 ////////////////////////////////////////////////////////////////////////////////
 
-/** Check whether \p item, its siblings and their descendents should be shown. Show or hide the items as necessary.
+/** Check whether \p item, its siblings and their descendants should be shown. Show or hide the items as necessary.
  *
  *  \p item  The list view item to start showing / hiding items at. Typically, this is the first child of another item, or the
  *              the first child of the list view.
@@ -265,7 +265,7 @@ bool KTreeViewSearchLine::itemMatches( const QModelIndex &parentIndex, int row, 
       d->regularExpression ? QRegExp::RegExp : QRegExp::FixedString );
 
   // If the search column list is populated, search just the columns
-  // specifified.  If it is empty default to searching all of the columns.
+  // specified.  If it is empty default to searching all of the columns.
 
   QAbstractItemModel *model = d->treeView->model();
   const int columncount = model->columnCount( parentIndex );

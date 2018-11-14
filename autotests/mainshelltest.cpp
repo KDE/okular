@@ -315,7 +315,7 @@ void MainShellTest::testShell()
 
             if (unique)
             {
-                // It is unique so part got "overriten"
+                // It is unique so part got "overwritten"
                 QCOMPARE(s->m_tabs.count(), 1);
                 QCOMPARE(part->url().url(), QStringLiteral("file://%1").arg(externalProcessPath));
                 QCOMPARE(partDocument(part)->currentPage(), externalProcessExpectedPage);

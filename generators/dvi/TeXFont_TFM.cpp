@@ -71,7 +71,7 @@ TeXFont_TFM::TeXFont_TFM(TeXFontDefinition *parent)
 
     stream >> widthTable_in_units_of_design_size[i].value;
     // Some characters, which are used as parts of glyphs, have width
-    // 0 --the real width is caculated in a lig_kern program and
+    // 0 --the real width is calculated in a lig_kern program and
     // depends on the preceding character. We cannot calculate the
     // real width here and take 0.4 times the design size as an
     // approximation.

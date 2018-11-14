@@ -147,7 +147,7 @@ class OKULARCORE_EXPORT Annotation
             Solid = 1,      ///< A solid line
             Dashed = 2,     ///< A dashed line
             Beveled = 4,    ///< A beveled line
-            Inset = 8,      ///< A inseted line
+            Inset = 8,      ///< An inset line
             Underline = 16  ///< An underline
         };
 

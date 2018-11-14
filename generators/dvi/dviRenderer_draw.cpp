@@ -667,7 +667,7 @@ void dviRenderer::draw_page()
   }
   else
   {
-    // In accessiblity mode use the custom background color
+    // In accessibility mode use the custom background color
     foreGroundPainter->fillRect( foreGroundPainter->viewport(), accessibilityBackgroundColor );
   }
 #endif
@@ -676,7 +676,7 @@ void dviRenderer::draw_page()
   if (_postscript)
   {
 #if 0
-    // In accessiblity mode use the custom background color
+    // In accessibility mode use the custom background color
     if (accessibilityBackground)
     {
       // Flag permanent is set to false because otherwise we would not be able to restore

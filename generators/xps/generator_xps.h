@@ -128,7 +128,7 @@ protected:
     void processStartElement( XpsRenderNode &node );
     void processEndElement( XpsRenderNode &node );
 
-    // Methods for processing of diferent xml elements
+    // Methods for processing of different xml elements
     void processGlyph( XpsRenderNode &node );
     void processPath( XpsRenderNode &node );
     void processPathData( XpsRenderNode &node );

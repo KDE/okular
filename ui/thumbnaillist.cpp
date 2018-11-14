@@ -388,7 +388,7 @@ void ThumbnailList::notifyVisibleRectsChanged()
 
 bool ThumbnailList::canUnloadPixmap( int pageNumber ) const
 {
-    // if the thubnail 'pageNumber' is one of the visible ones, forbid unloading
+    // if the thumbnail 'pageNumber' is one of the visible ones, forbid unloading
     QList<ThumbnailWidget *>::const_iterator vIt = d->m_visibleThumbnails.constBegin(), vEnd = d->m_visibleThumbnails.constEnd();
     for ( ; vIt != vEnd; ++vIt )
         if ( (*vIt)->pageNumber() == pageNumber )
@@ -583,7 +583,7 @@ void ThumbnailListPrivate::viewportResizeEvent( QResizeEvent * e )
         // enable scrollbar when there's something to scroll
         q->verticalScrollBar()->setEnabled( q->viewport()->height() < newHeight );
 
-        // ensure that what was visibile before remains visible now
+        // ensure that what was visible before remains visible now
         q->ensureVisible( 0, int( (qreal)oldYCenter * q->widget()->height() / oldHeight ), 0, q->viewport()->height() / 2 );
     }
     else if ( e->size().height() <= e->oldSize().height() )

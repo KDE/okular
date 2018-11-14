@@ -26,7 +26,7 @@ class SearchLineEdit;
  *
  * This widget accepts keyboard input and performs a call to findTextAll(..)
  * in the Okular::Document class when there are 3 or more chars to search for.
- * It supports case sensitive/unsensitive(default) and provieds a button
+ * It supports case sensitive/unsensitive(default) and provides a button
  * for switching between the 2 modes.
  */
 class SearchWidget : public QWidget

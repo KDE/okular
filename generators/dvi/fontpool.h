@@ -108,7 +108,7 @@ public:
   fontMap          fontsByTeXName;
 
   /** This is a list of known font encodings which can be conveniently
-      acessed by name. */
+      accessed by name. */
   fontEncodingPool encodingPool;
 #endif
 
@@ -117,7 +117,7 @@ public:
       channel of pixmaps. Experiments show that --depending of the
       configuration of QT at compile and runtime or the availability
       of the XFt extension, alpha channels are either supported, or
-      silently converted to 1-bit masks. The redering routines in the
+      silently converted to 1-bit masks. The rendering routines in the
       TeXFont implementation use this flag to choose the appropriated
       drawing routines for the different setups. */
   bool QPixmapSupportsAlpha;

@@ -108,7 +108,7 @@ class TeXFontDefinition {
   macro* macrotable;
   // used by (loaded) virtual fonts, list of fonts used by this vf,
   QHash<int,TeXFontDefinition*> vf_table;
-  // acessible by number
+  // accessible by number
   // used by (loaded) virtual fonts, list of fonts used by this vf
   TeXFontDefinition* first_font;
 

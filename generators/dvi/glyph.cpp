@@ -2,7 +2,7 @@
 
 /* glyph.cpp
  *
- * part of kdvi, a dvi-previewer for the KDE desktop environement
+ * part of kdvi, a dvi-previewer for the KDE desktop environment
  *
  * written by Stefan Kebekus, originally based on code by Paul Vojta
  * and a large number of co-authors */

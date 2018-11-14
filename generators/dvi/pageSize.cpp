@@ -207,7 +207,7 @@ QString pageSize::preferredUnit() const
   if (currentSize >= 0)
     return QString::fromLocal8Bit(staticList[currentSize].preferredUnit);
 
-  // User-defined size. Give a preferred unit depening on the locale.
+  // User-defined size. Give a preferred unit depending on the locale.
   if (QLocale::system().measurementSystem() == QLocale::MetricSystem)
     return QStringLiteral("mm");
   else

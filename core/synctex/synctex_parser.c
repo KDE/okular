@@ -1482,7 +1482,7 @@ DEFINE_SYNCTEX_DATA_INT_GETSET(depth_V)
  *  It contains V variants of geometrical information.
  *  It happens that hboxes contain material that is not used to compute
  *  the bounding box. Some letters may appear out of the box given by TeX.
- *  In such a situation, the visible bouding box is bigger ence the V variant.
+ *  In such a situation, the visible bounding box is bigger than the V variant.
  *  Only hboxes have such variant. It does not make sense for void boxes
  *  and it is not used here for vboxes.
  *  - author: JL

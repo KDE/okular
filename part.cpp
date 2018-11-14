@@ -1906,7 +1906,7 @@ void Part::slotFileDirty( const QString& path )
 {
     // The beauty of this is that each start cancels the previous one.
     // This means that timeout() is only fired when there have
-    // no changes to the file for the last 750 milisecs.
+    // no changes to the file for the last 750 millisecs.
     // This ensures that we don't update on every other byte that gets
     // written to the file.
     if ( path == localFilePath() )
@@ -2749,7 +2749,7 @@ bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
 
     bool reloadedCorrectly = true;
 
-    // Make the generator use the new new file instead of the old one
+    // Make the generator use the new file instead of the old one
     if ( m_document->canSwapBackingFile() && !m_documentOpenWithPassword )
     {
         QWidget *currentSidebarItem = m_sidebar->currentItem();
@@ -3366,7 +3366,7 @@ void Part::displayInfoMessage( const QString &message, KMessageWidget::MessageTy
     if ( message.isEmpty() )
         m_infoMessage->animatedHide();
 
-    // display message (duration is length dependant)
+    // display message (duration is length dependent)
     if ( duration < 0 )
     {
         duration = 500 + 100 * message.length();
@@ -3390,7 +3390,7 @@ void Part::warningMessage( const QString &message, int duration )
 
 void Part::noticeMessage( const QString &message, int duration )
 {
-    // less important message -> simpleer display widget in the PageView
+    // less important message -> simpler display widget in the PageView
     m_pageView->displayMessage( message, QString(), PageViewMessage::Info, duration );
 }
 

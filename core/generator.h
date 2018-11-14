@@ -63,7 +63,7 @@ class NormalizedRect;
 class SourceReference;
 
 /* Note: on contents generation and asynchronous queries.
- * Many observers may want to request data syncronously or asynchronously.
+ * Many observers may want to request data synchronously or asynchronously.
  * - Sync requests. These should be done in-place.
  * - Async request must be done in real background. That usually means a
  *   thread, such as QThread derived classes.

@@ -253,7 +253,7 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap* page)
 void dviRenderer::getText(RenderedDocumentPagePixmap* page)
 {
   bool postscriptBackup = _postscript;
-  // Disable postscript-specials temporarely to speed up text extraction.
+  // Disable postscript-specials temporarily to speed up text extraction.
   _postscript = false;
 
   drawPage(page);

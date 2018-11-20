@@ -29,7 +29,7 @@ have the following components:
   \li \ref Okular::Generator
 
 The shell is the application which is started by the user as standalone application and
-which embedds the part. The part contains all GUI elements of Okular, for example the
+which embeds the part. The part contains all GUI elements of Okular, for example the
 content list, the bookmark manager, menus and the graphical view of the document class.
 The document class is an abstract presentation of the document content. It contains information
 about every page of the document, its size, orientation etc.
@@ -91,7 +91,7 @@ to the document class. However for the text selection feature the document class
 the extracted text is located on the page. For a zoom factor of 100% the absolute position of
 the text in the document can be used, however for larger or smaller zoom factors the position
 must be recalculated. To make this calculation as easy as possible, the Generators return an
-abstract represtentation (\ref Okular::TextPage) of the text which includes every character together
+abstract representation (\ref Okular::TextPage) of the text which includes every character together
 with its <em>normalized</em> position. Normalized means that the width and height of the page is
 in the range of 0 to 1, so a character in the middle of the page is at x=0.5 and y=0.5.
 
@@ -680,7 +680,7 @@ how to do it in the next chapter \ref okular_generators_textdocument anyway.
 
 As you can see we have 5 new methods in the class:
 
-  \li <b>generateDocumentInfo()</b> Creates an Okular::DocumentInfo (which is infact a QDomDocument)
+  \li <b>generateDocumentInfo()</b> Creates an Okular::DocumentInfo (which is in fact a QDomDocument)
       which contains document information like author, creation time etc.
   \li <b>generateDocumentSynopsis()</b> Creates an Okular::DocumentSynopsis (which is a QDomDocument as well)
       which contains the table of content.
@@ -691,10 +691,10 @@ As you can see we have 5 new methods in the class:
 Now that you know what the methods are supposed to do, let's take a look at the implementation:
 
 \code
-#include <QtCore/QFile>
-#include <QtGui/QAbstractTextDocumentLayout>
+#include <QFile>
+#include <QAbstractTextDocumentLayout>
 
-#include <kprinter.h>
+#include <QPrinter>
 
 #include <okular/core/document.h>
 #include <okular/core/page.h>

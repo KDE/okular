@@ -378,8 +378,8 @@ class OKULARCORE_EXPORT Generator : public QObject
         virtual PageSizeMetric pagesSizeMetric() const;
 
         /**
-         * This method returns whether given @p action (@ref Permission ) is
-         * allowed in this document.
+         * Returns whether the given @p action is allowed in the document.
+         * @see @ref Permission
          */
         virtual bool isAllowed( Permission action ) const;
 

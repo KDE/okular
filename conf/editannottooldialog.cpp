@@ -112,6 +112,7 @@ EditAnnotToolDialog::EditAnnotToolDialog( QWidget *parent, const QDomElement &in
 
 EditAnnotToolDialog::~EditAnnotToolDialog()
 {
+    delete m_stubann;
     delete m_annotationWidget;
 }
 

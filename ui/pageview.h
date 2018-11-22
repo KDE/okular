@@ -198,6 +198,7 @@ Q_OBJECT
         QMenu* createProcessLinkMenu( PageViewItem *item, const QPoint & eventPos );
         // used when selecting stuff, makes the view scroll as necessary to keep the mouse inside the view
         void scrollPosIntoView( const QPoint & pos );
+        QPoint viewportToContentArea( const Okular::DocumentViewport & vp ) const;
 
         // called from slots to turn off trim modes mutually exclusive to id
         void updateTrimMode( int except_id );

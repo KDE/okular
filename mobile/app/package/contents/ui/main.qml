@@ -17,7 +17,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import QtQuick 2.1
+import QtQuick 2.7
 import QtQuick.Dialogs 1.3 as QQD
 import org.kde.okular 2.0 as Okular
 import org.kde.kirigami 2.0 as Kirigami

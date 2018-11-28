@@ -292,7 +292,6 @@ void DjVuGenerator::loadPages( QVector<Okular::Page*> & pagesVector, int rotatio
 
 Okular::ObjectRect* DjVuGenerator::convertKDjVuLink( int page, KDjVu::Link * link ) const
 {
-    int newpage = -1;
     Okular::Action *newlink = nullptr;
     Okular::ObjectRect *newrect = nullptr;
     switch ( link->type() )
@@ -309,10 +308,7 @@ Okular::ObjectRect* DjVuGenerator::convertKDjVuLink( int page, KDjVu::Link * lin
             {
                 Okular::DocumentViewport vp;
                 if ( !target.isEmpty() )
-                {
                     vp.pageNumber = ( target.at(0) == QLatin1Char( '+' ) || target.at(0) == QLatin1Char( '-' ) ) ? page + tmppage : tmppage - 1;
-                    newpage = vp.pageNumber;
-                }
                 newlink = new Okular::GotoAction( QString(), vp );
             }
             break;
@@ -327,9 +323,7 @@ Okular::ObjectRect* DjVuGenerator::convertKDjVuLink( int page, KDjVu::Link * lin
     }
     if ( newlink )
     {
-        const KDjVu::Page* p = m_djvu->pages().value( newpage == -1 ? page : newpage );
-        if ( !p )
-            p = m_djvu->pages().at( page );
+        const KDjVu::Page* p = m_djvu->pages().at( page );
         int width = p->width();
         int height = p->height();
         bool scape_orientation = false; // hack by tokoe, should always create default page

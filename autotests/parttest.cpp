@@ -118,6 +118,7 @@ class PartTest
         void testCrashTextEditDestroy();
         void testAnnotWindow();
         void testAdditionalActionTriggers();
+        void testJumpToPage();
 
     private:
         void simulateMouseSelection(double startX, double startY, double endX, double endY, QWidget *target);
@@ -1749,6 +1750,35 @@ void PartTest::testAdditionalActionTriggers()
     verifyTargetStates( QStringLiteral( "pb" ), fields, false, false, false, __LINE__ );
     QTest::mouseRelease( part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, tfPos );
     verifyTargetStates( QStringLiteral( "pb" ), fields, false, false, false, __LINE__ );
+}
+
+void PartTest::testJumpToPage() {
+    const QString testFile = QStringLiteral( KDESRCDIR "data/simple-multipage.pdf" );
+    const int targetPage = 25;
+    Okular::Part part( nullptr, nullptr, QVariantList() );
+    part.openDocument( testFile );
+    part.widget()->resize(800, 600);
+    part.widget()->show();
+    QVERIFY( QTest::qWaitForWindowExposed( part.widget() ) );
+
+    part.m_document->pages();
+    part.m_document->setViewportPage( targetPage );
+
+    /* Document::setViewportPage triggers pixmap rendering in another thread.
+     * We want to test how things look AFTER finished signal arrives back,
+     * because PageView::slotRelayoutPages may displace the viewport again.
+     */
+    QTRY_VERIFY( part.m_document->page( targetPage )->hasPixmap( part.m_pageView ) );
+
+    const int contentAreaHeight = part.m_pageView->verticalScrollBar()->maximum() + part.m_pageView->viewport()->height();
+    const int pageWithSpaceTop = contentAreaHeight / part.m_document->pages() * targetPage;
+
+    /*
+     * This is a test for a "known by trial" displacement.
+     * We'd need access to part.m_pageView->d->items[targetPage]->croppedGeometry().top(),
+     * to determine the expected viewport position, but we don't have access.
+     */
+    QCOMPARE(part.m_pageView->verticalScrollBar()->value(), pageWithSpaceTop - 4);
 }
 
 } // namespace Okular

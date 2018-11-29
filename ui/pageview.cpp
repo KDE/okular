@@ -1331,36 +1331,15 @@ void PageView::slotRealNotifyViewportChanged( bool smoothMove )
         slotRelayoutPages();
 
     // restore viewport center or use default {x-center,v-top} alignment
-    const QRect & r = item->croppedGeometry();
-    int newCenterX = r.left(),
-        newCenterY = r.top();
-    if ( vp.rePos.enabled )
-    {
-        if ( vp.rePos.pos == Okular::DocumentViewport::Center )
-        {
-            newCenterX += (int)( normClamp( vp.rePos.normalizedX, 0.5 ) * (double)r.width() );
-            newCenterY += (int)( normClamp( vp.rePos.normalizedY, 0.0 ) * (double)r.height() );
-        }
-        else
-        {
-            // TopLeft
-            newCenterX += (int)( normClamp( vp.rePos.normalizedX, 0.0 ) * (double)r.width() + viewport()->width() / 2 );
-            newCenterY += (int)( normClamp( vp.rePos.normalizedY, 0.0 ) * (double)r.height() + viewport()->height() / 2 );
-        }
-    }
-    else
-    {
-        newCenterX += r.width() / 2;
-        newCenterY += viewport()->height() / 2 - 10;
-    }
+    const QPoint centerCoord = viewportToContentArea( vp );
 
     // if smooth movement requested, setup parameters and start it
     if ( smoothMove )
     {
         d->viewportMoveActive = true;
         d->viewportMoveTime.start();
-        d->viewportMoveDest.setX( newCenterX );
-        d->viewportMoveDest.setY( newCenterY );
+        d->viewportMoveDest.setX( centerCoord.x() );
+        d->viewportMoveDest.setY( centerCoord.y() );
         if ( !d->viewportMoveTimer )
         {
             d->viewportMoveTimer = new QTimer( this );
@@ -1372,7 +1351,7 @@ void PageView::slotRealNotifyViewportChanged( bool smoothMove )
         horizontalScrollBar()->setEnabled( false );
     }
     else
-        center( newCenterX, newCenterY );
+        center( centerCoord.x(), centerCoord.y() );
     d->blockPixmapsRequest = false;
 
     // request visible pixmaps in the current viewport and recompute it
@@ -3805,6 +3784,35 @@ void PageView::scrollPosIntoView( const QPoint & pos )
     else d->dragScrollTimer.stop();
 }
 
+QPoint PageView::viewportToContentArea( const Okular::DocumentViewport & vp ) const {
+    Q_ASSERT( vp.pageNumber >= 0 );
+
+    const QRect & r = d->items[ vp.pageNumber ]->croppedGeometry();
+    QPoint c { r.left(), r.top() };
+
+    if ( vp.rePos.enabled )
+    {
+        if ( vp.rePos.pos == Okular::DocumentViewport::Center )
+        {
+            c.rx() += qRound( normClamp( vp.rePos.normalizedX, 0.5 ) * (double)r.width() );
+            c.ry() += qRound( normClamp( vp.rePos.normalizedY, 0.0 ) * (double)r.height() );
+        }
+        else
+        {
+            // TopLeft
+            c.rx() += qRound( normClamp( vp.rePos.normalizedX, 0.0 ) * (double)r.width() + viewport()->width() / 2 );
+            c.ry() += qRound( normClamp( vp.rePos.normalizedY, 0.0 ) * (double)r.height() + viewport()->height() / 2 );
+        }
+    }
+    else
+    {
+        // exact repositioning disabled, align page top margin with viewport top border by default
+        c.rx() += r.width() / 2;
+        c.ry() += viewport()->height() / 2 - 10;
+    }
+    return c;
+}
+
 void PageView::updateSelection( const QPoint & pos )
 {
     if ( d->mouseSelecting )
@@ -4644,11 +4652,10 @@ void PageView::slotRelayoutPages()
             {
                 int prevX = horizontalScrollBar()->value(),
                     prevY = verticalScrollBar()->value();
-                const QRect & geometry = d->items[ vp.pageNumber ]->croppedGeometry();
-                double nX = vp.rePos.enabled ? normClamp( vp.rePos.normalizedX, 0.5 ) : 0.5,
-                       nY = vp.rePos.enabled ? normClamp( vp.rePos.normalizedY, 0.0 ) : 0.0;
-                center( geometry.left() + qRound( nX * (double)geometry.width() ),
-                        geometry.top() + qRound( nY * (double)geometry.height() ) );
+
+                const QPoint centerPos = viewportToContentArea( vp );
+                center( centerPos.x(), centerPos.y() );
+
                 // center() usually moves the viewport, that requests pixmaps too.
                 // if that doesn't happen we have to request them by hand
                 if ( prevX == horizontalScrollBar()->value() && prevY == verticalScrollBar()->value() )

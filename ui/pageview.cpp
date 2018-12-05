@@ -145,6 +145,7 @@ public:
     QPoint mouseGrabPos;
     QPoint mousePressPos;
     QPoint mouseSelectPos;
+    QPoint previousMouseMovePos;
     int mouseMidLastY;
     bool mouseSelecting;
     QRect mouseSelectionRect;
@@ -2070,7 +2071,14 @@ void PageView::tabletEvent( QTabletEvent * e )
 
 void PageView::mouseMoveEvent( QMouseEvent * e )
 {
-    d->controlWheelAccumulatedDelta = 0;
+    // For some reason in Qt 5.11.2 (no idea when this started) all wheel
+    // events are followed by mouse move events (without changing position),
+    // so we only actually reset the controlWheelAccumulatedDelta if there is a mouse movement
+    if ( e->globalPos() != d->previousMouseMovePos )
+    {
+        d->controlWheelAccumulatedDelta = 0;
+    }
+    d->previousMouseMovePos = e->globalPos();
 
     // don't perform any mouse action when no document is shown
     if ( d->items.isEmpty() )

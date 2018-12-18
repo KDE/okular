@@ -3166,6 +3166,11 @@ void Part::slotAboutBackend()
         }
     }
 
+    const QString extraDescription = m_document->metaData( QStringLiteral("GeneratorExtraDescription") ).toString();
+    if (!extraDescription.isEmpty()) {
+        aboutData.setShortDescription(aboutData.shortDescription() + QStringLiteral("\n\n") + extraDescription);
+    }
+
     if (!icon.isNull()) {
         // 48x48 is what KAboutApplicationDialog wants, which doesn't match any default so we hardcode it
         aboutData.setProgramLogo(icon.pixmap(48, 48));

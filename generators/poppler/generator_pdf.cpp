@@ -53,6 +53,7 @@
 #include <config-okular-poppler.h>
 
 #include <poppler-media.h>
+#include <poppler-version.h>
 
 #include "debug_pdf.h"
 #include "annots.h"
@@ -1490,6 +1491,16 @@ QVariant PDFGenerator::metaData( const QString & key, const QVariant & option ) 
 #ifdef HAVE_POPPLER_0_53
         QMutexLocker ml(userMutex());
         return QVariant::fromValue<QVector<int>>(pdfdoc->formCalculateOrder());
+#endif
+    }
+    else if ( key == QLatin1String("GeneratorExtraDescription") )
+    {
+#ifdef HAVE_POPPLER_0_73
+        if (Poppler::Version::string() == POPPLER_VERSION) {
+            return i18n("Using Poppler %1", Poppler::Version::string());
+        } else {
+            return i18n("Using Poppler %1\n\nBuilt against Poppler %2", Poppler::Version::string(), POPPLER_VERSION);
+        }
 #endif
     }
     return QVariant();

@@ -53,7 +53,9 @@
 #include <config-okular-poppler.h>
 
 #include <poppler-media.h>
+#ifdef HAVE_POPPLER_0_73
 #include <poppler-version.h>
+#endif
 
 #include "debug_pdf.h"
 #include "annots.h"

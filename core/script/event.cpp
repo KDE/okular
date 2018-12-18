@@ -118,7 +118,7 @@ void Event::setTarget( void *target )
 
 Page *Event::targetPage() const
 {
-    return d->m_sourcePage;
+    return d->m_targetPage;
 }
 
 void Event::setTargetPage( Page *val )

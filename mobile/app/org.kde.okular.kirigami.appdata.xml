@@ -17,7 +17,6 @@
   <name xml:lang="ko">Okular 모바일</name>
   <name xml:lang="nl">Okular mobiel</name>
   <name xml:lang="nn">Okular mobil</name>
-  <name xml:lang="pl">Okular Mobile</name>
   <name xml:lang="pt">Okular Móvel</name>
   <name xml:lang="pt-BR">Okular móvel</name>
   <name xml:lang="ru">Okular Mobile</name>
@@ -41,7 +40,6 @@
   <summary xml:lang="ko">문서 뷰어</summary>
   <summary xml:lang="nl">Documentenviewer</summary>
   <summary xml:lang="nn">Dokumentvisar</summary>
-  <summary xml:lang="pl">Przeglądarka dokumentów</summary>
   <summary xml:lang="pt">Visualizador do Documento</summary>
   <summary xml:lang="pt-BR">Visualizador de documentos</summary>
   <summary xml:lang="ru">Просмотр документов</summary>
@@ -67,7 +65,6 @@
     <p xml:lang="ko">Okular는 KDE에서 개발한 문서 뷰어입니다. 리눅스, Windows, macOS, *BSD 등 다양한 플랫폼에서 사용할 수 있습니다.</p>
     <p xml:lang="nl">Okular is een universele documentviewer ontwikkeld door KDE. Okular werkt op meerdere platforms, inclusief, maar niet beperkt tot Linux, Windows, Mac OS X, *BSD, etc.</p>
     <p xml:lang="nn">Okular er ein dokumentvisar for mange ulike filformat, og er utvikla av KDE. Okular køyrer på fleire plattformer, blant anna Linux, Windows, Mac OS X og *BSD.</p>
-    <p xml:lang="pl">Okular jest wszechstronną przeglądarką dokumentów opracowaną przez KDE. Okular działa na wielu platformach takich jak Linux, Windows, Mac OS X, *BSD, itp.</p>
     <p xml:lang="pt">O Okular é um visualizador universal de documentos desenvolvido pelo KDE. O Okular funciona em diversas plataformas, incluindo mas não se limitando ao Linux, Windows, Mac OS X, *BSD, etc.</p>
     <p xml:lang="pt-BR">O Okular é um visualizador de documentos universal desenvolvido pelo KDE. Ele funciona em várias plataformas, incluindo, mas não se limitando, o Linux, Windows, Mac OS X, *BSD, etc.</p>
     <p xml:lang="ru">Okular — универсальная программа просмотра документов от KDE. Okular работает на многих платформах: Linux, Windows, Mac OS X, *BSD и других.</p>
@@ -90,7 +87,6 @@
     <p xml:lang="ko">기능:</p>
     <p xml:lang="nl">Kenmerken:</p>
     <p xml:lang="nn">Funksjonar:</p>
-    <p xml:lang="pl">Możliwości:</p>
     <p xml:lang="pt">Funcionalidades:</p>
     <p xml:lang="pt-BR">Funcionalidades:</p>
     <p xml:lang="ru">Возможности:</p>
@@ -115,7 +111,6 @@
       <li xml:lang="ko">지원하는 형식: PDF, PS, Tiff, CHM, DjVu, 그림, DVI, XPS, ODT, Fiction Book, 만화책, Plucker, EPub, 팩스</li>
       <li xml:lang="nl">Ondersteunde formaten: PDF, PS, Tiff, CHM, DjVu, Afbeeldingen, DVI, XPS, ODT, Fictie boek, Stripboek, Plucker, EPub, Fax</li>
       <li xml:lang="nn">Støtta format: PDF, PS, Tiff, CHM, DjVu, bilete, DVI, XPS, ODT, e-bøker, teikneseriar, Plucker, EPub, Fax</li>
-      <li xml:lang="pl">Obsługa formatów: PDF, PS, Tiff, CHM, DjVu, Obrazy, DVI, XPS, ODT, Fikcja, Komiksy, Plucker, EPub, Fax</li>
       <li xml:lang="pt">Formatos Suportados: PDF, PS, Tiff, CHM, DjVu, Imagens, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="pt-BR">Suporte aos formatos: PDF, PS, TIFF, CHM, DjVu, imagens, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="ru">Поддержка форматов PDF, PS, Tiff, CHM, DjVu, изображений, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, факсов;</li>
@@ -137,7 +132,6 @@
       <li xml:lang="ko">목차, 미리 보기 그림, 검토 및 책갈피 도구가 있는 사이드바</li>
       <li xml:lang="nl">Zijbalk met inhoud, miniaturen, reviews en bladwijzers</li>
       <li xml:lang="nn">Sidestolpe med innhaldsliste, miniatyrbilete, omtalar og bokmerke</li>
-      <li xml:lang="pl">Pasek boczny z treścią, miniaturami, recenzją i zakładkami</li>
       <li xml:lang="pt">Barra lateral com o conteúdo, miniaturas, revisões e marcação de favoritos</li>
       <li xml:lang="pt-BR">Barra lateral com o conteúdo, miniaturas, revisões e favoritos</li>
       <li xml:lang="ru">Боковая панель с содержанием, миниатюрами страниц, комментариями и закладками;</li>
@@ -159,7 +153,6 @@
       <li xml:lang="ko">주석 지원</li>
       <li xml:lang="nl">Ondersteuning van annotaties</li>
       <li xml:lang="nn">Støtte for merknadar</li>
-      <li xml:lang="pl">Obsługa przypisów</li>
       <li xml:lang="pt">Suporte para anotações</li>
       <li xml:lang="pt-BR">Suporte a anotações</li>
       <li xml:lang="ru">Поддержка комментариев.</li>
@@ -181,7 +174,6 @@
       <caption xml:lang="it">Consultazione di un manuale in Okular</caption>
       <caption xml:lang="nl">Handleiding wordt gelezen in Okular</caption>
       <caption xml:lang="nn">Lesing av brukarhandbok i Okular</caption>
-      <caption xml:lang="pl">Instrukcja czytania w Okular</caption>
       <caption xml:lang="pt">Leitura de manual no Okular</caption>
       <caption xml:lang="pt-BR">Lendo manual no Okular</caption>
       <caption xml:lang="ru">Документация, открытая в Okular</caption>

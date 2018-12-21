@@ -903,7 +903,7 @@ void Part::setupActions()
 
     QAction *eraseDrawingAction = new QAction( i18n( "Erase Drawings" ), ac );
     ac->addAction( QStringLiteral("presentation_erase_drawings"), eraseDrawingAction );
-    eraseDrawingAction->setIcon( QIcon::fromTheme( QStringLiteral("draw-eraser") ) );
+    eraseDrawingAction->setIcon( QIcon::fromTheme( QStringLiteral("draw-eraser-delete-objects") ) );
     eraseDrawingAction->setEnabled( false );
 
     QAction *configureAnnotations = new QAction( i18n( "Configure Annotations..." ), ac );

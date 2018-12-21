@@ -193,11 +193,6 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     setPlayPauseIcon();
     addAction( playPauseAct );
     m_topBar->addSeparator();
-    QAction *eraseDrawingAct = collection->action( QStringLiteral("presentation_erase_drawings") );
-    eraseDrawingAct->setEnabled( true );
-    connect(eraseDrawingAct, &QAction::triggered, this, &PresentationWidget::clearDrawings);
-    m_topBar->addAction( eraseDrawingAct );
-    addAction( eraseDrawingAct );
 
     foreach(QAction *action, drawingToolActions->actions())
     {
@@ -207,6 +202,12 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     }
     connect( drawingToolActions, &DrawingToolActions::changeEngine, this, &PresentationWidget::slotChangeDrawingToolEngine );
     connect( drawingToolActions, &DrawingToolActions::actionsRecreated, this, &PresentationWidget::slotAddDrawingToolActions );
+
+    QAction *eraseDrawingAct = collection->action( QStringLiteral("presentation_erase_drawings") );
+    eraseDrawingAct->setEnabled( true );
+    connect(eraseDrawingAct, &QAction::triggered, this, &PresentationWidget::clearDrawings);
+    m_topBar->addAction( eraseDrawingAct );
+    addAction( eraseDrawingAct );
 
     QDesktopWidget *desktop = QApplication::desktop();
     if ( desktop->numScreens() > 1 )

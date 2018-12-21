@@ -901,7 +901,7 @@ void Part::setupActions()
 
     m_presentationDrawingActions = new DrawingToolActions( ac );
 
-    QAction *eraseDrawingAction = new QAction( i18n( "Erase Drawings" ), ac );
+    QAction *eraseDrawingAction = new QAction( i18n( "Erase Drawing" ), ac );
     ac->addAction( QStringLiteral("presentation_erase_drawings"), eraseDrawingAction );
     eraseDrawingAction->setIcon( QIcon::fromTheme( QStringLiteral("draw-eraser-delete-objects") ) );
     eraseDrawingAction->setEnabled( false );

@@ -34,8 +34,8 @@ Context menu actions like Rename Bookmarks etc.)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2018-10-28</date>
-		<releaseinfo>1.6 (Applications 18.12)</releaseinfo>
+		<date>2018-12-23</date>
+		<releaseinfo>1.7 (Applications 19.04)</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
 			<para>&okular; is a &kde; universal document viewer based on &kpdf; code.</para>
@@ -1085,8 +1085,13 @@ Context menu actions like Rename Bookmarks etc.)
 					</term>
 					<listitem>
 						<para>
-							<action>Print</action> the currently displayed document.
+							<action>Print</action> the currently displayed document. Please take into account that &okular; has some specific options for printing &PDF; which are available via pressing the <guibutton>Options >></guibutton> button then choosing the <guilabel>&PDF; Options</guilabel>. Use these options to print your annotations or configure rasterization mode if you have problems with printing some symbols or need to change the scale mode.
 						</para>
+                                                <note>
+                                                    <para>
+                                                        The scale mode options are only available when you check the <guilabel>Force rasterization</guilabel> option.
+                                                    </para>
+                                                </note>
 					</listitem>
 				</varlistentry>
 

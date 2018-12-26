@@ -125,7 +125,7 @@ QTextDocument* Converter::convert( const QString &fileName )
                 return nullptr;
             }
         } else if ( element.tagName() == QLatin1String( "body" ) ) {
-            if ( !mTitleInfo->mCoverPage.isNull() ) {
+            if ( mTitleInfo && !mTitleInfo->mCoverPage.isNull() ) {
                 convertCover( mTitleInfo->mCoverPage );
                 mCursor->insertBlock();
             }
@@ -137,7 +137,7 @@ QTextDocument* Converter::convert( const QString &fileName )
             frameFormat.setPadding( 8 );
             frameFormat.setBackground( Qt::lightGray );
 
-            if ( !mTitleInfo->mTitle.isEmpty() ) {
+            if ( mTitleInfo && !mTitleInfo->mTitle.isEmpty() ) {
                 mCursor->insertFrame( frameFormat );
 
                 QTextCharFormat charFormat;
@@ -148,7 +148,7 @@ QTextDocument* Converter::convert( const QString &fileName )
                 mCursor->setPosition( topFrame->lastPosition() );
             }
 
-            if ( !mTitleInfo->mAuthor.isEmpty() ) {
+            if ( mTitleInfo && !mTitleInfo->mAuthor.isEmpty() ) {
                 frameFormat.setBorder( 1 );
                 mCursor->insertFrame( frameFormat );
 

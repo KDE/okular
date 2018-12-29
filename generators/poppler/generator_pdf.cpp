@@ -12,6 +12,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include <memory>
+
 #include "generator_pdf.h"
 
 // qt/kde includes
@@ -1380,7 +1382,7 @@ bool PDFGenerator::print( QPrinter& printer )
 
         const int page = pageList.at( i ) - 1;
         userMutex()->lock();
-        Poppler::Page *pp = pdfdoc->page( page );
+        std::unique_ptr<Poppler::Page> pp( pdfdoc->page( page ) );
         if (pp)
         {
                 QSizeF pageSize = pp->pageSizeF();        // Unit is 'points' (i.e., 1/72th of an inch)
@@ -1407,7 +1409,6 @@ bool PDFGenerator::print( QPrinter& printer )
             QImage img = pp->renderToImage( 300, 300 );
 #endif
             painter.drawImage( QRectF( QPointF( 0, 0 ), scaling * pp->pageSizeF() ), img );
-            delete pp;
         }
         userMutex()->unlock();
     }

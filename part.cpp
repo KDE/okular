@@ -3465,7 +3465,9 @@ bool Part::handleCompressed( QString &destpath, const QString &path, KFilterDev:
             "not have enough permissions to read the file. "
             "You can check ownership and permissions if you "
             "right-click on the file in the Dolphin "
-            "file manager and then choose the 'Properties' tab.</qt>"));
+            "file manager, then choose the 'Properties' option, "
+            "and select 'Permissions' tab in the opened window.</qt>"));
+
 
         delete newtempfile;
         return false;

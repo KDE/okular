@@ -74,6 +74,7 @@ class Reviews;
 class BookmarkList;
 class DrawingToolActions;
 class Layers;
+class SignaturePanel;
 
 #if PURPOSE_FOUND
 namespace Purpose { class Menu; }
@@ -236,6 +237,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         void enableTOC(bool enable);
         void slotRebuildBookmarkMenu();
         void enableLayers( bool enable );
+        void showSidebarSignaturesItem( bool show );
 
     public Q_SLOTS:
         bool saveFile() override;
@@ -310,6 +312,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         KMessageWidget * m_topMessage;
         KMessageWidget * m_formsMessage;
         KMessageWidget * m_infoMessage;
+        KMessageWidget * m_signatureMessage;
         QPointer<ThumbnailList> m_thumbnailList;
         QPointer<PageView> m_pageView;
         QPointer<TOC> m_toc;
@@ -323,6 +326,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         QPointer<Reviews> m_reviewsWidget;
         QPointer<BookmarkList> m_bookmarkList;
         QPointer<Layers> m_layers;
+        QPointer<SignaturePanel> m_signaturePanel;
 
         // document watcher (and reloader) variables
         KDirWatch *m_watcher;
@@ -374,6 +378,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         KToggleAction* m_showMenuBarAction;
         KToggleAction* m_showLeftPanel;
         KToggleAction* m_showBottomBar;
+        QAction* m_showSignaturePanel;
         KToggleFullScreenAction* m_showFullScreenAction;
         QAction *m_aboutBackend;
         QAction *m_reload;

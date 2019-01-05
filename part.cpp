@@ -1,4 +1,4 @@
-/***************************************************************************
+﻿/***************************************************************************
  *   Copyright (C) 2002 by Wilco Greven <greven@kde.org>                   *
  *   Copyright (C) 2002 by Chris Cheney <ccheney@cheney.cx>                *
  *   Copyright (C) 2002 by Malcolm Hunter <malcolm.hunter@gmx.co.uk>       *
@@ -106,6 +106,7 @@
 #include "ui/guiutils.h"
 #include "ui/layers.h"
 #include "ui/okmenutitle.h"
+#include "ui/signaturepanel.h"
 #include "conf/preferencesdialog.h"
 #include "settings.h"
 #include "core/action.h"
@@ -452,6 +453,12 @@ m_cliPresentation(false), m_cliPrint(false), m_cliPrintAndExit(false), m_embedMo
     m_sidebar->addItem( m_bookmarkList, QIcon::fromTheme(QStringLiteral("bookmarks")), i18n("Bookmarks") );
     m_sidebar->setItemEnabled( m_bookmarkList, false );
 
+    // [left toolbox: Signature Panel] | []
+    m_signaturePanel = new SignaturePanel( m_document, nullptr );
+    connect( m_signaturePanel.data(), &SignaturePanel::documentHasSignatures, this, &Part::showSidebarSignaturesItem );
+    m_sidebar->addItem( m_signaturePanel, QIcon::fromTheme(QStringLiteral("application-pkcs7-signature")), i18n("Signatures") );
+    showSidebarSignaturesItem( false );
+
     // widgets: [../miniBarContainer] | []
 #ifdef OKULAR_ENABLE_MINIBAR
     QWidget * miniBarContainer = new QWidget( 0 );
@@ -506,6 +513,11 @@ m_cliPresentation(false), m_cliPrint(false), m_cliPrintAndExit(false), m_embedMo
     m_infoTimer = new QTimer();
     m_infoTimer->setSingleShot( true );
     connect( m_infoTimer, &QTimer::timeout, m_infoMessage, &KMessageWidget::animatedHide );
+    m_signatureMessage = new KMessageWidget( rightContainer );
+    m_signatureMessage->setVisible( false );
+    m_signatureMessage->setWordWrap( true );
+    m_signatureMessage->setMessageType( KMessageWidget::Information );
+    rightLayout->addWidget( m_signatureMessage );
     m_pageView = new PageView( rightContainer, m_document );
     QMetaObject::invokeMethod( m_pageView, "setFocus", Qt::QueuedConnection );      //usability setting
 //    m_splitter->setFocusProxy(m_pageView);
@@ -517,6 +529,7 @@ m_cliPresentation(false), m_cliPrint(false), m_cliPrintAndExit(false), m_embedMo
     connect( m_pageView.data(), &PageView::fitWindowToPage, this, &Part::fitWindowToPage );
     rightLayout->addWidget( m_pageView );
     m_layers->setPageView( m_pageView );
+    m_signaturePanel->setPageView( m_pageView );
     m_findBar = new FindBar( m_document, rightContainer );
     rightLayout->addWidget( m_findBar );
     m_bottomBar = new QWidget( rightContainer );
@@ -555,6 +568,7 @@ m_cliPresentation(false), m_cliPrint(false), m_cliPrintAndExit(false), m_embedMo
     m_document->addObserver( m_reviewsWidget );
     m_document->addObserver( m_pageSizeLabel );
     m_document->addObserver( m_bookmarkList );
+    m_document->addObserver( m_signaturePanel );
 
     connect( m_document->bookmarkManager(), &BookmarkManager::saved,
         this, &Part::slotRebuildBookmarkMenu );
@@ -752,6 +766,7 @@ void Part::setupViewerActions()
 
     m_showLeftPanel = nullptr;
     m_showBottomBar = nullptr;
+    m_showSignaturePanel = nullptr;
 
     m_showProperties = ac->addAction(QStringLiteral("properties"));
     m_showProperties->setText(i18n("&Properties"));
@@ -848,6 +863,14 @@ void Part::setupActions()
     m_showBottomBar->setChecked( Okular::Settings::showBottomBar() );
     slotShowBottomBar();
 
+    m_showSignaturePanel = ac->add<QAction>(QStringLiteral("show_signatures"));
+    m_showSignaturePanel->setText(i18n("Show &Signatures Panel"));
+    connect( m_showSignaturePanel, &QAction::triggered, this, [this] {
+        if ( m_sidebar->currentItem() != m_signaturePanel) {
+            m_sidebar->setCurrentItem( m_signaturePanel );
+        }
+    });
+
     m_showEmbeddedFiles = ac->addAction(QStringLiteral("embedded_files"));
     m_showEmbeddedFiles->setText(i18n("&Embedded Files"));
     m_showEmbeddedFiles->setIcon( QIcon::fromTheme( QStringLiteral("mail-attachment") ) );
@@ -941,6 +964,7 @@ Part::~Part()
     delete m_reviewsWidget;
     delete m_bookmarkList;
     delete m_infoTimer;
+    delete m_signaturePanel;
 
     delete m_document;
 
@@ -1564,6 +1588,19 @@ bool Part::openFile()
         m_formsMessage->setVisible( false );
     }
 
+    if ( ok && m_document->metaData( QStringLiteral("IsDigitallySigned") ).toBool() )
+    {
+        if ( m_embedMode == PrintPreviewMode )
+        {
+            m_signatureMessage->setText( i18n( "All editing and interactive features for this document are disabled. Please save a copy and reopen to edit this document." ) );
+        }
+        else
+        {
+            m_signatureMessage->setText( i18n( "This document is digitally signed." ) );
+        }
+        m_signatureMessage->setVisible( true );
+    }
+
     if ( m_showPresentation ) m_showPresentation->setEnabled( ok );
     if ( ok )
     {
@@ -1844,6 +1881,7 @@ bool Part::closeUrl(bool promptToSave)
         m_migrationMessage->setVisible( false );
         m_topMessage->setVisible( false );
         m_formsMessage->setVisible( false );
+        m_signatureMessage->setVisible( false );
     }
 #ifdef OKULAR_KEEP_FILE_OPEN
     m_keeper->close();
@@ -2034,7 +2072,7 @@ bool Part::slotAttemptReload( bool oneShot, const QUrl &newUrl )
     }
     else if ( !oneShot )
     {
-        // start watching the file again (since we dropped it on close) 
+        // start watching the file again (since we dropped it on close)
         setFileToWatch( localFilePath() );
         m_dirtyHandler->start( 750 );
     }
@@ -2176,6 +2214,11 @@ void Part::slotRebuildBookmarkMenu()
 void Part::enableLayers(bool enable)
 {
     m_sidebar->setItemVisible( m_layers, enable );
+}
+
+void Part::showSidebarSignaturesItem( bool show )
+{
+    m_sidebar->setItemVisible( m_signaturePanel, show );
 }
 
 void Part::slotShowFindBar()
@@ -3412,6 +3455,7 @@ void Part::unsetDummyMode()
 
     m_sidebar->setItemEnabled( m_reviewsWidget, true );
     m_sidebar->setItemEnabled( m_bookmarkList, true );
+    m_sidebar->setItemEnabled( m_signaturePanel, true );
     m_sidebar->setSidebarVisibility( Okular::Settings::showLeftPanel() );
 
     // add back and next in history
@@ -3427,6 +3471,8 @@ void Part::unsetDummyMode()
 
     // attach the actions of the children widgets too
     m_formsMessage->addAction( m_pageView->toggleFormsAction() );
+
+    m_signatureMessage->addAction( m_showSignaturePanel );
 
     // ensure history actions are in the correct state
     updateViewActions();

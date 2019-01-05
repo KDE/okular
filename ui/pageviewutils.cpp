@@ -205,7 +205,7 @@ bool PageViewItem::setFormWidgetsVisible( bool visible )
     for ( ; it != itEnd; ++it )
     {
         bool hadfocus = (*it)->setVisibility( visible && (*it)->formField()->isVisible() &&
-                                              !(*it)->formField()->isReadOnly() );
+                                              FormWidgetsController::shouldFormWidgetBeShown((*it)->formField()) );
         somehadfocus = somehadfocus || hadfocus;
     }
     return somehadfocus;
@@ -215,7 +215,7 @@ void PageViewItem::reloadFormWidgetsState()
 {
     foreach(FormWidgetIface *fwi, m_formWidgets)
     {
-        fwi->setVisibility( fwi->formField()->isVisible() && !fwi->formField()->isReadOnly() );
+        fwi->setVisibility( fwi->formField()->isVisible() && FormWidgetsController::shouldFormWidgetBeShown(fwi->formField()));
     }
 }
 

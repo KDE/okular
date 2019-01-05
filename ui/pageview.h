@@ -36,6 +36,7 @@ namespace Okular {
 class Action;
 class Document;
 class DocumentViewport;
+class FormFieldSignature;
 class Annotation;
 class MovieAction;
 class RenditionAction;
@@ -116,6 +117,8 @@ Q_OBJECT
         void clearLastSourceLocationViewport();
 
         void updateCursor();
+
+        void highlightSignatureFormWidget( const Okular::FormFieldSignature *form );
 
     public Q_SLOTS:
         void copyTextSelection() const;

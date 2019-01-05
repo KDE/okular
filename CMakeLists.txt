@@ -195,6 +195,7 @@ set(okularcore_SRCS
    core/utils.cpp
    core/view.cpp
    core/fileprinter.cpp
+   core/signatureutils.cpp
    core/script/event.cpp
    core/synctex/synctex_parser.c
    core/synctex/synctex_parser_utils.c
@@ -219,6 +220,7 @@ install( FILES
            core/page.h
            core/pagesize.h
            core/pagetransition.h
+           core/signatureutils.h
            core/sound.h
            core/sourcereference.h
            core/textdocumentgenerator.h
@@ -350,6 +352,7 @@ set(okularpart_SRCS
    ui/annotationtools.cpp
    ui/annotationwidgets.cpp
    ui/bookmarklist.cpp
+   ui/certificateviewer.cpp
    ui/debug_ui.cpp
    ui/drawingtoolactions.cpp
    ui/fileprinterpreview.cpp
@@ -371,6 +374,7 @@ set(okularpart_SRCS
    ui/presentationsearchbar.cpp
    ui/presentationwidget.cpp
    ui/propertiesdialog.cpp
+   ui/revisionviewer.cpp
    ui/searchlineedit.cpp
    ui/searchwidget.cpp
    ui/sidebar.cpp
@@ -382,6 +386,10 @@ set(okularpart_SRCS
    ui/toolaction.cpp
    ui/videowidget.cpp
    ui/layers.cpp
+   ui/signatureguiutils.cpp
+   ui/signaturepropertiesdialog.cpp
+   ui/signaturemodel.cpp
+   ui/signaturepanel.cpp
 )
 
 if (Qt5TextToSpeech_FOUND)

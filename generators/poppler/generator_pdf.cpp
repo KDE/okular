@@ -1573,6 +1573,20 @@ QVariant PDFGenerator::metaData( const QString & key, const QVariant & option ) 
         }
 #endif
     }
+    else if ( key == QLatin1String("IsDigitallySigned") )
+    {
+        const Okular::Document *doc = document();
+        uint numPages = doc->pages();
+        for ( uint i = 0; i < numPages; i++ )
+        {
+            foreach ( Okular::FormField *f, doc->page( i )->formFields() )
+            {
+                if ( f->type() == Okular::FormField::FormSignature )
+                    return true;
+            }
+        }
+        return false;
+    }
     return QVariant();
 }
 
@@ -1957,6 +1971,10 @@ void PDFGenerator::addFormFields( Poppler::Page * popplerPage, Okular::Page * pa
             case Poppler::FormField::FormChoice:
                 of = new PopplerFormFieldChoice( static_cast<Poppler::FormFieldChoice*>( f ) );
                 break;
+            case Poppler::FormField::FormSignature: {
+                of = new PopplerFormFieldSignature( static_cast<Poppler::FormFieldSignature*>( f ) );
+                break;
+            }
             default: ;
         }
         if ( of )

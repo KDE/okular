@@ -13,6 +13,8 @@
 
 #include "formwidgets.h"
 #include "pageviewutils.h"
+#include "revisionviewer.h"
+#include "signaturepropertiesdialog.h"
 
 #include <qbuttongroup.h>
 #include <QKeyEvent>
@@ -23,6 +25,7 @@
 #include <kstandardaction.h>
 #include <qaction.h>
 #include <QUrl>
+#include <QPainter>
 
 // local includes
 #include "core/form.h"
@@ -152,6 +155,11 @@ bool FormWidgetsController::canRedo()
     return m_doc->canRedo();
 }
 
+bool FormWidgetsController::shouldFormWidgetBeShown( Okular::FormField *form )
+{
+    return !form->isReadOnly() || form->type() == Okular::FormField::FormSignature;
+}
+
 void FormWidgetsController::slotButtonClicked( QAbstractButton *button )
 {
     int pageNumber = -1;
@@ -276,10 +284,17 @@ FormWidgetIface * FormWidgetFactory::createWidget( Okular::FormField * ff, QWidg
             }
             break;
         }
+        case Okular::FormField::FormSignature:
+        {
+            Okular::FormFieldSignature * ffs = static_cast< Okular::FormFieldSignature * >( ff );
+            if ( ffs->isVisible() && ffs->signatureType() != Okular::FormFieldSignature::UnknownType )
+                widget = new SignatureEdit( ffs, parent );
+            break;
+        }
         default: ;
     }
 
-    if ( ff->isReadOnly() )
+    if ( !FormWidgetsController::shouldFormWidgetBeShown( ff ) )
         widget->setVisibility( false );
 
     return widget;
@@ -360,7 +375,7 @@ void FormWidgetIface::slotRefresh( Okular::FormField * form )
     {
         return;
     }
-    setVisibility( form->isVisible() && !form->isReadOnly() );
+    setVisibility( form->isVisible() /*&& !form->isReadOnly()*/ );
 
     m_widget->setEnabled( !form->isReadOnly() );
 }
@@ -1052,6 +1067,123 @@ bool ComboEdit::event( QEvent* e )
     return QComboBox::event( e );
 }
 
+SignatureEdit::SignatureEdit( Okular::FormFieldSignature * signature, QWidget * parent )
+    : QAbstractButton( parent ), FormWidgetIface( this, signature ),
+      m_widgetPressed( false ), m_dummyMode( false ), m_wasVisible( false )
+{
+    setCursor( Qt::PointingHandCursor );
+    connect( this, &SignatureEdit::clicked, this, &SignatureEdit::slotViewProperties );
+}
+
+void SignatureEdit::setDummyMode( bool set )
+{
+    m_dummyMode = set;
+    if ( m_dummyMode )
+    {
+        m_wasVisible = isVisible();
+        //if widget was hidden then show it.
+        //even if it wasn't hidden calling this will still update the background.
+        setVisibility( true );
+    }
+    else
+    {
+        //forms were not visible before this call so hide this widget.
+        if ( !m_wasVisible )
+            setVisibility( false );
+        //forms were visible even before this call so only update the background color.
+        else
+            update();
+    }
+}
+
+bool SignatureEdit::event( QEvent * e )
+{
+    if ( m_dummyMode && e->type() != QEvent::Paint )
+    {
+        e->accept();
+        return true;
+    }
+
+    switch ( e->type() )
+    {
+        case QEvent::MouseButtonPress:
+        {
+            QMouseEvent *ev = static_cast< QMouseEvent * >( e );
+            if ( ev->button() == Qt::LeftButton )
+            {
+                m_widgetPressed = true;
+                update();
+            }
+            break;
+        }
+        case QEvent::MouseButtonRelease:
+        {
+            QMouseEvent *ev = static_cast< QMouseEvent * >( e );
+            if ( ev->button() == Qt::LeftButton)
+            {
+                m_widgetPressed = false;
+                update();
+            }
+            break;
+        }
+        case QEvent::Leave:
+        {
+            m_widgetPressed = false;
+            update();
+        }
+        default:
+            break;
+    }
+
+    return QAbstractButton::event( e );
+}
+
+void SignatureEdit::contextMenuEvent( QContextMenuEvent * event )
+{
+    QMenu *menu = new QMenu( this );
+    QAction *signatureProperties = new QAction( i18n("Signature Properties"), menu );
+    connect( signatureProperties, &QAction::triggered, this, &SignatureEdit::slotViewProperties );
+    menu->addAction( signatureProperties );
+    menu->exec( event->globalPos() );
+    delete menu;
+}
+
+void SignatureEdit::paintEvent( QPaintEvent * )
+{
+    QPainter painter( this );
+    //no borders when user hasn't allowed the forms to be shown
+    if ( m_dummyMode && !m_wasVisible )
+    {
+        painter.setPen( Qt::transparent );
+    }
+    else
+    {
+        painter.setPen( Qt::black );
+    }
+
+    if ( m_widgetPressed || m_dummyMode )
+    {
+        QColor col = palette().color( QPalette::Active, QPalette::Highlight );
+        col.setAlpha(50);
+        painter.setBrush( col );
+    }
+    else
+    {
+        painter.setBrush( Qt::transparent );
+    }
+    painter.drawRect( 0, 0, width()-2, height()-2 );
+}
+
+void SignatureEdit::slotViewProperties()
+{
+    if ( m_dummyMode )
+        return;
+
+    Okular::FormFieldSignature *formSignature = static_cast< Okular::FormFieldSignature * >( formField() );
+    SignaturePropertiesDialog propDlg( m_controller->m_doc, formSignature, this );
+    propDlg.exec();
+}
+
 // Code for additional action handling.
 // Challenge: Change preprocessor magic to C++ magic!
 //
@@ -1137,6 +1269,7 @@ DEFINE_ADDITIONAL_ACTIONS( TextAreaEdit, KTextEdit )
 DEFINE_ADDITIONAL_ACTIONS( FileEdit, KUrlRequester )
 DEFINE_ADDITIONAL_ACTIONS( ListEdit, QListWidget )
 DEFINE_ADDITIONAL_ACTIONS( ComboEdit, QComboBox )
+DEFINE_ADDITIONAL_ACTIONS( SignatureEdit, QAbstractButton )
 
 #undef DEFINE_ADDITIONAL_ACTIONS
 

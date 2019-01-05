@@ -61,6 +61,7 @@ class RenditionAction;
 class SourceReference;
 class View;
 class VisiblePageRect;
+class SignatureInfo;
 
 /** IDs for seaches. Globally defined here. **/
 #define PART_SEARCH_ID 1
@@ -1025,6 +1026,13 @@ class OKULARCORE_EXPORT Document : public QObject
          * @since 0.24
         */
         void reloadDocument() const;
+
+        /**
+         * Returns the part of document covered by the given signature @p info.
+         *
+         * @since 1.7
+         */
+        QByteArray requestSignedRevisionData( const Okular::SignatureInfo &info );
 
     Q_SIGNALS:
         /**

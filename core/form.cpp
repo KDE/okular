@@ -294,3 +294,32 @@ bool FormFieldChoice::canBeSpellChecked() const
     return false;
 }
 
+class Okular::FormFieldSignaturePrivate : public Okular::FormFieldPrivate
+{
+    public:
+        FormFieldSignaturePrivate()
+            : FormFieldPrivate( FormField::FormSignature )
+        {
+        }
+
+        Q_DECLARE_PUBLIC( FormFieldSignature )
+
+        void setValue( const QString& v ) override
+        {
+            Q_UNUSED( v )
+        }
+
+        QString value() const override
+        {
+            return QString();
+        }
+};
+
+FormFieldSignature::FormFieldSignature()
+    : FormField( *new FormFieldSignaturePrivate() )
+{
+}
+
+FormFieldSignature::~FormFieldSignature()
+{
+}

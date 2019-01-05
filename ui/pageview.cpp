@@ -5570,6 +5570,26 @@ void PageView::slotFitWindowToPage()
     emit fitWindowToPage( viewportSize, pageSize );
 }
 
+void PageView::highlightSignatureFormWidget( const Okular::FormFieldSignature *form )
+{
+    QVector< PageViewItem * >::const_iterator dIt = d->items.constBegin(), dEnd = d->items.constEnd();
+    for ( ; dIt != dEnd; ++dIt )
+    {
+        foreach ( auto fw, (*dIt)->formWidgets() )
+        {
+            if ( fw->formField() == form )
+            {
+                SignatureEdit *widget = static_cast< SignatureEdit * >( fw );
+                widget->setDummyMode( true );
+                QTimer::singleShot( 250, this, [=]{
+                    widget->setDummyMode( false );
+                });
+                return;
+            }
+        }
+    }
+}
+
 //END private SLOTS
 
 #include "moc_pageview.cpp"

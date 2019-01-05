@@ -5093,6 +5093,25 @@ QAbstractItemModel * Document::layersModel() const
     return d->m_generator ? d->m_generator->layersModel() : nullptr;
 }
 
+QByteArray Document::requestSignedRevisionData( const Okular::SignatureInfo &info )
+{
+    QFile f( d->m_docFileName );
+    if ( !f.open( QIODevice::ReadOnly ) )
+    {
+        KMessageBox::error( nullptr, i18n("Could not open '%1'. File does not exist", d->m_docFileName ) );
+        return {};
+    }
+
+    const QList<qint64> byteRange = info.signedRangeBounds();
+    f.seek( byteRange.first() );
+    QByteArray data;
+    QDataStream stream( &data, QIODevice::WriteOnly );
+    stream << f.read( byteRange.last() - byteRange.first() );
+    f.close();
+
+    return data;
+}
+
 void DocumentPrivate::requestDone( PixmapRequest * req )
 {
     if ( !req )

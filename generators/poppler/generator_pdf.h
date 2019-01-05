@@ -31,6 +31,7 @@
 namespace Okular {
 class ObjectRect;
 class SourceReference;
+class SignatureInfo;
 }
 
 class PDFOptionsPage;

@@ -38,6 +38,7 @@ class FormField;
 class FormFieldButton;
 class FormFieldChoice;
 class FormFieldText;
+class FormFieldSignature;
 class Document;
 }
 
@@ -63,6 +64,8 @@ class FormWidgetsController : public QObject
         void dropRadioButtons();
         bool canUndo();
         bool canRedo();
+
+        static bool shouldFormWidgetBeShown( Okular::FormField *form );
 
     Q_SIGNALS:
         void changed( int pageNumber );
@@ -126,6 +129,7 @@ class FormWidgetsController : public QObject
         friend class FileEdit;
         friend class ListEdit;
         friend class ComboEdit;
+        friend class SignatureEdit;
 
         QList< RadioData > m_radios;
         QHash< int, QAbstractButton* > m_buttons;
@@ -344,6 +348,35 @@ class ComboEdit : public QComboBox, public FormWidgetIface
     private:
         int m_prevCursorPos;
         int m_prevAnchorPos;
+    DECLARE_ADDITIONAL_ACTIONS
+};
+
+class SignatureEdit : public QAbstractButton, public FormWidgetIface
+{
+    Q_OBJECT
+
+    public:
+        explicit SignatureEdit( Okular::FormFieldSignature * signature, QWidget * parent = nullptr );
+
+        // This will be called when an item in signature panel is clicked. Calling it changes the
+        // widget state. If this widget was visible prior to calling this then background
+        // color will change and borders will remain otherwise visibility of this widget will change.
+        // During the change all interactions will be disabled.
+        void setDummyMode( bool set );
+
+    protected:
+        bool event( QEvent * e ) override;
+        void contextMenuEvent( QContextMenuEvent * event ) override;
+        void paintEvent( QPaintEvent * event ) override;
+
+    private Q_SLOTS:
+        void slotViewProperties();
+
+    private:
+        bool m_widgetPressed;
+        bool m_dummyMode;
+        bool m_wasVisible; // this will help in deciding whether or not to paint border for this widget
+
     DECLARE_ADDITIONAL_ACTIONS
 };
 

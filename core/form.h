@@ -13,8 +13,11 @@
 #include "okularcore_export.h"
 #include "area.h"
 #include "annotations.h"
+#include "signatureutils.h"
 
 #include <QStringList>
+
+#include <memory>
 
 namespace Okular {
 
@@ -25,6 +28,7 @@ class FormFieldPrivate;
 class FormFieldButtonPrivate;
 class FormFieldTextPrivate;
 class FormFieldChoicePrivate;
+class FormFieldSignaturePrivate;
 
 /**
  * @short The base interface of a form field.
@@ -387,6 +391,46 @@ class OKULARCORE_EXPORT FormFieldChoice : public FormField
         Q_DISABLE_COPY( FormFieldChoice )
 };
 
+/**
+ * @short Interface of a signature form field.
+ *
+ * This is the base interface to reimplement to represent a signature field.
+ */
+class OKULARCORE_EXPORT FormFieldSignature : public FormField
+{
+    public:
+        /**
+         * The types of signature.
+         */
+        enum SignatureType {
+            AdbePkcs7sha1,
+            AdbePkcs7detached,
+            EtsiCAdESdetached,
+            UnknownType
+         };
+
+        ~FormFieldSignature();
+
+        /**
+         * The signature type
+         */
+        virtual SignatureType signatureType() const = 0;
+
+        /**
+         * The signature info
+         */
+        virtual const SignatureInfo &signatureInfo() const = 0;
+
+    protected:
+        FormFieldSignature();
+
+    private:
+        Q_DECLARE_PRIVATE( FormFieldSignature )
+        Q_DISABLE_COPY( FormFieldSignature )
+};
+
 }
+
+Q_DECLARE_METATYPE(const Okular::FormFieldSignature *);
 
 #endif

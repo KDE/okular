@@ -12,6 +12,8 @@
 
 #include "core/action.h"
 
+#include "pdfsignatureutils.h"
+
 #include <poppler-qt5.h>
 
 #include <config-okular-poppler.h>
@@ -367,4 +369,80 @@ bool PopplerFormFieldChoice::canBeSpellChecked() const
     return m_field->canBeSpellChecked();
 }
 
+#ifndef HAVE_POPPLER_0_51
 
+class DummySignatureInfo : public Okular::SignatureInfo
+{
+};
+
+#endif
+
+
+PopplerFormFieldSignature::PopplerFormFieldSignature( Poppler::FormFieldSignature * field )
+    : Okular::FormFieldSignature(), m_field( field )
+{
+    m_rect = Okular::NormalizedRect::fromQRectF( m_field->rect() );
+    m_id = m_field->id();
+#ifdef HAVE_POPPLER_0_51
+    m_info = new PopplerSignatureInfo( m_field->validate( Poppler::FormFieldSignature::ValidateVerifyCertificate ) );
+#else
+    m_info = new DummySignatureInfo();
+#endif
+    SET_ACTIONS
+}
+
+PopplerFormFieldSignature::~PopplerFormFieldSignature()
+{
+    delete m_field;
+    delete m_info;
+}
+
+Okular::NormalizedRect PopplerFormFieldSignature::rect() const
+{
+    return m_rect;
+}
+
+int PopplerFormFieldSignature::id() const
+{
+    return m_id;
+}
+
+QString PopplerFormFieldSignature::name() const
+{
+    return m_field->name();
+}
+
+QString PopplerFormFieldSignature::uiName() const
+{
+    return m_field->uiName();
+}
+
+bool PopplerFormFieldSignature::isReadOnly() const
+{
+    return m_field->isReadOnly();
+}
+
+bool PopplerFormFieldSignature::isVisible() const
+{
+    return m_field->isVisible();
+}
+
+PopplerFormFieldSignature::SignatureType PopplerFormFieldSignature::signatureType() const
+{
+    switch ( m_field->signatureType() )
+    {
+        case Poppler::FormFieldSignature::AdbePkcs7sha1:
+            return Okular::FormFieldSignature::AdbePkcs7sha1;
+        case Poppler::FormFieldSignature::AdbePkcs7detached:
+            return Okular::FormFieldSignature::AdbePkcs7detached;
+        case Poppler::FormFieldSignature::EtsiCAdESdetached:
+            return Okular::FormFieldSignature::EtsiCAdESdetached;
+        default:
+            return Okular::FormFieldSignature::UnknownType;
+    }
+}
+
+const Okular::SignatureInfo &PopplerFormFieldSignature::signatureInfo() const
+{
+    return *m_info;
+}

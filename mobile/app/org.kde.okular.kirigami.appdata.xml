@@ -25,6 +25,7 @@
   <name xml:lang="uk">Мобільний Okular</name>
   <name xml:lang="x-test">xxOkular Mobilexx</name>
   <name xml:lang="zh-CN">Okular Mobile</name>
+  <name xml:lang="zh-TW">Okular 行動版</name>
   <summary>Document Viewer</summary>
   <summary xml:lang="ca">Visualitzador de documents</summary>
   <summary xml:lang="ca-valencia">Visualitzador de documents</summary>
@@ -48,6 +49,7 @@
   <summary xml:lang="uk">Перегляд документів</summary>
   <summary xml:lang="x-test">xxDocument Viewerxx</summary>
   <summary xml:lang="zh-CN">文档查看器</summary>
+  <summary xml:lang="zh-TW">文件檢視器</summary>
   <description>
     <p>
    Okular is a universal document viewer developed by KDE. Okular works on multiple platforms, including but not limited to Linux, Windows, Mac OS X, *BSD, etc.
@@ -72,6 +74,7 @@
     <p xml:lang="uk">Okular є універсальною програмою для перегляду документів, розробленою KDE. Okular може працювати на багатьох програмних платформах, зокрема Linux, Windows, Mac OS X, *BSD тощо.</p>
     <p xml:lang="x-test">xxOkular is a universal document viewer developed by KDE. Okular works on multiple platforms, including but not limited to Linux, Windows, Mac OS X, *BSD, etc.xx</p>
     <p xml:lang="zh-CN">Okular 是由 KDE 开发的通用文档查看器。Okular 可在多个平台上运行，包括但不是限于 Linux，Windows，Mac OS X，* BSD，等。</p>
+    <p xml:lang="zh-TW">Okular 是個由 KDE 開發的一款通用文件檢視器。Okular 能在多個平台上運作，包含但不限於 Linux、Windows、Mac OS X 以及各個 BSD 等。</p>
     <p>Features:</p>
     <p xml:lang="ca">Característiques:</p>
     <p xml:lang="ca-valencia">Característiques:</p>
@@ -95,6 +98,7 @@
     <p xml:lang="uk">Можливості:</p>
     <p xml:lang="x-test">xxFeatures:xx</p>
     <p xml:lang="zh-CN">功能：</p>
+    <p xml:lang="zh-TW">功能：</p>
     <ul>
       <li>Supported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="ca">Formats acceptats: PDF, PS, Tiff, CHM, DjVu, imatges, DVI, XPS, ODT, Fiction Book, llibres de còmic, Plucker, EPub, Fax</li>
@@ -118,6 +122,7 @@
       <li xml:lang="uk">Підтримувані формати: PDF, PS, Tiff, CHM, DjVu, зображення, DVI, XPS, ODT, Fiction Book, комікси, Plucker, EPub, факси.</li>
       <li xml:lang="x-test">xxSupported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Faxxx</li>
       <li xml:lang="zh-CN">支持的格式︰ PDF，PS，Tiff，CHM，DjVu，图片，DVI，XPS，ODT，FictionBook，漫画书，Plucker，EPub，传真</li>
+      <li xml:lang="zh-TW">支援的格式：PDF, PS, Tiff, CHM, DjVu, 影像, DVI, XPS, ODT, 小說書籍, 漫畫書, Plucker, EPub, 傳真</li>
       <li>Sidebar with contents, thumbnails, reviews and bookmarks</li>
       <li xml:lang="ca">Barra lateral amb el contingut, miniatures, revisions i punts</li>
       <li xml:lang="ca-valencia">Barra lateral amb el contingut, miniatures, revisions i punts</li>
@@ -139,6 +144,7 @@
       <li xml:lang="uk">Бічні панелі зі списками змісту, мініатюрами сторінок, можливість рецензування та додавання закладок.</li>
       <li xml:lang="x-test">xxSidebar with contents, thumbnails, reviews and bookmarksxx</li>
       <li xml:lang="zh-CN">目录，缩略图，批注和书签侧边栏</li>
+      <li xml:lang="zh-TW">側邊欄包含了內容、縮圖、評論以及書籤</li>
       <li>Annotations support</li>
       <li xml:lang="ca">Admet anotacions</li>
       <li xml:lang="ca-valencia">Admet anotacions</li>
@@ -160,6 +166,7 @@
       <li xml:lang="uk">Підтримка анотування.</li>
       <li xml:lang="x-test">xxAnnotations supportxx</li>
       <li xml:lang="zh-CN">支持批注</li>
+      <li xml:lang="zh-TW">支援註釋功能</li>
     </ul>
   </description>
   <screenshots>
@@ -182,6 +189,7 @@
       <caption xml:lang="uk">Читання підручника в Okular</caption>
       <caption xml:lang="x-test">xxReading manual in Okularxx</caption>
       <caption xml:lang="zh-CN">在 Okular 中阅读手册</caption>
+      <caption xml:lang="zh-TW">在 Okular 中閱讀文件</caption>
       <image>https://www.kde.org/images/screenshots/okular.png</image>
     </screenshot>
   </screenshots>

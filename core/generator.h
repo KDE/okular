@@ -34,7 +34,7 @@
 
 #define OKULAR_EXPORT_PLUGIN(classname, json ) \
     static_assert(json[0] != '\0', "arg2 must be a string literal"); \
-    K_PLUGIN_FACTORY_WITH_JSON(classname ## Factory, json, registerPlugin<classname >();)
+    K_PLUGIN_CLASS_WITH_JSON(classname, json)
 
 class QByteArray;
 class QMutex;

@@ -146,6 +146,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         bool m_inBlackScreenMode;
         bool m_showSummaryView;
         bool m_advanceSlides;
+        bool m_goToPreviousPageOnRelease;
         bool m_goToNextPageOnRelease;
 
     private Q_SLOTS:

@@ -92,5 +92,13 @@
   <entry key="SlidesLoop" type="Bool" >
    <default>false</default>
   </entry>
+  <entry key="SlidesTapNavigation" type="Enum" >
+   <default>Forward</default>
+   <choices>
+    <choice name="ForwardBackward" />
+    <choice name="Forward" />
+    <choice name="Disabled" />
+   </choices>
+  </entry>
  </group>
 </kcfg>

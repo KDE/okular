@@ -153,6 +153,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     m_ac( collection ), m_screenSelect( nullptr ), m_isSetup( false ), m_blockNotifications( false ), m_inBlackScreenMode( false ),
     m_showSummaryView( Okular::Settings::slidesShowSummary() ),
     m_advanceSlides( Okular::SettingsCore::slidesAdvance() ),
+    m_goToPreviousPageOnRelease( false ),
     m_goToNextPageOnRelease( false )
 {
     Q_UNUSED( parent )
@@ -707,7 +708,39 @@ void PresentationWidget::mousePressEvent( QMouseEvent * e )
             return;
         }
 
-        m_goToNextPageOnRelease = true;
+        // Actual mouse press events always lead to the next page page
+        if ( e->source() == Qt::MouseEventNotSynthesized )
+        {
+            m_goToNextPageOnRelease = true;
+        }
+        // Touch events may lead to the previous or next page
+        else if ( Okular::Settings::slidesTapNavigation() != Okular::Settings::EnumSlidesTapNavigation::Disabled )
+        {
+            switch ( Okular::Settings::slidesTapNavigation() )
+            {
+                case Okular::Settings::EnumSlidesTapNavigation::ForwardBackward:
+                {
+                    if ( e->x() < ( geometry().width()/2 ) )
+                    {
+                        m_goToPreviousPageOnRelease = true;
+                    }
+                    else
+                    {
+                        m_goToNextPageOnRelease = true;
+                    }
+                    break;
+                }
+                case Okular::Settings::EnumSlidesTapNavigation::Forward:
+                {
+                    m_goToNextPageOnRelease = true;
+                    break;
+                }
+                case Okular::Settings::EnumSlidesTapNavigation::Disabled:
+                {
+                    // Do Nothing
+                }
+            }
+        }
     }
     // pressing the "move forward" mouse button: unlike the left button this
     // always means "show next page", so we unconditionally delegate to that
@@ -735,6 +768,11 @@ void PresentationWidget::mouseReleaseEvent( QMouseEvent * e )
         if ( link == m_pressedLink )
             m_document->processAction( link );
         m_pressedLink = nullptr;
+    }
+
+    if ( m_goToPreviousPageOnRelease ) {
+        slotPrevPage();
+        m_goToPreviousPageOnRelease = false;
     }
 
     if ( m_goToNextPageOnRelease ) {

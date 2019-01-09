@@ -520,12 +520,6 @@ class OKULARCORE_EXPORT SourceRefObjectRect : public ObjectRect
 
 /// @cond PRIVATE
 /** @internal */
-template <typename T>
-void doDelete( T& t )
-{
-    (void)t;
-}
-
 /** @internal */
 template <typename T>
 T* givePtr( T& t )
@@ -538,27 +532,6 @@ template <typename T>
 T& deref( T& t )
 {
     return t;
-}
-
-/** @internal */
-template <typename T>
-static void doDelete( T* t )
-{
-    delete t;
-}
-
-/** @internal */
-template <typename T>
-static T* givePtr( T* t )
-{
-    return t;
-}
-
-/** @internal */
-template <typename T>
-static T& deref( T* t )
-{
-    return *t;
 }
 /// @endcond
 
@@ -575,11 +548,6 @@ static T& deref( T* t )
 template <class NormalizedShape, class Shape> class RegularArea : public  QList<NormalizedShape>
 {
     public:
-        /**
-         * Destroys a regular area.
-         */
-        ~RegularArea();
-
         /**
          * Returns whether the regular area contains the
          * normalized point @p x, @p y.
@@ -635,14 +603,6 @@ template <class NormalizedShape, class Shape> class RegularArea : public  QList<
 };
 
 template <class NormalizedShape, class Shape>
-RegularArea<NormalizedShape, Shape>::~RegularArea()
-{
-    int size = this->count();
-    for ( int i = 0; i < size; ++i )
-        doDelete( (*this)[i] );
-}
-
-template <class NormalizedShape, class Shape>
 void RegularArea<NormalizedShape, Shape>::simplify()
 {
 #ifdef DEBUG_REGULARAREA
@@ -654,9 +614,7 @@ void RegularArea<NormalizedShape, Shape>::simplify()
                     if ( givePtr( (*this)[x] )->intersects( deref( (*this)[i+1] ) ) )
                     {
                         deref((*this)[x]) |= deref((*this)[i+1]);
-                        NormalizedShape& tobedeleted = (*this)[i+1];
                         this->removeAt( i + 1 );
-                        doDelete( tobedeleted );
                         --end;
                         --i;
                     }
@@ -791,7 +749,6 @@ void RegularArea<NormalizedShape, Shape>::appendShape( const NormalizedShape& sh
         if ( intersection )
         {
             deref((*this)[size - 1]) |= deref( shape );
-            doDelete( const_cast<NormalizedShape&>( shape ) );
         }
         else
             this->append( shape );

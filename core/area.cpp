@@ -33,12 +33,9 @@ NormalizedPoint::NormalizedPoint( double dX, double dY )
 NormalizedPoint::NormalizedPoint( int iX, int iY, int xScale, int yScale )
     : x( (double)iX / (double)xScale ), y( (double)iY / (double)yScale ) {}
 
-NormalizedPoint& NormalizedPoint::operator=( const NormalizedPoint & p )
-{
-    x = p.x;
-    y = p.y;
-    return *this;
-}
+NormalizedPoint& NormalizedPoint::operator=( const NormalizedPoint & p ) = default;
+NormalizedPoint::NormalizedPoint( const NormalizedPoint& ) = default;
+NormalizedPoint::~NormalizedPoint() = default;
 
 void NormalizedPoint::transform( const QTransform &matrix )
 {
@@ -134,8 +131,7 @@ NormalizedRect::NormalizedRect( const QRect & r, double xScale, double yScale )
     : left( (double)r.left() / xScale ), top( (double)r.top() / yScale ),
     right( (double)r.right() / xScale ), bottom( (double)r.bottom() / yScale ) {}
 
-NormalizedRect::NormalizedRect( const NormalizedRect & rect )
-    : left( rect.left ), top( rect.top ), right( rect.right ), bottom( rect.bottom ) {}
+NormalizedRect::NormalizedRect( const NormalizedRect & rect ) = default;
 
 NormalizedRect NormalizedRect::fromQRectF( const QRectF &rect )
 {
@@ -206,14 +202,9 @@ NormalizedRect NormalizedRect::operator&( const NormalizedRect & r ) const
     return ret;
 }
 
-NormalizedRect & NormalizedRect::operator=( const NormalizedRect & r )
-{
-    left = r.left;
-    right = r.right;
-    top = r.top;
-    bottom = r.bottom;
-    return *this;
-}
+NormalizedRect & NormalizedRect::operator=( const NormalizedRect & r ) = default;
+
+NormalizedRect::~NormalizedRect() = default;
 
 bool NormalizedRect::operator==( const NormalizedRect & r ) const
 {

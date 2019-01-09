@@ -69,6 +69,9 @@ class OKULARCORE_EXPORT NormalizedPoint
          */
         NormalizedPoint& operator=( const NormalizedPoint& );
 
+        NormalizedPoint( const NormalizedPoint& );
+        ~NormalizedPoint();
+
         /**
          * Transforms the normalized point with the operations defined by @p matrix.
          */
@@ -141,6 +144,8 @@ class OKULARCORE_EXPORT NormalizedRect
          * @internal
          */
         NormalizedRect& operator=( const NormalizedRect &other );
+
+        ~NormalizedRect();
 
         /**
          * Build a normalized rect from a QRectF.

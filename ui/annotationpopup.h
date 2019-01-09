@@ -51,8 +51,9 @@ class AnnotationPopup : public QObject
             AnnotPagePair( Okular::Annotation *a, int pn ) : annotation( a ),  pageNumber( pn )
             { }
             
-            AnnotPagePair( const AnnotPagePair & pair ) : annotation( pair.annotation ),  pageNumber( pair.pageNumber )
-            { }
+            ~AnnotPagePair() = default;
+            AnnotPagePair( const AnnotPagePair & pair ) = default;
+            AnnotPagePair &operator=( const AnnotPagePair & pair ) = default;
             
             bool operator==( const AnnotPagePair & pair ) const
             { return annotation == pair.annotation && pageNumber == pair.pageNumber; }

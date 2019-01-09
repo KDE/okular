@@ -27,6 +27,9 @@ public:
   pageInfo(const QString& _PostScriptString);
   ~pageInfo();
 
+  pageInfo(const pageInfo &) = delete;
+  pageInfo &operator=(const pageInfo &) = delete;
+
   QColor    background;
   QColor    permanentBackground;
   QString   *PostScriptString;

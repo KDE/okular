@@ -50,6 +50,9 @@ class QUnpluck
         QUnpluck();
         ~QUnpluck();
 
+        QUnpluck(const QUnpluck &) = delete;
+        QUnpluck &operator=(const QUnpluck &) = delete;
+
         bool open( const QString &fileName );
 
         QList<QTextDocument*> pages() const { return mPages; }

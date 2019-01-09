@@ -215,6 +215,9 @@ class Manifest
 
     ~Manifest();
 
+    Manifest(const Manifest &) = delete;
+    Manifest &operator=(const Manifest &) = delete;
+
     /**
        Check if the manifest indicates that a file is encrypted
     */

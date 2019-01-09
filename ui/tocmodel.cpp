@@ -28,6 +28,9 @@ struct TOCItem
     TOCItem( TOCItem *parent, const QDomElement &e );
     ~TOCItem();
 
+    TOCItem(const TOCItem &) = delete;
+    TOCItem &operator=(const TOCItem &) = delete;
+
     QString text;
     Okular::DocumentViewport viewport;
     QString extFileName;

@@ -30,6 +30,9 @@ class Scripter
     public:
         ~Scripter();
 
+        Scripter(const Scripter &) = delete;
+        Scripter &operator=(const Scripter &) = delete;
+
         QString execute( ScriptType type, const QString &script );
 
         void setEvent( Event *event );

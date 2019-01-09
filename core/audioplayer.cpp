@@ -77,6 +77,9 @@ public:
         delete m_buffer;
     }
 
+    PlayData(const PlayData &) = delete;
+    PlayData &operator=(const PlayData &) = delete;
+
     Phonon::MediaObject * m_mediaobject;
     Phonon::AudioOutput * m_output;
     QBuffer * m_buffer;

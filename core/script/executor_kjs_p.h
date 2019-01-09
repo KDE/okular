@@ -24,6 +24,9 @@ class ExecutorKJS
         explicit ExecutorKJS( DocumentPrivate *doc );
         ~ExecutorKJS();
 
+        ExecutorKJS(const ExecutorKJS &) = delete;
+        ExecutorKJS &operator=(const ExecutorKJS &) = delete;
+
         void execute( const QString &script, Event *event );
 
     private:

@@ -36,6 +36,9 @@ public:
     LatexRenderer();
     ~LatexRenderer();
 
+    LatexRenderer(const LatexRenderer &) = delete;
+    LatexRenderer &operator=(const LatexRenderer &) = delete;
+
     Error renderLatexInHtml( QString& html, const QColor &textColor, int fontSize, int resolution, QString &latexOutput );
     static bool mightContainLatex ( const QString& text );
 

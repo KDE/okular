@@ -46,6 +46,9 @@ class PageViewItem
         PageViewItem( const Okular::Page * page );
         ~PageViewItem();
 
+        PageViewItem(const PageViewItem &) = delete;
+        PageViewItem &operator=(const PageViewItem &) = delete;
+
         const Okular::Page * page() const;
         int pageNumber() const;
         double zoomFactor() const;

@@ -78,10 +78,15 @@
 // transition effect to the next frame
 struct PresentationFrame
 {
+    PresentationFrame() = default;
+
     ~PresentationFrame()
     {
         qDeleteAll( videoWidgets );
     }
+
+    PresentationFrame(const PresentationFrame &) = delete;
+    PresentationFrame &operator=(const PresentationFrame &) = delete;
 
     void recalcGeometry( int width, int height, float screenRatio )
     {

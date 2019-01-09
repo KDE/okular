@@ -31,6 +31,9 @@ class macro {
   macro();
   ~macro();
 
+  macro(const macro &) = delete;
+  macro &operator=(const macro &) = delete;
+
   // address of first byte of macro
   unsigned char* pos;
   // address of last+1 byte
@@ -71,6 +74,9 @@ class TeXFontDefinition {
   TeXFontDefinition(const QString &nfontname, double _displayResolution_in_dpi, quint32 chk, qint32 _scaled_size_in_DVI_units,
        class fontPool *pool, double _enlargement);
   ~TeXFontDefinition();
+
+  TeXFontDefinition(const TeXFontDefinition &) = delete;
+  TeXFontDefinition &operator=(const TeXFontDefinition &) = delete;
 
   void reset();
   void fontNameReceiver(const QString&);

@@ -287,6 +287,9 @@ class AuthorGroupItem
             qDeleteAll( mChilds );
         }
 
+        AuthorGroupItem(const AuthorGroupItem &) = delete;
+        AuthorGroupItem &operator=(const AuthorGroupItem &) = delete;
+
         void appendChild( AuthorGroupItem *child ) { mChilds.append( child ); }
         AuthorGroupItem* parent() const { return mParent; }
         AuthorGroupItem* child( int row ) const { return mChilds.value( row ); }

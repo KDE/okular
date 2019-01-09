@@ -34,6 +34,9 @@ class KDjVu
         KDjVu();
         ~KDjVu();
 
+        KDjVu(const KDjVu &) = delete;
+        KDjVu &operator=(const KDjVu &) = delete;
+
         /**
          * A DjVu page.
          */

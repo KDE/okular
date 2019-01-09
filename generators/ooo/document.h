@@ -24,6 +24,9 @@ class Document
     explicit Document( const QString &fileName );
     ~Document();
 
+    Document(const Document &) = delete;
+    Document &operator=(const Document &) = delete;
+
     bool open( const QString &password );
 
     QString lastErrorString() const;

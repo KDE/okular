@@ -99,6 +99,9 @@ struct XpsPathGeometry
         qDeleteAll( paths );
     }
 
+    XpsPathGeometry(const XpsPathGeometry &) = delete;
+    XpsPathGeometry &operator=(const XpsPathGeometry &) = delete;
+
     QList< XpsPathFigure* > paths;
     Qt::FillRule fillRule;
     XpsMatrixTransform transform;
@@ -153,6 +156,9 @@ public:
     XpsPage(XpsFile *file, const QString &fileName);
     ~XpsPage();
 
+    XpsPage(const XpsPage &) = delete;
+    XpsPage &operator=(const XpsPage &) = delete;
+
     QSizeF size() const;
     bool renderToImage( QImage *p );
     bool renderToPainter( QPainter *painter );
@@ -188,6 +194,9 @@ class XpsDocument
 public:
     XpsDocument(XpsFile *file, const QString &fileName);
     ~XpsDocument();
+
+    XpsDocument(const XpsDocument &) = delete;
+    XpsDocument &operator=(const XpsDocument &) = delete;
 
     /**
        the total number of pages in this document
@@ -233,6 +242,9 @@ class XpsFile
 public:
     XpsFile();
     ~XpsFile();
+
+    XpsFile(const XpsFile &) = delete;
+    XpsFile &operator=(const XpsFile &) = delete;
 
     bool loadDocument( const QString & fileName );
     bool closeDocument();

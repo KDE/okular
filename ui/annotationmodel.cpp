@@ -32,6 +32,9 @@ struct AnnItem
     AnnItem( AnnItem *parent, int page );
     ~AnnItem();
 
+    AnnItem(const AnnItem &) = delete;
+    AnnItem &operator=(const AnnItem &) = delete;
+
     AnnItem *parent;
     QList< AnnItem* > children;
 

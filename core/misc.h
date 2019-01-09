@@ -46,6 +46,9 @@ class OKULARCORE_EXPORT TextSelection
          */
         ~TextSelection();
 
+        TextSelection(const TextSelection &) = delete;
+        TextSelection &operator=(const TextSelection &) = delete;
+
         /**
          * Changes the end point of the selection to the given @p point.
          */

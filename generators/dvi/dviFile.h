@@ -32,6 +32,9 @@ class dvifile : public bigEndianByteReader
 
   ~dvifile();
 
+  dvifile(const dvifile &) = delete;
+  dvifile &operator=(const dvifile &) = delete;
+
   fontPool     * font_pool;
   QString        filename;
   QString        generatorString;

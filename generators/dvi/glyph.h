@@ -10,6 +10,9 @@
 struct bitmap {
   bitmap();
   ~bitmap();
+
+  bitmap(const bitmap &) = delete;
+  bitmap &operator=(const bitmap &) = delete;
   
   // width and height in pixels
   quint16 w, h;

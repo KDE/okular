@@ -32,6 +32,9 @@ struct UnrarHelper
     UnrarHelper();
     ~UnrarHelper();
 
+    UnrarHelper(const UnrarHelper &) = delete;
+    UnrarHelper &operator=(const UnrarHelper &) = delete;
+
     UnrarFlavour *kind;
     QString unrarPath;
     QString lsarPath;

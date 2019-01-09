@@ -21,6 +21,9 @@ class fontEncodingPool {
   fontEncodingPool();
   ~fontEncodingPool();
 
+  fontEncodingPool(const fontEncodingPool &) = delete;
+  fontEncodingPool &operator=(const fontEncodingPool &) = delete;
+
   fontEncoding *findByName(const QString &name);
 
  private:

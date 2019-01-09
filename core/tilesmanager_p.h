@@ -107,6 +107,9 @@ class TilesManager
         TilesManager( int pageNumber, int width, int height, Rotation rotation = Rotation0 );
         ~TilesManager();
 
+        TilesManager(const TilesManager &) = delete;
+        TilesManager &operator=(const TilesManager &) = delete;
+
         /**
          * Sets the pixmap of the tiles covered by @p rect (which represents
          * the location of @p pixmap on the page).

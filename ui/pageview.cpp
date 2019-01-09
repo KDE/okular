@@ -5548,17 +5548,21 @@ void PageView::slotToggleChangeColors()
 
 void PageView::slotFitWindowToPage()
 {
-    PageViewItem currentPageItem = nullptr;
+    const PageViewItem *currentPageItem = nullptr;
     QSize viewportSize = viewport()->size();
     foreach ( const PageViewItem * pageItem, d->items )
     {
         if ( pageItem->isVisible() )
         {
-            currentPageItem = *pageItem;
+            currentPageItem = pageItem;
             break;
         }
     }
-    const QSize pageSize = QSize( currentPageItem.uncroppedWidth() + kcolWidthMargin, currentPageItem.uncroppedHeight() + krowHeightMargin );
+
+    if ( !currentPageItem )
+        return;
+
+    const QSize pageSize = QSize( currentPageItem->uncroppedWidth() + kcolWidthMargin, currentPageItem->uncroppedHeight() + krowHeightMargin );
     if ( verticalScrollBar()->isVisible() )
         viewportSize.setWidth( viewportSize.width() + verticalScrollBar()->width() );
     if ( horizontalScrollBar()->isVisible() )

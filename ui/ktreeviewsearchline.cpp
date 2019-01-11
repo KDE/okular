@@ -259,7 +259,7 @@ bool KTreeViewSearchLine::itemMatches( const QModelIndex &parentIndex, int row, 
   if ( !parentIndex.isValid() && parentIndex != d->treeView->rootIndex() )
     return false;
 
-  // Contruct a regular expression object with the right options.
+  // Construct a regular expression object with the right options.
   QRegExp expression = QRegExp( pattern,
       d->caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive,
       d->regularExpression ? QRegExp::RegExp : QRegExp::FixedString );

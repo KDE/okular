@@ -570,7 +570,7 @@ void dviRenderer::applicationDoSpecial(char *cp)
   if (special_command.startsWith(QLatin1String("ps:SDict begin"))) {
 
     // Hyperref: start of hyperref rectangle. At this stage it is not
-    // yet clear if the rectangle will conain a hyperlink, an anchor,
+    // yet clear if the rectangle will contain a hyperlink, an anchor,
     // or another type of object. We suspect that this rectangle will
     // define a hyperlink, allocate a QString and set HTML_href to
     // point to this string. The string contains the name of the
@@ -578,7 +578,7 @@ void dviRenderer::applicationDoSpecial(char *cp)
     // language--- will be defined only after characters are drawn and
     // the hyperref rectangle has been closed. We use "glopglyph" as a
     // temporary name. Since the pointer HTML_href is not NULL, the
-    // chracter drawing routines will now underline all characters in
+    // character drawing routines will now underline all characters in
     // blue to point out that they correspond to a hyperlink. Also, as
     // soon as characters are drawn, the drawing routines will
     // allocate a Hyperlink and add it to the top of the vector

@@ -114,7 +114,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
     private:
         Okular::Document::OpenResult init(QVector<Okular::Page*> & pagesVector, const QString &password);
 
-        // create the document synopsis hieracy
+        // create the document synopsis hierarchy
         void addSynopsisChildren( QDomNode * parentSource, QDomNode * parentDestination );
         // fetch annotations from the pdf file and add they to the page
         void addAnnotations( Poppler::Page * popplerPage, Okular::Page * page );

@@ -17,7 +17,7 @@
  * e.g. "8r.enc"
  *
  * Explanation of font encodings: TeX was designed to only use
- * MetaFont fonts. A DVI file referres to a MetaFont font by giving an
+ * MetaFont fonts. A DVI file refers to a MetaFont font by giving an
  * at-most-8-character name, such as 'cmr10'. The DVI previewer would
  * then locate the associated PK font file (e.g. cmr10.600pk), load
  * it, and retrieve the character shaped.

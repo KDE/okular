@@ -144,7 +144,7 @@ glyph* TeXFont_TFM::getGlyph(quint16 characterCode, bool generateCharacterPixmap
                                       design_size_in_TeX_points.toDouble() *
                                       characterHeight_in_units_of_design_size[characterCode].toDouble() * 100.0/7227.0 + 0.5);
 
-    // Just make sure that weired TFM files never lead to giant
+    // Just make sure that weird TFM files never lead to giant
     // pixmaps that eat all system memory...
     if (pixelWidth > 50)
       pixelWidth = 50;

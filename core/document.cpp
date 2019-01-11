@@ -622,7 +622,7 @@ bool DocumentPrivate::loadDocumentInfo( QFile &infoFile, LoadDocumentInfoFlags l
                         }
                         historyNode = historyNode.nextSibling();
                     }
-                    // consistancy check
+                    // consistency check
                     if ( m_viewportHistory.isEmpty() )
                         m_viewportIterator = m_viewportHistory.insert( m_viewportHistory.end(), DocumentViewport() );
                 }
@@ -1788,7 +1788,7 @@ void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *
             if ( !lastMatch )
                 break;
 
-            // add highligh rect to the matches map
+            // add highlight rect to the matches map
             (*pageMatches)[page].append(lastMatch);
         }
         delete lastMatch;

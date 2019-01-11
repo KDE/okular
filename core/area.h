@@ -347,7 +347,7 @@ class OKULARCORE_EXPORT NormalizedRect
  * performed by accessors based on the value returned by objectType(). Objects
  * are reparented to this class.
  *
- * Type / Class correspondency tab:
+ * Type / Class correspondence tab:
  *  - Action    : class Action: description of an action
  *  - Image     : class Image : description of an image (n/a)
  *  - Annotation: class Annotation: description of an annotation

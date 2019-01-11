@@ -298,7 +298,7 @@ void ProtocolMSITS::listDir (const QUrl & url)
 
 	for ( int i = 0; i < listing.size(); i++ )
 	{
-		// Strip the direcroty name
+		// Strip the directory name
 		QString ename = listing[i].mid (striplength);
 
 		if ( isDirectory ( ename ) )

@@ -18,7 +18,7 @@
 /** \brief Page number and vertical position in physical coordinates
 
 This very simple class contains a page number and a vertical position
-in physical coordiantes. The vertical position is given by the
+in physical coordinates. The vertical position is given by the
 distance from the top of the page. Anchors are completely independent
 of documents, there is no need for a document to exists that contains
 the given page, nor does the page number need to be valid.
@@ -32,7 +32,7 @@ class Anchor {
   /** \brief Constructs an anchor that points to an invalid page */
   Anchor() {page = 0;}
 
-  /** \brief Constructs an snchor that points to a given position on a
+  /** \brief Constructs an anchor that points to a given position on a
       given page
 
       The class contains no code to make sure in any way that the page

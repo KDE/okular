@@ -124,7 +124,7 @@ class OKULARCORE_EXPORT TextDocumentConverter : public QObject
         /**
          * This method can be used to calculate the viewport for a given text block.
          *
-         * @note This method should be called at the end of the convertion, because it
+         * @note This method should be called at the end of the conversion, because it
          *       triggers QTextDocument to do the layout calculation.
          */
         DocumentViewport calculateViewport( QTextDocument *document, const QTextBlock &block );

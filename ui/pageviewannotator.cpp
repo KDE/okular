@@ -1051,7 +1051,7 @@ void PageViewAnnotator::slotToolSelected( int toolID )
                 m_pageView->displayMessage( tip, QString(), PageViewMessage::Annotation );
         }
 
-        // consistancy warning
+        // consistency warning
         if ( !m_engine )
         {
             qCWarning(OkularUiDebug) << "tools.xml: couldn't find good engine description. check xml.";

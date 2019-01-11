@@ -65,7 +65,7 @@ class dvifile : public bigEndianByteReader
 
   /** This flag is set to "true" during the construction of the
       dvifile, and is never changed afterwards by the dvifile
-      class. It is used in kdvi in conjuction with source-specials:
+      class. It is used in kdvi in conjunction with source-specials:
       the first time a page with source specials is rendered, KDVI
       shows an info dialog, and the flag is set to false. That way
       KDVI ensures that the user is only informed once. */
@@ -103,7 +103,7 @@ class dvifile : public bigEndianByteReader
 
   This utility method takes the name of a PDF-file, and attempts to
   convert it to a PS file. The dvifile internally keeps a list of
-  converted files, to do two thigs:
+  converted files, to do two things:
 
   - convert files only once.
 

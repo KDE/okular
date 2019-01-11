@@ -414,7 +414,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     horizontalScrollBar()->setCursor( Qt::ArrowCursor );
     horizontalScrollBar()->setSingleStep( 20 );
 
-    // conntect the padding of the viewport to pixmaps requests
+    // connect the padding of the viewport to pixmaps requests
     connect(horizontalScrollBar(), &QAbstractSlider::valueChanged, this, &PageView::slotRequestVisiblePixmaps);
     connect(verticalScrollBar(), &QAbstractSlider::valueChanged, this, &PageView::slotRequestVisiblePixmaps);
     connect( &d->dragScrollTimer, &QTimer::timeout, this, &PageView::slotDragScroll );
@@ -2243,7 +2243,7 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
             break;
 
         case Okular::Settings::EnumMouseMode::TextSelect:
-            // if mouse moves 5 px away from the press point and the document soupports text extraction, do 'textselection'
+            // if mouse moves 5 px away from the press point and the document supports text extraction, do 'textselection'
             if ( !d->mouseTextSelecting && !d->mousePressPos.isNull() && d->document->supportsSearching() && ( ( eventPos - d->mouseSelectPos ).manhattanLength() > 5 ) )
             {
                 d->mouseTextSelecting = true;

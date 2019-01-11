@@ -1471,7 +1471,7 @@ QFont XpsFile::getFontByName( const QString &absoluteFileName, float size )
         m_fontCache[absoluteFileName] = index;
     }
     if ( index == -1 ) {
-        qCWarning(OkularXpsDebug) << "Requesting uknown font:" << absoluteFileName;
+        qCWarning(OkularXpsDebug) << "Requesting unknown font:" << absoluteFileName;
         return QFont();
     }
 

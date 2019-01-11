@@ -253,7 +253,7 @@ void ThumbnailList::notifySetup( const QVector< Okular::Page * > & pages, int se
         return;
     }
 
-    // show pages containing hilighted text or bookmarked ones
+    // show pages containing highlighted text or bookmarked ones
     //RESTORE THIS int flags = Okular::Settings::filterBookmarks() ? Okular::Page::Bookmark : Okular::Page::Highlight;
 
     // if no page matches filter rule, then display all pages

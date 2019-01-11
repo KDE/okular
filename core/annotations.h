@@ -737,7 +737,7 @@ class OKULARCORE_EXPORT AnnotationProxy
          * Called after an existing @p annotation at a given @p page is modified.
          *
          * Generator can call @p annotation getters to get the new values.
-         * @p appearanceChanged tells if a non-visible property was modifed
+         * @p appearanceChanged tells if a non-visible property was modified
          *
          * @note Only called if supports(Modification) == true
          */

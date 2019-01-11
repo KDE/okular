@@ -210,7 +210,7 @@ void TeXFontDefinition::setDisplayResolution(double _displayResolution_in_dpi)
 }
 
 
-/** mark_as_used marks the font, and all the fonts it referrs to, as
+/** mark_as_used marks the font, and all the fonts it refers to, as
     used, i.e. their FONT_IN_USE-flag is set. */
 
 void TeXFontDefinition::mark_as_used()

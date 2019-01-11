@@ -220,7 +220,7 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
 {
   // Set up the kpsewhich process. If pass == 0, look for vf-fonts and
   // disable automatic font generation as vf-fonts can't be
-  // generated. If pass == 0, ennable font generation, if it was
+  // generated. If pass == 0, enable font generation, if it was
   // enabled globally.
 
   // Now generate the command line for the kpsewhich

@@ -811,7 +811,7 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
             generatePage();
     }
 
-    // check painting rect consistancy
+    // check painting rect consistency
     QRect r = pe->rect().intersected( QRect( QPoint( 0, 0 ), geometry().size() ) );
     if ( r.isNull() )
         return;

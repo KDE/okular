@@ -34,7 +34,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2018-12-23</date>
+		<date>2019-01-14</date>
 		<releaseinfo>1.7 (Applications 19.04)</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
@@ -433,6 +433,43 @@ Context menu actions like Rename Bookmarks etc.)
 				<menuchoice><guimenu>View</guimenu><guimenuitem>Show Forms</guimenuitem></menuchoice>
 				to enter data into the form fields.
 			</para>
+		</sect1>
+		<sect1 id="signatures">
+			<title>Signatures</title>
+			<para>
+				If the current document has signatures a bar
+                will appear above the page view after the document opening. It allows you to open the <guilabel>Signatures</guilabel> panel.
+			</para>
+			<screenshot>
+				<screeninfo>The signatures bar</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="signatures-bar.png" format="PNG" />
+					</imageobject>
+					<textobject>
+						<phrase>The signatures bar</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para>
+				Using the <guilabel>Signatures</guilabel> panel you can inspect the document signature and its certificate.
+			</para>
+			<screenshot>
+				<screeninfo>The signatures panel</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="signatures-panel.png" format="PNG" />
+					</imageobject>
+					<textobject>
+						<phrase>The signatures panel</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<note>
+				<para>
+					This feature is available for &PDF; documents only. You need to install at least version 0.51 of <ulink url="http://poppler.freedesktop.org/">Poppler</ulink> to get most signature information, version 0.68 to get signature location/reason information, and version 0.73 to get signature certificate information.
+				</para>
+			</note>
 		</sect1>
 		<sect1 id="annotations">
 			<title>Annotations</title>

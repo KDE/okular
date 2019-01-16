@@ -165,8 +165,10 @@ void TextDocumentGeneratorPrivate::addMetaData( DocumentInfo::Key key, const QSt
     mDocumentInfo.set( key, value );
 }
 
-void TextDocumentGeneratorPrivate::generateLinkInfos()
+QList<TextDocumentGeneratorPrivate::LinkInfo> TextDocumentGeneratorPrivate::generateLinkInfos() const
 {
+    QList<LinkInfo> result;
+
     for ( int i = 0; i < mLinkPositions.count(); ++i ) {
         const LinkPosition &linkPosition = mLinkPositions[ i ];
 
@@ -177,12 +179,16 @@ void TextDocumentGeneratorPrivate::generateLinkInfos()
                                                   info.boundingRect, info.page );
 
         if ( info.page >= 0 )
-            mLinkInfos.append( info );
+            result.append( info );
     }
+
+    return result;
 }
 
-void TextDocumentGeneratorPrivate::generateAnnotationInfos()
+QList<TextDocumentGeneratorPrivate::AnnotationInfo> TextDocumentGeneratorPrivate::generateAnnotationInfos() const
 {
+    QList<AnnotationInfo> result;
+
     for ( int i = 0; i < mAnnotationPositions.count(); ++i ) {
         const AnnotationPosition &annotationPosition = mAnnotationPositions[ i ];
 
@@ -193,8 +199,10 @@ void TextDocumentGeneratorPrivate::generateAnnotationInfos()
                                                   info.boundingRect, info.page );
 
         if ( info.page >= 0 )
-            mAnnotationInfos.append( info );
+            result.append( info );
     }
+
+    return result;
 }
 
 void TextDocumentGeneratorPrivate::generateTitleInfos()
@@ -310,17 +318,15 @@ Document::OpenResult TextDocumentGenerator::loadDocumentWithPassword( const QStr
     d->mDocument = d->mConverter->document();
 
     d->generateTitleInfos();
-    d->generateLinkInfos();
-    d->generateAnnotationInfos();
+    const QList<TextDocumentGeneratorPrivate::LinkInfo> linkInfos = d->generateLinkInfos();
+    const QList<TextDocumentGeneratorPrivate::AnnotationInfo> annotationInfos = d->generateAnnotationInfos();
 
     pagesVector.resize( d->mDocument->pageCount() );
 
     const QSize size = d->mDocument->pageSize().toSize();
 
     QVector< QLinkedList<Okular::ObjectRect*> > objects( d->mDocument->pageCount() );
-    for ( int i = 0; i < d->mLinkInfos.count(); ++i ) {
-        const TextDocumentGeneratorPrivate::LinkInfo &info = d->mLinkInfos.at( i );
-
+    for ( const TextDocumentGeneratorPrivate::LinkInfo &info : linkInfos ) {
         // in case that the converter report bogus link info data, do not assert here
         if ( info.page >= objects.count() )
           continue;
@@ -331,8 +337,7 @@ Document::OpenResult TextDocumentGenerator::loadDocumentWithPassword( const QStr
     }
 
     QVector< QLinkedList<Okular::Annotation*> > annots( d->mDocument->pageCount() );
-    for ( int i = 0; i < d->mAnnotationInfos.count(); ++i ) {
-        const TextDocumentGeneratorPrivate::AnnotationInfo &info = d->mAnnotationInfos[ i ];
+    for ( const TextDocumentGeneratorPrivate::AnnotationInfo &info : annotationInfos ) {
         annots[ info.page ].append( info.annotation );
     }
 
@@ -360,9 +365,7 @@ bool TextDocumentGenerator::doCloseDocument()
 
     d->mTitlePositions.clear();
     d->mLinkPositions.clear();
-    d->mLinkInfos.clear();
     d->mAnnotationPositions.clear();
-    d->mAnnotationInfos.clear();
     // do not use clear() for the following two, otherwise they change type
     d->mDocumentInfo = Okular::DocumentInfo();
     d->mDocumentSynopsis = Okular::DocumentSynopsis();

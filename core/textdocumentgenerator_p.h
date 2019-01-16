@@ -35,25 +35,25 @@ namespace TextDocumentUtils {
             const QTextBlock endBlock = document->findBlock( endPosition );
             const QRectF endBoundingRect = document->documentLayout()->blockBoundingRect( endBlock );
 
-            QTextLayout *startLayout = startBlock.layout();
-            QTextLayout *endLayout = endBlock.layout();
+            const QTextLayout *startLayout = startBlock.layout();
+            const QTextLayout *endLayout = endBlock.layout();
             if (!startLayout || !endLayout) {
                 qCWarning(OkularCoreDebug) << "Start or end layout not found" << startLayout << endLayout;
                 page = -1;
                 return;
             }
 
-            int startPos = startPosition - startBlock.position();
-            int endPos = endPosition - endBlock.position();
+            const int startPos = startPosition - startBlock.position();
+            const int endPos = endPosition - endBlock.position();
             const QTextLine startLine = startLayout->lineForTextPosition( startPos );
             const QTextLine endLine = endLayout->lineForTextPosition( endPos );
 
-            double x = startBoundingRect.x() + startLine.cursorToX( startPos );
-            double y = startBoundingRect.y() + startLine.y();
-            double r = endBoundingRect.x() + endLine.cursorToX( endPos );
-            double b = endBoundingRect.y() + endLine.y() + endLine.height();
+            const double x = startBoundingRect.x() + startLine.cursorToX( startPos );
+            const double y = startBoundingRect.y() + startLine.y();
+            const double r = endBoundingRect.x() + endLine.cursorToX( endPos );
+            const double b = endBoundingRect.y() + endLine.y() + endLine.height();
 
-            int offset = qRound( y ) % qRound( pageSize.height() );
+            const int offset = qRound( y ) % qRound( pageSize.height() );
 
             if ( x > r ) { // line break, so return a pseudo character on the start line
                 rect = QRectF( x / pageSize.width(), offset / pageSize.height(),
@@ -71,7 +71,7 @@ namespace TextDocumentUtils {
         {
             const QAbstractTextDocumentLayout *layout = document->documentLayout();
             const QSizeF pageSize = document->pageSize();
-            double margin = document->rootFrame()->frameFormat().margin();
+            const double margin = document->rootFrame()->frameFormat().margin();
 
             /**
              * Take the upper left and lower left corner including the margin
@@ -85,8 +85,8 @@ namespace TextDocumentUtils {
             const QSizeF pageSize = document->pageSize();
             const QRectF rect = document->documentLayout()->blockBoundingRect( block );
 
-            int page = qRound( rect.y() ) / qRound( pageSize.height() );
-            int offset = qRound( rect.y() ) % qRound( pageSize.height() );
+            const int page = qRound( rect.y() ) / qRound( pageSize.height() );
+            const int offset = qRound( rect.y() ) % qRound( pageSize.height() );
 
             Okular::DocumentViewport viewport( page );
             viewport.rePos.normalizedX = (double)rect.x() / (double)pageSize.width();
@@ -128,6 +128,20 @@ class TextDocumentGeneratorPrivate : public GeneratorPrivate
 
         void initializeGenerator();
 
+        struct LinkInfo
+        {
+          int page;
+          QRectF boundingRect;
+          Action *link;
+        };
+
+        struct AnnotationInfo
+        {
+          int page;
+          QRectF boundingRect;
+          Annotation *annotation;
+        };
+
         Q_DECLARE_PUBLIC( TextDocumentGenerator )
 
         /* reimp */ QVariant metaData( const QString &key, const QVariant &option ) const override;
@@ -143,8 +157,8 @@ class TextDocumentGeneratorPrivate : public GeneratorPrivate
         void addMetaData( const QString &key, const QString &value, const QString &title );
         void addMetaData( DocumentInfo::Key, const QString &value );
 
-        void generateLinkInfos();
-        void generateAnnotationInfos();
+        QList<LinkInfo> generateLinkInfos() const;
+        QList<AnnotationInfo> generateAnnotationInfos() const;
         void generateTitleInfos();
 
         TextDocumentConverter *mConverter;
@@ -169,14 +183,6 @@ class TextDocumentGeneratorPrivate : public GeneratorPrivate
         };
         QList<LinkPosition> mLinkPositions;
 
-        struct LinkInfo
-        {
-          int page;
-          QRectF boundingRect;
-          Action *link;
-        };
-        QList<LinkInfo> mLinkInfos;
-
         struct AnnotationPosition
         {
           int startPosition;
@@ -184,14 +190,6 @@ class TextDocumentGeneratorPrivate : public GeneratorPrivate
           Annotation *annotation;
         };
         QList<AnnotationPosition> mAnnotationPositions;
-
-        struct AnnotationInfo
-        {
-          int page;
-          QRectF boundingRect;
-          Annotation *annotation;
-        };
-        QList<AnnotationInfo> mAnnotationInfos;
 
         TextDocumentSettings *mGeneralSettings;
 

@@ -22,7 +22,6 @@ import QtQuick 2.1
 import QtQuick.Controls 1.3
 import QtQuick.Controls 2.0 as QQC2
 import org.kde.kirigami 2.0 as Kirigami
-import org.kde.kquickcontrolsaddons 2.0
 import org.kde.okular 2.0 as Okular
 
 

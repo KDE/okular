@@ -40,9 +40,7 @@ public class OpenFileActivity extends QtActivity
         FileClass.openUri(uri.toString());
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void handleViewIntent() {
         final Intent bundleIntent = getIntent();
         if (bundleIntent == null)
             return;

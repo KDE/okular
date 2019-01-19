@@ -17,11 +17,13 @@
  *************************************************************************************/
 
 #include "android.h"
+#include <QtAndroid>
 #include <QAndroidJniObject>
 #include <QAndroidJniEnvironment>
 #include <QStringList>
 #include <QDebug>
 
+URIHandler URIHandler::handler;
 static AndroidInstance* s_instance = nullptr;
 
 void AndroidInstance::openFile(const QString &title, const QStringList &mimes)
@@ -44,6 +46,11 @@ void AndroidInstance::openFile(const QString &title, const QStringList &mimes)
     }
 }
 
+void AndroidInstance::handleViewIntent()
+{
+    QtAndroid::androidActivity().callMethod<void>("handleViewIntent", "()V");
+}
+
 void Java_org_kde_something_FileClass_openUri(JNIEnv *env,
                                                     jobject /*obj*/,
                                                     jstring uri)
@@ -54,7 +61,7 @@ void Java_org_kde_something_FileClass_openUri(JNIEnv *env,
     if (s_instance)
         s_instance->openUri(QUrl(uriString));
     else
-        handler.openUri(uriString);
+        URIHandler::handler.openUri(uriString);
     env->ReleaseStringUTFChars(uri, utf);
 
 }

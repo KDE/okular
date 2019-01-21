@@ -117,6 +117,7 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
     m_view->setModel( m_authorProxy );
 
     m_searchLine = new KTreeViewSearchLine( this, m_view );
+    m_searchLine->setPlaceholderText(i18n( "Search..." ));
     m_searchLine->setCaseSensitivity( Okular::Settings::self()->reviewsSearchCaseSensitive() ? Qt::CaseSensitive : Qt::CaseInsensitive );
     m_searchLine->setRegularExpression( Okular::Settings::self()->reviewsSearchRegularExpression() );
     connect(m_searchLine, &KTreeViewSearchLine::searchOptionsChanged, this, &Reviews::saveSearchOptions);

@@ -17,6 +17,7 @@
 #include <QContextMenuEvent>
 
 #include <klineedit.h>
+#include <KLocalizedString>
 
 // local includes
 #include "ktreeviewsearchline.h"
@@ -34,6 +35,7 @@ TOC::TOC(QWidget *parent, Okular::Document *document) : QWidget(parent), m_docum
 
     m_searchLine = new KTreeViewSearchLine( this );
     mainlay->addWidget( m_searchLine );
+    m_searchLine->setPlaceholderText(i18n( "Search..." ));
     m_searchLine->setCaseSensitivity( Okular::Settings::self()->contentsSearchCaseSensitive() ? Qt::CaseSensitive : Qt::CaseInsensitive );
     m_searchLine->setRegularExpression( Okular::Settings::self()->contentsSearchRegularExpression() );
     connect(m_searchLine, &KTreeViewSearchLine::searchOptionsChanged, this, &TOC::saveSearchOptions);

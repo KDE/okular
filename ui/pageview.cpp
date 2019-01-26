@@ -525,14 +525,14 @@ void PageView::setupViewerActions( KActionCollection * ac )
     d->aTrimMode->setDelayed( false );
     ac->addAction(QStringLiteral("view_trim_mode"), d->aTrimMode );
 
-    d->aTrimMargins  = new KToggleAction( i18n( "&Trim Margins" ), d->aTrimMode->menu() );
+    d->aTrimMargins  = new KToggleAction(QIcon::fromTheme( QStringLiteral("trim-margins") ), i18n( "&Trim Margins" ), d->aTrimMode->menu() );
     d->aTrimMode->addAction( d->aTrimMargins  );
     ac->addAction( QStringLiteral("view_trim_margins"), d->aTrimMargins  );
     d->aTrimMargins->setData( qVariantFromValue( (int)Okular::Settings::EnumTrimMode::Margins ) );
     connect( d->aTrimMargins, &QAction::toggled, this, &PageView::slotTrimMarginsToggled );
     d->aTrimMargins->setChecked( Okular::Settings::trimMargins() );
 
-    d->aTrimToSelection  = new KToggleAction( i18n( "Trim To &Selection" ), d->aTrimMode->menu() );
+    d->aTrimToSelection  = new KToggleAction(QIcon::fromTheme( QStringLiteral("trim-to-selection") ), i18n( "Trim To &Selection" ), d->aTrimMode->menu() );
     d->aTrimMode->addAction( d->aTrimToSelection);
     ac->addAction( QStringLiteral("view_trim_selection"), d->aTrimToSelection);
     d->aTrimToSelection->setData( qVariantFromValue( (int)Okular::Settings::EnumTrimMode::Selection ) );

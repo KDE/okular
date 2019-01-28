@@ -487,3 +487,16 @@ bool SourceRefObjectRect::contains( double x, double y, double xScale, double yS
 {
     return distanceSqr( x, y, xScale, yScale ) < ( pow( 7.0 / xScale, 2 ) + pow( 7.0 / yScale, 2 ) );
 }
+
+/** class NonOwningObjectRect **/
+
+NonOwningObjectRect::NonOwningObjectRect( double left, double top, double right, double bottom, bool ellipse, ObjectType type, void *object )
+ : ObjectRect( left, top, right, bottom, ellipse, type, object )
+{
+}
+
+NonOwningObjectRect::~NonOwningObjectRect()
+{
+    // Set m_object so that ~ObjectRect() doesn't delete it
+    m_object = nullptr;
+}

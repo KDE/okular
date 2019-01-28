@@ -518,6 +518,17 @@ class OKULARCORE_EXPORT SourceRefObjectRect : public ObjectRect
         NormalizedPoint m_point;
 };
 
+/**
+ * This class is an object rect that doesn't own the given pointer, i.e. won't delete it on destruction
+ * @since 1.7
+ */
+class OKULARCORE_EXPORT NonOwningObjectRect : public ObjectRect
+{
+    public:
+        NonOwningObjectRect( double left, double top, double right, double bottom, bool ellipse, ObjectType type, void *object );
+        ~NonOwningObjectRect();
+};
+
 /// @cond PRIVATE
 /** @internal */
 /** @internal */

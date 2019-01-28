@@ -172,14 +172,18 @@ QList<TextDocumentGeneratorPrivate::LinkInfo> TextDocumentGeneratorPrivate::gene
     for ( int i = 0; i < mLinkPositions.count(); ++i ) {
         const LinkPosition &linkPosition = mLinkPositions[ i ];
 
-        LinkInfo info;
-        info.link = linkPosition.link;
+        const QVector<QRectF> rects = TextDocumentUtils::calculateBoundingRects( mDocument, linkPosition.startPosition, linkPosition.endPosition );
 
-        TextDocumentUtils::calculateBoundingRect( mDocument, linkPosition.startPosition, linkPosition.endPosition,
-                                                  info.boundingRect, info.page );
+        for ( int i = 0; i < rects.count(); ++i) {
+            const QRectF &rect = rects[ i ];
 
-        if ( info.page >= 0 )
+            LinkInfo info;
+            info.link = linkPosition.link;
+            info.ownsLink = i == 0;
+            info.page = std::floor( rect.y() );
+            info.boundingRect = QRectF( rect.x(), rect.y() - info.page, rect.width(), rect.height() );
             result.append( info );
+        }
     }
 
     return result;
@@ -332,8 +336,13 @@ Document::OpenResult TextDocumentGenerator::loadDocumentWithPassword( const QStr
           continue;
 
         const QRectF rect = info.boundingRect;
-        objects[ info.page ].append( new Okular::ObjectRect( rect.left(), rect.top(), rect.right(), rect.bottom(), false,
-                                                             Okular::ObjectRect::Action, info.link ) );
+        if ( info.ownsLink ) {
+            objects[ info.page ].append( new Okular::ObjectRect( rect.left(), rect.top(), rect.right(), rect.bottom(), false,
+                                                                 Okular::ObjectRect::Action, info.link ) );
+        } else {
+            objects[ info.page ].append( new Okular::NonOwningObjectRect( rect.left(), rect.top(), rect.right(), rect.bottom(), false,
+                                                                          Okular::ObjectRect::Action, info.link ) );
+        }
     }
 
     QVector< QLinkedList<Okular::Annotation*> > annots( d->mDocument->pageCount() );

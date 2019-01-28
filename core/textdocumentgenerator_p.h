@@ -67,6 +67,66 @@ namespace TextDocumentUtils {
                            (r - x) / pageSize.width(), (b - y) / pageSize.height() );
         }
 
+        static QVector<QRectF> calculateBoundingRects( QTextDocument *document, int startPosition, int endPosition )
+        {
+            QVector<QRectF> result;
+
+            const QSizeF pageSize = document->pageSize();
+
+            const QTextBlock startBlock = document->findBlock( startPosition );
+            const QRectF startBoundingRect = document->documentLayout()->blockBoundingRect( startBlock );
+
+            const QTextBlock endBlock = document->findBlock( endPosition );
+            const QRectF endBoundingRect = document->documentLayout()->blockBoundingRect( endBlock );
+
+            const QTextLayout *startLayout = startBlock.layout();
+            const QTextLayout *endLayout = endBlock.layout();
+            if (!startLayout || !endLayout) {
+                qCWarning(OkularCoreDebug) << "Start or end layout not found" << startLayout << endLayout;
+                return {};
+            }
+
+            const int startPos = startPosition - startBlock.position();
+            const int endPos = endPosition - endBlock.position();
+            const QTextLine startLine = startLayout->lineForTextPosition( startPos );
+            const QTextLine endLine = endLayout->lineForTextPosition( endPos );
+
+            // This only works if both start and end layout are the same
+            if (startLayout == endLayout) {
+                Q_ASSERT( startBoundingRect == endBoundingRect );
+                for (int i = startLine.lineNumber(); i < endLine.lineNumber(); ++i) {
+                    const QTextLine line = startLayout->lineAt( i );
+                    // using startPos and endPos is fine, if the pos is out of bounds for that line, it'll return beginning and end of line respectively
+                    const double x = endBoundingRect.x() + line.cursorToX( startPos );
+                    const double y = endBoundingRect.y() + line.y();
+                    const double r = endBoundingRect.x() + line.cursorToX( endPos );
+                    const double b = endBoundingRect.y() + line.y() + endLine.height();
+
+                    result.append( QRectF( x / pageSize.width(), y / pageSize.height(),
+                                          (r - x) / pageSize.width(), (b - y) / pageSize.height() ) );
+                }
+
+                // The last line
+                const double x = endBoundingRect.x() + endLine.cursorToX( startPos );
+                const double y = endBoundingRect.y() + endLine.y();
+                const double r = endBoundingRect.x() + endLine.cursorToX( endPos );
+                const double b = endBoundingRect.y() + endLine.y() + endLine.height();
+
+                result.append( QRectF( x / pageSize.width(), y / pageSize.height(),
+                                      (r - x) / pageSize.width(), (b - y) / pageSize.height() ) );
+            } else {
+                const double x = startBoundingRect.x() + startLine.cursorToX( startPos );
+                const double y = startBoundingRect.y() + startLine.y();
+                const double r = endBoundingRect.x() + endLine.cursorToX( endPos );
+                const double b = endBoundingRect.y() + endLine.y() + endLine.height();
+
+                result.append( QRectF( x / pageSize.width(), y / pageSize.height(),
+                                  (r - x) / pageSize.width(), (b - y) / pageSize.height() ) );
+            }
+
+            return result;
+        }
+
         static void calculatePositions( QTextDocument *document, int page, int &start, int &end )
         {
             const QAbstractTextDocumentLayout *layout = document->documentLayout();
@@ -133,6 +193,7 @@ class TextDocumentGeneratorPrivate : public GeneratorPrivate
           int page;
           QRectF boundingRect;
           Action *link;
+          bool ownsLink;
         };
 
         struct AnnotationInfo

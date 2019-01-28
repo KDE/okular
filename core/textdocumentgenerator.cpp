@@ -28,6 +28,8 @@
 
 #include "document.h"
 
+#include <cmath>
+
 using namespace Okular;
 
 /**

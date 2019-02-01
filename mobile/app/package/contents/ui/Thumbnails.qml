@@ -41,7 +41,7 @@ ThumbnailsBase {
                 }
             }
         }
-        Kirigami.Label {
+        Label {
             anchors {
                 left: searchField.right
                 verticalCenter: searchField.verticalCenter

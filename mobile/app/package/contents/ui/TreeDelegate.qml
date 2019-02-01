@@ -18,6 +18,7 @@
  */
 
 import QtQuick 2.1
+import QtQuick.Controls 2.0
 import org.kde.kquickcontrolsaddons 2.0
 import org.kde.kirigami 2.0 as Kirigami
 
@@ -45,7 +46,7 @@ Column {
         onClicked: {
             documentItem.currentPage = page-1
 
-            contextDrawer.opened = false
+            contextDrawer.drawerOpen = false
         }
 
         QIconItem {
@@ -56,7 +57,7 @@ Column {
             anchors.verticalCenter: parent.verticalCenter
             x: units.largeSpacing
         }
-        Kirigami.Label {
+        Label {
             id: label
             text: display
             verticalAlignment: Text.AlignBottom
@@ -73,7 +74,7 @@ Column {
                 right: pageNumber.left
             }
         }
-        Kirigami.Label {
+        Label {
             id: pageNumber
             text: pageLabel ? pageLabel : page
             anchors.right: parent.right

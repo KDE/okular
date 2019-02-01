@@ -82,7 +82,7 @@ Kirigami.Page {
                                 bottom: parent.bottom
                                 right: parent.right
                             }
-                            Kirigami.Label {
+                            Label {
                                 text: modelData + 1
                             }
                         }

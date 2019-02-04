@@ -19,7 +19,6 @@
 
 import QtQuick 2.1
 import QtQuick.Controls 2.0
-import org.kde.kquickcontrolsaddons 2.0
 import org.kde.kirigami 2.0 as Kirigami
 
 Column {
@@ -49,13 +48,13 @@ Column {
             contextDrawer.drawerOpen = false
         }
 
-        QIconItem {
+        Kirigami.Icon {
             id: icon
-            icon: decoration
-            width: theme.smallIconSize
+            source: decoration
+            width: Kirigami.Units.iconSizes.small
             height: width
             anchors.verticalCenter: parent.verticalCenter
-            x: units.largeSpacing
+            x: Kirigami.Units.largeSpacing
         }
         Label {
             id: label
@@ -65,7 +64,7 @@ Column {
         }
         //there isn't a sane way to do a dotted line in QML
         Rectangle {
-            color: theme.textColor
+            color: Kirigami.Theme.textColor
             opacity: 0.3
             height: 1
             anchors {
@@ -79,7 +78,7 @@ Column {
             text: pageLabel ? pageLabel : page
             anchors.right: parent.right
             verticalAlignment: Text.AlignBottom
-            anchors.rightMargin: units.largeSpacing
+            anchors.rightMargin: Kirigami.Units.largeSpacing
         }
     }
     Column {

@@ -30,15 +30,16 @@ public:
     }
 
     QString m_lastUrl;
+    static URIHandler handler;
 };
-
-static URIHandler handler;
 
 class AndroidInstance : public QObject
 {
     Q_OBJECT
 public:
     Q_SCRIPTABLE void openFile(const QString &title, const QStringList &mimes);
+
+    static void handleViewIntent();
 
 Q_SIGNALS:
     void openUri(const QUrl &uri);

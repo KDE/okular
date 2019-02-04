@@ -68,7 +68,7 @@ public class OpenFileActivity extends QtActivity
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         Log.v("Okular", "Activity Result: " + String.valueOf(requestCode) + " with code: " + String.valueOf(resultCode));
-        if (intent != null && requestCode == OpenDocumentRequest) {
+        if (resultCode == RESULT_OK && requestCode == OpenDocumentRequest) {
             Uri uri = intent.getData();
             Log.v("Okular", "Opening document: " + uri.toString());
             displayUri(uri);

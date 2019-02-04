@@ -379,7 +379,7 @@ Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink, bool
     {
         case Poppler::Link::None:
         break;
-
+        
         case Poppler::Link::Goto:
         {
             popplerLinkGoto = static_cast<const Poppler::LinkGoto *>(popplerLink);
@@ -523,6 +523,9 @@ Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink, bool
         }
         break;
 #endif
+        
+        case Poppler::Link::OCGState:
+            Q_UNREACHABLE();
     }
 
 #ifdef HAVE_POPPLER_0_64

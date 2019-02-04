@@ -261,6 +261,9 @@ void Manifest::checkPassword( ManifestEntry *entry, const QByteArray &fileData, 
   }
 #else
   m_haveGoodPassword = false;
+  Q_UNUSED(entry);
+  Q_UNUSED(fileData);
+  Q_UNUSED(decryptedData);
 #endif
 }
 
@@ -312,5 +315,6 @@ QByteArray Manifest::decryptFile( const QString &filename, const QByteArray &fil
   KMessageBox::error( 0, i18n("This document is encrypted, but Okular was compiled without crypto support. This document will probably not open.") );
   // this is equivalent to what happened before all this Manifest stuff :-)
   return QByteArray( fileData );
+  Q_UNUSED(filename);
 #endif
 }

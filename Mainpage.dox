@@ -24,7 +24,7 @@ To support a wide range of document formats, Okular was designed in a modular wa
 have the following components:
 
   \li \ref Shell
-  \li \ref Part
+  \li \ref Okular::Part
   \li \ref Okular::Document Class
   \li \ref Okular::Generator
 
@@ -52,8 +52,9 @@ Currently Generators for the following document types are available:
   \li FictionBook Format
   \li Plucker Format
   \li OpenDocument Text Format
-  \li Microsofts CHM Format
-  \li Microsofts XML Document Format
+  \li Microsoft's CHM Format
+  \li Microsoft's XML Document Format
+  \li Markdown Format
 
 Now the questions is how can these various formats be represented in a unified way?
 Okular provides features like rotation, text search and extraction, zooming and many more, so how
@@ -197,14 +198,7 @@ The implementation of the Generator looks like this:
 
 #include "magicgenerator.h"
 
-static KAboutData createAboutData()
-{
-    KAboutData aboutData(...);
-    // fill the about data
-    return aboutData;
-}
-
-OKULAR_EXPORT_PLUGIN(MagicGenerator, createAboutData())
+OKULAR_EXPORT_PLUGIN(MagicGenerator, "libokularGenerator_magic.json")
 
 MagicGenerator::MagicGenerator( QObject *parent, const QVariantList &args )
     : Okular::Generator( parent, args )
@@ -282,44 +276,62 @@ pixmap asynchronously.
 So now you have the code of a working Okular Generator, the next step is to tell Okular about the new plugin.
 Like in other places in KDE that is done by .desktop files, which are installed to the services directory.
 
-Every Generator needs 3 .desktop files:
+Every Generator needs 1 .json, 3 .desktop files, and 1 .xml file:
 
-  \li libokularGenerator_&lt;name&gt;.desktop
+  \li libokularGenerator_&lt;name&gt;.json
   \li okularApplication_&lt;name&gt;.desktop
   \li okular&lt;name&gt;.desktop
+  \li org.kde.mobile.okular_&lt;name&gt;.desktop
+  \li org.kde.okular-&lt;name&gt;.metainfo.xml
 
 where &lt;name&gt; should be the name of the document format. So for our Magic Document Generator we
-create the following 3 files:
+create the following 4 files:
 
-  \li libokularGenerator_magic.desktop
+  \li libokularGenerator_magic.json
   \li okularApplication_magic.desktop
   \li okularMagic.desktop
+  \li org.kde.mobile.okular_magic.desktop
+  \li org.kde.okular-magic.metainfo.xml
 
-with the following content:
+where libokularGenerator_magic.json has the following content something like this
 
 \verbatim
-[Desktop Entry]
-Type=Service
-Name=Magic Document
-Comment=Magic Document backend for okular
-ServiceTypes=okular/Generator
-MimeType=application/x-magic;
-X-KDE-Library=okularGenerator_magic
-X-KDE-Priority=1
-X-KDE-okularAPIVersion=1
-X-KDE-okularHasInternalSettings=false
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "author@hosting.suffix",
+                "Name": "Proud Author",
+            }
+        ],
+        "Copyright": "© 2042 Proud Author",
+        "Id": "okular_magic",
+        "License": "GPL",
+        "MimeTypes": [
+            "text/magic",
+            "text/x-magic"
+        ],
+        "Name": "Magic Backend",
+        "ServiceTypes": [
+            "okular/Generator"
+        ],
+        "Version": "0.1.0"
+    },
+    "X-KDE-Priority": 1,
+    "X-KDE-okularAPIVersion": 1,
+    "X-KDE-okularHasInternalSettings": true
+}
 \endverbatim
 
-The first 6 fields are standard .desktop entries, the fields afterwards have a special meaning to Okular
+The last five fields has the special meaning to Okular
 
   \li <b>ServiceType</b>  Must be 'okular/Generator' for all Okular Generator Plugins
   \li <b>MimeType</b> The mimetype or list of mimetypes of the supported document format(s)
-  \li <b>X-KDE-Library</b> The name of the plugin library
   \li <b>X-KDE-Priority</b> When multiple Generators for the same mimetype exists, the one with the highest priority is used
   \li <b>X-KDE-okularAPIVersion</b> The version of the Generator Plugin API ('1' currently)
   \li <b>X-KDE-okularHasInternalSettings</b> Is 'true' when the Generator provides configuration dialogs
 
-The second .desktop file has the following content:
+The first .desktop file has the following content:
 
 \verbatim
 [Desktop Entry]
@@ -327,54 +339,97 @@ MimeType=application/x-magic;
 Terminal=false
 Name=okular
 GenericName=Document Viewer
-Exec=okular %U %i
+Exec=okular %U
 Icon=okular
 Type=Application
 InitialPreference=7
 Categories=Qt;KDE;Graphics;Viewer;
 NoDisplay=true
+X-KDE-Keywords=Magic
 \endverbatim
 
 You can use the file as it is, you just have to adapt the mimetype. This file is needed to allow Okular
 to handle multiple mimetypes.
 
-The third .desktop file looks like this:
+The second .desktop file looks like this:
 
 \verbatim
 [Desktop Entry]
 Icon=okular
 Name=okular
-ServiceTypes=KParts/ReadOnlyPart
+X-KDE-ServiceTypes=KParts/ReadOnlyPart
 X-KDE-Library=okularpart
 Type=Service
 MimeType=application/x-magic;
 \endverbatim
 
+where
+
+  \li <b>X-KDE-Library</b> The name of the plugin library
+
 You can use the file as it is as well, you just have to adapt the mimetype. This file is needed to allow
 the Okular part to handle multiple mimetypes.
+
+The third .desktop file contains data for the mobile version
+
+\verbatim
+[Desktop Entry]
+MimeType=application/x-magic;
+Name=Reader
+GenericName=Document viewer
+Comment=Viewer for various types of documents
+TryExec=kpackagelauncherqml -a org.kde.mobile.okular
+Exec=kpackagelauncherqml -a org.kde.mobile.okular %u
+Terminal=false
+Icon=okular
+Type=Application
+Categories=Qt;KDE;Graphics;Office;Viewer;
+InitialPreference=2
+NoDisplay=true
+X-KDE-Keywords=Magic
+\endverbatim
+
+And the last .xml file has the following content
+
+\verbatim
+<?xml version="1.0" encoding="utf-8"?>
+<component type="addon">
+  <id>org.kde.okular-md</id>
+  <extends>org.kde.okular.desktop</extends>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-2.0+ and GFDL-1.3</project_license>
+  <name>Magic</name>
+  <summary>Adds support for reading Magic documents</summary>
+  <mimetypes>
+    <mimetype>application/magic</mimetype>
+  </mimetypes>
+  <url type="homepage">https://okular.kde.org</url>
+</component>
+\endverbatim
 
 The last piece you need for a complete Generator is a CMakeLists.txt which compiles and installs the
 Generator. Our CMakeLists.txt looks like the following:
 
 \verbatim
+add_definitions(-DTRANSLATION_DOMAIN="okular_magic")
+
 macro_optional_find_package(Okular)
 
-include_directories( ${OKULAR_INCLUDE_DIR} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} )
+include_directories( ${OKULAR_INCLUDE_DIR} ${KF5_INCLUDE_DIR} ${QT_INCLUDES} )
 
 ########### next target ###############
 
-set( okularGenerator_magic_SRCS generator_magic.cpp )
+set( okularGenerator_magic_PART_SRCS generator_magic.cpp )
 
-kde4_add_plugin( okularGenerator_magic ${okularGenerator_magic_SRCS} )
-
-target_link_libraries( okularGenerator_magic ${OKULAR_LIBRARIES} ${KDE4_KDEUI_LIBS} )
+target_link_libraries( okularGenerator_magic PRIVATE okularcore KF5::I18n KF5::KIOCore )
 
 install( TARGETS okularGenerator_magic DESTINATION ${PLUGIN_INSTALL_DIR} )
 
 ########### install files ###############
 
-install( FILES libokularGenerator_magic.desktop okularMagic.desktop DESTINATION ${SERVICES_INSTALL_DIR} )
-install( FILES okularApplication_magic.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
+install( FILES okularMagic.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
+install( PROGRAMS okularApplication_magic.desktop org.kde.mobile.okular_magic.desktop DESTINATION ${KDE_INSTALL_APPDIR} )
+install( FILES org.kde.okular-magic.metainfo.xml DESTINATION ${KDE_INSTALL_METAINFODIR} )
 \endverbatim
 
 The macro_optional_find_package(Okular) call is required to make the ${OKULAR_INCLUDE_DIR} and ${OKULAR_LIBRARIES}
@@ -676,7 +731,7 @@ class HTMLGenerator : public Okular::Generator
 \endcode
 
 The Generator doesn't support text search and selection, as the code would be quite complex, we'll show
-how to do it in the next chapter \ref okular_generators_textdocument anyway.
+how to do it in the next chapter (not yet written) anyway.
 
 As you can see we have 5 new methods in the class:
 
@@ -693,7 +748,6 @@ Now that you know what the methods are supposed to do, let's take a look at the 
 \code
 #include <QFile>
 #include <QAbstractTextDocumentLayout>
-
 #include <QPrinter>
 
 #include <okular/core/document.h>
@@ -701,14 +755,9 @@ Now that you know what the methods are supposed to do, let's take a look at the 
 
 #include "htmlgenerator.h"
 
-static KAboutData createAboutData()
-{
-    KAboutData aboutData(...);
-    // fill the about data
-    return aboutData;
-}
+#include <KLocalizedString>
 
-OKULAR_EXPORT_PLUGIN(HTMLGenerator, createAboutData())
+OKULAR_EXPORT_PLUGIN(HTMLGenerator, "libokularGenerator_html.json")
 
 HTMLGenerator::HTMLGenerator( QObject *parent, const QVariantList &args )
     : Okular::Generator( parent, args ),

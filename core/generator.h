@@ -205,7 +205,7 @@ class OKULARCORE_EXPORT Generator : public QObject
          */
         enum GeneratorFeature
         {
-            Threaded,
+            Threaded,          ///< Whether the Generator supports asynchronous generation of pictures or text pages
             TextExtraction,    ///< Whether the Generator can extract text from the document in the form of TextPage's
             ReadRawData,       ///< Whether the Generator can read a document directly from its raw data.
             FontInfo,          ///< Whether the Generator can provide information about the fonts used in the document
@@ -379,7 +379,7 @@ class OKULARCORE_EXPORT Generator : public QObject
 
         /**
          * Returns whether the given @p action is allowed in the document.
-         * @see @ref Permission
+         * @see @ref Okular::Permission
          */
         virtual bool isAllowed( Permission action ) const;
 

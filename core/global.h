@@ -12,6 +12,12 @@
 
 #include <QGlobalStatic>
 
+/**
+ * \namespace Okular global.h
+ *
+ * \brief The documentation to the global Okular namespace.
+ */
+
 namespace Okular {
 
 /**

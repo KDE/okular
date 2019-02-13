@@ -197,4 +197,10 @@ void FindBar::closeAndStopSearch()
     close();
 }
 
+void FindBar::startSearch(const QString & findText)
+{
+    m_search->lineEdit()->setText( findText );
+    show();
+}
+
 #include "moc_findbar.cpp"

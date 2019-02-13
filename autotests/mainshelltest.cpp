@@ -19,6 +19,7 @@
 #include "../shell/shell.h"
 #include "../shell/shellutils.h"
 #include "../core/document_p.h"
+#include "../ui/findbar.h"
 #include "../ui/presentationwidget.h"
 #include "../part.h"
 #include "../settings.h"
@@ -39,6 +40,9 @@ public:
     }
     QWidget *presentationWidget(Okular::Part *part) const {
         return part->m_presentationWidget;
+    }
+    FindBar *findWidget(Okular::Part *part) const {
+        return part->m_findBar;
     }
 };
 }
@@ -175,6 +179,7 @@ void MainShellTest::testShell_data()
     QTest::addColumn<uint>("externalProcessExpectedPage");
     QTest::addColumn<bool>("externalProcessExpectPresentation");
     QTest::addColumn<bool>("externalProcessExpectPrintDialog");
+    QTest::addColumn<QString>("externalProcessExpectFind");
 
     const QStringList contentsEpub = QStringList(QStringLiteral(KDESRCDIR "data/contents.epub"));
     const QStringList file1 = QStringList(QStringLiteral(KDESRCDIR "data/file1.pdf"));
@@ -183,31 +188,33 @@ void MainShellTest::testShell_data()
     file1AndToc << QStringLiteral(KDESRCDIR "data/tocreload.pdf");
     const QString tocReload = QStringLiteral(KDESRCDIR "data/tocreload.pdf");
 
-    const QString optionsPage2 = ShellUtils::serializeOptions(false, false, false, false, false, QStringLiteral("2"));
-    const QString optionsPage2Presentation = ShellUtils::serializeOptions(true, false, false, false, false, QStringLiteral("2"));
-    const QString optionsPrint = ShellUtils::serializeOptions(false, true, false, false, false, QString());
-    const QString optionsUnique = ShellUtils::serializeOptions(false, false, false, true, false, QString());
+    const QString optionsPage2 = ShellUtils::serializeOptions(false, false, false, false, false, QStringLiteral("2"), QString());
+    const QString optionsPage2Presentation = ShellUtils::serializeOptions(true, false, false, false, false, QStringLiteral("2"), QString());
+    const QString optionsPrint = ShellUtils::serializeOptions(false, true, false, false, false, QString(), QString());
+    const QString optionsUnique = ShellUtils::serializeOptions(false, false, false, true, false, QString(), QString());
+    const QString optionsFind = ShellUtils::serializeOptions(false, false, false, false ,false , QString(), QStringLiteral("si:next-testing parameters!"));
 
-    QTest::newRow("just show shell") << QStringList() << QString() << false << QString() << 0u << false << false << false << 0u << false << false;
-    QTest::newRow("open file") << file1 << QString() << false << QString() << 0u << false << false << false << 0u << false << false;
-    QTest::newRow("two files no tabs") << file1AndToc << QString() << false << QString() << 0u << false << false << false << 0u << false << false;
-    QTest::newRow("two files with tabs") << file1AndToc << QString() << true << QString() << 0u << false << false << false << 0u << false << false;
-    QTest::newRow("two files sequence no tabs") << file1 << QString() << false << tocReload << 0u << false << false << false << 0u << false << false;
-    QTest::newRow("two files sequence with tabs") << file1 << QString() << true << tocReload << 0u << false << false << false << 0u << false << false;
-    QTest::newRow("open file page number") << contentsEpub << optionsPage2 << false << QString() << 1u << false << false << false << 0u << false << false;
-    QTest::newRow("open file page number and presentation") << contentsEpub << optionsPage2Presentation << false << QString() << 1u << true << false << false << 0u << false << false;
-    QTest::newRow("open file print") << file1 << optionsPrint << false << QString() << 0u << false << true << false << 0u << false << false;
-    QTest::newRow("open two files unique") << file1 << optionsUnique << false << tocReload << 0u << false << false << true << 0u << false << false;
-    QTest::newRow("open two files unique tabs") << file1 << optionsUnique << true << tocReload << 0u << false << false << true << 0u << false << false;
-    QTest::newRow("page number attach tabs") << file1 << QString() << true << contentsEpub[0] << 0u << false << false << false << 2u << false << false;
-    QTest::newRow("presentation attach tabs") << file1 << QString() << true << contentsEpub[0] << 0u << false << false << false << 2u << true << false;
-    QTest::newRow("print attach tabs") << file1 << QString() << true << contentsEpub[0] << 0u << false << true << false << 2u << false << true;
-    QTest::newRow("page number attach unique") << file1 << optionsUnique << false << contentsEpub[0] << 0u << false << false << true << 3u << false << false;
-    QTest::newRow("presentation attach unique") << file1 << optionsUnique << false << contentsEpub[0] << 0u << false << false << true << 2u << true << false;
-    QTest::newRow("print attach unique") << file1 << optionsUnique << false << contentsEpub[0] << 0u << false << false << true << 2u << false << true;
-    QTest::newRow("page number attach unique tabs") << file1 << optionsUnique << true << contentsEpub[0] << 0u << false << false << true << 3u << false << false;
-    QTest::newRow("presentation attach unique tabs") << file1 << optionsUnique << true << contentsEpub[0] << 0u << false << false << true << 2u << true << false;
-    QTest::newRow("print attach unique tabs") << file1 << optionsUnique << true << contentsEpub[0] << 0u << false << false << true << 2u << false << true;
+    QTest::newRow("just show shell") << QStringList() << QString() << false << QString() << 0u << false << false << false << 0u << false << false << QString();
+    QTest::newRow("open file") << file1 << QString() << false << QString() << 0u << false << false << false << 0u << false << false << QString();
+    QTest::newRow("two files no tabs") << file1AndToc << QString() << false << QString() << 0u << false << false << false << 0u << false << false << QString();
+    QTest::newRow("two files with tabs") << file1AndToc << QString() << true << QString() << 0u << false << false << false << 0u << false << false << QString();
+    QTest::newRow("two files sequence no tabs") << file1 << QString() << false << tocReload << 0u << false << false << false << 0u << false << false << QString();
+    QTest::newRow("two files sequence with tabs") << file1 << QString() << true << tocReload << 0u << false << false << false << 0u << false << false << QString();
+    QTest::newRow("open file page number") << contentsEpub << optionsPage2 << false << QString() << 1u << false << false << false << 0u << false << false << QString();
+    QTest::newRow("open file page number and presentation") << contentsEpub << optionsPage2Presentation << false << QString() << 1u << true << false << false << 0u << false << false << QString();
+    QTest::newRow("open file find") << file1 << optionsFind << false << QString() << 0u << false << false << false << 0u << false << false << QString("si:next-testing parameters!"); 
+    QTest::newRow("open file print") << file1 << optionsPrint << false << QString() << 0u << false << true << false << 0u << false << false << QString();
+    QTest::newRow("open two files unique") << file1 << optionsUnique << false << tocReload << 0u << false << false << true << 0u << false << false << QString();
+    QTest::newRow("open two files unique tabs") << file1 << optionsUnique << true << tocReload << 0u << false << false << true << 0u << false << false << QString();
+    QTest::newRow("page number attach tabs") << file1 << QString() << true << contentsEpub[0] << 0u << false << false << false << 2u << false << false << QString();
+    QTest::newRow("presentation attach tabs") << file1 << QString() << true << contentsEpub[0] << 0u << false << false << false << 2u << true << false << QString();
+    QTest::newRow("print attach tabs") << file1 << QString() << true << contentsEpub[0] << 0u << false << true << false << 2u << false << true << QString();
+    QTest::newRow("page number attach unique") << file1 << optionsUnique << false << contentsEpub[0] << 0u << false << false << true << 3u << false << false << QString();
+    QTest::newRow("presentation attach unique") << file1 << optionsUnique << false << contentsEpub[0] << 0u << false << false << true << 2u << true << false << QString();
+    QTest::newRow("print attach unique") << file1 << optionsUnique << false << contentsEpub[0] << 0u << false << false << true << 2u << false << true << QString();
+    QTest::newRow("page number attach unique tabs") << file1 << optionsUnique << true << contentsEpub[0] << 0u << false << false << true << 3u << false << false << QString();
+    QTest::newRow("presentation attach unique tabs") << file1 << optionsUnique << true << contentsEpub[0] << 0u << false << false << true << 2u << true << false << QString();
+    QTest::newRow("print attach unique tabs") << file1 << optionsUnique << true << contentsEpub[0] << 0u << false << false << true << 2u << false << true << QString();
 }
 
 void MainShellTest::testShell()
@@ -223,6 +230,8 @@ void MainShellTest::testShell()
     QFETCH(uint, externalProcessExpectedPage);
     QFETCH(bool, externalProcessExpectPresentation);
     QFETCH(bool, externalProcessExpectPrintDialog);
+    QFETCH(QString, externalProcessExpectFind);
+
 
     QScopedPointer<ClosePrintDialogHelper> helper;
 
@@ -246,6 +255,11 @@ void MainShellTest::testShell()
         QVERIFY(part);
         QCOMPARE(part->url().url(), QStringLiteral("file://%1").arg(paths[0]));
         QCOMPARE(partDocument(part)->currentPage(), expectedPage);
+        // Testing if the bar is shown or hidden as expected
+        QCOMPARE(findWidget(part)->isHidden(), externalProcessExpectFind.isEmpty());
+        // Checking if the encryption/decryption worked
+        QCOMPARE(externalProcessExpectFind, ShellUtils::find(serializedOptions));
+
     }
     else if (paths.count() == 2)
     {
@@ -405,9 +419,9 @@ void MainShellTest::testFileRemembersPagePosition()
     const QStringList paths = QStringList(QStringLiteral(KDESRCDIR "data/contents.epub"));
     QString serializedOptions;
     if (mode == 1 || mode == 3)
-        serializedOptions = ShellUtils::serializeOptions(false, false, false, false, false, QString());
+        serializedOptions = ShellUtils::serializeOptions(false, false, false, false, false, QString(), QString());
     else
-        serializedOptions = ShellUtils::serializeOptions(false, false, false, true, false, QString());
+        serializedOptions = ShellUtils::serializeOptions(false, false, false, true, false, QString(), QString());
 
     Okular::Settings::self()->setShellOpenFileInTabs(mode == 3);
 
@@ -458,10 +472,11 @@ void MainShellTest::test2FilesError_data()
 {
     QTest::addColumn<QString>("serializedOptions");
 
-    QTest::newRow("startInPresentation") << ShellUtils::serializeOptions(true, false, false, false, false, QString());
-    QTest::newRow("showPrintDialog") << ShellUtils::serializeOptions(false, true, false, false, false, QString());
-    QTest::newRow("unique") << ShellUtils::serializeOptions(false, false, false, true, false, QString());
-    QTest::newRow("pageNumger") << ShellUtils::serializeOptions(false, false, false, false, false, QStringLiteral("3"));
+    QTest::newRow("startInPresentation") << ShellUtils::serializeOptions(true, false, false, false, false, QString(), QString());
+    QTest::newRow("showPrintDialog") << ShellUtils::serializeOptions(false, true, false, false, false, QString(), QString());
+    QTest::newRow("unique") << ShellUtils::serializeOptions(false, false, false, true, false, QString(), QString());
+    QTest::newRow("pageNumber") << ShellUtils::serializeOptions(false, false, false, false, false, QStringLiteral("3"), QString());
+    QTest::newRow("find") << ShellUtils::serializeOptions(false, false, false, false, false, QString(), QStringLiteral("silly"));
 }
 
 void MainShellTest::test2FilesError()
@@ -488,7 +503,7 @@ void MainShellTest::testSessionRestore_data()
     QStringList twoDocPaths( oneDocPaths );
     twoDocPaths << QStringLiteral(KDESRCDIR "data/formSamples.pdf");
 
-    const QString options = ShellUtils::serializeOptions(false, false, false, false, false, QString());
+    const QString options = ShellUtils::serializeOptions(false, false, false, false, false, QString(), QString());
 
     QTest::newRow("1 doc, 1 window, tabs")      << oneDocPaths << options << true  << true;
     QTest::newRow("2 docs, 1 window, tabs")     << twoDocPaths << options << true  << true;

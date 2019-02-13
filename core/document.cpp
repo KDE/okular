@@ -3773,7 +3773,7 @@ void Document::searchText( int searchID, const QString & text, bool fromStart, Q
                                SearchType type, bool moveViewport, const QColor & color )
 {
     d->m_searchCancelled = false;
-
+    
     // safety checks: don't perform searches on empty or unsearchable docs
     if ( !d->m_generator || !d->m_generator->hasFeature( Generator::TextExtraction ) || d->m_pagesVector.isEmpty() )
     {

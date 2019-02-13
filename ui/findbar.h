@@ -33,6 +33,7 @@ class FindBar
 
         void focusAndSetCursor();
         bool maybeHide();
+        void startSearch(const QString & findText);
 
     Q_SIGNALS:
         void forwardKeyPressEvent( QKeyEvent* );

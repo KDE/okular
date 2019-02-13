@@ -1634,6 +1634,14 @@ bool Part::openFile()
         if ( keepFileOpen() )
             m_keeper->open( fileNameToOpen );
 #endif
+
+        // Tries to find the text passed from terminal after the file is open
+        if(!m_textToFindOnOpen.isEmpty())
+        {
+            m_findBar->startSearch(m_textToFindOnOpen);
+            m_textToFindOnOpen = QString();
+        }
+        
     }
     if ( m_exportAsText ) m_exportAsText->setEnabled( ok && m_document->canExportToText() );
     if ( m_exportAs ) m_exportAs->setEnabled( ok );
@@ -1757,7 +1765,7 @@ bool Part::openUrl( const QUrl &_url, bool swapInsteadOfOpening )
         resetStartArguments();
         KMessageBox::error( widget(), i18n("Could not open %1", url.toDisplayString() ) );
     }
-
+    
     return openOk;
 }
 
@@ -3656,6 +3664,11 @@ void Part::setReadWrite(bool readwrite)
 {
     m_document->setAnnotationEditingEnabled( readwrite );
     ReadWritePart::setReadWrite( readwrite );
+}
+
+void Part::enableStartWithFind(const QString &text)
+{
+    m_textToFindOnOpen = QString(text);
 }
 
 } // namespace Okular

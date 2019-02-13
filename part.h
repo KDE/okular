@@ -169,6 +169,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         Q_SCRIPTABLE Q_NOREPLY void reload();
         Q_SCRIPTABLE Q_NOREPLY void enableStartWithPrint();
         Q_SCRIPTABLE Q_NOREPLY void enableExitAfterPrint();
+        Q_SCRIPTABLE Q_NOREPLY void enableStartWithFind(const QString &text);
 
     Q_SIGNALS:
         void enablePrintAction(bool enable);
@@ -411,6 +412,9 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         QTimer *m_infoTimer;
 
         QString m_registerDbusName;
+
+        // String to search in document startup
+        QString m_textToFindOnOpen;
 
     private Q_SLOTS:
         void slotAnnotationPreferences();

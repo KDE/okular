@@ -149,6 +149,12 @@ Status main(const QStringList &paths, const QString &serializedOptions)
         return Error;
     }
 
+    if(!ShellUtils::find(serializedOptions).isEmpty() && paths.count() > 1)
+    {
+        QTextStream stream(stderr);
+        stream << i18n( "Error: Can't open more than one document with the --find switch" ) << endl;
+        return Error;
+    }
     // try to attach to existing session, unique or not
     if (attachUniqueInstance(paths, serializedOptions) || attachExistingInstance(paths, serializedOptions))
     {
@@ -181,7 +187,7 @@ Status main(const QStringList &paths, const QString &serializedOptions)
             shell->show();
         }
     }
-
+    
     return Success;
 }
 

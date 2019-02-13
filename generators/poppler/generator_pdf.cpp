@@ -2022,7 +2022,7 @@ bool PDFGenerator::save( const QString &fileName, SaveOptions options, QString *
 {
     Q_UNUSED(errorText);
     Poppler::PDFConverter *pdfConv = pdfdoc->pdfConverter();
-
+    
     pdfConv->setOutputFileName( fileName );
     if ( options & SaveChanges )
         pdfConv->setPDFOptions( pdfConv->pdfOptions() | Poppler::PDFConverter::WithChanges );

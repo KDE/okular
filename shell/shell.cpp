@@ -681,12 +681,15 @@ void Shell::openNewTab( const QUrl& url, const QString &serializedOptions )
 void Shell::applyOptionsToPart( QObject* part, const QString &serializedOptions )
 {
     KDocumentViewer* const doc = qobject_cast<KDocumentViewer*>(part);
+    const QString find = ShellUtils::find(serializedOptions);
     if ( ShellUtils::startInPresentation(serializedOptions) )
         doc->startPresentation();
     if ( ShellUtils::showPrintDialog(serializedOptions) )
         QMetaObject::invokeMethod( part, "enableStartWithPrint" );
     if ( ShellUtils::showPrintDialogAndExit(serializedOptions) )
         QMetaObject::invokeMethod( part, "enableExitAfterPrint" );
+    if(!find.isEmpty())
+        QMetaObject::invokeMethod( part, "enableStartWithFind", Q_ARG( const QString &, find ));
 }
 
 void Shell::connectPart( QObject* part )

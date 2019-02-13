@@ -14,6 +14,7 @@
 #include <qtabwidget.h>
 #include <QStandardPaths>
 #include <kconfiggroup.h>
+#include <klineedit.h>
 
 #include "../shell/okular_main.h"
 #include "../shell/shell.h"
@@ -257,6 +258,7 @@ void MainShellTest::testShell()
         QCOMPARE(partDocument(part)->currentPage(), expectedPage);
         // Testing if the bar is shown or hidden as expected
         QCOMPARE(findWidget(part)->isHidden(), externalProcessExpectFind.isEmpty());
+        QCOMPARE(findWidget(part)->findChild<KLineEdit*>()->text(), externalProcessExpectFind);
         // Checking if the encryption/decryption worked
         QCOMPARE(externalProcessExpectFind, ShellUtils::find(serializedOptions));
 

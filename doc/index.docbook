@@ -34,7 +34,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2019-01-14</date>
+		<date>2019-02-14</date>
 		<releaseinfo>1.7 (Applications 19.04)</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
@@ -966,22 +966,27 @@ Context menu actions like Rename Bookmarks etc.)
 				<term><userinput><command>okular</command>
 				<option>--print</option></userinput></term>
 				<listitem><para>Start with print dialog.</para></listitem>
-			    </varlistentry>
-                            <varlistentry>
+				</varlistentry>
+                <varlistentry>
 				<term><userinput><command>okular</command>
 				<option>--print-and-exit</option></userinput></term>
 				<listitem><para>Start with print dialog and exit after printing.</para></listitem>
-			    </varlistentry>
+				</varlistentry>
 			    <varlistentry>
 				<term><userinput><command>okular</command>
 				<option>--unique</option></userinput></term>
 				<listitem><para>Unique instance control.</para></listitem>
-			    </varlistentry>
-			    <varlistentry>
+				</varlistentry>
+				<varlistentry>
 				<term><userinput><command>okular</command>
 				<option>--noraise</option></userinput></term>
 				<listitem><para>Allows to prevent &okular; window raising after the start.</para></listitem>
-                            </varlistentry>
+				</varlistentry>
+                <varlistentry>
+				<term><userinput><command>okular</command>
+				<option>--find <replaceable>string</replaceable></option></userinput></term>
+				<listitem><para>Tries to find and highlight a given string in the document. Only works if just one document is given as an argument of the <userinput><command>okular</command></userinput> command.</para></listitem>
+				</varlistentry>
 			</variablelist>
 		    </sect2>
 		</sect1>

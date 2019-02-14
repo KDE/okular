@@ -10,8 +10,8 @@
 <author><firstname>Yuri</firstname><surname>Chornoivan</surname>
 <contrib>Okular man page.</contrib>
 <email>yurchor@ukr.net</email></author>
-<date>2018-02-03</date>
-<releaseinfo>Okular 1.4</releaseinfo>
+<date>2019-02-14</date>
+<releaseinfo>Okular 1.7</releaseinfo>
 <productname>KDE Applications</productname>
 </refentryinfo>
 
@@ -76,6 +76,12 @@ is aimed to show documents in different formats.</para>
     <term><option>--noraise</option></term>
   <listitem>
 <para>Allows to prevent Okular window raising after the start.</para>
+  </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><option>--find <replaceable>string</replaceable></option></term>
+  <listitem>
+<para>Find a string on the text.</para>
   </listitem>
   </varlistentry>
 </variablelist>

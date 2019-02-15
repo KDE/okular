@@ -20,7 +20,7 @@ set(okular_SRCS
     okularsingleton.cpp
     )
 
-kconfig_add_kcfg_files(okular_SRCS ${CMAKE_SOURCE_DIR}/conf/settings.kcfgc )
+kconfig_add_kcfg_files(okular_SRCS ${CMAKE_SOURCE_DIR}/conf/settings_mobile.kcfgc)
 
 add_library(okularplugin SHARED ${okular_SRCS})
 set_target_properties(okularplugin PROPERTIES COMPILE_DEFINITIONS "okularpart_EXPORTS")

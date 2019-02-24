@@ -2399,7 +2399,7 @@ Context menu actions like Rename Bookmarks etc.)
 						This is the case when the document has references to the various points (usually row and column number) of sources it was generated from. The &DVI; format supports natively the addition of the information about the sources the LaTeX document was generated from. A similar system exists for &PDF; documents, called <acronym>pdfsync</acronym>, which stores these extra information in an external file named after the &PDF; file itself (for example <filename>mydocument.pdfsync</filename> for <filename>mydocument.pdf</filename>).
 						</para>
 						<para>
-						  &okular; ships with preconfigured settings for the following editors: <ulink url="http://kate-editor.org/">&kate;</ulink>, <ulink url="http://kile.sourceforge.net/">Kile</ulink>, <ulink url="http://www.scintilla.org/SciTE.html">SciTE</ulink>, <ulink url="http://www.gnu.org/software/emacs/">&Emacs; client</ulink>, and <ulink url="http://www.lyx.org/">LyX client</ulink>.
+						  &okular; ships with preconfigured settings for the following editors: <ulink url="https://kate-editor.org/">&kate;</ulink>, <ulink url="https://kile.sourceforge.io/">Kile</ulink>, <ulink url="https://www.scintilla.org/SciTE.html">SciTE</ulink>, <ulink url="https://www.gnu.org/software/emacs/">&Emacs; client</ulink>, <ulink url="https://www.lyx.org/">LyX client</ulink>, and <ulink url="https://www.texstudio.org/">TeXstudio</ulink>.
 						</para>
 						<note>
 						  <para>

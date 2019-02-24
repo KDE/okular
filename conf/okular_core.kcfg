@@ -73,6 +73,7 @@
     <choice name="Scite" />
     <choice name="Emacsclient" />
     <choice name="Lyxclient" />
+    <choice name="Texstudio" />
    </choices>
   </entry>
   <entry key="ExternalEditorCommand" type="String">

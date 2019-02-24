@@ -31,6 +31,8 @@ static inline QHash< int, QString > buildEditorsMap()
         QStringLiteral( "emacsclient -a emacs --no-wait +%l %f" ) );
     editors.insert( SettingsCore::EnumExternalEditor::Lyxclient,
         QStringLiteral( "lyxclient -g %f %l" ) );
+    editors.insert( SettingsCore::EnumExternalEditor::Texstudio,
+        QStringLiteral( "texstudio --line %l" ) );
     return editors;
 }
 

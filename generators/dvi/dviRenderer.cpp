@@ -280,7 +280,7 @@ void dviRenderer::showThatSourceInformationIsPresent()
 
     QWidget *topcontents = new QWidget (&dialog);
     QVBoxLayout *topcontentsVBoxLayout = new QVBoxLayout(topcontents);
-    topcontentsVBoxLayout->setMargin(0);
+    topcontentsVBoxLayout->setContentsMargins(0, 0, 0, 0);
     topcontentsVBoxLayout->setSpacing(KDialog::spacingHint()*2);
     topcontentsVBoxLayout->setMargin(KDialog::marginHint()*2);
 

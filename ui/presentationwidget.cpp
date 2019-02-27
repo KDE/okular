@@ -172,7 +172,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     m_topBar = new PresentationToolBar( this );
     m_topBar->setObjectName( QStringLiteral( "presentationBar" ) );
     m_topBar->setMovable( false );
-    m_topBar->layout()->setMargin(0);
+    m_topBar->layout()->setContentsMargins(0, 0, 0, 0);
     m_topBar->addAction( QIcon::fromTheme( layoutDirection() == Qt::RightToLeft ? QStringLiteral("go-next") : QStringLiteral("go-previous") ), i18n( "Previous Page" ), this, SLOT(slotPrevPage()) );
     m_pagesEdit = new KLineEdit( m_topBar );
     QSizePolicy sp = m_pagesEdit->sizePolicy();
@@ -238,7 +238,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     // change topbar background color
     QPalette p = m_topBar->palette();
     p.setColor( QPalette::Active, QPalette::Button, Qt::gray );
-    p.setColor( QPalette::Active, QPalette::Background, Qt::darkGray );
+    p.setColor( QPalette::Active, QPalette::Window, Qt::darkGray );
     m_topBar->setPalette( p );
 
     // Grab swipe gestures to change pages

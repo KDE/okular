@@ -1336,7 +1336,7 @@ void Part::setFileToWatch( const QString &filePath )
 
     if ( fi.isSymLink() )
     {
-        m_watchedFileSymlinkTarget = fi.readLink();
+        m_watchedFileSymlinkTarget = fi.symLinkTarget();
         m_watcher->addFile( m_watchedFileSymlinkTarget );
     }
     else
@@ -1981,9 +1981,9 @@ void Part::slotFileDirty( const QString& path )
                 m_dirtyHandler->start( 750 );
             }
         }
-        else if ( fi.isSymLink() && fi.readLink() == path )
+        else if ( fi.isSymLink() && fi.symLinkTarget() == path )
         {
-            if ( QFile::exists( fi.readLink() ))
+            if ( QFile::exists( fi.symLinkTarget() ))
                 m_dirtyHandler->start( 750 );
             else
                 m_fileWasRemoved = true;

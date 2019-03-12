@@ -626,7 +626,7 @@ static void preprocessXpsGradients( QList<XpsGradient> &gradients )
         return;
 
     // sort the gradients (case 1.)
-    qStableSort( gradients.begin(), gradients.end(), xpsGradientLessThan );
+    std::stable_sort( gradients.begin(), gradients.end(), xpsGradientLessThan );
 
     // no gradient with stop 0.0 (case 2.)
     if ( xpsGradientWithOffset( gradients, 0.0 ) == -1 ) {

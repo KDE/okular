@@ -471,7 +471,7 @@ void TilesManager::cleanupPixmapMemory( qulonglong numberOfBytes, const Normaliz
     {
         d->rankTiles( d->tiles[ i ], rankedTiles, visibleRect, visiblePageNumber );
     }
-    qSort( rankedTiles.begin(), rankedTiles.end(), rankedTilesLessThan );
+    std::sort(rankedTiles.begin(), rankedTiles.end(), rankedTilesLessThan);
 
     while ( numberOfBytes > 0 && !rankedTiles.isEmpty() )
     {

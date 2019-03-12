@@ -905,7 +905,7 @@ QString PageViewPrivate::selectedText() const
 
     QString text;
     QList< int > selpages = pagesWithTextSelection.toList();
-    qSort( selpages );
+    std::sort(selpages.begin(), selpages.end());
     const Okular::Page * pg = nullptr;
     if ( selpages.count() == 1 )
     {
@@ -2435,7 +2435,7 @@ void PageView::mousePressEvent( QMouseEvent * e )
                                 col += tsp.rectInSelection.left; // at this point, it's normalised within the whole table
 
                                 d->tableSelectionCols.append(col);
-                                qSort(d->tableSelectionCols);
+                                std::sort(d->tableSelectionCols.begin(), d->tableSelectionCols.end());
                             }
                         } else {
                             bool deleted=false;
@@ -2456,7 +2456,7 @@ void PageView::mousePressEvent( QMouseEvent * e )
                                 row += tsp.rectInSelection.top; // at this point, it's normalised within the whole table
 
                                 d->tableSelectionRows.append(row);
-                                qSort(d->tableSelectionRows);
+                                std::sort(d->tableSelectionRows.begin(), d->tableSelectionRows.end());
                             }
                         }
                     }
@@ -3207,8 +3207,8 @@ void PageView::guessTableDividers()
 
     int tally = 0;
 
-    qSort( colSelectionTicks );
-    qSort( rowSelectionTicks );
+    std::sort(colSelectionTicks.begin(), colSelectionTicks.end());
+    std::sort(rowSelectionTicks.begin(), rowSelectionTicks.end());
 
     for (int i = 0; i < colSelectionTicks.length(); ++i)
     {
@@ -3231,8 +3231,8 @@ void PageView::guessTableDividers()
     }
     Q_ASSERT( tally == 0 );
 
-    qSort( colTicks );
-    qSort( rowTicks );
+    std::sort(colTicks.begin(), colTicks.end());
+    std::sort(rowTicks.begin(), rowTicks.end());
 
     for (int i = 0; i < colTicks.length(); ++i)
     {
@@ -3991,7 +3991,7 @@ void PageView::updateZoom( ZoomMode newZoomMode )
             qCopy(kZoomValues, kZoomValues + 13, zoomValue.begin());
             zoomValue[13] = zoomFactorFitWidth;
             zoomValue[14] = zoomFactorFitPage;
-            qSort(zoomValue.begin(), zoomValue.end());
+            std::sort(zoomValue.begin(), zoomValue.end());
             QVector<float>::iterator i;
             if ( newZoomMode == ZoomOut )
             {

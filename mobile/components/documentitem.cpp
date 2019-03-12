@@ -144,7 +144,7 @@ QVariantList DocumentItem::bookmarkedPages() const
         pages << viewport.pageNumber;
     }
     list = pages.toList();
-    qSort(list);
+    std::sort(list.begin(), list.end());
 
     QVariantList variantList;
     foreach (const int page, list) {

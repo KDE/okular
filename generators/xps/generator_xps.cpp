@@ -507,7 +507,7 @@ static QByteArray readFileOrDirectoryParts( const KArchiveEntry *entry, QString 
     if ( entry->isDirectory() ) {
         const KArchiveDirectory* relDir = static_cast<const KArchiveDirectory *>( entry );
         QStringList entries = relDir->entries();
-        qSort( entries );
+        std::sort(entries.begin(), entries.end());
         Q_FOREACH ( const QString &entry, entries ) {
             const KArchiveEntry* relSubEntry = relDir->entry( entry );
             if ( !relSubEntry->isFile() )
@@ -552,7 +552,7 @@ static const KArchiveEntry* loadEntry( KZip *archive, const QString &fileName, Q
     if ( newEntry->isDirectory() ) {
         const KArchiveDirectory* relDir = static_cast< const KArchiveDirectory * >( newEntry );
         QStringList relEntries = relDir->entries();
-        qSort( relEntries );
+        std::sort(relEntries.begin(), relEntries.end());
         Q_FOREACH ( const QString &relEntry, relEntries ) {
             if ( relEntry.compare( entryName, Qt::CaseInsensitive ) == 0 ) {
                 return relDir->entry( relEntry );

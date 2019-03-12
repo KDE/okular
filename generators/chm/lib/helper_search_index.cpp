@@ -380,7 +380,7 @@ QList< QUrl > Index::query(const QStringList &terms, const QStringList &termSeq,
 	if ( !termList.count() )
 		return QList< QUrl >();
 	
-	qSort( termList );
+	std::sort(termList.begin(), termList.end());
 
 	QVector<Document> minDocs = termList.takeFirst().documents;
 	for(QList<Term>::Iterator it = termList.begin(); it != termList.end(); ++it) {
@@ -403,7 +403,7 @@ QList< QUrl > Index::query(const QStringList &terms, const QStringList &termSeq,
 	}
 
 	QList< QUrl > results;
-	qSort( minDocs );
+	std::sort(minDocs.begin(), minDocs.end());
 	if ( termSeq.isEmpty() ) {
 		for(QVector<Document>::Iterator it = minDocs.begin(); it != minDocs.end(); ++it)
 			results << docList.at((int)(*it).docNumber);

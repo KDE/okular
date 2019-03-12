@@ -1295,7 +1295,7 @@ QList< QPair<WordsWithCharacters, QRect> > makeAndSortLines(const WordsWithChara
     QList<WordWithCharacters> words = wordsTmp;
 
     // Step 1
-    qSort(words.begin(),words.end(),compareTinyTextEntityY);
+    std::sort(words.begin(),words.end(), compareTinyTextEntityY);
 
     // Step 2
     QList<WordWithCharacters>::Iterator it = words.begin(), itEnd = words.end();
@@ -1358,7 +1358,7 @@ QList< QPair<WordsWithCharacters, QRect> > makeAndSortLines(const WordsWithChara
     for(int i = 0 ; i < lines.length() ; i++)
     {
         WordsWithCharacters &list = lines[i].first;
-        qSort(list.begin(), list.end(), compareTinyTextEntityX);
+        std::sort(list.begin(), list.end(), compareTinyTextEntityX);
     }
     
     return lines;

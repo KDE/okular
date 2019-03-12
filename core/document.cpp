@@ -4569,7 +4569,7 @@ QStringList Document::supportedMimeTypes() const
 
         // Sorting by mimetype name doesn't make a ton of sense,
         // but ensures that the list is ordered the same way every time
-        qSort(result);
+        std::sort(result.begin(), result.end());
 
         d->m_supportedMimeTypes = result;
     }

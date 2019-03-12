@@ -163,7 +163,7 @@ bool Document::processArchive() {
 
 void Document::pages( QVector<Okular::Page*> * pagesVector )
 {
-    qSort( mEntries.begin(), mEntries.end(), caseSensitiveNaturalOrderLessThen );
+    std::sort(mEntries.begin(), mEntries.end(), caseSensitiveNaturalOrderLessThen);
     QScopedPointer< QIODevice > dev;
 
     int count = 0;

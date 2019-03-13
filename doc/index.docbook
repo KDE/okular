@@ -34,7 +34,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2019-02-14</date>
+		<date>2019-03-13</date>
 		<releaseinfo>1.7 (Applications 19.04)</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
@@ -2277,6 +2277,23 @@ Context menu actions like Rename Bookmarks etc.)
 					<term><guilabel>Loop after last page</guilabel></term>
 					<listitem>
 						<para>When navigating on presentation mode and going past the last page the first page will appear.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term><guilabel>Touch navigation</guilabel></term>
+					<listitem>
+						<para>Allows you to fine-tune touchscreen navigation with tapping in the presentation using the following three possible values:</para>
+                        <itemizedlist>
+							<listitem>
+								<para><guilabel>Tap left/right side to go back/forward</guilabel>: Tapping on the left (right) half of the screen makes the presentation go to the previous (next) slide.</para>
+							</listitem>
+							<listitem>
+								<para><guilabel>Tap anywhere to go forward</guilabel> (default): Tapping on the screen makes the presentation go to the next slide, no matter where the screen is being tapped.</para>
+							</listitem>
+							<listitem>
+								<para><guilabel>Disabled</guilabel>: Screen tapping does not do anything.</para>
+							</listitem>
+						</itemizedlist>
 					</listitem>
 				</varlistentry>
 				<varlistentry>

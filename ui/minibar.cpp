@@ -412,7 +412,7 @@ void ProgressWidget::paintEvent( QPaintEvent * e )
         p.fillRect( fRect, pal.color( QPalette::Active, QPalette::Highlight ) );
     if ( l && l != w  )
     {
-        p.setPen( pal.color( QPalette::Active, QPalette::Highlight ).dark( 120 ) );
+        p.setPen( pal.color( QPalette::Active, QPalette::Highlight ).darker( 120 ) );
         int delta = QApplication::isRightToLeft() ? w - l : l;
         p.drawLine( delta, 0, delta, h );
     }
@@ -540,7 +540,7 @@ void PagesEdit::updatePalette()
     if ( hasFocus() )
         pal.setColor( QPalette::Active, QPalette::Base, QApplication::palette().color( QPalette::Active, QPalette::Base ) );
     else
-        pal.setColor( QPalette::Base, QApplication::palette().color( QPalette::Base ).dark( 102 ) );
+        pal.setColor( QPalette::Base, QApplication::palette().color( QPalette::Base ).darker( 102 ) );
 
     setPalette( pal );
 }

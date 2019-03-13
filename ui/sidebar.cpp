@@ -150,7 +150,7 @@ void SidebarDelegate::paint( QPainter *painter, const QStyleOptionViewItem &opti
     }
     else if ( option.state & QStyle::State_MouseOver )
     {
-        backBrush = m_selectionBackground->brush(option.palette).color().light( 115 );
+        backBrush = m_selectionBackground->brush(option.palette).color().lighter( 115 );
         foreColor = m_windowForeground->brush(option.palette).color();
         hover = true;
     }
@@ -167,7 +167,7 @@ void SidebarDelegate::paint( QPainter *painter, const QStyleOptionViewItem &opti
     {
         Qt::BrushStyle bs = opt.backgroundBrush.style();
         if ( bs > Qt::NoBrush && bs < Qt::TexturePattern )
-            opt.backgroundBrush = opt.backgroundBrush.color().light( 115 );
+            opt.backgroundBrush = opt.backgroundBrush.color().lighter( 115 );
         else
             opt.backgroundBrush = backBrush;
     }

@@ -1740,7 +1740,7 @@ void PageView::paintEvent(QPaintEvent *pe)
                                     (blendRect.left() - contentsRect.left()) * devicePixelRatioF(), (blendRect.top() - contentsRect.top()) * devicePixelRatioF(),
                                     blendRect.width() * devicePixelRatioF(), blendRect.height() * devicePixelRatioF() );
 
-                        QColor blCol = selBlendColor.dark( 140 );
+                        QColor blCol = selBlendColor.darker( 140 );
                         blCol.setAlphaF( 0.2 );
                         p.fillRect( blendedPixmap.rect(), blCol );
                         p.end();
@@ -1772,7 +1772,7 @@ void PageView::paintEvent(QPaintEvent *pe)
                                         (blendRect.left() - contentsRect.left()) * devicePixelRatioF(), (blendRect.top() - contentsRect.top()) * devicePixelRatioF(),
                                         blendRect.width() * devicePixelRatioF(), blendRect.height() * devicePixelRatioF() );
 
-                            QColor blCol = d->mouseSelectionColor.dark( 140 );
+                            QColor blCol = d->mouseSelectionColor.darker( 140 );
                             blCol.setAlphaF( 0.2 );
                             p.fillRect( blendedPixmap.rect(), blCol );
                             p.end();
@@ -1810,7 +1810,7 @@ void PageView::paintEvent(QPaintEvent *pe)
                 if ( !selectionRect.isNull() && selectionRect.intersects( contentsRect ) &&
                     !selectionRectInternal.contains( contentsRect ) )
                 {
-                    screenPainter.setPen( palette().color( QPalette::Active, QPalette::Highlight ).dark(110) );
+                    screenPainter.setPen( palette().color( QPalette::Active, QPalette::Highlight ).darker(110) );
                     screenPainter.drawRect( selectionRect );
                 }
                 // 2b) Layer 1b: paint opaque selection (table)
@@ -1822,7 +1822,7 @@ void PageView::paintEvent(QPaintEvent *pe)
                     if ( !selectionPartRect.isNull() && selectionPartRect.intersects( contentsRect ) &&
                         !selectionPartRectInternal.contains( contentsRect ) )
                     {
-                        screenPainter.setPen( palette().color( QPalette::Active, QPalette::Highlight ).dark(110) );
+                        screenPainter.setPen( palette().color( QPalette::Active, QPalette::Highlight ).darker(110) );
                         screenPainter.drawRect( selectionPartRect );
                     }
                 }
@@ -1846,7 +1846,7 @@ void PageView::paintEvent(QPaintEvent *pe)
 void PageView::drawTableDividers(QPainter * screenPainter)
 {
         if (!d->tableSelectionParts.isEmpty()) {
-            screenPainter->setPen( d->mouseSelectionColor.dark() );
+            screenPainter->setPen( d->mouseSelectionColor.darker() );
             if (d->tableDividersGuessed) {
                 QPen p = screenPainter->pen();
                 p.setStyle( Qt::DashLine );
@@ -2208,7 +2208,7 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
                     d->aPrevAction = d->aMouseNormal;
                     d->aMouseSelect->trigger();
                     QPoint newPos = eventPos + QPoint( deltaX, deltaY );
-                    selectionStart( newPos, palette().color( QPalette::Active, QPalette::Highlight ).light( 120 ), false );
+                    selectionStart( newPos, palette().color( QPalette::Active, QPalette::Highlight ).lighter( 120 ), false );
                     updateSelection( eventPos );
                     break;
                 }
@@ -2382,7 +2382,7 @@ void PageView::mousePressEvent( QMouseEvent * e )
         case Okular::Settings::EnumMouseMode::TrimSelect:
              if ( leftButton )
              {
-                selectionStart( eventPos, palette().color( QPalette::Active, QPalette::Highlight ).light( 120 ), false );
+                selectionStart( eventPos, palette().color( QPalette::Active, QPalette::Highlight ).lighter( 120 ), false );
              }
             break;
         case Okular::Settings::EnumMouseMode::TableSelect:
@@ -2390,7 +2390,7 @@ void PageView::mousePressEvent( QMouseEvent * e )
              {
                 if (d->tableSelectionParts.isEmpty())
                 {
-                    selectionStart( eventPos, palette().color( QPalette::Active, QPalette::Highlight ).light( 120 ), false );
+                    selectionStart( eventPos, palette().color( QPalette::Active, QPalette::Highlight ).lighter( 120 ), false );
                 } else {
                     QRect updatedRect;
                     foreach (const TableSelectionPart &tsp, d->tableSelectionParts) {

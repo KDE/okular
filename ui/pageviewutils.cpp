@@ -412,7 +412,7 @@ void PageViewMessage::paintEvent( QPaintEvent * /* e */ )
     const int textDrawingFlags = Qt::AlignLeft | Qt::AlignTop | Qt::TextWordWrap;
 
     // draw shadow and text
-    painter.setPen( palette().color( QPalette::Window ).dark( 115 ) );
+    painter.setPen( palette().color( QPalette::Window ).darker( 115 ) );
     painter.drawText( xStartPoint + shadowOffset, yStartPoint + shadowOffset, textRect.width(), textRect.height(), textDrawingFlags, m_message );
     if ( !m_details.isEmpty() )
         painter.drawText( xStartPoint + shadowOffset, yStartPoint + textRect.height() + m_lineSpacing + shadowOffset, textRect.width(), detailsRect.height(), textDrawingFlags, m_details );

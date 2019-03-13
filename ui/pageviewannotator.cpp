@@ -407,7 +407,7 @@ class PolyLineEngine : public AnnotatorEngine
                 const Okular::NormalizedPoint second = points[1];
                 // draw a semitransparent block around the 2 points
                 painter->setPen( m_engineColor );
-                painter->setBrush( QBrush( m_engineColor.light(), Qt::Dense4Pattern ) );
+                painter->setBrush( QBrush( m_engineColor.lighter(), Qt::Dense4Pattern ) );
                 painter->drawRect( (int)(first.x * (double)xScale), (int)(first.y * (double)yScale),
                                    (int)((second.x - first.x) * (double)xScale), (int)((second.y - first.y) * (double)yScale) );
             }

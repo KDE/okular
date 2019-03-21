@@ -19,7 +19,7 @@ bitmap::bitmap()
 
 bitmap::~bitmap()
 {
-  delete bits;
+  delete[] bits;
 }
 
 glyph::glyph()

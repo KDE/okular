@@ -742,15 +742,13 @@ void PresentationWidget::mousePressEvent( QMouseEvent * e )
             }
         }
     }
-    // pressing the "move forward" mouse button: unlike the left button this
-    // always means "show next page", so we unconditionally delegate to that
-    // action on mouse button press
+    // pressing forward button
     else if ( e->button() == Qt::ForwardButton ) {
-        slotNextPage();
+        m_goToNextPageOnRelease = true;
     }
     // pressing right or backward button
     else if ( e->button() == Qt::RightButton || e->button() == Qt::BackButton )
-        slotPrevPage();
+        m_goToPreviousPageOnRelease = true;
 }
 
 void PresentationWidget::mouseReleaseEvent( QMouseEvent * e )

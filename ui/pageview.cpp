@@ -462,9 +462,7 @@ PageView::~PageView()
     qDeleteAll( annowindows );
 
     // delete all widgets
-    QVector< PageViewItem * >::const_iterator dIt = d->items.constBegin(), dEnd = d->items.constEnd();
-    for ( ; dIt != dEnd; ++dIt )
-        delete *dIt;
+    qDeleteAll( d->items );
     delete d->formsWidgetController;
     d->document->removeObserver( this );
     delete d;
@@ -940,12 +938,11 @@ void PageView::copyTextSelection() const
 
 void PageView::selectAll()
 {
-    QVector< PageViewItem * >::const_iterator it = d->items.constBegin(), itEnd = d->items.constEnd();
-    for ( ; it < itEnd; ++it )
+    for ( const PageViewItem * item : qAsConst( d->items ) )
     {
-        Okular::RegularAreaRect * area = textSelectionForItem( *it );
-        d->pagesWithTextSelection.insert( (*it)->pageNumber() );
-        d->document->setPageTextSelection( (*it)->pageNumber(), area, palette().color( QPalette::Active, QPalette::Highlight ) );
+        Okular::RegularAreaRect * area = textSelectionForItem( item );
+        d->pagesWithTextSelection.insert( item->pageNumber() );
+        d->document->setPageTextSelection( item->pageNumber(), area, palette().color( QPalette::Active, QPalette::Highlight ) );
     }
 }
 
@@ -954,10 +951,8 @@ void PageView::createAnnotationsVideoWidgets(PageViewItem *item, const QLinkedLi
     qDeleteAll( item->videoWidgets() );
     item->videoWidgets().clear();
 
-    QLinkedList< Okular::Annotation * >::const_iterator aIt = annotations.constBegin(), aEnd = annotations.constEnd();
-    for ( ; aIt != aEnd; ++aIt )
+    for ( Okular::Annotation * a : annotations )
     {
-        Okular::Annotation * a = *aIt;
         if ( a->subType() == Okular::Annotation::AMovie )
         {
             Okular::MovieAnnotation * movieAnn = static_cast< Okular::MovieAnnotation * >( a );
@@ -1081,9 +1076,7 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
     d->mouseAnnotation->reset();
 
     // delete all widgets (one for each page in pageSet)
-    QVector< PageViewItem * >::const_iterator dIt = d->items.constBegin(), dEnd = d->items.constEnd();
-    for ( ; dIt != dEnd; ++dIt )
-        delete *dIt;
+    qDeleteAll( d->items );
     d->items.clear();
     d->visibleItems.clear();
     d->pagesWithTextSelection.clear();
@@ -1094,19 +1087,16 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
     bool haspages = !pageSet.isEmpty();
     bool hasformwidgets = false;
     // create children widgets
-    QVector< Okular::Page * >::const_iterator setIt = pageSet.constBegin(), setEnd = pageSet.constEnd();
-    for ( ; setIt != setEnd; ++setIt )
+    for ( const Okular::Page * page : pageSet )
     {
-        PageViewItem * item = new PageViewItem( *setIt );
+        PageViewItem * item = new PageViewItem( page );
         d->items.push_back( item );
 #ifdef PAGEVIEW_DEBUG
         qCDebug(OkularUiDebug).nospace() << "cropped geom for " << d->items.last()->pageNumber() << " is " << d->items.last()->croppedGeometry();
 #endif
-        const QLinkedList< Okular::FormField * > pageFields = (*setIt)->formFields();
-        QLinkedList< Okular::FormField * >::const_iterator ffIt = pageFields.constBegin(), ffEnd = pageFields.constEnd();
-        for ( ; ffIt != ffEnd; ++ffIt )
+        const QLinkedList< Okular::FormField * > pageFields = page->formFields();
+        for ( Okular::FormField * ff : pageFields )
         {
-            Okular::FormField * ff = *ffIt;
             FormWidgetIface * w = FormWidgetFactory::createWidget( ff, viewport() );
             if ( w )
             {
@@ -1119,7 +1109,7 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
             }
         }
 
-        createAnnotationsVideoWidgets( item, (*setIt)->annotations() );
+        createAnnotationsVideoWidgets( item, page->annotations() );
     }
 
     // invalidate layout so relayout/repaint will happen on next viewport change
@@ -1309,12 +1299,11 @@ void PageView::slotRealNotifyViewportChanged( bool smoothMove )
 
     // find PageViewItem matching the viewport description
     const Okular::DocumentViewport & vp = d->document->viewport();
-    PageViewItem * item = nullptr;
-    QVector< PageViewItem * >::const_iterator iIt = d->items.constBegin(), iEnd = d->items.constEnd();
-    for ( ; iIt != iEnd; ++iIt )
-        if ( (*iIt)->pageNumber() == vp.pageNumber )
+    const PageViewItem * item = nullptr;
+    for ( const PageViewItem * tmpItem : qAsConst( d->items ) )
+        if ( tmpItem->pageNumber() == vp.pageNumber )
         {
-            item = *iIt;
+            item = tmpItem;
             break;
         }
     if ( !item )
@@ -1416,12 +1405,11 @@ void PageView::notifyPageChanged( int pageNumber, int changedFlags )
     }
 
     // iterate over visible items: if page(pageNumber) is one of them, repaint it
-    QLinkedList< PageViewItem * >::const_iterator iIt = d->visibleItems.constBegin(), iEnd = d->visibleItems.constEnd();
-    for ( ; iIt != iEnd; ++iIt )
-        if ( (*iIt)->pageNumber() == pageNumber && (*iIt)->isVisible() )
+    for ( const PageViewItem * visibleItem : qAsConst( d->visibleItems ) )
+        if ( visibleItem->pageNumber() == pageNumber && visibleItem->isVisible() )
         {
             // update item's rectangle plus the little outline
-            QRect expandedRect = (*iIt)->croppedGeometry();
+            QRect expandedRect = visibleItem->croppedGeometry();
             // a PageViewItem is placed in the global page layout,
             // while we need to map its position in the viewport coordinates
             // (to get the correct area to repaint)
@@ -1460,17 +1448,15 @@ bool PageView::canUnloadPixmap( int pageNumber ) const
          Okular::SettingsCore::memoryLevel() == Okular::SettingsCore::EnumMemoryLevel::Normal )
     {
         // if the item is visible, forbid unloading
-        QLinkedList< PageViewItem * >::const_iterator vIt = d->visibleItems.constBegin(), vEnd = d->visibleItems.constEnd();
-        for ( ; vIt != vEnd; ++vIt )
-            if ( (*vIt)->pageNumber() == pageNumber )
+        for ( const PageViewItem * visibleItem : qAsConst( d->visibleItems ) )
+            if ( visibleItem->pageNumber() == pageNumber )
                 return false;
     }
     else
     {
         // forbid unloading of the visible items, and of the previous and next
-        QLinkedList< PageViewItem * >::const_iterator vIt = d->visibleItems.constBegin(), vEnd = d->visibleItems.constEnd();
-        for ( ; vIt != vEnd; ++vIt )
-            if ( abs( (*vIt)->pageNumber() - pageNumber ) <= 1 )
+        for ( const PageViewItem * visibleItem : qAsConst( d->visibleItems ) )
+            if ( abs( visibleItem->pageNumber() - pageNumber ) <= 1 )
                 return false;
     }
     // if hidden premit unloading
@@ -2765,10 +2751,8 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
             {
                 // grab text in selection by extracting it from all intersected pages
                 const Okular::Page * okularPage=nullptr;
-                QVector< PageViewItem * >::const_iterator iIt = d->items.constBegin(), iEnd = d->items.constEnd();
-                for ( ; iIt != iEnd; ++iIt )
+                for ( const PageViewItem * item : qAsConst( d->items ) )
                 {
-                    PageViewItem * item = *iIt;
                     if ( !item->isVisible() )
                         continue;
 
@@ -2928,10 +2912,8 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                 // break up the selection into page-relative pieces
                 d->tableSelectionParts.clear();
                 const Okular::Page * okularPage=nullptr;
-                QVector< PageViewItem * >::const_iterator iIt = d->items.constBegin(), iEnd = d->items.constEnd();
-                for ( ; iIt != iEnd; ++iIt )
+                for ( PageViewItem * item : qAsConst( d->items ) )
                 {
-                    PageViewItem * item = *iIt;
                     if ( !item->isVisible() )
                         continue;
 
@@ -3534,15 +3516,13 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
     QRegion remainingArea( contentsRect );
 
     // iterate over all items painting the ones intersecting contentsRect
-    QVector< PageViewItem * >::const_iterator iIt = d->items.constBegin(), iEnd = d->items.constEnd();
-    for ( ; iIt != iEnd; ++iIt )
+    for ( const PageViewItem * item : qAsConst( d->items ) )
     {
         // check if a piece of the page intersects the contents rect
-        if ( !(*iIt)->isVisible() || !(*iIt)->croppedGeometry().intersects( checkRect ) )
+        if ( !item->isVisible() || !item->croppedGeometry().intersects( checkRect ) )
             continue;
 
         // get item and item's outline geometries
-        PageViewItem * item = *iIt;
         QRect itemGeometry = item->croppedGeometry(),
               outlineGeometry = itemGeometry;
         outlineGeometry.adjust( -1, -1, 3, 3 );
@@ -3734,10 +3714,8 @@ void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight 
 PageViewItem * PageView::pickItemOnPoint( int x, int y )
 {
     PageViewItem * item = nullptr;
-    QLinkedList< PageViewItem * >::const_iterator iIt = d->visibleItems.constBegin(), iEnd = d->visibleItems.constEnd();
-    for ( ; iIt != iEnd; ++iIt )
+    for ( PageViewItem * i : qAsConst( d->visibleItems ) )
     {
-        PageViewItem * i = *iIt;
         const QRect & r = i->croppedGeometry();
         if ( x < r.right() && x > r.left() && y < r.bottom() )
         {
@@ -3754,9 +3732,8 @@ void PageView::textSelectionClear()
    // something to clear
     if ( !d->pagesWithTextSelection.isEmpty() )
     {
-        QSet< int >::ConstIterator it = d->pagesWithTextSelection.constBegin(), itEnd = d->pagesWithTextSelection.constEnd();
-        for ( ; it != itEnd; ++it )
-            d->document->setPageTextSelection( *it, nullptr, QColor() );
+        for ( const int page : qAsConst( d->pagesWithTextSelection ) )
+            d->document->setPageTextSelection( page, nullptr, QColor() );
         d->pagesWithTextSelection.clear();
     }
 }
@@ -3880,7 +3857,7 @@ static Okular::NormalizedPoint rotateInNormRect( const QPoint &rotated, const QR
     return ret;
 }
 
-Okular::RegularAreaRect * PageView::textSelectionForItem( PageViewItem * item, const QPoint & startPoint, const QPoint & endPoint )
+Okular::RegularAreaRect * PageView::textSelectionForItem( const PageViewItem * item, const QPoint & startPoint, const QPoint & endPoint )
 {
     const QRect & geometry = item->uncroppedGeometry();
     Okular::NormalizedPoint startCursor( 0.0, 0.0 );
@@ -4222,12 +4199,11 @@ void PageView::updateCursor( const QPoint &p )
 
 void PageView::reloadForms()
 {
-    QLinkedList< PageViewItem * >::const_iterator iIt = d->visibleItems.constBegin(), iEnd = d->visibleItems.constEnd();
     if( d->m_formsVisible )
     {
-        for ( ; iIt != iEnd; ++iIt )
+        for ( PageViewItem * item : qAsConst( d->visibleItems ) )
         {
-            (*iIt)->reloadFormWidgetsState();
+            item->reloadFormWidgetsState();
         }
     }
 
@@ -4324,10 +4300,9 @@ void PageView::scrollTo( int x, int y )
 void PageView::toggleFormWidgets( bool on )
 {
     bool somehadfocus = false;
-    QVector< PageViewItem * >::const_iterator dIt = d->items.constBegin(), dEnd = d->items.constEnd();
-    for ( ; dIt != dEnd; ++dIt )
+    for ( PageViewItem * item : qAsConst( d->items ) )
     {
-        bool hadfocus = (*dIt)->setFormWidgetsVisible( on );
+        const bool hadfocus = item->setFormWidgetsVisible( on );
         somehadfocus = somehadfocus || hadfocus;
     }
     if ( somehadfocus )
@@ -4487,8 +4462,6 @@ void PageView::slotRelayoutPages()
         horizontalScrollBar()->setEnabled( true );
     }
 
-    // common iterator used in this method and viewport parameters
-    QVector< PageViewItem * >::const_iterator iIt, iEnd = d->items.constEnd();
     int viewportWidth = viewport()->width(),
         viewportHeight = viewport()->height(),
         fullWidth = 0,
@@ -4531,9 +4504,8 @@ void PageView::slotRelayoutPages()
 
         // 1) find the maximum columns width and rows height for a grid in
         // which each page must well-fit inside a cell
-        for ( iIt = d->items.constBegin(); iIt != iEnd; ++iIt )
+        for ( PageViewItem * item : qAsConst( d->items ) )
         {
-            PageViewItem * item = *iIt;
             // update internal page size (leaving a little margin in case of Fit* modes)
             updateItemSize( item, colWidth[ cIdx ] - kcolWidthMargin, viewportHeight - krowHeightMargin );
             // find row's maximum height and column's max width
@@ -4575,9 +4547,8 @@ void PageView::slotRelayoutPages()
             for ( int i = 0; i < cIdx; ++i )
                 insertX += colWidth[ i ];
         }
-        for ( iIt = d->items.constBegin(); iIt != iEnd; ++iIt )
+        for ( PageViewItem * item : qAsConst( d->items ) )
         {
-            PageViewItem * item = *iIt;
             int cWidth = colWidth[ cIdx ],
                 rHeight = rowHeight[ rIdx ];
             if ( continuousView || rIdx == pageRowIdx )
@@ -4746,10 +4717,8 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
     d->visibleItems.clear();
     QLinkedList< Okular::PixmapRequest * > requestedPixmaps;
     QVector< Okular::VisiblePageRect * > visibleRects;
-    QVector< PageViewItem * >::const_iterator iIt = d->items.constBegin(), iEnd = d->items.constEnd();
-    for ( ; iIt != iEnd; ++iIt )
+    for ( PageViewItem * i : qAsConst( d->items ) )
     {
-        PageViewItem * i = *iIt;
         foreach( FormWidgetIface *fwi, i->formWidgets() )
         {
             Okular::NormalizedRect r = fwi->rect();
@@ -5410,11 +5379,10 @@ void PageView::slotRefreshPage()
 void PageView::slotSpeakDocument()
 {
     QString text;
-    QVector< PageViewItem * >::const_iterator it = d->items.constBegin(), itEnd = d->items.constEnd();
-    for ( ; it < itEnd; ++it )
+    for ( const PageViewItem * item : qAsConst( d->items ) )
     {
-        Okular::RegularAreaRect * area = textSelectionForItem( *it );
-        text.append( (*it)->page()->text( area ) );
+        Okular::RegularAreaRect * area = textSelectionForItem( item );
+        text.append( item->page()->text( area ) );
         text.append( '\n' );
         delete area;
     }

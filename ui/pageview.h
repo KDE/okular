@@ -97,7 +97,7 @@ Q_OBJECT
         void setCapability( ViewCapability capability, const QVariant &option ) override;
 
         QList< Okular::RegularAreaRect * > textSelections( const QPoint& start, const QPoint& end, int& firstpage );
-        Okular::RegularAreaRect * textSelectionForItem( PageViewItem * item, const QPoint & startPoint = QPoint(), const QPoint & endPoint = QPoint() );
+        Okular::RegularAreaRect * textSelectionForItem( const PageViewItem * item, const QPoint & startPoint = QPoint(), const QPoint & endPoint = QPoint() );
 
         void reparseConfig();
 

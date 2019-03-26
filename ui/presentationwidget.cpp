@@ -311,9 +311,7 @@ PresentationWidget::~PresentationWidget()
     delete m_drawingEngine;
 
     // delete frames
-    QVector< PresentationFrame * >::iterator fIt = m_frames.begin(), fEnd = m_frames.end();
-    for ( ; fIt != fEnd; ++fIt )
-        delete *fIt;
+    qDeleteAll( m_frames );
 }
 
 
@@ -325,25 +323,20 @@ void PresentationWidget::notifySetup( const QVector< Okular::Page * > & pageSet,
         return;
 
     // delete previous frames (if any (shouldn't be))
-    QVector< PresentationFrame * >::iterator fIt = m_frames.begin(), fEnd = m_frames.end();
-    for ( ; fIt != fEnd; ++fIt )
-        delete *fIt;
+    qDeleteAll( m_frames );
     if ( !m_frames.isEmpty() )
         qCWarning(OkularUiDebug) << "Frames setup changed while a Presentation is in progress.";
     m_frames.clear();
 
     // create the new frames
-    QVector< Okular::Page * >::const_iterator setIt = pageSet.begin(), setEnd = pageSet.end();
     float screenRatio = (float)m_height / (float)m_width;
-    for ( ; setIt != setEnd; ++setIt )
+    for ( const Okular::Page * page : pageSet )
     {
         PresentationFrame * frame = new PresentationFrame();
-        frame->page = *setIt;
-        const QLinkedList< Okular::Annotation * > annotations = (*setIt)->annotations();
-        QLinkedList< Okular::Annotation * >::const_iterator aIt = annotations.begin(), aEnd = annotations.end();
-        for ( ; aIt != aEnd; ++aIt )
+        frame->page = page;
+        const QLinkedList< Okular::Annotation * > annotations = page->annotations();
+        for ( Okular::Annotation * a : annotations )
         {
-            Okular::Annotation * a = *aIt;
             if ( a->subType() == Okular::Annotation::AMovie )
             {
                 Okular::MovieAnnotation * movieAnn = static_cast< Okular::MovieAnnotation * >( a );
@@ -1732,11 +1725,10 @@ void PresentationWidget::applyNewScreenSize( const QSize & oldSize )
     m_height = height();
 
     // update the frames
-    QVector< PresentationFrame * >::const_iterator fIt = m_frames.constBegin(), fEnd = m_frames.constEnd();
     const float screenRatio = (float)m_height / (float)m_width;
-    for ( ; fIt != fEnd; ++fIt )
+    for ( PresentationFrame * frame : qAsConst( m_frames ) )
     {
-        (*fIt)->recalcGeometry( m_width, m_height, screenRatio );
+        frame->recalcGeometry( m_width, m_height, screenRatio );
     }
 
     if ( m_frameIndex != -1 )

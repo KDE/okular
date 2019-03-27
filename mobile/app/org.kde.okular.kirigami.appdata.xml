@@ -76,6 +76,7 @@
     <p xml:lang="pt">O Okular é um visualizador universal de documentos desenvolvido pelo KDE. O Okular funciona em diversas plataformas, incluindo mas não se limitando ao Linux, Windows, Mac OS X, *BSD, etc.</p>
     <p xml:lang="pt-BR">O Okular é um visualizador de documentos universal desenvolvido pelo KDE. Ele funciona em várias plataformas, incluindo, mas não se limitando, o Linux, Windows, Mac OS X, *BSD, etc.</p>
     <p xml:lang="ru">Okular — универсальная программа просмотра документов от KDE. Okular работает на многих платформах: Linux, Windows, Mac OS X, *BSD и других.</p>
+    <p xml:lang="sk">Okular je univerzálny zobrazovač dokumentov vyvynutý týmom KDE. Okular funguje na viacerých platformách, vrátane týchto: Linux, Windows, MAC OS X, *BSD, atď.</p>
     <p xml:lang="sv">Okular är en universell dokumentvisare utvecklad av KDE. Okular fungerar på flera plattformar, inklusive men inte begränsat till Linux, Windows, Max OS X, *BSD, etc.</p>
     <p xml:lang="uk">Okular є універсальною програмою для перегляду документів, розробленою KDE. Okular може працювати на багатьох програмних платформах, зокрема Linux, Windows, Mac OS X, *BSD тощо.</p>
     <p xml:lang="x-test">xxOkular is a universal document viewer developed by KDE. Okular works on multiple platforms, including but not limited to Linux, Windows, Mac OS X, *BSD, etc.xx</p>
@@ -128,6 +129,7 @@
       <li xml:lang="pt">Formatos Suportados: PDF, PS, Tiff, CHM, DjVu, Imagens, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="pt-BR">Suporte aos formatos: PDF, PS, TIFF, CHM, DjVu, imagens, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="ru">Поддержка форматов PDF, PS, Tiff, CHM, DjVu, изображений, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, факсов;</li>
+      <li xml:lang="sk">Podporované formáty: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="sv">Format som stöds: PDF, PS, Tiff, CHM, DjVu, bilder, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="uk">Підтримувані формати: PDF, PS, Tiff, CHM, DjVu, зображення, DVI, XPS, ODT, Fiction Book, комікси, Plucker, EPub, факси.</li>
       <li xml:lang="x-test">xxSupported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Faxxx</li>
@@ -152,6 +154,7 @@
       <li xml:lang="pt">Barra lateral com o conteúdo, miniaturas, revisões e marcação de favoritos</li>
       <li xml:lang="pt-BR">Barra lateral com o conteúdo, miniaturas, revisões e favoritos</li>
       <li xml:lang="ru">Боковая панель с содержанием, миниатюрами страниц, комментариями и закладками;</li>
+      <li xml:lang="sk">Bočný panel s obsahom, náhľadmi, hodnoteniami, a záložkami</li>
       <li xml:lang="sv">Sidorad med innehåll, miniatyrbilder, granskningar och bokmärken</li>
       <li xml:lang="uk">Бічні панелі зі списками змісту, мініатюрами сторінок, можливість рецензування та додавання закладок.</li>
       <li xml:lang="x-test">xxSidebar with contents, thumbnails, reviews and bookmarksxx</li>
@@ -176,6 +179,7 @@
       <li xml:lang="pt">Suporte para anotações</li>
       <li xml:lang="pt-BR">Suporte a anotações</li>
       <li xml:lang="ru">Поддержка комментариев.</li>
+      <li xml:lang="sk">Podpora anotácií</li>
       <li xml:lang="sv">Stöd för kommentarer</li>
       <li xml:lang="uk">Підтримка анотування.</li>
       <li xml:lang="x-test">xxAnnotations supportxx</li>
@@ -201,6 +205,7 @@
       <caption xml:lang="pt">Leitura de manual no Okular</caption>
       <caption xml:lang="pt-BR">Lendo manual no Okular</caption>
       <caption xml:lang="ru">Документация, открытая в Okular</caption>
+      <caption xml:lang="sk">Čítanie návodu v Okular</caption>
       <caption xml:lang="sv">Läsa handbok i Okular</caption>
       <caption xml:lang="uk">Читання підручника в Okular</caption>
       <caption xml:lang="x-test">xxReading manual in Okularxx</caption>

@@ -21,7 +21,14 @@ class MarkdownGenerator : public Okular::TextDocumentGenerator
         MarkdownGenerator( QObject *parent, const QVariantList &args );
 
         // [INHERITED] reparse configuration
+        bool reparseConfig() override;
         void addPages( KConfigDialog* dlg ) override;
+
+        static bool isFancyPantsEnabled() { return s_isFancyPantsEnabled; }
+
+    private:
+        static bool s_isFancyPantsEnabled;
+        static bool s_wasFancyPantsEnabled;
 };
 
 #endif

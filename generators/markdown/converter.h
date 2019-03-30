@@ -12,7 +12,8 @@
 
 #include <core/textdocumentgenerator.h>
 
-class QDir;
+#include <QDir>
+
 class QTextBlock;
 class QTextFrame;
 
@@ -28,11 +29,18 @@ class Converter : public Okular::TextDocumentConverter
 
         QTextDocument *convert( const QString &fileName ) override;
 
+        void convertAgain();
+
+        QTextDocument *convertOpenFile();
+
     private:
-        void convertLinks(QTextFrame *parent);
-        void convertLinks(const QTextBlock& parent);
+        void extractLinks(QTextFrame *parent);
+        void extractLinks(const QTextBlock& parent);
         void convertImages(QTextFrame *parent, const QDir &dir, QTextDocument *textDocument);
         void convertImages(const QTextBlock& parent, const QDir &dir, QTextDocument *textDocument);
+
+        FILE *m_markdownFile;
+        QDir m_fileDir;
 };
 
 }

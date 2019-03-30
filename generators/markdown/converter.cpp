@@ -9,6 +9,8 @@
 
 #include "converter.h"
 
+#include "generator_md.h"
+
 #include <KLocalizedString>
 
 #include <QDir>
@@ -38,37 +40,59 @@ extern "C" {
 #ifndef MKD_AUTOLINK 
 #define MKD_AUTOLINK 0
 #endif
-    
+
 using namespace Markdown;
 
 Converter::Converter()
+ : m_markdownFile( nullptr )
 {
 }
 
 Converter::~Converter()
 {
+    if ( m_markdownFile )
+    {
+        fclose( m_markdownFile );
+    }
 }
 
 QTextDocument* Converter::convert( const QString &fileName )
 {
-    FILE *markdownFile = fopen( fileName.toLocal8Bit(), "rb" );
-    if ( !markdownFile ) {
+    m_markdownFile = fopen( fileName.toLocal8Bit(), "rb" );
+    if ( !m_markdownFile ) {
         emit error( i18n( "Failed to open the document" ), -1 );
         return nullptr;
     }
 
-    const QDir dir = QDir( fileName.left( fileName.lastIndexOf( '/' ) ) );
+    m_fileDir = QDir( fileName.left( fileName.lastIndexOf( '/' ) ) );
+
+    QTextDocument *doc = convertOpenFile();
+    extractLinks( doc->rootFrame() );
+    return doc;
+}
+
+void Converter::convertAgain()
+{
+    setDocument( convertOpenFile() );
+}
+
+QTextDocument *Converter::convertOpenFile()
+{
+    rewind( m_markdownFile );
+
+    MMIOT *markdownHandle = mkd_in( m_markdownFile, 0 );
     
-    MMIOT *markdownHandle = mkd_in( markdownFile, 0 );
-    
-    if ( !mkd_compile( markdownHandle, MKD_FENCEDCODE | MKD_GITHUBTAGS | MKD_AUTOLINK ) ) {
+    int flags = MKD_FENCEDCODE | MKD_GITHUBTAGS | MKD_AUTOLINK;
+    if (!MarkdownGenerator::isFancyPantsEnabled())
+        flags |= MKD_NOPANTS;
+    if ( !mkd_compile( markdownHandle, flags ) ) {
         emit error( i18n( "Failed to compile the Markdown document." ), -1 );
         return 0;
     }
     
     char *htmlDocument;
     const int size = mkd_document( markdownHandle, &htmlDocument );
-    
+
     const QString html = QString::fromUtf8( htmlDocument, size );
     
     QTextDocument *textDocument = new QTextDocument;
@@ -84,27 +108,26 @@ QTextDocument* Converter::convert( const QString &fileName )
     QTextFrame *rootFrame = textDocument->rootFrame();
     rootFrame->setFrameFormat( frameFormat );
     
-    convertLinks( rootFrame );
-    convertImages( rootFrame, dir, textDocument );
+    convertImages( rootFrame, m_fileDir, textDocument );
 
     return textDocument;
 }
 
-void Converter::convertLinks(QTextFrame * parent)
+void Converter::extractLinks(QTextFrame * parent)
 {
     for ( QTextFrame::iterator it = parent->begin(); !it.atEnd(); ++it ) {
         QTextFrame *textFrame = it.currentFrame();
         const QTextBlock textBlock = it.currentBlock();
 
         if ( textFrame ) {
-            convertLinks(textFrame);
+            extractLinks(textFrame);
         } else if ( textBlock.isValid() ) {
-            convertLinks(textBlock);
+            extractLinks(textBlock);
         }
     }
 }
 
-void Converter::convertLinks(const QTextBlock & parent)
+void Converter::extractLinks(const QTextBlock & parent)
 {
     for ( QTextBlock::iterator it = parent.begin(); !it.atEnd(); ++it ) {
         const QTextFragment textFragment = it.fragment();

@@ -23,6 +23,7 @@
 
 #include "action.h"
 #include "annotations.h"
+#include "document_p.h"
 #include "page.h"
 #include "textpage.h"
 
@@ -561,6 +562,25 @@ TextDocumentSettings* TextDocumentGenerator::generalSettings()
     Q_D( TextDocumentGenerator );
 
     return d->mGeneralSettings;
+}
+
+TextDocumentConverter* TextDocumentGenerator::converter()
+{
+    Q_D( TextDocumentGenerator );
+
+    return d->mConverter;
+}
+
+void TextDocumentGenerator::setTextDocument( QTextDocument *textDocument )
+{
+    Q_D( TextDocumentGenerator );
+
+    d->mDocument = textDocument;
+
+    Q_FOREACH (Page *p, d->m_document->m_pagesVector )
+    {
+        p->setTextPage( nullptr );
+    }
 }
 
 #include "moc_textdocumentgenerator.cpp"

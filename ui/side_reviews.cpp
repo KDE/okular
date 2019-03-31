@@ -146,6 +146,16 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
     connect(curPageOnlyAction, &QAction::toggled, this, &Reviews::slotCurrentPageOnly);
     curPageOnlyAction->setChecked( Okular::Settings::currentPageOnly() );
 
+    // Adds space between left actions, so that the next two buttons are aligned to the right
+    QWidget * spacer = new QWidget();
+    spacer->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
+    toolBar->addWidget( spacer );
+
+    QAction * expandAll = toolBar->addAction( QIcon::fromTheme( QStringLiteral("expand-all") ), i18n( "Expand all elements" ) );
+    connect(expandAll, &QAction::triggered, this, &Reviews::slotExpandAll);
+    QAction * collapseAll = toolBar->addAction( QIcon::fromTheme( QStringLiteral("collapse-all") ), i18n( "Collapse all elements" ) );
+    connect(collapseAll, &QAction::triggered, this, &Reviews::slotCollapseAll);
+
     connect(m_view, &TreeView::activated, this, &Reviews::activated);
 
     m_view->setContextMenuPolicy( Qt::CustomContextMenu );
@@ -200,6 +210,16 @@ void Reviews::slotCurrentPageOnly( bool on )
     m_filterProxy->groupByCurrentPage( on );
 
     m_view->expandAll();
+}
+
+void Reviews::slotExpandAll()
+{
+    m_view->expandAll();
+}
+
+void Reviews::slotCollapseAll()
+{
+    m_view->collapseAll();
 }
 //END GUI Slots
 

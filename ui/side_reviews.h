@@ -49,6 +49,8 @@ class Reviews : public QWidget, public Okular::DocumentObserver
         void slotPageEnabled( bool );
         void slotAuthorEnabled( bool );
         void slotCurrentPageOnly( bool );
+        void slotExpandAll();
+        void slotCollapseAll();
 
     Q_SIGNALS:
         void openAnnotationWindow( Okular::Annotation *annotation, int pageNumber );

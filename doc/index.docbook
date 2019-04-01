@@ -34,8 +34,8 @@ Context menu actions like Rename Bookmarks etc.)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2019-03-13</date>
-		<releaseinfo>1.7 (Applications 19.04)</releaseinfo>
+		<date>2019-04-01</date>
+		<releaseinfo>1.8 (Applications 19.08)</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
 			<para>&okular; is a &kde; universal document viewer based on &kpdf; code.</para>
@@ -1902,11 +1902,30 @@ Context menu actions like Rename Bookmarks etc.)
 	    </mediaobject>
 	  </screenshot>
 	  <para>
-	    Using backend configuration pages for EPub, FictionBook, Txt and OpenDocument Text you can define the font to render documents in the corresponding formats. The <guibutton>Choose...</guibutton> button in these pages opens standard &kde; font configuration window. Please refer to the <ulink url="help:/fundamentals/fonts.html">&kde; Fundamentals documentation</ulink> for the details.
+	    Using backend configuration pages for EPub, FictionBook, Mobipocket, Markdown, TXT, and OpenDocument Text you can define the font to render documents in the corresponding formats. The <guibutton>Choose...</guibutton> button in these pages opens standard &kde; font configuration window. Please refer to the <ulink url="help:/fundamentals/fonts.html">&kde; Fundamentals documentation</ulink> for the details.
 	  </para>
 	  <para>
-	    The description of &PostScript; and &PDF; backends configuration pages can be found below.
+	    The description of Markdown, &PostScript; and &PDF; backends configuration pages can be found below.
 	  </para>
+	  <sect1 id="config-markdown">
+	    <title>Markdown backend configuration</title>
+	    <para>
+	      You can configure &okular; Markdown rendering backend based on <ulink url="https://www.pell.portland.or.us/~orc/Code/markdown/">Discount</ulink> by choosing <guilabel>Markdown</guilabel> from the list on the left part of the configuration dialog. An additional configurable option is as follows.
+	    </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel>Enable SmartyPants formatting</guilabel>
+		  </term>
+		  <listitem>
+              <para>When checked this option allows &okular; to process <ulink url="https://daringfireball.net/projects/smartypants/">SmartyPants</ulink> formatting. Such formatting can be troublesome in the technical texts because of unwanted substitutions (&eg;, it replaces <literal>(C)</literal> with a copyright symbol). This option is checked by default.
+		    </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect1>
 	  <sect1 id="config-ghostscript">
 	    <title>&PostScript; backend configuration</title>
 	    <para>

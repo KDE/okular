@@ -11,7 +11,6 @@
 
 #include "converter.h"
 #include "debug_md.h"
-#include "mdsettings.h"
 
 #include <KAboutData>
 #include <KLocalizedString>

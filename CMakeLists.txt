@@ -195,6 +195,7 @@ set(okularcore_SRCS
    core/utils.cpp
    core/view.cpp
    core/fileprinter.cpp
+   core/printoptionswidget.cpp
    core/signatureutils.cpp
    core/script/event.cpp
    core/synctex/synctex_parser.c
@@ -229,6 +230,7 @@ install( FILES
            core/tile.h
            core/utils.h
            core/fileprinter.h
+           core/printoptionswidget.h
            core/observer.h
            ${CMAKE_CURRENT_BINARY_DIR}/core/version.h
            ${CMAKE_CURRENT_BINARY_DIR}/core/okularcore_export.h

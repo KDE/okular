@@ -117,6 +117,7 @@
 #include "core/generator.h"
 #include "core/page.h"
 #include "core/fileprinter.h"
+#include "core/printoptionswidget.h"
 #include <memory>
 
 #ifdef OKULAR_KEEP_FILE_OPEN
@@ -3302,6 +3303,10 @@ void Part::slotPrint()
     {
         printConfigWidget = m_document->printConfigurationWidget();
     }
+    else
+    {
+        printConfigWidget = new DefaultPrintOptionsWidget();
+    }
 
     printDialog = new QPrintDialog(&printer, widget());
     printDialog->setWindowTitle(i18nc("@title:window", "Print"));
@@ -3309,7 +3314,7 @@ void Part::slotPrint()
     if (printConfigWidget) {
          options << printConfigWidget;
     }
-        printDialog->setOptionTabs(options);
+    printDialog->setOptionTabs(options);
 
     if ( printDialog )
     {
@@ -3339,7 +3344,20 @@ void Part::slotPrint()
 
         bool success = true;
         if ( printDialog->exec() )
+        {
+            // set option for margins if widget is of corresponding type that holds this information
+            PrintOptionsWidget *optionWidget = dynamic_cast<PrintOptionsWidget *>(printConfigWidget);
+            if (optionWidget != nullptr)
+                printer.setFullPage( optionWidget->ignorePrintMargins() );
+            else
+            {
+                // printConfigurationWidget() method should always return an object of type Okular::PrintOptionsWidget,
+                // (signature does not (yet) require it for ABI stability reasons), so emit a warning if the object is of another type
+                qWarning() << "printConfigurationWidget() method did not return an Okular::PrintOptionsWidget. This is strongly discouraged!";
+            }
+
             success = doPrint( printer );
+        }
         delete printDialog;
         if ( m_cliPrintAndExit )
             exit ( success ? EXIT_SUCCESS : EXIT_FAILURE );

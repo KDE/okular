@@ -615,8 +615,10 @@ QStringList FilePrinter::optionPageMargins( QPrinter &printer )
     if (printer.printEngine()->property(QPrintEngine::PPK_PageMargins).isNull()) {
         return QStringList();
     } else {
-        qreal l, t, r, b;
-        printer.getPageMargins( &l, &t, &r, &b, QPrinter::Point );
+        qreal l(0), t(0), r(0), b(0);
+        if (!printer.fullPage()) {
+            printer.getPageMargins( &l, &t, &r, &b, QPrinter::Point );
+        }
         return QStringList(QStringLiteral("-o")) << QStringLiteral("page-left=%1").arg(l)
                        <<  QStringLiteral("-o")  << QStringLiteral("page-top=%1").arg(t)
                        <<  QStringLiteral("-o")  << QStringLiteral("page-right=%1").arg(r)

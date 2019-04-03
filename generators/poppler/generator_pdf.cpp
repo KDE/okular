@@ -44,6 +44,7 @@
 #include <core/annotations.h>
 #include <core/movie.h>
 #include <core/pagetransition.h>
+#include <core/printoptionswidget.h>
 #include <core/sound.h>
 #include <core/sourcereference.h>
 #include <core/textpage.h>
@@ -76,7 +77,7 @@ Q_DECLARE_METATYPE(const Poppler::LinkOCGState*)
 static const int defaultPageWidth = 595;
 static const int defaultPageHeight = 842;
 
-class PDFOptionsPage : public QWidget
+class PDFOptionsPage : public Okular::PrintOptionsWidget
 {
     Q_OBJECT
 public slots:
@@ -135,6 +136,10 @@ public slots:
            m_printAnnots->setVisible( false );
 #endif
            setPrintAnnots( true ); // Default value
+       }
+
+       bool ignorePrintMargins() const override {
+           return scaleMode() == FitToPage;
        }
 
        bool printAnnots()
@@ -1369,8 +1374,7 @@ bool PDFGenerator::print( QPrinter& printer )
 #endif
 
         // If requested, scale to full page instead of the printable area
-        if ( scaleMode == PDFOptionsPage::FitToPage )
-            printer.setFullPage( true );
+        printer.setFullPage( pdfOptionsPage->ignorePrintMargins() );
 
     QPainter painter;
     painter.begin(&printer);
@@ -1996,7 +2000,7 @@ PDFGenerator::PrintError PDFGenerator::printError() const
     return lastPrintError;
 }
 
-QWidget* PDFGenerator::printConfigurationWidget() const
+Okular::PrintOptionsWidget* PDFGenerator::printConfigurationWidget() const
 {
     if ( !pdfOptionsPage )
     {

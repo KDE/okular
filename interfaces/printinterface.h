@@ -49,6 +49,10 @@ class OKULARCORE_EXPORT PrintInterface
          *
          * @note don't keep a pointer to the new constructed widget, as it
          * will be handled elsewhere (in the Okular KPart)
+         *
+         * @note The returned object should be of a PrintOptionsWidget subclass
+         * (which is not officially enforced by the signature for binary
+         * compatibility reasons).
          */
         virtual QWidget* printConfigurationWidget() const = 0;
 };

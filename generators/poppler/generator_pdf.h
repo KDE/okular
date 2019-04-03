@@ -24,6 +24,7 @@
 
 #include <core/document.h>
 #include <core/generator.h>
+#include <core/printoptionswidget.h>
 #include <interfaces/configinterface.h>
 #include <interfaces/printinterface.h>
 #include <interfaces/saveinterface.h>
@@ -95,7 +96,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         bool exportTo( const QString &fileName, const Okular::ExportFormat &format ) override;
 
         // [INHERITED] print interface
-        QWidget* printConfigurationWidget() const override;
+        Okular::PrintOptionsWidget* printConfigurationWidget() const override;
 
         // [INHERITED] save interface
         bool supportsOption( SaveOption ) const override;

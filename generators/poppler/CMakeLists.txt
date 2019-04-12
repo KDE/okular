@@ -53,6 +53,15 @@ int main()
 
 check_cxx_source_compiles("
 #include <poppler-qt5.h>
+#include <poppler-form.h>
+int main()
+{
+  auto s = &Poppler::SignatureValidationInfo::signsTotalDocument;
+}
+" HAVE_POPPLER_0_58)
+
+check_cxx_source_compiles("
+#include <poppler-qt5.h>
 int main()
 {
   Poppler::Document::RenderHint hint = Poppler::Document::HideAnnotations;

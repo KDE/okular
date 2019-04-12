@@ -193,6 +193,7 @@ PopplerSignatureInfo::CertificateStatus PopplerSignatureInfo::certificateStatus(
 
 PopplerSignatureInfo::HashAlgorithm PopplerSignatureInfo::hashAlgorithm() const
 {
+#ifdef HAVE_POPPLER_0_58
     switch ( m_info.hashAlgorithm() )
     {
         case Poppler::SignatureValidationInfo::HashAlgorithmMd2:
@@ -212,6 +213,9 @@ PopplerSignatureInfo::HashAlgorithm PopplerSignatureInfo::hashAlgorithm() const
         default:
             return HashAlgorithmUnknown;
     }
+#else
+    return HashAlgorithmUnknown;
+#endif
 }
 
 QString PopplerSignatureInfo::signerName() const
@@ -221,7 +225,11 @@ QString PopplerSignatureInfo::signerName() const
 
 QString PopplerSignatureInfo::signerSubjectDN() const
 {
+#ifdef HAVE_POPPLER_0_58
     return m_info.signerSubjectDN();
+#else
+    return {};
+#endif
 }
 
 QString PopplerSignatureInfo::location() const
@@ -249,17 +257,29 @@ QDateTime PopplerSignatureInfo::signingTime() const
 
 QByteArray PopplerSignatureInfo::signature() const
 {
+#ifdef HAVE_POPPLER_0_58
     return m_info.signature();
+#else
+    return {};
+#endif
 }
 
 QList<qint64> PopplerSignatureInfo::signedRangeBounds() const
 {
+#ifdef HAVE_POPPLER_0_58
     return m_info.signedRangeBounds();
+#else
+    return {};
+#endif
 }
 
 bool PopplerSignatureInfo::signsTotalDocument() const
 {
+ #ifdef HAVE_POPPLER_0_58
     return m_info.signsTotalDocument();
+#else
+    return false;
+#endif
 }
 
 const Okular::CertificateInfo &PopplerSignatureInfo::certificateInfo() const

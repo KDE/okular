@@ -429,6 +429,7 @@ bool PopplerFormFieldSignature::isVisible() const
 
 PopplerFormFieldSignature::SignatureType PopplerFormFieldSignature::signatureType() const
 {
+#ifdef HAVE_POPPLER_0_58
     switch ( m_field->signatureType() )
     {
         case Poppler::FormFieldSignature::AdbePkcs7sha1:
@@ -440,6 +441,9 @@ PopplerFormFieldSignature::SignatureType PopplerFormFieldSignature::signatureTyp
         default:
             return Okular::FormFieldSignature::UnknownType;
     }
+#else
+    return Okular::FormFieldSignature::UnknownType;
+#endif
 }
 
 const Okular::SignatureInfo &PopplerFormFieldSignature::signatureInfo() const

@@ -48,7 +48,7 @@ class Document
         Directory *mDirectory;
         Unrar *mUnrar;
         KArchive *mArchive;
-        KArchiveDirectory *mArchiveDir;
+        const KArchiveDirectory *mArchiveDir;
         QString mLastErrorString;
         QStringList mEntries;
 };

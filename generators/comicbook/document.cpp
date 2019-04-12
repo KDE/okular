@@ -154,7 +154,7 @@ bool Document::processArchive() {
         return false;
     }
 
-    mArchiveDir = const_cast<KArchiveDirectory*>( directory );
+    mArchiveDir = directory;
 
     imagesInArchive( QString(), mArchiveDir, &mEntries );
 

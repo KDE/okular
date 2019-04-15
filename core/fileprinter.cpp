@@ -35,14 +35,31 @@ int FilePrinter::printFile( QPrinter &printer, const QString file,
                             QPrinter::Orientation documentOrientation, FileDeletePolicy fileDeletePolicy,
                             PageSelectPolicy pageSelectPolicy, const QString &pageRange )
 {
+    return printFile( printer, file, documentOrientation, fileDeletePolicy,
+                      pageSelectPolicy, pageRange, ScaleMode::FitToPrintArea );
+}
+
+int FilePrinter::printFile( QPrinter &printer, const QString file,
+                            QPrinter::Orientation documentOrientation,
+                            FileDeletePolicy fileDeletePolicy, PageSelectPolicy pageSelectPolicy,
+                            const QString &pageRange, ScaleMode scaleMode )
+{
     FilePrinter fp;
-    return fp.doPrintFiles( printer, QStringList( file ), fileDeletePolicy, pageSelectPolicy, pageRange, 
-                            documentOrientation );
+    return fp.doPrintFiles( printer, QStringList( file ), fileDeletePolicy, pageSelectPolicy, pageRange,
+                            documentOrientation, scaleMode );
 }
 
 int FilePrinter::doPrintFiles( QPrinter &printer, QStringList fileList, FileDeletePolicy fileDeletePolicy,
                                PageSelectPolicy pageSelectPolicy, const QString &pageRange,
                                QPrinter::Orientation documentOrientation )
+{
+    return doPrintFiles( printer, fileList, fileDeletePolicy, pageSelectPolicy, pageRange,
+                         documentOrientation, ScaleMode::FitToPrintArea );
+}
+
+int FilePrinter::doPrintFiles( QPrinter &printer, QStringList fileList, FileDeletePolicy fileDeletePolicy,
+                               PageSelectPolicy pageSelectPolicy, const QString &pageRange,
+                               QPrinter::Orientation documentOrientation, ScaleMode scaleMode )
 {
 
     if ( fileList.size() < 1 ) {
@@ -130,7 +147,7 @@ int FilePrinter::doPrintFiles( QPrinter &printer, QStringList fileList, FileDele
 
         bool useCupsOptions = cupsAvailable();
         argList = printArguments( printer, fileDeletePolicy, pageSelectPolicy, 
-                                  useCupsOptions, pageRange, exe, documentOrientation ) << fileList;
+                                  useCupsOptions, pageRange, exe, documentOrientation, scaleMode ) << fileList;
         qCDebug(OkularCoreDebug) << "Executing" << exe << "with arguments" << argList;
 
         ret = KProcess::execute( exe, argList );
@@ -319,12 +336,19 @@ Generator::PrintError FilePrinter::printError( int c )
     return pe;
 }
 
+QStringList FilePrinter::printArguments( QPrinter &printer, FileDeletePolicy fileDeletePolicy,
+                                         PageSelectPolicy pageSelectPolicy, bool useCupsOptions,
+                                         const QString &pageRange, const QString &version,
+                                         QPrinter::Orientation documentOrientation ) {
+    return printArguments( printer, fileDeletePolicy, pageSelectPolicy, useCupsOptions,
+                           pageRange, version, documentOrientation, ScaleMode::FitToPrintArea);
+}
 
 
 QStringList FilePrinter::printArguments( QPrinter &printer, FileDeletePolicy fileDeletePolicy,
                                          PageSelectPolicy pageSelectPolicy, bool useCupsOptions,
                                          const QString &pageRange, const QString &version, 
-                                         QPrinter::Orientation documentOrientation )
+                                         QPrinter::Orientation documentOrientation, ScaleMode scaleMode )
 {
     QStringList argList;
 
@@ -344,8 +368,8 @@ QStringList FilePrinter::printArguments( QPrinter &printer, FileDeletePolicy fil
         argList << pages( printer, pageSelectPolicy, pageRange, useCupsOptions, version );
     }
 
-    if ( useCupsOptions && ! cupsOptions( printer, documentOrientation ).isEmpty() ) {
-        argList << cupsOptions( printer, documentOrientation);
+    if ( useCupsOptions && ! cupsOptions( printer, documentOrientation, scaleMode ).isEmpty() ) {
+        argList << cupsOptions( printer, documentOrientation, scaleMode);
     }
 
     if ( ! deleteFile( printer, fileDeletePolicy, version ).isEmpty() ) {
@@ -451,6 +475,11 @@ QStringList FilePrinter::pages( QPrinter &printer, PageSelectPolicy pageSelectPo
 
 QStringList FilePrinter::cupsOptions( QPrinter &printer, QPrinter::Orientation documentOrientation )
 {
+    return cupsOptions( printer, documentOrientation, ScaleMode::FitToPrintArea );
+}
+
+QStringList FilePrinter::cupsOptions( QPrinter &printer, QPrinter::Orientation documentOrientation, ScaleMode scaleMode )
+{
     QStringList optionList;
 
     if ( ! optionMedia( printer ).isEmpty() ) {
@@ -473,8 +502,8 @@ QStringList FilePrinter::cupsOptions( QPrinter &printer, QPrinter::Orientation d
         optionList << optionCollateCopies( printer );
     }
 
-    if ( ! optionPageMargins( printer ).isEmpty() ) {
-        optionList << optionPageMargins( printer );
+    if ( ! optionPageMargins( printer, scaleMode ).isEmpty() ) {
+        optionList << optionPageMargins( printer, scaleMode );
     }
 
     optionList << optionCupsProperties( printer );
@@ -612,6 +641,11 @@ QStringList FilePrinter::optionCollateCopies( QPrinter &printer )
 
 QStringList FilePrinter::optionPageMargins( QPrinter &printer )
 {
+    return optionPageMargins( printer, ScaleMode::FitToPrintArea );
+}
+
+QStringList FilePrinter::optionPageMargins( QPrinter &printer, ScaleMode scaleMode )
+{
     if (printer.printEngine()->property(QPrintEngine::PPK_PageMargins).isNull()) {
         return QStringList();
     } else {
@@ -619,10 +653,16 @@ QStringList FilePrinter::optionPageMargins( QPrinter &printer )
         if (!printer.fullPage()) {
             printer.getPageMargins( &l, &t, &r, &b, QPrinter::Point );
         }
-        return QStringList(QStringLiteral("-o")) << QStringLiteral("page-left=%1").arg(l)
+        QStringList marginOptions;
+        marginOptions << (QStringLiteral("-o")) << QStringLiteral("page-left=%1").arg(l)
                        <<  QStringLiteral("-o")  << QStringLiteral("page-top=%1").arg(t)
                        <<  QStringLiteral("-o")  << QStringLiteral("page-right=%1").arg(r)
-                       <<  QStringLiteral("-o")  << QStringLiteral("page-bottom=%1").arg(b) << QStringLiteral("-o") << QStringLiteral("fit-to-page");
+                       <<  QStringLiteral("-o")  << QStringLiteral("page-bottom=%1").arg(b);
+        if (scaleMode == ScaleMode::FitToPrintArea) {
+            marginOptions << QStringLiteral("-o") << QStringLiteral("fit-to-page");
+        }
+
+        return marginOptions;
     }
 }
 

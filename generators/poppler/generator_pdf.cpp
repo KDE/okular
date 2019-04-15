@@ -80,17 +80,6 @@ static const int defaultPageHeight = 842;
 class PDFOptionsPage : public Okular::PrintOptionsWidget
 {
     Q_OBJECT
-public slots:
-       void enableOrDisableScaleMode()
-       {
-           m_scaleMode->setEnabled ( m_forceRaster->isChecked() );
-
-           if ( m_forceRaster->isChecked() ) {
-               m_scaleMode->setToolTip( i18n( "Scaling mode for the printed pages" ) );
-           } else {
-               m_scaleMode->setToolTip( i18n( "Select rasterization to enable this!" ) );
-           }
-       }
 
    public:
        enum ScaleMode {
@@ -120,17 +109,12 @@ public slots:
            m_scaleMode->insertItem(FitToPrintableArea, i18n("Fit to printable area"), FitToPrintableArea);
            m_scaleMode->insertItem(FitToPage, i18n("Fit to full page"), FitToPage);
            m_scaleMode->insertItem(None, i18n("None; print original size"), None);
-           m_scaleMode->setToolTip(i18n("Select rasterization to enable this!"));
+           m_scaleMode->setToolTip(i18n( "Scaling mode for the printed pages" ) );
            printBackendLayout->addRow(i18n("Scale mode:"), m_scaleMode);
 
            layout->addWidget(formWidget);
 
            layout->addStretch(1);
-
-           // Enable scaleMode only if the file is to be rasterized before printing
-           m_scaleMode->setEnabled( false );
-
-           connect( m_forceRaster, &QCheckBox::stateChanged, this, &PDFOptionsPage::enableOrDisableScaleMode );
 
 #if defined(Q_OS_WIN) && !defined HAVE_POPPLER_0_60
            m_printAnnots->setVisible( false );
@@ -1491,11 +1475,17 @@ bool PDFGenerator::print( QPrinter& printer )
         userMutex()->unlock();
         delete psConverter;
         tf.close();
+
+        const Okular::FilePrinter::ScaleMode filePrinterScaleMode =
+                (scaleMode == PDFOptionsPage::None) ? Okular::FilePrinter::ScaleMode::NoScaling : Okular::FilePrinter::ScaleMode::FitToPrintArea;
+
         int ret = Okular::FilePrinter::printFile( printer, tempfilename,
                                                   document()->orientation(),
                                                   Okular::FilePrinter::SystemDeletesFiles,
                                                   Okular::FilePrinter::ApplicationSelectsPages,
-                                                  document()->bookmarkedPageRange() );
+                                                  document()->bookmarkedPageRange(),
+                                                  filePrinterScaleMode
+                                                );
 
         lastPrintError = Okular::FilePrinter::printError( ret );
 

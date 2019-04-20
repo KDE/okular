@@ -19,6 +19,7 @@
 #include <QTextStream>
 #include <kwindowsystem.h>
 #include <QApplication>
+#include <QtGlobal>
 #include <KAboutData>
 #include <KCrash>
 #include <KMessageBox>
@@ -31,7 +32,9 @@
 int main(int argc, char** argv)
 {
     QGuiApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
     QCoreApplication::setAttribute(Qt::AA_CompressTabletEvents);
+#endif
 
     QApplication app(argc, argv);
     KLocalizedString::setApplicationDomain("okular");

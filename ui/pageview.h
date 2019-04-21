@@ -130,6 +130,8 @@ Q_OBJECT
         void slotToggleChangeColors();
         void slotSetChangeColors(bool active);
 
+        void slotSelectPage();
+
     Q_SIGNALS:
         void rightClick( const Okular::Page *, const QPoint & );
         void mouseBackButtonClick();

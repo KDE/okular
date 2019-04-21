@@ -720,6 +720,7 @@ void Part::setupViewerActions()
     m_copy = nullptr;
 
     m_selectAll = nullptr;
+    m_selectCurrentPage = nullptr;
 
     // Find and other actions
     m_find = KStandardAction::find( this, SLOT(slotShowFindBar()), ac );
@@ -842,6 +843,12 @@ void Part::setupActions()
     m_copy = KStandardAction::create( KStandardAction::Copy, m_pageView, SLOT(copyTextSelection()), ac );
 
     m_selectAll = KStandardAction::selectAll( m_pageView, SLOT(selectAll()), ac );
+
+    // Setup select all action for the current page
+    m_selectCurrentPage = ac->addAction(QStringLiteral("edit_select_all_current_page"));
+    m_selectCurrentPage->setText(i18n("Select All Text on Current Page"));
+    connect( m_selectCurrentPage, &QAction::triggered, m_pageView, &PageView::slotSelectPage );
+    m_selectCurrentPage->setEnabled( false );
 
     m_save = KStandardAction::save( this, [this] { saveFile(); }, ac );
     m_save->setEnabled( false );
@@ -2146,6 +2153,7 @@ void Part::updateViewActions()
         m_reload->setEnabled( true );
         if (m_copy) m_copy->setEnabled( true );
         if (m_selectAll) m_selectAll->setEnabled( true );
+        if (m_selectCurrentPage) m_selectCurrentPage->setEnabled( true );
     }
     else
     {
@@ -2159,6 +2167,7 @@ void Part::updateViewActions()
         m_reload->setEnabled( false );
         if (m_copy) m_copy->setEnabled( false );
         if (m_selectAll) m_selectAll->setEnabled( false );
+        if (m_selectCurrentPage) m_selectCurrentPage->setEnabled( false );
     }
 
     if ( factory() )

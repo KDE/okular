@@ -1288,6 +1288,21 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term>
 						<menuchoice>
+							<guimenu>Edit</guimenu>
+							<guimenuitem>Select All Text on Current Page</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para><action>Selects</action> all the text (if the document provides it) of the current page.
+                        </para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice>
 							<shortcut><keycombo action="simul">&Ctrl;<keycap>F</keycap></keycombo></shortcut>
 							<guimenu>Edit</guimenu>
 							<guimenuitem>Find...</guimenuitem>

@@ -360,6 +360,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         QAction *m_nextBookmark;
         QAction *m_copy;
         QAction *m_selectAll;
+        QAction *m_selectCurrentPage;
         QAction *m_find;
         QAction *m_findNext;
         QAction *m_findPrev;

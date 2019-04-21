@@ -5538,6 +5538,21 @@ void PageView::slotFitWindowToPage()
     emit fitWindowToPage( viewportSize, pageSize );
 }
 
+void PageView::slotSelectPage()
+{
+    textSelectionClear();
+    const int currentPage = d->document->viewport().pageNumber;
+    PageViewItem *item = d->items.at( currentPage );
+
+    if ( item )
+    {
+        Okular::RegularAreaRect * area = textSelectionForItem( item );
+        const QString text = item->page()->text( area );
+        d->pagesWithTextSelection.insert( currentPage );
+        d->document->setPageTextSelection( currentPage, area, palette().color( QPalette::Active, QPalette::Highlight ) );
+    }
+}
+
 void PageView::highlightSignatureFormWidget( const Okular::FormFieldSignature *form )
 {
     QVector< PageViewItem * >::const_iterator dIt = d->items.constBegin(), dEnd = d->items.constEnd();

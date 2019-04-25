@@ -76,8 +76,8 @@ class ModifyAnnotationPropertiesCommand : public OkularUndoCommand
     public:
         ModifyAnnotationPropertiesCommand( Okular::DocumentPrivate* docPriv,  Okular::Annotation*  annotation,
                                                                   int pageNumber,
-                                                                  QDomNode oldProperties,
-                                                                  QDomNode newProperties );
+                                                                  const QDomNode &oldProperties,
+                                                                  const QDomNode &newProperties );
 
         void undo() override;
         void redo() override;

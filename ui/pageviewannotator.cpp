@@ -141,7 +141,7 @@ class PickPointEngine : public AnnotatorEngine
             }
         }
 
-        void addInPlaceTextAnnotation( Okular::Annotation * &ann, const QString summary, const QString content, Okular::TextAnnotation::InplaceIntent inplaceIntent )
+        void addInPlaceTextAnnotation( Okular::Annotation * &ann, const QString &summary, const QString &content, Okular::TextAnnotation::InplaceIntent inplaceIntent )
         {
             Okular::TextAnnotation * ta = new Okular::TextAnnotation();
             ann = ta;
@@ -1126,7 +1126,7 @@ QPixmap PageViewAnnotator::makeToolPixmap( const QDomElement &toolElement )
     // Load HiDPI variant on HiDPI screen
     QString imageVariant;
     if ( qApp->devicePixelRatio() > 1.05 ) {
-        imageVariant = "@2x";
+        imageVariant = QStringLiteral("@2x");
     }
 
     // Load base pixmap. We'll draw on top of it

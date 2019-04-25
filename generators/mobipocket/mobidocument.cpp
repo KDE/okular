@@ -55,7 +55,7 @@ QVariant MobiDocument::loadResource(int type, const QUrl &name)
 {
   if (type!=QTextDocument::ImageResource || name.scheme()!=QString(QStringLiteral("pdbrec"))) return QVariant();
   bool ok;
-  quint16 recnum=name.path().mid(1).toUShort(&ok);
+  quint16 recnum=name.path().midRef(1).toUShort(&ok);
   if (!ok || recnum>=doc->imageCount()) return QVariant();
    
   QVariant resource;

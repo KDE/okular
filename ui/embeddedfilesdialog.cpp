@@ -60,7 +60,7 @@ EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const Okular::Document
 
 	mUser2Button = new QPushButton;
 	buttonBox->addButton(mUser2Button, QDialogButtonBox::ActionRole);
-	KGuiItem::assign(mUser2Button, KGuiItem(i18nc("@action:button", "View"), "document-open"));
+	KGuiItem::assign(mUser2Button, KGuiItem(i18nc("@action:button", "View"), QStringLiteral("document-open")));
 	mUser2Button->setEnabled(false);
 
 	m_tw = new QTreeWidget(this);
@@ -183,7 +183,7 @@ void EmbeddedFilesDialog::viewFile( Okular::EmbeddedFile* ef )
 		+ QDir::separator()
 		+ fileInfo.baseName()
 		+ ".XXXXXX"
-		+ (fileInfo.completeSuffix().isEmpty() ? QString("") : "." + fileInfo.completeSuffix()) // krazy:exclude=doublequote_chars
+		+ (fileInfo.completeSuffix().isEmpty() ? QStringLiteral("") : "." + fileInfo.completeSuffix()) // krazy:exclude=doublequote_chars
 	);
 	GuiUtils::writeEmbeddedFile( ef, this, *tmpFile );
 

@@ -63,7 +63,7 @@ static QString splitDNAttributes(const QStringList &text)
     {
         for ( const QString &attribute : attributes )
         {
-            const QRegularExpression re( QString( "(.*),\\s*(%1=.*)" ).arg( attribute ), QRegularExpression::DotMatchesEverythingOption );
+            const QRegularExpression re( QStringLiteral( "(.*),\\s*(%1=.*)" ).arg( attribute ), QRegularExpression::DotMatchesEverythingOption );
             const QRegularExpressionMatch match = re.match( t );
             if ( match.hasMatch() )
             {
@@ -81,7 +81,7 @@ static QString splitDNAttributes(const QStringList &text)
     QStringList result = text;
     for ( QString &t : result )
     {
-        t.replace( "\\,", "," );
+        t.replace( QLatin1String("\\,"), QLatin1String(",") );
     }
 
     // Clean up quoted attributes
@@ -89,7 +89,7 @@ static QString splitDNAttributes(const QStringList &text)
     {
         for ( const QString &attribute : attributes )
         {
-            const QRegularExpression re( QString( "%1=\"(.*)\"" ).arg( attribute ) );
+            const QRegularExpression re( QStringLiteral( "%1=\"(.*)\"" ).arg( attribute ) );
             const QRegularExpressionMatch match = re.match( t );
             if ( match.hasMatch() )
             {

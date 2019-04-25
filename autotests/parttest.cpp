@@ -215,7 +215,7 @@ void PartTest::testForwardPDF()
     QProcess process;
     process.setWorkingDirectory(workDir.path());
 
-    const QString pdflatexPath(QStandardPaths::findExecutable("pdflatex"));
+    const QString pdflatexPath(QStandardPaths::findExecutable(QStringLiteral("pdflatex")));
     if (pdflatexPath.isEmpty()) {
         QFAIL("pdflatex executable not found, but needed for the test. Try installing the respective TeXLive packages.");
     }
@@ -254,8 +254,8 @@ void PartTest::testForwardPDF_data()
 {
     QTest::addColumn<QString>("dir");
 
-    QTest::newRow("non-utf8") << QString::fromUtf8("synctextest");
-    QTest::newRow("utf8")     << QString::fromUtf8("ßðđđŋßðđŋ");
+    QTest::newRow("non-utf8") << QStringLiteral("synctextest");
+    QTest::newRow("utf8")     << QStringLiteral("ßðđđŋßðđŋ");
 }
 
 void PartTest::testGeneratorPreferences()
@@ -390,8 +390,8 @@ void PartTest::testClickUrlLinkWhileInSelectionMode()
     QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseTextSelect"));
 
     // overwrite urlHandler for 'mailto' urls
-    QDesktopServices::setUrlHandler("mailto", this, "urlHandler");
-    QSignalSpy openUrlSignalSpy(this, SIGNAL(urlHandler(QUrl)));
+    QDesktopServices::setUrlHandler(QStringLiteral("mailto"), this, "urlHandler");
+    QSignalSpy openUrlSignalSpy(this, &PartTest::urlHandler);
 
     // click on url
     QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * 0.250, height * 0.127));
@@ -488,8 +488,8 @@ void PartTest::testClickUrlLinkWhileLinkTextIsSelected()
     simulateMouseSelection(mouseStartX, mouseY, mouseEndX, mouseY, part.m_pageView->viewport());
 
     // overwrite urlHandler for 'mailto' urls
-    QDesktopServices::setUrlHandler("mailto", this, "urlHandler");
-    QSignalSpy openUrlSignalSpy(this, SIGNAL(urlHandler(QUrl)));
+    QDesktopServices::setUrlHandler(QStringLiteral("mailto"), this, "urlHandler");
+    QSignalSpy openUrlSignalSpy(this, &PartTest::urlHandler);
 
     // click on url
     const double mouseClickX = width * 0.2997;
@@ -540,20 +540,20 @@ void PartTest::testRClickWhileLinkTextIsSelected()
     bool menuClosed = false;
     QTimer::singleShot(2000, [view, &menuClosed]() {
         // check if popup menu is active and visible
-        QMenu *menu = qobject_cast<QMenu*>(view->findChild<QMenu*>("PopupMenu"));
+        QMenu *menu = qobject_cast<QMenu*>(view->findChild<QMenu*>(QStringLiteral("PopupMenu")));
         QVERIFY(menu);
         QVERIFY(menu->isVisible());
 
         // check if the menu contains go-to link action
-        QAction *goToAction = qobject_cast<QAction*>(menu->findChild<QAction*>("GoToAction"));
+        QAction *goToAction = qobject_cast<QAction*>(menu->findChild<QAction*>(QStringLiteral("GoToAction")));
         QVERIFY(goToAction);
 
         // check if the "follow this link" action is not visible
-        QAction *processLinkAction = qobject_cast<QAction*>(menu->findChild<QAction*>("ProcessLinkAction"));
+        QAction *processLinkAction = qobject_cast<QAction*>(menu->findChild<QAction*>(QStringLiteral("ProcessLinkAction")));
         QVERIFY(!processLinkAction);
 
         // check if the "copy link address" action is not visible
-        QAction *copyLinkLocation = qobject_cast<QAction*>(menu->findChild<QAction*>("CopyLinkLocationAction"));
+        QAction *copyLinkLocation = qobject_cast<QAction*>(menu->findChild<QAction*>(QStringLiteral("CopyLinkLocationAction")));
         QVERIFY(!copyLinkLocation);
 
         // close menu to continue test
@@ -609,16 +609,16 @@ void PartTest::testRClickOverLinkWhileLinkTextIsSelected()
     bool menuClosed = false;
     QTimer::singleShot(2000, [view, &menuClosed]() {
         // check if popup menu is active and visible
-        QMenu *menu = qobject_cast<QMenu*>(view->findChild<QMenu*>("PopupMenu"));
+        QMenu *menu = qobject_cast<QMenu*>(view->findChild<QMenu*>(QStringLiteral("PopupMenu")));
         QVERIFY(menu);
         QVERIFY(menu->isVisible());
 
         // check if the menu contains "follow this link" action
-        QAction *processLinkAction = qobject_cast<QAction*>(menu->findChild<QAction*>("ProcessLinkAction"));
+        QAction *processLinkAction = qobject_cast<QAction*>(menu->findChild<QAction*>(QStringLiteral("ProcessLinkAction")));
         QVERIFY(processLinkAction);
 
         // check if the menu contains "copy link address" action
-        QAction *copyLinkLocation = qobject_cast<QAction*>(menu->findChild<QAction*>("CopyLinkLocationAction"));
+        QAction *copyLinkLocation = qobject_cast<QAction*>(menu->findChild<QAction*>(QStringLiteral("CopyLinkLocationAction")));
         QVERIFY(copyLinkLocation);
 
         // close menu to continue test
@@ -666,16 +666,16 @@ void PartTest::testRClickOnSelectionModeShoulShowFollowTheLinkMenu()
     bool menuClosed = false;
     QTimer::singleShot(2000, [view, &menuClosed]() {
         // check if popup menu is active and visible
-        QMenu *menu = qobject_cast<QMenu*>(view->findChild<QMenu*>("PopupMenu"));
+        QMenu *menu = qobject_cast<QMenu*>(view->findChild<QMenu*>(QStringLiteral("PopupMenu")));
         QVERIFY(menu);
         QVERIFY(menu->isVisible());
 
         // check if the menu contains "Follow this link" action
-        QAction *processLink = qobject_cast<QAction*>(menu->findChild<QAction*>("ProcessLinkAction"));
+        QAction *processLink = qobject_cast<QAction*>(menu->findChild<QAction*>(QStringLiteral("ProcessLinkAction")));
         QVERIFY(processLink);
 
         // chek if the menu contains  "Copy Link Address" action
-        QAction *actCopyLinkLocation = qobject_cast<QAction*>(menu->findChild<QAction*>("CopyLinkLocationAction"));
+        QAction *actCopyLinkLocation = qobject_cast<QAction*>(menu->findChild<QAction*>(QStringLiteral("CopyLinkLocationAction")));
         QVERIFY(actCopyLinkLocation);
 
         // close menu to continue test
@@ -772,12 +772,12 @@ void PartTest::testeRectSelectionStartingOnLinks()
         QApplication::clipboard()->clear();
 
         // check if popup menu is active and visible
-        QMenu *menu = qobject_cast<QMenu*>(view->findChild<QMenu*>("PopupMenu"));
+        QMenu *menu = qobject_cast<QMenu*>(view->findChild<QMenu*>(QStringLiteral("PopupMenu")));
         QVERIFY(menu);
         QVERIFY(menu->isVisible());
 
         // check if the copy selected text to clipboard is present
-        QAction *copyAct = qobject_cast<QAction*>(menu->findChild<QAction*>("CopyTextToClipboard"));
+        QAction *copyAct = qobject_cast<QAction*>(menu->findChild<QAction*>(QStringLiteral("CopyTextToClipboard")));
         QVERIFY(copyAct);
 
         menu->close();
@@ -820,7 +820,7 @@ void PartTest::testSaveAsToNonExistingPath()
 
     QString saveFilePath;
     {
-        QTemporaryFile saveFile( QString( "%1/okrXXXXXX.pdf" ).arg( QDir::tempPath() ) );
+        QTemporaryFile saveFile( QStringLiteral( "%1/okrXXXXXX.pdf" ).arg( QDir::tempPath() ) );
         saveFile.open();
         saveFilePath = saveFile.fileName();
         // QTemporaryFile is destroyed and the file it created is gone, this is a TOCTOU but who cares
@@ -839,12 +839,12 @@ void PartTest::testSaveAsToSymlink()
     Okular::Part part(nullptr, nullptr, QVariantList());
     part.openDocument( KDESRCDIR "data/file1.pdf" );
 
-    QTemporaryFile newFile( QString( "%1/okrXXXXXX.pdf" ).arg( QDir::tempPath() ) );
+    QTemporaryFile newFile( QStringLiteral( "%1/okrXXXXXX.pdf" ).arg( QDir::tempPath() ) );
     newFile.open();
 
     QString linkFilePath;
     {
-        QTemporaryFile linkFile( QString( "%1/okrXXXXXX.pdf" ).arg( QDir::tempPath() ) );
+        QTemporaryFile linkFile( QStringLiteral( "%1/okrXXXXXX.pdf" ).arg( QDir::tempPath() ) );
         linkFile.open();
         linkFilePath = linkFile.fileName();
         // QTemporaryFile is destroyed and the file it created is gone, this is a TOCTOU but who cares
@@ -869,7 +869,7 @@ void PartTest::testSaveIsSymlink()
 
     QString newFilePath;
     {
-        QTemporaryFile newFile( QString( "%1/okrXXXXXX.pdf" ).arg( QDir::tempPath() ) );
+        QTemporaryFile newFile( QStringLiteral( "%1/okrXXXXXX.pdf" ).arg( QDir::tempPath() ) );
         newFile.open();
         newFilePath = newFile.fileName();
         // QTemporaryFile is destroyed and the file it created is gone, this is a TOCTOU but who cares
@@ -879,7 +879,7 @@ void PartTest::testSaveIsSymlink()
 
     QString linkFilePath;
     {
-        QTemporaryFile linkFile( QString( "%1/okrXXXXXX.pdf" ).arg( QDir::tempPath() ) );
+        QTemporaryFile linkFile( QStringLiteral( "%1/okrXXXXXX.pdf" ).arg( QDir::tempPath() ) );
         linkFile.open();
         linkFilePath = linkFile.fileName();
         // QTemporaryFile is destroyed and the file it created is gone, this is a TOCTOU but who cares
@@ -909,9 +909,9 @@ void PartTest::testSaveAs()
     QScopedPointer<CloseDialogHelper> closeDialogHelper;
 
     QString annotName;
-    QTemporaryFile archiveSave( QString( "%1/okrXXXXXX.okular" ).arg( QDir::tempPath() ) );
-    QTemporaryFile nativeDirectSave( QString( "%1/okrXXXXXX.%2" ).arg( QDir::tempPath() ).arg ( extension ) );
-    QTemporaryFile nativeFromArchiveFile( QString( "%1/okrXXXXXX.%2" ).arg( QDir::tempPath() ).arg ( extension ) );
+    QTemporaryFile archiveSave( QStringLiteral( "%1/okrXXXXXX.okular" ).arg( QDir::tempPath() ) );
+    QTemporaryFile nativeDirectSave( QStringLiteral( "%1/okrXXXXXX.%2" ).arg( QDir::tempPath() ).arg ( extension ) );
+    QTemporaryFile nativeFromArchiveFile( QStringLiteral( "%1/okrXXXXXX.%2" ).arg( QDir::tempPath() ).arg ( extension ) );
     QVERIFY( archiveSave.open() );
     archiveSave.close();
     QVERIFY( nativeDirectSave.open() );
@@ -929,7 +929,7 @@ void PartTest::testSaveAs()
 
         Okular::Annotation *annot = new Okular::TextAnnotation();
         annot->setBoundingRectangle( Okular::NormalizedRect( 0.1, 0.1, 0.15, 0.15 ) );
-        annot->setContents( "annot contents" );
+        annot->setContents( QStringLiteral("annot contents") );
         part.m_document->addPageAnnotation( 0, annot );
         annotName = annot->uniqueName();
 
@@ -1064,10 +1064,10 @@ void PartTest::testSaveAsUndoStackAnnotations()
     // when saving to a file format not supporting those. However, this button is only sensible
     // and available for "Save As", but not for "Save". By alternately saving to saveFile1 and
     // saveFile2 we always force "Save As", so closeDialogHelper keeps working.
-    QTemporaryFile saveFile1( QString( "%1/okrXXXXXX_1.%2" ).arg( QDir::tempPath() ).arg ( extension ) );
+    QTemporaryFile saveFile1( QStringLiteral( "%1/okrXXXXXX_1.%2" ).arg( QDir::tempPath() ).arg ( extension ) );
     QVERIFY( saveFile1.open() );
     saveFile1.close();
-    QTemporaryFile saveFile2( QString( "%1/okrXXXXXX_2.%2" ).arg( QDir::tempPath() ).arg ( extension ) );
+    QTemporaryFile saveFile2( QStringLiteral( "%1/okrXXXXXX_2.%2" ).arg( QDir::tempPath() ).arg ( extension ) );
     QVERIFY( saveFile2.open() );
     saveFile2.close();
 
@@ -1078,7 +1078,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
 
     Okular::Annotation *annot = new Okular::TextAnnotation();
     annot->setBoundingRectangle( Okular::NormalizedRect( 0.1, 0.1, 0.15, 0.15 ) );
-    annot->setContents( "annot contents" );
+    annot->setContents( QStringLiteral("annot contents") );
     part.m_document->addPageAnnotation( 0, annot );
     QString annotName = annot->uniqueName();
 
@@ -1250,7 +1250,7 @@ void PartTest::testSaveAsUndoStackForms()
 
     const Part::SaveAsFlag saveFlags = saveToArchive ? Part::SaveAsOkularArchive : Part::NoSaveAsFlags;
 
-    QTemporaryFile saveFile( QString( "%1/okrXXXXXX.%2" ).arg( QDir::tempPath(), extension ) );
+    QTemporaryFile saveFile( QStringLiteral( "%1/okrXXXXXX.%2" ).arg( QDir::tempPath(), extension ) );
     QVERIFY( saveFile.open() );
     saveFile.close();
 
@@ -1263,7 +1263,7 @@ void PartTest::testSaveAsUndoStackForms()
         {
             QCOMPARE( ff->type(), FormField::FormText );
             FormFieldText *fft = static_cast<FormFieldText *>( ff );
-            part.m_document->editFormText( 0, fft, "BlaBla", 6, 0, 0 );
+            part.m_document->editFormText( 0, fft, QStringLiteral("BlaBla"), 6, 0, 0 );
         }
         else if ( ff->id() == 65538 )
         {
@@ -1284,7 +1284,7 @@ void PartTest::testSaveAsUndoStackForms()
             QCOMPARE( ff->type(), FormField::FormChoice );
             FormFieldChoice *ffc = static_cast<FormFieldChoice *>( ff );
             QCOMPARE( ffc->choiceType(), FormFieldChoice::ComboBox );
-            part.m_document->editFormCombo( 0, ffc, "combo2", 3, 0, 0);
+            part.m_document->editFormCombo( 0, ffc, QStringLiteral("combo2"), 3, 0, 0);
         }
     }
 
@@ -1484,7 +1484,7 @@ void PartTest::testCheckBoxReadOnly()
     btnStates << true << true;
     part.m_document->editFormButtons( 0, btns, btnStates );
 
-    QTemporaryFile saveFile( QString( "%1/okrXXXXXX.pdf" ).arg( QDir::tempPath() ) );
+    QTemporaryFile saveFile( QStringLiteral( "%1/okrXXXXXX.pdf" ).arg( QDir::tempPath() ) );
     QVERIFY( saveFile.open() );
     saveFile.close();
 
@@ -1525,7 +1525,7 @@ void PartTest::testCrashTextEditDestroy()
     part.widget()->show();
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
-    part.widget()->findChild<QTextEdit*>()->setText("HOLA");
+    part.widget()->findChild<QTextEdit*>()->setText(QStringLiteral("HOLA"));
     part.actionCollection()->action(QStringLiteral("view_toggle_forms"))->trigger();
 }
 
@@ -1574,7 +1574,7 @@ void PartTest::testAnnotWindow()
     QTest::mouseDClick(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, QPoint(width * annot1pt.x, height * annot1pt.y));
     QTRY_COMPARE( part.m_pageView->findChildren<QFrame *>("AnnotWindow").size(), 1 );
     // Verify that the window is visible
-    QFrame* win1 = part.m_pageView->findChild<QFrame *>("AnnotWindow");
+    QFrame* win1 = part.m_pageView->findChild<QFrame *>(QStringLiteral("AnnotWindow"));
     QVERIFY( !win1->visibleRegion().isEmpty() );
 
     // Double click the second annotation to open its window (move mouse for visual feedback)
@@ -1583,7 +1583,7 @@ void PartTest::testAnnotWindow()
     QTest::mouseDClick(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, QPoint(width * annot2pt.x, height * annot2pt.y));
     QTRY_COMPARE( part.m_pageView->findChildren<QFrame *>("AnnotWindow").size(), 2 );
     // Verify that the first window is hidden covered by the second, which is visible
-    QList<QFrame *> lstWin = part.m_pageView->findChildren<QFrame *>("AnnotWindow");
+    QList<QFrame *> lstWin = part.m_pageView->findChildren<QFrame *>(QStringLiteral("AnnotWindow"));
     QFrame * win2;
     if (lstWin[0] == win1) {
         win2 = lstWin[1];
@@ -1808,8 +1808,8 @@ int main(int argc, char *argv[])
     qunsetenv("QT_MESSAGE_PATTERN");
 
     QApplication app( argc, argv );
-    app.setApplicationName(QLatin1String("okularparttest"));
-    app.setOrganizationDomain(QLatin1String("kde.org"));
+    app.setApplicationName(QStringLiteral("okularparttest"));
+    app.setOrganizationDomain(QStringLiteral("kde.org"));
     app.setQuitOnLastWindowClosed(false);
 
     qRegisterMetaType<QUrl>(); /*as done by kapplication*/

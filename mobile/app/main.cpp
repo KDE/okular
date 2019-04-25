@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
     paths[QStringLiteral("home")] = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
     engine.rootContext()->setContextProperty(QStringLiteral("userPaths"), paths);
 
-    engine.setBaseUrl(QUrl("qrc:/package/contents/ui/"));
-    engine.load(QUrl("qrc:/package/contents/ui/main.qml"));
+    engine.setBaseUrl(QUrl(QStringLiteral("qrc:/package/contents/ui/")));
+    engine.load(QUrl(QStringLiteral("qrc:/package/contents/ui/main.qml")));
     return app.exec();
 }

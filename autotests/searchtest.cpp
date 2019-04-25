@@ -168,7 +168,7 @@ void SearchTest::test311232()
 {
     Okular::Document d(nullptr);
     SearchFinishedReceiver receiver;
-    QSignalSpy spy(&d, SIGNAL(searchFinished(int,Okular::Document::SearchStatus)));
+    QSignalSpy spy(&d, &Okular::Document::searchFinished);
 
     QObject::connect(&d, SIGNAL(searchFinished(int,Okular::Document::SearchStatus)), &receiver, SLOT(searchFinished(int,Okular::Document::SearchStatus)));
     
@@ -243,14 +243,14 @@ void SearchTest::testDottedI()
     //the Unicode case-folding rules http://www.unicode.org/Public/6.2.0/ucd/CaseFolding.txt).
 
     QVector<QString> text;
-    text << QString::fromUtf8("İ");
+    text << QStringLiteral("İ");
 
     QVector<Okular::NormalizedRect> rect;
     rect << Okular::NormalizedRect(1, 2, 3, 4);
 
     CREATE_PAGE;
 
-    Okular::RegularAreaRect* result = tp->findText(0, QString::fromUtf8("İ"), Okular::FromTop, Qt::CaseInsensitive, nullptr);
+    Okular::RegularAreaRect* result = tp->findText(0, QStringLiteral("İ"), Okular::FromTop, Qt::CaseInsensitive, nullptr);
     QVERIFY(result);
     delete result;
 

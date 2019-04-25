@@ -122,7 +122,7 @@ void VisibilityTest::testSaveLoad()
     verifyTargetStates( false );
 
     // Save the changed states
-    QTemporaryFile saveFile( QString( "%1/okrXXXXXX.pdf" ).arg( QDir::tempPath() ) );
+    QTemporaryFile saveFile( QStringLiteral( "%1/okrXXXXXX.pdf" ).arg( QDir::tempPath() ) );
     QVERIFY( saveFile.open() );
     saveFile.close();
 

@@ -156,8 +156,8 @@ bool RemoveAnnotationCommand::refreshInternalPageReferences( const QVector< Okul
 ModifyAnnotationPropertiesCommand::ModifyAnnotationPropertiesCommand( DocumentPrivate* docPriv,
                                                                       Annotation* annotation,
                                                                       int pageNumber,
-                                                                      QDomNode oldProperties,
-                                                                      QDomNode newProperties )
+                                                                      const QDomNode &oldProperties,
+                                                                      const QDomNode &newProperties )
  : m_docPriv( docPriv ),
    m_annotation( annotation ),
    m_pageNumber( pageNumber ),

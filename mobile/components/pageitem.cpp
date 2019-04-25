@@ -39,7 +39,7 @@
 
 PageItem::PageItem(QQuickItem *parent)
     : QQuickItem(parent),
-      Okular::View( QLatin1String( "PageView" ) ),
+      Okular::View( QStringLiteral( "PageView" ) ),
       m_page(nullptr),
       m_smooth(false),
       m_bookmarked(false),

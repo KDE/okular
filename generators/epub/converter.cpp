@@ -381,7 +381,7 @@ QTextDocument* Converter::convert( const QString &fileName )
         } else { // load missing resource
           char *data = 0;
           //epub_get_data can't handle whitespace url encodings
-          QByteArray ba = link.replace("%20", " ").toLatin1();
+          QByteArray ba = link.replace(QLatin1String("%20"), QLatin1String(" ")).toLatin1();
           const char *clinkClean = ba.data(); 
           int size = epub_get_data(mTextDocument->getEpub(), clinkClean, &data);
 

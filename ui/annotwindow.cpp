@@ -198,7 +198,7 @@ AnnotWindow::AnnotWindow( QWidget * parent, Okular::Annotation * annot, Okular::
     setAutoFillBackground( true );
     setFrameStyle( Panel | Raised );
     setAttribute( Qt::WA_DeleteOnClose );
-    setObjectName("AnnotWindow");
+    setObjectName(QStringLiteral("AnnotWindow"));
 
     const bool canEditAnnotation = m_document->canModifyPageAnnotation( annot );
 
@@ -421,7 +421,7 @@ void AnnotWindow::renderLatex( bool render )
     }
 }
 
-void AnnotWindow::slotHandleContentsChangedByUndoRedo(Okular::Annotation* annot, QString contents, int cursorPos, int anchorPos)
+void AnnotWindow::slotHandleContentsChangedByUndoRedo(Okular::Annotation* annot, const QString &contents, int cursorPos, int anchorPos)
 {
     if ( annot != m_annot )
     {

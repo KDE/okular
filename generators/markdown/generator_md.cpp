@@ -28,7 +28,7 @@ MarkdownGenerator::MarkdownGenerator( QObject *parent, const QVariantList &args 
 {
     Okular::TextDocumentSettings *mdSettings = generalSettings();
 
-    mdSettings->addItemBool( "SmartyPants", s_isFancyPantsEnabled, true );
+    mdSettings->addItemBool( QStringLiteral("SmartyPants"), s_isFancyPantsEnabled, true );
     mdSettings->load();
     s_wasFancyPantsEnabled = s_isFancyPantsEnabled;
 }
@@ -55,7 +55,7 @@ void MarkdownGenerator::addPages( KConfigDialog* dlg )
     Okular::TextDocumentSettingsWidget *widget = new Okular::TextDocumentSettingsWidget();
 
     QCheckBox *enableSmartyPants = new QCheckBox( dlg );
-    enableSmartyPants->setObjectName( QString::fromUtf8( "kcfg_SmartyPants" ) );
+    enableSmartyPants->setObjectName( QStringLiteral( "kcfg_SmartyPants" ) );
     widget->addRow( i18n("Enable SmartyPants formatting"), enableSmartyPants );
 
     dlg->addPage( widget, generalSettings(), i18n("Markdown"), QStringLiteral("text-markdown"), i18n("Markdown Backend Configuration") );

@@ -73,7 +73,7 @@ void DocumentTest::testCloseDuringRotationJob()
 // the document without migrating and that it does get wiped out after migrating
 void DocumentTest::testDocdataMigration()
 {
-    Okular::SettingsCore::instance( "documenttest" );
+    Okular::SettingsCore::instance( QStringLiteral("documenttest") );
 
     const QUrl testFileUrl = QUrl::fromLocalFile(KDESRCDIR "data/file1.pdf");
     const QString testFilePath = testFileUrl.toLocalFile();
@@ -106,7 +106,7 @@ void DocumentTest::testDocdataMigration()
     QCOMPARE( m_document->isDocdataMigrationNeeded(), true );
 
     // Do the migration
-    QTemporaryFile migratedSaveFile( QString( "%1/okrXXXXXX.pdf" ).arg( QDir::tempPath() ) );
+    QTemporaryFile migratedSaveFile( QStringLiteral( "%1/okrXXXXXX.pdf" ).arg( QDir::tempPath() ) );
     QVERIFY( migratedSaveFile.open() );
     migratedSaveFile.close();
     QVERIFY( m_document->saveChanges( migratedSaveFile.fileName() ) );

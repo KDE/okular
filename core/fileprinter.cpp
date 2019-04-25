@@ -31,7 +31,7 @@
 
 using namespace Okular;
 
-int FilePrinter::printFile( QPrinter &printer, const QString file,
+int FilePrinter::printFile(QPrinter &printer, const QString file,
                             QPrinter::Orientation documentOrientation, FileDeletePolicy fileDeletePolicy,
                             PageSelectPolicy pageSelectPolicy, const QString &pageRange )
 {
@@ -39,7 +39,7 @@ int FilePrinter::printFile( QPrinter &printer, const QString file,
                       pageSelectPolicy, pageRange, ScaleMode::FitToPrintArea );
 }
 
-int FilePrinter::printFile( QPrinter &printer, const QString file,
+int FilePrinter::printFile(QPrinter &printer, const QString file,
                             QPrinter::Orientation documentOrientation,
                             FileDeletePolicy fileDeletePolicy, PageSelectPolicy pageSelectPolicy,
                             const QString &pageRange, ScaleMode scaleMode )
@@ -49,7 +49,7 @@ int FilePrinter::printFile( QPrinter &printer, const QString file,
                             documentOrientation, scaleMode );
 }
 
-int FilePrinter::doPrintFiles( QPrinter &printer, QStringList fileList, FileDeletePolicy fileDeletePolicy,
+int FilePrinter::doPrintFiles(QPrinter &printer, const QStringList fileList, FileDeletePolicy fileDeletePolicy,
                                PageSelectPolicy pageSelectPolicy, const QString &pageRange,
                                QPrinter::Orientation documentOrientation )
 {
@@ -113,8 +113,8 @@ int FilePrinter::doPrintFiles( QPrinter &printer, QStringList fileList, FileDele
             argList << fileList[0] << printer.outputFileName();
             qCDebug(OkularCoreDebug) << "Executing" << exe << "with arguments" << argList;
             ret = KProcess::execute( exe, argList );
-        } else if ( inputFileInfo.suffix() == "pdf" && printer.outputFormat() == QPrinter::NativeFormat && pdf2psAvailable() ) {
-            exe = "pdf2ps";
+        } else if ( inputFileInfo.suffix() == QLatin1String("pdf") && printer.outputFormat() == QPrinter::NativeFormat && pdf2psAvailable() ) {
+            exe = QStringLiteral("pdf2ps");
             argList << fileList[0] << printer.outputFileName();
             qCDebug(OkularCoreDebug) << "Executing" << exe << "with arguments" << argList;
             ret = KProcess::execute( exe, argList );

@@ -299,7 +299,7 @@ OkularTTS* PageViewPrivate::tts()
  */
 PageView::PageView( QWidget *parent, Okular::Document *document )
     : QAbstractScrollArea( parent )
-    , Okular::View( QLatin1String( "PageView" ) )
+    , Okular::View( QStringLiteral( "PageView" ) )
 {
     // create and initialize private storage structure
     d = new PageViewPrivate( this );
@@ -2776,7 +2776,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
 
             // popup that ask to copy:text and copy/save:image
             QMenu menu( this );
-            menu.setObjectName("PopupMenu");
+            menu.setObjectName(QStringLiteral("PopupMenu"));
             QAction *textToClipboard = nullptr;
 #ifdef HAVE_SPEECH
             QAction *speakText = nullptr;
@@ -2787,7 +2787,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
             {
                 menu.addAction( new OKMenuTitle( &menu, i18np( "Text (1 character)", "Text (%1 characters)", selectedText.length() ) ) );
                 textToClipboard = menu.addAction( QIcon::fromTheme(QStringLiteral("edit-copy")), i18n( "Copy to Clipboard" ) );
-                textToClipboard->setObjectName("CopyTextToClipboard");
+                textToClipboard->setObjectName(QStringLiteral("CopyTextToClipboard"));
                 bool copyAllowed = d->document->isAllowed( Okular::AllowCopy );
                 if ( !copyAllowed )
                 {
@@ -3094,13 +3094,13 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                                 {
                                     const QString squeezedText = KStringHandler::rsqueeze( url, 30 );
                                     httpLink = menu->addAction( i18n( "Go to '%1'", squeezedText ) );
-                                    httpLink->setObjectName("GoToAction");
+                                    httpLink->setObjectName(QStringLiteral("GoToAction"));
                                 }
                             }
                         }
 
                         if ( menu ) {
-                            menu->setObjectName("PopupMenu");
+                            menu->setObjectName(QStringLiteral("PopupMenu"));
 
                             QAction *choice = menu->exec( e->globalPos() );
                             // check if the user really selected an action
@@ -4411,7 +4411,7 @@ QMenu* PageView::createProcessLinkMenu(PageViewItem *item, const QPoint &eventPo
         const Okular::Action * link = static_cast< const Okular::Action * >( rect->object() );
         // creating the menu and its actions
         QAction * processLink = menu->addAction( i18n( "Follow This Link" ) );
-        processLink->setObjectName("ProcessLinkAction");
+        processLink->setObjectName(QStringLiteral("ProcessLinkAction"));
         if ( link->actionType() == Okular::Action::Sound ) {
             processLink->setText( i18n( "Play this Sound" ) );
             if ( Okular::AudioPlayer::instance()->state() == Okular::AudioPlayer::PlayingState ) {
@@ -4426,7 +4426,7 @@ QMenu* PageView::createProcessLinkMenu(PageViewItem *item, const QPoint &eventPo
         if ( dynamic_cast< const Okular::BrowseAction * >( link ) )
         {
             QAction * actCopyLinkLocation = menu->addAction( QIcon::fromTheme( QStringLiteral("edit-copy") ), i18n( "Copy Link Address" ) );
-            actCopyLinkLocation->setObjectName("CopyLinkLocationAction");
+            actCopyLinkLocation->setObjectName(QStringLiteral("CopyLinkLocationAction"));
             connect( actCopyLinkLocation, &QAction::triggered, [ link ]() {
                 const Okular::BrowseAction * browseLink = static_cast< const Okular::BrowseAction * >( link );
                 QClipboard *cb = QApplication::clipboard();

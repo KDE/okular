@@ -204,16 +204,16 @@ static KFilterDev::CompressionType compressionTypeFor( const QString& mime_to_ch
     if ( compressedMimeMap.isEmpty() )
     {
         std::unique_ptr< KFilterBase > f;
-        compressedMimeMap[ QLatin1String( "image/x-gzeps" ) ] = KFilterDev::GZip;
+        compressedMimeMap[ QStringLiteral( "image/x-gzeps" ) ] = KFilterDev::GZip;
         // check we can read bzip2-compressed files
         f.reset( KCompressionDevice::filterForCompressionType( KCompressionDevice::BZip2 ) );
         if ( f.get() )
         {
             supportBzip = true;
-            compressedMimeMap[ QLatin1String( "application/x-bzpdf" ) ] = KFilterDev::BZip2;
-            compressedMimeMap[ QLatin1String( "application/x-bzpostscript" ) ] = KFilterDev::BZip2;
-            compressedMimeMap[ QLatin1String( "application/x-bzdvi" ) ] = KFilterDev::BZip2;
-            compressedMimeMap[ QLatin1String( "image/x-bzeps" ) ] = KFilterDev::BZip2;
+            compressedMimeMap[ QStringLiteral( "application/x-bzpdf" ) ] = KFilterDev::BZip2;
+            compressedMimeMap[ QStringLiteral( "application/x-bzpostscript" ) ] = KFilterDev::BZip2;
+            compressedMimeMap[ QStringLiteral( "application/x-bzdvi" ) ] = KFilterDev::BZip2;
+            compressedMimeMap[ QStringLiteral( "image/x-bzeps" ) ] = KFilterDev::BZip2;
         }
         // check if we can read XZ-compressed files
         f.reset( KCompressionDevice::filterForCompressionType( KCompressionDevice::Xz ) );
@@ -1566,8 +1566,8 @@ bool Part::openFile()
     m_find->setEnabled( ok && canSearch );
     m_findNext->setEnabled( ok && canSearch );
     m_findPrev->setEnabled( ok && canSearch );
-    if( m_save ) m_save->setEnabled( ok && !( isstdin || mime.inherits( "inode/directory" ) ) );
-    if( m_saveAs ) m_saveAs->setEnabled( ok && !( isstdin || mime.inherits( "inode/directory" ) ) );
+    if( m_save ) m_save->setEnabled( ok && !( isstdin || mime.inherits( QStringLiteral("inode/directory") ) ) );
+    if( m_saveAs ) m_saveAs->setEnabled( ok && !( isstdin || mime.inherits( QStringLiteral("inode/directory") ) ) );
     emit enablePrintAction( ok && m_document->printingSupport() != Okular::Document::NoPrinting );
     m_printPreview->setEnabled( ok && m_document->printingSupport() != Okular::Document::NoPrinting );
     m_showProperties->setEnabled( ok );
@@ -2439,10 +2439,10 @@ bool Part::aboutToShowContextMenu(QMenu * /*menu*/, QAction *action, QMenu *cont
     {
         QAction *separatorAction = contextMenu->addSeparator();
         separatorAction->setObjectName(QStringLiteral("OkularPrivateRenameBookmarkActions"));
-        QAction *renameAction = contextMenu->addAction( QIcon::fromTheme( QStringLiteral("edit-rename") ), i18n( "Rename this Bookmark" ), this, SLOT(slotRenameBookmarkFromMenu()) );
+        QAction *renameAction = contextMenu->addAction( QIcon::fromTheme( QStringLiteral("edit-rename") ), i18n( "Rename this Bookmark" ), this, &Part::slotRenameBookmarkFromMenu );
         renameAction->setData(ba->property("htmlRef").toString());
         renameAction->setObjectName(QStringLiteral("OkularPrivateRenameBookmarkActions"));
-        QAction *deleteAction = contextMenu->addAction( QIcon::fromTheme( QStringLiteral("list-remove") ), i18n("Remove this Bookmark"), this, SLOT(slotRemoveBookmarkFromMenu()));
+        QAction *deleteAction = contextMenu->addAction( QIcon::fromTheme( QStringLiteral("list-remove") ), i18n("Remove this Bookmark"), this, &Part::slotRemoveBookmarkFromMenu);
         deleteAction->setData(ba->property("htmlRef").toString());
         deleteAction->setObjectName(QStringLiteral("OkularPrivateRenameBookmarkActions"));
     }
@@ -2667,7 +2667,7 @@ bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
                 const int result = KMessageBox::warningYesNoList( widget(),
                     warningMessage,
                     listOfwontSaves, i18n( "Warning" ),
-                    KGuiItem( i18n( "Save as Okular document archive..." ), "document-save-as" ), // <- KMessageBox::Yes
+                    KGuiItem( i18n( "Save as Okular document archive..." ), QStringLiteral("document-save-as") ), // <- KMessageBox::Yes
                     KStandardGuiItem::cancel() );
 
                 switch (result)
@@ -2690,8 +2690,8 @@ bool Part::saveAs( const QUrl & saveUrl, SaveAsFlags flags )
                 const int result = KMessageBox::warningYesNoCancelList( widget(),
                     warningMessage,
                     listOfwontSaves, i18n( "Warning" ),
-                    KGuiItem( i18n( "Save as Okular document archive..." ), "document-save-as" ), // <- KMessageBox::Yes
-                    KGuiItem( continueMessage, "arrow-right" ) ); // <- KMessageBox::NO
+                    KGuiItem( i18n( "Save as Okular document archive..." ), QStringLiteral("document-save-as") ), // <- KMessageBox::Yes
+                    KGuiItem( continueMessage, QStringLiteral("arrow-right") ) ); // <- KMessageBox::NO
 
                 switch (result)
                 {
@@ -3675,7 +3675,7 @@ void Part::slotShareActionFinished(const QJsonObject &output, int error, const Q
         KMessageBox::error(widget(), i18n("There was a problem sharing the document: %1", message),
                            i18n("Share"));
     } else {
-        const QString url = output["url"].toString();
+        const QString url = output[QStringLiteral("url")].toString();
         if (url.isEmpty()) {
             m_pageView->displayMessage(i18n("Document shared successfully"));
         } else {

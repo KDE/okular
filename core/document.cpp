@@ -1113,7 +1113,7 @@ void DocumentPrivate::performSetAnnotationContents( const QString & newContents,
 
 void DocumentPrivate::recalculateForms()
 {
-    const QVariant fco = m_parent->metaData(QLatin1String("FormCalculateOrder"));
+    const QVariant fco = m_parent->metaData(QStringLiteral("FormCalculateOrder"));
     const QVector<int> formCalculateOrder = fco.value<QVector<int>>();
     foreach(int formId, formCalculateOrder) {
         for ( uint pageIdx = 0; pageIdx  < m_parent->pages(); pageIdx++ )
@@ -1196,7 +1196,7 @@ void DocumentPrivate::saveDocumentInfo() const
     //  -> do this if there are not-yet-migrated annots or forms in docdata/
     if ( m_docdataMigrationNeeded )
     {
-        QDomElement pageList = doc.createElement( "pageList" );
+        QDomElement pageList = doc.createElement( QStringLiteral("pageList") );
         root.appendChild( pageList );
         // OriginalAnnotationPageItems and OriginalFormFieldPageItems tell to
         // store the same unmodified annotation list and form contents that we
@@ -2281,7 +2281,7 @@ QVector<KPluginMetaData> DocumentPrivate::availableGenerators()
     static QVector<KPluginMetaData> result;
     if (result.isEmpty())
     {
-        result = KPluginLoader::findPlugins( QLatin1String ( "okular/generators" ) );
+        result = KPluginLoader::findPlugins( QStringLiteral ( "okular/generators" ) );
     }
     return result;
 }
@@ -2365,7 +2365,7 @@ Document::OpenResult Document::openDocument(const QString & docFile, const QUrl 
     if (url.scheme() == QLatin1String("fd"))
     {
         bool ok;
-        fd = url.path().mid(1).toInt(&ok);
+        fd = url.path().midRef(1).toInt(&ok);
         if (!ok)
         {
             return OpenError;
@@ -4230,7 +4230,7 @@ void Document::processAction( const Action * action )
                 const QUrl url = browse->url();
 
                 // fix for #100366, documents with relative links that are the form of http:foo.pdf
-                if ((url.scheme() == "http") && url.host().isEmpty() && url.fileName().endsWith("pdf"))
+                if ((url.scheme() == QLatin1String("http")) && url.host().isEmpty() && url.fileName().endsWith(QLatin1String("pdf")))
                 {
                     d->openRelativeFile(url.fileName());
                     break;

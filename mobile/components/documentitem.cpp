@@ -59,7 +59,7 @@ void DocumentItem::setUrl(const QUrl & url)
     //TODO: password
     QMimeDatabase db;
 
-    const QString path = url.isLocalFile() ? url.toLocalFile() : QLatin1String("-");
+    const QString path = url.isLocalFile() ? url.toLocalFile() : QStringLiteral("-");
 
     m_document->openDocument(path, url, db.mimeTypeForUrl(url));
 

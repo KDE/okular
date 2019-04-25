@@ -59,7 +59,7 @@ QString Scripter::execute( ScriptType type, const QString &script )
     static QString builtInScript;
     if ( builtInScript.isNull() )
     {
-        QFile builtInResource ( ":/script/builtin.js" );
+        QFile builtInResource ( QStringLiteral(":/script/builtin.js") );
         if (!builtInResource.open( QIODevice::ReadOnly ))
         {
             qCDebug(OkularCoreDebug) << "failed to load builtin script";

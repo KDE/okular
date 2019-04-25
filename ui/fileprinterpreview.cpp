@@ -91,7 +91,7 @@ void FilePrinterPreviewPrivate::getPart()
                                            QStringLiteral("KParts/ReadOnlyPart"),
                                            QStringLiteral("[DesktopEntryName] == 'okularghostview'"));
     } else {
-        offers = KMimeTypeTrader::self()->query("application/pdf", "KParts/ReadOnlyPart");
+        offers = KMimeTypeTrader::self()->query(QStringLiteral("application/pdf"), QStringLiteral("KParts/ReadOnlyPart"));
     }
 
     KService::List::ConstIterator it = offers.constBegin();

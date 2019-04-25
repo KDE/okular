@@ -64,7 +64,7 @@ class AnnotWindow : public QFrame
         void slotOptionBtn();
         void slotsaveWindowText();
         void renderLatex( bool render );
-        void slotHandleContentsChangedByUndoRedo( Okular::Annotation* annot, QString contents, int cursorPos, int anchorPos);
+        void slotHandleContentsChangedByUndoRedo( Okular::Annotation* annot, const QString &contents, int cursorPos, int anchorPos);
 
     Q_SIGNALS:
         void containsLatex( bool );

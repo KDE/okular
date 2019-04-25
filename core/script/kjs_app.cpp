@@ -101,7 +101,7 @@ static KJSObject appGetPlatform( KJSContext *, void * )
 #elif defined(Q_OS_MAC)
     return KJSString( QString::fromLatin1( "MAC" ) );
 #else
-    return KJSString( QLatin1String( "UNIX" ) );
+    return KJSString( QStringLiteral( "UNIX" ) );
 #endif
 }
 
@@ -135,13 +135,13 @@ static KJSObject appGetPrinterNames( KJSContext *context, void * )
 static KJSObject appGetViewerType( KJSContext *, void * )
 {
     // faking a bit...
-    return KJSString( QLatin1String( "Reader" ) );
+    return KJSString( QStringLiteral( "Reader" ) );
 }
 
 static KJSObject appGetViewerVariation( KJSContext *, void * )
 {
     // faking a bit...
-    return KJSString( QLatin1String( "Reader" ) );
+    return KJSString( QStringLiteral( "Reader" ) );
 }
 
 static KJSObject appGetViewerVersion( KJSContext *, void * )

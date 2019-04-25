@@ -1754,8 +1754,8 @@ void PresentationWidget::inhibitPowerManagement()
     QString reason = i18nc( "Reason for inhibiting the screensaver activation, when the presentation mode is active", "Giving a presentation" );
 
     if (!m_screenInhibitCookie) {
-        QDBusMessage message = QDBusMessage::createMethodCall("org.freedesktop.ScreenSaver", "/ScreenSaver",
-                                                              "org.freedesktop.ScreenSaver", "Inhibit");
+        QDBusMessage message = QDBusMessage::createMethodCall(QStringLiteral("org.freedesktop.ScreenSaver"), QStringLiteral("/ScreenSaver"),
+                                                              QStringLiteral("org.freedesktop.ScreenSaver"), QStringLiteral("Inhibit"));
         message << QCoreApplication::applicationName();
         message << reason;
 
@@ -1800,8 +1800,8 @@ void PresentationWidget::allowPowerManagement()
     }
 
     if (m_screenInhibitCookie) {
-        QDBusMessage message = QDBusMessage::createMethodCall("org.freedesktop.ScreenSaver", "/ScreenSaver",
-                                                              "org.freedesktop.ScreenSaver", "UnInhibit");
+        QDBusMessage message = QDBusMessage::createMethodCall(QStringLiteral("org.freedesktop.ScreenSaver"), QStringLiteral("/ScreenSaver"),
+                                                              QStringLiteral("org.freedesktop.ScreenSaver"), QStringLiteral("UnInhibit"));
         message << m_screenInhibitCookie;
 
         QDBusPendingReply<uint> reply = QDBusConnection::sessionBus().asyncCall(message);

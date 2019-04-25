@@ -572,7 +572,7 @@ bool Shell::queryClose()
 {
     if (m_tabs.count() > 1)
     {
-        const QString dontAskAgainName = "ShowTabWarning";
+        const QString dontAskAgainName = QStringLiteral("ShowTabWarning");
         KMessageBox::ButtonCode dummy;
         if (shouldBeShownYesNo(dontAskAgainName, dummy))
         {
@@ -581,7 +581,7 @@ bool Shell::queryClose()
 
             QDialogButtonBox *buttonBox = new QDialogButtonBox(dialog);
             buttonBox->setStandardButtons(QDialogButtonBox::Yes | QDialogButtonBox::No);
-            KGuiItem::assign(buttonBox->button(QDialogButtonBox::Yes), KGuiItem(i18n("Close Tabs"), "tab-close"));
+            KGuiItem::assign(buttonBox->button(QDialogButtonBox::Yes), KGuiItem(i18n("Close Tabs"), QStringLiteral("tab-close")));
             KGuiItem::assign(buttonBox->button(QDialogButtonBox::No), KStandardGuiItem::cancel());
 
 

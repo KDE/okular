@@ -203,10 +203,13 @@ QTextDocument* Converter::convert( const QString &fileName )
   QVector<Okular::SoundAction *> soundActions;
   const QSize videoSize(320, 240);
   do{
-    movieAnnots.clear();
-    soundActions.clear();
+      if(!epub_it_get_curr(it)) {
+        continue;
+      }
 
-    if(epub_it_get_curr(it)) {
+      movieAnnots.clear();
+      soundActions.clear();
+
       const QString link = QString::fromUtf8(epub_it_get_curr_url(it));
       mTextDocument->setCurrentSubDocument(link);
       QString htmlContent = QString::fromUtf8(epub_it_get_curr(it));
@@ -354,7 +357,7 @@ QTextDocument* Converter::convert( const QString &fileName )
 
       while(mTextDocument->pageCount() == page)
         _cursor->insertText(QStringLiteral("\n"));
-    }
+
   } while (epub_it_get_next(it));
 
   epub_free_iterator(it);

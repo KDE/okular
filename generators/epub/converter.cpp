@@ -201,6 +201,14 @@ QTextDocument* Converter::convert( const QString &fileName )
   bool firstPage = true;
   QVector<Okular::MovieAnnotation *> movieAnnots;
   QVector<Okular::SoundAction *> soundActions;
+
+  // HACK BEGIN Get the links without CSS to be blue
+  //            Remove if Qt ever gets fixed and the code in textdocumentgenerator.cpp works
+  const QPalette orig = qApp->palette();
+  QPalette p = orig;
+  p.setColor(QPalette::Link, Qt::blue);
+  // HACK END
+
   const QSize videoSize(320, 240);
   do{
       if(!epub_it_get_curr(it)) {
@@ -289,11 +297,7 @@ QTextDocument* Converter::convert( const QString &fileName )
         htmlContent = dom.toString();
       }
 
-      // HACK BEGIN Get the links without CSS to be blue
-      //            Remove if Qt ever gets fixed and the code in textdocumentgenerator.cpp works
-      const QPalette orig = qApp->palette();
-      QPalette p = orig;
-      p.setColor(QPalette::Link, Qt::blue);
+      // HACK BEGIN
       qApp->setPalette(p);
       // HACK END
 

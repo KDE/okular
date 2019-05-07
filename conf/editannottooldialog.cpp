@@ -189,6 +189,7 @@ QDomDocument EditAnnotToolDialog::toolXml() const
             annotationElement.setAttribute( QStringLiteral("leadFwd"), QString::number( la->lineLeadingForwardPoint() ) );
             annotationElement.setAttribute( QStringLiteral("leadBack"), QString::number( la->lineLeadingBackwardPoint() ) );
         }
+        annotationElement.setAttribute( QStringLiteral("endStyle"), QString::number( la->lineEndStyle() ));
     }
     else if ( toolType == ToolPolygon )
     {
@@ -484,6 +485,8 @@ void EditAnnotToolDialog::loadTool( const QDomElement &toolElement )
             la->setLineLeadingForwardPoint( annotationElement.attribute( QStringLiteral("leadFwd") ).toDouble() );
         if ( annotationElement.hasAttribute( QStringLiteral("leadBack") ) )
             la->setLineLeadingBackwardPoint( annotationElement.attribute( QStringLiteral("leadBack") ).toDouble() );
+        if ( annotationElement.hasAttribute( QStringLiteral("endStyle") ) )
+            la->setLineEndStyle( (Okular::LineAnnotation::TermStyle)annotationElement.attribute( QStringLiteral("endStyle") ).toInt() );
     }
     else if ( annotType == QLatin1String("strikeout") )
     {

@@ -537,6 +537,29 @@ QWidget * LineAnnotationWidget::createStyleWidget()
     }
     connect( m_spinSize, SIGNAL(valueChanged(double)), this, SIGNAL(dataChanged()) );
 
+    //Line Term Styles
+    QLabel * tmplabel3 = new QLabel( i18n( "Line End:" ), widget );
+    gridlay2->addWidget( tmplabel3, 1, 0, Qt::AlignRight );
+    m_termStyleCombo = new KComboBox( widget );
+    tmplabel3->setBuddy( m_termStyleCombo );
+    gridlay2->addWidget( m_termStyleCombo );
+    tmplabel3->setToolTip( i18n("Only for PDF documents"));
+    m_termStyleCombo->setToolTip( i18n("Only for PDF documents"));
+
+    m_termStyleCombo->addItem( i18n( "Square" ) );
+    m_termStyleCombo->addItem( i18n( "Circle" ) );
+    m_termStyleCombo->addItem( i18n( "Diamond" ) );
+    m_termStyleCombo->addItem( i18n( "Open Arrow" ) );
+    m_termStyleCombo->addItem( i18n( "Closed Arrow" ) );
+    m_termStyleCombo->addItem( i18n( "None" ) );
+    m_termStyleCombo->addItem( i18n( "Butt" ) );
+    m_termStyleCombo->addItem( i18n( "Right Open Arrow" ) );
+    m_termStyleCombo->addItem( i18n( "Right Closed Arrow" ) );
+    m_termStyleCombo->addItem( i18n( "Slash" ) );
+    m_termStyleCombo->setCurrentIndex( m_lineAnn->lineEndStyle() );
+
+    connect( m_termStyleCombo, SIGNAL(currentIndexChanged(int)), this, SIGNAL(dataChanged()) );
+
     return widget;
 }
 
@@ -560,6 +583,7 @@ void LineAnnotationWidget::applyChanges()
         }
     }
     m_lineAnn->style().setWidth( m_spinSize->value() );
+    m_lineAnn->setLineEndStyle( (Okular::LineAnnotation::TermStyle)m_termStyleCombo->currentIndex());
 }
 
 

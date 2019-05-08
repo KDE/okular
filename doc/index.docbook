@@ -34,7 +34,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2019-04-01</date>
+		<date>2019-05-08</date>
 		<releaseinfo>1.8 (Applications 19.08)</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
@@ -862,6 +862,11 @@ Context menu actions like Rename Bookmarks etc.)
 				</textobject>
 				</mediaobject>
 				</screenshot>
+				<note>
+					<para>
+						The <guilabel>Line End</guilabel> property for the <guilabel>Straight Line</guilabel> annotation works for &PDF; documents only in its current implementation.
+					</para>
+                </note>
 				<para>
 					To move an annotation, hold down the &Ctrl; key, move the mouse pointer on it and
 					then start dragging with the &LMB;.

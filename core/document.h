@@ -582,7 +582,9 @@ class OKULARCORE_EXPORT Document : public QObject
         void removePageAnnotations( int page, const QList<Annotation*> &annotations );
 
         /**
-         * Sets the text selection for the given @p page.
+         * Clears the text selection highlights for the given @p page,
+         * creates new ones if @p rect is not nullptr,
+         * and deletes @p rect.
          *
          * @param page The number of the page.
          * @param rect The rectangle of the selection.

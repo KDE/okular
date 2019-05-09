@@ -93,7 +93,12 @@ class PagePrivate
         void changeSize( const PageSize &size );
 
         /**
-         * Sets the @p color and @p areas of text selections.
+         * Clears current text selection highlight areas,
+         * creates new ones if @p areas is not nullptr,
+         * and deletes @p areas.
+         *
+         * @param areas Areas of new text selections.
+         * @param color Color of new text selections.
          */
         void setTextSelections( RegularAreaRect *areas, const QColor & color );
 

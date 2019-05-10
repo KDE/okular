@@ -19,6 +19,7 @@
 #include <QDebug>
 #include <QApplication>
 #include <QIcon>
+#include <QTransform>
 
 // system includes
 #include <math.h>
@@ -445,78 +446,13 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                     acolor = Qt::yellow;
                 acolor.setAlphaF( a->style().opacity() );
 
-                // draw LineAnnotation MISSING: all
+                // draw LineAnnotation MISSING: caption, dash pattern, endings for multipoint lines
                 if ( type == Okular::Annotation::ALine )
                 {
-                    // get the annotation
-                    Okular::LineAnnotation * la = (Okular::LineAnnotation *) a;
-
-                    NormalizedPath path;
-                    // normalize page point to image
-                    const QLinkedList<Okular::NormalizedPoint> points = la->transformedLinePoints();
-                    QLinkedList<Okular::NormalizedPoint>::const_iterator it = points.constBegin();
-                    QLinkedList<Okular::NormalizedPoint>::const_iterator itEnd = points.constEnd();
-                    for ( ; it != itEnd; ++it )
-                    {
-                        Okular::NormalizedPoint point;
-                        point.x = ( (*it).x - xOffset) * xScale;
-                        point.y = ( (*it).y - yOffset) * yScale;
-                        path.append( point );
-                    }
-
-                    const QPen linePen = buildPen( a, a->style().width(), a->style().color() );
-                    QBrush fillBrush;
-
-                    if ( la->lineClosed() && la->lineInnerColor().isValid() )
-                        fillBrush = QBrush( la->lineInnerColor() );
-
-                    // draw the line as normalized path into image
-                    drawShapeOnImage( backImage, path, la->lineClosed(),
-                                      linePen,
-                                      fillBrush, pageScale ,Multiply);
-
-                    if ( path.count() == 2 && fabs( la->lineLeadingForwardPoint() ) > 0.1 )
-                    {
-                        Okular::NormalizedPoint delta( la->transformedLinePoints().last().x - la->transformedLinePoints().first().x, la->transformedLinePoints().first().y - la->transformedLinePoints().last().y );
-                        double angle = atan2( delta.y * page->height(), delta.x * page->width() );
-                        if ( delta.y < 0 )
-                            angle += 2 * M_PI;
-
-                        int sign = la->lineLeadingForwardPoint() > 0.0 ? 1 : -1;
-                        double LLx = fabs( la->lineLeadingForwardPoint() ) * cos( angle + sign * M_PI_2 + 2 * M_PI ) / page->width();
-                        double LLy = fabs( la->lineLeadingForwardPoint() ) * sin( angle + sign * M_PI_2 + 2 * M_PI ) / page->height();
-
-                        NormalizedPath path2;
-                        NormalizedPath path3;
-
-                        Okular::NormalizedPoint point;
-                        point.x = ( la->transformedLinePoints().first().x + LLx - xOffset ) * xScale;
-                        point.y = ( la->transformedLinePoints().first().y - LLy - yOffset ) * yScale;
-                        path2.append( point );
-                        point.x = ( la->transformedLinePoints().last().x + LLx - xOffset ) * xScale;
-                        point.y = ( la->transformedLinePoints().last().y - LLy - yOffset ) * yScale;
-                        path3.append( point );
-                        // do we have the extension on the "back"?
-                        if ( fabs( la->lineLeadingBackwardPoint() ) > 0.1 )
-                        {
-                            double LLEx = la->lineLeadingBackwardPoint() * cos( angle - sign * M_PI_2 + 2 * M_PI ) / page->width();
-                            double LLEy = la->lineLeadingBackwardPoint() * sin( angle - sign * M_PI_2 + 2 * M_PI ) / page->height();
-                            point.x = ( la->transformedLinePoints().first().x + LLEx - xOffset ) * xScale;
-                            point.y = ( la->transformedLinePoints().first().y - LLEy - yOffset ) * yScale;
-                            path2.append( point );
-                            point.x = ( la->transformedLinePoints().last().x + LLEx - xOffset ) * xScale;
-                            point.y = ( la->transformedLinePoints().last().y - LLEy - yOffset ) * yScale;
-                            path3.append( point );
-                        }
-                        else
-                        {
-                            path2.append( path[0] );
-                            path3.append( path[1] );
-                        }
-
-                        drawShapeOnImage( backImage, path2, false, linePen, QBrush(), pageScale, Multiply );
-                        drawShapeOnImage( backImage, path3, false, linePen, QBrush(), pageScale, Multiply );
-                    }
+                    LineAnnotPainter linepainter { (Okular::LineAnnotation *) a,
+                        { page->width(), page->height() }, pageScale,
+                        { xScale, 0., 0., yScale, -xOffset * xScale, -yOffset * yScale } };
+                    linepainter.draw( backImage );
                 }
                 // draw HighlightAnnotation MISSING: under/strike width, feather, capping
                 else if ( type == Okular::Annotation::AHighlight )
@@ -998,6 +934,295 @@ void PagePainter::drawShapeOnImage(
 
         painter.drawPath( path );
     }
+}
+
+void PagePainter::drawEllipseOnImage(
+    QImage & image,
+    const NormalizedPath & rect,
+    const QPen & pen,
+    const QBrush & brush,
+    double penWidthMultiplier,
+    RasterOperation op
+    )
+{
+    const double fImageWidth = (double) image.width();
+    const double fImageHeight = (double) image.height();
+
+    // stroke outline
+    const double penWidth = (double)pen.width() * penWidthMultiplier;
+    QPainter painter(&image);
+    painter.setRenderHint(QPainter::Antialiasing);
+    QPen pen2 = pen;
+    pen2.setWidthF(penWidth);
+    painter.setPen(pen2);
+    painter.setBrush(brush);
+
+    if ( op == Multiply ) {
+        painter.setCompositionMode(QPainter::CompositionMode_Multiply);
+    }
+
+    const QPointF &topLeft { rect[0].x * fImageWidth, rect[0].y * fImageHeight };
+    const QSizeF &size { (rect[1].x - rect[0].x) * fImageWidth, (rect[1].y - rect[0].y) * fImageHeight };
+    const QRectF imgRect { topLeft, size };
+    if ( brush.style() == Qt::NoBrush )
+    {
+        painter.drawArc( imgRect, 0, 16*360 );
+    } else {
+        painter.drawEllipse( imgRect );
+    }
+}
+
+LineAnnotPainter::LineAnnotPainter( const Okular::LineAnnotation * a, QSizeF pageSize, double pageScale, const QTransform &toNormalizedImage )
+    : la { a }
+    , pageSize { pageSize }
+    , pageScale { pageScale }
+    , toNormalizedImage { toNormalizedImage }
+    , aspectRatio { pageSize.height() / pageSize.width() }
+    , linePen { buildPen( a, a->style().width(), a->style().color() ) }
+{
+    if ( ( la->lineClosed() || la->transformedLinePoints().count() == 2 ) &&
+        la->lineInnerColor().isValid() )
+    {
+        fillBrush = QBrush( la->lineInnerColor() );
+    }
+}
+
+void LineAnnotPainter::draw( QImage &image ) const
+{
+    if ( la->transformedLinePoints().count() == 2 )
+    {
+        const Okular::NormalizedPoint delta {
+            la->transformedLinePoints().last().x - la->transformedLinePoints().first().x,
+            la->transformedLinePoints().first().y - la->transformedLinePoints().last().y
+        };
+        const double angle { atan2( delta.y * aspectRatio, delta.x ) };
+        const double cosA { cos( -angle ) };
+        const double sinA { sin( -angle ) };
+        const QTransform tmpMatrix = QTransform {
+            cosA, sinA / aspectRatio,
+            -sinA, cosA / aspectRatio,
+            la->transformedLinePoints().first().x,
+            la->transformedLinePoints().first().y };
+        const double deaspectedY { delta.y * aspectRatio };
+        const double mainSegmentLength { sqrt( delta.x * delta.x + deaspectedY * deaspectedY ) };
+        const double lineendSize { std::min( 6. * la->style().width() / pageSize.width(), mainSegmentLength / 2. ) };
+
+        drawShortenedLine( mainSegmentLength, lineendSize, image, tmpMatrix );
+        drawLineEnds( mainSegmentLength, lineendSize, image, tmpMatrix );
+        drawLeaderLine( 0., image, tmpMatrix );
+        drawLeaderLine( mainSegmentLength, image, tmpMatrix );
+    }
+    else if ( la->transformedLinePoints().count() > 2 )
+    {
+        drawMainLine( image );
+    }
+}
+
+void LineAnnotPainter::drawMainLine( QImage &image ) const
+{
+    // draw the line as normalized path into image
+    PagePainter::drawShapeOnImage( image, transformPath(
+        la->transformedLinePoints(), toNormalizedImage ), la->lineClosed(),
+        linePen, fillBrush, pageScale, PagePainter::Multiply );
+}
+
+void LineAnnotPainter::drawShortenedLine( double mainSegmentLength, double size, QImage &image, const QTransform& toNormalizedPage ) const
+{
+    const QTransform combinedTransform { toNormalizedPage * toNormalizedImage };
+    const QList<Okular::NormalizedPoint> path {
+        { shortenForArrow(size, la->lineStartStyle()), 0 },
+        { mainSegmentLength - shortenForArrow(size, la->lineEndStyle()), 0 }
+    };
+    PagePainter::drawShapeOnImage( image, transformPath(path, combinedTransform),
+        la->lineClosed(), linePen, fillBrush, pageScale, PagePainter::Multiply );
+}
+
+void LineAnnotPainter::drawLineEnds( double mainSegmentLength, double size, QImage &image, const QTransform& transform ) const
+{
+    switch ( la->lineStartStyle() ) {
+    case Okular::LineAnnotation::Square:
+        drawLineEndSquare( 0, -size, transform, image );
+        break;
+    case Okular::LineAnnotation::Circle:
+        drawLineEndCircle( 0, -size, transform, image );
+        break;
+    case Okular::LineAnnotation::Diamond:
+        drawLineEndDiamond( 0, -size, transform, image );
+        break;
+    case Okular::LineAnnotation::OpenArrow:
+        drawLineEndArrow( 0, -size, 1., false, transform, image );
+        break;
+    case Okular::LineAnnotation::ClosedArrow:
+        drawLineEndArrow( 0, -size, 1., true, transform, image );
+        break;
+    case Okular::LineAnnotation::None:
+        break;
+    case Okular::LineAnnotation::Butt:
+        drawLineEndButt( 0, size, transform, image );
+        break;
+    case Okular::LineAnnotation::ROpenArrow:
+        drawLineEndArrow( 0, size, 1., false, transform, image );
+        break;
+    case Okular::LineAnnotation::RClosedArrow:
+        drawLineEndArrow( 0, size, 1., true, transform, image );
+        break;
+    case Okular::LineAnnotation::Slash:
+        drawLineEndSlash( 0, -size, transform, image );
+        break;
+    }
+    switch ( la->lineEndStyle() ) {
+    case Okular::LineAnnotation::Square:
+        drawLineEndSquare( mainSegmentLength, size, transform, image );
+        break;
+    case Okular::LineAnnotation::Circle:
+        drawLineEndCircle( mainSegmentLength, size, transform, image );
+        break;
+    case Okular::LineAnnotation::Diamond:
+        drawLineEndDiamond( mainSegmentLength, size, transform, image );
+        break;
+    case Okular::LineAnnotation::OpenArrow:
+        drawLineEndArrow( mainSegmentLength, size, 1., false, transform, image );
+        break;
+    case Okular::LineAnnotation::ClosedArrow:
+        drawLineEndArrow( mainSegmentLength, size, 1., true, transform, image );
+        break;
+    case Okular::LineAnnotation::None:
+        break;
+    case Okular::LineAnnotation::Butt:
+        drawLineEndButt( mainSegmentLength, size, transform, image );
+        break;
+    case Okular::LineAnnotation::ROpenArrow:
+        drawLineEndArrow( mainSegmentLength, size, -1., false, transform, image );
+        break;
+    case Okular::LineAnnotation::RClosedArrow:
+        drawLineEndArrow( mainSegmentLength, size, -1., true, transform, image );
+        break;
+    case Okular::LineAnnotation::Slash:
+        drawLineEndSlash( mainSegmentLength, size, transform, image );
+        break;
+    }
+}
+
+void LineAnnotPainter::drawLineEndArrow( double xEndPos, double size, double flipX, bool close, const QTransform& toNormalizedPage, QImage &image ) const
+{
+    const QTransform combinedTransform { toNormalizedPage * toNormalizedImage };
+    const QList<Okular::NormalizedPoint> path {
+        { xEndPos - size * flipX, size / 2. },
+        { xEndPos, 0 },
+        { xEndPos - size * flipX, -size / 2. },
+    };
+    PagePainter::drawShapeOnImage( image, transformPath(path, combinedTransform),
+        close, linePen, fillBrush, pageScale, PagePainter::Multiply);
+}
+
+void LineAnnotPainter::drawLineEndButt( double xEndPos, double size, const QTransform& toNormalizedPage, QImage &image ) const
+{
+    const QTransform combinedTransform { toNormalizedPage * toNormalizedImage };
+    const double halfSize { size / 2. };
+    const QList<Okular::NormalizedPoint> path {
+        { xEndPos, halfSize },
+        { xEndPos, -halfSize },
+    };
+    PagePainter::drawShapeOnImage( image, transformPath(path, combinedTransform),
+        true, linePen, fillBrush, pageScale, PagePainter::Multiply);
+}
+
+void LineAnnotPainter::drawLineEndCircle( double xEndPos, double size, const QTransform& toNormalizedPage, QImage &image ) const
+{
+    /* transform the circle midpoint to intermediate normalized coordinates
+     * where it's easy to construct the bounding rect of the circle */
+    Okular::NormalizedPoint center;
+    toNormalizedPage.map( xEndPos - size / 2., 0, &center.x, &center.y );
+    const double halfSize { size / 2. };
+    const QList<Okular::NormalizedPoint> path {
+        { center.x - halfSize, center.y - halfSize / aspectRatio },
+        { center.x + halfSize, center.y + halfSize / aspectRatio },
+    };
+
+    /* then transform bounding rect with toNormalizedImage */
+    PagePainter::drawEllipseOnImage(
+        image,
+        transformPath(path, toNormalizedImage),
+        linePen,
+        fillBrush,
+        pageScale,
+        PagePainter::Multiply);
+}
+
+void LineAnnotPainter::drawLineEndSquare( double xEndPos, double size, const QTransform& toNormalizedPage, QImage &image ) const
+{
+    const QTransform combinedTransform { toNormalizedPage * toNormalizedImage };
+    const QList<Okular::NormalizedPoint> path {
+        { xEndPos, size / 2. },
+        { xEndPos - size, size / 2. },
+        { xEndPos - size, -size / 2. },
+        { xEndPos, -size / 2. }
+    };
+    PagePainter::drawShapeOnImage( image, transformPath(path, combinedTransform),
+        true, linePen, fillBrush, pageScale, PagePainter::Multiply);
+}
+
+void LineAnnotPainter::drawLineEndDiamond( double xEndPos, double size, const QTransform& toNormalizedPage, QImage &image ) const
+{
+    const QTransform combinedTransform { toNormalizedPage * toNormalizedImage };
+    const QList<Okular::NormalizedPoint> path {
+        { xEndPos, 0 },
+        { xEndPos - size / 2., size / 2. },
+        { xEndPos - size, 0 },
+        { xEndPos - size / 2., -size / 2. }
+    };
+    PagePainter::drawShapeOnImage( image, transformPath(path, combinedTransform),
+        true, linePen, fillBrush, pageScale, PagePainter::Multiply);
+}
+
+void LineAnnotPainter::drawLineEndSlash( double xEndPos, double size, const QTransform& toNormalizedPage, QImage &image ) const
+{
+    const QTransform combinedTransform { toNormalizedPage * toNormalizedImage };
+    const double halfSize { size / 2. };
+    const double xOffset { cos(M_PI/3.) * halfSize };
+    const QList<Okular::NormalizedPoint> path {
+        { xEndPos - xOffset, halfSize },
+        { xEndPos + xOffset, -halfSize },
+    };
+    PagePainter::drawShapeOnImage( image, transformPath(path, combinedTransform),
+        true, linePen, fillBrush, pageScale, PagePainter::Multiply);
+}
+
+void LineAnnotPainter::drawLeaderLine( double xEndPos, QImage &image, const QTransform& toNormalizedPage ) const
+{
+    const QTransform combinedTransform = toNormalizedPage * toNormalizedImage;
+    const double ll = aspectRatio * la->lineLeadingForwardPoint() / pageSize.height();
+    const double lle = aspectRatio * la->lineLeadingBackwardPoint() / pageSize.height();
+    const int sign { ll > 0 ? -1 : 1 };
+    QList<Okular::NormalizedPoint> path;
+
+    if ( fabs( ll ) > 0 ) {
+        path.append( { xEndPos, ll } );
+        // do we have the extension on the "back"?
+        if ( fabs( lle ) > 0 )
+        {
+            path.append( { xEndPos, sign * lle } );
+        } else {
+            path.append( { xEndPos, 0 } );
+        }
+    }
+    PagePainter::drawShapeOnImage( image, transformPath(path, combinedTransform), false,
+        linePen, fillBrush, pageScale, PagePainter::Multiply);
+}
+
+double LineAnnotPainter::shortenForArrow( double size, Okular::LineAnnotation::TermStyle endStyle )
+{
+    double shortenBy { 0 };
+
+    if ( endStyle == Okular::LineAnnotation::Square ||
+         endStyle == Okular::LineAnnotation::Circle ||
+         endStyle == Okular::LineAnnotation::Diamond ||
+         endStyle == Okular::LineAnnotation::ClosedArrow )
+    {
+        shortenBy = size;
+    }
+
+    return shortenBy;
 }
 
 /* kate: replace-tabs on; indent-width 4; */

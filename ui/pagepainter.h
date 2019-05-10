@@ -14,6 +14,7 @@
 #include <QImage>
 #include <QPen>
 
+#include "core/annotations.h"
 #include "core/area.h"  // for NormalizedPoint
 
 class QPainter;
@@ -72,6 +73,56 @@ class Q_DECL_EXPORT PagePainter
             RasterOperation op = Normal
             //float antiAliasRadius = 1.0
         );
+        static void drawEllipseOnImage(
+            QImage & image,
+            const NormalizedPath & rect,
+            const QPen & pen,
+            const QBrush & brush,
+            double penWidthMultiplier,
+            RasterOperation op
+        );
+
+    friend class LineAnnotPainter;
+};
+
+class LineAnnotPainter {
+public:
+    LineAnnotPainter( const Okular::LineAnnotation * a, QSizeF pageSizeA, double pageScale, const QTransform &toNormalizedImage );
+    void draw( QImage &image ) const;
+
+private:
+    void drawMainLine( QImage &image ) const;
+    void drawShortenedLine( double mainSegmentLength, double size, QImage &image, const QTransform& toNormalizedPage ) const;
+    void drawLineEnds( double mainSegmentLength, double size, QImage &image, const QTransform& transform ) const;
+    void drawLineEndArrow( double xEndPos, double size, double flipX, bool close, const QTransform& toNormalizedPage, QImage &image ) const;
+    void drawLineEndButt( double xEndPos, double size, const QTransform& toNormalizedPage, QImage &image ) const;
+    void drawLineEndCircle( double xEndPos, double size, const QTransform& toNormalizedPage, QImage &image ) const;
+    void drawLineEndSquare( double xEndPos, double size, const QTransform& toNormalizedPage, QImage &image ) const;
+    void drawLineEndDiamond( double xEndPos, double size, const QTransform& toNormalizedPage, QImage &image ) const;
+    void drawLineEndSlash( double xEndPos, double size, const QTransform& toNormalizedPage, QImage &image ) const;
+    void drawLeaderLine( double xEndPos, QImage &image, const QTransform& toNormalizedPage ) const;
+    template <typename T> QList<Okular::NormalizedPoint> transformPath( const T& path, const QTransform& transform ) const
+    {
+        QList<Okular::NormalizedPoint> transformedPath;
+        for( const Okular::NormalizedPoint &item : path )
+        {
+            Okular::NormalizedPoint p;
+            transform.map( item.x, item.y, &p.x, &p.y );
+            transformedPath.append(p);
+        }
+        return transformedPath;
+    }
+
+    static double shortenForArrow( double size, Okular::LineAnnotation::TermStyle endStyle );
+
+private:
+    const Okular::LineAnnotation* la;
+    QSizeF pageSize;
+    double pageScale;
+    QTransform toNormalizedImage;
+    double aspectRatio;
+    const QPen linePen;
+    QBrush fillBrush;
 };
 
 #endif

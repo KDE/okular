@@ -529,10 +529,6 @@ QWidget * LineAnnotationWidget::createStyleWidget()
         tmplabel4->setBuddy( m_endStyleCombo );
         gridlay2->addWidget( m_startStyleCombo, 1, 1, Qt::AlignLeft );
         gridlay2->addWidget( m_endStyleCombo,  2, 1, Qt::AlignLeft );
-        tmplabel3->setToolTip( i18n("Only for PDF documents") );
-        tmplabel4->setToolTip( i18n("Only for PDF documents") );
-        m_startStyleCombo->setToolTip( i18n("Only for PDF documents") );
-        m_endStyleCombo->setToolTip( i18n("Only for PDF documents") );
 
         for ( const QString &i: { i18n( "Square" ), i18n( "Circle" ), i18n( "Diamond" ), i18n( "Open Arrow" ), i18n( "Closed Arrow" ),
                         i18n( "None" ), i18n( "Butt" ), i18n( "Right Open Arrow" ), i18n( "Right Closed Arrow" ), i18n( "Slash" ) } )

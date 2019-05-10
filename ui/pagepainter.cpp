@@ -478,7 +478,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                     if ( path.count() == 2 && fabs( la->lineLeadingForwardPoint() ) > 0.1 )
                     {
                         Okular::NormalizedPoint delta( la->transformedLinePoints().last().x - la->transformedLinePoints().first().x, la->transformedLinePoints().first().y - la->transformedLinePoints().last().y );
-                        double angle = atan2( delta.y, delta.x );
+                        double angle = atan2( delta.y * page->height(), delta.x * page->width() );
                         if ( delta.y < 0 )
                             angle += 2 * M_PI;
 

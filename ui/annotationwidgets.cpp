@@ -535,7 +535,7 @@ QWidget * LineAnnotationWidget::createStyleWidget()
         connect( m_useColor, &QAbstractButton::toggled, this, &AnnotationWidget::dataChanged );
         connect(m_useColor, &QCheckBox::toggled, m_innerColor, &KColorButton::setEnabled);
     }
-    connect( m_spinSize, SIGNAL(valueChanged(double)), this, SIGNAL(dataChanged()) );
+    connect( m_spinSize, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LineAnnotationWidget::dataChanged );
 
     //Line Term Styles
     QLabel * tmplabel3 = new QLabel( i18n( "Line End:" ), widget );
@@ -558,7 +558,7 @@ QWidget * LineAnnotationWidget::createStyleWidget()
     m_termStyleCombo->addItem( i18n( "Slash" ) );
     m_termStyleCombo->setCurrentIndex( m_lineAnn->lineEndStyle() );
 
-    connect( m_termStyleCombo, SIGNAL(currentIndexChanged(int)), this, SIGNAL(dataChanged()) );
+    connect( m_termStyleCombo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LineAnnotationWidget::dataChanged );
 
     return widget;
 }

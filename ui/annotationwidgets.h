@@ -180,7 +180,8 @@ private:
     QCheckBox * m_useColor;
     KColorButton * m_innerColor;
     QDoubleSpinBox * m_spinSize;
-    QComboBox * m_termStyleCombo;
+    QComboBox * m_startStyleCombo;
+    QComboBox * m_endStyleCombo;
 };
 
 class HighlightAnnotationWidget

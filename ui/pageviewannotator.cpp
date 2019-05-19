@@ -463,6 +463,8 @@ class PolyLineEngine : public AnnotatorEngine
                     if ( m_annotElement.hasAttribute( QStringLiteral("leadBack") ) )
                         la->setLineLeadingBackwardPoint( m_annotElement.attribute( QStringLiteral("leadBack") ).toDouble() );
                 }
+                if ( m_annotElement.hasAttribute( QStringLiteral("startStyle") ) )
+                    la->setLineStartStyle( (Okular::LineAnnotation::TermStyle)m_annotElement.attribute( QStringLiteral("startStyle") ).toInt() );
                 if ( m_annotElement.hasAttribute( QStringLiteral("endStyle") ) )
                     la->setLineEndStyle( (Okular::LineAnnotation::TermStyle)m_annotElement.attribute( QStringLiteral("endStyle") ).toInt() );
 

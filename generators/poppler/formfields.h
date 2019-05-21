@@ -111,6 +111,7 @@ class PopplerFormFieldChoice : public Okular::FormFieldChoice
 
 };
 
+#ifdef HAVE_POPPLER_0_51
 class PopplerSignatureInfo;
 class PopplerFormFieldSignature : public Okular::FormFieldSignature
 {
@@ -136,5 +137,6 @@ class PopplerFormFieldSignature : public Okular::FormFieldSignature
         Okular::NormalizedRect m_rect;
         int m_id;
 };
+#endif
 
 #endif

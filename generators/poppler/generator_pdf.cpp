@@ -523,9 +523,11 @@ Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink, bool
         }
         break;
 #endif
-        
+
+#ifdef HAVE_POPPLER_0_50
         case Poppler::Link::OCGState:
             Q_UNREACHABLE();
+#endif
     }
 
 #ifdef HAVE_POPPLER_0_64
@@ -1974,10 +1976,12 @@ void PDFGenerator::addFormFields( Poppler::Page * popplerPage, Okular::Page * pa
             case Poppler::FormField::FormChoice:
                 of = new PopplerFormFieldChoice( static_cast<Poppler::FormFieldChoice*>( f ) );
                 break;
+#ifdef HAVE_POPPLER_0_51
             case Poppler::FormField::FormSignature: {
                 of = new PopplerFormFieldSignature( static_cast<Poppler::FormFieldSignature*>( f ) );
                 break;
             }
+#endif
             default: ;
         }
         if ( of )

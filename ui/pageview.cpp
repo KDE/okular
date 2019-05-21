@@ -3777,17 +3777,20 @@ void PageView::selectionStart( const QPoint & pos, const QColor & color, bool /*
 
 void PageView::scrollPosIntoView( const QPoint & pos )
 {
-    if (pos.x() < horizontalScrollBar()->value()) d->dragScrollVector.setX(pos.x() - horizontalScrollBar()->value());
-    else if (horizontalScrollBar()->value() + viewport()->width() < pos.x()) d->dragScrollVector.setX(pos.x() - horizontalScrollBar()->value() - viewport()->width());
+    // this number slows the speed of the page by its value, chosen not to be too fast or too slow, the actual speed is determined from the mouse position, not critical
+    const int damping=6; 
+
+    if (pos.x() < horizontalScrollBar()->value()) d->dragScrollVector.setX((pos.x() - horizontalScrollBar()->value())/damping);
+    else if (horizontalScrollBar()->value() + viewport()->width() < pos.x()) d->dragScrollVector.setX((pos.x() - horizontalScrollBar()->value() - viewport()->width())/damping);
     else d->dragScrollVector.setX(0);
 
-    if (pos.y() < verticalScrollBar()->value()) d->dragScrollVector.setY(pos.y() - verticalScrollBar()->value());
-    else if (verticalScrollBar()->value() + viewport()->height() < pos.y()) d->dragScrollVector.setY(pos.y() - verticalScrollBar()->value() - viewport()->height());
+    if (pos.y() < verticalScrollBar()->value()) d->dragScrollVector.setY((pos.y() - verticalScrollBar()->value())/damping);
+    else if (verticalScrollBar()->value() + viewport()->height() < pos.y()) d->dragScrollVector.setY((pos.y() - verticalScrollBar()->value() - viewport()->height())/damping);
     else d->dragScrollVector.setY(0);
 
     if (d->dragScrollVector != QPoint(0, 0))
     {
-        if (!d->dragScrollTimer.isActive()) d->dragScrollTimer.start(100);
+        if (!d->dragScrollTimer.isActive()) d->dragScrollTimer.start(1000/60); //60 fps
     }
     else d->dragScrollTimer.stop();
 }

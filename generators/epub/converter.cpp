@@ -314,10 +314,10 @@ QTextDocument* Converter::convert( const QString &fileName )
       qApp->setPalette(orig);
       // HACK END
 
-      QTextCursor csr(mTextDocument);   // a temporary cursor
-      csr.movePosition(QTextCursor::Start);
+      QTextCursor csr(before);   // a temporary cursor pointing at the begin of the last inserted block
       int index = 0;
-      while( !(csr = mTextDocument->find(QStringLiteral("<video></video>"),csr)).isNull() ) {
+
+      while( !movieAnnots.isEmpty() && !(csr = mTextDocument->find(QStringLiteral("<video></video>"),csr)).isNull() ) {
         const int posStart = csr.position();
         const QPoint startPoint = calculateXYPosition(mTextDocument, posStart);
         QImage img(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("okular/pics/okular-epub-movie.png")));
@@ -330,10 +330,10 @@ QTextDocument* Converter::convert( const QString &fileName )
         csr.movePosition(QTextCursor::NextWord);
       }
 
-      csr.movePosition(QTextCursor::Start);
+      csr = QTextCursor(before);
       index = 0;
       const QString keyToSearch(QStringLiteral("<audio></audio>"));
-      while( !(csr = mTextDocument->find(keyToSearch, csr)).isNull() ) {
+      while( !soundActions.isEmpty() && !(csr = mTextDocument->find(keyToSearch, csr)).isNull() ) {
         const int posStart = csr.position() - keyToSearch.size();
         const QImage img(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("okular/pics/okular-epub-sound-icon.png")));
         csr.insertImage(img);

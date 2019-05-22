@@ -369,25 +369,13 @@ bool PopplerFormFieldChoice::canBeSpellChecked() const
     return m_field->canBeSpellChecked();
 }
 
-#ifndef HAVE_POPPLER_0_51
-
-class DummySignatureInfo : public Okular::SignatureInfo
-{
-};
-
-#endif
-
-
+#ifdef HAVE_POPPLER_0_51
 PopplerFormFieldSignature::PopplerFormFieldSignature( Poppler::FormFieldSignature * field )
     : Okular::FormFieldSignature(), m_field( field )
 {
     m_rect = Okular::NormalizedRect::fromQRectF( m_field->rect() );
     m_id = m_field->id();
-#ifdef HAVE_POPPLER_0_51
     m_info = new PopplerSignatureInfo( m_field->validate( Poppler::FormFieldSignature::ValidateVerifyCertificate ) );
-#else
-    m_info = new DummySignatureInfo();
-#endif
     SET_ACTIONS
 }
 
@@ -450,3 +438,4 @@ const Okular::SignatureInfo &PopplerFormFieldSignature::signatureInfo() const
 {
     return *m_info;
 }
+#endif

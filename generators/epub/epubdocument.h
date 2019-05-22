@@ -31,7 +31,7 @@ namespace Epub {
     void setCurrentSubDocument(const QString &doc);
     int maxContentHeight() const;
     int maxContentWidth() const;
-    enum Multimedia { MovieResource = 4, AudioResource = 5 };
+    enum Multimedia { MovieResource = QTextDocument::UserResource, AudioResource };
 
   protected:
     QVariant loadResource(int type, const QUrl &name) override;

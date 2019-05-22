@@ -296,13 +296,7 @@ QTextDocument* Converter::convert( const QString &fileName )
 
       QTextBlock before;
       if(firstPage) {
-        // preHtml & postHtml make it possible to have a margin around the content of the page
-        const QString preHtml = QString::fromLatin1("<html><head></head><body>"
-                                        "<table style=\"-qt-table-type: root; margin-top:%1px; margin-bottom:%1px; margin-left:%1px; margin-right:%1px;\">"
-                                        "<tr>"
-                                        "<td style=\"border: none;\">").arg(mTextDocument->padding);
-        const QString postHtml = QStringLiteral("</tr></table></body></html>");
-        mTextDocument->setHtml(preHtml + htmlContent + postHtml);
+        mTextDocument->setHtml(htmlContent);
         firstPage = false;
         before = mTextDocument->begin();
       } else {

@@ -20,6 +20,7 @@
   <name xml:lang="ia">Documentos CHM</name>
   <name xml:lang="it">Documenti CHM</name>
   <name xml:lang="ko">CHM 문서</name>
+  <name xml:lang="ml">സി എച് എം പ്രമാണങ്ങൾ</name>
   <name xml:lang="nl">CHM-documenten</name>
   <name xml:lang="nn">CHM-dokument</name>
   <name xml:lang="pl">Dokumenty CHM</name>
@@ -54,6 +55,7 @@
   <summary xml:lang="ia">Adde supporto per leger documentos CHM</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti CHM</summary>
   <summary xml:lang="ko">CHM 문서 읽기 지원 추가</summary>
+  <summary xml:lang="ml">സി എം എച് പ്രമാണങ്ങൾ വായിക്കുവാൻ പിന്തുണ ചേർക്കുന്നു</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van CHM-documenten toe</summary>
   <summary xml:lang="nn">Legg til støtte for å lesa CHM-dokument</summary>
   <summary xml:lang="pl">Dodaje obsługę dokumnetów CHM</summary>

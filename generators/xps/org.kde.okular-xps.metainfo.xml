@@ -20,6 +20,7 @@
   <name xml:lang="ia">XPS</name>
   <name xml:lang="it">XPS</name>
   <name xml:lang="ko">XPS</name>
+  <name xml:lang="ml">എക്സ് പി എസ്</name>
   <name xml:lang="nl">XPS</name>
   <name xml:lang="nn">XPS</name>
   <name xml:lang="pl">XPS</name>
@@ -54,6 +55,7 @@
   <summary xml:lang="ia">Adde supporto per leger documentos XPS</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti XPS</summary>
   <summary xml:lang="ko">XPS 문서 읽기 지원 추가</summary>
+  <summary xml:lang="ml">എക്‌സ് പി എസ് പ്രമാണങ്ങൾ വായിക്കാൻ പിന്തുണാ ചേർക്കുന്നു</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van XPS-documenten toe</summary>
   <summary xml:lang="nn">Legg til støtte for å lesa XPS-dokument</summary>
   <summary xml:lang="pl">Dodaje obsługę dokumnetów XPS</summary>

@@ -20,6 +20,7 @@
   <name xml:lang="ia">Libros de Comic</name>
   <name xml:lang="it">Fumetti</name>
   <name xml:lang="ko">만화책</name>
+  <name xml:lang="ml">കോമിക് പുസ്തകങ്ങള്‍</name>
   <name xml:lang="nl">Stripboeken</name>
   <name xml:lang="nn">Teikneseriar</name>
   <name xml:lang="pl">Komiksy</name>
@@ -54,6 +55,7 @@
   <summary xml:lang="ia">Adde supporto per leger libros de comic</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di fumetti</summary>
   <summary xml:lang="ko">만화책 읽기 지원 추가</summary>
+  <summary xml:lang="ml">കോമിക്ക് പുസ്തകങ്ങൾ വായിക്കാൻ പിന്തുണ ചേർക്കുന്നു</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van stripboeken toe</summary>
   <summary xml:lang="nn">Legg til støtte for å lesa teikneseriefiler</summary>
   <summary xml:lang="pl">Dodaje obsługę komiksów</summary>

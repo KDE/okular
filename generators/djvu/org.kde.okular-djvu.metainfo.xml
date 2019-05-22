@@ -20,6 +20,7 @@
   <name xml:lang="ia">Documentos DjVu</name>
   <name xml:lang="it">Documenti DjVu</name>
   <name xml:lang="ko">DjVu 문서</name>
+  <name xml:lang="ml">ഡിജെവിയു പ്രമാണങ്ങൾ</name>
   <name xml:lang="nl">DjVu-documenten</name>
   <name xml:lang="nn">DjVu-dokument</name>
   <name xml:lang="pl">Dokumenty DjVu</name>
@@ -54,6 +55,7 @@
   <summary xml:lang="ia">Adde supporto per leger documentos DjVu</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti DjVu</summary>
   <summary xml:lang="ko">DjVu 문서 읽기 지원 추가</summary>
+  <summary xml:lang="ml">ഡിജെവിയു പ്രമാണങ്ങൾ വായിക്കുവാൻ പിന്തുണ ചേർക്കുന്നു</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van DjVu-documenten toe</summary>
   <summary xml:lang="nn">Legg til støtte for å lesa DjVu-dokument</summary>
   <summary xml:lang="pl">Dodaje obsługę czytania dokumentów DjVu</summary>

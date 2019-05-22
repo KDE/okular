@@ -20,6 +20,7 @@
   <name xml:lang="ia">Plucker</name>
   <name xml:lang="it">Plucker</name>
   <name xml:lang="ko">plucker</name>
+  <name xml:lang="ml">പ്ലക്കർ</name>
   <name xml:lang="nl">Plucker</name>
   <name xml:lang="nn">Plucker</name>
   <name xml:lang="pl">Plucker</name>
@@ -54,6 +55,7 @@
   <summary xml:lang="ia">Adde supporto per leger documentos Plucker</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti Plucker</summary>
   <summary xml:lang="ko">Plucker 문서 읽기 지원 추가</summary>
+  <summary xml:lang="ml">പ്ലക്കർ പ്രമാണങ്ങൾ വായിക്കാൻ പിന്തുണ ചേർക്കുന്നു</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van Plucker-documenten toe</summary>
   <summary xml:lang="nn">Legg til støtte for å lesa Plucker-dokument</summary>
   <summary xml:lang="pl">Dodaje obsługę czytania dokumnetów Plucker</summary>

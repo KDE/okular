@@ -20,6 +20,7 @@
   <name xml:lang="ia">Images</name>
   <name xml:lang="it">Immagini</name>
   <name xml:lang="ko">그림</name>
+  <name xml:lang="ml">ചിത്രങ്ങള്‍</name>
   <name xml:lang="nl">Afbeeldingen</name>
   <name xml:lang="nn">Bilete</name>
   <name xml:lang="pl">Obrazy</name>
@@ -54,6 +55,7 @@
   <summary xml:lang="ia">Adde supporto per leger formatos de image</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di vari formati di immagini</summary>
   <summary xml:lang="ko">다양한 그림 형식 읽기 지원 추가</summary>
+  <summary xml:lang="ml">നിരവധി ചിത്ര ഫോർമാറ്റുകൾ വായിക്കുന്നതിനുള്ള പിന്തുണ ചേർക്കുന്നു</summary>
   <summary xml:lang="nl">Ondersteuning toevoegen om vele afbeeldingsformaten te lezen</summary>
   <summary xml:lang="nn">Legg til støtte for å lesa mange ulike biletformat</summary>
   <summary xml:lang="pl">Dodaje obsługę czytania wielu formatów obrazów</summary>

@@ -5115,6 +5115,14 @@ QByteArray Document::requestSignedRevisionData( const Okular::SignatureInfo &inf
     return data;
 }
 
+QString Document::executeScript( QString function )
+{
+    qDebug() << function;
+    if( !d->m_scripter )
+        d->m_scripter = new Scripter( d );
+    return d->m_scripter->execute( JavaScript, function );
+}
+
 void DocumentPrivate::requestDone( PixmapRequest * req )
 {
     if ( !req )

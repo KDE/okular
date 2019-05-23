@@ -1467,6 +1467,18 @@ void PageView::notifyCurrentPageChanged( int previous, int current )
             Q_FOREACH ( VideoWidget *videoWidget, item->videoWidgets() )
                 videoWidget->pageLeft();
         }
+
+        // On close, run the widget scripts, needed for running animated PDF
+        const Okular::Page *page = d->document->page( previous );
+        foreach( Okular::Annotation *annotation, page->annotations() )
+        {
+            if ( annotation->subType() == Okular::Annotation::AWidget )
+            {
+                Okular::WidgetAnnotation *widgetAnnotation = static_cast<Okular::WidgetAnnotation*>( annotation );
+                d->document->processAction( widgetAnnotation->additionalAction( Okular::Annotation::PageClosing ) );
+            }
+        }
+
     }
 
     if ( current != -1 )
@@ -1481,6 +1493,17 @@ void PageView::notifyCurrentPageChanged( int previous, int current )
         // update zoom text and factor if in a ZoomFit/* zoom mode
         if ( d->zoomMode != ZoomFixed )
             updateZoomText();
+
+        // Opening any widget scripts, needed for running animated PDF
+        const Okular::Page *page = d->document->page( current );
+        foreach( Okular::Annotation *annotation, page->annotations() )
+        {
+            if ( annotation->subType() == Okular::Annotation::AWidget )
+            {
+                Okular::WidgetAnnotation *widgetAnnotation = static_cast<Okular::WidgetAnnotation*>( annotation );
+                d->document->processAction( widgetAnnotation->additionalAction( Okular::Annotation::PageOpening ) );
+            }
+        }
     }
 }
 

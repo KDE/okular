@@ -28,10 +28,12 @@ class ExecutorKJS
         ExecutorKJS &operator=(const ExecutorKJS &) = delete;
 
         void execute( const QString &script, Event *event );
+        QString getResult();
 
     private:
         friend class ExecutorKJSPrivate;
         ExecutorKJSPrivate* d;
+        QString* resultValue;
 };
 
 }

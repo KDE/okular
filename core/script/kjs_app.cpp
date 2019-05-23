@@ -21,11 +21,14 @@
 #include <KLocalizedString>
 
 #include "../document_p.h"
+#include "../scripter.h"
 #include "kjs_fullscreen_p.h"
 
 using namespace Okular;
 
 static KJSPrototype *g_appProto;
+typedef QHash< int, QTimer * > TimerCache;
+Q_GLOBAL_STATIC( TimerCache, g_timerCache )
 
 // the acrobat version we fake
 static const double fake_acroversion = 8.00;
@@ -199,6 +202,77 @@ static KJSObject appGoForward( KJSContext *, void *object,
     return KJSUndefined();
 }
 
+// app.setInterval()
+static KJSObject appSetInterval( KJSContext *ctx, void *object,
+                                      const KJSArguments &arguments )
+{
+    DocumentPrivate *doc = reinterpret_cast< DocumentPrivate * >( object );
+    QString function = arguments.at( 0 ).toString( ctx ) + ';';
+    int interval = arguments.at( 1 ).toInt32( ctx );
+
+    QTimer *timer = new QTimer();
+
+    QObject::connect( timer, &QTimer::timeout, [=](){ doc->m_parent->executeScript( function ); } );
+
+    timer->start( interval );
+
+    return JSApp::wrapTimer( ctx, timer );
+}
+
+// app.clearInterval()
+static KJSObject appClearInterval( KJSContext *ctx, void *object,
+                                      const KJSArguments &arguments )
+{
+    KJSObject timerObject = arguments.at( 0 );
+    int timerId = timerObject.property( ctx, QStringLiteral( "timerID" ).toLatin1().toBase64() ).toInt32( ctx );
+    QTimer *timer = g_timerCache->value( timerId );
+    if( timer != nullptr )
+    {
+        timer->stop();
+        g_timerCache->remove( timerId );
+        delete timer;
+    }
+
+    return KJSUndefined();
+}
+
+// app.setTimeOut()
+static KJSObject appSetTimeOut( KJSContext *ctx, void *object,
+                                      const KJSArguments &arguments )
+{
+    DocumentPrivate *doc = reinterpret_cast< DocumentPrivate * >( object );
+    QString function = arguments.at( 0 ).toString( ctx ) + ';';
+    int interval = arguments.at( 1 ).toInt32( ctx );
+
+    QTimer *timer = new QTimer();
+    timer->setSingleShot( true );
+
+    QObject::connect( timer, &QTimer::timeout, [=](){ doc->m_parent->executeScript( function ); } );
+
+    timer->start( interval );
+
+    return JSApp::wrapTimer( ctx, timer );
+}
+
+// app.clearTimeOut()
+static KJSObject appClearTimeOut( KJSContext *ctx, void *object,
+                                      const KJSArguments &arguments )
+{
+    KJSObject timerObject = arguments.at( 0 );
+    int timerId = timerObject.property( ctx, QStringLiteral( "timerID" ).toLatin1().toBase64() ).toInt32( ctx );
+    QTimer *timer = g_timerCache->value( timerId );
+
+    if( timer != nullptr )
+    {
+        timer->stop();
+        g_timerCache->remove( timerId );
+        delete timer;
+    }
+
+    return KJSUndefined();
+}
+
+
 void JSApp::initType( KJSContext *ctx )
 {
     static bool initialized = false;
@@ -223,9 +297,40 @@ void JSApp::initType( KJSContext *ctx )
     g_appProto->defineFunction( ctx, QStringLiteral("getNthPlugInName"), appGetNthPlugInName );
     g_appProto->defineFunction( ctx, QStringLiteral("goBack"), appGoBack );
     g_appProto->defineFunction( ctx, QStringLiteral("goForward"), appGoForward );
+    g_appProto->defineFunction( ctx, QStringLiteral("setInterval"), appSetInterval );
+    g_appProto->defineFunction( ctx, QStringLiteral("clearInterval"), appClearInterval );
+    g_appProto->defineFunction( ctx, QStringLiteral("setTimeOut"), appSetTimeOut );
+    g_appProto->defineFunction( ctx, QStringLiteral("clearTimeOut"), appClearTimeOut );
 }
 
 KJSObject JSApp::object( KJSContext *ctx, DocumentPrivate *doc )
 {
     return g_appProto->constructObject( ctx, doc );
+}
+
+KJSObject JSApp::wrapTimer( KJSContext *ctx, QTimer *timer)
+{
+    KJSObject timerObject = g_appProto->constructObject( ctx, timer );
+    timerObject.setProperty( ctx, QStringLiteral("timerID").toLatin1().toBase64(), timer->timerId() );
+
+    g_timerCache->insert( timer->timerId(), timer );
+
+    return timerObject;
+}
+
+void JSApp::clearCachedFields()
+{
+    if ( g_timerCache )
+    {
+        for( auto it = g_timerCache->begin(); it != g_timerCache->end(); ++it )
+        {
+            QTimer *timer = it.value();
+            
+            if(timer == nullptr)
+                continue;
+            
+            delete timer;
+        }
+        g_timerCache->clear();
+    }
 }

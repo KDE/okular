@@ -1,6 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2008 by Pino Toscano <pino@kde.org>                     *
- *   Copyright (C) 2008 by Harri Porten <porten@kde.org>                   *
+ *   Copyright (C) 2019 by João Netto <joaonetto901@gmail.com>             *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -8,25 +7,19 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef OKULAR_SCRIPT_KJS_APP_P_H
-#define OKULAR_SCRIPT_KJS_APP_P_H
+#ifndef OKULAR_SCRIPT_KJS_DISPLAY_P_H
+#define OKULAR_SCRIPT_KJS_DISPLAY_P_H
 
 class KJSContext;
 class KJSObject;
 
-#include <QTimer>
-
 namespace Okular {
 
-class DocumentPrivate;
-
-class JSApp
+class JSDisplay
 {
     public:
         static void initType( KJSContext *ctx );
-        static KJSObject object( KJSContext *ctx, DocumentPrivate *doc );
-        static KJSObject wrapTimer( KJSContext *ctx, QTimer *timer );
-        static void clearCachedFields();
+        static KJSObject object( KJSContext *ctx );
 };
 
 }

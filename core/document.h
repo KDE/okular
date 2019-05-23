@@ -1040,6 +1040,13 @@ class OKULARCORE_EXPORT Document : public QObject
          */
         QByteArray requestSignedRevisionData( const Okular::SignatureInfo &info );
 
+        /**
+         * Executes a JavaScript script from the setInterval function.
+         *
+         * @since 1.7
+        */
+        void executeScript();
+
     Q_SIGNALS:
         /**
          * This signal is emitted whenever the document is about to close.

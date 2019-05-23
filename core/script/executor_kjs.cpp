@@ -24,6 +24,7 @@
 #include "kjs_app_p.h"
 #include "kjs_console_p.h"
 #include "kjs_data_p.h"
+#include "kjs_display_p.h"
 #include "kjs_document_p.h"
 #include "kjs_event_p.h"
 #include "kjs_field_p.h"
@@ -64,6 +65,7 @@ void ExecutorKJSPrivate::initTypes()
     JSFullscreen::initType( ctx );
     JSConsole::initType( ctx );
     JSData::initType( ctx );
+    JSDisplay::initType( ctx );
     JSDocument::initType( ctx );
     JSEvent::initType( ctx );
     JSField::initType( ctx );
@@ -73,6 +75,7 @@ void ExecutorKJSPrivate::initTypes()
     m_docObject.setProperty( ctx, QStringLiteral("app"), JSApp::object( ctx, m_doc ) );
     m_docObject.setProperty( ctx, QStringLiteral("console"), JSConsole::object( ctx ) );
     m_docObject.setProperty( ctx, QStringLiteral("Doc"), m_docObject );
+    m_docObject.setProperty( ctx, QStringLiteral("display"), JSDisplay::object( ctx ));
     m_docObject.setProperty( ctx, QStringLiteral("spell"), JSSpell::object( ctx ) );
     m_docObject.setProperty( ctx, QStringLiteral("util"), JSUtil::object( ctx ) );
 }
@@ -84,6 +87,8 @@ ExecutorKJS::ExecutorKJS( DocumentPrivate *doc )
 
 ExecutorKJS::~ExecutorKJS()
 {
+    JSField::clearCachedFields();
+    JSApp::clearCachedFields();
     delete d;
 }
 
@@ -120,5 +125,4 @@ void ExecutorKJS::execute( const QString &script, Event *event )
                                      << event->type() << "value:" << event->value();
         }
     }
-    JSField::clearCachedFields();
 }

@@ -304,6 +304,7 @@ if (KF5JS_FOUND)
             core/script/kjs_app.cpp
             core/script/kjs_console.cpp
             core/script/kjs_data.cpp
+            core/script/kjs_display.cpp
             core/script/kjs_document.cpp
             core/script/kjs_field.cpp
             core/script/kjs_fullscreen.cpp

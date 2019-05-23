@@ -224,6 +224,24 @@ static void fieldSetHidden( KJSContext *context, void *object, KJSObject value )
     updateField( field );
 }
 
+// Field.display (getter)
+static KJSObject fieldGetDisplay( KJSContext *, void *object )
+{
+    const FormField *field = reinterpret_cast< FormField * >( object );
+    return KJSBoolean( field->isVisible() );
+}
+
+// Field.display (setter)
+static void fieldSetDisplay( KJSContext *context, void *object, KJSObject value )
+{
+    FormField *field = reinterpret_cast< FormField * >( object );
+    bool b = value.toBoolean( context );
+    field->setVisible( b );
+
+    updateField( field );
+}
+
+
 void JSField::initType( KJSContext *ctx )
 {
     static bool initialized = false;
@@ -241,6 +259,7 @@ void JSField::initType( KJSContext *ctx )
     g_fieldProto->defineProperty( ctx, QStringLiteral("type"), fieldGetType );
     g_fieldProto->defineProperty( ctx, QStringLiteral("value"), fieldGetValue, fieldSetValue );
     g_fieldProto->defineProperty( ctx, QStringLiteral("hidden"), fieldGetHidden, fieldSetHidden );
+    g_fieldProto->defineProperty( ctx, QStringLiteral("display"), fieldGetDisplay, fieldSetDisplay );
 }
 
 KJSObject JSField::wrapField( KJSContext *ctx, FormField *field, Page *page )

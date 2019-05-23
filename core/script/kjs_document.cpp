@@ -129,6 +129,21 @@ static KJSObject docGetExternal( KJSContext *, void *object )
     return KJSBoolean( !isShell );
 }
 
+// Document.numFields
+static KJSObject docGetNumFields( KJSContext *, void *object )
+{
+    DocumentPrivate *doc = reinterpret_cast< DocumentPrivate* >( object );
+
+    unsigned int numFields = 0;
+
+    for ( const Page * pIt : qAsConst(doc->m_pagesVector) )
+    {
+        numFields += pIt->formFields().size();
+    }
+
+    return KJSNumber( numFields );
+}
+
 
 static KJSObject docGetInfo( KJSContext *ctx, void *object )
 {
@@ -248,6 +263,32 @@ static KJSObject docSyncAnnotScan( KJSContext *, void *,
     return KJSUndefined();
 }
 
+// Document.getNthFieldName
+static KJSObject docGetNthFieldName( KJSContext *ctx, void *object,
+                                   const KJSArguments &arguments )
+{
+    DocumentPrivate *doc = reinterpret_cast< DocumentPrivate* >( object );
+
+    int numField = arguments.at( 0 ).toInt32( ctx );
+
+    for ( const Page * pIt : qAsConst(doc->m_pagesVector) )
+    {
+        const QLinkedList< Okular::FormField * > pageFields = pIt->formFields();
+        
+        if(numField < pageFields.size())
+        {
+            auto ffIt = pageFields.begin();
+            ffIt += numField;
+            
+            return KJSString( (*ffIt)->name() );
+        }
+
+        numField -= pageFields.size();
+    }
+
+    return KJSUndefined();
+}
+
 void JSDocument::initType( KJSContext *ctx )
 {
     assert( g_docProto );
@@ -266,6 +307,7 @@ void JSDocument::initType( KJSContext *ctx )
     g_docProto->defineProperty( ctx, QStringLiteral("permStatusReady"), docGetPermStatusReady );
     g_docProto->defineProperty( ctx, QStringLiteral("dataObjects"), docGetDataObjects );
     g_docProto->defineProperty( ctx, QStringLiteral("external"), docGetExternal );
+    g_docProto->defineProperty( ctx, QStringLiteral("numFields"), docGetNumFields );
 
     // info properties
     g_docProto->defineProperty( ctx, QStringLiteral("info"), docGetInfo );
@@ -281,6 +323,7 @@ void JSDocument::initType( KJSContext *ctx )
     g_docProto->defineFunction( ctx, QStringLiteral("getPageRotation"), docGetPageRotation );
     g_docProto->defineFunction( ctx, QStringLiteral("gotoNamedDest"), docGotoNamedDest );
     g_docProto->defineFunction( ctx, QStringLiteral("syncAnnotScan"), docSyncAnnotScan );
+    g_docProto->defineFunction( ctx, QStringLiteral("getNthFieldName"), docGetNthFieldName );
 }
 
 KJSGlobalObject JSDocument::wrapDocument( DocumentPrivate *doc )

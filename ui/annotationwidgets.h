@@ -175,13 +175,13 @@ protected:
 private:
     Okular::LineAnnotation * m_lineAnn;
     int m_lineType;
-    QDoubleSpinBox * m_spinLL;
-    QDoubleSpinBox * m_spinLLE;
-    QCheckBox * m_useColor;
-    KColorButton * m_innerColor;
-    QDoubleSpinBox * m_spinSize;
-    QComboBox * m_startStyleCombo;
-    QComboBox * m_endStyleCombo;
+    QDoubleSpinBox * m_spinLL { nullptr };
+    QDoubleSpinBox * m_spinLLE { nullptr };
+    QCheckBox * m_useColor { nullptr };
+    KColorButton * m_innerColor { nullptr };
+    QDoubleSpinBox * m_spinSize { nullptr };
+    QComboBox * m_startStyleCombo { nullptr };
+    QComboBox * m_endStyleCombo { nullptr };
 };
 
 class HighlightAnnotationWidget

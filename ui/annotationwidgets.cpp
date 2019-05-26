@@ -494,23 +494,12 @@ QWidget * LineAnnotationWidget::createStyleWidget()
     gridlay2->addWidget( m_spinSize, 0, 1 );
     tmplabel2->setBuddy( m_spinSize );
 
-    if ( m_lineType == 1 )
+    if ( m_lineType == 1 )  //Polygon
     {
         m_useColor = new QCheckBox( i18n( "Inner color:" ), gb2 );
         gridlay2->addWidget( m_useColor, 1, 0 );
         m_innerColor = new KColorButton( gb2 );
         gridlay2->addWidget( m_innerColor, 1, 1 );
-    }
-
-    if ( m_lineType == 0 )
-    {
-        m_spinLL->setRange( -500, 500 );
-        m_spinLL->setValue( m_lineAnn->lineLeadingForwardPoint() );
-        m_spinLLE->setRange( 0, 500 );
-        m_spinLLE->setValue( m_lineAnn->lineLeadingBackwardPoint() );
-    }
-    else if ( m_lineType == 1 )
-    {
         m_innerColor->setColor( m_lineAnn->lineInnerColor() );
         if ( m_lineAnn->lineInnerColor().isValid() )
         {
@@ -521,6 +510,44 @@ QWidget * LineAnnotationWidget::createStyleWidget()
             m_innerColor->setEnabled( false );
         }
     }
+
+    if ( m_lineType == 0 )  //Straight line
+    {
+        m_spinLL->setRange( -500, 500 );
+        m_spinLL->setValue( m_lineAnn->lineLeadingForwardPoint() );
+        m_spinLLE->setRange( 0, 500 );
+        m_spinLLE->setValue( m_lineAnn->lineLeadingBackwardPoint() );
+
+        //Line Term Styles
+        QLabel * tmplabel3 = new QLabel( i18n( "Line Start:" ), widget );
+        QLabel * tmplabel4 = new QLabel( i18n( "Line End:" ), widget );
+        gridlay2->addWidget( tmplabel3, 1, 0, Qt::AlignRight );
+        gridlay2->addWidget( tmplabel4, 2, 0, Qt::AlignRight );
+        m_startStyleCombo = new QComboBox( widget );
+        m_endStyleCombo = new QComboBox( widget );
+        tmplabel3->setBuddy( m_startStyleCombo );
+        tmplabel4->setBuddy( m_endStyleCombo );
+        gridlay2->addWidget( m_startStyleCombo, 1, 1, Qt::AlignLeft );
+        gridlay2->addWidget( m_endStyleCombo,  2, 1, Qt::AlignLeft );
+        tmplabel3->setToolTip( i18n("Only for PDF documents") );
+        tmplabel4->setToolTip( i18n("Only for PDF documents") );
+        m_startStyleCombo->setToolTip( i18n("Only for PDF documents") );
+        m_endStyleCombo->setToolTip( i18n("Only for PDF documents") );
+
+        for ( const QString &i: { i18n( "Square" ), i18n( "Circle" ), i18n( "Diamond" ), i18n( "Open Arrow" ), i18n( "Closed Arrow" ),
+                        i18n( "None" ), i18n( "Butt" ), i18n( "Right Open Arrow" ), i18n( "Right Closed Arrow" ), i18n( "Slash" ) } )
+        {
+            m_startStyleCombo->addItem( i );
+            m_endStyleCombo->addItem( i );
+        }
+
+        m_startStyleCombo->setCurrentIndex( m_lineAnn->lineStartStyle() );
+        m_endStyleCombo->setCurrentIndex( m_lineAnn->lineEndStyle() );
+        connect( m_startStyleCombo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LineAnnotationWidget::dataChanged );
+        connect( m_endStyleCombo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LineAnnotationWidget::dataChanged );
+
+    }
+
     m_spinSize->setRange( 1, 100 );
     m_spinSize->setValue( m_lineAnn->style().width() );
 
@@ -533,37 +560,9 @@ QWidget * LineAnnotationWidget::createStyleWidget()
     {
         connect( m_innerColor, &KColorButton::changed, this, &AnnotationWidget::dataChanged );
         connect( m_useColor, &QAbstractButton::toggled, this, &AnnotationWidget::dataChanged );
-        connect(m_useColor, &QCheckBox::toggled, m_innerColor, &KColorButton::setEnabled);
+        connect( m_useColor, &QCheckBox::toggled, m_innerColor, &KColorButton::setEnabled );
     }
     connect( m_spinSize, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LineAnnotationWidget::dataChanged );
-
-    //Line Term Styles
-    QLabel * tmplabel3 = new QLabel( i18n( "Line Start:" ), widget );
-    QLabel * tmplabel4 = new QLabel( i18n( "Line End:" ), widget );
-    gridlay2->addWidget( tmplabel3, 1, 0, Qt::AlignRight );
-    gridlay2->addWidget( tmplabel4, 2, 0, Qt::AlignRight );
-    m_startStyleCombo = new QComboBox( widget );
-    m_endStyleCombo = new QComboBox( widget );
-    tmplabel3->setBuddy( m_startStyleCombo );
-    tmplabel4->setBuddy( m_endStyleCombo );
-    gridlay2->addWidget( m_startStyleCombo, 1, 1, Qt::AlignLeft );
-    gridlay2->addWidget( m_endStyleCombo,  2, 1, Qt::AlignLeft );
-    tmplabel3->setToolTip( i18n("Only for PDF documents") );
-    tmplabel4->setToolTip( i18n("Only for PDF documents") );
-    m_startStyleCombo->setToolTip( i18n("Only for PDF documents"));
-    m_endStyleCombo->setToolTip( i18n("Only for PDF documents"));
-
-    for ( const QString &i: { i18n( " Square" ), i18n( " Circle" ), i18n( " Diamond" ), i18n( " Open Arrow" ), i18n( " Closed Arrow" ),
-                    i18n( " None" ), i18n( " Butt" ), i18n( " Right Open Arrow" ), i18n( " Right Closed Arrow" ), i18n( "Slash" ) } )
-    {
-        m_startStyleCombo->addItem(i);
-        m_endStyleCombo->addItem(i);
-    }
-
-    m_startStyleCombo->setCurrentIndex( m_lineAnn->lineStartStyle() );
-    m_endStyleCombo->setCurrentIndex( m_lineAnn->lineEndStyle() );
-    connect( m_startStyleCombo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LineAnnotationWidget::dataChanged );
-    connect( m_endStyleCombo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LineAnnotationWidget::dataChanged );
 
     return widget;
 }
@@ -573,11 +572,15 @@ void LineAnnotationWidget::applyChanges()
     AnnotationWidget::applyChanges();
     if ( m_lineType == 0 )
     {
+        Q_ASSERT(m_spinLL && m_spinLLE && m_startStyleCombo && m_endStyleCombo);
         m_lineAnn->setLineLeadingForwardPoint( m_spinLL->value() );
         m_lineAnn->setLineLeadingBackwardPoint( m_spinLLE->value() );
+        m_lineAnn->setLineStartStyle( (Okular::LineAnnotation::TermStyle)m_startStyleCombo->currentIndex() );
+        m_lineAnn->setLineEndStyle( (Okular::LineAnnotation::TermStyle)m_endStyleCombo->currentIndex() );
     }
     else if ( m_lineType == 1 )
     {
+        Q_ASSERT( m_useColor && m_innerColor );
         if ( !m_useColor->isChecked() )
         {
             m_lineAnn->setLineInnerColor( QColor() );
@@ -587,9 +590,8 @@ void LineAnnotationWidget::applyChanges()
             m_lineAnn->setLineInnerColor( m_innerColor->color() );
         }
     }
+    Q_ASSERT( m_spinSize );
     m_lineAnn->style().setWidth( m_spinSize->value() );
-    m_lineAnn->setLineStartStyle( (Okular::LineAnnotation::TermStyle)m_startStyleCombo->currentIndex() );
-    m_lineAnn->setLineEndStyle( (Okular::LineAnnotation::TermStyle)m_endStyleCombo->currentIndex() );
 }
 
 

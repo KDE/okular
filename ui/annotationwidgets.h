@@ -173,6 +173,8 @@ protected:
     QWidget * createStyleWidget() override;
 
 private:
+    static QIcon endStyleIcon( Okular::LineAnnotation::TermStyle endStyle, const QColor &lineColor );
+
     Okular::LineAnnotation * m_lineAnn;
     int m_lineType;
     QDoubleSpinBox * m_spinLL { nullptr };

@@ -23,11 +23,15 @@
 #include <kiconloader.h>
 #include <KLocalizedString>
 #include <QDebug>
+#include <QGuiApplication>
+#include <QList>
 #include <QMimeDatabase>
+#include <QPair>
 #include <KFormat>
 
 #include "core/document.h"
 #include "guiutils.h"
+#include "pagepainter.h"
 
 #define FILEATTACH_ICONSIZE 48
 
@@ -530,11 +534,24 @@ QWidget * LineAnnotationWidget::createStyleWidget()
         gridlay2->addWidget( m_startStyleCombo, 1, 1, Qt::AlignLeft );
         gridlay2->addWidget( m_endStyleCombo,  2, 1, Qt::AlignLeft );
 
-        for ( const QString &i: { i18n( "Square" ), i18n( "Circle" ), i18n( "Diamond" ), i18n( "Open Arrow" ), i18n( "Closed Arrow" ),
-                        i18n( "None" ), i18n( "Butt" ), i18n( "Right Open Arrow" ), i18n( "Right Closed Arrow" ), i18n( "Slash" ) } )
+        const QList<QPair<Okular::LineAnnotation::TermStyle, QString>> termStyles
         {
-            m_startStyleCombo->addItem( i );
-            m_endStyleCombo->addItem( i );
+            { Okular::LineAnnotation::Square, i18n( "Square" ) },
+            { Okular::LineAnnotation::Circle, i18n( "Circle" ) },
+            { Okular::LineAnnotation::Diamond, i18n( "Diamond" ) },
+            { Okular::LineAnnotation::OpenArrow, i18n( "Open Arrow" ) },
+            { Okular::LineAnnotation::ClosedArrow, i18n( "Closed Arrow" ) },
+            { Okular::LineAnnotation::None, i18n( "None" ) },
+            { Okular::LineAnnotation::Butt, i18n( "Butt" ) },
+            { Okular::LineAnnotation::ROpenArrow, i18n( "Right Open Arrow" ) },
+            { Okular::LineAnnotation::RClosedArrow, i18n( "Right Closed Arrow" ) },
+            { Okular::LineAnnotation::Slash, i18n( "Slash" ) }
+        };
+        for ( const auto &item: termStyles )
+        {
+            const QIcon icon = endStyleIcon( item.first, QGuiApplication::palette().color( QPalette::WindowText ) );
+            m_startStyleCombo->addItem( icon, item.second );
+            m_endStyleCombo->addItem( icon, item.second );
         }
 
         m_startStyleCombo->setCurrentIndex( m_lineAnn->lineStartStyle() );
@@ -588,6 +605,23 @@ void LineAnnotationWidget::applyChanges()
     }
     Q_ASSERT( m_spinSize );
     m_lineAnn->style().setWidth( m_spinSize->value() );
+}
+
+QIcon LineAnnotationWidget::endStyleIcon( Okular::LineAnnotation::TermStyle endStyle, const QColor &lineColor ) {
+    const int iconSize { 48 };
+    QImage image { iconSize, iconSize, QImage::Format_ARGB32};
+    image.fill( qRgba(0, 0, 0, 0) );
+    Okular::LineAnnotation prototype;
+    prototype.setLinePoints( { { 0, 0.5 }, { 0.65, 0.5 } } );
+    prototype.setLineStartStyle(Okular::LineAnnotation::TermStyle::None);
+    prototype.setLineEndStyle( endStyle );
+    prototype.style().setWidth( 4 );
+    prototype.style().setColor( lineColor );
+    prototype.style().setLineStyle( Okular::Annotation::LineStyle::Solid );
+    prototype.setBoundingRectangle( { 0, 0, 1, 1 } );
+    LineAnnotPainter linepainter { &prototype, { iconSize, iconSize }, 1, QTransform() };
+    linepainter.draw( image );
+    return QIcon( QPixmap::fromImage( image ) );
 }
 
 

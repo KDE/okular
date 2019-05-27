@@ -375,7 +375,7 @@ void FormWidgetIface::slotRefresh( Okular::FormField * form )
     {
         return;
     }
-    setVisibility( form->isVisible() && !form->isReadOnly() );
+    setVisibility( form->isVisible() /*&& !form->isReadOnly()*/ );
 
     m_widget->setEnabled( !form->isReadOnly() );
 }

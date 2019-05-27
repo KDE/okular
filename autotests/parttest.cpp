@@ -255,7 +255,8 @@ void PartTest::testForwardPDF_data()
     QTest::addColumn<QString>("dir");
 
     QTest::newRow("non-utf8") << QStringLiteral("synctextest");
-    QTest::newRow("utf8")     << QStringLiteral("ßðđđŋßðđŋ");
+    //QStringliteral is broken on windows with non ascii chars so using QString::fromUtf8
+    QTest::newRow("utf8")     << QString::fromUtf8("ßðđđŋßðđŋ");
 }
 
 void PartTest::testGeneratorPreferences()

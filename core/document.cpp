@@ -5112,10 +5112,12 @@ QByteArray Document::requestSignedRevisionData( const Okular::SignatureInfo &inf
     return data;
 }
 
-void Document::executeScript()
+QString Document::executeScript( QString function )
 {
-    QString function = sender()->property( "function" ).toString();
-    d->m_scripter->execute( JavaScript, function );
+    qDebug() << function;
+    if( !d->m_scripter )
+        d->m_scripter = new Scripter( d );
+    return d->m_scripter->execute( JavaScript, function );
 }
 
 void DocumentPrivate::requestDone( PixmapRequest * req )

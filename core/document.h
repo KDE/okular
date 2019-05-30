@@ -1045,7 +1045,7 @@ class OKULARCORE_EXPORT Document : public QObject
          *
          * @since 1.7
         */
-        void executeScript();
+        QString executeScript( QString function );
 
     Q_SIGNALS:
         /**

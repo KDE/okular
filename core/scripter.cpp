@@ -79,7 +79,8 @@ QString Scripter::execute( ScriptType type, const QString &script )
                 d->m_kjs.reset(new ExecutorKJS( d->m_doc ));
             }
             d->m_kjs->execute( builtInScript + script, d->m_event );
-            break;
+            
+            return d->m_kjs->getResult();
     }
 #endif
     return QString();

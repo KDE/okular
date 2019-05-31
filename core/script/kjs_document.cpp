@@ -24,6 +24,7 @@
 #include "../form.h"
 #include "kjs_data_p.h"
 #include "kjs_field_p.h"
+#include "kjs_ocg_p.h"
 
 using namespace Okular;
 
@@ -289,6 +290,30 @@ static KJSObject docGetNthFieldName( KJSContext *ctx, void *object,
     return KJSUndefined();
 }
 
+static KJSObject docGetOCGs( KJSContext *ctx, void *object,
+                                   const KJSArguments &arguments )
+{
+    DocumentPrivate *doc = reinterpret_cast< DocumentPrivate* >( object );
+
+    QAbstractItemModel * model = doc->m_parent->layersModel();
+
+    KJSArray array( ctx, model->rowCount() );
+
+    for(int i = 0;i < model->rowCount();++i){
+        for(int j = 0;j < model->columnCount();++j){
+            QModelIndex index = model->index( i, j );
+            
+            KJSObject item = JSOCG::wrapOCGObject( ctx, model, i, j );
+            item.setProperty( ctx, QStringLiteral("name"), model->data( index , Qt::DisplayRole ).toString() );
+            item.setProperty( ctx, QStringLiteral("initState"), model->data( index , Qt::CheckStateRole ).toBool() );
+
+            array.setProperty( ctx, QString::number( i ), item );
+        }
+    }
+
+    return array;
+}
+
 void JSDocument::initType( KJSContext *ctx )
 {
     assert( g_docProto );
@@ -324,6 +349,7 @@ void JSDocument::initType( KJSContext *ctx )
     g_docProto->defineFunction( ctx, QStringLiteral("gotoNamedDest"), docGotoNamedDest );
     g_docProto->defineFunction( ctx, QStringLiteral("syncAnnotScan"), docSyncAnnotScan );
     g_docProto->defineFunction( ctx, QStringLiteral("getNthFieldName"), docGetNthFieldName );
+    g_docProto->defineFunction( ctx, QStringLiteral("getOCGs"), docGetOCGs );
 }
 
 KJSGlobalObject JSDocument::wrapDocument( DocumentPrivate *doc )

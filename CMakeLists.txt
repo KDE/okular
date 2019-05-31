@@ -312,6 +312,7 @@ if (KF5JS_FOUND)
             core/script/kjs_spell.cpp
             core/script/kjs_util.cpp
             core/script/kjs_event.cpp
+            core/script/kjs_ocg.cpp
     )
     target_link_libraries(okularcore PRIVATE KF5::JS KF5::JSApi)
 endif()

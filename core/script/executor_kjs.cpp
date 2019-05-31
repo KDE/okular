@@ -29,6 +29,7 @@
 #include "kjs_event_p.h"
 #include "kjs_field_p.h"
 #include "kjs_fullscreen_p.h"
+#include "kjs_ocg_p.h"
 #include "kjs_spell_p.h"
 #include "kjs_util_p.h"
 
@@ -69,13 +70,15 @@ void ExecutorKJSPrivate::initTypes()
     JSDocument::initType( ctx );
     JSEvent::initType( ctx );
     JSField::initType( ctx );
+    JSOCG::initType( ctx );
     JSSpell::initType( ctx );
     JSUtil::initType( ctx );
 
     m_docObject.setProperty( ctx, QStringLiteral("app"), JSApp::object( ctx, m_doc ) );
     m_docObject.setProperty( ctx, QStringLiteral("console"), JSConsole::object( ctx ) );
     m_docObject.setProperty( ctx, QStringLiteral("Doc"), m_docObject );
-    m_docObject.setProperty( ctx, QStringLiteral("display"), JSDisplay::object( ctx ));
+    m_docObject.setProperty( ctx, QStringLiteral("display"), JSDisplay::object( ctx ) );
+    m_docObject.setProperty( ctx, QStringLiteral("OCG"), JSOCG::object( ctx ) );
     m_docObject.setProperty( ctx, QStringLiteral("spell"), JSSpell::object( ctx ) );
     m_docObject.setProperty( ctx, QStringLiteral("util"), JSUtil::object( ctx ) );
 }
@@ -89,6 +92,7 @@ ExecutorKJS::~ExecutorKJS()
 {
     JSField::clearCachedFields();
     JSApp::clearCachedFields();
+    JSOCG::clearCachedFields();
     delete d;
 }
 

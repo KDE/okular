@@ -9,6 +9,7 @@
 
 #include <QtTest>
 
+#include <QAbstractItemModel>
 #include <QMap>
 #include <QMimeType>
 #include <QMimeDatabase>
@@ -33,6 +34,8 @@ private slots:
     void testDisplay();
     void testSetClearInterval();
     void testSetClearTimeOut();
+    void testGetOCGs();
+    void testOCGSetState();
     void cleanupTestCase();
 
 private:
@@ -60,7 +63,7 @@ void KJSFunctionsTest::initTestCase()
 void KJSFunctionsTest::testNumFields()
 {
     QString result = m_document->executeScript( "Doc.numFields" );
-    QCOMPARE( "22", result );
+    QCOMPARE( "31", result );
 }
 
 void KJSFunctionsTest::testNthFieldName()
@@ -89,7 +92,6 @@ void KJSFunctionsTest::testDisplay()
     QCOMPARE( false, m_fields["0.15"]->isVisible() );
     QCOMPARE( true, m_fields["0.20"]->isVisible() );
 
-
     m_document->executeScript( "field = Doc.getField(\"0.20\");field.display=display.hidden;\
         field = Doc.getField(\"0.0\");field.display=display.visible;" );
     QCOMPARE( false, m_fields["0.20"]->isVisible() );
@@ -110,6 +112,7 @@ void KJSFunctionsTest::testSetClearInterval()
         intv = app.setInterval('obj.inc()', 450);obj.idx;" );
     QCOMPARE( "0", result );
     delay();
+
     result = m_document->executeScript( "app.clearInterval(intv);obj.idx;");
     QCOMPARE( "4", result );
 }
@@ -119,14 +122,80 @@ void KJSFunctionsTest::testSetClearTimeOut()
     QString result = m_document->executeScript( "intv = app.setTimeOut('obj.inc()', 1);obj.idx;" );
     QCOMPARE( "4", result );
     delay();
+    
     result = m_document->executeScript( "obj.idx;" );
     QCOMPARE( "5", result );
+    
     result = m_document->executeScript( "intv = app.setTimeOut('obj.inc()', 2000);obj.idx;" );
     QCOMPARE( "5", result );
+    
     result = m_document->executeScript( "app.clearTimeOut(intv);obj.idx;" );
     QCOMPARE( "5", result );
     delay();
     QCOMPARE( "5", result );
+}
+
+void KJSFunctionsTest::testGetOCGs()
+{
+    QAbstractItemModel *model = m_document->layersModel();
+
+    QString result = m_document->executeScript( "var ocg = this.getOCGs(this.pageNum);\
+        ocgName = ocg[0].name;" );
+    QCOMPARE( model->data( model->index( 0, 0 ), Qt::DisplayRole ).toString() , result );
+    
+    result = m_document->executeScript( "ocgName = ocg[1].name;" );
+    QCOMPARE( model->data( model->index( 1, 0 ), Qt::DisplayRole ).toString() , result );
+    
+    result = m_document->executeScript( "ocgName = ocg[2].name;" );
+    QCOMPARE( model->data( model->index( 2, 0 ), Qt::DisplayRole ).toString() , result );
+    
+    result = m_document->executeScript( "ocgName = ocg[3].name;" );
+    QCOMPARE( model->data( model->index( 3, 0 ), Qt::DisplayRole ).toString() , result );
+
+    result = m_document->executeScript( "ocgName = ocg[0].initState;" );
+    QCOMPARE( model->data( model->index( 0, 0 ), Qt::CheckStateRole ).toBool() ? "true" : "false"
+        , result );
+    
+    result = m_document->executeScript( "ocgName = ocg[1].initState;" );
+    QCOMPARE( model->data( model->index( 1, 0 ), Qt::CheckStateRole ).toBool() ? "true" : "false"
+        , result );
+    
+    result = m_document->executeScript( "ocgName = ocg[2].initState;" );
+    QCOMPARE( model->data( model->index( 2, 0 ), Qt::CheckStateRole ).toBool() ? "true" : "false"
+        , result );
+    
+    result = m_document->executeScript( "ocgName = ocg[3].initState;" );
+    QCOMPARE( model->data( model->index( 3, 0 ), Qt::CheckStateRole ).toBool() ? "true" : "false"
+        , result );
+}
+
+void KJSFunctionsTest::testOCGSetState()
+{
+    QAbstractItemModel *model = m_document->layersModel();
+
+    QString result = m_document->executeScript( "ocgName = ocg[0].state;" );
+    QCOMPARE( model->data( model->index( 0, 0 ), Qt::CheckStateRole ).toBool() ? "true" : "false", result );
+    
+    result = m_document->executeScript( "ocg[0].state = false;ocgName = ocg[0].state;");
+    QCOMPARE( model->data( model->index( 0, 0 ), Qt::CheckStateRole ).toBool() ? "true" : "false", result );
+
+    result = m_document->executeScript( "ocgName = ocg[1].state;" );
+    QCOMPARE( model->data( model->index( 1, 0 ), Qt::CheckStateRole ).toBool() ? "true" : "false", result );
+    
+    result = m_document->executeScript( "ocg[1].state = false;ocgName = ocg[1].state;");
+    QCOMPARE( model->data( model->index( 1, 0 ), Qt::CheckStateRole ).toBool() ? "true" : "false", result );
+    
+    result = m_document->executeScript( "ocgName = ocg[2].state;" );
+    QCOMPARE( model->data( model->index( 2, 0 ), Qt::CheckStateRole ).toBool() ? "true" : "false", result );
+    
+    result = m_document->executeScript( "ocg[2].state = true;ocgName = ocg[2].state;");
+    QCOMPARE( model->data( model->index( 2, 0 ), Qt::CheckStateRole ).toBool() ? "true" : "false", result );
+
+    result = m_document->executeScript( "ocgName = ocg[3].state;" );
+    QCOMPARE( model->data( model->index( 3, 0 ), Qt::CheckStateRole ).toBool() ? "true" : "false", result );
+    
+    result = m_document->executeScript( "ocg[3].state = true;ocgName = ocg[3].state;");
+    QCOMPARE( model->data( model->index( 3, 0 ), Qt::CheckStateRole ).toBool() ? "true" : "false", result );
 }
 
 void KJSFunctionsTest::cleanupTestCase()

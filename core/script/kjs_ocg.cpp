@@ -30,8 +30,8 @@ Q_GLOBAL_STATIC( OCGCache, g_OCGCache )
 // OCG.state (getter)
 static KJSObject OCGGetState( KJSContext *, void *object )
 {
-	QPair< int, int > *pair = reinterpret_cast< QPair< int, int >* > ( object );
-   	QAbstractItemModel *model = g_OCGCache->value( pair );
+    QPair< int, int > *pair = reinterpret_cast< QPair< int, int >* > ( object );
+    QAbstractItemModel *model = g_OCGCache->value( pair );
 
    	QModelIndex index = model->index( pair->first, pair->second );
 
@@ -51,7 +51,7 @@ static void OCGSetState( KJSContext* ctx, void* object,
 
    	bool state = value.toBoolean( ctx );
 
-   	model->setData( index, QVariant( state ? 2 : 0 ), Qt::CheckStateRole );
+   	model->setData( index, QVariant( state ? Qt::Checked : Qt::Unchecked ), Qt::CheckStateRole );
 }
 
 
@@ -72,8 +72,8 @@ KJSObject JSOCG::object( KJSContext *ctx )
 
 KJSObject JSOCG::wrapOCGObject( KJSContext *ctx, QAbstractItemModel *model, int i, int j )
 {
-	QPair< int, int > *pair = new QPair< int ,int >( i, j );
-	g_OCGCache->insert( pair, model );
+    QPair< int, int > *pair = new QPair< int ,int >( i, j );
+    g_OCGCache->insert( pair, model );
     return g_OCGProto->constructObject( ctx, pair );
 }
 

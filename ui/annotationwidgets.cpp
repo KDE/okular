@@ -27,6 +27,7 @@
 #include <QList>
 #include <QMimeDatabase>
 #include <QPair>
+#include <QSize>
 #include <KFormat>
 
 #include "core/document.h"
@@ -619,7 +620,7 @@ QIcon LineAnnotationWidget::endStyleIcon( Okular::LineAnnotation::TermStyle endS
     prototype.style().setColor( lineColor );
     prototype.style().setLineStyle( Okular::Annotation::LineStyle::Solid );
     prototype.setBoundingRectangle( { 0, 0, 1, 1 } );
-    LineAnnotPainter linepainter { &prototype, { iconSize, iconSize }, 1, QTransform() };
+    LineAnnotPainter linepainter { &prototype, QSize { iconSize, iconSize }, 1, QTransform() };
     linepainter.draw( image );
     return QIcon( QPixmap::fromImage( image ) );
 }

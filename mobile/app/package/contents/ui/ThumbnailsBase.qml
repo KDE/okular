@@ -29,8 +29,8 @@ Kirigami.Page {
     topPadding: 0
     rightPadding: 0
     bottomPadding: 0
-    property alias contentY: resultsGrid.contentY
-    property alias contentHeight: resultsGrid.contentHeight
+    property alias resultsContentY: resultsGrid.contentY
+    property alias resultsContentHeight: resultsGrid.contentHeight
     property alias model: resultsGrid.model
     signal pageClicked(int pageNumber)
     property Item view: resultsGrid

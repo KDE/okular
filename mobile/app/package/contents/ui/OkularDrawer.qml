@@ -18,9 +18,7 @@
  */
 
 import QtQuick 2.1
-//still needed for icons in toolbuttons
-import QtQuick.Controls 1.3
-import QtQuick.Controls 2.0 as QQC2
+import QtQuick.Controls 2.5
 import org.kde.kirigami 2.0 as Kirigami
 import org.kde.okular 2.0 as Okular
 
@@ -49,7 +47,7 @@ Kirigami.OverlayDrawer {
             onUrlChanged: thumbnailsButton.checked = true;
         }
 
-        QQC2.ToolBar {
+        ToolBar {
             id: tabsToolbar
             height: mainTabBar.height
             anchors {
@@ -67,48 +65,47 @@ Kirigami.OverlayDrawer {
                     spacing: 0
                     anchors.horizontalCenter: parent.horizontalCenter
                     width: Math.min(parent.width, implicitWidth)
-                    ExclusiveGroup { id: tabPositionGroup }
+                    ButtonGroup { id: tabPositionGroup }
                     ToolButton {
                         id: thumbnailsButton
                         text: tabsToolbar.width > Kirigami.Units.gridUnit * 30 ? i18n("Thumbnails") : ""
-                        iconName: "view-preview"
+                        icon.name: "view-preview"
                         checkable: true
-                        //Hint for Plasma style
-                        property bool flat: false
+                        flat: false
                         onCheckedChanged: {
                             if (checked) {
                                 pageStack.replace(Qt.createComponent("Thumbnails.qml"))
                             }
                         }
-                        exclusiveGroup: tabPositionGroup
+                        ButtonGroup.group: tabPositionGroup
                     }
                     ToolButton {
                         id: tocButton
                         enabled: documentItem.tableOfContents.count > 0
                         text: tabsToolbar.width > Kirigami.Units.gridUnit * 30 ? i18n("Table of contents") : ""
-                        iconName: "view-table-of-contents-ltr"
+                        icon.name: "view-table-of-contents-ltr"
                         checkable: true
-                        property bool flat: false
+                        flat: false
                         onCheckedChanged: {
                             if (checked) {
                                 pageStack.replace(Qt.createComponent("TableOfContents.qml"))
                             }
                         }
-                        exclusiveGroup: tabPositionGroup
+                        ButtonGroup.group: tabPositionGroup
                     }
                     ToolButton {
                         id: bookmarksButton
                         enabled: documentItem.bookmarkedPages.length > 0
                         text: tabsToolbar.width > Kirigami.Units.gridUnit * 30 ? i18n("Bookmarks") : ""
-                        iconName: "bookmarks-organize"
+                        icon.name: "bookmarks-organize"
                         checkable: true
-                        property bool flat: false
+                        flat: false
                         onCheckedChanged: {
                             if (checked) {
                                 pageStack.replace(Qt.createComponent("Bookmarks.qml"))
                             }
                         }
-                        exclusiveGroup: tabPositionGroup
+                        ButtonGroup.group: tabPositionGroup
                     }
                 }
             }

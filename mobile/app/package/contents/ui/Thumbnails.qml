@@ -31,8 +31,8 @@ ThumbnailsBase {
         height: searchField.height
         TextField {
             id: searchField
+            anchors.fill: parent
             enabled: documentItem ? documentItem.supportsSearching : false
-            anchors.centerIn: parent
             onTextChanged: {
                 if (text.length > 2) {
                     documentItem.searchText(text);
@@ -40,14 +40,6 @@ ThumbnailsBase {
                     documentItem.resetSearch();
                 }
             }
-        }
-        Label {
-            anchors {
-                left: searchField.right
-                verticalCenter: searchField.verticalCenter
-            }
-            visible: documentItem.matchingPages.length == 0
-            text: i18n("No results found.")
         }
     }
 }

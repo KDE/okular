@@ -41,6 +41,12 @@ Kirigami.Page {
             topMargin: Kirigami.Units.gridUnit * 2
         }
 
+        Label {
+            anchors.centerIn: parent
+            visible: model.length == 0
+            text: i18n("No results found.")
+        }
+
         GridView {
             id: resultsGrid
             anchors.fill: parent

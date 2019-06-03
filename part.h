@@ -47,12 +47,9 @@ class QPrinter;
 class QMenu;
 
 class KConfigDialog;
-class KConfigGroup;
 class KDirWatch;
 class KToggleAction;
 class KToggleFullScreenAction;
-class KSelectAction;
-class KAboutData;
 class QTemporaryFile;
 class QAction;
 class QJsonObject;

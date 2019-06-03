@@ -28,8 +28,6 @@
 #include <QMimeType>
 #include <QUrl>
 
-class QPrintDialog;
-class KBookmark;
 class KConfigDialog;
 class KPluginMetaData;
 class KXMLGUIClient;

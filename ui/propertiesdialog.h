@@ -20,7 +20,6 @@
 class QLabel;
 class QProgressBar;
 class FontsListModel;
-class KSqueezedTextLabel;
 
 namespace Okular {
 class Document;

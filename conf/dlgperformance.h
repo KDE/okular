@@ -13,7 +13,6 @@
 #include <QWidget>
 
 class Ui_DlgPerformanceBase;
-class QButtonGroup;
 
 class DlgPerformance : public QWidget
 {

@@ -39,13 +39,11 @@
 class QByteArray;
 class QMutex;
 class QPrinter;
-class QPrintDialog;
 class QIcon;
 
 namespace Okular {
 
 class BackendOpaqueAction;
-class DocumentFonts;
 class DocumentInfo;
 class DocumentObserver;
 class DocumentSynopsis;
@@ -60,7 +58,6 @@ class TextPage;
 class TextRequest;
 class TextRequestPrivate;
 class NormalizedRect;
-class SourceReference;
 
 /* Note: on contents generation and asynchronous queries.
  * Many observers may want to request data synchronously or asynchronously.

@@ -13,7 +13,6 @@
 #include "global.h"
 
 class QString;
-class QStringList;
 
 namespace Okular {
 

@@ -17,11 +17,8 @@
 
 namespace Okular {
 class Document;
-class FormFieldSignature;
 }
 
-class QTreeView;
-class SignatureModel;
 class PageView;
 
 class SignaturePanelPrivate;

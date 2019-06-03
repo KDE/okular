@@ -40,13 +40,10 @@ class FormFieldSignature;
 class Annotation;
 class MovieAction;
 class RenditionAction;
-class PixmapRequest;
 }
 
-class FormWidgetIface;
 class PageViewPrivate;
 
-class MagnifierView;
 
 class QGestureEvent;
 

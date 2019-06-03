@@ -16,7 +16,6 @@ class KLineEdit;
 class KComboBox;
 class QLabel;
 class QListWidget;
-class QListWidgetItem;
 class QGroupBox;
 class AnnotationWidget;
 

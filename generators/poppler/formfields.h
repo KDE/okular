@@ -111,7 +111,6 @@ class PopplerFormFieldChoice : public Okular::FormFieldChoice
 
 };
 
-class PopplerSignatureInfo;
 class PopplerFormFieldSignature : public Okular::FormFieldSignature
 {
     public:

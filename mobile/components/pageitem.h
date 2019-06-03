@@ -28,7 +28,6 @@
 #include <core/view.h>
 
 class QTimer;
-class QSGTexture;
 
 class DocumentItem;
 

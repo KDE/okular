@@ -17,7 +17,6 @@
 namespace Okular {
     class Document;
     class FormFieldSignature;
-    class SignatureInfo;
 }
 
 class SignaturePropertiesDialog : public QDialog

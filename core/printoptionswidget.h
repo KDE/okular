@@ -15,7 +15,6 @@
 #include "okularcore_export.h"
 
 class QComboBox;
-class QFormLayout;
 
 namespace Okular {
 

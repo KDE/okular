@@ -17,7 +17,6 @@
 
 #include "okularpart_export.h"
 
-class QDomNode;
 class QModelIndex;
 class QTreeView;
 class KTreeViewSearchLine;

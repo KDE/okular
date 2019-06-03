@@ -15,7 +15,6 @@
 class KArchiveDirectory;
 class KArchive;
 class QImage;
-class QSize;
 class Unrar;
 class Directory;
 

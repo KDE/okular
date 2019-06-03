@@ -29,7 +29,6 @@ class KToggleAction;
 class QTabWidget;
 class KPluginFactory;
 
-class KDocumentViewer;
 class Part;
 
 #ifndef Q_OS_WIN

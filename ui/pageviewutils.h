@@ -22,8 +22,6 @@
 
 #include "core/area.h"
 
-class QAction;
-class QLabel;
 class QTimer;
 class FormWidgetIface;
 class PageView;

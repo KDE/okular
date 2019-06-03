@@ -16,7 +16,6 @@
 #include "okularpart_export.h"
 
 class PageView;
-class QModelIndex;
 class QTreeView;
 class KTreeViewSearchLine;
 

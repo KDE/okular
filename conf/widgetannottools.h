@@ -15,11 +15,6 @@
 #include <qdom.h>
 #include <qwidget.h>
 
-namespace Okular
-{
-class Annotation;
-}
-
 class WidgetAnnotTools : public WidgetConfigurationToolsBase
 {
     Q_OBJECT

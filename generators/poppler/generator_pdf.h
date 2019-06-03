@@ -29,12 +29,6 @@
 #include <interfaces/printinterface.h>
 #include <interfaces/saveinterface.h>
 
-namespace Okular {
-class ObjectRect;
-class SourceReference;
-class SignatureInfo;
-}
-
 class PDFOptionsPage;
 class PopplerAnnotationProxy;
 

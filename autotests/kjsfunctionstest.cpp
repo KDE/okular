@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2018 by Intevation GmbH <intevation@intevation.de>      *
+ *   Copyright (C) 2019 by João Netto <joaonetto901@gmail.com>             *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *

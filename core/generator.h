@@ -44,6 +44,7 @@ class QIcon;
 namespace Okular {
 
 class BackendOpaqueAction;
+class DocumentFonts;
 class DocumentInfo;
 class DocumentObserver;
 class DocumentSynopsis;

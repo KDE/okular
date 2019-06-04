@@ -761,7 +761,7 @@ Context menu actions like Rename Bookmarks etc.)
 					  </para>
 					</entry>
 				      </row>
-                                      <row>
+				     <row>
 					<entry>
 					  <para>
 					      <inlinemediaobject>
@@ -862,11 +862,6 @@ Context menu actions like Rename Bookmarks etc.)
 				</textobject>
 				</mediaobject>
 				</screenshot>
-				<note>
-					<para>
-						The <guilabel>Line End</guilabel> property for the <guilabel>Straight Line</guilabel> annotation works for &PDF; documents only in its current implementation.
-					</para>
-                </note>
 				<para>
 					To move an annotation, hold down the &Ctrl; key, move the mouse pointer on it and
 					then start dragging with the &LMB;.

@@ -385,6 +385,12 @@ PushButtonEdit::PushButtonEdit( Okular::FormFieldButton * button, QWidget * pare
     : QPushButton( parent ), FormWidgetIface( this, button )
 {
     setText( button->caption() );
+    
+    if( button->caption().isEmpty() )
+    {
+        setFlat( true );
+    }
+    
     setVisible( button->isVisible() );
     setCursor( Qt::ArrowCursor );
 }

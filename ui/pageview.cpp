@@ -662,8 +662,8 @@ void PageView::setupActions( KActionCollection * ac )
 
     ToolAction *ta = new ToolAction( this );
     ac->addAction( QStringLiteral("mouse_selecttools"), ta );
-    ta->addAction( d->aMouseSelect );
     ta->addAction( d->aMouseTextSelect );
+    ta->addAction( d->aMouseSelect );
     ta->addAction( d->aMouseTableSelect );
 
     // speak actions

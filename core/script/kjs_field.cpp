@@ -17,6 +17,7 @@
 #include <qhash.h>
 
 #include <QDebug>
+#include <memory>
 
 #include "../debug_p.h"
 #include "../document_p.h"
@@ -30,6 +31,10 @@ static KJSPrototype *g_fieldProto;
 
 typedef QHash< FormField *, Page * > FormCache;
 Q_GLOBAL_STATIC( FormCache, g_fieldCache )
+typedef QHash< QString, FormField * > ButtonCache;
+Q_GLOBAL_STATIC( ButtonCache, g_buttonCache )
+typedef QHash< QString, QString > FrameCache;
+Q_GLOBAL_STATIC( FrameCache, g_frameCache )
 
 
 // Helper for modified fields
@@ -241,6 +246,49 @@ static void fieldSetDisplay( KJSContext *context, void *object, KJSObject value 
     updateField( field );
 }
 
+//  Instead of getting the Icon, we pick the field instead to draw it.
+static KJSObject fieldButtonGetIcon( KJSContext *ctx, void *object,
+                                   const KJSArguments & )
+{
+    FormField *field = reinterpret_cast< FormField * >( object );
+    
+    KJSObject fieldObject;
+    fieldObject.setProperty( ctx, QStringLiteral("name").toLatin1().toBase64(), field->name() );
+    g_buttonCache->insert( field->name(), field );
+
+    return fieldObject;
+}
+
+/*
+*   We don't have acess to the Icon Object because it's not given by Poppler
+*   Instead, we turn the current object invisible and draw the object
+*   that represents the new icon.
+*/
+static KJSObject fieldButtonSetIcon( KJSContext *ctx, void *object,
+                                   const KJSArguments &arguments )
+{
+    FormField *field = reinterpret_cast< FormField * >( object );
+    field->setVisible( false );
+
+    QString lastField = g_frameCache->value( field->name() );
+    QString fieldName = arguments.at( 0 ).property( ctx, QStringLiteral("name").toLatin1().toBase64() ).toString( ctx );
+
+    g_frameCache->insert( field->name(), fieldName );
+
+    if( !lastField.isEmpty() )
+        field = g_buttonCache->value( lastField );
+
+    if( field )
+        field->setVisible( false );
+
+    field = g_buttonCache->value( fieldName );
+
+    field->setVisible( true );
+
+    updateField( field );
+
+    return KJSUndefined();
+}
 
 void JSField::initType( KJSContext *ctx )
 {
@@ -260,6 +308,9 @@ void JSField::initType( KJSContext *ctx )
     g_fieldProto->defineProperty( ctx, QStringLiteral("value"), fieldGetValue, fieldSetValue );
     g_fieldProto->defineProperty( ctx, QStringLiteral("hidden"), fieldGetHidden, fieldSetHidden );
     g_fieldProto->defineProperty( ctx, QStringLiteral("display"), fieldGetDisplay, fieldSetDisplay );
+
+    g_fieldProto->defineFunction( ctx, QStringLiteral("buttonGetIcon"), fieldButtonGetIcon );
+    g_fieldProto->defineFunction( ctx, QStringLiteral("buttonSetIcon"), fieldButtonSetIcon );
 }
 
 KJSObject JSField::wrapField( KJSContext *ctx, FormField *field, Page *page )
@@ -274,7 +325,11 @@ KJSObject JSField::wrapField( KJSContext *ctx, FormField *field, Page *page )
 void JSField::clearCachedFields()
 {
     if ( g_fieldCache.exists() )
-    {
         g_fieldCache->clear();
-    }
+    
+    if( g_buttonCache.exists() )
+        g_buttonCache->clear();
+
+    if( g_frameCache.exists() )
+        g_frameCache->clear();
 }

@@ -125,9 +125,9 @@ Context menu actions like Rename Bookmarks etc.)
 			</para>
 			<para>
 				Another way is to hold the &LMB; down at any place on the document while dragging the mouse in the
-				opposite direction of where you want to move. This procedure only works if the Browse Tool is
+				opposite direction of where you want to move. This procedure only works if the Browse tool is
 				enabled, which you can select by choosing <menuchoice><guimenu>Tools</guimenu>
-				<guimenuitem>Browse Tool</guimenuitem></menuchoice>.
+				<guimenuitem>Browse</guimenuitem></menuchoice>.
 			</para>
 			<note>
 			  <para>
@@ -357,8 +357,8 @@ Context menu actions like Rename Bookmarks etc.)
 		<itemizedlist>
 			<listitem><para>The source file has been compiled successfully.</para></listitem>
 			<listitem><para>&okular; knows which editor you would like to use.</para></listitem>
-			<listitem><para>The Browse Tool has to be enabled, which you can select by choosing 
-				<menuchoice><guimenu>Tools</guimenu><guimenuitem>Browse Tool
+			<listitem><para>The Browse tool has to be enabled, which you can select by choosing
+				<menuchoice><guimenu>Tools</guimenu><guimenuitem>Browse
 				</guimenuitem></menuchoice>.</para></listitem>
 		</itemizedlist>
 
@@ -814,7 +814,7 @@ Context menu actions like Rename Bookmarks etc.)
 				</note>
 				<note>
 					<para>
-						Activating the annotating toolbar will make you switch to the Browse Tool Mode.
+						Activating the annotating toolbar will make you switch to the Browse Mode.
 					</para>
 				</note>
 				<para>
@@ -1723,7 +1723,7 @@ Context menu actions like Rename Bookmarks etc.)
 						<menuchoice>
 							<shortcut><keycombo action="simul">&Ctrl;<keycap>1</keycap></keycombo></shortcut>
 							<guimenu>Tools</guimenu>
-							<guimenuitem>Browse Tool</guimenuitem>
+							<guimenuitem>Browse</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
@@ -1735,7 +1735,7 @@ Context menu actions like Rename Bookmarks etc.)
 						<menuchoice>
 							<shortcut><keycombo action="simul">&Ctrl;<keycap>2</keycap></keycombo></shortcut>
 							<guimenu>Tools</guimenu>
-							<guimenuitem>Zoom Tool</guimenuitem>
+							<guimenuitem>Zoom</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
@@ -1747,11 +1747,11 @@ Context menu actions like Rename Bookmarks etc.)
 						<menuchoice>
 							<shortcut><keycombo action="simul">&Ctrl;<keycap>3</keycap></keycombo></shortcut>
 							<guimenu>Tools</guimenu>
-							<guimenuitem>Selection Tool</guimenuitem>
+							<guimenuitem>Area Selection</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
-						<para>The mouse will work as a select tool. In that mode clicking &LMB; and dragging will give the option of copying the text/image of current selected area to the clipboard, speak a text or to save an image to a file.</para>
+						<para>The mouse will work as a rectangular region selection tool. In that mode clicking &LMB; and dragging will draw a selection box and provide the option of copying the selected content to the clipboard, speaking the selected text, or transforming the selection region into an image and saving it to a file.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -1759,7 +1759,7 @@ Context menu actions like Rename Bookmarks etc.)
 						<menuchoice>
 							<shortcut><keycombo action="simul">&Ctrl;<keycap>4</keycap></keycombo></shortcut>
 							<guimenu>Tools</guimenu>
-							<guimenuitem>Text Selection Tool</guimenuitem>
+							<guimenuitem>Text Selection</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
@@ -1773,7 +1773,7 @@ Context menu actions like Rename Bookmarks etc.)
 						<menuchoice>
 							<shortcut><keycombo action="simul">&Ctrl;<keycap>5</keycap></keycombo></shortcut>
 							<guimenu>Tools</guimenu>
-							<guimenuitem>Table Selection Tool</guimenuitem>
+							<guimenuitem>Table Selection</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>

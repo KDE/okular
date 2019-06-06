@@ -630,7 +630,7 @@ void PageView::setupActions( KActionCollection * ac )
     d->aMouseSelect->setActionGroup( d->mouseModeActionGroup );
     d->aMouseSelect->setChecked( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::RectSelect );
 
-    d->aMouseTextSelect  = new QAction(QIcon::fromTheme( QStringLiteral("draw-text") ), i18n("&Text Selection"), this);
+    d->aMouseTextSelect  = new QAction(QIcon::fromTheme( QStringLiteral("edit-select-text") ), i18n("&Text Selection"), this);
     ac->addAction(QStringLiteral("mouse_textselect"), d->aMouseTextSelect );
     connect( d->aMouseTextSelect, &QAction::triggered, this, &PageView::slotSetMouseTextSelect );
     d->aMouseTextSelect->setCheckable( true );

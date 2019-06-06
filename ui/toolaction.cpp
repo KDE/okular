@@ -49,7 +49,7 @@ QWidget* ToolAction::createWidget( QWidget *parent )
     button->setFocusPolicy( Qt::NoFocus );
     button->setIconSize( toolBar->iconSize() );
     button->setToolButtonStyle( toolBar->toolButtonStyle() );
-    button->setPopupMode( QToolButton::DelayedPopup );
+    button->setPopupMode( QToolButton::MenuButtonPopup );
     button->setMenu( new QMenu( button ) );
     button->setCheckable( true );
     connect(toolBar, &QToolBar::iconSizeChanged, button, &QToolButton::setIconSize);
@@ -68,7 +68,7 @@ QWidget* ToolAction::createWidget( QWidget *parent )
             if ( action->isChecked() )
                 button->setDefaultAction( action );
         }
-        button->setToolTip( i18n("Click to use the current selection tool\nClick and hold to choose another selection tool") );
+        button->setToolTip( i18n("Click to use the current selection tool\nClick on the arrow to choose another selection tool") );
     }
 
     return button;
@@ -80,7 +80,7 @@ void ToolAction::slotNewDefaultAction( QAction *action )
         if ( button )
         {
             button->setDefaultAction( action );
-            button->setToolTip( i18n("Click to use the current selection tool\nClick and hold to choose another selection tool") );
+            button->setToolTip( i18n("Click to use the current selection tool\nClick on the arrow to choose another selection tool") );
         }
 }
 

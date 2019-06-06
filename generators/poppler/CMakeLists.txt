@@ -144,6 +144,18 @@ int main()
 }
 " HAVE_POPPLER_0_73)
 
+check_cxx_source_compiles("
+#include <poppler-form.h>
+#include <poppler-qt5.h>
+int main()
+{
+    Poppler::FormFieldIcon icon(nullptr);
+    Poppler::FormFieldButton *button;
+    button->setIcon( icon );
+    return 0;
+}
+" HAVE_POPPLER_0_78)
+
 configure_file(
    ${CMAKE_CURRENT_SOURCE_DIR}/config-okular-poppler.h.cmake
    ${CMAKE_CURRENT_BINARY_DIR}/config-okular-poppler.h

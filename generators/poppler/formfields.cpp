@@ -139,6 +139,26 @@ QList< int > PopplerFormFieldButton::siblings() const
     return m_field->siblings();
 }
 
+#ifdef HAVE_POPPLER_0_78
+Poppler::FormFieldIcon PopplerFormFieldButton::icon() const
+{
+    return m_field->icon();
+}
+#endif
+
+void PopplerFormFieldButton::setIcon( Okular::FormField *field )
+{
+#ifdef HAVE_POPPLER_0_78
+    if( field->type() == Okular::FormField::FormButton )
+    {
+        PopplerFormFieldButton *button = static_cast< PopplerFormFieldButton * >( field );
+        m_field->setIcon( button->icon() );
+    }
+#else
+    Q_UNUSED( field );
+#endif
+}
+
 
 PopplerFormFieldText::PopplerFormFieldText( Poppler::FormFieldText * field )
     : Okular::FormFieldText(), m_field( field )

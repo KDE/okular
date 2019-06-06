@@ -11,6 +11,7 @@
 #define _OKULAR_GENERATOR_PDF_FORMFIELDS_H_
 
 #include <poppler-form.h>
+#include <config-okular-poppler.h>
 #include "core/form.h"
 
 class PopplerFormFieldButton : public Okular::FormFieldButton
@@ -35,6 +36,15 @@ class PopplerFormFieldButton : public Okular::FormFieldButton
         bool state() const override;
         void setState( bool state ) override;
         QList< int > siblings() const override;
+        void setIcon( Okular::FormField *field ) override;
+#ifdef HAVE_POPPLER_0_78
+        /*
+         * Supported only in newer versions of Poppler library.
+         *
+         * @since 1.7
+        */
+        Poppler::FormFieldIcon icon() const;
+#endif
 
     private:
         Poppler::FormFieldButton * m_field;

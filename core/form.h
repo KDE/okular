@@ -207,6 +207,13 @@ class OKULARCORE_EXPORT FormFieldButton : public FormField
          */
         virtual QList< int > siblings() const = 0;
 
+        /**
+         * Sets the icon of the Button to the Icon of the field parameter.
+         *
+         * @since 1.7
+        */
+        virtual void setIcon( Okular::FormField *field );
+
     protected:
         FormFieldButton();
 

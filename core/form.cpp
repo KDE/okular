@@ -147,6 +147,10 @@ void FormFieldButton::setState( bool )
 {
 }
 
+void FormFieldButton::setIcon( Okular::FormField * )
+{
+}
+
 
 class Okular::FormFieldTextPrivate : public Okular::FormFieldPrivate
 {

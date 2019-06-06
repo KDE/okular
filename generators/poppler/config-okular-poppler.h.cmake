@@ -45,3 +45,6 @@
 
 /* Defined if we have the 0.73 version of the Poppler library */
 #cmakedefine HAVE_POPPLER_0_73 1
+
+/* Defined if we have the 0.78 version of the Poppler library */
+#cmakedefine HAVE_POPPLER_0_78 1

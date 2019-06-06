@@ -17,6 +17,7 @@
 #include <qhash.h>
 
 #include <QDebug>
+#include <memory>
 
 #include "../debug_p.h"
 #include "../document_p.h"
@@ -30,6 +31,8 @@ static KJSPrototype *g_fieldProto;
 
 typedef QHash< FormField *, Page * > FormCache;
 Q_GLOBAL_STATIC( FormCache, g_fieldCache )
+typedef QHash< QString, FormField * > ButtonCache;
+Q_GLOBAL_STATIC( ButtonCache, g_buttonCache )
 
 
 // Helper for modified fields
@@ -241,6 +244,39 @@ static void fieldSetDisplay( KJSContext *context, void *object, KJSObject value 
     updateField( field );
 }
 
+//  Instead of getting the Icon, we pick the field.
+static KJSObject fieldButtonGetIcon( KJSContext *ctx, void *object,
+                                   const KJSArguments & )
+{
+    FormField *field = reinterpret_cast< FormField * >( object );
+    
+    KJSObject fieldObject;
+    fieldObject.setProperty( ctx, QStringLiteral("name").toLatin1().toBase64(), field->name() );
+    g_buttonCache->insert( field->name(), field );
+
+    return fieldObject;
+}
+
+/*
+* Now we send to the button what Icon should be drawn on it
+*/
+static KJSObject fieldButtonSetIcon( KJSContext *ctx, void *object,
+                                   const KJSArguments &arguments )
+{
+    FormField *field = reinterpret_cast< FormField * >( object );
+
+    QString fieldName = arguments.at( 0 ).property( ctx, QStringLiteral("name").toLatin1().toBase64() ).toString( ctx );
+
+    if( field->type() == Okular::FormField::FormButton )
+    {
+        FormFieldButton *button = static_cast< FormFieldButton * >( field );
+        button->setIcon( g_buttonCache->value( fieldName ) );
+    }
+
+    updateField( field );
+
+    return KJSUndefined();
+}
 
 void JSField::initType( KJSContext *ctx )
 {
@@ -260,6 +296,9 @@ void JSField::initType( KJSContext *ctx )
     g_fieldProto->defineProperty( ctx, QStringLiteral("value"), fieldGetValue, fieldSetValue );
     g_fieldProto->defineProperty( ctx, QStringLiteral("hidden"), fieldGetHidden, fieldSetHidden );
     g_fieldProto->defineProperty( ctx, QStringLiteral("display"), fieldGetDisplay, fieldSetDisplay );
+
+    g_fieldProto->defineFunction( ctx, QStringLiteral("buttonGetIcon"), fieldButtonGetIcon );
+    g_fieldProto->defineFunction( ctx, QStringLiteral("buttonSetIcon"), fieldButtonSetIcon );
 }
 
 KJSObject JSField::wrapField( KJSContext *ctx, FormField *field, Page *page )
@@ -274,7 +313,8 @@ KJSObject JSField::wrapField( KJSContext *ctx, FormField *field, Page *page )
 void JSField::clearCachedFields()
 {
     if ( g_fieldCache.exists() )
-    {
         g_fieldCache->clear();
-    }
+
+    if( g_buttonCache.exists() )
+        g_buttonCache->clear();
 }

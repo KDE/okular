@@ -17,6 +17,7 @@
 class QCheckBox;
 class QComboBox;
 class QDoubleSpinBox;
+class QFormLayout;
 class QLabel;
 class QWidget;
 class KColorButton;
@@ -88,13 +89,14 @@ Q_SIGNALS:
 protected:
     QWidget * createAppearanceWidget();
 
-    virtual QWidget * createStyleWidget();
+    virtual void createStyleWidget(QFormLayout * formLayout);
     virtual QWidget * createExtraWidget();
 
-private:
-    virtual bool hasColorButton() const { return true; }
-    virtual bool hasOpacityBox() const { return true; }
+    void addColorButton( QWidget * widget, QFormLayout * formlayout );
+    void addOpacitySpinBox( QWidget * widget, QFormLayout * formlayout );
+    void addVerticalSpacer( QFormLayout * formlayout );
 
+private:
     Okular::Annotation * m_ann;
     QWidget * m_appearanceWidget { nullptr };
     QWidget * m_extraWidget { nullptr };
@@ -103,7 +105,7 @@ private:
 };
 
 class QVBoxLayout;
-class QGridLayout;
+class QFormLayout;
 
 class TextAnnotationWidget
   : public AnnotationWidget
@@ -116,20 +118,18 @@ public:
     void applyChanges() override;
 
 protected:
-    QWidget * createStyleWidget() override;
+    void createStyleWidget( QFormLayout * formlayout ) override;
 
 private:
-    virtual bool hasColorButton() const override;
-    virtual bool hasOpacityBox() const override;
 
-    void createPopupNoteStyleUi( QWidget * widget, QVBoxLayout * layout );
-    void createInlineNoteStyleUi( QWidget * widget, QVBoxLayout * layout );
-    void createTypewriterStyleUi( QWidget * widget, QVBoxLayout * layout );
-    void addPixmapSelector( QWidget * widget, QLayout * layout );
-    void addFontRequester( QWidget * widget, QGridLayout * layout );
-    void addTextColorButton( QWidget * widget, QGridLayout * layout );
-    void addTextAlignComboBox( QWidget * widget, QGridLayout * layout );
-    void addWidthSpinBox( QWidget * widget, QGridLayout * layout );
+    void createPopupNoteStyleUi( QWidget * widget, QFormLayout * formlayout );
+    void createInlineNoteStyleUi( QWidget * widget, QFormLayout * formlayout );
+    void createTypewriterStyleUi( QWidget * widget, QFormLayout * formlayout );
+    void addPixmapSelector( QWidget * widget, QFormLayout * formlayout );
+    void addFontRequester( QWidget * widget, QFormLayout * formlayout );
+    void addTextColorButton( QWidget * widget, QFormLayout * formlayout );
+    void addTextAlignComboBox( QWidget * widget, QFormLayout * formlayout );
+    void addWidthSpinBox( QWidget * widget, QFormLayout * formlayout );
 
     inline bool isTypewriter() const { return ( m_textAnn->inplaceIntent() == Okular::TextAnnotation::TypeWriter ); }
 
@@ -152,7 +152,7 @@ public:
     void applyChanges() override;
 
 protected:
-    QWidget * createStyleWidget() override;
+    void createStyleWidget( QFormLayout * formlayout ) override;
 
 private:
     Okular::StampAnnotation * m_stampAnn;
@@ -170,7 +170,7 @@ public:
     void applyChanges() override;
 
 protected:
-    QWidget * createStyleWidget() override;
+    void createStyleWidget( QFormLayout * formlayout ) override;
 
 private:
     static QIcon endStyleIcon( Okular::LineAnnotation::TermStyle endStyle, const QColor &lineColor );
@@ -197,7 +197,7 @@ public:
     void applyChanges() override;
 
 protected:
-    QWidget * createStyleWidget() override;
+    void createStyleWidget( QFormLayout * formlayout ) override;
 
 private:
     Okular::HighlightAnnotation * m_hlAnn;
@@ -215,7 +215,7 @@ public:
     void applyChanges() override;
 
 protected:
-    QWidget * createStyleWidget() override;
+    void createStyleWidget( QFormLayout * formlayout ) override;
 
 private:
     Okular::GeomAnnotation * m_geomAnn;
@@ -236,7 +236,7 @@ public:
     void applyChanges() override;
 
 protected:
-    QWidget * createStyleWidget() override;
+    void createStyleWidget( QFormLayout * formlayout ) override;
     QWidget * createExtraWidget() override;
 
 private:
@@ -255,7 +255,7 @@ public:
     void applyChanges() override;
 
 protected:
-    QWidget * createStyleWidget() override;
+    void createStyleWidget( QFormLayout * formlayout ) override;
 
 private:
     Okular::CaretAnnotation * m_caretAnn;
@@ -273,7 +273,7 @@ public:
     void applyChanges() override;
 
 protected:
-    QWidget * createStyleWidget() override;
+    void createStyleWidget( QFormLayout * formlayout ) override;
 
 private:
     Okular::InkAnnotation * m_inkAnn;

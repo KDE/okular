@@ -52,7 +52,7 @@
       <item row="0" column="0" >
        <widget class="QLabel" name="label" >
         <property name="text" >
-         <string>&amp;Author:</string>
+         <string>Au&amp;thor:</string>
         </property>
         <property name="alignment" >
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -68,7 +68,7 @@
       <item row="1" column="0" colspan="2" >
        <widget class="QLabel" name="label_2" >
         <property name="text" >
-         <string>&lt;b>Note&lt;/b>: the information here is used only for comments and reviews. Information inserted here will not be transmitted without your knowledge.</string>
+         <string>&lt;b>Note&lt;/b>: the information here is used only for annotations. The information is saved in annotated documents, and so will be transmitted together with the document.</string>
         </property>
         <property name="alignment" >
          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>

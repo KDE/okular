@@ -10,6 +10,7 @@
 #include "annotationpropertiesdialog.h"
 
 // qt/kde includes
+#include <QFormLayout>
 #include <qframe.h>
 #include <qlayout.h>
 #include <qlabel.h>
@@ -61,25 +62,21 @@ AnnotsPropertiesDialog::AnnotsPropertiesDialog( QWidget *parent, Okular::Documen
     QFrame* page = new QFrame( this );
     addPage( page, i18n( "&General" ) );
 //    m_tabitem[1]->setIcon( QIcon::fromTheme( "fonts" ) );
-    QGridLayout* gridlayout = new QGridLayout( page );
-    tmplabel = new QLabel( i18n( "&Author:" ), page );
+    QFormLayout * gridlayout = new QFormLayout( page );
     AuthorEdit = new KLineEdit( ann->author(), page );
     AuthorEdit->setEnabled( canEditAnnotations );
-    tmplabel->setBuddy( AuthorEdit );
-    gridlayout->addWidget( tmplabel, 0, 0, Qt::AlignRight );
-    gridlayout->addWidget( AuthorEdit, 0, 1 );
+    gridlayout->addRow( i18n( "&Author:" ), AuthorEdit );
 
     tmplabel = new QLabel( page );
-    tmplabel->setText( i18n( "Created: %1", QLocale().toString( ann->creationDate(), QLocale::LongFormat ) ) );
+    tmplabel->setText( QLocale().toString( ann->creationDate(), QLocale::LongFormat ) );
     tmplabel->setTextInteractionFlags( Qt::TextSelectableByMouse );
-    gridlayout->addWidget( tmplabel, 1, 0, 1, 2 );
+    gridlayout->addRow( i18n( "Created:" ), tmplabel );
 
     m_modifyDateLabel = new QLabel( page );
-    m_modifyDateLabel->setText( i18n( "Modified: %1", QLocale().toString( ann->modificationDate(), QLocale::LongFormat ) ) );
+    m_modifyDateLabel->setText( QLocale().toString( ann->modificationDate(), QLocale::LongFormat ) );
     m_modifyDateLabel->setTextInteractionFlags( Qt::TextSelectableByMouse );
-    gridlayout->addWidget( m_modifyDateLabel, 2, 0, 1, 2 );
+    gridlayout->addRow( i18n( "Modified:" ), m_modifyDateLabel );
 
-    gridlayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::MinimumExpanding ), 3, 0 );
     //END tab 2
 
     QWidget * extraWidget = m_annotWidget->extraWidget();

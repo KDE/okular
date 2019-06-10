@@ -18,7 +18,7 @@
  */
 
 import QtQuick 2.1
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.0 as QQC2
 import org.kde.kirigami 2.0 as Kirigami
 
 Column {
@@ -56,7 +56,7 @@ Column {
             anchors.verticalCenter: parent.verticalCenter
             x: Kirigami.Units.largeSpacing
         }
-        Label {
+        QQC2.Label {
             id: label
             text: display
             verticalAlignment: Text.AlignBottom
@@ -73,7 +73,7 @@ Column {
                 right: pageNumber.left
             }
         }
-        Label {
+        QQC2.Label {
             id: pageNumber
             text: pageLabel ? pageLabel : page
             anchors.right: parent.right

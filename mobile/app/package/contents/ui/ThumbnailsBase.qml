@@ -18,7 +18,7 @@
  */
 
 import QtQuick 2.1
-import QtQuick.Controls 1.3
+import QtQuick.Controls 2.3 as QQC2
 import QtGraphicalEffects 1.0
 import org.kde.okular 2.0 as Okular
 import org.kde.kirigami 2.0 as Kirigami
@@ -35,13 +35,13 @@ Kirigami.Page {
     signal pageClicked(int pageNumber)
     property Item view: resultsGrid
 
-    ScrollView {
+    QQC2.ScrollView {
         anchors {
             fill: parent
             topMargin: Kirigami.Units.gridUnit * 2
         }
 
-        Label {
+        QQC2.Label {
             anchors.centerIn: parent
             visible: model.length == 0
             text: i18n("No results found.")
@@ -88,7 +88,7 @@ Kirigami.Page {
                                 bottom: parent.bottom
                                 right: parent.right
                             }
-                            Label {
+                            QQC2.Label {
                                 text: modelData + 1
                             }
                         }

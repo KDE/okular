@@ -18,7 +18,7 @@
  */
 
 import QtQuick 2.1
-import QtQuick.Controls 2.5
+import QtQuick.Controls 2.5 as QQC2
 import org.kde.kirigami 2.0 as Kirigami
 import org.kde.okular 2.0 as Okular
 
@@ -31,7 +31,7 @@ Kirigami.OverlayDrawer {
         implicitHeight: implicitWidth
         state: "Hidden"
 
-        StackView {
+        QQC2.StackView {
             id: pageStack
             anchors {
                 left: parent.left
@@ -47,7 +47,7 @@ Kirigami.OverlayDrawer {
             onUrlChanged: thumbnailsButton.checked = true;
         }
 
-        ToolBar {
+        QQC2.ToolBar {
             id: tabsToolbar
             height: mainTabBar.height
             anchors {
@@ -65,8 +65,8 @@ Kirigami.OverlayDrawer {
                     spacing: 0
                     anchors.horizontalCenter: parent.horizontalCenter
                     width: Math.min(parent.width, implicitWidth)
-                    ButtonGroup { id: tabPositionGroup }
-                    ToolButton {
+                    QQC2.ButtonGroup { id: tabPositionGroup }
+                    QQC2.ToolButton {
                         id: thumbnailsButton
                         text: tabsToolbar.width > Kirigami.Units.gridUnit * 30 ? i18n("Thumbnails") : ""
                         icon.name: "view-preview"
@@ -77,9 +77,9 @@ Kirigami.OverlayDrawer {
                                 pageStack.replace(Qt.createComponent("Thumbnails.qml"))
                             }
                         }
-                        ButtonGroup.group: tabPositionGroup
+                        QQC2.ButtonGroup.group: tabPositionGroup
                     }
-                    ToolButton {
+                    QQC2.ToolButton {
                         id: tocButton
                         enabled: documentItem.tableOfContents.count > 0
                         text: tabsToolbar.width > Kirigami.Units.gridUnit * 30 ? i18n("Table of contents") : ""
@@ -91,9 +91,9 @@ Kirigami.OverlayDrawer {
                                 pageStack.replace(Qt.createComponent("TableOfContents.qml"))
                             }
                         }
-                        ButtonGroup.group: tabPositionGroup
+                        QQC2.ButtonGroup.group: tabPositionGroup
                     }
-                    ToolButton {
+                    QQC2.ToolButton {
                         id: bookmarksButton
                         enabled: documentItem.bookmarkedPages.length > 0
                         text: tabsToolbar.width > Kirigami.Units.gridUnit * 30 ? i18n("Bookmarks") : ""
@@ -105,7 +105,7 @@ Kirigami.OverlayDrawer {
                                 pageStack.replace(Qt.createComponent("Bookmarks.qml"))
                             }
                         }
-                        ButtonGroup.group: tabPositionGroup
+                        QQC2.ButtonGroup.group: tabPositionGroup
                     }
                 }
             }

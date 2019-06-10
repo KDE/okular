@@ -18,7 +18,7 @@
  */
 
 import QtQuick 2.2
-import QtQuick.Controls 1.2 as QtControls
+import QtQuick.Controls 2.2 as QQC2
 import org.kde.okular 2.0
 import "./private"
 
@@ -28,7 +28,7 @@ import "./private"
  * It supports changing pages by a swipe gesture, pinch zoom
  * and flicking to scroll around
  */
-QtControls.ScrollView {
+QQC2.ScrollView {
     id: root
     property DocumentItem document
     property PageItem page: mouseArea.currPageDelegate.pageItem

@@ -18,7 +18,6 @@
  */
 
 import QtQuick 2.1
-import QtQuick.Controls 1.3
 import QtQuick.Controls 2.0 as QQC2
 import org.kde.kirigami 2.0 as Kirigami
 
@@ -35,12 +34,12 @@ Kirigami.Page {
         id: toolBarContent
         width: root.width
         height: searchField.height
-        QQC2.TextField {
+        TextField {
             id: searchField
             anchors.centerIn: parent
         }
     }
-    ScrollView {
+    QQC2.ScrollView {
         anchors {
             left: parent.left
             top: toolBarContent.bottom

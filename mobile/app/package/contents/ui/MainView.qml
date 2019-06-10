@@ -18,7 +18,7 @@
  */
 
 import QtQuick 2.1
-import QtQuick.Controls 1.3
+import QtQuick.Controls 2.3 as QQC2
 import org.kde.okular 2.0 as Okular
 import org.kde.kirigami 2.0 as Kirigami
 
@@ -51,7 +51,7 @@ Kirigami.Page {
         target: pageArea.page
         onBookmarkedChanged: actions.main.checked = pageArea.page.bookmarked
     }
-    ProgressBar {
+    QQC2.ProgressBar {
         id: bar
         z: 99
         visible: applicationWindow().controlsVisible

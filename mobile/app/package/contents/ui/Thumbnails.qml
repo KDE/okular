@@ -18,18 +18,18 @@
  */
 
 import QtQuick 2.1
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.0 as QQC2
 import org.kde.kirigami 2.0 as Kirigami
 
 ThumbnailsBase {
     id: root
     model: documentItem.matchingPages
 
-    ToolBar {
+    QQC2.ToolBar {
         id: toolBarContent
         width: root.width
         height: searchField.height
-        TextField {
+        QQC2.TextField {
             id: searchField
             anchors.fill: parent
             enabled: documentItem ? documentItem.supportsSearching : false

@@ -90,7 +90,6 @@ public:
 AudioPlayerPrivate::AudioPlayerPrivate( AudioPlayer * qq )
     : q( qq ), m_state( AudioPlayer::StoppedState )
 {
-    QObject::connect( &m_mapper, SIGNAL(mapped(int)), q, SLOT(finished(int)) );
 }
 
 AudioPlayerPrivate::~AudioPlayerPrivate()
@@ -131,7 +130,9 @@ bool AudioPlayerPrivate::play( const SoundInfo& si )
             if ( !url.isEmpty() )
             {
                 int newid = newId();
-                m_mapper.setMapping( data->m_mediaobject, newid );
+                QObject::connect( data->m_mediaobject, &Phonon::MediaObject::finished, q, [this, newid]() {
+                    finished(newid);
+                });
                 QUrl newurl;
                 if ( QUrl::fromUserInput(url).isRelative() )
                 {
@@ -156,7 +157,9 @@ bool AudioPlayerPrivate::play( const SoundInfo& si )
             {
                 qCDebug(OkularCoreDebug) << "Mediaobject:" << data->m_mediaobject;
                 int newid = newId();
-                m_mapper.setMapping( data->m_mediaobject, newid );
+                QObject::connect( data->m_mediaobject, &Phonon::MediaObject::finished, q, [this, newid]() {
+                    finished(newid);
+                });
                 data->m_buffer = new QBuffer();
                 data->m_buffer->setData( filedata );
                 data->m_mediaobject->setCurrentSource( Phonon::MediaSource( data->m_buffer ) );
@@ -173,7 +176,6 @@ bool AudioPlayerPrivate::play( const SoundInfo& si )
     }
     if ( data )
     {
-        QObject::connect( data->m_mediaobject, SIGNAL(finished()), &m_mapper, SLOT(map()) );
         qCDebug(OkularCoreDebug) << "PLAY";
         data->play();
         m_state = AudioPlayer::PlayingState;
@@ -203,7 +205,6 @@ void AudioPlayerPrivate::finished( int id )
     }
     else
     {
-        m_mapper.removeMappings( it.value()->m_mediaobject );
         delete it.value();
         m_playing.erase( it );
         m_state = AudioPlayer::StoppedState;

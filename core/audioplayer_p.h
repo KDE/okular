@@ -12,7 +12,6 @@
 
 // qt/kde includes
 #include <qhash.h>
-#include <qsignalmapper.h>
 #include <QUrl>
 
 class PlayData;
@@ -33,13 +32,11 @@ public:
     bool play( const SoundInfo& si );
     void stopPlayings();
 
-    // private slots
     void finished( int );
 
     AudioPlayer * q;
 
     QHash< int, PlayData * > m_playing;
-    QSignalMapper m_mapper;
     QUrl m_currentDocument;
     AudioPlayer::State m_state;
 };

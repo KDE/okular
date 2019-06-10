@@ -81,7 +81,6 @@ class OKULARCORE_EXPORT AudioPlayer : public QObject
         friend class Document;
 
         Q_DISABLE_COPY( AudioPlayer )
-        Q_PRIVATE_SLOT( d, void finished( int ) )
 };
 
 }

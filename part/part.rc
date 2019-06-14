@@ -79,6 +79,7 @@
     <Action name="mouse_magnifier"/>
     <Separator/>
     <Action name="mouse_toggle_annotate"/>
+    <Action name="mouse_toggle_sign"/>
     <Separator/>
     <Action name="speak_document"/>
     <Action name="speak_current_page"/>

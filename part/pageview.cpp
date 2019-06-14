@@ -232,6 +232,7 @@ public:
     QAction *aMouseTableSelect;
     QAction *aMouseMagnifier;
     KToggleAction *aTrimToSelection;
+    KToggleAction * aToggleSignature;
     KSelectAction *aZoom;
     QAction *aZoomIn;
     QAction *aZoomOut;
@@ -363,6 +364,7 @@ PageView::PageView(QWidget *parent, Okular::Document *document)
     d->aMouseNormal = nullptr;
     d->aMouseSelect = nullptr;
     d->aMouseTextSelect = nullptr;
+    d->aToggleSignature = nullptr;
     d->aZoomFitWidth = nullptr;
     d->aZoomFitPage = nullptr;
     d->aZoomAutoFit = nullptr;
@@ -714,6 +716,10 @@ void PageView::setupActions(KActionCollection *ac)
     d->aMouseModeMenu->suggestDefaultAction(d->aMouseTextSelect);
     d->aMouseModeMenu->setText(i18nc("@action", "Selection Tools"));
     ac->addAction(QStringLiteral("mouse_selecttools"), d->aMouseModeMenu);
+
+    d->aToggleSignature  = new KToggleAction(QIcon::fromTheme( QStringLiteral("application-pkcs7-signature") ), i18n("&Sign"), this);
+    ac->addAction(QStringLiteral("mouse_toggle_sign"), d->aToggleSignature );
+    d->aToggleSignature->setCheckable( true );
 
     // speak actions
 #ifdef HAVE_SPEECH
@@ -1210,6 +1216,10 @@ void PageView::updateActionState(bool haspages, bool hasformwidgets)
         d->annotator->setToolsEnabled(allowTools);
         d->annotator->setTextToolsEnabled(allowTools && d->document->supportsSearching());
     }
+
+    if ( d->aToggleSignature )
+        d->aToggleSignature->setEnabled( haspages );
+
 #ifdef HAVE_SPEECH
     if (d->aSpeakDoc) {
         const bool enablettsactions = haspages ? Okular::Settings::useTTS() : false;

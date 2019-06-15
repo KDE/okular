@@ -170,16 +170,15 @@ void SmoothPath::paint( QPainter * painter, double xScale, double yScale ) const
         painter->setPen( pen );
         painter->setOpacity( opacity );
 
+        QPainterPath path;
         QLinkedList<Okular::NormalizedPoint>::const_iterator pIt = points.begin(), pEnd = points.end();
-        Okular::NormalizedPoint pA = *pIt;
+        path.moveTo( QPointF( pIt->x * xScale, pIt->y * yScale ) );
         ++pIt;
         for ( ; pIt != pEnd; ++pIt )
         {
-            Okular::NormalizedPoint pB = *pIt;
-            painter->drawLine( (int)(pA.x * (double)xScale), (int)(pA.y * (double)yScale),
-                               (int)(pB.x * (double)xScale), (int)(pB.y * (double)yScale) );
-            pA = pB;
+            path.lineTo( QPointF( pIt->x * xScale, pIt->y * yScale ) );
         }
+        painter->drawPath(path);
     }
 }
 

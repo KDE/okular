@@ -897,16 +897,21 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
 
         const QRect & geom = m_frames[ m_frameIndex ]->geometry;
 
-        QPixmap pm( geom.size() );
+        const QSize pmSize( geom.width() * dpr, geom.height() * dpr );
+        QPixmap pm( pmSize );
         pm.fill( Qt::transparent );
         QPainter pmPainter( &pm );
 
+        pm.setDevicePixelRatio( dpr );
         pmPainter.setRenderHints( QPainter::Antialiasing );
-        foreach ( const SmoothPath &drawing, m_frames[ m_frameIndex ]->drawings )
-            drawing.paint( &pmPainter, geom.width(), geom.height() );
 
+        // Paint old paths
+        foreach ( const SmoothPath &drawing, m_frames[ m_frameIndex ]->drawings )
+            drawing.paint( &pmPainter, pmSize.width(), pmSize.height() );
+
+        // Paint the path that is currently being drawn by the user
         if ( m_drawingEngine && m_drawingRect.intersects( pe->rect() ) )
-            m_drawingEngine->paint( &pmPainter, geom.width(), geom.height(), m_drawingRect.intersected( pe->rect() ) );
+            m_drawingEngine->paint( &pmPainter, pmSize.width(), pmSize.height(), m_drawingRect.intersected( pe->rect() ) );
 
         painter.setRenderHints( QPainter::Antialiasing );
         painter.drawPixmap( geom.topLeft() , pm );
@@ -1322,8 +1327,9 @@ QRect PresentationWidget::routeMouseDrawingEvent( QMouseEvent * e )
     if ( eventType == AnnotatorEngine::Press )
         hasclicked = true;
 
-    double nX = ( (double)e->x() - (double)geom.left() ) / (double)geom.width();
-    double nY = ( (double)e->y() - (double)geom.top() ) / (double)geom.height();
+    QPointF mousePos = e->localPos();
+    double nX = ( mousePos.x() - (double)geom.left() ) / (double)geom.width();
+    double nY = ( mousePos.y() - (double)geom.top() ) / (double)geom.height();
     QRect ret;
     bool isInside = nX >= 0 && nX < 1 && nY >= 0 && nY < 1;
 

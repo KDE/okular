@@ -23,6 +23,7 @@ class DlgAccessibility;
 class DlgPresentation;
 class DlgAnnotations;
 class DlgEditor;
+class DlgSignatures;
 class DlgDebug;
 
 class PreferencesDialog : public KConfigDialog
@@ -48,6 +49,7 @@ private:
     DlgPresentation *m_presentation;
     DlgAnnotations *m_annotations;
     DlgEditor *m_editor;
+    DlgSignatures *m_signatures;
 #ifdef OKULAR_DEBUG_CONFIGPAGE
     DlgDebug *m_debug;
 #endif

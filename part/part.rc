@@ -79,6 +79,7 @@
     <Action name="mouse_magnifier"/>
     <Separator/>
     <Action name="mouse_toggle_annotate"/>
+    <Separator/>
     <Action name="mouse_toggle_sign"/>
     <Separator/>
     <Action name="speak_document"/>
@@ -108,6 +109,8 @@
   <Action name="view_zoom_out"/>
   <Action name="zoom_to" />
   <Action name="view_zoom_in"/>
+  <Separator/>
+  <Action name="mouse_toggle_sign"/>
 </ToolBar>
 <ToolBar name="annotationToolBar" iconText="icononly" newline="true" hidden="true"><text>Annotation Toolbar</text>
   <Action name="annotation_highlighter"/>

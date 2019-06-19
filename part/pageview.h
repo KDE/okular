@@ -265,6 +265,7 @@ private Q_SLOTS:
     void slotSetMouseSelect();
     void slotSetMouseTextSelect();
     void slotSetMouseTableSelect();
+    void slotToggleSignature();
     void slotAutoScrollUp();
     void slotAutoScrollDown();
     void slotScrollUp(int nSteps = 0);

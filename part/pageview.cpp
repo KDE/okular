@@ -232,7 +232,7 @@ public:
     QAction *aMouseTableSelect;
     QAction *aMouseMagnifier;
     KToggleAction *aTrimToSelection;
-    KToggleAction * aToggleSignature;
+    KToggleAction *aToggleSignature;
     KSelectAction *aZoom;
     QAction *aZoomIn;
     QAction *aZoomOut;
@@ -717,9 +717,10 @@ void PageView::setupActions(KActionCollection *ac)
     d->aMouseModeMenu->setText(i18nc("@action", "Selection Tools"));
     ac->addAction(QStringLiteral("mouse_selecttools"), d->aMouseModeMenu);
 
-    d->aToggleSignature  = new KToggleAction(QIcon::fromTheme( QStringLiteral("application-pkcs7-signature") ), i18n("&Sign"), this);
-    ac->addAction(QStringLiteral("mouse_toggle_sign"), d->aToggleSignature );
-    d->aToggleSignature->setCheckable( true );
+    d->aToggleSignature = new KToggleAction(QIcon::fromTheme(QStringLiteral("application-pkcs7-signature")), i18n("&Sign"), this);
+    ac->addAction(QStringLiteral("mouse_toggle_sign"), d->aToggleSignature);
+    d->aToggleSignature->setCheckable(true);
+    connect(d->aToggleSignature, &QAction::toggled, this, &PageView::slotToggleSignature);
 
     // speak actions
 #ifdef HAVE_SPEECH
@@ -1217,8 +1218,8 @@ void PageView::updateActionState(bool haspages, bool hasformwidgets)
         d->annotator->setTextToolsEnabled(allowTools && d->document->supportsSearching());
     }
 
-    if ( d->aToggleSignature )
-        d->aToggleSignature->setEnabled( haspages );
+    if (d->aToggleSignature)
+        d->aToggleSignature->setEnabled(haspages);
 
 #ifdef HAVE_SPEECH
     if (d->aSpeakDoc) {
@@ -4769,6 +4770,15 @@ void PageView::slotSetMouseTableSelect()
     Okular::Settings::setMouseMode(d->mouseMode);
     // change the text in messageWindow (and show it if hidden)
     d->messageWindow->display(i18n("Draw a rectangle around the table, then click near edges to divide up; press Esc to clear."), QString(), PageViewMessage::Info, -1);
+    // force an update of the cursor
+    updateCursor();
+    Okular::Settings::self()->save();
+}
+
+void PageView::slotToggleSignature()
+{
+    d->messageWindow->display(i18n("Draw a rectangle to insert the signature field"), QString(), PageViewMessage::Info, -1);
+
     // force an update of the cursor
     updateCursor();
     Okular::Settings::self()->save();

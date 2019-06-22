@@ -4429,8 +4429,13 @@ QMenu* PageView::createProcessLinkMenu(PageViewItem *item, const QPoint &eventPo
     const Okular::ObjectRect * rect = item->page()->objectRect( Okular::ObjectRect::Action, nX, nY, item->uncroppedWidth(), item->uncroppedHeight() );
     if ( rect )
     {
-        QMenu *menu = new QMenu(this);
         const Okular::Action * link = static_cast< const Okular::Action * >( rect->object() );
+
+        if (!link)
+            return nullptr;
+
+        QMenu *menu = new QMenu(this);
+
         // creating the menu and its actions
         QAction * processLink = menu->addAction( i18n( "Follow This Link" ) );
         processLink->setObjectName("ProcessLinkAction");

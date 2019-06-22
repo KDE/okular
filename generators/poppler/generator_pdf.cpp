@@ -524,13 +524,13 @@ Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink, bool
         break;
 #endif
         
-        case Poppler::Link::OCGState:
 #ifdef HAVE_POPPLER_0_50
+        case Poppler::Link::OCGState:
             link = new Okular::BackendOpaqueAction();
             link->setNativeId( QVariant::fromValue( static_cast<const Poppler::LinkOCGState*>( popplerLink ) ) );
             deletePopplerLink = false;
-#endif
         break;
+#endif
     }
 
 #ifdef HAVE_POPPLER_0_64

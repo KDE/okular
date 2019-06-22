@@ -1303,6 +1303,7 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
 
         QRect requestRect = r->isTile() ? r->normalizedRect().geometry( r->width(), r->height() ) : QRect( 0, 0, r->width(), r->height() );
         TilesManager *tilesManager = r->d->tilesManager();
+        const double normalizedArea = r->normalizedRect().width() * r->normalizedRect().height();
 
         // If it's a preload but the generator is not threaded no point in trying to preload
         if ( r->preload() && !m_generator->hasFeature( Generator::Threaded ) )
@@ -1328,8 +1329,10 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
             m_pixmapRequestsStack.pop_back();
             delete r;
         }
-        // If the requested area is above 8000000 pixels, switch on the tile manager
-        else if ( !tilesManager && m_generator->hasFeature( Generator::TiledRendering ) && (long)r->width() * (long)r->height() > 8000000L )
+        // If the requested area is above 8000000 pixels, and we're not rendering most of the page,  switch on the tile manager
+        else if ( !tilesManager && m_generator->hasFeature( Generator::TiledRendering ) &&
+                  (long)r->width() * (long)r->height() > 8000000L &&
+                  normalizedArea < 0.75 && normalizedArea != 0 )
         {
             // if the image is too big. start using tiles
             qCDebug(OkularCoreDebug).nospace() << "Start using tiles on page " << r->pageNumber()

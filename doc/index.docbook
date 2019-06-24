@@ -34,7 +34,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2019-05-08</date>
+		<date>2019-06-24</date>
 		<releaseinfo>1.8 (Applications 19.08)</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
@@ -563,6 +563,9 @@ Context menu actions like Rename Bookmarks etc.)
 					  <para>
 					    Click on the tool button, then click on the place in the document where the pop-up note should be added. Enter the text of pop-up note then click on the <guilabel>Close this note</guilabel> button in the top right corner of the pop-up window.
 					  </para>
+					  <para>
+                          It is possible to define the <guilabel>Color</guilabel>, <guilabel>Opacity</guilabel>, and <guilabel>Icon</guilabel> for the note. Just right-click on the note icon created and select the <guimenuitem>Properties</guimenuitem> menu item.
+					  </para>
 					</entry>
 				      </row>
 				      <row>
@@ -586,6 +589,9 @@ Context menu actions like Rename Bookmarks etc.)
 					  </para>
 					  <para>
 					    Click on the tool button, then click with the &LMB; and hold to place the top-left corner of the note, then drag to place the bottom-right one. Enter the text of the note then click on the <guibutton>OK</guibutton> to save the note, <guibutton>Cancel</guibutton> to cancel note entering or <guibutton>Clear</guibutton> to clear the note.
+					  </para>
+					  <para>
+                          It is possible to define the <guilabel>Color</guilabel>, <guilabel>Opacity</guilabel>, <guilabel>Font</guilabel>, <guilabel>Align</guilabel>, and <guilabel>Border width</guilabel> for the note. Just right-click on the note icon created and select the <guimenuitem>Properties</guimenuitem> menu item.
 					  </para>
 					</entry>
 				      </row>
@@ -611,6 +617,9 @@ Context menu actions like Rename Bookmarks etc.)
 					  <para>
 					    Click on the tool button, then click with the &LMB; and hold to place the start of the line, then drag to draw the line.
 					  </para>
+					  <para>
+                          It is possible to define the <guilabel>Color</guilabel>, <guilabel>Opacity</guilabel>, and <guilabel>Width</guilabel> for the line. Just right-click on the line created and select the <guimenuitem>Properties</guimenuitem> menu item.
+					  </para>
 					</entry>
 				      </row>
 				      <row>
@@ -634,6 +643,9 @@ Context menu actions like Rename Bookmarks etc.)
 					  </para>
 					  <para>
 					    Click on the tool button, then click with the &LMB; and hold to place the beginning of the highlighted text snippet, then drag to highlight it.
+					  </para>
+					  <para>
+                          It is possible to define the <guilabel>Type</guilabel> (<guimenuitem>Highlight</guimenuitem>, <guimenuitem>Squiggle</guimenuitem>, <guimenuitem>Underline</guimenuitem> or <guimenuitem>Strike out</guimenuitem>), <guilabel>Color</guilabel>, and <guilabel>Opacity</guilabel> for the highlighter. Just right-click on the highlighted text and select the <guimenuitem>Properties</guimenuitem> menu item.
 					  </para>
 					</entry>
 				      </row>
@@ -659,6 +671,9 @@ Context menu actions like Rename Bookmarks etc.)
 					  <para>
 					    Click on the tool button, then click with the &LMB; to place the starting point of the line, then drag to place of the ending point of the line should be and click once more.
 					  </para>
+					  <para>
+                          It is possible to define the <guilabel>Color</guilabel>, <guilabel>Opacity</guilabel>, <guilabel>Width</guilabel>, <guilabel>Line start</guilabel>, <guilabel>Line end</guilabel>, <guilabel>Leader line length</guilabel>, and <guilabel>Leader line extension length</guilabel> for the line. Just right-click on the line created and select the <guimenuitem>Properties</guimenuitem> menu item.
+					  </para>
 					</entry>
 				      </row>
 				      <row>
@@ -682,6 +697,9 @@ Context menu actions like Rename Bookmarks etc.)
 					  </para>
 					  <para>
 					    Click on the tool button, then click with the &LMB; to place the first vertex of the polygon, then drag to place of the second vertex. Proceed until you draw the whole polygon up to the first vertex. Click twice if you want to add some note to the polygon.  Enter the text of the note then click on the <guibutton>OK</guibutton> to save the note, <guibutton>Cancel</guibutton> to cancel note entering or <guibutton>Clear</guibutton> to clear the note.
+					  </para>
+					  <para>
+                          It is possible to define the <guilabel>Color</guilabel>, <guilabel>Opacity</guilabel>, <guilabel>Shape fill</guilabel> (and its color), and <guilabel>Width</guilabel> for the polygon. Just right-click on the polygon created and select the <guimenuitem>Properties</guimenuitem> menu item.
 					  </para>
 					</entry>
 				      </row>
@@ -711,6 +729,9 @@ Context menu actions like Rename Bookmarks etc.)
 					    A single click just places a square stamp (useful for icons).
 					    To add a rectangular stamp you can click with the &LMB; and hold to place the top-left point, then drag to place the bottom-right one.
 					  </para>
+					  <para>
+                          It is possible to define the <guilabel>Opacity</guilabel> and <guilabel>Stamp symbol</guilabel> for the stamp. Just right-click on the stamp icon created and select the <guimenuitem>Properties</guimenuitem> menu item.
+					  </para>
 					</entry>
 				      </row>
 				      <row>
@@ -735,6 +756,9 @@ Context menu actions like Rename Bookmarks etc.)
 					  <para>
 					    Click on the tool button, then click with the &LMB; and hold to place the beginning of the underlined text snippet, then drag to underline it.
 					  </para>
+					  <para>
+                          It is possible to define the <guilabel>Type</guilabel> (<guimenuitem>Highlight</guimenuitem>, <guimenuitem>Squiggle</guimenuitem>, <guimenuitem>Underline</guimenuitem> or <guimenuitem>Strike out</guimenuitem>), <guilabel>Color</guilabel>, and <guilabel>Opacity</guilabel> for the underline. Just right-click on the underlined text and select the <guimenuitem>Properties</guimenuitem> menu item.
+					  </para>
 					</entry>
 				      </row>
 				      <row>
@@ -754,10 +778,13 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para>
-					    To draw an ellipse around some chosen area.
+					    To draw an ellipse or rectangle around some chosen area.
 					  </para>
 					  <para>
 					    Click on the tool button, then click with the &LMB; and hold to place the top-left corner of the circumscribed rectangular for the ellipse, then drag to place the bottom-right one.
+					  </para>
+					  <para>
+                          It is possible to define the <guilabel>Type</guilabel> (<guimenuitem>Rectangle</guimenuitem> or <guimenuitem>Ellipse</guimenuitem>), <guilabel>Color</guilabel>, <guilabel>Opacity</guilabel>, <guilabel>Shape fill</guilabel> (and its color), and <guilabel>Width</guilabel> for the border. Just right-click on the border created and select the <guimenuitem>Properties</guimenuitem> menu item.
 					  </para>
 					</entry>
 				      </row>
@@ -782,6 +809,9 @@ Context menu actions like Rename Bookmarks etc.)
 					  </para>
 					  <para>
 					    Click on the tool button, then click with the &LMB; and hold to place the top-left corner of the note, then drag to place the bottom-right one. Enter the text of the note then click on the <guibutton>OK</guibutton> to save the note, <guibutton>Cancel</guibutton> to cancel note entering or <guibutton>Clear</guibutton> to clear the note.
+					  </para>
+					  <para>
+                          It is possible to define the <guilabel>Font</guilabel> and <guilabel>Text color</guilabel> for the text. Just right-click on the typewriter text created and select the <guimenuitem>Properties</guimenuitem> menu item.
 					  </para>
 					</entry>
 				      </row>

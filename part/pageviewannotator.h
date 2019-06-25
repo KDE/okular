@@ -70,6 +70,9 @@ public:
     // @return Are we currently annotating (using the selected tool)?
     bool annotating() const;
 
+    void setSignatureMode(bool forced);
+    bool signatureMode() const;
+
     // returns the preferred cursor for the current tool. call this only
     // if active() == true
     QCursor cursor() const;
@@ -156,6 +159,7 @@ private:
     AnnotationTools *m_quickToolsDefinition;
     bool m_continuousMode;
     bool m_constrainRatioAndAngle;
+    bool m_signatureMode;
 
     // creation related variables
     int m_lastToolId;

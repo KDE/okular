@@ -4779,6 +4779,12 @@ void PageView::slotToggleSignature()
 {
     d->messageWindow->display(i18n("Draw a rectangle to insert the signature field"), QString(), PageViewMessage::Info, -1);
 
+    if (!d->annotator) {
+        d->annotator = new PageViewAnnotator(this, d->document);
+    }
+
+    d->annotator->setSignatureMode(true);
+
     // force an update of the cursor
     updateCursor();
     Okular::Settings::self()->save();

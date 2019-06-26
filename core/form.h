@@ -317,6 +317,31 @@ class OKULARCORE_EXPORT FormFieldText : public FormField
          */
         virtual bool canBeSpellChecked() const;
 
+        /**
+         * Optionally different internal text.
+         *
+         * Internal text is the value of the field before formatting
+         * and should be used for editing and calculations.
+         *
+         * The default implementation returns the value of
+         * @ref text if no internal text was set.
+         *
+         * @since 1.5
+         */
+        virtual QString internalText() const;
+
+        /**
+         * Set internalText to a value before formatting.
+         *
+         * If the text value was changed for display purposes use
+         * setRawText to store the internal value @p text before
+         * formatting. The internal text is used for calculations
+         * and editing.
+         *
+         * @since 1.5
+         */
+        virtual void setInternalText( const QString &text );
+
     protected:
         FormFieldText();
 

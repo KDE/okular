@@ -669,6 +669,13 @@ class OKULARCORE_EXPORT Document : public QObject
         void processAction( const Action *action );
 
         /**
+         * Processes the given format @p action on @p field.
+         *
+         * @since 1.5
+         */
+        void processFormatAction( const Action *action, Okular::FormFieldText *field );
+
+        /**
          * Returns a list of the bookmarked.pages
          */
         QList<int> bookmarkedPageList() const;

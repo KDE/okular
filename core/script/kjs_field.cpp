@@ -148,7 +148,7 @@ static KJSObject fieldGetValue( KJSContext */*context*/, void *object )
         case FormField::FormText:
         {
             const FormFieldText *text = static_cast< const FormFieldText * >( field );
-            return KJSString( text->text() );
+            return KJSString( text->internalText() );
         }
         case FormField::FormChoice:
         {
@@ -192,9 +192,10 @@ static void fieldSetValue( KJSContext *context, void *object, KJSObject value )
         {
             FormFieldText *textField = static_cast< FormFieldText * >( field );
             const QString text = value.toString( context );
-            if ( text != textField->text() )
+            if ( text != textField->internalText() )
             {
                 textField->setText( text );
+                textField->setInternalText( text );
                 updateField( field );
             }
             break;

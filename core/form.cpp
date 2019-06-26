@@ -182,6 +182,19 @@ class Okular::FormFieldTextPrivate : public Okular::FormFieldPrivate
             Q_Q( const FormFieldText );
             return q->text();
         }
+
+        void setInternalText( const QString& v )
+        {
+            m_internalText = v;
+        }
+
+        QString internalText() const
+        {
+            return m_internalText;
+        }
+
+    private:
+        QString m_internalText;
 };
 
 
@@ -221,6 +234,23 @@ Qt::Alignment FormFieldText::textAlignment() const
 bool FormFieldText::canBeSpellChecked() const
 {
     return false;
+}
+
+QString FormFieldText::internalText() const
+{
+    Q_D( const FormFieldText );
+    const QString val = d->internalText();
+    if ( val.isNull() )
+    {
+        return text();
+    }
+    return val;
+}
+
+void FormFieldText::setInternalText( const QString &text )
+{
+    Q_D( FormFieldText );
+    d->setInternalText( text );
 }
 
 

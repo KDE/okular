@@ -501,6 +501,18 @@ bool FormLineEdit::event( QEvent* e )
             return true;
         }
     }
+    else if ( e->type() == QEvent::FocusIn )
+    {
+        const auto fft = static_cast< Okular::FormFieldText * > ( m_ff );
+        setText( fft->internalText() );
+    }
+    else if ( e->type() == QEvent::FocusOut )
+    {
+        if ( const Okular::Action *action = m_ff->additionalAction( Okular::FormField::FormatField ) )
+        {
+            emit m_controller->formatAction( action, static_cast< Okular::FormFieldText * > ( m_ff ) );
+        }
+    }
     return QLineEdit::event( e );
 }
 
@@ -631,6 +643,18 @@ bool TextAreaEdit::event( QEvent* e )
         {
             emit m_controller->requestRedo();
             return true;
+        }
+    }
+    else if ( e->type() == QEvent::FocusIn )
+    {
+        const auto fft = static_cast< Okular::FormFieldText * > ( m_ff );
+        setText( fft->internalText() );
+    }
+    else if ( e->type() == QEvent::FocusOut )
+    {
+        if ( const Okular::Action *action = m_ff->additionalAction( Okular::FormField::FormatField ) )
+        {
+            emit m_controller->formatAction( action, static_cast< Okular::FormFieldText * > ( m_ff ) );
         }
     }
     return KTextEdit::event( e );

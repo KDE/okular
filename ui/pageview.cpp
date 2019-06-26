@@ -264,6 +264,10 @@ FormWidgetsController* PageViewPrivate::formWidgetsController()
                           q, SLOT( slotFormChanged( int ) ) );
         QObject::connect( formsWidgetController, SIGNAL( action( Okular::Action* ) ),
                           q, SLOT( slotAction( Okular::Action* ) ) );
+        QObject::connect( formsWidgetController, &FormWidgetsController::formatAction,
+                          q, [this] (const Okular::Action *action, Okular::FormFieldText *fft ) {
+                              document->processFormatAction( action, fft );
+                          } );
     }
 
     return formsWidgetController;

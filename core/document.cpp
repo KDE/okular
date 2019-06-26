@@ -1151,8 +1151,16 @@ void DocumentPrivate::recalculateForms()
                                 if ( newVal != oldVal )
                                 {
                                     fft->setText( newVal );
-                                    emit m_parent->refreshFormWidget( fft );
-                                    pageNeedsRefresh = true;
+                                    if ( const Okular::Action *action = fft->additionalAction( Okular::FormField::FormatField ) )
+                                    {
+                                        // The format action handles the refresh.
+                                        m_parent->processFormatAction( action, fft );
+                                    }
+                                    else
+                                    {
+                                        emit m_parent->refreshFormWidget( fft );
+                                        pageNeedsRefresh = true;
+                                    }
                                 }
                             }
                         }
@@ -4289,6 +4297,68 @@ void Document::processAction( const Action * action )
         {
             processAction( a );
         }
+    }
+}
+
+void Document::processFormatAction( const Action * action, Okular::FormFieldText *fft )
+{
+    if ( action->actionType() != Action::Script )
+    {
+        qCDebug( OkularCoreDebug ) << "Unsupported action type" << action->actionType() << "for formatting.";
+        return;
+    }
+
+    // Lookup the page of the FormFieldText
+    int foundPage = -1;
+    for ( uint pageIdx = 0, nPages = pages(); pageIdx < nPages; pageIdx++ )
+    {
+        const Page *p = page( pageIdx );
+        if ( p && p->formFields().contains( fft ) )
+        {
+            foundPage = static_cast< int >( pageIdx );
+            break;
+        }
+    }
+
+    if ( foundPage == -1 )
+    {
+        qCDebug( OkularCoreDebug ) << "Could not find page for formfield!";
+        return;
+    }
+
+    const QString oldVal = fft->text();
+
+    // We are before formatting. So the unformatted text is currently in fft->text()
+    // Internally we want to use the current value for calculations and formatting.
+    fft->setInternalText( oldVal );
+    std::shared_ptr< Event > event = Event::createFormatEvent( fft, d->m_pagesVector[foundPage] );
+
+    const ScriptAction * linkscript = static_cast< const ScriptAction * >( action );
+    if ( !d->m_scripter )
+    {
+        d->m_scripter = new Scripter( d );
+    }
+    d->m_scripter->setEvent( event.get() );
+    d->m_scripter->execute( linkscript->scriptType(), linkscript->script() );
+
+    // Clear out the event after execution
+    d->m_scripter->setEvent( nullptr );
+
+    const QString newVal = event->value().toString();
+    if ( newVal != oldVal )
+    {
+        fft->setText( newVal );
+        emit refreshFormWidget( fft );
+        d->refreshPixmaps( foundPage );
+    }
+    else if ( fft->additionalAction( FormField::CalculateField ) )
+    {
+        // When the field was calculated we need to refresh even
+        // if the format script changed nothing. e.g. on error.
+        // This is because the recalculateForms function delegated
+        // the responsiblity for the refresh to us.
+        emit refreshFormWidget( fft );
+        d->refreshPixmaps( foundPage );
     }
 }
 

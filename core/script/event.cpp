@@ -53,6 +53,8 @@ QString Event::name() const
     {
         case ( FieldCalculate ):
             return QStringLiteral( "Calculate" );
+        case ( FieldFormat ):
+            return QStringLiteral( "Format" );
         case ( UnknownEvent ):
         default:
             return QStringLiteral( "Unknown" );
@@ -64,6 +66,7 @@ QString Event::type() const
     switch ( d->m_eventType )
     {
         case ( FieldCalculate ):
+        case ( FieldFormat ):
             return QStringLiteral( "Field" );
         case ( UnknownEvent ):
         default:
@@ -153,7 +156,25 @@ std::shared_ptr<Event> Event::createFormCalculateEvent( FormField *target,
     FormFieldText *fft = dynamic_cast< FormFieldText * >(target);
     if ( fft )
     {
-        ret->setValue( QVariant( fft->text() ) );
+        ret->setValue( QVariant( fft->internalText() ) );
+    }
+    return ret;
+}
+
+// static
+std::shared_ptr<Event> Event::createFormatEvent( FormField *target,
+                                                 Page *targetPage,
+                                                 const QString &targetName )
+{
+    std::shared_ptr<Event> ret( new Event( Event::FieldFormat ) );
+    ret->setTarget( target );
+    ret->setTargetPage( targetPage );
+    ret->setTargetName( targetName );
+
+    FormFieldText *fft = dynamic_cast< FormFieldText * >(target);
+    if ( fft )
+    {
+        ret->setValue( QVariant( fft->internalText() ) );
     }
     return ret;
 }

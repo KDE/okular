@@ -116,6 +116,8 @@ class FormWidgetsController : public QObject
 
         void action( Okular::Action *action );
 
+        void formatAction( const Okular::Action *action, Okular::FormFieldText *ff );
+
         void refreshFormWidget( Okular::FormField * form );
 
     private Q_SLOTS:

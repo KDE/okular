@@ -57,7 +57,7 @@ class Event
             FieldBlur,       /// < Not implemented.
             FieldCalculate,  /// < This event is defined in a field re-calculation.
             FieldFocus,      /// < Not implemented.
-            FieldFormat,     /// < Not implemented.
+            FieldFormat,     /// < When a format action is executed
             FieldKeystroke,  /// < Not implemented.
             FieldMouseDown,  /// < Not implemented.
             FieldMouseEnter, /// < Not implemented.
@@ -102,6 +102,8 @@ class Event
                                                                 FormField *source = nullptr,
                                                                 Page *sourcePage = nullptr,
                                                                 const QString &targetName = QString() );
+        static std::shared_ptr<Event> createFormatEvent( FormField *target, Page *targetPage,
+                                                         const QString &targetName = QString() );
     private:
         class Private;
         std::shared_ptr<Private> d;

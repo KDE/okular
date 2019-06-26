@@ -361,6 +361,7 @@ if(BUILD_DESKTOP)
     part/dlgperformance.cpp
     part/dlgpresentation.cpp
     part/dlgsignatures.cpp
+    part/certificatetools.cpp
     part/editannottooldialog.cpp
     part/editdrawingtooldialog.cpp
     part/widgetannottools.cpp

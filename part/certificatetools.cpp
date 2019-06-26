@@ -7,23 +7,31 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include "dlgsignatures.h"
-
 #include "certificatetools.h"
-#include "ui_dlgsignaturesbase.h"
+#include <iostream>
 
-DlgSignatures::DlgSignatures(QWidget *parent)
-    : QWidget(parent)
+CertificateTools::CertificateTools( QWidget * parent )
+    : WidgetConfigurationToolsBase( parent )
 {
-    m_dlg = new Ui_DlgSignaturesBase();
-    m_dlg->setupUi(this);
-
-    CertificateTools * kcfg_CertTools = new CertificateTools( m_dlg->certificatesGroup );
-    m_dlg->certificatesPlaceholder->addWidget( kcfg_CertTools );
 }
 
-DlgSignatures::~DlgSignatures()
+QStringList CertificateTools::tools() const
 {
-    delete m_dlg;
+    QStringList res;
+    return res;
 }
-#include "moc_dlgsignatures.cpp"
+
+void CertificateTools::setTools(const QStringList& /*items*/)
+{
+    return;
+}
+
+void CertificateTools::slotAdd()
+{
+    std::cout << "add" << std::endl;
+}
+
+void CertificateTools::slotEdit()
+{
+    std::cout << "edit" << std::endl;
+}

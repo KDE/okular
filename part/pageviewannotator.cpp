@@ -327,6 +327,20 @@ public:
     {
         return PickPointEngine::event(type, button, modifiers, nX, nY, xScale, yScale, page);
     }
+
+    QList<Okular::Annotation *> end() override
+    {
+        QStringList items;
+        items << "Cert1"
+              << "Cert2";
+
+        bool resok;
+        QString cert = QInputDialog::getItem(nullptr, i18n("Select certificate to sign with"), i18n("Certificates:"), items, 0, false, &resok);
+
+        m_creationCompleted = false;
+        clicked = false;
+        return QList<Okular::Annotation *>();
+    }
 };
 
 /** @short PolyLineEngine */

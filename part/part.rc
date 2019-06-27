@@ -80,7 +80,7 @@
     <Separator/>
     <Action name="mouse_toggle_annotate"/>
     <Separator/>
-    <Action name="mouse_toggle_sign"/>
+    <Action name="mouse_sign"/>
     <Separator/>
     <Action name="speak_document"/>
     <Action name="speak_current_page"/>
@@ -110,7 +110,7 @@
   <Action name="zoom_to" />
   <Action name="view_zoom_in"/>
   <Separator/>
-  <Action name="mouse_toggle_sign"/>
+  <Action name="mouse_sign"/>
 </ToolBar>
 <ToolBar name="annotationToolBar" iconText="icononly" newline="true" hidden="true"><text>Annotation Toolbar</text>
   <Action name="annotation_highlighter"/>

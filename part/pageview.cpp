@@ -232,7 +232,7 @@ public:
     QAction *aMouseTableSelect;
     QAction *aMouseMagnifier;
     KToggleAction *aTrimToSelection;
-    KToggleAction *aToggleSignature;
+    QAction * aSignature;
     KSelectAction *aZoom;
     QAction *aZoomIn;
     QAction *aZoomOut;
@@ -364,7 +364,7 @@ PageView::PageView(QWidget *parent, Okular::Document *document)
     d->aMouseNormal = nullptr;
     d->aMouseSelect = nullptr;
     d->aMouseTextSelect = nullptr;
-    d->aToggleSignature = nullptr;
+    d->aSignature = nullptr;
     d->aZoomFitWidth = nullptr;
     d->aZoomFitPage = nullptr;
     d->aZoomAutoFit = nullptr;
@@ -717,10 +717,9 @@ void PageView::setupActions(KActionCollection *ac)
     d->aMouseModeMenu->setText(i18nc("@action", "Selection Tools"));
     ac->addAction(QStringLiteral("mouse_selecttools"), d->aMouseModeMenu);
 
-    d->aToggleSignature = new KToggleAction(QIcon::fromTheme(QStringLiteral("application-pkcs7-signature")), i18n("&Sign"), this);
-    ac->addAction(QStringLiteral("mouse_toggle_sign"), d->aToggleSignature);
-    d->aToggleSignature->setCheckable(true);
-    connect(d->aToggleSignature, &QAction::toggled, this, &PageView::slotToggleSignature);
+    d->aSignature  = new QAction(QIcon::fromTheme( QStringLiteral("application-pkcs7-signature") ), i18n("&Sign..."), this);
+    ac->addAction(QStringLiteral("mouse_sign"), d->aSignature );
+    connect( d->aSignature, &QAction::triggered, this, &PageView::slotSignature );
 
     // speak actions
 #ifdef HAVE_SPEECH
@@ -1218,8 +1217,8 @@ void PageView::updateActionState(bool haspages, bool hasformwidgets)
         d->annotator->setTextToolsEnabled(allowTools && d->document->supportsSearching());
     }
 
-    if (d->aToggleSignature)
-        d->aToggleSignature->setEnabled(haspages);
+    if ( d->aSignature )
+        d->aSignature->setEnabled( haspages );
 
 #ifdef HAVE_SPEECH
     if (d->aSpeakDoc) {
@@ -4775,7 +4774,7 @@ void PageView::slotSetMouseTableSelect()
     Okular::Settings::self()->save();
 }
 
-void PageView::slotToggleSignature()
+void PageView::slotSignature()
 {
     d->messageWindow->display(i18n("Draw a rectangle to insert the signature field"), QString(), PageViewMessage::Info, -1);
 

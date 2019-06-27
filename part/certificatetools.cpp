@@ -9,6 +9,12 @@
 
 #include "certificatetools.h"
 #include <iostream>
+#include <klocalizedstring.h>
+
+#include <QFileDialog>
+#include <QListWidget>
+#include <QListWidgetItem>
+#include <QMimeDatabase>
 
 CertificateTools::CertificateTools( QWidget * parent )
     : WidgetConfigurationToolsBase( parent )
@@ -28,7 +34,22 @@ void CertificateTools::setTools(const QStringList& /*items*/)
 
 void CertificateTools::slotAdd()
 {
-    std::cout << "add" << std::endl;
+    QMimeDatabase mimeDatabase;
+    QString filter = i18n("PKCS12 Digital IDs (%1)", mimeDatabase.mimeTypeForName(QStringLiteral("application/x-pkcs12")).globPatterns().join(QLatin1Char(' ')));
+
+    QString file = QFileDialog::getOpenFileName( this, QString(), QString(), filter );
+
+    if (file.isEmpty())
+        return;
+
+    // Create list entry
+    QListWidgetItem * listEntry = new QListWidgetItem( file, m_list );
+
+    // Select and scroll
+    m_list->setCurrentItem( listEntry );
+    m_list->scrollToItem( listEntry );
+    updateButtons();
+    emit changed();
 }
 
 void CertificateTools::slotEdit()

@@ -12,6 +12,8 @@
 #include "certificatetools.h"
 #include "ui_dlgsignaturesbase.h"
 
+#include <KConfigDialogManager>
+
 DlgSignatures::DlgSignatures(QWidget *parent)
     : QWidget(parent)
 {
@@ -20,6 +22,9 @@ DlgSignatures::DlgSignatures(QWidget *parent)
 
     CertificateTools * kcfg_CertTools = new CertificateTools( m_dlg->certificatesGroup );
     m_dlg->certificatesPlaceholder->addWidget( kcfg_CertTools );
+    kcfg_CertTools->setObjectName( QStringLiteral("kcfg_Certificates") );
+
+    KConfigDialogManager::changedMap()->insert( QStringLiteral("CertificateTools"), SIGNAL(changed()) );
 }
 
 DlgSignatures::~DlgSignatures()

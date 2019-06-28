@@ -10,6 +10,7 @@
 #include "certificatetools.h"
 #include <iostream>
 #include <klocalizedstring.h>
+#include "settings.h"
 
 #include <QFileDialog>
 #include <QListWidget>
@@ -24,12 +25,29 @@ CertificateTools::CertificateTools( QWidget * parent )
 QStringList CertificateTools::tools() const
 {
     QStringList res;
+
+    const int count = m_list->count();
+    for ( int i = 0; i < count; ++i )
+    {
+        QListWidgetItem * listEntry = m_list->item(i);
+
+        res << listEntry->text();
+    }
+
     return res;
 }
 
 void CertificateTools::setTools(const QStringList& /*items*/)
 {
-    return;
+    m_list->clear();
+
+    QStringList certs = Okular::Settings::certificates();
+    foreach( const QString cert, certs )
+    {
+        QListWidgetItem * listEntry = new QListWidgetItem( cert, m_list );
+    }
+
+    updateButtons();
 }
 
 void CertificateTools::slotAdd()

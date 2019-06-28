@@ -398,4 +398,8 @@
     <default code="true">userString</default>
   </entry>
  </group>
+ <group name="Signatures" >
+  <entry key="Certificates" type="StringList">
+  </entry>
+ </group>
 </kcfg>

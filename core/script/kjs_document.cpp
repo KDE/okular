@@ -133,7 +133,7 @@ static KJSObject docGetExternal( KJSContext *, void *object )
 // Document.numFields
 static KJSObject docGetNumFields( KJSContext *, void *object )
 {
-    DocumentPrivate *doc = reinterpret_cast< DocumentPrivate* >( object );
+    const DocumentPrivate *doc = reinterpret_cast< DocumentPrivate* >( object );
 
     unsigned int numFields = 0;
 
@@ -268,7 +268,7 @@ static KJSObject docSyncAnnotScan( KJSContext *, void *,
 static KJSObject docGetNthFieldName( KJSContext *ctx, void *object,
                                    const KJSArguments &arguments )
 {
-    DocumentPrivate *doc = reinterpret_cast< DocumentPrivate* >( object );
+    const DocumentPrivate *doc = reinterpret_cast< DocumentPrivate* >( object );
 
     int numField = arguments.at( 0 ).toInt32( ctx );
 
@@ -278,8 +278,7 @@ static KJSObject docGetNthFieldName( KJSContext *ctx, void *object,
         
         if(numField < pageFields.size())
         {
-            auto ffIt = pageFields.begin();
-            ffIt += numField;
+            const auto ffIt = pageFields.begin() + numField;
             
             return KJSString( (*ffIt)->name() );
         }
@@ -293,7 +292,7 @@ static KJSObject docGetNthFieldName( KJSContext *ctx, void *object,
 static KJSObject docGetOCGs( KJSContext *ctx, void *object,
                                    const KJSArguments &arguments )
 {
-    DocumentPrivate *doc = reinterpret_cast< DocumentPrivate* >( object );
+    const DocumentPrivate *doc = reinterpret_cast< DocumentPrivate* >( object );
 
     QAbstractItemModel * model = doc->m_parent->layersModel();
 
@@ -301,7 +300,7 @@ static KJSObject docGetOCGs( KJSContext *ctx, void *object,
 
     for(int i = 0;i < model->rowCount();++i){
         for(int j = 0;j < model->columnCount();++j){
-            QModelIndex index = model->index( i, j );
+            const QModelIndex index = model->index( i, j );
             
             KJSObject item = JSOCG::wrapOCGObject( ctx, model, i, j );
             item.setProperty( ctx, QStringLiteral("name"), model->data( index , Qt::DisplayRole ).toString() );

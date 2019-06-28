@@ -5115,11 +5115,11 @@ QByteArray Document::requestSignedRevisionData( const Okular::SignatureInfo &inf
     return data;
 }
 
-QString Document::executeScript( QString function )
+void DocumentPrivate::executeScript( const QString &function )
 {
-    if( !d->m_scripter )
-        d->m_scripter = new Scripter( d );
-    return d->m_scripter->execute( JavaScript, function );
+    if( !m_scripter )
+        m_scripter = new Scripter( this );
+    m_scripter->execute( JavaScript, function );
 }
 
 void DocumentPrivate::requestDone( PixmapRequest * req )

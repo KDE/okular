@@ -191,6 +191,13 @@ class DocumentPrivate
 
         void doProcessSearchMatch( RegularAreaRect *match, RunningSearch *search, QSet< int > *pagesToNotify, int currentPage, int searchID, bool moveViewport, const QColor & color );
 
+        /**
+         * Executes a JavaScript script from the setInterval function.
+         *
+         * @since 1.7
+        */
+        void executeScript( const QString &function );
+
         // generators stuff
         /**
          * This method is used by the generators to signal the finish of

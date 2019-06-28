@@ -70,6 +70,15 @@ void FormField::setVisible( bool )
 {
 }
 
+bool FormField::isPrintable() const
+{
+    return true;
+}
+
+void FormField::setPrintable( bool )
+{
+}
+
 Action* FormField::activationAction() const
 {
     Q_D( const FormField );

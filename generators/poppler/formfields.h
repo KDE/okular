@@ -29,6 +29,8 @@ class PopplerFormFieldButton : public Okular::FormFieldButton
         void setReadOnly( bool value ) override;
         bool isVisible() const override;
         void setVisible( bool value ) override;
+        bool isPrintable() const override;
+        void setPrintable( bool value ) override;
 
         // inherited from Okular::FormFieldButton
         ButtonType buttonType() const override;
@@ -37,7 +39,7 @@ class PopplerFormFieldButton : public Okular::FormFieldButton
         void setState( bool state ) override;
         QList< int > siblings() const override;
         void setIcon( Okular::FormField *field ) override;
-#ifdef HAVE_POPPLER_0_78
+#ifdef HAVE_POPPLER_0_79
         /*
          * Supported only in newer versions of Poppler library.
          *
@@ -68,6 +70,8 @@ class PopplerFormFieldText : public Okular::FormFieldText
         void setReadOnly( bool value ) override;
         bool isVisible() const override;
         void setVisible( bool value ) override;
+        bool isPrintable() const override;
+        void setPrintable( bool value ) override;
 
         // inherited from Okular::FormFieldText
         Okular::FormFieldText::TextType textType() const override;
@@ -101,6 +105,8 @@ class PopplerFormFieldChoice : public Okular::FormFieldChoice
         void setReadOnly( bool value ) override;
         bool isVisible() const override;
         void setVisible( bool value ) override;
+        bool isPrintable() const override;
+        void setPrintable( bool value ) override;
 
         // inherited from Okular::FormFieldChoice
         ChoiceType choiceType() const override;

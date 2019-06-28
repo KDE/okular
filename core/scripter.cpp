@@ -46,7 +46,7 @@ Scripter::~Scripter()
     delete d;
 }
 
-QString Scripter::execute( ScriptType type, const QString &script )
+void Scripter::execute( ScriptType type, const QString &script )
 {
     qCDebug(OkularCoreDebug) << "executing the script:";
 #ifdef WITH_KJS
@@ -79,11 +79,8 @@ QString Scripter::execute( ScriptType type, const QString &script )
                 d->m_kjs.reset(new ExecutorKJS( d->m_doc ));
             }
             d->m_kjs->execute( builtInScript + script, d->m_event );
-            
-            return d->m_kjs->getResult();
-    }
+        }
 #endif
-    return QString();
 }
 
 void Scripter::setEvent( Event *event )

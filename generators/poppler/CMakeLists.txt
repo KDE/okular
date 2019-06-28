@@ -154,7 +154,7 @@ int main()
     button->setIcon( icon );
     return 0;
 }
-" HAVE_POPPLER_0_78)
+" HAVE_POPPLER_0_79)
 
 configure_file(
    ${CMAKE_CURRENT_SOURCE_DIR}/config-okular-poppler.h.cmake

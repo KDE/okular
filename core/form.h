@@ -57,6 +57,17 @@ class OKULARCORE_EXPORT FormField
             FormSignature    ///< A signature.
         };
 
+        /**
+         * The display types of the field.
+         */
+        enum FieldDisplay
+        {
+            FormVisible,
+            FormHidden,
+            FormNoPrint,
+            FormNoView
+        };
+
         virtual ~FormField();
 
         /**
@@ -109,6 +120,20 @@ class OKULARCORE_EXPORT FormField
          * @since 1.5
          */
         virtual void setVisible( bool value );
+
+        /**
+          Whether this field is printable.
+          
+          @since 1.7
+        */
+        virtual bool isPrintable() const;
+
+        /**
+          Set this field printable
+          
+          @since 1.7
+        */
+        virtual void setPrintable( bool value );
 
         Action* activationAction() const;
 

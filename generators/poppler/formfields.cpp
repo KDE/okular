@@ -105,6 +105,24 @@ void PopplerFormFieldButton::setVisible( bool value )
 #endif
 }
 
+bool PopplerFormFieldButton::isPrintable() const
+{
+#ifdef HAVE_POPPLER_0_79
+    return m_field->isPrintable();
+#else
+    return m_field->isVisible() ? true : false;
+#endif
+}
+
+void PopplerFormFieldButton::setPrintable( bool value )
+{
+#ifdef HAVE_POPPLER_0_79
+    m_field->setPrintable( value );
+#else
+    Q_UNUSED( value );
+#endif
+}
+
 Okular::FormFieldButton::ButtonType PopplerFormFieldButton::buttonType() const
 {
     switch ( m_field->buttonType() )
@@ -139,7 +157,7 @@ QList< int > PopplerFormFieldButton::siblings() const
     return m_field->siblings();
 }
 
-#ifdef HAVE_POPPLER_0_78
+#ifdef HAVE_POPPLER_0_79
 Poppler::FormFieldIcon PopplerFormFieldButton::icon() const
 {
     return m_field->icon();
@@ -148,7 +166,7 @@ Poppler::FormFieldIcon PopplerFormFieldButton::icon() const
 
 void PopplerFormFieldButton::setIcon( Okular::FormField *field )
 {
-#ifdef HAVE_POPPLER_0_78
+#ifdef HAVE_POPPLER_0_79
     if( field->type() == Okular::FormField::FormButton )
     {
         PopplerFormFieldButton *button = static_cast< PopplerFormFieldButton * >( field );
@@ -220,6 +238,25 @@ void PopplerFormFieldText::setVisible( bool value )
     Q_UNUSED( value );
 #endif
 }
+
+bool PopplerFormFieldText::isPrintable() const
+{
+#ifdef HAVE_POPPLER_0_79
+    return m_field->isPrintable();
+#else
+    return m_field->isVisible() ? true : false;
+#endif
+}
+
+void PopplerFormFieldText::setPrintable( bool value )
+{
+#ifdef HAVE_POPPLER_0_79
+    m_field->setPrintable( value );
+#else
+    Q_UNUSED( value );
+#endif
+}
+
 
 Okular::FormFieldText::TextType PopplerFormFieldText::textType() const
 {
@@ -327,6 +364,24 @@ void PopplerFormFieldChoice::setVisible( bool value )
 {
 #ifdef HAVE_POPPLER_0_64
     m_field->setVisible( value );
+#else
+    Q_UNUSED( value );
+#endif
+}
+
+bool PopplerFormFieldChoice::isPrintable() const
+{
+#ifdef HAVE_POPPLER_0_79
+    return m_field->isPrintable();
+#else
+    return m_field->isVisible() ? true : false;
+#endif
+}
+
+void PopplerFormFieldChoice::setPrintable( bool value )
+{
+#ifdef HAVE_POPPLER_0_79
+    m_field->setPrintable( value );
 #else
     Q_UNUSED( value );
 #endif

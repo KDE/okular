@@ -207,12 +207,12 @@ static KJSObject appSetInterval( KJSContext *ctx, void *object,
                                       const KJSArguments &arguments )
 {
     DocumentPrivate *doc = reinterpret_cast< DocumentPrivate * >( object );
-    QString function = arguments.at( 0 ).toString( ctx ) + ';';
-    int interval = arguments.at( 1 ).toInt32( ctx );
+    const QString function = arguments.at( 0 ).toString( ctx ) + ';';
+    const int interval = arguments.at( 1 ).toInt32( ctx );
 
     QTimer *timer = new QTimer();
 
-    QObject::connect( timer, &QTimer::timeout, [=](){ doc->m_parent->executeScript( function ); } );
+    QObject::connect( timer, &QTimer::timeout, [=](){ doc->executeScript( function ); } );
 
     timer->start( interval );
 
@@ -224,7 +224,7 @@ static KJSObject appClearInterval( KJSContext *ctx, void *object,
                                       const KJSArguments &arguments )
 {
     KJSObject timerObject = arguments.at( 0 );
-    int timerId = timerObject.property( ctx, QStringLiteral( "timerID" ).toLatin1().toBase64() ).toInt32( ctx );
+    const int timerId = timerObject.property( ctx, QStringLiteral( "timerID" ).toLatin1().toBase64() ).toInt32( ctx );
     QTimer *timer = g_timerCache->value( timerId );
     if( timer != nullptr )
     {
@@ -241,13 +241,13 @@ static KJSObject appSetTimeOut( KJSContext *ctx, void *object,
                                       const KJSArguments &arguments )
 {
     DocumentPrivate *doc = reinterpret_cast< DocumentPrivate * >( object );
-    QString function = arguments.at( 0 ).toString( ctx ) + ';';
-    int interval = arguments.at( 1 ).toInt32( ctx );
+    const QString function = arguments.at( 0 ).toString( ctx ) + ';';
+    const int interval = arguments.at( 1 ).toInt32( ctx );
 
     QTimer *timer = new QTimer();
     timer->setSingleShot( true );
 
-    QObject::connect( timer, &QTimer::timeout, [=](){ doc->m_parent->executeScript( function ); } );
+    QObject::connect( timer, &QTimer::timeout, [=](){ doc->executeScript( function ); } );
 
     timer->start( interval );
 
@@ -259,7 +259,7 @@ static KJSObject appClearTimeOut( KJSContext *ctx, void *object,
                                       const KJSArguments &arguments )
 {
     KJSObject timerObject = arguments.at( 0 );
-    int timerId = timerObject.property( ctx, QStringLiteral( "timerID" ).toLatin1().toBase64() ).toInt32( ctx );
+    const int timerId = timerObject.property( ctx, QStringLiteral( "timerID" ).toLatin1().toBase64() ).toInt32( ctx );
     QTimer *timer = g_timerCache->value( timerId );
 
     if( timer != nullptr )
@@ -322,15 +322,7 @@ void JSApp::clearCachedFields()
 {
     if ( g_timerCache )
     {
-        for( auto it = g_timerCache->begin(); it != g_timerCache->end(); ++it )
-        {
-            QTimer *timer = it.value();
-            
-            if(timer == nullptr)
-                continue;
-            
-            delete timer;
-        }
+        qDeleteAll( g_timerCache->begin(), g_timerCache->end() );
         g_timerCache->clear();
     }
 }

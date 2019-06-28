@@ -116,8 +116,6 @@ void ExecutorKJS::execute( const QString &script, Event *event )
     KJSResult result = d->m_interpreter->evaluate( QStringLiteral("okular.js"), 1,
                                                    script, &d->m_docObject );
     
-    resultValue = new QString( result.value().toString( ctx ) );
-
     if ( result.isException() || ctx->hasException() )
     {
         qCDebug(OkularCoreDebug) << "JS exception" << result.errorMessage();
@@ -132,9 +130,4 @@ void ExecutorKJS::execute( const QString &script, Event *event )
                                      << event->type() << "value:" << event->value();
         }
     }
-}
-
-QString ExecutorKJS::getResult()
-{
-    return *resultValue;
 }

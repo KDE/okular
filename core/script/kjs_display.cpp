@@ -8,6 +8,7 @@
  ***************************************************************************/
 
 #include "kjs_display_p.h"
+#include "../form.h"
 
 #include <kjs/kjsobject.h>
 #include <kjs/kjsprototype.h>
@@ -23,13 +24,25 @@ std::unique_ptr < KJSPrototype > g_displayProto;
 // display.hidden
 static KJSObject displayGetHidden( KJSContext *, void *  )
 {
-    return KJSBoolean( false );
+    return KJSNumber( FormField::FormHidden );
 }
 
 // display.visible
 static KJSObject displayGetVisible( KJSContext *, void *  )
 {
-    return KJSBoolean( true );
+    return KJSNumber( FormField::FormVisible );
+}
+
+// display.noView
+static KJSObject displayGetNoView( KJSContext *, void *  )
+{
+    return KJSNumber( FormField::FormNoView );
+}
+
+// display.noPrint
+static KJSObject displayGetNoPrint( KJSContext *, void *  )
+{
+    return KJSNumber( FormField::FormNoPrint );
 }
 
 void JSDisplay::initType( KJSContext *ctx )
@@ -41,6 +54,8 @@ void JSDisplay::initType( KJSContext *ctx )
 
     g_displayProto->defineProperty( ctx, QStringLiteral("hidden"), displayGetHidden );
     g_displayProto->defineProperty( ctx, QStringLiteral("visible"), displayGetVisible );
+    g_displayProto->defineProperty( ctx, QStringLiteral("noView"), displayGetNoView );
+    g_displayProto->defineProperty( ctx, QStringLiteral("noPrint"), displayGetNoPrint );
 }
 
 KJSObject JSDisplay::object( KJSContext *ctx )

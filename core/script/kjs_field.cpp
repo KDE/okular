@@ -231,16 +231,38 @@ static void fieldSetHidden( KJSContext *context, void *object, KJSObject value )
 static KJSObject fieldGetDisplay( KJSContext *, void *object )
 {
     const FormField *field = reinterpret_cast< FormField * >( object );
-    return KJSBoolean( field->isVisible() );
+    bool visible = field->isVisible();
+    if( visible )
+    {
+        return KJSNumber( field->isPrintable() ? FormField::FormVisible : FormField::FormNoPrint );
+    }
+    return KJSNumber( field->isPrintable() ? FormField::FormNoView : FormField::FormHidden );
 }
 
 // Field.display (setter)
 static void fieldSetDisplay( KJSContext *context, void *object, KJSObject value )
 {
     FormField *field = reinterpret_cast< FormField * >( object );
-    bool b = value.toBoolean( context );
-    field->setVisible( b );
-
+    const unsigned int b = value.toInt32( context );
+    switch( b )
+    {
+        case FormField::FormVisible:
+            field->setVisible( true );
+            field->setPrintable( true );
+            break;
+        case FormField::FormHidden:
+            field->setVisible( false );
+            field->setPrintable( false );
+            break;
+        case FormField::FormNoPrint:
+            field->setVisible( true );
+            field->setPrintable( false );
+            break;
+        case FormField::FormNoView:
+            field->setVisible( false );
+            field->setPrintable( true );
+            break;
+    }
     updateField( field );
 }
 
@@ -265,7 +287,7 @@ static KJSObject fieldButtonSetIcon( KJSContext *ctx, void *object,
 {
     FormField *field = reinterpret_cast< FormField * >( object );
 
-    QString fieldName = arguments.at( 0 ).property( ctx, QStringLiteral("name").toLatin1().toBase64() ).toString( ctx );
+    const QString fieldName = arguments.at( 0 ).property( ctx, QStringLiteral("name").toLatin1().toBase64() ).toString( ctx );
 
     if( field->type() == Okular::FormField::FormButton )
     {

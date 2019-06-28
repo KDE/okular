@@ -59,6 +59,7 @@
 #include <KFilterBase>
 #include <KFilterDev>
 #include <KIO/Job>
+#include <KIO/OpenFileManagerWindowJob>
 #include <KJobWidgets>
 #include <KMessageBox>
 #include <KPasswordDialog>
@@ -737,6 +738,7 @@ void Part::setupViewerActions()
 
     m_save = nullptr;
     m_saveAs = nullptr;
+    m_openContainingFolder = nullptr;
 
     QAction * prefs = KStandardAction::preferences( this, SLOT(slotPreferences()), ac);
     if ( m_embedMode == NativeShellMode )
@@ -912,6 +914,12 @@ void Part::setupActions()
     connect(m_showPresentation, &QAction::triggered, this, &Part::slotShowPresentation);
     ac->setDefaultShortcut(m_showPresentation, QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_P));
     m_showPresentation->setEnabled( false );
+
+    m_openContainingFolder = ac->addAction(QStringLiteral("open_containing_folder"));
+    m_openContainingFolder->setText(i18n("Open Con&taining Folder"));
+    m_openContainingFolder->setIcon( QIcon::fromTheme( QStringLiteral("document-open-folder") ) );
+    connect(m_openContainingFolder, &QAction::triggered, this, &Part::slotOpenContainingFolder);
+    m_openContainingFolder->setEnabled( false );
 
     QAction * importPS = ac->addAction(QStringLiteral("import_ps"));
     importPS->setText(i18n("&Import PostScript as PDF..."));
@@ -1571,6 +1579,7 @@ bool Part::openFile()
     emit enablePrintAction( ok && m_document->printingSupport() != Okular::Document::NoPrinting );
     m_printPreview->setEnabled( ok && m_document->printingSupport() != Okular::Document::NoPrinting );
     m_showProperties->setEnabled( ok );
+    if( m_openContainingFolder ) m_openContainingFolder->setEnabled( ok );
     bool hasEmbeddedFiles = ok && m_document->embeddedFiles() && m_document->embeddedFiles()->count() > 0;
     if ( m_showEmbeddedFiles ) m_showEmbeddedFiles->setEnabled( hasEmbeddedFiles );
     m_topMessage->setVisible( hasEmbeddedFiles && Okular::Settings::showOSD() );
@@ -3696,6 +3705,11 @@ void Part::setReadWrite(bool readwrite)
 void Part::enableStartWithFind(const QString &text)
 {
     m_textToFindOnOpen = QString(text);
+}
+
+void Part::slotOpenContainingFolder()
+{
+    KIO::highlightInFileManager( { QUrl(localFilePath()) } );
 }
 
 } // namespace Okular

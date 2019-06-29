@@ -3571,11 +3571,9 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
         p->restore();
     }
 
-    // fill with background color the unpainted area
-    const QVector<QRect> &backRects = remainingArea.rects();
-    int backRectsNumber = backRects.count();
-    for ( int jr = 0; jr < backRectsNumber; jr++ )
-        p->fillRect( backRects[ jr ], backColor );
+    // fill the visible area around the page with the background color
+    for (const QRect& backRect : remainingArea )
+        p->fillRect( backRect, backColor );
 }
 
 void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight )

@@ -3509,6 +3509,7 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
     // create a region from which we'll subtract painted rects
     QRegion remainingArea( contentsRect );
 
+    // This loop draws the actual pages
     // iterate over all items painting the ones intersecting contentsRect
     for ( const PageViewItem * item : qAsConst( d->items ) )
     {
@@ -3517,37 +3518,11 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
             continue;
 
         // get item and item's outline geometries
-        QRect itemGeometry = item->croppedGeometry(),
-              outlineGeometry = itemGeometry;
-        outlineGeometry.adjust( -1, -1, 3, 3 );
+        QRect itemGeometry = item->croppedGeometry();
 
         // move the painter to the top-left corner of the real page
         p->save();
         p->translate( itemGeometry.left(), itemGeometry.top() );
-
-        // draw the page outline (black border and 2px bottom-right shadow)
-        if ( !itemGeometry.contains( contentsRect ) )
-        {
-            int itemWidth = itemGeometry.width(),
-                itemHeight = itemGeometry.height();
-            // draw simple outline
-            p->setPen( Qt::black );
-            p->drawRect( -1, -1, itemWidth + 1, itemHeight + 1 );
-            // draw bottom/right gradient
-            static const int levels = 2;
-            int r = backColor.red() / (levels + 2) + 6,
-                g = backColor.green() / (levels + 2) + 6,
-                b = backColor.blue() / (levels + 2) + 6;
-            for ( int i = 0; i < levels; i++ )
-            {
-                p->setPen( QColor( r * (i+2), g * (i+2), b * (i+2) ) );
-                p->drawLine( i, i + itemHeight + 1, i + itemWidth + 1, i + itemHeight + 1 );
-                p->drawLine( i + itemWidth + 1, i, i + itemWidth + 1, i + itemHeight );
-                p->setPen( backColor );
-                p->drawLine( -1, i + itemHeight + 1, i - 1, i + itemHeight + 1 );
-                p->drawLine( i + itemWidth + 1, -1, i + itemWidth + 1, i - 1 );
-            }
-        }
 
         // draw the page using the PagePainter with all flags active
         if ( contentsRect.intersects( itemGeometry ) )
@@ -3567,13 +3542,51 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
         }
 
         // remove painted area from 'remainingArea' and restore painter
-        remainingArea -= outlineGeometry.intersected( contentsRect );
+        remainingArea -= itemGeometry;
         p->restore();
     }
 
     // fill the visible area around the page with the background color
     for (const QRect& backRect : remainingArea )
         p->fillRect( backRect, backColor );
+
+    // iterate over all items painting a black outline and a simple bottom/right gradient
+    for ( const PageViewItem * item : qAsConst( d->items ) )
+    {
+        // check if a piece of the page intersects the contents rect
+        if ( !item->isVisible() || !item->croppedGeometry().intersects( checkRect ) )
+            continue;
+
+        // get item and item's outline geometries
+        QRect itemGeometry = item->croppedGeometry();
+
+        // move the painter to the top-left corner of the real page
+        p->save();
+        p->translate( itemGeometry.left(), itemGeometry.top() );
+
+        // draw the page outline (black border and 2px bottom-right shadow)
+        if ( !itemGeometry.contains( contentsRect ) )
+        {
+            int itemWidth = itemGeometry.width();
+            int itemHeight = itemGeometry.height();
+            // draw simple outline
+            p->setPen( Qt::black );
+            p->drawRect( -1, -1, itemWidth + 1, itemHeight + 1 );
+            // draw bottom/right gradient
+            static const int levels = 2;
+            int r = backColor.red() / (levels + 2) + 6,
+                g = backColor.green() / (levels + 2) + 6,
+                b = backColor.blue() / (levels + 2) + 6;
+            for ( int i = 0; i < levels; i++ )
+            {
+                p->setPen( QColor( r * (i+2), g * (i+2), b * (i+2) ) );
+                p->drawLine( i, i + itemHeight + 1, i + itemWidth + 1, i + itemHeight + 1 );
+                p->drawLine( i + itemWidth + 1, i, i + itemWidth + 1, i + itemHeight );
+            }
+        }
+
+        p->restore();
+    }
 }
 
 void PageView::updateItemSize( PageViewItem * item, int colWidth, int rowHeight )

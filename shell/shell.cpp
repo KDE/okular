@@ -573,7 +573,7 @@ bool Shell::queryClose()
     if (m_tabs.count() > 1)
     {
         const QString dontAskAgainName = "ShowTabWarning";
-        KMessageBox::ButtonCode dummy;
+        KMessageBox::ButtonCode dummy = KMessageBox::Yes;
         if (shouldBeShownYesNo(dontAskAgainName, dummy))
         {
             QDialog *dialog = new QDialog(this);

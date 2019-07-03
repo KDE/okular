@@ -919,7 +919,7 @@ void XpsHandler::processGlyph( XpsRenderNode &node )
         if ( advanceWidth > 0.0 ) {
             originAdvance.rx() += advanceWidth;
         } else {
-            originAdvance.rx() += metrics.width( thisChar );
+            originAdvance.rx() += metrics.horizontalAdvance( thisChar );
         }
     }
     // qCWarning(OkularXpsDebug) << "Glyphs: " << atts.value("Fill") << ", " << atts.value("FontUri");
@@ -1659,7 +1659,7 @@ Okular::TextPage* XpsPage::textPage()
 
                 int lastWidth = 0;
                 for (int i = 0; i < text.length(); i++) {
-                    int width = metrics.width( text, i + 1 );
+                    int width = metrics.horizontalAdvance( text, i + 1 );
 
                     Okular::NormalizedRect * rect = new Okular::NormalizedRect( (origin.x() + lastWidth) / m_pageSize.width(),
                                                                                 (origin.y() - metrics.height()) / m_pageSize.height(),

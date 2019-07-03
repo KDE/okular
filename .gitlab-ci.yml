@@ -1,0 +1,11 @@
+build_ubuntu_18_04:
+  image: ubuntu:bionic
+  before_script:
+    - sed -i -e 's/# deb-src/deb-src/g' /etc/apt/sources.list
+    - apt-get update
+    - apt-get build-dep --yes --no-install-recommends okular
+    - apt-get install --yes --no-install-recommends ninja-build libkf5crash-dev
+  script:
+    - mkdir -p build && cd build
+    - cmake -G Ninja ..
+    - ninja

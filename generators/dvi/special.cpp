@@ -426,13 +426,11 @@ void dviRenderer::epsf_special(const QString& cp)
        the call to drawText() in the non-GUI thread will produce a crash.
        Ensure that the rendering of the text is performed only if
        the threaded font rendering is available */
-    if (QFontDatabase::supportsThreadedFontRendering()) {
-      if (QFile::exists(EPSfilename))
-        foreGroundPainter->drawText (bbox, (int)(Qt::AlignCenter), EPSfilename);
-      else
-        foreGroundPainter->drawText (bbox, (int)(Qt::AlignCenter),
-                                     i18n("File not found: \n %1", EPSfilename_orig));
-    }
+    if (QFile::exists(EPSfilename))
+      foreGroundPainter->drawText (bbox, (int)(Qt::AlignCenter), EPSfilename);
+    else
+      foreGroundPainter->drawText (bbox, (int)(Qt::AlignCenter),
+                                   i18n("File not found: \n %1", EPSfilename_orig));
     foreGroundPainter->restore();
   }
 

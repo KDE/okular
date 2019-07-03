@@ -262,8 +262,7 @@ void TextDocumentGeneratorPrivate::initializeGenerator()
     q->setFeature( Generator::PrintNative );
     q->setFeature( Generator::PrintToFile );
 #ifdef OKULAR_TEXTDOCUMENT_THREADED_RENDERING
-    if ( QFontDatabase::supportsThreadedFontRendering() )
-        q->setFeature( Generator::Threaded );
+    q->setFeature( Generator::Threaded );
 #endif
 
     QObject::connect( mConverter, SIGNAL(addAction(Action*,int,int)),

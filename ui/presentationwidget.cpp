@@ -1369,11 +1369,11 @@ QRect PresentationWidget::routeMouseDrawingEvent( QMouseEvent * e )
         // add drawing to current page
         m_frames[ m_frameIndex ]->drawings << m_drawingEngine->endSmoothPath();
 
-        // manually disable and re-enable the pencil mode, so we can do
-        // cleaning of the actual drawer and create a new one just after
+        // remove the actual drawer and create a new one just after
         // that - that gives continuous drawing
-        slotChangeDrawingToolEngine( QDomElement() );
-        slotChangeDrawingToolEngine( m_currentDrawingToolElement );
+        delete m_drawingEngine;
+        m_drawingRect = QRect();
+        m_drawingEngine = new SmoothPathEngine( m_currentDrawingToolElement );
 
         // schedule repaint
         update();

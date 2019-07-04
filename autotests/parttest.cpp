@@ -19,6 +19,8 @@
 #include "../ui/toc.h"
 #include "../ui/sidebar.h"
 #include "../ui/pageview.h"
+#include "../ui/presentationwidget.h"
+#include "../settings.h"
 
 #include "../generators/poppler/config-okular-poppler.h"
 
@@ -26,10 +28,12 @@
 #include <KConfigDialog>
 #include <KParts/OpenUrlArguments>
 
+#include <QApplication>
 #include <QClipboard>
 #include <QMessageBox>
 #include <QPushButton>
 #include <QScrollBar>
+#include <QTabletEvent>
 #include <QTemporaryDir>
 #include <QTextEdit>
 #include <QTreeView>
@@ -42,7 +46,12 @@ class CloseDialogHelper : public QObject
     Q_OBJECT
 
 public:
-    CloseDialogHelper(Okular::Part *p, QDialogButtonBox::StandardButton b) : m_part(p), m_button(b), m_clicked(false)
+    CloseDialogHelper(Okular::Part *p, QDialogButtonBox::StandardButton b) : m_widget(p->widget()), m_button(b), m_clicked(false)
+    {
+        QTimer::singleShot(0, this, &CloseDialogHelper::closeDialog);
+    }
+
+    CloseDialogHelper(QWidget *w, QDialogButtonBox::StandardButton b) : m_widget(w), m_button(b), m_clicked(false)
     {
         QTimer::singleShot(0, this, &CloseDialogHelper::closeDialog);
     }
@@ -55,7 +64,7 @@ public:
 private slots:
     void closeDialog()
     {
-        QDialog *dialog = m_part->widget()->findChild<QDialog*>();
+        QDialog *dialog = m_widget->findChild<QDialog*>();
         if (!dialog) {
             QTimer::singleShot(0, this, &CloseDialogHelper::closeDialog);
             return;
@@ -66,7 +75,7 @@ private slots:
     }
 
 private:
-    Okular::Part *m_part;
+    QWidget *m_widget;
     QDialogButtonBox::StandardButton m_button;
     bool m_clicked;
 };
@@ -119,6 +128,7 @@ class PartTest
         void testAnnotWindow();
         void testAdditionalActionTriggers();
         void testJumpToPage();
+        void testTabletProximityBehavior();
 
     private:
         void simulateMouseSelection(double startX, double startY, double endX, double endY, QWidget *target);
@@ -1780,6 +1790,76 @@ void PartTest::testJumpToPage() {
      * to determine the expected viewport position, but we don't have access.
      */
     QCOMPARE(part.m_pageView->verticalScrollBar()->value(), pageWithSpaceTop - 4);
+}
+
+void PartTest::testTabletProximityBehavior()
+{
+    QVariantList dummyArgs;
+    Okular::Part part{ nullptr, nullptr, dummyArgs };
+    QVERIFY( openDocument( &part, QStringLiteral( KDESRCDIR "data/file1.pdf" ) ) );
+    part.slotShowPresentation();
+    PresentationWidget *w = part.m_presentationWidget;
+    QVERIFY( w );
+    part.widget()->show();
+
+    // close the KMessageBox "There are two ways of exiting[...]"
+    CloseDialogHelper closeDialogHelper( w, QDialogButtonBox::Ok ); // confirm the "To leave, press ESC"
+
+    QTabletEvent enterProximityEvent{ QEvent::TabletEnterProximity,
+                                      QPoint( 10, 10 ), QPoint( 10, 10 ),
+                                      QTabletEvent::Stylus, QTabletEvent::Pen,
+                                      1., 0, 0, 1., 1., 0,
+                                      Qt::NoModifier, 0, Qt::NoButton, Qt::NoButton };
+    QTabletEvent leaveProximityEvent{ QEvent::TabletLeaveProximity,
+                                      QPoint( 10, 10 ), QPoint( 10, 10 ),
+                                      QTabletEvent::Stylus, QTabletEvent::Pen,
+                                      1., 0, 0, 1., 1., 0,
+                                      Qt::NoModifier, 0, Qt::NoButton, Qt::NoButton };
+
+    // Test with the Okular::Settings::EnumSlidesCursor::Visible setting
+    Okular::Settings::self()->setSlidesCursor( Okular::Settings::EnumSlidesCursor::Visible );
+
+    // Send an enterProximity event
+    qApp->notify( qApp, &enterProximityEvent );
+
+    // The cursor should be a cross-hair
+    QVERIFY( w->cursor().shape() == Qt::CursorShape( Qt::CrossCursor ) );
+
+    // Send a leaveProximity event
+    qApp->notify( qApp, &leaveProximityEvent );
+
+    // After the leaveProximityEvent, the cursor should be an arrow again, because
+    // we have set the slidesCursor mode to 'Visible'
+    QVERIFY( w->cursor().shape() == Qt::CursorShape( Qt::ArrowCursor ) );
+
+
+    // Test with the Okular::Settings::EnumSlidesCursor::Hidden setting
+    Okular::Settings::self()->setSlidesCursor( Okular::Settings::EnumSlidesCursor::Hidden );
+
+    qApp->notify( qApp, &enterProximityEvent );
+    QVERIFY( w->cursor().shape() == Qt::CursorShape( Qt::CrossCursor ) );
+    qApp->notify( qApp, &leaveProximityEvent );
+    QVERIFY( w->cursor().shape() == Qt::CursorShape( Qt::BlankCursor ) );
+
+    // Moving the mouse should not bring the cursor back
+    QTest::mouseMove( w, QPoint( 100, 100 ) );
+    QVERIFY( w->cursor().shape() == Qt::CursorShape( Qt::BlankCursor ) );
+
+
+    // First test with the Okular::Settings::EnumSlidesCursor::HiddenDelay setting
+    Okular::Settings::self()->setSlidesCursor( Okular::Settings::EnumSlidesCursor::HiddenDelay );
+
+    qApp->notify( qApp, &enterProximityEvent );
+    QVERIFY( w->cursor().shape() == Qt::CursorShape( Qt::CrossCursor ) );
+    qApp->notify( qApp, &leaveProximityEvent );
+
+    // After the leaveProximityEvent, the cursor should be blank, because
+    // we have set the slidesCursor mode to 'HiddenDelay'
+    QVERIFY( w->cursor().shape() == Qt::CursorShape( Qt::BlankCursor ) );
+
+    // Moving the mouse should bring the cursor back
+    QTest::mouseMove(w, QPoint( 100, 100 ));
+    QVERIFY( w->cursor().shape() == Qt::CursorShape( Qt::ArrowCursor ) );
 }
 
 } // namespace Okular

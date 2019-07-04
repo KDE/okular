@@ -74,6 +74,9 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         void leaveEvent( QEvent * e ) override;
         bool gestureEvent (QGestureEvent * e );
 
+        // Catch TabletEnterProximity and TabletLeaveProximity events from the QApplication
+        bool eventFilter (QObject * o, QEvent * ev ) override;
+
     private:
         const void * getObjectRect( Okular::ObjectRect::ObjectType type, int x, int y, QRect * geometry = nullptr ) const;
         const Okular::Action * getLink( int x, int y, QRect * geometry = nullptr ) const;

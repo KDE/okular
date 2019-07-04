@@ -283,6 +283,9 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
 
     // setFocus() so KCursor::setAutoHideCursor() goes into effect if it's enabled
     setFocus( Qt::OtherFocusReason );
+
+    // Catch TabletEnterProximity and TabletLeaveProximity events from the QApplication
+    qApp->installEventFilter( this );
 }
 
 PresentationWidget::~PresentationWidget()
@@ -312,6 +315,8 @@ PresentationWidget::~PresentationWidget()
 
     // delete frames
     qDeleteAll( m_frames );
+
+    qApp->removeEventFilter( this );
 }
 
 
@@ -529,6 +534,29 @@ void PresentationWidget::setPlayPauseIcon()
        playPauseAction->setIcon( QIcon::fromTheme( QStringLiteral("media-playback-start") ) );
        playPauseAction->setToolTip( i18nc( "For Presentation", "Play" ) );
     }
+}
+
+bool PresentationWidget::eventFilter (QObject *o, QEvent *e )
+{
+    if ( o == qApp )
+    {
+        if ( e->type() == QTabletEvent::TabletEnterProximity )
+        {
+            setCursor( QCursor( Qt::CrossCursor ) );
+        }
+        if ( e->type() == QTabletEvent::TabletLeaveProximity )
+        {
+            if ( Okular::Settings::slidesCursor() == Okular::Settings::EnumSlidesCursor::Visible )
+            {
+                setCursor( QCursor( Qt::ArrowCursor ) );
+            }
+            else
+            {
+                setCursor( QCursor( Qt::BlankCursor ) );
+            }
+        }
+    }
+    return false;
 }
 
 // <widget events>

@@ -3569,8 +3569,13 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
             int itemWidth = itemGeometry.width();
             int itemHeight = itemGeometry.height();
             // draw simple outline
-            p->setPen( Qt::black );
-            p->drawRect( -1, -1, itemWidth + 1, itemHeight + 1 );
+            QPen pen( Qt::black );
+            pen.setWidth(0);
+            p->setPen( pen );
+
+            QRectF outline( -1.0/dpr, -1.0/dpr, itemWidth + 1.0/dpr, itemHeight + 1.0/dpr );
+            p->drawRect( outline );
+
             // draw bottom/right gradient
             static const int levels = 2;
             int r = backColor.red() / (levels + 2) + 6,

@@ -4,6 +4,6 @@
 /* Defines if the purpose framework is available */
 #define PURPOSE_FOUND ${PURPOSE_FOUND}
 
-/* Defines if the purpose framework is available */
+/* Defines whether the malloc_trim method from malloc.h is available */
 #cmakedefine01 HAVE_MALLOC_TRIM
 

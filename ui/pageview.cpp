@@ -3549,6 +3549,15 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
     QRect checkRect = contentsRect;
     checkRect.adjust( -3, -3, 1, 1 );
 
+    // Method to linearly interpolate between black (=(0,0,0), omitted) and the background color
+    auto interpolateColor = [&backColor]( double t )
+    {
+        return QColor( t*backColor.red(), t*backColor.green(), t*backColor.blue() );
+    };
+
+    // width of the shadow in device pixels
+    static const int shadowWidth = 2*dpr;
+
     // iterate over all items painting a black outline and a simple bottom/right gradient
     for ( const PageViewItem * item : qAsConst( d->items ) )
     {
@@ -3563,7 +3572,7 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
         p->save();
         p->translate( itemGeometry.left(), itemGeometry.top() );
 
-        // draw the page outline (black border and 2px bottom-right shadow)
+        // draw the page outline (black border and bottom-right shadow)
         if ( !itemGeometry.contains( contentsRect ) )
         {
             int itemWidth = itemGeometry.width();
@@ -3577,15 +3586,15 @@ void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
             p->drawRect( outline );
 
             // draw bottom/right gradient
-            static const int levels = 2;
-            int r = backColor.red() / (levels + 2) + 6,
-                g = backColor.green() / (levels + 2) + 6,
-                b = backColor.blue() / (levels + 2) + 6;
-            for ( int i = 0; i < levels; i++ )
+            for ( int i = 1; i <= shadowWidth; i++ )
             {
-                p->setPen( QColor( r * (i+2), g * (i+2), b * (i+2) ) );
-                p->drawLine( i, i + itemHeight + 1, i + itemWidth + 1, i + itemHeight + 1 );
-                p->drawLine( i + itemWidth + 1, i, i + itemWidth + 1, i + itemHeight );
+                pen.setColor( interpolateColor( double(i)/( shadowWidth+1 ) ) );
+                p->setPen( pen );
+                QPointF left( (i-1)/dpr, itemHeight + i/dpr );
+                QPointF up( itemWidth + i/dpr, (i-1)/dpr );
+                QPointF corner( itemWidth + i/dpr, itemHeight + i/dpr);
+                p->drawLine( left, corner );
+                p->drawLine( up, corner );
             }
         }
 

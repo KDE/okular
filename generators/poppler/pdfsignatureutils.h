@@ -7,8 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef _OKULAR_GENERATOR_PDF_SIGNATUREINFO_H_
-#define _OKULAR_GENERATOR_PDF_SIGNATUREINFO_H_
+#ifndef _OKULAR_GENERATOR_PDF_SIGNATUREUTILS_H_
+#define _OKULAR_GENERATOR_PDF_SIGNATUREUTILS_H_
 
 #include <poppler-form.h>
 

@@ -7,8 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#ifndef OKULAR_SIGNATUREINFO_H
-#define OKULAR_SIGNATUREINFO_H
+#ifndef OKULAR_SIGNATUREUTILS_H
+#define OKULAR_SIGNATUREUTILS_H
 
 #include "okularcore_export.h"
 
@@ -155,7 +155,7 @@ class OKULARCORE_EXPORT SignatureInfo
     public:
 
         /**
-         * The verfication result of the signature.
+         * The verification result of the signature.
          */
         enum SignatureStatus
         {

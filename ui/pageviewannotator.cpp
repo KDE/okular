@@ -799,6 +799,13 @@ QCursor PageViewAnnotator::cursor() const
 QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::EventType & eventType, const AnnotatorEngine::Button & button,
                                                         const QPointF & pos, PageViewItem * item )
 {
+    // creationCompleted is intended to be set by event(), handled subsequently by end(), and cleared within end().
+    // If it's set here, we recursed for some reason (e.g., stacked event loop).
+    // Just bail out, all we want to do is already on stack.
+    if ( m_engine->creationCompleted() ) {
+        return QRect();
+    }
+
     // if the right mouse button was pressed, we simply do nothing. In this way, we are still editing the annotation
     // and so this function will receive and process the right mouse button release event too. If we detach now the annotation tool,
     // the release event will be processed by the PageView class which would create the annotation property widget, and we do not want this.

@@ -334,12 +334,24 @@ public:
         items << "Cert1"
               << "Cert2";
 
-        bool resok;
-        QString cert = QInputDialog::getItem(nullptr, i18n("Select certificate to sign with"), i18n("Certificates:"), items, 0, false, &resok);
+            Okular::Annotation * ann = nullptr;
 
-        m_creationCompleted = false;
-        clicked = false;
-        return QList<Okular::Annotation *>();
+            bool resok;
+            QString cert = QInputDialog::getItem(nullptr, i18n( "Select certificate to sign with" ), i18n( "Certificates:" ), items, 0, false, &resok);
+
+            if (resok)
+            {
+                Okular::WidgetAnnotation * wa = new Okular::WidgetAnnotation();
+                ann = wa;
+            }
+
+            m_creationCompleted = false;
+            clicked = false;
+
+            if ( !ann )
+                return QList< Okular::Annotation* >();
+
+            return QList< Okular::Annotation* >() << ann;
     }
 };
 

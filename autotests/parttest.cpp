@@ -285,15 +285,15 @@ void PartTest::testSelectText()
     part.widget()->show();
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
-    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
-                      part.m_pageView->viewport()->width();
-    const int height = part.m_pageView->verticalScrollBar()->maximum() +
-                       part.m_pageView->viewport()->height();
-
     part.m_document->setViewportPage(0);
 
     // wait for pixmap
     QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
+
+    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
+                      part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->verticalScrollBar()->maximum() +
+                       part.m_pageView->viewport()->height();
 
     QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseTextSelect"));
 
@@ -317,15 +317,15 @@ void PartTest::testClickInternalLink()
     part.widget()->show();
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
-    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
-                      part.m_pageView->viewport()->width();
-    const int height = part.m_pageView->verticalScrollBar()->maximum() +
-                       part.m_pageView->viewport()->height();
-
     part.m_document->setViewportPage(0);
 
     // wait for pixmap
     QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
+
+    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
+                      part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->verticalScrollBar()->maximum() +
+                       part.m_pageView->viewport()->height();
 
     QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseNormal");
 
@@ -346,15 +346,15 @@ void PartTest::testMouseMoveOverLinkWhileInSelectionMode()
     part.widget()->show();
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
-    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
-                      part.m_pageView->viewport()->width();
-    const int height = part.m_pageView->verticalScrollBar()->maximum() +
-                       part.m_pageView->viewport()->height();
-
     part.m_document->setViewportPage(0);
 
     // wait for pixmap
     QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
+
+    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
+                      part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->verticalScrollBar()->maximum() +
+                       part.m_pageView->viewport()->height();
 
     // enter text-selection mode
     QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseTextSelect"));
@@ -377,15 +377,15 @@ void PartTest::testClickUrlLinkWhileInSelectionMode()
     part.widget()->show();
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
-    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
-                      part.m_pageView->viewport()->width();
-    const int height = part.m_pageView->verticalScrollBar()->maximum() +
-                       part.m_pageView->viewport()->height();
-
     part.m_document->setViewportPage(0);
 
     // wait for pixmap
     QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
+
+    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
+                      part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->verticalScrollBar()->maximum() +
+                       part.m_pageView->viewport()->height();
 
     // enter text-selection mode
     QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseTextSelect"));
@@ -429,15 +429,15 @@ void PartTest::testeTextSelectionOverAndAcrossLinks()
     part.widget()->show();
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
-    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
-                      part.m_pageView->viewport()->width();
-    const int height = part.m_pageView->verticalScrollBar()->maximum() +
-                       part.m_pageView->viewport()->height();
-
     part.m_document->setViewportPage(0);
 
     // wait for pixmap
     QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
+
+    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
+                      part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->verticalScrollBar()->maximum() +
+                       part.m_pageView->viewport()->height();
 
     // enter text-selection mode
     QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseTextSelect"));
@@ -469,15 +469,15 @@ void PartTest::testClickUrlLinkWhileLinkTextIsSelected()
     part.widget()->show();
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
-    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
-                      part.m_pageView->viewport()->width();
-    const int height = part.m_pageView->verticalScrollBar()->maximum() +
-                       part.m_pageView->viewport()->height();
-
     part.m_document->setViewportPage(0);
 
     // wait for pixmap
     QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
+
+    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
+                      part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->verticalScrollBar()->maximum() +
+                       part.m_pageView->viewport()->height();
 
     // enter text-selection mode
     QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseTextSelect"));
@@ -516,15 +516,15 @@ void PartTest::testRClickWhileLinkTextIsSelected()
     part.widget()->show();
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
-    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
-                      part.m_pageView->viewport()->width();
-    const int height = part.m_pageView->verticalScrollBar()->maximum() +
-                       part.m_pageView->viewport()->height();
-
     part.m_document->setViewportPage(0);
 
     // wait for pixmap
     QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
+
+    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
+                      part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->verticalScrollBar()->maximum() +
+                       part.m_pageView->viewport()->height();
 
     // enter text-selection mode
     QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseTextSelect"));
@@ -585,15 +585,15 @@ void PartTest::testRClickOverLinkWhileLinkTextIsSelected()
     part.widget()->show();
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
-    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
-                      part.m_pageView->viewport()->width();
-    const int height = part.m_pageView->verticalScrollBar()->maximum() +
-                       part.m_pageView->viewport()->height();
-
     part.m_document->setViewportPage(0);
 
     // wait for pixmap
     QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
+
+    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
+                      part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->verticalScrollBar()->maximum() +
+                       part.m_pageView->viewport()->height();
 
     // enter text-selection mode
     QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseTextSelect"));
@@ -648,15 +648,15 @@ void PartTest::testRClickOnSelectionModeShoulShowFollowTheLinkMenu()
     part.widget()->show();
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
-    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
-                      part.m_pageView->viewport()->width();
-    const int height = part.m_pageView->verticalScrollBar()->maximum() +
-                       part.m_pageView->viewport()->height();
-
     part.m_document->setViewportPage(0);
 
     // wait for pixmap
     QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
+
+    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
+                      part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->verticalScrollBar()->maximum() +
+                       part.m_pageView->viewport()->height();
 
     // enter text-selection mode
     QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseTextSelect"));
@@ -705,15 +705,15 @@ void PartTest::testClickAnywhereAfterSelectionShouldUnselect()
     part.widget()->show();
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
-    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
-                      part.m_pageView->viewport()->width();
-    const int height = part.m_pageView->verticalScrollBar()->maximum() +
-                       part.m_pageView->viewport()->height();
-
     part.m_document->setViewportPage(0);
 
     // wait for pixmap
     QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
+
+    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
+                      part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->verticalScrollBar()->maximum() +
+                       part.m_pageView->viewport()->height();
 
     // enter text-selection mode
     QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseTextSelect"));
@@ -747,15 +747,15 @@ void PartTest::testeRectSelectionStartingOnLinks()
     part.widget()->show();
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
-    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
-                      part.m_pageView->viewport()->width();
-    const int height = part.m_pageView->verticalScrollBar()->maximum() +
-                       part.m_pageView->viewport()->height();
-
     part.m_document->setViewportPage(0);
 
     // wait for pixmap
     QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
+
+    const int width = part.m_pageView->horizontalScrollBar()->maximum() +
+                      part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->verticalScrollBar()->maximum() +
+                       part.m_pageView->viewport()->height();
 
     // enter text-selection mode
     QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseSelect"));
@@ -1539,15 +1539,15 @@ void PartTest::testAnnotWindow()
     part.widget()->resize(800, 600);
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
-    const int width =  part.m_pageView->horizontalScrollBar()->maximum() +
-                       part.m_pageView->viewport()->width();
-    const int height = part.m_pageView->verticalScrollBar()->maximum() +
-                       part.m_pageView->viewport()->height();
-
     part.m_document->setViewportPage(0);
 
     // wait for pixmap
     QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
+
+    const int width =  part.m_pageView->horizontalScrollBar()->maximum() +
+                       part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->verticalScrollBar()->maximum() +
+                       part.m_pageView->viewport()->height();
 
     QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseNormal");
 

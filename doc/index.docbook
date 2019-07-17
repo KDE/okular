@@ -1102,6 +1102,20 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term>
 						<menuchoice>
+							<guimenu>File</guimenu>
+							<guimenuitem>Open Containing Folder</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para>
+							<action>Open</action> folder that contains the current document in your favorite file manager. This action is especially useful for the case when you have downloaded a &PDF; file from the internet that opens itself in &okular;. The location of this file may not be clear or easy to find without this feature.
+						</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice>
 							<shortcut>
 							<keycombo action="simul">&Ctrl;<keycap>S</keycap></keycombo>
 							</shortcut>

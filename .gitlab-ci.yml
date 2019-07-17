@@ -1,5 +1,12 @@
+include:
+  - https://invent.kde.org/sysadmin/ci-tooling/raw/master/invent/ci-before.yml
+  - https://invent.kde.org/sysadmin/ci-tooling/raw/master/invent/ci-applications-linux.yml
+
 build_ubuntu_18_04:
+  stage: build
   image: ubuntu:bionic
+  only:
+    - merge_requests
   before_script:
     - sed -i -e 's/# deb-src/deb-src/g' /etc/apt/sources.list
     - apt-get update

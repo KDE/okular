@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="okular_part" version="40">
+<kpartgui name="okular_part" version="41">
 <MenuBar>
   <Menu name="file"><text>&amp;File</text>
     <Action name="get_new_stuff" group="file_open"/>
@@ -9,6 +9,7 @@
     <Action name="file_reload" group="file_save"/>
     <Action name="file_print" group="file_print"/>
     <Action name="file_print_preview" group="file_print"/>
+    <Action name="open_containing_folder" group="file_print"/>
     <Action name="properties" group="file_print"/>
     <Action name="embedded_files" group="file_print"/>
     <Action name="file_export_as" group="file_print"/>

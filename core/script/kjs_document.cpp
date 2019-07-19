@@ -290,7 +290,7 @@ static KJSObject docGetNthFieldName( KJSContext *ctx, void *object,
 }
 
 static KJSObject docGetOCGs( KJSContext *ctx, void *object,
-                                   const KJSArguments &arguments )
+                                   const KJSArguments & )
 {
     const DocumentPrivate *doc = reinterpret_cast< DocumentPrivate* >( object );
 

@@ -220,11 +220,11 @@ static KJSObject appSetInterval( KJSContext *ctx, void *object,
 }
 
 // app.clearInterval()
-static KJSObject appClearInterval( KJSContext *ctx, void *object,
+static KJSObject appClearInterval( KJSContext *ctx, void *,
                                       const KJSArguments &arguments )
 {
     KJSObject timerObject = arguments.at( 0 );
-    const int timerId = timerObject.property( ctx, QStringLiteral( "timerID" ).toLatin1().toBase64() ).toInt32( ctx );
+    const int timerId = timerObject.property( ctx, QStringLiteral("okular_timerID") ).toInt32( ctx );
     QTimer *timer = g_timerCache->value( timerId );
     if( timer != nullptr )
     {
@@ -255,11 +255,11 @@ static KJSObject appSetTimeOut( KJSContext *ctx, void *object,
 }
 
 // app.clearTimeOut()
-static KJSObject appClearTimeOut( KJSContext *ctx, void *object,
+static KJSObject appClearTimeOut( KJSContext *ctx, void *,
                                       const KJSArguments &arguments )
 {
     KJSObject timerObject = arguments.at( 0 );
-    const int timerId = timerObject.property( ctx, QStringLiteral( "timerID" ).toLatin1().toBase64() ).toInt32( ctx );
+    const int timerId = timerObject.property( ctx, QStringLiteral("okular_timerID") ).toInt32( ctx );
     QTimer *timer = g_timerCache->value( timerId );
 
     if( timer != nullptr )
@@ -311,7 +311,7 @@ KJSObject JSApp::object( KJSContext *ctx, DocumentPrivate *doc )
 KJSObject JSApp::wrapTimer( KJSContext *ctx, QTimer *timer)
 {
     KJSObject timerObject = g_appProto->constructObject( ctx, timer );
-    timerObject.setProperty( ctx, QStringLiteral("timerID").toLatin1().toBase64(), timer->timerId() );
+    timerObject.setProperty( ctx, QStringLiteral("okular_timerID"), timer->timerId() );
 
     g_timerCache->insert( timer->timerId(), timer );
 

@@ -22,7 +22,7 @@
 
 using namespace Okular;
 
-std::unique_ptr < KJSPrototype > g_OCGProto;
+static KJSPrototype *g_OCGProto;
 
 typedef QHash< QPair< int, int > *, QAbstractItemModel* > OCGCache;
 Q_GLOBAL_STATIC( OCGCache, g_OCGCache )
@@ -56,11 +56,13 @@ static void OCGSetState( KJSContext* ctx, void* object,
 
 
 void JSOCG::initType( KJSContext *ctx )
-{
-    if ( g_OCGProto )
+{      
+    static bool initialized = false;
+    if ( initialized )
         return;
+    initialized = true;
 
-    g_OCGProto.reset(new KJSPrototype);
+    g_OCGProto = new KJSPrototype();
     
     g_OCGProto->defineProperty( ctx, QStringLiteral("state"), OCGGetState, OCGSetState );
 }

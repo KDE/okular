@@ -19,7 +19,7 @@
 
 using namespace Okular;
 
-std::unique_ptr < KJSPrototype > g_displayProto;
+static KJSPrototype *g_displayProto;
 
 // display.hidden
 static KJSObject displayGetHidden( KJSContext *, void *  )
@@ -46,11 +46,13 @@ static KJSObject displayGetNoPrint( KJSContext *, void *  )
 }
 
 void JSDisplay::initType( KJSContext *ctx )
-{
-    if ( g_displayProto )
+{      
+    static bool initialized = false;
+    if ( initialized )
         return;
+    initialized = true;
 
-    g_displayProto.reset(new KJSPrototype);
+    g_displayProto = new KJSPrototype();
 
     g_displayProto->defineProperty( ctx, QStringLiteral("hidden"), displayGetHidden );
     g_displayProto->defineProperty( ctx, QStringLiteral("visible"), displayGetVisible );

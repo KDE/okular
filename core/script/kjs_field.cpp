@@ -273,7 +273,7 @@ static KJSObject fieldButtonGetIcon( KJSContext *ctx, void *object,
     FormField *field = reinterpret_cast< FormField * >( object );
     
     KJSObject fieldObject;
-    fieldObject.setProperty( ctx, QStringLiteral("name").toLatin1().toBase64(), field->name() );
+    fieldObject.setProperty( ctx, QStringLiteral("okular_name"), field->name() );
     g_buttonCache->insert( field->name(), field );
 
     return fieldObject;
@@ -287,7 +287,7 @@ static KJSObject fieldButtonSetIcon( KJSContext *ctx, void *object,
 {
     FormField *field = reinterpret_cast< FormField * >( object );
 
-    const QString fieldName = arguments.at( 0 ).property( ctx, QStringLiteral("name").toLatin1().toBase64() ).toString( ctx );
+    const QString fieldName = arguments.at( 0 ).property( ctx, QStringLiteral("okular_name") ).toString( ctx );
 
     if( field->type() == Okular::FormField::FormButton )
     {

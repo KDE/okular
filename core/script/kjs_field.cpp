@@ -17,15 +17,17 @@
 #include <qhash.h>
 
 #include <QDebug>
-#include <memory>
 
 #include "../debug_p.h"
 #include "../document_p.h"
 #include "../form.h"
 #include "../page.h"
 #include "../page_p.h"
+#include "kjs_display_p.h"
 
 using namespace Okular;
+
+#define OKULAR_NAME QStringLiteral("okular_name")
 
 static KJSPrototype *g_fieldProto;
 
@@ -234,9 +236,9 @@ static KJSObject fieldGetDisplay( KJSContext *, void *object )
     bool visible = field->isVisible();
     if( visible )
     {
-        return KJSNumber( field->isPrintable() ? FormField::FormVisible : FormField::FormNoPrint );
+        return KJSNumber( field->isPrintable() ? FormDisplay::FormVisible : FormDisplay::FormNoPrint );
     }
-    return KJSNumber( field->isPrintable() ? FormField::FormNoView : FormField::FormHidden );
+    return KJSNumber( field->isPrintable() ? FormDisplay::FormNoView : FormDisplay::FormHidden );
 }
 
 // Field.display (setter)
@@ -246,19 +248,19 @@ static void fieldSetDisplay( KJSContext *context, void *object, KJSObject value 
     const unsigned int b = value.toInt32( context );
     switch( b )
     {
-        case FormField::FormVisible:
+        case FormDisplay::FormVisible:
             field->setVisible( true );
             field->setPrintable( true );
             break;
-        case FormField::FormHidden:
+        case FormDisplay::FormHidden:
             field->setVisible( false );
             field->setPrintable( false );
             break;
-        case FormField::FormNoPrint:
+        case FormDisplay::FormNoPrint:
             field->setVisible( true );
             field->setPrintable( false );
             break;
-        case FormField::FormNoView:
+        case FormDisplay::FormNoView:
             field->setVisible( false );
             field->setPrintable( true );
             break;
@@ -273,7 +275,7 @@ static KJSObject fieldButtonGetIcon( KJSContext *ctx, void *object,
     FormField *field = reinterpret_cast< FormField * >( object );
     
     KJSObject fieldObject;
-    fieldObject.setProperty( ctx, QStringLiteral("okular_name"), field->name() );
+    fieldObject.setProperty( ctx, OKULAR_NAME, field->name() );
     g_buttonCache->insert( field->name(), field );
 
     return fieldObject;
@@ -287,7 +289,7 @@ static KJSObject fieldButtonSetIcon( KJSContext *ctx, void *object,
 {
     FormField *field = reinterpret_cast< FormField * >( object );
 
-    const QString fieldName = arguments.at( 0 ).property( ctx, QStringLiteral("okular_name") ).toString( ctx );
+    const QString fieldName = arguments.at( 0 ).property( ctx, OKULAR_NAME ).toString( ctx );
 
     if( field->type() == Okular::FormField::FormButton )
     {

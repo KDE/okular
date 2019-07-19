@@ -18,8 +18,6 @@
 #include <QDebug>
 #include <QPair>
 
-#include <memory>
-
 using namespace Okular;
 
 static KJSPrototype *g_OCGProto;
@@ -42,7 +40,7 @@ static KJSObject OCGGetState( KJSContext *, void *object )
 
 // OCG.state (setter)
 static void OCGSetState( KJSContext* ctx, void* object,
-                           KJSObject value )
+                         KJSObject value )
 {
    	QPair< int, int > *pair = reinterpret_cast< QPair< int, int >* > ( object );
    	QAbstractItemModel *model = g_OCGCache->value( pair );

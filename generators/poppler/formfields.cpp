@@ -110,7 +110,7 @@ bool PopplerFormFieldButton::isPrintable() const
 #ifdef HAVE_POPPLER_0_79
     return m_field->isPrintable();
 #else
-    return m_field->isVisible() ? true : false;
+    return true;
 #endif
 }
 
@@ -244,7 +244,7 @@ bool PopplerFormFieldText::isPrintable() const
 #ifdef HAVE_POPPLER_0_79
     return m_field->isPrintable();
 #else
-    return m_field->isVisible() ? true : false;
+    return true;
 #endif
 }
 
@@ -374,7 +374,7 @@ bool PopplerFormFieldChoice::isPrintable() const
 #ifdef HAVE_POPPLER_0_79
     return m_field->isPrintable();
 #else
-    return m_field->isVisible() ? true : false;
+    return true;
 #endif
 }
 

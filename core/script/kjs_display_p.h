@@ -15,6 +15,17 @@ class KJSObject;
 
 namespace Okular {
 
+/**
+ * The display types of the field.
+*/
+enum FormDisplay
+{
+    FormVisible,
+    FormHidden,
+    FormNoPrint,
+    FormNoView
+};
+
 class JSDisplay
 {
     public:

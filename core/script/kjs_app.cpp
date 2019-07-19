@@ -17,6 +17,7 @@
 #include <qapplication.h>
 
 #include <QLocale>
+#include <QTimer>
 
 #include <KLocalizedString>
 
@@ -25,6 +26,8 @@
 #include "kjs_fullscreen_p.h"
 
 using namespace Okular;
+
+#define OKULAR_TIMERID QStringLiteral( "okular_timerID" )
 
 static KJSPrototype *g_appProto;
 typedef QHash< int, QTimer * > TimerCache;
@@ -212,7 +215,7 @@ static KJSObject appSetInterval( KJSContext *ctx, void *object,
 
     QTimer *timer = new QTimer();
 
-    QObject::connect( timer, &QTimer::timeout, [=](){ doc->executeScript( function ); } );
+    QObject::connect( timer, &QTimer::timeout, doc->m_parent, [=](){ doc->executeScript( function ); } );
 
     timer->start( interval );
 
@@ -224,7 +227,7 @@ static KJSObject appClearInterval( KJSContext *ctx, void *,
                                       const KJSArguments &arguments )
 {
     KJSObject timerObject = arguments.at( 0 );
-    const int timerId = timerObject.property( ctx, QStringLiteral("okular_timerID") ).toInt32( ctx );
+    const int timerId = timerObject.property( ctx, OKULAR_TIMERID ).toInt32( ctx );
     QTimer *timer = g_timerCache->value( timerId );
     if( timer != nullptr )
     {
@@ -247,7 +250,7 @@ static KJSObject appSetTimeOut( KJSContext *ctx, void *object,
     QTimer *timer = new QTimer();
     timer->setSingleShot( true );
 
-    QObject::connect( timer, &QTimer::timeout, [=](){ doc->executeScript( function ); } );
+    QObject::connect( timer, &QTimer::timeout, doc->m_parent, [=](){ doc->executeScript( function ); } );
 
     timer->start( interval );
 
@@ -259,7 +262,7 @@ static KJSObject appClearTimeOut( KJSContext *ctx, void *,
                                       const KJSArguments &arguments )
 {
     KJSObject timerObject = arguments.at( 0 );
-    const int timerId = timerObject.property( ctx, QStringLiteral("okular_timerID") ).toInt32( ctx );
+    const int timerId = timerObject.property( ctx, OKULAR_TIMERID ).toInt32( ctx );
     QTimer *timer = g_timerCache->value( timerId );
 
     if( timer != nullptr )
@@ -311,7 +314,7 @@ KJSObject JSApp::object( KJSContext *ctx, DocumentPrivate *doc )
 KJSObject JSApp::wrapTimer( KJSContext *ctx, QTimer *timer)
 {
     KJSObject timerObject = g_appProto->constructObject( ctx, timer );
-    timerObject.setProperty( ctx, QStringLiteral("okular_timerID"), timer->timerId() );
+    timerObject.setProperty( ctx, OKULAR_TIMERID, timer->timerId() );
 
     g_timerCache->insert( timer->timerId(), timer );
 

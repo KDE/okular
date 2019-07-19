@@ -194,7 +194,7 @@ class DocumentPrivate
         /**
          * Executes a JavaScript script from the setInterval function.
          *
-         * @since 1.7
+         * @since 1.9
         */
         void executeScript( const QString &function );
 

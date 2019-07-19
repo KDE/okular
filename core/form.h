@@ -57,17 +57,6 @@ class OKULARCORE_EXPORT FormField
             FormSignature    ///< A signature.
         };
 
-        /**
-         * The display types of the field.
-         */
-        enum FieldDisplay
-        {
-            FormVisible,
-            FormHidden,
-            FormNoPrint,
-            FormNoView
-        };
-
         virtual ~FormField();
 
         /**
@@ -124,14 +113,14 @@ class OKULARCORE_EXPORT FormField
         /**
           Whether this field is printable.
           
-          @since 1.7
+          @since 1.9
         */
         virtual bool isPrintable() const;
 
         /**
           Set this field printable
           
-          @since 1.7
+          @since 1.9
         */
         virtual void setPrintable( bool value );
 
@@ -235,7 +224,7 @@ class OKULARCORE_EXPORT FormFieldButton : public FormField
         /**
          * Sets the icon of the Button to the Icon of the field parameter.
          *
-         * @since 1.7
+         * @since 1.9
         */
         virtual void setIcon( Okular::FormField *field );
 

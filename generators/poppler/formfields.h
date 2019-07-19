@@ -43,7 +43,7 @@ class PopplerFormFieldButton : public Okular::FormFieldButton
         /*
          * Supported only in newer versions of Poppler library.
          *
-         * @since 1.7
+         * @since 1.9
         */
         Poppler::FormFieldIcon icon() const;
 #endif

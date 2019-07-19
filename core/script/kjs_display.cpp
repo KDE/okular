@@ -15,8 +15,6 @@
 
 #include <QString>
 
-#include <memory>
-
 using namespace Okular;
 
 static KJSPrototype *g_displayProto;
@@ -24,25 +22,25 @@ static KJSPrototype *g_displayProto;
 // display.hidden
 static KJSObject displayGetHidden( KJSContext *, void *  )
 {
-    return KJSNumber( FormField::FormHidden );
+    return KJSNumber( FormDisplay::FormHidden );
 }
 
 // display.visible
 static KJSObject displayGetVisible( KJSContext *, void *  )
 {
-    return KJSNumber( FormField::FormVisible );
+    return KJSNumber( FormDisplay::FormVisible );
 }
 
 // display.noView
 static KJSObject displayGetNoView( KJSContext *, void *  )
 {
-    return KJSNumber( FormField::FormNoView );
+    return KJSNumber( FormDisplay::FormNoView );
 }
 
 // display.noPrint
 static KJSObject displayGetNoPrint( KJSContext *, void *  )
 {
-    return KJSNumber( FormField::FormNoPrint );
+    return KJSNumber( FormDisplay::FormNoPrint );
 }
 
 void JSDisplay::initType( KJSContext *ctx )

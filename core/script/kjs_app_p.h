@@ -13,8 +13,7 @@
 
 class KJSContext;
 class KJSObject;
-
-#include <QTimer>
+class QTimer;
 
 namespace Okular {
 

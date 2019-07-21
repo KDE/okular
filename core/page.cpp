@@ -579,9 +579,7 @@ void Page::setTextPage( TextPage * textPage )
     if ( d->m_text )
     {
         d->m_text->d->m_page = this;
-        /**
-         * Correct text order for before text selection
-         */
+        // Correct/optimize text order for search and text selection
         d->m_text->d->correctTextOrder();
     }
 }

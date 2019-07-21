@@ -17,6 +17,15 @@
 #include <QTransform>
 
 class SearchPoint;
+
+/**
+ * Memory-optimized storage of a TextEntity. Stores a string and its bounding box.
+ *
+ * When a generator adds a TextEntity to a TextPage, it is internally stored as TinyTextEntity.
+ * TinyTextEntity is also internally used to get the geometry of text selections and highlight areas.
+ *
+ * @see TextEntity
+ */
 class TinyTextEntity;
 class RegionText;
 

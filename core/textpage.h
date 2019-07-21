@@ -29,17 +29,27 @@ class TextSelection;
 class RegularAreaRect;
 
 /*! @class TextEntity
- * @short Abstract textentity of Okular
- * @par The context
- * A document can provide different forms of information about textual representation
- * of its contents. It can include information about positions of every character on the
- * page, this is the best possibility.
+ * @short Represents a piece of text on a TextPage, containing its textual representation and its bounding box.
  *
- * But also it can provide information only about positions of every word on the page (not the character).
- * Furthermore it can provide information only about the position of the whole page's text on the page.
+ * To enable searching and text selection, a generator can give information about the textual
+ * content of a Page using a TextPage.
+ * A TextPage is created using TextEntity objects.
+ * A TextEntity can represent a single character/glyph, a word, a line, or even the whole page.
  *
- * Also some document types have glyphes - sets of characters rendered as one, so in search they should
- * appear as a text but are only one character when drawn on screen. We need to allow this.
+ * Ideally, every single glyph is represented by its own TextEntity.
+ * If the textual representation of a graphical glyph contains more than one character,
+ * the TextEntity must contain the whole string which represents the glyph.
+ *
+ * When the Generator has created the TextPage, and it is added to a Page,
+ * the text entities are reordered to words, lines, and paragraphs, to optimize search and text selection.
+ * This way, the Generator does not need to care about the logical order of lines or paragraphs.
+ *
+ * @par Text Selection/Highlighting
+ * A TextEntity is the smallest piece of text, which the user can select, or which can be highlighted.
+ * That is, if the TextEntity represents a word, only the whole word can be selected.
+ * It would not be possible to select a single glyph of the word, because its bounding box is not known.
+ *
+ * @see TextPage, Generator
  */
 class OKULARCORE_EXPORT TextEntity
 {
@@ -48,9 +58,9 @@ class OKULARCORE_EXPORT TextEntity
 
         /**
          * Creates a new text entity with the given @p text and the
-         * given @p area.
+         * given @p boundingBox.
          */
-        TextEntity( const QString &text, NormalizedRect *area );
+        TextEntity( const QString &text, NormalizedRect *boundingBox );
 
         /**
          * Destroys the text entity.
@@ -83,9 +93,17 @@ class OKULARCORE_EXPORT TextEntity
 };
 
 /**
- * The TextPage class represents the text of a page by
- * providing @see TextEntity items for every word/character of
- * the page.
+ * @short Represents the textual information of a Page. Makes search and text selection possible.
+ *
+ * A Generator with text support should add a TextPage to every Page.
+ * For every piece of text, a TextEntity is added, holding the string representation and the bounding box.
+ *
+ * Ideally, every TextEntity describes only one glyph.
+ * A "glyph" is one character in the graphical representation, but the textual representation may consist of multiple characters (like diacritic modifiers).
+ *
+ * When the TextPage is added to the Page, the TextEntitys are restructured to optimize text selection.
+ *
+ * @see TextEntity
  */
 class OKULARCORE_EXPORT TextPage
 {
@@ -142,26 +160,26 @@ class OKULARCORE_EXPORT TextPage
                                    Qt::CaseSensitivity caseSensitivity, const RegularAreaRect *lastRect );
 
         /**
-         * Text extraction function.
+         * Text extraction function. Looks for text in the given @p area.
          *
-         * Returns:
-         * - a null string if @p rect is a valid pointer to a null area
-         * - the whole page text if @p rect is a null pointer
-         * - the text which is included by rectangular area @p rect otherwise
+         * @return
+         * - If @p area points to a valid null area, a null string.
+         * - If @p area is nullptr, the whole page text as a single string.
+         * - Otherwise, the text which is included by @p area, as a single string.
          * Uses AnyPixelTextAreaInclusionBehaviour
          */
-        QString text( const RegularAreaRect *rect = nullptr ) const;
+        QString text( const RegularAreaRect *area = nullptr ) const;
 
         /**
-         * Text extraction function.
+         * Text extraction function. Looks for text in the given @p area.
          *
-         * Returns:
-         * - a null string if @p rect is a valid pointer to a null area
-         * - the whole page text if @p rect is a null pointer
-         * - the text which is included by rectangular area @p rect otherwise
+         * @return
+         * - If @p area points to a valid null area, a null string.
+         * - If @p area is nullptr, the whole page text as a single string.
+         * - Otherwise, the text which is included by @p area, as a single string.
          * @since 0.10 (KDE 4.4)
          */
-        QString text( const RegularAreaRect * rect, TextAreaInclusionBehaviour b ) const;
+        QString text( const RegularAreaRect * area, TextAreaInclusionBehaviour b ) const;
 
         /**
          * Text entity extraction function. Similar to text() but returns

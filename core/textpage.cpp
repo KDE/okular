@@ -1877,10 +1877,10 @@ WordsWithCharacters addNecessarySpace(RegionTextList tree, int pageWidth, int pa
  */
 void TextPagePrivate::correctTextOrder()
 {
-    //m_page->m_page->width() and m_page->m_page->height() are in pixels at
-    //100% zoom level, and thus depend on display DPI. We scale pageWidth and
-    //pageHeight to remove the dependence. Otherwise bugs would be more difficult
-    //to reproduce and Okular could fail in extreme cases like a large TV with low DPI.
+    // m_page->width() and m_page->height() are in pixels at
+    // 100% zoom level, and thus depend on display DPI.
+    // To avoid Okular failing on lowDPI displays,
+    // we scale pageWidth and pageHeight so their sum equals 2000.
     const double scalingFactor = 2000.0 / (m_page->width() + m_page->height());
     const int pageWidth  = (int) (scalingFactor * m_page->width() );
     const int pageHeight = (int) (scalingFactor * m_page->height());

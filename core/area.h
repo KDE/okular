@@ -32,24 +32,95 @@ class NormalizedShape;
 
 /**
  * NormalizedPoint is a helper class which stores the coordinates
- * of a normalized point. Normalized means that the coordinates are
- * between 0 and 1 so that it is page size independent.
+ * of a normalized point.
  *
- * Example:
- *    The normalized point is (0.5, 0.3)
+ * @par Normalized Coordinate System
+ * @parblock
+ * Normalized means that the coordinates are always between 0 and 1,
+ * unless the point shall be outside of the reference area.
  *
- *    If you want to draw it on a 800x600 page, just multiply the x coordinate (0.5) with
- *    the page width (800) and the y coordinate (0.3) with the page height (600), so
- *    the point will be drawn on the page at (400, 180).
+ * The reference area is a rectangle, and all normalized points
+ * with coordinates of 0 or 1 describe its edges.
  *
- *    That allows you to zoom the page by just multiplying the normalized points with the
- *    zoomed page size.
+ * This allows to locate things on a reference area without knowing its
+ * (current or future) actual size. When the reference area is resized,
+ * all things which are described in normalized coordinates keep their
+ * proportional position on the area.
+ * @endparblock
+ *
+ * @par Transformation to and from Normalized Coordinates
+ * @parblock
+ * To transform normalized coordinates to coordinates on the reference area,
+ * just multiply them with the size of the reference area.
+ *
+ * To get normalized coordinates from a point on the reference area,
+ * just divide its coordinates with the size of the reference area.
+ *
+ * Many methods have parameters @c xScale and @c yScale,
+ * these are equal to the size of the reference area.
+ * @endparblock
+ *
+ * @par Normalized Coordinate System Applied to Pages
+ * @parblock
+ * Okular uses a normalized coordinate system mainly to describe
+ * positions on pages.
+ * This is useful because pages can be shown in different sizes (zoom),
+ * but all objects shall keep their proportional position on the page.
+ *
+ * Okular maps from page to normalized coordinates as follows:
+ *  * Left edge of the page: x = 0
+ *  * Right edge of the page: x = 1
+ *  * Top edge of the page: y = 0
+ *  * Bottom edge of the page: y = 1
+ * @endparblock
+ *
+ * @par Example: Draw a Point on a Page
+ * @parblock
+ * The point is given in normalized coordinates (0.5, 0.3).
+ *
+ * If you want to draw it on a 800x600 page,
+ * just multiply the x coordinate (0.5) with the page width (800),
+ * and the y coordinate (0.3) with the page height (600).
+ * So, the point will be drawn on the page at (400, 180).
+ *
+ * That allows you to zoom the page by just multiplying the normalized points with the
+ * zoomed page size.
+ * @endparblock
+ *
+ * @par Example: Select Text on a Page using Mouse Events
+ * @parblock
+ * The positon of all glyphs and words is stored in normalized coordinates.
+ * (This is what TextPage actually does.)
+ * Mouse press and release events are given in page coordinates (400, 180) and (600, 450),
+ * while the page has a size of 800x600.
+ *
+ * If you want to search all text between the mouse click and release event,
+ * you need their normalized coordinates.
+ * Just divide the x coordinates (400 and 600) by the page width (800),
+ * and the y coordinates (180 and 450) by the page height (600).
+ * So, you have to search for all glyphs between (0.5, 0.3) and (0.75, 0.75).
+ *
+ * That allows you to process all glyphs and words without
+ * having to keep any of their positions in sync with the page.
+ * @endparblock
+ *
+ * @par Geometric operations
+ * @parblock
+ * NormalizedPoint supports basic geometric operations.
+ *  * You can transform it with a QTransform matrix.
+ *  * With the size of the reference area, you can calculate the squared
+ *    absolute distance to another NormalizedPoint or a line of two NormalizedPoints.
+ *
+ * NormalizedRect provides additional geometric operations for rectangles.
+ * @endparblock
+ *
+ * @see NormalizedRect
  */
 class OKULARCORE_EXPORT NormalizedPoint
 {
     public:
         /**
-         * Creates a new empty normalized point.
+         * Creates a normalized point at (0, 0).
          */
         NormalizedPoint();
 
@@ -59,8 +130,8 @@ class OKULARCORE_EXPORT NormalizedPoint
         NormalizedPoint( double x, double y );
 
         /**
-         * Creates a new normalized point with the coordinates (@p x, @p y) which are normalized
-         * by the scaling factors @p xScale and @p yScale.
+         * Creates a new normalized point from an absolute point (@p x, @p y)
+         * on a reference area of size @p xScale x @p yScale.
          */
         NormalizedPoint( int x, int y, int xScale, int yScale );
 
@@ -78,14 +149,16 @@ class OKULARCORE_EXPORT NormalizedPoint
         void transform( const QTransform &matrix );
 
         /**
-         * Returns squared distance to point @p x @p y @p xScale @p yScale
+         * Returns squared distance to normalized point (@p x, @p y)
+         * on a reference area of size @p xScale x @p yScale.
          * @since 0.17 (KDE 4.11)
          */
         double distanceSqr( double x, double y, double xScale, double yScale ) const;
 
-
         /**
-         * @brief Calculates distance of the point @p x @p y @p xScale @p yScale to the line segment from @p start to @p end
+         * Returns squared distance of the normalized point (@p x, @p y)
+         * to the line segment from @p start to @p end
+         * on a reference area of size @p xScale x @p yScale.
          * @since 0.17 (KDE 4.11)
          */
         static double distanceSqr( double x, double y, double xScale, double yScale, const NormalizedPoint& start, const NormalizedPoint& end );
@@ -103,8 +176,18 @@ class OKULARCORE_EXPORT NormalizedPoint
 
 
 /**
- * NormalizedRect is a helper class which stores the coordinates
- * of a normalized rect, which is a rectangle of @see NormalizedPoints.
+ * A NormalizedRect is a rectangle which can be defined by two NormalizedPoints.
+ *
+ * It describes a rectangular area on a reference area of undefined size.
+ * For more information about the normalized coordinate system, see NormalizedPoint.
+ *
+ * In Okular, NormalizedRect can be used e. g. to describe bounding boxes of TextEntity objects,
+ * and the highlight area of text selections.
+ *
+ * If you need to describe an area which consists of multiple rectangles,
+ * you can use RegularAreaRect instead.
+ *
+ * @see NormalizedPoint, RegularAreaRect, TextEntity
  */
 class OKULARCORE_EXPORT NormalizedRect
 {
@@ -126,12 +209,22 @@ class OKULARCORE_EXPORT NormalizedRect
          * @li y = top
          * @li width = right - left
          * @li height = bottom - top
+         *
+         * @note
+         * The coordinates for @p left and @p top should be lower than
+         * @p right and @p bottom, respectively.
+         * At negative width or height the behaviour of some operations is undefined.
          */
         NormalizedRect( double left, double top, double right, double bottom );
 
         /**
-         * Creates a normalized rectangle of the given @p rectangle which is normalized
-         * by the scaling factors @p xScale and @p yScale.
+         * Creates a normalized rectangle from the given @p rectangle
+         * on a reference area of size @p xScale x @p yScale.
+         *
+         * @note
+         * The rectangle should have positive width and height.
+         * You can use e. g. QRect::normalize() to ensure this.
+         * At negative width or height the behaviour of some operations is undefined.
          */
         NormalizedRect( const QRect &rectangle, double xScale, double yScale );
 
@@ -148,7 +241,7 @@ class OKULARCORE_EXPORT NormalizedRect
         ~NormalizedRect();
 
         /**
-         * Build a normalized rect from a QRectF.
+         * Build a normalized rect from a QRectF, which already has normalized coordinates.
          */
         static NormalizedRect fromQRectF( const QRectF &rect );
 
@@ -158,8 +251,8 @@ class OKULARCORE_EXPORT NormalizedRect
         bool isNull() const;
 
         /**
-         * Returns whether the normalized rectangle contains the normalized coordinates
-         * @p x and @p y.
+         * Returns whether the normalized rectangle contains the normalized point
+         * (@p x, @p y).
          */
         bool contains( double x, double y ) const;
 
@@ -182,13 +275,13 @@ class OKULARCORE_EXPORT NormalizedRect
         bool intersects( double left, double top, double right, double bottom ) const;
 
         /**
-         * Returns the rectangle that accrues when the normalized rectangle is multiplyed
-         * with the scaling @p xScale and @p yScale.
+         * Returns the rectangle mapped to a reference area of @p xScale x @p yScale.
          */
         QRect geometry( int xScale, int yScale ) const;
 
         /**
          * Same functionality as geometry, but the output is now rounded before typecasting to int
+         *
          * @since 0.14 (KDE 4.8)
          */
         QRect roundedGeometry( int xScale, int yScale ) const;
@@ -207,7 +300,7 @@ class OKULARCORE_EXPORT NormalizedRect
 
         /**
          * Returns the intersection of this normalized rectangle with the specified
-         * @p other. If the rects do not intersect then the result is null.
+         * @p other. If the rects do not intersect then the result is a null rectangle.
          *
          * @since 0.7 (KDE 4.1)
          */
@@ -231,7 +324,7 @@ class OKULARCORE_EXPORT NormalizedRect
         void transform( const QTransform &matrix );
 
         /**
-         * Returns true if the point pt is located to the bottom of the rectangle
+         * Returns true if the point @p pt is located below the bottom of the rectangle
          * @since 0.14 (KDE 4.8)
          */
         bool isBottom(const NormalizedPoint& pt) const
@@ -240,7 +333,7 @@ class OKULARCORE_EXPORT NormalizedRect
         }
 
         /**
-         * Returns true if the point pt is located on the top of the rectangle
+         * Returns true if the point @p pt is located above the top of the rectangle
          * @since 0.14 (KDE 4.8)
          */
         bool isTop(const NormalizedPoint& pt) const
@@ -249,7 +342,7 @@ class OKULARCORE_EXPORT NormalizedRect
         }
 
         /**
-         * Returns true if the point pt is located under the top of the rectangle
+         * Returns true if the point @p pt is located below the top of the rectangle
          * @since 0.14 (KDE 4.8)
          */
         bool isBottomOrLevel(const NormalizedPoint& pt) const
@@ -258,7 +351,7 @@ class OKULARCORE_EXPORT NormalizedRect
         }
 
         /**
-         * Returns true if the point pt is located above the bottom of the rectangle
+         * Returns true if the point @p pt is located above the bottom of the rectangle
          * @since 0.14 (KDE 4.8)
          */
         bool isTopOrLevel(const NormalizedPoint& pt) const
@@ -267,7 +360,7 @@ class OKULARCORE_EXPORT NormalizedRect
         }
 
         /**
-         * Returns true if the point pt is located to the right of the left arm of rectangle
+         * Returns true if the point @p pt is located to the right of the left edge of the rectangle
          * @since 0.14 (KDE 4.8)
          */
         bool isLeft(const NormalizedPoint& pt) const
@@ -276,7 +369,7 @@ class OKULARCORE_EXPORT NormalizedRect
         }
 
         /**
-         * Returns true if the point pt is located to the left of the right arm of rectangle
+         * Returns true if the point @p pt is located to the left of the right edge of the rectangle
          * @since 0.14 (KDE 4.8)
          */
         bool isRight(const NormalizedPoint& pt) const
@@ -285,8 +378,9 @@ class OKULARCORE_EXPORT NormalizedRect
         }
 
         /**
-         * Returns the distance of the point @p x @p y @p xScale @p yScale to the closest
-         * edge or 0 if the point is within the rectangle
+         * Returns the squared distance of the normalized point (@p x, @p y)
+         * to the closest edge, or 0 if the point is within the rectangle;
+         * using a reference area of size @p xScale x @p yScale
          * @since 0.17 (KDE 4.11)
          */
         double distanceSqr(double x, double y, double xScale, double yScale) const
@@ -340,10 +434,11 @@ class OKULARCORE_EXPORT NormalizedRect
 //KDE_DUMMY_QHASH_FUNCTION(NormalizedRect)
 
 /**
- * @short NormalizedRect that contains a reference to an object.
+ * @short An area with normalized coordinates that contains a reference to an object.
  *
- * These rects contains a pointer to a okular object (such as an action or something
- * like that). The pointer is read and stored as 'void pointer' so cast is
+ * These areas ("rects") contain a pointer to a document object
+ * (such as a hyperlink, an action, or something like that).
+ * The pointer is read and stored as 'void pointer' so cast is
  * performed by accessors based on the value returned by objectType(). Objects
  * are reparented to this class.
  *
@@ -351,6 +446,10 @@ class OKULARCORE_EXPORT NormalizedRect
  *  - Action    : class Action: description of an action
  *  - Image     : class Image : description of an image (n/a)
  *  - Annotation: class Annotation: description of an annotation
+ *
+ * For more information about the normalized coordinate system, see NormalizedPoint.
+ *
+ * @see NormalizedPoint
  */
 class OKULARCORE_EXPORT ObjectRect
 {
@@ -417,8 +516,8 @@ class OKULARCORE_EXPORT ObjectRect
         virtual QRect boundingRect( double xScale, double yScale ) const;
 
         /**
-         * Returns whether the object rectangle contains the point @p x, @p y for the
-         * scaling factor @p xScale and @p yScale.
+         * Returns whether the object rectangle contains the point with absolute coordinates
+         * (@p x, @p y) at a page size of @p xScale x @p yScale.
          */
         virtual bool contains( double x, double y, double xScale, double yScale ) const;
 
@@ -428,8 +527,10 @@ class OKULARCORE_EXPORT ObjectRect
         virtual void transform( const QTransform &matrix );
 
         /**
-         * Returns the square of the distance between the object and the point @p x, @p y
-         * for the scaling factor @p xScale and @p yScale.
+         * Returns the squared distance between the object
+         * and the point with
+         * normalized coordinates (@p x, @p y)
+         * at a page size of @p xScale x @p yScale.
          *
          * @since 0.8.2 (KDE 4.2.2)
          */
@@ -547,32 +648,40 @@ T& deref( T& t )
 /// @endcond
 
 /**
- * @short A regular area of NormalizedShape which normalizes a Shape
+ * @short An area with normalized coordinates, consisting of NormalizedShape objects.
+ *
+ * This is a template class to describe an area which consists of
+ * multiple shapes of the same type, intersecting or non-intersecting.
+ * The coordinates are normalized, and can be mapped to a reference area of defined size.
+ * For more information about the normalized coordinate system, see NormalizedPoint.
  *
  * Class NormalizedShape \b must have the following functions/operators defined:
- * - bool contains( double, double )
+ * - bool contains( double, double ), whether it contains the given NormalizedPoint
  * - bool intersects( NormalizedShape )
  * - bool isNull()
- * - Shape geometry( int, int )
- * - operator|=( NormalizedShape ) which unite two NormalizedShape's
+ * - Shape geometry( int, int ), which maps to the reference area
+ * - operator|=( NormalizedShape ), which unites two NormalizedShape's
+ *
+ * @see RegularAreaRect, NormalizedPoint
  */
 template <class NormalizedShape, class Shape> class RegularArea : public  QList<NormalizedShape>
 {
     public:
         /**
-         * Returns whether the regular area contains the
-         * normalized point @p x, @p y.
+         * Returns whether this area contains the normalized point (@p x, @p y).
          */
         bool contains( double x, double y ) const;
 
         /**
-         * Returns whether the regular area contains the
-         * given @p shape.
+         * Returns whether this area contains a NormalizedShape object that equals @p shape.
+         *
+         * @note
+         * The original NormalizedShape objects can be lost if simplify() was called.
          */
         bool contains( const NormalizedShape& shape ) const;
 
         /**
-         * Returns whether the regular area intersects with the given @p area.
+         * Returns whether this area intersects with the given @p area.
          */
         bool intersects( const RegularArea<NormalizedShape,Shape> *area ) const;
 
@@ -582,17 +691,18 @@ template <class NormalizedShape, class Shape> class RegularArea : public  QList<
         bool intersects( const NormalizedShape& shape ) const;
 
         /**
-         * Appends the given @p area to the regular area.
+         * Appends the given @p area to this area.
          */
         void appendArea( const RegularArea<NormalizedShape,Shape> *area );
 
         /**
-         * Appends the given @p shape to the regular area.
+         * Appends the given @p shape to this area.
          */
         void appendShape( const NormalizedShape& shape, MergeSide side = MergeAll );
 
         /**
-         * Simplifies the regular area by merging its intersecting subareas.
+         * Simplifies this regular area by merging its intersecting subareas.
+         * This might change the effective geometry of this area.
          */
         void simplify();
 
@@ -602,8 +712,9 @@ template <class NormalizedShape, class Shape> class RegularArea : public  QList<
         bool isNull() const;
 
         /**
-         * Returns the subareas of the regular areas as shapes for the given scaling factor
-         * @p xScale and @p yScale, translated by @p dx and @p dy.
+         * Returns the subareas of this regular area
+         * mapped to a reference area of size @p xScale x @p yScale,
+         * then translated by @p dx and @p dy.
          */
         QList<Shape> geometry( int xScale, int yScale, int dx = 0, int dy = 0 ) const;
 
@@ -819,6 +930,18 @@ void RegularArea<NormalizedShape, Shape>::transform( const QTransform &matrix )
         givePtr( (*this)[i] )->transform( matrix );
 }
 
+/**
+ * This is a list of NormalizedRect, to describe an area consisting of
+ * multiple rectangles using normalized coordinates.
+ *
+ * This area can be mapped to a reference area, resulting in a list of QRects.
+ * For more information about the normalized coordinate system, see NormalizedPoint.
+ *
+ * Okular uses this area e. g. to describe a text highlight area,
+ * which consists of multiple, intersecting or non-intersecting rectangles.
+ *
+ * @see NormalizedRect, NormalizedPoint
+ */
 class OKULARCORE_EXPORT RegularAreaRect : public RegularArea< NormalizedRect, QRect >
 {
     public:
@@ -834,8 +957,8 @@ class OKULARCORE_EXPORT RegularAreaRect : public RegularArea< NormalizedRect, QR
 };
 
 /**
- * This class stores the coordinates of a highlighting area
- * together with the id of the highlight owner and the color.
+ * This class stores the geometry of a highlighting area in normalized coordinates,
+ * together with highlighting specific information.
  */
 class HighlightAreaRect : public RegularAreaRect
 {

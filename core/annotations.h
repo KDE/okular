@@ -1153,8 +1153,18 @@ class OKULARCORE_EXPORT HighlightAnnotation : public Annotation
         HighlightType highlightType() const;
 
         /**
-         * The Quad class contains 8 coordinates and style definitions
-         * which describe a line part of the whole highlight annotation.
+         * @short Describes a highlight quad of a text markup annotation.
+         *
+         * The Quad is a closed path of 4 NormalizedPoints.
+         * Another set of 4 NormalizedPoints can be generated with transform(),
+         * e. g. to get highlighting coordinates on a rotated PageViewItem.
+         * Additionally, Quad stores some geometry related style attributes.
+         *
+         * To enable correct rendering of the annotation,
+         * the points 0 and 1 must describe the bottom edge of the quad
+         * (relative to the text orientation).
+         *
+         * @see NormalizedPoint
          */
         class OKULARCORE_EXPORT Quad
         {
@@ -1226,6 +1236,9 @@ class OKULARCORE_EXPORT HighlightAnnotation : public Annotation
                 /**
                  * Transforms the quad coordinates with the transformation defined
                  * by @p matrix.
+                 *
+                 * The transformed coordinates will be accessible with transformedPoint().
+                 * The coordinates returned by point() are not affected.
                  */
                 void transform( const QTransform &matrix );
 

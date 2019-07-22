@@ -1614,7 +1614,7 @@ bool PageView::gestureEvent( QGestureEvent * event )
             d->blockPixmapsRequest = true;
             updateZoom( ZoomRefreshCurrent );
             d->blockPixmapsRequest = false;
-            viewport()->repaint();
+            viewport()->update();
         }
 
         // Count the number of 90-degree rotations we did since the start of the pinch gesture.
@@ -2129,7 +2129,7 @@ void PageView::mouseMoveEvent( QMouseEvent * e )
             d->blockPixmapsRequest = true;
             updateZoom( ZoomRefreshCurrent );
             d->blockPixmapsRequest = false;
-            viewport()->repaint();
+            viewport()->update();
         }
         return;
     }
@@ -3431,8 +3431,9 @@ void PageView::scrollContentsBy( int dx, int dy )
     // thus leaving artifacts around
     QRegion rgn( r );
     rgn -= rgn & r.translated( dx, dy );
+
     foreach ( const QRect &rect, rgn.rects() )
-        viewport()->repaint( rect );
+        viewport()->update( rect );
 }
 //END widget events
 

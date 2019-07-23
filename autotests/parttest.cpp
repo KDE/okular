@@ -1858,7 +1858,7 @@ void PartTest::testTabletProximityBehavior()
     QVERIFY( w->cursor().shape() == Qt::CursorShape( Qt::BlankCursor ) );
 
     // Moving the mouse should bring the cursor back
-    QTest::mouseMove(w, QPoint( 100, 100 ));
+    QTest::mouseMove(w, QPoint( 150, 150 ));
     QVERIFY( w->cursor().shape() == Qt::CursorShape( Qt::ArrowCursor ) );
 }
 

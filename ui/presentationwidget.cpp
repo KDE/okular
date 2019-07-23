@@ -544,15 +544,16 @@ bool PresentationWidget::eventFilter (QObject *o, QEvent *e )
         {
             setCursor( QCursor( Qt::CrossCursor ) );
         }
-        if ( e->type() == QTabletEvent::TabletLeaveProximity )
+        else if ( e->type() == QTabletEvent::TabletLeaveProximity )
         {
-            if ( Okular::Settings::slidesCursor() == Okular::Settings::EnumSlidesCursor::Visible )
-            {
-                setCursor( QCursor( Qt::ArrowCursor ) );
-            }
-            else
-            {
-                setCursor( QCursor( Qt::BlankCursor ) );
+            setCursor( QCursor( Okular::Settings::slidesCursor() == Okular::Settings::EnumSlidesCursor::Hidden ? Qt::BlankCursor : Qt::ArrowCursor ) );
+            if ( Okular::Settings::slidesCursor() == Okular::Settings::EnumSlidesCursor::HiddenDelay) {
+                // Trick KCursor to hide the cursor if needed by sending an "unknown" key press event
+                // Send also the key release to make the world happy even it's probably not needed
+                QKeyEvent kp( QEvent::KeyPress, 0, Qt::NoModifier );
+                qApp->sendEvent( this, &kp );
+                QKeyEvent kr( QEvent::KeyRelease, 0, Qt::NoModifier );
+                qApp->sendEvent( this, &kr );
             }
         }
     }

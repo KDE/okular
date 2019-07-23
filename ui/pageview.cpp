@@ -1681,28 +1681,27 @@ void PageView::paintEvent(QPaintEvent *pe)
                             d->mouseSelectionColor : Qt::red;
 
         // subdivide region into rects
-        const QVector<QRect> &allRects = pe->region().rects();
-        uint numRects = allRects.count();
-
+        QRegion rgn = pe->region();
         // preprocess rects area to see if it worths or not using subdivision
         uint summedArea = 0;
-        for ( uint i = 0; i < numRects; i++ )
+        for ( const QRect & r : rgn )
         {
-            const QRect & r = allRects[i];
             summedArea += r.width() * r.height();
         }
         // very elementary check: SUMj(Region[j].area) is less than boundingRect.area
-        bool useSubdivision = summedArea < (0.6 * contentsRect.width() * contentsRect.height());
+        const bool useSubdivision = summedArea < (0.6 * contentsRect.width() * contentsRect.height());
         if ( !useSubdivision )
-            numRects = 1;
+        {
+            rgn = contentsRect;
+        }
 
         // iterate over the rects (only one loop if not using subdivision)
-        for ( uint i = 0; i < numRects; i++ )
+        for ( const QRect & r : rgn )
         {
             if ( useSubdivision )
             {
                 // set 'contentsRect' to a part of the sub-divided region
-                contentsRect = allRects[i].translated( areaPos ).intersected( viewportRect );
+                contentsRect = r.translated( areaPos ).intersected( viewportRect );
                 if ( !contentsRect.isValid() )
                     continue;
             }
@@ -3432,7 +3431,7 @@ void PageView::scrollContentsBy( int dx, int dy )
     QRegion rgn( r );
     rgn -= rgn & r.translated( dx, dy );
 
-    foreach ( const QRect &rect, rgn.rects() )
+    for ( const QRect &rect : rgn )
         viewport()->update( rect );
 }
 //END widget events

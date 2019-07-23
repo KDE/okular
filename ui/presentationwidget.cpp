@@ -853,12 +853,9 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
     }
 
     // blit the pixmap to the screen
-    QVector<QRect> allRects = pe->region().rects();
-    uint numRects = allRects.count();
     QPainter painter( this );
-    for ( uint i = 0; i < numRects; i++ )
+    for ( const QRect &r : pe->region() )
     {
-        const QRect & r = allRects[i];
         if ( !r.isValid() )
             continue;
 #ifdef ENABLE_PROGRESS_OVERLAY
@@ -1177,11 +1174,10 @@ void PresentationWidget::generateContentsPage( int pageNum, QPainter & p )
     p.translate( -frame->geometry.left(), -frame->geometry.top() );
 
     // fill unpainted areas with background color
-    QRegion unpainted( QRect( 0, 0, m_width, m_height ) );
-    QVector<QRect> rects = unpainted.subtracted( frame->geometry ).rects();
-    for ( int i = 0; i < rects.count(); i++ )
+    const QRegion unpainted( QRect( 0, 0, m_width, m_height ) );
+    const QRegion rgn = unpainted.subtracted( frame->geometry );
+    for ( const QRect & r : rgn )
     {
-        const QRect & r = rects[i];
         p.fillRect( r, Okular::Settings::slidesBackgroundColor() );
     }
 }

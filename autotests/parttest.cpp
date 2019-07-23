@@ -1611,8 +1611,8 @@ void PartTest::testAnnotWindow()
     auto widget = win2->window()->childAt(win2->mapTo(win2->window(), QPoint(10,  10)));
     QTest::mouseMove(win2->window(), win2->mapTo(win2->window(), QPoint(10,  10)));
     QTest::mouseClick(widget, Qt::LeftButton, Qt::NoModifier, widget->mapFrom(win2, QPoint(10,  10)));
-    QVERIFY( win1->visibleRegion().rects().count() == 3);
-    QVERIFY( win2->visibleRegion().rects().count() == 4);
+    QVERIFY( win1->visibleRegion().rectCount() == 3);
+    QVERIFY( win2->visibleRegion().rectCount() == 4);
 }
 
 // Helper for testAdditionalActionTriggers

@@ -839,10 +839,10 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
         m_lastDrawnRect = paintRect;
         m_lastDrawnRect.translate( itemRect.left(), itemRect.top() );
         // 3.2. decompose paint region in rects and send paint events
-        const QVector<QRect> rects = compoundRegion.united( m_lastDrawnRect ).rects();
+        const QRegion rgn = compoundRegion.united( m_lastDrawnRect );
         const QPoint areaPos = m_pageView->contentAreaPosition();
-        for ( int i = 0; i < rects.count(); i++ )
-            m_pageView->viewport()->update( rects[i].translated( -areaPos ) );
+        for ( const QRect &r : rgn )
+            m_pageView->viewport()->update( r.translated( -areaPos ) );
         modifiedRect = compoundRegion.boundingRect() | m_lastDrawnRect;
     }
 

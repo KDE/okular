@@ -106,12 +106,13 @@ void FormWidgetsController::registerRadioButton( FormWidgetIface *fwButton, Okul
     m_buttons.insert( id, button );
     for ( ; it != itEnd; ++it )
     {
-        const QList< int >::const_iterator idsIt = qFind( (*it).ids, id );
-        if ( idsIt != (*it).ids.constEnd() )
+        const RadioData &rd = *it;
+        const QList< int >::const_iterator idsIt = std::find( rd.ids.begin(), rd.ids.end(), id );
+        if ( idsIt != rd.ids.constEnd() )
         {
-            qCDebug(OkularUiDebug) << "Adding id" << id << "To group including" << (*it).ids;
-            (*it).group->addButton( button );
-            (*it).group->setId( button, id );
+            qCDebug(OkularUiDebug) << "Adding id" << id << "To group including" << rd.ids;
+            rd.group->addButton( button );
+            rd.group->setId( button, id );
             return;
         }
     }

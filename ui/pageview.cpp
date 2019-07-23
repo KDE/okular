@@ -1366,7 +1366,7 @@ void PageView::notifyPageChanged( int pageNumber, int changedFlags )
         QSet< AnnotWindow * >::Iterator it = d->m_annowindows.begin();
         for ( ; it != d->m_annowindows.end(); )
         {
-            QLinkedList< Okular::Annotation * >::ConstIterator annIt = qFind( annots, (*it)->annotation() );
+            QLinkedList< Okular::Annotation * >::ConstIterator annIt = std::find( annots.begin(), annots.end(), (*it)->annotation() );
             if ( annIt != annItEnd )
             {
                 (*it)->reloadInfo();
@@ -4010,7 +4010,7 @@ void PageView::updateZoom( ZoomMode newZoomMode )
             const float zoomFactorFitWidth = zoomFactorFitMode(ZoomFitWidth);
             const float zoomFactorFitPage = zoomFactorFitMode(ZoomFitPage);
             QVector<float> zoomValue(15);
-            qCopy(kZoomValues, kZoomValues + 13, zoomValue.begin());
+            std::copy(kZoomValues, kZoomValues + 13, zoomValue.begin());
             zoomValue[13] = zoomFactorFitWidth;
             zoomValue[14] = zoomFactorFitPage;
             std::sort(zoomValue.begin(), zoomValue.end());
@@ -4019,13 +4019,13 @@ void PageView::updateZoom( ZoomMode newZoomMode )
             {
                 if (newFactor <= zoomValue.first())
                     return;
-                i = qLowerBound(zoomValue.begin(), zoomValue.end(), newFactor) - 1;
+                i = std::lower_bound(zoomValue.begin(), zoomValue.end(), newFactor) - 1;
             }
             else
             {
                 if (newFactor >= zoomValue.last())
                     return;
-                i = qUpperBound(zoomValue.begin(), zoomValue.end(), newFactor);
+                i = std::upper_bound(zoomValue.begin(), zoomValue.end(), newFactor);
             }
             const float tmpFactor = *i;
             if ( tmpFactor == zoomFactorFitWidth )

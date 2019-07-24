@@ -39,7 +39,14 @@ namespace GuiUtils
 
     QString prettyToolTip( const Okular::Annotation * annotation );
 
-    QPixmap loadStamp( const QString& name, const QSize& size, int iconSize = 0 );
+    /**
+     * Returns a pixmap for a stamp symbol
+     *
+     * @p name Name of a Okular stamp symbol, icon or path to an image
+     * @p size Size of the pixmap (ignore aspect ratio). Takes precedence over @p iconSize
+     * @p iconSize Maximum size of the pixmap (keep aspect ratio)
+     */
+    QPixmap loadStamp( const QString& nameOrPath, int size, bool keepAspectRatio = true );
 
     void addIconLoader( KIconLoader * loader );
     void removeIconLoader( KIconLoader * loader );

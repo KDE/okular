@@ -680,7 +680,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                 Okular::StampAnnotation * stamp = (Okular::StampAnnotation *)a;
 
                 // get pixmap and alpha blend it if needed
-                QPixmap pixmap = GuiUtils::loadStamp( stamp->stampIconName(), annotBoundary.size() );
+                QPixmap pixmap = GuiUtils::loadStamp( stamp->stampIconName(), annotBoundary.width() );
                 if ( !pixmap.isNull() ) // should never happen but can happen on huge sizes
                 {
                     const QRect dInnerRect(QRectF(innerRect.x() * dpr, innerRect.y() * dpr, innerRect.width() * dpr, innerRect.height() * dpr).toAlignedRect());

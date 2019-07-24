@@ -19,6 +19,7 @@ class QComboBox;
 class QDoubleSpinBox;
 class QFormLayout;
 class QLabel;
+class QPushButton;
 class QWidget;
 class KColorButton;
 class QSpinBox;
@@ -31,7 +32,9 @@ class PixmapPreviewSelector
     Q_OBJECT
 
 public:
-    explicit PixmapPreviewSelector( QWidget * parent = nullptr );
+    enum PreviewPosition{ Side, Below };
+
+    explicit PixmapPreviewSelector( QWidget * parent = nullptr, PreviewPosition position = Side );
     virtual ~PixmapPreviewSelector();
 
     void setIcon( const QString& icon );
@@ -49,12 +52,15 @@ Q_SIGNALS:
 
 private Q_SLOTS:
     void iconComboChanged( const QString& icon );
+    void selectCustomStamp();
 
 private:
     QString m_icon;
+    QPushButton * m_stampPushButton;
     QLabel * m_iconLabel;
     QComboBox * m_comboItems;
     int m_previewSize;
+    PreviewPosition m_previewPosition;
 };
 
 

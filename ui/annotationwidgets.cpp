@@ -19,7 +19,10 @@
 #include <kcolorbutton.h>
 #include <kcombobox.h>
 #include <kfontrequester.h>
+#include <KMessageBox>
+#include <KMessageWidget>
 #include <QIcon>
+#include <QFileDialog>
 #include <kiconloader.h>
 #include <KLocalizedString>
 #include <QDebug>
@@ -37,16 +40,31 @@
 
 #define FILEATTACH_ICONSIZE 48
 
-PixmapPreviewSelector::PixmapPreviewSelector( QWidget * parent )
-  : QWidget( parent )
+PixmapPreviewSelector::PixmapPreviewSelector( QWidget * parent, PreviewPosition position )
+  : QWidget( parent ), m_previewPosition( position )
 {
-    QHBoxLayout * mainlay = new QHBoxLayout( this );
+    QVBoxLayout * mainlay = new QVBoxLayout( this );
     mainlay->setMargin( 0 );
+    QHBoxLayout * toplay = new QHBoxLayout( this );
+    toplay->setMargin( 0 );
+    mainlay->addLayout( toplay );
     m_comboItems = new KComboBox( this );
-    mainlay->addWidget( m_comboItems );
-    mainlay->setAlignment( m_comboItems, Qt::AlignTop );
+    toplay->addWidget( m_comboItems );
+    m_stampPushButton = new QPushButton(QIcon::fromTheme( "document-open" ), QString(), this );
+    m_stampPushButton->setVisible( false );
+    m_stampPushButton->setToolTip( i18nc( "@info:tooltip", "Select a custom stamp symbol from file") );
+    toplay->addWidget(m_stampPushButton);
     m_iconLabel = new QLabel( this );
-    mainlay->addWidget( m_iconLabel );
+    switch ( m_previewPosition )
+    {
+        case Side:
+            toplay->addWidget( m_iconLabel );
+            break;
+        case Below:
+            mainlay->addWidget( m_iconLabel );
+            mainlay->setAlignment( m_iconLabel, Qt::AlignHCenter );
+            break;
+    }
     m_iconLabel->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
     m_iconLabel->setAlignment( Qt::AlignCenter );
     m_iconLabel->setFrameStyle( QFrame::StyledPanel );
@@ -57,6 +75,7 @@ PixmapPreviewSelector::PixmapPreviewSelector( QWidget * parent )
 
     connect( m_comboItems, SIGNAL(currentIndexChanged(QString)), this, SLOT(iconComboChanged(QString)) );
     connect( m_comboItems, &QComboBox::editTextChanged, this, &PixmapPreviewSelector::iconComboChanged );
+    connect( m_stampPushButton, &QPushButton::clicked, this, &PixmapPreviewSelector::selectCustomStamp );
 }
 
 PixmapPreviewSelector::~PixmapPreviewSelector()
@@ -93,7 +112,15 @@ void PixmapPreviewSelector::addItem( const QString& item, const QString& id )
 void PixmapPreviewSelector::setPreviewSize( int size )
 {
     m_previewSize = size;
-    m_iconLabel->setFixedSize( m_previewSize + 8, m_previewSize + 8 );
+    switch( m_previewPosition )
+    {
+        case Side:
+            m_iconLabel->setFixedSize( m_previewSize + 8, m_previewSize + 8 );
+            break;
+        case Below:
+            m_iconLabel->setFixedSize( 3 * m_previewSize + 8, m_previewSize + 8 );
+            break;
+    }
     iconComboChanged( m_icon );
 }
 
@@ -105,6 +132,7 @@ int PixmapPreviewSelector::previewSize() const
 void PixmapPreviewSelector::setEditable( bool editable )
 {
     m_comboItems->setEditable( editable );
+    m_stampPushButton->setVisible( editable );
 }
 
 void PixmapPreviewSelector::iconComboChanged( const QString& icon )
@@ -119,7 +147,7 @@ void PixmapPreviewSelector::iconComboChanged( const QString& icon )
         m_icon = icon;
     }
 
-    QPixmap pixmap = GuiUtils::loadStamp( m_icon, QSize(), m_previewSize );
+    QPixmap pixmap = GuiUtils::loadStamp( m_icon, m_previewSize );
     const QRect cr = m_iconLabel->contentsRect();
     if ( pixmap.width() > cr.width() || pixmap.height() > cr.height() )
         pixmap = pixmap.scaled( cr.size(), Qt::KeepAspectRatio, Qt::SmoothTransformation );
@@ -128,6 +156,23 @@ void PixmapPreviewSelector::iconComboChanged( const QString& icon )
     emit iconChanged( m_icon );
 }
 
+void PixmapPreviewSelector::selectCustomStamp()
+{
+    const QString customStampFile = QFileDialog::getOpenFileName(this, i18nc("@title:window file chooser", "Select custom stamp symbol"),
+        QString(), i18n("*.ico *.png *.xpm *.svg *.svgz | Icon Files (*.ico *.png *.xpm *.svg *.svgz)") );
+    if ( !customStampFile.isEmpty() )
+    {
+        QPixmap pixmap = GuiUtils::loadStamp( customStampFile, m_previewSize );
+        if( pixmap.isNull() ) {
+            KMessageBox::sorry( this,
+                                xi18nc("@info", "Could not load the file <filename>%1</filename>", customStampFile ),
+                                i18nc("@title:window", "Invalid file")
+                              );
+        } else {
+            m_comboItems->setEditText(customStampFile);
+        }
+    }
+}
 
 AnnotationWidget * AnnotationWidgetFactory::widgetFor( Okular::Annotation * ann )
 {
@@ -386,10 +431,18 @@ void StampAnnotationWidget::createStyleWidget( QFormLayout * formlayout )
 {
     QWidget * widget = qobject_cast<QWidget *>( formlayout->parent() );
 
+    KMessageWidget * brokenStampSupportWarning = new KMessageWidget( widget );
+    brokenStampSupportWarning->setText( xi18nc("@info", "<warning>experimental feature.<nl/>"
+                                                        "Stamps inserted in PDF documents are not visible in PDF readers other than Okular.</warning>") );
+    brokenStampSupportWarning->setMessageType( KMessageWidget::Warning );
+    brokenStampSupportWarning->setWordWrap( true );
+    brokenStampSupportWarning->setCloseButtonVisible( false );
+    formlayout->insertRow( 0, brokenStampSupportWarning );
+
     addOpacitySpinBox( widget, formlayout );
     addVerticalSpacer( formlayout );
 
-    m_pixmapSelector = new PixmapPreviewSelector( widget );
+    m_pixmapSelector = new PixmapPreviewSelector( widget, PixmapPreviewSelector::Below );
     formlayout->addRow( i18n( "Stamp symbol:" ), m_pixmapSelector );
     m_pixmapSelector->setEditable( true );
 

@@ -65,7 +65,7 @@ class PickPointEngine : public AnnotatorEngine
 
             // create engine objects
             if ( !hoverIconName.simplified().isEmpty() )
-                pixmap = GuiUtils::loadStamp( hoverIconName, QSize( size, size ) );
+                pixmap = GuiUtils::loadStamp( hoverIconName, size );
         }
 
         QRect event( EventType type, Button button, double nX, double nY, double xScale, double yScale, const Okular::Page * page ) override
@@ -244,8 +244,8 @@ class PickPointEngine : public AnnotatorEngine
                 const int ml = ( rcf.bottomRight() - rcf.topLeft() ).toPoint().manhattanLength();
                 if ( ml <= QApplication::startDragDistance() )
                 {
-                    const double stampxscale = size / xscale;
-                    const double stampyscale = size / yscale;
+                    const double stampxscale = pixmap.width() / xscale;
+                    const double stampyscale = pixmap.height() / yscale;
                     if ( center )
                     {
                         rect.left = point.x - stampxscale / 2;
@@ -1235,7 +1235,7 @@ QPixmap PageViewAnnotator::makeToolPixmap( const QDomElement &toolElement )
     }
     else if ( annotType == QLatin1String("stamp") )
     {
-        QPixmap stamp = GuiUtils::loadStamp( icon, QSize( 16, 16 ) );
+        QPixmap stamp = GuiUtils::loadStamp( icon, 16, false /* keepAspectRatio */ );
         p.setRenderHint( QPainter::Antialiasing );
         p.drawPixmap( 16, 14, stamp );
     }

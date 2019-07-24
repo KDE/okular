@@ -169,29 +169,45 @@ QString prettyToolTip( const Okular::Annotation * ann )
     return tooltip;
 }
 
-QPixmap loadStamp( const QString& _name, const QSize& size, int iconSize )
+QPixmap loadStamp( const QString& nameOrPath, int size, bool keepAspectRatio )
 {
-    const QString name = _name.toLower();
+    const QString name = nameOrPath.toLower();
+
+    // _name is the name of an Okular stamp symbols ( multiple symbols in a single *.svg file)
     QSvgRenderer * r = nullptr;
     if ( ( r = s_data->svgStamps() ) && r->elementExists( name ) )
     {
-        const QRectF stampElemRect = r->boundsOnElement( name );
-        const QRectF stampRect( size.isValid() ? QRectF( QPointF( 0, 0 ), size ) : stampElemRect );
-        QPixmap pixmap( stampRect.size().toSize() );
+        const QSize stampSize = r->boundsOnElement( name ).size().toSize();
+        const QSize pixmapSize = stampSize.scaled( size, size,
+                                                   keepAspectRatio ? Qt::KeepAspectRatioByExpanding
+                                                                   : Qt::IgnoreAspectRatio );
+        QPixmap pixmap( pixmapSize );
         pixmap.fill( Qt::transparent );
         QPainter p( &pixmap );
         r->render( &p, name );
         p.end();
         return pixmap;
     }
+
+    // _name is a path (do this before loading as icon name to avoid some rare weirdness )
     QPixmap pixmap;
+    pixmap.load( nameOrPath );
+    if ( !pixmap.isNull() ) {
+        pixmap = pixmap.scaled( size, size,
+                                keepAspectRatio ? Qt::KeepAspectRatioByExpanding
+                                                : Qt::IgnoreAspectRatio,
+                                Qt::SmoothTransformation );
+        return pixmap;
+    }
+
+    // _name is an icon name
     const KIconLoader * il = iconLoader();
     QString path;
-    const int minSize = iconSize > 0 ? iconSize : qMin( size.width(), size.height() );
-    pixmap = il->loadIcon( name, KIconLoader::User, minSize, KIconLoader::DefaultState, QStringList(), &path, true );
+    pixmap = il->loadIcon( name, KIconLoader::User, size, KIconLoader::DefaultState, QStringList(), &path, true );
     if ( path.isEmpty() )
-        pixmap = il->loadIcon( name, KIconLoader::NoGroup, minSize );
-    return pixmap;
+        pixmap = il->loadIcon( name, KIconLoader::NoGroup, size );
+
+    return pixmap;  // can be a null pixmap
 }
 
 void addIconLoader( KIconLoader * loader )

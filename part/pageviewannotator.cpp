@@ -1142,6 +1142,7 @@ void PageViewAnnotator::detachAnnotation()
         if (m_actionHandler)
             m_actionHandler->deselectAllAnnotationActions();
     } else {
+        m_pageView->displayMessage( QString() );
         setSignatureMode(false);
     }
 }

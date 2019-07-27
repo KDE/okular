@@ -156,3 +156,92 @@ function AFTime_Keystroke( ptf )
 {
     return;
 }
+
+/** AFSpecial_Format
+ * psf is the type of formatting to use: 
+ * 0 = zip code
+ * 1 = zip + 4 
+ * 2 = phone 
+ * 3 = SSN
+ *
+ * These are all in the US format.
+*/
+function AFSpecial_Format( psf )
+{
+    if( !event.value || psf == 0 )
+    {
+        return;
+    }
+
+    var ret = event.value;
+
+    if( psf === 1 )
+        ret = ret.substr( 0, 5 ) + '-' + ret.substr( 5, 4 );
+
+    else if( psf === 2 )
+        ret = '(' + ret.substr( 0, 3 ) + ') ' + ret.substr( 3, 3 ) + '-' + ret.substr( 6, 4 );
+
+    else if( psf === 3 )
+        ret = ret.substr( 0, 3 ) + '-' + ret.substr( 3, 2 ) + '-' + ret.substr( 5, 4 );
+
+    event.value = ret;
+} 
+
+/** AFSpecial_Keystroke
+ *
+ * Checks if the String in event.value is valid.
+ *
+ * Parameter description based on Acrobat Help:
+ *
+ * psf is the type of formatting to use: 
+ * 0 = zip code
+ * 1 = zip + 4 
+ * 2 = phone 
+ * 3 = SSN
+ *
+ * These are all in the US format. We check to see if only numbers are inserted and the length of the string.
+*/
+function AFSpecial_Keystroke( psf )
+{
+    if ( !event.value )
+    {
+        return;
+    }
+
+    var str = event.value;
+    if( psf === 0 )
+    {
+        if( str.length > 5 )
+        {
+            event.rc = false;
+            return;
+        }
+    }
+
+    else if( psf === 1 || psf === 3 )
+    {
+        if( str.length > 9 )
+        {
+            event.rc = false;
+            return;
+        }
+    }
+
+    else if( psf === 2 )
+    {
+        if( str.length > 10 )
+        {
+            event.rc = false;
+            return;
+        }
+    }
+
+    for( i = 0 ; i < str.length ; ++i )
+    {
+        if( !( str[i] <= '9' && str[i] >= '0' ) )
+        {
+            event.rc = false;
+            return;
+        }
+    }
+} 

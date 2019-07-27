@@ -66,11 +66,17 @@ static KJSObject eventGetSource( KJSContext *ctx, void *object )
 static KJSObject eventGetTarget( KJSContext *ctx, void *object )
 {
     const Event *event = reinterpret_cast< Event * >( object );
-    if ( event->eventType() == Event::FieldCalculate )
+    switch( event->eventType() )
     {
-        FormField *target = static_cast< FormField * >( event->target() );
-        if ( target )
-            return JSField::wrapField( ctx, target, event->targetPage() );
+        case Event::FieldCalculate:
+        case Event::FieldFormat:
+        case Event::FieldKeystroke:
+        {
+            FormField *target = static_cast< FormField * >( event->target() );
+            if ( target )
+                return JSField::wrapField( ctx, target, event->targetPage() );
+            break;
+        }
     }
     return KJSUndefined();
 }
@@ -87,6 +93,20 @@ static void eventSetValue( KJSContext *ctx, void *object, KJSObject value )
 {
     Event *event = reinterpret_cast< Event * >( object );
     event->setValue ( QVariant( value.toString ( ctx ) ) );
+}
+
+// Event.rc (getter)
+static KJSObject eventGetReturnCode( KJSContext *, void *object )
+{
+    const Event *event = reinterpret_cast< Event * >( object );
+    return KJSBoolean( event->returnCode() );
+}
+
+// Event.rc (setter)
+static void eventSetReturnCode( KJSContext *ctx, void *object, KJSObject value )
+{
+    Event *event = reinterpret_cast< Event * >( object );
+    event->setReturnCode ( value.toBoolean ( ctx ) );
 }
 
 void JSEvent::initType( KJSContext *ctx )
@@ -106,6 +126,7 @@ void JSEvent::initType( KJSContext *ctx )
     g_eventProto->defineProperty( ctx, QStringLiteral( "source" ), eventGetSource );
     g_eventProto->defineProperty( ctx, QStringLiteral( "target" ), eventGetTarget );
     g_eventProto->defineProperty( ctx, QStringLiteral( "value" ), eventGetValue, eventSetValue );
+    g_eventProto->defineProperty( ctx, QStringLiteral( "rc" ), eventGetReturnCode, eventSetReturnCode );
 }
 
 KJSObject JSEvent::wrapEvent( KJSContext *ctx, Event *event )

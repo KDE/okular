@@ -471,6 +471,7 @@ FormLineEdit::FormLineEdit( Okular::FormFieldText * text, QWidget * parent )
 
     m_prevCursorPos = cursorPosition();
     m_prevAnchorPos = cursorPosition();
+    m_editing = false;
 
     connect( this, &QLineEdit::textEdited, this, &FormLineEdit::slotChanged );
     connect( this, &QLineEdit::cursorPositionChanged, this, &FormLineEdit::slotChanged );
@@ -505,9 +506,11 @@ bool FormLineEdit::event( QEvent* e )
     {
         const auto fft = static_cast< Okular::FormFieldText * > ( m_ff );
         setText( fft->internalText() );
+        m_editing = true;
     }
     else if ( e->type() == QEvent::FocusOut )
     {
+        m_editing = false;
         if ( const Okular::Action *action = m_ff->additionalAction( Okular::FormField::FormatField ) )
         {
             emit m_controller->formatAction( action, static_cast< Okular::FormFieldText * > ( m_ff ) );
@@ -549,6 +552,21 @@ void FormLineEdit::slotChanged()
     Okular::FormFieldText *form = static_cast<Okular::FormFieldText *>(m_ff);
     QString contents = text();
     int cursorPos = cursorPosition();
+
+    if( form->additionalAction( Okular::FormField::FieldModified ) && m_editing && !form->isReadOnly() )
+    {
+        bool ok = false;
+        QString oldText = form->text();
+        form->setText( text() );
+        emit m_controller->keystrokeAction( form->additionalAction( Okular::FormField::FieldModified ), form, ok );
+        form->setText( oldText );
+        if(!ok)
+        {
+            setText( oldText );
+            return;
+        }
+    }
+
     if ( contents != form->text() )
     {
         m_controller->formTextChangedByWidget( pageItem()->pageNumber(),
@@ -618,6 +636,7 @@ TextAreaEdit::TextAreaEdit( Okular::FormFieldText * text, QWidget * parent )
              this, &TextAreaEdit::slotUpdateUndoAndRedoInContextMenu );
     m_prevCursorPos = textCursor().position();
     m_prevAnchorPos = textCursor().anchor();
+    m_editing = false;
     setVisible( text->isVisible() );
 }
 
@@ -649,9 +668,11 @@ bool TextAreaEdit::event( QEvent* e )
     {
         const auto fft = static_cast< Okular::FormFieldText * > ( m_ff );
         setText( fft->internalText() );
+        m_editing = true;
     }
     else if ( e->type() == QEvent::FocusOut )
     {
+        m_editing = false;
         if ( const Okular::Action *action = m_ff->additionalAction( Okular::FormField::FormatField ) )
         {
             emit m_controller->formatAction( action, static_cast< Okular::FormFieldText * > ( m_ff ) );
@@ -718,6 +739,21 @@ void TextAreaEdit::slotChanged()
     Okular::FormFieldText *form = static_cast<Okular::FormFieldText *>(m_ff);
     QString contents = toPlainText();
     int cursorPos = textCursor().position();
+
+    if( form->additionalAction( Okular::FormField::FieldModified ) && m_editing && !form->isReadOnly() )
+    {
+        bool ok = false;
+        QString oldText = form->text();
+        form->setText( toPlainText() );
+        emit m_controller->keystrokeAction( form->additionalAction( Okular::FormField::FieldModified ), form, ok );
+        form->setText( oldText );
+        if(!ok)
+        {
+            setText( oldText );
+            return;
+        }
+    }
+
     if (contents != form->text())
     {
         m_controller->formTextChangedByWidget( pageItem()->pageNumber(),

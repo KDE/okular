@@ -20,7 +20,8 @@ class Event::Private
                                         m_targetPage( nullptr ),
                                         m_source( nullptr ),
                                         m_sourcePage( nullptr ),
-                                        m_eventType( eventType )
+                                        m_eventType( eventType ),
+                                        m_returnCode( false )
         {
         }
 
@@ -31,6 +32,7 @@ class Event::Private
         EventType m_eventType;
         QString m_targetName;
         QVariant m_value;
+        bool m_returnCode;
 };
 
 Event::Event(): d( new Private( UnknownEvent ) )
@@ -55,6 +57,8 @@ QString Event::name() const
             return QStringLiteral( "Calculate" );
         case ( FieldFormat ):
             return QStringLiteral( "Format" );
+        case ( FieldKeystroke ):
+            return QStringLiteral( "Keystroke" );        
         case ( UnknownEvent ):
         default:
             return QStringLiteral( "Unknown" );
@@ -67,6 +71,7 @@ QString Event::type() const
     {
         case ( FieldCalculate ):
         case ( FieldFormat ):
+        case ( FieldKeystroke ):
             return QStringLiteral( "Field" );
         case ( UnknownEvent ):
         default:
@@ -139,6 +144,16 @@ void Event::setValue( const QVariant &val )
     d->m_value = val;
 }
 
+bool Event::returnCode() const
+{
+    return d->m_returnCode;
+}
+
+void Event::setReturnCode( bool returnCode )
+{
+    d->m_returnCode = returnCode;
+}
+
 // static
 std::shared_ptr<Event> Event::createFormCalculateEvent( FormField *target,
                                                         Page *targetPage,
@@ -175,6 +190,22 @@ std::shared_ptr<Event> Event::createFormatEvent( FormField *target,
     if ( fft )
     {
         ret->setValue( QVariant( fft->internalText() ) );
+    }
+    return ret;
+}
+
+// static
+std::shared_ptr<Event> Event::createKeystrokeEvent( FormField *target, Page *targetPage )
+{
+    std::shared_ptr<Event> ret( new Event( Event::FieldKeystroke ) );
+    ret->setTarget( target );
+    ret->setTargetPage( targetPage );
+
+    FormFieldText *fft = dynamic_cast< FormFieldText * >(target);
+    if ( fft )
+    {
+        ret->setReturnCode( true );
+        ret->setValue( QVariant( fft->text() ) );
     }
     return ret;
 }

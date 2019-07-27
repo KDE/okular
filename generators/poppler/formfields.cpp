@@ -292,6 +292,7 @@ void PopplerFormFieldText::setText( const QString& text )
     m_field->setText( text );
 }
 
+
 bool PopplerFormFieldText::isPassword() const
 {
     return m_field->isPassword();

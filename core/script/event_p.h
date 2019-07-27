@@ -58,7 +58,7 @@ class Event
             FieldCalculate,  /// < This event is defined in a field re-calculation.
             FieldFocus,      /// < Not implemented.
             FieldFormat,     /// < When a format action is executed
-            FieldKeystroke,  /// < Not implemented.
+            FieldKeystroke,  /// < Checks if the entered value is valid.
             FieldMouseDown,  /// < Not implemented.
             FieldMouseEnter, /// < Not implemented.
             FieldMouseExit,  /// < Not implemented.
@@ -97,6 +97,9 @@ class Event
         QVariant value() const;
         void setValue(const QVariant &val);
 
+        bool returnCode() const;
+        void setReturnCode(bool returnCode);
+
         static std::shared_ptr<Event> createFormCalculateEvent( FormField *target,
                                                                 Page *targetPage,
                                                                 FormField *source = nullptr,
@@ -104,6 +107,7 @@ class Event
                                                                 const QString &targetName = QString() );
         static std::shared_ptr<Event> createFormatEvent( FormField *target, Page *targetPage,
                                                          const QString &targetName = QString() );
+        static std::shared_ptr<Event> createKeystrokeEvent( FormField *target, Page *targetPage );
     private:
         class Private;
         std::shared_ptr<Private> d;

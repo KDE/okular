@@ -118,6 +118,8 @@ class FormWidgetsController : public QObject
 
         void formatAction( const Okular::Action *action, Okular::FormFieldText *ff );
 
+        void keystrokeAction( const Okular::Action *action, Okular::FormFieldText *ff, bool &ok );
+
         void refreshFormWidget( Okular::FormField * form );
 
     private Q_SLOTS:
@@ -250,6 +252,7 @@ class FormLineEdit : public QLineEdit, public FormWidgetIface
     private:
         int m_prevCursorPos;
         int m_prevAnchorPos;
+        bool m_editing;
     DECLARE_ADDITIONAL_ACTIONS
 };
 
@@ -281,6 +284,7 @@ class TextAreaEdit : public KTextEdit, public FormWidgetIface
     private:
         int m_prevCursorPos;
         int m_prevAnchorPos;
+        bool m_editing;
     DECLARE_ADDITIONAL_ACTIONS
 };
 

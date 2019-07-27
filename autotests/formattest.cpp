@@ -30,6 +30,8 @@ private Q_SLOTS:
     void testFocusAction_data();
     void testValidateAction();
     void testValidateAction_data();
+    void testNumberFormat();
+    void testNumberFormat_data();
 
 private:
     Okular::Document *m_document;
@@ -166,6 +168,36 @@ void FormatTest::testValidateAction_data()
 
     QTest::newRow("valid text was set") << QStringLiteral("123") << QStringLiteral("valid");
     QTest::newRow("invalid text was set") << QStringLiteral("abc") << QStringLiteral("invalid");
+}
+
+void FormatTest::testNumberFormat()
+{
+    m_formattedText = QString();
+    QFETCH(QString, fieldName);
+    QFETCH(QString, text);
+    QFETCH(QString, result);
+
+    Okular::FormFieldText *fft = reinterpret_cast<Okular::FormFieldText *>(m_fields[fieldName]);
+    fft->setText(text);
+    m_document->processFormatAction(fft->additionalAction(Okular::FormField::FormatField), fft);
+
+    QCOMPARE(m_formattedText, result);
+}
+
+void FormatTest::testNumberFormat_data()
+{
+    QTest::addColumn<QString>("fieldName");
+    QTest::addColumn<QString>("text");
+    QTest::addColumn<QString>("result");
+
+    QTest::newRow("EUR on left") << QStringLiteral("number1") << QStringLiteral("1.20") << QStringLiteral("€ 1.20");
+    QTest::newRow("EUR on left with comma") << QStringLiteral("number1") << QStringLiteral("1234.20") << QStringLiteral("€ 1,234.20");
+    QTest::newRow("EUR on right") << QStringLiteral("number2") << QStringLiteral("1.20") << QStringLiteral("1.20 €");
+    QTest::newRow("EUR on right without comma") << QStringLiteral("number2") << QStringLiteral("1234.20") << QStringLiteral("1234.20 €");
+    QTest::newRow("EUR on left using comma sep") << QStringLiteral("number3") << QStringLiteral("1,20") << QStringLiteral("€ 1,20");
+    QTest::newRow("EUR on left using comma sep and thousands with dot") << QStringLiteral("number3") << QStringLiteral("1234,20") << QStringLiteral("€ 1.234,20");
+    QTest::newRow("EUR on right with comma") << QStringLiteral("number4") << QStringLiteral("1,20") << /*true <<*/ QStringLiteral("1,20 €");
+    QTest::newRow("EUR on right with dot sep without thousands sep") << QStringLiteral("number4") << QStringLiteral("1234,20") << QStringLiteral("1234,20 €");
 }
 
 void FormatTest::cleanupTestCase()

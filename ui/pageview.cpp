@@ -272,6 +272,10 @@ FormWidgetsController* PageViewPrivate::formWidgetsController()
                           q, [this] (const Okular::Action *action, Okular::FormFieldText *fft, bool &ok ) {
                           document->processKeystrokeAction( action, fft, ok );
                           } );
+        QObject::connect( formsWidgetController, &FormWidgetsController::focusAction,
+                          q, [this] (const Okular::Action *action, Okular::FormFieldText *fft ) {
+                          document->processFocusAction( action, fft );
+                          } );
     }
 
     return formsWidgetController;

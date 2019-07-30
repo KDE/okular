@@ -56,7 +56,7 @@ class Event
             ExternalExec,    /// < Not implemented.
             FieldBlur,       /// < Not implemented.
             FieldCalculate,  /// < This event is defined in a field re-calculation.
-            FieldFocus,      /// < Not implemented.
+            FieldFocus,      /// < This event is defined when the field gains or loses focus.
             FieldFormat,     /// < When a format action is executed
             FieldKeystroke,  /// < Checks if the entered value is valid.
             FieldMouseDown,  /// < Not implemented.
@@ -100,6 +100,10 @@ class Event
         bool returnCode() const;
         void setReturnCode(bool returnCode);
 
+        // Checks if the shift key was down when creating the event.
+        bool shiftModifier() const;
+        void setShiftModifier(bool shiftModifier);
+
         static std::shared_ptr<Event> createFormCalculateEvent( FormField *target,
                                                                 Page *targetPage,
                                                                 FormField *source = nullptr,
@@ -108,6 +112,9 @@ class Event
         static std::shared_ptr<Event> createFormatEvent( FormField *target, Page *targetPage,
                                                          const QString &targetName = QString() );
         static std::shared_ptr<Event> createKeystrokeEvent( FormField *target, Page *targetPage );
+        static std::shared_ptr<Event> createFormFocusEvent( FormField *target,
+                                                            Page *targetPage,
+                                                            const QString &targetName = QString() );
     private:
         class Private;
         std::shared_ptr<Private> d;

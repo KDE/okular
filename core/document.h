@@ -683,6 +683,13 @@ class OKULARCORE_EXPORT Document : public QObject
         void processKeystrokeAction( const Action *action, Okular::FormFieldText *field, bool &returnCode );
 
         /**
+         * Processes the given focus action on the field.
+         *
+         * @since 1.9
+         */
+        void processFocusAction( const Action *action, Okular::FormField *field );
+
+        /**
          * Returns a list of the bookmarked.pages
          */
         QList<int> bookmarkedPageList() const;

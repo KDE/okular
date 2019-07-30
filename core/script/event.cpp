@@ -7,6 +7,7 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include <QApplication>
 #include "event_p.h"
 
 #include "../form.h"
@@ -21,7 +22,8 @@ class Event::Private
                                         m_source( nullptr ),
                                         m_sourcePage( nullptr ),
                                         m_eventType( eventType ),
-                                        m_returnCode( false )
+                                        m_returnCode( false ),
+                                        m_shiftModifier( false )
         {
         }
 
@@ -33,6 +35,7 @@ class Event::Private
         QString m_targetName;
         QVariant m_value;
         bool m_returnCode;
+        bool m_shiftModifier;
 };
 
 Event::Event(): d( new Private( UnknownEvent ) )
@@ -59,6 +62,8 @@ QString Event::name() const
             return QStringLiteral( "Format" );
         case ( FieldKeystroke ):
             return QStringLiteral( "Keystroke" );        
+        case ( FieldFocus ):
+            return QStringLiteral( "Focus" );
         case ( UnknownEvent ):
         default:
             return QStringLiteral( "Unknown" );
@@ -72,6 +77,7 @@ QString Event::type() const
         case ( FieldCalculate ):
         case ( FieldFormat ):
         case ( FieldKeystroke ):
+        case ( FieldFocus ):
             return QStringLiteral( "Field" );
         case ( UnknownEvent ):
         default:
@@ -154,6 +160,16 @@ void Event::setReturnCode( bool returnCode )
     d->m_returnCode = returnCode;
 }
 
+bool Event::shiftModifier() const
+{
+    return d->m_shiftModifier;
+}
+
+void Event::setShiftModifier( bool shiftModifier )
+{
+    d->m_shiftModifier = shiftModifier;
+}
+
 // static
 std::shared_ptr<Event> Event::createFormCalculateEvent( FormField *target,
                                                         Page *targetPage,
@@ -205,6 +221,24 @@ std::shared_ptr<Event> Event::createKeystrokeEvent( FormField *target, Page *tar
     if ( fft )
     {
         ret->setReturnCode( true );
+        ret->setValue( QVariant( fft->text() ) );
+    }
+    return ret;
+}
+
+std::shared_ptr<Event> Event::createFormFocusEvent( FormField *target,
+                                                    Page *targetPage,
+                                                    const QString &targetName )
+{
+    std::shared_ptr<Event> ret( new Event( Event::FieldFocus ) );
+    ret->setTarget( target );
+    ret->setTargetPage( targetPage );
+    ret->setTargetName( targetName );
+    ret->setShiftModifier( QApplication::keyboardModifiers() & Qt::ShiftModifier );
+
+    FormFieldText *fft = dynamic_cast< FormFieldText * >(target);
+    if ( fft )
+    {
         ret->setValue( QVariant( fft->text() ) );
     }
     return ret;

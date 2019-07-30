@@ -49,6 +49,13 @@ static void eventSetTargetName( KJSContext *ctx, void *object, KJSObject value )
     event->setTargetName ( value.toString ( ctx ) );
 }
 
+// Event.shift
+static KJSObject eventGetShift( KJSContext *, void *object )
+{
+    const Event *event = reinterpret_cast< Event * >( object );
+    return KJSBoolean( event->shiftModifier() );
+}
+
 // Event.source
 static KJSObject eventGetSource( KJSContext *ctx, void *object )
 {
@@ -71,6 +78,7 @@ static KJSObject eventGetTarget( KJSContext *ctx, void *object )
         case Event::FieldCalculate:
         case Event::FieldFormat:
         case Event::FieldKeystroke:
+        case Event::FieldFocus:
         {
             FormField *target = static_cast< FormField * >( event->target() );
             if ( target )
@@ -123,6 +131,7 @@ void JSEvent::initType( KJSContext *ctx )
     g_eventProto->defineProperty( ctx, QStringLiteral( "type" ), eventGetType );
     g_eventProto->defineProperty( ctx, QStringLiteral( "targetName" ), eventGetTargetName,
                                   eventSetTargetName );
+    g_eventProto->defineProperty( ctx, QStringLiteral( "shift" ), eventGetShift );
     g_eventProto->defineProperty( ctx, QStringLiteral( "source" ), eventGetSource );
     g_eventProto->defineProperty( ctx, QStringLiteral( "target" ), eventGetTarget );
     g_eventProto->defineProperty( ctx, QStringLiteral( "value" ), eventGetValue, eventSetValue );

@@ -28,6 +28,7 @@
 #include <QPainter>
 
 // local includes
+#include "core/action.h"
 #include "core/form.h"
 #include "core/document.h"
 #include "debug_ui.h"
@@ -507,6 +508,8 @@ bool FormLineEdit::event( QEvent* e )
         const auto fft = static_cast< Okular::FormFieldText * > ( m_ff );
         setText( fft->text() );
         m_editing = true;
+        if( const Okular::Action *action = m_ff->additionalAction( Okular::Annotation::FocusIn ) )
+            emit m_controller->focusAction( action, fft );
     }
     else if ( e->type() == QEvent::FocusOut )
     {

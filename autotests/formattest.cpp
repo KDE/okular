@@ -31,6 +31,8 @@ private slots:
     void testTimeFormat_data();
     void testSpecialFormat();
     void testSpecialFormat_data();
+    void testFocusAction();
+    void testFocusAction_data();
 private:
 
     Okular::Document *m_document;
@@ -134,6 +136,22 @@ void FormatTest::testSpecialFormat_data()
     QTest::newRow( "field invalid telephone" ) << QStringLiteral( "telefone" ) << QStringLiteral( "12345678900" ) << false << QStringLiteral( "(123) 456-7890" );
     QTest::newRow( "field formmated SSN" ) << QStringLiteral( "CPF" ) << QStringLiteral( "123456789" ) << true << QStringLiteral( "123-45-6789" );
     QTest::newRow( "field invalid SSN" ) << QStringLiteral( "CPF" ) << QStringLiteral( "1234567890" ) << false << QStringLiteral( "123-45-6789" );
+}
+
+void FormatTest::testFocusAction()
+{
+    QFETCH( QString, result );
+    Okular::FormFieldText *fft = reinterpret_cast< Okular::FormFieldText * >(  m_fields[ "Validate/Focus" ] );
+
+    m_document->processFocusAction( fft->additionalAction( Okular::Annotation::FocusIn ), fft );
+    QCOMPARE( fft->text(), result );
+}
+
+void FormatTest::testFocusAction_data()
+{
+    QTest::addColumn< QString >( "result" );
+
+    QTest::newRow( "when focuses" ) << QStringLiteral( "No" );
 }
 
 void FormatTest::cleanupTestCase()

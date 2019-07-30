@@ -20,6 +20,8 @@
 #include <QTimer>
 
 #include <KLocalizedString>
+#include <QMessageBox>
+#include <QCheckBox>
 
 #include "../document_p.h"
 #include "../scripter.h"
@@ -154,6 +156,113 @@ static KJSObject appGetViewerVersion( KJSContext *, void * )
 {
     // faking a bit...
     return KJSNumber( fake_acroversion );
+}
+
+/*
+    Alert function defined in the reference, it shows a Dialog Box with options.
+    app.alert()
+*/
+static KJSObject appAlert( KJSContext *context, void *,
+                          const KJSArguments &arguments )
+{
+    if ( arguments.count() < 1 )
+    {
+        return context->throwException( i18n( "Missing alert type") );
+    }
+    QString cMsg = arguments.at( 0 ).toString( context );
+    int nIcon = 0;
+    int nType = 0;
+    QString cTitle = "Okular";
+
+    if( arguments.count() >= 2 )
+        nIcon = arguments.at( 1 ).toInt32( context );
+    if( arguments.count() >= 3 )
+        nType = arguments.at( 2 ).toInt32( context );
+    if( arguments.count() >= 4 )
+        cTitle = arguments.at( 3 ).toString( context );
+
+    QMessageBox::Icon icon;
+    switch( nIcon )
+    {
+        case 0:
+            icon = QMessageBox::Critical;
+            break;
+        case 1:
+            icon = QMessageBox::Warning;
+            break;     
+        case 2:
+            icon = QMessageBox::Question;
+            break;
+        case 3:
+            icon = QMessageBox::Information;
+            break;     
+    }
+
+    QMessageBox box( icon, cTitle, cMsg );
+
+    switch( nType )
+    {
+        case 0:
+            box.setStandardButtons( QMessageBox::Ok );
+            break;
+        case 1:
+            box.setStandardButtons( QMessageBox::Ok | QMessageBox::Cancel );
+            break;     
+        case 2:
+            box.setStandardButtons( QMessageBox::Yes | QMessageBox::No );
+            break;
+        case 3:
+            box.setStandardButtons( QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel );
+            break;    
+    }
+
+    QCheckBox *checkBox = nullptr;
+    KJSObject oCheckbox;
+    if( arguments.count() >= 6 )
+    {
+        oCheckbox = arguments.at( 5 );
+        KJSObject oMsg = oCheckbox.property( context, "cMsg" );
+        QString msg = i18n( "Do not show this message again" );
+        
+        if( oMsg.isString() )
+            msg = oMsg.toString( context );
+        
+        bool bInitialValue = false;       
+        KJSObject value = oCheckbox.property( context, "bInitialValue" );
+        if( value.isBoolean() )
+            bInitialValue = value.toBoolean( context );
+        checkBox = new QCheckBox( msg );
+        checkBox->setChecked( bInitialValue );
+        box.setCheckBox( checkBox );
+
+    }
+    
+    int button = box.exec();
+
+    int ret;
+
+    switch( button )
+    {
+        case QMessageBox::Ok:
+            ret = 1;
+            break;
+        case QMessageBox::Cancel:
+            ret = 2;
+            break;
+        case QMessageBox::No:
+            ret = 3;
+            break;
+        case QMessageBox::Yes:
+            ret = 4;
+            break;         
+    }
+    
+    if( arguments.count() >= 6 )
+        oCheckbox.setProperty( context, QStringLiteral( "bAfterValue" ), checkBox->isChecked() );
+
+    delete checkBox;
+
+    return KJSNumber( ret );
 }
 
 static KJSObject appBeep( KJSContext *context, void *,
@@ -296,6 +405,7 @@ void JSApp::initType( KJSContext *ctx )
     g_appProto->defineProperty( ctx, QStringLiteral("viewerVariation"), appGetViewerVariation );
     g_appProto->defineProperty( ctx, QStringLiteral("viewerVersion"), appGetViewerVersion );
 
+    g_appProto->defineFunction( ctx, QStringLiteral("alert"), appAlert );
     g_appProto->defineFunction( ctx, QStringLiteral("beep"), appBeep );
     g_appProto->defineFunction( ctx, QStringLiteral("getNthPlugInName"), appGetNthPlugInName );
     g_appProto->defineFunction( ctx, QStringLiteral("goBack"), appGoBack );

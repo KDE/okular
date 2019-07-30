@@ -15,6 +15,10 @@
 #include <kjs/kjsarguments.h>
 
 #include <QUrl>
+#include <QLocale>
+#include <QDebug>
+#include <QRegularExpression>
+#include <QDateTime>
 
 using namespace Okular;
 
@@ -56,6 +60,34 @@ static KJSObject crackURL( KJSContext *context, void *,
     return obj;
 }
 
+static KJSObject printd( KJSContext *context, void *,
+                           const KJSArguments &arguments )
+{
+    if ( arguments.count() < 2 )
+    {
+        return context->throwException( QStringLiteral("Invalid arguments") );
+    }
+    
+    QLocale locale( "en_US" );
+    QString format = arguments.at( 0 ).toString( context ).replace( "tt", "ap" );
+    format.replace( "t", "a" );
+   
+    QStringList str = arguments.at( 1 ).toString( context ).split( QRegularExpression( "\\W") );
+    QString myStr = QStringLiteral( "%1/%2/%3 %4:%5:%6" ).arg( str[1] ).
+        arg( str[2] ).arg( str[3] ).arg( str[4] ).arg( str[5] ).arg( str[6] );
+    QDateTime date = locale.toDateTime( myStr, QStringLiteral( "MMM/d/yyyy H:m:s" ) );
+
+    for( int i = 0 ; i < format.size() ; ++i )
+    {  
+        if( format[i] == 'M' )
+            format[i] = 'm';
+        else if( format[i] == 'm' )
+            format[i] = 'M';
+    }
+
+    return KJSString( date.toString( format ) );
+}
+
 void JSUtil::initType( KJSContext *ctx )
 {
     static bool initialized = false;
@@ -65,6 +97,7 @@ void JSUtil::initType( KJSContext *ctx )
 
     g_utilProto = new KJSPrototype();
     g_utilProto->defineFunction( ctx, QStringLiteral("crackURL"), crackURL );
+    g_utilProto->defineFunction( ctx, QStringLiteral("printd"), printd );
 }
 
 KJSObject JSUtil::object( KJSContext *ctx )

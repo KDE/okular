@@ -28,10 +28,9 @@ ThumbnailsBase {
     QQC2.ToolBar {
         id: toolBarContent
         width: root.width
-        height: searchField.height
-        QQC2.TextField {
+        contentItem: QQC2.TextField {
             id: searchField
-            anchors.fill: parent
+            placeholderText: i18n("Search...")
             enabled: documentItem ? documentItem.supportsSearching : false
             onTextChanged: {
                 if (text.length > 2) {

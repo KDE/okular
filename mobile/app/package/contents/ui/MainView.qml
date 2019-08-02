@@ -30,9 +30,10 @@ Kirigami.Page {
     bottomPadding: 0
 
     actions.main: Kirigami.Action {
-        iconName: "bookmarks-organize"
+        icon.name: pageArea.page.bookmarked ? "bookmark-remove" : "bookmarks-organize"
         checkable: true
-        onCheckedChanged: pageArea.page.bookmarked = checked;
+        onCheckedChanged: pageArea.page.bookmarked = checked
+        text: pageArea.page.bookmarked ? i18n("Remove bookmark") : i18n("Bookmark this page")
     }
 
     Okular.DocumentView {
@@ -61,6 +62,6 @@ Kirigami.Page {
             right: parent.right
             bottom: parent.bottom
         }
-        value: documentItem.pageCount != 0 ? ((documentItem.currentPage+1) / documentItem.pageCount) : 0
+        value: documentItem.pageCount !== 0 ? ((documentItem.currentPage+1) / documentItem.pageCount) : 0
     }
 }

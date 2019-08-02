@@ -23,7 +23,7 @@ import org.kde.okular 2.0 as Okular
 import org.kde.kirigami 2.0 as Kirigami
 import org.kde.okular.app 2.0
 
-Kirigami.AbstractApplicationWindow {
+Kirigami.ApplicationWindow {
     id: fileBrowserRoot
     visible: true
 

@@ -11,6 +11,8 @@
 
 #include <QAbstractItemModel>
 #include <QMap>
+#include <QAbstractButton>
+#include <QMessageBox>
 #include <QMimeType>
 #include <QMimeDatabase>
 #include <QThread>
@@ -23,6 +25,55 @@
 #include <core/form.h>
 
 #include "../generators/poppler/config-okular-poppler.h"
+
+class MessageBoxHelper : public QObject
+{
+    Q_OBJECT
+
+public:
+    MessageBoxHelper(QMessageBox::StandardButton b, QString message, QMessageBox::Icon icon, QString title, bool hasCheckBox ) 
+                     : m_button(b), m_clicked(false), m_message(message), m_icon(icon), m_title(title), m_checkBox(hasCheckBox)
+    {
+        QTimer::singleShot(0, this, &MessageBoxHelper::closeMessageBox);
+    }
+
+    ~MessageBoxHelper()
+    {
+        QVERIFY(m_clicked);
+    }
+
+private slots:
+    void closeMessageBox()
+    {
+        QWidgetList allToplevelWidgets = QApplication::topLevelWidgets();
+        QMessageBox *mb = nullptr;
+        foreach ( QWidget *w, allToplevelWidgets ) {
+            if ( w->inherits( "QMessageBox" ) ) {
+                mb = qobject_cast< QMessageBox * >( w );
+                QCOMPARE( m_message, mb->text() );
+                QCOMPARE( m_title, mb->windowTitle() );
+                QCOMPARE( m_icon, mb->icon() );
+                QCheckBox *box = mb->checkBox();
+                QCOMPARE( m_checkBox, box != nullptr );
+                mb->button( m_button )->click();
+            }
+        }
+        if (!mb) {
+            QTimer::singleShot(0, this, &MessageBoxHelper::closeMessageBox);
+            return;
+        }
+        m_clicked = true;
+    }
+
+private:
+    QMessageBox::StandardButton m_button;
+    bool m_clicked;
+    QString m_message;
+    QMessageBox::Icon m_icon;
+    QString m_title;
+    bool m_checkBox;
+};
+
 
 class KJSFunctionsTest: public QObject
 {
@@ -37,6 +88,8 @@ private slots:
     void testSetClearTimeOut();
     void testGetOCGs();
     void cleanupTestCase();
+    void testAlert();
+    void testPrintD();
 #endif
 private:
     Okular::Document *m_document;
@@ -227,6 +280,66 @@ void KJSFunctionsTest::testGetOCGs()
     delete action;
 }
 
+void KJSFunctionsTest::testAlert()
+{
+    Okular::ScriptAction *action = new Okular::ScriptAction( Okular::JavaScript, QStringLiteral( "ret = app.alert( \"Random Message\" );" ) );
+    QScopedPointer< MessageBoxHelper > messageBoxHelper;
+    messageBoxHelper.reset( new MessageBoxHelper( QMessageBox::Ok, QStringLiteral( "Random Message" ), QMessageBox::Critical, QStringLiteral( "Okular" ), false ) );
+    m_document->processAction( action );
+    delete action;
+
+    action = new Okular::ScriptAction( Okular::JavaScript, QStringLiteral( "ret = app.alert( \"Empty Message\", 1 );" ) );
+    messageBoxHelper.reset( new MessageBoxHelper( QMessageBox::Ok, QStringLiteral( "Empty Message" ), QMessageBox::Warning, QStringLiteral( "Okular" ), false ) );
+    m_document->processAction( action );
+    delete action;
+
+    action = new Okular::ScriptAction( Okular::JavaScript, QStringLiteral( "ret = app.alert( \"No Message\", 2, 2 );" ) );
+    messageBoxHelper.reset( new MessageBoxHelper( QMessageBox::Yes, QStringLiteral( "No Message" ), QMessageBox::Question, QStringLiteral( "Okular" ), false ) );
+    m_document->processAction( action );
+    delete action;
+
+    action = new Okular::ScriptAction( Okular::JavaScript, QStringLiteral( "ret = app.alert( \"No\", 3, 2, \"Test Dialog\" );" ) );
+    messageBoxHelper.reset( new MessageBoxHelper( QMessageBox::No, QStringLiteral( "No" ), QMessageBox::Information, QStringLiteral( "Test Dialog" ), false ) );
+    m_document->processAction( action );
+    delete action;
+
+    action = new Okular::ScriptAction( Okular::JavaScript, QStringLiteral( "var oCheckBox = new Object();\
+                                                                            ret = app.alert( \"Cancel\", 3, 3, \"Test Dialog\", 0, oCheckBox );" ) );
+    messageBoxHelper.reset( new MessageBoxHelper( QMessageBox::Cancel, QStringLiteral( "Cancel" ), QMessageBox::Information, QStringLiteral( "Test Dialog" ), true ) );
+    m_document->processAction( action );
+    delete action;
+}
+
+void KJSFunctionsTest::testPrintD()
+{
+    Okular::ScriptAction *action = new Okular::ScriptAction( Okular::JavaScript, 
+                                                             QStringLiteral( "var date = new Date( 2010, 0, 1, 11, 10, 32, 1 );\
+                                                                              ret = app.alert( util.printd( \"mm\\\\yyyy\", date ) );" ) );
+    QScopedPointer< MessageBoxHelper > messageBoxHelper;
+    messageBoxHelper.reset( new MessageBoxHelper( QMessageBox::Ok, QStringLiteral( "01\\2010" ), QMessageBox::Critical, QStringLiteral( "Okular" ), false ) );
+    m_document->processAction( action );
+    delete action;
+
+    action = new Okular::ScriptAction( Okular::JavaScript, QStringLiteral( "ret = app.alert( util.printd( \"m\\\\yy\", date ) );" ) );
+    messageBoxHelper.reset( new MessageBoxHelper( QMessageBox::Ok, QStringLiteral( "1\\10" ), QMessageBox::Critical, QStringLiteral( "Okular" ), false ) );
+    m_document->processAction( action );
+    delete action;
+
+    action = new Okular::ScriptAction( Okular::JavaScript, QStringLiteral( "ret = app.alert( util.printd( \"dd\\\\mm HH:MM\", date ) );" ) );
+    messageBoxHelper.reset( new MessageBoxHelper( QMessageBox::Ok, QStringLiteral( "01\\01 11:10" ), QMessageBox::Critical, QStringLiteral( "Okular" ), false ) );
+    m_document->processAction( action );
+    delete action;
+
+    action = new Okular::ScriptAction( Okular::JavaScript, QStringLiteral( "ret = app.alert( util.printd( \"dd\\\\mm HH:MM:ss\", date ) );" ) );
+    messageBoxHelper.reset( new MessageBoxHelper( QMessageBox::Ok, QStringLiteral( "01\\01 11:10:32" ), QMessageBox::Critical, QStringLiteral( "Okular" ), false ) );
+    m_document->processAction( action );
+    delete action;
+
+    action = new Okular::ScriptAction( Okular::JavaScript, QStringLiteral( "ret = app.alert( util.printd( \"yyyy\\\\mm HH:MM:ss\", date ) );" ) );
+    messageBoxHelper.reset( new MessageBoxHelper( QMessageBox::Ok, QStringLiteral( "2010\\01 11:10:32" ), QMessageBox::Critical, QStringLiteral( "Okular" ), false ) );
+    m_document->processAction( action );
+    delete action;
+}
 
 void KJSFunctionsTest::cleanupTestCase()
 {

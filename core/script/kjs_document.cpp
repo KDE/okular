@@ -211,7 +211,7 @@ static KJSObject docGetField( KJSContext *context, void *object,
         QLinkedList< Okular::FormField * >::const_iterator ffIt = pageFields.constBegin(), ffEnd = pageFields.constEnd();
         for ( ; ffIt != ffEnd; ++ffIt )
         {
-            if ( (*ffIt)->name() == cName )
+            if ( (*ffIt)->fullyQualifiedName() == cName )
             {
                 return JSField::wrapField( context, *ffIt, *pIt );
             }
@@ -280,7 +280,7 @@ static KJSObject docGetNthFieldName( KJSContext *ctx, void *object,
         {
             const auto ffIt = pageFields.begin() + numField;
             
-            return KJSString( (*ffIt)->name() );
+            return KJSString( (*ffIt)->fullyQualifiedName() );
         }
 
         numField -= pageFields.size();

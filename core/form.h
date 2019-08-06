@@ -87,6 +87,14 @@ class OKULARCORE_EXPORT FormField
         virtual QString uiName() const = 0;
 
         /**
+         * The fully qualified name of the field, is used in the JavaScript
+         * scripts.
+         *
+         * @since 1.9
+         */
+        virtual QString fullyQualifiedName() const = 0;
+
+        /**
          * Whether the field is read-only.
          */
         virtual bool isReadOnly() const;

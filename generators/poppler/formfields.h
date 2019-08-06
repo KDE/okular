@@ -25,6 +25,7 @@ class PopplerFormFieldButton : public Okular::FormFieldButton
         int id() const override;
         QString name() const override;
         QString uiName() const override;
+        QString fullyQualifiedName() const override;
         bool isReadOnly() const override;
         void setReadOnly( bool value ) override;
         bool isVisible() const override;
@@ -66,6 +67,7 @@ class PopplerFormFieldText : public Okular::FormFieldText
         int id() const override;
         QString name() const override;
         QString uiName() const override;
+        QString fullyQualifiedName() const override;
         bool isReadOnly() const override;
         void setReadOnly( bool value ) override;
         bool isVisible() const override;
@@ -101,6 +103,7 @@ class PopplerFormFieldChoice : public Okular::FormFieldChoice
         int id() const override;
         QString name() const override;
         QString uiName() const override;
+        QString fullyQualifiedName() const override;
         bool isReadOnly() const override;
         void setReadOnly( bool value ) override;
         bool isVisible() const override;
@@ -138,6 +141,7 @@ class PopplerFormFieldSignature : public Okular::FormFieldSignature
         int id() const override;
         QString name() const override;
         QString uiName() const override;
+        QString fullyQualifiedName() const override;
         bool isReadOnly() const override;
         bool isVisible() const override;
 

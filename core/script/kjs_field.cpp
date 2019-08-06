@@ -63,7 +63,7 @@ static KJSObject fieldGetDoc( KJSContext *context, void *  )
 static KJSObject fieldGetName( KJSContext *, void *object  )
 {
     const FormField *field = reinterpret_cast< FormField * >( object );
-    return KJSString( field->name() );
+    return KJSString( field->fullyQualifiedName() );
 }
 
 // Field.readonly (getter)
@@ -275,8 +275,8 @@ static KJSObject fieldButtonGetIcon( KJSContext *ctx, void *object,
     FormField *field = reinterpret_cast< FormField * >( object );
     
     KJSObject fieldObject;
-    fieldObject.setProperty( ctx, OKULAR_NAME, field->name() );
-    g_buttonCache->insert( field->name(), field );
+    fieldObject.setProperty( ctx, OKULAR_NAME, field->fullyQualifiedName() );
+    g_buttonCache->insert( field->fullyQualifiedName(), field );
 
     return fieldObject;
 }

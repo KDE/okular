@@ -77,6 +77,11 @@ QString PopplerFormFieldButton::uiName() const
     return m_field->uiName();
 }
 
+QString PopplerFormFieldButton::fullyQualifiedName() const
+{
+    return m_field->fullyQualifiedName();
+}
+
 bool PopplerFormFieldButton::isReadOnly() const
 {
     return m_field->isReadOnly();
@@ -211,6 +216,11 @@ QString PopplerFormFieldText::uiName() const
     return m_field->uiName();
 }
 
+QString PopplerFormFieldText::fullyQualifiedName() const
+{
+    return m_field->fullyQualifiedName();
+}
+
 bool PopplerFormFieldText::isReadOnly() const
 {
     return m_field->isReadOnly();
@@ -339,6 +349,11 @@ QString PopplerFormFieldChoice::name() const
 QString PopplerFormFieldChoice::uiName() const
 {
     return m_field->uiName();
+}
+
+QString PopplerFormFieldChoice::fullyQualifiedName() const
+{
+    return m_field->fullyQualifiedName();
 }
 
 bool PopplerFormFieldChoice::isReadOnly() const
@@ -490,6 +505,11 @@ QString PopplerFormFieldSignature::name() const
 QString PopplerFormFieldSignature::uiName() const
 {
     return m_field->uiName();
+}
+
+QString PopplerFormFieldSignature::fullyQualifiedName() const
+{
+    return m_field->fullyQualifiedName();
 }
 
 bool PopplerFormFieldSignature::isReadOnly() const

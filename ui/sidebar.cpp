@@ -189,7 +189,7 @@ void SidebarDelegate::paint( QPainter *painter, const QStyleOptionViewItem &opti
     if ( m_showText )
     {
         QString text = index.data( Qt::DisplayRole ).toString();
-        QRect fontBoundaries = QFontMetrics( option.font ).boundingRect( text );
+        QRect fontBoundaries = QFontMetrics( option.font ).boundingRect( QRect(), Qt::AlignCenter, text );
         QPoint textPos(
             ITEM_MARGIN_LEFT + ( option.rect.width() - ITEM_MARGIN_LEFT - ITEM_MARGIN_RIGHT - fontBoundaries.width() ) / 2,
             ITEM_MARGIN_TOP + option.decorationSize.height() + ITEM_PADDING
@@ -207,7 +207,7 @@ QSize SidebarDelegate::sizeHint( const QStyleOptionViewItem &option, const QMode
     QSize baseSize( option.decorationSize.width(), option.decorationSize.height() );
     if ( m_showText )
     {
-        QRect fontBoundaries = QFontMetrics( option.font ).boundingRect( index.data( Qt::DisplayRole ).toString() );
+        QRect fontBoundaries = QFontMetrics( option.font ).boundingRect( QRect(), Qt::AlignCenter, index.data( Qt::DisplayRole ).toString() );
         baseSize.setWidth( qMax( fontBoundaries.width(), baseSize.width() ) );
         baseSize.setHeight( baseSize.height() + fontBoundaries.height() + ITEM_PADDING );
     }

@@ -313,7 +313,7 @@ void KJSFunctionsTest::testAlert()
 void KJSFunctionsTest::testPrintD()
 {
     Okular::ScriptAction *action = new Okular::ScriptAction( Okular::JavaScript, 
-                                                             QStringLiteral( "var date = new Date( 2010, 0, 1, 11, 10, 32, 1 );\
+                                                             QStringLiteral( "var date = new Date( 2010, 0, 5, 11, 10, 32, 1 );\
                                                                               ret = app.alert( util.printd( \"mm\\\\yyyy\", date ) );" ) );
     QScopedPointer< MessageBoxHelper > messageBoxHelper;
     messageBoxHelper.reset( new MessageBoxHelper( QMessageBox::Ok, QStringLiteral( "01\\2010" ), QMessageBox::Critical, QStringLiteral( "Okular" ), false ) );
@@ -326,17 +326,35 @@ void KJSFunctionsTest::testPrintD()
     delete action;
 
     action = new Okular::ScriptAction( Okular::JavaScript, QStringLiteral( "ret = app.alert( util.printd( \"dd\\\\mm HH:MM\", date ) );" ) );
-    messageBoxHelper.reset( new MessageBoxHelper( QMessageBox::Ok, QStringLiteral( "01\\01 11:10" ), QMessageBox::Critical, QStringLiteral( "Okular" ), false ) );
+    messageBoxHelper.reset( new MessageBoxHelper( QMessageBox::Ok, QStringLiteral( "05\\01 11:10" ), QMessageBox::Critical, QStringLiteral( "Okular" ), false ) );
     m_document->processAction( action );
     delete action;
 
     action = new Okular::ScriptAction( Okular::JavaScript, QStringLiteral( "ret = app.alert( util.printd( \"dd\\\\mm HH:MM:ss\", date ) );" ) );
-    messageBoxHelper.reset( new MessageBoxHelper( QMessageBox::Ok, QStringLiteral( "01\\01 11:10:32" ), QMessageBox::Critical, QStringLiteral( "Okular" ), false ) );
+    messageBoxHelper.reset( new MessageBoxHelper( QMessageBox::Ok, QStringLiteral( "05\\01 11:10:32" ), QMessageBox::Critical, QStringLiteral( "Okular" ), false ) );
     m_document->processAction( action );
     delete action;
 
     action = new Okular::ScriptAction( Okular::JavaScript, QStringLiteral( "ret = app.alert( util.printd( \"yyyy\\\\mm HH:MM:ss\", date ) );" ) );
     messageBoxHelper.reset( new MessageBoxHelper( QMessageBox::Ok, QStringLiteral( "2010\\01 11:10:32" ), QMessageBox::Critical, QStringLiteral( "Okular" ), false ) );
+    m_document->processAction( action );
+    delete action;
+
+    action = new Okular::ScriptAction( Okular::JavaScript, QStringLiteral( "ret = app.alert( util.printd( 0, date ) );" ) );
+    messageBoxHelper.reset( new MessageBoxHelper( QMessageBox::Ok, QStringLiteral( "D:20100105111032" ), QMessageBox::Critical, QStringLiteral( "Okular" ), false ) );
+    m_document->processAction( action );
+    delete action;
+
+    action = new Okular::ScriptAction( Okular::JavaScript, QStringLiteral( "ret = app.alert( util.printd( 1, date ) );" ) );
+    messageBoxHelper.reset( new MessageBoxHelper( QMessageBox::Ok, QStringLiteral( "2010.01.05 11:10:32" ), QMessageBox::Critical, QStringLiteral( "Okular" ), false ) );
+    m_document->processAction( action );
+    delete action;
+
+    action = new Okular::ScriptAction( Okular::JavaScript, QStringLiteral( "ret = app.alert( util.printd( 2, date ) );" ) );
+    QLocale locale = QLocale::system();
+    QDate date( 2010, 1, 5 );
+    messageBoxHelper.reset( new MessageBoxHelper( QMessageBox::Ok, date.toString( locale.dateFormat( QLocale::ShortFormat ) ) + QStringLiteral( " 11:10:32" ), QMessageBox::Critical,
+                                                  QStringLiteral( "Okular" ), false ) );
     m_document->processAction( action );
     delete action;
 }

@@ -67,23 +67,45 @@ static KJSObject printd( KJSContext *context, void *,
     {
         return context->throwException( QStringLiteral("Invalid arguments") );
     }
-    
+
+    KJSObject oFormat = arguments.at( 0 );
+    QString format;
+
+    if( oFormat.isNumber() )
+    {
+        int formatType = oFormat.toInt32( context );
+        switch( formatType )
+        {
+            case 0:
+                format = QStringLiteral( "D:yyyyMMddHHmmss" );
+                break;
+            case 1:
+                format = QStringLiteral( "yyyy.MM.dd HH:mm:ss");
+                break;
+            case 2:
+                QLocale system = QLocale::system();
+                format = system.dateTimeFormat( QLocale::ShortFormat ) + QStringLiteral( ":ss" );
+                break;
+        }
+    }
+    else
+    {
+        format = arguments.at( 0 ).toString( context ).replace( "tt", "ap" );
+        format.replace( "t", "a" );
+        for( int i = 0 ; i < format.size() ; ++i )
+        {  
+            if( format[i] == 'M' )
+                format[i] = 'm';
+            else if( format[i] == 'm' )
+                format[i] = 'M';
+        }
+    }
+
     QLocale locale( "en_US" );
-    QString format = arguments.at( 0 ).toString( context ).replace( "tt", "ap" );
-    format.replace( "t", "a" );
-   
     QStringList str = arguments.at( 1 ).toString( context ).split( QRegularExpression( "\\W") );
     QString myStr = QStringLiteral( "%1/%2/%3 %4:%5:%6" ).arg( str[1] ).
         arg( str[2] ).arg( str[3] ).arg( str[4] ).arg( str[5] ).arg( str[6] );
     QDateTime date = locale.toDateTime( myStr, QStringLiteral( "MMM/d/yyyy H:m:s" ) );
-
-    for( int i = 0 ; i < format.size() ; ++i )
-    {  
-        if( format[i] == 'M' )
-            format[i] = 'm';
-        else if( format[i] == 'm' )
-            format[i] = 'M';
-    }
 
     return KJSString( date.toString( format ) );
 }

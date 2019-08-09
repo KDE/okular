@@ -171,7 +171,7 @@ std::shared_ptr<Event> Event::createFormCalculateEvent( FormField *target,
     FormFieldText *fft = dynamic_cast< FormFieldText * >(target);
     if ( fft )
     {
-        ret->setValue( QVariant( fft->internalText() ) );
+        ret->setValue( QVariant( fft->text() ) );
     }
     return ret;
 }
@@ -189,7 +189,7 @@ std::shared_ptr<Event> Event::createFormatEvent( FormField *target,
     FormFieldText *fft = dynamic_cast< FormFieldText * >(target);
     if ( fft )
     {
-        ret->setValue( QVariant( fft->internalText() ) );
+        ret->setValue( QVariant( fft->text() ) );
     }
     return ret;
 }

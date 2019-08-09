@@ -4328,9 +4328,6 @@ void Document::processFormatAction( const Action * action, Okular::FormFieldText
 
     const QString oldVal = fft->text();
 
-    // We are before formatting. So the unformatted text is currently in fft->text()
-    // Internally we want to use the current value for calculations and formatting.
-    fft->setInternalText( oldVal );
     std::shared_ptr< Event > event = Event::createFormatEvent( fft, d->m_pagesVector[foundPage] );
 
     const ScriptAction * linkscript = static_cast< const ScriptAction * >( action );
@@ -4347,9 +4344,14 @@ void Document::processFormatAction( const Action * action, Okular::FormFieldText
     const QString newVal = event->value().toString();
     if ( newVal != oldVal )
     {
+        // We set the newVal, because when we call refreshFormWidget
+        // It will set the QLineEdit to this newVal
         fft->setText( newVal );
         emit refreshFormWidget( fft );
         d->refreshPixmaps( foundPage );
+        // Then we make the form have the unformatted text, to use
+        // in calculations and other things.
+        fft->setText( oldVal );
     }
     else if ( fft->additionalAction( FormField::CalculateField ) )
     {
@@ -4400,10 +4402,6 @@ void Document::processKeystrokeAction( const Action * action, Okular::FormFieldT
     // Clear out the event after execution
     d->m_scripter->setEvent( nullptr );
     returnCode = event->returnCode();
-    if( returnCode )
-    {
-        fft->setInternalText( fft->text() );
-    }
 }
 
 void Document::processSourceReference( const SourceReference * ref )

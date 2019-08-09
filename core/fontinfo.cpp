@@ -27,6 +27,7 @@ class Okular::FontInfoPrivate
         bool operator==( const FontInfoPrivate &rhs ) const
         {
             return name == rhs.name &&
+                   substituteName == rhs.substituteName &&
                    type == rhs.type &&
                    embedType == rhs.embedType &&
                    file == rhs.file &&
@@ -34,6 +35,7 @@ class Okular::FontInfoPrivate
         }
 
         QString name;
+        QString substituteName;
         FontInfo::FontType type;
         FontInfo::EmbedType embedType;
         bool canBeExtracted;
@@ -64,6 +66,16 @@ QString FontInfo::name() const
 void FontInfo::setName( const QString& name )
 {
     d->name = name;
+}
+
+QString FontInfo::substituteName() const
+{
+    return d->substituteName;
+}
+
+void FontInfo::setSubstituteName( const QString& substituteName )
+{
+    d->substituteName = substituteName;
 }
 
 FontInfo::FontType FontInfo::type() const

@@ -85,6 +85,16 @@ class OKULARCORE_EXPORT FontInfo
         void setName( const QString& name );
 
         /**
+         * Returns the substitute name for the font.
+         */
+        QString substituteName() const;
+
+        /**
+         * Sets a new substitute name for the font.
+         */
+        void setSubstituteName( const QString& substituteName );
+
+        /**
          * Returns the type of the font.
          */
         FontType type() const;

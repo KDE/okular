@@ -355,7 +355,12 @@ QVariant FontsListModel::data( const QModelIndex &index, int role ) const
             {
                 case 0:
                 {
-                    QString fontname = m_fonts.at( index.row() ).name();
+                    const Okular::FontInfo &fi = m_fonts.at( index.row() );
+                    const QString fontname = fi.name();
+                    const QString substituteName = fi.substituteName();
+                    if ( fi.embedType() == Okular::FontInfo::NotEmbedded && !substituteName.isEmpty() && !fontname.isEmpty() && substituteName != fontname ) {
+                        return i18nc("Replacing missing font with another one", "%1 (substituting with %2)", fontname, substituteName);
+                    }
                     return fontname.isEmpty() ? i18nc( "font name not available (empty)", "[n/a]" ) : fontname;
                     break;
                 }

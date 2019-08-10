@@ -1,5 +1,5 @@
 [Desktop Entry]
-MimeType=application/x-cbz;application/x-cbr;application/x-cbt;
+MimeType=application/x-cbz;application/x-cbr;application/x-cbt;application/x-cb7;
 Terminal=false
 Name=Okular
 Name[ar]=اوكلار
@@ -165,7 +165,7 @@ Type=Application
 InitialPreference=7
 Categories=Qt;KDE;Graphics;Viewer;
 NoDisplay=true
-X-KDE-Keywords=cbr, cbz, cbt, Comic Book
+X-KDE-Keywords=cbr, cbz, cbt, cb7, Comic Book
 X-KDE-Keywords[ar]=cbr, cbz, cbt, Comic Book
 X-KDE-Keywords[bg]=cbr, cbz, cbt, Comic Book
 X-KDE-Keywords[bs]=cbr, cbz, cbt, Comic Book,stripovi

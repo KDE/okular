@@ -18,6 +18,7 @@
 #include <QMimeDatabase>
 #include <kzip.h>
 #include <ktar.h>
+#include <k7zip.h>
 
 #include <memory>
 
@@ -74,6 +75,15 @@ bool Document::open( const QString &fileName )
     } else if ( mime.inherits( QStringLiteral("application/x-cbt") ) || mime.inherits( QStringLiteral("application/x-gzip") ) ||
                 mime.inherits( QStringLiteral("application/x-tar") ) || mime.inherits( QStringLiteral("application/x-bzip") ) ) {
         mArchive = new KTar( fileName );
+
+        if ( !processArchive() ) {
+            return false;
+        }
+    /**
+     * We have a 7z archive
+     */
+    } else if ( mime.inherits( QStringLiteral("application/x-cb7") ) || mime.inherits( QStringLiteral("application/x-7z-compressed") ) ) {
+        mArchive = new K7Zip( fileName );
 
         if ( !processArchive() ) {
             return false;

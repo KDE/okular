@@ -116,6 +116,7 @@
             "application/x-cbz",
             "application/x-cbr",
             "application/x-cbt",
+            "application/x-cb7",
             "inode/directory"
         ],
         "Name": "ComicBook Backend",

@@ -556,13 +556,13 @@ void FormLineEdit::slotChanged()
     if( form->additionalAction( Okular::FormField::FieldModified ) && m_editing && !form->isReadOnly() )
     {
         bool ok = false;
-        QString oldText = form->text();
+        QString oldInputText = form->text();
         form->setText( text() );
         emit m_controller->keystrokeAction( form->additionalAction( Okular::FormField::FieldModified ), form, ok );
-        form->setText( oldText );
+        form->setText( oldInputText );
         if(!ok)
         {
-            setText( oldText );
+            setText( oldInputText );
             return;
         }
     }
@@ -743,13 +743,13 @@ void TextAreaEdit::slotChanged()
     if( form->additionalAction( Okular::FormField::FieldModified ) && m_editing && !form->isReadOnly() )
     {
         bool ok = false;
-        QString oldText = form->text();
+        QString oldInputText = form->text();
         form->setText( toPlainText() );
         emit m_controller->keystrokeAction( form->additionalAction( Okular::FormField::FieldModified ), form, ok );
-        form->setText( oldText );
+        form->setText( oldInputText );
         if(!ok)
         {
-            setText( oldText );
+            setText( oldInputText );
             return;
         }
     }

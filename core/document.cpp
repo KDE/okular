@@ -4326,7 +4326,7 @@ void Document::processFormatAction( const Action * action, Okular::FormFieldText
         return;
     }
 
-    const QString oldVal = fft->text();
+    const QString unformattedText = fft->text();
 
     std::shared_ptr< Event > event = Event::createFormatEvent( fft, d->m_pagesVector[foundPage] );
 
@@ -4341,17 +4341,18 @@ void Document::processFormatAction( const Action * action, Okular::FormFieldText
     // Clear out the event after execution
     d->m_scripter->setEvent( nullptr );
 
-    const QString newVal = event->value().toString();
-    if ( newVal != oldVal )
+    const QString formattedText = event->value().toString();
+    if ( formattedText != unformattedText )
     {
-        // We set the newVal, because when we call refreshFormWidget
-        // It will set the QLineEdit to this newVal
-        fft->setText( newVal );
+        // We set the formattedText, because when we call refreshFormWidget
+        // It will set the QLineEdit to this formattedText
+        fft->setText( formattedText );
+        fft->setAppearanceText( formattedText );
         emit refreshFormWidget( fft );
         d->refreshPixmaps( foundPage );
         // Then we make the form have the unformatted text, to use
         // in calculations and other things.
-        fft->setText( oldVal );
+        fft->setText( unformattedText );
     }
     else if ( fft->additionalAction( FormField::CalculateField ) )
     {

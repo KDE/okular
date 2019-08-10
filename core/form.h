@@ -341,6 +341,13 @@ class OKULARCORE_EXPORT FormFieldText : public FormField
          * @since 1.5
          */
         virtual void setInternalText( const QString &text );
+        
+        /**
+         * Set the text which should be rendered by the PDF.
+         *
+         * @since 1.9
+         */
+        virtual void setAppearanceText( const QString &text ) = 0;
 
     protected:
         FormFieldText();

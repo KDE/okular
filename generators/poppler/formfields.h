@@ -79,6 +79,7 @@ class PopplerFormFieldText : public Okular::FormFieldText
         Okular::FormFieldText::TextType textType() const override;
         QString text() const override;
         void setText( const QString& text ) override;
+        void setAppearanceText( const QString& text ) override;
         bool isPassword() const override;
         bool isRichText() const override;
         int maximumLength() const override;

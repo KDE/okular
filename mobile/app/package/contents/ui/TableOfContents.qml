@@ -18,7 +18,7 @@
  */
 
 import QtQuick 2.1
-import QtQuick.Controls 2.0 as QQC2
+import QtQuick.Controls 2.2 as QQC2
 import org.kde.kirigami 2.0 as Kirigami
 
 Kirigami.Page {
@@ -27,16 +27,15 @@ Kirigami.Page {
     topPadding: 0
     rightPadding: 0
     bottomPadding: 0
-    property alias contentY: flickable.contentY
-    property alias contentHeight: flickable.contentHeight
+    property alias tocContentY: flickable.contentY
+    property alias tocContentHeight: flickable.contentHeight
 
     QQC2.ToolBar {
         id: toolBarContent
         width: root.width
-        height: searchField.height
-        TextField {
+        contentItem: QQC2.TextField {
             id: searchField
-            anchors.centerIn: parent
+            placeholderText: i18n("Search...")
         }
     }
     QQC2.ScrollView {

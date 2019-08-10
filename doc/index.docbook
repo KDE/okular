@@ -34,7 +34,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2019-07-26</date>
+		<date>2019-08-10</date>
 		<releaseinfo>1.9 (Applications 19.12)</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
@@ -1212,6 +1212,9 @@ Context menu actions like Rename Bookmarks etc.)
 						<para><action>Display some basic information</action> about the document, such as
 							title, author, creation date, and details about the fonts used. The available information
 							depends on the type of document.</para>
+						<note>
+							<para>Please pay attention on the information about substituting font in the <guilabel>Fonts</guilabel> tab of the <guilabel>Properties</guilabel> dialog. Many problems with font rendering can be solved by installing of the substituted fonts.</para>
+						</note>
 					</listitem>
 				</varlistentry>
 				<varlistentry>

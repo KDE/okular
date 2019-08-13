@@ -107,7 +107,9 @@ static KJSObject printd( KJSContext *context, void *,
         arg( str[2] ).arg( str[3] ).arg( str[4] ).arg( str[5] ).arg( str[6] );
     QDateTime date = locale.toDateTime( myStr, QStringLiteral( "MMM/d/yyyy H:m:s" ) );
 
-    return KJSString( date.toString( format ) );
+    QLocale defaultLocale;
+
+    return KJSString( defaultLocale.toString( date, format ) );
 }
 
 void JSUtil::initType( KJSContext *ctx )

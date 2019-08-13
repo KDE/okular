@@ -41,6 +41,10 @@ void FormatTest::initTestCase()
     Okular::SettingsCore::instance( QStringLiteral( "formattest" ) );
     m_document = new Okular::Document( nullptr );
 
+    // Force consistent locale
+    QLocale locale( QStringLiteral( "en_US" ) );
+    QLocale::setDefault( locale );
+
     const QString testFile = QStringLiteral( KDESRCDIR "data/formattest.pdf" );
     QMimeDatabase db;
     const QMimeType mime = db.mimeTypeForFile( testFile );

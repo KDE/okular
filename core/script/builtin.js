@@ -123,8 +123,10 @@ function AFTime_Format( ptf )
     while( tokens.length < 3 )
         tokens.push( 0 );
 
+    // We get pm string in the user locale to search.
+    var dummyPm = util.printd( 'ap', new Date( 2018, 5, 11, 23, 11, 11) ).toLocaleLowerCase();
     // Add 12 to time if it's PM and less than 12
-    if( ( event.value.search( 'PM' ) !== -1 || event.value.search( 'pm' ) !== -1 ) && Number( tokens[0] ) < 12 )
+    if( event.value.toLocaleLowerCase().search( dummyPm ) !== -1 && Number( tokens[0] ) < 12 )
         tokens[0] = Number( tokens[0] ) + 12;
 
     // We use a random date, because we only care about time.

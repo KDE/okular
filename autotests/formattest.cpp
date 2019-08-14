@@ -71,73 +71,73 @@ void FormatTest::testTimeFormat()
     fft->setText( QStringLiteral( "1:20" ) );
     m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
 
-    QCOMPARE( QStringLiteral( "01:20" ), m_formattedText );
+    QCOMPARE( m_formattedText, QStringLiteral( "01:20" ) );
 
     fft->setText( QStringLiteral( "1:20 pm" ) );
     m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
 
-    QCOMPARE( QStringLiteral( "13:20" ), m_formattedText );
+    QCOMPARE( m_formattedText, QStringLiteral( "13:20" ) );
 
     fft->setText( QStringLiteral( "1" ) );
     m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
 
-    QCOMPARE( QStringLiteral( "" ), m_formattedText );
+    QCOMPARE( m_formattedText, QStringLiteral( "" ) );
 
     fft->setText( QStringLiteral( "25:12" ) );
     m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
 
-    QCOMPARE( QStringLiteral( "" ), m_formattedText );
+    QCOMPARE( m_formattedText, QStringLiteral( "" ) );
 
     fft->setText( QStringLiteral( "abcd" ) );
     m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
 
-    QCOMPARE( QStringLiteral( "" ), m_formattedText );
+    QCOMPARE( m_formattedText, QStringLiteral( "" ) );
 
     fft = reinterpret_cast< Okular::FormFieldText * >(  m_fields[ QStringLiteral( "time2" ) ] );
    
     fft->setText( QStringLiteral( "1:20" ) );
     m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
 
-    QCOMPARE( QStringLiteral( "1:20 am" ), m_formattedText );
+    QCOMPARE( m_formattedText, QStringLiteral( "1:20 am" ) );
 
     fft->setText( QStringLiteral( "01:20 pm" ) );
     m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
 
-    QCOMPARE( QStringLiteral( "1:20 pm" ), m_formattedText );
+    QCOMPARE( m_formattedText, QStringLiteral( "1:20 pm" ) );
 
     fft->setText( QStringLiteral( "13:20" ) );
     m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
 
-    QCOMPARE( QStringLiteral( "1:20 pm" ), m_formattedText );
+    QCOMPARE( m_formattedText, QStringLiteral( "1:20 pm" ) );
 
     fft = reinterpret_cast< Okular::FormFieldText * >(  m_fields[ QStringLiteral( "time3" ) ] );
    
     fft->setText( QStringLiteral( "1:20" ) );
     m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
 
-    QCOMPARE( QStringLiteral( "01:20:00" ), m_formattedText );
+    QCOMPARE( m_formattedText, QStringLiteral( "01:20:00" ) );
 
     fft->setText( QStringLiteral( "1:20:00 pm" ) );
     m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
 
-    QCOMPARE( QStringLiteral( "13:20:00" ), m_formattedText );
+    QCOMPARE( m_formattedText, QStringLiteral( "13:20:00" ) );
 
     fft = reinterpret_cast< Okular::FormFieldText * >(  m_fields[ QStringLiteral( "time4" ) ] );
    
     fft->setText( QStringLiteral( "1:20:00" ) );
     m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
 
-    QCOMPARE( QStringLiteral( "1:20:00 am" ), m_formattedText );
+    QCOMPARE( m_formattedText, QStringLiteral( "1:20:00 am" ) );
 
     fft->setText( QStringLiteral( "01:20:00 pm" ) );
     m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
 
-    QCOMPARE( QStringLiteral( "1:20:00 pm" ), m_formattedText );
+    QCOMPARE( m_formattedText, QStringLiteral( "1:20:00 pm" ) );
 
     fft->setText( QStringLiteral( "13:20:00" ) );
     m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
 
-    QCOMPARE( QStringLiteral( "1:20:00 pm" ), m_formattedText );
+    QCOMPARE( m_formattedText, QStringLiteral( "1:20:00 pm" ) );
 }
 
 void FormatTest::testSpecialFormat()

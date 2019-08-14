@@ -50,11 +50,11 @@ private slots:
         foreach ( QWidget *w, allToplevelWidgets ) {
             if ( w->inherits( "QMessageBox" ) ) {
                 mb = qobject_cast< QMessageBox * >( w );
-                QCOMPARE( m_message, mb->text() );
-                QCOMPARE( m_title, mb->windowTitle() );
-                QCOMPARE( m_icon, mb->icon() );
+                QCOMPARE( mb->text(), m_message );
+                QCOMPARE( mb->windowTitle(), m_title );
+                QCOMPARE( mb->icon(), m_icon );
                 QCheckBox *box = mb->checkBox();
-                QCOMPARE( m_checkBox, box != nullptr );
+                QCOMPARE( box != nullptr, m_checkBox );
                 mb->button( m_button )->click();
             }
         }

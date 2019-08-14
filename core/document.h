@@ -671,7 +671,7 @@ class OKULARCORE_EXPORT Document : public QObject
         /**
          * Processes the given format @p action on @p field.
          *
-         * @since 1.5
+         * @since 1.9
          */
         void processFormatAction( const Action *action, Okular::FormFieldText *field );
 

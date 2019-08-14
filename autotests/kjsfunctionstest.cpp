@@ -122,7 +122,7 @@ void KJSFunctionsTest::testNthFieldName()
         Okular::ScriptAction *action = new Okular::ScriptAction( Okular::JavaScript, QStringLiteral( "var field = Doc.getField( Doc.getNthFieldName(%1) );\
                                                                               field.display = display.visible;" ).arg( i ) );
         m_document->processAction( action );
-        QCOMPARE( true, m_fields[QString( "0.%1" ).arg(i)]->isVisible() );
+        QVERIFY( m_fields[QString( "0.%1" ).arg(i)]->isVisible() );
         m_fields[QString( "0.%1" ).arg(i)]->setVisible( false ); 
         delete action;
     }
@@ -134,40 +134,40 @@ void KJSFunctionsTest::testDisplay()
         QStringLiteral( "field = Doc.getField(\"0.0\");field.display=display.hidden;\
         field = Doc.getField(\"0.10\");field.display=display.visible;" ) );
     m_document->processAction( action );
-    QCOMPARE( false, m_fields["0.0"]->isVisible() );
-    QCOMPARE( false, m_fields["0.0"]->isPrintable() );
-    QCOMPARE( true, m_fields["0.10"]->isVisible() );
-    QCOMPARE( true, m_fields["0.10"]->isPrintable() );
+    QVERIFY( !m_fields["0.0"]->isVisible() );
+    QVERIFY( !m_fields["0.0"]->isPrintable() );
+    QVERIFY( m_fields["0.10"]->isVisible() );
+    QVERIFY( m_fields["0.10"]->isPrintable() );
     delete action;
     
     action = new Okular::ScriptAction( Okular::JavaScript,
         QStringLiteral( "field = Doc.getField(\"0.10\");field.display=display.noView;\
         field = Doc.getField(\"0.15\");field.display=display.noPrint;" ) );
     m_document->processAction( action );
-    QCOMPARE( false, m_fields["0.10"]->isVisible() );
-    QCOMPARE( true, m_fields["0.10"]->isPrintable() );
-    QCOMPARE( true, m_fields["0.15"]->isVisible() );
-    QCOMPARE( false, m_fields["0.15"]->isPrintable() );
+    QVERIFY( !m_fields["0.10"]->isVisible() );
+    QVERIFY( m_fields["0.10"]->isPrintable() );
+    QVERIFY( m_fields["0.15"]->isVisible() );
+    QVERIFY( !m_fields["0.15"]->isPrintable() );
     delete action;
 
     action = new Okular::ScriptAction( Okular::JavaScript,
         QStringLiteral( "field = Doc.getField(\"0.15\");field.display=display.hidden;\
         field = Doc.getField(\"0.20\");field.display=display.visible;" ) );
     m_document->processAction( action );
-    QCOMPARE( false, m_fields["0.15"]->isVisible() );
-    QCOMPARE( false, m_fields["0.15"]->isPrintable() );
-    QCOMPARE( true, m_fields["0.20"]->isVisible() );
-    QCOMPARE( true, m_fields["0.20"]->isPrintable() );
+    QVERIFY( !m_fields["0.15"]->isVisible() );
+    QVERIFY( !m_fields["0.15"]->isPrintable() );
+    QVERIFY( m_fields["0.20"]->isVisible() );
+    QVERIFY( m_fields["0.20"]->isPrintable() );
     delete action;
 
     action = new Okular::ScriptAction( Okular::JavaScript,
         QStringLiteral( "field = Doc.getField(\"0.20\");field.display=display.hidden;\
         field = Doc.getField(\"0.0\");field.display=display.visible;" ) );
     m_document->processAction( action );
-    QCOMPARE( false, m_fields["0.20"]->isVisible() );
-    QCOMPARE( false, m_fields["0.20"]->isPrintable() );
-    QCOMPARE( true, m_fields["0.0"]->isVisible() );
-    QCOMPARE( true, m_fields["0.0"]->isPrintable() );
+    QVERIFY( !m_fields["0.20"]->isVisible() );
+    QVERIFY( !m_fields["0.20"]->isPrintable() );
+    QVERIFY( m_fields["0.0"]->isVisible() );
+    QVERIFY( m_fields["0.0"]->isPrintable() );
     delete action;
 }
 
@@ -187,15 +187,15 @@ void KJSFunctionsTest::testSetClearInterval()
         obj.idx = obj.idx + 1;};\
         intv = app.setInterval('obj.inc()', 450);obj.idx;" ) );
     m_document->processAction( action );
-    QCOMPARE( m_fields["0.0"]->isVisible() , true  );
-    QCOMPARE( m_fields["0.3"]->isVisible() , false );
+    QVERIFY( m_fields["0.0"]->isVisible() );
+    QVERIFY( !m_fields["0.3"]->isVisible() );
     delete action;
     delay();
 
     action = new Okular::ScriptAction( Okular::JavaScript, 
         QStringLiteral( "app.clearInterval(intv);obj.idx;" ) );
     m_document->processAction( action );
-    QCOMPARE( m_fields["0.3"]->isVisible() , true );
+    QVERIFY( m_fields["0.3"]->isVisible() );
     delete action;
 }
 
@@ -204,25 +204,25 @@ void KJSFunctionsTest::testSetClearTimeOut()
     Okular::ScriptAction *action = new Okular::ScriptAction( Okular::JavaScript, 
         QStringLiteral( "intv = app.setTimeOut('obj.inc()', 1);obj.idx;" ) );
     m_document->processAction( action );
-    QCOMPARE( m_fields["0.3"]->isVisible() , true);
-    QCOMPARE( m_fields["0.4"]->isVisible() , false );
+    QVERIFY( m_fields["0.3"]->isVisible() );
+    QVERIFY( !m_fields["0.4"]->isVisible() );
     delay();
     delete action;
     
-    QCOMPARE( m_fields["0.4"]->isVisible() , true );
+    QVERIFY( m_fields["0.4"]->isVisible() );
     
     action = new Okular::ScriptAction( Okular::JavaScript, 
         QStringLiteral(  "intv = app.setTimeOut('obj.inc()', 2000);obj.idx;" ) );
     m_document->processAction( action );
-    QCOMPARE( m_fields["0.4"]->isVisible() , true );
+    QVERIFY( m_fields["0.4"]->isVisible() );
     delete action;
     
     action = new Okular::ScriptAction( Okular::JavaScript, 
         QStringLiteral(  "app.clearTimeOut(intv);obj.idx;" ) );
     m_document->processAction( action );
-    QCOMPARE( m_fields["0.4"]->isVisible() , true );
+    QVERIFY( m_fields["0.4"]->isVisible() );
     delay();
-    QCOMPARE( m_fields["0.4"]->isVisible() , true );
+    QVERIFY( m_fields["0.4"]->isVisible() );
     delete action;
 }
 
@@ -234,49 +234,49 @@ void KJSFunctionsTest::testGetOCGs()
         QStringLiteral( "var ocg = this.getOCGs(this.pageNum);\
         ocg[0].state = false;" ) );
     m_document->processAction( action );
-    QCOMPARE( model->data( model->index( 0, 0 ), Qt::CheckStateRole ).toBool() , false );
+    QVERIFY( !model->data( model->index( 0, 0 ), Qt::CheckStateRole ).toBool() );
     delete action;
 
     action = new Okular::ScriptAction( Okular::JavaScript, 
         QStringLiteral( "ocg[0].state = true;" ) );
     m_document->processAction( action );
-    QCOMPARE( model->data( model->index( 0, 0 ), Qt::CheckStateRole ).toBool() , true );
+    QVERIFY( model->data( model->index( 0, 0 ), Qt::CheckStateRole ).toBool() );
     delete action;
     
     action = new Okular::ScriptAction( Okular::JavaScript, 
         QStringLiteral( "ocg[1].state = false;" ) );
     m_document->processAction( action );
-    QCOMPARE( model->data( model->index( 1, 0 ), Qt::CheckStateRole ).toBool() , false );
+    QVERIFY( !model->data( model->index( 1, 0 ), Qt::CheckStateRole ).toBool() );
     delete action;
 
     action = new Okular::ScriptAction( Okular::JavaScript, 
         QStringLiteral( "ocg[1].state = true;" ) );
     m_document->processAction( action );
-    QCOMPARE( model->data( model->index( 1, 0 ), Qt::CheckStateRole ).toBool() , true );
+    QVERIFY( model->data( model->index( 1, 0 ), Qt::CheckStateRole ).toBool() );
     delete action;
 
     action = new Okular::ScriptAction( Okular::JavaScript, 
         QStringLiteral( "ocg[2].state = false;" ) );
     m_document->processAction( action );
-    QCOMPARE( model->data( model->index( 2, 0 ), Qt::CheckStateRole ).toBool() , false );
+    QVERIFY( !model->data( model->index( 2, 0 ), Qt::CheckStateRole ).toBool() );
     delete action;
 
     action = new Okular::ScriptAction( Okular::JavaScript, 
         QStringLiteral( "ocg[2].state = true;" ) );
     m_document->processAction( action );
-    QCOMPARE( model->data( model->index( 2, 0 ), Qt::CheckStateRole ).toBool() , true );
+    QVERIFY( model->data( model->index( 2, 0 ), Qt::CheckStateRole ).toBool() );
     delete action;
     
     action = new Okular::ScriptAction( Okular::JavaScript, 
         QStringLiteral( "ocg[3].state = false;" ) );
     m_document->processAction( action );
-    QCOMPARE( model->data( model->index( 3, 0 ), Qt::CheckStateRole ).toBool() , false );
+    QVERIFY( !model->data( model->index( 3, 0 ), Qt::CheckStateRole ).toBool() );
     delete action;
 
     action = new Okular::ScriptAction( Okular::JavaScript, 
         QStringLiteral( "ocg[3].state = true;" ) );
     m_document->processAction( action );
-    QCOMPARE( model->data( model->index( 3, 0 ), Qt::CheckStateRole ).toBool() , true );
+    QVERIFY( model->data( model->index( 3, 0 ), Qt::CheckStateRole ).toBool() );
     delete action;
 }
 

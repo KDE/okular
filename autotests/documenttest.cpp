@@ -95,7 +95,7 @@ void DocumentTest::testDocdataMigration()
     QCOMPARE( m_document->page( 0 )->annotations().first()->uniqueName(), QString("testannot") );
 
     // Check that we detect that it must be migrated
-    QCOMPARE( m_document->isDocdataMigrationNeeded(), true );
+    QVERIFY( m_document->isDocdataMigrationNeeded() );
     m_document->closeDocument();
 
     // Reopen the document and check that the annotation is still present
@@ -103,7 +103,7 @@ void DocumentTest::testDocdataMigration()
     QCOMPARE( m_document->openDocument( testFilePath, testFileUrl, mime ), Okular::Document::OpenSuccess );
     QCOMPARE( m_document->page( 0 )->annotations().size(), 1 );
     QCOMPARE( m_document->page( 0 )->annotations().first()->uniqueName(), QString("testannot") );
-    QCOMPARE( m_document->isDocdataMigrationNeeded(), true );
+    QVERIFY( m_document->isDocdataMigrationNeeded() );
 
     // Do the migration
     QTemporaryFile migratedSaveFile( QStringLiteral( "%1/okrXXXXXX.pdf" ).arg( QDir::tempPath() ) );
@@ -111,19 +111,19 @@ void DocumentTest::testDocdataMigration()
     migratedSaveFile.close();
     QVERIFY( m_document->saveChanges( migratedSaveFile.fileName() ) );
     m_document->docdataMigrationDone();
-    QCOMPARE( m_document->isDocdataMigrationNeeded(), false );
+    QVERIFY( !m_document->isDocdataMigrationNeeded() );
     m_document->closeDocument();
 
     // Now the docdata file should have no annotations, let's check
     QCOMPARE( m_document->openDocument( testFilePath, testFileUrl, mime ), Okular::Document::OpenSuccess );
     QCOMPARE( m_document->page( 0 )->annotations().size(), 0 );
-    QCOMPARE( m_document->isDocdataMigrationNeeded(), false );
+    QVERIFY( !m_document->isDocdataMigrationNeeded() );
     m_document->closeDocument();
 
     // And the new file should have 1 annotation, let's check
     QCOMPARE( m_document->openDocument( migratedSaveFile.fileName(), QUrl::fromLocalFile(migratedSaveFile.fileName()), mime ), Okular::Document::OpenSuccess );
     QCOMPARE( m_document->page( 0 )->annotations().size(), 1 );
-    QCOMPARE( m_document->isDocdataMigrationNeeded(), false );
+    QVERIFY( !m_document->isDocdataMigrationNeeded() );
     m_document->closeDocument();
 
     delete m_document;

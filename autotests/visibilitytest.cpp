@@ -141,7 +141,7 @@ void VisibilityTest::testSaveLoad()
     {
         if ( ff->name().startsWith( QStringLiteral( "Target" ) ) )
         {
-            QCOMPARE( ff->isVisible(), false );
+            QVERIFY( !ff->isVisible() );
             anyChecked = true;
         }
     }

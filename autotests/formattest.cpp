@@ -149,14 +149,14 @@ void FormatTest::testSpecialFormat()
     bool ok = false;
     m_document->processKeystrokeAction( fft->additionalAction( Okular::FormField::FieldModified ), fft, ok );
 
-    QCOMPARE( true, ok );
+    QVERIFY( ok );
 
     fft->setText( QStringLiteral( "123456" ) );
     ok = false;
     m_document->processKeystrokeAction( fft->additionalAction( Okular::FormField::FieldModified ), fft, ok );
     m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
 
-    QCOMPARE( false, ok );
+    QVERIFY( !ok );
 
     fft = reinterpret_cast< Okular::FormFieldText * >(  m_fields[ QStringLiteral( "8Digits" ) ] );
 
@@ -165,7 +165,7 @@ void FormatTest::testSpecialFormat()
     m_document->processKeystrokeAction( fft->additionalAction( Okular::FormField::FieldModified ), fft, ok );
     m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
 
-    QCOMPARE( true, ok );
+    QVERIFY( ok );
     QCOMPARE( m_formattedText, QStringLiteral( "12345-6789" ) );
 
     fft->setText( QStringLiteral( "1234567890" ) );
@@ -173,7 +173,7 @@ void FormatTest::testSpecialFormat()
     m_document->processKeystrokeAction( fft->additionalAction( Okular::FormField::FieldModified ), fft, ok );
     m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
 
-    QCOMPARE( false, ok );
+    QVERIFY( !ok );
     QCOMPARE( m_formattedText, QStringLiteral( "12345-6789" ) );
 
     fft = reinterpret_cast< Okular::FormFieldText * >(  m_fields[ QStringLiteral( "telefone" ) ] );
@@ -183,7 +183,7 @@ void FormatTest::testSpecialFormat()
     m_document->processKeystrokeAction( fft->additionalAction( Okular::FormField::FieldModified ), fft, ok );
     m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
 
-    QCOMPARE( true, ok );
+    QVERIFY( ok );
     QCOMPARE( m_formattedText, QStringLiteral("(123) 456-7890" ) );
 
     fft->setText( QStringLiteral( "12345678900" ) );
@@ -191,7 +191,7 @@ void FormatTest::testSpecialFormat()
     m_document->processKeystrokeAction( fft->additionalAction( Okular::FormField::FieldModified ), fft, ok );
     m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
 
-    QCOMPARE( false, ok );
+    QVERIFY( !ok );
     QCOMPARE( m_formattedText, QStringLiteral("(123) 456-7890" ) );
 
     fft = reinterpret_cast< Okular::FormFieldText * >(  m_fields[ QStringLiteral( "CPF" ) ] );
@@ -201,7 +201,7 @@ void FormatTest::testSpecialFormat()
     m_document->processKeystrokeAction( fft->additionalAction( Okular::FormField::FieldModified ), fft, ok );
     m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
 
-    QCOMPARE( true, ok );
+    QVERIFY( ok );
     QCOMPARE( m_formattedText, QStringLiteral( "123-45-6789" ) );
 
     fft->setText( QStringLiteral( "1234567890" ) );
@@ -209,7 +209,7 @@ void FormatTest::testSpecialFormat()
     m_document->processKeystrokeAction( fft->additionalAction( Okular::FormField::FieldModified ), fft, ok );
     m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
 
-    QCOMPARE( false, ok );
+    QVERIFY( !ok );
     QCOMPARE( m_formattedText, QStringLiteral( "123-45-6789" ) );
 }
 

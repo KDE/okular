@@ -70,6 +70,7 @@ static KJSObject printd( KJSContext *context, void *,
 
     KJSObject oFormat = arguments.at( 0 );
     QString format;
+    QLocale defaultLocale;
 
     if( oFormat.isNumber() )
     {
@@ -83,8 +84,9 @@ static KJSObject printd( KJSContext *context, void *,
                 format = QStringLiteral( "yyyy.MM.dd HH:mm:ss");
                 break;
             case 2:
-                QLocale system = QLocale::system();
-                format = system.dateTimeFormat( QLocale::ShortFormat ) + QStringLiteral( ":ss" );
+                format = defaultLocale.dateTimeFormat( QLocale::ShortFormat );
+                if( !format.contains( QStringLiteral( "ss" ) ) )
+                    format.insert( format.indexOf( QStringLiteral( "mm" ) ) + 2,  QStringLiteral( ":ss" ) );
                 break;
         }
     }
@@ -107,7 +109,6 @@ static KJSObject printd( KJSContext *context, void *,
         arg( str[2] ).arg( str[3] ).arg( str[4] ).arg( str[5] ).arg( str[6] );
     QDateTime date = locale.toDateTime( myStr, QStringLiteral( "MMM/d/yyyy H:m:s" ) );
 
-    QLocale defaultLocale;
 
     return KJSString( defaultLocale.toString( date, format ) );
 }

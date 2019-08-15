@@ -333,6 +333,10 @@ private:
 
 void KJSFunctionsTest::testPrintD_data()
 {
+    // Force consistent locale
+    QLocale locale( QStringLiteral( "en_US" ) );
+    QLocale::setDefault( locale );
+
     QTest::addColumn<QString>("script");
     QTest::addColumn<QString>("result");
 
@@ -359,11 +363,10 @@ void KJSFunctionsTest::testPrintD_data()
         << QStringLiteral( "ret = app.alert( util.printd( 1, date ) );" )
         << QStringLiteral( "2010.01.05 11:10:32" );
 
-    QLocale locale = QLocale::system();
     QDate date( 2010, 1, 5 );
     QTest::newRow("2")
         << QStringLiteral( "ret = app.alert( util.printd( 2, date ) );" )
-        << QString( date.toString( locale.dateFormat( QLocale::ShortFormat ) ) + QStringLiteral( " 11:10:32" ) );
+        << QString( date.toString( locale.dateFormat( QLocale::ShortFormat ) ) + QStringLiteral( " 11:10:32 AM" ) );
 }
 
 void KJSFunctionsTest::testPrintD()

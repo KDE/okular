@@ -90,6 +90,7 @@ private slots:
     void cleanupTestCase();
     void testAlert();
     void testPrintD();
+    void testPrintD_data();
 #endif
 private:
     Okular::Document *m_document;
@@ -310,53 +311,68 @@ void KJSFunctionsTest::testAlert()
     delete action;
 }
 
-void KJSFunctionsTest::testPrintD()
+/** @brief Checks a single JS action against an expected result
+ * 
+ * Runs an action with the given @p script and checks that it
+ * does pop-up a messagebox with the given @p result text.
+ */
+class PrintDHelper
 {
-    Okular::ScriptAction *action = new Okular::ScriptAction( Okular::JavaScript, 
-                                                             QStringLiteral( "var date = new Date( 2010, 0, 5, 11, 10, 32, 1 );\
-                                                                              ret = app.alert( util.printd( \"mm\\\\yyyy\", date ) );" ) );
-    QScopedPointer< MessageBoxHelper > messageBoxHelper;
-    messageBoxHelper.reset( new MessageBoxHelper( QMessageBox::Ok, QStringLiteral( "01\\2010" ), QMessageBox::Critical, QStringLiteral( "Okular" ), false ) );
-    m_document->processAction( action );
-    delete action;
+public:
+    PrintDHelper( Okular::Document* document, const QString& script, const QString& result ) :
+        action( new Okular::ScriptAction( Okular::JavaScript, script ) ),
+        box( new MessageBoxHelper( QMessageBox::Ok, result, QMessageBox::Critical, QStringLiteral( "Okular" ), false ) )
+    {
+        document->processAction( action.get() );
+    }
+private:
+    QScopedPointer< Okular::ScriptAction > action;
+    QScopedPointer< MessageBoxHelper > box;
+} ;
+                                                                 
 
-    action = new Okular::ScriptAction( Okular::JavaScript, QStringLiteral( "ret = app.alert( util.printd( \"m\\\\yy\", date ) );" ) );
-    messageBoxHelper.reset( new MessageBoxHelper( QMessageBox::Ok, QStringLiteral( "1\\10" ), QMessageBox::Critical, QStringLiteral( "Okular" ), false ) );
-    m_document->processAction( action );
-    delete action;
+void KJSFunctionsTest::testPrintD_data()
+{
+    QTest::addColumn<QString>("script");
+    QTest::addColumn<QString>("result");
 
-    action = new Okular::ScriptAction( Okular::JavaScript, QStringLiteral( "ret = app.alert( util.printd( \"dd\\\\mm HH:MM\", date ) );" ) );
-    messageBoxHelper.reset( new MessageBoxHelper( QMessageBox::Ok, QStringLiteral( "05\\01 11:10" ), QMessageBox::Critical, QStringLiteral( "Okular" ), false ) );
-    m_document->processAction( action );
-    delete action;
+    QTest::newRow("mmyyy")
+        << QStringLiteral( "var date = new Date( 2010, 0, 5, 11, 10, 32, 1 );\
+                            ret = app.alert( util.printd( \"mm\\\\yyyy\", date ) );" )
+        << QStringLiteral( "01\\2010" );
+    QTest::newRow("myy")
+        << QStringLiteral( "ret = app.alert( util.printd( \"m\\\\yy\", date ) );" )
+        << QStringLiteral( "1\\10" );
+    QTest::newRow("ddmmHHMM")
+        << QStringLiteral( "ret = app.alert( util.printd( \"dd\\\\mm HH:MM\", date ) );" )
+        << QStringLiteral( "05\\01 11:10" );
+    QTest::newRow("ddmmHHMMss")
+        << QStringLiteral( "ret = app.alert( util.printd( \"dd\\\\mm HH:MM:ss\", date ) );" )
+        << QStringLiteral( "05\\01 11:10:32" );
+    QTest::newRow("yyyymmHHMMss")
+        << QStringLiteral( "ret = app.alert( util.printd( \"yyyy\\\\mm HH:MM:ss\", date ) );" )
+        << QStringLiteral( "2010\\01 11:10:32" );
+    QTest::newRow("0")
+        << QStringLiteral( "ret = app.alert( util.printd( 0, date ) );" )
+        << QStringLiteral( "D:20100105111032" );
+    QTest::newRow("1")
+        << QStringLiteral( "ret = app.alert( util.printd( 1, date ) );" )
+        << QStringLiteral( "2010.01.05 11:10:32" );
 
-    action = new Okular::ScriptAction( Okular::JavaScript, QStringLiteral( "ret = app.alert( util.printd( \"dd\\\\mm HH:MM:ss\", date ) );" ) );
-    messageBoxHelper.reset( new MessageBoxHelper( QMessageBox::Ok, QStringLiteral( "05\\01 11:10:32" ), QMessageBox::Critical, QStringLiteral( "Okular" ), false ) );
-    m_document->processAction( action );
-    delete action;
-
-    action = new Okular::ScriptAction( Okular::JavaScript, QStringLiteral( "ret = app.alert( util.printd( \"yyyy\\\\mm HH:MM:ss\", date ) );" ) );
-    messageBoxHelper.reset( new MessageBoxHelper( QMessageBox::Ok, QStringLiteral( "2010\\01 11:10:32" ), QMessageBox::Critical, QStringLiteral( "Okular" ), false ) );
-    m_document->processAction( action );
-    delete action;
-
-    action = new Okular::ScriptAction( Okular::JavaScript, QStringLiteral( "ret = app.alert( util.printd( 0, date ) );" ) );
-    messageBoxHelper.reset( new MessageBoxHelper( QMessageBox::Ok, QStringLiteral( "D:20100105111032" ), QMessageBox::Critical, QStringLiteral( "Okular" ), false ) );
-    m_document->processAction( action );
-    delete action;
-
-    action = new Okular::ScriptAction( Okular::JavaScript, QStringLiteral( "ret = app.alert( util.printd( 1, date ) );" ) );
-    messageBoxHelper.reset( new MessageBoxHelper( QMessageBox::Ok, QStringLiteral( "2010.01.05 11:10:32" ), QMessageBox::Critical, QStringLiteral( "Okular" ), false ) );
-    m_document->processAction( action );
-    delete action;
-
-    action = new Okular::ScriptAction( Okular::JavaScript, QStringLiteral( "ret = app.alert( util.printd( 2, date ) );" ) );
     QLocale locale = QLocale::system();
     QDate date( 2010, 1, 5 );
-    messageBoxHelper.reset( new MessageBoxHelper( QMessageBox::Ok, date.toString( locale.dateFormat( QLocale::ShortFormat ) ) + QStringLiteral( " 11:10:32" ), QMessageBox::Critical,
-                                                  QStringLiteral( "Okular" ), false ) );
-    m_document->processAction( action );
-    delete action;
+    QTest::newRow("2")
+        << QStringLiteral( "ret = app.alert( util.printd( 2, date ) );" )
+        << QString( date.toString( locale.dateFormat( QLocale::ShortFormat ) ) + QStringLiteral( " 11:10:32" ) );
+}
+
+void KJSFunctionsTest::testPrintD()
+{
+    QFETCH(QString, script);
+    QFETCH(QString, result);
+
+    QVERIFY( script.contains( "printd" ) );
+    PrintDHelper test( m_document, script, result );
 }
 
 void KJSFunctionsTest::cleanupTestCase()

@@ -28,7 +28,9 @@ private slots:
     void initTestCase();
     void cleanupTestCase();
     void testTimeFormat();
+    void testTimeFormat_data();
     void testSpecialFormat();
+    void testSpecialFormat_data();
 private:
 
     Okular::Document *m_document;
@@ -66,151 +68,72 @@ void FormatTest::initTestCase()
 
 void FormatTest::testTimeFormat()
 {
-    Okular::FormFieldText *fft = reinterpret_cast< Okular::FormFieldText * >(  m_fields[ QStringLiteral( "time1" ) ] );
-   
-    fft->setText( QStringLiteral( "1:20" ) );
+    QFETCH( QString, fieldName );
+    QFETCH( QString, text );
+    QFETCH( QString, result );
+
+    Okular::FormFieldText *fft = reinterpret_cast< Okular::FormFieldText * >(  m_fields[ fieldName ] );
+    fft->setText( text );
     m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
 
-    QCOMPARE( m_formattedText, QStringLiteral( "01:20" ) );
+    QCOMPARE( m_formattedText, result );
+}
 
-    fft->setText( QStringLiteral( "1:20 pm" ) );
-    m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
+void FormatTest::testTimeFormat_data()
+{
+    QTest::addColumn< QString >( "fieldName" );
+    QTest::addColumn< QString >( "text" );
+    QTest::addColumn< QString > ( "result" );
 
-    QCOMPARE( m_formattedText, QStringLiteral( "13:20" ) );
-
-    fft->setText( QStringLiteral( "1" ) );
-    m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
-
-    QCOMPARE( m_formattedText, QStringLiteral( "" ) );
-
-    fft->setText( QStringLiteral( "25:12" ) );
-    m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
-
-    QCOMPARE( m_formattedText, QStringLiteral( "" ) );
-
-    fft->setText( QStringLiteral( "abcd" ) );
-    m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
-
-    QCOMPARE( m_formattedText, QStringLiteral( "" ) );
-
-    fft = reinterpret_cast< Okular::FormFieldText * >(  m_fields[ QStringLiteral( "time2" ) ] );
-   
-    fft->setText( QStringLiteral( "1:20" ) );
-    m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
-
-    QCOMPARE( m_formattedText, QStringLiteral( "1:20 am" ) );
-
-    fft->setText( QStringLiteral( "01:20 pm" ) );
-    m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
-
-    QCOMPARE( m_formattedText, QStringLiteral( "1:20 pm" ) );
-
-    fft->setText( QStringLiteral( "13:20" ) );
-    m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
-
-    QCOMPARE( m_formattedText, QStringLiteral( "1:20 pm" ) );
-
-    fft = reinterpret_cast< Okular::FormFieldText * >(  m_fields[ QStringLiteral( "time3" ) ] );
-   
-    fft->setText( QStringLiteral( "1:20" ) );
-    m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
-
-    QCOMPARE( m_formattedText, QStringLiteral( "01:20:00" ) );
-
-    fft->setText( QStringLiteral( "1:20:00 pm" ) );
-    m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
-
-    QCOMPARE( m_formattedText, QStringLiteral( "13:20:00" ) );
-
-    fft = reinterpret_cast< Okular::FormFieldText * >(  m_fields[ QStringLiteral( "time4" ) ] );
-   
-    fft->setText( QStringLiteral( "1:20:00" ) );
-    m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
-
-    QCOMPARE( m_formattedText, QStringLiteral( "1:20:00 am" ) );
-
-    fft->setText( QStringLiteral( "01:20:00 pm" ) );
-    m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
-
-    QCOMPARE( m_formattedText, QStringLiteral( "1:20:00 pm" ) );
-
-    fft->setText( QStringLiteral( "13:20:00" ) );
-    m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
-
-    QCOMPARE( m_formattedText, QStringLiteral( "1:20:00 pm" ) );
+    QTest::newRow( "field hh:mm" ) << QStringLiteral( "time1" ) << QStringLiteral( "1:20" ) << QStringLiteral( "01:20" );
+    QTest::newRow( "field hh:mm with pm" ) << QStringLiteral( "time1" ) << QStringLiteral( "1:20 pm" ) << QStringLiteral( "13:20" );
+    QTest::newRow( "field hh:mm invalid one number" ) << QStringLiteral( "time1" ) << QStringLiteral( "1" ) << QStringLiteral( "" );
+    QTest::newRow( "field hh:mm invalid time" ) << QStringLiteral( "time1" ) << QStringLiteral( "25:12" ) << QStringLiteral( "" );
+    QTest::newRow( "field hh:mm invalid only letters" ) << QStringLiteral( "time1" ) << QStringLiteral( "abcd" ) << QStringLiteral( "" );
+    QTest::newRow( "field hh:mm ap" ) << QStringLiteral( "time2" ) << QStringLiteral( "1:20" ) << QStringLiteral( "1:20 am" );
+    QTest::newRow( "field hh:mm ap remove zero" ) << QStringLiteral( "time2" ) << QStringLiteral( "01:20 pm" ) << QStringLiteral( "1:20 pm" );
+    QTest::newRow( "field hh:mm ap change to AM/PM" ) << QStringLiteral( "time2" ) << QStringLiteral( "13:20" ) << QStringLiteral( "1:20 pm" );
+    QTest::newRow( "field hh:mm:ss without seconds" ) << QStringLiteral( "time3" ) << QStringLiteral( "1:20" ) << QStringLiteral( "01:20:00" );
+    QTest::newRow( "field hh:mm:ss with pm" ) << QStringLiteral( "time3" ) << QStringLiteral( "1:20:00 pm" ) << QStringLiteral( "13:20:00" );
+    QTest::newRow( "field hh:mm:ss ap without am" ) << QStringLiteral( "time4" ) << QStringLiteral( "1:20:00" ) << QStringLiteral( "1:20:00 am" );
+    QTest::newRow( "field hh:mm:ss ap remove 0" ) << QStringLiteral( "time4" ) << QStringLiteral( "01:20:00 pm" ) << QStringLiteral( "1:20:00 pm" );
+    QTest::newRow( "field hh:mm:ss ap change to AM/PM" ) << QStringLiteral( "time4" ) << QStringLiteral( "13:20:00" ) << QStringLiteral( "1:20:00 pm" );
 }
 
 void FormatTest::testSpecialFormat()
 {
-    Okular::FormFieldText *fft = reinterpret_cast< Okular::FormFieldText * >(  m_fields[ QStringLiteral( "CEP" ) ] );
+    m_formattedText = QStringLiteral( "" );
+    QFETCH( QString, fieldName );
+    QFETCH( QString, text );
+    QFETCH( bool, edited );
+    QFETCH( QString, result );
 
-    // This field will just become itself, so we test only if keystroke worked.
-    fft->setText( QStringLiteral( "12345" ) );
+    Okular::FormFieldText *fft = reinterpret_cast< Okular::FormFieldText * >(  m_fields[ fieldName ] );
+    fft->setText( text );
     bool ok = false;
-    m_document->processKeystrokeAction( fft->additionalAction( Okular::FormField::FieldModified ), fft, ok );
-
-    QVERIFY( ok );
-
-    fft->setText( QStringLiteral( "123456" ) );
-    ok = false;
-    m_document->processKeystrokeAction( fft->additionalAction( Okular::FormField::FieldModified ), fft, ok );
     m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
-
-    QVERIFY( !ok );
-
-    fft = reinterpret_cast< Okular::FormFieldText * >(  m_fields[ QStringLiteral( "8Digits" ) ] );
-
-    fft->setText( QStringLiteral( "123456789" ) );
-    ok = false;
     m_document->processKeystrokeAction( fft->additionalAction( Okular::FormField::FieldModified ), fft, ok );
-    m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
 
-    QVERIFY( ok );
-    QCOMPARE( m_formattedText, QStringLiteral( "12345-6789" ) );
+    QCOMPARE( m_formattedText, result );
+    QCOMPARE( ok, edited );
+}
 
-    fft->setText( QStringLiteral( "1234567890" ) );
-    ok = false;
-    m_document->processKeystrokeAction( fft->additionalAction( Okular::FormField::FieldModified ), fft, ok );
-    m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
+void FormatTest::testSpecialFormat_data()
+{
+    QTest::addColumn< QString >( "fieldName" );
+    QTest::addColumn< QString >( "text" );
+    QTest::addColumn< bool >( "edited" );
+    QTest::addColumn< QString > ( "result" );
 
-    QVERIFY( !ok );
-    QCOMPARE( m_formattedText, QStringLiteral( "12345-6789" ) );
-
-    fft = reinterpret_cast< Okular::FormFieldText * >(  m_fields[ QStringLiteral( "telefone" ) ] );
-
-    fft->setText( QStringLiteral( "1234567890" ) );
-    ok = false;
-    m_document->processKeystrokeAction( fft->additionalAction( Okular::FormField::FieldModified ), fft, ok );
-    m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
-
-    QVERIFY( ok );
-    QCOMPARE( m_formattedText, QStringLiteral("(123) 456-7890" ) );
-
-    fft->setText( QStringLiteral( "12345678900" ) );
-    ok = false;
-    m_document->processKeystrokeAction( fft->additionalAction( Okular::FormField::FieldModified ), fft, ok );
-    m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
-
-    QVERIFY( !ok );
-    QCOMPARE( m_formattedText, QStringLiteral("(123) 456-7890" ) );
-
-    fft = reinterpret_cast< Okular::FormFieldText * >(  m_fields[ QStringLiteral( "CPF" ) ] );
-
-    fft->setText( QStringLiteral( "123456789" ) );
-    ok = false;
-    m_document->processKeystrokeAction( fft->additionalAction( Okular::FormField::FieldModified ), fft, ok );
-    m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
-
-    QVERIFY( ok );
-    QCOMPARE( m_formattedText, QStringLiteral( "123-45-6789" ) );
-
-    fft->setText( QStringLiteral( "1234567890" ) );
-    ok = false;
-    m_document->processKeystrokeAction( fft->additionalAction( Okular::FormField::FieldModified ), fft, ok );
-    m_document->processFormatAction( fft->additionalAction( Okular::FormField::FormatField ), fft );
-
-    QVERIFY( !ok );
-    QCOMPARE( m_formattedText, QStringLiteral( "123-45-6789" ) );
+    // The tests which have invalid edited, keep the same value as when it was formatted before.
+    QTest::newRow( "field validated but not changed" ) << QStringLiteral( "CEP" ) << QStringLiteral( "12345" ) << true << QStringLiteral( "" );
+    QTest::newRow( "field invalid but not changed" ) << QStringLiteral( "CEP" ) << QStringLiteral( "123456" ) << false << QStringLiteral( "" );
+    QTest::newRow( "field formatted and changed" ) << QStringLiteral( "8Digits" ) << QStringLiteral( "123456789" ) << true << QStringLiteral( "12345-6789" );
+    QTest::newRow( "field invalid 10 digits" ) << QStringLiteral( "8Digits" ) << QStringLiteral( "1234567890" ) << false << QStringLiteral( "12345-6789" );
+    QTest::newRow( "field formatted telephone" ) << QStringLiteral( "telefone" ) << QStringLiteral( "1234567890" ) << true << QStringLiteral( "(123) 456-7890" );
+    QTest::newRow( "field invalid telephone" ) << QStringLiteral( "telefone" ) << QStringLiteral( "12345678900" ) << false << QStringLiteral( "(123) 456-7890" );
+    QTest::newRow( "field formmated SSN" ) << QStringLiteral( "CPF" ) << QStringLiteral( "123456789" ) << true << QStringLiteral( "123-45-6789" );
+    QTest::newRow( "field invalid SSN" ) << QStringLiteral( "CPF" ) << QStringLiteral( "1234567890" ) << false << QStringLiteral( "123-45-6789" );
 }
 
 void FormatTest::cleanupTestCase()

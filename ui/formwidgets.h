@@ -61,6 +61,8 @@ class FormWidgetsController : public QObject
 
         void signalAction( Okular::Action *action );
 
+        void processScriptAction( Okular::Action *a, Okular::FormField * field, Okular::Annotation::AdditionalActionType type );
+
         void registerRadioButton( FormWidgetIface *fwButton, Okular::FormFieldButton *formButton );
         void dropRadioButtons();
         bool canUndo();
@@ -122,6 +124,8 @@ class FormWidgetsController : public QObject
         void formatAction( const Okular::Action *action, Okular::FormFieldText *ff );
 
         void keystrokeAction( const Okular::Action *action, Okular::FormFieldText *ff, bool &ok );
+
+        void validateAction( const Okular::Action *action, Okular::FormFieldText *ff, bool &ok );
 
         void refreshFormWidget( Okular::FormField * form );
 

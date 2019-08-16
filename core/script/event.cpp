@@ -64,6 +64,8 @@ QString Event::name() const
             return QStringLiteral( "Keystroke" );        
         case ( FieldFocus ):
             return QStringLiteral( "Focus" );
+        case ( FieldValidate ):
+            return QStringLiteral( "Validate" );
         case ( UnknownEvent ):
         default:
             return QStringLiteral( "Unknown" );
@@ -78,6 +80,7 @@ QString Event::type() const
         case ( FieldFormat ):
         case ( FieldKeystroke ):
         case ( FieldFocus ):
+        case ( FieldValidate ):
             return QStringLiteral( "Field" );
         case ( UnknownEvent ):
         default:
@@ -240,6 +243,25 @@ std::shared_ptr<Event> Event::createFormFocusEvent( FormField *target,
     if ( fft )
     {
         ret->setValue( QVariant( fft->text() ) );
+    }
+    return ret;
+}
+
+std::shared_ptr<Event> Event::createFormValidateEvent( FormField *target,
+                                                       Page *targetPage,
+                                                       const QString &targetName )
+{
+    std::shared_ptr<Event> ret( new Event( Event::FieldValidate ) );
+    ret->setTarget( target );
+    ret->setTargetPage( targetPage );
+    ret->setTargetName( targetName );
+    ret->setShiftModifier( QApplication::keyboardModifiers() & Qt::ShiftModifier );
+
+    FormFieldText *fft = dynamic_cast< FormFieldText * >(target);
+    if ( fft )
+    {
+        ret->setValue( QVariant( fft->text() ) );
+        ret->setReturnCode( true );
     }
     return ret;
 }

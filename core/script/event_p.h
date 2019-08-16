@@ -63,7 +63,11 @@ class Event
             FieldMouseEnter, /// < Not implemented.
             FieldMouseExit,  /// < Not implemented.
             FieldMouseUp,    /// < Not implemented.
-            FieldValidate,   /// < Not implemented.
+            /* Validates the field after every change is commited
+             * (clicked outside or tabbed to another field).
+             * The enter event is not handled
+             */
+            FieldValidate,
             LinkMouseUp,     /// < Not implemented.
             MenuExec,        /// < Not implemented.
             PageOpen,        /// < Not implemented.
@@ -115,6 +119,9 @@ class Event
         static std::shared_ptr<Event> createFormFocusEvent( FormField *target,
                                                             Page *targetPage,
                                                             const QString &targetName = QString() );
+        static std::shared_ptr<Event> createFormValidateEvent( FormField *target,
+                                                               Page *targetPage,
+                                                               const QString &targetName = QString() );
     private:
         class Private;
         std::shared_ptr<Private> d;

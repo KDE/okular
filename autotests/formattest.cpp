@@ -33,6 +33,8 @@ private slots:
     void testSpecialFormat_data();
     void testFocusAction();
     void testFocusAction_data();
+    void testValidateAction();
+    void testValidateAction_data();
 private:
 
     Okular::Document *m_document;
@@ -152,6 +154,28 @@ void FormatTest::testFocusAction_data()
     QTest::addColumn< QString >( "result" );
 
     QTest::newRow( "when focuses" ) << QStringLiteral( "No" );
+}
+
+void FormatTest::testValidateAction()
+{
+    QFETCH( QString, text );
+    QFETCH( QString, result );
+    Okular::FormFieldText *fft = reinterpret_cast< Okular::FormFieldText * >(  m_fields[ "Validate/Focus" ] );
+
+    fft->setText( text );
+    bool ok = false;
+    m_document->processValidateAction( fft->additionalAction( Okular::Annotation::FocusOut ), fft, ok );
+    QCOMPARE( fft->text(), result );
+    QVERIFY( ok );
+}
+
+void FormatTest::testValidateAction_data()
+{
+    QTest::addColumn< QString >( "text" );
+    QTest::addColumn< QString >( "result" );
+
+    QTest::newRow( "valid text was set" ) << QStringLiteral( "123" ) << QStringLiteral( "valid" );
+    QTest::newRow( "invalid text was set" ) << QStringLiteral( "abc" ) << QStringLiteral( "invalid" );
 }
 
 void FormatTest::cleanupTestCase()

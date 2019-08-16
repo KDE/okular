@@ -90,6 +90,30 @@ void FormWidgetsController::signalAction( Okular::Action *a )
     emit action( a );
 }
 
+void FormWidgetsController::processScriptAction( Okular::Action *a, Okular::FormField * field, Okular::Annotation::AdditionalActionType type )
+{
+    // If it's not a Action Script or if the field is not a FormText, handle it normally
+    if( a->actionType() != Okular::Action::Script || field->type() != Okular::FormField::FormText )
+    {
+        emit action( a );
+        return;
+    }
+    switch( type )
+    {
+        // These cases are to be handled by the FormField text, so we let it happen.
+        case Okular::Annotation::FocusIn:
+        case Okular::Annotation::FocusOut:
+            return;  
+        case Okular::Annotation::PageOpening:
+        case Okular::Annotation::PageClosing:
+        case Okular::Annotation::CursorEntering:
+        case Okular::Annotation::CursorLeaving:
+        case Okular::Annotation::MousePressed:
+        case Okular::Annotation::MouseReleased:
+            emit action( a );
+    }
+}
+
 void FormWidgetsController::registerRadioButton( FormWidgetIface *fwButton, Okular::FormFieldButton *formButton )
 {
     if ( !fwButton )
@@ -510,10 +534,21 @@ bool FormLineEdit::event( QEvent* e )
         m_editing = true;
         if( const Okular::Action *action = m_ff->additionalAction( Okular::Annotation::FocusIn ) )
             emit m_controller->focusAction( action, fft );
+        setFocus();
     }
     else if ( e->type() == QEvent::FocusOut )
     {
+        // Don't worry about focus events from other sources than the user FocusEvent to edit the field
+        QFocusEvent *focusEvent = static_cast< QFocusEvent* >( e );
+        if( focusEvent->reason() == Qt::OtherFocusReason )
+            return true;
         m_editing = false;
+        
+        if( const Okular::Action *action = m_ff->additionalAction( Okular::Annotation::FocusOut ) )
+        {
+            bool ok = false;
+            emit m_controller->validateAction( action, static_cast< Okular::FormFieldText * > ( m_ff ), ok );
+        }
         if ( const Okular::Action *action = m_ff->additionalAction( Okular::FormField::FormatField ) )
         {
             emit m_controller->formatAction( action, static_cast< Okular::FormFieldText * > ( m_ff ) );
@@ -1299,7 +1334,7 @@ void SignatureEdit::slotViewProperties()
         Okular::Action *act = m_ff->additionalAction( Okular::Annotation::FocusIn ); \
         if ( act ) \
         { \
-            m_controller->signalAction( act ); \
+            m_controller->processScriptAction( act, m_ff, Okular::Annotation::FocusIn ); \
         } \
         BaseClass::focusInEvent( event ); \
     } \
@@ -1308,7 +1343,7 @@ void SignatureEdit::slotViewProperties()
         Okular::Action *act = m_ff->additionalAction( Okular::Annotation::FocusOut ); \
         if ( act ) \
         { \
-            m_controller->signalAction( act ); \
+            m_controller->processScriptAction( act, m_ff, Okular::Annotation::FocusOut ); \
         } \
         BaseClass::focusOutEvent( event ); \
     } \

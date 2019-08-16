@@ -79,6 +79,7 @@ static KJSObject eventGetTarget( KJSContext *ctx, void *object )
         case Event::FieldFormat:
         case Event::FieldKeystroke:
         case Event::FieldFocus:
+        case Event::FieldValidate:
         {
             FormField *target = static_cast< FormField * >( event->target() );
             if ( target )

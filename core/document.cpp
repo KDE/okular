@@ -4442,6 +4442,44 @@ void Document::processFocusAction( const Action * action, Okular::FormField *fie
     d->m_scripter->setEvent( nullptr );
 }
 
+void Document::processValidateAction( const Action * action, Okular::FormFieldText *fft, bool &returnCode )
+{
+    if ( !action || action->actionType() != Action::Script )
+        return;
+
+    // Lookup the page of the FormFieldText
+    int foundPage = -1;
+    for ( uint pageIdx = 0, nPages = pages(); pageIdx < nPages; pageIdx++ )
+    {
+        const Page *p = page( pageIdx );
+        if ( p && p->formFields().contains( fft ) )
+        {
+            foundPage = static_cast< int >( pageIdx );
+            break;
+        }
+    }
+
+    if ( foundPage == -1 )
+    {
+        qCDebug( OkularCoreDebug ) << "Could not find page for formfield!";
+        return;
+    }
+    
+    std::shared_ptr< Event > event = Event::createFormValidateEvent( fft, d->m_pagesVector[foundPage] );
+
+    const ScriptAction * linkscript = static_cast< const ScriptAction * >( action );
+    if ( !d->m_scripter )
+    {
+        d->m_scripter = new Scripter( d );
+    }
+    d->m_scripter->setEvent( event.get() );
+    d->m_scripter->execute( linkscript->scriptType(), linkscript->script() );
+
+    // Clear out the event after execution
+    d->m_scripter->setEvent( nullptr );
+    returnCode = event->returnCode();
+}
+
 void Document::processSourceReference( const SourceReference * ref )
 {
     if ( !ref )

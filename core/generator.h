@@ -307,6 +307,10 @@ public:
      */
     virtual bool canGeneratePixmap() const;
 
+    virtual bool canSign() const { return false; }
+
+    virtual void sign() { return; }
+
     /**
      * This method can be called to trigger the generation of
      * a new pixmap as described by @p request.

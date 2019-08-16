@@ -1052,6 +1052,8 @@ public Q_SLOTS:
      */
     void reloadDocument() const;
 
+    void sign();
+
     /**
      * Returns the part of document covered by the given signature @p info.
      *

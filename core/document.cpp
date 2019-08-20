@@ -2701,10 +2701,10 @@ bool Document::canConfigurePrinter() const
         return false;
 }
 
-void Document::sign()
+void Document::sign( const Okular::Annotation* pWhichAnnotation )
 {
     if (d->m_generator->canSign())
-        d->m_generator->sign();
+        d->m_generator->sign( pWhichAnnotation );
 }
 
 DocumentInfo Document::documentInfo() const

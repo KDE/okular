@@ -923,7 +923,7 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
             m_document->addPageAnnotation(m_lockedItem->pageNumber(), annotation);
 
             if (signatureMode())
-                m_document->sign();
+                m_document->sign(annotation);
 
             if (annotation->openDialogAfterCreation())
                 m_pageView->openAnnotationWindow(annotation, m_lockedItem->pageNumber());

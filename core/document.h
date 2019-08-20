@@ -1052,7 +1052,7 @@ public Q_SLOTS:
      */
     void reloadDocument() const;
 
-    void sign();
+    void sign( const Okular::Annotation* pWhichAnnotation );
 
     /**
      * Returns the part of document covered by the given signature @p info.

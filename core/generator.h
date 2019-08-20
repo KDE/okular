@@ -309,7 +309,7 @@ public:
 
     virtual bool canSign() const { return false; }
 
-    virtual void sign() { return; }
+    virtual void sign( const Okular::Annotation* /*pWhichAnnotation*/) { return; }
 
     /**
      * This method can be called to trigger the generation of

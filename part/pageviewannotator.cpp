@@ -299,11 +299,11 @@ protected:
     bool clicked;
     bool m_block;
     double xscale, yscale;
-
-private:
     Okular::NormalizedRect rect;
     Okular::NormalizedPoint startpoint;
     Okular::NormalizedPoint point;
+
+private:
     QPixmap pixmap;
     QString hoverIconName, iconName;
     int size;
@@ -343,6 +343,7 @@ public:
             {
                 Okular::WidgetAnnotation * wa = new Okular::WidgetAnnotation();
                 ann = wa;
+                wa->setBoundingRectangle(rect);
             }
 
             m_creationCompleted = false;

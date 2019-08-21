@@ -12,10 +12,9 @@
 #include <klocalizedstring.h>
 #include "settings.h"
 
-#include <QFileDialog>
+#include <QInputDialog>
 #include <QListWidget>
 #include <QListWidgetItem>
-#include <QMimeDatabase>
 
 CertificateTools::CertificateTools( QWidget * parent )
     : WidgetConfigurationToolsBase( parent )
@@ -52,16 +51,13 @@ void CertificateTools::setTools(const QStringList& /*items*/)
 
 void CertificateTools::slotAdd()
 {
-    QMimeDatabase mimeDatabase;
-    QString filter = i18n("PKCS12 Digital IDs (%1)", mimeDatabase.mimeTypeForName(QStringLiteral("application/x-pkcs12")).globPatterns().join(QLatin1Char(' ')));
+    QString certCN = QInputDialog::getText( this, i18n("Enter Certificate CN"), i18n("CertificateCN"), QLineEdit::Normal, QString() );
 
-    QString file = QFileDialog::getOpenFileName( this, QString(), QString(), filter );
-
-    if (file.isEmpty())
+    if (certCN.isEmpty())
         return;
 
     // Create list entry
-    QListWidgetItem * listEntry = new QListWidgetItem( file, m_list );
+    QListWidgetItem * listEntry = new QListWidgetItem( certCN, m_list );
 
     // Select and scroll
     m_list->setCurrentItem( listEntry );
@@ -72,5 +68,14 @@ void CertificateTools::slotAdd()
 
 void CertificateTools::slotEdit()
 {
-    std::cout << "edit" << std::endl;
+    QListWidgetItem *listEntry = m_list->currentItem();
+
+    QString certCN = QInputDialog::getText( this, i18n("Change Certificate CN"), i18n("CertificateCN"), QLineEdit::Normal, listEntry->text() );
+    listEntry->setText(certCN);
+
+    // Select and scrolldd
+    m_list->setCurrentItem( listEntry );
+    m_list->scrollToItem( listEntry );
+    updateButtons();
+    emit changed();
 }

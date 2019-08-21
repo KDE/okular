@@ -334,7 +334,7 @@ Document::OpenResult TextDocumentGenerator::loadDocumentWithPassword( const QStr
     QVector< QLinkedList<Okular::ObjectRect*> > objects( d->mDocument->pageCount() );
     for ( const TextDocumentGeneratorPrivate::LinkInfo &info : linkInfos ) {
         // in case that the converter report bogus link info data, do not assert here
-        if ( info.page >= objects.count() )
+        if ( info.page < 0 || info.page >= objects.count() )
           continue;
 
         const QRectF rect = info.boundingRect;

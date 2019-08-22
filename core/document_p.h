@@ -12,8 +12,10 @@
 #define _OKULAR_DOCUMENT_P_H_
 
 #include "document.h"
+#include "script/event_p.h"
 
 #include "synctex/synctex_parser.h"
+#include <memory>
 
 // qt/kde/system includes
 #include <QHash>
@@ -41,6 +43,7 @@ struct ArchiveData;
 struct RunningSearch;
 
 namespace Okular {
+class ScriptAction;
 class ConfigInterface;
 class PageController;
 class SaveInterface;
@@ -226,6 +229,17 @@ class DocumentPrivate
         void loadSyncFile( const QString & filePath );
 
         void clearAndWaitForRequests();
+
+
+        /*
+         * Executes a ScriptAction with the event passed as parameter.
+         */ 
+        void executeScriptEvent( std::shared_ptr< Event > event, const Okular::ScriptAction * linkscript );
+
+        /*
+         * Find the corresponding page number for the form field passed as parameter.
+         */
+        int findFieldPageNumber( Okular::FormField *field );
 
         // member variables
         Document *m_parent;

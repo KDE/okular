@@ -2212,6 +2212,36 @@ void DocumentPrivate::clearAndWaitForRequests()
     while ( startEventLoop );
 }
 
+int DocumentPrivate::findFieldPageNumber( Okular::FormField *field )
+{
+    // Lookup the page of the FormField
+    int foundPage = -1;
+    for ( uint pageIdx = 0, nPages = m_parent->pages(); pageIdx < nPages; pageIdx++ )
+    {
+        const Page *p = m_parent->page( pageIdx );
+        if ( p && p->formFields().contains( field ) )
+        {
+            foundPage = static_cast< int >( pageIdx );
+            break;
+        }
+    }
+    return foundPage;
+}
+
+void DocumentPrivate::executeScriptEvent( std::shared_ptr< Event > event, const Okular::ScriptAction * linkscript )
+{
+    if ( !m_scripter )
+    {
+        m_scripter = new Scripter( this );
+    }
+    m_scripter->setEvent( event.get() );
+    m_scripter->execute( linkscript->scriptType(), linkscript->script() );
+
+    // Clear out the event after execution
+    m_scripter->setEvent( nullptr );
+}
+
+
 Document::Document( QWidget *widget )
     : QObject( nullptr ), d( new DocumentPrivate( this ) )
 {
@@ -4309,16 +4339,7 @@ void Document::processFormatAction( const Action * action, Okular::FormFieldText
     }
 
     // Lookup the page of the FormFieldText
-    int foundPage = -1;
-    for ( uint pageIdx = 0, nPages = pages(); pageIdx < nPages; pageIdx++ )
-    {
-        const Page *p = page( pageIdx );
-        if ( p && p->formFields().contains( fft ) )
-        {
-            foundPage = static_cast< int >( pageIdx );
-            break;
-        }
-    }
+    int foundPage = d->findFieldPageNumber( fft );
 
     if ( foundPage == -1 )
     {
@@ -4331,15 +4352,8 @@ void Document::processFormatAction( const Action * action, Okular::FormFieldText
     std::shared_ptr< Event > event = Event::createFormatEvent( fft, d->m_pagesVector[foundPage] );
 
     const ScriptAction * linkscript = static_cast< const ScriptAction * >( action );
-    if ( !d->m_scripter )
-    {
-        d->m_scripter = new Scripter( d );
-    }
-    d->m_scripter->setEvent( event.get() );
-    d->m_scripter->execute( linkscript->scriptType(), linkscript->script() );
 
-    // Clear out the event after execution
-    d->m_scripter->setEvent( nullptr );
+    d->executeScriptEvent( event, linkscript );
 
     const QString formattedText = event->value().toString();
     if ( formattedText != unformattedText )
@@ -4373,16 +4387,7 @@ void Document::processKeystrokeAction( const Action * action, Okular::FormFieldT
         return;
     }
     // Lookup the page of the FormFieldText
-    int foundPage = -1;
-    for ( uint pageIdx = 0, nPages = pages(); pageIdx < nPages; pageIdx++ )
-    {
-        const Page *p = page( pageIdx );
-        if ( p && p->formFields().contains( fft ) )
-        {
-            foundPage = static_cast< int >( pageIdx );
-            break;
-        }
-    }
+    int foundPage = d->findFieldPageNumber( fft );
 
     if ( foundPage == -1 )
     {
@@ -4393,15 +4398,9 @@ void Document::processKeystrokeAction( const Action * action, Okular::FormFieldT
     std::shared_ptr< Event > event = Event::createKeystrokeEvent( fft, d->m_pagesVector[foundPage] );
 
     const ScriptAction * linkscript = static_cast< const ScriptAction * >( action );
-    if ( !d->m_scripter )
-    {
-        d->m_scripter = new Scripter( d );
-    }
-    d->m_scripter->setEvent( event.get() );
-    d->m_scripter->execute( linkscript->scriptType(), linkscript->script() );
 
-    // Clear out the event after execution
-    d->m_scripter->setEvent( nullptr );
+    d->executeScriptEvent( event, linkscript );
+
     returnCode = event->returnCode();
 }
 
@@ -4410,17 +4409,8 @@ void Document::processFocusAction( const Action * action, Okular::FormField *fie
     if ( !action || action->actionType() != Action::Script )
         return;
 
-    // Lookup the page of the FormField
-    int foundPage = -1;
-    for ( uint pageIdx = 0, nPages = pages(); pageIdx < nPages; pageIdx++ )
-    {
-        const Page *p = page( pageIdx );
-        if ( p && p->formFields().contains( field ) )
-        {
-            foundPage = static_cast< int >( pageIdx );
-            break;
-        }
-    }
+    // Lookup the page of the FormFieldText
+    int foundPage = d->findFieldPageNumber( field );
 
     if ( foundPage == -1 )
     {
@@ -4431,15 +4421,8 @@ void Document::processFocusAction( const Action * action, Okular::FormField *fie
     std::shared_ptr< Event > event = Event::createFormFocusEvent( field, d->m_pagesVector[foundPage] );
 
     const ScriptAction * linkscript = static_cast< const ScriptAction * >( action );
-    if ( !d->m_scripter )
-    {
-        d->m_scripter = new Scripter( d );
-    }
-    d->m_scripter->setEvent( event.get() );
-    d->m_scripter->execute( linkscript->scriptType(), linkscript->script() );
 
-    // Clear out the event after execution
-    d->m_scripter->setEvent( nullptr );
+    d->executeScriptEvent( event, linkscript );
 }
 
 void Document::processValidateAction( const Action * action, Okular::FormFieldText *fft, bool &returnCode )
@@ -4448,16 +4431,7 @@ void Document::processValidateAction( const Action * action, Okular::FormFieldTe
         return;
 
     // Lookup the page of the FormFieldText
-    int foundPage = -1;
-    for ( uint pageIdx = 0, nPages = pages(); pageIdx < nPages; pageIdx++ )
-    {
-        const Page *p = page( pageIdx );
-        if ( p && p->formFields().contains( fft ) )
-        {
-            foundPage = static_cast< int >( pageIdx );
-            break;
-        }
-    }
+    int foundPage = d->findFieldPageNumber( fft );
 
     if ( foundPage == -1 )
     {
@@ -4468,15 +4442,8 @@ void Document::processValidateAction( const Action * action, Okular::FormFieldTe
     std::shared_ptr< Event > event = Event::createFormValidateEvent( fft, d->m_pagesVector[foundPage] );
 
     const ScriptAction * linkscript = static_cast< const ScriptAction * >( action );
-    if ( !d->m_scripter )
-    {
-        d->m_scripter = new Scripter( d );
-    }
-    d->m_scripter->setEvent( event.get() );
-    d->m_scripter->execute( linkscript->scriptType(), linkscript->script() );
 
-    // Clear out the event after execution
-    d->m_scripter->setEvent( nullptr );
+    d->executeScriptEvent( event, linkscript );
     returnCode = event->returnCode();
 }
 

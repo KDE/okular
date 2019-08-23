@@ -334,14 +334,24 @@ public:
 
             Okular::Annotation * ann = nullptr;
 
-            bool resok;
+            bool resok = false;
             QString cert = QInputDialog::getItem(nullptr, i18n( "Select certificate to sign with" ), i18n( "Certificates:" ), items, 0, false, &resok);
 
             if (resok)
             {
-                Okular::WidgetAnnotation * wa = new Okular::WidgetAnnotation();
-                ann = wa;
-                wa->setBoundingRectangle(rect);
+                bool passok = false;
+                QString title = i18n("Enter password to unlock certificate %1");
+                QString pass = QInputDialog::getText(nullptr, i18n( "Enter password" ), title.replace("%1", cert),QLineEdit::Password ,QString(), &passok);
+
+                if (passok)
+                {
+                    Okular::WidgetAnnotation * wa = new Okular::WidgetAnnotation();
+                    ann = wa;
+
+                    wa->setBoundingRectangle(rect);
+                    wa->setCertificateCN( cert );
+                    wa->setPassword( pass );
+                }
             }
 
             m_creationCompleted = false;

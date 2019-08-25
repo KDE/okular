@@ -524,6 +524,12 @@ m_cliPresentation(false), m_cliPrint(false), m_cliPrintAndExit(false), m_embedMo
     QMetaObject::invokeMethod( m_pageView, "setFocus", Qt::QueuedConnection );      //usability setting
 //    m_splitter->setFocusProxy(m_pageView);
     connect( m_pageView.data(), &PageView::rightClick, this, &Part::slotShowMenu );
+    connect( m_pageView, &PageView::triggerSearch, this,
+       [this] (const QString& searchText){
+           m_findBar->startSearch(searchText);
+           slotShowFindBar();
+       }
+    );
     connect( m_document, &Document::error, this, &Part::errorMessage );
     connect( m_document, &Document::warning, this, &Part::warningMessage );
     connect( m_document, &Document::notice, this, &Part::noticeMessage );

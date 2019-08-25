@@ -135,6 +135,7 @@ Q_OBJECT
         void mouseForwardButtonClick();
         void escPressed();
         void fitWindowToPage( const QSize& pageViewPortSize, const QSize& pageSize );
+        void triggerSearch( const QString& text );
 
     protected:
         bool event( QEvent * event ) override;
@@ -196,6 +197,7 @@ Q_OBJECT
         void resizeContentArea( const QSize & newSize );
         void updatePageStep();
 
+        void addSearchWithinDocumentAction(QMenu * menu, const QString & searchText );
         void addWebShortcutsMenu( QMenu * menu, const QString & text );
         QMenu* createProcessLinkMenu( PageViewItem *item, const QPoint & eventPos );
         // used when selecting stuff, makes the view scroll as necessary to keep the mouse inside the view

@@ -103,6 +103,12 @@ static const int pageflags = PagePainter::Accessibility | PagePainter::EnhanceLi
 
 static const float kZoomValues[] = { 0.12, 0.25, 0.33, 0.50, 0.66, 0.75, 1.00, 1.25, 1.50, 2.00, 4.00, 8.00, 16.00 };
 
+// This is the length of the text that will be shown when the user is searching for a specific piece of text.
+static const int searchTextPreviewLength = 21;
+
+// When following a link, only a preview of this length will be used to set the text of the action.
+static const int linkTextPreviewLength = 30;
+
 static inline double normClamp( double value, double def )
 {
     return ( value < 0.0 || value > 1.0 ) ? def : value;
@@ -2833,6 +2839,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
 #endif
                 if ( copyAllowed )
                 {
+                    addSearchWithinDocumentAction( &menu, selectedText );
                     addWebShortcutsMenu( &menu, selectedText );
                 }
             }
@@ -3116,6 +3123,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                             }
                             else
                             {
+                                addSearchWithinDocumentAction(menu, d->selectedText());
                                 addWebShortcutsMenu( menu, d->selectedText() );
                             }
 
@@ -3125,7 +3133,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                                 url = UrlUtils::getUrl( d->selectedText() );
                                 if ( !url.isEmpty() )
                                 {
-                                    const QString squeezedText = KStringHandler::rsqueeze( url, 30 );
+                                    const QString squeezedText = KStringHandler::rsqueeze( url, linkTextPreviewLength );
                                     httpLink = menu->addAction( i18n( "Go to '%1'", squeezedText ) );
                                     httpLink->setObjectName(QStringLiteral("GoToAction"));
                                 }
@@ -4431,7 +4439,7 @@ void PageView::addWebShortcutsMenu( QMenu * menu, const QString & text )
             QMenu *webShortcutsMenu = new QMenu( menu );
             webShortcutsMenu->setIcon( QIcon::fromTheme( QStringLiteral("preferences-web-browser-shortcuts") ) );
 
-            const QString squeezedText = KStringHandler::rsqueeze( searchText, 21 );
+            const QString squeezedText = KStringHandler::rsqueeze( searchText, searchTextPreviewLength );
             webShortcutsMenu->setTitle( i18n( "Search for '%1' with", squeezedText ) );
 
             QAction *action = nullptr;
@@ -4505,6 +4513,15 @@ QMenu* PageView::createProcessLinkMenu(PageViewItem *item, const QPoint &eventPo
         return menu;
     }
     return nullptr;
+}
+
+void PageView::addSearchWithinDocumentAction(QMenu *menu, const QString &searchText)
+{
+    const QString squeezedText = KStringHandler::rsqueeze( searchText, searchTextPreviewLength );
+    QAction *action = new QAction(i18n("Search for '%1' in open document", squeezedText), menu);
+    action->setIcon( QIcon::fromTheme( QStringLiteral("document-preview") ) );
+    connect(action, &QAction::triggered, [this, searchText]{Q_EMIT triggerSearch(searchText);});
+    menu->addAction( action );
 }
 
 //BEGIN private SLOTS

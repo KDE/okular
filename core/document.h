@@ -282,6 +282,11 @@ public:
     bool canProvideFontInformation() const;
 
     /**
+     * Whether the current document can perform digital signing.
+     */
+    bool canSign() const;
+
+    /**
      * Returns the list of embedded files or 0 if no embedded files
      * are available.
      */

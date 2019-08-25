@@ -15,6 +15,14 @@ int main()
 }
 " HAVE_POPPLER_0_87)
 
+check_cxx_source_compiles("
+#include <poppler-qt5.h>
+int main()
+{
+  auto f = &Poppler::Document::sign;
+}
+" HAVE_POPPLER_SIGNING)
+
 configure_file(
    ${CMAKE_CURRENT_SOURCE_DIR}/config-okular-poppler.h.cmake
    ${CMAKE_CURRENT_BINARY_DIR}/config-okular-poppler.h

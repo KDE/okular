@@ -1218,7 +1218,10 @@ void PageView::updateActionState(bool haspages, bool hasformwidgets)
     }
 
     if ( d->aSignature )
-        d->aSignature->setEnabled( haspages );
+    {
+        const bool canSign = d->document->canSign();
+        d->aSignature->setEnabled( canSign && haspages );
+    }
 
 #ifdef HAVE_SPEECH
     if (d->aSpeakDoc) {

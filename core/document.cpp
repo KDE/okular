@@ -2799,6 +2799,11 @@ bool Document::canProvideFontInformation() const
     return d->m_generator ? d->m_generator->hasFeature(Generator::FontInfo) : false;
 }
 
+bool Document::canSign() const
+{
+    return d->m_generator ? d->m_generator->canSign() : false;
+}
+
 const QList<EmbeddedFile *> *Document::embeddedFiles() const
 {
     return d->m_generator ? d->m_generator->embeddedFiles() : nullptr;

@@ -28,21 +28,11 @@ class OKULARPART_EXPORT Sidebar : public QWidget
         void setMainWidget( QWidget *widget );
         void setBottomWidget( QWidget *widget );
 
-        void setItemEnabled( QWidget *widget, bool enabled );
-        bool isItemEnabled( QWidget *widget ) const;
-
-        void setItemVisible( QWidget *widget, bool visible );
-
-        enum SetCurrentItemBehaviour { UncollapseIfCollapsed, DoNotUncollapseIfCollapsed };
-
-        void setCurrentItem( QWidget *widget, SetCurrentItemBehaviour b = UncollapseIfCollapsed );
+        void setCurrentItem( QWidget *widget );
         QWidget *currentItem() const;
 
         void setSidebarVisibility( bool visible );
         bool isSidebarVisible() const;
-
-        void setCollapsed( bool collapsed );
-        bool isCollapsed() const;
 
         void moveSplitter( int sideWidgetSize );
 
@@ -54,17 +44,10 @@ class OKULARPART_EXPORT Sidebar : public QWidget
         void dropEvent( QDropEvent* event ) override;
 
     private Q_SLOTS:
-        void itemClicked( QListWidgetItem *item );
         void splitterMoved( int pos, int index );
-        void listContextMenu( const QPoint & );
-        void showTextToggled( bool );
-        void iconSizeChanged( QAction *action );
 
     private:
-        void setIndexEnabled( int index, bool enabled );
-        void setCurrentIndex( int index, SetCurrentItemBehaviour b = UncollapseIfCollapsed );
-        bool isIndexEnabled( int index ) const;
-        void itemClicked( QListWidgetItem *item, SetCurrentItemBehaviour b );
+        void setCurrentIndex( int index );
         void saveSplitterSize() const;
 
         // private storage

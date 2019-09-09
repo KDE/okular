@@ -419,18 +419,14 @@ m_cliPresentation(false), m_cliPrint(false), m_cliPrintAndExit(false), m_embedMo
     //      sLabel->setBuddy( m_searchWidget );
     //      m_searchToolBar->setStretchableWidget( m_searchWidget );
 
-    // [left toolbox: Table of Contents] | []
+    // [left toolbox optional item: Table of Contents] | []
     m_toc = new TOC( nullptr, m_document );
     connect( m_toc.data(), &TOC::hasTOC, this, &Part::enableTOC );
     connect( m_toc.data(), &TOC::rightClick, this, &Part::slotShowTOCMenu );
-    m_sidebar->addItem( m_toc, QIcon::fromTheme(QApplication::isLeftToRight() ? QStringLiteral("format-justify-left") : QStringLiteral("format-justify-right")), i18n("Contents") );
-    enableTOC( false );
 
-    // [left toolbox: Layers] | []
+    // [left toolbox optional item: Layers] | []
     m_layers = new Layers( nullptr, m_document );
     connect( m_layers.data(), &Layers::hasLayers, this, &Part::enableLayers );
-    m_sidebar->addItem( m_layers, QIcon::fromTheme( QStringLiteral("format-list-unordered") ), i18n( "Layers" ) );
-    enableLayers( false );
 
     // [left toolbox: Thumbnails and Bookmarks] | []
     QWidget * thumbsBox = new ThumbnailsBox( nullptr );
@@ -448,18 +444,14 @@ m_cliPresentation(false), m_cliPrint(false), m_cliPrintAndExit(false), m_embedMo
     // [left toolbox: Reviews] | []
     m_reviewsWidget = new Reviews( nullptr, m_document );
     m_sidebar->addItem( m_reviewsWidget, QIcon::fromTheme(QStringLiteral("draw-freehand")), i18n("Reviews") );
-    m_sidebar->setItemEnabled( m_reviewsWidget, false );
 
     // [left toolbox: Bookmarks] | []
     m_bookmarkList = new BookmarkList( m_document, nullptr );
     m_sidebar->addItem( m_bookmarkList, QIcon::fromTheme(QStringLiteral("bookmarks")), i18n("Bookmarks") );
-    m_sidebar->setItemEnabled( m_bookmarkList, false );
 
-    // [left toolbox: Signature Panel] | []
+    // [left toolbox optional item: Signature Panel] | []
     m_signaturePanel = new SignaturePanel( m_document, nullptr );
-    connect( m_signaturePanel.data(), &SignaturePanel::documentHasSignatures, this, &Part::showSidebarSignaturesItem );
-    m_sidebar->addItem( m_signaturePanel, QIcon::fromTheme(QStringLiteral("application-pkcs7-signature")), i18n("Signatures") );
-    showSidebarSignaturesItem( false );
+    connect( m_signaturePanel.data(), &SignaturePanel::documentHasSignatures, this, &Part::enableSidebarSignaturesItem );
 
     // widgets: [../miniBarContainer] | []
 #ifdef OKULAR_ENABLE_MINIBAR
@@ -860,7 +852,7 @@ void Part::setupActions()
     m_migrationMessage->addAction( m_saveAs );
 
     m_showLeftPanel = ac->add<KToggleAction>(QStringLiteral("show_leftpanel"));
-    m_showLeftPanel->setText(i18n( "Show &Navigation Panel"));
+    m_showLeftPanel->setText(i18n( "Show S&idebar"));
     m_showLeftPanel->setIcon(QIcon::fromTheme( QStringLiteral("view-sidetree") ));
     connect( m_showLeftPanel, &QAction::toggled, this, &Part::slotShowLeftPanel );
     ac->setDefaultShortcut(m_showLeftPanel, QKeySequence(Qt::Key_F7));
@@ -1685,9 +1677,9 @@ bool Part::openFile()
         setFileToWatch( localFilePath() );
 
     // if the 'OpenTOC' flag is set, open the TOC
-    if ( m_document->metaData( QStringLiteral("OpenTOC") ).toBool() && m_sidebar->isItemEnabled( m_toc ) && !m_sidebar->isCollapsed() && m_sidebar->currentItem() != m_toc )
+    if ( m_document->metaData( QStringLiteral("OpenTOC") ).toBool() && m_tocEnabled && m_sidebar->currentItem() != m_toc )
     {
-        m_sidebar->setCurrentItem( m_toc, Sidebar::DoNotUncollapseIfCollapsed );
+        m_sidebar->setCurrentItem( m_toc );
     }
     // if the 'StartFullScreen' flag is set and we're not in viewer widget mode, or the command line flag was
     // specified, start presentation
@@ -2031,7 +2023,6 @@ bool Part::slotAttemptReload( bool oneShot, const QUrl &newUrl )
         // store the current toolbox pane
         m_dirtyToolboxItem = m_sidebar->currentItem();
         m_wasSidebarVisible = m_sidebar->isSidebarVisible();
-        m_wasSidebarCollapsed = m_sidebar->isCollapsed();
 
         // store if presentation view was open
         m_wasPresentationOpen = ((PresentationWidget*)m_presentationWidget != nullptr);
@@ -2077,18 +2068,13 @@ bool Part::slotAttemptReload( bool oneShot, const QUrl &newUrl )
         m_oldUrl = QUrl();
         m_viewportDirty.pageNumber = -1;
         m_document->setRotation( m_dirtyPageRotation );
-        if ( m_sidebar->currentItem() != m_dirtyToolboxItem && m_sidebar->isItemEnabled( m_dirtyToolboxItem )
-            && !m_sidebar->isCollapsed() )
+        if ( m_sidebar->currentItem() != m_dirtyToolboxItem )
         {
             m_sidebar->setCurrentItem( m_dirtyToolboxItem );
         }
         if ( m_sidebar->isSidebarVisible() != m_wasSidebarVisible )
         {
             m_sidebar->setSidebarVisibility( m_wasSidebarVisible );
-        }
-        if ( m_sidebar->isCollapsed() != m_wasSidebarCollapsed )
-        {
-            m_sidebar->setCollapsed( m_wasSidebarCollapsed );
         }
         if (m_wasPresentationOpen) slotShowPresentation();
         emit enablePrintAction(true && m_document->printingSupport() != Okular::Document::NoPrinting);
@@ -2224,12 +2210,18 @@ void Part::updateBookmarksActions()
 
 void Part::enableTOC(bool enable)
 {
-    m_sidebar->setItemEnabled(m_toc, enable);
+    if ( !enable ) {
+        m_tocEnabled = false;
+        return;
+    }
+
+    m_sidebar->addItem( m_toc, QIcon::fromTheme(QApplication::isLeftToRight() ? QStringLiteral("format-justify-left") : QStringLiteral("format-justify-right")), i18n("Contents") );
+    m_tocEnabled = true;
 
     // If present, show the TOC when a document is opened
-    if ( enable && m_sidebar->currentItem() != m_toc )
+    if ( m_sidebar->currentItem() != m_toc )
     {
-        m_sidebar->setCurrentItem( m_toc, Sidebar::DoNotUncollapseIfCollapsed );
+        m_sidebar->setCurrentItem( m_toc );
     }
 }
 
@@ -2240,12 +2232,24 @@ void Part::slotRebuildBookmarkMenu()
 
 void Part::enableLayers(bool enable)
 {
-    m_sidebar->setItemVisible( m_layers, enable );
+    if ( !enable ) {
+        m_layersEnabled = false;
+        return;
+    }
+
+    m_sidebar->addItem( m_layers, QIcon::fromTheme( QStringLiteral("format-list-unordered") ), i18n( "Layers" ) );
+    m_layersEnabled = true;
 }
 
-void Part::showSidebarSignaturesItem( bool show )
+void Part::enableSidebarSignaturesItem( bool enable )
 {
-    m_sidebar->setItemVisible( m_signaturePanel, show );
+    if ( !enable ) {
+        m_signaturePanelEnabled = false;
+        return;
+    }
+
+    m_sidebar->addItem( m_signaturePanel, QIcon::fromTheme(QStringLiteral("application-pkcs7-signature")), i18n("Signatures") );
+    m_signaturePanelEnabled = true;
 }
 
 void Part::slotShowFindBar()
@@ -2981,7 +2985,7 @@ void Part::slotNewConfig()
     m_document->reparseConfig();
 
     // update TOC settings
-    if ( m_sidebar->isItemEnabled(m_toc) )
+    if ( m_tocEnabled )
         m_toc->reparseConfig();
 
     // update ThumbnailList contents
@@ -2989,8 +2993,7 @@ void Part::slotNewConfig()
         m_thumbnailList->updateWidgets();
 
     // update Reviews settings
-    if ( m_sidebar->isItemEnabled(m_reviewsWidget) )
-        m_reviewsWidget->reparseConfig();
+    m_reviewsWidget->reparseConfig();
 
     setWindowTitleFromDocument ();
 
@@ -3497,9 +3500,6 @@ void Part::unsetDummyMode()
     if ( m_embedMode == PrintPreviewMode )
        return;
 
-    m_sidebar->setItemEnabled( m_reviewsWidget, true );
-    m_sidebar->setItemEnabled( m_bookmarkList, true );
-    m_sidebar->setItemEnabled( m_signaturePanel, true );
     m_sidebar->setSidebarVisibility( Okular::Settings::showLeftPanel() );
 
     // add back and next in history

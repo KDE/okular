@@ -89,7 +89,7 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
 {
     // create widgets and layout them vertically
     QVBoxLayout * vLayout = new QVBoxLayout( this );
-    vLayout->setMargin( 0 );
+    vLayout->setContentsMargins( 0, 0, 0, 0 );
     vLayout->setSpacing( 6 );
 
     m_view = new TreeView( m_document, this );

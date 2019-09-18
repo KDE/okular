@@ -95,7 +95,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
             value = new QWidget( page );
             /// place icon left of mime type's name
             QHBoxLayout *hboxLayout = new QHBoxLayout( value );
-            hboxLayout->setMargin( 0 );
+            hboxLayout->setContentsMargins( 0, 0, 0, 0 );
             /// retrieve icon and place it in a QLabel
             QMimeDatabase db;
             QMimeType mimeType = db.mimeTypeForName( valueString );

@@ -23,7 +23,7 @@ DlgDebug::DlgDebug( QWidget * parent )
     : QWidget( parent )
 {
     QVBoxLayout * lay = new QVBoxLayout( this );
-    lay->setMargin( 0 );
+    lay->setContentsMargins( 0, 0, 0, 0 );
 
     DEBUG_SIMPLE_BOOL( "DebugDrawBoundaries", lay );
     DEBUG_SIMPLE_BOOL( "DebugDrawAnnotationRect", lay );

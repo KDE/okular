@@ -469,7 +469,7 @@ Sidebar::Sidebar( QWidget *parent )
     : QWidget( parent ), d( new Private )
 {
     QHBoxLayout *mainlay = new QHBoxLayout( this );
-    mainlay->setMargin( 0 );
+    mainlay->setContentsMargins( 0, 0, 0, 0 );
     mainlay->setSpacing( 0 );
 
     setAutoFillBackground( true );

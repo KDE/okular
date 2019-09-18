@@ -44,9 +44,9 @@ PixmapPreviewSelector::PixmapPreviewSelector( QWidget * parent, PreviewPosition 
   : QWidget( parent ), m_previewPosition( position )
 {
     QVBoxLayout * mainlay = new QVBoxLayout( this );
-    mainlay->setMargin( 0 );
+    mainlay->setContentsMargins( 0, 0, 0, 0 );
     QHBoxLayout * toplay = new QHBoxLayout( this );
-    toplay->setMargin( 0 );
+    toplay->setContentsMargins( 0, 0, 0, 0 );
     mainlay->addLayout( toplay );
     m_comboItems = new KComboBox( this );
     toplay->addWidget( m_comboItems );

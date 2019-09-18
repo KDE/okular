@@ -119,7 +119,7 @@ BookmarkList::BookmarkList( Okular::Document *document, QWidget *parent )
     : QWidget( parent ), m_document( document ), m_currentDocumentItem( nullptr )
 {
     QVBoxLayout *mainlay = new QVBoxLayout( this );
-    mainlay->setMargin( 0 );
+    mainlay->setContentsMargins( 0, 0, 0, 0 );
     mainlay->setSpacing( 6 );
 
     m_searchLine = new KTreeWidgetSearchLine( this );

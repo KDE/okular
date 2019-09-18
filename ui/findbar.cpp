@@ -29,7 +29,7 @@ FindBar::FindBar( Okular::Document * document, QWidget * parent )
   , m_active( false )
 {
     QHBoxLayout * lay = new QHBoxLayout( this );
-    lay->setMargin( 2 );
+    lay->setContentsMargins( 2, 2, 2, 2 );
 
     QToolButton * closeBtn = new QToolButton( this );
     closeBtn->setIcon( QIcon::fromTheme( QStringLiteral("dialog-close") ) );

@@ -48,7 +48,7 @@ static QAction* createToolBarButtonWithWidgetPopup( QToolBar* toolBar, QWidget *
     QWidget *dummy = new QWidget( menu );
     widgetAction->setDefaultWidget( dummy );
     QVBoxLayout *dummyLayout = new QVBoxLayout( dummy );
-    dummyLayout->setMargin( 5 );
+    dummyLayout->setContentsMargins( 5, 5, 5, 5 );
     dummyLayout->addWidget( widget );
     menu->addAction( widgetAction );
     return action;
@@ -235,7 +235,7 @@ VideoWidget::VideoWidget( const Okular::Annotation *annotation, Okular::Movie *m
     QWidget *playerPage = new QWidget( this );
 
     QVBoxLayout *mainlay = new QVBoxLayout( playerPage );
-    mainlay->setMargin( 0 );
+    mainlay->setContentsMargins( 0, 0, 0, 0 );
     mainlay->setSpacing( 0 );
 
     d->player = new Phonon::VideoPlayer( Phonon::NoCategory, playerPage );

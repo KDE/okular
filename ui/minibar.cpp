@@ -161,7 +161,7 @@ MiniBar::MiniBar( QWidget * parent, MiniBarLogic * miniBarLogic )
 
     QHBoxLayout * horLayout = new QHBoxLayout( this );
 
-    horLayout->setMargin( 0 );
+    horLayout->setContentsMargins( 0, 0, 0, 0 );
     horLayout->setSpacing( 3 );
 
     QSize buttonSize( KIconLoader::SizeSmallMedium, KIconLoader::SizeSmallMedium );

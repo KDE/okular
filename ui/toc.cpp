@@ -30,7 +30,7 @@
 TOC::TOC(QWidget *parent, Okular::Document *document) : QWidget(parent), m_document(document)
 {
     QVBoxLayout *mainlay = new QVBoxLayout( this );
-    mainlay->setMargin( 0 );
+    mainlay->setContentsMargins( 0, 0, 0, 0 );
     mainlay->setSpacing( 6 );
 
     m_searchLine = new KTreeViewSearchLine( this );

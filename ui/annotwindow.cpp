@@ -70,7 +70,7 @@ public:
       : QWidget( parent )
     {
         QVBoxLayout * mainlay = new QVBoxLayout( this );
-        mainlay->setMargin( 0 );
+        mainlay->setContentsMargins( 0, 0, 0, 0 );
         mainlay->setSpacing( 0 );
         // close button row
         QHBoxLayout * buttonlay = new QHBoxLayout();
@@ -220,7 +220,7 @@ AnnotWindow::AnnotWindow( QWidget * parent, Okular::Annotation * annot, Okular::
         textEdit->setReadOnly(true);
 
     QVBoxLayout * mainlay = new QVBoxLayout( this );
-    mainlay->setMargin( 2 );
+    mainlay->setContentsMargins( 2, 2, 2, 2 );
     mainlay->setSpacing( 0 );
     m_title = new MovableTitle( this );
     mainlay->addWidget( m_title );

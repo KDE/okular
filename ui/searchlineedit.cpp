@@ -281,7 +281,7 @@ SearchLineWidget::SearchLineWidget( QWidget * parent, Okular::Document * documen
     : QWidget( parent )
 {
     QHBoxLayout *layout = new QHBoxLayout( this );
-    layout->setMargin( 0 );
+    layout->setContentsMargins( 0, 0, 0, 0 );
 
     m_edit = new SearchLineEdit( this, document );
     layout->addWidget( m_edit );

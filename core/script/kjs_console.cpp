@@ -42,7 +42,7 @@ static void createConsoleWindow()
     g_jsConsoleWindow->setButtonGuiItem( KDialog::User1, KStandardGuiItem::clear() );
 
     QVBoxLayout *mainLay = new QVBoxLayout( g_jsConsoleWindow->mainWidget() );
-    mainLay->setMargin( 0 );
+    mainLay->setContentsMargins( 0, 0, 0, 0 );
     g_jsConsoleLog = new QPlainTextEdit( g_jsConsoleWindow->mainWidget() );
     g_jsConsoleLog->setReadOnly( true );
     mainLay->addWidget( g_jsConsoleLog );

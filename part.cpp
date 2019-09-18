@@ -466,14 +466,14 @@ m_cliPresentation(false), m_cliPrint(false), m_cliPrintAndExit(false), m_embedMo
     QWidget * miniBarContainer = new QWidget( 0 );
     m_sidebar->setBottomWidget( miniBarContainer );
     QVBoxLayout * miniBarLayout = new QVBoxLayout( miniBarContainer );
-    miniBarLayout->setMargin( 0 );
+    miniBarLayout->setContentsMargins( 0, 0, 0, 0 );
     // widgets: [../[spacer/..]] | []
     miniBarLayout->addItem( new QSpacerItem( 6, 6, QSizePolicy::Fixed, QSizePolicy::Fixed ) );
     // widgets: [../[../MiniBar]] | []
     QFrame * bevelContainer = new QFrame( miniBarContainer );
     bevelContainer->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
     QVBoxLayout * bevelContainerLayout = new QVBoxLayout( bevelContainer );
-    bevelContainerLayout->setMargin( 4 );
+    bevelContainerLayout->setContentsMargins( 4, 4, 4, 4 );
     m_progressWidget = new ProgressWidget( bevelContainer, m_document );
     bevelContainerLayout->addWidget( m_progressWidget );
     miniBarLayout->addWidget( bevelContainer );
@@ -484,7 +484,7 @@ m_cliPresentation(false), m_cliPrint(false), m_cliPrintAndExit(false), m_embedMo
     QWidget * rightContainer = new QWidget( nullptr );
     m_sidebar->setMainWidget( rightContainer );
     QVBoxLayout * rightLayout = new QVBoxLayout( rightContainer );
-    rightLayout->setMargin( 0 );
+    rightLayout->setContentsMargins( 0, 0, 0, 0 );
     rightLayout->setSpacing( 0 );
     //	KToolBar * rtb = new KToolBar( rightContainer, "mainToolBarSS" );
     //	rightLayout->addWidget( rtb );
@@ -537,7 +537,7 @@ m_cliPresentation(false), m_cliPrint(false), m_cliPrintAndExit(false), m_embedMo
     m_bottomBar = new QWidget( rightContainer );
     QHBoxLayout * bottomBarLayout = new QHBoxLayout( m_bottomBar );
     m_pageSizeLabel = new PageSizeLabel( m_bottomBar, m_document );
-    bottomBarLayout->setMargin( 0 );
+    bottomBarLayout->setContentsMargins( 0, 0, 0, 0 );
     bottomBarLayout->setSpacing( 0 );
     bottomBarLayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Expanding, QSizePolicy::Minimum ) );
     m_miniBarLogic = new MiniBarLogic( this, m_document );
@@ -2278,7 +2278,7 @@ class GotoPageDialog : public QDialog
             connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
 
             QVBoxLayout *topLayout = new QVBoxLayout(this);
-            topLayout->setMargin(6);
+            topLayout->setContentsMargins(6, 6, 6, 6);
             QHBoxLayout *midLayout = new QHBoxLayout();
             spinbox = new QSpinBox(this);
             spinbox->setRange(1, max);

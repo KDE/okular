@@ -55,7 +55,7 @@ PresentationSearchBar::PresentationSearchBar( Okular::Document *document, QWidge
     setAutoFillBackground( true );
 
     QHBoxLayout * lay = new QHBoxLayout( this );
-    lay->setMargin( 0 );
+    lay->setContentsMargins( 0, 0, 0, 0 );
 
     m_handle = new HandleDrag( this );
     lay->addWidget( m_handle );

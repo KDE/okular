@@ -23,7 +23,7 @@
 Layers::Layers(QWidget *parent, Okular::Document *document) : QWidget(parent), m_document(document)
 {
     QVBoxLayout * const mainlay = new QVBoxLayout( this );
-    mainlay->setMargin( 0 );
+    mainlay->setContentsMargins( 0, 0, 0, 0 );
     mainlay->setSpacing( 6 );
 
     m_document->addObserver( this );

@@ -54,7 +54,7 @@ SignaturePanel::SignaturePanel( Okular::Document *document, QWidget *parent )
     connect( d->m_view, &QTreeView::customContextMenuRequested, this, &SignaturePanel::slotShowContextMenu );
 
     auto vLayout = new QVBoxLayout( this );
-    vLayout->setMargin( 0 );
+    vLayout->setContentsMargins( 0, 0, 0, 0 );
     vLayout->setSpacing( 6 );
     vLayout->addWidget( d->m_view );
 }

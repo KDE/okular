@@ -95,7 +95,7 @@ void WidgetDrawingTools::setTools( const QStringList &items )
                 itemText = name;
 
             QListWidgetItem * listEntry = new QListWidgetItem( itemText, m_list );
-            listEntry->setData( ToolXmlRole, qVariantFromValue( toolXml ) );
+            listEntry->setData( ToolXmlRole, QVariant::fromValue( toolXml ) );
             listEntry->setData( Qt::DecorationRole, colorDecorationFromToolDescription( toolXml ) );
         }
     }
@@ -157,7 +157,7 @@ void WidgetDrawingTools::slotAdd()
     // Create list entry and attach XML string as data
     const QString toolXml = rootDoc.toString( -1 );
     QListWidgetItem * listEntry = new QListWidgetItem( itemText, m_list );
-    listEntry->setData( ToolXmlRole, qVariantFromValue( toolXml ) );
+    listEntry->setData( ToolXmlRole, QVariant::fromValue( toolXml ) );
     listEntry->setData( Qt::DecorationRole, colorDecorationFromToolDescription( toolXml ) );
 
     // Select and scroll
@@ -201,7 +201,7 @@ void WidgetDrawingTools::slotEdit()
     // Edit list entry and attach XML string as data
     const QString toolXml = doc.toString( -1 );
     listEntry->setText( itemText );
-    listEntry->setData( ToolXmlRole, qVariantFromValue( toolXml ) );
+    listEntry->setData( ToolXmlRole, QVariant::fromValue( toolXml ) );
     listEntry->setData( Qt::DecorationRole, colorDecorationFromToolDescription( toolXml ) );
 
     // Select and scroll

@@ -151,7 +151,7 @@ class EBook_CHM : public EBook
 		/*!
 		 * \brief Gets the Title of the page referenced by url.
 		 * \param url An URL in ebook file to get title from. Must be absolute.
-		 * \return The title, or QString::null if the URL cannot be found or not a HTML page.
+		 * \return The title, or QString() if the URL cannot be found or not a HTML page.
 		 *
 		 * \ingroup dataretrieve
 		 */

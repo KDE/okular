@@ -134,7 +134,7 @@ bool QUnpluck::open( const QString &fileName )
     mInfo.insert( QStringLiteral("name"), QString::fromLocal8Bit(plkr_GetName( mDocument ) ));
     mInfo.insert( QStringLiteral("title"), QString::fromLocal8Bit(plkr_GetTitle( mDocument ) ));
     mInfo.insert( QStringLiteral("author"), QString::fromLocal8Bit(plkr_GetAuthor( mDocument ) ));
-    mInfo.insert( QStringLiteral("time"), QDateTime::fromTime_t( plkr_GetPublicationTime( mDocument ) ).toString() );
+    mInfo.insert( QStringLiteral("time"), QDateTime::fromSecsSinceEpoch( plkr_GetPublicationTime( mDocument ) ).toString() );
 
     AddRecord( plkr_GetHomeRecordID( mDocument ) );
 

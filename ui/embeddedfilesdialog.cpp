@@ -92,7 +92,7 @@ EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const Okular::Document
 		twi->setText(2, ef->size() <= 0 ? i18nc("Not available size", "N/A") : KFormat().formatByteSize(ef->size()));
 		twi->setText(3, dateToString( ef->creationDate() ) );
 		twi->setText(4, dateToString( ef->modificationDate() ) );
-		twi->setData( 0, EmbeddedFileRole, qVariantFromValue( ef ) );
+		twi->setData( 0, EmbeddedFileRole, QVariant::fromValue( ef ) );
 		m_tw->addTopLevelItem(twi);
 	}
 	// Having filled the columns, it is nice to resize them to be able to read the contents

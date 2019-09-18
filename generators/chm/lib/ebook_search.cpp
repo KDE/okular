@@ -203,7 +203,7 @@ bool EBookSearch::searchQuery(const QString & query, QList< QUrl > * results, EB
 
 		// Just add the word; it is most likely a space or terminated by tokenizer.
 		keeper.addTerm( term );
-		term = QString::null;			
+		term = QString();			
 	}
 	
 	keeper.addTerm( term );

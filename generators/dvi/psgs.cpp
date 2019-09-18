@@ -95,7 +95,7 @@ void ghostscript_interface::setBackgroundColor(const PageNumber& page, const QCo
 #endif
 
   if (pageList.value(page) == 0) {
-    pageInfo *info = new pageInfo(QString::null);	//krazy:exclude=nullstrassign for old broken gcc
+    pageInfo *info = new pageInfo(QString());
     info->background = background_color;
     if (permanent)
       info->permanentBackground = background_color;

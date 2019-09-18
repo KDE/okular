@@ -776,7 +776,7 @@ void Sidebar::listContextMenu( const QPoint &pos )
     const int itssize = static_cast< int >( _itssize ); \
     QAction *sizeAct = menu.addAction( text ); \
     sizeAct->setCheckable( true ); \
-    sizeAct->setData( qVariantFromValue( itssize ) ); \
+    sizeAct->setData( QVariant::fromValue( itssize ) ); \
     sizeAct->setChecked( itssize == curSize ); \
     sizeGroup->addAction( sizeAct ); \
 }

@@ -98,7 +98,7 @@ class FileItem : public QTreeWidgetItem
             setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable );
             const QString fileString = document->bookmarkManager()->titleForUrl( url );
             setText( 0, fileString );
-            setData( 0, UrlRole, qVariantFromValue( url ) );
+            setData( 0, UrlRole, QVariant::fromValue( url ) );
         }
 
         QVariant data( int column, int role ) const override

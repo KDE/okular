@@ -227,7 +227,7 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
         for ( int i = 0; i < screenCount; ++i )
         {
             QAction *act = m_screenSelect->addAction( i18nc( "%1 is the screen number (0, 1, ...)", "Screen %1", i ) );
-            act->setData( qVariantFromValue( i ) );
+            act->setData( QVariant::fromValue( i ) );
         }
     }
     QWidget *spacer = new QWidget( m_topBar );
@@ -654,7 +654,7 @@ void PresentationWidget::wheelEvent( QWheelEvent * e )
         return;
 
     // performance note: don't remove the clipping
-    int div = e->delta() / 120;
+    int div = e->angleDelta().y() / 120;
     if ( div > 0 )
     {
         if ( div > 3 )

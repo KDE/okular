@@ -403,7 +403,7 @@ bool VideoWidget::eventFilter( QObject * object, QEvent * event )
                     QWheelEvent * we = static_cast< QWheelEvent * >( event );
 
                     // forward wheel events to parent widget
-                    QWheelEvent *copy = new QWheelEvent( we->pos(), we->globalPos(), we->delta(), we->buttons(), we->modifiers(), we->orientation() );
+                    QWheelEvent *copy = new QWheelEvent( we->pos(), we->globalPos(), we->angleDelta().y(), we->buttons(), we->modifiers(), we->orientation() );
                     QCoreApplication::postEvent( parentWidget(), copy );
                 }
                 break;

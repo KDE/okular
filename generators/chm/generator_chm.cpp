@@ -371,7 +371,7 @@ void CHMGenerator::additionalRequestData()
                                 new Okular::ObjectRect ( Okular::NormalizedRect(r,xScale,yScale),
                                 false,
                                 Okular::ObjectRect::Action,
-                                new Okular::GotoAction ( QString::null, viewport)));	//krazy:exclude=nullstrassign for old broken gcc
+                                new Okular::GotoAction ( QString(), viewport)));
                         }
                     }
                 }

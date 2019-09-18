@@ -102,7 +102,7 @@ void WidgetAnnotTools::setTools(const QStringList& items)
             if ( itemText.isEmpty() )
                 itemText = PageViewAnnotator::defaultToolName( toolElement );
             QListWidgetItem * listEntry = new QListWidgetItem( itemText, m_list );
-            listEntry->setData( ToolXmlRole, qVariantFromValue(toolXml) );
+            listEntry->setData( ToolXmlRole, QVariant::fromValue(toolXml) );
             listEntry->setIcon( PageViewAnnotator::makeToolPixmap( toolElement ) );
         }
     }
@@ -136,7 +136,7 @@ void WidgetAnnotTools::slotEdit()
 
     // Edit list entry and attach XML string as data
     listEntry->setText( itemText );
-    listEntry->setData( ToolXmlRole, qVariantFromValue( doc.toString(-1) ) );
+    listEntry->setData( ToolXmlRole, QVariant::fromValue( doc.toString(-1) ) );
     listEntry->setIcon( PageViewAnnotator::makeToolPixmap( toolElement ) );
 
     // Select and scroll
@@ -166,7 +166,7 @@ void WidgetAnnotTools::slotAdd()
 
     // Create list entry and attach XML string as data
     QListWidgetItem * listEntry = new QListWidgetItem( itemText, m_list );
-    listEntry->setData( ToolXmlRole, qVariantFromValue( rootDoc.toString(-1) ) );
+    listEntry->setData( ToolXmlRole, QVariant::fromValue( rootDoc.toString(-1) ) );
     listEntry->setIcon( PageViewAnnotator::makeToolPixmap( toolElement ) );
 
     // Select and scroll

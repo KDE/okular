@@ -138,7 +138,7 @@ class Okular::FormFieldButtonPrivate : public Okular::FormFieldPrivate
         QString value() const override
         {
             Q_Q( const FormFieldButton );
-            return qVariantFromValue<bool>( q->state() ).toString();
+            return QVariant::fromValue<bool>( q->state() ).toString();
         }
 };
 

@@ -260,7 +260,7 @@ bool Index::parseDocumentToStringlist(EBook *chmFile, const QUrl& filename, QStr
 		if ( ch == '&' )
 		{
 			state = STATE_IN_HTML_ENTITY;
-			parseentity = QString::null;
+			parseentity = QString();
 			continue;
 		}
 		
@@ -283,7 +283,7 @@ bool Index::parseDocumentToStringlist(EBook *chmFile, const QUrl& filename, QStr
 				tokenlist.push_back( parsedbuf.toLower() );
 			
 			tokenlist.push_back( ch.toLower() );
-			parsedbuf = QString::null;
+			parsedbuf = QString();
 			continue;
 		}
 		
@@ -292,7 +292,7 @@ tokenize_buf:
 		if ( !parsedbuf.isEmpty() )
 		{
 			tokenlist.push_back( parsedbuf.toLower() );
-			parsedbuf = QString::null;
+			parsedbuf = QString();
 		}
 	}
 	

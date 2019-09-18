@@ -892,7 +892,7 @@ void ThumbnailListPrivate::wheelEvent( QWheelEvent * e )
 
     if ( r.contains( e->pos() - QPoint( margin / 2, margin / 2 ) ) && e->orientation() == Qt::Vertical && e->modifiers() == Qt::ControlModifier )
     {
-        m_document->setZoom( e->delta() );
+        m_document->setZoom( e->angleDelta().y() );
     }
     else
     {

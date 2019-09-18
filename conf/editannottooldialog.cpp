@@ -84,15 +84,15 @@ EditAnnotToolDialog::EditAnnotToolDialog( QWidget *parent, const QDomElement &in
     widgetLayout->addWidget( m_appearanceBox, 2, 0, 1, 3 );
 
     // Populate combobox with annotation types
-    m_type->addItem( i18n("Pop-up Note"), qVariantFromValue( ToolNoteLinked ) );
-    m_type->addItem( i18n("Inline Note"), qVariantFromValue( ToolNoteInline ) );
-    m_type->addItem( i18n("Freehand Line"), qVariantFromValue( ToolInk ) );
-    m_type->addItem( i18n("Straight Line"), qVariantFromValue( ToolStraightLine ) );
-    m_type->addItem( i18n("Polygon"), qVariantFromValue( ToolPolygon ) );
-    m_type->addItem( i18n("Text markup"), qVariantFromValue( ToolTextMarkup ) );
-    m_type->addItem( i18n("Geometrical shape"), qVariantFromValue( ToolGeometricalShape ) );
-    m_type->addItem( i18n("Stamp"), qVariantFromValue( ToolStamp ) );
-    m_type->addItem( i18n("Typewriter"), qVariantFromValue( ToolTypewriter ) );
+    m_type->addItem( i18n("Pop-up Note"), QVariant::fromValue( ToolNoteLinked ) );
+    m_type->addItem( i18n("Inline Note"), QVariant::fromValue( ToolNoteInline ) );
+    m_type->addItem( i18n("Freehand Line"), QVariant::fromValue( ToolInk ) );
+    m_type->addItem( i18n("Straight Line"), QVariant::fromValue( ToolStraightLine ) );
+    m_type->addItem( i18n("Polygon"), QVariant::fromValue( ToolPolygon ) );
+    m_type->addItem( i18n("Text markup"), QVariant::fromValue( ToolTextMarkup ) );
+    m_type->addItem( i18n("Geometrical shape"), QVariant::fromValue( ToolGeometricalShape ) );
+    m_type->addItem( i18n("Stamp"), QVariant::fromValue( ToolStamp ) );
+    m_type->addItem( i18n("Typewriter"), QVariant::fromValue( ToolTypewriter ) );
 
     createStubAnnotation();
 

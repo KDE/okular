@@ -130,7 +130,7 @@ void PopplerAnnotationProxy::notifyAddition( Okular::Annotation *okl_ann, int pa
     delete ppl_page;
 
     // Set pointer to poppler annotation as native Id
-    okl_ann->setNativeId( qVariantFromValue( ppl_ann ) );
+    okl_ann->setNativeId( QVariant::fromValue( ppl_ann ) );
     okl_ann->setDisposeDataFunction( disposeAnnotation );
 
     qCDebug(OkularPdfDebug) << okl_ann->uniqueName();
@@ -265,7 +265,7 @@ void PopplerAnnotationProxy::notifyRemoval( Okular::Annotation *okl_ann, int pag
     ppl_page->removeAnnotation( ppl_ann ); // Also destroys ppl_ann
     delete ppl_page;
 
-    okl_ann->setNativeId( qVariantFromValue(0) ); // So that we don't double-free in disposeAnnotation
+    okl_ann->setNativeId( QVariant::fromValue(0) ); // So that we don't double-free in disposeAnnotation
 
     qCDebug(OkularPdfDebug) << okl_ann->uniqueName();
 }
@@ -423,7 +423,7 @@ Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *
         // TODO clone revisions
         if ( tieToOkularAnn )
         {
-            annotation->setNativeId( qVariantFromValue( ann ) );
+            annotation->setNativeId( QVariant::fromValue( ann ) );
             annotation->setDisposeDataFunction( disposeAnnotation );
         }
     }

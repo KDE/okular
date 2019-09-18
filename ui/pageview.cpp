@@ -542,14 +542,14 @@ void PageView::setupViewerActions( KActionCollection * ac )
     d->aTrimMargins  = new KToggleAction(QIcon::fromTheme( QStringLiteral("trim-margins") ), i18n( "&Trim Margins" ), d->aTrimMode->menu() );
     d->aTrimMode->addAction( d->aTrimMargins  );
     ac->addAction( QStringLiteral("view_trim_margins"), d->aTrimMargins  );
-    d->aTrimMargins->setData( qVariantFromValue( (int)Okular::Settings::EnumTrimMode::Margins ) );
+    d->aTrimMargins->setData( QVariant::fromValue( (int)Okular::Settings::EnumTrimMode::Margins ) );
     connect( d->aTrimMargins, &QAction::toggled, this, &PageView::slotTrimMarginsToggled );
     d->aTrimMargins->setChecked( Okular::Settings::trimMargins() );
 
     d->aTrimToSelection  = new KToggleAction(QIcon::fromTheme( QStringLiteral("trim-to-selection") ), i18n( "Trim To &Selection" ), d->aTrimMode->menu() );
     d->aTrimMode->addAction( d->aTrimToSelection);
     ac->addAction( QStringLiteral("view_trim_selection"), d->aTrimToSelection);
-    d->aTrimToSelection->setData( qVariantFromValue( (int)Okular::Settings::EnumTrimMode::Selection ) );
+    d->aTrimToSelection->setData( QVariant::fromValue( (int)Okular::Settings::EnumTrimMode::Selection ) );
     connect( d->aTrimToSelection, &QAction::toggled, this, &PageView::slotTrimToSelectionToggled );
 
     d->aZoomFitWidth  = new KToggleAction(QIcon::fromTheme( QStringLiteral("zoom-fit-width") ), i18n("Fit &Width"), this);
@@ -577,7 +577,7 @@ void PageView::setupViewerActions( KActionCollection * ac )
 do { \
     QAction *vm = new QAction( text, this ); \
     vm->setCheckable( true ); \
-    vm->setData( qVariantFromValue( id ) ); \
+    vm->setData( QVariant::fromValue( id ) ); \
     d->aViewMode->addAction( vm ); \
     ac->addAction( QStringLiteral(name), vm ); \
     vmGroup->addAction( vm ); \
@@ -3333,7 +3333,7 @@ void PageView::wheelEvent( QWheelEvent *e )
         return;
     }
 
-    int delta = e->delta(),
+    int delta = e->angleDelta().y(),
         vScroll = verticalScrollBar()->value();
     e->accept();
     if ( (e->modifiers() & Qt::ControlModifier) == Qt::ControlModifier ) {

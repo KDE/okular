@@ -212,7 +212,7 @@ QString HelperEntityDecoder::decode( const QString &entity ) const
 		if ( !valid )
 		{
 			qWarning ( "HelperEntityDecoder::decode: could not decode HTML entity '%s'", qPrintable( entity ) );
-			return QString::null;
+			return QString();
 		}
 
 		return (QString) (QChar( ascode ));

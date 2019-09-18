@@ -252,7 +252,7 @@ QString PopplerSignatureInfo::reason() const
 
 QDateTime PopplerSignatureInfo::signingTime() const
 {
-    return QDateTime::fromTime_t( m_info.signingTime() );
+    return QDateTime::fromSecsSinceEpoch( m_info.signingTime() );
 }
 
 QByteArray PopplerSignatureInfo::signature() const

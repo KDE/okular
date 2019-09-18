@@ -377,7 +377,7 @@ void ProgressWidget::mousePressEvent( QMouseEvent * e )
 
 void ProgressWidget::wheelEvent( QWheelEvent * e )
 {
-    if ( e->delta() > 0 )
+    if ( e->angleDelta().y() > 0 )
         emit nextPage();
     else
         emit prevPage();
@@ -575,7 +575,7 @@ void PagesEdit::mousePressEvent( QMouseEvent * e )
 
 void PagesEdit::wheelEvent( QWheelEvent * e )
 {
-    if ( e->delta() > 0 )
+    if ( e->angleDelta().y() > 0 )
         m_miniBar->slotEmitNextPage();
     else
         m_miniBar->slotEmitPrevPage();

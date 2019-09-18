@@ -986,7 +986,7 @@ void XpsHandler::processImageBrush( XpsRenderNode &node )
     brush = QBrush( image );
     brush.setTransform( viewboxMatrix.inverted() * viewportMatrix );
 
-    node.data = qVariantFromValue( brush );
+    node.data = QVariant::fromValue( brush );
 }
 
 void XpsHandler::processPath( XpsRenderNode &node )
@@ -1173,7 +1173,7 @@ void XpsHandler::processPathGeometry( XpsRenderNode &node )
     }
 
     if ( !geom->paths.isEmpty() ) {
-        node.data = qVariantFromValue( geom );
+        node.data = QVariant::fromValue( geom );
     } else {
         delete geom;
     }
@@ -1262,7 +1262,7 @@ void XpsHandler::processPathFigure( XpsRenderNode &node )
     }
 
     if ( !path.isEmpty() ) {
-        node.data = qVariantFromValue( new XpsPathFigure( path, isFilled ) );
+        node.data = QVariant::fromValue( new XpsPathFigure( path, isFilled ) );
     }
 }
 
@@ -1296,7 +1296,7 @@ void XpsHandler::processEndElement( XpsRenderNode &node )
         processPath( node );
     } else if (node.name == QLatin1String("MatrixTransform")) {
         //TODO Ignoring x:key
-        node.data = qVariantFromValue( QTransform( attsToMatrix( node.attributes.value( QStringLiteral("Matrix") ) ) ) );
+        node.data = QVariant::fromValue( QTransform( attsToMatrix( node.attributes.value( QStringLiteral("Matrix") ) ) ) );
     } else if ((node.name == QLatin1String("Canvas.RenderTransform")) || (node.name == QLatin1String("Glyphs.RenderTransform")) || (node.name == QLatin1String("Path.RenderTransform")))  {
         QVariant data = node.getRequiredChildData( QStringLiteral("MatrixTransform") );
         if (data.canConvert<QTransform>()) {
@@ -1310,7 +1310,7 @@ void XpsHandler::processEndElement( XpsRenderNode &node )
         processStroke( node );
     } else if (node.name == QLatin1String("SolidColorBrush")) {
         //TODO Ignoring opacity, x:key
-        node.data = qVariantFromValue( QBrush( QColor( hexToRgba( node.attributes.value( QStringLiteral("Color") ).toLatin1() ) ) ) );
+        node.data = QVariant::fromValue( QBrush( QColor( hexToRgba( node.attributes.value( QStringLiteral("Color") ).toLatin1() ) ) ) );
     } else if (node.name == QLatin1String("ImageBrush")) {
         processImageBrush( node );
     } else if (node.name == QLatin1String("ImageBrush.Transform")) {
@@ -1324,7 +1324,7 @@ void XpsHandler::processEndElement( XpsRenderNode &node )
             qgrad->setStart( start );
             qgrad->setFinalStop( end );
             applySpreadStyleToQGradient( node.attributes.value( QStringLiteral("SpreadMethod") ), qgrad );
-            node.data = qVariantFromValue( QBrush( *qgrad ) );
+            node.data = QVariant::fromValue( QBrush( *qgrad ) );
             delete qgrad;
         }
     } else if (node.name == QLatin1String("RadialGradientBrush")) {
@@ -1340,7 +1340,7 @@ void XpsHandler::processEndElement( XpsRenderNode &node )
             // TODO what in case of different radii?
             qgrad->setRadius( qMin( radiusX, radiusY ) );
             applySpreadStyleToQGradient( node.attributes.value( QStringLiteral("SpreadMethod") ), qgrad );
-            node.data = qVariantFromValue( QBrush( *qgrad ) );
+            node.data = QVariant::fromValue( QBrush( *qgrad ) );
             delete qgrad;
         }
     } else if (node.name == QLatin1String("LinearGradientBrush.GradientStops")) {
@@ -1354,7 +1354,7 @@ void XpsHandler::processEndElement( XpsRenderNode &node )
         if ( !gradients.isEmpty() ) {
             QLinearGradient * qgrad = new QLinearGradient();
             addXpsGradientsToQGradient( gradients, qgrad );
-            node.data = qVariantFromValue< QGradient * >( qgrad );
+            node.data = QVariant::fromValue< QGradient * >( qgrad );
         }
     } else if (node.name == QLatin1String("RadialGradientBrush.GradientStops")) {
         QList<XpsGradient> gradients;
@@ -1367,7 +1367,7 @@ void XpsHandler::processEndElement( XpsRenderNode &node )
         if ( !gradients.isEmpty() ) {
             QRadialGradient * qgrad = new QRadialGradient();
             addXpsGradientsToQGradient( gradients, qgrad );
-            node.data = qVariantFromValue< QGradient * >( qgrad );
+            node.data = QVariant::fromValue< QGradient * >( qgrad );
         }
     } else if (node.name == QLatin1String("PathFigure")) {
         processPathFigure( node );

@@ -44,7 +44,7 @@ EBook_CHM::EBook_CHM()
 {
 	m_envOptions = getenv("KCHMVIEWEROPTS");
 	m_chmFile = NULL;
-	m_filename = m_font = QString::null;
+	m_filename = m_font = QString();
 
 	m_textCodec = 0;
 	m_textCodecForSpecialFiles = 0;
@@ -66,7 +66,7 @@ void EBook_CHM::close()
 	chm_close( m_chmFile );
 
 	m_chmFile = NULL;
-	m_filename = m_font = QString::null;
+	m_filename = m_font = QString();
 
 	m_home.clear();
 	m_topicsFile.clear();
@@ -334,7 +334,7 @@ int EBook_CHM::findStringInQuotes (const QString& tag, int offset, QString& valu
 	// If we do not need to decode HTML entities, just return.
 	if ( decodeentities )
 	{
-		QString htmlentity = QString::null;
+		QString htmlentity = QString();
 		bool fill_entity = false;
 
 		value.reserve (qend - qbegin); // to avoid multiple memory allocations
@@ -359,7 +359,7 @@ int EBook_CHM::findStringInQuotes (const QString& tag, int offset, QString& valu
 						break;
 
 					value.append ( decode );
-					htmlentity = QString::null;
+					htmlentity = QString();
 					fill_entity = false;
 				}
 				else
@@ -472,7 +472,7 @@ bool EBook_CHM::parseFileAndFillArray( const QString& file, QList< ParsedEntry >
 				data.push_back( entry );
 			}
 
-			entry.name = QString::null;
+			entry.name = QString();
 			entry.urls.clear();
 			entry.iconid = defaultimagenum;
 			entry.seealso.clear();
@@ -787,7 +787,7 @@ QString EBook_CHM::getTopicByUrl( const QUrl& url )
 	QMap< QUrl, QString >::const_iterator it = m_url2topics.constFind( url );
 
 	if ( it == m_url2topics.constEnd() )
-		return QString::null;
+		return QString();
 
 	return it.value();
 }

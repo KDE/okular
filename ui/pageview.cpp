@@ -4224,11 +4224,10 @@ void PageView::updateZoomText()
 
 void PageView::updateViewMode(const int nr)
 {
-    for (int i=0; i < d->aViewMode->menu()->actions().size(); ++i) {
-        const QAction* action = d->aViewMode->menu()->actions().at(i);
+    for ( QAction* action : d->aViewMode->menu()->actions() ) {
         QVariant mode_id = action->data();
         if (mode_id.toInt() == nr) {
-            d->aViewMode->menu()->actions().at( i )->trigger();
+            action->trigger();
         }
     }
 }

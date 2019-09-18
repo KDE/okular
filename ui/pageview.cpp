@@ -1539,6 +1539,9 @@ bool PageView::supportsCapability( ViewCapability capability ) const
     {
         case Zoom:
         case ZoomModality:
+        case Continuous:
+        case ViewModeModality:
+        case TrimMargins:
             return true;
     }
     return false;
@@ -1550,6 +1553,9 @@ Okular::View::CapabilityFlags PageView::capabilityFlags( ViewCapability capabili
     {
         case Zoom:
         case ZoomModality:
+        case Continuous:
+        case ViewModeModality:
+        case TrimMargins:
             return CapabilityRead | CapabilityWrite | CapabilitySerializable;
     }
     return nullptr;
@@ -1563,6 +1569,20 @@ QVariant PageView::capability( ViewCapability capability ) const
             return d->zoomFactor;
         case ZoomModality:
             return d->zoomMode;
+        case Continuous:
+            return d->aViewContinuous->isChecked();
+        case ViewModeModality:
+        {
+            for (int i=0; i < d->aViewMode->menu()->actions().size(); ++i)
+            {
+                const QAction* action = d->aViewMode->menu()->actions().at(i);
+                if ( action->isChecked() )
+                    return action->data();
+            }
+            return QVariant();
+        }
+        case TrimMargins:
+            return d->aTrimMargins->isChecked();
     }
     return QVariant();
 }
@@ -1591,6 +1611,31 @@ void PageView::setCapability( ViewCapability capability, const QVariant &option 
                 if ( mode >= 0 && mode < 3 )
                     updateZoom( (ZoomMode)mode );
             }
+            break;
+        }
+        case ViewModeModality:
+        {
+            bool ok = true;
+            int mode = option.toInt( &ok );
+            if ( ok )
+            {
+                if ( mode >= 0 && mode < Okular::Settings::EnumViewMode::COUNT)
+                    updateViewMode(mode);
+            }
+            break;
+        }
+        case Continuous:
+        {
+            bool mode = option.toBool( );
+            d->aViewContinuous->setChecked(mode);
+            slotContinuousToggled(mode);
+            break;
+        }
+        case TrimMargins:
+        {
+            bool value = option.toBool( );
+            d->aTrimMargins->setChecked(value);
+            slotTrimMarginsToggled(value);
             break;
         }
     }
@@ -4175,6 +4220,17 @@ void PageView::updateZoomText()
     d->aZoom->setCurrentItem( selIdx );
     d->aZoom->setEnabled( d->items.size() > 0 );
     d->aZoom->selectableActionGroup()->setEnabled( d->items.size() > 0 );
+}
+
+void PageView::updateViewMode(const int nr)
+{
+    for (int i=0; i < d->aViewMode->menu()->actions().size(); ++i) {
+        const QAction* action = d->aViewMode->menu()->actions().at(i);
+        QVariant mode_id = action->data();
+        if (mode_id.toInt() == nr) {
+            d->aViewMode->menu()->actions().at( i )->trigger();
+        }
+    }
 }
 
 void PageView::updateCursor()

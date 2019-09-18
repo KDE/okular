@@ -180,6 +180,8 @@ Q_OBJECT
         void updateZoom( ZoomMode newZm );
         // update the text on the label using global zoom value or current page's one
         void updateZoomText();
+        // update view mode (single, facing...)
+        void updateViewMode ( const int nr );
         void textSelectionClear();
         // updates cursor
         void updateCursor( const QPoint &p );

@@ -1558,7 +1558,7 @@ Okular::View::CapabilityFlags PageView::capabilityFlags( ViewCapability capabili
         case TrimMargins:
             return CapabilityRead | CapabilityWrite | CapabilitySerializable;
     }
-    return nullptr;
+    return NoFlag;
 }
 
 QVariant PageView::capability( ViewCapability capability ) const

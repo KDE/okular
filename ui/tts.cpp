@@ -60,6 +60,17 @@ void OkularTTS::stopAllSpeechs()
     d->speech->stop();
 }
 
+void OkularTTS::pauseResumeSpeech()
+{
+    if ( !d->speech )
+        return;
+
+    if ( d->speech->state() == QTextToSpeech::Speaking )
+        d->speech->pause();
+    else
+        d->speech->resume();
+}
+
 void OkularTTS::slotSpeechStateChanged(QTextToSpeech::State state)
 {
     if (state == QTextToSpeech::Speaking)

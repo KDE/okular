@@ -241,6 +241,7 @@ public:
     QAction * aSpeakDoc;
     QAction * aSpeakPage;
     QAction * aSpeakStop;
+    QAction * aSpeakPauseResume;
     KActionCollection * actionCollection;
     QActionGroup * mouseModeActionGroup;
     QAction * aFitWindowToPage;
@@ -379,6 +380,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->aSpeakDoc = nullptr;
     d->aSpeakPage = nullptr;
     d->aSpeakStop = nullptr;
+    d->aSpeakPauseResume = nullptr;
     d->actionCollection = nullptr;
     d->aPageSizes=nullptr;
     d->setting_viewCols = Okular::Settings::viewColumns();
@@ -705,10 +707,16 @@ void PageView::setupActions( KActionCollection * ac )
     ac->addAction( QStringLiteral("speak_stop_all"), d->aSpeakStop );
     d->aSpeakStop->setEnabled( false );
     connect( d->aSpeakStop, &QAction::triggered, this, &PageView::slotStopSpeaks );
+
+    d->aSpeakPauseResume = new QAction( QIcon::fromTheme( QStringLiteral("media-playback-pause") ), i18n( "Pause/Resume Speaking" ), this );
+    ac->addAction( QStringLiteral("speak_pause_resume"), d->aSpeakPauseResume );
+    d->aSpeakPauseResume->setEnabled( false );
+    connect( d->aSpeakPauseResume, &QAction::triggered, this, &PageView::slotPauseResumeSpeech );
 #else
     d->aSpeakDoc = 0;
     d->aSpeakPage = 0;
     d->aSpeakStop = 0;
+    d->aSpeakPauseResume = 0;
 #endif
 
     // Other actions
@@ -1253,6 +1261,7 @@ void PageView::updateActionState( bool haspages, bool documentChanged, bool hasf
         const bool enablettsactions = haspages ? Okular::Settings::useTTS() : false;
         d->aSpeakDoc->setEnabled( enablettsactions );
         d->aSpeakPage->setEnabled( enablettsactions );
+        d->aSpeakPauseResume->setEnabled( enablettsactions );
     }
 #endif
     if (d->aMouseMagnifier)
@@ -5546,6 +5555,15 @@ void PageView::slotStopSpeaks()
 
     d->m_tts->stopAllSpeechs();
 }
+
+void PageView::slotPauseResumeSpeech()
+{
+    if ( !d->m_tts )
+        return;
+
+    d->m_tts->pauseResumeSpeech();
+}
+
 #endif
 
 void PageView::slotAction( Okular::Action *action )

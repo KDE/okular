@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="okular_part" version="41">
+<kpartgui name="okular_part" version="42">
 <MenuBar>
   <Menu name="file"><text>&amp;File</text>
     <Action name="get_new_stuff" group="file_open"/>
@@ -84,6 +84,7 @@
     <Action name="speak_document"/>
     <Action name="speak_current_page"/>
     <Action name="speak_stop_all"/>
+    <Action name="speak_pause_resume"/>
   </Menu>
   <Menu name="settings"><text>&amp;Settings</text>
     <Action name="show_leftpanel" group="show_merge"/>

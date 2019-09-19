@@ -274,6 +274,7 @@ Q_OBJECT
         void slotSpeakDocument();
         void slotSpeakCurrentPage();
         void slotStopSpeaks();
+        void slotPauseResumeSpeech();
 #endif
         void slotAction( Okular::Action *action );
         void externalKeyPressEvent( QKeyEvent *e );

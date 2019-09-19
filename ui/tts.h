@@ -22,6 +22,7 @@ class OkularTTS : public QObject
 
         void say( const QString &text );
         void stopAllSpeechs();
+        void pauseResumeSpeech();
 
     public slots:
         void slotSpeechStateChanged(QTextToSpeech::State state);

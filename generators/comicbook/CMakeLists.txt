@@ -5,7 +5,6 @@ include_directories(
    ${CMAKE_CURRENT_SOURCE_DIR}/../..
 )
 
-
 ########### next target ###############
 
 set( okularGenerator_comicbook_PART_SRCS
@@ -24,6 +23,10 @@ if (UNIX AND NOT ANDROID)
    target_compile_definitions(okularGenerator_comicbook PRIVATE -DWITH_KPTY=1)
    target_link_libraries(okularGenerator_comicbook KF5::Pty)
 endif ()
+
+if (KArchive_HAVE_LZMA)
+    target_compile_definitions(okularGenerator_comicbook PRIVATE -DWITH_K7ZIP=1)
+endif()
 
 ########### install files ###############
 install( FILES okularComicbook.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )

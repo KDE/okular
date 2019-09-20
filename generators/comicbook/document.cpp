@@ -18,7 +18,9 @@
 #include <QMimeDatabase>
 #include <kzip.h>
 #include <ktar.h>
+#if WITH_K7ZIP
 #include <k7zip.h>
+#endif
 
 #include <memory>
 
@@ -79,6 +81,7 @@ bool Document::open( const QString &fileName )
         if ( !processArchive() ) {
             return false;
         }
+#ifdef WITH_K7ZIP
     /**
      * We have a 7z archive
      */
@@ -88,6 +91,7 @@ bool Document::open( const QString &fileName )
         if ( !processArchive() ) {
             return false;
         }
+#endif
     } else if ( mime.inherits( QStringLiteral("application/x-cbr") ) || mime.inherits( QStringLiteral("application/x-rar") ) || mime.inherits( QStringLiteral("application/vnd.rar") ) ) {
         if ( !Unrar::isAvailable() ) {
             mLastErrorString = i18n( "Cannot open document, neither unrar nor unarchiver were found." );

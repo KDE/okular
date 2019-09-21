@@ -41,6 +41,7 @@
 #include <QMimeDatabase>
 #include <QMimeData>
 #include <QGestureEvent>
+#include <QElapsedTimer>
 
 #include <qaction.h>
 #include <kactionmenu.h>
@@ -164,7 +165,7 @@ public:
 
     // viewport move
     bool viewportMoveActive;
-    QTime viewportMoveTime;
+    QElapsedTimer viewportMoveTime;
     QPoint viewportMoveDest;
     int lastSourceLocationViewportPageNumber;
     double lastSourceLocationViewportNormalizedX;

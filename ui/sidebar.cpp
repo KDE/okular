@@ -500,7 +500,7 @@ Sidebar::Sidebar( QWidget *parent )
     d->sideContainer->setMinimumWidth( 90 );
     d->sideContainer->setMaximumWidth( 600 );
     d->vlay = new QVBoxLayout( d->sideContainer );
-    d->vlay->setMargin( 0 );
+    d->vlay->setContentsMargins( 0, 0, 0, 0 );
 
     d->sideTitle = new QLabel( d->sideContainer );
     d->vlay->addWidget( d->sideTitle );

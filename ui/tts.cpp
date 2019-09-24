@@ -14,12 +14,14 @@
 
 #include <KLocalizedString>
 
+#include "settings.h"
+
 /* Private storage. */
 class OkularTTS::Private
 {
 public:
     Private( OkularTTS *qq )
-        : q( qq ), speech( new QTextToSpeech )
+        : q( qq ), speech( new QTextToSpeech( Okular::Settings::ttsEngine() ) )
     {
     }
 

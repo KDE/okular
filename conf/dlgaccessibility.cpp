@@ -11,6 +11,10 @@
 
 #include "ui_dlgaccessibilitybase.h"
 
+#include "settings.h"
+
+#include <QtTextToSpeech>
+
 DlgAccessibility::DlgAccessibility( QWidget * parent )
     : QWidget( parent ), m_selected( 0 )
 {
@@ -27,6 +31,13 @@ DlgAccessibility::DlgAccessibility( QWidget * parent )
     foreach ( QWidget * page, m_color_pages )
         page->hide();
     m_color_pages[ m_selected ]->show();
+
+    // Populate tts engines
+    const QStringList engines = QTextToSpeech::availableEngines();
+    for (const QString &engine: engines) {
+        m_dlg->kcfg_ttsEngine->addItem (engine);
+    }
+    m_dlg->kcfg_ttsEngine->setProperty("kcfg_property", QByteArray("currentText"));
 
     connect(m_dlg->kcfg_RenderMode, static_cast<void (KComboBox::*)(int)>(&KComboBox::currentIndexChanged), this, &DlgAccessibility::slotColorMode);
 }

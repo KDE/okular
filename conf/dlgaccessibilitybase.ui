@@ -6,7 +6,7 @@
     <x>0</x>
     <y>0</y>
     <width>374</width>
-    <height>327</height>
+    <height>479</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" >
@@ -347,6 +347,25 @@
          </item>
         </layout>
        </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="speechBox" >
+     <property name="title" >
+      <string>Speech</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout" >
+      <item row="0" column="0" >
+       <widget class="QLabel" name="label_2" >
+        <property name="text" >
+         <string>Engine</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1" >
+       <widget class="QComboBox" name="kcfg_ttsEngine" />
       </item>
      </layout>
     </widget>

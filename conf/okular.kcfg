@@ -145,6 +145,9 @@
    </choices>
  </entry>
   <entry key="UseTTS" type="Bool" />
+  <entry key="ttsEngine" type="String">
+    <default>speechd</default>
+  </entry>
   <entry key="WatchFile" type="Bool" >
    <default>true</default>
   </entry>

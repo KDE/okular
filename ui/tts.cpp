@@ -76,9 +76,18 @@ void OkularTTS::pauseResumeSpeech()
 void OkularTTS::slotSpeechStateChanged(QTextToSpeech::State state)
 {
     if (state == QTextToSpeech::Speaking)
+    {
         emit isSpeaking(true);
+        emit canPauseOrResume(true);
+    }
     else
+    {
         emit isSpeaking(false);
+        if (state == QTextToSpeech::Paused)
+            emit canPauseOrResume(true);
+        else
+            emit canPauseOrResume(false);
+    }
 }
 
 #include "moc_tts.cpp"

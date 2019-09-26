@@ -29,6 +29,7 @@ class OkularTTS : public QObject
 
     signals:
         void isSpeaking( bool speaking );
+        void canPauseOrResume( bool speakingOrPaused );
 
     private:
         // private storage

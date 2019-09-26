@@ -301,8 +301,14 @@ OkularTTS* PageViewPrivate::tts()
         m_tts = new OkularTTS( q );
         if ( aSpeakStop )
         {
-            QObject::connect( m_tts, &OkularTTS::isSpeaking,
+            QObject::connect( m_tts, &OkularTTS::canPauseOrResume,
                               aSpeakStop, &QAction::setEnabled );
+        }
+
+        if ( aSpeakPauseResume )
+        {
+             QObject::connect( m_tts, &OkularTTS::canPauseOrResume,
+                               aSpeakPauseResume, &QAction::setEnabled );
         }
     }
 
@@ -1261,7 +1267,6 @@ void PageView::updateActionState( bool haspages, bool documentChanged, bool hasf
         const bool enablettsactions = haspages ? Okular::Settings::useTTS() : false;
         d->aSpeakDoc->setEnabled( enablettsactions );
         d->aSpeakPage->setEnabled( enablettsactions );
-        d->aSpeakPauseResume->setEnabled( enablettsactions );
     }
 #endif
     if (d->aMouseMagnifier)

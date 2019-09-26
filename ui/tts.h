@@ -26,6 +26,7 @@ class OkularTTS : public QObject
 
     public slots:
         void slotSpeechStateChanged(QTextToSpeech::State state);
+        void slotConfigChanged();
 
     signals:
         void isSpeaking( bool speaking );

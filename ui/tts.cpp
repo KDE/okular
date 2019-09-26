@@ -33,12 +33,19 @@ public:
 
     OkularTTS *q;
     QTextToSpeech *speech;
+    // Which speech engine was used when above object was created.
+    // When the setting changes, we need to stop speaking and recreate.
+    QString speechEngine;
 };
 
 OkularTTS::OkularTTS( QObject *parent )
     : QObject( parent ), d( new Private( this ) )
 {
+    // Initialize speechEngine so we can reinitialize if it changes.
+    d->speechEngine = Okular::Settings::ttsEngine();
     connect( d->speech, &QTextToSpeech::stateChanged, this, &OkularTTS::slotSpeechStateChanged);
+    connect( Okular::Settings::self(), &KConfigSkeleton::configChanged,
+             this, &OkularTTS::slotConfigChanged);
 }
 
 OkularTTS::~OkularTTS()
@@ -87,6 +94,19 @@ void OkularTTS::slotSpeechStateChanged(QTextToSpeech::State state)
             emit canPauseOrResume(true);
         else
             emit canPauseOrResume(false);
+    }
+}
+
+void OkularTTS::slotConfigChanged()
+{
+    const QString engine = Okular::Settings::ttsEngine();
+    if (engine != d->speechEngine)
+    {
+        d->speech->stop();
+        delete d->speech;
+        d->speech = new QTextToSpeech(engine);
+        connect( d->speech, &QTextToSpeech::stateChanged, this, &OkularTTS::slotSpeechStateChanged);
+        d->speechEngine = engine;
     }
 }
 

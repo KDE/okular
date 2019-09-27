@@ -109,6 +109,7 @@ class PartTest
         void testSaveAsToSymlink();
         void testSaveIsSymlink();
         void testSidebarItemAfterSaving();
+        void testViewModeSavingPerFile();
         void testSaveAsUndoStackAnnotations();
         void testSaveAsUndoStackAnnotations_data();
         void testSaveAsUndoStackForms();
@@ -1057,6 +1058,36 @@ void PartTest::testSidebarItemAfterSaving()
 
     // Check it is still thumbnails after saving
     QCOMPARE(currentSidebarItem, part.m_sidebar->currentItem());
+}
+
+void PartTest::testViewModeSavingPerFile()
+{
+    QVariantList dummyArgs;
+    Okular::Part part( nullptr, nullptr, dummyArgs );
+
+    // Open some file
+    QVERIFY( openDocument( &part, QStringLiteral( KDESRCDIR "data/file1.pdf" ) ) );
+
+    // Switch to 'continuous' view mode
+    part.m_pageView->setCapability( Okular::View::ViewCapability::Continuous, QVariant( true ) );
+
+    // Close document
+    part.closeUrl();
+
+    // Open another file
+    QVERIFY( openDocument( &part, QStringLiteral( KDESRCDIR "data/file2.pdf" ) ) );
+
+    // Switch to 'non-continuous' mode
+    part.m_pageView->setCapability( Okular::View::ViewCapability::Continuous, QVariant( false ) );
+
+    // Close that document, too
+    part.closeUrl();
+
+    // Open first document again
+    QVERIFY( openDocument( &part, QStringLiteral( KDESRCDIR "data/file1.pdf" ) ) );
+
+    // If per-file view mode saving works, the view mode should be 'continuous' again.
+    QVERIFY( part.m_pageView->capability( Okular::View::ViewCapability::Continuous).toBool() );
 }
 
 void PartTest::testSaveAsUndoStackAnnotations()

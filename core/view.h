@@ -44,9 +44,9 @@ class OKULARCORE_EXPORT View
         {
             Zoom,                ///< Possibility to get/set the zoom of the view
             ZoomModality,        ///< Possibility to get/set the zoom mode of the view
-            Continuous,          ///< Possibility to toggle continuous mode
-            ViewModeModality,    ///< Possibility to get/set the view mode
-            TrimMargins          ///< Possibility to toggle trim-margins mode
+            Continuous,          ///< Possibility to toggle continuous mode @since 1.9
+            ViewModeModality,    ///< Possibility to get/set the view mode @since 1.9
+            TrimMargins          ///< Possibility to toggle trim-margins mode @since 1.9
         };
 
         /**

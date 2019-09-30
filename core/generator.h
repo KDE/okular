@@ -309,7 +309,7 @@ public:
 
     virtual bool canSign() const { return false; }
 
-    virtual void sign( const Okular::Annotation* /*pWhichAnnotation*/) { return; }
+    virtual bool sign( const Okular::Annotation* /*pWhichAnnotation*/, const QString& /*rFilename*/) { return false; }
 
     /**
      * This method can be called to trigger the generation of

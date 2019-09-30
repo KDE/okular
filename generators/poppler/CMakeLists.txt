@@ -19,7 +19,7 @@ check_cxx_source_compiles("
 #include <poppler-qt5.h>
 int main()
 {
-  auto f = &Poppler::Document::sign;
+  auto f = &Poppler::PDFConverter::sign;
 }
 " HAVE_POPPLER_SIGNING)
 

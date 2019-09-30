@@ -2704,7 +2704,32 @@ bool Document::canConfigurePrinter() const
 void Document::sign( const Okular::Annotation* pWhichAnnotation )
 {
     if (d->m_generator->canSign())
-        d->m_generator->sign( pWhichAnnotation );
+    {
+        // we technically need to save the document before signing it,
+        // so let's ask before clobbering
+        const int res = KMessageBox::warningContinueCancel(
+            d->m_widget,
+            i18n( "Signing this document will modify the file \"%1\" on disk by embedding a "
+                  "digital signature inside it. Do you wish to proceed?",
+                  currentDocument().fileName() ),
+            i18n( "Sign Document" ),
+            KStandardGuiItem::ok(),
+            KStandardGuiItem::cancel(),
+            QStringLiteral("SignatureAutoClobber") );
+
+        if (res == KMessageBox::Continue)
+        {
+            // Sign it!
+            if (!d->m_generator->sign( pWhichAnnotation, currentDocument().path() ))
+            {
+                KMessageBox::error( nullptr, i18n("Could not sign '%1'. Invalid password or cannot write",
+                                                  currentDocument().fileName() ) );
+            }
+                // no need to - slotAttemptReload() gets called via
+                //dirty handler anyway:
+                //swapBackingFile(currentDocument().path(), currentDocument());
+        }
+    }
 }
 
 DocumentInfo Document::documentInfo() const

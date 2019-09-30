@@ -101,7 +101,7 @@ public:
     Okular::AnnotationProxy *annotationProxy() const override;
 
     bool canSign() const override {return true;}
-    void sign( const Okular::Annotation* pWhichAnnotation ) override;
+    bool sign( const Okular::Annotation* pWhichAnnotation, const QString& rFilename ) override;
 
 protected:
     SwapBackingFileResult swapBackingFile(QString const &newFileName, QVector<Okular::Page *> &newPagesVector) override;

@@ -1854,16 +1854,35 @@ Okular::AnnotationProxy *PDFGenerator::annotationProxy() const
     return annotProxy;
 }
 
-void PDFGenerator::sign( const Okular::Annotation* pWhichAnnotation )
+bool PDFGenerator::sign( const Okular::Annotation* pWhichAnnotation, const QString& rFilename )
 {
 #ifdef HAVE_POPPLER_SIGNING
     const Okular::WidgetAnnotation* wa = dynamic_cast<const Okular::WidgetAnnotation*>(pWhichAnnotation);
 
     Poppler::Annotation *popplerAnn = qvariant_cast< Poppler::Annotation * >( pWhichAnnotation->nativeId() );
-    pdfdoc->sign( popplerAnn, wa->certificateCN(), wa->password() );
+
+    // save to tmp file - poppler doesn't like overwriting in-place
+    QTemporaryFile tf(QDir::tempPath() + QLatin1String("/okular_XXXXXX.pdf"));
+    tf.setAutoRemove(false);
+    if (!tf.open())
+        return false;
+    std::unique_ptr<Poppler::PDFConverter> converter(
+        pdfdoc->pdfConverter());
+    converter->setOutputFileName(tf.fileName());
+    converter->setPDFOptions(converter->pdfOptions() | Poppler::PDFConverter::WithChanges);
+    if (!converter->sign( popplerAnn, wa->certificateCN(), QString(), wa->password(), QString()))
+        return false;
+
+    // now copy over old file
+    tf.remove(rFilename);
+    if (!tf.rename(rFilename))
+        return false;
 #else
     Q_UNUSED( pWhichAnnotation );
+    Q_UNUSED( rFilename );
 #endif
+
+    return true;
 }
 
 #include "generator_pdf.moc"

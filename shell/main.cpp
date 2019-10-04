@@ -31,7 +31,12 @@
 
 int main(int argc, char** argv)
 {
-    QGuiApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+    /**
+     * enable high dpi support
+     */
+    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
+
 #if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
     QCoreApplication::setAttribute(Qt::AA_CompressTabletEvents);
 #endif
@@ -86,7 +91,7 @@ int main(int argc, char** argv)
                 break;
         }
     }
-    
+
     return app.exec();
 }
 

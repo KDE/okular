@@ -1760,7 +1760,7 @@ static RegionTextList XYCutForBoundingBoxes(const QList<WordWithCharacters> &wor
         {
             for( int j = 0 ; j < list.length() ; ++j )
             {
-                const WordWithCharacters word = list.at(j);
+                const WordWithCharacters &word = list.at(j);
                 const QRect wordRect = word.area().geometry(pageWidth,pageHeight);
 
                 if(topRect.intersects(wordRect))
@@ -1781,7 +1781,7 @@ static RegionTextList XYCutForBoundingBoxes(const QList<WordWithCharacters> &wor
         {
             for( int j = 0 ; j < list.length() ; ++j )
             {
-                const WordWithCharacters word = list.at(j);
+                const WordWithCharacters &word = list.at(j);
                 const QRect wordRect = word.area().geometry(pageWidth,pageHeight);
 
                 if(leftRect.intersects(wordRect))

@@ -32,7 +32,7 @@ class MessageBoxHelper : public QObject
 
 public:
     MessageBoxHelper(QMessageBox::StandardButton b, QString message, QMessageBox::Icon icon, QString title, bool hasCheckBox ) 
-                     : m_button(b), m_clicked(false), m_message(message), m_icon(icon), m_title(title), m_checkBox(hasCheckBox)
+                     : m_button(b), m_clicked(false), m_message(std::move(message)), m_icon(icon), m_title(std::move(title)), m_checkBox(hasCheckBox)
     {
         QTimer::singleShot(0, this, &MessageBoxHelper::closeMessageBox);
     }

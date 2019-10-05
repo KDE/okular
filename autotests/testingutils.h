@@ -30,7 +30,7 @@ namespace TestingUtils
      * Returns true if the pairwise comparison coordinates of points in @p points1 and @p points2 are almost
      * equal (according to qFuzzyCompare)
      */
-    bool pointListsAlmostEqual( QLinkedList< Okular::NormalizedPoint > points1, QLinkedList< Okular::NormalizedPoint > points2 );
+    bool pointListsAlmostEqual( const QLinkedList< Okular::NormalizedPoint > &points1, const QLinkedList< Okular::NormalizedPoint > &points2 );
 
     /*
      * The AnnotationDisposeWatcher class provides a static disposeAnnotation function

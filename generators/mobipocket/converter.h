@@ -25,7 +25,7 @@ namespace Mobi {
       
       QTextDocument *convert( const QString &fileName ) override;
     private:
-      void handleMetadata(const QMap<Mobipocket::Document::MetaKey, QString> metadata);
+      void handleMetadata(const QMap<Mobipocket::Document::MetaKey, QString> &metadata);
     };
 }
 

@@ -31,7 +31,7 @@ Converter::~Converter()
 {    
 }
 
-void Converter::handleMetadata(const QMap<Mobipocket::Document::MetaKey,QString> metadata)
+void Converter::handleMetadata(const QMap<Mobipocket::Document::MetaKey,QString> &metadata)
 {
   QMapIterator<Mobipocket::Document::MetaKey,QString> it(metadata);
   while (it.hasNext()) {

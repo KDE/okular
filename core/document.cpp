@@ -2298,7 +2298,7 @@ int DocumentPrivate::findFieldPageNumber( Okular::FormField *field )
     return foundPage;
 }
 
-void DocumentPrivate::executeScriptEvent( std::shared_ptr< Event > event, const Okular::ScriptAction * linkscript )
+void DocumentPrivate::executeScriptEvent( const std::shared_ptr< Event > &event, const Okular::ScriptAction * linkscript )
 {
     if ( !m_scripter )
     {

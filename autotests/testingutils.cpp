@@ -21,7 +21,7 @@ namespace TestingUtils
         return annotXmlString;
     }
 
-    bool pointListsAlmostEqual( QLinkedList< Okular::NormalizedPoint > points1, QLinkedList< Okular::NormalizedPoint > points2 ) {
+    bool pointListsAlmostEqual( const QLinkedList< Okular::NormalizedPoint > &points1, const QLinkedList< Okular::NormalizedPoint > &points2 ) {
 
         QLinkedListIterator<Okular::NormalizedPoint> it1( points1 );
         QLinkedListIterator<Okular::NormalizedPoint> it2( points2 );

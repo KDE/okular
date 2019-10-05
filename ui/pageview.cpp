@@ -2001,25 +2001,24 @@ void PageView::keyPressEvent( QKeyEvent * e )
     switch ( e->key() )
     {
         case Qt::Key_J:
-        case Qt::Key_K:
         case Qt::Key_Down:
+        slotScrollDown( true  /* singleStep */ );
+        break;
+
         case Qt::Key_PageDown:
+        slotScrollDown();
+        break;
+
+        case Qt::Key_K:
         case Qt::Key_Up:
+        slotScrollUp( true  /* singleStep */ );
+        break;
+
         case Qt::Key_PageUp:
         case Qt::Key_Backspace:
-            if ( e->key() == Qt::Key_Down
-                 || e->key() == Qt::Key_PageDown
-                 || e->key() == Qt::Key_J )
-            {
-                bool singleStep = e->key() == Qt::Key_Down || e->key() == Qt::Key_J;
-                slotScrollDown( singleStep );
-            }
-            else
-            {
-                bool singleStep = e->key() == Qt::Key_Up || e->key() == Qt::Key_K;
-                slotScrollUp( singleStep );
-            }
-            break;
+        slotScrollUp();
+        break;
+
         case Qt::Key_Left:
         case Qt::Key_H:
             if ( horizontalScrollBar()->maximum() == 0 )

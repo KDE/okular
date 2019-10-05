@@ -16,7 +16,6 @@
   <name xml:lang="fi">Okular</name>
   <name xml:lang="fr">Okular</name>
   <name xml:lang="gl">Okular</name>
-  <name xml:lang="ia">Okular</name>
   <name xml:lang="id">Okular</name>
   <name xml:lang="it">Okular</name>
   <name xml:lang="ko">Okular</name>
@@ -287,6 +286,6 @@
   </provides>
   <content_rating type="oars-1.1"/>
   <custom>
-      <value key="KDE::windows_store">https://www.microsoft.com/store/apps/9n41msq1wnm8</value>
+    <value key="KDE::windows_store">https://www.microsoft.com/store/apps/9n41msq1wnm8</value>
   </custom>
 </component>

@@ -323,7 +323,7 @@ public:
         action( new Okular::ScriptAction( Okular::JavaScript, script ) ),
         box( new MessageBoxHelper( QMessageBox::Ok, result, QMessageBox::Critical, QStringLiteral( "Okular" ), false ) )
     {
-        document->processAction( action.get() );
+        document->processAction( action.data() );
     }
 private:
     QScopedPointer< Okular::ScriptAction > action;

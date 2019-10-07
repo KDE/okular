@@ -2722,12 +2722,14 @@ void Document::sign( const Okular::Annotation* pWhichAnnotation )
             // Sign it!
             if (!d->m_generator->sign( pWhichAnnotation, currentDocument().path() ))
             {
-                KMessageBox::error( nullptr, i18n("Could not sign '%1'. Invalid password or cannot write",
-                                                  currentDocument().fileName() ) );
+                KMessageBox::error( d->m_widget,
+                                    i18nc("%1 is a filename",
+                                          "Could not sign '%1'. Invalid password or cannot write",
+                                         currentDocument().fileName() ) );
             }
-                // no need to - slotAttemptReload() gets called via
-                //dirty handler anyway:
-                //swapBackingFile(currentDocument().path(), currentDocument());
+            // no need to - slotAttemptReload() gets called via
+            //dirty handler anyway:
+            //swapBackingFile(currentDocument().path(), currentDocument());
         }
     }
 }

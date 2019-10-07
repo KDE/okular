@@ -340,8 +340,14 @@ public:
             if (resok)
             {
                 bool passok = false;
-                QString title = i18n("Enter password to unlock certificate %1");
-                QString pass = QInputDialog::getText(nullptr, i18n( "Enter password" ), title.replace("%1", cert),QLineEdit::Password ,QString(), &passok);
+                QString title = i18n("Enter password to unlock certificate %1",
+                                     cert);
+                QString pass = QInputDialog::getText(nullptr,
+                                                     i18n( "Enter password" ),
+                                                     title,
+                                                     QLineEdit::Password,
+                                                     QString(),
+                                                     &passok);
 
                 if (passok)
                 {

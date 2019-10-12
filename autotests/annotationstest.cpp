@@ -30,6 +30,7 @@ private slots:
 //     void testInk();
 //     void testHighlight();
 //     void testGeom();
+    void testTypewriter();
     void cleanupTestCase();
 
 private:
@@ -140,6 +141,29 @@ void AnnotationTest::testDistance_data()
     QTest::newRow("Highlight: Outside") << (Okular::Annotation*) highlight << 1.0 << 0.9 << qRound( pow( documentX * 0.1, 2 ) );
 }
 
+void AnnotationTest::testTypewriter()
+{
+  Okular::Annotation * annot = nullptr;
+  Okular::TextAnnotation * ta = new Okular::TextAnnotation();
+  annot = ta;
+  ta->setFlags( ta->flags() | Okular::Annotation::FixedRotation );
+  ta->setTextType( Okular::TextAnnotation::InPlace );
+  ta->setInplaceIntent( Okular::TextAnnotation::TypeWriter );
+  ta->style().setWidth( 0.0 );
+  ta->style().setColor( QColor(255,255,255,0) );
+
+  annot->setBoundingRectangle( Okular::NormalizedRect( 0.8, 0.1, 0.85, 0.15 ) );
+  annot->setContents( QStringLiteral("annot contents") );
+
+  m_document->addPageAnnotation( 0, annot );
+
+  QDomNode annotNode = annot->getAnnotationPropertiesDomNode();
+  QDomNodeList annotNodeList = annotNode.toElement().elementsByTagName("base");
+  QDomElement annotEl = annotNodeList.item(0).toElement();
+  QCOMPARE( annotEl.attribute( QStringLiteral("color") ), QStringLiteral("#00ffffff") );
+  QCOMPARE( annotEl.attribute( QStringLiteral("flags") ), QStringLiteral("4") );
+  QCOMPARE( annotEl.attribute( QStringLiteral("contents") ), QStringLiteral("annot contents") );
+}
 
 QTEST_MAIN( AnnotationTest )
 #include "annotationstest.moc"

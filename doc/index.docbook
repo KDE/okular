@@ -390,7 +390,7 @@ Context menu actions like Rename Bookmarks etc.)
 		<sect1 id="embedded-files">
 			<title>Embedded Files</title>
 			<para>
-				If the current document has some files embedded in it, when you open it a yellow bar
+				If the current document has some files embedded in it, when you open it a bar
 				will appear above the page view to notify you about the embedded files.
 			</para>
 			<screenshot>

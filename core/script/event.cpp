@@ -61,7 +61,7 @@ QString Event::name() const
         case ( FieldFormat ):
             return QStringLiteral( "Format" );
         case ( FieldKeystroke ):
-            return QStringLiteral( "Keystroke" );        
+            return QStringLiteral( "Keystroke" );
         case ( FieldFocus ):
             return QStringLiteral( "Focus" );
         case ( FieldValidate ):

@@ -63,7 +63,7 @@ class Event
             FieldMouseEnter, /// < Not implemented.
             FieldMouseExit,  /// < Not implemented.
             FieldMouseUp,    /// < Not implemented.
-            /* Validates the field after every change is commited
+            /* Validates the field after every change is committed
              * (clicked outside or tabbed to another field).
              * The enter event is not handled
              */

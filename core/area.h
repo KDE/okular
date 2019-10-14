@@ -89,7 +89,7 @@ class NormalizedShape;
  *
  * @par Example: Select Text on a Page using Mouse Events
  * @parblock
- * The positon of all glyphs and words is stored in normalized coordinates.
+ * The position of all glyphs and words is stored in normalized coordinates.
  * (This is what TextPage actually does.)
  * Mouse press and release events are given in page coordinates (400, 180) and (600, 450),
  * while the page has a size of 800x600.

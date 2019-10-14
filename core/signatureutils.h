@@ -235,7 +235,7 @@ class OKULARCORE_EXPORT SignatureInfo
         virtual QString reason() const;
 
         /**
-         * The the hash algorithm used for the signature.
+         * The hash algorithm used for the signature.
          */
         virtual HashAlgorithm hashAlgorithm() const;
 

@@ -1362,8 +1362,11 @@ bool PDFGenerator::print( QPrinter& printer )
     {
 #endif
 
+    if ( pdfOptionsPage )
+    {
         // If requested, scale to full page instead of the printable area
         printer.setFullPage( pdfOptionsPage->ignorePrintMargins() );
+    }
 
     QPainter painter;
     painter.begin(&printer);

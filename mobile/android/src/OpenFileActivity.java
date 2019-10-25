@@ -8,6 +8,8 @@ import android.os.ParcelFileDescriptor;
 import android.net.Uri;
 import android.app.Activity;
 
+import java.io.FileNotFoundException;
+
 import org.qtproject.qt5.android.bindings.QtActivity;
 
 class FileClass
@@ -17,6 +19,20 @@ class FileClass
 
 public class OpenFileActivity extends QtActivity
 {
+
+    public String contentUrlToFd(String url)
+    {
+        try {
+            ContentResolver resolver = getBaseContext().getContentResolver();
+            ParcelFileDescriptor fdObject = resolver.openFileDescriptor(Uri.parse(url), "r");
+            return "fd:///" + fdObject.detachFd();
+        } catch (FileNotFoundException e) {
+            Log.e("Okular", "Cannot find file", e);
+        }
+        return "";
+    }
+
+
     private void displayUri(Uri uri)
     {
         if (uri == null)
@@ -49,29 +65,6 @@ public class OpenFileActivity extends QtActivity
         Log.v("Okular", "Starting action: " + action);
         if (action == "android.intent.action.VIEW") {
             displayUri(bundleIntent.getData());
-        }
-    }
-
-    private static int OpenDocumentRequest = 42;
-
-    public static void openFile(Activity context, String title, String mimes)
-    {
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        intent.setType("application/pdf");
-        Log.v("Okular", "opening: " + mimes);
-        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimes.split(";"));
-
-        context.startActivityForResult(intent, OpenDocumentRequest);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        Log.v("Okular", "Activity Result: " + String.valueOf(requestCode) + " with code: " + String.valueOf(resultCode));
-        if (resultCode == RESULT_OK && requestCode == OpenDocumentRequest) {
-            Uri uri = intent.getData();
-            Log.v("Okular", "Opening document: " + uri.toString());
-            displayUri(uri);
         }
     }
 }

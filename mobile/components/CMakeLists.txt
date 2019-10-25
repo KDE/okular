@@ -37,6 +37,10 @@ target_link_libraries(okularplugin
         okularcore
         )
 
+if(ANDROID)
+    target_link_libraries(okularplugin Qt5::AndroidExtras)
+endif()
+
 install(TARGETS okularplugin DESTINATION ${KDE_INSTALL_QMLDIR}/org/kde/okular)
 install(FILES qmldir DESTINATION ${KDE_INSTALL_QMLDIR}/org/kde/okular)
 install(FILES DocumentView.qml DESTINATION ${KDE_INSTALL_QMLDIR}/org/kde/okular)

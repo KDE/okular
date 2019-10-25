@@ -45,26 +45,8 @@ Kirigami.ApplicationWindow {
             Kirigami.Action {
                 text: i18n("Open...")
                 icon.name: "document-open"
-                visible: Qt.platform.os !== "android"
                 onTriggered: {
                     fileDialog.open()
-                }
-            },
-            Kirigami.Action {
-                text: i18n("Open...")
-                icon.name: "document-open"
-                visible: p0.enabled
-                readonly property var p0: Connections {
-                    target: AndroidInstance
-                    enabled: AndroidInstance.hasOwnProperty("openFile")
-                    onOpenUri: {
-                        console.log("open uri!", uri)
-                        documentItem.url = uri
-                    }
-                }
-                onTriggered: {
-//                     var mimetypes = Okular.Okular.mimeTypes.join(",")
-                    AndroidInstance.openFile(i18n("Document to open..."), "*/*")
                 }
             }
         ]

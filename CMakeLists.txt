@@ -11,6 +11,10 @@ project(okular VERSION 1.8.${KDE_APPLICATIONS_VERSION_MICRO})
 set(QT_REQUIRED_VERSION "5.9.0")
 set(KF5_REQUIRED_VERSION "5.44.0")
 
+if (ANDROID)
+    set(QT_REQUIRED_VERSION "5.13.0")
+endif()
+
 find_package(ECM 5.33.0 CONFIG REQUIRED)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH})
 
@@ -38,6 +42,10 @@ if (NOT Qt5TextToSpeech_FOUND)
     message(STATUS "Qt5TextToSpeech not found, speech features will be disabled")
 else()
     add_definitions(-DHAVE_SPEECH)
+endif()
+
+if(ANDROID)
+    find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED COMPONENTS AndroidExtras)
 endif()
 
 if(NOT CMAKE_VERSION VERSION_LESS "3.10.0")

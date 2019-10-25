@@ -22,6 +22,11 @@
 #include <QtQml> // krazy:exclude=includes
 #include <QMimeDatabase>
 
+#ifdef Q_OS_ANDROID
+#include <QAndroidJniObject>
+#include <QtAndroid>
+#endif
+
 #include <core/document_p.h>
 #include <core/page.h>
 #include <core/bookmarkmanager.h>
@@ -59,9 +64,18 @@ void DocumentItem::setUrl(const QUrl & url)
     //TODO: password
     QMimeDatabase db;
 
-    const QString path = url.isLocalFile() ? url.toLocalFile() : QStringLiteral("-");
+    QUrl realUrl = url;
 
-    m_document->openDocument(path, url, db.mimeTypeForUrl(url));
+#ifdef Q_OS_ANDROID
+    realUrl = QUrl(QtAndroid::androidActivity().callObjectMethod("contentUrlToFd",
+                                                                 "(Ljava/lang/String;)Ljava/lang/String;",
+                                                                 QAndroidJniObject::fromString(url.toString()).object<jstring>()
+                                                                 ).toString());
+#endif
+
+    const QString path = realUrl.isLocalFile() ? realUrl.toLocalFile() : QStringLiteral("-");
+
+    m_document->openDocument(path, realUrl, db.mimeTypeForUrl(realUrl));
 
     m_tocModel->clear();
     m_tocModel->fill(m_document->documentSynopsis());

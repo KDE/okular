@@ -33,8 +33,9 @@ Kirigami.Page {
     QQC2.ToolBar {
         id: toolBarContent
         width: root.width
-        contentItem: QQC2.TextField {
+        QQC2.TextField {
             id: searchField
+            width: parent.width
             placeholderText: i18n("Search...")
         }
     }

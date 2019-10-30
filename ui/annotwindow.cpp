@@ -163,7 +163,7 @@ public:
 
     void setDate( const QDateTime& dt )
     {
-        dateLabel->setText( QLocale().toString( dt, QLocale::ShortFormat ) + QLatin1Char(' ') );
+        dateLabel->setText( QLocale().toString( dt.toTimeSpec(Qt::LocalTime), QLocale::ShortFormat ) + QLatin1Char(' ') );
     }
 
     void setAuthor( const QString& author )

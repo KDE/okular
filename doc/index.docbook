@@ -34,7 +34,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2019-08-10</date>
+		<date>2019-11-02</date>
 		<releaseinfo>1.9 (Applications 19.12)</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
@@ -1878,9 +1878,16 @@ Context menu actions like Rename Bookmarks etc.)
 							<guimenuitem>Stop Speaking</guimenuitem>
 						</menuchoice>
 					</term>
+					<term>
+						<menuchoice>
+							<guimenu>Tools</guimenu>
+							<guimenuitem>Pause/Resume Speaking</guimenuitem>
+						</menuchoice>
+					</term>
 					<listitem>
 						<para>These items allow you to speak the whole document or just the current page and stop speaking using the system speech service.
-						This service is provided by a &Qt; library which wraps speech-dispatcher on &Linux;, and native speech systems on other platforms.</para>
+						This service is provided by a &Qt; library which wraps speech-dispatcher on &Linux;, and native speech systems on other platforms.
+						It is possible to choose the current voice via &okular; <link linkend="configaccessibility">Accessibility</link> configuration page.</para>
 						<para>The <guilabel>Speak ...</guilabel> actions are enabled only if a speech service is available in the system.</para>
 					</listitem>
 				</varlistentry>
@@ -2314,6 +2321,15 @@ Context menu actions like Rename Bookmarks etc.)
 						<para><action>Converts</action> the document to black and white. You can set the
 							threshold and the contrast. Setting the threshold to a higher value
 							by moving it to the right will result in lighter grays used.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term><guilabel>Engine</guilabel></term>
+					<listitem>
+						<para><action>Allows you to choose</action> the text-to-speech (<abbrev>TTS</abbrev>) engine to be used by &okular;.
+							The default is <application>speechd</application> <abbrev>TTS</abbrev>, but you can use all
+							languages and voices depending on the available synthesizers on your platform. On &Linux;,
+							speech-dispatcher is used by default to determine available voices.</para>
 					</listitem>
 				</varlistentry>
 			</variablelist>

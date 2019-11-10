@@ -10,6 +10,7 @@
   <name xml:lang="el">Okular για κινητά</name>
   <name xml:lang="en-GB">Okular Mobile</name>
   <name xml:lang="es">Okular Mobile</name>
+  <name xml:lang="et">Okular Mobile</name>
   <name xml:lang="eu">Okular Mugikorra</name>
   <name xml:lang="fi">Okular Mobile</name>
   <name xml:lang="fr">Okular Mobile</name>
@@ -37,6 +38,7 @@
   <summary xml:lang="el">Πρόγραμμα προβολής εγγράφων</summary>
   <summary xml:lang="en-GB">Document Viewer</summary>
   <summary xml:lang="es">Visor de documentos</summary>
+  <summary xml:lang="et">Dokumendinäitaja</summary>
   <summary xml:lang="eu">Dokumentu erakuslea</summary>
   <summary xml:lang="fi">Asiakirjakatselin</summary>
   <summary xml:lang="fr">Afficheur de document</summary>
@@ -66,6 +68,7 @@
     <p xml:lang="el">Το Okular είναι ένα καθολικό πρόγραμμα προβολής εγγράφων που αναπτύχθηκε από το KDE. Το Okular λειτουργεί σε πολλές πλατφόρμες, συμπεριλαμβανομένων αλλά όχι μόνο των Linux, Windows, Mac OS X, *BSD, κλπ.</p>
     <p xml:lang="en-GB">Okular is a universal document viewer developed by KDE. Okular works on multiple platforms, including but not limited to Linux, Windows, Mac OS X, *BSD, etc.</p>
     <p xml:lang="es">Okular es un visor universal de documentos desarrollado por KDE. Okular funciona en diversas plataformas, incluidas Linux, Windows, Mac OS X, *BSD, etc.</p>
+    <p xml:lang="et">Okular on KDE loodud universaalne dokumendinäitaja. Okular töötab paljudel platvormidel, sealhulgas Linuxil, Windowsis, Mac OS X-is, *BSD-s jne.</p>
     <p xml:lang="eu">Okular KDEk garatutako dokumentu erakusle unibertsal bat da. Okular hainbat  plataformatan dabil, haien artean baino ez soilik haietara mugatua, Linux,  windows, Mac OS X, *BSD, etab.</p>
     <p xml:lang="fi">Okular on KDE:n kehittämä yleinen tiedostokatselin. Okular toimii monella alustalla kuten Linuxissa, Windowsissa, macOSissa, BSD:ssä jne.</p>
     <p xml:lang="fr">Okular est un afficheur universel de documents développé par KDE. Okular fonctionne sur de multiples plate-formes, comme Linux, Windows, Mac OS X, etc.</p>
@@ -93,6 +96,7 @@
     <p xml:lang="el">Χαρακτηριστικά:</p>
     <p xml:lang="en-GB">Features:</p>
     <p xml:lang="es">Funciones:</p>
+    <p xml:lang="et">Omadused:</p>
     <p xml:lang="eu">Eginbideak:</p>
     <p xml:lang="fi">Ominaisuuksia:</p>
     <p xml:lang="fr">Fonctionnalités :</p>
@@ -121,6 +125,7 @@
       <li xml:lang="el">Υποστηριζόμενοι τύποι αποθήκευσης: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="en-GB">Supported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="es">Formatos permitidos: PDF, PS, Tiff, CHM, DjVu, imágenes, DVI, XPS, ODT, Fiction Book, libros de cómics, Plucker, EPub, Fax</li>
+      <li xml:lang="et">Toetatud vormingud: PDF, PS, Tiff, CHM, DjVu, pildid, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="eu">Onartutako formatuak: PDF, PS, Tiff, CHM, DjVu, irudiak, DVI, XPS, ODT,  FictionBook, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="fi">Tuetut tiedostomuodot: PDF, Postscript, TIFF, CHM, DjVu, kuvat, DVI, XPS, OpenDocument, Fiction Book, sarjakuvakirja, Plucker, EPub, faksi</li>
       <li xml:lang="fr">Formats de fichiers gérés : PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
@@ -147,6 +152,7 @@
       <li xml:lang="el">Πλευρική γραμμή με περιεχόμενα, εικόνες επισκόπησης, αναλύσεις και σελιδοδείκτες</li>
       <li xml:lang="en-GB">Sidebar with contents, thumbnails, reviews and bookmarks</li>
       <li xml:lang="es">Barra lateral con contenido, miniaturas, revisiones y marcadores</li>
+      <li xml:lang="et">Külgriba sisukorra, pisipiltide, arvustuste ja järjehoidjatega</li>
       <li xml:lang="eu">Alboko-barra edukiekin, koadro-txikiekin, iritziekin eta laster-markekin</li>
       <li xml:lang="fi">Sivupaneeli, jossa sisällys, pienoiskuvat, arvostelut ja kirjanmerkit</li>
       <li xml:lang="fr">Barre latérale montrant les contenus, miniatures, informations de relecture et signets</li>
@@ -173,6 +179,7 @@
       <li xml:lang="el">Υποστήριξη σημειώσεων</li>
       <li xml:lang="en-GB">Annotations support</li>
       <li xml:lang="es">Permite el uso de notas</li>
+      <li xml:lang="et">Annotatsioonide toetus</li>
       <li xml:lang="eu">Idatzoharrak onartzen ditu</li>
       <li xml:lang="fi">Merkintöjen tuki</li>
       <li xml:lang="fr">Gestion des annotations</li>
@@ -203,6 +210,7 @@
       <caption xml:lang="el">Ανάγνωση οδηγού χρήσης στο Okular</caption>
       <caption xml:lang="en-GB">Reading manual in Okular</caption>
       <caption xml:lang="es">Lectura del manual en Okular</caption>
+      <caption xml:lang="et">Käsiraamatu lugemine Okularis</caption>
       <caption xml:lang="eu">Eskuliburua Okularren irakurtzea</caption>
       <caption xml:lang="fi">Oppaan lukeminen Okularissa</caption>
       <caption xml:lang="fr">Lecture d'un manuel dans Okular</caption>

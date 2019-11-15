@@ -743,7 +743,7 @@ void ThumbnailListPrivate::mouseReleaseEvent( QMouseEvent * e )
         vp.rePos.normalizedY = double(p.y()) / double(item->rect().height());
         vp.rePos.pos = Okular::DocumentViewport::Center;
         vp.rePos.enabled = true;
-        m_document->setViewport( vp );
+        m_document->setViewport( vp, nullptr, true);
     }
     setCursor( Qt::OpenHandCursor );
     m_mouseGrabPos.setX( 0 );

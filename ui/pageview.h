@@ -191,8 +191,8 @@ Q_OBJECT
 
         int viewColumns() const;
 
-        void center(int cx, int cy);
-        void scrollTo( int x, int y );
+        void center(int cx, int cy, bool smoothMove = false);
+        void scrollTo( int x, int y, bool smoothMove = false);
 
         void toggleFormWidgets( bool on );
 
@@ -226,8 +226,6 @@ Q_OBJECT
         void delayedResizeEvent();
         // activated either directly or via the contentsMoving(int,int) signal
         void slotRequestVisiblePixmaps( int newValue = -1 );
-        // activated by the viewport move timer
-        void slotMoveViewport();
         // activated by the autoscroll timer (Shift+Up/Down keys)
         void slotAutoScroll();
         // activated by the dragScroll timer
@@ -259,8 +257,8 @@ Q_OBJECT
         void slotToggleAnnotator( bool );
         void slotAutoScrollUp();
         void slotAutoScrollDown();
-        void slotScrollUp( bool singleStep = false );
-        void slotScrollDown( bool singleStep = false );
+        void slotScrollUp( int nSteps = 0 );
+        void slotScrollDown(int nSteps = 0 );
         void slotRotateClockwise();
         void slotRotateCounterClockwise();
         void slotRotateOriginal();

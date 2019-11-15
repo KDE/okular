@@ -2330,28 +2330,28 @@ void Part::slotGoToPage()
 {
     GotoPageDialog pageDialog( m_pageView, m_document->currentPage() + 1, m_document->pages() );
     if ( pageDialog.exec() == QDialog::Accepted )
-        m_document->setViewportPage( pageDialog.getPage() - 1 );
+        m_document->setViewportPage( pageDialog.getPage() - 1, nullptr, true );
 }
 
 
 void Part::slotPreviousPage()
 {
     if ( m_document->isOpened() && !(m_document->currentPage() < 1) )
-        m_document->setViewportPage( m_document->currentPage() - 1 );
+        m_document->setViewportPage( m_document->currentPage() - 1, nullptr, true );
 }
 
 
 void Part::slotNextPage()
 {
     if ( m_document->isOpened() && m_document->currentPage() < (m_document->pages() - 1) )
-        m_document->setViewportPage( m_document->currentPage() + 1 );
+        m_document->setViewportPage( m_document->currentPage() + 1, nullptr, true );
 }
 
 
 void Part::slotGotoFirst()
 {
     if ( m_document->isOpened() ) {
-        m_document->setViewportPage( 0 );
+        m_document->setViewportPage( 0, nullptr, true);
         m_beginningOfDocument->setEnabled( false );
     }
 }
@@ -2366,7 +2366,7 @@ void Part::slotGotoLast()
         endPage.rePos.normalizedX = 0;
         endPage.rePos.normalizedY = 1;
         endPage.rePos.pos = Okular::DocumentViewport::TopLeft;
-        m_document->setViewport(endPage);
+        m_document->setViewport(endPage, nullptr, true);
         m_endOfDocument->setEnabled(false);
     }
 }
@@ -2471,7 +2471,7 @@ void Part::slotPreviousBookmark()
     if ( !bookmark.isNull() )
     {
         DocumentViewport vp( bookmark.url().fragment(QUrl::FullyDecoded) );
-        m_document->setViewport( vp );
+        m_document->setViewport( vp, nullptr, true );
     }
 }
 
@@ -2483,7 +2483,7 @@ void Part::slotNextBookmark()
     if ( !bookmark.isNull() )
     {
         DocumentViewport vp( bookmark.url().fragment(QUrl::FullyDecoded) );
-        m_document->setViewport( vp );
+        m_document->setViewport( vp, nullptr, true );
     }
 }
 

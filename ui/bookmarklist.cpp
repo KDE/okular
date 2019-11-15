@@ -390,7 +390,7 @@ void BookmarkList::goTo( BookmarkItem * item )
 {
     if ( item->url() == m_document->currentDocument() )
     {
-        m_document->setViewport( item->viewport() );
+        m_document->setViewport( item->viewport(), nullptr, true );
     }
     else
     {

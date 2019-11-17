@@ -52,7 +52,6 @@
 #include <KAboutApplicationDialog>
 #include <KActionCollection>
 #include <KBookmarkAction>
-#include <KBookmarkMenu>
 #include <Kdelibs4ConfigMigrator>
 #include <Kdelibs4Migration>
 #include <KDirWatch>

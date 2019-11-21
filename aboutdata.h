@@ -30,7 +30,7 @@ inline KAboutData okularAboutData()
               "(C) 2004-2017 Albert Astals Cid\n"
               "(C) 2006-2009 Pino Toscano"),
         QString(),
-        QStringLiteral("http://okular.kde.org")
+        QStringLiteral("https://okular.kde.org")
     );
 
     about.addAuthor(QStringLiteral("Pino Toscano"), i18n("Former maintainer"), QStringLiteral("pino@kde.org"));

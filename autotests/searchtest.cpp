@@ -240,7 +240,7 @@ void SearchTest::testDottedI()
 
     //In the future it would be nice to add support for matching "İ"<->"i" and "I"<->"ı" in case-insensitive
     //mode as well (QString::compare does not match them, at least in non-Turkish locales, since it follows
-    //the Unicode case-folding rules http://www.unicode.org/Public/6.2.0/ucd/CaseFolding.txt).
+    //the Unicode case-folding rules https://www.unicode.org/Public/6.2.0/ucd/CaseFolding.txt).
 
     QVector<QString> text;
     text << QStringLiteral("İ");

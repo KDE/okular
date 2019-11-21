@@ -7,7 +7,7 @@ include_directories(
 
 find_package(Qca-qt5 2.1.0)
 set_package_properties(Qca-qt5 PROPERTIES DESCRIPTION "Support for encryption"
-                       URL "http://download.kde.org/stable/qca-qt5/"
+                       URL "https://download.kde.org/stable/qca-qt5/"
                        TYPE RECOMMENDED)
 
 if ( Qca-qt5_FOUND )

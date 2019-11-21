@@ -11,14 +11,14 @@ set(LIBSPECTRE_MINIMUM_VERSION "0.2")
 find_package(LibSpectre "${LIBSPECTRE_MINIMUM_VERSION}")
 set_package_properties(LibSpectre PROPERTIES
         DESCRIPTION  "A PostScript rendering library"
-        URL "http://libspectre.freedesktop.org/wiki/"
+        URL "https://libspectre.freedesktop.org"
         TYPE RECOMMENDED
         PURPOSE "Support for PS files in okular.")
 
 find_package(KF5KExiv2 CONFIG)
 set_package_properties("LibKExiv2" PROPERTIES
         DESCRIPTION  "Wrapper around Exiv2 library"
-        URL "http://www.digikam.org/sharedlibs"
+        URL "https://commits.kde.org/libkexiv2"
         TYPE RECOMMENDED
         PURPOSE "Support for image files")
 
@@ -45,35 +45,35 @@ set_package_properties("LibZip" PROPERTIES
 find_package(DjVuLibre "3.5.17")
 set_package_properties("DjVuLibre" PROPERTIES
         DESCRIPTION  "A library for dealing with DjVu formatted files"
-        URL "http://djvulibre.djvuzone.org"
+        URL "https://djvulibre.djvuzone.org"
         TYPE RECOMMENDED
         PURPOSE "Support for DjVu files in okular.")
 
 find_package(TIFF)
 set_package_properties("libTIFF" PROPERTIES
         DESCRIPTION  "A library for reading and writing TIFF formatted files,"
-        URL "http://www.remotesensing.org/libtiff"
+        URL "http://www.libtiff.org"
         TYPE RECOMMENDED
         PURPOSE "Support for TIFF files in okular.")
 
 find_package(Freetype)
 set_package_properties("FreeType" PROPERTIES
         DESCRIPTION  "A font rendering engine"
-        URL "http://www.freetype.org"
+        URL "https://www.freetype.org"
         TYPE RECOMMENDED
         PURPOSE "Provides freetype font support in the okular DVI generator.")
 
 find_package(JPEG)
 set_package_properties("JPEG" PROPERTIES
         DESCRIPTION  "A library for reading and writing JPEG image files."
-        URL "http://www.ijg.org"
+        URL "https://www.ijg.org"
         TYPE RECOMMENDED
         PURPOSE "Support for PalmDB documents in okular.")
 
 find_package(ZLIB)
 set_package_properties("ZLib" PROPERTIES
         DESCRIPTION  "The Zlib compression library"
-        URL "http://www.zlib.net"
+        URL "https://www.zlib.net"
         TYPE RECOMMENDED
         PURPOSE "Support for Plucker files in Okular.")
 
@@ -94,7 +94,7 @@ set_package_properties("libqmobipocket" PROPERTIES
 find_package(Discount "2")
 set_package_properties("discount" PROPERTIES
         DESCRIPTION "A library that gives you formatting functions suitable for marking down entire documents or lines of text"
-        URL "http://www.pell.portland.or.us/~orc/Code/discount/"
+        URL "https://www.pell.portland.or.us/~orc/Code/discount/"
         TYPE RECOMMENDED
         PURPOSE "Support for Markdown documents in Okular.")
 

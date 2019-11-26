@@ -1,5 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2007 by Pino Toscano <pino@kde.org>                     *
+ *   Copyright (C) 2019 by Oliver Sander <oliver.sander@tu-dresden.de>     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,8 +18,7 @@
 class PopplerFormFieldButton : public Okular::FormFieldButton
 {
     public:
-        explicit PopplerFormFieldButton( Poppler::FormFieldButton * field );
-        virtual ~PopplerFormFieldButton();
+        explicit PopplerFormFieldButton( std::unique_ptr<Poppler::FormFieldButton> field );
 
         // inherited from Okular::FormField
         Okular::NormalizedRect rect() const override;
@@ -50,7 +50,7 @@ class PopplerFormFieldButton : public Okular::FormFieldButton
 #endif
 
     private:
-        Poppler::FormFieldButton * m_field;
+        std::unique_ptr<Poppler::FormFieldButton> m_field;
         Okular::NormalizedRect m_rect;
         int m_id;
 
@@ -59,8 +59,7 @@ class PopplerFormFieldButton : public Okular::FormFieldButton
 class PopplerFormFieldText : public Okular::FormFieldText
 {
     public:
-        explicit PopplerFormFieldText( Poppler::FormFieldText * field );
-        virtual ~PopplerFormFieldText();
+        explicit PopplerFormFieldText( std::unique_ptr<Poppler::FormFieldText> field );
 
         // inherited from Okular::FormField
         Okular::NormalizedRect rect() const override;
@@ -87,7 +86,7 @@ class PopplerFormFieldText : public Okular::FormFieldText
         bool canBeSpellChecked() const override;
 
     private:
-        Poppler::FormFieldText * m_field;
+        std::unique_ptr<Poppler::FormFieldText> m_field;
         Okular::NormalizedRect m_rect;
         int m_id;
 
@@ -96,8 +95,7 @@ class PopplerFormFieldText : public Okular::FormFieldText
 class PopplerFormFieldChoice : public Okular::FormFieldChoice
 {
     public:
-        explicit PopplerFormFieldChoice( Poppler::FormFieldChoice * field );
-        virtual ~PopplerFormFieldChoice();
+        explicit PopplerFormFieldChoice( std::unique_ptr<Poppler::FormFieldChoice> field );
 
         // inherited from Okular::FormField
         Okular::NormalizedRect rect() const override;
@@ -125,7 +123,7 @@ class PopplerFormFieldChoice : public Okular::FormFieldChoice
         bool canBeSpellChecked() const override;
 
     private:
-        Poppler::FormFieldChoice * m_field;
+        std::unique_ptr<Poppler::FormFieldChoice> m_field;
         Okular::NormalizedRect m_rect;
         int m_id;
 
@@ -134,7 +132,7 @@ class PopplerFormFieldChoice : public Okular::FormFieldChoice
 class PopplerFormFieldSignature : public Okular::FormFieldSignature
 {
     public:
-        PopplerFormFieldSignature( Poppler::FormFieldSignature * field );
+        PopplerFormFieldSignature( std::unique_ptr<Poppler::FormFieldSignature> field );
         virtual ~PopplerFormFieldSignature();
 
         // inherited from Okular::FormField
@@ -151,7 +149,7 @@ class PopplerFormFieldSignature : public Okular::FormFieldSignature
         const Okular::SignatureInfo &signatureInfo() const override;
 
     private:
-        Poppler::FormFieldSignature * m_field;
+        std::unique_ptr<Poppler::FormFieldSignature> m_field;
         Okular::SignatureInfo *m_info;
         Okular::NormalizedRect m_rect;
         int m_id;

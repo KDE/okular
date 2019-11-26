@@ -5,6 +5,7 @@
  *   Copyright (C) 2017    Klarälvdalens Datakonsult AB, a KDAB Group      *
  *                         company, info@kdab.com. Work sponsored by the   *
  *                         LiMux project of the city of Munich             *
+ *   Copyright (C) 2019 by Oliver Sander <oliver.sander@tu-dresden.de>     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -1971,16 +1972,16 @@ void PDFGenerator::addFormFields( Poppler::Page * popplerPage, Okular::Page * pa
         switch ( f->type() )
         {
             case Poppler::FormField::FormButton:
-                of = new PopplerFormFieldButton( static_cast<Poppler::FormFieldButton*>( f ) );
+                of = new PopplerFormFieldButton( std::unique_ptr<Poppler::FormFieldButton>( static_cast<Poppler::FormFieldButton*>( f ) ) );
                 break;
             case Poppler::FormField::FormText:
-                of = new PopplerFormFieldText( static_cast<Poppler::FormFieldText*>( f ) );
+                of = new PopplerFormFieldText( std::unique_ptr<Poppler::FormFieldText>( static_cast<Poppler::FormFieldText*>( f ) ) );
                 break;
             case Poppler::FormField::FormChoice:
-                of = new PopplerFormFieldChoice( static_cast<Poppler::FormFieldChoice*>( f ) );
+                of = new PopplerFormFieldChoice( std::unique_ptr<Poppler::FormFieldChoice>( static_cast<Poppler::FormFieldChoice*>( f ) ) );
                 break;
             case Poppler::FormField::FormSignature: {
-                of = new PopplerFormFieldSignature( static_cast<Poppler::FormFieldSignature*>( f ) );
+                of = new PopplerFormFieldSignature( std::unique_ptr<Poppler::FormFieldSignature>( static_cast<Poppler::FormFieldSignature*>( f ) ) );
                 break;
             }
             default: ;

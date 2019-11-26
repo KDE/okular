@@ -1,6 +1,7 @@
 /***************************************************************************
  *   Copyright (C) 2007 by Pino Toscano <pino@kde.org>                     *
  *   Copyright (C) 2018 by Intevation GmbH <intevation@intevation.de>      *
+ *   Copyright (C) 2019 by Oliver Sander <oliver.sander@tu-dresden.de>     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -21,40 +22,35 @@
 extern Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink, bool deletePopplerLink = true);
 #ifdef HAVE_POPPLER_0_65
 # define SET_ANNOT_ACTIONS \
-    setAdditionalAction( Okular::Annotation::CursorEntering, createLinkFromPopplerLink( field->additionalAction( Poppler::Annotation::CursorEnteringAction ) ) ); \
-    setAdditionalAction( Okular::Annotation::CursorLeaving, createLinkFromPopplerLink( field->additionalAction( Poppler::Annotation::CursorLeavingAction ) ) ); \
-    setAdditionalAction( Okular::Annotation::MousePressed, createLinkFromPopplerLink( field->additionalAction( Poppler::Annotation::MousePressedAction ) ) ); \
-    setAdditionalAction( Okular::Annotation::MouseReleased, createLinkFromPopplerLink( field->additionalAction( Poppler::Annotation::MouseReleasedAction ) ) ); \
-    setAdditionalAction( Okular::Annotation::FocusIn, createLinkFromPopplerLink( field->additionalAction( Poppler::Annotation::FocusInAction ) ) ); \
-    setAdditionalAction( Okular::Annotation::FocusOut, createLinkFromPopplerLink( field->additionalAction( Poppler::Annotation::FocusOutAction ) ) );
+    setAdditionalAction( Okular::Annotation::CursorEntering, createLinkFromPopplerLink( m_field->additionalAction( Poppler::Annotation::CursorEnteringAction ) ) ); \
+    setAdditionalAction( Okular::Annotation::CursorLeaving, createLinkFromPopplerLink( m_field->additionalAction( Poppler::Annotation::CursorLeavingAction ) ) ); \
+    setAdditionalAction( Okular::Annotation::MousePressed, createLinkFromPopplerLink( m_field->additionalAction( Poppler::Annotation::MousePressedAction ) ) ); \
+    setAdditionalAction( Okular::Annotation::MouseReleased, createLinkFromPopplerLink( m_field->additionalAction( Poppler::Annotation::MouseReleasedAction ) ) ); \
+    setAdditionalAction( Okular::Annotation::FocusIn, createLinkFromPopplerLink( m_field->additionalAction( Poppler::Annotation::FocusInAction ) ) ); \
+    setAdditionalAction( Okular::Annotation::FocusOut, createLinkFromPopplerLink( m_field->additionalAction( Poppler::Annotation::FocusOutAction ) ) );
 #else
 # define SET_ANNOT_ACTIONS
 #endif
 
 #ifdef HAVE_POPPLER_0_53
 #define SET_ACTIONS \
-    setActivationAction( createLinkFromPopplerLink( field->activationAction() ) ); \
-    setAdditionalAction( Okular::FormField::FieldModified, createLinkFromPopplerLink( field->additionalAction( Poppler::FormField::FieldModified ) ) ); \
-    setAdditionalAction( Okular::FormField::FormatField, createLinkFromPopplerLink( field->additionalAction( Poppler::FormField::FormatField ) ) ); \
-    setAdditionalAction( Okular::FormField::ValidateField, createLinkFromPopplerLink( field->additionalAction( Poppler::FormField::ValidateField ) ) ); \
-    setAdditionalAction( Okular::FormField::CalculateField, createLinkFromPopplerLink( field->additionalAction( Poppler::FormField::CalculateField ) ) ); \
+    setActivationAction( createLinkFromPopplerLink( m_field->activationAction() ) ); \
+    setAdditionalAction( Okular::FormField::FieldModified, createLinkFromPopplerLink( m_field->additionalAction( Poppler::FormField::FieldModified ) ) ); \
+    setAdditionalAction( Okular::FormField::FormatField, createLinkFromPopplerLink( m_field->additionalAction( Poppler::FormField::FormatField ) ) ); \
+    setAdditionalAction( Okular::FormField::ValidateField, createLinkFromPopplerLink( m_field->additionalAction( Poppler::FormField::ValidateField ) ) ); \
+    setAdditionalAction( Okular::FormField::CalculateField, createLinkFromPopplerLink( m_field->additionalAction( Poppler::FormField::CalculateField ) ) ); \
     SET_ANNOT_ACTIONS
 #else
 #define SET_ACTIONS \
-    setActivationAction( createLinkFromPopplerLink( field->activationAction() ) );
+    setActivationAction( createLinkFromPopplerLink( m_field->activationAction() ) );
 #endif
 
-PopplerFormFieldButton::PopplerFormFieldButton( Poppler::FormFieldButton * field )
-    : Okular::FormFieldButton(), m_field( field )
+PopplerFormFieldButton::PopplerFormFieldButton( std::unique_ptr<Poppler::FormFieldButton> field )
+    : Okular::FormFieldButton(), m_field( std::move( field ) )
 {
     m_rect = Okular::NormalizedRect::fromQRectF( m_field->rect() );
     m_id = m_field->id();
     SET_ACTIONS
-}
-
-PopplerFormFieldButton::~PopplerFormFieldButton()
-{
-    delete m_field;
 }
 
 Okular::NormalizedRect PopplerFormFieldButton::rect() const
@@ -183,17 +179,12 @@ void PopplerFormFieldButton::setIcon( Okular::FormField *field )
 }
 
 
-PopplerFormFieldText::PopplerFormFieldText( Poppler::FormFieldText * field )
-    : Okular::FormFieldText(), m_field( field )
+PopplerFormFieldText::PopplerFormFieldText( std::unique_ptr<Poppler::FormFieldText> field )
+    : Okular::FormFieldText(), m_field( std::move( field ) )
 {
     m_rect = Okular::NormalizedRect::fromQRectF( m_field->rect() );
     m_id = m_field->id();
     SET_ACTIONS
-}
-
-PopplerFormFieldText::~PopplerFormFieldText()
-{
-    delete m_field;
 }
 
 Okular::NormalizedRect PopplerFormFieldText::rect() const
@@ -328,17 +319,12 @@ bool PopplerFormFieldText::canBeSpellChecked() const
 }
 
 
-PopplerFormFieldChoice::PopplerFormFieldChoice( Poppler::FormFieldChoice * field )
-    : Okular::FormFieldChoice(), m_field( field )
+PopplerFormFieldChoice::PopplerFormFieldChoice( std::unique_ptr<Poppler::FormFieldChoice> field )
+    : Okular::FormFieldChoice(), m_field( std::move( field ) )
 {
     m_rect = Okular::NormalizedRect::fromQRectF( m_field->rect() );
     m_id = m_field->id();
     SET_ACTIONS
-}
-
-PopplerFormFieldChoice::~PopplerFormFieldChoice()
-{
-    delete m_field;
 }
 
 Okular::NormalizedRect PopplerFormFieldChoice::rect() const
@@ -478,8 +464,8 @@ class DummySignatureInfo : public Okular::SignatureInfo
 #endif
 
 
-PopplerFormFieldSignature::PopplerFormFieldSignature( Poppler::FormFieldSignature * field )
-    : Okular::FormFieldSignature(), m_field( field )
+PopplerFormFieldSignature::PopplerFormFieldSignature( std::unique_ptr<Poppler::FormFieldSignature> field )
+    : Okular::FormFieldSignature(), m_field( std::move( field ) )
 {
     m_rect = Okular::NormalizedRect::fromQRectF( m_field->rect() );
     m_id = m_field->id();
@@ -493,7 +479,6 @@ PopplerFormFieldSignature::PopplerFormFieldSignature( Poppler::FormFieldSignatur
 
 PopplerFormFieldSignature::~PopplerFormFieldSignature()
 {
-    delete m_field;
     delete m_info;
 }
 

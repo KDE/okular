@@ -136,7 +136,7 @@ void FormatTest::testSpecialFormat_data()
     QTest::newRow( "field invalid 10 digits" ) << QStringLiteral( "8Digits" ) << QStringLiteral( "1234567890" ) << false << QStringLiteral( "12345-6789" );
     QTest::newRow( "field formatted telephone" ) << QStringLiteral( "telefone" ) << QStringLiteral( "1234567890" ) << true << QStringLiteral( "(123) 456-7890" );
     QTest::newRow( "field invalid telephone" ) << QStringLiteral( "telefone" ) << QStringLiteral( "12345678900" ) << false << QStringLiteral( "(123) 456-7890" );
-    QTest::newRow( "field formmated SSN" ) << QStringLiteral( "CPF" ) << QStringLiteral( "123456789" ) << true << QStringLiteral( "123-45-6789" );
+    QTest::newRow( "field formatted SSN" ) << QStringLiteral( "CPF" ) << QStringLiteral( "123456789" ) << true << QStringLiteral( "123-45-6789" );
     QTest::newRow( "field invalid SSN" ) << QStringLiteral( "CPF" ) << QStringLiteral( "1234567890" ) << false << QStringLiteral( "123-45-6789" );
 }
 

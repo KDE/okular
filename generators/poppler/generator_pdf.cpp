@@ -657,7 +657,7 @@ Okular::Document::OpenResult PDFGenerator::init(QVector<Okular::Page*> & pagesVe
 
         if ( pdfdoc->isLocked() ) {
             delete pdfdoc;
-            pdfdoc = 0;
+            pdfdoc = nullptr;
             return Okular::Document::OpenNeedsPassword;
         }
     }
@@ -666,7 +666,7 @@ Okular::Document::OpenResult PDFGenerator::init(QVector<Okular::Page*> & pagesVe
     int pageCount = pdfdoc->numPages();
     if (pageCount < 0) {
         delete pdfdoc;
-        pdfdoc = 0;
+        pdfdoc = nullptr;
         return Okular::Document::OpenError;
     }
     pagesVector.resize(pageCount);
@@ -722,7 +722,7 @@ bool PDFGenerator::doCloseDocument()
     delete annotProxy;
     annotProxy = 0;
     delete pdfdoc;
-    pdfdoc = 0;
+    pdfdoc = nullptr;
     userMutex()->unlock();
     docSynopsisDirty = true;
     docSyn.clear();
@@ -1967,7 +1967,7 @@ void PDFGenerator::addFormFields( Poppler::Page * popplerPage, Okular::Page * pa
     QLinkedList<Okular::FormField*> okularFormFields;
     foreach( Poppler::FormField *f, popplerFormFields )
     {
-        Okular::FormField * of = 0;
+        Okular::FormField * of = nullptr;
         switch ( f->type() )
         {
             case Poppler::FormField::FormButton:

@@ -2402,8 +2402,8 @@ void PageView::mousePressEvent( QMouseEvent * e )
                 }
 
                 if( !d->mouseOnRect ){
+                    d->mouseGrabOffset = QPoint(0,0);
                     d->scroller->handleInput(QScroller::InputPress, e->pos(), e->timestamp());
-
                     d->leftClickTimer.start( QApplication::doubleClickInterval() + 10 );
                 }
             }
@@ -2604,7 +2604,11 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
     {
         case Okular::Settings::EnumMouseMode::Browse:{
 
-            d->scroller->handleInput(QScroller::InputRelease, e->pos(), e->timestamp());
+            d->scroller->handleInput(QScroller::InputRelease, e->pos() + d->mouseGrabOffset, e->timestamp());
+
+            //disable flick if the cursor has wrapped around
+            if(d->mouseGrabOffset != QPoint(0,0))
+                d->scroller->stop();
 
             // return the cursor to its normal state after dragging
             if ( cursor().shape() == Qt::ClosedHandCursor )

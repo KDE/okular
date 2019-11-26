@@ -37,7 +37,6 @@
 #include <kactioncollection.h>
 #include <klineedit.h>
 #include <KLocalizedString>
-#include <kiconloader.h>
 #include <kmessagebox.h>
 #include <kselectaction.h>
 #include <QDialog>
@@ -1147,7 +1146,7 @@ void PresentationWidget::generateIntroPage( QPainter & p )
     }
 
     // draw okular logo in the four corners
-    QPixmap logo = DesktopIcon( QStringLiteral("okular"), 64 * dpr );
+    QPixmap logo = QIcon::fromTheme( QStringLiteral("okular") ).pixmap( 64 * dpr );
     logo.setDevicePixelRatio( dpr );
     if ( !logo.isNull() )
     {

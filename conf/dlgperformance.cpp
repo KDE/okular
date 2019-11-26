@@ -13,7 +13,6 @@
 #include <QFont>
 
 #include <KConfigDialogManager>
-#include <KIconLoader>
 
 #include "settings_core.h"
 #include "ui_dlgperformancebase.h"
@@ -29,8 +28,8 @@ DlgPerformance::DlgPerformance( QWidget * parent )
     labelFont.setBold( true );
     m_dlg->descLabel->setFont( labelFont );
 
-    m_dlg->cpuLabel->setPixmap( BarIcon( QStringLiteral("cpu"), 32 ) );
-//    m_dlg->memoryLabel->setPixmap( BarIcon( "kcmmemory", 32 ) ); // TODO: enable again when proper icon is available
+    m_dlg->cpuLabel->setPixmap( QIcon::fromTheme( QStringLiteral("cpu") ).pixmap( 32 ) );
+//    m_dlg->memoryLabel->setPixmap( QIcon::fromTheme( "kcmmemory" ).pixmap(  32 ) ); // TODO: enable again when proper icon is available
 
     m_dlg->memoryLevelGroup->setId(m_dlg->lowRadio, 0);
     m_dlg->memoryLevelGroup->setId(m_dlg->normalRadio, 1);

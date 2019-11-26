@@ -22,7 +22,6 @@
 #include <QTimer>
 
 #include <KLocalizedString>
-#include <KIconLoader>
 #include <KActionCollection>
 
 // local includes
@@ -640,7 +639,7 @@ void ThumbnailListPrivate::slotDelayTimeout()
     delete m_bookmarkOverlay;
     const int expectedWidth = q->viewport()->width() / 4;
     if ( expectedWidth > 10 )
-        m_bookmarkOverlay = new QPixmap( DesktopIcon( QStringLiteral("bookmarks"), expectedWidth ) );
+        m_bookmarkOverlay = new QPixmap( QIcon::fromTheme( QStringLiteral("bookmarks") ).pixmap( expectedWidth ) );
     else
         m_bookmarkOverlay = nullptr;
 

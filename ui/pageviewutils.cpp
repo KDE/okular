@@ -27,7 +27,6 @@
 #include <kacceleratormanager.h>
 #include <kactioncollection.h>
 #include <kcolorscheme.h>
-#include <kiconloader.h>
 #include <KLocalizedString>
 
 // system includes
@@ -258,24 +257,25 @@ void PageViewMessage::display( const QString & message, const QString & details,
 
     // load icon (if set)
     m_symbol = QPixmap();
+    const auto symbolSize = style()->pixelMetric(QStyle::PM_SmallIconSize);
     if ( icon != None )
     {
         switch ( icon )
         {
             case Annotation:
-                m_symbol = SmallIcon( QStringLiteral("draw-freehand") );
+                m_symbol = QIcon::fromTheme( QStringLiteral("draw-freehand") ).pixmap( symbolSize );
                 break;
             case Find:
-                m_symbol = SmallIcon( QStringLiteral("zoom-original") );
+                m_symbol = QIcon::fromTheme( QStringLiteral("zoom-original") ).pixmap( symbolSize );
                 break;
             case Error:
-                m_symbol = SmallIcon( QStringLiteral("dialog-error") );
+                m_symbol = QIcon::fromTheme( QStringLiteral("dialog-error") ).pixmap( symbolSize );
                 break;
             case Warning:
-                m_symbol = SmallIcon( QStringLiteral("dialog-warning") );
+                m_symbol = QIcon::fromTheme( QStringLiteral("dialog-warning") ).pixmap( symbolSize );
                 break;
             default:
-                m_symbol = SmallIcon( QStringLiteral("dialog-information") );
+                m_symbol = QIcon::fromTheme( QStringLiteral("dialog-information") ).pixmap( symbolSize );
                 break;
         }
 

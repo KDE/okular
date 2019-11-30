@@ -74,6 +74,7 @@
     <choice name="Emacsclient" />
     <choice name="Lyxclient" />
     <choice name="Texstudio" />
+    <choice name="Texifyidea" />
    </choices>
   </entry>
   <entry key="ExternalEditorCommand" type="String">

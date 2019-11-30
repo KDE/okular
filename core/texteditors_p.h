@@ -33,6 +33,8 @@ static inline QHash< int, QString > buildEditorsMap()
         QStringLiteral( "lyxclient -g %f %l" ) );
     editors.insert( SettingsCore::EnumExternalEditor::Texstudio,
         QStringLiteral( "texstudio --line %l" ) );
+    editors.insert( SettingsCore::EnumExternalEditor::Texifyidea,
+        QStringLiteral( "idea --line %l" ) );
     return editors;
 }
 

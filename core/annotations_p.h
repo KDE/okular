@@ -53,7 +53,7 @@ class AnnotationPrivate
          * given point @p x @p y @p xScale @p yScale
          * @since 0.17
          */
-        virtual double distanceSqr( double x, double y, double xScale, double yScale );
+        virtual double distanceSqr( double x, double y, double xScale, double yScale ) const;
 
         PagePrivate * m_page;
 

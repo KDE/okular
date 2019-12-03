@@ -855,7 +855,7 @@ void Annotation::setAnnotationProperties( const QDomNode& node )
     d_ptr->transform( d_ptr->m_page->rotationMatrix() );
 }
 
-double AnnotationPrivate::distanceSqr( double x, double y, double xScale, double yScale )
+double AnnotationPrivate::distanceSqr( double x, double y, double xScale, double yScale ) const
 {
     return m_transformedBoundary.distanceSqr( x, y, xScale, yScale );
 }
@@ -1328,7 +1328,7 @@ class Okular::LineAnnotationPrivate : public Okular::AnnotationPrivate
         void baseTransform( const QTransform &matrix ) override;
         void resetTransformation() override;
         void translate( const NormalizedPoint &coord ) override;
-        double distanceSqr( double x, double y, double xScale, double yScale ) override;
+        double distanceSqr( double x, double y, double xScale, double yScale ) const override;
         void setAnnotationProperties( const QDomNode& node ) override;
         AnnotationPrivate* getNewAnnotationPrivate() override;
 
@@ -1619,7 +1619,7 @@ AnnotationPrivate* LineAnnotationPrivate::getNewAnnotationPrivate()
     return new LineAnnotationPrivate();
 }
 
-double LineAnnotationPrivate::distanceSqr( double x, double y, double xScale, double yScale )
+double LineAnnotationPrivate::distanceSqr( double x, double y, double xScale, double yScale ) const
 {
     QLinkedList<NormalizedPoint> transformedLinePoints = m_transformedLinePoints;
 
@@ -1652,7 +1652,7 @@ class Okular::GeomAnnotationPrivate : public Okular::AnnotationPrivate
         void setAnnotationProperties( const QDomNode& node ) override;
         bool canBeResized() const override;
         AnnotationPrivate* getNewAnnotationPrivate() override;
-        double distanceSqr( double x, double y, double xScale, double yScale ) override;
+        double distanceSqr( double x, double y, double xScale, double yScale ) const override;
 
         GeomAnnotation::GeomType m_geomType;
         QColor m_geomInnerColor;
@@ -1754,7 +1754,7 @@ AnnotationPrivate* GeomAnnotationPrivate::getNewAnnotationPrivate()
     return new GeomAnnotationPrivate();
 }
 
-double GeomAnnotationPrivate::distanceSqr( double x, double y, double xScale, double yScale )
+double GeomAnnotationPrivate::distanceSqr( double x, double y, double xScale, double yScale ) const
 {
     double distance = 0;
     //the line thickness is applied unevenly (only on the "inside") - account for this
@@ -1936,7 +1936,7 @@ class Okular::HighlightAnnotationPrivate : public Okular::AnnotationPrivate
 
         void transform( const QTransform &matrix ) override;
         void baseTransform( const QTransform &matrix ) override;
-        double distanceSqr( double x, double y, double xScale, double yScale ) override;
+        double distanceSqr( double x, double y, double xScale, double yScale ) const override;
         void setAnnotationProperties( const QDomNode& node ) override;
         AnnotationPrivate* getNewAnnotationPrivate() override;
 
@@ -2087,7 +2087,7 @@ AnnotationPrivate* HighlightAnnotationPrivate::getNewAnnotationPrivate()
     return new HighlightAnnotationPrivate();
 }
 
-double HighlightAnnotationPrivate::distanceSqr( double x, double y, double xScale, double yScale )
+double HighlightAnnotationPrivate::distanceSqr( double x, double y, double xScale, double yScale ) const
 {
     NormalizedPoint point( x, y );
     double outsideDistance = DBL_MAX;
@@ -2225,7 +2225,7 @@ class Okular::InkAnnotationPrivate : public Okular::AnnotationPrivate
         void transform( const QTransform &matrix ) override;
         void baseTransform( const QTransform &matrix ) override;
         void resetTransformation() override;
-        double distanceSqr( double x, double y, double xScale, double yScale ) override;
+        double distanceSqr( double x, double y, double xScale, double yScale ) const override;
         void translate( const NormalizedPoint &coord ) override;
         void setAnnotationProperties( const QDomNode& node ) override;
         AnnotationPrivate* getNewAnnotationPrivate() override;
@@ -2303,7 +2303,7 @@ void InkAnnotation::store( QDomNode & node, QDomDocument & document ) const
     }
 }
 
-double InkAnnotationPrivate::distanceSqr( double x, double y, double xScale, double yScale )
+double InkAnnotationPrivate::distanceSqr( double x, double y, double xScale, double yScale ) const
 {
     double distance = DBL_MAX;
     foreach ( const QLinkedList<NormalizedPoint>& path, m_transformedInkPaths )

@@ -17,10 +17,14 @@
 #include <qapplication.h>
 #include <qlayout.h>
 #include <qtimer.h>
-#include <kcolorscheme.h>
-#include <kiconloader.h>
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 61, 0)
+#include <kbusyindicatorwidget.h>
+#else
 #include <kpixmapsequence.h>
 #include <kpixmapsequencewidget.h>
+#endif
+#include <kcolorscheme.h>
+#include <kiconloader.h>
 #include <kmessagebox.h>
 #include <klocalizedstring.h>
 
@@ -286,7 +290,11 @@ SearchLineWidget::SearchLineWidget( QWidget * parent, Okular::Document * documen
     m_edit = new SearchLineEdit( this, document );
     layout->addWidget( m_edit );
 
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 61, 0)
+    m_anim = new KBusyIndicatorWidget( this );
+#else
     m_anim = new KPixmapSequenceWidget( this );
+#endif
     m_anim->setFixedSize( 22, 22 );
     layout->addWidget( m_anim );
     m_anim->hide();
@@ -317,6 +325,7 @@ void SearchLineWidget::slotSearchStopped()
 
 void SearchLineWidget::slotTimedout()
 {
+#if KWIDGETSADDONS_VERSION < QT_VERSION_CHECK(5, 61, 0)
     if ( m_anim->sequence().isEmpty() )
     {
         const KPixmapSequence seq = KIconLoader::global()->loadPixmapSequence(QStringLiteral("process-working"), 22);
@@ -326,6 +335,7 @@ void SearchLineWidget::slotTimedout()
             m_anim->setSequence( seq );
         }
     }
+#endif
     m_anim->show();
 }
 

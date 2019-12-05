@@ -240,4 +240,7 @@
   <provides>
     <binary>okularkirigami</binary>
   </provides>
+  <releases>
+    <release version="1.8.0" date="2019-12-12"/>
+  </releases>
 </component>

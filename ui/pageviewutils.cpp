@@ -140,14 +140,14 @@ void PageViewItem::setWHZC( int w, int h, double z, const Okular:: NormalizedRec
     m_crop = c;
     m_uncroppedGeometry.setWidth( qRound( w / ( c.right - c.left ) ) );
     m_uncroppedGeometry.setHeight( qRound( h / ( c.bottom - c.top ) ) );
-    foreach(FormWidgetIface *fwi, m_formWidgets)
+    for (FormWidgetIface *fwi : qAsConst(m_formWidgets))
     {
         Okular::NormalizedRect r = fwi->rect();
         fwi->setWidthHeight(
             qRound( fabs( r.right - r.left ) * m_uncroppedGeometry.width() ),
             qRound( fabs( r.bottom - r.top ) * m_uncroppedGeometry.height() ) );
     }
-    Q_FOREACH ( VideoWidget *vw, m_videoWidgets )
+    for ( VideoWidget *vw : qAsConst(m_videoWidgets) )
     {
         const Okular::NormalizedRect r = vw->normGeometry();
         vw->resize(
@@ -171,7 +171,7 @@ void PageViewItem::moveTo( int x, int y )
             qRound( x + m_uncroppedGeometry.width() * r.left ) + 1,
             qRound( y + m_uncroppedGeometry.height() * r.top ) + 1 );
     }
-    Q_FOREACH ( VideoWidget *vw, m_videoWidgets )
+    for ( VideoWidget *vw : qAsConst(m_videoWidgets) )
     {
         const Okular::NormalizedRect r = vw->normGeometry();
         vw->move(
@@ -212,7 +212,7 @@ bool PageViewItem::setFormWidgetsVisible( bool visible )
 
 void PageViewItem::reloadFormWidgetsState()
 {
-    foreach(FormWidgetIface *fwi, m_formWidgets)
+    for (FormWidgetIface *fwi : qAsConst(m_formWidgets))
     {
         fwi->setVisibility( fwi->formField()->isVisible() && FormWidgetsController::shouldFormWidgetBeShown(fwi->formField()));
     }

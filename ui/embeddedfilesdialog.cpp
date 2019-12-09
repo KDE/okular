@@ -78,7 +78,8 @@ EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const Okular::Document
 	m_tw->setSelectionMode(QAbstractItemView::ExtendedSelection);
 	m_tw->setContextMenuPolicy(Qt::CustomContextMenu);
 
-	foreach(Okular::EmbeddedFile* ef, *document->embeddedFiles())
+    // embeddedFiles() returns a const QList
+	for (Okular::EmbeddedFile *ef : *document->embeddedFiles())
 	{
 		QTreeWidgetItem *twi = new QTreeWidgetItem();
 		twi->setText(0, ef->name());
@@ -119,8 +120,8 @@ void EmbeddedFilesDialog::updateSaveButton()
 
 void EmbeddedFilesDialog::saveFile()
 {
-	QList<QTreeWidgetItem *> selected = m_tw->selectedItems();
-	foreach(QTreeWidgetItem *twi, selected)
+	const QList<QTreeWidgetItem *> selected = m_tw->selectedItems();
+	for (const QTreeWidgetItem *twi : selected)
 	{
 		Okular::EmbeddedFile* ef = qvariant_cast< Okular::EmbeddedFile* >( twi->data( 0, EmbeddedFileRole ) );
 		saveFile(ef);
@@ -129,8 +130,8 @@ void EmbeddedFilesDialog::saveFile()
 
 void EmbeddedFilesDialog::viewFile()
 {
-	QList<QTreeWidgetItem *> selected = m_tw->selectedItems();
-	foreach(QTreeWidgetItem *twi, selected)
+	const QList<QTreeWidgetItem *> selected = m_tw->selectedItems();
+	for (QTreeWidgetItem *twi : selected)
 	{
 		Okular::EmbeddedFile* ef = qvariant_cast< Okular::EmbeddedFile* >( twi->data( 0, EmbeddedFileRole ) );
 		viewFile( ef );

@@ -72,7 +72,8 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
     {
         orderedProperties << Okular::DocumentInfo::getKeyString( ks );
     }
-    foreach( const QString &ks, info.keys()) {
+    // keys() is a const method
+    for (const QString &ks : info.keys()) {
         if ( !orderedProperties.contains( ks ) ) {
             orderedProperties << ks;
         }

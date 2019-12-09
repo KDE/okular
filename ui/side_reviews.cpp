@@ -278,11 +278,11 @@ void Reviews::contextMenuRequested( const QPoint &pos )
     AnnotationPopup popup( m_document, AnnotationPopup::SingleAnnotationMode, this );
     connect(&popup, &AnnotationPopup::openAnnotationWindow, this, &Reviews::openAnnotationWindow);
 
-    QModelIndexList indexes = m_view->selectionModel()->selectedIndexes();
-    Q_FOREACH ( const QModelIndex &index, indexes )
+    const QModelIndexList indexes = m_view->selectionModel()->selectedIndexes();
+    for ( const QModelIndex &index : indexes )
     {
-        QModelIndexList annotations = retrieveAnnotations(index);
-        Q_FOREACH ( const QModelIndex &idx, annotations )
+        const QModelIndexList annotations = retrieveAnnotations(index);
+        for ( const QModelIndex &idx : annotations )
         {
             const QModelIndex authorIndex = m_authorProxy->mapToSource( idx );
             const QModelIndex filterIndex = m_groupProxy->mapToSource( authorIndex );

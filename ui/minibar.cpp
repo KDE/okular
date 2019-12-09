@@ -80,7 +80,7 @@ void MiniBarLogic::notifySetup( const QVector< Okular::Page * > & pageVector, in
     const int pages = pageVector.count();
     if ( pages < 1 )
     {
-        foreach ( MiniBar *miniBar, m_miniBars )
+        for ( MiniBar *miniBar : qAsConst(m_miniBars) )
         {
             miniBar->setEnabled( false );
         }
@@ -88,7 +88,7 @@ void MiniBarLogic::notifySetup( const QVector< Okular::Page * > & pageVector, in
     }
     
     bool labelsDiffer = false;
-    foreach(const Okular::Page * page, pageVector)
+    for (const Okular::Page * page : pageVector)
     {
         if (!page->label().isEmpty())
         {
@@ -101,7 +101,7 @@ void MiniBarLogic::notifySetup( const QVector< Okular::Page * > & pageVector, in
     
     const QString pagesString = QString::number( pages );
 
-    foreach ( MiniBar *miniBar, m_miniBars )
+    for ( MiniBar *miniBar : qAsConst(m_miniBars) )
     {
         // resize width of widgets
         miniBar->resizeForPage( pages );
@@ -135,7 +135,7 @@ void MiniBarLogic::notifyCurrentPageChanged( int previousPage, int currentPage )
         const QString pageNumber = QString::number( currentPage + 1 );
         const QString pageLabel = m_document->page( currentPage )->label();
 
-        foreach ( MiniBar *miniBar, m_miniBars )
+        for ( MiniBar *miniBar : qAsConst(m_miniBars) )
         {
             // update prev/next button state
             miniBar->m_prevButton->setEnabled( currentPage > 0 );
@@ -437,7 +437,7 @@ void PageLabelEdit::setPageLabels( const QVector<Okular::Page *> &pageVector )
 {
     m_labelPageMap.clear();
     completionObject()->clear();
-    foreach(const Okular::Page * page, pageVector)
+    for (const Okular::Page * page : pageVector)
     {
         if ( !page->label().isEmpty() )
         {

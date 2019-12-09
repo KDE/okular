@@ -46,7 +46,7 @@ static QLinkedList< Okular::Annotation* > filterOutWidgetAnnotations( const QLin
 {
     QLinkedList< Okular::Annotation* > result;
 
-    foreach ( Okular::Annotation *annotation, annotations )
+    for ( Okular::Annotation *annotation : annotations )
     {
         if ( annotation->subType() == Okular::Annotation::AWidget )
             continue;
@@ -119,8 +119,9 @@ static void updateAnnotationPointer( AnnItem *item, const QVector< Okular::Page 
             qWarning() << "Lost annotation on document save, something went wrong";
     }
 
-    foreach ( AnnItem *child, item->children )
+    for ( AnnItem *child : qAsConst(item->children) ) {
         updateAnnotationPointer( child, pages );
+    }
 }
 
 void AnnotationModelPrivate::notifySetup( const QVector< Okular::Page * > &pages, int setupFlags )

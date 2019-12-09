@@ -157,11 +157,11 @@ void TOCModelPrivate::findViewport( const Okular::DocumentViewport &viewport, TO
 
     while ( todo )
     {
-        TOCItem *current = todo;
+        const TOCItem *current = todo;
         todo = nullptr;
         TOCItem *pos = nullptr;
 
-        foreach ( TOCItem *child, current->children )
+        for ( TOCItem *child : current->children )
         {
             if ( child->viewport.isValid() )
             {
@@ -340,7 +340,7 @@ void TOCModel::fill( const Okular::DocumentSynopsis *toc )
     emit layoutChanged();
     if ( equals( d->m_oldModel ) )
     {
-        foreach( const QModelIndex &oldIndex, d->m_oldTocExpandedIndexes )
+        for ( const QModelIndex &oldIndex : qAsConst(d->m_oldTocExpandedIndexes) )
         {
             const QModelIndex index = indexForIndex( oldIndex, this );
             if ( !index.isValid() )
@@ -352,7 +352,7 @@ void TOCModel::fill( const Okular::DocumentSynopsis *toc )
     }
     else
     {
-        foreach ( TOCItem *item, d->itemsToOpen )
+        for ( TOCItem *item : qAsConst(d->itemsToOpen) )
         {
             const QModelIndex index = d->indexForItem( item );
             if ( !index.isValid() )
@@ -383,7 +383,7 @@ void TOCModel::clear()
 
 void TOCModel::setCurrentViewport( const Okular::DocumentViewport &viewport )
 {
-    foreach ( TOCItem* item, d->currentPage )
+    for ( TOCItem* item : qAsConst(d->currentPage) )
     {
         QModelIndex index = d->indexForItem( item );
         if ( !index.isValid() )
@@ -399,7 +399,7 @@ void TOCModel::setCurrentViewport( const Okular::DocumentViewport &viewport )
 
     d->currentPage = newCurrentPage;
 
-    foreach ( TOCItem* item, d->currentPage )
+    for ( TOCItem* item : qAsConst(d->currentPage) )
     {
         QModelIndex index = d->indexForItem( item );
         if ( !index.isValid() )

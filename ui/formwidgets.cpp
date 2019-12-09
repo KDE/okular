@@ -213,7 +213,7 @@ void FormWidgetsController::slotButtonClicked( QAbstractButton *button )
     QList< bool > prevChecked;
     QList< Okular::FormFieldButton*> formButtons;
 
-    foreach ( QAbstractButton* button, buttons )
+    for ( QAbstractButton* button : buttons )
     {
         checked.append( button->isChecked() );
         Okular::FormFieldButton *formButton = static_cast<Okular::FormFieldButton *>( dynamic_cast<FormWidgetIface*>(button)->formField() );
@@ -233,7 +233,7 @@ void FormWidgetsController::slotButtonClicked( QAbstractButton *button )
 
 void FormWidgetsController::slotFormButtonsChangedByUndoRedo( int pageNumber, const QList< Okular::FormFieldButton* > & formButtons)
 {
-    foreach ( Okular::FormFieldButton* formButton, formButtons )
+    for ( const Okular::FormFieldButton* formButton : formButtons )
     {
         int id = formButton->id();
         QAbstractButton* button = m_buttons[id];
@@ -949,10 +949,10 @@ ListEdit::ListEdit( Okular::FormFieldChoice * choice, QWidget * parent )
     addItems( choice->choices() );
     setSelectionMode( choice->multiSelect() ? QAbstractItemView::ExtendedSelection : QAbstractItemView::SingleSelection );
     setVerticalScrollMode( QAbstractItemView::ScrollPerPixel );
-    QList< int > selectedItems = choice->currentChoices();
+    const QList< int > selectedItems = choice->currentChoices();
     if ( choice->multiSelect() )
     {
-        foreach ( int index, selectedItems )
+        for ( const int index : selectedItems )
             if ( index >= 0 && index < count() )
                 item( index )->setSelected( true );
     }
@@ -980,11 +980,11 @@ void ListEdit::setFormWidgetsController( FormWidgetsController* controller )
 
 void ListEdit::slotSelectionChanged()
 {
-    QList< QListWidgetItem * > selection = selectedItems();
+    const QList< QListWidgetItem * > selection = selectedItems();
     QList< int > rows;
-    foreach( const QListWidgetItem * item, selection )
+    for ( const QListWidgetItem * item : selection ) {
         rows.append( row( item ) );
-
+    }
     Okular::FormFieldChoice *form = static_cast<Okular::FormFieldChoice *>(m_ff);
     if ( rows != form->currentChoices() ) {
         m_controller->formListChangedByWidget( pageItem()->pageNumber(),

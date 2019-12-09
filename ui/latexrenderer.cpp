@@ -35,7 +35,7 @@ LatexRenderer::LatexRenderer()
 
 LatexRenderer::~LatexRenderer()
 {
-    foreach(const QString &file, m_fileList)
+    for (const QString &file : qAsConst(m_fileList))
     {
         QFile::remove(file);
     }

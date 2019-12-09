@@ -95,7 +95,8 @@ static void updateFormFieldSignaturePointer( SignatureItem *item, const QVector<
 {
     if ( item->form )
     {
-        foreach ( Okular::FormField *f, pages[item->page]->formFields() )
+        const QLinkedList< Okular::FormField * > formFields = pages[item->page]->formFields();
+        for ( Okular::FormField *f : pages[item->page]->formFields() )
         {
             if ( item->form->id() == f->id() )
             {
@@ -107,8 +108,9 @@ static void updateFormFieldSignaturePointer( SignatureItem *item, const QVector<
             qWarning() << "Lost signature form field, something went wrong";
     }
 
-    foreach ( SignatureItem *child, item->children )
+    for ( SignatureItem *child : qAsConst(item->children) ) {
         updateFormFieldSignaturePointer( child, pages );
+    }
 }
 
 void SignatureModelPrivate::notifySetup( const QVector<Okular::Page*> &pages, int setupFlags )
@@ -125,7 +127,7 @@ void SignatureModelPrivate::notifySetup( const QVector<Okular::Page*> &pages, in
     q->beginResetModel();
     qDeleteAll( root->children );
     root->children.clear();
-    foreach ( auto page, pages )
+    for ( const Okular::Page *page : pages )
     {
         const int currentPage = page->number();
         // get form fields page by page so that page number and index of the form can be determined.

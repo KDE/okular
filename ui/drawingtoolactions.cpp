@@ -84,7 +84,7 @@ void DrawingToolActions::actionTriggered()
 
     if ( action ) {
         if ( action->isChecked() ) {
-            Q_FOREACH ( QAction *btn, m_actions )
+            for ( QAction *btn : qAsConst(m_actions) )
             {
                 if ( action != btn ) {
                     btn->setChecked( false );
@@ -104,7 +104,7 @@ void DrawingToolActions::loadTools()
 
     QDomDocument doc;
     QDomElement drawingDefinition = doc.createElement( QStringLiteral("drawingTools") );
-    foreach ( const QString &drawingXml, drawingTools )
+    for ( const QString &drawingXml : drawingTools )
     {
         QDomDocument entryParser;
         if ( entryParser.setContent( drawingXml ) )

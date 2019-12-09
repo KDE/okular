@@ -101,7 +101,8 @@ struct PresentationFrame
                           ( height - pageHeight ) / 2,
                           pageWidth, pageHeight );
 
-        Q_FOREACH ( VideoWidget *vw, videoWidgets )
+
+        for ( VideoWidget *vw : qAsConst(videoWidgets) )
         {
             const Okular::NormalizedRect r = vw->normGeometry();
             QRect vwgeom = r.geometry( geometry.width(), geometry.height() );
@@ -199,7 +200,8 @@ PresentationWidget::PresentationWidget( QWidget * parent, Okular::Document * doc
     addAction( playPauseAct );
     m_topBar->addSeparator();
 
-    foreach(QAction *action, drawingToolActions->actions())
+    const QList<QAction *> actionsList = drawingToolActions->actions();
+    for (QAction *action : actionsList)
     {
         action->setEnabled( true );
         m_topBar->addAction( action );
@@ -304,7 +306,8 @@ PresentationWidget::~PresentationWidget()
     // remove this widget from document observer
     m_document->removeObserver( this );
 
-    foreach( QAction *action, m_topBar->actions() )
+    const QList<QAction *> actionsList = actions();
+    for ( QAction *action : actionsList )
     {
         action->setChecked( false );
         action->setEnabled( false );
@@ -412,7 +415,7 @@ void PresentationWidget::notifyCurrentPageChanged( int previousPage, int current
     if ( previousPage != -1 )
     {
         // stop video playback
-        Q_FOREACH ( VideoWidget *vw, m_frames[ previousPage ]->videoWidgets )
+        for ( VideoWidget *vw : qAsConst(m_frames[ previousPage ]->videoWidgets) )
         {
             vw->stop();
             vw->pageLeft();
@@ -426,7 +429,8 @@ void PresentationWidget::notifyCurrentPageChanged( int previousPage, int current
             m_document->processAction( m_document->page( previousPage )->pageAction( Okular::Page::Closing ) );
 
         // perform the additional actions of the page's annotations, if any
-        Q_FOREACH ( const Okular::Annotation *annotation, m_document->page( previousPage )->annotations() )
+        const QLinkedList< Okular::Annotation* > annotationsList = m_document->page( previousPage )->annotations();
+        for ( const Okular::Annotation *annotation : annotationsList )
         {
             Okular::Action *action = nullptr;
 
@@ -471,7 +475,8 @@ void PresentationWidget::notifyCurrentPageChanged( int previousPage, int current
             m_document->processAction( m_document->page( m_frameIndex )->pageAction( Okular::Page::Opening ) );
 
         // perform the additional actions of the page's annotations, if any
-        Q_FOREACH ( const Okular::Annotation *annotation, m_document->page( m_frameIndex )->annotations() )
+        const QLinkedList< Okular::Annotation* > annotationsList = m_document->page( m_frameIndex )->annotations();
+        for ( const Okular::Annotation *annotation : annotationsList )
         {
             Okular::Action *action = nullptr;
 
@@ -485,8 +490,9 @@ void PresentationWidget::notifyCurrentPageChanged( int previousPage, int current
         }
 
         // start autoplay video playback
-        Q_FOREACH ( VideoWidget *vw, m_frames[ m_frameIndex ]->videoWidgets )
+        for ( VideoWidget *vw : qAsConst(m_frames[ m_frameIndex ]->videoWidgets) ) {
             vw->pageEntered();
+        }
     }
 }
 
@@ -931,8 +937,9 @@ void PresentationWidget::paintEvent( QPaintEvent * pe )
         pmPainter.setRenderHints( QPainter::Antialiasing );
 
         // Paint old paths
-        foreach ( const SmoothPath &drawing, m_frames[ m_frameIndex ]->drawings )
+        for ( const SmoothPath &drawing : qAsConst(m_frames[ m_frameIndex ]->drawings) ) {
             drawing.paint( &pmPainter, pmSize.width(), pmSize.height() );
+        }
 
         // Paint the path that is currently being drawn by the user
         if ( m_drawingEngine && m_drawingRect.intersects( pe->rect() ) )
@@ -1690,7 +1697,9 @@ void PresentationWidget::slotChangeDrawingToolEngine( const QDomElement &element
 void PresentationWidget::slotAddDrawingToolActions()
 {
     DrawingToolActions *drawingToolActions = qobject_cast<DrawingToolActions*>(sender());
-    foreach(QAction *action, drawingToolActions->actions()) {
+
+    const QList<QAction *> actionsList = drawingToolActions->actions();
+    for (QAction *action : actionsList) {
         action->setEnabled( true );
         m_topBar->addAction( action );
         addAction( action );

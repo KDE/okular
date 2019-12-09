@@ -305,7 +305,7 @@ void MouseAnnotation::routePaint( QPainter * painter, const QRect & paintRect )
     {
         painter->setPen(borderColor);
         painter->setBrush(fillColor);
-        Q_FOREACH( const ResizeHandle & handle, m_resizeHandleList )
+        for ( const ResizeHandle &handle : qAsConst(m_resizeHandleList) )
         {
             QRect rect = getHandleRect( handle, m_focusedAnnotation );
             painter->drawRect( rect );
@@ -603,7 +603,7 @@ MouseAnnotation::ResizeHandle MouseAnnotation::getHandleAt( const QPoint & event
 
     if ( ad.annotation->canBeResized() )
     {
-        Q_FOREACH( const ResizeHandle & handle, m_resizeHandleList )
+        for ( const ResizeHandle &handle : m_resizeHandleList )
         {
             const QRect rect = getHandleRect( handle, ad );
             if ( rect.contains( eventPos ) )

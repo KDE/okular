@@ -621,7 +621,7 @@ do { \
     ADD_VIEWMODE_ACTION( i18n( "Facing Pages (Center First Page)" ), "view_render_mode_facing_center_first", (int)Okular::Settings::EnumViewMode::FacingFirstCentered );
     ADD_VIEWMODE_ACTION( i18n( "Overview" ), "view_render_mode_overview", (int)Okular::Settings::EnumViewMode::Summary );
     const QList<QAction *> viewModeActions = d->aViewMode->menu()->actions();
-    foreach(QAction *viewModeAction, viewModeActions)
+    for (QAction *viewModeAction : viewModeActions)
     {
         if (viewModeAction->data().toInt() == Okular::Settings::viewMode())
         {
@@ -811,7 +811,7 @@ void PageView::openAnnotationWindow( Okular::Annotation * annotation, int pageNu
 
     // find the annot window
     AnnotWindow* existWindow = nullptr;
-    foreach(AnnotWindow *aw, d->m_annowindows)
+    for (AnnotWindow *aw : qAsConst(d->m_annowindows))
     {
         if ( aw->annotation() == annotation )
         {
@@ -1054,7 +1054,8 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
             {
                 // even if the document has not changed, allowfillforms may have
                 // changed, so update all fields' "canBeFilled" flag
-                foreach ( FormWidgetIface * w, d->items[i]->formWidgets() )
+                const QSet<FormWidgetIface *> formWidgetsList = d->items[i]->formWidgets();
+                for ( FormWidgetIface *w : formWidgetsList )
                     w->setCanBeFilled( allowfillforms );
             }
         }
@@ -1069,7 +1070,7 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
                 // around so we can look for the new ones using unique ids, etc
                 d->mouseAnnotation->updateAnnotationPointers();
 
-                foreach(AnnotWindow *aw, d->m_annowindows)
+                for (AnnotWindow *aw : qAsConst(d->m_annowindows))
                 {
                     Okular::Annotation *newA = d->document->page( aw->pageNumber() )->annotation( aw->annotation()->uniqueName() );
                     aw->updateAnnotation( newA );
@@ -1081,7 +1082,7 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
                 {
                     PageViewItem *item = d->items[i];
                     const QSet<FormWidgetIface*> fws = item->formWidgets();
-                    foreach ( FormWidgetIface * w, fws )
+                    for ( FormWidgetIface *w : fws )
                     {
                         Okular::FormField *f = Okular::PagePrivate::findEquivalentForm( d->document->page( i ), w->formField() );
                         if (f)
@@ -1099,7 +1100,8 @@ void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setup
                     // For the video widgets we don't really care about reusing them since they don't contain much info so just
                     // create them again
                     createAnnotationsVideoWidgets( item, pageSet[i]->annotations() );
-                    Q_FOREACH ( VideoWidget *vw, item->videoWidgets() )
+                    const QHash<Okular::Movie *, VideoWidget *> videoWidgets = item->videoWidgets();
+                    for ( VideoWidget *vw : videoWidgets )
                     {
                         const Okular::NormalizedRect r = vw->normGeometry();
                         vw->setGeometry(
@@ -1213,7 +1215,8 @@ void PageView::updateActionState( bool haspages, bool documentChanged, bool hasf
         if ( pageSizes && documentChanged )
         {
             QStringList items;
-            foreach ( const Okular::PageSize &p, d->document->pageSizes() )
+            const QList<Okular::PageSize> sizes = d->document->pageSizes();
+            for ( const Okular::PageSize &p : sizes )
                 items.append( p.name() );
             d->aPageSizes->setItems( items );
         }
@@ -1502,13 +1505,15 @@ void PageView::notifyCurrentPageChanged( int previous, int current )
         PageViewItem * item = d->items.at( previous );
         if ( item )
         {
-            Q_FOREACH ( VideoWidget *videoWidget, item->videoWidgets() )
+            const QHash<Okular::Movie *, VideoWidget *> videoWidgetsList = item->videoWidgets();
+            for ( VideoWidget *videoWidget : videoWidgetsList  )
                 videoWidget->pageLeft();
         }
 
         // On close, run the widget scripts, needed for running animated PDF
         const Okular::Page *page = d->document->page( previous );
-        foreach( Okular::Annotation *annotation, page->annotations() )
+        const QLinkedList<Okular::Annotation *> annotations = page->annotations();
+        for ( Okular::Annotation *annotation : annotations )
         {
             if ( annotation->subType() == Okular::Annotation::AWidget )
             {
@@ -1524,7 +1529,8 @@ void PageView::notifyCurrentPageChanged( int previous, int current )
         PageViewItem * item = d->items.at( current );
         if ( item )
         {
-            Q_FOREACH ( VideoWidget *videoWidget, item->videoWidgets() )
+            const QHash<Okular::Movie *, VideoWidget *> videoWidgetsList = item->videoWidgets();
+            for ( VideoWidget *videoWidget : videoWidgetsList )
                 videoWidget->pageEntered();
         }
 
@@ -1534,7 +1540,8 @@ void PageView::notifyCurrentPageChanged( int previous, int current )
 
         // Opening any widget scripts, needed for running animated PDF
         const Okular::Page *page = d->document->page( current );
-        foreach( Okular::Annotation *annotation, page->annotations() )
+        const QLinkedList<Okular::Annotation *> annotations = page->annotations();
+        for ( Okular::Annotation *annotation : annotations )
         {
             if ( annotation->subType() == Okular::Annotation::AWidget )
             {
@@ -1837,7 +1844,7 @@ void PageView::paintEvent(QPaintEvent *pe)
                     pixmapPainter.drawRect( selectionRect.adjusted( 0, 0, -1, -1 ) );
                 }
                 // 2b) Layer 1b: paint (blend) transparent selection (table)
-                foreach (const TableSelectionPart &tsp, d->tableSelectionParts) {
+                for (const TableSelectionPart &tsp : qAsConst(d->tableSelectionParts)) {
                     QRect selectionPartRect = tsp.rectInItem.geometry(tsp.item->uncroppedWidth(), tsp.item->uncroppedHeight());
                     selectionPartRect.translate( tsp.item->uncroppedGeometry().topLeft () );
                     QRect selectionPartRectInternal = selectionPartRect;
@@ -1899,7 +1906,7 @@ void PageView::paintEvent(QPaintEvent *pe)
                     screenPainter.drawRect( selectionRect );
                 }
                 // 2b) Layer 1b: paint opaque selection (table)
-                foreach (const TableSelectionPart &tsp, d->tableSelectionParts) {
+                for (const TableSelectionPart &tsp : qAsConst(d->tableSelectionParts)) {
                     QRect selectionPartRect = tsp.rectInItem.geometry(tsp.item->uncroppedWidth(), tsp.item->uncroppedHeight());
                     selectionPartRect.translate( tsp.item->uncroppedGeometry().topLeft () );
                     QRect selectionPartRectInternal = selectionPartRect;
@@ -1937,12 +1944,12 @@ void PageView::drawTableDividers(QPainter * screenPainter)
                 p.setStyle( Qt::DashLine );
                 screenPainter->setPen( p );
             }
-            foreach (const TableSelectionPart &tsp, d->tableSelectionParts) {
+            for (const TableSelectionPart &tsp : qAsConst(d->tableSelectionParts)) {
                 QRect selectionPartRect = tsp.rectInItem.geometry(tsp.item->uncroppedWidth(), tsp.item->uncroppedHeight());
                 selectionPartRect.translate( tsp.item->uncroppedGeometry().topLeft () );
                 QRect selectionPartRectInternal = selectionPartRect;
                 selectionPartRectInternal.adjust( 1, 1, -1, -1 );
-                foreach(double col, d->tableSelectionCols) {
+                for (double col : qAsConst(d->tableSelectionCols)) {
                     if (col >= tsp.rectInSelection.left && col <= tsp.rectInSelection.right) {
                         col = (col - tsp.rectInSelection.left) / (tsp.rectInSelection.right - tsp.rectInSelection.left);
                         const int x =  selectionPartRect.left() + col * selectionPartRect.width() + 0.5;
@@ -1952,7 +1959,7 @@ void PageView::drawTableDividers(QPainter * screenPainter)
                         );
                     }
                 }
-                foreach(double row, d->tableSelectionRows) {
+                for (double row : qAsConst(d->tableSelectionRows)) {
                     if (row >= tsp.rectInSelection.top && row <= tsp.rectInSelection.bottom) {
                         row = (row - tsp.rectInSelection.top) / (tsp.rectInSelection.bottom - tsp.rectInSelection.top);
                         const int y =  selectionPartRect.top() + row * selectionPartRect.height() + 0.5;
@@ -2422,7 +2429,7 @@ void PageView::mousePressEvent( QMouseEvent * e )
                     {
                         AnnotationPopup popup( d->document, AnnotationPopup::MultiAnnotationMode, this );
 
-                        foreach ( const Okular::ObjectRect * orect, orects )
+                        for ( const Okular::ObjectRect * orect : orects )
                         {
                             Okular::Annotation * ann = ( (Okular::AnnotationObjectRect *)orect )->annotation();
                             if ( ann && (ann->subType() != Okular::Annotation::AWidget) )
@@ -2471,7 +2478,7 @@ void PageView::mousePressEvent( QMouseEvent * e )
                     selectionStart( eventPos, palette().color( QPalette::Active, QPalette::Highlight ).lighter( 120 ), false );
                 } else {
                     QRect updatedRect;
-                    foreach (const TableSelectionPart &tsp, d->tableSelectionParts) {
+                    for (const TableSelectionPart &tsp : qAsConst(d->tableSelectionParts)) {
                         QRect selectionPartRect = tsp.rectInItem.geometry(tsp.item->uncroppedWidth(), tsp.item->uncroppedHeight());
                         selectionPartRect.translate( tsp.item->uncroppedGeometry().topLeft () );
 
@@ -3068,7 +3075,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                     Okular::NormalizedRect cell(xs[c], ys[r], xs[c+1], ys[r+1]);
                     if (c) selText += QLatin1Char('\t');
                     QString txt;
-                    foreach (const TableSelectionPart &tsp, d->tableSelectionParts) {
+                    for (const TableSelectionPart &tsp : qAsConst(d->tableSelectionParts)) {
                         // first, crop the cell to this part
                         if (!tsp.rectInSelection.intersects(cell))
                             continue;
@@ -3232,7 +3239,7 @@ void PageView::guessTableDividers()
 {
     QList< QPair<double, int> > colTicks, rowTicks, colSelectionTicks, rowSelectionTicks;
 
-    foreach ( const TableSelectionPart& tsp, d->tableSelectionParts )
+    for ( const TableSelectionPart& tsp : qAsConst(d->tableSelectionParts) )
     {
         // add ticks for the edges of this area...
         colSelectionTicks.append( qMakePair( tsp.rectInSelection.left,   +1 ) );
@@ -3245,7 +3252,7 @@ void PageView::guessTableDividers()
         rects.append( tsp.rectInItem );
         const Okular::TextEntity::List words = tsp.item->page()->words( &rects, Okular::TextPage::CentralPixelTextAreaInclusionBehaviour );
 
-        foreach (Okular::TextEntity *te, words)
+        for (const Okular::TextEntity *te : words)
         {
             if (te->text().isEmpty()) {
                 delete te;
@@ -3534,7 +3541,7 @@ QList< Okular::RegularAreaRect * > PageView::textSelections( const QPoint& start
     QList< Okular::RegularAreaRect * > ret;
     QSet< int > affectedItemsSet;
     QRect selectionRect = QRect( start, end ).normalized();
-    foreach( PageViewItem * item, d->items )
+    for ( const PageViewItem *item : qAsConst(d->items) )
     {
         if ( item->isVisible() && selectionRect.intersects( item->croppedGeometry() ) )
             affectedItemsSet.insert( item->pageNumber() );
@@ -3550,7 +3557,7 @@ QList< Okular::RegularAreaRect * > PageView::textSelections( const QPoint& start
 
         int tmpmin = d->document->pages();
         int tmpmax = 0;
-        foreach( int p, affectedItemsSet )
+        for ( const int p : qAsConst(affectedItemsSet) )
         {
             if ( p < tmpmin ) tmpmin = p;
             if ( p > tmpmax ) tmpmax = p;
@@ -3595,7 +3602,7 @@ QList< Okular::RegularAreaRect * > PageView::textSelections( const QPoint& start
             affectedItemsIds.removeFirst();
             affectedItemsIds.removeLast();
             // item between the two above
-            foreach( int page, affectedItemsIds )
+            for ( const int page :  qAsConst(affectedItemsIds) )
             {
                 ret.append( textSelectionForItem( d->items[ page ] ) );
             }
@@ -3957,12 +3964,12 @@ void PageView::updateSelection( const QPoint & pos )
 
         const QSet< int > noMoreSelectedPages = d->pagesWithTextSelection - pagesWithSelectionSet;
         // clear the selection from pages not selected anymore
-        foreach( int p, noMoreSelectedPages )
+        for ( int p : noMoreSelectedPages )
         {
             d->document->setPageTextSelection( p, nullptr, QColor() );
         }
         // set the new selection for the selected pages
-        foreach( int p, pagesWithSelectionSet )
+        for ( int p : qAsConst(pagesWithSelectionSet) )
         {
             d->document->setPageTextSelection( p, selections[ p - first ], palette().color( QPalette::Active, QPalette::Highlight ) );
         }
@@ -4028,7 +4035,7 @@ void PageView::selectionClear(const ClearMode mode)
     d->tableSelectionCols.clear();
     d->tableSelectionRows.clear();
     d->tableDividersGuessed = false;
-    foreach (const TableSelectionPart &tsp, d->tableSelectionParts) {
+    for (const TableSelectionPart &tsp : qAsConst(d->tableSelectionParts)) {
         QRect selectionPartRect = tsp.rectInItem.geometry(tsp.item->uncroppedWidth(), tsp.item->uncroppedHeight());
         selectionPartRect.translate( tsp.item->uncroppedGeometry().topLeft () );
         // should check whether this is on-screen here?
@@ -4524,7 +4531,7 @@ void PageView::addWebShortcutsMenu( QMenu * menu, const QString & text )
 
             QAction *action = nullptr;
 
-            foreach( const QString &searchProvider, searchProviders )
+            for ( const QString &searchProvider : searchProviders )
             {
                 action = new QAction( searchProvider, webShortcutsMenu );
                 action->setIcon( QIcon::fromTheme( filterData.iconNameForPreferredSearchProvider( searchProvider ) ) );
@@ -4872,14 +4879,16 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
     QVector< Okular::VisiblePageRect * > visibleRects;
     for ( PageViewItem * i : qAsConst( d->items ) )
     {
-        foreach( FormWidgetIface *fwi, i->formWidgets() )
+        const QSet<FormWidgetIface *> formWidgetsList = i->formWidgets();
+        for ( FormWidgetIface *fwi :  formWidgetsList)
         {
             Okular::NormalizedRect r = fwi->rect();
             fwi->moveTo(
                 qRound( i->uncroppedGeometry().left() + i->uncroppedWidth() * r.left ) + 1 - viewportRect.left(),
                 qRound( i->uncroppedGeometry().top() + i->uncroppedHeight() * r.top ) + 1 - viewportRect.top() );
         }
-        Q_FOREACH ( VideoWidget *vw, i->videoWidgets() )
+        const QHash<Okular::Movie *, VideoWidget *> videoWidgets = i->videoWidgets();
+        for ( VideoWidget *vw : videoWidgets )
         {
             const Okular::NormalizedRect r = vw->normGeometry();
             vw->move(
@@ -5406,7 +5415,7 @@ void PageView::slotPageSizes( int newsize )
 // From Okular::Settings::EnumTrimMode
 void PageView::updateTrimMode( int except_id ) {
     const QList<QAction *> trimModeActions = d->aTrimMode->menu()->actions();
-    foreach(QAction *trimModeAction, trimModeActions)
+    for (QAction *trimModeAction : trimModeActions)
     {
         if (trimModeAction->data().toInt() != except_id)
             trimModeAction->setChecked( false );
@@ -5511,7 +5520,7 @@ void PageView::slotFormChanged( int pageNumber )
 
 void PageView::slotRefreshPage()
 {
-    foreach(int req, d->refreshPages)
+    for (int req : qAsConst(d->refreshPages))
     {
         QMetaObject::invokeMethod( d->document, "refreshPixmaps", Qt::QueuedConnection,
                                    Q_ARG( int, req ) );
@@ -5671,7 +5680,7 @@ void PageView::slotFitWindowToPage()
 {
     const PageViewItem *currentPageItem = nullptr;
     QSize viewportSize = viewport()->size();
-    foreach ( const PageViewItem * pageItem, d->items )
+    for ( const PageViewItem *pageItem : qAsConst(d->items) )
     {
         if ( pageItem->isVisible() )
         {
@@ -5711,7 +5720,8 @@ void PageView::highlightSignatureFormWidget( const Okular::FormFieldSignature *f
     QVector< PageViewItem * >::const_iterator dIt = d->items.constBegin(), dEnd = d->items.constEnd();
     for ( ; dIt != dEnd; ++dIt )
     {
-        foreach ( auto fw, (*dIt)->formWidgets() )
+        const QSet<FormWidgetIface *> fwi = (*dIt)->formWidgets();
+        for ( FormWidgetIface *fw : fwi )
         {
             if ( fw->formField() == form )
             {

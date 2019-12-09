@@ -320,7 +320,7 @@ QList<QTreeWidgetItem*> createItems( const QUrl& baseurl, const KBookmark::List&
 {
     Q_UNUSED(baseurl)
     QList<QTreeWidgetItem*> ret;
-    foreach ( const KBookmark& bm, bmlist )
+    for ( const KBookmark &bm : bmlist )
     {
 //        qCDebug(OkularUiDebug).nospace() << "checking '" << tmp << "'";
 //        qCDebug(OkularUiDebug).nospace() << "      vs '" << baseurl << "'";
@@ -340,12 +340,12 @@ void BookmarkList::rebuildTree( bool filter )
     m_currentDocumentItem = nullptr;
     m_tree->clear();
 
-    QList<QUrl> urls = m_document->bookmarkManager()->files();
+    const QList<QUrl> urls = m_document->bookmarkManager()->files();
     if ( filter )
     {
         if ( m_document->isOpened() )
         {
-        foreach ( const QUrl& url, urls )
+        for ( const QUrl &url : urls )
         {
             if ( url == m_document->currentDocument() )
             {
@@ -359,7 +359,7 @@ void BookmarkList::rebuildTree( bool filter )
     else
     {
         QTreeWidgetItem * currenturlitem = nullptr;
-        foreach ( const QUrl& url, urls )
+        for ( const QUrl &url : urls )
         {
             QList<QTreeWidgetItem*> subitems = createItems( url, m_document->bookmarkManager()->bookmarks( url ) );
             if ( !subitems.isEmpty() )

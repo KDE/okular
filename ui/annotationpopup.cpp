@@ -96,7 +96,7 @@ void AnnotationPopup::exec( const QPoint &point )
         action->setEnabled( mDocument->isAllowed( Okular::AllowNotes ) );
         action->setProperty( actionTypeId, deleteAllId );
 
-        foreach ( const AnnotPagePair& pair, mAnnotations )
+        for ( const AnnotPagePair &pair : qAsConst(mAnnotations) )
         {
             if ( !mDocument->canRemovePageAnnotation( pair.annotation ) )
                 action->setEnabled( false );
@@ -123,7 +123,7 @@ void AnnotationPopup::exec( const QPoint &point )
     }
     else
     {
-        foreach ( const AnnotPagePair& pair, mAnnotations )
+        for ( const AnnotPagePair &pair : qAsConst(mAnnotations) )
         {
             menu.addAction( new OKMenuTitle( &menu, GuiUtils::captionForAnnotation( pair.annotation ) ) );
 
@@ -170,7 +170,7 @@ void AnnotationPopup::exec( const QPoint &point )
             if ( pair.pageNumber != -1 )
                 mDocument->removePageAnnotation( pair.pageNumber, pair.annotation );
         } else if( actionType == deleteAllId ) {
-            Q_FOREACH ( const AnnotPagePair& pair, mAnnotations )
+            for ( const AnnotPagePair &pair : qAsConst(mAnnotations) )
             {
                 if ( pair.pageNumber != -1 )
                     mDocument->removePageAnnotation( pair.pageNumber, pair.annotation );

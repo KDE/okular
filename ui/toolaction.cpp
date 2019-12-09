@@ -28,7 +28,7 @@ ToolAction::~ToolAction()
 void ToolAction::addAction( QAction *action )
 {
     bool setDefault = !m_buttons.isEmpty() ? m_buttons.first()->menu()->actions().isEmpty() : false;
-    foreach ( QToolButton *button, m_buttons )
+    for ( QToolButton *button : qAsConst(m_buttons) )
         if ( button )
         {
             button->menu()->addAction( action );
@@ -62,7 +62,7 @@ QWidget* ToolAction::createWidget( QWidget *parent )
     if ( !m_actions.isEmpty() )
     {
         button->setDefaultAction( m_actions.first() );
-        foreach ( QAction *action, m_actions )
+        for ( QAction *action : qAsConst(m_actions) )
         {
             button->menu()->addAction( action );
             if ( action->isChecked() )
@@ -76,7 +76,7 @@ QWidget* ToolAction::createWidget( QWidget *parent )
 
 void ToolAction::slotNewDefaultAction( QAction *action )
 {
-    foreach ( QToolButton *button, m_buttons )
+    for ( QToolButton *button : qAsConst(m_buttons) )
         if ( button )
         {
             button->setDefaultAction( action );

@@ -537,7 +537,7 @@ class TextSelectorEngine : public AnnotatorEngine
                     {
                         const QList<QRect> geom = newselection->geometry( (int)xScale, (int)yScale );
                         QRect newrect;
-                        Q_FOREACH ( const QRect& r, geom )
+                        for ( const QRect &r : geom )
                         {
                             if ( newrect.isNull() )
                                 newrect = r;
@@ -564,7 +564,7 @@ class TextSelectorEngine : public AnnotatorEngine
                 QColor col = m_engineColor;
                 col.setAlphaF( 0.5 );
                 painter->setBrush( col );
-                foreach( const Okular::NormalizedRect & r, *selection )
+                for ( const Okular::NormalizedRect &r : qAsConst(*selection) )
                 {
                     painter->drawRect( r.geometry( (int)xScale, (int)yScale ) );
                 }
@@ -611,7 +611,7 @@ class TextSelectorEngine : public AnnotatorEngine
                 Okular::HighlightAnnotation * ha = new Okular::HighlightAnnotation();
                 ha->setHighlightType( type );
                 ha->setBoundingRectangle( Okular::NormalizedRect( rect, item()->uncroppedWidth(), item()->uncroppedHeight() ) );
-                foreach ( const Okular::NormalizedRect & r, *selection )
+                for ( const Okular::NormalizedRect &r : qAsConst(*selection) )
                 {
                     Okular::HighlightAnnotation::Quad q;
                     q.setCapStart( false );
@@ -677,7 +677,7 @@ void PageViewAnnotator::reparseConfig()
     // Populate m_toolsDefinition
     QDomDocument doc;
     m_toolsDefinition = doc.createElement( QStringLiteral("annotatingTools") );
-    foreach ( const QString &toolXml, userTools )
+    for ( const QString &toolXml : userTools )
     {
         QDomDocument entryParser;
         if ( entryParser.setContent( toolXml ) )
@@ -857,9 +857,9 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
     if ( m_engine->creationCompleted() )
     {
         // apply engine data to the Annotation's and reset engine
-        QList< Okular::Annotation* > annotations = m_engine->end();
+        const QList< Okular::Annotation* > annotations = m_engine->end();
         // attach the newly filled annotations to the page
-        foreach ( Okular::Annotation * annotation, annotations )
+        for ( Okular::Annotation *annotation : annotations )
         {
             if ( !annotation ) continue;
 

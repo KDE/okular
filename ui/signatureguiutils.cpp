@@ -24,7 +24,8 @@ QVector<const Okular::FormFieldSignature*> getSignatureFormFields( Okular::Docum
     QVector<const Okular::FormFieldSignature*> signatureFormFields;
     while ( curPage <= endPage )
     {
-        foreach ( Okular::FormField *f, doc->page( curPage++ )->formFields() )
+        const QLinkedList< Okular::FormField * > formFields = doc->page( curPage++ )->formFields();
+        for ( Okular::FormField *f :  formFields )
         {
             if ( f->type() == Okular::FormField::FormSignature )
             {

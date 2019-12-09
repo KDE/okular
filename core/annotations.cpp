@@ -1629,7 +1629,7 @@ double LineAnnotationPrivate::distanceSqr( double x, double y, double xScale, do
     if ( m_lineInnerColor.isValid() )
     {
         QPolygonF polygon;
-        foreach ( const NormalizedPoint &p, transformedLinePoints )
+        for ( const NormalizedPoint &p : qAsConst(transformedLinePoints) )
             polygon.append( QPointF( p.x, p.y ) );
 
         if ( polygon.containsPoint( QPointF( x, y ), Qt::WindingFill ) )
@@ -2091,7 +2091,7 @@ double HighlightAnnotationPrivate::distanceSqr( double x, double y, double xScal
 {
     NormalizedPoint point( x, y );
     double outsideDistance = DBL_MAX;
-    foreach ( const HighlightAnnotation::Quad& quad, m_highlightQuads )
+    for ( const HighlightAnnotation::Quad &quad : m_highlightQuads )
     {
         QLinkedList<NormalizedPoint> pathPoints;
 
@@ -2306,7 +2306,7 @@ void InkAnnotation::store( QDomNode & node, QDomDocument & document ) const
 double InkAnnotationPrivate::distanceSqr( double x, double y, double xScale, double yScale ) const
 {
     double distance = DBL_MAX;
-    foreach ( const QLinkedList<NormalizedPoint>& path, m_transformedInkPaths )
+    for ( const QLinkedList<NormalizedPoint> &path : m_transformedInkPaths )
     {
         const double thisDistance = ::distanceSqr( x, y, xScale, yScale, path );
         if ( thisDistance < distance )

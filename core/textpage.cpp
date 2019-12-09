@@ -298,8 +298,9 @@ public:
     inline QString string() const
     {
         QString res;
-        foreach(const WordWithCharacters &word, m_region_wordWithCharacters)
+        for (const WordWithCharacters &word : m_region_wordWithCharacters) {
             res += word.text();
+        }
         return res;
     }
 
@@ -1911,7 +1912,7 @@ void TextPagePrivate::correctTextOrder()
      * Break the words into characters
      */
     TextList listOfCharacters;
-    foreach(const WordWithCharacters &word, listWithWordsAndSpaces)
+    for (const WordWithCharacters &word : listWithWordsAndSpaces)
     {
         delete word.word;
         listOfCharacters.append(word.characters);
@@ -1927,7 +1928,7 @@ TextEntity::List TextPage::words(const RegularAreaRect *area, TextAreaInclusionB
     TextEntity::List ret;
     if ( area )
     {
-        foreach (TinyTextEntity *te, d->m_words)
+        for (const TinyTextEntity *te : qAsConst(d->m_words))
         {
             if (b == AnyPixelTextAreaInclusionBehaviour)
             {
@@ -1948,7 +1949,7 @@ TextEntity::List TextPage::words(const RegularAreaRect *area, TextAreaInclusionB
     }
     else
     {
-        foreach (TinyTextEntity *te, d->m_words)
+        for (const TinyTextEntity *te : qAsConst(d->m_words))
         {
             ret.append( new TextEntity( te->text(), new Okular::NormalizedRect( te->area) ) );
         }

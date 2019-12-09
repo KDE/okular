@@ -501,7 +501,7 @@ QLinkedList< Annotation* > Page::annotations() const
 
 Annotation * Page::annotation( const QString & uniqueName ) const
 {
-    foreach(Annotation *a, m_annotations)
+    for (Annotation *a : m_annotations)
     {
         if ( a->uniqueName() == uniqueName )
             return a;
@@ -627,8 +627,9 @@ void PagePrivate::setTextSelections( RegularAreaRect *r, const QColor & color )
 void Page::setSourceReferences( const QLinkedList< SourceRefObjectRect * > & refRects )
 {
     deleteSourceReferences();
-    foreach( SourceRefObjectRect * rect, refRects )
+    for ( SourceRefObjectRect *rect : refRects ) {
         m_rects << rect;
+    }
 }
 
 void Page::setDuration( double seconds )
@@ -1096,19 +1097,19 @@ FormField *PagePrivate::findEquivalentForm( const Page *p, FormField *oldField )
 {
     // given how id is not very good of id (at least for pdf) we do a few passes
     // same rect, type and id
-    foreach(FormField *f, p->d->formfields)
+    for (FormField *f : qAsConst(p->d->formfields))
     {
         if (f->rect() == oldField->rect() && f->type() == oldField->type() && f->id() == oldField->id())
             return f;
     }
     // same rect and type
-    foreach(FormField *f, p->d->formfields)
+    for (FormField *f : qAsConst(p->d->formfields))
     {
         if (f->rect() == oldField->rect() && f->type() == oldField->type())
             return f;
     }
     // fuzzy rect, same type and id
-    foreach(FormField *f, p->d->formfields)
+    for (FormField *f : qAsConst(p->d->formfields))
     {
         if (f->type() == oldField->type() && f->id() == oldField->id() && qFuzzyCompare(f->rect().left, oldField->rect().left) && qFuzzyCompare(f->rect().top, oldField->rect().top) && qFuzzyCompare(f->rect().right, oldField->rect().right) && qFuzzyCompare(f->rect().bottom, oldField->rect().bottom))
         {
@@ -1116,7 +1117,7 @@ FormField *PagePrivate::findEquivalentForm( const Page *p, FormField *oldField )
         }
     }
     // fuzzy rect and same type
-    foreach(FormField *f, p->d->formfields)
+    for (FormField *f : qAsConst(p->d->formfields))
     {
         if (f->type() == oldField->type() && qFuzzyCompare(f->rect().left, oldField->rect().left) && qFuzzyCompare(f->rect().top, oldField->rect().top) && qFuzzyCompare(f->rect().right, oldField->rect().right) && qFuzzyCompare(f->rect().bottom, oldField->rect().bottom))
         {

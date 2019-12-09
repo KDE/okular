@@ -281,7 +281,7 @@ KBookmark::List BookmarkManager::bookmarks( int page ) const
 {
     const KBookmark::List bmarks = bookmarks();
     KBookmark::List ret;
-    foreach( const KBookmark &bm, bmarks )
+    for ( const KBookmark &bm : bmarks )
     {
         DocumentViewport vp( bm.url().fragment(QUrl::FullyDecoded) );
         if ( vp.isValid() && vp.pageNumber == page )
@@ -296,7 +296,7 @@ KBookmark::List BookmarkManager::bookmarks( int page ) const
 KBookmark BookmarkManager::bookmark( int page ) const
 {
     const KBookmark::List bmarks = bookmarks();
-    foreach( const KBookmark &bm, bmarks )
+    for ( const KBookmark &bm : bmarks )
     {
         DocumentViewport vp( bm.url().fragment(QUrl::FullyDecoded) );
         if ( vp.isValid() && vp.pageNumber == page )
@@ -552,7 +552,7 @@ void BookmarkManager::removeBookmarks(const QUrl &referurl, const KBookmark::Lis
 
     const QHash<int,int> oldUrlBookmarks = d->urlBookmarks;
     bool deletedAny = false;
-    foreach ( const KBookmark & bm, list )
+    for ( const KBookmark &bm : list )
     {
         if ( bm.parentGroup() == thebg )
         {
@@ -708,7 +708,7 @@ KBookmark BookmarkManager::nextBookmark( const DocumentViewport &viewport) const
     std::sort(bmarks.begin(), bmarks.end(), bookmarkLessThan);
 
     KBookmark bookmark;
-    foreach ( const KBookmark &bm, bmarks )
+    for ( const KBookmark &bm : qAsConst(bmarks) )
     {
         DocumentViewport vp( bm.url().fragment(QUrl::FullyDecoded) );
         if ( viewport < vp )

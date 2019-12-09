@@ -309,7 +309,7 @@ void DocumentPrivate::cleanupPixmapMemory( qulonglong memoryToFree )
     while (memoryToFree > 0)
     {
         int clean_hits = 0;
-        foreach (DocumentObserver *observer, m_observers)
+        for (DocumentObserver *observer : qAsConst(m_observers))
         {
             AllocatedPixmap * p = searchLowestPriorityPixmap( false, true, observer );
             if ( !p ) // No pixmap to remove
@@ -646,7 +646,7 @@ bool DocumentPrivate::loadDocumentInfo( QFile &infoFile, LoadDocumentInfoFlags l
                         if ( viewElement.tagName() == QLatin1String("view") )
                         {
                             const QString viewName = viewElement.attribute( QStringLiteral("name") );
-                            Q_FOREACH ( View * view, m_views )
+                            for ( View *view : qAsConst(m_views) )
                             {
                                 if ( view->name() == viewName )
                                 {
@@ -1327,7 +1327,7 @@ void DocumentPrivate::saveDocumentInfo() const
     // create views root node
     QDomElement viewsNode = doc.createElement( QStringLiteral("views") );
     generalInfo.appendChild( viewsNode );
-    Q_FOREACH ( View * view, m_views )
+    for ( View *view : qAsConst(m_views) )
     {
         QDomElement viewEntry = doc.createElement( QStringLiteral("view") );
         viewEntry.setAttribute( QStringLiteral("name"), view->name() );
@@ -1649,7 +1649,7 @@ void DocumentPrivate::refreshPixmaps( int pageNumber )
         m_parent->requestPixmaps( requestedPixmaps, Okular::Document::NoOption );
     }
 
-    foreach (DocumentObserver *observer, m_observers)
+    for (DocumentObserver *observer : qAsConst(m_observers))
     {
         QLinkedList< Okular::PixmapRequest * > requestedPixmaps;
 
@@ -2225,7 +2225,7 @@ void DocumentPrivate::loadSyncFile( const QString & filePath )
     }
 
     QVector< QLinkedList< Okular::SourceRefObjectRect * > > refRects( m_pagesVector.size() );
-    foreach ( const pdfsyncpoint& pt, points )
+    for ( const pdfsyncpoint &pt : qAsConst(points) )
     {
         // drop pdfsync points not completely valid
         if ( pt.page < 0 || pt.page >= m_pagesVector.size() )
@@ -2413,7 +2413,8 @@ KPluginMetaData DocumentPrivate::generatorForMimeType(const QMimeType& type, QWi
         if (triedOffers.contains(md))
             continue;
 
-        foreach (const QString& supported, md.mimeTypes())
+        const QStringList mimetypes = md.mimeTypes();
+        for (const QString &supported : mimetypes)
         {
             QMimeType mimeType = mimeDatabase.mimeTypeForName(supported);
             if (mimeType == type && !exactMatches.contains(md)) {
@@ -2619,7 +2620,7 @@ Document::OpenResult Document::openDocument(const QString & docFile, const QUrl 
     connect( d->m_pageController, SIGNAL(rotationFinished(int,Okular::Page*)),
              this, SLOT(rotationFinished(int,Okular::Page*)) );
 
-    foreach ( Page * p, d->m_pagesVector )
+    for ( Page *p : qAsConst(d->m_pagesVector) )
         p->d->m_doc = d;
 
     d->m_metadataLoadingCompleted = false;
@@ -2688,7 +2689,7 @@ Document::OpenResult Document::openDocument(const QString & docFile, const QUrl 
     if ( !docScripts.isEmpty() )
     {
         d->m_scripter = new Scripter( d );
-        Q_FOREACH ( const QString &docscript, docScripts )
+        for ( const QString &docscript : docScripts )
         {
             d->m_scripter->execute( JavaScript, docscript );
         }
@@ -3816,7 +3817,7 @@ void Document::setViewport( const DocumentViewport & viewport, DocumentObserver 
     const bool currentPageChanged = (oldPageNumber != currentViewportPage);
 
     // notify change to all other (different from id) observers
-    foreach(DocumentObserver *o, d->m_observers)
+    for (DocumentObserver *o : qAsConst(d->m_observers))
     {
         if ( o != excludeObserver )
             o->notifyViewportChanged( smoothMove );
@@ -3829,7 +3830,7 @@ void Document::setViewport( const DocumentViewport & viewport, DocumentObserver 
 void Document::setZoom(int factor, DocumentObserver *excludeObserver)
 {
     // notify change to all other (different from id) observers
-    foreach(DocumentObserver *o, d->m_observers)
+    for (DocumentObserver *o : qAsConst(d->m_observers))
         if (o != excludeObserver)
             o->notifyZoom( factor );
 }
@@ -3916,8 +3917,9 @@ void Document::searchText( int searchID, const QString & text, bool fromStart, Q
 
     // remove highlights from pages and queue them for notifying changes
     *pagesToNotify += s->highlightedPages;
-    foreach(int pageNumber, s->highlightedPages)
+    for (const int pageNumber : qAsConst(s->highlightedPages)) {
         d->m_pagesVector.at(pageNumber)->d->deleteHighlights( searchID );
+    }
     s->highlightedPages.clear();
 
     // set hourglass cursor
@@ -4029,7 +4031,7 @@ void Document::resetSearch( int searchID )
     RunningSearch * s = *searchIt;
 
     // unhighlight pages and inform observers about that
-    foreach(int pageNumber, s->highlightedPages)
+    for (const int pageNumber : qAsConst(s->highlightedPages))
     {
         d->m_pagesVector.at(pageNumber)->d->deleteHighlights( searchID );
         foreachObserver( notifyPageChanged( pageNumber, DocumentObserver::Highlights ) );

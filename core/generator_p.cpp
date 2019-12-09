@@ -166,8 +166,8 @@ void FontExtractionThread::run()
 {
     for ( int i = -1; i < mNumOfPages && mGoOn; ++i )
     {
-        FontInfo::List list = mGenerator->fontsForPage( i );
-        foreach ( const FontInfo& fi, list )
+        const FontInfo::List list = mGenerator->fontsForPage( i );
+        for ( const FontInfo &fi : list )
         {
             emit gotFont( fi );
         }

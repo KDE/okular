@@ -236,9 +236,9 @@ class Okular::FormFieldChoicePrivate : public Okular::FormFieldPrivate
         void setValue( const QString& v ) override
         {
             Q_Q( FormFieldChoice );
-            QStringList choices = v.split( QLatin1Char (';'), QString::SkipEmptyParts );
+            const QStringList choices = v.split( QLatin1Char (';'), QString::SkipEmptyParts );
             QList<int> newchoices;
-            foreach ( const QString& str, choices )
+            for ( const QString &str : choices )
             {
                 bool ok = true;
                 int val = str.toInt( &ok );
@@ -255,7 +255,7 @@ class Okular::FormFieldChoicePrivate : public Okular::FormFieldPrivate
             QList<int> choices = q->currentChoices();
             std::sort(choices.begin(), choices.end());
             QStringList list;
-            foreach ( int c, choices )
+            for ( const int c : qAsConst(choices) )
             {
                 list.append( QString::number( c ) );
             }

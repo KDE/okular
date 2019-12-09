@@ -49,7 +49,7 @@ Okular::NormalizedRect buildBoundingRectangleForButtons( const QList<Okular::For
     double right = 0.0;
     double bottom = 0.0;
 
-    foreach( FormFieldButton* formButton, formButtons )
+    for( const FormFieldButton *formButton : formButtons )
     {
         left = qMin<double>( left, formButton->rect().left );
         top = qMin<double>( top, formButton->rect().top );
@@ -688,7 +688,7 @@ EditFormButtonsCommand::EditFormButtonsCommand( Okular::DocumentPrivate* docPriv
   m_prevButtonStates( QList< bool >() )
 {
     setText( i18nc( "Edit the state of a group of form buttons", "edit form button states" ) );
-    foreach( FormFieldButton* formButton, m_formButtons )
+    for ( const FormFieldButton *formButton : qAsConst(m_formButtons) )
     {
         m_prevButtonStates.append( formButton->state() );
     }
@@ -730,7 +730,7 @@ bool EditFormButtonsCommand::refreshInternalPageReferences( const QVector< Okula
 {
     const QList< FormFieldButton* > oldFormButtons = m_formButtons;
     m_formButtons.clear();
-    foreach( FormFieldButton* oldFormButton, oldFormButtons )
+    for ( FormFieldButton *oldFormButton : oldFormButtons )
     {
         FormFieldButton *button = dynamic_cast<FormFieldButton *>(Okular::PagePrivate::findEquivalentForm( newPagesVector[m_pageNumber], oldFormButton ));
         if ( !button )
@@ -743,7 +743,7 @@ bool EditFormButtonsCommand::refreshInternalPageReferences( const QVector< Okula
 
 void EditFormButtonsCommand::clearFormButtonStates()
 {
-    foreach( FormFieldButton* formButton, m_formButtons )
+    for ( FormFieldButton *formButton : qAsConst(m_formButtons) )
     {
         formButton->setState( false );
     }

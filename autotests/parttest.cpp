@@ -136,6 +136,7 @@ class PartTest
         void testAdditionalActionTriggers();
         void testTypewriterAnnotTool();
         void testJumpToPage();
+        void testForwardBackwardNavigation();
         void testTabletProximityBehavior();
         void testOpenPrintPreview();
 
@@ -1881,6 +1882,34 @@ void PartTest::testJumpToPage() {
      * to determine the expected viewport position, but we don't have access.
      */
     QCOMPARE(part.m_pageView->verticalScrollBar()->value(), pageWithSpaceTop - 4);
+}
+
+void PartTest::testForwardBackwardNavigation() {
+    const QString testFile = QStringLiteral( KDESRCDIR "data/simple-multipage.pdf" );
+    Okular::Part part( nullptr, nullptr, QVariantList() );
+    part.openDocument( testFile );
+    part.widget()->resize(800, 600);
+    part.widget()->show();
+    QVERIFY( QTest::qWaitForWindowExposed( part.widget() ) );
+
+    // Go to some page
+    const int targetPageA = 15;
+    part.m_document->setViewportPage( targetPageA );
+
+    QVERIFY( part.m_document->viewport() == targetPageA );
+
+    // Go to some other page
+    const int targetPageB = 25;
+    part.m_document->setViewportPage( targetPageB );
+    QVERIFY( part.m_document->viewport() == targetPageB );
+
+    // Go back to page A
+    QVERIFY(QMetaObject::invokeMethod(&part, "slotHistoryBack"));
+    QVERIFY( part.m_document->viewport().pageNumber == targetPageA );
+
+    // Go back to page B
+    QVERIFY(QMetaObject::invokeMethod(&part, "slotHistoryNext"));
+    QVERIFY( part.m_document->viewport().pageNumber == targetPageB );
 }
 
 void PartTest::testTabletProximityBehavior()

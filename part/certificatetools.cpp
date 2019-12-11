@@ -44,6 +44,15 @@ void CertificateTools::setTools(const QStringList& /*items*/)
     foreach( const QString cert, certs )
     {
         QListWidgetItem * listEntry = new QListWidgetItem( cert, m_list );
+        (void)listEntry;
+    }
+    //QVector<Poppler::CertificateInfo*> nssCerts = Poppler::getAvailableSigningCertificates();
+    Poppler::getAvailableSigningCertificates();
+    foreach( auto cert, nssCerts )
+    {
+        QListWidgetItem * listEntry = new QListWidgetItem( cert->getSubjectInfo().commonName,
+                                                           m_list );
+        (void)listEntry;
     }
 
     updateButtons();

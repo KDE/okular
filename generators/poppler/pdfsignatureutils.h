@@ -64,4 +64,18 @@ private:
     Okular::CertificateInfo *m_certfiticateInfo;
 };
 
+#ifdef HAVE_POPPLER_SIGNING
+
+class PopplerCertificateStore : public Okular::CertificateStore
+{
+    public:
+        PopplerCertificateStore();
+        ~PopplerCertificateStore();
+
+        QList<Okular::CertificateInfo*> getSigningCertificates() const override;
+        //QList<PopplerCertificateInfo*> getSigningCertificates() const override;
+};
+
+#endif
+
 #endif

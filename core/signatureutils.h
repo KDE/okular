@@ -239,6 +239,29 @@ private:
     Q_DISABLE_COPY(SignatureInfo)
 };
 
+/**
+ * @short A helper class to store information about x509 certificate
+ */
+class OKULARCORE_EXPORT CertificateStore
+{
+    public:
+        /**
+         * Destructor
+         */
+        virtual ~CertificateStore();
+
+        /**
+         * Returns list of valid, usable signing certificates
+         */
+        virtual QList<CertificateInfo*> getSigningCertificates() const;
+
+    protected:
+        CertificateStore();
+
+    private:
+        Q_DISABLE_COPY( CertificateStore )
+};
+
 }
 
 #endif

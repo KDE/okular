@@ -154,3 +154,16 @@ const CertificateInfo &SignatureInfo::certificateInfo() const
     static CertificateInfo dummy;
     return dummy;
 }
+
+CertificateStore::CertificateStore()
+{
+}
+
+CertificateStore::~CertificateStore()
+{
+}
+
+QList<CertificateInfo*> CertificateStore::getSigningCertificates() const
+{
+    return QList<CertificateInfo*>();
+}

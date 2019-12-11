@@ -20,6 +20,7 @@
 #include "global.h"
 #include "okularcore_export.h"
 #include "pagesize.h"
+#include "signatureutils.h"
 
 #include <QList>
 #include <QObject>
@@ -310,6 +311,8 @@ public:
     virtual bool canSign() const { return false; }
 
     virtual bool sign( const Okular::Annotation* /*pWhichAnnotation*/, const QString& /*rFilename*/) { return false; }
+
+    virtual CertificateStore* getCertStore() { return nullptr; }
 
     /**
      * This method can be called to trigger the generation of

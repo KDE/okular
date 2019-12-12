@@ -153,7 +153,8 @@ QVariantList DocumentItem::bookmarkedPages() const
 {
     QList<int> list;
     QSet<int> pages;
-    foreach (const KBookmark &bookmark, m_document->bookmarkManager()->bookmarks()) {
+    const KBookmark::List bMarks = m_document->bookmarkManager()->bookmarks();
+    for (const KBookmark &bookmark : bMarks) {
         Okular::DocumentViewport viewport(bookmark.url().fragment());
         pages << viewport.pageNumber;
     }
@@ -161,7 +162,7 @@ QVariantList DocumentItem::bookmarkedPages() const
     std::sort(list.begin(), list.end());
 
     QVariantList variantList;
-    foreach (const int page, list) {
+    for (const int page : qAsConst(list)) {
         variantList << page;
     }
     return variantList;
@@ -170,7 +171,8 @@ QVariantList DocumentItem::bookmarkedPages() const
 QStringList DocumentItem::bookmarks() const
 {
     QStringList list;
-    foreach(const KBookmark &bookmark, m_document->bookmarkManager()->bookmarks()) {
+    const KBookmark::List bMarks = m_document->bookmarkManager()->bookmarks();
+    for (const KBookmark &bookmark : bMarks) {
         list << bookmark.url().toString();
     }
     return list;

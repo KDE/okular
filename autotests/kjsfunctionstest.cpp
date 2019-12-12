@@ -45,9 +45,9 @@ public:
 private slots:
     void closeMessageBox()
     {
-        QWidgetList allToplevelWidgets = QApplication::topLevelWidgets();
+        const QWidgetList allToplevelWidgets = QApplication::topLevelWidgets();
         QMessageBox *mb = nullptr;
-        foreach ( QWidget *w, allToplevelWidgets ) {
+        for ( QWidget *w : allToplevelWidgets ) {
             if ( w->inherits( "QMessageBox" ) ) {
                 mb = qobject_cast< QMessageBox * >( w );
                 QCOMPARE( mb->text(), m_message );

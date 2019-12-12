@@ -447,7 +447,7 @@ void Shell::fileOpen()
     QMimeDatabase mimeDatabase;
     QSet<QString> globPatterns;
     QMap<QString, QStringList> namedGlobs;
-    foreach ( const QString &mimeName, m_fileformats ) {
+    for ( const QString &mimeName : qAsConst(m_fileformats) ) {
         QMimeType mimeType = mimeDatabase.mimeTypeForName( mimeName );
         const QStringList globs( mimeType.globPatterns() );
         if ( globs.isEmpty() ) {
@@ -460,11 +460,9 @@ void Shell::fileOpen()
 
     }
     QStringList namePatterns;
-    foreach( const QString &name, namedGlobs.keys()) {
-        namePatterns.append( name +
-                             QStringLiteral(" (") +
-                             namedGlobs[name].join( QLatin1Char(' ') ) +
-                             QStringLiteral(")")
+    for ( auto it = namedGlobs.cbegin(); it != namedGlobs.cend(); ++it ) {
+        namePatterns.append( it.key() + QLatin1String(" (")
+                             + it.value().join( QLatin1Char(' ') ) + QLatin1Char(')')
                            );
     }
 
@@ -474,7 +472,8 @@ void Shell::fileOpen()
 
     dlg->setWindowTitle( i18n("Open Document") );
     if ( dlg->exec() && dlg ) {
-        foreach(const QUrl& url, dlg->selectedUrls())
+        const QList<QUrl> urlList = dlg->selectedUrls();
+        for (const QUrl &url : urlList)
         {
             openUrl( url );
         }
@@ -774,7 +773,7 @@ int Shell::findTabIndex( QObject* sender )
 
 void Shell::handleDroppedUrls( const QList<QUrl>& urls )
 {
-    foreach( const QUrl& url, urls )
+    for ( const QUrl &url : urls )
     {
         openUrl( url );
     }

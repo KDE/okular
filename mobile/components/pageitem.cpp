@@ -215,7 +215,9 @@ void PageItem::setBookmarked(bool bookmarked)
 QStringList PageItem::bookmarks() const
 {
     QStringList list;
-    foreach(const KBookmark &bookmark, m_documentItem.data()->document()->bookmarkManager()->bookmarks(m_viewPort.pageNumber)) {
+    const KBookmark::List pageMarks =
+                m_documentItem.data()->document()->bookmarkManager()->bookmarks(m_viewPort.pageNumber);
+    for (const KBookmark &bookmark : pageMarks) {
         list << bookmark.url().toString();
     }
     return list;

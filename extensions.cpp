@@ -106,7 +106,7 @@ QString OkularLiveConnectExtension::eval( const QString &script )
 void OkularLiveConnectExtension::postMessage( const QStringList &args )
 {
     QStringList arrayargs;
-    Q_FOREACH ( const QString &arg, args )
+    for ( const QString &arg : args )
     {
         QString newarg = arg;
         newarg.replace( QLatin1Char('\''), QLatin1String("\\'") );

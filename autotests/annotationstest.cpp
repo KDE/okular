@@ -49,9 +49,12 @@ void AnnotationTest::initTestCase()
 
 void AnnotationTest::cleanupTestCase()
 {
-    if ( m_document->isOpened() )
-        foreach ( Okular::Annotation* annotation, m_document->page( 0 )->annotations() )
+    if ( m_document->isOpened() ) {
+        const QLinkedList<Okular::Annotation *> annotations = m_document->page( 0 )->annotations();
+        for ( Okular::Annotation* annotation : annotations ) {
             m_document->removePageAnnotation( 0, annotation );
+        }
+    }
 }
 
 

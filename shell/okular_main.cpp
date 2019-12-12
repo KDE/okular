@@ -56,7 +56,7 @@ static bool attachExistingInstance(const QStringList &paths, const QString &seri
     const int desktop = KWindowSystem::currentDesktop();
 
     // Select the first instance that isn't us (metric may change in future)
-    foreach ( const QString& service, services )
+    for ( const QString &service : services )
     {
         if ( service.startsWith(pattern) && !service.endsWith( myPid ) )
         {
@@ -74,7 +74,7 @@ static bool attachExistingInstance(const QStringList &paths, const QString &seri
     if ( !bestService )
         return false;
 
-    foreach( const QString &arg, paths )
+    for ( const QString &arg : paths )
     {
         // Copy stdin to temporary file which can be opened by the existing
         // window. The temp file is automatically deleted after it has been

@@ -30,8 +30,9 @@ DlgAccessibility::DlgAccessibility( QWidget * parent )
     m_color_pages.append( m_dlg->page_paperColor );
     m_color_pages.append( m_dlg->page_darkLight );
     m_color_pages.append( m_dlg->page_bw );
-    foreach ( QWidget * page, m_color_pages )
+    for ( QWidget *page : qAsConst(m_color_pages) ) {
         page->hide();
+    }
     m_color_pages[ m_selected ]->show();
 
 #ifdef HAVE_SPEECH

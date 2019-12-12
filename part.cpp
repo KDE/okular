@@ -254,7 +254,7 @@ static Okular::EmbedMode detectEmbedMode( QWidget *parentWidget, QObject *parent
          && ( QByteArray( "KHTMLPart" ) == parent->metaObject()->className() ) )
         return Okular::KHTMLPartMode;
 
-    Q_FOREACH ( const QVariant &arg, args )
+    for ( const QVariant &arg : args )
     {
         if ( arg.type() == QVariant::String )
         {
@@ -274,7 +274,7 @@ static Okular::EmbedMode detectEmbedMode( QWidget *parentWidget, QObject *parent
 
 static QString detectConfigFileName( const QVariantList &args )
 {
-    Q_FOREACH ( const QVariant &arg, args )
+    for ( const QVariant &arg : args )
     {
         if ( arg.type() == QVariant::String )
         {
@@ -2909,8 +2909,8 @@ void Part::checkNativeSaveDataLoss(bool *out_wontSaveForms, bool *out_wontSaveAn
 
         for ( int pageno = 0; pageno < pagecount; ++pageno )
         {
-            const Okular::Page *page = m_document->page( pageno );
-            foreach ( const Okular::Annotation *ann, page->annotations() )
+            const QLinkedList< Okular::Annotation* > annotations = m_document->page( pageno )->annotations();
+            for ( const Okular::Annotation *ann : annotations )
             {
                 if ( !(ann->flags() & Okular::Annotation::External) )
                 {

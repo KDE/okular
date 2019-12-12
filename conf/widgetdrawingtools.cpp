@@ -75,7 +75,7 @@ void WidgetDrawingTools::setTools( const QStringList &items )
     m_list->clear();
 
     // Parse each string and populate the list widget
-    foreach ( const QString &toolXml, items )
+    for ( const QString &toolXml : items )
     {
         QDomDocument entryParser;
         if ( !entryParser.setContent( toolXml ) )

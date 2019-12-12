@@ -94,7 +94,8 @@ private:
 QList<Shell*> getShells()
 {
     QList<Shell*> shells;
-    foreach( KMainWindow* kmw, KMainWindow::memberList() )
+    const QList< KMainWindow * > mainWindows = KMainWindow::memberList();
+    for ( KMainWindow* kmw : mainWindows )
     {
         Shell* shell = qobject_cast<Shell*>( kmw );
         if( shell )
@@ -107,7 +108,8 @@ QList<Shell*> getShells()
 
 Shell *findShell(Shell *ignore = nullptr)
 {
-    foreach (QWidget *widget, QApplication::topLevelWidgets())
+    const QWidgetList wList = QApplication::topLevelWidgets();
+    for (QWidget *widget : wList )
     {
         Shell *s = qobject_cast<Shell*>(widget);
         if (s && s != ignore)
@@ -145,12 +147,12 @@ void MainShellTest::init()
     Okular::Settings::self()->setDefaults();
 
     // Clean docdatas
-    QList<QUrl> urls;
-    urls << QUrl::fromUserInput(QStringLiteral("file://" KDESRCDIR "data/file1.pdf"));
-    urls << QUrl::fromUserInput(QStringLiteral("file://" KDESRCDIR "data/tocreload.pdf"));
-    urls << QUrl::fromUserInput(QStringLiteral("file://" KDESRCDIR "data/contents.epub"));
+    const QList<QUrl> urls = { QUrl::fromUserInput(QStringLiteral("file://" KDESRCDIR "data/file1.pdf"))
+                               , QUrl::fromUserInput(QStringLiteral("file://" KDESRCDIR "data/tocreload.pdf"))
+                               , QUrl::fromUserInput(QStringLiteral("file://" KDESRCDIR "data/contents.epub"))
+                             };
 
-    foreach (const QUrl &url, urls)
+    for (const QUrl &url : urls)
     {
         QFileInfo fileReadTest( url.toLocalFile() );
         const QString docDataPath = Okular::DocumentPrivate::docDataFileName(url, fileReadTest.size());
@@ -296,7 +298,7 @@ void MainShellTest::testShell()
             QCOMPARE(partDocument(part2)->currentPage(), expectedPage);
             openUrls << part2->url().url();
 
-            foreach(const QString &path, paths)
+            for (const QString &path : qAsConst(paths))
             {
                 QVERIFY(openUrls.contains(QStringLiteral("file://%1").arg(path)));
             }
@@ -531,7 +533,7 @@ void MainShellTest::testSessionRestore()
     QList<Shell*> shells = getShells();
     QVERIFY( !shells.isEmpty() );
     int numDocs = 0;
-    foreach( Shell* shell, shells )
+    for ( Shell *shell : qAsConst(shells) )
     {
         QVERIFY( QTest::qWaitForWindowExposed( shell ) );
         numDocs += shell->m_tabs.size();
@@ -552,7 +554,7 @@ void MainShellTest::testSessionRestore()
     int numWindows = 0;
     {   // Scope for config so that we can reconstruct from file
         KConfig config( configFile.fileName(), KConfig::SimpleConfig );
-        foreach( Shell* shell, shells )
+        for ( Shell *shell : qAsConst(shells) )
         {
             shell->savePropertiesInternal( &config, ++numWindows );
             // Windows aren't necessarily closed on shutdown, but we'll use
@@ -587,7 +589,7 @@ void MainShellTest::testSessionRestore()
     shells = getShells();
     QVERIFY( !shells.isEmpty() );
     numDocs = 0;
-    foreach( Shell* shell, shells )
+    for ( Shell* shell : qAsConst(shells) )
     {
         QVERIFY( QTest::qWaitForWindowExposed( shell ) );
         numDocs += shell->m_tabs.size();

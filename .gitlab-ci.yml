@@ -16,3 +16,20 @@ build_ubuntu_18_04:
     - mkdir -p build && cd build
     - cmake -G Ninja ..
     - ninja
+
+build_clang_tidy:
+  stage: build
+  image: debian:unstable
+  only:
+    - merge_requests
+  before_script:
+    - echo 'deb-src http://deb.debian.org/debian unstable main' >> /etc/apt/sources.list
+    - apt-get update
+    - apt-get build-dep --yes --no-install-recommends okular
+    - apt-get install --yes --no-install-recommends ninja-build clang clang-tidy python python-yaml libkf5crash-dev libkf5purpose-dev
+
+  script:
+    - mkdir -p build && cd build
+    - CC=clang CXX=clang++ cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G Ninja ..
+    - ninja
+    - "run-clang-tidy -header-filter='.*' -checks='-*,modernize-redundant-void-arg' -config=\"{WarningsAsErrors: '*'}\""

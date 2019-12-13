@@ -88,7 +88,7 @@ class fontMap {
       using the kpsewhich command, or if it cannot be read, or is
       (partially) in an improper format, an error message is printed
       to stderr using the kDebug() stream. */
-  fontMap( void );
+  fontMap();
 
   /** find the name of a font file (e.g. 'ubkd8a.pfb') from a TeX font
       name (e.g. 'rpbkd'). This method return a reference to

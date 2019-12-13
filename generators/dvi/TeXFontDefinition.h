@@ -147,7 +147,7 @@ class TeXFontDefinition {
   font_type     fontType;
 
   // Functions related to virtual fonts
-  void          read_VF_index(void );
+  void          read_VF_index();
 };
 
 #endif

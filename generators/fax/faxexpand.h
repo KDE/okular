@@ -114,7 +114,7 @@ void g32expand(class pagenode *pn, drawfunc df);
 void g4expand(class pagenode *pn, drawfunc df);
 
 /* initialise code tables */
-extern void fax_init_tables(void);
+extern void fax_init_tables();
 
 /* count lines in image */
 extern int G3count(class pagenode *pn, int twoD);

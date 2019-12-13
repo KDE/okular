@@ -315,7 +315,7 @@ FillTable(struct tabent *T, int Size, const struct proto *P, int State)
 
 /* initialise the huffman code tables */
 void
-fax_init_tables(void)
+fax_init_tables()
 {
     static bool already_initialized = false;
     if (already_initialized) {

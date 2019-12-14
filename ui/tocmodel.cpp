@@ -206,6 +206,8 @@ QHash<int, QByteArray> TOCModel::roleNames() const
     QHash<int, QByteArray> roles = QAbstractItemModel::roleNames();
     roles[(int)PageItemDelegate::PageRole] = "page";
     roles[(int)PageItemDelegate::PageLabelRole] = "pageLabel";
+    roles[HighlightRole] = "highlight";
+    roles[HighlightedParentRole] = "highlightedParent";
     return roles;
 }
 
@@ -255,6 +257,8 @@ QVariant TOCModel::data( const QModelIndex &index, int role ) const
                 }
             }
             break;
+        case HighlightRole:
+            return item->highlight;
         case PageItemDelegate::PageRole:
             if ( item->viewport.isValid() )
                 return item->viewport.pageNumber + 1;

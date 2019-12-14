@@ -11,6 +11,7 @@
 #define TOCMODEL_H
 
 #include <qabstractitemmodel.h>
+#include "pageitemdelegate.h"
 #include <QVector>
 
 namespace Okular {
@@ -30,6 +31,12 @@ class TOCModel : public QAbstractItemModel
     Q_PROPERTY(int count READ count NOTIFY countChanged)
 
     public:
+
+        enum Roles {
+            HighlightRole = PageItemDelegate::PageLabelRole + 1,
+            HighlightedParentRole
+        };
+
         explicit TOCModel( Okular::Document *document, QObject *parent = nullptr );
         virtual ~TOCModel();
 

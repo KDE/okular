@@ -19,6 +19,7 @@
 
 import QtQuick 2.1
 import QtQuick.Controls 2.0 as QQC2
+import QtQuick.Layouts 1.2
 import org.kde.kirigami 2.0 as Kirigami
 
 Column {
@@ -29,56 +30,30 @@ Column {
 
     property bool matches: display.toLowerCase().indexOf(searchField.text.toLowerCase()) !== -1
 
-
-    MouseArea {
+    Kirigami.BasicListItem {
         id: delegateArea
-        width: parent.width
-        height: matches ? label.height : 0
+        height: matches ? implicitHeight : 0
         opacity: matches ? 1 : 0
         Behavior on opacity {
-            NumberAnimation {
-                duration: 250
-            }
+            NumberAnimation { duration: 250 }
         }
-
+        Behavior on height {
+            NumberAnimation { duration: 250 }
+        }
 
         onClicked: {
             documentItem.currentPage = page-1
-
             contextDrawer.drawerOpen = false
         }
 
-        Kirigami.Icon {
-            id: icon
-            source: decoration
-            width: Kirigami.Units.iconSizes.small
-            height: width
-            anchors.verticalCenter: parent.verticalCenter
-            x: Kirigami.Units.largeSpacing
-        }
+        label: display
+        highlighted: highlight
+        icon: highlight || highlightedParent ? (LayoutMirroring.enabled ? "arrow-left" : "arrow-right") : ""
+
         QQC2.Label {
-            id: label
-            text: display
-            verticalAlignment: Text.AlignBottom
-            anchors.left: icon.right
-        }
-        //there isn't a sane way to do a dotted line in QML
-        Rectangle {
-            color: Kirigami.Theme.textColor
-            opacity: 0.3
-            height: 1
-            anchors {
-                bottom: parent.bottom
-                left: label.right
-                right: pageNumber.left
-            }
-        }
-        QQC2.Label {
-            id: pageNumber
             text: pageLabel ? pageLabel : page
-            anchors.right: parent.right
             verticalAlignment: Text.AlignBottom
-            anchors.rightMargin: Kirigami.Units.largeSpacing
+            Layout.rightMargin: Kirigami.Units.largeSpacing
         }
     }
     Column {

@@ -39,7 +39,7 @@ DocumentItem::DocumentItem(QObject *parent)
       m_pageviewObserver(nullptr),
       m_searchInProgress(false)
 {
-    qmlRegisterUncreatableType<TOCModel>("org.kde.okular", 1, 0, "TOCModel", QStringLiteral("Do not create objects of this type."));
+    qmlRegisterUncreatableType<TOCModel>("org.kde.okular.private", 1, 0, "TOCModel", QStringLiteral("Do not create objects of this type."));
     Okular::Settings::instance(QStringLiteral("okularproviderrc"));
     m_document = new Okular::Document(nullptr);
     m_tocModel = new TOCModel(m_document, this);

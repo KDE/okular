@@ -50,6 +50,7 @@ Kirigami.OverlayDrawer {
         QQC2.ToolBar {
             id: tabsToolbar
             height: mainTabBar.height
+            position: QQC2.ToolBar.Footer
             anchors {
                 top: undefined
                 bottom: browserFrame.bottom

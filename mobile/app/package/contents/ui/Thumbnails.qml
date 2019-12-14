@@ -25,7 +25,7 @@ ThumbnailsBase {
     id: root
     model: documentItem.matchingPages
 
-    QQC2.ToolBar {
+    header: QQC2.ToolBar {
         id: toolBarContent
         width: root.width
         QQC2.TextField {

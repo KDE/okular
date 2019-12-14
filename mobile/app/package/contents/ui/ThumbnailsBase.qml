@@ -21,101 +21,55 @@ import QtQuick 2.1
 import QtQuick.Controls 2.3 as QQC2
 import QtGraphicalEffects 1.0
 import org.kde.okular 2.0 as Okular
-import org.kde.kirigami 2.0 as Kirigami
+import org.kde.kirigami 2.5 as Kirigami
 
-Kirigami.Page {
+Kirigami.ScrollablePage {
     id: root
-    leftPadding: 0
-    topPadding: 0
-    rightPadding: 0
-    bottomPadding: 0
-    property alias resultsContentY: resultsGrid.contentY
-    property alias resultsContentHeight: resultsGrid.contentHeight
     property alias model: resultsGrid.model
-    signal pageClicked(int pageNumber)
     property Item view: resultsGrid
+    signal pageClicked(int pageNumber)
 
-    QQC2.ScrollView {
-        anchors {
-            fill: parent
-            topMargin: Kirigami.Units.gridUnit * 2
-        }
+    QQC2.Label {
+        anchors.centerIn: parent
+        visible: model.length == 0
+        text: i18n("No results found.")
+    }
+    Kirigami.CardsListView {
+        id: resultsGrid
+        clip: true
 
-        QQC2.Label {
-            anchors.centerIn: parent
-            visible: model.length == 0
-            text: i18n("No results found.")
-        }
+        leftMargin: Kirigami.Units.largeSpacing * 10
+        rightMargin: Kirigami.Units.largeSpacing * 10
 
-        GridView {
-            id: resultsGrid
-            anchors.fill: parent
-
-            cellWidth: Math.floor(width / Math.floor(width / (Kirigami.Units.gridUnit * 8)))
-            cellHeight: Math.floor(cellWidth * 1.6)
-
-            delegate: Item {
-                id: delegate
-                width: resultsGrid.cellWidth
-                height: resultsGrid.cellHeight
-                property bool current: documentItem.currentPage == modelData
-                onCurrentChanged: {
-                    if (current) {
-                        resultsGrid.currentIndex = index
-                    }
-                }
+        delegate: Kirigami.AbstractCard {
+            highlighted: delegateRecycler && delegateRecycler.GridView.isCurrentItem
+            showClickFeedback: true
+            readonly property real ratio: contentItem.implicitHeight/contentItem.implicitWidth
+            height: width * ratio
+            contentItem: Okular.ThumbnailItem {
+                document: documentItem
+                pageNumber: modelData
                 Rectangle {
-                    anchors.centerIn: parent
-                    width: thumbnail.width + Kirigami.Units.smallSpacing * 2
-                    //FIXME: why bindings with thumbnail.height doesn't work?
-                    height: thumbnail.height + Kirigami.Units.smallSpacing * 2
-                    Okular.ThumbnailItem {
-                        id: thumbnail
-                        x: Kirigami.Units.smallSpacing
-                        y: Kirigami.Units.smallSpacing
-                        document: documentItem
-                        pageNumber: modelData
-                        width: delegate.width - Kirigami.Units.smallSpacing * 2 - Kirigami.Units.gridUnit
-                        //value repeated to avoid binding loops
-                        height: Math.round(width / (implicitWidth/implicitHeight))
-                        Rectangle {
-                            width: childrenRect.width
-                            height: childrenRect.height
-                            color: Kirigami.Theme.backgroundColor
-                            radius: width
-                            smooth: true
-                            anchors {
-                                bottom: parent.bottom
-                                right: parent.right
-                            }
-                            QQC2.Label {
-                                text: modelData + 1
-                            }
-                        }
+                    width: childrenRect.width
+                    height: childrenRect.height
+                    color: Kirigami.Theme.backgroundColor
+                    radius: width
+                    smooth: true
+                    anchors {
+                        top: parent.top
+                        right: parent.right
                     }
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            resultsGrid.currentIndex = index
-                            documentItem.currentPage = modelData
-
-                            contextDrawer.drawerOpen = false
-                            root.pageClicked(modelData)
-                        }
+                    QQC2.Label {
+                        text: modelData + 1
                     }
-                }
-                layer.enabled: true
-                layer.effect: DropShadow {
-                    horizontalOffset: 0
-                    verticalOffset: 0
-                    radius: Math.ceil(Kirigami.Units.gridUnit * 0.8)
-                    samples: 32
-                    color: Qt.rgba(0, 0, 0, 0.5)
                 }
             }
-            highlight: Rectangle {
-                color: Kirigami.Theme.highlightColor
-                opacity: 0.4
+            onClicked: {
+                resultsGrid.currentIndex = index
+                documentItem.currentPage = modelData
+
+                contextDrawer.drawerOpen = false
+                root.pageClicked(modelData)
             }
         }
     }

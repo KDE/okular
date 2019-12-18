@@ -32,4 +32,4 @@ build_clang_tidy:
     - mkdir -p build && cd build
     - CC=clang CXX=clang++ cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G Ninja ..
     - ninja
-    - "run-clang-tidy -header-filter='.*' -checks='-*,modernize-redundant-void-arg' -config=\"{WarningsAsErrors: '*'}\""
+    - "run-clang-tidy -header-filter='.*' -checks='-*,modernize-redundant-void-arg,modernize-use-bool-literals' -config=\"{WarningsAsErrors: '*'}\""

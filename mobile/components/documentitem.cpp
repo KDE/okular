@@ -196,7 +196,7 @@ void DocumentItem::searchText(const QString &text)
     }
     m_document->cancelSearch();
     m_document->resetSearch(PAGEVIEW_SEARCH_ID);
-    m_document->searchText(PAGEVIEW_SEARCH_ID, text, 1, Qt::CaseInsensitive,
+    m_document->searchText(PAGEVIEW_SEARCH_ID, text, true, Qt::CaseInsensitive,
                            Okular::Document::AllDocument, true, QColor(100,100,200,40));
 
     if (!m_searchInProgress) {

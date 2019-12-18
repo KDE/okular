@@ -435,7 +435,7 @@ g31expand(pagenode *pn, drawfunc df)
 	for (EOLcnt = 1; !EndOfData(pn); EOLcnt++) {
 	    /* we have seen 11 zeros, which implies EOL,
 	       skip possible fill bits too */
-	    while (1) {
+	    while (true) {
 		NeedBits(8);
 		if (GetBits(8))
 		    break;
@@ -524,7 +524,7 @@ g32expand(pagenode *pn, drawfunc df)
 	for (EOLcnt = 1; !EndOfData(pn); EOLcnt++) {
 	    /* we have seen 11 zeros, which implies EOL,
 	       skip possible fill bits too */
-	    while (1) {
+	    while (true) {
 		NeedBits(8);
 		if (GetBits(8))
 		    break;

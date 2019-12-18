@@ -45,7 +45,7 @@ void GSRendererThread::addRequest(const GSRendererThreadRequest &req)
 
 void GSRendererThread::run()
 {
-    while(1)
+    while(true)
     {
         m_semaphore.acquire();
         {

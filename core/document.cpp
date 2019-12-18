@@ -1859,7 +1859,7 @@ void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *
 
         // loop on a page adding highlights for all found items
         RegularAreaRect * lastMatch = nullptr;
-        while ( 1 )
+        while ( true )
         {
             if ( lastMatch )
                 lastMatch = page->findText( searchID, search->cachedString, NextResult, search->cachedCaseSensitivity, lastMatch );
@@ -1967,7 +1967,7 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, vo
             RegularAreaRect * lastMatch = nullptr;
             // add all highlights for current word
             bool wordMatched = false;
-            while ( 1 )
+            while ( true )
             {
                 if ( lastMatch )
                     lastMatch = page->findText( searchID, word, NextResult, search->cachedCaseSensitivity, lastMatch );
@@ -2962,7 +2962,7 @@ bool Document::canConfigurePrinter( ) const
         return iface ? true : false;
     }
     else
-        return 0;
+        return false;
 }
 
 DocumentInfo Document::documentInfo() const

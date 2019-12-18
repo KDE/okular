@@ -100,7 +100,7 @@ static int ReadConfigFile
     status = 1;                 /* optimistic */
     line_number = 0;
 
-    while (1) {
+    while (true) {
 
         ptr = fgets (linebuf, sizeof (linebuf) - 1, fp);
         if (ptr == NULL)

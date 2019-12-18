@@ -38,7 +38,7 @@ class TOCModel : public QAbstractItemModel
         };
 
         explicit TOCModel( Okular::Document *document, QObject *parent = nullptr );
-        virtual ~TOCModel();
+        ~TOCModel() override;
 
         // reimplementations from QAbstractItemModel
         QHash<int, QByteArray> roleNames() const override;

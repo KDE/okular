@@ -32,7 +32,7 @@ class BookmarkList : public QWidget, public Okular::DocumentObserver
 
     public:
         explicit BookmarkList( Okular::Document *document, QWidget *parent = nullptr );
-        ~BookmarkList();
+        ~BookmarkList() override;
 
         // inherited from DocumentObserver
         void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) override;

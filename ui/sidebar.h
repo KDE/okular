@@ -21,7 +21,7 @@ class OKULARPART_EXPORT Sidebar : public QWidget
     Q_OBJECT
     public:
         explicit Sidebar( QWidget *parent = nullptr );
-        ~Sidebar();
+        ~Sidebar() override;
 
         int addItem( QWidget *widget, const QIcon &icon, const QString &text );
 

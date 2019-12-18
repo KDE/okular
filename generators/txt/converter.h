@@ -21,7 +21,7 @@ namespace Txt
 
     public:
         Converter();
-        ~Converter();
+        ~Converter() override;
 
         QTextDocument *convert( const QString &fileName ) override;
     };

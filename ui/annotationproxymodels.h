@@ -109,7 +109,7 @@ class AuthorGroupProxyModel : public QAbstractProxyModel
          * @param parent The parent object.
          */
         explicit AuthorGroupProxyModel( QObject *parent = nullptr );
-        ~AuthorGroupProxyModel();
+        ~AuthorGroupProxyModel() override;
 
         int columnCount( const QModelIndex &parentIndex ) const override;
         int rowCount( const QModelIndex &parentIndex ) const override;

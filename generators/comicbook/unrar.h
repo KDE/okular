@@ -36,7 +36,7 @@ class Unrar : public QObject
         /**
          * Destroys the unrar object.
          */
-        ~Unrar();
+        ~Unrar() override;
 
         /**
          * Opens given rar archive.

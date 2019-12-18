@@ -42,7 +42,7 @@ class ghostscript_interface  : public QObject
 
 public:
   ghostscript_interface();
-  ~ghostscript_interface();
+  ~ghostscript_interface() override;
 
   void clear();
 

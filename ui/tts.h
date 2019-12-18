@@ -18,7 +18,7 @@ class OkularTTS : public QObject
     Q_OBJECT
     public:
         explicit OkularTTS( QObject *parent = nullptr );
-        ~OkularTTS();
+        ~OkularTTS() override;
 
         void say( const QString &text );
         void stopAllSpeechs();

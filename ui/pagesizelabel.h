@@ -27,7 +27,7 @@ class PageSizeLabel : public KSqueezedTextLabel, public Okular::DocumentObserver
 
     public:
         PageSizeLabel( QWidget *parent, Okular::Document * document );
-        ~PageSizeLabel();
+        ~PageSizeLabel() override;
 
         // [INHERITED] from DocumentObserver
         void notifyCurrentPageChanged( int previous, int current ) override;

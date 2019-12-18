@@ -34,7 +34,7 @@ class DVIExport: public QObject, public QSharedData
 {
   Q_OBJECT
 public:
-  virtual ~DVIExport();
+  ~DVIExport() override;
 
   /** @c started() Flags whether or not the external process was
    *  spawned successfully.

@@ -42,7 +42,7 @@ class OKULARCORE_EXPORT GuiInterface : protected KXMLGUIClient
         /**
          * Destroys the gui interface.
          */
-        virtual ~GuiInterface() {}
+        ~GuiInterface() override {}
 
         /**
          * This method requests the XML GUI Client provided by the interface.

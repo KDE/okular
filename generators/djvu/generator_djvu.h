@@ -27,7 +27,7 @@ class DjVuGenerator : public Okular::Generator
     Q_INTERFACES( Okular::Generator )
     public:
         DjVuGenerator( QObject *parent, const QVariantList &args );
-        ~DjVuGenerator();
+        ~DjVuGenerator() override;
         bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector ) override;
 
         // document information

@@ -177,7 +177,7 @@ class PageViewToolBar : public QWidget
     Q_OBJECT
     public:
         PageViewToolBar( PageView * parent, QWidget * anchorWidget );
-        ~PageViewToolBar();
+        ~PageViewToolBar() override;
 
         // animated widget controls
         enum Side { Left = 0, Top = 1, Right = 2, Bottom = 3 };

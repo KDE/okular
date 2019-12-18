@@ -25,7 +25,7 @@ class Converter : public Okular::TextDocumentConverter
 
     public:
         Converter();
-        ~Converter();
+        ~Converter() override;
 
         QTextDocument *convert( const QString &fileName ) override;
 

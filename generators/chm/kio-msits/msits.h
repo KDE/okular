@@ -35,7 +35,7 @@ class ProtocolMSITS : public KIO::SlaveBase
 {
 public:
     ProtocolMSITS ( const QByteArray&, const QByteArray& );
-    virtual ~ProtocolMSITS();
+    ~ProtocolMSITS() override;
 
     void	get (const QUrl & ) override;
     void	listDir (const QUrl & url) override;

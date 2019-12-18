@@ -17,7 +17,7 @@ class EditDrawingToolDialogTest : public QObject
     Q_OBJECT
 public:
     explicit EditDrawingToolDialogTest(QObject *parent = nullptr);
-    ~EditDrawingToolDialogTest();
+    ~EditDrawingToolDialogTest() override;
 
 private Q_SLOTS:
     void shouldHaveDefaultValues();

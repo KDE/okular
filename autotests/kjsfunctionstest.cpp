@@ -37,7 +37,7 @@ public:
         QTimer::singleShot(0, this, &MessageBoxHelper::closeMessageBox);
     }
 
-    ~MessageBoxHelper()
+    ~MessageBoxHelper() override
     {
         QVERIFY(m_clicked);
     }

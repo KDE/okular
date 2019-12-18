@@ -18,7 +18,7 @@ class WidgetDrawingTools : public WidgetConfigurationToolsBase
     Q_OBJECT
 public:
     explicit WidgetDrawingTools( QWidget * parent = nullptr );
-    ~WidgetDrawingTools();
+    ~WidgetDrawingTools() override;
 
     QStringList tools() const override;
     void setTools( const QStringList& items ) override;

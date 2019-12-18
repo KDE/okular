@@ -22,7 +22,7 @@ class PopplerCertificateInfo : public Okular::CertificateInfo
 {
     public:
         PopplerCertificateInfo(const Poppler::CertificateInfo &info);
-        ~PopplerCertificateInfo();
+        ~PopplerCertificateInfo() override;
 
         bool isNull() const override;
         int version() const override;
@@ -50,7 +50,7 @@ class PopplerSignatureInfo : public Okular::SignatureInfo
 {
     public:
         PopplerSignatureInfo( const Poppler::SignatureValidationInfo &info );
-        ~PopplerSignatureInfo();
+        ~PopplerSignatureInfo() override;
 
         SignatureStatus signatureStatus() const override;
         CertificateStatus certificateStatus() const override;

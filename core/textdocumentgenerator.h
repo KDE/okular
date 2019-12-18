@@ -42,7 +42,7 @@ class OKULARCORE_EXPORT TextDocumentConverter : public QObject
         /**
          * Destroys the generic converter.
          */
-        ~TextDocumentConverter();
+        ~TextDocumentConverter() override;
 
         /**
          * Returns the generated QTextDocument object. The caller takes ownership of the QTextDocument
@@ -174,7 +174,7 @@ class OKULARCORE_EXPORT TextDocumentGenerator : public Generator, public Okular:
          */
         TextDocumentGenerator(TextDocumentConverter *converter, const QString& configName, QObject *parent, const QVariantList &args);
 
-        virtual ~TextDocumentGenerator();
+        ~TextDocumentGenerator() override;
 
         // [INHERITED] load a document and fill up the pagesVector
         Document::OpenResult loadDocumentWithPassword( const QString & fileName, QVector<Okular::Page*> & pagesVector, const QString &password ) override;

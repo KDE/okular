@@ -27,7 +27,7 @@ class PopplerAnnotationProxy : public Okular::AnnotationProxy
 {
     public:
         PopplerAnnotationProxy( Poppler::Document *doc, QMutex *userMutex, QHash<Okular::Annotation*, Poppler::Annotation*> *annotsOnOpenHash );
-        ~PopplerAnnotationProxy();
+        ~PopplerAnnotationProxy() override;
 
         bool supports( Capability capability ) const override;
         void notifyAddition( Okular::Annotation *annotation, int page ) override;

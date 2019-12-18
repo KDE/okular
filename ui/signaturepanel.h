@@ -28,7 +28,7 @@ class SignaturePanel : public QWidget, public Okular::DocumentObserver
     Q_OBJECT
     public:
         SignaturePanel( Okular::Document *document, QWidget *parent );
-        ~SignaturePanel();
+        ~SignaturePanel() override;
 
         // inherited from DocumentObserver
         void notifySetup( const QVector<Okular::Page *> &pages, int setupFlags ) override;

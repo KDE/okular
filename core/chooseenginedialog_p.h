@@ -23,7 +23,7 @@ class ChooseEngineDialog : public QDialog
 
     public:
         ChooseEngineDialog( const QStringList &generators, const QMimeType &mime, QWidget * parent = nullptr );
-        ~ChooseEngineDialog();
+        ~ChooseEngineDialog() override;
 
         int selectedGenerator() const;
 

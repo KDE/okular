@@ -22,7 +22,7 @@ class DrawingToolActions : public QObject
     Q_OBJECT
 public:
     explicit DrawingToolActions( KActionCollection *parent );
-    ~DrawingToolActions();
+    ~DrawingToolActions() override;
 
     QList<QAction*> actions() const;
 

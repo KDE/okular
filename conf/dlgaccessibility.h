@@ -21,7 +21,7 @@ class DlgAccessibility : public QWidget
 
     public:
         explicit DlgAccessibility( QWidget * parent = nullptr );
-        ~DlgAccessibility();
+        ~DlgAccessibility() override;
 
     private Q_SLOTS:
         void slotColorMode( int mode );

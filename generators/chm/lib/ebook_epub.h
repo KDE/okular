@@ -34,7 +34,7 @@ class EBook_EPUB : public EBook
 {
 	public:
 		EBook_EPUB();
-		virtual ~EBook_EPUB();
+		~EBook_EPUB() override;
 
 		/*!
 		 * \brief Attempts to load epub file.
@@ -44,20 +44,20 @@ class EBook_EPUB : public EBook
 		 * Loads a epub file.
 		 * \ingroup init
 		 */
-		bool	load( const QString& archiveName );
+		bool	load( const QString& archiveName ) override;
 
 		/*!
 		 * \brief Closes all the files, and frees the appropriate data.
 		 * \ingroup init
 		 */
-		virtual void close();
+		void close() override;
 
 		/*!
 		 * \brief Gets the title name of the opened ebook.
 		 * \return The name of the opened document, or an empty string if no ebook has been loaded.
 		 * \ingroup information
 		 */
-		virtual QString title() const;
+		QString title() const override;
 
 		/*!
 		 * \brief Gets the default URL of the e-book which should be opened when the book it first open
@@ -66,14 +66,14 @@ class EBook_EPUB : public EBook
 		 *         the root of the archive filesystem. If no book has been opened, returns "/".
 		 * \ingroup information
 		 */
-		virtual QUrl homeUrl() const;
+		QUrl homeUrl() const override;
 
 		/*!
          * \brief Checks whether the specific feature is present in this file.
          * \return true if it is available; false otherwise.
          * \ingroup information
          */
-        virtual bool  hasFeature( Feature code ) const;
+        bool  hasFeature( Feature code ) const override;
 
 		/*!
 		 * \brief Parses and fills up the Table of Contents (TOC)
@@ -84,7 +84,7 @@ class EBook_EPUB : public EBook
 		 *         by really buggy files; please report a bug if the file is opened ok under Windows.
 		 * \ingroup fileparsing
 		 */
-		virtual bool getTableOfContents( QList< EBookTocEntry >& toc ) const;
+		bool getTableOfContents( QList< EBookTocEntry >& toc ) const override;
 
 		/*!
 		 * \brief Parses the index table
@@ -95,7 +95,7 @@ class EBook_EPUB : public EBook
 		 *         by really buggy chm file; so far it never happened on indexes.
 		 * \ingroup fileparsing
 		 */
-		virtual bool getIndex( QList< EBookIndexEntry >& index ) const;
+		bool getIndex( QList< EBookIndexEntry >& index ) const override;
 
 		/*!
 		 * \brief Retrieves the content associated with the url from the current ebook as QString.
@@ -110,7 +110,7 @@ class EBook_EPUB : public EBook
 		 * \sa setCurrentEncoding() currentEncoding() getFileContentAsBinary()
 		 * \ingroup dataretrieve
 		 */
-		virtual bool getFileContentAsString( QString& str, const QUrl& url ) const;
+		bool getFileContentAsString( QString& str, const QUrl& url ) const override;
 
 		/*!
 		 * \brief Retrieves the content from url in current chm file to QByteArray.
@@ -124,7 +124,7 @@ class EBook_EPUB : public EBook
 		 * \sa getFileContentAsString()
 		 * \ingroup dataretrieve
 		 */
-		virtual bool getFileContentAsBinary( QByteArray& data, const QUrl& url ) const;
+		bool getFileContentAsBinary( QByteArray& data, const QUrl& url ) const override;
 
 		/*!
 		 * \brief Obtains the list of all the files (URLs) in current ebook archive. This is used in search
@@ -134,7 +134,7 @@ class EBook_EPUB : public EBook
 		 *
 		 * \ingroup dataretrieve
 		 */
-		virtual bool enumerateFiles( QList<QUrl>& files );
+		bool enumerateFiles( QList<QUrl>& files ) override;
 
 		/*!
 		 * \brief Gets the Title of the page referenced by url.
@@ -143,7 +143,7 @@ class EBook_EPUB : public EBook
 		 *
 		 * \ingroup dataretrieve
 		 */
-		virtual QString	getTopicByUrl ( const QUrl& url );
+		QString	getTopicByUrl ( const QUrl& url ) override;
 
 		/*!
 		 * \brief Gets the current ebook encoding (set or autodetected) as qtcodec
@@ -151,7 +151,7 @@ class EBook_EPUB : public EBook
 		 *
 		 * \ingroup encoding
 		 */
-		virtual QString	currentEncoding() const;
+		QString	currentEncoding() const override;
 
 		/*!
 		 * \brief Sets the ebook encoding to use for TOC and content
@@ -159,19 +159,19 @@ class EBook_EPUB : public EBook
 		 *
 		 * \ingroup encoding
 		 */
-		virtual bool setCurrentEncoding ( const char * encoding );
+		bool setCurrentEncoding ( const char * encoding ) override;
 
 		/*!
 		 * \brief Checks if this kind of URL is supported by the ebook format (i.e. could be passed to ebook functions)
 		 * \param url The url to check
 		 */
-		virtual bool isSupportedUrl( const QUrl& url );
+		bool isSupportedUrl( const QUrl& url ) override;
 
 		// Converts the string to the ebook-specific URL format
-		QUrl pathToUrl( const QString & link ) const;
+		QUrl pathToUrl( const QString & link ) const override;
 
 		// Extracts the path component from the URL
-		QString urlToPath( const QUrl& link ) const;
+		QString urlToPath( const QUrl& link ) const override;
 
 	private:
 		// Parses the XML file using a specified parser

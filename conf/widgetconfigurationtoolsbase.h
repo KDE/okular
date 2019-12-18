@@ -22,7 +22,7 @@ class WidgetConfigurationToolsBase : public QWidget
 
     public:
         explicit WidgetConfigurationToolsBase( QWidget * parent = nullptr );
-        ~WidgetConfigurationToolsBase();
+        ~WidgetConfigurationToolsBase() override;
 
         virtual QStringList tools() const = 0;
         virtual void setTools(const QStringList& items) = 0;

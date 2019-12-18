@@ -56,7 +56,7 @@ Q_OBJECT
     public:
         static GSRendererThread *getCreateRenderer();
 
-        ~GSRendererThread();
+        ~GSRendererThread() override;
 
         void addRequest(const GSRendererThreadRequest &req);
 

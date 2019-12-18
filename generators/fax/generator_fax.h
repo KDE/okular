@@ -23,7 +23,7 @@ class FaxGenerator : public Okular::Generator
 
     public:
         FaxGenerator( QObject *parent, const QVariantList &args );
-        virtual ~FaxGenerator();
+        ~FaxGenerator() override;
 
         bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector ) override;
 

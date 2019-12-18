@@ -34,7 +34,7 @@ Q_OBJECT
     
     public:
         TOC(QWidget *parent, Okular::Document *document);
-        ~TOC();
+        ~TOC() override;
 
         // inherited from DocumentObserver
         void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) override;

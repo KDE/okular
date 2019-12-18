@@ -20,7 +20,7 @@ class WidgetAnnotTools : public WidgetConfigurationToolsBase
     Q_OBJECT
     public:
         explicit WidgetAnnotTools( QWidget * parent = nullptr );
-        ~WidgetAnnotTools();
+        ~WidgetAnnotTools() override;
 
         QStringList tools() const override;
         void setTools(const QStringList& items) override;

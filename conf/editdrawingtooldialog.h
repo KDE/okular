@@ -23,7 +23,7 @@ class EditDrawingToolDialog : public QDialog
     Q_OBJECT
 public:
     explicit EditDrawingToolDialog( const QDomElement &initialState = QDomElement(), QWidget *parent = nullptr );
-    ~EditDrawingToolDialog();
+    ~EditDrawingToolDialog() override;
 
     QDomDocument toolXml() const;
 

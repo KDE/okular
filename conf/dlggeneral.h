@@ -22,7 +22,7 @@ class DlgGeneral : public QWidget
 
     public:
         explicit DlgGeneral( QWidget * parent,  Okular::EmbedMode embedMode );
-        virtual ~DlgGeneral();
+        ~DlgGeneral() override;
 
     public slots:
         void setCustomBackgroundColorButton( bool value );

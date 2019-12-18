@@ -29,7 +29,7 @@ class ThumbnailItem : public PageItem
 public:
 
     explicit ThumbnailItem(QQuickItem *parent=nullptr);
-    ~ThumbnailItem();
+    ~ThumbnailItem() override;
 };
 
 #endif

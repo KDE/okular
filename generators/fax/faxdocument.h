@@ -41,6 +41,9 @@ class FaxDocument
      */
     ~FaxDocument();
 
+    FaxDocument( const FaxDocument& ) = delete;
+    FaxDocument& operator=( const FaxDocument& ) = delete;
+
     /**
      * Loads the document.
      *
@@ -56,9 +59,6 @@ class FaxDocument
   private:
     class Private;
     Private* const d;
-
-    FaxDocument( const FaxDocument& );
-    FaxDocument& operator=( const FaxDocument& );
 };
 
 #endif

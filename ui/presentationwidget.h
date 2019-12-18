@@ -49,7 +49,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
     Q_OBJECT
     public:
         PresentationWidget( QWidget * parent, Okular::Document * doc, DrawingToolActions * drawingToolActions, KActionCollection * collection );
-        ~PresentationWidget();
+        ~PresentationWidget() override;
 
         // inherited from DocumentObserver
         void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) override;

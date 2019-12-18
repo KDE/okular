@@ -786,7 +786,7 @@ class OKULARCORE_EXPORT TextAnnotation : public Annotation
         /**
          * Destroys the text annotation.
          */
-        ~TextAnnotation();
+        ~TextAnnotation() override;
 
         /**
          * Sets the text @p type of the text annotation.
@@ -934,7 +934,7 @@ class OKULARCORE_EXPORT LineAnnotation : public Annotation
         /**
          * Destroys the line annotation.
          */
-        ~LineAnnotation();
+        ~LineAnnotation() override;
 
         /**
          * Sets the normalized line @p points of the line annotation.
@@ -1073,7 +1073,7 @@ class OKULARCORE_EXPORT GeomAnnotation : public Annotation
         /**
          * Destroys the geometrical annotation.
          */
-        ~GeomAnnotation();
+        ~GeomAnnotation() override;
 
         /**
          * Sets the geometrical @p type of the geometrical annotation.
@@ -1139,7 +1139,7 @@ class OKULARCORE_EXPORT HighlightAnnotation : public Annotation
         /**
          * Destroys the highlight annotation.
          */
-        ~HighlightAnnotation();
+        ~HighlightAnnotation() override;
 
         /**
          * Sets the @p type of the highlight annotation.
@@ -1284,7 +1284,7 @@ class OKULARCORE_EXPORT StampAnnotation : public Annotation
         /**
          * Destroys the stamp annotation.
          */
-        ~StampAnnotation();
+        ~StampAnnotation() override;
 
         /**
          * Sets the @p name of the icon for the stamp annotation.
@@ -1328,7 +1328,7 @@ class OKULARCORE_EXPORT InkAnnotation : public Annotation
         /**
          * Destroys the ink annotation.
          */
-        ~InkAnnotation();
+        ~InkAnnotation() override;
 
         /**
          * Sets the @p paths of points for the ink annotation.
@@ -1387,7 +1387,7 @@ class OKULARCORE_EXPORT CaretAnnotation : public Annotation
         /**
          * Destroys the caret annotation.
          */
-        ~CaretAnnotation();
+        ~CaretAnnotation() override;
 
         /**
          * Sets the @p symbol for the caret annotation.
@@ -1429,7 +1429,7 @@ class OKULARCORE_EXPORT FileAttachmentAnnotation : public Annotation
         /**
          * Destroys the file attachment annotation.
          */
-        virtual ~FileAttachmentAnnotation();
+        ~FileAttachmentAnnotation() override;
 
         /**
          * Gets the name of the icon.
@@ -1489,7 +1489,7 @@ class OKULARCORE_EXPORT SoundAnnotation : public Annotation
         /**
          * Destroys the sound annotation.
          */
-        virtual ~SoundAnnotation();
+        ~SoundAnnotation() override;
 
         /**
          * Gets the name of the icon.
@@ -1549,7 +1549,7 @@ class OKULARCORE_EXPORT MovieAnnotation : public Annotation
         /**
          * Destroys the movie annotation.
          */
-        virtual ~MovieAnnotation();
+        ~MovieAnnotation() override;
         /**
          * Gets the movie object.
          */
@@ -1597,7 +1597,7 @@ class OKULARCORE_EXPORT ScreenAnnotation : public Annotation
         /**
          * Destroys the screen annotation.
          */
-        virtual ~ScreenAnnotation();
+        ~ScreenAnnotation() override;
 
         /**
          * Returns the sub type of the screen annotation.
@@ -1666,7 +1666,7 @@ class OKULARCORE_EXPORT WidgetAnnotation : public Annotation
         /**
          * Destroys the widget annotation.
          */
-        virtual ~WidgetAnnotation();
+        ~WidgetAnnotation() override;
 
         /**
          * Returns the sub type of the widget annotation.
@@ -1721,7 +1721,7 @@ class OKULARCORE_EXPORT RichMediaAnnotation : public Annotation
         /**
          * Destroys the rich media annotation.
          */
-        virtual ~RichMediaAnnotation();
+        ~RichMediaAnnotation() override;
 
         /**
          * Returns the sub type of the rich media annotation.

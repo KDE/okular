@@ -31,7 +31,7 @@ class PropertiesDialog : public KPageDialog
 
   public:
         PropertiesDialog( QWidget *parent, Okular::Document *doc );
-        virtual ~PropertiesDialog();
+        ~PropertiesDialog() override;
 
     private Q_SLOTS:
         void pageChanged( KPageWidgetItem *, KPageWidgetItem * );
@@ -56,7 +56,7 @@ class FontsListModel
 
   public:
     explicit FontsListModel( QObject * parent = nullptr );
-    virtual ~FontsListModel();
+    ~FontsListModel() override;
 
     // reimplementations from QAbstractTableModel
     int columnCount( const QModelIndex &parent = QModelIndex() ) const override;

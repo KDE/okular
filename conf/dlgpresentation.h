@@ -20,7 +20,7 @@ class DlgPresentation : public QWidget
 
     public:
         explicit DlgPresentation( QWidget * parent = nullptr );
-        virtual ~DlgPresentation();
+        ~DlgPresentation() override;
 
     protected Q_SLOTS:
         void screenComboChanged( int which );

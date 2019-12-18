@@ -44,7 +44,7 @@ class EditAnnotToolDialog : public QDialog
         };
 
         explicit EditAnnotToolDialog( QWidget *parent = nullptr, const QDomElement &initialState = QDomElement() );
-        ~EditAnnotToolDialog();
+        ~EditAnnotToolDialog() override;
         QString name() const;
         QDomDocument toolXml() const;
 

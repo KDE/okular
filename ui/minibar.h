@@ -89,7 +89,7 @@ class MiniBarLogic : public QObject, public Okular::DocumentObserver
 
     public:
         MiniBarLogic( QObject * parent, Okular::Document * m_document );
-        ~MiniBarLogic();
+        ~MiniBarLogic() override;
         
         void addMiniBar( MiniBar * miniBar );
         void removeMiniBar( MiniBar * miniBar );
@@ -116,7 +116,7 @@ class MiniBar : public QWidget
     
     public:
         MiniBar( QWidget *parent, MiniBarLogic * miniBarLogic );
-        ~MiniBar();
+        ~MiniBar() override;
 
         void changeEvent( QEvent * event )  override;
 
@@ -155,7 +155,7 @@ class ProgressWidget : public QWidget, public Okular::DocumentObserver
     Q_OBJECT
     public:
         ProgressWidget( QWidget * parent, Okular::Document * document );
-        ~ProgressWidget();
+        ~ProgressWidget() override;
 
         // [INHERITED] from DocumentObserver
         void notifyCurrentPageChanged( int previous, int current ) override;

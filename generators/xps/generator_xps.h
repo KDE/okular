@@ -114,7 +114,7 @@ class XpsHandler: public QXmlDefaultHandler
 {
 public:
     explicit XpsHandler( XpsPage *page );
-    ~XpsHandler();
+    ~XpsHandler() override;
 
     bool startElement( const QString & nameSpace,
                        const QString & localName,
@@ -317,7 +317,7 @@ class XpsGenerator : public Okular::Generator
     Q_INTERFACES( Okular::Generator )
     public:
         XpsGenerator( QObject *parent, const QVariantList &args );
-        virtual ~XpsGenerator();
+        ~XpsGenerator() override;
 
         bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector ) override;
 

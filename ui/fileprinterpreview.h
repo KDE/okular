@@ -33,7 +33,7 @@ public:
      * @param parent  pointer to the parent widget for the dialog
      */
     explicit FilePrinterPreview( const QString &filename, QWidget *parent = nullptr );
-    virtual ~FilePrinterPreview();
+    ~FilePrinterPreview() override;
 
     QSize sizeHint() const override;
 

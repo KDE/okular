@@ -35,7 +35,7 @@ public:
     enum PreviewPosition{ Side, Below };
 
     explicit PixmapPreviewSelector( QWidget * parent = nullptr, PreviewPosition position = Side );
-    virtual ~PixmapPreviewSelector();
+    ~PixmapPreviewSelector() override;
 
     void setIcon( const QString& icon );
     QString icon() const;
@@ -80,7 +80,7 @@ class AnnotationWidget
 
 public:
     explicit AnnotationWidget( Okular::Annotation * ann );
-    virtual ~AnnotationWidget();
+    ~AnnotationWidget() override;
 
     virtual Okular::Annotation::SubType annotationType() const;
 

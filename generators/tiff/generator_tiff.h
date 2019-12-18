@@ -21,7 +21,7 @@ class TIFFGenerator : public Okular::Generator
     Q_INTERFACES( Okular::Generator )
     public:
         TIFFGenerator( QObject *parent, const QVariantList &args );
-        virtual ~TIFFGenerator();
+        ~TIFFGenerator() override;
 
         bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector ) override;
         bool loadDocumentFromData( const QByteArray & fileData, QVector< Okular::Page * > & pagesVector ) override;

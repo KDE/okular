@@ -59,7 +59,7 @@ public:
   /**
    * Default Destructor
    */
-  virtual ~Shell();
+  ~Shell() override;
 
   QSize sizeHint() const override;
 

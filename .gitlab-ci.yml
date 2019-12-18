@@ -29,7 +29,6 @@ build_clang_tidy:
     - apt-get install --yes --no-install-recommends ninja-build clang clang-tidy python python-yaml libkf5crash-dev libkf5purpose-dev
 
   script:
-    - mkdir -p build && cd build
-    - CC=clang CXX=clang++ cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G Ninja ..
+    - srcdir=`pwd` && mkdir -p /tmp/okular_build && cd /tmp/okular_build && CC=clang CXX=clang++ cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G Ninja $srcdir
     - ninja
-    - "run-clang-tidy -header-filter='.*' -checks='-*,modernize-redundant-void-arg,modernize-use-bool-literals' -config=\"{WarningsAsErrors: '*'}\""
+    - "run-clang-tidy -header-filter='.*/okular/.*' -checks='-*,modernize-redundant-void-arg,modernize-use-bool-literals,modernize-make-unique,modernize-make-shared,modernize-use-override,modernize-use-equals-delete,modernize-use-emplace' -config=\"{WarningsAsErrors: '*'}\""

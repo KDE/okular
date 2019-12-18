@@ -34,7 +34,7 @@ class CHMGenerator : public Okular::Generator
     Q_INTERFACES( Okular::Generator )
     public:
         CHMGenerator( QObject *parent, const QVariantList &args );
-        ~CHMGenerator();
+        ~CHMGenerator() override;
         bool loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector ) override;
 
         Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const override;

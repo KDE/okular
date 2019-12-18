@@ -202,7 +202,7 @@ class OKULARCORE_EXPORT Document : public QObject
         /**
          * Destroys the document.
          */
-        ~Document();
+        ~Document() override;
 
         /**
          * Describes the result of an open document operation.

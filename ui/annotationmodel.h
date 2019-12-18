@@ -30,7 +30,7 @@ class AnnotationModel : public QAbstractItemModel
         };
 
         explicit AnnotationModel( Okular::Document *document, QObject *parent = nullptr );
-        virtual ~AnnotationModel();
+        ~AnnotationModel() override;
 
         // reimplementations from QAbstractItemModel
         int columnCount( const QModelIndex &parent = QModelIndex() ) const override;

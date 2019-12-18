@@ -62,7 +62,7 @@ public:
         QTimer::singleShot(0, this, &CloseDialogHelper::closeDialog);
     }
 
-    ~CloseDialogHelper()
+    ~CloseDialogHelper() override
     {
         QVERIFY(m_clicked);
     }

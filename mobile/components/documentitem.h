@@ -96,7 +96,7 @@ class DocumentItem : public QObject
 public:
 
     explicit DocumentItem(QObject *parent=nullptr);
-    ~DocumentItem();
+    ~DocumentItem() override;
 
     void setUrl(const QUrl &url);
     QUrl url() const;
@@ -170,7 +170,7 @@ class Observer : public QObject, public Okular::DocumentObserver
 
 public:
     explicit Observer(DocumentItem *parent);
-    ~Observer();
+    ~Observer() override;
 
     // inherited from DocumentObserver
     void notifyPageChanged(int page, int flags) override;

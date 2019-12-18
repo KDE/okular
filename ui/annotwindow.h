@@ -35,7 +35,7 @@ class AnnotWindow : public QFrame
     Q_OBJECT
     public:
         AnnotWindow( QWidget * parent, Okular::Annotation * annot, Okular::Document * document, int page );
-        ~AnnotWindow();
+        ~AnnotWindow() override;
 
         void reloadInfo();
 

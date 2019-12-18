@@ -25,7 +25,7 @@ class KIMGIOGenerator : public Okular::Generator
 
     public:
         KIMGIOGenerator( QObject *parent, const QVariantList &args );
-        virtual ~KIMGIOGenerator();
+        ~KIMGIOGenerator() override;
 
         // [INHERITED] load a document and fill up the pagesVector
         bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector ) override;

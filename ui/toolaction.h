@@ -23,7 +23,7 @@ class ToolAction : public KSelectAction
 
     public:
         explicit ToolAction( QObject *parent = nullptr );
-        virtual ~ToolAction();
+        ~ToolAction() override;
 
         void addAction( QAction *action );
 

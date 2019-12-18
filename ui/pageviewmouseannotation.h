@@ -74,7 +74,7 @@ Q_OBJECT
 
 public:
     MouseAnnotation( PageView * parent, Okular::Document * document );
-    ~MouseAnnotation();
+    ~MouseAnnotation() override;
 
     /* Process a mouse press event. eventPos: Mouse position in content area coordinates. */
     void routeMousePressEvent( PageViewItem * pageViewItem, const QPoint & eventPos );

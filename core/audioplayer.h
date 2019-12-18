@@ -49,7 +49,7 @@ class OKULARCORE_EXPORT AudioPlayer : public QObject
 	    StoppedState
 	};
 
-        ~AudioPlayer();
+        ~AudioPlayer() override;
 
         /**
          * Gets the instance of the audio player.

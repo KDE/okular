@@ -125,7 +125,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         Part(QWidget* parentWidget, QObject* parent, const QVariantList& args);
 
         // Destructor
-        ~Part();
+        ~Part() override;
 
         // inherited from DocumentObserver
         void notifySetup( const QVector< Okular::Page * > &pages, int setupFlags ) override;

@@ -25,8 +25,8 @@ namespace Epub {
 
   public:
     explicit EpubDocument(const QString &fileName);
+    ~EpubDocument() override;
     bool isValid();
-    ~EpubDocument();
     struct epub *getEpub();
     void setCurrentSubDocument(const QString &doc);
     int maxContentHeight() const;

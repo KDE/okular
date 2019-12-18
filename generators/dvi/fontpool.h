@@ -41,7 +41,7 @@ public:
  fontPool(bool useFontHinting);
 
  // Default destructor.
- ~fontPool();
+ ~fontPool() override;
 
  /** Method used to set the MetafontMode for the PK font files. This
      data is used when loading fonts. Currently, a change here will be

@@ -199,7 +199,7 @@ class OKULARCORE_EXPORT FormFieldButton : public FormField
             Radio          ///< A radio button.
         };
 
-        virtual ~FormFieldButton();
+        ~FormFieldButton() override;
 
         /**
           The particular type of the button field.
@@ -264,7 +264,7 @@ class OKULARCORE_EXPORT FormFieldText : public FormField
             FileSelect     ///< An input field to select the path of a file on disk.
         };
 
-        virtual ~FormFieldText();
+        ~FormFieldText() override;
 
         /**
          * The particular type of the text field.
@@ -352,7 +352,7 @@ class OKULARCORE_EXPORT FormFieldChoice : public FormField
             ListBox       ///< A list box choice field.
         };
 
-        virtual ~FormFieldChoice();
+        ~FormFieldChoice() override;
 
         /**
          * The particular type of the choice field.
@@ -445,7 +445,7 @@ class OKULARCORE_EXPORT FormFieldSignature : public FormField
             UnknownType
          };
 
-        ~FormFieldSignature();
+        ~FormFieldSignature() override;
 
         /**
          * The signature type

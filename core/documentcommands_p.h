@@ -39,7 +39,7 @@ class AddAnnotationCommand : public OkularUndoCommand
     public:
         AddAnnotationCommand(Okular::DocumentPrivate * docPriv,  Okular::Annotation* annotation, int pageNumber);
 
-        virtual ~AddAnnotationCommand();
+        ~AddAnnotationCommand() override;
 
         void undo() override;
 
@@ -58,7 +58,7 @@ class RemoveAnnotationCommand : public OkularUndoCommand
 {
     public:
         RemoveAnnotationCommand(Okular::DocumentPrivate * doc,  Okular::Annotation* annotation, int pageNumber);
-        virtual ~RemoveAnnotationCommand();
+        ~RemoveAnnotationCommand() override;
         void undo() override;
         void redo() override;
 

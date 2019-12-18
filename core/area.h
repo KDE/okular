@@ -559,7 +559,7 @@ class OKULARCORE_EXPORT AnnotationObjectRect : public ObjectRect
         /**
          * Destroys the annotation object rectangle.
          */
-        virtual ~AnnotationObjectRect();
+        ~AnnotationObjectRect() override;
 
         /**
          * Returns the annotation object of the annotation object rectangle.
@@ -627,7 +627,7 @@ class OKULARCORE_EXPORT NonOwningObjectRect : public ObjectRect
 {
     public:
         NonOwningObjectRect( double left, double top, double right, double bottom, bool ellipse, ObjectType type, void *object );
-        ~NonOwningObjectRect();
+        ~NonOwningObjectRect() override;
 };
 
 /// @cond PRIVATE

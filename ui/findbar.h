@@ -26,7 +26,7 @@ class FindBar
 
     public:
         explicit FindBar( Okular::Document * document, QWidget * parent = nullptr );
-        virtual ~FindBar();
+        ~FindBar() override;
 
         QString text() const;
         Qt::CaseSensitivity caseSensitivity() const;

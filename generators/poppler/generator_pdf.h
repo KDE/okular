@@ -54,7 +54,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
 
     public:
         PDFGenerator( QObject *parent, const QVariantList &args );
-        virtual ~PDFGenerator();
+        ~PDFGenerator() override;
 
         // [INHERITED] load a document and fill up the pagesVector
         Okular::Document::OpenResult loadDocumentWithPassword( const QString & fileName, QVector<Okular::Page*> & pagesVector, const QString & password ) override;

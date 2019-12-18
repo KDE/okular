@@ -32,7 +32,7 @@ class ThumbnailList : public QScrollArea, public Okular::DocumentObserver
 Q_OBJECT
     public:
         ThumbnailList(QWidget *parent, Okular::Document *document);
-        ~ThumbnailList();
+        ~ThumbnailList() override;
 
         // inherited: create thumbnails ( inherited as a DocumentObserver )
         void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) override;

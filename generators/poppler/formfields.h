@@ -133,7 +133,7 @@ class PopplerFormFieldSignature : public Okular::FormFieldSignature
 {
     public:
         PopplerFormFieldSignature( std::unique_ptr<Poppler::FormFieldSignature> field );
-        virtual ~PopplerFormFieldSignature();
+        ~PopplerFormFieldSignature() override;
 
         // inherited from Okular::FormField
         Okular::NormalizedRect rect() const override;

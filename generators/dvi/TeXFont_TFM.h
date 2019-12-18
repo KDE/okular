@@ -24,7 +24,7 @@ class fix_word {
 class TeXFont_TFM : public TeXFont {
  public:
   TeXFont_TFM(TeXFontDefinition *parent);
-  ~TeXFont_TFM();
+  ~TeXFont_TFM() override;
 
   glyph* getGlyph(quint16 character, bool generateCharacterPixmap=false, const QColor& color=Qt::black) override;
 

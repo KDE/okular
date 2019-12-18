@@ -25,7 +25,7 @@ class PresentationSearchBar
 
     public:
         PresentationSearchBar( Okular::Document *document, QWidget *anchor, QWidget *parent = nullptr );
-        virtual ~PresentationSearchBar();
+        ~PresentationSearchBar() override;
 
         void forceSnap();
         void focusOnSearchEdit();

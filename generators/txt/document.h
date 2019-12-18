@@ -20,7 +20,7 @@ namespace Txt
 
         public:
             explicit Document( const QString &fileName );
-            ~Document();
+            ~Document() override;
 
         private:
             QString toUnicode( const QByteArray &array );

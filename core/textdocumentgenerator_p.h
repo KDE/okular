@@ -180,7 +180,7 @@ class TextDocumentGeneratorPrivate : public GeneratorPrivate
         {
         }
 
-        virtual ~TextDocumentGeneratorPrivate()
+        ~TextDocumentGeneratorPrivate() override
         {
             delete mConverter;
             delete mDocument;

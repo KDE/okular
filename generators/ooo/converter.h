@@ -30,7 +30,7 @@ class Converter : public Okular::TextDocumentConverter
 
   public:
     Converter();
-    ~Converter();
+    ~Converter() override;
 
     Okular::Document::OpenResult convertWithPassword( const QString &fileName, const QString &password ) override;
 

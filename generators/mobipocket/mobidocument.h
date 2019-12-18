@@ -25,7 +25,7 @@ namespace Mobi {
       
   public:
     explicit MobiDocument(const QString &fileName);  
-    ~MobiDocument();   
+    ~MobiDocument() override;
     
     Mobipocket::Document* mobi() const { return doc; }
     

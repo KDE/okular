@@ -26,7 +26,7 @@ class PluckerGenerator : public Okular::Generator
 
     public:
         PluckerGenerator( QObject *parent, const QVariantList &args );
-        virtual ~PluckerGenerator();
+        ~PluckerGenerator() override;
 
         // [INHERITED] load a document and fill up the pagesVector
         bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector ) override;

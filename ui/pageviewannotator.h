@@ -52,7 +52,7 @@ class PageViewAnnotator : public QObject
     Q_OBJECT
     public:
         PageViewAnnotator( PageView * parent, Okular::Document * storage );
-        ~PageViewAnnotator();
+        ~PageViewAnnotator() override;
 
         // called to show/hide the editing toolbar
         void setEnabled( bool enabled );

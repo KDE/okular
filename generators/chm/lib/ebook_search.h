@@ -30,7 +30,7 @@ class EBookSearch : public QObject
 			
 	public:
 		EBookSearch();
-		~EBookSearch();
+		~EBookSearch() override;
 		
 		//! Loads the search index from the data stream \param stream. 
 		//! The index should be previously saved with generateIndex().

@@ -57,7 +57,7 @@ class FormWidgetsController : public QObject
 
     public:
         explicit FormWidgetsController( Okular::Document *doc );
-        virtual ~FormWidgetsController();
+        ~FormWidgetsController() override;
 
         void signalAction( Okular::Action *action );
 
@@ -269,7 +269,7 @@ class TextAreaEdit : public KTextEdit, public FormWidgetIface
 
     public:
         explicit TextAreaEdit( Okular::FormFieldText * text, QWidget * parent = nullptr );
-        ~TextAreaEdit();
+        ~TextAreaEdit() override;
         void setFormWidgetsController( FormWidgetsController *controller ) override;
         bool event ( QEvent * e ) override;
 

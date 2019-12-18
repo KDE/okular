@@ -21,7 +21,7 @@ class ComicBookGenerator : public Okular::Generator
 
     public:
         ComicBookGenerator( QObject *parent, const QVariantList &args );
-        virtual ~ComicBookGenerator();
+        ~ComicBookGenerator() override;
 
         // [INHERITED] load a document and fill up the pagesVector
         bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector ) override;

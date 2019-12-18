@@ -26,7 +26,7 @@ class AnnotsPropertiesDialog : public KPageDialog
     Q_OBJECT
 public:
     AnnotsPropertiesDialog( QWidget *parent, Okular::Document *document, int docpage, Okular::Annotation *ann );
-    ~AnnotsPropertiesDialog();
+    ~AnnotsPropertiesDialog() override;
 
 private:
     Okular::Document *m_document;

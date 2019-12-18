@@ -55,7 +55,7 @@ class KTreeViewSearchLine : public KLineEdit
     /**
      * Destroys the KTreeViewSearchLine.
      */
-    virtual ~KTreeViewSearchLine();
+    ~KTreeViewSearchLine() override;
 
     /**
      * Returns true if the search is case sensitive.  This defaults to false.
@@ -199,7 +199,7 @@ class KTreeViewSearchLineWidget : public QWidget
     /**
      * Destroys the KTreeViewSearchLineWidget
      */
-    ~KTreeViewSearchLineWidget();
+    ~KTreeViewSearchLineWidget() override;
 
     /**
      * Returns a pointer to the search line.

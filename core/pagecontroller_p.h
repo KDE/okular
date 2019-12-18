@@ -27,7 +27,7 @@ class PageController : public QObject
 
     public:
         PageController();
-        ~PageController();
+        ~PageController() override;
 
         void addRotationJob( RotationJob *job );
 

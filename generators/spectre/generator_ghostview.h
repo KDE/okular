@@ -46,7 +46,7 @@ class GSGenerator : public Okular::Generator, public Okular::ConfigInterface
 
         /** constructor **/
         GSGenerator( QObject *parent, const QVariantList &args );
-        ~GSGenerator();
+        ~GSGenerator() override;
 
     public Q_SLOTS:
         void slotImageGenerated(QImage *img, Okular::PixmapRequest *request);

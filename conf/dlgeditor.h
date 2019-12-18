@@ -21,7 +21,7 @@ class DlgEditor : public QWidget
 
     public:
         explicit DlgEditor( QWidget * parent = nullptr );
-        virtual ~DlgEditor();
+        ~DlgEditor() override;
 
     private Q_SLOTS:
         void editorChanged( int which );

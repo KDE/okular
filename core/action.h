@@ -152,7 +152,7 @@ class OKULARCORE_EXPORT GotoAction : public Action
         /**
          * Destroys the goto action.
          */
-        virtual ~GotoAction();
+        ~GotoAction() override;
 
         /**
          * Returns the action type.
@@ -208,7 +208,7 @@ class OKULARCORE_EXPORT ExecuteAction : public Action
         /**
          * Destroys the execute action.
          */
-        virtual ~ExecuteAction();
+        ~ExecuteAction() override;
 
         /**
          * Returns the action type.
@@ -252,7 +252,7 @@ class OKULARCORE_EXPORT BrowseAction : public Action
         /**
          * Destroys the browse action.
          */
-        virtual ~BrowseAction();
+        ~BrowseAction() override;
 
         /**
          * Returns the action type.
@@ -311,7 +311,7 @@ class OKULARCORE_EXPORT DocumentAction : public Action
         /**
          * Destroys the document action.
          */
-        virtual ~DocumentAction();
+        ~DocumentAction() override;
 
         /**
          * Returns the action type.
@@ -353,7 +353,7 @@ class OKULARCORE_EXPORT SoundAction : public Action
         /**
          * Destroys the sound action.
          */
-        virtual ~SoundAction();
+        ~SoundAction() override;
 
         /**
          * Returns the action type.
@@ -414,7 +414,7 @@ class OKULARCORE_EXPORT ScriptAction : public Action
         /**
          * Destroys the browse action.
          */
-        virtual ~ScriptAction();
+        ~ScriptAction() override;
 
         /**
          * Returns the action type.
@@ -467,7 +467,7 @@ class OKULARCORE_EXPORT MovieAction : public Action
         /**
          * Destroys the movie action.
          */
-        virtual ~MovieAction();
+        ~MovieAction() override;
 
         /**
          * Returns the action type.
@@ -532,7 +532,7 @@ class OKULARCORE_EXPORT RenditionAction : public Action
         /**
          * Destroys the rendition action.
          */
-        virtual ~RenditionAction();
+        ~RenditionAction() override;
 
         /**
          * Returns the action type.

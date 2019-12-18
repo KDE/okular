@@ -31,7 +31,7 @@ Q_OBJECT
 
     public:
         Layers(QWidget *parent, Okular::Document *document);
-        ~Layers();
+        ~Layers() override;
 
         // inherited from DocumentObserver
         void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) override;

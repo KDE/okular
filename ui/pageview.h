@@ -58,7 +58,7 @@ Q_OBJECT
 
     public:
         PageView( QWidget *parent, Okular::Document *document );
-        ~PageView();
+        ~PageView() override;
 
         // Zoom mode ( last 4 are internally used only! )
         enum ZoomMode { ZoomFixed = 0, ZoomFitWidth = 1, ZoomFitPage = 2, ZoomFitAuto = 3,

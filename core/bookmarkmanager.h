@@ -35,7 +35,7 @@ class OKULARCORE_EXPORT BookmarkManager : public QObject
     Q_OBJECT
 
     public:
-        virtual ~BookmarkManager();
+        ~BookmarkManager() override;
 
         /**
          * Returns the list of documents with bookmarks.

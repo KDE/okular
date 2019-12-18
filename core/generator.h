@@ -224,7 +224,7 @@ class OKULARCORE_EXPORT Generator : public QObject
         /**
          * Destroys the generator.
          */
-        virtual ~Generator();
+        ~Generator() override;
 
         /**
          * Loads the document with the given @p fileName and fills the

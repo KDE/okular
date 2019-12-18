@@ -22,7 +22,7 @@ class SnapshotTaker : public QObject
 
     public:
         explicit SnapshotTaker( const QUrl &url, QObject *parent = nullptr );
-        ~SnapshotTaker();
+        ~SnapshotTaker() override;
 
     Q_SIGNALS:
         void finished( const QImage &image );

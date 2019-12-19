@@ -625,9 +625,6 @@ class OKULARCORE_EXPORT Generator : public QObject
 
     private:
         Q_DISABLE_COPY( Generator )
-
-        Q_PRIVATE_SLOT( d_func(), void pixmapGenerationFinished() )
-        Q_PRIVATE_SLOT( d_func(), void textpageGenerationFinished() )
 };
 
 /**

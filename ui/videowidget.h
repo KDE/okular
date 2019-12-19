@@ -57,11 +57,6 @@ class VideoWidget : public QWidget
         void resizeEvent( QResizeEvent * event ) override;
 
     private:
-        Q_PRIVATE_SLOT( d, void finished() )
-        Q_PRIVATE_SLOT( d, void playOrPause() )
-        Q_PRIVATE_SLOT( d, void setPosterImage( const QImage& ) )
-        Q_PRIVATE_SLOT( d, void stateChanged( Phonon::State, Phonon::State ) )
-
         // private storage
         class Private;
         Private *d;

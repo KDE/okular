@@ -76,7 +76,7 @@ public:
     void setPosterImage( const QImage& );
     void takeSnapshot();
     void videoStopped();
-    void stateChanged(Phonon::State, Phonon::State);
+    void stateChanged(Phonon::State newState);
 
     // slots
     void finished();
@@ -128,8 +128,8 @@ void VideoWidget::Private::load()
 
     player->load( urlFromUrlString( movie->url(), document ) );
 
-    connect( player->mediaObject(), SIGNAL( stateChanged( Phonon::State, Phonon::State ) ),
-             q, SLOT( stateChanged( Phonon::State, Phonon::State ) ) );
+    connect( player->mediaObject(), &Phonon::MediaObject::stateChanged,
+             q, [this](Phonon::State s) { stateChanged( s ); } );
 
     seekSlider->setEnabled( true );
 }
@@ -153,7 +153,7 @@ void VideoWidget::Private::takeSnapshot()
     const QUrl url = urlFromUrlString( movie->url(), document );
     SnapshotTaker *taker = new SnapshotTaker( url, q );
 
-    q->connect( taker, SIGNAL( finished( const QImage& ) ), q, SLOT( setPosterImage( const QImage& ) ) );
+    q->connect( taker, &SnapshotTaker::finished, q, [this]( const QImage &image ) { setPosterImage( image ); } );
 }
 
 void VideoWidget::Private::videoStopped()
@@ -218,7 +218,7 @@ void VideoWidget::Private::setPosterImage( const QImage &image )
     posterImagePage->setPixmap( QPixmap::fromImage( image ) );
 }
 
-void VideoWidget::Private::stateChanged( Phonon::State newState, Phonon::State )
+void VideoWidget::Private::stateChanged( Phonon::State newState )
 {
     if ( newState == Phonon::PlayingState )
         pageLayout->setCurrentIndex( 0 );
@@ -268,8 +268,8 @@ VideoWidget::VideoWidget( const Okular::Annotation *annotation, Okular::Movie *m
 
     d->controlBar->setVisible( movie->showControls() );
 
-    connect( d->player, SIGNAL(finished()), this, SLOT(finished()) );
-    connect( d->playPauseAction, SIGNAL(triggered()), this, SLOT(playOrPause()) );
+    connect( d->player, &Phonon::VideoPlayer::finished, this, [this] { d->finished(); } );
+    connect( d->playPauseAction, &QAction::triggered, this, [this] { d->playOrPause(); } );
 
     d->geom = annotation->transformedBoundingRectangle();
 

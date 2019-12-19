@@ -282,10 +282,10 @@ void KTreeViewSearchLine::contextMenuEvent( QContextMenuEvent *event )
 
   popup->addSeparator();
   QMenu *optionsSubMenu = popup->addMenu( i18n("Search Options") );
-  QAction* caseSensitiveAction = optionsSubMenu->addAction( i18nc("Enable case sensitive search in the side navigation panels", "Case Sensitive"), this, SLOT(slotCaseSensitive()) );
+  QAction* caseSensitiveAction = optionsSubMenu->addAction( i18nc("Enable case sensitive search in the side navigation panels", "Case Sensitive"), this, [this] { d->slotCaseSensitive(); } );
   caseSensitiveAction->setCheckable( true );
   caseSensitiveAction->setChecked( d->caseSensitive );
-  QAction* regularExpressionAction = optionsSubMenu->addAction( i18nc("Enable regular expression search in the side navigation panels", "Regular Expression"), this, SLOT(slotRegularExpression()) );
+  QAction* regularExpressionAction = optionsSubMenu->addAction( i18nc("Enable regular expression search in the side navigation panels", "Regular Expression"), this, [this] { d->slotRegularExpression(); } );
   regularExpressionAction->setCheckable( true );
   regularExpressionAction->setChecked( d->regularExpression );
 
@@ -296,22 +296,22 @@ void KTreeViewSearchLine::contextMenuEvent( QContextMenuEvent *event )
 void KTreeViewSearchLine::connectTreeView( QTreeView *treeView )
 {
   if ( treeView ) {
-    connect( treeView, SIGNAL(destroyed(QObject*)),
-             this, SLOT(treeViewDeleted(QObject*)) );
+    connect( treeView, &QTreeView::destroyed,
+                this, &KTreeViewSearchLine::treeViewDeleted );
 
-    connect( treeView->model(), SIGNAL(rowsInserted(QModelIndex,int,int)),
-             this, SLOT(rowsInserted(QModelIndex,int,int)) );
+    connect( treeView->model(), &QAbstractItemModel::rowsInserted,
+             this, &KTreeViewSearchLine::rowsInserted );
   }
 }
 
 void KTreeViewSearchLine::disconnectTreeView( QTreeView *treeView )
 {
   if ( treeView ) {
-    disconnect( treeView, SIGNAL(destroyed(QObject*)),
-                this, SLOT(treeViewDeleted(QObject*)) );
+    disconnect( treeView, &QTreeView::destroyed,
+                this, &KTreeViewSearchLine::treeViewDeleted );
 
-    disconnect( treeView->model(), SIGNAL(rowsInserted(QModelIndex,int,int)),
-                this, SLOT(rowsInserted(QModelIndex,int,int)) );
+    disconnect( treeView->model(), &QAbstractItemModel::rowsInserted,
+                this, &KTreeViewSearchLine::rowsInserted );
   }
 }
 
@@ -333,6 +333,20 @@ void KTreeViewSearchLine::activateSearch()
 
   if ( d->queuedSearches == 0 )
     updateSearch( d->search );
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// private functions
+////////////////////////////////////////////////////////////////////////////////
+
+void KTreeViewSearchLine::rowsInserted(const QModelIndex & parent, int start, int end) const
+{
+    d->rowsInserted(parent, start, end);
+}
+
+void KTreeViewSearchLine::treeViewDeleted( QObject *treeView )
+{
+    d->treeViewDeleted( treeView );
 }
 
 ////////////////////////////////////////////////////////////////////////////////

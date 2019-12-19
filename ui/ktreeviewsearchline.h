@@ -175,10 +175,8 @@ class KTreeViewSearchLine : public KLineEdit
     class Private;
     Private* const d;
 
-    Q_PRIVATE_SLOT( d, void rowsInserted( const QModelIndex&, int, int ) const )
-    Q_PRIVATE_SLOT( d, void treeViewDeleted( QObject* ) )
-    Q_PRIVATE_SLOT( d, void slotCaseSensitive() )
-    Q_PRIVATE_SLOT( d, void slotRegularExpression() )
+    void rowsInserted( const QModelIndex&, int, int ) const;
+    void treeViewDeleted( QObject* );
 };
 
 /**

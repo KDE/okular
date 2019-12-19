@@ -1547,7 +1547,7 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
     {
         m_pixmapRequestsMutex.unlock();
         // pino (7/4/2006): set the polling interval from 10 to 30
-        QTimer::singleShot( 30, m_parent, SLOT(sendGeneratorPixmapRequest()) );
+        QTimer::singleShot( 30, m_parent, [this] { sendGeneratorPixmapRequest(); } );
     }
 }
 
@@ -1583,7 +1583,7 @@ void DocumentPrivate::fontReadingGotFont( const Okular::FontInfo& font )
     }
 }
 
-void DocumentPrivate::slotGeneratorConfigChanged( const QString& )
+void DocumentPrivate::slotGeneratorConfigChanged()
 {
     if ( !m_generator )
         return;
@@ -1763,7 +1763,7 @@ void DocumentPrivate::doContinueDirectionMatchSearch(void *doContinueDirectionMa
         }
 
         // Both of the previous if branches need to call doContinueDirectionMatchSearch
-        QMetaObject::invokeMethod(m_parent, "doContinueDirectionMatchSearch", Qt::QueuedConnection, Q_ARG(void *, searchStruct));
+        QTimer::singleShot(0, m_parent, [this, searchStruct] { doContinueDirectionMatchSearch(searchStruct); });
     }
     else
     {
@@ -1874,7 +1874,7 @@ void DocumentPrivate::doContinueAllDocumentSearch(void *pagesToNotifySet, void *
         }
         delete lastMatch;
 
-        QMetaObject::invokeMethod(m_parent, "doContinueAllDocumentSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotifySet), Q_ARG(void *, pageMatches), Q_ARG(int, currentPage + 1), Q_ARG(int, searchID));
+        QTimer::singleShot(0, m_parent, [this, pagesToNotifySet, pageMatches, currentPage, searchID] { doContinueAllDocumentSearch(pagesToNotifySet, pageMatches, currentPage + 1, searchID); });
     }
     else
     {
@@ -1994,7 +1994,7 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(void *pagesToNotifySet, vo
             pageMatches->remove(page);
         }
 
-        QMetaObject::invokeMethod(m_parent, "doContinueGooglesDocumentSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotifySet), Q_ARG(void *, pageMatches), Q_ARG(int, currentPage + 1), Q_ARG(int, searchID), Q_ARG(QStringList, words));
+        QTimer::singleShot(0, m_parent, [this, pagesToNotifySet, pageMatches, currentPage, searchID, words] { doContinueGooglesDocumentSearch(pagesToNotifySet, pageMatches, currentPage + 1, searchID, words); });
     }
     else
     {
@@ -2320,7 +2320,7 @@ Document::Document( QWidget *widget )
     d->m_viewportIterator = d->m_viewportHistory.insert( d->m_viewportHistory.end(), DocumentViewport() );
     d->m_undoStack = new QUndoStack(this);
 
-    connect( SettingsCore::self(), SIGNAL(configChanged()), this, SLOT(_o_configChanged()) );
+    connect( SettingsCore::self(), &SettingsCore::configChanged, this, [this] { d->_o_configChanged(); } );
     connect(d->m_undoStack, &QUndoStack::canUndoChanged, this, &Document::canUndoChanged);
     connect(d->m_undoStack, &QUndoStack::canRedoChanged, this, &Document::canRedoChanged);
     connect(d->m_undoStack, &QUndoStack::cleanChanged, this, &Document::undoHistoryCleanChanged);
@@ -2617,8 +2617,8 @@ Document::OpenResult Document::openDocument(const QString & docFile, const QUrl 
 
     d->m_generatorName = offer.pluginId();
     d->m_pageController = new PageController();
-    connect( d->m_pageController, SIGNAL(rotationFinished(int,Okular::Page*)),
-             this, SLOT(rotationFinished(int,Okular::Page*)) );
+    connect( d->m_pageController, &PageController::rotationFinished,
+             this, [this](int p, Okular::Page *op) { d->rotationFinished(p, op); } );
 
     for ( Page *p : qAsConst(d->m_pagesVector) )
         p->d->m_doc = d;
@@ -2663,7 +2663,7 @@ Document::OpenResult Document::openDocument(const QString & docFile, const QUrl 
     if ( !d->m_saveBookmarksTimer )
     {
         d->m_saveBookmarksTimer = new QTimer( this );
-        connect( d->m_saveBookmarksTimer, SIGNAL(timeout()), this, SLOT(saveDocumentInfo()) );
+        connect( d->m_saveBookmarksTimer, &QTimer::timeout, this, [this] { d->saveDocumentInfo(); } );
     }
     d->m_saveBookmarksTimer->start( 5 * 60 * 1000 );
 
@@ -2671,7 +2671,7 @@ Document::OpenResult Document::openDocument(const QString & docFile, const QUrl 
     if ( !d->m_memCheckTimer )
     {
         d->m_memCheckTimer = new QTimer( this );
-        connect( d->m_memCheckTimer, SIGNAL(timeout()), this, SLOT(slotTimedMemoryCheck()) );
+        connect( d->m_memCheckTimer, &QTimer::timeout, this, [this] { d->slotTimedMemoryCheck(); } );
     }
     d->m_memCheckTimer->start( 2000 );
 
@@ -3045,8 +3045,8 @@ void Document::startFontReading()
     }
 
     d->m_fontThread = new FontExtractionThread( d->m_generator, pages() );
-    connect( d->m_fontThread, SIGNAL(gotFont(Okular::FontInfo)), this, SLOT(fontReadingGotFont(Okular::FontInfo)) );
-    connect( d->m_fontThread.data(), SIGNAL(progress(int)), this, SLOT(slotFontReadingProgress(int)) );
+    connect( d->m_fontThread, &FontExtractionThread::gotFont, this, [this](const Okular::FontInfo &f) { d->fontReadingGotFont(f); } );
+    connect( d->m_fontThread.data(), &FontExtractionThread::progress, this, [this](int p) { d->slotFontReadingProgress(p); } );
 
     d->m_fontThread->startExtraction( /*d->m_generator->hasFeature( Generator::Threaded )*/true );
 }
@@ -3931,7 +3931,7 @@ void Document::searchText( int searchID, const QString & text, bool fromStart, Q
         QMap< Page *, QVector<RegularAreaRect *> > *pageMatches = new QMap< Page *, QVector<RegularAreaRect *> >;
 
         // search and highlight 'text' (as a solid phrase) on all pages
-        QMetaObject::invokeMethod(this, "doContinueAllDocumentSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotify), Q_ARG(void *, pageMatches), Q_ARG(int, 0), Q_ARG(int, searchID));
+        QTimer::singleShot(0, this, [this, pagesToNotify, pageMatches, searchID] { d->doContinueAllDocumentSearch(pagesToNotify, pageMatches, 0, searchID); });
     }
     // 2. NEXTMATCH - find next matching item (or start from top)
     // 3. PREVMATCH - find previous matching item (or start from bottom)
@@ -3969,7 +3969,7 @@ void Document::searchText( int searchID, const QString & text, bool fromStart, Q
         searchStruct->currentPage = currentPage;
         searchStruct->searchID = searchID;
 
-        QMetaObject::invokeMethod(this, "doContinueDirectionMatchSearch", Qt::QueuedConnection, Q_ARG(void *, searchStruct));
+        QTimer::singleShot(0, this, [this, searchStruct] { d->doContinueDirectionMatchSearch(searchStruct); });
     }
     // 4. GOOGLE* - process all document marking pages
     else if ( type == GoogleAll || type == GoogleAny )
@@ -3978,7 +3978,7 @@ void Document::searchText( int searchID, const QString & text, bool fromStart, Q
         const QStringList words = text.split( QLatin1Char ( ' ' ), QString::SkipEmptyParts );
 
         // search and highlight every word in 'text' on all pages
-        QMetaObject::invokeMethod(this, "doContinueGooglesDocumentSearch", Qt::QueuedConnection, Q_ARG(void *, pagesToNotify), Q_ARG(void *, pageMatches), Q_ARG(int, 0), Q_ARG(int, searchID), Q_ARG(QStringList, words));
+        QTimer::singleShot(0, this, [this, pagesToNotify, pageMatches, searchID, words] { d->doContinueGooglesDocumentSearch(pagesToNotify, pageMatches, 0, searchID, words); });
     }
 }
 
@@ -4736,8 +4736,8 @@ void Document::fillConfigDialog( KConfigDialog * dialog )
     }
     if ( pagesAdded )
     {
-        connect( dialog, SIGNAL(settingsChanged(QString)),
-                 this, SLOT(slotGeneratorConfigChanged(QString)) );
+        connect( dialog, &KConfigDialog::settingsChanged,
+                 this, [this] { d->slotGeneratorConfigChanged(); } );
     }
 }
 
@@ -5340,6 +5340,11 @@ QByteArray Document::requestSignedRevisionData( const Okular::SignatureInfo &inf
     f.close();
 
     return data;
+}
+
+void Document::refreshPixmaps( int pageNumber )
+{
+    d->refreshPixmaps( pageNumber );
 }
 
 void DocumentPrivate::executeScript( const QString &function )

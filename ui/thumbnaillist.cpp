@@ -76,7 +76,7 @@ class ThumbnailListPrivate : public QWidget
 
         // SLOTS:
         // make requests for generating pixmaps for visible thumbnails
-        void slotRequestVisiblePixmaps( int newContentsY = -1 );
+        void slotRequestVisiblePixmaps();
         // delay timeout: resize overlays and requests pixmaps
         void slotDelayTimeout();
         ThumbnailWidget* getPageByNumber( int page ) const;
@@ -216,7 +216,7 @@ ThumbnailList::ThumbnailList( QWidget *parent, Okular::Document *document )
     widget()->show();
     widget()->setBackgroundRole( QPalette::Base );
 
-    connect( verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(slotRequestVisiblePixmaps(int)) );
+    connect( verticalScrollBar(), &QScrollBar::valueChanged, d, &ThumbnailListPrivate::slotRequestVisiblePixmaps );
 }
 
 ThumbnailList::~ThumbnailList()
@@ -601,7 +601,7 @@ void ThumbnailListPrivate::viewportResizeEvent( QResizeEvent * e )
 //END widget events
 
 //BEGIN internal SLOTS
-void ThumbnailListPrivate::slotRequestVisiblePixmaps( int /*newContentsY*/ )
+void ThumbnailListPrivate::slotRequestVisiblePixmaps()
 {
     // if an update is already scheduled or the widget is hidden, don't proceed
     if ( ( m_delayTimer && m_delayTimer->isActive() ) || q->isHidden() )
@@ -654,7 +654,7 @@ void ThumbnailListPrivate::delayedRequestVisiblePixmaps( int delayMs )
     {
         m_delayTimer = new QTimer( q );
         m_delayTimer->setSingleShot( true );
-        connect( m_delayTimer, SIGNAL(timeout()), q, SLOT(slotDelayTimeout()) );
+        connect( m_delayTimer, &QTimer::timeout, this, &ThumbnailListPrivate::slotDelayTimeout );
     }
     m_delayTimer->start( delayMs );
 }

@@ -17,6 +17,7 @@
 #include <qhash.h>
 
 #include <QDebug>
+#include <QTimer>
 
 #include "../debug_p.h"
 #include "../document_p.h"
@@ -44,7 +45,8 @@ static void updateField( FormField *field )
     if (page)
     {
         Document *doc = PagePrivate::get( page )->m_doc->m_parent;
-        QMetaObject::invokeMethod( doc, "refreshPixmaps", Qt::QueuedConnection, Q_ARG( int, page->number() ) );
+        const int pageNumber = page->number();
+        QTimer::singleShot(0, doc, [doc, pageNumber] { doc->refreshPixmaps(pageNumber); } );
         emit doc->refreshFormWidget( field );
     }
     else

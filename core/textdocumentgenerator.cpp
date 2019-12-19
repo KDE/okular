@@ -265,16 +265,16 @@ void TextDocumentGeneratorPrivate::initializeGenerator()
     q->setFeature( Generator::Threaded );
 #endif
 
-    QObject::connect( mConverter, SIGNAL(addAction(Action*,int,int)),
-                      q, SLOT(addAction(Action*,int,int)) );
-    QObject::connect( mConverter, SIGNAL(addAnnotation(Annotation*,int,int)),
-                      q, SLOT(addAnnotation(Annotation*,int,int)) );
-    QObject::connect( mConverter, SIGNAL(addTitle(int,QString,QTextBlock)),
-                      q, SLOT(addTitle(int,QString,QTextBlock)) );
-    QObject::connect( mConverter, SIGNAL(addMetaData(QString,QString,QString)),
-                      q, SLOT(addMetaData(QString,QString,QString)) );
-    QObject::connect( mConverter, SIGNAL(addMetaData(DocumentInfo::Key,QString)),
-                      q, SLOT(addMetaData(DocumentInfo::Key,QString)) );
+    QObject::connect( mConverter, &TextDocumentConverter::addAction,
+                      q, [this](Action *a, int cb, int ce) { addAction(a, cb, ce); } );
+    QObject::connect( mConverter, &TextDocumentConverter::addAnnotation,
+                      q, [this](Annotation *a, int cb, int ce) { addAnnotation(a, cb, ce); } );
+    QObject::connect( mConverter, &TextDocumentConverter::addTitle,
+                      q, [this](int l, const QString &t, const QTextBlock &b) { addTitle(l, t, b); } );
+    QObject::connect( mConverter, QOverload<const QString &, const QString &, const QString &>::of(&TextDocumentConverter::addMetaData),
+                      q, [this](const QString &k, const QString &v, const QString &t) { addMetaData(k, v, t); } );
+    QObject::connect( mConverter, QOverload<DocumentInfo::Key,const QString &>::of(&TextDocumentConverter::addMetaData),
+                      q, [this](DocumentInfo::Key k, const QString &v) { addMetaData(k, v); } );
 
     QObject::connect( mConverter, &TextDocumentConverter::error,
                       q, &Generator::error );

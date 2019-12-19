@@ -145,8 +145,9 @@ BookmarkManager::BookmarkManager( DocumentPrivate * document )
     d->manager = KBookmarkManager::managerForFile( d->file, QStringLiteral("okular") );
     d->manager->setEditorOptions( QGuiApplication::applicationDisplayName(), false );
     d->manager->setUpdate( true );
-    connect( d->manager, SIGNAL(changed(QString,QString)),
-             this, SLOT(_o_changed(QString,QString)) );
+    connect( d->manager, &KBookmarkManager::changed, this, [this](const QString & groupAddress, const QString & caller) {
+        d->_o_changed(groupAddress, caller);
+    });
 }
 
 BookmarkManager::~BookmarkManager()

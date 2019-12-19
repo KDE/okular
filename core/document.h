@@ -1066,6 +1066,13 @@ class OKULARCORE_EXPORT Document : public QObject
          */
         QByteArray requestSignedRevisionData( const Okular::SignatureInfo &info );
 
+        /**
+         * Refresh the pixmaps for the given @p pageNumber.
+         *
+         * @since 1.10
+         */
+        void refreshPixmaps( int pageNumber );
+
     Q_SIGNALS:
         /**
          * This signal is emitted whenever the document is about to close.
@@ -1267,21 +1274,6 @@ class OKULARCORE_EXPORT Document : public QObject
         DocumentPrivate *const d;
 
         Q_DISABLE_COPY( Document )
-
-        Q_PRIVATE_SLOT( d, void saveDocumentInfo() const )
-        Q_PRIVATE_SLOT( d, void slotTimedMemoryCheck() )
-        Q_PRIVATE_SLOT( d, void sendGeneratorPixmapRequest() )
-        Q_PRIVATE_SLOT( d, void rotationFinished( int page, Okular::Page *okularPage ) )
-        Q_PRIVATE_SLOT( d, void slotFontReadingProgress( int page ) )
-        Q_PRIVATE_SLOT( d, void fontReadingGotFont( const Okular::FontInfo& font ) )
-        Q_PRIVATE_SLOT( d, void slotGeneratorConfigChanged( const QString& ) )
-        Q_PRIVATE_SLOT( d, void refreshPixmaps( int ) )
-        Q_PRIVATE_SLOT( d, void _o_configChanged() )
-
-        // search thread simulators
-        Q_PRIVATE_SLOT( d, void doContinueDirectionMatchSearch(void *doContinueDirectionMatchSearchStruct) )
-        Q_PRIVATE_SLOT( d, void doContinueAllDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID) )
-        Q_PRIVATE_SLOT( d, void doContinueGooglesDocumentSearch(void *pagesToNotifySet, void *pageMatchesMap, int currentPage, int searchID, const QStringList & words) )
 };
 
 

@@ -84,6 +84,7 @@ class OKULARCORE_EXPORT TextDocumentConverter : public QObject
          */
         void addMetaData( const QString &key, const QString &value, const QString &title );
 
+        // TODO When we can do a BIC change rename one of the two addMetaData functions (or see if we can kill one)
         /**
          * Adds a set of meta data to the generator.
          *
@@ -222,12 +223,6 @@ class OKULARCORE_EXPORT TextDocumentGenerator : public Generator, public Okular:
     private:
         Q_DECLARE_PRIVATE( TextDocumentGenerator )
         Q_DISABLE_COPY( TextDocumentGenerator )
-
-        Q_PRIVATE_SLOT( d_func(), void addAction( Action*, int, int ) )
-        Q_PRIVATE_SLOT( d_func(), void addAnnotation( Annotation*, int, int ) )
-        Q_PRIVATE_SLOT( d_func(), void addTitle( int, const QString&, const QTextBlock& ) )
-        Q_PRIVATE_SLOT( d_func(), void addMetaData( const QString&, const QString&, const QString& ) )
-        Q_PRIVATE_SLOT( d_func(), void addMetaData( DocumentInfo::Key, const QString& ) )
 };
 
 }

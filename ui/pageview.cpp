@@ -5522,8 +5522,7 @@ void PageView::slotRefreshPage()
 {
     for (int req : qAsConst(d->refreshPages))
     {
-        QMetaObject::invokeMethod( d->document, "refreshPixmaps", Qt::QueuedConnection,
-                                   Q_ARG( int, req ) );
+        QTimer::singleShot(0, this, [this, req] { d->document->refreshPixmaps(req); });
     }
     d->refreshPages.clear();
 }

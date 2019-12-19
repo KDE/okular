@@ -185,7 +185,7 @@ class DocumentPrivate
         void rotationFinished( int page, Okular::Page *okularPage );
         void slotFontReadingProgress( int page );
         void fontReadingGotFont( const Okular::FontInfo& font );
-        void slotGeneratorConfigChanged( const QString& );
+        void slotGeneratorConfigChanged();
         void refreshPixmaps( int );
         void _o_configChanged();
         void doContinueDirectionMatchSearch(void *doContinueDirectionMatchSearchStruct);

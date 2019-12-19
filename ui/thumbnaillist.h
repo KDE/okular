@@ -67,9 +67,6 @@ Q_OBJECT
     private:
         friend class ThumbnailListPrivate;
         ThumbnailListPrivate *d;
-
-        Q_PRIVATE_SLOT( d, void slotRequestVisiblePixmaps( int newContentsY = -1 ) )
-        Q_PRIVATE_SLOT( d, void slotDelayTimeout() )
 };
 
 /**

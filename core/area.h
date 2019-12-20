@@ -481,7 +481,7 @@ class OKULARCORE_EXPORT ObjectRect
         /**
          * This is an overloaded member function, provided for convenience.
          */
-        ObjectRect( const NormalizedRect &rect, bool ellipse, ObjectType type, void *object );
+        ObjectRect( const NormalizedRect &r, bool ellipse, ObjectType type, void *object );
 
         /**
          * This is an overloaded member function, provided for convenience.
@@ -599,9 +599,9 @@ class OKULARCORE_EXPORT SourceRefObjectRect : public ObjectRect
          * Creates a new source reference object rectangle.
          *
          * @param point The point of the source reference.
-         * @param reference The storable source reference object.
+         * @param srcRef The storable source reference object.
          */
-        SourceRefObjectRect( const NormalizedPoint& point, void *reference );
+        SourceRefObjectRect( const NormalizedPoint& point, void *srcRef );
 
         /**
          * Returns the bounding rect of the source reference object rectangle for the
@@ -765,14 +765,14 @@ bool RegularArea<NormalizedShape, Shape>::isNull() const
 }
 
 template <class NormalizedShape, class Shape>
-bool RegularArea<NormalizedShape, Shape>::intersects( const NormalizedShape& rect ) const
+bool RegularArea<NormalizedShape, Shape>::intersects( const NormalizedShape& shape ) const
 {
     if ( this->isEmpty() )
         return false;
 
     typename QList<NormalizedShape>::const_iterator it = this->begin(), itEnd = this->end();
     for ( ; it != itEnd; ++it )
-        if ( !givePtr( *it )->isNull() && givePtr( *it )->intersects( rect ) )
+        if ( !givePtr( *it )->isNull() && givePtr( *it )->intersects( shape ) )
             return true;
 
     return false;

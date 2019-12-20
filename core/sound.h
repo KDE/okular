@@ -51,9 +51,9 @@ class OKULARCORE_EXPORT Sound
         explicit Sound( const QByteArray& data );
 
         /**
-         * Creates a new sound object with the given external @p filename.
+         * Creates a new sound object with the given external @p url.
          */
-        explicit Sound( const QString& filename );
+        explicit Sound( const QString& url );
 
         /**
          * Destroys the sound object.
@@ -96,9 +96,9 @@ class OKULARCORE_EXPORT Sound
         int channels() const;
 
         /**
-         * Sets the bits per sample @p rate.
+         * Sets the bits per sample @p bitsPerSample.
          */
-        void setBitsPerSample( int rate );
+        void setBitsPerSample( int bitsPerSample );
 
         /**
          * Returns the bits per sample rate.

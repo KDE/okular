@@ -491,9 +491,9 @@ class OKULARCORE_EXPORT Document : public QObject
         void requestPixmaps( const QLinkedList<PixmapRequest*> &requests, PixmapRequestFlags reqOptions );
 
         /**
-         * Sends a request for text page generation for the given page @p number.
+         * Sends a request for text page generation for the given page @p pageNumber.
          */
-        void requestTextPage( uint number );
+        void requestTextPage( uint pageNumber );
 
         /**
          * Adds a new @p annotation to the given @p page.
@@ -669,18 +669,18 @@ class OKULARCORE_EXPORT Document : public QObject
         void processAction( const Action *action );
 
         /**
-         * Processes the given format @p action on @p field.
+         * Processes the given format @p action on @p fft.
          *
          * @since 1.9
          */
-        void processFormatAction( const Action *action, Okular::FormFieldText *field );
+        void processFormatAction( const Action *action, Okular::FormFieldText *fft );
 
         /**
-         * Processes the given keystroke @p action on @p field.
+         * Processes the given keystroke @p action on @p fft.
          *
          * @since 1.9
          */
-        void processKeystrokeAction( const Action *action, Okular::FormFieldText *field, bool &returnCode );
+        void processKeystrokeAction( const Action *action, Okular::FormFieldText *fft, bool &returnCode );
 
         /**
          * Processes the given focus action on the field.
@@ -690,11 +690,11 @@ class OKULARCORE_EXPORT Document : public QObject
         void processFocusAction( const Action *action, Okular::FormField *field );
         
         /**
-         * Processes the given keystroke @p action on @p field.
+         * Processes the given keystroke @p action on @p fft.
          *
          * @since 1.9
          */
-        void processValidateAction( const Action *action, Okular::FormFieldText *field, bool &returnCode );
+        void processValidateAction( const Action *action, Okular::FormFieldText *fft, bool &returnCode );
         
         /**
          * Returns a list of the bookmarked.pages
@@ -1293,9 +1293,9 @@ class OKULARCORE_EXPORT DocumentViewport
         DocumentViewport( int number = -1 );
 
         /**
-         * Creates a new viewport from the given xml @p description.
+         * Creates a new viewport from the given @p xmlDesc.
          */
-        DocumentViewport( const QString &description );
+        DocumentViewport( const QString &xmlDesc );
 
         /**
          * Returns the viewport as xml description.

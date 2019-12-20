@@ -57,7 +57,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         ~PDFGenerator() override;
 
         // [INHERITED] load a document and fill up the pagesVector
-        Okular::Document::OpenResult loadDocumentWithPassword( const QString & fileName, QVector<Okular::Page*> & pagesVector, const QString & password ) override;
+        Okular::Document::OpenResult loadDocumentWithPassword( const QString & filePath, QVector<Okular::Page*> & pagesVector, const QString & password ) override;
         Okular::Document::OpenResult loadDocumentFromDataWithPassword( const QByteArray & fileData, QVector<Okular::Page*> & pagesVector, const QString & password ) override;
         void loadPages(QVector<Okular::Page*> &pagesVector, int rotation=-1, bool clear=false);
         // [INHERITED] document information
@@ -73,7 +73,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         bool isAllowed( Okular::Permission permission ) const override;
 
         // [INHERITED] perform actions on document / pages
-        QImage image( Okular::PixmapRequest *page ) override;
+        QImage image( Okular::PixmapRequest *request ) override;
 
         // [INHERITED] print page using an already configured kprinter
         bool print( QPrinter& printer ) override;
@@ -114,7 +114,7 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         // fetch annotations from the pdf file and add they to the page
         void addAnnotations( Poppler::Page * popplerPage, Okular::Page * page );
         // fetch the transition information and add it to the page
-        void addTransition( Poppler::Page * popplerPage, Okular::Page * page );
+        void addTransition( Poppler::Page * pdfPage, Okular::Page * page );
         // fetch the form fields and add them to the page
         void addFormFields( Poppler::Page * popplerPage, Okular::Page * page );
 

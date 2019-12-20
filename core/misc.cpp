@@ -23,16 +23,16 @@ class TextSelection::Private
         NormalizedPoint cur[2];
 };
 
-TextSelection::TextSelection( const NormalizedPoint & a, const NormalizedPoint & b )
+TextSelection::TextSelection( const NormalizedPoint & start, const NormalizedPoint & end )
     : d( new Private )
 {
-    if (b.y-a.y<0 || (b.y-a.y==0 && b.x-a.x <0))
+    if (end.y-start.y<0 || (end.y-start.y==0 && end.x-start.x <0))
         d->direction = 1;
     else
         d->direction = 0;
 
-    d->cur[0] = a;
-    d->cur[1] = b;
+    d->cur[0] = start;
+    d->cur[1] = end;
     d->it[d->direction % 2] = -1;
     d->it[(d->direction + 1) % 2] = -1;
 }

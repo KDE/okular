@@ -306,8 +306,8 @@ HighlightAreaRect::HighlightAreaRect( const RegularAreaRect *area )
 
 /** class ObjectRect **/
 
-ObjectRect::ObjectRect( double l, double t, double r, double b, bool ellipse, ObjectType type, void * pnt )
-    : m_objectType( type ), m_object( pnt )
+ObjectRect::ObjectRect( double l, double t, double r, double b, bool ellipse, ObjectType type, void * object )
+    : m_objectType( type ), m_object( object )
 {
     // assign coordinates swapping them if negative width or height
     QRectF rect( r > l ? l : r, b > t ? t : b, fabs( r - l ), fabs( b - t ) );
@@ -319,10 +319,10 @@ ObjectRect::ObjectRect( double l, double t, double r, double b, bool ellipse, Ob
     m_transformedPath = m_path;
 }
 
-ObjectRect::ObjectRect( const NormalizedRect& x, bool ellipse, ObjectType type, void * pnt )
-    : m_objectType( type ), m_object( pnt )
+ObjectRect::ObjectRect( const NormalizedRect& r, bool ellipse, ObjectType type, void * object )
+    : m_objectType( type ), m_object( object )
 {
-    QRectF rect( x.left, x.top, fabs( x.right - x.left ), fabs( x.bottom - x.top ) );
+    QRectF rect( r.left, r.top, fabs( r.right - r.left ), fabs( r.bottom - r.top ) );
     if ( ellipse )
         m_path.addEllipse( rect );
     else
@@ -331,8 +331,8 @@ ObjectRect::ObjectRect( const NormalizedRect& x, bool ellipse, ObjectType type, 
     m_transformedPath = m_path;
 }
 
-ObjectRect::ObjectRect( const QPolygonF &poly, ObjectType type, void * pnt )
-    : m_objectType( type ), m_object( pnt )
+ObjectRect::ObjectRect( const QPolygonF &poly, ObjectType type, void * object )
+    : m_objectType( type ), m_object( object )
 {
     m_path.addPolygon( poly );
 

@@ -67,10 +67,10 @@ Q_OBJECT
         enum ClearMode { ClearAllSelection, ClearOnlyDividers };
 
         // create actions that interact with this widget
-        void setupBaseActions( KActionCollection * collection );
-        void setupViewerActions( KActionCollection * collection );
-        void setupActions( KActionCollection * collection );
-        void updateActionState( bool docHasPages, bool docChanged, bool docHasFormWidgets );
+        void setupBaseActions( KActionCollection * ac );
+        void setupViewerActions( KActionCollection * ac );
+        void setupActions( KActionCollection * ac );
+        void updateActionState( bool docHasPages, bool documentChanged, bool docHasFormWidgets );
 
         // misc methods (from RMB menu/children)
         bool canFitPageWidth() const;
@@ -162,9 +162,9 @@ Q_OBJECT
 
     private:
         // draw background and items on the opened qpainter
-        void drawDocumentOnPainter( const QRect & pageViewRect, QPainter * p );
+        void drawDocumentOnPainter( const QRect & contentsRect, QPainter * p );
         // update item width and height using current zoom parameters
-        void updateItemSize( PageViewItem * item, int columnWidth, int rowHeight );
+        void updateItemSize( PageViewItem * item, int colWidth, int rowHeight );
         // return the widget placed on a certain point or 0 if clicking on empty space
         PageViewItem * pickItemOnPoint( int x, int y );
         // start / modify / clear selection rectangle
@@ -177,7 +177,7 @@ Q_OBJECT
         // compute the zoom factor value for FitWidth and FitPage mode
         double zoomFactorFitMode( ZoomMode mode );
         // update internal zoom values and end in a slotRelayoutPages();
-        void updateZoom( ZoomMode newZm );
+        void updateZoom( ZoomMode newZoomMode );
         // update the text on the label using global zoom value or current page's one
         void updateZoomText();
         // update view mode (single, facing...)

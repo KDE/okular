@@ -524,7 +524,7 @@ class OKULARCORE_EXPORT Generator : public QObject
          * @warning this method may be executed in its own separated thread if the
          * @ref Threaded is enabled!
          */
-        virtual QImage image( PixmapRequest *page );
+        virtual QImage image( PixmapRequest *request );
 
         /**
          * Returns the text page for the given @p request.

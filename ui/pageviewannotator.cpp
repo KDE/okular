@@ -721,9 +721,9 @@ PageViewAnnotator::~PageViewAnnotator()
     delete m_engine;
 }
 
-void PageViewAnnotator::setEnabled( bool on )
+void PageViewAnnotator::setEnabled( bool enabled )
 {
-    if ( !on )
+    if ( !enabled )
     {
         // remove toolBar
         if ( m_toolBar )

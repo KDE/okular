@@ -175,7 +175,7 @@ class EBook_EPUB : public EBook
 
 	private:
 		// Parses the XML file using a specified parser
-		bool	parseXML( const QString& uri, QXmlDefaultHandler * reader );
+		bool	parseXML( const QString& uri, QXmlDefaultHandler * parser );
 
 		// Parses the book description file. Fills up the ebook info
 		bool	parseBookinfo();

@@ -3534,9 +3534,9 @@ void Document::requestPixmaps( const QLinkedList< PixmapRequest * > & requests, 
         o->notifyContentsCleared( Okular::DocumentObserver::Pixmap );
 }
 
-void Document::requestTextPage( uint page )
+void Document::requestTextPage( uint pageNumber )
 {
-    Page * kp = d->m_pagesVector[ page ];
+    Page * kp = d->m_pagesVector[ pageNumber ];
     if ( !d->m_generator || !kp )
         return;
 
@@ -5644,41 +5644,41 @@ bool DocumentViewport::isValid() const
     return pageNumber >= 0;
 }
 
-bool DocumentViewport::operator==( const DocumentViewport & vp ) const
+bool DocumentViewport::operator==( const DocumentViewport & other ) const
 {
-    bool equal = ( pageNumber == vp.pageNumber ) &&
-                 ( rePos.enabled == vp.rePos.enabled ) &&
-                 ( autoFit.enabled == vp.autoFit.enabled );
+    bool equal = ( pageNumber == other.pageNumber ) &&
+                 ( rePos.enabled == other.rePos.enabled ) &&
+                 ( autoFit.enabled == other.autoFit.enabled );
     if ( !equal )
         return false;
     if ( rePos.enabled &&
-         (( rePos.normalizedX != vp.rePos.normalizedX) ||
-         ( rePos.normalizedY != vp.rePos.normalizedY ) || rePos.pos != vp.rePos.pos) )
+         (( rePos.normalizedX != other.rePos.normalizedX) ||
+         ( rePos.normalizedY != other.rePos.normalizedY ) || rePos.pos != other.rePos.pos) )
         return false;
     if ( autoFit.enabled &&
-         (( autoFit.width != vp.autoFit.width ) ||
-         ( autoFit.height != vp.autoFit.height )) )
+         (( autoFit.width != other.autoFit.width ) ||
+         ( autoFit.height != other.autoFit.height )) )
         return false;
     return true;
 }
 
-bool DocumentViewport::operator<( const DocumentViewport & vp ) const
+bool DocumentViewport::operator<( const DocumentViewport & other ) const
 {
     // TODO: Check autoFit and Position
 
-    if ( pageNumber != vp.pageNumber )
-        return pageNumber < vp.pageNumber;
+    if ( pageNumber != other.pageNumber )
+        return pageNumber < other.pageNumber;
 
-    if ( !rePos.enabled && vp.rePos.enabled )
+    if ( !rePos.enabled && other.rePos.enabled )
         return true;
 
-    if ( !vp.rePos.enabled )
+    if ( !other.rePos.enabled )
         return false;
 
-    if ( rePos.normalizedY != vp.rePos.normalizedY )
-        return rePos.normalizedY < vp.rePos.normalizedY;
+    if ( rePos.normalizedY != other.rePos.normalizedY )
+        return rePos.normalizedY < other.rePos.normalizedY;
 
-    return rePos.normalizedX < vp.rePos.normalizedX;
+    return rePos.normalizedX < other.rePos.normalizedX;
 }
 
 
@@ -5907,7 +5907,5 @@ VisiblePageRect::VisiblePageRect( int page, const NormalizedRect &rectangle )
 
 #undef foreachObserver
 #undef foreachObserverD
-
-#include "moc_document.cpp"
 
 /* kate: replace-tabs on; indent-width 4; */

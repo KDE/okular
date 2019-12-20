@@ -387,12 +387,12 @@ QHash<QUrl, QString>::iterator BookmarkManager::Private::bookmarkFind( const QUr
     return it;
 }
 
-void BookmarkManager::addBookmark( int n )
+void BookmarkManager::addBookmark( int page )
 {
-    if ( n >= 0 && n < (int)d->document->m_pagesVector.count() )
+    if ( page >= 0 && page < (int)d->document->m_pagesVector.count() )
     {
-        if ( setPageBookmark( n ) )
-            foreachObserver( notifyPageChanged( n, DocumentObserver::Bookmark ) );
+        if ( setPageBookmark( page ) )
+            foreachObserver( notifyPageChanged( page, DocumentObserver::Bookmark ) );
     }
 }
 
@@ -461,12 +461,12 @@ bool BookmarkManager::addBookmark(const QUrl &referurl, const Okular::DocumentVi
     return true;
 }
 
-void BookmarkManager::removeBookmark( int n )
+void BookmarkManager::removeBookmark( int page )
 {
-    if ( n >= 0 && n < (int)d->document->m_pagesVector.count() )
+    if ( page >= 0 && page < (int)d->document->m_pagesVector.count() )
     {
-        if ( removePageBookmark( n ) )
-            foreachObserver( notifyPageChanged( n, DocumentObserver::Bookmark ) );
+        if ( removePageBookmark( page ) )
+            foreachObserver( notifyPageChanged( page, DocumentObserver::Bookmark ) );
     }
 }
 
@@ -744,7 +744,5 @@ KBookmark BookmarkManager::previousBookmark( const DocumentViewport &viewport ) 
 
 #undef foreachObserver
 #undef foreachObserverD
-
-#include "moc_bookmarkmanager.cpp"
 
 /* kate: replace-tabs on; indent-width 4; */

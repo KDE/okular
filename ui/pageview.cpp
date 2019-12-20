@@ -5737,6 +5737,4 @@ void PageView::highlightSignatureFormWidget( const Okular::FormFieldSignature *f
 
 //END private SLOTS
 
-#include "moc_pageview.cpp"
-
 /* kate: replace-tabs on; indent-width 4; */

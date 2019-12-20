@@ -116,7 +116,7 @@ class PixmapGenerationThread : public QThread
     public:
         explicit PixmapGenerationThread( Generator *generator );
 
-        void startGeneration( PixmapRequest *request, bool calcBoundingRect );
+        void startGeneration( PixmapRequest *request, bool calcBoundingBox );
 
         void endGeneration();
 

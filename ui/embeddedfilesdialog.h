@@ -33,7 +33,7 @@ Q_OBJECT
 		void attachViewContextMenu( const QPoint& pos );
 		void updateSaveButton();
 		void viewFile();
-		void viewFileItem( QTreeWidgetItem* index, int column );
+		void viewFileItem( QTreeWidgetItem* item, int column );
 
 	private:
 		void saveFile( Okular::EmbeddedFile* );

@@ -246,7 +246,7 @@ class EBook_CHM : public EBook
 		/*!
 		 * Parse binary TOC
 		 */
-		bool parseBinaryTOC(QList<EBookTocEntry> &data ) const;
+		bool parseBinaryTOC(QList<EBookTocEntry> &toc ) const;
 
 		//! btree string parser
 		QString getBtreeString( const QByteArray& btidx, unsigned long * offset, unsigned short * spaceLeft ) const;
@@ -260,7 +260,7 @@ class EBook_CHM : public EBook
 							  const QByteArray& urlstr,
 							  const QByteArray& strings,
 							  int offset,
-							  QList<EBookTocEntry> &data,
+							  QList<EBookTocEntry> &entries,
 							  int level ) const;
 
 		/*!

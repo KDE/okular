@@ -680,11 +680,11 @@ void dviRenderer::setResolution(double resolution_in_DPI)
 }
 
 
-void dviRenderer::handleSRCLink(const QString &linkText, const QPoint& point, DocumentWidget *win)
+void dviRenderer::handleSRCLink(const QString &linkText, const QPoint& point, DocumentWidget *widget)
 {
   Q_UNUSED( linkText );
   Q_UNUSED( point );
-  Q_UNUSED( win );
+  Q_UNUSED( widget );
 #if 0
   QExplicitlySharedDataPointer<DVISourceEditor> editor(new DVISourceEditor(*this, parentWidget, linkText, point, win));
   if (editor->started())

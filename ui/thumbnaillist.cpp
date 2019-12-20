@@ -662,8 +662,8 @@ void ThumbnailListPrivate::delayedRequestVisiblePixmaps( int delayMs )
 
 /** ThumbnailWidget implementation **/
 
-ThumbnailWidget::ThumbnailWidget( ThumbnailListPrivate * parent, const Okular::Page * kp )
-    : m_parent( parent ), m_page( kp ),
+ThumbnailWidget::ThumbnailWidget( ThumbnailListPrivate * parent, const Okular::Page * page )
+    : m_parent( parent ), m_page( page ),
     m_selected( false ), m_pixmapWidth( 10 ), m_pixmapHeight( 10 )
 {
     m_labelNumber = m_page->number() + 1;

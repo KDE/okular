@@ -18,7 +18,7 @@ class QString;
 class DVI_SourceFileSplitter
 {
 public:
-  DVI_SourceFileSplitter(const QString & scrlink, const QString & dviFile);
+  DVI_SourceFileSplitter(const QString & srclink, const QString & dviFile);
 
   QString  fileName() const { return m_fileInfo.fileName(); }
   QString  filePath() const { return m_fileInfo.absoluteFilePath(); }

@@ -56,7 +56,7 @@ Q_OBJECT
 
     protected:
         // scroll up/down the view
-        void keyPressEvent( QKeyEvent * e ) override;
+        void keyPressEvent( QKeyEvent * keyEvent ) override;
 
         // catch the viewport event and filter them if necessary
         bool viewportEvent( QEvent * ) override;

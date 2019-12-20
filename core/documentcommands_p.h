@@ -263,9 +263,9 @@ class EditFormComboCommand : public EditTextCommand
         EditFormComboCommand( Okular::DocumentPrivate* docPriv,
                               FormFieldChoice* form,
                               int pageNumber,
-                              const QString & newText,
+                              const QString & newContents,
                               int newCursorPos,
-                              const QString & prevText,
+                              const QString & prevContents,
                               int prevCursorPos,
                               int prevAnchorPos
                             );

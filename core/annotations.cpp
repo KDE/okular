@@ -151,16 +151,16 @@ QDomElement AnnotationUtils::findChildElement( const QDomNode & parentNode,
     return QDomElement();
 }
 
-QRect AnnotationUtils::annotationGeometry( const Annotation * ann,
-    double scaledWidth, double scaledHeight )
+QRect AnnotationUtils::annotationGeometry( const Annotation * annotation,
+    double scaleX, double scaleY )
 {
-    const QRect rect = ann->transformedBoundingRectangle().geometry( (int)scaledWidth, (int)scaledHeight );
-    if ( ann->subType() == Annotation::AText && ( ( (TextAnnotation*)ann )->textType() == TextAnnotation::Linked ) )
+    const QRect rect = annotation->transformedBoundingRectangle().geometry( (int)scaleX, (int)scaleY );
+    if ( annotation->subType() == Annotation::AText && ( ( (TextAnnotation*)annotation )->textType() == TextAnnotation::Linked ) )
     {
         // To be honest i have no clue of why the 24,24 is here, maybe to make sure it's not too small?
         // But why only for linked text?
-        const QRect rect24 = QRect( (int)( ann->transformedBoundingRectangle().left * scaledWidth ),
-                                    (int)( ann->transformedBoundingRectangle().top * scaledHeight ), 24, 24 );
+        const QRect rect24 = QRect( (int)( annotation->transformedBoundingRectangle().left * scaleX ),
+                                    (int)( annotation->transformedBoundingRectangle().top * scaleY ), 24, 24 );
         return rect24.united(rect);
     }
 
@@ -510,10 +510,10 @@ Annotation::Annotation( AnnotationPrivate &dd )
 {
 }
 
-Annotation::Annotation( AnnotationPrivate &dd, const QDomNode & annNode )
+Annotation::Annotation( AnnotationPrivate &dd, const QDomNode & description )
     : d_ptr( &dd )
 {
-    d_ptr->setAnnotationProperties( annNode );
+    d_ptr->setAnnotationProperties( description );
 }
 
 Annotation::~Annotation()
@@ -1043,8 +1043,8 @@ TextAnnotation::TextAnnotation()
 {
 }
 
-TextAnnotation::TextAnnotation( const QDomNode & node )
-    : Annotation( *new TextAnnotationPrivate(), node )
+TextAnnotation::TextAnnotation( const QDomNode & description )
+    : Annotation( *new TextAnnotationPrivate(), description )
 {
 }
 
@@ -1349,8 +1349,8 @@ LineAnnotation::LineAnnotation()
 {
 }
 
-LineAnnotation::LineAnnotation( const QDomNode & node )
-    : Annotation( *new LineAnnotationPrivate(), node )
+LineAnnotation::LineAnnotation( const QDomNode & description )
+    : Annotation( *new LineAnnotationPrivate(), description )
 {
 }
 
@@ -1663,8 +1663,8 @@ GeomAnnotation::GeomAnnotation()
 {
 }
 
-GeomAnnotation::GeomAnnotation( const QDomNode & node )
-    : Annotation( *new GeomAnnotationPrivate(), node )
+GeomAnnotation::GeomAnnotation( const QDomNode & description )
+    : Annotation( *new GeomAnnotationPrivate(), description )
 {
 }
 
@@ -1949,8 +1949,8 @@ HighlightAnnotation::HighlightAnnotation()
 {
 }
 
-HighlightAnnotation::HighlightAnnotation( const QDomNode & node )
-    : Annotation( *new HighlightAnnotationPrivate(), node )
+HighlightAnnotation::HighlightAnnotation( const QDomNode & description )
+    : Annotation( *new HighlightAnnotationPrivate(), description )
 {
 }
 
@@ -2139,8 +2139,8 @@ StampAnnotation::StampAnnotation()
 {
 }
 
-StampAnnotation::StampAnnotation( const QDomNode & node )
-    : Annotation( *new StampAnnotationPrivate(), node )
+StampAnnotation::StampAnnotation( const QDomNode & description )
+    : Annotation( *new StampAnnotationPrivate(), description )
 {
 }
 
@@ -2239,8 +2239,8 @@ InkAnnotation::InkAnnotation()
 {
 }
 
-InkAnnotation::InkAnnotation( const QDomNode & node )
-    : Annotation( *new InkAnnotationPrivate(), node )
+InkAnnotation::InkAnnotation( const QDomNode & description )
+    : Annotation( *new InkAnnotationPrivate(), description )
 {
 }
 
@@ -2489,8 +2489,8 @@ CaretAnnotation::CaretAnnotation()
 {
 }
 
-CaretAnnotation::CaretAnnotation( const QDomNode & node )
-    : Annotation( *new CaretAnnotationPrivate(), node )
+CaretAnnotation::CaretAnnotation( const QDomNode & description )
+    : Annotation( *new CaretAnnotationPrivate(), description )
 {
 }
 
@@ -2580,8 +2580,8 @@ FileAttachmentAnnotation::FileAttachmentAnnotation()
 {
 }
 
-FileAttachmentAnnotation::FileAttachmentAnnotation( const QDomNode & node )
-    : Annotation( *new FileAttachmentAnnotationPrivate(), node )
+FileAttachmentAnnotation::FileAttachmentAnnotation( const QDomNode & description )
+    : Annotation( *new FileAttachmentAnnotationPrivate(), description )
 {
 }
 
@@ -2610,10 +2610,10 @@ QString FileAttachmentAnnotation::fileIconName() const
     return d->icon;
 }
 
-void FileAttachmentAnnotation::setFileIconName( const QString &icon )
+void FileAttachmentAnnotation::setFileIconName( const QString &iconName )
 {
     Q_D( FileAttachmentAnnotation );
-    d->icon = icon;
+    d->icon = iconName;
 }
 
 EmbeddedFile* FileAttachmentAnnotation::embeddedFile() const
@@ -2679,8 +2679,8 @@ SoundAnnotation::SoundAnnotation()
 {
 }
 
-SoundAnnotation::SoundAnnotation( const QDomNode & node )
-    : Annotation( *new SoundAnnotationPrivate(), node )
+SoundAnnotation::SoundAnnotation( const QDomNode & description )
+    : Annotation( *new SoundAnnotationPrivate(), description )
 {
 }
 
@@ -2709,10 +2709,10 @@ QString SoundAnnotation::soundIconName() const
     return d->icon;
 }
 
-void SoundAnnotation::setSoundIconName( const QString &icon )
+void SoundAnnotation::setSoundIconName( const QString &iconName )
 {
     Q_D( SoundAnnotation );
-    d->icon = icon;
+    d->icon = iconName;
 }
 
 Sound* SoundAnnotation::sound() const
@@ -2776,8 +2776,8 @@ MovieAnnotation::MovieAnnotation()
 {
 }
 
-MovieAnnotation::MovieAnnotation( const QDomNode & node )
-    : Annotation( *new MovieAnnotationPrivate(), node )
+MovieAnnotation::MovieAnnotation( const QDomNode & description )
+    : Annotation( *new MovieAnnotationPrivate(), description )
 {
 }
 
@@ -2866,8 +2866,8 @@ ScreenAnnotation::ScreenAnnotation()
 {
 }
 
-ScreenAnnotation::ScreenAnnotation( const QDomNode & node )
-    : Annotation( *new ScreenAnnotationPrivate(), node )
+ScreenAnnotation::ScreenAnnotation( const QDomNode & description )
+    : Annotation( *new ScreenAnnotationPrivate(), description )
 {
 }
 
@@ -2967,8 +2967,8 @@ WidgetAnnotation::WidgetAnnotation()
 {
 }
 
-WidgetAnnotation::WidgetAnnotation( const QDomNode & node )
-    : Annotation( *new WidgetAnnotationPrivate, node )
+WidgetAnnotation::WidgetAnnotation( const QDomNode & description )
+    : Annotation( *new WidgetAnnotationPrivate, description )
 {
 }
 
@@ -3063,8 +3063,8 @@ RichMediaAnnotation::RichMediaAnnotation()
 {
 }
 
-RichMediaAnnotation::RichMediaAnnotation( const QDomNode & node )
-    : Annotation( *new RichMediaAnnotationPrivate, node )
+RichMediaAnnotation::RichMediaAnnotation( const QDomNode & description )
+    : Annotation( *new RichMediaAnnotationPrivate, description )
 {
 }
 

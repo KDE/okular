@@ -132,8 +132,8 @@ QTransform PagePrivate::rotationMatrix() const
 
 /** class Page **/
 
-Page::Page( uint page, double w, double h, Rotation o )
-    : d( new PagePrivate( this, page, w, h, o ) )
+Page::Page( uint pageNumber, double w, double h, Rotation o )
+    : d( new PagePrivate( this, pageNumber, w, h, o ) )
 {
 }
 

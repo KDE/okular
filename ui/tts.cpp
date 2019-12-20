@@ -109,6 +109,3 @@ void OkularTTS::slotConfigChanged()
         d->speechEngine = engine;
     }
 }
-
-#include "moc_tts.cpp"
-

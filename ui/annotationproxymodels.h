@@ -71,7 +71,7 @@ class PageGroupProxyModel : public QAbstractProxyModel
     int rowCount( const QModelIndex &parentIndex ) const override;
 
     QModelIndex index( int row, int column, const QModelIndex &parentIndex = QModelIndex() ) const override;
-    QModelIndex parent( const QModelIndex &index ) const override;
+    QModelIndex parent( const QModelIndex &idx ) const override;
 
     QModelIndex mapFromSource( const QModelIndex &sourceIndex ) const override;
     QModelIndex mapToSource( const QModelIndex &proxyIndex ) const override;

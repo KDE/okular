@@ -88,13 +88,13 @@ class SimplePageSize
   an error message is printed, and an undefined value is returned.
 
   @param height target height in pixels
-  @param device the widget to be printed on.
+  @param pd the widget to be printed on.
 
   @returns the zoom value required to scale the page size down to
   'height' pixels. If the pageSize is invalid, an undefined value is
   returned.
   */
-  double zoomForHeight(quint32 height, const QPaintDevice& device) const;
+  double zoomForHeight(quint32 height, const QPaintDevice& pd) const;
 
   /** \brief Zoom value required to scale to a certain height
 
@@ -104,13 +104,13 @@ class SimplePageSize
   an error message is printed, and an undefined value is returned.
 
   @param width target width in pixels
-  @param device the widget to be printed on.
+  @param pd the widget to be printed on.
 
   @returns the zoom value required to scale the page size down to
   'width' pixels. If the pageSize is invalid, an undefined value is
   returned.
   */
-  double zoomForWidth(quint32 width, const QPaintDevice& device) const;
+  double zoomForWidth(quint32 width, const QPaintDevice& pd) const;
 
   /** \brief Returns a zoom to fit into a certain page size
 

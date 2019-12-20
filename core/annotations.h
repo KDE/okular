@@ -1437,9 +1437,9 @@ class OKULARCORE_EXPORT FileAttachmentAnnotation : public Annotation
         QString fileIconName() const;
 
         /**
-         * Sets the @p name of the icon for the file attachment annotation.
+         * Sets the @p iconName of the icon for the file attachment annotation.
          */
-        void setFileIconName( const QString &name );
+        void setFileIconName( const QString &iconName );
 
         /**
          * Gets the embedded file object.
@@ -1447,10 +1447,10 @@ class OKULARCORE_EXPORT FileAttachmentAnnotation : public Annotation
         EmbeddedFile* embeddedFile() const;
 
         /**
-         * Sets the @p object representing the embedded file of the file
+         * Sets the @p ef representing the embedded file of the file
          * attachment annotation.
          */
-        void setEmbeddedFile( EmbeddedFile *object );
+        void setEmbeddedFile( EmbeddedFile *ef );
 
         /**
          * Returns the sub type of the file attachment annotation.
@@ -1497,9 +1497,9 @@ class OKULARCORE_EXPORT SoundAnnotation : public Annotation
         QString soundIconName() const;
 
         /**
-         * Sets the @p name of the icon for the sound annotation.
+         * Sets the @p iconName of the icon for the sound annotation.
          */
-        void setSoundIconName( const QString &name );
+        void setSoundIconName( const QString &iconName );
 
         /**
          * Gets the sound object.
@@ -1507,10 +1507,10 @@ class OKULARCORE_EXPORT SoundAnnotation : public Annotation
         Sound* sound() const;
 
         /**
-         * Sets the @p object representing the sound of the file
+         * Sets the @p s representing the sound of the file
          * attachment annotation.
          */
-        void setSound( Sound *object );
+        void setSound( Sound *s );
 
         /**
          * Returns the sub type of the sound annotation.
@@ -1745,9 +1745,9 @@ class OKULARCORE_EXPORT RichMediaAnnotation : public Annotation
         void setMovie( Movie *movie );
 
         /**
-         * Sets the @p object representing the embedded file.
+         * Sets the @p embeddedFile representing the embedded file.
          */
-        void setEmbeddedFile( EmbeddedFile *object );
+        void setEmbeddedFile( EmbeddedFile *embeddedFile );
 
         /**
          * Gets the embedded file object.

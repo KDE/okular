@@ -59,7 +59,7 @@ class KTreeViewSearchLine::Private
     int queuedSearches;
 
     void rowsInserted(const QModelIndex & parent, int start, int end) const;
-    void treeViewDeleted( QObject *treeView );
+    void treeViewDeleted( QObject *object );
     void slotCaseSensitive();
     void slotRegularExpression();
 
@@ -219,10 +219,10 @@ void KTreeViewSearchLine::updateSearch( QTreeView *treeView )
     treeView->scrollTo( currentIndex );
 }
 
-void KTreeViewSearchLine::setCaseSensitivity( Qt::CaseSensitivity caseSensitive )
+void KTreeViewSearchLine::setCaseSensitivity( Qt::CaseSensitivity caseSensitivity )
 {
-  if ( d->caseSensitive != caseSensitive ) {
-    d->caseSensitive = caseSensitive;
+  if ( d->caseSensitive != caseSensitivity ) {
+    d->caseSensitive = caseSensitivity;
     updateSearch();
     emit searchOptionsChanged();
   }

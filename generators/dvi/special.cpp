@@ -205,9 +205,9 @@ QColor dviRenderer::parseColorSpecification(const QString& colorSpec)
 }
 
 
-void dviRenderer::color_special(const QString& _cp)
+void dviRenderer::color_special(const QString& msg)
 {
-  QString const cp = _cp.trimmed();
+  QString const cp = msg.trimmed();
 
   QString command = cp.section(QLatin1Char(' '), 0, 0);
 
@@ -244,9 +244,9 @@ void dviRenderer::color_special(const QString& _cp)
 }
 
 
-void dviRenderer::html_href_special(const QString& _cp)
+void dviRenderer::html_href_special(const QString& msg)
 {
-  QString cp = _cp;
+  QString cp = msg;
   cp.truncate(cp.indexOf(QLatin1Char('"')));
 
 #ifdef DEBUG_SPECIAL

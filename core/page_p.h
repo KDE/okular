@@ -94,19 +94,19 @@ class PagePrivate
 
         /**
          * Clears current text selection highlight areas,
-         * creates new ones if @p areas is not nullptr,
-         * and deletes @p areas.
+         * creates new ones if @p r is not nullptr,
+         * and deletes @p r.
          *
-         * @param areas Areas of new text selections.
+         * @param r Areas of new text selections.
          * @param color Color of new text selections.
          */
-        void setTextSelections( RegularAreaRect *areas, const QColor & color );
+        void setTextSelections( RegularAreaRect *r, const QColor & color );
 
         /**
-         * Sets the @p color and @p area of the highlight for the observer with
+         * Sets the @p color and @p rect of the highlight for the observer with
          * the given @p id.
          */
-        void setHighlight( int id, RegularAreaRect *area, const QColor & color );
+        void setHighlight( int id, RegularAreaRect *rect, const QColor & color );
 
         /**
          * Deletes all highlight objects for the observer with the given @p id.

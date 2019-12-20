@@ -30,9 +30,9 @@ class PopplerAnnotationProxy : public Okular::AnnotationProxy
         ~PopplerAnnotationProxy() override;
 
         bool supports( Capability capability ) const override;
-        void notifyAddition( Okular::Annotation *annotation, int page ) override;
-        void notifyModification( const Okular::Annotation *annotation, int page, bool appearanceChanged ) override;
-        void notifyRemoval( Okular::Annotation *annotation, int page ) override;
+        void notifyAddition( Okular::Annotation *okl_ann, int page ) override;
+        void notifyModification( const Okular::Annotation *okl_ann, int page, bool appearanceChanged ) override;
+        void notifyRemoval( Okular::Annotation *okl_ann, int page ) override;
     private:
         Poppler::Document *ppl_doc;
         QMutex *mutex;

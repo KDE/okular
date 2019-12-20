@@ -64,12 +64,12 @@ class OKULARCORE_EXPORT Page
         /**
          * Creates a new page.
          *
-         * @param number The number of the page in the document.
+         * @param pageNumber The number of the page in the document.
          * @param width The width of the page.
          * @param height The height of the page.
          * @param orientation The orientation of the page
          */
-        Page( uint number, double width, double height, Rotation orientation );
+        Page( uint pageNumber, double width, double height, Rotation orientation );
 
         /**
          * Destroys the page.
@@ -192,14 +192,14 @@ class OKULARCORE_EXPORT Page
          * Returns the page text (or part of it).
          * @see TextPage::text()
          */
-        QString text( const RegularAreaRect * rect = nullptr ) const;
+        QString text( const RegularAreaRect * area = nullptr ) const;
 
         /**
          * Returns the page text (or part of it).
          * @see TextPage::text()
          * @since 0.10 (KDE 4.4)
          */
-        QString text( const RegularAreaRect * rect, TextPage::TextAreaInclusionBehaviour b ) const;
+        QString text( const RegularAreaRect * area, TextPage::TextAreaInclusionBehaviour b ) const;
 
         /**
          * Returns the page text (or part of it) including the bounding
@@ -208,7 +208,7 @@ class OKULARCORE_EXPORT Page
          * @see TextPage::words()
          * @since 0.14 (KDE 4.8)
          */
-        TextEntity::List words( const RegularAreaRect * rect, TextPage::TextAreaInclusionBehaviour b ) const;
+        TextEntity::List words( const RegularAreaRect * area, TextPage::TextAreaInclusionBehaviour b ) const;
         
         /**
          * Returns the area and text of the word at the given point

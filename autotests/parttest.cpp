@@ -96,7 +96,7 @@ class PartTest
         static bool openDocument(Okular::Part *part, const QString &filePath);
 
     signals:
-        void urlHandler(const QUrl &url);
+        void urlHandler(const QUrl &url); // NOLINT(readability-inconsistent-declaration-parameter-name)
 
     private slots:
         void testReload();

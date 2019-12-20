@@ -117,11 +117,11 @@ class KTreeViewSearchLine : public KLineEdit
 
   protected:
     /**
-     * Returns true if \a item matches the search \a pattern.  This will be evaluated
+     * Returns true if \a parentIndex matches the search \a pattern.  This will be evaluated
      * based on the value of caseSensitive().  This can be overridden in
      * subclasses to implement more complicated matching schemes.
      */
-    virtual bool itemMatches( const QModelIndex &item, int row, const QString &pattern ) const;
+    virtual bool itemMatches( const QModelIndex &parentIndex, int row, const QString &pattern ) const;
 
     /**
     * Re-implemented for internal reasons.  API not affected.

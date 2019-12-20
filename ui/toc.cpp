@@ -234,5 +234,3 @@ void TOC::collapseAll()
 {
     m_treeView->collapseAll();
 }
-
-#include "moc_toc.cpp"

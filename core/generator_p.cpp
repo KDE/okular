@@ -174,5 +174,3 @@ void FontExtractionThread::run()
         emit progress( i );
     }
 }
-
-#include "moc_generator_p.cpp"

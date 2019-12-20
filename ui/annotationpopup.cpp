@@ -186,5 +186,3 @@ void AnnotationPopup::exec( const QPoint &point )
         }
     }
 }
-
-#include "moc_annotationpopup.cpp"

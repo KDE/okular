@@ -1270,10 +1270,10 @@ void Part::notifyPageChanged( int page, int flags )
 }
 
 
-void Part::goToPage(uint i)
+void Part::goToPage(uint page)
 {
-    if ( i <= m_document->pages() )
-        m_document->setViewportPage( i - 1 );
+    if ( page <= m_document->pages() )
+        m_document->setViewportPage( page - 1 );
 }
 
 

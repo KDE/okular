@@ -119,5 +119,3 @@ void SignaturePanel::setPageView( PageView *pv )
     Q_D( SignaturePanel );
     d->m_pageView = pv;
 }
-
-#include "moc_signaturepanel.cpp"

@@ -284,13 +284,13 @@ public:
     */
     XpsDocument* document(int documentNum) const;
 
-    QFont getFontByName( const QString &fontName, float size );
+    QFont getFontByName( const QString &absoluteFileName, float size );
 
     KZip* xpsArchive();
 
 
 private:
-    int loadFontByName( const QString &fontName );
+    int loadFontByName( const QString &absoluteFileName );
 
     QList<XpsDocument*> m_documents;
     QList<XpsPage*> m_pages;
@@ -331,7 +331,7 @@ class XpsGenerator : public Okular::Generator
 
     protected:
         bool doCloseDocument() override;
-        QImage image( Okular::PixmapRequest *page ) override;
+        QImage image( Okular::PixmapRequest *request ) override;
         Okular::TextPage* textPage( Okular::TextRequest * request ) override;
 
     private:

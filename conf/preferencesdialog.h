@@ -30,7 +30,7 @@ class PreferencesDialog : public KConfigDialog
     Q_OBJECT
 
     public:
-        PreferencesDialog( QWidget * parent, KConfigSkeleton * config, Okular::EmbedMode embedMode );
+        PreferencesDialog( QWidget * parent, KConfigSkeleton * skeleton, Okular::EmbedMode embedMode );
 
         void switchToAnnotationsPage();
 

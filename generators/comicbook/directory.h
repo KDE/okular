@@ -31,7 +31,7 @@ class Directory
         /**
          * Opens given directory.
          */
-        bool open( const QString &fileName );
+        bool open( const QString &dirName );
 
         /**
          * Returns the list of files from the directory.

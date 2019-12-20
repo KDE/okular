@@ -58,9 +58,9 @@ class OKULARCORE_EXPORT TextEntity
 
         /**
          * Creates a new text entity with the given @p text and the
-         * given @p boundingBox.
+         * given @p area.
          */
-        TextEntity( const QString &text, NormalizedRect *boundingBox );
+        TextEntity( const QString &text, NormalizedRect *area );
 
         /**
          * Destroys the text entity.
@@ -148,16 +148,16 @@ class OKULARCORE_EXPORT TextPage
          * Returns the bounding rect of the text which matches the following criteria
          * or 0 if the search is not successful.
          *
-         * @param id An unique id for this search.
-         * @param text The search text.
+         * @param searchID An unique id for this search.
+         * @param query The search text.
          * @param direction The direction of the search (@ref SearchDirection)
          * @param caseSensitivity If Qt::CaseSensitive, the search is case sensitive; otherwise
          *                        the search is case insensitive.
-         * @param lastRect If 0 the search starts at the beginning of the page, otherwise
+         * @param area If null the search starts at the beginning of the page, otherwise
          *                 right/below the coordinates of the given rect.
          */
-        RegularAreaRect* findText( int id, const QString &text, SearchDirection direction,
-                                   Qt::CaseSensitivity caseSensitivity, const RegularAreaRect *lastRect );
+        RegularAreaRect* findText( int searchID, const QString &query, SearchDirection direction,
+                                   Qt::CaseSensitivity caseSensitivity, const RegularAreaRect *area );
 
         /**
          * Text extraction function. Looks for text in the given @p area.
@@ -188,7 +188,7 @@ class OKULARCORE_EXPORT TextPage
          * caller.
          * @since 0.14 (KDE 4.8)
          */
-        TextEntity::List words( const RegularAreaRect * rect, TextAreaInclusionBehaviour b ) const;
+        TextEntity::List words( const RegularAreaRect * area, TextAreaInclusionBehaviour b ) const;
 
         /**
          * Returns the area and text of the word at the given point

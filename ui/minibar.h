@@ -54,7 +54,7 @@ class PageNumberEdit : public PagesEdit
     Q_OBJECT
 
     public:
-        explicit PageNumberEdit( MiniBar * parent );
+        explicit PageNumberEdit( MiniBar * miniBar );
         void setPagesNumber( int pages );
 
     private:
@@ -98,7 +98,7 @@ class MiniBarLogic : public QObject, public Okular::DocumentObserver
         int currentPage() const;
         
         // [INHERITED] from DocumentObserver
-        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) override;
+        void notifySetup( const QVector< Okular::Page * > & pageVector, int setupFlags ) override;
         void notifyCurrentPageChanged( int previous, int current ) override;
         
     private:

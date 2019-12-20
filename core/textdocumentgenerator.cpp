@@ -581,6 +581,3 @@ void TextDocumentGenerator::setTextDocument( QTextDocument *textDocument )
         p->setTextPage( nullptr );
     }
 }
-
-#include "moc_textdocumentgenerator.cpp"
-

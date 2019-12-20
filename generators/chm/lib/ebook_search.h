@@ -53,14 +53,14 @@ class EBookSearch : public QObject
 		//! Executes the search query. The \param query is a string like <i>"C++ language" class</i>,
 		//! \param results is a pointer to QStringList, and \param limit limits the number of
 		//! results in case the query is too generic (like \a "a" ).
-		//! The \param chmFile is used to get the current encoding information.
+		//! The \param ebookFile is used to get the current encoding information.
 		//! The return value is false only if the index is not generated, or if a closing quote character 
 		//! is missing. Call hasIndex() to clarify. If search returns no results, the return value is 
 		//! true, but the \param results list will be empty.
 		//!
 		//! Note that the function does not clear \param results before adding search results, so if you are
 		//! not merging search results, make sure it's empty.
-		bool	searchQuery ( const QString& query, QList< QUrl > * results, EBook * chmFile, unsigned int limit = 100 );
+		bool	searchQuery ( const QString& query, QList< QUrl > * results, EBook * ebookFile, unsigned int limit = 100 );
 		
 		//! Returns true if a valid search index is present, and therefore search could be executed
 		bool	hasIndex() const;

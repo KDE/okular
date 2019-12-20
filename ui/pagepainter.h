@@ -36,20 +36,20 @@ class Q_DECL_EXPORT PagePainter
                                 EnhanceImages = 4, Highlights = 8,
                                 TextSelection = 16, Annotations = 32 };
 
-        // draw (using painter 'p') the 'page' requested by 'observer' using features
+        // draw (using painter 'destPainter') the 'page' requested by 'observer' using features
         // in 'flags'. 'limits' is the bounding rect of the paint operation,
         // 'scaledWidth' and 'scaledHeight' the expected size of page contents
-        static void paintPageOnPainter( QPainter * p, const Okular::Page * page, Okular::DocumentObserver *observer,
+        static void paintPageOnPainter( QPainter * destPainter, const Okular::Page * page, Okular::DocumentObserver *observer,
             int flags, int scaledWidth, int scaledHeight, const QRect & pageLimits );
 
-        // draw (using painter 'p') the 'page' requested by 'observer' using features
+        // draw (using painter 'destPainter') the 'page' requested by 'observer' using features
         // in 'flags'.
         // 'pageLimits' is the bounding rect of the paint operation relative to the
         // top left of the (cropped) page.
         // 'scaledWidth' and 'scaledHeight' the size of the page pixmap (before cropping).
         // 'crop' is the (normalized) cropped rectangle within the page.
         // The painter's (0,0) is assumed to be top left of the painted ('pageLimits') rect.
-        static void paintCroppedPageOnPainter( QPainter * p, const Okular::Page * page, Okular::DocumentObserver *observer,
+        static void paintCroppedPageOnPainter( QPainter * destPainter, const Okular::Page * page, Okular::DocumentObserver *observer,
             int flags, int scaledWidth, int scaledHeight, const QRect & pageLimits,
             const Okular::NormalizedRect & crop, Okular::NormalizedPoint *viewPortPoint );
 
@@ -65,7 +65,7 @@ class Q_DECL_EXPORT PagePainter
         enum RasterOperation { Normal, Multiply };
         static void drawShapeOnImage(
             QImage & image,
-            const NormalizedPath & imagePoints,
+            const NormalizedPath & normPath,
             bool closeShape,
             const QPen & pen,
             const QBrush & brush = QBrush(),

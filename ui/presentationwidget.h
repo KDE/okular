@@ -168,7 +168,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         void slotProcessMovieAction( const Okular::MovieAction *action );
         void slotProcessRenditionAction( const Okular::RenditionAction *action );
         void slotTogglePlayPause();
-        void slotChangeDrawingToolEngine( const QDomElement &doc );
+        void slotChangeDrawingToolEngine( const QDomElement &element );
         void slotAddDrawingToolActions();
 };
 

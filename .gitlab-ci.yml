@@ -26,7 +26,7 @@ build_clang_tidy:
     - echo 'deb-src http://deb.debian.org/debian unstable main' >> /etc/apt/sources.list
     - apt-get update
     - apt-get build-dep --yes --no-install-recommends okular
-    - apt-get install --yes --no-install-recommends ninja-build clang clang-tidy python python-yaml libkf5crash-dev libkf5purpose-dev
+    - apt-get install --yes --no-install-recommends ninja-build clang clang-tidy python python-yaml libkf5crash-dev libkf5purpose-dev libegl-dev
 
   script:
     - srcdir=`pwd` && mkdir -p /tmp/okular_build && cd /tmp/okular_build && CC=clang CXX=clang++ cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G Ninja $srcdir

@@ -158,7 +158,7 @@ QVariantList DocumentItem::bookmarkedPages() const
         Okular::DocumentViewport viewport(bookmark.url().fragment());
         pages << viewport.pageNumber;
     }
-    list = pages.toList();
+    list = pages.values();
     std::sort(list.begin(), list.end());
 
     QVariantList variantList;

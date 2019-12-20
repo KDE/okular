@@ -950,7 +950,7 @@ QString PageViewPrivate::selectedText() const
         return QString();
 
     QString text;
-    QList< int > selpages = pagesWithTextSelection.toList();
+    QList< int > selpages = pagesWithTextSelection.values();
     std::sort(selpages.begin(), selpages.end());
     const Okular::Page * pg = nullptr;
     if ( selpages.count() == 1 )

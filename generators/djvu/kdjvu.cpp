@@ -1057,7 +1057,7 @@ bool KDjVu::exportAsPostScript( QFile* file, const QList<int>& pageList ) const
     }
 
     QString pl;
-    foreach ( int p, pageList )
+    for ( const int p : pageList )
     {
         if ( !pl.isEmpty() )
             pl += QLatin1String( "," );

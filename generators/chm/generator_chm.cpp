@@ -80,7 +80,7 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
     QMap<QString, int> tmpPageList;
     int pageNum = 0;
 
-    foreach(const EBookTocEntry &e, topics)
+    for (const EBookTocEntry &e : qAsConst(topics))
     {
         QDomElement item = m_docSyn.createElement(e.name);
         if (!e.url.isEmpty())
@@ -107,7 +107,7 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
         pageList.prepend(home);
     m_pageUrl.resize(pageNum);
 
-    foreach (const QUrl &qurl, pageList)
+    for (const QUrl &qurl : qAsConst(pageList))
     {
         QString url = qurl.toString();
         const QString urlLower = url.toLower();

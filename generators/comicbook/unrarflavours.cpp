@@ -77,7 +77,7 @@ QStringList FreeUnrarFlavour::processListing( const QStringList &data )
     QRegExp re( QStringLiteral("^ ([^/]+/([^\\s]+))$") );
 
     QStringList newdata;
-    foreach ( const QString &line, data )
+    for ( const QString &line : data )
     {
         if ( re.exactMatch( line ) )
             newdata.append( re.cap( 1 ) );

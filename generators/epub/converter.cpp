@@ -250,7 +250,7 @@ QTextDocument* Converter::convert( const QString &fileName )
               newDoc.setContent(QStringLiteral("<img src=\"%1\" height=\"%2\" width=\"%3\" />").arg(lnk).arg(ht).arg(wd));
               imgNodes.append(newDoc.documentElement());
             }
-            foreach (const QDomNode& nd, imgNodes) {
+            for (const QDomNode &nd : qAsConst(imgNodes)) {
               svgs.at(i).parentNode().replaceChild(nd,svgs.at(i));
             }
           }

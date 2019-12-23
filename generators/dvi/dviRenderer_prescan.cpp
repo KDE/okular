@@ -366,7 +366,7 @@ void dviRenderer::prescan_ParsePSSpecial(const QString& cp)
       if (cp.contains(QStringLiteral("/Dest")) && cp.contains(QStringLiteral("/Title"))) {
         const QString childrenNumberAndMoreStuff = cp.section(QLatin1Char('-'), 1, 1); // Contains from the - symbol to the end of cp, effectively containing the number of children and some stuff after it
         int indexOfFirstNonDigit = 0;
-        foreach(const QChar &c, childrenNumberAndMoreStuff) {
+        for (const QChar &c : childrenNumberAndMoreStuff) {
           if (c.isDigit()) ++indexOfFirstNonDigit;
           else break;
         }

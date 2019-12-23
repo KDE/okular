@@ -193,8 +193,11 @@ void PopplerAnnotationProxy::notifyModification( const Okular::Annotation *okl_a
             const Okular::LineAnnotation * okl_lineann = static_cast<const Okular::LineAnnotation*>(okl_ann);
             Poppler::LineAnnotation * ppl_lineann = static_cast<Poppler::LineAnnotation*>(ppl_ann);
             QLinkedList<QPointF> points;
-            foreach ( const Okular::NormalizedPoint &p, okl_lineann->linePoints() )
+            const QLinkedList<Okular::NormalizedPoint> annotPoints = okl_lineann->linePoints();
+            for ( const Okular::NormalizedPoint &p : annotPoints  )
+            {
                 points.append(normPointToPointF( p ));
+            }
             ppl_lineann->setLinePoints( points );
             ppl_lineann->setLineStartStyle( (Poppler::LineAnnotation::TermStyle)okl_lineann->lineStartStyle() );
             ppl_lineann->setLineEndStyle( (Poppler::LineAnnotation::TermStyle)okl_lineann->lineEndStyle() );
@@ -233,11 +236,14 @@ void PopplerAnnotationProxy::notifyModification( const Okular::Annotation *okl_a
             const Okular::InkAnnotation * okl_inkann = static_cast<const Okular::InkAnnotation*>(okl_ann);
             Poppler::InkAnnotation * ppl_inkann = static_cast<Poppler::InkAnnotation*>(ppl_ann);
             QList< QLinkedList<QPointF> > paths;
-            foreach ( const QLinkedList<Okular::NormalizedPoint> &path, okl_inkann->inkPaths() )
+            const QList< QLinkedList<Okular::NormalizedPoint> > inkPathsList = okl_inkann->inkPaths();
+            for ( const QLinkedList<Okular::NormalizedPoint> &path : inkPathsList )
             {
                 QLinkedList<QPointF> points;
-                foreach ( const Okular::NormalizedPoint &p, path )
+                for ( const Okular::NormalizedPoint &p : path )
+                {
                     points.append(normPointToPointF( p ));
+                }
                 paths.append( points );
             }
             ppl_inkann->setInkPaths( paths );

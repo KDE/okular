@@ -147,7 +147,7 @@ QLinkedList<Okular::ObjectRect*> DviGenerator::generateDviLinks( const dviPageIn
 
     int pageWidth = pageInfo->width, pageHeight = pageInfo->height;
     
-    foreach( const Hyperlink &dviLink, pageInfo->hyperLinkList )
+    for ( const Hyperlink &dviLink : qAsConst(pageInfo->hyperLinkList) )
     {
         QRect boxArea = dviLink.box;
         double nl = (double)boxArea.left() / pageWidth,
@@ -391,9 +391,8 @@ Okular::FontInfo::List DviGenerator::fontsForPage( int page )
     if ( m_dviRenderer && m_dviRenderer->dviFile &&
          m_dviRenderer->dviFile->font_pool )
     {
-        QList<TeXFontDefinition*> fonts = m_dviRenderer->dviFile->font_pool->fontList;
-
-        foreach (const TeXFontDefinition* font, fonts)
+        const QList<TeXFontDefinition *> fonts = m_dviRenderer->dviFile->font_pool->fontList;
+        for (const TeXFontDefinition *font : fonts)
         {
             Okular::FontInfo of;
             QString name;
@@ -506,7 +505,7 @@ void DviGenerator::loadPages( QVector< Okular::Page * > &pagesVector )
     // filling the pages with the source references rects
     const QVector<DVI_SourceFileAnchor>& sourceAnchors = m_dviRenderer->sourceAnchors();
     QVector< QLinkedList< Okular::SourceRefObjectRect * > > refRects( numofpages );
-    foreach ( const DVI_SourceFileAnchor& sfa, sourceAnchors )
+    for ( const DVI_SourceFileAnchor &sfa : sourceAnchors )
     {
         if ( sfa.page < 1 || (int)sfa.page > numofpages )
             continue;
@@ -527,14 +526,14 @@ bool DviGenerator::print( QPrinter& printer )
     if ( !tf.open() )
         return false;
 
-    QList<int> pageList = Okular::FilePrinter::pageList( printer, 
+    const QList<int> pageList = Okular::FilePrinter::pageList( printer, 
                                  m_dviRenderer->totalPages(),
                                  document()->currentPage() + 1,
                                  document()->bookmarkedPageList() );
     QString pages;
     QStringList printOptions;
     // List of pages to print.
-    foreach ( int p, pageList )
+    for ( const int p : pageList )
     {
         pages += QStringLiteral(",%1").arg(p);
     }

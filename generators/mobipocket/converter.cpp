@@ -79,9 +79,10 @@ QTextDocument* Converter::convert( const QString &fileName )
     //link
     if (!format.anchorHref().isEmpty()) links[format.anchorHref()]=
       QPair<int,int>(frag.position(), frag.position()+frag.length());
-    if (!format.anchorNames().isEmpty()) {
+    const QStringList anchors = format.anchorNames();
+    if (!anchors.isEmpty()) {
       // link targets
-      Q_FOREACH(const QString& name, format.anchorNames()) 
+      for (const QString &name : anchors) 
     targets[QLatin1Char('#')+name]=it;
     }
   }

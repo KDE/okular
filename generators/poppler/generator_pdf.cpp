@@ -289,7 +289,7 @@ QPair<Okular::Movie*, Okular::EmbeddedFile*> createMovieFromPopplerRichMedia( co
     bool playbackLoops = false;
 
     const QStringList flashVars = params->flashVars().split( QLatin1Char( '&' ) );
-    foreach ( const QString & flashVar, flashVars ) {
+    for ( const QString &flashVar : flashVars ) {
         const int pos = flashVar.indexOf( QLatin1Char( '=' ) );
         if ( pos == -1 )
             continue;
@@ -311,7 +311,7 @@ QPair<Okular::Movie*, Okular::EmbeddedFile*> createMovieFromPopplerRichMedia( co
         return emptyResult;
 
     Poppler::RichMediaAnnotation::Asset *matchingAsset = 0;
-    foreach ( Poppler::RichMediaAnnotation::Asset *asset, assets ) {
+    for ( Poppler::RichMediaAnnotation::Asset *asset : assets ) {
         if ( asset->name() == sourceId ) {
             matchingAsset = asset;
             break;
@@ -547,7 +547,7 @@ Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink, bool
 static QLinkedList<Okular::ObjectRect*> generateLinks( const QList<Poppler::Link*> &popplerLinks )
 {
     QLinkedList<Okular::ObjectRect*> links;
-    foreach(const Poppler::Link *popplerLink, popplerLinks)
+    for (const Poppler::Link *popplerLink : popplerLinks)
     {
         QRectF linkArea = popplerLink->linkArea();
         double nl = linkArea.left(),
@@ -939,7 +939,7 @@ Okular::FontInfo::List PDFGenerator::fontsForPage( int page )
     }
     userMutex()->unlock();
 
-    foreach (const Poppler::FontInfo &font, fonts)
+    for (const Poppler::FontInfo &font : qAsConst(fonts))
     {
         Okular::FontInfo of;
         of.setName( font.name() );
@@ -969,7 +969,7 @@ const QList<Okular::EmbeddedFile*> *PDFGenerator::embeddedFiles() const
     {
         userMutex()->lock();
         const QList<Poppler::EmbeddedFile*> &popplerFiles = pdfdoc->embeddedFiles();
-        foreach(Poppler::EmbeddedFile* pef, popplerFiles)
+        for (Poppler::EmbeddedFile *pef : popplerFiles)
         {
             docEmbeddedFiles.append(new PDFEmbeddedFile(pef));
         }
@@ -1247,7 +1247,8 @@ void PDFGenerator::resolveMediaLinkReferences( Okular::Page *page )
     resolveMediaLinkReference( const_cast<Okular::Action*>( page->pageAction( Okular::Page::Opening ) ) );
     resolveMediaLinkReference( const_cast<Okular::Action*>( page->pageAction( Okular::Page::Closing ) ) );
 
-    foreach ( Okular::Annotation *annotation, page->annotations() )
+    const QLinkedList< Okular::Annotation* > annotations = page->annotations();
+    for ( Okular::Annotation *annotation : annotations )
     {
         if ( annotation->subType() == Okular::Annotation::AScreen )
         {
@@ -1264,8 +1265,11 @@ void PDFGenerator::resolveMediaLinkReferences( Okular::Page *page )
         }
     }
 
-    foreach ( Okular::FormField *field, page->formFields() )
+    const QLinkedList< Okular::FormField * > fields = page->formFields();
+    for ( Okular::FormField *field : fields )
+    {
         resolveMediaLinkReference( field->activationAction() );
+    }
 }
 
 #ifdef HAVE_POPPLER_0_63
@@ -1588,7 +1592,8 @@ QVariant PDFGenerator::metaData( const QString & key, const QVariant & option ) 
         uint numPages = doc->pages();
         for ( uint i = 0; i < numPages; i++ )
         {
-            foreach ( Okular::FormField *f, doc->page( i )->formFields() )
+            const QLinkedList<Okular::FormField *> formFields = doc->page( i )->formFields();
+            for ( const Okular::FormField *f : formFields )
             {
                 if ( f->type() == Okular::FormField::FormSignature )
                     return true;
@@ -1727,7 +1732,7 @@ Okular::TextPage * PDFGenerator::abstractTextPage(const QList<Poppler::TextBox*>
 #endif
     QString s;
     bool addChar;
-    foreach (Poppler::TextBox *word, text)
+    for (const Poppler::TextBox *word : text)
     {
         const int qstringCharCount = word->text().length();
         next=word->nextWord();
@@ -1828,12 +1833,12 @@ void PDFGenerator::addAnnotations( Poppler::Page * popplerPage, Okular::Page * p
         << Poppler::Annotation::AStamp
         << Poppler::Annotation::ACaret;
 
-    QList<Poppler::Annotation*> popplerAnnotations = popplerPage->annotations( subtypes );
+    const QList<Poppler::Annotation*> popplerAnnotations = popplerPage->annotations( subtypes );
 #else
-    QList<Poppler::Annotation*> popplerAnnotations = popplerPage->annotations();
+    const QList<Poppler::Annotation*> popplerAnnotations = popplerPage->annotations();
 #endif
 
-    foreach(Poppler::Annotation *a, popplerAnnotations)
+    for (Poppler::Annotation *a : popplerAnnotations)
     {
         bool doDelete = true;
         Okular::Annotation * newann = createAnnotationFromPopplerAnnotation( a, &doDelete );
@@ -1964,9 +1969,9 @@ void PDFGenerator::addTransition( Poppler::Page * pdfPage, Okular::Page * page )
 
 void PDFGenerator::addFormFields( Poppler::Page * popplerPage, Okular::Page * page )
 {
-    QList<Poppler::FormField*> popplerFormFields = popplerPage->formFields();
+    const QList<Poppler::FormField*> popplerFormFields = popplerPage->formFields();
     QLinkedList<Okular::FormField*> okularFormFields;
-    foreach( Poppler::FormField *f, popplerFormFields )
+    for ( Poppler::FormField *f : popplerFormFields )
     {
         Okular::FormField * of = nullptr;
         switch ( f->type() )

@@ -35,12 +35,13 @@ using namespace ComicBook;
 
 static void imagesInArchive( const QString &prefix, const KArchiveDirectory* dir, QStringList *entries )
 {
-    Q_FOREACH ( const QString &entry, dir->entries() ) {
-        const KArchiveEntry *e = dir->entry( entry );
+    const QStringList entryList =  dir->entries();
+    for ( const QString &file : entryList ) {
+        const KArchiveEntry *e = dir->entry( file );
         if ( e->isDirectory() ) {
-            imagesInArchive( prefix + entry + QLatin1Char('/'), static_cast<const KArchiveDirectory*>( e ), entries );
+            imagesInArchive( prefix + file + QLatin1Char('/'), static_cast<const KArchiveDirectory*>( e ), entries );
         } else if ( e->isFile() ) {
-            entries->append( prefix + entry );
+            entries->append( prefix + file );
         }
     }
 }
@@ -184,7 +185,7 @@ void Document::pages( QVector<Okular::Page*> * pagesVector )
     pagesVector->clear();
     pagesVector->resize( mEntries.size() );
     QImageReader reader;
-    foreach(const QString &file, mEntries) {
+    for (const QString &file : qAsConst(mEntries)) {
         if ( mArchive ) {
             const KArchiveFile *entry = static_cast<const KArchiveFile*>( mArchiveDir->entry( file ) );
             if ( entry ) {

@@ -122,7 +122,7 @@ bool EBook_CHM::getTableOfContents( QList<EBookTocEntry> &toc ) const
 
 	// Fill up the real toc
 	toc.reserve( parsed.size() );
-	Q_FOREACH( const ParsedEntry& e, parsed )
+	for ( const ParsedEntry &e : qAsConst(parsed) )
 	{
 		if ( root_offset == -1 )
 			root_offset = e.indent;
@@ -157,7 +157,8 @@ bool EBook_CHM::getIndex(QList<EBookIndexEntry> &index) const
 	index.reserve( parsed.size() );
 
     // Find the index root offset
-    Q_FOREACH( const ParsedEntry& e, parsed )
+    const QList< ParsedEntry > &parsedList = parsed;
+    for ( const ParsedEntry &e : parsedList )
     {
         if ( e.urls.empty() )
             continue;
@@ -166,7 +167,7 @@ bool EBook_CHM::getIndex(QList<EBookIndexEntry> &index) const
     }
 
     // And apply the index
-	Q_FOREACH( const ParsedEntry& e, parsed )
+	for( const ParsedEntry &e : parsedList )
 	{
 		if ( e.urls.empty() )
 			continue;

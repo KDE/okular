@@ -508,7 +508,7 @@ static QByteArray readFileOrDirectoryParts( const KArchiveEntry *entry, QString 
         const KArchiveDirectory* relDir = static_cast<const KArchiveDirectory *>( entry );
         QStringList entries = relDir->entries();
         std::sort(entries.begin(), entries.end());
-        Q_FOREACH ( const QString &entry, entries ) {
+        for ( const QString &entry : qAsConst(entries) ) {
             const KArchiveEntry* relSubEntry = relDir->entry( entry );
             if ( !relSubEntry->isFile() )
                 continue;
@@ -553,7 +553,7 @@ static const KArchiveEntry* loadEntry( KZip *archive, const QString &fileName, Q
         const KArchiveDirectory* relDir = static_cast< const KArchiveDirectory * >( newEntry );
         QStringList relEntries = relDir->entries();
         std::sort(relEntries.begin(), relEntries.end());
-        Q_FOREACH ( const QString &relEntry, relEntries ) {
+        for ( const QString &relEntry : qAsConst(relEntries) ) {
             if ( relEntry.compare( entryName, Qt::CaseInsensitive ) == 0 ) {
                 return relDir->entry( relEntry );
             }
@@ -606,7 +606,7 @@ static bool xpsGradientLessThan( const XpsGradient &g1, const XpsGradient &g2 )
 static int xpsGradientWithOffset( const QList<XpsGradient> &gradients, double offset )
 {
     int i = 0;
-    Q_FOREACH ( const XpsGradient &grad, gradients ) {
+    for ( const XpsGradient &grad : gradients ) {
         if ( grad.offset == offset ) {
             return i;
         }
@@ -686,7 +686,7 @@ static void preprocessXpsGradients( QList<XpsGradient> &gradients )
 
 static void addXpsGradientsToQGradient( const QList<XpsGradient> &gradients, QGradient *qgrad )
 {
-    Q_FOREACH ( const XpsGradient &grad, gradients ) {
+    for ( const XpsGradient &grad : gradients ) {
         qgrad->setColorAt( grad.offset, grad.color );
     }
 }
@@ -1121,7 +1121,7 @@ void XpsHandler::processPath( XpsRenderNode &node )
         m_painter->setWorldTransform( pathdata->transform, true );
     }
 
-    Q_FOREACH ( XpsPathFigure *figure, pathdata->paths ) {
+    for ( const XpsPathFigure *figure : qAsConst(pathdata->paths) ) {
         m_painter->setBrush( figure->isFilled ? brush : QBrush() );
         m_painter->drawPath( figure->path );
     }
@@ -1144,7 +1144,7 @@ void XpsHandler::processPathGeometry( XpsRenderNode &node )
 {
     XpsPathGeometry * geom = new XpsPathGeometry();
 
-    Q_FOREACH ( const XpsRenderNode &child, node.children ) {
+    for ( const XpsRenderNode &child : qAsConst(node.children) ) {
         if ( child.data.canConvert<XpsPathFigure *>() ) {
             XpsPathFigure *figure = child.data.value<XpsPathFigure *>();
             geom->paths.append( figure );
@@ -1194,7 +1194,7 @@ void XpsHandler::processPathFigure( XpsRenderNode &node )
         return;
     }
 
-    Q_FOREACH ( const XpsRenderNode &child, node.children ) {
+    for ( const XpsRenderNode &child : qAsConst(node.children) ) {
         bool isStroked = true;
         att = node.attributes.value( QStringLiteral("IsStroked") );
         if ( !att.isEmpty() ) {
@@ -1209,7 +1209,7 @@ void XpsHandler::processPathFigure( XpsRenderNode &node )
             att = child.attributes.value( QStringLiteral("Points") );
             if ( !att.isEmpty() ) {
                 const QStringList points = att.split( QLatin1Char( ' ' ), QString::SkipEmptyParts );
-                Q_FOREACH ( const QString &p, points ) {
+                for ( const QString &p : points ) {
                     QPointF point = getPointFromString( p );
                     path.lineTo( point );
                 }
@@ -1345,7 +1345,7 @@ void XpsHandler::processEndElement( XpsRenderNode &node )
         }
     } else if (node.name == QLatin1String("LinearGradientBrush.GradientStops")) {
         QList<XpsGradient> gradients;
-        Q_FOREACH ( const XpsRenderNode &child, node.children ) {
+        for ( const XpsRenderNode &child : qAsConst(node.children) ) {
             double offset = child.attributes.value( QStringLiteral("Offset") ).toDouble();
             QColor color = hexToRgba( child.attributes.value( QStringLiteral("Color") ).toLatin1() );
             gradients.append( XpsGradient( offset, color ) );
@@ -1358,7 +1358,7 @@ void XpsHandler::processEndElement( XpsRenderNode &node )
         }
     } else if (node.name == QLatin1String("RadialGradientBrush.GradientStops")) {
         QList<XpsGradient> gradients;
-        Q_FOREACH ( const XpsRenderNode &child, node.children ) {
+        for ( const XpsRenderNode &child : qAsConst(node.children) ) {
             double offset = child.attributes.value( QStringLiteral("Offset") ).toDouble();
             QColor color = hexToRgba( child.attributes.value( QStringLiteral("Color") ).toLatin1() );
             gradients.append( XpsGradient( offset, color ) );

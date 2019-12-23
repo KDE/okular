@@ -20,7 +20,6 @@
 
 namespace Okular {
 
-class CertificateInfoPrivate;
 class SignatureInfoPrivate;
 
 /**

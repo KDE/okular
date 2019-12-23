@@ -22,8 +22,6 @@ class QDomText;
 
 namespace OOO {
 
-class Document;
-
 class Converter : public Okular::TextDocumentConverter
 {
   Q_OBJECT

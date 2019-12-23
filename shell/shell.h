@@ -29,8 +29,6 @@ class KToggleAction;
 class QTabWidget;
 class KPluginFactory;
 
-class Part;
-
 #ifndef Q_OS_WIN
 namespace KActivities { class ResourceInstance; }
 #endif

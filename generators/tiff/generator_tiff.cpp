@@ -379,7 +379,7 @@ bool TIFFGenerator::print( QPrinter& printer )
                                                          document()->currentPage() + 1,
                                                          document()->bookmarkedPageList() );
 
-    for ( tdir_t i = 0; i < pageList.count(); ++i )
+    for ( int i = 0; i < pageList.count(); ++i )
     {
         if ( !TIFFSetDirectory( d->tiff, mapPage( pageList[i] - 1 ) ) )
             continue;

@@ -944,7 +944,7 @@ void ThumbnailWidget::paint( QPainter &p, const QRect &_clipRect )
         }
 
         // draw the page using the shared PagePainter class
-        p.translate( m_margin/2, m_margin/2 );
+        p.translate( m_margin/2.0, m_margin/2.0 );
         clipRect.translate( -m_margin/2, -m_margin/2 );
         clipRect = clipRect.intersected( QRect( 0, 0, m_pixmapWidth, m_pixmapHeight ) );
         if ( clipRect.isValid() )

@@ -60,7 +60,7 @@ bool View::supportsCapability( View::ViewCapability capability ) const
 View::CapabilityFlags View::capabilityFlags( View::ViewCapability capability ) const
 {
     Q_UNUSED( capability )
-    return nullptr;
+    return NoFlag;
 }
 
 QVariant View::capability( View::ViewCapability capability ) const

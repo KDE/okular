@@ -396,11 +396,11 @@ bool TIFFGenerator::print( QPrinter& printer )
         {
             // an image read by ReadRGBAImage is ABGR, we need ARGB, so swap red and blue
             uint32 size = width * height;
-            for ( uint32 i = 0; i < size; ++i )
+            for ( uint32 j = 0; j < size; ++j )
             {
-                uint32 red = ( data[i] & 0x00FF0000 ) >> 16;
-                uint32 blue = ( data[i] & 0x000000FF ) << 16;
-                data[i] = ( data[i] & 0xFF00FF00 ) + red + blue;
+                uint32 red = ( data[j] & 0x00FF0000 ) >> 16;
+                uint32 blue = ( data[j] & 0x000000FF ) << 16;
+                data[j] = ( data[j] & 0xFF00FF00 ) + red + blue;
             }
         }
 

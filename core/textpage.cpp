@@ -118,14 +118,14 @@ static bool doesConsumeY(const NormalizedRect& first, const NormalizedRect& seco
  */
 class TinyTextEntity
 {
-    static const int MaxStaticChars = sizeof( QChar * ) / sizeof( QChar );
+    static const int MaxStaticChars = sizeof( void* ) / sizeof( QChar );
 
     public:
         TinyTextEntity( const QString &text, const NormalizedRect &rect )
             : area( rect )
         {
             Q_ASSERT_X( !text.isEmpty(), "TinyTextEntity", "empty string" );
-            Q_ASSERT_X( sizeof( d ) == sizeof( QChar * ), "TinyTextEntity",
+            Q_ASSERT_X( sizeof( d ) == sizeof( void * ), "TinyTextEntity",
                         "internal storage is wider than QChar*, fix it!" );
             length = text.length();
             switch ( length )

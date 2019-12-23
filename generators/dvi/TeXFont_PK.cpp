@@ -275,9 +275,9 @@ glyph* TeXFont_PK::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCol
       // character outline only using the alpha channel. That ensures
       // good quality rendering for overlapping characters.
       im32.fill(qRgb(color.red(), color.green(), color.blue()));
-      for(quint16 y=0; y<shrunk_height; y++) {
+      for(int y=0; y<shrunk_height; y++) {
         quint8 *destScanLine = (quint8 *)im32.scanLine(y);
-        for(quint16 col=0; col<shrunk_width; col++)
+        for(int col=0; col<shrunk_width; col++)
           destScanLine[4*col+3] = xydata[shrunk_width*y + col];
       }
     } else {
@@ -295,9 +295,9 @@ glyph* TeXFont_PK::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCol
       quint16 bInv = 0xFF - color.blue();
 
       quint8 *srcScanLine = xydata;
-      for(quint16 y=0; y<shrunk_height; y++) {
+      for(int y=0; y<shrunk_height; y++) {
         unsigned int *destScanLine = (unsigned int *)im32.scanLine(y);
-        for(quint16 col=0; col<shrunk_width; col++) {
+        for(int col=0; col<shrunk_width; col++) {
           quint16 data =  *srcScanLine;
           // The value stored in "data" now has the following meaning:
           // data = 0 -> white; data = 0xff -> use "color"

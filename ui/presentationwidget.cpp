@@ -1225,7 +1225,7 @@ void PresentationWidget::generateOverlay()
     qreal dpr = qApp->devicePixelRatio();
 
     // calculate overlay geometry and resize pixmap if needed
-    int side = m_width / 16;
+    double side = m_width / 16.0;
     m_overlayGeometry.setRect( m_width - side - 4, 4, side, side );
 
     // note: to get a sort of antialiasing, we render the pixmap double sized

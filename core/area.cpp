@@ -285,7 +285,9 @@ RegularAreaRect::~RegularAreaRect()
 
 RegularAreaRect& RegularAreaRect::operator=( const RegularAreaRect& rar )
 {
-    RegularArea< NormalizedRect, QRect >::operator=( rar );
+    if (this != &rar) {
+        RegularArea< NormalizedRect, QRect >::operator=( rar );
+    }
     return *this;
 }
 

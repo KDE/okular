@@ -3928,8 +3928,8 @@ QPoint PageView::viewportToContentArea( const Okular::DocumentViewport & vp ) co
         else
         {
             // TopLeft
-            c.rx() += qRound( normClamp( vp.rePos.normalizedX, 0.0 ) * (double)r.width() + viewport()->width() / 2 );
-            c.ry() += qRound( normClamp( vp.rePos.normalizedY, 0.0 ) * (double)r.height() + viewport()->height() / 2 );
+            c.rx() += qRound( normClamp( vp.rePos.normalizedX, 0.0 ) * (double)r.width() + viewport()->width() / 2.0 );
+            c.ry() += qRound( normClamp( vp.rePos.normalizedY, 0.0 ) * (double)r.height() + viewport()->height() / 2.0 );
         }
     }
     else
@@ -4061,7 +4061,7 @@ double PageView::zoomFactorFitMode( ZoomMode mode )
     const bool facingCentered = Okular::Settings::viewMode() == Okular::Settings::EnumViewMode::FacingFirstCentered || (Okular::Settings::viewMode() == Okular::Settings::EnumViewMode::Facing && pageCount == 1);
     const bool overrideCentering = facingCentered && pageCount < 3;
     const int nCols = overrideCentering ? 1 : viewColumns();
-    const double colWidth = viewport()->width() / nCols - kcolWidthMargin;
+    const double colWidth = viewport()->width() / static_cast<double>(nCols) - kcolWidthMargin;
     const double rowHeight = viewport()->height() - krowHeightMargin;
     const PageViewItem * currentItem = d->items[ qMax( 0, (int)d->document->currentPage()) ];
     // prevent segmentation fault when opening a new document;
@@ -4957,8 +4957,8 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
         {
             const QRect & geometry = i->croppedGeometry();
             // compute distance between item center and viewport center (slightly moved left)
-            double distance = hypot( (geometry.left() + geometry.right()) / 2 - (viewportCenterX - 4),
-                                     (geometry.top() + geometry.bottom()) / 2 - viewportCenterY );
+            const double distance = hypot( (geometry.left() + geometry.right()) / 2.0 - (viewportCenterX - 4),
+                                           (geometry.top() + geometry.bottom()) / 2.0 - viewportCenterY );
             if ( distance >= minDistance && nearPageNumber != -1 )
                 continue;
             nearPageNumber = i->pageNumber();

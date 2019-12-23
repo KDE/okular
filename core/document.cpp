@@ -5695,8 +5695,10 @@ DocumentInfo::DocumentInfo(const DocumentInfo &info) : d(new DocumentInfoPrivate
 
 DocumentInfo& DocumentInfo::operator=(const DocumentInfo &info)
 {
-    d->values = info.d->values;
-    d->titles = info.d->titles;
+    if (this != &info) {
+        d->values = info.d->values;
+        d->titles = info.d->titles;
+    }
     return *this;
 }
 

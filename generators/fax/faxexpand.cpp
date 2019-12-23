@@ -704,19 +704,19 @@ static const unsigned char zerotab[256] = {
     prezeros >>= 4;							\
     if (prezeros == 8) {						\
 	zeros += 8;							\
-	continue;							\
+	break;							\
     }									\
     if (zeros + prezeros < 11) {					\
 	empty = 0;							\
 	zeros = postzeros;						\
-	continue;							\
+	break;							\
     }									\
     zeros = postzeros;							\
     if (empty)								\
 	EOLcnt++;							\
     lines++;								\
     empty = 1;								\
-} while (0)
+} while (false)
 
 /* count fax lines */
 int

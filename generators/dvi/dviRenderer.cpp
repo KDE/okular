@@ -424,7 +424,7 @@ bool dviRenderer::isValidFile(const QString& filename) const
 
   unsigned char trailer[4] = { 0xdf,0xdf,0xdf,0xdf };
 
-  if ( f.read( (char *)test, 4 )<4 || strncmp( (char *)test, (char *) trailer, 4 ) )
+  if ( f.read( (char *)test, 4 )<4 || strncmp( (char *)test, (char *) trailer, 4 ) != 0 )
     return false;
   // We suppose now that the dvi file is complete and OK
   return true;

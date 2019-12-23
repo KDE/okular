@@ -28,7 +28,7 @@ EditDrawingToolDialog::EditDrawingToolDialog( const QDomElement &initialState, Q
 
     QPushButton *okButton = buttonBox->button( QDialogButtonBox::Ok );
     okButton->setDefault( true );
-    okButton->setShortcut( Qt::CTRL | Qt::Key_Return );
+    okButton->setShortcut( Qt::CTRL | Qt::Key_Return ); // NOLINT(bugprone-suspicious-enum-usage)
     connect( buttonBox, &QDialogButtonBox::accepted, this, &EditDrawingToolDialog::accept );
     connect( buttonBox, &QDialogButtonBox::rejected, this, &EditDrawingToolDialog::reject );
     okButton->setDefault( true );

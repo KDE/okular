@@ -28,7 +28,7 @@ ChooseEngineDialog::ChooseEngineDialog( const QStringList &generators, const QMi
     setLayout(mainLayout);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
     okButton->setDefault(true);
-    okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+    okButton->setShortcut(Qt::CTRL | Qt::Key_Return); // NOLINT(bugprone-suspicious-enum-usage)
     connect(buttonBox, &QDialogButtonBox::accepted, this, &ChooseEngineDialog::accept);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &ChooseEngineDialog::reject);
     okButton->setDefault(true);

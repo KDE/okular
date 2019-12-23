@@ -251,10 +251,10 @@ glyph* TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCo
         quint16 gInv = 0xFF - color.green();
         quint16 bInv = 0xFF - color.blue();
 
-        for(quint16 y=0; y<slot->bitmap.rows; y++) {
+        for(unsigned int y=0; y<slot->bitmap.rows; y++) {
           quint8 *srcScanLine = slot->bitmap.buffer + y*slot->bitmap.pitch;
           unsigned int *destScanLine = (unsigned int *)imgi.scanLine(y);
-          for(quint16 col=0; col<slot->bitmap.width; col++) {
+          for(unsigned int col=0; col<slot->bitmap.width; col++) {
             quint16 data =  *srcScanLine;
             // The value stored in "data" now has the following meaning:
             // data = 0 -> white; data = 0xff -> use "color"

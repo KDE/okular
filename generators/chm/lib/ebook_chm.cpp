@@ -899,7 +899,7 @@ void EBook_CHM::fillTopicsUrlMap()
 	|| !RetrieveObject( &m_chmSTRINGS, (unsigned char*) strings.data(), 0, m_chmSTRINGS.length ) )
 		return;
 
-	for ( unsigned int i = 0; i < m_chmTOPICS.length; i += TOPICS_ENTRY_LEN )
+	for ( LONGUINT64 i = 0; i < m_chmTOPICS.length; i += TOPICS_ENTRY_LEN )
 	{
 		unsigned int off_title = get_int32_le( (unsigned int *)(topics.data() + i + 4) );
 		unsigned int off_url = get_int32_le( (unsigned int *)(topics.data() + i + 8) );

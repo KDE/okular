@@ -27,9 +27,9 @@
 <!-- body begins here -->
 <refsynopsisdiv id='synopsis'>
 <cmdsynopsis>
-  <command>okular</command>
-    <arg choice="opt"><replaceable>Okular options</replaceable></arg>
-    <arg choice="opt"><replaceable>URL</replaceable></arg>
+<command>okular</command>
+<arg choice="opt"><replaceable>Okular options</replaceable></arg>
+<arg choice="opt"><replaceable>URL</replaceable></arg>
 </cmdsynopsis>
 </refsynopsisdiv>
 
@@ -42,59 +42,66 @@ is aimed to show documents in different formats.</para>
 
 <refsect1 id="options"><title>Okular options</title>
 <variablelist>
-  <varlistentry>
-    <term><option>-p, --page <replaceable>number</replaceable></option></term>
-  <listitem>
+
+<varlistentry>
+<term><option>-p, --page <replaceable>number</replaceable></option></term>
+<listitem>
 <para>Open a given page in the document.</para>
-  </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><option>--presentation</option></term>
-  <listitem>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><option>--presentation</option></term>
+<listitem>
 <para>Start the document in presentation mode.</para>
-  </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><option>--print</option></term>
-  <listitem>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><option>--print</option></term>
+<listitem>
 <para>Start with print dialog.</para>
-  </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><option>--print-and-exit</option></term>
-  <listitem>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><option>--print-and-exit</option></term>
+<listitem>
 <para>Start with print dialog and exit after printing.</para>
-  </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><option>--unique</option></term>
-  <listitem>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><option>--unique</option></term>
+<listitem>
 <para>Unique instance control.</para>
-  </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><option>--noraise</option></term>
-  <listitem>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><option>--noraise</option></term>
+<listitem>
 <para>Allows to prevent Okular window raising after the start.</para>
-  </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><option>--find <replaceable>string</replaceable></option></term>
-  <listitem>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><option>--find <replaceable>string</replaceable></option></term>
+<listitem>
 <para>Find a string on the text.</para>
-  </listitem>
-  </varlistentry>
+</listitem>
+</varlistentry>
 </variablelist>
 </refsect1>
 
 <refsect1 id="arguments"><title>Arguments</title>
 <variablelist>
-  <varlistentry>
-    <term><option>URL</option></term>
-  <listitem>
-    <para>An address of the document to be opened. For PDF, can be given as <replaceable>document_name</replaceable>#<replaceable>named_destination</replaceable> where <replaceable>named_destination</replaceable> is a particular named destination embedded in the document.</para>
-  </listitem>
-  </varlistentry>
+<varlistentry>
+<term><option>URL</option></term>
+<listitem>
+<para>An address of the document to be opened. For PDF, can be given as <replaceable>document_name</replaceable>#<replaceable>named_destination</replaceable> where <replaceable>named_destination</replaceable> is a particular named destination embedded in the document.</para>
+</listitem>
+</varlistentry>
 </variablelist>
 </refsect1>
 

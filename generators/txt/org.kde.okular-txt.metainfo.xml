@@ -77,4 +77,7 @@
     <mimetype>text/plain</mimetype>
   </mimetypes>
   <url type="homepage">https://okular.kde.org</url>
+  <releases>
+    <release version="1.9.0" date="2019-12-12"/>
+  </releases>
 </component>

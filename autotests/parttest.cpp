@@ -137,6 +137,7 @@ class PartTest
         void testTypewriterAnnotTool();
         void testJumpToPage();
         void testTabletProximityBehavior();
+        void testOpenPrintPreview();
 
     private:
         void simulateMouseSelection(double startX, double startY, double endX, double endY, QWidget *target);
@@ -1942,6 +1943,17 @@ void PartTest::testTabletProximityBehavior()
     // Moving the mouse should bring the cursor back
     QTest::mouseMove(w, QPoint( 150, 150 ));
     QVERIFY( w->cursor().shape() == Qt::CursorShape( Qt::ArrowCursor ) );
+}
+
+void PartTest::testOpenPrintPreview()
+{
+    QVariantList dummyArgs;
+    Okular::Part part{ nullptr, nullptr, dummyArgs };
+    QVERIFY( openDocument( &part, QStringLiteral( KDESRCDIR "data/file1.pdf" ) ) );
+    part.widget()->show();
+    QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
+    CloseDialogHelper closeDialogHelper( QDialogButtonBox::Close );
+    part.slotPrintPreview();
 }
 
 } // namespace Okular

@@ -1592,10 +1592,11 @@ QVariant PageView::capability( ViewCapability capability ) const
         case ZoomModality:
             return d->zoomMode;
         case Continuous:
-            return d->aViewContinuous->isChecked();
+            return d->aViewContinuous ? d->aViewContinuous->isChecked() : true;
         case ViewModeModality:
         {
-            for (int i=0; i < d->aViewMode->menu()->actions().size(); ++i)
+            const int nActions = d->aViewMode ? d->aViewMode->menu()->actions().size() : 0;
+            for (int i=0; i < nActions; ++i)
             {
                 const QAction* action = d->aViewMode->menu()->actions().at(i);
                 if ( action->isChecked() )
@@ -1604,7 +1605,7 @@ QVariant PageView::capability( ViewCapability capability ) const
             return QVariant();
         }
         case TrimMargins:
-            return d->aTrimMargins->isChecked();
+            return d->aTrimMargins ? d->aTrimMargins->isChecked() : false;
     }
     return QVariant();
 }

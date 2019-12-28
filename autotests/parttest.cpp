@@ -1702,6 +1702,11 @@ void PartTest::testAdditionalActionTriggers()
     part.widget()->show();
     QVERIFY( QTest::qWaitForWindowExposed( part.widget() ) );
 
+    part.m_document->setViewportPage( 0 );
+
+    // wait for pixmap
+    QTRY_VERIFY( part.m_document->page( 0 )->hasPixmap( part.m_pageView) );
+
     QMap<QString, Okular::FormField *> fields;
     // Field names in test document are:
     // For trigger fields: tf, cb, rb, dd, pb
@@ -1725,10 +1730,6 @@ void PartTest::testAdditionalActionTriggers()
     const int height = part.m_pageView->verticalScrollBar()->maximum() +
                        part.m_pageView->viewport()->height();
 
-    part.m_document->setViewportPage( 0 );
-
-    // wait for pixmap
-    QTRY_VERIFY( part.m_document->page( 0 )->hasPixmap( part.m_pageView) );
 
     part.actionCollection()->action( QStringLiteral( "view_toggle_forms" ) )->trigger();
 

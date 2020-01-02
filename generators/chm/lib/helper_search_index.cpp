@@ -39,7 +39,7 @@ static const char WORD_CHARACTERS[] = "$_";
 struct Term
 {
 	Term() : frequency(-1) {}
-	Term( const QString &t, int f, QVector<Document> l ) : term( t ), frequency( f ), documents( l ) {}
+	Term( const QString &t, int f, const QVector<Document> &l ) : term( t ), frequency( f ), documents( l ) {}
 	QString term;
 	int frequency;
 	QVector<Document>documents;

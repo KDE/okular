@@ -238,7 +238,7 @@ bool EBook_EPUB::parseBookinfo()
     // Copy the manifest information and fill up the other maps if we have it
     if ( !toc_parser.entries.isEmpty() )
     {
-        for( EBookTocEntry e : qAsConst(toc_parser.entries) )
+        for( const EBookTocEntry &e : qAsConst(toc_parser.entries) )
         {
             // Add into url-title map
             m_urlTitleMap[ e.url ] = e.name;

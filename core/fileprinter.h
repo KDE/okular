@@ -89,6 +89,7 @@ public:
      *
      * @since 1.8
      */
+    // TODO make file const QString & when a BIC change happens somehwere else
     static int printFile( QPrinter &printer, const QString file,
                           QPrinter::Orientation documentOrientation,
                           FileDeletePolicy fileDeletePolicy,
@@ -182,6 +183,7 @@ protected:
     bool detectCupsService();
     bool detectCupsConfig();
 
+    // TODO make fileList const QStringList & when a BIC change happens somehwere else
     int doPrintFiles( QPrinter &printer, const QStringList fileList,
                              FileDeletePolicy fileDeletePolicy, PageSelectPolicy pageSelectPolicy,
                              const QString &pageRange,

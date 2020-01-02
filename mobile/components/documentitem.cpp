@@ -64,7 +64,7 @@ void DocumentItem::setUrl(const QUrl & url)
     //TODO: password
     QMimeDatabase db;
 
-    QUrl realUrl = url;
+    QUrl realUrl = url; // NOLINT(performance-unnecessary-copy-initialization) because of the ifdef below this can't be const &
 
 #ifdef Q_OS_ANDROID
     realUrl = QUrl(QtAndroid::androidActivity().callObjectMethod("contentUrlToFd",

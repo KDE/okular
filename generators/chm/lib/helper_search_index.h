@@ -89,7 +89,7 @@ class Index : public QObject
 		struct Entry
 		{
 			Entry( int d ) { documents.append( Document( d, 1 ) ); }
-			Entry( QVector<Document> l ) : documents( l ) {}
+			Entry( const QVector<Document> &l ) : documents( l ) {}
 			QVector<Document> documents;
 		};
 		

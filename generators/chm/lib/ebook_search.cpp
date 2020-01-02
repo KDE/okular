@@ -109,14 +109,14 @@ bool EBookSearch::generateIndex( EBook * ebookFile, QDataStream & stream )
 	connect( m_Index, SIGNAL( indexingProgress( int, const QString& ) ), this, SLOT( updateProgress( int, const QString& ) ) );
 	
 	// Process the list of files in CHM archive and keep only HTML document files from there
-	for ( int i = 0; i < alldocuments.size(); i++ )
+	for ( const QUrl &allDocumentsI : qAsConst( alldocuments ) )
 	{
-		QString docpath = alldocuments[i].path();
+		const QString docpath = allDocumentsI.path();
 
 		if ( docpath.endsWith( ".html", Qt::CaseInsensitive )
 		|| docpath.endsWith( ".htm", Qt::CaseInsensitive )
 		|| docpath.endsWith( ".xhtml", Qt::CaseInsensitive ) )
-			documents.push_back( alldocuments[i] );
+			documents.push_back( allDocumentsI );
 	}
 
     if ( !m_Index->makeIndex( documents, ebookFile ) )
@@ -167,9 +167,9 @@ bool EBookSearch::searchQuery(const QString & query, QList< QUrl > * results, EB
 	SearchDataKeeper keeper;	
 	QString term;
 
-	for ( int i = 0; i < query.length(); i++ )
+	for ( const QChar &iChar : query )
 	{
-		QChar ch = query[i].toLower();
+		const QChar ch = iChar.toLower();
 		
 		// a quote either begins or ends the phrase
 		if ( ch == '"' )

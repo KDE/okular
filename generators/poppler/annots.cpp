@@ -393,16 +393,14 @@ Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *
         if ( annotation->subType() == Okular::Annotation::AHighlight )
         {
             Okular::HighlightAnnotation * hlann = static_cast<Okular::HighlightAnnotation*>( annotation );
-            QList<Okular::HighlightAnnotation::Quad> &quads = hlann->highlightQuads();
-            for (QList<Okular::HighlightAnnotation::Quad>::iterator it = quads.begin(); it != quads.end(); ++it)
+            for (Okular::HighlightAnnotation::Quad &quad : hlann->highlightQuads())
             {
-                Okular::NormalizedPoint t;
-                t = it->point( 3 );
-                it->setPoint( it->point(0), 3 );
-                it->setPoint( t, 0 );
-                t = it->point( 2 );
-                it->setPoint( it->point(1), 2 );
-                it->setPoint( t, 1 );
+                const Okular::NormalizedPoint p3 = quad.point( 3 );
+                quad.setPoint( quad.point(0), 3 );
+                quad.setPoint( p3, 0 );
+                const Okular::NormalizedPoint p2 = quad.point( 2 );
+                quad.setPoint( quad.point(1), 2 );
+                quad.setPoint( p2, 1 );
             }
         }
 

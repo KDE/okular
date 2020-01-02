@@ -1316,7 +1316,7 @@ void XpsHandler::processEndElement( XpsRenderNode &node )
     } else if (node.name == QLatin1String("ImageBrush.Transform")) {
         node.data = node.getRequiredChildData( QStringLiteral("MatrixTransform") );
     } else if (node.name == QLatin1String("LinearGradientBrush")) {
-        XpsRenderNode * gradients = node.findChild( QStringLiteral("LinearGradientBrush.GradientStops") );
+        const XpsRenderNode * gradients = node.findChild( QStringLiteral("LinearGradientBrush.GradientStops") );
         if ( gradients && gradients->data.canConvert< QGradient * >() ) {
             QPointF start = getPointFromString( node.attributes.value( QStringLiteral("StartPoint") ) );
             QPointF end = getPointFromString( node.attributes.value( QStringLiteral("EndPoint") ) );
@@ -1328,7 +1328,7 @@ void XpsHandler::processEndElement( XpsRenderNode &node )
             delete qgrad;
         }
     } else if (node.name == QLatin1String("RadialGradientBrush")) {
-        XpsRenderNode * gradients = node.findChild( QStringLiteral("RadialGradientBrush.GradientStops") );
+        const XpsRenderNode * gradients = node.findChild( QStringLiteral("RadialGradientBrush.GradientStops") );
         if ( gradients && gradients->data.canConvert< QGradient * >() ) {
             QPointF center = getPointFromString( node.attributes.value( QStringLiteral("Center") ) );
             QPointF origin = getPointFromString( node.attributes.value( QStringLiteral("GradientOrigin") ) );
@@ -1854,9 +1854,7 @@ XpsDocument::XpsDocument(XpsFile *file, const QString &fileName): m_file(file), 
 
 XpsDocument::~XpsDocument()
 {
-    for (int i = 0; i < m_pages.size(); i++) {
-        delete m_pages.at( i );
-    }
+    qDeleteAll(m_pages);
     m_pages.clear();
 
     if ( m_docStructure )
@@ -2203,20 +2201,20 @@ bool XpsGenerator::print( QPrinter &printer )
     return true;
 }
 
-XpsRenderNode * XpsRenderNode::findChild( const QString &name )
+const XpsRenderNode * XpsRenderNode::findChild( const QString &name ) const
 {
-    for (int i = 0; i < children.size(); i++) {
-        if (children[i].name == name) {
-            return &children[i];
+    for (const XpsRenderNode &child : children) {
+        if (child.name == name) {
+            return &child;
         }
     }
 
     return nullptr;
 }
 
-QVariant XpsRenderNode::getRequiredChildData( const QString &name )
+QVariant XpsRenderNode::getRequiredChildData( const QString &name ) const
 {
-    XpsRenderNode * child = findChild( name );
+    const XpsRenderNode * child = findChild( name );
     if (child == nullptr) {
         qCWarning(OkularXpsDebug) << "Required element " << name << " is missing in " << this->name;
         return QVariant();
@@ -2225,9 +2223,9 @@ QVariant XpsRenderNode::getRequiredChildData( const QString &name )
     return child->data;
 }
 
-QVariant XpsRenderNode::getChildData( const QString &name )
+QVariant XpsRenderNode::getChildData( const QString &name ) const
 {
-    XpsRenderNode * child = findChild( name );
+    const XpsRenderNode * child = findChild( name );
     if (child == nullptr) {
         return QVariant();
     } else {

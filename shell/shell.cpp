@@ -201,9 +201,9 @@ Shell::~Shell()
     if( !m_tabs.empty() )
     {
         writeSettings();
-        for( QList<TabState>::iterator it = m_tabs.begin(); it != m_tabs.end(); ++it )
+        for( const TabState &tab : qAsConst( m_tabs ) )
         {
-           it->part->closeUrl( false );
+           tab.part->closeUrl( false );
         }
         m_tabs.clear();
     }
@@ -390,9 +390,9 @@ void Shell::saveProperties(KConfigGroup &group)
 
     // Gather lists of settings to preserve
     QStringList urls;
-    for( int i = 0; i < m_tabs.size(); ++i )
+    for( const TabState &tab : qAsConst( m_tabs ) )
     {
-        urls.append( m_tabs[i].part->url().url() );
+        urls.append( tab.part->url().url() );
     }
     group.writePathEntry( SESSION_URL_KEY, urls );
     group.writeEntry( SESSION_TAB_KEY, m_tabWidget->currentIndex() );

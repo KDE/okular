@@ -58,9 +58,9 @@ public:
     QXmlAttributes attributes;
     QVariant data;
 
-    XpsRenderNode * findChild( const QString &name );
-    QVariant getRequiredChildData( const QString &name );
-    QVariant getChildData( const QString &name );
+    const XpsRenderNode * findChild( const QString &name ) const;
+    QVariant getRequiredChildData( const QString &name ) const;
+    QVariant getChildData( const QString &name ) const;
 };
 
 struct XpsGradient

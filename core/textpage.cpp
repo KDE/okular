@@ -1307,13 +1307,13 @@ QList< QPair<WordsWithCharacters, QRect> > makeAndSortLines(const WordsWithChara
         const QRect elementArea = (*it).area().roundedGeometry(pageWidth,pageHeight);
         bool found = false;
 
-        for( int i = 0 ; i < lines.length() ; i++)
+        for( QPair<WordsWithCharacters, QRect> &linesI : lines)
         {
             /* the line area which will be expanded
                line_rects is only necessary to preserve the topmin and bottommax of all
                the texts in the line, left and right is not necessary at all
             */
-            QRect &lineArea = lines[i].second;
+            QRect &lineArea = linesI.second;
             const int text_y1 = elementArea.top() ,
                       text_y2 = elementArea.top() + elementArea.height() ,
                       text_x1 = elementArea.left(),
@@ -1329,7 +1329,7 @@ QList< QPair<WordsWithCharacters, QRect> > makeAndSortLines(const WordsWithChara
              */
             if(doesConsumeY(elementArea,lineArea,70))
             {
-                WordsWithCharacters &line = lines[i].first;
+                WordsWithCharacters &line = linesI.first;
                 line.append(*it);
 
                 const int newLeft = line_x1 < text_x1 ? line_x1 : text_x1;
@@ -1356,9 +1356,9 @@ QList< QPair<WordsWithCharacters, QRect> > makeAndSortLines(const WordsWithChara
     }
 
     // Step 3
-    for(int i = 0 ; i < lines.length() ; i++)
+    for(QPair<WordsWithCharacters, QRect> &line : lines)
     {
-        WordsWithCharacters &list = lines[i].first;
+        WordsWithCharacters &list = line.first;
         std::sort(list.begin(), list.end(), compareTinyTextEntityX);
     }
     
@@ -1424,9 +1424,9 @@ static void calculateStatisticalInformation(const QList<WordWithCharacters> &wor
     QList<QRect> max_hor_space_rects;
 
     // Space in every line
-    for(int i = 0 ; i < sortedLines.length() ; i++)
+    for(const QPair<WordsWithCharacters, QRect> &sortedLine : sortedLines)
     {
-        const WordsWithCharacters list = sortedLines.at(i).first;
+        const WordsWithCharacters list = sortedLine.first;
         QList<QRect> line_space_rects;
         int maxSpace = 0, minSpace = pageWidth;
 
@@ -1586,9 +1586,9 @@ static RegionTextList XYCutForBoundingBoxes(const QList<WordWithCharacters> &wor
         int count;
 
         // for every text in the region
-        for(int j = 0 ; j < list.length() ; ++j )
+        for( const WordWithCharacters &wwc : list )
         {
-            TinyTextEntity *ent = list.at(j).word;
+            TinyTextEntity *ent = wwc.word;
             const QRect entRect = ent->area.geometry(pageWidth, pageHeight);
 
             // calculate vertical projection profile proj_on_xaxis1
@@ -1759,9 +1759,8 @@ static RegionTextList XYCutForBoundingBoxes(const QList<WordWithCharacters> &wor
         // horizontal cut, topRect and bottomRect
         if(cut_hor)
         {
-            for( int j = 0 ; j < list.length() ; ++j )
+            for( const WordWithCharacters &word : list )
             {
-                const WordWithCharacters &word = list.at(j);
                 const QRect wordRect = word.area().geometry(pageWidth,pageHeight);
 
                 if(topRect.intersects(wordRect))
@@ -1780,9 +1779,8 @@ static RegionTextList XYCutForBoundingBoxes(const QList<WordWithCharacters> &wor
         //vertical cut, leftRect and rightRect
         else if(cut_ver)
         {
-            for( int j = 0 ; j < list.length() ; ++j )
+            for( const WordWithCharacters &word : list )
             {
-                const WordWithCharacters &word = list.at(j);
                 const QRect wordRect = word.area().geometry(pageWidth,pageHeight);
 
                 if(leftRect.intersects(wordRect))
@@ -1814,17 +1812,15 @@ WordsWithCharacters addNecessarySpace(RegionTextList tree, int pageWidth, int pa
      */
 
     // Only change the texts under RegionTexts, not the area
-    for(int j = 0 ; j < tree.length() ; j++)
+    for(RegionText &tmpRegion : tree)
     {
-        RegionText &tmpRegion = tree[j];
-
         // Step 01
         QList< QPair<WordsWithCharacters, QRect> > sortedLines = makeAndSortLines(tmpRegion.text(), pageWidth, pageHeight);
 
         // Step 02
-        for(int i = 0 ; i < sortedLines.length() ; i++)
+        for(QPair<WordsWithCharacters, QRect> &sortedLine : sortedLines)
         {
-            WordsWithCharacters &list = sortedLines[i].first;
+            WordsWithCharacters &list = sortedLine.first;
             for(int k = 0 ; k < list.length() ; k++ )
             {
                 const QRect area1 = list.at(k).area().roundedGeometry(pageWidth,pageHeight);
@@ -1857,18 +1853,18 @@ WordsWithCharacters addNecessarySpace(RegionTextList tree, int pageWidth, int pa
         }
 
         WordsWithCharacters tmpList;
-        for(int i = 0 ; i < sortedLines.length() ; i++)
+        for(const QPair<WordsWithCharacters, QRect> &sortedLine : qAsConst(sortedLines))
         {
-            tmpList += sortedLines.at(i).first;
+            tmpList += sortedLine.first;
         }
         tmpRegion.setText(tmpList);
     }
 
     // Step 03
     WordsWithCharacters tmp;
-    for(int i = 0 ; i < tree.length() ; i++)
+    for(const RegionText &tmpRegion : qAsConst(tree))
     {
-        tmp += tree.at(i).text();
+        tmp += tmpRegion.text();
     }
     return tmp;
 }

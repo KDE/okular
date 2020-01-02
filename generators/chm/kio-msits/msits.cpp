@@ -296,10 +296,10 @@ void ProtocolMSITS::listDir (const QUrl & url)
 	UDSEntry entry;
 	int striplength = filepath.length();
 
-	for ( int i = 0; i < listing.size(); i++ )
+	for ( const QString &iListing : qAsConst(listing) )
 	{
 		// Strip the directory name
-		QString ename = listing[i].mid (striplength);
+		const QString ename = iListing.mid (striplength);
 
 		if ( isDirectory ( ename ) )
 			app_dir(entry, ename);

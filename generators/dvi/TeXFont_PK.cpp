@@ -83,8 +83,8 @@ TeXFont_PK::TeXFont_PK(TeXFontDefinition *parent)
   qCDebug(OkularDviDebug) << "TeXFont_PK::TeXFont_PK( parent=" << parent << ")";
 #endif
 
-  for(unsigned int i=0; i<TeXFontDefinition::max_num_of_chars_in_font; i++)
-    characterBitmaps[i] = nullptr;
+  for(auto &characterBitmap : characterBitmaps)
+    characterBitmap = nullptr;
   file = fopen(QFile::encodeName(parent->filename).constData(), "r");
   if (file == nullptr)
     qCCritical(OkularDviDebug) << i18n("Cannot open font file %1.", parent->filename) << endl;
@@ -104,9 +104,8 @@ TeXFont_PK::TeXFont_PK(TeXFontDefinition *parent)
 TeXFont_PK::~TeXFont_PK()
 {
   //@@@ Release bitmaps
-  for(unsigned int i=0; i<TeXFontDefinition::max_num_of_chars_in_font; i++) {
-    delete characterBitmaps[i];
-    characterBitmaps[i] = nullptr;
+  for(bitmap *characterBitmap : characterBitmaps) {
+    delete characterBitmap;
   }
 
   if (file != nullptr) {

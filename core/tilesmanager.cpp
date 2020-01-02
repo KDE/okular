@@ -110,8 +110,8 @@ TilesManager::TilesManager( int pageNumber, int width, int height, Rotation rota
 
 TilesManager::~TilesManager()
 {
-    for ( int i = 0; i < 16; ++i )
-        d->deleteTiles( d->tiles[ i ] );
+    for ( const TileNode &tile : d->tiles )
+        d->deleteTiles( tile );
 
     delete d;
 }
@@ -169,9 +169,9 @@ Rotation TilesManager::rotation() const
 
 void TilesManager::markDirty()
 {
-    for ( int i = 0; i < 16; ++i )
+    for ( TileNode &tile : d->tiles )
     {
-        TilesManager::Private::markDirty( d->tiles[ i ] );
+        TilesManager::Private::markDirty( tile );
     }
 }
 
@@ -217,9 +217,9 @@ void TilesManager::setPixmap( const QPixmap *pixmap, const NormalizedRect &rect,
         d->requestRect = NormalizedRect();
     }
 
-    for ( int i = 0; i < 16; ++i )
+    for ( TileNode &tile : d->tiles )
     {
-        d->setPixmap( pixmap, rotatedRect, d->tiles[ i ], isPartialPixmap );
+        d->setPixmap( pixmap, rotatedRect, tile, isPartialPixmap );
     }
 }
 
@@ -342,9 +342,9 @@ void TilesManager::Private::setPixmap( const QPixmap *pixmap, const NormalizedRe
 bool TilesManager::hasPixmap( const NormalizedRect &rect )
 {
     NormalizedRect rotatedRect = fromRotatedRect( rect, d->rotation );
-    for ( int i = 0; i < 16; ++i )
+    for ( const TileNode &tile : qAsConst( d->tiles ) )
     {
-        if ( !d->hasPixmap( rotatedRect, d->tiles[ i ] ) )
+        if ( !d->hasPixmap( rotatedRect, tile ) )
             return false;
     }
 
@@ -378,9 +378,9 @@ QList<Tile> TilesManager::tilesAt( const NormalizedRect &rect, TileLeaf tileLeaf
     QList<Tile> result;
 
     NormalizedRect rotatedRect = fromRotatedRect( rect, d->rotation );
-    for ( int i = 0; i < 16; ++i )
+    for ( TileNode &tile : d->tiles )
     {
-        d->tilesAt( rotatedRect, d->tiles[ i ], result, tileLeaf );
+        d->tilesAt( rotatedRect, tile, result, tileLeaf );
     }
 
     return result;
@@ -467,9 +467,9 @@ qulonglong TilesManager::totalMemory() const
 void TilesManager::cleanupPixmapMemory( qulonglong numberOfBytes, const NormalizedRect &visibleRect, int visiblePageNumber )
 {
     QList<TileNode*> rankedTiles;
-    for ( int i = 0; i < 16; ++i )
+    for ( TileNode &tile : d->tiles )
     {
-        d->rankTiles( d->tiles[ i ], rankedTiles, visibleRect, visiblePageNumber );
+        d->rankTiles( tile, rankedTiles, visibleRect, visiblePageNumber );
     }
     std::sort(rankedTiles.begin(), rankedTiles.end(), rankedTilesLessThan);
 

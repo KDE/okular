@@ -63,8 +63,8 @@ TeXFont_TFM::TeXFont_TFM(TeXFontDefinition *parent)
 
   // Width table
   fix_word widthTable_in_units_of_design_size[TeXFontDefinition::max_num_of_chars_in_font];
-  for(unsigned int i=0; i<TeXFontDefinition::max_num_of_chars_in_font; i++)
-    widthTable_in_units_of_design_size[i].value = 0;
+  for(fix_word &fw : widthTable_in_units_of_design_size)
+    fw.value = 0;
 
   file.seek( 24 + 4*lh + 4*(ec-bc) );
   for(unsigned int i=0; i<nw; i++) {
@@ -81,8 +81,8 @@ TeXFont_TFM::TeXFont_TFM(TeXFontDefinition *parent)
 
   // Height table
   fix_word heightTable_in_units_of_design_size[16];
-  for(unsigned int i=0; i<16; i++)
-    heightTable_in_units_of_design_size[i].value = 0;
+  for(fix_word &fw : heightTable_in_units_of_design_size)
+    fw.value = 0;
   for(unsigned int i=0; i<nh; i++) {
     stream >> heightTable_in_units_of_design_size[i].value;
   }

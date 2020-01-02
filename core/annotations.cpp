@@ -1198,8 +1198,8 @@ void TextAnnotationPrivate::transform( const QTransform &matrix )
 {
     AnnotationPrivate::transform( matrix );
 
-    for ( int i = 0; i < 3; ++i ) {
-       m_transformedInplaceCallout[i].transform( matrix );
+    for ( NormalizedPoint &np : m_transformedInplaceCallout ) {
+       np.transform( matrix );
     }
 }
 
@@ -1207,8 +1207,8 @@ void TextAnnotationPrivate::baseTransform( const QTransform &matrix )
 {
     AnnotationPrivate::baseTransform( matrix );
 
-    for ( int i = 0; i < 3; ++i ) {
-       m_inplaceCallout[i].transform( matrix );
+    for ( NormalizedPoint &np : m_inplaceCallout ) {
+       np.transform( matrix );
     }
 }
 

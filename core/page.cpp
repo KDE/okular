@@ -353,10 +353,10 @@ TextEntity::List Page::words( const RegularAreaRect * area, TextPage::TextAreaIn
     else
         ret = d->m_text->words( nullptr, b );
 
-    for (int i = 0; i < ret.length(); ++i)
+    for (auto &retI : ret)
     {
-        const TextEntity * orig = ret[i];
-        ret[i] = new TextEntity( orig->text(), new Okular::NormalizedRect(orig->transformedArea ( d->rotationMatrix() )) );
+        const TextEntity * orig = retI;
+        retI = new TextEntity( orig->text(), new Okular::NormalizedRect(orig->transformedArea ( d->rotationMatrix() )) );
         delete orig;
     }
 

@@ -471,11 +471,12 @@ static bool isAuthorItem( const QModelIndex &index )
 
 QItemSelection AuthorGroupProxyModel::mapSelectionToSource( const QItemSelection &selection ) const
 {
-    QModelIndexList proxyIndexes = selection.indexes();
+    const QModelIndexList proxyIndexes = selection.indexes();
     QItemSelection sourceSelection;
-    for ( int i = 0; i < proxyIndexes.size(); ++i ) {
-        if ( !isAuthorItem( proxyIndexes.at( i ) ) )
-            sourceSelection << QItemSelectionRange( mapToSource( proxyIndexes.at( i ) ) );
+    for ( const QModelIndex &proxyIndex : proxyIndexes ) {
+        if ( !isAuthorItem( proxyIndex ) ) {
+            sourceSelection << QItemSelectionRange( mapToSource( proxyIndex ) );
+        }
     }
 
     return sourceSelection;

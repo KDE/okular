@@ -71,9 +71,7 @@ Q_DECLARE_METATYPE(Poppler::Annotation*)
 Q_DECLARE_METATYPE(Poppler::FontInfo)
 Q_DECLARE_METATYPE(const Poppler::LinkMovie*)
 Q_DECLARE_METATYPE(const Poppler::LinkRendition*)
-#ifdef HAVE_POPPLER_0_50
 Q_DECLARE_METATYPE(const Poppler::LinkOCGState*)
-#endif
 
 static const int defaultPageWidth = 595;
 static const int defaultPageHeight = 842;
@@ -117,9 +115,6 @@ class PDFOptionsPage : public Okular::PrintOptionsWidget
 
            layout->addStretch(1);
 
-#if defined(Q_OS_WIN) && !defined HAVE_POPPLER_0_60
-           m_printAnnots->setVisible( false );
-#endif
            setPrintAnnots( true ); // Default value
        }
 
@@ -250,7 +245,6 @@ Okular::Movie* createMovieFromPopplerScreen( const Poppler::LinkRendition *poppl
     return movie;
 }
 
-#ifdef HAVE_POPPLER_0_36
 QPair<Okular::Movie*, Okular::EmbeddedFile*> createMovieFromPopplerRichMedia( const Poppler::RichMediaAnnotation *popplerRichMedia )
 {
     const QPair<Okular::Movie*, Okular::EmbeddedFile*> emptyResult(0, 0);
@@ -344,7 +338,6 @@ QPair<Okular::Movie*, Okular::EmbeddedFile*> createMovieFromPopplerRichMedia( co
 
     return qMakePair(movie, pdfEmbeddedFile);
 }
-#endif
 
 /**
  * Note: the function will take ownership of the popplerLink object.
@@ -514,13 +507,11 @@ Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink, bool
         break;
 #endif
         
-#ifdef HAVE_POPPLER_0_50
         case Poppler::Link::OCGState:
             link = new Okular::BackendOpaqueAction();
             link->setNativeId( QVariant::fromValue( static_cast<const Poppler::LinkOCGState*>( popplerLink ) ) );
             deletePopplerLink = false;
         break;
-#endif
     }
 
 #ifdef HAVE_POPPLER_0_64
@@ -988,12 +979,8 @@ QAbstractItemModel* PDFGenerator::layersModel() const
 
 void PDFGenerator::opaqueAction( const Okular::BackendOpaqueAction *action )
 {
-#ifdef HAVE_POPPLER_0_50
     const Poppler::LinkOCGState *popplerLink = action->nativeId().value<const Poppler::LinkOCGState *>();
     pdfdoc->optionalContentModel()->applyLink( const_cast< Poppler::LinkOCGState* >( popplerLink ) );
-#else
-    (void)action;
-#endif
 }
 
 bool PDFGenerator::isAllowed( Okular::Permission permission ) const
@@ -1021,7 +1008,6 @@ bool PDFGenerator::isAllowed( Okular::Permission permission ) const
     return b;
 }
 
-#ifdef HAVE_POPPLER_0_62
 struct RenderImagePayload
 {
     RenderImagePayload(PDFGenerator *g, Okular::PixmapRequest *r) :
@@ -1057,7 +1043,6 @@ static void partialUpdateCallback(const QImage &image, const QVariant &vPayload)
     auto payload = vPayload.value<RenderImagePayload *>();
     QMetaObject::invokeMethod(payload->generator, "signalPartialPixmapRequest", Qt::QueuedConnection, Q_ARG(Okular::PixmapRequest*, payload->request), Q_ARG(QImage, image));
 }
-#endif
 
 #ifdef HAVE_POPPLER_0_63
 static bool shouldAbortRenderCallback(const QVariant &vPayload)
@@ -1137,7 +1122,7 @@ QImage PDFGenerator::image( Okular::PixmapRequest * request )
             }
 
         }
-#elif defined(HAVE_POPPLER_0_62)
+#else
         if ( request->isTile() )
         {
             const QRect rect = request->normalizedRect().geometry( request->width(), request->height() );
@@ -1165,16 +1150,6 @@ QImage PDFGenerator::image( Okular::PixmapRequest * request )
                 img = p->renderToImage( fakeDpiX, fakeDpiY, -1, -1, -1, -1, Poppler::Page::Rotate0 );
             }
 
-        }
-#else
-        if ( request->isTile() )
-        {
-            const QRect rect = request->normalizedRect().geometry( request->width(), request->height() );
-            img = p->renderToImage( fakeDpiX, fakeDpiY, rect.x(), rect.y(), rect.width(), rect.height(), Poppler::Page::Rotate0 );
-        }
-        else
-        {
-            img = p->renderToImage( fakeDpiX, fakeDpiY, -1, -1, -1, -1, Poppler::Page::Rotate0 );
         }
 #endif
     }
@@ -1355,20 +1330,11 @@ bool PDFGenerator::print( QPrinter& printer )
     // currently the only way Okular implements printing without using UNIX-specific
     // tools like 'lpr'.
     forceRasterize = true;
-#ifndef HAVE_POPPLER_0_60
-    // The Document::HideAnnotations flags was introduced in poppler 0.60
-    printAnnots = true;
-#endif
 #endif
 
-#ifdef HAVE_POPPLER_0_60
     if ( forceRasterize )
     {
         pdfdoc->setRenderHint(Poppler::Document::HideAnnotations, !printAnnots);
-#else
-    if ( forceRasterize && printAnnots)
-    {
-#endif
 
     if ( pdfOptionsPage )
     {
@@ -1571,10 +1537,8 @@ QVariant PDFGenerator::metaData( const QString & key, const QVariant & option ) 
     }
     else if ( key == QLatin1String("FormCalculateOrder") )
     {
-#ifdef HAVE_POPPLER_0_53
         QMutexLocker ml(userMutex());
         return QVariant::fromValue<QVector<int>>(pdfdoc->formCalculateOrder());
-#endif
     }
     else if ( key == QLatin1String("GeneratorExtraDescription") )
     {
@@ -1629,12 +1593,10 @@ bool PDFGenerator::reparseConfig()
 
 void PDFGenerator::addPages( KConfigDialog *dlg )
 {
-#ifdef HAVE_POPPLER_0_24
     Ui_PDFSettingsWidget pdfsw;
     QWidget* w = new QWidget(dlg);
     pdfsw.setupUi(w);
     dlg->addPage(w, PDFSettings::self(), i18n("PDF"), QStringLiteral("application-pdf"), i18n("PDF Backend Configuration") );
-#endif
 }
 
 bool PDFGenerator::setDocumentRenderHints()
@@ -1654,7 +1616,6 @@ bool PDFGenerator::setDocumentRenderHints()
     SET_HINT(TextAntialiasMetaData, true, Poppler::Document::TextAntialiasing)
     SET_HINT(TextHintingMetaData, false, Poppler::Document::TextHinting)
 #undef SET_HINT
-#ifdef HAVE_POPPLER_0_24
     // load thin line mode
     const int thinLineMode = PDFSettings::enhanceThinLines();
     const bool enableThinLineSolid = thinLineMode == PDFSettings::EnumEnhanceThinLines::Solid;
@@ -1669,7 +1630,6 @@ bool PDFGenerator::setDocumentRenderHints()
       pdfdoc->setRenderHint(Poppler::Document::ThinLineShape, enableShapeLineSolid);
       changed = true;
     }
-#endif
     return changed;
 }
 
@@ -1818,7 +1778,6 @@ void PDFGenerator::addSynopsisChildren( QDomNode * parent, QDomNode * parentDest
 
 void PDFGenerator::addAnnotations( Poppler::Page * popplerPage, Okular::Page * page )
 {
-#ifdef HAVE_POPPLER_0_28
     QSet<Poppler::Annotation::SubType> subtypes;
     subtypes << Poppler::Annotation::AFileAttachment
         << Poppler::Annotation::ASound
@@ -1834,9 +1793,6 @@ void PDFGenerator::addAnnotations( Poppler::Page * popplerPage, Okular::Page * p
         << Poppler::Annotation::ACaret;
 
     const QList<Poppler::Annotation*> popplerAnnotations = popplerPage->annotations( subtypes );
-#else
-    const QList<Poppler::Annotation*> popplerAnnotations = popplerPage->annotations();
-#endif
 
     for (Poppler::Annotation *a : popplerAnnotations)
     {
@@ -1936,11 +1892,7 @@ void PDFGenerator::addTransition( Poppler::Page * pdfPage, Okular::Page * page )
             break;
     }
 
-#ifdef HAVE_POPPLER_0_37
     transition->setDuration( pdfTransition->durationReal() );
-#else
-    transition->setDuration( pdfTransition->duration() );
-#endif
 
     switch ( pdfTransition->alignment() ) {
         case Poppler::PageTransition::Horizontal:

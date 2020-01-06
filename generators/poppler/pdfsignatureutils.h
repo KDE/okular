@@ -44,8 +44,6 @@ class PopplerCertificateInfo : public Okular::CertificateInfo
 
 #endif
 
-#ifdef HAVE_POPPLER_0_51
-
 class PopplerSignatureInfo : public Okular::SignatureInfo
 {
     public:
@@ -69,7 +67,5 @@ class PopplerSignatureInfo : public Okular::SignatureInfo
         Poppler::SignatureValidationInfo m_info;
         Okular::CertificateInfo *m_certfiticateInfo;
 };
-
-#endif
 
 #endif

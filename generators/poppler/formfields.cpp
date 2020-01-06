@@ -32,7 +32,6 @@ extern Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLin
 # define SET_ANNOT_ACTIONS
 #endif
 
-#ifdef HAVE_POPPLER_0_53
 #define SET_ACTIONS \
     setActivationAction( createLinkFromPopplerLink( m_field->activationAction() ) ); \
     setAdditionalAction( Okular::FormField::FieldModified, createLinkFromPopplerLink( m_field->additionalAction( Poppler::FormField::FieldModified ) ) ); \
@@ -40,10 +39,6 @@ extern Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLin
     setAdditionalAction( Okular::FormField::ValidateField, createLinkFromPopplerLink( m_field->additionalAction( Poppler::FormField::ValidateField ) ) ); \
     setAdditionalAction( Okular::FormField::CalculateField, createLinkFromPopplerLink( m_field->additionalAction( Poppler::FormField::CalculateField ) ) ); \
     SET_ANNOT_ACTIONS
-#else
-#define SET_ACTIONS \
-    setActivationAction( createLinkFromPopplerLink( m_field->activationAction() ) );
-#endif
 
 PopplerFormFieldButton::PopplerFormFieldButton( std::unique_ptr<Poppler::FormFieldButton> field )
     : Okular::FormFieldButton(), m_field( std::move( field ) )
@@ -455,25 +450,12 @@ bool PopplerFormFieldChoice::canBeSpellChecked() const
     return m_field->canBeSpellChecked();
 }
 
-#ifndef HAVE_POPPLER_0_51
-
-class DummySignatureInfo : public Okular::SignatureInfo
-{
-};
-
-#endif
-
-
 PopplerFormFieldSignature::PopplerFormFieldSignature( std::unique_ptr<Poppler::FormFieldSignature> field )
     : Okular::FormFieldSignature(), m_field( std::move( field ) )
 {
     m_rect = Okular::NormalizedRect::fromQRectF( m_field->rect() );
     m_id = m_field->id();
-#ifdef HAVE_POPPLER_0_51
     m_info = new PopplerSignatureInfo( m_field->validate( Poppler::FormFieldSignature::ValidateVerifyCertificate ) );
-#else
-    m_info = new DummySignatureInfo();
-#endif
     SET_ACTIONS
 }
 
@@ -519,7 +501,6 @@ bool PopplerFormFieldSignature::isVisible() const
 
 PopplerFormFieldSignature::SignatureType PopplerFormFieldSignature::signatureType() const
 {
-#ifdef HAVE_POPPLER_0_58
     switch ( m_field->signatureType() )
     {
         case Poppler::FormFieldSignature::AdbePkcs7sha1:
@@ -531,9 +512,6 @@ PopplerFormFieldSignature::SignatureType PopplerFormFieldSignature::signatureTyp
         default:
             return Okular::FormFieldSignature::UnknownType;
     }
-#else
-    return Okular::FormFieldSignature::UnknownType;
-#endif
 }
 
 const Okular::SignatureInfo &PopplerFormFieldSignature::signatureInfo() const

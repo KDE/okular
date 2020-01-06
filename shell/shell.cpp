@@ -171,6 +171,18 @@ bool Shell::eventFilter(QObject *obj, QEvent *event)
         dEvent->setAccepted(true);
         return true;
     }
+
+    // Handle middle button click events on the tab bar
+    if (obj == m_tabWidget && event->type() == QEvent::MouseButtonRelease) {
+        QMouseEvent* mEvent = static_cast<QMouseEvent*>(event);
+        if (mEvent->button() == Qt::MiddleButton) {
+            int tabIndex = m_tabWidget->tabBar()->tabAt(mEvent->pos());
+            if (tabIndex != -1) {
+                closeTab(tabIndex);
+                return true;
+            }
+        }
+    }
     return false;
 }
 
@@ -362,6 +374,13 @@ void Shell::setupActions()
   actionCollection()->setDefaultShortcuts(m_prevTabAction, KStandardShortcut::tabPrev());
   m_prevTabAction->setEnabled( false );
   connect( m_prevTabAction, &QAction::triggered, this, &Shell::activatePrevTab );
+
+  m_undoCloseTab = actionCollection()->addAction(QStringLiteral("undo-close-tab"));
+  m_undoCloseTab->setText( i18n("Undo close tab") );
+  actionCollection()->setDefaultShortcut(m_undoCloseTab, QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_T));
+  m_undoCloseTab->setIcon(QIcon::fromTheme(QStringLiteral("edit-undo")));
+  m_undoCloseTab->setEnabled( false );
+  connect( m_undoCloseTab, &QAction::triggered, this, &Shell::undoCloseTab );
 }
 
 void Shell::saveProperties(KConfigGroup &group)
@@ -627,6 +646,7 @@ void Shell::setActiveTab( int tab )
 void Shell::closeTab( int tab )
 {
     KParts::ReadWritePart* const part = m_tabs[tab].part;
+    QUrl url = part->url();
     if( part->closeUrl() && m_tabs.count() > 1 )
     {
         if( part->factory() )
@@ -635,6 +655,8 @@ void Shell::closeTab( int tab )
         part->deleteLater();
         m_tabs.removeAt( tab );
         m_tabWidget->removeTab( tab );
+        m_undoCloseTab->setEnabled( true );
+        m_closedTabUrls.append( url );
 
         if( m_tabWidget->count() == 1 )
         {
@@ -748,6 +770,23 @@ void Shell::activatePrevTab()
     const int prevTab = (activeTab == 0) ? m_tabs.size()-1 : activeTab-1;
 
     setActiveTab( prevTab );
+}
+
+void Shell::undoCloseTab()
+{
+    if ( m_closedTabUrls.isEmpty() )
+    {
+        return;
+    }
+
+    const QUrl lastTabUrl = m_closedTabUrls.takeLast();
+
+    if ( m_closedTabUrls.isEmpty() )
+    {
+        m_undoCloseTab->setEnabled(false);
+    }
+
+    openUrl(lastTabUrl);
 }
 
 void Shell::setTabIcon( const QMimeType& mimeType )

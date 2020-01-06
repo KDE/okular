@@ -21,6 +21,7 @@
 #include <QMimeType>
 #include <QMimeDatabase>
 #include <QAction>
+#include <QList>
 
 #include <QtDBus> // krazy:exclude=includes
 
@@ -124,6 +125,7 @@ private Q_SLOTS:
   void closeTab( int tab );
   void activateNextTab();
   void activatePrevTab();
+  void undoCloseTab();
   void moveTabData( int from, int to );
 
   void slotFitWindowToPage( const QSize& pageViewSize, const QSize& pageSize );
@@ -168,8 +170,10 @@ private:
     bool closeEnabled;
   };
   QList<TabState> m_tabs;
+  QList<QUrl> m_closedTabUrls;
   QAction* m_nextTabAction;
   QAction* m_prevTabAction;
+  QAction* m_undoCloseTab;
 
 #ifndef Q_OS_WIN
   KActivities::ResourceInstance* m_activityResource;

@@ -12,6 +12,7 @@
 #include <qprintdialog.h>
 #include <qwidget.h>
 #include <qtabwidget.h>
+#include <QTabBar>
 #include <QStandardPaths>
 #include <kconfiggroup.h>
 #include <klineedit.h>
@@ -85,6 +86,7 @@ private slots:
     void testFileRemembersPagePosition();
     void test2FilesError_data();
     void test2FilesError();
+    void testMiddleButtonCloseUndo();
     void testSessionRestore_data();
     void testSessionRestore();
 
@@ -597,6 +599,29 @@ void MainShellTest::testSessionRestore()
 
     QCOMPARE( numDocs, paths.size() );
     QCOMPARE( shells.size(), useTabsRestore ? numWindows : paths.size() );
+}
+
+void MainShellTest::testMiddleButtonCloseUndo()
+{
+    const QStringList paths = { QStringLiteral(KDESRCDIR "data/file1.pdf"), QStringLiteral(KDESRCDIR "data/file2.pdf") };
+    QString serializedOptions;
+    serializedOptions = ShellUtils::serializeOptions(false, false, false, false, false, QString(), QString());
+
+    Okular::Settings::self()->setShellOpenFileInTabs(true);
+    Okular::Status status = Okular::main(paths, serializedOptions);
+    QCOMPARE(status, Okular::Success);
+    Shell *s = findShell();
+    QVERIFY(s);
+
+    QCOMPARE(s->m_tabWidget->count(), paths.size());
+    // Close a tab using middle key
+    QWidget *firstTab = s->m_tabWidget->tabBar()->tabButton(0, QTabBar::RightSide);
+    QVERIFY(firstTab);
+    QTest::mouseClick(firstTab, Qt::MiddleButton);
+    QCOMPARE(s->m_tabWidget->count(), paths.size() - 1);
+    // Undo tab close
+    s->undoCloseTab();
+    QCOMPARE(s->m_tabWidget->count(), paths.size());
 }
 
 QTEST_MAIN( MainShellTest )

@@ -1702,6 +1702,10 @@ void PartTest::testAdditionalActionTriggers()
     part.widget()->show();
     QVERIFY( QTest::qWaitForWindowExposed( part.widget() ) );
 
+    QTimer *delayResizeEventTimer = part.m_pageView->findChildren<QTimer *>("delayResizeEventTimer").at(0);
+    QVERIFY(delayResizeEventTimer->isActive());
+    QTest::qWait(delayResizeEventTimer->interval() * 2);
+
     part.m_document->setViewportPage( 0 );
 
     // wait for pixmap

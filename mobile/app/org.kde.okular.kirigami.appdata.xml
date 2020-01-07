@@ -241,6 +241,7 @@
     <binary>okularkirigami</binary>
   </provides>
   <releases>
+    <release version="1.9.1" date="2020-01-09"/>
     <release version="1.9.0" date="2019-12-12"/>
   </releases>
 </component>

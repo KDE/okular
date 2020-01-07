@@ -1701,6 +1701,10 @@ void PartTest::testAdditionalActionTriggers()
     part.widget()->show();
     QVERIFY( QTest::qWaitForWindowExposed( part.widget() ) );
 
+    QTimer *delayResizeEventTimer = part.m_pageView->findChildren<QTimer *>("delayResizeEventTimer").at(0);
+    QVERIFY(delayResizeEventTimer->isActive());
+    QTest::qWait(delayResizeEventTimer->interval() * 2);
+
     QMap<QString, Okular::FormField *> fields;
     // Field names in test document are:
     // For trigger fields: tf, cb, rb, dd, pb

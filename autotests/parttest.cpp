@@ -1590,14 +1590,6 @@ void PartTest::testAnnotWindow()
 
     part.m_document->setViewportPage(0);
 
-    // wait for pixmap
-    QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
-
-    const int width =  part.m_pageView->horizontalScrollBar()->maximum() +
-                       part.m_pageView->viewport()->width();
-    const int height = part.m_pageView->verticalScrollBar()->maximum() +
-                       part.m_pageView->viewport()->height();
-
     QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseNormal");
 
     QCOMPARE(part.m_document->currentPage(), 0u);
@@ -1613,10 +1605,21 @@ void PartTest::testAnnotWindow()
 
     // Add annot1 and annot2 to document
     part.m_document->addPageAnnotation( 0, annot1 );
-    QTest::qWait(100);
     part.m_document->addPageAnnotation( 0, annot2 );
-    QTest::qWait(100);
     QVERIFY( part.m_document->page( 0 )->annotations().size() == 2 );
+
+    QTimer *delayResizeEventTimer = part.m_pageView->findChildren<QTimer *>("delayResizeEventTimer").at(0);
+    QVERIFY(delayResizeEventTimer->isActive());
+    QTest::qWait(delayResizeEventTimer->interval() * 2);
+
+    // wait for pixmap
+    QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
+
+    const int width =  part.m_pageView->horizontalScrollBar()->maximum() +
+                       part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->verticalScrollBar()->maximum() +
+                       part.m_pageView->viewport()->height();
+
 
     // Double click the first annotation to open its window (move mouse for visual feedback)
     const NormalizedPoint annot1pt = annot1->boundingRectangle().center();

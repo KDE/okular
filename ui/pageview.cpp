@@ -447,6 +447,8 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     prop.setScrollMetric(QScrollerProperties::OvershootDragDistanceFactor, 0.05);
     d->scroller->setScrollerProperties(prop);
 
+    connect(d->scroller, &QScroller::stateChanged, this, &PageView::slotRequestVisiblePixmaps);
+
     // the apparently "magic" value of 20 is the same used internally in QScrollArea
     verticalScrollBar()->setCursor( Qt::ArrowCursor );
     verticalScrollBar()->setSingleStep( 20 );
@@ -4855,7 +4857,7 @@ static void slotRequestPreloadPixmap( Okular::DocumentObserver * observer, const
 void PageView::slotRequestVisiblePixmaps( int newValue )
 {
     // if requests are blocked (because raised by an unwanted event), exit
-    if ( d->blockPixmapsRequest )
+    if ( d->blockPixmapsRequest || d->scroller->state() == QScroller::Scrolling)
         return;
 
     // precalc view limits for intersecting with page coords inside the loop

@@ -867,7 +867,7 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
     // creationCompleted is intended to be set by event(), handled subsequently by end(), and cleared within end().
     // If it's set here, we recursed for some reason (e.g., stacked event loop).
     // Just bail out, all we want to do is already on stack.
-    if (m_engine->creationCompleted()) {
+    if (m_engine && m_engine->creationCompleted()) {
         return QRect();
     }
 

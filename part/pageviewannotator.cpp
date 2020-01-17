@@ -40,6 +40,7 @@
 #include "core/area.h"
 #include "core/document.h"
 #include "core/page.h"
+#include "core/signatureutils.h"
 #include "debug_ui.h"
 #include "editannottooldialog.h"
 #include "guiutils.h"
@@ -313,15 +314,15 @@ private:
 
 class PickPointEngine2 : public PickPointEngine
 {
-public:
-    PickPointEngine2(const QDomElement &engineElement)
-        : PickPointEngine(engineElement)
-    {
-        clicked = false;
-        m_block = true;
-        xscale = 1.0;
-        yscale = 1.0;
-    }
+    public:
+        PickPointEngine2( const QDomElement & engineElement, Okular::Document* storage )
+            : PickPointEngine( engineElement ), m_document(storage)
+        {
+            clicked = false;
+            m_block = true;
+            xscale = 1.0;
+            yscale = 1.0;
+        }
 
     QRect event(EventType type, Button button, Modifiers modifiers, double nX, double nY, double xScale, double yScale, const Okular::Page *page) override
     {
@@ -330,9 +331,14 @@ public:
 
     QList<Okular::Annotation *> end() override
     {
-            QStringList items = Okular::Settings::certificates();
-
             Okular::Annotation * ann = nullptr;
+
+            Okular::CertificateStore* certStore = m_document->getCertStore();
+            QList<Okular::CertificateInfo*> certs = certStore->getSigningCertificates();
+
+            QStringList items;
+            for( auto cert : certs )
+                items.append(cert->subjectInfo( Okular::CertificateInfo::EntityInfoKey::CommonName ));
 
             bool resok = false;
             QString cert = QInputDialog::getItem(nullptr, i18n( "Select certificate to sign with" ), i18n( "Certificates:" ), items, 0, false, &resok);
@@ -368,6 +374,9 @@ public:
 
             return QList< Okular::Annotation* >() << ann;
     }
+
+    private:
+        Okular::Document* m_document;
 };
 
 /** @short PolyLineEngine */
@@ -885,7 +894,7 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
         QDomElement elem;
         elem.setTagName("engine");
         elem.setAttribute("block", 1);
-        m_engine = new PickPointEngine2(elem);
+        m_engine = new PickPointEngine2(elem, m_document);
     }
 
     // 1. lock engine to current item

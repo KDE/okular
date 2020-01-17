@@ -11,7 +11,6 @@
 #include "preferencesdialog.h"
 
 #include <KLocalizedString>
-#include "../generators/poppler/config-okular-poppler.h"
 
 // single config pages
 #include "dlgaccessibility.h"
@@ -21,7 +20,6 @@
 #include "dlggeneral.h"
 #include "dlgperformance.h"
 #include "dlgpresentation.h"
-#include "dlgsignatures.h"
 
 PreferencesDialog::PreferencesDialog(QWidget *parent, KConfigSkeleton *skeleton, Okular::EmbedMode embedMode)
     : KConfigDialog(parent, QStringLiteral("preferences"), skeleton)
@@ -49,15 +47,9 @@ PreferencesDialog::PreferencesDialog(QWidget *parent, KConfigSkeleton *skeleton,
         m_presentation = new DlgPresentation(this);
         m_annotations = new DlgAnnotations(this);
         m_editor = new DlgEditor(this);
-#ifdef HAVE_POPPLER_SIGNING
-        m_signatures = new DlgSignatures(this);
-#endif
         addPage(m_presentation, i18n("Presentation"), QStringLiteral("view-presentation"), i18n("Options for Presentation Mode"));
         m_annotationsPage = addPage(m_annotations, i18n("Annotations"), QStringLiteral("draw-freehand"), i18n("Annotation Options"));
         addPage(m_editor, i18n("Editor"), QStringLiteral("accessories-text-editor"), i18n("Editor Options"));
-#ifdef HAVE_POPPLER_SIGNING
-        addPage(m_signatures, i18n("Signatures"), QStringLiteral("application-pkcs7-signature"), i18n("Digital Signatures"));
-#endif
     }
 #ifdef OKULAR_DEBUG_CONFIGPAGE
     addPage(m_debug, "Debug", "system-run", "Debug options");

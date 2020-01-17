@@ -143,6 +143,7 @@ private:
     mutable QList<Okular::EmbeddedFile *> docEmbeddedFiles;
     int nextFontPage;
     PopplerAnnotationProxy *annotProxy;
+    Okular::CertificateStore* certStore;
     // the hash below only contains annotations that were present on the file at open time
     // this is enough for what we use it for
     QHash<Okular::Annotation *, Poppler::Annotation *> annotationsOnOpenHash;

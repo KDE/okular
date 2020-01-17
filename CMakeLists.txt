@@ -360,8 +360,6 @@ if(BUILD_DESKTOP)
     part/dlgannotations.cpp
     part/dlgperformance.cpp
     part/dlgpresentation.cpp
-    part/dlgsignatures.cpp
-    part/certificatetools.cpp
     part/editannottooldialog.cpp
     part/editdrawingtooldialog.cpp
     part/widgetannottools.cpp
@@ -433,7 +431,6 @@ ki18n_wrap_ui(okularpart_SRCS
    part/dlgannotationsbase.ui
    part/dlgperformancebase.ui
    part/dlgpresentationbase.ui
-   part/dlgsignaturesbase.ui
 )
 
 kconfig_add_kcfg_files(okularpart_SRCS GENERATE_MOC conf/settings.kcfgc)

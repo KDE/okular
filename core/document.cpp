@@ -2734,6 +2734,11 @@ void Document::sign( const Okular::Annotation* pWhichAnnotation )
     }
 }
 
+Okular::CertificateStore* Document::getCertStore()
+{
+    return d->m_generator ? d->m_generator->getCertStore() : nullptr;
+}
+
 DocumentInfo Document::documentInfo() const
 {
     QSet<DocumentInfo::Key> keys;

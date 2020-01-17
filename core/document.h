@@ -38,6 +38,7 @@ namespace Okular
 {
 class Annotation;
 class BookmarkManager;
+class CertificateStore;
 class DocumentInfoPrivate;
 class DocumentObserver;
 class DocumentPrivate;
@@ -1057,7 +1058,20 @@ public Q_SLOTS:
      */
     void reloadDocument() const;
 
+    /**
+     * Digitally sign document, as the passed annotation's place
+     *
+     * @since 1.9
+     */
     void sign( const Okular::Annotation* pWhichAnnotation );
+
+    /**
+     * Returns the generator's certificate store (if any)
+     *
+     * @since 1.9
+     */
+    CertificateStore* getCertStore();
+
 
     /**
      * Returns the part of document covered by the given signature @p info.

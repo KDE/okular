@@ -10,23 +10,42 @@
 #ifndef _CERTIFICATETOOLS_H_
 #define _CERTIFICATETOOLS_H_
 
-#include "widgetconfigurationtoolsbase.h"
+#include <QWidget>
+class QListWidget;
+class QPushButton;
 
-#include <qwidget.h>
-
-class CertificateTools : public WidgetConfigurationToolsBase
+class CertificateTools : public QWidget
 {
     Q_OBJECT
+
+    Q_PROPERTY( QStringList certificates READ certificates WRITE setCertificates NOTIFY changed USER true )
+
     public:
         explicit CertificateTools( QWidget * parent = nullptr );
-        ~CertificateTools() {};
+        ~CertificateTools() override;
 
-        QStringList tools() const override;
-        void setTools(const QStringList& items) override;
+        QStringList certificates() const;
+        void setCertificates(const QStringList& items);
+
+    Q_SIGNALS:
+        void changed();
+
+    protected:
+        QListWidget *m_list;
+    private:
+        QPushButton *m_btnAdd;
+        QPushButton *m_btnEdit;
+        QPushButton *m_btnRemove;
+        QPushButton *m_btnMoveUp;
+        QPushButton *m_btnMoveDown;
 
     protected Q_SLOTS:
-        void slotAdd() override;
-        void slotEdit() override;
+        void slotAdd();
+        void slotEdit();
+        void updateButtons();
+        void slotRemove();
+        void slotMoveUp();
+        void slotMoveDown();
 };
 
 #endif

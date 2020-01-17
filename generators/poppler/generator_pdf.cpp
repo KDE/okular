@@ -1883,7 +1883,7 @@ bool PDFGenerator::sign( const Okular::Annotation* pWhichAnnotation, const QStri
     Poppler::Annotation *popplerAnn = qvariant_cast< Poppler::Annotation * >( pWhichAnnotation->nativeId() );
 
     // save to tmp file - poppler doesn't like overwriting in-place
-    QTemporaryFile tf(QDir::tempPath() + QLatin1String("/okular_XXXXXX.pdf"));
+    QTemporaryFile tf(QFileInfo(rFilename).absolutePath() + QLatin1String("/okular_XXXXXX.pdf"));
     tf.setAutoRemove(false);
     if (!tf.open())
         return false;
@@ -1895,7 +1895,7 @@ bool PDFGenerator::sign( const Okular::Annotation* pWhichAnnotation, const QStri
         return false;
 
     // now copy over old file
-    tf.remove(rFilename);
+    QFile::remove(rFilename);
     if (!tf.rename(rFilename))
         return false;
 #else

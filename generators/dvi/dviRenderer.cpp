@@ -111,12 +111,12 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap* page)
 
   // Paranoid safety checks
   if (page == nullptr) {
-    qCCritical(OkularDviDebug) << "dviRenderer::drawPage(documentPage *) called with argument == 0" << endl;
+    qCCritical(OkularDviDebug) << "dviRenderer::drawPage(documentPage *) called with argument == 0";
     return;
   }
   // Paranoid safety checks
   if (page->pageNumber == 0) {
-    qCCritical(OkularDviDebug) << "dviRenderer::drawPage(documentPage *) called for a documentPage with page number 0" << endl;
+    qCCritical(OkularDviDebug) << "dviRenderer::drawPage(documentPage *) called for a documentPage with page number 0";
     return;
   }
 
@@ -124,17 +124,17 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap* page)
 
 
   if ( dviFile == nullptr ) {
-    qCCritical(OkularDviDebug) << "dviRenderer::drawPage(documentPage *) called, but no dviFile class allocated." << endl;
+    qCCritical(OkularDviDebug) << "dviRenderer::drawPage(documentPage *) called, but no dviFile class allocated.";
     page->clear();
     return;
   }
   if (page->pageNumber > dviFile->total_pages) {
     qCCritical(OkularDviDebug) << "dviRenderer::drawPage(documentPage *) called for a documentPage with page number " << page->pageNumber
-                  << " but the current dviFile has only " << dviFile->total_pages << " pages." << endl;
+                  << " but the current dviFile has only " << dviFile->total_pages << " pages.";
     return;
   }
   if ( dviFile->dvi_Data() == nullptr ) {
-    qCCritical(OkularDviDebug) << "dviRenderer::drawPage(documentPage *) called, but no dviFile is loaded yet." << endl;
+    qCCritical(OkularDviDebug) << "dviRenderer::drawPage(documentPage *) called, but no dviFile is loaded yet.";
     page->clear();
     return;
   }

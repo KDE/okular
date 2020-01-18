@@ -48,6 +48,11 @@ QString PopplerCertificateInfo::subjectInfo(PopplerCertificateInfo::EntityInfoKe
     return !str.isEmpty() ? str : i18n("Not Available");
 }
 
+QString PopplerCertificateInfo::nickName() const
+{
+    return m_info.nickName();
+}
+
 QDateTime PopplerCertificateInfo::validityStart() const
 {
     return m_info.validityStart();

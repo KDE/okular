@@ -100,13 +100,16 @@ void CertificateTools::setCertificates(const QStringList& /*items*/)
     {
         QListWidgetItem * listEntry = new QListWidgetItem(
             cert->subjectInfo(
-                Poppler::CertificateInfo::EntityInfoKey::CommonName ) + "\t(" +
+                Poppler::CertificateInfo::EntityInfoKey::CommonName ) + "\t\t" +
+            cert->subjectInfo(
+                Poppler::CertificateInfo::EntityInfoKey::EmailAddress ) + "\t\t(" +
             cert->validityEnd().toString("yyyy-MM-dd") + ")",
             m_list );
 
         QJsonObject json;
+        json["NickName"] = cert->nickName();
         json["CommonName"] = cert->subjectInfo( Poppler::CertificateInfo::EntityInfoKey::CommonName );
-        json["SerialNumber"] = QString::fromStdString(cert->serialNumber().toStdString());
+        json["EMail"] = cert->subjectInfo( Poppler::CertificateInfo::EntityInfoKey::EmailAddress );
         json["ValidUntil"] = cert->validityEnd().toString();
         listEntry->setData( Qt::UserRole, QJsonDocument(json).toJson() );
     }

@@ -46,6 +46,11 @@ QString CertificateInfo::subjectInfo(EntityInfoKey) const
     return QString();
 }
 
+QString CertificateInfo::nickName() const
+{
+    return QString();
+}
+
 QDateTime CertificateInfo::validityStart() const
 {
     return QDateTime();

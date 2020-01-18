@@ -27,6 +27,7 @@ public:
     QByteArray serialNumber() const override;
     QString issuerInfo(EntityInfoKey) const override;
     QString subjectInfo(EntityInfoKey) const override;
+    QString nickName() const override;
     QDateTime validityStart() const override;
     QDateTime validityEnd() const override;
     KeyUsageExtensions keyUsageExtensions() const override;

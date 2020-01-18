@@ -2983,13 +2983,13 @@ Action *WidgetAnnotation::additionalAction(AdditionalActionType type) const
         return d->m_additionalActions.value(type);
 }
 
-void WidgetAnnotation::setCertificateCN( const QString &certNickname )
+void WidgetAnnotation::setCertificateNick( const QString &certNickname )
 {
     Q_D( WidgetAnnotation );
     d->m_certNickname = certNickname;
 }
 
-QString WidgetAnnotation::certificateCN() const
+QString WidgetAnnotation::certificateNick() const
 {
     Q_D( const WidgetAnnotation );
     return d->m_certNickname;

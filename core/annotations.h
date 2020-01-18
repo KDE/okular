@@ -1688,8 +1688,8 @@ public:
      */
     Action *additionalAction(AdditionalActionType type) const;
 
-    void setCertificateCN( const QString &certNickname );
-    QString certificateCN() const;
+    void setCertificateNick( const QString &certNickname );
+    QString certificateNick() const;
 
     void setPassword( const QString &password );
     QString password() const;

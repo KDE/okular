@@ -80,6 +80,11 @@ public:
     virtual QString subjectInfo(EntityInfoKey key) const;
 
     /**
+     * The certificate internal database nickname
+    */
+    virtual QString nickName() const;
+
+    /**
      * The date-time when certificate becomes valid.
      */
     virtual QDateTime validityStart() const;

@@ -761,8 +761,8 @@ void PartTest::testeRectSelectionStartingOnLinks()
     QVariantList dummyArgs;
     Okular::Part part(nullptr, nullptr, dummyArgs);
     QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/pdf_with_links.pdf")));
-    // resize window to avoid problem with selection areas
-    part.widget()->resize(800, 600);
+    // hide info messages as they interfere with selection area
+    Okular::Settings::self()->setShowOSD(false);;
     part.widget()->show();
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 

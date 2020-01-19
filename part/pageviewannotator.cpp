@@ -799,6 +799,7 @@ PageViewAnnotator::PageViewAnnotator(PageView *parent, Okular::Document *storage
     , m_quickToolsDefinition(nullptr)
     , m_continuousMode(true)
     , m_constrainRatioAndAngle(false)
+    , m_signatureMode(false)
     , m_lastToolId(-1)
     , m_lockedItem(nullptr)
 {

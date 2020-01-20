@@ -360,6 +360,12 @@ class PickPointEngine2 : public PickPointEngine
                     Okular::WidgetAnnotation * wa = new Okular::WidgetAnnotation();
                     ann = wa;
 
+                    //set boundary
+                    rect.left = qMin(startpoint.x,point.x);
+                    rect.top = qMin(startpoint.y,point.y);
+                    rect.right = qMax(startpoint.x,point.x);
+                    rect.bottom = qMax(startpoint.y,point.y);
+
                     wa->setBoundingRectangle(rect);
                     wa->setCertificateNick( cert );
                     wa->setPassword( pass );

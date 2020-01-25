@@ -63,6 +63,8 @@ CertificateTools::CertificateTools( QWidget * parent )
     connect(m_btnRemove, &QPushButton::clicked, this, &CertificateTools::slotRemove);
     connect(m_btnMoveUp, &QPushButton::clicked, this, &CertificateTools::slotMoveUp);
     connect(m_btnMoveDown, &QPushButton::clicked, this, &CertificateTools::slotMoveDown);
+
+    setCertificates(QStringList());
 }
 
 CertificateTools::~CertificateTools()
@@ -95,6 +97,7 @@ void CertificateTools::setCertificates(const QStringList& /*items*/)
         (void)listEntry;
     }
 */
+    Poppler::setNSSDir( CertificateSettings::certificatePath() );
     QVector<Poppler::CertificateInfo*> nssCerts = Poppler::getAvailableSigningCertificates();
     foreach( auto cert, nssCerts )
     {

@@ -7,6 +7,8 @@
     <group name="Signatures" >
       <entry key="Certificates" type="StringList">
       </entry>
+      <entry key="CertificatePath" type="String">
+      </entry>
     </group>
 </kcfg>
 <!-- vim:set ts=4 -->

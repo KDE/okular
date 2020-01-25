@@ -14,6 +14,7 @@
 #include "core/action.h"
 
 #include "pdfsignatureutils.h"
+#include "certsettings.h"
 
 #include <poppler-qt5.h>
 
@@ -396,6 +397,7 @@ PopplerFormFieldSignature::PopplerFormFieldSignature(std::unique_ptr<Poppler::Fo
 {
     m_rect = Okular::NormalizedRect::fromQRectF(m_field->rect());
     m_id = m_field->id();
+    Poppler::setNSSDir( CertificateSettings::certificatePath() );
     m_info = new PopplerSignatureInfo(m_field->validate(Poppler::FormFieldSignature::ValidateVerifyCertificate));
     SET_ACTIONS
 }

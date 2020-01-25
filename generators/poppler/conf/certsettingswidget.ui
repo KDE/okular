@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>375</width>
-    <height>118</height>
+    <width>675</width>
+    <height>225</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -28,7 +28,16 @@
      <property name="title">
       <string>Digital Signatures</string>
      </property>
-     <layout class="QVBoxLayout" name="certificatesPlaceholder" />
+     <layout class="QVBoxLayout" name="certificatesPlaceholder"/>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="certpathsettings">
+     <layout class="QFormLayout" name="formLayout">
+      <property name="fieldGrowthPolicy">
+       <enum>QFormLayout::ExpandingFieldsGrow</enum>
+      </property>
+     </layout>
     </widget>
    </item>
    <item>

@@ -39,6 +39,7 @@
 #include <KConfigDialogManager>
 #include <KLocalizedString>
 #include <KMessageBox>
+#include <KUrlRequester>
 
 #include <core/action.h>
 #include <core/annotations.h>
@@ -1486,7 +1487,14 @@ void PDFGenerator::addPages(KConfigDialog *dlg)
     CertificateTools * kcfg_CertTools = new CertificateTools( certsw.certificatesGroup );
     certsw.certificatesPlaceholder->addWidget( kcfg_CertTools );
     kcfg_CertTools->setObjectName( QStringLiteral("kcfg_Certificates") );
-    KConfigDialogManager::changedMap()->insert( QStringLiteral("CertificateTools"), SIGNAL(changed()) );
+
+    KUrlRequester* pDlg = new KUrlRequester( certsw.certpathsettings );
+    pDlg->setObjectName( QStringLiteral("kcfg_CertificatePath") );
+    pDlg->setMode( KFile::Directory | KFile::ExistingOnly | KFile::LocalOnly );
+    certsw.formLayout->addRow( QStringLiteral("CertDB Path:"), pDlg );
+
+    KConfigDialogManager::changedMap()->insert(
+        QStringLiteral("CertificateTools"), SIGNAL(changed()) );
 
     dlg->addPage(w2, CertificateSettings::self(), i18n("Certificates"), QStringLiteral("application-pkcs7-signature"), i18n("Digital Signature Certificates") );
 }
@@ -1911,6 +1919,7 @@ namespace {
   {
       virtual QList<Okular::CertificateInfo*> getSigningCertificates() const
       {
+          Poppler::setNSSDir( CertificateSettings::certificatePath() );
           QVector<Poppler::CertificateInfo*> certs = Poppler::getAvailableSigningCertificates();
           QList<Okular::CertificateInfo*> vReturnCerts;
           for (auto cert : certs)

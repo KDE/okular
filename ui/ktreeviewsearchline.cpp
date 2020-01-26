@@ -23,7 +23,7 @@
 
 #include <QList>
 #include <QTimer>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QApplication>
 #include <QContextMenuEvent>
 #include <QHBoxLayout>
@@ -259,18 +259,21 @@ bool KTreeViewSearchLine::itemMatches( const QModelIndex &parentIndex, int row, 
     return false;
 
   // Construct a regular expression object with the right options.
-  QRegExp expression = QRegExp( pattern,
-      d->caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive,
-      d->regularExpression ? QRegExp::RegExp : QRegExp::FixedString );
+  QRegularExpression re(
+      d->regularExpression ? pattern : QRegularExpression::escape(pattern),
+      d->caseSensitive ? QRegularExpression::NoPatternOption : QRegularExpression::CaseInsensitiveOption );
+  QRegularExpressionMatch match;
 
   // If the search column list is populated, search just the columns
   // specified.  If it is empty default to searching all of the columns.
-
   QAbstractItemModel *model = d->treeView->model();
   const int columncount = model->columnCount( parentIndex );
   for ( int i = 0; i < columncount; ++i) {
-    if ( expression.indexIn( model->data( model->index( row, i, parentIndex ), Qt::DisplayRole ).toString() ) >= 0 )
-      return true;
+    const QString str = model->data( model->index( row, i, parentIndex ), Qt::DisplayRole ).toString();
+    match = re.match( str );
+    if ( match.hasMatch() ) {
+        return true;
+    }
   }
 
   return false;

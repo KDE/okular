@@ -25,7 +25,6 @@
 #include <qimage.h>
 #include <qlayout.h>
 #include <qmutex.h>
-#include <qregexp.h>
 #include <qstack.h>
 #include <qtemporaryfile.h>
 #include <qtextstream.h>

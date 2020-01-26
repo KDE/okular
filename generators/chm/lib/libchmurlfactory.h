@@ -21,7 +21,7 @@
 
 #include <QDir>
 #include <QString>
-#include <QRegExp>
+#include <QRegularExpression>
 
 namespace LCHMUrlFactory
 {
@@ -29,7 +29,8 @@ namespace LCHMUrlFactory
 static inline bool isRemoteURL( const QString & url, QString & protocol )
 {
 	// Check whether the URL is external
-	QRegExp uriregex ( QStringLiteral("^(\\w+):\\/\\/") );
+	QRegularExpression uriregex( QStringLiteral("^(\\w+):\\/\\/") );
+	QRegularExpressionMatch match;
 
 	// mailto: can also have different format, so handle it
 	if ( url.startsWith( QLatin1String("mailto:") ) )
@@ -37,9 +38,9 @@ static inline bool isRemoteURL( const QString & url, QString & protocol )
 		protocol = QStringLiteral("mailto");
 		return true;
 	}
-	else if ( uriregex.indexIn( url ) != -1 )
+	else if ( (match = uriregex.match( url ) ).hasMatch() )
 	{
-		QString proto = uriregex.cap ( 1 ).toLower();
+		const QString proto = match.captured( 1 ).toLower();
 	
 		// Filter the URLs which need to be opened by a browser
 		if ( proto == QLatin1String("http") 
@@ -64,13 +65,13 @@ static inline bool isJavascriptURL( const QString & url )
 // Parse urls like "ms-its:file name.chm::/topic.htm"
 static inline bool isNewChmURL( const QString & url, QString & chmfile, QString & page )
 {
-	QRegExp uriregex ( QStringLiteral("^ms-its:(.*)::(.*)$") );
-	uriregex.setCaseSensitivity( Qt::CaseInsensitive );
-
-	if ( uriregex.indexIn ( url ) != -1 )
+	QRegularExpression uriregex ( QStringLiteral("^ms-its:(.*)::(.*)$") );
+	uriregex.setPatternOptions( QRegularExpression::CaseInsensitiveOption );
+	QRegularExpressionMatch match = uriregex.match( url );
+	if ( match.hasMatch() )
 	{
-		chmfile = uriregex.cap ( 1 );
-		page = uriregex.cap ( 2 );
+		chmfile = match.captured( 1 );
+		page = match.captured( 2 );
 	
 		return true;
 	}

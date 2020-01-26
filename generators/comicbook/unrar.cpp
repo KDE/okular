@@ -12,7 +12,6 @@
 #include <QEventLoop>
 #include <QFile>
 #include <QFileInfo>
-#include <QRegExp>
 #include <QGlobalStatic>
 #include <QTemporaryDir>
 

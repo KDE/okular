@@ -22,6 +22,7 @@
 #include <QImage>
 #include <qtemporaryfile.h>
 #include <QTextStream>
+#include <QRegularExpression>
 #include <QStandardPaths>
 
 #include "debug_ui.h"
@@ -46,42 +47,41 @@ LatexRenderer::Error LatexRenderer::renderLatexInHtml( QString& html, const QCol
     if( !html.contains(QStringLiteral("$$")))
         return NoError;
 
-    // this searches for $$formula$$ 
-    QRegExp rg(QStringLiteral("\\$\\$.+\\$\\$"));
-    rg.setMinimal(true);
-
-    int pos = 0;
+    // this searches for $$formula$$
+    QRegularExpression rg(QStringLiteral("\\$\\$.+?\\$\\$"));
+    QRegularExpressionMatchIterator it = rg.globalMatch(html);
 
     QMap<QString, QString> replaceMap;
-    while (pos >= 0 && pos < html.length())
-    {
-        pos = rg.indexIn(html, pos);
+    while (it.hasNext()) {
+        QRegularExpressionMatch match = it.next();
+        const QString matchedString = match.captured(0);
 
-        if (pos >= 0 )
-        {
-            const QString match = rg.cap(0);
-            pos += rg.matchedLength();
-
-            QString formul=match;
-            // first remove the $$ delimiters on start and end
-            formul.remove(QStringLiteral("$$"));
-            // then trim the result, so we can skip totally empty/whitespace-only formulas
-            formul = formul.trimmed();
-            if (formul.isEmpty() || !securityCheck(formul))
-                continue;
-
-            //unescape formula
-            formul.replace(QLatin1String("&gt;"),QLatin1String(">")).replace(QLatin1String("&lt;"),QLatin1String("<")).replace(QLatin1String("&amp;"),QLatin1String("&")).replace(QLatin1String("&quot;"),QLatin1String("\"")).replace(QLatin1String("&apos;"),QLatin1String("\'")).replace(QLatin1String("<br>"),QLatin1String(" "));
-
-            QString fileName;
-            Error returnCode = handleLatex(fileName, formul, textColor, fontSize, resolution, latexOutput);
-            if (returnCode != NoError)
-                return returnCode;
-
-            replaceMap[match] = fileName;
+        QString formul = matchedString;
+        // first remove the $$ delimiters on start and end
+        formul.remove(QStringLiteral("$$"));
+        // then trim the result, so we can skip totally empty/whitespace-only formulas
+        formul = formul.trimmed();
+        if (formul.isEmpty() || !securityCheck(formul)) {
+            continue;
         }
+
+        //unescape formula
+        formul.replace(QLatin1String("&gt;"),   QLatin1String(">"));
+        formul.replace(QLatin1String("&lt;"),   QLatin1String("<"));
+        formul.replace(QLatin1String("&amp;"),  QLatin1String("&"));
+        formul.replace(QLatin1String("&quot;"), QLatin1String("\""));
+        formul.replace(QLatin1String("&apos;"), QLatin1String("\'"));
+        formul.replace(QLatin1String("<br>"),   QLatin1String(" "));
+
+        QString fileName;
+        Error returnCode = handleLatex(fileName, formul, textColor, fontSize, resolution, latexOutput);
+        if (returnCode != NoError) {
+            return returnCode;
+        }
+
+        replaceMap[matchedString] = fileName;
     }
-    
+
     if(replaceMap.isEmpty()) //we haven't found any LaTeX strings
         return NoError;
     
@@ -105,9 +105,8 @@ bool LatexRenderer::mightContainLatex (const QString& text)
         return false;
 
     // this searches for $$formula$$ 
-    QRegExp rg(QStringLiteral("\\$\\$.+\\$\\$"));
-    rg.setMinimal(true);
-    if( rg.lastIndexIn(text) == -1 )
+    QRegularExpression rg(QStringLiteral("\\$\\$.+?\\$\\$"));
+    if( !rg.match(text).hasMatch() )
         return false;
 
     return true;
@@ -191,7 +190,7 @@ LatexRenderer::Error LatexRenderer::handleLatex( QString& fileName, const QStrin
 
 bool LatexRenderer::securityCheck( const QString &latexFormula )
 {
-    return !latexFormula.contains(QRegExp(QString::fromLatin1("\\\\(def|let|futurelet|newcommand|renewcommand|else|fi|write|input|include"
+    return !latexFormula.contains(QRegularExpression(QString::fromLatin1("\\\\(def|let|futurelet|newcommand|renewcommand|else|fi|write|input|include"
     "|chardef|catcode|makeatletter|noexpand|toksdef|every|errhelp|errorstopmode|scrollmode|nonstopmode|batchmode"
     "|read|csname|newhelp|relax|afterground|afterassignment|expandafter|noexpand|special|command|loop|repeat|toks"
     "|output|line|mathcode|name|item|section|mbox|DeclareRobustCommand)[^a-zA-Z]")));

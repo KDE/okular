@@ -44,6 +44,7 @@
 #include <QMimeDatabase>
 #include <QDesktopServices>
 #include <QPageSize>
+#include <QRegularExpression>
 #include <QStandardPaths>
 
 #include <kauthorized.h>
@@ -2139,11 +2140,15 @@ void DocumentPrivate::loadSyncFile( const QString & filePath )
     // first row: core name of the pdf output
     const QString coreName = ts.readLine();
     // second row: version string, in the form 'Version %u'
-    QString versionstr = ts.readLine();
-    QRegExp versionre( QStringLiteral("Version (\\d+)") );
-    versionre.setCaseSensitivity( Qt::CaseInsensitive );
-    if ( !versionre.exactMatch( versionstr ) )
+    const QString versionstr = ts.readLine();
+    // anchor the pattern with \A and \z to match the entire subject string
+    // TODO: with Qt 5.12 QRegularExpression::anchoredPattern() can be used instead
+    QRegularExpression versionre( QStringLiteral("\\AVersion \\d+\\z")
+                                  , QRegularExpression::CaseInsensitiveOption );
+    QRegularExpressionMatch match = versionre.match( versionstr );
+    if ( !match.hasMatch() ) {
         return;
+    }
 
     QHash<int, pdfsyncpoint> points;
     QStack<QString> fileStack;

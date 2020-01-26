@@ -9,7 +9,7 @@
 
 #include "unrarflavours.h"
 
-#include <QRegExp>
+#include <QRegularExpression>
 
 ProcessArgs::ProcessArgs()
 {
@@ -74,13 +74,15 @@ FreeUnrarFlavour::FreeUnrarFlavour()
 
 QStringList FreeUnrarFlavour::processListing( const QStringList &data )
 {
-    QRegExp re( QStringLiteral("^ ([^/]+/([^\\s]+))$") );
+    QRegularExpression re( QStringLiteral("^ ([^/]+/([^\\s]+))$") );
 
     QStringList newdata;
     for ( const QString &line : data )
     {
-        if ( re.exactMatch( line ) )
-            newdata.append( re.cap( 1 ) );
+        QRegularExpressionMatch match = re.match( line );
+        if ( match.hasMatch() ) {
+            newdata.append( match.captured( 1 ) );
+        }
     }
     return newdata;
 }

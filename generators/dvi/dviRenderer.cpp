@@ -38,7 +38,7 @@
 #include <QLabel>
 #include <QPainter>
 #include <QProgressBar>
-#include <QRegExp>
+#include <QRegularExpression>
 
 
 //------ now comes the dviRenderer class implementation ----------
@@ -708,19 +708,20 @@ QString dviRenderer::PDFencodingToQString(const QString& _pdfstring)
   pdfstring = pdfstring.replace(QLatin1String("\\\\"), QLatin1String("\\"));
 
   // Now replace octal character codes with the characters they encode
-  int pos;
-  QRegExp rx( QStringLiteral("(\\\\)(\\d\\d\\d)") );  // matches "\xyz" where x,y,z are numbers
-  while((pos = rx.indexIn( pdfstring )) != -1) {
-    pdfstring = pdfstring.replace(pos, 4, QChar(rx.cap(2).toInt(nullptr,8)));
+  QRegularExpression regex( QStringLiteral("(\\\\)(\\d\\d\\d)") ); // matches "\xyz" where x,y,z are numbers
+  QRegularExpressionMatch match;
+  while ((match = regex.match(pdfstring)).hasMatch()) {
+      pdfstring = pdfstring.replace(match.capturedStart(0), 4, QChar(match.captured(2).toInt(nullptr, 8)));
   }
-  rx.setPattern( QStringLiteral("(\\\\)(\\d\\d)") );  // matches "\xy" where x,y are numbers
-  while((pos = rx.indexIn( pdfstring )) != -1) {
-    pdfstring = pdfstring.replace(pos, 3, QChar(rx.cap(2).toInt(nullptr,8)));
+  regex.setPattern( QStringLiteral("(\\\\)(\\d\\d)") ); // matches "\xy" where x,y are numbers
+  while ((match = regex.match(pdfstring)).hasMatch()) {
+    pdfstring = pdfstring.replace(match.capturedStart(0), 3, QChar(match.captured(2).toInt(nullptr,8)));
   }
-  rx.setPattern( QStringLiteral("(\\\\)(\\d)") );  // matches "\x" where x is a number
-  while((pos = rx.indexIn( pdfstring )) != -1) {
-    pdfstring = pdfstring.replace(pos, 4, QChar(rx.cap(2).toInt(nullptr,8)));
+  regex.setPattern( QStringLiteral("(\\\\)(\\d)") );  // matches "\x" where x is a number
+  while ((match = regex.match(pdfstring)).hasMatch()) {
+    pdfstring = pdfstring.replace(match.capturedStart(0), 2, QChar(match.captured(2).toInt(nullptr,8)));
   }
+
   return pdfstring;
 }
 

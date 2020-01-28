@@ -20,6 +20,7 @@
   <name xml:lang="ia">OpenDocument</name>
   <name xml:lang="it">OpenDocument</name>
   <name xml:lang="ko">OpenDocument</name>
+  <name xml:lang="lt">OpenDocument</name>
   <name xml:lang="nl">OpenDocument</name>
   <name xml:lang="nn">OpenDocument</name>
   <name xml:lang="pl">OpenDocument</name>
@@ -54,6 +55,7 @@
   <summary xml:lang="ia">Adde supporto per leger files de texto OpenDocument</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti di testo OpenDocument</summary>
   <summary xml:lang="ko">OpenDocument 텍스트 파일 읽기 지원 추가</summary>
+  <summary xml:lang="lt">Prideda palaikymą OpenDocument tekstinių failų skaitymui</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van OpenDocument tekstbestanden toe</summary>
   <summary xml:lang="nn">Legg til støtte for å lesa tekstfiler i OpenDocument-formatet</summary>
   <summary xml:lang="pl">Dodaje obsługę czytania plików tekstowych OpenDocument</summary>

@@ -20,6 +20,7 @@
   <name xml:lang="ia">Texto</name>
   <name xml:lang="it">Testo</name>
   <name xml:lang="ko">텍스트</name>
+  <name xml:lang="lt">Tekstas</name>
   <name xml:lang="ml">വാചകം</name>
   <name xml:lang="nl">Tekst</name>
   <name xml:lang="nn">Tekst</name>
@@ -55,6 +56,7 @@
   <summary xml:lang="ia">Adde supporto per leger documentos plan</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti in testo semplice</summary>
   <summary xml:lang="ko">일반 텍스트 문서 읽기 지원 추가</summary>
+  <summary xml:lang="lt">Prideda palaikymą grynų tekstinių dokumentų skaitymui</summary>
   <summary xml:lang="nl">Voegt ondersteuning voor lezen van gewone tekstdocumenten toe</summary>
   <summary xml:lang="nn">Legg til støtte for å lesa reintekstdokument</summary>
   <summary xml:lang="pl">Dodaje obsługę czytania zwykłych plików tekstowych</summary>

@@ -279,8 +279,6 @@ void Generator::generatePixmap( PixmapRequest *request )
             return;
         }
 
-        d->pixmapGenerationThread()->startGeneration( request, calcBoundingBox );
-
         /**
          * We create the text page for every page that is visible to the
          * user, so he can use the text extraction tools without a delay.
@@ -297,6 +295,8 @@ void Generator::generatePixmap( PixmapRequest *request )
                 d_ptr->textPageGenerationThread()->startGeneration();
             });
         }
+        // pixmap generation thread must be started *after* connect(), else we may miss the start signal and get lock-ups (see bug 396137)
+        d->pixmapGenerationThread()->startGeneration( request, calcBoundingBox );
 
         return;
     }

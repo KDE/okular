@@ -15,12 +15,12 @@
 
 #include "area.h"
 
+#include <QMutex>
 #include <QSet>
 #include <QThread>
 #include <QImage>
 
 class QEventLoop;
-class QMutex;
 
 #include "generator.h"
 #include "page.h"
@@ -65,8 +65,8 @@ class GeneratorPrivate
         QSet< int > m_features;
         PixmapGenerationThread *mPixmapGenerationThread;
         TextPageGenerationThread *mTextPageGenerationThread;
-        mutable QMutex *m_mutex;
-        QMutex *m_threadsMutex;
+        mutable QMutex m_mutex;
+        QMutex m_threadsMutex;
         bool mPixmapReady : 1;
         bool mTextPageReady : 1;
         bool m_closing : 1;

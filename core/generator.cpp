@@ -41,7 +41,7 @@ using namespace Okular;
 GeneratorPrivate::GeneratorPrivate()
     : m_document( nullptr ),
       mPixmapGenerationThread( nullptr ), mTextPageGenerationThread( nullptr ),
-      m_mutex( nullptr ), m_threadsMutex( nullptr ), mPixmapReady( true ), mTextPageReady( true ),
+      mPixmapReady( true ), mTextPageReady( true ),
       m_closing( false ), m_closingLoop( nullptr ),
       m_dpi(72.0, 72.0)
 {
@@ -59,9 +59,6 @@ GeneratorPrivate::~GeneratorPrivate()
         mTextPageGenerationThread->wait();
 
     delete mTextPageGenerationThread;
-
-    delete m_mutex;
-    delete m_threadsMutex;
 }
 
 PixmapGenerationThread* GeneratorPrivate::pixmapGenerationThread()
@@ -163,9 +160,7 @@ void GeneratorPrivate::textpageGenerationFinished()
 
 QMutex* GeneratorPrivate::threadsLock()
 {
-    if ( !m_threadsMutex )
-        m_threadsMutex = new QMutex();
-    return m_threadsMutex;
+    return &m_threadsMutex;
 }
 
 QVariant GeneratorPrivate::metaData( const QString &, const QVariant & ) const
@@ -279,8 +274,6 @@ void Generator::generatePixmap( PixmapRequest *request )
             return;
         }
 
-        d->pixmapGenerationThread()->startGeneration( request, calcBoundingBox );
-
         /**
          * We create the text page for every page that is visible to the
          * user, so he can use the text extraction tools without a delay.
@@ -297,6 +290,8 @@ void Generator::generatePixmap( PixmapRequest *request )
                 d_ptr->textPageGenerationThread()->startGeneration();
             });
         }
+        // pixmap generation thread must be started *after* connect(), else we may miss the start signal and get lock-ups (see bug 396137)
+        d->pixmapGenerationThread()->startGeneration( request, calcBoundingBox );
 
         return;
     }
@@ -508,11 +503,7 @@ QVariant Generator::documentMetaData( const DocumentMetaDataKey key, const QVari
 QMutex* Generator::userMutex() const
 {
     Q_D( const Generator );
-    if ( !d->m_mutex )
-    {
-        d->m_mutex = new QMutex();
-    }
-    return d->m_mutex;
+    return &d->m_mutex;
 }
 
 void Generator::updatePageBoundingBox( int page, const NormalizedRect & boundingBox )

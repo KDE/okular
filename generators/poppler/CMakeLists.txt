@@ -17,9 +17,11 @@ int main()
 
 check_cxx_source_compiles("
 #include <poppler-qt5.h>
+#include <poppler-form.h>
 int main()
 {
   auto f = &Poppler::PDFConverter::sign;
+  auto g = &Poppler::setNSSDir;
 }
 " HAVE_POPPLER_SIGNING)
 
@@ -38,9 +40,13 @@ set(okularGenerator_poppler_PART_SRCS
    generator_pdf.cpp
    formfields.cpp
    annots.cpp
-   certificatetools.cpp
    pdfsignatureutils.cpp
 )
+
+if(HAVE_POPPLER_SIGNING)
+   set(okularGenerator_poppler_PART_SRCS
+       ${okularGenerator_poppler_PART_SRCS} certificatetools.cpp)
+endif()
 
 ki18n_wrap_ui(okularGenerator_poppler_PART_SRCS
    conf/pdfsettingswidget.ui

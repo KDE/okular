@@ -50,7 +50,11 @@ QString PopplerCertificateInfo::subjectInfo(PopplerCertificateInfo::EntityInfoKe
 
 QString PopplerCertificateInfo::nickName() const
 {
+#ifdef HAVE_POPPLER_SIGNING
     return m_info.nickName();
+#else
+    return i18n("Not Available");
+#endif
 }
 
 QDateTime PopplerCertificateInfo::validityStart() const

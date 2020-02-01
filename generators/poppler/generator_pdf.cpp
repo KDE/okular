@@ -1480,6 +1480,7 @@ void PDFGenerator::addPages(KConfigDialog *dlg)
     pdfsw.setupUi(w);
     dlg->addPage(w, PDFSettings::self(), i18n("PDF"), QStringLiteral("application-pdf"), i18n("PDF Backend Configuration"));
 
+#ifdef HAVE_POPPLER_SIGNING
     Ui_DlgSignaturesBase certsw;
     QWidget* w2 = new QWidget(dlg);
     certsw.setupUi(w2);
@@ -1497,6 +1498,7 @@ void PDFGenerator::addPages(KConfigDialog *dlg)
         QStringLiteral("CertificateTools"), SIGNAL(changed()) );
 
     dlg->addPage(w2, CertificateSettings::self(), i18n("Certificates"), QStringLiteral("application-pkcs7-signature"), i18n("Digital Signature Certificates") );
+#endif
 }
 
 bool PDFGenerator::setDocumentRenderHints()
@@ -1915,6 +1917,7 @@ bool PDFGenerator::sign( const Okular::Annotation* pWhichAnnotation, const QStri
     return true;
 }
 
+#ifdef HAVE_POPPLER_SIGNING
 namespace {
   struct CertificateStoreImpl : public Okular::CertificateStore
   {
@@ -1930,6 +1933,7 @@ namespace {
       }
   };
 }
+#endif
 
 Okular::CertificateStore* PDFGenerator::getCertStore()
 {

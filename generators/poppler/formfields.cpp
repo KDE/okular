@@ -397,7 +397,9 @@ PopplerFormFieldSignature::PopplerFormFieldSignature(std::unique_ptr<Poppler::Fo
 {
     m_rect = Okular::NormalizedRect::fromQRectF(m_field->rect());
     m_id = m_field->id();
+#ifdef HAVE_POPPLER_SIGNING
     Poppler::setNSSDir( CertificateSettings::certificatePath() );
+#endif
     m_info = new PopplerSignatureInfo(m_field->validate(Poppler::FormFieldSignature::ValidateVerifyCertificate));
     SET_ACTIONS
 }

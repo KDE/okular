@@ -1899,7 +1899,8 @@ bool PDFGenerator::sign( const Okular::Annotation* pWhichAnnotation, const QStri
         pdfdoc->pdfConverter());
     converter->setOutputFileName(tf.fileName());
     converter->setPDFOptions(converter->pdfOptions() | Poppler::PDFConverter::WithChanges);
-    if (!converter->sign( popplerAnn, wa->certificateNick(), QString(), wa->password(), QString()))
+    if (!converter->sign( popplerAnn, wa->certificateNick(), QString(), wa->password(),
+                          QLatin1String("Okular interactive signature")))
         return false;
 
     // now copy over old file

@@ -17,6 +17,24 @@ build_ubuntu_18_04:
     - cmake -G Ninja ..
     - ninja
 
+build_ubuntu_20_04:
+  stage: build
+  image: ubuntu:focal
+  only:
+    - merge_requests
+  before_script:
+    - sed -i -e 's/# deb-src/deb-src/g' /etc/apt/sources.list
+    - apt-get update
+    - apt-get build-dep --yes --no-install-recommends okular
+    - apt-get install --yes --no-install-recommends ninja-build 
+  script:
+    - mkdir -p build && cd build
+    - cmake -DOKULAR_UI=desktop -G Ninja ..
+    - ninja
+    - rm -rf *
+    - cmake -DOKULAR_UI=mobile -G Ninja ..
+    - ninja
+
 build_clang_tidy:
   stage: build
   image: debian:unstable

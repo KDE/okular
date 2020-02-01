@@ -11,8 +11,23 @@ project(okular VERSION 1.9.${RELEASE_SERVICE_VERSION_MICRO})
 set(QT_REQUIRED_VERSION "5.9.0")
 set(KF5_REQUIRED_VERSION "5.44.0")
 
+set(OKULAR_UI "desktop" CACHE STRING "Which Okular user interface to build. Possible values: desktop, mobile, both. Default: desktop")
+
+if(OKULAR_UI STREQUAL "desktop" OR OKULAR_UI STREQUAL "both")
+    set(BUILD_DESKTOP ON)
+else()
+    set(BUILD_DESKTOP OFF)
+endif()
+if(OKULAR_UI STREQUAL "mobile" OR OKULAR_UI STREQUAL "both")
+    set(BUILD_MOBILE ON)
+else()
+    set(BUILD_MOBILE OFF)
+endif()
+
 if (ANDROID)
     set(QT_REQUIRED_VERSION "5.13.0")
+elseif (BUILD_MOBILE)
+    set(QT_REQUIRED_VERSION "5.12.0")
 endif()
 
 find_package(ECM 5.33.0 CONFIG REQUIRED)
@@ -132,8 +147,7 @@ add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${PHONON_INCLUDES} core/synctex ${ZLIB_INCLUDE_DIR} ${CMAKE_BINARY_DIR}/core)
 
-option(BUILD_OKULARKIRIGAMI "Builds the touch-friendly frontend" ON)
-if (BUILD_OKULARKIRIGAMI)
+if(BUILD_MOBILE)
     add_subdirectory( mobile )
 endif()
 option(BUILD_COVERAGE "Build the project with gcov support" OFF)
@@ -150,7 +164,9 @@ if(BUILD_COVERAGE)
 endif()
 
 add_subdirectory( ui )
-add_subdirectory( shell )
+if(BUILD_DESKTOP)
+    add_subdirectory( shell )
+endif()
 add_subdirectory( generators )
 if(BUILD_TESTING)
    add_subdirectory( autotests )
@@ -333,76 +349,77 @@ install(FILES conf/okular.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
 install(FILES conf/okular_core.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
 install(FILES core/okularGenerator.desktop DESTINATION ${KDE_INSTALL_KSERVICETYPES5DIR})
 
-# okularpart
+if(BUILD_DESKTOP)
+  # okularpart
+  set(okularpart_conf_SRCS
+    conf/preferencesdialog.cpp
+    conf/dlgaccessibility.cpp
+    conf/dlgdebug.cpp
+    conf/dlgeditor.cpp
+    conf/dlggeneral.cpp
+    conf/dlgannotations.cpp
+    conf/dlgperformance.cpp
+    conf/dlgpresentation.cpp
+    conf/editannottooldialog.cpp
+    conf/editdrawingtooldialog.cpp
+    conf/widgetannottools.cpp
+    conf/widgetconfigurationtoolsbase.cpp
+    conf/widgetdrawingtools.cpp
+  )
 
-set(okularpart_conf_SRCS
-   conf/preferencesdialog.cpp
-   conf/dlgaccessibility.cpp
-   conf/dlgdebug.cpp
-   conf/dlgeditor.cpp
-   conf/dlggeneral.cpp
-   conf/dlgannotations.cpp
-   conf/dlgperformance.cpp
-   conf/dlgpresentation.cpp
-   conf/editannottooldialog.cpp
-   conf/editdrawingtooldialog.cpp
-   conf/widgetannottools.cpp
-   conf/widgetconfigurationtoolsbase.cpp
-   conf/widgetdrawingtools.cpp
-)
-
-set(okularpart_SRCS
-   ${okularpart_conf_SRCS}
-   part.cpp
-   extensions.cpp
-   ui/embeddedfilesdialog.cpp
-   ui/annotwindow.cpp
-   ui/annotationmodel.cpp
-   ui/annotationpopup.cpp
-   ui/annotationpropertiesdialog.cpp
-   ui/annotationproxymodels.cpp
-   ui/annotationtools.cpp
-   ui/annotationwidgets.cpp
-   ui/bookmarklist.cpp
-   ui/certificateviewer.cpp
-   ui/debug_ui.cpp
-   ui/drawingtoolactions.cpp
-   ui/fileprinterpreview.cpp
-   ui/findbar.cpp
-   ui/formwidgets.cpp
-   ui/guiutils.cpp
-   ui/ktreeviewsearchline.cpp
-   ui/latexrenderer.cpp
-   ui/minibar.cpp
-   ui/okmenutitle.cpp
-   ui/pageitemdelegate.cpp
-   ui/pagepainter.cpp
-   ui/pagesizelabel.cpp
-   ui/pageviewannotator.cpp
-   ui/pageviewmouseannotation.cpp
-   ui/pageview.cpp
-   ui/magnifierview.cpp
-   ui/pageviewutils.cpp
-   ui/presentationsearchbar.cpp
-   ui/presentationwidget.cpp
-   ui/propertiesdialog.cpp
-   ui/revisionviewer.cpp
-   ui/searchlineedit.cpp
-   ui/searchwidget.cpp
-   ui/sidebar.cpp
-   ui/side_reviews.cpp
-   ui/snapshottaker.cpp
-   ui/thumbnaillist.cpp
-   ui/toc.cpp
-   ui/tocmodel.cpp
-   ui/toggleactionmenu.cpp
-   ui/videowidget.cpp
-   ui/layers.cpp
-   ui/signatureguiutils.cpp
-   ui/signaturepropertiesdialog.cpp
-   ui/signaturemodel.cpp
-   ui/signaturepanel.cpp
-)
+  set(okularpart_SRCS
+    ${okularpart_conf_SRCS}
+    part.cpp
+    extensions.cpp
+    ui/embeddedfilesdialog.cpp
+    ui/annotwindow.cpp
+    ui/annotationmodel.cpp
+    ui/annotationpopup.cpp
+    ui/annotationpropertiesdialog.cpp
+    ui/annotationproxymodels.cpp
+    ui/annotationtools.cpp
+    ui/annotationwidgets.cpp
+    ui/bookmarklist.cpp
+    ui/certificateviewer.cpp
+    ui/debug_ui.cpp
+    ui/drawingtoolactions.cpp
+    ui/fileprinterpreview.cpp
+    ui/findbar.cpp
+    ui/formwidgets.cpp
+    ui/guiutils.cpp
+    ui/ktreeviewsearchline.cpp
+    ui/latexrenderer.cpp
+    ui/minibar.cpp
+    ui/okmenutitle.cpp
+    ui/pageitemdelegate.cpp
+    ui/pagepainter.cpp
+    ui/pagesizelabel.cpp
+    ui/pageviewannotator.cpp
+    ui/pageviewmouseannotation.cpp
+    ui/pageview.cpp
+    ui/magnifierview.cpp
+    ui/pageviewutils.cpp
+    ui/presentationsearchbar.cpp
+    ui/presentationwidget.cpp
+    ui/propertiesdialog.cpp
+    ui/revisionviewer.cpp
+    ui/searchlineedit.cpp
+    ui/searchwidget.cpp
+    ui/sidebar.cpp
+    ui/side_reviews.cpp
+    ui/snapshottaker.cpp
+    ui/thumbnaillist.cpp
+    ui/toc.cpp
+    ui/tocmodel.cpp
+    ui/toggleactionmenu.cpp
+    ui/videowidget.cpp
+    ui/layers.cpp
+    ui/signatureguiutils.cpp
+    ui/signaturepropertiesdialog.cpp
+    ui/signaturemodel.cpp
+    ui/signaturepanel.cpp
+  )
+endif()
 
 if (Qt5TextToSpeech_FOUND)
    set(okularpart_SRCS ${okularpart_SRCS}
@@ -492,3 +509,6 @@ install(EXPORT Okular5Targets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE Okul
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
+message("-- Building Deskop User Interface: ${BUILD_DESKTOP}")
+message("-- Building Mobile Interface: ${BUILD_MOBILE}")
+message("")

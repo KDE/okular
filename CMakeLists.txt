@@ -395,7 +395,7 @@ set(okularpart_SRCS
    ui/thumbnaillist.cpp
    ui/toc.cpp
    ui/tocmodel.cpp
-   ui/toolaction.cpp
+   ui/toggleactionmenu.cpp
    ui/videowidget.cpp
    ui/layers.cpp
    ui/signatureguiutils.cpp

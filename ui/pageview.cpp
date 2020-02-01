@@ -76,7 +76,7 @@
 #include "pageviewannotator.h"
 #include "pageviewmouseannotation.h"
 #include "priorities.h"
-#include "toolaction.h"
+#include "toggleactionmenu.h"
 #include "okmenutitle.h"
 #ifdef HAVE_SPEECH
 #include "tts.h"
@@ -241,6 +241,7 @@ public:
     QAction * aSpeakPauseResume;
     KActionCollection * actionCollection;
     QActionGroup * mouseModeActionGroup;
+    ToggleActionMenu * aMouseModeMenu;
     QAction * aFitWindowToPage;
 
     int setting_viewCols;
@@ -705,17 +706,22 @@ void PageView::setupActions( KActionCollection * ac )
     d->aMouseMagnifier->setActionGroup( d->mouseModeActionGroup );
     d->aMouseMagnifier->setChecked( Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::Magnifier );
 
+    // Mouse-Mode action menu
+    d->aMouseModeMenu = new ToggleActionMenu( QIcon(),QString(), this,
+                                              ToggleActionMenu::MenuButtonPopup,
+                                              ToggleActionMenu::ImplicitDefaultAction );
+    d->aMouseModeMenu->addAction( d->aMouseSelect );
+    d->aMouseModeMenu->addAction( d->aMouseTextSelect );
+    d->aMouseModeMenu->addAction( d->aMouseTableSelect );
+    d->aMouseModeMenu->suggestDefaultAction( d->aMouseTextSelect );
+    d->aMouseModeMenu->setText( i18nc( "@action", "Selection Tools" ) );
+    ac->addAction( QStringLiteral( "mouse_selecttools" ), d->aMouseModeMenu );
+
     d->aToggleAnnotator  = new KToggleAction(QIcon::fromTheme( QStringLiteral("draw-freehand") ), i18n("&Review"), this);
     ac->addAction(QStringLiteral("mouse_toggle_annotate"), d->aToggleAnnotator );
     d->aToggleAnnotator->setCheckable( true );
     connect( d->aToggleAnnotator, &QAction::toggled, this, &PageView::slotToggleAnnotator );
     ac->setDefaultShortcut(d->aToggleAnnotator, Qt::Key_F6);
-
-    ToolAction *ta = new ToolAction( this );
-    ac->addAction( QStringLiteral("mouse_selecttools"), ta );
-    ta->addAction( d->aMouseTextSelect );
-    ta->addAction( d->aMouseSelect );
-    ta->addAction( d->aMouseTableSelect );
 
     // speak actions
 #ifdef HAVE_SPEECH
@@ -1258,6 +1264,8 @@ void PageView::updateActionState( bool haspages, bool documentChanged, bool hasf
 
     if ( d->mouseModeActionGroup )
         d->mouseModeActionGroup->setEnabled( haspages );
+    if ( d->aMouseModeMenu )
+        d->aMouseModeMenu->setEnabled( haspages );
 
     if ( d->aRotateClockwise )
         d->aRotateClockwise->setEnabled( haspages );

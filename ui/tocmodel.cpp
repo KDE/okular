@@ -14,7 +14,7 @@
 #include <qlist.h>
 #include <qtreeview.h>
 
-#include <QIcon>
+#include <QFont>
 
 #include "pageitemdelegate.h"
 #include "core/document.h"
@@ -229,31 +229,33 @@ QVariant TOCModel::data( const QModelIndex &index, int role ) const
         case Qt::ToolTipRole:
             return item->text;
             break;
-        case Qt::DecorationRole:
+        case Qt::FontRole:
             if ( item->highlight )
             {
-                const QVariant icon = QIcon::fromTheme( QApplication::layoutDirection() == Qt::RightToLeft ? QStringLiteral("arrow-left") : QStringLiteral("arrow-right") );
+                QFont font;
+                font.setBold(true);
+
                 TOCItem *lastHighlighted = d->currentPage.last();
 
-                // in the mobile version our parent is not a QTreeView; add icon to the last highlighted item
+                // in the mobile version our parent is not a QTreeView; embolden the last highlighted item
                 // TODO misusing parent() here, fix
                 QTreeView *view = dynamic_cast< QTreeView* > ( QObject::parent() );
                 if ( !view )
                 {
                     if ( item == lastHighlighted )
-                        return icon;
+                        return font;
                     return QVariant();
                 }
 
                 if ( view->isExpanded( index ) )
                 {
-                    // if this is the last highlighted node, its child is on a page below, thus it needs icon
+                    // if this is the last highlighted node, its child is on a page below, thus it gets emboldened
                     if ( item == lastHighlighted )
-                        return icon;
+                        return font;
                 }
                 else
                 {
-                    return icon;
+                    return font;
                 }
             }
             break;

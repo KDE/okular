@@ -390,6 +390,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->setting_viewCols = Okular::Settings::viewColumns();
     d->rtl_Mode = Okular::Settings::rtlReadingDirection();
     d->mouseModeActionGroup = nullptr;
+    d->aMouseModeMenu = nullptr;
     d->penDown = false;
     d->aMouseMagnifier = nullptr;
     d->aFitWindowToPage = nullptr;

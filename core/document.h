@@ -978,6 +978,8 @@ class OKULARCORE_EXPORT Document : public QObject
 
         /**
          *  Returns the reason why the file opening failed, if any.
+         *
+         * @since 1.10
          */
         QString openError() const;
 

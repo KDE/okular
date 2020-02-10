@@ -1078,9 +1078,6 @@ class OKULARCORE_EXPORT Document : public QObject
          */
         void refreshPixmaps( int pageNumber );
 
-    private Q_SLOTS:
-        void setOpenError( const QString& message, int /*interval*/ );
-
     Q_SIGNALS:
         /**
          * This signal is emitted whenever the document is about to close.

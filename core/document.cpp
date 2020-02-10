@@ -930,7 +930,7 @@ Document::OpenResult DocumentPrivate::openDocumentInternal( const KPluginMetaDat
     m_generator->d_func()->m_document = this;
 
     // connect error reporting signals
-    QObject::connect( m_generator, &Generator::error, m_parent, &Document::setOpenError );
+    QMetaObject::Connection errorToOpenErrorConnection = QObject::connect( m_generator, &Generator::error, m_parent, [this](const QString &message) { m_openError = message; } );
     QObject::connect( m_generator, &Generator::warning, m_parent, &Document::warning );
     QObject::connect( m_generator, &Generator::notice, m_parent, &Document::notice );
 
@@ -974,6 +974,7 @@ Document::OpenResult DocumentPrivate::openDocumentInternal( const KPluginMetaDat
     {
         m_generator->d_func()->m_document = nullptr;
         QObject::disconnect( m_generator, nullptr, m_parent, nullptr );
+
         // TODO this is a bit of a hack, since basically means that
         // you can only call walletDataForFile after calling openDocument
         // but since in reality it's what happens I've decided not to refactor/break API
@@ -996,7 +997,7 @@ Document::OpenResult DocumentPrivate::openDocumentInternal( const KPluginMetaDat
          * we can now connect the error reporting signal directly to the parent
         */
 
-        QObject::disconnect( m_generator, &Generator::error, m_parent, &Document::setOpenError );
+        QObject::disconnect(errorToOpenErrorConnection);
         QObject::connect( m_generator, &Generator::error, m_parent, &Document::error );
     }
 
@@ -5364,11 +5365,6 @@ QByteArray Document::requestSignedRevisionData( const Okular::SignatureInfo &inf
 void Document::refreshPixmaps( int pageNumber )
 {
     d->refreshPixmaps( pageNumber );
-}
-
-void Document::setOpenError( const QString &message, int /*interval*/ )
-{
-    d->m_openError = message;
 }
 
 void DocumentPrivate::executeScript( const QString &function )

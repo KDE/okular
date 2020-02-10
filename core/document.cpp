@@ -930,7 +930,7 @@ Document::OpenResult DocumentPrivate::openDocumentInternal( const KPluginMetaDat
     m_generator->d_func()->m_document = this;
 
     // connect error reporting signals
-    QObject::connect( m_generator, &Generator::error, m_parent, &Document::error );
+    QObject::connect( m_generator, &Generator::error, m_parent, &Document::setOpenError );
     QObject::connect( m_generator, &Generator::warning, m_parent, &Document::warning );
     QObject::connect( m_generator, &Generator::notice, m_parent, &Document::notice );
 
@@ -990,6 +990,14 @@ Document::OpenResult DocumentPrivate::openDocumentInternal( const KPluginMetaDat
         // TODO: emit a message telling the document is empty
         if ( openResult == Document::OpenSuccess )
             openResult = Document::OpenError;
+    } else {
+        /*
+         *  Now that the documen is opened, the tab (if using tabs) is visible, which mean that
+         * we can now connect the error reporting signal directly to the parent
+        */
+
+        QObject::disconnect( m_generator, &Generator::error, m_parent, &Document::setOpenError );
+        QObject::connect( m_generator, &Generator::error, m_parent, &Document::error );
     }
 
     return openResult;
@@ -2551,7 +2559,8 @@ Document::OpenResult Document::openDocument(const QString & docFile, const QUrl 
     }
     if (!offer.isValid())
     {
-        emit error( i18n( "Can not find a plugin which is able to handle the document being passed." ), -1 );
+        d->m_openError = i18n( "Can not find a plugin which is able to handle the document being passed." );
+        emit error( d->m_openError, -1 );
         qCWarning(OkularCoreDebug).nospace() << "No plugin for mimetype '" << mime.name() << "'.";
         return OpenError;
     }
@@ -5328,6 +5337,11 @@ QAbstractItemModel * Document::layersModel() const
     return d->m_generator ? d->m_generator->layersModel() : nullptr;
 }
 
+QString Document::openError() const
+{
+    return d->m_openError;
+}
+
 QByteArray Document::requestSignedRevisionData( const Okular::SignatureInfo &info )
 {
     QFile f( d->m_docFileName );
@@ -5350,6 +5364,11 @@ QByteArray Document::requestSignedRevisionData( const Okular::SignatureInfo &inf
 void Document::refreshPixmaps( int pageNumber )
 {
     d->refreshPixmaps( pageNumber );
+}
+
+void Document::setOpenError( const QString &message, int /*interval*/ )
+{
+    d->m_openError = message;
 }
 
 void DocumentPrivate::executeScript( const QString &function )

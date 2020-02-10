@@ -976,6 +976,11 @@ class OKULARCORE_EXPORT Document : public QObject
         */
         QAbstractItemModel * layersModel() const;
 
+        /**
+         *  Returns the reason why the file opening failed, if any.
+         */
+        QString openError() const;
+
     public Q_SLOTS:
         /**
          * This slot is called whenever the user changes the @p rotation of
@@ -1072,6 +1077,9 @@ class OKULARCORE_EXPORT Document : public QObject
          * @since 1.10
          */
         void refreshPixmaps( int pageNumber );
+
+    private Q_SLOTS:
+        void setOpenError( const QString& message, int /*interval*/ );
 
     Q_SIGNALS:
         /**

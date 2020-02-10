@@ -9,7 +9,7 @@ ecm_add_test(shelltest.cpp ../shell/shellutils.cpp
 
 if(Poppler_Qt5_FOUND)
     if (BUILD_DESKTOP)
-        ecm_add_test(parttest.cpp
+        ecm_add_test(parttest.cpp closedialoghelper.cpp
             TEST_NAME "parttest"
             LINK_LIBRARIES Qt5::Widgets Qt5::Test Qt5::Xml okularcore okularpart
         )
@@ -82,7 +82,7 @@ ecm_add_test(calculatetexttest.cpp
 )
 
 if(KF5Activities_FOUND AND BUILD_DESKTOP)
-	ecm_add_test(mainshelltest.cpp ../shell/okular_main.cpp ../shell/shellutils.cpp ../shell/shell.cpp
+	ecm_add_test(mainshelltest.cpp ../shell/okular_main.cpp ../shell/shellutils.cpp ../shell/shell.cpp closedialoghelper.cpp
 		TEST_NAME "mainshelltest"
 		LINK_LIBRARIES Qt5::Test KF5::Activities okularpart okularcore
 	)

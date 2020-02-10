@@ -46,6 +46,7 @@ namespace TestingUtils
         static void resetDisposedAnnotationName();
         static void disposeAnnotation( const Okular::Annotation *ann );
     };
+
 }
 
 #endif

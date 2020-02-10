@@ -21,6 +21,7 @@
 #include "../ui/pageview.h"
 #include "../ui/presentationwidget.h"
 #include "../settings.h"
+#include "closedialoghelper.h"
 
 #include "../generators/poppler/config-okular-poppler.h"
 
@@ -40,51 +41,6 @@
 #include <QUrl>
 #include <QDesktopServices>
 #include <QMenu>
-
-class CloseDialogHelper : public QObject
-{
-    Q_OBJECT
-
-public:
-    CloseDialogHelper(Okular::Part *p, QDialogButtonBox::StandardButton b) : m_widget(p->widget()), m_button(b), m_clicked(false)
-    {
-        QTimer::singleShot(0, this, &CloseDialogHelper::closeDialog);
-    }
-
-    CloseDialogHelper(QWidget *w, QDialogButtonBox::StandardButton b) : m_widget(w), m_button(b), m_clicked(false)
-    {
-        QTimer::singleShot(0, this, &CloseDialogHelper::closeDialog);
-    }
-
-    // Close a modal dialog, which may not be associated to any other widget
-    CloseDialogHelper(QDialogButtonBox::StandardButton b) : m_widget(nullptr), m_button(b), m_clicked(false)
-    {
-        QTimer::singleShot(0, this, &CloseDialogHelper::closeDialog);
-    }
-
-    ~CloseDialogHelper() override
-    {
-        QVERIFY(m_clicked);
-    }
-
-private slots:
-    void closeDialog()
-    {
-        QWidget *dialog = ( m_widget ) ? m_widget->findChild<QDialog*>() : qApp->activeModalWidget();
-        if (!dialog) {
-            QTimer::singleShot(0, this, &CloseDialogHelper::closeDialog);
-            return;
-        }
-        QDialogButtonBox *buttonBox = dialog->findChild<QDialogButtonBox*>();
-        buttonBox->button(m_button)->click();
-        m_clicked = true;
-    }
-
-private:
-    QWidget *m_widget;
-    QDialogButtonBox::StandardButton m_button;
-    bool m_clicked;
-};
 
 namespace Okular
 {
@@ -927,7 +883,7 @@ void PartTest::testSaveAs()
     QFETCH(bool, nativelySupportsAnnotations);
     QFETCH(bool, canSwapBackingFile);
 
-    QScopedPointer<CloseDialogHelper> closeDialogHelper;
+    QScopedPointer<TestingUtils::CloseDialogHelper> closeDialogHelper;
 
     QString annotName;
     QTemporaryFile archiveSave( QStringLiteral( "%1/okrXXXXXX.okular" ).arg( QDir::tempPath() ) );
@@ -958,7 +914,7 @@ void PartTest::testSaveAs()
         {
             if ( !nativelySupportsAnnotations )
             {
-                closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+                closeDialogHelper.reset(new TestingUtils::CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
             }
             QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
             // For backends that don't support annotations natively we mark the part as still modified
@@ -971,12 +927,12 @@ void PartTest::testSaveAs()
         {
             // We need to save to archive first otherwise we lose the annotation
 
-            closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::Yes )); // this is the "you're going to lose the undo/redo stack" dialog
+            closeDialogHelper.reset(new TestingUtils::CloseDialogHelper( &part, QDialogButtonBox::Yes )); // this is the "you're going to lose the undo/redo stack" dialog
             QVERIFY( part.saveAs( QUrl::fromLocalFile( archiveSave.fileName() ), Part::SaveAsOkularArchive ) );
 
             if ( !nativelySupportsAnnotations )
             {
-                closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+                closeDialogHelper.reset(new TestingUtils::CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
             }
             QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeDirectSave.fileName() ), Part::NoSaveAsFlags ) );
         }
@@ -996,7 +952,7 @@ void PartTest::testSaveAs()
 
         if ( !nativelySupportsAnnotations )
         {
-            closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+            closeDialogHelper.reset(new TestingUtils::CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
         }
         QVERIFY( part.saveAs( QUrl::fromLocalFile( nativeFromArchiveFile.fileName() ), Part::NoSaveAsFlags ) );
 
@@ -1005,7 +961,7 @@ void PartTest::testSaveAs()
             // For backends that don't support annotations natively we mark the part as still modified
             // after a save because we keep the annotation around but it will get lost if the user closes the app
             // so we want to give her a last chance to save on close with the "you have changes dialog"
-            closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "do you want to save or discard" dialog
+            closeDialogHelper.reset(new TestingUtils::CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "do you want to save or discard" dialog
         }
 
         QCOMPARE( part.m_document->documentInfo().get( Okular::DocumentInfo::FilePath ), part.m_document->currentDocument().toDisplayString() );
@@ -1109,7 +1065,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
 
     const Part::SaveAsFlag saveFlags = saveToArchive ? Part::SaveAsOkularArchive : Part::NoSaveAsFlags;
 
-    QScopedPointer<CloseDialogHelper> closeDialogHelper;
+    QScopedPointer<TestingUtils::CloseDialogHelper> closeDialogHelper;
 
     // closeDialogHelper relies on the availability of the "Continue" button to drop changes
     // when saving to a file format not supporting those. However, this button is only sensible
@@ -1134,7 +1090,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
     QString annotName = annot->uniqueName();
 
     if ( !nativelySupportsAnnotations && !saveToArchive ) {
-        closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+        closeDialogHelper.reset(new TestingUtils::CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
 
     QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile1.fileName() ), saveFlags ) );
@@ -1181,7 +1137,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
 
     // Check we can still undo the annot add after save
     if ( !nativelySupportsAnnotations && !saveToArchive ) {
-        closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+        closeDialogHelper.reset(new TestingUtils::CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
     QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile2.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canUndo() );
@@ -1212,7 +1168,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
 
     // Now check we can still undo/redo/save at all the intermediate states and things still work
     if ( !nativelySupportsAnnotations && !saveToArchive ) {
-        closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+        closeDialogHelper.reset(new TestingUtils::CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
     QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile2.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canUndo() );
@@ -1220,7 +1176,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
     QVERIFY( part.m_document->canUndo() );
 
     if ( !nativelySupportsAnnotations && !saveToArchive ) {
-        closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+        closeDialogHelper.reset(new TestingUtils::CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
     QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile1.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canUndo() );
@@ -1228,7 +1184,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
     QVERIFY( part.m_document->canUndo() );
 
     if ( !nativelySupportsAnnotations && !saveToArchive ) {
-        closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+        closeDialogHelper.reset(new TestingUtils::CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
     QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile2.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canUndo() );
@@ -1236,7 +1192,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
     QVERIFY( part.m_document->canUndo() );
 
     if ( !nativelySupportsAnnotations && !saveToArchive ) {
-        closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+        closeDialogHelper.reset(new TestingUtils::CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
     QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile1.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canUndo() );
@@ -1251,7 +1207,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
     QVERIFY( part.m_document->canRedo() );
 
     if ( !nativelySupportsAnnotations && !saveToArchive ) {
-        closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+        closeDialogHelper.reset(new TestingUtils::CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
     QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile2.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canRedo() );
@@ -1259,7 +1215,7 @@ void PartTest::testSaveAsUndoStackAnnotations()
     QVERIFY( part.m_document->canRedo() );
 
     if ( !nativelySupportsAnnotations && !saveToArchive ) {
-        closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+        closeDialogHelper.reset(new TestingUtils::CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
     QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile1.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canRedo() );
@@ -1267,14 +1223,14 @@ void PartTest::testSaveAsUndoStackAnnotations()
     QVERIFY( part.m_document->canRedo() );
 
     if ( !nativelySupportsAnnotations && !saveToArchive ) {
-        closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
+        closeDialogHelper.reset(new TestingUtils::CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "you're going to lose the annotations" dialog
     }
     QVERIFY( part.saveAs( QUrl::fromLocalFile( saveFile2.fileName() ), saveFlags ) );
     QVERIFY( part.m_document->canRedo() );
     part.m_document->redo();
     QVERIFY( !part.m_document->canRedo() );
 
-    closeDialogHelper.reset(new CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "do you want to save or discard" dialog
+    closeDialogHelper.reset(new TestingUtils::CloseDialogHelper( &part, QDialogButtonBox::No  )); // this is the "do you want to save or discard" dialog
     part.closeUrl();
 }
 
@@ -1841,7 +1797,7 @@ void PartTest::testTypewriterAnnotTool()
   typewriterButton->click();
 
   QTest::qWait(1000);  // Wait for the "add new note" dialog to appear
-  CloseDialogHelper closeDialogHelper( QDialogButtonBox::Ok );
+  TestingUtils::CloseDialogHelper closeDialogHelper( QDialogButtonBox::Ok );
 
   QTest::mouseClick(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, QPoint(width * 0.5, height * 0.2));
 
@@ -1923,7 +1879,7 @@ void PartTest::testTabletProximityBehavior()
     part.widget()->show();
 
     // close the KMessageBox "There are two ways of exiting[...]"
-    CloseDialogHelper closeDialogHelper( w, QDialogButtonBox::Ok ); // confirm the "To leave, press ESC"
+    TestingUtils::CloseDialogHelper closeDialogHelper( w, QDialogButtonBox::Ok ); // confirm the "To leave, press ESC"
 
     QTabletEvent enterProximityEvent{ QEvent::TabletEnterProximity,
                                       QPoint( 10, 10 ), QPoint( 10, 10 ),
@@ -1989,7 +1945,7 @@ void PartTest::testOpenPrintPreview()
     QVERIFY( openDocument( &part, QStringLiteral( KDESRCDIR "data/file1.pdf" ) ) );
     part.widget()->show();
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
-    CloseDialogHelper closeDialogHelper( QDialogButtonBox::Close );
+    TestingUtils::CloseDialogHelper closeDialogHelper( QDialogButtonBox::Close );
     part.slotPrintPreview();
 }
 

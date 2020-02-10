@@ -9,7 +9,6 @@
 
 #include "testingutils.h"
 #include "core/annotations.h"
-#include <qtest.h>
 
 namespace TestingUtils
 {
@@ -51,4 +50,5 @@ namespace TestingUtils
     {
         m_disposedAnnotationName = ann->uniqueName();
     }
+
 }

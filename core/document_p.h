@@ -339,6 +339,8 @@ class DocumentPrivate
 
         synctex_scanner_p m_synctex_scanner;
 
+        QString m_openError;
+
         // generator selection
         static QVector<KPluginMetaData> availableGenerators();
         static QVector<KPluginMetaData> configurableGenerators();

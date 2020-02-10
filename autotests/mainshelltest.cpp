@@ -16,6 +16,7 @@
 #include <QStandardPaths>
 #include <kconfiggroup.h>
 #include <klineedit.h>
+#include <krecentfilesaction.h>
 
 #include "../shell/okular_main.h"
 #include "../shell/shell.h"
@@ -25,6 +26,7 @@
 #include "../ui/presentationwidget.h"
 #include "../part.h"
 #include "../settings.h"
+#include "closedialoghelper.h"
 
 #include <sys/types.h>
 #ifndef Q_OS_WIN
@@ -89,6 +91,8 @@ private slots:
     void testMiddleButtonCloseUndo();
     void testSessionRestore_data();
     void testSessionRestore();
+    void testOpenInvalidFiles_data();
+    void testOpenInvalidFiles();
 
 private:
 };
@@ -243,7 +247,7 @@ void MainShellTest::testShell()
     Okular::Settings::self()->setShellOpenFileInTabs(useTabs);
 
     if (expectPrintDialog || externalProcessExpectPrintDialog) {
-        const int expectedTab = externalProcessExpectPrintDialog && !unique ? 1 : 0;
+        const int expectedTab = 0;
         helper.reset(new ClosePrintDialogHelper(expectedTab));
         QTimer::singleShot(0, helper.data(), SLOT(closePrintDialog()));
     }
@@ -599,6 +603,62 @@ void MainShellTest::testSessionRestore()
 
     QCOMPARE( numDocs, paths.size() );
     QCOMPARE( shells.size(), useTabsRestore ? numWindows : paths.size() );
+}
+
+void MainShellTest::testOpenInvalidFiles_data()
+{
+    QTest::addColumn<QList<QUrl>>("files");
+    QTest::addColumn<QString>("options");
+
+    QString options = ShellUtils::serializeOptions( false, false, false, false, false, QString(), QString() );
+    QUrl validFile = ShellUtils::urlFromArg( QStringLiteral( KDESRCDIR "data/file2.pdf" ), ShellUtils::qfileExistFunc(), QString() );
+    QUrl invalidFile = ShellUtils::urlFromArg( QStringLiteral( KDESRCDIR "data/non-existing-doc.pdf" ), ShellUtils::qfileExistFunc(), QString() );
+
+    QList<QUrl> firstCase { invalidFile, validFile };
+    QList<QUrl> secondCase { validFile, invalidFile };
+
+    QTest::newRow( "opening the invalid file first" ) << firstCase << options;
+    QTest::newRow( "opening the valid file first" ) << secondCase << options;
+}
+
+void MainShellTest::testOpenInvalidFiles()
+{
+    QFETCH( QList<QUrl>, files  );
+    QFETCH( QString, options  );
+
+
+    /*
+     *  The purpose of this test is to verify that when we open an invalid file, no tab is created in the
+     * shell.
+     *
+     */
+
+     Okular::Settings::self()->setShellOpenFileInTabs( true );
+     Okular::Status status = Okular::main( QStringList(), options );
+     QCOMPARE( status, Okular::Success );
+
+     Shell *shell = findShell();
+     QVERIFY( shell );
+
+     /*
+      *  We need to make sure that the KrecentFilesAction is empty before starting, because we will also test that
+      * the file gets removed from the recent documents
+      *
+      */
+     shell->m_recent->clear();
+
+     QScopedPointer<TestingUtils::CloseDialogHelper> closeDialogHelper { new TestingUtils::CloseDialogHelper( QDialogButtonBox::StandardButton::Ok ) };
+
+     for (const QUrl& file: files)
+     {
+         shell->openUrl( file );
+     }
+
+     QList<QUrl> recentFiles = shell->m_recent->urls();
+
+     QVERIFY( shell->m_tabs.size() == 1 );
+     QVERIFY( recentFiles.size() == 1 );
+     QVERIFY( recentFiles.first().toString().contains(  QStringLiteral( "data/file2.pdf" ) )  );
 }
 
 void MainShellTest::testMiddleButtonCloseUndo()

@@ -930,6 +930,7 @@ Document::OpenResult DocumentPrivate::openDocumentInternal( const KPluginMetaDat
     m_generator->d_func()->m_document = this;
 
     // connect error reporting signals
+    m_openError.clear();
     QMetaObject::Connection errorToOpenErrorConnection = QObject::connect( m_generator, &Generator::error, m_parent, [this](const QString &message) { m_openError = message; } );
     QObject::connect( m_generator, &Generator::warning, m_parent, &Document::warning );
     QObject::connect( m_generator, &Generator::notice, m_parent, &Document::notice );

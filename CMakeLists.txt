@@ -339,6 +339,16 @@ if (KF5JS_FOUND)
             core/script/kjs_ocg.cpp
     )
     target_link_libraries(okularcore PRIVATE KF5::JS KF5::JSApi)
+    set(CMAKE_REQUIRED_LIBRARIES KF5::JSApi)
+    check_cxx_source_compiles("
+#include <kjs/kjsinterpreter.h>
+int main()
+{
+  KJSInterpreter *ip = 0;
+  ip->setTimeoutTime(0);
+  return 0;
+}
+"   HAVE_KJS_TIMEOUT)
 endif()
 
 set_target_properties(okularcore PROPERTIES VERSION 9.0.0 SOVERSION 9 OUTPUT_NAME Okular5Core EXPORT_NAME Core)

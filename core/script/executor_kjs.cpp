@@ -21,6 +21,7 @@
 #include "../document_p.h"
 
 #include "event_p.h"
+#include "config-okular.h"
 #include "kjs_app_p.h"
 #include "kjs_console_p.h"
 #include "kjs_data_p.h"
@@ -60,6 +61,9 @@ void ExecutorKJSPrivate::initTypes()
     m_docObject = JSDocument::wrapDocument( m_doc );
     m_interpreter = new KJSInterpreter( m_docObject );
 
+#ifdef HAVE_KJS_TIMEOUT
+    m_interpreter->setTimeoutTime( 2000 ); // max 2 secs allowed
+#endif
     KJSContext *ctx = m_interpreter->globalContext();
 
     JSApp::initType( ctx );
@@ -113,9 +117,15 @@ void ExecutorKJS::execute( const QString &script, Event *event )
 
     d->m_docObject.setProperty( ctx, QStringLiteral("event"), event ? JSEvent::wrapEvent( ctx, event ) : KJSUndefined() );
 
+#ifdef HAVE_KJS_TIMEOUT
+    d->m_interpreter->startTimeoutCheck();
+#endif
     KJSResult result = d->m_interpreter->evaluate( QStringLiteral("okular.js"), 1,
                                                    script, &d->m_docObject );
-    
+#ifdef HAVE_KJS_TIMEOUT
+    d->m_interpreter->stopTimeoutCheck();
+#endif
+
     if ( result.isException() || ctx->hasException() )
     {
         qCDebug(OkularCoreDebug) << "JS exception" << result.errorMessage();

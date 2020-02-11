@@ -11,6 +11,7 @@
 #include "kjs_app_p.h"
 
 #include <kjs/kjsarguments.h>
+#include <kjs/kjsinterpreter.h>
 #include <kjs/kjsobject.h>
 #include <kjs/kjsprototype.h>
 
@@ -25,6 +26,7 @@
 
 #include "../document_p.h"
 #include "../scripter.h"
+#include "config-okular.h"
 #include "kjs_fullscreen_p.h"
 
 using namespace Okular;
@@ -236,8 +238,18 @@ static KJSObject appAlert( KJSContext *context, void *,
         box.setCheckBox( checkBox );
 
     }
-    
+
+#ifdef HAVE_KJS_TIMEOUT
+    // halt timeout until the user has responded
+    context->interpreter().stopTimeoutCheck();
+#endif
+
     int button = box.exec();
+
+#ifdef HAVE_KJS_TIMEOUT
+    // restart max allowed time
+    context->interpreter().startTimeoutCheck();
+#endif
 
     int ret;
 

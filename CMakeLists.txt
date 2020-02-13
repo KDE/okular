@@ -519,6 +519,6 @@ install(EXPORT Okular5Targets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE Okul
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
-message("-- Building Deskop User Interface: ${BUILD_DESKTOP}")
+message("-- Building Desktop User Interface: ${BUILD_DESKTOP}")
 message("-- Building Mobile Interface: ${BUILD_MOBILE}")
 message("")

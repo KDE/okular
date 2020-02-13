@@ -31,14 +31,14 @@
  *
  * @par Intention
  * Setting the default action of the toolbar button can be useful for:
- *  * Providing the most propably needed entry of a menu directly on the menu button.
+ *  * Providing the most probably needed entry of a menu directly on the menu button.
  *  * Showing the last used menu entry on the menu button, including its checked state.
  * The advantage is that the user often does not need to open the menu,
  * and that the toolbar button shows additional information
  * like checked state or the user's last selection.
  *
  * This shall replace the former ToolAction in Okular,
- * while beeing flexible enough for other (planned) action menus.
+ * while being flexible enough for other (planned) action menus.
  */
 class ToggleActionMenu : public KActionMenu
 {
@@ -103,7 +103,7 @@ public:
      *
      * It will be used if the default action is not determined another way.
      * This is useful for ImplicitDefaultAction mode,
-     * when you can not guarrantee that one action in the menu
+     * when you can not guarantee that one action in the menu
      * will be checked.
      *
      * @note

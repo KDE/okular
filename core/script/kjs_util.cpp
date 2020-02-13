@@ -93,7 +93,7 @@ static KJSObject printd( KJSContext *context, void *,
     else
     {
         format = arguments.at( 0 ).toString( context ).replace( "tt", "ap" );
-        format.replace( "t", "a" );
+        format.replace( 't', 'a' );
         for( QChar &formatChar : format )
         {  
             if( formatChar == 'M' )

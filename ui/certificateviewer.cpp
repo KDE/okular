@@ -93,7 +93,7 @@ static QString splitDNAttributes(const QStringList &text)
             const QRegularExpressionMatch match = re.match( t );
             if ( match.hasMatch() )
             {
-                t = attribute + "=" + match.captured( 1 );
+                t = attribute + '=' + match.captured( 1 );
             }
         }
     }

@@ -247,7 +247,7 @@ void MainShellTest::testShell()
     Okular::Settings::self()->setShellOpenFileInTabs(useTabs);
 
     if (expectPrintDialog || externalProcessExpectPrintDialog) {
-        const int expectedTab = 0;
+        const int expectedTab = externalProcessExpectPrintDialog && !unique ? 1 : 0;
         helper.reset(new ClosePrintDialogHelper(expectedTab));
         QTimer::singleShot(0, helper.data(), SLOT(closePrintDialog()));
     }
@@ -611,14 +611,15 @@ void MainShellTest::testOpenInvalidFiles_data()
     QTest::addColumn<QString>("options");
 
     QString options = ShellUtils::serializeOptions( false, false, false, false, false, QString(), QString() );
-    QUrl validFile = ShellUtils::urlFromArg( QStringLiteral( KDESRCDIR "data/file2.pdf" ), ShellUtils::qfileExistFunc(), QString() );
+    QUrl validFile1 = ShellUtils::urlFromArg( QStringLiteral( KDESRCDIR "data/file1.pdf" ), ShellUtils::qfileExistFunc(), QString() );
+    QUrl validFile2 = ShellUtils::urlFromArg( QStringLiteral( KDESRCDIR "data/file2.pdf" ), ShellUtils::qfileExistFunc(), QString() );
     QUrl invalidFile = ShellUtils::urlFromArg( QStringLiteral( KDESRCDIR "data/non-existing-doc.pdf" ), ShellUtils::qfileExistFunc(), QString() );
 
-    QList<QUrl> firstCase { invalidFile, validFile };
-    QList<QUrl> secondCase { validFile, invalidFile };
+    QList<QUrl> firstCase { invalidFile, validFile1, validFile2 };
+    QList<QUrl> secondCase { validFile1, validFile2, invalidFile };
 
     QTest::newRow( "opening the invalid file first" ) << firstCase << options;
-    QTest::newRow( "opening the valid file first" ) << secondCase << options;
+    QTest::newRow( "opening the valids file first" ) << secondCase << options;
 }
 
 void MainShellTest::testOpenInvalidFiles()
@@ -656,9 +657,15 @@ void MainShellTest::testOpenInvalidFiles()
 
      QList<QUrl> recentFiles = shell->m_recent->urls();
 
-     QVERIFY( shell->m_tabs.size() == 1 );
-     QVERIFY( recentFiles.size() == 1 );
-     QVERIFY( recentFiles.first().toString().contains(  QStringLiteral( "data/file2.pdf" ) )  );
+     QVERIFY( shell->m_tabs.size() == 2 );
+     QVERIFY( shell->m_tabWidget->tabBar()->isVisible() );
+
+     QVERIFY( ! shell->m_tabWidget->tabIcon(0).isNull() );
+     QVERIFY( ! shell->m_tabWidget->tabIcon(1).isNull() );
+
+
+     QVERIFY( recentFiles.size() == 2 );
+
 }
 
 void MainShellTest::testMiddleButtonCloseUndo()

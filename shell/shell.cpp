@@ -673,6 +673,13 @@ void Shell::closeTab( int tab )
 
 void Shell::openNewTab( const QUrl& url, const QString &serializedOptions )
 {
+    // Tabs are hidden when there's only one, so show it
+    if( m_tabs.size() == 1 )
+    {
+        m_tabWidget->tabBar()->show();
+        m_nextTabAction->setEnabled( true );
+        m_prevTabAction->setEnabled( true );
+    }
 
     const int newIndex = m_tabs.size();
 
@@ -680,7 +687,10 @@ void Shell::openNewTab( const QUrl& url, const QString &serializedOptions )
     m_tabs.append( m_partFactory->create<KParts::ReadWritePart>(this) );
     connectPart( m_tabs[newIndex].part );
 
+    // Update GUI
     KParts::ReadWritePart* const part = m_tabs[newIndex].part;
+    m_tabWidget->addTab( part->widget(), url.fileName() );
+
     applyOptionsToPart(part, serializedOptions);
 
     int previousActiveTab = m_tabWidget->currentIndex();
@@ -688,17 +698,6 @@ void Shell::openNewTab( const QUrl& url, const QString &serializedOptions )
 
     if( part->openUrl(url) )
     {
-        // Update GUI
-        m_tabWidget->addTab( part->widget(), url.fileName() );
-
-        // Tabs are hidden when there's only one, so show it
-        if( m_tabs.size() == 1 )
-        {
-            m_tabWidget->tabBar()->show();
-            m_nextTabAction->setEnabled( true );
-            m_prevTabAction->setEnabled( true );
-        }
-
         m_recent->addUrl( url );
     }
     else

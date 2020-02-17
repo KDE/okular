@@ -18,7 +18,7 @@ class CertificateTools : public QWidget
 {
     Q_OBJECT
 
-    Q_PROPERTY( QStringList certificates READ certificates WRITE setCertificates NOTIFY changed USER true )
+    Q_PROPERTY(QStringList certificates READ certificates WRITE setCertificates NOTIFY changed USER true)
 
     public:
         explicit CertificateTools( QWidget * parent = nullptr );

@@ -1421,7 +1421,7 @@ static void calculateStatisticalInformation(const QList<WordWithCharacters> &wor
     QMap<int,int> hor_space_stat;
     QMap<int,int> col_space_stat;
     QList< QList<QRect> > space_rects;
-    QList<QRect> max_hor_space_rects;
+    QVector<QRect> max_hor_space_rects;
 
     // Space in every line
     for(const QPair<WordsWithCharacters, QRect> &sortedLine : sortedLines)

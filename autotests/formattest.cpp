@@ -64,7 +64,8 @@ void FormatTest::initTestCase()
             });
 
     const Okular::Page* page = m_document->page( 0 );
-    for ( Okular::FormField *ff: page->formFields() )
+    const QLinkedList<Okular::FormField *> pageFormFields = page->formFields();
+    for ( Okular::FormField *ff: pageFormFields )
     {
         m_fields.insert( ff->name(),  ff );
     }

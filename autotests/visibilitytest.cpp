@@ -60,7 +60,8 @@ void VisibilityTest::initTestCase()
     // With two radio buttons named TargetRadio.
 
     const Okular::Page* page = m_document->page( 0 );
-    for ( Okular::FormField *ff: page->formFields() )
+    const QLinkedList<Okular::FormField *> pageFormFields = page->formFields();
+    for ( Okular::FormField *ff : pageFormFields )
     {
         m_fields.insert( ff->name(),  ff );
     }
@@ -137,7 +138,8 @@ void VisibilityTest::testSaveLoad()
     const Okular::Page* page = newDoc->page( 0 );
 
     bool anyChecked = false; // Saveguard against accidental test passing here ;-)
-    for ( Okular::FormField *ff: page->formFields() )
+    const QLinkedList<Okular::FormField *> pageFormFields = page->formFields();
+    for ( Okular::FormField *ff: pageFormFields )
     {
         if ( ff->name().startsWith( QStringLiteral( "Target" ) ) )
         {

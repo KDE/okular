@@ -400,7 +400,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
         if ( bufferedHighlights )
         {
             // draw highlights that are inside the 'limits' paint region
-            for (const auto& highlight : *bufferedHighlights)
+            for (const auto& highlight : qAsConst(*bufferedHighlights))
             {
                 const Okular::NormalizedRect & r = highlight.second;
                 // find out the rect to highlight on pixmap

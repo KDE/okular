@@ -4411,7 +4411,8 @@ void Document::processAction( const Action * action )
 
     if ( executeNextActions )
     {
-        for ( const Action *a : action->nextActions() )
+        const QVector<Action*> nextActions = action->nextActions();
+        for ( const Action *a : nextActions )
         {
             processAction( a );
         }
@@ -4802,7 +4803,7 @@ QStringList Document::supportedMimeTypes() const
         // Remove duplicate mimetypes represented by different names
         QMimeDatabase mimeDatabase;
         QSet<QMimeType> uniqueMimetypes;
-        for (const QString &mimeName : result) {
+        for (const QString &mimeName : qAsConst(result)) {
             uniqueMimetypes.insert(mimeDatabase.mimeTypeForName(mimeName));
         }
         result.clear();
@@ -5078,7 +5079,8 @@ ArchiveData *DocumentPrivate::unpackDocumentArchive( const QString &archivePath 
 
     // Check the archive doesn't have folders, we don't create them when saving the archive
     // and folders mean paths and paths mean path traversal issues
-    for ( const QString &entry : mainDir->entries() )
+    const QStringList mainDirEntries = mainDir->entries();
+    for ( const QString &entry : mainDirEntries )
     {
         if ( mainDir->entry( entry )->isDirectory() )
         {

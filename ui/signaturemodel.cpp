@@ -96,7 +96,7 @@ static void updateFormFieldSignaturePointer( SignatureItem *item, const QVector<
     if ( item->form )
     {
         const QLinkedList< Okular::FormField * > formFields = pages[item->page]->formFields();
-        for ( Okular::FormField *f : pages[item->page]->formFields() )
+        for ( Okular::FormField *f : formFields )
         {
             if ( item->form->id() == f->id() )
             {

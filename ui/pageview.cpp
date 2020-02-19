@@ -4266,7 +4266,8 @@ void PageView::updateZoomText()
 
 void PageView::updateViewMode(const int nr)
 {
-    for ( QAction* action : d->aViewMode->menu()->actions() ) {
+    const QList<QAction*> actions = d->aViewMode->menu()->actions();
+    for ( QAction* action : actions ) {
         QVariant mode_id = action->data();
         if (mode_id.toInt() == nr) {
             action->trigger();

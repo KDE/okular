@@ -92,7 +92,8 @@ QAction * ToggleActionMenu::checkedAction( QMenu *menu ) const
 {
     // Look at each action a in the menu whether it is checked.
     // If a is a menu, recursively call checkedAction().
-    for ( QAction * a : menu->actions() )
+    const QList<QAction*> actions = menu->actions();
+    for ( QAction * a : actions )
     {
         if ( a->isChecked() )
         {

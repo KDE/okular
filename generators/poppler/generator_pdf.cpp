@@ -497,7 +497,8 @@ Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink, bool
         {
             const Poppler::LinkHide * l = static_cast<const Poppler::LinkHide *>( popplerLink );
             QStringList scripts;
-            for ( const QString &target: l->targets() )
+            const QVector<QString> targets = l->targets();
+            for ( const QString &target : targets )
             {
                 scripts << QStringLiteral( "getField(\"%1\").hidden = %2;" ).arg( target ).arg( l->isShowAction() ? QLatin1String( "false" ) : QLatin1String( "true" ) );
             }
@@ -517,7 +518,8 @@ Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink, bool
     if (link)
     {
         QVector< Okular::Action * > nextActions;
-        for ( const Poppler::Link *nl : popplerLink->nextLinks() )
+        const QVector<Poppler::Link *> nextLinks = popplerLink->nextLinks();
+        for ( const Poppler::Link *nl : nextLinks )
         {
             nextActions << createLinkFromPopplerLink( nl, false );
         }

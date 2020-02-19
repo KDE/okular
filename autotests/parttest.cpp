@@ -1264,7 +1264,8 @@ void PartTest::testSaveAsUndoStackForms()
     Okular::Part part(nullptr, nullptr, QVariantList());
     part.openDocument( file );
 
-    for ( FormField *ff : part.m_document->page( 0 )->formFields() )
+    const QLinkedList<Okular::FormField *> pageFormFields = part.m_document->page( 0 )->formFields();
+    for ( FormField *ff : pageFormFields )
     {
         if ( ff->id() == 65537 )
         {
@@ -1432,7 +1433,8 @@ void PartTest::testCheckBoxReadOnly()
     // Field names in test document are:
     // CBMakeRW, CBMakeRO, TargetDefaultRO, TargetDefaultRW
 
-    for ( Okular::FormField *ff: page->formFields() )
+    const QLinkedList<Okular::FormField *> pageFormFields = page->formFields();
+    for ( Okular::FormField *ff: pageFormFields )
     {
         fields.insert( ff->name(), static_cast< Okular::FormField* >( ff ) );
     }
@@ -1507,9 +1509,12 @@ void PartTest::testCheckBoxReadOnly()
 
     fields.clear();
 
-    for ( Okular::FormField *ff: page->formFields() )
     {
-        fields.insert( ff->name(), static_cast< Okular::FormField* >( ff ) );
+        const QLinkedList<Okular::FormField *> pageFormFields = page->formFields();
+        for ( Okular::FormField *ff: pageFormFields )
+        {
+            fields.insert( ff->name(), static_cast< Okular::FormField* >( ff ) );
+        }
     }
 
     cbMakeRW = dynamic_cast< Okular::FormFieldButton* > ( fields[QStringLiteral( "CBMakeRW" )] );
@@ -1677,7 +1682,8 @@ void PartTest::testAdditionalActionTriggers()
     // For target fields: <trigger_name>_focus_target, <trigger_name>_cursor_target,
     // <trigger_name>_mouse_target
     const Okular::Page* page = part.m_document->page( 0 );
-    for ( Okular::FormField *ff: page->formFields() )
+    const QLinkedList<Okular::FormField *> pageFormFields = page->formFields();
+    for ( Okular::FormField *ff: pageFormFields )
     {
         fields.insert( ff->name(), static_cast< Okular::FormField* >( ff ) );
     }

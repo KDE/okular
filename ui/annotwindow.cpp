@@ -1,4 +1,4 @@
-/***************************************************************************
+    /***************************************************************************
  *   Copyright (C) 2006 by Chu Xiaodong <xiaodongchu@gmail.com>            *
  *   Copyright (C) 2006 by Pino Toscano <pino@kde.org>                     *
  *   Copyright (C) 2017    Klarälvdalens Datakonsult AB, a KDAB Group      *
@@ -232,7 +232,9 @@ AnnotWindow::AnnotWindow( QWidget * parent, Okular::Annotation * annot, Okular::
     lowerlay->addWidget( sb );
 
     m_latexRenderer = new GuiUtils::LatexRenderer();
-    emit containsLatex( GuiUtils::LatexRenderer::mightContainLatex( m_annot->contents() ) );
+    // The emit below is not wrong even if emitting signals from the constructor it's usually wrong
+    // in this case the signal it's connected to inside MovableTitle constructor a few lines above
+    emit containsLatex( GuiUtils::LatexRenderer::mightContainLatex( m_annot->contents() ) ); // clazy:exclude=incorrect-emit
 
     m_title->setTitle( m_annot->window().summary() );
     m_title->connectOptionButton( this, SLOT(slotOptionBtn()) );

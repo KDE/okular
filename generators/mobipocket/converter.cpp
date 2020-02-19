@@ -37,11 +37,11 @@ void Converter::handleMetadata(const QMap<Mobipocket::Document::MetaKey,QString>
   while (it.hasNext()) {
     it.next();
     switch (it.key()) {
-        case Mobipocket::Document::Title: addMetaData(Okular::DocumentInfo::Title, it.value()); break;
-        case Mobipocket::Document::Author: addMetaData(Okular::DocumentInfo::Author, it.value()); break;
-        case Mobipocket::Document::Description: addMetaData(Okular::DocumentInfo::Description, it.value()); break;
-        case Mobipocket::Document::Subject: addMetaData(Okular::DocumentInfo::Subject, it.value()); break;
-        case Mobipocket::Document::Copyright: addMetaData(Okular::DocumentInfo::Copyright, it.value()); break;
+        case Mobipocket::Document::Title: emit addMetaData(Okular::DocumentInfo::Title, it.value()); break;
+        case Mobipocket::Document::Author: emit addMetaData(Okular::DocumentInfo::Author, it.value()); break;
+        case Mobipocket::Document::Description: emit addMetaData(Okular::DocumentInfo::Description, it.value()); break;
+        case Mobipocket::Document::Subject: emit addMetaData(Okular::DocumentInfo::Subject, it.value()); break;
+        case Mobipocket::Document::Copyright: emit addMetaData(Okular::DocumentInfo::Copyright, it.value()); break;
     }
   }
 }

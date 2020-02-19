@@ -284,13 +284,13 @@ void MiniBar::slotChangePage( int pageNumber )
 void MiniBar::slotEmitNextPage()
 {
     // emit signal
-    nextPage();
+    emit nextPage();
 }
 
 void MiniBar::slotEmitPrevPage()
 {
     // emit signal
-    prevPage();
+    emit prevPage();
 }
 
 void MiniBar::slotToolBarIconSizeChanged()

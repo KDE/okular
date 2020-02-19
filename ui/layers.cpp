@@ -37,7 +37,6 @@ Layers::Layers(QWidget *parent, Okular::Document *document) : QWidget(parent), m
     m_treeView = new QTreeView( this );
     mainlay->addWidget( m_treeView );
 
-    emit hasLayers( false );
     m_treeView->setSortingEnabled( false );
     m_treeView->setRootIsDecorated( true );
     m_treeView->setAlternatingRowColors( true );

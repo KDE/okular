@@ -607,12 +607,12 @@ void FormLineEdit::slotChanged()
 
     if ( contents != form->text() )
     {
-        m_controller->formTextChangedByWidget( pageItem()->pageNumber(),
-                                               form,
-                                               contents,
-                                               cursorPos,
-                                               m_prevCursorPos,
-                                               m_prevAnchorPos );
+        emit m_controller->formTextChangedByWidget( pageItem()->pageNumber(),
+                                                   form,
+                                                   contents,
+                                                   cursorPos,
+                                                   m_prevCursorPos,
+                                                   m_prevAnchorPos );
     }
 
     m_prevCursorPos = cursorPos;
@@ -794,12 +794,12 @@ void TextAreaEdit::slotChanged()
 
     if (contents != form->text())
     {
-        m_controller->formTextChangedByWidget( pageItem()->pageNumber(),
-                                               form,
-                                               contents,
-                                               cursorPos,
-                                               m_prevCursorPos,
-                                               m_prevAnchorPos );
+        emit m_controller->formTextChangedByWidget( pageItem()->pageNumber(),
+                                                   form,
+                                                   contents,
+                                                   cursorPos,
+                                                   m_prevCursorPos,
+                                                   m_prevAnchorPos );
     }
     m_prevCursorPos = cursorPos;
     m_prevAnchorPos = textCursor().anchor();
@@ -903,12 +903,12 @@ void FileEdit::slotChanged()
     int cursorPos = lineEdit()->cursorPosition();
     if (contents != form->text())
     {
-        m_controller->formTextChangedByWidget( pageItem()->pageNumber(),
-                                               form,
-                                               contents,
-                                               cursorPos,
-                                               m_prevCursorPos,
-                                               m_prevAnchorPos );
+        emit m_controller->formTextChangedByWidget( pageItem()->pageNumber(),
+                                                   form,
+                                                   contents,
+                                                   cursorPos,
+                                                   m_prevCursorPos,
+                                                   m_prevAnchorPos );
     }
 
     m_prevCursorPos = cursorPos;
@@ -987,9 +987,9 @@ void ListEdit::slotSelectionChanged()
     }
     Okular::FormFieldChoice *form = static_cast<Okular::FormFieldChoice *>(m_ff);
     if ( rows != form->currentChoices() ) {
-        m_controller->formListChangedByWidget( pageItem()->pageNumber(),
-                                               form,
-                                               rows );
+        emit m_controller->formListChangedByWidget( pageItem()->pageNumber(),
+                                                   form,
+                                                   rows );
     }
 }
 
@@ -1064,13 +1064,13 @@ void ComboEdit::slotValueChanged()
     int cursorPos = lineEdit()->cursorPosition();
     if ( text != prevText )
     {
-        m_controller->formComboChangedByWidget( pageItem()->pageNumber(),
-                                                form,
-                                                currentText(),
-                                                cursorPos,
-                                                m_prevCursorPos,
-                                                m_prevAnchorPos
-                                              );
+        emit m_controller->formComboChangedByWidget( pageItem()->pageNumber(),
+                                                    form,
+                                                    currentText(),
+                                                    cursorPos,
+                                                    m_prevCursorPos,
+                                                    m_prevAnchorPos
+                                                  );
     }
     prevText = text;
     m_prevCursorPos = cursorPos;

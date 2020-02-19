@@ -1123,8 +1123,8 @@ void Part::openUrlFromDocument(const QUrl &url)
         }
     }
 
-    m_bExtension->openUrlNotify();
-    m_bExtension->setLocationBarUrl(url.toDisplayString());
+    emit m_bExtension->openUrlNotify();
+    emit m_bExtension->setLocationBarUrl(url.toDisplayString());
     openUrl(url);
 }
 

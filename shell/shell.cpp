@@ -838,7 +838,7 @@ void Shell::slotFitWindowToPage(const QSize& pageViewSize, const QSize& pageSize
     const int yOffset = pageViewSize.height() - pageSize.height();
     showNormal();
     resize( width() - xOffset, height() - yOffset);
-    moveSplitter(pageSize.width());
+    emit moveSplitter(pageSize.width());
 }
 
 /* kate: replace-tabs on; indent-width 4; */

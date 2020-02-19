@@ -25,8 +25,8 @@ FormFieldPrivate::FormFieldPrivate( FormField::FieldType type )
 FormFieldPrivate::~FormFieldPrivate()
 {
     delete m_activateAction;
-    qDeleteAll( m_additionalActions.values() );
-    qDeleteAll( m_additionalAnnotActions.values() );
+    qDeleteAll( m_additionalActions );
+    qDeleteAll( m_additionalAnnotActions );
 }
 
 void FormFieldPrivate::setDefault()

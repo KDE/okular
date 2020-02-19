@@ -746,10 +746,10 @@ void PageView::setupActions( KActionCollection * ac )
     d->aSpeakPauseResume->setEnabled( false );
     connect( d->aSpeakPauseResume, &QAction::triggered, this, &PageView::slotPauseResumeSpeech );
 #else
-    d->aSpeakDoc = 0;
-    d->aSpeakPage = 0;
-    d->aSpeakStop = 0;
-    d->aSpeakPauseResume = 0;
+    d->aSpeakDoc = nullptr;
+    d->aSpeakPage = nullptr;
+    d->aSpeakStop = nullptr;
+    d->aSpeakPauseResume = nullptr;
 #endif
 
     // Other actions

@@ -51,7 +51,7 @@ private:
 	// Resolve an object inside a CHM file
 	inline bool ResolveObject (const QString& fileName, chmUnitInfo *ui)
 	{
-		return m_chmFile != NULL && ::chm_resolve_object(m_chmFile, fileName.toUtf8().constData(), ui) == CHM_RESOLVE_SUCCESS;
+		return m_chmFile != nullptr && ::chm_resolve_object(m_chmFile, fileName.toUtf8().constData(), ui) == CHM_RESOLVE_SUCCESS;
 	}
 
 	// Retrieve an object from the CHM file

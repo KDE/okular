@@ -49,7 +49,7 @@
 #define SEGMENT_END_CHAR        ']'
 #define OPTION_SEPARATOR_CHARS  "=:"
 
-HashTable *SectionsTable = NULL;
+HashTable *SectionsTable = nullptr;
 
 static HashTable* GetOrCreateSegment
     (
@@ -58,10 +58,10 @@ static HashTable* GetOrCreateSegment
 {
     HashTable* target;
 
-    if (SectionsTable == NULL)
+    if (SectionsTable == nullptr)
         SectionsTable = _plkr_NewHashTable (23);
 
-    if ((target = (HashTable*)_plkr_FindInTable (SectionsTable, name)) == NULL) {
+    if ((target = (HashTable*)_plkr_FindInTable (SectionsTable, name)) == nullptr) {
         target = _plkr_NewHashTable (53);
         _plkr_AddToTable (SectionsTable, name, target);
     }
@@ -74,7 +74,7 @@ static int ReadConfigFile
     const char* filename
     )
 {
-    HashTable*  current_segment = NULL;
+    HashTable*  current_segment = nullptr;
     FILE*       fp = fopen (filename, "r");
     char*       ptr;
     char*       str_end;
@@ -89,13 +89,13 @@ static int ReadConfigFile
     int         status;
     int         line_number;
 
-    if (fp == NULL) {
+    if (fp == nullptr) {
         _plkr_message ("Can't open config file %s", filename);
         return 0;
     }
 
     current_segment = GetOrCreateSegment ("default");
-    current_option = NULL;
+    current_option = nullptr;
 
     status = 1;                 /* optimistic */
     line_number = 0;
@@ -103,7 +103,7 @@ static int ReadConfigFile
     while (true) {
 
         ptr = fgets (linebuf, sizeof (linebuf) - 1, fp);
-        if (ptr == NULL)
+        if (ptr == nullptr)
             break;
 
         line_number += 1;
@@ -122,7 +122,7 @@ static int ReadConfigFile
             /* blank line */
             continue;
 
-        if ((strchr (COMMENT_CHARS, linebuf[0]) != NULL) ||
+        if ((strchr (COMMENT_CHARS, linebuf[0]) != nullptr) ||
             (strncmp (linebuf, "rem", 3) == 0) ||
             (strncmp (linebuf, "REM", 3) == 0))
             /* comment */
@@ -133,7 +133,7 @@ static int ReadConfigFile
         if (linebuf[buf_index] == SEGMENT_LEAD_CHAR) {
             if ((str_end =
                  strchr (linebuf + buf_index + 1,
-                         SEGMENT_END_CHAR)) == NULL) {
+                         SEGMENT_END_CHAR)) == nullptr) {
                 /* invalid segment line */
                 _plkr_message ("%s:%d:  Invalid segment line '%s'",
                                filename, line_number, linebuf);
@@ -147,11 +147,11 @@ static int ReadConfigFile
             /* fprintf (stderr, "Current segment is now %p (%s)\n", current_segment, str_begin); */
             if (current_option)
                 free (current_option);
-            current_option = NULL;
+            current_option = nullptr;
 
         }
         else if ((linebuf[0] == ' ' || linebuf[0] == '\t')
-                 && current_option != NULL) {
+                 && current_option != nullptr) {
             /* continuation line */
             str_begin =
                 (char *) _plkr_RemoveFromTable (current_segment,
@@ -190,7 +190,7 @@ static int ReadConfigFile
             while (isspace (*ptr) && (*ptr != '\0'))
                 ptr++;
 
-            if (strchr (OPTION_SEPARATOR_CHARS, *ptr) != NULL)
+            if (strchr (OPTION_SEPARATOR_CHARS, *ptr) != nullptr)
                 ptr++;
             else {
                 _plkr_message ("%s:%d:  Invalid option line '%s'",
@@ -251,7 +251,7 @@ static void TryReadConfigFile
 {
     char*  filename;
 
-    if (dir == NULL || name == NULL)
+    if (dir == nullptr || name == nullptr)
         return;
 
     filename = (char *) malloc (strlen (dir) + strlen (name) + 2);
@@ -272,7 +272,7 @@ static void InitializeConfigInfo ()
     char *home = getenv ("HOME");
 
     TryReadConfigFile (config_dir, system_config_file_name);
-    if (home != NULL)
+    if (home != nullptr)
         TryReadConfigFile (home, user_config_filename);
 }
 
@@ -283,38 +283,38 @@ char* plkr_GetConfigString
     char*  default_value
     )
 {
-    char*       value = NULL;
+    char*       value = nullptr;
     HashTable*  section;
 
-    if (SectionsTable == NULL)
+    if (SectionsTable == nullptr)
         InitializeConfigInfo ();
 
-    if (SectionsTable == NULL)
+    if (SectionsTable == nullptr)
         return default_value;
 
-    if (section_name != NULL) {
+    if (section_name != nullptr) {
         if ((section =
              (HashTable *) _plkr_FindInTable (SectionsTable,
-                                              section_name)) != NULL)
+                                              section_name)) != nullptr)
             value = (char *) _plkr_FindInTable (section, option_name);
     }
-    if (value == NULL && ((section_name == NULL)
+    if (value == nullptr && ((section_name == nullptr)
                           || (strcmp (section_name, "default") != 0))) {
         if ((section =
              (HashTable *) _plkr_FindInTable (SectionsTable,
                                               STRINGIFY (OS_SECTION_NAME)))
-            != NULL)
+            != nullptr)
             value = (char *) _plkr_FindInTable (section, option_name);
     }
-    if (value == NULL && ((section_name == NULL)
+    if (value == nullptr && ((section_name == nullptr)
                           || (strcmp (section_name, "default") != 0))) {
         if ((section =
              (HashTable *) _plkr_FindInTable (SectionsTable,
-                                              "default")) != NULL)
+                                              "default")) != nullptr)
             value = (char *) _plkr_FindInTable (section, option_name);
     }
 
-    return ((value == NULL) ? default_value : value);
+    return ((value == nullptr) ? default_value : value);
 }
 
 long int plkr_GetConfigInt
@@ -324,11 +324,11 @@ long int plkr_GetConfigInt
     long int  default_value
     )
 {
-    char*     svalue = plkr_GetConfigString (section_name, option_name, NULL);
+    char*     svalue = plkr_GetConfigString (section_name, option_name, nullptr);
     char*     endptr;
     long int  value;
 
-    if (svalue == NULL)
+    if (svalue == nullptr)
         return default_value;
 
     value = strtol (svalue, &endptr, 0);
@@ -349,11 +349,11 @@ double plkr_GetConfigFloat
     double  default_value
     )
 {
-    char*   svalue = plkr_GetConfigString (section_name, option_name, NULL);
+    char*   svalue = plkr_GetConfigString (section_name, option_name, nullptr);
     char*   endptr;
     double  value;
 
-    if (svalue == NULL)
+    if (svalue == nullptr)
         return default_value;
 
     value = strtod (svalue, &endptr);
@@ -374,9 +374,9 @@ int plkr_GetConfigBoolean
     int    default_value
     )
 {
-    char*  svalue = plkr_GetConfigString (section_name, option_name, NULL);
+    char*  svalue = plkr_GetConfigString (section_name, option_name, nullptr);
 
-    if (svalue == NULL)
+    if (svalue == nullptr)
         return default_value;
 
     if ((strcmp (svalue, "1") == 0) ||

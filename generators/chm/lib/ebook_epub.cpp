@@ -35,7 +35,7 @@ static const char * URL_SCHEME_EPUB = "epub";
 EBook_EPUB::EBook_EPUB()
     : EBook()
 {
-	m_zipFile = 0;
+	m_zipFile = nullptr;
 }
 
 EBook_EPUB::~EBook_EPUB()
@@ -88,7 +88,7 @@ void EBook_EPUB::close()
 	if ( m_zipFile )
 	{
 		zip_close( m_zipFile );
-		m_zipFile = 0;
+		m_zipFile = nullptr;
 	}
 
     //if ( m_epubFile.isOpen() )
@@ -322,7 +322,7 @@ bool EBook_EPUB::getFileAsString(QString &str, const QString &path) const
 
 		if ( utf16 > 0 && utf16 < endxmltag )
 		{
-			QMessageBox::critical( 0,
+			QMessageBox::critical( nullptr,
 								   ("Unsupported encoding"),
 								   ("The encoding of this ebook is not supported yet. Please send it to gyunaev@ulduzsoft.com for support to be added") );
 			return false;

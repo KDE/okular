@@ -87,7 +87,7 @@ QTextDocument *Converter::convertOpenFile()
         flags |= MKD_NOPANTS;
     if ( !mkd_compile( markdownHandle, flags ) ) {
         emit error( i18n( "Failed to compile the Markdown document." ), -1 );
-        return 0;
+        return nullptr;
     }
     
     char *htmlDocument;

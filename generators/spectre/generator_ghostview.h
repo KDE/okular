@@ -28,8 +28,8 @@ class GSGenerator : public Okular::Generator, public Okular::ConfigInterface
 
         // Document description and Table of contents
         Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const override;
-        const Okular::DocumentSynopsis * generateDocumentSynopsis()  override { return 0L; }
-        const Okular::DocumentFonts * generateDocumentFonts() { return 0L; }
+        const Okular::DocumentSynopsis * generateDocumentSynopsis()  override { return nullptr; }
+        const Okular::DocumentFonts * generateDocumentFonts() { return nullptr; }
 
         // page contents generation
         bool canGeneratePixmap() const override;

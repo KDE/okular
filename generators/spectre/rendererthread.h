@@ -30,8 +30,8 @@ struct GSRendererThreadRequest
 {
     GSRendererThreadRequest(GSGenerator *_owner)
         : owner(_owner)
-        , request(0)
-        , spectrePage(0)
+        , request(nullptr)
+        , spectrePage(nullptr)
         , textAAbits(1)
         , graphicsAAbits(1)
         , magnify(1.0)

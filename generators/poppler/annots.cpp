@@ -277,7 +277,7 @@ void PopplerAnnotationProxy::notifyRemoval( Okular::Annotation *okl_ann, int pag
 
 Okular::Annotation* createAnnotationFromPopplerAnnotation( Poppler::Annotation *ann, bool *doDelete )
 {
-    Okular::Annotation *annotation = 0;
+    Okular::Annotation *annotation = nullptr;
     *doDelete = true;
     bool tieToOkularAnn = false;
     bool externallyDrawn = false;

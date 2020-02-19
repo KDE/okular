@@ -52,12 +52,12 @@ QTextDocument* Converter::convert( const QString &fileName )
   if (!newDocument->mobi()->isValid()) {
     emit error(i18n("Error while opening the Mobipocket document."), -1);
     delete newDocument;
-    return NULL;
+    return nullptr;
   }
   if (newDocument->mobi()->hasDRM()) {
     emit error(i18n("This book is protected by DRM and can be displayed only on designated device"), -1);
     delete newDocument;
-    return NULL;
+    return nullptr;
   }
   
   handleMetadata(newDocument->mobi()->metadata());

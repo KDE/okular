@@ -41,8 +41,8 @@ OKULAR_EXPORT_PLUGIN(GSGenerator, "libokularGenerator_ghostview.json")
 
 GSGenerator::GSGenerator( QObject *parent, const QVariantList &args ) :
     Okular::Generator( parent, args ),
-    m_internalDocument(0),
-    m_request(0)
+    m_internalDocument(nullptr),
+    m_request(nullptr)
 {
     setFeature( PrintPostscript );
     setFeature( PrintToFile );
@@ -153,7 +153,7 @@ bool GSGenerator::loadDocument( const QString & fileName, QVector< Okular::Page 
     {
         qCDebug(OkularSpectreDebug) << "ERR:" << spectre_status_to_string(loadStatus);
         spectre_document_free(m_internalDocument);
-        m_internalDocument = 0;
+        m_internalDocument = nullptr;
         return false;
     }
     pagesVector.resize( spectre_document_get_n_pages(m_internalDocument) );
@@ -164,7 +164,7 @@ bool GSGenerator::loadDocument( const QString & fileName, QVector< Okular::Page 
 bool GSGenerator::doCloseDocument()
 {
     spectre_document_free(m_internalDocument);
-    m_internalDocument = 0;
+    m_internalDocument = nullptr;
 
     return true;
 }
@@ -178,7 +178,7 @@ void GSGenerator::slotImageGenerated(QImage *img, Okular::PixmapRequest *request
     if ( !request->page()->isBoundingBoxKnown() )
         updatePageBoundingBox( request->page()->number(), Okular::Utils::imageBoundingBox( img ) );
 
-    m_request = 0;
+    m_request = nullptr;
     QPixmap *pix = new QPixmap(QPixmap::fromImage(*img));
     delete img;
     request->page()->setPixmap( request->observer(), pix );

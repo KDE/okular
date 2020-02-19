@@ -28,7 +28,7 @@
 
 using namespace Epub;
 
-Converter::Converter() : mTextDocument(NULL)
+Converter::Converter() : mTextDocument(nullptr)
 {
 }
 
@@ -170,7 +170,7 @@ QTextDocument* Converter::convert( const QString &fileName )
   if (!newDocument->isValid()) {
     emit error(i18n("Error while opening the EPub document."), -1);
     delete newDocument;
-    return NULL;
+    return nullptr;
   }
   mTextDocument = newDocument;
 
@@ -379,7 +379,7 @@ QTextDocument* Converter::convert( const QString &fileName )
         if (mSectionMap.contains(link)) {
           block = mSectionMap.value(link);
         } else { // load missing resource
-          char *data = 0;
+          char *data = nullptr;
           //epub_get_data can't handle whitespace url encodings
           QByteArray ba = link.replace(QLatin1String("%20"), QLatin1String(" ")).toLatin1();
           const char *clinkClean = ba.data(); 

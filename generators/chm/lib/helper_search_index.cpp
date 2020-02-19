@@ -62,7 +62,7 @@ QDataStream &operator<<( QDataStream &s, const Document &l )
 }
 
 Index::Index()
-	: QObject( 0 )
+	: QObject( nullptr )
 {
 	lastWindowClosed = false;
 	connect( qApp, SIGNAL( lastWindowClosed() ), this, SLOT( setLastWinClosed() ) );
@@ -121,7 +121,7 @@ bool Index::makeIndex(const QList< QUrl >& docs, EBook *chmFile )
 
 void Index::insertInDict( const QString &str, int docNum )
 {
-	Entry *e = 0;
+	Entry *e = nullptr;
 	if ( dict.count() )
 		e = dict[ str ];
 
@@ -364,7 +364,7 @@ QList< QUrl > Index::query(const QStringList &terms, const QStringList &termSeq,
 	QStringList::ConstIterator it = terms.begin();
 	for ( it = terms.begin(); it != terms.end(); ++it )
 	{
-		Entry *e = 0;
+		Entry *e = nullptr;
 		
 		if ( dict[ *it ] )
 		{

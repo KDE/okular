@@ -43,14 +43,14 @@ EBook_CHM::EBook_CHM()
     : EBook()
 {
 	m_envOptions = getenv("KCHMVIEWEROPTS");
-	m_chmFile = NULL;
+	m_chmFile = nullptr;
 	m_filename = m_font = QString();
 
-	m_textCodec = 0;
-	m_textCodecForSpecialFiles = 0;
+	m_textCodec = nullptr;
+	m_textCodecForSpecialFiles = nullptr;
 	m_detectedLCID = 0;
 	m_currentEncoding = "UTF-8";
-	m_htmlEntityDecoder = 0;
+	m_htmlEntityDecoder = nullptr;
 }
 
 EBook_CHM::~EBook_CHM()
@@ -60,20 +60,20 @@ EBook_CHM::~EBook_CHM()
 
 void EBook_CHM::close()
 {
-	if ( m_chmFile == NULL )
+	if ( m_chmFile == nullptr )
 		return;
 
 	chm_close( m_chmFile );
 
-	m_chmFile = NULL;
+	m_chmFile = nullptr;
 	m_filename = m_font = QString();
 
 	m_home.clear();
 	m_topicsFile.clear();
 	m_indexFile.clear();
 
-	m_textCodec = 0;
-	m_textCodecForSpecialFiles = 0;
+	m_textCodec = nullptr;
+	m_textCodecForSpecialFiles = nullptr;
 	m_detectedLCID = 0;
 	m_currentEncoding = "UTF-8";
 }
@@ -271,14 +271,14 @@ bool EBook_CHM::load(const QString &archiveName)
 	m_chmFile = chm_open( QFile::encodeName(filename) );
 #endif
 
-	if ( m_chmFile == NULL )
+	if ( m_chmFile == nullptr )
 		return false;
 
 	m_filename = filename;
 
 	// Reset encoding
-	m_textCodec = 0;
-	m_textCodecForSpecialFiles = 0;
+	m_textCodec = nullptr;
+	m_textCodecForSpecialFiles = nullptr;
 	m_currentEncoding = "UTF-8";
 
 	// Get information from /#WINDOWS and /#SYSTEM files (encoding, title, context file and so)
@@ -576,7 +576,7 @@ bool EBook_CHM::parseFileAndFillArray( const QString& file, QList< ParsedEntry >
 
 bool EBook_CHM::ResolveObject(const QString& fileName, chmUnitInfo *ui) const
 {
-	return m_chmFile != NULL
+	return m_chmFile != nullptr
 			&& ::chm_resolve_object(m_chmFile, qPrintable( fileName ), ui) ==
 			CHM_RESOLVE_SUCCESS;
 }
@@ -586,7 +586,7 @@ bool EBook_CHM::hasFile(const QString & fileName) const
 {
 	chmUnitInfo ui;
 
-	return m_chmFile != NULL
+	return m_chmFile != nullptr
 			&& ::chm_resolve_object(m_chmFile, qPrintable( fileName ), &ui) ==
 			CHM_RESOLVE_SUCCESS;
 }
@@ -680,7 +680,7 @@ bool EBook_CHM::getInfoFromSystem()
 	chmUnitInfo ui;
 
 	int index = 0;
-	unsigned char* cursor = NULL, *p;
+	unsigned char* cursor = nullptr, *p;
 	unsigned short value = 0;
 	long size = 0;
 

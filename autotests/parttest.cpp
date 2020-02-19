@@ -1344,7 +1344,7 @@ void PartTest::testSaveAsUndoStackForms_data()
 void PartTest::testOpenUrlArguments()
 {
     QVariantList dummyArgs;
-    Okular::Part part(NULL, NULL, dummyArgs);
+    Okular::Part part(nullptr, nullptr, dummyArgs);
 
     KParts::OpenUrlArguments args;
     args.setMimeType(QStringLiteral("text/rtf"));

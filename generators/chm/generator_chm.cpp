@@ -53,9 +53,9 @@ CHMGenerator::CHMGenerator( QObject *parent, const QVariantList &args )
 {
     setFeature( TextExtraction );
 
-    m_syncGen=0;
-    m_file=0;
-    m_request = 0;
+    m_syncGen=nullptr;
+    m_file=nullptr;
+    m_request = nullptr;
 }
 
 CHMGenerator::~CHMGenerator()
@@ -141,7 +141,7 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
     {
         m_syncGen = new KHTMLPart();
     }
-    disconnect( m_syncGen, 0, this, 0 );
+    disconnect( m_syncGen, nullptr, this, nullptr );
 
     for (int i = 0; i < m_pageUrl.count(); ++i)
     {
@@ -160,7 +160,7 @@ bool CHMGenerator::doCloseDocument()
 {
     // delete the document information of the old document
     delete m_file;
-    m_file=0;
+    m_file=nullptr;
     m_textpageAddedList.clear();
     m_rectsGenerated.clear();
     m_urlPage.clear();
@@ -217,7 +217,7 @@ void CHMGenerator::slotCompleted()
     userMutex()->unlock();
 
     Okular::PixmapRequest *req = m_request;
-    m_request = 0;
+    m_request = nullptr;
 
     if ( !req->page()->isBoundingBoxKnown() )
         updatePageBoundingBox( req->page()->number(), Okular::Utils::imageBoundingBox( &image ) );
@@ -391,7 +391,7 @@ void CHMGenerator::additionalRequestData()
                                 new Okular::ObjectRect ( Okular::NormalizedRect(n.getRect(),xScale,yScale),
                                 false,
                                 Okular::ObjectRect::Image,
-                                0));
+                                nullptr));
                     }
                 }
             }

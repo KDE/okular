@@ -17,7 +17,7 @@
 #include "core/page.h"
 #include "core/utils.h"
 
-GSRendererThread *GSRendererThread::theRenderer = 0;
+GSRendererThread *GSRendererThread::theRenderer = nullptr;
 
 GSRendererThread *GSRendererThread::getCreateRenderer()
 {
@@ -60,7 +60,7 @@ void GSRendererThread::run()
             // so we basically do the rendering without any rotation and then rotate to the orientation as needed
             // spectre_render_context_set_rotation(m_renderContext, req.orientation);
 
-            unsigned char *data = NULL;
+            unsigned char *data = nullptr;
             int row_length = 0;
             int wantedWidth = req.request->width();
             int wantedHeight = req.request->height();

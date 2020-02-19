@@ -45,6 +45,6 @@ EBook * EBook::loadFile( const QString &archiveName )
 		return ebook;
 
 	delete ebook;
-	return 0;
+	return nullptr;
 }
 

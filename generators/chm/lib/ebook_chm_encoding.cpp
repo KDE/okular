@@ -289,7 +289,7 @@ static const EbookChmTextEncodingEntry text_encoding_table [] =
 		lcid_Western
 	},
 
-	{	0,	0	}
+	{	nullptr,	nullptr	}
 };
 
 

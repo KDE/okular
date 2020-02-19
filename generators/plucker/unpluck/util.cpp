@@ -150,7 +150,7 @@ static int HashString
 {
     unsigned long  crc;
 
-    crc = crc32 (0L, NULL, 0);
+    crc = crc32 (0L, nullptr, 0);
     crc = crc32 (crc, (const Bytef*)str, strlen (str));
     return (crc % size);
 }
@@ -164,14 +164,14 @@ void* _plkr_FindInTable
     HashTableSlot*  slot;
     int             count;
 
-    if (ht == NULL)
-        return (NULL);
+    if (ht == nullptr)
+        return (nullptr);
     slot = hashtable_slot (ht, hashtable_hash_index (ht, key));
     for (count = slot->hs_count; count > 0; count -= 1)
         if (hashtable_compare_keys
             (ht, key, slot->hs_entries[count - 1].he_key))
             return (slot->hs_entries[count - 1].he_data);
-    return (NULL);
+    return (nullptr);
 }
 
 void* _plkr_RemoveFromTable
@@ -183,8 +183,8 @@ void* _plkr_RemoveFromTable
     HashTableSlot*  slot;
     int             count;
 
-    if (ht == NULL)
-        return (NULL);
+    if (ht == nullptr)
+        return (nullptr);
 
     slot = hashtable_slot (ht, hashtable_hash_index (ht, key));
     for (count = 0; count < slot->hs_count; count += 1)
@@ -198,13 +198,13 @@ void* _plkr_RemoveFromTable
             --ht->ht_nPairs;
             if (--slot->hs_count <= 0) {
                 free (slot->hs_entries);
-                slot->hs_entries = NULL;
+                slot->hs_entries = nullptr;
                 slot->hs_allocated = 0;
                 slot->hs_count = 0;
             }
             return (data);
         }
-    return (NULL);
+    return (nullptr);
 }
 
 int _plkr_AddToTable
@@ -217,7 +217,7 @@ int _plkr_AddToTable
     HashTableSlot*  slot;
     int             count;
 
-    if (ht == NULL)
+    if (ht == nullptr)
         return (0);
 
     slot = hashtable_slot (ht, hashtable_hash_index (ht, key));

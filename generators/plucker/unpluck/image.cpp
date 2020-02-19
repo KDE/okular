@@ -232,7 +232,7 @@ bool TranscribePalmImageToJPEG
         imagedatastart = palmimage + 16;
     }
     else if (bits_per_pixel == 16 && (flags & PALM_DIRECT_COLOR_FLAG)) {
-        colormap = NULL;
+        colormap = nullptr;
         palm_red_bits = palmimage[16];
         palm_green_bits = palmimage[17];
         palm_blue_bits = palmimage[18];
@@ -406,13 +406,13 @@ bool TranscribeMultiImageRecord
     unsigned char*       bytes
     )
 {
-    unsigned char*       pbytes = 0;
-    unsigned char*       outbytes = 0;
-    unsigned char*       outptr = 0;
+    unsigned char*       pbytes = nullptr;
+    unsigned char*       outbytes = nullptr;
+    unsigned char*       outptr = nullptr;
     unsigned char*       ptr = &bytes[12];
     plkr_DataRecordType  ptype;
-    PALMPIX*             cells = 0;
-    PALMPIX*             acell = 0;
+    PALMPIX*             cells = nullptr;
+    PALMPIX*             acell = nullptr;
     unsigned int         record_id = 0;
              int         plen = 0;
     unsigned int         x = 0;
@@ -448,7 +448,7 @@ bool TranscribeMultiImageRecord
             record_id = (ptr[0] << 8) + ptr[1];
             ptr += 2;
             pbytes = plkr_GetRecordBytes (doc, record_id, &plen, &ptype);
-            if (pbytes == NULL) {
+            if (pbytes == nullptr) {
                 free (cells);
                 return false;
             }

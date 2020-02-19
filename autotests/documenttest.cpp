@@ -85,7 +85,7 @@ void DocumentTest::testDocdataMigration()
     QVERIFY( QFile::copy(KDESRCDIR "data/file1-docdata.xml", docDataPath) );
 
     // Open our document
-    Okular::Document *m_document = new Okular::Document( 0 );
+    Okular::Document *m_document = new Okular::Document( nullptr );
     QMimeDatabase db;
     const QMimeType mime = db.mimeTypeForFile( testFilePath );
     QCOMPARE( m_document->openDocument( testFilePath, testFileUrl, mime ), Okular::Document::OpenSuccess );

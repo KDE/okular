@@ -106,7 +106,7 @@ static Okular::DocumentViewport calculateViewport( QTextDocument *document, cons
 }
 
 QUnpluck::QUnpluck()
-    : mDocument( 0 )
+    : mDocument( nullptr )
 {
 }
 
@@ -498,7 +498,7 @@ void QUnpluck::ParseText
                     if (fclen == 4) {
                         int                   record_id, datalen;
                         plkr_DataRecordType   type = (plkr_DataRecordType)0;
-                        unsigned char        *bytes = NULL;
+                        unsigned char        *bytes = nullptr;
 
                         record_id = (ptr[2] << 8) + ptr[3];
                         bytes =
@@ -697,7 +697,7 @@ bool QUnpluck::TranscribeTextRecord
             record_index = (ptr[2] << 8) + ptr[3];
             if ((data =
                  plkr_GetRecordBytes (doc, record_index, &data_len,
-                                      &type)) == NULL) {
+                                      &type)) == nullptr) {
 //                ShowWarning ("Can't open record %d!", record_index);
                 free (paragraphs);
                 return false;
@@ -775,8 +775,8 @@ bool QUnpluck::TranscribeTextRecord
                     int                   record_id, real_record_id,
                         datalen;
                     plkr_DataRecordType   type = (plkr_DataRecordType)0;
-                    unsigned char        *bytes = NULL;
-                    char                 *url = NULL;
+                    unsigned char        *bytes = nullptr;
+                    char                 *url = nullptr;
 
                     if (fclen == 0) {
                         if (current_link) {
@@ -1068,7 +1068,7 @@ bool QUnpluck::TranscribeTextRecord
 
                     int                   record_id, datalen;
                     plkr_DataRecordType   type = (plkr_DataRecordType)0;
-                    unsigned char        *bytes = NULL;
+                    unsigned char        *bytes = nullptr;
 
                     record_id = (ptr[0] << 8) + ptr[1];
                     bytes =

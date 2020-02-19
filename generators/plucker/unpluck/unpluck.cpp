@@ -64,7 +64,7 @@ static unsigned int UncompressDOC
     unsigned int  src_index;
     unsigned int  dest_index;
 
-    assert (src != NULL && src_len != 0 && dest != NULL && dest_len != 0);
+    assert (src != nullptr && src_len != 0 && dest != nullptr && dest_len != 0);
 
 //     offset = 0;
     src_index = 0;
@@ -128,13 +128,13 @@ static unsigned int UncompressZLib
     unsigned int   i;
     unsigned char  keybuf[OWNER_ID_HASH_LEN];
 
-    assert (src != NULL && src_len != 0 && dest != NULL && dest_len != 0);
+    assert (src != nullptr && src_len != 0 && dest != nullptr && dest_len != 0);
 
-    keylen = (owner_id == NULL) ? 0 : MIN (src_len, OWNER_ID_HASH_LEN);
+    keylen = (owner_id == nullptr) ? 0 : MIN (src_len, OWNER_ID_HASH_LEN);
 
     memset (&z, 0, sizeof z);
 
-    if (owner_id != NULL) {
+    if (owner_id != nullptr) {
 
         for (i = 0; i < keylen; i++)
             keybuf[i] = src[i] ^ owner_id[i];
@@ -189,23 +189,23 @@ static void FreePluckerDoc
     plkr_Document*  doc
     )
 {
-    if (doc->name != NULL)
+    if (doc->name != nullptr)
         free (doc->name);
-    if (doc->title != NULL)
+    if (doc->title != nullptr)
         free (doc->title);
-    if (doc->author != NULL)
+    if (doc->author != nullptr)
         free (doc->author);
-    if (doc->records != NULL) {
+    if (doc->records != nullptr) {
         int i;
         for (i = 0; i < doc->nrecords; i++) {
-            if (doc->records[i].cache != NULL)
+            if (doc->records[i].cache != nullptr)
                 free (doc->records[i].cache);
         }
         free (doc->records);
     }
-    if (doc->urls != NULL)
+    if (doc->urls != nullptr)
         free (doc->urls);
-    if (doc->handle != NULL)
+    if (doc->handle != nullptr)
         doc->handle->free (doc->handle);
     free (doc);
 }
@@ -231,7 +231,7 @@ static plkr_DataRecord* FindRecordByIndex
         else if (record_index < doc->records[itest].uid)
             imax = itest;
     }
-    return NULL;
+    return nullptr;
 }
 
 static int GetUncompressedRecord
@@ -258,7 +258,7 @@ static int GetUncompressedRecord
     int               blen = buffer_size;
 
     record = FindRecordByIndex (doc, record_index);
-    if (record == NULL) {
+    if (record == nullptr) {
         _plkr_message ("No record with index %d", record_index);
         return FALSE;
     };
@@ -275,7 +275,7 @@ static int GetUncompressedRecord
         size_needed += 4 * record->nparagraphs;
 
     if (!buffer) {
-        if (buffer_out == NULL) {
+        if (buffer_out == nullptr) {
             _plkr_message ("No output buffer");
             return FALSE;
         }
@@ -351,7 +351,7 @@ static int GetUncompressedRecord
                 if (UncompressZLib (start_of_data, len_of_data, output_ptr,
                                     buf_to_use,
                                     (doc->owner_id_required ? doc->
-                                    owner_id_key : NULL)) != Z_OK) {
+                                    owner_id_key : nullptr)) != Z_OK) {
                     _plkr_message ("Bad Zlib uncompress of record %d",
                                    record_index);
                     free (buf);
@@ -411,12 +411,12 @@ static int ParseCategories
     int                         bufsize;
 
     if (GetUncompressedRecord
-        (newdoc, handle, newdoc->default_category_record_uid, NULL, 0,
+        (newdoc, handle, newdoc->default_category_record_uid, nullptr, 0,
          PLKR_DRTYPE_CATEGORY, &buf, &bufsize, &record)) {
         /* keep the record data, since the list of char * ptrs will point into it */
         record->cache = buf;
         record->cached_size = bufsize;
-        categories = NULL;
+        categories = nullptr;
         for (ptr = buf + 8; (ptr - buf) < bufsize;) {
             newc = (struct _plkr_CategoryName *)
                 malloc (sizeof (struct _plkr_CategoryName));
@@ -449,8 +449,8 @@ static int ParseMetadata
     int             i;
 
     if (!GetUncompressedRecord
-        (newdoc, handle, newdoc->metadata_record_uid, NULL, 0,
-         PLKR_DRTYPE_METADATA, &buf, &bufsize, NULL)) {
+        (newdoc, handle, newdoc->metadata_record_uid, nullptr, 0,
+         PLKR_DRTYPE_METADATA, &buf, &bufsize, nullptr)) {
         return FALSE;
     }
     else {
@@ -475,7 +475,7 @@ static int ParseMetadata
                     record_id = (ptr[0] << 8) + ptr[1];
                     mibenum = (ptr[2] << 8) + ptr[3];
                     record = FindRecordByIndex (newdoc, record_id);
-                    if (record == NULL) {
+                    if (record == nullptr) {
                         _plkr_message ("Can't find record with id %d",
                                        record_id);
                         free (buf);
@@ -546,13 +546,13 @@ static int ParseURLs
         int record_id;
     } *records;
 
-    buf = NULL;
-    urls = NULL;
-    records = NULL;
+    buf = nullptr;
+    urls = nullptr;
+    records = nullptr;
 
     if (!GetUncompressedRecord
-        (newdoc, handle, newdoc->urls_index_record_uid, NULL, 0,
-         PLKR_DRTYPE_LINKS_INDEX, &buf, &bufsize, NULL)) {
+        (newdoc, handle, newdoc->urls_index_record_uid, nullptr, 0,
+         PLKR_DRTYPE_LINKS_INDEX, &buf, &bufsize, nullptr)) {
         return FALSE;
     }
     else {
@@ -571,7 +571,7 @@ static int ParseURLs
             nurls = MAX (nurls, records[i].last_url_index);
         }
         free (buf);
-        buf = NULL;
+        buf = nullptr;
     }
 
     urls = (char **) malloc (nurls * sizeof (char *));
@@ -581,7 +581,7 @@ static int ParseURLs
 
         id = records[i].record_id;
         if (!GetUncompressedRecord (newdoc, handle, id,
-                                    NULL, 0, PLKR_DRTYPE_NONE, &buf,
+                                    nullptr, 0, PLKR_DRTYPE_NONE, &buf,
                                     &bufsize, &record)) {
             goto errout4;
         }
@@ -593,7 +593,7 @@ static int ParseURLs
         }
         record->cache = buf;
         record->cached_size = bufsize;
-        buf = NULL;
+        buf = nullptr;
         for (ptr = record->cache + 8;
              (ptr - record->cache) < record->cached_size;
              ptr += (strlen ((char*)ptr) + 1)) {
@@ -611,7 +611,7 @@ static int ParseURLs
     return TRUE;
 
   errout4:
-    if (buf != NULL)
+    if (buf != nullptr)
         free (buf);
     free (urls);
     free (records);
@@ -638,20 +638,20 @@ plkr_Document* plkr_OpenDoc
     if (!handle->seek (handle, 0) ||
         (handle->read (handle, utilbuf, sizeof (utilbuf), 78) != 78)) {
         _plkr_message ("Bad read of DB header");
-        return NULL;
+        return nullptr;
     }
 
     /* check for type stamp */
     if (strncmp ((char *) (utilbuf + 60), id_stamp, 8) != 0) {
         _plkr_message ("Bad magic number");
-        return NULL;
+        return nullptr;
     }
 
     /* check for version 1 */
     i = (utilbuf[34] << 8) + utilbuf[35];
     if (i != 1) {
         _plkr_message ("Not version 1 of Plucker format; version %d", i);
-        return NULL;
+        return nullptr;
     }
 
     /* get the title, creation time, and last modification time from header */
@@ -676,7 +676,7 @@ plkr_Document* plkr_OpenDoc
         if (handle->read (handle, utilbuf, sizeof (utilbuf), 8) != 8) {
             _plkr_message ("Bad read of record list");
             FreePluckerDoc (newdoc);
-            return NULL;
+            return nullptr;
         }
         newdoc->records[i].offset =
             (utilbuf[0] << 24) + (utilbuf[1] << 16) + (utilbuf[2] << 8) +
@@ -688,13 +688,13 @@ plkr_Document* plkr_OpenDoc
         (handle->read (handle, utilbuf, sizeof (utilbuf), 6) != 6)) {
         _plkr_message ("Bad read of index record");
         FreePluckerDoc (newdoc);
-        return NULL;
+        return nullptr;
     }
     if ((utilbuf[0] << 8) + utilbuf[1] != 1) {
         _plkr_message ("index record has bad UID %d",
                        (utilbuf[0] << 8) + utilbuf[1]);
         FreePluckerDoc (newdoc);
-        return NULL;
+        return nullptr;
     }
     newdoc->records[0].uid = 1;
     compression = (utilbuf[2] << 8) + utilbuf[3];
@@ -705,20 +705,20 @@ plkr_Document* plkr_OpenDoc
     else {
         _plkr_message ("Unknown compression type %d", compression);
         FreePluckerDoc (newdoc);
-        return NULL;
+        return nullptr;
     }
     nreserved = (utilbuf[4] << 8) + utilbuf[5];
     if (nreserved > MAX_RESERVED) {
         _plkr_message ("Too many reserved records (%d) for software",
                        nreserved);
         FreePluckerDoc (newdoc);
-        return NULL;
+        return nullptr;
     }
     for (i = 0; i < nreserved; i++) {
         if (handle->read (handle, utilbuf, sizeof (utilbuf), 4) != 4) {
             _plkr_message ("Bad read of reserved record list");
             FreePluckerDoc (newdoc);
-            return NULL;
+            return nullptr;
         }
         reserved[i].name = (ReservedRecordName)( (utilbuf[0] << 8) + utilbuf[1] );
         reserved[i].uid = (utilbuf[2] << 8) + utilbuf[3];
@@ -732,7 +732,7 @@ plkr_Document* plkr_OpenDoc
             (handle->read (handle, utilbuf, sizeof (utilbuf), 8) != 8)) {
             _plkr_message ("Can't read header of record %d", i);
             FreePluckerDoc (newdoc);
-            return NULL;
+            return nullptr;
         }
         newdoc->records[i - 1].size =
             record->offset - newdoc->records[i - 1].offset;
@@ -747,7 +747,7 @@ plkr_Document* plkr_OpenDoc
     if ((i = handle->size (handle)) == 0) {
         _plkr_message ("Can't obtain size of DB");
         FreePluckerDoc (newdoc);
-        return NULL;
+        return nullptr;
     };
     record = newdoc->records + (newdoc->nrecords - 1);
     record->size = i - record->offset;
@@ -762,7 +762,7 @@ plkr_Document* plkr_OpenDoc
                 _plkr_message ("Bad uncompressed size 0 in record uid %d",
                                record->uid);
                 FreePluckerDoc (newdoc);
-                return NULL;
+                return nullptr;
             }
             else {
                 record->uncompressed_size = record->size - 8;
@@ -794,7 +794,7 @@ plkr_Document* plkr_OpenDoc
             if (!ParseMetadata (newdoc, handle)) {
                 _plkr_message ("Error parsing metadata record");
                 FreePluckerDoc (newdoc);
-                return NULL;
+                return nullptr;
             }
         }
     }
@@ -804,12 +804,12 @@ plkr_Document* plkr_OpenDoc
         /* we need to set up the owner-id key before uncompressing
            any records... */
 
-        char *owner_id = plkr_GetConfigString (NULL, "owner_id", NULL);
+        char *owner_id = plkr_GetConfigString (nullptr, "owner_id", nullptr);
 
-        if (owner_id != NULL) {
+        if (owner_id != nullptr) {
             unsigned long crc;
             int owner_id_len = strlen (owner_id);
-            crc = crc32 (0L, NULL, 0);
+            crc = crc32 (0L, nullptr, 0);
             crc = crc32 (crc, (const Bytef*)owner_id, owner_id_len);
             for (i = 0; i < 10; i++) {
                 crc = crc32 (crc, (const Bytef*)owner_id, owner_id_len);
@@ -822,7 +822,7 @@ plkr_Document* plkr_OpenDoc
         else {
             _plkr_message ("Document requires owner-id to open");
             FreePluckerDoc (newdoc);
-            return NULL;
+            return nullptr;
         }
     }
 
@@ -836,7 +836,7 @@ plkr_Document* plkr_OpenDoc
             if (!ParseCategories (newdoc, handle)) {
                 _plkr_message ("Error parsing default-categories record");
                 FreePluckerDoc (newdoc);
-                return NULL;
+                return nullptr;
             }
         }
         else if (reserved[i].name == PLKR_URLS_INDEX_NAME) {
@@ -844,7 +844,7 @@ plkr_Document* plkr_OpenDoc
             if (!ParseURLs (newdoc, handle)) {
                 _plkr_message ("Error parsing URLs records");
                 FreePluckerDoc (newdoc);
-                return NULL;
+                return nullptr;
             }
         }
     }
@@ -880,7 +880,7 @@ void plkr_CloseDoc
     plkr_Document * doc
     )
 {
-    if (doc == NULL) {
+    if (doc == nullptr) {
         _plkr_message ("Attempt to free NULL doc");
     }
     else {
@@ -977,7 +977,7 @@ plkr_Document* plkr_OpenDBFile
 #endif
     if (fp < 0) {
         _plkr_message ("Can't open file %s", filename);
-        return NULL;
+        return nullptr;
     }
     handle = (plkr_DBHandle) malloc (sizeof (*handle));
     handle->dbprivate = fp;
@@ -986,7 +986,7 @@ plkr_Document* plkr_OpenDBFile
     handle->free = FpFree;
     handle->size = FpSize;
     doc = plkr_OpenDoc (handle);
-    if (doc == NULL)
+    if (doc == nullptr)
         close (fp);
     return doc;
 }
@@ -1015,7 +1015,7 @@ int plkr_CopyRecordBytes
 
     if (!GetUncompressedRecord (doc, doc->handle, record_index,
                                 output_buffer, output_buffer_size,
-                                PLKR_DRTYPE_NONE, NULL, &output_size,
+                                PLKR_DRTYPE_NONE, nullptr, &output_size,
                                 &record))
         return 0;
     else {
@@ -1036,12 +1036,12 @@ unsigned char *plkr_GetRecordBytes
     unsigned char*    buf;
 
     if (!FindRecordByIndex (doc, record_index))
-        return NULL;
+        return nullptr;
 
     if (!GetUncompressedRecord (doc, doc->handle, record_index,
-                                NULL, 0, PLKR_DRTYPE_NONE,
+                                nullptr, 0, PLKR_DRTYPE_NONE,
                                 &buf, size, &record))
-        return NULL;
+        return nullptr;
     else {
         if (!record->cache) {
             record->cache = buf;
@@ -1134,7 +1134,7 @@ char* plkr_GetRecordURL
     )
 {
     if (record_index < 1 || record_index > doc->nurls)
-        return NULL;
+        return nullptr;
     else
         return (doc->urls[record_index - 1]);
 }
@@ -1145,7 +1145,7 @@ int plkr_HasRecordWithID
     int             record_index
     )
 {
-    return (FindRecordByIndex (doc, record_index) != NULL);
+    return (FindRecordByIndex (doc, record_index) != nullptr);
 }
 
 int plkr_GetRecordType

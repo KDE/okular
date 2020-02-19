@@ -71,7 +71,7 @@ class SearchDataKeeper
 
 EBookSearch::EBookSearch()
 {
-	m_Index = 0;
+	m_Index = nullptr;
 }
 
 
@@ -122,7 +122,7 @@ bool EBookSearch::generateIndex( EBook * ebookFile, QDataStream & stream )
     if ( !m_Index->makeIndex( documents, ebookFile ) )
 	{
 		delete m_Index;
-		m_Index = 0;
+		m_Index = nullptr;
 		return false;
 	}
 	
@@ -221,5 +221,5 @@ bool EBookSearch::searchQuery(const QString & query, QList< QUrl > * results, EB
 
 bool EBookSearch::hasIndex() const
 {
-	return m_Index != 0;
+	return m_Index != nullptr;
 }

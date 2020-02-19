@@ -60,7 +60,7 @@ extern "C"
 ProtocolMSITS::ProtocolMSITS (const QByteArray &pool_socket, const QByteArray &app_socket)
 	: SlaveBase ("kio_msits", pool_socket, app_socket)
 {
-	m_chmFile = 0;
+	m_chmFile = nullptr;
 }
 
 ProtocolMSITS::~ProtocolMSITS()
@@ -69,7 +69,7 @@ ProtocolMSITS::~ProtocolMSITS()
 		return;
 
 	chm_close (m_chmFile);
-	m_chmFile = 0;
+	m_chmFile = nullptr;
 }
 
 // A simple stat() wrapper
@@ -173,7 +173,7 @@ bool ProtocolMSITS::parseLoadAndLookup ( const QUrl& url, QString& abspath )
 	// First try to open a temporary file
 	chmFile * tmpchm;
 
-        if( (tmpchm = chm_open ( QFile::encodeName( QDir::toNativeSeparators( filename) ).constData() ) ) == 0 )
+        if( (tmpchm = chm_open ( QFile::encodeName( QDir::toNativeSeparators( filename) ).constData() ) ) == nullptr )
 	{
                 error( KIO::ERR_COULD_NOT_READ, url.toString() );
         return false;

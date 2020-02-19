@@ -227,7 +227,7 @@ Okular::Movie* createMovieFromPopplerMovie( const Poppler::MovieObject *popplerM
 Okular::Movie* createMovieFromPopplerScreen( const Poppler::LinkRendition *popplerScreen )
 {
     Poppler::MediaRendition *rendition = popplerScreen->rendition();
-    Okular::Movie *movie = 0;
+    Okular::Movie *movie = nullptr;
     if ( rendition->isEmbedded() )
         movie = new Okular::Movie( rendition->fileName(), rendition->data() );
     else
@@ -303,7 +303,7 @@ QPair<Okular::Movie*, Okular::EmbeddedFile*> createMovieFromPopplerRichMedia( co
     if ( assets.isEmpty() )
         return emptyResult;
 
-    Poppler::RichMediaAnnotation::Asset *matchingAsset = 0;
+    Poppler::RichMediaAnnotation::Asset *matchingAsset = nullptr;
     for ( Poppler::RichMediaAnnotation::Asset *asset : assets ) {
         if ( asset->name() == sourceId ) {
             matchingAsset = asset;
@@ -346,7 +346,7 @@ Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink, bool
     if (!popplerLink)
         return nullptr;
 
-    Okular::Action *link = 0;
+    Okular::Action *link = nullptr;
     const Poppler::LinkGoto *popplerLinkGoto;
     const Poppler::LinkExecute *popplerLinkExecute;
     const Poppler::LinkBrowse *popplerLinkBrowse;
@@ -447,7 +447,7 @@ Okular::Action* createLinkFromPopplerLink(const Poppler::Link *popplerLink, bool
                     break;
             };
 
-            Okular::Movie *movie = 0;
+            Okular::Movie *movie = nullptr;
             if ( popplerLinkRendition->rendition() )
                 movie = createMovieFromPopplerScreen( popplerLinkRendition );
 
@@ -576,10 +576,10 @@ static void PDFGeneratorPopplerDebugFunction(const QString &message, const QVari
 }
 
 PDFGenerator::PDFGenerator( QObject *parent, const QVariantList &args )
-    : Generator( parent, args ), pdfdoc( 0 ),
+    : Generator( parent, args ), pdfdoc( nullptr ),
     docSynopsisDirty( true ),
     docEmbeddedFilesDirty( true ), nextFontPage( 0 ),
-    annotProxy( 0 )
+    annotProxy( nullptr )
 {
     setFeature( Threaded );
     setFeature( TextExtraction );
@@ -619,7 +619,7 @@ Okular::Document::OpenResult PDFGenerator::loadDocumentWithPassword( const QStri
     }
 #endif
     // create PDFDoc for the given file
-    pdfdoc = Poppler::Document::load( filePath, 0, 0 );
+    pdfdoc = Poppler::Document::load( filePath, nullptr, nullptr );
     return init(pagesVector, password);
 }
 
@@ -633,7 +633,7 @@ Okular::Document::OpenResult PDFGenerator::loadDocumentFromDataWithPassword( con
     }
 #endif
     // create PDFDoc for the given file
-    pdfdoc = Poppler::Document::loadFromData( fileData, 0, 0 );
+    pdfdoc = Poppler::Document::loadFromData( fileData, nullptr, nullptr );
     return init(pagesVector, password);
 }
 
@@ -711,7 +711,7 @@ bool PDFGenerator::doCloseDocument()
     // remove internal objects
     userMutex()->lock();
     delete annotProxy;
-    annotProxy = 0;
+    annotProxy = nullptr;
     delete pdfdoc;
     pdfdoc = nullptr;
     userMutex()->unlock();
@@ -838,13 +838,13 @@ const Okular::DocumentSynopsis * PDFGenerator::generateDocumentSynopsis()
         return &docSyn;
 
     if ( !pdfdoc )
-        return NULL;
+        return nullptr;
 
     userMutex()->lock();
     QDomDocument *toc = pdfdoc->toc();
     userMutex()->unlock();
     if ( !toc )
-        return NULL;
+        return nullptr;
 
     addSynopsisChildren(toc, &docSyn);
     delete toc;
@@ -973,7 +973,7 @@ const QList<Okular::EmbeddedFile*> *PDFGenerator::embeddedFiles() const
 
 QAbstractItemModel* PDFGenerator::layersModel() const
 {
-    return pdfdoc->hasOptionalContent() ? pdfdoc->optionalContentModel() : NULL;
+    return pdfdoc->hasOptionalContent() ? pdfdoc->optionalContentModel() : nullptr;
 }
 
 void PDFGenerator::opaqueAction( const Okular::BackendOpaqueAction *action )

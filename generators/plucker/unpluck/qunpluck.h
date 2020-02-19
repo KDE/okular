@@ -31,7 +31,7 @@ class Link
 {
     public:
         Link()
-            : link( 0 )
+            : link( nullptr )
         {
         }
 

@@ -33,7 +33,7 @@ class ChmGeneratorTest
 void ChmGeneratorTest::initTestCase()
 {
     Okular::SettingsCore::instance( QStringLiteral("ChmGeneratorTest") );
-    m_document = new Okular::Document( 0 );
+    m_document = new Okular::Document( nullptr );
     const QString testFile = QStringLiteral(KDESRCDIR "autotests/data/test.chm");
     QMimeDatabase db;
     const QMimeType mime = db.mimeTypeForFile( testFile );

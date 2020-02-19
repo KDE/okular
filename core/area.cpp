@@ -258,9 +258,9 @@ void NormalizedRect::transform( const QTransform &matrix )
     bottom = rect.bottom();
 }
 
-uint qHash( const NormalizedRect& r, uint seed )
+uint Okular::qHash( const NormalizedRect& r, uint seed )
 {
-    return qHash(r.bottom, qHash(r.right, qHash(r.top, qHash(r.left, seed))));
+    return ::qHash(r.bottom, ::qHash(r.right, ::qHash(r.top, ::qHash(r.left, seed))));
 }
 
 QDebug operator<<( QDebug str, const Okular::NormalizedRect& r )

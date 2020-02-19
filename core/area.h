@@ -980,9 +980,9 @@ class HighlightAreaRect : public RegularAreaRect
         QColor color;
 };
 
+uint qHash(const Okular::NormalizedRect& r, uint seed = 0);
 }
 
-uint qHash(const Okular::NormalizedRect& r, uint seed = 0);
 
 #ifndef QT_NO_DEBUG_STREAM
 /**

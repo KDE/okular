@@ -10,7 +10,7 @@ check_cxx_source_compiles("
 #include <QImage>
 int main()
 {
-  Poppler::Page *p;
+  Poppler::Page *p = nullptr;
   p->renderToImage(0, 0, 0, 0, 0, 0, Poppler::Page::Rotate0, nullptr, nullptr, nullptr, QVariant());
   return 0;
 }
@@ -22,10 +22,10 @@ check_cxx_source_compiles("
 #include <poppler-link.h>
 int main()
 {
-  Poppler::FormField *f;
+  Poppler::FormField *f = nullptr;
   f->setReadOnly(true);
   f->setVisible(true);
-  Poppler::Link *l;
+  Poppler::Link *l = nullptr;
   l->nextLinks();
 }
 " HAVE_POPPLER_0_64)
@@ -35,7 +35,7 @@ check_cxx_source_compiles("
 #include <poppler-form.h>
 int main()
 {
-  Poppler::FormField *f;
+  Poppler::FormField *f = nullptr;
   f->additionalAction(Poppler::Annotation::CursorEnteringAction);
 }
 " HAVE_POPPLER_0_65)
@@ -46,6 +46,7 @@ check_cxx_source_compiles("
 int main()
 {
   auto f = &Poppler::SignatureValidationInfo::reason;
+  (void)f;
 }
 " HAVE_POPPLER_0_68)
 
@@ -65,6 +66,7 @@ check_cxx_source_compiles("
 int main()
 {
     QString s = Poppler::Version::string();
+    (void)s;
     return 0;
 }
 " HAVE_POPPLER_0_73)
@@ -75,7 +77,7 @@ check_cxx_source_compiles("
 int main()
 {
     Poppler::FormFieldIcon icon(nullptr);
-    Poppler::FormFieldButton *button;
+    Poppler::FormFieldButton *button = nullptr;
     button->setIcon( icon );
     return 0;
 }
@@ -87,6 +89,7 @@ int main()
 {
     Poppler::FontInfo info;
     QString substituteName = info.substituteName();
+    (void)substituteName;
     return 0;
 }
 " HAVE_POPPLER_0_80)

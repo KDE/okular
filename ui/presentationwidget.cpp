@@ -1302,8 +1302,8 @@ void PresentationWidget::generateOverlay()
     color = pal.color( QPalette::Active, QPalette::Highlight );
     int sRed = color.red(), sGreen = color.green(), sBlue = color.blue();
     // pointers
-    unsigned int * data = (unsigned int *)image.bits(),
-                 * shadowData = (unsigned int *)shadow.bits(),
+    unsigned int * data = reinterpret_cast<unsigned int *>(image.bits()),
+                 * shadowData = reinterpret_cast<unsigned int *>(shadow.bits()),
                  pixels = image.width() * image.height();
     // cache data (reduce computation time to 26%!)
     int c1 = -1, c2 = -1, cR = 0, cG = 0, cB = 0, cA = 0;

@@ -91,10 +91,10 @@ private slots:
     void testAlert();
     void testPrintD();
     void testPrintD_data();
-#endif
 private:
     Okular::Document *m_document;
     QMap<QString, Okular::FormField*> m_fields;
+#endif
 };
 
 #ifdef HAVE_POPPLER_0_79

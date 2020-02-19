@@ -887,8 +887,8 @@ void PartTest::testSaveAs()
 
     QString annotName;
     QTemporaryFile archiveSave( QStringLiteral( "%1/okrXXXXXX.okular" ).arg( QDir::tempPath() ) );
-    QTemporaryFile nativeDirectSave( QStringLiteral( "%1/okrXXXXXX.%2" ).arg( QDir::tempPath() ).arg ( extension ) );
-    QTemporaryFile nativeFromArchiveFile( QStringLiteral( "%1/okrXXXXXX.%2" ).arg( QDir::tempPath() ).arg ( extension ) );
+    QTemporaryFile nativeDirectSave( QStringLiteral( "%1/okrXXXXXX.%2" ).arg( QDir::tempPath(), extension ) );
+    QTemporaryFile nativeFromArchiveFile( QStringLiteral( "%1/okrXXXXXX.%2" ).arg( QDir::tempPath(), extension ) );
     QVERIFY( archiveSave.open() );
     archiveSave.close();
     QVERIFY( nativeDirectSave.open() );
@@ -1071,10 +1071,10 @@ void PartTest::testSaveAsUndoStackAnnotations()
     // when saving to a file format not supporting those. However, this button is only sensible
     // and available for "Save As", but not for "Save". By alternately saving to saveFile1 and
     // saveFile2 we always force "Save As", so closeDialogHelper keeps working.
-    QTemporaryFile saveFile1( QStringLiteral( "%1/okrXXXXXX_1.%2" ).arg( QDir::tempPath() ).arg ( extension ) );
+    QTemporaryFile saveFile1( QStringLiteral( "%1/okrXXXXXX_1.%2" ).arg( QDir::tempPath(), extension ) );
     QVERIFY( saveFile1.open() );
     saveFile1.close();
-    QTemporaryFile saveFile2( QStringLiteral( "%1/okrXXXXXX_2.%2" ).arg( QDir::tempPath() ).arg ( extension ) );
+    QTemporaryFile saveFile2( QStringLiteral( "%1/okrXXXXXX_2.%2" ).arg( QDir::tempPath(), extension ) );
     QVERIFY( saveFile2.open() );
     saveFile2.close();
 

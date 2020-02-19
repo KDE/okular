@@ -372,7 +372,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                     break;
                 case Okular::SettingsCore::EnumRenderMode::BlackWhite:
                     // Manual Gray and Contrast
-                    unsigned int * data = (unsigned int *)backImage.bits();
+                    unsigned int * data = reinterpret_cast<unsigned int *>(backImage.bits());
                     int val, pixels = backImage.width() * backImage.height(),
                         con = Okular::Settings::bWContrast(), thr = 255 - Okular::Settings::bWThreshold();
                     for( int i = 0; i < pixels; ++i )
@@ -850,7 +850,7 @@ static inline int qt_div_255(int x) { return (x + (x>>8) + 0x80) >> 8; }
 void PagePainter::changeImageAlpha( QImage & image, unsigned int destAlpha )
 {
     // iterate over all pixels changing the alpha component value
-    unsigned int * data = (unsigned int *)image.bits();
+    unsigned int * data = reinterpret_cast<unsigned int *>(image.bits());
     unsigned int pixels = image.width() * image.height();
 
     int source, sourceAlpha;

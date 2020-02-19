@@ -269,7 +269,7 @@ void colorizeImage( QImage & grayImage, const QColor & color, unsigned int destA
         grayImage = grayImage.convertToFormat( QImage::Format_ARGB32_Premultiplied );
 
     // iterate over all pixels changing the alpha component value
-    unsigned int * data = (unsigned int *)grayImage.bits();
+    unsigned int * data = reinterpret_cast<unsigned int *>(grayImage.bits());
     unsigned int pixels = grayImage.width() * grayImage.height();
     int red = color.red(),
         green = color.green(),

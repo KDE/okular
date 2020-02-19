@@ -86,6 +86,9 @@ static KJSObject eventGetTarget( KJSContext *ctx, void *object )
                 return JSField::wrapField( ctx, target, event->targetPage() );
             break;
         }
+        default:
+        {
+        }
     }
     return KJSUndefined();
 }

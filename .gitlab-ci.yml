@@ -44,11 +44,11 @@ build_clang_tidy:
     - echo 'deb-src http://deb.debian.org/debian unstable main' >> /etc/apt/sources.list
     - apt-get update
     - apt-get build-dep --yes --no-install-recommends okular
-    - apt-get install --yes --no-install-recommends ninja-build clang clang-tidy python python-yaml libkf5crash-dev libkf5purpose-dev libegl-dev jq
+    - apt-get install --yes --no-install-recommends ninja-build clazy clang clang-tidy python python-yaml libkf5crash-dev libkf5purpose-dev libegl-dev jq
 
   script:
-    - srcdir=`pwd` && mkdir -p /tmp/okular_build && cd /tmp/okular_build && CC=clang CXX=clang++ cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G Ninja $srcdir && cat compile_commands.json | jq  '[.[] | select(.file | contains("'"$srcdir"'"))]' > compile_commands.aux.json && cat compile_commands.aux.json | jq  '[.[] | select(.file | contains("/synctex/")| not)]' > compile_commands.json
-    - ninja
+    - srcdir=`pwd` && mkdir -p /tmp/okular_build && cd /tmp/okular_build && CC=clang CXX=clazy CXXFLAGS="-Werror -Wno-deprecated-declarations" cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G Ninja $srcdir && cat compile_commands.json | jq  '[.[] | select(.file | contains("'"$srcdir"'"))]' > compile_commands.aux.json && cat compile_commands.aux.json | jq  '[.[] | select(.file | contains("/synctex/")| not)]' > compile_commands.json
+    - CLAZY_CHECKS="qstring-arg" ninja
     # Fix the poppler header, remove when debian:unstable ships poppler 0.82 or later
     - sed -i "N;N;N;N; s#class MediaRendition\;\nclass MovieAnnotation\;\nclass ScreenAnnotation;#class MediaRendition\;#g"  /usr/include/poppler/qt5/poppler-link.h
     - "run-clang-tidy -header-filter='.*/okular/.*' -checks='-*,performance-*,bugprone-*,readability-inconsistent-declaration-parameter-name,readability-string-compare,modernize-redundant-void-arg,modernize-use-bool-literals,modernize-make-unique,modernize-make-shared,modernize-use-override,modernize-use-equals-delete,modernize-use-emplace,modernize-loop-convert,modernize-use-nullptr,-bugprone-macro-parentheses,-bugprone-narrowing-conversions,-bugprone-branch-clone,-bugprone-incorrect-roundings' -config=\"{WarningsAsErrors: '*'}\""

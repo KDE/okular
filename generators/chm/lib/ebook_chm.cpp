@@ -612,8 +612,8 @@ bool EBook_CHM::getInfoFromWindows()
 		if ( !RetrieveObject(&ui, buffer, 0, WIN_HEADER_LEN) )
 			return false;
 
-		unsigned int entries = get_int32_le( (unsigned int *)(buffer) );
-		unsigned int entry_size = get_int32_le( (unsigned int *)(buffer + 0x04) );
+		unsigned int entries = get_int32_le( reinterpret_cast<unsigned int *>(buffer) );
+		unsigned int entry_size = get_int32_le( reinterpret_cast<unsigned int *>(buffer + 0x04) );
 
 		QVector<unsigned char> uptr(entries * entry_size);
 		unsigned char* raw = (unsigned char*) uptr.data();
@@ -628,10 +628,10 @@ bool EBook_CHM::getInfoFromWindows()
 		{
 			unsigned int offset = i * entry_size;
 
-			unsigned int off_title = get_int32_le( (unsigned int *)(raw + offset + 0x14) );
-			unsigned int off_home = get_int32_le( (unsigned int *)(raw + offset + 0x68) );
-			unsigned int off_hhc = get_int32_le( (unsigned int *)(raw + offset + 0x60) );
-			unsigned int off_hhk = get_int32_le( (unsigned int *)(raw + offset + 0x64) );
+			unsigned int off_title = get_int32_le( reinterpret_cast<unsigned int *>(raw + offset + 0x14) );
+			unsigned int off_home = get_int32_le( reinterpret_cast<unsigned int *>(raw + offset + 0x68) );
+			unsigned int off_hhc = get_int32_le( reinterpret_cast<unsigned int *>(raw + offset + 0x60) );
+			unsigned int off_hhk = get_int32_le( reinterpret_cast<unsigned int *>(raw + offset + 0x64) );
 
 			factor = off_title / 4096;
 
@@ -901,9 +901,9 @@ void EBook_CHM::fillTopicsUrlMap()
 
 	for ( LONGUINT64 i = 0; i < m_chmTOPICS.length; i += TOPICS_ENTRY_LEN )
 	{
-		unsigned int off_title = get_int32_le( (unsigned int *)(topics.data() + i + 4) );
-		unsigned int off_url = get_int32_le( (unsigned int *)(topics.data() + i + 8) );
-		off_url = get_int32_le( (unsigned int *)( urltbl.data() + off_url + 8) ) + 8;
+		unsigned int off_title = get_int32_le( reinterpret_cast<unsigned int *>(topics.data() + i + 4) );
+		unsigned int off_url = get_int32_le( reinterpret_cast<unsigned int *>(topics.data() + i + 8) );
+		off_url = get_int32_le( reinterpret_cast<unsigned int *>( urltbl.data() + off_url + 8) ) + 8;
 
 		QUrl url = pathToUrl( (const char*) urlstr.data() + off_url );
 

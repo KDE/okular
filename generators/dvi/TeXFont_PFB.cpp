@@ -253,7 +253,7 @@ glyph* TeXFont_PFB::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCo
 
         for(unsigned int y=0; y<slot->bitmap.rows; y++) {
           quint8 *srcScanLine = slot->bitmap.buffer + y*slot->bitmap.pitch;
-          unsigned int *destScanLine = (unsigned int *)imgi.scanLine(y);
+          unsigned int *destScanLine = reinterpret_cast<unsigned int *>(imgi.scanLine(y));
           for(unsigned int col=0; col<slot->bitmap.width; col++) {
             quint16 data =  *srcScanLine;
             // The value stored in "data" now has the following meaning:

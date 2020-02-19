@@ -19,7 +19,7 @@
 
 static const QColor RED = QColor(255, 0, 0);
 static const QColor GREEN = QColor(0, 255, 0.0);
-static const QColor BLUE = QColor(0, 0, 255);
+// static const QColor BLUE = QColor(0, 0, 255);
 
 class ModifyAnnotationPropertiesTest : public QObject
 {

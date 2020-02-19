@@ -104,9 +104,8 @@ static KJSObject printd( KJSContext *context, void *,
     }
 
     QLocale locale( "en_US" );
-    QStringList str = arguments.at( 1 ).toString( context ).split( QRegularExpression( "\\W") );
-    QString myStr = QStringLiteral( "%1/%2/%3 %4:%5:%6" ).arg( str[1] ).
-        arg( str[2] ).arg( str[3] ).arg( str[4] ).arg( str[5] ).arg( str[6] );
+    const QStringList str = arguments.at( 1 ).toString( context ).split( QRegularExpression( "\\W") );
+    QString myStr = QStringLiteral( "%1/%2/%3 %4:%5:%6" ).arg( str[1], str[2], str[3], str[4], str[5], str[6] );
     QDateTime date = locale.toDateTime( myStr, QStringLiteral( "MMM/d/yyyy H:m:s" ) );
 
 

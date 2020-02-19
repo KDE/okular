@@ -61,7 +61,7 @@ fontPool::fontPool(bool useFontHinting)
   // extension, alpha channels are either supported, or silently
   // ignored.
   QImage start(1, 1, QImage::Format_ARGB32); // Generate a 1x1 image, black with alpha=0x10
-  quint32 *destScanLine = (quint32 *)start.scanLine(0);
+  quint32 *destScanLine = reinterpret_cast<quint32 *>(start.scanLine(0));
   *destScanLine = 0x80000000;
   QPixmap intermediate = QPixmap::fromImage(start);
   QPixmap dest(1,1);

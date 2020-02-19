@@ -251,7 +251,7 @@ QImage TIFFGenerator::image( Okular::PixmapRequest * request )
             orientation = ORIENTATION_TOPLEFT;
 
         QImage image( width, height, QImage::Format_RGB32 );
-        uint32 * data = (uint32 *)image.bits();
+        uint32 * data = reinterpret_cast<uint32 *>(image.bits());
 
         // read data
         if ( TIFFReadRGBAImageOriented( d->tiff, width, height, data, orientation ) != 0 )
@@ -389,7 +389,7 @@ bool TIFFGenerator::print( QPrinter& printer )
             continue;
 
         QImage image( width, height, QImage::Format_RGB32 );
-        uint32 * data = (uint32 *)image.bits();
+        uint32 * data = reinterpret_cast<uint32 *>(image.bits());
 
         // read data
         if ( TIFFReadRGBAImageOriented( d->tiff, width, height, data, ORIENTATION_TOPLEFT ) != 0 )

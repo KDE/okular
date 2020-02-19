@@ -295,7 +295,7 @@ glyph* TeXFont_PK::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCol
 
       quint8 *srcScanLine = xydata;
       for(int y=0; y<shrunk_height; y++) {
-        unsigned int *destScanLine = (unsigned int *)im32.scanLine(y);
+        unsigned int *destScanLine = reinterpret_cast<unsigned int *>(im32.scanLine(y));
         for(int col=0; col<shrunk_width; col++) {
           quint16 data =  *srcScanLine;
           // The value stored in "data" now has the following meaning:
@@ -317,8 +317,8 @@ glyph* TeXFont_PK::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCol
 
 
 
-#define        ADD(a, b)        ((quint32 *) (((char *) a) + b))
-#define        SUB(a, b)        ((quint32 *) (((char *) a) - b))
+#define        ADD(a, b)        (reinterpret_cast<quint32 *>(((char *) a) + b))
+#define        SUB(a, b)        (reinterpret_cast<quint32 *>(((char *) a) - b))
 
 
 
@@ -534,7 +534,7 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
     characterBitmaps[ch]->bits = new char[size != 0 ? size : 1];
   }
 
-  cp = (quint32 *) characterBitmaps[ch]->bits;
+  cp = reinterpret_cast<quint32 *>(characterBitmaps[ch]->bits);
 
   /*
    * read character data into *cp
@@ -618,7 +618,7 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
         }
         paint_switch = 1 - paint_switch;
       }
-      if (cp != ((quint32 *) (characterBitmaps[ch]->bits + bytes_wide * characterBitmaps[ch]->h)))
+      if (cp != (reinterpret_cast<quint32 *> (characterBitmaps[ch]->bits + bytes_wide * characterBitmaps[ch]->h)))
         oops(i18n("Wrong number of bits stored:  char. %1, font %2", ch, parent->filename));
       if (rows_left != 0 || h_bit != characterBitmaps[ch]->w)
         oops(i18n("Bad pk file (%1), too many bits", parent->filename));
@@ -704,7 +704,7 @@ void TeXFont_PK::read_PK_char(unsigned int ch)
         }
         paint_switch = 1 - paint_switch;
       }
-      if (cp != ((quint32 *) (characterBitmaps[ch]->bits + bytes_wide * characterBitmaps[ch]->h)))
+      if (cp != (reinterpret_cast<quint32 *> (characterBitmaps[ch]->bits + bytes_wide * characterBitmaps[ch]->h)))
         oops(i18n("Wrong number of bits stored:  char. %1, font %2", ch, parent->filename));
       if (rows_left != 0 || h_bit != characterBitmaps[ch]->w)
         oops(i18n("Bad pk file (%1), too many bits", parent->filename));

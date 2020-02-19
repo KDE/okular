@@ -22,7 +22,7 @@ static const char FAXMAGIC[]   = "\000PC Research, Inc\000\000\000\000\000\000";
 /* rearrange input bits into t16bits lsb-first chunks */
 static void normalize( pagenode *pn, int revbits, int swapbytes, size_t length )
 {
-    t32bits *p = (t32bits *) pn->data;
+    t32bits *p = reinterpret_cast<t32bits *>( pn->data );
 
     switch ( (revbits<<1) | swapbytes )
     {
@@ -101,8 +101,8 @@ static unsigned char* getstrip( pagenode *pn, int strip )
     data = new uchar[ roundup ];
     /* clear the last 2 t32bits, to force the expander to terminate
        even if the file ends in the middle of a fax line  */
-    *((t32bits *) data + roundup/4 - 2) = 0;
-    *((t32bits *) data + roundup/4 - 1) = 0;
+    *(reinterpret_cast<t32bits*>( data + roundup/4 - 2)) = 0;
+    *(reinterpret_cast<t32bits*>( data + roundup/4 - 1)) = 0;
 
     /* we expect to get it in one gulp... */
     if ( !file.seek(offset) || (size_t) file.read( (char *)data, pn->length ) != pn->length )
@@ -112,7 +112,7 @@ static unsigned char* getstrip( pagenode *pn, int strip )
     }
     file.close();
 
-    pn->data = (t16bits *)data;
+    pn->data = reinterpret_cast<t16bits *>(data);
 
     if ( pn->strips == nullptr && memcmp( data, FAXMAGIC, sizeof( FAXMAGIC ) - 1 ) == 0 )
     {
@@ -137,7 +137,7 @@ static unsigned char* getstrip( pagenode *pn, int strip )
     if ( pn->strips == nullptr )
         pn->rowsperstrip = pn->size.height();
 
-    pn->dataOrig = (t16bits *)data;
+    pn->dataOrig = reinterpret_cast<t16bits *>(data);
 
     return data;
 }
@@ -156,8 +156,8 @@ static void draw_line( pixnum *run, int lineNum, pagenode *pn )
     if ( lineNum >= pn->size.height() )
         return;
 
-    p = (t32bits *)(pn->imageData + lineNum*(2-pn->vres)*pn->bytes_per_line);
-    p1 =(t32bits *)(pn->vres ? nullptr : p + pn->bytes_per_line/sizeof(*p));
+    p = reinterpret_cast<t32bits*>(pn->imageData + lineNum*(2-pn->vres)*pn->bytes_per_line);
+    p1 =reinterpret_cast<t32bits*>(pn->vres ? nullptr : p + pn->bytes_per_line/sizeof(*p));
 
     r = run;
     acc = 0;
@@ -277,8 +277,8 @@ bool FaxDocument::load()
     for ( int y= height - 1; y >= 0; --y )
     {
         quint32 offset  = y * bytes_per_line;
-        quint32 *source = (quint32 *) (d->mPageNode.imageData + offset);
-        quint32 *dest   = (quint32 *) (bytes.data() + offset);
+        quint32 *source = reinterpret_cast<quint32 *> (d->mPageNode.imageData + offset);
+        quint32 *dest   = reinterpret_cast<quint32 *> (bytes.data() + offset);
         for ( int x= (bytes_per_line/4) - 1; x >= 0; --x )
         {
             quint32 dv = 0, sv = *source;

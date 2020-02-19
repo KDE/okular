@@ -35,7 +35,7 @@ build_ubuntu_20_04:
     - cmake -DOKULAR_UI=mobile -G Ninja ..
     - ninja
 
-build_clang_tidy:
+build_clazy_clang_tidy:
   stage: build
   image: debian:unstable
   only:

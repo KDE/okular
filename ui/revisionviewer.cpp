@@ -71,7 +71,7 @@ void RevisionViewer::viewRevision()
     QMimeDatabase db;
     const QMimeType mime = db.mimeTypeForData( m_revisionData );
     const QString tempDir = QStandardPaths::writableLocation( QStandardPaths::TempLocation );
-    QTemporaryFile tf( tempDir + QStringLiteral("/okular_revision_XXXXXX.%1").arg( mime.suffixes().first() ));
+    QTemporaryFile tf( tempDir + QStringLiteral("/okular_revision_XXXXXX.%1").arg( mime.suffixes().constFirst() ));
     if ( !tf.open() )
     {
         KMessageBox::error( m_parent, i18n("Could not view revision.") );

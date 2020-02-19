@@ -45,7 +45,7 @@ void KIMGIOTest::initTestCase()
     QVERIFY( !KPluginLoader::findPlugin( QStringLiteral("okularGenerator_kimgio") ).isEmpty() );
 	// make sure we didn't break the search path for image formats:
 	auto availableFormats = QImageReader::supportedImageFormats();
-	QVERIFY2(availableFormats.contains( "jpeg" ), availableFormats.join( ", " ).data() );
+	QVERIFY2(availableFormats.contains( "jpeg" ), availableFormats.join( ", " ).constData() );
 }
 
 

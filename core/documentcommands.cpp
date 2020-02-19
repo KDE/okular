@@ -603,12 +603,12 @@ EditFormComboCommand::EditFormComboCommand( Okular::DocumentPrivate* docPriv,
     // Determine new and previous choice indices (if any)
     for ( int i = 0; i < m_form->choices().size(); i++ )
     {
-        if ( m_form->choices()[i] == m_prevContents )
+        if ( m_form->choices().at(i) == m_prevContents )
         {
             m_prevIndex = i;
         }
 
-        if ( m_form->choices()[i] == m_newContents )
+        if ( m_form->choices().at(i) == m_newContents )
         {
             m_newIndex = i;
         }

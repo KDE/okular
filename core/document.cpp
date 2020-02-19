@@ -4111,7 +4111,7 @@ void Document::editFormCombo( int pageNumber,
     }
     else
     {
-        prevText = form->choices()[form->currentChoices().constFirst()];
+        prevText = form->choices().at(form->currentChoices().constFirst());
     }
 
     QUndoCommand *uc = new EditFormComboCommand( this->d, form, pageNumber, newText, newCursorPos, prevText, prevCursorPos, prevAnchorPos );

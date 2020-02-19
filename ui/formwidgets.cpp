@@ -1058,7 +1058,7 @@ void ComboEdit::slotValueChanged()
     }
     else
     {
-        prevText = form->choices()[form->currentChoices()[0]];
+        prevText = form->choices().at(form->currentChoices().constFirst());
     }
 
     int cursorPos = lineEdit()->cursorPosition();

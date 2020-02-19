@@ -989,11 +989,12 @@ LineAnnotPainter::LineAnnotPainter( const Okular::LineAnnotation * a, QSizeF pag
 
 void LineAnnotPainter::draw( QImage &image ) const
 {
-    if ( la->transformedLinePoints().count() == 2 )
+    const QLinkedList<Okular::NormalizedPoint> transformedLinePoints = la->transformedLinePoints();
+    if ( transformedLinePoints.count() == 2 )
     {
         const Okular::NormalizedPoint delta {
-            la->transformedLinePoints().last().x - la->transformedLinePoints().first().x,
-            la->transformedLinePoints().first().y - la->transformedLinePoints().last().y
+            transformedLinePoints.last().x - transformedLinePoints.first().x,
+            transformedLinePoints.first().y - transformedLinePoints.last().y
         };
         const double angle { atan2( delta.y * aspectRatio, delta.x ) };
         const double cosA { cos( -angle ) };
@@ -1001,8 +1002,8 @@ void LineAnnotPainter::draw( QImage &image ) const
         const QTransform tmpMatrix = QTransform {
             cosA, sinA / aspectRatio,
             -sinA, cosA / aspectRatio,
-            la->transformedLinePoints().first().x,
-            la->transformedLinePoints().first().y };
+            transformedLinePoints.first().x,
+            transformedLinePoints.first().y };
         const double deaspectedY { delta.y * aspectRatio };
         const double mainSegmentLength { sqrt( delta.x * delta.x + deaspectedY * deaspectedY ) };
         const double lineendSize { std::min( 6. * la->style().width() / pageSize.width(), mainSegmentLength / 2. ) };
@@ -1012,7 +1013,7 @@ void LineAnnotPainter::draw( QImage &image ) const
         drawLeaderLine( 0., image, tmpMatrix );
         drawLeaderLine( mainSegmentLength, image, tmpMatrix );
     }
-    else if ( la->transformedLinePoints().count() > 2 )
+    else if ( transformedLinePoints.count() > 2 )
     {
         drawMainLine( image );
     }

@@ -249,7 +249,7 @@ void EditFormsTest::testComboEditForm()
     // Select first choice
     m_document->editFormCombo( 0, m_comboEdit, QStringLiteral("combo1"), 0, 0, 0);
     QCOMPARE( m_comboEdit->currentChoices().length(), 1 );
-    QCOMPARE( m_comboEdit->currentChoices()[0], 0 );
+    QCOMPARE( m_comboEdit->currentChoices().constFirst(), 0 );
     QCOMPARE( m_comboEdit->editChoice(), QLatin1String( "" ) );
     QVERIFY( m_document->canUndo() );
     QVERIFY( !m_document->canRedo() );
@@ -257,7 +257,7 @@ void EditFormsTest::testComboEditForm()
     // Select third choice
     m_document->editFormCombo( 0, m_comboEdit, QStringLiteral("combo3"), 0, 0, 0);
     QCOMPARE( m_comboEdit->currentChoices().length(), 1 );
-    QCOMPARE( m_comboEdit->currentChoices()[0], 2 );
+    QCOMPARE( m_comboEdit->currentChoices().constFirst(), 2 );
     QCOMPARE( m_comboEdit->editChoice(), QLatin1String( "" ) );
     QVERIFY( m_document->canUndo() );
     QVERIFY( !m_document->canRedo() );
@@ -265,14 +265,14 @@ void EditFormsTest::testComboEditForm()
     // Undo and verify that first choice is selected
     m_document->undo();
     QCOMPARE( m_comboEdit->currentChoices().length(), 1 );
-    QCOMPARE( m_comboEdit->currentChoices()[0], 0 );
+    QCOMPARE( m_comboEdit->currentChoices().constFirst(), 0 );
     QVERIFY( m_document->canUndo() );
     QVERIFY( m_document->canRedo() );
 
     // Redo and verify that third choice is selected
     m_document->redo();
     QCOMPARE( m_comboEdit->currentChoices().length(), 1 );
-    QCOMPARE( m_comboEdit->currentChoices()[0], 2 );
+    QCOMPARE( m_comboEdit->currentChoices().constFirst(), 2 );
     QVERIFY( m_document->canUndo() );
     QVERIFY( !m_document->canRedo() );
 
@@ -286,7 +286,7 @@ void EditFormsTest::testComboEditForm()
     // Undo and verify that third choice is selected
     m_document->undo();
     QCOMPARE( m_comboEdit->currentChoices().length(), 1 );
-    QCOMPARE( m_comboEdit->currentChoices()[0], 2 );
+    QCOMPARE( m_comboEdit->currentChoices().constFirst(), 2 );
     QVERIFY( m_document->canUndo() );
     QVERIFY( m_document->canRedo() );
 }
@@ -300,28 +300,28 @@ void EditFormsTest::testListSingleEdit()
     // Select first item
     m_document->editFormList( 0, m_listSingleEdit, QList<int>() << 0);
     QCOMPARE( m_listSingleEdit->currentChoices().length(), 1 );
-    QCOMPARE( m_listSingleEdit->currentChoices()[0], 0 );
+    QCOMPARE( m_listSingleEdit->currentChoices().constFirst(), 0 );
     QVERIFY( m_document->canUndo() );
     QVERIFY( !m_document->canRedo() );
 
     // Select second item
     m_document->editFormList( 0, m_listSingleEdit, QList<int>() << 1);
     QCOMPARE( m_listSingleEdit->currentChoices().length(), 1 );
-    QCOMPARE( m_listSingleEdit->currentChoices()[0], 1 );
+    QCOMPARE( m_listSingleEdit->currentChoices().constFirst(), 1 );
     QVERIFY( m_document->canUndo() );
     QVERIFY( !m_document->canRedo() );
 
     // Undo and verify that first item is selected
     m_document->undo();
     QCOMPARE( m_listSingleEdit->currentChoices().length(), 1 );
-    QCOMPARE( m_listSingleEdit->currentChoices()[0], 0 );
+    QCOMPARE( m_listSingleEdit->currentChoices().constFirst(), 0 );
     QVERIFY( m_document->canUndo() );
     QVERIFY( m_document->canRedo() );
 
     // Redo and verify that second item is selected
     m_document->redo();
     QCOMPARE( m_listSingleEdit->currentChoices().length(), 1 );
-    QCOMPARE( m_listSingleEdit->currentChoices()[0], 1 );
+    QCOMPARE( m_listSingleEdit->currentChoices().constFirst(), 1 );
     QVERIFY( m_document->canUndo() );
     QVERIFY( !m_document->canRedo() );
 }

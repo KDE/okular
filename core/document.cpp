@@ -5058,7 +5058,7 @@ QByteArray Document::fontData(const FontInfo &font) const
 
     if (d->m_generator)
     {
-        QMetaObject::invokeMethod(d->m_generator, "requestFontData", Qt::DirectConnection, Q_ARG(Okular::FontInfo, font), Q_ARG(QByteArray *, &result));
+        QMetaObject::invokeMethod(d->m_generator, "requestFontData", Qt::DirectConnection, Q_ARG(Okular::FontInfo, font), Q_ARG(QByteArray*, &result));
     }
 
     return result;

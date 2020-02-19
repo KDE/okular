@@ -106,7 +106,7 @@ bool EBookSearch::generateIndex( EBook * ebookFile, QDataStream & stream )
 		delete m_Index;
 
 	m_Index = new QtAs::Index();
-	connect( m_Index, SIGNAL( indexingProgress( int, const QString& ) ), this, SLOT( updateProgress( int, const QString& ) ) );
+	connect( m_Index, &QtAs::Index::indexingProgress, this, &EBookSearch::updateProgress );
 	
 	// Process the list of files in CHM archive and keep only HTML document files from there
 	for ( const QUrl &allDocumentsI : qAsConst( alldocuments ) )

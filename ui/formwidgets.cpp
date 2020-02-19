@@ -155,8 +155,8 @@ void FormWidgetsController::registerRadioButton( FormWidgetIface *fwButton, Okul
     if (siblings.isEmpty())
         newdata.group->setExclusive( false );
 
-    connect( newdata.group, SIGNAL( buttonClicked(QAbstractButton* ) ),
-             this, SLOT( slotButtonClicked( QAbstractButton* ) ) );
+    connect( newdata.group, QOverload<QAbstractButton *>::of(&QButtonGroup::buttonClicked),
+             this, &FormWidgetsController::slotButtonClicked );
     m_radios.append( newdata );
 }
 
@@ -937,7 +937,7 @@ void FileEdit::slotHandleFileChangedByUndoRedo( int pageNumber,
     setText( contents );
     lineEdit()->setCursorPosition( anchorPos );
     lineEdit()->cursorForward( true, cursorPos - anchorPos );
-    connect( this, SIGNAL(cursorPositionChanged( int, int ) ), this, SLOT( slotChanged() ) );
+    connect( this, SIGNAL(cursorPositionChanged(int,int)), this, SLOT( slotChanged() ) );
     m_prevCursorPos = cursorPos;
     m_prevAnchorPos = anchorPos;
     setFocus();

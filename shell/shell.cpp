@@ -719,7 +719,7 @@ void Shell::applyOptionsToPart( QObject* part, const QString &serializedOptions 
     if ( ShellUtils::showPrintDialogAndExit(serializedOptions) )
         QMetaObject::invokeMethod( part, "enableExitAfterPrint" );
     if(!find.isEmpty())
-        QMetaObject::invokeMethod( part, "enableStartWithFind", Q_ARG( const QString &, find ));
+        QMetaObject::invokeMethod( part, "enableStartWithFind", Q_ARG(QString, find ));
 }
 
 void Shell::connectPart( QObject* part )

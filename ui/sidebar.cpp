@@ -760,7 +760,7 @@ void Sidebar::saveSplitterSize() const
     Okular::Settings::self()->save();
 }
 
-void Sidebar::listContextMenu( const QPoint &pos )
+void Sidebar::listContextMenu( const QPoint pos )
 {
     QMenu menu( this );
     menu.setTitle( i18n( "Okular" ) );

@@ -46,7 +46,7 @@ bool OKMenuTitle::eventFilter(QObject *object, QEvent *event)
     Q_UNUSED(object);
 
     if (event->type() == QEvent::Paint) {
-        return false;
+        return QWidgetAction::eventFilter(object, event);
     } else if (event->type() == QEvent::KeyRelease) {
         // If we're receiving the key release event is because we just gained
         // focus though a key event, use the same key to move it to the next action

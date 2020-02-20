@@ -183,7 +183,7 @@ bool Shell::eventFilter(QObject *obj, QEvent *event)
             }
         }
     }
-    return false;
+    return KParts::MainWindow::eventFilter(obj, event);
 }
 
 bool Shell::isValid() const
@@ -834,7 +834,7 @@ void Shell::moveTabData( int from, int to )
    m_tabs.move( from, to );
 }
 
-void Shell::slotFitWindowToPage(const QSize& pageViewSize, const QSize& pageSize )
+void Shell::slotFitWindowToPage(const QSize pageViewSize, const QSize pageSize )
 {
     const int xOffset = pageViewSize.width() - pageSize.width();
     const int yOffset = pageViewSize.height() - pageSize.height();

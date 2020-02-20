@@ -40,7 +40,7 @@ class Q_DECL_EXPORT PagePainter
         // in 'flags'. 'limits' is the bounding rect of the paint operation,
         // 'scaledWidth' and 'scaledHeight' the expected size of page contents
         static void paintPageOnPainter( QPainter * destPainter, const Okular::Page * page, Okular::DocumentObserver *observer,
-            int flags, int scaledWidth, int scaledHeight, const QRect & pageLimits );
+            int flags, int scaledWidth, int scaledHeight, const QRect pageLimits );
 
         // draw (using painter 'destPainter') the 'page' requested by 'observer' using features
         // in 'flags'.
@@ -50,11 +50,11 @@ class Q_DECL_EXPORT PagePainter
         // 'crop' is the (normalized) cropped rectangle within the page.
         // The painter's (0,0) is assumed to be top left of the painted ('pageLimits') rect.
         static void paintCroppedPageOnPainter( QPainter * destPainter, const Okular::Page * page, Okular::DocumentObserver *observer,
-            int flags, int scaledWidth, int scaledHeight, const QRect & pageLimits,
+            int flags, int scaledWidth, int scaledHeight, const QRect pageLimits,
             const Okular::NormalizedRect & crop, Okular::NormalizedPoint *viewPortPoint );
 
     private:
-        static void cropPixmapOnImage( QImage & dest, const QPixmap * src, const QRect & r );
+        static void cropPixmapOnImage( QImage & dest, const QPixmap * src, const QRect r );
         static void recolor(QImage *image, const QColor &foreground, const QColor &background);
 
         // set the alpha component of the image to a given value

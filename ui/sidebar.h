@@ -56,7 +56,7 @@ class OKULARPART_EXPORT Sidebar : public QWidget
     private Q_SLOTS:
         void itemClicked( QListWidgetItem *item );
         void splitterMoved( int pos, int index );
-        void listContextMenu( const QPoint & );
+        void listContextMenu( const QPoint );
         void showTextToggled( bool );
         void iconSizeChanged( QAction *action );
 

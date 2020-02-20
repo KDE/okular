@@ -38,22 +38,22 @@ struct Document
 {
 	Document( int d, int f ) : docNumber( d ), frequency( f ) {}
 	Document() : docNumber( -1 ), frequency( 0 ) {}
-	bool operator==( const Document &doc ) const
+	bool operator==( const Document doc ) const
 	{
 		return docNumber == doc.docNumber;
 	}
 	
-	bool operator<( const Document &doc ) const
+	bool operator<( const Document doc ) const
 	{
 		return frequency > doc.frequency;
 	}
 	
-	bool operator<=( const Document &doc ) const
+	bool operator<=( const Document doc ) const
 	{
 		return frequency >= doc.frequency;
 	}
 	
-	bool operator>( const Document &doc ) const
+	bool operator>( const Document doc ) const
 	{
 		return frequency < doc.frequency;
 	}
@@ -63,7 +63,7 @@ struct Document
 };
 
 QDataStream &operator>>( QDataStream &s, Document &l );
-QDataStream &operator<<( QDataStream &s, const Document &l );
+QDataStream &operator<<( QDataStream &s, const Document l );
 
 class Index : public QObject
 {
@@ -123,5 +123,7 @@ class Index : public QObject
 };
 
 };
+
+Q_DECLARE_TYPEINFO(QtAs::Document, Q_MOVABLE_TYPE);
 
 #endif // EBOOK_SEARCH_INDEX_H

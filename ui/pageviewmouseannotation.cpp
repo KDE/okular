@@ -66,7 +66,7 @@ void AnnotationDescription::invalidate()
     pageNumber = -1;
 }
 
-AnnotationDescription::AnnotationDescription( PageViewItem * newPageViewItem, const QPoint& eventPos )
+AnnotationDescription::AnnotationDescription( PageViewItem * newPageViewItem, const QPoint eventPos )
 {
     const Okular::AnnotationObjectRect * annObjRect = nullptr;
     if ( newPageViewItem )
@@ -103,7 +103,7 @@ MouseAnnotation::~MouseAnnotation()
 {
 }
 
-void MouseAnnotation::routeMousePressEvent( PageViewItem * pageViewItem, const QPoint & eventPos )
+void MouseAnnotation::routeMousePressEvent( PageViewItem * pageViewItem, const QPoint eventPos )
 {
     /* Is there a selected annotation? */
     if ( m_focusedAnnotation.isValid() )
@@ -163,7 +163,7 @@ void MouseAnnotation::routeMouseReleaseEvent()
     */
 }
 
-void MouseAnnotation::routeMouseMoveEvent(  PageViewItem * pageViewItem, const QPoint & eventPos, bool leftButtonPressed )
+void MouseAnnotation::routeMouseMoveEvent(  PageViewItem * pageViewItem, const QPoint eventPos, bool leftButtonPressed )
 {
     if ( !pageViewItem )
     {
@@ -270,7 +270,7 @@ void MouseAnnotation::routeTooltipEvent( const QHelpEvent * helpEvent )
     }
 }
 
-void MouseAnnotation::routePaint( QPainter * painter, const QRect & paintRect )
+void MouseAnnotation::routePaint( QPainter * painter, const QRect paintRect )
 {
     /* QPainter draws relative to the origin of uncropped viewport. */
     static const QColor borderColor = QColor::fromHsvF( 0, 0, 1.0 );
@@ -537,7 +537,7 @@ QRect MouseAnnotation::getFullBoundingRect( const AnnotationDescription & ad ) c
 }
 
 /* Apply the command determined by m_state to the currently focused annotation. */
-void MouseAnnotation::performCommand( const QPoint & newPos )
+void MouseAnnotation::performCommand( const QPoint newPos )
 {
     const QRect & pageViewItemRect = m_focusedAnnotation.pageViewItem->uncroppedGeometry();
     QPointF mouseDelta( newPos - pageViewItemRect.topLeft() - m_mousePosition );
@@ -597,7 +597,7 @@ void MouseAnnotation::updateViewport( const AnnotationDescription & ad ) const
 
 /* eventPos: Mouse position in uncropped page coordinates.
    ad: The annotation to get the handle for. */
-MouseAnnotation::ResizeHandle MouseAnnotation::getHandleAt( const QPoint & eventPos, const AnnotationDescription & ad ) const
+MouseAnnotation::ResizeHandle MouseAnnotation::getHandleAt( const QPoint eventPos, const AnnotationDescription & ad ) const
 {
     ResizeHandle selected = RH_None;
 
@@ -678,7 +678,7 @@ QRect MouseAnnotation::getHandleRect( ResizeHandle handle, const AnnotationDescr
 }
 
 /* Convert a resize handle delta into two adjust delta coordinates. */
-void MouseAnnotation::handleToAdjust( const QPointF & dIn, QPointF & dOut1, QPointF & dOut2, MouseAnnotation::ResizeHandle handle, Okular::Rotation rotation )
+void MouseAnnotation::handleToAdjust( const QPointF dIn, QPointF & dOut1, QPointF & dOut2, MouseAnnotation::ResizeHandle handle, Okular::Rotation rotation )
 {
     const MouseAnnotation::ResizeHandle rotatedHandle = MouseAnnotation::rotateHandle( handle, rotation);
     dOut1.rx() = ( rotatedHandle & MouseAnnotation::RH_Left ) ? dIn.x() : 0;
@@ -687,7 +687,7 @@ void MouseAnnotation::handleToAdjust( const QPointF & dIn, QPointF & dOut1, QPoi
     dOut2.ry() = ( rotatedHandle & MouseAnnotation::RH_Bottom ) ? dIn.y() : 0;
 }
 
-QPointF MouseAnnotation::rotateInRect( const QPointF & rotated, Okular::Rotation rotation )
+QPointF MouseAnnotation::rotateInRect( const QPointF rotated, Okular::Rotation rotation )
 {
     QPointF ret;
 

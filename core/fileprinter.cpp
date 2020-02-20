@@ -31,7 +31,7 @@
 
 using namespace Okular;
 
-int FilePrinter::printFile(QPrinter &printer, const QString file, // NOLINT(performance-unnecessary-value-param) TODO when BIC changes are allowed
+int FilePrinter::printFile(QPrinter &printer, const QString file, // NOLINT(performance-unnecessary-value-param) clazy:exclude=function-args-by-ref TODO when BIC changes are allowed
                             QPrinter::Orientation documentOrientation, FileDeletePolicy fileDeletePolicy,
                             PageSelectPolicy pageSelectPolicy, const QString &pageRange )
 {
@@ -39,7 +39,7 @@ int FilePrinter::printFile(QPrinter &printer, const QString file, // NOLINT(perf
                       pageSelectPolicy, pageRange, ScaleMode::FitToPrintArea );
 }
 
-int FilePrinter::printFile(QPrinter &printer, const QString file, // NOLINT(performance-unnecessary-value-param) TODO when BIC changes are allowed
+int FilePrinter::printFile(QPrinter &printer, const QString file, // NOLINT(performance-unnecessary-value-param) clazy:exclude=function-args-by-ref TODO when BIC changes are allowed
                             QPrinter::Orientation documentOrientation,
                             FileDeletePolicy fileDeletePolicy, PageSelectPolicy pageSelectPolicy,
                             const QString &pageRange, ScaleMode scaleMode )
@@ -49,7 +49,7 @@ int FilePrinter::printFile(QPrinter &printer, const QString file, // NOLINT(perf
                             documentOrientation, scaleMode );
 }
 
-int FilePrinter::doPrintFiles(QPrinter &printer, const QStringList fileList, FileDeletePolicy fileDeletePolicy, // NOLINT(performance-unnecessary-value-param) TODO when BIC changes are allowed
+int FilePrinter::doPrintFiles(QPrinter &printer, const QStringList fileList, FileDeletePolicy fileDeletePolicy, // NOLINT(performance-unnecessary-value-param) clazy:exclude=function-args-by-ref TODO when BIC changes are allowed
                                PageSelectPolicy pageSelectPolicy, const QString &pageRange,
                                QPrinter::Orientation documentOrientation )
 {

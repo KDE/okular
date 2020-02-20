@@ -229,7 +229,7 @@ void BookmarkList::slotChanged( QTreeWidgetItem * item )
     }
 }
 
-void BookmarkList::slotContextMenu( const QPoint& p )
+void BookmarkList::slotContextMenu( const QPoint p )
 {
     QTreeWidgetItem * item = m_tree->itemAt( p );
     BookmarkItem* bmItem = item ? dynamic_cast<BookmarkItem*>( item ) : nullptr;
@@ -239,7 +239,7 @@ void BookmarkList::slotContextMenu( const QPoint& p )
         contextMenuForFileItem( p, fItem );
 }
 
-void BookmarkList::contextMenuForBookmarkItem( const QPoint& p, BookmarkItem* bmItem )
+void BookmarkList::contextMenuForBookmarkItem( const QPoint p, BookmarkItem* bmItem )
 {
     Q_UNUSED( p );
     if ( !bmItem || !bmItem->viewport().isValid() )
@@ -261,7 +261,7 @@ void BookmarkList::contextMenuForBookmarkItem( const QPoint& p, BookmarkItem* bm
         m_document->bookmarkManager()->removeBookmark( bmItem->url(), bmItem->bookmark() );
 }
 
-void BookmarkList::contextMenuForFileItem( const QPoint& p, FileItem* fItem )
+void BookmarkList::contextMenuForFileItem( const QPoint p, FileItem* fItem )
 {
     Q_UNUSED( p );
     if ( !fItem )

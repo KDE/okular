@@ -174,9 +174,9 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         void openSourceReference(const QString& absFileName, int line, int column);
         void viewerMenuStateChange(bool enabled);
         void enableCloseAction(bool enable);
-        void mimeTypeChanged(QMimeType mimeType);
+        void mimeTypeChanged(const QMimeType &mimeType);
         void urlsDropped( const QList<QUrl>& urls );
-        void fitWindowToPage( const QSize& pageViewPortSize, const QSize& pageSize );
+        void fitWindowToPage( const QSize pageViewPortSize, const QSize pageSize );
 
     protected:
         // reimplemented from KParts::ReadWritePart
@@ -210,8 +210,8 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         bool slotSaveFileAs(bool showOkularArchiveAsDefaultFormat = false);
         void slotGetNewStuff();
         void slotNewConfig();
-        void slotShowMenu(const Okular::Page *page, const QPoint &point);
-        void slotShowTOCMenu(const Okular::DocumentViewport &vp, const QPoint &point, const QString &title);
+        void slotShowMenu(const Okular::Page *page, const QPoint point);
+        void slotShowTOCMenu(const Okular::DocumentViewport &vp, const QPoint point, const QString &title);
         void slotShowProperties();
         void slotShowEmbeddedFiles();
         void slotShowLeftPanel();
@@ -255,7 +255,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
 
     private:
         bool aboutToShowContextMenu(QMenu *menu, QAction *action, QMenu *contextMenu);
-        void showMenu(const Okular::Page *page, const QPoint &point, const QString &bookmarkTitle = QString(), const Okular::DocumentViewport &vp = DocumentViewport(), bool showTOCActions = false);
+        void showMenu(const Okular::Page *page, const QPoint point, const QString &bookmarkTitle = QString(), const Okular::DocumentViewport &vp = DocumentViewport(), bool showTOCActions = false);
         bool eventFilter(QObject * watched, QEvent * event) override;
         Document::OpenResult doOpenFile(const QMimeType &mime, const QString &fileNameToOpen, bool *isCompressedFile);
         bool openUrl( const QUrl &url, bool swapInsteadOfOpening );

@@ -76,12 +76,12 @@ class PageViewAnnotator : public QObject
         QCursor cursor() const;
 
         QRect routeMouseEvent( QMouseEvent * event, PageViewItem * item );
-        QRect routeTabletEvent( QTabletEvent * event, PageViewItem * item, const QPoint & localOriginInGlobal );
-        QRect performRouteMouseOrTabletEvent( const AnnotatorEngine::EventType & eventType, const AnnotatorEngine::Button & button,
-                                              const QPointF & pos, PageViewItem * item );
+        QRect routeTabletEvent( QTabletEvent * event, PageViewItem * item, const QPoint localOriginInGlobal );
+        QRect performRouteMouseOrTabletEvent( const AnnotatorEngine::EventType eventType, const AnnotatorEngine::Button button,
+                                              const QPointF pos, PageViewItem * item );
         bool routeKeyEvent( QKeyEvent * event );
-        bool routePaints( const QRect & wantedRect ) const;
-        void routePaint( QPainter * painter, const QRect & paintRect );
+        bool routePaints( const QRect wantedRect ) const;
+        void routePaint( QPainter * painter, const QRect paintRect );
 
         void reparseConfig();
 

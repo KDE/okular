@@ -93,8 +93,8 @@ Q_OBJECT
         QVariant capability( ViewCapability capability ) const override;
         void setCapability( ViewCapability capability, const QVariant &option ) override;
 
-        QList< Okular::RegularAreaRect * > textSelections( const QPoint& start, const QPoint& end, int& firstpage );
-        Okular::RegularAreaRect * textSelectionForItem( const PageViewItem * item, const QPoint & startPoint = QPoint(), const QPoint & endPoint = QPoint() );
+        QList< Okular::RegularAreaRect * > textSelections( const QPoint start, const QPoint end, int& firstpage );
+        Okular::RegularAreaRect * textSelectionForItem( const PageViewItem * item, const QPoint startPoint = QPoint(), const QPoint endPoint = QPoint() );
 
         void reparseConfig();
 
@@ -104,8 +104,8 @@ Q_OBJECT
         int contentAreaWidth() const;
         int contentAreaHeight() const;
         QPoint contentAreaPosition() const;
-        QPoint contentAreaPoint( const QPoint & pos ) const;
-        QPointF contentAreaPoint( const QPointF & pos ) const;
+        QPoint contentAreaPoint( const QPoint pos ) const;
+        QPointF contentAreaPoint( const QPointF pos ) const;
 
         bool areSourceLocationsShownGraphically() const;
         void setShowSourceLocationsGraphically(bool show);
@@ -135,11 +135,11 @@ Q_OBJECT
         void externalKeyPressEvent( QKeyEvent *e );
 
     Q_SIGNALS:
-        void rightClick( const Okular::Page *, const QPoint & );
+        void rightClick( const Okular::Page *, const QPoint );
         void mouseBackButtonClick();
         void mouseForwardButtonClick();
         void escPressed();
-        void fitWindowToPage( const QSize& pageViewPortSize, const QSize& pageSize );
+        void fitWindowToPage( const QSize pageViewPortSize, const QSize pageSize );
         void triggerSearch( const QString& text );
 
     protected:
@@ -167,18 +167,18 @@ Q_OBJECT
 
     private:
         // draw background and items on the opened qpainter
-        void drawDocumentOnPainter( const QRect & contentsRect, QPainter * p );
+        void drawDocumentOnPainter( const QRect contentsRect, QPainter * p );
         // update item width and height using current zoom parameters
         void updateItemSize( PageViewItem * item, int colWidth, int rowHeight );
         // return the widget placed on a certain point or 0 if clicking on empty space
         PageViewItem * pickItemOnPoint( int x, int y );
         // start / modify / clear selection rectangle
-        void selectionStart( const QPoint & pos, const QColor & color, bool aboveAll = false );
+        void selectionStart( const QPoint pos, const QColor & color, bool aboveAll = false );
         void selectionClear( const ClearMode mode = ClearAllSelection );
         void drawTableDividers(QPainter * screenPainter);
         void guessTableDividers();
         // update either text or rectangle selection
-        void updateSelection( const QPoint & pos );
+        void updateSelection( const QPoint pos );
         // compute the zoom factor value for FitWidth and FitPage mode
         double zoomFactorFitMode( ZoomMode mode );
         // update internal zoom values and end in a slotRelayoutPages();
@@ -189,10 +189,10 @@ Q_OBJECT
         void updateViewMode ( const int nr );
         void textSelectionClear();
         // updates cursor
-        void updateCursor( const QPoint &p );
+        void updateCursor( const QPoint p );
 
-        void moveMagnifier( const QPoint &p );
-        void updateMagnifier( const QPoint &p );
+        void moveMagnifier( const QPoint p );
+        void updateMagnifier( const QPoint p );
 
         int viewColumns() const;
 
@@ -201,14 +201,14 @@ Q_OBJECT
 
         void toggleFormWidgets( bool on );
 
-        void resizeContentArea( const QSize & newSize );
+        void resizeContentArea( const QSize newSize );
         void updatePageStep();
 
         void addSearchWithinDocumentAction(QMenu * menu, const QString & searchText );
         void addWebShortcutsMenu( QMenu * menu, const QString & text );
-        QMenu* createProcessLinkMenu( PageViewItem *item, const QPoint & eventPos );
+        QMenu* createProcessLinkMenu( PageViewItem *item, const QPoint eventPos );
         // used when selecting stuff, makes the view scroll as necessary to keep the mouse inside the view
-        void scrollPosIntoView( const QPoint & pos );
+        void scrollPosIntoView( const QPoint pos );
         QPoint viewportToContentArea( const Okular::DocumentViewport & vp ) const;
 
         // called from slots to turn off trim modes mutually exclusive to id

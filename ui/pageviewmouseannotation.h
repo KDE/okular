@@ -47,7 +47,7 @@ class AnnotationDescription
 public:
     AnnotationDescription()
         : annotation( nullptr ), pageViewItem( nullptr ), pageNumber( -1 ) {}
-    AnnotationDescription( PageViewItem * newPageViewItem, const QPoint& eventPos );
+    AnnotationDescription( PageViewItem * newPageViewItem, const QPoint eventPos );
     bool isValid() const;
     bool isContainedInPage( const Okular::Document * document, int pageNumber ) const;
     void invalidate();
@@ -77,13 +77,13 @@ public:
     ~MouseAnnotation() override;
 
     /* Process a mouse press event. eventPos: Mouse position in content area coordinates. */
-    void routeMousePressEvent( PageViewItem * pageViewItem, const QPoint & eventPos );
+    void routeMousePressEvent( PageViewItem * pageViewItem, const QPoint eventPos );
 
     /* Process a mouse release event. */
     void routeMouseReleaseEvent();
 
     /* Process a mouse move event. eventPos: Mouse position in content area coordinates. */
-    void routeMouseMoveEvent( PageViewItem * pageViewItem, const QPoint & eventPos, bool leftButtonPressed );
+    void routeMouseMoveEvent( PageViewItem * pageViewItem, const QPoint eventPos, bool leftButtonPressed );
 
     /* Process a key event. */
     void routeKeyPressEvent( const QKeyEvent * e );
@@ -92,7 +92,7 @@ public:
     void routeTooltipEvent( const QHelpEvent * helpEvent );
 
     /* Process a paint event. */
-    void routePaint( QPainter * painter, const QRect & paintRect );
+    void routePaint( QPainter * painter, const QRect paintRect );
 
     /* Cancel the current selection or action, if any. */
     void cancel();
@@ -148,13 +148,13 @@ public:
 private:
     void setState( MouseAnnotationState state, const AnnotationDescription & ad );
     QRect getFullBoundingRect( const AnnotationDescription & ad ) const;
-    void performCommand( const QPoint & newPos );
+    void performCommand( const QPoint newPos );
     void finishCommand();
     void updateViewport( const AnnotationDescription & ad ) const;
-    ResizeHandle getHandleAt( const QPoint & eventPos, const AnnotationDescription & ad ) const;
+    ResizeHandle getHandleAt( const QPoint eventPos, const AnnotationDescription & ad ) const;
     QRect getHandleRect( ResizeHandle handle, const AnnotationDescription & ad ) const;
-    static void handleToAdjust( const QPointF & dIn, QPointF & dOut1, QPointF & dOut2, MouseAnnotation::ResizeHandle handle, Okular::Rotation rotation );
-    static QPointF rotateInRect( const QPointF & rotated, Okular::Rotation rotation );
+    static void handleToAdjust( const QPointF dIn, QPointF & dOut1, QPointF & dOut2, MouseAnnotation::ResizeHandle handle, Okular::Rotation rotation );
+    static QPointF rotateInRect( const QPointF rotated, Okular::Rotation rotation );
     static ResizeHandle rotateHandle( ResizeHandle handle, Okular::Rotation rotation );
     void processAction( const AnnotationDescription& ad );
 

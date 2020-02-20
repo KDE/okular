@@ -273,7 +273,7 @@ QModelIndexList Reviews::retrieveAnnotations(const QModelIndex& idx) const
     return ret;
 }
 
-void Reviews::contextMenuRequested( const QPoint &pos )
+void Reviews::contextMenuRequested( const QPoint pos )
 {
     AnnotationPopup popup( m_document, AnnotationPopup::SingleAnnotationMode, this );
     connect(&popup, &AnnotationPopup::openAnnotationWindow, this, &Reviews::openAnnotationWindow);

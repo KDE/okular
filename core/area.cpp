@@ -127,7 +127,7 @@ NormalizedRect::NormalizedRect( double l, double t, double r, double b )
     // note: check for swapping coords?
     : left( l ), top( t ), right( r ), bottom( b ) {}
 
-NormalizedRect::NormalizedRect( const QRect & r, double xScale, double yScale )
+NormalizedRect::NormalizedRect( const QRect & r, double xScale, double yScale ) // clazy:exclude=function-args-by-value TODO when BIC changes are allowed
     : left( (double)r.left() / xScale ), top( (double)r.top() / yScale ),
     right( (double)r.right() / xScale ), bottom( (double)r.bottom() / yScale ) {}
 

@@ -82,7 +82,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         const Okular::Action * getLink( int x, int y, QRect * geometry = nullptr ) const;
         const Okular::Annotation * getAnnotation( int x, int y, QRect * geometry = nullptr ) const;
         void testCursorOnLink( int x, int y );
-        void overlayClick( const QPoint & position );
+        void overlayClick( const QPoint position );
         void changePage( int newPage );
         void generatePage( bool disableTransition = false );
         void generateIntroPage( QPainter & p );
@@ -97,7 +97,7 @@ class PresentationWidget : public QWidget, public Okular::DocumentObserver
         void repositionContent();
         void requestPixmaps();
         void setScreen( int );
-        void applyNewScreenSize( const QSize & oldSize );
+        void applyNewScreenSize( const QSize oldSize );
         void inhibitPowerManagement();
         void allowPowerManagement();
         void showTopBar( bool );

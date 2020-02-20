@@ -518,7 +518,7 @@ void Generator::requestFontData(const Okular::FontInfo & /*font*/, QByteArray * 
 
 }
 
-void Generator::setDPI(const QSizeF & dpi)
+void Generator::setDPI(const QSizeF & dpi) // clazy:exclude=function-args-by-value TODO remove the & when we do a BIC change elsewhere
 {
      Q_D( Generator );
      d->m_dpi = dpi;

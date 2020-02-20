@@ -54,7 +54,7 @@ Q_OBJECT
 
     Q_SIGNALS:
         void hasTOC(bool has);
-        void rightClick( const Okular::DocumentViewport &, const QPoint &, const QString & );
+        void rightClick( const Okular::DocumentViewport &, const QPoint , const QString & );
 
     private Q_SLOTS:
         void slotExecuted( const QModelIndex & );

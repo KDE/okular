@@ -117,13 +117,13 @@ bool DviGenerator::doCloseDocument()
 }
 
 void DviGenerator::fillViewportFromAnchor( Okular::DocumentViewport &vp,
-                                           const Anchor &anch, const Okular::Page *page ) const
+                                           const Anchor anch, const Okular::Page *page ) const
 {
     fillViewportFromAnchor( vp, anch, page->width(), page->height() );
 }
 
 void DviGenerator::fillViewportFromAnchor( Okular::DocumentViewport &vp,
-                                           const Anchor &anch, int pW, int pH ) const
+                                           const Anchor anch, int pW, int pH ) const
 {
     vp.pageNumber = anch.page - 1;
 

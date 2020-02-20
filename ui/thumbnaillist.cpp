@@ -69,9 +69,9 @@ class ThumbnailListPrivate : public QWidget
         // called by ThumbnailWidgets to get the overlay bookmark pixmap
         const QPixmap * getBookmarkOverlay() const;
         // called by ThumbnailWidgets to send (forward) the mouse move signals
-        ChangePageDirection forwardTrack( const QPoint &, const QSize & );
+        ChangePageDirection forwardTrack( const QPoint, const QSize );
 
-        ThumbnailWidget* itemFor( const QPoint & p ) const;
+        ThumbnailWidget* itemFor( const QPoint p ) const;
         void delayedRequestVisiblePixmaps( int delayMs = 0 );
 
         // SLOTS:
@@ -114,7 +114,7 @@ class ThumbnailWidget
         const Okular::Page * page() const { return m_page; }
         QRect visibleRect() const { return m_visibleRect.geometry( m_pixmapWidth, m_pixmapHeight ); }
 
-        void paint( QPainter &p, const QRect &clipRect );
+        void paint( QPainter &p, const QRect clipRect );
 
         static int margin() { return m_margin; }
 
@@ -125,7 +125,7 @@ class ThumbnailWidget
         QPoint pos() const { return m_rect.topLeft(); }
         void move( int x, int y ) { m_rect.setTopLeft( QPoint( x, y ) ); }
         void update() { m_parent->update( m_rect ); }
-        void update( const QRect & rect ) { m_parent->update( rect.translated( m_rect.topLeft() ) ); }
+        void update( const QRect rect ) { m_parent->update( rect.translated( m_rect.topLeft() ) ); }
 
     private:
         // the margin around the widget
@@ -165,7 +165,7 @@ ThumbnailListPrivate::~ThumbnailListPrivate()
 {
 }
 
-ThumbnailWidget* ThumbnailListPrivate::itemFor( const QPoint & p ) const
+ThumbnailWidget* ThumbnailListPrivate::itemFor( const QPoint p ) const
 {
     QVector< ThumbnailWidget * >::const_iterator tIt = m_thumbnails.constBegin(), tEnd = m_thumbnails.constEnd();
     for ( ; tIt != tEnd; ++tIt )
@@ -457,7 +457,7 @@ ThumbnailWidget *ThumbnailListPrivate::getThumbnailbyOffset(int current, int off
     return m_thumbnails[idx];
 }
 
-ThumbnailListPrivate::ChangePageDirection ThumbnailListPrivate::forwardTrack(const QPoint &point, const QSize &r )
+ThumbnailListPrivate::ChangePageDirection ThumbnailListPrivate::forwardTrack(const QPoint point, const QSize r )
 {
     Okular::DocumentViewport vp = m_document->viewport();
     const double deltaX = (double)point.x() / r.width(),
@@ -497,8 +497,10 @@ void ThumbnailList::slotFilterBookmarks( bool filterOn )
 //BEGIN widget events
 void ThumbnailList::keyPressEvent( QKeyEvent * keyEvent )
 {
-    if ( d->m_thumbnails.count() < 1 )
-        return keyEvent->ignore();
+    if ( d->m_thumbnails.count() < 1 ) {
+        keyEvent->ignore();
+        return;
+    }
 
     int nextPage = -1;
     if ( keyEvent->key() == Qt::Key_Up )
@@ -524,8 +526,10 @@ void ThumbnailList::keyPressEvent( QKeyEvent * keyEvent )
     else if ( keyEvent->key() == Qt::Key_End )
         nextPage = d->m_thumbnails[ d->m_thumbnails.count() - 1 ]->pageNumber();
 
-    if ( nextPage == -1 )
-        return keyEvent->ignore();
+    if ( nextPage == -1 ) {
+        keyEvent->ignore();
+        return;
+    }
 
     keyEvent->accept();
     if ( d->m_selected )
@@ -700,8 +704,10 @@ void ThumbnailWidget::setVisibleRect( const Okular::NormalizedRect & rect )
 void ThumbnailListPrivate::mousePressEvent( QMouseEvent * e )
 {
     ThumbnailWidget* item = itemFor( e->pos() );
-    if ( !item ) // mouse on the spacing between items
-        return e->ignore();
+    if ( !item ) { // mouse on the spacing between items
+        e->ignore();
+        return;
+    }
 
     const QRect r = item->visibleRect();
     const int margin = ThumbnailWidget::margin();
@@ -727,8 +733,10 @@ void ThumbnailListPrivate::mouseReleaseEvent( QMouseEvent * e )
 {
     ThumbnailWidget* item = itemFor( e->pos() );
     m_mouseGrabItem = item;
-    if ( !item ) // mouse on the spacing between items
-        return e->ignore();
+    if ( !item ) { // mouse on the spacing between items
+        e->ignore();
+        return;
+    }
 
     QRect r = item->visibleRect();
     const QPoint p = e->pos() - item->pos();
@@ -754,8 +762,10 @@ void ThumbnailListPrivate::mouseMoveEvent( QMouseEvent * e )
     if ( e->buttons() == Qt::NoButton )
     {
         ThumbnailWidget* item = itemFor( e->pos() );
-        if ( !item ) // mouse on the spacing between items
-            return e->ignore();
+        if ( !item ) { // mouse on the spacing between items
+            e->ignore();
+            return;
+        }
 
         QRect r = item->visibleRect();
         const int margin = ThumbnailWidget::margin();
@@ -769,11 +779,14 @@ void ThumbnailListPrivate::mouseMoveEvent( QMouseEvent * e )
             setCursor( Qt::ArrowCursor );
         }
 
-        return e->ignore();
+        e->ignore();
+        return;
     }
     // no item under the mouse or previously selected
-    if ( !m_mouseGrabItem )
-        return e->ignore();
+    if ( !m_mouseGrabItem ) {
+        e->ignore();
+        return;
+    }
     const QRect r = m_mouseGrabItem->rect();
     if ( !m_mouseGrabPos.isNull() )
     {
@@ -883,8 +896,10 @@ void ThumbnailListPrivate::mouseMoveEvent( QMouseEvent * e )
 void ThumbnailListPrivate::wheelEvent( QWheelEvent * e )
 {
     const ThumbnailWidget* item = itemFor( e->pos() );
-    if ( !item ) // wheeling on the spacing between items
-        return e->ignore();
+    if ( !item ) { // wheeling on the spacing between items
+        e->ignore();
+        return;
+    }
 
     const QRect r = item->visibleRect();
     const int margin = ThumbnailWidget::margin();
@@ -908,7 +923,7 @@ void ThumbnailListPrivate::contextMenuEvent( QContextMenuEvent * e )
     }
 }
 
-void ThumbnailWidget::paint( QPainter &p, const QRect &_clipRect )
+void ThumbnailWidget::paint( QPainter &p, const QRect _clipRect )
 {
     const int width = m_pixmapWidth + m_margin;
     QRect clipRect = _clipRect;

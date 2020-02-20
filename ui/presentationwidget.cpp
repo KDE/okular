@@ -1042,7 +1042,7 @@ void PresentationWidget::testCursorOnLink( int x, int y )
     }
 }
 
-void PresentationWidget::overlayClick( const QPoint & position )
+void PresentationWidget::overlayClick( const QPoint position )
 {
     // clicking the progress indicator
     int xPos = position.x() - m_overlayGeometry.x() - m_overlayGeometry.width() / 2,
@@ -1751,7 +1751,7 @@ void PresentationWidget::setScreen( int newScreen )
     applyNewScreenSize( oldSize );
 }
 
-void PresentationWidget::applyNewScreenSize( const QSize & oldSize )
+void PresentationWidget::applyNewScreenSize( const QSize oldSize )
 {
     repositionContent();
 

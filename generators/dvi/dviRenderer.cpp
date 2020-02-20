@@ -680,7 +680,7 @@ void dviRenderer::setResolution(double resolution_in_DPI)
 }
 
 
-void dviRenderer::handleSRCLink(const QString &linkText, const QPoint& point, DocumentWidget *widget)
+void dviRenderer::handleSRCLink(const QString &linkText, const QPoint point, DocumentWidget *widget)
 {
   Q_UNUSED( linkText );
   Q_UNUSED( point );

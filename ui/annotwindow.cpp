@@ -295,7 +295,7 @@ void AnnotWindow::showEvent( QShowEvent * event )
     textEdit->setFocus();
 }
 
-bool AnnotWindow::eventFilter(QObject *, QEvent *e)
+bool AnnotWindow::eventFilter(QObject *o, QEvent *e)
 {
     if ( e->type () == QEvent::ShortcutOverride )
     {
@@ -324,7 +324,7 @@ bool AnnotWindow::eventFilter(QObject *, QEvent *e)
     {
         raise();
     }
-    return false;
+    return QFrame::eventFilter(o, e);
 }
 
 void AnnotWindow::slotUpdateUndoAndRedoInContextMenu(QMenu* menu)

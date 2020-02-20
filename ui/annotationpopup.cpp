@@ -62,7 +62,7 @@ void AnnotationPopup::addAnnotation( Okular::Annotation* annotation, int pageNum
       mAnnotations.append( pair );
 }
 
-void AnnotationPopup::exec( const QPoint &point )
+void AnnotationPopup::exec( const QPoint point )
 {
     if ( mAnnotations.isEmpty() )
         return;

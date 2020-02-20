@@ -197,7 +197,7 @@ void PropertiesDialog::reallyStartFontReading()
     m_document->startFontReading();
 }
 
-void PropertiesDialog::showFontsMenu(const QPoint &pos)
+void PropertiesDialog::showFontsMenu(const QPoint pos)
 {
     QTreeView *view = static_cast<QTreeView*>(sender());
     QModelIndex index = view->indexAt(pos);

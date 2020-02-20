@@ -62,7 +62,7 @@ class OKULARCORE_EXPORT Movie
         /**
          * Sets the size for the movie.
          */
-        void setSize( const QSize &aspect );
+        void setSize( const QSize &aspect ); // TODO remove the & when we do a BIC change elsewhere
 
         /**
          * Returns the size of the movie.

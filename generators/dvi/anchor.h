@@ -42,7 +42,7 @@ class Anchor {
       @param pg number of the page
       @param _distance_from_top distance from the top of the page
   */
-  Anchor(const PageNumber& pg, const Length& _distance_from_top): page(pg), distance_from_top(_distance_from_top) {}
+  Anchor(const PageNumber pg, const Length _distance_from_top): page(pg), distance_from_top(_distance_from_top) {}
 
   /** \brief quick validity check for anchors
 

@@ -118,15 +118,15 @@ class Length
   int getLength_in_pixel(double res) const { return int(getLength_in_inch() * res); }
 
   /** @returns true is lengths differ by no more than 2mm */
-  bool isNearlyEqual(const Length &o) const {return fabs(length_in_mm-o.getLength_in_mm()) <= 2.0;}
+  bool isNearlyEqual(const Length o) const {return fabs(length_in_mm-o.getLength_in_mm()) <= 2.0;}
 
   /** Comparison of two lengthes */
-  bool operator > (const Length &o) const {return (length_in_mm > o.getLength_in_mm());}
-  bool operator < (const Length &o) const {return (length_in_mm < o.getLength_in_mm());}
+  bool operator > (const Length o) const {return (length_in_mm > o.getLength_in_mm());}
+  bool operator < (const Length o) const {return (length_in_mm < o.getLength_in_mm());}
 
   /** Comparison of two lengthes */
-  bool operator >= (const Length &o) const {return (length_in_mm >= o.getLength_in_mm());}
-  bool operator <= (const Length &o) const {return (length_in_mm <= o.getLength_in_mm());}
+  bool operator >= (const Length o) const {return (length_in_mm >= o.getLength_in_mm());}
+  bool operator <= (const Length o) const {return (length_in_mm <= o.getLength_in_mm());}
 
   /** Ratio of two lengthes
 
@@ -136,19 +136,19 @@ class Length
 
   @returns the ratio of the two lengthes as a double
   */
-  double operator / (const Length &o) const {return (length_in_mm/o.getLength_in_mm());}
+  double operator / (const Length o) const {return (length_in_mm/o.getLength_in_mm());}
 
   /** Sum of two lengthes
 
   @returns the sum of the lengthes as a Length
   */
-  Length operator + (const Length &o) const {Length r; r.length_in_mm = length_in_mm + o.length_in_mm; return r; }
+  Length operator + (const Length o) const {Length r; r.length_in_mm = length_in_mm + o.length_in_mm; return r; }
 
   /** Difference of two lengthes
 
   @returns the difference of the lengthes as a Length
   */
-  Length operator - (const Length &o) const {Length r; r.length_in_mm = length_in_mm - o.length_in_mm; return r; }
+  Length operator - (const Length o) const {Length r; r.length_in_mm = length_in_mm - o.length_in_mm; return r; }
 
   /** Division of a length
 

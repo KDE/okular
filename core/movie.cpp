@@ -86,7 +86,7 @@ QString Movie::url() const
         return d->m_url;
 }
 
-void Movie::setSize( const QSize &aspect )
+void Movie::setSize( const QSize &aspect ) // clazy:exclude=function-args-by-value TODO remove the & when we do a BIC change elsewhere
 {
     d->m_aspect = aspect;
 }

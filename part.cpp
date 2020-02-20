@@ -3045,17 +3045,17 @@ void Part::slotPrintPreview()
     }
 }
 
-void Part::slotShowTOCMenu(const Okular::DocumentViewport &vp, const QPoint &point, const QString &title)
+void Part::slotShowTOCMenu(const Okular::DocumentViewport &vp, const QPoint point, const QString &title)
 {
     showMenu(m_document->page(vp.pageNumber), point, title, vp, true);
 }
 
-void Part::slotShowMenu(const Okular::Page *page, const QPoint &point)
+void Part::slotShowMenu(const Okular::Page *page, const QPoint point)
 {
     showMenu(page, point);
 }
 
-void Part::showMenu(const Okular::Page *page, const QPoint &point, const QString &bookmarkTitle, const Okular::DocumentViewport &vp, bool showTOCActions)
+void Part::showMenu(const Okular::Page *page, const QPoint point, const QString &bookmarkTitle, const Okular::DocumentViewport &vp, bool showTOCActions)
 {
     if ( m_embedMode == PrintPreviewMode )
        return;
@@ -3669,7 +3669,7 @@ bool Part::eventFilter(QObject * watched, QEvent * event)
         break;
     }
 
-    return false;
+    return KParts::ReadWritePart::eventFilter(watched, event);
 }
 
 void Part::updateAboutBackendAction()

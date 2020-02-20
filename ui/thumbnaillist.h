@@ -62,7 +62,7 @@ Q_OBJECT
         bool viewportEvent( QEvent * ) override;
 
     Q_SIGNALS:
-        void rightClick( const Okular::Page *, const QPoint & );
+        void rightClick( const Okular::Page *, const QPoint );
 
     private:
         friend class ThumbnailListPrivate;

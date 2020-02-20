@@ -219,7 +219,7 @@ class StyleFormatProperty
 
     void setParagraphFormat( const ParagraphFormatProperty &format );
     void setTextFormat( const TextFormatProperty &format );
-    void setTableColumnFormat( const TableColumnFormatProperty &format );
+    void setTableColumnFormat( const TableColumnFormatProperty format );
     void setTableCellFormat( const TableCellFormatProperty &format );
 
   private:

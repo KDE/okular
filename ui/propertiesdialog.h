@@ -38,7 +38,7 @@ class PropertiesDialog : public KPageDialog
         void slotFontReadingProgress( int page );
         void slotFontReadingEnded();
         void reallyStartFontReading();
-        void showFontsMenu(const QPoint &pos);
+        void showFontsMenu(const QPoint pos);
 
     private:
         Okular::Document * m_document;

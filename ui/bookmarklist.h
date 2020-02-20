@@ -41,7 +41,7 @@ class BookmarkList : public QWidget, public Okular::DocumentObserver
         void slotFilterBookmarks( bool );
         void slotExecuted( QTreeWidgetItem * item );
         void slotChanged( QTreeWidgetItem * item );
-        void slotContextMenu( const QPoint& p );
+        void slotContextMenu( const QPoint p );
         void slotBookmarksChanged( const QUrl& url );
 
     private:
@@ -49,8 +49,8 @@ class BookmarkList : public QWidget, public Okular::DocumentObserver
         void goTo( BookmarkItem * item );
         void selectiveUrlUpdate( const QUrl& url, QTreeWidgetItem*& item );
         QTreeWidgetItem* itemForUrl(const QUrl &url ) const;
-        void contextMenuForBookmarkItem( const QPoint& p, BookmarkItem* bmItem );
-        void contextMenuForFileItem( const QPoint& p, FileItem* fItem );
+        void contextMenuForBookmarkItem( const QPoint p, BookmarkItem* bmItem );
+        void contextMenuForFileItem( const QPoint p, FileItem* fItem );
 
         Okular::Document * m_document;
         QTreeWidget * m_tree;

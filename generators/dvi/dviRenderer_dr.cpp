@@ -14,7 +14,7 @@
 
 #include "dviRenderer.h"
 
-SimplePageSize dviRenderer::sizeOfPage(const PageNumber& page)
+SimplePageSize dviRenderer::sizeOfPage(const PageNumber page)
 {
 #if !defined(QT_NO_THREAD)
   // Wait for all access to this DocumentRenderer to finish

@@ -128,7 +128,7 @@ private Q_SLOTS:
   void undoCloseTab();
   void moveTabData( int from, int to );
 
-  void slotFitWindowToPage( const QSize& pageViewSize, const QSize& pageSize );
+  void slotFitWindowToPage( const QSize pageViewSize, const QSize pageSize );
 
 Q_SIGNALS:
   void moveSplitter(int sideWidgetSize);

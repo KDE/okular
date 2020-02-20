@@ -57,7 +57,7 @@ class Reviews : public QWidget, public Okular::DocumentObserver
 
     private Q_SLOTS:
         void activated( const QModelIndex& );
-        void contextMenuRequested( const QPoint& );
+        void contextMenuRequested( const QPoint );
         void saveSearchOptions();
 
     private:

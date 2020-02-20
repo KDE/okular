@@ -54,7 +54,7 @@ QDataStream &operator>>( QDataStream &s, Document &l )
 	return s;
 }
 
-QDataStream &operator<<( QDataStream &s, const Document &l )
+QDataStream &operator<<( QDataStream &s, const Document l )
 {
 	s << (short)l.docNumber;
 	s << (short)l.frequency;

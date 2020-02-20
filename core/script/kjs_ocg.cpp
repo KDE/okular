@@ -70,7 +70,7 @@ KJSObject JSOCG::object( KJSContext *ctx )
     return g_OCGProto->constructObject( ctx, nullptr );
 }
 
-KJSObject JSOCG::wrapOCGObject( KJSContext *ctx, QAbstractItemModel *model, const int &i, const int &j )
+KJSObject JSOCG::wrapOCGObject( KJSContext *ctx, QAbstractItemModel *model, const int i, const int j )
 {
     QPair< int, int > *pair = new QPair< int ,int >( i, j );
     g_OCGCache->insert( pair, model );

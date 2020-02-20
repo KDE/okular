@@ -864,8 +864,10 @@ void PageView::displayMessage( const QString & message, const QString & details,
     }
 
     // hide messageWindow if string is empty
-    if ( message.isEmpty() )
-        return d->messageWindow->hide();
+    if ( message.isEmpty() ) {
+        d->messageWindow->hide();
+        return;
+    }
 
     // display message (duration is length dependent)
     if (duration==-1)
@@ -944,12 +946,12 @@ QPoint PageView::contentAreaPosition() const
     return QPoint( horizontalScrollBar()->value(), verticalScrollBar()->value() );
 }
 
-QPoint PageView::contentAreaPoint( const QPoint & pos ) const
+QPoint PageView::contentAreaPoint( const QPoint pos ) const
 {
     return pos + contentAreaPosition();
 }
 
-QPointF PageView::contentAreaPoint( const QPointF & pos ) const
+QPointF PageView::contentAreaPoint( const QPointF pos ) const
 {
     return pos + contentAreaPosition();
 }
@@ -3548,7 +3550,7 @@ void PageView::scrollContentsBy( int dx, int dy )
 }
 //END widget events
 
-QList< Okular::RegularAreaRect * > PageView::textSelections( const QPoint& start, const QPoint& end, int& firstpage )
+QList< Okular::RegularAreaRect * > PageView::textSelections( const QPoint start, const QPoint end, int& firstpage )
 {
     firstpage = -1;
     QList< Okular::RegularAreaRect * > ret;
@@ -3626,7 +3628,7 @@ QList< Okular::RegularAreaRect * > PageView::textSelections( const QPoint& start
 }
 
 
-void PageView::drawDocumentOnPainter( const QRect & contentsRect, QPainter * p )
+void PageView::drawDocumentOnPainter( const QRect contentsRect, QPainter * p )
 {
     QColor backColor;
 
@@ -3891,7 +3893,7 @@ void PageView::textSelectionClear()
     }
 }
 
-void PageView::selectionStart( const QPoint & pos, const QColor & color, bool /*aboveAll*/ )
+void PageView::selectionStart( const QPoint pos, const QColor & color, bool /*aboveAll*/ )
 {
     selectionClear();
     d->mouseSelecting = true;
@@ -3905,7 +3907,7 @@ void PageView::selectionStart( const QPoint & pos, const QColor & color, bool /*
     }
 }
 
-void PageView::scrollPosIntoView( const QPoint & pos )
+void PageView::scrollPosIntoView( const QPoint pos )
 {
     // this number slows the speed of the page by its value, chosen not to be too fast or too slow, the actual speed is determined from the mouse position, not critical
     const int damping=6; 
@@ -3954,7 +3956,7 @@ QPoint PageView::viewportToContentArea( const Okular::DocumentViewport & vp ) co
     return c;
 }
 
-void PageView::updateSelection( const QPoint & pos )
+void PageView::updateSelection( const QPoint pos )
 {
     if ( d->mouseSelecting )
     {
@@ -3990,7 +3992,7 @@ void PageView::updateSelection( const QPoint & pos )
     }
 }
 
-static Okular::NormalizedPoint rotateInNormRect( const QPoint &rotated, const QRect &rect, Okular::Rotation rotation )
+static Okular::NormalizedPoint rotateInNormRect( const QPoint rotated, const QRect rect, Okular::Rotation rotation )
 {
     Okular::NormalizedPoint ret;
 
@@ -4013,7 +4015,7 @@ static Okular::NormalizedPoint rotateInNormRect( const QPoint &rotated, const QR
     return ret;
 }
 
-Okular::RegularAreaRect * PageView::textSelectionForItem( const PageViewItem * item, const QPoint & startPoint, const QPoint & endPoint )
+Okular::RegularAreaRect * PageView::textSelectionForItem( const PageViewItem * item, const QPoint startPoint, const QPoint endPoint )
 {
     const QRect & geometry = item->uncroppedGeometry();
     Okular::NormalizedPoint startCursor( 0.0, 0.0 );
@@ -4281,7 +4283,7 @@ void PageView::updateCursor()
     updateCursor( p );
 }
 
-void PageView::updateCursor( const QPoint &p )
+void PageView::updateCursor( const QPoint p )
 {
     // reset mouse over link it will be re-set if that still valid
     d->mouseOverLinkObject = nullptr;
@@ -4376,7 +4378,7 @@ void PageView::reloadForms()
 
 }
 
-void PageView::moveMagnifier( const QPoint& p ) // non scaled point
+void PageView::moveMagnifier( const QPoint p ) // non scaled point
 {
     const int w = d->magnifierView->width() * 0.5;
     const int h = d->magnifierView->height() * 0.5;
@@ -4419,7 +4421,7 @@ void PageView::moveMagnifier( const QPoint& p ) // non scaled point
     d->magnifierView->move(x, y);
 }
 
-void PageView::updateMagnifier( const QPoint& p ) // scaled point
+void PageView::updateMagnifier( const QPoint p ) // scaled point
 {
     /* translate mouse coordinates to page coordinates and inform the magnifier of the situation */
     PageViewItem *item = pickItemOnPoint(p.x(), p.y());
@@ -4491,7 +4493,7 @@ void PageView::toggleFormWidgets( bool on )
     }
 }
 
-void PageView::resizeContentArea( const QSize & newSize )
+void PageView::resizeContentArea( const QSize newSize )
 {
     const QSize vs = viewport()->size();
     int hRange = newSize.width() - vs.width();
@@ -4566,7 +4568,7 @@ void PageView::addWebShortcutsMenu( QMenu * menu, const QString & text )
     }
 }
 
-QMenu* PageView::createProcessLinkMenu(PageViewItem *item, const QPoint &eventPos)
+QMenu* PageView::createProcessLinkMenu(PageViewItem *item, const QPoint eventPos)
 {
     // check if the right-click was over a link
     const double nX = item->absToPageX(eventPos.x());
@@ -4834,7 +4836,7 @@ void PageView::delayedResizeEvent()
     slotRequestVisiblePixmaps();
 }
 
-static void slotRequestPreloadPixmap( Okular::DocumentObserver * observer, const PageViewItem * i, const QRect &expandedViewportRect, QLinkedList< Okular::PixmapRequest * > *requestedPixmaps )
+static void slotRequestPreloadPixmap( Okular::DocumentObserver * observer, const PageViewItem * i, const QRect expandedViewportRect, QLinkedList< Okular::PixmapRequest * > *requestedPixmaps )
 {
     Okular::NormalizedRect preRenderRegion;
     const QRect intersectionRect = expandedViewportRect.intersected( i->croppedGeometry() );

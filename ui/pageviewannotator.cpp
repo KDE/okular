@@ -796,8 +796,8 @@ QCursor PageViewAnnotator::cursor() const
     return m_engine->cursor();
 }
 
-QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::EventType & eventType, const AnnotatorEngine::Button & button,
-                                                        const QPointF & pos, PageViewItem * item )
+QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::EventType eventType, const AnnotatorEngine::Button button,
+                                                        const QPointF pos, PageViewItem * item )
 {
     // creationCompleted is intended to be set by event(), handled subsequently by end(), and cleared within end().
     // If it's set here, we recursed for some reason (e.g., stacked event loop).
@@ -892,7 +892,7 @@ QRect PageViewAnnotator::routeMouseEvent( QMouseEvent * e, PageViewItem * item )
     return performRouteMouseOrTabletEvent( eventType, button, e->localPos(), item );
 }
 
-QRect PageViewAnnotator::routeTabletEvent( QTabletEvent * e, PageViewItem * item, const QPoint & localOriginInGlobal )
+QRect PageViewAnnotator::routeTabletEvent( QTabletEvent * e, PageViewItem * item, const QPoint localOriginInGlobal )
 {
     // Unlike routeMouseEvent, routeTabletEvent must explicitly ignore events it doesn't care about so that
     // the corresponding mouse event will later be delivered.
@@ -935,12 +935,12 @@ bool PageViewAnnotator::routeKeyEvent( QKeyEvent * event )
     return false;
 }
 
-bool PageViewAnnotator::routePaints( const QRect & wantedRect ) const
+bool PageViewAnnotator::routePaints( const QRect wantedRect ) const
 {
     return m_engine && m_toolBar && wantedRect.intersects( m_lastDrawnRect ) && m_lockedItem;
 }
 
-void PageViewAnnotator::routePaint( QPainter * painter, const QRect & paintRect )
+void PageViewAnnotator::routePaint( QPainter * painter, const QRect paintRect )
 {
     // if there's no locked item, then there's no decided place to draw on
     if ( !m_lockedItem )

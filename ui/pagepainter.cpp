@@ -54,14 +54,14 @@ inline QPen buildPen( const Okular::Annotation *ann, double width, const QColor 
 }
 
 void PagePainter::paintPageOnPainter( QPainter * destPainter, const Okular::Page * page,
-    Okular::DocumentObserver *observer, int flags, int scaledWidth, int scaledHeight, const QRect &limits )
+    Okular::DocumentObserver *observer, int flags, int scaledWidth, int scaledHeight, const QRect limits )
 {
         paintCroppedPageOnPainter( destPainter, page, observer, flags, scaledWidth, scaledHeight, limits,
                                    Okular::NormalizedRect( 0, 0, 1, 1 ), nullptr );
 }
 
 void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okular::Page * page,
-    Okular::DocumentObserver *observer, int flags, int scaledWidth, int scaledHeight, const QRect &limits,
+    Okular::DocumentObserver *observer, int flags, int scaledWidth, int scaledHeight, const QRect limits,
     const Okular::NormalizedRect &crop, Okular::NormalizedPoint *viewPortPoint )
 {
     qreal dpr = destPainter->device()->devicePixelRatioF();
@@ -791,7 +791,7 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
 
 
 /** Private Helpers :: Pixmap conversion **/
-void PagePainter::cropPixmapOnImage( QImage & dest, const QPixmap * src, const QRect & r )
+void PagePainter::cropPixmapOnImage( QImage & dest, const QPixmap * src, const QRect r )
 {
     qreal dpr = src->devicePixelRatioF();
 

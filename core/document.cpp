@@ -185,7 +185,7 @@ QString DocumentPrivate::namePaperSize(double inchesWidth, double inchesHeight) 
     }
 }
 
-QString DocumentPrivate::localizedSize(const QSizeF &size) const
+QString DocumentPrivate::localizedSize(const QSizeF size) const
 {
     double inchesWidth = 0, inchesHeight = 0;
     switch (m_generator->pagesSizeMetric())

@@ -455,7 +455,7 @@ class OKULARCORE_EXPORT Generator : public QObject
          *
          * @since 0.19 (KDE 4.13)
          */
-        void setDPI(const QSizeF &dpi);
+        void setDPI(const QSizeF &dpi); // TODO remove the & when we do a BIC change elsewhere
 
         /**
          * Returns the 'layers model' object of the document or NULL if

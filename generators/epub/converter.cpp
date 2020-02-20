@@ -131,7 +131,7 @@ void Converter::_handle_anchors(const QTextBlock &start, const QString &name) {
   }
 }
 
-void Converter::_insert_local_links(const QString &key, const QPair<int, int> &value)
+void Converter::_insert_local_links(const QString &key, const QPair<int, int> value)
 {
   if(mLocalLinks.contains(key)){
     mLocalLinks[key].append(value);

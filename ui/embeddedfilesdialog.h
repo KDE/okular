@@ -30,7 +30,7 @@ Q_OBJECT
 
     private Q_SLOTS:
 		void saveFileFromButton();
-		void attachViewContextMenu( const QPoint& pos );
+		void attachViewContextMenu();
 		void updateSaveButton();
 		void viewFileFromButton();
 		void viewFileItem( QTreeWidgetItem* item, int column );

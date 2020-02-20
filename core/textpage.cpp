@@ -94,7 +94,7 @@ static bool segmentsOverlap(double left1, double right1, double left2, double ri
     return false;
 }
 
-static bool doesConsumeY(const QRect& first, const QRect& second, int threshold)
+static bool doesConsumeY(const QRect first, const QRect second, int threshold)
 {
     return segmentsOverlap(first.top(), first.bottom(), second.top(), second.bottom(), threshold);
 }
@@ -290,7 +290,7 @@ public:
     {
     };
 
-    RegionText(const WordsWithCharacters &wordsWithCharacters, const QRect &area)
+    RegionText(const WordsWithCharacters &wordsWithCharacters, const QRect area)
         : m_region_wordWithCharacters(wordsWithCharacters), m_area(area)
     {
     }
@@ -314,7 +314,7 @@ public:
         return m_area;
     }
 
-    inline void setArea(const QRect &area)
+    inline void setArea(const QRect area)
     {
         m_area = area;
     }

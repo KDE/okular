@@ -38,7 +38,7 @@ class AnnotationPopup : public QObject
 
         void addAnnotation( Okular::Annotation* annotation, int pageNumber );
 
-        void exec( const QPoint &point = QPoint() );
+        void exec( const QPoint point = QPoint() );
 
     Q_SIGNALS:
         void openAnnotationWindow( Okular::Annotation *annotation, int pageNumber );
@@ -51,11 +51,7 @@ class AnnotationPopup : public QObject
             AnnotPagePair( Okular::Annotation *a, int pn ) : annotation( a ),  pageNumber( pn )
             { }
             
-            ~AnnotPagePair() = default;
-            AnnotPagePair( const AnnotPagePair & pair ) = default;
-            AnnotPagePair &operator=( const AnnotPagePair & pair ) = default;
-            
-            bool operator==( const AnnotPagePair & pair ) const
+            bool operator==( const AnnotPagePair pair ) const
             { return annotation == pair.annotation && pageNumber == pair.pageNumber; }
             
             Okular::Annotation* annotation;

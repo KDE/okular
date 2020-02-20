@@ -277,7 +277,7 @@ void StyleFormatProperty::setTextFormat( const TextFormatProperty &format )
   mTextFormat = format;
 }
 
-void StyleFormatProperty::setTableColumnFormat( const TableColumnFormatProperty &format )
+void StyleFormatProperty::setTableColumnFormat( const TableColumnFormatProperty format )
 {
   mTableColumnFormat = format;
 }

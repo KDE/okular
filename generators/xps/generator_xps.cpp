@@ -168,7 +168,7 @@ static bool nextAbbPathToken(AbbPathToken *token)
 /**
     Read point (two reals delimited by comma) from abbreviated path data
 */
-static QPointF getPointFromString(AbbPathToken *token, bool relative, const QPointF &currentPosition) {
+static QPointF getPointFromString(AbbPathToken *token, bool relative, const QPointF currentPosition) {
     //TODO Check grammar
 
     QPointF result;

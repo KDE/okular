@@ -26,7 +26,7 @@
 
 using namespace Okular;
 
-QRect Utils::rotateRect( const QRect & source, int width, int height, int orientation )
+QRect Utils::rotateRect( const QRect & source, int width, int height, int orientation ) // clazy:exclude=function-args-by-value TODO remove the & when we do a BIC change elsewhere
 {
     QRect ret;
 

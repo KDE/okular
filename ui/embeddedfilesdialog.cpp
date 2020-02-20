@@ -144,7 +144,7 @@ void EmbeddedFilesDialog::viewFileItem( QTreeWidgetItem* item, int /*column*/ )
 	viewFile( ef );
 }
 
-void EmbeddedFilesDialog::attachViewContextMenu( const QPoint& /*pos*/ )
+void EmbeddedFilesDialog::attachViewContextMenu()
 {
     QList<QTreeWidgetItem *> selected = m_tw->selectedItems();
     if ( selected.isEmpty() )

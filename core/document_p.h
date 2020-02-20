@@ -136,7 +136,7 @@ class DocumentPrivate
         bool updateMetadataXmlNameAndDocSize();
         QString pagesSizeString() const;
         QString namePaperSize(double inchesWidth, double inchesHeight) const;
-        QString localizedSize(const QSizeF &size) const;
+        QString localizedSize(const QSizeF size) const;
         qulonglong calculateMemoryToFree();
         void cleanupPixmapMemory();
         void cleanupPixmapMemory( qulonglong memoryToFree );

@@ -26,7 +26,7 @@
 
 #include <stdio.h>
 
-QDebug &operator<<( QDebug & s, const ddjvu_rect_t &r )
+QDebug &operator<<( QDebug & s, const ddjvu_rect_t r )
 {
     s.nospace() << "[" << r.x << "," << r.y << " - " << r.w << "x" << r.h << "]";
     return s.space();

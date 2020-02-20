@@ -46,7 +46,7 @@ extern const int MFResolutions[];
 class DVI_SourceFileAnchor {
  public:
   DVI_SourceFileAnchor() {}
-  DVI_SourceFileAnchor(const QString& name, quint32 ln, quint32 pg, const Length& _distance_from_top)
+  DVI_SourceFileAnchor(const QString& name, quint32 ln, quint32 pg, const Length _distance_from_top)
     : fileName(name), line(ln), page(pg),
       distance_from_top(_distance_from_top) {}
 
@@ -159,14 +159,14 @@ public Q_SLOTS:
   void          exportPS(const QString& fname = QString(), const QStringList& options = QStringList(), QPrinter* printer = nullptr, QPrinter::Orientation orientation = QPrinter::Portrait);
   void          exportPDF();
 
-  void          handleSRCLink(const QString &linkText, const QPoint& point, DocumentWidget *widget);
+  void          handleSRCLink(const QString &linkText, const QPoint point, DocumentWidget *widget);
 
   void          embedPostScript();
 
   virtual void  drawPage(RenderedDocumentPagePixmap* page);
   virtual void  getText(RenderedDocumentPagePixmap* page);
 
-  SimplePageSize sizeOfPage(const PageNumber& page);
+  SimplePageSize sizeOfPage(const PageNumber page);
 
   const QVector<DVI_SourceFileAnchor>& sourceAnchors() { return sourceHyperLinkAnchors; }
 

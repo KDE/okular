@@ -20,7 +20,6 @@
 DlgPerformance::DlgPerformance( QWidget * parent )
     : QWidget( parent )
 {
-    Q_PROPERTY( QButtonGroup checkedId READ checkedId USER true );
     m_dlg = new Ui_DlgPerformanceBase();
     m_dlg->setupUi( this );
 

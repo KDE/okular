@@ -66,13 +66,13 @@ class OKULARCORE_EXPORT TextDocumentConverter : public QObject
          * Adds a new link object which is located between cursorBegin and
          * cursorEnd to the generator.
          */
-        void addAction( Action *link, int cursorBegin, int cursorEnd );
+        void addAction( Okular::Action *link, int cursorBegin, int cursorEnd );
 
         /**
          * Adds a new annotation object which is located between cursorBegin and
          * cursorEnd to the generator.
          */
-        void addAnnotation( Annotation *annotation, int cursorBegin, int cursorEnd );
+        void addAnnotation( Okular::Annotation *annotation, int cursorBegin, int cursorEnd );
 
         /**
          * Adds a new title at the given level which is located as position to the generator.

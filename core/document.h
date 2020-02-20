@@ -994,7 +994,7 @@ class OKULARCORE_EXPORT Document : public QObject
          * This slot is called whenever the user changes the page @p size
          * of the document.
          */
-        void setPageSize( const PageSize &size );
+        void setPageSize( const Okular::PageSize &size );
 
         /**
          * Cancels the current search

@@ -34,7 +34,7 @@ FaxGenerator::~FaxGenerator()
 
 bool FaxGenerator::loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector )
 {
-    if ( fileName.toLower().endsWith( QLatin1String(".g3") ) )
+    if ( fileName.endsWith( QLatin1String(".g3"), Qt::CaseInsensitive ) )
         m_type = FaxDocument::G3;
     else
         m_type = FaxDocument::G4;

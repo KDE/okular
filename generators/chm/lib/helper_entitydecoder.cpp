@@ -207,7 +207,7 @@ QString HelperEntityDecoder::decode( const QString &entity ) const
 	else if ( entity[0] == '#' )
 	{
 		bool valid;
-		unsigned int ascode = entity.mid(1).toUInt( &valid );
+		unsigned int ascode = entity.midRef(1).toUInt( &valid );
 
 		if ( !valid )
 		{

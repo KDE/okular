@@ -515,7 +515,7 @@ void PartTest::testRClickWhileLinkTextIsSelected()
     // the menu disappear
     PageView *view = part.m_pageView;
     bool menuClosed = false;
-    QTimer::singleShot(2000, [view, &menuClosed]() {
+    QTimer::singleShot(2000, view, [view, &menuClosed]() {
         // check if popup menu is active and visible
         QMenu *menu = qobject_cast<QMenu*>(view->findChild<QMenu*>(QStringLiteral("PopupMenu")));
         QVERIFY(menu);
@@ -584,7 +584,7 @@ void PartTest::testRClickOverLinkWhileLinkTextIsSelected()
     // the menu disappear
     PageView *view = part.m_pageView;
     bool menuClosed = false;
-    QTimer::singleShot(2000, [view, &menuClosed]() {
+    QTimer::singleShot(2000, view, [view, &menuClosed]() {
         // check if popup menu is active and visible
         QMenu *menu = qobject_cast<QMenu*>(view->findChild<QMenu*>(QStringLiteral("PopupMenu")));
         QVERIFY(menu);
@@ -641,7 +641,7 @@ void PartTest::testRClickOnSelectionModeShoulShowFollowTheLinkMenu()
     // the menu disappear
     PageView *view = part.m_pageView;
     bool menuClosed = false;
-    QTimer::singleShot(2000, [view, &menuClosed]() {
+    QTimer::singleShot(2000, view, [view, &menuClosed]() {
         // check if popup menu is active and visible
         QMenu *menu = qobject_cast<QMenu*>(view->findChild<QMenu*>(QStringLiteral("PopupMenu")));
         QVERIFY(menu);
@@ -745,7 +745,7 @@ void PartTest::testeRectSelectionStartingOnLinks()
     // the menu disappear
     PageView *view = part.m_pageView;
     bool menuClosed = false;
-    QTimer::singleShot(2000, [view, &menuClosed]() {
+    QTimer::singleShot(2000, view, [view, &menuClosed]() {
         QApplication::clipboard()->clear();
 
         // check if popup menu is active and visible

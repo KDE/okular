@@ -4599,7 +4599,7 @@ QMenu* PageView::createProcessLinkMenu(PageViewItem *item, const QPoint &eventPo
         {
             QAction * actCopyLinkLocation = menu->addAction( QIcon::fromTheme( QStringLiteral("edit-copy") ), i18n( "Copy Link Address" ) );
             actCopyLinkLocation->setObjectName(QStringLiteral("CopyLinkLocationAction"));
-            connect( actCopyLinkLocation, &QAction::triggered, [ link ]() {
+            connect( actCopyLinkLocation, &QAction::triggered, menu, [ link ]() {
                 const Okular::BrowseAction * browseLink = static_cast< const Okular::BrowseAction * >( link );
                 QClipboard *cb = QApplication::clipboard();
                 cb->setText( browseLink->url().toDisplayString(), QClipboard::Clipboard );
@@ -4608,7 +4608,7 @@ QMenu* PageView::createProcessLinkMenu(PageViewItem *item, const QPoint &eventPo
             } );
         }
 
-        connect( processLink, &QAction::triggered, [this, link]() {
+        connect( processLink, &QAction::triggered, this, [this, link]() {
             d->document->processAction( link );
         });
         return menu;
@@ -4621,7 +4621,7 @@ void PageView::addSearchWithinDocumentAction(QMenu *menu, const QString &searchT
     const QString squeezedText = KStringHandler::rsqueeze( searchText, searchTextPreviewLength );
     QAction *action = new QAction(i18n("Search for '%1' in this document", squeezedText), menu);
     action->setIcon( QIcon::fromTheme( QStringLiteral("document-preview") ) );
-    connect(action, &QAction::triggered, [this, searchText]{Q_EMIT triggerSearch(searchText);});
+    connect(action, &QAction::triggered, this, [this, searchText]{Q_EMIT triggerSearch(searchText);});
     menu->addAction( action );
 }
 

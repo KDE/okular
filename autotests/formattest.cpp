@@ -56,7 +56,7 @@ void FormatTest::initTestCase()
     const QMimeType mime = db.mimeTypeForFile( testFile );
     QCOMPARE( m_document->openDocument( testFile, QUrl(), mime), Okular::Document::OpenSuccess );
 
-    connect( m_document, &Okular::Document::refreshFormWidget, [=]( Okular::FormField * form )
+    connect( m_document, &Okular::Document::refreshFormWidget, this, [this]( Okular::FormField * form )
             {
                 Okular::FormFieldText *fft = reinterpret_cast< Okular::FormFieldText * >( form );
                 if( fft )

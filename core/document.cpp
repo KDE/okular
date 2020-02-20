@@ -4208,7 +4208,8 @@ void Document::processAction( const Action * action )
 
     // Don't execute next actions if the action itself caused the closing of the document
     bool executeNextActions = true;
-    auto connectionId = connect( this, &Document::aboutToClose, [&executeNextActions] { executeNextActions = false; } );
+    QObject disconnectHelper; // guarantees the connect below will be disconnected on finishing the function
+    connect( this, &Document::aboutToClose, &disconnectHelper, [&executeNextActions] { executeNextActions = false; } );
 
     switch( action->actionType() )
     {
@@ -4407,8 +4408,6 @@ void Document::processAction( const Action * action )
             } break;
 
     }
-
-    disconnect( connectionId );
 
     if ( executeNextActions )
     {

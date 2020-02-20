@@ -361,22 +361,4 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections>
-  <connection>
-   <sender>kcfg_SlidesAdvance</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>kcfg_SlidesAdvanceTime</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>88</x>
-     <y>43</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>280</x>
-     <y>49</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
 </ui>

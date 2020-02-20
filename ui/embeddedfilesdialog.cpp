@@ -104,8 +104,8 @@ EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const Okular::Document
 	m_tw->setMinimumWidth(640);
 	m_tw->updateGeometry();
 
-	connect(mUser1Button, SIGNAL(clicked()), this, SLOT(saveFile()));
-	connect(mUser2Button, SIGNAL(clicked()), this, SLOT(viewFile()));
+	connect(mUser1Button, &QPushButton::clicked, this, &EmbeddedFilesDialog::saveFileFromButton);
+	connect(mUser2Button, &QPushButton::clicked, this, &EmbeddedFilesDialog::viewFileFromButton);
 	connect(m_tw, &QWidget::customContextMenuRequested, this, &EmbeddedFilesDialog::attachViewContextMenu);
 	connect(m_tw, &QTreeWidget::itemSelectionChanged, this, &EmbeddedFilesDialog::updateSaveButton);
 	connect(m_tw, &QTreeWidget::itemDoubleClicked, this, &EmbeddedFilesDialog::viewFileItem);
@@ -118,7 +118,7 @@ void EmbeddedFilesDialog::updateSaveButton()
 	mUser2Button->setEnabled(enable);
 }
 
-void EmbeddedFilesDialog::saveFile()
+void EmbeddedFilesDialog::saveFileFromButton()
 {
 	const QList<QTreeWidgetItem *> selected = m_tw->selectedItems();
 	for (const QTreeWidgetItem *twi : selected)
@@ -128,7 +128,7 @@ void EmbeddedFilesDialog::saveFile()
 	}
 }
 
-void EmbeddedFilesDialog::viewFile()
+void EmbeddedFilesDialog::viewFileFromButton()
 {
 	const QList<QTreeWidgetItem *> selected = m_tw->selectedItems();
 	for (QTreeWidgetItem *twi : selected)

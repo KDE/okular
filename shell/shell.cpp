@@ -725,12 +725,13 @@ void Shell::applyOptionsToPart( QObject* part, const QString &serializedOptions 
 
 void Shell::connectPart( QObject* part )
 {
-    connect( this, SIGNAL(moveSplitter(int)), part, SLOT(moveSplitter(int)) );
-    connect( part, SIGNAL(enablePrintAction(bool)), this, SLOT(setPrintEnabled(bool)));
-    connect( part, SIGNAL(enableCloseAction(bool)), this, SLOT(setCloseEnabled(bool)));
-    connect( part, SIGNAL(mimeTypeChanged(QMimeType)), this, SLOT(setTabIcon(QMimeType)));
-    connect( part, SIGNAL(urlsDropped(QList<QUrl>)), this, SLOT(handleDroppedUrls(QList<QUrl>)) );
-    connect( part, SIGNAL(fitWindowToPage(QSize,QSize)), this, SLOT(slotFitWindowToPage(QSize,QSize)) );
+    // We're abusing the fact we know the part is our part here
+    connect( this, SIGNAL(moveSplitter(int)), part, SLOT(moveSplitter(int)) );                              // clazy:exclude=old-style-connect
+    connect( part, SIGNAL(enablePrintAction(bool)), this, SLOT(setPrintEnabled(bool)));                     // clazy:exclude=old-style-connect
+    connect( part, SIGNAL(enableCloseAction(bool)), this, SLOT(setCloseEnabled(bool)));                     // clazy:exclude=old-style-connect
+    connect( part, SIGNAL(mimeTypeChanged(QMimeType)), this, SLOT(setTabIcon(QMimeType)));                  // clazy:exclude=old-style-connect
+    connect( part, SIGNAL(urlsDropped(QList<QUrl>)), this, SLOT(handleDroppedUrls(QList<QUrl>)) );          // clazy:exclude=old-style-connect
+    connect( part, SIGNAL(fitWindowToPage(QSize,QSize)), this, SLOT(slotFitWindowToPage(QSize,QSize)) );    // clazy:exclude=old-style-connect
 }
 
 void Shell::print()

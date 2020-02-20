@@ -59,7 +59,7 @@ public:
     ClosePrintDialogHelper(int expectedTab) : foundDialog(false), m_expectedTab(expectedTab) { }
     bool foundDialog;
 
-private slots:
+public slots:
     void closePrintDialog();
 
 private:
@@ -249,7 +249,7 @@ void MainShellTest::testShell()
     if (expectPrintDialog || externalProcessExpectPrintDialog) {
         const int expectedTab = externalProcessExpectPrintDialog && !unique ? 1 : 0;
         helper.reset(new ClosePrintDialogHelper(expectedTab));
-        QTimer::singleShot(0, helper.data(), SLOT(closePrintDialog()));
+        QTimer::singleShot(0, helper.data(), &ClosePrintDialogHelper::closePrintDialog);
     }
 
     Okular::Status status = Okular::main(paths, serializedOptions);

@@ -150,7 +150,7 @@ bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page
             m_syncGen->view()->contentsHeight(), Okular::Rotation0 );
     }
 
-    connect( m_syncGen, SIGNAL(completed()), this, SLOT(slotCompleted()) );
+    connect( m_syncGen, QOverload<>::of(&KHTMLPart::completed), this, &CHMGenerator::slotCompleted );
     connect( m_syncGen, &KParts::ReadOnlyPart::canceled, this, &CHMGenerator::slotCompleted );
 
     return true;
@@ -183,7 +183,7 @@ void CHMGenerator::preparePageForSyncOperation(const QString & url)
     m_syncGen->view()->layout();
 
     QEventLoop loop;
-    connect( m_syncGen, SIGNAL(completed()), &loop, SLOT(quit()) );
+    connect( m_syncGen, QOverload<>::of(&KHTMLPart::completed), &loop, &QEventLoop::quit );
     connect( m_syncGen, &KParts::ReadOnlyPart::canceled, &loop, &QEventLoop::quit );
     // discard any user input, otherwise it breaks the "synchronicity" of this
     // function

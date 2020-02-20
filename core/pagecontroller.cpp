@@ -28,8 +28,8 @@ PageController::~PageController()
 
 void PageController::addRotationJob(RotationJob *job)
 {
-    connect( job, SIGNAL(done(ThreadWeaver::JobPointer)),
-             this, SLOT(imageRotationDone(ThreadWeaver::JobPointer)) );
+    connect( job, &RotationJob::done,
+             this, &PageController::imageRotationDone );
     ThreadWeaver::enqueue(&m_weaver, job);
 }
 

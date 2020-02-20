@@ -127,7 +127,7 @@ class MiniBar : public QWidget
         void forwardKeyPressEvent( QKeyEvent *e );
 
     public Q_SLOTS:
-        void slotChangePage();
+        void slotChangePageFromReturn();
         void slotChangePage(int page);
         void slotEmitNextPage();
         void slotEmitPrevPage();

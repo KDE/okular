@@ -203,8 +203,8 @@ MiniBar::MiniBar( QWidget * parent, MiniBarLogic * miniBarLogic )
     resizeForPage( 0 );
 
     // connect signals from child widgets to internal handlers / signals bouncers
-    connect( m_pageNumberEdit, SIGNAL(returnPressed()), this, SLOT(slotChangePage()) );
-    connect( m_pageLabelEdit, SIGNAL(pageNumberChosen(int)), this, SLOT(slotChangePage(int)) );
+    connect( m_pageNumberEdit, &PageNumberEdit::returnPressed, this, &MiniBar::slotChangePageFromReturn );
+    connect( m_pageLabelEdit, &PageLabelEdit::pageNumberChosen, this, &MiniBar::slotChangePage );
     connect( m_pagesButton, &QAbstractButton::clicked, this, &MiniBar::gotoPage );
     connect( m_prevButton, &QAbstractButton::clicked, this, &MiniBar::prevPage );
     connect( m_nextButton, &QAbstractButton::clicked, this, &MiniBar::nextPage );
@@ -259,7 +259,7 @@ bool MiniBar::eventFilter( QObject *target, QEvent *event )
     return false;
 }
 
-void MiniBar::slotChangePage()
+void MiniBar::slotChangePageFromReturn()
 {
     // get text from the lineEdit
     const QString pageNumber = m_pageNumberEdit->text();
@@ -424,7 +424,7 @@ PageLabelEdit::PageLabelEdit( MiniBar * parent )
     : PagesEdit( parent )
 {
     setVisible( false );
-    connect( this, SIGNAL(returnPressed()), this, SLOT(pageChosen()) );
+    connect( this, &PageLabelEdit::returnPressed, this, &PageLabelEdit::pageChosen );
 }
 
 void PageLabelEdit::setText( const QString & newText )

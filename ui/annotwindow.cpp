@@ -66,7 +66,7 @@ class MovableTitle
     Q_OBJECT
 
 public:
-    MovableTitle( QWidget * parent )
+    MovableTitle( AnnotWindow * parent )
       : QWidget( parent )
     {
         QVBoxLayout * mainlay = new QVBoxLayout( this );
@@ -122,8 +122,8 @@ public:
         latexlay->addWidget( latexButton );
         latexlay->addSpacing( 1 );
         mainlay->addLayout( latexlay );
-        connect(latexButton, SIGNAL(clicked(bool)), parent, SLOT(renderLatex(bool)));
-        connect(parent, SIGNAL(containsLatex(bool)), latexButton, SLOT(setVisible(bool)));
+        connect(latexButton, &QToolButton::clicked, parent, &AnnotWindow::renderLatex);
+        connect(parent, &AnnotWindow::containsLatex, latexButton, &QWidget::setVisible);
 
         titleLabel->installEventFilter( this );
         dateLabel->installEventFilter( this );

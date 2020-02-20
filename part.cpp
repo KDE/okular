@@ -375,7 +375,7 @@ m_cliPresentation(false), m_cliPrint(false), m_cliPrintAndExit(false), m_embedMo
     connect(this, &KParts::ReadOnlyPart::started, this, &Part::slotJobStarted);
 
     // connect the completed signal so we can put the window caption when loading remote files
-    connect(this, SIGNAL(completed()), this, SLOT(setWindowTitleFromDocument()));
+    connect(this, QOverload<>::of(&Part::completed), this, &Part::setWindowTitleFromDocument);
     connect(this, &KParts::ReadOnlyPart::canceled, this, &Part::loadCancelled);
 
     // create browser extension (for printing when embedded into browser)
@@ -407,7 +407,7 @@ m_cliPresentation(false), m_cliPrint(false), m_cliPrintAndExit(false), m_embedMo
     );
 
     if ( parent && parent->metaObject()->indexOfSlot( QMetaObject::normalizedSignature( "slotQuit()" ).constData() ) != -1 )
-        connect( m_document, SIGNAL(quit()), parent, SLOT(slotQuit()) );
+        connect( m_document, SIGNAL(quit()), parent, SLOT(slotQuit()) ); // clazy:exclude=old-style-connect
     else
         connect( m_document, &Document::quit, this, &Part::cannotQuit );
     // widgets: ^searchbar (toolbar containing label and SearchWidget)
@@ -553,11 +553,11 @@ m_cliPresentation(false), m_cliPrint(false), m_cliPrintAndExit(false), m_embedMo
 
     m_pageNumberTool = new MiniBar( nullptr, m_miniBarLogic );
 
-    connect( m_findBar, SIGNAL(forwardKeyPressEvent(QKeyEvent*)), m_pageView, SLOT(externalKeyPressEvent(QKeyEvent*)));
-    connect( m_findBar, SIGNAL(onCloseButtonPressed()), m_pageView, SLOT(setFocus()));
-    connect( m_miniBar, SIGNAL(forwardKeyPressEvent(QKeyEvent*)), m_pageView, SLOT(externalKeyPressEvent(QKeyEvent*)));
+    connect( m_findBar, &FindBar::forwardKeyPressEvent, m_pageView, &PageView::externalKeyPressEvent );
+    connect( m_findBar, &FindBar::onCloseButtonPressed, m_pageView, QOverload<>::of(&PageView::setFocus) );
+    connect( m_miniBar, &MiniBar::forwardKeyPressEvent, m_pageView, &PageView::externalKeyPressEvent );
     connect( m_pageView.data(), &PageView::escPressed, m_findBar, &FindBar::resetSearch );
-    connect( m_pageNumberTool, SIGNAL(forwardKeyPressEvent(QKeyEvent*)), m_pageView, SLOT(externalKeyPressEvent(QKeyEvent*)));
+    connect( m_pageNumberTool, &MiniBar::forwardKeyPressEvent, m_pageView, &PageView::externalKeyPressEvent);
 
     connect( m_reviewsWidget.data(), &Reviews::openAnnotationWindow,
         m_pageView.data(), &PageView::openAnnotationWindow );
@@ -1336,7 +1336,7 @@ bool Part::slotImportPSFile()
         QProcess *p = new QProcess();
         args << url.toLocalFile() << m_temporaryLocalFile;
         m_pageView->displayMessage(i18n("Importing PS file as PDF (this may take a while)..."));
-        connect(p, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(psTransformEnded(int,QProcess::ExitStatus)));
+        connect(p, QOverload<int,QProcess::ExitStatus>::of(&QProcess::finished), this, &Part::psTransformEnded);
         p->start(app, args);
         return true;
     }

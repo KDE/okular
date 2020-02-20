@@ -32,6 +32,8 @@ DlgGeneral::DlgGeneral( QWidget * parent, Okular::EmbedMode embedMode )
         m_dlg->kcfg_rtlReadingDirection->setVisible(false);
     }
     m_dlg->kcfg_ShellOpenFileInTabs->setVisible( embedMode == Okular::NativeShellMode );
+
+    connect(m_dlg->kcfg_UseCustomBackgroundColor, &QCheckBox::toggled, this, &DlgGeneral::setCustomBackgroundColorButton);
 }
 
 DlgGeneral::~DlgGeneral()

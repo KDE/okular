@@ -530,7 +530,7 @@ void PageView::setupBaseActions( KActionCollection * ac )
     ac->addAction(QStringLiteral("zoom_to"), d->aZoom );
     d->aZoom->setEditable( true );
     d->aZoom->setMaxComboViewCount( 14 );
-    connect( d->aZoom, SIGNAL(triggered(QAction*)), this, SLOT(slotZoom()) );
+    connect( d->aZoom, QOverload<QAction*>::of(&KSelectAction::triggered), this, &PageView::slotZoom );
     updateZoomText();
 
     d->aZoomIn = KStandardAction::zoomIn( this, SLOT(slotZoomIn()), ac );
@@ -568,8 +568,8 @@ void PageView::setupViewerActions( KActionCollection * ac )
     ac->addAction(QStringLiteral("view_pagesizes"), d->aPageSizes);
     d->aPageSizes->setEnabled( false );
 
-    connect( d->aPageSizes , SIGNAL(triggered(int)),
-         this, SLOT(slotPageSizes(int)) );
+    connect( d->aPageSizes , QOverload<int>::of(&KSelectAction::triggered),
+         this, &PageView::slotPageSizes );
 
     // Trim View actions
     d->aTrimMode = new KActionMenu(i18n( "&Trim View" ), this );

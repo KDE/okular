@@ -73,7 +73,7 @@ PixmapPreviewSelector::PixmapPreviewSelector( QWidget * parent, PreviewPosition 
     setFocusPolicy( Qt::TabFocus );
     setFocusProxy( m_comboItems );
 
-    connect( m_comboItems, SIGNAL(currentIndexChanged(QString)), this, SLOT(iconComboChanged(QString)) );
+    connect( m_comboItems, QOverload<const QString &>::of(&QComboBox::currentIndexChanged), this, &PixmapPreviewSelector::iconComboChanged );
     connect( m_comboItems, &QComboBox::editTextChanged, this, &PixmapPreviewSelector::iconComboChanged );
     connect( m_stampPushButton, &QPushButton::clicked, this, &PixmapPreviewSelector::selectCustomStamp );
 }
@@ -283,7 +283,7 @@ void AnnotationWidget::addOpacitySpinBox( QWidget * widget, QFormLayout * formla
     m_opacity->setValue( (int)( m_ann->style().opacity() * 100 ) );
     m_opacity->setSuffix( i18nc( "Suffix for the opacity level, eg '80 %'", " %" ) );
     formlayout->addRow( i18n( "&Opacity:" ), m_opacity);
-    connect( m_opacity, SIGNAL(valueChanged(int)), this, SIGNAL(dataChanged()) );
+    connect( m_opacity, QOverload<int>::of(&QSpinBox::valueChanged), this, &AnnotationWidget::dataChanged );
 }
 
 void AnnotationWidget::addVerticalSpacer( QFormLayout * formlayout )
@@ -408,7 +408,7 @@ void TextAnnotationWidget::addTextAlignComboBox( QWidget * widget, QFormLayout *
     m_textAlign->addItem( i18n("Center") );
     m_textAlign->addItem( i18n("Right") );
     m_textAlign->setCurrentIndex( m_textAnn->inplaceAlignment() );
-    connect( m_textAlign, SIGNAL(currentIndexChanged(int)), this, SIGNAL(dataChanged()) );
+    connect( m_textAlign, QOverload<int>::of(&KComboBox::currentIndexChanged), this, &AnnotationWidget::dataChanged );
 }
 
 void TextAnnotationWidget::addWidthSpinBox( QWidget * widget, QFormLayout * formlayout )
@@ -418,7 +418,7 @@ void TextAnnotationWidget::addWidthSpinBox( QWidget * widget, QFormLayout * form
     m_spinWidth->setRange( 0, 100 );
     m_spinWidth->setValue( m_textAnn->style().width() );
     m_spinWidth->setSingleStep( 0.1 );
-    connect( m_spinWidth, SIGNAL(valueChanged(double)), this, SIGNAL(dataChanged()) );
+    connect( m_spinWidth, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &AnnotationWidget::dataChanged );
 }
 
 StampAnnotationWidget::StampAnnotationWidget( Okular::Annotation * ann )
@@ -554,8 +554,8 @@ void LineAnnotationWidget::createStyleWidget( QFormLayout * formlayout )
 
         connect( m_startStyleCombo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LineAnnotationWidget::dataChanged );
         connect( m_endStyleCombo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LineAnnotationWidget::dataChanged );
-        connect( m_spinLL, SIGNAL(valueChanged(double)), this, SIGNAL(dataChanged()) );
-        connect( m_spinLLE, SIGNAL(valueChanged(double)), this, SIGNAL(dataChanged()) );
+        connect( m_spinLL, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LineAnnotationWidget::dataChanged );
+        connect( m_spinLLE, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LineAnnotationWidget::dataChanged );
     }
     else if ( m_lineType == 1 ) // Polygon
     {
@@ -652,7 +652,7 @@ void InkAnnotationWidget::createStyleWidget( QFormLayout * formlayout )
     m_spinSize->setRange( 1, 100 );
     m_spinSize->setValue( m_inkAnn->style().width() );
 
-    connect( m_spinSize, SIGNAL(valueChanged(double)), this, SIGNAL(dataChanged()) );
+    connect( m_spinSize, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &AnnotationWidget::dataChanged );
 }
 
 void InkAnnotationWidget::applyChanges()
@@ -685,7 +685,7 @@ void HighlightAnnotationWidget::createStyleWidget( QFormLayout * formlayout )
     addColorButton( widget, formlayout );
     addOpacitySpinBox( widget, formlayout );
 
-    connect( m_typeCombo, SIGNAL(currentIndexChanged(int)), this, SIGNAL(dataChanged()) );
+    connect( m_typeCombo, QOverload<int>::of(&KComboBox::currentIndexChanged), this, &AnnotationWidget::dataChanged );
 }
 
 void HighlightAnnotationWidget::applyChanges()
@@ -736,11 +736,11 @@ void GeomAnnotationWidget::createStyleWidget( QFormLayout * formlayout )
     m_spinSize->setRange( 0, 100 );
     m_spinSize->setValue( m_geomAnn->style().width() );
 
-    connect( m_typeCombo, SIGNAL(currentIndexChanged(int)), this, SIGNAL(dataChanged()) );
+    connect( m_typeCombo, QOverload<int>::of(&KComboBox::currentIndexChanged), this, &AnnotationWidget::dataChanged );
     connect( m_innerColor, &KColorButton::changed, this, &AnnotationWidget::dataChanged );
     connect( m_useColor, &QAbstractButton::toggled, this, &AnnotationWidget::dataChanged );
     connect(m_useColor, &QCheckBox::toggled, m_innerColor, &KColorButton::setEnabled);
-    connect( m_spinSize, SIGNAL(valueChanged(double)), this, SIGNAL(dataChanged()) );
+    connect( m_spinSize, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &AnnotationWidget::dataChanged );
 }
 
 void GeomAnnotationWidget::applyChanges()

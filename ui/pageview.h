@@ -132,6 +132,8 @@ Q_OBJECT
         void slotAction( Okular::Action *action );
         void slotFormChanged( int pageNumber );
 
+        void externalKeyPressEvent( QKeyEvent *e );
+
     Q_SIGNALS:
         void rightClick( const Okular::Page *, const QPoint & );
         void mouseBackButtonClick();
@@ -276,7 +278,6 @@ Q_OBJECT
         void slotStopSpeaks();
         void slotPauseResumeSpeech();
 #endif
-        void externalKeyPressEvent( QKeyEvent *e );
         void slotAnnotationWindowDestroyed( QObject *window );
         void slotProcessMovieAction( const Okular::MovieAction *action );
         void slotProcessRenditionAction( const Okular::RenditionAction *action );

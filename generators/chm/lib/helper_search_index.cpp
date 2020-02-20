@@ -65,7 +65,7 @@ Index::Index()
 	: QObject( nullptr )
 {
 	lastWindowClosed = false;
-	connect( qApp, SIGNAL( lastWindowClosed() ), this, SLOT( setLastWinClosed() ) );
+	connect( qApp, &QGuiApplication::lastWindowClosed, this, &Index::setLastWinClosed );
 }
 
 void Index::setLastWinClosed()

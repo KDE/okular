@@ -933,11 +933,11 @@ void FileEdit::slotHandleFileChangedByUndoRedo( int pageNumber,
     {
         return;
     }
-    disconnect( this, SIGNAL( cursorPositionChanged( int, int ) ), this, SLOT( slotChanged() ) );
+    disconnect( lineEdit(), &QLineEdit::cursorPositionChanged, this, &FileEdit::slotChanged );
     setText( contents );
     lineEdit()->setCursorPosition( anchorPos );
     lineEdit()->cursorForward( true, cursorPos - anchorPos );
-    connect( this, SIGNAL(cursorPositionChanged(int,int)), this, SLOT( slotChanged() ) );
+    connect( lineEdit(), &QLineEdit::cursorPositionChanged, this, &FileEdit::slotChanged );
     m_prevCursorPos = cursorPos;
     m_prevAnchorPos = anchorPos;
     setFocus();
@@ -1027,7 +1027,7 @@ ComboEdit::ComboEdit( Okular::FormFieldChoice * choice, QWidget * parent )
     if ( choice->isEditable() && !choice->editChoice().isEmpty() )
         lineEdit()->setText( choice->editChoice() );
 
-    connect( this, SIGNAL(currentIndexChanged(int)), this, SLOT(slotValueChanged()) );
+    connect( this, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &ComboEdit::slotValueChanged );
     connect( this, &QComboBox::editTextChanged, this, &ComboEdit::slotValueChanged );
     connect( lineEdit(), &QLineEdit::cursorPositionChanged, this, &ComboEdit::slotValueChanged );
 

@@ -480,25 +480,4 @@ For files which were opened before the previous zoom is applied.</string>
   <include location="global">kiconloader.h</include>
  </includes>
  <resources/>
- <connections>
-  <connection>
-   <sender>kcfg_UseCustomBackgroundColor</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>DlgGeneralBase</receiver>
-   <slot>setCustomBackgroundColorButton(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>130</x>
-     <y>229</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>203</x>
-     <y>-9</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
- <slots>
-  <slot>setCustomBackgroundColorButton(bool)</slot>
- </slots>
 </ui>

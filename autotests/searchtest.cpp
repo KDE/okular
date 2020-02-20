@@ -20,7 +20,7 @@ class SearchFinishedReceiver : public QObject
 {
     Q_OBJECT
 
-    private slots:
+    public slots:
         void searchFinished(int id, Okular::Document::SearchStatus status)
         {
             m_id = id;
@@ -170,7 +170,7 @@ void SearchTest::test311232()
     SearchFinishedReceiver receiver;
     QSignalSpy spy(&d, &Okular::Document::searchFinished);
 
-    QObject::connect(&d, SIGNAL(searchFinished(int,Okular::Document::SearchStatus)), &receiver, SLOT(searchFinished(int,Okular::Document::SearchStatus)));
+    QObject::connect(&d, &Okular::Document::searchFinished, &receiver, &SearchFinishedReceiver::searchFinished);
     
     const QString testFile = QStringLiteral(KDESRCDIR "data/file1.pdf");
     QMimeDatabase db;

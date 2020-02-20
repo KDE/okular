@@ -55,6 +55,9 @@ class AnnotWindow : public QFrame
         int m_prevCursorPos;
         int m_prevAnchorPos;
 
+    public Q_SLOTS:
+        void renderLatex( bool render );
+
     protected:
         void showEvent( QShowEvent * event ) override;
         bool eventFilter( QObject * obj, QEvent * event ) override;
@@ -63,7 +66,6 @@ class AnnotWindow : public QFrame
         void slotUpdateUndoAndRedoInContextMenu(QMenu *menu);
         void slotOptionBtn();
         void slotsaveWindowText();
-        void renderLatex( bool render );
         void slotHandleContentsChangedByUndoRedo( Okular::Annotation* annot, const QString &contents, int cursorPos, int anchorPos);
 
     Q_SIGNALS:

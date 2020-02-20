@@ -29,10 +29,10 @@ Q_OBJECT
 		EmbeddedFilesDialog(QWidget *parent, const Okular::Document *document);
 
     private Q_SLOTS:
-		void saveFile();
+		void saveFileFromButton();
 		void attachViewContextMenu( const QPoint& pos );
 		void updateSaveButton();
-		void viewFile();
+		void viewFileFromButton();
 		void viewFileItem( QTreeWidgetItem* item, int column );
 
 	private:

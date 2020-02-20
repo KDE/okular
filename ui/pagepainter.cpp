@@ -653,10 +653,6 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                     QPixmap pixmap = GuiUtils::iconLoader()->loadIcon( text->textIcon().toLower(), KIconLoader::User, 32, KIconLoader::DefaultState, QStringList(), &path, true );
                     if ( path.isEmpty() )
                         pixmap = GuiUtils::iconLoader()->loadIcon( text->textIcon().toLower(), KIconLoader::NoGroup, 32 );
-                    QRect annotBoundary2 = QRect( annotBoundary.topLeft(), QSize( TEXTANNOTATION_ICONSIZE * dpr, TEXTANNOTATION_ICONSIZE * dpr ) );
-                    QRect annotRect2 = annotBoundary2.intersected( limits );
-                    QRect innerRect2( annotRect2.left() - annotBoundary2.left(), annotRect2.top() -
-                    annotBoundary2.top(), annotRect2.width(), annotRect2.height() );
 
                     QPixmap scaledCroppedPixmap = pixmap.scaled(TEXTANNOTATION_ICONSIZE * dpr, TEXTANNOTATION_ICONSIZE * dpr).copy(dInnerRect.toAlignedRect());
                     scaledCroppedPixmap.setDevicePixelRatio(dpr);

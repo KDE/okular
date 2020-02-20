@@ -5722,7 +5722,6 @@ void PageView::slotSelectPage()
     if ( item )
     {
         Okular::RegularAreaRect * area = textSelectionForItem( item );
-        const QString text = item->page()->text( area );
         d->pagesWithTextSelection.insert( currentPage );
         d->document->setPageTextSelection( currentPage, area, palette().color( QPalette::Active, QPalette::Highlight ) );
     }

@@ -601,12 +601,6 @@ class OKULARCORE_EXPORT Generator : public QObject
         void requestFontData(const Okular::FontInfo &font, QByteArray *data);
 
         /**
-         * Returns the last print error in case print() failed
-         * @since 0.11 (KDE 4.5)
-         */
-        Okular::Generator::PrintError printError() const;
-
-        /**
          * This method can be called to trigger a partial pixmap update for the given request
          * Make sure you call it in a way it's executed in the main thread.
          * @since 1.3
@@ -614,6 +608,13 @@ class OKULARCORE_EXPORT Generator : public QObject
         void signalPartialPixmapRequest( Okular::PixmapRequest *request, const QImage &image );
 
     protected:
+        /**
+         * Returns the last print error in case print() failed
+         * @since 0.11 (KDE 4.5)
+         */
+        // TODO Make print() return a PrintError instead of bool and remove this function when a BIC change happens somewhere else
+        Q_INVOKABLE Okular::Generator::PrintError printError() const;
+
         /// @cond PRIVATE
         Generator(GeneratorPrivate &dd, QObject *parent, const QVariantList &args);
         Q_DECLARE_PRIVATE( Generator )

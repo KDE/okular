@@ -143,6 +143,7 @@ public:
   void          export_finished(const DVIExport*);
 //void          editor_finished(const DVISourceEditor*);
 
+  QVector<PreBookmark> getPrebookmarks() const { return prebookmarks; }
 
 Q_SIGNALS:
   /**
@@ -166,8 +167,6 @@ public Q_SLOTS:
   virtual void  getText(RenderedDocumentPagePixmap* page);
 
   SimplePageSize sizeOfPage(const PageNumber& page);
-
-  QVector<PreBookmark> getPrebookmarks() const { return prebookmarks; }
 
   const QVector<DVI_SourceFileAnchor>& sourceAnchors() { return sourceHyperLinkAnchors; }
 

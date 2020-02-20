@@ -602,7 +602,7 @@ void PageViewToolBar::selectButton( int id )
         button = *(d->buttons.begin() + id);
     else
     {
-        QLinkedList< ToolBarButton * >::const_iterator it = d->buttons.begin(), end = d->buttons.end();
+        QLinkedList< ToolBarButton * >::const_iterator it = d->buttons.constBegin(), end = d->buttons.constEnd();
         for ( ; !button && it != end; ++it )
             if ( (*it)->isChecked() )
                 button = *it;
@@ -797,7 +797,7 @@ void ToolBarPrivate::buildToolBar()
     // 6. reposition buttons (in rows/col grid)
     int gridX = 0,
         gridY = 0;
-    QLinkedList< ToolBarButton * >::const_iterator it = buttons.begin(), end = buttons.end();
+    QLinkedList< ToolBarButton * >::const_iterator it = buttons.constBegin(), end = buttons.constEnd();
     for ( ; it != end; ++it )
     {
         ToolBarButton * button = *it;
@@ -832,7 +832,7 @@ void ToolBarPrivate::reposition()
     q->move( currentPosition );
 
     // repaint all buttons (to update background)
-    QLinkedList< ToolBarButton * >::const_iterator it = buttons.begin(), end = buttons.end();
+    QLinkedList< ToolBarButton * >::const_iterator it = buttons.constBegin(), end = buttons.constEnd();
     for ( ; it != end; ++it )
         (*it)->update();
 }
@@ -921,7 +921,7 @@ void ToolBarPrivate::selectButton( ToolBarButton * button )
     if ( button )
     {
         // deselect other buttons
-        QLinkedList< ToolBarButton * >::const_iterator it = buttons.begin(), end = buttons.end();
+        QLinkedList< ToolBarButton * >::const_iterator it = buttons.constBegin(), end = buttons.constEnd();
         for ( ; it != end; ++it )
             if ( *it != button )
                 (*it)->setChecked( false );
@@ -932,14 +932,14 @@ void ToolBarPrivate::selectButton( ToolBarButton * button )
 
 void PageViewToolBar::setToolsEnabled( bool on )
 {
-    QLinkedList< ToolBarButton * >::const_iterator it = d->buttons.begin(), end = d->buttons.end();
+    QLinkedList< ToolBarButton * >::const_iterator it = d->buttons.constBegin(), end = d->buttons.constEnd();
     for ( ; it != end; ++it )
         (*it)->setEnabled( on );
 }
 
 void PageViewToolBar::setTextToolsEnabled( bool on )
 {
-    QLinkedList< ToolBarButton * >::const_iterator it = d->buttons.begin(), end = d->buttons.end();
+    QLinkedList< ToolBarButton * >::const_iterator it = d->buttons.constBegin(), end = d->buttons.constEnd();
     for ( ; it != end; ++it )
         if ( (*it)->isText() )
             (*it)->setEnabled( on );

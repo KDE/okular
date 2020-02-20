@@ -1311,7 +1311,8 @@ void DocumentPrivate::saveDocumentInfo() const
         rotationNode.appendChild( doc.createTextNode( QString::number( (int)m_rotation ) ) );
     }
     // <general info><history> ... </history> save history up to OKULAR_HISTORY_SAVEDSTEPS viewports
-    QLinkedList< DocumentViewport >::const_iterator backIterator = m_viewportIterator;
+    const auto currentViewportIterator = QLinkedList< DocumentViewport >::const_iterator(m_viewportIterator);
+    QLinkedList< DocumentViewport >::const_iterator backIterator = currentViewportIterator;
     if ( backIterator != m_viewportHistory.constEnd() )
     {
         // go back up to OKULAR_HISTORY_SAVEDSTEPS steps from the current viewportIterator
@@ -1324,11 +1325,11 @@ void DocumentPrivate::saveDocumentInfo() const
         generalInfo.appendChild( historyNode );
 
         // add old[backIterator] and present[viewportIterator] items
-        QLinkedList< DocumentViewport >::const_iterator endIt = m_viewportIterator;
+        QLinkedList< DocumentViewport >::const_iterator endIt = currentViewportIterator;
         ++endIt;
         while ( backIterator != endIt )
         {
-            QString name = (backIterator == m_viewportIterator) ? QStringLiteral ("current") : QStringLiteral ("oldPage");
+            QString name = (backIterator == currentViewportIterator) ? QStringLiteral ("current") : QStringLiteral ("oldPage");
             QDomElement historyEntry = doc.createElement( name );
             historyEntry.setAttribute( QStringLiteral("viewport"), (*backIterator).toString() );
             historyNode.appendChild( historyEntry );
@@ -3871,9 +3872,9 @@ void Document::setPrevViewport()
 void Document::setNextViewport()
 // restore next viewport from the history
 {
-    QLinkedList< DocumentViewport >::const_iterator nextIterator = d->m_viewportIterator;
+    auto nextIterator = QLinkedList< DocumentViewport >::const_iterator(d->m_viewportIterator);
     ++nextIterator;
-    if ( nextIterator != d->m_viewportHistory.end() )
+    if ( nextIterator != d->m_viewportHistory.constEnd() )
     {
         const int oldViewportPage = (*d->m_viewportIterator).pageNumber;
 

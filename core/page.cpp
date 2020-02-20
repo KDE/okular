@@ -406,15 +406,13 @@ void PagePrivate::rotateAt( Rotation orientation )
      * Rotate the object rects on the page.
      */
     const QTransform matrix = rotationMatrix();
-    QLinkedList< ObjectRect * >::const_iterator objectIt = m_page->m_rects.begin(), end = m_page->m_rects.end();
-    for ( ; objectIt != end; ++objectIt )
-        (*objectIt)->transform( matrix );
+    for ( ObjectRect *objRect : qAsConst(m_page->m_rects) )
+        objRect->transform( matrix );
 
     const QTransform highlightRotationMatrix = Okular::buildRotationMatrix( (Rotation)(((int)m_rotation - (int)oldRotation + 4) % 4) );
-    QLinkedList< HighlightAreaRect* >::const_iterator hlIt = m_page->m_highlights.begin(), hlItEnd = m_page->m_highlights.end();
-    for ( ; hlIt != hlItEnd; ++hlIt )
+    for ( HighlightAreaRect *hlar : qAsConst(m_page->m_highlights) )
     {
-        (*hlIt)->transform( highlightRotationMatrix );
+        hlar->transform( highlightRotationMatrix );
     }
 }
 
@@ -736,10 +734,9 @@ void Page::setFormFields( const QLinkedList< FormField * >& fields )
 {
     qDeleteAll( d->formfields );
     d->formfields = fields;
-    QLinkedList< FormField * >::const_iterator it = d->formfields.begin(), itEnd = d->formfields.end();
-    for ( ; it != itEnd; ++it )
+    for ( FormField *ff : qAsConst(d->formfields) )
     {
-        (*it)->d_ptr->setDefault();
+        ff->d_ptr->setDefault();
     }
 }
 
@@ -813,9 +810,7 @@ void Page::deleteAnnotations()
     // delete ObjectRects of type Annotation
     deleteObjectRects( m_rects, QSet<ObjectRect::ObjectType>() << ObjectRect::OAnnotation );
     // delete all stored annotations
-    QLinkedList< Annotation * >::const_iterator aIt = m_annotations.begin(), aEnd = m_annotations.end();
-    for ( ; aIt != aEnd; ++aIt )
-        delete *aIt;
+    qDeleteAll( m_annotations );
     m_annotations.clear();
 }
 
@@ -877,10 +872,9 @@ bool PagePrivate::restoreLocalContents( const QDomNode & pageNode )
                 continue;
 
             QHash<int, FormField*> hashedforms;
-            QLinkedList< FormField * >::const_iterator fIt = formfields.begin(), fItEnd = formfields.end();
-            for ( ; fIt != fItEnd; ++fIt )
+            for ( FormField *ff : qAsConst(formfields) )
             {
-                hashedforms[(*fIt)->id()] = (*fIt);
+                hashedforms[ff->id()] = ff;
             }
 
             // iterate over all forms

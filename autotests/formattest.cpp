@@ -92,9 +92,9 @@ void FormatTest::testTimeFormat_data()
 
     QTest::newRow( "field hh:mm" ) << QStringLiteral( "time1" ) << QStringLiteral( "1:20" ) << QStringLiteral( "01:20" );
     QTest::newRow( "field hh:mm with pm" ) << QStringLiteral( "time1" ) << QStringLiteral( "1:20 pm" ) << QStringLiteral( "13:20" );
-    QTest::newRow( "field hh:mm invalid one number" ) << QStringLiteral( "time1" ) << QStringLiteral( "1" ) << QStringLiteral( "" );
-    QTest::newRow( "field hh:mm invalid time" ) << QStringLiteral( "time1" ) << QStringLiteral( "25:12" ) << QStringLiteral( "" );
-    QTest::newRow( "field hh:mm invalid only letters" ) << QStringLiteral( "time1" ) << QStringLiteral( "abcd" ) << QStringLiteral( "" );
+    QTest::newRow( "field hh:mm invalid one number" ) << QStringLiteral( "time1" ) << QStringLiteral( "1" ) << QString( QLatin1String( "" ) );
+    QTest::newRow( "field hh:mm invalid time" ) << QStringLiteral( "time1" ) << QStringLiteral( "25:12" ) << QString( QLatin1String( "" ) );
+    QTest::newRow( "field hh:mm invalid only letters" ) << QStringLiteral( "time1" ) << QStringLiteral( "abcd" ) << QString( QLatin1String( "" ) );
     QTest::newRow( "field hh:mm ap" ) << QStringLiteral( "time2" ) << QStringLiteral( "1:20" ) << QStringLiteral( "1:20 am" );
     QTest::newRow( "field hh:mm ap remove zero" ) << QStringLiteral( "time2" ) << QStringLiteral( "01:20 pm" ) << QStringLiteral( "1:20 pm" );
     QTest::newRow( "field hh:mm ap change to AM/PM" ) << QStringLiteral( "time2" ) << QStringLiteral( "13:20" ) << QStringLiteral( "1:20 pm" );
@@ -107,7 +107,7 @@ void FormatTest::testTimeFormat_data()
 
 void FormatTest::testSpecialFormat()
 {
-    m_formattedText = QStringLiteral( "" );
+    m_formattedText = QLatin1String( "" );
     QFETCH( QString, fieldName );
     QFETCH( QString, text );
     QFETCH( bool, edited );
@@ -131,8 +131,8 @@ void FormatTest::testSpecialFormat_data()
     QTest::addColumn< QString > ( "result" );
 
     // The tests which have invalid edited, keep the same value as when it was formatted before.
-    QTest::newRow( "field validated but not changed" ) << QStringLiteral( "CEP" ) << QStringLiteral( "12345" ) << true << QStringLiteral( "" );
-    QTest::newRow( "field invalid but not changed" ) << QStringLiteral( "CEP" ) << QStringLiteral( "123456" ) << false << QStringLiteral( "" );
+    QTest::newRow( "field validated but not changed" ) << QStringLiteral( "CEP" ) << QStringLiteral( "12345" ) << true << QString( QLatin1String( "" ) );
+    QTest::newRow( "field invalid but not changed" ) << QStringLiteral( "CEP" ) << QStringLiteral( "123456" ) << false << QString( QLatin1String( "" ) );
     QTest::newRow( "field formatted and changed" ) << QStringLiteral( "8Digits" ) << QStringLiteral( "123456789" ) << true << QStringLiteral( "12345-6789" );
     QTest::newRow( "field invalid 10 digits" ) << QStringLiteral( "8Digits" ) << QStringLiteral( "1234567890" ) << false << QStringLiteral( "12345-6789" );
     QTest::newRow( "field formatted telephone" ) << QStringLiteral( "telefone" ) << QStringLiteral( "1234567890" ) << true << QStringLiteral( "(123) 456-7890" );

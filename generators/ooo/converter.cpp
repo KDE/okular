@@ -585,7 +585,7 @@ bool Converter::convertAnnotation( QTextCursor *cursor, const QDomElement &eleme
   annotation->setAuthor( creator );
   annotation->setContents( contents.join( QStringLiteral("\n") ) );
   annotation->setCreationDate( dateTime );
-  annotation->style().setColor( QColor( "#ffff00" ) );
+  annotation->style().setColor( QColor( 0xff, 0xff, 0x00 ) );
   annotation->style().setOpacity( 0.5 );
 
   emit addAnnotation( annotation, position, position + 3 );

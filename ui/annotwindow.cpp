@@ -266,7 +266,7 @@ void AnnotWindow::reloadInfo()
     {
         Okular::TextAnnotation * textAnn = static_cast< Okular::TextAnnotation * >( m_annot );
         if ( textAnn->textType() == Okular::TextAnnotation::InPlace && textAnn->inplaceIntent() == Okular::TextAnnotation::TypeWriter )
-            newcolor = QColor("#fdfd96");
+            newcolor = QColor(0xfd, 0xfd, 0x96);
     }
     if ( !newcolor.isValid() )
         newcolor = m_annot->style().color().isValid() ? QColor(m_annot->style().color().red(), m_annot->style().color().green(), m_annot->style().color().blue(), 255) : Qt::yellow;

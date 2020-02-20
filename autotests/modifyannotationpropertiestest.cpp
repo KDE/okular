@@ -17,10 +17,6 @@
 #include "core/document.h"
 #include "testingutils.h"
 
-static const QColor RED = QColor(255, 0, 0);
-static const QColor GREEN = QColor(0, 255, 0.0);
-// static const QColor BLUE = QColor(0, 0, 255);
-
 class ModifyAnnotationPropertiesTest : public QObject
 {
     Q_OBJECT
@@ -65,7 +61,7 @@ void ModifyAnnotationPropertiesTest::init()
     m_annot1->setBoundingRectangle( Okular::NormalizedRect( 0.1, 0.1, 0.15, 0.15 ) );
     m_annot1->setContents( QStringLiteral( "Hello, World" ) );
     m_annot1->setAuthor( QStringLiteral("Jon Mease") );
-    m_annot1->style().setColor( RED );
+    m_annot1->style().setColor( Qt::red );
     m_annot1->style().setWidth( 4.0 );
     m_document->addPageAnnotation( 0, m_annot1 );
 }
@@ -86,22 +82,22 @@ void ModifyAnnotationPropertiesTest::testModifyAnnotationProperties()
 
     // Now modify m_annot1's properties and record properties XML string
     m_annot1->style().setWidth( 8.0 );
-    m_annot1->style().setColor( GREEN );
+    m_annot1->style().setColor( Qt::green );
     m_document->modifyPageAnnotationProperties( 0, m_annot1 );
     QString m_annot1XmlA =  TestingUtils::getAnnotationXml( m_annot1 );
     QCOMPARE( 8.0, m_annot1->style().width() );
-    QCOMPARE( GREEN, m_annot1->style().color() );
+    QCOMPARE( QColor(Qt::green), m_annot1->style().color() );
 
     // undo modification and check that original properties have been restored
     m_document->undo();
     QCOMPARE( 4.0, m_annot1->style().width() );
-    QCOMPARE( RED, m_annot1->style().color() );
+    QCOMPARE( QColor(Qt::red), m_annot1->style().color() );
     QCOMPARE( origLine1Xml, TestingUtils::getAnnotationXml( m_annot1 ) );
 
     // redo modification and verify that new properties have been restored
     m_document->redo();
     QCOMPARE( 8.0, m_annot1->style().width() );
-    QCOMPARE( GREEN, m_annot1->style().color() );
+    QCOMPARE( QColor(Qt::green), m_annot1->style().color() );
     QCOMPARE( m_annot1XmlA, TestingUtils::getAnnotationXml( m_annot1 ) );
 
     // Verify that default values are properly restored.  (We haven't explicitly set opacity yet)
@@ -118,7 +114,7 @@ void ModifyAnnotationPropertiesTest::testModifyAnnotationProperties()
     // And finally undo back to original properties
     m_document->undo();
     QCOMPARE( 4.0, m_annot1->style().width() );
-    QCOMPARE( RED, m_annot1->style().color() );
+    QCOMPARE( QColor(Qt::red), m_annot1->style().color() );
     QCOMPARE( origLine1Xml, TestingUtils::getAnnotationXml( m_annot1 ) );
 }
 

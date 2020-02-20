@@ -35,7 +35,6 @@ class HandleDrag
         {
             setCursor( Qt::SizeAllCursor );
             setFixedWidth( style()->pixelMetric( QStyle::PM_ToolBarHandleExtent ) );
-            installEventFilter( parent );
         }
 
         void paintEvent( QPaintEvent * ) override
@@ -58,6 +57,7 @@ PresentationSearchBar::PresentationSearchBar( Okular::Document *document, QWidge
     lay->setContentsMargins( 0, 0, 0, 0 );
 
     m_handle = new HandleDrag( this );
+    m_handle->installEventFilter( this );
     lay->addWidget( m_handle );
 
     QToolButton * closeBtn = new QToolButton( this );

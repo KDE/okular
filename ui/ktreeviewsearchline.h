@@ -39,7 +39,7 @@ class KTreeViewSearchLine : public KLineEdit
 {
     Q_OBJECT
 
-    Q_PROPERTY( Qt::CaseSensitivity caseSensitity READ caseSensitivity WRITE setCaseSensitivity NOTIFY searchOptionsChanged )
+    Q_PROPERTY(Qt::CaseSensitivity caseSensitity READ caseSensitivity WRITE setCaseSensitivity NOTIFY searchOptionsChanged)
 
 
   public:

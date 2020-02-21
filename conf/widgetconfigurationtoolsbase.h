@@ -18,7 +18,7 @@ class WidgetConfigurationToolsBase : public QWidget
 {
     Q_OBJECT
 
-    Q_PROPERTY( QStringList tools READ tools WRITE setTools NOTIFY changed USER true )
+    Q_PROPERTY(QStringList tools READ tools WRITE setTools NOTIFY changed USER true)
 
     public:
         explicit WidgetConfigurationToolsBase( QWidget * parent = nullptr );

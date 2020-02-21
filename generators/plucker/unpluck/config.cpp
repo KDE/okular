@@ -269,7 +269,7 @@ static void InitializeConfigInfo ()
     const char *config_dir = STRINGIFY (PLUCKER_CONFIG_DIR);
     const char *system_config_file_name = STRINGIFY (SYS_CONFIG_FILE_NAME);
     const char *user_config_filename = STRINGIFY (USER_CONFIG_FILE_NAME);
-    char *home = getenv ("HOME");
+    char *home = getenv ("HOME"); //clazy:exclude=raw-environment-function
 
     TryReadConfigFile (config_dir, system_config_file_name);
     if (home != nullptr)

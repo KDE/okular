@@ -24,6 +24,7 @@
 
 #include <QMessageBox>
 #include <QXmlSimpleReader>
+#include <KLocalizedString>
 
 #include "ebook_epub.h"
 #include "helperxmlhandler_epubcontainer.h"
@@ -156,12 +157,12 @@ QString EBook_EPUB::getTopicByUrl(const QUrl& url)
 	if ( m_urlTitleMap.contains( url ) )
 		return m_urlTitleMap[ url ];
 
-	return "";
+	return QLatin1String("");
 }
 
 QString EBook_EPUB::currentEncoding() const
 {
-    return "UTF-8";
+    return QStringLiteral("UTF-8");
 }
 
 bool EBook_EPUB::setCurrentEncoding(const char *)
@@ -201,7 +202,7 @@ bool EBook_EPUB::parseBookinfo()
 	// Parse the container.xml to find the content descriptor
 	HelperXmlHandler_EpubContainer container_parser;
 
-	if ( !parseXML( "META-INF/container.xml", &container_parser )
+	if ( !parseXML( QStringLiteral("META-INF/container.xml"), &container_parser )
 		 || container_parser.contentPath.isEmpty() )
 		return false;
 
@@ -212,7 +213,7 @@ bool EBook_EPUB::parseBookinfo()
 		return false;
 
 	// At least title and the TOC must be present
-	if ( !content_parser.metadata.contains("title") || content_parser.tocname.isEmpty() )
+	if ( !content_parser.metadata.contains(QStringLiteral("title")) || content_parser.tocname.isEmpty() )
 		return false;
 
 	// All the files, including TOC, are relative to the container_parser.contentPath
@@ -229,7 +230,7 @@ bool EBook_EPUB::parseBookinfo()
 		return false;
 
 	// Get the data
-	m_title = content_parser.metadata[ "title" ];
+	m_title = content_parser.metadata[ QStringLiteral("title") ];
 
     // Move the manifest entries into the list
     for ( const QString &f : qAsConst(content_parser.manifest) )
@@ -304,7 +305,7 @@ QString EBook_EPUB::urlToPath(const QUrl &link) const
 	if ( link.scheme() == URL_SCHEME_EPUB )
 		return link.path();
 
-	return "";
+	return QLatin1String("");
 }
 
 bool EBook_EPUB::getFileAsString(QString &str, const QString &path) const
@@ -323,8 +324,8 @@ bool EBook_EPUB::getFileAsString(QString &str, const QString &path) const
 		if ( utf16 > 0 && utf16 < endxmltag )
 		{
 			QMessageBox::critical( nullptr,
-								   ("Unsupported encoding"),
-								   ("The encoding of this ebook is not supported yet. Please send it to gyunaev@ulduzsoft.com for support to be added") );
+								   i18n("Unsupported encoding"),
+								   i18n("The encoding of this ebook is not supported yet. Please open a bug in https://bugs.kde.org for support to be added") );
 			return false;
 		}
 	}

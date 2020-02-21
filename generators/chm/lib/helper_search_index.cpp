@@ -217,7 +217,7 @@ bool Index::parseDocumentToStringlist(EBook *chmFile, const QUrl& filename, QStr
 				if ( parseentity.isEmpty() )
 				{
 					// straight '&' symbol. Add and continue.
-					parsedbuf += "&";
+					parsedbuf += QLatin1String("&");
 				}
 				else
 					qWarning( "Index::parseDocument: incorrectly terminated HTML entity '&%s%c', ignoring", qPrintable( parseentity ), ch.toLatin1() );
@@ -227,7 +227,7 @@ bool Index::parseDocumentToStringlist(EBook *chmFile, const QUrl& filename, QStr
 			}
 			
 			// Don't we have a space?
-			if ( parseentity.toLower() != "nbsp" )
+			if ( parseentity.toLower() != QLatin1String("nbsp") )
 			{
 				QString entity = entityDecoder.decode( parseentity );
 			

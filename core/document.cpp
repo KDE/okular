@@ -698,9 +698,9 @@ void DocumentPrivate::loadViewsInfo( View *view, const QDomElement &e )
                 view->setCapability( View::ZoomModality, newmode );
             }
         }
-        else if ( viewElement.tagName() == "viewMode" )
+        else if ( viewElement.tagName() == QLatin1String("viewMode") )
         {
-            const QString modeString = viewElement.attribute( "mode" );
+            const QString modeString = viewElement.attribute( QStringLiteral("mode") );
             bool newmode_ok = true;
             const int newmode = !modeString.isEmpty() ? modeString.toInt( &newmode_ok ) : 2;
             if ( newmode_ok
@@ -711,9 +711,9 @@ void DocumentPrivate::loadViewsInfo( View *view, const QDomElement &e )
                 view->setCapability( View::ViewModeModality, newmode );
             }
         }
-        else if ( viewElement.tagName() == "continuous" )
+        else if ( viewElement.tagName() == QLatin1String("continuous") )
         {
-            const QString modeString = viewElement.attribute( "mode" );
+            const QString modeString = viewElement.attribute( QStringLiteral("mode") );
             bool newmode_ok = true;
             const int newmode = !modeString.isEmpty() ? modeString.toInt( &newmode_ok ) : 2;
             if ( newmode_ok
@@ -724,9 +724,9 @@ void DocumentPrivate::loadViewsInfo( View *view, const QDomElement &e )
                 view->setCapability( View::Continuous, newmode );
             }
         }
-        else if ( viewElement.tagName() == "trimMargins" )
+        else if ( viewElement.tagName() == QLatin1String("trimMargins") )
         {
-            const QString valueString = viewElement.attribute( "value" );
+            const QString valueString = viewElement.attribute( QStringLiteral("value") );
             bool newmode_ok = true;
             const int newmode = !valueString.isEmpty() ? valueString.toInt( &newmode_ok ) : 2;
             if ( newmode_ok
@@ -767,32 +767,32 @@ void DocumentPrivate::saveViewsInfo( View *view, QDomElement &e ) const
          && ( view->capabilityFlags( View::Continuous )
               & ( View::CapabilityRead | View::CapabilitySerializable ) ) )
     {
-        QDomElement contEl = e.ownerDocument().createElement( "continuous" );
+        QDomElement contEl = e.ownerDocument().createElement( QStringLiteral("continuous") );
         e.appendChild( contEl );
         const bool mode = view->capability( View::Continuous ).toBool();
-        contEl.setAttribute( "mode", mode );
+        contEl.setAttribute( QStringLiteral("mode"), mode );
     }
     if ( view->supportsCapability( View::ViewModeModality )
          && ( view->capabilityFlags( View::ViewModeModality )
               & ( View::CapabilityRead | View::CapabilitySerializable ) ) )
     {
-        QDomElement viewEl = e.ownerDocument().createElement( "viewMode" );
+        QDomElement viewEl = e.ownerDocument().createElement( QStringLiteral("viewMode") );
         e.appendChild( viewEl );
         bool ok = true;
         const int mode = view->capability( View::ViewModeModality ).toInt( &ok );
         if ( ok )
         {
-            viewEl.setAttribute( "mode", mode );
+            viewEl.setAttribute( QStringLiteral("mode"), mode );
         }
     }
     if ( view->supportsCapability( View::TrimMargins )
          && ( view->capabilityFlags( View::TrimMargins )
          & ( View::CapabilityRead | View::CapabilitySerializable ) ) )
     {
-        QDomElement contEl = e.ownerDocument().createElement( "trimMargins" );
+        QDomElement contEl = e.ownerDocument().createElement( QStringLiteral("trimMargins") );
         e.appendChild( contEl );
         const bool value = view->capability( View::TrimMargins ).toBool();
-        contEl.setAttribute( "value", value );
+        contEl.setAttribute( QStringLiteral("value"), value );
     }
 }
 

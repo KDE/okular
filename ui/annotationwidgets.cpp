@@ -50,7 +50,7 @@ PixmapPreviewSelector::PixmapPreviewSelector( QWidget * parent, PreviewPosition 
     mainlay->addLayout( toplay );
     m_comboItems = new KComboBox( this );
     toplay->addWidget( m_comboItems );
-    m_stampPushButton = new QPushButton(QIcon::fromTheme( "document-open" ), QString(), this );
+    m_stampPushButton = new QPushButton(QIcon::fromTheme( QStringLiteral("document-open") ), QString(), this );
     m_stampPushButton->setVisible( false );
     m_stampPushButton->setToolTip( i18nc( "@info:tooltip", "Select a custom stamp symbol from file") );
     toplay->addWidget(m_stampPushButton);

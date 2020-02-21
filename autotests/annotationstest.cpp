@@ -161,7 +161,7 @@ void AnnotationTest::testTypewriter()
   m_document->addPageAnnotation( 0, annot );
 
   QDomNode annotNode = annot->getAnnotationPropertiesDomNode();
-  QDomNodeList annotNodeList = annotNode.toElement().elementsByTagName("base");
+  QDomNodeList annotNodeList = annotNode.toElement().elementsByTagName(QStringLiteral("base"));
   QDomElement annotEl = annotNodeList.item(0).toElement();
   QCOMPARE( annotEl.attribute( QStringLiteral("color") ), QStringLiteral("#00ffffff") );
   QCOMPARE( annotEl.attribute( QStringLiteral("flags") ), QStringLiteral("4") );

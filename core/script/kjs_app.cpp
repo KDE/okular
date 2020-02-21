@@ -174,7 +174,7 @@ static KJSObject appAlert( KJSContext *context, void *,
     QString cMsg = arguments.at( 0 ).toString( context );
     int nIcon = 0;
     int nType = 0;
-    QString cTitle = "Okular";
+    QString cTitle = QStringLiteral("Okular");
 
     if( arguments.count() >= 2 )
         nIcon = arguments.at( 1 ).toInt32( context );
@@ -223,14 +223,14 @@ static KJSObject appAlert( KJSContext *context, void *,
     if( arguments.count() >= 6 )
     {
         oCheckbox = arguments.at( 5 );
-        KJSObject oMsg = oCheckbox.property( context, "cMsg" );
+        KJSObject oMsg = oCheckbox.property( context, QStringLiteral("cMsg") );
         QString msg = i18n( "Do not show this message again" );
         
         if( oMsg.isString() )
             msg = oMsg.toString( context );
         
         bool bInitialValue = false;       
-        KJSObject value = oCheckbox.property( context, "bInitialValue" );
+        KJSObject value = oCheckbox.property( context, QStringLiteral("bInitialValue") );
         if( value.isBoolean() )
             bInitialValue = value.toBoolean( context );
         checkBox = new QCheckBox( msg );

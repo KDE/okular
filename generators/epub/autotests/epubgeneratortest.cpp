@@ -51,7 +51,7 @@ void EpubGeneratorTest::testDocumentStructure()
 {
     unsigned int expectedPageNr = 3;
     QCOMPARE( m_document->pages(), expectedPageNr);
-    QCOMPARE( m_document->metaData(QLatin1String("DocumentTitle")).toString(), QStringLiteral("Okular Test") );
+    QCOMPARE( m_document->metaData(QStringLiteral("DocumentTitle")).toString(), QStringLiteral("Okular Test") );
 
     const Okular::DocumentSynopsis *docSyn = m_document->documentSynopsis();
     QDomElement heading1 = docSyn->documentElement();

@@ -51,7 +51,7 @@ void ChmGeneratorTest::testDocumentStructure()
 {
     unsigned int expectedPageNr = 6;
     QCOMPARE( m_document->pages(), expectedPageNr);
-    QCOMPARE( m_document->metaData(QLatin1String("DocumentTitle")).toString(), QStringLiteral("okular test chm") );
+    QCOMPARE( m_document->metaData(QStringLiteral("DocumentTitle")).toString(), QStringLiteral("okular test chm") );
 
     const Okular::DocumentSynopsis *docSyn = m_document->documentSynopsis();
     QDomElement heading1 = docSyn->documentElement();

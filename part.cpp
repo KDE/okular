@@ -1786,7 +1786,7 @@ bool Part::openUrl( const QUrl &_url, bool swapInsteadOfOpening )
     {
         resetStartArguments();
         /* TRANSLATORS: Adding the reason (%2) why the opening failed (if any). */
-        QString errorMessage = i18n("Could not open %1. %2", url.toDisplayString(), QString("\n%1").arg(m_document->openError()) );
+        QString errorMessage = i18n("Could not open %1. %2", url.toDisplayString(), QStringLiteral("\n%1").arg(m_document->openError()) );
         KMessageBox::error( widget(), errorMessage );
     }
     

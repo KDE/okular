@@ -1544,7 +1544,7 @@ QVariant PDFGenerator::metaData( const QString & key, const QVariant & option ) 
     else if ( key == QLatin1String("GeneratorExtraDescription") )
     {
 #ifdef HAVE_POPPLER_0_73
-        if (Poppler::Version::string() == POPPLER_VERSION) {
+        if (Poppler::Version::string() == QStringLiteral(POPPLER_VERSION)) {
             return i18n("Using Poppler %1", Poppler::Version::string());
         } else {
             return i18n("Using Poppler %1\n\nBuilt against Poppler %2", Poppler::Version::string(), POPPLER_VERSION);

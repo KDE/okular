@@ -144,7 +144,7 @@ void FormatTest::testSpecialFormat_data()
 void FormatTest::testFocusAction()
 {
     QFETCH( QString, result );
-    Okular::FormFieldText *fft = reinterpret_cast< Okular::FormFieldText * >(  m_fields[ "Validate/Focus" ] );
+    Okular::FormFieldText *fft = reinterpret_cast< Okular::FormFieldText * >(  m_fields[ QStringLiteral("Validate/Focus") ] );
 
     m_document->processFocusAction( fft->additionalAction( Okular::Annotation::FocusIn ), fft );
     QCOMPARE( fft->text(), result );
@@ -161,7 +161,7 @@ void FormatTest::testValidateAction()
 {
     QFETCH( QString, text );
     QFETCH( QString, result );
-    Okular::FormFieldText *fft = reinterpret_cast< Okular::FormFieldText * >(  m_fields[ "Validate/Focus" ] );
+    Okular::FormFieldText *fft = reinterpret_cast< Okular::FormFieldText * >(  m_fields[ QStringLiteral("Validate/Focus") ] );
 
     fft->setText( text );
     bool ok = false;

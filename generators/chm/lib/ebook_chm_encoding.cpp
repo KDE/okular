@@ -302,5 +302,5 @@ QString Ebook_CHM_Encoding::guessByLCID(unsigned short lcid)
 				return t->qtcodec;
 	}
 
-	return "UTF-8";
+	return QStringLiteral("UTF-8");
 }

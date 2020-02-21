@@ -92,7 +92,7 @@ void DocumentTest::testDocdataMigration()
 
     // Check that the annotation from file1-docdata.xml was loaded
     QCOMPARE( m_document->page( 0 )->annotations().size(), 1 );
-    QCOMPARE( m_document->page( 0 )->annotations().first()->uniqueName(), QString("testannot") );
+    QCOMPARE( m_document->page( 0 )->annotations().first()->uniqueName(), QStringLiteral("testannot") );
 
     // Check that we detect that it must be migrated
     QVERIFY( m_document->isDocdataMigrationNeeded() );
@@ -102,7 +102,7 @@ void DocumentTest::testDocdataMigration()
     // (because we have not migrated)
     QCOMPARE( m_document->openDocument( testFilePath, testFileUrl, mime ), Okular::Document::OpenSuccess );
     QCOMPARE( m_document->page( 0 )->annotations().size(), 1 );
-    QCOMPARE( m_document->page( 0 )->annotations().first()->uniqueName(), QString("testannot") );
+    QCOMPARE( m_document->page( 0 )->annotations().first()->uniqueName(), QStringLiteral("testannot") );
     QVERIFY( m_document->isDocdataMigrationNeeded() );
 
     // Do the migration

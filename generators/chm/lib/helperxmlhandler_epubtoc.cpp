@@ -34,7 +34,7 @@ bool HelperXmlHandler_EpubTOC::startElement(const QString &, const QString &loca
 //	for ( int i = 0; i < atts.count(); i++ )
 //		qDebug() << "    " << atts.localName(i) << " " << atts.value(i);
 
-	if ( localName == "navMap" )
+	if ( localName == QLatin1String("navMap" ) )
 	{
 		m_inNavMap = true;
 		return true;
@@ -43,15 +43,15 @@ bool HelperXmlHandler_EpubTOC::startElement(const QString &, const QString &loca
 	if ( !m_inNavMap )
 		return true;
 
-	if ( localName == "navPoint" )
+	if ( localName == QLatin1String("navPoint" ) )
 		m_indent++;
 
-	if ( localName == "text" )
+	if ( localName == QLatin1String("text" ) )
 		m_inText = true;
 
-	if ( localName == "content" )
+	if ( localName == QLatin1String("content" ) )
 	{
-		int idx = atts.index( "src" );
+		int idx = atts.index( QLatin1String( "src" ) );
 
 		if ( idx == -1 )
 			return false;
@@ -77,16 +77,16 @@ bool HelperXmlHandler_EpubTOC::endElement(const QString& , const QString &localN
 {
 //	qDebug() << "endElement" << " " << qName;
 
-	if ( localName == "navMap" )
+	if ( localName == QLatin1String("navMap" ) )
 	{
 		m_inNavMap = false;
 		return true;
 	}
 
-	if ( localName == "navPoint" )
+	if ( localName == QLatin1String("navPoint" ) )
 		m_indent--;
 
-	if ( localName == "text" )
+	if ( localName == QLatin1String("text" ) )
 		m_inText = false;
 
 	return true;

@@ -10,6 +10,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+// clazy:excludeall=qstring-allocations
+
 #include <QtTest>
 
 #include "../core/annotations.h"

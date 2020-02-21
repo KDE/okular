@@ -423,7 +423,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
 
     d->delayResizeEventTimer = new QTimer( this );
     d->delayResizeEventTimer->setSingleShot( true );
-    d->delayResizeEventTimer->setObjectName("delayResizeEventTimer");
+    d->delayResizeEventTimer->setObjectName(QStringLiteral("delayResizeEventTimer"));
     connect( d->delayResizeEventTimer, &QTimer::timeout, this, &PageView::delayedResizeEvent );
 
     setFrameStyle(QFrame::NoFrame);

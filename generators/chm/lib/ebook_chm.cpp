@@ -49,7 +49,7 @@ EBook_CHM::EBook_CHM()
 	m_textCodec = nullptr;
 	m_textCodecForSpecialFiles = nullptr;
 	m_detectedLCID = 0;
-	m_currentEncoding = "UTF-8";
+	m_currentEncoding = QStringLiteral("UTF-8");
 	m_htmlEntityDecoder = nullptr;
 }
 
@@ -75,7 +75,7 @@ void EBook_CHM::close()
 	m_textCodec = nullptr;
 	m_textCodecForSpecialFiles = nullptr;
 	m_detectedLCID = 0;
-	m_currentEncoding = "UTF-8";
+	m_currentEncoding = QStringLiteral("UTF-8");
 }
 
 QString EBook_CHM::title() const
@@ -251,7 +251,7 @@ bool EBook_CHM::load(const QString &archiveName)
 	QString filename;
 
 	// If the file has a file:// prefix, remove it
-	if ( archiveName.startsWith( "file://" ) )
+	if ( archiveName.startsWith( QLatin1String("file://") ) )
 		filename = archiveName.mid( 7 ); // strip it
 	else
 		filename = archiveName;
@@ -279,7 +279,7 @@ bool EBook_CHM::load(const QString &archiveName)
 	// Reset encoding
 	m_textCodec = nullptr;
 	m_textCodecForSpecialFiles = nullptr;
-	m_currentEncoding = "UTF-8";
+	m_currentEncoding = QStringLiteral("UTF-8");
 
 	// Get information from /#WINDOWS and /#SYSTEM files (encoding, title, context file and so)
 	// and guess the encoding
@@ -288,10 +288,10 @@ bool EBook_CHM::load(const QString &archiveName)
 	guessTextEncoding();
 
 	// Check whether the search tables are present
-	if ( ResolveObject("/#TOPICS", &m_chmTOPICS)
-			&& ResolveObject("/#STRINGS", &m_chmSTRINGS)
-			&& ResolveObject("/#URLTBL", &m_chmURLTBL)
-			&& ResolveObject("/#URLSTR", &m_chmURLSTR) )
+	if ( ResolveObject(QStringLiteral("/#TOPICS"), &m_chmTOPICS)
+			&& ResolveObject(QStringLiteral("/#STRINGS"), &m_chmSTRINGS)
+			&& ResolveObject(QStringLiteral("/#URLTBL"), &m_chmURLTBL)
+			&& ResolveObject(QStringLiteral("/#URLSTR"), &m_chmURLSTR) )
 	{
 		m_lookupTablesValid = true;
 		fillTopicsUrlMap();
@@ -301,18 +301,18 @@ bool EBook_CHM::load(const QString &archiveName)
 
 	// Some CHM files have toc and index files, but do not set the name properly.
 	// Some heuristics here.
-	if ( m_topicsFile.isEmpty() && hasFile( "/toc.hhc" ) )
+	if ( m_topicsFile.isEmpty() && hasFile( QStringLiteral("/toc.hhc") ) )
 		m_topicsFile = "/toc.hhc";
 
-	if ( m_indexFile.isEmpty() && hasFile( "/index.hhk" ) )
+	if ( m_indexFile.isEmpty() && hasFile( QStringLiteral("/index.hhk") ) )
 		m_indexFile = "/index.hhk";
 
-	if ( !m_topicsFile.isEmpty() || ( m_lookupTablesValid && hasFile( "/#TOCIDX" ) ) )
+	if ( !m_topicsFile.isEmpty() || ( m_lookupTablesValid && hasFile( QStringLiteral("/#TOCIDX") ) ) )
 		m_tocAvailable = true;
 	else
 		m_tocAvailable = false;
 
-	if ( !m_indexFile.isEmpty() || ( m_lookupTablesValid && hasFile( "/$WWKeywordLinks/BTree" ) ) )
+	if ( !m_indexFile.isEmpty() || ( m_lookupTablesValid && hasFile( QStringLiteral("/$WWKeywordLinks/BTree") ) ) )
 		m_indexAvailable = true;
 	else
 		m_indexAvailable = false;
@@ -440,9 +440,9 @@ bool EBook_CHM::parseFileAndFillArray( const QString& file, QList< ParsedEntry >
         //DEBUGPARSER(("tag: '%s', tagword: '%s'\n", qPrintable( tag ), qPrintable( tagword ) ));
 
 		// <OBJECT type="text/sitemap"> - a topic entry
-		if ( tagword == "object" && tag.indexOf ("text/sitemap", 0, Qt::CaseInsensitive ) != -1 )
+		if ( tagword == QLatin1String("object") && tag.indexOf (QLatin1String("text/sitemap"), 0, Qt::CaseInsensitive ) != -1 )
 			in_object = true;
-		else if ( tagword == "/object" && in_object )
+		else if ( tagword == QLatin1String("/object") && in_object )
 		{
 			// a topic entry closed. Add a tree item
 			if ( entry.name.isEmpty() && entry.urls.isEmpty() )
@@ -479,11 +479,11 @@ bool EBook_CHM::parseFileAndFillArray( const QString& file, QList< ParsedEntry >
 			entry.seealso.clear();
 			in_object = false;
 		}
-		else if ( tagword == "param" && in_object )
+		else if ( tagword == QLatin1String("param") && in_object )
 		{
 			// <param name="Name" value="First Page">
 			int offset; // strlen("param ")
-			QString name_pattern = "name=", value_pattern = "value=";
+			const QString name_pattern = QStringLiteral("name="), value_pattern = QStringLiteral("value=");
 			QString pname, pvalue;
 
 			if ( (offset = tag.indexOf (name_pattern, 0, Qt::CaseInsensitive )) == -1 )
@@ -501,13 +501,13 @@ bool EBook_CHM::parseFileAndFillArray( const QString& file, QList< ParsedEntry >
 
             //DEBUGPARSER(("<param>: name '%s', value '%s'", qPrintable( pname ), qPrintable( pvalue )));
 
-			if ( pname == "name" || pname == "keyword" )
+			if ( pname == QLatin1String("name") || pname == QLatin1String("keyword") )
 			{
 				// Some help files contain duplicate names, where the second name is empty. Work it around by keeping the first one
 				if ( !pvalue.isEmpty() )
 					entry.name = pvalue;
 			}
-			else if ( pname == "merge" )
+			else if ( pname == QLatin1String("merge") )
 			{
 				// MERGE implementation is experimental
 				QUrl mergeurl = pathToUrl( pvalue );
@@ -526,7 +526,7 @@ bool EBook_CHM::parseFileAndFillArray( const QString& file, QList< ParsedEntry >
 				else
 					qWarning( "MERGE is used in index but file %s was not found in CHM archive", qPrintable(pvalue) );
 			}
-			else if ( pname == "local" )
+			else if ( pname == QLatin1String("local") )
 			{
 				// Check for URL duplication
 				QUrl url = pathToUrl( pvalue );
@@ -534,12 +534,12 @@ bool EBook_CHM::parseFileAndFillArray( const QString& file, QList< ParsedEntry >
 				if ( !entry.urls.contains( url ) )
 					entry.urls.push_back( url );
 			}
-			else if ( pname == "see also" && asIndex && entry.name != pvalue )
+			else if ( pname == QLatin1String("see also") && asIndex && entry.name != pvalue )
 			{
-				entry.urls.push_back( QUrl("seealso") );
+				entry.urls.push_back( QUrl(QStringLiteral("seealso")) );
 				entry.seealso = pvalue;
 			}
-			else if ( pname == "imagenumber" )
+			else if ( pname == QLatin1String("imagenumber") )
 			{
 				bool bok;
 				int imgnum = pvalue.toInt (&bok);
@@ -548,7 +548,7 @@ bool EBook_CHM::parseFileAndFillArray( const QString& file, QList< ParsedEntry >
 					entry.iconid = (EBookTocEntry::Icon) imgnum;
 			}
 		}
-		else if ( tagword == "ul" ) // increase indent level
+		else if ( tagword == QLatin1String("ul") ) // increase indent level
 		{
 			// Fix for buggy help files
 			if ( ++indent >= MAX_NEST_DEPTH )
@@ -556,7 +556,7 @@ bool EBook_CHM::parseFileAndFillArray( const QString& file, QList< ParsedEntry >
 
             DEBUGPARSER(("<ul>: new intent is %d\n", indent - root_indent_offset));
 		}
-		else if ( tagword == "/ul" ) // decrease indent level
+		else if ( tagword == QLatin1String("/ul") ) // decrease indent level
 		{
 			if ( --indent < root_indent_offset )
 				indent = root_indent_offset;
@@ -607,7 +607,7 @@ bool EBook_CHM::getInfoFromWindows()
 	chmUnitInfo ui;
 	long size = 0;
 
-	if ( ResolveObject("/#WINDOWS", &ui) )
+	if ( ResolveObject(QStringLiteral("/#WINDOWS"), &ui) )
 	{
 		if ( !RetrieveObject(&ui, buffer, 0, WIN_HEADER_LEN) )
 			return false;
@@ -621,7 +621,7 @@ bool EBook_CHM::getInfoFromWindows()
 		if ( !RetrieveObject (&ui, raw, 8, entries * entry_size) )
 			return false;
 
-		if( !ResolveObject ("/#STRINGS", &ui) )
+		if( !ResolveObject (QStringLiteral("/#STRINGS"), &ui) )
 			return false;
 
 		for ( unsigned int i = 0; i < entries; ++i )
@@ -686,7 +686,7 @@ bool EBook_CHM::getInfoFromSystem()
 
 	// Run the first loop to detect the encoding. We need this, because title could be
 	// already encoded in user encoding. Same for file names
-	if ( !ResolveObject ("/#SYSTEM", &ui) )
+	if ( !ResolveObject (QStringLiteral("/#SYSTEM"), &ui) )
 		return false;
 
 	// Can we pull BUFF_SIZE bytes of the #SYSTEM file?
@@ -749,10 +749,10 @@ bool EBook_CHM::getInfoFromSystem()
 
 				if ( m_topicsFile.isEmpty() )
 				{
-					QString topicAttempt = "/", tmp;
+					QString topicAttempt = QStringLiteral("/");
 					topicAttempt += QString ((const char*) buffer +index +2);
 
-					tmp = topicAttempt + ".hhc";
+					QString tmp = topicAttempt + ".hhc";
 
 					if ( ResolveObject( tmp, &ui) )
 						m_topicsFile = qPrintable( tmp );
@@ -910,7 +910,7 @@ void EBook_CHM::fillTopicsUrlMap()
 		if ( off_title < (unsigned int)strings.size() )
 			m_url2topics[url] = encodeWithCurrentCodec ( (const char*) strings.data() + off_title );
 		else
-			m_url2topics[url] = "Untitled";
+			m_url2topics[url] = QStringLiteral("Untitled");
 	}
 }
 
@@ -923,11 +923,11 @@ bool EBook_CHM::parseBinaryTOC( QList< EBookTocEntry >& toc ) const
 	QByteArray tocidx, topics, urltbl, urlstr, strings;
 
 	// Read the index tables
-	if ( !getBinaryContent( tocidx, "/#TOCIDX" )
-	|| !getBinaryContent( topics, "/#TOPICS" )
-	|| !getBinaryContent( urltbl, "/#URLTBL" )
-	|| !getBinaryContent( urlstr, "/#URLSTR" )
-	|| !getBinaryContent( strings, "/#STRINGS" ) )
+	if ( !getBinaryContent( tocidx, QStringLiteral("/#TOCIDX") )
+	|| !getBinaryContent( topics, QStringLiteral("/#TOPICS") )
+	|| !getBinaryContent( urltbl, QStringLiteral("/#URLTBL") )
+	|| !getBinaryContent( urlstr, QStringLiteral("/#URLSTR") )
+	|| !getBinaryContent( strings, QStringLiteral("/#STRINGS") ) )
 		return false;
 
 	// Shamelessly stolen from xchm
@@ -1066,7 +1066,7 @@ bool EBook_CHM::hasOption(const QString & name) const
 
 QUrl EBook_CHM::pathToUrl(const QString &link) const
 {
-	if ( link.startsWith( "http://" ) || link.startsWith( "https://" ) )
+	if ( link.startsWith( QLatin1String("http://") ) || link.startsWith( QLatin1String("https://") ) )
 		return QUrl( link );
 
 	QUrl url;
@@ -1096,13 +1096,13 @@ QString EBook_CHM::urlToPath(const QUrl &link) const
 {
 	if ( link.scheme() == URL_SCHEME_CHM )
 	{
-		if ( link.path() == "/" || link.path().isEmpty() )
+		if ( link.path() == QLatin1String("/") || link.path().isEmpty() )
 			return m_home;
 
 		return link.path();
 	}
 
-	return "";
+	return QLatin1String("");
 }
 
 

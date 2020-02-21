@@ -37,7 +37,7 @@ class SearchDataKeeper
 		{
 			m_inPhrase = false;
 			phrasewords += phrase_terms;
-			phrases.push_back( phrase_terms.join(" ") );
+			phrases.push_back( phrase_terms.join(QStringLiteral(" ")) );
 		}
 
 		bool isInPhrase() const { return m_inPhrase; }
@@ -95,7 +95,7 @@ bool EBookSearch::generateIndex( EBook * ebookFile, QDataStream & stream )
 	QList< QUrl > documents;
 	QList< QUrl > alldocuments;
 	
-	emit progressStep( 0, "Generating the list of documents" );
+	emit progressStep( 0, QStringLiteral("Generating the list of documents") );
 	processEvents();
 
 	// Enumerate the documents
@@ -113,9 +113,9 @@ bool EBookSearch::generateIndex( EBook * ebookFile, QDataStream & stream )
 	{
 		const QString docpath = allDocumentsI.path();
 
-		if ( docpath.endsWith( ".html", Qt::CaseInsensitive )
-		|| docpath.endsWith( ".htm", Qt::CaseInsensitive )
-		|| docpath.endsWith( ".xhtml", Qt::CaseInsensitive ) )
+		if ( docpath.endsWith( QLatin1String(".html"), Qt::CaseInsensitive )
+		|| docpath.endsWith( QLatin1String(".htm"), Qt::CaseInsensitive )
+		|| docpath.endsWith( QLatin1String(".xhtml"), Qt::CaseInsensitive ) )
 			documents.push_back( allDocumentsI );
 	}
 

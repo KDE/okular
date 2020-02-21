@@ -49,10 +49,15 @@ class OKULARCORE_EXPORT SaveInterface
         };
         Q_DECLARE_FLAGS( SaveOptions, SaveOption )
 
+        SaveInterface() {}
+
         /**
          * Destroys the save interface.
          */
         virtual ~SaveInterface() {}
+
+        SaveInterface(const SaveInterface &) = delete;
+        SaveInterface &operator=(const SaveInterface &) = delete;
 
         /**
          * Query for the supported saving options.

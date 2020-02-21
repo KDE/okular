@@ -171,21 +171,6 @@ void pageSize::setPageSize(const QString& width, const QString& _widthUnits, con
     emit sizeChanged(*this);
 }
 
-
-pageSize &pageSize::operator= (const pageSize &src)
-{
-  SimplePageSize oldPage = *this;
-
-  currentSize = src.currentSize;
-  pageWidth   = src.pageWidth;
-  pageHeight  = src.pageHeight;
-
-  if ( !isNearlyEqual(oldPage))
-    emit sizeChanged(*this);
-  return *this;
-}
-
-
 void pageSize::rectifySizes()
 {
   // Now do some sanity checks to make sure that values are not

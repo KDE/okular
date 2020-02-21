@@ -716,10 +716,15 @@ class OKULARCORE_EXPORT AnnotationProxy
             Removal         ///< Generator can remove native annotations
         };
 
+        AnnotationProxy();
+
         /**
          * Destroys the annotation proxy.
          */
         virtual ~AnnotationProxy();
+
+        AnnotationProxy(const AnnotationProxy &) = delete;
+        AnnotationProxy &operator=(const AnnotationProxy &) = delete;
 
         /**
          * Query for the supported capabilities.

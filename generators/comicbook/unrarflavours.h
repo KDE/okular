@@ -29,6 +29,9 @@ class UnrarFlavour
     public:
         virtual ~UnrarFlavour();
 
+        UnrarFlavour(const UnrarFlavour &) = delete;
+        UnrarFlavour &operator=(const UnrarFlavour &) = delete;
+
         virtual QStringList processListing( const QStringList &data ) = 0;
         virtual QString name() const = 0;
 

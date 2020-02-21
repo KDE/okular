@@ -33,6 +33,9 @@ class RotationJobInternal : public ThreadWeaver::Job
         Rotation rotation() const;
         NormalizedRect rect() const;
 
+        RotationJobInternal(const RotationJobInternal &) = delete;
+        RotationJobInternal &operator=(const RotationJobInternal &) = delete;
+
     protected:
         void run(ThreadWeaver::JobPointer self, ThreadWeaver::Thread *thread) override;
 

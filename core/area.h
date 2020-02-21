@@ -493,6 +493,9 @@ class OKULARCORE_EXPORT ObjectRect
          */
         virtual ~ObjectRect();
 
+        ObjectRect(const ObjectRect &o) = delete;
+        ObjectRect &operator=(const ObjectRect &o) = delete;
+
         /**
          * Returns the object type of the object rectangle.
          * @see ObjectType

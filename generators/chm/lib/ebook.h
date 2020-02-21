@@ -84,6 +84,9 @@ class EBook
 		EBook();
 		virtual ~EBook();
 
+		EBook(const EBook &) = delete;
+		EBook &operator=(const EBook &) = delete;
+
 		/*!
 		 * \brief Attempts to load chm or epub file.
 		 * \param archiveName filename.

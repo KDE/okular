@@ -47,7 +47,7 @@ class SimplePageSize
   */
   SimplePageSize(const Length width, const Length height) { pageWidth = width; pageHeight = height; }
 
-  virtual ~SimplePageSize() {}
+  ~SimplePageSize() {}
 
   /** \brief Sets the page width and height
 
@@ -57,7 +57,7 @@ class SimplePageSize
   @param width
   @param height
   */
-  virtual void setPageSize(const Length width, const Length height) { pageWidth = width; pageHeight = height; }
+  void setPageSize(const Length width, const Length height) { pageWidth = width; pageHeight = height; }
 
   /** \brief Returns the page width. */
   Length width() const { return pageWidth; }

@@ -39,10 +39,15 @@ namespace Okular {
 class OKULARCORE_EXPORT PrintInterface
 {
     public:
+        PrintInterface() {}
+
         /**
          * Destroys the printer interface.
          */
         virtual ~PrintInterface() {}
+
+        PrintInterface(const PrintInterface &) = delete;
+        PrintInterface &operator=(const PrintInterface &) = delete;
 
         /**
          * Builds and returns a new printing configuration widget.

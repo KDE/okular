@@ -161,6 +161,9 @@ class FormWidgetIface
         FormWidgetIface( QWidget * w, Okular::FormField * ff );
         virtual ~FormWidgetIface();
 
+        FormWidgetIface(const FormWidgetIface &) = delete;
+        FormWidgetIface &operator=(const FormWidgetIface &) = delete;
+
         Okular::NormalizedRect rect() const;
         void setWidthHeight( int w, int h );
         void moveTo( int x, int y );

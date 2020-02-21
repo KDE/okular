@@ -24,7 +24,11 @@ class QUrl;
 class OKULARPART_EXPORT KDocumentViewer
 {
     public:
+        KDocumentViewer() {}
         virtual ~KDocumentViewer() {}
+
+        KDocumentViewer(const KDocumentViewer &) = delete;
+        KDocumentViewer &operator=(const KDocumentViewer &) = delete;
 
         /**
          * Open the document at the specified @p url at page @p page.

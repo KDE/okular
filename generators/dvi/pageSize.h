@@ -53,6 +53,9 @@ public:
   /** \brief Initializes the pageSize with a SimplePageSize. */
   pageSize(const SimplePageSize&);
 
+  pageSize(const pageSize &) = delete;
+  pageSize &operator=(const pageSize &) = delete;
+
   /** \brief List of standard pageSizes
 
   This method returns the names of standard pageSizes,
@@ -139,15 +142,8 @@ public:
 
   @param height_in_mm page height in mm
   */
-  virtual void setPageSize(double width_in_mm, double height_in_mm);
+  void setPageSize(double width_in_mm, double height_in_mm);
   using SimplePageSize::setPageSize;
-
-  /** \brief Copy operator.
-
-  This operator will emit the signal sizeChanged() if one of the
-  dimensions of *this and src differ by more than two millimeters.
-  */
-  pageSize &  operator= (const pageSize &src);
 
   /** \brief Preferred unit for the current page size
 

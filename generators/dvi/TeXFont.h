@@ -23,6 +23,9 @@ class TeXFont {
 
   virtual ~TeXFont();
 
+  TeXFont(const TeXFont &) = delete;
+  TeXFont &operator=(const TeXFont &) = delete;
+
   void setDisplayResolution()
     {
       for(glyph &g : glyphtable)

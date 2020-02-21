@@ -70,7 +70,11 @@ class KDjVu
             friend class KDjVu;
 
             public:
+                Link() = default;
                 virtual ~Link();
+
+                Link(const Link &) = delete;
+                Link &operator=(const Link &) = delete;
 
                 enum LinkType { PageLink, UrlLink };
                 enum LinkArea { UnknownArea, RectArea, EllipseArea, PolygonArea };
@@ -129,6 +133,9 @@ class KDjVu
 
             public:
                 virtual ~Annotation();
+
+                Annotation(const Annotation &) = delete;
+                Annotation &operator=(const Annotation &) = delete;
 
                 enum AnnotationType { TextAnnotation, LineAnnotation };
                 virtual int type() const = 0;

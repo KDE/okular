@@ -38,10 +38,15 @@ namespace Okular {
 class OKULARCORE_EXPORT ConfigInterface
 {
     public:
+        ConfigInterface() {}
+
         /**
          * Destroys the config interface.
          */
         virtual ~ConfigInterface() {}
+
+        ConfigInterface(const ConfigInterface &) = delete;
+        ConfigInterface &operator=(const ConfigInterface &) = delete;
 
         /**
          * This method is called to tell the generator to re-parse its configuration.

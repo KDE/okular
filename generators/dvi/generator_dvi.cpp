@@ -212,17 +212,12 @@ QImage DviGenerator::image( Okular::PixmapRequest *request )
 
         if (s.isValid())
         {
-            ps = s; /* it should be the user specified size, if any, instead */
+            pageInfo->resolution = (double)(pageInfo->width)/s.width().getLength_in_inch();
         }
-
-        pageInfo->resolution = (double)(pageInfo->width)/ps.width().getLength_in_inch();
-
-#if 0
-        qCDebug(OkularDviDebug) << *request
-        << ", res:" << pageInfo->resolution << " - (" << pageInfo->width << ","
-        << ps.width().getLength_in_inch() << ")," << ps.width().getLength_in_mm()
-        << endl;
-#endif
+        else
+        {
+            pageInfo->resolution = (double)(pageInfo->width)/ps.width().getLength_in_inch();
+        }
 
         m_dviRenderer->drawPage( pageInfo );
 

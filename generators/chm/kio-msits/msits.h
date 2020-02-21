@@ -37,6 +37,9 @@ public:
     ProtocolMSITS ( const QByteArray&, const QByteArray& );
     ~ProtocolMSITS() override;
 
+    ProtocolMSITS(const ProtocolMSITS &) = delete;
+    ProtocolMSITS &operator=(const ProtocolMSITS &) = delete;
+
     void	get (const QUrl & ) override;
     void	listDir (const QUrl & url) override;
     void	stat (const QUrl & url) override;

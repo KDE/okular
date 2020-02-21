@@ -37,6 +37,9 @@ class OKULARCORE_EXPORT DocumentObserver
          */
         virtual ~DocumentObserver();
 
+        DocumentObserver(const DocumentObserver &) = delete;
+        DocumentObserver &operator=(const DocumentObserver &) = delete;
+
         /**
          * Flags that can be sent from the document to all observers to
          * inform them about the type of object that has been changed.

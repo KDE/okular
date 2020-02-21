@@ -31,7 +31,11 @@ namespace Okular {
 class VIEWERINTERFACE_EXPORT ViewerInterface
 {
     public:
+        ViewerInterface() {}
         virtual ~ViewerInterface() {}
+
+        ViewerInterface(const ViewerInterface &) = delete;
+        ViewerInterface &operator=(const ViewerInterface &) = delete;
 
         /**
          * Show the specified source location centrally in the viewer.

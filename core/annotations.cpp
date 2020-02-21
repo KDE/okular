@@ -168,6 +168,10 @@ QRect AnnotationUtils::annotationGeometry( const Annotation * annotation,
 }
 //END AnnotationUtils implementation
 
+AnnotationProxy::AnnotationProxy()
+{
+}
+
 AnnotationProxy::~AnnotationProxy()
 {
 }

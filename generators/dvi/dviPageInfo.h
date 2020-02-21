@@ -26,9 +26,11 @@ public:
    PageNumber pageNumber;
 
    dviPageInfo();
-   dviPageInfo( const dviPageInfo &dvipi );
-   
+
    virtual ~dviPageInfo();
+
+   dviPageInfo(const dviPageInfo &) = delete;
+   dviPageInfo &operator=(const dviPageInfo &) = delete;
 
    virtual void clear();
 

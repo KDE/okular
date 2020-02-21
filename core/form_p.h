@@ -25,6 +25,9 @@ class FormFieldPrivate
         explicit FormFieldPrivate( FormField::FieldType type );
         virtual ~FormFieldPrivate();
 
+        FormFieldPrivate(const FormFieldPrivate &) = delete;
+        FormFieldPrivate  &operator=(const FormFieldPrivate &) = delete;
+
         void setDefault();
 
         virtual void setValue( const QString& ) = 0;

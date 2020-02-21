@@ -106,6 +106,9 @@ class BookmarkManager::Private : public KBookmarkOwner
             // delete manager;
         }
 
+        Private(const Private &) = delete;
+        Private &operator=(const Private &) = delete;
+
         QUrl currentUrl() const override;
         QString currentTitle() const override;
         bool enableOption(BookmarkOption option) const override;

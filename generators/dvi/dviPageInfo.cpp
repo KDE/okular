@@ -9,14 +9,6 @@
 
 #include "dviPageInfo.h"
 
-dviPageInfo::dviPageInfo( const dviPageInfo &dvipi )
-{
-    width = dvipi.width; 
-    height = dvipi.height;
-    resolution = dvipi.resolution;
-    pageNumber = dvipi.pageNumber;
-}
-
 dviPageInfo::dviPageInfo() 
 {
     sourceHyperLinkList.reserve(200);

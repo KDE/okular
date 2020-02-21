@@ -35,6 +35,9 @@ class AnnotatorEngine
         explicit AnnotatorEngine( const QDomElement & engineElement );
         virtual ~AnnotatorEngine();
 
+        AnnotatorEngine(const AnnotatorEngine &) = delete;
+        AnnotatorEngine &operator=(const AnnotatorEngine &) = delete;
+
         // enum definitions
         enum EventType { Press, Move, Release };
         enum Button { None, Left, Right };

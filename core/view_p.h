@@ -24,6 +24,9 @@ class ViewPrivate
         ViewPrivate();
         virtual ~ViewPrivate();
 
+        ViewPrivate(const ViewPrivate &) = delete;
+        ViewPrivate &operator=(const ViewPrivate &) = delete;
+
         QString name;
         DocumentPrivate *document;
 };

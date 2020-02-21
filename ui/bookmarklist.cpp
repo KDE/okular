@@ -47,6 +47,9 @@ class BookmarkItem : public QTreeWidgetItem
                 setData( 0, PageItemDelegate::PageRole, QString::number( m_viewport.pageNumber + 1 ) );
         }
 
+        BookmarkItem(const BookmarkItem &) = delete;
+        BookmarkItem &operator=(const BookmarkItem &) = delete;
+
         QVariant data( int column, int role ) const override
         {
             switch ( role )
@@ -100,6 +103,9 @@ class FileItem : public QTreeWidgetItem
             setText( 0, fileString );
             setData( 0, UrlRole, QVariant::fromValue( url ) );
         }
+
+        FileItem(const FileItem &) = delete;
+        FileItem &operator=(const FileItem &) = delete;
 
         QVariant data( int column, int role ) const override
         {

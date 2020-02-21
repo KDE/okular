@@ -50,6 +50,9 @@ class SidebarItem : public QListWidgetItem
             setToolTip( text );
         }
 
+        SidebarItem(const SidebarItem &) = delete;
+        SidebarItem &operator=(const SidebarItem &) = delete;
+
         QWidget* widget() const
         {
             return m_widget;

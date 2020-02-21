@@ -39,10 +39,15 @@ namespace Okular {
 class OKULARCORE_EXPORT GuiInterface : protected KXMLGUIClient
 {
     public:
+        GuiInterface() {}
+
         /**
          * Destroys the gui interface.
          */
         ~GuiInterface() override {}
+
+        GuiInterface(const GuiInterface &) = delete;
+        GuiInterface &operator=(const GuiInterface &) = delete;
 
         /**
          * This method requests the XML GUI Client provided by the interface.

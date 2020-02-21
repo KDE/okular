@@ -1410,6 +1410,9 @@ class OKULARCORE_EXPORT EmbeddedFile
          */
         virtual ~EmbeddedFile();
 
+        EmbeddedFile(const EmbeddedFile &) = delete;
+        EmbeddedFile &operator=(const EmbeddedFile &) = delete;
+
         /**
          * Returns the name of the file
          */

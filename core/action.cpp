@@ -32,6 +32,9 @@ class Okular::ActionPrivate
             qDeleteAll( m_nextActions );
         }
 
+        ActionPrivate(const ActionPrivate &) = delete;
+        ActionPrivate &operator=(const ActionPrivate &) = delete;
+
         QVariant m_nativeId;
         QVector< Action * > m_nextActions;
 };

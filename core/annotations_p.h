@@ -32,6 +32,9 @@ class AnnotationPrivate
 
         virtual ~AnnotationPrivate();
 
+        AnnotationPrivate(const AnnotationPrivate &) = delete;
+        AnnotationPrivate &operator=(const AnnotationPrivate &) = delete;
+
         /**
          * Transforms the annotation coordinates with the transformation
          * defined by @p matrix.

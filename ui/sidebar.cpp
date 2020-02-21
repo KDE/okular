@@ -557,7 +557,7 @@ void Sidebar::setMainWidget( QWidget *widget )
         if ( !d->splitterSizesSet )
         {
             QList<int> splitterSizes = Okular::Settings::splitterSizes();
-            if ( !splitterSizes.count() )
+            if ( splitterSizes.isEmpty() )
             {
                 // the first time use 1/10 for the panel and 9/10 for the pageView
                 splitterSizes.push_back( 50 );

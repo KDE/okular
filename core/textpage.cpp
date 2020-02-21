@@ -1193,7 +1193,7 @@ static WordsWithCharacters makeWordFromCharacters(const TextList &characters, in
 
         while (!space)
         {
-            if (textString.length())
+            if (!textString.isEmpty())
             {
                 newString.append(textString);
 

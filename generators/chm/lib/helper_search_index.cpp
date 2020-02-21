@@ -122,7 +122,7 @@ bool Index::makeIndex(const QList< QUrl >& docs, EBook *chmFile )
 void Index::insertInDict( const QString &str, int docNum )
 {
 	Entry *e = nullptr;
-	if ( dict.count() )
+	if ( !dict.isEmpty() )
 		e = dict[ str ];
 
 	if ( e )
@@ -377,7 +377,7 @@ QList< QUrl > Index::query(const QStringList &terms, const QStringList &termSeq,
 		}
 	}
 	
-	if ( !termList.count() )
+	if ( termList.isEmpty() )
 		return QList< QUrl >();
 	
 	std::sort(termList.begin(), termList.end());
@@ -482,10 +482,7 @@ bool Index::searchForPhrases( const QStringList &phrases, const QStringList &wor
 		}
 	}
 	
-	if ( first_word_positions.count() )
-		return true;
-	
-	return false;
+	return !first_word_positions.isEmpty();
 }
 
 

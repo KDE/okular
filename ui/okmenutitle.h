@@ -22,6 +22,7 @@
 
 class OKMenuTitle : public QWidgetAction
 {
+    Q_OBJECT
 public:
     OKMenuTitle(QMenu *menu, const QString &text, const QIcon &icon = QIcon());
 

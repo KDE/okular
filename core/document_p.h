@@ -68,8 +68,9 @@ struct GeneratorInfo
 
 namespace Okular {
 
-class BackendConfigDialog : public KConfigDialog
+class OKULARCORE_EXPORT BackendConfigDialog : public KConfigDialog
 {
+    Q_OBJECT
 public:
     BackendConfigDialog(QWidget *parent, const QString &name, KCoreConfigSkeleton *config)
      : KConfigDialog(parent, name, config)

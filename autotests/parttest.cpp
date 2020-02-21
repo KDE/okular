@@ -102,6 +102,7 @@ class PartTest
 
 class PartThatHijacksQueryClose : public Okular::Part
 {
+    Q_OBJECT
     public:
         PartThatHijacksQueryClose(QWidget* parentWidget, QObject* parent,
                                   const QVariantList& args)

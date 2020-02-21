@@ -36,6 +36,7 @@ using namespace Okular;
 
 class OkularBookmarkAction : public KBookmarkAction
 {
+    Q_OBJECT
     public:
         OkularBookmarkAction( const Okular::DocumentViewport& vp, const KBookmark& bk, KBookmarkOwner* owner, QObject *parent )
             : KBookmarkAction( bk, owner, parent )
@@ -747,5 +748,7 @@ KBookmark BookmarkManager::previousBookmark( const DocumentViewport &viewport ) 
 
 #undef foreachObserver
 #undef foreachObserverD
+
+#include "bookmarkmanager.moc"
 
 /* kate: replace-tabs on; indent-width 4; */

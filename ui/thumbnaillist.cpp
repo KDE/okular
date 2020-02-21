@@ -38,6 +38,7 @@ class ThumbnailWidget;
 
 class ThumbnailListPrivate : public QWidget
 {
+    Q_OBJECT
     public:
         ThumbnailListPrivate( ThumbnailList *qq, Okular::Document *document );
         ~ThumbnailListPrivate() override;
@@ -1018,6 +1019,6 @@ ThumbnailController::ThumbnailController( QWidget * parent, ThumbnailList * list
 }
 
 
-#include "moc_thumbnaillist.cpp"
+#include "thumbnaillist.moc"
 
 /* kate: replace-tabs on; indent-width 4; */

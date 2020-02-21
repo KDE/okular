@@ -14,6 +14,7 @@ namespace TestingUtils
      */
     class CloseDialogHelper : public QObject
     {
+        Q_OBJECT
 
     public:
         CloseDialogHelper(Okular::Part *p, QDialogButtonBox::StandardButton b);

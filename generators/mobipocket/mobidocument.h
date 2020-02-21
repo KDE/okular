@@ -22,6 +22,7 @@ class QFileStream;
 namespace Mobi {
 
   class MobiDocument : public QTextDocument {
+      Q_OBJECT
       
   public:
     explicit MobiDocument(const QString &fileName);  

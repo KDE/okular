@@ -23,6 +23,7 @@ namespace Okular {
  */
 class OKULARCORE_EXPORT PrintOptionsWidget : public QWidget
 {
+    Q_OBJECT
     public:
         explicit PrintOptionsWidget(QWidget * parent = nullptr)
             : QWidget(parent) {}

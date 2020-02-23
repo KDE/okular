@@ -116,10 +116,12 @@ void PagePrivate::imageRotationDone( RotationJob * job )
         PixmapObject &object = it.value();
         (*object.m_pixmap) = QPixmap::fromImage( job->image() );
         object.m_rotation = job->rotation();
+        object.m_isPartialPixmap = job->isPartialUpdate();
     } else {
         PixmapObject object;
         object.m_pixmap = new QPixmap( QPixmap::fromImage( job->image() ) );
         object.m_rotation = job->rotation();
+        object.m_isPartialPixmap = job->isPartialUpdate();
 
         m_pixmaps.insert( job->observer(), object );
     }
@@ -234,6 +236,9 @@ bool Page::hasPixmap( DocumentObserver *observer, int width, int height, const N
 
     if ( width == -1 || height == -1 )
         return true;
+
+    if ( it.value().m_isPartialPixmap )
+        return false;
 
     const QPixmap *pixmap = it.value().m_pixmap;
 
@@ -556,6 +561,7 @@ void PagePrivate::setPixmap( DocumentObserver *observer, QPixmap *pixmap, const 
         }
         it.value().m_pixmap = pixmap;
         it.value().m_rotation = m_rotation;
+        it.value().m_isPartialPixmap = isPartialPixmap;
     } else {
         // it can happen that we get a setPixmap while closing and thus the page controller is gone
         if ( m_doc->m_pageController )

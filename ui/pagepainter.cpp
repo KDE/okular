@@ -849,6 +849,7 @@ static inline int qt_div_255(int x) { return (x + (x>>8) + 0x80) >> 8; }
 
 void PagePainter::changeImageAlpha( QImage & image, unsigned int destAlpha )
 {
+    image = image.convertToFormat(QImage::Format_ARGB32);
     // iterate over all pixels changing the alpha component value
     unsigned int * data = (unsigned int *)image.bits();
     unsigned int pixels = image.width() * image.height();

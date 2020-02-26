@@ -1,0 +1,9 @@
+---
+Checks:          'clang-diagnostic-*,clang-analyzer-*,-*,performance-*,bugprone-*,readability-inconsistent-declaration-parameter-name,readability-string-compare,modernize-redundant-void-arg,modernize-use-bool-literals,modernize-make-unique,modernize-make-shared,modernize-use-override,modernize-use-equals-delete,modernize-use-emplace,modernize-loop-convert,modernize-use-nullptr,-bugprone-macro-parentheses,-bugprone-narrowing-conversions,-bugprone-branch-clone,-bugprone-incorrect-roundings'
+WarningsAsErrors: '*'
+HeaderFilterRegex: '.*/okular/.*'
+AnalyzeTemporaryDtors: false
+FormatStyle:     none
+User:            user
+...
+

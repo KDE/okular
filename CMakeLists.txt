@@ -46,6 +46,10 @@ include(ECMAddTests)
 include(ECMAddAppIcon)
 include(CMakePackageConfigHelpers)
 
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
 ecm_setup_version(${PROJECT_VERSION}
                   VARIABLE_PREFIX OKULAR
                   VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/core/version.h"

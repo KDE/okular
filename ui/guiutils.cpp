@@ -46,7 +46,7 @@ QSvgRenderer* GuiUtilsHelper::svgStamps()
         const QString stampFile = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("okular/pics/stamps.svg") );
         if ( !stampFile.isEmpty() )
         {
-            svgStampFile.reset( new QSvgRenderer( stampFile ) );
+            svgStampFile = std::make_unique<QSvgRenderer>( stampFile );
             if ( !svgStampFile->isValid() )
             {
                 svgStampFile.reset();

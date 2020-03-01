@@ -185,6 +185,7 @@ void Document::pages( QVector<Okular::Page*> * pagesVector )
     pagesVector->clear();
     pagesVector->resize( mEntries.size() );
     QImageReader reader;
+    reader.setAutoTransform( true );
     for (const QString &file : qAsConst(mEntries)) {
         if ( mArchive ) {
             const KArchiveFile *entry = static_cast<const KArchiveFile*>( mArchiveDir->entry( file ) );
@@ -202,6 +203,9 @@ void Document::pages( QVector<Okular::Page*> * pagesVector )
             if ( reader.canRead() )
             {
                 QSize pageSize = reader.size();
+                if (reader.transformation() & QImageIOHandler::TransformationRotate90) {
+                    pageSize.transpose();
+                }
                 if ( !pageSize.isValid() ) {
                     const QImage i = reader.read();
                     if ( !i.isNull() )
@@ -229,8 +233,12 @@ QImage Document::pageImage( int page ) const
 {
     if ( mArchive ) {
         const KArchiveFile *entry = static_cast<const KArchiveFile*>( mArchiveDir->entry( mPageMap[ page ] ) );
-        if ( entry )
-            return QImage::fromData( entry->data() );
+        if ( entry ) {
+            std::unique_ptr<QIODevice> dev(entry->createDevice());
+            QImageReader reader( dev.get() );
+            reader.setAutoTransform( true );
+            return reader.read();
+        }
     } else if ( mDirectory ) {
         return QImage( mPageMap[ page ] );
     } else {
@@ -245,3 +253,4 @@ QString Document::lastErrorString() const
     return mLastErrorString;
 }
 
+Q_LOGGING_CATEGORY(OkularComicbookDebug, "org.kde.okular.generators.comicbook", QtWarningMsg)

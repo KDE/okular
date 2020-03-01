@@ -92,7 +92,5 @@ bool ComicBookGenerator::print( QPrinter& printer )
     return true;
 }
 
-Q_LOGGING_CATEGORY(OkularComicbookDebug, "org.kde.okular.generators.comicbook", QtWarningMsg)
-
 #include "generator_comicbook.moc"
 

@@ -39,6 +39,8 @@
 #include <QLabel>
 #include <QPrinter>
 #include <QPrintDialog>
+#include <QScreen>
+#include <QWindow>
 #include <QStack>
 #include <QUndoCommand>
 #include <QMimeDatabase>
@@ -1394,6 +1396,17 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
         QRect requestRect = r->isTile() ? r->normalizedRect().geometry( r->width(), r->height() ) : QRect( 0, 0, r->width(), r->height() );
         TilesManager *tilesManager = r->d->tilesManager();
         const double normalizedArea = r->normalizedRect().width() * r->normalizedRect().height();
+        const QScreen *screen = nullptr;
+        if (m_widget)
+        {
+            const QWindow *window = m_widget->window()->windowHandle();
+            if (window)
+                screen = window->screen();
+        }
+        if (!screen)
+            screen = QGuiApplication::primaryScreen();
+        const long screenSize = screen->devicePixelRatio() * screen->size().width()
+                              * screen->devicePixelRatio() * screen->size().height();
 
         // If it's a preload but the generator is not threaded no point in trying to preload
         if ( r->preload() && !m_generator->hasFeature( Generator::Threaded ) )
@@ -1419,9 +1432,9 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
             m_pixmapRequestsStack.pop_back();
             delete r;
         }
-        // If the requested area is above 8000000 pixels, and we're not rendering most of the page,  switch on the tile manager
+        // If the requested area is above 4*screenSize pixels, and we're not rendering most of the page,  switch on the tile manager
         else if ( !tilesManager && m_generator->hasFeature( Generator::TiledRendering ) &&
-                  (long)r->width() * (long)r->height() > 8000000L &&
+                  (long)r->width() * (long)r->height() > 4L*screenSize &&
                   normalizedArea < 0.75 && normalizedArea != 0 )
         {
             // if the image is too big. start using tiles
@@ -1477,8 +1490,8 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
                 delete r;
             }
         }
-        // If the requested area is below 6000000 pixels, switch off the tile manager
-        else if ( tilesManager && (long)r->width() * (long)r->height() < 6000000L )
+        // If the requested area is below 3*screenSize pixels, switch off the tile manager
+        else if ( tilesManager && (long)r->width() * (long)r->height() < 3L*screenSize )
         {
             qCDebug(OkularCoreDebug).nospace() << "Stop using tiles on page " << r->pageNumber()
                 << " (" << r->width() << "x" << r->height() << " px);";
@@ -1489,7 +1502,7 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
 
             request = r;
         }
-        else if ( (long)requestRect.width() * (long)requestRect.height() > 200000000L && (SettingsCore::memoryLevel() != SettingsCore::EnumMemoryLevel::Greedy ) )
+        else if ( (long)requestRect.width() * (long)requestRect.height() > 100L*screenSize && (SettingsCore::memoryLevel() != SettingsCore::EnumMemoryLevel::Greedy ) )
         {
             m_pixmapRequestsStack.pop_back();
             if ( !m_warnedOutOfMemory )

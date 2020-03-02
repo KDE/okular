@@ -434,7 +434,7 @@ qulonglong DocumentPrivate::getFreeMemory( qulonglong *freeSwap )
     static qulonglong cachedValue = 0;
     static qulonglong cachedFreeSwap = 0;
 
-    if ( qAbs( lastUpdate.secsTo( QTime::currentTime() ) ) <= 2 )
+    if ( qAbs( lastUpdate.msecsTo( QTime::currentTime() ) ) <= 1900 )
     {
         if (freeSwap)
             *freeSwap = cachedFreeSwap;

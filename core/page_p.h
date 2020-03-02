@@ -146,6 +146,7 @@ class PagePrivate
             public:
                 QPixmap *m_pixmap = nullptr;
                 Rotation m_rotation;
+                bool m_isPartialPixmap = false;
         };
         QMap< DocumentObserver*, PixmapObject > m_pixmaps;
         QMap< const DocumentObserver*, TilesManager *> m_tilesManagers;

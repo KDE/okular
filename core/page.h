@@ -141,8 +141,9 @@ class OKULARCORE_EXPORT Page
         void setBoundingBox( const NormalizedRect& bbox );
 
         /**
-         * Returns whether the page of size @p width x @p height has a @p pixmap 
+         * Returns whether the page of size @p width x @p height has a @p pixmap
          * in the region given by @p rect for the given @p observer
+         * If there is a partially rendered pixmap the answer is false.
          */
         bool hasPixmap( DocumentObserver *observer, int width = -1, int height = -1, const NormalizedRect &rect = NormalizedRect() ) const;
 

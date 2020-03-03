@@ -154,6 +154,9 @@ struct RunningSearch
 #define OKULAR_HISTORY_MAXSTEPS 100
 #define OKULAR_HISTORY_SAVEDSTEPS 10
 
+// how often to run slotTimedMemoryCheck
+const int kMemCheckTime = 2000; // in msec
+
 /***** Document ******/
 
 QString DocumentPrivate::pagesSizeString() const
@@ -434,7 +437,7 @@ qulonglong DocumentPrivate::getFreeMemory( qulonglong *freeSwap )
     static qulonglong cachedValue = 0;
     static qulonglong cachedFreeSwap = 0;
 
-    if ( qAbs( lastUpdate.msecsTo( QTime::currentTime() ) ) <= 1900 )
+    if ( qAbs( lastUpdate.msecsTo( QTime::currentTime() ) ) <= kMemCheckTime - 100 )
     {
         if (freeSwap)
             *freeSwap = cachedFreeSwap;
@@ -2703,7 +2706,7 @@ Document::OpenResult Document::openDocument(const QString & docFile, const QUrl 
         d->m_memCheckTimer = new QTimer( this );
         connect( d->m_memCheckTimer, &QTimer::timeout, this, [this] { d->slotTimedMemoryCheck(); } );
     }
-    d->m_memCheckTimer->start( 2000 );
+    d->m_memCheckTimer->start( kMemCheckTime );
 
     const DocumentViewport nextViewport = d->nextDocumentViewport();
     if ( nextViewport.isValid() )

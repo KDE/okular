@@ -22,6 +22,7 @@
 #include "../ui/sidebar.h"
 #include "../ui/pageview.h"
 #include "../ui/presentationwidget.h"
+#include "../ui/toggleactionmenu.h"
 #include "../settings.h"
 #include "closedialoghelper.h"
 
@@ -43,6 +44,7 @@
 #include <QUrl>
 #include <QDesktopServices>
 #include <QMenu>
+#include <QToolBar>
 
 namespace Okular
 {
@@ -97,6 +99,7 @@ class PartTest
         void testForwardBackwardNavigation();
         void testTabletProximityBehavior();
         void testOpenPrintPreview();
+        void testMouseModeMenu();
 
     private:
         void simulateMouseSelection(double startX, double startY, double endX, double endY, QWidget *target);
@@ -1956,6 +1959,37 @@ void PartTest::testOpenPrintPreview()
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
     TestingUtils::CloseDialogHelper closeDialogHelper( QDialogButtonBox::Close );
     part.slotPrintPreview();
+}
+
+void PartTest::testMouseModeMenu()
+{
+    QVariantList dummyArgs;
+    Okular::Part part(nullptr, nullptr, dummyArgs);
+    QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/file1.pdf")));
+
+    QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseNormal");
+
+    // Get mouse mode menu action
+    QAction *mouseModeAction = part.actionCollection()->action(QStringLiteral("mouse_selecttools"));
+    QVERIFY(mouseModeAction);
+    QMenu *mouseModeActionMenu = mouseModeAction->menu();
+
+    // Test that actions are usable (not disabled)
+    QVERIFY(mouseModeActionMenu->actions().at(0)->isEnabled());
+    QVERIFY(mouseModeActionMenu->actions().at(1)->isEnabled());
+    QVERIFY(mouseModeActionMenu->actions().at(2)->isEnabled());
+
+    // Test activating area selection mode
+    mouseModeActionMenu->actions().at(0)->trigger();
+    QCOMPARE(Okular::Settings::mouseMode(), (int)Okular::Settings::EnumMouseMode::RectSelect );
+
+    // Test activating text selection mode
+    mouseModeActionMenu->actions().at(1)->trigger();
+    QCOMPARE(Okular::Settings::mouseMode(), (int)Okular::Settings::EnumMouseMode::TextSelect );
+
+    // Test activating table selection mode
+    mouseModeActionMenu->actions().at(2)->trigger();
+    QCOMPARE(Okular::Settings::mouseMode(), (int)Okular::Settings::EnumMouseMode::TableSelect );
 }
 
 } // namespace Okular

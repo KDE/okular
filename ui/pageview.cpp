@@ -623,16 +623,20 @@ void PageView::setupViewerActions( KActionCollection * ac )
         ac->addAction( name, a );
         d->viewModeActionGroup->addAction( a );
     };
-    addViewMode( new QAction( i18nc( "@item:inmenu", "&Single Page" ), this ),
+    addViewMode( new QAction( QIcon::fromTheme(QStringLiteral("view-pages-single")),
+                              i18nc( "@item:inmenu", "&Single Page" ), this ),
                  QStringLiteral("view_render_mode_single"),
                  Okular::Settings::EnumViewMode::Single );
-    addViewMode( new QAction( i18nc( "@item:inmenu", "&Facing Pages" ), this ),
+    addViewMode( new QAction( QIcon::fromTheme(QStringLiteral("view-pages-facing")),
+                              i18nc( "@item:inmenu", "&Facing Pages" ), this ),
                  QStringLiteral("view_render_mode_single"),
                  Okular::Settings::EnumViewMode::Facing );
-    addViewMode( new QAction( i18nc( "@item:inmenu", "Facing Pages (&Center First Page)" ), this ),
+    addViewMode( new QAction( QIcon::fromTheme(QStringLiteral("view-pages-facing-first-centered")),
+                              i18nc( "@item:inmenu", "Facing Pages (&Center First Page)" ), this ),
                  QStringLiteral("view_render_mode_single"),
                  Okular::Settings::EnumViewMode::FacingFirstCentered );
-    addViewMode( new QAction( i18nc( "@item:inmenu", "&Overview" ), this ),
+    addViewMode( new QAction( QIcon::fromTheme(QStringLiteral("view-pages-overview")),
+                              i18nc( "@item:inmenu", "&Overview" ), this ),
                  QStringLiteral("view_render_mode_single"),
                  Okular::Settings::EnumViewMode::Summary );
     const QList< QAction* > viewModeActions = d->viewModeActionGroup->actions();
@@ -648,7 +652,7 @@ void PageView::setupViewerActions( KActionCollection * ac )
 
     // Continuous view action, add to view mode action menu.
     d->aViewModeMenu->addSeparator();
-    d->aViewContinuous  = new KToggleAction(QIcon::fromTheme( QStringLiteral("view-list-text") ), i18n("&Continuous"), this);
+    d->aViewContinuous  = new KToggleAction(QIcon::fromTheme( QStringLiteral("view-pages-continuous") ), i18n("&Continuous"), this);
     d->aViewModeMenu->addAction(d->aViewContinuous);
     ac->addAction(QStringLiteral("view_continuous"), d->aViewContinuous );
     connect( d->aViewContinuous, &QAction::toggled, this, &PageView::slotContinuousToggled );

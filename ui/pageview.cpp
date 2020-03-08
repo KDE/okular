@@ -63,6 +63,7 @@
 // system includes
 #include <math.h>
 #include <stdlib.h>
+#include <array>
 
 // local includes
 #include "debug_ui.h"

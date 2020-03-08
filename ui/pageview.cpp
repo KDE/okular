@@ -103,7 +103,7 @@ static const int pageflags = PagePainter::Accessibility | PagePainter::EnhanceLi
                        PagePainter::EnhanceImages | PagePainter::Highlights |
                        PagePainter::TextSelection | PagePainter::Annotations;
 
-static const float kZoomValues[] = { 0.12, 0.25, 0.33, 0.50, 0.66, 0.75, 1.00, 1.25, 1.50, 2.00, 4.00, 8.00, 16.00 };
+static const std::array<float, 13> kZoomValues { 0.12, 0.25, 0.33, 0.50, 0.66, 0.75, 1.00, 1.25, 1.50, 2.00, 4.00, 8.00, 16.00 };
 
 // This is the length of the text that will be shown when the user is searching for a specific piece of text.
 static const int searchTextPreviewLength = 21;
@@ -4122,11 +4122,14 @@ void PageView::updateZoom( ZoomMode newZoomMode )
         case ZoomOut:{
             const float zoomFactorFitWidth = zoomFactorFitMode(ZoomFitWidth);
             const float zoomFactorFitPage = zoomFactorFitMode(ZoomFitPage);
-            QVector<float> zoomValue(15);
-            std::copy(kZoomValues, kZoomValues + 13, zoomValue.begin());
-            zoomValue[13] = zoomFactorFitWidth;
-            zoomValue[14] = zoomFactorFitPage;
+
+            QVector<float> zoomValue(kZoomValues.size());
+
+            std::copy(kZoomValues.begin(), kZoomValues.end(), zoomValue.begin());
+            zoomValue.append(zoomFactorFitWidth);
+            zoomValue.append(zoomFactorFitPage);
             std::sort(zoomValue.begin(), zoomValue.end());
+
             QVector<float>::iterator i;
             if ( newZoomMode == ZoomOut )
             {

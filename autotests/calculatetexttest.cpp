@@ -45,6 +45,14 @@ void CalculateTextTest::cleanupTestCase()
 
 void CalculateTextTest::testSimpleCalculate()
 {
+    // Force consistent locale
+    QLocale locale(QStringLiteral("en_US.UTF-8"));
+    if (locale == QLocale::c())
+    {
+        locale = QLocale(QLocale::English, QLocale::UnitedStates);
+    }
+
+    QLocale::setDefault(locale);
     const QString testFile = QStringLiteral( KDESRCDIR "data/simpleCalculate.pdf" );
     QMimeDatabase db;
     const QMimeType mime = db.mimeTypeForFile( testFile );
@@ -79,7 +87,7 @@ void CalculateTextTest::testSimpleCalculate()
     // Verify the results
     QCOMPARE (fields[QStringLiteral ("Sum")]->text(), QStringLiteral( "60" ));
     QCOMPARE (fields[QStringLiteral ("AVG")]->text(), QStringLiteral( "20" ));
-    QCOMPARE (fields[QStringLiteral ("Prod")]->text(), QStringLiteral( "6000" ));
+    QCOMPARE (fields[QStringLiteral ("Prod")]->text(), QStringLiteral( "6,000" ));
     QCOMPARE (fields[QStringLiteral ("Min")]->text(), QStringLiteral( "10" ));
     QCOMPARE (fields[QStringLiteral ("Max")]->text(), QStringLiteral( "30" ));
 

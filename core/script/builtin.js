@@ -27,7 +27,7 @@ function AFSimple_Calculate( cFunction, cFields )
     for (i = 0; i < cFields.length; i++)
     {
         var field = Doc.getField( cFields[i] );
-        var val = Number( field.value );
+        var val = util.stringToNumber( field.value );
 
         if ( cFunction === "SUM" || cFunction === "AVG" )
         {
@@ -56,6 +56,75 @@ function AFSimple_Calculate( cFunction, cFields )
     if ( cFunction === "AVG" )
     {
         ret /= cFields.length;
+    }
+
+    event.value = util.numberToString( ret, "g", 32 );
+}
+
+
+/** AFNumber_Format
+ *
+ * Formats event.value based on parameters.
+ *
+ * Parameter description based on Acrobat Help:
+ *
+ * nDec is the number of places after the decimal point.
+ *
+ * sepStyle is an integer denoting whether to use a separator
+ *          If it is 1 comma should be used.
+ *          If it is 2 a dot should be used.
+ *          The decimal seperator is changed accordingly.
+ *
+ * nexStyle is the formatting used for negative numbers: - not implemented.
+ * 0 = MinusBlack
+ * 1 = Red
+ * 2 = ParensBlack
+ * 3 = ParensRed
+ *
+ * currStyle is the currency style - not used.
+ *
+ * strCurrency is the currency symbol.
+ *
+ * bCurrencyPrepend is true to prepend the currency symbol;
+ *  false to display on the end of the number.
+ */
+function AFNumber_Format( nDec, sepStyle, negStyle, currStyle, strCurrency, bCurrencyPrepend )
+{
+    if ( !event.value )
+    {
+        return;
+    }
+
+    var ret;
+    var localized = util.stringToNumber( event.value );
+
+    if ( sepStyle === 2 )
+    {
+        // Use de_DE as the locale for the dot seperator format
+        ret = util.numberToString( localized, "f", nDec, 'de_DE' );
+    }
+    else
+    {
+        // Otherwise US
+        ret = util.numberToString( localized, "f", nDec, 'en_US' );
+    }
+
+    if ( sepStyle === 0 )
+    {
+        // No seperators. Remove all commas from the US format.
+        ret.replace( /,/g, '' );
+    }
+
+    if ( strCurrency )
+    {
+        if ( bCurrencyPrepend )
+        {
+            ret = strCurrency + ret;
+        }
+        else
+        {
+            ret = ret + strCurrency;
+        }
     }
 
     event.value = ret;

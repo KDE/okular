@@ -20,6 +20,8 @@
 #include <QRegularExpression>
 #include <QDateTime>
 
+#include <cmath>
+
 using namespace Okular;
 
 static KJSPrototype *g_utilProto;
@@ -112,6 +114,84 @@ static KJSObject printd( KJSContext *context, void *,
     return KJSString( defaultLocale.toString( date, format ) );
 }
 
+/** Converts a Number to a String using l10n
+ *
+ * String numberToString( Number number, String format = 'g', int precision = 6,
+ *                        String LocaleName = system )
+ */
+static KJSObject numberToString ( KJSContext *context, void *,
+                                  const KJSArguments &arguments )
+{
+    if ( arguments.count() < 1 )
+    {
+        return context->throwException( QStringLiteral( "Invalid arguments" ) );
+    }
+
+    const double number = arguments.at( 0 ).toNumber( context );
+    if ( std::isnan( number ) )
+    {
+        return KJSString( "NaN" );
+    }
+
+    QChar format = QLatin1Char( 'g' );
+    if ( arguments.count() >= 2 )
+    {
+        const QString fmt = arguments.at( 1 ).toString( context );
+        if ( !fmt.isEmpty() )
+        {
+            format = fmt[0];
+        }
+    }
+
+    int precision = 6;
+    if ( arguments.count() >= 3 )
+    {
+        precision = arguments.at( 2 ).toInt32( context );
+    }
+
+    QLocale locale;
+    if ( arguments.count() == 4 )
+    {
+        locale = QLocale( arguments.at( 3 ).toString( context ) );
+    }
+
+    return KJSString( locale.toString( number, format.toLatin1(), precision ) );
+}
+
+/** Converts a String to a Number using l10n.
+ *
+ * Number stringToNumber( String number, String LocaleName = system ) */
+static KJSObject stringToNumber ( KJSContext *context, void *,
+                                  const KJSArguments &arguments )
+{
+    if ( arguments.count() < 1 )
+    {
+        return context->throwException( QStringLiteral( "Invalid arguments" ) );
+    }
+
+    const QString number = arguments.at( 0 ).toString( context );
+    if ( number.isEmpty() )
+    {
+        return KJSNumber( 0 );
+    }
+
+    QLocale locale;
+    if ( arguments.count() == 2 )
+    {
+        locale = QLocale( arguments.at( 1 ).toString( context ) );
+    }
+
+    bool ok;
+    const double converted = locale.toDouble( number, &ok );
+
+    if ( !ok )
+    {
+        return KJSNumber( std::nan( "" ) );
+    }
+
+    return KJSNumber( converted );
+}
+
 void JSUtil::initType( KJSContext *ctx )
 {
     static bool initialized = false;
@@ -122,6 +202,8 @@ void JSUtil::initType( KJSContext *ctx )
     g_utilProto = new KJSPrototype();
     g_utilProto->defineFunction( ctx, QStringLiteral("crackURL"), crackURL );
     g_utilProto->defineFunction( ctx, QStringLiteral("printd"), printd );
+    g_utilProto->defineFunction( ctx, QStringLiteral("stringToNumber"), stringToNumber );
+    g_utilProto->defineFunction( ctx, QStringLiteral("numberToString"), numberToString );
 }
 
 KJSObject JSUtil::object( KJSContext *ctx )

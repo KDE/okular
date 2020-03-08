@@ -158,9 +158,10 @@ static KJSObject numberToString ( KJSContext *context, void *,
     return KJSString( locale.toString( number, format.toLatin1(), precision ) );
 }
 
-/** Converts a String to a Number using l10n.
+/** Converts a String to a Number trying with the current locale first and
+ * if that fails trying with the reverse locale for the decimal separator
  *
- * Number stringToNumber( String number, String LocaleName = system ) */
+ * Number stringToNumber( String number ) */
 static KJSObject stringToNumber ( KJSContext *context, void *,
                                   const KJSArguments &arguments )
 {
@@ -175,18 +176,18 @@ static KJSObject stringToNumber ( KJSContext *context, void *,
         return KJSNumber( 0 );
     }
 
-    QLocale locale;
-    if ( arguments.count() == 2 )
-    {
-        locale = QLocale( arguments.at( 1 ).toString( context ) );
-    }
-
+    const QLocale locale;
     bool ok;
-    const double converted = locale.toDouble( number, &ok );
+    double converted = locale.toDouble( number, &ok );
 
     if ( !ok )
     {
-        return KJSNumber( std::nan( "" ) );
+        const QLocale locale2( locale.decimalPoint() == QLatin1Char('.') ? QStringLiteral("de") : QStringLiteral("en") );
+        converted = locale2.toDouble( number, &ok );
+        if ( !ok )
+        {
+            return KJSNumber( std::nan( "" ) );
+        }
     }
 
     return KJSNumber( converted );

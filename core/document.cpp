@@ -4388,7 +4388,8 @@ void Document::processAction( const Action * action )
                 {
                     const QUrl realUrl = KIO::upUrl(d->m_url).resolved(url);
                     // KRun autodeletes
-                    new KRun( realUrl, d->m_widget );
+                    KRun *r = new KRun( realUrl, d->m_widget );
+                    r->setRunExecutables(false);
                 }
             }
             } break;

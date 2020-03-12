@@ -181,7 +181,7 @@ void EmbeddedFilesDialog::viewFile( Okular::EmbeddedFile* ef )
 	// using QTemporaryFile's XXXXXX placeholder
 	QTemporaryFile *tmpFile = new QTemporaryFile(
 		QDir::tempPath()
-		+ QDir::separator()
+		+ "/"
 		+ fileInfo.baseName()
 		+ ".XXXXXX"
 		+ (fileInfo.completeSuffix().isEmpty() ? QLatin1String("") : QString("." + fileInfo.completeSuffix()))

@@ -1512,22 +1512,6 @@ Context menu actions like Rename Bookmarks etc.)
 					<term>
 						<menuchoice>
 							<guimenu>View</guimenu>
-							<guimenuitem>Continuous</guimenuitem>
-						</menuchoice>
-					</term>
-					<listitem>
-						<para><action>Enable the continuous page mode</action>. In continuous mode,
-							all pages of the document are shown, and you can scroll through
-							them without having to use the <menuchoice><guimenu>Go</guimenu>
-							<guimenuitem>Previous Page</guimenuitem></menuchoice> and
-							<menuchoice><guimenu>Go</guimenu><guimenuitem>Next Page</guimenuitem>
-							</menuchoice> options.</para>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
-					<term>
-						<menuchoice>
-							<guimenu>View</guimenu>
 							<guisubmenu>View Mode</guisubmenu>
 						</menuchoice>
 					</term>
@@ -1538,6 +1522,10 @@ Context menu actions like Rename Bookmarks etc.)
 							<guimenuitem>Facing Pages (Center First Page)</guimenuitem> and
 							<guimenuitem>Overview</guimenuitem> (the number of columns is the one
 							specified in the <link linkend="configure">&okular; settings</link>).</para>
+						<para>Additionally, you can enable the <guimenuitem>Continuous</guimenuitem> mode.
+							In continuous mode, all pages of the document are shown, and you can smoothly
+							scroll through them. Otherwise, only one page (or one row of pages) is shown
+							at a time.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>

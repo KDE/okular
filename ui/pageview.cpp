@@ -232,7 +232,8 @@ public:
     KToggleAction * aZoomFitWidth;
     KToggleAction * aZoomFitPage;
     KToggleAction * aZoomAutoFit;
-    KActionMenu * aViewMode;
+    KActionMenu * aViewModeMenu;
+    QActionGroup * viewModeActionGroup;
     KToggleAction * aViewContinuous;
     QAction * aPrevAction;
     QAction * aToggleForms;
@@ -338,7 +339,7 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->aRotateClockwise = nullptr;
     d->aRotateCounterClockwise = nullptr;
     d->aRotateOriginal = nullptr;
-    d->aViewMode = nullptr;
+    d->aViewModeMenu = nullptr;
     d->zoomMode = PageView::ZoomFitWidth;
     d->zoomFactor = 1.0;
     d->mouseSelecting = false;
@@ -378,8 +379,9 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->aZoomFitWidth = nullptr;
     d->aZoomFitPage = nullptr;
     d->aZoomAutoFit = nullptr;
-    d->aViewMode = nullptr;
+    d->aViewModeMenu = nullptr;
     d->aViewContinuous = nullptr;
+    d->viewModeActionGroup = nullptr;
     d->aPrevAction = nullptr;
     d->aToggleForms = nullptr;
     d->aSpeakDoc = nullptr;
@@ -608,36 +610,46 @@ void PageView::setupViewerActions( KActionCollection * ac )
     ac->addAction( QStringLiteral("fit_window_to_page"), d->aFitWindowToPage );
     connect( d->aFitWindowToPage, &QAction::triggered, this, &PageView::slotFitWindowToPage );
 
-    // View-Layout actions
-    d->aViewMode = new KActionMenu( QIcon::fromTheme( QStringLiteral("view-split-left-right") ), i18n( "&View Mode" ), this );
-    d->aViewMode->setDelayed( false );
-#define ADD_VIEWMODE_ACTION( text, name, id ) \
-do { \
-    QAction *vm = new QAction( text, this ); \
-    vm->setCheckable( true ); \
-    vm->setData( QVariant::fromValue( id ) ); \
-    d->aViewMode->addAction( vm ); \
-    ac->addAction( QStringLiteral(name), vm ); \
-    vmGroup->addAction( vm ); \
-} while( 0 )
-    ac->addAction(QStringLiteral("view_render_mode"), d->aViewMode );
-    QActionGroup *vmGroup = new QActionGroup( this ); //d->aViewMode->menu() );
-    ADD_VIEWMODE_ACTION( i18n( "Single Page" ), "view_render_mode_single", (int)Okular::Settings::EnumViewMode::Single );
-    ADD_VIEWMODE_ACTION( i18n( "Facing Pages" ), "view_render_mode_facing", (int)Okular::Settings::EnumViewMode::Facing );
-    ADD_VIEWMODE_ACTION( i18n( "Facing Pages (Center First Page)" ), "view_render_mode_facing_center_first", (int)Okular::Settings::EnumViewMode::FacingFirstCentered );
-    ADD_VIEWMODE_ACTION( i18n( "Overview" ), "view_render_mode_overview", (int)Okular::Settings::EnumViewMode::Summary );
-    const QList<QAction *> viewModeActions = d->aViewMode->menu()->actions();
-    for (QAction *viewModeAction : viewModeActions)
+    // View Mode action menu (Single Page, Facing Pages,...(choose), and Continuous (on/off))
+    d->aViewModeMenu = new KActionMenu( QIcon::fromTheme( QStringLiteral("view-split-left-right") ), i18n( "&View Mode" ), this );
+    d->aViewModeMenu->setDelayed( false );
+    ac->addAction( QStringLiteral( "view_render_mode" ), d->aViewModeMenu );
+
+    d->viewModeActionGroup = new QActionGroup( this );
+    auto addViewMode = [=] ( QAction * a, const QString &name, Okular::Settings::EnumViewMode::type id ) {
+        a->setCheckable( true );
+        a->setData( int( id ) );
+        d->aViewModeMenu->addAction( a );
+        ac->addAction( name, a );
+        d->viewModeActionGroup->addAction( a );
+    };
+    addViewMode( new QAction( i18nc( "@item:inmenu", "&Single Page" ), this ),
+                 QStringLiteral("view_render_mode_single"),
+                 Okular::Settings::EnumViewMode::Single );
+    addViewMode( new QAction( i18nc( "@item:inmenu", "&Facing Pages" ), this ),
+                 QStringLiteral("view_render_mode_single"),
+                 Okular::Settings::EnumViewMode::Facing );
+    addViewMode( new QAction( i18nc( "@item:inmenu", "Facing Pages (&Center First Page)" ), this ),
+                 QStringLiteral("view_render_mode_single"),
+                 Okular::Settings::EnumViewMode::FacingFirstCentered );
+    addViewMode( new QAction( i18nc( "@item:inmenu", "&Overview" ), this ),
+                 QStringLiteral("view_render_mode_single"),
+                 Okular::Settings::EnumViewMode::Summary );
+    const QList< QAction* > viewModeActions = d->viewModeActionGroup->actions();
+    for ( QAction * viewModeAction : viewModeActions )
     {
-        if (viewModeAction->data().toInt() == Okular::Settings::viewMode())
+        if ( viewModeAction->data().toInt() == Okular::Settings::viewMode() )
         {
             viewModeAction->setChecked( true );
+            break;
         }
     }
-    connect( vmGroup, &QActionGroup::triggered, this, &PageView::slotViewMode );
-#undef ADD_VIEWMODE_ACTION
+    connect( d->viewModeActionGroup, &QActionGroup::triggered, this, &PageView::slotViewMode );
 
+    // Continuous view action, add to view mode action menu.
+    d->aViewModeMenu->addSeparator();
     d->aViewContinuous  = new KToggleAction(QIcon::fromTheme( QStringLiteral("view-list-text") ), i18n("&Continuous"), this);
+    d->aViewModeMenu->addAction(d->aViewContinuous);
     ac->addAction(QStringLiteral("view_continuous"), d->aViewContinuous );
     connect( d->aViewContinuous, &QAction::toggled, this, &PageView::slotContinuousToggled );
     d->aViewContinuous->setChecked( Okular::Settings::viewContinuous() );
@@ -806,7 +818,7 @@ void PageView::fitPageWidth( int page )
     d->aZoomFitWidth->setChecked( true );
     d->aZoomFitPage->setChecked( false );
     d->aZoomAutoFit->setChecked( false );
-    d->aViewMode->menu()->actions().at( 0 )->setChecked( true );
+    updateViewMode( 0 );
     viewport()->setUpdatesEnabled( false );
     slotRelayoutPages();
     viewport()->setUpdatesEnabled( true );
@@ -1241,8 +1253,8 @@ void PageView::updateActionState( bool haspages, bool documentChanged, bool hasf
     if ( d->aTrimToSelection )
         d->aTrimToSelection->setEnabled( haspages );
 
-    if ( d->aViewMode )
-        d->aViewMode->setEnabled( haspages );
+    if ( d->aViewModeMenu )
+        d->aViewModeMenu->setEnabled( haspages );
 
     if ( d->aViewContinuous )
         d->aViewContinuous->setEnabled( haspages );
@@ -1610,12 +1622,16 @@ QVariant PageView::capability( ViewCapability capability ) const
             return d->aViewContinuous ? d->aViewContinuous->isChecked() : true;
         case ViewModeModality:
         {
-            const int nActions = d->aViewMode ? d->aViewMode->menu()->actions().size() : 0;
-            for (int i=0; i < nActions; ++i)
+            if ( d->viewModeActionGroup )
             {
-                const QAction* action = d->aViewMode->menu()->actions().at(i);
-                if ( action->isChecked() )
-                    return action->data();
+                const QList<QAction*> actions = d->viewModeActionGroup->actions();
+                for ( const QAction* action : actions )
+                {
+                    if (action->isChecked())
+                    {
+                        return action->data();
+                    }
+                }
             }
             return QVariant();
         }
@@ -4272,7 +4288,7 @@ void PageView::updateZoomText()
 
 void PageView::updateViewMode(const int nr)
 {
-    const QList<QAction*> actions = d->aViewMode->menu()->actions();
+    const QList<QAction*> actions = d->viewModeActionGroup->actions();
     for ( QAction* action : actions ) {
         QVariant mode_id = action->data();
         if (mode_id.toInt() == nr) {

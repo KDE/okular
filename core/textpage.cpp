@@ -54,11 +54,17 @@ class SearchPoint
 
 static bool CaseInsensitiveCmpFn( const QStringRef & from, const QStringRef & to )
 {
+#ifdef DEBUG_TEXTPAGE
+    qDebug(OkularCoreDebug) << from << ":" << to << "(case insensitive)";
+#endif
     return from.compare( to, Qt::CaseInsensitive ) == 0;
 }
 
 static bool CaseSensitiveCmpFn( const QStringRef & from, const QStringRef & to )
 {
+#ifdef DEBUG_TEXTPAGE
+    qDebug(OkularCoreDebug) << from << ":" << to << "(case sensitive)";
+#endif
     return from.compare( to, Qt::CaseSensitive ) == 0;
 }
 
@@ -780,7 +786,7 @@ RegularAreaRect* TextPage::findText( int searchID, const QString &query, SearchD
 // if the '-' is the last entry
 static int stringLengthAdaptedWithHyphen(const QString &str, const TextList::ConstIterator &it, const TextList::ConstIterator &textListEnd)
 {
-    int len = str.length();
+    const int len = str.length();
     
     // hyphenated '-' must be at the end of a word, so hyphenation means
     // we have a '-' just followed by a '\n' character
@@ -795,26 +801,24 @@ static int stringLengthAdaptedWithHyphen(const QString &str, const TextList::Con
             const QString &lookahedStr = (*(it+1))->text();
             if (lookahedStr.startsWith(QLatin1Char('\n')))
             {
-                len -= 1;
+                return len - 1;
             }
-            else
-            {
-                // 2. if the next word is in a different line or not
-                const NormalizedRect& hyphenArea = (*it)->area;
-                const NormalizedRect& lookaheadArea = (*(it + 1))->area;
 
-                // lookahead to check whether both the '-' rect and next character rect overlap
-                if( !doesConsumeY( hyphenArea, lookaheadArea, 70 ) )
-                {
-                    len -= 1;
-                }
+            // 2. if the next word is in a different line or not
+            const NormalizedRect& hyphenArea = (*it)->area;
+            const NormalizedRect& lookaheadArea = (*(it + 1))->area;
+
+            // lookahead to check whether both the '-' rect and next character rect overlap
+            if( !doesConsumeY( hyphenArea, lookaheadArea, 70 ) )
+            {
+                return len - 1;
             }
         }
     }
     // else if it is the second last entry - for example in pdf format
     else if (str.endsWith(QLatin1String("-\n")))
     {
-        len -= 2;
+        return len - 2;
     }
     
     return len;
@@ -850,8 +854,7 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
     const QString query = _query.normalized(QString::NormalizationForm_KC);
 
     // j is the current position in our query
-    // len is the length of the string in TextEntity
-    // queryLeft is the length of the query we have left
+    // queryLeft is the length of the query we have left to match
     int j=0, queryLeft=query.length();
 
     TextList::ConstIterator it = start;
@@ -864,9 +867,11 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
     {
         const TinyTextEntity* curEntity = *it;
         const QString& str = curEntity->text();
-        int len = stringLengthAdaptedWithHyphen(str, it, m_words.constEnd());
+        const int strLen = str.length();
+        const int adjustedLen = stringLengthAdaptedWithHyphen(str, it, m_words.constEnd());
+        // adjustedLen <= strLen
 
-        if (offset >= len)
+        if (offset >= strLen)
         {
             it++;
             offset = 0;
@@ -879,62 +884,67 @@ RegularAreaRect* TextPagePrivate::findTextInternalForward( int searchID, const Q
             offset_begin = offset;
         }
 
-        int min=qMin(queryLeft,len-offset);
+        // Let the user write the hyphen or not when searching for text
+        int matchedLen = -1;
+        for (int matchingLen = strLen; matchingLen >= adjustedLen; matchingLen--)
         {
-#ifdef DEBUG_TEXTPAGE
-            qCDebug(OkularCoreDebug) << str.midRef(offset, min) << ":" << _query.midRef(j, min);
-#endif
-            // we have equal (or less than) area of the query left as the length of the current 
+            // we have equal (or less than) area of the query left as the length of the current
             // entity
-
-            if ( !comparer( str.midRef( offset, min ), query.midRef( j, min ) ) )
+            const int min = qMin(queryLeft, matchingLen - offset);
+            if ( comparer( str.midRef( offset, min ), query.midRef( j, min ) ) )
             {
-                    // we have not matched
-                    // this means we do not have a complete match
-                    // we need to get back to query start
-                    // and continue the search from this place
+                matchedLen = min;
+                break;
+            }
+        }
+
+        if ( matchedLen == -1 )
+        {
+            // we have not matched
+            // this means we do not have a complete match
+            // we need to get back to query start
+            // and continue the search from this place
 #ifdef DEBUG_TEXTPAGE
             qCDebug(OkularCoreDebug) << "\tnot matched";
 #endif
-                    j = 0;
-                    queryLeft=query.length();
-                    it = it_begin;
-                    offset = offset_begin+1;
-                    it_begin = TextList::ConstIterator();
-            }
-            else
-            {
-                    // we have a match
-                    // move the current position in the query
-                    // to the position after the length of this string
-                    // we matched
-                    // subtract the length of the current entity from 
-                    // the left length of the query
+            j = 0;
+            queryLeft=query.length();
+            it = it_begin;
+            offset = offset_begin+1;
+            it_begin = TextList::ConstIterator();
+        }
+        else
+        {
+            // we have a match
+            // move the current position in the query
+            // to the position after the length of this string
+            // we matched
+            // subtract the length of the current entity from
+            // the left length of the query
 #ifdef DEBUG_TEXTPAGE
-            qCDebug(OkularCoreDebug) << "\tmatched";
+            qCDebug(OkularCoreDebug) << "\tmatched" << matchedLen;
 #endif
-                    j += min;
-                    queryLeft -= min;
+            j += matchedLen;
+            queryLeft -= matchedLen;
 
-                    if (queryLeft==0)
-                    {
-                        // save or update the search point for the current searchID
-                        QMap< int, SearchPoint* >::iterator sIt = m_searchPoints.find( searchID );
-                        if ( sIt == m_searchPoints.end() )
-                        {
-                            sIt = m_searchPoints.insert( searchID, new SearchPoint );
-                        }
-                        SearchPoint* sp = *sIt;
-                        sp->it_begin = it_begin;
-                        sp->it_end = it;
-                        sp->offset_begin = offset_begin;
-                        sp->offset_end = offset + min;
-                        return searchPointToArea(sp);
-                    }
-
-                    it++;
-                    offset = 0;
+            if (queryLeft==0)
+            {
+                // save or update the search point for the current searchID
+                QMap< int, SearchPoint* >::iterator sIt = m_searchPoints.find( searchID );
+                if ( sIt == m_searchPoints.end() )
+                {
+                    sIt = m_searchPoints.insert( searchID, new SearchPoint );
+                }
+                SearchPoint* sp = *sIt;
+                sp->it_begin = it_begin;
+                sp->it_end = it;
+                sp->offset_begin = offset_begin;
+                sp->offset_end = offset + matchedLen;
+                return searchPointToArea(sp);
             }
+
+            it++;
+            offset = 0;
         }
     }
     // end of loop - it means that we've ended the textentities
@@ -982,11 +992,13 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
 
         const TinyTextEntity* curEntity = *it;
         const QString& str = curEntity->text();
-        int len = stringLengthAdaptedWithHyphen(str, it, m_words.constEnd());
+        const int strLen = str.length();
+        const int adjustedLen = stringLengthAdaptedWithHyphen(str, it, m_words.constEnd());
+        // adjustedLen <= strLen
 
         if (offset <= 0)
         {
-            offset = len;
+            offset = strLen;
         }
 
         if ( it_begin == TextList::ConstIterator() )
@@ -995,66 +1007,69 @@ RegularAreaRect* TextPagePrivate::findTextInternalBackward( int searchID, const 
             offset_begin = offset;
         }
 
-        int min=qMin(queryLeft,offset);
+        // Let the user write the hyphen or not when searching for text
+        int matchedLen = -1;
+        // we have equal (or less than) area of the query left as the length of the current
+        // entity
+        for (int matchingLen = strLen; matchingLen >= adjustedLen; matchingLen--)
         {
-#ifdef DEBUG_TEXTPAGE
-            qCDebug(OkularCoreDebug) << str.midRef(offset-min, min) << " : " << _query.midRef(j-min, min);
-#endif
-            // we have equal (or less than) area of the query left as the length of the current 
-            // entity
-
-            // Note len is not str.length() so we can't use rightRef here
-            if ( !comparer( str.midRef(offset-min, min ), query.midRef( j - min, min ) ) )
+            const int hyphenOffset = (strLen - matchingLen);
+            const int min = qMin(queryLeft + hyphenOffset, offset);
+            if ( comparer( str.midRef( offset - min, min - hyphenOffset ), query.midRef( j - min + hyphenOffset, min - hyphenOffset ) ) )
             {
-                    // we have not matched
-                    // this means we do not have a complete match
-                    // we need to get back to query start
-                    // and continue the search from this place
-#ifdef DEBUG_TEXTPAGE
-                    qCDebug(OkularCoreDebug) << "\tnot matched";
-#endif
-
-                    j = query.length();
-                    queryLeft = query.length();
-                    it = it_begin;
-                    offset = offset_begin-1;
-                    it_begin = TextList::ConstIterator();
+                matchedLen = min - hyphenOffset;
+                break;
             }
-            else
-            {
-                    // we have a match
-                    // move the current position in the query
-                    // to the position after the length of this string
-                    // we matched
-                    // subtract the length of the current entity from 
-                    // the left length of the query
-#ifdef DEBUG_TEXTPAGE
-                    qCDebug(OkularCoreDebug) << "\tmatched";
-#endif
-                    j -= min;
-                    queryLeft -= min;
-
-                    if ( queryLeft == 0 )
-                    {
-                        // save or update the search point for the current searchID
-                        QMap< int, SearchPoint* >::iterator sIt = m_searchPoints.find( searchID );
-                        if ( sIt == m_searchPoints.end() )
-                        {
-                            sIt = m_searchPoints.insert( searchID, new SearchPoint );
-                        }
-                        SearchPoint* sp = *sIt;
-                        sp->it_begin = it;
-                        sp->it_end = it_begin;
-                        sp->offset_begin = offset - min;
-                        sp->offset_end = offset_begin;
-                        return searchPointToArea(sp);
-                    }
-
-                    offset = 0;
-            }
-
         }
 
+        if ( matchedLen == -1 )
+        {
+            // we have not matched
+            // this means we do not have a complete match
+            // we need to get back to query start
+            // and continue the search from this place
+#ifdef DEBUG_TEXTPAGE
+            qCDebug(OkularCoreDebug) << "\tnot matched";
+#endif
+
+            j = query.length();
+            queryLeft = query.length();
+            it = it_begin;
+            offset = offset_begin-1;
+            it_begin = TextList::ConstIterator();
+        }
+        else
+        {
+            // we have a match
+            // move the current position in the query
+            // to the position after the length of this string
+            // we matched
+            // subtract the length of the current entity from
+            // the left length of the query
+#ifdef DEBUG_TEXTPAGE
+            qCDebug(OkularCoreDebug) << "\tmatched";
+#endif
+            j -= matchedLen;
+            queryLeft -= matchedLen;
+
+            if ( queryLeft == 0 )
+            {
+                // save or update the search point for the current searchID
+                QMap< int, SearchPoint* >::iterator sIt = m_searchPoints.find( searchID );
+                if ( sIt == m_searchPoints.end() )
+                {
+                    sIt = m_searchPoints.insert( searchID, new SearchPoint );
+                }
+                SearchPoint* sp = *sIt;
+                sp->it_begin = it;
+                sp->it_end = it_begin;
+                sp->offset_begin = offset - matchedLen;
+                sp->offset_end = offset_begin;
+                return searchPointToArea(sp);
+            }
+
+            offset = 0;
+        }
     }
     // end of loop - it means that we've ended the textentities
 

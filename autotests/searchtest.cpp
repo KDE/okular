@@ -288,6 +288,22 @@ void SearchTest::testHyphenAtEndOfLineWithoutYOverlap()
     QCOMPARE(*result, expected);
     delete result;
 
+    result = tp->findText(0, QStringLiteral("supercalifragilisticexpialidocious"),
+                                                 Okular::FromBottom, Qt::CaseSensitive, nullptr);
+    QVERIFY(result);
+    QCOMPARE(*result, expected);
+    delete result;
+
+    // If the user is looking for the text explicitely with the hyphen also find it
+    result = tp->findText(0, QStringLiteral("super-cali-fragilistic"), Okular::FromTop, Qt::CaseSensitive, nullptr);
+    QVERIFY(result);
+    delete result;
+
+    // If the user is looking for the text explicitely with the hyphen also find it
+    result = tp->findText(0, QStringLiteral("super-cali-fragilistic"), Okular::FromBottom, Qt::CaseSensitive, nullptr);
+    QVERIFY(result);
+    delete result;
+
     delete page;
 }
 

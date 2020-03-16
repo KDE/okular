@@ -80,6 +80,9 @@
           <property name="alignment" >
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
+          <property name="buddy">
+           <cstring>kcfg_RenderMode</cstring>
+          </property>
          </widget>
         </item>
         <item>
@@ -220,6 +223,9 @@
              <property name="alignment" >
               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
              </property>
+             <property name="buddy" >
+              <cstring>kcfg_RecolorForeground</cstring>
+             </property>
             </widget>
            </item>
            <item>
@@ -251,6 +257,9 @@
              </property>
              <property name="alignment" >
               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+             <property name="buddy" >
+              <cstring>kcfg_RecolorBackground</cstring>
              </property>
             </widget>
            </item>
@@ -293,6 +302,9 @@
              <property name="alignment" >
               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
              </property>
+             <property name="buddy" >
+              <cstring>kcfg_BWThreshold</cstring>
+             </property>
             </widget>
            </item>
            <item row="0" column="1" >
@@ -324,6 +336,9 @@
              </property>
              <property name="alignment" >
               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+             <property name="buddy" >
+              <cstring>kcfg_BWContrast</cstring>
              </property>
             </widget>
            </item>
@@ -361,6 +376,12 @@
        <widget class="QLabel" name="label_2" >
         <property name="text" >
          <string>Engine</string>
+        </property>
+        <property name="alignment" >
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+        <property name="buddy" >
+         <cstring>kcfg_ttsEngine</cstring>
         </property>
        </widget>
       </item>

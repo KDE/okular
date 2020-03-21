@@ -320,6 +320,15 @@ PopplerFormFieldChoice::PopplerFormFieldChoice( std::unique_ptr<Poppler::FormFie
     m_rect = Okular::NormalizedRect::fromQRectF( m_field->rect() );
     m_id = m_field->id();
     SET_ACTIONS
+
+#ifdef HAVE_POPPLER_0_87
+    QMap<QString, QString> values;
+    for ( const QPair<QString, QString> &value : m_field->choicesWithExportValues() )
+    {
+        values.insert(value.first, value.second);
+    }
+    setExportValues( values );
+#endif
 }
 
 Okular::NormalizedRect PopplerFormFieldChoice::rect() const

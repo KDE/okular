@@ -155,7 +155,11 @@ static KJSObject fieldGetValue( KJSContext */*context*/, void *object )
         case FormField::FormChoice:
         {
             const FormFieldChoice *choice = static_cast< const FormFieldChoice * >( field );
-            Q_UNUSED( choice ); // ###
+            const QList< int > currentChoices = choice->currentChoices();
+            if ( currentChoices.count() == 1 )
+            {
+                return KJSString( choice->exportValueForChoice( choice->choices().at( currentChoices[0] ) ) );
+            }
             break;
         }
         case FormField::FormSignature:

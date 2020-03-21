@@ -419,8 +419,24 @@ class OKULARCORE_EXPORT FormFieldChoice : public FormField
          */
         virtual bool canBeSpellChecked() const;
 
+        /**
+         * Returns the export value for a given choice
+         *
+         * @since 1.11
+         */
+        QString exportValueForChoice( const QString &choice ) const;
+
     protected:
         FormFieldChoice();
+
+        /**
+         * The possible choices of the choice field.
+         * The key is the the display name of the choice,
+         * The value is the export value (i.e. for use in javascript, etc) of the choice
+         *
+         * @since 1.11
+         */
+        void setExportValues( const QMap<QString,QString> &values );
 
     private:
         Q_DECLARE_PRIVATE( FormFieldChoice )

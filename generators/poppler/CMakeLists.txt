@@ -94,6 +94,16 @@ int main()
 }
 " HAVE_POPPLER_0_80)
 
+check_cxx_source_compiles("
+#include <poppler-form.h>
+int main()
+{
+    Poppler::FormFieldChoice *ffc = nullptr;
+    ffc->choicesWithExportValues();
+    return 0;
+}
+" HAVE_POPPLER_0_87)
+
 configure_file(
    ${CMAKE_CURRENT_SOURCE_DIR}/config-okular-poppler.h.cmake
    ${CMAKE_CURRENT_BINARY_DIR}/config-okular-poppler.h

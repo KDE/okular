@@ -261,6 +261,8 @@ class Okular::FormFieldChoicePrivate : public Okular::FormFieldPrivate
             }
             return list.join( QStringLiteral( ";" ) );
         }
+
+        QMap<QString, QString> exportValues;
 };
 
 
@@ -304,6 +306,18 @@ Qt::Alignment FormFieldChoice::textAlignment() const
 bool FormFieldChoice::canBeSpellChecked() const
 {
     return false;
+}
+
+void FormFieldChoice::setExportValues( const QMap<QString,QString> &values )
+{
+    Q_D( FormFieldChoice );
+    d->exportValues = values;
+}
+
+QString FormFieldChoice::exportValueForChoice( const QString &choice ) const
+{
+    Q_D( const FormFieldChoice );
+    return d->exportValues.value(choice, choice);
 }
 
 class Okular::FormFieldSignaturePrivate : public Okular::FormFieldPrivate

@@ -130,6 +130,12 @@ function AFNumber_Format( nDec, sepStyle, negStyle, currStyle, strCurrency, bCur
     event.value = ret;
 }
 
+function AFNumber_Keystroke(nDec, sepStyle, negStyle, currStyle, strCurrency, bCurrencyPrepend)
+{
+    // TODO
+    return;
+}
+
 /** AFTime_Format
  *
  * Formats event.value based on parameters.

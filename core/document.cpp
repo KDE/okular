@@ -1237,6 +1237,7 @@ void DocumentPrivate::recalculateForms()
                                 if ( newVal != oldVal )
                                 {
                                     fft->setText( newVal );
+                                    fft->setAppearanceText( newVal );
                                     if ( const Okular::Action *action = fft->additionalAction( Okular::FormField::FormatField ) )
                                     {
                                         // The format action handles the refresh.

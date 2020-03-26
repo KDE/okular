@@ -1,3 +1,6 @@
+variables:
+  DEBIAN_FRONTEND: "noninteractive"
+
 include:
   - https://invent.kde.org/sysadmin/ci-tooling/raw/master/invent/ci-before.yml
   - https://invent.kde.org/sysadmin/ci-tooling/raw/master/invent/ci-applications-linux.yml
@@ -37,7 +40,7 @@ build_ubuntu_20_04:
 
 build_clazy_clang_tidy:
   stage: build
-  image: debian:unstable
+  image: debian:testing
   only:
     - merge_requests
   before_script:

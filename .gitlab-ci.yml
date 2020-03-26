@@ -1,3 +1,6 @@
+variables:
+  DEBIAN_FRONTEND: "noninteractive"
+
 include:
   - https://invent.kde.org/sysadmin/ci-tooling/raw/master/invent/ci-before.yml
   - https://invent.kde.org/sysadmin/ci-tooling/raw/master/invent/ci-applications-linux.yml

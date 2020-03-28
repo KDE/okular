@@ -107,6 +107,31 @@
             <string>Convert to Black &amp; White</string>
            </property>
           </item>
+          <item>
+           <property name="text" >
+            <string>Invert Lightness</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Invert Luma (sRGB Linear)</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Invert Luma (Symmetric)</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Shift Hue Positive</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Shift Hue Negative</string>
+           </property>
+          </item>
          </widget>
         </item>
        </layout>
@@ -362,6 +387,21 @@
          </item>
         </layout>
        </widget>
+      </item>
+      <item>
+       <widget class="QWidget" native="1" name="page_invertLightness" />
+      </item>
+      <item>
+       <widget class="QWidget" native="1" name="page_invertLuma" />
+      </item>
+      <item>
+       <widget class="QWidget" native="1" name="page_invertLumaSymmetric" />
+      </item>
+      <item>
+       <widget class="QWidget" native="1" name="page_hueShiftPositive" />
+      </item>
+      <item>
+       <widget class="QWidget" native="1" name="page_hueShiftNegative" />
       </item>
      </layout>
     </widget>

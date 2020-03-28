@@ -2335,6 +2335,47 @@ Context menu actions like Rename Bookmarks etc.)
 					</listitem>
 				</varlistentry>
 				<varlistentry>
+					<term><guilabel>Invert Lightness</guilabel></term>
+					<listitem>
+						<para><action>Inverts</action> lightness of all colors.
+							Light and dark colors will be swapped, but hue and saturation will not be affected.
+							The Contrast in images will usually be worse than in <guilabel>Invert Luma (sRGB Linear)</guilabel>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term><guilabel>Invert Luma (sRGB Linear)</guilabel></term>
+					<listitem>
+						<para><action>Inverts</action> luma of all colors.
+							Light and dark will be swapped, but hue and saturation will not be affected.
+							The Contrast in images is preserved better than in <guilabel>Invert Lightness</guilabel>,
+							but graphics and colorful text markup usually look worse.
+							Uses sRGB luma coefficients, but no gamma correction.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term><guilabel>Invert Luma (Symmetric)</guilabel></term>
+					<listitem>
+						<para><action>Inverts</action> luma of all colors, using symmetric luma coefficients.
+							Light and dark will be swapped, but hue and saturation will not be affected.
+							Very similar to <guilabel>Invert Lightness</guilabel>,
+							but the contrast is in some cases better.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term><guilabel>Shift Hue Positive</guilabel></term>
+					<listitem>
+						<para><action>Shifts</action> hue of all colors by 120 degrees.
+							Can mitigate some contrast problems in colorful graphics</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term><guilabel>Shift Hue Negative</guilabel></term>
+					<listitem>
+						<para><action>Shifts</action> hue of all colors by 240 degrees.
+							Can mitigate some contrast problems in colorful graphics</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
 					<term><guilabel>Engine</guilabel></term>
 					<listitem>
 						<para><action>Allows you to choose</action> the text-to-speech (<abbrev>TTS</abbrev>) engine to be used by &okular;.

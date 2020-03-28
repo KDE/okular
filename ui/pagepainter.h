@@ -56,6 +56,27 @@ class Q_DECL_EXPORT PagePainter
     private:
         static void cropPixmapOnImage( QImage & dest, const QPixmap * src, const QRect r );
         static void recolor(QImage *image, const QColor &foreground, const QColor &background);
+        static void blackWhite(QImage *image, int contrast, int threshold);
+        static void invertLightness(QImage *image);
+        /**
+         * Inverts luma of @p image using the luma coefficients @p Y_R, @p Y_G, @p Y_B (should sum up to 1),
+         * and assuming linear 8bit RGB color space.
+         */
+        static void invertLuma(QImage *image, float Y_R, float Y_G, float Y_B);
+        /**
+         * Inverts luma of a pixel given in @p R, @p G, @p B,
+         * using the luma coefficients @p Y_R, @p Y_G, @p Y_B (should sum up to 1),
+         * and assuming linear 8bit RGB color space.
+         */
+        static void invertLumaPixel(uchar &R, uchar &G, uchar &B, float Y_R, float Y_G, float Y_B);
+        /**
+         * Shifts hue of each pixel by 120 degrees, by simply swapping channels.
+         */
+        static void hueShiftPositive(QImage *image);
+        /**
+         * Shifts hue of each pixel by 240 degrees, by simply swapping channels.
+         */
+        static void hueShiftNegative(QImage *image);
 
         // set the alpha component of the image to a given value
         static void changeImageAlpha( QImage & image, unsigned int alpha );

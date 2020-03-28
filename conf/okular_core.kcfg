@@ -54,6 +54,11 @@
     <choice name="Paper" />
     <choice name="Recolor" />
     <choice name="BlackWhite" />
+    <choice name="InvertLightness" />
+    <choice name="InvertLuma" />
+    <choice name="InvertLumaSymmetric" />
+    <choice name="HueShiftPositive" />
+    <choice name="HueShiftNegative" />
    </choices>
   </entry>
  </group>

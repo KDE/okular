@@ -30,6 +30,11 @@ DlgAccessibility::DlgAccessibility( QWidget * parent )
     m_color_pages.append( m_dlg->page_paperColor );
     m_color_pages.append( m_dlg->page_darkLight );
     m_color_pages.append( m_dlg->page_bw );
+    m_color_pages.append( m_dlg->page_invertLightness );
+    m_color_pages.append( m_dlg->page_invertLuma );
+    m_color_pages.append( m_dlg->page_invertLumaSymmetric );
+    m_color_pages.append( m_dlg->page_hueShiftPositive );
+    m_color_pages.append( m_dlg->page_hueShiftNegative );
     for ( QWidget *page : qAsConst(m_color_pages) ) {
         page->hide();
     }

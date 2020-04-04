@@ -431,7 +431,7 @@ class OKULARCORE_EXPORT FormFieldChoice : public FormField
 
         /**
          * The possible choices of the choice field.
-         * The key is the the display name of the choice,
+         * The key is the display name of the choice,
          * The value is the export value (i.e. for use in javascript, etc) of the choice
          *
          * @since 1.11

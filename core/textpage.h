@@ -131,7 +131,7 @@ class OKULARCORE_EXPORT TextPage
         /**
          * Creates a new text page with the given @p words.
          */
-        TextPage( const TextEntity::List &words );
+        explicit TextPage( const TextEntity::List &words );
 
         /**
          * Destroys the text page.

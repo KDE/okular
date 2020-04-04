@@ -294,12 +294,12 @@ void SearchTest::testHyphenAtEndOfLineWithoutYOverlap()
     QCOMPARE(*result, expected);
     delete result;
 
-    // If the user is looking for the text explicitely with the hyphen also find it
+    // If the user is looking for the text explicitly with the hyphen also find it
     result = tp->findText(0, QStringLiteral("super-cali-fragilistic"), Okular::FromTop, Qt::CaseSensitive, nullptr);
     QVERIFY(result);
     delete result;
 
-    // If the user is looking for the text explicitely with the hyphen also find it
+    // If the user is looking for the text explicitly with the hyphen also find it
     result = tp->findText(0, QStringLiteral("super-cali-fragilistic"), Okular::FromBottom, Qt::CaseSensitive, nullptr);
     QVERIFY(result);
     delete result;

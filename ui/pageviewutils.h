@@ -41,7 +41,7 @@ class Page;
 class PageViewItem
 {
     public:
-        PageViewItem( const Okular::Page * page );
+        explicit PageViewItem( const Okular::Page * page );
         ~PageViewItem();
 
         PageViewItem(const PageViewItem &) = delete;

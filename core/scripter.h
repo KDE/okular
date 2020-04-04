@@ -41,7 +41,7 @@ class Scripter
         friend class ScripterPrivate;
         ScripterPrivate* d;
 
-        Scripter( DocumentPrivate *doc );
+        explicit Scripter( DocumentPrivate *doc );
 };
 
 }

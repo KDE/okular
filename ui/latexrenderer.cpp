@@ -121,7 +121,7 @@ LatexRenderer::Error LatexRenderer::handleLatex( QString& fileName, const QStrin
     tempFile->open();
     QString tempFileName = tempFile->fileName();
     QFileInfo *tempFileInfo = new QFileInfo(tempFileName);
-    QString tempFileNameNS = tempFileInfo->absolutePath() + "/" + tempFileInfo->baseName();
+    QString tempFileNameNS = tempFileInfo->absolutePath() + '/' + tempFileInfo->baseName();
     QString tempFilePath = tempFileInfo->absolutePath();
     delete tempFileInfo;
     QTextStream tempStream(tempFile);

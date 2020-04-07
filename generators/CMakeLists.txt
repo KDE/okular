@@ -5,6 +5,7 @@ function(okular_add_generator _target)
     INSTALL_NAMESPACE "okular/generators"
     SOURCES ${ARGN}
   )
+  set_target_properties(${_target} PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/plugins/okular")
 endfunction()
 
 set(LIBSPECTRE_MINIMUM_VERSION "0.2")

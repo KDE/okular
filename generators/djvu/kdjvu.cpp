@@ -981,15 +981,12 @@ QImage KDjVu::image( int page, int width, int height, int rotation )
         int parts = xparts * yparts;
         for ( int i = 0; i < parts; ++i )
         {
-            int row = i % xparts;
-            int col = i / xparts;
+            const int row = i % xparts;
+            const int col = i / xparts;
             int tmpres = 0;
-            QImage tempp = d->generateImageTile( djvupage, tmpres,
+            const QImage tempp = d->generateImageTile( djvupage, tmpres,
                     width, row, xdelta, height, col, ydelta );
-            if ( tmpres )
-            {
-                p.drawImage( row * xdelta, col * ydelta, tempp );
-            }
+            p.drawImage( row * xdelta, col * ydelta, tempp );
             res = qMin( tmpres, res );
         }
         p.end();

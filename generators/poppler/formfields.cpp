@@ -323,7 +323,8 @@ PopplerFormFieldChoice::PopplerFormFieldChoice( std::unique_ptr<Poppler::FormFie
 
 #ifdef HAVE_POPPLER_0_87
     QMap<QString, QString> values;
-    for ( const QPair<QString, QString> &value : m_field->choicesWithExportValues() )
+    const auto fieldChoicesWithExportValues = m_field->choicesWithExportValues();
+    for ( const QPair<QString, QString> &value : fieldChoicesWithExportValues )
     {
         values.insert(value.first, value.second);
     }

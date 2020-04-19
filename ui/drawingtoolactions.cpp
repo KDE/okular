@@ -17,6 +17,7 @@
 #include <KLocalizedString>
 
 #include <QAction>
+#include <QIconEngine>
 #include <QPainter>
 
 class ColorAction : public QAction
@@ -31,28 +32,70 @@ public:
 
     void setColor( const QColor &color )
     {
-        QPixmap pm( 25, 25 );
-        pm.fill( color );
-
-        QIcon icon;
-
-        icon.addPixmap( pm, QIcon::Normal, QIcon::Off );
-
-        QPixmap pmSel( pm );
-        QPainter p( &pmSel );
-        QFont font = p.font();
-        font.setPixelSize( pmSel.height() * 0.9 );
-        p.setFont( font );
-
-        // draw check mark
-        const int lightness = ((color.red() * 299) + (color.green() * 587) + (color.blue() * 114)) / 1000;
-        p.setPen( lightness < 128 ? Qt::white : Qt::black );
-        p.drawText( QRect( QPoint( 0, 0 ), pmSel.size() ), Qt::AlignCenter, QStringLiteral("\u2713") );
-
-        icon.addPixmap( pmSel, QIcon::Normal, QIcon::On );
-
-        setIcon( icon );
+        setIcon( QIcon( new ColorActionIconEngine( color ) ) );
     }
+
+protected:
+    class ColorActionIconEngine : public QIconEngine
+    {
+    public:
+        explicit ColorActionIconEngine( const QColor &color )
+            : m_color( color )
+        {
+        }
+
+        ColorActionIconEngine( const ColorActionIconEngine& ) = delete;
+        ColorActionIconEngine &operator=( const ColorActionIconEngine& ) = delete;
+
+        // No one needs clone(), but it’s pure virtual
+        QIconEngine* clone() const override
+        {
+            return nullptr;
+        }
+
+        QPixmap pixmap( const QSize &size, QIcon::Mode mode, QIcon::State state ) override
+        {
+            QPixmap pixmap( size );
+            pixmap.fill( Qt::transparent );
+            Q_ASSERT( pixmap.hasAlphaChannel() );
+
+            QPainter painter( &pixmap );
+            paint( &painter, QRect( QPoint( 0, 0), size ), mode, state );
+            return pixmap;
+        }
+
+        void paint( QPainter * painter,
+                    const QRect &rect,
+                    QIcon::Mode mode,
+                    QIcon::State state ) override
+        {
+            Q_UNUSED( mode )
+
+            // Assume that rect is square and at position (0, 0)
+            int squareSize = rect.height() * 0.8;
+            int squareOffset = ( rect.height() - squareSize ) / 2;
+
+            painter->fillRect( squareOffset, squareOffset, squareSize, squareSize, m_color );
+
+            if ( state == QIcon::On ) {
+                QFont checkmarkFont = painter->font();
+                checkmarkFont.setPixelSize( squareSize * 0.9 );
+                painter->setFont( checkmarkFont );
+
+                const int lightness = ( ( m_color.red() * 299 )
+                                        + ( m_color.green() * 587 )
+                                        + ( m_color.blue() * 114 ) ) / 1000;
+                painter->setPen( lightness < 128 ? Qt::white : Qt::black );
+
+                painter->drawText( QRect( squareOffset, squareOffset, squareSize, squareSize ),
+                                   Qt::AlignCenter,
+                                   QStringLiteral("\u2713") );
+            }
+        }
+
+    protected:
+        QColor m_color;
+    };
 };
 
 DrawingToolActions::DrawingToolActions( KActionCollection *parent )

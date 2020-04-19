@@ -271,7 +271,7 @@ bool EBook_EPUB::parseBookinfo()
     if ( m_tocEntries.isEmpty() )
         return false;
 
-	return true;
+    return true;
 }
 
 QUrl EBook_EPUB::pathToUrl(const QString &link) const

@@ -674,6 +674,23 @@ void Shell::closeTab( int tab )
 
 void Shell::openNewTab( const QUrl& url, const QString &serializedOptions )
 {
+    const int previousActiveTab = m_tabWidget->currentIndex();
+    KParts::ReadWritePart* const activePart = m_tabs[previousActiveTab].part;
+
+    bool activateTabIfAlreadyOpen;
+    QMetaObject::invokeMethod( activePart, "activateTabIfAlreadyOpenFile", Q_RETURN_ARG( bool,  activateTabIfAlreadyOpen ) );
+
+    if( activateTabIfAlreadyOpen ){
+
+        const int tabIndex = findTabIndex( url );
+
+        if ( tabIndex >= 0 ) {
+            setActiveTab( tabIndex );
+            m_recent->addUrl( url  );
+            return;
+        }
+    }
+
     // Tabs are hidden when there's only one, so show it
     if( m_tabs.size() == 1 )
     {
@@ -694,7 +711,6 @@ void Shell::openNewTab( const QUrl& url, const QString &serializedOptions )
 
     applyOptionsToPart(part, serializedOptions);
 
-    int previousActiveTab = m_tabWidget->currentIndex();
     setActiveTab( m_tabs.size() - 1 );
 
     if( part->openUrl(url) )
@@ -809,7 +825,7 @@ void Shell::setTabIcon( const QMimeType& mimeType )
     }
 }
 
-int Shell::findTabIndex( QObject* sender )
+int Shell::findTabIndex( QObject* sender ) const
 {
     for( int i = 0; i < m_tabs.size(); ++i )
     {
@@ -819,6 +835,16 @@ int Shell::findTabIndex( QObject* sender )
         }
     }
     return -1;
+}
+
+int Shell::findTabIndex(const QUrl &url ) const
+{
+  auto it =  std::find_if( m_tabs.begin(), m_tabs.end(),
+                 [&url]( const TabState state ){
+                     return state.part->url() == url;
+                 });
+  return  ( it != m_tabs.end() ) ? std::distance( m_tabs.begin(), it ) : -1;
+
 }
 
 void Shell::handleDroppedUrls( const QList<QUrl>& urls )

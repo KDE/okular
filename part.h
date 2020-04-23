@@ -145,6 +145,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         bool areSourceLocationsShownGraphically() const override;
         void setShowSourceLocationsGraphically(bool show) override;
         bool openNewFilesInTabs() const override;
+        Q_INVOKABLE bool activateTabIfAlreadyOpenFile() const;
 
     public Q_SLOTS:                // dbus
         Q_SCRIPTABLE Q_NOREPLY void goToPage(uint page) override;

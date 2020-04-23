@@ -74,7 +74,7 @@ class VIEWERINTERFACE_EXPORT ViewerInterface
         virtual void setWatchFileModeEnabled(bool b) = 0;
 
         /**
-         * Should the shell that supports tabs pen new files in tabs?
+         * Should the shell that supports tabs open new files in tabs?
          */
         virtual bool openNewFilesInTabs() const = 0;
 

@@ -1095,6 +1095,11 @@ bool Part::openNewFilesInTabs() const
     return Okular::Settings::self()->shellOpenFileInTabs();
 }
 
+bool Part::activateTabIfAlreadyOpenFile() const
+{
+    return Okular::Settings::self()->switchToTabIfOpen();
+}
+
 void Part::slotHandleActivatedSourceReference(const QString& absFileName, int line, int col, bool *handled)
 {
     emit openSourceReference( absFileName, line, col );

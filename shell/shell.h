@@ -140,7 +140,8 @@ private:
   void openNewTab( const QUrl& url, const QString &serializedOptions );
   void applyOptionsToPart( QObject* part, const QString &serializedOptions );
   void connectPart( QObject* part );
-  int  findTabIndex( QObject* sender );
+  int findTabIndex( QObject* sender ) const;
+  int findTabIndex( const QUrl& url ) const;
 
 private:
   bool eventFilter(QObject *obj, QEvent *event) override;

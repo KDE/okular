@@ -95,6 +95,7 @@ private slots:
     void testSessionRestore();
     void testOpenInvalidFiles_data();
     void testOpenInvalidFiles();
+    void testOpenTheSameFileSeveralTimes();
 
 private:
 };
@@ -667,6 +668,41 @@ void MainShellTest::testOpenInvalidFiles()
 
 
      QVERIFY( recentFiles.size() == 2 );
+
+}
+
+void MainShellTest::testOpenTheSameFileSeveralTimes()
+{
+    QString options = ShellUtils::serializeOptions( false, false, false, false, false, QString(), QString() );
+
+    Okular::Settings::self()->setShellOpenFileInTabs( true );
+    Okular::Status status = Okular::main( QStringList(), options );
+    QCOMPARE( status, Okular::Success );
+
+    Shell *shell = findShell();
+    QVERIFY( shell );
+
+    QUrl file1 = ShellUtils::urlFromArg( QStringLiteral( KDESRCDIR "data/file1.pdf" ), ShellUtils::qfileExistFunc(), QString() );
+    QUrl file2 = ShellUtils::urlFromArg( QStringLiteral( KDESRCDIR "data/file2.pdf" ), ShellUtils::qfileExistFunc(), QString() );
+    QUrl file3 = ShellUtils::urlFromArg( QStringLiteral( KDESRCDIR "data/formattest.pdf" ), ShellUtils::qfileExistFunc(), QString() );
+
+    shell->openUrl( file1 );
+    shell->openUrl( file2 );
+    shell->openUrl( file2 );
+
+    QVERIFY( shell->m_tabs.size() == 3 );
+
+    Okular::Settings::self()->setSwitchToTabIfOpen( true );
+
+    shell->openUrl( file3 );
+
+    shell->openUrl( file1 );
+    QVERIFY( shell->m_tabWidget->currentIndex() == 0 );
+
+    shell->openUrl( file3 );
+    QVERIFY( shell->m_tabWidget->currentIndex() == 3 );
+
+    QVERIFY( shell->m_tabs.size() == 4 );
 
 }
 

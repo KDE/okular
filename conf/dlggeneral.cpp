@@ -22,8 +22,6 @@ DlgGeneral::DlgGeneral( QWidget * parent, Okular::EmbedMode embedMode )
     m_dlg = new Ui_DlgGeneralBase();
     m_dlg->setupUi( this );
 
-    setCustomBackgroundColorButton( Okular::Settings::useCustomBackgroundColor() );
-
     if( embedMode == Okular::ViewerWidgetMode )
     {
         m_dlg->kcfg_SyncThumbnailsViewport->setVisible( false );
@@ -31,9 +29,13 @@ DlgGeneral::DlgGeneral( QWidget * parent, Okular::EmbedMode embedMode )
         m_dlg->kcfg_WatchFile->setVisible( false );
         m_dlg->kcfg_rtlReadingDirection->setVisible(false);
     }
-    m_dlg->kcfg_ShellOpenFileInTabs->setVisible( embedMode == Okular::NativeShellMode );
 
-    connect(m_dlg->kcfg_UseCustomBackgroundColor, &QCheckBox::toggled, this, &DlgGeneral::setCustomBackgroundColorButton);
+    m_dlg->kcfg_BackgroundColor->setEnabled( Okular::Settings::useCustomBackgroundColor() );
+    m_dlg->kcfg_ShellOpenFileInTabs->setVisible( embedMode == Okular::NativeShellMode );
+    m_dlg->kcfg_SwitchToTabIfOpen->setEnabled( Okular::Settings::shellOpenFileInTabs() );
+
+    connect( m_dlg->kcfg_UseCustomBackgroundColor, &QCheckBox::toggled, m_dlg->kcfg_BackgroundColor, &QCheckBox::setEnabled );
+    connect( m_dlg->kcfg_ShellOpenFileInTabs, &QCheckBox::toggled, m_dlg->kcfg_SwitchToTabIfOpen, &QCheckBox::setEnabled );
 }
 
 DlgGeneral::~DlgGeneral()
@@ -53,7 +55,3 @@ void DlgGeneral::showEvent( QShowEvent * )
 #endif
 }
 
-void DlgGeneral::setCustomBackgroundColorButton( bool value )
-{
-    m_dlg->kcfg_BackgroundColor->setEnabled( value );
-}

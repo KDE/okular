@@ -34,8 +34,8 @@ Context menu actions like Rename Bookmarks etc.)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2020-01-08</date>
-		<releaseinfo>1.10 (Applications 20.04)</releaseinfo>
+		<date>2020-04-08</date>
+		<releaseinfo>1.11 (Applications 20.08)</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
 			<para>&okular; is a &kde; universal document viewer based on &kpdf; code.</para>
@@ -2228,6 +2228,12 @@ Context menu actions like Rename Bookmarks etc.)
 						<para>
 						  The default shortcuts to switch between tabs are <keycombo>&Ctrl;<keycap>.</keycap></keycombo> (<guilabel>Next tab</guilabel>) and <keycombo>&Ctrl;<keycap>,</keycap></keycombo> (<guilabel>Previous tab</guilabel>).
 						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term><guilabel>Switch to existing tab if file is already open</guilabel></term>
+					<listitem>
+						<para>Whether &okular; should switch to a tab if the file is already open instead of opening a new tab. This option is disabled by default. Can be toggled only if <guilabel>Open new files in tabs</guilabel> is enabled.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>

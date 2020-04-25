@@ -629,15 +629,15 @@ void PageView::setupViewerActions( KActionCollection * ac )
                  Okular::Settings::EnumViewMode::Single );
     addViewMode( new QAction( QIcon::fromTheme(QStringLiteral("view-pages-facing")),
                               i18nc( "@item:inmenu", "&Facing Pages" ), this ),
-                 QStringLiteral("view_render_mode_single"),
+                 QStringLiteral("view_render_mode_facing"),
                  Okular::Settings::EnumViewMode::Facing );
     addViewMode( new QAction( QIcon::fromTheme(QStringLiteral("view-pages-facing-first-centered")),
                               i18nc( "@item:inmenu", "Facing Pages (&Center First Page)" ), this ),
-                 QStringLiteral("view_render_mode_single"),
+                 QStringLiteral("view_render_mode_facing_center_first"),
                  Okular::Settings::EnumViewMode::FacingFirstCentered );
     addViewMode( new QAction( QIcon::fromTheme(QStringLiteral("view-pages-overview")),
                               i18nc( "@item:inmenu", "&Overview" ), this ),
-                 QStringLiteral("view_render_mode_single"),
+                 QStringLiteral("view_render_mode_overview"),
                  Okular::Settings::EnumViewMode::Summary );
     const QList< QAction* > viewModeActions = d->viewModeActionGroup->actions();
     for ( QAction * viewModeAction : viewModeActions )

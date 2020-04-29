@@ -115,8 +115,8 @@ class PDFGenerator : public Okular::Generator, public Okular::ConfigInterface, p
         void addAnnotations( Poppler::Page * popplerPage, Okular::Page * page );
         // fetch the transition information and add it to the page
         void addTransition( Poppler::Page * pdfPage, Okular::Page * page );
-        // fetch the form fields and add them to the page
-        void addFormFields( Poppler::Page * popplerPage, Okular::Page * page );
+        // fetch the poppler page form fields
+        QLinkedList<Okular::FormField*> getFormFields( Poppler::Page * popplerPage );
 
         Okular::TextPage * abstractTextPage(const QList<Poppler::TextBox*> &text, double height, double width, int rot);
 

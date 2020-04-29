@@ -771,7 +771,15 @@ void PDFGenerator::loadPages(QVector<Okular::Page*> &pagesVector, int rotation, 
             page->setDuration( p->duration() );
             page->setLabel( p->label() );
 
-            addFormFields( p, page );
+            QLinkedList<Okular::FormField*> okularFormFields;
+#ifdef HAVE_POPPLER_0_88
+            if ( i > 0 ) // for page 0 we handle the form fields at the end
+                okularFormFields = getFormFields( p );
+#else
+            okularFormFields = getFormFields( p );
+#endif
+            if ( !okularFormFields.isEmpty() )
+                page->setFormFields( okularFormFields );
 //        kWarning(PDFDebug).nospace() << page->width() << "x" << page->height();
 
 #ifdef PDFGENERATOR_DEBUG
@@ -788,6 +796,52 @@ void PDFGenerator::loadPages(QVector<Okular::Page*> &pagesVector, int rotation, 
         }
         // set the Okular::page at the right position in document's pages vector
         pagesVector[i] = page;
+    }
+
+    // Once we've added the signatures to all pages except page 0, we add all the missing signatures there
+    // we do that because there's signatures that don't belong to any page, but okular needs a page<->signature mapping
+    if ( count > 0 )
+    {
+#ifdef HAVE_POPPLER_0_88
+        const QVector<Poppler::FormFieldSignature*> allSignatures = pdfdoc->signatures();
+        Poppler::Page * page0 = pdfdoc->page( 0 );
+        QLinkedList<Okular::FormField*> page0FormFields = getFormFields( page0 );
+
+        for (Poppler::FormFieldSignature *s : allSignatures)
+        {
+            bool createSignature = true;
+            const QString fullyQualifiedName = s->fullyQualifiedName();
+            auto compareSignatureByFullyQualifiedName = [&fullyQualifiedName](const Okular::FormField *off) { return off->fullyQualifiedName() == fullyQualifiedName; };
+
+            // See if the signature is in one of the already loaded page (i.e. 1 to end)
+            for (Okular::Page *p : pagesVector)
+            {
+                const QLinkedList<Okular::FormField*> pageFormFields = p->formFields();
+                if (std::find_if(pageFormFields.begin(), pageFormFields.end(), compareSignatureByFullyQualifiedName) != pageFormFields.end())
+                {
+                    delete s;
+                    createSignature = false;
+                    continue;
+                }
+            }
+            // See if the signature is in page 0
+            if (std::find_if(page0FormFields.constBegin(), page0FormFields.constEnd(), compareSignatureByFullyQualifiedName) != page0FormFields.constEnd())
+            {
+                delete s;
+                createSignature = false;
+            }
+            // Otherwise it's a page-less signature, add it to page 0
+            if (createSignature)
+            {
+                Okular::FormField * of = new PopplerFormFieldSignature( std::unique_ptr<Poppler::FormFieldSignature>( s ) );
+                page0FormFields.append( of );
+
+            }
+        }
+
+        if ( !page0FormFields.isEmpty() )
+            pagesVector[0]->setFormFields( page0FormFields );
+#endif
     }
 }
 
@@ -1920,7 +1974,7 @@ void PDFGenerator::addTransition( Poppler::Page * pdfPage, Okular::Page * page )
     page->setTransition( transition );
 }
 
-void PDFGenerator::addFormFields( Poppler::Page * popplerPage, Okular::Page * page )
+QLinkedList<Okular::FormField*>  PDFGenerator::getFormFields( Poppler::Page * popplerPage )
 {
     const QList<Poppler::FormField*> popplerFormFields = popplerPage->formFields();
     QLinkedList<Okular::FormField*> okularFormFields;
@@ -1951,8 +2005,8 @@ void PDFGenerator::addFormFields( Poppler::Page * popplerPage, Okular::Page * pa
             // no form field available - delete the Poppler::FormField
             delete f;
     }
-    if ( !okularFormFields.isEmpty() )
-        page->setFormFields( okularFormFields );
+
+    return okularFormFields;
 }
 
 PDFGenerator::PrintError PDFGenerator::printError() const

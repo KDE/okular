@@ -5365,17 +5365,14 @@ void PageView::slotAutoScrollDown()
 
 void PageView::slotScrollUp( int nSteps )
 {
-    //if we are too far behind the animation, do nothing and let it catch up
-    auto limit_value = nSteps ? 200 : verticalScrollBar()->rect().height();
-    if(d->scroller->state() == QScroller::Scrolling && abs(d->scroller->finalPosition().y() - verticalScrollBar()->value()) > limit_value){
+    if(d->scroller->state() == QScroller::Scrolling)
         return;
-    }
 
     // if in single page mode and at the top of the screen, go to \ page
     if ( Okular::Settings::viewContinuous() || verticalScrollBar()->value() > verticalScrollBar()->minimum() )
     {
         if ( nSteps ){
-            d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0,-100*nSteps), 100);
+            d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0,-100*nSteps), 0);
         }else{
             if(d->scroller->finalPosition().y() > verticalScrollBar()->minimum())
                 d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, -verticalScrollBar()->rect().height() ));
@@ -5396,17 +5393,14 @@ void PageView::slotScrollUp( int nSteps )
 
 void PageView::slotScrollDown( int nSteps )
 {
-    //if we are too far behind the animation, do nothing and let it catch up
-    auto limit_value = nSteps ? 200 : verticalScrollBar()->rect().height();
-    if(d->scroller->state() == QScroller::Scrolling && abs(d->scroller->finalPosition().y() - verticalScrollBar()->value()) > limit_value){
+    if(d->scroller->state() == QScroller::Scrolling)
         return;
-    }
 
     // if in single page mode and at the bottom of the screen, go to next page
     if ( Okular::Settings::viewContinuous() || verticalScrollBar()->value() < verticalScrollBar()->maximum() )
     {
         if ( nSteps ){
-            d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0,100*nSteps), 100);
+            d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0,100*nSteps), 0);
         }else{
             if(d->scroller->finalPosition().y() < verticalScrollBar()->maximum())
                 d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, verticalScrollBar()->rect().height() ));

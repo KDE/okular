@@ -100,6 +100,7 @@ class PartTest
         void testTabletProximityBehavior();
         void testOpenPrintPreview();
         void testMouseModeMenu();
+        void testFullScreenRequest();
 
     private:
         void simulateMouseSelection(double startX, double startY, double endX, double endY, QWidget *target);
@@ -1990,6 +1991,33 @@ void PartTest::testMouseModeMenu()
     // Test activating table selection mode
     mouseModeActionMenu->actions().at(2)->trigger();
     QCOMPARE(Okular::Settings::mouseMode(), (int)Okular::Settings::EnumMouseMode::TableSelect );
+}
+
+void PartTest::testFullScreenRequest()
+{
+    QVariantList dummyArgs;
+    Okular::Part part(nullptr, nullptr, dummyArgs);
+
+    // Open file.  For this particular file, a dialog has to appear asking whether
+    // one wants to comply with the wish to go to presentation mode directly.
+    // Answer 'no'
+    auto dialogHelper = std::make_unique<TestingUtils::CloseDialogHelper>( &part, QDialogButtonBox::No );
+    QVERIFY( openDocument(&part, QStringLiteral(KDESRCDIR "data/RequestFullScreen.pdf")) );
+
+    // Check that we are not in presentation mode
+    QEXPECT_FAIL("", "The presentation widget should not be shown because we clicked No in the dialog", Continue);
+    QTRY_VERIFY_WITH_TIMEOUT( part.m_presentationWidget, 1000 );
+
+    // Reload the file.  The initial dialog should no appear again.
+    // (This is https://bugs.kde.org/show_bug.cgi?id=361740)
+    part.reload();
+
+    // Open the file again.  Now we answer "yes, go to presentation mode"
+    dialogHelper = std::make_unique<TestingUtils::CloseDialogHelper>( &part, QDialogButtonBox::Yes );
+    QVERIFY( openDocument(&part, QStringLiteral(KDESRCDIR "data/RequestFullScreen.pdf")) );
+
+    // Test whether we really are in presentation mode
+    QTRY_VERIFY( part.m_presentationWidget );
 }
 
 } // namespace Okular

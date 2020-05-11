@@ -1702,7 +1702,7 @@ bool Part::openFile()
     // if the 'StartFullScreen' flag is set and we're not in viewer widget mode, or the command line flag was
     // specified, start presentation
     const bool presentationBecauseOfDocumentMetadata = ( m_embedMode != ViewerWidgetMode ) && m_document->metaData( QStringLiteral("StartFullScreen") ).toBool();
-    if ( presentationBecauseOfDocumentMetadata || m_cliPresentation )
+    if ( ( presentationBecauseOfDocumentMetadata || m_cliPresentation ) && !m_isReloading )
     {
         bool goAheadWithPresentationMode = true;
         if ( !m_cliPresentation )

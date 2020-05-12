@@ -67,7 +67,21 @@ QTextDocument* Converter::convert( const QString &fileName )
     m_fileDir = QDir( fileName.left( fileName.lastIndexOf( '/' ) ) );
 
     QTextDocument *doc = convertOpenFile();
-    extractLinks( doc->rootFrame() );
+    QHash<QString, QTextFragment> internalLinks;
+    QHash<QString, QTextBlock> documentAnchors;
+    extractLinks( doc->rootFrame(), internalLinks, documentAnchors );
+
+    for (auto linkIt = internalLinks.constBegin(); linkIt != internalLinks.constEnd(); ++linkIt) {
+        auto anchorIt = documentAnchors.constFind(linkIt.key());
+        if (anchorIt != documentAnchors.constEnd()) {
+            const Okular::DocumentViewport viewport = calculateViewport(doc, anchorIt.value());
+            Okular::GotoAction *action = new Okular::GotoAction(QString(), viewport);
+            emit addAction(action, linkIt.value().position(), linkIt.value().position()+linkIt.value().length());
+        } else {
+            qDebug() << "Could not find destination for" << linkIt.key();
+        }
+    }
+
     return doc;
 }
 
@@ -82,7 +96,7 @@ QTextDocument *Converter::convertOpenFile()
 
     MMIOT *markdownHandle = mkd_in( m_markdownFile, 0 );
     
-    int flags = MKD_FENCEDCODE | MKD_GITHUBTAGS | MKD_AUTOLINK;
+    int flags = MKD_FENCEDCODE | MKD_GITHUBTAGS | MKD_AUTOLINK | MKD_TOC | MKD_IDANCHOR;
     if (!MarkdownGenerator::isFancyPantsEnabled())
         flags |= MKD_NOPANTS;
     if ( !mkd_compile( markdownHandle, flags ) ) {
@@ -99,7 +113,7 @@ QTextDocument *Converter::convertOpenFile()
     textDocument->setPageSize( QSizeF( 980, 1307 ) );
     textDocument->setHtml( html );
     textDocument->setDefaultFont( generator()->generalSettings()->font() );
-    
+
     mkd_cleanup( markdownHandle );
     
     QTextFrameFormat frameFormat;
@@ -113,30 +127,39 @@ QTextDocument *Converter::convertOpenFile()
     return textDocument;
 }
 
-void Converter::extractLinks(QTextFrame * parent)
+void Converter::extractLinks(QTextFrame * parent, QHash<QString, QTextFragment> &internalLinks, QHash<QString, QTextBlock> &documentAnchors)
 {
     for ( QTextFrame::iterator it = parent->begin(); !it.atEnd(); ++it ) {
         QTextFrame *textFrame = it.currentFrame();
         const QTextBlock textBlock = it.currentBlock();
 
         if ( textFrame ) {
-            extractLinks(textFrame);
+            extractLinks(textFrame, internalLinks, documentAnchors);
         } else if ( textBlock.isValid() ) {
-            extractLinks(textBlock);
+            extractLinks(textBlock, internalLinks, documentAnchors);
         }
     }
 }
 
-void Converter::extractLinks(const QTextBlock & parent)
+void Converter::extractLinks(const QTextBlock & parent, QHash<QString, QTextFragment> &internalLinks, QHash<QString, QTextBlock> &documentAnchors)
 {
     for ( QTextBlock::iterator it = parent.begin(); !it.atEnd(); ++it ) {
         const QTextFragment textFragment = it.fragment();
         if ( textFragment.isValid() ) {
             const QTextCharFormat textCharFormat = textFragment.charFormat();
             if ( textCharFormat.isAnchor() ) {
-                Okular::BrowseAction *action = new Okular::BrowseAction( QUrl( textCharFormat.anchorHref() ) );
-                emit addAction( action, textFragment.position(), textFragment.position()+textFragment.length() );
-        
+                const QString href = textCharFormat.anchorHref();
+                if ( href.startsWith( '#' ) ) { // It's an internal link, store it and we'll resolve it at the end
+                    internalLinks.insert(href.mid(1), textFragment);
+                } else {
+                    Okular::BrowseAction *action = new Okular::BrowseAction( QUrl( textCharFormat.anchorHref() ) );
+                    emit addAction( action, textFragment.position(), textFragment.position()+textFragment.length() );
+                }
+
+                const QStringList anchorNames = textCharFormat.anchorNames();
+                for (const QString &anchorName : anchorNames) {
+                    documentAnchors.insert(anchorName, parent);
+                }
             }
         }
     }

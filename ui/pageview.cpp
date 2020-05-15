@@ -104,7 +104,7 @@ static const int pageflags = PagePainter::Accessibility | PagePainter::EnhanceLi
                        PagePainter::EnhanceImages | PagePainter::Highlights |
                        PagePainter::TextSelection | PagePainter::Annotations;
 
-static const std::array<float, 13> kZoomValues { 0.12, 0.25, 0.33, 0.50, 0.66, 0.75, 1.00, 1.25, 1.50, 2.00, 4.00, 8.00, 16.00 };
+static const std::array<float, 16> kZoomValues { 0.12, 0.25, 0.33, 0.50, 0.66, 0.75, 1.00, 1.25, 1.50, 2.00, 4.00, 8.00, 16.00, 25.00, 50.00, 100.00 };
 
 // This is the length of the text that will be shown when the user is searching for a specific piece of text.
 static const int searchTextPreviewLength = 21;
@@ -532,7 +532,7 @@ void PageView::setupBaseActions( KActionCollection * ac )
     d->aZoom  = new KSelectAction(QIcon::fromTheme( QStringLiteral("page-zoom") ), i18n("Zoom"), this);
     ac->addAction(QStringLiteral("zoom_to"), d->aZoom );
     d->aZoom->setEditable( true );
-    d->aZoom->setMaxComboViewCount( 14 );
+    d->aZoom->setMaxComboViewCount( kZoomValues.size() + 3 );
     connect( d->aZoom, QOverload<QAction*>::of(&KSelectAction::triggered), this, &PageView::slotZoom );
     updateZoomText();
 
@@ -2774,7 +2774,7 @@ void PageView::mouseReleaseEvent( QMouseEvent * e )
                 double nX = (double)(selRect.left() + selRect.right()) / (2.0 * (double)contentAreaWidth());
                 double nY = (double)(selRect.top() + selRect.bottom()) / (2.0 * (double)contentAreaHeight());
 
-                const float upperZoomLimit = d->document->supportsTiles() ? 16.0 : 4.0;
+                const float upperZoomLimit = d->document->supportsTiles() ? 100.0 : 4.0;
                 if ( d->zoomFactor <= upperZoomLimit || zoom <= 1.0 )
                 {
                     d->zoomFactor *= zoom;
@@ -4200,7 +4200,7 @@ void PageView::updateZoom( ZoomMode newZoomMode )
             d->zoomFactor = -1;
             break;
     }
-    const float upperZoomLimit = d->document->supportsTiles() ? 16.0 : 4.0;
+    const float upperZoomLimit = d->document->supportsTiles() ? 100.0 : 4.0;
     if ( newFactor > upperZoomLimit )
         newFactor = upperZoomLimit;
     if ( newFactor < 0.1 )
@@ -4253,7 +4253,7 @@ void PageView::updateZoomText()
     bool inserted = false; //use: "d->zoomMode != ZoomFixed" to hide Fit/* zoom ratio
     int zoomValueCount = 11;
     if ( d->document->supportsTiles() )
-        zoomValueCount = 13;
+        zoomValueCount = kZoomValues.size();
     while ( idx < zoomValueCount || !inserted )
     {
         float value = idx < zoomValueCount ? kZoomValues[ idx ] : newFactor;

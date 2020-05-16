@@ -72,6 +72,12 @@ Q_DECLARE_METATYPE(const Poppler::LinkMovie*)
 Q_DECLARE_METATYPE(const Poppler::LinkRendition*)
 Q_DECLARE_METATYPE(const Poppler::LinkOCGState*)
 
+#ifdef HAVE_POPPLER_0_73
+#define POPPLER_VERSION_MACRO ((POPPLER_VERSION_MAJOR<<16)|(POPPLER_VERSION_MINOR<<8)|(POPPLER_VERSION_MICRO))
+#else
+#define POPPLER_VERSION_MACRO 0
+#endif
+
 static const int defaultPageWidth = 595;
 static const int defaultPageHeight = 842;
 
@@ -772,7 +778,7 @@ void PDFGenerator::loadPages(QVector<Okular::Page*> &pagesVector, int rotation, 
             page->setLabel( p->label() );
 
             QLinkedList<Okular::FormField*> okularFormFields;
-#ifdef HAVE_POPPLER_0_88
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(0, 89, 0)
             if ( i > 0 ) // for page 0 we handle the form fields at the end
                 okularFormFields = getFormFields( p );
 #else
@@ -802,7 +808,7 @@ void PDFGenerator::loadPages(QVector<Okular::Page*> &pagesVector, int rotation, 
     // we do that because there's signatures that don't belong to any page, but okular needs a page<->signature mapping
     if ( count > 0 )
     {
-#ifdef HAVE_POPPLER_0_88
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(0, 89, 0)
         const QVector<Poppler::FormFieldSignature*> allSignatures = pdfdoc->signatures();
         Poppler::Page * page0 = pdfdoc->page( 0 );
         QLinkedList<Okular::FormField*> page0FormFields = getFormFields( page0 );

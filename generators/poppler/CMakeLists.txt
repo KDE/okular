@@ -104,16 +104,6 @@ int main()
 }
 " HAVE_POPPLER_0_87)
 
-check_cxx_source_compiles("
-#include <poppler-qt5.h>
-int main()
-{
-    Poppler::Document *d = nullptr;
-    d->signatures();
-    return 0;
-}
-" HAVE_POPPLER_0_88)
-
 configure_file(
    ${CMAKE_CURRENT_SOURCE_DIR}/config-okular-poppler.h.cmake
    ${CMAKE_CURRENT_BINARY_DIR}/config-okular-poppler.h

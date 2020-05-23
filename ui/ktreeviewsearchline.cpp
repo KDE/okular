@@ -64,7 +64,7 @@ class KTreeViewSearchLine::Private
     void slotRegularExpression();
 
     void checkItemParentsNotVisible(QTreeView *treeView);
-    bool checkItemParentsVisible(QTreeView *treeView, const QModelIndex &index);
+    bool filterItems(QTreeView *treeView, const QModelIndex &index);
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -129,12 +129,12 @@ void KTreeViewSearchLine::Private::slotRegularExpression()
  *  \return \c true if an item which should be visible is found, \c false if all items found should be hidden. If this function
  *             returns true and \p highestHiddenParent was not 0, highestHiddenParent will have been shown.
  */
-bool KTreeViewSearchLine::Private::checkItemParentsVisible( QTreeView *treeView, const QModelIndex &index )
+bool KTreeViewSearchLine::Private::filterItems( QTreeView *treeView, const QModelIndex &index )
 {
   bool childMatch = false;
   const int rowcount = treeView->model()->rowCount( index );
   for ( int i = 0; i < rowcount; ++i )
-    childMatch |= checkItemParentsVisible( treeView, treeView->model()->index( i, 0, index ) );
+    childMatch |= filterItems( treeView, treeView->model()->index( i, 0, index ) );
 
   // Should this item be shown? It should if any children should be, or if it matches.
   const QModelIndex parentindex = index.parent();
@@ -211,8 +211,7 @@ void KTreeViewSearchLine::updateSearch( QTreeView *treeView )
 
   bool wasUpdateEnabled = treeView->updatesEnabled();
   treeView->setUpdatesEnabled( false );
-  for ( int i = 0; i < treeView->model()->rowCount(); ++i )
-    d->checkItemParentsVisible( treeView, treeView->rootIndex() );
+  d->filterItems( treeView, treeView->rootIndex() );
   treeView->setUpdatesEnabled( wasUpdateEnabled );
 
   if ( currentIndex.isValid() )
@@ -259,10 +258,11 @@ bool KTreeViewSearchLine::itemMatches( const QModelIndex &parentIndex, int row, 
     return false;
 
   // Construct a regular expression object with the right options.
-  QRegularExpression re(
-      d->regularExpression ? pattern : QRegularExpression::escape(pattern),
-      d->caseSensitive ? QRegularExpression::NoPatternOption : QRegularExpression::CaseInsensitiveOption );
-  QRegularExpressionMatch match;
+  QRegularExpression re;
+  if (d->regularExpression) {
+    re.setPattern(pattern);
+    re.setPatternOptions(d->caseSensitive ? QRegularExpression::NoPatternOption : QRegularExpression::CaseInsensitiveOption);
+  }
 
   // If the search column list is populated, search just the columns
   // specified.  If it is empty default to searching all of the columns.
@@ -270,9 +270,10 @@ bool KTreeViewSearchLine::itemMatches( const QModelIndex &parentIndex, int row, 
   const int columncount = model->columnCount( parentIndex );
   for ( int i = 0; i < columncount; ++i) {
     const QString str = model->data( model->index( row, i, parentIndex ), Qt::DisplayRole ).toString();
-    match = re.match( str );
-    if ( match.hasMatch() ) {
-        return true;
+    if (d->regularExpression) {
+      return str.contains(re);
+    } else {
+      return str.contains(pattern, d->caseSensitive? Qt::CaseSensitive : Qt::CaseInsensitive);
     }
   }
 

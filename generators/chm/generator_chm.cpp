@@ -65,7 +65,6 @@ CHMGenerator::~CHMGenerator()
 
 bool CHMGenerator::loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector )
 {
-    m_file = new EBook_CHM();
     m_file = EBook::loadFile( fileName );
     if (!m_file)
     {

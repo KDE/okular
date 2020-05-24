@@ -70,7 +70,7 @@ Q_OBJECT
         void setupBaseActions( KActionCollection * ac );
         void setupViewerActions( KActionCollection * ac );
         void setupActions( KActionCollection * ac );
-        void updateActionState( bool docHasPages, bool documentChanged, bool docHasFormWidgets );
+        void updateActionState( bool docHasPages, bool docHasFormWidgets );
 
         // misc methods (from RMB menu/children)
         bool canFitPageWidth() const;
@@ -267,7 +267,6 @@ Q_OBJECT
         void slotRotateClockwise();
         void slotRotateCounterClockwise();
         void slotRotateOriginal();
-        void slotPageSizes( int );
         void slotTrimMarginsToggled( bool );
         void slotTrimToSelectionToggled( bool );
         void slotToggleForms();

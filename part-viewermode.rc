@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="okular_part_viewermode" version="5">
+<kpartgui name="okular_part_viewermode" version="6">
 
 <MenuBar>
   <Menu name="file"><text>&amp;File</text>
@@ -33,7 +33,6 @@
     <Action name="view_orientation_rotate_cw" group="viewer_menu_merge"/>
     <Action name="view_orientation_original" group="viewer_menu_merge"/>
   </Menu>
-  <Action name="view_pagesizes" group="viewer_menu_merge"/>
   <Action name="view_trim" group="viewer_menu_merge"/>
   <Separator group="viewer_menu_merge"/>
   <Action name="go_previous" group="viewer_menu_merge"/>

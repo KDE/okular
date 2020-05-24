@@ -1556,25 +1556,6 @@ Context menu actions like Rename Bookmarks etc.)
 					<term>
 						<menuchoice>
 							<guimenu>View</guimenu>
-							<guisubmenu>Page Size</guisubmenu>
-						</menuchoice>
-					</term>
-					<listitem>
-						<para>
-							<action>Changes the size of the pages</action> of the document.
-						</para>
-						<note>
-							<para>
-								This submenu is active only if the current type of document
-								supports different page sizes.
-							</para>
-						</note>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
-					<term>
-						<menuchoice>
-							<guimenu>View</guimenu>
 							<guisubmenu>Trim View</guisubmenu>
 						</menuchoice>
 					</term>

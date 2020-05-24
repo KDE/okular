@@ -641,7 +641,7 @@ m_cliPresentation(false), m_cliPrint(false), m_cliPrintAndExit(false), m_embedMo
     updateViewActions();
 
     // also update the state of the actions in the page view
-    m_pageView->updateActionState( false, false, false );
+    m_pageView->updateActionState( false, false );
 
     if ( m_embedMode == NativeShellMode )
         m_sidebar->setAutoFillBackground( false );

@@ -100,6 +100,7 @@ class PartTest
         void testTabletProximityBehavior();
         void testOpenPrintPreview();
         void testMouseModeMenu();
+        void testZoomInFacingPages();
 
     private:
         void simulateMouseSelection(double startX, double startY, double endX, double endY, QWidget *target);
@@ -1990,6 +1991,29 @@ void PartTest::testMouseModeMenu()
     // Test activating table selection mode
     mouseModeActionMenu->actions().at(2)->trigger();
     QCOMPARE(Okular::Settings::mouseMode(), (int)Okular::Settings::EnumMouseMode::TableSelect );
+}
+
+void PartTest::testZoomInFacingPages()
+{
+    QVariantList dummyArgs;
+    Okular::Part part(nullptr, nullptr, dummyArgs);
+    QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/file2.pdf")));
+    QAction *facingAction = part.m_pageView->findChild<QAction*>(QStringLiteral("view_render_mode_facing"));
+    KSelectAction *zoomSelectAction = part.m_pageView->findChild<KSelectAction*>(QStringLiteral("zoom_to"));
+    part.widget()->resize(600, 400);
+    part.widget()->show();
+    QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
+    facingAction->trigger();
+    while (zoomSelectAction->currentText() != "12%") {
+        QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotZoomOut"));
+    }
+    QTRY_VERIFY( part.m_document->page( 0 )->hasPixmap( part.m_pageView ) );
+    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotZoomIn"));
+    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotZoomIn"));
+    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotZoomIn"));
+    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotZoomIn"));
+    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotZoomIn"));
+    QTRY_COMPARE(zoomSelectAction->currentText(), QStringLiteral("66%"));
 }
 
 } // namespace Okular

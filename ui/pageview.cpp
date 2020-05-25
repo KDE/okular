@@ -4097,7 +4097,7 @@ double PageView::zoomFactorFitMode( ZoomMode mode )
     const bool facingCentered = Okular::Settings::viewMode() == Okular::Settings::EnumViewMode::FacingFirstCentered || (Okular::Settings::viewMode() == Okular::Settings::EnumViewMode::Facing && pageCount == 1);
     const bool overrideCentering = facingCentered && pageCount < 3;
     const int nCols = overrideCentering ? 1 : viewColumns();
-    const double colWidth = viewport()->width() / static_cast<double>(nCols) - kcolWidthMargin;
+    const int colWidth = viewport()->width() / nCols - kcolWidthMargin;
     const double rowHeight = viewport()->height() - krowHeightMargin;
     const PageViewItem * currentItem = d->items[ qMax( 0, (int)d->document->currentPage()) ];
     // prevent segmentation fault when opening a new document;

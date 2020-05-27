@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="okular_part" version="44">
+<kpartgui name="okular_part" version="45">
 <MenuBar>
   <Menu name="file"><text>&amp;File</text>
     <Action name="get_new_stuff" group="file_open"/>
@@ -95,8 +95,7 @@
   </Menu>
 </MenuBar>
 <ToolBar name="mainToolBar"><text>Main Toolbar</text>
-  <Action name="go_previous"/>
-  <Action name="go_next"/>
+  <Action name="show_leftpanel"/>
   <Separator/>
   <Action name="zoom_to" />
   <Action name="view_zoom_out"/>

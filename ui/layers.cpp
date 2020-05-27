@@ -11,9 +11,13 @@
 #include "settings.h"
 
 // qt/kde includes
+#include <ktitlewidget.h>
+#include <klocalizedstring.h>
 #include <QVBoxLayout>
 #include <QTreeView>
 #include <qheaderview.h>
+
+#include <kwidgetsaddons_version.h>
 
 // local includes
 #include "core/document.h"
@@ -23,11 +27,17 @@
 Layers::Layers(QWidget *parent, Okular::Document *document) : QWidget(parent), m_document(document)
 {
     QVBoxLayout * const mainlay = new QVBoxLayout( this );
-    mainlay->setContentsMargins( 0, 0, 0, 0 );
     mainlay->setSpacing( 6 );
 
     m_document->addObserver( this );
 
+    KTitleWidget *titleWidget = new KTitleWidget( this );
+    #if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 53, 0)
+    titleWidget->setLevel( 2 );
+    #endif
+    titleWidget->setText( i18n( "Layers" ) );
+    mainlay->addWidget( titleWidget );
+    mainlay->setAlignment( titleWidget, Qt::AlignHCenter );
     m_searchLine = new KTreeViewSearchLine( this );
     mainlay->addWidget( m_searchLine );
     m_searchLine->setCaseSensitivity( Okular::Settings::self()->layersSearchCaseSensitive() ? Qt::CaseSensitive : Qt::CaseInsensitive );

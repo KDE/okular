@@ -20,9 +20,13 @@
 #include <QSizePolicy>
 #include <QStyle>
 #include <QTimer>
+#include <QVBoxLayout>
 
 #include <KLocalizedString>
 #include <KActionCollection>
+#include <KTitleWidget>
+
+#include <kwidgetsaddons_version.h>
 
 // local includes
 #include "pagepainter.h"
@@ -35,6 +39,25 @@
 #include "priorities.h"
 
 class ThumbnailWidget;
+
+ThumbnailsBox::ThumbnailsBox( QWidget * parent ) : QWidget( parent ) {
+    QVBoxLayout *vbox = new QVBoxLayout(this);
+    vbox->setSpacing(0);
+
+    KTitleWidget *titleWidget = new KTitleWidget( this );
+    #if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 53, 0)
+    titleWidget->setLevel( 2 );
+    #endif
+    titleWidget->setText( i18n( "Thumbnails" ) );
+    vbox->addWidget( titleWidget );
+    vbox->setAlignment( titleWidget, Qt::AlignHCenter );
+}
+
+QSize ThumbnailsBox::sizeHint() const
+{
+    return QSize();
+}
+
 
 class ThumbnailListPrivate : public QWidget
 {

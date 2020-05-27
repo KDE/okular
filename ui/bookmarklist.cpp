@@ -21,7 +21,10 @@
 #include <QIcon>
 
 #include <KLocalizedString>
+#include <KTitleWidget>
 #include <KTreeWidgetSearchLine>
+
+#include <kwidgetsaddons_version.h>
 
 #include "pageitemdelegate.h"
 #include "core/action.h"
@@ -125,9 +128,15 @@ BookmarkList::BookmarkList( Okular::Document *document, QWidget *parent )
     : QWidget( parent ), m_document( document ), m_currentDocumentItem( nullptr )
 {
     QVBoxLayout *mainlay = new QVBoxLayout( this );
-    mainlay->setContentsMargins( 0, 0, 0, 0 );
     mainlay->setSpacing( 6 );
 
+    KTitleWidget *titleWidget = new KTitleWidget( this );
+    #if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 53, 0)
+    titleWidget->setLevel( 2 );
+    #endif
+    titleWidget->setText( i18n( "Bookmarks" ) );
+    mainlay->addWidget( titleWidget );
+    mainlay->setAlignment( titleWidget, Qt::AlignHCenter );
     m_searchLine = new KTreeWidgetSearchLine( this );
     mainlay->addWidget( m_searchLine );
     m_searchLine->setPlaceholderText(i18n( "Search..." ));

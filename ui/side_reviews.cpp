@@ -23,7 +23,10 @@
 #include <qaction.h>
 #include <KLocalizedString>
 #include <kiconloader.h>
+#include <KTitleWidget>
 #include <QIcon>
+
+#include <kwidgetsaddons_version.h>
 
 // local includes
 #include "core/annotations.h"
@@ -89,8 +92,13 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
 {
     // create widgets and layout them vertically
     QVBoxLayout * vLayout = new QVBoxLayout( this );
-    vLayout->setContentsMargins( 0, 0, 0, 0 );
     vLayout->setSpacing( 6 );
+
+    KTitleWidget *titleWidget = new KTitleWidget( this );
+    #if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 53, 0)
+    titleWidget->setLevel( 2 );
+    #endif
+    titleWidget->setText( i18n("Reviews") );
 
     m_view = new TreeView( m_document, this );
     m_view->setAlternatingRowColors( true );
@@ -121,6 +129,8 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
     m_searchLine->setCaseSensitivity( Okular::Settings::self()->reviewsSearchCaseSensitive() ? Qt::CaseSensitive : Qt::CaseInsensitive );
     m_searchLine->setRegularExpression( Okular::Settings::self()->reviewsSearchRegularExpression() );
     connect(m_searchLine, &KTreeViewSearchLine::searchOptionsChanged, this, &Reviews::saveSearchOptions);
+    vLayout->addWidget( titleWidget );
+    vLayout->setAlignment( titleWidget, Qt::AlignHCenter );
     vLayout->addWidget( m_searchLine );
     vLayout->addWidget( m_view );
     vLayout->addWidget( toolBar );

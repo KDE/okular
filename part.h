@@ -237,7 +237,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         void enableTOC(bool enable);
         void slotRebuildBookmarkMenu();
         void enableLayers( bool enable );
-        void showSidebarSignaturesItem( bool show );
+        void enableSidebarSignaturesItem( bool enable );
 
     public Q_SLOTS:
         bool saveFile() override;
@@ -316,6 +316,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         QPointer<ThumbnailList> m_thumbnailList;
         QPointer<PageView> m_pageView;
         QPointer<TOC> m_toc;
+        bool m_tocEnabled;
         QPointer<MiniBarLogic> m_miniBarLogic;
         QPointer<MiniBar> m_miniBar;
         QPointer<MiniBar> m_pageNumberTool;
@@ -326,7 +327,9 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         QPointer<Reviews> m_reviewsWidget;
         QPointer<BookmarkList> m_bookmarkList;
         QPointer<Layers> m_layers;
+        bool m_layersEnabled;
         QPointer<SignaturePanel> m_signaturePanel;
+        bool m_signaturePanelEnabled;
 
         // document watcher (and reloader) variables
         KDirWatch *m_watcher;
@@ -338,7 +341,6 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         bool m_wasPresentationOpen;
         QWidget *m_dirtyToolboxItem;
         bool m_wasSidebarVisible;
-        bool m_wasSidebarCollapsed;
         bool m_fileWasRemoved;
         Rotation m_dirtyPageRotation;
 

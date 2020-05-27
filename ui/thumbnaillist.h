@@ -12,7 +12,6 @@
 
 #include <QScrollArea>
 #include <QToolBar>
-#include <QVBoxLayout>
 
 #include "core/observer.h"
 
@@ -77,8 +76,8 @@ class ThumbnailsBox : public QWidget
     Q_OBJECT
 
     public:
-        explicit ThumbnailsBox( QWidget * parent ) : QWidget( parent ) { QVBoxLayout *vbox = new QVBoxLayout(this); vbox->setContentsMargins(0, 0, 0, 0); vbox->setSpacing(0);}
-        QSize sizeHint() const override { return QSize(); }
+        explicit ThumbnailsBox( QWidget * parent );
+        QSize sizeHint() const override;
 };
 
 /**

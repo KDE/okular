@@ -15,6 +15,9 @@
 #include "revisionviewer.h"
 #include "signaturepropertiesdialog.h"
 
+#include <kwidgetsaddons_version.h>
+
+#include <KTitleWidget>
 #include <KLocalizedString>
 
 #include <QMenu>
@@ -40,6 +43,14 @@ SignaturePanel::SignaturePanel( Okular::Document *document, QWidget *parent )
     : QWidget( parent ), d_ptr( new SignaturePanelPrivate )
 {
     Q_D( SignaturePanel );
+
+
+    KTitleWidget *titleWidget = new KTitleWidget( this );
+    #if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 53, 0)
+    titleWidget->setLevel( 2 );
+    #endif
+    titleWidget->setText( i18n( "Signatures" ) );
+
     d->m_view = new QTreeView( this );
     d->m_view->setAlternatingRowColors( true );
     d->m_view->setSelectionMode( QAbstractItemView::SingleSelection );
@@ -54,8 +65,10 @@ SignaturePanel::SignaturePanel( Okular::Document *document, QWidget *parent )
     connect( d->m_view, &QTreeView::customContextMenuRequested, this, &SignaturePanel::slotShowContextMenu );
 
     auto vLayout = new QVBoxLayout( this );
-    vLayout->setContentsMargins( 0, 0, 0, 0 );
     vLayout->setSpacing( 6 );
+
+    vLayout->addWidget( titleWidget );
+    vLayout->setAlignment( titleWidget, Qt::AlignHCenter );
     vLayout->addWidget( d->m_view );
 }
 

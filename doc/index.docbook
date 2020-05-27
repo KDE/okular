@@ -6,9 +6,8 @@
   <!ENTITY % addindex "IGNORE">
 ]>
 <!-- TODO
-add chapter about navigation panel
-Show/Hide Contens/Thumbnails/Reviews/Bookmarks bar to save screen space
-Use Small Icons and deselect Show Text to minimize the navigation panel
+add chapter about sidebar
+Show/Hide the whole thing to save screen space
 Describe all actions only possible in the navigation bars:
 Switching between documents using bookmarks
 Context menu actions like Rename Bookmarks etc.)
@@ -150,7 +149,7 @@ Context menu actions like Rename Bookmarks etc.)
 			Once you cross the border of a page, the mouse cursor appears on top or bottom of the screen again and you can just continue to drag.
 			</para>
 			<para>
-				The navigation panel on the left side of the screen enables two more ways of navigating
+				The sidebar on the left side of the screen enables two more ways of navigating
 				through a document:
 			</para>
 			<itemizedlist>
@@ -497,7 +496,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<para>Text annotations like <guilabel>Yellow Highlighter</guilabel> and <guilabel>Black Underlining</guilabel>
 			for files with text like &eg; &PDF;.</para>
 		      <para>Graphic annotations like <guilabel>Pop-up Note</guilabel>, <guilabel>Inline Note</guilabel>, <guilabel>Freehand Line</guilabel>, <guilabel>Highlighter</guilabel>, <guilabel>Straight Line</guilabel>, <guilabel>Polygon</guilabel>, <guilabel>Stamp</guilabel>, <guilabel>Underline</guilabel>, <guilabel>Ellipse</guilabel>, and <guilabel>Typewriter</guilabel> for all formats supported by &okular;.</para>
-			<para>Using the context menu either in the <guilabel>Reviews</guilabel> view of the navigation panel or in the main window you can open a <guilabel>Pop up Note</guilabel> for any kind of annotation and add or edit comments.</para>
+			<para>Using the context menu either in the <guilabel>Reviews</guilabel> view of the sidebar or in the main window you can open a <guilabel>Pop up Note</guilabel> for any kind of annotation and add or edit comments.</para>
 			<para>Annotations are not only limited to &PDF; files, they can be used for any format &okular; supports.</para>
 			<para>
                 &okular; has the "document archiving" feature. This is an &okular;-specific format for carrying the document plus various metadata related to it (currently only annotations). You can save a "document archive" from the open document by choosing <menuchoice><guimenu>File</guimenu><guisubmenu>Save As</guisubmenu></menuchoice> and selecting <guilabel>Okular document archive</guilabel> in the <guilabel>Filter</guilabel> selector. Documents saved this way will get <filename>.okular</filename> as their filename extension. To open an &okular; document archive, just open it with &okular; as it would be &eg; a &PDF; document.
@@ -929,13 +928,12 @@ Context menu actions like Rename Bookmarks etc.)
 				&okular; has a very flexible bookmark system. &okular; saves the position on the page in bookmark and allows you to define more than one bookmark per page.
 			</para>
 			<para>
-			  To manage bookmarks in &okular; you can use <guilabel>Bookmarks</guilabel> view from <guilabel>Navigation Panel</guilabel>, <link linkend="menubookmarks">Bookmarks menu</link> or context menu of document view (click with &RMB; to open it).
+			  To manage bookmarks in &okular; you can use <guilabel>Bookmarks</guilabel> view from <guilabel>Sidebar</guilabel>, <link linkend="menubookmarks">Bookmarks menu</link> or context menu of document view (click with &RMB; to open it).
 			</para>
 			<sect2 id="bookmarks-view">
 				<title>Bookmarks view</title>
 				<para>
-				  To open <guilabel>Bookmarks</guilabel> view click on <guilabel>Bookmarks</guilabel> item on the <guilabel>Navigation Panel</guilabel>. If the <guilabel>Navigation Panel</guilabel> is not shown, use <menuchoice><shortcut><keycap>F7</keycap></shortcut> <guimenu>Settings</guimenu><guimenuitem>Show Navigation Panel</guimenuitem>
-				  </menuchoice> main menu item to make it visible.
+                    To open <guilabel>Bookmarks</guilabel> view, click on the <guilabel>Bookmarks</guilabel> tab at the top of the <guilabel>Sidebar</guilabel>. If the <guilabel>Sidebar</guilabel> is not shown, click the <guibutton>Show Sidebar</guibutton> button on the toolbar or the  menu item, or the <menuchoice><shortcut><keycap>F7</keycap></shortcut> <guimenu>Settings</guimenu><guimenuitem>Show Sidebar</guimenuitem></menuchoice> menu item to make it visible.
 				</para>
 				<screenshot>
 				    <screeninfo>Bookmark view context menu</screeninfo>
@@ -1897,11 +1895,11 @@ Context menu actions like Rename Bookmarks etc.)
 						<menuchoice>
 							<shortcut><keycap>F7</keycap></shortcut>
 							<guimenu>Settings</guimenu>
-							<guimenuitem>Show Navigation Panel</guimenuitem>
+							<guimenuitem>Show Sidebar</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
-						<para><action>Toggle the navigation panel</action> on and off.</para>
+						<para><action>Shows or hides the Sidebar.</action></para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>

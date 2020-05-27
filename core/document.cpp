@@ -167,7 +167,7 @@ QString DocumentPrivate::pagesSizeString() const
         {
             QSizeF size = m_parent->allPagesSize();
             if (size.isValid()) return localizedSize(size);
-            else return QString();
+            else return i18nc("Used in this context: 'Page sizes: Multiple'", "Multiple");
         }
         else return QString();
     }

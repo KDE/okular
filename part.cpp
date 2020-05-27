@@ -772,6 +772,7 @@ void Part::setupViewerActions()
     m_showProperties = ac->addAction(QStringLiteral("properties"));
     m_showProperties->setText(i18n("&Properties"));
     m_showProperties->setIcon(QIcon::fromTheme(QStringLiteral("document-properties")));
+    ac->setDefaultShortcuts(m_showProperties, {QKeySequence(Qt::ALT + Qt::Key_Return)});
     connect(m_showProperties, &QAction::triggered, this, &Part::slotShowProperties);
     m_showProperties->setEnabled( false );
 

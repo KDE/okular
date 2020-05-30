@@ -109,7 +109,7 @@ static bool attachExistingInstance(const QStringList &paths, const QString &seri
         // Returns false if it can't fit another document
         const QDBusReply<bool> reply = bestService->call( QStringLiteral("openDocument"), path, serializedOptions );
         if( !reply.isValid() || !reply.value() )
-        return false;
+            return false;
     }
 
     bestService->call( QStringLiteral("tryRaise") );

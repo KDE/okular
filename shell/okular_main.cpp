@@ -47,6 +47,11 @@ static bool attachExistingInstance(const QStringList &paths, const QString &seri
     if ( paths.count() < 1 )
         return false;
 
+    // Don't try to attach to an existing instance with --print-and-exit because that would mean
+    // we're going to exit that other instance and that's just rude
+    if ( ShellUtils::showPrintDialogAndExit(serializedOptions) )
+        return false;
+
     const QStringList services = QDBusConnection::sessionBus().interface()->registeredServiceNames().value();
 
     // Don't match the service without trailing "-" (unique instance)

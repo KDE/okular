@@ -2246,23 +2246,19 @@ void Part::slotRebuildBookmarkMenu()
 void Part::enableLayers(bool enable)
 {
     if ( !enable ) {
-        m_layersEnabled = false;
         return;
     }
 
     m_sidebar->addItem( m_layers, QIcon::fromTheme( QStringLiteral("format-list-unordered") ), i18n( "Layers" ) );
-    m_layersEnabled = true;
 }
 
 void Part::enableSidebarSignaturesItem( bool enable )
 {
     if ( !enable ) {
-        m_signaturePanelEnabled = false;
         return;
     }
 
     m_sidebar->addItem( m_signaturePanel, QIcon::fromTheme(QStringLiteral("application-pkcs7-signature")), i18n("Signatures") );
-    m_signaturePanelEnabled = true;
 }
 
 void Part::slotShowFindBar()

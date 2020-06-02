@@ -327,9 +327,7 @@ class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::Docu
         QPointer<Reviews> m_reviewsWidget;
         QPointer<BookmarkList> m_bookmarkList;
         QPointer<Layers> m_layers;
-        bool m_layersEnabled;
         QPointer<SignaturePanel> m_signaturePanel;
-        bool m_signaturePanelEnabled;
 
         // document watcher (and reloader) variables
         KDirWatch *m_watcher;

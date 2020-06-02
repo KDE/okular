@@ -20,6 +20,7 @@
 class QLabel;
 class QProgressBar;
 class FontsListModel;
+class PageSizesModel;
 
 namespace Okular {
 class Document;
@@ -44,6 +45,7 @@ class PropertiesDialog : public KPageDialog
         Okular::Document * m_document;
         KPageWidgetItem * m_fontPage;
         FontsListModel * m_fontModel;
+        PageSizesModel * m_pageSizesModel;
         QLabel * m_fontInfo;
         QProgressBar * m_fontProgressBar;
         bool m_fontScanStarted;
@@ -69,6 +71,25 @@ class FontsListModel
 
   private:
     QList<Okular::FontInfo> m_fonts;
+};
+
+class PageSizesModel
+  : public QAbstractTableModel
+{
+  Q_OBJECT
+
+  public:
+    explicit PageSizesModel( QObject * parent = nullptr, Okular::Document *doc = nullptr );
+    ~PageSizesModel() override;
+
+    // reimplementations from QAbstractTableModel
+    int columnCount( const QModelIndex &parent = QModelIndex() ) const override;
+    QVariant data( const QModelIndex &index, int role = Qt::DisplayRole ) const override;
+    QVariant headerData( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const override;
+    int rowCount( const QModelIndex &parent = QModelIndex() ) const override;
+
+    private:
+      Okular::Document * m_document;
 };
 
 #endif

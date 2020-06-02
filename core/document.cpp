@@ -166,8 +166,37 @@ QString DocumentPrivate::pagesSizeString() const
         if (m_generator->pagesSizeMetric() != Generator::None)
         {
             QSizeF size = m_parent->allPagesSize();
+            // Single page size
             if (size.isValid()) return localizedSize(size);
-            else return i18nc("Used in this context: 'Page sizes: Multiple'", "Multiple");
+
+            // Multiple page sizes
+            QString sizeString;
+            QHash<QString, int> pageSizeFrequencies;
+
+            // Compute frequencies of each page size
+            for (int i = 0; i < m_pagesVector.count(); ++i)
+            {
+                const Page *p = m_pagesVector.at(i);
+                sizeString = localizedSize( QSizeF( p->width(), p->height() ) );
+                pageSizeFrequencies[sizeString] = pageSizeFrequencies.value(sizeString, 0) + 1;
+            }
+
+            // Figure out which page size is most frequent
+            int largestFrequencySeen = 0;
+            QString mostCommonPageSize = QString();
+            QHash<QString, int>::const_iterator i = pageSizeFrequencies.constBegin();
+            while (i != pageSizeFrequencies.constEnd())
+            {
+                if (i.value() > largestFrequencySeen)
+                {
+                    largestFrequencySeen = i.value();
+                    mostCommonPageSize = i.key();
+                }
+                ++i;
+            }
+            QString finalText = i18nc( "@info %1 is a page size", "Most pages are %1.", mostCommonPageSize );
+
+            return finalText;
         }
         else return QString();
     }

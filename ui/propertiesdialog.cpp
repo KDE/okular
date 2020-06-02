@@ -23,6 +23,7 @@
 #include <QProgressBar>
 #include <QPushButton>
 #include <QSortFilterProxyModel>
+#include <QTableView>
 #include <QTreeView>
 #include <QTimer>
 
@@ -41,8 +42,8 @@ static const int FontInfoRole = Qt::UserRole + 1;
 
 PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
     : KPageDialog( parent ), m_document( doc ), m_fontPage( nullptr ),
-      m_fontModel( nullptr ), m_fontInfo( nullptr ), m_fontProgressBar( nullptr ),
-      m_fontScanStarted( false )
+      m_fontModel( nullptr ), m_pageSizesModel ( nullptr ), m_fontInfo( nullptr ),
+      m_fontProgressBar( nullptr ), m_fontScanStarted( false )
 {
     setFaceType( Tabbed );
     setWindowTitle( i18n( "Unknown File" ) );
@@ -152,6 +153,30 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
         m_fontProgressBar->setRange( 0, 100 );
         m_fontProgressBar->setValue( 0 );
         m_fontProgressBar->hide();
+    }
+
+    // PAGE SIZES
+    if ( !m_document->allPagesSize().isValid() ) {
+        // create page sizes tab tab and layout it when there are multiple page sizes
+        QFrame *page3 = new QFrame();
+        KPageWidgetItem *pageSizesPage = addPage( page3, i18n("&Page Sizes") );
+        pageSizesPage->setIcon( QIcon::fromTheme( QStringLiteral( "view-pages-overview" ) ) );
+        QVBoxLayout *page3Layout = new QVBoxLayout( page3 );
+
+        // Add a table view
+        QTableView *view = new QTableView( page3 );
+        m_pageSizesModel = new PageSizesModel( view, m_document );
+        page3Layout->addWidget( view );
+        view->setModel( m_pageSizesModel );
+        view->setAlternatingRowColors( true );
+        view->setCornerButtonEnabled( false );
+        view->resizeColumnsToContents();
+        view->verticalHeader()->hide();
+
+        // Stretch the last column, which is the widest
+        QHeaderView *headerView = view->horizontalHeader();
+        headerView->setSectionResizeMode(0, QHeaderView::Interactive);
+        headerView->setSectionResizeMode(1, QHeaderView::Stretch);
     }
 
     // KPageDialog is a bit buggy, it doesn't fix its own sizeHint, so we have to manually resize
@@ -422,6 +447,67 @@ QVariant FontsListModel::headerData( int section, Qt::Orientation orientation, i
 int FontsListModel::rowCount( const QModelIndex &parent ) const
 {
     return parent.isValid() ? 0 : m_fonts.size();
+}
+
+PageSizesModel::PageSizesModel( QObject * parent, Okular::Document *doc )
+  : QAbstractTableModel( parent ), m_document ( doc )
+{
+}
+
+PageSizesModel::~PageSizesModel()
+{
+}
+
+
+int PageSizesModel::columnCount( const QModelIndex &parent ) const
+{
+    return parent.isValid() ? 0 : 2;
+}
+
+QVariant PageSizesModel::data( const QModelIndex &index, int role ) const
+{
+    if ( !index.isValid() || index.row() < 0 || index.row() >= (int) m_document->pages() )
+        return QVariant();
+
+    switch ( index.column() )
+    {
+        case 0:
+        {
+            if (role == Qt::DisplayRole) return index.row() + 1; // Page zero doesn't make sense to the user
+            else if (role == Qt::TextAlignmentRole) return Qt::AlignCenter;
+            break;
+        }
+        case 1:
+            if (role == Qt::DisplayRole) return m_document->pageSizeString( index.row() );
+            break;
+    }
+
+    return QVariant();
+}
+
+QVariant PageSizesModel::headerData( int section, Qt::Orientation orientation, int role ) const
+{
+    if ( orientation != Qt::Horizontal )
+        return QVariant();
+
+    if ( role == Qt::TextAlignmentRole )
+        return QVariant( Qt::AlignLeft );
+
+    if ( role != Qt::DisplayRole )
+        return QVariant();
+
+    switch ( section )
+    {
+        case 0: return i18n( "Page" ); break;
+        case 1: return i18n( "Size" ); break;
+        default:
+            return QVariant();
+    }
+}
+
+int PageSizesModel::rowCount( const QModelIndex &parent ) const
+{
+    return parent.isValid() ? 0 : m_document->pages();
 }
 
 #include "moc_propertiesdialog.cpp"

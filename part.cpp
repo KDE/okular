@@ -309,7 +309,7 @@ Part::Part(QWidget *parentWidget,
 QObject *parent,
 const QVariantList &args)
 : KParts::ReadWritePart(parent),
-m_tempfile( nullptr ), m_documentOpenWithPassword( false ), m_swapInsteadOfOpening( false ), m_isReloading( false ), m_fileWasRemoved( false ), m_showMenuBarAction( nullptr ), m_showFullScreenAction( nullptr ), m_actionsSearched( false ),
+m_tempfile( nullptr ), m_documentOpenWithPassword( false ), m_swapInsteadOfOpening( false ), m_tocEnabled( false ), m_isReloading( false ), m_fileWasRemoved( false ), m_showMenuBarAction( nullptr ), m_showFullScreenAction( nullptr ), m_actionsSearched( false ),
 m_cliPresentation(false), m_cliPrint(false), m_cliPrintAndExit(false), m_embedMode(detectEmbedMode(parentWidget, parent, args)), m_generatorGuiClient(nullptr), m_keeper( nullptr )
 {
     // make sure that the component name is okular otherwise the XMLGUI .rc files are not found

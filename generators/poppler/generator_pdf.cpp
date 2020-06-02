@@ -929,6 +929,7 @@ Okular::FontInfo::List PDFGenerator::fontsForPage( int page )
     if (it->hasNext()) {
         fonts = it->next();
     }
+    delete it;
     userMutex()->unlock();
 
     for (const Poppler::FontInfo &font : qAsConst(fonts))

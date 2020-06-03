@@ -1437,6 +1437,21 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term>
 						<menuchoice>
+							<shortcut><keycombo action="simul">&Ctrl;&Shift;<keycap>F</keycap></keycombo></shortcut>
+							<guimenu>View</guimenu>
+							<guimenuitem>Full Screen Mode</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para><action>Enables the full screen mode</action>. Note that
+							full screen mode is different from presentation mode insofar as the
+							only peculiarity of full screen mode is that it hides the window
+							decorations, the menubar and the toolbar.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice>
 							<shortcut><keycombo action="simul">&Ctrl;<keycap>+</keycap></keycombo></shortcut>
 							<guimenu>View</guimenu>
 							<guimenuitem>Zoom In</guimenuitem>
@@ -1912,22 +1927,6 @@ Context menu actions like Rename Bookmarks etc.)
 					</term>
 					<listitem>
 						<para><action>Toggle the page bar</action> at the bottom of document area on and off to save vertical place in &okular; window.</para>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
-					<term>
-						<menuchoice>
-							<shortcut><keycombo action="simul">&Ctrl;&Shift;<keycap>F</keycap></keycombo></shortcut>
-							<guimenu>Settings</guimenu>
-							<guimenuitem>Full Screen Mode</guimenuitem>
-						</menuchoice>
-					</term>
-					<listitem>
-						<para><action>Enables the full screen mode</action>. Note that
-							full screen mode is different from <link
-								linkend="presentationMode">presentation mode</link> insofar as the
-							only peculiarity of full screen mode is that it hides the window
-							decorations, the menubar and the toolbar.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>

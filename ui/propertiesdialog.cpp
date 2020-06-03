@@ -126,7 +126,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
         // create fonts tab and layout it
         QFrame *page2 = new QFrame();
         m_fontPage = addPage(page2, i18n("&Fonts"));
-        m_fontPage->setIcon( QIcon::fromTheme( QStringLiteral("preferences-desktop-font") ) );
+        m_fontPage->setIcon( QIcon::fromTheme( QStringLiteral("dialog-text-and-font") ) );
         QVBoxLayout *page2Layout = new QVBoxLayout(page2);
         // add a tree view
         QTreeView *view = new QTreeView(page2);

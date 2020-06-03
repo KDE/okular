@@ -1926,7 +1926,7 @@ Context menu actions like Rename Bookmarks etc.)
 						</menuchoice>
 					</term>
 					<listitem>
-						<para><action>Toggle the page bar</action> at the bottom of document area on and off to save vertical place in &okular; window.</para>
+						<para><action>Toggle the page bar</action> at the bottom of document area on and off to save vertical place in &okular; window. Note that the page numbers will be shown on the default toolbar anyway.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>

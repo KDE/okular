@@ -212,7 +212,7 @@
   </entry>
   <entry key="SplitterSizes" type="IntList" />
   <entry key="ShowBottomBar" type="Bool" >
-   <default>true</default>
+   <default>false</default>
   </entry>
  </group>
  <group name="Nav Panel" >

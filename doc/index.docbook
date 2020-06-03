@@ -1225,6 +1225,7 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term>
 						<menuchoice>
+							<shortcut><keycombo action="simul">&Alt;<keycap>Return</keycap></keycombo></shortcut>
 							<guimenu>File</guimenu>
 							<guimenuitem>Properties</guimenuitem>
 						</menuchoice>

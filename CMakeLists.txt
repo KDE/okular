@@ -8,8 +8,8 @@ set (RELEASE_SERVICE_VERSION "${RELEASE_SERVICE_VERSION_MAJOR}.${RELEASE_SERVICE
 
 project(okular VERSION 1.10.${RELEASE_SERVICE_VERSION_MICRO})
 
-set(QT_REQUIRED_VERSION "5.9.0")
-set(KF5_REQUIRED_VERSION "5.44.0")
+set(QT_REQUIRED_VERSION "5.9.0") # Remember to update the QT_DEPRECATED_WARNINGS_SINCE below
+set(KF5_REQUIRED_VERSION "5.44.0") # Remember to update the KF_DEPRECATED_WARNINGS_SINCE below
 
 set(OKULAR_UI "desktop" CACHE STRING "Which Okular user interface to build. Possible values: desktop, mobile, both. Default: desktop")
 
@@ -161,6 +161,8 @@ set_package_properties("Poppler" PROPERTIES
 add_definitions(-DQT_USE_FAST_OPERATOR_PLUS)
 add_definitions(-DTRANSLATION_DOMAIN="okular")
 add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
+add_definitions(-DQT_DEPRECATED_WARNINGS_SINCE=0x050900)
+add_definitions(-DKF_DEPRECATED_WARNINGS_SINCE=0x052C00)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${PHONON_INCLUDES} core/synctex ${ZLIB_INCLUDE_DIR} ${CMAKE_BINARY_DIR}/core)
 

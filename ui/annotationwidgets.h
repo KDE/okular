@@ -89,6 +89,8 @@ public:
 
     virtual void applyChanges();
 
+    void setAnnotTypeEditable( bool );
+
 Q_SIGNALS:
     void dataChanged();
 
@@ -101,6 +103,8 @@ protected:
     void addColorButton( QWidget * widget, QFormLayout * formlayout );
     void addOpacitySpinBox( QWidget * widget, QFormLayout * formlayout );
     void addVerticalSpacer( QFormLayout * formlayout );
+
+    bool m_typeEditable;
 
 private:
     Okular::Annotation * m_ann;
@@ -153,6 +157,8 @@ class StampAnnotationWidget
     Q_OBJECT
 
 public:
+    static const QList<QPair<QString, QString>> defaultStamps;
+
     explicit StampAnnotationWidget( Okular::Annotation * ann );
 
     void applyChanges() override;

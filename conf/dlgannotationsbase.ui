@@ -84,7 +84,7 @@
    <item>
     <widget class="QGroupBox" name="annotToolsGroup">
      <property name="title">
-      <string>Annotation tools</string>
+      <string>Quick annotation tools</string>
      </property>
      <layout class="QVBoxLayout" name="annotToolsPlaceholder" />
     </widget>

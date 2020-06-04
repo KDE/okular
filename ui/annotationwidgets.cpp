@@ -212,7 +212,7 @@ AnnotationWidget * AnnotationWidgetFactory::widgetFor( Okular::Annotation * ann 
 
 
 AnnotationWidget::AnnotationWidget( Okular::Annotation * ann )
-    : m_ann( ann )
+    : m_typeEditable( true ), m_ann( ann )
 {
 }
 
@@ -281,7 +281,7 @@ void AnnotationWidget::addOpacitySpinBox( QWidget * widget, QFormLayout * formla
     m_opacity = new QSpinBox( widget );
     m_opacity->setRange( 0, 100 );
     m_opacity->setValue( (int)( m_ann->style().opacity() * 100 ) );
-    m_opacity->setSuffix( i18nc( "Suffix for the opacity level, eg '80 %'", " %" ) );
+    m_opacity->setSuffix( i18nc( "Suffix for the opacity level, eg '80%'", "%" ) );
     formlayout->addRow( i18n( "&Opacity:" ), m_opacity);
     connect( m_opacity, QOverload<int>::of(&QSpinBox::valueChanged), this, &AnnotationWidget::dataChanged );
 }
@@ -344,6 +344,12 @@ void TextAnnotationWidget::applyChanges()
             m_textAnn->setTextColor( m_textColorBn->color() );
         }
     }
+}
+
+
+void AnnotationWidget::setAnnotTypeEditable( bool editable )
+{
+    m_typeEditable = editable;
 }
 
 void TextAnnotationWidget::createPopupNoteStyleUi( QWidget * widget, QFormLayout * formlayout  ) {
@@ -421,6 +427,26 @@ void TextAnnotationWidget::addWidthSpinBox( QWidget * widget, QFormLayout * form
     connect( m_spinWidth, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &AnnotationWidget::dataChanged );
 }
 
+const QList<QPair<QString, QString>> StampAnnotationWidget::defaultStamps = {
+    { i18n( "Approved" ), QStringLiteral("Approved") },
+    { i18n( "As Is" ), QStringLiteral("AsIs") },
+    { i18n( "Confidential" ), QStringLiteral("Confidential") },
+    { i18n( "Departmental" ), QStringLiteral("Departmental") },
+    { i18n( "Draft" ), QStringLiteral("Draft") },
+    { i18n( "Experimental" ), QStringLiteral("Experimental") },
+    { i18n( "Final" ), QStringLiteral("Expired") },
+    { i18n( "For Comment" ), QStringLiteral("ForComment") },
+    { i18n( "For Public Release" ), QStringLiteral("ForPublicRelease") },
+    { i18n( "Not Approved" ), QStringLiteral("NotApproved") },
+    { i18n( "Not For Public Release" ), QStringLiteral("NotForPublicRelease") },
+    { i18n( "Sold" ), QStringLiteral("Sold") },
+    { i18n( "Top Secret" ), QStringLiteral("TopSecret") },
+    { i18n( "Bookmark" ), QStringLiteral("bookmark-new") },
+    { i18n( "Information" ), QStringLiteral("help-about") },
+    { i18n( "KDE" ), QStringLiteral("kde") },
+    { i18n( "Okular" ), QStringLiteral("okular") }
+};
+
 StampAnnotationWidget::StampAnnotationWidget( Okular::Annotation * ann )
     : AnnotationWidget( ann ), m_pixmapSelector( nullptr )
 {
@@ -446,24 +472,12 @@ void StampAnnotationWidget::createStyleWidget( QFormLayout * formlayout )
     formlayout->addRow( i18n( "Stamp symbol:" ), m_pixmapSelector );
     m_pixmapSelector->setEditable( true );
 
-    m_pixmapSelector->addItem( i18n( "Okular" ), QStringLiteral("okular") );
-    m_pixmapSelector->addItem( i18n( "Bookmark" ), QStringLiteral("bookmarks") );
-    m_pixmapSelector->addItem( i18n( "KDE" ), QStringLiteral("kde") );
-    m_pixmapSelector->addItem( i18n( "Information" ), QStringLiteral("help-about") );
-    m_pixmapSelector->addItem( i18n( "Approved" ), QStringLiteral("Approved") );
-    m_pixmapSelector->addItem( i18n( "As Is" ), QStringLiteral("AsIs") );
-    m_pixmapSelector->addItem( i18n( "Confidential" ), QStringLiteral("Confidential") );
-    m_pixmapSelector->addItem( i18n( "Departmental" ), QStringLiteral("Departmental") );
-    m_pixmapSelector->addItem( i18n( "Draft" ), QStringLiteral("Draft") );
-    m_pixmapSelector->addItem( i18n( "Experimental" ), QStringLiteral("Experimental") );
-    m_pixmapSelector->addItem( i18n( "Expired" ), QStringLiteral("Expired") );
-    m_pixmapSelector->addItem( i18n( "Final" ), QStringLiteral("Final") );
-    m_pixmapSelector->addItem( i18n( "For Comment" ), QStringLiteral("ForComment") );
-    m_pixmapSelector->addItem( i18n( "For Public Release" ), QStringLiteral("ForPublicRelease") );
-    m_pixmapSelector->addItem( i18n( "Not Approved" ), QStringLiteral("NotApproved") );
-    m_pixmapSelector->addItem( i18n( "Not For Public Release" ), QStringLiteral("NotForPublicRelease") );
-    m_pixmapSelector->addItem( i18n( "Sold" ), QStringLiteral("Sold") );
-    m_pixmapSelector->addItem( i18n( "Top Secret" ), QStringLiteral("TopSecret") );
+    QPair<QString, QString> pair;
+    foreach(pair, defaultStamps)
+    {
+         m_pixmapSelector->addItem(pair.first, pair.second);
+    }
+
     m_pixmapSelector->setIcon( m_stampAnn->stampIconName() );
     m_pixmapSelector->setPreviewSize( 64 );
 
@@ -673,8 +687,13 @@ void HighlightAnnotationWidget::createStyleWidget( QFormLayout * formlayout )
 {
     QWidget * widget = qobject_cast<QWidget *>( formlayout->parent() );
 
+
     m_typeCombo = new KComboBox( widget );
-    formlayout->addRow( i18n( "Type:" ), m_typeCombo );
+    m_typeCombo->setVisible( m_typeEditable );
+    if( m_typeEditable )
+    {
+        formlayout->addRow( i18n( "Type:" ), m_typeCombo );
+    }
     m_typeCombo->addItem( i18n( "Highlight" ) );
     m_typeCombo->addItem( i18n( "Squiggle" ) );
     m_typeCombo->addItem( i18n( "Underline" ) );
@@ -707,7 +726,11 @@ void GeomAnnotationWidget::createStyleWidget( QFormLayout * formlayout )
     QWidget * widget = qobject_cast<QWidget *>( formlayout->parent() );
 
     m_typeCombo = new KComboBox( widget );
-    formlayout->addRow( i18n( "Type:" ), m_typeCombo );
+    m_typeCombo->setVisible( m_typeEditable );
+    if( m_typeEditable )
+    {
+        formlayout->addRow( i18n( "Type:" ), m_typeCombo );
+    }
     addVerticalSpacer( formlayout );
     addColorButton( widget, formlayout );
     addOpacitySpinBox( widget, formlayout );

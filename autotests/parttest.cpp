@@ -311,7 +311,7 @@ void PartTest::testClickInternalLink()
     const int height = part.m_pageView->verticalScrollBar()->maximum() +
                        part.m_pageView->viewport()->height();
 
-    QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseNormal");
+    QMetaObject::invokeMethod(part.m_pageView, "slotMouseNormalToggled", Q_ARG(bool, true));
 
     QCOMPARE(part.m_document->currentPage(), 0u);
     QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * 0.17, height * 0.05));
@@ -1374,7 +1374,7 @@ void PartTest::test388288()
     part.widget()->show();
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
-    QMetaObject::invokeMethod(part.m_pageView, "slotToggleAnnotator", Q_ARG( bool, true ));
+    QMetaObject::invokeMethod(part.m_pageView, "slotMouseNormalToggled", Q_ARG(bool, true));
 
     auto annot = new Okular::HighlightAnnotation();
     annot->setHighlightType( Okular::HighlightAnnotation::Highlight );
@@ -1560,7 +1560,7 @@ void PartTest::testAnnotWindow()
 
     part.m_document->setViewportPage(0);
 
-    QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseNormal");
+    QMetaObject::invokeMethod(part.m_pageView, "slotMouseNormalToggled", Q_ARG(bool, true));
 
     QCOMPARE(part.m_document->currentPage(), 0u);
 
@@ -1791,24 +1791,17 @@ void PartTest::testTypewriterAnnotTool()
   QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
   const int width = part.m_pageView->horizontalScrollBar()->maximum() +
-                    part.m_pageView->viewport()->width();
+                      part.m_pageView->viewport()->width();
   const int height = part.m_pageView->verticalScrollBar()->maximum() +
-                     part.m_pageView->viewport()->height();
+                      part.m_pageView->viewport()->height();
 
   part.m_document->setViewportPage(0);
 
-  QMetaObject::invokeMethod(part.m_pageView, "slotToggleAnnotator", Q_ARG( bool, true ));
+  // Find the TypeWriter annotation
+  QAction * typeWriterAction = part.actionCollection()->action( QStringLiteral("annotation_typewriter") );
+  QVERIFY( typeWriterAction );
 
-  // Find the button for the TypeWriter annotation
-  QList<QToolButton *> toolbuttonList = part.m_pageView->findChildren<QToolButton *>();
-  auto it = std::find_if( toolbuttonList.begin(),
-                          toolbuttonList.end(),
-                          [](const QToolButton * x)  { return x->toolTip().contains("Typewriter"); } );
-
-  QVERIFY(it != toolbuttonList.end());
-  QToolButton* typewriterButton = *it;
-
-  typewriterButton->click();
+  typeWriterAction->trigger();
 
   QTest::qWait(1000);  // Wait for the "add new note" dialog to appear
   TestingUtils::CloseDialogHelper closeDialogHelper( QDialogButtonBox::Ok );

@@ -17,8 +17,6 @@
 #include <qpixmap.h>
 #include <qrect.h>
 #include <qhash.h>
-#include <qtoolbutton.h>
-
 
 #include "core/area.h"
 
@@ -126,99 +124,6 @@ class PageViewMessage : public QWidget
         QPixmap m_symbol;
         QTimer * m_timer;
         int m_lineSpacing;
-};
-
-struct AnnotationToolItem
-{
-    AnnotationToolItem()
-        : id( -1 ), isText( false )
-    {
-    }
-
-    int id;
-    QString text;
-    QPixmap pixmap;
-    QString shortcut;
-    bool isText;
-};
-
-class ToolBarButton : public QToolButton
-{
-    Q_OBJECT
-    public:
-        static const int iconSize = 32;
-        static const int buttonSize = 40;
-
-        ToolBarButton( QWidget * parent, const AnnotationToolItem &item );
-        int buttonID() const { return m_id; }
-        bool isText() const { return m_isText; }
-
-    Q_SIGNALS:
-        void buttonDoubleClicked( int buttonID );
-
-    protected:
-        void mouseDoubleClickEvent( QMouseEvent * event ) override;
-
-    private:
-        int m_id;
-        bool m_isText;
-};
-
-/**
- * @short A widget containing exclusive buttons, that slides in from a side.
- *
- * This is a shaped widget that slides in from a side of the 'anchor widget'
- * it's attached to. It can be dragged and docked on {left,top,right,bottom}
- * sides and contains toggable exclusive buttons.
- * When a 'tool' of this 'toolBar' is selected, a signal is emitted.
- */
-class PageViewToolBar : public QWidget
-{
-    Q_OBJECT
-    public:
-        PageViewToolBar( PageView * parent, QWidget * anchorWidget );
-        ~PageViewToolBar() override;
-
-        // animated widget controls
-        enum Side { Left = 0, Top = 1, Right = 2, Bottom = 3 };
-
-        void setItems( const QLinkedList<AnnotationToolItem> &items );
-        void setSide( Side side );
-
-        void showAndAnimate();
-        void hideAndDestroy();
-
-        void selectButton( int id );
-
-        void setToolsEnabled( bool on );
-        void setTextToolsEnabled( bool on );
-
-        // query properties
-
-    Q_SIGNALS:
-        // the tool 'toolID' has been selected
-        void toolSelected( int toolID );
-        // orientation has been changed
-        void orientationChanged( int side );
-        // a tool button of this toolbar has been double clicked
-        void buttonDoubleClicked( int buttonID );
-
-    protected:
-        // handle widget events { anchor_resize, paint, animation, drag }
-        bool eventFilter( QObject * o, QEvent * e ) override;
-        void paintEvent( QPaintEvent * ) override;
-        void mousePressEvent( QMouseEvent * e ) override;
-        void mouseMoveEvent( QMouseEvent * e ) override;
-        void mouseReleaseEvent( QMouseEvent * e ) override;
-
-    private:
-        // private variables
-        friend class ToolBarPrivate;
-        class ToolBarPrivate * d;
-
-    private Q_SLOTS:
-        void slotAnimate();
-        void slotButtonClicked();
 };
 
 #endif

@@ -43,7 +43,9 @@ class EditAnnotToolDialog : public QDialog
             ToolTypewriter
         };
 
-        explicit EditAnnotToolDialog( QWidget *parent = nullptr, const QDomElement &initialState = QDomElement() );
+        explicit EditAnnotToolDialog( QWidget *parent = nullptr,
+                                      const QDomElement &initialState = QDomElement(),
+                                      bool builtinTool = false );
         ~EditAnnotToolDialog() override;
         QString name() const;
         QDomDocument toolXml() const;
@@ -62,6 +64,8 @@ class EditAnnotToolDialog : public QDialog
 
         Okular::Annotation *m_stubann;
         AnnotationWidget *m_annotationWidget;
+
+        bool m_builtinTool;
 
     private Q_SLOTS:
         void slotTypeChanged();

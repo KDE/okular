@@ -14,12 +14,15 @@
 #include <qdom.h>
 #include <qlinkedlist.h>
 
+#include <kactioncollection.h>
+
 #include "pageviewutils.h"
 #include "annotationtools.h"
 
 class QKeyEvent;
 class QMouseEvent;
 class QPainter;
+class AnnotationActionHandler;
 
 namespace Okular
 {
@@ -28,6 +31,7 @@ class Document;
 
 // engines are defined and implemented in the cpp
 class AnnotatorEngine;
+class AnnotationTools;
 class PageView;
 
 /**
@@ -40,30 +44,25 @@ class PageView;
  * to this class that performs a rough visual representation of what the
  * annotation will become when finished.
  *
- * m_toolsDefinition is a DOM object that contains Annotations/Engine association
- * for the items placed in the toolbar. The XML is parsed (1) when populating
- * the toolbar and (2)after selecting a toolbar item, in which case an Ann is
+ * m_toolsDefinition is a AnnotationTools object that wraps a DOM object that
+ * contains Annotations/Engine association for the items placed in the toolbar.
+ * The XML is parsed after selecting a toolbar item, in which case an Ann is
  * initialized with the values in the XML and an engine is created to handle
  * that annotation. m_toolsDefinition is created in reparseConfig according to
- * user configuration.
+ * user configuration. m_toolsDefinition is updated (and saved to disk) (1) each
+ * time a property of an annotation (color, font, etc) is changed by the user,
+ * and (2) each time a "quick annotation" is selected, in which case the properties
+ * of the selected quick annotation are written over those of the corresponding
+ * builtin tool
  */
 class PageViewAnnotator : public QObject
 {
     Q_OBJECT
     public:
+        static const int STAMP_TOOL_ID;
+
         PageViewAnnotator( PageView * parent, Okular::Document * storage );
         ~PageViewAnnotator() override;
-
-        // called to show/hide the editing toolbar
-        void setEnabled( bool enabled );
-
-        // called to toggle the usage of text annotating tools
-        void setTextToolsEnabled( bool enabled );
-
-        void setToolsEnabled( bool enabled );
-
-        void setHidingForced( bool forced );
-        bool hidingWasForced() const;
 
         // methods used when creating the annotation
         // @return Is a tool currently selected?
@@ -88,25 +87,62 @@ class PageViewAnnotator : public QObject
         static QString defaultToolName( const QDomElement &toolElement );
         static QPixmap makeToolPixmap( const QDomElement &toolElement );
 
-    private Q_SLOTS:
-        void slotToolSelected( int toolID );
-        void slotSaveToolbarOrientation( int side );
-        void slotToolDoubleClicked( int toolID );
+        // methods related to the annotation actions
+        void setupActions( KActionCollection *ac );
+        // setup those actions that first require the GUI is fully created
+        void setupActionsPostGUIActivated();
+        // @return Is continuous mode active (pin annotation)?
+        bool continuousMode();
+        // enable/disable the annotation actions
+        void setToolsEnabled( bool enabled );
+        // enable/disable the text-selection annotation actions
+        void setTextToolsEnabled( bool enabled );
+
+        // selects the active tool
+        void selectTool( int toolID );
+        // selects a stamp tool and sets the stamp symbol
+        void selectStampTool( const QString &stampSymbol );
+        // makes a quick annotation the active tool
+        int setQuickTool ( int toolID );
+        // deselects the tool and uncheck all the annotation actions
+        void detachAnnotation();
+
+        // returns the builtin annotation tool with the given Id
+        QDomElement builtinTool( int toolID );
+        // returns the quick annotation tool with the given Id
+        QDomElement quickTool( int toolID );
+
+        // methods that write the properties
+        void setAnnotationWidth( double width );
+        void setAnnotationColor( const QColor &color );
+        void setAnnotationInnerColor( const QColor &color );
+        void setAnnotationOpacity( double opacity );
+        void setAnnotationFont( const QFont &font );
+
+    public Q_SLOTS:
+        void setContinuousMode( bool enabled );
+        void addToQuickAnnotations();
+        void slotAdvancedSettings();
+
+    Q_SIGNALS:
+        void toolSelected();
 
     private:
-        void detachAnnotation();
+        // save the annotation tools to Okular settings
+        void saveAnnotationTools();
+        // returns the engine QDomElement of the the currently active tool
+        QDomElement currentEngineElement();
+        // returns the annotation QDomElement of the the currently active tool
+        QDomElement currentAnnotationElement();
 
         // global class pointers
         Okular::Document * m_document;
         PageView * m_pageView;
-        PageViewToolBar * m_toolBar;
+        AnnotationActionHandler * m_actionHandler;
         AnnotatorEngine * m_engine;
-        QDomElement m_toolsDefinition;
-        QLinkedList<AnnotationToolItem> m_items;
-        bool m_textToolsEnabled;
-        bool m_toolsEnabled;
+        AnnotationTools * m_toolsDefinition;
+        AnnotationTools * m_quickToolsDefinition;
         bool m_continuousMode;
-        bool m_hidingWasForced;
 
         // creation related variables
         int m_lastToolID;

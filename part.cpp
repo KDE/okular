@@ -442,7 +442,7 @@ m_cliPresentation(false), m_cliPrint(false), m_cliPrintAndExit(false), m_embedMo
 
     // [left toolbox: Reviews] | []
     m_reviewsWidget = new Reviews( nullptr, m_document );
-    m_sidebar->addItem( m_reviewsWidget, QIcon::fromTheme(QStringLiteral("draw-freehand")), i18n("Reviews") );
+    m_sidebar->addItem( m_reviewsWidget, QIcon::fromTheme(QStringLiteral("draw-freehand")), i18n("Annotations") );
 
     // [left toolbox: Bookmarks] | []
     m_bookmarkList = new BookmarkList( m_document, nullptr );
@@ -1934,6 +1934,8 @@ void Part::guiActivateEvent(KParts::GUIActivateEvent *event)
     KParts::ReadWritePart::guiActivateEvent(event);
 
     setWindowTitleFromDocument();
+
+    m_pageView->setupActionsPostGUIActivated();
 }
 
 void Part::close()

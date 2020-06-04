@@ -64,7 +64,7 @@ class TreeView : public QTreeView
 
         QTextDocument document;
         document.setHtml( i18n( "<div align=center><h3>No annotations</h3>"
-                                "To create new annotations press F6 or select <i>Tools -&gt; Review</i>"
+                                "To create new annotations press F6 or select <i>Tools -&gt; Annotations</i>"
                                 " from the menu.</div>" ) );
         document.setTextWidth( width() - 50 );
 
@@ -151,7 +151,7 @@ Reviews::Reviews( QWidget * parent, Okular::Document * document )
     // - add separator
     toolBar->addSeparator();
     // - add Current Page Only button
-    QAction * curPageOnlyAction = toolBar->addAction( QIcon::fromTheme( QStringLiteral("arrow-down") ), i18n( "Show reviews for current page only" ) );
+    QAction * curPageOnlyAction = toolBar->addAction( QIcon::fromTheme( QStringLiteral("arrow-down") ), i18n( "Show annotations for current page only" ) );
     curPageOnlyAction->setCheckable( true );
     connect(curPageOnlyAction, &QAction::toggled, this, &Reviews::slotCurrentPageOnly);
     curPageOnlyAction->setChecked( Okular::Settings::currentPageOnly() );

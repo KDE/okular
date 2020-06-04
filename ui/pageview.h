@@ -30,6 +30,7 @@
 #include "core/observer.h"
 #include "core/view.h"
 
+class QMenu;
 class KActionCollection;
 
 namespace Okular {
@@ -70,6 +71,7 @@ Q_OBJECT
         void setupBaseActions( KActionCollection * ac );
         void setupViewerActions( KActionCollection * ac );
         void setupActions( KActionCollection * ac );
+        void setupActionsPostGUIActivated();
         void updateActionState( bool docHasPages, bool docHasFormWidgets );
 
         // misc methods (from RMB menu/children)
@@ -253,13 +255,12 @@ Q_OBJECT
         void slotAutoFitToggled( bool );
         void slotViewMode( QAction *action );
         void slotContinuousToggled( bool );
-        void slotSetMouseNormal();
+        void slotMouseNormalToggled( bool );
         void slotSetMouseZoom();
         void slotSetMouseMagnifier();
         void slotSetMouseSelect();
         void slotSetMouseTextSelect();
         void slotSetMouseTableSelect();
-        void slotToggleAnnotator( bool );
         void slotAutoScrollUp();
         void slotAutoScrollDown();
         void slotScrollUp( int nSteps = 0 );

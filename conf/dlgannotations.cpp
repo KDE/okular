@@ -20,9 +20,9 @@ DlgAnnotations::DlgAnnotations( QWidget * parent )
     Ui_DlgAnnotationsBase dlg;
     dlg.setupUi( this );
 
-    WidgetAnnotTools * kcfg_AnnotationTools = new WidgetAnnotTools( dlg.annotToolsGroup );
-    dlg.annotToolsPlaceholder->addWidget( kcfg_AnnotationTools );
-    kcfg_AnnotationTools->setObjectName( QStringLiteral("kcfg_AnnotationTools") );
+    WidgetAnnotTools * kcfg_QuickAnnotationTools = new WidgetAnnotTools( dlg.annotToolsGroup );
+    dlg.annotToolsPlaceholder->addWidget( kcfg_QuickAnnotationTools );
+    kcfg_QuickAnnotationTools->setObjectName( QStringLiteral("kcfg_QuickAnnotationTools") );
 
     KConfigDialogManager::changedMap()->insert( QStringLiteral("WidgetAnnotTools") , SIGNAL(changed()) );
 }

@@ -89,6 +89,13 @@ if(KF5Activities_FOUND AND BUILD_DESKTOP)
 	target_compile_definitions(mainshelltest PRIVATE OKULAR_BINARY="$<TARGET_FILE:okular>")
 endif()
 
+if(BUILD_DESKTOP)
+    ecm_add_test(annotationtoolbartest.cpp ../shell/okular_main.cpp ../shell/shellutils.cpp ../shell/shell.cpp
+        TEST_NAME "annotationtoolbartest"
+        LINK_LIBRARIES Qt5::Test okularpart
+    )
+endif()
+
 ecm_add_test(generatorstest.cpp
     TEST_NAME "generatorstest"
     LINK_LIBRARIES Qt5::Test KF5::CoreAddons okularcore

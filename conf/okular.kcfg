@@ -117,6 +117,47 @@
     </code>
     <default code="true">annotationTools</default>
   </entry>
+  <entry key="QuickAnnotationTools" type="StringList">
+    <code>
+      QStringList quickAnnotationTools;
+      // load the default tool list from the 'xml tools definition' file
+      QFile quickAnnFile( QStandardPaths::locate(QStandardPaths::GenericDataLocation, "okular/toolsQuick.xml") );
+      if ( quickAnnFile.exists() &amp;&amp; quickAnnFile.open( QIODevice::ReadOnly ) )
+      {
+          QDomDocument doc;
+          if ( doc.setContent( &amp;quickAnnFile ) )
+          {
+              QDomElement toolsDefinition = doc.elementsByTagName("quickAnnotatingTools").item( 0 ).toElement();
+               // create the quickAnnotationTools list from the XML dom tree
+              QDomNode toolDescription = toolsDefinition.firstChild();
+              while ( toolDescription.isElement() )
+              {
+                  QDomElement toolElement = toolDescription.toElement();
+                  if ( toolElement.tagName() == "tool" )
+                  {
+                      QDomDocument temp;
+                      temp.appendChild( temp.importNode( toolElement, true) );
+                      // add each &lt;tool&gt;...&lt;/tool&gt; as XML string
+                      quickAnnotationTools &lt;&lt; temp.toString(-1);
+                  }
+                  toolDescription = toolDescription.nextSibling();
+              }
+          }
+          else
+          {
+              qWarning() &lt;&lt; "QuickAnnotatingTools XML file seems to be damaged";
+          }
+      }
+      else
+      {
+          qWarning() &lt;&lt; "Unable to open QuickAnnotatingTools XML definition";
+      }
+    </code>
+    <default code="true">quickAnnotationTools</default>
+  </entry>
+  <entry key="AnnotationContinuousMode" type="Bool">
+   <default>true</default>
+  </entry>
  </group>
  <group name="Zoom">
    <entry key="ZoomMode" type="UInt" >

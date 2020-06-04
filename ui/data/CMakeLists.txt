@@ -4,6 +4,7 @@ add_subdirectory(icons)
 # install annotator xml tools description
 install(FILES
    tools.xml
+   toolsQuick.xml
    drawingtools.xml
    DESTINATION ${KDE_INSTALL_DATADIR}/okular)
 

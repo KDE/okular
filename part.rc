@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="okular_part" version="46">
+<kpartgui name="okular_part" version="47">
 <MenuBar>
   <Menu name="file"><text>&amp;File</text>
     <Action name="get_new_stuff" group="file_open"/>
@@ -105,5 +105,30 @@
   <Action name="view_zoom_out"/>
   <Action name="zoom_to" />
   <Action name="view_zoom_in"/>
+  <Action name="annotation_favorites"/>
+</ToolBar>
+<ToolBar name="annotationToolBar" iconText="icononly" newline="true" hidden="true"><text>Annotation Toolbar</text>
+  <Action name="annotation_highlighter"/>
+  <Action name="annotation_underline"/>
+  <Action name="annotation_squiggle"/>
+  <Action name="annotation_strike_out"/>
+  <Action name="annotation_typewriter"/>
+  <Action name="annotation_inline_note"/>
+  <Action name="annotation_popup_note"/>
+  <Action name="annotation_freehand_line"/>
+  <Action name="annotation_geometrical_shape"/>
+  <Action name="annotation_stamp"/>
+  <Separator/>
+  <Action name="annotation_settings_width"/>
+  <Action name="annotation_settings_color"/>
+  <Action name="annotation_settings_inner_color"/>
+  <Action name="annotation_settings_opacity"/>
+  <Action name="annotation_settings_font"/>
+  <Action name="annotation_settings_advanced"/>
+  <Separator/>
+  <Action name="annotation_bookmark"/>
+  <Action name="annotation_settings_pin"/>
+  <Spacer/>
+  <Action name="hide_annotation_toolbar"/>
 </ToolBar>
 </kpartgui>

@@ -34,9 +34,11 @@
 #include "ui/pageviewannotator.h"
 
 
-EditAnnotToolDialog::EditAnnotToolDialog( QWidget *parent, const QDomElement &initialState )
+EditAnnotToolDialog::EditAnnotToolDialog( QWidget *parent, const QDomElement &initialState, bool builtinTool )
     : QDialog( parent ), m_stubann( nullptr ), m_annotationWidget( nullptr )
 {
+    m_builtinTool = builtinTool;
+
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
     QVBoxLayout *mainLayout = new QVBoxLayout;
     setLayout(mainLayout);
@@ -54,8 +56,8 @@ EditAnnotToolDialog::EditAnnotToolDialog( QWidget *parent, const QDomElement &in
     mainLayout->addWidget(widget);
     mainLayout->addWidget(buttonBox);
 
-
     m_name = new KLineEdit( widget );
+    m_name->setReadOnly( m_builtinTool );
     mainLayout->addWidget(m_name);
     tmplabel = new QLabel( i18n( "&Name:" ), widget );
     mainLayout->addWidget(tmplabel);
@@ -64,11 +66,13 @@ EditAnnotToolDialog::EditAnnotToolDialog( QWidget *parent, const QDomElement &in
     widgetLayout->addWidget( m_name, 0, 1 );
 
     m_type = new KComboBox( false, widget );
+    m_type->setVisible( !m_builtinTool );
     mainLayout->addWidget(m_type);
     connect(m_type, static_cast<void (KComboBox::*)(int)>(&KComboBox::currentIndexChanged), this, &EditAnnotToolDialog::slotTypeChanged);
     tmplabel = new QLabel( i18n( "&Type:" ), widget );
     mainLayout->addWidget(tmplabel);
     tmplabel->setBuddy( m_type );
+    tmplabel->setVisible( !m_builtinTool );
     widgetLayout->addWidget( tmplabel, 1, 0, Qt::AlignRight );
     widgetLayout->addWidget( m_type, 1, 1 );
 
@@ -381,6 +385,7 @@ void EditAnnotToolDialog::rebuildAppearanceBox()
     }
 
     m_annotationWidget = AnnotationWidgetFactory::widgetFor( m_stubann );
+    m_annotationWidget->setAnnotTypeEditable( !m_builtinTool );
     m_appearanceBox->layout()->addWidget( m_annotationWidget->appearanceWidget() );
 
     connect(m_annotationWidget, &AnnotationWidget::dataChanged, this, &EditAnnotToolDialog::slotDataChanged);

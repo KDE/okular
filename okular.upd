@@ -23,3 +23,8 @@ Key=ExternalEditorCommand
 Group=Dlg Presentation,Core Presentation
 Key=SlidesAdvance
 Key=SlidesAdvanceTime
+
+#Convert user-defined annotation tools to quick annotation tools
+Id=annotation-toolbar
+File=okularpartrc
+Key=AnnotationTools,QuickAnnotationTools

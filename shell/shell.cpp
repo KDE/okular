@@ -119,11 +119,11 @@ Shell::Shell( const QString &serializedOptions )
     connect( QCoreApplication::instance(), &QCoreApplication::aboutToQuit, this, &QObject::deleteLater );
     // and integrate the part's GUI with the shell's
     setupGUI(Keys | ToolBar | Save);
-    createGUI(firstPart);
-    connectPart( firstPart );
 
     m_tabs.append( firstPart );
-    m_tabWidget->addTab( firstPart->widget(), QString() );
+    m_tabWidget->addTab( firstPart->widget(), QString() );  // triggers setActiveTab that calls createGUI( part )
+
+    connectPart( firstPart );
 
     readSettings();
 

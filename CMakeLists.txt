@@ -401,6 +401,7 @@ if(BUILD_DESKTOP)
     part.cpp
     extensions.cpp
     ui/embeddedfilesdialog.cpp
+    ui/annotationactionhandler.cpp
     ui/annotwindow.cpp
     ui/annotationmodel.cpp
     ui/annotationpopup.cpp
@@ -504,7 +505,7 @@ install(TARGETS okularpart DESTINATION ${KDE_INSTALL_PLUGINDIR})
 
 ########### install files ###############
 
-install(FILES okular.upd DESTINATION ${KDE_INSTALL_DATADIR}/kconf_update)
+install(FILES okular.upd DESTINATION ${KDE_INSTALL_KCONFUPDATEDIR})
 
 install( FILES okular_part.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
 install( FILES part.rc part-viewermode.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/okular )

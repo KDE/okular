@@ -223,7 +223,6 @@ public:
     QAction * aMouseTableSelect;
     QAction * aMouseMagnifier;
     KToggleAction * aTrimToSelection;
-    KToggleAction * aToggleAnnotator;
     KSelectAction * aZoom;
     QAction * aZoomIn;
     QAction * aZoomOut;
@@ -373,7 +372,6 @@ PageView::PageView( QWidget *parent, Okular::Document *document )
     d->aMouseNormal = nullptr;
     d->aMouseSelect = nullptr;
     d->aMouseTextSelect = nullptr;
-    d->aToggleAnnotator = nullptr;
     d->aZoomFitWidth = nullptr;
     d->aZoomFitPage = nullptr;
     d->aZoomAutoFit = nullptr;
@@ -653,7 +651,7 @@ void PageView::setupViewerActions( KActionCollection * ac )
     d->mouseModeActionGroup->setExclusive( true );
     d->aMouseNormal  = new QAction( QIcon::fromTheme( QStringLiteral("transform-browse") ), i18n( "&Browse" ), this );
     ac->addAction(QStringLiteral("mouse_drag"), d->aMouseNormal );
-    connect( d->aMouseNormal, &QAction::triggered, this, &PageView::slotSetMouseNormal );
+    connect( d->aMouseNormal, &QAction::toggled, this, &PageView::slotMouseNormalToggled );
     d->aMouseNormal->setCheckable( true );
     ac->setDefaultShortcut(d->aMouseNormal, QKeySequence(Qt::CTRL + Qt::Key_1));
     d->aMouseNormal->setActionGroup( d->mouseModeActionGroup );
@@ -725,12 +723,6 @@ void PageView::setupActions( KActionCollection * ac )
     d->aMouseModeMenu->setText( i18nc( "@action", "Selection Tools" ) );
     ac->addAction( QStringLiteral( "mouse_selecttools" ), d->aMouseModeMenu );
 
-    d->aToggleAnnotator  = new KToggleAction(QIcon::fromTheme( QStringLiteral("draw-freehand") ), i18n("&Review"), this);
-    ac->addAction(QStringLiteral("mouse_toggle_annotate"), d->aToggleAnnotator );
-    d->aToggleAnnotator->setCheckable( true );
-    connect( d->aToggleAnnotator, &QAction::toggled, this, &PageView::slotToggleAnnotator );
-    ac->setDefaultShortcut(d->aToggleAnnotator, Qt::Key_F6);
-
     // speak actions
 #ifdef HAVE_SPEECH
     d->aSpeakDoc = new QAction( QIcon::fromTheme( QStringLiteral("text-speak") ), i18n( "Speak Whole Document" ), this );
@@ -797,6 +789,13 @@ void PageView::setupActions( KActionCollection * ac )
     connect(d->document, &Okular::Document::canRedoChanged, kredo, &QAction::setEnabled);
     kundo->setEnabled(false);
     kredo->setEnabled(false);
+
+    if( !d->annotator )
+    {
+        d->annotator = new PageViewAnnotator( this, d->document );
+        connect( d->annotator, &PageViewAnnotator::toolSelected, d->aMouseNormal , &QAction::trigger );
+    }
+    d->annotator->setupActions( ac );
 }
 
 bool PageView::canFitPageWidth() const
@@ -914,12 +913,7 @@ void PageView::reparseConfig()
     updatePageStep();
 
     if ( d->annotator )
-    {
-        d->annotator->setEnabled( false );
         d->annotator->reparseConfig();
-        if ( d->aToggleAnnotator->isChecked() )
-            slotToggleAnnotator( true );
-    }
 
     // Something like invert colors may have changed
     // As we don't have a way to find out the old value
@@ -1052,12 +1046,7 @@ void PageView::createAnnotationsVideoWidgets(PageViewItem *item, const QLinkedLi
 void PageView::notifySetup( const QVector< Okular::Page * > & pageSet, int setupFlags )
 {
     bool documentChanged = setupFlags & Okular::DocumentObserver::DocumentChanged;
-    const bool allownotes = d->document->isAllowed( Okular::AllowNotes );
     const bool allowfillforms = d->document->isAllowed( Okular::AllowFillForms );
-
-    // allownotes may have changed
-    if ( d->aToggleAnnotator )
-        d->aToggleAnnotator->setEnabled( allownotes );
 
     // reuse current pages if nothing new
     if ( ( pageSet.count() == d->items.count() ) && !documentChanged && !( setupFlags & Okular::DocumentObserver::NewLayoutForPages ) )
@@ -1277,14 +1266,6 @@ void PageView::updateActionState( bool haspages, bool hasformwidgets )
         d->annotator->setToolsEnabled( allowTools );
         d->annotator->setTextToolsEnabled( allowTools && d->document->supportsSearching() );
     }
-    if ( d->aToggleAnnotator )
-    {
-        if ( !allowAnnotations && d->aToggleAnnotator->isChecked() )
-        {
-            d->aToggleAnnotator->trigger();
-        }
-        d->aToggleAnnotator->setEnabled( allowAnnotations );
-    }
 #ifdef HAVE_SPEECH
     if ( d->aSpeakDoc )
     {
@@ -1297,6 +1278,11 @@ void PageView::updateActionState( bool haspages, bool hasformwidgets )
         d->aMouseMagnifier->setEnabled(d->document->supportsTiles());
     if ( d->aFitWindowToPage )
         d->aFitWindowToPage->setEnabled( haspages && !Okular::Settings::viewContinuous() );
+}
+
+void PageView::setupActionsPostGUIActivated()
+{
+    d->annotator->setupActionsPostGUIActivated();
 }
 
 bool PageView::areSourceLocationsShownGraphically() const
@@ -5165,18 +5151,22 @@ void PageView::slotContinuousToggled( bool on )
     }
 }
 
-void PageView::slotSetMouseNormal()
+void PageView::slotMouseNormalToggled( bool checked )
 {
-    d->mouseMode = Okular::Settings::EnumMouseMode::Browse;
-    Okular::Settings::setMouseMode( d->mouseMode );
-    // hide the messageWindow
-    d->messageWindow->hide();
-    // reshow the annotator toolbar if hiding was forced (and if it is not already visible)
-    if ( d->annotator && d->annotator->hidingWasForced() && d->aToggleAnnotator && !d->aToggleAnnotator->isChecked() )
-        d->aToggleAnnotator->trigger();
-    // force an update of the cursor
-    updateCursor();
-    Okular::Settings::self()->save();
+    if ( checked )
+    {
+        d->mouseMode = Okular::Settings::EnumMouseMode::Browse;
+        Okular::Settings::setMouseMode( d->mouseMode );
+        // hide the messageWindow
+        d->messageWindow->hide();
+        // force an update of the cursor
+        updateCursor();
+        Okular::Settings::self()->save();
+    }
+    else
+    {
+        d->annotator->detachAnnotation();
+    }
 }
 
 void PageView::slotSetMouseZoom()
@@ -5185,12 +5175,6 @@ void PageView::slotSetMouseZoom()
     Okular::Settings::setMouseMode( d->mouseMode );
     // change the text in messageWindow (and show it if hidden)
     d->messageWindow->display( i18n( "Select zooming area. Right-click to zoom out." ), QString(), PageViewMessage::Info, -1 );
-    // force hiding of annotator toolbar
-    if ( d->aToggleAnnotator && d->aToggleAnnotator->isChecked() )
-    {
-        d->aToggleAnnotator->trigger();
-        d->annotator->setHidingForced( true );
-    }
     // force an update of the cursor
     updateCursor();
     Okular::Settings::self()->save();
@@ -5213,12 +5197,6 @@ void PageView::slotSetMouseSelect()
     Okular::Settings::setMouseMode( d->mouseMode );
     // change the text in messageWindow (and show it if hidden)
     d->messageWindow->display( i18n( "Draw a rectangle around the text/graphics to copy." ), QString(), PageViewMessage::Info, -1 );
-    // force hiding of annotator toolbar
-    if ( d->aToggleAnnotator && d->aToggleAnnotator->isChecked() )
-    {
-        d->aToggleAnnotator->trigger();
-        d->annotator->setHidingForced( true );
-    }
     // force an update of the cursor
     updateCursor();
     Okular::Settings::self()->save();
@@ -5230,12 +5208,6 @@ void PageView::slotSetMouseTextSelect()
     Okular::Settings::setMouseMode( d->mouseMode );
     // change the text in messageWindow (and show it if hidden)
     d->messageWindow->display( i18n( "Select text" ), QString(), PageViewMessage::Info, -1 );
-    // force hiding of annotator toolbar
-    if ( d->aToggleAnnotator && d->aToggleAnnotator->isChecked() )
-    {
-        d->aToggleAnnotator->trigger();
-        d->annotator->setHidingForced( true );
-    }
     // force an update of the cursor
     updateCursor();
     Okular::Settings::self()->save();
@@ -5249,73 +5221,9 @@ void PageView::slotSetMouseTableSelect()
     d->messageWindow->display( i18n(
         "Draw a rectangle around the table, then click near edges to divide up; press Esc to clear."
         ), QString(), PageViewMessage::Info, -1 );
-    // force hiding of annotator toolbar
-    if ( d->aToggleAnnotator && d->aToggleAnnotator->isChecked() )
-    {
-        d->aToggleAnnotator->trigger();
-        d->annotator->setHidingForced( true );
-    }
     // force an update of the cursor
     updateCursor();
     Okular::Settings::self()->save();
-}
-
-void PageView::slotToggleAnnotator( bool on )
-{
-    // the 'inHere' trick is needed as the slotSetMouseZoom() calls this
-    static bool inHere = false;
-    if ( inHere )
-        return;
-    inHere = true;
-
-    // the annotator can be used in normal mouse mode only, so if asked for it,
-    // switch to normal mode
-    if ( on && d->mouseMode != Okular::Settings::EnumMouseMode::Browse )
-        d->aMouseNormal->trigger();
-
-    // ask for Author's name if not already set
-    if ( Okular::Settings::identityAuthor().isEmpty() )
-    {
-        // get default username from the kdelibs/kdecore/KUser
-        KUser currentUser;
-        QString userName = currentUser.property( KUser::FullName ).toString();
-        // ask the user for confirmation/change
-        if ( userName.isEmpty() )
-        {
-            bool ok = false;
-            userName = QInputDialog::getText(nullptr,
-                           i18n( "Annotations author" ),
-                           i18n( "Please insert your name or initials:" ),
-                           QLineEdit::Normal,
-                           QString(),
-                           &ok );
-
-            if ( !ok )
-            {
-                d->aToggleAnnotator->trigger();
-                inHere = false;
-                return;
-            }
-        }
-        // save the name
-        Okular::Settings::setIdentityAuthor( userName );
-        Okular::Settings::self()->save();
-    }
-
-    // create the annotator object if not present
-    if ( !d->annotator )
-    {
-        d->annotator = new PageViewAnnotator( this, d->document );
-        bool allowTools = d->document->pages() > 0 && d->document->isAllowed( Okular::AllowNotes );
-        d->annotator->setToolsEnabled( allowTools );
-        d->annotator->setTextToolsEnabled( allowTools && d->document->supportsSearching() );
-    }
-
-    // initialize/reset annotator (and show/hide toolbar)
-    d->annotator->setEnabled( on );
-    d->annotator->setHidingForced( false );
-
-    inHere = false;
 }
 
 void PageView::slotAutoScrollUp()
@@ -5459,12 +5367,6 @@ void PageView::slotTrimToSelectionToggled( bool on )
         d->mouseMode = Okular::Settings::EnumMouseMode::TrimSelect;
         // change the text in messageWindow (and show it if hidden)
         d->messageWindow->display( i18n( "Draw a rectangle around the page area you wish to keep visible" ), QString(), PageViewMessage::Info, -1 );
-        // force hiding of annotator toolbar
-        if ( d->aToggleAnnotator && d->aToggleAnnotator->isChecked() )
-        {
-           d->aToggleAnnotator->trigger();
-           d->annotator->setHidingForced( true );
-        }
         // force an update of the cursor
         updateCursor();
     } else {

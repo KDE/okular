@@ -121,6 +121,13 @@ static void eventSetReturnCode( KJSContext *ctx, void *object, KJSObject value )
     event->setReturnCode ( value.toBoolean ( ctx ) );
 }
 
+// Event.willCommit (getter)
+static KJSObject eventGetWillCommit( KJSContext *, void */*object*/ )
+{
+    // TODO Someone try to understand the defintion of willCommit better from js_api_reference.pdf
+    return KJSBoolean( true );
+}
+
 void JSEvent::initType( KJSContext *ctx )
 {
     static bool initialized = false;
@@ -138,6 +145,7 @@ void JSEvent::initType( KJSContext *ctx )
     g_eventProto->defineProperty( ctx, QStringLiteral( "shift" ), eventGetShift );
     g_eventProto->defineProperty( ctx, QStringLiteral( "source" ), eventGetSource );
     g_eventProto->defineProperty( ctx, QStringLiteral( "target" ), eventGetTarget );
+    g_eventProto->defineProperty( ctx, QStringLiteral( "willCommit" ), eventGetWillCommit );
     g_eventProto->defineProperty( ctx, QStringLiteral( "value" ), eventGetValue, eventSetValue );
     g_eventProto->defineProperty( ctx, QStringLiteral( "rc" ), eventGetReturnCode, eventSetReturnCode );
 }

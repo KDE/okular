@@ -33,7 +33,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2020-04-08</date>
+		<date>2020-06-05</date>
 		<releaseinfo>1.11 (Applications 20.08)</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
@@ -182,7 +182,7 @@ Context menu actions like Rename Bookmarks etc.)
 				</listitem>
 				<listitem>
 					<para>
-						If the document has annotations, enable the <guilabel>Reviews</guilabel> view
+						If the document has annotations, enable the <guilabel>Annotations</guilabel> view
 						and click the annotations or select them with the <keysym>Up Arrow</keysym> and <keysym>Down Arrow</keysym> keys and press <keycap>Return</keycap> to go to the associated page.
 					</para>
 				</listitem>
@@ -496,7 +496,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<para>Text annotations like <guilabel>Yellow Highlighter</guilabel> and <guilabel>Black Underlining</guilabel>
 			for files with text like &eg; &PDF;.</para>
 		      <para>Graphic annotations like <guilabel>Pop-up Note</guilabel>, <guilabel>Inline Note</guilabel>, <guilabel>Freehand Line</guilabel>, <guilabel>Highlighter</guilabel>, <guilabel>Straight Line</guilabel>, <guilabel>Polygon</guilabel>, <guilabel>Stamp</guilabel>, <guilabel>Underline</guilabel>, <guilabel>Ellipse</guilabel>, and <guilabel>Typewriter</guilabel> for all formats supported by &okular;.</para>
-			<para>Using the context menu either in the <guilabel>Reviews</guilabel> view of the sidebar or in the main window you can open a <guilabel>Pop up Note</guilabel> for any kind of annotation and add or edit comments.</para>
+			<para>Using the context menu either in the <guilabel>Annotations</guilabel> view of the sidebar or in the main window you can open a <guilabel>Pop up Note</guilabel> for any kind of annotation and add or edit comments.</para>
 			<para>Annotations are not only limited to &PDF; files, they can be used for any format &okular; supports.</para>
 			<para>
                 &okular; has the "document archiving" feature. This is an &okular;-specific format for carrying the document plus various metadata related to it (currently only annotations). You can save a "document archive" from the open document by choosing <menuchoice><guimenu>File</guimenu><guisubmenu>Save As</guisubmenu></menuchoice> and selecting <guilabel>Okular document archive</guilabel> in the <guilabel>Filter</guilabel> selector. Documents saved this way will get <filename>.okular</filename> as their filename extension. To open an &okular; document archive, just open it with &okular; as it would be &eg; a &PDF; document.
@@ -521,9 +521,9 @@ Context menu actions like Rename Bookmarks etc.)
 			<sect2 id="annotations-add">
 				<title>Adding annotations</title>
 				<para>
-					To add some annotations to the document, you have to activate the annotating toolbar.
+					To add some annotations to the document, you have to use <guilabel>Quick Annotations</guilabel> button on the main &okular; toolbar or activate the annotating toolbar.
 					This is done by either selecting
-					<menuchoice><guimenu>Tools</guimenu><guimenuitem>Review</guimenuitem></menuchoice> or
+					<menuchoice><guimenu>Tools</guimenu><guimenuitem>Annotations</guimenuitem></menuchoice> or
 					pressing <keycap>F6</keycap>. Once the annotating toolbar is shown, just press one of
 					its buttons or use keyboard shortcuts (keys from <keycap>1</keycap> to <keycap>9</keycap>) to start constructing that annotation.
 				</para>
@@ -551,88 +551,7 @@ Context menu actions like Rename Bookmarks etc.)
 					  <para>
 					      <inlinemediaobject>
 						<imageobject>
-						  <imagedata fileref="tool-note-okular.png" format="PNG"/>
-						</imageobject>
-					      </inlinemediaobject>
-					  </para>
-					</entry>
-					<entry>
-					  <para>
-					    Pop-up Note
-					  </para>
-					</entry>
-					<entry>
-					  <para>
-					    To draw multiline note. The note will can be viewed by double clicking on an icon in the document.
-					  </para>
-					  <para>
-					    Click on the tool button, then click on the place in the document where the pop-up note should be added. Enter the text of pop-up note then click on the <guilabel>Close this note</guilabel> button in the top right corner of the pop-up window.
-					  </para>
-					  <para>
-                          It is possible to define the <guilabel>Color</guilabel>, <guilabel>Opacity</guilabel>, and <guilabel>Icon</guilabel> for the note. Just right-click on the note icon created and select the <guimenuitem>Properties</guimenuitem> menu item.
-					  </para>
-					</entry>
-				      </row>
-				      <row>
-					<entry>
-					  <para>
-					      <inlinemediaobject>
-						<imageobject>
-						  <imagedata fileref="tool-note-inline-okular.png" format="PNG"/>
-						</imageobject>
-					      </inlinemediaobject>
-					  </para>
-					</entry>
-					<entry>
-					  <para>
-					    Inline Note
-					  </para>
-					</entry>
-					<entry>
-					  <para>
-					    To draw inline note. The note will be shown inline as is.
-					  </para>
-					  <para>
-					    Click on the tool button, then click with the &LMB; and hold to place the top-left corner of the note, then drag to place the bottom-right one. Enter the text of the note then click on the <guibutton>OK</guibutton> to save the note, <guibutton>Cancel</guibutton> to cancel note entering or <guibutton>Clear</guibutton> to clear the note.
-					  </para>
-					  <para>
-                          It is possible to define the <guilabel>Color</guilabel>, <guilabel>Opacity</guilabel>, <guilabel>Font</guilabel>, <guilabel>Align</guilabel>, and <guilabel>Border width</guilabel> for the note. Just right-click on the note icon created and select the <guimenuitem>Properties</guimenuitem> menu item.
-					  </para>
-					</entry>
-				      </row>
-				      <row>
-					<entry>
-					  <para>
-					      <inlinemediaobject>
-						<imageobject>
-						  <imagedata fileref="tool-ink-okular.png" format="PNG"/>
-						</imageobject>
-					      </inlinemediaobject>
-					  </para>
-					</entry>
-					<entry>
-					  <para>
-					    Freehand Line
-					  </para>
-					</entry>
-					<entry>
-					  <para>
-					    To draw free-form lines.
-					  </para>
-					  <para>
-					    Click on the tool button, then click with the &LMB; and hold to place the start of the line, then drag to draw the line.
-					  </para>
-					  <para>
-                          It is possible to define the <guilabel>Color</guilabel>, <guilabel>Opacity</guilabel>, and <guilabel>Width</guilabel> for the line. Just right-click on the line created and select the <guimenuitem>Properties</guimenuitem> menu item.
-					  </para>
-					</entry>
-				      </row>
-				      <row>
-					<entry>
-					  <para>
-					      <inlinemediaobject>
-						<imageobject>
-						  <imagedata fileref="tool-highlighter-okular.png" format="PNG"/>
+						  <imagedata fileref="tool-draw-highlight.png" format="PNG"/>
 						</imageobject>
 					      </inlinemediaobject>
 					  </para>
@@ -659,97 +578,7 @@ Context menu actions like Rename Bookmarks etc.)
 					  <para>
 					      <inlinemediaobject>
 						<imageobject>
-						  <imagedata fileref="tool-line-okular.png" format="PNG"/>
-						</imageobject>
-					      </inlinemediaobject>
-					  </para>
-					</entry>
-					<entry>
-					  <para>
-					    Straight Line
-					  </para>
-					</entry>
-					<entry>
-					  <para>
-					    To mark with a line.
-					  </para>
-					  <para>
-					    Click on the tool button, then click with the &LMB; to place the starting point of the line, then drag to place of the ending point of the line should be and click once more.
-					  </para>
-					  <para>
-                          It is possible to define the <guilabel>Color</guilabel>, <guilabel>Opacity</guilabel>, <guilabel>Width</guilabel>, <guilabel>Line start</guilabel>, <guilabel>Line end</guilabel>, <guilabel>Leader line length</guilabel>, and <guilabel>Leader line extension length</guilabel> for the line. Just right-click on the line created and select the <guimenuitem>Properties</guimenuitem> menu item.
-					  </para>
-					</entry>
-				      </row>
-				      <row>
-					<entry>
-					  <para>
-					      <inlinemediaobject>
-						<imageobject>
-						  <imagedata fileref="tool-polygon-okular.png" format="PNG"/>
-						</imageobject>
-					      </inlinemediaobject>
-					  </para>
-					</entry>
-					<entry>
-					  <para>
-					    Polygon
-					  </para>
-					</entry>
-					<entry>
-					  <para>
-					    To draw a closed plane figure from three or more segments. The corresponding note can be viewed by double clicking inside the polygon.
-					  </para>
-					  <para>
-					    Click on the tool button, then click with the &LMB; to place the first vertex of the polygon, then drag to place of the second vertex. Proceed until you draw the whole polygon up to the first vertex. Click twice if you want to add some note to the polygon.  Enter the text of the note then click on the <guibutton>OK</guibutton> to save the note, <guibutton>Cancel</guibutton> to cancel note entering or <guibutton>Clear</guibutton> to clear the note.
-					  </para>
-					  <para>
-                          It is possible to define the <guilabel>Color</guilabel>, <guilabel>Opacity</guilabel>, <guilabel>Shape fill</guilabel> (and its color), and <guilabel>Width</guilabel> for the polygon. Just right-click on the polygon created and select the <guimenuitem>Properties</guimenuitem> menu item.
-					  </para>
-					</entry>
-				      </row>
-				      <row>
-					<entry>
-					  <para>
-					      <inlinemediaobject>
-						<imageobject>
-						  <imagedata fileref="tool-stamp-okular.png" format="PNG"/>
-						</imageobject>
-					      </inlinemediaobject>
-					  </para>
-					</entry>
-					<entry>
-					  <para>
-					    Stamp
-					  </para>
-					</entry>
-					<entry>
-					  <para>
-					    To mark the text or image with some predefined shape.
-					  </para>
-					  <para>
-					    Click on the tool button then click with the &LMB; to place the stamp.
-					  </para>
-					  <para>
-					    A single click just places a square stamp (useful for icons).
-					    To add a rectangular stamp you can click with the &LMB; and hold to place the top-left point, then drag to place the bottom-right one.
-					  </para>
-					  <para>
-					    It is possible to define the <guilabel>Opacity</guilabel> and <guilabel>Stamp symbol</guilabel> for the stamp. Just right-click on the stamp icon created and select the <guimenuitem>Properties</guimenuitem> menu item.
-					  </para>
-					  <warning>
-					  	 <para>
-					  	 	 This feature is experimental. Custom stamps inserted in &PDF; documents are not visible in &PDF; readers other than &okular;.
-					  	 </para>
-					  </warning>
-					</entry>
-				      </row>
-				      <row>
-					<entry>
-					  <para>
-					      <inlinemediaobject>
-						<imageobject>
-						  <imagedata fileref="tool-underline-okular.png" format="PNG"/>
+						  <imagedata fileref="tool-format-text-underline.png" format="PNG"/>
 						</imageobject>
 					      </inlinemediaobject>
 					  </para>
@@ -776,25 +605,52 @@ Context menu actions like Rename Bookmarks etc.)
 					  <para>
 					      <inlinemediaobject>
 						<imageobject>
-						  <imagedata fileref="tool-ellipse-okular.png" format="PNG"/>
+						  <imagedata fileref="tool-format-text-underline-squiggle.png" format="PNG"/>
 						</imageobject>
 					      </inlinemediaobject>
 					  </para>
 					</entry>
 					<entry>
 					  <para>
-					    Ellipse
+					    Squiggle
 					  </para>
 					</entry>
 					<entry>
 					  <para>
-					    To draw an ellipse or rectangle around some chosen area.
+					    To underline some text by a squiggle line.
 					  </para>
 					  <para>
-					    Click on the tool button, then click with the &LMB; and hold to place the top-left corner of the circumscribed rectangular for the ellipse, then drag to place the bottom-right one.
+					    Click on the tool button, then click with the &LMB; and hold to place the beginning of the underlined text snippet, then drag to underline it.
 					  </para>
 					  <para>
-                          It is possible to define the <guilabel>Type</guilabel> (<guimenuitem>Rectangle</guimenuitem> or <guimenuitem>Ellipse</guimenuitem>), <guilabel>Color</guilabel>, <guilabel>Opacity</guilabel>, <guilabel>Shape fill</guilabel> (and its color), and <guilabel>Width</guilabel> for the border. Just right-click on the border created and select the <guimenuitem>Properties</guimenuitem> menu item.
+                          It is possible to define the <guilabel>Type</guilabel> (<guimenuitem>Highlight</guimenuitem>, <guimenuitem>Squiggle</guimenuitem>, <guimenuitem>Underline</guimenuitem> or <guimenuitem>Strike out</guimenuitem>), <guilabel>Color</guilabel>, and <guilabel>Opacity</guilabel> for the underline. Just right-click on the underlined text and select the <guimenuitem>Properties</guimenuitem> menu item.
+					  </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-format-text-strikethrough.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    Strike Out
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    To strike out some text.
+					  </para>
+					  <para>
+					    Click on the tool button, then click with the &LMB; and hold to place the beginning of the underlined text snippet, then drag to underline it.
+					  </para>
+					  <para>
+                          It is possible to define the <guilabel>Type</guilabel> (<guimenuitem>Highlight</guimenuitem>, <guimenuitem>Squiggle</guimenuitem>, <guimenuitem>Underline</guimenuitem> or <guimenuitem>Strike out</guimenuitem>), <guilabel>Color</guilabel>, and <guilabel>Opacity</guilabel> for the underline. Just right-click on the underlined text and select the <guimenuitem>Properties</guimenuitem> menu item.
 					  </para>
 					</entry>
 				      </row>
@@ -803,7 +659,7 @@ Context menu actions like Rename Bookmarks etc.)
 					  <para>
 					      <inlinemediaobject>
 						<imageobject>
-						  <imagedata fileref="tool-typewriter-okular.png" format="PNG"/>
+						  <imagedata fileref="tool-tool-text.png" format="PNG"/>
 						</imageobject>
 					      </inlinemediaobject>
 					  </para>
@@ -825,33 +681,504 @@ Context menu actions like Rename Bookmarks etc.)
 					  </para>
 					</entry>
 				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-note.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    Inline Note
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    To draw inline note. The note will be shown inline as is.
+					  </para>
+					  <para>
+					    Click on the tool button, then click with the &LMB; and hold to place the top-left corner of the note, then drag to place the bottom-right one. Enter the text of the note then click on the <guibutton>OK</guibutton> to save the note, <guibutton>Cancel</guibutton> to cancel note entering or <guibutton>Clear</guibutton> to clear the note.
+					  </para>
+					  <para>
+                          It is possible to define the <guilabel>Color</guilabel>, <guilabel>Opacity</guilabel>, <guilabel>Font</guilabel>, <guilabel>Align</guilabel>, and <guilabel>Border width</guilabel> for the note. Just right-click on the note icon created and select the <guimenuitem>Properties</guimenuitem> menu item.
+					  </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-edit-comment.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    Pop-up Note
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    To draw multiline note. The note will can be viewed by double clicking on an icon in the document.
+					  </para>
+					  <para>
+					    Click on the tool button, then click on the place in the document where the pop-up note should be added. Enter the text of pop-up note then click on the <guilabel>Close this note</guilabel> button in the top right corner of the pop-up window.
+					  </para>
+					  <para>
+                          It is possible to define the <guilabel>Color</guilabel>, <guilabel>Opacity</guilabel>, and <guilabel>Icon</guilabel> for the note. Just right-click on the note icon created and select the <guimenuitem>Properties</guimenuitem> menu item.
+					  </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-freehand.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    Freehand Line
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    To draw free-form lines.
+					  </para>
+					  <para>
+					    Click on the tool button, then click with the &LMB; and hold to place the start of the line, then drag to draw the line.
+					  </para>
+					  <para>
+                          It is possible to define the <guilabel>Color</guilabel>, <guilabel>Opacity</guilabel>, and <guilabel>Width</guilabel> for the line. Just right-click on the line created and select the <guimenuitem>Properties</guimenuitem> menu item.
+					  </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-arrow.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    Arrow (drop-down list)
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    To mark with an arrow.
+					  </para>
+					  <para>
+					    Click on the tool button, then click with the &LMB; to place the starting point of the line, then drag to place of the ending point of the line should be and click once more.
+					  </para>
+					  <para>
+                          It is possible to define the <guilabel>Color</guilabel>, <guilabel>Opacity</guilabel>, <guilabel>Width</guilabel>, <guilabel>Line start</guilabel>, <guilabel>Line end</guilabel>, <guilabel>Leader line length</guilabel>, and <guilabel>Leader line extension length</guilabel> for the line. Just right-click on the line created and select the <guimenuitem>Properties</guimenuitem> menu item.
+					  </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-line.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    Straight line (drop-down list)
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    To mark with a line.
+					  </para>
+					  <para>
+					    Click on the tool button, then click with the &LMB; to place the starting point of the line, then drag to place of the ending point of the line should be and click once more.
+					  </para>
+					  <para>
+                          It is possible to define the <guilabel>Color</guilabel>, <guilabel>Opacity</guilabel>, <guilabel>Width</guilabel>, <guilabel>Line start</guilabel>, <guilabel>Line end</guilabel>, <guilabel>Leader line length</guilabel>, and <guilabel>Leader line extension length</guilabel> for the line. Just right-click on the line created and select the <guimenuitem>Properties</guimenuitem> menu item.
+					  </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-rectangle.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    Rectangle (drop-down list)
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    To draw a rectangle around some chosen area.
+					  </para>
+					  <para>
+					    Click on the tool button, then click with the &LMB; and hold to place the top-left corner of the rectangle, then drag to place the bottom-right one.
+					  </para>
+					  <para>
+                          It is possible to define the <guilabel>Type</guilabel> (<guimenuitem>Rectangle</guimenuitem> or <guimenuitem>Ellipse</guimenuitem>), <guilabel>Color</guilabel>, <guilabel>Opacity</guilabel>, <guilabel>Shape fill</guilabel> (and its color), and <guilabel>Width</guilabel> for the border. Just right-click on the border created and select the <guimenuitem>Properties</guimenuitem> menu item.
+					  </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-ellipse.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    Ellipse (drop-down list)
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    To draw an ellipse or rectangle around some chosen area.
+					  </para>
+					  <para>
+					    Click on the tool button, then click with the &LMB; and hold to place the top-left corner of the circumscribed rectangular for the ellipse, then drag to place the bottom-right one.
+					  </para>
+					  <para>
+                          It is possible to define the <guilabel>Type</guilabel> (<guimenuitem>Rectangle</guimenuitem> or <guimenuitem>Ellipse</guimenuitem>), <guilabel>Color</guilabel>, <guilabel>Opacity</guilabel>, <guilabel>Shape fill</guilabel> (and its color), and <guilabel>Width</guilabel> for the border. Just right-click on the border created and select the <guimenuitem>Properties</guimenuitem> menu item.
+					  </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-polyline.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    Polygon (drop-down list)
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    To draw a closed plane figure from three or more segments. The corresponding note can be viewed by double clicking inside the polygon.
+					  </para>
+					  <para>
+					    Click on the tool button, then click with the &LMB; to place the first vertex of the polygon, then drag to place of the second vertex. Proceed until you draw the whole polygon up to the first vertex. Click twice if you want to add some note to the polygon.  Enter the text of the note then click on the <guibutton>OK</guibutton> to save the note, <guibutton>Cancel</guibutton> to cancel note entering or <guibutton>Clear</guibutton> to clear the note.
+					  </para>
+					  <para>
+                          It is possible to define the <guilabel>Color</guilabel>, <guilabel>Opacity</guilabel>, <guilabel>Shape fill</guilabel> (and its color), and <guilabel>Width</guilabel> for the polygon. Just right-click on the polygon created and select the <guimenuitem>Properties</guimenuitem> menu item.
+					  </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-tag.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    Stamp
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    To mark the text or image with some predefined shape.
+					  </para>
+					  <para>
+					    Click on the tool button to choose the stamp from the drop-down list then click with the &LMB; to place the stamp.
+					  </para>
+					  <para>
+					    A single click just places a square stamp (useful for icons).
+					    To add a rectangular stamp you can click with the &LMB; and hold to place the top-left point, then drag to place the bottom-right one.
+					  </para>
+					  <para>
+					    It is possible to define the <guilabel>Opacity</guilabel> and <guilabel>Stamp symbol</guilabel> for the stamp. Just right-click on the stamp icon created and select the <guimenuitem>Properties</guimenuitem> menu item.
+					  </para>
+					  <warning>
+					  	 <para>
+					  	 	 This feature is experimental. Custom stamps inserted in &PDF; documents are not visible in &PDF; readers other than &okular;.
+					  	 </para>
+					  </warning>
+					</entry>
+				      </row>
 				      </tbody>
 				    </tgroup>
 				  </informaltable>
                                   <para>These are the default annotations provided by &okular;. Using the <link linkend="configannotations">Annotations page</link> of the configuration dialog
-                                    you can add your own annotations like custom stamps, text markup with <guilabel>Squiggle</guilabel> or <guilabel>Strike out</guilabel>, a geometrical shape
-                                    like a <guilabel>Rectangle</guilabel> with inner color to highlight regions &etc;
+                                    you can add your own annotations like custom stamps, text markup or a geometrical shape with inner color to highlight regions &etc;
                                   </para>
                                   <note>
                                       <para>
                                           It is possible to add &latex; code into the text of annotations. Please add <userinput>$$<replaceable>code</replaceable>$$</userinput> to the text of annotation, where <replaceable>code</replaceable> is any valid &latex; equation, and follow instructions on the screen to make it render by a &latex; distribution installed in your system.
                                       </para>
                                   </note>
+				<para>
+				  It is possible to configure the current tool options using the annotating toolbar itself. The table below describes exactly what the default set of annotating toolbar configuring buttons does.
+				</para>
+				<informaltable>
+				  <tgroup cols="3">
+				    <thead>
+				      <row>
+					<entry>
+					  Button
+					</entry>
+					<entry>
+					    Option Name
+					</entry>
+					<entry>
+					    Description
+					</entry>
+				      </row>
+				    </thead>
+				    <tbody>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-edit-line-width.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    Line width
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    Click on the tool button to choose the width from the drop-down list.
+					  </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-format-text-color.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					      /
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-bordertool.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    Annotation color
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+						  Click on the tool button to choose color of text or border of your annotation. You can chose one of the predefined colors or click on the <guimenuitem>Custom Color...</guimenuitem> item to open the color selection dialog.
+					  </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-fill-color.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    Annotation fill color
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+						  Click on the tool button to choose a fill color of your annotation. You can chose one of the predefined colors or click on the <guimenuitem>Custom Color...</guimenuitem> item to open the color selection dialog.
+					  </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-edit-opacity.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    Annotation opacity
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+						  Click on the tool button to choose annotation level of opacity from the drop-down list (<guimenuitem>100%</guimenuitem> is for the opaque annotations).
+					  </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-font-face.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    Annotation font
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+						  Click on the tool button to open the font selection dialog.
+					  </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-settings-configure.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    Advanced settings for the current annotation tool
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+						  Click on the tool button to open the general configuration dialog for your annotation.
+					  </para>
+					</entry>
+				      </row>
+			            </tbody>
+				    </tgroup>
+				  </informaltable>
+				<para>
+				  There are three additional utility buttons on the default annotating toolbar.
+				</para>
+				<informaltable>
+				  <tgroup cols="2">
+				    <thead>
+				      <row>
+					<entry>
+					  Button
+					</entry>
+					<entry>
+					    Description
+					</entry>
+				      </row>
+				    </thead>
+				    <tbody>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-favorite.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+						  Add the current annotation to the <guilabel>Quick Annotations</guilabel> menu on the main toolbar.
+					  </para>
+					  <note>
+						  <para>
+							  You can use the default shortcuts from <keycombo action="simul">&Alt;<keycap>9</keycap></keycombo> to <keycombo action="simul">&Alt;<keycap>0</keycap></keycombo> to select the quick annotation actions any time you like even with the annotating toolbar hidden.
+						  </para>
+					  </note>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-window-pin.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    When checked keep the current annotation tool active after use.
+					  </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-dialog-close.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para>
+					    Hide the annotating toolbar.
+					  </para>
+					</entry>
+				      </row>
+			            </tbody>
+				    </tgroup>
+				  </informaltable>
 				  <para>
 				    The contents of the annotating toolbar can be configured using the <link linkend="configannotations">Annotations page of &okular; configuration dialog</link>. This page can be opened with &RMB; clicking on the annotating toolbar then choosing <guimenuitem>Configure Annotations...</guimenuitem> from the context menu.
 				</para>
 				<para>
-                                        With a single &LMB; click on an annotation tool button you can use a tool once. 
-					If you &eg; want to highlight all important parts of a text, activate that tool 
-					permanently by double clicking on the tool button. 
+                                        With a single &LMB; click on an annotation tool button you can use a tool once.
+					If you &eg; want to highlight all important parts of a text, activate that tool
+					permanently by double clicking on the tool button.
 					Press the <keycap>Esc</keycap> key or click the tool button again to leave the permanent mode.
 				</para>
-				<note>
-					<para>
-						The annotating toolbar can be docked in any side of the viewing area: just drag it to
-						move it to another place.
-					</para>
-				</note>
 				<note>
 					<para>
 						Activating the annotating toolbar will make you switch to the Browse Mode.
@@ -1856,11 +2183,11 @@ Context menu actions like Rename Bookmarks etc.)
 						<menuchoice>
 							<shortcut><keycap>F6</keycap></shortcut>
 							<guimenu>Tools</guimenu>
-							<guimenuitem>Review</guimenuitem>
+							<guimenuitem>Annotations</guimenuitem>
 						</menuchoice>
 					</term>
 					<listitem>
-						<para><action>Open the review toolbar</action>. The review toolbar allows you to add
+						<para><action>Open the annotating toolbar</action>. The annotating toolbar allows you to add
 							annotations on the document you are reading. For more information, please see the
 							section about <link linkend="annotations">Annotations</link>.</para>
 					</listitem>
@@ -2395,7 +2722,7 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term><guilabel>Rendering</guilabel></term>
 					<listitem>
-						<para>Using this group of options you can improve text and image rendering in &okular;. The result depends on the device to display the document. 
+						<para>Using this group of options you can improve text and image rendering in &okular;. The result depends on the device to display the document.
 						 <guilabel>Enable Text Antialias</guilabel> and <guilabel>Enable Graphics Antialias</guilabel> items can be used to switch on and off <ulink url="http://en.wikipedia.org/wiki/Spatial_anti-aliasing">spatial anti-aliasing</ulink> of text and images in document, correspondingly.
 						 <guilabel>Enable Text Hinting</guilabel> item is meant to be a switcher for <ulink url="http://en.wikipedia.org/wiki/Font_hinting">font hinting</ulink>.
 						 Antialiasing and hinting change how the documents are displayed, you may want to tweak them to your preference.</para>

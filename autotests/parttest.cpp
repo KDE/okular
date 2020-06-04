@@ -66,6 +66,7 @@ private slots:
     void testGeneratorPreferences();
     void testSelectText();
     void testClickInternalLink();
+    void testScrollBarAndMouseWheel();
     void testOpenUrlArguments();
     void test388288();
     void testSaveAs();
@@ -313,6 +314,50 @@ void PartTest::testClickInternalLink()
     QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * 0.17, height * 0.05));
     QTest::mouseClick(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, QPoint(width * 0.17, height * 0.05));
     QTRY_COMPARE(part.m_document->currentPage(), 1u);
+}
+
+// Test for bug 421159, which is: When scrolling down with the scroll bar
+// followed by scrolling down with the mouse wheel, the mouse wheel scrolling
+// will make the viewport jump back to the first page.
+void PartTest::testScrollBarAndMouseWheel()
+{
+    QVariantList dummyArgs;
+    Okular::Part part(nullptr, nullptr, dummyArgs);
+    QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/simple-multipage.pdf")));
+    part.widget()->show();
+    QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
+
+    part.m_document->setViewportPage(0);
+
+    // wait for pixmap
+    QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
+
+    // Make sure we are on the first page
+    QCOMPARE(part.m_document->currentPage(), 0u);
+
+    // Two clicks on the vertical scrollbar
+    auto scrollBar = part.m_pageView->verticalScrollBar();
+
+    QTest::mouseClick(scrollBar, Qt::LeftButton);
+    QTest::qWait(QApplication::doubleClickInterval() * 2); // Wait a tiny bit
+    QTest::mouseClick(scrollBar, Qt::LeftButton);
+
+    // We have scrolled enough to be on the second page now
+    QCOMPARE(part.m_document->currentPage(), 1u);
+
+    // Scroll further down using the mouse wheel
+    auto wheelDown = new QWheelEvent({}, {}, {}, {0, -150}, Qt::NoButton, Qt::NoModifier, Qt::NoScrollPhase, false);
+    QCoreApplication::postEvent(part.m_pageView->viewport(), wheelDown);
+
+    // Wait a little for the scrolling to actually happen.
+    // We should still be on the second page after that.
+    QTest::qWait(1000);
+
+    // This test for bug 421159 has been committed when there was no fix for the bug
+    // available yet.  That's why the final QCOMPARE is preceded by QEXPECT_FAIL.
+    // Please remove the QEXPECT_FAIL together with the fix for bug 421159.
+    QEXPECT_FAIL("", "Please remove this QEXPECT_FAIL once bug 421159 is fixed!", Continue);
+    QCOMPARE(part.m_document->currentPage(), 1u);
 }
 
 // cursor switches to Hand when hovering over link in TextSelect mode.

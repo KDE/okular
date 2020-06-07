@@ -670,8 +670,8 @@ bool KDjVu::openFile( const QString & fileName )
     if ( d->m_djvu_document )
         closeFile();
 
-    // load the document...
-    d->m_djvu_document = ddjvu_document_create_by_filename( d->m_djvu_cxt, QFile::encodeName( fileName ).constData(), true );
+    // load the document..., use UTF-8 variant to work on Windows, too, see bug 422500
+    d->m_djvu_document = ddjvu_document_create_by_filename_utf8( d->m_djvu_cxt, fileName.toUtf8().constData(), true );
     if ( !d->m_djvu_document ) return false;
     // ...and wait for its loading
     wait_for_ddjvu_message( d->m_djvu_cxt, DDJVU_DOCINFO );
@@ -887,7 +887,7 @@ void KDjVu::linksAndAnnotationsForPage( int pageNum, QList<KDjVu::Link*> *links,
             {
                 link->m_area = KDjVu::Link::PolygonArea;
                 QPolygon poly;
-                for ( int j = 1; j < arealength; j += 2 ) 
+                for ( int j = 1; j < arealength; j += 2 )
                 {
                     poly << QPoint( miniexp_to_int( miniexp_nth( j, area ) ), miniexp_to_int( miniexp_nth( j + 1, area ) ) );
                 }

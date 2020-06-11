@@ -37,12 +37,30 @@ int main(int argc, char** argv)
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
 
+    /**
+     * allow fractional scaling
+     * we only activate this on Windows, it seems to creates problems on unices
+     * (and there the fractional scaling with the QT_... env vars as set by KScreen works)
+     * see bug 416078
+     */
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0) && defined(Q_OS_WIN)
+    QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
+#endif
+
 #if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
     QCoreApplication::setAttribute(Qt::AA_CompressTabletEvents);
 #endif
 
     QApplication app(argc, argv);
     KLocalizedString::setApplicationDomain("okular");
+
+    /**
+     * For Windows and macOS: use Breeze if available
+     * Of all tested styles that works the best for us
+     */
+#if defined(Q_OS_MACOS) || defined(Q_OS_WIN)
+    QApplication::setStyle(QStringLiteral("breeze"));
+#endif
 
     KAboutData aboutData = okularAboutData();
     KAboutData::setApplicationData(aboutData);

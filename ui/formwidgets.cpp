@@ -530,7 +530,8 @@ bool FormLineEdit::event( QEvent* e )
     else if ( e->type() == QEvent::FocusIn )
     {
         const auto fft = static_cast< Okular::FormFieldText * > ( m_ff );
-        setText( fft->text() );
+        if ( text() != fft->text() )
+            setText( fft->text() );
         m_editing = true;
         if( const Okular::Action *action = m_ff->additionalAction( Okular::Annotation::FocusIn ) )
             emit m_controller->focusAction( action, fft );
@@ -705,7 +706,8 @@ bool TextAreaEdit::event( QEvent* e )
     else if ( e->type() == QEvent::FocusIn )
     {
         const auto fft = static_cast< Okular::FormFieldText * > ( m_ff );
-        setText( fft->text() );
+        if ( toPlainText() != fft->text() )
+            setText( fft->text() );
         m_editing = true;
     }
     else if ( e->type() == QEvent::FocusOut )

@@ -36,7 +36,6 @@
                 "Name[sv]": "Tobias Koenig",
                 "Name[tr]": "Tobias Koenig",
                 "Name[uk]": "Tobias Koenig",
-                "Name[x-test]": "xxTobias Koenigxx",
                 "Name[zh_CN]": "Tobias Koenig",
                 "Name[zh_TW]": "Tobias Koenig"
             }
@@ -74,7 +73,6 @@
         "Copyright[sv]": "© 2007-2008 Tobias Koenig",
         "Copyright[tr]": "© 2007-2008 Tobias Koenig",
         "Copyright[uk]": "© Tobias Koenig, 2007–2008",
-        "Copyright[x-test]": "xx© 2007-2008 Tobias Koenigxx",
         "Copyright[zh_CN]": "© 2007-2008 Tobias Koenig",
         "Copyright[zh_TW]": "© 2007-2008 Tobias Koenig",
         "Description": "A renderer for Plucker eBooks",
@@ -110,7 +108,6 @@
         "Description[sv]": "Ett återgivningsprogram för Plucker e-böcker",
         "Description[tr]": "Plucker e-kitapları için bir oluşturucu",
         "Description[uk]": "Програма для відображення ел. книг Plucker",
-        "Description[x-test]": "xxA renderer for Plucker eBooksxx",
         "Description[zh_CN]": "Plucker 电子书渲染器",
         "Description[zh_TW]": "Plucker 電子書成像器",
         "Id": "okular_plucker",
@@ -151,7 +148,6 @@
         "Name[sv]": "Plucker-dokumentgränssnitt",
         "Name[tr]": "Plucker Belgesi Arka Ucu",
         "Name[uk]": "Модуль документів Plucker",
-        "Name[x-test]": "xxPlucker Document Backendxx",
         "Name[zh_CN]": "Plucker 文档后端",
         "Name[zh_TW]": "Pluker 文件後端介面",
         "ServiceTypes": [

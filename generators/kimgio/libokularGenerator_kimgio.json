@@ -36,6 +36,7 @@
                 "Name[sv]": "Albert Astals Cid",
                 "Name[tr]": "Albert Astals Cid",
                 "Name[uk]": "Albert Astals Cid",
+                "Name[x-test]": "xxAlbert Astals Cidxx",
                 "Name[zh_CN]": "Albert Astals Cid",
                 "Name[zh_TW]": "Albert Astals Cid"
             },
@@ -74,6 +75,7 @@
                 "Name[sv]": "Pino Toscano",
                 "Name[tr]": "Pino Toscano",
                 "Name[uk]": "Pino Toscano",
+                "Name[x-test]": "xxPino Toscanoxx",
                 "Name[zh_CN]": "Pino Toscano",
                 "Name[zh_TW]": "Pino Toscano"
             },
@@ -112,6 +114,7 @@
                 "Name[sv]": "Tobias Koenig",
                 "Name[tr]": "Tobias Koenig",
                 "Name[uk]": "Tobias Koenig",
+                "Name[x-test]": "xxTobias Koenigxx",
                 "Name[zh_CN]": "Tobias Koenig",
                 "Name[zh_TW]": "Tobias Koenig"
             }
@@ -149,6 +152,7 @@
         "Copyright[sv]": "© 2005,2009 Albert Astals Cid\n© 2006-2007 Pino Toscano\n© 2006-2007 Tobias Koenig",
         "Copyright[tr]": "© 2005, 2009 Albert Astals Cid\n© 2006-2007 Pino Toscano\n© 2006-2007 Tobias Koenig",
         "Copyright[uk]": "© Albert Astals Cid, 2005, 2009 \n© Pino Toscano, 2006–2007\n© Tobias Koenig, 2006–2007",
+        "Copyright[x-test]": "xx© 2005, 2009 Albert Astals Cid\n© 2006-2007 Pino Toscano\n© 2006-2007 Tobias Koenigxx",
         "Copyright[zh_CN]": "© 2005, 2009 Albert Astals Cid\n© 2006-2007 Pino Toscano\n© 2006-2007 Tobias Koenig",
         "Copyright[zh_TW]": "© 2005, 2009 Albert Astals Cid\n© 2006-2007 Pino Toscano\n© 2006-2007 Tobias Koenig",
         "Description": "A simple image backend",
@@ -184,6 +188,7 @@
         "Description[sv]": "Ett enkelt bildgränssnitt",
         "Description[tr]": "Basit bir görüntü arka ucu",
         "Description[uk]": "Проста програма для зображень",
+        "Description[x-test]": "xxA simple image backendxx",
         "Description[zh_CN]": "简单的图像后端",
         "Description[zh_TW]": "簡易的圖片後端介面",
         "Id": "okular_kimgio",
@@ -245,6 +250,7 @@
         "Name[sv]": "Bildgränssnitt",
         "Name[tr]": "Resim Arka Ucu",
         "Name[uk]": "Модуль зображень",
+        "Name[x-test]": "xxImage Backendxx",
         "Name[zh_CN]": "图像后端",
         "Name[zh_TW]": "圖片後端介面",
         "ServiceTypes": [

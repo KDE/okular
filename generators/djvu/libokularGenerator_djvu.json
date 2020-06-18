@@ -36,6 +36,7 @@
                 "Name[sv]": "Pino Toscano",
                 "Name[tr]": "Pino Toscano",
                 "Name[uk]": "Pino Toscano",
+                "Name[x-test]": "xxPino Toscanoxx",
                 "Name[zh_CN]": "Pino Toscano",
                 "Name[zh_TW]": "Pino Toscano"
             }
@@ -73,6 +74,7 @@
         "Copyright[sv]": "© 2006-2008 Pino Toscano",
         "Copyright[tr]": "© 2006-2008 Pino Toscano",
         "Copyright[uk]": "© Pino Toscano, 2006–2008",
+        "Copyright[x-test]": "xx© 2006-2008 Pino Toscanoxx",
         "Copyright[zh_CN]": "© 2006-2008 Pino Toscano",
         "Copyright[zh_TW]": "© 2006-2008 Pino Toscano",
         "Description": "DjVu backend based on DjVuLibre",
@@ -108,6 +110,7 @@
         "Description[sv]": "DjVu-gränssnitt baserat på DjVuLibre",
         "Description[tr]": "DjVuLibre tabanlı DjVu arka ucu",
         "Description[uk]": "Засіб обробки DjVu, заснований на DjVuLibre",
+        "Description[x-test]": "xxDjVu backend based on DjVuLibrexx",
         "Description[zh_CN]": "基于 DjVuLibre 的 DjVu 后端",
         "Description[zh_TW]": "基於 DjVuLibre 的 DjVu 後端介面",
         "Id": "okular_djvu",
@@ -148,6 +151,7 @@
         "Name[sv]": "DjVu-gränssnitt",
         "Name[tr]": "DjVu Arka Ucu",
         "Name[uk]": "Модуль DjVu",
+        "Name[x-test]": "xxDjVu Backendxx",
         "Name[zh_CN]": "DjVu 后端",
         "Name[zh_TW]": "DjVu 後端介面",
         "ServiceTypes": [

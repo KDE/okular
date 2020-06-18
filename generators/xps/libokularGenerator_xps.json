@@ -36,6 +36,7 @@
                 "Name[sv]": "Brad Hards",
                 "Name[tr]": "Brad Hards",
                 "Name[uk]": "Brad Hards",
+                "Name[x-test]": "xxBrad Hardsxx",
                 "Name[zh_CN]": "Brad Hards",
                 "Name[zh_TW]": "Brad Hards"
             },
@@ -74,6 +75,7 @@
                 "Name[sv]": "Jiri Klement",
                 "Name[tr]": "Jiri Klement",
                 "Name[uk]": "Jiri Klement",
+                "Name[x-test]": "xxJiri Klementxx",
                 "Name[zh_CN]": "Jiri Klement",
                 "Name[zh_TW]": "Jiri Klement"
             },
@@ -112,6 +114,7 @@
                 "Name[sv]": "Pino Toscano",
                 "Name[tr]": "Pino Toscano",
                 "Name[uk]": "Pino Toscano",
+                "Name[x-test]": "xxPino Toscanoxx",
                 "Name[zh_CN]": "Pino Toscano",
                 "Name[zh_TW]": "Pino Toscano"
             }
@@ -149,6 +152,7 @@
         "Copyright[sv]": "© 2006-2007 Brad Hards\n© 2007 Jiri Klement\n© 2008 Pino Toscano",
         "Copyright[tr]": "© 2006-2007 Brad Hards\n© 2007 Jiri Klement\n© 2008 Pino Toscano",
         "Copyright[uk]": "© Brad Hards, 2006–2007\n© Jiri Klement, 2007\n© Pino Toscano, 2008",
+        "Copyright[x-test]": "xx© 2006-2007 Brad Hards\n© 2007 Jiri Klement\n© 2008 Pino Toscanoxx",
         "Copyright[zh_CN]": "© 2006-2007 Brad Hards\n© 2007 Jiri Klement\n© 2008 Pino Toscano",
         "Copyright[zh_TW]": "© 2006-2007 Brad Hards\n© 2007 Jiri Klement\n© 2008 Pino Toscano",
         "Description": "An XPS backend",
@@ -184,6 +188,7 @@
         "Description[sv]": "Ett XPS-gränssnitt",
         "Description[tr]": "Bir XPS arka ucu",
         "Description[uk]": "Програма для XPS",
+        "Description[x-test]": "xxAn XPS backendxx",
         "Description[zh_CN]": "XPS 后端",
         "Description[zh_TW]": "XPS 後端介面",
         "Id": "okular_xps",
@@ -225,6 +230,7 @@
         "Name[sv]": "XPS-gränssnitt",
         "Name[tr]": "XPS Arka Ucu",
         "Name[uk]": "Модуль XPS",
+        "Name[x-test]": "xxXPS Backendxx",
         "Name[zh_CN]": "XPS 后端",
         "Name[zh_TW]": "XPS 後端介面",
         "ServiceTypes": [

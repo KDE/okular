@@ -36,6 +36,7 @@
                 "Name[sv]": "Luigi Toscano",
                 "Name[tr]": "Luigi Toscano",
                 "Name[uk]": "Luigi Toscano",
+                "Name[x-test]": "xxLuigi Toscanoxx",
                 "Name[zh_CN]": "Luigi Toscano",
                 "Name[zh_TW]": "Luigi Toscano"
             }
@@ -73,6 +74,7 @@
         "Copyright[sv]": "© 2006 Luigi Toscano",
         "Copyright[tr]": "© 2006 Luigi Toscano",
         "Copyright[uk]": "© Luigi Toscano, 2006",
+        "Copyright[x-test]": "xx© 2006 Luigi Toscanoxx",
         "Copyright[zh_CN]": "© 2006 Luigi Toscano",
         "Copyright[zh_TW]": "© 2006 Luigi Toscano",
         "Description": "A DVI file renderer",
@@ -108,6 +110,7 @@
         "Description[sv]": "Ett återgivningsprogram för DVI-filer",
         "Description[tr]": "Bir DVI dosya oluşturucu",
         "Description[uk]": "Інструмент для показу файлів DVI",
+        "Description[x-test]": "xxA DVI file rendererxx",
         "Description[zh_CN]": "DVI 文件渲染器",
         "Description[zh_TW]": "DVI 檔成像器",
         "Id": "okular_dvi",
@@ -148,6 +151,7 @@
         "Name[sv]": "DVI-gränssnitt",
         "Name[tr]": "DVI Arka Ucu",
         "Name[uk]": "Модуль DVI",
+        "Name[x-test]": "xxDVI Backendxx",
         "Name[zh_CN]": "DVI 后端",
         "Name[zh_TW]": "DVI 後端介面",
         "ServiceTypes": [

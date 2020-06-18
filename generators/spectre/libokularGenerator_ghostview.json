@@ -36,6 +36,7 @@
                 "Name[sv]": "Albert Astals Cid",
                 "Name[tr]": "Albert Astals Cid",
                 "Name[uk]": "Albert Astals Cid",
+                "Name[x-test]": "xxAlbert Astals Cidxx",
                 "Name[zh_CN]": "Albert Astals Cid",
                 "Name[zh_TW]": "Albert Astals Cid"
             }
@@ -73,6 +74,7 @@
         "Copyright[sv]": "© 2007-2008 Albert Astals Cid",
         "Copyright[tr]": "© 2007-2008 Albert Astals Cid",
         "Copyright[uk]": "© Albert Astals Cid, 2007–2008",
+        "Copyright[x-test]": "xx© 2007-2008 Albert Astals Cidxx",
         "Copyright[zh_CN]": "© 2007-2008 Albert Astals Cid",
         "Copyright[zh_TW]": "© 2007-2008 Albert Astals Cid",
         "Description": "A PostScript file renderer based on the Spectre library",
@@ -108,6 +110,7 @@
         "Description[sv]": "Ett återgivningsprogram för Postscript-filer baserat på Spectre-biblioteket",
         "Description[tr]": "Spectre kitaplığına dayalı bir PostScript dosya oluşturucu",
         "Description[uk]": "Обробник файлів PostScript на основі бібліотеки Spectre",
+        "Description[x-test]": "xxA PostScript file renderer based on the Spectre libraryxx",
         "Description[zh_CN]": "基于 Spectre 库的 PostScript 文件渲染器",
         "Description[zh_TW]": "基於 Spectre 函式庫的 PostScript 檔成像器",
         "Id": "okular_ghostview",
@@ -149,6 +152,7 @@
         "Name[sv]": "PS-gränssnitt",
         "Name[tr]": "PS Arka Ucu",
         "Name[uk]": "Модуль PS",
+        "Name[x-test]": "xxPS Backendxx",
         "Name[zh_CN]": "PS 后端",
         "Name[zh_TW]": "PS 後端介面",
         "ServiceTypes": [

@@ -36,6 +36,7 @@
                 "Name[sv]": "Julian Wolff",
                 "Name[tr]": "Julian Wolff",
                 "Name[uk]": "Julian Wolff",
+                "Name[x-test]": "xxJulian Wolffxx",
                 "Name[zh_CN]": "Julian Wolff",
                 "Name[zh_TW]": "Julian Wolff"
             }
@@ -73,6 +74,7 @@
         "Copyright[sv]": "© 2017 Julian Wolff",
         "Copyright[tr]": "© 2017 Julian Wolff",
         "Copyright[uk]": "© Julian Wolff, 2017",
+        "Copyright[x-test]": "xx© 2017 Julian Wolffxx",
         "Copyright[zh_CN]": "© 2017 Julian Wolff",
         "Copyright[zh_TW]": "© 2017 Julian Wolff",
         "Id": "okular_markdown",
@@ -114,6 +116,7 @@
         "Name[sv]": "Markdown-gränssnitt",
         "Name[tr]": "Markdown Arka Ucu",
         "Name[uk]": "Модуль Markdown",
+        "Name[x-test]": "xxMarkdown Backendxx",
         "Name[zh_CN]": "Markdown 后端",
         "Name[zh_TW]": "Markdown 後端介面",
         "ServiceTypes": [

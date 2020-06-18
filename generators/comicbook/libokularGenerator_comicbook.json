@@ -36,6 +36,7 @@
                 "Name[sv]": "Tobias Koenig",
                 "Name[tr]": "Tobias Koenig",
                 "Name[uk]": "Tobias Koenig",
+                "Name[x-test]": "xxTobias Koenigxx",
                 "Name[zh_CN]": "Tobias Koenig",
                 "Name[zh_TW]": "Tobias Koenig"
             }
@@ -73,6 +74,7 @@
         "Copyright[sv]": "© 2007-2008 Tobias Koenig",
         "Copyright[tr]": "© 2007-2008 Tobias Koenig",
         "Copyright[uk]": "© Tobias Koenig, 2007–2008",
+        "Copyright[x-test]": "xx© 2007-2008 Tobias Koenigxx",
         "Copyright[zh_CN]": "© 2007-2008 Tobias Koenig",
         "Copyright[zh_TW]": "© 2007-2008 Tobias Koenig",
         "Description": "A renderer for various comic book formats",
@@ -108,6 +110,7 @@
         "Description[sv]": "Ett återgivningsprogram för diverse format för serieböcker",
         "Description[tr]": "Çeşitli çizgi roman biçimleri için bir oluşturucu",
         "Description[uk]": "Програма для відображення коміксів у різних форматах",
+        "Description[x-test]": "xxA renderer for various comic book formatsxx",
         "Description[zh_CN]": "多种漫画书格式的渲染器",
         "Description[zh_TW]": "多種漫畫書的成像器",
         "Id": "okular_comicbook",
@@ -152,6 +155,7 @@
         "Name[sv]": "Comic Book-gränssnitt",
         "Name[tr]": "ComicBook Arka Ucu",
         "Name[uk]": "Модуль коміксів",
+        "Name[x-test]": "xxComicBook Backendxx",
         "Name[zh_CN]": "漫画书后端",
         "Name[zh_TW]": "ComicBook 後端介面",
         "ServiceTypes": [

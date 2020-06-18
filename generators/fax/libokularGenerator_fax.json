@@ -36,6 +36,7 @@
                 "Name[sv]": "Tobias Koenig",
                 "Name[tr]": "Tobias Koenig",
                 "Name[uk]": "Tobias Koenig",
+                "Name[x-test]": "xxTobias Koenigxx",
                 "Name[zh_CN]": "Tobias Koenig",
                 "Name[zh_TW]": "Tobias Koenig"
             }
@@ -73,6 +74,7 @@
         "Copyright[sv]": "© 2008 Tobias Koenig",
         "Copyright[tr]": "© 2008 Tobias Koenig",
         "Copyright[uk]": "© Tobias Koenig, 2008",
+        "Copyright[x-test]": "xx© 2008 Tobias Koenigxx",
         "Copyright[zh_CN]": "© 2008 Tobias Koenig",
         "Copyright[zh_TW]": "© 2008 Tobias Koenig",
         "Description": "A G3/G4 fax document backend",
@@ -108,6 +110,7 @@
         "Description[sv]": "Ett G3/G4 telefax-dokumentgränssnitt",
         "Description[tr]": "G3/G4 faks belgesi arka ucu",
         "Description[uk]": "Сервер документів факсів G3/G4",
+        "Description[x-test]": "xxA G3/G4 fax document backendxx",
         "Description[zh_CN]": "G3/G4 传真文档后端",
         "Description[zh_TW]": "G3/G4 fax 文件後端介面",
         "Id": "okular_fax",
@@ -149,6 +152,7 @@
         "Name[sv]": "Telefax-gränssnitt",
         "Name[tr]": "Faks Arka Ucu",
         "Name[uk]": "Модуль факсів",
+        "Name[x-test]": "xxFax Backendxx",
         "Name[zh_CN]": "传真后端",
         "Name[zh_TW]": "Fax 後端介面",
         "ServiceTypes": [

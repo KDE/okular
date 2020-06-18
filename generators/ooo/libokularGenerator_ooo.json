@@ -36,6 +36,7 @@
                 "Name[sv]": "Tobias Koenig",
                 "Name[tr]": "Tobias Koenig",
                 "Name[uk]": "Tobias Koenig",
+                "Name[x-test]": "xxTobias Koenigxx",
                 "Name[zh_CN]": "Tobias Koenig",
                 "Name[zh_TW]": "Tobias Koenig"
             }
@@ -73,6 +74,7 @@
         "Copyright[sv]": "© 2006-2008 Tobias Koenig",
         "Copyright[tr]": "© 2006-2008 Tobias Koenig",
         "Copyright[uk]": "© Tobias Koenig, 2006–2008",
+        "Copyright[x-test]": "xx© 2006-2008 Tobias Koenigxx",
         "Copyright[zh_CN]": "© 2006-2008 Tobias Koenig",
         "Copyright[zh_TW]": "© 2006-2008 Tobias Koenig",
         "Description": "A renderer for OpenDocument Text documents",
@@ -108,6 +110,7 @@
         "Description[sv]": "Ett återgivningsprogram för OpenDocument-textdokument",
         "Description[tr]": "OpenDocument Metin belgeleri için bir oluşturucu",
         "Description[uk]": "Модуль для показу текстових документів OpenDocument",
+        "Description[x-test]": "xxA renderer for OpenDocument Text documentsxx",
         "Description[zh_CN]": "OpenDocument 文本文档渲染器",
         "Description[zh_TW]": "OpenDocument 文字檔成像器",
         "Id": "okular_ooo",
@@ -148,6 +151,7 @@
         "Name[sv]": "OpenDocument-textgränssnitt",
         "Name[tr]": "OpenDocument Metin Arka ucu",
         "Name[uk]": "Модуль текстових документів OpenDocument",
+        "Name[x-test]": "xxOpenDocument Text Backendxx",
         "Name[zh_CN]": "开放文档(ODF)文本后端",
         "Name[zh_TW]": "OpenDocument 文字檔後端介面",
         "ServiceTypes": [

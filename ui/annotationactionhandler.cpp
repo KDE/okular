@@ -715,8 +715,8 @@ void AnnotationActionHandler::setupAnnotationToolBarVisibilityAction()
     Q_ASSERT(itToolBar != toolbars.end());
     KToolBar *annotationToolBar = mw->toolBar(QStringLiteral("annotationToolBar"));
     d->aShowToolBar->setChecked(annotationToolBar->isVisible());
-    connect(annotationToolBar, &QToolBar::visibilityChanged, d->aShowToolBar, &QAction::setChecked);
-    connect(d->aShowToolBar, &QAction::toggled, annotationToolBar, &KToolBar::setVisible);
+    connect(annotationToolBar, &QToolBar::visibilityChanged, d->aShowToolBar, &QAction::setChecked, Qt::UniqueConnection);
+    connect(d->aShowToolBar, &QAction::toggled, annotationToolBar, &KToolBar::setVisible, Qt::UniqueConnection);
     connect(d->aShowToolBar, &QAction::toggled, this, [this](bool checked) { d->slotToolBarVisibilityChanged(checked); });
 }
 

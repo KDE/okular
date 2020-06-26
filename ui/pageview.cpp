@@ -234,7 +234,7 @@ public:
     QActionGroup * viewModeActionGroup;
     KToggleAction * aViewContinuous;
     QAction * aPrevAction;
-    QAction * aToggleForms;
+    KToggleAction * aToggleForms;
     QAction * aSpeakDoc;
     QAction * aSpeakPage;
     QAction * aSpeakStop;
@@ -776,9 +776,9 @@ void PageView::setupActions( KActionCollection * ac )
     ac->setDefaultShortcut(spd, QKeySequence(Qt::Key_Space));
     addAction( spd );
 
-    d->aToggleForms = new QAction( this );
+    d->aToggleForms = new KToggleAction( i18n( "Show Forms" ), this );
     ac->addAction( QStringLiteral("view_toggle_forms"), d->aToggleForms );
-    connect( d->aToggleForms, &QAction::triggered, this, &PageView::slotToggleForms );
+    connect( d->aToggleForms, &QAction::toggled, this, &PageView::slotToggleForms );
     d->aToggleForms->setEnabled( false );
     toggleFormWidgets( false );
 
@@ -4463,17 +4463,6 @@ void PageView::toggleFormWidgets( bool on )
     if ( somehadfocus )
         setFocus();
     d->m_formsVisible = on;
-    if ( d->aToggleForms ) // it may not exist if we are on dummy mode
-    {
-        if ( d->m_formsVisible )
-        {
-            d->aToggleForms->setText( i18n( "Hide Forms" ) );
-        }
-        else
-        {
-            d->aToggleForms->setText( i18n( "Show Forms" ) );
-        }
-    }
 }
 
 void PageView::resizeContentArea( const QSize newSize )

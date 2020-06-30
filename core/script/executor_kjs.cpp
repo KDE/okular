@@ -10,6 +10,7 @@
 
 #include "executor_kjs_p.h"
 
+#include <kjs_version.h>
 #include <kjs/kjsinterpreter.h>
 #include <kjs/kjsobject.h>
 #include <kjs/kjsprototype.h>
@@ -61,7 +62,7 @@ void ExecutorKJSPrivate::initTypes()
     m_docObject = JSDocument::wrapDocument( m_doc );
     m_interpreter = new KJSInterpreter( m_docObject );
 
-#ifdef HAVE_KJS_TIMEOUT
+#if KJS_VERSION > QT_VERSION_CHECK(5, 71, 0)
     m_interpreter->setTimeoutTime( 2000 ); // max 2 secs allowed
 #endif
     KJSContext *ctx = m_interpreter->globalContext();
@@ -117,12 +118,12 @@ void ExecutorKJS::execute( const QString &script, Event *event )
 
     d->m_docObject.setProperty( ctx, QStringLiteral("event"), event ? JSEvent::wrapEvent( ctx, event ) : KJSUndefined() );
 
-#ifdef HAVE_KJS_TIMEOUT
+#if KJS_VERSION > QT_VERSION_CHECK(5, 71, 0)
     d->m_interpreter->startTimeoutCheck();
 #endif
     KJSResult result = d->m_interpreter->evaluate( QStringLiteral("okular.js"), 1,
                                                    script, &d->m_docObject );
-#ifdef HAVE_KJS_TIMEOUT
+#if KJS_VERSION > QT_VERSION_CHECK(5, 71, 0)
     d->m_interpreter->stopTimeoutCheck();
 #endif
 

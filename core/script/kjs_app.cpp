@@ -10,6 +10,7 @@
 
 #include "kjs_app_p.h"
 
+#include <kjs_version.h>
 #include <kjs/kjsarguments.h>
 #include <kjs/kjsinterpreter.h>
 #include <kjs/kjsobject.h>
@@ -239,14 +240,14 @@ static KJSObject appAlert( KJSContext *context, void *,
 
     }
 
-#ifdef HAVE_KJS_TIMEOUT
+#if KJS_VERSION > QT_VERSION_CHECK(5, 71, 0)
     // halt timeout until the user has responded
     context->interpreter().stopTimeoutCheck();
 #endif
 
     int button = box.exec();
 
-#ifdef HAVE_KJS_TIMEOUT
+#if KJS_VERSION > QT_VERSION_CHECK(5, 71, 0)
     // restart max allowed time
     context->interpreter().startTimeoutCheck();
 #endif

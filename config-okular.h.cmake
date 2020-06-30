@@ -6,6 +6,3 @@
 
 /* Defines whether the malloc_trim method from malloc.h is available */
 #cmakedefine01 HAVE_MALLOC_TRIM
-
-/* Defines if we have timeout support in the KJS library */
-#cmakedefine HAVE_KJS_TIMEOUT 1

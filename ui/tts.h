@@ -10,7 +10,7 @@
 #ifndef _TTS_H_
 #define _TTS_H_
 
-#include <qobject.h>
+#include <QObject>
 #include <QTextToSpeech>
 
 class OkularTTS : public QObject

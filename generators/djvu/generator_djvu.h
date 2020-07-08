@@ -12,7 +12,7 @@
 
 #include <core/generator.h>
 
-#include <qvector.h>
+#include <QVector>
 
 #include "kdjvu.h"
 

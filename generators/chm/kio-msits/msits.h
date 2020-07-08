@@ -25,8 +25,8 @@
 #include <kio/slavebase.h>
 #include <QUrl>
 
-#include <qbytearray.h>
-#include <qstring.h>
+#include <QByteArray>
+#include <QString>
 
 #include "chm_lib.h"
 

@@ -9,8 +9,8 @@
 
 #include "dlgdebug.h"
 
-#include <qcheckbox.h>
-#include <qlayout.h>
+#include <QCheckBox>
+#include <QLayout>
 
 #define DEBUG_SIMPLE_BOOL( cfgname, layout ) \
 { \

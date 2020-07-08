@@ -20,9 +20,9 @@
 #include <QToolBar>
 #include <QTreeView>
 
-#include <qaction.h>
+#include <QAction>
 #include <KLocalizedString>
-#include <kiconloader.h>
+#include <KIconLoader>
 #include <KTitleWidget>
 #include <QIcon>
 

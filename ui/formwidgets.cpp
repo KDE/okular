@@ -16,14 +16,14 @@
 #include "revisionviewer.h"
 #include "signaturepropertiesdialog.h"
 
-#include <qbuttongroup.h>
+#include <QButtonGroup>
 #include <QKeyEvent>
 #include <QMenu>
 #include <QEvent>
-#include <klineedit.h>
+#include <KLineEdit>
 #include <KLocalizedString>
-#include <kstandardaction.h>
-#include <qaction.h>
+#include <KStandardAction>
+#include <QAction>
 #include <QUrl>
 #include <QPainter>
 

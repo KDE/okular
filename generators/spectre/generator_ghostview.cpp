@@ -18,7 +18,7 @@
 #include <QPrinter>
 
 #include <KAboutData>
-#include <kconfigdialog.h>
+#include <KConfigDialog>
 #include <QDebug>
 #include <QMimeType>
 #include <QMimeDatabase>

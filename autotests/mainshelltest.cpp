@@ -11,14 +11,14 @@
 
 #include <QtTest>
 
-#include <qprintdialog.h>
+#include <QPrintDialog>
 #include <qwidget.h>
-#include <qtabwidget.h>
+#include <QTabWidget>
 #include <QTabBar>
 #include <QStandardPaths>
-#include <kconfiggroup.h>
-#include <klineedit.h>
-#include <krecentfilesaction.h>
+#include <KConfigGroup>
+#include <KLineEdit>
+#include <KRecentFilesAction>
 
 #include "../shell/okular_main.h"
 #include "../shell/shell.h"

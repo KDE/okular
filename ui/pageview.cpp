@@ -23,20 +23,20 @@
 #include "pageview.h"
 
 // qt/kde includes
-#include <qloggingcategory.h>
-#include <qcursor.h>
-#include <qevent.h>
-#include <qimage.h>
-#include <qpainter.h>
-#include <qtimer.h>
-#include <qset.h>
-#include <qscrollbar.h>
-#include <qtooltip.h>
-#include <qapplication.h>
-#include <qclipboard.h>
-#include <qmenu.h>
+#include <QLoggingCategory>
+#include <QCursor>
+#include <QEvent>
+#include <QImage>
+#include <QPainter>
+#include <QTimer>
+#include <QSet>
+#include <QScrollBar>
+#include <QToolTip>
+#include <QApplication>
+#include <QClipboard>
+#include <QMenu>
 #include <QInputDialog>
-#include <qdesktopwidget.h>
+#include <QDesktopWidget>
 #include <QDesktopServices>
 #include <QMimeDatabase>
 #include <QMimeData>
@@ -45,20 +45,20 @@
 #include <QScroller>
 #include <QScrollerProperties>
 
-#include <qaction.h>
-#include <kactionmenu.h>
-#include <kstandardaction.h>
-#include <kactioncollection.h>
+#include <QAction>
+#include <KActionMenu>
+#include <KStandardAction>
+#include <KActionCollection>
 #include <KLocalizedString>
-#include <kselectaction.h>
-#include <ktoggleaction.h>
+#include <KSelectAction>
+#include <KToggleAction>
 #include <QDebug>
-#include <kmessagebox.h>
+#include <KMessageBox>
 #include <QIcon>
-#include <kurifilter.h>
-#include <kstringhandler.h>
-#include <ktoolinvocation.h>
-#include <krun.h>
+#include <KUriFilter>
+#include <KStringHandler>
+#include <KToolInvocation>
+#include <KRun>
 
 // system includes
 #include <math.h>

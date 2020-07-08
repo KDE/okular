@@ -9,16 +9,16 @@
 
 #include "generator_tiff.h"
 
-#include <qbuffer.h>
-#include <qdatetime.h>
-#include <qfile.h>
-#include <qfileinfo.h>
-#include <qimage.h>
-#include <qlist.h>
-#include <qpainter.h>
+#include <QBuffer>
+#include <QDateTime>
+#include <QFile>
+#include <QFileInfo>
+#include <QImage>
+#include <QList>
+#include <QPainter>
 #include <QPrinter>
 
-#include <kaboutdata.h>
+#include <KAboutData>
 #include <QDebug>
 #include <KLocalizedString>
 

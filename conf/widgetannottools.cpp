@@ -11,7 +11,7 @@
 #include "editannottooldialog.h"
 
 #include <QIcon>
-#include <klocalizedstring.h>
+#include <KLocalizedString>
 
 
 #include <QApplication>

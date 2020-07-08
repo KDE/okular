@@ -32,7 +32,7 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QMap>
-#include <qtemporaryfile.h>
+#include <QTemporaryFile>
 #include <QTextStream>
 #include <QTimer>
 #include <QApplication>
@@ -49,14 +49,14 @@
 #include <QRegularExpression>
 #include <QStandardPaths>
 
-#include <kauthorized.h>
-#include <kconfigdialog.h>
-#include <kmacroexpander.h>
-#include <kmessagebox.h>
-#include <kmimetypetrader.h>
-#include <kprocess.h>
+#include <KAuthorized>
+#include <KConfigDialog>
+#include <KMacroExpander>
+#include <KMessageBox>
+#include <KMimeTypeTrader>
+#include <KProcess>
 #include <KRun>
-#include <kshell.h>
+#include <KShell>
 #include <kzip.h>
 #include <KIO/Global>
 #include <KFormat>

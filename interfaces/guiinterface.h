@@ -14,7 +14,7 @@
 
 #include <QObject>
 
-#include <kxmlguiclient.h>
+#include <KXMLGUIClient>
 
 namespace Okular {
 

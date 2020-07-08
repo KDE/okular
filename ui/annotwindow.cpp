@@ -14,24 +14,24 @@
 #include "annotwindow.h"
 
 // qt/kde includes
-#include <qapplication.h>
-#include <qevent.h>
-#include <qfont.h>
-#include <qfontinfo.h>
-#include <qfontmetrics.h>
-#include <qframe.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qsizegrip.h>
-#include <qstyle.h>
-#include <qtoolbutton.h>
+#include <QApplication>
+#include <QEvent>
+#include <QFont>
+#include <QFontInfo>
+#include <QFontMetrics>
+#include <QFrame>
+#include <QLabel>
+#include <QLayout>
+#include <QPushButton>
+#include <QSizeGrip>
+#include <QStyle>
+#include <QToolButton>
 #include <KLocalizedString>
-#include <ktextedit.h>
+#include <KTextEdit>
 #include <QDebug>
-#include <qaction.h>
-#include <kstandardaction.h>
-#include <qmenu.h>
+#include <QAction>
+#include <KStandardAction>
+#include <QMenu>
 
 // local includes
 #include "core/annotations.h"

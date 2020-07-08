@@ -24,7 +24,7 @@
 #ifndef _OKULAR_PAGEVIEWMOUSEANNOTATION_H_
 #define _OKULAR_PAGEVIEWMOUSEANNOTATION_H_
 
-#include <qobject.h>
+#include <QObject>
 
 #include "pageviewutils.h"
 #include "core/annotations.h"

@@ -10,10 +10,10 @@
 
 #include "editannottooldialog.h"
 
-#include <kcolorbutton.h>
-#include <kcombobox.h>
-#include <klocalizedstring.h>
-#include <klineedit.h>
+#include <KColorButton>
+#include <KComboBox>
+#include <KLocalizedString>
+#include <KLineEdit>
 
 #include <QApplication>
 #include <QHBoxLayout>

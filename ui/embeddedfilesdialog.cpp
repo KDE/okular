@@ -22,13 +22,13 @@
 #include <KLocalizedString>
 #include <QMimeType>
 #include <QMimeDatabase>
-#include <kstandardguiitem.h>
+#include <KStandardGuiItem>
 #include <KFormat>
 #include <KConfigGroup>
 #include <QDialogButtonBox>
 #include <QPushButton>
 #include <QVBoxLayout>
-#include <krun.h>
+#include <KRun>
 
 #include "core/document.h"
 #include "guiutils.h"

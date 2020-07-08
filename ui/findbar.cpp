@@ -10,14 +10,15 @@
 #include "findbar.h"
 
 // qt/kde includes
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qmenu.h>
-#include <qtoolbutton.h>
-#include <qevent.h>
+#include <QLabel>
+#include <QLayout>
+#include <QMenu>
+#include <QToolButton>
+#include <QEvent>
 #include <QIcon>
 #include <KLocalizedString>
-#include <qpushbutton.h>
+#include <QPushButton>
+#include <QKeyEvent>
 
 // local includes
 #include "searchlineedit.h"

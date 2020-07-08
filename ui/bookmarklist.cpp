@@ -10,12 +10,12 @@
 #include "bookmarklist.h"
 
 // qt/kde includes
-#include <qaction.h>
-#include <qcursor.h>
-#include <qheaderview.h>
-#include <qlayout.h>
-#include <qtoolbar.h>
-#include <qtreewidget.h>
+#include <QAction>
+#include <QCursor>
+#include <QHeaderView>
+#include <QLayout>
+#include <QToolBar>
+#include <QTreeWidget>
 #include <QMenu>
 #include <QDebug>
 #include <QIcon>

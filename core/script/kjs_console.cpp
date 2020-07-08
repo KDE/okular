@@ -24,11 +24,11 @@ static KJSPrototype *g_consoleProto;
 
 #ifdef OKULAR_JS_CONSOLE
 
-#include <qlayout.h>
-#include <qplaintextedit.h>
+#include <QLayout>
+#include <QPlainTextEdit>
 
-#include <kdialog.h>
-#include <kstandardguiitem.h>
+#include <KDialog>
+#include <KStandardGuiItem>
 
 K_GLOBAL_STATIC( KDialog, g_jsConsoleWindow )
 static QPlainTextEdit *g_jsConsoleLog = 0;

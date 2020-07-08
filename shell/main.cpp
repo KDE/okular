@@ -17,7 +17,7 @@
 #include <KLocalizedString>
 #include <QDBusInterface>
 #include <QTextStream>
-#include <kwindowsystem.h>
+#include <KWindowSystem>
 #include <QApplication>
 #include <QtGlobal>
 #include <KAboutData>

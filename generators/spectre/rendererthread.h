@@ -10,11 +10,11 @@
 #ifndef _OKULAR_GSRENDERERTHREAD_H_
 #define _OKULAR_GSRENDERERTHREAD_H_
 
-#include <qmutex.h>
-#include <qqueue.h>
-#include <qsemaphore.h>
-#include <qstring.h>
-#include <qthread.h>
+#include <QMutex>
+#include <QQueue>
+#include <QSemaphore>
+#include <QString>
+#include <QThread>
 
 #include <libspectre/spectre.h>
 

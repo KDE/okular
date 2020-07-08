@@ -11,7 +11,7 @@
 #ifndef OKULAR_DEBUG_P_H
 #define OKULAR_DEBUG_P_H
 
-#include <qloggingcategory.h>
+#include <QLoggingCategory>
 
 Q_DECLARE_LOGGING_CATEGORY(OkularCoreDebug)
 

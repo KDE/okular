@@ -14,8 +14,8 @@
 #ifndef _ANNOTWINDOW_H_
 #define _ANNOTWINDOW_H_
 
-#include <qcolor.h>
-#include <qframe.h>
+#include <QColor>
+#include <QFrame>
 
 namespace Okular {
 class Annotation;

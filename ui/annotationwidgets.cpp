@@ -10,20 +10,20 @@
 #include "annotationwidgets.h"
 
 // qt/kde includes
-#include <qcheckbox.h>
-#include <qgroupbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qspinbox.h>
-#include <qvariant.h>
-#include <kcolorbutton.h>
-#include <kcombobox.h>
-#include <kfontrequester.h>
+#include <QCheckBox>
+#include <QGroupBox>
+#include <QLabel>
+#include <QLayout>
+#include <QSpinBox>
+#include <QVariant>
+#include <KColorButton>
+#include <KComboBox>
+#include <KFontRequester>
 #include <KMessageBox>
 #include <KMessageWidget>
 #include <QIcon>
 #include <QFileDialog>
-#include <kiconloader.h>
+#include <KIconLoader>
 #include <KLocalizedString>
 #include <QDebug>
 #include <QGuiApplication>

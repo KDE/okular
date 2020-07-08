@@ -10,7 +10,7 @@
 #ifndef _OKULAR_PAGESIZELABEL_H_
 #define _OKULAR_PAGESIZELABEL_H_
 
-#include <ksqueezedtextlabel.h>
+#include <KSqueezedTextLabel>
 
 #include "core/observer.h"
 

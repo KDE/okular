@@ -10,7 +10,7 @@
 #ifndef ANNOTATIONMODEL_H
 #define ANNOTATIONMODEL_H
 
-#include <qabstractitemmodel.h>
+#include <QAbstractItemModel>
 
 namespace Okular {
 class Annotation;

@@ -15,10 +15,10 @@
 #define _OKULAR_PAGE_PRIVATE_H_
 
 // qt/kde includes
-#include <qlinkedlist.h>
-#include <qmap.h>
-#include <qtransform.h>
-#include <qstring.h>
+#include <QLinkedList>
+#include <QMap>
+#include <QTransform>
+#include <QString>
 #include <qdom.h>
 
 // local includes

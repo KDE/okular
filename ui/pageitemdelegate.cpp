@@ -10,11 +10,11 @@
 #include "pageitemdelegate.h"
 
 // qt/kde includes
-#include <qapplication.h>
+#include <QApplication>
 #include <QItemDelegate>
 #include <QModelIndex>
 #include <QTextDocument>
-#include <qvariant.h>
+#include <QVariant>
 
 // local includes
 #include "settings.h"

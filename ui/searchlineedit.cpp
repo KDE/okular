@@ -14,19 +14,19 @@
 #include "core/document.h"
 
 // qt/kde includes
-#include <qapplication.h>
-#include <qlayout.h>
-#include <qtimer.h>
+#include <QApplication>
+#include <QLayout>
+#include <QTimer>
 #if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 61, 0)
-#include <kbusyindicatorwidget.h>
+#include <KBusyIndicatorWidget>
 #else
-#include <kpixmapsequence.h>
-#include <kpixmapsequencewidget.h>
+#include <KPixmapSequence>
+#include <KPixmapSequenceWidget>
 #endif
-#include <kcolorscheme.h>
-#include <kiconloader.h>
-#include <kmessagebox.h>
-#include <klocalizedstring.h>
+#include <KColorScheme>
+#include <KIconLoader>
+#include <KMessageBox>
+#include <KLocalizedString>
 
 SearchLineEdit::SearchLineEdit( QWidget * parent, Okular::Document * document )
     : KLineEdit( parent ), m_document( document ), m_minLength( 0 ),

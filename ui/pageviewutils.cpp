@@ -13,11 +13,11 @@
 #include "pageviewutils.h"
 
 // qt/kde includes
-#include <qapplication.h>
-#include <qmenu.h>
-#include <qpainter.h>
-#include <qtimer.h>
-#include <kiconloader.h>
+#include <QApplication>
+#include <QMenu>
+#include <QPainter>
+#include <QTimer>
+#include <KIconLoader>
 
 // local includes
 #include "formwidgets.h"

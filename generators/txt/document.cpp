@@ -13,7 +13,7 @@
 #include <QDataStream>
 #include <QTextCodec>
 
-#include <kencodingprober.h>
+#include <KEncodingProber>
 #include <QDebug>
 
 #include "debug_txt.h"

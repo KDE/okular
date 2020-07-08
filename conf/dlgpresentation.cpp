@@ -12,8 +12,8 @@
 #include "ui_dlgpresentationbase.h"
 #include "widgetdrawingtools.h"
 
-#include <qapplication.h>
-#include <qdesktopwidget.h>
+#include <QApplication>
+#include <QDesktopWidget>
 #include <KConfigDialogManager>
 #include <KLocalizedString>
 

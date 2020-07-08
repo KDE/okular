@@ -19,11 +19,11 @@
 
 #include "generator_xps.h"
 
-#include <qdatetime.h>
-#include <qfile.h>
-#include <qlist.h>
-#include <qpainter.h>
-#include <qprinter.h>
+#include <QDateTime>
+#include <QFile>
+#include <QList>
+#include <QPainter>
+#include <QPrinter>
 #include <KAboutData>
 #include <KLocalizedString>
 #include <QUrl>

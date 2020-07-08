@@ -16,7 +16,7 @@
 #include <kjs/kjsobject.h>
 #include <kjs/kjsprototype.h>
 
-#include <qapplication.h>
+#include <QApplication>
 
 #include <QLocale>
 #include <QTimer>

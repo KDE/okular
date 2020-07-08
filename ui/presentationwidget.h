@@ -11,9 +11,9 @@
 #define _OKULAR_PRESENTATIONWIDGET_H_
 
 #include <QDomElement>
-#include <qlist.h>
-#include <qpixmap.h>
-#include <qstringlist.h>
+#include <QList>
+#include <QPixmap>
+#include <QStringList>
 #include <qwidget.h>
 #include "core/area.h"
 #include "core/observer.h"

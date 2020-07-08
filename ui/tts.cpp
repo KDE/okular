@@ -9,8 +9,8 @@
 
 #include "tts.h"
 
-#include <qdbusservicewatcher.h>
-#include <qset.h>
+#include <QDBusServiceWatcher>
+#include <QSet>
 
 #include <KLocalizedString>
 

@@ -10,12 +10,12 @@
 #include "pagepainter.h"
 
 // qt / kde includes
-#include <qrect.h>
-#include <qpainter.h>
-#include <qpalette.h>
-#include <qpixmap.h>
-#include <qvarlengtharray.h>
-#include <kiconloader.h>
+#include <QRect>
+#include <QPainter>
+#include <QPalette>
+#include <QPixmap>
+#include <QVarLengthArray>
+#include <KIconLoader>
 #include <QDebug>
 #include <QApplication>
 #include <QIcon>

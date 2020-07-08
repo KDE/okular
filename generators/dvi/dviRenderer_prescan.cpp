@@ -19,7 +19,7 @@
 #include <KLocalizedString>
 #include <QMimeType>
 #include <QMimeDatabase>
-#include <kprocess.h>
+#include <KProcess>
 
 #include <QApplication>
 #include <QByteArray>

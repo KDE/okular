@@ -10,11 +10,11 @@
 #include "bookmarkmanager.h"
 
 // qt/kde includes
-#include <qhash.h>
-#include <qset.h>
-#include <kbookmarkaction.h>
-#include <kbookmarkmanager.h>
-#include <kbookmarkmenu.h>
+#include <QHash>
+#include <QSet>
+#include <KBookmarkAction>
+#include <KBookmarkManager>
+#include <KBookmarkMenu>
 #include <QDebug>
 #include <QGuiApplication>
 #include <QUrl>

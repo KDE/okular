@@ -14,9 +14,9 @@
 #define _PAGEVIEW_UTILS_H_
 
 #include <qwidget.h>
-#include <qpixmap.h>
-#include <qrect.h>
-#include <qhash.h>
+#include <QPixmap>
+#include <QRect>
+#include <QHash>
 
 #include "core/area.h"
 

@@ -10,7 +10,7 @@
 // local includes
 #include "fontinfo.h"
 
-#include <qvariant.h>
+#include <QVariant>
 
 using namespace Okular;
 

@@ -35,7 +35,7 @@
 
 #include <QDebug>
 #include <KLocalizedString>
-#include <ktoolbar.h>
+#include <KToolBar>
 
 class KTreeViewSearchLine::Private
 {

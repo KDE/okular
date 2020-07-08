@@ -16,7 +16,7 @@
 #include "observer.h"
 
 #include <QApplication>
-#include <qeventloop.h>
+#include <QEventLoop>
 #include <QPrinter>
 
 #include <QDebug>
@@ -26,7 +26,7 @@
 #include <KLocalizedString>
 
 #ifdef WITH_KWALLET
-#include <kwallet.h>
+#include <KWallet>
 #endif
 
 #include "document.h"

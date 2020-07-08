@@ -12,7 +12,7 @@
 #include "converter.h"
 
 #include <KAboutData>
-#include <kconfigdialog.h>
+#include <KConfigDialog>
 #include <KLocalizedString>
 
 OKULAR_EXPORT_PLUGIN(EPubGenerator, "libokularGenerator_epub.json")

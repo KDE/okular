@@ -11,10 +11,10 @@
 #include "movie.h"
 
 // qt/kde includes
-#include <qdir.h>
-#include <qimage.h>
-#include <qstring.h>
-#include <qtemporaryfile.h>
+#include <QDir>
+#include <QImage>
+#include <QString>
+#include <QTemporaryFile>
 
 #include <QDebug>
 

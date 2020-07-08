@@ -21,13 +21,13 @@
 #include <QVBoxLayout>
 
 #include <KWindowConfig>
-#include <klocalizedstring.h>
-#include <kmimetypetrader.h>
+#include <KLocalizedString>
+#include <KMimeTypeTrader>
 #include <kparts/readonlypart.h>
-#include <kpluginfactory.h>
-#include <kpluginloader.h>
-#include <ksharedconfig.h>
-#include <qloggingcategory.h>
+#include <KPluginFactory>
+#include <KPluginLoader>
+#include <KSharedConfig>
+#include <QLoggingCategory>
 
 #include "debug_ui.h"
 

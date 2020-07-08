@@ -13,7 +13,7 @@
 
 #include <KAboutData>
 #include <KLocalizedString>
-#include <kconfigdialog.h>
+#include <KConfigDialog>
 #ifdef WITH_KWALLET
 #   include <kwallet.h>
 #endif

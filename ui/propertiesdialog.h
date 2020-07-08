@@ -10,10 +10,10 @@
 #ifndef _PROPERTIESDIALOG_H_
 #define _PROPERTIESDIALOG_H_
 
-#include <qabstractitemmodel.h>
-#include <qlist.h>
+#include <QAbstractItemModel>
+#include <QList>
 
-#include <kpagedialog.h>
+#include <KPageDialog>
 
 #include "core/fontinfo.h"
 

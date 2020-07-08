@@ -13,7 +13,7 @@
 
 #include "core/document.h"
 
-#include <klineedit.h>
+#include <KLineEdit>
 
 #include <kwidgetsaddons_version.h>
 #if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 61, 0)

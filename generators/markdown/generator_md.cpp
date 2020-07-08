@@ -14,7 +14,7 @@
 
 #include <KAboutData>
 #include <KLocalizedString>
-#include <kconfigdialog.h>
+#include <KConfigDialog>
 
 #include <QCheckBox>
 

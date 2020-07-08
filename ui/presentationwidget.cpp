@@ -10,35 +10,35 @@
 #include "presentationwidget.h"
 
 // qt/kde includes
-#include <qloggingcategory.h>
+#include <QLoggingCategory>
 #include <QDBusConnection>
 #include <QDBusMessage>
 #include <QDBusReply>
 
-#include <qevent.h>
-#include <qfontmetrics.h>
+#include <QEvent>
+#include <QFontMetrics>
 #include <QIcon>
-#include <qtimer.h>
-#include <qimage.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qpainter.h>
-#include <qstyle.h>
-#include <qstyleoption.h>
-#include <qtooltip.h>
-#include <qvalidator.h>
-#include <qapplication.h>
-#include <qdesktopwidget.h>
+#include <QTimer>
+#include <QImage>
+#include <QLabel>
+#include <QLayout>
+#include <QPainter>
+#include <QStyle>
+#include <QStyleOption>
+#include <QToolTip>
+#include <QValidator>
+#include <QApplication>
+#include <QDesktopWidget>
 #include <QGestureEvent>
-#include <kcursor.h>
-#include <krandom.h>
-#include <qtoolbar.h>
-#include <qaction.h>
-#include <kactioncollection.h>
-#include <klineedit.h>
+#include <KCursor>
+#include <KRandom>
+#include <QToolBar>
+#include <QAction>
+#include <KActionCollection>
+#include <KLineEdit>
 #include <KLocalizedString>
-#include <kmessagebox.h>
-#include <kselectaction.h>
+#include <KMessageBox>
+#include <KSelectAction>
 #include <QDialog>
 
 #ifdef Q_OS_LINUX

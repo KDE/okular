@@ -11,9 +11,9 @@
 #ifndef _OKULAR_MINIBAR_H_
 #define _OKULAR_MINIBAR_H_
 
-#include <qset.h>
+#include <QSet>
 #include <qwidget.h>
-#include <klineedit.h>
+#include <KLineEdit>
 #include "core/observer.h"
 
 namespace Okular {

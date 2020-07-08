@@ -27,8 +27,8 @@
 
 
 #include <KLocalizedString>
-#include <kmessagebox.h>
-#include <kprocess.h>
+#include <KMessageBox>
+#include <KProcess>
 
 #include <QEventLoop>
 #include <QFileInfo>

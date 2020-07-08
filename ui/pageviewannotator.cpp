@@ -10,27 +10,29 @@
 #include "pageviewannotator.h"
 
 // qt / kde includes
-#include <qloggingcategory.h>
-#include <qapplication.h>
-#include <qfile.h>
-#include <qcolor.h>
-#include <qevent.h>
-#include <qlist.h>
-#include <qpainter.h>
-#include <qset.h>
-#include <qvariant.h>
+#include <QLoggingCategory>
+#include <QApplication>
+#include <QFile>
+#include <QColor>
+#include <QEvent>
+#include <QList>
+#include <QPainter>
+#include <QSet>
+#include <QVariant>
 #include <QInputDialog>
-#include <kiconloader.h>
+#include <KIconLoader>
 #include <KLocalizedString>
 
-#include <kuser.h>
+#include <KUser>
 #include <QDebug>
-#include <qmenu.h>
+#include <QMenu>
 
 // system includes
 #include <math.h>
 #include <memory>
 #include <QStandardPaths>
+#include <QKeyEvent>
+#include <QTabletEvent>
 
 // local includes
 #include "conf/editannottooldialog.h"

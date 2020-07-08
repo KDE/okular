@@ -11,7 +11,7 @@
 
 #include "core/texteditors_p.h"
 
-#include <klocalizedstring.h>
+#include <KLocalizedString>
 
 #include "ui_dlgeditorbase.h"
 

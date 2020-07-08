@@ -11,7 +11,7 @@
 #define _OKULAR_AUDIOPLAYER_P_H_
 
 // qt/kde includes
-#include <qhash.h>
+#include <QHash>
 #include <QUrl>
 
 class PlayData;

@@ -13,8 +13,8 @@
 #include "pageNumber.h"
 #include "hyperlink.h"
 #include "textBox.h"
-#include <qvector.h>
-#include <qpixmap.h>
+#include <QVector>
+#include <QPixmap>
 
 class dviPageInfo
 {

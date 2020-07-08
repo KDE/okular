@@ -11,14 +11,14 @@
 
 // qt/kde includes
 #include <QFormLayout>
-#include <qframe.h>
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qheaderview.h>
-#include <qpushbutton.h>
-#include <qtextedit.h>
+#include <QFrame>
+#include <QLayout>
+#include <QLabel>
+#include <QHeaderView>
+#include <QPushButton>
+#include <QTextEdit>
 #include <QIcon>
-#include <klineedit.h>
+#include <KLineEdit>
 #include <KLocalizedString>
 
 // local includes

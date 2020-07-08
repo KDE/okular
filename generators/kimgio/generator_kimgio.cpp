@@ -23,8 +23,8 @@
 #include <QMimeDatabase>
 
 #include <KAboutData>
-#include <qaction.h>
-#include <kactioncollection.h>
+#include <QAction>
+#include <KActionCollection>
 #include <QIcon>
 #include <KLocalizedString>
 

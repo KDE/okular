@@ -10,7 +10,7 @@
 #ifndef _DLGACCESSIBILITY_H
 #define _DLGACCESSIBILITY_H
 
-#include <qlist.h>
+#include <QList>
 #include <qwidget.h>
 
 class Ui_DlgAccessibilityBase;

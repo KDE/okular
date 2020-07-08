@@ -18,16 +18,16 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 
-#include <qcoreapplication.h>
+#include <QCoreApplication>
 #include "kio_mits_debug.h"
 #include <QUrl>
 #include <QMimeType>
 #include <QMimeDatabase>
 
-#include <qfile.h>
-#include <qdir.h>
-#include <qbitarray.h>
-#include <qvector.h>
+#include <QFile>
+#include <QDir>
+#include <QBitArray>
+#include <QVector>
 
 #include "msits.h"
 #include "libchmurlfactory.h"

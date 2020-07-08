@@ -11,10 +11,10 @@
 #include "audioplayer_p.h"
 
 // qt/kde includes
-#include <qbuffer.h>
-#include <qdir.h>
+#include <QBuffer>
+#include <QDir>
 #include <QDebug>
-#include <krandom.h>
+#include <KRandom>
 #include <phonon/path.h>
 #include <phonon/audiooutput.h>
 #include <phonon/abstractmediastream.h>

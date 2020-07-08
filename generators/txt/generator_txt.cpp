@@ -12,7 +12,7 @@
 #include "converter.h"
 
 #include <KAboutData>
-#include <klocalizedstring.h>
+#include <KLocalizedString>
 #include <KConfigDialog>
 
 OKULAR_EXPORT_PLUGIN(TxtGenerator, "libokularGenerator_txt.json")

@@ -9,7 +9,7 @@
 
 #include "dlgannotations.h"
 
-#include <kconfigdialogmanager.h>
+#include <KConfigDialogManager>
 
 #include "widgetannottools.h"
 #include "ui_dlgannotationsbase.h"

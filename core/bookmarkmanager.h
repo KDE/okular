@@ -10,7 +10,7 @@
 #ifndef _OKULAR_BOOKMARK_MANAGER_H_
 #define _OKULAR_BOOKMARK_MANAGER_H_
 
-#include <kbookmark.h>
+#include <KBookmark>
 
 #include "okularcore_export.h"
 #include <QObject>

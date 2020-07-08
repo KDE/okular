@@ -16,14 +16,14 @@
 #include "core/area.h"
 #include "core/form.h"
 
-#include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qlineedit.h>
-#include <qlistwidget.h>
-#include <qpushbutton.h>
-#include <qradiobutton.h>
-#include <ktextedit.h>
-#include <kurlrequester.h>
+#include <QCheckBox>
+#include <QComboBox>
+#include <QLineEdit>
+#include <QListWidget>
+#include <QPushButton>
+#include <QRadioButton>
+#include <KTextEdit>
+#include <KUrlRequester>
 
 class ComboEdit;
 class QMenu;

@@ -11,11 +11,11 @@
 #include "settings.h"
 
 // qt/kde includes
-#include <ktitlewidget.h>
-#include <klocalizedstring.h>
+#include <KTitleWidget>
+#include <KLocalizedString>
 #include <QVBoxLayout>
 #include <QTreeView>
-#include <qheaderview.h>
+#include <QHeaderView>
 
 #include <kwidgetsaddons_version.h>
 

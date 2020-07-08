@@ -9,10 +9,10 @@
 
 #include "tocmodel.h"
 
-#include <qapplication.h>
+#include <QApplication>
 #include <qdom.h>
-#include <qlist.h>
-#include <qtreeview.h>
+#include <QList>
+#include <QTreeView>
 
 #include <QFont>
 

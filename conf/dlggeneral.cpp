@@ -9,7 +9,7 @@
 
 #include "dlggeneral.h"
 
-#include <kauthorized.h>
+#include <KAuthorized>
 
 #include <config-okular.h>
 

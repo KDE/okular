@@ -11,7 +11,7 @@
 #include "converter.h"
 
 #include <KAboutData>
-#include <kconfigdialog.h>
+#include <KConfigDialog>
 #include <KLocalizedString>
 
 OKULAR_EXPORT_PLUGIN(MobiGenerator, "libokularGenerator_mobi.json")

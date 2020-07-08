@@ -10,13 +10,13 @@
 #ifndef _KDJVU_
 #define _KDJVU_
 
-#include <qcolor.h>
-#include <qimage.h>
-#include <qlist.h>
-#include <qpolygon.h>
-#include <qrect.h>
-#include <qvariant.h>
-#include <qvector.h>
+#include <QColor>
+#include <QImage>
+#include <QList>
+#include <QPolygon>
+#include <QRect>
+#include <QVariant>
+#include <QVector>
 
 class QDomDocument;
 class QFile;

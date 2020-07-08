@@ -30,7 +30,7 @@
 #include <QVector>
 
 #include <QMimeType>
-#include <kpluginfactory.h>
+#include <KPluginFactory>
 
 #define OKULAR_EXPORT_PLUGIN(classname, json ) \
     static_assert(json[0] != '\0', "arg2 must be a string literal"); \

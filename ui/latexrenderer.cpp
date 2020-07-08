@@ -14,13 +14,13 @@
 
 #include <QDebug>
 
-#include <kprocess.h>
+#include <KProcess>
 
 #include <QColor>
 #include <QDir>
 #include <QFileInfo>
 #include <QImage>
-#include <qtemporaryfile.h>
+#include <QTemporaryFile>
 #include <QTextStream>
 #include <QRegularExpression>
 #include <QStandardPaths>

@@ -19,8 +19,8 @@
 #include <poppler-qt5.h>
 
 
-#include <qbitarray.h>
-#include <qpointer.h>
+#include <QBitArray>
+#include <QPointer>
 
 #include <core/document.h>
 #include <core/generator.h>

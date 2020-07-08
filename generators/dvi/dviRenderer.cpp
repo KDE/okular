@@ -24,7 +24,7 @@
 
 #include <math.h>
 #include <QTime>
-#include <kconfig.h>
+#include <KConfig>
 #include <KLocalizedString>
 #include <QMimeType>
 #include <QMimeDatabase>

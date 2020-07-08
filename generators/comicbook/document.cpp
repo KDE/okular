@@ -17,9 +17,9 @@
 #include <QMimeType>
 #include <QMimeDatabase>
 #include <kzip.h>
-#include <ktar.h>
+#include <KTar>
 #if WITH_K7ZIP
-#include <k7zip.h>
+#include <K7Zip>
 #endif
 
 #include <memory>

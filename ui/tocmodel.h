@@ -10,7 +10,7 @@
 #ifndef TOCMODEL_H
 #define TOCMODEL_H
 
-#include <qabstractitemmodel.h>
+#include <QAbstractItemModel>
 #include "pageitemdelegate.h"
 #include <QVector>
 

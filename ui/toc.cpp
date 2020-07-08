@@ -11,12 +11,12 @@
 
 // qt/kde includes
 #include <qdom.h>
-#include <qheaderview.h>
-#include <qlayout.h>
-#include <qtreeview.h>
+#include <QHeaderView>
+#include <QLayout>
+#include <QTreeView>
 #include <QContextMenuEvent>
 
-#include <klineedit.h>
+#include <KLineEdit>
 #include <KLocalizedString>
 #include <KTitleWidget>
 

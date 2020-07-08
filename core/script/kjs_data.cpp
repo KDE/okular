@@ -13,7 +13,7 @@
 #include <kjs/kjsobject.h>
 #include <kjs/kjsprototype.h>
 
-#include <qdatetime.h>
+#include <QDateTime>
 
 #include "../document.h"
 

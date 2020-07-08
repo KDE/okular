@@ -12,7 +12,7 @@
 
 #include <core/generator.h>
 
-#include <qbitarray.h>
+#include <QBitArray>
 
 class dviRenderer;
 class dviPageInfo;

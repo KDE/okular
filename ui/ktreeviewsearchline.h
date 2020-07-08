@@ -22,7 +22,7 @@
 #ifndef KTREEVIEWSEARCHLINE_H
 #define KTREEVIEWSEARCHLINE_H
 
-#include <klineedit.h>
+#include <KLineEdit>
 
 class QModelIndex;
 class QTreeView;

@@ -9,7 +9,7 @@
 
 #include "rendererthread.h"
 
-#include <qimage.h>
+#include <QImage>
 
 #include "spectre_debug.h"
 

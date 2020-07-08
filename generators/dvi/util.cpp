@@ -57,7 +57,7 @@
 #include "debug_dvi.h"
 
 #include <KLocalizedString>
-#include <kmessagebox.h>
+#include <KMessageBox>
 
 #include <cstdlib>
 

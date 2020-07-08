@@ -11,10 +11,10 @@
 #define _OKULAR_ANNOTATIONTOOLS_H_
 
 #include <qdom.h>
-#include <qlinkedlist.h>
-#include <qpainter.h>
-#include <qpen.h>
-#include <qrect.h>
+#include <QLinkedList>
+#include <QPainter>
+#include <QPen>
+#include <QRect>
 
 #include "core/area.h"
 

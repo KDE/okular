@@ -10,11 +10,11 @@
 #ifndef _OKULAR_PAGEVIEWANNOTATOR_H_
 #define _OKULAR_PAGEVIEWANNOTATOR_H_
 
-#include <qobject.h>
+#include <QObject>
 #include <qdom.h>
-#include <qlinkedlist.h>
+#include <QLinkedList>
 
-#include <kactioncollection.h>
+#include <KActionCollection>
 
 #include "pageviewutils.h"
 #include "annotationtools.h"

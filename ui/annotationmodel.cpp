@@ -12,9 +12,9 @@
 
 #include "annotationmodel.h"
 
-#include <qlinkedlist.h>
-#include <qlist.h>
-#include <qpointer.h>
+#include <QLinkedList>
+#include <QList>
+#include <QPointer>
 
 #include <QIcon>
 #include <KLocalizedString>

@@ -19,7 +19,7 @@
 #include <KLocalizedString>
 #include <QDBusInterface>
 #include <QTextStream>
-#include <kwindowsystem.h>
+#include <KWindowSystem>
 #include "aboutdata.h"
 #include "shellutils.h"
 

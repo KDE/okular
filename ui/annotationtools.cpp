@@ -10,10 +10,11 @@
 #include "annotationtools.h"
 
 // qt / kde includes
-#include <qcolor.h>
-#include <qcursor.h>
-#include <qevent.h>
-#include <qpainter.h>
+#include <QColor>
+#include <QCursor>
+#include <QEvent>
+#include <QMouseEvent>
+#include <QPainter>
 
 // local includes
 #include "core/annotations.h"

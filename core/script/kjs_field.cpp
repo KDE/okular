@@ -14,7 +14,7 @@
 #include <kjs/kjsprototype.h>
 #include <kjs/kjsarguments.h>
 
-#include <qhash.h>
+#include <QHash>
 
 #include <QDebug>
 #include <QTimer>

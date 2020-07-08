@@ -16,7 +16,7 @@
 
 #include "lib/ebook_chm.h"
 
-#include <qbitarray.h>
+#include <QBitArray>
 
 class KHTMLPart;
 

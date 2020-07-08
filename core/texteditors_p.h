@@ -12,8 +12,8 @@
 
 #include "settings_core.h"
 
-#include <qhash.h>
-#include <qstring.h>
+#include <QHash>
+#include <QString>
 
 namespace Okular
 {

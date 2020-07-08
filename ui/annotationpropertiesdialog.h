@@ -10,7 +10,7 @@
 #ifndef _ANNOTATIONPROPERTIESDIALOG_H_
 #define _ANNOTATIONPROPERTIESDIALOG_H_
 
-#include <kpagedialog.h>
+#include <KPageDialog>
 
 class QLabel;
 class QLineEdit;

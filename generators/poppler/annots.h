@@ -16,7 +16,7 @@
 #include <poppler-annotation.h>
 #include <poppler-qt5.h>
 
-#include <qmutex.h>
+#include <QMutex>
 
 #include "core/annotations.h"
 #include "config-okular-poppler.h"

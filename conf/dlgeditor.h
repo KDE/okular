@@ -10,7 +10,7 @@
 #ifndef DLGEDITOR_H
 #define DLGEDITOR_H
 
-#include <qhash.h>
+#include <QHash>
 #include <qwidget.h>
 
 class Ui_DlgEditorBase;

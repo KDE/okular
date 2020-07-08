@@ -18,16 +18,16 @@
 #include "generator_pdf.h"
 
 // qt/kde includes
-#include <qcheckbox.h>
-#include <qcolor.h>
-#include <qdir.h>
-#include <qfile.h>
-#include <qimage.h>
-#include <qlayout.h>
-#include <qmutex.h>
-#include <qstack.h>
-#include <qtemporaryfile.h>
-#include <qtextstream.h>
+#include <QCheckBox>
+#include <QColor>
+#include <QDir>
+#include <QFile>
+#include <QImage>
+#include <QLayout>
+#include <QMutex>
+#include <QStack>
+#include <QTemporaryFile>
+#include <QTextStream>
 #include <QComboBox>
 #include <QPrinter>
 #include <QPainter>
@@ -35,9 +35,9 @@
 #include <QDebug>
 
 #include <KAboutData>
-#include <kconfigdialog.h>
+#include <KConfigDialog>
 #include <KLocalizedString>
-#include <kmessagebox.h>
+#include <KMessageBox>
 
 #include <core/action.h>
 #include <core/page.h>

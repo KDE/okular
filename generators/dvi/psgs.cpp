@@ -17,8 +17,8 @@
 #include "debug_dvi.h"
 
 #include <KLocalizedString>
-#include <kprocess.h>
-#include <qtemporaryfile.h>
+#include <KProcess>
+#include <QTemporaryFile>
 #include <QUrl>
 
 #include <QLoggingCategory>

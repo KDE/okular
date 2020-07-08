@@ -13,7 +13,7 @@
 
 #include <KAboutData>
 #include <KLocalizedString>
-#include <kconfigdialog.h>
+#include <KConfigDialog>
 
 OKULAR_EXPORT_PLUGIN(FictionBookGenerator, "libokularGenerator_fb.json")
 

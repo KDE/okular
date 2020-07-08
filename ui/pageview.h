@@ -22,9 +22,9 @@
 #ifndef _OKULAR_PAGEVIEW_H_
 #define _OKULAR_PAGEVIEW_H_
 
-#include <qabstractscrollarea.h>
-#include <qlist.h>
-#include <qvector.h>
+#include <QAbstractScrollArea>
+#include <QList>
+#include <QVector>
 #include "ui/pageviewutils.h"
 #include "core/area.h"
 #include "core/observer.h"

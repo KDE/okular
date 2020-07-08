@@ -10,11 +10,11 @@
 #include "searchwidget.h"
 
 // qt/kde includes
-#include <qlayout.h>
-#include <qmenu.h>
-#include <qaction.h>
-#include <qsizepolicy.h>
-#include <qtoolbutton.h>
+#include <QLayout>
+#include <QMenu>
+#include <QAction>
+#include <QSizePolicy>
+#include <QToolButton>
 #include <QIcon>
 #include <KLocalizedString>
 

@@ -820,7 +820,7 @@ void PDFGenerator::loadPages(QVector<Okular::Page*> &pagesVector, int rotation, 
             auto compareSignatureByFullyQualifiedName = [&fullyQualifiedName](const Okular::FormField *off) { return off->fullyQualifiedName() == fullyQualifiedName; };
 
             // See if the signature is in one of the already loaded page (i.e. 1 to end)
-            for (Okular::Page *p : pagesVector)
+            for (Okular::Page *p : qAsConst(pagesVector))
             {
                 const QLinkedList<Okular::FormField*> pageFormFields = p->formFields();
                 if (std::find_if(pageFormFields.begin(), pageFormFields.end(), compareSignatureByFullyQualifiedName) != pageFormFields.end())

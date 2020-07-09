@@ -82,7 +82,7 @@ class OKULARCORE_EXPORT TextDocumentConverter : public QObject
         /**
          * Adds a set of meta data to the generator.
          */
-        void addMetaData( const QString &key, const QString &value, const QString &title );
+        void addMetaData( const QString &key, const QString &value, const QString &title ); // clazy:exclude=overloaded-signal
 
         // TODO When we can do a BIC change rename one of the two addMetaData functions (or see if we can kill one)
         /**
@@ -90,7 +90,7 @@ class OKULARCORE_EXPORT TextDocumentConverter : public QObject
          *
          * @since 0.7 (KDE 4.1)
          */
-        void addMetaData( DocumentInfo::Key key, const QString &value );
+        void addMetaData( DocumentInfo::Key key, const QString &value ); // clazy:exclude=overloaded-signal
 
         /**
          * This signal should be emitted whenever an error occurred in the converter.

@@ -74,7 +74,7 @@ public:
             pixmap = GuiUtils::loadStamp(hoverIconName, size);
     }
 
-    QRect event(EventType type, Button button, double nX, double nY, double xScale, double yScale, const Okular::Page *page) override
+    QRect event(EventType type, Button button, Modifiers /*modifiers*/, double nX, double nY, double xScale, double yScale, const Okular::Page *page) override
     {
         xscale = xScale;
         yscale = yScale;
@@ -325,13 +325,32 @@ public:
             numofpoints = -1;
     }
 
-    QRect event(EventType type, Button button, double nX, double nY, double xScale, double yScale, const Okular::Page * /*page*/) override
+    static Okular::NormalizedPoint constrainAngle(const Okular::NormalizedPoint &p1, double x, double y, double xScale, double yScale, double angleIncrement)
+    {
+        // given the normalized point (x, y), return the closest point such that the line segment from p1 forms an angle
+        // with the horizontal axis which is an integer multiple of angleIncrement on a reference area of size xScale x yScale
+        double dist = sqrt(p1.distanceSqr(x, y, xScale, yScale));
+        double angle = atan2((y - p1.y) * yScale, (x - p1.x) * xScale);
+        double constrainedAngle = round(angle / angleIncrement) * angleIncrement;
+        double offset = dist * sin(angle - constrainedAngle);
+        x += offset * sin(constrainedAngle) / xScale;
+        y -= offset * cos(constrainedAngle) / yScale;
+        return Okular::NormalizedPoint(x, y);
+    }
+
+    QRect event(EventType type, Button button, Modifiers modifiers, double nX, double nY, double xScale, double yScale, const Okular::Page * /*page*/) override
     {
         // only proceed if pressing left button
         //            if ( button != Left )
         //                return rect;
 
-        // start operation
+        // shift button: constrain to 15° steps
+        if (modifiers.shift && !points.isEmpty()) {
+            const Okular::NormalizedPoint constrainedPoint = constrainAngle(points.constLast(), nX, nY, xScale, yScale, M_PI / 12.);
+            nX = constrainedPoint.x;
+            nY = constrainedPoint.y;
+        }
+        // process button press
         if (type == Press) {
             newPoint.x = nX;
             newPoint.y = nY;
@@ -471,7 +490,7 @@ public:
         // parse engine specific attributes
     }
 
-    QRect event(EventType type, Button button, double nX, double nY, double xScale, double yScale, const Okular::Page * /*page*/) override
+    QRect event(EventType type, Button button, Modifiers /*modifiers*/, double nX, double nY, double xScale, double yScale, const Okular::Page * /*page*/) override
     {
         // only proceed if pressing left button
         if (button != Left)
@@ -728,7 +747,7 @@ QCursor PageViewAnnotator::cursor() const
     return m_engine->cursor();
 }
 
-QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::EventType eventType, const AnnotatorEngine::Button button, const QPointF pos, PageViewItem *item)
+QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::EventType eventType, const AnnotatorEngine::Button button, const AnnotatorEngine::Modifiers modifiers, const QPointF pos, PageViewItem *item)
 {
     // creationCompleted is intended to be set by event(), handled subsequently by end(), and cleared within end().
     // If it's set here, we recursed for some reason (e.g., stacked event loop).
@@ -765,7 +784,7 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
     QRect modifiedRect;
 
     // 2. use engine to perform operations
-    const QRect paintRect = m_engine->event(eventType, button, nX, nY, itemRect.width(), itemRect.height(), m_lockedItem->page());
+    const QRect paintRect = m_engine->event(eventType, button, modifiers, nX, nY, itemRect.width(), itemRect.height(), m_lockedItem->page());
 
     // 3. update absolute extents rect and send paint event(s)
     if (paintRect.isValid()) {
@@ -812,11 +831,12 @@ QRect PageViewAnnotator::routeMouseEvent(QMouseEvent *e, PageViewItem *item)
 {
     AnnotatorEngine::EventType eventType;
     AnnotatorEngine::Button button;
+    AnnotatorEngine::Modifiers modifiers;
 
     // figure out the event type and button
-    AnnotatorEngine::decodeEvent(e, &eventType, &button);
+    AnnotatorEngine::decodeEvent(e, &eventType, &button, &modifiers);
 
-    return performRouteMouseOrTabletEvent(eventType, button, e->localPos(), item);
+    return performRouteMouseOrTabletEvent(eventType, button, modifiers, e->localPos(), item);
 }
 
 QRect PageViewAnnotator::routeTabletEvent(QTabletEvent *e, PageViewItem *item, const QPoint localOriginInGlobal)
@@ -830,13 +850,14 @@ QRect PageViewAnnotator::routeTabletEvent(QTabletEvent *e, PageViewItem *item, c
 
     AnnotatorEngine::EventType eventType;
     AnnotatorEngine::Button button;
+    AnnotatorEngine::Modifiers modifiers;
 
     // figure out the event type and button
-    AnnotatorEngine::decodeEvent(e, &eventType, &button);
+    AnnotatorEngine::decodeEvent(e, &eventType, &button, &modifiers);
 
     const QPointF globalPosF = e->globalPosF();
     const QPointF localPosF = globalPosF - localOriginInGlobal;
-    return performRouteMouseOrTabletEvent(eventType, button, localPosF, item);
+    return performRouteMouseOrTabletEvent(eventType, button, modifiers, localPosF, item);
 }
 
 bool PageViewAnnotator::routeKeyEvent(QKeyEvent *event)

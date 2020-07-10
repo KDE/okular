@@ -10,8 +10,8 @@
 #ifndef _OKULAR_LAYERS_H_
 #define _OKULAR_LAYERS_H_
 
-#include <qwidget.h>
 #include "core/observer.h"
+#include <qwidget.h>
 
 #include "okularpart_export.h"
 
@@ -19,37 +19,37 @@ class PageView;
 class QTreeView;
 class KTreeViewSearchLine;
 
-namespace Okular {
+namespace Okular
+{
 class Document;
 class PartTest;
 }
 
 class OKULARPART_EXPORT Layers : public QWidget, public Okular::DocumentObserver
 {
-Q_OBJECT
+    Q_OBJECT
     friend class Okular::PartTest;
 
-    public:
-        Layers(QWidget *parent, Okular::Document *document);
-        ~Layers() override;
+public:
+    Layers(QWidget *parent, Okular::Document *document);
+    ~Layers() override;
 
-        // inherited from DocumentObserver
-        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) override;
+    // inherited from DocumentObserver
+    void notifySetup(const QVector<Okular::Page *> &pages, int setupFlags) override;
 
-        void setPageView( PageView *pageView );
+    void setPageView(PageView *pageView);
 
-    Q_SIGNALS:
-        void hasLayers(bool has);
+Q_SIGNALS:
+    void hasLayers(bool has);
 
-    private Q_SLOTS:
-        void saveSearchOptions();
+private Q_SLOTS:
+    void saveSearchOptions();
 
-    private:
-
-        Okular::Document *m_document;
-        QTreeView *m_treeView;
-        KTreeViewSearchLine *m_searchLine;
-        PageView *m_pageView;
+private:
+    Okular::Document *m_document;
+    QTreeView *m_treeView;
+    KTreeViewSearchLine *m_searchLine;
+    PageView *m_pageView;
 };
 
 #endif

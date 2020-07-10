@@ -10,9 +10,9 @@
 
 #include "kjs_console_p.h"
 
+#include <kjs/kjsarguments.h>
 #include <kjs/kjsobject.h>
 #include <kjs/kjsprototype.h>
-#include <kjs/kjsarguments.h>
 
 #include <QDebug>
 
@@ -30,27 +30,25 @@ static KJSPrototype *g_consoleProto;
 #include <KDialog>
 #include <KStandardGuiItem>
 
-K_GLOBAL_STATIC( KDialog, g_jsConsoleWindow )
+K_GLOBAL_STATIC(KDialog, g_jsConsoleWindow)
 static QPlainTextEdit *g_jsConsoleLog = 0;
 
 static void createConsoleWindow()
 {
-    if ( g_jsConsoleWindow.exists() )
+    if (g_jsConsoleWindow.exists())
         return;
 
-    g_jsConsoleWindow->setButtons( KDialog::Close | KDialog::User1 );
-    g_jsConsoleWindow->setButtonGuiItem( KDialog::User1, KStandardGuiItem::clear() );
+    g_jsConsoleWindow->setButtons(KDialog::Close | KDialog::User1);
+    g_jsConsoleWindow->setButtonGuiItem(KDialog::User1, KStandardGuiItem::clear());
 
-    QVBoxLayout *mainLay = new QVBoxLayout( g_jsConsoleWindow->mainWidget() );
-    mainLay->setContentsMargins( 0, 0, 0, 0 );
-    g_jsConsoleLog = new QPlainTextEdit( g_jsConsoleWindow->mainWidget() );
-    g_jsConsoleLog->setReadOnly( true );
-    mainLay->addWidget( g_jsConsoleLog );
+    QVBoxLayout *mainLay = new QVBoxLayout(g_jsConsoleWindow->mainWidget());
+    mainLay->setContentsMargins(0, 0, 0, 0);
+    g_jsConsoleLog = new QPlainTextEdit(g_jsConsoleWindow->mainWidget());
+    g_jsConsoleLog->setReadOnly(true);
+    mainLay->addWidget(g_jsConsoleLog);
 
-    QObject::connect( g_jsConsoleWindow, SIGNAL(closeClicked()),
-                      g_jsConsoleWindow, SLOT(close()) );
-    QObject::connect( g_jsConsoleWindow, SIGNAL(user1Clicked()),
-                      g_jsConsoleLog, SLOT(clear()) );
+    QObject::connect(g_jsConsoleWindow, SIGNAL(closeClicked()), g_jsConsoleWindow, SLOT(close()));
+    QObject::connect(g_jsConsoleWindow, SIGNAL(user1Clicked()), g_jsConsoleLog, SLOT(clear()));
 }
 
 static void showConsole()
@@ -61,7 +59,7 @@ static void showConsole()
 
 static void hideConsole()
 {
-    if ( !g_jsConsoleWindow.exists() )
+    if (!g_jsConsoleWindow.exists())
         return;
 
     g_jsConsoleWindow->hide();
@@ -69,16 +67,16 @@ static void hideConsole()
 
 static void clearConsole()
 {
-    if ( !g_jsConsoleWindow.exists() )
+    if (!g_jsConsoleWindow.exists())
         return;
 
     g_jsConsoleLog->clear();
 }
 
-static void outputToConsole( const QString &message )
+static void outputToConsole(const QString &message)
 {
     showConsole();
-    g_jsConsoleLog->appendPlainText( message );
+    g_jsConsoleLog->appendPlainText(message);
 }
 
 #else /* OKULAR_JS_CONSOLE */
@@ -95,56 +93,55 @@ static void clearConsole()
 {
 }
 
-static void outputToConsole( const QString &cMessage )
+static void outputToConsole(const QString &cMessage)
 {
     qCDebug(OkularCoreDebug) << "CONSOLE:" << cMessage;
 }
 
 #endif /* OKULAR_JS_CONSOLE */
 
-static KJSObject consoleClear( KJSContext *, void *, const KJSArguments & )
+static KJSObject consoleClear(KJSContext *, void *, const KJSArguments &)
 {
     clearConsole();
     return KJSUndefined();
 }
 
-static KJSObject consoleHide( KJSContext *, void *, const KJSArguments & )
+static KJSObject consoleHide(KJSContext *, void *, const KJSArguments &)
 {
     hideConsole();
     return KJSUndefined();
 }
 
-static KJSObject consolePrintln( KJSContext *ctx, void *,
-                                 const KJSArguments &arguments )
+static KJSObject consolePrintln(KJSContext *ctx, void *, const KJSArguments &arguments)
 {
-    QString cMessage = arguments.at( 0 ).toString( ctx );
-    outputToConsole( cMessage );
+    QString cMessage = arguments.at(0).toString(ctx);
+    outputToConsole(cMessage);
 
     return KJSUndefined();
 }
 
-static KJSObject consoleShow( KJSContext *, void *, const KJSArguments & )
+static KJSObject consoleShow(KJSContext *, void *, const KJSArguments &)
 {
     showConsole();
     return KJSUndefined();
 }
 
-void JSConsole::initType( KJSContext *ctx )
+void JSConsole::initType(KJSContext *ctx)
 {
     static bool initialized = false;
-    if ( initialized )
+    if (initialized)
         return;
     initialized = true;
 
     g_consoleProto = new KJSPrototype();
 
-    g_consoleProto->defineFunction( ctx, QStringLiteral("clear"), consoleClear );
-    g_consoleProto->defineFunction( ctx, QStringLiteral("hide"), consoleHide );
-    g_consoleProto->defineFunction( ctx, QStringLiteral("println"), consolePrintln );
-    g_consoleProto->defineFunction( ctx, QStringLiteral("hide"), consoleShow );
+    g_consoleProto->defineFunction(ctx, QStringLiteral("clear"), consoleClear);
+    g_consoleProto->defineFunction(ctx, QStringLiteral("hide"), consoleHide);
+    g_consoleProto->defineFunction(ctx, QStringLiteral("println"), consolePrintln);
+    g_consoleProto->defineFunction(ctx, QStringLiteral("hide"), consoleShow);
 }
 
-KJSObject JSConsole::object( KJSContext *ctx )
+KJSObject JSConsole::object(KJSContext *ctx)
 {
-    return g_consoleProto->constructObject( ctx, nullptr );
+    return g_consoleProto->constructObject(ctx, nullptr);
 }

@@ -25,9 +25,6 @@ ThumbnailItem::ThumbnailItem(QQuickItem *parent)
     setIsThumbnail(true);
 }
 
-
 ThumbnailItem::~ThumbnailItem()
 {
 }
-
-

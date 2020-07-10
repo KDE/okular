@@ -24,7 +24,7 @@
 #include <QToolButton>
 
 OKMenuTitle::OKMenuTitle(QMenu *menu, const QString &text, const QIcon &icon)
- : QWidgetAction(menu)
+    : QWidgetAction(menu)
 {
     QAction *buttonAction = new QAction(menu);
     QFont font = buttonAction->font();
@@ -50,8 +50,8 @@ bool OKMenuTitle::eventFilter(QObject *object, QEvent *event)
     } else if (event->type() == QEvent::KeyRelease) {
         // If we're receiving the key release event is because we just gained
         // focus though a key event, use the same key to move it to the next action
-        if (static_cast<QMenu*>(parentWidget())->activeAction() == this) {
-            QKeyEvent *ke = static_cast<QKeyEvent*>(event);
+        if (static_cast<QMenu *>(parentWidget())->activeAction() == this) {
+            QKeyEvent *ke = static_cast<QKeyEvent *>(event);
             QKeyEvent newKe(QEvent::KeyPress, ke->key(), ke->modifiers(), ke->text(), ke->isAutoRepeat(), ke->count());
             QApplication::sendEvent(parentWidget(), &newKe);
         }
@@ -62,4 +62,3 @@ bool OKMenuTitle::eventFilter(QObject *object, QEvent *event)
     event->accept();
     return true;
 }
-

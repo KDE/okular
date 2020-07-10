@@ -12,30 +12,30 @@
 
 #include "fontEncodingPool.h"
 
-
 fontEncodingPool::fontEncodingPool()
-{}
+{
+}
 
 fontEncodingPool::~fontEncodingPool()
 {
-  qDeleteAll(dictionary);
+    qDeleteAll(dictionary);
 }
 
 fontEncoding *fontEncodingPool::findByName(const QString &name)
 {
-  fontEncoding *ptr = dictionary.value( name );
+    fontEncoding *ptr = dictionary.value(name);
 
-  if (ptr == nullptr) {
-    ptr = new fontEncoding(name);
-    if (ptr->isValid())
-      dictionary.insert(name, ptr );
-    else {
-      delete ptr;
-      ptr = nullptr;
+    if (ptr == nullptr) {
+        ptr = new fontEncoding(name);
+        if (ptr->isValid())
+            dictionary.insert(name, ptr);
+        else {
+            delete ptr;
+            ptr = nullptr;
+        }
     }
-  }
 
-  return ptr;
+    return ptr;
 }
 
 #endif // HAVE_FREETYPE

@@ -14,15 +14,15 @@ class KJSContext;
 class KJSObject;
 class QAbstractItemModel;
 
-namespace Okular {
-
+namespace Okular
+{
 class JSOCG
 {
-    public:
-        static void initType( KJSContext *ctx );
-        static KJSObject object( KJSContext *ctx );
-        static KJSObject wrapOCGObject( KJSContext *ctx, QAbstractItemModel *model, const int i, const int j );
-        static void clearCachedFields();
+public:
+    static void initType(KJSContext *ctx);
+    static KJSObject object(KJSContext *ctx);
+    static KJSObject wrapOCGObject(KJSContext *ctx, QAbstractItemModel *model, const int i, const int j);
+    static void clearCachedFields();
 };
 
 }

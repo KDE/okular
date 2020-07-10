@@ -18,14 +18,13 @@
  */
 class FaxDocument
 {
-  public:
+public:
     /**
      * Describes the type of the fax document.
      */
-    enum DocumentType
-    {
-      G3,  ///< G3 encoded fax document
-      G4   ///< G4 encoded fax document
+    enum DocumentType {
+        G3, ///< G3 encoded fax document
+        G4  ///< G4 encoded fax document
     };
 
     /**
@@ -34,15 +33,15 @@ class FaxDocument
      * @param fileName The name of the fax file.
      * @param type The type of the fax document.
      */
-    explicit FaxDocument( const QString &fileName, DocumentType type = G3 );
+    explicit FaxDocument(const QString &fileName, DocumentType type = G3);
 
     /**
      * Destroys the fax document.
      */
     ~FaxDocument();
 
-    FaxDocument( const FaxDocument& ) = delete;
-    FaxDocument& operator=( const FaxDocument& ) = delete;
+    FaxDocument(const FaxDocument &) = delete;
+    FaxDocument &operator=(const FaxDocument &) = delete;
 
     /**
      * Loads the document.
@@ -56,9 +55,9 @@ class FaxDocument
      */
     QImage image() const;
 
-  private:
+private:
     class Private;
-    Private* const d;
+    Private *const d;
 };
 
 #endif

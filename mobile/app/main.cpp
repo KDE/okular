@@ -19,15 +19,15 @@
 #include <QApplication>
 
 #include <KLocalizedContext>
-#include <QDebug>
-#include <QFileInfo>
-#include <QDir>
-#include <QStandardPaths>
-#include <QQmlEngine>
-#include <QQmlContext>
-#include <QQmlApplicationEngine>
 #include <QCommandLineParser>
+#include <QDebug>
+#include <QDir>
+#include <QFileInfo>
 #include <QIcon>
+#include <QQmlApplicationEngine>
+#include <QQmlContext>
+#include <QQmlEngine>
+#include <QStandardPaths>
 #include <QTimer>
 
 #ifdef __ANDROID__
@@ -44,19 +44,17 @@ int main(int argc, char *argv[])
     QCommandLineParser parser;
     parser.addVersionOption();
     parser.addHelpOption();
-    //parser.setApplicationDescription(i18n("Okular mobile"));
+    // parser.setApplicationDescription(i18n("Okular mobile"));
     parser.process(app);
     QQmlApplicationEngine engine;
 
 #ifdef __ANDROID__
     AndroidInstance::handleViewIntent();
-    qmlRegisterSingletonType<QObject>("org.kde.okular.app", 2, 0, "AndroidInstance", [](QQmlEngine*, QJSEngine*) -> QObject* { return new AndroidInstance; });
+    qmlRegisterSingletonType<QObject>("org.kde.okular.app", 2, 0, "AndroidInstance", [](QQmlEngine *, QJSEngine *) -> QObject * { return new AndroidInstance; });
     const QString uri = URIHandler::handler.m_lastUrl;
 #else
-    qmlRegisterSingletonType<QObject>("org.kde.okular.app", 2, 0, "AndroidInstance", [](QQmlEngine*, QJSEngine*) -> QObject* { return new QObject; });
-    const QString uri = parser.positionalArguments().count() == 1
-                      ? QUrl::fromUserInput(parser.positionalArguments().constFirst(), {}, QUrl::AssumeLocalFile).toString()
-                      : QString();
+    qmlRegisterSingletonType<QObject>("org.kde.okular.app", 2, 0, "AndroidInstance", [](QQmlEngine *, QJSEngine *) -> QObject * { return new QObject; });
+    const QString uri = parser.positionalArguments().count() == 1 ? QUrl::fromUserInput(parser.positionalArguments().constFirst(), {}, QUrl::AssumeLocalFile).toString() : QString();
 #endif
     engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
     engine.rootContext()->setContextProperty(QStringLiteral("uri"), uri);

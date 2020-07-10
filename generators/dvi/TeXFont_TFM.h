@@ -11,28 +11,38 @@
 
 #include "TeXFont.h"
 
+class fix_word
+{
+public:
+    void fromINT32(qint32 val)
+    {
+        value = val;
+    }
+    void fromDouble(double val)
+    {
+        value = (qint32)(val * (1 << 20) + 0.5);
+    }
+    double toDouble()
+    {
+        return (double(value)) / (double(1 << 20));
+    }
 
-class fix_word {
- public:
-  void fromINT32(qint32 val) {value = val;}
-  void fromDouble(double val) {value = (qint32)(val * (1<<20) + 0.5);}
-  double toDouble() {return (double(value)) / (double(1<<20));}
-
-  qint32 value;
+    qint32 value;
 };
 
-class TeXFont_TFM : public TeXFont {
- public:
-  TeXFont_TFM(TeXFontDefinition *parent);
-  ~TeXFont_TFM() override;
+class TeXFont_TFM : public TeXFont
+{
+public:
+    TeXFont_TFM(TeXFontDefinition *parent);
+    ~TeXFont_TFM() override;
 
-  glyph* getGlyph(quint16 character, bool generateCharacterPixmap=false, const QColor& color=Qt::black) override;
+    glyph *getGlyph(quint16 character, bool generateCharacterPixmap = false, const QColor &color = Qt::black) override;
 
- private:
-  fix_word characterWidth_in_units_of_design_size[256];
-  fix_word characterHeight_in_units_of_design_size[256];
+private:
+    fix_word characterWidth_in_units_of_design_size[256];
+    fix_word characterHeight_in_units_of_design_size[256];
 
-  fix_word design_size_in_TeX_points;
+    fix_word design_size_in_TeX_points;
 };
 
 #endif

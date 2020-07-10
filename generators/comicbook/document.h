@@ -18,38 +18,39 @@ class QImage;
 class Unrar;
 class Directory;
 
-namespace Okular {
+namespace Okular
+{
 class Page;
 }
 
-namespace ComicBook {
-
+namespace ComicBook
+{
 class Document
 {
-    public:
-        Document();
-        ~Document();
+public:
+    Document();
+    ~Document();
 
-        bool open( const QString &fileName );
-        void close();
+    bool open(const QString &fileName);
+    void close();
 
-        void pages( QVector<Okular::Page*> * pagesVector );
-        QStringList pageTitles() const;
+    void pages(QVector<Okular::Page *> *pagesVector);
+    QStringList pageTitles() const;
 
-        QImage pageImage( int page ) const;
+    QImage pageImage(int page) const;
 
-        QString lastErrorString() const;
+    QString lastErrorString() const;
 
-    private:
-        bool processArchive();
+private:
+    bool processArchive();
 
-        QStringList mPageMap;
-        Directory *mDirectory;
-        Unrar *mUnrar;
-        KArchive *mArchive;
-        const KArchiveDirectory *mArchiveDir;
-        QString mLastErrorString;
-        QStringList mEntries;
+    QStringList mPageMap;
+    Directory *mDirectory;
+    Unrar *mUnrar;
+    KArchive *mArchive;
+    const KArchiveDirectory *mArchiveDir;
+    QString mLastErrorString;
+    QStringList mEntries;
 };
 
 }

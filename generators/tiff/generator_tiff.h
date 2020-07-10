@@ -12,37 +12,37 @@
 
 #include <core/generator.h>
 
-#include <QLoggingCategory>
 #include <QHash>
+#include <QLoggingCategory>
 
 class TIFFGenerator : public Okular::Generator
 {
     Q_OBJECT
-    Q_INTERFACES( Okular::Generator )
-    public:
-        TIFFGenerator( QObject *parent, const QVariantList &args );
-        ~TIFFGenerator() override;
+    Q_INTERFACES(Okular::Generator)
+public:
+    TIFFGenerator(QObject *parent, const QVariantList &args);
+    ~TIFFGenerator() override;
 
-        bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector ) override;
-        bool loadDocumentFromData( const QByteArray & fileData, QVector< Okular::Page * > & pagesVector ) override;
+    bool loadDocument(const QString &fileName, QVector<Okular::Page *> &pagesVector) override;
+    bool loadDocumentFromData(const QByteArray &fileData, QVector<Okular::Page *> &pagesVector) override;
 
-        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const override;
+    Okular::DocumentInfo generateDocumentInfo(const QSet<Okular::DocumentInfo::Key> &keys) const override;
 
-        bool print( QPrinter& printer ) override;
+    bool print(QPrinter &printer) override;
 
-    protected:
-        bool doCloseDocument() override;
-        QImage image( Okular::PixmapRequest * request ) override;
+protected:
+    bool doCloseDocument() override;
+    QImage image(Okular::PixmapRequest *request) override;
 
-    private:
-        class Private;
-        Private * const d;
+private:
+    class Private;
+    Private *const d;
 
-        bool loadTiff( QVector< Okular::Page * > & pagesVector, const char *name );
-        void loadPages( QVector<Okular::Page*> & pagesVector );
-        int mapPage( int page ) const;
+    bool loadTiff(QVector<Okular::Page *> &pagesVector, const char *name);
+    void loadPages(QVector<Okular::Page *> &pagesVector);
+    int mapPage(int page) const;
 
-        QHash< int, int > m_pageMapping;
+    QHash<int, int> m_pageMapping;
 };
 
 Q_DECLARE_LOGGING_CATEGORY(OkularTiffDebug)

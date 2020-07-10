@@ -16,18 +16,18 @@
 
 #include "manifest.h"
 
-namespace OOO {
-
+namespace OOO
+{
 class Document
 {
-  public:
-    explicit Document( const QString &fileName );
+public:
+    explicit Document(const QString &fileName);
     ~Document();
 
     Document(const Document &) = delete;
     Document &operator=(const Document &) = delete;
 
-    bool open( const QString &password );
+    bool open(const QString &password);
 
     QString lastErrorString() const;
 
@@ -37,8 +37,8 @@ class Document
     QMap<QString, QByteArray> images() const;
     bool anyFileEncrypted() const;
 
-  private:
-    void setError( const QString& );
+private:
+    void setError(const QString &);
 
     QString mFileName;
     QByteArray mContent;

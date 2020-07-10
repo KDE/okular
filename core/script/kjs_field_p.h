@@ -14,17 +14,17 @@
 class KJSContext;
 class KJSObject;
 
-namespace Okular {
-
+namespace Okular
+{
 class FormField;
 class Page;
 
 class JSField
 {
-    public:
-        static void initType( KJSContext *ctx );
-        static KJSObject wrapField( KJSContext *ctx, FormField *field, Page *page );
-        static void clearCachedFields();
+public:
+    static void initType(KJSContext *ctx);
+    static KJSObject wrapField(KJSContext *ctx, FormField *field, Page *page);
+    static void clearCachedFields();
 };
 
 }

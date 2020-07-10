@@ -14,8 +14,8 @@
 #define TOGGLEACTIONMENU_H
 
 #include <KActionMenu>
-#include <QToolButton>
 #include <QSet>
+#include <QToolButton>
 
 /**
  * @brief A KActionMenu, with allows to set the default action of its toolbar buttons.
@@ -51,22 +51,19 @@ public:
     enum MenuLogic {
         DefaultLogic = 0x0,
         /**
-        * Automatically makes the triggered action the default action, even if in a submenu.
-        * When a toolbar button is constructed,
-        * the default action is set to the default action set with setDefaultAction() before,
-        * otherwise to the first checked action in the menu,
-        * otherwise to the action suggested with suggestDefaultAction().
-        */
+         * Automatically makes the triggered action the default action, even if in a submenu.
+         * When a toolbar button is constructed,
+         * the default action is set to the default action set with setDefaultAction() before,
+         * otherwise to the first checked action in the menu,
+         * otherwise to the action suggested with suggestDefaultAction().
+         */
         ImplicitDefaultAction = 0x1
     };
 
-    enum PopupMode {
-        DelayedPopup,
-        MenuButtonPopup
-    };
+    enum PopupMode { DelayedPopup, MenuButtonPopup };
 
-    explicit ToggleActionMenu( QObject *parent );
-    ToggleActionMenu( const QString &text, QObject * parent );
+    explicit ToggleActionMenu(QObject *parent);
+    ToggleActionMenu(const QString &text, QObject *parent);
     /**
      * Constructs an empty ToggleActionMenu.
      *
@@ -79,14 +76,9 @@ public:
      * @param logic To define special behaviour of @c ToggleActionMenu,
      * to simplify the usage.
      */
-    ToggleActionMenu( const QIcon &icon,
-                      const QString &text,
-                      QObject *parent,
-                      PopupMode popupMode = MenuButtonPopup,
-                      MenuLogic logic = DefaultLogic
-                    );
+    ToggleActionMenu(const QIcon &icon, const QString &text, QObject *parent, PopupMode popupMode = MenuButtonPopup, MenuLogic logic = DefaultLogic);
 
-    QWidget *createWidget( QWidget *parent ) override;
+    QWidget *createWidget(QWidget *parent) override;
 
     /**
      * Returns the current default action of the toolbar buttons.
@@ -110,7 +102,7 @@ public:
      * In DefaultLogic mode, or when you already have called setDefaultAction(),
      * you have to use setDefaultAction() instead.
      */
-    void suggestDefaultAction( QAction * action );
+    void suggestDefaultAction(QAction *action);
 
 public slots:
     /**
@@ -129,19 +121,19 @@ public slots:
      *
      * @see suggestDefaultAction()
      */
-    void setDefaultAction( QAction *action );
+    void setDefaultAction(QAction *action);
 
 private:
     QAction *m_defaultAction;
     QAction *m_suggestedDefaultAction;
-    QList< QPointer< QToolButton > > m_buttons;
+    QList<QPointer<QToolButton>> m_buttons;
     MenuLogic m_menuLogic;
 
     /**
      * Returns the first checked action in @p menu and its submenus,
      * or nullptr if no action is checked.
      */
-    QAction *checkedAction( QMenu *menu ) const;
+    QAction *checkedAction(QMenu *menu) const;
 
 private slots:
     /**

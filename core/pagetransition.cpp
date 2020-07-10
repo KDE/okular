@@ -16,40 +16,40 @@ using namespace Okular;
 
 class PageTransition::Private
 {
-    public:
-        Private( Type type )
-            : m_type( type ),
-              m_duration( 1 ),
-              m_alignment( Horizontal ),
-              m_direction( Inward ),
-              m_angle( 0 ),
-              m_scale( 1.0 ),
-              m_rectangular( false )
-        {
-        }
+public:
+    Private(Type type)
+        : m_type(type)
+        , m_duration(1)
+        , m_alignment(Horizontal)
+        , m_direction(Inward)
+        , m_angle(0)
+        , m_scale(1.0)
+        , m_rectangular(false)
+    {
+    }
 
-        Type m_type;
-        double m_duration;
-        Alignment m_alignment;
-        Direction m_direction;
-        int m_angle;
-        double m_scale;
-        bool m_rectangular;
+    Type m_type;
+    double m_duration;
+    Alignment m_alignment;
+    Direction m_direction;
+    int m_angle;
+    double m_scale;
+    bool m_rectangular;
 };
 
-PageTransition::PageTransition( Type type )
-    : d( new Private( type ) )
+PageTransition::PageTransition(Type type)
+    : d(new Private(type))
 {
 }
 
-PageTransition::PageTransition( const PageTransition &other )
-    : d( new Private( *other.d ) )
+PageTransition::PageTransition(const PageTransition &other)
+    : d(new Private(*other.d))
 {
 }
 
-PageTransition& PageTransition::operator=( const PageTransition &other )
+PageTransition &PageTransition::operator=(const PageTransition &other)
 {
-    if ( this == &other )
+    if (this == &other)
         return *this;
 
     *d = *other.d;
@@ -97,38 +97,37 @@ bool PageTransition::isRectangular() const
     return d->m_rectangular;
 }
 
-void PageTransition::setType( Type type )
+void PageTransition::setType(Type type)
 {
     d->m_type = type;
 }
 
-void PageTransition::setDuration( double duration )
+void PageTransition::setDuration(double duration)
 {
     d->m_duration = duration;
 }
 
-void PageTransition::setAlignment( Alignment alignment )
+void PageTransition::setAlignment(Alignment alignment)
 {
     d->m_alignment = alignment;
 }
 
-void PageTransition::setDirection( Direction direction )
+void PageTransition::setDirection(Direction direction)
 {
     d->m_direction = direction;
 }
 
-void PageTransition::setAngle( int angle )
+void PageTransition::setAngle(int angle)
 {
     d->m_angle = angle;
 }
 
-void PageTransition::setScale( double scale )
+void PageTransition::setScale(double scale)
 {
     d->m_scale = scale;
 }
 
-void PageTransition::setIsRectangular( bool rectangular )
+void PageTransition::setIsRectangular(bool rectangular)
 {
     d->m_rectangular = rectangular;
 }
-

@@ -16,426 +16,438 @@
 using namespace OOO;
 
 FontFormatProperty::FontFormatProperty()
-  : mFamily( QStringLiteral("Nimbus Sans L") )
+    : mFamily(QStringLiteral("Nimbus Sans L"))
 {
 }
 
-void FontFormatProperty::apply( QTextFormat *format ) const
+void FontFormatProperty::apply(QTextFormat *format) const
 {
-  format->setProperty( QTextFormat::FontFamily, mFamily );
+    format->setProperty(QTextFormat::FontFamily, mFamily);
 }
 
-
-void FontFormatProperty::setFamily( const QString &name )
+void FontFormatProperty::setFamily(const QString &name)
 {
-  mFamily = name;
+    mFamily = name;
 }
 
 ParagraphFormatProperty::ParagraphFormatProperty()
-  : mPageNumber( 0 ), mWritingMode( LRTB ), mAlignment( Qt::AlignLeft ),
-    mHasAlignment( false )
+    : mPageNumber(0)
+    , mWritingMode(LRTB)
+    , mAlignment(Qt::AlignLeft)
+    , mHasAlignment(false)
 {
 }
 
-void ParagraphFormatProperty::apply( QTextFormat *format ) const
+void ParagraphFormatProperty::apply(QTextFormat *format) const
 {
-  if ( mWritingMode == LRTB || mWritingMode == TBLR || mWritingMode == LR || mWritingMode == TB )
-    format->setLayoutDirection( Qt::LeftToRight );
-  else
-    format->setLayoutDirection( Qt::RightToLeft );
+    if (mWritingMode == LRTB || mWritingMode == TBLR || mWritingMode == LR || mWritingMode == TB)
+        format->setLayoutDirection(Qt::LeftToRight);
+    else
+        format->setLayoutDirection(Qt::RightToLeft);
 
-  if ( mHasAlignment ) {
-    static_cast<QTextBlockFormat*>( format )->setAlignment( mAlignment );
-  }
+    if (mHasAlignment) {
+        static_cast<QTextBlockFormat *>(format)->setAlignment(mAlignment);
+    }
 
-  format->setProperty( QTextFormat::FrameWidth, 595 );
+    format->setProperty(QTextFormat::FrameWidth, 595);
 
-  static_cast<QTextBlockFormat*>( format )->setLeftMargin( mLeftMargin );
+    static_cast<QTextBlockFormat *>(format)->setLeftMargin(mLeftMargin);
 
-  if ( mBackgroundColor.isValid() )
-    format->setBackground( mBackgroundColor );
+    if (mBackgroundColor.isValid())
+        format->setBackground(mBackgroundColor);
 }
 
-void ParagraphFormatProperty::setPageNumber( int number )
+void ParagraphFormatProperty::setPageNumber(int number)
 {
-  mPageNumber = number;
+    mPageNumber = number;
 }
 
-void ParagraphFormatProperty::setWritingMode( WritingMode mode )
+void ParagraphFormatProperty::setWritingMode(WritingMode mode)
 {
-  mWritingMode = mode;
+    mWritingMode = mode;
 }
 
 bool ParagraphFormatProperty::writingModeIsRightToLeft() const
 {
-  return ( ( mWritingMode == RLTB ) || ( mWritingMode == TBRL ) || ( mWritingMode == RL ) );
+    return ((mWritingMode == RLTB) || (mWritingMode == TBRL) || (mWritingMode == RL));
 }
 
-void ParagraphFormatProperty::setTextAlignment( Qt::Alignment alignment )
+void ParagraphFormatProperty::setTextAlignment(Qt::Alignment alignment)
 {
-  mHasAlignment = true;
-  mAlignment = alignment;
+    mHasAlignment = true;
+    mAlignment = alignment;
 }
 
-void ParagraphFormatProperty::setBackgroundColor( const QColor &color )
+void ParagraphFormatProperty::setBackgroundColor(const QColor &color)
 {
-  mBackgroundColor = color;
+    mBackgroundColor = color;
 }
 
-void ParagraphFormatProperty::setLeftMargin( const qreal margin )
+void ParagraphFormatProperty::setLeftMargin(const qreal margin)
 {
-  mLeftMargin = margin;
+    mLeftMargin = margin;
 }
 
 TextFormatProperty::TextFormatProperty()
-  : mStyleInformation( nullptr ), mHasFontSize( false ),
-    mFontWeight( -1 ), mFontStyle( -1 ), mTextPosition( 0 )
+    : mStyleInformation(nullptr)
+    , mHasFontSize(false)
+    , mFontWeight(-1)
+    , mFontStyle(-1)
+    , mTextPosition(0)
 {
 }
 
-TextFormatProperty::TextFormatProperty( const StyleInformation *information )
-  : mStyleInformation( information ), mHasFontSize( false ),
-    mFontWeight( -1 ), mFontStyle( -1 ), mTextPosition( 0 )
+TextFormatProperty::TextFormatProperty(const StyleInformation *information)
+    : mStyleInformation(information)
+    , mHasFontSize(false)
+    , mFontWeight(-1)
+    , mFontStyle(-1)
+    , mTextPosition(0)
 {
 }
 
-void TextFormatProperty::apply( QTextCharFormat *format ) const
+void TextFormatProperty::apply(QTextCharFormat *format) const
 {
-  if ( !mFontName.isEmpty() ) {
-    if ( mStyleInformation ) {
-      const FontFormatProperty property = mStyleInformation->fontProperty( mFontName );
-      property.apply( format );
+    if (!mFontName.isEmpty()) {
+        if (mStyleInformation) {
+            const FontFormatProperty property = mStyleInformation->fontProperty(mFontName);
+            property.apply(format);
+        }
     }
-  }
 
-  if ( mFontWeight != -1 ) {
-    QFont font = format->font();
-    font.setWeight( mFontWeight );
-    format->setFont( font );
-  }
+    if (mFontWeight != -1) {
+        QFont font = format->font();
+        font.setWeight(mFontWeight);
+        format->setFont(font);
+    }
 
-  if ( mHasFontSize ) {
-    QFont font = format->font();
-    font.setPointSize( mFontSize );
-    format->setFont( font );
-  }
+    if (mHasFontSize) {
+        QFont font = format->font();
+        font.setPointSize(mFontSize);
+        format->setFont(font);
+    }
 
-  if ( mFontStyle != -1 ) {
-    QFont font = format->font();
-    font.setStyle( (QFont::Style)mFontStyle );
-    format->setFont( font );
-  }
+    if (mFontStyle != -1) {
+        QFont font = format->font();
+        font.setStyle((QFont::Style)mFontStyle);
+        format->setFont(font);
+    }
 
-  if ( mColor.isValid() )
-    format->setForeground( mColor );
+    if (mColor.isValid())
+        format->setForeground(mColor);
 
-  if ( mBackgroundColor.isValid() )
-    format->setBackground( mBackgroundColor );
+    if (mBackgroundColor.isValid())
+        format->setBackground(mBackgroundColor);
 
-  // TODO: get FontFormatProperty and apply it
-  // TODO: how to set the base line?!?
+    // TODO: get FontFormatProperty and apply it
+    // TODO: how to set the base line?!?
 }
 
-void TextFormatProperty::setFontSize( int size )
+void TextFormatProperty::setFontSize(int size)
 {
-  mHasFontSize = true;
-  mFontSize = size;
+    mHasFontSize = true;
+    mFontSize = size;
 }
 
-void TextFormatProperty::setFontName( const QString &name )
+void TextFormatProperty::setFontName(const QString &name)
 {
-  mFontName = name;
+    mFontName = name;
 }
 
-void TextFormatProperty::setFontWeight( int weight )
+void TextFormatProperty::setFontWeight(int weight)
 {
-  mFontWeight = weight;
+    mFontWeight = weight;
 }
 
-void TextFormatProperty::setFontStyle( int style )
+void TextFormatProperty::setFontStyle(int style)
 {
-  mFontStyle = style;
+    mFontStyle = style;
 }
 
-void TextFormatProperty::setTextPosition( int position )
+void TextFormatProperty::setTextPosition(int position)
 {
-  mTextPosition = position;
+    mTextPosition = position;
 }
 
-void TextFormatProperty::setColor( const QColor &color )
+void TextFormatProperty::setColor(const QColor &color)
 {
-  mColor = color;
+    mColor = color;
 }
 
-void TextFormatProperty::setBackgroundColor( const QColor &color )
+void TextFormatProperty::setBackgroundColor(const QColor &color)
 {
-  mBackgroundColor = color;
+    mBackgroundColor = color;
 }
 
 StyleFormatProperty::StyleFormatProperty()
-  : mStyleInformation( nullptr ), mDefaultStyle( false )
+    : mStyleInformation(nullptr)
+    , mDefaultStyle(false)
 {
 }
 
-StyleFormatProperty::StyleFormatProperty( const StyleInformation *information )
-  : mStyleInformation( information ), mDefaultStyle( false )
+StyleFormatProperty::StyleFormatProperty(const StyleInformation *information)
+    : mStyleInformation(information)
+    , mDefaultStyle(false)
 {
 }
 
-void StyleFormatProperty::applyBlock( QTextBlockFormat *format ) const
+void StyleFormatProperty::applyBlock(QTextBlockFormat *format) const
 {
-  if ( !mDefaultStyle && !mFamily.isEmpty() && mStyleInformation ) {
-    const StyleFormatProperty property = mStyleInformation->styleProperty( mFamily );
-    property.applyBlock( format );
-  }
+    if (!mDefaultStyle && !mFamily.isEmpty() && mStyleInformation) {
+        const StyleFormatProperty property = mStyleInformation->styleProperty(mFamily);
+        property.applyBlock(format);
+    }
 
-  if ( !mParentStyleName.isEmpty() && mStyleInformation ) {
-    const StyleFormatProperty property = mStyleInformation->styleProperty( mParentStyleName );
-    property.applyBlock( format );
-  }
+    if (!mParentStyleName.isEmpty() && mStyleInformation) {
+        const StyleFormatProperty property = mStyleInformation->styleProperty(mParentStyleName);
+        property.applyBlock(format);
+    }
 
-  mParagraphFormat.apply( format );
+    mParagraphFormat.apply(format);
 }
 
-void StyleFormatProperty::applyText( QTextCharFormat *format ) const
+void StyleFormatProperty::applyText(QTextCharFormat *format) const
 {
-  if ( !mDefaultStyle && !mFamily.isEmpty() && mStyleInformation ) {
-    const StyleFormatProperty property = mStyleInformation->styleProperty( mFamily );
-    property.applyText( format );
-  }
+    if (!mDefaultStyle && !mFamily.isEmpty() && mStyleInformation) {
+        const StyleFormatProperty property = mStyleInformation->styleProperty(mFamily);
+        property.applyText(format);
+    }
 
-  if ( !mParentStyleName.isEmpty() && mStyleInformation ) {
-    const StyleFormatProperty property = mStyleInformation->styleProperty( mParentStyleName );
-    property.applyText( format );
-  }
+    if (!mParentStyleName.isEmpty() && mStyleInformation) {
+        const StyleFormatProperty property = mStyleInformation->styleProperty(mParentStyleName);
+        property.applyText(format);
+    }
 
-  mTextFormat.apply( format );
+    mTextFormat.apply(format);
 }
 
-void StyleFormatProperty::applyTableColumn( QTextTableFormat *format ) const
+void StyleFormatProperty::applyTableColumn(QTextTableFormat *format) const
 {
-  if ( !mDefaultStyle && !mFamily.isEmpty() && mStyleInformation ) {
-    const StyleFormatProperty property = mStyleInformation->styleProperty( mFamily );
-    property.applyTableColumn( format );
-  }
+    if (!mDefaultStyle && !mFamily.isEmpty() && mStyleInformation) {
+        const StyleFormatProperty property = mStyleInformation->styleProperty(mFamily);
+        property.applyTableColumn(format);
+    }
 
-  if ( !mParentStyleName.isEmpty() && mStyleInformation ) {
-    const StyleFormatProperty property = mStyleInformation->styleProperty( mParentStyleName );
-    property.applyTableColumn( format );
-  }
+    if (!mParentStyleName.isEmpty() && mStyleInformation) {
+        const StyleFormatProperty property = mStyleInformation->styleProperty(mParentStyleName);
+        property.applyTableColumn(format);
+    }
 
-  mTableColumnFormat.apply( format );
+    mTableColumnFormat.apply(format);
 }
 
-void StyleFormatProperty::applyTableCell( QTextBlockFormat *format ) const
+void StyleFormatProperty::applyTableCell(QTextBlockFormat *format) const
 {
-  if ( !mDefaultStyle && !mFamily.isEmpty() && mStyleInformation ) {
-    const StyleFormatProperty property = mStyleInformation->styleProperty( mFamily );
-    property.applyTableCell( format );
-  }
+    if (!mDefaultStyle && !mFamily.isEmpty() && mStyleInformation) {
+        const StyleFormatProperty property = mStyleInformation->styleProperty(mFamily);
+        property.applyTableCell(format);
+    }
 
-  if ( !mParentStyleName.isEmpty() && mStyleInformation ) {
-    const StyleFormatProperty property = mStyleInformation->styleProperty( mParentStyleName );
-    property.applyTableCell( format );
-  }
+    if (!mParentStyleName.isEmpty() && mStyleInformation) {
+        const StyleFormatProperty property = mStyleInformation->styleProperty(mParentStyleName);
+        property.applyTableCell(format);
+    }
 
-  mTableCellFormat.apply( format );
+    mTableCellFormat.apply(format);
 }
 
-void StyleFormatProperty::setParentStyleName( const QString &parentStyleName )
+void StyleFormatProperty::setParentStyleName(const QString &parentStyleName)
 {
-  mParentStyleName = parentStyleName;
+    mParentStyleName = parentStyleName;
 }
 
 QString StyleFormatProperty::parentStyleName() const
 {
-  return mParentStyleName;
+    return mParentStyleName;
 }
 
-void StyleFormatProperty::setFamily( const QString &family )
+void StyleFormatProperty::setFamily(const QString &family)
 {
-  mFamily = family;
+    mFamily = family;
 }
 
-void StyleFormatProperty::setDefaultStyle( bool defaultStyle )
+void StyleFormatProperty::setDefaultStyle(bool defaultStyle)
 {
-  mDefaultStyle = defaultStyle;
+    mDefaultStyle = defaultStyle;
 }
 
-void StyleFormatProperty::setMasterPageName( const QString &masterPageName )
+void StyleFormatProperty::setMasterPageName(const QString &masterPageName)
 {
-  mMasterPageName = masterPageName;
+    mMasterPageName = masterPageName;
 }
 
-void StyleFormatProperty::setParagraphFormat( const ParagraphFormatProperty &format )
+void StyleFormatProperty::setParagraphFormat(const ParagraphFormatProperty &format)
 {
-  mParagraphFormat = format;
+    mParagraphFormat = format;
 }
 
-void StyleFormatProperty::setTextFormat( const TextFormatProperty &format )
+void StyleFormatProperty::setTextFormat(const TextFormatProperty &format)
 {
-  mTextFormat = format;
+    mTextFormat = format;
 }
 
-void StyleFormatProperty::setTableColumnFormat( const TableColumnFormatProperty format )
+void StyleFormatProperty::setTableColumnFormat(const TableColumnFormatProperty format)
 {
-  mTableColumnFormat = format;
+    mTableColumnFormat = format;
 }
 
-void StyleFormatProperty::setTableCellFormat( const TableCellFormatProperty &format )
+void StyleFormatProperty::setTableCellFormat(const TableCellFormatProperty &format)
 {
-  mTableCellFormat = format;
+    mTableCellFormat = format;
 }
 
 PageFormatProperty::PageFormatProperty()
-  : mHeight( 0.0 ), mWidth( 0.0 )
+    : mHeight(0.0)
+    , mWidth(0.0)
 {
 }
 
-void PageFormatProperty::apply( QTextFormat *format ) const
+void PageFormatProperty::apply(QTextFormat *format) const
 {
-  format->setProperty( QTextFormat::BlockBottomMargin, mBottomMargin );
-  format->setProperty( QTextFormat::BlockLeftMargin, mLeftMargin );
-  format->setProperty( QTextFormat::BlockTopMargin, mTopMargin );
-  format->setProperty( QTextFormat::BlockRightMargin, mRightMargin );
-  format->setProperty( QTextFormat::FrameWidth, mWidth );
-  format->setProperty( QTextFormat::FrameHeight, mHeight );
+    format->setProperty(QTextFormat::BlockBottomMargin, mBottomMargin);
+    format->setProperty(QTextFormat::BlockLeftMargin, mLeftMargin);
+    format->setProperty(QTextFormat::BlockTopMargin, mTopMargin);
+    format->setProperty(QTextFormat::BlockRightMargin, mRightMargin);
+    format->setProperty(QTextFormat::FrameWidth, mWidth);
+    format->setProperty(QTextFormat::FrameHeight, mHeight);
 }
 
-void PageFormatProperty::setPageUsage( PageUsage usage )
+void PageFormatProperty::setPageUsage(PageUsage usage)
 {
-  mPageUsage = usage;
+    mPageUsage = usage;
 }
 
-void PageFormatProperty::setBottomMargin( double margin )
+void PageFormatProperty::setBottomMargin(double margin)
 {
-  mBottomMargin = margin;
+    mBottomMargin = margin;
 }
 
-void PageFormatProperty::setLeftMargin( double margin )
+void PageFormatProperty::setLeftMargin(double margin)
 {
-  mLeftMargin = margin;
+    mLeftMargin = margin;
 }
 
-void PageFormatProperty::setTopMargin( double margin )
+void PageFormatProperty::setTopMargin(double margin)
 {
-  mTopMargin = margin;
+    mTopMargin = margin;
 }
 
-void PageFormatProperty::setRightMargin( double margin )
+void PageFormatProperty::setRightMargin(double margin)
 {
-  mRightMargin = margin;
+    mRightMargin = margin;
 }
 
-void PageFormatProperty::setHeight( double height )
+void PageFormatProperty::setHeight(double height)
 {
-  mHeight = height;
+    mHeight = height;
 }
 
-void PageFormatProperty::setWidth( double width )
+void PageFormatProperty::setWidth(double width)
 {
-  mWidth = width;
+    mWidth = width;
 }
 
-void PageFormatProperty::setPrintOrientation( PrintOrientation orientation )
+void PageFormatProperty::setPrintOrientation(PrintOrientation orientation)
 {
-  mPrintOrientation = orientation;
+    mPrintOrientation = orientation;
 }
 
 double PageFormatProperty::width() const
 {
-  return mWidth;
+    return mWidth;
 }
 
 double PageFormatProperty::height() const
 {
-  return mHeight;
+    return mHeight;
 }
 
 double PageFormatProperty::margin() const
 {
-  return mLeftMargin;
+    return mLeftMargin;
 }
 
 ListFormatProperty::ListFormatProperty()
-  : mType( Number )
+    : mType(Number)
 {
-  mIndents.resize( 10 );
+    mIndents.resize(10);
 }
 
-ListFormatProperty::ListFormatProperty( Type type )
-  : mType( type )
+ListFormatProperty::ListFormatProperty(Type type)
+    : mType(type)
 {
-  mIndents.resize( 10 );
+    mIndents.resize(10);
 }
 
-void ListFormatProperty::apply( QTextListFormat *format, int level ) const
+void ListFormatProperty::apply(QTextListFormat *format, int level) const
 {
-  if ( mType == Number )
-    format->setStyle( QTextListFormat::ListDecimal );
-  else {
-    format->setStyle( QTextListFormat::ListDisc );
-    if ( level > 0 && level < 10 )
-      format->setIndent( qRound( mIndents[ level ] ) );
-  }
+    if (mType == Number)
+        format->setStyle(QTextListFormat::ListDecimal);
+    else {
+        format->setStyle(QTextListFormat::ListDisc);
+        if (level > 0 && level < 10)
+            format->setIndent(qRound(mIndents[level]));
+    }
 }
 
-void ListFormatProperty::addItem( int level, double indent )
+void ListFormatProperty::addItem(int level, double indent)
 {
-  if ( level < 0 || level >= 10 )
-    return;
+    if (level < 0 || level >= 10)
+        return;
 
-  mIndents[ level ] = indent;
+    mIndents[level] = indent;
 }
 
 TableColumnFormatProperty::TableColumnFormatProperty()
-  : mWidth( 0 ), isValid( false )
+    : mWidth(0)
+    , isValid(false)
 {
 }
 
-void TableColumnFormatProperty::apply( QTextTableFormat *format ) const
+void TableColumnFormatProperty::apply(QTextTableFormat *format) const
 {
-  if ( ! isValid ) {
-    return;
-  }
-  QVector<QTextLength> lengths = format->columnWidthConstraints();
-  lengths.append( QTextLength( QTextLength::FixedLength, mWidth ) );
+    if (!isValid) {
+        return;
+    }
+    QVector<QTextLength> lengths = format->columnWidthConstraints();
+    lengths.append(QTextLength(QTextLength::FixedLength, mWidth));
 
-  format->setColumnWidthConstraints( lengths );
+    format->setColumnWidthConstraints(lengths);
 }
 
-void TableColumnFormatProperty::setWidth( double width )
+void TableColumnFormatProperty::setWidth(double width)
 {
-  mWidth = width;
-  isValid = true;
+    mWidth = width;
+    isValid = true;
 }
 
 TableCellFormatProperty::TableCellFormatProperty()
-  : mPadding( 0 ), mHasAlignment( false )
+    : mPadding(0)
+    , mHasAlignment(false)
 {
 }
 
-void TableCellFormatProperty::apply( QTextBlockFormat *format ) const
+void TableCellFormatProperty::apply(QTextBlockFormat *format) const
 {
-  if ( mBackgroundColor.isValid() )
-    format->setBackground( mBackgroundColor );
+    if (mBackgroundColor.isValid())
+        format->setBackground(mBackgroundColor);
 
-  if ( mHasAlignment )
-    format->setAlignment( mAlignment );
+    if (mHasAlignment)
+        format->setAlignment(mAlignment);
 }
 
-void TableCellFormatProperty::setBackgroundColor( const QColor &color )
+void TableCellFormatProperty::setBackgroundColor(const QColor &color)
 {
-  mBackgroundColor = color;
+    mBackgroundColor = color;
 }
 
-void TableCellFormatProperty::setPadding( double padding )
+void TableCellFormatProperty::setPadding(double padding)
 {
-  mPadding = padding;
+    mPadding = padding;
 }
 
-void TableCellFormatProperty::setAlignment( Qt::Alignment alignment )
+void TableCellFormatProperty::setAlignment(Qt::Alignment alignment)
 {
-  mAlignment = alignment;
-  mHasAlignment = true;
+    mAlignment = alignment;
+    mHasAlignment = true;
 }

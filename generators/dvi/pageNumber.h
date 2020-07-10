@@ -12,7 +12,6 @@
 
 #include <QGlobalStatic>
 
-
 /** \brief Class to represent a page number
 
 The class PageNumber is really nothing but an alias for quint16, and
@@ -29,35 +28,51 @@ that checks if the page number is 0.
 
 class PageNumber
 {
- public:
-  enum pageNums {
-    invalidPage   = 0 /*! Invalid page number */
-  };
+public:
+    enum pageNums {
+        invalidPage = 0 /*! Invalid page number */
+    };
 
-  /** The default constructor sets the page number to 'invalidPage' */
-  PageNumber() {pgNum = invalidPage;}
+    /** The default constructor sets the page number to 'invalidPage' */
+    PageNumber()
+    {
+        pgNum = invalidPage;
+    }
 
-  /** \brief Constructor that sets the page number
+    /** \brief Constructor that sets the page number
 
-  @param num page number that is set initially
-  */
-  PageNumber(quint16 num) {pgNum = num;}
+    @param num page number that is set initially
+    */
+    PageNumber(quint16 num)
+    {
+        pgNum = num;
+    }
 
-  /** \brief this method implements typecasts from quint16 */
-  PageNumber &operator=(const quint16 p) { pgNum = p; return *this; }
+    /** \brief this method implements typecasts from quint16 */
+    PageNumber &operator=(const quint16 p)
+    {
+        pgNum = p;
+        return *this;
+    }
 
-  /** \brief This method implements typecasts to quint16 */
-  operator quint16() const { return pgNum; }
+    /** \brief This method implements typecasts to quint16 */
+    operator quint16() const
+    {
+        return pgNum;
+    }
 
-  /** \brief Checks if the page number is invalid
+    /** \brief Checks if the page number is invalid
 
-  @returns true, if pgNum != invalidPage, i.e., does not equal 0
-  */
-  bool isValid() const {return (pgNum != invalidPage);}
+    @returns true, if pgNum != invalidPage, i.e., does not equal 0
+    */
+    bool isValid() const
+    {
+        return (pgNum != invalidPage);
+    }
 
- private:
-  /** \brief Single number that represents the page number */
-  quint16 pgNum;
+private:
+    /** \brief Single number that represents the page number */
+    quint16 pgNum;
 };
 
 #endif

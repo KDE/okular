@@ -23,9 +23,11 @@
 #include <QUrl>
 #include <jni.h>
 
-class URIHandler {
+class URIHandler
+{
 public:
-    void openUri(const QString &uri) {
+    void openUri(const QString &uri)
+    {
         m_lastUrl = uri;
     }
 
@@ -47,11 +49,7 @@ Q_SIGNALS:
 
 extern "C" {
 
-JNIEXPORT void JNICALL
-  Java_org_kde_something_FileClass_openUri(JNIEnv *env,
-                                                    jobject /*obj*/,
-                                                    jstring uri);
-
+JNIEXPORT void JNICALL Java_org_kde_something_FileClass_openUri(JNIEnv *env, jobject /*obj*/, jstring uri);
 }
 
 #endif

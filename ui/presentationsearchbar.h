@@ -14,34 +14,34 @@
 
 class SearchLineEdit;
 
-namespace Okular {
+namespace Okular
+{
 class Document;
 }
 
-class PresentationSearchBar
-    : public QWidget
+class PresentationSearchBar : public QWidget
 {
     Q_OBJECT
 
-    public:
-        PresentationSearchBar( Okular::Document *document, QWidget *anchor, QWidget *parent = nullptr );
-        ~PresentationSearchBar() override;
+public:
+    PresentationSearchBar(Okular::Document *document, QWidget *anchor, QWidget *parent = nullptr);
+    ~PresentationSearchBar() override;
 
-        void forceSnap();
-        void focusOnSearchEdit();
+    void forceSnap();
+    void focusOnSearchEdit();
 
-    protected:
-        void resizeEvent( QResizeEvent * ) override;
-        bool eventFilter( QObject *, QEvent * ) override;
+protected:
+    void resizeEvent(QResizeEvent *) override;
+    bool eventFilter(QObject *, QEvent *) override;
 
-    private:
-        QWidget *m_handle;
-        QWidget *m_anchor;
-        QPoint m_point;
-        bool m_snapped;
-        QPoint m_drag;
+private:
+    QWidget *m_handle;
+    QWidget *m_anchor;
+    QPoint m_point;
+    bool m_snapped;
+    QPoint m_drag;
 
-        SearchLineEdit *m_search;
+    SearchLineEdit *m_search;
 };
 
 #endif

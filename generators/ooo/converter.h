@@ -10,8 +10,8 @@
 #ifndef OOO_CONVERTER_H
 #define OOO_CONVERTER_H
 
-#include <QTextCharFormat>
 #include <QDomDocument>
+#include <QTextCharFormat>
 
 #include <core/textdocumentgenerator.h>
 
@@ -20,30 +20,30 @@
 class QDomElement;
 class QDomText;
 
-namespace OOO {
-
+namespace OOO
+{
 class Converter : public Okular::TextDocumentConverter
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
+public:
     Converter();
     ~Converter() override;
 
-    Okular::Document::OpenResult convertWithPassword( const QString &fileName, const QString &password ) override;
+    Okular::Document::OpenResult convertWithPassword(const QString &fileName, const QString &password) override;
 
-  private:
-    bool convertBody( const QDomElement &element );
-    bool convertText( const QDomElement &element );
-    bool convertHeader( QTextCursor *cursor, const QDomElement &element );
-    bool convertParagraph( QTextCursor *cursor, const QDomElement &element, const QTextBlockFormat &format = QTextBlockFormat(), bool merge = false );
-    bool convertTextNode( QTextCursor *cursor, const QDomText &element, const QTextCharFormat &format );
-    bool convertSpan( QTextCursor *cursor, const QDomElement &element, const QTextCharFormat &format );
-    bool convertLink( QTextCursor *cursor, const QDomElement &element, const QTextCharFormat &format );
-    bool convertList( QTextCursor *cursor, const QDomElement &element );
-    bool convertTable( const QDomElement &element );
-    bool convertFrame( const QDomElement &element );
-    bool convertAnnotation( QTextCursor *cursor, const QDomElement &element );
+private:
+    bool convertBody(const QDomElement &element);
+    bool convertText(const QDomElement &element);
+    bool convertHeader(QTextCursor *cursor, const QDomElement &element);
+    bool convertParagraph(QTextCursor *cursor, const QDomElement &element, const QTextBlockFormat &format = QTextBlockFormat(), bool merge = false);
+    bool convertTextNode(QTextCursor *cursor, const QDomText &element, const QTextCharFormat &format);
+    bool convertSpan(QTextCursor *cursor, const QDomElement &element, const QTextCharFormat &format);
+    bool convertLink(QTextCursor *cursor, const QDomElement &element, const QTextCharFormat &format);
+    bool convertList(QTextCursor *cursor, const QDomElement &element);
+    bool convertTable(const QDomElement &element);
+    bool convertFrame(const QDomElement &element);
+    bool convertAnnotation(QTextCursor *cursor, const QDomElement &element);
 
     QTextDocument *mTextDocument;
     QTextCursor *mCursor;

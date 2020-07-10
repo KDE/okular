@@ -19,7 +19,7 @@ CertificateInfo::~CertificateInfo()
 {
 }
 
-Q_DECLARE_OPERATORS_FOR_FLAGS( CertificateInfo::KeyUsageExtensions )
+Q_DECLARE_OPERATORS_FOR_FLAGS(CertificateInfo::KeyUsageExtensions)
 
 bool CertificateInfo::isNull() const
 {
@@ -86,7 +86,6 @@ QByteArray CertificateInfo::certificateData() const
     return QByteArray();
 }
 
-
 SignatureInfo::SignatureInfo()
 {
 }
@@ -103,7 +102,6 @@ SignatureInfo::SignatureStatus SignatureInfo::signatureStatus() const
 SignatureInfo::CertificateStatus SignatureInfo::certificateStatus() const
 {
     return CertificateStatusUnknown;
-
 }
 
 SignatureInfo::HashAlgorithm SignatureInfo::hashAlgorithm() const

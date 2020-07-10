@@ -13,8 +13,8 @@
 
 class QPixmap;
 
-namespace Okular {
-
+namespace Okular
+{
 /**
  * This class represents a rectangular portion of a page.
  *
@@ -24,31 +24,31 @@ namespace Okular {
  */
 class OKULARCORE_EXPORT Tile
 {
-    public:
-        Tile( const NormalizedRect &rect, QPixmap *pixmap, bool isValid );
-        Tile( const Tile &t );
-        ~Tile();
+public:
+    Tile(const NormalizedRect &rect, QPixmap *pixmap, bool isValid);
+    Tile(const Tile &t);
+    ~Tile();
 
-        /**
-         * Location of the tile
-         */
-        NormalizedRect rect() const;
+    /**
+     * Location of the tile
+     */
+    NormalizedRect rect() const;
 
-        /**
-         * Pixmap (may also be NULL)
-         */
-        QPixmap * pixmap() const;
+    /**
+     * Pixmap (may also be NULL)
+     */
+    QPixmap *pixmap() const;
 
-        /**
-         * True if the pixmap is available and updated
-         */
-        bool isValid() const;
+    /**
+     * True if the pixmap is available and updated
+     */
+    bool isValid() const;
 
-        Tile& operator=( const Tile &other );
+    Tile &operator=(const Tile &other);
 
-    private:
-        class Private;
-        Private * d;
+private:
+    class Private;
+    Private *d;
 };
 
 }

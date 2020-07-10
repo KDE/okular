@@ -13,13 +13,12 @@
 
 ProcessArgs::ProcessArgs()
 {
-
 }
 
-ProcessArgs::ProcessArgs( const QStringList &args, bool lsar )
-    : appArgs { args }, useLsar { lsar }
+ProcessArgs::ProcessArgs(const QStringList &args, bool lsar)
+    : appArgs {args}
+    , useLsar {lsar}
 {
-
 }
 
 UnrarFlavour::UnrarFlavour()
@@ -30,7 +29,7 @@ UnrarFlavour::~UnrarFlavour()
 {
 }
 
-void UnrarFlavour::setFileName( const QString &fileName )
+void UnrarFlavour::setFileName(const QString &fileName)
 {
     mFileName = fileName;
 }
@@ -40,13 +39,12 @@ QString UnrarFlavour::fileName() const
     return mFileName;
 }
 
-
 NonFreeUnrarFlavour::NonFreeUnrarFlavour()
     : UnrarFlavour()
 {
 }
 
-QStringList NonFreeUnrarFlavour::processListing( const QStringList &data )
+QStringList NonFreeUnrarFlavour::processListing(const QStringList &data)
 {
     // unrar-nonfree just lists the files
     return data;
@@ -57,14 +55,14 @@ QString NonFreeUnrarFlavour::name() const
     return QStringLiteral("unrar-nonfree");
 }
 
-ProcessArgs NonFreeUnrarFlavour::processListArgs( const QString &fileName ) const
+ProcessArgs NonFreeUnrarFlavour::processListArgs(const QString &fileName) const
 {
-    return ProcessArgs ( QStringList() << QStringLiteral("lb") << fileName, false );
+    return ProcessArgs(QStringList() << QStringLiteral("lb") << fileName, false);
 }
 
-ProcessArgs NonFreeUnrarFlavour::processOpenArchiveArgs( const QString &fileName, const QString &path ) const
+ProcessArgs NonFreeUnrarFlavour::processOpenArchiveArgs(const QString &fileName, const QString &path) const
 {
-    return ProcessArgs ( QStringList() << QStringLiteral("e") << fileName << path +  QLatin1Char('/'), false );
+    return ProcessArgs(QStringList() << QStringLiteral("e") << fileName << path + QLatin1Char('/'), false);
 }
 
 FreeUnrarFlavour::FreeUnrarFlavour()
@@ -72,16 +70,15 @@ FreeUnrarFlavour::FreeUnrarFlavour()
 {
 }
 
-QStringList FreeUnrarFlavour::processListing( const QStringList &data )
+QStringList FreeUnrarFlavour::processListing(const QStringList &data)
 {
-    QRegularExpression re( QStringLiteral("^ ([^/]+/([^\\s]+))$") );
+    QRegularExpression re(QStringLiteral("^ ([^/]+/([^\\s]+))$"));
 
     QStringList newdata;
-    for ( const QString &line : data )
-    {
-        QRegularExpressionMatch match = re.match( line );
-        if ( match.hasMatch() ) {
-            newdata.append( match.captured( 1 ) );
+    for (const QString &line : data) {
+        QRegularExpressionMatch match = re.match(line);
+        if (match.hasMatch()) {
+            newdata.append(match.captured(1));
         }
     }
     return newdata;
@@ -92,12 +89,12 @@ QString FreeUnrarFlavour::name() const
     return QStringLiteral("unrar-free");
 }
 
-ProcessArgs FreeUnrarFlavour::processListArgs( const QString& ) const
+ProcessArgs FreeUnrarFlavour::processListArgs(const QString &) const
 {
     return ProcessArgs();
 }
 
-ProcessArgs FreeUnrarFlavour::processOpenArchiveArgs( const QString&, const QString& ) const
+ProcessArgs FreeUnrarFlavour::processOpenArchiveArgs(const QString &, const QString &) const
 {
     return ProcessArgs();
 }
@@ -107,7 +104,7 @@ UnarFlavour::UnarFlavour()
 {
 }
 
-QStringList UnarFlavour::processListing( const QStringList &data )
+QStringList UnarFlavour::processListing(const QStringList &data)
 {
     QStringList newdata = data;
 
@@ -121,13 +118,12 @@ QString UnarFlavour::name() const
     return QStringLiteral("unar");
 }
 
-ProcessArgs UnarFlavour::processListArgs( const QString &fileName ) const
+ProcessArgs UnarFlavour::processListArgs(const QString &fileName) const
 {
-    return ProcessArgs ( QStringList() << fileName, true );
+    return ProcessArgs(QStringList() << fileName, true);
 }
 
-ProcessArgs UnarFlavour::processOpenArchiveArgs( const QString &fileName, const QString &path ) const
+ProcessArgs UnarFlavour::processOpenArchiveArgs(const QString &fileName, const QString &path) const
 {
-    return ProcessArgs ( QStringList() << fileName << QStringLiteral("-o") << path +  QLatin1Char('/'), false );
+    return ProcessArgs(QStringList() << fileName << QStringLiteral("-o") << path + QLatin1Char('/'), false);
 }
-

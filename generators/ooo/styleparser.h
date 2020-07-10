@@ -15,38 +15,38 @@
 class QDomDocument;
 class QDomElement;
 
-namespace OOO {
-
+namespace OOO
+{
 class Document;
 class StyleInformation;
 
 class StyleParser
 {
-  public:
-    StyleParser( const Document *document, const QDomDocument &domDocument, StyleInformation *styleInformation );
+public:
+    StyleParser(const Document *document, const QDomDocument &domDocument, StyleInformation *styleInformation);
 
     bool parse();
 
-    static double convertUnit( const QString& );
+    static double convertUnit(const QString &);
 
-  private:
+private:
     bool parseContentFile();
     bool parseStyleFile();
     bool parseMetaFile();
 
-    bool parseDocumentCommonAttrs( QDomElement& );
-    bool parseFontFaceDecls( QDomElement& );
-    bool parseStyles( QDomElement& );
-    bool parseMasterStyles( QDomElement& );
-    bool parseAutomaticStyles( QDomElement& );
+    bool parseDocumentCommonAttrs(QDomElement &);
+    bool parseFontFaceDecls(QDomElement &);
+    bool parseStyles(QDomElement &);
+    bool parseMasterStyles(QDomElement &);
+    bool parseAutomaticStyles(QDomElement &);
 
-    StyleFormatProperty parseStyleProperty( QDomElement& );
-    ParagraphFormatProperty parseParagraphProperty( QDomElement& );
-    TableColumnFormatProperty parseTableColumnProperty( QDomElement& );
-    TableCellFormatProperty parseTableCellProperty( QDomElement& );
-    TextFormatProperty parseTextProperty( QDomElement& );
-    PageFormatProperty parsePageProperty( QDomElement& );
-    ListFormatProperty parseListProperty( QDomElement& );
+    StyleFormatProperty parseStyleProperty(QDomElement &);
+    ParagraphFormatProperty parseParagraphProperty(QDomElement &);
+    TableColumnFormatProperty parseTableColumnProperty(QDomElement &);
+    TableCellFormatProperty parseTableCellProperty(QDomElement &);
+    TextFormatProperty parseTextProperty(QDomElement &);
+    PageFormatProperty parsePageProperty(QDomElement &);
+    ListFormatProperty parseListProperty(QDomElement &);
 
     const Document *mDocument;
     const QDomDocument &mDomDocument;

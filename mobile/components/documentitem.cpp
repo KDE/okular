@@ -19,58 +19,51 @@
 
 #include "documentitem.h"
 
-#include <QtQml> // krazy:exclude=includes
 #include <QMimeDatabase>
+#include <QtQml> // krazy:exclude=includes
 
 #ifdef Q_OS_ANDROID
 #include <QAndroidJniObject>
 #include <QtAndroid>
 #endif
 
+#include <core/bookmarkmanager.h>
 #include <core/document_p.h>
 #include <core/page.h>
-#include <core/bookmarkmanager.h>
 
 #include "ui/tocmodel.h"
 
 DocumentItem::DocumentItem(QObject *parent)
-    : QObject(parent),
-      m_thumbnailObserver(nullptr),
-      m_pageviewObserver(nullptr),
-      m_searchInProgress(false)
+    : QObject(parent)
+    , m_thumbnailObserver(nullptr)
+    , m_pageviewObserver(nullptr)
+    , m_searchInProgress(false)
 {
     qmlRegisterUncreatableType<TOCModel>("org.kde.okular.private", 1, 0, "TOCModel", QStringLiteral("Do not create objects of this type."));
     Okular::Settings::instance(QStringLiteral("okularproviderrc"));
     m_document = new Okular::Document(nullptr);
     m_tocModel = new TOCModel(m_document, this);
 
-    connect(m_document, &Okular::Document::searchFinished,
-            this, &DocumentItem::searchFinished);
-    connect(m_document->bookmarkManager(), &Okular::BookmarkManager::bookmarksChanged,
-            this, &DocumentItem::bookmarkedPagesChanged);
-    connect(m_document->bookmarkManager(), &Okular::BookmarkManager::bookmarksChanged,
-            this, &DocumentItem::bookmarksChanged);
+    connect(m_document, &Okular::Document::searchFinished, this, &DocumentItem::searchFinished);
+    connect(m_document->bookmarkManager(), &Okular::BookmarkManager::bookmarksChanged, this, &DocumentItem::bookmarkedPagesChanged);
+    connect(m_document->bookmarkManager(), &Okular::BookmarkManager::bookmarksChanged, this, &DocumentItem::bookmarksChanged);
 }
-
 
 DocumentItem::~DocumentItem()
 {
     delete m_document;
 }
 
-void DocumentItem::setUrl(const QUrl & url)
+void DocumentItem::setUrl(const QUrl &url)
 {
     m_document->closeDocument();
-    //TODO: password
+    // TODO: password
     QMimeDatabase db;
 
     QUrl realUrl = url; // NOLINT(performance-unnecessary-copy-initialization) because of the ifdef below this can't be const &
 
 #ifdef Q_OS_ANDROID
-    realUrl = QUrl(QtAndroid::androidActivity().callObjectMethod("contentUrlToFd",
-                                                                 "(Ljava/lang/String;)Ljava/lang/String;",
-                                                                 QAndroidJniObject::fromString(url.toString()).object<jstring>()
-                                                                 ).toString());
+    realUrl = QUrl(QtAndroid::androidActivity().callObjectMethod("contentUrlToFd", "(Ljava/lang/String;)Ljava/lang/String;", QAndroidJniObject::fromString(url.toString()).object<jstring>()).toString());
 #endif
 
     const QString path = realUrl.isLocalFile() ? realUrl.toLocalFile() : QStringLiteral("-");
@@ -83,7 +76,7 @@ void DocumentItem::setUrl(const QUrl & url)
 
     m_matchingPages.clear();
     for (uint i = 0; i < m_document->pages(); ++i) {
-         m_matchingPages << (int)i;
+        m_matchingPages << (int)i;
     }
     emit matchingPagesChanged();
     emit urlChanged();
@@ -98,14 +91,13 @@ QString DocumentItem::windowTitleForDocument() const
 {
     // If 'DocumentTitle' should be used, check if the document has one. If
     // either case is false, use the file name.
-    QString title = Okular::Settings::displayDocumentNameOrPath() == Okular::Settings::EnumDisplayDocumentNameOrPath::Path ?
-                m_document->currentDocument().toDisplayString(QUrl::PreferLocalFile) : m_document->currentDocument().fileName();
+    QString title = Okular::Settings::displayDocumentNameOrPath() == Okular::Settings::EnumDisplayDocumentNameOrPath::Path ? m_document->currentDocument().toDisplayString(QUrl::PreferLocalFile) : m_document->currentDocument().fileName();
 
     if (Okular::Settings::displayDocumentTitle()) {
-        const QString docTitle = m_document->metaData( QStringLiteral("DocumentTitle") ).toString();
+        const QString docTitle = m_document->metaData(QStringLiteral("DocumentTitle")).toString();
 
         if (!docTitle.isEmpty() && !docTitle.trimmed().isEmpty()) {
-             title = docTitle;
+            title = docTitle;
         }
     }
 
@@ -196,8 +188,7 @@ void DocumentItem::searchText(const QString &text)
     }
     m_document->cancelSearch();
     m_document->resetSearch(PAGEVIEW_SEARCH_ID);
-    m_document->searchText(PAGEVIEW_SEARCH_ID, text, true, Qt::CaseInsensitive,
-                           Okular::Document::AllDocument, true, QColor(100,100,200,40));
+    m_document->searchText(PAGEVIEW_SEARCH_ID, text, true, Qt::CaseInsensitive, Okular::Document::AllDocument, true, QColor(100, 100, 200, 40));
 
     if (!m_searchInProgress) {
         m_searchInProgress = true;
@@ -210,7 +201,7 @@ void DocumentItem::resetSearch()
     m_document->resetSearch(PAGEVIEW_SEARCH_ID);
     m_matchingPages.clear();
     for (uint i = 0; i < m_document->pages(); ++i) {
-         m_matchingPages << (int)i;
+        m_matchingPages << (int)i;
     }
     if (m_searchInProgress) {
         m_searchInProgress = false;
@@ -264,12 +255,11 @@ void DocumentItem::searchFinished(int id, Okular::Document::SearchStatus endStat
     emit matchingPagesChanged();
 }
 
-
-//Observer
+// Observer
 
 Observer::Observer(DocumentItem *parent)
-    : QObject(parent),
-      m_document(parent)
+    : QObject(parent)
+    , m_document(parent)
 {
     parent->document()->addObserver(this);
 }
@@ -282,4 +272,3 @@ void Observer::notifyPageChanged(int page, int flags)
 {
     emit pageChanged(page, flags);
 }
-

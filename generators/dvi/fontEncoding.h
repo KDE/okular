@@ -11,7 +11,6 @@
 
 #include <QString>
 
-
 /**
  * This class represents the contents of a font encoding file,
  * e.g. "8r.enc"
@@ -55,32 +54,36 @@
  *
  **/
 
-class fontEncoding {
- public:
-  // The constructor takes the name of an encoding file, such as
-  // '8r.enc', locate the file on the hard disk using the 'kpsewhich'
-  // command, reads it in and parses it. If the file cannot be
-  // located, opened or parsed, errors are printed using the kError()
-  // channel, and the array glyphNameVector will contain empty
-  // strings.
-  fontEncoding(const QString &encName);
+class fontEncoding
+{
+public:
+    // The constructor takes the name of an encoding file, such as
+    // '8r.enc', locate the file on the hard disk using the 'kpsewhich'
+    // command, reads it in and parses it. If the file cannot be
+    // located, opened or parsed, errors are printed using the kError()
+    // channel, and the array glyphNameVector will contain empty
+    // strings.
+    fontEncoding(const QString &encName);
 
-  // Full name of the encoding, as read from the encoding file
-  QString encodingFullName;
+    // Full name of the encoding, as read from the encoding file
+    QString encodingFullName;
 
-  // List of 256 glyph names. The name can be '.notdef' to indicate
-  // that a certain position is left open, or empty, if the encoding
-  // file did not contain 256 characters or could not be properly read
-  QString glyphNameVector[256];
+    // List of 256 glyph names. The name can be '.notdef' to indicate
+    // that a certain position is left open, or empty, if the encoding
+    // file did not contain 256 characters or could not be properly read
+    QString glyphNameVector[256];
 
-  // Returns 'true' if the encoding file was found and could
-  // successfully be loaded.
-  bool isValid() {return _isValid;}
+    // Returns 'true' if the encoding file was found and could
+    // successfully be loaded.
+    bool isValid()
+    {
+        return _isValid;
+    }
 
- private:
-  // Set by the constructor to 'true', if the encoding file was found
-  // and could be loaded successfully.
-  bool _isValid;
+private:
+    // Set by the constructor to 'true', if the encoding file was found
+    // and could be loaded successfully.
+    bool _isValid;
 };
 
 #endif

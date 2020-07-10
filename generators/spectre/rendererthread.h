@@ -23,11 +23,10 @@ class GSGenerator;
 
 namespace Okular
 {
-   class PixmapRequest;
+class PixmapRequest;
 }
 
-struct GSRendererThreadRequest
-{
+struct GSRendererThreadRequest {
     GSRendererThreadRequest(GSGenerator *_owner)
         : owner(_owner)
         , request(nullptr)
@@ -37,7 +36,8 @@ struct GSRendererThreadRequest
         , magnify(1.0)
         , orientation(0)
         , platformFonts(true)
-    {}
+    {
+    }
 
     GSGenerator *owner;
     Okular::PixmapRequest *request;
@@ -52,29 +52,29 @@ Q_DECLARE_TYPEINFO(GSRendererThreadRequest, Q_MOVABLE_TYPE);
 
 class GSRendererThread : public QThread
 {
-Q_OBJECT
-    public:
-        static GSRendererThread *getCreateRenderer();
+    Q_OBJECT
+public:
+    static GSRendererThread *getCreateRenderer();
 
-        ~GSRendererThread() override;
+    ~GSRendererThread() override;
 
-        void addRequest(const GSRendererThreadRequest &req);
+    void addRequest(const GSRendererThreadRequest &req);
 
-    Q_SIGNALS:
-        void imageDone(QImage *image, Okular::PixmapRequest *request);
+Q_SIGNALS:
+    void imageDone(QImage *image, Okular::PixmapRequest *request);
 
-    private:
-        GSRendererThread();
+private:
+    GSRendererThread();
 
-        QSemaphore m_semaphore;
+    QSemaphore m_semaphore;
 
-        static GSRendererThread *theRenderer;
+    static GSRendererThread *theRenderer;
 
-        void run() override;
+    void run() override;
 
-        SpectreRenderContext *m_renderContext;
-        QQueue<GSRendererThreadRequest> m_queue;
-        QMutex m_queueMutex;
+    SpectreRenderContext *m_renderContext;
+    QQueue<GSRendererThreadRequest> m_queue;
+    QMutex m_queueMutex;
 };
 
 #endif

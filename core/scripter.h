@@ -14,8 +14,8 @@
 
 class QString;
 
-namespace Okular {
-
+namespace Okular
+{
 class Document;
 class DocumentPrivate;
 class Event;
@@ -26,22 +26,22 @@ class Scripter
     friend class Document;
     friend class DocumentPrivate;
 
-    public:
-        ~Scripter();
+public:
+    ~Scripter();
 
-        Scripter(const Scripter &) = delete;
-        Scripter &operator=(const Scripter &) = delete;
+    Scripter(const Scripter &) = delete;
+    Scripter &operator=(const Scripter &) = delete;
 
-        void execute( ScriptType type, const QString &script );
+    void execute(ScriptType type, const QString &script);
 
-        void setEvent( Event *event );
-        Event *event() const;
+    void setEvent(Event *event);
+    Event *event() const;
 
-    private:
-        friend class ScripterPrivate;
-        ScripterPrivate* d;
+private:
+    friend class ScripterPrivate;
+    ScripterPrivate *d;
 
-        explicit Scripter( DocumentPrivate *doc );
+    explicit Scripter(DocumentPrivate *doc);
 };
 
 }

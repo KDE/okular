@@ -27,8 +27,7 @@ class ThumbnailItem : public PageItem
     Q_OBJECT
 
 public:
-
-    explicit ThumbnailItem(QQuickItem *parent=nullptr);
+    explicit ThumbnailItem(QQuickItem *parent = nullptr);
     ~ThumbnailItem() override;
 };
 

@@ -21,70 +21,70 @@ using namespace Okular;
 
 static KJSPrototype *g_dataProto;
 
-static KJSObject dataGetCreationDate( KJSContext *ctx, void *object )
+static KJSObject dataGetCreationDate(KJSContext *ctx, void *object)
 {
-    const EmbeddedFile *file = reinterpret_cast< EmbeddedFile * >( object );
+    const EmbeddedFile *file = reinterpret_cast<EmbeddedFile *>(object);
 
-    return KJSDate( ctx, file->creationDate() );
+    return KJSDate(ctx, file->creationDate());
 }
 
-static KJSObject dataGetDescription( KJSContext *, void *object )
+static KJSObject dataGetDescription(KJSContext *, void *object)
 {
-    const EmbeddedFile *file = reinterpret_cast< EmbeddedFile * >( object );
+    const EmbeddedFile *file = reinterpret_cast<EmbeddedFile *>(object);
 
-    return KJSString( file->description() );
+    return KJSString(file->description());
 }
 
-static KJSObject dataGetMIMEType( KJSContext *, void * )
+static KJSObject dataGetMIMEType(KJSContext *, void *)
 {
-    return KJSString( "" );
+    return KJSString("");
 }
 
-static KJSObject dataGetModDate( KJSContext *ctx, void *object )
+static KJSObject dataGetModDate(KJSContext *ctx, void *object)
 {
-    const EmbeddedFile *file = reinterpret_cast< EmbeddedFile * >( object );
+    const EmbeddedFile *file = reinterpret_cast<EmbeddedFile *>(object);
 
-    return KJSDate( ctx, file->modificationDate() );
+    return KJSDate(ctx, file->modificationDate());
 }
 
-static KJSObject dataGetName( KJSContext *, void *object )
+static KJSObject dataGetName(KJSContext *, void *object)
 {
-    const EmbeddedFile *file = reinterpret_cast< EmbeddedFile * >( object );
+    const EmbeddedFile *file = reinterpret_cast<EmbeddedFile *>(object);
 
-    return KJSString( file->name() );
+    return KJSString(file->name());
 }
 
-static KJSObject dataGetPath( KJSContext *, void * )
+static KJSObject dataGetPath(KJSContext *, void *)
 {
-    return KJSString( "" );
+    return KJSString("");
 }
 
-static KJSObject dataGetSize( KJSContext *, void *object )
+static KJSObject dataGetSize(KJSContext *, void *object)
 {
-    const EmbeddedFile *file = reinterpret_cast< EmbeddedFile * >( object );
-    return KJSNumber( file->size() );
+    const EmbeddedFile *file = reinterpret_cast<EmbeddedFile *>(object);
+    return KJSNumber(file->size());
 }
 
-void JSData::initType( KJSContext *ctx )
+void JSData::initType(KJSContext *ctx)
 {
     static bool initialized = false;
-    if ( initialized )
+    if (initialized)
         return;
     initialized = true;
 
-    if ( !g_dataProto )
+    if (!g_dataProto)
         g_dataProto = new KJSPrototype();
 
-    g_dataProto->defineProperty( ctx, QStringLiteral("creationDate"), dataGetCreationDate );
-    g_dataProto->defineProperty( ctx, QStringLiteral("description"), dataGetDescription );
-    g_dataProto->defineProperty( ctx, QStringLiteral("MIMEType"), dataGetMIMEType );
-    g_dataProto->defineProperty( ctx, QStringLiteral("modDate"), dataGetModDate );
-    g_dataProto->defineProperty( ctx, QStringLiteral("name"), dataGetName );
-    g_dataProto->defineProperty( ctx, QStringLiteral("path"), dataGetPath );
-    g_dataProto->defineProperty( ctx, QStringLiteral("size"), dataGetSize );
+    g_dataProto->defineProperty(ctx, QStringLiteral("creationDate"), dataGetCreationDate);
+    g_dataProto->defineProperty(ctx, QStringLiteral("description"), dataGetDescription);
+    g_dataProto->defineProperty(ctx, QStringLiteral("MIMEType"), dataGetMIMEType);
+    g_dataProto->defineProperty(ctx, QStringLiteral("modDate"), dataGetModDate);
+    g_dataProto->defineProperty(ctx, QStringLiteral("name"), dataGetName);
+    g_dataProto->defineProperty(ctx, QStringLiteral("path"), dataGetPath);
+    g_dataProto->defineProperty(ctx, QStringLiteral("size"), dataGetSize);
 }
 
-KJSObject JSData::wrapFile( KJSContext *ctx, EmbeddedFile *f )
+KJSObject JSData::wrapFile(KJSContext *ctx, EmbeddedFile *f)
 {
-    return g_dataProto->constructObject( ctx, f );
+    return g_dataProto->constructObject(ctx, f);
 }

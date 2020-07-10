@@ -11,18 +11,18 @@
 
 #include <KConfigDialogManager>
 
-#include "widgetannottools.h"
 #include "ui_dlgannotationsbase.h"
+#include "widgetannottools.h"
 
-DlgAnnotations::DlgAnnotations( QWidget * parent )
-    : QWidget( parent )
+DlgAnnotations::DlgAnnotations(QWidget *parent)
+    : QWidget(parent)
 {
     Ui_DlgAnnotationsBase dlg;
-    dlg.setupUi( this );
+    dlg.setupUi(this);
 
-    WidgetAnnotTools * kcfg_QuickAnnotationTools = new WidgetAnnotTools( dlg.annotToolsGroup );
-    dlg.annotToolsPlaceholder->addWidget( kcfg_QuickAnnotationTools );
-    kcfg_QuickAnnotationTools->setObjectName( QStringLiteral("kcfg_QuickAnnotationTools") );
+    WidgetAnnotTools *kcfg_QuickAnnotationTools = new WidgetAnnotTools(dlg.annotToolsGroup);
+    dlg.annotToolsPlaceholder->addWidget(kcfg_QuickAnnotationTools);
+    kcfg_QuickAnnotationTools->setObjectName(QStringLiteral("kcfg_QuickAnnotationTools"));
 
-    KConfigDialogManager::changedMap()->insert( QStringLiteral("WidgetAnnotTools") , SIGNAL(changed()) );
+    KConfigDialogManager::changedMap()->insert(QStringLiteral("WidgetAnnotTools"), SIGNAL(changed()));
 }

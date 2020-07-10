@@ -22,7 +22,6 @@
 
 #include <QQmlExtensionPlugin>
 
-
 class OkularPlugin : public QQmlExtensionPlugin
 {
     Q_OBJECT

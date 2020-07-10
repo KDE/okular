@@ -14,17 +14,17 @@
 
 namespace Txt
 {
-    class Document : public QTextDocument
-    {
-        Q_OBJECT
+class Document : public QTextDocument
+{
+    Q_OBJECT
 
-        public:
-            explicit Document( const QString &fileName );
-            ~Document() override;
+public:
+    explicit Document(const QString &fileName);
+    ~Document() override;
 
-        private:
-            QString toUnicode( const QByteArray &array );
-    };
+private:
+    QString toUnicode(const QByteArray &array);
+};
 }
 
 #endif

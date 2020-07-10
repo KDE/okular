@@ -20,35 +20,35 @@
 #ifndef MAGNIFIERVIEW_H
 #define MAGNIFIERVIEW_H
 
-#include <QWidget>
 #include "core/observer.h"
 #include "core/page.h"
+#include <QWidget>
 
 class MagnifierView : public QWidget, public Okular::DocumentObserver
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    explicit MagnifierView( Okular::Document *document, QWidget *parent = nullptr );
+public:
+    explicit MagnifierView(Okular::Document *document, QWidget *parent = nullptr);
     ~MagnifierView() override;
 
-    void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) override;
-    void notifyPageChanged( int page, int flags ) override;
-    void notifyCurrentPageChanged( int previous, int current ) override;
-    bool canUnloadPixmap( int page ) const override;
+    void notifySetup(const QVector<Okular::Page *> &pages, int setupFlags) override;
+    void notifyPageChanged(int page, int flags) override;
+    void notifyCurrentPageChanged(int previous, int current) override;
+    bool canUnloadPixmap(int page) const override;
 
-    void updateView( const Okular::NormalizedPoint &p, const Okular::Page * page );
-    void move( int x, int y );
+    void updateView(const Okular::NormalizedPoint &p, const Okular::Page *page);
+    void move(int x, int y);
 
-  protected:
-    void paintEvent( QPaintEvent *e ) override;
+protected:
+    void paintEvent(QPaintEvent *e) override;
 
-  private:
+private:
     Okular::NormalizedRect normalizedView() const;
     void requestPixmap();
-    void drawTicks( QPainter *p );
+    void drawTicks(QPainter *p);
 
-  private:
+private:
     Okular::Document *m_document;
     Okular::NormalizedPoint m_viewpoint;
     const Okular::Page *m_page;

@@ -54,7 +54,6 @@
 
 #include "debug_dvi.h"
 #include "xdvi.h"
-#include "debug_dvi.h"
 
 #include <KLocalizedString>
 #include <KMessageBox>
@@ -71,23 +70,19 @@
  *   Print error message and quit.
  */
 
-void oops(const QString& message)
+void oops(const QString &message)
 {
-  qCCritical(OkularDviDebug) << "Fatal Error:" << message << endl;
+    qCCritical(OkularDviDebug) << "Fatal Error:" << message << endl;
 
-  KMessageBox::error( nullptr,
-                      i18n("Fatal error.\n\n") +
-                      message +
-                      i18n("\n\n\
+    KMessageBox::error(nullptr, i18n("Fatal error.\n\n") + message + i18n("\n\n\
 This probably means that either you found a bug in Okular,\n\
 or that the DVI file, or auxiliary files (such as font files, \n\
 or virtual font files) were really badly broken.\n\
 Okular will abort after this message. If you believe that you \n\
 found a bug, or that Okular should behave better in this situation\n\
 please report the problem."));
-  exit(1);
+    exit(1);
 }
-
 
 /*
  * Read size bytes from the FILE fp, constructing them into a
@@ -95,22 +90,25 @@ please report the problem."));
  */
 unsigned long num(FILE *fp, int size)
 {
-  long x = 0;
+    long x = 0;
 
-  while (size--) x = (x << 8) | one(fp);
-  return x;
+    while (size--)
+        x = (x << 8) | one(fp);
+    return x;
 }
 
 long snum(FILE *fp, int size)
 {
-  long x;
+    long x;
 
 #ifdef __STDC__
-  x = (signed char) getc(fp);
+    x = (signed char)getc(fp);
 #else
-  x = (unsigned char) getc(fp);
-  if (x & 0x80) x -= 0x100;
+    x = (unsigned char)getc(fp);
+    if (x & 0x80)
+        x -= 0x100;
 #endif
-  while (--size) x = (x << 8) | one(fp);
-  return x;
+    while (--size)
+        x = (x << 8) | one(fp);
+    return x;
 }

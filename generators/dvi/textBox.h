@@ -6,13 +6,11 @@
 //
 // (C) 2004-2005 Stefan Kebekus. Distributed under the GPL.
 
-
 #ifndef _textbox_h_
 #define _textbox_h_
 
 #include <QRect>
 #include <QString>
-
 
 /** Represents a rectangular region in a RenderedDocumentPage that contains text
 
@@ -29,38 +27,42 @@
 class TextBox
 {
 public:
-  /** \brief Default Constructor
+    /** \brief Default Constructor
 
-  The default constructor leaves all fields uninitialized.
-  */
-  TextBox() {}
+    The default constructor leaves all fields uninitialized.
+    */
+    TextBox()
+    {
+    }
 
-  /** \brief Constructor
+    /** \brief Constructor
 
-  Trivial constructor leaves that initialized all members.
+    Trivial constructor leaves that initialized all members.
 
-  @param re value for the box
-  @param lT valus for the text field
-  */
-  TextBox(const QRect re, const QString& lT): box(re), text(lT) {}
+    @param re value for the box
+    @param lT valus for the text field
+    */
+    TextBox(const QRect re, const QString &lT)
+        : box(re)
+        , text(lT)
+    {
+    }
 
-  /** \brief Bounding box of the text or hyperlink
+    /** \brief Bounding box of the text or hyperlink
 
-  This rectangle specifies where on the page the text or hyperlink is
-  found. It uses the same coordinates that were used when the
-  associated documentPage was rendered by the
-  documentRenderer.drawPage() method. The contents of the box is
-  graphically inverted to indicate marked text.
-  */
-  QRect    box;
+    This rectangle specifies where on the page the text or hyperlink is
+    found. It uses the same coordinates that were used when the
+    associated documentPage was rendered by the
+    documentRenderer.drawPage() method. The contents of the box is
+    graphically inverted to indicate marked text.
+    */
+    QRect box;
 
-  /** \brief Name of the region
+    /** \brief Name of the region
 
-  The text associated with the box is stored here.
-  */
-  QString  text;
+    The text associated with the box is stored here.
+    */
+    QString text;
 };
-
-
 
 #endif

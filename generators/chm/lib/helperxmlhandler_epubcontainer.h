@@ -23,12 +23,12 @@
 
 class HelperXmlHandler_EpubContainer : public QXmlDefaultHandler
 {
-	public:
-		// Overridden members
-		bool startElement ( const QString & namespaceURI, const QString & localName, const QString & qName, const QXmlAttributes & atts ) override;
+public:
+    // Overridden members
+    bool startElement(const QString &namespaceURI, const QString &localName, const QString &qName, const QXmlAttributes &atts) override;
 
-		// The content path
-		QString	contentPath;
+    // The content path
+    QString contentPath;
 };
 
 #endif // HELPERXMLHANDLER_EPUBCONTAINER_H

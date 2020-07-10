@@ -13,22 +13,22 @@
 #include <QHash>
 #include <QString>
 
-namespace Okular {
-
+namespace Okular
+{
 class DocumentPrivate;
 class View;
 
 class ViewPrivate
 {
-    public:
-        ViewPrivate();
-        virtual ~ViewPrivate();
+public:
+    ViewPrivate();
+    virtual ~ViewPrivate();
 
-        ViewPrivate(const ViewPrivate &) = delete;
-        ViewPrivate &operator=(const ViewPrivate &) = delete;
+    ViewPrivate(const ViewPrivate &) = delete;
+    ViewPrivate &operator=(const ViewPrivate &) = delete;
 
-        QString name;
-        DocumentPrivate *document;
+    QString name;
+    DocumentPrivate *document;
 };
 
 }

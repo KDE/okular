@@ -10,21 +10,21 @@
 #ifndef TXT_CONVERTER_H
 #define TXT_CONVERTER_H
 
-#include <core/textdocumentgenerator.h>
 #include <core/document.h>
+#include <core/textdocumentgenerator.h>
 
 namespace Txt
 {
-    class Converter : public Okular::TextDocumentConverter
-    {
+class Converter : public Okular::TextDocumentConverter
+{
     Q_OBJECT
 
-    public:
-        Converter();
-        ~Converter() override;
+public:
+    Converter();
+    ~Converter() override;
 
-        QTextDocument *convert( const QString &fileName ) override;
-    };
+    QTextDocument *convert(const QString &fileName) override;
+};
 }
 
 #endif

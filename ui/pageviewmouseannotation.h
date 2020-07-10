@@ -26,8 +26,8 @@
 
 #include <QObject>
 
-#include "pageviewutils.h"
 #include "core/annotations.h"
+#include "pageviewutils.h"
 
 class QHelpEvent;
 class QPainter;
@@ -46,17 +46,21 @@ class AnnotationDescription
 {
 public:
     AnnotationDescription()
-        : annotation( nullptr ), pageViewItem( nullptr ), pageNumber( -1 ) {}
-    AnnotationDescription( PageViewItem * newPageViewItem, const QPoint eventPos );
-    bool isValid() const;
-    bool isContainedInPage( const Okular::Document * document, int pageNumber ) const;
-    void invalidate();
-    bool operator==( const AnnotationDescription & rhs ) const
+        : annotation(nullptr)
+        , pageViewItem(nullptr)
+        , pageNumber(-1)
     {
-       return ( annotation == rhs.annotation );
     }
-    Okular::Annotation * annotation;
-    PageViewItem * pageViewItem;
+    AnnotationDescription(PageViewItem *newPageViewItem, const QPoint eventPos);
+    bool isValid() const;
+    bool isContainedInPage(const Okular::Document *document, int pageNumber) const;
+    void invalidate();
+    bool operator==(const AnnotationDescription &rhs) const
+    {
+        return (annotation == rhs.annotation);
+    }
+    Okular::Annotation *annotation;
+    PageViewItem *pageViewItem;
     int pageNumber;
 };
 
@@ -70,29 +74,29 @@ public:
  */
 class MouseAnnotation : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-    MouseAnnotation( PageView * parent, Okular::Document * document );
+    MouseAnnotation(PageView *parent, Okular::Document *document);
     ~MouseAnnotation() override;
 
     /* Process a mouse press event. eventPos: Mouse position in content area coordinates. */
-    void routeMousePressEvent( PageViewItem * pageViewItem, const QPoint eventPos );
+    void routeMousePressEvent(PageViewItem *pageViewItem, const QPoint eventPos);
 
     /* Process a mouse release event. */
     void routeMouseReleaseEvent();
 
     /* Process a mouse move event. eventPos: Mouse position in content area coordinates. */
-    void routeMouseMoveEvent( PageViewItem * pageViewItem, const QPoint eventPos, bool leftButtonPressed );
+    void routeMouseMoveEvent(PageViewItem *pageViewItem, const QPoint eventPos, bool leftButtonPressed);
 
     /* Process a key event. */
-    void routeKeyPressEvent( const QKeyEvent * e );
+    void routeKeyPressEvent(const QKeyEvent *e);
 
     /* Process a tooltip event. eventPos: Mouse position in content area coordinates. */
-    void routeTooltipEvent( const QHelpEvent * helpEvent );
+    void routeTooltipEvent(const QHelpEvent *helpEvent);
 
     /* Process a paint event. */
-    void routePaint( QPainter * painter, const QRect paintRect );
+    void routePaint(QPainter *painter, const QRect paintRect);
 
     /* Cancel the current selection or action, if any. */
     void cancel();
@@ -100,7 +104,7 @@ public:
     /* Reset to initial state. Cancel current action and relinquish references to PageViewItem widgets. */
     void reset();
 
-    Okular::Annotation * annotation() const;
+    Okular::Annotation *annotation() const;
 
     /* Return true, if MouseAnnotation demands control for a mouse click on the current cursor position. */
     bool isMouseOver() const;
@@ -118,17 +122,12 @@ public:
     Qt::CursorShape cursor() const;
 
     /* Forward DocumentObserver::notifyPageChanged to this method. */
-    void notifyAnnotationChanged( int pageNumber );
+    void notifyAnnotationChanged(int pageNumber);
 
     /* Forward DocumentObserver::notifySetup to this method. */
     void updateAnnotationPointers();
 
-    enum MouseAnnotationState {
-        StateInactive,
-        StateFocused,
-        StateMoving,
-        StateResizing
-    };
+    enum MouseAnnotationState { StateInactive, StateFocused, StateMoving, StateResizing };
 
     enum ResizeHandleFlag {
         RH_None = 0,
@@ -143,24 +142,24 @@ public:
         RH_Content = 16,
         RH_AllHandles = RH_Top | RH_Right | RH_Bottom | RH_Left
     };
-    Q_DECLARE_FLAGS( ResizeHandle, ResizeHandleFlag )
+    Q_DECLARE_FLAGS(ResizeHandle, ResizeHandleFlag)
 
 private:
-    void setState( MouseAnnotationState state, const AnnotationDescription & ad );
-    QRect getFullBoundingRect( const AnnotationDescription & ad ) const;
-    void performCommand( const QPoint newPos );
+    void setState(MouseAnnotationState state, const AnnotationDescription &ad);
+    QRect getFullBoundingRect(const AnnotationDescription &ad) const;
+    void performCommand(const QPoint newPos);
     void finishCommand();
-    void updateViewport( const AnnotationDescription & ad ) const;
-    ResizeHandle getHandleAt( const QPoint eventPos, const AnnotationDescription & ad ) const;
-    QRect getHandleRect( ResizeHandle handle, const AnnotationDescription & ad ) const;
-    static void handleToAdjust( const QPointF dIn, QPointF & dOut1, QPointF & dOut2, MouseAnnotation::ResizeHandle handle, Okular::Rotation rotation );
-    static QPointF rotateInRect( const QPointF rotated, Okular::Rotation rotation );
-    static ResizeHandle rotateHandle( ResizeHandle handle, Okular::Rotation rotation );
-    void processAction( const AnnotationDescription& ad );
+    void updateViewport(const AnnotationDescription &ad) const;
+    ResizeHandle getHandleAt(const QPoint eventPos, const AnnotationDescription &ad) const;
+    QRect getHandleRect(ResizeHandle handle, const AnnotationDescription &ad) const;
+    static void handleToAdjust(const QPointF dIn, QPointF &dOut1, QPointF &dOut2, MouseAnnotation::ResizeHandle handle, Okular::Rotation rotation);
+    static QPointF rotateInRect(const QPointF rotated, Okular::Rotation rotation);
+    static ResizeHandle rotateHandle(ResizeHandle handle, Okular::Rotation rotation);
+    void processAction(const AnnotationDescription &ad);
 
     /* We often have to delegate to the document model and our parent widget. */
-    Okular::Document * m_document;
-    PageView * m_pageView;
+    Okular::Document *m_document;
+    PageView *m_pageView;
 
     /* Remember which annotation is currently focused/modified. */
     MouseAnnotationState m_state;

@@ -23,19 +23,19 @@ Converter::~Converter()
 {
 }
 
-QTextDocument* Converter::convert( const QString &fileName )
+QTextDocument *Converter::convert(const QString &fileName)
 {
-    Document *textDocument = new Document( fileName );
+    Document *textDocument = new Document(fileName);
 
-    textDocument->setPageSize(QSizeF( 600, 800 ));
+    textDocument->setPageSize(QSizeF(600, 800));
 
     QTextFrameFormat frameFormat;
-    frameFormat.setMargin( 20 );
+    frameFormat.setMargin(20);
 
     QTextFrame *rootFrame = textDocument->rootFrame();
-    rootFrame->setFrameFormat( frameFormat );
+    rootFrame->setFrameFormat(frameFormat);
 
-    emit addMetaData( Okular::DocumentInfo::MimeType, QStringLiteral("text/plain") );
+    emit addMetaData(Okular::DocumentInfo::MimeType, QStringLiteral("text/plain"));
 
     return textDocument;
 }

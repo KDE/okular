@@ -9,8 +9,8 @@
 
 #include "document.h"
 
-#include <QFile>
 #include <QDataStream>
+#include <QFile>
 #include <QTextCodec>
 
 #include <KEncodingProber>
@@ -20,28 +20,27 @@
 
 using namespace Txt;
 
-Document::Document( const QString &fileName )
+Document::Document(const QString &fileName)
 {
 #ifdef TXT_DEBUG
     qCDebug(OkularTxtDebug) << "Opening file" << fileName;
 #endif
 
-    QFile plainFile( fileName );
-    if ( !plainFile.open( QIODevice::ReadOnly | QIODevice::Text ) )
-    {
+    QFile plainFile(fileName);
+    if (!plainFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qCDebug(OkularTxtDebug) << "Can't open file" << plainFile.fileName();
         return;
     }
 
     const QByteArray buffer = plainFile.readAll();
-    setPlainText( toUnicode(buffer) );
+    setPlainText(toUnicode(buffer));
 }
 
 Document::~Document()
 {
 }
 
-QString Document::toUnicode( const QByteArray &array )
+QString Document::toUnicode(const QByteArray &array)
 {
     QByteArray encoding;
     KEncodingProber prober(KEncodingProber::Universal);
@@ -49,26 +48,23 @@ QString Document::toUnicode( const QByteArray &array )
     int chunkSize = 3000; // ~= number of symbols in page.
 
     // Try to detect encoding.
-    while ( encoding.isEmpty() && charsFeeded < array.size() )
-    {
-        prober.feed( array.mid( charsFeeded, chunkSize ) );
+    while (encoding.isEmpty() && charsFeeded < array.size()) {
+        prober.feed(array.mid(charsFeeded, chunkSize));
         charsFeeded += chunkSize;
 
-        if (prober.confidence() >= 0.5)
-        {
+        if (prober.confidence() >= 0.5) {
             encoding = prober.encoding();
             break;
         }
     }
 
-    if ( encoding.isEmpty() )
-    {
+    if (encoding.isEmpty()) {
         return QString();
     }
 
     qCDebug(OkularTxtDebug) << "Detected" << prober.encoding() << "encoding"
-             << "based on" << charsFeeded << "chars";
-    return QTextCodec::codecForName( encoding )->toUnicode( array );
+                            << "based on" << charsFeeded << "chars";
+    return QTextCodec::codecForName(encoding)->toUnicode(array);
 }
 
 Q_LOGGING_CATEGORY(OkularTxtDebug, "org.kde.okular.generators.txt", QtWarningMsg)

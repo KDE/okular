@@ -20,9 +20,9 @@
 #ifndef QPAGEITEM_H
 #define QPAGEITEM_H
 
-#include <QQuickItem>
-#include <QPointer>
 #include <QImage>
+#include <QPointer>
+#include <QQuickItem>
 
 #include <core/document.h>
 #include <core/view.h>
@@ -31,9 +31,10 @@ class QTimer;
 
 class DocumentItem;
 
-namespace Okular {
-    class Document;
-    class Page;
+namespace Okular
+{
+class Document;
+class Page;
 }
 
 class PageItem : public QQuickItem, public Okular::View
@@ -83,8 +84,7 @@ class PageItem : public QQuickItem, public Okular::View
     Q_PROPERTY(QStringList bookmarks READ bookmarks NOTIFY bookmarksChanged)
 
 public:
-
-    explicit PageItem(QQuickItem *parent=nullptr);
+    explicit PageItem(QQuickItem *parent = nullptr);
     ~PageItem() override;
 
     void setFlickable(QQuickItem *flickable);
@@ -137,10 +137,9 @@ public:
      */
     Q_INVOKABLE void removeBookmark(const QString &bookmark);
 
-    void geometryChanged(const QRectF &newGeometry,
-                         const QRectF &oldGeometry) override;
+    void geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry) override;
 
-    QSGNode * updatePaintNode(QSGNode * , QQuickItem::UpdatePaintNodeData * ) override;
+    QSGNode *updatePaintNode(QSGNode *, QQuickItem::UpdatePaintNodeData *) override;
 
 Q_SIGNALS:
     void flickableChanged();

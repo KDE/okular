@@ -14,15 +14,14 @@
 
 #include <QImage>
 
-SnapshotTaker::SnapshotTaker(const QUrl &url, QObject *parent )
-    : QObject( parent )
-    , m_player( new Phonon::VideoPlayer( Phonon::NoCategory, nullptr ) )
+SnapshotTaker::SnapshotTaker(const QUrl &url, QObject *parent)
+    : QObject(parent)
+    , m_player(new Phonon::VideoPlayer(Phonon::NoCategory, nullptr))
 {
-    m_player->load( url );
+    m_player->load(url);
     m_player->hide();
 
-    connect(m_player->mediaObject(), &Phonon::MediaObject::stateChanged,
-            this, &SnapshotTaker::stateChanged);
+    connect(m_player->mediaObject(), &Phonon::MediaObject::stateChanged, this, &SnapshotTaker::stateChanged);
 
     m_player->play();
 }
@@ -38,7 +37,7 @@ void SnapshotTaker::stateChanged(Phonon::State newState, Phonon::State)
     if (newState == Phonon::PlayingState) {
         const QImage image = m_player->videoWidget()->snapshot();
         if (!image.isNull())
-            emit finished( image );
+            emit finished(image);
 
         m_player->stop();
         deleteLater();

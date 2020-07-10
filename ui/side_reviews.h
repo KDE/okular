@@ -18,7 +18,8 @@
 
 class QModelIndex;
 
-namespace Okular {
+namespace Okular
+{
 class Annotation;
 class Document;
 }
@@ -36,42 +37,42 @@ class TreeView;
 class Reviews : public QWidget, public Okular::DocumentObserver
 {
     Q_OBJECT
-    public:
-        Reviews( QWidget * parent, Okular::Document * document );
-        ~Reviews() override;
+public:
+    Reviews(QWidget *parent, Okular::Document *document);
+    ~Reviews() override;
 
-        // [INHERITED] from DocumentObserver
-        void notifyCurrentPageChanged( int previous, int current ) override;
+    // [INHERITED] from DocumentObserver
+    void notifyCurrentPageChanged(int previous, int current) override;
 
-        void reparseConfig();
+    void reparseConfig();
 
-    public Q_SLOTS:
-        void slotPageEnabled( bool );
-        void slotAuthorEnabled( bool );
-        void slotCurrentPageOnly( bool );
-        void slotExpandAll();
-        void slotCollapseAll();
+public Q_SLOTS:
+    void slotPageEnabled(bool);
+    void slotAuthorEnabled(bool);
+    void slotCurrentPageOnly(bool);
+    void slotExpandAll();
+    void slotCollapseAll();
 
-    Q_SIGNALS:
-        void openAnnotationWindow( Okular::Annotation *annotation, int pageNumber );
+Q_SIGNALS:
+    void openAnnotationWindow(Okular::Annotation *annotation, int pageNumber);
 
-    private Q_SLOTS:
-        void activated( const QModelIndex& );
-        void contextMenuRequested( const QPoint );
-        void saveSearchOptions();
+private Q_SLOTS:
+    void activated(const QModelIndex &);
+    void contextMenuRequested(const QPoint);
+    void saveSearchOptions();
 
-    private:
-        QModelIndexList retrieveAnnotations(const QModelIndex& idx) const;
-        
-        // data fields (GUI)
-        KTreeViewSearchLine *m_searchLine;
-        TreeView * m_view;
-        // internal storage
-        Okular::Document * m_document;
-        AnnotationModel * m_model;
-        AuthorGroupProxyModel * m_authorProxy;
-        PageFilterProxyModel * m_filterProxy;
-        PageGroupProxyModel * m_groupProxy;
+private:
+    QModelIndexList retrieveAnnotations(const QModelIndex &idx) const;
+
+    // data fields (GUI)
+    KTreeViewSearchLine *m_searchLine;
+    TreeView *m_view;
+    // internal storage
+    Okular::Document *m_document;
+    AnnotationModel *m_model;
+    AuthorGroupProxyModel *m_authorProxy;
+    PageFilterProxyModel *m_filterProxy;
+    PageGroupProxyModel *m_groupProxy;
 };
 
 #endif

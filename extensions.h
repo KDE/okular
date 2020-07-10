@@ -16,44 +16,41 @@
 
 namespace Okular
 {
-
 class Part;
 
 class BrowserExtension : public KParts::BrowserExtension
 {
     Q_OBJECT
 
-    public:
-        explicit BrowserExtension(Part*);
+public:
+    explicit BrowserExtension(Part *);
 
-    public Q_SLOTS:
-        // Automatically detected by the host.
-        void print();
+public Q_SLOTS:
+    // Automatically detected by the host.
+    void print();
 
-    private:
-        Part *m_part;
+private:
+    Part *m_part;
 };
 
 class OkularLiveConnectExtension : public KParts::LiveConnectExtension
 {
     Q_OBJECT
 
-    public:
-        explicit OkularLiveConnectExtension( Part *parent );
+public:
+    explicit OkularLiveConnectExtension(Part *parent);
 
-        // from LiveConnectExtension
-        bool get( const unsigned long objid, const QString &field, Type &type,
-                          unsigned long &retobjid, QString &value ) override;
-        bool put( const unsigned long objid, const QString &field, const QString &value ) override;
-        bool call( const unsigned long objid, const QString &func, const QStringList &args,
-                           Type &type, unsigned long &retobjid, QString &value ) override;
+    // from LiveConnectExtension
+    bool get(const unsigned long objid, const QString &field, Type &type, unsigned long &retobjid, QString &value) override;
+    bool put(const unsigned long objid, const QString &field, const QString &value) override;
+    bool call(const unsigned long objid, const QString &func, const QStringList &args, Type &type, unsigned long &retobjid, QString &value) override;
 
-    private:
-        QString eval( const QString &script );
-        void postMessage( const QStringList &args );
+private:
+    QString eval(const QString &script);
+    void postMessage(const QStringList &args);
 
-        bool m_inEval;
-        QString m_evalRes;
+    bool m_inEval;
+    QString m_evalRes;
 };
 
 }

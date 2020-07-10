@@ -18,15 +18,15 @@ class DlgPerformance : public QWidget
 {
     Q_OBJECT
 
-    public:
-        explicit DlgPerformance( QWidget * parent = nullptr );
-        ~DlgPerformance() override;
+public:
+    explicit DlgPerformance(QWidget *parent = nullptr);
+    ~DlgPerformance() override;
 
-    protected Q_SLOTS:
-        void radioGroup_changed( int which );
+protected Q_SLOTS:
+    void radioGroup_changed(int which);
 
-    protected:
-        Ui_DlgPerformanceBase * m_dlg;
+protected:
+    Ui_DlgPerformanceBase *m_dlg;
 };
 
 #endif

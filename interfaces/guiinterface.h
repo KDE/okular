@@ -16,8 +16,8 @@
 
 #include <KXMLGUIClient>
 
-namespace Okular {
-
+namespace Okular
+{
 /**
  * @short Abstract interface for user interface control
  *
@@ -38,25 +38,32 @@ namespace Okular {
  */
 class OKULARCORE_EXPORT GuiInterface : protected KXMLGUIClient
 {
-    public:
-        GuiInterface() {}
+public:
+    GuiInterface()
+    {
+    }
 
-        /**
-         * Destroys the gui interface.
-         */
-        ~GuiInterface() override {}
+    /**
+     * Destroys the gui interface.
+     */
+    ~GuiInterface() override
+    {
+    }
 
-        GuiInterface(const GuiInterface &) = delete;
-        GuiInterface &operator=(const GuiInterface &) = delete;
+    GuiInterface(const GuiInterface &) = delete;
+    GuiInterface &operator=(const GuiInterface &) = delete;
 
-        /**
-         * This method requests the XML GUI Client provided by the interface.
-         */
-        KXMLGUIClient* guiClient() { return this; }
+    /**
+     * This method requests the XML GUI Client provided by the interface.
+     */
+    KXMLGUIClient *guiClient()
+    {
+        return this;
+    }
 };
 
 }
 
-Q_DECLARE_INTERFACE( Okular::GuiInterface, "org.kde.okular.GuiInterface/0.1" )
+Q_DECLARE_INTERFACE(Okular::GuiInterface, "org.kde.okular.GuiInterface/0.1")
 
 #endif

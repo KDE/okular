@@ -18,15 +18,15 @@ class DlgPresentation : public QWidget
 {
     Q_OBJECT
 
-    public:
-        explicit DlgPresentation( QWidget * parent = nullptr );
-        ~DlgPresentation() override;
+public:
+    explicit DlgPresentation(QWidget *parent = nullptr);
+    ~DlgPresentation() override;
 
-    protected Q_SLOTS:
-        void screenComboChanged( int which );
+protected Q_SLOTS:
+    void screenComboChanged(int which);
 
-    protected:
-        Ui_DlgPresentationBase * m_dlg;
+protected:
+    Ui_DlgPresentationBase *m_dlg;
 };
 
 #endif

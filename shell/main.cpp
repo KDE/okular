@@ -14,22 +14,22 @@
 
 #include "shell.h"
 
-#include <KLocalizedString>
-#include <QDBusInterface>
-#include <QTextStream>
-#include <KWindowSystem>
-#include <QApplication>
-#include <QtGlobal>
-#include <KAboutData>
-#include <KCrash>
-#include <KMessageBox>
-#include <QCommandLineParser>
-#include <QCommandLineOption>
 #include "aboutdata.h"
 #include "okular_main.h"
 #include "shellutils.h"
+#include <KAboutData>
+#include <KCrash>
+#include <KLocalizedString>
+#include <KMessageBox>
+#include <KWindowSystem>
+#include <QApplication>
+#include <QCommandLineOption>
+#include <QCommandLineParser>
+#include <QDBusInterface>
+#include <QTextStream>
+#include <QtGlobal>
 
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
     /**
      * enable high dpi support
@@ -87,26 +87,22 @@ int main(int argc, char** argv)
     aboutData.processCommandLine(&parser);
 
     // see if we are starting with session management
-    if (app.isSessionRestored())
-    {
+    if (app.isSessionRestored()) {
         kRestoreMainWindows<Shell>();
-    }
-    else
-    {
+    } else {
         // no session.. just start up normally
         QStringList paths;
-        for ( int i = 0; i < parser.positionalArguments().count(); ++i )
+        for (int i = 0; i < parser.positionalArguments().count(); ++i)
             paths << parser.positionalArguments().at(i);
         Okular::Status status = Okular::main(paths, ShellUtils::serializeOptions(parser));
-        switch (status)
-        {
-            case Okular::Error:
-                return -1;
-            case Okular::AttachedOtherProcess:
-                return 0;
-            case Okular::Success:
-                // Do nothing
-                break;
+        switch (status) {
+        case Okular::Error:
+            return -1;
+        case Okular::AttachedOtherProcess:
+            return 0;
+        case Okular::Success:
+            // Do nothing
+            break;
         }
     }
 

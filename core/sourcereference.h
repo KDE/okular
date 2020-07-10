@@ -14,8 +14,8 @@
 #include <QObject>
 class QString;
 
-namespace Okular {
-
+namespace Okular
+{
 /**
  * @short Defines a source reference
  *
@@ -24,41 +24,40 @@ namespace Okular {
  */
 class OKULARCORE_EXPORT SourceReference
 {
-    public:
-        /**
-         * Creates a reference to the row @p row and column @p column of the
-         * source @p fileName
-         */
-        SourceReference( const QString &fileName, int row, int column = 0 );
+public:
+    /**
+     * Creates a reference to the row @p row and column @p column of the
+     * source @p fileName
+     */
+    SourceReference(const QString &fileName, int row, int column = 0);
 
-        /**
-         * Destroys the source reference.
-         */
-        ~SourceReference();
+    /**
+     * Destroys the source reference.
+     */
+    ~SourceReference();
 
-        /**
-         * Returns the filename of the source.
-         */
-        QString fileName() const;
+    /**
+     * Returns the filename of the source.
+     */
+    QString fileName() const;
 
-        /**
-         * Returns the row of the position in the source file.
-         */
-        int row() const;
+    /**
+     * Returns the row of the position in the source file.
+     */
+    int row() const;
 
-        /**
-         * Returns the column of the position in the source file.
-         */
-        int column() const;
+    /**
+     * Returns the column of the position in the source file.
+     */
+    int column() const;
 
-    private:
-        class Private;
-        Private* const d;
+private:
+    class Private;
+    Private *const d;
 
-        Q_DISABLE_COPY( SourceReference )
+    Q_DISABLE_COPY(SourceReference)
 };
 
 }
 
 #endif
-

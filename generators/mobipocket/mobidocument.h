@@ -14,30 +14,35 @@
 #include <QVariant>
 
 class QFile;
-namespace Mobipocket {
+namespace Mobipocket
+{
 class Document;
 class QFileStream;
 }
 
-namespace Mobi {
+namespace Mobi
+{
+class MobiDocument : public QTextDocument
+{
+    Q_OBJECT
 
-  class MobiDocument : public QTextDocument {
-      Q_OBJECT
-      
-  public:
-    explicit MobiDocument(const QString &fileName);  
+public:
+    explicit MobiDocument(const QString &fileName);
     ~MobiDocument() override;
-    
-    Mobipocket::Document* mobi() const { return doc; }
-    
-  protected:
+
+    Mobipocket::Document *mobi() const
+    {
+        return doc;
+    }
+
+protected:
     QVariant loadResource(int type, const QUrl &name) override;
-    
-  private:
-    QString fixMobiMarkup(const QString& data);
+
+private:
+    QString fixMobiMarkup(const QString &data);
     Mobipocket::Document *doc;
-    Mobipocket::QFileStream* file;
-  };
+    Mobipocket::QFileStream *file;
+};
 
 }
 #endif

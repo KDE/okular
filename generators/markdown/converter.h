@@ -18,30 +18,30 @@
 class QTextBlock;
 class QTextFrame;
 
-namespace Markdown {
-
+namespace Markdown
+{
 class Converter : public Okular::TextDocumentConverter
 {
     Q_OBJECT
 
-    public:
-        Converter();
-        ~Converter() override;
+public:
+    Converter();
+    ~Converter() override;
 
-        QTextDocument *convert( const QString &fileName ) override;
+    QTextDocument *convert(const QString &fileName) override;
 
-        void convertAgain();
+    void convertAgain();
 
-        QTextDocument *convertOpenFile();
+    QTextDocument *convertOpenFile();
 
-    private:
-        void extractLinks(QTextFrame *parent, QHash<QString, QTextFragment> &internalLinks, QHash<QString, QTextBlock> &documentAnchors);
-        void extractLinks(const QTextBlock& parent, QHash<QString, QTextFragment> &internalLinks, QHash<QString, QTextBlock> &documentAnchors);
-        void convertImages(QTextFrame *parent, const QDir &dir, QTextDocument *textDocument);
-        void convertImages(const QTextBlock& parent, const QDir &dir, QTextDocument *textDocument);
+private:
+    void extractLinks(QTextFrame *parent, QHash<QString, QTextFragment> &internalLinks, QHash<QString, QTextBlock> &documentAnchors);
+    void extractLinks(const QTextBlock &parent, QHash<QString, QTextFragment> &internalLinks, QHash<QString, QTextBlock> &documentAnchors);
+    void convertImages(QTextFrame *parent, const QDir &dir, QTextDocument *textDocument);
+    void convertImages(const QTextBlock &parent, const QDir &dir, QTextDocument *textDocument);
 
-        FILE *m_markdownFile;
-        QDir m_fileDir;
+    FILE *m_markdownFile;
+    QDir m_fileDir;
 };
 
 }

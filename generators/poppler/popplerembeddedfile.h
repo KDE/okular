@@ -16,45 +16,45 @@
 
 class PDFEmbeddedFile : public Okular::EmbeddedFile
 {
-    public:
-        PDFEmbeddedFile(Poppler::EmbeddedFile *f) : ef(f)
-        {
-        }
-        
-        QString name() const override
-        {
-            return ef->name();
-        }
-        
-        QString description() const override
-        {
-            return ef->description();
-        }
-        
-        QByteArray data() const override
-        {
-            return ef->data();
-        }
-        
-        int size() const override
-        {
-            int s = ef->size();
-            return s <= 0 ? -1 : s;
-        }
-        
-        QDateTime modificationDate() const override
-        {
-            return ef->modDate();
-        }
-        
-        QDateTime creationDate() const override
-        {
-            return ef->createDate();
-        }
-    
-    private:
-        Poppler::EmbeddedFile *ef;
+public:
+    PDFEmbeddedFile(Poppler::EmbeddedFile *f)
+        : ef(f)
+    {
+    }
+
+    QString name() const override
+    {
+        return ef->name();
+    }
+
+    QString description() const override
+    {
+        return ef->description();
+    }
+
+    QByteArray data() const override
+    {
+        return ef->data();
+    }
+
+    int size() const override
+    {
+        int s = ef->size();
+        return s <= 0 ? -1 : s;
+    }
+
+    QDateTime modificationDate() const override
+    {
+        return ef->modDate();
+    }
+
+    QDateTime creationDate() const override
+    {
+        return ef->createDate();
+    }
+
+private:
+    Poppler::EmbeddedFile *ef;
 };
 
 #endif
-

@@ -12,51 +12,43 @@
 
 #include "toggleactionmenu.h"
 
-#include <QPointer>
 #include <QMenu>
+#include <QPointer>
 
-ToggleActionMenu::ToggleActionMenu( QObject * parent )
-    : ToggleActionMenu( QIcon(), QString(), parent )
+ToggleActionMenu::ToggleActionMenu(QObject *parent)
+    : ToggleActionMenu(QIcon(), QString(), parent)
 {
 }
 
-ToggleActionMenu::ToggleActionMenu( const QString &text, QObject * parent )
-    : ToggleActionMenu( QIcon(), text, parent )
+ToggleActionMenu::ToggleActionMenu(const QString &text, QObject *parent)
+    : ToggleActionMenu(QIcon(), text, parent)
 {
 }
 
-ToggleActionMenu::ToggleActionMenu( const QIcon &icon,
-                                    const QString &text,
-                                    QObject * parent,
-                                    PopupMode popupMode,
-                                    MenuLogic logic )
-    : KActionMenu( icon, text, parent ),
-    m_defaultAction( nullptr ),
-    m_suggestedDefaultAction( nullptr ),
-    m_menuLogic( logic )
+ToggleActionMenu::ToggleActionMenu(const QIcon &icon, const QString &text, QObject *parent, PopupMode popupMode, MenuLogic logic)
+    : KActionMenu(icon, text, parent)
+    , m_defaultAction(nullptr)
+    , m_suggestedDefaultAction(nullptr)
+    , m_menuLogic(logic)
 {
-    connect( this, &QAction::changed, this, &ToggleActionMenu::updateButtons );
+    connect(this, &QAction::changed, this, &ToggleActionMenu::updateButtons);
 
-    if ( popupMode == DelayedPopup )
-    {
-        setDelayed( true );
+    if (popupMode == DelayedPopup) {
+        setDelayed(true);
+    } else {
+        setDelayed(false);
     }
-    else
-    {
-        setDelayed( false );
-    }
-    setStickyMenu( false );
+    setStickyMenu(false);
 
-    if ( logic & ImplicitDefaultAction )
-    {
-        connect( menu(), &QMenu::triggered, this, &ToggleActionMenu::setDefaultAction );
+    if (logic & ImplicitDefaultAction) {
+        connect(menu(), &QMenu::triggered, this, &ToggleActionMenu::setDefaultAction);
     }
 }
 
-QWidget * ToggleActionMenu::createWidget( QWidget * parent )
+QWidget *ToggleActionMenu::createWidget(QWidget *parent)
 {
-    QToolButton * button = qobject_cast< QToolButton * >( KActionMenu::createWidget( parent ) );
-    if ( !button ) {
+    QToolButton *button = qobject_cast<QToolButton *>(KActionMenu::createWidget(parent));
+    if (!button) {
         // This function is used to add a button into the toolbar.
         // KActionMenu will plug itself as QToolButton.
         // So, if no QToolButton was returned, this was not called the intended way.
@@ -65,11 +57,11 @@ QWidget * ToggleActionMenu::createWidget( QWidget * parent )
 
     // Remove this menu action from the button,
     // so it doesn't compose a menu of this menu action and its own menu.
-    button->removeAction( this );
+    button->removeAction(this);
     // The button has lost the menu now, let it use the correct menu.
-    button->setMenu( menu() );
+    button->setMenu(menu());
 
-    m_buttons.append( QPointer< QToolButton >( button ) );
+    m_buttons.append(QPointer<QToolButton>(button));
 
     // Apply other properties to the button.
     updateButtons();
@@ -77,33 +69,28 @@ QWidget * ToggleActionMenu::createWidget( QWidget * parent )
     return button;
 }
 
-void ToggleActionMenu::setDefaultAction( QAction *action )
+void ToggleActionMenu::setDefaultAction(QAction *action)
 {
     m_defaultAction = action;
     updateButtons();
 }
 
-void ToggleActionMenu::suggestDefaultAction( QAction *action )
+void ToggleActionMenu::suggestDefaultAction(QAction *action)
 {
     m_suggestedDefaultAction = action;
 }
 
-QAction * ToggleActionMenu::checkedAction( QMenu *menu ) const
+QAction *ToggleActionMenu::checkedAction(QMenu *menu) const
 {
     // Look at each action a in the menu whether it is checked.
     // If a is a menu, recursively call checkedAction().
-    const QList<QAction*> actions = menu->actions();
-    for ( QAction * a : actions )
-    {
-        if ( a->isChecked() )
-        {
+    const QList<QAction *> actions = menu->actions();
+    for (QAction *a : actions) {
+        if (a->isChecked()) {
             return a;
-        }
-        else if ( a->menu() )
-        {
-            QAction * b = checkedAction( a->menu() );
-            if ( b )
-            {
+        } else if (a->menu()) {
+            QAction *b = checkedAction(a->menu());
+            if (b) {
                 return b;
             }
         }
@@ -113,40 +100,31 @@ QAction * ToggleActionMenu::checkedAction( QMenu *menu ) const
 
 void ToggleActionMenu::updateButtons()
 {
-    for ( const QPointer< QToolButton > &button : qAsConst( m_buttons ) )
-    {
-        if ( button )
-        {
-            button->setDefaultAction( defaultAction() );
+    for (const QPointer<QToolButton> &button : qAsConst(m_buttons)) {
+        if (button) {
+            button->setDefaultAction(defaultAction());
 
             // Override some properties of the default action,
             // where the property of this menu makes more sense.
-            button->setEnabled( isEnabled() );
+            button->setEnabled(isEnabled());
 
-            if ( delayed() )
-            {
-                button->setPopupMode( QToolButton::DelayedPopup );
-            }
-            else if ( stickyMenu() )
-            {
-                button->setPopupMode( QToolButton::InstantPopup );
-            }
-            else
-            {
-                button->setPopupMode( QToolButton::MenuButtonPopup );
+            if (delayed()) {
+                button->setPopupMode(QToolButton::DelayedPopup);
+            } else if (stickyMenu()) {
+                button->setPopupMode(QToolButton::InstantPopup);
+            } else {
+                button->setPopupMode(QToolButton::MenuButtonPopup);
             }
         }
     }
 }
 
-QAction * ToggleActionMenu::defaultAction()
+QAction *ToggleActionMenu::defaultAction()
 {
-    if ( ( m_menuLogic & ImplicitDefaultAction ) && !m_defaultAction )
-    {
-        m_defaultAction = checkedAction( menu() );
+    if ((m_menuLogic & ImplicitDefaultAction) && !m_defaultAction) {
+        m_defaultAction = checkedAction(menu());
     }
-    if ( !m_defaultAction )
-    {
+    if (!m_defaultAction) {
         m_defaultAction = m_suggestedDefaultAction;
     }
     return m_defaultAction;

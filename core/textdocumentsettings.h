@@ -7,20 +7,18 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-
 #ifndef _OKULAR_TEXTDOCUMENTSETTINGS_H_
 #define _OKULAR_TEXTDOCUMENTSETTINGS_H_
 
-
 #include "okularcore_export.h"
 
-#include <QFont>
-#include <QWidget>
-#include <QObject>
 #include <KConfigSkeleton>
+#include <QFont>
+#include <QObject>
+#include <QWidget>
 
-namespace Okular {
-
+namespace Okular
+{
 class TextDocumentSettingsWidgetPrivate;
 class TextDocumentSettingsPrivate;
 
@@ -83,18 +81,18 @@ class OKULARCORE_EXPORT TextDocumentSettingsWidget : public QWidget
 {
     Q_OBJECT
 
-    public:
-        explicit TextDocumentSettingsWidget( QWidget *parent = nullptr );
-        ~TextDocumentSettingsWidget() override;
+public:
+    explicit TextDocumentSettingsWidget(QWidget *parent = nullptr);
+    ~TextDocumentSettingsWidget() override;
 
-        void addRow( const QString& labelText, QWidget *widget );
+    void addRow(const QString &labelText, QWidget *widget);
 
-    private:
-        friend class TextDocumentGenerator;
+private:
+    friend class TextDocumentGenerator;
 
-        TextDocumentSettingsWidgetPrivate *d_ptr;
-        Q_DECLARE_PRIVATE( TextDocumentSettingsWidget )
-        Q_DISABLE_COPY( TextDocumentSettingsWidget )
+    TextDocumentSettingsWidgetPrivate *d_ptr;
+    Q_DECLARE_PRIVATE(TextDocumentSettingsWidget)
+    Q_DISABLE_COPY(TextDocumentSettingsWidget)
 };
 
 /**
@@ -109,17 +107,17 @@ class OKULARCORE_EXPORT TextDocumentSettings : public KConfigSkeleton
 {
     Q_OBJECT
 
-    public:
-        QFont font() const;
+public:
+    QFont font() const;
 
-    private:
-        friend class TextDocumentGenerator;
+private:
+    friend class TextDocumentGenerator;
 
-        TextDocumentSettings( const QString& config, QObject *parent );
+    TextDocumentSettings(const QString &config, QObject *parent);
 
-        TextDocumentSettingsPrivate *d_ptr;
-        Q_DECLARE_PRIVATE( TextDocumentSettings )
-        Q_DISABLE_COPY( TextDocumentSettings )
+    TextDocumentSettingsPrivate *d_ptr;
+    Q_DECLARE_PRIVATE(TextDocumentSettings)
+    Q_DISABLE_COPY(TextDocumentSettings)
 };
 
 }

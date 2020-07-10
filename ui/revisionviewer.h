@@ -10,8 +10,8 @@
 #ifndef OKULAR_REVISIONVIEWER_H
 #define OKULAR_REVISIONVIEWER_H
 
-#include <QObject>
 #include <QByteArray>
+#include <QObject>
 
 class QWidget;
 
@@ -19,15 +19,15 @@ class RevisionViewer : public QObject
 {
     Q_OBJECT
 
-    public:
-        explicit RevisionViewer( const QByteArray &revisionData, QWidget *parent = nullptr );
+public:
+    explicit RevisionViewer(const QByteArray &revisionData, QWidget *parent = nullptr);
 
-    public Q_SLOTS:
-        void viewRevision();
+public Q_SLOTS:
+    void viewRevision();
 
-    private:
-        QWidget *m_parent;
-        QByteArray m_revisionData;
+private:
+    QWidget *m_parent;
+    QByteArray m_revisionData;
 };
 
 #endif

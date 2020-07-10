@@ -20,18 +20,18 @@ class SnapshotTaker : public QObject
 {
     Q_OBJECT
 
-    public:
-        explicit SnapshotTaker( const QUrl &url, QObject *parent = nullptr );
-        ~SnapshotTaker() override;
+public:
+    explicit SnapshotTaker(const QUrl &url, QObject *parent = nullptr);
+    ~SnapshotTaker() override;
 
-    Q_SIGNALS:
-        void finished( const QImage &image );
+Q_SIGNALS:
+    void finished(const QImage &image);
 
-    private Q_SLOTS:
-        void stateChanged(Phonon::State, Phonon::State);
+private Q_SLOTS:
+    void stateChanged(Phonon::State, Phonon::State);
 
-    private:
-        Phonon::VideoPlayer *m_player;
+private:
+    Phonon::VideoPlayer *m_player;
 };
 
 #endif

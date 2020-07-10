@@ -9,7 +9,7 @@
 
 #include "dviPageInfo.h"
 
-dviPageInfo::dviPageInfo() 
+dviPageInfo::dviPageInfo()
 {
     sourceHyperLinkList.reserve(200);
 }
@@ -22,4 +22,3 @@ void dviPageInfo::clear()
 {
     sourceHyperLinkList.clear();
 }
-

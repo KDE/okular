@@ -14,7 +14,8 @@
 #endif
 #endif
 
-_Xconst char psheader[] = "\
+_Xconst char psheader[] =
+    "\
 /TeXDict 300 dict def TeXDict begin/N{def}def/B{bind def}N/S{exch}N/X{S\n\
 N}B/A{dup}B/TR{translate}N/isls false N/vsize 11 72 mul N/hsize 8.5 72\n\
 mul N/landplus90{false}def/@rigin{isls{[0 landplus90{1 -1}{-1 1}ifelse 0\n\
@@ -124,5 +125,5 @@ moveto}N/fil{fill SaveX SaveY moveto}N/ellipse{/endangle X/startangle X\n\
 /yrad X/xrad X/savematrix matrix currentmatrix N TR xrad yrad scale 0 0\n\
 1 startangle endangle arc savematrix setmatrix}N end\n";
 
-//int	psheaderlen	= 7620;
+// int	psheaderlen	= 7620;
 #endif

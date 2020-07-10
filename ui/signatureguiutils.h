@@ -14,23 +14,25 @@
 
 #include "core/signatureutils.h"
 
-namespace Okular {
+namespace Okular
+{
 class Document;
 class FormFieldSignature;
 }
 
-namespace SignatureGuiUtils {
+namespace SignatureGuiUtils
+{
 /**
  * Returns a vector containing signature form fields. If @p allPages is true then all signature form fields in the
  * document are returned otherwise the fields in page number @p pageNum are returned.
  */
-QVector<const Okular::FormFieldSignature*> getSignatureFormFields( Okular::Document *doc, bool allPages, int pageNum );
-QString getReadableSignatureStatus( Okular::SignatureInfo::SignatureStatus sigStatus );
-QString getReadableCertStatus( Okular::SignatureInfo::CertificateStatus certStatus );
-QString getReadableHashAlgorithm( Okular::SignatureInfo::HashAlgorithm hashAlg );
-QString getReadablePublicKeyType( Okular::CertificateInfo::PublicKeyType type );
-QString getReadableKeyUsageCommaSeparated( Okular::CertificateInfo::KeyUsageExtensions kuExtensions );
-QString getReadableKeyUsageNewLineSeparated( Okular::CertificateInfo::KeyUsageExtensions kuExtensions );
+QVector<const Okular::FormFieldSignature *> getSignatureFormFields(Okular::Document *doc, bool allPages, int pageNum);
+QString getReadableSignatureStatus(Okular::SignatureInfo::SignatureStatus sigStatus);
+QString getReadableCertStatus(Okular::SignatureInfo::CertificateStatus certStatus);
+QString getReadableHashAlgorithm(Okular::SignatureInfo::HashAlgorithm hashAlg);
+QString getReadablePublicKeyType(Okular::CertificateInfo::PublicKeyType type);
+QString getReadableKeyUsageCommaSeparated(Okular::CertificateInfo::KeyUsageExtensions kuExtensions);
+QString getReadableKeyUsageNewLineSeparated(Okular::CertificateInfo::KeyUsageExtensions kuExtensions);
 
 }
 

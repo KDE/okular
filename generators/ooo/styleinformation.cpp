@@ -11,24 +11,26 @@
 
 using namespace OOO;
 
-MetaInformation::MetaInformation( const QString &key, const QString &value, const QString &title )
-  : mKey( key ), mValue( value ), mTitle( title )
+MetaInformation::MetaInformation(const QString &key, const QString &value, const QString &title)
+    : mKey(key)
+    , mValue(value)
+    , mTitle(title)
 {
 }
 
 QString MetaInformation::key() const
 {
-  return mKey;
+    return mKey;
 }
 
 QString MetaInformation::value() const
 {
-  return mValue;
+    return mValue;
 }
 
 QString MetaInformation::title() const
 {
-  return mTitle;
+    return mTitle;
 }
 
 StyleInformation::StyleInformation()
@@ -39,82 +41,82 @@ StyleInformation::~StyleInformation()
 {
 }
 
-void StyleInformation::addFontProperty( const QString &name, const FontFormatProperty &property )
+void StyleInformation::addFontProperty(const QString &name, const FontFormatProperty &property)
 {
-  mFontProperties.insert( name, property );
+    mFontProperties.insert(name, property);
 }
 
-FontFormatProperty StyleInformation::fontProperty( const QString &name ) const
+FontFormatProperty StyleInformation::fontProperty(const QString &name) const
 {
-  return mFontProperties[ name ];
+    return mFontProperties[name];
 }
 
-void StyleInformation::addStyleProperty( const QString &name, const StyleFormatProperty &property )
+void StyleInformation::addStyleProperty(const QString &name, const StyleFormatProperty &property)
 {
-  mStyleProperties.insert( name, property );
+    mStyleProperties.insert(name, property);
 }
 
-StyleFormatProperty StyleInformation::styleProperty( const QString &name ) const
+StyleFormatProperty StyleInformation::styleProperty(const QString &name) const
 {
-  return mStyleProperties[ name ];
+    return mStyleProperties[name];
 }
 
-void StyleInformation::addPageProperty( const QString &name, const PageFormatProperty &property )
+void StyleInformation::addPageProperty(const QString &name, const PageFormatProperty &property)
 {
-  mPageProperties.insert( name, property );
+    mPageProperties.insert(name, property);
 }
 
-PageFormatProperty StyleInformation::pageProperty( const QString &name ) const
+PageFormatProperty StyleInformation::pageProperty(const QString &name) const
 {
-  return mPageProperties[ name ];
+    return mPageProperties[name];
 }
 
-void StyleInformation::addListProperty( const QString &name, const ListFormatProperty &property )
+void StyleInformation::addListProperty(const QString &name, const ListFormatProperty &property)
 {
-  mListProperties[ name ] = property;
+    mListProperties[name] = property;
 }
 
-ListFormatProperty StyleInformation::listProperty( const QString &name ) const
+ListFormatProperty StyleInformation::listProperty(const QString &name) const
 {
-  return mListProperties[ name ];
+    return mListProperties[name];
 }
 
-void StyleInformation::addMasterLayout( const QString &name, const QString &layoutName )
+void StyleInformation::addMasterLayout(const QString &name, const QString &layoutName)
 {
-  mMasterLayouts.insert( name, layoutName );
+    mMasterLayouts.insert(name, layoutName);
 }
 
-QString StyleInformation::masterLayout( const QString &name )
+QString StyleInformation::masterLayout(const QString &name)
 {
-  return mMasterLayouts[ name ];
+    return mMasterLayouts[name];
 }
 
-void StyleInformation::setMasterPageName( const QString &name )
+void StyleInformation::setMasterPageName(const QString &name)
 {
-  mMasterPageName = name;
+    mMasterPageName = name;
 }
 
 QString StyleInformation::masterPageName() const
 {
-  return mMasterPageName.isEmpty() ? mMasterLayouts[ QStringLiteral("Standard") ] :  mMasterLayouts[ mMasterPageName ];
+    return mMasterPageName.isEmpty() ? mMasterLayouts[QStringLiteral("Standard")] : mMasterLayouts[mMasterPageName];
 }
 
-void StyleInformation::addMetaInformation( const QString &key, const QString &value, const QString &title )
+void StyleInformation::addMetaInformation(const QString &key, const QString &value, const QString &title)
 {
-  const MetaInformation meta( key, value, title );
-  mMetaInformation.append( meta );
+    const MetaInformation meta(key, value, title);
+    mMetaInformation.append(meta);
 }
 
 MetaInformation::List StyleInformation::metaInformation() const
 {
-  return mMetaInformation;
+    return mMetaInformation;
 }
 
 void StyleInformation::dump() const
 {
-  QMapIterator<QString, StyleFormatProperty> it( mStyleProperties );
-  while ( it.hasNext() ) {
-    it.next();
-    qDebug( "%s", qPrintable( it.key() ) );
-  }
+    QMapIterator<QString, StyleFormatProperty> it(mStyleProperties);
+    while (it.hasNext()) {
+        it.next();
+        qDebug("%s", qPrintable(it.key()));
+    }
 }

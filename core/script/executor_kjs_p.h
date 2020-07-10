@@ -12,26 +12,26 @@
 
 class QString;
 
-namespace Okular {
-
+namespace Okular
+{
 class DocumentPrivate;
 class ExecutorKJSPrivate;
 class Event;
 
 class ExecutorKJS
 {
-    public:
-        explicit ExecutorKJS( DocumentPrivate *doc );
-        ~ExecutorKJS();
+public:
+    explicit ExecutorKJS(DocumentPrivate *doc);
+    ~ExecutorKJS();
 
-        ExecutorKJS(const ExecutorKJS &) = delete;
-        ExecutorKJS &operator=(const ExecutorKJS &) = delete;
+    ExecutorKJS(const ExecutorKJS &) = delete;
+    ExecutorKJS &operator=(const ExecutorKJS &) = delete;
 
-        void execute( const QString &script, Event *event );
+    void execute(const QString &script, Event *event);
 
-    private:
-        friend class ExecutorKJSPrivate;
-        ExecutorKJSPrivate* d;
+private:
+    friend class ExecutorKJSPrivate;
+    ExecutorKJSPrivate *d;
 };
 
 }

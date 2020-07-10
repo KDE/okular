@@ -9,104 +9,103 @@
 #include <config.h>
 
 #include "bigEndianByteReader.h"
-#include "dvi.h"
 #include "debug_dvi.h"
-
+#include "dvi.h"
 
 //#define DEBUG_ENDIANREADER
 
 quint8 bigEndianByteReader::readUINT8()
 {
-  // This check saveguards us against segmentation fault. It is also
-  // necessary for virtual fonts, which do not end with EOP.
-  if (command_pointer >= end_pointer) {
+    // This check saveguards us against segmentation fault. It is also
+    // necessary for virtual fonts, which do not end with EOP.
+    if (command_pointer >= end_pointer) {
 #ifdef DEBUG_ENDIANREADER
-    qCCritical(OkularDviDebug) << "bigEndianByteReader::readUINT8() tried to read past end of data chunk" << endl;
-    qCCritical(OkularDviDebug) << "end_pointer     = " << end_pointer << endl;
-    qCCritical(OkularDviDebug) << "command_pointer = " << command_pointer << endl;
+        qCCritical(OkularDviDebug) << "bigEndianByteReader::readUINT8() tried to read past end of data chunk" << endl;
+        qCCritical(OkularDviDebug) << "end_pointer     = " << end_pointer << endl;
+        qCCritical(OkularDviDebug) << "command_pointer = " << command_pointer << endl;
 #endif
-    return EOP;
-  }
+        return EOP;
+    }
 
-  return *(command_pointer++);
+    return *(command_pointer++);
 }
 
 quint16 bigEndianByteReader::readUINT16()
 {
-  // This check saveguards us against segmentation fault. It is also
-  // necessary for virtual fonts, which do not end with EOP.
-  if (command_pointer >= end_pointer)
-    return EOP;
+    // This check saveguards us against segmentation fault. It is also
+    // necessary for virtual fonts, which do not end with EOP.
+    if (command_pointer >= end_pointer)
+        return EOP;
 
-  quint16 a;
-  a = *(command_pointer++);
-  a = (a << 8) | *(command_pointer++);
-  return a;
+    quint16 a;
+    a = *(command_pointer++);
+    a = (a << 8) | *(command_pointer++);
+    return a;
 }
 
 quint32 bigEndianByteReader::readUINT32()
 {
-  // This check saveguards us against segmentation fault. It is also
-  // necessary for virtual fonts, which do not end with EOP.
-  if (command_pointer >= end_pointer)
-    return EOP;
+    // This check saveguards us against segmentation fault. It is also
+    // necessary for virtual fonts, which do not end with EOP.
+    if (command_pointer >= end_pointer)
+        return EOP;
 
-  quint32 a;
-  a = *(command_pointer++);
-  a = (a << 8) | *(command_pointer++);
-  a = (a << 8) | *(command_pointer++);
-  a = (a << 8) | *(command_pointer++);
-  return a;
+    quint32 a;
+    a = *(command_pointer++);
+    a = (a << 8) | *(command_pointer++);
+    a = (a << 8) | *(command_pointer++);
+    a = (a << 8) | *(command_pointer++);
+    return a;
 }
 
 void bigEndianByteReader::writeUINT32(quint32 a)
 {
-  // This check saveguards us against segmentation fault. It is also
-  // necessary for virtual fonts, which do not end with EOP.
-  if (command_pointer >= end_pointer)
+    // This check saveguards us against segmentation fault. It is also
+    // necessary for virtual fonts, which do not end with EOP.
+    if (command_pointer >= end_pointer)
+        return;
+
+    command_pointer[3] = (quint8)(a & 0xFF);
+    a = a >> 8;
+    command_pointer[2] = (quint8)(a & 0xFF);
+    a = a >> 8;
+    command_pointer[1] = (quint8)(a & 0xFF);
+    a = a >> 8;
+    command_pointer[0] = (quint8)(a & 0xFF);
+
+    command_pointer += 4;
     return;
-
-  command_pointer[3] = (quint8)(a & 0xFF);
-  a = a >> 8;
-  command_pointer[2] = (quint8)(a & 0xFF);
-  a = a >> 8;
-  command_pointer[1] = (quint8)(a & 0xFF);
-  a = a >> 8;
-  command_pointer[0] = (quint8)(a & 0xFF);
-
-  command_pointer += 4;
-  return;
 }
 
 quint32 bigEndianByteReader::readUINT(quint8 size)
 {
-  // This check saveguards us against segmentation fault. It is also
-  // necessary for virtual fonts, which do not end with EOP.
-  if (command_pointer >= end_pointer)
-    return EOP;
+    // This check saveguards us against segmentation fault. It is also
+    // necessary for virtual fonts, which do not end with EOP.
+    if (command_pointer >= end_pointer)
+        return EOP;
 
-  quint32 a = 0;
-  while (size > 0) {
-    a = (a << 8) + *(command_pointer++);
-    size--;
-  }
-  return a;
+    quint32 a = 0;
+    while (size > 0) {
+        a = (a << 8) + *(command_pointer++);
+        size--;
+    }
+    return a;
 }
 
 qint32 bigEndianByteReader::readINT(quint8 length)
 {
-  // This check saveguards us against segmentation fault. It is also
-  // necessary for virtual fonts, which do not end with EOP.
-  if (command_pointer >= end_pointer)
-    return EOP;
+    // This check saveguards us against segmentation fault. It is also
+    // necessary for virtual fonts, which do not end with EOP.
+    if (command_pointer >= end_pointer)
+        return EOP;
 
-  qint32 a = *(command_pointer++);
+    qint32 a = *(command_pointer++);
 
-  if (a & 0x80)
-    a -= 0x100;
+    if (a & 0x80)
+        a -= 0x100;
 
-  while ((--length) > 0)
-    a = (a << 8) | *(command_pointer++);
+    while ((--length) > 0)
+        a = (a << 8) | *(command_pointer++);
 
-  return a;
+    return a;
 }

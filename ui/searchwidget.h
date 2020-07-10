@@ -12,7 +12,8 @@
 
 #include <qwidget.h>
 
-namespace Okular {
+namespace Okular
+{
 class Document;
 }
 
@@ -32,17 +33,17 @@ class SearchLineEdit;
 class SearchWidget : public QWidget
 {
     Q_OBJECT
-    public:
-        SearchWidget( QWidget *parent, Okular::Document *document );
-        void clearText();
+public:
+    SearchWidget(QWidget *parent, Okular::Document *document);
+    void clearText();
 
-    private:
-        QMenu * m_menu;
-        QAction *m_matchPhraseAction, *m_caseSensitiveAction, * m_marchAllWordsAction, *m_marchAnyWordsAction;
-        SearchLineEdit *m_lineEdit;
+private:
+    QMenu *m_menu;
+    QAction *m_matchPhraseAction, *m_caseSensitiveAction, *m_marchAllWordsAction, *m_marchAnyWordsAction;
+    SearchLineEdit *m_lineEdit;
 
-    private Q_SLOTS:
-        void slotMenuChaged( QAction * );
+private Q_SLOTS:
+    void slotMenuChaged(QAction *);
 };
 
 #endif

@@ -14,8 +14,8 @@
 
 #include <QObject>
 
-namespace Okular {
-
+namespace Okular
+{
 class AnnotationProxy;
 
 /**
@@ -38,53 +38,56 @@ class AnnotationProxy;
  */
 class OKULARCORE_EXPORT SaveInterface
 {
-    public:
-        /**
-         * The possible options for the saving.
-         */
-        enum SaveOption
-        {
-            NoOption = 0,
-            SaveChanges = 1        ///< The possibility to save with the current changes to the document.
-        };
-        Q_DECLARE_FLAGS( SaveOptions, SaveOption )
+public:
+    /**
+     * The possible options for the saving.
+     */
+    enum SaveOption {
+        NoOption = 0,
+        SaveChanges = 1 ///< The possibility to save with the current changes to the document.
+    };
+    Q_DECLARE_FLAGS(SaveOptions, SaveOption)
 
-        SaveInterface() {}
+    SaveInterface()
+    {
+    }
 
-        /**
-         * Destroys the save interface.
-         */
-        virtual ~SaveInterface() {}
+    /**
+     * Destroys the save interface.
+     */
+    virtual ~SaveInterface()
+    {
+    }
 
-        SaveInterface(const SaveInterface &) = delete;
-        SaveInterface &operator=(const SaveInterface &) = delete;
+    SaveInterface(const SaveInterface &) = delete;
+    SaveInterface &operator=(const SaveInterface &) = delete;
 
-        /**
-         * Query for the supported saving options.
-         *
-         * @note NoOption is never queried
-         */
-        virtual bool supportsOption( SaveOption option ) const = 0;
+    /**
+     * Query for the supported saving options.
+     *
+     * @note NoOption is never queried
+     */
+    virtual bool supportsOption(SaveOption option) const = 0;
 
-        /**
-         * Save to the specified @p fileName with the specified @p options.
-         */
-        virtual bool save( const QString &fileName, SaveOptions options, QString *errorText ) = 0;
+    /**
+     * Save to the specified @p fileName with the specified @p options.
+     */
+    virtual bool save(const QString &fileName, SaveOptions options, QString *errorText) = 0;
 
-        /**
-         * Returns the annotation proxy. Generators can return NULL if native
-         * annotations are not supported.
-         *
-         * @note Returning NULL is equivalent to returning an AnnotationProxy
-         *       that doesn't support any capability.
-         * @since 0.15 (KDE 4.9)
-         */
-        virtual AnnotationProxy* annotationProxy() const = 0;
+    /**
+     * Returns the annotation proxy. Generators can return NULL if native
+     * annotations are not supported.
+     *
+     * @note Returning NULL is equivalent to returning an AnnotationProxy
+     *       that doesn't support any capability.
+     * @since 0.15 (KDE 4.9)
+     */
+    virtual AnnotationProxy *annotationProxy() const = 0;
 };
 
 }
 
-Q_DECLARE_INTERFACE( Okular::SaveInterface, "org.kde.okular.SaveInterface/0.3" )
-Q_DECLARE_OPERATORS_FOR_FLAGS( Okular::SaveInterface::SaveOptions )
+Q_DECLARE_INTERFACE(Okular::SaveInterface, "org.kde.okular.SaveInterface/0.3")
+Q_DECLARE_OPERATORS_FOR_FLAGS(Okular::SaveInterface::SaveOptions)
 
 #endif

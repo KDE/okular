@@ -16,8 +16,8 @@
 
 class QWidget;
 
-namespace Okular {
-
+namespace Okular
+{
 /**
  * @short Abstract interface for advanced printing control
  *
@@ -38,32 +38,36 @@ namespace Okular {
  */
 class OKULARCORE_EXPORT PrintInterface
 {
-    public:
-        PrintInterface() {}
+public:
+    PrintInterface()
+    {
+    }
 
-        /**
-         * Destroys the printer interface.
-         */
-        virtual ~PrintInterface() {}
+    /**
+     * Destroys the printer interface.
+     */
+    virtual ~PrintInterface()
+    {
+    }
 
-        PrintInterface(const PrintInterface &) = delete;
-        PrintInterface &operator=(const PrintInterface &) = delete;
+    PrintInterface(const PrintInterface &) = delete;
+    PrintInterface &operator=(const PrintInterface &) = delete;
 
-        /**
-         * Builds and returns a new printing configuration widget.
-         *
-         * @note don't keep a pointer to the new constructed widget, as it
-         * will be handled elsewhere (in the Okular KPart)
-         *
-         * @note The returned object should be of a PrintOptionsWidget subclass
-         * (which is not officially enforced by the signature for binary
-         * compatibility reasons).
-         */
-        virtual QWidget* printConfigurationWidget() const = 0;
+    /**
+     * Builds and returns a new printing configuration widget.
+     *
+     * @note don't keep a pointer to the new constructed widget, as it
+     * will be handled elsewhere (in the Okular KPart)
+     *
+     * @note The returned object should be of a PrintOptionsWidget subclass
+     * (which is not officially enforced by the signature for binary
+     * compatibility reasons).
+     */
+    virtual QWidget *printConfigurationWidget() const = 0;
 };
 
 }
 
-Q_DECLARE_INTERFACE( Okular::PrintInterface, "org.kde.okular.PrintInterface/0.1" )
+Q_DECLARE_INTERFACE(Okular::PrintInterface, "org.kde.okular.PrintInterface/0.1")
 
 #endif

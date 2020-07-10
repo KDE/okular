@@ -16,18 +16,20 @@
 
 class QComboBox;
 
-namespace Okular {
-
+namespace Okular
+{
 /**
  * @short Abstract base class for an extra print options widget in the print dialog.
  */
 class OKULARCORE_EXPORT PrintOptionsWidget : public QWidget
 {
     Q_OBJECT
-    public:
-        explicit PrintOptionsWidget(QWidget * parent = nullptr)
-            : QWidget(parent) {}
-        virtual bool ignorePrintMargins() const = 0;
+public:
+    explicit PrintOptionsWidget(QWidget *parent = nullptr)
+        : QWidget(parent)
+    {
+    }
+    virtual bool ignorePrintMargins() const = 0;
 };
 
 /**
@@ -40,13 +42,13 @@ class OKULARCORE_EXPORT DefaultPrintOptionsWidget : public PrintOptionsWidget
 {
     Q_OBJECT
 
-    public:
-        explicit DefaultPrintOptionsWidget(QWidget *parent = nullptr);
+public:
+    explicit DefaultPrintOptionsWidget(QWidget *parent = nullptr);
 
-        bool ignorePrintMargins() const override;
+    bool ignorePrintMargins() const override;
 
-    private:
-        QComboBox *m_ignorePrintMargins;
+private:
+    QComboBox *m_ignorePrintMargins;
 };
 
 }

@@ -13,13 +13,13 @@
 #include <QList>
 #include <QString>
 
-#include "okularcore_export.h"
 #include "global.h"
+#include "okularcore_export.h"
 
 class QTransform;
 
-namespace Okular {
-
+namespace Okular
+{
 class NormalizedPoint;
 class NormalizedRect;
 class Page;
@@ -53,43 +53,43 @@ class RegularAreaRect;
  */
 class OKULARCORE_EXPORT TextEntity
 {
-    public:
-        typedef QList<TextEntity*> List;
+public:
+    typedef QList<TextEntity *> List;
 
-        /**
-         * Creates a new text entity with the given @p text and the
-         * given @p area.
-         */
-        TextEntity( const QString &text, NormalizedRect *area );
+    /**
+     * Creates a new text entity with the given @p text and the
+     * given @p area.
+     */
+    TextEntity(const QString &text, NormalizedRect *area);
 
-        /**
-         * Destroys the text entity.
-         */
-        ~TextEntity();
+    /**
+     * Destroys the text entity.
+     */
+    ~TextEntity();
 
-        /**
-         * Returns the text of the text entity.
-         */
-        QString text() const;
+    /**
+     * Returns the text of the text entity.
+     */
+    QString text() const;
 
-        /**
-         * Returns the bounding area of the text entity.
-         */
-        NormalizedRect* area() const;
+    /**
+     * Returns the bounding area of the text entity.
+     */
+    NormalizedRect *area() const;
 
-        /**
-         * Returns the transformed area of the text entity.
-         */
-        NormalizedRect transformedArea(const QTransform &matrix) const;
+    /**
+     * Returns the transformed area of the text entity.
+     */
+    NormalizedRect transformedArea(const QTransform &matrix) const;
 
-    private:
-        QString m_text;
-        NormalizedRect* m_area;
+private:
+    QString m_text;
+    NormalizedRect *m_area;
 
-        class Private;
-        const Private *d;
+    class Private;
+    const Private *d;
 
-        Q_DISABLE_COPY( TextEntity )
+    Q_DISABLE_COPY(TextEntity)
 };
 
 /**
@@ -112,102 +112,100 @@ class OKULARCORE_EXPORT TextPage
     friend class PagePrivate;
     /// @endcond
 
-    public:
-        /**
-         * Defines the behaviour of adding characters to text() result
-         * @since 0.10 (KDE 4.4)
-         */
-        enum TextAreaInclusionBehaviour
-        {
-            AnyPixelTextAreaInclusionBehaviour,      ///< A character is included into text() result if any pixel of his bounding box is in the given area
-            CentralPixelTextAreaInclusionBehaviour  ///< A character is included into text() result if the central pixel of his bounding box is in the given area
-        };
+public:
+    /**
+     * Defines the behaviour of adding characters to text() result
+     * @since 0.10 (KDE 4.4)
+     */
+    enum TextAreaInclusionBehaviour {
+        AnyPixelTextAreaInclusionBehaviour,    ///< A character is included into text() result if any pixel of his bounding box is in the given area
+        CentralPixelTextAreaInclusionBehaviour ///< A character is included into text() result if the central pixel of his bounding box is in the given area
+    };
 
-        /**
-         * Creates a new text page.
-         */
-        TextPage();
+    /**
+     * Creates a new text page.
+     */
+    TextPage();
 
-        /**
-         * Creates a new text page with the given @p words.
-         */
-        explicit TextPage( const TextEntity::List &words );
+    /**
+     * Creates a new text page with the given @p words.
+     */
+    explicit TextPage(const TextEntity::List &words);
 
-        /**
-         * Destroys the text page.
-         */
-        ~TextPage();
+    /**
+     * Destroys the text page.
+     */
+    ~TextPage();
 
-        /**
-         * Appends the given @p text with the given @p area as new
-         * @ref TextEntity to the page.
-         */
-        void append( const QString &text, NormalizedRect *area );
+    /**
+     * Appends the given @p text with the given @p area as new
+     * @ref TextEntity to the page.
+     */
+    void append(const QString &text, NormalizedRect *area);
 
-        /**
-         * Returns the bounding rect of the text which matches the following criteria
-         * or 0 if the search is not successful.
-         *
-         * @param searchID An unique id for this search.
-         * @param query The search text.
-         * @param direction The direction of the search (@ref SearchDirection)
-         * @param caseSensitivity If Qt::CaseSensitive, the search is case sensitive; otherwise
-         *                        the search is case insensitive.
-         * @param area If null the search starts at the beginning of the page, otherwise
-         *                 right/below the coordinates of the given rect.
-         */
-        RegularAreaRect* findText( int searchID, const QString &query, SearchDirection direction,
-                                   Qt::CaseSensitivity caseSensitivity, const RegularAreaRect *area );
+    /**
+     * Returns the bounding rect of the text which matches the following criteria
+     * or 0 if the search is not successful.
+     *
+     * @param searchID An unique id for this search.
+     * @param query The search text.
+     * @param direction The direction of the search (@ref SearchDirection)
+     * @param caseSensitivity If Qt::CaseSensitive, the search is case sensitive; otherwise
+     *                        the search is case insensitive.
+     * @param area If null the search starts at the beginning of the page, otherwise
+     *                 right/below the coordinates of the given rect.
+     */
+    RegularAreaRect *findText(int searchID, const QString &query, SearchDirection direction, Qt::CaseSensitivity caseSensitivity, const RegularAreaRect *area);
 
-        /**
-         * Text extraction function. Looks for text in the given @p area.
-         *
-         * @return
-         * - If @p area points to a valid null area, a null string.
-         * - If @p area is nullptr, the whole page text as a single string.
-         * - Otherwise, the text which is included by @p area, as a single string.
-         * Uses AnyPixelTextAreaInclusionBehaviour
-         */
-        QString text( const RegularAreaRect *area = nullptr ) const;
+    /**
+     * Text extraction function. Looks for text in the given @p area.
+     *
+     * @return
+     * - If @p area points to a valid null area, a null string.
+     * - If @p area is nullptr, the whole page text as a single string.
+     * - Otherwise, the text which is included by @p area, as a single string.
+     * Uses AnyPixelTextAreaInclusionBehaviour
+     */
+    QString text(const RegularAreaRect *area = nullptr) const;
 
-        /**
-         * Text extraction function. Looks for text in the given @p area.
-         *
-         * @return
-         * - If @p area points to a valid null area, a null string.
-         * - If @p area is nullptr, the whole page text as a single string.
-         * - Otherwise, the text which is included by @p area, as a single string.
-         * @since 0.10 (KDE 4.4)
-         */
-        QString text( const RegularAreaRect * area, TextAreaInclusionBehaviour b ) const;
+    /**
+     * Text extraction function. Looks for text in the given @p area.
+     *
+     * @return
+     * - If @p area points to a valid null area, a null string.
+     * - If @p area is nullptr, the whole page text as a single string.
+     * - Otherwise, the text which is included by @p area, as a single string.
+     * @since 0.10 (KDE 4.4)
+     */
+    QString text(const RegularAreaRect *area, TextAreaInclusionBehaviour b) const;
 
-        /**
-         * Text entity extraction function. Similar to text() but returns
-         * the words including their bounding rectangles. Note that
-         * ownership of the contents of the returned list belongs to the
-         * caller.
-         * @since 0.14 (KDE 4.8)
-         */
-        TextEntity::List words( const RegularAreaRect * area, TextAreaInclusionBehaviour b ) const;
+    /**
+     * Text entity extraction function. Similar to text() but returns
+     * the words including their bounding rectangles. Note that
+     * ownership of the contents of the returned list belongs to the
+     * caller.
+     * @since 0.14 (KDE 4.8)
+     */
+    TextEntity::List words(const RegularAreaRect *area, TextAreaInclusionBehaviour b) const;
 
-        /**
-         * Returns the area and text of the word at the given point
-         * Note that ownership of the returned area belongs to the caller.
-         * @since 0.15 (KDE 4.9)
-         */
-        RegularAreaRect * wordAt( const NormalizedPoint &p, QString *word = nullptr ) const;
+    /**
+     * Returns the area and text of the word at the given point
+     * Note that ownership of the returned area belongs to the caller.
+     * @since 0.15 (KDE 4.9)
+     */
+    RegularAreaRect *wordAt(const NormalizedPoint &p, QString *word = nullptr) const;
 
-        /**
-         * Returns the rectangular area of the given @p selection.
-         */
-        RegularAreaRect *textArea( TextSelection *selection ) const;
+    /**
+     * Returns the rectangular area of the given @p selection.
+     */
+    RegularAreaRect *textArea(TextSelection *selection) const;
 
-    private:
-        TextPagePrivate* const d;
+private:
+    TextPagePrivate *const d;
 
-        Q_DISABLE_COPY( TextPage )
+    Q_DISABLE_COPY(TextPage)
 };
 
 }
 
-#endif 
+#endif

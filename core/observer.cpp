@@ -20,19 +20,19 @@ DocumentObserver::~DocumentObserver()
 {
 }
 
-void DocumentObserver::notifySetup( const QVector< Okular::Page * >&, int )
+void DocumentObserver::notifySetup(const QVector<Okular::Page *> &, int)
 {
 }
 
-void DocumentObserver::notifyViewportChanged( bool )
+void DocumentObserver::notifyViewportChanged(bool)
 {
 }
 
-void DocumentObserver::notifyPageChanged( int, int )
+void DocumentObserver::notifyPageChanged(int, int)
 {
 }
 
-void DocumentObserver::notifyContentsCleared( int )
+void DocumentObserver::notifyContentsCleared(int)
 {
 }
 
@@ -40,15 +40,15 @@ void DocumentObserver::notifyVisibleRectsChanged()
 {
 }
 
-void DocumentObserver::notifyZoom( int )
+void DocumentObserver::notifyZoom(int)
 {
 }
 
-bool DocumentObserver::canUnloadPixmap( int ) const
+bool DocumentObserver::canUnloadPixmap(int) const
 {
     return true;
 }
 
-void DocumentObserver::notifyCurrentPageChanged( int, int )
+void DocumentObserver::notifyCurrentPageChanged(int, int)
 {
 }

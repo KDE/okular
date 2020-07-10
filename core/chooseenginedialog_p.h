@@ -21,14 +21,14 @@ class ChooseEngineDialog : public QDialog
 {
     Q_OBJECT
 
-    public:
-        ChooseEngineDialog( const QStringList &generators, const QMimeType &mime, QWidget * parent = nullptr );
-        ~ChooseEngineDialog() override;
+public:
+    ChooseEngineDialog(const QStringList &generators, const QMimeType &mime, QWidget *parent = nullptr);
+    ~ChooseEngineDialog() override;
 
-        int selectedGenerator() const;
+    int selectedGenerator() const;
 
-    protected:
-        Ui_ChooseEngineWidget * m_widget;
+protected:
+    Ui_ChooseEngineWidget *m_widget;
 };
 
 #endif

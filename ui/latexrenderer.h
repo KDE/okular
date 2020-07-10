@@ -20,18 +20,10 @@ class QColor;
 
 namespace GuiUtils
 {
-
 class LatexRenderer
 {
-
 public:
-    enum Error {
-        NoError,
-        LatexNotFound,
-        DvipngNotFound,
-        LatexFailed,
-        DvipngFailed
-    };
+    enum Error { NoError, LatexNotFound, DvipngNotFound, LatexFailed, DvipngFailed };
 
     LatexRenderer();
     ~LatexRenderer();
@@ -39,12 +31,12 @@ public:
     LatexRenderer(const LatexRenderer &) = delete;
     LatexRenderer &operator=(const LatexRenderer &) = delete;
 
-    Error renderLatexInHtml( QString& html, const QColor &textColor, int fontSize, int resolution, QString &latexOutput );
-    static bool mightContainLatex ( const QString& text );
+    Error renderLatexInHtml(QString &html, const QColor &textColor, int fontSize, int resolution, QString &latexOutput);
+    static bool mightContainLatex(const QString &text);
 
 private:
-    Error handleLatex( QString &fileName, const QString &latexFormula, const QColor &textColor, int fontSize, int resolution, QString &latexOutput );
-    static bool securityCheck( const QString &latexFormula );
+    Error handleLatex(QString &fileName, const QString &latexFormula, const QColor &textColor, int fontSize, int resolution, QString &latexOutput);
+    static bool securityCheck(const QString &latexFormula);
 
     QStringList m_fileList;
 };

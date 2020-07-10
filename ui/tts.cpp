@@ -20,8 +20,9 @@
 class OkularTTS::Private
 {
 public:
-    Private( OkularTTS *qq )
-        : q( qq ), speech( new QTextToSpeech( Okular::Settings::ttsEngine() ) )
+    Private(OkularTTS *qq)
+        : q(qq)
+        , speech(new QTextToSpeech(Okular::Settings::ttsEngine()))
     {
     }
 
@@ -38,14 +39,14 @@ public:
     QString speechEngine;
 };
 
-OkularTTS::OkularTTS( QObject *parent )
-    : QObject( parent ), d( new Private( this ) )
+OkularTTS::OkularTTS(QObject *parent)
+    : QObject(parent)
+    , d(new Private(this))
 {
     // Initialize speechEngine so we can reinitialize if it changes.
     d->speechEngine = Okular::Settings::ttsEngine();
-    connect( d->speech, &QTextToSpeech::stateChanged, this, &OkularTTS::slotSpeechStateChanged);
-    connect( Okular::Settings::self(), &KConfigSkeleton::configChanged,
-             this, &OkularTTS::slotConfigChanged);
+    connect(d->speech, &QTextToSpeech::stateChanged, this, &OkularTTS::slotSpeechStateChanged);
+    connect(Okular::Settings::self(), &KConfigSkeleton::configChanged, this, &OkularTTS::slotConfigChanged);
 }
 
 OkularTTS::~OkularTTS()
@@ -53,17 +54,17 @@ OkularTTS::~OkularTTS()
     delete d;
 }
 
-void OkularTTS::say( const QString &text )
+void OkularTTS::say(const QString &text)
 {
-    if ( text.isEmpty() )
+    if (text.isEmpty())
         return;
 
-    d->speech->say( text );
+    d->speech->say(text);
 }
 
 void OkularTTS::stopAllSpeechs()
 {
-    if ( !d->speech )
+    if (!d->speech)
         return;
 
     d->speech->stop();
@@ -71,10 +72,10 @@ void OkularTTS::stopAllSpeechs()
 
 void OkularTTS::pauseResumeSpeech()
 {
-    if ( !d->speech )
+    if (!d->speech)
         return;
 
-    if ( d->speech->state() == QTextToSpeech::Speaking )
+    if (d->speech->state() == QTextToSpeech::Speaking)
         d->speech->pause();
     else
         d->speech->resume();
@@ -82,13 +83,10 @@ void OkularTTS::pauseResumeSpeech()
 
 void OkularTTS::slotSpeechStateChanged(QTextToSpeech::State state)
 {
-    if (state == QTextToSpeech::Speaking)
-    {
+    if (state == QTextToSpeech::Speaking) {
         emit isSpeaking(true);
         emit canPauseOrResume(true);
-    }
-    else
-    {
+    } else {
         emit isSpeaking(false);
         if (state == QTextToSpeech::Paused)
             emit canPauseOrResume(true);
@@ -100,12 +98,11 @@ void OkularTTS::slotSpeechStateChanged(QTextToSpeech::State state)
 void OkularTTS::slotConfigChanged()
 {
     const QString engine = Okular::Settings::ttsEngine();
-    if (engine != d->speechEngine)
-    {
+    if (engine != d->speechEngine) {
         d->speech->stop();
         delete d->speech;
         d->speech = new QTextToSpeech(engine);
-        connect( d->speech, &QTextToSpeech::stateChanged, this, &OkularTTS::slotSpeechStateChanged);
+        connect(d->speech, &QTextToSpeech::stateChanged, this, &OkularTTS::slotSpeechStateChanged);
         d->speechEngine = engine;
     }
 }

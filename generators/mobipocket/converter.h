@@ -9,25 +9,26 @@
 #ifndef MOBI_CONVERTER_H
 #define MOBI_CONVERTER_H
 
-#include <core/textdocumentgenerator.h>
 #include <core/document.h>
+#include <core/textdocumentgenerator.h>
 
 #include "mobidocument.h"
 #include <qmobipocket/mobipocket.h>
 
+namespace Mobi
+{
+class Converter : public Okular::TextDocumentConverter
+{
+    Q_OBJECT
+public:
+    Converter();
+    ~Converter() override;
 
-namespace Mobi {
-  class Converter : public Okular::TextDocumentConverter
-    {
-        Q_OBJECT
-    public:
-      Converter();
-      ~Converter() override;
-      
-      QTextDocument *convert( const QString &fileName ) override;
-    private:
-      void handleMetadata(const QMap<Mobipocket::Document::MetaKey, QString> &metadata);
-    };
+    QTextDocument *convert(const QString &fileName) override;
+
+private:
+    void handleMetadata(const QMap<Mobipocket::Document::MetaKey, QString> &metadata);
+};
 }
 
 #endif

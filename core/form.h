@@ -10,17 +10,17 @@
 #ifndef _OKULAR_FORM_H_
 #define _OKULAR_FORM_H_
 
-#include "okularcore_export.h"
-#include "area.h"
 #include "annotations.h"
+#include "area.h"
+#include "okularcore_export.h"
 #include "signatureutils.h"
 
 #include <QStringList>
 
 #include <memory>
 
-namespace Okular {
-
+namespace Okular
+{
 class Action;
 class Page;
 class PagePrivate;
@@ -45,138 +45,135 @@ class OKULARCORE_EXPORT FormField
     friend class PagePrivate;
     /// @endcond
 
-    public:
-        /**
-         * The types of form field.
-         */
-        enum FieldType
-        {
-            FormButton,      ///< A "button". See @ref FormFieldButton::ButtonType.
-            FormText,        ///< A field of variable text. See @ref FormFieldText::TextType.
-            FormChoice,      ///< A choice field. See @ref FormFieldChoice::ChoiceType.
-            FormSignature    ///< A signature.
-        };
+public:
+    /**
+     * The types of form field.
+     */
+    enum FieldType {
+        FormButton,   ///< A "button". See @ref FormFieldButton::ButtonType.
+        FormText,     ///< A field of variable text. See @ref FormFieldText::TextType.
+        FormChoice,   ///< A choice field. See @ref FormFieldChoice::ChoiceType.
+        FormSignature ///< A signature.
+    };
 
-        virtual ~FormField();
+    virtual ~FormField();
 
-        /**
-         * The type of the field.
-         */
-        FieldType type() const;
+    /**
+     * The type of the field.
+     */
+    FieldType type() const;
 
-        /**
-         * The bounding rect of the field, in normalized coordinates.
-         */
-        virtual NormalizedRect rect() const = 0;
+    /**
+     * The bounding rect of the field, in normalized coordinates.
+     */
+    virtual NormalizedRect rect() const = 0;
 
-        /**
-         * The ID of the field.
-         */
-        virtual int id() const = 0;
+    /**
+     * The ID of the field.
+     */
+    virtual int id() const = 0;
 
-        /**
-         * The internal name of the field, to be used when referring to the
-         * field in eg scripts.
-         */
-        virtual QString name() const = 0;
+    /**
+     * The internal name of the field, to be used when referring to the
+     * field in eg scripts.
+     */
+    virtual QString name() const = 0;
 
-        /**
-         * The visible name of the field, to be used in the user interface
-         * (eg in error messages, etc).
-         */
-        virtual QString uiName() const = 0;
+    /**
+     * The visible name of the field, to be used in the user interface
+     * (eg in error messages, etc).
+     */
+    virtual QString uiName() const = 0;
 
-        /**
-         * The fully qualified name of the field, is used in the JavaScript
-         * scripts.
-         *
-         * @since 1.9
-         */
-        virtual QString fullyQualifiedName() const = 0;
+    /**
+     * The fully qualified name of the field, is used in the JavaScript
+     * scripts.
+     *
+     * @since 1.9
+     */
+    virtual QString fullyQualifiedName() const = 0;
 
-        /**
-         * Whether the field is read-only.
-         */
-        virtual bool isReadOnly() const;
+    /**
+     * Whether the field is read-only.
+     */
+    virtual bool isReadOnly() const;
 
-        /**
-         * Whether the field is read-only.
-         *
-         * @since 1.4
-         */
-        virtual void setReadOnly( bool value );
+    /**
+     * Whether the field is read-only.
+     *
+     * @since 1.4
+     */
+    virtual void setReadOnly(bool value);
 
-        /**
-         * Whether this form field is visible.
-         */
-        virtual bool isVisible() const;
+    /**
+     * Whether this form field is visible.
+     */
+    virtual bool isVisible() const;
 
-        /**
-         * Whether the field is visible.
-         *
-         * @since 1.5
-         */
-        virtual void setVisible( bool value );
+    /**
+     * Whether the field is visible.
+     *
+     * @since 1.5
+     */
+    virtual void setVisible(bool value);
 
-        /**
-          Whether this field is printable.
-          
-          @since 1.9
-        */
-        virtual bool isPrintable() const;
+    /**
+      Whether this field is printable.
 
-        /**
-          Set this field printable
-          
-          @since 1.9
-        */
-        virtual void setPrintable( bool value );
+      @since 1.9
+    */
+    virtual bool isPrintable() const;
 
-        Action* activationAction() const;
+    /**
+      Set this field printable
 
-        /**
-         * Describes the type of form additional action.
-         *
-         * @since 1.1
-         */
-        enum AdditionalActionType
-        {
-            FieldModified,   ///< An action to be performed when the user modifies the field
-            FormatField,     ///< An action to be performed before the field is formatted to display its value
-            ValidateField,   ///< An action to be performed when the field value changes
-            CalculateField,  ///< An action to be performed when the field needs to be recalculated
-        };
+      @since 1.9
+    */
+    virtual void setPrintable(bool value);
 
-        /**
-         * Returns the additional action of the given @p type or @c nullptr if no action has been defined.
-         *
-         * @since 1.1
-        */
-        Action* additionalAction( AdditionalActionType type ) const;
+    Action *activationAction() const;
 
-        /* Returns the additional action of the given @p type or @c nullptr if no action has been defined.
-         *
-         * This is for actions of annotation widgets associated with the FormField
-         *
-         * @since 1.5
-        */
-        Action* additionalAction( Annotation::AdditionalActionType type ) const;
+    /**
+     * Describes the type of form additional action.
+     *
+     * @since 1.1
+     */
+    enum AdditionalActionType {
+        FieldModified,  ///< An action to be performed when the user modifies the field
+        FormatField,    ///< An action to be performed before the field is formatted to display its value
+        ValidateField,  ///< An action to be performed when the field value changes
+        CalculateField, ///< An action to be performed when the field needs to be recalculated
+    };
 
-    protected:
-        /// @cond PRIVATE
-        FormField( FormFieldPrivate &dd );
-        Q_DECLARE_PRIVATE( FormField )
-        FormFieldPrivate *d_ptr;
-        /// @endcond
+    /**
+     * Returns the additional action of the given @p type or @c nullptr if no action has been defined.
+     *
+     * @since 1.1
+     */
+    Action *additionalAction(AdditionalActionType type) const;
 
-        void setActivationAction( Action *action );
-        void setAdditionalAction( AdditionalActionType type, Action *action );
-        void setAdditionalAction( Annotation::AdditionalActionType type, Action *action );
+    /* Returns the additional action of the given @p type or @c nullptr if no action has been defined.
+     *
+     * This is for actions of annotation widgets associated with the FormField
+     *
+     * @since 1.5
+     */
+    Action *additionalAction(Annotation::AdditionalActionType type) const;
 
-    private:
-        Q_DISABLE_COPY( FormField )
+protected:
+    /// @cond PRIVATE
+    FormField(FormFieldPrivate &dd);
+    Q_DECLARE_PRIVATE(FormField)
+    FormFieldPrivate *d_ptr;
+    /// @endcond
+
+    void setActivationAction(Action *action);
+    void setAdditionalAction(AdditionalActionType type, Action *action);
+    void setAdditionalAction(Annotation::AdditionalActionType type, Action *action);
+
+private:
+    Q_DISABLE_COPY(FormField)
 };
-
 
 /**
  * @short Interface of a button form field.
@@ -188,62 +185,60 @@ class OKULARCORE_EXPORT FormField
  */
 class OKULARCORE_EXPORT FormFieldButton : public FormField
 {
-    public:
-        /**
-         * The types of button field.
-         */
-        enum ButtonType
-        {
-            Push,          ///< A simple push button.
-            CheckBox,      ///< A check box.
-            Radio          ///< A radio button.
-        };
+public:
+    /**
+     * The types of button field.
+     */
+    enum ButtonType {
+        Push,     ///< A simple push button.
+        CheckBox, ///< A check box.
+        Radio     ///< A radio button.
+    };
 
-        ~FormFieldButton() override;
+    ~FormFieldButton() override;
 
-        /**
-          The particular type of the button field.
-         */
-        virtual ButtonType buttonType() const = 0;
+    /**
+      The particular type of the button field.
+     */
+    virtual ButtonType buttonType() const = 0;
 
-        /**
-         * The caption to be used for the button.
-         */
-        virtual QString caption() const = 0;
+    /**
+     * The caption to be used for the button.
+     */
+    virtual QString caption() const = 0;
 
-        /**
-         * The state of the button.
-         */
-        virtual bool state() const = 0;
+    /**
+     * The state of the button.
+     */
+    virtual bool state() const = 0;
 
-        /**
-         * Sets the state of the button to the new \p state .
-         */
-        virtual void setState( bool state );
+    /**
+     * Sets the state of the button to the new \p state .
+     */
+    virtual void setState(bool state);
 
-        /**
-         * The list with the IDs of siblings (ie, buttons belonging to the same
-         * group as the current one.
-         *
-         * Valid only for \ref Radio buttons, an empty list otherwise.
-         */
-        virtual QList< int > siblings() const = 0;
+    /**
+     * The list with the IDs of siblings (ie, buttons belonging to the same
+     * group as the current one.
+     *
+     * Valid only for \ref Radio buttons, an empty list otherwise.
+     */
+    virtual QList<int> siblings() const = 0;
 
-        /**
-         * Sets the icon of the Button to the Icon of the field parameter.
-         *
-         * @since 1.9
-        */
-        virtual void setIcon( Okular::FormField *field );
+    /**
+     * Sets the icon of the Button to the Icon of the field parameter.
+     *
+     * @since 1.9
+     */
+    virtual void setIcon(Okular::FormField *field);
 
-    protected:
-        FormFieldButton();
+protected:
+    FormFieldButton();
 
-    private:
-        Q_DECLARE_PRIVATE( FormFieldButton )
-        Q_DISABLE_COPY( FormFieldButton )
+private:
+    Q_DECLARE_PRIVATE(FormFieldButton)
+    Q_DISABLE_COPY(FormFieldButton)
 };
-
 
 /**
  * @short Interface of a text form field.
@@ -253,85 +248,83 @@ class OKULARCORE_EXPORT FormFieldButton : public FormField
  */
 class OKULARCORE_EXPORT FormFieldText : public FormField
 {
-    public:
-        /**
-         * The types of text field.
-         */
-        enum TextType
-        {
-            Normal,        ///< A simple singleline text field.
-            Multiline,     ///< A multiline text field.
-            FileSelect     ///< An input field to select the path of a file on disk.
-        };
+public:
+    /**
+     * The types of text field.
+     */
+    enum TextType {
+        Normal,    ///< A simple singleline text field.
+        Multiline, ///< A multiline text field.
+        FileSelect ///< An input field to select the path of a file on disk.
+    };
 
-        ~FormFieldText() override;
+    ~FormFieldText() override;
 
-        /**
-         * The particular type of the text field.
-         */
-        virtual TextType textType() const = 0;
+    /**
+     * The particular type of the text field.
+     */
+    virtual TextType textType() const = 0;
 
-        /**
-         * The text of text field.
-         */
-        virtual QString text() const = 0;
+    /**
+     * The text of text field.
+     */
+    virtual QString text() const = 0;
 
-        /**
-         * Sets the new @p text in the text field.
-         *
-         * The default implementation does nothing.
-         *
-         * Reimplemented only if the setting of new text is supported.
-         */
-        virtual void setText( const QString& text );
+    /**
+     * Sets the new @p text in the text field.
+     *
+     * The default implementation does nothing.
+     *
+     * Reimplemented only if the setting of new text is supported.
+     */
+    virtual void setText(const QString &text);
 
-        /**
-         * Whether this text field is a password input, eg its text @b must be
-         * replaced with asterisks.
-         *
-         * Always false for @ref FileSelect text fields.
-         */
-        virtual bool isPassword() const;
+    /**
+     * Whether this text field is a password input, eg its text @b must be
+     * replaced with asterisks.
+     *
+     * Always false for @ref FileSelect text fields.
+     */
+    virtual bool isPassword() const;
 
-        /**
-         * Whether this text field should allow rich text.
-         */
-        virtual bool isRichText() const;
+    /**
+     * Whether this text field should allow rich text.
+     */
+    virtual bool isRichText() const;
 
-        /**
-         * The maximum length allowed for the text of text field, or -1 if
-         * there is no limitation for the text.
-         */
-        virtual int maximumLength() const;
+    /**
+     * The maximum length allowed for the text of text field, or -1 if
+     * there is no limitation for the text.
+     */
+    virtual int maximumLength() const;
 
-        /**
-         * The alignment of the text within the field.
-         */
-        virtual Qt::Alignment textAlignment() const;
+    /**
+     * The alignment of the text within the field.
+     */
+    virtual Qt::Alignment textAlignment() const;
 
-        /**
-         * Whether the text inserted manually in the field (where possible)
-         * can be spell-checked.
-         *
-         * @note meaningful only if the field is editable.
-         */
-        virtual bool canBeSpellChecked() const;
+    /**
+     * Whether the text inserted manually in the field (where possible)
+     * can be spell-checked.
+     *
+     * @note meaningful only if the field is editable.
+     */
+    virtual bool canBeSpellChecked() const;
 
-        /**
-         * Set the text which should be rendered by the PDF.
-         *
-         * @since 1.9
-         */
-        virtual void setAppearanceText( const QString &text ) = 0;
+    /**
+     * Set the text which should be rendered by the PDF.
+     *
+     * @since 1.9
+     */
+    virtual void setAppearanceText(const QString &text) = 0;
 
-    protected:
-        FormFieldText();
+protected:
+    FormFieldText();
 
-    private:
-        Q_DECLARE_PRIVATE( FormFieldText )
-        Q_DISABLE_COPY( FormFieldText )
+private:
+    Q_DECLARE_PRIVATE(FormFieldText)
+    Q_DISABLE_COPY(FormFieldText)
 };
-
 
 /**
  * @short Interface of a choice form field.
@@ -342,105 +335,104 @@ class OKULARCORE_EXPORT FormFieldText : public FormField
  */
 class OKULARCORE_EXPORT FormFieldChoice : public FormField
 {
-    public:
-        /**
-         * The types of choice field.
-         */
-        enum ChoiceType
-        {
-            ComboBox,     ///< A combo box choice field.
-            ListBox       ///< A list box choice field.
-        };
+public:
+    /**
+     * The types of choice field.
+     */
+    enum ChoiceType {
+        ComboBox, ///< A combo box choice field.
+        ListBox   ///< A list box choice field.
+    };
 
-        ~FormFieldChoice() override;
+    ~FormFieldChoice() override;
 
-        /**
-         * The particular type of the choice field.
-         */
-        virtual ChoiceType choiceType() const = 0;
+    /**
+     * The particular type of the choice field.
+     */
+    virtual ChoiceType choiceType() const = 0;
 
-        /**
-         * The possible choices of the choice field.
-         */
-        virtual QStringList choices() const = 0;
+    /**
+     * The possible choices of the choice field.
+     */
+    virtual QStringList choices() const = 0;
 
-        /**
-         * Whether this ComboBox is editable, ie the user can type in a custom
-         * value.
-         *
-         * Always false for the other types of choices.
-         */
-        virtual bool isEditable() const;
+    /**
+     * Whether this ComboBox is editable, ie the user can type in a custom
+     * value.
+     *
+     * Always false for the other types of choices.
+     */
+    virtual bool isEditable() const;
 
-        /**
-         * Whether more than one choice of this ListBox can be selected at the
-         * same time.
-         *
-         * Always false for the other types of choices.
-         */
-        virtual bool multiSelect() const;
+    /**
+     * Whether more than one choice of this ListBox can be selected at the
+     * same time.
+     *
+     * Always false for the other types of choices.
+     */
+    virtual bool multiSelect() const;
 
-        /**
-         * The currently selected choices.
-         *
-         * Always one element in the list in case of single choice elements.
-         */
-        virtual QList< int > currentChoices() const = 0;
+    /**
+     * The currently selected choices.
+     *
+     * Always one element in the list in case of single choice elements.
+     */
+    virtual QList<int> currentChoices() const = 0;
 
-        /**
-         * Sets the selected choices to @p choices .
-         */
-        virtual void setCurrentChoices( const QList< int >& choices );
+    /**
+     * Sets the selected choices to @p choices .
+     */
+    virtual void setCurrentChoices(const QList<int> &choices);
 
-        /**
-          The text entered into an editable combo box choice field
+    /**
+      The text entered into an editable combo box choice field
 
-          @since 0.16 (KDE 4.10)
-        */
-        virtual QString editChoice() const;
+      @since 0.16 (KDE 4.10)
+    */
+    virtual QString editChoice() const;
 
-        /**
-          Sets the text entered into an editable combo box choice field
+    /**
+      Sets the text entered into an editable combo box choice field
 
-          @since 0.16 (KDE 4.10)
-        */
-        virtual void setEditChoice( const QString& text );
+      @since 0.16 (KDE 4.10)
+    */
+    virtual void setEditChoice(const QString &text);
 
-        /**
-         * The alignment of the text within the field.
-         */
-        virtual Qt::Alignment textAlignment() const;
+    /**
+     * The alignment of the text within the field.
+     */
+    virtual Qt::Alignment textAlignment() const;
 
-        /**
-         * Whether the text inserted manually in the field (where possible)
-         * can be spell-checked.
-         *
-         * @note meaningful only if the field is editable.
-         */
-        virtual bool canBeSpellChecked() const;
+    /**
+     * Whether the text inserted manually in the field (where possible)
+     * can be spell-checked.
+     *
+     * @note meaningful only if the field is editable.
+     */
+    virtual bool canBeSpellChecked() const;
 
-        /**
-         * Returns the export value for a given choice
-         *
-         * @since 1.11
-         */
-        QString exportValueForChoice( const QString &choice ) const;
+    /**
+     * Returns the export value for a given choice
+     *
+     * @since 1.11
+     */
+    QString exportValueForChoice(const QString &choice) const;
 
-    protected:
-        FormFieldChoice();
+protected:
+    FormFieldChoice();
 
-        /**
-         * The possible choices of the choice field.
-         * The key is the display name of the choice,
-         * The value is the export value (i.e. for use in javascript, etc) of the choice
-         *
-         * @since 1.11
-         */
-        void setExportValues( const QMap<QString,QString> &values );
+    /**
+     * The possible choices of the choice field.
+     * The key is the display name of the choice,
+     * The value is the export value (i.e. for use in javascript, etc) of the choice
+     *
+     * @since 1.11
+     */
+    void setExportValues(const QMap<QString, QString> &values);
 
-    private:
-        Q_DECLARE_PRIVATE( FormFieldChoice )
-        Q_DISABLE_COPY( FormFieldChoice )
+private:
+    Q_DECLARE_PRIVATE(FormFieldChoice)
+    Q_DISABLE_COPY(FormFieldChoice)
 };
 
 /**
@@ -450,35 +442,30 @@ class OKULARCORE_EXPORT FormFieldChoice : public FormField
  */
 class OKULARCORE_EXPORT FormFieldSignature : public FormField
 {
-    public:
-        /**
-         * The types of signature.
-         */
-        enum SignatureType {
-            AdbePkcs7sha1,
-            AdbePkcs7detached,
-            EtsiCAdESdetached,
-            UnknownType
-         };
+public:
+    /**
+     * The types of signature.
+     */
+    enum SignatureType { AdbePkcs7sha1, AdbePkcs7detached, EtsiCAdESdetached, UnknownType };
 
-        ~FormFieldSignature() override;
+    ~FormFieldSignature() override;
 
-        /**
-         * The signature type
-         */
-        virtual SignatureType signatureType() const = 0;
+    /**
+     * The signature type
+     */
+    virtual SignatureType signatureType() const = 0;
 
-        /**
-         * The signature info
-         */
-        virtual const SignatureInfo &signatureInfo() const = 0;
+    /**
+     * The signature info
+     */
+    virtual const SignatureInfo &signatureInfo() const = 0;
 
-    protected:
-        FormFieldSignature();
+protected:
+    FormFieldSignature();
 
-    private:
-        Q_DECLARE_PRIVATE( FormFieldSignature )
-        Q_DISABLE_COPY( FormFieldSignature )
+private:
+    Q_DECLARE_PRIVATE(FormFieldSignature)
+    Q_DISABLE_COPY(FormFieldSignature)
 };
 
 }

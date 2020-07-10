@@ -16,26 +16,26 @@
 class OkularTTS : public QObject
 {
     Q_OBJECT
-    public:
-        explicit OkularTTS( QObject *parent = nullptr );
-        ~OkularTTS() override;
+public:
+    explicit OkularTTS(QObject *parent = nullptr);
+    ~OkularTTS() override;
 
-        void say( const QString &text );
-        void stopAllSpeechs();
-        void pauseResumeSpeech();
+    void say(const QString &text);
+    void stopAllSpeechs();
+    void pauseResumeSpeech();
 
-    public slots:
-        void slotSpeechStateChanged(QTextToSpeech::State state);
-        void slotConfigChanged();
+public slots:
+    void slotSpeechStateChanged(QTextToSpeech::State state);
+    void slotConfigChanged();
 
-    signals:
-        void isSpeaking( bool speaking );
-        void canPauseOrResume( bool speakingOrPaused );
+signals:
+    void isSpeaking(bool speaking);
+    void canPauseOrResume(bool speakingOrPaused);
 
-    private:
-        // private storage
-        class Private;
-        Private *d;
+private:
+    // private storage
+    class Private;
+    Private *d;
 };
 
 #endif

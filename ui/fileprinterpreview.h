@@ -15,8 +15,8 @@
 
 #include <QDialog>
 
-namespace Okular {
-
+namespace Okular
+{
 // This code copied from KPrintPreview by Alex Merry, adapted to do PS files instead of PDF
 
 class FilePrinterPreviewPrivate;
@@ -32,16 +32,16 @@ public:
      * @param filename file to print preview
      * @param parent  pointer to the parent widget for the dialog
      */
-    explicit FilePrinterPreview( const QString &filename, QWidget *parent = nullptr );
+    explicit FilePrinterPreview(const QString &filename, QWidget *parent = nullptr);
     ~FilePrinterPreview() override;
 
     QSize sizeHint() const override;
 
 protected:
-    void showEvent( QShowEvent *event ) override;
+    void showEvent(QShowEvent *event) override;
 
 private:
-    FilePrinterPreviewPrivate * const d;
+    FilePrinterPreviewPrivate *const d;
 };
 
 }

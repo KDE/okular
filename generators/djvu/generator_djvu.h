@@ -16,7 +16,8 @@
 
 #include "kdjvu.h"
 
-namespace Okular {
+namespace Okular
+{
 class Annotation;
 class ObjectRect;
 }
@@ -24,35 +25,35 @@ class ObjectRect;
 class DjVuGenerator : public Okular::Generator
 {
     Q_OBJECT
-    Q_INTERFACES( Okular::Generator )
-    public:
-        DjVuGenerator( QObject *parent, const QVariantList &args );
-        ~DjVuGenerator() override;
-        bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector ) override;
+    Q_INTERFACES(Okular::Generator)
+public:
+    DjVuGenerator(QObject *parent, const QVariantList &args);
+    ~DjVuGenerator() override;
+    bool loadDocument(const QString &fileName, QVector<Okular::Page *> &pagesVector) override;
 
-        // document information
-        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const override;
-        const Okular::DocumentSynopsis * generateDocumentSynopsis() override;
+    // document information
+    Okular::DocumentInfo generateDocumentInfo(const QSet<Okular::DocumentInfo::Key> &keys) const override;
+    const Okular::DocumentSynopsis *generateDocumentSynopsis() override;
 
-        // printing
-        bool print( QPrinter& printer ) override;
+    // printing
+    bool print(QPrinter &printer) override;
 
-        QVariant metaData( const QString & key, const QVariant & option ) const override;
+    QVariant metaData(const QString &key, const QVariant &option) const override;
 
-    protected:
-        bool doCloseDocument() override;
-        // pixmap generation
-        QImage image( Okular::PixmapRequest *request ) override;
-        Okular::TextPage* textPage( Okular::TextRequest *request ) override;
+protected:
+    bool doCloseDocument() override;
+    // pixmap generation
+    QImage image(Okular::PixmapRequest *request) override;
+    Okular::TextPage *textPage(Okular::TextRequest *request) override;
 
-    private:
-        void loadPages( QVector<Okular::Page*> & pagesVector, int rotation );
-        Okular::ObjectRect* convertKDjVuLink( int page, KDjVu::Link * link ) const;
-        Okular::Annotation* convertKDjVuAnnotation( int w, int h, KDjVu::Annotation * ann ) const;
+private:
+    void loadPages(QVector<Okular::Page *> &pagesVector, int rotation);
+    Okular::ObjectRect *convertKDjVuLink(int page, KDjVu::Link *link) const;
+    Okular::Annotation *convertKDjVuAnnotation(int w, int h, KDjVu::Annotation *ann) const;
 
-        KDjVu *m_djvu;
+    KDjVu *m_djvu;
 
-        Okular::DocumentSynopsis *m_docSyn;
+    Okular::DocumentSynopsis *m_docSyn;
 };
 
 #endif

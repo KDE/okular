@@ -14,13 +14,13 @@
 class KJSContext;
 class KJSObject;
 
-namespace Okular {
-
+namespace Okular
+{
 class JSSpell
 {
-    public:
-        static void initType( KJSContext *ctx );
-        static KJSObject object( KJSContext *ctx );
+public:
+    static void initType(KJSContext *ctx);
+    static KJSObject object(KJSContext *ctx);
 };
 
 }

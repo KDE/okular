@@ -18,20 +18,18 @@
 
 inline KAboutData okularAboutData()
 {
-    KAboutData about(
-        QStringLiteral("okular"),
-        i18n("Okular"),
-        QStringLiteral(OKULAR_VERSION_STRING),
-        i18n("Okular, a universal document viewer"),
-        KAboutLicense::GPL,
-        i18n("(C) 2002 Wilco Greven, Christophe Devriese\n"
-              "(C) 2004-2005 Enrico Ros\n"
-              "(C) 2005 Piotr Szymanski\n"
-              "(C) 2004-2017 Albert Astals Cid\n"
-              "(C) 2006-2009 Pino Toscano"),
-        QString(),
-        QStringLiteral("https://okular.kde.org")
-    );
+    KAboutData about(QStringLiteral("okular"),
+                     i18n("Okular"),
+                     QStringLiteral(OKULAR_VERSION_STRING),
+                     i18n("Okular, a universal document viewer"),
+                     KAboutLicense::GPL,
+                     i18n("(C) 2002 Wilco Greven, Christophe Devriese\n"
+                          "(C) 2004-2005 Enrico Ros\n"
+                          "(C) 2005 Piotr Szymanski\n"
+                          "(C) 2004-2017 Albert Astals Cid\n"
+                          "(C) 2006-2009 Pino Toscano"),
+                     QString(),
+                     QStringLiteral("https://okular.kde.org"));
 
     about.addAuthor(QStringLiteral("Pino Toscano"), i18n("Former maintainer"), QStringLiteral("pino@kde.org"));
     about.addAuthor(QStringLiteral("Tobias Koenig"), i18n("Lots of framework work, ODT and FictionBook backends"), QStringLiteral("tokoe@kde.org"));

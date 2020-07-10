@@ -11,11 +11,11 @@
 #include "settings.h"
 
 // qt/kde includes
-#include <KTitleWidget>
 #include <KLocalizedString>
-#include <QVBoxLayout>
-#include <QTreeView>
+#include <KTitleWidget>
 #include <QHeaderView>
+#include <QTreeView>
+#include <QVBoxLayout>
 
 #include <kwidgetsaddons_version.h>
 
@@ -24,55 +24,54 @@
 #include "ktreeviewsearchline.h"
 #include "ui/pageview.h"
 
-Layers::Layers(QWidget *parent, Okular::Document *document) : QWidget(parent), m_document(document)
+Layers::Layers(QWidget *parent, Okular::Document *document)
+    : QWidget(parent)
+    , m_document(document)
 {
-    QVBoxLayout * const mainlay = new QVBoxLayout( this );
-    mainlay->setSpacing( 6 );
+    QVBoxLayout *const mainlay = new QVBoxLayout(this);
+    mainlay->setSpacing(6);
 
-    m_document->addObserver( this );
+    m_document->addObserver(this);
 
-    KTitleWidget *titleWidget = new KTitleWidget( this );
-    #if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 53, 0)
-    titleWidget->setLevel( 2 );
-    #endif
-    titleWidget->setText( i18n( "Layers" ) );
-    mainlay->addWidget( titleWidget );
-    mainlay->setAlignment( titleWidget, Qt::AlignHCenter );
-    m_searchLine = new KTreeViewSearchLine( this );
-    mainlay->addWidget( m_searchLine );
-    m_searchLine->setCaseSensitivity( Okular::Settings::self()->layersSearchCaseSensitive() ? Qt::CaseSensitive : Qt::CaseInsensitive );
-    m_searchLine->setRegularExpression( Okular::Settings::self()->layersSearchRegularExpression() );
-    connect( m_searchLine, &KTreeViewSearchLine::searchOptionsChanged, this, &Layers::saveSearchOptions );
+    KTitleWidget *titleWidget = new KTitleWidget(this);
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 53, 0)
+    titleWidget->setLevel(2);
+#endif
+    titleWidget->setText(i18n("Layers"));
+    mainlay->addWidget(titleWidget);
+    mainlay->setAlignment(titleWidget, Qt::AlignHCenter);
+    m_searchLine = new KTreeViewSearchLine(this);
+    mainlay->addWidget(m_searchLine);
+    m_searchLine->setCaseSensitivity(Okular::Settings::self()->layersSearchCaseSensitive() ? Qt::CaseSensitive : Qt::CaseInsensitive);
+    m_searchLine->setRegularExpression(Okular::Settings::self()->layersSearchRegularExpression());
+    connect(m_searchLine, &KTreeViewSearchLine::searchOptionsChanged, this, &Layers::saveSearchOptions);
 
-    m_treeView = new QTreeView( this );
-    mainlay->addWidget( m_treeView );
+    m_treeView = new QTreeView(this);
+    mainlay->addWidget(m_treeView);
 
-    m_treeView->setSortingEnabled( false );
-    m_treeView->setRootIsDecorated( true );
-    m_treeView->setAlternatingRowColors( true );
+    m_treeView->setSortingEnabled(false);
+    m_treeView->setRootIsDecorated(true);
+    m_treeView->setAlternatingRowColors(true);
     m_treeView->header()->hide();
 }
 
 Layers::~Layers()
 {
-    m_document->removeObserver( this );
+    m_document->removeObserver(this);
 }
 
-void Layers::notifySetup( const QVector< Okular::Page * > & /*pages*/, int /*setupFlags*/ )
+void Layers::notifySetup(const QVector<Okular::Page *> & /*pages*/, int /*setupFlags*/)
 {
-    QAbstractItemModel * layersModel = m_document->layersModel();
+    QAbstractItemModel *layersModel = m_document->layersModel();
 
-    if( layersModel )
-    {
-        m_treeView->setModel( layersModel );
-        m_searchLine->setTreeView( m_treeView );
-        emit hasLayers( true );
-        connect( layersModel, &QAbstractItemModel::dataChanged, m_document, &Okular::Document::reloadDocument );
-        connect( layersModel, &QAbstractItemModel::dataChanged, m_pageView, &PageView::reloadForms );
-    }
-    else
-    {
-        emit hasLayers( false );
+    if (layersModel) {
+        m_treeView->setModel(layersModel);
+        m_searchLine->setTreeView(m_treeView);
+        emit hasLayers(true);
+        connect(layersModel, &QAbstractItemModel::dataChanged, m_document, &Okular::Document::reloadDocument);
+        connect(layersModel, &QAbstractItemModel::dataChanged, m_pageView, &PageView::reloadForms);
+    } else {
+        emit hasLayers(false);
     }
 }
 
@@ -83,7 +82,7 @@ void Layers::setPageView(PageView *pageView)
 
 void Layers::saveSearchOptions()
 {
-    Okular::Settings::setLayersSearchRegularExpression( m_searchLine->regularExpression() );
-    Okular::Settings::setLayersSearchCaseSensitive( m_searchLine->caseSensitivity() == Qt::CaseSensitive ? true : false );
+    Okular::Settings::setLayersSearchRegularExpression(m_searchLine->regularExpression());
+    Okular::Settings::setLayersSearchCaseSensitive(m_searchLine->caseSensitivity() == Qt::CaseSensitive ? true : false);
     Okular::Settings::self()->save();
 }

@@ -10,38 +10,37 @@
 #ifndef _dvipageinfo_h_
 #define _dvipageinfo_h_
 
-#include "pageNumber.h"
 #include "hyperlink.h"
+#include "pageNumber.h"
 #include "textBox.h"
-#include <QVector>
 #include <QPixmap>
+#include <QVector>
 
 class dviPageInfo
 {
-
 public:
-   QImage img;
-   int width, height;
-   double resolution;
-   PageNumber pageNumber;
+    QImage img;
+    int width, height;
+    double resolution;
+    PageNumber pageNumber;
 
-   dviPageInfo();
+    dviPageInfo();
 
-   virtual ~dviPageInfo();
+    virtual ~dviPageInfo();
 
-   dviPageInfo(const dviPageInfo &) = delete;
-   dviPageInfo &operator=(const dviPageInfo &) = delete;
+    dviPageInfo(const dviPageInfo &) = delete;
+    dviPageInfo &operator=(const dviPageInfo &) = delete;
 
-   virtual void clear();
+    virtual void clear();
 
-   /** \brief List of source hyperlinks
-    */
-   QVector<Hyperlink> sourceHyperLinkList;
+    /** \brief List of source hyperlinks
+     */
+    QVector<Hyperlink> sourceHyperLinkList;
 
-   /** \brief Hyperlinks on the document page
-    */
-   QVector<Hyperlink> hyperLinkList;
-   QVector<TextBox> textBoxList;
+    /** \brief Hyperlinks on the document page
+     */
+    QVector<Hyperlink> hyperLinkList;
+    QVector<TextBox> textBoxList;
 };
 
 /* quick&dirty hack to cheat the dviRenderer class... */

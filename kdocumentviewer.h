@@ -23,34 +23,38 @@ class QUrl;
  */
 class OKULARPART_EXPORT KDocumentViewer
 {
-    public:
-        KDocumentViewer() {}
-        virtual ~KDocumentViewer() {}
+public:
+    KDocumentViewer()
+    {
+    }
+    virtual ~KDocumentViewer()
+    {
+    }
 
-        KDocumentViewer(const KDocumentViewer &) = delete;
-        KDocumentViewer &operator=(const KDocumentViewer &) = delete;
+    KDocumentViewer(const KDocumentViewer &) = delete;
+    KDocumentViewer &operator=(const KDocumentViewer &) = delete;
 
-        /**
-         * Open the document at the specified @p url at page @p page.
-         */
-        virtual bool openDocument( const QUrl& url, uint page ) = 0;
+    /**
+     * Open the document at the specified @p url at page @p page.
+     */
+    virtual bool openDocument(const QUrl &url, uint page) = 0;
 
-        /**
-         * Change to @p page the currently shown page.
-         */
-        virtual void goToPage( uint page ) = 0;
+    /**
+     * Change to @p page the currently shown page.
+     */
+    virtual void goToPage(uint page) = 0;
 
-        /**
-         * Start the presentation mode.
-         */
-        virtual void startPresentation() = 0;
+    /**
+     * Start the presentation mode.
+     */
+    virtual void startPresentation() = 0;
 
-        /**
-         * Return a list with the supported mimetypes.
-         */
-        virtual QStringList supportedMimeTypes() const = 0;
+    /**
+     * Return a list with the supported mimetypes.
+     */
+    virtual QStringList supportedMimeTypes() const = 0;
 };
 
-Q_DECLARE_INTERFACE( KDocumentViewer, "org.kde.kdocumentviewer/0.1" )
+Q_DECLARE_INTERFACE(KDocumentViewer, "org.kde.kdocumentviewer/0.1")
 
 #endif

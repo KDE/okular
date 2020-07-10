@@ -10,18 +10,17 @@
 #include "widgetannottools.h"
 #include "editannottooldialog.h"
 
-#include <QIcon>
 #include <KLocalizedString>
+#include <QIcon>
 
-
+#include <KConfigGroup>
 #include <QApplication>
+#include <QDialogButtonBox>
+#include <QDomDocument>
+#include <QDomElement>
 #include <QHBoxLayout>
 #include <QListWidget>
 #include <QListWidgetItem>
-#include <QDomDocument>
-#include <QDomElement>
-#include <KConfigGroup>
-#include <QDialogButtonBox>
 #include <QPushButton>
 #include <QVBoxLayout>
 
@@ -30,10 +29,9 @@
 // Used to store tools' XML description in m_list's items
 static const int ToolXmlRole = Qt::UserRole;
 
-WidgetAnnotTools::WidgetAnnotTools( QWidget * parent )
-    : WidgetConfigurationToolsBase( parent )
+WidgetAnnotTools::WidgetAnnotTools(QWidget *parent)
+    : WidgetConfigurationToolsBase(parent)
 {
-
 }
 
 WidgetAnnotTools::~WidgetAnnotTools()
@@ -48,29 +46,27 @@ QStringList WidgetAnnotTools::tools() const
     QStringList res;
 
     const int count = m_list->count();
-    for ( int i = 0; i < count; ++i )
-    {
-        QListWidgetItem * listEntry = m_list->item(i);
+    for (int i = 0; i < count; ++i) {
+        QListWidgetItem *listEntry = m_list->item(i);
 
         // Parse associated DOM data
         QDomDocument doc;
-        doc.setContent( listEntry->data( ToolXmlRole ).value<QString>() );
+        doc.setContent(listEntry->data(ToolXmlRole).value<QString>());
 
         // Set id
         QDomElement toolElement = doc.documentElement();
-        toolElement.setAttribute( QStringLiteral("id"), i+1 );
+        toolElement.setAttribute(QStringLiteral("id"), i + 1);
 
         // Remove old shortcut, if any
-        QDomNode oldShortcut = toolElement.elementsByTagName( QStringLiteral("shortcut") ).item( 0 );
-        if ( oldShortcut.isElement() )
-            toolElement.removeChild( oldShortcut );
+        QDomNode oldShortcut = toolElement.elementsByTagName(QStringLiteral("shortcut")).item(0);
+        if (oldShortcut.isElement())
+            toolElement.removeChild(oldShortcut);
 
         // Create new shortcut element (only the first 9 tools are assigned a shortcut key)
-        if ( i < 9 )
-        {
-            QDomElement newShortcut = doc.createElement( QStringLiteral("shortcut") );
-            newShortcut.appendChild( doc.createTextNode(QString::number( i+1 )) );
-            toolElement.appendChild( newShortcut );
+        if (i < 9) {
+            QDomElement newShortcut = doc.createElement(QStringLiteral("shortcut"));
+            newShortcut.appendChild(doc.createTextNode(QString::number(i + 1)));
+            toolElement.appendChild(newShortcut);
         }
 
         // Append to output
@@ -80,30 +76,27 @@ QStringList WidgetAnnotTools::tools() const
     return res;
 }
 
-void WidgetAnnotTools::setTools(const QStringList& items)
+void WidgetAnnotTools::setTools(const QStringList &items)
 {
     m_list->clear();
 
     // Parse each string and populate the list widget
-    for ( const QString &toolXml : items )
-    {
+    for (const QString &toolXml : items) {
         QDomDocument entryParser;
-        if ( !entryParser.setContent( toolXml ) )
-        {
+        if (!entryParser.setContent(toolXml)) {
             qWarning() << "Skipping malformed tool XML string";
             break;
         }
 
         QDomElement toolElement = entryParser.documentElement();
-        if ( toolElement.tagName() == QLatin1String("tool") )
-        {
+        if (toolElement.tagName() == QLatin1String("tool")) {
             // Create list item and attach the source XML string as data
-            QString itemText = toolElement.attribute( QStringLiteral("name") );
-            if ( itemText.isEmpty() )
-                itemText = PageViewAnnotator::defaultToolName( toolElement );
-            QListWidgetItem * listEntry = new QListWidgetItem( itemText, m_list );
-            listEntry->setData( ToolXmlRole, QVariant::fromValue(toolXml) );
-            listEntry->setIcon( PageViewAnnotator::makeToolPixmap( toolElement ) );
+            QString itemText = toolElement.attribute(QStringLiteral("name"));
+            if (itemText.isEmpty())
+                itemText = PageViewAnnotator::defaultToolName(toolElement);
+            QListWidgetItem *listEntry = new QListWidgetItem(itemText, m_list);
+            listEntry->setData(ToolXmlRole, QVariant::fromValue(toolXml));
+            listEntry->setIcon(PageViewAnnotator::makeToolPixmap(toolElement));
         }
     }
 
@@ -115,12 +108,12 @@ void WidgetAnnotTools::slotEdit()
     QListWidgetItem *listEntry = m_list->currentItem();
 
     QDomDocument doc;
-    doc.setContent( listEntry->data( ToolXmlRole ).value<QString>() );
+    doc.setContent(listEntry->data(ToolXmlRole).value<QString>());
     QDomElement toolElement = doc.documentElement();
 
-    EditAnnotToolDialog t( this, toolElement );
+    EditAnnotToolDialog t(this, toolElement);
 
-    if ( t.exec() != QDialog::Accepted )
+    if (t.exec() != QDialog::Accepted)
         return;
 
     doc = t.toolXml();
@@ -129,28 +122,28 @@ void WidgetAnnotTools::slotEdit()
     QString itemText = t.name();
 
     // Store name attribute only if the user specified a customized name
-    if ( !itemText.isEmpty() )
-        toolElement.setAttribute( QStringLiteral("name"), itemText );
+    if (!itemText.isEmpty())
+        toolElement.setAttribute(QStringLiteral("name"), itemText);
     else
-        itemText = PageViewAnnotator::defaultToolName( toolElement );
+        itemText = PageViewAnnotator::defaultToolName(toolElement);
 
     // Edit list entry and attach XML string as data
-    listEntry->setText( itemText );
-    listEntry->setData( ToolXmlRole, QVariant::fromValue( doc.toString(-1) ) );
-    listEntry->setIcon( PageViewAnnotator::makeToolPixmap( toolElement ) );
+    listEntry->setText(itemText);
+    listEntry->setData(ToolXmlRole, QVariant::fromValue(doc.toString(-1)));
+    listEntry->setIcon(PageViewAnnotator::makeToolPixmap(toolElement));
 
     // Select and scroll
-    m_list->setCurrentItem( listEntry );
-    m_list->scrollToItem( listEntry );
+    m_list->setCurrentItem(listEntry);
+    m_list->scrollToItem(listEntry);
     updateButtons();
     emit changed();
 }
 
 void WidgetAnnotTools::slotAdd()
 {
-    EditAnnotToolDialog t( this );
+    EditAnnotToolDialog t(this);
 
-    if ( t.exec() != QDialog::Accepted )
+    if (t.exec() != QDialog::Accepted)
         return;
 
     QDomDocument rootDoc = t.toolXml();
@@ -159,19 +152,19 @@ void WidgetAnnotTools::slotAdd()
     QString itemText = t.name();
 
     // Store name attribute only if the user specified a customized name
-    if ( !itemText.isEmpty() )
-        toolElement.setAttribute( QStringLiteral("name"), itemText );
+    if (!itemText.isEmpty())
+        toolElement.setAttribute(QStringLiteral("name"), itemText);
     else
-        itemText = PageViewAnnotator::defaultToolName( toolElement );
+        itemText = PageViewAnnotator::defaultToolName(toolElement);
 
     // Create list entry and attach XML string as data
-    QListWidgetItem * listEntry = new QListWidgetItem( itemText, m_list );
-    listEntry->setData( ToolXmlRole, QVariant::fromValue( rootDoc.toString(-1) ) );
-    listEntry->setIcon( PageViewAnnotator::makeToolPixmap( toolElement ) );
+    QListWidgetItem *listEntry = new QListWidgetItem(itemText, m_list);
+    listEntry->setData(ToolXmlRole, QVariant::fromValue(rootDoc.toString(-1)));
+    listEntry->setIcon(PageViewAnnotator::makeToolPixmap(toolElement));
 
     // Select and scroll
-    m_list->setCurrentItem( listEntry );
-    m_list->scrollToItem( listEntry );
+    m_list->setCurrentItem(listEntry);
+    m_list->scrollToItem(listEntry);
     updateButtons();
     emit changed();
 }

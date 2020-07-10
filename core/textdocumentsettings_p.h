@@ -7,40 +7,41 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-
 #ifndef _OKULAR_TEXTDOCUMENTSETTINGS_P_H_
 #define _OKULAR_TEXTDOCUMENTSETTINGS_P_H_
 
 class KFontRequester;
 class Ui_TextDocumentSettings;
 
-namespace Okular {
-
+namespace Okular
+{
 class TextDocumentSettingsWidgetPrivate
 {
-    public:
-        /**
-         * @note the private class won't take ownership of the ui, so you
-         *       must delete it yourself
-         */
-        explicit TextDocumentSettingsWidgetPrivate(Ui_TextDocumentSettings *ui)
-            : mUi(ui)
-        {}
+public:
+    /**
+     * @note the private class won't take ownership of the ui, so you
+     *       must delete it yourself
+     */
+    explicit TextDocumentSettingsWidgetPrivate(Ui_TextDocumentSettings *ui)
+        : mUi(ui)
+    {
+    }
 
-        KFontRequester *mFont;
-        Ui_TextDocumentSettings *mUi;
+    KFontRequester *mFont;
+    Ui_TextDocumentSettings *mUi;
 };
 
 class TextDocumentSettingsPrivate : public QObject
 {
     Q_OBJECT
 
-    public:
-        explicit TextDocumentSettingsPrivate(QObject *parent)
-            : QObject(parent)
-        {}
+public:
+    explicit TextDocumentSettingsPrivate(QObject *parent)
+        : QObject(parent)
+    {
+    }
 
-        QFont mFont;
+    QFont mFont;
 };
 
 }

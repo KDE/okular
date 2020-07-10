@@ -13,16 +13,16 @@
 class KJSContext;
 class KJSObject;
 
-namespace Okular {
-
+namespace Okular
+{
 class Event;
 
 class JSEvent
 {
-    public:
-        static void initType( KJSContext *ctx );
-        static KJSObject wrapEvent( KJSContext *ctx, Event *event );
-        static void clearCachedFields();
+public:
+    static void initType(KJSContext *ctx);
+    static KJSObject wrapEvent(KJSContext *ctx, Event *event);
+    static void clearCachedFields();
 };
 
 }

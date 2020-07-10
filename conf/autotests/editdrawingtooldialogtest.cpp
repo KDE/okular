@@ -22,7 +22,6 @@ EditDrawingToolDialogTest::EditDrawingToolDialogTest(QObject *parent)
 {
 }
 
-
 EditDrawingToolDialogTest::~EditDrawingToolDialogTest()
 {
 }

@@ -7,12 +7,12 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <QTest>
-#include <QDirIterator>
-#include <QDebug>
-#include <QStringList>
 #include <KPluginFactory>
 #include <KPluginLoader>
+#include <QDebug>
+#include <QDirIterator>
+#include <QStringList>
+#include <QTest>
 
 #include "../generator.h"
 
@@ -38,12 +38,12 @@ void GeneratorsTest::testLoadsCorrectly()
             if (it.fileName().startsWith(QLatin1String("kio_"))) {
                 continue; // don't check kio_msits.so
             }
-            generatorLibs <<  it.fileInfo().absoluteFilePath();
+            generatorLibs << it.fileInfo().absoluteFilePath();
         }
     }
     int failures = 0;
     int successful = 0;
-    foreach (const QString& lib, generatorLibs) {
+    foreach (const QString &lib, generatorLibs) {
         KPluginLoader loader(lib);
         QVERIFY2(!loader.fileName().isEmpty(), qPrintable(lib));
         qDebug() << loader.fileName();
@@ -53,14 +53,14 @@ void GeneratorsTest::testLoadsCorrectly()
             failures++;
             continue;
         }
-        Okular::Generator* generator = factory->create<Okular::Generator>();
+        Okular::Generator *generator = factory->create<Okular::Generator>();
         if (!generator) {
             qWarning() << "Failed to cast" << lib << "to Okular::Generator";
             // without the necessary Q_INTERFACES() qobject_cast fails!
             auto obj = factory->create<QObject>();
             qDebug() << "Object is of type " << obj->metaObject()->className();
-            qDebug() << "dynamic_cast:" << dynamic_cast<Okular::Generator*>(obj);
-            qDebug() << "qobject_cast:" << qobject_cast<Okular::Generator*>(obj);
+            qDebug() << "dynamic_cast:" << dynamic_cast<Okular::Generator *>(obj);
+            qDebug() << "qobject_cast:" << qobject_cast<Okular::Generator *>(obj);
             failures++;
             continue;
         }

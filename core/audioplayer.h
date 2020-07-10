@@ -14,8 +14,8 @@
 
 #include <QObject>
 
-namespace Okular {
-
+namespace Okular
+{
 class AudioPlayerPrivate;
 class Document;
 class Sound;
@@ -31,56 +31,54 @@ class OKULARCORE_EXPORT AudioPlayer : public QObject
 {
     Q_OBJECT
 
-    public:
-
+public:
+    /**
+     * The state of AudioPlayer
+     * @since 0.19 (KDE 4.13)
+     */
+    enum State {
         /**
-         * The state of AudioPlayer
-         * @since 0.19 (KDE 4.13)
+         * The AudioPlayer is playing a audio file.
          */
-        enum State
-        {
-            /**
-             * The AudioPlayer is playing a audio file.
-             */
-            PlayingState,
-            /**
-             * The AudioPlayer isn't playing a audio file.
-             */
-	    StoppedState
-	};
-
-        ~AudioPlayer() override;
-
+        PlayingState,
         /**
-         * Gets the instance of the audio player.
+         * The AudioPlayer isn't playing a audio file.
          */
-        static AudioPlayer * instance();
+        StoppedState
+    };
 
-        /**
-         * Enqueue the specified @p sound for playing, optionally taking more
-         * information about the playing from the @p soundlink .
-         */
-        void playSound( const Sound * sound, const SoundAction * linksound = nullptr );
+    ~AudioPlayer() override;
 
-        /**
-         * Tell the AudioPlayer to stop all the playbacks.
-         */
-        void stopPlaybacks();
+    /**
+     * Gets the instance of the audio player.
+     */
+    static AudioPlayer *instance();
 
-        /**
-         * Return state of sound (playing/stopped)
-         * @since 0.19 (KDE 4.13)
-         */
-        State state() const;
+    /**
+     * Enqueue the specified @p sound for playing, optionally taking more
+     * information about the playing from the @p soundlink .
+     */
+    void playSound(const Sound *sound, const SoundAction *linksound = nullptr);
 
-    private:
-        AudioPlayer();
+    /**
+     * Tell the AudioPlayer to stop all the playbacks.
+     */
+    void stopPlaybacks();
 
-        friend class AudioPlayerPrivate;
-        AudioPlayerPrivate * const d;
-        friend class Document;
+    /**
+     * Return state of sound (playing/stopped)
+     * @since 0.19 (KDE 4.13)
+     */
+    State state() const;
 
-        Q_DISABLE_COPY( AudioPlayer )
+private:
+    AudioPlayer();
+
+    friend class AudioPlayerPrivate;
+    AudioPlayerPrivate *const d;
+    friend class Document;
+
+    Q_DISABLE_COPY(AudioPlayer)
 };
 
 }

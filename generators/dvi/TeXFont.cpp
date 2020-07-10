@@ -3,6 +3,6 @@
 
 #include "TeXFont.h"
 
-
 TeXFont::~TeXFont()
-{}
+{
+}

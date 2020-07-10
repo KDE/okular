@@ -25,18 +25,24 @@
 #endif
 #include <KColorScheme>
 #include <KIconLoader>
-#include <KMessageBox>
 #include <KLocalizedString>
+#include <KMessageBox>
 
-SearchLineEdit::SearchLineEdit( QWidget * parent, Okular::Document * document )
-    : KLineEdit( parent ), m_document( document ), m_minLength( 0 ),
-      m_caseSensitivity( Qt::CaseInsensitive ),
-      m_searchType( Okular::Document::AllDocument ), m_id( -1 ),
-      m_moveViewport( false ), m_changed( false ), m_fromStart( true ),
-      m_findAsYouType( true ), m_searchRunning( false )
+SearchLineEdit::SearchLineEdit(QWidget *parent, Okular::Document *document)
+    : KLineEdit(parent)
+    , m_document(document)
+    , m_minLength(0)
+    , m_caseSensitivity(Qt::CaseInsensitive)
+    , m_searchType(Okular::Document::AllDocument)
+    , m_id(-1)
+    , m_moveViewport(false)
+    , m_changed(false)
+    , m_fromStart(true)
+    , m_findAsYouType(true)
+    , m_searchRunning(false)
 {
-    setObjectName( QStringLiteral( "SearchLineEdit" ) );
-    setClearButtonEnabled( true );
+    setObjectName(QStringLiteral("SearchLineEdit"));
+    setClearButtonEnabled(true);
 
     // a timer to ensure that we don't flood the document with requests to search
     m_inputDelayTimer = new QTimer(this);
@@ -52,21 +58,21 @@ void SearchLineEdit::clearText()
     clear();
 }
 
-void SearchLineEdit::setSearchCaseSensitivity( Qt::CaseSensitivity cs )
+void SearchLineEdit::setSearchCaseSensitivity(Qt::CaseSensitivity cs)
 {
     m_caseSensitivity = cs;
     m_changed = true;
 }
 
-void SearchLineEdit::setSearchMinimumLength( int length )
+void SearchLineEdit::setSearchMinimumLength(int length)
 {
     m_minLength = length;
     m_changed = true;
 }
 
-void SearchLineEdit::setSearchType( Okular::Document::SearchType type )
+void SearchLineEdit::setSearchType(Okular::Document::SearchType type)
 {
-    if ( type == m_searchType )
+    if (type == m_searchType)
         return;
 
     disconnect(this, &SearchLineEdit::returnPressed, this, &SearchLineEdit::slotReturnPressed);
@@ -79,33 +85,33 @@ void SearchLineEdit::setSearchType( Okular::Document::SearchType type )
         connect(this, &SearchLineEdit::returnPressed, this, &SearchLineEdit::slotReturnPressed);
     }
 
-    if ( !m_changed )
-        m_changed = ( m_searchType != Okular::Document::NextMatch && m_searchType != Okular::Document::PreviousMatch );
+    if (!m_changed)
+        m_changed = (m_searchType != Okular::Document::NextMatch && m_searchType != Okular::Document::PreviousMatch);
 }
 
-void SearchLineEdit::setSearchId( int id )
+void SearchLineEdit::setSearchId(int id)
 {
     m_id = id;
     m_changed = true;
 }
 
-void SearchLineEdit::setSearchColor( const QColor &color )
+void SearchLineEdit::setSearchColor(const QColor &color)
 {
     m_color = color;
     m_changed = true;
 }
 
-void SearchLineEdit::setSearchMoveViewport( bool move )
+void SearchLineEdit::setSearchMoveViewport(bool move)
 {
     m_moveViewport = move;
 }
 
-void SearchLineEdit::setSearchFromStart( bool fromStart )
+void SearchLineEdit::setSearchFromStart(bool fromStart)
 {
     m_fromStart = fromStart;
 }
 
-void SearchLineEdit::setFindAsYouType( bool findAsYouType )
+void SearchLineEdit::setFindAsYouType(bool findAsYouType)
 {
     m_findAsYouType = findAsYouType;
 }
@@ -116,8 +122,8 @@ void SearchLineEdit::resetSearch()
     stopSearch();
 
     // Clear highlights
-    if ( m_id != -1 )
-        m_document->resetSearch( m_id );
+    if (m_id != -1)
+        m_document->resetSearch(m_id);
 
     // Make sure that the search will be reset at the next one
     m_changed = true;
@@ -134,13 +140,13 @@ bool SearchLineEdit::isSearchRunning() const
 void SearchLineEdit::restartSearch()
 {
     m_inputDelayTimer->stop();
-    m_inputDelayTimer->start( 700 );
+    m_inputDelayTimer->start(700);
     m_changed = true;
 }
 
 void SearchLineEdit::stopSearch()
 {
-    if ( m_id == -1 || !m_searchRunning )
+    if (m_id == -1 || !m_searchRunning)
         return;
 
     m_inputDelayTimer->stop();
@@ -152,41 +158,37 @@ void SearchLineEdit::stopSearch()
 
 void SearchLineEdit::findNext()
 {
-    if ( m_id == -1 || m_searchType != Okular::Document::NextMatch )
+    if (m_id == -1 || m_searchType != Okular::Document::NextMatch)
         return;
 
-    if ( !m_changed )
-    {
+    if (!m_changed) {
         emit searchStarted();
         m_searchRunning = true;
-        m_document->continueSearch( m_id, m_searchType );
-    }
-    else
+        m_document->continueSearch(m_id, m_searchType);
+    } else
         startSearch();
 }
 
 void SearchLineEdit::findPrev()
 {
-    if ( m_id == -1 || m_searchType != Okular::Document::PreviousMatch )
+    if (m_id == -1 || m_searchType != Okular::Document::PreviousMatch)
         return;
 
-    if ( !m_changed )
-    {
+    if (!m_changed) {
         emit searchStarted();
         m_searchRunning = true;
-        m_document->continueSearch( m_id, m_searchType );
-    }
-    else
+        m_document->continueSearch(m_id, m_searchType);
+    } else
         startSearch();
 }
 
-void SearchLineEdit::slotTextChanged( const QString & text )
+void SearchLineEdit::slotTextChanged(const QString &text)
 {
     Q_UNUSED(text);
 
     prepareLineEditForSearch();
 
-    if ( m_findAsYouType )
+    if (m_findAsYouType)
         restartSearch();
     else
         m_changed = true;
@@ -196,34 +198,28 @@ void SearchLineEdit::prepareLineEditForSearch()
 {
     QPalette pal = palette();
     const int textLength = text().length();
-    if ( textLength > 0 && textLength < m_minLength )
-    {
-        const KColorScheme scheme( QPalette::Active, KColorScheme::View );
-        pal.setBrush( QPalette::Base, scheme.background( KColorScheme::NegativeBackground ) );
-        pal.setBrush( QPalette::Text, scheme.foreground( KColorScheme::NegativeText ) );
-    }
-    else
-    {
+    if (textLength > 0 && textLength < m_minLength) {
+        const KColorScheme scheme(QPalette::Active, KColorScheme::View);
+        pal.setBrush(QPalette::Base, scheme.background(KColorScheme::NegativeBackground));
+        pal.setBrush(QPalette::Text, scheme.foreground(KColorScheme::NegativeText));
+    } else {
         const QPalette qAppPalette = QApplication::palette();
-        pal.setColor( QPalette::Base, qAppPalette.color( QPalette::Base ) );
-        pal.setColor( QPalette::Text, qAppPalette.color( QPalette::Text ) );
+        pal.setColor(QPalette::Base, qAppPalette.color(QPalette::Base));
+        pal.setColor(QPalette::Text, qAppPalette.color(QPalette::Text));
     }
-    setPalette( pal );
+    setPalette(pal);
 }
 
-void SearchLineEdit::slotReturnPressed( const QString &text )
+void SearchLineEdit::slotReturnPressed(const QString &text)
 {
     Q_UNUSED(text);
 
     m_inputDelayTimer->stop();
     prepareLineEditForSearch();
-    if ( QApplication::keyboardModifiers() == Qt::ShiftModifier )
-    {
+    if (QApplication::keyboardModifiers() == Qt::ShiftModifier) {
         m_searchType = Okular::Document::PreviousMatch;
         findPrev();
-    }
-    else
-    {
+    } else {
         m_searchType = Okular::Document::NextMatch;
         findNext();
     }
@@ -231,90 +227,82 @@ void SearchLineEdit::slotReturnPressed( const QString &text )
 
 void SearchLineEdit::startSearch()
 {
-    if ( m_id == -1 || !m_color.isValid() )
+    if (m_id == -1 || !m_color.isValid())
         return;
 
-    if ( m_changed && ( m_searchType == Okular::Document::NextMatch || m_searchType == Okular::Document::PreviousMatch ) )
-    {
-        m_document->resetSearch( m_id );
+    if (m_changed && (m_searchType == Okular::Document::NextMatch || m_searchType == Okular::Document::PreviousMatch)) {
+        m_document->resetSearch(m_id);
     }
     m_changed = false;
     // search text if have more than 3 chars or else clear search
     QString thistext = text();
-    if ( thistext.length() >= qMax( m_minLength, 1 ) )
-    {
+    if (thistext.length() >= qMax(m_minLength, 1)) {
         emit searchStarted();
         m_searchRunning = true;
-        m_document->searchText( m_id, thistext, m_fromStart, m_caseSensitivity,
-                                m_searchType, m_moveViewport, m_color );
-    }
-    else
-        m_document->resetSearch( m_id );
+        m_document->searchText(m_id, thistext, m_fromStart, m_caseSensitivity, m_searchType, m_moveViewport, m_color);
+    } else
+        m_document->resetSearch(m_id);
 }
 
-void SearchLineEdit::searchFinished( int id, Okular::Document::SearchStatus endStatus )
+void SearchLineEdit::searchFinished(int id, Okular::Document::SearchStatus endStatus)
 {
     // ignore the searches not started by this search edit
-    if ( id != m_id )
+    if (id != m_id)
         return;
 
     // if not found, use warning colors
-    if ( endStatus == Okular::Document::NoMatchFound )
-    {
+    if (endStatus == Okular::Document::NoMatchFound) {
         QPalette pal = palette();
-        const KColorScheme scheme( QPalette::Active, KColorScheme::View );
-        pal.setBrush( QPalette::Base, scheme.background( KColorScheme::NegativeBackground ) );
-        pal.setBrush( QPalette::Text, scheme.foreground( KColorScheme::NegativeText ) );
-        setPalette( pal );
-    }
-    else
-    {
+        const KColorScheme scheme(QPalette::Active, KColorScheme::View);
+        pal.setBrush(QPalette::Base, scheme.background(KColorScheme::NegativeBackground));
+        pal.setBrush(QPalette::Text, scheme.foreground(KColorScheme::NegativeText));
+        setPalette(pal);
+    } else {
         QPalette pal = palette();
         const QPalette qAppPalette = QApplication::palette();
-        pal.setColor( QPalette::Base, qAppPalette.color( QPalette::Base ) );
-        pal.setColor( QPalette::Text, qAppPalette.color( QPalette::Text ) );
-        setPalette( pal );
+        pal.setColor(QPalette::Base, qAppPalette.color(QPalette::Base));
+        pal.setColor(QPalette::Text, qAppPalette.color(QPalette::Text));
+        setPalette(pal);
     }
 
     m_searchRunning = false;
     emit searchStopped();
 }
 
-
-SearchLineWidget::SearchLineWidget( QWidget * parent, Okular::Document * document )
-    : QWidget( parent )
+SearchLineWidget::SearchLineWidget(QWidget *parent, Okular::Document *document)
+    : QWidget(parent)
 {
-    QHBoxLayout *layout = new QHBoxLayout( this );
-    layout->setContentsMargins( 0, 0, 0, 0 );
+    QHBoxLayout *layout = new QHBoxLayout(this);
+    layout->setContentsMargins(0, 0, 0, 0);
 
-    m_edit = new SearchLineEdit( this, document );
-    layout->addWidget( m_edit );
+    m_edit = new SearchLineEdit(this, document);
+    layout->addWidget(m_edit);
 
 #if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 61, 0)
-    m_anim = new KBusyIndicatorWidget( this );
+    m_anim = new KBusyIndicatorWidget(this);
 #else
-    m_anim = new KPixmapSequenceWidget( this );
+    m_anim = new KPixmapSequenceWidget(this);
 #endif
-    m_anim->setFixedSize( 22, 22 );
-    layout->addWidget( m_anim );
+    m_anim->setFixedSize(22, 22);
+    layout->addWidget(m_anim);
     m_anim->hide();
 
-    m_timer = new QTimer( this );
-    m_timer->setSingleShot( true );
+    m_timer = new QTimer(this);
+    m_timer->setSingleShot(true);
     connect(m_timer, &QTimer::timeout, this, &SearchLineWidget::slotTimedout);
 
     connect(m_edit, &SearchLineEdit::searchStarted, this, &SearchLineWidget::slotSearchStarted);
     connect(m_edit, &SearchLineEdit::searchStopped, this, &SearchLineWidget::slotSearchStopped);
 }
 
-SearchLineEdit* SearchLineWidget::lineEdit() const
+SearchLineEdit *SearchLineWidget::lineEdit() const
 {
     return m_edit;
 }
 
 void SearchLineWidget::slotSearchStarted()
 {
-    m_timer->start( 100 );
+    m_timer->start(100);
 }
 
 void SearchLineWidget::slotSearchStopped()
@@ -326,13 +314,11 @@ void SearchLineWidget::slotSearchStopped()
 void SearchLineWidget::slotTimedout()
 {
 #if KWIDGETSADDONS_VERSION < QT_VERSION_CHECK(5, 61, 0)
-    if ( m_anim->sequence().isEmpty() )
-    {
+    if (m_anim->sequence().isEmpty()) {
         const KPixmapSequence seq = KIconLoader::global()->loadPixmapSequence(QStringLiteral("process-working"), 22);
-        if ( seq.frameCount() > 0 )
-        {
-            m_anim->setInterval( 1000 / seq.frameCount() );
-            m_anim->setSequence( seq );
+        if (seq.frameCount() > 0) {
+            m_anim->setInterval(1000 / seq.frameCount());
+            m_anim->setSequence(seq);
         }
     }
 #endif

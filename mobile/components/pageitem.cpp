@@ -21,29 +21,29 @@
 #include "documentitem.h"
 
 #include <QPainter>
-#include <QTimer>
-#include <QStyleOptionGraphicsItem>
 #include <QQuickWindow>
 #include <QSGSimpleTextureNode>
+#include <QStyleOptionGraphicsItem>
+#include <QTimer>
 
 #include <core/bookmarkmanager.h>
 #include <core/document.h>
 #include <core/generator.h>
 #include <core/page.h>
 
+#include "settings.h"
 #include "ui/pagepainter.h"
 #include "ui/priorities.h"
-#include "settings.h"
 
 #define REDRAW_TIMEOUT 250
 
 PageItem::PageItem(QQuickItem *parent)
-    : QQuickItem(parent),
-      Okular::View( QStringLiteral( "PageView" ) ),
-      m_page(nullptr),
-      m_smooth(false),
-      m_bookmarked(false),
-      m_isThumbnail(false)
+    : QQuickItem(parent)
+    , Okular::View(QStringLiteral("PageView"))
+    , m_page(nullptr)
+    , m_smooth(false)
+    , m_bookmarked(false)
+    , m_isThumbnail(false)
 {
     setFlag(QQuickItem::ItemHasContents, true);
 
@@ -53,9 +53,8 @@ PageItem::PageItem(QQuickItem *parent)
     m_redrawTimer->setInterval(REDRAW_TIMEOUT);
     m_redrawTimer->setSingleShot(true);
     connect(m_redrawTimer, &QTimer::timeout, this, &PageItem::requestPixmap);
-    connect(this, &QQuickItem::windowChanged, m_redrawTimer, [this]() {m_redrawTimer->start(); });
+    connect(this, &QQuickItem::windowChanged, m_redrawTimer, [this]() { m_redrawTimer->start(); });
 }
-
 
 PageItem::~PageItem()
 {
@@ -67,9 +66,8 @@ void PageItem::setFlickable(QQuickItem *flickable)
         return;
     }
 
-    //check the object can act as a flickable
-    if (!flickable->property("contentX").isValid() ||
-        !flickable->property("contentY").isValid()) {
+    // check the object can act as a flickable
+    if (!flickable->property("contentX").isValid() || !flickable->property("contentY").isValid()) {
         return;
     }
 
@@ -77,9 +75,8 @@ void PageItem::setFlickable(QQuickItem *flickable)
         disconnect(m_flickable.data(), nullptr, this, nullptr);
     }
 
-    //check the object can act as a flickable
-    if (!flickable->property("contentX").isValid() ||
-        !flickable->property("contentY").isValid()) {
+    // check the object can act as a flickable
+    if (!flickable->property("contentX").isValid() || !flickable->property("contentY").isValid()) {
         m_flickable.clear();
         return;
     }
@@ -115,8 +112,7 @@ void PageItem::setDocument(DocumentItem *doc)
     m_documentItem = doc;
     Observer *observer = m_isThumbnail ? m_documentItem.data()->thumbnailObserver() : m_documentItem.data()->pageviewObserver();
     connect(observer, &Observer::pageChanged, this, &PageItem::pageHasChanged);
-    connect(doc->document()->bookmarkManager(), &Okular::BookmarkManager::bookmarksChanged,
-            this, &PageItem::checkBookmarksChanged);
+    connect(doc->document()->bookmarkManager(), &Okular::BookmarkManager::bookmarksChanged, this, &PageItem::checkBookmarksChanged);
     setPageNumber(0);
     emit documentChanged();
     m_redrawTimer->start();
@@ -131,10 +127,7 @@ int PageItem::pageNumber() const
 
 void PageItem::setPageNumber(int number)
 {
-    if ((m_page && m_viewPort.pageNumber == number) ||
-        !m_documentItem ||
-        !m_documentItem.data()->isOpened() ||
-        number < 0) {
+    if ((m_page && m_viewPort.pageNumber == number) || !m_documentItem || !m_documentItem.data()->isOpened() || number < 0) {
         return;
     }
 
@@ -215,8 +208,7 @@ void PageItem::setBookmarked(bool bookmarked)
 QStringList PageItem::bookmarks() const
 {
     QStringList list;
-    const KBookmark::List pageMarks =
-                m_documentItem.data()->document()->bookmarkManager()->bookmarks(m_viewPort.pageNumber);
+    const KBookmark::List pageMarks = m_documentItem.data()->document()->bookmarkManager()->bookmarks(m_viewPort.pageNumber);
     for (const KBookmark &bookmark : pageMarks) {
         list << bookmark.url().toString();
     }
@@ -228,9 +220,9 @@ void PageItem::goToBookmark(const QString &bookmark)
     Okular::DocumentViewport viewPort(QUrl::fromUserInput(bookmark).fragment(QUrl::FullyDecoded));
     setPageNumber(viewPort.pageNumber);
 
-    //Are we in a flickable?
+    // Are we in a flickable?
     if (m_flickable) {
-        //normalizedX is a proportion, so contentX will be the difference between document and viewport times normalizedX
+        // normalizedX is a proportion, so contentX will be the difference between document and viewport times normalizedX
         m_flickable.data()->setProperty("contentX", qMax((qreal)0, width() - m_flickable.data()->width()) * viewPort.rePos.normalizedX);
 
         m_flickable.data()->setProperty("contentY", qMax((qreal)0, height() - m_flickable.data()->height()) * viewPort.rePos.normalizedY);
@@ -245,8 +237,7 @@ QPointF PageItem::bookmarkPosition(const QString &bookmark) const
         return QPointF(-1, -1);
     }
 
-    return QPointF(qMax((qreal)0, width() - m_flickable.data()->width()) * viewPort.rePos.normalizedX,
-                   qMax((qreal)0, height() - m_flickable.data()->height()) * viewPort.rePos.normalizedY);
+    return QPointF(qMax((qreal)0, width() - m_flickable.data()->width()) * viewPort.rePos.normalizedX, qMax((qreal)0, height() - m_flickable.data()->height()) * viewPort.rePos.normalizedY);
 }
 
 void PageItem::setBookmarkAtPos(qreal x, qreal y)
@@ -288,9 +279,8 @@ void PageItem::removeBookmark(const QString &bookmark)
     emit bookmarksChanged();
 }
 
-//Reimplemented
-void PageItem::geometryChanged(const QRectF &newGeometry,
-                               const QRectF &oldGeometry)
+// Reimplemented
+void PageItem::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry)
 {
     if (newGeometry.size().isEmpty()) {
         return;
@@ -305,13 +295,13 @@ void PageItem::geometryChanged(const QRectF &newGeometry,
     QQuickItem::geometryChanged(newGeometry, oldGeometry);
 
     if (changed) {
-        //Why aren't they automatically emitted?
+        // Why aren't they automatically emitted?
         emit widthChanged();
         emit heightChanged();
     }
 }
 
-QSGNode * PageItem::updatePaintNode(QSGNode* node, QQuickItem::UpdatePaintNodeData* /*data*/)
+QSGNode *PageItem::updatePaintNode(QSGNode *node, QQuickItem::UpdatePaintNodeData * /*data*/)
 {
     if (!window() || m_buffer.isNull()) {
         delete node;
@@ -352,7 +342,7 @@ void PageItem::requestPixmap()
     paint();
     {
         auto request = new Okular::PixmapRequest(observer, m_viewPort.pageNumber, width() * dpr, height() * dpr, priority, Okular::PixmapRequest::Asynchronous);
-        request->setNormalizedRect(Okular::NormalizedRect(0,0,1,1));
+        request->setNormalizedRect(Okular::NormalizedRect(0, 0, 1, 1));
         const Okular::Document::PixmapRequestFlag prf = Okular::Document::NoOption;
         m_documentItem.data()->document()->requestPixmaps({request}, prf);
     }
@@ -364,7 +354,7 @@ void PageItem::paint()
     const int flags = PagePainter::Accessibility | PagePainter::Highlights | PagePainter::Annotations;
 
     const qreal dpr = window()->devicePixelRatio();
-    const QRect limits(QPoint(0, 0), QSize(width()*dpr, height()*dpr));
+    const QRect limits(QPoint(0, 0), QSize(width() * dpr, height() * dpr));
     QPixmap pix(limits.size());
     pix.setDevicePixelRatio(dpr);
     QPainter p(&pix);
@@ -377,13 +367,13 @@ void PageItem::paint()
     update();
 }
 
-//Protected slots
+// Protected slots
 void PageItem::pageHasChanged(int page, int flags)
 {
     if (m_viewPort.pageNumber == page) {
         if (flags == Okular::DocumentObserver::BoundingBox) {
             // skip bounding box updates
-            //kDebug() << "32" << m_page->boundingBox();
+            // kDebug() << "32" << m_page->boundingBox();
         } else if (flags == Okular::DocumentObserver::Pixmap) {
             // if pixmaps have updated, just repaint .. don't bother updating pixmaps AGAIN
             paint();
@@ -405,7 +395,7 @@ void PageItem::checkBookmarksChanged()
         emit bookmarkedChanged();
     }
 
-    //TODO: check the page
+    // TODO: check the page
     emit bookmarksChanged();
 }
 

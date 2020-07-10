@@ -19,11 +19,11 @@
 #include <QEventLoop>
 #include <QPrinter>
 
+#include <KLocalizedString>
 #include <QDebug>
 #include <QIcon>
 #include <QMimeDatabase>
 #include <QTimer>
-#include <KLocalizedString>
 
 #ifdef WITH_KWALLET
 #include <KWallet>
@@ -39,149 +39,143 @@
 using namespace Okular;
 
 GeneratorPrivate::GeneratorPrivate()
-    : m_document( nullptr ),
-      mPixmapGenerationThread( nullptr ), mTextPageGenerationThread( nullptr ),
-      mPixmapReady( true ), mTextPageReady( true ),
-      m_closing( false ), m_closingLoop( nullptr ),
-      m_dpi(72.0, 72.0)
+    : m_document(nullptr)
+    , mPixmapGenerationThread(nullptr)
+    , mTextPageGenerationThread(nullptr)
+    , mPixmapReady(true)
+    , mTextPageReady(true)
+    , m_closing(false)
+    , m_closingLoop(nullptr)
+    , m_dpi(72.0, 72.0)
 {
-    qRegisterMetaType<Okular::Page*>();
+    qRegisterMetaType<Okular::Page *>();
 }
 
 GeneratorPrivate::~GeneratorPrivate()
 {
-    if ( mPixmapGenerationThread )
+    if (mPixmapGenerationThread)
         mPixmapGenerationThread->wait();
 
     delete mPixmapGenerationThread;
 
-    if ( mTextPageGenerationThread )
+    if (mTextPageGenerationThread)
         mTextPageGenerationThread->wait();
 
     delete mTextPageGenerationThread;
 }
 
-PixmapGenerationThread* GeneratorPrivate::pixmapGenerationThread()
+PixmapGenerationThread *GeneratorPrivate::pixmapGenerationThread()
 {
-    if ( mPixmapGenerationThread )
+    if (mPixmapGenerationThread)
         return mPixmapGenerationThread;
 
-    Q_Q( Generator );
-    mPixmapGenerationThread = new PixmapGenerationThread( q );
-    QObject::connect( mPixmapGenerationThread, &PixmapGenerationThread::finished, q, [this] { pixmapGenerationFinished(); },
-                      Qt::QueuedConnection );
+    Q_Q(Generator);
+    mPixmapGenerationThread = new PixmapGenerationThread(q);
+    QObject::connect(
+        mPixmapGenerationThread, &PixmapGenerationThread::finished, q, [this] { pixmapGenerationFinished(); }, Qt::QueuedConnection);
 
     return mPixmapGenerationThread;
 }
 
-TextPageGenerationThread* GeneratorPrivate::textPageGenerationThread()
+TextPageGenerationThread *GeneratorPrivate::textPageGenerationThread()
 {
-    if ( mTextPageGenerationThread )
+    if (mTextPageGenerationThread)
         return mTextPageGenerationThread;
 
-    Q_Q( Generator );
-    mTextPageGenerationThread = new TextPageGenerationThread( q );
-    QObject::connect( mTextPageGenerationThread, &TextPageGenerationThread::finished, q, [this] { textpageGenerationFinished(); },
-                      Qt::QueuedConnection );
+    Q_Q(Generator);
+    mTextPageGenerationThread = new TextPageGenerationThread(q);
+    QObject::connect(
+        mTextPageGenerationThread, &TextPageGenerationThread::finished, q, [this] { textpageGenerationFinished(); }, Qt::QueuedConnection);
 
     return mTextPageGenerationThread;
 }
 
 void GeneratorPrivate::pixmapGenerationFinished()
 {
-    Q_Q( Generator );
+    Q_Q(Generator);
     PixmapRequest *request = mPixmapGenerationThread->request();
-    const QImage& img = mPixmapGenerationThread->image();
+    const QImage &img = mPixmapGenerationThread->image();
     mPixmapGenerationThread->endGeneration();
 
-    QMutexLocker locker( threadsLock() );
+    QMutexLocker locker(threadsLock());
 
-    if ( m_closing )
-    {
+    if (m_closing) {
         mPixmapReady = true;
         delete request;
-        if ( mTextPageReady )
-        {
+        if (mTextPageReady) {
             locker.unlock();
             m_closingLoop->quit();
         }
         return;
     }
 
-
-    if ( !request->shouldAbortRender() )
-    {
-        request->page()->setPixmap( request->observer(), new QPixmap( QPixmap::fromImage( img ) ), request->normalizedRect() );
+    if (!request->shouldAbortRender()) {
+        request->page()->setPixmap(request->observer(), new QPixmap(QPixmap::fromImage(img)), request->normalizedRect());
         const int pageNumber = request->page()->number();
 
-        if ( mPixmapGenerationThread->calcBoundingBox() )
-            q->updatePageBoundingBox( pageNumber, mPixmapGenerationThread->boundingBox() );
-    }
-    else
-    {
+        if (mPixmapGenerationThread->calcBoundingBox())
+            q->updatePageBoundingBox(pageNumber, mPixmapGenerationThread->boundingBox());
+    } else {
         // Cancel the text page generation too if it's still running
-        if ( mTextPageGenerationThread && mTextPageGenerationThread->isRunning() ) {
+        if (mTextPageGenerationThread && mTextPageGenerationThread->isRunning()) {
             mTextPageGenerationThread->abortExtraction();
             mTextPageGenerationThread->wait();
         }
     }
 
     mPixmapReady = true;
-    q->signalPixmapRequestDone( request );
+    q->signalPixmapRequestDone(request);
 }
 
 void GeneratorPrivate::textpageGenerationFinished()
 {
-    Q_Q( Generator );
+    Q_Q(Generator);
     Page *page = mTextPageGenerationThread->page();
     mTextPageGenerationThread->endGeneration();
 
-    QMutexLocker locker( threadsLock() );
+    QMutexLocker locker(threadsLock());
     mTextPageReady = true;
 
-    if ( m_closing )
-    {
+    if (m_closing) {
         delete mTextPageGenerationThread->textPage();
-        if ( mPixmapReady )
-        {
+        if (mPixmapReady) {
             locker.unlock();
             m_closingLoop->quit();
         }
         return;
     }
 
-    if ( mTextPageGenerationThread->textPage() )
-    {
+    if (mTextPageGenerationThread->textPage()) {
         TextPage *tp = mTextPageGenerationThread->textPage();
-        page->setTextPage( tp );
-        q->signalTextGenerationDone( page, tp );
+        page->setTextPage(tp);
+        q->signalTextGenerationDone(page, tp);
     }
 }
 
-QMutex* GeneratorPrivate::threadsLock()
+QMutex *GeneratorPrivate::threadsLock()
 {
     return &m_threadsMutex;
 }
 
-QVariant GeneratorPrivate::metaData( const QString &, const QVariant & ) const
+QVariant GeneratorPrivate::metaData(const QString &, const QVariant &) const
 {
     return QVariant();
 }
 
-QImage GeneratorPrivate::image( PixmapRequest * )
+QImage GeneratorPrivate::image(PixmapRequest *)
 {
     return QImage();
 }
 
-
-Generator::Generator(QObject* parent, const QVariantList &args)
-    : Generator( *new GeneratorPrivate(), parent, args )
+Generator::Generator(QObject *parent, const QVariantList &args)
+    : Generator(*new GeneratorPrivate(), parent, args)
 {
     // the delegated constructor does it all
 }
 
 Generator::Generator(GeneratorPrivate &dd, QObject *parent, const QVariantList &args)
-    : QObject(parent), d_ptr(&dd)
+    : QObject(parent)
+    , d_ptr(&dd)
 {
     d_ptr->q_ptr = this;
     Q_UNUSED(args)
@@ -192,7 +186,7 @@ Generator::~Generator()
     delete d_ptr;
 }
 
-bool Generator::loadDocument( const QString & fileName, QVector< Page * > & pagesVector )
+bool Generator::loadDocument(const QString &fileName, QVector<Page *> &pagesVector)
 {
     Q_UNUSED(fileName);
     Q_UNUSED(pagesVector);
@@ -200,35 +194,34 @@ bool Generator::loadDocument( const QString & fileName, QVector< Page * > & page
     return false;
 }
 
-bool Generator::loadDocumentFromData( const QByteArray &, QVector< Page * > & )
+bool Generator::loadDocumentFromData(const QByteArray &, QVector<Page *> &)
 {
     return false;
 }
 
-Document::OpenResult Generator::loadDocumentWithPassword( const QString & fileName, QVector< Page * > & pagesVector, const QString & )
+Document::OpenResult Generator::loadDocumentWithPassword(const QString &fileName, QVector<Page *> &pagesVector, const QString &)
 {
-    return loadDocument( fileName, pagesVector ) ? Document::OpenSuccess : Document::OpenError;
+    return loadDocument(fileName, pagesVector) ? Document::OpenSuccess : Document::OpenError;
 }
 
-Document::OpenResult Generator::loadDocumentFromDataWithPassword( const QByteArray & fileData, QVector< Page * > & pagesVector, const QString & )
+Document::OpenResult Generator::loadDocumentFromDataWithPassword(const QByteArray &fileData, QVector<Page *> &pagesVector, const QString &)
 {
-    return loadDocumentFromData( fileData, pagesVector ) ? Document::OpenSuccess : Document::OpenError;
+    return loadDocumentFromData(fileData, pagesVector) ? Document::OpenSuccess : Document::OpenError;
 }
 
-Generator::SwapBackingFileResult Generator::swapBackingFile( QString const &/*newFileName */, QVector<Okular::Page*> & /*newPagesVector*/ )
+Generator::SwapBackingFileResult Generator::swapBackingFile(QString const & /*newFileName */, QVector<Okular::Page *> & /*newPagesVector*/)
 {
     return SwapBackingFileError;
 }
 
 bool Generator::closeDocument()
 {
-    Q_D( Generator );
+    Q_D(Generator);
 
     d->m_closing = true;
 
     d->threadsLock()->lock();
-    if ( !( d->mPixmapReady && d->mTextPageReady ) )
-    {
+    if (!(d->mPixmapReady && d->mTextPageReady)) {
         QEventLoop loop;
         d->m_closingLoop = &loop;
 
@@ -237,9 +230,7 @@ bool Generator::closeDocument()
         loop.exec();
 
         d->m_closingLoop = nullptr;
-    }
-    else
-    {
+    } else {
         d->threadsLock()->unlock();
     }
 
@@ -252,21 +243,19 @@ bool Generator::closeDocument()
 
 bool Generator::canGeneratePixmap() const
 {
-    Q_D( const Generator );
+    Q_D(const Generator);
     return d->mPixmapReady;
 }
 
-void Generator::generatePixmap( PixmapRequest *request )
+void Generator::generatePixmap(PixmapRequest *request)
 {
-    Q_D( Generator );
+    Q_D(Generator);
     d->mPixmapReady = false;
 
     const bool calcBoundingBox = !request->isTile() && !request->page()->isBoundingBoxKnown();
 
-    if ( request->asynchronous() && hasFeature( Threaded ) )
-    {
-        if ( d->textPageGenerationThread()->isFinished() && !canGenerateTextPage() )
-        {
+    if (request->asynchronous() && hasFeature(Threaded)) {
+        if (d->textPageGenerationThread()->isFinished() && !canGenerateTextPage()) {
             // It can happen that the text generation has already finished but
             // mTextPageReady is still false because textpageGenerationFinished
             // didn't have time to run, if so queue ourselves
@@ -278,9 +267,9 @@ void Generator::generatePixmap( PixmapRequest *request )
          * We create the text page for every page that is visible to the
          * user, so he can use the text extraction tools without a delay.
          */
-        if ( hasFeature( TextExtraction ) && !request->page()->hasTextPage() && canGenerateTextPage() && !d->m_closing ) {
+        if (hasFeature(TextExtraction) && !request->page()->hasTextPage() && canGenerateTextPage() && !d->m_closing) {
             d->mTextPageReady = false;
-            d->textPageGenerationThread()->setPage( request->page() );
+            d->textPageGenerationThread()->setPage(request->page());
 
             // dummy is used as a way to make sure the lambda gets disconnected each time it is executed
             // since not all the times the pixmap generation thread starts we want the text generation thread to also start
@@ -291,43 +280,43 @@ void Generator::generatePixmap( PixmapRequest *request )
             });
         }
         // pixmap generation thread must be started *after* connect(), else we may miss the start signal and get lock-ups (see bug 396137)
-        d->pixmapGenerationThread()->startGeneration( request, calcBoundingBox );
+        d->pixmapGenerationThread()->startGeneration(request, calcBoundingBox);
 
         return;
     }
 
-    const QImage& img = image( request );
-    request->page()->setPixmap( request->observer(), new QPixmap( QPixmap::fromImage( img ) ), request->normalizedRect() );
+    const QImage &img = image(request);
+    request->page()->setPixmap(request->observer(), new QPixmap(QPixmap::fromImage(img)), request->normalizedRect());
     const int pageNumber = request->page()->number();
 
     d->mPixmapReady = true;
 
-    signalPixmapRequestDone( request );
-    if ( calcBoundingBox )
-        updatePageBoundingBox( pageNumber, Utils::imageBoundingBox( &img ) );
+    signalPixmapRequestDone(request);
+    if (calcBoundingBox)
+        updatePageBoundingBox(pageNumber, Utils::imageBoundingBox(&img));
 }
 
 bool Generator::canGenerateTextPage() const
 {
-    Q_D( const Generator );
+    Q_D(const Generator);
     return d->mTextPageReady;
 }
 
-void Generator::generateTextPage( Page *page )
+void Generator::generateTextPage(Page *page)
 {
-    TextRequest treq( page );
-    TextPage *tp = textPage( &treq );
-    page->setTextPage( tp );
-    signalTextGenerationDone( page, tp );
+    TextRequest treq(page);
+    TextPage *tp = textPage(&treq);
+    page->setTextPage(tp);
+    signalTextGenerationDone(page, tp);
 }
 
-QImage Generator::image( PixmapRequest *request )
+QImage Generator::image(PixmapRequest *request)
 {
-    Q_D( Generator );
-    return d->image( request );
+    Q_D(Generator);
+    return d->image(request);
 }
 
-TextPage* Generator::textPage( TextRequest * )
+TextPage *Generator::textPage(TextRequest *)
 {
     return nullptr;
 }
@@ -339,17 +328,17 @@ DocumentInfo Generator::generateDocumentInfo(const QSet<DocumentInfo::Key> &keys
     return DocumentInfo();
 }
 
-const DocumentSynopsis * Generator::generateDocumentSynopsis()
+const DocumentSynopsis *Generator::generateDocumentSynopsis()
 {
     return nullptr;
 }
 
-FontInfo::List Generator::fontsForPage( int )
+FontInfo::List Generator::fontsForPage(int)
 {
     return FontInfo::List();
 }
 
-const QList<EmbeddedFile*> * Generator::embeddedFiles() const
+const QList<EmbeddedFile *> *Generator::embeddedFiles() const
 {
     return nullptr;
 }
@@ -359,12 +348,12 @@ Generator::PageSizeMetric Generator::pagesSizeMetric() const
     return None;
 }
 
-bool Generator::isAllowed( Permission ) const
+bool Generator::isAllowed(Permission) const
 {
     return true;
 }
 
-void Generator::rotationChanged( Rotation, Rotation )
+void Generator::rotationChanged(Rotation, Rotation)
 {
 }
 
@@ -373,11 +362,11 @@ PageSize::List Generator::pageSizes() const
     return PageSize::List();
 }
 
-void Generator::pageSizeChanged( const PageSize &, const PageSize & )
+void Generator::pageSizeChanged(const PageSize &, const PageSize &)
 {
 }
 
-bool Generator::print( QPrinter& )
+bool Generator::print(QPrinter &)
 {
     return false;
 }
@@ -387,14 +376,14 @@ Generator::PrintError Generator::printError() const
     return UnknownPrintError;
 }
 
-void Generator::opaqueAction( const BackendOpaqueAction * /*action*/ )
+void Generator::opaqueAction(const BackendOpaqueAction * /*action*/)
 {
 }
 
-QVariant Generator::metaData( const QString &key, const QVariant &option ) const
+QVariant Generator::metaData(const QString &key, const QVariant &option) const
 {
-    Q_D( const Generator );
-    return d->metaData( key, option );
+    Q_D(const Generator);
+    return d->metaData(key, option);
 }
 
 ExportFormat::List Generator::exportFormats() const
@@ -402,81 +391,79 @@ ExportFormat::List Generator::exportFormats() const
     return ExportFormat::List();
 }
 
-bool Generator::exportTo( const QString&, const ExportFormat& )
+bool Generator::exportTo(const QString &, const ExportFormat &)
 {
     return false;
 }
 
-void Generator::walletDataForFile( const QString &fileName, QString *walletName, QString *walletFolder, QString *walletKey ) const
+void Generator::walletDataForFile(const QString &fileName, QString *walletName, QString *walletFolder, QString *walletKey) const
 {
 #ifdef WITH_KWALLET
-    *walletKey = fileName.section( QLatin1Char('/'), -1, -1);
+    *walletKey = fileName.section(QLatin1Char('/'), -1, -1);
     *walletName = KWallet::Wallet::NetworkWallet();
     *walletFolder = QStringLiteral("KPdf");
 #endif
 }
 
-bool Generator::hasFeature( GeneratorFeature feature ) const
+bool Generator::hasFeature(GeneratorFeature feature) const
 {
-    Q_D( const Generator );
-    return d->m_features.contains( feature );
+    Q_D(const Generator);
+    return d->m_features.contains(feature);
 }
 
-void Generator::signalPixmapRequestDone( PixmapRequest * request )
+void Generator::signalPixmapRequestDone(PixmapRequest *request)
 {
-    Q_D( Generator );
-    if ( d->m_document )
-        d->m_document->requestDone( request );
-    else
-    {
+    Q_D(Generator);
+    if (d->m_document)
+        d->m_document->requestDone(request);
+    else {
         delete request;
     }
 }
 
-void Generator::signalTextGenerationDone( Page *page, TextPage *textPage )
+void Generator::signalTextGenerationDone(Page *page, TextPage *textPage)
 {
-    Q_D( Generator );
-    if ( d->m_document )
-        d->m_document->textGenerationDone( page );
+    Q_D(Generator);
+    if (d->m_document)
+        d->m_document->textGenerationDone(page);
     else
         delete textPage;
 }
 
-void Generator::signalPartialPixmapRequest( PixmapRequest *request, const QImage &image )
+void Generator::signalPartialPixmapRequest(PixmapRequest *request, const QImage &image)
 {
-    if ( request->shouldAbortRender() )
+    if (request->shouldAbortRender())
         return;
 
-    PagePrivate *pagePrivate = PagePrivate::get( request->page() );
-    pagePrivate->setPixmap( request->observer(), new QPixmap( QPixmap::fromImage( image ) ), request->normalizedRect(), true /* isPartialPixmap */ );
+    PagePrivate *pagePrivate = PagePrivate::get(request->page());
+    pagePrivate->setPixmap(request->observer(), new QPixmap(QPixmap::fromImage(image)), request->normalizedRect(), true /* isPartialPixmap */);
 
     const int pageNumber = request->page()->number();
-    request->observer()->notifyPageChanged( pageNumber, Okular::DocumentObserver::Pixmap );
+    request->observer()->notifyPageChanged(pageNumber, Okular::DocumentObserver::Pixmap);
 }
 
-const Document * Generator::document() const
+const Document *Generator::document() const
 {
-    Q_D( const Generator );
-    if ( d->m_document )
-    {
+    Q_D(const Generator);
+    if (d->m_document) {
         return d->m_document->m_parent;
     }
     return nullptr;
 }
 
-void Generator::setFeature( GeneratorFeature feature, bool on )
+void Generator::setFeature(GeneratorFeature feature, bool on)
 {
-    Q_D( Generator );
-    if ( on )
-        d->m_features.insert( feature );
+    Q_D(Generator);
+    if (on)
+        d->m_features.insert(feature);
     else
-        d->m_features.remove( feature );
+        d->m_features.remove(feature);
 }
 
-QVariant Generator::documentMetaData( const QString &key, const QVariant &option ) const
+QVariant Generator::documentMetaData(const QString &key, const QVariant &option) const
 {
-    Q_D( const Generator );
-    if ( !d->m_document )
+    Q_D(const Generator);
+    if (!d->m_document)
         return QVariant();
 
     if (key == QLatin1String("PaperColor"))
@@ -491,59 +478,58 @@ QVariant Generator::documentMetaData( const QString &key, const QVariant &option
     return QVariant();
 }
 
-QVariant Generator::documentMetaData( const DocumentMetaDataKey key, const QVariant &option ) const
+QVariant Generator::documentMetaData(const DocumentMetaDataKey key, const QVariant &option) const
 {
-    Q_D( const Generator );
-    if ( !d->m_document )
+    Q_D(const Generator);
+    if (!d->m_document)
         return QVariant();
 
-    return d->m_document->documentMetaData( key, option );
+    return d->m_document->documentMetaData(key, option);
 }
 
-QMutex* Generator::userMutex() const
+QMutex *Generator::userMutex() const
 {
-    Q_D( const Generator );
+    Q_D(const Generator);
     return &d->m_mutex;
 }
 
-void Generator::updatePageBoundingBox( int page, const NormalizedRect & boundingBox )
+void Generator::updatePageBoundingBox(int page, const NormalizedRect &boundingBox)
 {
-    Q_D( Generator );
-    if ( d->m_document ) // still connected to document?
-        d->m_document->setPageBoundingBox( page, boundingBox );
+    Q_D(Generator);
+    if (d->m_document) // still connected to document?
+        d->m_document->setPageBoundingBox(page, boundingBox);
 }
 
 void Generator::requestFontData(const Okular::FontInfo & /*font*/, QByteArray * /*data*/)
 {
-
 }
 
-void Generator::setDPI(const QSizeF & dpi) // clazy:exclude=function-args-by-value TODO remove the & when we do a BIC change elsewhere
+void Generator::setDPI(const QSizeF &dpi) // clazy:exclude=function-args-by-value TODO remove the & when we do a BIC change elsewhere
 {
-     Q_D( Generator );
-     d->m_dpi = dpi;
+    Q_D(Generator);
+    d->m_dpi = dpi;
 }
 
 QSizeF Generator::dpi() const
 {
-     Q_D( const Generator );
-     return d->m_dpi;
+    Q_D(const Generator);
+    return d->m_dpi;
 }
 
-QAbstractItemModel * Generator::layersModel() const
+QAbstractItemModel *Generator::layersModel() const
 {
     return nullptr;
 }
 
 TextRequest::TextRequest()
-: d( new TextRequestPrivate )
+    : d(new TextRequestPrivate)
 {
     d->mPage = nullptr;
     d->mShouldAbortExtraction = 0;
 }
 
-TextRequest::TextRequest( Page *page )
-: d( new TextRequestPrivate )
+TextRequest::TextRequest(Page *page)
+    : d(new TextRequestPrivate)
 {
     d->mPage = page;
     d->mShouldAbortExtraction = 0;
@@ -569,8 +555,8 @@ TextRequestPrivate *TextRequestPrivate::get(const TextRequest *req)
     return req->d;
 }
 
-PixmapRequest::PixmapRequest( DocumentObserver *observer, int pageNumber, int width, int height, int priority, PixmapRequestFeatures features )
-  : d( new PixmapRequestPrivate )
+PixmapRequest::PixmapRequest(DocumentObserver *observer, int pageNumber, int width, int height, int priority, PixmapRequestFeatures features)
+    : d(new PixmapRequestPrivate)
 {
     d->mObserver = observer;
     d->mPageNumber = pageNumber;
@@ -625,12 +611,12 @@ bool PixmapRequest::preload() const
     return d->mFeatures & Preload;
 }
 
-Page* PixmapRequest::page() const
+Page *PixmapRequest::page() const
 {
     return d->mPage;
 }
 
-void PixmapRequest::setTile( bool tile )
+void PixmapRequest::setTile(bool tile)
 {
     d->mTile = tile;
 }
@@ -640,15 +626,15 @@ bool PixmapRequest::isTile() const
     return d->mTile;
 }
 
-void PixmapRequest::setNormalizedRect( const NormalizedRect &rect )
+void PixmapRequest::setNormalizedRect(const NormalizedRect &rect)
 {
-    if ( d->mNormalizedRect == rect )
+    if (d->mNormalizedRect == rect)
         return;
 
     d->mNormalizedRect = rect;
 }
 
-const NormalizedRect& PixmapRequest::normalizedRect() const
+const NormalizedRect &PixmapRequest::normalizedRect() const
 {
     return d->mNormalizedRect;
 }
@@ -668,7 +654,7 @@ bool PixmapRequest::shouldAbortRender() const
     return d->mShouldAbortRender != 0;
 }
 
-Okular::TilesManager* PixmapRequestPrivate::tilesManager() const
+Okular::TilesManager *PixmapRequestPrivate::tilesManager() const
 {
     return mPage->d->tilesManager(mObserver);
 }
@@ -680,37 +666,40 @@ PixmapRequestPrivate *PixmapRequestPrivate::get(const PixmapRequest *req)
 
 void PixmapRequestPrivate::swap()
 {
-    qSwap( mWidth, mHeight );
+    qSwap(mWidth, mHeight);
 }
 
 class Okular::ExportFormatPrivate : public QSharedData
 {
-    public:
-        ExportFormatPrivate( const QString &description, const QMimeType &mimeType, const QIcon &icon = QIcon() )
-            : QSharedData(), mDescription( description ), mMimeType( mimeType ), mIcon( icon )
-        {
-        }
-        ~ExportFormatPrivate()
-        {
-        }
+public:
+    ExportFormatPrivate(const QString &description, const QMimeType &mimeType, const QIcon &icon = QIcon())
+        : QSharedData()
+        , mDescription(description)
+        , mMimeType(mimeType)
+        , mIcon(icon)
+    {
+    }
+    ~ExportFormatPrivate()
+    {
+    }
 
-        QString mDescription;
-        QMimeType mMimeType;
-        QIcon mIcon;
+    QString mDescription;
+    QMimeType mMimeType;
+    QIcon mIcon;
 };
 
 ExportFormat::ExportFormat()
-    : d( new ExportFormatPrivate( QString(), QMimeType() ) )
+    : d(new ExportFormatPrivate(QString(), QMimeType()))
 {
 }
 
-ExportFormat::ExportFormat( const QString &description, const QMimeType &mimeType )
-    : d( new ExportFormatPrivate( description, mimeType ) )
+ExportFormat::ExportFormat(const QString &description, const QMimeType &mimeType)
+    : d(new ExportFormatPrivate(description, mimeType))
 {
 }
 
-ExportFormat::ExportFormat( const QIcon &icon, const QString &description, const QMimeType &mimeType )
-    : d( new ExportFormatPrivate( description, mimeType, icon ) )
+ExportFormat::ExportFormat(const QIcon &icon, const QString &description, const QMimeType &mimeType)
+    : d(new ExportFormatPrivate(description, mimeType, icon))
 {
 }
 
@@ -718,14 +707,14 @@ ExportFormat::~ExportFormat()
 {
 }
 
-ExportFormat::ExportFormat( const ExportFormat &other )
-    : d( other.d )
+ExportFormat::ExportFormat(const ExportFormat &other)
+    : d(other.d)
 {
 }
 
-ExportFormat& ExportFormat::operator=( const ExportFormat &other )
+ExportFormat &ExportFormat::operator=(const ExportFormat &other)
 {
-    if ( this == &other )
+    if (this == &other)
         return *this;
 
     d = other.d;
@@ -753,41 +742,38 @@ bool ExportFormat::isNull() const
     return !d->mMimeType.isValid() || d->mDescription.isNull();
 }
 
-ExportFormat ExportFormat::standardFormat( StandardExportFormat type )
+ExportFormat ExportFormat::standardFormat(StandardExportFormat type)
 {
     QMimeDatabase db;
-    switch ( type )
-    {
-        case PlainText:
-            return ExportFormat( QIcon::fromTheme( QStringLiteral("text-x-generic") ), i18n( "Plain &Text..." ), db.mimeTypeForName( QStringLiteral("text/plain") ) );
-            break;
-        case PDF:
-            return ExportFormat( QIcon::fromTheme( QStringLiteral("application-pdf") ), i18n( "PDF" ), db.mimeTypeForName( QStringLiteral("application/pdf") ) );
-            break;
-        case OpenDocumentText:
-            return ExportFormat(
-                QIcon::fromTheme( QStringLiteral("application-vnd.oasis.opendocument.text") ),
-                i18nc( "This is the document format", "OpenDocument Text" ),
-                db.mimeTypeForName( QStringLiteral("application/vnd.oasis.opendocument.text") ) );
-	    break;
-        case HTML:
-            return ExportFormat( QIcon::fromTheme( QStringLiteral("text-html") ), i18nc( "This is the document format", "HTML" ), db.mimeTypeForName( QStringLiteral("text/html") ) );
-            break;
+    switch (type) {
+    case PlainText:
+        return ExportFormat(QIcon::fromTheme(QStringLiteral("text-x-generic")), i18n("Plain &Text..."), db.mimeTypeForName(QStringLiteral("text/plain")));
+        break;
+    case PDF:
+        return ExportFormat(QIcon::fromTheme(QStringLiteral("application-pdf")), i18n("PDF"), db.mimeTypeForName(QStringLiteral("application/pdf")));
+        break;
+    case OpenDocumentText:
+        return ExportFormat(
+            QIcon::fromTheme(QStringLiteral("application-vnd.oasis.opendocument.text")), i18nc("This is the document format", "OpenDocument Text"), db.mimeTypeForName(QStringLiteral("application/vnd.oasis.opendocument.text")));
+        break;
+    case HTML:
+        return ExportFormat(QIcon::fromTheme(QStringLiteral("text-html")), i18nc("This is the document format", "HTML"), db.mimeTypeForName(QStringLiteral("text/html")));
+        break;
     }
     return ExportFormat();
 }
 
-bool ExportFormat::operator==( const ExportFormat &other ) const
+bool ExportFormat::operator==(const ExportFormat &other) const
 {
     return d == other.d;
 }
 
-bool ExportFormat::operator!=( const ExportFormat &other ) const
+bool ExportFormat::operator!=(const ExportFormat &other) const
 {
     return d != other.d;
 }
 
-QDebug operator<<( QDebug str, const Okular::PixmapRequest &req )
+QDebug operator<<(QDebug str, const Okular::PixmapRequest &req)
 {
     PixmapRequestPrivate *reqPriv = PixmapRequestPrivate::get(&req);
 
@@ -797,13 +783,13 @@ QDebug operator<<( QDebug str, const Okular::PixmapRequest &req )
     str << "- width:" << req.width();
     str << "- height:" << req.height();
     str << "- priority:" << req.priority();
-    str << "- async:" << ( req.asynchronous() ? "true" : "false" );
-    str << "- tile:" << ( req.isTile() ? "true" : "false" );
+    str << "- async:" << (req.asynchronous() ? "true" : "false");
+    str << "- tile:" << (req.isTile() ? "true" : "false");
     str << "- rect:" << req.normalizedRect();
-    str << "- preload:" << ( req.preload() ? "true" : "false" );
-    str << "- partialUpdates:" << ( req.partialUpdatesWanted() ? "true" : "false" );
-    str << "- shouldAbort:" << ( req.shouldAbortRender() ? "true" : "false" );
-    str << "- force:" << ( reqPriv->mForce ? "true" : "false" );
+    str << "- preload:" << (req.preload() ? "true" : "false");
+    str << "- partialUpdates:" << (req.partialUpdatesWanted() ? "true" : "false");
+    str << "- shouldAbort:" << (req.shouldAbortRender() ? "true" : "false");
+    str << "- force:" << (reqPriv->mForce ? "true" : "false");
     return str;
 }
 

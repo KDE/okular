@@ -13,24 +13,18 @@
 class KJSContext;
 class KJSObject;
 
-namespace Okular {
-
+namespace Okular
+{
 /**
  * The display types of the field.
-*/
-enum FormDisplay
-{
-    FormVisible,
-    FormHidden,
-    FormNoPrint,
-    FormNoView
-};
+ */
+enum FormDisplay { FormVisible, FormHidden, FormNoPrint, FormNoView };
 
 class JSDisplay
 {
-    public:
-        static void initType( KJSContext *ctx );
-        static KJSObject object( KJSContext *ctx );
+public:
+    static void initType(KJSContext *ctx);
+    static KJSObject object(KJSContext *ctx);
 };
 
 }

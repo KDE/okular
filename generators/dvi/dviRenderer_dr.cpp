@@ -17,33 +17,31 @@
 SimplePageSize dviRenderer::sizeOfPage(const PageNumber page)
 {
 #if !defined(QT_NO_THREAD)
-  // Wait for all access to this DocumentRenderer to finish
-  //QMutexLocker locker(&mutex);
+    // Wait for all access to this DocumentRenderer to finish
+    // QMutexLocker locker(&mutex);
 #endif
 
-  if (!page.isValid())
-    return SimplePageSize();
-  if (page > totalPages())
-    return SimplePageSize();
-  if (page > pageSizes.size())
-    return SimplePageSize();
+    if (!page.isValid())
+        return SimplePageSize();
+    if (page > totalPages())
+        return SimplePageSize();
+    if (page > pageSizes.size())
+        return SimplePageSize();
 
-  return pageSizes[page-1];
+    return pageSizes[page - 1];
 }
 
 Anchor dviRenderer::findAnchor(const QString &locallink)
 {
-  QMap<QString,Anchor>::Iterator it = anchorList.find(locallink);
-  if (it != anchorList.end())
-    return *it;
-  else
-    return Anchor();
+    QMap<QString, Anchor>::Iterator it = anchorList.find(locallink);
+    if (it != anchorList.end())
+        return *it;
+    else
+        return Anchor();
 }
-
 
 PageNumber dviRenderer::totalPages() const
 {
-  PageNumber temp = numPages;
-  return temp;
+    PageNumber temp = numPages;
+    return temp;
 }
-

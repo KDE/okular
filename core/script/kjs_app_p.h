@@ -15,17 +15,17 @@ class KJSContext;
 class KJSObject;
 class QTimer;
 
-namespace Okular {
-
+namespace Okular
+{
 class DocumentPrivate;
 
 class JSApp
 {
-    public:
-        static void initType( KJSContext *ctx );
-        static KJSObject object( KJSContext *ctx, DocumentPrivate *doc );
-        static KJSObject wrapTimer( KJSContext *ctx, QTimer *timer );
-        static void clearCachedFields();
+public:
+    static void initType(KJSContext *ctx);
+    static KJSObject object(KJSContext *ctx, DocumentPrivate *doc);
+    static KJSObject wrapTimer(KJSContext *ctx, QTimer *timer);
+    static void clearCachedFields();
 };
 
 }

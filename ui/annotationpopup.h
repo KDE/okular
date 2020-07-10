@@ -10,12 +10,13 @@
 #ifndef ANNOTATIONPOPUP_H
 #define ANNOTATIONPOPUP_H
 
-#include <QObject>
 #include <QList>
+#include <QObject>
 #include <QPair>
 #include <QPoint>
 
-namespace Okular {
+namespace Okular
+{
 class Annotation;
 class Document;
 }
@@ -24,47 +25,53 @@ class AnnotationPopup : public QObject
 {
     Q_OBJECT
 
-    public:
-        /**
-         * Describes the structure of the popup menu.
-         */
-        enum MenuMode
+public:
+    /**
+     * Describes the structure of the popup menu.
+     */
+    enum MenuMode {
+        SingleAnnotationMode, ///< The menu shows only entries to manipulate a single annotation, or multiple annotations as a group.
+        MultiAnnotationMode   ///< The menu shows entries to manipulate multiple annotations.
+    };
+
+    AnnotationPopup(Okular::Document *document, MenuMode mode, QWidget *parent = nullptr);
+
+    void addAnnotation(Okular::Annotation *annotation, int pageNumber);
+
+    void exec(const QPoint point = QPoint());
+
+Q_SIGNALS:
+    void openAnnotationWindow(Okular::Annotation *annotation, int pageNumber);
+
+public:
+    struct AnnotPagePair {
+        AnnotPagePair()
+            : annotation(nullptr)
+            , pageNumber(-1)
         {
-            SingleAnnotationMode, ///< The menu shows only entries to manipulate a single annotation, or multiple annotations as a group.
-            MultiAnnotationMode   ///< The menu shows entries to manipulate multiple annotations.
-        };
+        }
 
-        AnnotationPopup( Okular::Document *document, MenuMode mode, QWidget *parent = nullptr );
+        AnnotPagePair(Okular::Annotation *a, int pn)
+            : annotation(a)
+            , pageNumber(pn)
+        {
+        }
 
-        void addAnnotation( Okular::Annotation* annotation, int pageNumber );
+        bool operator==(const AnnotPagePair pair) const
+        {
+            return annotation == pair.annotation && pageNumber == pair.pageNumber;
+        }
 
-        void exec( const QPoint point = QPoint() );
+        Okular::Annotation *annotation;
+        int pageNumber;
+    };
 
-    Q_SIGNALS:
-        void openAnnotationWindow( Okular::Annotation *annotation, int pageNumber );
+private:
+    QWidget *mParent;
 
-    public:
-        struct AnnotPagePair {
-            AnnotPagePair() : annotation( nullptr ),  pageNumber( -1 )
-            { }
-
-            AnnotPagePair( Okular::Annotation *a, int pn ) : annotation( a ),  pageNumber( pn )
-            { }
-            
-            bool operator==( const AnnotPagePair pair ) const
-            { return annotation == pair.annotation && pageNumber == pair.pageNumber; }
-            
-            Okular::Annotation* annotation;
-            int pageNumber;
-        };
-
-    private:
-        QWidget *mParent;
-
-        QList< AnnotPagePair > mAnnotations;
-        Okular::Document *mDocument;
-        MenuMode mMenuMode;
+    QList<AnnotPagePair> mAnnotations;
+    Okular::Document *mDocument;
+    MenuMode mMenuMode;
 };
-
 
 #endif

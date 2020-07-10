@@ -20,23 +20,23 @@ using namespace Okular;
 static KJSPrototype *g_spellProto;
 
 // Spell.available
-static KJSObject spellGetAvailable( KJSContext *, void *  )
+static KJSObject spellGetAvailable(KJSContext *, void *)
 {
-    return KJSBoolean( false );
+    return KJSBoolean(false);
 }
 
-void JSSpell::initType( KJSContext *ctx )
+void JSSpell::initType(KJSContext *ctx)
 {
     static bool initialized = false;
-    if ( initialized )
+    if (initialized)
         return;
     initialized = true;
 
     g_spellProto = new KJSPrototype();
-    g_spellProto->defineProperty( ctx, QStringLiteral( "available" ), spellGetAvailable );
+    g_spellProto->defineProperty(ctx, QStringLiteral("available"), spellGetAvailable);
 }
 
-KJSObject JSSpell::object( KJSContext *ctx )
+KJSObject JSSpell::object(KJSContext *ctx)
 {
-    return g_spellProto->constructObject( ctx, nullptr );
+    return g_spellProto->constructObject(ctx, nullptr);
 }

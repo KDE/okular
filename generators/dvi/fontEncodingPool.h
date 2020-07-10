@@ -15,19 +15,19 @@
 
 class QString;
 
+class fontEncodingPool
+{
+public:
+    fontEncodingPool();
+    ~fontEncodingPool();
 
-class fontEncodingPool {
- public:
-  fontEncodingPool();
-  ~fontEncodingPool();
+    fontEncodingPool(const fontEncodingPool &) = delete;
+    fontEncodingPool &operator=(const fontEncodingPool &) = delete;
 
-  fontEncodingPool(const fontEncodingPool &) = delete;
-  fontEncodingPool &operator=(const fontEncodingPool &) = delete;
+    fontEncoding *findByName(const QString &name);
 
-  fontEncoding *findByName(const QString &name);
-
- private:
-  QHash<QString,fontEncoding*> dictionary;
+private:
+    QHash<QString, fontEncoding *> dictionary;
 };
 
 #endif

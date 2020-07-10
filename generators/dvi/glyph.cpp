@@ -9,30 +9,31 @@
 
 #include <config.h>
 
-#include "glyph.h"
 #include "debug_dvi.h"
+#include "glyph.h"
 
 bitmap::bitmap()
 {
-  bits = nullptr; 
+    bits = nullptr;
 }
 
 bitmap::~bitmap()
 {
-  delete[] bits;
+    delete[] bits;
 }
 
 glyph::glyph()
 {
 #ifdef DEBUG_GLYPH
-  qCDebug(OkularDviDebug) << "glyph::glyph()";
+    qCDebug(OkularDviDebug) << "glyph::glyph()";
 #endif
 
-  addr                     = 0;
-  x                        = 0;
-  y                        = 0;
-  dvi_advance_in_units_of_design_size_by_2e20 = 0;
+    addr = 0;
+    x = 0;
+    y = 0;
+    dvi_advance_in_units_of_design_size_by_2e20 = 0;
 }
 
 glyph::~glyph()
-{}
+{
+}

@@ -19,5 +19,3 @@
 
 #include "fax_debug.h"
 Q_LOGGING_CATEGORY(FAX_LOG, "org.kde.okular.generators.fax", QtWarningMsg)
-
-

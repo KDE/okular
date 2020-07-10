@@ -12,7 +12,6 @@
 #include <QRect>
 #include <QString>
 
-
 /** Represents a named, rectangular region in a rendered documentPage
 
     This trivial class is used in the documentPage class to represent
@@ -25,54 +24,59 @@
 class Hyperlink
 {
 public:
-  /** \brief Default Constructor
+    /** \brief Default Constructor
 
-  The default constructor leaves all fields uninitialized.
-  */
-  Hyperlink() {}
+    The default constructor leaves all fields uninitialized.
+    */
+    Hyperlink()
+    {
+    }
 
-  /** \brief Constructor
+    /** \brief Constructor
 
-  Trivial constructor leaves that initialized all members.
+    Trivial constructor leaves that initialized all members.
 
-  @param bl value for the baseline field
-  @param re value for the box
-  @param lT valus for the text field
-  */
-  Hyperlink(quint32 bl, const QRect re, const QString& lT): baseline(bl), box(re), linkText(lT) {}
+    @param bl value for the baseline field
+    @param re value for the box
+    @param lT valus for the text field
+    */
+    Hyperlink(quint32 bl, const QRect re, const QString &lT)
+        : baseline(bl)
+        , box(re)
+        , linkText(lT)
+    {
+    }
 
-  /** \brief Base line of a hyperlink
+    /** \brief Base line of a hyperlink
 
-  This field specifies the Y-coordinate of the base line of the
-  bounding box in the same coordinates that were used when the
-  associated documentPage was rendered by the
-  documentRenderer.drawPage() method. It is used to underline
-  hyperlinks in blue. Note that this field does generally differ from
-  the Y-coordinate of the bottom of the bounding box, e.g. if the text
-  in the box contains characters with underlengths, such as 'y', 'j'
-  or 'g'.
-   */
-  quint32 baseline;
+    This field specifies the Y-coordinate of the base line of the
+    bounding box in the same coordinates that were used when the
+    associated documentPage was rendered by the
+    documentRenderer.drawPage() method. It is used to underline
+    hyperlinks in blue. Note that this field does generally differ from
+    the Y-coordinate of the bottom of the bounding box, e.g. if the text
+    in the box contains characters with underlengths, such as 'y', 'j'
+    or 'g'.
+     */
+    quint32 baseline;
 
-  /** \brief Bounding box of the text or hyperlink
+    /** \brief Bounding box of the text or hyperlink
 
-  This rectangle specifies where on the page the hyperlink is
-  found. It uses the same coordinates that were used when the
-  associated documentPage was rendered by the
-  documentRenderer.drawPage() method. The box is used to determine if
-  the mouse pointer hovers over the link.
-  */
-  QRect    box;
+    This rectangle specifies where on the page the hyperlink is
+    found. It uses the same coordinates that were used when the
+    associated documentPage was rendered by the
+    documentRenderer.drawPage() method. The box is used to determine if
+    the mouse pointer hovers over the link.
+    */
+    QRect box;
 
-  /** \brief Name of the region
+    /** \brief Name of the region
 
-  This field contains the name of the target,
-  e.g. "http://www.kde.org". If the Hyperlink class is used to
-  represent text, then the text is stored here.
-  */
-  QString  linkText;
+    This field contains the name of the target,
+    e.g. "http://www.kde.org". If the Hyperlink class is used to
+    represent text, then the text is stored here.
+    */
+    QString linkText;
 };
-
-
 
 #endif

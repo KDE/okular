@@ -23,8 +23,8 @@
 
 class Ebook_CHM_Encoding
 {
-	public:
-		static QString guessByLCID( unsigned short lcid );
+public:
+    static QString guessByLCID(unsigned short lcid);
 };
 
 #endif // EBOOK_CHM_ENCODING_H

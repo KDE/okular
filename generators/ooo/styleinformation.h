@@ -14,20 +14,20 @@
 
 #include "formatproperty.h"
 
-namespace OOO {
-
+namespace OOO
+{
 class MetaInformation
 {
-  public:
+public:
     typedef QList<MetaInformation> List;
 
-    MetaInformation( const QString &key, const QString &value, const QString &title );
+    MetaInformation(const QString &key, const QString &value, const QString &title);
 
     QString key() const;
     QString value() const;
     QString title() const;
 
-  private:
+private:
     QString mKey;
     QString mValue;
     QString mTitle;
@@ -35,33 +35,33 @@ class MetaInformation
 
 class StyleInformation
 {
-  public:
+public:
     StyleInformation();
     ~StyleInformation();
 
-    void addFontProperty( const QString &name, const FontFormatProperty &property );
-    FontFormatProperty fontProperty( const QString &name ) const;
+    void addFontProperty(const QString &name, const FontFormatProperty &property);
+    FontFormatProperty fontProperty(const QString &name) const;
 
-    void addStyleProperty( const QString &name, const StyleFormatProperty &property );
-    StyleFormatProperty styleProperty( const QString &name ) const;
+    void addStyleProperty(const QString &name, const StyleFormatProperty &property);
+    StyleFormatProperty styleProperty(const QString &name) const;
 
-    void addPageProperty( const QString &name, const PageFormatProperty &property );
-    PageFormatProperty pageProperty( const QString &name ) const;
+    void addPageProperty(const QString &name, const PageFormatProperty &property);
+    PageFormatProperty pageProperty(const QString &name) const;
 
-    void addListProperty( const QString &name, const ListFormatProperty &property );
-    ListFormatProperty listProperty( const QString &name ) const;
+    void addListProperty(const QString &name, const ListFormatProperty &property);
+    ListFormatProperty listProperty(const QString &name) const;
 
-    void addMasterLayout( const QString &name, const QString &layoutName );
-    QString masterLayout( const QString &name );
-    void setMasterPageName( const QString &name );
+    void addMasterLayout(const QString &name, const QString &layoutName);
+    QString masterLayout(const QString &name);
+    void setMasterPageName(const QString &name);
     QString masterPageName() const;
 
-    void addMetaInformation( const QString &key, const QString &value, const QString &title );
+    void addMetaInformation(const QString &key, const QString &value, const QString &title);
     MetaInformation::List metaInformation() const;
 
     void dump() const;
 
-  private:
+private:
     QMap<QString, FontFormatProperty> mFontProperties;
     QMap<QString, StyleFormatProperty> mStyleProperties;
     QMap<QString, PageFormatProperty> mPageProperties;

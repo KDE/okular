@@ -10,42 +10,43 @@
 #ifndef OKULAR_TESTINGUTILS_H
 #define OKULAR_TESTINGUTILS_H
 
-template<class T >
-class QLinkedList;
+template<class T> class QLinkedList;
 class QString;
 
-namespace Okular {
+namespace Okular
+{
 class NormalizedPoint;
 class Annotation;
 }
 
 namespace TestingUtils
 {
-    /**
-     * Return the XML string associated with an annotation's properties
-     */
-    QString getAnnotationXml(const Okular::Annotation* annotation);
+/**
+ * Return the XML string associated with an annotation's properties
+ */
+QString getAnnotationXml(const Okular::Annotation *annotation);
 
-    /**
-     * Returns true if the pairwise comparison coordinates of points in @p points1 and @p points2 are almost
-     * equal (according to qFuzzyCompare)
-     */
-    bool pointListsAlmostEqual( const QLinkedList< Okular::NormalizedPoint > &points1, const QLinkedList< Okular::NormalizedPoint > &points2 );
+/**
+ * Returns true if the pairwise comparison coordinates of points in @p points1 and @p points2 are almost
+ * equal (according to qFuzzyCompare)
+ */
+bool pointListsAlmostEqual(const QLinkedList<Okular::NormalizedPoint> &points1, const QLinkedList<Okular::NormalizedPoint> &points2);
 
-    /*
-     * The AnnotationDisposeWatcher class provides a static disposeAnnotation function
-     * that may be assigned to an annotation with Annotation::setDisposeDataFunction in order to
-     * determine when an annotation has been disposed of.
-     */
-    class AnnotationDisposeWatcher {
-    private:
-        static QString m_disposedAnnotationName;
+/*
+ * The AnnotationDisposeWatcher class provides a static disposeAnnotation function
+ * that may be assigned to an annotation with Annotation::setDisposeDataFunction in order to
+ * determine when an annotation has been disposed of.
+ */
+class AnnotationDisposeWatcher
+{
+private:
+    static QString m_disposedAnnotationName;
 
-    public:
-        static QString disposedAnnotationName();
-        static void resetDisposedAnnotationName();
-        static void disposeAnnotation( const Okular::Annotation *ann );
-    };
+public:
+    static QString disposedAnnotationName();
+    static void resetDisposedAnnotationName();
+    static void disposeAnnotation(const Okular::Annotation *ann);
+};
 
 }
 

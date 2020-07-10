@@ -27,17 +27,18 @@
 #include <QDomDocument>
 #include <QFontDatabase>
 #include <QImage>
-#include <QXmlStreamReader>
-#include <QXmlDefaultHandler>
+#include <QLoggingCategory>
 #include <QStack>
 #include <QVariant>
-#include <QLoggingCategory>
+#include <QXmlDefaultHandler>
+#include <QXmlStreamReader>
 
 #include <kzip.h>
 
-typedef enum {abtCommand, abtNumber, abtComma, abtEOF} AbbPathTokenType;
+typedef enum { abtCommand, abtNumber, abtComma, abtEOF } AbbPathTokenType;
 
-class AbbPathToken {
+class AbbPathToken
+{
 public:
     QString data;
     int curPos;
@@ -58,16 +59,17 @@ public:
     QXmlAttributes attributes;
     QVariant data;
 
-    const XpsRenderNode * findChild( const QString &name ) const;
-    QVariant getRequiredChildData( const QString &name ) const;
-    QVariant getChildData( const QString &name ) const;
+    const XpsRenderNode *findChild(const QString &name) const;
+    QVariant getRequiredChildData(const QString &name) const;
+    QVariant getChildData(const QString &name) const;
 };
 
-struct XpsGradient
-{
-    XpsGradient( double o, const QColor &c )
-        : offset( o ), color( c )
-    {}
+struct XpsGradient {
+    XpsGradient(double o, const QColor &c)
+        : offset(o)
+        , color(c)
+    {
+    }
 
     double offset;
     QColor color;
@@ -80,29 +82,30 @@ struct XpsGradient
 typedef QTransform XpsMatrixTransform;
 typedef QTransform XpsRenderTransform;
 typedef QBrush XpsFill;
-struct XpsPathFigure
-{
-    XpsPathFigure( const QPainterPath &_path, bool filled )
-        : path( _path ), isFilled( filled )
-    {}
+struct XpsPathFigure {
+    XpsPathFigure(const QPainterPath &_path, bool filled)
+        : path(_path)
+        , isFilled(filled)
+    {
+    }
 
     QPainterPath path;
     bool isFilled;
 };
-struct XpsPathGeometry
-{
+struct XpsPathGeometry {
     XpsPathGeometry()
-        : fillRule( Qt::OddEvenFill )
-    {}
+        : fillRule(Qt::OddEvenFill)
+    {
+    }
     ~XpsPathGeometry()
     {
-        qDeleteAll( paths );
+        qDeleteAll(paths);
     }
 
     XpsPathGeometry(const XpsPathGeometry &) = delete;
     XpsPathGeometry &operator=(const XpsPathGeometry &) = delete;
 
-    QList< XpsPathFigure* > paths;
+    QList<XpsPathFigure *> paths;
     Qt::FillRule fillRule;
     XpsMatrixTransform transform;
 };
@@ -110,36 +113,31 @@ struct XpsPathGeometry
 class XpsPage;
 class XpsFile;
 
-class XpsHandler: public QXmlDefaultHandler
+class XpsHandler : public QXmlDefaultHandler
 {
 public:
-    explicit XpsHandler( XpsPage *page );
+    explicit XpsHandler(XpsPage *page);
     ~XpsHandler() override;
 
-    bool startElement( const QString & nameSpace,
-                       const QString & localName,
-                       const QString & qname,
-                       const QXmlAttributes & atts ) override;
-    bool endElement( const QString & nameSpace,
-                     const QString & localName,
-                     const QString & qname ) override;
+    bool startElement(const QString &nameSpace, const QString &localName, const QString &qname, const QXmlAttributes &atts) override;
+    bool endElement(const QString &nameSpace, const QString &localName, const QString &qname) override;
     bool startDocument() override;
 
 protected:
     XpsPage *m_page;
 
-    void processStartElement( XpsRenderNode &node );
-    void processEndElement( XpsRenderNode &node );
+    void processStartElement(XpsRenderNode &node);
+    void processEndElement(XpsRenderNode &node);
 
     // Methods for processing of different xml elements
-    void processGlyph( XpsRenderNode &node );
-    void processPath( XpsRenderNode &node );
-    void processPathData( XpsRenderNode &node );
-    void processFill( XpsRenderNode &node );
-    void processStroke( XpsRenderNode &node );
-    void processImageBrush (XpsRenderNode &node );
-    void processPathGeometry( XpsRenderNode &node );
-    void processPathFigure( XpsRenderNode &node );
+    void processGlyph(XpsRenderNode &node);
+    void processPath(XpsRenderNode &node);
+    void processPathData(XpsRenderNode &node);
+    void processFill(XpsRenderNode &node);
+    void processStroke(XpsRenderNode &node);
+    void processImageBrush(XpsRenderNode &node);
+    void processPathGeometry(XpsRenderNode &node);
+    void processPathFigure(XpsRenderNode &node);
 
     QPainter *m_painter;
 
@@ -160,19 +158,21 @@ public:
     XpsPage &operator=(const XpsPage &) = delete;
 
     QSizeF size() const;
-    bool renderToImage( QImage *p );
-    bool renderToPainter( QPainter *painter );
-    Okular::TextPage* textPage();
+    bool renderToImage(QImage *p);
+    bool renderToPainter(QPainter *painter);
+    Okular::TextPage *textPage();
 
-    QImage loadImageFromFile( const QString &filename );
-    QString fileName() const { return m_fileName; }
+    QImage loadImageFromFile(const QString &filename);
+    QString fileName() const
+    {
+        return m_fileName;
+    }
 
 private:
     XpsFile *m_file;
     const QString m_fileName;
 
     QSizeF m_pageSize;
-
 
     QString m_thumbnailFileName;
     bool m_thumbnailMightBeAvailable;
@@ -211,7 +211,7 @@ public:
        \note page numbers are zero based - they run from 0 to
        numPages() - 1
     */
-    XpsPage* page(int pageNum) const;
+    XpsPage *page(int pageNum) const;
 
     /**
       whether this document has a Document Structure
@@ -221,16 +221,16 @@ public:
     /**
       the document structure for this document, if available
     */
-    const Okular::DocumentSynopsis * documentStructure();
+    const Okular::DocumentSynopsis *documentStructure();
 
 private:
-    void parseDocumentStructure( const QString &documentStructureFileName );
+    void parseDocumentStructure(const QString &documentStructureFileName);
 
-    QList<XpsPage*> m_pages;
-    XpsFile * m_file;
+    QList<XpsPage *> m_pages;
+    XpsFile *m_file;
     bool m_haveDocumentStructure;
     Okular::DocumentSynopsis *m_docStructure;
-    QMap<QString,int> m_docStructurePageMap;
+    QMap<QString, int> m_docStructurePageMap;
 };
 
 /**
@@ -246,7 +246,7 @@ public:
     XpsFile(const XpsFile &) = delete;
     XpsFile &operator=(const XpsFile &) = delete;
 
-    bool loadDocument( const QString & fileName );
+    bool loadDocument(const QString &fileName);
     bool closeDocument();
 
     Okular::DocumentInfo generateDocumentInfo() const;
@@ -272,7 +272,7 @@ public:
         \note page numbers are zero based - they run from 0 to
         numPages() - 1
     */
-    XpsPage* page(int pageNum) const;
+    XpsPage *page(int pageNum) const;
 
     /**
        obtain a certain document from this file
@@ -282,18 +282,17 @@ public:
        \note document numbers are zero based - they run from 0 to
        numDocuments() - 1
     */
-    XpsDocument* document(int documentNum) const;
+    XpsDocument *document(int documentNum) const;
 
-    QFont getFontByName( const QString &absoluteFileName, float size );
+    QFont getFontByName(const QString &absoluteFileName, float size);
 
-    KZip* xpsArchive();
-
+    KZip *xpsArchive();
 
 private:
-    int loadFontByName( const QString &absoluteFileName );
+    int loadFontByName(const QString &absoluteFileName);
 
-    QList<XpsDocument*> m_documents;
-    QList<XpsPage*> m_pages;
+    QList<XpsDocument *> m_documents;
+    QList<XpsPage *> m_pages;
 
     QString m_thumbnailFileName;
     bool m_thumbnailMightBeAvailable;
@@ -304,38 +303,37 @@ private:
 
     QString m_signatureOrigin;
 
-    KZip * m_xpsArchive;
+    KZip *m_xpsArchive;
 
     QMap<QString, int> m_fontCache;
     QFontDatabase m_fontDatabase;
 };
 
-
 class XpsGenerator : public Okular::Generator
 {
     Q_OBJECT
-    Q_INTERFACES( Okular::Generator )
-    public:
-        XpsGenerator( QObject *parent, const QVariantList &args );
-        ~XpsGenerator() override;
+    Q_INTERFACES(Okular::Generator)
+public:
+    XpsGenerator(QObject *parent, const QVariantList &args);
+    ~XpsGenerator() override;
 
-        bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector ) override;
+    bool loadDocument(const QString &fileName, QVector<Okular::Page *> &pagesVector) override;
 
-        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const override;
-        const Okular::DocumentSynopsis * generateDocumentSynopsis() override;
+    Okular::DocumentInfo generateDocumentInfo(const QSet<Okular::DocumentInfo::Key> &keys) const override;
+    const Okular::DocumentSynopsis *generateDocumentSynopsis() override;
 
-        Okular::ExportFormat::List exportFormats() const override;
-        bool exportTo( const QString &fileName, const Okular::ExportFormat &format ) override;
+    Okular::ExportFormat::List exportFormats() const override;
+    bool exportTo(const QString &fileName, const Okular::ExportFormat &format) override;
 
-        bool print( QPrinter &printer ) override;
+    bool print(QPrinter &printer) override;
 
-    protected:
-        bool doCloseDocument() override;
-        QImage image( Okular::PixmapRequest *request ) override;
-        Okular::TextPage* textPage( Okular::TextRequest * request ) override;
+protected:
+    bool doCloseDocument() override;
+    QImage image(Okular::PixmapRequest *request) override;
+    Okular::TextPage *textPage(Okular::TextRequest *request) override;
 
-    private:
-        XpsFile *m_xpsFile;
+private:
+    XpsFile *m_xpsFile;
 };
 
 Q_DECLARE_LOGGING_CATEGORY(OkularXpsDebug)

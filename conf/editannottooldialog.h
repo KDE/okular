@@ -24,54 +24,40 @@ namespace Okular
 class Annotation;
 }
 
-
 class EditAnnotToolDialog : public QDialog
 {
     Q_OBJECT
 
-    public:
-        enum ToolType
-        {
-            ToolNoteLinked,
-            ToolNoteInline,
-            ToolInk,
-            ToolStraightLine,
-            ToolPolygon,
-            ToolTextMarkup,
-            ToolGeometricalShape,
-            ToolStamp,
-            ToolTypewriter
-        };
+public:
+    enum ToolType { ToolNoteLinked, ToolNoteInline, ToolInk, ToolStraightLine, ToolPolygon, ToolTextMarkup, ToolGeometricalShape, ToolStamp, ToolTypewriter };
 
-        explicit EditAnnotToolDialog( QWidget *parent = nullptr,
-                                      const QDomElement &initialState = QDomElement(),
-                                      bool builtinTool = false );
-        ~EditAnnotToolDialog() override;
-        QString name() const;
-        QDomDocument toolXml() const;
+    explicit EditAnnotToolDialog(QWidget *parent = nullptr, const QDomElement &initialState = QDomElement(), bool builtinTool = false);
+    ~EditAnnotToolDialog() override;
+    QString name() const;
+    QDomDocument toolXml() const;
 
-    private:
-        void createStubAnnotation();
-        void rebuildAppearanceBox();
-        void updateDefaultNameAndIcon();
-        void setToolType( ToolType newType );
-        void loadTool( const QDomElement &toolElement );
+private:
+    void createStubAnnotation();
+    void rebuildAppearanceBox();
+    void updateDefaultNameAndIcon();
+    void setToolType(ToolType newType);
+    void loadTool(const QDomElement &toolElement);
 
-        KLineEdit *m_name;
-        KComboBox *m_type;
-        QLabel *m_toolIcon;
-        QGroupBox *m_appearanceBox;
+    KLineEdit *m_name;
+    KComboBox *m_type;
+    QLabel *m_toolIcon;
+    QGroupBox *m_appearanceBox;
 
-        Okular::Annotation *m_stubann;
-        AnnotationWidget *m_annotationWidget;
+    Okular::Annotation *m_stubann;
+    AnnotationWidget *m_annotationWidget;
 
-        bool m_builtinTool;
+    bool m_builtinTool;
 
-    private Q_SLOTS:
-        void slotTypeChanged();
-        void slotDataChanged();
+private Q_SLOTS:
+    void slotTypeChanged();
+    void slotDataChanged();
 };
 
-Q_DECLARE_METATYPE( EditAnnotToolDialog::ToolType )
+Q_DECLARE_METATYPE(EditAnnotToolDialog::ToolType)
 
 #endif // EDITANNOTTOOLDIALOG_H

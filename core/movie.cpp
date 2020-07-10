@@ -24,38 +24,38 @@ using namespace Okular;
 
 class Movie::Private
 {
-    public:
-        Private( const QString &url )
-            : m_url( url ),
-              m_rotation( Rotation0 ),
-              m_playMode( PlayLimited ),
-              m_playRepetitions( 1.0 ),
-              m_tmp( nullptr ),
-              m_showControls( false ),
-              m_autoPlay( false ),
-              m_showPosterImage( false )
-        {
-        }
+public:
+    Private(const QString &url)
+        : m_url(url)
+        , m_rotation(Rotation0)
+        , m_playMode(PlayLimited)
+        , m_playRepetitions(1.0)
+        , m_tmp(nullptr)
+        , m_showControls(false)
+        , m_autoPlay(false)
+        , m_showPosterImage(false)
+    {
+    }
 
-        QString m_url;
-        QSize m_aspect;
-        Rotation m_rotation;
-        PlayMode m_playMode;
-        double m_playRepetitions;
-        QTemporaryFile *m_tmp;
-        QImage m_posterImage;
-        bool m_showControls : 1;
-        bool m_autoPlay : 1;
-        bool m_showPosterImage : 1;
+    QString m_url;
+    QSize m_aspect;
+    Rotation m_rotation;
+    PlayMode m_playMode;
+    double m_playRepetitions;
+    QTemporaryFile *m_tmp;
+    QImage m_posterImage;
+    bool m_showControls : 1;
+    bool m_autoPlay : 1;
+    bool m_showPosterImage : 1;
 };
 
-Movie::Movie( const QString& fileName )
-    : d( new Private( fileName ) )
+Movie::Movie(const QString &fileName)
+    : d(new Private(fileName))
 {
 }
 
-Movie::Movie( const QString& fileName, const QByteArray &data )
-    : d( new Private( fileName ) )
+Movie::Movie(const QString &fileName, const QByteArray &data)
+    : d(new Private(fileName))
 {
     /* Store movie data as temporary file.
      *
@@ -64,12 +64,12 @@ Movie::Movie( const QString& fileName, const QByteArray &data )
      * GStreamer backend). Storing the data in a temporary file works fine
      * though, not to mention, it releases much needed memory. (gamaral)
      */
-    d->m_tmp = new QTemporaryFile( QStringLiteral( "%1/okrXXXXXX" ).arg( QDir::tempPath() ) );
-    if ( d->m_tmp->open() ) {
-       d->m_tmp->write( data );
-       d->m_tmp->flush();
-    }
-    else qCDebug(OkularCoreDebug) << "Failed to create temporary file for video data.";
+    d->m_tmp = new QTemporaryFile(QStringLiteral("%1/okrXXXXXX").arg(QDir::tempPath()));
+    if (d->m_tmp->open()) {
+        d->m_tmp->write(data);
+        d->m_tmp->flush();
+    } else
+        qCDebug(OkularCoreDebug) << "Failed to create temporary file for video data.";
 }
 
 Movie::~Movie()
@@ -86,7 +86,7 @@ QString Movie::url() const
         return d->m_url;
 }
 
-void Movie::setSize( const QSize &aspect ) // clazy:exclude=function-args-by-value TODO remove the & when we do a BIC change elsewhere
+void Movie::setSize(const QSize &aspect) // clazy:exclude=function-args-by-value TODO remove the & when we do a BIC change elsewhere
 {
     d->m_aspect = aspect;
 }
@@ -96,7 +96,7 @@ QSize Movie::size() const
     return d->m_aspect;
 }
 
-void Movie::setRotation( Rotation rotation )
+void Movie::setRotation(Rotation rotation)
 {
     d->m_rotation = rotation;
 }
@@ -106,7 +106,7 @@ Rotation Movie::rotation() const
     return d->m_rotation;
 }
 
-void Movie::setShowControls( bool show )
+void Movie::setShowControls(bool show)
 {
     d->m_showControls = show;
 }
@@ -116,7 +116,7 @@ bool Movie::showControls() const
     return d->m_showControls;
 }
 
-void Movie::setPlayMode( Movie::PlayMode mode )
+void Movie::setPlayMode(Movie::PlayMode mode)
 {
     d->m_playMode = mode;
 }
@@ -126,7 +126,7 @@ Movie::PlayMode Movie::playMode() const
     return d->m_playMode;
 }
 
-void Movie::setPlayRepetitions( double repetitions )
+void Movie::setPlayRepetitions(double repetitions)
 {
     d->m_playRepetitions = repetitions;
 }
@@ -136,7 +136,7 @@ double Movie::playRepetitions() const
     return d->m_playRepetitions;
 }
 
-void Movie::setAutoPlay( bool autoPlay )
+void Movie::setAutoPlay(bool autoPlay)
 {
     d->m_autoPlay = autoPlay;
 }
@@ -146,7 +146,7 @@ bool Movie::autoPlay() const
     return d->m_autoPlay;
 }
 
-void Movie::setShowPosterImage( bool show )
+void Movie::setShowPosterImage(bool show)
 {
     d->m_showPosterImage = show;
 }
@@ -156,7 +156,7 @@ bool Movie::showPosterImage() const
     return d->m_showPosterImage;
 }
 
-void Movie::setPosterImage( const QImage &image )
+void Movie::setPosterImage(const QImage &image)
 {
     d->m_posterImage = image;
 }

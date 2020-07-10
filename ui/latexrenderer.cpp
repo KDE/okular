@@ -20,31 +20,29 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QImage>
-#include <QTemporaryFile>
-#include <QTextStream>
 #include <QRegularExpression>
 #include <QStandardPaths>
+#include <QTemporaryFile>
+#include <QTextStream>
 
 #include "debug_ui.h"
 
 namespace GuiUtils
 {
-
 LatexRenderer::LatexRenderer()
 {
 }
 
 LatexRenderer::~LatexRenderer()
 {
-    for (const QString &file : qAsConst(m_fileList))
-    {
+    for (const QString &file : qAsConst(m_fileList)) {
         QFile::remove(file);
     }
 }
 
-LatexRenderer::Error LatexRenderer::renderLatexInHtml( QString& html, const QColor& textColor, int fontSize, int resolution, QString& latexOutput )
+LatexRenderer::Error LatexRenderer::renderLatexInHtml(QString &html, const QColor &textColor, int fontSize, int resolution, QString &latexOutput)
 {
-    if( !html.contains(QStringLiteral("$$")))
+    if (!html.contains(QStringLiteral("$$")))
         return NoError;
 
     // this searches for $$formula$$
@@ -65,13 +63,13 @@ LatexRenderer::Error LatexRenderer::renderLatexInHtml( QString& html, const QCol
             continue;
         }
 
-        //unescape formula
-        formul.replace(QLatin1String("&gt;"),   QLatin1String(">"));
-        formul.replace(QLatin1String("&lt;"),   QLatin1String("<"));
-        formul.replace(QLatin1String("&amp;"),  QLatin1String("&"));
+        // unescape formula
+        formul.replace(QLatin1String("&gt;"), QLatin1String(">"));
+        formul.replace(QLatin1String("&lt;"), QLatin1String("<"));
+        formul.replace(QLatin1String("&amp;"), QLatin1String("&"));
         formul.replace(QLatin1String("&quot;"), QLatin1String("\""));
         formul.replace(QLatin1String("&apos;"), QLatin1String("\'"));
-        formul.replace(QLatin1String("<br>"),   QLatin1String(" "));
+        formul.replace(QLatin1String("<br>"), QLatin1String(" "));
 
         QString fileName;
         Error returnCode = handleLatex(fileName, formul, textColor, fontSize, resolution, latexOutput);
@@ -82,37 +80,38 @@ LatexRenderer::Error LatexRenderer::renderLatexInHtml( QString& html, const QCol
         replaceMap[matchedString] = fileName;
     }
 
-    if(replaceMap.isEmpty()) //we haven't found any LaTeX strings
+    if (replaceMap.isEmpty()) // we haven't found any LaTeX strings
         return NoError;
-    
-    int imagePxWidth,imagePxHeight;
-    for (QMap<QString,QString>::ConstIterator it = replaceMap.constBegin(); it != replaceMap.constEnd(); ++it)
-    {
+
+    int imagePxWidth, imagePxHeight;
+    for (QMap<QString, QString>::ConstIterator it = replaceMap.constBegin(); it != replaceMap.constEnd(); ++it) {
         QImage theImage(*it);
-        if(theImage.isNull())
+        if (theImage.isNull())
             continue;
         imagePxWidth = theImage.width();
         imagePxHeight = theImage.height();
-        QString escapedLATEX=it.key().toHtmlEscaped().replace(QLatin1Char('"'),QLatin1String("&quot;"));  //we need  the escape quotes because that string will be in a title="" argument, but not the \n
-        html.replace(it.key(), QStringLiteral(" <img width=\"") + QString::number(imagePxWidth) + QStringLiteral("\" height=\"") + QString::number(imagePxHeight) + QStringLiteral("\" align=\"middle\" src=\"") + (*it) + QStringLiteral("\"  alt=\"") + escapedLATEX + QStringLiteral("\" title=\"") + escapedLATEX + QStringLiteral("\"  /> "));
+        QString escapedLATEX = it.key().toHtmlEscaped().replace(QLatin1Char('"'), QLatin1String("&quot;")); // we need  the escape quotes because that string will be in a title="" argument, but not the \n
+        html.replace(it.key(),
+                     QStringLiteral(" <img width=\"") + QString::number(imagePxWidth) + QStringLiteral("\" height=\"") + QString::number(imagePxHeight) + QStringLiteral("\" align=\"middle\" src=\"") + (*it) + QStringLiteral("\"  alt=\"") +
+                         escapedLATEX + QStringLiteral("\" title=\"") + escapedLATEX + QStringLiteral("\"  /> "));
     }
     return NoError;
 }
 
-bool LatexRenderer::mightContainLatex (const QString& text)
+bool LatexRenderer::mightContainLatex(const QString &text)
 {
-    if( !text.contains(QStringLiteral("$$")))
+    if (!text.contains(QStringLiteral("$$")))
         return false;
 
-    // this searches for $$formula$$ 
+    // this searches for $$formula$$
     QRegularExpression rg(QStringLiteral("\\$\\$.+?\\$\\$"));
-    if( !rg.match(text).hasMatch() )
+    if (!rg.match(text).hasMatch())
         return false;
 
     return true;
 }
 
-LatexRenderer::Error LatexRenderer::handleLatex( QString& fileName, const QString& latexFormula, const QColor& textColor, int fontSize, int resolution, QString& latexOutput )
+LatexRenderer::Error LatexRenderer::handleLatex(QString &fileName, const QString &latexFormula, const QColor &textColor, int fontSize, int resolution, QString &latexOutput)
 {
     KProcess latexProc;
     KProcess dvipngProc;
@@ -127,28 +126,30 @@ LatexRenderer::Error LatexRenderer::handleLatex( QString& fileName, const QStrin
     QTextStream tempStream(tempFile);
 
     tempStream << "\
-\\documentclass[" << fontSize << "pt]{article} \
+\\documentclass["
+               << fontSize << "pt]{article} \
 \\usepackage{color} \
 \\usepackage{amsmath,latexsym,amsfonts,amssymb,ulem} \
 \\pagestyle{empty} \
 \\begin{document} \
-{\\color[rgb]{" << textColor.redF() << "," << textColor.greenF() << "," << textColor.blueF() << "} \
+{\\color[rgb]{" << textColor.redF()
+               << "," << textColor.greenF() << "," << textColor.blueF() << "} \
 \\begin{eqnarray*} \
-" << latexFormula << " \
+" << latexFormula
+               << " \
 \\end{eqnarray*}} \
 \\end{document}";
 
     tempFile->close();
     QString latexExecutable = QStandardPaths::findExecutable(QStringLiteral("latex"));
-    if (latexExecutable.isEmpty())
-    {
+    if (latexExecutable.isEmpty()) {
         qCDebug(OkularUiDebug) << "Could not find latex!";
         delete tempFile;
         fileName = QString();
         return LatexNotFound;
     }
     latexProc << latexExecutable << QStringLiteral("-interaction=nonstopmode") << QStringLiteral("-halt-on-error") << QStringLiteral("-output-directory=%1").arg(tempFilePath) << tempFile->fileName();
-    latexProc.setOutputChannelMode( KProcess::MergedChannels );
+    latexProc.setOutputChannelMode(KProcess::MergedChannels);
     latexProc.execute();
     latexOutput = QString::fromLocal8Bit(latexProc.readAll());
     tempFile->remove();
@@ -157,28 +158,26 @@ LatexRenderer::Error LatexRenderer::handleLatex( QString& fileName, const QStrin
     QFile::remove(tempFileNameNS + QStringLiteral(".aux"));
     delete tempFile;
 
-    if (!QFile::exists(tempFileNameNS + QStringLiteral(".dvi")))
-    {
+    if (!QFile::exists(tempFileNameNS + QStringLiteral(".dvi"))) {
         fileName = QString();
         return LatexFailed;
     }
 
     QString dvipngExecutable = QStandardPaths::findExecutable(QStringLiteral("dvipng"));
-    if (dvipngExecutable.isEmpty())
-    {
+    if (dvipngExecutable.isEmpty()) {
         qCDebug(OkularUiDebug) << "Could not find dvipng!";
         fileName = QString();
         return DvipngNotFound;
     }
 
-    dvipngProc << dvipngExecutable << QStringLiteral("-o%1").arg(tempFileNameNS + QStringLiteral(".png")) << QStringLiteral("-Ttight") << QStringLiteral("-bgTransparent") << QStringLiteral("-D %1").arg(resolution) << QStringLiteral("%1").arg(tempFileNameNS + QStringLiteral(".dvi"));
-    dvipngProc.setOutputChannelMode( KProcess::MergedChannels );
+    dvipngProc << dvipngExecutable << QStringLiteral("-o%1").arg(tempFileNameNS + QStringLiteral(".png")) << QStringLiteral("-Ttight") << QStringLiteral("-bgTransparent") << QStringLiteral("-D %1").arg(resolution)
+               << QStringLiteral("%1").arg(tempFileNameNS + QStringLiteral(".dvi"));
+    dvipngProc.setOutputChannelMode(KProcess::MergedChannels);
     dvipngProc.execute();
 
     QFile::remove(tempFileNameNS + QStringLiteral(".dvi"));
-    
-    if (!QFile::exists(tempFileNameNS + QStringLiteral(".png")))
-    {
+
+    if (!QFile::exists(tempFileNameNS + QStringLiteral(".png"))) {
         fileName = QString();
         return DvipngFailed;
     }
@@ -188,12 +187,13 @@ LatexRenderer::Error LatexRenderer::handleLatex( QString& fileName, const QStrin
     return NoError;
 }
 
-bool LatexRenderer::securityCheck( const QString &latexFormula )
+bool LatexRenderer::securityCheck(const QString &latexFormula)
 {
-    return !latexFormula.contains(QRegularExpression(QString::fromLatin1("\\\\(def|let|futurelet|newcommand|renewcommand|else|fi|write|input|include"
-    "|chardef|catcode|makeatletter|noexpand|toksdef|every|errhelp|errorstopmode|scrollmode|nonstopmode|batchmode"
-    "|read|csname|newhelp|relax|afterground|afterassignment|expandafter|noexpand|special|command|loop|repeat|toks"
-    "|output|line|mathcode|name|item|section|mbox|DeclareRobustCommand)[^a-zA-Z]")));
+    return !latexFormula.contains(
+        QRegularExpression(QString::fromLatin1("\\\\(def|let|futurelet|newcommand|renewcommand|else|fi|write|input|include"
+                                               "|chardef|catcode|makeatletter|noexpand|toksdef|every|errhelp|errorstopmode|scrollmode|nonstopmode|batchmode"
+                                               "|read|csname|newhelp|relax|afterground|afterassignment|expandafter|noexpand|special|command|loop|repeat|toks"
+                                               "|output|line|mathcode|name|item|section|mbox|DeclareRobustCommand)[^a-zA-Z]")));
 }
 
 }

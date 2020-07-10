@@ -10,20 +10,20 @@
 #ifndef EPUB_DOCUMENT_H
 #define EPUB_DOCUMENT_H
 
+#include <QImage>
+#include <QLoggingCategory>
 #include <QTextDocument>
 #include <QUrl>
 #include <QVariant>
-#include <QImage>
 #include <epub.h>
-#include <QLoggingCategory>
 
-namespace Epub {
-
-  class EpubDocument : public QTextDocument
-  {
+namespace Epub
+{
+class EpubDocument : public QTextDocument
+{
     Q_OBJECT
 
-  public:
+public:
     explicit EpubDocument(const QString &fileName);
     ~EpubDocument() override;
     bool isValid();
@@ -33,10 +33,10 @@ namespace Epub {
     int maxContentWidth() const;
     enum Multimedia { MovieResource = QTextDocument::UserResource, AudioResource };
 
-  protected:
+protected:
     QVariant loadResource(int type, const QUrl &name) override;
 
-  private:
+private:
     void checkCSS(QString &css);
 
     struct epub *mEpub;
@@ -45,7 +45,7 @@ namespace Epub {
     int padding;
 
     friend class Converter;
-  };
+};
 
 }
 Q_DECLARE_LOGGING_CATEGORY(OkularEpuDebug)

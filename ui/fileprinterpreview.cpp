@@ -12,22 +12,22 @@
 
 #include "fileprinterpreview.h"
 
-#include <QFile>
-#include <QSize>
 #include <QDialogButtonBox>
+#include <QFile>
 #include <QLabel>
 #include <QPushButton>
 #include <QShowEvent>
+#include <QSize>
 #include <QVBoxLayout>
 
-#include <KWindowConfig>
 #include <KLocalizedString>
 #include <KMimeTypeTrader>
-#include <kparts/readonlypart.h>
 #include <KPluginFactory>
 #include <KPluginLoader>
 #include <KSharedConfig>
+#include <KWindowConfig>
 #include <QLoggingCategory>
+#include <kparts/readonlypart.h>
 
 #include "debug_ui.h"
 
@@ -38,7 +38,7 @@ using namespace Okular;
 class Okular::FilePrinterPreviewPrivate
 {
 public:
-    FilePrinterPreviewPrivate( FilePrinterPreview *host, const QString & _filename )
+    FilePrinterPreviewPrivate(FilePrinterPreview *host, const QString &_filename)
         : q(host)
         , mainWidget(new QWidget(host))
         , previewPart(nullptr)
@@ -86,10 +86,7 @@ void FilePrinterPreviewPrivate::getPart()
         /* Explicitly look for the Okular/Ghostview part: no other PostScript
            parts are available now; other parts which handles text are not
            suitable here (PostScript source code) */
-        offers =
-            KMimeTypeTrader::self()->query(QStringLiteral("application/postscript"),
-                                           QStringLiteral("KParts/ReadOnlyPart"),
-                                           QStringLiteral("[DesktopEntryName] == 'okularghostview'"));
+        offers = KMimeTypeTrader::self()->query(QStringLiteral("application/postscript"), QStringLiteral("KParts/ReadOnlyPart"), QStringLiteral("[DesktopEntryName] == 'okularghostview'"));
     } else {
         offers = KMimeTypeTrader::self()->query(QStringLiteral("application/pdf"), QStringLiteral("KParts/ReadOnlyPart"));
     }
@@ -121,7 +118,7 @@ bool FilePrinterPreviewPrivate::doPreview()
 
     getPart();
     if (!previewPart) {
-        //TODO: error dialog
+        // TODO: error dialog
         qCWarning(OkularUiDebug) << "Could not find a PS viewer for the preview dialog";
         fail();
         return false;
@@ -139,12 +136,9 @@ void FilePrinterPreviewPrivate::fail()
     mainlayout->insertWidget(0, failMessage);
 }
 
-
-
-
-FilePrinterPreview::FilePrinterPreview( const QString &filename, QWidget *parent )
-    : QDialog( parent )
-    , d( new FilePrinterPreviewPrivate( this, filename ) )
+FilePrinterPreview::FilePrinterPreview(const QString &filename, QWidget *parent)
+    : QDialog(parent)
+    , d(new FilePrinterPreviewPrivate(this, filename))
 {
     qCDebug(OkularUiDebug) << "kdeprint: creating preview dialog";
 

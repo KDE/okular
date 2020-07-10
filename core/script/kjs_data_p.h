@@ -14,15 +14,15 @@
 class KJSContext;
 class KJSObject;
 
-namespace Okular {
-
+namespace Okular
+{
 class EmbeddedFile;
 
 class JSData
 {
-    public:
-        static void initType( KJSContext *ctx );
-        static KJSObject wrapFile( KJSContext *ctx, EmbeddedFile *f );
+public:
+    static void initType(KJSContext *ctx);
+    static KJSObject wrapFile(KJSContext *ctx, EmbeddedFile *f);
 };
 
 }

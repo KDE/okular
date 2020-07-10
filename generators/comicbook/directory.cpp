@@ -25,27 +25,27 @@ Directory::~Directory()
 {
 }
 
-bool Directory::open( const QString &dirName )
+bool Directory::open(const QString &dirName)
 {
     mDir = dirName;
-    QFileInfo dirTest( dirName );
+    QFileInfo dirTest(dirName);
     return dirTest.isDir() && dirTest.isReadable();
 }
 
-QStringList Directory::recurseDir( const QString &dirPath, int curDepth ) const
+QStringList Directory::recurseDir(const QString &dirPath, int curDepth) const
 {
-    QDir dir( dirPath );
-    dir.setFilter( QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot );
+    QDir dir(dirPath);
+    dir.setFilter(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot);
     QStringList fileList;
-    QDirIterator it( dir );
+    QDirIterator it(dir);
     QFileInfo info;
-    while( it.hasNext() ) {
+    while (it.hasNext()) {
         it.next();
         info = it.fileInfo();
-        if ( info.isDir() && curDepth < staticMaxDepth ) {
-            fileList.append( recurseDir( info.filePath(), curDepth + 1 ) );
-        } else if ( info.isFile() ) {
-            fileList.append( info.filePath() );
+        if (info.isDir() && curDepth < staticMaxDepth) {
+            fileList.append(recurseDir(info.filePath(), curDepth + 1));
+        } else if (info.isFile()) {
+            fileList.append(info.filePath());
         }
     }
     return fileList;
@@ -53,15 +53,14 @@ QStringList Directory::recurseDir( const QString &dirPath, int curDepth ) const
 
 QStringList Directory::list() const
 {
-    return recurseDir( mDir, 0 );
+    return recurseDir(mDir, 0);
 }
 
-QIODevice* Directory::createDevice( const QString &path ) const
+QIODevice *Directory::createDevice(const QString &path) const
 {
-    std::unique_ptr<QFile> file( new QFile( path ) );
-    if ( !file->open( QIODevice::ReadOnly ) )
+    std::unique_ptr<QFile> file(new QFile(path));
+    if (!file->open(QIODevice::ReadOnly))
         return nullptr;
 
     return file.release();
 }
-

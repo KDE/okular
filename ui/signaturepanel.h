@@ -15,7 +15,8 @@
 
 #include "core/observer.h"
 
-namespace Okular {
+namespace Okular
+{
 class Document;
 }
 
@@ -26,26 +27,26 @@ class SignaturePanelPrivate;
 class SignaturePanel : public QWidget, public Okular::DocumentObserver
 {
     Q_OBJECT
-    public:
-        SignaturePanel( Okular::Document *document, QWidget *parent );
-        ~SignaturePanel() override;
+public:
+    SignaturePanel(Okular::Document *document, QWidget *parent);
+    ~SignaturePanel() override;
 
-        // inherited from DocumentObserver
-        void notifySetup( const QVector<Okular::Page *> &pages, int setupFlags ) override;
+    // inherited from DocumentObserver
+    void notifySetup(const QVector<Okular::Page *> &pages, int setupFlags) override;
 
-        void setPageView( PageView *pv );
+    void setPageView(PageView *pv);
 
-    Q_SIGNALS:
-        void documentHasSignatures( bool hasSignatures );
+Q_SIGNALS:
+    void documentHasSignatures(bool hasSignatures);
 
-    private Q_SLOTS:
-        void activated( const QModelIndex& );
-        void slotShowContextMenu();
-        void slotViewProperties();
+private Q_SLOTS:
+    void activated(const QModelIndex &);
+    void slotShowContextMenu();
+    void slotViewProperties();
 
-    private:
-        Q_DECLARE_PRIVATE( SignaturePanel )
-        QScopedPointer<SignaturePanelPrivate> d_ptr;
+private:
+    Q_DECLARE_PRIVATE(SignaturePanel)
+    QScopedPointer<SignaturePanelPrivate> d_ptr;
 };
 
 #endif

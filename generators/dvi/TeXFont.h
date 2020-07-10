@@ -9,43 +9,43 @@
 #ifndef _TEXFONT_H
 #define _TEXFONT_H
 
-#include "glyph.h"
 #include "TeXFontDefinition.h"
+#include "glyph.h"
 
-
-class TeXFont {
- public:
-  TeXFont(TeXFontDefinition *_parent)
+class TeXFont
+{
+public:
+    TeXFont(TeXFontDefinition *_parent)
     {
-      parent       = _parent;
-      errorMessage.clear();
+        parent = _parent;
+        errorMessage.clear();
     }
 
-  virtual ~TeXFont();
+    virtual ~TeXFont();
 
-  TeXFont(const TeXFont &) = delete;
-  TeXFont &operator=(const TeXFont &) = delete;
+    TeXFont(const TeXFont &) = delete;
+    TeXFont &operator=(const TeXFont &) = delete;
 
-  void setDisplayResolution()
+    void setDisplayResolution()
     {
-      for(glyph &g : glyphtable)
-        g.shrunkenCharacter = QImage();
+        for (glyph &g : glyphtable)
+            g.shrunkenCharacter = QImage();
     }
 
-  virtual glyph* getGlyph(quint16 character, bool generateCharacterPixmap=false, const QColor& color=Qt::black) = 0;
+    virtual glyph *getGlyph(quint16 character, bool generateCharacterPixmap = false, const QColor &color = Qt::black) = 0;
 
-  // Checksum of the font. Used e.g. by PK fonts. This field is filled
-  // in by the constructor, or set to 0.0, if the font format does not
-  // contain checksums.
-  quint32           checksum;
+    // Checksum of the font. Used e.g. by PK fonts. This field is filled
+    // in by the constructor, or set to 0.0, if the font format does not
+    // contain checksums.
+    quint32 checksum;
 
-  // If the font or if some glyphs could not be loaded, error messages
-  // will be put here.
-  QString            errorMessage;
+    // If the font or if some glyphs could not be loaded, error messages
+    // will be put here.
+    QString errorMessage;
 
- protected:
-  glyph              glyphtable[TeXFontDefinition::max_num_of_chars_in_font];
-  TeXFontDefinition *parent;
+protected:
+    glyph glyphtable[TeXFontDefinition::max_num_of_chars_in_font];
+    TeXFontDefinition *parent;
 };
 
 #endif

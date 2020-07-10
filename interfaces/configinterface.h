@@ -16,8 +16,8 @@
 
 class KConfigDialog;
 
-namespace Okular {
-
+namespace Okular
+{
 /**
  * @short Abstract interface for configuration control
  *
@@ -37,38 +37,42 @@ namespace Okular {
  */
 class OKULARCORE_EXPORT ConfigInterface
 {
-    public:
-        ConfigInterface() {}
+public:
+    ConfigInterface()
+    {
+    }
 
-        /**
-         * Destroys the config interface.
-         */
-        virtual ~ConfigInterface() {}
+    /**
+     * Destroys the config interface.
+     */
+    virtual ~ConfigInterface()
+    {
+    }
 
-        ConfigInterface(const ConfigInterface &) = delete;
-        ConfigInterface &operator=(const ConfigInterface &) = delete;
+    ConfigInterface(const ConfigInterface &) = delete;
+    ConfigInterface &operator=(const ConfigInterface &) = delete;
 
-        /**
-         * This method is called to tell the generator to re-parse its configuration.
-         *
-         * Returns true if something has changed.
-         *
-         * @note this method can be called also when the generator is not the
-         * active generator, or when there was not changed in the config added
-         * by the generator itself. So the suggestion is to @b check whether
-         * something changed, and only in that case return @p true
-         */
-        virtual bool reparseConfig() = 0;
+    /**
+     * This method is called to tell the generator to re-parse its configuration.
+     *
+     * Returns true if something has changed.
+     *
+     * @note this method can be called also when the generator is not the
+     * active generator, or when there was not changed in the config added
+     * by the generator itself. So the suggestion is to @b check whether
+     * something changed, and only in that case return @p true
+     */
+    virtual bool reparseConfig() = 0;
 
-        /**
-         * This method allows the generator to add custom configuration pages to the
-         * config @p dialog of okular.
-         */
-        virtual void addPages( KConfigDialog *dialog ) = 0;
+    /**
+     * This method allows the generator to add custom configuration pages to the
+     * config @p dialog of okular.
+     */
+    virtual void addPages(KConfigDialog *dialog) = 0;
 };
 
 }
 
-Q_DECLARE_INTERFACE( Okular::ConfigInterface, "org.kde.okular.ConfigInterface/0.1" )
+Q_DECLARE_INTERFACE(Okular::ConfigInterface, "org.kde.okular.ConfigInterface/0.1")
 
 #endif

@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Piotr Szymański <niedakh@gmail.com>             *
- *   Copyright (C) 2008 by Albert Astals Cid <aacid@kde.org>               * 
+ *   Copyright (C) 2008 by Albert Astals Cid <aacid@kde.org>               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -20,52 +20,54 @@
 
 class KHTMLPart;
 
-namespace Okular {
+namespace Okular
+{
 class TextPage;
 }
 
-namespace DOM {
+namespace DOM
+{
 class Node;
 }
 
 class CHMGenerator : public Okular::Generator
 {
     Q_OBJECT
-    Q_INTERFACES( Okular::Generator )
-    public:
-        CHMGenerator( QObject *parent, const QVariantList &args );
-        ~CHMGenerator() override;
-        bool loadDocument( const QString & fileName, QVector< Okular::Page * > & pagesVector ) override;
+    Q_INTERFACES(Okular::Generator)
+public:
+    CHMGenerator(QObject *parent, const QVariantList &args);
+    ~CHMGenerator() override;
+    bool loadDocument(const QString &fileName, QVector<Okular::Page *> &pagesVector) override;
 
-        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const override;
-        const Okular::DocumentSynopsis * generateDocumentSynopsis() override;
+    Okular::DocumentInfo generateDocumentInfo(const QSet<Okular::DocumentInfo::Key> &keys) const override;
+    const Okular::DocumentSynopsis *generateDocumentSynopsis() override;
 
-        bool canGeneratePixmap() const override;
-        void generatePixmap( Okular::PixmapRequest * request ) override;
+    bool canGeneratePixmap() const override;
+    void generatePixmap(Okular::PixmapRequest *request) override;
 
-        QVariant metaData( const QString & key, const QVariant & option ) const override;
+    QVariant metaData(const QString &key, const QVariant &option) const override;
 
-    public Q_SLOTS:
-        void slotCompleted();
+public Q_SLOTS:
+    void slotCompleted();
 
-    protected:
-        bool doCloseDocument() override;
-        Okular::TextPage* textPage( Okular::TextRequest *request ) override;
+protected:
+    bool doCloseDocument() override;
+    Okular::TextPage *textPage(Okular::TextRequest *request) override;
 
-    private:
-        void additionalRequestData();
-        void recursiveExploreNodes( DOM::Node node, Okular::TextPage *tp );
-        void preparePageForSyncOperation( const QString &url );
-        QMap<QString, int> m_urlPage;
-        QVector<QString> m_pageUrl;
-        Okular::DocumentSynopsis m_docSyn;
-        EBook* m_file;
-        KHTMLPart *m_syncGen;
-        QString m_fileName;
-        QString m_chmUrl;
-        Okular::PixmapRequest* m_request;
-        QBitArray m_textpageAddedList;
-        QBitArray m_rectsGenerated;
+private:
+    void additionalRequestData();
+    void recursiveExploreNodes(DOM::Node node, Okular::TextPage *tp);
+    void preparePageForSyncOperation(const QString &url);
+    QMap<QString, int> m_urlPage;
+    QVector<QString> m_pageUrl;
+    Okular::DocumentSynopsis m_docSyn;
+    EBook *m_file;
+    KHTMLPart *m_syncGen;
+    QString m_fileName;
+    QString m_chmUrl;
+    Okular::PixmapRequest *m_request;
+    QBitArray m_textpageAddedList;
+    QBitArray m_rectsGenerated;
 };
 
 #endif

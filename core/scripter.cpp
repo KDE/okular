@@ -19,25 +19,25 @@ using namespace Okular;
 
 class Okular::ScripterPrivate
 {
-    public:
-        ScripterPrivate( DocumentPrivate *doc )
-            : m_doc( doc )
+public:
+    ScripterPrivate(DocumentPrivate *doc)
+        : m_doc(doc)
 #ifdef WITH_KJS
-            , m_kjs( nullptr )
+        , m_kjs(nullptr)
 #endif
-            , m_event( nullptr )
-        {
-        }
+        , m_event(nullptr)
+    {
+    }
 
-        DocumentPrivate *m_doc;
+    DocumentPrivate *m_doc;
 #ifdef WITH_KJS
-        QScopedPointer<ExecutorKJS> m_kjs;
+    QScopedPointer<ExecutorKJS> m_kjs;
 #endif
-        Event *m_event;
+    Event *m_event;
 };
 
-Scripter::Scripter( DocumentPrivate *doc )
-    : d( new ScripterPrivate( doc ) )
+Scripter::Scripter(DocumentPrivate *doc)
+    : d(new ScripterPrivate(doc))
 {
 }
 
@@ -46,7 +46,7 @@ Scripter::~Scripter()
     delete d;
 }
 
-void Scripter::execute( ScriptType type, const QString &script )
+void Scripter::execute(ScriptType type, const QString &script)
 {
     qCDebug(OkularCoreDebug) << "executing the script:";
 #ifdef WITH_KJS
@@ -57,33 +57,27 @@ void Scripter::execute( ScriptType type, const QString &script )
         qDebug() << script.left( 1000 ) << "[...]";
 #endif
     static QString builtInScript;
-    if ( builtInScript.isNull() )
-    {
-        QFile builtInResource ( QStringLiteral(":/script/builtin.js") );
-        if (!builtInResource.open( QIODevice::ReadOnly ))
-        {
+    if (builtInScript.isNull()) {
+        QFile builtInResource(QStringLiteral(":/script/builtin.js"));
+        if (!builtInResource.open(QIODevice::ReadOnly)) {
             qCDebug(OkularCoreDebug) << "failed to load builtin script";
-        }
-        else
-        {
-            builtInScript = QString::fromUtf8( builtInResource.readAll() );
+        } else {
+            builtInScript = QString::fromUtf8(builtInResource.readAll());
             builtInResource.close();
         }
     }
 
-    switch ( type )
-    {
-        case JavaScript:
-            if ( !d->m_kjs )
-            {
-                d->m_kjs.reset(new ExecutorKJS( d->m_doc ));
-            }
-            d->m_kjs->execute( builtInScript + script, d->m_event );
+    switch (type) {
+    case JavaScript:
+        if (!d->m_kjs) {
+            d->m_kjs.reset(new ExecutorKJS(d->m_doc));
         }
+        d->m_kjs->execute(builtInScript + script, d->m_event);
+    }
 #endif
 }
 
-void Scripter::setEvent( Event *event )
+void Scripter::setEvent(Event *event)
 {
     d->m_event = event;
 }

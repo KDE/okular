@@ -14,8 +14,8 @@
 
 #include <threadweaver/queue.h>
 
-namespace Okular {
-
+namespace Okular
+{
 class Page;
 class RotationJob;
 
@@ -25,20 +25,20 @@ class PageController : public QObject
 {
     Q_OBJECT
 
-    public:
-        PageController();
-        ~PageController() override;
+public:
+    PageController();
+    ~PageController() override;
 
-        void addRotationJob( RotationJob *job );
+    void addRotationJob(RotationJob *job);
 
-    Q_SIGNALS:
-        void rotationFinished( int page, Okular::Page *okularPage );
+Q_SIGNALS:
+    void rotationFinished(int page, Okular::Page *okularPage);
 
-    private Q_SLOTS:
-        void imageRotationDone(const ThreadWeaver::JobPointer &job);
+private Q_SLOTS:
+    void imageRotationDone(const ThreadWeaver::JobPointer &job);
 
-    private:
-        ThreadWeaver::Queue m_weaver;
+private:
+    ThreadWeaver::Queue m_weaver;
 };
 
 }

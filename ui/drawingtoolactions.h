@@ -21,15 +21,15 @@ class DrawingToolActions : public QObject
 {
     Q_OBJECT
 public:
-    explicit DrawingToolActions( KActionCollection *parent );
+    explicit DrawingToolActions(KActionCollection *parent);
     ~DrawingToolActions() override;
 
-    QList<QAction*> actions() const;
+    QList<QAction *> actions() const;
 
     void reparseConfig();
 
 Q_SIGNALS:
-    void changeEngine( const QDomElement &doc );
+    void changeEngine(const QDomElement &doc);
     void actionsRecreated();
 
 private Q_SLOTS:
@@ -37,11 +37,11 @@ private Q_SLOTS:
 
 private:
     void loadTools();
-    void createToolAction( const QString &text, const QString &toolName, const QString &colorName, const QDomElement &root );
+    void createToolAction(const QString &text, const QString &toolName, const QString &colorName, const QDomElement &root);
 
-    QList<QAction*> m_actions;
+    QList<QAction *> m_actions;
 };
 
-Q_DECLARE_METATYPE( QDomElement )
+Q_DECLARE_METATYPE(QDomElement)
 
 #endif // DRAWINGTOOLACTIONS_H

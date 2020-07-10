@@ -23,5 +23,4 @@
 #include <QLoggingCategory>
 Q_DECLARE_LOGGING_CATEGORY(FAX_LOG)
 
-#endif 
-
+#endif

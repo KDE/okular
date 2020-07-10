@@ -22,7 +22,7 @@ class EditDrawingToolDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit EditDrawingToolDialog( const QDomElement &initialState = QDomElement(), QWidget *parent = nullptr );
+    explicit EditDrawingToolDialog(const QDomElement &initialState = QDomElement(), QWidget *parent = nullptr);
     ~EditDrawingToolDialog() override;
 
     QDomDocument toolXml() const;
@@ -30,7 +30,7 @@ public:
     QString name() const;
 
 private:
-    void loadTool( const QDomElement &toolElement );
+    void loadTool(const QDomElement &toolElement);
 
     KLineEdit *m_name;
     KColorButton *m_colorBn;

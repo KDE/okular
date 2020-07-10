@@ -14,8 +14,8 @@
 
 #ifdef HAVE_POPPLER_0_73
 
-PopplerCertificateInfo::PopplerCertificateInfo( const Poppler::CertificateInfo &info )
-    : m_info( info )
+PopplerCertificateInfo::PopplerCertificateInfo(const Poppler::CertificateInfo &info)
+    : m_info(info)
 {
 }
 
@@ -38,15 +38,15 @@ QByteArray PopplerCertificateInfo::serialNumber() const
     return m_info.serialNumber();
 }
 
-QString PopplerCertificateInfo::issuerInfo( PopplerCertificateInfo::EntityInfoKey key ) const
+QString PopplerCertificateInfo::issuerInfo(PopplerCertificateInfo::EntityInfoKey key) const
 {
-    QString str = m_info.issuerInfo(static_cast<Poppler::CertificateInfo::EntityInfoKey>( key ));
+    QString str = m_info.issuerInfo(static_cast<Poppler::CertificateInfo::EntityInfoKey>(key));
     return !str.isEmpty() ? str : i18n("Not Available");
 }
 
-QString PopplerCertificateInfo::subjectInfo( PopplerCertificateInfo::EntityInfoKey key ) const
+QString PopplerCertificateInfo::subjectInfo(PopplerCertificateInfo::EntityInfoKey key) const
 {
-    QString str = m_info.subjectInfo(static_cast<Poppler::CertificateInfo::EntityInfoKey>( key ));
+    QString str = m_info.subjectInfo(static_cast<Poppler::CertificateInfo::EntityInfoKey>(key));
     return !str.isEmpty() ? str : i18n("Not Available");
 }
 
@@ -64,21 +64,21 @@ PopplerCertificateInfo::KeyUsageExtensions PopplerCertificateInfo::keyUsageExten
 {
     Poppler::CertificateInfo::KeyUsageExtensions popplerKu = m_info.keyUsageExtensions();
     KeyUsageExtensions ku = KuNone;
-    if ( popplerKu.testFlag( Poppler::CertificateInfo::KuDigitalSignature ) )
+    if (popplerKu.testFlag(Poppler::CertificateInfo::KuDigitalSignature))
         ku |= KuDigitalSignature;
-    if ( popplerKu.testFlag( Poppler::CertificateInfo::KuNonRepudiation ) )
+    if (popplerKu.testFlag(Poppler::CertificateInfo::KuNonRepudiation))
         ku |= KuNonRepudiation;
-    if ( popplerKu.testFlag( Poppler::CertificateInfo::KuKeyEncipherment ) )
+    if (popplerKu.testFlag(Poppler::CertificateInfo::KuKeyEncipherment))
         ku |= KuKeyEncipherment;
-    if ( popplerKu.testFlag( Poppler::CertificateInfo::KuDataEncipherment ) )
+    if (popplerKu.testFlag(Poppler::CertificateInfo::KuDataEncipherment))
         ku |= KuDataEncipherment;
-    if ( popplerKu.testFlag( Poppler::CertificateInfo::KuKeyAgreement ) )
+    if (popplerKu.testFlag(Poppler::CertificateInfo::KuKeyAgreement))
         ku |= KuKeyAgreement;
-    if ( popplerKu.testFlag( Poppler::CertificateInfo::KuKeyCertSign ) )
+    if (popplerKu.testFlag(Poppler::CertificateInfo::KuKeyCertSign))
         ku |= KuKeyCertSign;
-    if ( popplerKu.testFlag( Poppler::CertificateInfo::KuClrSign ) )
+    if (popplerKu.testFlag(Poppler::CertificateInfo::KuClrSign))
         ku |= KuClrSign;
-    if ( popplerKu.testFlag( Poppler::CertificateInfo::KuEncipherOnly ) )
+    if (popplerKu.testFlag(Poppler::CertificateInfo::KuEncipherOnly))
         ku |= KuEncipherOnly;
     return ku;
 }
@@ -90,16 +90,15 @@ QByteArray PopplerCertificateInfo::publicKey() const
 
 PopplerCertificateInfo::PublicKeyType PopplerCertificateInfo::publicKeyType() const
 {
-    switch ( m_info.publicKeyType() )
-    {
-        case Poppler::CertificateInfo::RsaKey:
-            return RsaKey;
-        case Poppler::CertificateInfo::DsaKey:
-            return DsaKey;
-        case Poppler::CertificateInfo::EcKey:
-            return EcKey;
-        case Poppler::CertificateInfo::OtherKey:
-            return OtherKey;
+    switch (m_info.publicKeyType()) {
+    case Poppler::CertificateInfo::RsaKey:
+        return RsaKey;
+    case Poppler::CertificateInfo::DsaKey:
+        return DsaKey;
+    case Poppler::CertificateInfo::EcKey:
+        return EcKey;
+    case Poppler::CertificateInfo::OtherKey:
+        return OtherKey;
     }
 
     return OtherKey;
@@ -128,11 +127,11 @@ class DummyCertificateInfo : public Okular::CertificateInfo
 
 #endif
 
-PopplerSignatureInfo::PopplerSignatureInfo( const Poppler::SignatureValidationInfo &info )
-    : m_info( info )
+PopplerSignatureInfo::PopplerSignatureInfo(const Poppler::SignatureValidationInfo &info)
+    : m_info(info)
 {
 #ifdef HAVE_POPPLER_0_73
-    m_certfiticateInfo = new PopplerCertificateInfo( m_info.certificateInfo() );
+    m_certfiticateInfo = new PopplerCertificateInfo(m_info.certificateInfo());
 #else
     m_certfiticateInfo = new DummyCertificateInfo();
 #endif
@@ -145,70 +144,67 @@ PopplerSignatureInfo::~PopplerSignatureInfo()
 
 PopplerSignatureInfo::SignatureStatus PopplerSignatureInfo::signatureStatus() const
 {
-    switch ( m_info.signatureStatus() )
-    {
-        case Poppler::SignatureValidationInfo::SignatureValid:
-            return SignatureValid;
-        case Poppler::SignatureValidationInfo::SignatureInvalid:
-            return SignatureInvalid;
-        case Poppler::SignatureValidationInfo::SignatureDigestMismatch:
-            return SignatureDigestMismatch;
-        case Poppler::SignatureValidationInfo::SignatureDecodingError:
-            return SignatureDecodingError;
-        case Poppler::SignatureValidationInfo::SignatureGenericError:
-            return SignatureGenericError;
-        case Poppler::SignatureValidationInfo::SignatureNotFound:
-            return SignatureNotFound;
-        case Poppler::SignatureValidationInfo::SignatureNotVerified:
-            return SignatureNotVerified;
-        default:
-            return SignatureStatusUnknown;
+    switch (m_info.signatureStatus()) {
+    case Poppler::SignatureValidationInfo::SignatureValid:
+        return SignatureValid;
+    case Poppler::SignatureValidationInfo::SignatureInvalid:
+        return SignatureInvalid;
+    case Poppler::SignatureValidationInfo::SignatureDigestMismatch:
+        return SignatureDigestMismatch;
+    case Poppler::SignatureValidationInfo::SignatureDecodingError:
+        return SignatureDecodingError;
+    case Poppler::SignatureValidationInfo::SignatureGenericError:
+        return SignatureGenericError;
+    case Poppler::SignatureValidationInfo::SignatureNotFound:
+        return SignatureNotFound;
+    case Poppler::SignatureValidationInfo::SignatureNotVerified:
+        return SignatureNotVerified;
+    default:
+        return SignatureStatusUnknown;
     }
 }
 
 PopplerSignatureInfo::CertificateStatus PopplerSignatureInfo::certificateStatus() const
 {
-    switch ( m_info.certificateStatus() )
-    {
-        case Poppler::SignatureValidationInfo::CertificateTrusted:
-            return CertificateTrusted;
-        case Poppler::SignatureValidationInfo::CertificateUntrustedIssuer:
-            return CertificateUntrustedIssuer;
-        case Poppler::SignatureValidationInfo::CertificateUnknownIssuer:
-            return CertificateUnknownIssuer;
-        case Poppler::SignatureValidationInfo::CertificateRevoked:
-            return CertificateRevoked;
-        case Poppler::SignatureValidationInfo::CertificateExpired:
-            return CertificateExpired;
-        case Poppler::SignatureValidationInfo::CertificateGenericError:
-            return CertificateGenericError;
-        case Poppler::SignatureValidationInfo::CertificateNotVerified:
-            return CertificateNotVerified;
-        default:
-            return CertificateStatusUnknown;
+    switch (m_info.certificateStatus()) {
+    case Poppler::SignatureValidationInfo::CertificateTrusted:
+        return CertificateTrusted;
+    case Poppler::SignatureValidationInfo::CertificateUntrustedIssuer:
+        return CertificateUntrustedIssuer;
+    case Poppler::SignatureValidationInfo::CertificateUnknownIssuer:
+        return CertificateUnknownIssuer;
+    case Poppler::SignatureValidationInfo::CertificateRevoked:
+        return CertificateRevoked;
+    case Poppler::SignatureValidationInfo::CertificateExpired:
+        return CertificateExpired;
+    case Poppler::SignatureValidationInfo::CertificateGenericError:
+        return CertificateGenericError;
+    case Poppler::SignatureValidationInfo::CertificateNotVerified:
+        return CertificateNotVerified;
+    default:
+        return CertificateStatusUnknown;
     }
 }
 
 PopplerSignatureInfo::HashAlgorithm PopplerSignatureInfo::hashAlgorithm() const
 {
-    switch ( m_info.hashAlgorithm() )
-    {
-        case Poppler::SignatureValidationInfo::HashAlgorithmMd2:
-            return HashAlgorithmMd2;
-        case Poppler::SignatureValidationInfo::HashAlgorithmMd5:
-            return HashAlgorithmMd5;
-        case Poppler::SignatureValidationInfo::HashAlgorithmSha1:
-            return HashAlgorithmSha1;
-        case Poppler::SignatureValidationInfo::HashAlgorithmSha256:
-            return HashAlgorithmSha256;
-        case Poppler::SignatureValidationInfo::HashAlgorithmSha384:
-            return HashAlgorithmSha384;
-        case Poppler::SignatureValidationInfo::HashAlgorithmSha512:
-            return HashAlgorithmSha512;
-        case Poppler::SignatureValidationInfo::HashAlgorithmSha224:
-            return HashAlgorithmSha224;
-        default:
-            return HashAlgorithmUnknown;
+    switch (m_info.hashAlgorithm()) {
+    case Poppler::SignatureValidationInfo::HashAlgorithmMd2:
+        return HashAlgorithmMd2;
+    case Poppler::SignatureValidationInfo::HashAlgorithmMd5:
+        return HashAlgorithmMd5;
+    case Poppler::SignatureValidationInfo::HashAlgorithmSha1:
+        return HashAlgorithmSha1;
+    case Poppler::SignatureValidationInfo::HashAlgorithmSha256:
+        return HashAlgorithmSha256;
+    case Poppler::SignatureValidationInfo::HashAlgorithmSha384:
+        return HashAlgorithmSha384;
+    case Poppler::SignatureValidationInfo::HashAlgorithmSha512:
+        return HashAlgorithmSha512;
+    case Poppler::SignatureValidationInfo::HashAlgorithmSha224:
+        return HashAlgorithmSha224;
+    default:
+        return HashAlgorithmUnknown;
     }
 }
 
@@ -242,7 +238,7 @@ QString PopplerSignatureInfo::reason() const
 
 QDateTime PopplerSignatureInfo::signingTime() const
 {
-    return QDateTime::fromSecsSinceEpoch( m_info.signingTime() );
+    return QDateTime::fromSecsSinceEpoch(m_info.signingTime());
 }
 
 QByteArray PopplerSignatureInfo::signature() const

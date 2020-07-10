@@ -17,12 +17,14 @@
 #include <QColor>
 #include <QFrame>
 
-namespace Okular {
+namespace Okular
+{
 class Annotation;
 class Document;
 }
 
-namespace GuiUtils {
+namespace GuiUtils
+{
 class LatexRenderer;
 }
 
@@ -33,44 +35,43 @@ class QMenu;
 class AnnotWindow : public QFrame
 {
     Q_OBJECT
-    public:
-        AnnotWindow( QWidget * parent, Okular::Annotation * annot, Okular::Document * document, int page );
-        ~AnnotWindow() override;
+public:
+    AnnotWindow(QWidget *parent, Okular::Annotation *annot, Okular::Document *document, int page);
+    ~AnnotWindow() override;
 
-        void reloadInfo();
+    void reloadInfo();
 
-        Okular::Annotation * annotation() const;
-        int pageNumber() const;
+    Okular::Annotation *annotation() const;
+    int pageNumber() const;
 
-        void updateAnnotation( Okular::Annotation * a );
+    void updateAnnotation(Okular::Annotation *a);
 
-    private:
-        MovableTitle * m_title;
-        KTextEdit *textEdit;
-        QColor m_color;
-        GuiUtils::LatexRenderer *m_latexRenderer;
-        Okular::Annotation* m_annot;
-        Okular::Document* m_document;
-        int m_page;
-        int m_prevCursorPos;
-        int m_prevAnchorPos;
+private:
+    MovableTitle *m_title;
+    KTextEdit *textEdit;
+    QColor m_color;
+    GuiUtils::LatexRenderer *m_latexRenderer;
+    Okular::Annotation *m_annot;
+    Okular::Document *m_document;
+    int m_page;
+    int m_prevCursorPos;
+    int m_prevAnchorPos;
 
-    public Q_SLOTS:
-        void renderLatex( bool render );
+public Q_SLOTS:
+    void renderLatex(bool render);
 
-    protected:
-        void showEvent( QShowEvent * event ) override;
-        bool eventFilter( QObject * obj, QEvent * event ) override;
+protected:
+    void showEvent(QShowEvent *event) override;
+    bool eventFilter(QObject *obj, QEvent *event) override;
 
-    private Q_SLOTS:
-        void slotUpdateUndoAndRedoInContextMenu(QMenu *menu);
-        void slotOptionBtn();
-        void slotsaveWindowText();
-        void slotHandleContentsChangedByUndoRedo( Okular::Annotation* annot, const QString &contents, int cursorPos, int anchorPos);
+private Q_SLOTS:
+    void slotUpdateUndoAndRedoInContextMenu(QMenu *menu);
+    void slotOptionBtn();
+    void slotsaveWindowText();
+    void slotHandleContentsChangedByUndoRedo(Okular::Annotation *annot, const QString &contents, int cursorPos, int anchorPos);
 
-    Q_SIGNALS:
-        void containsLatex( bool );
+Q_SIGNALS:
+    void containsLatex(bool);
 };
-
 
 #endif

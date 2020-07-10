@@ -14,12 +14,12 @@
 
 #include <KLocalizedString>
 
-namespace Okular {
-
-DefaultPrintOptionsWidget::DefaultPrintOptionsWidget(QWidget *parent)
- : PrintOptionsWidget(parent)
+namespace Okular
 {
-    setWindowTitle( i18n( "Print Options" ) );
+DefaultPrintOptionsWidget::DefaultPrintOptionsWidget(QWidget *parent)
+    : PrintOptionsWidget(parent)
+{
+    setWindowTitle(i18n("Print Options"));
     QFormLayout *layout = new QFormLayout(this);
     m_ignorePrintMargins = new QComboBox;
     // value indicates whether full page is enabled (i.e. print margins ignored)

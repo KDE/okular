@@ -11,25 +11,25 @@
 
 #include "core/document.h"
 
-PageSizeLabel::PageSizeLabel( QWidget * parent, Okular::Document * document )
-    : KSqueezedTextLabel( parent ), m_document( document )
+PageSizeLabel::PageSizeLabel(QWidget *parent, Okular::Document *document)
+    : KSqueezedTextLabel(parent)
+    , m_document(document)
 {
-    setAlignment( Qt::AlignRight );
+    setAlignment(Qt::AlignRight);
 }
 
 PageSizeLabel::~PageSizeLabel()
 {
-    m_document->removeObserver( this );
+    m_document->removeObserver(this);
 }
 
-void PageSizeLabel::notifyCurrentPageChanged( int previousPage, int currentPage )
+void PageSizeLabel::notifyCurrentPageChanged(int previousPage, int currentPage)
 {
-    Q_UNUSED( previousPage )
+    Q_UNUSED(previousPage)
 
     // if the document is opened
-    if ( m_document->pages() > 0 && !m_document->allPagesSize().isValid() )
-    {
-        setText( m_document->pageSizeString( currentPage ) );
+    if (m_document->pages() > 0 && !m_document->allPagesSize().isValid()) {
+        setText(m_document->pageSizeString(currentPage));
     }
 }
 

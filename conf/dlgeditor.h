@@ -19,16 +19,16 @@ class DlgEditor : public QWidget
 {
     Q_OBJECT
 
-    public:
-        explicit DlgEditor( QWidget * parent = nullptr );
-        ~DlgEditor() override;
+public:
+    explicit DlgEditor(QWidget *parent = nullptr);
+    ~DlgEditor() override;
 
-    private Q_SLOTS:
-        void editorChanged( int which );
+private Q_SLOTS:
+    void editorChanged(int which);
 
-    private:
-        Ui_DlgEditorBase * m_dlg;
-        QHash< int, QString > m_editors;
+private:
+    Ui_DlgEditorBase *m_dlg;
+    QHash<int, QString> m_editors;
 };
 
 #endif

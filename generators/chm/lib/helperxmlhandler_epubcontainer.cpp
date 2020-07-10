@@ -20,15 +20,14 @@
 
 bool HelperXmlHandler_EpubContainer::startElement(const QString &, const QString &, const QString &qName, const QXmlAttributes &atts)
 {
-	if ( qName == QLatin1String("rootfile") )
-	{
-		int idx = atts.index( QLatin1String("full-path") );
+    if (qName == QLatin1String("rootfile")) {
+        int idx = atts.index(QLatin1String("full-path"));
 
-		if ( idx == -1 )
-			return false;
+        if (idx == -1)
+            return false;
 
-		contentPath = atts.value( idx );
-	}
+        contentPath = atts.value(idx);
+    }
 
-	return true;
+    return true;
 }

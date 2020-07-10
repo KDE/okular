@@ -22,8 +22,8 @@
 
 Q_DECLARE_LOGGING_CATEGORY(OkularOooDebug)
 
-namespace OOO {
-
+namespace OOO
+{
 /**
    OOO document manifest entry
 
@@ -41,16 +41,16 @@ namespace OOO {
 */
 class ManifestEntry
 {
-  public:
+public:
     /**
        Create a new manifest entry
     */
-    explicit ManifestEntry( const QString &fileName );
+    explicit ManifestEntry(const QString &fileName);
 
     /**
        Set the mimetype of the file.
     */
-    void setMimeType( const QString &mimeType );
+    void setMimeType(const QString &mimeType);
 
     /**
        Get the file name
@@ -62,7 +62,7 @@ class ManifestEntry
 
        This is only required for files with encryption
     */
-    void setSize( const QString &size );
+    void setSize(const QString &size);
 
     /**
        Get the mime type
@@ -81,7 +81,7 @@ class ManifestEntry
 
        This is only required for files with encryption
     */
-    void setChecksumType( const QString &checksumType );
+    void setChecksumType(const QString &checksumType);
 
     /**
        Set the checksum.
@@ -90,7 +90,7 @@ class ManifestEntry
 
        This is only required for files with encryption
     */
-    void setChecksum( const QString &checksum );
+    void setChecksum(const QString &checksum);
 
     /**
        Get the checksum type
@@ -111,7 +111,7 @@ class ManifestEntry
 
        This is only required for files with encryption
     */
-    void setAlgorithm( const QString &algorithm );
+    void setAlgorithm(const QString &algorithm);
 
     /**
        Get the algorithm name
@@ -127,7 +127,7 @@ class ManifestEntry
 
        This is only required for files with encryption
     */
-    void setInitialisationVector( const QString &initialisationVector );
+    void setInitialisationVector(const QString &initialisationVector);
 
     /**
        Get the initialisation vector for the cipher algorithm
@@ -141,7 +141,7 @@ class ManifestEntry
 
        This is only required for files with encryption
     */
-    void setKeyDerivationName( const QString &keyDerivationName );
+    void setKeyDerivationName(const QString &keyDerivationName);
 
     /**
        Get the name of the key derivation function
@@ -155,7 +155,7 @@ class ManifestEntry
 
        This is only required for files with encryption
     */
-    void setIterationCount( const QString &iterationCount );
+    void setIterationCount(const QString &iterationCount);
 
     /**
        Get the iteration count for the key derivation function
@@ -171,7 +171,7 @@ class ManifestEntry
 
        This is only required for files with encryption
     */
-    void setSalt( const QString &salt );
+    void setSalt(const QString &salt);
 
     /**
        Get the salt for the key derivation function
@@ -180,19 +180,18 @@ class ManifestEntry
     */
     QByteArray salt() const;
 
- private:
-   const QString m_fileName;
-   QString m_mimeType;
-   QString m_size;
-   QString m_checksumType;
-   QByteArray m_checksum;
-   QString m_algorithm;
-   QByteArray m_initialisationVector;
-   QString m_keyDerivationName;
-   int m_iterationCount;
-   QByteArray m_salt;
+private:
+    const QString m_fileName;
+    QString m_mimeType;
+    QString m_size;
+    QString m_checksumType;
+    QByteArray m_checksum;
+    QString m_algorithm;
+    QByteArray m_initialisationVector;
+    QString m_keyDerivationName;
+    int m_iterationCount;
+    QByteArray m_salt;
 };
-
 
 /**
    OOO document manifest
@@ -202,7 +201,7 @@ class ManifestEntry
 */
 class Manifest
 {
-  public:
+public:
     /**
        Create a new manifest.
 
@@ -211,7 +210,7 @@ class Manifest
        of the XML format data.
        \param password to decrypt the file
     */
-    Manifest( const QString &odfFileName, const QByteArray &manifestData, const QString &password );
+    Manifest(const QString &odfFileName, const QByteArray &manifestData, const QString &password);
 
     ~Manifest();
 
@@ -221,31 +220,31 @@ class Manifest
     /**
        Check if the manifest indicates that a file is encrypted
     */
-    bool testIfEncrypted( const QString &filename );
+    bool testIfEncrypted(const QString &filename);
 
     /**
        Decrypt data associated with a specific file
     */
-    QByteArray decryptFile( const QString &filename, const QByteArray &fileData );
+    QByteArray decryptFile(const QString &filename, const QByteArray &fileData);
 
-  private:
+private:
     /**
        Retrieve the manifest data for a particular file
     */
-    ManifestEntry* entryByName( const QString &filename );
+    ManifestEntry *entryByName(const QString &filename);
 
     /**
        Verify whether the password we have is the right one.
 
        This verifies the provided checksum
     */
-    void checkPassword( ManifestEntry *entry, const QByteArray &fileData, QByteArray *decryptedData );
+    void checkPassword(ManifestEntry *entry, const QByteArray &fileData, QByteArray *decryptedData);
 
 #ifdef QCA2
     QCA::Initializer m_init;
 #endif
     const QString m_odfFileName;
-    QMap<QString, ManifestEntry*> mEntries;
+    QMap<QString, ManifestEntry *> mEntries;
     bool m_haveGoodPassword;
     QString m_password;
 };

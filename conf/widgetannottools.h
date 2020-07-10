@@ -18,16 +18,16 @@
 class WidgetAnnotTools : public WidgetConfigurationToolsBase
 {
     Q_OBJECT
-    public:
-        explicit WidgetAnnotTools( QWidget * parent = nullptr );
-        ~WidgetAnnotTools() override;
+public:
+    explicit WidgetAnnotTools(QWidget *parent = nullptr);
+    ~WidgetAnnotTools() override;
 
-        QStringList tools() const override;
-        void setTools(const QStringList& items) override;
+    QStringList tools() const override;
+    void setTools(const QStringList &items) override;
 
-    protected Q_SLOTS:
-        void slotAdd() override;
-        void slotEdit() override;
+protected Q_SLOTS:
+    void slotAdd() override;
+    void slotEdit() override;
 };
 
 #endif

@@ -18,7 +18,7 @@
 using namespace Okular;
 
 PageController::PageController()
-  : QObject()
+    : QObject()
 {
 }
 
@@ -28,19 +28,17 @@ PageController::~PageController()
 
 void PageController::addRotationJob(RotationJob *job)
 {
-    connect( job, &RotationJob::done,
-             this, &PageController::imageRotationDone );
+    connect(job, &RotationJob::done, this, &PageController::imageRotationDone);
     ThreadWeaver::enqueue(&m_weaver, job);
 }
 
 void PageController::imageRotationDone(const ThreadWeaver::JobPointer &j)
 {
-    RotationJob *job = static_cast< RotationJob * >( j.data() );
+    RotationJob *job = static_cast<RotationJob *>(j.data());
 
-    if ( job->page() )
-    {
-        job->page()->imageRotationDone( job );
+    if (job->page()) {
+        job->page()->imageRotationDone(job);
 
-        emit rotationFinished( job->page()->m_number, job->page()->m_page );
+        emit rotationFinished(job->page()->m_number, job->page()->m_page);
     }
 }

@@ -12,22 +12,22 @@
 #include <QCheckBox>
 #include <QLayout>
 
-#define DEBUG_SIMPLE_BOOL( cfgname, layout ) \
-{ \
-    QCheckBox * foo = new QCheckBox( QStringLiteral(cfgname), this ); \
-    foo->setObjectName( QStringLiteral("kcfg_" cfgname) ); \
-    layout->addWidget( foo ); \
-}
+#define DEBUG_SIMPLE_BOOL(cfgname, layout)                                                                                                                                                                                                     \
+    {                                                                                                                                                                                                                                          \
+        QCheckBox *foo = new QCheckBox(QStringLiteral(cfgname), this);                                                                                                                                                                         \
+        foo->setObjectName(QStringLiteral("kcfg_" cfgname));                                                                                                                                                                                   \
+        layout->addWidget(foo);                                                                                                                                                                                                                \
+    }
 
-DlgDebug::DlgDebug( QWidget * parent )
-    : QWidget( parent )
+DlgDebug::DlgDebug(QWidget *parent)
+    : QWidget(parent)
 {
-    QVBoxLayout * lay = new QVBoxLayout( this );
-    lay->setContentsMargins( 0, 0, 0, 0 );
+    QVBoxLayout *lay = new QVBoxLayout(this);
+    lay->setContentsMargins(0, 0, 0, 0);
 
-    DEBUG_SIMPLE_BOOL( "DebugDrawBoundaries", lay );
-    DEBUG_SIMPLE_BOOL( "DebugDrawAnnotationRect", lay );
-    DEBUG_SIMPLE_BOOL( "TocPageColumn", lay );
+    DEBUG_SIMPLE_BOOL("DebugDrawBoundaries", lay);
+    DEBUG_SIMPLE_BOOL("DebugDrawAnnotationRect", lay);
+    DEBUG_SIMPLE_BOOL("TocPageColumn", lay);
 
-    lay->addItem( new QSpacerItem( 5, 5, QSizePolicy::Fixed, QSizePolicy::MinimumExpanding ) );
+    lay->addItem(new QSpacerItem(5, 5, QSizePolicy::Fixed, QSizePolicy::MinimumExpanding));
 }

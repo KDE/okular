@@ -13,29 +13,28 @@
 
 #include <config-okular.h>
 
-#include "ui_dlggeneralbase.h"
 #include "settings.h"
+#include "ui_dlggeneralbase.h"
 
-DlgGeneral::DlgGeneral( QWidget * parent, Okular::EmbedMode embedMode )
-    : QWidget( parent )
+DlgGeneral::DlgGeneral(QWidget *parent, Okular::EmbedMode embedMode)
+    : QWidget(parent)
 {
     m_dlg = new Ui_DlgGeneralBase();
-    m_dlg->setupUi( this );
+    m_dlg->setupUi(this);
 
-    if( embedMode == Okular::ViewerWidgetMode )
-    {
-        m_dlg->kcfg_SyncThumbnailsViewport->setVisible( false );
-        m_dlg->kcfg_DisplayDocumentTitle->setVisible( false );
-        m_dlg->kcfg_WatchFile->setVisible( false );
+    if (embedMode == Okular::ViewerWidgetMode) {
+        m_dlg->kcfg_SyncThumbnailsViewport->setVisible(false);
+        m_dlg->kcfg_DisplayDocumentTitle->setVisible(false);
+        m_dlg->kcfg_WatchFile->setVisible(false);
         m_dlg->kcfg_rtlReadingDirection->setVisible(false);
     }
 
-    m_dlg->kcfg_BackgroundColor->setEnabled( Okular::Settings::useCustomBackgroundColor() );
-    m_dlg->kcfg_ShellOpenFileInTabs->setVisible( embedMode == Okular::NativeShellMode );
-    m_dlg->kcfg_SwitchToTabIfOpen->setEnabled( Okular::Settings::shellOpenFileInTabs() );
+    m_dlg->kcfg_BackgroundColor->setEnabled(Okular::Settings::useCustomBackgroundColor());
+    m_dlg->kcfg_ShellOpenFileInTabs->setVisible(embedMode == Okular::NativeShellMode);
+    m_dlg->kcfg_SwitchToTabIfOpen->setEnabled(Okular::Settings::shellOpenFileInTabs());
 
-    connect( m_dlg->kcfg_UseCustomBackgroundColor, &QCheckBox::toggled, m_dlg->kcfg_BackgroundColor, &QCheckBox::setEnabled );
-    connect( m_dlg->kcfg_ShellOpenFileInTabs, &QCheckBox::toggled, m_dlg->kcfg_SwitchToTabIfOpen, &QCheckBox::setEnabled );
+    connect(m_dlg->kcfg_UseCustomBackgroundColor, &QCheckBox::toggled, m_dlg->kcfg_BackgroundColor, &QCheckBox::setEnabled);
+    connect(m_dlg->kcfg_ShellOpenFileInTabs, &QCheckBox::toggled, m_dlg->kcfg_SwitchToTabIfOpen, &QCheckBox::setEnabled);
 }
 
 DlgGeneral::~DlgGeneral()
@@ -43,15 +42,14 @@ DlgGeneral::~DlgGeneral()
     delete m_dlg;
 }
 
-void DlgGeneral::showEvent( QShowEvent * )
+void DlgGeneral::showEvent(QShowEvent *)
 {
 #if OKULAR_FORCE_DRM
     m_dlg->kcfg_ObeyDRM->hide();
 #else
-    if ( KAuthorized::authorize( QStringLiteral("skip_drm") ) )
+    if (KAuthorized::authorize(QStringLiteral("skip_drm")))
         m_dlg->kcfg_ObeyDRM->show();
     else
         m_dlg->kcfg_ObeyDRM->hide();
 #endif
 }
-

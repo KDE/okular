@@ -5,9 +5,9 @@
 
 class EbookURL : public QUrl
 {
-	public:
-		EbookURL();
-		EbookURL( const QString & url );
+public:
+    EbookURL();
+    EbookURL(const QString &url);
 };
 
 #endif // EBOOK_URL_H

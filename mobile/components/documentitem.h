@@ -27,8 +27,9 @@
 #include <core/document.h>
 #include <core/observer.h>
 
-namespace Okular {
-    class Document;
+namespace Okular
+{
+class Document;
 }
 
 class Observer;
@@ -94,8 +95,7 @@ class DocumentItem : public QObject
     Q_PROPERTY(QStringList bookmarks READ bookmarks NOTIFY bookmarksChanged)
 
 public:
-
-    explicit DocumentItem(QObject *parent=nullptr);
+    explicit DocumentItem(QObject *parent = nullptr);
     ~DocumentItem() override;
 
     void setUrl(const QUrl &url);
@@ -122,7 +122,7 @@ public:
 
     QStringList bookmarks() const;
 
-    //This could be a property, but maybe we want to have parameter for searchText
+    // This could be a property, but maybe we want to have parameter for searchText
     /**
      * Performs a search in the document
      *
@@ -135,7 +135,7 @@ public:
      */
     Q_INVOKABLE void resetSearch();
 
-    //Internal, not binded to qml
+    // Internal, not binded to qml
     Okular::Document *document();
     Observer *pageviewObserver();
     Observer *thumbnailObserver();

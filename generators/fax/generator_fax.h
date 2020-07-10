@@ -19,25 +19,25 @@
 class FaxGenerator : public Okular::Generator
 {
     Q_OBJECT
-    Q_INTERFACES( Okular::Generator )
+    Q_INTERFACES(Okular::Generator)
 
-    public:
-        FaxGenerator( QObject *parent, const QVariantList &args );
-        ~FaxGenerator() override;
+public:
+    FaxGenerator(QObject *parent, const QVariantList &args);
+    ~FaxGenerator() override;
 
-        bool loadDocument( const QString & fileName, QVector<Okular::Page*> & pagesVector ) override;
+    bool loadDocument(const QString &fileName, QVector<Okular::Page *> &pagesVector) override;
 
-        Okular::DocumentInfo generateDocumentInfo( const QSet<Okular::DocumentInfo::Key> &keys ) const override;
+    Okular::DocumentInfo generateDocumentInfo(const QSet<Okular::DocumentInfo::Key> &keys) const override;
 
-        bool print( QPrinter& printer ) override;
+    bool print(QPrinter &printer) override;
 
-    protected:
-        bool doCloseDocument() override;
-        QImage image( Okular::PixmapRequest * request ) override;
+protected:
+    bool doCloseDocument() override;
+    QImage image(Okular::PixmapRequest *request) override;
 
-    private:
-        QImage m_img;
-        FaxDocument::DocumentType m_type;
+private:
+    QImage m_img;
+    FaxDocument::DocumentType m_type;
 };
 
 #endif

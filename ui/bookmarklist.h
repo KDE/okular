@@ -22,7 +22,8 @@ class QUrl;
 class BookmarkItem;
 class FileItem;
 
-namespace Okular {
+namespace Okular
+{
 class Document;
 }
 
@@ -30,33 +31,33 @@ class BookmarkList : public QWidget, public Okular::DocumentObserver
 {
     Q_OBJECT
 
-    public:
-        explicit BookmarkList( Okular::Document *document, QWidget *parent = nullptr );
-        ~BookmarkList() override;
+public:
+    explicit BookmarkList(Okular::Document *document, QWidget *parent = nullptr);
+    ~BookmarkList() override;
 
-        // inherited from DocumentObserver
-        void notifySetup( const QVector< Okular::Page * > & pages, int setupFlags ) override;
+    // inherited from DocumentObserver
+    void notifySetup(const QVector<Okular::Page *> &pages, int setupFlags) override;
 
-    private Q_SLOTS:
-        void slotFilterBookmarks( bool );
-        void slotExecuted( QTreeWidgetItem * item );
-        void slotChanged( QTreeWidgetItem * item );
-        void slotContextMenu( const QPoint p );
-        void slotBookmarksChanged( const QUrl& url );
+private Q_SLOTS:
+    void slotFilterBookmarks(bool);
+    void slotExecuted(QTreeWidgetItem *item);
+    void slotChanged(QTreeWidgetItem *item);
+    void slotContextMenu(const QPoint p);
+    void slotBookmarksChanged(const QUrl &url);
 
-    private:
-        void rebuildTree( bool filter );
-        void goTo( BookmarkItem * item );
-        void selectiveUrlUpdate( const QUrl& url, QTreeWidgetItem*& item );
-        QTreeWidgetItem* itemForUrl(const QUrl &url ) const;
-        void contextMenuForBookmarkItem( const QPoint p, BookmarkItem* bmItem );
-        void contextMenuForFileItem( const QPoint p, FileItem* fItem );
+private:
+    void rebuildTree(bool filter);
+    void goTo(BookmarkItem *item);
+    void selectiveUrlUpdate(const QUrl &url, QTreeWidgetItem *&item);
+    QTreeWidgetItem *itemForUrl(const QUrl &url) const;
+    void contextMenuForBookmarkItem(const QPoint p, BookmarkItem *bmItem);
+    void contextMenuForFileItem(const QPoint p, FileItem *fItem);
 
-        Okular::Document * m_document;
-        QTreeWidget * m_tree;
-        KTreeWidgetSearchLine * m_searchLine;
-        QAction * m_showBoomarkOnlyAction;
-        QTreeWidgetItem * m_currentDocumentItem;
+    Okular::Document *m_document;
+    QTreeWidget *m_tree;
+    KTreeWidgetSearchLine *m_searchLine;
+    QAction *m_showBoomarkOnlyAction;
+    QTreeWidgetItem *m_currentDocumentItem;
 };
 
 #endif

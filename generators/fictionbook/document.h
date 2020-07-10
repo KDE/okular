@@ -11,29 +11,29 @@
 #define FICTIONBOOK_DOCUMENT_H
 
 #include <QByteArray>
+#include <QDomDocument>
 #include <QMap>
 #include <QString>
-#include <QDomDocument>
 
-namespace FictionBook {
-
+namespace FictionBook
+{
 class Document
 {
-    public:
-        explicit Document( const QString &fileName );
+public:
+    explicit Document(const QString &fileName);
 
-        bool open();
+    bool open();
 
-        QDomDocument content() const;
+    QDomDocument content() const;
 
-        QString lastErrorString() const;
+    QString lastErrorString() const;
 
-    private:
-        void setError( const QString& );
+private:
+    void setError(const QString &);
 
-        QString mFileName;
-        QDomDocument mDocument;
-        QString mErrorString;
+    QString mFileName;
+    QDomDocument mDocument;
+    QString mErrorString;
 };
 
 }

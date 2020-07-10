@@ -9,8 +9,8 @@
 
 #include <QtTest>
 
-#include <QMimeType>
 #include <QMimeDatabase>
+#include <QMimeType>
 
 #include "../settings_core.h"
 #include <core/document.h>
@@ -32,8 +32,8 @@ private:
 
 void SignatureFormTest::initTestCase()
 {
-    Okular::SettingsCore::instance( QStringLiteral("signatureformtest") );
-    m_document = new Okular::Document( nullptr );
+    Okular::SettingsCore::instance(QStringLiteral("signatureformtest"));
+    m_document = new Okular::Document(nullptr);
 }
 
 void SignatureFormTest::cleanupTestCase()
@@ -46,19 +46,18 @@ void SignatureFormTest::testSignatureForm()
 #ifndef HAVE_POPPLER_0_73
     const QString testFile = QStringLiteral(KDESRCDIR "data/pdf_with_signature.pdf");
     QMimeDatabase db;
-    const QMimeType mime = db.mimeTypeForFile( testFile );
-    QCOMPARE( m_document->openDocument(testFile, QUrl(), mime), Okular::Document::OpenSuccess );
+    const QMimeType mime = db.mimeTypeForFile(testFile);
+    QCOMPARE(m_document->openDocument(testFile, QUrl(), mime), Okular::Document::OpenSuccess);
 
-    const Okular::Page *page = m_document->page( 0 );
-    QLinkedList< Okular::FormField * > pageFields = page->formFields();
-    QCOMPARE( pageFields.size(), 1 );
-    QCOMPARE( pageFields.first()->type(), Okular::FormField::FormSignature );
+    const Okular::Page *page = m_document->page(0);
+    QLinkedList<Okular::FormField *> pageFields = page->formFields();
+    QCOMPARE(pageFields.size(), 1);
+    QCOMPARE(pageFields.first()->type(), Okular::FormField::FormSignature);
 
-    Okular::FormFieldSignature *sf = static_cast< Okular::FormFieldSignature * >( pageFields.first() );
-    QCOMPARE( sf->signatureType(), Okular::FormFieldSignature::AdbePkcs7detached );
+    Okular::FormFieldSignature *sf = static_cast<Okular::FormFieldSignature *>(pageFields.first());
+    QCOMPARE(sf->signatureType(), Okular::FormFieldSignature::AdbePkcs7detached);
 #endif
 }
 
-
-QTEST_MAIN( SignatureFormTest )
+QTEST_MAIN(SignatureFormTest)
 #include "signatureformtest.moc"

@@ -27,60 +27,59 @@ class Unrar : public QObject
 {
     Q_OBJECT
 
-    public:
-        /**
-         * Creates a new unrar object.
-         */
-        Unrar();
+public:
+    /**
+     * Creates a new unrar object.
+     */
+    Unrar();
 
-        /**
-         * Destroys the unrar object.
-         */
-        ~Unrar() override;
+    /**
+     * Destroys the unrar object.
+     */
+    ~Unrar() override;
 
-        /**
-         * Opens given rar archive.
-         */
-        bool open( const QString &fileName );
+    /**
+     * Opens given rar archive.
+     */
+    bool open(const QString &fileName);
 
-        /**
-         * Returns the list of files from the archive.
-         */
-        QStringList list();
+    /**
+     * Returns the list of files from the archive.
+     */
+    QStringList list();
 
-        /**
-         * Returns the content of the file with the given name.
-         */
-        QByteArray contentOf( const QString &fileName ) const;
+    /**
+     * Returns the content of the file with the given name.
+     */
+    QByteArray contentOf(const QString &fileName) const;
 
-        /**
-         * Returns a new device for reading the file with the given name.
-         */
-        QIODevice* createDevice( const QString &fileName ) const;
+    /**
+     * Returns a new device for reading the file with the given name.
+     */
+    QIODevice *createDevice(const QString &fileName) const;
 
-        static bool isAvailable();
-        static bool isSuitableVersionAvailable();
+    static bool isAvailable();
+    static bool isSuitableVersionAvailable();
 
-    private Q_SLOTS:
-        void readFromStdout();
-        void readFromStderr();
-        void finished( int exitCode, QProcess::ExitStatus exitStatus );
+private Q_SLOTS:
+    void readFromStdout();
+    void readFromStderr();
+    void finished(int exitCode, QProcess::ExitStatus exitStatus);
 
-    private:
-        int startSyncProcess( const ProcessArgs &args );
-        void writeToProcess( const QByteArray &data );
+private:
+    int startSyncProcess(const ProcessArgs &args);
+    void writeToProcess(const QByteArray &data);
 
 #if defined(WITH_KPTY)
-        KPtyProcess *mProcess;
+    KPtyProcess *mProcess;
 #else
-        QProcess *mProcess;
+    QProcess *mProcess;
 #endif
-        QEventLoop *mLoop;
-        QString mFileName;
-        QByteArray mStdOutData;
-        QByteArray mStdErrData;
-        QTemporaryDir *mTempDir;
+    QEventLoop *mLoop;
+    QString mFileName;
+    QByteArray mStdOutData;
+    QByteArray mStdErrData;
+    QTemporaryDir *mTempDir;
 };
 
 #endif
-

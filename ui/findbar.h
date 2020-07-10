@@ -15,49 +15,48 @@
 class QAction;
 class SearchLineWidget;
 
-namespace Okular {
+namespace Okular
+{
 class Document;
 }
 
-class FindBar
-    : public QWidget
+class FindBar : public QWidget
 {
     Q_OBJECT
 
-    public:
-        explicit FindBar( Okular::Document * document, QWidget * parent = nullptr );
-        ~FindBar() override;
+public:
+    explicit FindBar(Okular::Document *document, QWidget *parent = nullptr);
+    ~FindBar() override;
 
-        QString text() const;
-        Qt::CaseSensitivity caseSensitivity() const;
+    QString text() const;
+    Qt::CaseSensitivity caseSensitivity() const;
 
-        void focusAndSetCursor();
-        bool maybeHide();
-        void startSearch(const QString & findText);
+    void focusAndSetCursor();
+    bool maybeHide();
+    void startSearch(const QString &findText);
 
-    Q_SIGNALS:
-        void forwardKeyPressEvent( QKeyEvent* );
-        void onCloseButtonPressed();
+Q_SIGNALS:
+    void forwardKeyPressEvent(QKeyEvent *);
+    void onCloseButtonPressed();
 
-    public Q_SLOTS:
-        void findNext();
-        void findPrev();
-        void resetSearch();
+public Q_SLOTS:
+    void findNext();
+    void findPrev();
+    void resetSearch();
 
-    private Q_SLOTS:
-        void caseSensitivityChanged();
-        void fromCurrentPageChanged();
-        void findAsYouTypeChanged();
-        void closeAndStopSearch();
+private Q_SLOTS:
+    void caseSensitivityChanged();
+    void fromCurrentPageChanged();
+    void findAsYouTypeChanged();
+    void closeAndStopSearch();
 
-    private:
-        SearchLineWidget * m_search;
-        QAction * m_caseSensitiveAct;
-        QAction * m_fromCurrentPageAct;
-        QAction * m_findAsYouTypeAct;
-        bool eventFilter( QObject *target, QEvent *event ) override;
-        bool m_active;
+private:
+    SearchLineWidget *m_search;
+    QAction *m_caseSensitiveAct;
+    QAction *m_fromCurrentPageAct;
+    QAction *m_findAsYouTypeAct;
+    bool eventFilter(QObject *target, QEvent *event) override;
+    bool m_active;
 };
-
 
 #endif

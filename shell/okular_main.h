@@ -20,7 +20,6 @@ class QStringList;
 
 namespace Okular
 {
-
 enum Status { Error, AttachedOtherProcess, Success };
 
 Status main(const QStringList &paths, const QString &serializedOptions);

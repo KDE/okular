@@ -14,15 +14,15 @@
 class KJSContext;
 class KJSGlobalObject;
 
-namespace Okular {
-
+namespace Okular
+{
 class DocumentPrivate;
 
 class JSDocument
 {
-    public:
-        static void initType( KJSContext *ctx );
-        static KJSGlobalObject wrapDocument( DocumentPrivate *doc );
+public:
+    static void initType(KJSContext *ctx);
+    static KJSGlobalObject wrapDocument(DocumentPrivate *doc);
 };
 
 }

@@ -12,6 +12,8 @@
 #ifndef IMAGE_H
 #define IMAGE_H
 
+#include "unpluck.h"
+
 class QImage;
 
 bool TranscribePalmImageToJPEG( unsigned char *image_bytes_in, QImage &image );

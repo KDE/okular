@@ -19,6 +19,7 @@
 #ifndef EBOOK_EPUB_H
 #define EBOOK_EPUB_H
 
+#include <QMap>
 #include <QString>
 #include <QStringList>
 #include <QFile>

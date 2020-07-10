@@ -1,0 +1,14 @@
+We introduced clang-format mandatory usage in July 2020.
+If you want git blame to ignore the revision in which we did the mass change you can do
+   git config blame.ignoreRevsFile .git-blame-ignore-revs
+on your clone
+
+To get the clang-format warnings locally instead at CI time we recommend you
+to copy the hooks/pre-commit to your .git
+    cp hooks/pre-commit .git/hooks/
+
+We are using clang-format 10 on CI. Unfortunately clang-format is not totally
+compatible with older versions of itself. If CI gives you trouble but your local
+clang-format disagrees, just apply the changes suggested by CI and then commit
+with the --no-verify flag. If you get stuck, don't hesitate to ask the reviewer
+to help and they will reformat your commits :)

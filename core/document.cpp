@@ -5105,7 +5105,10 @@ QByteArray Document::fontData(const FontInfo &font) const
 
     if (d->m_generator)
     {
+        // clang-format off
+        // Otherwise the Q_ARG(QByteArray* gets broken
         QMetaObject::invokeMethod(d->m_generator, "requestFontData", Qt::DirectConnection, Q_ARG(Okular::FontInfo, font), Q_ARG(QByteArray*, &result));
+        // clang-format on
     }
 
     return result;

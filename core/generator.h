@@ -598,6 +598,7 @@ class OKULARCORE_EXPORT Generator : public QObject
          *
          * @since 0.8 (KDE 4.1)
          */
+        // TODO Make it return a QByteArray and be virtual when a BIC change happens somewhere else
         void requestFontData(const Okular::FontInfo &font, QByteArray *data);
 
         /**

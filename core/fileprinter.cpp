@@ -49,8 +49,8 @@ int FilePrinter::printFile(QPrinter &printer, const QString file, // NOLINT(perf
                             documentOrientation, scaleMode );
 }
 
-int FilePrinter::doPrintFiles(QPrinter &printer, const QStringList fileList, FileDeletePolicy fileDeletePolicy, // NOLINT(performance-unnecessary-value-param) clazy:exclude=function-args-by-ref TODO when BIC changes are allowed
-                               PageSelectPolicy pageSelectPolicy, const QString &pageRange,
+int FilePrinter::doPrintFiles(QPrinter &printer, const QStringList fileList, // NOLINT(performance-unnecessary-value-param) clazy:exclude=function-args-by-ref TODO when BIC changes are allowed
+                               FileDeletePolicy fileDeletePolicy, PageSelectPolicy pageSelectPolicy, const QString &pageRange,
                                QPrinter::Orientation documentOrientation )
 {
     return doPrintFiles( printer, fileList, fileDeletePolicy, pageSelectPolicy, pageRange,

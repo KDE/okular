@@ -747,7 +747,10 @@ void Shell::connectPart( QObject* part )
     connect( part, SIGNAL(enableCloseAction(bool)), this, SLOT(setCloseEnabled(bool)));                     // clazy:exclude=old-style-connect
     connect( part, SIGNAL(mimeTypeChanged(QMimeType)), this, SLOT(setTabIcon(QMimeType)));                  // clazy:exclude=old-style-connect
     connect( part, SIGNAL(urlsDropped(QList<QUrl>)), this, SLOT(handleDroppedUrls(QList<QUrl>)) );          // clazy:exclude=old-style-connect
-    connect( part, SIGNAL(fitWindowToPage(QSize,QSize)), this, SLOT(slotFitWindowToPage(QSize,QSize)) );    // clazy:exclude=old-style-connect
+    // clang-format off
+    // Otherwise the QSize,QSize gets turned into QSize, QSize that is not normalized signals and is slightly slower
+    connect(part, SIGNAL(fitWindowToPage(QSize,QSize)), this, SLOT(slotFitWindowToPage(QSize,QSize)));   // clazy:exclude=old-style-connect
+    // clang-format on
 }
 
 void Shell::print()

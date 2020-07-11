@@ -1103,7 +1103,10 @@ static bool shouldDoPartialUpdateCallback(const QVariant &vPayload)
 static void partialUpdateCallback(const QImage &image, const QVariant &vPayload)
 {
     auto payload = vPayload.value<RenderImagePayload *>();
+    // clang-format off
+    // Otherwise the Okular::PixmapRequest* gets turned into Okular::PixmapRequest * that is not normalized and is slightly slower
     QMetaObject::invokeMethod(payload->generator, "signalPartialPixmapRequest", Qt::QueuedConnection, Q_ARG(Okular::PixmapRequest*, payload->request), Q_ARG(QImage, image));
+    // clang-format on
 }
 
 #ifdef HAVE_POPPLER_0_63

@@ -21,8 +21,11 @@
 #define _WIN32_WINNT 0x0500
 #include <windows.h>
 #elif defined(Q_OS_FREEBSD)
-#include <sys/sysctl.h>
+// clang-format off
+// FreeBSD really wants this include order
 #include <sys/types.h>
+#include <sys/sysctl.h>
+// clang-format on
 #include <vm/vm_param.h>
 #endif
 

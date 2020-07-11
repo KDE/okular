@@ -74,7 +74,7 @@ public:
             pixmap = GuiUtils::loadStamp(hoverIconName, size);
     }
 
-    QRect event(EventType type, Button button, Modifiers /*modifiers*/, double nX, double nY, double xScale, double yScale, const Okular::Page *page) override
+    QRect event(EventType type, Button button, Modifiers modifiers, double nX, double nY, double xScale, double yScale, const Okular::Page *page) override
     {
         xscale = xScale;
         yscale = yScale;
@@ -99,6 +99,12 @@ public:
         } else
             return QRect();
 
+        // shift button: enforce 1:1 form factor (e.g. circle or square)
+        if (modifiers.shift) {
+            double side = qMin(qAbs(nX - startpoint.x) * xScale, qAbs(nY - startpoint.y) * yScale);
+            nX = qBound(startpoint.x - side / xScale, nX, startpoint.x + side / xScale);
+            nY = qBound(startpoint.y - side / yScale, nY, startpoint.y + side / yScale);
+        }
         // update variables and extents (zoom invariant rect)
         point.x = nX;
         point.y = nY;

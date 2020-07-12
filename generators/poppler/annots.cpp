@@ -258,6 +258,38 @@ void PopplerAnnotationProxy::notifyRemoval(Okular::Annotation *okl_ann, int page
 }
 // END PopplerAnnotationProxy implementation
 
+static Okular::Annotation::LineStyle okularLineStyleFromAnnotationLineStyle(Poppler::Annotation::LineStyle s)
+{
+    switch (s) {
+    case Poppler::Annotation::Solid:
+        return Okular::Annotation::Solid;
+    case Poppler::Annotation::Dashed:
+        return Okular::Annotation::Dashed;
+    case Poppler::Annotation::Beveled:
+        return Okular::Annotation::Beveled;
+    case Poppler::Annotation::Inset:
+        return Okular::Annotation::Inset;
+    case Poppler::Annotation::Underline:
+        return Okular::Annotation::Underline;
+    }
+
+    Q_UNREACHABLE();
+    return Okular::Annotation::Solid;
+}
+
+static Okular::Annotation::LineEffect okularLineEffectFromAnnotationLineEffect(Poppler::Annotation::LineEffect e)
+{
+    switch (e) {
+    case Poppler::Annotation::NoEffect:
+        return Okular::Annotation::NoEffect;
+    case Poppler::Annotation::Cloudy:
+        return Okular::Annotation::Cloudy;
+    }
+
+    Q_UNREACHABLE();
+    return Okular::Annotation::NoEffect;
+}
+
 Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *popplerAnnotation, bool *doDelete)
 {
     Okular::Annotation *okularAnnotation = nullptr;
@@ -388,7 +420,23 @@ Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *p
             }
         }
 
-        // TODO clone style
+        // Convert the poppler annotation style to Okular annotation style
+        Okular::Annotation::Style &okularStyle = okularAnnotation->style();
+        const Poppler::Annotation::Style popplerStyle = popplerAnnotation->style();
+        okularStyle.setColor(popplerStyle.color());
+        okularStyle.setOpacity(popplerStyle.opacity());
+        okularStyle.setWidth(popplerStyle.width());
+        okularStyle.setLineStyle(okularLineStyleFromAnnotationLineStyle(popplerStyle.lineStyle()));
+        okularStyle.setXCorners(popplerStyle.xCorners());
+        okularStyle.setYCorners(popplerStyle.yCorners());
+        const QVector<double> &dashArray = popplerStyle.dashArray();
+        if (dashArray.size() > 0)
+            okularStyle.setMarks(dashArray[0]);
+        if (dashArray.size() > 1)
+            okularStyle.setSpaces(dashArray[1]);
+        okularStyle.setLineEffect(okularLineEffectFromAnnotationLineEffect(popplerStyle.lineEffect()));
+        okularStyle.setEffectIntensity(popplerStyle.effectIntensity());
+
         // TODO clone window
         // TODO clone revisions
         if (tieToOkularAnn) {

@@ -290,6 +290,46 @@ static Okular::Annotation::LineEffect okularLineEffectFromAnnotationLineEffect(P
     return Okular::Annotation::NoEffect;
 }
 
+static Okular::Annotation::RevisionScope okularRevisionScopeFromPopplerRevisionScope(Poppler::Annotation::RevScope s)
+{
+    switch (s) {
+    case Poppler::Annotation::Root:
+        Q_UNREACHABLE();
+    case Poppler::Annotation::Reply:
+        return Okular::Annotation::Reply;
+    case Poppler::Annotation::Group:
+        return Okular::Annotation::Group;
+    case Poppler::Annotation::Delete:
+        return Okular::Annotation::Delete;
+    }
+
+    Q_UNREACHABLE();
+    return Okular::Annotation::Reply;
+}
+
+static Okular::Annotation::RevisionType okularRevisionTypeFromPopplerRevisionType(Poppler::Annotation::RevType t)
+{
+    switch (t) {
+    case Poppler::Annotation::None:
+        return Okular::Annotation::None;
+    case Poppler::Annotation::Marked:
+        return Okular::Annotation::Marked;
+    case Poppler::Annotation::Unmarked:
+        return Okular::Annotation::Unmarked;
+    case Poppler::Annotation::Accepted:
+        return Okular::Annotation::Accepted;
+    case Poppler::Annotation::Rejected:
+        return Okular::Annotation::Rejected;
+    case Poppler::Annotation::Cancelled:
+        return Okular::Annotation::Cancelled;
+    case Poppler::Annotation::Completed:
+        return Okular::Annotation::Completed;
+    }
+
+    Q_UNREACHABLE();
+    return Okular::Annotation::None;
+}
+
 Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *popplerAnnotation, const Poppler::Page &popplerPage, bool *doDelete)
 {
     Okular::Annotation *okularAnnotation = nullptr;
@@ -450,7 +490,23 @@ Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *p
         okularWindow.setTitle(popplerPopup.title());
         okularWindow.setSummary(popplerPopup.summary());
 
-        // TODO clone revisions
+        // Convert the poppler revisions to Okular revisions
+        QLinkedList<Okular::Annotation::Revision> &okularRevisions = okularAnnotation->revisions();
+        okularRevisions.clear(); // We can remove this once we stop calling Okular::AnnotationUtils::createAnnotation
+        const QList<Poppler::Annotation *> popplerRevisions = popplerAnnotation->revisions();
+        for (Poppler::Annotation *popplerRevision : popplerRevisions) {
+            bool deletePopplerRevision;
+            Okular::Annotation::Revision okularRevision;
+            okularRevision.setAnnotation(createAnnotationFromPopplerAnnotation(popplerRevision, popplerPage, &deletePopplerRevision));
+            okularRevision.setScope(okularRevisionScopeFromPopplerRevisionScope(popplerRevision->revisionScope()));
+            okularRevision.setType(okularRevisionTypeFromPopplerRevisionType(popplerRevision->revisionType()));
+            okularRevisions << okularRevision;
+
+            if (deletePopplerRevision) {
+                delete popplerRevision;
+            }
+        }
+
         if (tieToOkularAnn) {
             okularAnnotation->setNativeId(QVariant::fromValue(popplerAnnotation));
             okularAnnotation->setDisposeDataFunction(disposeAnnotation);

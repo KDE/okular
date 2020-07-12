@@ -389,6 +389,7 @@ if(BUILD_DESKTOP)
   set(okularpart_SRCS
     ${okularpart_conf_SRCS}
     part.cpp
+    xmlgui_helper.cpp
     extensions.cpp
     ui/embeddedfilesdialog.cpp
     ui/annotationactionhandler.cpp

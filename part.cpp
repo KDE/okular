@@ -117,6 +117,7 @@
 #include "ui/signaturepanel.h"
 #include "ui/thumbnaillist.h"
 #include "ui/toc.h"
+#include "xmlgui_helper.h"
 #include <memory>
 
 #ifdef OKULAR_KEEP_FILE_OPEN
@@ -350,6 +351,13 @@ Part::Part(QWidget *parentWidget, QObject *parent, const QVariantList &args)
     }
 
     Okular::Settings::instance(configFilePath);
+
+    // In part.rc 47 we introduced a new mandatory toolbar that kxmlgui doesn't know how to merge properly
+    // so unfortunately we have to remove any customized part.rc that is older than 47
+    const QStringList files = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("kxmlgui5/okular/part.rc"));
+    for (const QString &file : files) {
+        removeRCFileIfVersionSmallerThan(file, 47);
+    }
 
     numberOfParts++;
     if (numberOfParts == 1) {

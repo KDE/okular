@@ -1737,7 +1737,7 @@ void PDFGenerator::addAnnotations(Poppler::Page *popplerPage, Okular::Page *page
 
     for (Poppler::Annotation *a : popplerAnnotations) {
         bool doDelete = true;
-        Okular::Annotation *newann = createAnnotationFromPopplerAnnotation(a, &doDelete);
+        Okular::Annotation *newann = createAnnotationFromPopplerAnnotation(a, *popplerPage, &doDelete);
         if (newann) {
             page->addAnnotation(newann);
 

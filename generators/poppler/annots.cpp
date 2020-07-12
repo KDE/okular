@@ -290,7 +290,7 @@ static Okular::Annotation::LineEffect okularLineEffectFromAnnotationLineEffect(P
     return Okular::Annotation::NoEffect;
 }
 
-Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *popplerAnnotation, bool *doDelete)
+Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *popplerAnnotation, const Poppler::Page &popplerPage, bool *doDelete)
 {
     Okular::Annotation *okularAnnotation = nullptr;
     *doDelete = true;
@@ -437,7 +437,19 @@ Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *p
         okularStyle.setLineEffect(okularLineEffectFromAnnotationLineEffect(popplerStyle.lineEffect()));
         okularStyle.setEffectIntensity(popplerStyle.effectIntensity());
 
-        // TODO clone window
+        // Convert the poppler annotation popup to Okular annotation window
+        Okular::Annotation::Window &okularWindow = okularAnnotation->window();
+        const Poppler::Annotation::Popup popplerPopup = popplerAnnotation->popup();
+        // This assumes that both "flags" int mean the same, but since we don't use the flags in okular anywhere it's not really that important
+        okularWindow.setFlags(popplerPopup.flags());
+        const QRectF popplerGeometry = popplerPopup.geometry();
+        const QSize popplerPageSize = popplerPage.pageSize();
+        okularWindow.setTopLeft(Okular::NormalizedPoint(popplerGeometry.top(), popplerGeometry.left(), popplerPageSize.width(), popplerPageSize.height()));
+        okularWindow.setWidth(popplerGeometry.width());
+        okularWindow.setHeight(popplerGeometry.height());
+        okularWindow.setTitle(popplerPopup.title());
+        okularWindow.setSummary(popplerPopup.summary());
+
         // TODO clone revisions
         if (tieToOkularAnn) {
             okularAnnotation->setNativeId(QVariant::fromValue(popplerAnnotation));

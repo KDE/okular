@@ -21,7 +21,7 @@
 #include "config-okular-poppler.h"
 #include "core/annotations.h"
 
-extern Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *popplerAnnotation, bool *doDelete);
+extern Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *popplerAnnotation, const Poppler::Page &popplerPage, bool *doDelete);
 
 class PopplerAnnotationProxy : public Okular::AnnotationProxy
 {

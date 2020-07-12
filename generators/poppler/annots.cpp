@@ -258,17 +258,17 @@ void PopplerAnnotationProxy::notifyRemoval(Okular::Annotation *okl_ann, int page
 }
 // END PopplerAnnotationProxy implementation
 
-Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *ann, bool *doDelete)
+Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *popplerAnnotation, bool *doDelete)
 {
-    Okular::Annotation *annotation = nullptr;
+    Okular::Annotation *okularAnnotation = nullptr;
     *doDelete = true;
     bool tieToOkularAnn = false;
     bool externallyDrawn = false;
-    switch (ann->subType()) {
+    switch (popplerAnnotation->subType()) {
     case Poppler::Annotation::AFileAttachment: {
-        Poppler::FileAttachmentAnnotation *attachann = static_cast<Poppler::FileAttachmentAnnotation *>(ann);
+        Poppler::FileAttachmentAnnotation *attachann = static_cast<Poppler::FileAttachmentAnnotation *>(popplerAnnotation);
         Okular::FileAttachmentAnnotation *f = new Okular::FileAttachmentAnnotation();
-        annotation = f;
+        okularAnnotation = f;
         tieToOkularAnn = true;
         *doDelete = false;
 
@@ -278,9 +278,9 @@ Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *a
         break;
     }
     case Poppler::Annotation::ASound: {
-        Poppler::SoundAnnotation *soundann = static_cast<Poppler::SoundAnnotation *>(ann);
+        Poppler::SoundAnnotation *soundann = static_cast<Poppler::SoundAnnotation *>(popplerAnnotation);
         Okular::SoundAnnotation *s = new Okular::SoundAnnotation();
-        annotation = s;
+        okularAnnotation = s;
 
         s->setSoundIconName(soundann->soundIconName());
         s->setSound(createSoundFromPopplerSound(soundann->sound()));
@@ -288,9 +288,9 @@ Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *a
         break;
     }
     case Poppler::Annotation::AMovie: {
-        Poppler::MovieAnnotation *movieann = static_cast<Poppler::MovieAnnotation *>(ann);
+        Poppler::MovieAnnotation *movieann = static_cast<Poppler::MovieAnnotation *>(popplerAnnotation);
         Okular::MovieAnnotation *m = new Okular::MovieAnnotation();
-        annotation = m;
+        okularAnnotation = m;
         tieToOkularAnn = true;
         *doDelete = false;
 
@@ -299,25 +299,25 @@ Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *a
         break;
     }
     case Poppler::Annotation::AWidget: {
-        annotation = new Okular::WidgetAnnotation();
+        okularAnnotation = new Okular::WidgetAnnotation();
         break;
     }
     case Poppler::Annotation::AScreen: {
         Okular::ScreenAnnotation *m = new Okular::ScreenAnnotation();
-        annotation = m;
+        okularAnnotation = m;
         tieToOkularAnn = true;
         *doDelete = false;
         break;
     }
     case Poppler::Annotation::ARichMedia: {
-        Poppler::RichMediaAnnotation *richmediaann = static_cast<Poppler::RichMediaAnnotation *>(ann);
+        Poppler::RichMediaAnnotation *richmediaann = static_cast<Poppler::RichMediaAnnotation *>(popplerAnnotation);
         const QPair<Okular::Movie *, Okular::EmbeddedFile *> result = createMovieFromPopplerRichMedia(richmediaann);
 
         if (result.first) {
             Okular::RichMediaAnnotation *r = new Okular::RichMediaAnnotation();
             tieToOkularAnn = true;
             *doDelete = false;
-            annotation = r;
+            okularAnnotation = r;
 
             r->setMovie(result.first);
             r->setEmbeddedFile(result.second);
@@ -342,30 +342,30 @@ Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *a
         QDomDocument doc;
         QDomElement root = doc.createElement(QStringLiteral("root"));
         doc.appendChild(root);
-        Poppler::AnnotationUtils::storeAnnotation(ann, root, doc);
-        annotation = Okular::AnnotationUtils::createAnnotation(root);
+        Poppler::AnnotationUtils::storeAnnotation(popplerAnnotation, root, doc);
+        okularAnnotation = Okular::AnnotationUtils::createAnnotation(root);
         break;
     }
     }
-    if (annotation) {
+    if (okularAnnotation) {
         // the Contents field might have lines separated by \r
-        QString contents = ann->contents();
+        QString contents = popplerAnnotation->contents();
         contents.replace(QLatin1Char('\r'), QLatin1Char('\n'));
 
-        annotation->setAuthor(ann->author());
-        annotation->setContents(contents);
-        annotation->setUniqueName(ann->uniqueName());
-        annotation->setModificationDate(ann->modificationDate());
-        annotation->setCreationDate(ann->creationDate());
-        annotation->setFlags(ann->flags() | Okular::Annotation::External);
-        annotation->setBoundingRectangle(Okular::NormalizedRect::fromQRectF(ann->boundary()));
+        okularAnnotation->setAuthor(popplerAnnotation->author());
+        okularAnnotation->setContents(contents);
+        okularAnnotation->setUniqueName(popplerAnnotation->uniqueName());
+        okularAnnotation->setModificationDate(popplerAnnotation->modificationDate());
+        okularAnnotation->setCreationDate(popplerAnnotation->creationDate());
+        okularAnnotation->setFlags(popplerAnnotation->flags() | Okular::Annotation::External);
+        okularAnnotation->setBoundingRectangle(Okular::NormalizedRect::fromQRectF(popplerAnnotation->boundary()));
 
         if (externallyDrawn)
-            annotation->setFlags(annotation->flags() | Okular::Annotation::ExternallyDrawn);
+            okularAnnotation->setFlags(okularAnnotation->flags() | Okular::Annotation::ExternallyDrawn);
 
         // Poppler stores highlight points in swapped order
-        if (annotation->subType() == Okular::Annotation::AHighlight) {
-            Okular::HighlightAnnotation *hlann = static_cast<Okular::HighlightAnnotation *>(annotation);
+        if (okularAnnotation->subType() == Okular::Annotation::AHighlight) {
+            Okular::HighlightAnnotation *hlann = static_cast<Okular::HighlightAnnotation *>(okularAnnotation);
             for (Okular::HighlightAnnotation::Quad &quad : hlann->highlightQuads()) {
                 const Okular::NormalizedPoint p3 = quad.point(3);
                 quad.setPoint(quad.point(0), 3);
@@ -376,11 +376,11 @@ Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *a
             }
         }
 
-        if (annotation->subType() == Okular::Annotation::AText) {
-            Okular::TextAnnotation *txtann = static_cast<Okular::TextAnnotation *>(annotation);
+        if (okularAnnotation->subType() == Okular::Annotation::AText) {
+            Okular::TextAnnotation *txtann = static_cast<Okular::TextAnnotation *>(okularAnnotation);
 
             if (txtann->textType() == Okular::TextAnnotation::Linked) {
-                Poppler::TextAnnotation *ppl_txtann = static_cast<Poppler::TextAnnotation *>(ann);
+                Poppler::TextAnnotation *ppl_txtann = static_cast<Poppler::TextAnnotation *>(popplerAnnotation);
 
                 // Poppler and Okular assume a different default icon name in XML
                 // We re-read it via getter, which always tells the right one
@@ -392,9 +392,9 @@ Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *a
         // TODO clone window
         // TODO clone revisions
         if (tieToOkularAnn) {
-            annotation->setNativeId(QVariant::fromValue(ann));
-            annotation->setDisposeDataFunction(disposeAnnotation);
+            okularAnnotation->setNativeId(QVariant::fromValue(popplerAnnotation));
+            okularAnnotation->setDisposeDataFunction(disposeAnnotation);
         }
     }
-    return annotation;
+    return okularAnnotation;
 }

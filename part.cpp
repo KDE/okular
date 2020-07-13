@@ -857,6 +857,8 @@ void Part::setupActions()
         if (m_sidebar->currentItem() != m_signaturePanel) {
             m_sidebar->setCurrentItem(m_signaturePanel);
         }
+        m_showLeftPanel->setChecked(true);
+        slotShowLeftPanel();
     });
 
     m_showEmbeddedFiles = ac->addAction(QStringLiteral("embedded_files"));

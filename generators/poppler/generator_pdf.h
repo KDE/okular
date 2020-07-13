@@ -15,6 +15,7 @@
 #define _OKULAR_GENERATOR_PDF_H_
 
 //#include "synctex/synctex_parser.h"
+#include <config-okular-poppler.h>
 
 #include <poppler-qt5.h>
 
@@ -112,7 +113,11 @@ private:
     Okular::Document::OpenResult init(QVector<Okular::Page *> &pagesVector, const QString &password);
 
     // create the document synopsis hierarchy
+#ifdef HAVE_POPPLER_0_74
+    void addSynopsisChildren(const QVector<Poppler::OutlineItem> &outlineItems, QDomNode *parentDestination);
+#else
     void addSynopsisChildren(QDomNode *parentSource, QDomNode *parentDestination);
+#endif
     // fetch annotations from the pdf file and add they to the page
     void addAnnotations(Poppler::Page *popplerPage, Okular::Page *page);
     // fetch the transition information and add it to the page

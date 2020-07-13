@@ -54,8 +54,6 @@
 #include "pdfsettings.h"
 #include "ui_pdfsettingswidget.h"
 
-#include <config-okular-poppler.h>
-
 #include <poppler-media.h>
 #ifdef HAVE_POPPLER_0_73
 #include <poppler-version.h>
@@ -859,6 +857,16 @@ const Okular::DocumentSynopsis *PDFGenerator::generateDocumentSynopsis()
     if (!pdfdoc)
         return nullptr;
 
+#ifdef HAVE_POPPLER_0_74
+    userMutex()->lock();
+    const QVector<Poppler::OutlineItem> outline = pdfdoc->outline();
+    userMutex()->unlock();
+
+    if (outline.isEmpty())
+        return nullptr;
+
+    addSynopsisChildren(outline, &docSyn);
+#else
     userMutex()->lock();
     QDomDocument *toc = pdfdoc->toc();
     userMutex()->unlock();
@@ -867,6 +875,7 @@ const Okular::DocumentSynopsis *PDFGenerator::generateDocumentSynopsis()
 
     addSynopsisChildren(toc, &docSyn);
     delete toc;
+#endif
 
     docSynopsisDirty = false;
     return &docSyn;
@@ -1653,6 +1662,36 @@ Okular::TextPage *PDFGenerator::abstractTextPage(const QList<Poppler::TextBox *>
     return ktp;
 }
 
+#ifdef HAVE_POPPLER_0_74
+
+void PDFGenerator::addSynopsisChildren(const QVector<Poppler::OutlineItem> &outlineItems, QDomNode *parentDestination)
+{
+    for (const Poppler::OutlineItem &outlineItem : outlineItems) {
+        QDomElement item = docSyn.createElement(outlineItem.name());
+        parentDestination->appendChild(item);
+
+        item.setAttribute(QStringLiteral("ExternalFileName"), outlineItem.externalFileName());
+        const QSharedPointer<const Poppler::LinkDestination> outlineDestination = outlineItem.destination();
+        if (outlineDestination) {
+            const QString destinationName = outlineDestination->destinationName();
+            if (!destinationName.isEmpty()) {
+                item.setAttribute(QStringLiteral("ViewportName"), destinationName);
+            } else {
+                Okular::DocumentViewport vp;
+                fillViewportFromLinkDestination(vp, *outlineDestination);
+                item.setAttribute(QStringLiteral("Viewport"), vp.toString());
+            }
+        }
+        item.setAttribute(QStringLiteral("Open"), outlineItem.isOpen());
+        item.setAttribute(QStringLiteral("URL"), outlineItem.uri());
+
+        if (outlineItem.hasChildren())
+            addSynopsisChildren(outlineItem.children(), &item);
+    }
+}
+
+#else
+
 void PDFGenerator::addSynopsisChildren(QDomNode *parent, QDomNode *parentDestination)
 {
     // keep track of the current listViewItem
@@ -1685,6 +1724,8 @@ void PDFGenerator::addSynopsisChildren(QDomNode *parent, QDomNode *parentDestina
         n = n.nextSibling();
     }
 }
+
+#endif
 
 void PDFGenerator::addAnnotations(Poppler::Page *popplerPage, Okular::Page *page)
 {

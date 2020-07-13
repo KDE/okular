@@ -72,6 +72,16 @@ int main()
 " HAVE_POPPLER_0_73)
 
 check_cxx_source_compiles("
+#include <poppler-qt5.h>
+int main()
+{
+    Poppler::Document *document = nullptr;
+    (void)document->outline();
+    return 0;
+}
+" HAVE_POPPLER_0_74)
+
+check_cxx_source_compiles("
 #include <poppler-form.h>
 #include <poppler-qt5.h>
 int main()

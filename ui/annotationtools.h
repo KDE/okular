@@ -42,9 +42,12 @@ public:
     // enum definitions
     enum EventType { Press, Move, Release };
     enum Button { None, Left, Right };
+    struct Modifiers {
+        bool shift;
+    };
 
     // perform operations
-    virtual QRect event(EventType type, Button button, double nX, double nY, double xScale, double yScale, const Okular::Page *page) = 0;
+    virtual QRect event(EventType type, Button button, Modifiers modifiers, double nX, double nY, double xScale, double yScale, const Okular::Page *page) = 0;
     virtual void paint(QPainter *painter, double xScale, double yScale, const QRect &clipRect) = 0;
     virtual QList<Okular::Annotation *> end() = 0;
 
@@ -60,8 +63,8 @@ public:
         m_item = item;
     }
 
-    static void decodeEvent(const QMouseEvent *mouseEvent, EventType *eventType, Button *button);
-    static void decodeEvent(const QTabletEvent *tabletEvent, EventType *eventType, Button *button);
+    static void decodeEvent(const QMouseEvent *mouseEvent, EventType *eventType, Button *button, Modifiers *modifiers);
+    static void decodeEvent(const QTabletEvent *tabletEvent, EventType *eventType, Button *button, Modifiers *modifiers);
 
     virtual QCursor cursor() const;
 
@@ -101,7 +104,7 @@ class SmoothPathEngine : public AnnotatorEngine
 public:
     explicit SmoothPathEngine(const QDomElement &engineElement);
 
-    QRect event(EventType type, Button button, double nX, double nY, double xScale, double yScale, const Okular::Page * /*page*/) override;
+    QRect event(EventType type, Button button, Modifiers modifiers, double nX, double nY, double xScale, double yScale, const Okular::Page * /*page*/) override;
 
     void paint(QPainter *painter, double xScale, double yScale, const QRect & /*clipRect*/) override;
 

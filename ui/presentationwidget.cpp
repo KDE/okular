@@ -1234,9 +1234,10 @@ QRect PresentationWidget::routeMouseDrawingEvent(QMouseEvent *e)
 
     AnnotatorEngine::EventType eventType;
     AnnotatorEngine::Button button;
+    AnnotatorEngine::Modifiers modifiers;
 
     // figure out the event type and button
-    AnnotatorEngine::decodeEvent(e, &eventType, &button);
+    AnnotatorEngine::decodeEvent(e, &eventType, &button, &modifiers);
 
     static bool hasclicked = false;
     if (eventType == AnnotatorEngine::Press)
@@ -1252,7 +1253,7 @@ QRect PresentationWidget::routeMouseDrawingEvent(QMouseEvent *e)
         // Fake a move to the last border pos
         nX = qBound(0., nX, 1.);
         nY = qBound(0., nY, 1.);
-        m_drawingEngine->event(AnnotatorEngine::Move, button, nX, nY, geom.width(), geom.height(), page);
+        m_drawingEngine->event(AnnotatorEngine::Move, button, modifiers, nX, nY, geom.width(), geom.height(), page);
 
         // Fake a release in the following lines
         eventType = AnnotatorEngine::Release;
@@ -1273,7 +1274,7 @@ QRect PresentationWidget::routeMouseDrawingEvent(QMouseEvent *e)
     }
 
     if (hasclicked && isInside) {
-        ret = m_drawingEngine->event(eventType, button, nX, nY, geom.width(), geom.height(), page);
+        ret = m_drawingEngine->event(eventType, button, modifiers, nX, nY, geom.width(), geom.height(), page);
     }
 
     if (eventType == AnnotatorEngine::Release) {

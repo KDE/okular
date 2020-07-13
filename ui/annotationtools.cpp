@@ -34,7 +34,7 @@ AnnotatorEngine::AnnotatorEngine(const QDomElement &engineElement)
         m_annotElement = annElement;
 }
 
-void AnnotatorEngine::decodeEvent(const QMouseEvent *mouseEvent, EventType *eventType, Button *button)
+void AnnotatorEngine::decodeEvent(const QMouseEvent *mouseEvent, EventType *eventType, Button *button, Modifiers *modifiers)
 {
     *eventType = AnnotatorEngine::Press;
     if (mouseEvent->type() == QEvent::MouseMove)
@@ -48,9 +48,11 @@ void AnnotatorEngine::decodeEvent(const QMouseEvent *mouseEvent, EventType *even
         *button = AnnotatorEngine::Left;
     else if (buttonState == Qt::RightButton)
         *button = AnnotatorEngine::Right;
+
+    modifiers->shift = mouseEvent->modifiers() & Qt::ShiftModifier;
 }
 
-void AnnotatorEngine::decodeEvent(const QTabletEvent *tabletEvent, EventType *eventType, Button *button)
+void AnnotatorEngine::decodeEvent(const QTabletEvent *tabletEvent, EventType *eventType, Button *button, Modifiers *modifiers)
 {
     switch (tabletEvent->type()) {
     case QEvent::TabletPress:
@@ -73,6 +75,8 @@ void AnnotatorEngine::decodeEvent(const QTabletEvent *tabletEvent, EventType *ev
         Q_ASSERT(false);
         break;
     }
+
+    modifiers->shift = tabletEvent->modifiers() & Qt::ShiftModifier;
 }
 
 AnnotatorEngine::~AnnotatorEngine()
@@ -102,7 +106,7 @@ SmoothPathEngine::SmoothPathEngine(const QDomElement &engineElement)
         compositionMode = QPainter::CompositionMode_Clear;
 }
 
-QRect SmoothPathEngine::event(EventType type, Button button, double nX, double nY, double xScale, double yScale, const Okular::Page * /*page*/)
+QRect SmoothPathEngine::event(EventType type, Button button, Modifiers /*modifiers*/, double nX, double nY, double xScale, double yScale, const Okular::Page * /*page*/)
 {
     // only proceed if pressing left button
     if (button != Left)

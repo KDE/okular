@@ -217,6 +217,7 @@ public:
     QAction *aRotateOriginal;
     KActionMenu *aTrimMode;
     KToggleAction *aTrimMargins;
+    KToggleAction *aReadingDirection;
     QAction *aMouseNormal;
     QAction *aMouseSelect;
     QAction *aMouseTextSelect;
@@ -348,6 +349,7 @@ PageView::PageView(QWidget *parent, Okular::Document *document)
     d->aTrimMode = nullptr;
     d->aTrimMargins = nullptr;
     d->aTrimToSelection = nullptr;
+    d->aReadingDirection = nullptr;
     d->aMouseNormal = nullptr;
     d->aMouseSelect = nullptr;
     d->aMouseTextSelect = nullptr;
@@ -606,6 +608,13 @@ void PageView::setupViewerActions(KActionCollection *ac)
     ac->addAction(QStringLiteral("view_continuous"), d->aViewContinuous);
     connect(d->aViewContinuous, &QAction::toggled, this, &PageView::slotContinuousToggled);
     d->aViewContinuous->setChecked(Okular::Settings::viewContinuous());
+
+    // Reading direction toggle action. (Checked means RTL, unchecked means LTR.)
+    d->aReadingDirection = new KToggleAction(QIcon::fromTheme(QStringLiteral("format-text-direction-rtl")), i18nc("@action page layout", "Use Right to Left Reading Direction"), this);
+    d->aReadingDirection->setChecked(Okular::Settings::rtlReadingDirection());
+    ac->addAction(QStringLiteral("rtl_page_layout"), d->aReadingDirection);
+    connect(d->aReadingDirection, &QAction::toggled, this, &PageView::slotReadingDirectionToggled);
+    connect(Okular::SettingsCore::self(), &Okular::SettingsCore::configChanged, this, &PageView::slotUpdateReadingDirectionAction);
 
     // Mouse mode actions for viewer mode
     d->mouseModeActionGroup = new QActionGroup(this);
@@ -1148,6 +1157,10 @@ void PageView::updateActionState(bool haspages, bool hasformwidgets)
         d->aZoomOut->setEnabled(haspages);
     if (d->aZoomActual)
         d->aZoomActual->setEnabled(haspages && d->zoomFactor != 1.0);
+
+    if (d->aReadingDirection) {
+        d->aReadingDirection->setEnabled(haspages);
+    }
 
     if (d->mouseModeActionGroup)
         d->mouseModeActionGroup->setEnabled(haspages);
@@ -4615,6 +4628,17 @@ void PageView::slotContinuousToggled(bool on)
         if (d->document->pages() > 0)
             slotRelayoutPages();
     }
+}
+
+void PageView::slotReadingDirectionToggled(bool leftToRight)
+{
+    Okular::Settings::setRtlReadingDirection(leftToRight);
+    Okular::Settings::self()->save();
+}
+
+void PageView::slotUpdateReadingDirectionAction()
+{
+    d->aReadingDirection->setChecked(Okular::Settings::rtlReadingDirection());
 }
 
 void PageView::slotMouseNormalToggled(bool checked)

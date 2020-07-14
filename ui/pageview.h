@@ -254,6 +254,8 @@ private Q_SLOTS:
     void slotAutoFitToggled(bool);
     void slotViewMode(QAction *action);
     void slotContinuousToggled(bool);
+    void slotReadingDirectionToggled(bool leftToRight);
+    void slotUpdateReadingDirectionAction();
     void slotMouseNormalToggled(bool);
     void slotSetMouseZoom();
     void slotSetMouseMagnifier();

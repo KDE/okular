@@ -59,6 +59,7 @@
 #include <KIO/OpenFileManagerWindowJob>
 #include <KJobWidgets>
 #include <KMessageBox>
+#include <KParts/GUIActivateEvent>
 #include <KPasswordDialog>
 #include <KPluginFactory>
 #include <KPluginMetaData>
@@ -1824,7 +1825,9 @@ void Part::guiActivateEvent(KParts::GUIActivateEvent *event)
 
     setWindowTitleFromDocument();
 
-    m_pageView->setupActionsPostGUIActivated();
+    if (event->activated()) {
+        m_pageView->setupActionsPostGUIActivated();
+    }
 }
 
 void Part::close()

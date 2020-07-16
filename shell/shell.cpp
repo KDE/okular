@@ -53,6 +53,8 @@
 #include <KActivities/ResourceInstance>
 #endif
 
+#include <kio_version.h>
+
 // local includes
 #include "../interfaces/viewerinterface.h"
 #include "kdocumentviewer.h"
@@ -435,6 +437,15 @@ void Shell::fileOpen()
     dlg->setFileMode(QFileDialog::ExistingFiles); // Allow selection of more than one file
 
     QMimeDatabase mimeDatabase;
+#if KIO_VERSION >= QT_VERSION_CHECK(5, 73, 0)
+    QStringList mimetypes;
+    for (const QString &mimeName : qAsConst(m_fileformats)) {
+        QMimeType mimeType = mimeDatabase.mimeTypeForName(mimeName);
+        mimetypes << mimeType.name();
+    }
+    mimetypes << "application/octet-stream";
+    dlg->setMimeTypeFilters(mimetypes);
+#else
     QSet<QString> globPatterns;
     QMap<QString, QStringList> namedGlobs;
     for (const QString &mimeName : qAsConst(m_fileformats)) {
@@ -457,6 +468,7 @@ void Shell::fileOpen()
     namePatterns.prepend(i18n("All files (*)"));
     namePatterns.prepend(i18n("All supported files (%1)", allGlobPatterns.join(QLatin1Char(' '))));
     dlg->setNameFilters(namePatterns);
+#endif
 
     dlg->setWindowTitle(i18n("Open Document"));
     if (dlg->exec() && dlg) {

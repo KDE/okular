@@ -600,6 +600,7 @@ AnnotationActionHandler::AnnotationActionHandler(PageViewAnnotator *parent, KAct
 
     // Quick annotations action
     d->aQuickTools = new KSelectAction(QIcon::fromTheme(QStringLiteral("draw-freehand")), i18nc("@action:intoolbar Show list of quick annotation tools", "Quick Annotations"), this);
+    d->aQuickTools->setToolTip(i18nc("@info:tooltip", "Choose an annotation tool from the quick annotations"));
     d->aQuickTools->setToolBarMode(KSelectAction::MenuMode);
     d->populateQuickAnnotations();
 

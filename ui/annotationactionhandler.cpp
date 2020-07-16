@@ -52,6 +52,7 @@ public:
         , aStamp(nullptr)
         , aAddToQuickTools(nullptr)
         , aContinuousMode(nullptr)
+        , aConstrainRatioAndAngle(nullptr)
         , aWidth(nullptr)
         , aColor(nullptr)
         , aInnerColor(nullptr)
@@ -107,6 +108,7 @@ public:
     ToggleActionMenu *aStamp;
     QAction *aAddToQuickTools;
     KToggleAction *aContinuousMode;
+    KToggleAction *aConstrainRatioAndAngle;
     KSelectAction *aWidth;
     KSelectAction *aColor;
     KSelectAction *aInnerColor;
@@ -252,8 +254,10 @@ void AnnotationActionHandlerPrivate::updateConfigActions(const QString &annotTyp
     const bool isTypewriter = annotType == QStringLiteral("typewriter");
     const bool isInlineNote = annotType == QStringLiteral("note-inline");
     const bool isText = isInlineNote || isTypewriter;
-    const bool isShape = annotType == QStringLiteral("rectangle") || annotType == QStringLiteral("ellipse") || annotType == QStringLiteral("polygon");
-    const bool isLine = annotType == QStringLiteral("ink") || annotType == QStringLiteral("straight-line");
+    const bool isPolygon = annotType == QStringLiteral("polygon");
+    const bool isShape = annotType == QStringLiteral("rectangle") || annotType == QStringLiteral("ellipse") || isPolygon;
+    const bool isStraightLine = annotType == QStringLiteral("straight-line");
+    const bool isLine = annotType == QStringLiteral("ink") || isStraightLine;
     const bool isStamp = annotType == QStringLiteral("stamp");
 
     if (isTypewriter) {
@@ -269,6 +273,7 @@ void AnnotationActionHandlerPrivate::updateConfigActions(const QString &annotTyp
     aInnerColor->setEnabled(isShape);
     aOpacity->setEnabled(isAnnotationSelected);
     aFont->setEnabled(isText);
+    aConstrainRatioAndAngle->setEnabled(isStraightLine || isShape);
     aAdvancedSettings->setEnabled(isAnnotationSelected);
 
     // set tooltips
@@ -279,6 +284,7 @@ void AnnotationActionHandlerPrivate::updateConfigActions(const QString &annotTyp
         aOpacity->setToolTip(i18nc("@info:tooltip", "Annotation opacity (No annotation selected)"));
         aFont->setToolTip(i18nc("@info:tooltip", "Annotation font (No annotation selected)"));
         aAddToQuickTools->setToolTip(i18nc("@info:tooltip", "Add the current annotation to the quick annotations menu (No annotation selected)"));
+        aConstrainRatioAndAngle->setToolTip(i18nc("@info:tooltip", "Constrain shape ratio to 1:1 or line angle to 15° steps (No annotation selected)"));
         aAdvancedSettings->setToolTip(i18nc("@info:tooltip", "Advanced settings for the current annotation tool (No annotation selected)"));
         return;
     }
@@ -307,6 +313,14 @@ void AnnotationActionHandlerPrivate::updateConfigActions(const QString &annotTyp
         aFont->setToolTip(i18nc("@info:tooltip", "Annotation font"));
     } else {
         aFont->setToolTip(i18nc("@info:tooltip", "Annotation font (Current annotation has no font)"));
+    }
+
+    if (isStraightLine || isPolygon) {
+        aConstrainRatioAndAngle->setToolTip(i18nc("@info:tooltip", "Constrain line angle to 15° steps"));
+    } else if (isShape) {
+        aConstrainRatioAndAngle->setToolTip(i18nc("@info:tooltip", "Constrain shape ratio to 1:1"));
+    } else {
+        aConstrainRatioAndAngle->setToolTip(i18nc("@info:tooltip", "Constrain shape ratio to 1:1 or line angle to 15° steps (Not supported by current annotation)"));
     }
 
     aOpacity->setToolTip(i18nc("@info:tooltip", "Annotation opacity"));
@@ -612,6 +626,11 @@ AnnotationActionHandler::AnnotationActionHandler(PageViewAnnotator *parent, KAct
     d->aContinuousMode->setToolTip(i18nc("@info:tooltip", "Keep the annotation tool active after use"));
     d->aContinuousMode->setChecked(d->annotator->continuousMode());
 
+    // Constrain angle action
+    d->aConstrainRatioAndAngle =
+        new KToggleAction(QIcon::fromTheme(QStringLiteral("snap-angle")), i18nc("@action When checked, line annotations are constrained to 15° steps, shape annotations to 1:1 ratio", "Constrain Ratio and Angle of Annotation Tools"), this);
+    d->aConstrainRatioAndAngle->setChecked(d->annotator->constrainRatioAndAngleActive());
+
     // Annotation settings actions
     d->aColor = d->colorPickerAction(AnnotationActionHandlerPrivate::AnnotationColor::Color);
     d->aInnerColor = d->colorPickerAction(AnnotationActionHandlerPrivate::AnnotationColor::InnerColor);
@@ -638,6 +657,7 @@ AnnotationActionHandler::AnnotationActionHandler(PageViewAnnotator *parent, KAct
 
     connect(d->aAddToQuickTools, &QAction::triggered, d->annotator, &PageViewAnnotator::addToQuickAnnotations);
     connect(d->aContinuousMode, &QAction::toggled, d->annotator, &PageViewAnnotator::setContinuousMode);
+    connect(d->aConstrainRatioAndAngle, &QAction::toggled, d->annotator, &PageViewAnnotator::setConstrainRatioAndAngle);
     connect(d->aAdvancedSettings, &QAction::triggered, d->annotator, &PageViewAnnotator::slotAdvancedSettings);
     connect(d->aFont, &QAction::triggered, std::bind(&AnnotationActionHandlerPrivate::slotSelectAnnotationFont, d));
 
@@ -675,6 +695,7 @@ AnnotationActionHandler::AnnotationActionHandler(PageViewAnnotator *parent, KAct
     ac->addAction(QStringLiteral("annotation_favorites"), d->aQuickTools);
     ac->addAction(QStringLiteral("annotation_bookmark"), d->aAddToQuickTools);
     ac->addAction(QStringLiteral("annotation_settings_pin"), d->aContinuousMode);
+    ac->addAction(QStringLiteral("annotation_constrain_ratio_angle"), d->aConstrainRatioAndAngle);
     ac->addAction(QStringLiteral("annotation_settings_width"), d->aWidth);
     ac->addAction(QStringLiteral("annotation_settings_color"), d->aColor);
     ac->addAction(QStringLiteral("annotation_settings_inner_color"), d->aInnerColor);

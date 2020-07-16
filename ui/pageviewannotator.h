@@ -92,6 +92,11 @@ public:
     void setupActionsPostGUIActivated();
     // @return Is continuous mode active (pin annotation)?
     bool continuousMode();
+    /**
+     * State of constrain ratio and angle action.
+     * While annotating, this value is XOR-ed with the Shift modifier.
+     */
+    bool constrainRatioAndAngleActive();
     // enable/disable the annotation actions
     void setToolsEnabled(bool enabled);
     // enable/disable the text-selection annotation actions
@@ -120,6 +125,11 @@ public:
 
 public Q_SLOTS:
     void setContinuousMode(bool enabled);
+    /**
+     * State of constrain ratio and angle action.
+     * While annotating, this value is XOR-ed with the Shift modifier.
+     */
+    void setConstrainRatioAndAngle(bool enabled);
     void addToQuickAnnotations();
     void slotAdvancedSettings();
 
@@ -142,6 +152,7 @@ private:
     AnnotationTools *m_toolsDefinition;
     AnnotationTools *m_quickToolsDefinition;
     bool m_continuousMode;
+    bool m_constrainRatioAndAngle;
 
     // creation related variables
     int m_lastToolID;

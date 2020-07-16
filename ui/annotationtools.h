@@ -42,8 +42,9 @@ public:
     // enum definitions
     enum EventType { Press, Move, Release };
     enum Button { None, Left, Right };
+    /** To tell the annotator engine about modifier keys and other special wishes */
     struct Modifiers {
-        bool shift;
+        bool constrainRatioAndAngle; ///< Whether the engine shall snap to certain angles, if supported.
     };
 
     // perform operations
@@ -63,8 +64,8 @@ public:
         m_item = item;
     }
 
-    static void decodeEvent(const QMouseEvent *mouseEvent, EventType *eventType, Button *button, Modifiers *modifiers);
-    static void decodeEvent(const QTabletEvent *tabletEvent, EventType *eventType, Button *button, Modifiers *modifiers);
+    static void decodeEvent(const QMouseEvent *mouseEvent, EventType *eventType, Button *button);
+    static void decodeEvent(const QTabletEvent *tabletEvent, EventType *eventType, Button *button);
 
     virtual QCursor cursor() const;
 

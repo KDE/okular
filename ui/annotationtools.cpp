@@ -34,7 +34,7 @@ AnnotatorEngine::AnnotatorEngine(const QDomElement &engineElement)
         m_annotElement = annElement;
 }
 
-void AnnotatorEngine::decodeEvent(const QMouseEvent *mouseEvent, EventType *eventType, Button *button, Modifiers *modifiers)
+void AnnotatorEngine::decodeEvent(const QMouseEvent *mouseEvent, EventType *eventType, Button *button)
 {
     *eventType = AnnotatorEngine::Press;
     if (mouseEvent->type() == QEvent::MouseMove)
@@ -48,11 +48,9 @@ void AnnotatorEngine::decodeEvent(const QMouseEvent *mouseEvent, EventType *even
         *button = AnnotatorEngine::Left;
     else if (buttonState == Qt::RightButton)
         *button = AnnotatorEngine::Right;
-
-    modifiers->shift = mouseEvent->modifiers() & Qt::ShiftModifier;
 }
 
-void AnnotatorEngine::decodeEvent(const QTabletEvent *tabletEvent, EventType *eventType, Button *button, Modifiers *modifiers)
+void AnnotatorEngine::decodeEvent(const QTabletEvent *tabletEvent, EventType *eventType, Button *button)
 {
     switch (tabletEvent->type()) {
     case QEvent::TabletPress:
@@ -75,8 +73,6 @@ void AnnotatorEngine::decodeEvent(const QTabletEvent *tabletEvent, EventType *ev
         Q_ASSERT(false);
         break;
     }
-
-    modifiers->shift = tabletEvent->modifiers() & Qt::ShiftModifier;
 }
 
 AnnotatorEngine::~AnnotatorEngine()

@@ -330,6 +330,10 @@ void AnnotationActionHandlerPrivate::updateConfigActions(const QString &annotTyp
 
 void AnnotationActionHandlerPrivate::populateQuickAnnotations()
 {
+    if (!aQuickTools->isEnabled()) {
+        return;
+    }
+
     const QList<int> numberKeys = {Qt::Key_1, Qt::Key_2, Qt::Key_3, Qt::Key_4, Qt::Key_5, Qt::Key_6, Qt::Key_7, Qt::Key_8, Qt::Key_9, Qt::Key_0};
 
     textQuickTools->clear();
@@ -616,6 +620,7 @@ AnnotationActionHandler::AnnotationActionHandler(PageViewAnnotator *parent, KAct
     d->aQuickTools = new KSelectAction(QIcon::fromTheme(QStringLiteral("draw-freehand")), i18nc("@action:intoolbar Show list of quick annotation tools", "Quick Annotations"), this);
     d->aQuickTools->setToolTip(i18nc("@info:tooltip", "Choose an annotation tool from the quick annotations"));
     d->aQuickTools->setToolBarMode(KSelectAction::MenuMode);
+    d->aQuickTools->setEnabled(true); // required to ensure that populateQuickAnnotations is executed the first time
     d->populateQuickAnnotations();
 
     // Add to quick annotation action

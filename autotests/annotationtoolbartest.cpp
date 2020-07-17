@@ -279,6 +279,24 @@ void AnnotationToolBarTest::testAnnotationToolBarActionsEnabledState()
     QCOMPARE(aFreehandLine->isEnabled(), aFreehandLineEnabled);
     QCOMPARE(aGeomShapes->isEnabled(), aGeomShapesEnabled);
     QCOMPARE(aStamp->isEnabled(), aStampEnabled);
+
+    // trigger a reparsing of the tools to ensure that the enabled/disabled state is not changed (bug: 424296)
+    QAction *aMouseSelect = ac->action(QStringLiteral("mouse_select"));
+    QAction *aMouseNormal = ac->action(QStringLiteral("mouse_drag"));
+    aMouseSelect->trigger();
+    aMouseNormal->trigger();
+
+    QCOMPARE(aQuickTools->isEnabled(), aQuickToolsEnabled);
+    QCOMPARE(aHighlighter->isEnabled(), aHighlighterEnabled);
+    QCOMPARE(aUnderline->isEnabled(), aUnderlineEnabled);
+    QCOMPARE(aSquiggle->isEnabled(), aSquiggleEnabled);
+    QCOMPARE(aStrikeout->isEnabled(), aStrikeoutEnabled);
+    QCOMPARE(aTypewriter->isEnabled(), aTypewriterEnabled);
+    QCOMPARE(aInlineNote->isEnabled(), aInlineNoteEnabled);
+    QCOMPARE(aPopupNote->isEnabled(), aPopupNoteEnabled);
+    QCOMPARE(aFreehandLine->isEnabled(), aFreehandLineEnabled);
+    QCOMPARE(aGeomShapes->isEnabled(), aGeomShapesEnabled);
+    QCOMPARE(aStamp->isEnabled(), aStampEnabled);
 }
 
 void AnnotationToolBarTest::testAnnotationToolBarActionsEnabledState_data()

@@ -17,6 +17,8 @@
 #include <QToolBar>
 #include <QWidget>
 
+#include <KSelectAction>
+
 #include "../core/page.h"
 #include "../part.h"
 #include "../settings.h"
@@ -152,6 +154,10 @@ void AnnotationToolBarTest::testAnnotationToolBar()
     QVERIFY(!aAddToQuickTools->isEnabled());
     QVERIFY(!aAdvancedSettings->isEnabled());
     QVERIFY(aContinuousMode->isEnabled());
+
+    // Ensure that the 'Quick Annotations' action is correctly populated
+    // (at least the 'Configure Annotations...' action must be present)
+    QVERIFY(!qobject_cast<KSelectAction *>(aQuickTools)->actions().isEmpty());
 
     // Test annotation toolbar visibility triggers
     QAction *toggleAnnotationToolBar = part->actionCollection()->action(QStringLiteral("mouse_toggle_annotate"));

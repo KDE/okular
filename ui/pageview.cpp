@@ -1966,9 +1966,6 @@ void PageView::tabletEvent(QTabletEvent *e)
     // If we're editing an annotation and the tablet pen is either down or just released
     // then dispatch event to annotator
     if (d->annotator && d->annotator->active() && (d->penDown || penReleased)) {
-        // accept the event, otherwise it comes back as a mouse event
-        e->accept();
-
         const QPoint eventPos = contentAreaPoint(e->pos());
         PageViewItem *pageItem = pickItemOnPoint(eventPos.x(), eventPos.y());
         const QPoint localOriginInGlobal = mapToGlobal(QPoint(0, 0));

@@ -43,9 +43,9 @@ public:
     QList<QUrl> files() const;
 
     /**
-     * Returns the list of bookmarks for the specified @p url.
+     * Returns the list of bookmarks for the specified @p documentUrl.
      */
-    KBookmark::List bookmarks(const QUrl &url) const;
+    KBookmark::List bookmarks(const QUrl &documentUrl) const;
 
     /**
      * Returns the list of bookmarks for document
@@ -88,12 +88,12 @@ public:
     void addBookmark(const DocumentViewport &vp);
 
     /**
-     * Adds a new bookmark for the @p referurl at the specified viewport @p vp,
+     * Adds a new bookmark for the @p documentUrl at the specified viewport @p vp,
      * with an optional @p title.
      *
      * If no @p title is specified, then \em \#n will be used.
      */
-    bool addBookmark(const QUrl &referurl, const Okular::DocumentViewport &vp, const QString &title = QString());
+    bool addBookmark(const QUrl &documentUrl, const Okular::DocumentViewport &vp, const QString &title = QString());
 
     /**
      * Remove a bookmark for the given @p page.
@@ -107,18 +107,18 @@ public:
     void removeBookmark(const DocumentViewport &vp);
 
     /**
-     * Removes the bookmark @p bm for the @p referurl specified.
+     * Removes the bookmark @p bm for the @p documentUrl specified.
      */
-    int removeBookmark(const QUrl &referurl, const KBookmark &bm);
+    int removeBookmark(const QUrl &documentUrl, const KBookmark &bm);
 
     /**
-     * Removes the bookmarks in @p list for the @p referurl specified.
+     * Removes the bookmarks in @p list for the @p documentUrl specified.
      *
-     * @note it will remove only the bookmarks which belong to @p referurl
+     * @note it will remove only the bookmarks which belong to @p documentUrl
      *
      * @since 0.11 (KDE 4.5)
      */
-    void removeBookmarks(const QUrl &referurl, const KBookmark::List &list);
+    void removeBookmarks(const QUrl &documentUrl, const KBookmark::List &list);
 
     /**
      * Returns the bookmark given bookmark of the document
@@ -127,17 +127,17 @@ public:
     void renameBookmark(KBookmark *bm, const QString &newName);
 
     /**
-     * Renames the top-level bookmark for the @p referurl specified with
+     * Renames the top-level bookmark for the @p documentUrl specified with
      * the @p newName specified.
      * @since 0.15 (KDE 4.9)
      */
-    void renameBookmark(const QUrl &referurl, const QString &newName);
+    void renameBookmark(const QUrl &documentUrl, const QString &newName);
 
     /**
-     * Returns title for the @p referurl
+     * Returns title for the @p documentUrl
      * @since 0.15 (KDE 4.9)
      */
-    QString titleForUrl(const QUrl &referurl) const;
+    QString titleForUrl(const QUrl &documentUrl) const;
 
     /**
      * Returns whether the given @p page is bookmarked.
@@ -168,7 +168,7 @@ public:
      * @note the actions will have no parents, so you have to delete them
      * yourself
      */
-    QList<QAction *> actionsForUrl(const QUrl &url) const;
+    QList<QAction *> actionsForUrl(const QUrl &documentUrl) const;
 
 Q_SIGNALS:
     /**

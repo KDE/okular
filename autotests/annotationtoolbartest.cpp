@@ -17,6 +17,8 @@
 #include <QToolBar>
 #include <QWidget>
 
+#include <KSelectAction>
+
 #include "../core/page.h"
 #include "../part.h"
 #include "../settings.h"
@@ -153,6 +155,10 @@ void AnnotationToolBarTest::testAnnotationToolBar()
     QVERIFY(!aAdvancedSettings->isEnabled());
     QVERIFY(aContinuousMode->isEnabled());
 
+    // Ensure that the 'Quick Annotations' action is correctly populated
+    // (at least the 'Configure Annotations...' action must be present)
+    QVERIFY(!qobject_cast<KSelectAction *>(aQuickTools)->actions().isEmpty());
+
     // Test annotation toolbar visibility triggers
     QAction *toggleAnnotationToolBar = part->actionCollection()->action(QStringLiteral("mouse_toggle_annotate"));
     QAction *aHideToolBar = part->actionCollection()->action(QStringLiteral("hide_annotation_toolbar"));
@@ -244,6 +250,7 @@ void AnnotationToolBarTest::testAnnotationToolBarActionsEnabledState()
     QVERIFY(part);
 
     KActionCollection *ac = part->actionCollection();
+    QAction *aQuickTools = ac->action(QStringLiteral("annotation_favorites"));
     QAction *aHighlighter = ac->action(QStringLiteral("annotation_highlighter"));
     QAction *aUnderline = ac->action(QStringLiteral("annotation_underline"));
     QAction *aSquiggle = ac->action(QStringLiteral("annotation_squiggle"));
@@ -255,6 +262,7 @@ void AnnotationToolBarTest::testAnnotationToolBarActionsEnabledState()
     QAction *aGeomShapes = ac->action(QStringLiteral("annotation_geometrical_shape"));
     QAction *aStamp = ac->action(QStringLiteral("annotation_stamp"));
 
+    QFETCH(bool, aQuickToolsEnabled);
     QFETCH(bool, aHighlighterEnabled);
     QFETCH(bool, aUnderlineEnabled);
     QFETCH(bool, aSquiggleEnabled);
@@ -266,6 +274,25 @@ void AnnotationToolBarTest::testAnnotationToolBarActionsEnabledState()
     QFETCH(bool, aGeomShapesEnabled);
     QFETCH(bool, aStampEnabled);
 
+    QCOMPARE(aQuickTools->isEnabled(), aQuickToolsEnabled);
+    QCOMPARE(aHighlighter->isEnabled(), aHighlighterEnabled);
+    QCOMPARE(aUnderline->isEnabled(), aUnderlineEnabled);
+    QCOMPARE(aSquiggle->isEnabled(), aSquiggleEnabled);
+    QCOMPARE(aStrikeout->isEnabled(), aStrikeoutEnabled);
+    QCOMPARE(aTypewriter->isEnabled(), aTypewriterEnabled);
+    QCOMPARE(aInlineNote->isEnabled(), aInlineNoteEnabled);
+    QCOMPARE(aPopupNote->isEnabled(), aPopupNoteEnabled);
+    QCOMPARE(aFreehandLine->isEnabled(), aFreehandLineEnabled);
+    QCOMPARE(aGeomShapes->isEnabled(), aGeomShapesEnabled);
+    QCOMPARE(aStamp->isEnabled(), aStampEnabled);
+
+    // trigger a reparsing of the tools to ensure that the enabled/disabled state is not changed (bug: 424296)
+    QAction *aMouseSelect = ac->action(QStringLiteral("mouse_select"));
+    QAction *aMouseNormal = ac->action(QStringLiteral("mouse_drag"));
+    aMouseSelect->trigger();
+    aMouseNormal->trigger();
+
+    QCOMPARE(aQuickTools->isEnabled(), aQuickToolsEnabled);
     QCOMPARE(aHighlighter->isEnabled(), aHighlighterEnabled);
     QCOMPARE(aUnderline->isEnabled(), aUnderlineEnabled);
     QCOMPARE(aSquiggle->isEnabled(), aSquiggleEnabled);
@@ -281,6 +308,7 @@ void AnnotationToolBarTest::testAnnotationToolBarActionsEnabledState()
 void AnnotationToolBarTest::testAnnotationToolBarActionsEnabledState_data()
 {
     QTest::addColumn<QString>("document");
+    QTest::addColumn<bool>("aQuickToolsEnabled");
     QTest::addColumn<bool>("aHighlighterEnabled");
     QTest::addColumn<bool>("aUnderlineEnabled");
     QTest::addColumn<bool>("aSquiggleEnabled");
@@ -292,9 +320,9 @@ void AnnotationToolBarTest::testAnnotationToolBarActionsEnabledState_data()
     QTest::addColumn<bool>("aGeomShapesEnabled");
     QTest::addColumn<bool>("aStampEnabled");
 
-    QTest::addRow("pdf") << QStringLiteral(KDESRCDIR "data/file1.pdf") << true << true << true << true << true << true << true << true << true << true;
-    QTest::addRow("protected-pdf") << QStringLiteral(KDESRCDIR "data/protected.pdf") << false << false << false << false << false << false << false << false << false << false;
-    QTest::addRow("image") << QStringLiteral(KDESRCDIR "data/potato.jpg") << false << false << false << false << true << true << true << true << true << true;
+    QTest::addRow("pdf") << QStringLiteral(KDESRCDIR "data/file1.pdf") << true << true << true << true << true << true << true << true << true << true << true;
+    QTest::addRow("protected-pdf") << QStringLiteral(KDESRCDIR "data/protected.pdf") << false << false << false << false << false << false << false << false << false << false << false;
+    QTest::addRow("image") << QStringLiteral(KDESRCDIR "data/potato.jpg") << true << false << false << false << false << true << true << true << true << true << true;
 }
 
 void AnnotationToolBarTest::testAnnotationToolBarConfigActionsEnabledState()

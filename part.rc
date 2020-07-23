@@ -99,13 +99,13 @@
   <Separator/>
   <Action name="mouse_drag"/>
   <Action name="mouse_selecttools"/>
+  <Action name="annotation_favorites"/>
   <Spacer/>
   <Action name="page_number"/>
   <Spacer/>
   <Action name="view_zoom_out"/>
   <Action name="zoom_to" />
   <Action name="view_zoom_in"/>
-  <Action name="annotation_favorites"/>
 </ToolBar>
 <ToolBar name="annotationToolBar" iconText="icononly" newline="true" hidden="true"><text>Annotation Toolbar</text>
   <Action name="annotation_highlighter"/>

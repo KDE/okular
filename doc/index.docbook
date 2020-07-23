@@ -1171,13 +1171,10 @@ Context menu actions like Rename Bookmarks etc.)
 				    </tgroup>
 				  </informaltable>
 				  <para>
-				    The contents of the annotating toolbar can be configured using the <link linkend="configannotations">Annotations page of &okular; configuration dialog</link>. This page can be opened with &RMB; clicking on the annotating toolbar then choosing <guimenuitem>Configure Annotations...</guimenuitem> from the context menu.
-				</para>
-				<para>
-                                        With a single &LMB; click on an annotation tool button you can use a tool once.
-					If you &eg; want to highlight all important parts of a text, activate that tool
-					permanently by double clicking on the tool button.
-					Press the <keycap>Esc</keycap> key or click the tool button again to leave the permanent mode.
+					  By pressing <keycap>Shift</keycap> you can constrain the angle of line and polygon annotations to 15° steps, and the ratio of shape annotations (&eg; Rectangle, Ellipse) to 1:1. You can also get a toolbar button from <ulink url="help:/fundamentals/config.html#toolbars">Configure Toolbars...</ulink>.
+				  </para>
+				  <para>
+					  The contents of the <guilabel>Quick Annotations</guilabel> menu can be configured using the <link linkend="configannotations">Annotations page of &okular; configuration dialog</link>. This page can be opened by clicking <guilabel>Quick Annotations</guilabel> button, then choosing <guimenuitem>Configure Annotations...</guimenuitem> from the pop-up menu.
 				</para>
 				<note>
 					<para>

@@ -1237,7 +1237,7 @@ QRect PresentationWidget::routeMouseDrawingEvent(QMouseEvent *e)
     AnnotatorEngine::Modifiers modifiers;
 
     // figure out the event type and button
-    AnnotatorEngine::decodeEvent(e, &eventType, &button, &modifiers);
+    AnnotatorEngine::decodeEvent(e, &eventType, &button);
 
     static bool hasclicked = false;
     if (eventType == AnnotatorEngine::Press)

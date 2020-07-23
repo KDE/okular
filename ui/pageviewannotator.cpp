@@ -99,8 +99,8 @@ public:
         } else
             return QRect();
 
-        // shift button: enforce 1:1 form factor (e.g. circle or square)
-        if (modifiers.shift) {
+        // Constrain to 1:1 form factor (e.g. circle or square)
+        if (modifiers.constrainRatioAndAngle) {
             double side = qMin(qAbs(nX - startpoint.x) * xScale, qAbs(nY - startpoint.y) * yScale);
             nX = qBound(startpoint.x - side / xScale, nX, startpoint.x + side / xScale);
             nY = qBound(startpoint.y - side / yScale, nY, startpoint.y + side / yScale);
@@ -350,8 +350,8 @@ public:
         //            if ( button != Left )
         //                return rect;
 
-        // shift button: constrain to 15° steps
-        if (modifiers.shift && !points.isEmpty()) {
+        // Constrain to 15° steps, except first point of course.
+        if (modifiers.constrainRatioAndAngle && !points.isEmpty()) {
             const Okular::NormalizedPoint constrainedPoint = constrainAngle(points.constLast(), nX, nY, xScale, yScale, M_PI / 12.);
             nX = constrainedPoint.x;
             nY = constrainedPoint.y;
@@ -707,6 +707,7 @@ PageViewAnnotator::PageViewAnnotator(PageView *parent, Okular::Document *storage
     , m_toolsDefinition(nullptr)
     , m_quickToolsDefinition(nullptr)
     , m_continuousMode(true)
+    , m_constrainRatioAndAngle(false)
     , m_lastToolID(-1)
     , m_lockedItem(nullptr)
 {
@@ -840,7 +841,10 @@ QRect PageViewAnnotator::routeMouseEvent(QMouseEvent *e, PageViewItem *item)
     AnnotatorEngine::Modifiers modifiers;
 
     // figure out the event type and button
-    AnnotatorEngine::decodeEvent(e, &eventType, &button, &modifiers);
+    AnnotatorEngine::decodeEvent(e, &eventType, &button);
+
+    // Constrain angle if action checked XOR shift button pressed.
+    modifiers.constrainRatioAndAngle = (bool(constrainRatioAndAngleActive()) != bool(e->modifiers() & Qt::ShiftModifier));
 
     return performRouteMouseOrTabletEvent(eventType, button, modifiers, e->localPos(), item);
 }
@@ -859,7 +863,10 @@ QRect PageViewAnnotator::routeTabletEvent(QTabletEvent *e, PageViewItem *item, c
     AnnotatorEngine::Modifiers modifiers;
 
     // figure out the event type and button
-    AnnotatorEngine::decodeEvent(e, &eventType, &button, &modifiers);
+    AnnotatorEngine::decodeEvent(e, &eventType, &button);
+
+    // Constrain angle if action checked XOR shift button pressed.
+    modifiers.constrainRatioAndAngle = (bool(constrainRatioAndAngleActive()) != bool(e->modifiers() & Qt::ShiftModifier));
 
     const QPointF globalPosF = e->globalPosF();
     const QPointF localPosF = globalPosF - localOriginInGlobal;
@@ -1220,6 +1227,16 @@ void PageViewAnnotator::setContinuousMode(bool enabled)
     m_continuousMode = enabled;
     Okular::Settings::setAnnotationContinuousMode(enabled);
     Okular::Settings::self()->save();
+}
+
+bool PageViewAnnotator::constrainRatioAndAngleActive()
+{
+    return m_constrainRatioAndAngle;
+}
+
+void PageViewAnnotator::setConstrainRatioAndAngle(bool enabled)
+{
+    m_constrainRatioAndAngle = enabled;
 }
 
 void PageViewAnnotator::setToolsEnabled(bool enabled)

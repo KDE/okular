@@ -531,10 +531,11 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
                 acolor = Qt::yellow;
             acolor.setAlpha(opacity);
 
-            // get annotation boundary and drawn rect
+            // Annotation boundary in destPainter coordinates:
             QRect annotBoundary = a->transformedBoundingRectangle().geometry(scaledWidth, scaledHeight).translated(-scaledCrop.topLeft());
             QRect annotRect = annotBoundary.intersected(limits);
-            QRect innerRect(annotRect.left() - annotBoundary.left(), annotRect.top() - annotBoundary.top(), annotRect.width(), annotRect.height());
+            // Visible portion of the annotation at annotBoundary size:
+            QRect innerRect = annotRect.translated(-annotBoundary.topLeft());
             QRectF dInnerRect(innerRect.x() * dpr, innerRect.y() * dpr, innerRect.width() * dpr, innerRect.height() * dpr);
 
             Okular::Annotation::SubType type = a->subType();
@@ -594,22 +595,17 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
                 Okular::StampAnnotation *stamp = (Okular::StampAnnotation *)a;
 
                 // get pixmap and alpha blend it if needed
-                QPixmap pixmap = GuiUtils::loadStamp(stamp->stampIconName(), annotBoundary.width());
+                QPixmap pixmap = GuiUtils::loadStamp(stamp->stampIconName(), qMax(annotBoundary.width(), annotBoundary.height()) * dpr);
                 if (!pixmap.isNull()) // should never happen but can happen on huge sizes
                 {
-                    const QRect dInnerRect(QRectF(innerRect.x() * dpr, innerRect.y() * dpr, innerRect.width() * dpr, innerRect.height() * dpr).toAlignedRect());
-
-                    QPixmap scaledCroppedPixmap = pixmap.scaled(annotBoundary.width() * dpr, annotBoundary.height() * dpr).copy(dInnerRect);
+                    QPixmap scaledCroppedPixmap = pixmap.scaled(annotBoundary.width() * dpr, annotBoundary.height() * dpr).copy(dInnerRect.toAlignedRect());
                     scaledCroppedPixmap.setDevicePixelRatio(dpr);
 
-                    QImage scaledCroppedImage = scaledCroppedPixmap.toImage();
-
-                    if (opacity < 255)
-                        changeImageAlpha(scaledCroppedImage, opacity);
-                    pixmap = QPixmap::fromImage(scaledCroppedImage);
-
-                    // draw the scaled and al
-                    mixedPainter->drawPixmap(annotRect.topLeft(), pixmap);
+                    // Draw pixmap with opacity:
+                    mixedPainter->save();
+                    mixedPainter->setOpacity(mixedPainter->opacity() * opacity / 255.0);
+                    mixedPainter->drawPixmap(annotRect.topLeft(), scaledCroppedPixmap);
+                    mixedPainter->restore();
                 }
             }
             // draw GeomAnnotation
@@ -955,34 +951,6 @@ void PagePainter::hueShiftNegative(QImage *image)
 
         // Save new color
         data[i] = qRgba(G, B, R, 255);
-    }
-}
-
-/** Private Helpers :: Image Drawing **/
-// from Arthur - qt4
-static inline int qt_div_255(int x)
-{
-    return (x + (x >> 8) + 0x80) >> 8;
-}
-
-void PagePainter::changeImageAlpha(QImage &image, unsigned int destAlpha)
-{
-    image = image.convertToFormat(QImage::Format_ARGB32);
-    // iterate over all pixels changing the alpha component value
-    unsigned int *data = reinterpret_cast<unsigned int *>(image.bits());
-    unsigned int pixels = image.width() * image.height();
-
-    int source, sourceAlpha;
-    for (unsigned int i = 0; i < pixels; ++i) { // optimize this loop keeping byte order into account
-        source = data[i];
-        if ((sourceAlpha = qAlpha(source)) == 255) {
-            // use destAlpha
-            data[i] = qRgba(qRed(source), qGreen(source), qBlue(source), destAlpha);
-        } else {
-            // use destAlpha * sourceAlpha product
-            sourceAlpha = qt_div_255(destAlpha * sourceAlpha);
-            data[i] = qRgba(qRed(source), qGreen(source), qBlue(source), sourceAlpha);
-        }
     }
 }
 

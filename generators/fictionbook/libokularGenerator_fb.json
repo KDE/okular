@@ -119,8 +119,8 @@
             "application/x-fictionbook+xml"
         ],
         "Name": "Fiction Book Backend",
-        "Name[ca@valencia]": "Dorsal per al Fiction Book",
-        "Name[ca]": "Dorsal per al Fiction Book",
+        "Name[ca@valencia]": "Dorsal Fiction Book",
+        "Name[ca]": "Dorsal Fiction Book",
         "Name[cs]": "Podpůrná vrstva Fiction Book",
         "Name[da]": "Fiction Book-backend",
         "Name[de]": "Anzeigemodul für FictionBook",

@@ -123,8 +123,8 @@
             "inode/directory"
         ],
         "Name": "ComicBook Backend",
-        "Name[ca@valencia]": "Dorsal de ComicBook",
-        "Name[ca]": "Dorsal de ComicBook",
+        "Name[ca@valencia]": "Dorsal ComicBook",
+        "Name[ca]": "Dorsal ComicBook",
         "Name[cs]": "Podpůrná vrstva ComicBook",
         "Name[da]": "ComicBook-backend",
         "Name[de]": "Anzeigemodul für Comic-Book",

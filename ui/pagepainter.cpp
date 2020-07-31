@@ -963,10 +963,9 @@ void PagePainter::drawShapeOnImage(QImage &image, const NormalizedPath &normPath
     if (pointsNumber < 2)
         return;
 
-    int imageWidth = image.width();
-    int imageHeight = image.height();
-    double fImageWidth = (double)imageWidth;
-    double fImageHeight = (double)imageHeight;
+    const double dpr = image.devicePixelRatio();
+    const double fImageWidth = image.width() / dpr;
+    const double fImageHeight = image.height() / dpr;
 
     // stroke outline
     double penWidth = (double)pen.width() * penWidthMultiplier;
@@ -1009,8 +1008,9 @@ void PagePainter::drawShapeOnImage(QImage &image, const NormalizedPath &normPath
 
 void PagePainter::drawEllipseOnImage(QImage &image, const NormalizedPath &rect, const QPen &pen, const QBrush &brush, double penWidthMultiplier, RasterOperation op)
 {
-    const double fImageWidth = (double)image.width();
-    const double fImageHeight = (double)image.height();
+    const double dpr = image.devicePixelRatio();
+    const double fImageWidth = image.width() / dpr;
+    const double fImageHeight = image.height() / dpr;
 
     // stroke outline
     const double penWidth = (double)pen.width() * penWidthMultiplier;

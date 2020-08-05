@@ -15,11 +15,11 @@
 #include "settings_core.h"
 
 #include <QApplication>
-#include <QDesktopWidget>
 #include <QIODevice>
 #include <QImage>
 #include <QRect>
 #include <QScreen>
+#include <QWidget>
 #include <QWindow>
 
 using namespace Okular;

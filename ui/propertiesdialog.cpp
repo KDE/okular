@@ -11,7 +11,6 @@
 
 // qt/kde includes
 #include <QApplication>
-#include <QDesktopWidget>
 #include <QFile>
 #include <QFileDialog>
 #include <QFormLayout>

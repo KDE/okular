@@ -40,12 +40,12 @@
 #include <KXMLGUIFactory>
 #include <QApplication>
 #include <QDBusConnection>
-#include <QDesktopWidget>
 #include <QDragMoveEvent>
 #include <QFileDialog>
 #include <QMenuBar>
 #include <QMimeDatabase>
 #include <QMimeType>
+#include <QScreen>
 #include <QTabBar>
 #include <QTabWidget>
 #include <QTimer>
@@ -545,7 +545,7 @@ void Shell::slotShowMenubar()
 
 QSize Shell::sizeHint() const
 {
-    return QApplication::desktop()->availableGeometry(this).size() * 0.75;
+    return QApplication::primaryScreen()->availableSize() * 0.75;
 }
 
 bool Shell::queryClose()

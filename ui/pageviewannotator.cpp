@@ -690,6 +690,21 @@ public:
         return !oldTool.isNull();
     }
 
+    int findToolId(const QString &type)
+    {
+        int toolID = -1;
+        // FIXME: search from left. currently searching from right side as a workaround to avoid matching
+        // straight line tools to the arrow tool, which is also of type straight-line
+        QDomElement toolElement = m_toolsDefinition.documentElement().lastChildElement();
+        while (!toolElement.isNull() && toolElement.attribute(QStringLiteral("type")) != type) {
+            toolElement = toolElement.previousSiblingElement();
+        }
+        if (!toolElement.isNull()) {
+            toolID = toolElement.attribute(QStringLiteral("id")).toInt();
+        }
+        return toolID;
+    }
+
 private:
     QDomDocument m_toolsDefinition;
     int m_toolsCount;
@@ -1262,8 +1277,8 @@ int PageViewAnnotator::setQuickTool(int favToolID)
 {
     int toolId = -1;
     QDomElement favToolElement = m_quickToolsDefinition->tool(favToolID);
-    if (!favToolElement.isNull() && favToolElement.hasAttribute(QStringLiteral("sourceId"))) {
-        toolId = favToolElement.attribute(QStringLiteral("sourceId")).toInt();
+    if (!favToolElement.isNull()) {
+        toolId = m_toolsDefinition->findToolId(favToolElement.attribute(QStringLiteral("type")));
         if (m_toolsDefinition->updateTool(favToolElement, toolId))
             saveAnnotationTools();
     }
@@ -1353,7 +1368,6 @@ void PageViewAnnotator::addToQuickAnnotations()
     // store name attribute only if the user specified a customized name
     if (!itemText.isEmpty())
         toolElement.setAttribute(QStringLiteral("name"), itemText);
-    toolElement.setAttribute(QStringLiteral("sourceId"), sourceToolElement.attribute(QStringLiteral("id")));
     m_quickToolsDefinition->appendTool(toolElement);
     saveAnnotationTools();
 }

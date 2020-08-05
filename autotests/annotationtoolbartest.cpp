@@ -26,6 +26,7 @@
 #include "../shell/shell.h"
 #include "../shell/shellutils.h"
 #include "../ui/pageview.h"
+#include "closedialoghelper.h"
 
 namespace Okular
 {
@@ -146,7 +147,7 @@ void AnnotationToolBarTest::testAnnotationToolBar()
     QVERIFY(annToolBar);
 
     // Check config action default enabled states
-    QAction *aQuickTools = part->actionCollection()->action(QStringLiteral("annotation_favorites"));
+    KSelectAction *aQuickTools = qobject_cast<KSelectAction *>(part->actionCollection()->action(QStringLiteral("annotation_favorites")));
     QAction *aAddToQuickTools = part->actionCollection()->action(QStringLiteral("annotation_bookmark"));
     QAction *aAdvancedSettings = part->actionCollection()->action(QStringLiteral("annotation_settings_advanced"));
     QAction *aContinuousMode = part->actionCollection()->action(QStringLiteral("annotation_settings_pin"));
@@ -157,7 +158,7 @@ void AnnotationToolBarTest::testAnnotationToolBar()
 
     // Ensure that the 'Quick Annotations' action is correctly populated
     // (at least the 'Configure Annotations...' action must be present)
-    QVERIFY(!qobject_cast<KSelectAction *>(aQuickTools)->actions().isEmpty());
+    QVERIFY(!aQuickTools->actions().isEmpty());
 
     // Test annotation toolbar visibility triggers
     QAction *toggleAnnotationToolBar = part->actionCollection()->action(QStringLiteral("mouse_toggle_annotate"));
@@ -224,6 +225,22 @@ void AnnotationToolBarTest::testAnnotationToolBar()
     aContinuousMode->trigger();
     QCOMPARE(simulateAddPopupAnnotation(part, mouseX, mouseY), true);
     QCOMPARE(simulateAddPopupAnnotation(part, mouseX, mouseY), false);
+
+    // Test adding a tool to the quick tool list using the bookmark action
+    QScopedPointer<TestingUtils::CloseDialogHelper> closeDialogHelper;
+    closeDialogHelper.reset(new TestingUtils::CloseDialogHelper(QDialogButtonBox::Ok));
+    QAction *aEllipse = part->actionCollection()->action(QStringLiteral("annotation_ellipse"));
+    aEllipse->trigger();
+    QVERIFY(aEllipse->isChecked());
+    int quickActionCount = aQuickTools->actions().size();
+    aAddToQuickTools->trigger();
+    QCOMPARE(aQuickTools->actions().size(), quickActionCount + 1);
+    // Test that triggering a Quick Annotation action checks the corresponding built-in annotation action
+    aQuickTools->actions().at(5)->trigger();
+    QVERIFY(aPopupNote->isChecked());
+    // Test again for tool just added to the quick tools using the bookmark button
+    aQuickTools->actions().at(6)->trigger();
+    QVERIFY(aEllipse->isChecked());
 }
 
 void AnnotationToolBarTest::testAnnotationToolBar_data()

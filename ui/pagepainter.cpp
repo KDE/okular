@@ -692,27 +692,6 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
     delete unbufferedAnnotations;
 }
 
-/** Private Helpers :: Pixmap conversion **/
-void PagePainter::cropPixmapOnImage(QImage &dest, const QPixmap *src, const QRect r)
-{
-    qreal dpr = src->devicePixelRatioF();
-
-    // handle quickly the case in which the whole pixmap has to be converted
-    if (r == QRect(0, 0, src->width() / dpr, src->height() / dpr)) {
-        dest = src->toImage();
-        dest = dest.convertToFormat(QImage::Format_ARGB32_Premultiplied);
-    }
-    // else copy a portion of the src to an internal pixmap (smaller) and convert it
-    else {
-        QImage croppedImage(r.width() * dpr, r.height() * dpr, QImage::Format_ARGB32_Premultiplied);
-        croppedImage.setDevicePixelRatio(dpr);
-        QPainter p(&croppedImage);
-        p.drawPixmap(0, 0, *src, r.left(), r.top(), r.width(), r.height());
-        p.end();
-        dest = croppedImage;
-    }
-}
-
 void PagePainter::recolor(QImage *image, const QColor &foreground, const QColor &background)
 {
     if (image->format() != QImage::Format_ARGB32_Premultiplied) {

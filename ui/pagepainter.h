@@ -35,18 +35,32 @@ public:
     // you can decide whether or not to permit drawing of a certain feature.
     enum PagePainterFlags { Accessibility = 1, EnhanceLinks = 2, EnhanceImages = 4, Highlights = 8, TextSelection = 16, Annotations = 32 };
 
-    // draw (using painter 'destPainter') the 'page' requested by 'observer' using features
-    // in 'flags'. 'limits' is the bounding rect of the paint operation,
-    // 'scaledWidth' and 'scaledHeight' the expected size of page contents
+    /**
+     * Draw @p page on @p destPainter.
+     *
+     * @param destPainter Page will be drawn on this painter.
+     * @param page Which page do draw.
+     * @param observer Request pixmaps generated for this DocumentObserver.
+     * @param flags PagePainterFlags, which features to draw.
+     * @param scaledWidth The requested width of uncropped page in @p destPainter coordinates.
+     * @param scaledHeight The requested height of uncropped page in @p destPainter coordinates.
+     * @param pageLimits Where to paint in @p destPainter coordinates. (I. e. painter crop.) Should begin at (0, 0).
+     */
     static void paintPageOnPainter(QPainter *destPainter, const Okular::Page *page, Okular::DocumentObserver *observer, int flags, int scaledWidth, int scaledHeight, const QRect pageLimits);
 
-    // draw (using painter 'destPainter') the 'page' requested by 'observer' using features
-    // in 'flags'.
-    // 'pageLimits' is the bounding rect of the paint operation relative to the
-    // top left of the (cropped) page.
-    // 'scaledWidth' and 'scaledHeight' the size of the page pixmap (before cropping).
-    // 'crop' is the (normalized) cropped rectangle within the page.
-    // The painter's (0,0) is assumed to be top left of the painted ('pageLimits') rect.
+    /**
+     * Draw @p page on @p destPainter.
+     *
+     * @param destPainter Page will be drawn on this painter.
+     * @param page Which page do draw.
+     * @param observer Request pixmaps generated for this DocumentObserver.
+     * @param flags PagePainterFlags, which features to draw.
+     * @param scaledWidth The requested width of uncropped page in @p destPainter coordinates.
+     * @param scaledHeight The requested height of uncropped page in @p destPainter coordinates.
+     * @param pageLimits Where to paint in @p destPainter coordinates. (I. e. painter crop.) Should begin at (0, 0).
+     * @param crop Which area of the page to paint in @p pageLimits.
+     * @param viewPortPoint Which point of the page to highlight, e. g. a source location. @c nullptr to disable.
+     */
     static void paintCroppedPageOnPainter(QPainter *destPainter,
                                           const Okular::Page *page,
                                           Okular::DocumentObserver *observer,
@@ -58,9 +72,19 @@ public:
                                           Okular::NormalizedPoint *viewPortPoint);
 
 private:
-    static void cropPixmapOnImage(QImage &dest, const QPixmap *src, const QRect r);
+    // BEGIN Change Colors feature
+    /**
+     * Collapse color space (from white to black) to a line from @p foreground to @p background.
+     */
     static void recolor(QImage *image, const QColor &foreground, const QColor &background);
+    /**
+     * Collapse color space to a line from white to black,
+     * then move from @p threshold to 128 and stretch the line by @p contrast.
+     */
     static void blackWhite(QImage *image, int contrast, int threshold);
+    /**
+     * Invert the lightness axis of the HSL color cone.
+     */
     static void invertLightness(QImage *image);
     /**
      * Inverts luma of @p image using the luma coefficients @p Y_R, @p Y_G, @p Y_B (should sum up to 1),
@@ -81,22 +105,46 @@ private:
      * Shifts hue of each pixel by 240 degrees, by simply swapping channels.
      */
     static void hueShiftNegative(QImage *image);
+    // END Change Colors feature
 
     // my pretty dear raster function
     typedef QList<Okular::NormalizedPoint> NormalizedPath;
     enum RasterOperation { Normal, Multiply };
-    static void drawShapeOnImage(QImage &image, const NormalizedPath &normPath, bool closeShape, const QPen &pen, const QBrush &brush = QBrush(), double penWidthMultiplier = 1.0, RasterOperation op = Normal
-                                 // float antiAliasRadius = 1.0
-    );
+
+    /**
+     * Draw @p normPath on @p image.
+     *
+     * @note @p normPath needs to be normalized in respect to @p image, not to the actual page.
+     */
+    static void drawShapeOnImage(QImage &image, const NormalizedPath &normPath, bool closeShape, const QPen &pen, const QBrush &brush = QBrush(), double penWidthMultiplier = 1.0, RasterOperation op = Normal);
+
+    /**
+     * Draw an ellipse described by @p rect on @p image.
+     *
+     * @param rect Two NormalizedPoints describing the bounding rect. Need to be normalized in respect to @p image, not to the actual page.
+     */
     static void drawEllipseOnImage(QImage &image, const NormalizedPath &rect, const QPen &pen, const QBrush &brush, double penWidthMultiplier, RasterOperation op);
 
     friend class LineAnnotPainter;
 };
 
+/**
+ * @short Painting helper for a single Okular::LineAnnotation.
+ */
 class LineAnnotPainter
 {
 public:
+    /**
+     * @param a The annotation to paint. Accessed by draw().
+     * @param pageSizeA The full size of the page on which to paint.
+     * @param pageScale The scale of the page when you call draw().
+     * @param toNormalizedImage How to transform normalized coordinates of @p a to normalized coordinates of your paint device. (If your paint device represents the whole page, use the unit matrix QTransform().)
+     */
     LineAnnotPainter(const Okular::LineAnnotation *a, QSizeF pageSizeA, double pageScale, const QTransform &toNormalizedImage);
+
+    /**
+     * Draw the annotation on @p image.
+     */
     void draw(QImage &image) const;
 
 private:

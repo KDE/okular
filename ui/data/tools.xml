@@ -1,5 +1,10 @@
 <!DOCTYPE okularAnnotatingTools>
 <!--
+Tool
+  [id]              {int = unique id identifying the built-in tool}
+  [name]            {string = name of the tool displayed when configuring it}
+  [type]            {highlight, underline, squiggly, strikeout, typewriter, note-inline, note-linked, ink, straight-line, rectangle, ellipse, polygon, stamp}
+
 Engine
   TextSelector
     [color]         {RGB HEX}

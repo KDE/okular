@@ -1599,7 +1599,11 @@ void PresentationWidget::setScreen(int newScreen)
     const QSize oldSize = size();
     // qCDebug(OkularUiDebug) << newScreen << "=>" << screenGeom;
     m_screen = newScreen;
+
+    // Workaround until !233: Disable fullscreen mode for moving the geometry() to another screen.
+    setWindowState(windowState() & ~Qt::WindowFullScreen);
     setGeometry(screenGeom);
+    setWindowState(windowState() | Qt::WindowFullScreen);
 
     applyNewScreenSize(oldSize);
 }

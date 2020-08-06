@@ -1105,14 +1105,14 @@ void LineAnnotPainter::draw(QImage &image) const
 void LineAnnotPainter::drawMainLine(QImage &image) const
 {
     // draw the line as normalized path into image
-    PagePainter::drawShapeOnImage(image, transformPath(la->transformedLinePoints(), toNormalizedImage), la->lineClosed(), linePen, fillBrush, pageScale, PagePainter::Multiply);
+    PagePainter::drawShapeOnImage(image, transformPath(la->transformedLinePoints(), toNormalizedImage), la->lineClosed(), linePen, fillBrush, pageScale);
 }
 
 void LineAnnotPainter::drawShortenedLine(double mainSegmentLength, double size, QImage &image, const QTransform &toNormalizedPage) const
 {
     const QTransform combinedTransform {toNormalizedPage * toNormalizedImage};
     const QList<Okular::NormalizedPoint> path {{shortenForArrow(size, la->lineStartStyle()), 0}, {mainSegmentLength - shortenForArrow(size, la->lineEndStyle()), 0}};
-    PagePainter::drawShapeOnImage(image, transformPath(path, combinedTransform), la->lineClosed(), linePen, fillBrush, pageScale, PagePainter::Multiply);
+    PagePainter::drawShapeOnImage(image, transformPath(path, combinedTransform), la->lineClosed(), linePen, fillBrush, pageScale);
 }
 
 void LineAnnotPainter::drawLineEnds(double mainSegmentLength, double size, QImage &image, const QTransform &transform) const
@@ -1189,7 +1189,7 @@ void LineAnnotPainter::drawLineEndArrow(double xEndPos, double size, double flip
         {xEndPos, 0},
         {xEndPos - size * flipX, -size / 2.},
     };
-    PagePainter::drawShapeOnImage(image, transformPath(path, combinedTransform), close, linePen, fillBrush, pageScale, PagePainter::Multiply);
+    PagePainter::drawShapeOnImage(image, transformPath(path, combinedTransform), close, linePen, fillBrush, pageScale);
 }
 
 void LineAnnotPainter::drawLineEndButt(double xEndPos, double size, const QTransform &toNormalizedPage, QImage &image) const
@@ -1200,7 +1200,7 @@ void LineAnnotPainter::drawLineEndButt(double xEndPos, double size, const QTrans
         {xEndPos, halfSize},
         {xEndPos, -halfSize},
     };
-    PagePainter::drawShapeOnImage(image, transformPath(path, combinedTransform), true, linePen, fillBrush, pageScale, PagePainter::Multiply);
+    PagePainter::drawShapeOnImage(image, transformPath(path, combinedTransform), true, linePen, fillBrush, pageScale);
 }
 
 void LineAnnotPainter::drawLineEndCircle(double xEndPos, double size, const QTransform &toNormalizedPage, QImage &image) const
@@ -1216,21 +1216,21 @@ void LineAnnotPainter::drawLineEndCircle(double xEndPos, double size, const QTra
     };
 
     /* then transform bounding rect with toNormalizedImage */
-    PagePainter::drawEllipseOnImage(image, transformPath(path, toNormalizedImage), linePen, fillBrush, pageScale, PagePainter::Multiply);
+    PagePainter::drawEllipseOnImage(image, transformPath(path, toNormalizedImage), linePen, fillBrush, pageScale);
 }
 
 void LineAnnotPainter::drawLineEndSquare(double xEndPos, double size, const QTransform &toNormalizedPage, QImage &image) const
 {
     const QTransform combinedTransform {toNormalizedPage * toNormalizedImage};
     const QList<Okular::NormalizedPoint> path {{xEndPos, size / 2.}, {xEndPos - size, size / 2.}, {xEndPos - size, -size / 2.}, {xEndPos, -size / 2.}};
-    PagePainter::drawShapeOnImage(image, transformPath(path, combinedTransform), true, linePen, fillBrush, pageScale, PagePainter::Multiply);
+    PagePainter::drawShapeOnImage(image, transformPath(path, combinedTransform), true, linePen, fillBrush, pageScale);
 }
 
 void LineAnnotPainter::drawLineEndDiamond(double xEndPos, double size, const QTransform &toNormalizedPage, QImage &image) const
 {
     const QTransform combinedTransform {toNormalizedPage * toNormalizedImage};
     const QList<Okular::NormalizedPoint> path {{xEndPos, 0}, {xEndPos - size / 2., size / 2.}, {xEndPos - size, 0}, {xEndPos - size / 2., -size / 2.}};
-    PagePainter::drawShapeOnImage(image, transformPath(path, combinedTransform), true, linePen, fillBrush, pageScale, PagePainter::Multiply);
+    PagePainter::drawShapeOnImage(image, transformPath(path, combinedTransform), true, linePen, fillBrush, pageScale);
 }
 
 void LineAnnotPainter::drawLineEndSlash(double xEndPos, double size, const QTransform &toNormalizedPage, QImage &image) const
@@ -1242,7 +1242,7 @@ void LineAnnotPainter::drawLineEndSlash(double xEndPos, double size, const QTran
         {xEndPos - xOffset, halfSize},
         {xEndPos + xOffset, -halfSize},
     };
-    PagePainter::drawShapeOnImage(image, transformPath(path, combinedTransform), true, linePen, fillBrush, pageScale, PagePainter::Multiply);
+    PagePainter::drawShapeOnImage(image, transformPath(path, combinedTransform), true, linePen, fillBrush, pageScale);
 }
 
 void LineAnnotPainter::drawLeaderLine(double xEndPos, QImage &image, const QTransform &toNormalizedPage) const
@@ -1262,7 +1262,7 @@ void LineAnnotPainter::drawLeaderLine(double xEndPos, QImage &image, const QTran
             path.append({xEndPos, 0});
         }
     }
-    PagePainter::drawShapeOnImage(image, transformPath(path, combinedTransform), false, linePen, fillBrush, pageScale, PagePainter::Multiply);
+    PagePainter::drawShapeOnImage(image, transformPath(path, combinedTransform), false, linePen, fillBrush, pageScale);
 }
 
 double LineAnnotPainter::shortenForArrow(double size, Okular::LineAnnotation::TermStyle endStyle)

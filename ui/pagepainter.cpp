@@ -43,7 +43,9 @@ Q_GLOBAL_STATIC_WITH_ARGS(QPixmap, busyPixmap, (KIconLoader::global()->loadIcon(
 
 inline QPen buildPen(const Okular::Annotation *ann, double width, const QColor &color)
 {
-    QPen p(QBrush(color), width, ann->style().lineStyle() == Okular::Annotation::Dashed ? Qt::DashLine : Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin);
+    QColor c = color;
+    c.setAlphaF(ann->style().opacity());
+    QPen p(QBrush(c), width, ann->style().lineStyle() == Okular::Annotation::Dashed ? Qt::DashLine : Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin);
     return p;
 }
 

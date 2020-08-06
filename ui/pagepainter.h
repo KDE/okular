@@ -91,7 +91,7 @@ private:
     static void drawShapeOnImage(QImage &image, const NormalizedPath &normPath, bool closeShape, const QPen &pen, const QBrush &brush = QBrush(), double penWidthMultiplier = 1.0, RasterOperation op = Normal
                                  // float antiAliasRadius = 1.0
     );
-    static void drawEllipseOnImage(QImage &image, const NormalizedPath &rect, const QPen &pen, const QBrush &brush, double penWidthMultiplier, RasterOperation op);
+    static void drawEllipseOnImage(QImage &image, const NormalizedPath &rect, const QPen &pen, const QBrush &brush, double penWidthMultiplier, RasterOperation op = Normal);
 
     friend class LineAnnotPainter;
 };

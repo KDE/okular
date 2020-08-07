@@ -123,7 +123,7 @@ private:
      *
      * @param rect Two NormalizedPoints describing the bounding rect. Need to be normalized in respect to @p image, not to the actual page.
      */
-    static void drawEllipseOnImage(QImage &image, const NormalizedPath &rect, const QPen &pen, const QBrush &brush, double penWidthMultiplier, RasterOperation op);
+    static void drawEllipseOnImage(QImage &image, const NormalizedPath &rect, const QPen &pen, const QBrush &brush, double penWidthMultiplier, RasterOperation op = Normal);
 
     friend class LineAnnotPainter;
 };

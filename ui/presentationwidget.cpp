@@ -24,7 +24,6 @@
 #include <KSelectAction>
 #include <QAction>
 #include <QApplication>
-#include <QDesktopWidget>
 #include <QDialog>
 #include <QEvent>
 #include <QFontMetrics>
@@ -34,6 +33,7 @@
 #include <QLabel>
 #include <QLayout>
 #include <QPainter>
+#include <QScreen>
 #include <QStyle>
 #include <QStyleOption>
 #include <QTimer>
@@ -170,7 +170,6 @@ PresentationWidget::PresentationWidget(QWidget *parent, Okular::Document *doc, D
     setWindowTitle(caption);
 
     m_width = -1;
-    m_screen = -2;
 
     // create top toolbar
     m_topBar = new PresentationToolBar(this);
@@ -219,14 +218,13 @@ PresentationWidget::PresentationWidget(QWidget *parent, Okular::Document *doc, D
     m_topBar->addAction(eraseDrawingAct);
     addAction(eraseDrawingAct);
 
-    QDesktopWidget *desktop = QApplication::desktop();
-    if (desktop->numScreens() > 1) {
+    const int screenCount = QApplication::screens().count();
+    if (screenCount > 1) {
         m_topBar->addSeparator();
         m_screenSelect = new KSelectAction(QIcon::fromTheme(QStringLiteral("video-display")), i18n("Switch Screen"), m_topBar);
         m_screenSelect->setToolBarMode(KSelectAction::MenuMode);
         m_screenSelect->setToolButtonPopupMode(QToolButton::InstantPopup);
         m_topBar->addAction(m_screenSelect);
-        const int screenCount = desktop->numScreens();
         for (int i = 0; i < screenCount; ++i) {
             QAction *act = m_screenSelect->addAction(i18nc("%1 is the screen number (0, 1, ...)", "Screen %1", i));
             act->setData(QVariant::fromValue(i));
@@ -275,8 +273,6 @@ PresentationWidget::PresentationWidget(QWidget *parent, Okular::Document *doc, D
 
     // inhibit power management
     inhibitPowerManagement();
-
-    show();
 
     QTimer::singleShot(0, this, &PresentationWidget::slotDelayedEvents);
 
@@ -874,13 +870,44 @@ void PresentationWidget::paintEvent(QPaintEvent *pe)
 
 void PresentationWidget::resizeEvent(QResizeEvent *re)
 {
-    // qCDebug(OkularUiDebug) << re->oldSize() << "=>" << re->size();
-    if (re->oldSize() == QSize(-1, -1))
+    m_width = width();
+    m_height = height();
+
+    // if by chance the new size equals the old, do not invalidate pixmaps and such..
+    if (size() == re->oldSize())
         return;
 
-    m_screen = QApplication::desktop()->screenNumber(this);
+    // BEGIN Top toolbar
+    // tool bar height in pixels, make it large enough to hold the text fields with the page numbers
+    const int toolBarHeight = m_pagesEdit->height() * 1.5;
 
-    applyNewScreenSize(re->oldSize());
+    m_topBar->setGeometry(0, 0, width(), toolBarHeight);
+    m_topBar->setIconSize(QSize(toolBarHeight * 0.75, toolBarHeight * 0.75));
+    // END Top toolbar
+
+    // BEGIN Content area
+    // update the frames
+    const float screenRatio = (float)m_height / (float)m_width;
+    for (PresentationFrame *frame : qAsConst(m_frames)) {
+        frame->recalcGeometry(m_width, m_height, screenRatio);
+    }
+
+    if (m_frameIndex != -1) {
+        // ugliness alarm!
+        const_cast<Okular::Page *>(m_frames[m_frameIndex]->page)->deletePixmap(this);
+        // force the regeneration of the pixmap
+        m_lastRenderedPixmap = QPixmap();
+        m_blockNotifications = true;
+        requestPixmaps();
+        m_blockNotifications = false;
+    }
+
+    if (m_transitionTimer->isActive()) {
+        m_transitionTimer->stop();
+    }
+
+    generatePage(true /* no transitions */);
+    // END Content area
 }
 
 void PresentationWidget::leaveEvent(QEvent *e)
@@ -915,8 +942,8 @@ const void *PresentationWidget::getObjectRect(Okular::ObjectRect::ObjectType typ
         return nullptr;
 
     // check if 1) there is an object and 2) it's a link
-    const QRect d = QApplication::desktop()->screenGeometry(m_screen);
-    const Okular::ObjectRect *object = page->objectRect(type, nx, ny, d.width(), d.height());
+    const QRect screenRect = oldQt_screenOf(this)->geometry();
+    const Okular::ObjectRect *object = page->objectRect(type, nx, ny, screenRect.width(), screenRect.height());
     if (!object)
         return nullptr;
 
@@ -1314,36 +1341,19 @@ void PresentationWidget::startAutoChangeTimer()
     }
 }
 
-void PresentationWidget::recalcGeometry()
+QScreen *PresentationWidget::defaultScreen() const
 {
-    QDesktopWidget *desktop = QApplication::desktop();
     const int preferenceScreen = Okular::Settings::slidesScreen();
-    int screen = 0;
+
     if (preferenceScreen == -2) {
-        screen = desktop->screenNumber(m_parentWidget);
+        return oldQt_screenOf(m_parentWidget);
     } else if (preferenceScreen == -1) {
-        screen = desktop->primaryScreen();
-    } else if (preferenceScreen >= 0 && preferenceScreen < desktop->numScreens()) {
-        screen = preferenceScreen;
+        return QApplication::primaryScreen();
+    } else if (preferenceScreen >= 0 && preferenceScreen < QApplication::screens().count()) {
+        return QApplication::screens().at(preferenceScreen);
     } else {
-        screen = desktop->screenNumber(m_parentWidget);
-        Okular::Settings::setSlidesScreen(-2);
+        return oldQt_screenOf(m_parentWidget);
     }
-    const QRect screenGeom = desktop->screenGeometry(screen);
-    // qCDebug(OkularUiDebug) << screen << "=>" << screenGeom;
-    m_screen = screen;
-    setGeometry(screenGeom);
-}
-
-void PresentationWidget::repositionContent()
-{
-    const QRect ourGeom = geometry();
-
-    // tool bar height in pixels, make it large enough to hold the text fields with the page numbers
-    const int toolBarHeight = m_pagesEdit->height() * 1.5;
-
-    m_topBar->setGeometry(0, 0, ourGeom.width(), toolBarHeight);
-    m_topBar->setIconSize(QSize(toolBarHeight * 0.75, toolBarHeight * 0.75));
 }
 
 void PresentationWidget::requestPixmaps()
@@ -1501,19 +1511,13 @@ void PresentationWidget::slotTransitionStep()
 
 void PresentationWidget::slotDelayedEvents()
 {
-    recalcGeometry();
-    repositionContent();
+    setScreen(defaultScreen());
+    show();
 
     if (m_screenSelect) {
-        m_screenSelect->setCurrentItem(m_screen);
+        m_screenSelect->setCurrentItem(QApplication::screens().indexOf(oldQt_screenOf(this)));
         connect(m_screenSelect->selectableActionGroup(), &QActionGroup::triggered, this, &PresentationWidget::chooseScreen);
     }
-
-    // show widget and take control
-    show();
-    setWindowState(windowState() | Qt::WindowFullScreen);
-
-    connect(QApplication::desktop(), &QDesktopWidget::resized, this, &PresentationWidget::screenResized);
 
     // inform user on how to exit from presentation mode
     KMessageBox::information(
@@ -1566,24 +1570,15 @@ void PresentationWidget::clearDrawings()
     update();
 }
 
-void PresentationWidget::screenResized(int screen)
-{
-    // we can ignore if a screen was resized in the case the screen is not
-    // where we are on
-    if (screen != m_screen)
-        return;
-
-    setScreen(screen);
-}
-
 void PresentationWidget::chooseScreen(QAction *act)
 {
     if (!act || act->data().type() != QVariant::Int)
         return;
 
     const int newScreen = act->data().toInt();
-
-    setScreen(newScreen);
+    if (newScreen < QApplication::screens().count()) {
+        setScreen(QApplication::screens().at(newScreen));
+    }
 }
 
 void PresentationWidget::toggleBlackScreenMode(bool)
@@ -1593,52 +1588,18 @@ void PresentationWidget::toggleBlackScreenMode(bool)
     update();
 }
 
-void PresentationWidget::setScreen(int newScreen)
+void PresentationWidget::setScreen(const QScreen *newScreen)
 {
-    const QRect screenGeom = QApplication::desktop()->screenGeometry(newScreen);
-    const QSize oldSize = size();
-    // qCDebug(OkularUiDebug) << newScreen << "=>" << screenGeom;
-    m_screen = newScreen;
-
-    // Workaround until !233: Disable fullscreen mode for moving the geometry() to another screen.
-    setWindowState(windowState() & ~Qt::WindowFullScreen);
-    setGeometry(screenGeom);
+    // To move to a new screen, need to disable fullscreen first:
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+    if (newScreen != screen()) {
+#else
+    if (true) { // TODO Qt6 (oldQt_screenOf() doesn’t help here, because it has a default value.)
+#endif
+        setWindowState(windowState() & ~Qt::WindowFullScreen);
+    }
+    setGeometry(newScreen->geometry());
     setWindowState(windowState() | Qt::WindowFullScreen);
-
-    applyNewScreenSize(oldSize);
-}
-
-void PresentationWidget::applyNewScreenSize(const QSize oldSize)
-{
-    repositionContent();
-
-    // if by chance the new screen has the same resolution of the previous,
-    // do not invalidate pixmaps and such..
-    if (size() == oldSize)
-        return;
-
-    m_width = width();
-    m_height = height();
-
-    // update the frames
-    const float screenRatio = (float)m_height / (float)m_width;
-    for (PresentationFrame *frame : qAsConst(m_frames)) {
-        frame->recalcGeometry(m_width, m_height, screenRatio);
-    }
-
-    if (m_frameIndex != -1) {
-        // ugliness alarm!
-        const_cast<Okular::Page *>(m_frames[m_frameIndex]->page)->deletePixmap(this);
-        // force the regeneration of the pixmap
-        m_lastRenderedPixmap = QPixmap();
-        m_blockNotifications = true;
-        requestPixmaps();
-        m_blockNotifications = false;
-    }
-    if (m_transitionTimer->isActive()) {
-        m_transitionTimer->stop();
-    }
-    generatePage(true /* no transitions */);
 }
 
 void PresentationWidget::inhibitPowerManagement()

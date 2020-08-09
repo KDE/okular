@@ -19,6 +19,12 @@
 #include <QStringList>
 #include <qwidget.h>
 
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0) // TODO Qt6: These are needed for oldQt_screenOf().
+#include <QApplication>
+#include <QScreen>
+#include <QWindow>
+#endif
+
 class QLineEdit;
 class QToolBar;
 class QTimer;
@@ -94,11 +100,11 @@ private:
     const Okular::PageTransition defaultTransition(int) const;
     QRect routeMouseDrawingEvent(QMouseEvent *);
     void startAutoChangeTimer();
-    void recalcGeometry();
-    void repositionContent();
+    /** @returns Configure -> Presentation -> Preferred screen */
+    QScreen *defaultScreen() const;
     void requestPixmaps();
-    void setScreen(int);
-    void applyNewScreenSize(const QSize oldSize);
+    /** @param newScreen must be valid. */
+    void setScreen(const QScreen *newScreen);
     void inhibitPowerManagement();
     void allowPowerManagement();
     void showTopBar(bool);
@@ -116,7 +122,6 @@ private:
     bool m_handCursor;
     SmoothPathEngine *m_drawingEngine;
     QRect m_drawingRect;
-    int m_screen;
     uint m_screenInhibitCookie;
     int m_sleepInhibitFd;
 
@@ -153,6 +158,20 @@ private:
     bool m_goToPreviousPageOnRelease;
     bool m_goToNextPageOnRelease;
 
+    /** TODO Qt6: Just use QWidget::screen() instead of this. */
+    static inline QScreen *oldQt_screenOf(const QWidget *widget)
+    {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+        return widget->screen();
+#else
+        if (widget->window() && widget->window()->windowHandle() && widget->window()->windowHandle()->screen()) {
+            return widget->window()->windowHandle()->screen();
+        } else {
+            return QApplication::primaryScreen();
+        }
+#endif
+    }
+
 private Q_SLOTS:
     void slotNextPage();
     void slotPrevPage();
@@ -163,7 +182,6 @@ private Q_SLOTS:
     void slotDelayedEvents();
     void slotPageChanged();
     void clearDrawings();
-    void screenResized(int);
     void chooseScreen(QAction *);
     void toggleBlackScreenMode(bool);
     void slotProcessMovieAction(const Okular::MovieAction *action);

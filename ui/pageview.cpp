@@ -4734,9 +4734,6 @@ void PageView::slotAutoScrollDown()
 
 void PageView::slotScrollUp(int nSteps)
 {
-    if (d->scroller->state() == QScroller::Scrolling)
-        return;
-
     // if in single page mode and at the top of the screen, go to \ page
     if (Okular::Settings::viewContinuous() || verticalScrollBar()->value() > verticalScrollBar()->minimum()) {
         if (nSteps) {
@@ -4759,9 +4756,6 @@ void PageView::slotScrollUp(int nSteps)
 
 void PageView::slotScrollDown(int nSteps)
 {
-    if (d->scroller->state() == QScroller::Scrolling)
-        return;
-
     // if in single page mode and at the bottom of the screen, go to next page
     if (Okular::Settings::viewContinuous() || verticalScrollBar()->value() < verticalScrollBar()->maximum()) {
         if (nSteps) {

@@ -58,7 +58,7 @@
 #include <KLocalizedString>
 #include <KMacroExpander>
 #include <KMessageBox>
-#include <KMimeTypeTrader>
+#include <KApplicationTrader>
 #include <KPluginMetaData>
 #include <KProcess>
 #include <KRun>
@@ -3902,7 +3902,7 @@ void Document::processAction(const Action *action)
             }
         }
 
-        KService::Ptr ptr = KMimeTypeTrader::self()->preferredService(mime.name(), QStringLiteral("Application"));
+        KService::Ptr ptr = KApplicationTrader::preferredService(mime.name());
         if (ptr) {
             QList<QUrl> lst;
             lst.append(url);

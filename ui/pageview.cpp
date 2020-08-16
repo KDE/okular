@@ -4360,7 +4360,7 @@ static void slotRequestPreloadPixmap(Okular::DocumentObserver *observer, const P
 void PageView::slotRequestVisiblePixmaps(int newValue)
 {
     // if requests are blocked (because raised by an unwanted event), exit
-    if (d->blockPixmapsRequest || d->scroller->state() == QScroller::Scrolling)
+    if (d->blockPixmapsRequest)
         return;
 
     // precalc view limits for intersecting with page coords inside the loop
@@ -4503,7 +4503,8 @@ void PageView::slotRequestVisiblePixmaps(int newValue)
         newViewport.rePos.normalizedX = focusedX;
         newViewport.rePos.normalizedY = focusedY;
         // set the viewport to other observers
-        d->document->setViewport(newViewport, this);
+        // do not update history if the viewport is autoscrolling
+        d->document->setViewportWithHistory(newViewport, this, false, d->scroller->state() == QScroller::Scrolling);
     }
     d->document->setVisiblePageRects(visibleRects, this);
 }

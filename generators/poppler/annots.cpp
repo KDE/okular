@@ -258,7 +258,7 @@ void PopplerAnnotationProxy::notifyRemoval(Okular::Annotation *okl_ann, int page
 }
 // END PopplerAnnotationProxy implementation
 
-static Okular::Annotation::LineStyle okularLineStyleFromAnnotationLineStyle(Poppler::Annotation::LineStyle s)
+static Okular::Annotation::LineStyle popplerToOkular(Poppler::Annotation::LineStyle s)
 {
     switch (s) {
     case Poppler::Annotation::Solid:
@@ -271,26 +271,28 @@ static Okular::Annotation::LineStyle okularLineStyleFromAnnotationLineStyle(Popp
         return Okular::Annotation::Inset;
     case Poppler::Annotation::Underline:
         return Okular::Annotation::Underline;
+    default:
+        qWarning() << Q_FUNC_INFO << "unknown value" << s;
     }
 
-    Q_UNREACHABLE();
     return Okular::Annotation::Solid;
 }
 
-static Okular::Annotation::LineEffect okularLineEffectFromAnnotationLineEffect(Poppler::Annotation::LineEffect e)
+static Okular::Annotation::LineEffect popplerToOkular(Poppler::Annotation::LineEffect e)
 {
     switch (e) {
     case Poppler::Annotation::NoEffect:
         return Okular::Annotation::NoEffect;
     case Poppler::Annotation::Cloudy:
         return Okular::Annotation::Cloudy;
+    default:
+        qWarning() << Q_FUNC_INFO << "unknown value" << e;
     }
 
-    Q_UNREACHABLE();
     return Okular::Annotation::NoEffect;
 }
 
-static Okular::Annotation::RevisionScope okularRevisionScopeFromPopplerRevisionScope(Poppler::Annotation::RevScope s)
+static Okular::Annotation::RevisionScope popplerToOkular(Poppler::Annotation::RevScope s)
 {
     switch (s) {
     case Poppler::Annotation::Root:
@@ -301,13 +303,14 @@ static Okular::Annotation::RevisionScope okularRevisionScopeFromPopplerRevisionS
         return Okular::Annotation::Group;
     case Poppler::Annotation::Delete:
         return Okular::Annotation::Delete;
+    default:
+        qWarning() << Q_FUNC_INFO << "unknown value" << s;
     }
 
-    Q_UNREACHABLE();
     return Okular::Annotation::Reply;
 }
 
-static Okular::Annotation::RevisionType okularRevisionTypeFromPopplerRevisionType(Poppler::Annotation::RevType t)
+static Okular::Annotation::RevisionType popplerToOkular(Poppler::Annotation::RevType t)
 {
     switch (t) {
     case Poppler::Annotation::None:
@@ -324,10 +327,62 @@ static Okular::Annotation::RevisionType okularRevisionTypeFromPopplerRevisionTyp
         return Okular::Annotation::Cancelled;
     case Poppler::Annotation::Completed:
         return Okular::Annotation::Completed;
+    default:
+        qWarning() << Q_FUNC_INFO << "unknown value" << t;
     }
 
-    Q_UNREACHABLE();
     return Okular::Annotation::None;
+}
+
+static Okular::TextAnnotation::TextType popplerToOkular(Poppler::TextAnnotation::TextType ptt)
+{
+    switch (ptt) {
+    case Poppler::TextAnnotation::Linked:
+        return Okular::TextAnnotation::Linked;
+    case Poppler::TextAnnotation::InPlace:
+        return Okular::TextAnnotation::Linked;
+    default:
+        qWarning() << Q_FUNC_INFO << "unknown value" << ptt;
+    }
+
+    return Okular::TextAnnotation::Linked;
+}
+
+static Okular::TextAnnotation::InplaceIntent popplerToOkular(Poppler::TextAnnotation::InplaceIntent pii)
+{
+    switch (pii) {
+    case Poppler::TextAnnotation::Unknown:
+        return Okular::TextAnnotation::Unknown;
+    case Poppler::TextAnnotation::Callout:
+        return Okular::TextAnnotation::Callout;
+    case Poppler::TextAnnotation::TypeWriter:
+        return Okular::TextAnnotation::TypeWriter;
+    default:
+        qWarning() << Q_FUNC_INFO << "unknown value" << pii;
+    }
+
+    return Okular::TextAnnotation::Unknown;
+}
+
+static Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::TextAnnotation *popplerAnnotation)
+{
+    Okular::TextAnnotation *oTextAnn = new Okular::TextAnnotation();
+
+    oTextAnn->setTextType(popplerToOkular(popplerAnnotation->textType()));
+    oTextAnn->setTextIcon(popplerAnnotation->textIcon());
+    oTextAnn->setTextFont(popplerAnnotation->textFont());
+#ifdef HAVE_POPPLER_0_69
+    oTextAnn->setTextColor(popplerAnnotation->textColor());
+#endif
+    // this works because we use the same 0:left, 1:center, 2:right meaning both in poppler and okular
+    oTextAnn->setInplaceAlignment(popplerAnnotation->inplaceAlign());
+    oTextAnn->setInplaceIntent(popplerToOkular(popplerAnnotation->inplaceIntent()));
+    for (int i = 0; i < 3; ++i) {
+        const QPointF p = popplerAnnotation->calloutPoint(i);
+        oTextAnn->setInplaceCallout({p.x(), p.y()}, i);
+    }
+
+    return oTextAnn;
 }
 
 Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *popplerAnnotation, const Poppler::Page &popplerPage, bool *doDelete)
@@ -397,7 +452,13 @@ Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *p
 
         break;
     }
-    case Poppler::Annotation::AText:
+    case Poppler::Annotation::AText: {
+        externallyDrawn = true;
+        tieToOkularAnn = true;
+        *doDelete = false;
+        okularAnnotation = createAnnotationFromPopplerAnnotation(static_cast<Poppler::TextAnnotation *>(popplerAnnotation));
+        break;
+    }
     case Poppler::Annotation::ALine:
     case Poppler::Annotation::AGeom:
     case Poppler::Annotation::AHighlight:
@@ -466,7 +527,7 @@ Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *p
         okularStyle.setColor(popplerStyle.color());
         okularStyle.setOpacity(popplerStyle.opacity());
         okularStyle.setWidth(popplerStyle.width());
-        okularStyle.setLineStyle(okularLineStyleFromAnnotationLineStyle(popplerStyle.lineStyle()));
+        okularStyle.setLineStyle(popplerToOkular(popplerStyle.lineStyle()));
         okularStyle.setXCorners(popplerStyle.xCorners());
         okularStyle.setYCorners(popplerStyle.yCorners());
         const QVector<double> &dashArray = popplerStyle.dashArray();
@@ -474,7 +535,7 @@ Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *p
             okularStyle.setMarks(dashArray[0]);
         if (dashArray.size() > 1)
             okularStyle.setSpaces(dashArray[1]);
-        okularStyle.setLineEffect(okularLineEffectFromAnnotationLineEffect(popplerStyle.lineEffect()));
+        okularStyle.setLineEffect(popplerToOkular(popplerStyle.lineEffect()));
         okularStyle.setEffectIntensity(popplerStyle.effectIntensity());
 
         // Convert the poppler annotation popup to Okular annotation window
@@ -498,8 +559,8 @@ Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *p
             bool deletePopplerRevision;
             Okular::Annotation::Revision okularRevision;
             okularRevision.setAnnotation(createAnnotationFromPopplerAnnotation(popplerRevision, popplerPage, &deletePopplerRevision));
-            okularRevision.setScope(okularRevisionScopeFromPopplerRevisionScope(popplerRevision->revisionScope()));
-            okularRevision.setType(okularRevisionTypeFromPopplerRevisionType(popplerRevision->revisionType()));
+            okularRevision.setScope(popplerToOkular(popplerRevision->revisionScope()));
+            okularRevision.setType(popplerToOkular(popplerRevision->revisionType()));
             okularRevisions << okularRevision;
 
             if (deletePopplerRevision) {

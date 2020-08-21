@@ -827,11 +827,13 @@ public:
 
     /**
      * Sets the inplace @p alignment of the text annotation.
+     * 0:left, 1:center, 2:right
      */
     void setInplaceAlignment(int alignment);
 
     /**
      * Returns the inplace alignment of the text annotation.
+     * 0:left, 1:center, 2:right
      */
     int inplaceAlignment() const;
 

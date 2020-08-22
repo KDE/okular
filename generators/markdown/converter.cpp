@@ -9,8 +9,6 @@
 
 #include "converter.h"
 
-#include "generator_md.h"
-
 #include <KLocalizedString>
 
 #include <QDir>
@@ -41,10 +39,16 @@ extern "C" {
 #define MKD_AUTOLINK 0
 #endif
 
+#define PAGE_WIDTH 980
+#define PAGE_HEIGHT 1307
+#define PAGE_MARGIN 45
+#define CONTENT_WIDTH (PAGE_WIDTH - 2 * PAGE_MARGIN)
+
 using namespace Markdown;
 
 Converter::Converter()
     : m_markdownFile(nullptr)
+    , m_isFancyPantsEnabled(true)
 {
 }
 
@@ -96,7 +100,7 @@ QTextDocument *Converter::convertOpenFile()
     MMIOT *markdownHandle = mkd_in(m_markdownFile, 0);
 
     int flags = MKD_FENCEDCODE | MKD_GITHUBTAGS | MKD_AUTOLINK | MKD_TOC | MKD_IDANCHOR;
-    if (!MarkdownGenerator::isFancyPantsEnabled())
+    if (!m_isFancyPantsEnabled)
         flags |= MKD_NOPANTS;
     if (!mkd_compile(markdownHandle, flags)) {
         emit error(i18n("Failed to compile the Markdown document."), -1);
@@ -109,14 +113,15 @@ QTextDocument *Converter::convertOpenFile()
     const QString html = QString::fromUtf8(htmlDocument, size);
 
     QTextDocument *textDocument = new QTextDocument;
-    textDocument->setPageSize(QSizeF(980, 1307));
+    textDocument->setPageSize(QSizeF(PAGE_WIDTH, PAGE_HEIGHT));
     textDocument->setHtml(html);
-    textDocument->setDefaultFont(generator()->generalSettings()->font());
+    if (generator())
+        textDocument->setDefaultFont(generator()->generalSettings()->font());
 
     mkd_cleanup(markdownHandle);
 
     QTextFrameFormat frameFormat;
-    frameFormat.setMargin(45);
+    frameFormat.setMargin(PAGE_MARGIN);
 
     QTextFrame *rootFrame = textDocument->rootFrame();
     rootFrame->setFrameFormat(frameFormat);
@@ -189,16 +194,13 @@ void Converter::convertImages(const QTextBlock &parent, const QDir &dir, QTextDo
 
                 QTextImageFormat format;
 
+                const qreal specifiedHeight = textCharFormat.toImageFormat().height();
+                const qreal specifiedWidth = textCharFormat.toImageFormat().width();
+
                 format.setName(QDir::cleanPath(dir.absoluteFilePath(textCharFormat.toImageFormat().name())));
                 const QImage img = QImage(format.name());
 
-                if (img.width() > 890) {
-                    format.setWidth(890);
-                    format.setHeight(img.height() * 890. / img.width());
-                } else {
-                    format.setWidth(img.width());
-                    format.setHeight(img.height());
-                }
+                setImageSize(format, specifiedWidth, specifiedHeight, img.width(), img.height());
 
                 QTextCursor cursor(textDocument);
                 cursor.setPosition(textFragment.position(), QTextCursor::MoveAnchor);
@@ -208,4 +210,31 @@ void Converter::convertImages(const QTextBlock &parent, const QDir &dir, QTextDo
             }
         }
     }
+}
+
+void Converter::setImageSize(QTextImageFormat &format, const qreal specifiedWidth, const qreal specifiedHeight, const qreal originalWidth, const qreal originalHeight)
+{
+    qreal width = 0;
+    qreal height = 0;
+
+    const bool hasSpecifiedSize = specifiedHeight > 0 || specifiedWidth > 0;
+    if (hasSpecifiedSize) {
+        width = specifiedWidth;
+        height = specifiedHeight;
+        if (width == 0 && originalHeight > 0) {
+            width = originalWidth * height / originalHeight;
+        } else if (height == 0 && originalWidth > 0) {
+            height = originalHeight * width / originalWidth;
+        }
+    } else {
+        width = originalWidth;
+        height = originalHeight;
+    }
+
+    if (width > CONTENT_WIDTH) {
+        height = height * CONTENT_WIDTH / width;
+        width = CONTENT_WIDTH;
+    }
+    format.setWidth(width);
+    format.setHeight(height);
 }

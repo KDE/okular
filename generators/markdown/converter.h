@@ -32,6 +32,15 @@ public:
 
     void convertAgain();
 
+    void setFancyPantsEnabled(bool b)
+    {
+        m_isFancyPantsEnabled = b;
+    }
+    bool isFancyPantsEnabled() const
+    {
+        return m_isFancyPantsEnabled;
+    }
+
     QTextDocument *convertOpenFile();
 
 private:
@@ -39,9 +48,11 @@ private:
     void extractLinks(const QTextBlock &parent, QHash<QString, QTextFragment> &internalLinks, QHash<QString, QTextBlock> &documentAnchors);
     void convertImages(QTextFrame *parent, const QDir &dir, QTextDocument *textDocument);
     void convertImages(const QTextBlock &parent, const QDir &dir, QTextDocument *textDocument);
+    void setImageSize(QTextImageFormat &format, const qreal specifiedWidth, const qreal specifiedHeight, const qreal originalWidth, const qreal originalHeight);
 
     FILE *m_markdownFile;
     QDir m_fileDir;
+    bool m_isFancyPantsEnabled;
 };
 
 }

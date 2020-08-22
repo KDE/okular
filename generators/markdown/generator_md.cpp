@@ -20,27 +20,27 @@
 
 OKULAR_EXPORT_PLUGIN(MarkdownGenerator, "libokularGenerator_md.json")
 
-bool MarkdownGenerator::s_isFancyPantsEnabled = true;
-bool MarkdownGenerator::s_wasFancyPantsEnabled = true;
-
 MarkdownGenerator::MarkdownGenerator(QObject *parent, const QVariantList &args)
     : Okular::TextDocumentGenerator(new Markdown::Converter, QStringLiteral("okular_markdown_generator_settings"), parent, args)
 {
     Okular::TextDocumentSettings *mdSettings = generalSettings();
 
-    mdSettings->addItemBool(QStringLiteral("SmartyPants"), s_isFancyPantsEnabled, true);
+    mdSettings->addItemBool(QStringLiteral("SmartyPants"), m_isFancyPantsConfigEnabled, true);
     mdSettings->load();
-    s_wasFancyPantsEnabled = s_isFancyPantsEnabled;
+    m_wasFancyPantsConfigEnabled = m_isFancyPantsConfigEnabled;
+    Markdown::Converter *c = static_cast<Markdown::Converter *>(converter());
+    c->setFancyPantsEnabled(m_isFancyPantsConfigEnabled);
 }
 
 bool MarkdownGenerator::reparseConfig()
 {
     const bool textDocumentGeneratorChangedConfig = Okular::TextDocumentGenerator::reparseConfig();
 
-    if (s_wasFancyPantsEnabled != s_isFancyPantsEnabled) {
-        s_wasFancyPantsEnabled = s_isFancyPantsEnabled;
+    if (m_wasFancyPantsConfigEnabled != m_isFancyPantsConfigEnabled) {
+        m_wasFancyPantsConfigEnabled = m_isFancyPantsConfigEnabled;
 
         Markdown::Converter *c = static_cast<Markdown::Converter *>(converter());
+        c->setFancyPantsEnabled(m_isFancyPantsConfigEnabled);
         c->convertAgain();
         setTextDocument(c->document());
 

@@ -24,14 +24,9 @@ public:
     bool reparseConfig() override;
     void addPages(KConfigDialog *dlg) override;
 
-    static bool isFancyPantsEnabled()
-    {
-        return s_isFancyPantsEnabled;
-    }
-
 private:
-    static bool s_isFancyPantsEnabled;
-    static bool s_wasFancyPantsEnabled;
+    bool m_isFancyPantsConfigEnabled = true;
+    bool m_wasFancyPantsConfigEnabled = true;
 };
 
 #endif

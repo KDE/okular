@@ -719,7 +719,7 @@ PageViewAnnotator::PageViewAnnotator(PageView *parent, Okular::Document *storage
     , m_pageView(parent)
     , m_actionHandler(nullptr)
     , m_engine(nullptr)
-    , m_toolsDefinition(nullptr)
+    , m_builtinToolsDefinition(nullptr)
     , m_quickToolsDefinition(nullptr)
     , m_continuousMode(true)
     , m_constrainRatioAndAngle(false)
@@ -732,9 +732,9 @@ PageViewAnnotator::PageViewAnnotator(PageView *parent, Okular::Document *storage
 void PageViewAnnotator::reparseConfig()
 {
     // Read tool list from configuration. It's a list of XML <tool></tool> elements
-    if (!m_toolsDefinition)
-        m_toolsDefinition = new AnnotationTools();
-    m_toolsDefinition->setTools(Okular::Settings::annotationTools());
+    if (!m_builtinToolsDefinition)
+        m_builtinToolsDefinition = new AnnotationTools();
+    m_builtinToolsDefinition->setTools(Okular::Settings::builtinAnnotationTools());
 
     if (!m_quickToolsDefinition)
         m_quickToolsDefinition = new AnnotationTools();
@@ -972,7 +972,7 @@ void PageViewAnnotator::selectTool(int toolID)
     }
 
     // for the selected tool create the Engine
-    QDomElement toolElement = m_toolsDefinition->tool(toolID);
+    QDomElement toolElement = m_builtinToolsDefinition->tool(toolID);
     if (!toolElement.isNull()) {
         // parse tool properties
         QDomElement engineElement = toolElement.firstChildElement(QStringLiteral("engine"));
@@ -1268,7 +1268,7 @@ void PageViewAnnotator::setTextToolsEnabled(bool enabled)
 
 void PageViewAnnotator::saveAnnotationTools()
 {
-    Okular::Settings::setAnnotationTools(m_toolsDefinition->toStringList());
+    Okular::Settings::setBuiltinAnnotationTools(m_builtinToolsDefinition->toStringList());
     Okular::Settings::setQuickAnnotationTools(m_quickToolsDefinition->toStringList());
     Okular::Settings::self()->save();
 }
@@ -1278,8 +1278,8 @@ int PageViewAnnotator::setQuickTool(int favToolID)
     int toolId = -1;
     QDomElement favToolElement = m_quickToolsDefinition->tool(favToolID);
     if (!favToolElement.isNull()) {
-        toolId = m_toolsDefinition->findToolId(favToolElement.attribute(QStringLiteral("type")));
-        if (m_toolsDefinition->updateTool(favToolElement, toolId))
+        toolId = m_builtinToolsDefinition->findToolId(favToolElement.attribute(QStringLiteral("type")));
+        if (m_builtinToolsDefinition->updateTool(favToolElement, toolId))
             saveAnnotationTools();
     }
     return toolId;
@@ -1287,7 +1287,7 @@ int PageViewAnnotator::setQuickTool(int favToolID)
 
 QDomElement PageViewAnnotator::builtinTool(int toolID)
 {
-    return m_toolsDefinition->tool(toolID);
+    return m_builtinToolsDefinition->tool(toolID);
 }
 
 QDomElement PageViewAnnotator::quickTool(int toolID)
@@ -1297,7 +1297,7 @@ QDomElement PageViewAnnotator::quickTool(int toolID)
 
 QDomElement PageViewAnnotator::currentEngineElement()
 {
-    return m_toolsDefinition->tool(m_lastToolID).firstChildElement(QStringLiteral("engine"));
+    return m_builtinToolsDefinition->tool(m_lastToolID).firstChildElement(QStringLiteral("engine"));
 }
 
 QDomElement PageViewAnnotator::currentAnnotationElement()
@@ -1354,7 +1354,7 @@ void PageViewAnnotator::setAnnotationFont(const QFont &font)
 
 void PageViewAnnotator::addToQuickAnnotations()
 {
-    QDomElement sourceToolElement = m_toolsDefinition->tool(m_lastToolID);
+    QDomElement sourceToolElement = m_builtinToolsDefinition->tool(m_lastToolID);
     if (sourceToolElement.isNull())
         return;
 
@@ -1374,7 +1374,7 @@ void PageViewAnnotator::addToQuickAnnotations()
 
 void PageViewAnnotator::slotAdvancedSettings()
 {
-    QDomElement toolElement = m_toolsDefinition->tool(m_lastToolID);
+    QDomElement toolElement = m_builtinToolsDefinition->tool(m_lastToolID);
 
     EditAnnotToolDialog t(nullptr, toolElement, true);
     if (t.exec() != QDialog::Accepted)
@@ -1382,7 +1382,7 @@ void PageViewAnnotator::slotAdvancedSettings()
 
     QDomElement toolElementUpdated = t.toolXml().documentElement();
     int toolID = toolElement.attribute(QStringLiteral("id")).toInt();
-    m_toolsDefinition->updateTool(toolElementUpdated, toolID);
+    m_builtinToolsDefinition->updateTool(toolElementUpdated, toolID);
     saveAnnotationTools();
     selectTool(m_lastToolID);
 }

@@ -44,12 +44,12 @@ class PageView;
  * to this class that performs a rough visual representation of what the
  * annotation will become when finished.
  *
- * m_toolsDefinition is a AnnotationTools object that wraps a DOM object that
+ * m_builtinToolsDefinition is a AnnotationTools object that wraps a DOM object that
  * contains Annotations/Engine association for the items placed in the toolbar.
  * The XML is parsed after selecting a toolbar item, in which case an Ann is
  * initialized with the values in the XML and an engine is created to handle
- * that annotation. m_toolsDefinition is created in reparseConfig according to
- * user configuration. m_toolsDefinition is updated (and saved to disk) (1) each
+ * that annotation. m_builtinToolsDefinition is created in reparseConfig according to
+ * user configuration. m_builtinToolsDefinition is updated (and saved to disk) (1) each
  * time a property of an annotation (color, font, etc) is changed by the user,
  * and (2) each time a "quick annotation" is selected, in which case the properties
  * of the selected quick annotation are written over those of the corresponding
@@ -149,7 +149,7 @@ private:
     PageView *m_pageView;
     AnnotationActionHandler *m_actionHandler;
     AnnotatorEngine *m_engine;
-    AnnotationTools *m_toolsDefinition;
+    AnnotationTools *m_builtinToolsDefinition;
     AnnotationTools *m_quickToolsDefinition;
     bool m_continuousMode;
     bool m_constrainRatioAndAngle;

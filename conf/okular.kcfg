@@ -79,9 +79,9 @@
     </code>
     <default code="true">drawingTools</default>
   </entry>
-  <entry key="AnnotationTools" type="StringList">
+  <entry key="BuiltinAnnotationTools" type="StringList">
     <code>
-      QStringList annotationTools;
+      QStringList builtinAnnotationTools;
       // load the default tool list from the 'xml tools definition' file
       QFile infoFile( QStandardPaths::locate(QStandardPaths::GenericDataLocation, "okular/tools.xml") );
       if ( infoFile.exists() &amp;&amp; infoFile.open( QIODevice::ReadOnly ) )
@@ -90,7 +90,7 @@
           if ( doc.setContent( &amp;infoFile ) )
           {
               QDomElement toolsDefinition = doc.elementsByTagName("annotatingTools").item( 0 ).toElement();
-               // create the annotationTools list from the XML dom tree
+               // create the builtinAnnotationTools list from the XML dom tree
               QDomNode toolDescription = toolsDefinition.firstChild();
               while ( toolDescription.isElement() )
               {
@@ -100,7 +100,7 @@
                       QDomDocument temp;
                       temp.appendChild( temp.importNode( toolElement, true) );
                       // add each &lt;tool&gt;...&lt;/tool&gt; as XML string
-                      annotationTools &lt;&lt; temp.toString(-1);
+                      builtinAnnotationTools &lt;&lt; temp.toString(-1);
                   }
                   toolDescription = toolDescription.nextSibling();
               }
@@ -115,7 +115,7 @@
           qWarning() &lt;&lt; "Unable to open AnnotatingTools XML definition";
       }
     </code>
-    <default code="true">annotationTools</default>
+    <default code="true">builtinAnnotationTools</default>
   </entry>
   <entry key="QuickAnnotationTools" type="StringList">
     <code>

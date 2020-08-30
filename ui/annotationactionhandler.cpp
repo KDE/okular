@@ -83,7 +83,7 @@ public:
      * matches a default stamp, any existing stamp annotation action is removed.
      */
     void maybeUpdateCustomStampAction(const QString &stampIconName);
-    void parseTool(int toolID);
+    void parseTool(int toolId);
 
     void updateConfigActions(const QString &annotType = QLatin1String(""));
     void populateQuickAnnotations();
@@ -92,9 +92,9 @@ public:
     const QIcon widthIcon(double width);
     const QIcon stampIcon(const QString &stampIconName);
 
-    void selectTool(int toolID);
+    void selectTool(int toolId);
     void slotStampToolSelected(const QString &stamp);
-    void slotQuickToolSelected(int favToolID);
+    void slotQuickToolSelected(int favToolId);
     void slotSetColor(AnnotationColor colorType, const QColor &color = QColor());
     void slotSelectAnnotationFont();
     void slotToolBarVisibilityChanged(bool checked);
@@ -196,14 +196,14 @@ void AnnotationActionHandlerPrivate::maybeUpdateCustomStampAction(const QString 
     }
 }
 
-void AnnotationActionHandlerPrivate::parseTool(int toolID)
+void AnnotationActionHandlerPrivate::parseTool(int toolId)
 {
-    if (toolID == -1) {
+    if (toolId == -1) {
         updateConfigActions();
         return;
     }
 
-    QDomElement toolElement = annotator->builtinTool(toolID);
+    QDomElement toolElement = annotator->builtinTool(toolId);
     const QString annotType = toolElement.attribute(QStringLiteral("type"));
     QDomElement engineElement = toolElement.firstChildElement(QStringLiteral("engine"));
     QDomElement annElement = engineElement.firstChildElement(QStringLiteral("annotation"));
@@ -421,11 +421,11 @@ const QIcon AnnotationActionHandlerPrivate::stampIcon(const QString &stampIconNa
         return QIcon::fromTheme(QStringLiteral("tag"));
 }
 
-void AnnotationActionHandlerPrivate::selectTool(int toolID)
+void AnnotationActionHandlerPrivate::selectTool(int toolId)
 {
-    selectedTool = toolID;
-    annotator->selectTool(toolID);
-    parseTool(toolID);
+    selectedTool = toolId;
+    annotator->selectTool(toolId);
+    parseTool(toolId);
 }
 
 void AnnotationActionHandlerPrivate::slotStampToolSelected(const QString &stamp)
@@ -435,17 +435,17 @@ void AnnotationActionHandlerPrivate::slotStampToolSelected(const QString &stamp)
     annotator->selectStampTool(stamp); // triggers a reparsing thus calling parseTool
 }
 
-void AnnotationActionHandlerPrivate::slotQuickToolSelected(int favToolID)
+void AnnotationActionHandlerPrivate::slotQuickToolSelected(int favToolId)
 {
-    int toolID = annotator->setQuickTool(favToolID); // always triggers an unuseful reparsing
-    if (toolID == -1) {
-        qWarning("Corrupted configuration for quick annotation tool with id: %d", favToolID);
+    int toolId = annotator->setQuickTool(favToolId); // always triggers an unuseful reparsing
+    if (toolId == -1) {
+        qWarning("Corrupted configuration for quick annotation tool with id: %d", favToolId);
         return;
     }
-    int indexOfActionInGroup = toolID - 1;
-    if (toolID == PageViewAnnotator::STAMP_TOOL_ID) {
+    int indexOfActionInGroup = toolId - 1;
+    if (toolId == PageViewAnnotator::STAMP_TOOL_ID) {
         // if the quick tool is a stamp we need to find its corresponding built-in tool action and select it
-        QDomElement favToolElement = annotator->quickTool(favToolID);
+        QDomElement favToolElement = annotator->quickTool(favToolId);
         QDomElement engineElement = favToolElement.firstChildElement(QStringLiteral("engine"));
         QDomElement annotationElement = engineElement.firstChildElement(QStringLiteral("annotation"));
         QString stampIconName = annotationElement.attribute(QStringLiteral("icon"));
@@ -465,7 +465,7 @@ void AnnotationActionHandlerPrivate::slotQuickToolSelected(int favToolID)
         //                          when new tool if different from the selected one
         favToolAction->trigger();
     } else {
-        selectTool(toolID);
+        selectTool(toolId);
     }
     aShowToolBar->setChecked(true);
 }

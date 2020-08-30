@@ -103,18 +103,18 @@ public:
     void setTextToolsEnabled(bool enabled);
 
     // selects the active tool
-    void selectTool(int toolID);
+    void selectTool(int toolId);
     // selects a stamp tool and sets the stamp symbol
     void selectStampTool(const QString &stampSymbol);
     // makes a quick annotation the active tool
-    int setQuickTool(int toolID);
+    int setQuickTool(int toolId);
     // deselects the tool and uncheck all the annotation actions
     void detachAnnotation();
 
     // returns the builtin annotation tool with the given Id
-    QDomElement builtinTool(int toolID);
+    QDomElement builtinTool(int toolId);
     // returns the quick annotation tool with the given Id
-    QDomElement quickTool(int toolID);
+    QDomElement quickTool(int toolId);
 
     // methods that write the properties
     void setAnnotationWidth(double width);
@@ -155,7 +155,7 @@ private:
     bool m_constrainRatioAndAngle;
 
     // creation related variables
-    int m_lastToolID;
+    int m_lastToolId;
     QRect m_lastDrawnRect;
     PageViewItem *m_lockedItem;
     // selected annotation name

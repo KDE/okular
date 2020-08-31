@@ -82,9 +82,9 @@
   </mimetypes>
   <url type="homepage">https://okular.kde.org</url>
   <releases>
+    <release version="1.11.1" date="2020-09-03"/>
     <release version="1.11.0" date="2020-08-13"/>
     <release version="1.10.3" date="2020-07-09"/>
     <release version="1.10.2" date="2020-06-11"/>
-    <release version="1.10.1" date="2020-05-14"/>
   </releases>
 </component>

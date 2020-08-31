@@ -488,6 +488,10 @@ void AnnotationActionHandlerPrivate::slotStampToolSelected(const QString &stamp)
 void AnnotationActionHandlerPrivate::slotQuickToolSelected(int favToolID)
 {
     int toolID = annotator->setQuickTool(favToolID); // always triggers an unuseful reparsing
+    if (toolID == -1) {
+        qWarning("Corrupted configuration for quick annotation tool with id: %d", favToolID);
+        return;
+    }
     int indexOfActionInGroup = toolID - 1;
     if (toolID == PageViewAnnotator::STAMP_TOOL_ID) {
         // if the quick tool is a stamp we need to find its corresponding built-in tool action and select it

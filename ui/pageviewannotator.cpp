@@ -693,14 +693,21 @@ public:
     int findToolId(const QString &type)
     {
         int toolID = -1;
+        if (type.isEmpty()) {
+            return -1;
+        }
         // FIXME: search from left. currently searching from right side as a workaround to avoid matching
         // straight line tools to the arrow tool, which is also of type straight-line
         QDomElement toolElement = m_toolsDefinition.documentElement().lastChildElement();
         while (!toolElement.isNull() && toolElement.attribute(QStringLiteral("type")) != type) {
             toolElement = toolElement.previousSiblingElement();
         }
-        if (!toolElement.isNull()) {
-            toolID = toolElement.attribute(QStringLiteral("id")).toInt();
+        if (!toolElement.isNull() && toolElement.hasAttribute(QStringLiteral("id"))) {
+            bool ok;
+            toolID = toolElement.attribute(QStringLiteral("id")).toInt(&ok);
+            if (!ok) {
+                return -1;
+            }
         }
         return toolID;
     }
@@ -1279,6 +1286,9 @@ int PageViewAnnotator::setQuickTool(int favToolID)
     QDomElement favToolElement = m_quickToolsDefinition->tool(favToolID);
     if (!favToolElement.isNull()) {
         toolId = m_builtinToolsDefinition->findToolId(favToolElement.attribute(QStringLiteral("type")));
+        if (toolId == -1) {
+            return -1;
+        }
         if (m_builtinToolsDefinition->updateTool(favToolElement, toolId))
             saveAnnotationTools();
     }

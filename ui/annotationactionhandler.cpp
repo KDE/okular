@@ -89,10 +89,7 @@ public:
     void populateQuickAnnotations();
     KSelectAction *colorPickerAction(AnnotationColor colorType);
 
-    const QIcon colorIcon(const QColor &color);
     const QIcon widthIcon(double width);
-    const QIcon colorPickerIcon(const QString &iconName, const QColor &color);
-    const QIcon opacityIcon(double opacity);
     const QIcon stampIcon(const QString &stampIconName);
 
     void selectTool(int toolID);
@@ -154,7 +151,7 @@ const QList<QPair<QString, QColor>> AnnotationActionHandlerPrivate::defaultColor
 
 const QList<double> AnnotationActionHandlerPrivate::widthStandardValues = {1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5};
 
-const QList<double> AnnotationActionHandlerPrivate::opacityStandardValues = {10, 20, 30, 40, 50, 60, 70, 80, 90, 100};
+const QList<double> AnnotationActionHandlerPrivate::opacityStandardValues = {0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0};
 
 QAction *AnnotationActionHandlerPrivate::selectActionItem(KSelectAction *aList, QAction *aCustomCurrent, double value, const QList<double> &defaultValues, const QIcon &icon, const QString &label)
 {
@@ -241,8 +238,8 @@ void AnnotationActionHandlerPrivate::parseTool(int toolID)
 
     // if the opacity value is not a default one, insert a new action in the opacity list
     if (annElement.hasAttribute(QStringLiteral("opacity"))) {
-        double opacity = 100 * annElement.attribute(QStringLiteral("opacity")).toDouble();
-        aCustomOpacity = selectActionItem(aOpacity, aCustomOpacity, opacity, opacityStandardValues, opacityIcon(opacity), i18nc("@item:inlistbox", "%1\%", opacity));
+        double opacity = annElement.attribute(QStringLiteral("opacity")).toDouble();
+        aCustomOpacity = selectActionItem(aOpacity, aCustomOpacity, opacity, opacityStandardValues, GuiUtils::createOpacityIcon(opacity), i18nc("@item:inlistbox", "%1\%", opacity * 100));
     } else {
         aOpacity->setCurrentItem(opacityStandardValues.size() - 1); // 100 %
     }
@@ -269,11 +266,11 @@ void AnnotationActionHandlerPrivate::updateConfigActions(const QString &annotTyp
     const bool isStamp = annotType == QStringLiteral("stamp");
 
     if (isTypewriter) {
-        aColor->setIcon(colorPickerIcon(QStringLiteral("format-text-color"), currentColor));
+        aColor->setIcon(GuiUtils::createColorIcon({currentColor}, QIcon::fromTheme(QStringLiteral("format-text-color"))));
     } else {
-        aColor->setIcon(colorPickerIcon(QStringLiteral("format-stroke-color"), currentColor));
+        aColor->setIcon(GuiUtils::createColorIcon({currentColor}, QIcon::fromTheme(QStringLiteral("format-stroke-color"))));
     }
-    aInnerColor->setIcon(colorPickerIcon(QStringLiteral("format-fill-color"), currentInnerColor));
+    aInnerColor->setIcon(GuiUtils::createColorIcon({currentInnerColor}, QIcon::fromTheme(QStringLiteral("format-fill-color"))));
 
     aAddToQuickTools->setEnabled(isAnnotationSelected);
     aWidth->setEnabled(isLine || isShape);
@@ -393,7 +390,7 @@ KSelectAction *AnnotationActionHandlerPrivate::colorPickerAction(AnnotationColor
     aColorPicker->setToolBarMode(KSelectAction::MenuMode);
     for (const auto &colorNameValue : colorList) {
         QColor color(colorNameValue.second);
-        QAction *aColor = new QAction(colorIcon(color), i18nc("@item:inlistbox Color name", "%1", colorNameValue.first), q);
+        QAction *aColor = new QAction(GuiUtils::createColorIcon({color}, QIcon(), GuiUtils::VisualizeTransparent), i18nc("@item:inlistbox Color name", "%1", colorNameValue.first), q);
         aColorPicker->addAction(aColor);
         QObject::connect(aColor, &QAction::triggered, q, [this, colorType, color]() { slotSetColor(colorType, color); });
     }
@@ -411,53 +408,6 @@ const QIcon AnnotationActionHandlerPrivate::widthIcon(double width)
     p.setRenderHint(QPainter::Antialiasing);
     p.setPen(QPen(Qt::black, 2 * width, Qt::SolidLine, Qt::RoundCap));
     p.drawLine(0, pm.height() / 2, pm.width(), pm.height() / 2);
-    p.end();
-    return QIcon(pm);
-}
-
-const QIcon AnnotationActionHandlerPrivate::colorPickerIcon(const QString &iconName, const QColor &color)
-{
-    QIcon icon = QIcon::fromTheme(iconName);
-    if (!color.isValid()) {
-        return icon;
-    }
-    QSize iconSize = QSize(32, 32);
-    QPixmap pm = icon.pixmap(iconSize);
-    QPainter p(&pm);
-    p.fillRect(0, iconSize.height() - 8, iconSize.width(), 8, color);
-    p.end();
-    return QIcon(pm);
-}
-
-const QIcon AnnotationActionHandlerPrivate::colorIcon(const QColor &color)
-{
-    QSize iconSize = QSize(32, 32);
-    QPixmap pm(iconSize);
-    QPainter p(&pm);
-    if (color == Qt::transparent) {
-        p.fillRect(0, 0, iconSize.width(), iconSize.height(), Qt::white);
-        p.setPen(QPen(Qt::red, 2));
-        p.drawLine(iconSize.width() - 1, 0, 0, iconSize.height() - 1);
-    } else {
-        p.fillRect(0, 0, iconSize.width(), iconSize.height(), color);
-    }
-    p.setPen(Qt::black);
-    p.drawRect(0, 0, iconSize.width() - 1, iconSize.height() - 1);
-    p.end();
-    return QIcon(pm);
-}
-
-const QIcon AnnotationActionHandlerPrivate::opacityIcon(double opacity)
-{
-    QPixmap pm(32, 32);
-    pm.fill(Qt::transparent);
-    QPainter p(&pm);
-    p.setRenderHint(QPainter::Antialiasing);
-    p.setPen(Qt::NoPen);
-    QColor color(Qt::black);
-    color.setAlpha(opacity * 255 / 100);
-    p.setBrush(QBrush(color));
-    p.drawRect(4, 4, 24, 24);
     p.end();
     return QIcon(pm);
 }
@@ -683,10 +633,10 @@ AnnotationActionHandler::AnnotationActionHandler(PageViewAnnotator *parent, KAct
     // Opacity list
     d->aOpacity = new KSelectAction(QIcon::fromTheme(QStringLiteral("edit-opacity")), i18nc("@action:intoolbar Current annotation config option", "Opacity"), this);
     d->aOpacity->setToolBarMode(KSelectAction::MenuMode);
-    for (auto opacity : d->opacityStandardValues) {
-        KToggleAction *ann = new KToggleAction(d->opacityIcon(opacity), QStringLiteral("%1\%").arg(opacity), this);
+    for (double opacity : d->opacityStandardValues) {
+        KToggleAction *ann = new KToggleAction(GuiUtils::createOpacityIcon(opacity), QStringLiteral("%1\%").arg(opacity * 100), this);
         d->aOpacity->addAction(ann);
-        connect(ann, &QAction::triggered, this, [this, opacity]() { d->annotator->setAnnotationOpacity(opacity / 100); });
+        connect(ann, &QAction::triggered, this, [this, opacity]() { d->annotator->setAnnotationOpacity(opacity); });
     }
 
     connect(d->aAddToQuickTools, &QAction::triggered, d->annotator, &PageViewAnnotator::addToQuickAnnotations);

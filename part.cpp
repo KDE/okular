@@ -93,6 +93,7 @@
 #include "core/document.h"
 #include "core/document_p.h"
 #include "core/fileprinter.h"
+#include "core/form.h"
 #include "core/generator.h"
 #include "core/page.h"
 #include "core/printoptionswidget.h"
@@ -1528,11 +1529,23 @@ bool Part::openFile()
         m_formsMessage->setVisible(false);
     }
 
-    if (ok && m_document->metaData(QStringLiteral("IsDigitallySigned")).toBool()) {
-        if (m_embedMode == PrintPreviewMode) {
-            m_signatureMessage->setText(i18n("All editing and interactive features for this document are disabled. Please save a copy and reopen to edit this document."));
-        } else {
-            m_signatureMessage->setText(i18n("This document is digitally signed."));
+    if (ok) {
+        const uint numPages = m_document->pages();
+        bool isDigitallySigned = false;
+        for (uint i = 0; i < numPages; i++) {
+            const QLinkedList<Okular::FormField *> formFields = m_document->page(i)->formFields();
+            for (const Okular::FormField *f : formFields) {
+                if (f->type() == Okular::FormField::FormSignature)
+                    isDigitallySigned = true;
+            }
+        }
+
+        if (isDigitallySigned) {
+            if (m_embedMode == PrintPreviewMode) {
+                m_signatureMessage->setText(i18n("All editing and interactive features for this document are disabled. Please save a copy and reopen to edit this document."));
+            } else {
+                m_signatureMessage->setText(i18n("This document is digitally signed."));
+            }
         }
         m_signatureMessage->setVisible(true);
     }

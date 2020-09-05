@@ -1491,17 +1491,6 @@ QVariant PDFGenerator::metaData(const QString &key, const QVariant &option) cons
             return i18n("Using Poppler %1\n\nBuilt against Poppler %2", Poppler::Version::string(), POPPLER_VERSION);
         }
 #endif
-    } else if (key == QLatin1String("IsDigitallySigned")) {
-        const Okular::Document *doc = document();
-        uint numPages = doc->pages();
-        for (uint i = 0; i < numPages; i++) {
-            const QLinkedList<Okular::FormField *> formFields = doc->page(i)->formFields();
-            for (const Okular::FormField *f : formFields) {
-                if (f->type() == Okular::FormField::FormSignature)
-                    return true;
-            }
-        }
-        return false;
     }
     return QVariant();
 }

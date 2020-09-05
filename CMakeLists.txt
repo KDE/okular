@@ -112,13 +112,6 @@ find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS
     Wallet
 )
 
-if(KF5Wallet_FOUND)
-    add_definitions(-DWITH_KWALLET=1)
-endif()
-if(KF5JS_FOUND)
-    add_definitions(-DWITH_KJS=1)
-endif()
-
 if(NOT WIN32 AND NOT ANDROID)
     find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS
         Activities

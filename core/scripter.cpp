@@ -22,17 +22,13 @@ class Okular::ScripterPrivate
 public:
     ScripterPrivate(DocumentPrivate *doc)
         : m_doc(doc)
-#ifdef WITH_KJS
         , m_kjs(nullptr)
-#endif
         , m_event(nullptr)
     {
     }
 
     DocumentPrivate *m_doc;
-#ifdef WITH_KJS
     QScopedPointer<ExecutorKJS> m_kjs;
-#endif
     Event *m_event;
 };
 
@@ -49,7 +45,6 @@ Scripter::~Scripter()
 void Scripter::execute(ScriptType type, const QString &script)
 {
     qCDebug(OkularCoreDebug) << "executing the script:";
-#ifdef WITH_KJS
 #if 0
     if ( script.length() < 1000 )
         qDebug() << script;
@@ -74,7 +69,6 @@ void Scripter::execute(ScriptType type, const QString &script)
         }
         d->m_kjs->execute(builtInScript + script, d->m_event);
     }
-#endif
 }
 
 void Scripter::setEvent(Event *event)

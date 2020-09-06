@@ -1542,8 +1542,8 @@ bool Part::openFile()
             } else {
                 m_signatureMessage->setText(i18n("This document is digitally signed."));
             }
+            m_signatureMessage->setVisible(true);
         }
-        m_signatureMessage->setVisible(true);
     }
 
     if (m_showPresentation)

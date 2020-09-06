@@ -116,6 +116,7 @@
 #include "ui/searchwidget.h"
 #include "ui/side_reviews.h"
 #include "ui/sidebar.h"
+#include "ui/signatureguiutils.h"
 #include "ui/signaturepanel.h"
 #include "ui/thumbnaillist.h"
 #include "ui/toc.h"
@@ -507,7 +508,6 @@ Part::Part(QWidget *parentWidget, QObject *parent, const QVariantList &args)
     m_signatureMessage = new KMessageWidget(rightContainer);
     m_signatureMessage->setVisible(false);
     m_signatureMessage->setWordWrap(true);
-    m_signatureMessage->setMessageType(KMessageWidget::Information);
     rightLayout->addWidget(m_signatureMessage);
     m_pageView = new PageView(rightContainer, m_document);
     QMetaObject::invokeMethod(m_pageView, "setFocus", Qt::QueuedConnection); // usability setting
@@ -1544,7 +1544,27 @@ bool Part::openFile()
             if (m_embedMode == PrintPreviewMode) {
                 m_signatureMessage->setText(i18n("All editing and interactive features for this document are disabled. Please save a copy and reopen to edit this document."));
             } else {
-                m_signatureMessage->setText(i18n("This document is digitally signed."));
+                const QVector<const Okular::FormFieldSignature *> signatureFormFields = SignatureGuiUtils::getSignatureFormFields(m_document, true, 0);
+                bool allSignaturesValid = true;
+                for (const Okular::FormFieldSignature *signature : signatureFormFields) {
+                    const Okular::SignatureInfo &info = signature->signatureInfo();
+                    if (info.signatureStatus() != SignatureInfo::SignatureValid) {
+                        allSignaturesValid = false;
+                    }
+                }
+
+                if (allSignaturesValid) {
+                    if (signatureFormFields.last()->signatureInfo().signsTotalDocument()) {
+                        m_signatureMessage->setMessageType(KMessageWidget::Information);
+                        m_signatureMessage->setText(i18n("This document is digitally signed."));
+                    } else {
+                        m_signatureMessage->setMessageType(KMessageWidget::Warning);
+                        m_signatureMessage->setText(i18n("This document is digitally signed. There have been changes since last signed."));
+                    }
+                } else {
+                    m_signatureMessage->setMessageType(KMessageWidget::Warning);
+                    m_signatureMessage->setText(i18n("This document is digitally signed. Some of the signatures could not be validated properly."));
+                }
             }
             m_signatureMessage->setVisible(true);
         }

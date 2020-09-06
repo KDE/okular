@@ -179,11 +179,11 @@ void AnnotationToolBarTest::testAnnotationToolBar()
 
     toggleAnnotationToolBar->setChecked(false);
     QTRY_VERIFY(!annToolBar->isVisible());
-    QTest::keyClick(part->widget(), Qt::Key_1);
+    QTest::keyClick(part->widget(), Qt::Key_1, Qt::AltModifier);
     QTRY_VERIFY2(annToolBar->isVisible(), "ToolBar not shown when triggering annotation using shortcut.");
     toggleAnnotationToolBar->setChecked(false);
     QTRY_VERIFY(!annToolBar->isVisible());
-    QTest::keyClick(part->widget(), Qt::Key_3, Qt::AltModifier);
+    QTest::keyClick(part->widget(), Qt::Key_3);
     QTRY_VERIFY2(annToolBar->isVisible(), "ToolBar not shown when triggering quick annotation using shortcut.");
 
     // Click an annotation action to enable it
@@ -202,7 +202,7 @@ void AnnotationToolBarTest::testAnnotationToolBar()
     QCOMPARE(simulateAddPopupAnnotation(part, mouseX, mouseY), false);
 
     // Trigger the action using a shortcut
-    QTest::keyClick(part->widget(), Qt::Key_7);
+    QTest::keyClick(part->widget(), Qt::Key_7, Qt::AltModifier);
     mouseY = 200;
     QTRY_COMPARE(Okular::Settings::mouseMode(), static_cast<int>(Okular::Settings::EnumMouseMode::Browse));
     QCOMPARE(simulateAddPopupAnnotation(part, mouseX, mouseY), true);
@@ -214,7 +214,7 @@ void AnnotationToolBarTest::testAnnotationToolBar()
     QCOMPARE(simulateAddPopupAnnotation(part, mouseX, mouseY), false);
 
     // Trigger the action using a quick annotation shortcut
-    QTest::keyClick(part->widget(), Qt::Key_6, Qt::AltModifier);
+    QTest::keyClick(part->widget(), Qt::Key_6);
     QTRY_COMPARE(Okular::Settings::mouseMode(), static_cast<int>(Okular::Settings::EnumMouseMode::Browse));
     QCOMPARE(simulateAddPopupAnnotation(part, mouseX, mouseY), true);
 

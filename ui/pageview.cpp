@@ -1427,6 +1427,14 @@ void PageView::notifyCurrentPageChanged(int previous, int current)
             }
         }
     }
+
+    // if the view is paged (or not continuous) and there is a selected annotation,
+    // we call reset to avoid creating an artifact in the next page.
+    if (!Okular::Settings::viewContinuous()) {
+        if (d->mouseAnnotation && d->mouseAnnotation->isFocused()) {
+            d->mouseAnnotation->reset();
+        }
+    }
 }
 
 // END DocumentObserver inherited methods

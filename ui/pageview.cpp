@@ -782,6 +782,7 @@ void PageView::setupActions(KActionCollection *ac)
     if (!d->annotator) {
         d->annotator = new PageViewAnnotator(this, d->document);
         connect(d->annotator, &PageViewAnnotator::toolSelected, d->aMouseNormal, &QAction::trigger);
+        connect(d->annotator, &PageViewAnnotator::toolSelected, d->mouseAnnotation, &MouseAnnotation::reset);
     }
     d->annotator->setupActions(ac);
 }

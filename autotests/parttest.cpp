@@ -95,6 +95,7 @@ private slots:
     void testAdditionalActionTriggers();
     void testTypewriterAnnotTool();
     void testJumpToPage();
+    void testOpenAtPage();
     void testForwardBackwardNavigation();
     void testTabletProximityBehavior();
     void testOpenPrintPreview();
@@ -1792,6 +1793,26 @@ void PartTest::testJumpToPage()
      * to determine the expected viewport position, but we don't have access.
      */
     QCOMPARE(part.m_pageView->verticalScrollBar()->value(), pageWithSpaceTop - 4);
+}
+
+void PartTest::testOpenAtPage()
+{
+    const QString testFile = QStringLiteral(KDESRCDIR "data/simple-multipage.pdf");
+    QUrl url = QUrl::fromLocalFile(testFile);
+    Okular::Part part(nullptr, nullptr, QVariantList());
+
+    const uint targetPageNumA = 25;
+    const uint expectedPageA = targetPageNumA - 1;
+    url.setFragment(QString::number(targetPageNumA));
+    part.openUrl(url);
+    QCOMPARE(part.m_document->currentPage(), expectedPageA);
+
+    // 'page=<pagenum>' param as specified in RFC 3778
+    const uint targetPageNumB = 15;
+    const uint expectedPageB = targetPageNumB - 1;
+    url.setFragment("page=" + QString::number(targetPageNumB));
+    part.openUrl(url);
+    QCOMPARE(part.m_document->currentPage(), expectedPageB);
 }
 
 void PartTest::testForwardBackwardNavigation()

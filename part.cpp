@@ -1670,7 +1670,17 @@ bool Part::openUrl(const QUrl &_url, bool swapInsteadOfOpening)
     if (url.hasFragment()) {
         const QString dest = url.fragment(QUrl::FullyDecoded);
         bool ok = true;
-        const int page = dest.toInt(&ok);
+        int page = dest.toInt(&ok);
+
+        if (!ok) {
+            const QStringList parameters = dest.split(QChar('&'));
+            for (const QString &parameter : parameters) {
+                if (parameter.startsWith(QStringLiteral("page="), Qt::CaseInsensitive)) {
+                    page = dest.midRef(5).toInt(&ok);
+                }
+            }
+        }
+
         if (ok) {
             Okular::DocumentViewport vp(page - 1);
             vp.rePos.enabled = true;

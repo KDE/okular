@@ -455,7 +455,11 @@ void Shell::fileOpen()
             continue;
         }
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+        globPatterns.unite(QSet<QString>(globs.begin(), globs.end()));
+#else
         globPatterns.unite(globs.toSet());
+#endif
 
         namedGlobs[mimeType.comment()].append(globs);
     }

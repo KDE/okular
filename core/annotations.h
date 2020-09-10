@@ -540,7 +540,7 @@ public:
      * The Revision class contains all information about the revision
      * of the annotation.
      */
-    class Revision
+    class OKULARCORE_EXPORT Revision
     {
     public:
         /**

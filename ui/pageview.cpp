@@ -4737,7 +4737,7 @@ void PageView::slotScrollUp(int nSteps)
     // if in single page mode and at the top of the screen, go to \ page
     if (Okular::Settings::viewContinuous() || verticalScrollBar()->value() > verticalScrollBar()->minimum()) {
         if (nSteps) {
-            d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, -100 * nSteps), 0);
+            d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, -100 * nSteps), 100);
         } else {
             if (d->scroller->finalPosition().y() > verticalScrollBar()->minimum())
                 d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, -verticalScrollBar()->rect().height()));
@@ -4759,7 +4759,7 @@ void PageView::slotScrollDown(int nSteps)
     // if in single page mode and at the bottom of the screen, go to next page
     if (Okular::Settings::viewContinuous() || verticalScrollBar()->value() < verticalScrollBar()->maximum()) {
         if (nSteps) {
-            d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, 100 * nSteps), 0);
+            d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, 100 * nSteps), 100);
         } else {
             if (d->scroller->finalPosition().y() < verticalScrollBar()->maximum())
                 d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, verticalScrollBar()->rect().height()));

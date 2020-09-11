@@ -439,6 +439,13 @@ PageView::PageView(QWidget *parent, Okular::Document *document)
     horizontalScrollBar()->setCursor(Qt::ArrowCursor);
     horizontalScrollBar()->setSingleStep(20);
 
+    // make the smooth scroll animation durations respect the global animation
+    // scale
+    KConfigGroup kdeglobalsConfig = KConfigGroup(KSharedConfig::openConfig(), QStringLiteral("KDE"));
+    const qreal globalAnimationScale = qMax(0.0, kdeglobalsConfig.readEntry("AnimationDurationFactor", 1.0));
+    d->smoothScrollShortDuration *= globalAnimationScale;
+    d->smoothScrollLongDuration *= globalAnimationScale;
+
     // connect the padding of the viewport to pixmaps requests
     connect(horizontalScrollBar(), &QAbstractSlider::valueChanged, this, &PageView::slotRequestVisiblePixmaps);
     connect(verticalScrollBar(), &QAbstractSlider::valueChanged, this, &PageView::slotRequestVisiblePixmaps);

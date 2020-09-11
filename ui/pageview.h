@@ -220,6 +220,9 @@ private:
 
     void createAnnotationsVideoWidgets(PageViewItem *item, const QLinkedList<Okular::Annotation *> &annotations);
 
+    // Update speed of animated smooth scroll transitions
+    void updateSmoothScrollAnimationSpeed();
+
     // don't want to expose classes in here
     class PageViewPrivate *d;
 

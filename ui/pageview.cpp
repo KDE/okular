@@ -47,6 +47,7 @@
 
 #include <KActionCollection>
 #include <KActionMenu>
+#include <KConfigWatcher>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KRun>
@@ -178,9 +179,11 @@ public:
     int controlWheelAccumulatedDelta;
 
     // for everything except PgUp/PgDn and scroll to arbitrary locations
-    int smoothScrollShortDuration;
+    const int baseShortScrollDuration = 100;
+    int currentShortScrollDuration;
     // for PgUp/PgDn and scroll to arbitrary locations
-    int smoothScrollLongDuration;
+    const int baseLongScrollDuration = baseShortScrollDuration * 2;
+    int currentLongScrollDuration;
 
     // auto scroll
     int scrollIncrement;
@@ -336,8 +339,8 @@ PageView::PageView(QWidget *parent, Okular::Document *document)
     d->lastSourceLocationViewportNormalizedX = 0.0;
     d->lastSourceLocationViewportNormalizedY = 0.0;
     d->controlWheelAccumulatedDelta = 0;
-    d->smoothScrollShortDuration = 100;
-    d->smoothScrollLongDuration = d->smoothScrollShortDuration * 2;
+    d->currentShortScrollDuration = d->baseShortScrollDuration;
+    d->currentLongScrollDuration = d->baseLongScrollDuration;
     d->scrollIncrement = 0;
     d->autoScrollTimer = nullptr;
     d->annotator = nullptr;
@@ -441,10 +444,13 @@ PageView::PageView(QWidget *parent, Okular::Document *document)
 
     // make the smooth scroll animation durations respect the global animation
     // scale
-    KConfigGroup kdeglobalsConfig = KConfigGroup(KSharedConfig::openConfig(), QStringLiteral("KDE"));
-    const qreal globalAnimationScale = qMax(0.0, kdeglobalsConfig.readEntry("AnimationDurationFactor", 1.0));
-    d->smoothScrollShortDuration *= globalAnimationScale;
-    d->smoothScrollLongDuration *= globalAnimationScale;
+    KConfigWatcher::Ptr animationSpeedWatcher = KConfigWatcher::create(KSharedConfig::openConfig());
+    connect(animationSpeedWatcher.data(), &KConfigWatcher::configChanged, this, [this](const KConfigGroup &group, const QByteArrayList &names) {
+        if (group.name() == QLatin1String("KDE") && names.contains(QByteArrayLiteral("AnimationDurationFactor"))) {
+            PageView::updateSmoothScrollAnimationSpeed();
+        }
+    });
+    PageView::updateSmoothScrollAnimationSpeed();
 
     // connect the padding of the viewport to pixmaps requests
     connect(horizontalScrollBar(), &QAbstractSlider::valueChanged, this, &PageView::slotRequestVisiblePixmaps);
@@ -1901,7 +1907,7 @@ void PageView::keyPressEvent(QKeyEvent *e)
             int next_page = d->document->currentPage() - viewColumns();
             d->document->setViewportPage(next_page);
         } else {
-            d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(-horizontalScrollBar()->singleStep(), 0), d->smoothScrollShortDuration);
+            d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(-horizontalScrollBar()->singleStep(), 0), d->currentShortScrollDuration);
         }
         break;
     case Qt::Key_Right:
@@ -1911,7 +1917,7 @@ void PageView::keyPressEvent(QKeyEvent *e)
             int next_page = d->document->currentPage() + viewColumns();
             d->document->setViewportPage(next_page);
         } else {
-            d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(horizontalScrollBar()->singleStep(), 0), d->smoothScrollShortDuration);
+            d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(horizontalScrollBar()->singleStep(), 0), d->currentShortScrollDuration);
         }
         break;
     case Qt::Key_Escape:
@@ -4038,7 +4044,7 @@ void PageView::scrollTo(int x, int y, bool smoothMove)
     d->blockPixmapsRequest = true;
 
     if (smoothMove)
-        d->scroller->scrollTo(QPoint(x, y), d->smoothScrollLongDuration);
+        d->scroller->scrollTo(QPoint(x, y), d->currentLongScrollDuration);
     else
         d->scroller->scrollTo(QPoint(x, y), 0);
 
@@ -4179,6 +4185,14 @@ void PageView::addSearchWithinDocumentAction(QMenu *menu, const QString &searchT
     action->setIcon(QIcon::fromTheme(QStringLiteral("document-preview")));
     connect(action, &QAction::triggered, this, [this, searchText] { Q_EMIT triggerSearch(searchText); });
     menu->addAction(action);
+}
+
+void PageView::updateSmoothScrollAnimationSpeed()
+{
+    KConfigGroup kdeglobalsConfig = KConfigGroup(KSharedConfig::openConfig(), QStringLiteral("KDE"));
+    const qreal globalAnimationScale = qMax(0.0, kdeglobalsConfig.readEntry("AnimationDurationFactor", 1.0));
+    d->currentShortScrollDuration = d->baseShortScrollDuration * globalAnimationScale;
+    d->currentLongScrollDuration = d->baseLongScrollDuration * globalAnimationScale;
 }
 
 // BEGIN private SLOTS
@@ -4760,10 +4774,10 @@ void PageView::slotScrollUp(int nSteps)
     // if in single page mode and at the top of the screen, go to \ page
     if (Okular::Settings::viewContinuous() || verticalScrollBar()->value() > verticalScrollBar()->minimum()) {
         if (nSteps) {
-            d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, -100 * nSteps), d->smoothScrollShortDuration);
+            d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, -100 * nSteps), d->currentShortScrollDuration);
         } else {
             if (d->scroller->finalPosition().y() > verticalScrollBar()->minimum())
-                d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, -verticalScrollBar()->rect().height()), d->smoothScrollLongDuration);
+                d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, -verticalScrollBar()->rect().height()), d->currentLongScrollDuration);
         }
     } else if (d->document->currentPage() > 0) {
         // more optimized than document->setPrevPage and then move view to bottom
@@ -4782,10 +4796,10 @@ void PageView::slotScrollDown(int nSteps)
     // if in single page mode and at the bottom of the screen, go to next page
     if (Okular::Settings::viewContinuous() || verticalScrollBar()->value() < verticalScrollBar()->maximum()) {
         if (nSteps) {
-            d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, 100 * nSteps), d->smoothScrollShortDuration);
+            d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, 100 * nSteps), d->currentShortScrollDuration);
         } else {
             if (d->scroller->finalPosition().y() < verticalScrollBar()->maximum())
-                d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, verticalScrollBar()->rect().height()), d->smoothScrollLongDuration);
+                d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, verticalScrollBar()->rect().height()), d->currentLongScrollDuration);
         }
     } else if ((int)d->document->currentPage() < d->items.count() - 1) {
         // more optimized than document->setNextPage and then move view to top

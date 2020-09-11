@@ -8130,7 +8130,7 @@ static int _synctex_updater_print(synctex_updater_p updater, const char *format,
     }
     return result;
 }
-#if defined(_MSC_VER)
+#if defined(_MSC_VER) || defined(__MINGW32__)
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>

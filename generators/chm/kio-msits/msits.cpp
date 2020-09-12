@@ -182,13 +182,13 @@ bool ProtocolMSITS::parseLoadAndLookup(const QUrl &url, QString &abspath)
  */
 static void app_entry(UDSEntry &e, unsigned int uds, const QString &str)
 {
-    e.insert(uds, str);
+    e.fastInsert(uds, str);
 }
 
 // appends an int with the UDS-ID uds
 static void app_entry(UDSEntry &e, unsigned int uds, long l)
 {
-    e.insert(uds, l);
+    e.fastInsert(uds, l);
 }
 
 // internal function

@@ -10,16 +10,6 @@ check_cxx_source_compiles("
 #include <poppler-form.h>
 int main()
 {
-  Poppler::FormField *f = nullptr;
-  f->additionalAction(Poppler::Annotation::CursorEnteringAction);
-}
-" HAVE_POPPLER_0_65)
-
-check_cxx_source_compiles("
-#include <poppler-qt5.h>
-#include <poppler-form.h>
-int main()
-{
   auto f = &Poppler::SignatureValidationInfo::reason;
   (void)f;
 }

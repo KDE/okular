@@ -1613,9 +1613,6 @@ static void verifyTargetStates(const QString &triggerName, const QMap<QString, O
 
 void PartTest::testAdditionalActionTriggers()
 {
-#ifndef HAVE_POPPLER_0_65
-    return;
-#endif
     const QString testFile = QStringLiteral(KDESRCDIR "data/additionalFormActions.pdf");
     Okular::Part part(nullptr, nullptr, QVariantList());
     part.openDocument(testFile);

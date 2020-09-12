@@ -20,7 +20,6 @@
 #include <config-okular-poppler.h>
 
 extern Okular::Action *createLinkFromPopplerLink(const Poppler::Link *popplerLink, bool deletePopplerLink = true);
-#ifdef HAVE_POPPLER_0_65
 #define SET_ANNOT_ACTIONS                                                                                                                                                                                                                      \
     setAdditionalAction(Okular::Annotation::CursorEntering, createLinkFromPopplerLink(m_field->additionalAction(Poppler::Annotation::CursorEnteringAction)));                                                                                  \
     setAdditionalAction(Okular::Annotation::CursorLeaving, createLinkFromPopplerLink(m_field->additionalAction(Poppler::Annotation::CursorLeavingAction)));                                                                                    \
@@ -28,9 +27,6 @@ extern Okular::Action *createLinkFromPopplerLink(const Poppler::Link *popplerLin
     setAdditionalAction(Okular::Annotation::MouseReleased, createLinkFromPopplerLink(m_field->additionalAction(Poppler::Annotation::MouseReleasedAction)));                                                                                    \
     setAdditionalAction(Okular::Annotation::FocusIn, createLinkFromPopplerLink(m_field->additionalAction(Poppler::Annotation::FocusInAction)));                                                                                                \
     setAdditionalAction(Okular::Annotation::FocusOut, createLinkFromPopplerLink(m_field->additionalAction(Poppler::Annotation::FocusOutAction)));
-#else
-#define SET_ANNOT_ACTIONS
-#endif
 
 #define SET_ACTIONS                                                                                                                                                                                                                            \
     setActivationAction(createLinkFromPopplerLink(m_field->activationAction()));                                                                                                                                                               \

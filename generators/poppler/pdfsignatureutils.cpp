@@ -220,20 +220,12 @@ QString PopplerSignatureInfo::signerSubjectDN() const
 
 QString PopplerSignatureInfo::location() const
 {
-#ifdef HAVE_POPPLER_0_68
     return m_info.location();
-#else
-    return {};
-#endif
 }
 
 QString PopplerSignatureInfo::reason() const
 {
-#ifdef HAVE_POPPLER_0_68
     return m_info.reason();
-#else
-    return {};
-#endif
 }
 
 QDateTime PopplerSignatureInfo::signingTime() const

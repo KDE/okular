@@ -6,17 +6,6 @@ add_subdirectory( conf )
 set(CMAKE_REQUIRED_LIBRARIES Poppler::Qt5 Qt5::Core Qt5::Gui)
 
 check_cxx_source_compiles("
-#include <poppler-qt5.h>
-#include <QColor>
-int main()
-{
-    Poppler::TextAnnotation *annot = new Poppler::TextAnnotation( Poppler::TextAnnotation::InPlace );
-    annot->setTextColor( Qt::blue );
-    return 0;
-}
-" HAVE_POPPLER_0_69)
-
-check_cxx_source_compiles("
 #include <poppler-version.h>
 int main()
 {

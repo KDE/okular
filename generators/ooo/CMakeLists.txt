@@ -5,7 +5,7 @@ include_directories(
    ${CMAKE_CURRENT_SOURCE_DIR}/../..
 )
 
-find_package(Qca-qt5 2.1.0)
+find_package(Qca-qt5 2.2.0)
 set_package_properties(Qca-qt5 PROPERTIES DESCRIPTION "Support for encryption"
                        URL "https://download.kde.org/stable/qca-qt5/"
                        TYPE RECOMMENDED)

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.16)
 
 # KDE Application Version, managed by release script
 set (RELEASE_SERVICE_VERSION_MAJOR "20")
@@ -8,8 +8,8 @@ set (RELEASE_SERVICE_VERSION "${RELEASE_SERVICE_VERSION_MAJOR}.${RELEASE_SERVICE
 
 project(okular VERSION ${RELEASE_SERVICE_VERSION})
 
-set(QT_REQUIRED_VERSION "5.9.0") # Remember to update the QT_DEPRECATED_WARNINGS_SINCE below
-set(KF5_REQUIRED_VERSION "5.44.0") # Remember to update the KF_DEPRECATED_WARNINGS_SINCE below
+set(QT_REQUIRED_VERSION "5.12.0") # Remember to update the QT_DEPRECATED_WARNINGS_SINCE below
+set(KF5_REQUIRED_VERSION "5.68.0") # Remember to update the KF_DEPRECATED_WARNINGS_SINCE below
 
 set(OKULAR_UI "desktop" CACHE STRING "Which Okular user interface to build. Possible values: desktop, mobile, both. Default: desktop")
 
@@ -26,8 +26,6 @@ endif()
 
 if (ANDROID)
     set(QT_REQUIRED_VERSION "5.13.0")
-elseif (BUILD_MOBILE)
-    set(QT_REQUIRED_VERSION "5.12.0")
 endif()
 
 find_package(ECM ${KF5_REQUIRED_VERSION} CONFIG REQUIRED)
@@ -153,7 +151,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake/modules)
 find_package(ZLIB REQUIRED)
 
 # This is here instead of in generators since we use if(Poppler_Qt5_FOUND) in autotests/
-find_package(Poppler "0.62.0" COMPONENTS Qt5)
+find_package(Poppler "0.86.0" COMPONENTS Qt5)
 set_package_properties("Poppler" PROPERTIES
         TYPE RECOMMENDED
         PURPOSE "Support for PDF files in okular.")
@@ -161,8 +159,8 @@ set_package_properties("Poppler" PROPERTIES
 add_definitions(-DQT_USE_FAST_OPERATOR_PLUS)
 add_definitions(-DTRANSLATION_DOMAIN="okular")
 add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
-add_definitions(-DQT_DEPRECATED_WARNINGS_SINCE=0x050900)
-add_definitions(-DKF_DEPRECATED_WARNINGS_SINCE=0x052C00)
+add_definitions(-DQT_DEPRECATED_WARNINGS_SINCE=0x050C00)
+add_definitions(-DKF_DEPRECATED_WARNINGS_SINCE=0x054400)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${PHONON_INCLUDES} core/synctex ${ZLIB_INCLUDE_DIR} ${CMAKE_BINARY_DIR}/core)
 

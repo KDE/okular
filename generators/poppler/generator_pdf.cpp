@@ -845,7 +845,6 @@ const Okular::DocumentSynopsis *PDFGenerator::generateDocumentSynopsis()
     if (!pdfdoc)
         return nullptr;
 
-#ifdef HAVE_POPPLER_0_74
     userMutex()->lock();
     const QVector<Poppler::OutlineItem> outline = pdfdoc->outline();
     userMutex()->unlock();
@@ -854,16 +853,6 @@ const Okular::DocumentSynopsis *PDFGenerator::generateDocumentSynopsis()
         return nullptr;
 
     addSynopsisChildren(outline, &docSyn);
-#else
-    userMutex()->lock();
-    QDomDocument *toc = pdfdoc->toc();
-    userMutex()->unlock();
-    if (!toc)
-        return nullptr;
-
-    addSynopsisChildren(toc, &docSyn);
-    delete toc;
-#endif
 
     docSynopsisDirty = false;
     return &docSyn;
@@ -1610,8 +1599,6 @@ Okular::TextPage *PDFGenerator::abstractTextPage(const QList<Poppler::TextBox *>
     return ktp;
 }
 
-#ifdef HAVE_POPPLER_0_74
-
 void PDFGenerator::addSynopsisChildren(const QVector<Poppler::OutlineItem> &outlineItems, QDomNode *parentDestination)
 {
     for (const Poppler::OutlineItem &outlineItem : outlineItems) {
@@ -1637,43 +1624,6 @@ void PDFGenerator::addSynopsisChildren(const QVector<Poppler::OutlineItem> &outl
             addSynopsisChildren(outlineItem.children(), &item);
     }
 }
-
-#else
-
-void PDFGenerator::addSynopsisChildren(QDomNode *parent, QDomNode *parentDestination)
-{
-    // keep track of the current listViewItem
-    QDomNode n = parent->firstChild();
-    while (!n.isNull()) {
-        // convert the node to an element (sure it is)
-        QDomElement e = n.toElement();
-
-        // The name is the same
-        QDomElement item = docSyn.createElement(e.tagName());
-        parentDestination->appendChild(item);
-
-        if (!e.attribute(QStringLiteral("ExternalFileName")).isNull())
-            item.setAttribute(QStringLiteral("ExternalFileName"), e.attribute(QStringLiteral("ExternalFileName")));
-        if (!e.attribute(QStringLiteral("DestinationName")).isNull())
-            item.setAttribute(QStringLiteral("ViewportName"), e.attribute(QStringLiteral("DestinationName")));
-        if (!e.attribute(QStringLiteral("Destination")).isNull()) {
-            Okular::DocumentViewport vp;
-            fillViewportFromLinkDestination(vp, Poppler::LinkDestination(e.attribute(QStringLiteral("Destination"))));
-            item.setAttribute(QStringLiteral("Viewport"), vp.toString());
-        }
-        if (!e.attribute(QStringLiteral("Open")).isNull())
-            item.setAttribute(QStringLiteral("Open"), e.attribute(QStringLiteral("Open")));
-        if (!e.attribute(QStringLiteral("DestinationURI")).isNull())
-            item.setAttribute(QStringLiteral("URL"), e.attribute(QStringLiteral("DestinationURI")));
-
-        // descend recursively and advance to the next node
-        if (e.hasChildNodes())
-            addSynopsisChildren(&n, &item);
-        n = n.nextSibling();
-    }
-}
-
-#endif
 
 void PDFGenerator::addAnnotations(Poppler::Page *popplerPage, Okular::Page *page)
 {

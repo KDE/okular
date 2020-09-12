@@ -86,9 +86,6 @@ void VisibilityTest::verifyTargetStates(bool visible)
 
 void VisibilityTest::testJavaScriptVisibility()
 {
-#ifndef HAVE_POPPLER_0_64
-    return;
-#endif
     auto hideBtn = m_fields[QStringLiteral("HideScriptButton")];
     auto showBtn = m_fields[QStringLiteral("ShowScriptButton")];
 
@@ -107,9 +104,6 @@ void VisibilityTest::testJavaScriptVisibility()
 
 void VisibilityTest::testSaveLoad()
 {
-#ifndef HAVE_POPPLER_0_64
-    return;
-#endif
     auto hideBtn = m_fields[QStringLiteral("HideScriptButton")];
     auto showBtn = m_fields[QStringLiteral("ShowScriptButton")];
 
@@ -155,9 +149,6 @@ void VisibilityTest::testSaveLoad()
 
 void VisibilityTest::testActionVisibility()
 {
-#ifndef HAVE_POPPLER_0_64
-    return;
-#endif
     auto hideBtn = m_fields[QStringLiteral("HideActionButton")];
     auto showBtn = m_fields[QStringLiteral("ShowActionButton")];
 

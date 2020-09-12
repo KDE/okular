@@ -1387,10 +1387,6 @@ void PartTest::test388288()
 
 void PartTest::testCheckBoxReadOnly()
 {
-#ifndef HAVE_POPPLER_0_64
-    return;
-#endif
-
     const QString testFile = QStringLiteral(KDESRCDIR "data/checkbox_ro.pdf");
     Okular::Part part(nullptr, nullptr, QVariantList());
     part.openDocument(testFile);

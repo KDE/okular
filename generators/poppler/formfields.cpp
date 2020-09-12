@@ -81,11 +81,7 @@ bool PopplerFormFieldButton::isReadOnly() const
 
 void PopplerFormFieldButton::setReadOnly(bool value)
 {
-#ifdef HAVE_POPPLER_0_64
     m_field->setReadOnly(value);
-#else
-    Q_UNUSED(value);
-#endif
 }
 
 bool PopplerFormFieldButton::isVisible() const
@@ -95,11 +91,7 @@ bool PopplerFormFieldButton::isVisible() const
 
 void PopplerFormFieldButton::setVisible(bool value)
 {
-#ifdef HAVE_POPPLER_0_64
     m_field->setVisible(value);
-#else
-    Q_UNUSED(value);
-#endif
 }
 
 bool PopplerFormFieldButton::isPrintable() const
@@ -213,11 +205,7 @@ bool PopplerFormFieldText::isReadOnly() const
 
 void PopplerFormFieldText::setReadOnly(bool value)
 {
-#ifdef HAVE_POPPLER_0_64
     m_field->setReadOnly(value);
-#else
-    Q_UNUSED(value);
-#endif
 }
 
 bool PopplerFormFieldText::isVisible() const
@@ -227,11 +215,7 @@ bool PopplerFormFieldText::isVisible() const
 
 void PopplerFormFieldText::setVisible(bool value)
 {
-#ifdef HAVE_POPPLER_0_64
     m_field->setVisible(value);
-#else
-    Q_UNUSED(value);
-#endif
 }
 
 bool PopplerFormFieldText::isPrintable() const
@@ -359,11 +343,7 @@ bool PopplerFormFieldChoice::isReadOnly() const
 
 void PopplerFormFieldChoice::setReadOnly(bool value)
 {
-#ifdef HAVE_POPPLER_0_64
     m_field->setReadOnly(value);
-#else
-    Q_UNUSED(value);
-#endif
 }
 
 bool PopplerFormFieldChoice::isVisible() const
@@ -373,11 +353,7 @@ bool PopplerFormFieldChoice::isVisible() const
 
 void PopplerFormFieldChoice::setVisible(bool value)
 {
-#ifdef HAVE_POPPLER_0_64
     m_field->setVisible(value);
-#else
-    Q_UNUSED(value);
-#endif
 }
 
 bool PopplerFormFieldChoice::isPrintable() const

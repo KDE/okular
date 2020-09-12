@@ -472,7 +472,6 @@ Okular::Action *createLinkFromPopplerLink(const Poppler::Link *popplerLink, bool
         link = movieAction;
     } break;
 
-#ifdef HAVE_POPPLER_0_64
     case Poppler::Link::Hide: {
         const Poppler::LinkHide *l = static_cast<const Poppler::LinkHide *>(popplerLink);
         QStringList scripts;
@@ -482,7 +481,6 @@ Okular::Action *createLinkFromPopplerLink(const Poppler::Link *popplerLink, bool
         }
         link = new Okular::ScriptAction(Okular::JavaScript, scripts.join(QLatin1Char('\n')));
     } break;
-#endif
 
     case Poppler::Link::OCGState:
         link = new Okular::BackendOpaqueAction();
@@ -491,7 +489,6 @@ Okular::Action *createLinkFromPopplerLink(const Poppler::Link *popplerLink, bool
         break;
     }
 
-#ifdef HAVE_POPPLER_0_64
     if (link) {
         QVector<Okular::Action *> nextActions;
         const QVector<Poppler::Link *> nextLinks = popplerLink->nextLinks();
@@ -500,7 +497,6 @@ Okular::Action *createLinkFromPopplerLink(const Poppler::Link *popplerLink, bool
         }
         link->setNextActions(nextActions);
     }
-#endif
 
     if (deletePopplerLink)
         delete popplerLink;

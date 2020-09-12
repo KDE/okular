@@ -7,17 +7,6 @@ set(CMAKE_REQUIRED_LIBRARIES Poppler::Qt5 Qt5::Core Qt5::Gui)
 
 check_cxx_source_compiles("
 #include <poppler-qt5.h>
-#include <QImage>
-int main()
-{
-  Poppler::Page *p = nullptr;
-  p->renderToImage(0, 0, 0, 0, 0, 0, Poppler::Page::Rotate0, nullptr, nullptr, nullptr, QVariant());
-  return 0;
-}
-" HAVE_POPPLER_0_63)
-
-check_cxx_source_compiles("
-#include <poppler-qt5.h>
 #include <poppler-form.h>
 #include <poppler-link.h>
 int main()

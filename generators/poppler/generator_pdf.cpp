@@ -569,9 +569,7 @@ PDFGenerator::PDFGenerator(QObject *parent, const QVariantList &args)
     setFeature(ReadRawData);
     setFeature(TiledRendering);
     setFeature(SwapBackingFile);
-#ifdef HAVE_POPPLER_0_63
     setFeature(SupportsCancelling);
-#endif
 
     // You only need to do it once not for each of the documents but it is cheap enough
     // so doing it all the time won't hurt either
@@ -1066,13 +1064,11 @@ static void partialUpdateCallback(const QImage &image, const QVariant &vPayload)
     // clang-format on
 }
 
-#ifdef HAVE_POPPLER_0_63
 static bool shouldAbortRenderCallback(const QVariant &vPayload)
 {
     auto payload = vPayload.value<RenderImagePayload *>();
     return payload->request->shouldAbortRender();
 }
-#endif
 
 QImage PDFGenerator::image(Okular::PixmapRequest *request)
 {
@@ -1108,7 +1104,6 @@ QImage PDFGenerator::image(Okular::PixmapRequest *request)
     // 2. Take data from outputdev and attach it to the Page
     QImage img;
     if (p) {
-#ifdef HAVE_POPPLER_0_63
         if (request->isTile()) {
             const QRect rect = request->normalizedRect().geometry(request->width(), request->height());
             if (request->partialUpdatesWanted()) {
@@ -1128,24 +1123,6 @@ QImage PDFGenerator::image(Okular::PixmapRequest *request)
                 img = p->renderToImage(fakeDpiX, fakeDpiY, -1, -1, -1, -1, Poppler::Page::Rotate0, nullptr, nullptr, shouldAbortRenderCallback, QVariant::fromValue(&payload));
             }
         }
-#else
-        if (request->isTile()) {
-            const QRect rect = request->normalizedRect().geometry(request->width(), request->height());
-            if (request->partialUpdatesWanted()) {
-                RenderImagePayload payload(this, request);
-                img = p->renderToImage(fakeDpiX, fakeDpiY, rect.x(), rect.y(), rect.width(), rect.height(), Poppler::Page::Rotate0, partialUpdateCallback, shouldDoPartialUpdateCallback, QVariant::fromValue(&payload));
-            } else {
-                img = p->renderToImage(fakeDpiX, fakeDpiY, rect.x(), rect.y(), rect.width(), rect.height(), Poppler::Page::Rotate0);
-            }
-        } else {
-            if (request->partialUpdatesWanted()) {
-                RenderImagePayload payload(this, request);
-                img = p->renderToImage(fakeDpiX, fakeDpiY, -1, -1, -1, -1, Poppler::Page::Rotate0, partialUpdateCallback, shouldDoPartialUpdateCallback, QVariant::fromValue(&payload));
-            } else {
-                img = p->renderToImage(fakeDpiX, fakeDpiY, -1, -1, -1, -1, Poppler::Page::Rotate0);
-            }
-        }
-#endif
     } else {
         img = QImage(request->width(), request->height(), QImage::Format_Mono);
         img.fill(Qt::white);
@@ -1231,7 +1208,6 @@ void PDFGenerator::resolveMediaLinkReferences(Okular::Page *page)
     }
 }
 
-#ifdef HAVE_POPPLER_0_63
 struct TextExtractionPayload {
     TextExtractionPayload(Okular::TextRequest *r)
         : request(r)
@@ -1247,7 +1223,6 @@ static bool shouldAbortTextExtractionCallback(const QVariant &vPayload)
     auto payload = vPayload.value<TextExtractionPayload *>();
     return payload->request->shouldAbortExtraction();
 }
-#endif
 
 Okular::TextPage *PDFGenerator::textPage(Okular::TextRequest *request)
 {
@@ -1261,12 +1236,8 @@ Okular::TextPage *PDFGenerator::textPage(Okular::TextRequest *request)
     userMutex()->lock();
     Poppler::Page *pp = pdfdoc->page(page->number());
     if (pp) {
-#ifdef HAVE_POPPLER_0_63
         TextExtractionPayload payload(request);
         textList = pp->textList(Poppler::Page::Rotate0, shouldAbortTextExtractionCallback, QVariant::fromValue(&payload));
-#else
-        textList = pp->textList();
-#endif
         const QSizeF s = pp->pageSizeF();
         pageWidth = s.width();
         pageHeight = s.height();

@@ -169,12 +169,6 @@ if(BUILD_MOBILE)
 endif()
 option(BUILD_COVERAGE "Build the project with gcov support" OFF)
 
-if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    if (NOT CMAKE_CXX_COMPILER_VERSION VERSION_LESS "5.0.0")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wsuggest-override" )
-    endif()
-endif()
-
 if(BUILD_COVERAGE)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lgcov")

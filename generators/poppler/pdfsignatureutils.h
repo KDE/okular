@@ -16,8 +16,6 @@
 
 #include <config-okular-poppler.h>
 
-#ifdef HAVE_POPPLER_0_73
-
 class PopplerCertificateInfo : public Okular::CertificateInfo
 {
 public:
@@ -41,8 +39,6 @@ public:
 private:
     Poppler::CertificateInfo m_info;
 };
-
-#endif
 
 class PopplerSignatureInfo : public Okular::SignatureInfo
 {

@@ -43,7 +43,6 @@ void SignatureFormTest::cleanupTestCase()
 
 void SignatureFormTest::testSignatureForm()
 {
-#ifndef HAVE_POPPLER_0_73
     const QString testFile = QStringLiteral(KDESRCDIR "data/pdf_with_signature.pdf");
     QMimeDatabase db;
     const QMimeType mime = db.mimeTypeForFile(testFile);
@@ -56,7 +55,6 @@ void SignatureFormTest::testSignatureForm()
 
     Okular::FormFieldSignature *sf = static_cast<Okular::FormFieldSignature *>(pageFields.first());
     QCOMPARE(sf->signatureType(), Okular::FormFieldSignature::AdbePkcs7detached);
-#endif
 }
 
 QTEST_MAIN(SignatureFormTest)

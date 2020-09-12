@@ -12,8 +12,6 @@
 #include <KLocalizedString>
 #include <QDebug>
 
-#ifdef HAVE_POPPLER_0_73
-
 PopplerCertificateInfo::PopplerCertificateInfo(const Poppler::CertificateInfo &info)
     : m_info(info)
 {
@@ -119,22 +117,10 @@ QByteArray PopplerCertificateInfo::certificateData() const
     return m_info.certificateData();
 }
 
-#else
-
-class DummyCertificateInfo : public Okular::CertificateInfo
-{
-};
-
-#endif
-
 PopplerSignatureInfo::PopplerSignatureInfo(const Poppler::SignatureValidationInfo &info)
     : m_info(info)
 {
-#ifdef HAVE_POPPLER_0_73
     m_certfiticateInfo = new PopplerCertificateInfo(m_info.certificateInfo());
-#else
-    m_certfiticateInfo = new DummyCertificateInfo();
-#endif
 }
 
 PopplerSignatureInfo::~PopplerSignatureInfo()

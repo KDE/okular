@@ -55,9 +55,7 @@
 #include "ui_pdfsettingswidget.h"
 
 #include <poppler-media.h>
-#ifdef HAVE_POPPLER_0_73
 #include <poppler-version.h>
-#endif
 
 #include "annots.h"
 #include "debug_pdf.h"
@@ -70,11 +68,7 @@ Q_DECLARE_METATYPE(const Poppler::LinkMovie *)
 Q_DECLARE_METATYPE(const Poppler::LinkRendition *)
 Q_DECLARE_METATYPE(const Poppler::LinkOCGState *)
 
-#ifdef HAVE_POPPLER_0_73
 #define POPPLER_VERSION_MACRO ((POPPLER_VERSION_MAJOR << 16) | (POPPLER_VERSION_MINOR << 8) | (POPPLER_VERSION_MICRO))
-#else
-#define POPPLER_VERSION_MACRO 0
-#endif
 
 static const int defaultPageWidth = 595;
 static const int defaultPageHeight = 842;
@@ -1451,13 +1445,11 @@ QVariant PDFGenerator::metaData(const QString &key, const QVariant &option) cons
         QMutexLocker ml(userMutex());
         return QVariant::fromValue<QVector<int>>(pdfdoc->formCalculateOrder());
     } else if (key == QLatin1String("GeneratorExtraDescription")) {
-#ifdef HAVE_POPPLER_0_73
         if (Poppler::Version::string() == QStringLiteral(POPPLER_VERSION)) {
             return i18n("Using Poppler %1", Poppler::Version::string());
         } else {
             return i18n("Using Poppler %1\n\nBuilt against Poppler %2", Poppler::Version::string(), POPPLER_VERSION);
         }
-#endif
     }
     return QVariant();
 }

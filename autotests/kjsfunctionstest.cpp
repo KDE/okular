@@ -84,7 +84,6 @@ class KJSFunctionsTest : public QObject
     Q_OBJECT
 
 private slots:
-#ifdef HAVE_POPPLER_0_79
     void initTestCase();
     void testNthFieldName();
     void testDisplay();
@@ -99,10 +98,7 @@ private slots:
 private:
     Okular::Document *m_document;
     QMap<QString, Okular::FormField *> m_fields;
-#endif
 };
-
-#ifdef HAVE_POPPLER_0_79
 
 void KJSFunctionsTest::initTestCase()
 {
@@ -358,8 +354,6 @@ void KJSFunctionsTest::cleanupTestCase()
     m_document->closeDocument();
     delete m_document;
 }
-
-#endif
 
 QTEST_MAIN(KJSFunctionsTest)
 #include "kjsfunctionstest.moc"

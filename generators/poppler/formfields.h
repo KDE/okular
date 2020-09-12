@@ -40,14 +40,12 @@ public:
     void setState(bool state) override;
     QList<int> siblings() const override;
     void setIcon(Okular::FormField *field) override;
-#ifdef HAVE_POPPLER_0_79
     /*
      * Supported only in newer versions of Poppler library.
      *
      * @since 1.9
      */
     Poppler::FormFieldIcon icon() const;
-#endif
 
 private:
     std::unique_ptr<Poppler::FormFieldButton> m_field;

@@ -6,18 +6,6 @@ add_subdirectory( conf )
 set(CMAKE_REQUIRED_LIBRARIES Poppler::Qt5 Qt5::Core Qt5::Gui)
 
 check_cxx_source_compiles("
-#include <poppler-form.h>
-#include <poppler-qt5.h>
-int main()
-{
-    Poppler::FormFieldIcon icon(nullptr);
-    Poppler::FormFieldButton *button = nullptr;
-    button->setIcon( icon );
-    return 0;
-}
-" HAVE_POPPLER_0_79)
-
-check_cxx_source_compiles("
 #include <poppler-qt5.h>
 int main()
 {

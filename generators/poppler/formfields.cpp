@@ -92,20 +92,12 @@ void PopplerFormFieldButton::setVisible(bool value)
 
 bool PopplerFormFieldButton::isPrintable() const
 {
-#ifdef HAVE_POPPLER_0_79
     return m_field->isPrintable();
-#else
-    return true;
-#endif
 }
 
 void PopplerFormFieldButton::setPrintable(bool value)
 {
-#ifdef HAVE_POPPLER_0_79
     m_field->setPrintable(value);
-#else
-    Q_UNUSED(value);
-#endif
 }
 
 Okular::FormFieldButton::ButtonType PopplerFormFieldButton::buttonType() const
@@ -141,23 +133,17 @@ QList<int> PopplerFormFieldButton::siblings() const
     return m_field->siblings();
 }
 
-#ifdef HAVE_POPPLER_0_79
 Poppler::FormFieldIcon PopplerFormFieldButton::icon() const
 {
     return m_field->icon();
 }
-#endif
 
 void PopplerFormFieldButton::setIcon(Okular::FormField *field)
 {
-#ifdef HAVE_POPPLER_0_79
     if (field->type() == Okular::FormField::FormButton) {
         PopplerFormFieldButton *button = static_cast<PopplerFormFieldButton *>(field);
         m_field->setIcon(button->icon());
     }
-#else
-    Q_UNUSED(field);
-#endif
 }
 
 PopplerFormFieldText::PopplerFormFieldText(std::unique_ptr<Poppler::FormFieldText> field)
@@ -216,20 +202,12 @@ void PopplerFormFieldText::setVisible(bool value)
 
 bool PopplerFormFieldText::isPrintable() const
 {
-#ifdef HAVE_POPPLER_0_79
     return m_field->isPrintable();
-#else
-    return true;
-#endif
 }
 
 void PopplerFormFieldText::setPrintable(bool value)
 {
-#ifdef HAVE_POPPLER_0_79
     m_field->setPrintable(value);
-#else
-    Q_UNUSED(value);
-#endif
 }
 
 Okular::FormFieldText::TextType PopplerFormFieldText::textType() const
@@ -354,20 +332,12 @@ void PopplerFormFieldChoice::setVisible(bool value)
 
 bool PopplerFormFieldChoice::isPrintable() const
 {
-#ifdef HAVE_POPPLER_0_79
     return m_field->isPrintable();
-#else
-    return true;
-#endif
 }
 
 void PopplerFormFieldChoice::setPrintable(bool value)
 {
-#ifdef HAVE_POPPLER_0_79
     m_field->setPrintable(value);
-#else
-    Q_UNUSED(value);
-#endif
 }
 
 Okular::FormFieldChoice::ChoiceType PopplerFormFieldChoice::choiceType() const

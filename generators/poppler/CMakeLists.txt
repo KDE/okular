@@ -6,17 +6,6 @@ add_subdirectory( conf )
 set(CMAKE_REQUIRED_LIBRARIES Poppler::Qt5 Qt5::Core Qt5::Gui)
 
 check_cxx_source_compiles("
-#include <poppler-qt5.h>
-int main()
-{
-    Poppler::FontInfo info;
-    QString substituteName = info.substituteName();
-    (void)substituteName;
-    return 0;
-}
-" HAVE_POPPLER_0_80)
-
-check_cxx_source_compiles("
 #include <poppler-form.h>
 int main()
 {

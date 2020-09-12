@@ -235,11 +235,7 @@ void PopplerFormFieldText::setText(const QString &text)
 
 void PopplerFormFieldText::setAppearanceText(const QString &text)
 {
-#ifdef HAVE_POPPLER_0_80
     m_field->setAppearanceText(text);
-#else
-    Q_UNUSED(text);
-#endif
 }
 
 bool PopplerFormFieldText::isPassword() const

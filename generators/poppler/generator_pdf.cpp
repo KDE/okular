@@ -933,9 +933,7 @@ Okular::FontInfo::List PDFGenerator::fontsForPage(int page)
     for (const Poppler::FontInfo &font : qAsConst(fonts)) {
         Okular::FontInfo of;
         of.setName(font.name());
-#ifdef HAVE_POPPLER_0_80
         of.setSubstituteName(font.substituteName());
-#endif
         of.setType(convertPopplerFontInfoTypeToOkularFontInfoType(font.type()));
         of.setEmbedType(embedTypeForPopplerFontInfo(font));
         of.setFile(font.file());

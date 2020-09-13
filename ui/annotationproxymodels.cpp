@@ -563,7 +563,7 @@ void AuthorGroupProxyModel::rebuildIndexes()
             if (!author.isEmpty()) {
                 // We have the annotations as top-level, so introduce authors as new
                 // top-levels and append the annotations
-                AuthorGroupItem *authorItem = authorMap.value(author, 0);
+                AuthorGroupItem *authorItem = authorMap.value(author, nullptr);
                 if (!authorItem) {
                     authorItem = new AuthorGroupItem(d->mRoot, AuthorGroupItem::Author);
                     authorItem->setAuthor(author);
@@ -589,7 +589,7 @@ void AuthorGroupProxyModel::rebuildIndexes()
                     const QModelIndex annIdx = sourceModel()->index(subRow, 0, idx);
                     const QString author = sourceModel()->data(annIdx, AnnotationModel::AuthorRole).toString();
 
-                    AuthorGroupItem *authorItem = pageAuthorMap.value(author, 0);
+                    AuthorGroupItem *authorItem = pageAuthorMap.value(author, nullptr);
                     if (!authorItem) {
                         authorItem = new AuthorGroupItem(pageItem, AuthorGroupItem::Author);
                         authorItem->setAuthor(author);

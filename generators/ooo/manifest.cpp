@@ -213,7 +213,7 @@ Manifest::~Manifest()
 
 ManifestEntry *Manifest::entryByName(const QString &filename)
 {
-    return mEntries.value(filename, 0);
+    return mEntries.value(filename, nullptr);
 }
 
 bool Manifest::testIfEncrypted(const QString &filename)

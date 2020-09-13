@@ -239,7 +239,7 @@ Okular::Movie *createMovieFromPopplerScreen(const Poppler::LinkRendition *popple
 
 QPair<Okular::Movie *, Okular::EmbeddedFile *> createMovieFromPopplerRichMedia(const Poppler::RichMediaAnnotation *popplerRichMedia)
 {
-    const QPair<Okular::Movie *, Okular::EmbeddedFile *> emptyResult(0, 0);
+    const QPair<Okular::Movie *, Okular::EmbeddedFile *> emptyResult(nullptr, nullptr);
 
     /**
      * To convert a Flash/Video based RichMedia annotation to a movie, we search for the first

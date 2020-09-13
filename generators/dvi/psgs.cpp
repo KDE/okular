@@ -70,7 +70,7 @@ void ghostscript_interface::setPostScript(const PageNumber page, const QString &
     qCDebug(OkularDviDebug) << "ghostscript_interface::setPostScript( " << page << ", ... )";
 #endif
 
-    if (pageList.value(page) == 0) {
+    if (pageList.value(page) == nullptr) {
         pageInfo *info = new pageInfo(PostScript);
         // Check if dict is big enough
         if (pageList.count() > pageList.capacity() - 2)
@@ -94,7 +94,7 @@ void ghostscript_interface::setBackgroundColor(const PageNumber page, const QCol
     qCDebug(OkularDviDebug) << "ghostscript_interface::setBackgroundColor( " << page << ", " << background_color << " )";
 #endif
 
-    if (pageList.value(page) == 0) {
+    if (pageList.value(page) == nullptr) {
         pageInfo *info = new pageInfo(QString());
         info->background = background_color;
         if (permanent)
@@ -115,7 +115,7 @@ void ghostscript_interface::restoreBackgroundColor(const PageNumber page)
 #ifdef DEBUG_PSGS
     qCDebug(OkularDviDebug) << "ghostscript_interface::restoreBackgroundColor( " << page << " )";
 #endif
-    if (pageList.value(page) == 0)
+    if (pageList.value(page) == nullptr)
         return;
 
     pageInfo *info = pageList.value(page);
@@ -131,7 +131,7 @@ QColor ghostscript_interface::getBackgroundColor(const PageNumber page) const
     qCDebug(OkularDviDebug) << "ghostscript_interface::getBackgroundColor( " << page << " )";
 #endif
 
-    if (pageList.value(page) == 0)
+    if (pageList.value(page) == nullptr)
         return Qt::white;
     else
         return pageList.value(page)->background;

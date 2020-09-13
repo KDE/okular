@@ -3191,7 +3191,7 @@ void Part::psTransformEnded(int exit, QProcess::ExitStatus status)
     if (status != QProcess::NormalExit)
         return;
 
-    QProcess *senderobj = sender() ? qobject_cast<QProcess *>(sender()) : 0;
+    QProcess *senderobj = sender() ? qobject_cast<QProcess *>(sender()) : nullptr;
     if (senderobj) {
         senderobj->close();
         senderobj->deleteLater();

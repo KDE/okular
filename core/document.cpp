@@ -1444,7 +1444,7 @@ void DocumentPrivate::sendGeneratorPixmapRequest()
 
 void DocumentPrivate::rotationFinished(int page, Okular::Page *okularPage)
 {
-    Okular::Page *wantedPage = m_pagesVector.value(page, 0);
+    Okular::Page *wantedPage = m_pagesVector.value(page, nullptr);
     if (!wantedPage || wantedPage != okularPage)
         return;
 
@@ -1512,7 +1512,7 @@ void DocumentPrivate::slotGeneratorConfigChanged()
 
 void DocumentPrivate::refreshPixmaps(int pageNumber)
 {
-    Page *page = m_pagesVector.value(pageNumber, 0);
+    Page *page = m_pagesVector.value(pageNumber, nullptr);
     if (!page)
         return;
 
@@ -3150,7 +3150,7 @@ void Document::requestPixmaps(const QLinkedList<PixmapRequest *> &requests, Pixm
     for (PixmapRequest *request : requests) {
         // set the 'page field' (see PixmapRequest) and check if it is valid
         qCDebug(OkularCoreDebug).nospace() << "request observer=" << request->observer() << " " << request->width() << "x" << request->height() << "@" << request->pageNumber();
-        if (d->m_pagesVector.value(request->pageNumber()) == 0) {
+        if (d->m_pagesVector.value(request->pageNumber()) == nullptr) {
             // skip requests referencing an invalid page (must not happen)
             delete request;
             continue;
@@ -3614,7 +3614,7 @@ void Document::searchText(int searchID, const QString &text, bool fromStart, Qt:
         const int viewportPage = (*d->m_viewportIterator).pageNumber;
         const int fromStartSearchPage = forward ? 0 : d->m_pagesVector.count() - 1;
         int currentPage = fromStart ? fromStartSearchPage : ((s->continueOnPage != -1) ? s->continueOnPage : viewportPage);
-        Page *lastPage = fromStart ? 0 : d->m_pagesVector[currentPage];
+        Page *lastPage = fromStart ? nullptr : d->m_pagesVector[currentPage];
         int pagesDone = 0;
 
         // continue checking last TextPage first (if it is the current page)

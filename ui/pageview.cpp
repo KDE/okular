@@ -421,6 +421,7 @@ PageView::PageView(QWidget *parent, Okular::Document *document)
     prop.setScrollMetric(QScrollerProperties::MaximumVelocity, 1);
     prop.setScrollMetric(QScrollerProperties::HorizontalOvershootPolicy, QScrollerProperties::OvershootAlwaysOff);
     prop.setScrollMetric(QScrollerProperties::VerticalOvershootPolicy, QScrollerProperties::OvershootAlwaysOff);
+    prop.setScrollMetric(QScrollerProperties::DragStartDistance, 0.0);
     d->scroller->setScrollerProperties(prop);
 
     connect(d->scroller, &QScroller::stateChanged, this, &PageView::slotRequestVisiblePixmaps);

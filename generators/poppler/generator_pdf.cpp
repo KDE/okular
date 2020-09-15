@@ -790,11 +790,11 @@ void PDFGenerator::loadPages(QVector<Okular::Page *> &pagesVector, int rotation,
                 if (std::find_if(pageFormFields.begin(), pageFormFields.end(), compareSignatureByFullyQualifiedName) != pageFormFields.end()) {
                     delete s;
                     createSignature = false;
-                    continue;
+                    break;
                 }
             }
             // See if the signature is in page 0
-            if (std::find_if(page0FormFields.constBegin(), page0FormFields.constEnd(), compareSignatureByFullyQualifiedName) != page0FormFields.constEnd()) {
+            if (createSignature && std::find_if(page0FormFields.constBegin(), page0FormFields.constEnd(), compareSignatureByFullyQualifiedName) != page0FormFields.constEnd()) {
                 delete s;
                 createSignature = false;
             }

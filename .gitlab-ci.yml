@@ -32,7 +32,7 @@ build_clazy_clang_tidy:
     - echo 'deb-src http://deb.debian.org/debian unstable main' >> /etc/apt/sources.list
     - apt-get update
     - apt-get build-dep --yes --no-install-recommends okular
-    - apt-get install --yes --no-install-recommends ninja-build clazy clang clang-tidy python libkf5crash-dev libkf5purpose-dev libegl-dev jq
+    - apt-get install --yes --no-install-recommends ninja-build clazy clang clang-tidy libkf5crash-dev libkf5purpose-dev libegl-dev jq
 
   script:
     - srcdir=`pwd` && mkdir -p /tmp/okular_build && cd /tmp/okular_build && CC=clang CXX=clazy CXXFLAGS="-Werror -Wno-deprecated-declarations" cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G Ninja $srcdir && cat compile_commands.json | jq  '[.[] | select(.file | contains("'"$srcdir"'"))]' > compile_commands.aux.json && cat compile_commands.aux.json | jq  '[.[] | select(.file | contains("/synctex/")| not)]' > compile_commands.json && cp "$srcdir/.clang-tidy" .

@@ -410,6 +410,20 @@ static Okular::LineAnnotation::LineIntent popplerToOkular(Poppler::LineAnnotatio
     return Okular::LineAnnotation::Unknown;
 }
 
+static Okular::GeomAnnotation::GeomType popplerToOkular(Poppler::GeomAnnotation::GeomType pgt)
+{
+    switch (pgt) {
+    case Poppler::GeomAnnotation::InscribedSquare:
+        return Okular::GeomAnnotation::InscribedSquare;
+    case Poppler::GeomAnnotation::InscribedCircle:
+        return Okular::GeomAnnotation::InscribedCircle;
+    default:
+        qWarning() << Q_FUNC_INFO << "unknown value" << pgt;
+    }
+
+    return Okular::GeomAnnotation::InscribedSquare;
+}
+
 static Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::TextAnnotation *popplerAnnotation)
 {
     Okular::TextAnnotation *oTextAnn = new Okular::TextAnnotation();
@@ -450,6 +464,16 @@ static Okular::Annotation *createAnnotationFromPopplerAnnotation(const Poppler::
     oLineAnn->setLinePoints(points);
 
     return oLineAnn;
+}
+
+static Okular::Annotation *createAnnotationFromPopplerAnnotation(const Poppler::GeomAnnotation *popplerAnnotation)
+{
+    Okular::GeomAnnotation *oGeomAnn = new Okular::GeomAnnotation();
+
+    oGeomAnn->setGeometricalType(popplerToOkular(popplerAnnotation->geomType()));
+    oGeomAnn->setGeometricalInnerColor(popplerAnnotation->geomInnerColor());
+
+    return oGeomAnn;
 }
 
 Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *popplerAnnotation, const Poppler::Page &popplerPage, bool *doDelete)
@@ -533,7 +557,13 @@ Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *p
         okularAnnotation = createAnnotationFromPopplerAnnotation(static_cast<Poppler::LineAnnotation *>(popplerAnnotation));
         break;
     }
-    case Poppler::Annotation::AGeom:
+    case Poppler::Annotation::AGeom: {
+        externallyDrawn = true;
+        tieToOkularAnn = true;
+        *doDelete = false;
+        okularAnnotation = createAnnotationFromPopplerAnnotation(static_cast<Poppler::GeomAnnotation *>(popplerAnnotation));
+        break;
+    }
     case Poppler::Annotation::AHighlight:
     case Poppler::Annotation::AInk:
     case Poppler::Annotation::ACaret:

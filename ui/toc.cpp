@@ -38,9 +38,7 @@ TOC::TOC(QWidget *parent, Okular::Document *document)
     mainlay->setSpacing(6);
 
     KTitleWidget *titleWidget = new KTitleWidget(this);
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 53, 0)
     titleWidget->setLevel(2);
-#endif
     titleWidget->setText(i18n("Contents"));
     mainlay->addWidget(titleWidget);
     mainlay->setAlignment(titleWidget, Qt::AlignHCenter);

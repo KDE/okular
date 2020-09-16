@@ -97,9 +97,7 @@ Reviews::Reviews(QWidget *parent, Okular::Document *document)
     vLayout->setSpacing(6);
 
     KTitleWidget *titleWidget = new KTitleWidget(this);
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 53, 0)
     titleWidget->setLevel(2);
-#endif
     titleWidget->setText(i18n("Reviews"));
 
     m_view = new TreeView(m_document, this);

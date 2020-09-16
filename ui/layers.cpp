@@ -34,9 +34,7 @@ Layers::Layers(QWidget *parent, Okular::Document *document)
     m_document->addObserver(this);
 
     KTitleWidget *titleWidget = new KTitleWidget(this);
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 53, 0)
     titleWidget->setLevel(2);
-#endif
     titleWidget->setText(i18n("Layers"));
     mainlay->addWidget(titleWidget);
     mainlay->setAlignment(titleWidget, Qt::AlignHCenter);

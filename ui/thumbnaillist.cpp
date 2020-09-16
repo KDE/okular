@@ -47,9 +47,7 @@ ThumbnailsBox::ThumbnailsBox(QWidget *parent)
     vbox->setSpacing(0);
 
     KTitleWidget *titleWidget = new KTitleWidget(this);
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 53, 0)
     titleWidget->setLevel(2);
-#endif
     titleWidget->setText(i18n("Thumbnails"));
     vbox->addWidget(titleWidget);
     vbox->setAlignment(titleWidget, Qt::AlignHCenter);

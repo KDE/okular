@@ -563,6 +563,15 @@ static Okular::Annotation *createAnnotationFromPopplerAnnotation(const Poppler::
     return oCaretAnn;
 }
 
+static Okular::Annotation *createAnnotationFromPopplerAnnotation(const Poppler::StampAnnotation *popplerAnnotation)
+{
+    Okular::StampAnnotation *oStampAnn = new Okular::StampAnnotation();
+
+    oStampAnn->setStampIconName(popplerAnnotation->stampIconName());
+
+    return oStampAnn;
+}
+
 Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *popplerAnnotation, const Poppler::Page &popplerPage, bool *doDelete)
 {
     Okular::Annotation *okularAnnotation = nullptr;
@@ -675,14 +684,9 @@ Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *p
     case Poppler::Annotation::AStamp:
         tieToOkularAnn = true;
         *doDelete = false;
-        /* fallthrough */
+        okularAnnotation = createAnnotationFromPopplerAnnotation(static_cast<Poppler::StampAnnotation *>(popplerAnnotation));
+        break;
     default: {
-        // this is uber ugly but i don't know a better way to do it without introducing a poppler::annotation dependency on core
-        QDomDocument doc;
-        QDomElement root = doc.createElement(QStringLiteral("root"));
-        doc.appendChild(root);
-        Poppler::AnnotationUtils::storeAnnotation(popplerAnnotation, root, doc);
-        okularAnnotation = Okular::AnnotationUtils::createAnnotation(root);
         break;
     }
     }

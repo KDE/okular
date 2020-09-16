@@ -650,18 +650,6 @@ Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *p
         if (externallyDrawn)
             okularAnnotation->setFlags(okularAnnotation->flags() | Okular::Annotation::ExternallyDrawn);
 
-        if (okularAnnotation->subType() == Okular::Annotation::AText) {
-            Okular::TextAnnotation *txtann = static_cast<Okular::TextAnnotation *>(okularAnnotation);
-
-            if (txtann->textType() == Okular::TextAnnotation::Linked) {
-                Poppler::TextAnnotation *ppl_txtann = static_cast<Poppler::TextAnnotation *>(popplerAnnotation);
-
-                // Poppler and Okular assume a different default icon name in XML
-                // We re-read it via getter, which always tells the right one
-                txtann->setTextIcon(ppl_txtann->textIcon());
-            }
-        }
-
         // Convert the poppler annotation style to Okular annotation style
         Okular::Annotation::Style &okularStyle = okularAnnotation->style();
         const Poppler::Annotation::Style popplerStyle = popplerAnnotation->style();

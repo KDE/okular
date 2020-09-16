@@ -521,6 +521,25 @@ static Okular::Annotation *createAnnotationFromPopplerAnnotation(const Poppler::
     return oHighlightAnn;
 }
 
+static Okular::Annotation *createAnnotationFromPopplerAnnotation(const Poppler::InkAnnotation *popplerAnnotation)
+{
+    Okular::InkAnnotation *oInkAnn = new Okular::InkAnnotation();
+
+    const QList<QLinkedList<QPointF>> popplerInkPaths = popplerAnnotation->inkPaths();
+    QList<QLinkedList<Okular::NormalizedPoint>> okularInkPaths;
+    for (const QLinkedList<QPointF> &popplerInkPath : popplerInkPaths) {
+        QLinkedList<Okular::NormalizedPoint> okularInkPath;
+        for (const QPointF &popplerPoint : popplerInkPath) {
+            okularInkPath << Okular::NormalizedPoint(popplerPoint.x(), popplerPoint.y());
+        }
+        okularInkPaths << okularInkPath;
+    }
+
+    oInkAnn->setInkPaths(okularInkPaths);
+
+    return oInkAnn;
+}
+
 Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *popplerAnnotation, const Poppler::Page &popplerPage, bool *doDelete)
 {
     Okular::Annotation *okularAnnotation = nullptr;
@@ -616,7 +635,13 @@ Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *p
         okularAnnotation = createAnnotationFromPopplerAnnotation(static_cast<Poppler::HighlightAnnotation *>(popplerAnnotation));
         break;
     }
-    case Poppler::Annotation::AInk:
+    case Poppler::Annotation::AInk: {
+        externallyDrawn = true;
+        tieToOkularAnn = true;
+        *doDelete = false;
+        okularAnnotation = createAnnotationFromPopplerAnnotation(static_cast<Poppler::InkAnnotation *>(popplerAnnotation));
+        break;
+    }
     case Poppler::Annotation::ACaret:
         externallyDrawn = true;
         /* fallthrough */

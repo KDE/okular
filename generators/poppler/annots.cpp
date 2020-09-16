@@ -442,6 +442,20 @@ static Okular::HighlightAnnotation::HighlightType popplerToOkular(Poppler::Highl
     return Okular::HighlightAnnotation::Highlight;
 }
 
+static Okular::CaretAnnotation::CaretSymbol popplerToOkular(Poppler::CaretAnnotation::CaretSymbol pcs)
+{
+    switch (pcs) {
+    case Poppler::CaretAnnotation::None:
+        return Okular::CaretAnnotation::None;
+    case Poppler::CaretAnnotation::P:
+        return Okular::CaretAnnotation::P;
+    default:
+        qWarning() << Q_FUNC_INFO << "unknown value" << pcs;
+    }
+
+    return Okular::CaretAnnotation::None;
+}
+
 static Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::TextAnnotation *popplerAnnotation)
 {
     Okular::TextAnnotation *oTextAnn = new Okular::TextAnnotation();
@@ -538,6 +552,15 @@ static Okular::Annotation *createAnnotationFromPopplerAnnotation(const Poppler::
     oInkAnn->setInkPaths(okularInkPaths);
 
     return oInkAnn;
+}
+
+static Okular::Annotation *createAnnotationFromPopplerAnnotation(const Poppler::CaretAnnotation *popplerAnnotation)
+{
+    Okular::CaretAnnotation *oCaretAnn = new Okular::CaretAnnotation();
+
+    oCaretAnn->setCaretSymbol(popplerToOkular(popplerAnnotation->caretSymbol()));
+
+    return oCaretAnn;
 }
 
 Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *popplerAnnotation, const Poppler::Page &popplerPage, bool *doDelete)
@@ -642,9 +665,13 @@ Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *p
         okularAnnotation = createAnnotationFromPopplerAnnotation(static_cast<Poppler::InkAnnotation *>(popplerAnnotation));
         break;
     }
-    case Poppler::Annotation::ACaret:
+    case Poppler::Annotation::ACaret: {
         externallyDrawn = true;
-        /* fallthrough */
+        tieToOkularAnn = true;
+        *doDelete = false;
+        okularAnnotation = createAnnotationFromPopplerAnnotation(static_cast<Poppler::CaretAnnotation *>(popplerAnnotation));
+        break;
+    }
     case Poppler::Annotation::AStamp:
         tieToOkularAnn = true;
         *doDelete = false;

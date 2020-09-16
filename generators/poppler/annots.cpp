@@ -424,6 +424,24 @@ static Okular::GeomAnnotation::GeomType popplerToOkular(Poppler::GeomAnnotation:
     return Okular::GeomAnnotation::InscribedSquare;
 }
 
+static Okular::HighlightAnnotation::HighlightType popplerToOkular(Poppler::HighlightAnnotation::HighlightType pht)
+{
+    switch (pht) {
+    case Poppler::HighlightAnnotation::Highlight:
+        return Okular::HighlightAnnotation::Highlight;
+    case Poppler::HighlightAnnotation::Squiggly:
+        return Okular::HighlightAnnotation::Squiggly;
+    case Poppler::HighlightAnnotation::Underline:
+        return Okular::HighlightAnnotation::Underline;
+    case Poppler::HighlightAnnotation::StrikeOut:
+        return Okular::HighlightAnnotation::StrikeOut;
+    default:
+        qWarning() << Q_FUNC_INFO << "unknown value" << pht;
+    }
+
+    return Okular::HighlightAnnotation::Highlight;
+}
+
 static Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::TextAnnotation *popplerAnnotation)
 {
     Okular::TextAnnotation *oTextAnn = new Okular::TextAnnotation();
@@ -474,6 +492,33 @@ static Okular::Annotation *createAnnotationFromPopplerAnnotation(const Poppler::
     oGeomAnn->setGeometricalInnerColor(popplerAnnotation->geomInnerColor());
 
     return oGeomAnn;
+}
+
+static Okular::Annotation *createAnnotationFromPopplerAnnotation(const Poppler::HighlightAnnotation *popplerAnnotation)
+{
+    Okular::HighlightAnnotation *oHighlightAnn = new Okular::HighlightAnnotation();
+
+    oHighlightAnn->setHighlightType(popplerToOkular(popplerAnnotation->highlightType()));
+
+    const QList<Poppler::HighlightAnnotation::Quad> popplerHq = popplerAnnotation->highlightQuads();
+    QList<Okular::HighlightAnnotation::Quad> &okularHq = oHighlightAnn->highlightQuads();
+
+    for (const Poppler::HighlightAnnotation::Quad &popplerQ : popplerHq) {
+        Okular::HighlightAnnotation::Quad q;
+
+        // Poppler stores highlight points in swapped order
+        q.setPoint(Okular::NormalizedPoint(popplerQ.points[0].x(), popplerQ.points[0].y()), 3);
+        q.setPoint(Okular::NormalizedPoint(popplerQ.points[1].x(), popplerQ.points[1].y()), 2);
+        q.setPoint(Okular::NormalizedPoint(popplerQ.points[2].x(), popplerQ.points[2].y()), 1);
+        q.setPoint(Okular::NormalizedPoint(popplerQ.points[3].x(), popplerQ.points[3].y()), 0);
+
+        q.setCapStart(popplerQ.capStart);
+        q.setCapEnd(popplerQ.capEnd);
+        q.setFeather(popplerQ.feather);
+        okularHq << q;
+    }
+
+    return oHighlightAnn;
 }
 
 Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *popplerAnnotation, const Poppler::Page &popplerPage, bool *doDelete)
@@ -564,7 +609,13 @@ Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *p
         okularAnnotation = createAnnotationFromPopplerAnnotation(static_cast<Poppler::GeomAnnotation *>(popplerAnnotation));
         break;
     }
-    case Poppler::Annotation::AHighlight:
+    case Poppler::Annotation::AHighlight: {
+        externallyDrawn = true;
+        tieToOkularAnn = true;
+        *doDelete = false;
+        okularAnnotation = createAnnotationFromPopplerAnnotation(static_cast<Poppler::HighlightAnnotation *>(popplerAnnotation));
+        break;
+    }
     case Poppler::Annotation::AInk:
     case Poppler::Annotation::ACaret:
         externallyDrawn = true;
@@ -598,19 +649,6 @@ Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *p
 
         if (externallyDrawn)
             okularAnnotation->setFlags(okularAnnotation->flags() | Okular::Annotation::ExternallyDrawn);
-
-        // Poppler stores highlight points in swapped order
-        if (okularAnnotation->subType() == Okular::Annotation::AHighlight) {
-            Okular::HighlightAnnotation *hlann = static_cast<Okular::HighlightAnnotation *>(okularAnnotation);
-            for (Okular::HighlightAnnotation::Quad &quad : hlann->highlightQuads()) {
-                const Okular::NormalizedPoint p3 = quad.point(3);
-                quad.setPoint(quad.point(0), 3);
-                quad.setPoint(p3, 0);
-                const Okular::NormalizedPoint p2 = quad.point(2);
-                quad.setPoint(quad.point(1), 2);
-                quad.setPoint(p2, 1);
-            }
-        }
 
         if (okularAnnotation->subType() == Okular::Annotation::AText) {
             Okular::TextAnnotation *txtann = static_cast<Okular::TextAnnotation *>(okularAnnotation);

@@ -79,39 +79,393 @@ bool PopplerAnnotationProxy::supports(Capability cap) const
     }
 }
 
+static Poppler::TextAnnotation::TextType okularToPoppler(Okular::TextAnnotation::TextType ott)
+{
+    switch (ott) {
+    case Okular::TextAnnotation::Linked:
+        return Poppler::TextAnnotation::Linked;
+    case Okular::TextAnnotation::InPlace:
+        return Poppler::TextAnnotation::InPlace;
+    default:
+        qWarning() << Q_FUNC_INFO << "unknown value" << ott;
+    }
+
+    return Poppler::TextAnnotation::Linked;
+}
+
+static Poppler::Annotation::LineEffect okularToPoppler(Okular::Annotation::LineEffect ole)
+{
+    switch (ole) {
+    case Okular::Annotation::NoEffect:
+        return Poppler::Annotation::NoEffect;
+    case Okular::Annotation::Cloudy:
+        return Poppler::Annotation::Cloudy;
+    default:
+        qWarning() << Q_FUNC_INFO << "unknown value" << ole;
+    }
+
+    return Poppler::Annotation::NoEffect;
+}
+
+static Poppler::Annotation::LineStyle okularToPoppler(Okular::Annotation::LineStyle ols)
+{
+    switch (ols) {
+    case Okular::Annotation::Solid:
+        return Poppler::Annotation::Solid;
+    case Okular::Annotation::Dashed:
+        return Poppler::Annotation::Dashed;
+    case Okular::Annotation::Beveled:
+        return Poppler::Annotation::Beveled;
+    case Okular::Annotation::Inset:
+        return Poppler::Annotation::Inset;
+    case Okular::Annotation::Underline:
+        return Poppler::Annotation::Underline;
+    default:
+        qWarning() << Q_FUNC_INFO << "unknown value" << ols;
+    }
+
+    return Poppler::Annotation::Solid;
+}
+
+static Poppler::TextAnnotation::InplaceIntent okularToPoppler(Okular::TextAnnotation::InplaceIntent oii)
+{
+    switch (oii) {
+    case Okular::TextAnnotation::Unknown:
+        return Poppler::TextAnnotation::Unknown;
+    case Okular::TextAnnotation::Callout:
+        return Poppler::TextAnnotation::Callout;
+    case Okular::TextAnnotation::TypeWriter:
+        return Poppler::TextAnnotation::TypeWriter;
+    default:
+        qWarning() << Q_FUNC_INFO << "unknown value" << oii;
+    }
+
+    return Poppler::TextAnnotation::Unknown;
+}
+
+static Poppler::LineAnnotation::TermStyle okularToPoppler(Okular::LineAnnotation::TermStyle ots)
+{
+    switch (ots) {
+    case Okular::LineAnnotation::Square:
+        return Poppler::LineAnnotation::Square;
+    case Okular::LineAnnotation::Circle:
+        return Poppler::LineAnnotation::Circle;
+    case Okular::LineAnnotation::Diamond:
+        return Poppler::LineAnnotation::Diamond;
+    case Okular::LineAnnotation::OpenArrow:
+        return Poppler::LineAnnotation::OpenArrow;
+    case Okular::LineAnnotation::ClosedArrow:
+        return Poppler::LineAnnotation::ClosedArrow;
+    case Okular::LineAnnotation::None:
+        return Poppler::LineAnnotation::None;
+    case Okular::LineAnnotation::Butt:
+        return Poppler::LineAnnotation::Butt;
+    case Okular::LineAnnotation::ROpenArrow:
+        return Poppler::LineAnnotation::ROpenArrow;
+    case Okular::LineAnnotation::RClosedArrow:
+        return Poppler::LineAnnotation::RClosedArrow;
+    case Okular::LineAnnotation::Slash:
+        return Poppler::LineAnnotation::Slash;
+    default:
+        qWarning() << Q_FUNC_INFO << "unknown value" << ots;
+    }
+
+    return Poppler::LineAnnotation::None;
+}
+
+static Poppler::LineAnnotation::LineIntent okularToPoppler(Okular::LineAnnotation::LineIntent oli)
+{
+    switch (oli) {
+    case Okular::LineAnnotation::Unknown:
+        return Poppler::LineAnnotation::Unknown;
+    case Okular::LineAnnotation::Arrow:
+        return Poppler::LineAnnotation::Arrow;
+    case Okular::LineAnnotation::Dimension:
+        return Poppler::LineAnnotation::Dimension;
+    case Okular::LineAnnotation::PolygonCloud:
+        return Poppler::LineAnnotation::PolygonCloud;
+    default:
+        qWarning() << Q_FUNC_INFO << "unknown value" << oli;
+    }
+
+    return Poppler::LineAnnotation::Unknown;
+}
+
+static Poppler::GeomAnnotation::GeomType okularToPoppler(Okular::GeomAnnotation::GeomType ogt)
+{
+    switch (ogt) {
+    case Okular::GeomAnnotation::InscribedSquare:
+        return Poppler::GeomAnnotation::InscribedSquare;
+    case Okular::GeomAnnotation::InscribedCircle:
+        return Poppler::GeomAnnotation::InscribedCircle;
+    default:
+        qWarning() << Q_FUNC_INFO << "unknown value" << ogt;
+    }
+
+    return Poppler::GeomAnnotation::InscribedSquare;
+}
+
+static Poppler::HighlightAnnotation::HighlightType okularToPoppler(Okular::HighlightAnnotation::HighlightType oht)
+{
+    switch (oht) {
+    case Okular::HighlightAnnotation::Highlight:
+        return Poppler::HighlightAnnotation::Highlight;
+    case Okular::HighlightAnnotation::Squiggly:
+        return Poppler::HighlightAnnotation::Squiggly;
+    case Okular::HighlightAnnotation::Underline:
+        return Poppler::HighlightAnnotation::Underline;
+    case Okular::HighlightAnnotation::StrikeOut:
+        return Poppler::HighlightAnnotation::StrikeOut;
+    default:
+        qWarning() << Q_FUNC_INFO << "unknown value" << oht;
+    }
+
+    return Poppler::HighlightAnnotation::Highlight;
+}
+
+static Poppler::CaretAnnotation::CaretSymbol okularToPoppler(Okular::CaretAnnotation::CaretSymbol ocs)
+{
+    switch (ocs) {
+    case Okular::CaretAnnotation::None:
+        return Poppler::CaretAnnotation::None;
+    case Okular::CaretAnnotation::P:
+        return Poppler::CaretAnnotation::P;
+    default:
+        qWarning() << Q_FUNC_INFO << "unknown value" << ocs;
+    }
+
+    return Poppler::CaretAnnotation::None;
+}
+
+static Poppler::Annotation::Style okularToPoppler(const Okular::Annotation::Style &oStyle)
+{
+    Poppler::Annotation::Style pStyle;
+    pStyle.setColor(oStyle.color());
+    pStyle.setOpacity(oStyle.opacity());
+    pStyle.setLineEffect(okularToPoppler(oStyle.lineEffect()));
+    pStyle.setEffectIntensity(oStyle.effectIntensity());
+    pStyle.setWidth(oStyle.width());
+    pStyle.setLineStyle(okularToPoppler(oStyle.lineStyle()));
+    pStyle.setXCorners(oStyle.xCorners());
+    pStyle.setYCorners(oStyle.yCorners());
+
+    return pStyle;
+}
+
+static Poppler::Annotation::Popup okularToPoppler(const Okular::Annotation::Window &oWindow)
+{
+    Poppler::Annotation::Popup pWindow;
+    pWindow.setGeometry(QRectF(oWindow.topLeft().x, oWindow.topLeft().y, oWindow.width(), oWindow.height()));
+    // flags being ints is super fragile, should be enums on both ends, but Poppler::Annotation::setPopup is a noop so it's not like it matters
+    pWindow.setFlags(oWindow.flags());
+    pWindow.setTitle(oWindow.title());
+    pWindow.setSummary(oWindow.summary());
+
+    return pWindow;
+}
+
+static void setSharedAnnotationPropertiesToPopplerAnnotation(const Okular::Annotation *okularAnnotation, Poppler::Annotation *popplerAnnotation)
+{
+    popplerAnnotation->setAuthor(okularAnnotation->author());
+    popplerAnnotation->setContents(okularAnnotation->contents());
+    popplerAnnotation->setUniqueName(okularAnnotation->uniqueName());
+
+    // Note: flags and boundary must be set first in order to correctly handle
+    // FixedRotation annotations.
+    popplerAnnotation->setFlags(maskExportedFlags(okularAnnotation->flags()));
+    popplerAnnotation->setBoundary(normRectToRectF(okularAnnotation->boundingRectangle()));
+
+    popplerAnnotation->setStyle(okularToPoppler(okularAnnotation->style()));
+    popplerAnnotation->setPopup(okularToPoppler(okularAnnotation->window()));
+
+    popplerAnnotation->setCreationDate(okularAnnotation->creationDate());
+    popplerAnnotation->setModificationDate(okularAnnotation->modificationDate());
+}
+
+static void updatePopplerAnnotationFromOkularAnnotation(const Okular::TextAnnotation *oTextAnnotation, Poppler::TextAnnotation *pTextAnnotation)
+{
+    pTextAnnotation->setTextIcon(oTextAnnotation->textIcon());
+    pTextAnnotation->setTextFont(oTextAnnotation->textFont());
+    pTextAnnotation->setTextColor(oTextAnnotation->textColor());
+    pTextAnnotation->setInplaceAlign(oTextAnnotation->inplaceAlignment());
+    pTextAnnotation->setInplaceIntent(okularToPoppler(oTextAnnotation->inplaceIntent()));
+    pTextAnnotation->setCalloutPoints(QVector<QPointF>());
+}
+
+static void updatePopplerAnnotationFromOkularAnnotation(const Okular::LineAnnotation *oLineAnnotation, Poppler::LineAnnotation *pLineAnnotation)
+{
+    QLinkedList<QPointF> points;
+    const QLinkedList<Okular::NormalizedPoint> annotPoints = oLineAnnotation->linePoints();
+    for (const Okular::NormalizedPoint &p : annotPoints) {
+        points.append(normPointToPointF(p));
+    }
+    pLineAnnotation->setLinePoints(points);
+    pLineAnnotation->setLineStartStyle(okularToPoppler(oLineAnnotation->lineStartStyle()));
+    pLineAnnotation->setLineEndStyle(okularToPoppler(oLineAnnotation->lineEndStyle()));
+    pLineAnnotation->setLineClosed(oLineAnnotation->lineClosed());
+    pLineAnnotation->setLineInnerColor(oLineAnnotation->lineInnerColor());
+    pLineAnnotation->setLineLeadingForwardPoint(oLineAnnotation->lineLeadingForwardPoint());
+    pLineAnnotation->setLineLeadingBackPoint(oLineAnnotation->lineLeadingBackwardPoint());
+    pLineAnnotation->setLineShowCaption(oLineAnnotation->showCaption());
+    pLineAnnotation->setLineIntent(okularToPoppler(oLineAnnotation->lineIntent()));
+}
+
+static void updatePopplerAnnotationFromOkularAnnotation(const Okular::GeomAnnotation *oGeomAnnotation, Poppler::GeomAnnotation *pGeomAnnotation)
+{
+    pGeomAnnotation->setGeomType(okularToPoppler(oGeomAnnotation->geometricalType()));
+    pGeomAnnotation->setGeomInnerColor(oGeomAnnotation->geometricalInnerColor());
+}
+
+static void updatePopplerAnnotationFromOkularAnnotation(const Okular::HighlightAnnotation *oHighlightAnnotation, Poppler::HighlightAnnotation *pHighlightAnnotation)
+{
+    pHighlightAnnotation->setHighlightType(okularToPoppler(oHighlightAnnotation->highlightType()));
+
+    const QList<Okular::HighlightAnnotation::Quad> &oQuads = oHighlightAnnotation->highlightQuads();
+    QList<Poppler::HighlightAnnotation::Quad> pQuads;
+    for (const Okular::HighlightAnnotation::Quad &oQuad : oQuads) {
+        Poppler::HighlightAnnotation::Quad pQuad;
+        pQuad.points[0] = normPointToPointF(oQuad.point(3));
+        pQuad.points[1] = normPointToPointF(oQuad.point(2));
+        pQuad.points[2] = normPointToPointF(oQuad.point(1));
+        pQuad.points[3] = normPointToPointF(oQuad.point(0));
+        pQuad.capStart = oQuad.capStart();
+        pQuad.capEnd = oQuad.capEnd();
+        pQuad.feather = oQuad.feather();
+        pQuads << pQuad;
+    }
+    pHighlightAnnotation->setHighlightQuads(pQuads);
+}
+
+static void updatePopplerAnnotationFromOkularAnnotation(const Okular::StampAnnotation *oStampAnnotation, Poppler::StampAnnotation *pStampAnnotation)
+{
+    pStampAnnotation->setStampIconName(oStampAnnotation->stampIconName());
+}
+
+static void updatePopplerAnnotationFromOkularAnnotation(const Okular::InkAnnotation *oInkAnnotation, Poppler::InkAnnotation *pInkAnnotation)
+{
+    QList<QLinkedList<QPointF>> paths;
+    const QList<QLinkedList<Okular::NormalizedPoint>> inkPathsList = oInkAnnotation->inkPaths();
+    for (const QLinkedList<Okular::NormalizedPoint> &path : inkPathsList) {
+        QLinkedList<QPointF> points;
+        for (const Okular::NormalizedPoint &p : path) {
+            points.append(normPointToPointF(p));
+        }
+        paths.append(points);
+    }
+    pInkAnnotation->setInkPaths(paths);
+}
+
+static void updatePopplerAnnotationFromOkularAnnotation(const Okular::CaretAnnotation *oCaretAnnotation, Poppler::CaretAnnotation *pCaretAnnotation)
+{
+    pCaretAnnotation->setCaretSymbol(okularToPoppler(oCaretAnnotation->caretSymbol()));
+}
+
+static Poppler::Annotation *createPopplerAnnotationFromOkularAnnotation(const Okular::TextAnnotation *oTextAnnotation)
+{
+    Poppler::TextAnnotation *pTextAnnotation = new Poppler::TextAnnotation(okularToPoppler(oTextAnnotation->textType()));
+
+    setSharedAnnotationPropertiesToPopplerAnnotation(oTextAnnotation, pTextAnnotation);
+    updatePopplerAnnotationFromOkularAnnotation(oTextAnnotation, pTextAnnotation);
+
+    return pTextAnnotation;
+}
+
+static Poppler::Annotation *createPopplerAnnotationFromOkularAnnotation(const Okular::LineAnnotation *oLineAnnotation)
+{
+    const auto points = oLineAnnotation->linePoints();
+    Poppler::LineAnnotation *pLineAnnotation = new Poppler::LineAnnotation(points.size() == 2 ? Poppler::LineAnnotation::StraightLine : Poppler::LineAnnotation::Polyline);
+
+    setSharedAnnotationPropertiesToPopplerAnnotation(oLineAnnotation, pLineAnnotation);
+    updatePopplerAnnotationFromOkularAnnotation(oLineAnnotation, pLineAnnotation);
+
+    return pLineAnnotation;
+}
+
+static Poppler::Annotation *createPopplerAnnotationFromOkularAnnotation(const Okular::GeomAnnotation *oGeomAnnotation)
+{
+    Poppler::GeomAnnotation *pGeomAnnotation = new Poppler::GeomAnnotation();
+
+    setSharedAnnotationPropertiesToPopplerAnnotation(oGeomAnnotation, pGeomAnnotation);
+    updatePopplerAnnotationFromOkularAnnotation(oGeomAnnotation, pGeomAnnotation);
+
+    return pGeomAnnotation;
+}
+
+static Poppler::Annotation *createPopplerAnnotationFromOkularAnnotation(const Okular::HighlightAnnotation *oHighlightAnnotation)
+{
+    Poppler::HighlightAnnotation *pHighlightAnnotation = new Poppler::HighlightAnnotation();
+
+    setSharedAnnotationPropertiesToPopplerAnnotation(oHighlightAnnotation, pHighlightAnnotation);
+    updatePopplerAnnotationFromOkularAnnotation(oHighlightAnnotation, pHighlightAnnotation);
+
+    return pHighlightAnnotation;
+}
+
+static Poppler::Annotation *createPopplerAnnotationFromOkularAnnotation(const Okular::StampAnnotation *oStampAnnotation)
+{
+    Poppler::StampAnnotation *pStampAnnotation = new Poppler::StampAnnotation();
+
+    setSharedAnnotationPropertiesToPopplerAnnotation(oStampAnnotation, pStampAnnotation);
+    updatePopplerAnnotationFromOkularAnnotation(oStampAnnotation, pStampAnnotation);
+
+    return pStampAnnotation;
+}
+
+static Poppler::Annotation *createPopplerAnnotationFromOkularAnnotation(const Okular::InkAnnotation *oInkAnnotation)
+{
+    Poppler::InkAnnotation *pInkAnnotation = new Poppler::InkAnnotation();
+
+    setSharedAnnotationPropertiesToPopplerAnnotation(oInkAnnotation, pInkAnnotation);
+    updatePopplerAnnotationFromOkularAnnotation(oInkAnnotation, pInkAnnotation);
+
+    return pInkAnnotation;
+}
+
+static Poppler::Annotation *createPopplerAnnotationFromOkularAnnotation(const Okular::CaretAnnotation *oCaretAnnotation)
+{
+    Poppler::CaretAnnotation *pCaretAnnotation = new Poppler::CaretAnnotation();
+
+    setSharedAnnotationPropertiesToPopplerAnnotation(oCaretAnnotation, pCaretAnnotation);
+    updatePopplerAnnotationFromOkularAnnotation(oCaretAnnotation, pCaretAnnotation);
+
+    return pCaretAnnotation;
+}
 void PopplerAnnotationProxy::notifyAddition(Okular::Annotation *okl_ann, int page)
 {
-    // Export annotation to DOM
-    QDomDocument doc;
-    QDomElement dom_ann = doc.createElement(QStringLiteral("root"));
-    Okular::AnnotationUtils::storeAnnotation(okl_ann, dom_ann, doc);
-
     QMutexLocker ml(mutex);
 
     // Create poppler annotation
-    Poppler::Annotation *ppl_ann = Poppler::AnnotationUtils::createAnnotation(dom_ann);
+    Poppler::Annotation *ppl_ann = nullptr;
+    switch (okl_ann->subType()) {
+    case Okular::Annotation::AText:
+        ppl_ann = createPopplerAnnotationFromOkularAnnotation(static_cast<Okular::TextAnnotation *>(okl_ann));
+        break;
+    case Okular::Annotation::ALine:
+        ppl_ann = createPopplerAnnotationFromOkularAnnotation(static_cast<Okular::LineAnnotation *>(okl_ann));
+        break;
+    case Okular::Annotation::AGeom:
+        ppl_ann = createPopplerAnnotationFromOkularAnnotation(static_cast<Okular::GeomAnnotation *>(okl_ann));
+        break;
+    case Okular::Annotation::AHighlight:
+        ppl_ann = createPopplerAnnotationFromOkularAnnotation(static_cast<Okular::HighlightAnnotation *>(okl_ann));
+        break;
+    case Okular::Annotation::AStamp:
+        ppl_ann = createPopplerAnnotationFromOkularAnnotation(static_cast<Okular::StampAnnotation *>(okl_ann));
+        break;
+    case Okular::Annotation::AInk:
+        ppl_ann = createPopplerAnnotationFromOkularAnnotation(static_cast<Okular::InkAnnotation *>(okl_ann));
+        break;
+    case Okular::Annotation::ACaret:
+        ppl_ann = createPopplerAnnotationFromOkularAnnotation(static_cast<Okular::CaretAnnotation *>(okl_ann));
+        break;
+    default:
+        qWarning() << "Unsupported annotation type" << okl_ann->subType();
+        return;
+    }
 
     // Poppler doesn't render StampAnnotations yet
     if (ppl_ann->subType() != Poppler::Annotation::AStamp)
         okl_ann->setFlags(okl_ann->flags() | Okular::Annotation::ExternallyDrawn);
-
-    // Poppler stores highlight points in swapped order
-    if (ppl_ann->subType() == Poppler::Annotation::AHighlight) {
-        Poppler::HighlightAnnotation *hlann = static_cast<Poppler::HighlightAnnotation *>(ppl_ann);
-        QList<Poppler::HighlightAnnotation::Quad> quads = hlann->highlightQuads();
-        QMutableListIterator<Poppler::HighlightAnnotation::Quad> it(quads);
-        while (it.hasNext()) {
-            Poppler::HighlightAnnotation::Quad &q = it.next();
-            QPointF t;
-            t = q.points[3];
-            q.points[3] = q.points[0];
-            q.points[0] = t;
-            t = q.points[2];
-            q.points[2] = q.points[1];
-            q.points[1] = t;
-        }
-        hlann->setHighlightQuads(quads);
-    }
 
     // Bind poppler object to page
     Poppler::Page *ppl_page = ppl_doc->page(page);
@@ -152,77 +506,44 @@ void PopplerAnnotationProxy::notifyModification(const Okular::Annotation *okl_an
     ppl_ann->setAuthor(okl_ann->author());
     ppl_ann->setContents(okl_ann->contents());
 
-    // Set style
-    Poppler::Annotation::Style s;
-    s.setColor(okl_ann->style().color());
-    s.setWidth(okl_ann->style().width());
-    s.setOpacity(okl_ann->style().opacity());
-    ppl_ann->setStyle(s);
+    ppl_ann->setStyle(okularToPoppler(okl_ann->style()));
 
     // Set type-specific properties (if any)
     switch (ppl_ann->subType()) {
     case Poppler::Annotation::AText: {
         const Okular::TextAnnotation *okl_txtann = static_cast<const Okular::TextAnnotation *>(okl_ann);
         Poppler::TextAnnotation *ppl_txtann = static_cast<Poppler::TextAnnotation *>(ppl_ann);
-        ppl_txtann->setTextIcon(okl_txtann->textIcon());
-        ppl_txtann->setTextFont(okl_txtann->textFont());
-        ppl_txtann->setTextColor(okl_txtann->textColor());
-        ppl_txtann->setInplaceAlign(okl_txtann->inplaceAlignment());
-        ppl_txtann->setCalloutPoints(QVector<QPointF>());
-        ppl_txtann->setInplaceIntent((Poppler::TextAnnotation::InplaceIntent)okl_txtann->inplaceIntent());
+        updatePopplerAnnotationFromOkularAnnotation(okl_txtann, ppl_txtann);
         break;
     }
     case Poppler::Annotation::ALine: {
         const Okular::LineAnnotation *okl_lineann = static_cast<const Okular::LineAnnotation *>(okl_ann);
         Poppler::LineAnnotation *ppl_lineann = static_cast<Poppler::LineAnnotation *>(ppl_ann);
-        QLinkedList<QPointF> points;
-        const QLinkedList<Okular::NormalizedPoint> annotPoints = okl_lineann->linePoints();
-        for (const Okular::NormalizedPoint &p : annotPoints) {
-            points.append(normPointToPointF(p));
-        }
-        ppl_lineann->setLinePoints(points);
-        ppl_lineann->setLineStartStyle((Poppler::LineAnnotation::TermStyle)okl_lineann->lineStartStyle());
-        ppl_lineann->setLineEndStyle((Poppler::LineAnnotation::TermStyle)okl_lineann->lineEndStyle());
-        ppl_lineann->setLineClosed(okl_lineann->lineClosed());
-        ppl_lineann->setLineInnerColor(okl_lineann->lineInnerColor());
-        ppl_lineann->setLineLeadingForwardPoint(okl_lineann->lineLeadingForwardPoint());
-        ppl_lineann->setLineLeadingBackPoint(okl_lineann->lineLeadingBackwardPoint());
-        ppl_lineann->setLineShowCaption(okl_lineann->showCaption());
-        ppl_lineann->setLineIntent((Poppler::LineAnnotation::LineIntent)okl_lineann->lineIntent());
+        updatePopplerAnnotationFromOkularAnnotation(okl_lineann, ppl_lineann);
         break;
     }
     case Poppler::Annotation::AGeom: {
         const Okular::GeomAnnotation *okl_geomann = static_cast<const Okular::GeomAnnotation *>(okl_ann);
         Poppler::GeomAnnotation *ppl_geomann = static_cast<Poppler::GeomAnnotation *>(ppl_ann);
-        ppl_geomann->setGeomType((Poppler::GeomAnnotation::GeomType)okl_geomann->geometricalType());
-        ppl_geomann->setGeomInnerColor(okl_geomann->geometricalInnerColor());
+        updatePopplerAnnotationFromOkularAnnotation(okl_geomann, ppl_geomann);
         break;
     }
     case Poppler::Annotation::AHighlight: {
         const Okular::HighlightAnnotation *okl_hlann = static_cast<const Okular::HighlightAnnotation *>(okl_ann);
         Poppler::HighlightAnnotation *ppl_hlann = static_cast<Poppler::HighlightAnnotation *>(ppl_ann);
-        ppl_hlann->setHighlightType((Poppler::HighlightAnnotation::HighlightType)okl_hlann->highlightType());
+        updatePopplerAnnotationFromOkularAnnotation(okl_hlann, ppl_hlann);
         break;
     }
     case Poppler::Annotation::AStamp: {
         const Okular::StampAnnotation *okl_stampann = static_cast<const Okular::StampAnnotation *>(okl_ann);
         Poppler::StampAnnotation *ppl_stampann = static_cast<Poppler::StampAnnotation *>(ppl_ann);
-        ppl_stampann->setStampIconName(okl_stampann->stampIconName());
+        updatePopplerAnnotationFromOkularAnnotation(okl_stampann, ppl_stampann);
         break;
     }
     case Poppler::Annotation::AInk: {
         const Okular::InkAnnotation *okl_inkann = static_cast<const Okular::InkAnnotation *>(okl_ann);
         Poppler::InkAnnotation *ppl_inkann = static_cast<Poppler::InkAnnotation *>(ppl_ann);
-        QList<QLinkedList<QPointF>> paths;
-        const QList<QLinkedList<Okular::NormalizedPoint>> inkPathsList = okl_inkann->inkPaths();
-        for (const QLinkedList<Okular::NormalizedPoint> &path : inkPathsList) {
-            QLinkedList<QPointF> points;
-            for (const Okular::NormalizedPoint &p : path) {
-                points.append(normPointToPointF(p));
-            }
-            paths.append(points);
-        }
-        ppl_inkann->setInkPaths(paths);
+        updatePopplerAnnotationFromOkularAnnotation(okl_inkann, ppl_inkann);
         break;
     }
     default:
@@ -735,7 +1056,6 @@ Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annotation *p
 
         // Convert the poppler revisions to Okular revisions
         QLinkedList<Okular::Annotation::Revision> &okularRevisions = okularAnnotation->revisions();
-        okularRevisions.clear(); // We can remove this once we stop calling Okular::AnnotationUtils::createAnnotation
         const QList<Poppler::Annotation *> popplerRevisions = popplerAnnotation->revisions();
         for (Poppler::Annotation *popplerRevision : popplerRevisions) {
             bool deletePopplerRevision;

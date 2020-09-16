@@ -1243,6 +1243,12 @@ public:
     QList<Quad> &highlightQuads();
 
     /**
+     * Returns a const reference to the quad list of the highlight annotation.
+     * @since 20.12
+     */
+    const QList<Quad> &highlightQuads() const;
+
+    /**
      * Returns the sub type of the highlight annotation.
      */
     SubType subType() const override;

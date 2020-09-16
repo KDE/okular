@@ -1954,6 +1954,12 @@ QList<HighlightAnnotation::Quad> &HighlightAnnotation::highlightQuads()
     return d->m_highlightQuads;
 }
 
+const QList<HighlightAnnotation::Quad> &HighlightAnnotation::highlightQuads() const
+{
+    Q_D(const HighlightAnnotation);
+    return d->m_highlightQuads;
+}
+
 void HighlightAnnotation::store(QDomNode &node, QDomDocument &document) const
 {
     Q_D(const HighlightAnnotation);

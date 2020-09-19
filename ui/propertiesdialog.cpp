@@ -101,7 +101,8 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
                 /// retrieve icon and place it in a QLabel
                 QLabel *pixmapLabel = new QLabel(value);
                 hboxLayout->addWidget(pixmapLabel, 0);
-                pixmapLabel->setPixmap(KIconLoader::global()->loadMimeTypeIcon(mimeType.iconName(), KIconLoader::Small));
+                const QIcon icon = QIcon::fromTheme(mimeType.iconName(), QIcon::fromTheme(QStringLiteral("application-octet-stream")));
+                pixmapLabel->setPixmap(icon.pixmap(KIconLoader::SizeSmall));
                 /// mime type's name and label
                 squeezed = new KSqueezedTextLabel(i18nc("mimetype information, example: \"PDF Document (application/pdf)\"", "%1 (%2)", mimeType.comment(), valueString), value);
             } else {

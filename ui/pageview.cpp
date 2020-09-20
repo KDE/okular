@@ -2200,32 +2200,6 @@ void PageView::mousePressEvent(QMouseEvent *e)
                 d->scroller->handleInput(QScroller::InputPress, e->pos(), e->timestamp());
                 d->leftClickTimer.start(QApplication::doubleClickInterval() + 10);
             }
-        } else if (rightButton) {
-            if (pageItem) {
-                // find out normalized mouse coords inside current item
-                const QRect &itemRect = pageItem->uncroppedGeometry();
-                double nX = pageItem->absToPageX(eventPos.x());
-                double nY = pageItem->absToPageY(eventPos.y());
-
-                const QLinkedList<const Okular::ObjectRect *> orects = pageItem->page()->objectRects(Okular::ObjectRect::OAnnotation, nX, nY, itemRect.width(), itemRect.height());
-
-                if (!orects.isEmpty()) {
-                    AnnotationPopup popup(d->document, AnnotationPopup::MultiAnnotationMode, this);
-
-                    for (const Okular::ObjectRect *orect : orects) {
-                        Okular::Annotation *ann = ((Okular::AnnotationObjectRect *)orect)->annotation();
-                        if (ann && (ann->subType() != Okular::Annotation::AWidget))
-                            popup.addAnnotation(ann, pageItem->pageNumber());
-                    }
-
-                    connect(&popup, &AnnotationPopup::openAnnotationWindow, this, &PageView::openAnnotationWindow);
-
-                    popup.exec(e->globalPos());
-                    // Since ↑ spins its own event loop we won't get the mouse release event
-                    // so reset mousePressPos here
-                    d->mousePressPos = QPoint();
-                }
-            }
         }
     } break;
 
@@ -2446,15 +2420,38 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
         } else if (rightButton && !d->mouseAnnotation->isModified()) {
             if (pageItem && pageItem == pageItemPressPos && ((d->mousePressPos - e->globalPos()).manhattanLength() < QApplication::startDragDistance())) {
                 QMenu *menu = createProcessLinkMenu(pageItem, eventPos);
+
+                const QRect &itemRect = pageItem->uncroppedGeometry();
+                const double nX = pageItem->absToPageX(eventPos.x());
+                const double nY = pageItem->absToPageY(eventPos.y());
+
+                const QLinkedList<const Okular::ObjectRect *> annotRects = pageItem->page()->objectRects(Okular::ObjectRect::OAnnotation, nX, nY, itemRect.width(), itemRect.height());
+
+                AnnotationPopup annotPopup(d->document, AnnotationPopup::MultiAnnotationMode, this);
+                // Do not move annotPopup inside the if, it needs to live until menu->exec()
+                if (!annotRects.isEmpty()) {
+                    for (const Okular::ObjectRect *annotRect : annotRects) {
+                        Okular::Annotation *ann = ((Okular::AnnotationObjectRect *)annotRect)->annotation();
+                        if (ann && (ann->subType() != Okular::Annotation::AWidget)) {
+                            annotPopup.addAnnotation(ann, pageItem->pageNumber());
+                        }
+                    }
+
+                    connect(&annotPopup, &AnnotationPopup::openAnnotationWindow, this, &PageView::openAnnotationWindow);
+
+                    if (!menu) {
+                        menu = new QMenu(this);
+                    }
+                    annotPopup.addActionsToMenu(menu);
+                }
+
                 if (menu) {
                     menu->exec(e->globalPos());
                     menu->deleteLater();
                 } else {
-                    const double nX = pageItem->absToPageX(eventPos.x());
-                    const double nY = pageItem->absToPageY(eventPos.y());
                     // a link can move us to another page or even to another document, there's no point in trying to
                     //  process the click on the image once we have processes the click on the link
-                    const Okular::ObjectRect *rect = pageItem->page()->objectRect(Okular::ObjectRect::Image, nX, nY, pageItem->uncroppedWidth(), pageItem->uncroppedHeight());
+                    const Okular::ObjectRect *rect = pageItem->page()->objectRect(Okular::ObjectRect::Image, nX, nY, itemRect.width(), itemRect.height());
                     if (rect) {
                         // handle right click over a image
                     } else {

@@ -15,6 +15,8 @@
 #include <QPair>
 #include <QPoint>
 
+class QMenu;
+
 namespace Okular
 {
 class Annotation;
@@ -37,6 +39,9 @@ public:
     AnnotationPopup(Okular::Document *document, MenuMode mode, QWidget *parent = nullptr);
 
     void addAnnotation(Okular::Annotation *annotation, int pageNumber);
+
+    /* You only need to use this if you don't plan on using exec() */
+    void addActionsToMenu(QMenu *menu);
 
     void exec(const QPoint point = QPoint());
 

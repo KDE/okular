@@ -65,6 +65,13 @@ void AnnotationPopup::exec(const QPoint point)
 
     QMenu menu(mParent);
 
+    addActionsToMenu(&menu);
+
+    menu.exec(point.isNull() ? QCursor::pos() : point);
+}
+
+void AnnotationPopup::addActionsToMenu(QMenu *menu)
+{
     QAction *action = nullptr;
 
     if (mMenuMode == SingleAnnotationMode) {
@@ -72,15 +79,15 @@ void AnnotationPopup::exec(const QPoint point)
 
         const AnnotPagePair &pair = mAnnotations.at(0);
 
-        menu.addAction(new OKMenuTitle(&menu, i18np("Annotation", "%1 Annotations", mAnnotations.count())));
+        menu->addAction(new OKMenuTitle(menu, i18np("Annotation", "%1 Annotations", mAnnotations.count())));
 
-        action = menu.addAction(QIcon::fromTheme(QStringLiteral("comment")), i18n("&Open Pop-up Note"));
+        action = menu->addAction(QIcon::fromTheme(QStringLiteral("comment")), i18n("&Open Pop-up Note"));
         action->setEnabled(onlyOne);
-        connect(action, &QAction::triggered, &menu, [this, pair] { doOpenAnnotationWindow(pair); });
+        connect(action, &QAction::triggered, menu, [this, pair] { doOpenAnnotationWindow(pair); });
 
-        action = menu.addAction(QIcon::fromTheme(QStringLiteral("list-remove")), i18n("&Delete"));
+        action = menu->addAction(QIcon::fromTheme(QStringLiteral("list-remove")), i18n("&Delete"));
         action->setEnabled(mDocument->isAllowed(Okular::AllowNotes));
-        connect(action, &QAction::triggered, &menu, [this] {
+        connect(action, &QAction::triggered, menu, [this] {
             for (const AnnotPagePair &pair : qAsConst(mAnnotations)) {
                 doRemovePageAnnotation(pair);
             }
@@ -91,48 +98,46 @@ void AnnotationPopup::exec(const QPoint point)
                 action->setEnabled(false);
         }
 
-        action = menu.addAction(QIcon::fromTheme(QStringLiteral("configure")), i18n("&Properties"));
+        action = menu->addAction(QIcon::fromTheme(QStringLiteral("configure")), i18n("&Properties"));
         action->setEnabled(onlyOne);
-        connect(action, &QAction::triggered, &menu, [this, pair] { doOpenPropertiesDialog(pair); });
+        connect(action, &QAction::triggered, menu, [this, pair] { doOpenPropertiesDialog(pair); });
 
         if (onlyOne && annotationHasFileAttachment(pair.annotation)) {
             const Okular::EmbeddedFile *embeddedFile = embeddedFileFromAnnotation(pair.annotation);
             if (embeddedFile) {
                 const QString saveText = i18nc("%1 is the name of the file to save", "&Save '%1'...", embeddedFile->name());
 
-                menu.addSeparator();
-                action = menu.addAction(QIcon::fromTheme(QStringLiteral("document-save")), saveText);
-                connect(action, &QAction::triggered, &menu, [this, pair] { doSaveEmbeddedFile(pair); });
+                menu->addSeparator();
+                action = menu->addAction(QIcon::fromTheme(QStringLiteral("document-save")), saveText);
+                connect(action, &QAction::triggered, menu, [this, pair] { doSaveEmbeddedFile(pair); });
             }
         }
     } else {
         for (const AnnotPagePair &pair : qAsConst(mAnnotations)) {
-            menu.addAction(new OKMenuTitle(&menu, GuiUtils::captionForAnnotation(pair.annotation)));
+            menu->addAction(new OKMenuTitle(menu, GuiUtils::captionForAnnotation(pair.annotation)));
 
-            action = menu.addAction(QIcon::fromTheme(QStringLiteral("comment")), i18n("&Open Pop-up Note"));
-            connect(action, &QAction::triggered, &menu, [this, pair] { doOpenAnnotationWindow(pair); });
+            action = menu->addAction(QIcon::fromTheme(QStringLiteral("comment")), i18n("&Open Pop-up Note"));
+            connect(action, &QAction::triggered, menu, [this, pair] { doOpenAnnotationWindow(pair); });
 
-            action = menu.addAction(QIcon::fromTheme(QStringLiteral("list-remove")), i18n("&Delete"));
+            action = menu->addAction(QIcon::fromTheme(QStringLiteral("list-remove")), i18n("&Delete"));
             action->setEnabled(mDocument->isAllowed(Okular::AllowNotes) && mDocument->canRemovePageAnnotation(pair.annotation));
-            connect(action, &QAction::triggered, &menu, [this, pair] { doRemovePageAnnotation(pair); });
+            connect(action, &QAction::triggered, menu, [this, pair] { doRemovePageAnnotation(pair); });
 
-            action = menu.addAction(QIcon::fromTheme(QStringLiteral("configure")), i18n("&Properties"));
-            connect(action, &QAction::triggered, &menu, [this, pair] { doOpenPropertiesDialog(pair); });
+            action = menu->addAction(QIcon::fromTheme(QStringLiteral("configure")), i18n("&Properties"));
+            connect(action, &QAction::triggered, menu, [this, pair] { doOpenPropertiesDialog(pair); });
 
             if (annotationHasFileAttachment(pair.annotation)) {
                 const Okular::EmbeddedFile *embeddedFile = embeddedFileFromAnnotation(pair.annotation);
                 if (embeddedFile) {
                     const QString saveText = i18nc("%1 is the name of the file to save", "&Save '%1'...", embeddedFile->name());
 
-                    menu.addSeparator();
-                    action = menu.addAction(QIcon::fromTheme(QStringLiteral("document-save")), saveText);
-                    connect(action, &QAction::triggered, &menu, [this, pair] { doSaveEmbeddedFile(pair); });
+                    menu->addSeparator();
+                    action = menu->addAction(QIcon::fromTheme(QStringLiteral("document-save")), saveText);
+                    connect(action, &QAction::triggered, menu, [this, pair] { doSaveEmbeddedFile(pair); });
                 }
             }
         }
     }
-
-    menu.exec(point.isNull() ? QCursor::pos() : point);
 }
 
 void AnnotationPopup::doRemovePageAnnotation(AnnotPagePair pair)

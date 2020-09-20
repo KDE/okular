@@ -67,6 +67,11 @@ public:
     };
 
 private:
+    void doRemovePageAnnotation(AnnotPagePair pair);
+    void doOpenAnnotationWindow(AnnotPagePair pair);
+    void doOpenPropertiesDialog(AnnotPagePair pair);
+    void doSaveEmbeddedFile(AnnotPagePair pair);
+
     QWidget *mParent;
 
     QList<AnnotPagePair> mAnnotations;

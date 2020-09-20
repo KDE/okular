@@ -36,7 +36,7 @@ class AnnotationActionHandlerPrivate
 {
 public:
     enum class AnnotationColor { Color, InnerColor };
-    static const QList<QPair<QString, QColor>> defaultColors;
+    static const QList<QPair<KLocalizedString, QColor>> defaultColors;
     static const QList<double> widthStandardValues;
     static const QList<double> opacityStandardValues;
 
@@ -139,16 +139,16 @@ public:
     bool textToolsEnabled;
 };
 
-const QList<QPair<QString, QColor>> AnnotationActionHandlerPrivate::defaultColors = {{i18n("Red"), Qt::red},
-                                                                                     {i18n("Orange"), QColor(255, 85, 0)},
-                                                                                     {i18n("Yellow"), Qt::yellow},
-                                                                                     {i18n("Green"), Qt::green},
-                                                                                     {i18n("Cyan"), Qt::cyan},
-                                                                                     {i18n("Blue"), Qt::blue},
-                                                                                     {i18n("Magenta"), Qt::magenta},
-                                                                                     {i18n("White"), Qt::white},
-                                                                                     {i18n("Gray"), Qt::gray},
-                                                                                     {i18n("Black"), Qt::black}
+const QList<QPair<KLocalizedString, QColor>> AnnotationActionHandlerPrivate::defaultColors = {{ki18n("Red"), Qt::red},
+                                                                                              {ki18n("Orange"), QColor(255, 85, 0)},
+                                                                                              {ki18n("Yellow"), Qt::yellow},
+                                                                                              {ki18n("Green"), Qt::green},
+                                                                                              {ki18n("Cyan"), Qt::cyan},
+                                                                                              {ki18n("Blue"), Qt::blue},
+                                                                                              {ki18n("Magenta"), Qt::magenta},
+                                                                                              {ki18n("White"), Qt::white},
+                                                                                              {ki18n("Gray"), Qt::gray},
+                                                                                              {ki18n("Black"), Qt::black}
 
 };
 
@@ -387,7 +387,7 @@ KSelectAction *AnnotationActionHandlerPrivate::colorPickerAction(AnnotationColor
     QString aText(i18nc("@action:intoolbar Current annotation config option", "Color"));
     if (colorType == AnnotationColor::InnerColor) {
         aText = i18nc("@action:intoolbar Current annotation config option", "Fill Color");
-        colorList.append(QPair<QString, Qt::GlobalColor>(QStringLiteral("Transparent"), Qt::transparent));
+        colorList.append(QPair<KLocalizedString, Qt::GlobalColor>(ki18n("Transparent"), Qt::transparent));
     }
     KSelectAction *aColorPicker = new KSelectAction(QIcon(), aText, q);
     aColorPicker->setToolBarMode(KSelectAction::MenuMode);

@@ -451,7 +451,6 @@ PageView::PageView(QWidget *parent, Okular::Document *document)
             PageView::updateSmoothScrollAnimationSpeed();
         }
     });
-    PageView::updateSmoothScrollAnimationSpeed();
 
     // connect the padding of the viewport to pixmaps requests
     connect(horizontalScrollBar(), &QAbstractSlider::valueChanged, this, &PageView::slotRequestVisiblePixmaps);
@@ -871,6 +870,9 @@ void PageView::displayMessage(const QString &message, const QString &details, Pa
 
 void PageView::reparseConfig()
 {
+    // set smooth scrolling policies
+    PageView::updateSmoothScrollAnimationSpeed();
+
     // set the scroll bars policies
     Qt::ScrollBarPolicy scrollBarMode = Okular::Settings::showScrollBars() ? Qt::ScrollBarAsNeeded : Qt::ScrollBarAlwaysOff;
     if (horizontalScrollBarPolicy() != scrollBarMode) {
@@ -4188,6 +4190,16 @@ void PageView::addSearchWithinDocumentAction(QMenu *menu, const QString &searchT
 
 void PageView::updateSmoothScrollAnimationSpeed()
 {
+    // If it's turned off in Okular's own settings, don't bother to look at the
+    // global settings
+    if (!Okular::Settings::smoothScrolling()) {
+        d->currentShortScrollDuration = 0;
+        d->currentLongScrollDuration = 0;
+        return;
+    }
+
+    // If we are using smooth scrolling, scale the speed of the animated
+    // transitions according to the global animation speed setting
     KConfigGroup kdeglobalsConfig = KConfigGroup(KSharedConfig::openConfig(), QStringLiteral("KDE"));
     const qreal globalAnimationScale = qMax(0.0, kdeglobalsConfig.readEntry("AnimationDurationFactor", 1.0));
     d->currentShortScrollDuration = d->baseShortScrollDuration * globalAnimationScale;

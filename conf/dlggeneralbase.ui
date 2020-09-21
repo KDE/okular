@@ -65,6 +65,13 @@
          <number>0</number>
         </property>
         <item>
+         <widget class="QCheckBox" name="kcfg_SmoothScrolling">
+          <property name="text">
+           <string>Use smooth scrolling</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QCheckBox" name="kcfg_ShowScrollBars">
           <property name="text">
            <string>Show scroll&amp;bars</string>

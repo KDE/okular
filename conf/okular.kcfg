@@ -286,6 +286,9 @@
   <entry key="EditToolBarPlacement" type="Int" >
    <default>0</default>
   </entry>
+  <entry key="SmoothScrolling" type="Bool" >
+   <default>true</default>
+  </entry>
   <entry key="ShowScrollBars" type="Bool" >
    <default>true</default>
   </entry>

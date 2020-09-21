@@ -2482,6 +2482,12 @@ Context menu actions like Rename Bookmarks etc.)
 		<sect1 id="configgeneral">
 			<title>General</title>
 			<variablelist>
+                <varlistentry>
+					<term><guilabel>Use smooth scrolling</guilabel></term>
+					<listitem>
+						<para>Whether to display animated transitions when scrolling using the mouse wheel and keyboard.</para>
+					</listitem>
+				</varlistentry>
 				<varlistentry>
 					<term><guilabel>Show scrollbars</guilabel></term>
 					<listitem>

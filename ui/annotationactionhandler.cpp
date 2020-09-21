@@ -136,16 +136,16 @@ public:
     bool textToolsEnabled;
 };
 
-const QList<QPair<KLocalizedString, QColor>> AnnotationActionHandlerPrivate::defaultColors = {{ki18n("Red"), Qt::red},
-                                                                                              {ki18n("Orange"), QColor(255, 85, 0)},
-                                                                                              {ki18n("Yellow"), Qt::yellow},
-                                                                                              {ki18n("Green"), Qt::green},
-                                                                                              {ki18n("Cyan"), Qt::cyan},
-                                                                                              {ki18n("Blue"), Qt::blue},
-                                                                                              {ki18n("Magenta"), Qt::magenta},
-                                                                                              {ki18n("White"), Qt::white},
-                                                                                              {ki18n("Gray"), Qt::gray},
-                                                                                              {ki18n("Black"), Qt::black}
+const QList<QPair<KLocalizedString, QColor>> AnnotationActionHandlerPrivate::defaultColors = {{ki18nc("@item:inlistbox Color name", "Red"), Qt::red},
+                                                                                              {ki18nc("@item:inlistbox Color name", "Orange"), QColor(255, 85, 0)},
+                                                                                              {ki18nc("@item:inlistbox Color name", "Yellow"), Qt::yellow},
+                                                                                              {ki18nc("@item:inlistbox Color name", "Green"), Qt::green},
+                                                                                              {ki18nc("@item:inlistbox Color name", "Cyan"), Qt::cyan},
+                                                                                              {ki18nc("@item:inlistbox Color name", "Blue"), Qt::blue},
+                                                                                              {ki18nc("@item:inlistbox Color name", "Magenta"), Qt::magenta},
+                                                                                              {ki18nc("@item:inlistbox Color name", "White"), Qt::white},
+                                                                                              {ki18nc("@item:inlistbox Color name", "Gray"), Qt::gray},
+                                                                                              {ki18nc("@item:inlistbox Color name", "Black"), Qt::black}
 
 };
 
@@ -384,13 +384,13 @@ KSelectAction *AnnotationActionHandlerPrivate::colorPickerAction(AnnotationColor
     QString aText(i18nc("@action:intoolbar Current annotation config option", "Color"));
     if (colorType == AnnotationColor::InnerColor) {
         aText = i18nc("@action:intoolbar Current annotation config option", "Fill Color");
-        colorList.append(QPair<KLocalizedString, Qt::GlobalColor>(ki18n("Transparent"), Qt::transparent));
+        colorList.append(QPair<KLocalizedString, Qt::GlobalColor>(ki18nc("@item:inlistbox Color name", "Transparent"), Qt::transparent));
     }
     KSelectAction *aColorPicker = new KSelectAction(QIcon(), aText, q);
     aColorPicker->setToolBarMode(KSelectAction::MenuMode);
     for (const auto &colorNameValue : colorList) {
         QColor color(colorNameValue.second);
-        QAction *aColor = new QAction(GuiUtils::createColorIcon({color}, QIcon(), GuiUtils::VisualizeTransparent), i18nc("@item:inlistbox Color name", "%1", colorNameValue.first), q);
+        QAction *aColor = new QAction(GuiUtils::createColorIcon({color}, QIcon(), GuiUtils::VisualizeTransparent), colorNameValue.first.toString(), q);
         aColorPicker->addAction(aColor);
         QObject::connect(aColor, &QAction::triggered, q, [this, colorType, color]() { slotSetColor(colorType, color); });
     }

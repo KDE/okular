@@ -184,7 +184,7 @@ PresentationWidget::PresentationWidget(QWidget *parent, Okular::Document *doc, D
     QFontMetrics fm(m_pagesEdit->font());
     QStyleOptionFrame option;
     option.initFrom(m_pagesEdit);
-    m_pagesEdit->setMaximumWidth(fm.width(QString::number(m_document->pages())) + 2 * style()->pixelMetric(QStyle::PM_DefaultFrameWidth, &option, m_pagesEdit) +
+    m_pagesEdit->setMaximumWidth(fm.horizontalAdvance(QString::number(m_document->pages())) + 2 * style()->pixelMetric(QStyle::PM_DefaultFrameWidth, &option, m_pagesEdit) +
                                  4); // the 4 comes from 2*horizontalMargin, horizontalMargin being a define in qlineedit.cpp
     QIntValidator *validator = new QIntValidator(1, m_document->pages(), m_pagesEdit);
     m_pagesEdit->setValidator(validator);

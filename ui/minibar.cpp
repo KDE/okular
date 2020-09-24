@@ -285,7 +285,7 @@ void MiniBar::slotToolBarIconSizeChanged()
 
 void MiniBar::resizeForPage(int pages)
 {
-    int numberWidth = 10 + fontMetrics().width(QString::number(pages));
+    const int numberWidth = 10 + fontMetrics().horizontalAdvance(QString::number(pages));
     m_pageNumberEdit->setMinimumWidth(numberWidth);
     m_pageNumberEdit->setMaximumWidth(2 * numberWidth);
     m_pageLabelEdit->setMinimumWidth(numberWidth);

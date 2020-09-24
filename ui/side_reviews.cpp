@@ -262,10 +262,11 @@ QModelIndexList Reviews::retrieveAnnotations(const QModelIndex &idx) const
 {
     QModelIndexList ret;
     if (idx.isValid()) {
-        if (idx.model()->hasChildren(idx)) {
-            int rowCount = idx.model()->rowCount(idx);
+        const QAbstractItemModel *model = idx.model();
+        if (model->hasChildren(idx)) {
+            int rowCount = model->rowCount(idx);
             for (int i = 0; i < rowCount; i++) {
-                ret += retrieveAnnotations(idx.child(i, idx.column()));
+                ret += retrieveAnnotations(model->index(i, idx.column(), idx));
             }
         } else {
             ret += idx;

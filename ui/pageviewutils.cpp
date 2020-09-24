@@ -343,7 +343,7 @@ void PageViewMessage::paintEvent(QPaintEvent * /* e */)
     }
 
     int textXOffset = 0,
-        // add 2 to account for the reduced drawRoundRect later
+        // add 2 to account for the reduced drawRoundedRect later
         textYOffset = (geometry().height() - textRect.height() - detailsRect.height() - m_lineSpacing + 2) / 2, iconXOffset = 0, iconYOffset = !m_symbol.isNull() ? (geometry().height() - m_symbol.height()) / 2 : 0, shadowOffset = 1;
 
     if (layoutDirection() == Qt::RightToLeft)
@@ -357,7 +357,7 @@ void PageViewMessage::paintEvent(QPaintEvent * /* e */)
     painter.setPen(Qt::black);
     painter.setBrush(palette().color(QPalette::Window));
     painter.translate(0.5, 0.5);
-    painter.drawRoundRect(1, 1, width() - 2, height() - 2, 1600 / width(), 1600 / height());
+    painter.drawRoundedRect(1, 1, width() - 2, height() - 2, 1600.0 / width(), 1600.0 / height());
 
     // draw icon if present
     if (!m_symbol.isNull())

@@ -410,7 +410,7 @@ void dviRenderer::epsf_special(const QString &cp)
         else
             foreGroundPainter->setBrush(Qt::red);
         foreGroundPainter->setPen(Qt::black);
-        foreGroundPainter->drawRoundRect(bbox, 2, 2);
+        foreGroundPainter->drawRoundedRect(bbox, 2, 2);
         QFont f = foreGroundPainter->font();
         f.setPointSize(8);
         foreGroundPainter->setFont(f);

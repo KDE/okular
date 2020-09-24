@@ -75,7 +75,7 @@ protected:
 
             p.setBrush(palette().window());
             p.translate(0.5, 0.5);
-            p.drawRoundRect(15, 15, w, h, (8 * 200) / w, (8 * 200) / h);
+            p.drawRoundedRect(15, 15, w, h, (8 * 200.0) / w, (8 * 200.0) / h);
             p.translate(20, 20);
             document.drawContents(&p);
 

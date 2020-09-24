@@ -29,8 +29,6 @@ DlgPresentation::DlgPresentation(QWidget *parent)
     m_dlg->verticalLayout_4->addWidget(kcfg_DrawingTools);
     kcfg_DrawingTools->setObjectName(QStringLiteral("kcfg_DrawingTools"));
 
-    KConfigDialogManager::changedMap()->insert(QStringLiteral("WidgetDrawingTools"), SIGNAL(changed()));
-
     QStringList choices;
     choices.append(i18nc("@label:listbox The current screen, for the presentation mode", "Current Screen"));
     choices.append(i18nc("@label:listbox The default screen for the presentation mode", "Default Screen"));

@@ -23,6 +23,4 @@ DlgAnnotations::DlgAnnotations(QWidget *parent)
     WidgetAnnotTools *kcfg_QuickAnnotationTools = new WidgetAnnotTools(dlg.annotToolsGroup);
     dlg.annotToolsPlaceholder->addWidget(kcfg_QuickAnnotationTools);
     kcfg_QuickAnnotationTools->setObjectName(QStringLiteral("kcfg_QuickAnnotationTools"));
-
-    KConfigDialogManager::changedMap()->insert(QStringLiteral("WidgetAnnotTools"), SIGNAL(changed()));
 }

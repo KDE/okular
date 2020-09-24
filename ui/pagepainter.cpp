@@ -37,7 +37,7 @@
 #include "settings_core.h"
 #include "ui/debug_ui.h"
 
-Q_GLOBAL_STATIC_WITH_ARGS(QPixmap, busyPixmap, (KIconLoader::global()->loadIcon(QLatin1String("okular"), KIconLoader::NoGroup, IconSize(KIconLoader::Desktop), KIconLoader::DefaultState, QStringList(), nullptr, true)))
+Q_GLOBAL_STATIC_WITH_ARGS(QPixmap, busyPixmap, (KIconLoader::global()->loadIcon(QLatin1String("okular"), KIconLoader::NoGroup, KIconLoader::SizeLarge, KIconLoader::DefaultState, QStringList(), nullptr, true)))
 
 #define TEXTANNOTATION_ICONSIZE 24
 

@@ -32,7 +32,7 @@ DlgPresentation::DlgPresentation(QWidget *parent)
     QStringList choices;
     choices.append(i18nc("@label:listbox The current screen, for the presentation mode", "Current Screen"));
     choices.append(i18nc("@label:listbox The default screen for the presentation mode", "Default Screen"));
-    const int screenCount = QApplication::desktop()->numScreens();
+    const int screenCount = QGuiApplication::screens().count();
     for (int i = 0; i < screenCount; ++i) {
         choices.append(i18nc("@label:listbox %1 is the screen number (0, 1, ...)", "Screen %1", i));
     }

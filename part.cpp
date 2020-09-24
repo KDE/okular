@@ -49,7 +49,7 @@
 #include <QTimer>
 #include <QWidgetAction>
 
-#include <KAboutApplicationDialog>
+#include <KAboutPluginDialog>
 #include <KActionCollection>
 #include <KBookmarkAction>
 #include <KDirWatch>
@@ -3019,15 +3019,20 @@ void Part::enableExitAfterPrint()
     m_cliPrintAndExit = true;
 }
 
+static const char *kKPlugin = "KPlugin";
+
 void Part::slotAboutBackend()
 {
     const KPluginMetaData data = m_document->generatorInfo();
     if (!data.isValid())
         return;
 
-    KAboutData aboutData = KAboutData::fromPluginMetaData(data);
-
-    QIcon icon = QIcon::fromTheme(data.iconName());
+    // Here we do a bit of magic because KPluginMetaData doesn't have setters
+    // so we get the json info from it, modify it and use that for the KAboutPluginDialog
+    // in case the internals of KPluginMetaData change it won't be too bad, at most we're
+    // missing the icon or the generator extra description
+    QJsonObject rawData = data.rawData();
+    const QIcon icon = QIcon::fromTheme(data.iconName());
 
     // fall back to mime type icon
     if (icon.isNull()) {
@@ -3037,22 +3042,23 @@ void Part::slotAboutBackend()
             QMimeDatabase db;
             QMimeType type = db.mimeTypeForName(mimeTypeName);
             if (type.isValid()) {
-                icon = QIcon::fromTheme(type.iconName());
+                QJsonObject kplugin = rawData[kKPlugin].toObject();
+                kplugin[QStringLiteral("Icon")] = type.iconName();
+                rawData[kKPlugin] = kplugin;
             }
         }
     }
 
     const QString extraDescription = m_document->metaData(QStringLiteral("GeneratorExtraDescription")).toString();
+
     if (!extraDescription.isEmpty()) {
-        aboutData.setShortDescription(aboutData.shortDescription() + QStringLiteral("\n\n") + extraDescription);
+        const QString descriptionAndLang = QStringLiteral("Description[%1]").arg(QLocale().name());
+        QJsonObject kplugin = rawData[kKPlugin].toObject();
+        kplugin[descriptionAndLang] = QStringLiteral("%1\n\n%2").arg(data.description(), extraDescription);
+        rawData[kKPlugin] = kplugin;
     }
 
-    if (!icon.isNull()) {
-        // 48x48 is what KAboutApplicationDialog wants, which doesn't match any default so we hardcode it
-        aboutData.setProgramLogo(icon.pixmap(48, 48));
-    }
-
-    KAboutApplicationDialog dlg(aboutData, widget());
+    KAboutPluginDialog dlg(KPluginMetaData(rawData, data.fileName()), widget());
     dlg.exec();
 }
 

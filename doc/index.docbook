@@ -1,6 +1,5 @@
 <?xml version="1.0" ?>
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
-  <!ENTITY latex "L<superscript>A</superscript>T<subscript>E</subscript>X">
   <!ENTITY kpdf "<application>KPDF</application>">
   <!ENTITY % English "INCLUDE">
   <!ENTITY % addindex "IGNORE">
@@ -67,7 +66,7 @@ Context menu actions like Rename Bookmarks etc.)
 		<para>
 			&okular; supports a lot of different formats like &PDF;, &PostScript;, Tiff, CHM, DjVU, Images (png, jpg, &etc;)
 			XPS, Open Document (ODT), Fiction Books, Comic Book, Plucker, EPub, Fax and Markdown.
-			For all supported formats and their features see <ulink url="http://okular.kde.org/formats.php">
+			For all supported formats and their features see <ulink url="https://okular.kde.org/formats.php">
 			&okular; Document Format Handlers</ulink>.
 		</para>
 		<screenshot>
@@ -120,10 +119,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<title>Navigating</title>
 			<para>This section describes how you can navigate through a document in &okular;.</para>
 			<para>
-				There are multiple ways of scrolling the viewing area. One is to use the
-				<keysym>Up Arrow</keysym> and <keysym>Down Arrow</keysym> keys. You may also use
-				the scrollbar, your mousewheel or the <keycap>Page Up</keycap> and <keycap>Page Down</keycap>
-				keys.
+				There are multiple ways of scrolling the viewing area. One is to use the &Up; and &Down; arrow keys. You may also use the scrollbar, your mousewheel or the &PgUp; and &PgDn; keys.
 			</para>
 			<para>
 			  You can also use <application>vim</application>-like navigation keys, namely <keycap>H</keycap> to move to the top of the previous page, <keycap>L</keycap> to move to the top of the next page, <keycap>J</keycap> to move one line down, and <keycap>K</keycap> to move one line up.
@@ -136,12 +132,12 @@ Context menu actions like Rename Bookmarks etc.)
 			</para>
 			<note>
 			  <para>
-			    When viewing a document in the <link linkend="presentationMode">Presentation mode</link> use <keysym>Up Arrow</keysym> and <keysym>Down Arrow</keysym> keys to switch between pages or slides. The number and the position of the current slide will be shown in the overlay at the right upper corner of screen.
+			    When viewing a document in the <link linkend="presentationMode">Presentation mode</link> use &Up; and &Down; arrow keys to switch between pages or slides. The number and the position of the current slide will be shown in the overlay at the right upper corner of screen.
 			  </para>
 			</note>
 			<para>If you want to read a document with several pages use the automatic scrolling feature of &okular;.
-			Start automatic scrolling with <keycombo action="simul">&Shift;<keysym>Down Arrow</keysym></keycombo> or
-			<keycombo action="simul">&Shift;<keysym>Up Arrow</keysym></keycombo>. Then use these keys to increase and
+			Start automatic scrolling with <keycombo action="simul">&Shift;&Down;</keycombo> or
+			<keycombo action="simul">&Shift;&Up;</keycombo>. Then use these keys to increase and
 			decrease the scrolling speed. You can start or stop automatic scrolling temporarily by pressing the &Shift; key;
 			pressing any other key deactivates this feature.
 			</para>
@@ -183,7 +179,7 @@ Context menu actions like Rename Bookmarks etc.)
 				<listitem>
 					<para>
 						If the document has annotations, enable the <guilabel>Annotations</guilabel> view
-						and click the annotations or select them with the <keysym>Up Arrow</keysym> and <keysym>Down Arrow</keysym> keys and press <keycap>Return</keycap> to go to the associated page.
+						and click the annotations or select them with the &Up; and &Down; arrow keys and press &Enter; to go to the associated page.
 					</para>
 				</listitem>
 			</itemizedlist>
@@ -191,7 +187,7 @@ Context menu actions like Rename Bookmarks etc.)
 				Some documents have links. In this case you can click on them and the view will
 				change to the page it links to. If the link is to a web page or some
 				other document the default &kde; handler for that format will be invoked.
-				For example, clicking on a link pointing to <quote>http://www.kde.org</quote>
+				For example, clicking on a link pointing to <quote>https://www.kde.org</quote>
 				will open the web page in the default &kde;'s web browser.
 			</para>
 			<important>
@@ -228,7 +224,7 @@ Context menu actions like Rename Bookmarks etc.)
 				</listitem>
 				<listitem>
 					<para>
-						You can go forward in the document using <keycap>Space</keycap> or <keycap>Page Down</keycap>.
+						You can go forward in the document using &Space; or &PgDn;.
 						To go to the next page of the document use the <guibutton>Next Page</guibutton> Toolbar
 						button or
 						<menuchoice>
@@ -239,7 +235,7 @@ Context menu actions like Rename Bookmarks etc.)
 				</listitem>
 				<listitem>
 					<para>
-						You can go back in the document using &Backspace; or <keycap>Page Up</keycap>.
+						You can go back in the document using &Backspace; or &PgUp;.
 						To go to the previous page of the document use <guibutton>Previous Page</guibutton> Toolbar
 						button or
 						<menuchoice>
@@ -253,7 +249,7 @@ Context menu actions like Rename Bookmarks etc.)
 						You can go back to the positions in the document where you came from in a chronological order.
 						Consider &eg; reading the phrase <quote>As shown in [15], …</quote>, and you want
 						to know quickly lookup reference [15]. So you click on it, and &okular; will jump to the list
-						of references. Using <keycombo>&Alt;&Shift;<keysym>Left</keysym></keycombo> or
+						of references. Using <keycombo>&Alt;&Shift;&Left;</keycombo> or
 						<menuchoice>
 							<guimenu>Go</guimenu>
 							<guimenuitem>Back</guimenuitem>
@@ -263,7 +259,7 @@ Context menu actions like Rename Bookmarks etc.)
 				<listitem>
 					<para>
 						You can go forward in the document after the jumping back as described above using
-						<keycombo>&Alt;&Shift;<keysym>Right</keysym></keycombo> or
+						<keycombo>&Alt;&Shift;&Right;</keycombo> or
 						<menuchoice>
 							<guimenu>Go</guimenu>
 							<guimenuitem>Forward</guimenuitem>
@@ -472,7 +468,7 @@ Context menu actions like Rename Bookmarks etc.)
 			</screenshot>
 			<note>
 				<para>
-					This feature is available for &PDF; documents only. You need to install at least version 0.51 of <ulink url="http://poppler.freedesktop.org/">Poppler</ulink> to get most signature information, version 0.68 to get signature location/reason information, and version 0.73 to get signature certificate information.
+					This feature is available for &PDF; documents only. You need to install at least version 0.51 of <ulink url="https://poppler.freedesktop.org/">Poppler</ulink> to get most signature information, version 0.68 to get signature location/reason information, and version 0.73 to get signature certificate information.
 				</para>
 			</note>
 		</sect1>
@@ -1171,7 +1167,7 @@ Context menu actions like Rename Bookmarks etc.)
 				    </tgroup>
 				  </informaltable>
 				  <para>
-					  By pressing <keycap>Shift</keycap> you can constrain the angle of line and polygon annotations to 15° steps, and the ratio of shape annotations (&eg; Rectangle, Ellipse) to 1:1. You can also get a toolbar button from <ulink url="help:/fundamentals/config.html#toolbars">Configure Toolbars...</ulink>.
+					  By pressing &Shift; you can constrain the angle of line and polygon annotations to 15° steps, and the ratio of shape annotations (&eg; Rectangle, Ellipse) to 1:1. You can also get a toolbar button from <ulink url="help:/fundamentals/config.html#toolbars">Configure Toolbars...</ulink>.
 				  </para>
 				  <para>
 					  The contents of the <guilabel>Quick Annotations</guilabel> menu can be configured using the <link linkend="configannotations">Annotations page of &okular; configuration dialog</link>. This page can be opened by clicking <guilabel>Quick Annotations</guilabel> button, then choosing <guimenuitem>Configure Annotations...</guimenuitem> from the pop-up menu.
@@ -1360,7 +1356,7 @@ Context menu actions like Rename Bookmarks etc.)
 			    If the page doesn't completely fit on the screen, the window is enlarged so that the largest possible part of the page is shown.
 			</para>
 			<para>
-			    This feature can be accessed by using the keyboard shortcut <keycombo action="simul">&Ctrl;<keycap>J</keycap></keycombo>
+			    This feature can be accessed by using the keyboard shortcut <keycombo action="simul">&Ctrl;<keycap>J</keycap></keycombo>.
 			</para>
 		</sect1>
 	</chapter>
@@ -1586,7 +1582,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</term>
 					<listitem>
 						<para>This item contains the export formats the current document can be exported to.
-						The first entry for all kind of documents is always <guimenuitem>Plain Text...</guimenuitem></para>
+						The first entry for all kind of documents is always <guimenuitem>Plain Text...</guimenuitem>.</para>
 						<para>The second entry is <guimenuitem>Document Archive</guimenuitem>, which allows you to save the document with your annotations into an &okular;-specific archive format. Thus it is easily possible to share the original document and your annotations with other &okular; users or work with them collaboratively.</para>
 					</listitem>
 				</varlistentry>
@@ -1967,7 +1963,7 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term>
 						<menuchoice>
-							<shortcut><keycombo action="simul">&Ctrl;<keycap>Home</keycap></keycombo></shortcut>
+							<shortcut><keycombo action="simul">&Ctrl;&Home;</keycombo></shortcut>
 							<guimenu>Go</guimenu>
 							<guimenuitem>Beginning of the document</guimenuitem>
 					  </menuchoice>
@@ -1979,7 +1975,7 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term>
 						<menuchoice>
-							<shortcut><keycombo action="simul">&Ctrl;<keycap>End</keycap></keycombo></shortcut>
+							<shortcut><keycombo action="simul">&Ctrl;&End;</keycombo></shortcut>
 							<guimenu>Go</guimenu>
 							<guimenuitem>End of the document</guimenuitem>
 						</menuchoice>
@@ -1991,7 +1987,7 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term>
 						<menuchoice>
-							<shortcut><keycombo action="simul">&Alt;&Shift;<keysym>Left</keysym></keycombo></shortcut>
+							<shortcut><keycombo action="simul">&Alt;&Shift;&Left;</keycombo></shortcut>
 							<guimenu>Go</guimenu>
 							<guimenuitem>Back</guimenuitem>
 						</menuchoice>
@@ -2003,7 +1999,7 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term>
 						<menuchoice>
-							<shortcut><keycombo action="simul">&Alt;&Shift;<keysym 	>Right</keysym></keycombo></shortcut>
+							<shortcut><keycombo action="simul">&Alt;&Shift;&Right;</keycombo></shortcut>
 							<guimenu>Go</guimenu>
 							<guimenuitem>Forward</guimenuitem>
 						</menuchoice>
@@ -2317,7 +2313,7 @@ Context menu actions like Rename Bookmarks etc.)
 	  <sect1 id="config-ghostscript">
 	    <title>&PostScript; backend configuration</title>
 	    <para>
-	      You can configure &okular; &PostScript; rendering backend based on <ulink url="http://www.ghostscript.com/">Ghostscript</ulink> by choosing <guilabel>Ghostscript</guilabel> from the list on the left part of the configuration dialog. The only configurable option is as follows.
+	      You can configure &okular; &PostScript; rendering backend based on <ulink url="https://www.ghostscript.com/">Ghostscript</ulink> by choosing <guilabel>Ghostscript</guilabel> from the list on the left part of the configuration dialog. The only configurable option is as follows.
 	    </para>
 	    <para>
 	      <variablelist>
@@ -2336,7 +2332,7 @@ Context menu actions like Rename Bookmarks etc.)
 	  <sect1 id="config-pdf">
 	    <title>&PDF; backend configuration</title>
 	    <para>
-	      You can configure &okular; &PDF; rendering backend based on <ulink url="http://poppler.freedesktop.org/">Poppler</ulink> by choosing <guilabel>&PDF;</guilabel> from the list on the left part of the configuration dialog. The only configurable option is as follows.
+	      You can configure &okular; &PDF; rendering backend based on <ulink url="https://poppler.freedesktop.org/">Poppler</ulink> by choosing <guilabel>&PDF;</guilabel> from the list on the left part of the configuration dialog. The only configurable option is as follows.
 	    </para>
 	    <para>
 	      <variablelist>
@@ -2590,7 +2586,7 @@ Context menu actions like Rename Bookmarks etc.)
 					<term><guilabel>Page Up/Down overlap</guilabel></term>
 					<listitem>
 						<para>
-						  Here you can define the percentage of the current viewing area that should be visible after pressing <keycap>Page Up</keycap>/<keycap>Page Down</keycap> keys.
+						  Here you can define the percentage of the current viewing area that should be visible after pressing &PgUp;/&PgDn; keys.
 						</para>
 					</listitem>
 				</varlistentry>
@@ -2680,14 +2676,14 @@ Context menu actions like Rename Bookmarks etc.)
 					<term><guilabel>Shift Hue Positive</guilabel></term>
 					<listitem>
 						<para><action>Shifts</action> hue of all colors by 120 degrees.
-							Can mitigate some contrast problems in colorful graphics</para>
+							Can mitigate some contrast problems in colorful graphics.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
 					<term><guilabel>Shift Hue Negative</guilabel></term>
 					<listitem>
 						<para><action>Shifts</action> hue of all colors by 240 degrees.
-							Can mitigate some contrast problems in colorful graphics</para>
+							Can mitigate some contrast problems in colorful graphics.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -2726,8 +2722,8 @@ Context menu actions like Rename Bookmarks etc.)
 					<term><guilabel>Rendering</guilabel></term>
 					<listitem>
 						<para>Using this group of options you can improve text and image rendering in &okular;. The result depends on the device to display the document.
-						 <guilabel>Enable Text Antialias</guilabel> and <guilabel>Enable Graphics Antialias</guilabel> items can be used to switch on and off <ulink url="http://en.wikipedia.org/wiki/Spatial_anti-aliasing">spatial anti-aliasing</ulink> of text and images in document, correspondingly.
-						 <guilabel>Enable Text Hinting</guilabel> item is meant to be a switcher for <ulink url="http://en.wikipedia.org/wiki/Font_hinting">font hinting</ulink>.
+						 <guilabel>Enable Text Antialias</guilabel> and <guilabel>Enable Graphics Antialias</guilabel> items can be used to switch on and off <ulink url="https://en.wikipedia.org/wiki/Spatial_anti-aliasing">spatial anti-aliasing</ulink> of text and images in document, correspondingly.
+						 <guilabel>Enable Text Hinting</guilabel> item is meant to be a switcher for <ulink url="https://en.wikipedia.org/wiki/Font_hinting">font hinting</ulink>.
 						 Antialiasing and hinting change how the documents are displayed, you may want to tweak them to your preference.</para>
 					</listitem>
 				</varlistentry>
@@ -2882,14 +2878,14 @@ Context menu actions like Rename Bookmarks etc.)
 					<term><guilabel>Editor</guilabel></term>
 					<listitem>
 						<para>Choose the editor you want to launch when &okular; wants to open a source file.
-						This is the case when the document has references to the various points (usually row and column number) of sources it was generated from. The &DVI; format supports natively the addition of the information about the sources the LaTeX document was generated from. A similar system exists for &PDF; documents, called <acronym>pdfsync</acronym>, which stores these extra information in an external file named after the &PDF; file itself (for example <filename>mydocument.pdfsync</filename> for <filename>mydocument.pdf</filename>).
+						This is the case when the document has references to the various points (usually row and column number) of sources it was generated from. The &DVI; format supports natively the addition of the information about the sources the &latex; document was generated from. A similar system exists for &PDF; documents, called <acronym>pdfsync</acronym>, which stores these extra information in an external file named after the &PDF; file itself (for example <filename>mydocument.pdfsync</filename> for <filename>mydocument.pdf</filename>).
 						</para>
 						<para>
 								&okular; ships with preconfigured settings for the following editors: <ulink url="https://kate-editor.org/">&kate;</ulink>, <ulink url="https://kile.sourceforge.io/">Kile</ulink>, <ulink url="https://www.scintilla.org/SciTE.html">SciTE</ulink>, <ulink url="https://www.gnu.org/software/emacs/">&Emacs; client</ulink>, <ulink url="https://www.lyx.org/">LyX client</ulink>, <ulink url="https://www.texstudio.org/">TeXstudio</ulink>, and <ulink url="https://github.com/hannah-sten/texify-idea">TeXiFy IDEA</ulink>.
 						</para>
 						<note>
 						  <para>
-						    To use inverse search in <application>Kile</application>, you have to compile your &latex; file with the <guilabel>Modern</guilabel> configuration.
+						    To use inverse search in &kile;, you have to compile your &latex; file with the <guilabel>Modern</guilabel> configuration.
 						  </para>
 						</note>
 					</listitem>

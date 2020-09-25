@@ -106,7 +106,7 @@ is aimed to show documents in different formats.</para>
 </refsect1>
 
 <refsect1 id="feedback"><title>Feedback</title>
-<para>On IRC, irc.freenode.net #okular or via email, okular-devel@kde.org or on the web, &lt;<ulink url="http://okular.kde.org/">http://okular.kde.org/</ulink>&gt;</para>
+<para>On IRC, irc.freenode.net #okular or via email, okular-devel@kde.org or on the web, &lt;<ulink url="https://okular.kde.org/">https://okular.kde.org/</ulink>&gt;.</para>
 </refsect1>
 
 <refsect1>
@@ -120,7 +120,7 @@ url="help:/okular">help:/okular</ulink>
 <member>kf5options(7)</member>
 <member>qt5options(7)</member>
 <member>There is also further information available at
-<ulink url="http://okular.kde.org/">http://okular.kde.org/</ulink></member>
+<ulink url="https://okular.kde.org/">https://okular.kde.org/</ulink></member>
 </simplelist>
 </refsect1>
 
@@ -130,7 +130,7 @@ url="help:/okular">help:/okular</ulink>
 <para>Copyright &copy; 2005 Piotr Szymanski</para>
 <para>Copyright &copy; 2004-2012 Albert Astals Cid</para>
 <para>Copyright &copy; 2006-2009 Pino Toscano</para>
-<para>License: GNU General Public Version 2 &lt;<ulink url="http://www.gnu.org/licenses/gpl-2.0.html">http://www.gnu.org/licenses/gpl-2.0.html</ulink>&gt;</para>
+<para>License: GNU General Public Version 2 &lt;<ulink url="https://www.gnu.org/licenses/gpl-2.0.html">https://www.gnu.org/licenses/gpl-2.0.html</ulink>&gt;</para>
 </refsect1>
 </refentry>
 

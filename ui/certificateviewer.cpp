@@ -318,7 +318,7 @@ void CertificateViewer::exportCertificate()
         QFile targetFile(path);
         targetFile.open(QIODevice::WriteOnly);
         if (targetFile.write(m_certificateInfo.certificateData()) == -1) {
-            KMessageBox::error(this, i18n("Unable to export certificate!"));
+            KMessageBox::error(this, i18n("Could not export the certificate"));
         }
         targetFile.close();
     }

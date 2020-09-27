@@ -4739,7 +4739,7 @@ void PageView::slotScrollUp(int nSteps)
             d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, -100 * nSteps), 100);
         } else {
             if (d->scroller->finalPosition().y() > verticalScrollBar()->minimum())
-                d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, -verticalScrollBar()->rect().height()));
+                d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, -(1 - Okular::Settings::scrollOverlap() / 100.0) * verticalScrollBar()->rect().height()));
         }
     } else if (d->document->currentPage() > 0) {
         // more optimized than document->setPrevPage and then move view to bottom
@@ -4761,7 +4761,7 @@ void PageView::slotScrollDown(int nSteps)
             d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, 100 * nSteps), 100);
         } else {
             if (d->scroller->finalPosition().y() < verticalScrollBar()->maximum())
-                d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, verticalScrollBar()->rect().height()));
+                d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, (1 - Okular::Settings::scrollOverlap() / 100.0) * verticalScrollBar()->rect().height()));
         }
     } else if ((int)d->document->currentPage() < d->items.count() - 1) {
         // more optimized than document->setNextPage and then move view to top

@@ -371,6 +371,7 @@ if(BUILD_DESKTOP)
     part/xmlgui_helper.cpp
     part/extensions.cpp
     part/embeddedfilesdialog.cpp
+    part/actionbar.cpp
     part/annotationactionhandler.cpp
     part/annotwindow.cpp
     part/annotationmodel.cpp

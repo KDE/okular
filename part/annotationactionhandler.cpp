@@ -25,6 +25,7 @@
 #include <kwidgetsaddons_version.h>
 
 // local includes
+#include "actionbar.h"
 #include "annotationwidgets.h"
 #include "guiutils.h"
 #include "pageview.h"
@@ -46,6 +47,7 @@ public:
         , agTools(nullptr)
         , agLastAction(nullptr)
         , aQuickTools(nullptr)
+        , aQuickToolsBar(nullptr)
         , aGeomShapes(nullptr)
         , aStamp(nullptr)
         , aAddToQuickTools(nullptr)
@@ -105,12 +107,14 @@ public:
 
     PageViewAnnotator *annotator;
 
+    QList<QAction *> quickTools;
     QList<QAction *> textTools;
     QList<QAction *> textQuickTools;
     QActionGroup *agTools;
     QAction *agLastAction;
 
     ToggleActionMenu *aQuickTools;
+    ActionBar *aQuickToolsBar;
     ToggleActionMenu *aGeomShapes;
     ToggleActionMenu *aStamp;
     QAction *aAddToQuickTools;
@@ -351,20 +355,19 @@ void AnnotationActionHandlerPrivate::populateQuickAnnotations()
         q->deselectAllAnnotationActions();
     }
 
-    const QList<QAction *> quickToolActions = aQuickTools->menu()->actions();
-    for (QAction *action : quickToolActions) {
-        if (action->isCheckable()) {
-            aQuickTools->removeAction(action);
-            delete action;
-        }
+    for (QAction *action : qAsConst(quickTools)) {
+        aQuickTools->removeAction(action);
+        aQuickToolsBar->removeAction(action);
+        delete action;
     }
-    QAction *aSeparator = aQuickTools->menu()->actions().first();
+    quickTools.clear();
     textQuickTools.clear();
 
     int favToolId = 1;
     QList<int>::const_iterator shortcutNumber = numberKeys.begin();
     QDomElement favToolElement = annotator->quickTool(favToolId);
-    QList<QAction *> quickTools;
+    int actionBarInsertPosition = 0;
+    QAction *aSeparator = aQuickTools->menu()->actions().first();
     while (!favToolElement.isNull()) {
         QString itemText = favToolElement.attribute(QStringLiteral("name"));
         if (favToolElement.attribute(QStringLiteral("default"), QStringLiteral("false")) == QLatin1String("true")) {
@@ -376,6 +379,7 @@ void AnnotationActionHandlerPrivate::populateQuickAnnotations()
         QIcon toolIcon = QIcon(PageViewAnnotator::makeToolPixmap(favToolElement));
         QAction *annFav = new KToggleAction(toolIcon, itemText, q);
         aQuickTools->insertAction(aSeparator, annFav);
+        aQuickToolsBar->insertAction(actionBarInsertPosition++, annFav);
         agTools->addAction(annFav);
         quickTools.append(annFav);
         if (shortcutNumber != numberKeys.end())
@@ -392,6 +396,7 @@ void AnnotationActionHandlerPrivate::populateQuickAnnotations()
         }
         favToolElement = annotator->quickTool(++favToolId);
     }
+    aQuickToolsBar->recreateWidgets();
 
     // set the default action
     if (quickTools.isEmpty()) {
@@ -518,7 +523,7 @@ void AnnotationActionHandlerPrivate::slotToolBarVisibilityChanged(bool checked)
 
 bool AnnotationActionHandlerPrivate::isQuickToolAction(QAction *aTool)
 {
-    return aQuickTools->menu()->actions().contains(aTool) && aTool->isCheckable();
+    return quickTools.contains(aTool);
 }
 
 bool AnnotationActionHandlerPrivate::isQuickToolStamp(int toolId)
@@ -650,6 +655,10 @@ AnnotationActionHandler::AnnotationActionHandler(PageViewAnnotator *parent, KAct
             d->aQuickTools->setDefaultAction(action);
         }
     });
+
+    d->aQuickToolsBar = new ActionBar(this);
+    d->aQuickToolsBar->setText(i18n("Quick Annotation Bar"));
+
     QAction *aQuickToolsSeparator = new QAction(this);
     aQuickToolsSeparator->setSeparator(true);
     d->aQuickTools->addAction(aQuickToolsSeparator);
@@ -657,6 +666,7 @@ AnnotationActionHandler::AnnotationActionHandler(PageViewAnnotator *parent, KAct
     QAction *aConfigAnnotation = ac->action(QStringLiteral("options_configure_annotations"));
     if (aConfigAnnotation) {
         d->aQuickTools->addAction(aConfigAnnotation);
+        d->aQuickToolsBar->addAction(aConfigAnnotation);
     }
     d->populateQuickAnnotations();
 
@@ -721,6 +731,7 @@ AnnotationActionHandler::AnnotationActionHandler(PageViewAnnotator *parent, KAct
 
     ac->addAction(QStringLiteral("mouse_toggle_annotate"), d->aToolBarVisibility);
     ac->addAction(QStringLiteral("hide_annotation_toolbar"), d->aHideToolBar);
+    ac->addAction(QStringLiteral("quick_annotation_action_bar"), d->aQuickToolsBar);
     ac->addAction(QStringLiteral("annotation_highlighter"), aHighlighter);
     ac->addAction(QStringLiteral("annotation_underline"), aUnderline);
     ac->addAction(QStringLiteral("annotation_squiggle"), aSquiggle);

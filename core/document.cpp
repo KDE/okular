@@ -3445,19 +3445,8 @@ void Document::setPrevPage()
         setViewport( DocumentViewport( (*d->m_viewportIterator).pageNumber - 1 ) );
 }
 */
-void Document::setViewportPage(int page, DocumentObserver *excludeObserver, bool smoothMove)
-{
-    // clamp page in range [0 ... numPages-1]
-    if (page < 0)
-        page = 0;
-    else if (page > (int)d->m_pagesVector.count())
-        page = d->m_pagesVector.count() - 1;
 
-    // make a viewport from the page and broadcast it
-    setViewport(DocumentViewport(page), excludeObserver, smoothMove);
-}
-
-void Document::setViewport(const DocumentViewport &viewport, DocumentObserver *excludeObserver, bool smoothMove)
+void Document::setViewportWithHistory(const DocumentViewport &viewport, DocumentObserver *excludeObserver, bool smoothMove, bool updateHistory)
 {
     if (!viewport.isValid()) {
         qCDebug(OkularCoreDebug) << "invalid viewport:" << viewport.toString();
@@ -3477,7 +3466,7 @@ void Document::setViewport(const DocumentViewport &viewport, DocumentObserver *e
     const int oldPageNumber = oldViewport.pageNumber;
 
     // set internal viewport taking care of history
-    if (oldViewport.pageNumber == viewport.pageNumber || !oldViewport.isValid()) {
+    if (oldViewport.pageNumber == viewport.pageNumber || !oldViewport.isValid() || !updateHistory) {
         // if page is unchanged save the viewport at current position in queue
         oldViewport = viewport;
     } else {
@@ -3504,6 +3493,24 @@ void Document::setViewport(const DocumentViewport &viewport, DocumentObserver *e
         if (currentPageChanged)
             o->notifyCurrentPageChanged(oldPageNumber, currentViewportPage);
     }
+}
+
+void Document::setViewportPage(int page, DocumentObserver *excludeObserver, bool smoothMove)
+{
+    // clamp page in range [0 ... numPages-1]
+    if (page < 0)
+        page = 0;
+    else if (page > (int)d->m_pagesVector.count())
+        page = d->m_pagesVector.count() - 1;
+
+    // make a viewport from the page and broadcast it
+    setViewport(DocumentViewport(page), excludeObserver, smoothMove);
+}
+
+void Document::setViewport(const DocumentViewport &viewport, DocumentObserver *excludeObserver, bool smoothMove)
+{
+    // set viewport, updating history
+    setViewportWithHistory(viewport, excludeObserver, smoothMove, true);
 }
 
 void Document::setZoom(int factor, DocumentObserver *excludeObserver)

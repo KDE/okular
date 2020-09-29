@@ -4410,7 +4410,7 @@ static void slotRequestPreloadPixmap(Okular::DocumentObserver *observer, const P
 void PageView::slotRequestVisiblePixmaps(int newValue)
 {
     // if requests are blocked (because raised by an unwanted event), exit
-    if (d->blockPixmapsRequest || d->scroller->state() == QScroller::Scrolling)
+    if (d->blockPixmapsRequest)
         return;
 
     // precalc view limits for intersecting with page coords inside the loop
@@ -4553,7 +4553,8 @@ void PageView::slotRequestVisiblePixmaps(int newValue)
         newViewport.rePos.normalizedX = focusedX;
         newViewport.rePos.normalizedY = focusedY;
         // set the viewport to other observers
-        d->document->setViewport(newViewport, this);
+        // do not update history if the viewport is autoscrolling
+        d->document->setViewportWithHistory(newViewport, this, false, d->scroller->state() == QScroller::Scrolling);
     }
     d->document->setVisiblePageRects(visibleRects, this);
 }
@@ -4788,7 +4789,7 @@ void PageView::slotScrollUp(int nSteps)
             d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, -100 * nSteps), d->currentShortScrollDuration);
         } else {
             if (d->scroller->finalPosition().y() > verticalScrollBar()->minimum())
-                d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, -verticalScrollBar()->rect().height()), d->currentLongScrollDuration);
+                d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, -(1 - Okular::Settings::scrollOverlap() / 100.0) * verticalScrollBar()->rect().height()), d->currentLongScrollDuration);
         }
     } else if (d->document->currentPage() > 0) {
         // more optimized than document->setPrevPage and then move view to bottom
@@ -4810,7 +4811,7 @@ void PageView::slotScrollDown(int nSteps)
             d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, 100 * nSteps), d->currentShortScrollDuration);
         } else {
             if (d->scroller->finalPosition().y() < verticalScrollBar()->maximum())
-                d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, verticalScrollBar()->rect().height()), d->currentLongScrollDuration);
+                d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, (1 - Okular::Settings::scrollOverlap() / 100.0) * verticalScrollBar()->rect().height()), d->currentLongScrollDuration);
         }
     } else if ((int)d->document->currentPage() < d->items.count() - 1) {
         // more optimized than document->setNextPage and then move view to top

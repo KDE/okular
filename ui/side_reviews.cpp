@@ -98,7 +98,7 @@ Reviews::Reviews(QWidget *parent, Okular::Document *document)
 
     KTitleWidget *titleWidget = new KTitleWidget(this);
     titleWidget->setLevel(2);
-    titleWidget->setText(i18n("Reviews"));
+    titleWidget->setText(i18n("Annotations"));
 
     m_view = new TreeView(m_document, this);
     m_view->setAlternatingRowColors(true);

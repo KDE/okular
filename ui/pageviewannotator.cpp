@@ -527,7 +527,7 @@ public:
                     selection = std::move(newselection);
                 }
             }
-        } else if (type == Release && selection) {
+        } else if (type == Release) {
             m_creationCompleted = true;
         }
         return rect;

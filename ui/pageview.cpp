@@ -436,13 +436,16 @@ PageView::PageView(QWidget *parent, Okular::Document *document)
     connect(horizontalScrollBar(), &QAbstractSlider::valueChanged, this, &PageView::slotRequestVisiblePixmaps);
     connect(verticalScrollBar(), &QAbstractSlider::valueChanged, this, &PageView::slotRequestVisiblePixmaps);
 
+    // Keep the scroller in sync with user input on the scrollbars.
+    // QAbstractSlider::sliderMoved() and sliderReleased are the intuitive signals,
+    // but are only emitted when the “slider is down”, i. e. not when the user scrolls on the scrollbar.
+    // QAbstractSlider::actionTriggered() is emitted in all user input cases,
+    // but before the value() changes, so we need queued connection here.
     auto update_scroller = [=]() {
         d->scroller->scrollTo(QPoint(horizontalScrollBar()->value(), verticalScrollBar()->value()), 0); // sync scroller with scrollbar
     };
-    connect(verticalScrollBar(), &QAbstractSlider::sliderReleased, this, update_scroller);
-    connect(horizontalScrollBar(), &QAbstractSlider::sliderReleased, this, update_scroller);
-    connect(verticalScrollBar(), &QAbstractSlider::sliderMoved, this, update_scroller);
-    connect(horizontalScrollBar(), &QAbstractSlider::sliderMoved, this, update_scroller);
+    connect(verticalScrollBar(), &QAbstractSlider::actionTriggered, this, update_scroller, Qt::QueuedConnection);
+    connect(horizontalScrollBar(), &QAbstractSlider::actionTriggered, this, update_scroller, Qt::QueuedConnection);
 
     connect(&d->dragScrollTimer, &QTimer::timeout, this, &PageView::slotDragScroll);
 

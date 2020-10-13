@@ -353,10 +353,6 @@ void PartTest::testScrollBarAndMouseWheel()
     // We should still be on the second page after that.
     QTest::qWait(1000);
 
-    // This test for bug 421159 has been committed when there was no fix for the bug
-    // available yet.  That's why the final QCOMPARE is preceded by QEXPECT_FAIL.
-    // Please remove the QEXPECT_FAIL together with the fix for bug 421159.
-    QEXPECT_FAIL("", "Please remove this QEXPECT_FAIL once bug 421159 is fixed!", Continue);
     QCOMPARE(part.m_document->currentPage(), 1u);
 }
 

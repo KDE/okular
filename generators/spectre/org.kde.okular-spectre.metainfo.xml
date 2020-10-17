@@ -5,6 +5,7 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+ and GFDL-1.3</project_license>
   <name>PostScript</name>
+  <name xml:lang="az">PostScript</name>
   <name xml:lang="ca">PostScript</name>
   <name xml:lang="ca-valencia">PostScript</name>
   <name xml:lang="cs">PostScript</name>
@@ -42,6 +43,7 @@
   <name xml:lang="zh-CN">PostScript</name>
   <name xml:lang="zh-TW">PostScript</name>
   <summary>Adds support for reading PostScript documents</summary>
+  <summary xml:lang="az">PostScript sənədlərini oxumaq üçün dəstək əlavə edir</summary>
   <summary xml:lang="ca">Afegeix la implementació per a llegir documents PostScript</summary>
   <summary xml:lang="ca-valencia">Afig la implementació per a llegir documents PostScript</summary>
   <summary xml:lang="cs">Přidává podporu pro čtení dokumentů PostScript</summary>

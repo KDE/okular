@@ -4,6 +4,7 @@
             {
                 "Email": "elylevy@cs.huji.ac.il",
                 "Name": "Ely Levy",
+                "Name[az]": "Ely Levy",
                 "Name[ca@valencia]": "Ely Levy",
                 "Name[ca]": "Ely Levy",
                 "Name[cs]": "Ely Levy",
@@ -42,6 +43,7 @@
             }
         ],
         "Copyright": "© 2008 Ely Levy",
+        "Copyright[az]": "© 2008 Ely Levy",
         "Copyright[ca@valencia]": "© 2008 Ely Levy",
         "Copyright[ca]": "© 2008 Ely Levy",
         "Copyright[cs]": "© 2008 Ely Levy",
@@ -78,6 +80,7 @@
         "Copyright[zh_CN]": "© 2008 Ely Levy",
         "Copyright[zh_TW]": "© 2008 Ely Levy",
         "Description": "An EPub backend",
+        "Description[az]": "EPub modulu",
         "Description[ca@valencia]": "Un dorsal per a l'EPub",
         "Description[ca]": "Un dorsal per a l'EPub",
         "Description[cs]": "Podpůrná vrstva EPub",
@@ -119,6 +122,7 @@
             "application/epub+zip"
         ],
         "Name": "EPub Backend",
+        "Name[az]": "EPub modulu",
         "Name[ca@valencia]": "Dorsal EPub",
         "Name[ca]": "Dorsal EPub",
         "Name[cs]": "Podpůrná vrstva EPub",

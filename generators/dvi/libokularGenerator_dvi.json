@@ -4,6 +4,7 @@
             {
                 "Email": "luigi.toscano@tiscali.it",
                 "Name": "Luigi Toscano",
+                "Name[az]": "Luigi Toscano",
                 "Name[ca@valencia]": "Luigi Toscano",
                 "Name[ca]": "Luigi Toscano",
                 "Name[cs]": "Luigi Toscano",
@@ -42,6 +43,7 @@
             }
         ],
         "Copyright": "© 2006 Luigi Toscano",
+        "Copyright[az]": "© 2006 Luigi Toscano",
         "Copyright[ca@valencia]": "© 2006 Luigi Toscano",
         "Copyright[ca]": "© 2006 Luigi Toscano",
         "Copyright[cs]": "© 2006 Luigi Toscano",
@@ -78,6 +80,7 @@
         "Copyright[zh_CN]": "© 2006 Luigi Toscano",
         "Copyright[zh_TW]": "© 2006 Luigi Toscano",
         "Description": "A DVI file renderer",
+        "Description[az]": "DVİ faylı tərtibatçısı",
         "Description[ca@valencia]": "Un renderitzador per als fitxers DVI",
         "Description[ca]": "Un renderitzador per als fitxers DVI",
         "Description[cs]": "Vykreslovač DVI souborů",
@@ -119,6 +122,7 @@
             "application/x-dvi"
         ],
         "Name": "DVI Backend",
+        "Name[az]": "DVİ modulu",
         "Name[ca@valencia]": "Dorsal DVI",
         "Name[ca]": "Dorsal DVI",
         "Name[cs]": "Implementace DVI",

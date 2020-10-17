@@ -4,6 +4,7 @@
             {
                 "Email": "aacid@kde.org",
                 "Name": "Albert Astals Cid",
+                "Name[az]": "Albert Astals Cid",
                 "Name[ca@valencia]": "Albert Astals Cid",
                 "Name[ca]": "Albert Astals Cid",
                 "Name[cs]": "Albert Astals Cid",
@@ -42,6 +43,7 @@
             }
         ],
         "Copyright": "© 2005-2008 Albert Astals Cid",
+        "Copyright[az]": "© 2005-2008 Albert Astals Cid",
         "Copyright[ca@valencia]": "© 2005-2008 Albert Astals Cid",
         "Copyright[ca]": "© 2005-2008 Albert Astals Cid",
         "Copyright[cs]": "© 2005-2008 Albert Astals Cid",
@@ -78,6 +80,7 @@
         "Copyright[zh_CN]": "© 2005-2008 Albert Astals Cid",
         "Copyright[zh_TW]": "© 2005-2008 Albert Astals Cid",
         "Description": "A PDF file renderer",
+        "Description[az]": "PDF faylı tərtibatçısı",
         "Description[ca@valencia]": "Un renderitzador per als fitxers PDF",
         "Description[ca]": "Un renderitzador per als fitxers PDF",
         "Description[cs]": "Vykreslovač PDF souborů",
@@ -121,6 +124,7 @@
             "application/x-wwf"
         ],
         "Name": "PDF Backend",
+        "Name[az]": "PDF modulu",
         "Name[ca@valencia]": "Dorsal PDF",
         "Name[ca]": "Dorsal PDF",
         "Name[cs]": "Podpůrná vrstva PDF",

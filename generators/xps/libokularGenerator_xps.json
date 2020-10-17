@@ -4,6 +4,7 @@
             {
                 "Email": "bradh@frogmouth.net",
                 "Name": "Brad Hards",
+                "Name[az]": "Brad Hards",
                 "Name[ca@valencia]": "Brad Hards",
                 "Name[ca]": "Brad Hards",
                 "Name[cs]": "Brad Hards",
@@ -43,6 +44,7 @@
             {
                 "Email": "jiri.klement@gmail.com",
                 "Name": "Jiri Klement",
+                "Name[az]": "Jiri Klement",
                 "Name[ca@valencia]": "Jiri Klement",
                 "Name[ca]": "Jiri Klement",
                 "Name[cs]": "Jiří Klement",
@@ -82,6 +84,7 @@
             {
                 "Email": "pino@kde.org",
                 "Name": "Pino Toscano",
+                "Name[az]": "Pino Toscano",
                 "Name[ca@valencia]": "Pino Toscano",
                 "Name[ca]": "Pino Toscano",
                 "Name[cs]": "Pino Toscano",
@@ -120,6 +123,7 @@
             }
         ],
         "Copyright": "© 2006-2007 Brad Hards\n© 2007 Jiri Klement\n© 2008 Pino Toscano",
+        "Copyright[az]": "© 2006-2007 Brad Hards\n© 2007 Jiri Klement\n© 2008 Pino Toscano",
         "Copyright[ca@valencia]": "© 2006-2007 Brad Hards\n© 2007 Jiri Klement\n© 2008 Pino Toscano",
         "Copyright[ca]": "© 2006-2007 Brad Hards\n© 2007 Jiri Klement\n© 2008 Pino Toscano",
         "Copyright[cs]": "© 2006-2007 Brad Hards\n© 2007 Jiri Klement\n© 2008 Pino Toscano",
@@ -156,6 +160,7 @@
         "Copyright[zh_CN]": "© 2006-2007 Brad Hards\n© 2007 Jiri Klement\n© 2008 Pino Toscano",
         "Copyright[zh_TW]": "© 2006-2007 Brad Hards\n© 2007 Jiri Klement\n© 2008 Pino Toscano",
         "Description": "An XPS backend",
+        "Description[az]": "XPS modulu",
         "Description[ca@valencia]": "Un dorsal per a l'XPS",
         "Description[ca]": "Un dorsal per a l'XPS",
         "Description[cs]": "Podpůrná vrstva XPS",
@@ -198,6 +203,7 @@
             "application/vnd.ms-xpsdocument"
         ],
         "Name": "XPS Backend",
+        "Name[az]": "XPS modulu",
         "Name[ca@valencia]": "Dorsal XPS",
         "Name[ca]": "Dorsal XPS",
         "Name[cs]": "Podpůrná vrstva XPS",

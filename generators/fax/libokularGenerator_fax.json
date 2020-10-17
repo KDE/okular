@@ -4,6 +4,7 @@
             {
                 "Email": "tokoe@kde.org",
                 "Name": "Tobias Koenig",
+                "Name[az]": "Tobias Koenig",
                 "Name[ca@valencia]": "Tobias Koenig",
                 "Name[ca]": "Tobias Koenig",
                 "Name[cs]": "Tobias Koenig",
@@ -42,6 +43,7 @@
             }
         ],
         "Copyright": "© 2008 Tobias Koenig",
+        "Copyright[az]": "© 2008 Tobias Koenig",
         "Copyright[ca@valencia]": "© 2008 Tobias Koenig",
         "Copyright[ca]": "© 2008 Tobias Koenig",
         "Copyright[cs]": "© 2008 Tobias Koenig",
@@ -78,6 +80,7 @@
         "Copyright[zh_CN]": "© 2008 Tobias Koenig",
         "Copyright[zh_TW]": "© 2008 Tobias Koenig",
         "Description": "A G3/G4 fax document backend",
+        "Description[az]": "A G3/G4 fax sənədi modulu",
         "Description[ca@valencia]": "Un dorsal per a documents de fax G3/G4",
         "Description[ca]": "Un dorsal per a documents de fax G3/G4",
         "Description[cs]": "Implementace dokumentu faxu A G3/G4",
@@ -120,6 +123,7 @@
             "image/g3fax"
         ],
         "Name": "Fax Backend",
+        "Name[az]": "Fax Backend",
         "Name[ca@valencia]": "Dorsal de fax",
         "Name[ca]": "Dorsal de fax",
         "Name[cs]": "Implementace faxu",

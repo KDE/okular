@@ -4,6 +4,7 @@
             {
                 "Email": "niedakh@gmail.com",
                 "Name": "Piotr Szymański",
+                "Name[az]": "Piotr Szymański",
                 "Name[ca@valencia]": "Piotr Szymański",
                 "Name[ca]": "Piotr Szymański",
                 "Name[cs]": "Piotr Szymański",
@@ -43,6 +44,7 @@
             {
                 "Email": "aacid@kde.org",
                 "Name": "Albert Astals Cid",
+                "Name[az]": "Albert Astals Cid",
                 "Name[ca@valencia]": "Albert Astals Cid",
                 "Name[ca]": "Albert Astals Cid",
                 "Name[cs]": "Albert Astals Cid",
@@ -81,6 +83,7 @@
             }
         ],
         "Copyright": "© 2005-2007 Piotr Szymański\n© 2008 Albert Astals Cid",
+        "Copyright[az]": "© 2005-2007 Piotr Szymański\n© 2008 Albert Astals Cid",
         "Copyright[ca@valencia]": "© 2005-2007 Piotr Szymański\n© 2008 Albert Astals Cid",
         "Copyright[ca]": "© 2005-2007 Piotr Szymański\n© 2008 Albert Astals Cid",
         "Copyright[cs]": "© 2005-2007 Piotr Szymański\n© 2008 Albert Astals Cid",
@@ -117,6 +120,7 @@
         "Copyright[zh_CN]": "© 2005-2007 Piotr Szymański\n© 2008 Albert Astals Cid",
         "Copyright[zh_TW]": "© 2005-2007 Piotr Szymański\n© 2008 Albert Astals Cid",
         "Description": "A Microsoft Windows help file renderer",
+        "Description[az]": "Microsoft Windows köməkçi fayl tərtibatçısı",
         "Description[ca@valencia]": "Un renderitzador per als fitxers d'ajuda de Microsoft Windows",
         "Description[ca]": "Un renderitzador per als fitxers d'ajuda de Microsoft Windows",
         "Description[cs]": "Nástroj pro zobrazování nápovědy Microsoft Windows",
@@ -158,6 +162,7 @@
             "application/x-chm"
         ],
         "Name": "CHM Backend",
+        "Name[az]": "CHM modulu",
         "Name[ca@valencia]": "Dorsal CHM",
         "Name[ca]": "Dorsal CHM",
         "Name[cs]": "Podpora CHM",

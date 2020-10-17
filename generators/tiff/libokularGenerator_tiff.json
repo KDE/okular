@@ -4,6 +4,7 @@
             {
                 "Email": "pino@kde.org",
                 "Name": "Pino Toscano",
+                "Name[az]": "Pino Toscano",
                 "Name[ca@valencia]": "Pino Toscano",
                 "Name[ca]": "Pino Toscano",
                 "Name[cs]": "Pino Toscano",
@@ -42,6 +43,7 @@
             }
         ],
         "Copyright": "© 2006-2008 Pino Toscano",
+        "Copyright[az]": "© 2006-2008 Pino Toscano",
         "Copyright[ca@valencia]": "© 2006-2008 Pino Toscano",
         "Copyright[ca]": "© 2006-2008 Pino Toscano",
         "Copyright[cs]": "© 2006-2008 Pino Toscano",
@@ -78,6 +80,7 @@
         "Copyright[zh_CN]": "© 2006-2008 Pino Toscano",
         "Copyright[zh_TW]": "© 2006-2008 Pino Toscano",
         "Description": "A TIFF backend",
+        "Description[az]": "TİFF modulu",
         "Description[ca@valencia]": "Un dorsal per al TIFF",
         "Description[ca]": "Un dorsal per al TIFF",
         "Description[cs]": "Podpůrná vrstva pro TIFF",
@@ -119,6 +122,7 @@
             "image/tiff"
         ],
         "Name": "TIFF Backend",
+        "Name[az]": "TİFF modulu",
         "Name[ca@valencia]": "Dorsal TIFF",
         "Name[ca]": "Dorsal TIFF",
         "Name[cs]": "Podpůrná vrstva pro TIFF",

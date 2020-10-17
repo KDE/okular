@@ -4,6 +4,7 @@
             {
                 "Email": "wolff@julianwolff.de",
                 "Name": "Julian Wolff",
+                "Name[az]": "Julian Wolff",
                 "Name[ca@valencia]": "Julian Wolff",
                 "Name[ca]": "Julian Wolff",
                 "Name[cs]": "Julian Wolff",
@@ -42,6 +43,7 @@
             }
         ],
         "Copyright": "© 2017 Julian Wolff",
+        "Copyright[az]": "© 2017 Julian Wolff",
         "Copyright[ca@valencia]": "© 2017 Julian Wolff",
         "Copyright[ca]": "© 2017 Julian Wolff",
         "Copyright[cs]": "© 2017 Julian Wolff",
@@ -84,6 +86,7 @@
             "text/x-markdown"
         ],
         "Name": "Markdown Backend",
+        "Name[az]": "Markdown modulu",
         "Name[ca@valencia]": "Dorsal Markdown",
         "Name[ca]": "Dorsal Markdown",
         "Name[cs]": "Podpůrná vrstva Markdown",

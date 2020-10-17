@@ -4,6 +4,7 @@
             {
                 "Email": "tokoe@kde.org",
                 "Name": "Tobias Koenig",
+                "Name[az]": "Tobias Koenig",
                 "Name[ca@valencia]": "Tobias Koenig",
                 "Name[ca]": "Tobias Koenig",
                 "Name[cs]": "Tobias Koenig",
@@ -42,6 +43,7 @@
             }
         ],
         "Copyright": "© 2007-2008 Tobias Koenig",
+        "Copyright[az]": "© 2007-2008 Tobias Koenig",
         "Copyright[ca@valencia]": "© 2007-2008 Tobias Koenig",
         "Copyright[ca]": "© 2007-2008 Tobias Koenig",
         "Copyright[cs]": "© 2007-2008 Tobias Koenig",
@@ -78,6 +80,7 @@
         "Copyright[zh_CN]": "© 2007-2008 Tobias Koenig",
         "Copyright[zh_TW]": "© 2007-2008 Tobias Koenig",
         "Description": "A renderer for FictionBook eBooks",
+        "Description[az]": "FictionBook eBooks üçün tərtibatçı",
         "Description[ca@valencia]": "Un renderitzador per a llibres electrònics FictionBook",
         "Description[ca]": "Un renderitzador per a llibres electrònics FictionBook",
         "Description[cs]": "Renderer elektronických knih Fiction Book",
@@ -119,6 +122,7 @@
             "application/x-fictionbook+xml"
         ],
         "Name": "Fiction Book Backend",
+        "Name[az]": "Fiction Book modulu",
         "Name[ca@valencia]": "Dorsal Fiction Book",
         "Name[ca]": "Dorsal Fiction Book",
         "Name[cs]": "Podpůrná vrstva Fiction Book",

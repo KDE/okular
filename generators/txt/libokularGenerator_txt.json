@@ -4,6 +4,7 @@
             {
                 "Email": "a3at.mail@gmail.com",
                 "Name": "Azat Khuzhin",
+                "Name[az]": "Azat Khuzhin",
                 "Name[ca@valencia]": "Azat Khuzhin",
                 "Name[ca]": "Azat Khuzhin",
                 "Name[cs]": "Azat Khuzhin",
@@ -42,6 +43,7 @@
             }
         ],
         "Copyright": "© 2013 Azat Khuzhin",
+        "Copyright[az]": "© 2013 Azat Khuzhin",
         "Copyright[ca@valencia]": "© 2013 Azat Khuzhin",
         "Copyright[ca]": "© 2013 Azat Khuzhin",
         "Copyright[cs]": "© 2013 Azat Khuzhin",
@@ -78,6 +80,7 @@
         "Copyright[zh_CN]": "© 2013 Azat Khuzhin",
         "Copyright[zh_TW]": "© 2013 Azat Khuzhin",
         "Description": "Txt backend",
+        "Description[az]": "Txt modulu",
         "Description[ca@valencia]": "Dorsal txt",
         "Description[ca]": "Dorsal txt",
         "Description[cs]": "Podpůrná vrstva txt",
@@ -119,6 +122,7 @@
             "text/plain"
         ],
         "Name": "Txt Backend",
+        "Name[az]": "Txt modulu",
         "Name[ca@valencia]": "Dorsal txt",
         "Name[ca]": "Dorsal txt",
         "Name[cs]": "Podpůrná vrstva txt",

@@ -4,6 +4,7 @@
             {
                 "Email": "aacid@kde.org",
                 "Name": "Albert Astals Cid",
+                "Name[az]": "Albert Astals Cid",
                 "Name[ca@valencia]": "Albert Astals Cid",
                 "Name[ca]": "Albert Astals Cid",
                 "Name[cs]": "Albert Astals Cid",
@@ -43,6 +44,7 @@
             {
                 "Email": "pino@kde.org",
                 "Name": "Pino Toscano",
+                "Name[az]": "Pino Toscano",
                 "Name[ca@valencia]": "Pino Toscano",
                 "Name[ca]": "Pino Toscano",
                 "Name[cs]": "Pino Toscano",
@@ -82,6 +84,7 @@
             {
                 "Email": "tokoe@kde.org",
                 "Name": "Tobias Koenig",
+                "Name[az]": "Tobias Koenig",
                 "Name[ca@valencia]": "Tobias Koenig",
                 "Name[ca]": "Tobias Koenig",
                 "Name[cs]": "Tobias Koenig",
@@ -120,6 +123,7 @@
             }
         ],
         "Copyright": "© 2005, 2009 Albert Astals Cid\n© 2006-2007 Pino Toscano\n© 2006-2007 Tobias Koenig",
+        "Copyright[az]": "© 2005, 2009 Albert Astals Cid\n© 2006-2007 Pino Toscano\n© 2006-2007 Tobias Koenig",
         "Copyright[ca@valencia]": "© 2005, 2009 Albert Astals Cid\n© 2006-2007 Pino Toscano\n© 2006-2007 Tobias Koenig",
         "Copyright[ca]": "© 2005, 2009 Albert Astals Cid\n© 2006-2007 Pino Toscano\n© 2006-2007 Tobias Koenig",
         "Copyright[cs]": "© 2005, 2009 Albert Astals Cid\n© 2006-2007 Pino Toscano\n© 2006-2007 Tobias Koenig",
@@ -156,6 +160,7 @@
         "Copyright[zh_CN]": "© 2005, 2009 Albert Astals Cid\n© 2006-2007 Pino Toscano\n© 2006-2007 Tobias Koenig",
         "Copyright[zh_TW]": "© 2005, 2009 Albert Astals Cid\n© 2006-2007 Pino Toscano\n© 2006-2007 Tobias Koenig",
         "Description": "A simple image backend",
+        "Description[az]": "Sadə şəkil modulu",
         "Description[ca@valencia]": "Un dorsal d'imatges senzill",
         "Description[ca]": "Un dorsal d'imatges senzill",
         "Description[cs]": "Jednoduchá podpůrná vrstva obrázků",
@@ -218,6 +223,7 @@
             "image/x-xpixmap"
         ],
         "Name": "Image Backend",
+        "Name[az]": "Image Backend",
         "Name[ca@valencia]": "Dorsal d'imatges",
         "Name[ca]": "Dorsal d'imatges",
         "Name[cs]": "Podpůrná vrstva obrázků",

@@ -4,6 +4,7 @@
             {
                 "Email": "aacid@kde.org",
                 "Name": "Albert Astals Cid",
+                "Name[az]": "Albert Astals Cid",
                 "Name[ca@valencia]": "Albert Astals Cid",
                 "Name[ca]": "Albert Astals Cid",
                 "Name[cs]": "Albert Astals Cid",
@@ -42,6 +43,7 @@
             }
         ],
         "Copyright": "© 2007-2008 Albert Astals Cid",
+        "Copyright[az]": "© 2007-2008 Albert Astals Cid",
         "Copyright[ca@valencia]": "© 2007-2008 Albert Astals Cid",
         "Copyright[ca]": "© 2007-2008 Albert Astals Cid",
         "Copyright[cs]": "© 2007-2008 Albert Astals Cid",
@@ -78,6 +80,7 @@
         "Copyright[zh_CN]": "© 2007-2008 Albert Astals Cid",
         "Copyright[zh_TW]": "© 2007-2008 Albert Astals Cid",
         "Description": "A PostScript file renderer based on the Spectre library",
+        "Description[az]": "Spectre library'ə əsasında PostScript fayl tərtibatçısı",
         "Description[ca@valencia]": "Un renderitzador per a fitxers PostScript basat en la biblioteca Spectre",
         "Description[ca]": "Un renderitzador per a fitxers PostScript basat en la biblioteca Spectre",
         "Description[cs]": "Vykreslovač souborů PostScript založený na knihovně Spectre.",
@@ -120,6 +123,7 @@
             "image/x-eps"
         ],
         "Name": "PS Backend",
+        "Name[az]": "PS modulu",
         "Name[ca@valencia]": "Dorsal PS",
         "Name[ca]": "Dorsal PS",
         "Name[cs]": "Podpůrná vrstva PS",

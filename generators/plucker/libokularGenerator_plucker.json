@@ -4,6 +4,7 @@
             {
                 "Email": "tokoe@kde.org",
                 "Name": "Tobias Koenig",
+                "Name[az]": "Tobias Koenig",
                 "Name[ca@valencia]": "Tobias Koenig",
                 "Name[ca]": "Tobias Koenig",
                 "Name[cs]": "Tobias Koenig",
@@ -42,6 +43,7 @@
             }
         ],
         "Copyright": "© 2007-2008 Tobias Koenig",
+        "Copyright[az]": "© 2007-2008 Tobias Koenig",
         "Copyright[ca@valencia]": "© 2007-2008 Tobias Koenig",
         "Copyright[ca]": "© 2007-2008 Tobias Koenig",
         "Copyright[cs]": "© 2007-2008 Tobias Koenig",
@@ -78,6 +80,7 @@
         "Copyright[zh_CN]": "© 2007-2008 Tobias Koenig",
         "Copyright[zh_TW]": "© 2007-2008 Tobias Koenig",
         "Description": "A renderer for Plucker eBooks",
+        "Description[az]": "Plucker eBooks üçün təsvirləmə",
         "Description[ca@valencia]": "Un renderitzador per a llibres electrònics Plucker",
         "Description[ca]": "Un renderitzador per a llibres electrònics Plucker",
         "Description[cs]": "Renderer elektronických knih Plucker",
@@ -119,6 +122,7 @@
             "application/prs.plucker"
         ],
         "Name": "Plucker Document Backend",
+        "Name[az]": "Plucker sənədi modulu",
         "Name[ca@valencia]": "Dorsal per a documents Plucker",
         "Name[ca]": "Dorsal per a documents Plucker",
         "Name[cs]": "Podpůrná vrstva Plucker Dokumentu",

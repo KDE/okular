@@ -4,6 +4,7 @@
             {
                 "Email": "tokoe@kde.org",
                 "Name": "Tobias Koenig",
+                "Name[az]": "Tobias Koenig",
                 "Name[ca@valencia]": "Tobias Koenig",
                 "Name[ca]": "Tobias Koenig",
                 "Name[cs]": "Tobias Koenig",
@@ -42,6 +43,7 @@
             }
         ],
         "Copyright": "© 2007-2008 Tobias Koenig",
+        "Copyright[az]": "© 2007-2008 Tobias Koenig",
         "Copyright[ca@valencia]": "© 2007-2008 Tobias Koenig",
         "Copyright[ca]": "© 2007-2008 Tobias Koenig",
         "Copyright[cs]": "© 2007-2008 Tobias Koenig",
@@ -78,6 +80,7 @@
         "Copyright[zh_CN]": "© 2007-2008 Tobias Koenig",
         "Copyright[zh_TW]": "© 2007-2008 Tobias Koenig",
         "Description": "A renderer for various comic book formats",
+        "Description[az]": "Dəyişkən komiks formatları tərtibatçısı",
         "Description[ca@valencia]": "Un renderitzador per a diversos formats de ComicBook",
         "Description[ca]": "Un renderitzador per a diversos formats de ComicBook",
         "Description[cs]": "Vykreslovač různých formátů knih komiksů",
@@ -123,6 +126,7 @@
             "inode/directory"
         ],
         "Name": "ComicBook Backend",
+        "Name[az]": "ComicBook modulu",
         "Name[ca@valencia]": "Dorsal ComicBook",
         "Name[ca]": "Dorsal ComicBook",
         "Name[cs]": "Podpůrná vrstva ComicBook",

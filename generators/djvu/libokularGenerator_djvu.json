@@ -4,6 +4,7 @@
             {
                 "Email": "pino@kde.org",
                 "Name": "Pino Toscano",
+                "Name[az]": "Pino Toscano",
                 "Name[ca@valencia]": "Pino Toscano",
                 "Name[ca]": "Pino Toscano",
                 "Name[cs]": "Pino Toscano",
@@ -42,6 +43,7 @@
             }
         ],
         "Copyright": "© 2006-2008 Pino Toscano",
+        "Copyright[az]": "© 2006-2008 Pino Toscano",
         "Copyright[ca@valencia]": "© 2006-2008 Pino Toscano",
         "Copyright[ca]": "© 2006-2008 Pino Toscano",
         "Copyright[cs]": "© 2006-2008 Pino Toscano",
@@ -78,6 +80,7 @@
         "Copyright[zh_CN]": "© 2006-2008 Pino Toscano",
         "Copyright[zh_TW]": "© 2006-2008 Pino Toscano",
         "Description": "DjVu backend based on DjVuLibre",
+        "Description[az]": "DjVuLibre'yə əsaslanan DjVu modulu",
         "Description[ca@valencia]": "Dorsal DjVu basat en el DjVuLibre",
         "Description[ca]": "Dorsal DjVu basat en el DjVuLibre",
         "Description[cs]": "Implementace DjVu založena na DjVuLibre",
@@ -119,6 +122,7 @@
             "image/vnd.djvu"
         ],
         "Name": "DjVu Backend",
+        "Name[az]": "DjVu modulu",
         "Name[ca@valencia]": "Dorsal DjVu",
         "Name[ca]": "Dorsal DjVu",
         "Name[cs]": "Podpůrná vrstva DjVu",

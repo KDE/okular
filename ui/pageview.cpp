@@ -3139,8 +3139,6 @@ void PageView::wheelEvent(QWheelEvent *e)
             }
         }
     }
-
-    updateCursor();
 }
 
 bool PageView::viewportEvent(QEvent *e)
@@ -3193,6 +3191,8 @@ void PageView::scrollContentsBy(int dx, int dy)
 
     for (const QRect &rect : rgn)
         viewport()->update(rect);
+
+    updateCursor();
 }
 // END widget events
 
@@ -3863,12 +3863,15 @@ void PageView::updateCursor(const QPoint p)
 
     // detect the underlaying page (if present)
     PageViewItem *pageItem = pickItemOnPoint(p.x(), p.y());
+    QScroller::State scrollerState = d->scroller->state();
 
     if (d->annotator && d->annotator->active()) {
         if (pageItem || d->annotator->annotating())
             setCursor(d->annotator->cursor());
         else
             setCursor(Qt::ForbiddenCursor);
+    } else if (scrollerState == QScroller::Pressed || scrollerState == QScroller::Dragging) {
+        setCursor(Qt::ClosedHandCursor);
     } else if (pageItem) {
         double nX = pageItem->absToPageX(p.x());
         double nY = pageItem->absToPageY(p.y());

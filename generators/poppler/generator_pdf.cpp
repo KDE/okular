@@ -1918,7 +1918,7 @@ bool PDFGenerator::sign(const Okular::Annotation *pWhichAnnotation, const QStrin
 namespace
 {
 struct CertificateStoreImpl : public Okular::CertificateStore {
-    virtual QList<Okular::CertificateInfo *> getSigningCertificates() const
+    QList<Okular::CertificateInfo *> getSigningCertificates() const override
     {
         Poppler::setNSSDir(CertificateSettings::certificatePath());
         const QVector<Poppler::CertificateInfo> certs = Poppler::getAvailableSigningCertificates();

@@ -20,32 +20,33 @@ class CertificateTools : public QWidget
 
     Q_PROPERTY(QStringList certificates READ certificates WRITE setCertificates NOTIFY changed USER true)
 
-    public:
-        explicit CertificateTools( QWidget * parent = nullptr );
-        ~CertificateTools() override;
+public:
+    explicit CertificateTools(QWidget *parent = nullptr);
+    ~CertificateTools() override;
 
-        QStringList certificates() const;
-        void setCertificates(const QStringList& items);
+    QStringList certificates() const;
+    void setCertificates(const QStringList &items);
 
-    Q_SIGNALS:
-        void changed();
+Q_SIGNALS:
+    void changed();
 
-    protected:
-        QListWidget *m_list;
-    private:
-        QPushButton *m_btnAdd;
-        QPushButton *m_btnEdit;
-        QPushButton *m_btnRemove;
-        QPushButton *m_btnMoveUp;
-        QPushButton *m_btnMoveDown;
+protected:
+    QListWidget *m_list;
 
-    protected Q_SLOTS:
-        void slotAdd();
-        void slotEdit();
-        void updateButtons();
-        void slotRemove();
-        void slotMoveUp();
-        void slotMoveDown();
+private:
+    QPushButton *m_btnAdd;
+    QPushButton *m_btnEdit;
+    QPushButton *m_btnRemove;
+    QPushButton *m_btnMoveUp;
+    QPushButton *m_btnMoveDown;
+
+protected Q_SLOTS:
+    void slotAdd();
+    void slotEdit();
+    void updateButtons();
+    void slotRemove();
+    void slotMoveUp();
+    void slotMoveDown();
 };
 
 #endif

@@ -232,7 +232,7 @@ public:
     QAction *aMouseTableSelect;
     QAction *aMouseMagnifier;
     KToggleAction *aTrimToSelection;
-    QAction * aSignature;
+    QAction *aSignature;
     KSelectAction *aZoom;
     QAction *aZoomIn;
     QAction *aZoomOut;
@@ -717,9 +717,9 @@ void PageView::setupActions(KActionCollection *ac)
     d->aMouseModeMenu->setText(i18nc("@action", "Selection Tools"));
     ac->addAction(QStringLiteral("mouse_selecttools"), d->aMouseModeMenu);
 
-    d->aSignature  = new QAction(QIcon::fromTheme( QStringLiteral("application-pkcs7-signature") ), i18n("&Sign..."), this);
-    ac->addAction(QStringLiteral("mouse_sign"), d->aSignature );
-    connect( d->aSignature, &QAction::triggered, this, &PageView::slotSignature );
+    d->aSignature = new QAction(QIcon::fromTheme(QStringLiteral("application-pkcs7-signature")), i18n("&Sign..."), this);
+    ac->addAction(QStringLiteral("mouse_sign"), d->aSignature);
+    connect(d->aSignature, &QAction::triggered, this, &PageView::slotSignature);
 
     // speak actions
 #ifdef HAVE_SPEECH
@@ -1217,10 +1217,9 @@ void PageView::updateActionState(bool haspages, bool hasformwidgets)
         d->annotator->setTextToolsEnabled(allowTools && d->document->supportsSearching());
     }
 
-    if ( d->aSignature )
-    {
+    if (d->aSignature) {
         const bool canSign = d->document->canSign();
-        d->aSignature->setEnabled( canSign && haspages );
+        d->aSignature->setEnabled(canSign && haspages);
     }
 
 #ifdef HAVE_SPEECH

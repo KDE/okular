@@ -2701,40 +2701,33 @@ bool Document::canConfigurePrinter() const
         return false;
 }
 
-void Document::sign( const Okular::Annotation* pWhichAnnotation )
+void Document::sign(const Okular::Annotation *pWhichAnnotation)
 {
-    if (d->m_generator->canSign())
-    {
+    if (d->m_generator->canSign()) {
         // we technically need to save the document before signing it,
         // so let's ask before clobbering
-        const int res = KMessageBox::warningContinueCancel(
-            d->m_widget,
-            i18n( "Signing this document will modify the file \"%1\" on disk by embedding a "
-                  "digital signature inside it. Do you wish to proceed?",
-                  currentDocument().fileName() ),
-            i18n( "Sign Document" ),
-            KStandardGuiItem::ok(),
-            KStandardGuiItem::cancel(),
-            QStringLiteral("SignatureAutoClobber") );
+        const int res = KMessageBox::warningContinueCancel(d->m_widget,
+                                                           i18n("Signing this document will modify the file \"%1\" on disk by embedding a "
+                                                                "digital signature inside it. Do you wish to proceed?",
+                                                                currentDocument().fileName()),
+                                                           i18n("Sign Document"),
+                                                           KStandardGuiItem::ok(),
+                                                           KStandardGuiItem::cancel(),
+                                                           QStringLiteral("SignatureAutoClobber"));
 
-        if (res == KMessageBox::Continue)
-        {
+        if (res == KMessageBox::Continue) {
             // Sign it!
-            if (!d->m_generator->sign( pWhichAnnotation, currentDocument().path() ))
-            {
-                KMessageBox::error( d->m_widget,
-                                    i18nc("%1 is a filename",
-                                          "Could not sign '%1'. Invalid password or cannot write",
-                                         currentDocument().fileName() ) );
+            if (!d->m_generator->sign(pWhichAnnotation, currentDocument().path())) {
+                KMessageBox::error(d->m_widget, i18nc("%1 is a filename", "Could not sign '%1'. Invalid password or cannot write", currentDocument().fileName()));
             }
             // no need to - slotAttemptReload() gets called via
-            //dirty handler anyway:
-            //swapBackingFile(currentDocument().path(), currentDocument());
+            // dirty handler anyway:
+            // swapBackingFile(currentDocument().path(), currentDocument());
         }
     }
 }
 
-Okular::CertificateStore* Document::getCertStore()
+Okular::CertificateStore *Document::getCertStore()
 {
     return d->m_generator ? d->m_generator->getCertStore() : nullptr;
 }

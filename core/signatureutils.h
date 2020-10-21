@@ -81,7 +81,7 @@ public:
 
     /**
      * The certificate internal database nickname
-    */
+     */
     virtual QString nickName() const;
 
     /**
@@ -249,22 +249,22 @@ private:
  */
 class OKULARCORE_EXPORT CertificateStore
 {
-    public:
-        /**
-         * Destructor
-         */
-        virtual ~CertificateStore();
+public:
+    /**
+     * Destructor
+     */
+    virtual ~CertificateStore();
 
-        /**
-         * Returns list of valid, usable signing certificates
-         */
-        virtual QList<CertificateInfo*> getSigningCertificates() const;
+    /**
+     * Returns list of valid, usable signing certificates
+     */
+    virtual QList<CertificateInfo *> getSigningCertificates() const;
 
-    protected:
-        CertificateStore();
+protected:
+    CertificateStore();
 
-    private:
-        Q_DISABLE_COPY( CertificateStore )
+private:
+    Q_DISABLE_COPY(CertificateStore)
 };
 
 }

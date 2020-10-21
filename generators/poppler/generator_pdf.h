@@ -100,10 +100,13 @@ public:
     bool save(const QString &fileName, SaveOptions options, QString *errorText) override;
     Okular::AnnotationProxy *annotationProxy() const override;
 
-    bool canSign() const override {return true;}
-    bool sign( const Okular::Annotation* pWhichAnnotation, const QString& rFilename ) override;
+    bool canSign() const override
+    {
+        return true;
+    }
+    bool sign(const Okular::Annotation *pWhichAnnotation, const QString &rFilename) override;
 
-    Okular::CertificateStore* getCertStore() override;
+    Okular::CertificateStore *getCertStore() override;
 
 protected:
     SwapBackingFileResult swapBackingFile(QString const &newFileName, QVector<Okular::Page *> &newPagesVector) override;
@@ -143,7 +146,7 @@ private:
     mutable QList<Okular::EmbeddedFile *> docEmbeddedFiles;
     int nextFontPage;
     PopplerAnnotationProxy *annotProxy;
-    Okular::CertificateStore* certStore;
+    Okular::CertificateStore *certStore;
     // the hash below only contains annotations that were present on the file at open time
     // this is enough for what we use it for
     QHash<Okular::Annotation *, Poppler::Annotation *> annotationsOnOpenHash;

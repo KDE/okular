@@ -47,18 +47,18 @@
 #include <core/movie.h>
 #include <core/page.h>
 #include <core/pagetransition.h>
+#include <core/signatureutils.h>
 #include <core/sound.h>
 #include <core/sourcereference.h>
 #include <core/textpage.h>
 #include <core/utils.h>
-#include <core/signatureutils.h>
 
 #include "pdfsettings.h"
 #include "ui_pdfsettingswidget.h"
 
 #include "certificatetools.h"
-#include "ui_certsettingswidget.h"
 #include "certsettings.h"
+#include "ui_certsettingswidget.h"
 
 #include <config-okular-poppler.h>
 
@@ -68,8 +68,8 @@
 #include "annots.h"
 #include "debug_pdf.h"
 #include "formfields.h"
-#include "popplerembeddedfile.h"
 #include "pdfsignatureutils.h"
+#include "popplerembeddedfile.h"
 
 Q_DECLARE_METATYPE(Poppler::Annotation *)
 Q_DECLARE_METATYPE(Poppler::FontInfo)
@@ -554,7 +554,7 @@ PDFGenerator::PDFGenerator(QObject *parent, const QVariantList &args)
     , docEmbeddedFilesDirty(true)
     , nextFontPage(0)
     , annotProxy(nullptr)
-    , certStore( nullptr )
+    , certStore(nullptr)
 {
     setFeature(Threaded);
     setFeature(TextExtraction);
@@ -1482,22 +1482,21 @@ void PDFGenerator::addPages(KConfigDialog *dlg)
 
 #ifdef HAVE_POPPLER_SIGNING
     Ui_DlgSignaturesBase certsw;
-    QWidget* w2 = new QWidget(dlg);
+    QWidget *w2 = new QWidget(dlg);
     certsw.setupUi(w2);
 
-    CertificateTools * kcfg_CertTools = new CertificateTools( certsw.certificatesGroup );
-    certsw.certificatesPlaceholder->addWidget( kcfg_CertTools );
-    kcfg_CertTools->setObjectName( QStringLiteral("kcfg_Certificates") );
+    CertificateTools *kcfg_CertTools = new CertificateTools(certsw.certificatesGroup);
+    certsw.certificatesPlaceholder->addWidget(kcfg_CertTools);
+    kcfg_CertTools->setObjectName(QStringLiteral("kcfg_Certificates"));
 
-    KUrlRequester* pDlg = new KUrlRequester( certsw.certpathsettings );
-    pDlg->setObjectName( QStringLiteral("kcfg_CertificatePath") );
-    pDlg->setMode( KFile::Directory | KFile::ExistingOnly | KFile::LocalOnly );
-    certsw.formLayout->addRow( QStringLiteral("CertDB Path:"), pDlg );
+    KUrlRequester *pDlg = new KUrlRequester(certsw.certpathsettings);
+    pDlg->setObjectName(QStringLiteral("kcfg_CertificatePath"));
+    pDlg->setMode(KFile::Directory | KFile::ExistingOnly | KFile::LocalOnly);
+    certsw.formLayout->addRow(QStringLiteral("CertDB Path:"), pDlg);
 
-    KConfigDialogManager::changedMap()->insert(
-        QStringLiteral("CertificateTools"), SIGNAL(changed()) );
+    KConfigDialogManager::changedMap()->insert(QStringLiteral("CertificateTools"), SIGNAL(changed()));
 
-    dlg->addPage(w2, CertificateSettings::self(), i18n("Certificates"), QStringLiteral("application-pkcs7-signature"), i18n("Digital Signature Certificates") );
+    dlg->addPage(w2, CertificateSettings::self(), i18n("Certificates"), QStringLiteral("application-pkcs7-signature"), i18n("Digital Signature Certificates"));
 #endif
 }
 
@@ -1885,24 +1884,22 @@ Okular::AnnotationProxy *PDFGenerator::annotationProxy() const
     return annotProxy;
 }
 
-bool PDFGenerator::sign( const Okular::Annotation* pWhichAnnotation, const QString& rFilename )
+bool PDFGenerator::sign(const Okular::Annotation *pWhichAnnotation, const QString &rFilename)
 {
 #ifdef HAVE_POPPLER_SIGNING
-    const Okular::WidgetAnnotation* wa = dynamic_cast<const Okular::WidgetAnnotation*>(pWhichAnnotation);
+    const Okular::WidgetAnnotation *wa = dynamic_cast<const Okular::WidgetAnnotation *>(pWhichAnnotation);
 
-    Poppler::Annotation *popplerAnn = qvariant_cast< Poppler::Annotation * >( pWhichAnnotation->nativeId() );
+    Poppler::Annotation *popplerAnn = qvariant_cast<Poppler::Annotation *>(pWhichAnnotation->nativeId());
 
     // save to tmp file - poppler doesn't like overwriting in-place
     QTemporaryFile tf(QFileInfo(rFilename).absolutePath() + QLatin1String("/okular_XXXXXX.pdf"));
     tf.setAutoRemove(false);
     if (!tf.open())
         return false;
-    std::unique_ptr<Poppler::PDFConverter> converter(
-        pdfdoc->pdfConverter());
+    std::unique_ptr<Poppler::PDFConverter> converter(pdfdoc->pdfConverter());
     converter->setOutputFileName(tf.fileName());
     converter->setPDFOptions(converter->pdfOptions() | Poppler::PDFConverter::WithChanges);
-    if (!converter->sign( popplerAnn, wa->certificateNick(), QString(), wa->password(),
-                          QLatin1String("Okular interactive signature")))
+    if (!converter->sign(popplerAnn, wa->certificateNick(), QString(), wa->password(), QLatin1String("Okular interactive signature")))
         return false;
 
     // now copy over old file
@@ -1910,35 +1907,35 @@ bool PDFGenerator::sign( const Okular::Annotation* pWhichAnnotation, const QStri
     if (!tf.rename(rFilename))
         return false;
 #else
-    Q_UNUSED( pWhichAnnotation );
-    Q_UNUSED( rFilename );
+    Q_UNUSED(pWhichAnnotation);
+    Q_UNUSED(rFilename);
 #endif
 
     return true;
 }
 
 #ifdef HAVE_POPPLER_SIGNING
-namespace {
-  struct CertificateStoreImpl : public Okular::CertificateStore
-  {
-      virtual QList<Okular::CertificateInfo*> getSigningCertificates() const
-      {
-          Poppler::setNSSDir( CertificateSettings::certificatePath() );
-          QVector<Poppler::CertificateInfo*> certs = Poppler::getAvailableSigningCertificates();
-          QList<Okular::CertificateInfo*> vReturnCerts;
-          for (auto cert : certs)
-              vReturnCerts.append(new PopplerCertificateInfo(*cert));
+namespace
+{
+struct CertificateStoreImpl : public Okular::CertificateStore {
+    virtual QList<Okular::CertificateInfo *> getSigningCertificates() const
+    {
+        Poppler::setNSSDir(CertificateSettings::certificatePath());
+        QVector<Poppler::CertificateInfo *> certs = Poppler::getAvailableSigningCertificates();
+        QList<Okular::CertificateInfo *> vReturnCerts;
+        for (auto cert : certs)
+            vReturnCerts.append(new PopplerCertificateInfo(*cert));
 
-          return vReturnCerts;
-      }
-  };
+        return vReturnCerts;
+    }
+};
 }
 #endif
 
-Okular::CertificateStore* PDFGenerator::getCertStore()
+Okular::CertificateStore *PDFGenerator::getCertStore()
 {
 #ifdef HAVE_POPPLER_SIGNING
-    if( !certStore )
+    if (!certStore)
         certStore = new CertificateStoreImpl();
 
     return certStore;

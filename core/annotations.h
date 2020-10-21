@@ -1688,10 +1688,10 @@ public:
      */
     Action *additionalAction(AdditionalActionType type) const;
 
-    void setCertificateNick( const QString &certNickname );
+    void setCertificateNick(const QString &certNickname);
     QString certificateNick() const;
 
-    void setPassword( const QString &password );
+    void setPassword(const QString &password);
     QString password() const;
 
 private:

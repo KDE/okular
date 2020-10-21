@@ -995,14 +995,14 @@ public:
      *
      * @since 1.9
      */
-    void sign( const Okular::Annotation* pWhichAnnotation );
+    void sign(const Okular::Annotation *pWhichAnnotation);
 
     /**
      * Returns the generator's certificate store (if any)
      *
      * @since 1.9
      */
-    CertificateStore* getCertStore();
+    CertificateStore *getCertStore();
 
 public Q_SLOTS:
     /**

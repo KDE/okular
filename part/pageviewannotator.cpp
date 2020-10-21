@@ -314,15 +314,16 @@ private:
 
 class PickPointEngine2 : public PickPointEngine
 {
-    public:
-        PickPointEngine2( const QDomElement & engineElement, Okular::Document* storage )
-            : PickPointEngine( engineElement ), m_document(storage)
-        {
-            clicked = false;
-            m_block = true;
-            xscale = 1.0;
-            yscale = 1.0;
-        }
+public:
+    PickPointEngine2(const QDomElement &engineElement, Okular::Document *storage)
+        : PickPointEngine(engineElement)
+        , m_document(storage)
+    {
+        clicked = false;
+        m_block = true;
+        xscale = 1.0;
+        yscale = 1.0;
+    }
 
     QRect event(EventType type, Button button, Modifiers modifiers, double nX, double nY, double xScale, double yScale, const Okular::Page *page) override
     {
@@ -331,58 +332,50 @@ class PickPointEngine2 : public PickPointEngine
 
     QList<Okular::Annotation *> end() override
     {
-            Okular::Annotation * ann = nullptr;
+        Okular::Annotation *ann = nullptr;
 
-            Okular::CertificateStore* certStore = m_document->getCertStore();
-            const QList<Okular::CertificateInfo*>& certs = certStore->getSigningCertificates();
+        Okular::CertificateStore *certStore = m_document->getCertStore();
+        const QList<Okular::CertificateInfo *> &certs = certStore->getSigningCertificates();
 
-            QStringList items;
-            for( auto cert : certs )
-                items.append(cert->nickName());
+        QStringList items;
+        for (auto cert : certs)
+            items.append(cert->nickName());
 
-            bool resok = false;
-            QString cert = QInputDialog::getItem(nullptr, i18n( "Select certificate to sign with" ), i18n( "Certificates:" ), items, 0, false, &resok);
+        bool resok = false;
+        QString cert = QInputDialog::getItem(nullptr, i18n("Select certificate to sign with"), i18n("Certificates:"), items, 0, false, &resok);
 
-            if (resok)
-            {
-                bool passok = false;
-                QString title = i18n("Enter password to unlock certificate %1",
-                                     cert);
-                QString pass = QInputDialog::getText(nullptr,
-                                                     i18n( "Enter password" ),
-                                                     title,
-                                                     QLineEdit::Password,
-                                                     QString(),
-                                                     &passok);
+        if (resok) {
+            bool passok = false;
+            QString title = i18n("Enter password to unlock certificate %1", cert);
+            QString pass = QInputDialog::getText(nullptr, i18n("Enter password"), title, QLineEdit::Password, QString(), &passok);
 
-                if (passok)
-                {
-                    Okular::WidgetAnnotation * wa = new Okular::WidgetAnnotation();
-                    ann = wa;
+            if (passok) {
+                Okular::WidgetAnnotation *wa = new Okular::WidgetAnnotation();
+                ann = wa;
 
-                    //set boundary
-                    rect.left = qMin(startpoint.x,point.x);
-                    rect.top = qMin(startpoint.y,point.y);
-                    rect.right = qMax(startpoint.x,point.x);
-                    rect.bottom = qMax(startpoint.y,point.y);
+                // set boundary
+                rect.left = qMin(startpoint.x, point.x);
+                rect.top = qMin(startpoint.y, point.y);
+                rect.right = qMax(startpoint.x, point.x);
+                rect.bottom = qMax(startpoint.y, point.y);
 
-                    wa->setBoundingRectangle(rect);
-                    wa->setCertificateNick( cert );
-                    wa->setPassword( pass );
-                }
+                wa->setBoundingRectangle(rect);
+                wa->setCertificateNick(cert);
+                wa->setPassword(pass);
             }
+        }
 
-            m_creationCompleted = false;
-            clicked = false;
+        m_creationCompleted = false;
+        clicked = false;
 
-            if ( !ann )
-                return QList< Okular::Annotation* >();
+        if (!ann)
+            return QList<Okular::Annotation *>();
 
-            return QList< Okular::Annotation* >() << ann;
+        return QList<Okular::Annotation *>() << ann;
     }
 
-    private:
-        Okular::Document* m_document;
+private:
+    Okular::Document *m_document;
 };
 
 /** @short PolyLineEngine */
@@ -1176,7 +1169,7 @@ void PageViewAnnotator::detachAnnotation()
         if (m_actionHandler)
             m_actionHandler->deselectAllAnnotationActions();
     } else {
-        m_pageView->displayMessage( QString() );
+        m_pageView->displayMessage(QString());
         setSignatureMode(false);
     }
 }

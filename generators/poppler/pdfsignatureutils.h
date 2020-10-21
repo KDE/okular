@@ -69,12 +69,12 @@ private:
 
 class PopplerCertificateStore : public Okular::CertificateStore
 {
-    public:
-        PopplerCertificateStore();
-        ~PopplerCertificateStore();
+public:
+    PopplerCertificateStore();
+    ~PopplerCertificateStore();
 
-        QList<Okular::CertificateInfo*> getSigningCertificates() const override;
-        //QList<PopplerCertificateInfo*> getSigningCertificates() const override;
+    QList<Okular::CertificateInfo *> getSigningCertificates() const override;
+    // QList<PopplerCertificateInfo*> getSigningCertificates() const override;
 };
 
 #endif

@@ -308,11 +308,20 @@ public:
      */
     virtual bool canGeneratePixmap() const;
 
-    virtual bool canSign() const { return false; }
+    virtual bool canSign() const
+    {
+        return false;
+    }
 
-    virtual bool sign( const Okular::Annotation* /*pWhichAnnotation*/, const QString& /*rFilename*/) { return false; }
+    virtual bool sign(const Okular::Annotation * /*pWhichAnnotation*/, const QString & /*rFilename*/)
+    {
+        return false;
+    }
 
-    virtual CertificateStore* getCertStore() { return nullptr; }
+    virtual CertificateStore *getCertStore()
+    {
+        return nullptr;
+    }
 
     /**
      * This method can be called to trigger the generation of

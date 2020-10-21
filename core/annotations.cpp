@@ -2895,7 +2895,8 @@ Action *ScreenAnnotation::action() const
 class Okular::WidgetAnnotationPrivate : public Okular::AnnotationPrivate
 {
 public:
-    WidgetAnnotationPrivate() : AnnotationPrivate()
+    WidgetAnnotationPrivate()
+        : AnnotationPrivate()
     {
     }
 
@@ -2983,27 +2984,27 @@ Action *WidgetAnnotation::additionalAction(AdditionalActionType type) const
         return d->m_additionalActions.value(type);
 }
 
-void WidgetAnnotation::setCertificateNick( const QString &certNickname )
+void WidgetAnnotation::setCertificateNick(const QString &certNickname)
 {
-    Q_D( WidgetAnnotation );
+    Q_D(WidgetAnnotation);
     d->m_certNickname = certNickname;
 }
 
 QString WidgetAnnotation::certificateNick() const
 {
-    Q_D( const WidgetAnnotation );
+    Q_D(const WidgetAnnotation);
     return d->m_certNickname;
 }
 
-void WidgetAnnotation::setPassword( const QString &password )
+void WidgetAnnotation::setPassword(const QString &password)
 {
-    Q_D( WidgetAnnotation );
+    Q_D(WidgetAnnotation);
     d->m_password = password;
 }
 
 QString WidgetAnnotation::password() const
 {
-    Q_D( const WidgetAnnotation );
+    Q_D(const WidgetAnnotation);
     return d->m_password;
 }
 

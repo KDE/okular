@@ -1921,10 +1921,10 @@ struct CertificateStoreImpl : public Okular::CertificateStore {
     virtual QList<Okular::CertificateInfo *> getSigningCertificates() const
     {
         Poppler::setNSSDir(CertificateSettings::certificatePath());
-        QVector<Poppler::CertificateInfo *> certs = Poppler::getAvailableSigningCertificates();
+        const QVector<Poppler::CertificateInfo> certs = Poppler::getAvailableSigningCertificates();
         QList<Okular::CertificateInfo *> vReturnCerts;
         for (auto cert : certs)
-            vReturnCerts.append(new PopplerCertificateInfo(*cert));
+            vReturnCerts.append(new PopplerCertificateInfo(cert));
 
         return vReturnCerts;
     }

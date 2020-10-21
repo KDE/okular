@@ -12,6 +12,7 @@
 // qt / kde includes
 #include <KIconLoader>
 #include <KLocalizedString>
+#include <KMessageBox>
 #include <QApplication>
 #include <QColor>
 #include <QEvent>
@@ -334,15 +335,22 @@ public:
     {
         Okular::Annotation *ann = nullptr;
 
-        Okular::CertificateStore *certStore = m_document->getCertStore();
+        const Okular::CertificateStore *certStore = m_document->getCertStore();
         const QList<Okular::CertificateInfo *> &certs = certStore->getSigningCertificates();
 
         QStringList items;
         for (auto cert : certs)
             items.append(cert->nickName());
 
+        if (items.isEmpty()) {
+            m_creationCompleted = false;
+            clicked = false;
+            KMessageBox::information(nullptr, i18n("There are no available signing certificates."));
+            return {};
+        }
+
         bool resok = false;
-        QString cert = QInputDialog::getItem(nullptr, i18n("Select certificate to sign with"), i18n("Certificates:"), items, 0, false, &resok);
+        const QString cert = QInputDialog::getItem(nullptr, i18n("Select certificate to sign with"), i18n("Certificates:"), items, 0, false, &resok);
 
         if (resok) {
             bool passok = false;

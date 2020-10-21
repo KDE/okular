@@ -316,10 +316,6 @@ void PartTest::testClickInternalLink()
     QTRY_COMPARE(part.m_document->currentPage(), 1u);
 
     // make sure cursor goes back to being an open hand again.  Bug 421437
-    // TODO: This test for bug 421437 has been committed when there was no fix for the bug
-    // available yet.  That's why the QTRY_COMPARE_WITH_TIMEOUT is preceded by QEXPECT_FAIL.
-    // Please remove the QEXPECT_FAIL together with the fix for bug 421437.
-    QEXPECT_FAIL("", "Please remove this QEXPECT_FAIL once bug 421437 is fixed!", Continue);
     QTRY_COMPARE_WITH_TIMEOUT(part.m_pageView->cursor().shape(), Qt::OpenHandCursor, 1000);
 }
 

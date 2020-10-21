@@ -3126,16 +3126,19 @@ void PageView::wheelEvent(QWheelEvent *e)
                 d->scroller->scrollTo(QPoint(horizontalScrollBar()->value(), verticalScrollBar()->value()), 0); // sync scroller with scrollbar
             }
         } else {
+            // When the shift key is held down, scroll ten times faster
+            int multiplier = e->modifiers() & Qt::ShiftModifier ? 10 : 1;
+
             if (delta != 0 && delta % QWheelEvent::DefaultDeltasPerStep == 0) {
                 // number of scroll wheel steps Qt gives to us at the same time
-                int count = abs(delta / QWheelEvent::DefaultDeltasPerStep);
+                int count = abs(delta / QWheelEvent::DefaultDeltasPerStep) * multiplier;
                 if (delta < 0) {
                     slotScrollDown(count);
                 } else {
                     slotScrollUp(count);
                 }
             } else {
-                d->scroller->scrollTo(d->scroller->finalPosition() - e->angleDelta() / 4.0, 0);
+                d->scroller->scrollTo(d->scroller->finalPosition() - e->angleDelta() * multiplier / 4.0, 0);
             }
         }
     }

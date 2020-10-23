@@ -13,7 +13,6 @@
 
 #include "annots.h"
 
-
 // qt/kde includes
 #include <QLoggingCategory>
 #include <QVariant>

@@ -17,7 +17,6 @@
 
 #include <poppler-qt5.h>
 
-
 extern Okular::Action *createLinkFromPopplerLink(const Poppler::Link *popplerLink, bool deletePopplerLink = true);
 #define SET_ANNOT_ACTIONS                                                                                                                                                                                                                      \
     setAdditionalAction(Okular::Annotation::CursorEntering, createLinkFromPopplerLink(m_field->additionalAction(Poppler::Annotation::CursorEnteringAction)));                                                                                  \

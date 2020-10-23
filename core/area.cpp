@@ -12,7 +12,6 @@
 #include <QPolygonF>
 #include <QRect>
 
-
 #include "action.h"
 #include "annotations.h"
 #include "annotations_p.h"

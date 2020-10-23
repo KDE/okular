@@ -24,7 +24,6 @@
 
 // local includes
 #include "core/action.h"
-#include "core/document.h"
 #include "ktreeviewsearchline.h"
 #include "pageitemdelegate.h"
 #include "settings.h"

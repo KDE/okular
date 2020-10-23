@@ -22,7 +22,6 @@
 
 #include "ebook_chm.h"
 #include "ebook_chm_encoding.h"
-#include "helper_entitydecoder.h"
 
 #include "bitfiddle.h"
 

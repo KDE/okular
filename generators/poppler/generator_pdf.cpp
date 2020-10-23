@@ -45,7 +45,6 @@
 #include <core/movie.h>
 #include <core/page.h>
 #include <core/pagetransition.h>
-#include <core/printoptionswidget.h>
 #include <core/sound.h>
 #include <core/sourcereference.h>
 #include <core/textpage.h>

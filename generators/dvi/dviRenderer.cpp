@@ -16,10 +16,8 @@
 #include "dviRenderer.h"
 #include "dvisourcesplitter.h"
 #include "hyperlink.h"
-#include "prebookmark.h"
 #include "psgs.h"
 //#include "renderedDviPagePixmap.h"
-#include "dviPageInfo.h"
 
 #include <KConfig>
 #include <KLocalizedString>

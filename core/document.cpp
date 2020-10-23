@@ -40,7 +40,6 @@
 #include <QMimeDatabase>
 #include <QPageSize>
 #include <QPrintDialog>
-#include <QPrinter>
 #include <QRegularExpression>
 #include <QScreen>
 #include <QStack>

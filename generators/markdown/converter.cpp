@@ -11,7 +11,6 @@
 
 #include <KLocalizedString>
 
-#include <QDir>
 #include <QTextCursor>
 #include <QTextDocument>
 #include <QTextFrame>

@@ -24,7 +24,6 @@
 #include <QFont>
 #include <QFontInfo>
 #include <QFontMetrics>
-#include <QFrame>
 #include <QLabel>
 #include <QLayout>
 #include <QMenu>

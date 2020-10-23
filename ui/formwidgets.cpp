@@ -30,7 +30,6 @@
 // local includes
 #include "core/action.h"
 #include "core/document.h"
-#include "core/form.h"
 #include "debug_ui.h"
 
 FormWidgetsController::FormWidgetsController(Okular::Document *doc)

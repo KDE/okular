@@ -18,7 +18,6 @@
 
 #include "core/document.h"
 #include "core/page.h"
-#include "pageitemdelegate.h"
 
 Q_DECLARE_METATYPE(QModelIndex)
 

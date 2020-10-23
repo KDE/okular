@@ -34,7 +34,6 @@
 
 // local includes
 #include "core/document.h"
-#include "core/fontinfo.h"
 
 static const int IsExtractableRole = Qt::UserRole;
 static const int FontInfoRole = Qt::UserRole + 1;

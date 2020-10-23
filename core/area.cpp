@@ -9,11 +9,9 @@
 
 #include "area.h"
 
-#include <QDebug>
 #include <QPolygonF>
 #include <QRect>
 
-#include <math.h>
 
 #include "action.h"
 #include "annotations.h"

@@ -32,7 +32,6 @@
 #include <QEventLoop>
 #include <QFileInfo>
 #include <QLabel>
-#include <QPrinter>
 #include <QTemporaryFile>
 
 #include <QStandardPaths>

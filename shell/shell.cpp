@@ -43,8 +43,6 @@
 #include <QDragMoveEvent>
 #include <QFileDialog>
 #include <QMenuBar>
-#include <QMimeDatabase>
-#include <QMimeType>
 #include <QObject>
 #include <QScreen>
 #include <QTabBar>

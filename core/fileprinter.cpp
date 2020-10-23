@@ -16,7 +16,6 @@
 #include <QFileInfo>
 #include <QLabel>
 #include <QPrintEngine>
-#include <QPrinter>
 #include <QShowEvent>
 #include <QSize>
 #include <QStringList>

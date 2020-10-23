@@ -84,7 +84,6 @@
 #include "tts.h"
 #endif
 #include "core/action.h"
-#include "core/area.h"
 #include "core/audioplayer.h"
 #include "core/document_p.h"
 #include "core/form.h"

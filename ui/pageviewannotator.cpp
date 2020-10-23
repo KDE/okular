@@ -35,7 +35,6 @@
 #include <memory>
 
 // local includes
-#include "annotationtools.h"
 #include "conf/editannottooldialog.h"
 #include "core/annotations.h"
 #include "core/area.h"

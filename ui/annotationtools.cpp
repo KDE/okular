@@ -14,7 +14,6 @@
 #include <QCursor>
 #include <QEvent>
 #include <QMouseEvent>
-#include <QPainter>
 
 // local includes
 #include "core/annotations.h"

@@ -21,7 +21,6 @@ extern "C" {
 }
 
 #include "image.h"
-#include "unpluck.h"
 
 #define GET_FUNCTION_CODE_TYPE(x) (((x) >> 3) & 0x1F)
 #define GET_FUNCTION_CODE_DATALEN(x) ((x)&0x7)

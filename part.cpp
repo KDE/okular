@@ -33,7 +33,6 @@
 #include <QDialogButtonBox>
 #include <QFile>
 #include <QFileDialog>
-#include <QIcon>
 #include <QInputDialog>
 #include <QLabel>
 #include <QLayout>
@@ -55,13 +54,11 @@
 #include <KDirWatch>
 #include <KFilterBase>
 #include <KFilterDev>
-#include <KIO/Job>
 #include <KIO/OpenFileManagerWindowJob>
 #include <KJobWidgets>
 #include <KMessageBox>
 #include <KParts/GUIActivateEvent>
 #include <KPasswordDialog>
-#include <KPluginFactory>
 #include <KPluginMetaData>
 #include <KSharedDataCache>
 #include <KStandardShortcut>
@@ -90,7 +87,6 @@
 #include "core/action.h"
 #include "core/annotations.h"
 #include "core/bookmarkmanager.h"
-#include "core/document.h"
 #include "core/document_p.h"
 #include "core/fileprinter.h"
 #include "core/form.h"

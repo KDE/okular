@@ -29,7 +29,6 @@
 #include <KWallet>
 #endif
 
-#include "document.h"
 #include "document_p.h"
 #include "page.h"
 #include "page_p.h"

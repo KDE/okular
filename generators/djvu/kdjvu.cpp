@@ -13,7 +13,6 @@
 #include <QDomDocument>
 #include <QFile>
 #include <QHash>
-#include <QList>
 #include <QPainter>
 #include <QQueue>
 #include <QString>

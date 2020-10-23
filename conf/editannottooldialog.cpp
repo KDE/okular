@@ -19,7 +19,6 @@
 #include <QApplication>
 #include <QDialogButtonBox>
 #include <QDomDocument>
-#include <QDomElement>
 #include <QGroupBox>
 #include <QHBoxLayout>
 #include <QLabel>

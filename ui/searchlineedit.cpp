@@ -11,7 +11,6 @@
 #include "searchlineedit.h"
 
 // local includes
-#include "core/document.h"
 
 // qt/kde includes
 #include <KBusyIndicatorWidget>

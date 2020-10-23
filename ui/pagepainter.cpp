@@ -25,8 +25,6 @@
 #include <math.h>
 
 // local includes
-#include "core/annotations.h"
-#include "core/area.h"
 #include "core/observer.h"
 #include "core/page.h"
 #include "core/page_p.h"

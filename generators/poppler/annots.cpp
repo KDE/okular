@@ -13,7 +13,6 @@
 
 #include "annots.h"
 
-#include <poppler-annotation.h>
 
 // qt/kde includes
 #include <QLoggingCategory>
@@ -22,7 +21,6 @@
 #include <core/annotations.h>
 #include <core/area.h>
 
-#include "config-okular-poppler.h"
 #include "debug_pdf.h"
 #include "generator_pdf.h"
 #include "popplerembeddedfile.h"

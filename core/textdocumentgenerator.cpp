@@ -27,7 +27,6 @@
 #include "page.h"
 #include "textpage.h"
 
-#include "document.h"
 
 #include <cmath>
 

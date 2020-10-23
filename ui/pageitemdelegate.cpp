@@ -11,7 +11,6 @@
 
 // qt/kde includes
 #include <QApplication>
-#include <QItemDelegate>
 #include <QModelIndex>
 #include <QTextDocument>
 #include <QVariant>

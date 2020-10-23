@@ -22,7 +22,6 @@
 #include <QCoreApplication>
 #include <QMimeDatabase>
 #include <QMimeType>
-#include <QUrl>
 
 #include <QBitArray>
 #include <QDir>

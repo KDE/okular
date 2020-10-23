@@ -12,7 +12,6 @@
 #include <QDebug>
 
 #include "fontinfo.h"
-#include "generator.h"
 #include "utils.h"
 
 using namespace Okular;

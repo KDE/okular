@@ -27,7 +27,6 @@
 #include <qpainter.h>
 #include <qtooltip.h>
 
-#include "core/annotations.h"
 #include "core/document.h"
 #include "core/page.h"
 #include "ui/guiutils.h"

@@ -27,7 +27,6 @@
 #include <QTimer>
 
 #include <core/bookmarkmanager.h>
-#include <core/document.h>
 #include <core/generator.h>
 #include <core/page.h>
 

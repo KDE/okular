@@ -74,7 +74,7 @@ QString serializeOptions(const QCommandLineParser &args)
 
 QString serializeOptions(bool startInPresentation, bool showPrintDialog, bool showPrintDialogAndExit, bool unique, bool noRaise, const QString &page, const QString &find)
 {
-    return QStringLiteral("%1:%2:%3:%4:%5:%6:%7").arg(startInPresentation).arg(showPrintDialog).arg(showPrintDialogAndExit).arg(unique).arg(noRaise).arg(page, QString::fromLatin1(find.toLatin1().toBase64()));
+    return QStringLiteral("%1:%2:%3:%4:%5:%6:%7").arg(startInPresentation).arg(showPrintDialog).arg(showPrintDialogAndExit).arg(unique).arg(noRaise).arg(page, QString::fromLatin1(find.toUtf8().toBase64()));
 }
 
 bool unserializeOptions(const QString &serializedOptions, bool *presentation, bool *print, bool *print_and_exit, bool *unique, bool *noraise, QString *page, QString *find)
@@ -142,7 +142,7 @@ QString find(const QString &serializedOptions)
     QString result, dummyString;
     bool dummy;
     unserializeOptions(serializedOptions, &dummy, &dummy, &dummy, &dummy, &dummy, &dummyString, &result);
-    return QString(QByteArray::fromBase64(result.toLatin1()));
+    return QString::fromUtf8(QByteArray::fromBase64(result.toLatin1()));
 }
 
 }

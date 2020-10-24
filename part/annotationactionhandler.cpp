@@ -499,7 +499,7 @@ void AnnotationActionHandlerPrivate::slotSelectAnnotationFont()
 
 void AnnotationActionHandlerPrivate::slotToolBarVisibilityChanged(bool checked)
 {
-    if (!checked) {
+    if (!checked && !isQuickToolAction(agTools->checkedAction())) {
         q->deselectAllAnnotationActions();
     }
 }

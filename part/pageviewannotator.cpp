@@ -1149,7 +1149,12 @@ void PageViewAnnotator::routePaint(QPainter *painter, const QRect paintRect)
     painter->restore();
 }
 
-void PageViewAnnotator::selectTool(int toolId, ShowTip showTip)
+void PageViewAnnotator::selectBuiltinTool(int toolId, ShowTip showTip)
+{
+    selectTool(m_builtinToolsDefinition, toolId, showTip);
+}
+
+void PageViewAnnotator::selectTool(AnnotationTools *toolsDefinition, int toolId, ShowTip showTip)
 {
     // ask for Author's name if not already set
     if (toolId > 0 && Okular::Settings::identityAuthor().isEmpty()) {
@@ -1193,7 +1198,7 @@ void PageViewAnnotator::selectTool(int toolId, ShowTip showTip)
     }
 
     // for the selected tool create the Engine
-    QDomElement toolElement = m_builtinToolsDefinition->tool(toolId);
+    QDomElement toolElement = toolsDefinition->tool(toolId);
     if (!toolElement.isNull()) {
         // parse tool properties
         QDomElement engineElement = toolElement.firstChildElement(QStringLiteral("engine"));
@@ -1262,7 +1267,7 @@ void PageViewAnnotator::selectTool(int toolId, ShowTip showTip)
 
 void PageViewAnnotator::selectLastTool()
 {
-    selectTool(m_lastToolId, ShowTip::No);
+    selectBuiltinTool(m_lastToolId, ShowTip::No);
 }
 
 void PageViewAnnotator::selectStampTool(const QString &stampSymbol)
@@ -1273,12 +1278,12 @@ void PageViewAnnotator::selectStampTool(const QString &stampSymbol)
     engineElement.setAttribute(QStringLiteral("hoverIcon"), stampSymbol);
     annotationElement.setAttribute(QStringLiteral("icon"), stampSymbol);
     saveBuiltinAnnotationTools();
-    selectTool(STAMP_TOOL_ID, ShowTip::Yes);
+    selectBuiltinTool(STAMP_TOOL_ID, ShowTip::Yes);
 }
 
 void PageViewAnnotator::detachAnnotation()
 {
-    selectTool(-1, ShowTip::No);
+    selectBuiltinTool(-1, ShowTip::No);
     if (!signatureMode()) {
         if (m_actionHandler)
             m_actionHandler->deselectAllAnnotationActions();

@@ -107,7 +107,7 @@ public:
 
     enum class ShowTip { Yes, No };
     // selects the active tool
-    void selectTool(int toolId, ShowTip showTip);
+    void selectBuiltinTool(int toolId, ShowTip showTip);
     // selects a stamp tool and sets the stamp symbol
     void selectStampTool(const QString &stampSymbol);
     // makes a quick annotation the active tool
@@ -148,6 +148,8 @@ private:
     void reparseQuickToolsConfig();
     // save the builtin annotation tools to Okular settings
     void saveBuiltinAnnotationTools();
+    // selects the active tool
+    void selectTool(AnnotationTools *toolsDefinition, int toolId, ShowTip showTip);
     // returns the engine QDomElement of the the currently active tool
     QDomElement currentEngineElement();
     // returns the annotation QDomElement of the the currently active tool

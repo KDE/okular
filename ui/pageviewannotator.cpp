@@ -1064,7 +1064,7 @@ void PageViewAnnotator::selectStampTool(const QString &stampSymbol)
     QDomElement annotationElement = engineElement.firstChildElement(QStringLiteral("annotation"));
     engineElement.setAttribute(QStringLiteral("hoverIcon"), stampSymbol);
     annotationElement.setAttribute(QStringLiteral("icon"), stampSymbol);
-    saveAnnotationTools();
+    saveBuiltinAnnotationTools();
     selectTool(STAMP_TOOL_ID);
 }
 
@@ -1286,10 +1286,9 @@ void PageViewAnnotator::setTextToolsEnabled(bool enabled)
         m_actionHandler->setTextToolsEnabled(enabled);
 }
 
-void PageViewAnnotator::saveAnnotationTools()
+void PageViewAnnotator::saveBuiltinAnnotationTools()
 {
     Okular::Settings::setBuiltinAnnotationTools(m_builtinToolsDefinition->toStringList());
-    Okular::Settings::setQuickAnnotationTools(m_quickToolsDefinition->toStringList());
     Okular::Settings::self()->save();
 }
 
@@ -1303,7 +1302,7 @@ int PageViewAnnotator::setQuickTool(int favToolId)
             return -1;
         }
         if (m_builtinToolsDefinition->updateTool(favToolElement, toolId))
-            saveAnnotationTools();
+            saveBuiltinAnnotationTools();
     }
     return toolId;
 }
@@ -1331,7 +1330,7 @@ QDomElement PageViewAnnotator::currentAnnotationElement()
 void PageViewAnnotator::setAnnotationWidth(double width)
 {
     currentAnnotationElement().setAttribute(QStringLiteral("width"), QString::number(width));
-    saveAnnotationTools();
+    saveBuiltinAnnotationTools();
     selectTool(m_lastToolId);
 }
 
@@ -1345,7 +1344,7 @@ void PageViewAnnotator::setAnnotationColor(const QColor &color)
     } else {
         annotationElement.setAttribute(QStringLiteral("color"), color.name(QColor::HexRgb));
     }
-    saveAnnotationTools();
+    saveBuiltinAnnotationTools();
     selectTool(m_lastToolId);
 }
 
@@ -1357,21 +1356,21 @@ void PageViewAnnotator::setAnnotationInnerColor(const QColor &color)
     } else {
         annotationElement.setAttribute(QStringLiteral("innerColor"), color.name(QColor::HexRgb));
     }
-    saveAnnotationTools();
+    saveBuiltinAnnotationTools();
     selectTool(m_lastToolId);
 }
 
 void PageViewAnnotator::setAnnotationOpacity(double opacity)
 {
     currentAnnotationElement().setAttribute(QStringLiteral("opacity"), QString::number(opacity));
-    saveAnnotationTools();
+    saveBuiltinAnnotationTools();
     selectTool(m_lastToolId);
 }
 
 void PageViewAnnotator::setAnnotationFont(const QFont &font)
 {
     currentAnnotationElement().setAttribute(QStringLiteral("font"), font.toString());
-    saveAnnotationTools();
+    saveBuiltinAnnotationTools();
     selectTool(m_lastToolId);
 }
 
@@ -1392,7 +1391,8 @@ void PageViewAnnotator::addToQuickAnnotations()
     if (!itemText.isEmpty())
         toolElement.setAttribute(QStringLiteral("name"), itemText);
     m_quickToolsDefinition->appendTool(toolElement);
-    saveAnnotationTools();
+    Okular::Settings::setQuickAnnotationTools(m_quickToolsDefinition->toStringList());
+    Okular::Settings::self()->save();
 }
 
 void PageViewAnnotator::slotAdvancedSettings()
@@ -1406,7 +1406,7 @@ void PageViewAnnotator::slotAdvancedSettings()
     QDomElement toolElementUpdated = t.toolXml().documentElement();
     int toolId = toolElement.attribute(QStringLiteral("id")).toInt();
     m_builtinToolsDefinition->updateTool(toolElementUpdated, toolId);
-    saveAnnotationTools();
+    saveBuiltinAnnotationTools();
     selectTool(m_lastToolId);
 }
 

@@ -139,8 +139,8 @@ Q_SIGNALS:
 private:
     void reparseBuiltinToolsConfig();
     void reparseQuickToolsConfig();
-    // save the annotation tools to Okular settings
-    void saveAnnotationTools();
+    // save the builtin annotation tools to Okular settings
+    void saveBuiltinAnnotationTools();
     // returns the engine QDomElement of the the currently active tool
     QDomElement currentEngineElement();
     // returns the annotation QDomElement of the the currently active tool

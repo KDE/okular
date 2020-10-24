@@ -112,6 +112,8 @@ public:
     void selectStampTool(const QString &stampSymbol);
     // makes a quick annotation the active tool
     int setQuickTool(int toolId);
+    // selects the last used tool
+    void selectLastTool();
     // deselects the tool and uncheck all the annotation actions
     void detachAnnotation();
 

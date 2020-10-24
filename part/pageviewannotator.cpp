@@ -1062,7 +1062,7 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
         }
 
         if (m_continuousMode)
-            selectTool(m_lastToolId, ShowTip::No);
+            selectLastTool();
         else
             detachAnnotation();
     }
@@ -1258,6 +1258,11 @@ void PageViewAnnotator::selectTool(int toolId, ShowTip showTip)
 
     if (toolId > 0)
         emit toolSelected();
+}
+
+void PageViewAnnotator::selectLastTool()
+{
+    selectTool(m_lastToolId, ShowTip::No);
 }
 
 void PageViewAnnotator::selectStampTool(const QString &stampSymbol)
@@ -1539,7 +1544,7 @@ void PageViewAnnotator::setAnnotationWidth(double width)
 {
     currentAnnotationElement().setAttribute(QStringLiteral("width"), QString::number(width));
     saveBuiltinAnnotationTools();
-    selectTool(m_lastToolId, ShowTip::No);
+    selectLastTool();
 }
 
 void PageViewAnnotator::setAnnotationColor(const QColor &color)
@@ -1553,7 +1558,7 @@ void PageViewAnnotator::setAnnotationColor(const QColor &color)
         annotationElement.setAttribute(QStringLiteral("color"), color.name(QColor::HexRgb));
     }
     saveBuiltinAnnotationTools();
-    selectTool(m_lastToolId, ShowTip::No);
+    selectLastTool();
 }
 
 void PageViewAnnotator::setAnnotationInnerColor(const QColor &color)
@@ -1565,21 +1570,21 @@ void PageViewAnnotator::setAnnotationInnerColor(const QColor &color)
         annotationElement.setAttribute(QStringLiteral("innerColor"), color.name(QColor::HexRgb));
     }
     saveBuiltinAnnotationTools();
-    selectTool(m_lastToolId, ShowTip::No);
+    selectLastTool();
 }
 
 void PageViewAnnotator::setAnnotationOpacity(double opacity)
 {
     currentAnnotationElement().setAttribute(QStringLiteral("opacity"), QString::number(opacity));
     saveBuiltinAnnotationTools();
-    selectTool(m_lastToolId, ShowTip::No);
+    selectLastTool();
 }
 
 void PageViewAnnotator::setAnnotationFont(const QFont &font)
 {
     currentAnnotationElement().setAttribute(QStringLiteral("font"), font.toString());
     saveBuiltinAnnotationTools();
-    selectTool(m_lastToolId, ShowTip::No);
+    selectLastTool();
 }
 
 void PageViewAnnotator::addToQuickAnnotations()
@@ -1615,7 +1620,7 @@ void PageViewAnnotator::slotAdvancedSettings()
     int toolId = toolElement.attribute(QStringLiteral("id")).toInt();
     m_builtinToolsDefinition->updateTool(toolElementUpdated, toolId);
     saveBuiltinAnnotationTools();
-    selectTool(m_lastToolId, ShowTip::No);
+    selectLastTool();
 }
 
 /* kate: replace-tabs on; indent-width 4; */

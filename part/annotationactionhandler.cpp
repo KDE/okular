@@ -100,6 +100,7 @@ public:
     void slotSetColor(AnnotationColor colorType, const QColor &color = QColor());
     void slotSelectAnnotationFont();
     void slotToolBarVisibilityChanged(bool checked);
+    bool isQuickToolAction(QAction *aTool);
 
     AnnotationActionHandler *q;
 
@@ -493,6 +494,11 @@ void AnnotationActionHandlerPrivate::slotToolBarVisibilityChanged(bool checked)
     }
 }
 
+bool AnnotationActionHandlerPrivate::isQuickToolAction(QAction *aTool)
+{
+    return quickTools->contains(aTool);
+}
+
 AnnotationActionHandler::AnnotationActionHandler(PageViewAnnotator *parent, KActionCollection *ac)
     : QObject(parent)
     , d(new AnnotationActionHandlerPrivate(this))
@@ -657,8 +663,10 @@ AnnotationActionHandler::AnnotationActionHandler(PageViewAnnotator *parent, KAct
             d->selectTool(-1);
         } else {
             d->agLastAction = action;
-            // Show the annotation toolbar whenever actions are triggered (e.g using shortcuts)
-            d->aShowToolBar->setChecked(true);
+            // Show the annotation toolbar whenever builtin tool actions are triggered (e.g using shortcuts)
+            if (!d->isQuickToolAction(action)) {
+                d->aShowToolBar->setChecked(true);
+            }
         }
     });
 

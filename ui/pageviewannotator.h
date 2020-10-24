@@ -137,6 +137,8 @@ Q_SIGNALS:
     void toolSelected();
 
 private:
+    void reparseBuiltinToolsConfig();
+    void reparseQuickToolsConfig();
     // save the annotation tools to Okular settings
     void saveAnnotationTools();
     // returns the engine QDomElement of the the currently active tool

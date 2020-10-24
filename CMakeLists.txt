@@ -437,7 +437,7 @@ ki18n_wrap_ui(okularpart_SRCS
    conf/dlgpresentationbase.ui
 )
 
-kconfig_add_kcfg_files(okularpart_SRCS conf/settings.kcfgc)
+kconfig_add_kcfg_files(okularpart_SRCS GENERATE_MOC conf/settings.kcfgc)
 
 add_library(okularpart SHARED ${okularpart_SRCS})
 generate_export_header(okularpart BASE_NAME okularpart)

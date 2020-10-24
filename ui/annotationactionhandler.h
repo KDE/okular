@@ -39,7 +39,8 @@ public:
      * selected, an annotation property (line width, colors, opacity, font) is modified.
      */
     void setupAnnotationToolBarVisibilityAction();
-    void reparseTools();
+    void reparseBuiltinToolsConfig();
+    void reparseQuickToolsConfig();
     void setToolsEnabled(bool on);
     void setTextToolsEnabled(bool on);
     void deselectAllAnnotationActions();

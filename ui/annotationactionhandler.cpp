@@ -726,9 +726,13 @@ void AnnotationActionHandler::setupAnnotationToolBarVisibilityAction()
     connect(d->aShowToolBar, &QAction::toggled, this, [this](bool checked) { d->slotToolBarVisibilityChanged(checked); });
 }
 
-void AnnotationActionHandler::reparseTools()
+void AnnotationActionHandler::reparseBuiltinToolsConfig()
 {
     d->parseTool(d->selectedTool);
+}
+
+void AnnotationActionHandler::reparseQuickToolsConfig()
+{
     d->populateQuickAnnotations();
 }
 

@@ -733,26 +733,40 @@ PageViewAnnotator::PageViewAnnotator(PageView *parent, Okular::Document *storage
     , m_lockedItem(nullptr)
 {
     reparseConfig();
+    reparseBuiltinToolsConfig();
+    reparseQuickToolsConfig();
+    connect(Okular::Settings::self(), &Okular::Settings::builtinAnnotationToolsChanged, this, &PageViewAnnotator::reparseBuiltinToolsConfig);
+    connect(Okular::Settings::self(), &Okular::Settings::quickAnnotationToolsChanged, this, &PageViewAnnotator::reparseQuickToolsConfig);
 }
 
 void PageViewAnnotator::reparseConfig()
+{
+    m_continuousMode = Okular::Settings::annotationContinuousMode();
+
+    if (Okular::Settings::identityAuthor().isEmpty())
+        detachAnnotation();
+}
+
+void PageViewAnnotator::reparseBuiltinToolsConfig()
 {
     // Read tool list from configuration. It's a list of XML <tool></tool> elements
     if (!m_builtinToolsDefinition)
         m_builtinToolsDefinition = new AnnotationTools();
     m_builtinToolsDefinition->setTools(Okular::Settings::builtinAnnotationTools());
 
+    if (m_actionHandler)
+        m_actionHandler->reparseBuiltinToolsConfig();
+}
+
+void PageViewAnnotator::reparseQuickToolsConfig()
+{
+    // Read tool list from configuration. It's a list of XML <tool></tool> elements
     if (!m_quickToolsDefinition)
         m_quickToolsDefinition = new AnnotationTools();
     m_quickToolsDefinition->setTools(Okular::Settings::quickAnnotationTools());
 
-    m_continuousMode = Okular::Settings::annotationContinuousMode();
-
-    if (Okular::Settings::identityAuthor().isEmpty())
-        detachAnnotation();
-
     if (m_actionHandler)
-        m_actionHandler->reparseTools();
+        m_actionHandler->reparseQuickToolsConfig();
 }
 
 PageViewAnnotator::~PageViewAnnotator()

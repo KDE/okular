@@ -5,6 +5,8 @@
       http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
  <include>kuser.h</include>
  <kcfgfile arg="true" />
+ <signal name="builtinAnnotationToolsChanged" />
+ <signal name="quickAnnotationToolsChanged" />
  <group name="Dlg Performance" >
   <entry key="EnableCompositing" type="Bool" >
    <default>true</default>
@@ -116,6 +118,7 @@
       }
     </code>
     <default code="true">builtinAnnotationTools</default>
+    <emit signal="builtinAnnotationToolsChanged" />
   </entry>
   <entry key="QuickAnnotationTools" type="StringList">
     <code>
@@ -154,6 +157,7 @@
       }
     </code>
     <default code="true">quickAnnotationTools</default>
+    <emit signal="quickAnnotationToolsChanged" />
   </entry>
   <entry key="AnnotationContinuousMode" type="Bool">
    <default>true</default>

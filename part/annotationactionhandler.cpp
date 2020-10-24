@@ -101,6 +101,8 @@ public:
     void slotSelectAnnotationFont();
     void slotToolBarVisibilityChanged(bool checked);
     bool isQuickToolAction(QAction *aTool);
+    bool isQuickToolStamp(int toolId);
+    void ephemeralStampWarning();
 
     AnnotationActionHandler *q;
 
@@ -447,13 +449,16 @@ void AnnotationActionHandlerPrivate::selectTool(int toolId)
 
 void AnnotationActionHandlerPrivate::slotStampToolSelected(const QString &stamp)
 {
-    KMessageBox::information(nullptr, i18nc("@info", "Stamps inserted in PDF documents are not visible in PDF readers other than Okular"), i18nc("@title:window", "Experimental feature"), QStringLiteral("stampAnnotationWarning"));
+    ephemeralStampWarning();
     selectedBuiltinTool = PageViewAnnotator::STAMP_TOOL_ID;
     annotator->selectStampTool(stamp); // triggers a reparsing thus calling parseTool
 }
 
 void AnnotationActionHandlerPrivate::slotQuickToolSelected(int favToolId)
 {
+    if (isQuickToolStamp(favToolId)) {
+        ephemeralStampWarning();
+    }
     annotator->selectQuickTool(favToolId);
     selectedBuiltinTool = -1;
     updateConfigActions();
@@ -497,6 +502,20 @@ void AnnotationActionHandlerPrivate::slotToolBarVisibilityChanged(bool checked)
 bool AnnotationActionHandlerPrivate::isQuickToolAction(QAction *aTool)
 {
     return quickTools->contains(aTool);
+}
+
+bool AnnotationActionHandlerPrivate::isQuickToolStamp(int toolId)
+{
+    QDomElement toolElement = annotator->quickTool(toolId);
+    const QString annotType = toolElement.attribute(QStringLiteral("type"));
+    QDomElement engineElement = toolElement.firstChildElement(QStringLiteral("engine"));
+    QDomElement annElement = engineElement.firstChildElement(QStringLiteral("annotation"));
+    return annotType == QStringLiteral("stamp");
+}
+
+void AnnotationActionHandlerPrivate::ephemeralStampWarning()
+{
+    KMessageBox::information(nullptr, i18nc("@info", "Stamps inserted in PDF documents are not visible in PDF readers other than Okular"), i18nc("@title:window", "Experimental feature"), QStringLiteral("stampAnnotationWarning"));
 }
 
 AnnotationActionHandler::AnnotationActionHandler(PageViewAnnotator *parent, KActionCollection *ac)

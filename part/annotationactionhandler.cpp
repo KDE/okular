@@ -68,7 +68,7 @@ public:
         , currentInnerColor(QColor())
         , currentFont(QFont())
         , currentWidth(-1)
-        , selectedTool(-1)
+        , selectedBuiltinTool(-1)
         , textToolsEnabled(false)
     {
     }
@@ -133,7 +133,7 @@ public:
     QFont currentFont;
     int currentWidth;
 
-    int selectedTool;
+    int selectedBuiltinTool;
     bool textToolsEnabled;
 };
 
@@ -425,7 +425,7 @@ const QIcon AnnotationActionHandlerPrivate::stampIcon(const QString &stampIconNa
 
 void AnnotationActionHandlerPrivate::selectTool(int toolId)
 {
-    selectedTool = toolId;
+    selectedBuiltinTool = toolId;
     annotator->selectBuiltinTool(toolId, PageViewAnnotator::ShowTip::Yes);
     parseTool(toolId);
 }
@@ -433,44 +433,15 @@ void AnnotationActionHandlerPrivate::selectTool(int toolId)
 void AnnotationActionHandlerPrivate::slotStampToolSelected(const QString &stamp)
 {
     KMessageBox::information(nullptr, i18nc("@info", "Stamps inserted in PDF documents are not visible in PDF readers other than Okular"), i18nc("@title:window", "Experimental feature"), QStringLiteral("stampAnnotationWarning"));
-    selectedTool = PageViewAnnotator::STAMP_TOOL_ID;
+    selectedBuiltinTool = PageViewAnnotator::STAMP_TOOL_ID;
     annotator->selectStampTool(stamp); // triggers a reparsing thus calling parseTool
 }
 
 void AnnotationActionHandlerPrivate::slotQuickToolSelected(int favToolId)
 {
-    int toolId = annotator->setQuickTool(favToolId); // always triggers an unuseful reparsing
-    if (toolId == -1) {
-        qWarning("Corrupted configuration for quick annotation tool with id: %d", favToolId);
-        return;
-    }
-    int indexOfActionInGroup = toolId - 1;
-    if (toolId == PageViewAnnotator::STAMP_TOOL_ID) {
-        // if the quick tool is a stamp we need to find its corresponding built-in tool action and select it
-        QDomElement favToolElement = annotator->quickTool(favToolId);
-        QDomElement engineElement = favToolElement.firstChildElement(QStringLiteral("engine"));
-        QDomElement annotationElement = engineElement.firstChildElement(QStringLiteral("annotation"));
-        QString stampIconName = annotationElement.attribute(QStringLiteral("icon"));
-
-        const auto defaultStamps = StampAnnotationWidget::defaultStamps();
-        auto it = std::find_if(defaultStamps.begin(), defaultStamps.end(), [&stampIconName](const QPair<QString, QString> &element) { return element.second == stampIconName; });
-        if (it != defaultStamps.end()) {
-            int stampActionIndex = std::distance(defaultStamps.begin(), it);
-            indexOfActionInGroup = PageViewAnnotator::STAMP_TOOL_ID + stampActionIndex - 1;
-        } else {
-            maybeUpdateCustomStampAction(stampIconName);
-            indexOfActionInGroup = agTools->actions().size() - 1;
-        }
-    }
-    QAction *favToolAction = agTools->actions().at(indexOfActionInGroup);
-    if (!favToolAction->isChecked()) {
-        // action group workaround: activates the action slot calling selectTool
-        //                          when new tool if different from the selected one
-        favToolAction->trigger();
-    } else {
-        selectTool(toolId);
-    }
-    aShowToolBar->setChecked(true);
+    annotator->selectQuickTool(favToolId);
+    selectedBuiltinTool = -1;
+    updateConfigActions();
 }
 
 void AnnotationActionHandlerPrivate::slotSetColor(AnnotationColor colorType, const QColor &color)
@@ -741,7 +712,7 @@ void AnnotationActionHandler::setupAnnotationToolBarVisibilityAction()
 
 void AnnotationActionHandler::reparseBuiltinToolsConfig()
 {
-    d->parseTool(d->selectedTool);
+    d->parseTool(d->selectedBuiltinTool);
 }
 
 void AnnotationActionHandler::reparseQuickToolsConfig()

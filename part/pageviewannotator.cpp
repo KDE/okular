@@ -882,6 +882,7 @@ PageViewAnnotator::PageViewAnnotator(PageView *parent, Okular::Document *storage
     , m_continuousMode(true)
     , m_constrainRatioAndAngle(false)
     , m_signatureMode(false)
+    , m_lastToolsDefinition(nullptr)
     , m_lastToolId(-1)
     , m_lockedItem(nullptr)
 {
@@ -1154,6 +1155,11 @@ void PageViewAnnotator::selectBuiltinTool(int toolId, ShowTip showTip)
     selectTool(m_builtinToolsDefinition, toolId, showTip);
 }
 
+void PageViewAnnotator::selectQuickTool(int toolId)
+{
+    selectTool(m_quickToolsDefinition, toolId, ShowTip::Yes);
+}
+
 void PageViewAnnotator::selectTool(AnnotationTools *toolsDefinition, int toolId, ShowTip showTip)
 {
     // ask for Author's name if not already set
@@ -1189,6 +1195,7 @@ void PageViewAnnotator::selectTool(AnnotationTools *toolsDefinition, int toolId,
 
     // store current tool for later usage
     m_lastToolId = toolId;
+    m_lastToolsDefinition = toolsDefinition;
 
     // handle tool deselection
     if (toolId == -1) {
@@ -1267,7 +1274,7 @@ void PageViewAnnotator::selectTool(AnnotationTools *toolsDefinition, int toolId,
 
 void PageViewAnnotator::selectLastTool()
 {
-    selectBuiltinTool(m_lastToolId, ShowTip::No);
+    selectTool(m_lastToolsDefinition, m_lastToolId, ShowTip::No);
 }
 
 void PageViewAnnotator::selectStampTool(const QString &stampSymbol)
@@ -1508,21 +1515,6 @@ void PageViewAnnotator::saveBuiltinAnnotationTools()
 {
     Okular::Settings::setBuiltinAnnotationTools(m_builtinToolsDefinition->toStringList());
     Okular::Settings::self()->save();
-}
-
-int PageViewAnnotator::setQuickTool(int favToolId)
-{
-    int toolId = -1;
-    QDomElement favToolElement = m_quickToolsDefinition->tool(favToolId);
-    if (!favToolElement.isNull()) {
-        toolId = m_builtinToolsDefinition->findToolId(favToolElement.attribute(QStringLiteral("type")));
-        if (toolId == -1) {
-            return -1;
-        }
-        if (m_builtinToolsDefinition->updateTool(favToolElement, toolId))
-            saveBuiltinAnnotationTools();
-    }
-    return toolId;
 }
 
 QDomElement PageViewAnnotator::builtinTool(int toolId)

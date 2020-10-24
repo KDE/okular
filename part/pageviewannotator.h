@@ -110,8 +110,8 @@ public:
     void selectBuiltinTool(int toolId, ShowTip showTip);
     // selects a stamp tool and sets the stamp symbol
     void selectStampTool(const QString &stampSymbol);
-    // makes a quick annotation the active tool
-    int setQuickTool(int toolId);
+    // selects the active quick tool
+    void selectQuickTool(int toolId);
     // selects the last used tool
     void selectLastTool();
     // deselects the tool and uncheck all the annotation actions
@@ -167,6 +167,7 @@ private:
     bool m_signatureMode;
 
     // creation related variables
+    AnnotationTools *m_lastToolsDefinition;
     int m_lastToolId;
     QRect m_lastDrawnRect;
     PageViewItem *m_lockedItem;

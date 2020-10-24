@@ -45,6 +45,7 @@ public:
     explicit AnnotationActionHandlerPrivate(AnnotationActionHandler *qq)
         : q(qq)
         , annotator(nullptr)
+        , quickTools(new QList<QAction *>())
         , agTools(nullptr)
         , agLastAction(nullptr)
         , aQuickTools(nullptr)
@@ -104,12 +105,13 @@ public:
 
     PageViewAnnotator *annotator;
 
+    QList<QAction *> *quickTools;
     QList<QAction *> textTools;
     QList<QAction *> textQuickTools;
     QActionGroup *agTools;
     QAction *agLastAction;
 
-    KSelectAction *aQuickTools;
+    ToggleActionMenu *aQuickTools;
     ToggleActionMenu *aGeomShapes;
     ToggleActionMenu *aStamp;
     QAction *aAddToQuickTools;
@@ -343,8 +345,12 @@ void AnnotationActionHandlerPrivate::populateQuickAnnotations()
 
     const QList<int> numberKeys = {Qt::Key_1, Qt::Key_2, Qt::Key_3, Qt::Key_4, Qt::Key_5, Qt::Key_6, Qt::Key_7, Qt::Key_8, Qt::Key_9, Qt::Key_0};
 
+    for (auto action : *quickTools) {
+        action->setShortcut(QKeySequence());
+        aQuickTools->removeAction(action);
+    }
+    quickTools->clear();
     textQuickTools.clear();
-    aQuickTools->removeAllActions();
 
     int favToolId = 1;
     QList<int>::const_iterator shortcutNumber = numberKeys.begin();
@@ -355,12 +361,17 @@ void AnnotationActionHandlerPrivate::populateQuickAnnotations()
             itemText = PageViewAnnotator::defaultToolName(favToolElement);
         }
         QIcon toolIcon = QIcon(PageViewAnnotator::makeToolPixmap(favToolElement));
-        QAction *annFav = new QAction(toolIcon, itemText, q);
+        QAction *annFav = new KToggleAction(toolIcon, itemText, q);
         aQuickTools->addAction(annFav);
+        agTools->addAction(annFav);
+        quickTools->append(annFav);
         if (shortcutNumber != numberKeys.end())
             annFav->setShortcut(QKeySequence(*(shortcutNumber++)));
-        QObject::connect(annFav, &QAction::triggered, q, [this, favToolId]() { slotQuickToolSelected(favToolId); });
-
+        QObject::connect(annFav, &KToggleAction::toggled, q, [this, favToolId](bool checked) {
+            if (checked) {
+                slotQuickToolSelected(favToolId);
+            }
+        });
         QDomElement engineElement = favToolElement.firstChildElement(QStringLiteral("engine"));
         if (engineElement.attribute(QStringLiteral("type")) == QStringLiteral("TextSelector")) {
             textQuickTools.append(annFav);
@@ -368,6 +379,9 @@ void AnnotationActionHandlerPrivate::populateQuickAnnotations()
         }
 
         favToolElement = annotator->quickTool(++favToolId);
+    }
+    if (!quickTools->isEmpty() && !aQuickTools->defaultAction()) {
+        aQuickTools->setDefaultAction(quickTools->at(0));
     }
     QAction *separator = new QAction();
     separator->setSeparator(true);
@@ -580,10 +594,15 @@ AnnotationActionHandler::AnnotationActionHandler(PageViewAnnotator *parent, KAct
     connect(d->aStamp->menu(), &QMenu::triggered, d->aStamp, &ToggleActionMenu::setDefaultAction);
 
     // Quick annotations action
-    d->aQuickTools = new KSelectAction(QIcon::fromTheme(QStringLiteral("draw-freehand")), i18nc("@action:intoolbar Show list of quick annotation tools", "Quick Annotations"), this);
+    d->aQuickTools = new ToggleActionMenu(QIcon::fromTheme(QStringLiteral("draw-freehand")), i18nc("@action:intoolbar Show list of quick annotation tools", "Quick Annotations"), this, ToggleActionMenu::MenuButtonPopup);
     d->aQuickTools->setToolTip(i18nc("@info:tooltip", "Choose an annotation tool from the quick annotations"));
-    d->aQuickTools->setToolBarMode(KSelectAction::MenuMode);
     d->aQuickTools->setEnabled(true); // required to ensure that populateQuickAnnotations is executed the first time
+    // set the triggered quick annotation as default action (but avoid setting 'Configure...' as default action)
+    connect(d->aQuickTools->menu(), &QMenu::triggered, this, [this](QAction *action) {
+        if (action->isCheckable()) {
+            d->aQuickTools->setDefaultAction(action);
+        }
+    });
     d->populateQuickAnnotations();
 
     // Add to quick annotation action

@@ -348,6 +348,11 @@ void AnnotationActionHandlerPrivate::populateQuickAnnotations()
 
     const QList<int> numberKeys = {Qt::Key_1, Qt::Key_2, Qt::Key_3, Qt::Key_4, Qt::Key_5, Qt::Key_6, Qt::Key_7, Qt::Key_8, Qt::Key_9, Qt::Key_0};
 
+    // to be safe and avoid undefined states of the currently selected quick annotation
+    if (isQuickToolAction(agTools->checkedAction())) {
+        q->deselectAllAnnotationActions();
+    }
+
     for (auto action : *quickTools) {
         action->setShortcut(QKeySequence());
         aQuickTools->removeAction(action);
@@ -383,7 +388,7 @@ void AnnotationActionHandlerPrivate::populateQuickAnnotations()
 
         favToolElement = annotator->quickTool(++favToolId);
     }
-    if (!quickTools->isEmpty() && !aQuickTools->defaultAction()) {
+    if (!quickTools->isEmpty()) {
         aQuickTools->setDefaultAction(quickTools->at(0));
     }
     QAction *separator = new QAction();

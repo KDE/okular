@@ -506,6 +506,7 @@ Part::Part(QWidget *parentWidget, QObject *parent, const QVariantList &args)
     m_signatureMessage->setWordWrap(true);
     rightLayout->addWidget(m_signatureMessage);
     m_pageView = new PageView(rightContainer, m_document);
+    rightContainer->setFocusProxy(m_pageView);
     QMetaObject::invokeMethod(m_pageView, "setFocus", Qt::QueuedConnection); // usability setting
     //    m_splitter->setFocusProxy(m_pageView);
     connect(m_pageView.data(), &PageView::rightClick, this, &Part::slotShowMenu);

@@ -110,6 +110,7 @@ void Sidebar::setMainWidget(QWidget *widget)
         // setting the splitter as parent for the widget automatically plugs it
         // into the splitter, neat!
         d->sideWidget->setParent(d->splitter);
+        setFocusProxy(widget);
 
         if (!d->splitterSizesSet) {
             QList<int> splitterSizes = Okular::Settings::splitterSizes();

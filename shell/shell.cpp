@@ -107,7 +107,7 @@ Shell::Shell(const QString &serializedOptions)
         m_tabWidget->setMovable(true);
 
         m_tabWidget->setAcceptDrops(true);
-        m_tabWidget->installEventFilter(this);
+        m_tabWidget->tabBar()->installEventFilter(this);
 
         connect(m_tabWidget, &QTabWidget::currentChanged, this, &Shell::setActiveTab);
         connect(m_tabWidget, &QTabWidget::tabCloseRequested, this, &Shell::closeTab);
@@ -150,8 +150,6 @@ Shell::Shell(const QString &serializedOptions)
 
 bool Shell::eventFilter(QObject *obj, QEvent *event)
 {
-    Q_UNUSED(obj);
-
     QDragMoveEvent *dmEvent = dynamic_cast<QDragMoveEvent *>(event);
     if (dmEvent) {
         bool accept = dmEvent->mimeData()->hasUrls();
@@ -168,7 +166,7 @@ bool Shell::eventFilter(QObject *obj, QEvent *event)
     }
 
     // Handle middle button click events on the tab bar
-    if (obj == m_tabWidget && event->type() == QEvent::MouseButtonRelease) {
+    if (obj == m_tabWidget->tabBar() && event->type() == QEvent::MouseButtonRelease) {
         QMouseEvent *mEvent = static_cast<QMouseEvent *>(event);
         if (mEvent->button() == Qt::MiddleButton) {
             int tabIndex = m_tabWidget->tabBar()->tabAt(mEvent->pos());

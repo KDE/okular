@@ -772,6 +772,8 @@ void PageViewAnnotator::reparseQuickToolsConfig()
 PageViewAnnotator::~PageViewAnnotator()
 {
     delete m_engine;
+    delete m_builtinToolsDefinition;
+    delete m_quickToolsDefinition;
 }
 
 bool PageViewAnnotator::active() const

@@ -43,8 +43,6 @@ public:
     explicit AnnotationActionHandlerPrivate(AnnotationActionHandler *qq)
         : q(qq)
         , annotator(nullptr)
-        , textTools(nullptr)
-        , textQuickTools(nullptr)
         , agTools(nullptr)
         , agLastAction(nullptr)
         , aQuickTools(nullptr)
@@ -103,8 +101,8 @@ public:
 
     PageViewAnnotator *annotator;
 
-    QList<QAction *> *textTools;
-    QList<QAction *> *textQuickTools;
+    QList<QAction *> textTools;
+    QList<QAction *> textQuickTools;
     QActionGroup *agTools;
     QAction *agLastAction;
 
@@ -341,7 +339,7 @@ void AnnotationActionHandlerPrivate::populateQuickAnnotations()
 
     const QList<int> numberKeys = {Qt::Key_1, Qt::Key_2, Qt::Key_3, Qt::Key_4, Qt::Key_5, Qt::Key_6, Qt::Key_7, Qt::Key_8, Qt::Key_9, Qt::Key_0};
 
-    textQuickTools->clear();
+    textQuickTools.clear();
     aQuickTools->removeAllActions();
 
     int favToolId = 1;
@@ -361,7 +359,7 @@ void AnnotationActionHandlerPrivate::populateQuickAnnotations()
 
         QDomElement engineElement = favToolElement.firstChildElement(QStringLiteral("engine"));
         if (engineElement.attribute(QStringLiteral("type")) == QStringLiteral("TextSelector")) {
-            textQuickTools->append(annFav);
+            textQuickTools.append(annFav);
             annFav->setEnabled(textToolsEnabled);
         }
 
@@ -559,12 +557,10 @@ AnnotationActionHandler::AnnotationActionHandler(PageViewAnnotator *parent, KAct
     d->agTools->addAction(aEllipse);
     d->agTools->addAction(aPolygon);
 
-    d->textQuickTools = new QList<QAction *>();
-    d->textTools = new QList<QAction *>();
-    d->textTools->append(aHighlighter);
-    d->textTools->append(aUnderline);
-    d->textTools->append(aSquiggle);
-    d->textTools->append(aStrikeout);
+    d->textTools.append(aHighlighter);
+    d->textTools.append(aUnderline);
+    d->textTools.append(aSquiggle);
+    d->textTools.append(aStrikeout);
 
     int toolId = 1;
     const QList<QAction *> tools = d->agTools->actions();
@@ -751,10 +747,10 @@ void AnnotationActionHandler::setToolsEnabled(bool on)
 void AnnotationActionHandler::setTextToolsEnabled(bool on)
 {
     d->textToolsEnabled = on;
-    for (QAction *ann : qAsConst(*d->textTools)) {
+    for (QAction *ann : qAsConst(d->textTools)) {
         ann->setEnabled(on);
     }
-    for (QAction *ann : qAsConst(*d->textQuickTools)) {
+    for (QAction *ann : qAsConst(d->textQuickTools)) {
         ann->setEnabled(on);
     }
 }

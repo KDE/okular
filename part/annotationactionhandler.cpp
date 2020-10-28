@@ -32,6 +32,7 @@
 #include "guiutils.h"
 #include "pageview.h"
 #include "pageviewannotator.h"
+#include "settings.h"
 #include "toggleactionmenu.h"
 
 class AnnotationActionHandlerPrivate
@@ -353,6 +354,7 @@ void AnnotationActionHandlerPrivate::populateQuickAnnotations()
         q->deselectAllAnnotationActions();
     }
 
+    const bool isFirstTimePopulated = quickTools->count() == 0;
     for (auto action : *quickTools) {
         action->setShortcut(QKeySequence());
         aQuickTools->removeAction(action);
@@ -388,9 +390,24 @@ void AnnotationActionHandlerPrivate::populateQuickAnnotations()
 
         favToolElement = annotator->quickTool(++favToolId);
     }
-    if (!quickTools->isEmpty()) {
-        aQuickTools->setDefaultAction(quickTools->at(0));
+
+    if (quickTools->isEmpty()) {
+        aQuickTools->setDefaultAction(aQuickTools);
+        Okular::Settings::setQuickAnnotationDefaultAction(0);
+        Okular::Settings::self()->save();
+    } else {
+        int defaultAction = Okular::Settings::quickAnnotationDefaultAction();
+        if (isFirstTimePopulated && defaultAction < quickTools->count()) {
+            // we can reach here also if no quick tools were defined before, in that case defaultAction is correctly equal to zero
+            aQuickTools->setDefaultAction(quickTools->at(defaultAction));
+        } else {
+            // if the quick tools have been modified we cannot restore the previous default action
+            aQuickTools->setDefaultAction(quickTools->at(0));
+            Okular::Settings::setQuickAnnotationDefaultAction(0);
+            Okular::Settings::self()->save();
+        }
     }
+
     QAction *separator = new QAction();
     separator->setSeparator(true);
     aQuickTools->addAction(separator);
@@ -467,6 +484,8 @@ void AnnotationActionHandlerPrivate::slotQuickToolSelected(int favToolId)
     annotator->selectQuickTool(favToolId);
     selectedBuiltinTool = -1;
     updateConfigActions();
+    Okular::Settings::setQuickAnnotationDefaultAction(favToolId - 1);
+    Okular::Settings::self()->save();
 }
 
 void AnnotationActionHandlerPrivate::slotSetColor(AnnotationColor colorType, const QColor &color)

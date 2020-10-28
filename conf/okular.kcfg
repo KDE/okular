@@ -163,6 +163,9 @@
   <entry key="AnnotationContinuousMode" type="Bool">
    <default>true</default>
   </entry>
+  <entry key="QuickAnnotationDefaultAction" type="UInt">
+   <default>0</default>
+  </entry>
  </group>
  <group name="Zoom">
    <entry key="ZoomMode" type="UInt" >

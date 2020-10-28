@@ -890,7 +890,7 @@ PageViewAnnotator::PageViewAnnotator(PageView *parent, Okular::Document *storage
     reparseBuiltinToolsConfig();
     reparseQuickToolsConfig();
     connect(Okular::Settings::self(), &Okular::Settings::builtinAnnotationToolsChanged, this, &PageViewAnnotator::reparseBuiltinToolsConfig);
-    connect(Okular::Settings::self(), &Okular::Settings::quickAnnotationToolsChanged, this, &PageViewAnnotator::reparseQuickToolsConfig);
+    connect(Okular::Settings::self(), &Okular::Settings::quickAnnotationToolsChanged, this, &PageViewAnnotator::reparseQuickToolsConfig, Qt::QueuedConnection);
 }
 
 void PageViewAnnotator::reparseConfig()

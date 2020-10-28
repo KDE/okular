@@ -136,7 +136,6 @@ QDomDocument EditAnnotToolDialog::toolXml() const
     engineElement.appendChild(annotationElement);
 
     const QString color = m_stubann->style().color().name(QColor::HexArgb);
-    const QString textColor = static_cast<Okular::TextAnnotation *>(m_stubann)->textColor().name();
     const QString opacity = QString::number(m_stubann->style().opacity());
     const QString width = QString::number(m_stubann->style().width());
 
@@ -252,6 +251,7 @@ QDomDocument EditAnnotToolDialog::toolXml() const
         annotationElement.setAttribute(QStringLiteral("icon"), sa->stampIconName());
     } else if (toolType == ToolTypewriter) {
         Okular::TextAnnotation *ta = static_cast<Okular::TextAnnotation *>(m_stubann);
+        const QString textColor = ta->textColor().name();
         toolElement.setAttribute(QStringLiteral("type"), QStringLiteral("typewriter"));
         engineElement.setAttribute(QStringLiteral("type"), QStringLiteral("PickPoint"));
         engineElement.setAttribute(QStringLiteral("block"), QStringLiteral("true"));

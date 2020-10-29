@@ -2701,7 +2701,7 @@ bool Document::canConfigurePrinter() const
         return false;
 }
 
-void Document::sign(const Okular::Annotation *pWhichAnnotation)
+void Document::sign(const NewSignatureData &data)
 {
     if (d->m_generator->canSign()) {
         // we technically need to save the document before signing it,
@@ -2717,7 +2717,7 @@ void Document::sign(const Okular::Annotation *pWhichAnnotation)
 
         if (res == KMessageBox::Continue) {
             // Sign it!
-            if (!d->m_generator->sign(pWhichAnnotation, currentDocument().path())) {
+            if (!d->m_generator->sign(data, currentDocument().path())) {
                 KMessageBox::error(d->m_widget, i18nc("%1 is a filename", "Could not sign '%1'. Invalid password or cannot write", currentDocument().fileName()));
             }
             // no need to - slotAttemptReload() gets called via
@@ -2727,7 +2727,7 @@ void Document::sign(const Okular::Annotation *pWhichAnnotation)
     }
 }
 
-Okular::CertificateStore *Document::getCertStore()
+Okular::CertificateStore *Document::getCertStore() const
 {
     return d->m_generator ? d->m_generator->getCertStore() : nullptr;
 }
@@ -5497,6 +5497,78 @@ VisiblePageRect::VisiblePageRect(int page, const NormalizedRect &rectangle)
     : pageNumber(page)
     , rect(rectangle)
 {
+}
+
+/** NewSignatureData **/
+
+struct Okular::NewSignatureDataPrivate {
+    NewSignatureDataPrivate() = default;
+
+    QString certNickname;
+    QString certSubjectCommonName;
+    QString password;
+    int page;
+    NormalizedRect boundingRectangle;
+};
+
+NewSignatureData::NewSignatureData()
+    : d(new NewSignatureDataPrivate())
+{
+}
+
+NewSignatureData::~NewSignatureData()
+{
+    delete d;
+}
+
+QString NewSignatureData::certNickname() const
+{
+    return d->certNickname;
+}
+
+void NewSignatureData::setCertNickname(const QString &certNickname)
+{
+    d->certNickname = certNickname;
+}
+
+QString NewSignatureData::certSubjectCommonName() const
+{
+    return d->certSubjectCommonName;
+}
+
+void NewSignatureData::setCertSubjectCommonName(const QString &certSubjectCommonName)
+{
+    d->certSubjectCommonName = certSubjectCommonName;
+}
+
+QString NewSignatureData::password() const
+{
+    return d->password;
+}
+
+void NewSignatureData::setPassword(const QString &password)
+{
+    d->password = password;
+}
+
+int NewSignatureData::page() const
+{
+    return d->page;
+}
+
+void NewSignatureData::setPage(int page)
+{
+    d->page = page;
+}
+
+NormalizedRect NewSignatureData::boundingRectangle() const
+{
+    return d->boundingRectangle;
+}
+
+void NewSignatureData::setBoundingRectangle(const NormalizedRect &rect)
+{
+    d->boundingRectangle = rect;
 }
 
 #undef foreachObserver

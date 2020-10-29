@@ -313,34 +313,27 @@ private:
     bool center;
 };
 
-class PickPointEngine2 : public PickPointEngine
+class PickPointEngineSignature : public PickPointEngine
 {
 public:
-    PickPointEngine2(const QDomElement &engineElement, Okular::Document *storage)
-        : PickPointEngine(engineElement)
+    PickPointEngineSignature(Okular::Document *storage)
+        : PickPointEngine({})
         , m_document(storage)
     {
-        clicked = false;
         m_block = true;
-        xscale = 1.0;
-        yscale = 1.0;
-    }
-
-    QRect event(EventType type, Button button, Modifiers modifiers, double nX, double nY, double xScale, double yScale, const Okular::Page *page) override
-    {
-        return PickPointEngine::event(type, button, modifiers, nX, nY, xScale, yScale, page);
     }
 
     QList<Okular::Annotation *> end() override
     {
-        Okular::Annotation *ann = nullptr;
-
         const Okular::CertificateStore *certStore = m_document->getCertStore();
         const QList<Okular::CertificateInfo *> &certs = certStore->getSigningCertificates();
 
         QStringList items;
-        for (auto cert : certs)
+        QHash<QString, QString> nickToCommonName;
+        for (auto cert : certs) {
             items.append(cert->nickName());
+            nickToCommonName[cert->nickName()] = cert->subjectInfo(Okular::CertificateInfo::CommonName);
+        }
 
         if (items.isEmpty()) {
             m_creationCompleted = false;
@@ -350,37 +343,56 @@ public:
         }
 
         bool resok = false;
-        const QString cert = QInputDialog::getItem(nullptr, i18n("Select certificate to sign with"), i18n("Certificates:"), items, 0, false, &resok);
+        certNicknameToUse = QInputDialog::getItem(nullptr, i18n("Select certificate to sign with"), i18n("Certificates:"), items, 0, false, &resok);
 
         if (resok) {
             bool passok = false;
-            QString title = i18n("Enter password to unlock certificate %1", cert);
-            QString pass = QInputDialog::getText(nullptr, i18n("Enter password"), title, QLineEdit::Password, QString(), &passok);
+            const QString title = i18n("Enter password (if any) to unlock certificate: %1", certNicknameToUse);
+            passToUse = QInputDialog::getText(nullptr, i18n("Enter certificate password"), title, QLineEdit::Password, QString(), &passok);
 
             if (passok) {
-                Okular::WidgetAnnotation *wa = new Okular::WidgetAnnotation();
-                ann = wa;
-
-                // set boundary
+                certCommonName = nickToCommonName.value(certNicknameToUse);
                 rect.left = qMin(startpoint.x, point.x);
                 rect.top = qMin(startpoint.y, point.y);
                 rect.right = qMax(startpoint.x, point.x);
                 rect.bottom = qMax(startpoint.y, point.y);
-
-                wa->setBoundingRectangle(rect);
-                wa->setCertificateNick(cert);
-                wa->setPassword(pass);
+            } else {
+                certNicknameToUse.clear();
             }
+        } else {
+            certNicknameToUse.clear();
         }
 
         m_creationCompleted = false;
         clicked = false;
 
-        if (!ann)
-            return QList<Okular::Annotation *>();
+        qDeleteAll(certs);
 
-        return QList<Okular::Annotation *>() << ann;
+        return {};
     }
+
+    bool isAccepted() const
+    {
+        return !certNicknameToUse.isEmpty();
+    }
+
+    void sign(int page)
+    {
+        Okular::NewSignatureData data;
+        data.setCertNickname(certNicknameToUse);
+        data.setCertSubjectCommonName(certCommonName);
+        data.setPassword(passToUse);
+        data.setPage(page);
+        data.setBoundingRectangle(rect);
+        m_document->sign(data);
+
+        passToUse = QString();
+    }
+
+protected:
+    QString certNicknameToUse;
+    QString certCommonName;
+    QString passToUse;
 
 private:
     Okular::Document *m_document;
@@ -899,10 +911,7 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
     }
 
     if (signatureMode() && eventType == AnnotatorEngine::Press) {
-        QDomElement elem;
-        elem.setTagName(QStringLiteral("engine"));
-        elem.setAttribute(QStringLiteral("block"), 1);
-        m_engine = new PickPointEngine2(elem, m_document);
+        m_engine = new PickPointEngineSignature(m_document);
     }
 
     // 1. lock engine to current item
@@ -953,11 +962,15 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
             annotation->setAuthor(Okular::Settings::identityAuthor());
             m_document->addPageAnnotation(m_lockedItem->pageNumber(), annotation);
 
-            if (signatureMode())
-                m_document->sign(annotation);
-
             if (annotation->openDialogAfterCreation())
                 m_pageView->openAnnotationWindow(annotation, m_lockedItem->pageNumber());
+        }
+
+        if (signatureMode()) {
+            auto signEngine = static_cast<PickPointEngineSignature *>(m_engine);
+            if (signEngine->isAccepted()) {
+                static_cast<PickPointEngineSignature *>(m_engine)->sign(m_lockedItem->pageNumber());
+            }
         }
 
         if (m_continuousMode)

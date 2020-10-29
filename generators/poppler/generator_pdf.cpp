@@ -25,6 +25,7 @@
 #include <QDir>
 #include <QFile>
 #include <QImage>
+#include <QInputDialog>
 #include <QLayout>
 #include <QMutex>
 #include <QPainter>
@@ -547,6 +548,15 @@ static void PDFGeneratorPopplerDebugFunction(const QString &message, const QVari
     qCDebug(OkularPdfDebug) << "[Poppler]" << message;
 }
 
+#ifdef HAVE_POPPLER_SIGNING
+static char *PDFGeneratorNSSPasswordCallback(const char *element)
+{
+    bool ok;
+    const QString pwd = QInputDialog::getText(nullptr, i18n("Enter Password"), i18n("Enter password to open %1:", element), QLineEdit::Password, QString(), &ok);
+    return ok ? strdup(pwd.toUtf8().constData()) : nullptr;
+}
+#endif
+
 PDFGenerator::PDFGenerator(QObject *parent, const QVariantList &args)
     : Generator(parent, args)
     , pdfdoc(nullptr)
@@ -574,11 +584,18 @@ PDFGenerator::PDFGenerator(QObject *parent, const QVariantList &args)
     // You only need to do it once not for each of the documents but it is cheap enough
     // so doing it all the time won't hurt either
     Poppler::setDebugErrorFunction(PDFGeneratorPopplerDebugFunction, QVariant());
+#ifdef HAVE_POPPLER_SIGNING
+    Poppler::setNSSPasswordCallback(PDFGeneratorNSSPasswordCallback);
+    if (!CertificateSettings::useDefaultDB()) {
+        Poppler::setNSSDir(QUrl(CertificateSettings::dBCertificatePath()).toLocalFile());
+    }
+#endif
 }
 
 PDFGenerator::~PDFGenerator()
 {
     delete pdfOptionsPage;
+    delete certStore;
 }
 
 // BEGIN Generator inherited functions
@@ -1485,16 +1502,23 @@ void PDFGenerator::addPages(KConfigDialog *dlg)
     QWidget *w2 = new QWidget(dlg);
     certsw.setupUi(w2);
 
-    CertificateTools *kcfg_CertTools = new CertificateTools(certsw.certificatesGroup);
-    certsw.certificatesPlaceholder->addWidget(kcfg_CertTools);
-    kcfg_CertTools->setObjectName(QStringLiteral("kcfg_Certificates"));
+    CertificateTools *certTools = new CertificateTools(certsw.certificatesGroup);
+    certsw.certificatesPlaceholder->addWidget(certTools);
 
-    KUrlRequester *pDlg = new KUrlRequester(certsw.certpathsettings);
-    pDlg->setObjectName(QStringLiteral("kcfg_CertificatePath"));
+    KUrlRequester *pDlg = new KUrlRequester();
+    pDlg->setObjectName(QStringLiteral("kcfg_DBCertificatePath"));
     pDlg->setMode(KFile::Directory | KFile::ExistingOnly | KFile::LocalOnly);
-    certsw.formLayout->addRow(QStringLiteral("CertDB Path:"), pDlg);
+    pDlg->setEnabled(false);
+    certsw.formLayout->setWidget(1, QFormLayout::FieldRole, pDlg);
 
-    KConfigDialogManager::changedMap()->insert(QStringLiteral("CertificateTools"), SIGNAL(changed()));
+    connect(certsw.customRadioButton, &QRadioButton::toggled, pDlg, &KUrlRequester::setEnabled);
+
+    if (CertificateSettings::useDefaultDB()) {
+        certsw.defaultLabel->setText(Poppler::getNSSDir());
+    } else {
+        certsw.customRadioButton->setChecked(true);
+        certsw.defaultLabel->setVisible(false);
+    }
 
     dlg->addPage(w2, CertificateSettings::self(), i18n("Certificates"), QStringLiteral("application-pkcs7-signature"), i18n("Digital Signature Certificates"));
 #endif
@@ -1884,13 +1908,18 @@ Okular::AnnotationProxy *PDFGenerator::annotationProxy() const
     return annotProxy;
 }
 
-bool PDFGenerator::sign(const Okular::Annotation *pWhichAnnotation, const QString &rFilename)
+bool PDFGenerator::canSign() const
 {
 #ifdef HAVE_POPPLER_SIGNING
-    const Okular::WidgetAnnotation *wa = dynamic_cast<const Okular::WidgetAnnotation *>(pWhichAnnotation);
+    return true;
+#else
+    return false;
+#endif
+}
 
-    Poppler::Annotation *popplerAnn = qvariant_cast<Poppler::Annotation *>(pWhichAnnotation->nativeId());
-
+bool PDFGenerator::sign(const Okular::NewSignatureData &oData, const QString &rFilename)
+{
+#ifdef HAVE_POPPLER_SIGNING
     // save to tmp file - poppler doesn't like overwriting in-place
     QTemporaryFile tf(QFileInfo(rFilename).absolutePath() + QLatin1String("/okular_XXXXXX.pdf"));
     tf.setAutoRemove(false);
@@ -1899,7 +1928,15 @@ bool PDFGenerator::sign(const Okular::Annotation *pWhichAnnotation, const QStrin
     std::unique_ptr<Poppler::PDFConverter> converter(pdfdoc->pdfConverter());
     converter->setOutputFileName(tf.fileName());
     converter->setPDFOptions(converter->pdfOptions() | Poppler::PDFConverter::WithChanges);
-    if (!converter->sign(popplerAnn, wa->certificateNick(), QString(), wa->password(), QLatin1String("Okular interactive signature")))
+
+    Poppler::PDFConverter::NewSignatureData pData;
+    pData.setCertNickname(oData.certNickname());
+    pData.setPassword(oData.password());
+    pData.setPage(oData.page());
+    pData.setSignatureText(i18n("Signed by: %1\n\nDate: %2", oData.certSubjectCommonName(), QDateTime::currentDateTime().toString(Qt::ISODate)));
+    const Okular::NormalizedRect bRect = oData.boundingRectangle();
+    pData.setBoundingRectangle({bRect.left, bRect.top, bRect.width(), bRect.height()});
+    if (!converter->sign(pData))
         return false;
 
     // now copy over old file
@@ -1907,8 +1944,9 @@ bool PDFGenerator::sign(const Okular::Annotation *pWhichAnnotation, const QStrin
     if (!tf.rename(rFilename))
         return false;
 #else
-    Q_UNUSED(pWhichAnnotation);
+    Q_UNUSED(oData);
     Q_UNUSED(rFilename);
+    return false;
 #endif
 
     return true;
@@ -1920,7 +1958,6 @@ namespace
 struct CertificateStoreImpl : public Okular::CertificateStore {
     QList<Okular::CertificateInfo *> getSigningCertificates() const override
     {
-        Poppler::setNSSDir(CertificateSettings::certificatePath());
         const QVector<Poppler::CertificateInfo> certs = Poppler::getAvailableSigningCertificates();
         QList<Okular::CertificateInfo *> vReturnCerts;
         for (auto cert : certs)
@@ -1932,7 +1969,7 @@ struct CertificateStoreImpl : public Okular::CertificateStore {
 }
 #endif
 
-Okular::CertificateStore *PDFGenerator::getCertStore()
+Okular::CertificateStore *PDFGenerator::getCertStore() const
 {
 #ifdef HAVE_POPPLER_SIGNING
     if (!certStore)

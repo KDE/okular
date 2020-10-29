@@ -24,20 +24,44 @@
     <number>0</number>
    </property>
    <item>
+    <widget class="QGroupBox" name="DBGroupBox">
+     <property name="title">
+      <string>Certificate Database</string>
+     </property>
+     <layout class="QFormLayout" name="formLayout">
+      <property name="fieldGrowthPolicy">
+       <enum>QFormLayout::ExpandingFieldsGrow</enum>
+      </property>
+      <item row="0" column="0">
+       <widget class="QRadioButton" name="kcfg_UseDefaultDB">
+        <property name="text">
+         <string>Default:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QRadioButton" name="customRadioButton">
+        <property name="text">
+         <string>Custom:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="defaultLabel">
+        <property name="text">
+         <string notr="true">TextLabel</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <widget class="QGroupBox" name="certificatesGroup">
      <property name="title">
       <string>Digital Signatures</string>
      </property>
      <layout class="QVBoxLayout" name="certificatesPlaceholder"/>
-    </widget>
-   </item>
-   <item>
-    <widget class="QWidget" name="certpathsettings">
-     <layout class="QFormLayout" name="formLayout">
-      <property name="fieldGrowthPolicy">
-       <enum>QFormLayout::ExpandingFieldsGrow</enum>
-      </property>
-     </layout>
     </widget>
    </item>
    <item>

@@ -246,6 +246,21 @@ bool Generator::canGeneratePixmap() const
     return d->mPixmapReady;
 }
 
+bool Generator::canSign() const
+{
+    return false;
+}
+
+bool Generator::sign(const NewSignatureData &, const QString &)
+{
+    return false;
+}
+
+CertificateStore *Generator::getCertStore() const
+{
+    return nullptr;
+}
+
 void Generator::generatePixmap(PixmapRequest *request)
 {
     Q_D(Generator);

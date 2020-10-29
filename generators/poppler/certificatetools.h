@@ -11,42 +11,23 @@
 #define _CERTIFICATETOOLS_H_
 
 #include <QWidget>
-class QListWidget;
-class QPushButton;
+
+class QTreeWidget;
 
 class CertificateTools : public QWidget
 {
     Q_OBJECT
 
-    Q_PROPERTY(QStringList certificates READ certificates WRITE setCertificates NOTIFY changed USER true)
-
 public:
     explicit CertificateTools(QWidget *parent = nullptr);
-    ~CertificateTools() override;
-
-    QStringList certificates() const;
-    void setCertificates(const QStringList &items);
-
-Q_SIGNALS:
-    void changed();
-
-protected:
-    QListWidget *m_list;
+    bool event(QEvent *e) override;
 
 private:
-    QPushButton *m_btnAdd;
-    QPushButton *m_btnEdit;
-    QPushButton *m_btnRemove;
-    QPushButton *m_btnMoveUp;
-    QPushButton *m_btnMoveDown;
+    void warnRestartNeeded();
 
-protected Q_SLOTS:
-    void slotAdd();
-    void slotEdit();
-    void updateButtons();
-    void slotRemove();
-    void slotMoveUp();
-    void slotMoveDown();
+    QTreeWidget *m_tree;
+    bool m_certificatesAsked = false;
+    bool m_warnedAboutRestart = false;
 };
 
 #endif

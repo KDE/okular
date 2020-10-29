@@ -57,6 +57,8 @@ class MovieAction;
 class Page;
 class PixmapRequest;
 class RenditionAction;
+class NewSignatureData;
+struct NewSignatureDataPrivate;
 class SourceReference;
 class View;
 class VisiblePageRect;
@@ -991,18 +993,18 @@ public:
     QString openError() const;
 
     /**
-     * Digitally sign document, as the passed annotation's place
+     * Digitally sign document
      *
-     * @since 1.9
+     * @since 21.04
      */
-    void sign(const Okular::Annotation *pWhichAnnotation);
+    void sign(const NewSignatureData &data);
 
     /**
      * Returns the generator's certificate store (if any)
      *
-     * @since 1.9
+     * @since 21.04
      */
-    CertificateStore *getCertStore();
+    CertificateStore *getCertStore() const;
 
 public Q_SLOTS:
     /**
@@ -1478,6 +1480,38 @@ public:
      * The rectangle in normalized coordinates.
      */
     NormalizedRect rect;
+};
+
+/**
+ * @short Data needed to create a new signature
+ *
+ * @since 21.04
+ */
+class OKULARCORE_EXPORT NewSignatureData
+{
+public:
+    NewSignatureData();
+    ~NewSignatureData();
+    NewSignatureData(const NewSignatureData &) = delete;
+    NewSignatureData &operator=(const NewSignatureData &) = delete;
+
+    QString certNickname() const;
+    void setCertNickname(const QString &certNickname);
+
+    QString certSubjectCommonName() const;
+    void setCertSubjectCommonName(const QString &certSubjectCommonName);
+
+    QString password() const;
+    void setPassword(const QString &password);
+
+    int page() const;
+    void setPage(int page);
+
+    NormalizedRect boundingRectangle() const;
+    void setBoundingRectangle(const NormalizedRect &rect);
+
+private:
+    NewSignatureDataPrivate *const d;
 };
 
 }

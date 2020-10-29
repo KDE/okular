@@ -4,10 +4,15 @@
       xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
       http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
     <kcfgfile name="okular-generator-popplercertsrc"/>
+    <signal name="useDefaultDBChanged" />
+    <signal name="dBCertificatePathChanged" />
     <group name="Signatures" >
-      <entry key="Certificates" type="StringList">
+      <entry key="UseDefaultDB" type="Bool">
+          <default>true</default>
+          <emit signal="useDefaultDBChanged" />
       </entry>
-      <entry key="CertificatePath" type="String">
+      <entry key="DBCertificatePath" type="String">
+          <emit signal="dBCertificatePathChanged" />
       </entry>
     </group>
 </kcfg>

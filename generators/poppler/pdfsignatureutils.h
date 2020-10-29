@@ -74,7 +74,6 @@ public:
     ~PopplerCertificateStore();
 
     QList<Okular::CertificateInfo *> getSigningCertificates() const override;
-    // QList<PopplerCertificateInfo*> getSigningCertificates() const override;
 };
 
 #endif

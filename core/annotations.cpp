@@ -2895,19 +2895,11 @@ Action *ScreenAnnotation::action() const
 class Okular::WidgetAnnotationPrivate : public Okular::AnnotationPrivate
 {
 public:
-    WidgetAnnotationPrivate()
-        : AnnotationPrivate()
-    {
-    }
-
     ~WidgetAnnotationPrivate() override;
     void setAnnotationProperties(const QDomNode &node) override;
     AnnotationPrivate *getNewAnnotationPrivate() override;
 
     QMap<Okular::Annotation::AdditionalActionType, Okular::Action *> m_additionalActions;
-
-    QString m_certNickname;
-    QString m_password;
 };
 
 WidgetAnnotationPrivate::~WidgetAnnotationPrivate()
@@ -2982,30 +2974,6 @@ Action *WidgetAnnotation::additionalAction(AdditionalActionType type) const
         return nullptr;
     else
         return d->m_additionalActions.value(type);
-}
-
-void WidgetAnnotation::setCertificateNick(const QString &certNickname)
-{
-    Q_D(WidgetAnnotation);
-    d->m_certNickname = certNickname;
-}
-
-QString WidgetAnnotation::certificateNick() const
-{
-    Q_D(const WidgetAnnotation);
-    return d->m_certNickname;
-}
-
-void WidgetAnnotation::setPassword(const QString &password)
-{
-    Q_D(WidgetAnnotation);
-    d->m_password = password;
-}
-
-QString WidgetAnnotation::password() const
-{
-    Q_D(const WidgetAnnotation);
-    return d->m_password;
 }
 
 /** RichMediaAnnotation [Annotation] */

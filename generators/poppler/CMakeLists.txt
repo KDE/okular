@@ -54,7 +54,7 @@ ki18n_wrap_ui(okularGenerator_poppler_PART_SRCS
 )
 
 kconfig_add_kcfg_files(okularGenerator_poppler_PART_SRCS conf/pdfsettings.kcfgc )
-kconfig_add_kcfg_files(okularGenerator_poppler_PART_SRCS conf/certsettings.kcfgc )
+kconfig_add_kcfg_files(okularGenerator_poppler_PART_SRCS GENERATE_MOC conf/certsettings.kcfgc )
 
 okular_add_generator(okularGenerator_poppler ${okularGenerator_poppler_PART_SRCS})
 

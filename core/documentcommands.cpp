@@ -56,6 +56,8 @@ Okular::NormalizedRect buildBoundingRectangleForButtons(const QList<Okular::Form
     return boundingRect;
 }
 
+OkularUndoCommand::~OkularUndoCommand() = default;
+
 AddAnnotationCommand::AddAnnotationCommand(Okular::DocumentPrivate *docPriv, Okular::Annotation *annotation, int pageNumber)
     : m_docPriv(docPriv)
     , m_annotation(annotation)

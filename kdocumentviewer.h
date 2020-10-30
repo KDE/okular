@@ -27,9 +27,7 @@ public:
     KDocumentViewer()
     {
     }
-    virtual ~KDocumentViewer()
-    {
-    }
+    virtual ~KDocumentViewer();
 
     KDocumentViewer(const KDocumentViewer &) = delete;
     KDocumentViewer &operator=(const KDocumentViewer &) = delete;

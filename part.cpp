@@ -119,6 +119,8 @@
 #include "xmlgui_helper.h"
 #include <memory>
 
+KDocumentViewer::~KDocumentViewer() = default;
+
 #ifdef OKULAR_KEEP_FILE_OPEN
 class FileKeeper
 {

@@ -46,9 +46,7 @@ public:
     /**
      * Destroys the gui interface.
      */
-    ~GuiInterface() override
-    {
-    }
+    ~GuiInterface() override;
 
     GuiInterface(const GuiInterface &) = delete;
     GuiInterface &operator=(const GuiInterface &) = delete;

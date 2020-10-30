@@ -31,6 +31,7 @@ class Page;
 class OkularUndoCommand : public QUndoCommand
 {
 public:
+    ~OkularUndoCommand() override;
     virtual bool refreshInternalPageReferences(const QVector<Okular::Page *> &newPagesVector) = 0;
 };
 

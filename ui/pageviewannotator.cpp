@@ -73,6 +73,8 @@ public:
             pixmap = GuiUtils::loadStamp(hoverIconName, size);
     }
 
+    ~PickPointEngine() override;
+
     QRect event(EventType type, Button button, Modifiers modifiers, double nX, double nY, double xScale, double yScale, const Okular::Page *page) override
     {
         xscale = xScale;
@@ -309,6 +311,8 @@ private:
     bool m_block;
 };
 
+PickPointEngine::~PickPointEngine() = default;
+
 /** @short PolyLineEngine */
 class PolyLineEngine : public AnnotatorEngine
 {
@@ -329,6 +333,8 @@ public:
         if (!ok)
             numofpoints = -1;
     }
+
+    ~PolyLineEngine() override;
 
     static Okular::NormalizedPoint constrainAngle(const Okular::NormalizedPoint &p1, double x, double y, double xScale, double yScale, double angleIncrement)
     {
@@ -484,6 +490,8 @@ private:
     int numofpoints;
 };
 
+PolyLineEngine::~PolyLineEngine() = default;
+
 /** @short TextSelectorEngine */
 class TextSelectorEngine : public AnnotatorEngine
 {
@@ -494,6 +502,8 @@ public:
     {
         // parse engine specific attributes
     }
+
+    ~TextSelectorEngine() override;
 
     QRect event(EventType type, Button button, Modifiers /*modifiers*/, double nX, double nY, double xScale, double yScale, const Okular::Page * /*page*/) override
     {
@@ -619,6 +629,8 @@ private:
     Okular::NormalizedPoint lastPoint;
     QRect rect;
 };
+
+TextSelectorEngine::~TextSelectorEngine() = default;
 
 /** @short AnnotationTools*/
 class AnnotationTools

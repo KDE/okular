@@ -72,6 +72,8 @@ Q_DECLARE_METATYPE(const Poppler::LinkOCGState *)
 static const int defaultPageWidth = 595;
 static const int defaultPageHeight = 842;
 
+PDFEmbeddedFile::~PDFEmbeddedFile() = default;
+
 class PDFOptionsPage : public Okular::PrintOptionsWidget
 {
     Q_OBJECT

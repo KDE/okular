@@ -163,6 +163,10 @@ if(BUILD_COVERAGE)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lgcov")
 endif()
 
+if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wweak-vtables")
+endif()
+
 add_subdirectory( ui )
 if(BUILD_DESKTOP)
     add_subdirectory( shell )
@@ -224,6 +228,7 @@ set(okularcore_SRCS
    core/script/event.cpp
    core/synctex/synctex_parser.c
    core/synctex/synctex_parser_utils.c
+   interfaces/interfaces.cpp
 )
 qt5_add_resources(okularcore_SRCS
    core/script/builtin.qrc

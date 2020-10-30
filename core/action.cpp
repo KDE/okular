@@ -27,10 +27,7 @@ public:
     {
     }
 
-    virtual ~ActionPrivate()
-    {
-        qDeleteAll(m_nextActions);
-    }
+    virtual ~ActionPrivate();
 
     ActionPrivate(const ActionPrivate &) = delete;
     ActionPrivate &operator=(const ActionPrivate &) = delete;
@@ -38,6 +35,11 @@ public:
     QVariant m_nativeId;
     QVector<Action *> m_nextActions;
 };
+
+Okular::ActionPrivate::~ActionPrivate()
+{
+    qDeleteAll(m_nextActions);
+}
 
 Action::Action(ActionPrivate &dd)
     : d_ptr(&dd)
@@ -98,10 +100,14 @@ public:
     {
     }
 
+    ~GotoActionPrivate() override;
+
     QString m_extFileName;
     DocumentViewport m_vp;
     QString m_dest;
 };
+
+Okular::GotoActionPrivate::~GotoActionPrivate() = default;
 
 GotoAction::GotoAction(const QString &fileName, const DocumentViewport &viewport)
     : Action(*new GotoActionPrivate(fileName, viewport))
@@ -164,9 +170,13 @@ public:
     {
     }
 
+    ~ExecuteActionPrivate() override;
+
     QString m_fileName;
     QString m_parameters;
 };
+
+ExecuteActionPrivate::~ExecuteActionPrivate() = default;
 
 ExecuteAction::ExecuteAction(const QString &file, const QString &parameters)
     : Action(*new ExecuteActionPrivate(file, parameters))
@@ -211,8 +221,12 @@ public:
     {
     }
 
+    ~BrowseActionPrivate() override;
+
     QUrl m_url;
 };
+
+BrowseActionPrivate::~BrowseActionPrivate() = default;
 
 BrowseAction::BrowseAction(const QUrl &url)
     : Action(*new BrowseActionPrivate(url))
@@ -256,8 +270,12 @@ public:
     {
     }
 
+    ~DocumentActionPrivate() override;
+
     DocumentAction::DocumentActionType m_type;
 };
+
+DocumentActionPrivate::~DocumentActionPrivate() = default;
 
 DocumentAction::DocumentAction(enum DocumentActionType documentActionType)
     : Action(*new DocumentActionPrivate(documentActionType))
@@ -327,10 +345,7 @@ public:
     {
     }
 
-    ~SoundActionPrivate() override
-    {
-        delete m_sound;
-    }
+    ~SoundActionPrivate() override;
 
     double m_volume;
     bool m_sync : 1;
@@ -338,6 +353,11 @@ public:
     bool m_mix : 1;
     Okular::Sound *m_sound;
 };
+
+SoundActionPrivate::~SoundActionPrivate()
+{
+    delete m_sound;
+}
 
 SoundAction::SoundAction(double volume, bool sync, bool repeat, bool mix, Okular::Sound *sound)
     : Action(*new SoundActionPrivate(volume, sync, repeat, mix, sound))
@@ -400,9 +420,13 @@ public:
     {
     }
 
+    ~ScriptActionPrivate() override;
+
     ScriptType m_scriptType;
     QString m_script;
 };
+
+ScriptActionPrivate::~ScriptActionPrivate() = default;
 
 ScriptAction::ScriptAction(enum ScriptType type, const QString &script)
     : Action(*new ScriptActionPrivate(type, script))
@@ -453,9 +477,13 @@ public:
     {
     }
 
+    ~MovieActionPrivate() override;
+
     MovieAction::OperationType m_operation;
     MovieAnnotation *m_annotation;
 };
+
+MovieActionPrivate::~MovieActionPrivate() = default;
 
 MovieAction::MovieAction(OperationType operation)
     : Action(*new MovieActionPrivate(operation))
@@ -509,12 +537,16 @@ public:
     {
     }
 
+    ~RenditionActionPrivate() override;
+
     RenditionAction::OperationType m_operation;
     Okular::Movie *m_movie;
     ScriptType m_scriptType;
     QString m_script;
     ScreenAnnotation *m_annotation;
 };
+
+RenditionActionPrivate::~RenditionActionPrivate() = default;
 
 RenditionAction::RenditionAction(OperationType operation, Okular::Movie *movie, enum ScriptType scriptType, const QString &script)
     : Action(*new RenditionActionPrivate(operation, movie, scriptType, script))

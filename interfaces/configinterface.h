@@ -45,9 +45,7 @@ public:
     /**
      * Destroys the config interface.
      */
-    virtual ~ConfigInterface()
-    {
-    }
+    virtual ~ConfigInterface();
 
     ConfigInterface(const ConfigInterface &) = delete;
     ConfigInterface &operator=(const ConfigInterface &) = delete;

@@ -126,6 +126,8 @@ public:
     {
     }
 
+    ~FormFieldButtonPrivate() override;
+
     Q_DECLARE_PUBLIC(FormFieldButton)
 
     void setValue(const QString &v) override
@@ -140,6 +142,8 @@ public:
         return QVariant::fromValue<bool>(q->state()).toString();
     }
 };
+
+FormFieldButtonPrivate::~FormFieldButtonPrivate() = default;
 
 FormFieldButton::FormFieldButton()
     : FormField(*new FormFieldButtonPrivate())
@@ -166,6 +170,8 @@ public:
     {
     }
 
+    ~FormFieldTextPrivate() override;
+
     Q_DECLARE_PUBLIC(FormFieldText)
 
     void setValue(const QString &v) override
@@ -180,6 +186,8 @@ public:
         return q->text();
     }
 };
+
+FormFieldTextPrivate::~FormFieldTextPrivate() = default;
 
 FormFieldText::FormFieldText()
     : FormField(*new FormFieldTextPrivate())
@@ -227,6 +235,8 @@ public:
     {
     }
 
+    ~FormFieldChoicePrivate() override;
+
     Q_DECLARE_PUBLIC(FormFieldChoice)
 
     void setValue(const QString &v) override
@@ -258,6 +268,8 @@ public:
 
     QMap<QString, QString> exportValues;
 };
+
+FormFieldChoicePrivate::~FormFieldChoicePrivate() = default;
 
 FormFieldChoice::FormFieldChoice()
     : FormField(*new FormFieldChoicePrivate())
@@ -321,6 +333,8 @@ public:
     {
     }
 
+    ~FormFieldSignaturePrivate() override;
+
     Q_DECLARE_PUBLIC(FormFieldSignature)
 
     void setValue(const QString &v) override
@@ -333,6 +347,8 @@ public:
         return QString();
     }
 };
+
+FormFieldSignaturePrivate::~FormFieldSignaturePrivate() = default;
 
 FormFieldSignature::FormFieldSignature()
     : FormField(*new FormFieldSignaturePrivate())

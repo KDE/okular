@@ -46,9 +46,7 @@ public:
     /**
      * Destroys the printer interface.
      */
-    virtual ~PrintInterface()
-    {
-    }
+    virtual ~PrintInterface();
 
     PrintInterface(const PrintInterface &) = delete;
     PrintInterface &operator=(const PrintInterface &) = delete;

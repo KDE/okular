@@ -34,9 +34,7 @@ public:
     ViewerInterface()
     {
     }
-    virtual ~ViewerInterface()
-    {
-    }
+    virtual ~ViewerInterface();
 
     ViewerInterface(const ViewerInterface &) = delete;
     ViewerInterface &operator=(const ViewerInterface &) = delete;

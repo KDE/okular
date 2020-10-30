@@ -46,7 +46,6 @@ public:
     explicit AnnotationActionHandlerPrivate(AnnotationActionHandler *qq)
         : q(qq)
         , annotator(nullptr)
-        , quickTools(new QList<QAction *>())
         , agTools(nullptr)
         , agLastAction(nullptr)
         , aQuickTools(nullptr)
@@ -109,7 +108,6 @@ public:
 
     PageViewAnnotator *annotator;
 
-    QList<QAction *> *quickTools;
     QList<QAction *> textTools;
     QList<QAction *> textQuickTools;
     QActionGroup *agTools;
@@ -348,23 +346,28 @@ void AnnotationActionHandlerPrivate::populateQuickAnnotations()
     }
 
     const QList<int> numberKeys = {Qt::Key_1, Qt::Key_2, Qt::Key_3, Qt::Key_4, Qt::Key_5, Qt::Key_6, Qt::Key_7, Qt::Key_8, Qt::Key_9, Qt::Key_0};
+    const bool isFirstTimePopulated = aQuickTools->menu()->actions().count() == 0;
 
     // to be safe and avoid undefined states of the currently selected quick annotation
     if (isQuickToolAction(agTools->checkedAction())) {
         q->deselectAllAnnotationActions();
     }
 
-    const bool isFirstTimePopulated = quickTools->count() == 0;
-    for (auto action : *quickTools) {
-        action->setShortcut(QKeySequence());
+    KActionCollection *ac = qobject_cast<PageView *>(q->parent()->parent())->actionCollection();
+    QAction *aConfigAnnotation = ac->action(QStringLiteral("options_configure_annotations"));
+    const QList<QAction *> quickToolActions = aQuickTools->menu()->actions();
+    for (QAction *action : quickToolActions) {
         aQuickTools->removeAction(action);
+        if (action != aConfigAnnotation) {
+            delete action;
+        }
     }
-    quickTools->clear();
     textQuickTools.clear();
 
     int favToolId = 1;
     QList<int>::const_iterator shortcutNumber = numberKeys.begin();
     QDomElement favToolElement = annotator->quickTool(favToolId);
+    QList<QAction *> quickTools;
     while (!favToolElement.isNull()) {
         QString itemText = favToolElement.attribute(QStringLiteral("name"));
         if (itemText.isEmpty()) {
@@ -374,7 +377,7 @@ void AnnotationActionHandlerPrivate::populateQuickAnnotations()
         QAction *annFav = new KToggleAction(toolIcon, itemText, q);
         aQuickTools->addAction(annFav);
         agTools->addAction(annFav);
-        quickTools->append(annFav);
+        quickTools.append(annFav);
         if (shortcutNumber != numberKeys.end())
             annFav->setShortcut(QKeySequence(*(shortcutNumber++)));
         QObject::connect(annFav, &KToggleAction::toggled, q, [this, favToolId](bool checked) {
@@ -387,35 +390,31 @@ void AnnotationActionHandlerPrivate::populateQuickAnnotations()
             textQuickTools.append(annFav);
             annFav->setEnabled(textToolsEnabled);
         }
-
         favToolElement = annotator->quickTool(++favToolId);
     }
+    QAction *separator = new QAction();
+    separator->setSeparator(true);
+    aQuickTools->addAction(separator);
+    if (aConfigAnnotation) {
+        aQuickTools->addAction(aConfigAnnotation);
+    }
 
-    if (quickTools->isEmpty()) {
+    // set the default action
+    if (quickTools.isEmpty()) {
         aQuickTools->setDefaultAction(aQuickTools);
         Okular::Settings::setQuickAnnotationDefaultAction(0);
         Okular::Settings::self()->save();
     } else {
         int defaultAction = Okular::Settings::quickAnnotationDefaultAction();
-        if (isFirstTimePopulated && defaultAction < quickTools->count()) {
+        if (isFirstTimePopulated && defaultAction < quickTools.count()) {
             // we can reach here also if no quick tools were defined before, in that case defaultAction is correctly equal to zero
-            aQuickTools->setDefaultAction(quickTools->at(defaultAction));
+            aQuickTools->setDefaultAction(quickTools.at(defaultAction));
         } else {
             // if the quick tools have been modified we cannot restore the previous default action
-            aQuickTools->setDefaultAction(quickTools->at(0));
+            aQuickTools->setDefaultAction(quickTools.at(0));
             Okular::Settings::setQuickAnnotationDefaultAction(0);
             Okular::Settings::self()->save();
         }
-    }
-
-    QAction *separator = new QAction();
-    separator->setSeparator(true);
-    aQuickTools->addAction(separator);
-    // add action to open "Configure Annotation" settings dialog
-    KActionCollection *ac = qobject_cast<PageView *>(q->parent()->parent())->actionCollection();
-    QAction *aConfigAnnotation = ac->action(QStringLiteral("options_configure_annotations"));
-    if (aConfigAnnotation) {
-        aQuickTools->addAction(aConfigAnnotation);
     }
 }
 
@@ -525,7 +524,7 @@ void AnnotationActionHandlerPrivate::slotToolBarVisibilityChanged(bool checked)
 
 bool AnnotationActionHandlerPrivate::isQuickToolAction(QAction *aTool)
 {
-    return quickTools->contains(aTool);
+    return aQuickTools->menu()->actions().contains(aTool) && aTool->isCheckable();
 }
 
 bool AnnotationActionHandlerPrivate::isQuickToolStamp(int toolId)

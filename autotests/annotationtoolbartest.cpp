@@ -11,17 +11,19 @@
 
 #include <QTest>
 
-#include <KActionCollection>
+#include <QMenu>
 #include <QTabBar>
 #include <QTabWidget>
 #include <QToolBar>
 #include <QWidget>
 
+#include <KActionCollection>
 #include <KSelectAction>
 
 #include "../core/page.h"
 #include "../part/pageview.h"
 #include "../part/part.h"
+#include "../part/toggleactionmenu.h"
 #include "../settings.h"
 #include "../shell/okular_main.h"
 #include "../shell/shell.h"
@@ -137,7 +139,6 @@ void AnnotationToolBarTest::testAnnotationToolBar()
     Shell *s = findShell();
     QVERIFY(s);
     QVERIFY(QTest::qWaitForWindowExposed(s));
-
     QFETCH(int, tabIndex);
     s->m_tabWidget->tabBar()->setCurrentIndex(tabIndex);
     Okular::Part *part = dynamic_cast<Okular::Part *>(s->m_tabs[tabIndex].part);
@@ -147,7 +148,7 @@ void AnnotationToolBarTest::testAnnotationToolBar()
     QVERIFY(annToolBar);
 
     // Check config action default enabled states
-    KSelectAction *aQuickTools = qobject_cast<KSelectAction *>(part->actionCollection()->action(QStringLiteral("annotation_favorites")));
+    ToggleActionMenu *aQuickTools = dynamic_cast<ToggleActionMenu *>(part->actionCollection()->action(QStringLiteral("annotation_favorites")));
     QAction *aAddToQuickTools = part->actionCollection()->action(QStringLiteral("annotation_bookmark"));
     QAction *aAdvancedSettings = part->actionCollection()->action(QStringLiteral("annotation_settings_advanced"));
     QAction *aContinuousMode = part->actionCollection()->action(QStringLiteral("annotation_settings_pin"));
@@ -158,7 +159,7 @@ void AnnotationToolBarTest::testAnnotationToolBar()
 
     // Ensure that the 'Quick Annotations' action is correctly populated
     // (at least the 'Configure Annotations...' action must be present)
-    QVERIFY(!aQuickTools->actions().isEmpty());
+    QVERIFY(!aQuickTools->menu()->actions().isEmpty());
 
     // Test annotation toolbar visibility triggers
     QAction *toggleAnnotationToolBar = part->actionCollection()->action(QStringLiteral("mouse_toggle_annotate"));
@@ -184,7 +185,7 @@ void AnnotationToolBarTest::testAnnotationToolBar()
     toggleAnnotationToolBar->setChecked(false);
     QTRY_VERIFY(!annToolBar->isVisible());
     QTest::keyClick(part->widget(), Qt::Key_3);
-    QTRY_VERIFY2(annToolBar->isVisible(), "ToolBar not shown when triggering quick annotation using shortcut.");
+    QTRY_VERIFY2(!annToolBar->isVisible(), "ToolBar shown when triggering quick annotation using shortcut.");
 
     // Click an annotation action to enable it
     QAction *aPopupNote = part->actionCollection()->action(QStringLiteral("annotation_popup_note"));
@@ -229,18 +230,14 @@ void AnnotationToolBarTest::testAnnotationToolBar()
     // Test adding a tool to the quick tool list using the bookmark action
     QScopedPointer<TestingUtils::CloseDialogHelper> closeDialogHelper;
     closeDialogHelper.reset(new TestingUtils::CloseDialogHelper(QDialogButtonBox::Ok));
-    QAction *aEllipse = part->actionCollection()->action(QStringLiteral("annotation_ellipse"));
-    aEllipse->trigger();
-    QVERIFY(aEllipse->isChecked());
-    int quickActionCount = aQuickTools->actions().size();
-    aAddToQuickTools->trigger();
-    QCOMPARE(aQuickTools->actions().size(), quickActionCount + 1);
-    // Test that triggering a Quick Annotation action checks the corresponding built-in annotation action
-    aQuickTools->actions().at(5)->trigger();
+    aPopupNote->trigger();
     QVERIFY(aPopupNote->isChecked());
-    // Test again for tool just added to the quick tools using the bookmark button
-    aQuickTools->actions().at(6)->trigger();
-    QVERIFY(aEllipse->isChecked());
+    int quickActionCount = aQuickTools->menu()->actions().size();
+    aAddToQuickTools->trigger();
+    QTRY_COMPARE(aQuickTools->menu()->actions().size(), quickActionCount + 1);
+    // Trigger the quick tool that was just added
+    aQuickTools->menu()->actions().at(6)->trigger();
+    QCOMPARE(simulateAddPopupAnnotation(part, mouseX, mouseY), true);
 }
 
 void AnnotationToolBarTest::testAnnotationToolBar_data()

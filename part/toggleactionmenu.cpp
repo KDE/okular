@@ -114,3 +114,5 @@ void ToggleActionMenu::slotMenuChanged()
     menu()->installEventFilter(this);
     // Not removing old event filter, because we would need to remember the old menu.
 }
+
+#include "moc_toggleactionmenu.cpp"

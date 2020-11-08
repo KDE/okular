@@ -4041,6 +4041,21 @@ void PageView::center(int cx, int cy, bool smoothMove)
 
 void PageView::scrollTo(int x, int y, bool smoothMove)
 {
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
+    // Workaround for QTBUG-88288, (KDE bug 425188): To avoid a crash in QScroller,
+    // we need to make sure the target widget intersects a physical screen.
+    // QScroller queries QDesktopWidget::screenNumber().
+
+    // If we are not on a physical screen, we try to make our widget big enough.
+    // The geometry will be restored to a sensible value once the Part is shown.
+
+    // It should be enough to add this workaround ony in PageView::scrollTo(),
+    // because we don’t expect other QScroller::scrollTo() calls before PageView is shown.
+    if (QApplication::desktop()->screenNumber(this) < 0) {
+        setGeometry(QRect(-1000, -1000, 5000, 5000).united(QApplication::desktop()->availableGeometry()));
+    }
+#endif
+
     bool prevState = d->blockPixmapsRequest;
 
     int newValue = -1;

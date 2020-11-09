@@ -119,8 +119,6 @@
 #include "xmlgui_helper.h"
 #include <memory>
 
-KDocumentViewer::~KDocumentViewer() = default;
-
 #ifdef OKULAR_KEEP_FILE_OPEN
 class FileKeeper
 {
@@ -977,18 +975,6 @@ Part::~Part()
 #ifdef OKULAR_KEEP_FILE_OPEN
     delete m_keeper;
 #endif
-}
-
-bool Part::openDocument(const QUrl &url, uint page)
-{
-    Okular::DocumentViewport vp(page - 1);
-    vp.rePos.enabled = true;
-    vp.rePos.normalizedX = 0;
-    vp.rePos.normalizedY = 0;
-    vp.rePos.pos = Okular::DocumentViewport::TopLeft;
-    if (vp.isValid())
-        m_document->setNextDocumentViewport(vp);
-    return openUrl(url);
 }
 
 void Part::startPresentation()

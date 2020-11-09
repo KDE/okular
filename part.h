@@ -35,7 +35,6 @@
 #include "core/document.h"
 #include "core/observer.h"
 #include "interfaces/viewerinterface.h"
-#include "kdocumentviewer.h"
 
 #include "okularpart_export.h"
 
@@ -109,11 +108,10 @@ enum EmbedMode {
  * @author Wilco Greven <greven@kde.org>
  * @version 0.2
  */
-class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::DocumentObserver, public KDocumentViewer, public Okular::ViewerInterface
+class OKULARPART_EXPORT Part : public KParts::ReadWritePart, public Okular::DocumentObserver, public Okular::ViewerInterface
 {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.kde.okular")
-    Q_INTERFACES(KDocumentViewer)
     Q_INTERFACES(Okular::ViewerInterface)
 
     friend class PartTest;
@@ -136,9 +134,8 @@ public:
     void notifyViewportChanged(bool smoothMove) override;
     void notifyPageChanged(int page, int flags) override;
 
-    bool openDocument(const QUrl &url, uint page) override;
-    void startPresentation() override;
-    QStringList supportedMimeTypes() const override;
+    Q_INVOKABLE void startPresentation();
+    Q_INVOKABLE QStringList supportedMimeTypes() const;
 
     QUrl realUrl() const;
 
@@ -152,7 +149,7 @@ public:
     Q_INVOKABLE bool activateTabIfAlreadyOpenFile() const;
 
 public Q_SLOTS: // dbus
-    Q_SCRIPTABLE Q_NOREPLY void goToPage(uint page) override;
+    Q_SCRIPTABLE Q_NOREPLY void goToPage(uint page);
     Q_SCRIPTABLE Q_NOREPLY void openDocument(const QString &doc);
     Q_SCRIPTABLE uint pages();
     Q_SCRIPTABLE uint currentPage();

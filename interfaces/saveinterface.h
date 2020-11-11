@@ -55,7 +55,9 @@ public:
     /**
      * Destroys the save interface.
      */
-    virtual ~SaveInterface();
+    virtual ~SaveInterface()
+    {
+    }
 
     SaveInterface(const SaveInterface &) = delete;
     SaveInterface &operator=(const SaveInterface &) = delete;

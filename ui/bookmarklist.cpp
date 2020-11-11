@@ -51,8 +51,6 @@ public:
             setData(0, PageItemDelegate::PageRole, QString::number(m_viewport.pageNumber + 1));
     }
 
-    ~BookmarkItem() override;
-
     BookmarkItem(const BookmarkItem &) = delete;
     BookmarkItem &operator=(const BookmarkItem &) = delete;
 
@@ -95,8 +93,6 @@ private:
     Okular::DocumentViewport m_viewport;
 };
 
-BookmarkItem::~BookmarkItem() = default;
-
 class FileItem : public QTreeWidgetItem
 {
 public:
@@ -108,8 +104,6 @@ public:
         setText(0, fileString);
         setData(0, UrlRole, QVariant::fromValue(url));
     }
-
-    ~FileItem() override;
 
     FileItem(const FileItem &) = delete;
     FileItem &operator=(const FileItem &) = delete;
@@ -123,8 +117,6 @@ public:
         return QTreeWidgetItem::data(column, role);
     }
 };
-
-FileItem::~FileItem() = default;
 
 BookmarkList::BookmarkList(Okular::Document *document, QWidget *parent)
     : QWidget(parent)

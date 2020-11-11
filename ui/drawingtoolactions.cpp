@@ -44,8 +44,6 @@ protected:
         {
         }
 
-        ~ColorActionIconEngine() override;
-
         ColorActionIconEngine(const ColorActionIconEngine &) = delete;
         ColorActionIconEngine &operator=(const ColorActionIconEngine &) = delete;
 
@@ -92,8 +90,6 @@ protected:
         QColor m_color;
     };
 };
-
-ColorAction::ColorActionIconEngine::~ColorActionIconEngine() = default;
 
 DrawingToolActions::DrawingToolActions(KActionCollection *parent)
     : QObject(parent)

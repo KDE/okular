@@ -56,6 +56,7 @@
 
 // local includes
 #include "../interfaces/viewerinterface.h"
+#include "kdocumentviewer.h"
 #include "shellutils.h"
 
 static const char *shouldShowMenuBarComingFromFullScreen = "shouldShowMenuBarComingFromFullScreen";
@@ -423,7 +424,9 @@ void Shell::fileOpen()
     // button is clicked
     const int activeTab = m_tabWidget->currentIndex();
     if (!m_fileformatsscanned) {
-        QMetaObject::invokeMethod(m_tabs[activeTab].part, "supportedMimeTypes", Q_RETURN_ARG(QStringList, m_fileformats));
+        const KDocumentViewer *const doc = qobject_cast<KDocumentViewer *>(m_tabs[activeTab].part);
+        if (doc)
+            m_fileformats = doc->supportedMimeTypes();
 
         if (m_fileformats.isEmpty())
             m_fileformats = fileFormats();
@@ -697,9 +700,10 @@ void Shell::openNewTab(const QUrl &url, const QString &serializedOptions)
 
 void Shell::applyOptionsToPart(QObject *part, const QString &serializedOptions)
 {
+    KDocumentViewer *const doc = qobject_cast<KDocumentViewer *>(part);
     const QString find = ShellUtils::find(serializedOptions);
     if (ShellUtils::startInPresentation(serializedOptions))
-        QMetaObject::invokeMethod(part, "startPresentation");
+        doc->startPresentation();
     if (ShellUtils::showPrintDialog(serializedOptions))
         QMetaObject::invokeMethod(part, "enableStartWithPrint");
     if (ShellUtils::showPrintDialogAndExit(serializedOptions))

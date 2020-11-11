@@ -977,6 +977,18 @@ Part::~Part()
 #endif
 }
 
+bool Part::openDocument(const QUrl &url, uint page)
+{
+    Okular::DocumentViewport vp(page - 1);
+    vp.rePos.enabled = true;
+    vp.rePos.normalizedX = 0;
+    vp.rePos.normalizedY = 0;
+    vp.rePos.pos = Okular::DocumentViewport::TopLeft;
+    if (vp.isValid())
+        m_document->setNextDocumentViewport(vp);
+    return openUrl(url);
+}
+
 void Part::startPresentation()
 {
     m_cliPresentation = true;

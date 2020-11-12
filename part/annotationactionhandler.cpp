@@ -61,7 +61,7 @@ public:
         , aFont(nullptr)
         , aAdvancedSettings(nullptr)
         , aHideToolBar(nullptr)
-        , aShowToolBar(nullptr)
+        , aToolBarVisibility(nullptr)
         , aCustomStamp(nullptr)
         , aCustomWidth(nullptr)
         , aCustomOpacity(nullptr)
@@ -126,7 +126,7 @@ public:
     QAction *aFont;
     QAction *aAdvancedSettings;
     QAction *aHideToolBar;
-    KToggleAction *aShowToolBar;
+    KToggleAction *aToolBarVisibility;
 
     QAction *aCustomStamp;
     QAction *aCustomWidth;
@@ -548,9 +548,9 @@ AnnotationActionHandler::AnnotationActionHandler(PageViewAnnotator *parent, KAct
     d->annotator = parent;
 
     // toolbar visibility actions
-    d->aShowToolBar = new KToggleAction(QIcon::fromTheme(QStringLiteral("draw-freehand")), i18n("&Annotations"), this);
+    d->aToolBarVisibility = new KToggleAction(QIcon::fromTheme(QStringLiteral("draw-freehand")), i18n("&Annotations"), this);
     d->aHideToolBar = new QAction(QIcon::fromTheme(QStringLiteral("dialog-close")), i18nc("@action:intoolbar Hide the toolbar", "Hide"), this);
-    connect(d->aHideToolBar, &QAction::triggered, this, [this]() { d->aShowToolBar->setChecked(false); });
+    connect(d->aHideToolBar, &QAction::triggered, this, [this]() { d->aToolBarVisibility->setChecked(false); });
 
     // Text markup actions
     KToggleAction *aHighlighter = new KToggleAction(QIcon::fromTheme(QStringLiteral("draw-highlight")), i18nc("@action:intoolbar Annotation tool", "Highlighter"), this);
@@ -707,12 +707,12 @@ AnnotationActionHandler::AnnotationActionHandler(PageViewAnnotator *parent, KAct
             d->agLastAction = action;
             // Show the annotation toolbar whenever builtin tool actions are triggered (e.g using shortcuts)
             if (!d->isQuickToolAction(action)) {
-                d->aShowToolBar->setChecked(true);
+                d->aToolBarVisibility->setChecked(true);
             }
         }
     });
 
-    ac->addAction(QStringLiteral("mouse_toggle_annotate"), d->aShowToolBar);
+    ac->addAction(QStringLiteral("mouse_toggle_annotate"), d->aToolBarVisibility);
     ac->addAction(QStringLiteral("hide_annotation_toolbar"), d->aHideToolBar);
     ac->addAction(QStringLiteral("annotation_highlighter"), aHighlighter);
     ac->addAction(QStringLiteral("annotation_underline"), aUnderline);
@@ -740,18 +740,18 @@ AnnotationActionHandler::AnnotationActionHandler(PageViewAnnotator *parent, KAct
     ac->addAction(QStringLiteral("annotation_settings_font"), d->aFont);
     ac->addAction(QStringLiteral("annotation_settings_advanced"), d->aAdvancedSettings);
 
-    ac->setDefaultShortcut(d->aShowToolBar, Qt::Key_F6);
-    ac->setDefaultShortcut(aHighlighter, Qt::ALT | Qt::Key_1);
-    ac->setDefaultShortcut(aUnderline, Qt::ALT | Qt::Key_2);
-    ac->setDefaultShortcut(aSquiggle, Qt::ALT | Qt::Key_3);
-    ac->setDefaultShortcut(aStrikeout, Qt::ALT | Qt::Key_4);
-    ac->setDefaultShortcut(aTypewriter, Qt::ALT | Qt::Key_5);
-    ac->setDefaultShortcut(aInlineNote, Qt::ALT | Qt::Key_6);
-    ac->setDefaultShortcut(aPopupNote, Qt::ALT | Qt::Key_7);
-    ac->setDefaultShortcut(aFreehandLine, Qt::ALT | Qt::Key_8);
-    ac->setDefaultShortcut(aArrow, Qt::ALT | Qt::Key_9);
-    ac->setDefaultShortcut(aRectangle, Qt::ALT | Qt::Key_0);
-    ac->setDefaultShortcut(d->aAddToQuickTools, QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_B));
+    ac->setDefaultShortcut(d->aToolBarVisibility, Qt::Key_F6);
+    ac->setDefaultShortcut(aHighlighter, Qt::ALT + Qt::Key_1);
+    ac->setDefaultShortcut(aUnderline, Qt::ALT + Qt::Key_2);
+    ac->setDefaultShortcut(aSquiggle, Qt::ALT + Qt::Key_3);
+    ac->setDefaultShortcut(aStrikeout, Qt::ALT + Qt::Key_4);
+    ac->setDefaultShortcut(aTypewriter, Qt::ALT + Qt::Key_5);
+    ac->setDefaultShortcut(aInlineNote, Qt::ALT + Qt::Key_6);
+    ac->setDefaultShortcut(aPopupNote, Qt::ALT + Qt::Key_7);
+    ac->setDefaultShortcut(aFreehandLine, Qt::ALT + Qt::Key_8);
+    ac->setDefaultShortcut(aArrow, Qt::ALT + Qt::Key_9);
+    ac->setDefaultShortcut(aRectangle, Qt::ALT + Qt::Key_0);
+    ac->setDefaultShortcut(d->aAddToQuickTools, QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_B));
     d->updateConfigActions();
 }
 
@@ -764,7 +764,7 @@ AnnotationActionHandler::~AnnotationActionHandler()
 void AnnotationActionHandler::setupAnnotationToolBarVisibilityAction()
 {
     // find the main window associated to the toggle toolbar action
-    QList<QWidget *> widgets = d->aShowToolBar->associatedWidgets();
+    QList<QWidget *> widgets = d->aToolBarVisibility->associatedWidgets();
     auto itMainWindow = std::find_if(widgets.begin(), widgets.end(), [](const QWidget *widget) { return qobject_cast<const KParts::MainWindow *>(widget) != nullptr; });
     Q_ASSERT(itMainWindow != widgets.end());
     KParts::MainWindow *mw = qobject_cast<KParts::MainWindow *>(*itMainWindow);
@@ -773,10 +773,10 @@ void AnnotationActionHandler::setupAnnotationToolBarVisibilityAction()
     auto itToolBar = std::find_if(toolbars.begin(), toolbars.end(), [](const KToolBar *toolBar) { return toolBar->objectName() == QStringLiteral("annotationToolBar"); });
     Q_ASSERT(itToolBar != toolbars.end());
     KToolBar *annotationToolBar = mw->toolBar(QStringLiteral("annotationToolBar"));
-    d->aShowToolBar->setChecked(annotationToolBar->isVisible());
-    connect(annotationToolBar, &QToolBar::visibilityChanged, d->aShowToolBar, &QAction::setChecked, Qt::UniqueConnection);
-    connect(d->aShowToolBar, &QAction::toggled, annotationToolBar, &KToolBar::setVisible, Qt::UniqueConnection);
-    connect(d->aShowToolBar, &QAction::toggled, this, [this](bool checked) { d->slotToolBarVisibilityChanged(checked); });
+    d->aToolBarVisibility->setChecked(annotationToolBar->isVisible());
+    connect(annotationToolBar, &QToolBar::visibilityChanged, d->aToolBarVisibility, &QAction::setChecked, Qt::UniqueConnection);
+    connect(d->aToolBarVisibility, &QAction::toggled, annotationToolBar, &KToolBar::setVisible, Qt::UniqueConnection);
+    connect(d->aToolBarVisibility, &QAction::toggled, this, [this](bool checked) { d->slotToolBarVisibilityChanged(checked); });
 }
 
 void AnnotationActionHandler::reparseBuiltinToolsConfig()

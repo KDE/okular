@@ -61,6 +61,7 @@ public:
         , aFont(nullptr)
         , aAdvancedSettings(nullptr)
         , aHideToolBar(nullptr)
+        , aShowToolBar(nullptr)
         , aToolBarVisibility(nullptr)
         , aCustomStamp(nullptr)
         , aCustomWidth(nullptr)
@@ -126,6 +127,7 @@ public:
     QAction *aFont;
     QAction *aAdvancedSettings;
     QAction *aHideToolBar;
+    QAction *aShowToolBar;
     KToggleAction *aToolBarVisibility;
 
     QAction *aCustomStamp;
@@ -395,6 +397,9 @@ void AnnotationActionHandlerPrivate::populateQuickAnnotations()
     QAction *separator = new QAction();
     separator->setSeparator(true);
     aQuickTools->addAction(separator);
+    if (aShowToolBar) {
+        aQuickTools->addAction(aShowToolBar);
+    }
     if (aConfigAnnotation) {
         aQuickTools->addAction(aConfigAnnotation);
     }
@@ -551,6 +556,9 @@ AnnotationActionHandler::AnnotationActionHandler(PageViewAnnotator *parent, KAct
     d->aToolBarVisibility = new KToggleAction(QIcon::fromTheme(QStringLiteral("draw-freehand")), i18n("&Annotations"), this);
     d->aHideToolBar = new QAction(QIcon::fromTheme(QStringLiteral("dialog-close")), i18nc("@action:intoolbar Hide the toolbar", "Hide"), this);
     connect(d->aHideToolBar, &QAction::triggered, this, [this]() { d->aToolBarVisibility->setChecked(false); });
+    d->aShowToolBar = new QAction(QIcon::fromTheme(QStringLiteral("draw-freehand")), i18nc("@action:intoolbar Show the builtin annotation toolbar", "Show more annotation tools"), this);
+    connect(d->aShowToolBar, &QAction::triggered, this, [this]() { d->aToolBarVisibility->setChecked(true); });
+    connect(d->aToolBarVisibility, &QAction::toggled, this, [this](bool checked) { d->aShowToolBar->setEnabled(!checked); });
 
     // Text markup actions
     KToggleAction *aHighlighter = new KToggleAction(QIcon::fromTheme(QStringLiteral("draw-highlight")), i18nc("@action:intoolbar Annotation tool", "Highlighter"), this);
@@ -777,6 +785,8 @@ void AnnotationActionHandler::setupAnnotationToolBarVisibilityAction()
     connect(annotationToolBar, &QToolBar::visibilityChanged, d->aToolBarVisibility, &QAction::setChecked, Qt::UniqueConnection);
     connect(d->aToolBarVisibility, &QAction::toggled, annotationToolBar, &KToolBar::setVisible, Qt::UniqueConnection);
     connect(d->aToolBarVisibility, &QAction::toggled, this, [this](bool checked) { d->slotToolBarVisibilityChanged(checked); });
+
+    d->aShowToolBar->setEnabled(!annotationToolBar->isVisible());
 }
 
 void AnnotationActionHandler::reparseBuiltinToolsConfig()

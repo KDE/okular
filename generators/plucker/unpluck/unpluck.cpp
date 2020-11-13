@@ -280,13 +280,6 @@ GetUncompressedRecord(plkr_Document *doc, plkr_DBHandle handle, int record_index
                 return FALSE;
             }
 
-#if 0
-            _plkr_message
-                ("data record %d (%d):  uid is %d, # paras = %d, size = %d, type = %d",
-                 record_index, record->size, (buf[0] << 8) + buf[1],
-                 (buf[2] << 8) + buf[3], (buf[4] << 8) + buf[5], buf[6]);
-#endif
-
             memcpy(tbuffer, buf, 8);
             output_ptr = tbuffer + 8;
             buffer_remaining = blen - 8;

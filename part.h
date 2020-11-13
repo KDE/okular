@@ -214,7 +214,6 @@ protected Q_SLOTS:
     void slotFindNext();
     void slotFindPrev();
     bool slotSaveFileAs(bool showOkularArchiveAsDefaultFormat = false);
-    void slotGetNewStuff();
     void slotNewConfig();
     void slotShowMenu(const Okular::Page *page, const QPoint point);
     void slotShowTOCMenu(const Okular::DocumentViewport &vp, const QPoint point, const QString &title);

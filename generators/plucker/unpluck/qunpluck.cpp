@@ -904,51 +904,6 @@ bool QUnpluck::TranscribeTextRecord(plkr_Document *doc, int id, Context *context
                         //                         current_alignment = (*ptr) + 1;
                     }
 
-                } else if (fctype == PLKR_TFC_MARGINS) {
-                    /* Not easy to set, in HTML */
-#if 0
-                    output += QString( "<!-- margins:  %1, %2 -->" ).arg(ptr[0], ptr[1]);
-                    if (current_left_margin != ptr[0]
-                        || current_right_margin != ptr[1]) {
-                        if (current_right_margin != 0)
-                            fprintf (fp, "</td><td width=%d>&nbsp;",
-                                     current_right_margin);
-                        fprintf (fp, "</td></tr></table>\n");
-                    }
-                    current_left_margin = ptr[0];
-                    current_right_margin = ptr[1];
-                    if (current_right_margin > 0
-                        || current_left_margin > 0) {
-                        fprintf (fp, "<table border=1><tr>");
-                        if (current_left_margin != 0) {
-                            fprintf (fp, "<td width=%d align=right>",
-                                     current_left_margin);
-                            if ((ptr - run) > 2) {
-                                fwrite (run, 1, ((ptr - 2) - run), fp);
-                                textlen += ((ptr - 2) - run);
-                            }
-                            else {
-                                fprintf (fp, "&nbsp;");
-                            }
-                            fprintf (fp, "</td>");
-                        }
-                        fprintf (fp, "<td>");
-                        if (current_left_margin == 0 && (ptr - run) > 2) {
-                            fwrite (run, 1, ((ptr - 2) - run), fp);
-                            textlen += ((ptr - 2) - run);
-                        }
-                    }
-                    else {
-                        if ((ptr - run) > 2) {
-                            fwrite (run, 1, ((ptr - 2) - run), fp);
-                            textlen += ((ptr - 2) - run);
-                        }
-                    }
-#endif
-
-                    //                     current_left_margin = ptr[0];
-                    //                     current_right_margin = ptr[1];
-
                 } else if (fctype == PLKR_TFC_COLOR) {
                     /* not sure what to do here yet */
                     /*
@@ -981,10 +936,6 @@ bool QUnpluck::TranscribeTextRecord(plkr_Document *doc, int id, Context *context
                         context->cursor->insertText(QChar((ptr[3] << 8) + ptr[4]));
                     /* skip over alternate text */
                     ptr += ptr[0];
-
-                } else {
-                    /* ignore function */
-                    // output += QString( "<!-- function code %1 ignored -->" ).arg(fctype);
                 }
 
                 ptr += fclen;
@@ -1023,20 +974,6 @@ bool QUnpluck::TranscribeTextRecord(plkr_Document *doc, int id, Context *context
             format.setFontStrikeOut(false);
             context->cursor->setCharFormat(format);
         }
-#if 0
-        if (current_alignment > 0) {
-            context->cursor->insertBlock();
-        }
-
-        if (current_right_margin > 0)
-            fprintf (fp, "</td><td width=%d>&nbsp;</td></tr></table>",
-                     current_right_margin);
-        else if (current_left_margin > 0)
-            fprintf (fp, "</td></tr></table>");
-
-        /* end the paragraph */
-        context->cursor->insertBlock();
-#endif
     }
     free(paragraphs);
     return true;

@@ -877,19 +877,6 @@ void PagePrivate::saveLocalContents(QDomNode &parentNode, QDomDocument &document
     QDomElement pageElement = document.createElement(QStringLiteral("page"));
     pageElement.setAttribute(QStringLiteral("number"), m_number);
 
-#if 0
-    // add bookmark info if is bookmarked
-    if ( d->m_bookmarked )
-    {
-        // create the pageElement's 'bookmark' child
-        QDomElement bookmarkElement = document.createElement( "bookmark" );
-        pageElement.appendChild( bookmarkElement );
-
-        // add attributes to the element
-        //bookmarkElement.setAttribute( "name", bookmark name );
-    }
-#endif
-
     // add annotations info if has got any
     if ((what & AnnotationPageItems) && (what & OriginalAnnotationPageItems)) {
         const QDomElement savedDocRoot = restoredLocalAnnotationList.documentElement();

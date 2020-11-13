@@ -50,12 +50,6 @@ void Scripter::execute(ScriptType type, const QString &script)
 {
     qCDebug(OkularCoreDebug) << "executing the script:";
 #ifdef WITH_KJS
-#if 0
-    if ( script.length() < 1000 )
-        qDebug() << script;
-    else
-        qDebug() << script.left( 1000 ) << "[...]";
-#endif
     static QString builtInScript;
     if (builtInScript.isNull()) {
         QFile builtInResource(QStringLiteral(":/script/builtin.js"));

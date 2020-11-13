@@ -345,105 +345,6 @@ RegularAreaRect *TextPage::textArea(TextSelection *sel) const
 
     PagePrivate *pagePrivate = PagePrivate::get(d->m_page);
     const QTransform matrix = pagePrivate ? pagePrivate->rotationMatrix() : QTransform();
-#if 0
-    int it = -1;
-    int itB = -1;
-    int itE = -1;
-
-    // ending cursor is higher than start cursor, we need to find positions in reverse
-    NormalizedRect tmp;
-    NormalizedRect start;
-    NormalizedRect end;
-
-    NormalizedPoint startC = sel->start();
-    double startCx = startC.x;
-    double startCy = startC.y;
-
-    NormalizedPoint endC = sel->end();
-    double endCx = endC.x;
-    double endCy = endC.y;
-
-    if ( sel->direction() == 1 || ( sel->itB() == -1 && sel->direction() == 0 ) )
-    {
-#ifdef DEBUG_TEXTPAGE
-        qCWarning(OkularCoreDebug) << "running first loop";
-#endif
-        const int count = d->m_words.count();
-        for ( it = 0; it < count; it++ )
-        {
-            tmp = *d->m_words[ it ]->area();
-            if ( tmp.contains( startCx, startCy )
-                 || ( tmp.top <= startCy && tmp.bottom >= startCy && tmp.left >= startCx )
-                 || ( tmp.top >= startCy))
-            {
-                /// we have found the (rx,ry)x(tx,ty)
-                itB = it;
-#ifdef DEBUG_TEXTPAGE
-                qCWarning(OkularCoreDebug) << "start is" << itB << "count is" << d->m_words.count();
-#endif
-                break;
-            }
-        }
-        sel->itB( itB );
-    }
-    itB = sel->itB();
-#ifdef DEBUG_TEXTPAGE
-    qCWarning(OkularCoreDebug) << "direction is" << sel->direction();
-    qCWarning(OkularCoreDebug) << "reloaded start is" << itB << "against" << sel->itB();
-#endif
-    if ( sel->direction() == 0 || ( sel->itE() == -1 && sel->direction() == 1 ) )
-    {
-#ifdef DEBUG_TEXTPAGE
-        qCWarning(OkularCoreDebug) << "running second loop";
-#endif
-        for ( it = d->m_words.count() - 1; it >= itB; it-- )
-        {
-            tmp = *d->m_words[ it ]->area();
-            if ( tmp.contains( endCx, endCy )
-                 || ( tmp.top <= endCy && tmp.bottom >= endCy && tmp.right <= endCx )
-                 || ( tmp.bottom <= endCy ) )
-            {
-                /// we have found the (ux,uy)x(vx,vy)
-                itE = it;
-#ifdef DEBUG_TEXTPAGE
-                qCWarning(OkularCoreDebug) << "ending is" << itE << "count is" << d->m_words.count();
-                qCWarning(OkularCoreDebug) << "conditions" << tmp.contains( endCx, endCy ) << " " 
-                  << ( tmp.top <= endCy && tmp.bottom >= endCy && tmp.right <= endCx ) << " " <<
-                  ( tmp.top >= endCy);
-#endif
-                break;
-            }
-        }
-        sel->itE( itE );
-    }
-#ifdef DEBUG_TEXTPAGE
-    qCWarning(OkularCoreDebug) << "reloaded ending is" << itE << "against" << sel->itE();
-#endif
-
-    if ( sel->itB() != -1 && sel->itE() != -1 )
-    {
-        start = *d->m_words[ sel->itB() ]->area();
-        end = *d->m_words[ sel->itE() ]->area();
-
-        NormalizedRect first, second, third;
-        /// finding out if there is more than one baseline between them is a hard and discussable task
-        /// we will create a rectangle (rx,0)x(tx,1) and will check how many times does it intersect the 
-        /// areas, if more than one -> we have a three or over line selection
-        first = start;
-        second.top = start.bottom;
-        first.right = second.right = 1;
-        third = end;
-        third.left = second.left = 0;
-        second.bottom = end.top;
-        int selMax = qMax( sel->itB(), sel->itE() );
-        for ( it = qMin( sel->itB(), sel->itE() ); it <= selMax; ++it )
-        {
-            tmp = *d->m_words[ it ]->area();
-            if ( tmp.intersects( &first ) || tmp.intersects( &second ) || tmp.intersects( &third ) )
-                ret->appendShape( d->m_words.at( it )->transformedArea( matrix ) );
-        }
-    }
-#else
     const double scaleX = d->m_page->width();
     const double scaleY = d->m_page->height();
 
@@ -684,8 +585,6 @@ RegularAreaRect *TextPage::textArea(TextSelection *sel) const
     for (; start <= end; start++) {
         ret->appendShape((*start)->transformedArea(matrix), side);
     }
-
-#endif
 
     return ret;
 }

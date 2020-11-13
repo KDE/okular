@@ -103,12 +103,6 @@ public:
 
     dvifile *dviFile;
 
-#if 0
-  bool isModified() const {return _isModified;};
-
-  void          setPrefs(bool flag_showPS, const QString &editorCommand, bool useFontHints );
-#endif
-
     virtual bool supportsTextSearch() const
     {
         return true;

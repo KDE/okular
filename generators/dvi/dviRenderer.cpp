@@ -83,17 +83,6 @@ dviRenderer::~dviRenderer()
     delete dviFile;
 }
 
-#if 0
-void dviRenderer::setPrefs(bool flag_showPS, const QString &str_editorCommand, bool useFontHints )
-{
-  //QMutexLocker locker(&mutex);
-  _postscript = flag_showPS;
-  editorCommand = str_editorCommand;
-  font_pool.setParameters( useFontHints );
-}
-
-#endif
-
 //------ this function calls the dvi interpreter ----------
 
 void dviRenderer::drawPage(RenderedDocumentPagePixmap *page)
@@ -213,22 +202,6 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap *page)
         currentlyDrawnPage = nullptr;
         return;
     }
-#if 0
-
-  // Tell the user (once) if the DVI file contains source specials
-  // ... we don't want our great feature to go unnoticed.
-  RenderedDviPagePixmap* currentDVIPage = dynamic_cast<RenderedDviPagePixmap*>(currentlyDrawnPage);
-  if (currentDVIPage)
-  {
-    if ((dviFile->sourceSpecialMarker == true) && (currentDVIPage->sourceHyperLinkList.size() > 0)) {
-      dviFile->sourceSpecialMarker = false;
-      // Show the dialog as soon as event processing is finished, and
-      // the program is idle
-      //FIXME
-      //QTimer::singleShot( 0, this, SLOT(showThatSourceInformationIsPresent()) );
-    }
-  }
-#endif
     currentlyDrawnPage = nullptr;
 }
 
@@ -519,26 +492,6 @@ bool dviRenderer::setFile(const QString &fname, const QUrl &base)
     }
     PostScriptOutPutString = nullptr;
 
-#if 0
-  // Generate the list of bookmarks
-  bookmarks.clear();
-  Q3PtrStack<Bookmark> stack;
-  stack.setAutoDelete (false);
-  QVector<PreBookmark>::iterator it;
-  for( it = prebookmarks.begin(); it != prebookmarks.end(); ++it ) {
-    Bookmark *bmk = new Bookmark((*it).title, findAnchor((*it).anchorName));
-    if (stack.isEmpty())
-      bookmarks.append(bmk);
-    else {
-      stack.top()->subordinateBookmarks.append(bmk);
-      stack.remove();
-    }
-    for(int i=0; i<(*it).noOfChildren; i++)
-      stack.push(bmk);
-  }
-  prebookmarks.clear();
-#endif
-
 #ifdef PERFORMANCE_MEASUREMENT
     // qCDebug(OkularDviDebug) << "Time required for prescan phase: " << preScanTimer.restart() << "ms";
 #endif
@@ -660,11 +613,6 @@ void dviRenderer::handleSRCLink(const QString &linkText, const QPoint point, Doc
     Q_UNUSED(linkText);
     Q_UNUSED(point);
     Q_UNUSED(widget);
-#if 0
-  QExplicitlySharedDataPointer<DVISourceEditor> editor(new DVISourceEditor(*this, parentWidget, linkText, point, win));
-  if (editor->started())
-    editor_ = editor;
-#endif
 }
 
 QString dviRenderer::PDFencodingToQString(const QString &_pdfstring)

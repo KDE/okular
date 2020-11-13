@@ -103,17 +103,6 @@ ExecutorKJS::~ExecutorKJS()
 
 void ExecutorKJS::execute(const QString &script, Event *event)
 {
-#if 0
-    QString script2;
-    QString errMsg;
-    int errLine;
-    if ( !KJSInterpreter::normalizeCode( script, &script2, &errLine, &errMsg ) )
-    {
-        qCWarning(OkularCoreDebug) << "Parse error during normalization!";
-        script2 = script;
-    }
-#endif
-
     KJSContext *ctx = d->m_interpreter->globalContext();
 
     d->m_docObject.setProperty(ctx, QStringLiteral("event"), event ? JSEvent::wrapEvent(ctx, event) : KJSUndefined());

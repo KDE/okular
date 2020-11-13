@@ -5605,24 +5605,7 @@ SYNCTEX_INLINE static synctex_status_t _synctex_post_process(synctex_scanner_p s
     printf("!  ref replaced in sheet _synctex_post_process.\n");
     synctex_node_display(scanner->sheet);
 #endif
-#if 0
-    {
-        int i;
-        for (i=0;i<scanner->number_of_lists;++i) {
-            synctex_node_p P = ns.node;
-            do {
-                synctex_node_p N = scanner->lists_of_friends[i];
-                do {
-                    if (P == N) {
-                        printf("Already registered.\n");
-                        synctex_node_display(N);
-                        break;
-                    }
-                } while ((N = _synctex_tree_friend(N)));
-            } while((P = _synctex_tree_friend(P)));
-        }
-    }
-#endif
+
 #if defined SYNCTEX_DEBUG && SYNCTEX_DEBUG > 10000
     {
         int i;
@@ -7888,67 +7871,6 @@ SYNCTEX_INLINE static synctex_nd_lr_s __synctex_eq_get_closest_children_in_hbox_
     return nds;
 }
 
-#if 0
-SYNCTEX_INLINE static synctex_nd_lr_s __synctex_eq_get_closest_children_in_hbox_v3(synctex_point_p hitP, synctex_node_p nodeP) {
-    synctex_nd_s nd = SYNCTEX_ND_0;
-    synctex_nd_lr_s nds = {SYNCTEX_ND_0,SYNCTEX_ND_0};
-    if ((nd.node = _synctex_tree_child(nodeP))) {
-        do {
-            nd = _synctex_point_h_ordered_distance_v2(hitP,nd.node);
-            if (nd.distance > 0) {
-                /*  node is to the right of the hit point.
-                 *  We compare node and the previously recorded one, through the recorded distance.
-                 *  If the nodes have the same tag, prefer the one with the smallest line number,
-                 *  if the nodes also have the same line number, prefer the one with the smallest column. */
-                if (nds.r.distance > nd.distance) {
-                    nds.r = nd;
-                } else if (nds.r.distance == nd.distance && nds.r.node) {
-                    if (_synctex_data_tag(nds.r.node) == _synctex_data_tag(nd.node)
-                        && (_synctex_data_line(nds.r.node) > _synctex_data_line(nd.node)
-                            || (_synctex_data_line(nds.r.node) == _synctex_data_line(nd.node)
-                                && _synctex_data_column(nds.r.node) > _synctex_data_column(nd.node)))) {
-                                nds.r = nd;
-                            }
-                }
-            } else if (nd.distance == 0) {
-                /*  hit point is inside node. */
-                nds.l = nd;
-            } else { /*  here nd.d < 0, the hit point is to the right of node */
-                nd.distance = -nd.distance;
-                if (nds.l.distance > nd.distance) {
-                    nds.l = nd;
-                } else if (nds.l.distance == nd.distance && nds.l.node) {
-                    if (_synctex_data_tag(nds.l.node) == _synctex_data_tag(nd.node)
-                        && (_synctex_data_line(nds.l.node) > _synctex_data_line(nd.node)
-                            || (_synctex_data_line(nds.l.node) == _synctex_data_line(nd.node)
-                                && _synctex_data_column(nds.l.node) > _synctex_data_column(nd.node)))) {
-                                nds.l = nd;
-                            }
-                }
-            }
-        } while((nd.node = __synctex_tree_sibling(nd.node)));
-        if (nds.l.node) {
-            /*  the left node is new, try to narrow the result */
-            if ((nd.node = _synctex_eq_deepest_container_v2(hitP,nds.l.node))) {
-                nds.l.node = nd.node;
-            }
-            if((nd = _synctex_eq_closest_child_v2(hitP,nds.l.node)).node) {
-                nds.l.node = nd.node;
-            }
-        }
-        if (nds.r.node) {
-            /*  the right node is new, try to narrow the result */
-            if ((nd.node = _synctex_eq_deepest_container_v2(hitP,nds.r.node))) {
-                nds.r.node = nd.node;
-            }
-            if((nd = _synctex_eq_closest_child_v2(hitP,nds.r.node)).node) {
-                nds.r.node = nd.node;
-            }
-        }
-    }
-    return nds;
-}
-#endif
 SYNCTEX_INLINE static synctex_nd_lr_s __synctex_eq_get_closest_children_in_vbox_v2(synctex_point_p hitP, synctex_node_p nodeP)
 {
     (void)nodeP; /* unused */

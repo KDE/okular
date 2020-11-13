@@ -2428,25 +2428,6 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
                     }
                 }
             }
-#if 0
-                else
-                {
-                    // a link can move us to another page or even to another document, there's no point in trying to
-                    //  process the click on the image once we have processes the click on the link
-                    rect = pageItem->page()->objectRect( Okular::ObjectRect::Image, nX, nY, pageItem->width(), pageItem->height() );
-                    if ( rect )
-                    {
-                        // handle click over a image
-                    }
-/*		Enrico and me have decided this is not worth the trouble it generates
-                    else
-                    {
-                        // if not on a rect, the click selects the page
-                        // if ( pageItem->pageNumber() != (int)d->document->currentPage() )
-                        d->document->setViewportPage( pageItem->pageNumber(), this );
-                    }*/
-                }
-#endif
         } else if (rightButton && !d->mouseAnnotation->isModified()) {
             if (pageItem && pageItem == pageItemPressPos && ((d->mousePressPos - e->globalPos()).manhattanLength() < QApplication::startDragDistance())) {
                 QMenu *menu = createProcessLinkMenu(pageItem, eventPos);

@@ -617,32 +617,10 @@ void dviRenderer::draw_page()
     qCDebug(OkularDviDebug) << "draw_page";
 #endif
 
-#if 0
-  if (!accessibilityBackground)
-  {
-#endif
     foreGroundPainter->fillRect(foreGroundPainter->viewport(), PS_interface->getBackgroundColor(current_page));
-#if 0
-  }
-  else
-  {
-    // In accessibility mode use the custom background color
-    foreGroundPainter->fillRect( foreGroundPainter->viewport(), accessibilityBackgroundColor );
-  }
-#endif
 
     // Render the PostScript background, if there is one.
     if (_postscript) {
-#if 0
-    // In accessibility mode use the custom background color
-    if (accessibilityBackground)
-    {
-      // Flag permanent is set to false because otherwise we would not be able to restore
-      // the original background color.
-      PS_interface->setBackgroundColor(current_page, accessibilityBackgroundColor, false);
-    }
-    else
-#endif
         PS_interface->restoreBackgroundColor(current_page);
 
         PS_interface->graphics(current_page, resolutionInDPI, dviFile->getMagnification(), foreGroundPainter);

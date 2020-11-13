@@ -77,10 +77,6 @@
 #include <PurposeWidgets/Menu>
 #endif
 
-#if 0
-#include <knewstuff2/engine.h>
-#endif
-
 // local includes
 #include "aboutdata.h"
 #include "conf/preferencesdialog.h"
@@ -904,12 +900,6 @@ void Part::setupActions()
     importPS->setText(i18n("&Import PostScript as PDF..."));
     importPS->setIcon(QIcon::fromTheme(QStringLiteral("document-import")));
     connect(importPS, &QAction::triggered, this, &Part::slotImportPSFile);
-#if 0
-    QAction * ghns = ac->addAction("get_new_stuff");
-    ghns->setText(i18n("&Get Books From Internet..."));
-    ghns->setIcon(QIcon::fromTheme("get-hot-new-stuff"));
-    connect(ghns, SIGNAL(triggered()), this, SLOT(slotGetNewStuff()));
-#endif
 
     KToggleAction *blackscreenAction = new KToggleAction(i18n("Switch Blackscreen Mode"), ac);
     ac->addAction(QStringLiteral("switch_blackscreen_mode"), blackscreenAction);
@@ -2756,17 +2746,6 @@ void Part::checkNativeSaveDataLoss(bool *out_wontSaveForms, bool *out_wontSaveAn
 
     *out_wontSaveForms = wontSaveForms;
     *out_wontSaveAnnotations = wontSaveAnnotations;
-}
-
-void Part::slotGetNewStuff()
-{
-#if 0
-    KNS::Engine engine(widget());
-    engine.init( "okular.knsrc" );
-    // show the modal dialog over pageview and execute it
-    KNS::Entry::List entries = engine.downloadDialogModal( m_pageView );
-    Q_UNUSED( entries )
-#endif
 }
 
 void Part::slotPreferences()

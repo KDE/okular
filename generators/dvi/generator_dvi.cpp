@@ -266,13 +266,6 @@ Okular::TextPage *DviGenerator::extractTextFromPage(dviPageInfo *pageInfo)
 
     for (; it != itEnd; ++it) {
         TextBox curTB = *it;
-
-#if 0
-        qCDebug(OkularDviDebug) << "orientation: " << orientation
-                 << ", curTB.box: " << curTB.box
-                 << ", ( " << pageWidth << "," << pageHeight << " )" 
-               <<endl;
-#endif
         textOfThePage.push_back(new Okular::TextEntity(curTB.text, new Okular::NormalizedRect(curTB.box, pageWidth, pageHeight)));
     }
 

@@ -1906,12 +1906,6 @@ QVariant DocumentPrivate::documentMetaData(const Generator::DocumentMetaDataKey 
         case SettingsCore::EnumTextAntialias::Enabled:
             return true;
             break;
-#if 0
-                case Settings::EnumTextAntialias::UseKDESettings:
-                    // TODO: read the KDE configuration
-                    return true;
-                    break;
-#endif
         case SettingsCore::EnumTextAntialias::Disabled:
             return false;
             break;

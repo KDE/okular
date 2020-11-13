@@ -195,9 +195,6 @@ Okular::TextPage *DjVuGenerator::textPage(Okular::TextRequest *request)
     userMutex()->lock();
     const Okular::Page *page = request->page();
     QList<KDjVu::TextEntity> te;
-#if 0
-    m_djvu->textEntities( page->number(), "char" );
-#endif
     if (te.isEmpty())
         te = m_djvu->textEntities(page->number(), QStringLiteral("word"));
     if (te.isEmpty())

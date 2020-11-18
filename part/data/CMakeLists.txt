@@ -1,6 +1,3 @@
-# an own directory for multi-size icons retrieved by KIconThemeLoader
-add_subdirectory(icons)
-
 # install annotator xml tools description
 install(FILES
    tools.xml

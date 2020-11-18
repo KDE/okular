@@ -8,7 +8,7 @@
  ***************************************************************************/
 
 #include "editdrawingtooldialogtest.h"
-#include "../editdrawingtooldialog.h"
+#include "../part/editdrawingtooldialog.h"
 
 #include <KColorButton>
 #include <KLineEdit>

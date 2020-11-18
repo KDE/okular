@@ -29,9 +29,9 @@
 
 #include "core/document.h"
 #include "core/page.h"
-#include "ui/guiutils.h"
-#include "ui/pageview.h"
-#include "ui/videowidget.h"
+#include "guiutils.h"
+#include "pageview.h"
+#include "videowidget.h"
 
 static const int handleSize = 10;
 static const int handleSizeHalf = handleSize / 2;

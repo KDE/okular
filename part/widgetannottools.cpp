@@ -24,7 +24,7 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 
-#include "ui/pageviewannotator.h"
+#include "pageviewannotator.h"
 
 // Used to store tools' XML description in m_list's items
 static const int ToolXmlRole = Qt::UserRole;

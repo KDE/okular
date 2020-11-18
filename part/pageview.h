@@ -25,7 +25,7 @@
 #include "core/area.h"
 #include "core/observer.h"
 #include "core/view.h"
-#include "ui/pageviewutils.h"
+#include "pageviewutils.h"
 #include <QAbstractScrollArea>
 #include <QList>
 #include <QVector>

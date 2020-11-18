@@ -163,14 +163,14 @@ if(BUILD_COVERAGE)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lgcov")
 endif()
 
-add_subdirectory( ui )
+add_subdirectory( icons ) # an own directory for multi-size icons retrieved by KIconThemeLoader
+add_subdirectory( part )
 if(BUILD_DESKTOP)
     add_subdirectory( shell )
 endif()
 add_subdirectory( generators )
 if(BUILD_TESTING)
    add_subdirectory( autotests )
-   add_subdirectory( conf/autotests )
 endif()
 
 if(KF5DocTools_FOUND)
@@ -230,7 +230,7 @@ qt5_add_resources(okularcore_SRCS
 )
 
 ki18n_wrap_ui(okularcore_SRCS
-   conf/textdocumentsettings.ui
+   part/textdocumentsettings.ui
 )
 
 install( FILES
@@ -351,90 +351,86 @@ install(FILES core/okularGenerator.desktop DESTINATION ${KDE_INSTALL_KSERVICETYP
 
 if(BUILD_DESKTOP)
   # okularpart
-  set(okularpart_conf_SRCS
-    conf/preferencesdialog.cpp
-    conf/dlgaccessibility.cpp
-    conf/dlgdebug.cpp
-    conf/dlgeditor.cpp
-    conf/dlggeneral.cpp
-    conf/dlgannotations.cpp
-    conf/dlgperformance.cpp
-    conf/dlgpresentation.cpp
-    conf/editannottooldialog.cpp
-    conf/editdrawingtooldialog.cpp
-    conf/widgetannottools.cpp
-    conf/widgetconfigurationtoolsbase.cpp
-    conf/widgetdrawingtools.cpp
-  )
-
   set(okularpart_SRCS
-    ${okularpart_conf_SRCS}
-    part.cpp
-    xmlgui_helper.cpp
-    extensions.cpp
-    ui/embeddedfilesdialog.cpp
-    ui/annotationactionhandler.cpp
-    ui/annotwindow.cpp
-    ui/annotationmodel.cpp
-    ui/annotationpopup.cpp
-    ui/annotationpropertiesdialog.cpp
-    ui/annotationproxymodels.cpp
-    ui/annotationtools.cpp
-    ui/annotationwidgets.cpp
-    ui/bookmarklist.cpp
-    ui/certificateviewer.cpp
-    ui/debug_ui.cpp
-    ui/drawingtoolactions.cpp
-    ui/fileprinterpreview.cpp
-    ui/findbar.cpp
-    ui/formwidgets.cpp
-    ui/guiutils.cpp
-    ui/ktreeviewsearchline.cpp
-    ui/latexrenderer.cpp
-    ui/minibar.cpp
-    ui/okmenutitle.cpp
-    ui/pageitemdelegate.cpp
-    ui/pagepainter.cpp
-    ui/pagesizelabel.cpp
-    ui/pageviewannotator.cpp
-    ui/pageviewmouseannotation.cpp
-    ui/pageview.cpp
-    ui/magnifierview.cpp
-    ui/pageviewutils.cpp
-    ui/presentationsearchbar.cpp
-    ui/presentationwidget.cpp
-    ui/propertiesdialog.cpp
-    ui/revisionviewer.cpp
-    ui/searchlineedit.cpp
-    ui/searchwidget.cpp
-    ui/sidebar.cpp
-    ui/side_reviews.cpp
-    ui/snapshottaker.cpp
-    ui/thumbnaillist.cpp
-    ui/toc.cpp
-    ui/tocmodel.cpp
-    ui/toggleactionmenu.cpp
-    ui/videowidget.cpp
-    ui/layers.cpp
-    ui/signatureguiutils.cpp
-    ui/signaturepropertiesdialog.cpp
-    ui/signaturemodel.cpp
-    ui/signaturepanel.cpp
+    part/preferencesdialog.cpp
+    part/dlgaccessibility.cpp
+    part/dlgdebug.cpp
+    part/dlgeditor.cpp
+    part/dlggeneral.cpp
+    part/dlgannotations.cpp
+    part/dlgperformance.cpp
+    part/dlgpresentation.cpp
+    part/editannottooldialog.cpp
+    part/editdrawingtooldialog.cpp
+    part/widgetannottools.cpp
+    part/widgetconfigurationtoolsbase.cpp
+    part/widgetdrawingtools.cpp
+    part/part.cpp
+    part/xmlgui_helper.cpp
+    part/extensions.cpp
+    part/embeddedfilesdialog.cpp
+    part/annotationactionhandler.cpp
+    part/annotwindow.cpp
+    part/annotationmodel.cpp
+    part/annotationpopup.cpp
+    part/annotationpropertiesdialog.cpp
+    part/annotationproxymodels.cpp
+    part/annotationtools.cpp
+    part/annotationwidgets.cpp
+    part/bookmarklist.cpp
+    part/certificateviewer.cpp
+    part/debug_ui.cpp
+    part/drawingtoolactions.cpp
+    part/fileprinterpreview.cpp
+    part/findbar.cpp
+    part/formwidgets.cpp
+    part/guiutils.cpp
+    part/ktreeviewsearchline.cpp
+    part/latexrenderer.cpp
+    part/minibar.cpp
+    part/okmenutitle.cpp
+    part/pageitemdelegate.cpp
+    part/pagepainter.cpp
+    part/pagesizelabel.cpp
+    part/pageviewannotator.cpp
+    part/pageviewmouseannotation.cpp
+    part/pageview.cpp
+    part/magnifierview.cpp
+    part/pageviewutils.cpp
+    part/presentationsearchbar.cpp
+    part/presentationwidget.cpp
+    part/propertiesdialog.cpp
+    part/revisionviewer.cpp
+    part/searchlineedit.cpp
+    part/searchwidget.cpp
+    part/sidebar.cpp
+    part/side_reviews.cpp
+    part/snapshottaker.cpp
+    part/thumbnaillist.cpp
+    part/toc.cpp
+    part/tocmodel.cpp
+    part/toggleactionmenu.cpp
+    part/videowidget.cpp
+    part/layers.cpp
+    part/signatureguiutils.cpp
+    part/signaturepropertiesdialog.cpp
+    part/signaturemodel.cpp
+    part/signaturepanel.cpp
   )
 endif()
 
 if (Qt5TextToSpeech_FOUND)
    set(okularpart_SRCS ${okularpart_SRCS}
-      ui/tts.cpp)
+      part/tts.cpp)
 endif()
 
 ki18n_wrap_ui(okularpart_SRCS
-   conf/dlgaccessibilitybase.ui
-   conf/dlgeditorbase.ui
-   conf/dlggeneralbase.ui
-   conf/dlgannotationsbase.ui
-   conf/dlgperformancebase.ui
-   conf/dlgpresentationbase.ui
+   part/dlgaccessibilitybase.ui
+   part/dlgeditorbase.ui
+   part/dlggeneralbase.ui
+   part/dlgannotationsbase.ui
+   part/dlgperformancebase.ui
+   part/dlgpresentationbase.ui
 )
 
 kconfig_add_kcfg_files(okularpart_SRCS GENERATE_MOC conf/settings.kcfgc)
@@ -480,7 +476,7 @@ install(TARGETS okularpart DESTINATION ${KDE_INSTALL_PLUGINDIR})
 install(FILES okular.upd DESTINATION ${KDE_INSTALL_KCONFUPDATEDIR})
 
 install( FILES okular_part.desktop  DESTINATION  ${KDE_INSTALL_KSERVICES5DIR} )
-install( FILES part.rc part-viewermode.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/okular )
+install( FILES part/part.rc part/part-viewermode.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/okular )
 
 if (${ECM_VERSION} STRGREATER "5.58.0")
     install(FILES okular.categories  DESTINATION  ${KDE_INSTALL_LOGGINGCATEGORIESDIR})

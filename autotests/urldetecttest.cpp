@@ -9,7 +9,7 @@
 
 #include <QtTest>
 
-#include "../ui/url_utils.h"
+#include "../part/url_utils.h"
 
 namespace Okular
 {

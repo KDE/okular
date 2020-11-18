@@ -30,10 +30,10 @@
 #include "core/page_p.h"
 #include "core/tile.h"
 #include "core/utils.h"
+#include "debug_ui.h"
 #include "guiutils.h"
 #include "settings.h"
 #include "settings_core.h"
-#include "ui/debug_ui.h"
 
 Q_GLOBAL_STATIC_WITH_ARGS(QPixmap, busyPixmap, (KIconLoader::global()->loadIcon(QLatin1String("okular"), KIconLoader::NoGroup, KIconLoader::SizeLarge, KIconLoader::DefaultState, QStringList(), nullptr, true)))
 

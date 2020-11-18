@@ -10,10 +10,10 @@ include_directories(
 
 set(okular_SRCS
     okularplugin.cpp
-    ${CMAKE_SOURCE_DIR}/ui/guiutils.cpp
-    ${CMAKE_SOURCE_DIR}/ui/tocmodel.cpp
-    ${CMAKE_SOURCE_DIR}/ui/pagepainter.cpp
-    ${CMAKE_SOURCE_DIR}/ui/debug_ui.cpp
+    ${CMAKE_SOURCE_DIR}/part/guiutils.cpp
+    ${CMAKE_SOURCE_DIR}/part/tocmodel.cpp
+    ${CMAKE_SOURCE_DIR}/part/pagepainter.cpp
+    ${CMAKE_SOURCE_DIR}/part/debug_ui.cpp
     pageitem.cpp
     documentitem.cpp
     thumbnailitem.cpp

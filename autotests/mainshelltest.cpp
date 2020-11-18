@@ -21,13 +21,13 @@
 #include <qwidget.h>
 
 #include "../core/document_p.h"
-#include "../part.h"
+#include "../part/findbar.h"
+#include "../part/part.h"
+#include "../part/presentationwidget.h"
 #include "../settings.h"
 #include "../shell/okular_main.h"
 #include "../shell/shell.h"
 #include "../shell/shellutils.h"
-#include "../ui/findbar.h"
-#include "../ui/presentationwidget.h"
 #include "closedialoghelper.h"
 
 #include <sys/types.h>

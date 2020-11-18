@@ -35,16 +35,16 @@
 #include <memory>
 
 // local includes
-#include "conf/editannottooldialog.h"
+#include "annotationactionhandler.h"
 #include "core/annotations.h"
 #include "core/area.h"
 #include "core/document.h"
 #include "core/page.h"
 #include "debug_ui.h"
+#include "editannottooldialog.h"
 #include "guiutils.h"
 #include "pageview.h"
 #include "settings.h"
-#include "ui/annotationactionhandler.h"
 
 /** @short PickPointEngine */
 class PickPointEngine : public AnnotatorEngine

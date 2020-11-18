@@ -22,7 +22,7 @@
 // local includes
 #include "core/document.h"
 #include "ktreeviewsearchline.h"
-#include "ui/pageview.h"
+#include "pageview.h"
 
 Layers::Layers(QWidget *parent, Okular::Document *document)
     : QWidget(parent)

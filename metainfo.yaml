@@ -11,6 +11,6 @@ public_source_dirs:
         - core
         - interfaces
         - Mainpage.dox 
-logo: ui/data/icons/128-apps-okular.png
+logo: icons/128-apps-okular.png
 irc: okular
 mailinglist: okular-devel

@@ -30,9 +30,9 @@
 #include <core/generator.h>
 #include <core/page.h>
 
+#include "part/pagepainter.h"
+#include "part/priorities.h"
 #include "settings.h"
-#include "ui/pagepainter.h"
-#include "ui/priorities.h"
 
 #define REDRAW_TIMEOUT 250
 

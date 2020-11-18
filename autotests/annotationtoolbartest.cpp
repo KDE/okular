@@ -20,12 +20,12 @@
 #include <KSelectAction>
 
 #include "../core/page.h"
-#include "../part.h"
+#include "../part/pageview.h"
+#include "../part/part.h"
 #include "../settings.h"
 #include "../shell/okular_main.h"
 #include "../shell/shell.h"
 #include "../shell/shellutils.h"
-#include "../ui/pageview.h"
 #include "closedialoghelper.h"
 
 namespace Okular

@@ -31,7 +31,7 @@
 #include <core/document_p.h>
 #include <core/page.h>
 
-#include "ui/tocmodel.h"
+#include "part/tocmodel.h"
 
 DocumentItem::DocumentItem(QObject *parent)
     : QObject(parent)

@@ -32,10 +32,10 @@
 #include <KParts/ReadWritePart>
 #include <KPluginFactory>
 
-#include "core/document.h"
-#include "core/observer.h"
-#include "interfaces/viewerinterface.h"
-#include "kdocumentviewer.h"
+#include "../core/document.h"
+#include "../core/observer.h"
+#include "../interfaces/viewerinterface.h"
+#include "../kdocumentviewer.h"
 
 #include "okularpart_export.h"
 

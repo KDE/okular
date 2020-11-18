@@ -28,9 +28,9 @@
 #include <QStackedWidget>
 #include <QVBoxLayout>
 
+#include "annotationwidgets.h"
 #include "core/annotations.h"
-#include "ui/annotationwidgets.h"
-#include "ui/pageviewannotator.h"
+#include "pageviewannotator.h"
 
 EditAnnotToolDialog::EditAnnotToolDialog(QWidget *parent, const QDomElement &initialState, bool builtinTool)
     : QDialog(parent)

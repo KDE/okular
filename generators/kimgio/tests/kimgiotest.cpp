@@ -12,7 +12,7 @@
 
 #include <core/observer.h>
 #include <core/page.h>
-#include <ui/pagepainter.h>
+#include <part/pagepainter.h>
 
 #include <QtTest>
 

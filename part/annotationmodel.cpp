@@ -23,7 +23,7 @@
 #include "core/document.h"
 #include "core/observer.h"
 #include "core/page.h"
-#include "ui/guiutils.h"
+#include "guiutils.h"
 
 struct AnnItem {
     AnnItem();

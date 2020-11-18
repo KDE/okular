@@ -1,9 +1,10 @@
 #ifndef CLOSEDIALOGHELPER_H
 #define CLOSEDIALOGHELPER_H
 
-#include <../part.h>
 #include <QDialogButtonBox>
 #include <QObject>
+
+#include "../part/part.h"
 
 namespace TestingUtils
 {

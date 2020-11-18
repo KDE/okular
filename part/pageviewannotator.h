@@ -102,8 +102,9 @@ public:
     // enable/disable the text-selection annotation actions
     void setTextToolsEnabled(bool enabled);
 
+    enum class ShowTip { Yes, No };
     // selects the active tool
-    void selectTool(int toolId);
+    void selectTool(int toolId, ShowTip showTip);
     // selects a stamp tool and sets the stamp symbol
     void selectStampTool(const QString &stampSymbol);
     // makes a quick annotation the active tool

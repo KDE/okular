@@ -422,7 +422,7 @@ const QIcon AnnotationActionHandlerPrivate::stampIcon(const QString &stampIconNa
 void AnnotationActionHandlerPrivate::selectTool(int toolId)
 {
     selectedTool = toolId;
-    annotator->selectTool(toolId);
+    annotator->selectTool(toolId, PageViewAnnotator::ShowTip::Yes);
     parseTool(toolId);
 }
 

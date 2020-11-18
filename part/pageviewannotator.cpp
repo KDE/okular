@@ -863,7 +863,7 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
         }
 
         if (m_continuousMode)
-            selectTool(m_lastToolId);
+            selectTool(m_lastToolId, ShowTip::No);
         else
             detachAnnotation();
     }
@@ -950,7 +950,7 @@ void PageViewAnnotator::routePaint(QPainter *painter, const QRect paintRect)
     painter->restore();
 }
 
-void PageViewAnnotator::selectTool(int toolId)
+void PageViewAnnotator::selectTool(int toolId, ShowTip showTip)
 {
     // ask for Author's name if not already set
     if (toolId > 0 && Okular::Settings::identityAuthor().isEmpty()) {
@@ -1012,39 +1012,41 @@ void PageViewAnnotator::selectTool(int toolId)
             else
                 qCWarning(OkularUiDebug).nospace() << "tools.xml: engine type:'" << type << "' is not defined!";
 
-            // display the tooltip
-            const QString annotType = toolElement.attribute(QStringLiteral("type"));
-            QString tip;
+            if (showTip == ShowTip::Yes) {
+                // display the tooltip
+                const QString annotType = toolElement.attribute(QStringLiteral("type"));
+                QString tip;
 
-            if (annotType == QLatin1String("ellipse"))
-                tip = i18nc("Annotation tool", "Draw an ellipse (drag to select a zone)");
-            else if (annotType == QLatin1String("highlight"))
-                tip = i18nc("Annotation tool", "Highlight text");
-            else if (annotType == QLatin1String("ink"))
-                tip = i18nc("Annotation tool", "Draw a freehand line");
-            else if (annotType == QLatin1String("note-inline"))
-                tip = i18nc("Annotation tool", "Inline Text Annotation (drag to select a zone)");
-            else if (annotType == QLatin1String("note-linked"))
-                tip = i18nc("Annotation tool", "Put a pop-up note");
-            else if (annotType == QLatin1String("polygon"))
-                tip = i18nc("Annotation tool", "Draw a polygon (click on the first point to close it)");
-            else if (annotType == QLatin1String("rectangle"))
-                tip = i18nc("Annotation tool", "Draw a rectangle");
-            else if (annotType == QLatin1String("squiggly"))
-                tip = i18nc("Annotation tool", "Squiggle text");
-            else if (annotType == QLatin1String("stamp"))
-                tip = i18nc("Annotation tool", "Put a stamp symbol");
-            else if (annotType == QLatin1String("straight-line"))
-                tip = i18nc("Annotation tool", "Draw a straight line");
-            else if (annotType == QLatin1String("strikeout"))
-                tip = i18nc("Annotation tool", "Strike out text");
-            else if (annotType == QLatin1String("underline"))
-                tip = i18nc("Annotation tool", "Underline text");
-            else if (annotType == QLatin1String("typewriter"))
-                tip = i18nc("Annotation tool", "Typewriter Annotation (drag to select a zone)");
+                if (annotType == QLatin1String("ellipse"))
+                    tip = i18nc("Annotation tool", "Draw an ellipse (drag to select a zone)");
+                else if (annotType == QLatin1String("highlight"))
+                    tip = i18nc("Annotation tool", "Highlight text");
+                else if (annotType == QLatin1String("ink"))
+                    tip = i18nc("Annotation tool", "Draw a freehand line");
+                else if (annotType == QLatin1String("note-inline"))
+                    tip = i18nc("Annotation tool", "Inline Text Annotation (drag to select a zone)");
+                else if (annotType == QLatin1String("note-linked"))
+                    tip = i18nc("Annotation tool", "Put a pop-up note");
+                else if (annotType == QLatin1String("polygon"))
+                    tip = i18nc("Annotation tool", "Draw a polygon (click on the first point to close it)");
+                else if (annotType == QLatin1String("rectangle"))
+                    tip = i18nc("Annotation tool", "Draw a rectangle");
+                else if (annotType == QLatin1String("squiggly"))
+                    tip = i18nc("Annotation tool", "Squiggle text");
+                else if (annotType == QLatin1String("stamp"))
+                    tip = i18nc("Annotation tool", "Put a stamp symbol");
+                else if (annotType == QLatin1String("straight-line"))
+                    tip = i18nc("Annotation tool", "Draw a straight line");
+                else if (annotType == QLatin1String("strikeout"))
+                    tip = i18nc("Annotation tool", "Strike out text");
+                else if (annotType == QLatin1String("underline"))
+                    tip = i18nc("Annotation tool", "Underline text");
+                else if (annotType == QLatin1String("typewriter"))
+                    tip = i18nc("Annotation tool", "Typewriter Annotation (drag to select a zone)");
 
-            if (!tip.isEmpty() && !m_continuousMode)
-                m_pageView->displayMessage(tip, QString(), PageViewMessage::Annotation);
+                if (!tip.isEmpty())
+                    m_pageView->displayMessage(tip, QString(), PageViewMessage::Annotation);
+            }
         }
 
         // consistency warning
@@ -1067,12 +1069,12 @@ void PageViewAnnotator::selectStampTool(const QString &stampSymbol)
     engineElement.setAttribute(QStringLiteral("hoverIcon"), stampSymbol);
     annotationElement.setAttribute(QStringLiteral("icon"), stampSymbol);
     saveBuiltinAnnotationTools();
-    selectTool(STAMP_TOOL_ID);
+    selectTool(STAMP_TOOL_ID, ShowTip::Yes);
 }
 
 void PageViewAnnotator::detachAnnotation()
 {
-    selectTool(-1);
+    selectTool(-1, ShowTip::No);
     if (m_actionHandler)
         m_actionHandler->deselectAllAnnotationActions();
 }
@@ -1333,7 +1335,7 @@ void PageViewAnnotator::setAnnotationWidth(double width)
 {
     currentAnnotationElement().setAttribute(QStringLiteral("width"), QString::number(width));
     saveBuiltinAnnotationTools();
-    selectTool(m_lastToolId);
+    selectTool(m_lastToolId, ShowTip::No);
 }
 
 void PageViewAnnotator::setAnnotationColor(const QColor &color)
@@ -1347,7 +1349,7 @@ void PageViewAnnotator::setAnnotationColor(const QColor &color)
         annotationElement.setAttribute(QStringLiteral("color"), color.name(QColor::HexRgb));
     }
     saveBuiltinAnnotationTools();
-    selectTool(m_lastToolId);
+    selectTool(m_lastToolId, ShowTip::No);
 }
 
 void PageViewAnnotator::setAnnotationInnerColor(const QColor &color)
@@ -1359,21 +1361,21 @@ void PageViewAnnotator::setAnnotationInnerColor(const QColor &color)
         annotationElement.setAttribute(QStringLiteral("innerColor"), color.name(QColor::HexRgb));
     }
     saveBuiltinAnnotationTools();
-    selectTool(m_lastToolId);
+    selectTool(m_lastToolId, ShowTip::No);
 }
 
 void PageViewAnnotator::setAnnotationOpacity(double opacity)
 {
     currentAnnotationElement().setAttribute(QStringLiteral("opacity"), QString::number(opacity));
     saveBuiltinAnnotationTools();
-    selectTool(m_lastToolId);
+    selectTool(m_lastToolId, ShowTip::No);
 }
 
 void PageViewAnnotator::setAnnotationFont(const QFont &font)
 {
     currentAnnotationElement().setAttribute(QStringLiteral("font"), font.toString());
     saveBuiltinAnnotationTools();
-    selectTool(m_lastToolId);
+    selectTool(m_lastToolId, ShowTip::No);
 }
 
 void PageViewAnnotator::addToQuickAnnotations()
@@ -1409,7 +1411,7 @@ void PageViewAnnotator::slotAdvancedSettings()
     int toolId = toolElement.attribute(QStringLiteral("id")).toInt();
     m_builtinToolsDefinition->updateTool(toolElementUpdated, toolId);
     saveBuiltinAnnotationTools();
-    selectTool(m_lastToolId);
+    selectTool(m_lastToolId, ShowTip::No);
 }
 
 #include "moc_pageviewannotator.cpp"

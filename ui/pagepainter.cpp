@@ -705,13 +705,22 @@ void PagePainter::recolor(QImage *image, const QColor &foreground, const QColor 
     const float scaleGreen = background.greenF() - foreground.greenF();
     const float scaleBlue = background.blueF() - foreground.blueF();
 
-    for (int y = 0; y < image->height(); y++) {
-        QRgb *pixels = reinterpret_cast<QRgb *>(image->scanLine(y));
+    const int foreground_red = foreground.red();
+    const int foreground_green = foreground.green();
+    const int foreground_blue = foreground.blue();
 
-        for (int x = 0; x < image->width(); x++) {
-            const int lightness = qGray(pixels[x]);
-            pixels[x] = qRgba(scaleRed * lightness + foreground.red(), scaleGreen * lightness + foreground.green(), scaleBlue * lightness + foreground.blue(), qAlpha(pixels[x]));
-        }
+    QRgb *data = reinterpret_cast<QRgb *>(image->bits());
+    const int pixels = image->width() * image->height();
+
+    for (int i = 0; i < pixels; ++i) {
+        const int lightness = qGray(data[i]);
+
+        const float r = scaleRed * lightness + foreground_red;
+        const float g = scaleGreen * lightness + foreground_green;
+        const float b = scaleBlue * lightness + foreground_blue;
+
+        const unsigned a = qAlpha(data[i]);
+        data[i] = qRgba(r, g, b, a);
     }
 }
 
@@ -735,7 +744,9 @@ void PagePainter::blackWhite(QImage *image, int contrast, int threshold)
             val = thr + (val - thr) * con / 2;
             val = qBound(0, val, 255);
         }
-        data[i] = qRgba(val, val, val, 255);
+
+        const unsigned a = qAlpha(data[i]);
+        data[i] = qRgba(val, val, val, a);
     }
 }
 
@@ -780,7 +791,8 @@ void PagePainter::invertLightness(QImage *image)
         B += m_;
 
         // Save new color
-        data[i] = qRgba(R, G, B, 255);
+        const unsigned A = qAlpha(data[i]);
+        data[i] = qRgba(R, G, B, A);
     }
 }
 
@@ -803,7 +815,8 @@ void PagePainter::invertLuma(QImage *image, float Y_R, float Y_G, float Y_B)
         invertLumaPixel(R, G, B, Y_R, Y_G, Y_B);
 
         // Save new color
-        data[i] = qRgba(R, G, B, 255);
+        const unsigned A = qAlpha(data[i]);
+        data[i] = qRgba(R, G, B, A);
     }
 }
 
@@ -908,7 +921,8 @@ void PagePainter::hueShiftPositive(QImage *image)
         uchar B = qBlue(data[i]);
 
         // Save new color
-        data[i] = qRgba(B, R, G, 255);
+        const unsigned A = qAlpha(data[i]);
+        data[i] = qRgba(B, R, G, A);
     }
 }
 
@@ -929,7 +943,8 @@ void PagePainter::hueShiftNegative(QImage *image)
         uchar B = qBlue(data[i]);
 
         // Save new color
-        data[i] = qRgba(G, B, R, 255);
+        const unsigned A = qAlpha(data[i]);
+        data[i] = qRgba(G, B, R, A);
     }
 }
 

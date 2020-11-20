@@ -429,6 +429,7 @@ PageView::PageView(QWidget *parent, Okular::Document *document)
     QScrollerProperties prop;
     prop.setScrollMetric(QScrollerProperties::DecelerationFactor, 0.3);
     prop.setScrollMetric(QScrollerProperties::MaximumVelocity, 1);
+    prop.setScrollMetric(QScrollerProperties::AcceleratingFlickMaximumTime, 0.2); // Workaround for QTBUG-88249 (non-flick gestures recognized as accelerating flick)
     prop.setScrollMetric(QScrollerProperties::HorizontalOvershootPolicy, QScrollerProperties::OvershootAlwaysOff);
     prop.setScrollMetric(QScrollerProperties::VerticalOvershootPolicy, QScrollerProperties::OvershootAlwaysOff);
     prop.setScrollMetric(QScrollerProperties::DragStartDistance, 0.0);

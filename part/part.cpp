@@ -1152,7 +1152,9 @@ void Part::loadCancelled(const QString &reason)
     // so we don't want to show an ugly messagebox just because the document is
     // taking more than usual to be recreated
     if (m_viewportDirty.pageNumber == -1) {
-        if (!reason.isEmpty()) {
+        if (m_urlWithFragment.isValid() && !m_urlWithFragment.isLocalFile()) {
+            tryOpeningUrlWithFragmentAsName();
+        } else if (!reason.isEmpty()) {
             KMessageBox::error(widget(), i18n("Could not open %1. Reason: %2", url().toDisplayString(), reason));
         }
     }
@@ -1685,6 +1687,7 @@ bool Part::openUrl(const QUrl &_url, bool swapInsteadOfOpening)
 
     QUrl url(_url);
     if (url.hasFragment()) {
+        m_urlWithFragment = _url;
         const QString dest = url.fragment(QUrl::FullyDecoded);
         bool ok = true;
         int page = dest.toInt(&ok);
@@ -1709,6 +1712,8 @@ bool Part::openUrl(const QUrl &_url, bool swapInsteadOfOpening)
             m_document->setNextDocumentDestination(dest);
         }
         url.setFragment(QString());
+    } else {
+        m_urlWithFragment.clear();
     }
 
     // this calls in sequence the 'closeUrl' and 'openFile' methods
@@ -1719,13 +1724,25 @@ bool Part::openUrl(const QUrl &_url, bool swapInsteadOfOpening)
 
         setWindowTitleFromDocument();
     } else {
-        resetStartArguments();
-        /* TRANSLATORS: Adding the reason (%2) why the opening failed (if any). */
-        QString errorMessage = i18n("Could not open %1. %2", url.toDisplayString(), QStringLiteral("\n%1").arg(m_document->openError()));
-        KMessageBox::error(widget(), errorMessage);
+        if (m_urlWithFragment.isValid() && m_urlWithFragment.isLocalFile()) {
+            openOk = tryOpeningUrlWithFragmentAsName();
+        } else {
+            resetStartArguments();
+            /* TRANSLATORS: Adding the reason (%2) why the opening failed (if any). */
+            QString errorMessage = i18n("Could not open %1. %2", url.toDisplayString(), QStringLiteral("\n%1").arg(m_document->openError()));
+            KMessageBox::error(widget(), errorMessage);
+        }
     }
 
     return openOk;
+}
+
+bool Part::tryOpeningUrlWithFragmentAsName()
+{
+    QUrl url = m_urlWithFragment;
+    url.setPath(url.path() + QLatin1Char('#') + url.fragment());
+    url.setFragment(QString());
+    return openUrl(url);
 }
 
 bool Part::queryClose()

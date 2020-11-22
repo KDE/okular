@@ -64,12 +64,6 @@ void ShellTest::testUrlArgs_data()
 
     // non-local files
     QTest::newRow("http://kde.org/foo.pdf") << "http://kde.org/foo.pdf" << true << QUrl(QStringLiteral("http://kde.org/foo.pdf"));
-    // make sure we don't have a fragment
-    QUrl hashInName(QStringLiteral("http://kde.org"));
-    QVERIFY(hashInName.path().isEmpty());
-    hashInName.setPath(QStringLiteral("/foo#bar.pdf"));
-    QVERIFY(hashInName.fragment().isEmpty());
-    QTest::newRow("http://kde.org/foo#bar.pdf") << "http://kde.org/foo#bar.pdf" << true << hashInName;
     QUrl withAnchor(QStringLiteral("http://kde.org/foo.pdf"));
     withAnchor.setFragment(QStringLiteral("anchor"));
     QTest::newRow("http://kde.org/foo.pdf#anchor") << "http://kde.org/foo.pdf#anchor" << true << withAnchor;

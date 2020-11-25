@@ -687,7 +687,22 @@ bool Converter::convertPoem(const QDomElement &element)
 
 bool Converter::convertSubTitle(const QDomElement &element)
 {
-    Q_UNUSED(element)
+    QTextFrame *topFrame = mCursor->currentFrame();
+
+    QTextFrameFormat frameFormat;
+    frameFormat.setBorder(1);
+    frameFormat.setPadding(8);
+    frameFormat.setBackground(Qt::lightGray);
+    frameFormat.setTopMargin(16);
+
+    mCursor->insertFrame(frameFormat);
+
+    if (!convertParagraph(element)) {
+        return false;
+    }
+
+    mCursor->setPosition(topFrame->lastPosition());
+
     return true;
 }
 

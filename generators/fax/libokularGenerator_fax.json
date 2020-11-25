@@ -100,7 +100,7 @@
         "Description[lt]": "G3/G4 fakso dokumentų programinė sąsaja",
         "Description[nl]": "Een backend voor een G3/G4 faxdocument",
         "Description[nn]": "Ein motor for G3/G4-faksdokument",
-        "Description[pl]": "Obsługa dokumentów faksowych G3/G4",
+        "Description[pl]": "Obsługa dokumentów wysłanych faksem G3/G4",
         "Description[pt]": "Uma infra-estrutura de documentos de fax G3/G4",
         "Description[pt_BR]": "Uma infraestrutura para documentos de fax G3/G4",
         "Description[ru]": "Модуль поддержки формата факсов G3/G4",

@@ -176,7 +176,7 @@
       <li xml:lang="lt">Palaikomi formatai: PDF, PS, Tiff, CHM, DjVu, paveikslai, DVI, XPS, ODT, Fiction Book, komiksų knygos, Plucker, EPub, faksas</li>
       <li xml:lang="nl">Ondersteunde formaten: PDF, PS, Tiff, CHM, DjVu, Afbeeldingen, DVI, XPS, ODT, Fictie boek, Stripboek, Plucker, EPub, Fax</li>
       <li xml:lang="nn">Støtta format: PDF, PS, Tiff, CHM, DjVu, bilete, DVI, XPS, ODT, e-bøker, teikneseriar, Plucker, EPub, Fax</li>
-      <li xml:lang="pl">Obsługa formatów: PDF, PS, Tiff, CHM, DjVu, Obrazy, DVI, XPS, ODT, Fikcja, Komiksy, Plucker, EPub, Fax</li>
+      <li xml:lang="pl">Obsługiwane formaty: PDF, PS, TIFF, CHM, DjVu, DVI, XPS, ODT, FB2, Plucker, ePub,  a także różne formaty komisów, obrazów i faks.</li>
       <li xml:lang="pt">Formatos Suportados: PDF, PS, Tiff, CHM, DjVu, Imagens, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="pt-BR">Suporte aos formatos: PDF, PS, TIFF, CHM, DjVu, imagens, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="ru">Поддержка форматов PDF, PS, Tiff, CHM, DjVu, изображений, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, факсов;</li>
@@ -212,7 +212,7 @@
       <li xml:lang="lt">Šoninė juosta su turiniu, miniatiūromis, atsiliepimais ir žymelėmis</li>
       <li xml:lang="nl">Zijbalk met inhoud, miniaturen, reviews en bladwijzers</li>
       <li xml:lang="nn">Sidestolpe med innhaldsliste, miniatyrbilete, omtalar og bokmerke</li>
-      <li xml:lang="pl">Pasek boczny z treścią, miniaturami, recenzją i zakładkami</li>
+      <li xml:lang="pl">Pasek boczny z treścią, miniaturami, recenzjami i zakładkami</li>
       <li xml:lang="pt">Barra lateral com o conteúdo, miniaturas, revisões e marcação de favoritos</li>
       <li xml:lang="pt-BR">Barra lateral com o conteúdo, miniaturas, revisões e favoritos</li>
       <li xml:lang="ru">Боковая панель с содержанием, миниатюрами страниц, комментариями и закладками;</li>
@@ -289,7 +289,7 @@
       <caption xml:lang="lt">Vadovo skaitymas programoje Okular</caption>
       <caption xml:lang="nl">Handleiding wordt gelezen in Okular</caption>
       <caption xml:lang="nn">Lesing av brukarhandbok i Okular</caption>
-      <caption xml:lang="pl">Instrukcja czytania w Okular</caption>
+      <caption xml:lang="pl">Instrukcja czytania w Okularze</caption>
       <caption xml:lang="pt">Leitura de manual no Okular</caption>
       <caption xml:lang="pt-BR">Lendo manual no Okular</caption>
       <caption xml:lang="ru">Документ, открытый в Okular</caption>

@@ -2727,9 +2727,9 @@ void Document::sign(const NewSignatureData &data)
     }
 }
 
-Okular::CertificateStore *Document::getCertStore() const
+Okular::CertificateStore *Document::certificateStore() const
 {
-    return d->m_generator ? d->m_generator->getCertStore() : nullptr;
+    return d->m_generator ? d->m_generator->certificateStore() : nullptr;
 }
 
 DocumentInfo Document::documentInfo() const

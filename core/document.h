@@ -1006,7 +1006,7 @@ public:
      *
      * @since 21.04
      */
-    CertificateStore *getCertStore() const;
+    CertificateStore *certificateStore() const;
 
 public Q_SLOTS:
     /**

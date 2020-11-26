@@ -168,7 +168,7 @@ CertificateStore::~CertificateStore()
 {
 }
 
-QList<CertificateInfo *> CertificateStore::getSigningCertificates() const
+QList<CertificateInfo *> CertificateStore::signingCertificates() const
 {
     return QList<CertificateInfo *>();
 }

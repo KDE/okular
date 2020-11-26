@@ -258,7 +258,7 @@ public:
     /**
      * Returns list of valid, usable signing certificates
      */
-    virtual QList<CertificateInfo *> getSigningCertificates() const;
+    virtual QList<CertificateInfo *> signingCertificates() const;
 
 protected:
     CertificateStore();

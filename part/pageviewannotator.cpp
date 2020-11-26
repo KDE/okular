@@ -325,8 +325,8 @@ public:
 
     QList<Okular::Annotation *> end() override
     {
-        const Okular::CertificateStore *certStore = m_document->getCertStore();
-        const QList<Okular::CertificateInfo *> &certs = certStore->getSigningCertificates();
+        const Okular::CertificateStore *certStore = m_document->certificateStore();
+        const QList<Okular::CertificateInfo *> &certs = certStore->signingCertificates();
 
         QStringList items;
         QHash<QString, QString> nickToCommonName;

@@ -256,7 +256,7 @@ bool Generator::sign(const NewSignatureData &, const QString &)
     return false;
 }
 
-CertificateStore *Generator::getCertStore() const
+CertificateStore *Generator::certificateStore() const
 {
     return nullptr;
 }

@@ -1956,7 +1956,7 @@ bool PDFGenerator::sign(const Okular::NewSignatureData &oData, const QString &rF
 namespace
 {
 struct CertificateStoreImpl : public Okular::CertificateStore {
-    QList<Okular::CertificateInfo *> getSigningCertificates() const override
+    QList<Okular::CertificateInfo *> signingCertificates() const override
     {
         const QVector<Poppler::CertificateInfo> certs = Poppler::getAvailableSigningCertificates();
         QList<Okular::CertificateInfo *> vReturnCerts;
@@ -1969,7 +1969,7 @@ struct CertificateStoreImpl : public Okular::CertificateStore {
 }
 #endif
 
-Okular::CertificateStore *PDFGenerator::getCertStore() const
+Okular::CertificateStore *PDFGenerator::certificateStore() const
 {
 #ifdef HAVE_POPPLER_SIGNING
     if (!certStore)

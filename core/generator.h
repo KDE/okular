@@ -312,7 +312,7 @@ public:
 
     virtual bool sign(const NewSignatureData &data, const QString &rFilename);
 
-    virtual CertificateStore *getCertStore() const;
+    virtual CertificateStore *certificateStore() const;
 
     /**
      * This method can be called to trigger the generation of

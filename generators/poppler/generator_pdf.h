@@ -103,7 +103,7 @@ public:
     bool canSign() const override;
     bool sign(const Okular::NewSignatureData &oData, const QString &rFilename) override;
 
-    Okular::CertificateStore *getCertStore() const override;
+    Okular::CertificateStore *certificateStore() const override;
 
 protected:
     SwapBackingFileResult swapBackingFile(QString const &newFileName, QVector<Okular::Page *> &newPagesVector) override;

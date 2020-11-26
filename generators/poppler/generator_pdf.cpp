@@ -25,7 +25,6 @@
 #include <QDir>
 #include <QFile>
 #include <QImage>
-#include <QInputDialog>
 #include <QLayout>
 #include <QMutex>
 #include <QPainter>
@@ -545,15 +544,6 @@ static void PDFGeneratorPopplerDebugFunction(const QString &message, const QVari
     qCDebug(OkularPdfDebug) << "[Poppler]" << message;
 }
 
-#ifdef HAVE_POPPLER_SIGNING
-static char *PDFGeneratorNSSPasswordCallback(const char *element)
-{
-    bool ok;
-    const QString pwd = QInputDialog::getText(nullptr, i18n("Enter Password"), i18n("Enter password to open %1:", element), QLineEdit::Password, QString(), &ok);
-    return ok ? strdup(pwd.toUtf8().constData()) : nullptr;
-}
-#endif
-
 PDFGenerator::PDFGenerator(QObject *parent, const QVariantList &args)
     : Generator(parent, args)
     , pdfdoc(nullptr)
@@ -582,7 +572,6 @@ PDFGenerator::PDFGenerator(QObject *parent, const QVariantList &args)
     // so doing it all the time won't hurt either
     Poppler::setDebugErrorFunction(PDFGeneratorPopplerDebugFunction, QVariant());
 #ifdef HAVE_POPPLER_SIGNING
-    Poppler::setNSSPasswordCallback(PDFGeneratorNSSPasswordCallback);
     if (!CertificateSettings::useDefaultDB()) {
         Poppler::setNSSDir(QUrl(CertificateSettings::dBCertificatePath()).toLocalFile());
     }
@@ -1928,28 +1917,11 @@ bool PDFGenerator::sign(const Okular::NewSignatureData &oData, const QString &rF
     return true;
 }
 
-#ifdef HAVE_POPPLER_SIGNING
-namespace
-{
-struct CertificateStoreImpl : public Okular::CertificateStore {
-    QList<Okular::CertificateInfo *> signingCertificates() const override
-    {
-        const QVector<Poppler::CertificateInfo> certs = Poppler::getAvailableSigningCertificates();
-        QList<Okular::CertificateInfo *> vReturnCerts;
-        for (auto cert : certs)
-            vReturnCerts.append(new PopplerCertificateInfo(cert));
-
-        return vReturnCerts;
-    }
-};
-}
-#endif
-
 Okular::CertificateStore *PDFGenerator::certificateStore() const
 {
 #ifdef HAVE_POPPLER_SIGNING
     if (!certStore)
-        certStore = new CertificateStoreImpl();
+        certStore = new PopplerCertificateStore();
 
     return certStore;
 #else

@@ -8,12 +8,12 @@
  ***************************************************************************/
 
 #include "certificatetools.h"
+
 #include "certsettings.h"
+#include "pdfsignatureutils.h"
 
 #include <KLocalizedString>
 #include <KUrlRequester>
-
-#include <poppler-form.h>
 
 #include <QEvent>
 #include <QHBoxLayout>
@@ -25,6 +25,7 @@ CertificateTools::CertificateTools(QWidget *parent)
     : QWidget(parent)
 {
     m_certsw.setupUi(this);
+    m_certsw.loadSignaturesButton->hide();
 
     KUrlRequester *pDlg = new KUrlRequester();
     pDlg->setObjectName(QStringLiteral("kcfg_DBCertificatePath"));
@@ -51,6 +52,10 @@ CertificateTools::CertificateTools(QWidget *parent)
             warnRestartNeeded();
         }
     });
+    connect(m_certsw.loadSignaturesButton, &QPushButton::clicked, this, [this] {
+        m_certificatesAsked = false;
+        update();
+    });
 }
 
 bool CertificateTools::event(QEvent *e)
@@ -58,10 +63,16 @@ bool CertificateTools::event(QEvent *e)
     if (e->type() == QEvent::Paint && !m_certificatesAsked) {
         m_certificatesAsked = true;
 
-        const QVector<Poppler::CertificateInfo> nssCerts = Poppler::getAvailableSigningCertificates();
-        foreach (auto cert, nssCerts) {
-            new QTreeWidgetItem(m_tree, {cert.subjectInfo(Poppler::CertificateInfo::EntityInfoKey::CommonName), cert.subjectInfo(Poppler::CertificateInfo::EntityInfoKey::EmailAddress), cert.validityEnd().toString("yyyy-MM-dd")});
+        PopplerCertificateStore st;
+        bool userCancelled;
+        const QList<Okular::CertificateInfo *> certs = st.signingCertificates(&userCancelled);
+
+        m_certsw.loadSignaturesButton->setVisible(userCancelled);
+
+        for (auto cert : certs) {
+            new QTreeWidgetItem(m_tree, {cert->subjectInfo(Okular::CertificateInfo::EntityInfoKey::CommonName), cert->subjectInfo(Okular::CertificateInfo::EntityInfoKey::EmailAddress), cert->validityEnd().toString("yyyy-MM-dd")});
         }
+        qDeleteAll(certs);
 
         m_certsw.defaultLabel->setText(Poppler::getNSSDir());
 

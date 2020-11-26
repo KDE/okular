@@ -173,7 +173,8 @@ CertificateStore::~CertificateStore()
 {
 }
 
-QList<CertificateInfo *> CertificateStore::signingCertificates() const
+QList<CertificateInfo *> CertificateStore::signingCertificates(bool *userCancelled) const
 {
+    *userCancelled = false;
     return QList<CertificateInfo *>();
 }

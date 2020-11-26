@@ -355,7 +355,12 @@ public:
         }
 
         const Okular::CertificateStore *certStore = m_document->certificateStore();
-        const QList<Okular::CertificateInfo *> &certs = certStore->signingCertificates();
+        bool userCancelled;
+        const QList<Okular::CertificateInfo *> &certs = certStore->signingCertificates(&userCancelled);
+
+        if (userCancelled) {
+            return {};
+        }
 
         QStringList items;
         QHash<QString, Okular::CertificateInfo *> nickToCert;

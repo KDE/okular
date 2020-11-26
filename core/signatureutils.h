@@ -263,9 +263,11 @@ public:
     virtual ~CertificateStore();
 
     /**
-     * Returns list of valid, usable signing certificates
+     * Returns list of valid, usable signing certificates.
+     *
+     * This can ask the user for a password, userCancelled will be true if the user decided not to enter it.
      */
-    virtual QList<CertificateInfo *> signingCertificates() const;
+    virtual QList<CertificateInfo *> signingCertificates(bool *userCancelled) const;
 
 protected:
     CertificateStore();

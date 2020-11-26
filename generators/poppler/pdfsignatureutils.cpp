@@ -11,6 +11,7 @@
 
 #include <KLocalizedString>
 #include <QDebug>
+#include <QInputDialog>
 
 PopplerCertificateInfo::PopplerCertificateInfo(const Poppler::CertificateInfo &info)
     : m_info(info)
@@ -257,3 +258,28 @@ const Okular::CertificateInfo &PopplerSignatureInfo::certificateInfo() const
 {
     return *m_certfiticateInfo;
 }
+
+#ifdef HAVE_POPPLER_SIGNING
+PopplerCertificateStore::~PopplerCertificateStore() = default;
+
+QList<Okular::CertificateInfo *> PopplerCertificateStore::signingCertificates(bool *userCancelled) const
+{
+    *userCancelled = false;
+    auto PDFGeneratorNSSPasswordCallback = [&userCancelled](const char *element) -> char * {
+        bool ok;
+        const QString pwd = QInputDialog::getText(nullptr, i18n("Enter Password"), i18n("Enter password to open %1:", element), QLineEdit::Password, QString(), &ok);
+        *userCancelled = !ok;
+        return ok ? strdup(pwd.toUtf8().constData()) : nullptr;
+    };
+    Poppler::setNSSPasswordCallback(PDFGeneratorNSSPasswordCallback);
+
+    const QVector<Poppler::CertificateInfo> certs = Poppler::getAvailableSigningCertificates();
+    QList<Okular::CertificateInfo *> vReturnCerts;
+    for (auto cert : certs)
+        vReturnCerts.append(new PopplerCertificateInfo(cert));
+
+    Poppler::setNSSPasswordCallback(nullptr);
+
+    return vReturnCerts;
+}
+#endif

@@ -39,8 +39,6 @@
 #include <KConfigDialog>
 #include <KConfigDialogManager>
 #include <KLocalizedString>
-#include <KMessageBox>
-#include <KUrlRequester>
 
 #include <core/action.h>
 #include <core/annotations.h>
@@ -59,7 +57,6 @@
 
 #include "certificatetools.h"
 #include "certsettings.h"
-#include "ui_certsettingswidget.h"
 
 #include <config-okular-poppler.h>
 
@@ -1498,29 +1495,8 @@ void PDFGenerator::addPages(KConfigDialog *dlg)
     dlg->addPage(w, PDFSettings::self(), i18n("PDF"), QStringLiteral("application-pdf"), i18n("PDF Backend Configuration"));
 
 #ifdef HAVE_POPPLER_SIGNING
-    Ui_DlgSignaturesBase certsw;
-    QWidget *w2 = new QWidget(dlg);
-    certsw.setupUi(w2);
-
-    CertificateTools *certTools = new CertificateTools(certsw.certificatesGroup);
-    certsw.certificatesPlaceholder->addWidget(certTools);
-
-    KUrlRequester *pDlg = new KUrlRequester();
-    pDlg->setObjectName(QStringLiteral("kcfg_DBCertificatePath"));
-    pDlg->setMode(KFile::Directory | KFile::ExistingOnly | KFile::LocalOnly);
-    pDlg->setEnabled(false);
-    certsw.formLayout->setWidget(1, QFormLayout::FieldRole, pDlg);
-
-    connect(certsw.customRadioButton, &QRadioButton::toggled, pDlg, &KUrlRequester::setEnabled);
-
-    if (CertificateSettings::useDefaultDB()) {
-        certsw.defaultLabel->setText(Poppler::getNSSDir());
-    } else {
-        certsw.customRadioButton->setChecked(true);
-        certsw.defaultLabel->setVisible(false);
-    }
-
-    dlg->addPage(w2, CertificateSettings::self(), i18n("Certificates"), QStringLiteral("application-pkcs7-signature"), i18n("Digital Signature Certificates"));
+    CertificateTools *certTools = new CertificateTools(dlg);
+    dlg->addPage(certTools, CertificateSettings::self(), i18n("Certificates"), QStringLiteral("application-pkcs7-signature"), i18n("Digital Signature Certificates"));
 #endif
 }
 

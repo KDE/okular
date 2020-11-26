@@ -12,6 +12,8 @@
 
 #include <QWidget>
 
+#include "ui_certsettingswidget.h"
+
 class QTreeWidget;
 
 class CertificateTools : public QWidget
@@ -28,6 +30,7 @@ private:
     QTreeWidget *m_tree;
     bool m_certificatesAsked = false;
     bool m_warnedAboutRestart = false;
+    Ui_DlgSignaturesBase m_certsw;
 };
 
 #endif

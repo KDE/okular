@@ -10,7 +10,8 @@
 #include "certificatetools.h"
 #include "certsettings.h"
 
-#include <klocalizedstring.h>
+#include <KLocalizedString>
+#include <KUrlRequester>
 
 #include <poppler-form.h>
 
@@ -23,11 +24,26 @@
 CertificateTools::CertificateTools(QWidget *parent)
     : QWidget(parent)
 {
-    QHBoxLayout *hBoxLayout = new QHBoxLayout(this);
+    m_certsw.setupUi(this);
+
+    KUrlRequester *pDlg = new KUrlRequester();
+    pDlg->setObjectName(QStringLiteral("kcfg_DBCertificatePath"));
+    pDlg->setMode(KFile::Directory | KFile::ExistingOnly | KFile::LocalOnly);
+    pDlg->setEnabled(false);
+    m_certsw.formLayout->setWidget(1, QFormLayout::FieldRole, pDlg);
+
+    connect(m_certsw.customRadioButton, &QRadioButton::toggled, pDlg, &KUrlRequester::setEnabled);
+
+    if (!CertificateSettings::useDefaultDB()) {
+        m_certsw.customRadioButton->setChecked(true);
+        m_certsw.defaultLabel->setVisible(false);
+    }
+
     m_tree = new QTreeWidget(this);
-    hBoxLayout->addWidget(m_tree);
     m_tree->setHeaderLabels({i18nc("Name of the person to whom the cerficate was issued", "Issued to"), i18n("E-mail"), i18nc("Certificate expiration date", "Expiration date")});
     m_tree->setRootIsDecorated(false);
+
+    m_certsw.certificatesPlaceholder->addWidget(m_tree);
 
     connect(CertificateSettings::self(), &CertificateSettings::useDefaultDBChanged, this, &CertificateTools::warnRestartNeeded);
     connect(CertificateSettings::self(), &CertificateSettings::dBCertificatePathChanged, this, [this] {
@@ -46,6 +62,8 @@ bool CertificateTools::event(QEvent *e)
         foreach (auto cert, nssCerts) {
             new QTreeWidgetItem(m_tree, {cert.subjectInfo(Poppler::CertificateInfo::EntityInfoKey::CommonName), cert.subjectInfo(Poppler::CertificateInfo::EntityInfoKey::EmailAddress), cert.validityEnd().toString("yyyy-MM-dd")});
         }
+
+        m_certsw.defaultLabel->setText(Poppler::getNSSDir());
 
         m_tree->resizeColumnToContents(1);
         m_tree->resizeColumnToContents(0);

@@ -295,6 +295,8 @@ private:
     void slotShareActionFinished(const QJsonObject &output, int error, const QString &message);
 #endif
 
+    bool tryOpeningUrlWithFragmentAsName();
+
     static int numberOfParts;
 
     QTemporaryFile *m_tempfile;
@@ -419,6 +421,10 @@ private:
 
     // String to search in document startup
     QString m_textToFindOnOpen;
+
+    // Set when opening an url that had fragment so that if it fails opening we try adding the fragment to the filename
+    // if we're opening http://localhost/foo#bar.pdf and the filename contains an # we can open it after trying to open foo fails
+    QUrl m_urlWithFragment;
 
 private Q_SLOTS:
     void slotAnnotationPreferences();

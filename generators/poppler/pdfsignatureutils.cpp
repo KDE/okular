@@ -126,6 +126,16 @@ QByteArray PopplerCertificateInfo::certificateData() const
     return m_info.certificateData();
 }
 
+bool PopplerCertificateInfo::checkPassword(const QString &password) const
+{
+#ifdef HAVE_POPPLER_SIGNING
+    return m_info.checkPassword(password);
+#else
+    Q_UNUSED(password);
+    return false;
+#endif
+}
+
 PopplerSignatureInfo::PopplerSignatureInfo(const Poppler::SignatureValidationInfo &info)
     : m_info(info)
 {

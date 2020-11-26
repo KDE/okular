@@ -358,10 +358,10 @@ public:
         const QList<Okular::CertificateInfo *> &certs = certStore->signingCertificates();
 
         QStringList items;
-        QHash<QString, QString> nickToCommonName;
+        QHash<QString, Okular::CertificateInfo *> nickToCert;
         for (auto cert : certs) {
             items.append(cert->nickName());
-            nickToCommonName[cert->nickName()] = cert->subjectInfo(Okular::CertificateInfo::CommonName);
+            nickToCert[cert->nickName()] = cert;
         }
 
         if (items.isEmpty()) {
@@ -375,12 +375,24 @@ public:
         certNicknameToUse = QInputDialog::getItem(m_pageView, i18n("Select certificate to sign with"), i18n("Certificates:"), items, 0, false, &resok);
 
         if (resok) {
-            bool passok = false;
-            const QString title = i18n("Enter password (if any) to unlock certificate: %1", certNicknameToUse);
-            passToUse = QInputDialog::getText(m_pageView, i18n("Enter certificate password"), title, QLineEdit::Password, QString(), &passok);
+            // I could not find any case in which i need to enter a password to use the certificate, seems that once you unlcok the firefox/NSS database
+            // you don't need a password anymore, but still there's code to do that in NSS so we have code to ask for it if needed. What we do is
+            // ask if the empty password is fine, if it is we don't ask the user anything, if it's not, we ask for a password
+            Okular::CertificateInfo *cert = nickToCert.value(certNicknameToUse);
+            bool passok = cert->checkPassword(QString());
+            while (!passok) {
+                const QString title = i18n("Enter password (if any) to unlock certificate: %1", certNicknameToUse);
+                bool ok;
+                passToUse = QInputDialog::getText(m_pageView, i18n("Enter certificate password"), title, QLineEdit::Password, QString(), &ok);
+                if (ok) {
+                    passok = cert->checkPassword(passToUse);
+                } else {
+                    break;
+                }
+            }
 
             if (passok) {
-                certCommonName = nickToCommonName.value(certNicknameToUse);
+                certCommonName = cert->subjectInfo(Okular::CertificateInfo::CommonName);
             } else {
                 certNicknameToUse.clear();
             }

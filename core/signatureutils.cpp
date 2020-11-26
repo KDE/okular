@@ -91,6 +91,11 @@ QByteArray CertificateInfo::certificateData() const
     return QByteArray();
 }
 
+bool CertificateInfo::checkPassword(const QString & /*password*/) const
+{
+    return false;
+}
+
 SignatureInfo::SignatureInfo()
 {
 }

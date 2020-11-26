@@ -36,6 +36,7 @@ public:
     int publicKeyStrength() const override;
     bool isSelfSigned() const override;
     QByteArray certificateData() const override;
+    bool checkPassword(const QString &password) const override;
 
 private:
     Poppler::CertificateInfo m_info;

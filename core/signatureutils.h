@@ -124,6 +124,13 @@ public:
      */
     virtual QByteArray certificateData() const;
 
+    /**
+     * Checks if the given password is the correct one for this certificate
+     *
+     * @since 21.04
+     */
+    virtual bool checkPassword(const QString &password) const;
+
 protected:
     friend class SignatureInfo;
     CertificateInfo();

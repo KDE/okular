@@ -319,12 +319,38 @@ public:
     PickPointEngineSignature(Okular::Document *storage)
         : PickPointEngine({})
         , m_document(storage)
+        , m_page(nullptr)
     {
         m_block = true;
     }
 
+    QRect event(EventType type, Button button, Modifiers modifiers, double nX, double nY, double xScale, double yScale, const Okular::Page *page) override
+    {
+        m_page = page;
+        return PickPointEngine::event(type, button, modifiers, nX, nY, xScale, yScale, page);
+    }
+
     QList<Okular::Annotation *> end() override
     {
+        rect.left = qMin(startpoint.x, point.x);
+        rect.top = qMin(startpoint.y, point.y);
+        rect.right = qMax(startpoint.x, point.x);
+        rect.bottom = qMax(startpoint.y, point.y);
+
+        // FIXME this is a bit arbitrary, try to figure out a better rule, potentially based in cm and not pixels?
+        if (rect.width() * m_page->width() < 100 || rect.height() * m_page->height() < 100) {
+            const KMessageBox::ButtonCode answer =
+                KMessageBox::questionYesNo(nullptr,
+                                           i18n("The signature you're creating is small, it may have display issues. If you want to create a more readable signature press 'Start over' and draw a bigger rectangle."),
+                                           QString(),
+                                           KGuiItem(i18n("Start over")),
+                                           KGuiItem(i18n("Sign")),
+                                           QStringLiteral("TooSmallDigitalSignatureQuestion"));
+            if (answer == KMessageBox::Yes) {
+                return {};
+            }
+        }
+
         const Okular::CertificateStore *certStore = m_document->certificateStore();
         const QList<Okular::CertificateInfo *> &certs = certStore->signingCertificates();
 
@@ -352,10 +378,6 @@ public:
 
             if (passok) {
                 certCommonName = nickToCommonName.value(certNicknameToUse);
-                rect.left = qMin(startpoint.x, point.x);
-                rect.top = qMin(startpoint.y, point.y);
-                rect.right = qMax(startpoint.x, point.x);
-                rect.bottom = qMax(startpoint.y, point.y);
             } else {
                 certNicknameToUse.clear();
             }
@@ -389,13 +411,13 @@ public:
         passToUse = QString();
     }
 
-protected:
+private:
     QString certNicknameToUse;
     QString certCommonName;
     QString passToUse;
 
-private:
     Okular::Document *m_document;
+    const Okular::Page *m_page;
 };
 
 /** @short PolyLineEngine */

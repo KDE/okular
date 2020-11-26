@@ -316,10 +316,11 @@ private:
 class PickPointEngineSignature : public PickPointEngine
 {
 public:
-    PickPointEngineSignature(Okular::Document *storage)
+    PickPointEngineSignature(Okular::Document *document, PageView *pageView)
         : PickPointEngine({})
-        , m_document(storage)
+        , m_document(document)
         , m_page(nullptr)
+        , m_pageView(pageView)
     {
         m_block = true;
     }
@@ -340,7 +341,7 @@ public:
         // FIXME this is a bit arbitrary, try to figure out a better rule, potentially based in cm and not pixels?
         if (rect.width() * m_page->width() < 100 || rect.height() * m_page->height() < 100) {
             const KMessageBox::ButtonCode answer =
-                KMessageBox::questionYesNo(nullptr,
+                KMessageBox::questionYesNo(m_pageView,
                                            i18n("The signature you're creating is small, it may have display issues. If you want to create a more readable signature press 'Start over' and draw a bigger rectangle."),
                                            QString(),
                                            KGuiItem(i18n("Start over")),
@@ -364,17 +365,17 @@ public:
         if (items.isEmpty()) {
             m_creationCompleted = false;
             clicked = false;
-            KMessageBox::information(nullptr, i18n("There are no available signing certificates."));
+            KMessageBox::information(m_pageView, i18n("There are no available signing certificates."));
             return {};
         }
 
         bool resok = false;
-        certNicknameToUse = QInputDialog::getItem(nullptr, i18n("Select certificate to sign with"), i18n("Certificates:"), items, 0, false, &resok);
+        certNicknameToUse = QInputDialog::getItem(m_pageView, i18n("Select certificate to sign with"), i18n("Certificates:"), items, 0, false, &resok);
 
         if (resok) {
             bool passok = false;
             const QString title = i18n("Enter password (if any) to unlock certificate: %1", certNicknameToUse);
-            passToUse = QInputDialog::getText(nullptr, i18n("Enter certificate password"), title, QLineEdit::Password, QString(), &passok);
+            passToUse = QInputDialog::getText(m_pageView, i18n("Enter certificate password"), title, QLineEdit::Password, QString(), &passok);
 
             if (passok) {
                 certCommonName = nickToCommonName.value(certNicknameToUse);
@@ -418,6 +419,7 @@ private:
 
     Okular::Document *m_document;
     const Okular::Page *m_page;
+    PageView *m_pageView;
 };
 
 /** @short PolyLineEngine */
@@ -933,7 +935,7 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
     }
 
     if (signatureMode() && eventType == AnnotatorEngine::Press) {
-        m_engine = new PickPointEngineSignature(m_document);
+        m_engine = new PickPointEngineSignature(m_document, m_pageView);
     }
 
     // 1. lock engine to current item

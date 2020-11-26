@@ -717,8 +717,8 @@ void PageView::setupActions(KActionCollection *ac)
     d->aMouseModeMenu->setText(i18nc("@action", "Selection Tools"));
     ac->addAction(QStringLiteral("mouse_selecttools"), d->aMouseModeMenu);
 
-    d->aSignature = new QAction(QIcon::fromTheme(QStringLiteral("application-pkcs7-signature")), i18n("&Sign..."), this);
-    ac->addAction(QStringLiteral("mouse_sign"), d->aSignature);
+    d->aSignature = new QAction(QIcon::fromTheme(QStringLiteral("application-pkcs7-signature")), i18n("Digitally &Sign..."), this);
+    ac->addAction(QStringLiteral("add_digital_signature"), d->aSignature);
     connect(d->aSignature, &QAction::triggered, this, &PageView::slotSignature);
 
     // speak actions

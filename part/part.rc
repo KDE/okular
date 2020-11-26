@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE gui SYSTEM "kpartgui.dtd">
-<gui name="okular_part" version="47">
+<gui name="okular_part" version="48">
 <MenuBar>
   <Menu name="file"><text>&amp;File</text>
     <Action name="get_new_stuff" group="file_open"/>
@@ -80,7 +80,7 @@
     <Separator/>
     <Action name="mouse_toggle_annotate"/>
     <Separator/>
-    <Action name="mouse_sign"/>
+    <Action name="add_digital_signature"/>
     <Separator/>
     <Action name="speak_document"/>
     <Action name="speak_current_page"/>
@@ -109,8 +109,6 @@
   <Action name="view_zoom_out"/>
   <Action name="zoom_to" />
   <Action name="view_zoom_in"/>
-  <Separator/>
-  <Action name="mouse_sign"/>
 </ToolBar>
 <ToolBar name="annotationToolBar" iconText="icononly" newline="true" hidden="true"><text>Annotation Toolbar</text>
   <Action name="annotation_highlighter"/>

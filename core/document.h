@@ -831,6 +831,8 @@ public:
      */
     void setHistoryClean(bool clean);
 
+    bool isHistoryClean() const;
+
     /**
      * Saving capabilities. Their availability varies according to the
      * underlying generator and/or the document type.

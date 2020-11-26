@@ -4558,6 +4558,11 @@ void Document::setHistoryClean(bool clean)
         d->m_undoStack->resetClean();
 }
 
+bool Document::isHistoryClean() const
+{
+    return d->m_undoStack->isClean();
+}
+
 bool Document::canSaveChanges() const
 {
     if (!d->m_generator)

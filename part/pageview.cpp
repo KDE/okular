@@ -4778,6 +4778,11 @@ void PageView::slotSetMouseTableSelect()
 
 void PageView::slotSignature()
 {
+    if (!d->document->isHistoryClean()) {
+        KMessageBox::information(this, i18n("You have unsaved changes. Please save the document before signing it."));
+        return;
+    }
+
     d->messageWindow->display(i18n("Draw a rectangle to insert the signature field"), QString(), PageViewMessage::Info, -1);
 
     if (!d->annotator) {

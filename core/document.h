@@ -999,7 +999,7 @@ public:
      *
      * @since 21.04
      */
-    void sign(const NewSignatureData &data);
+    bool sign(const NewSignatureData &data, const QString &newPath);
 
     /**
      * Returns the generator's certificate store (if any)

@@ -17,9 +17,11 @@
 #include <QColor>
 #include <QEvent>
 #include <QFile>
+#include <QFileDialog>
 #include <QInputDialog>
 #include <QList>
 #include <QLoggingCategory>
+#include <QMimeDatabase>
 #include <QPainter>
 #include <QSet>
 #include <QVariant>
@@ -399,7 +401,7 @@ public:
         return !certNicknameToUse.isEmpty();
     }
 
-    void sign()
+    bool sign(const QString &newFilePath)
     {
         Okular::NewSignatureData data;
         data.setCertNickname(certNicknameToUse);
@@ -407,9 +409,8 @@ public:
         data.setPassword(passToUse);
         data.setPage(m_page->number());
         data.setBoundingRectangle(rect);
-        m_document->sign(data);
-
-        passToUse = QString();
+        passToUse.clear();
+        return m_document->sign(data, newFilePath);
     }
 
 private:
@@ -993,7 +994,27 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
         if (signatureMode()) {
             auto signEngine = static_cast<PickPointEngineSignature *>(m_engine);
             if (signEngine->isAccepted()) {
-                static_cast<PickPointEngineSignature *>(m_engine)->sign();
+                QMimeDatabase db;
+                const QString typeName = m_document->documentInfo().get(Okular::DocumentInfo::MimeType);
+                const QMimeType mimeType = db.mimeTypeForName(typeName);
+                const QString mimeTypeFilter = i18nc("File type name and pattern", "%1 (%2)", mimeType.comment(), mimeType.globPatterns().join(QLatin1Char(' ')));
+
+                const QUrl currentFileUrl = m_document->currentDocument();
+                const QFileInfo currentFileInfo(currentFileUrl.fileName());
+                const QString localFilePathIfAny = currentFileUrl.isLocalFile() ? QFileInfo(currentFileUrl.path()).canonicalPath() + QLatin1Char('/') : QString();
+                const QString newFileName =
+                    localFilePathIfAny + i18nc("Used when suggesting a new name for a digitally signed file. %1 is the old file name and %2 it's extension", "%1_signed.%2", currentFileInfo.baseName(), currentFileInfo.completeSuffix());
+
+                const QString newFilePath = QFileDialog::getSaveFileName(m_pageView, i18n("Save Signed File As"), newFileName, mimeTypeFilter);
+
+                if (!newFilePath.isEmpty()) {
+                    const bool success = static_cast<PickPointEngineSignature *>(m_engine)->sign(newFilePath);
+                    if (success) {
+                        emit requestOpenFile(newFilePath);
+                    } else {
+                        KMessageBox::error(m_pageView, i18nc("%1 is a file path", "Could not sign. Invalid certificate password or could not write to '%1'", newFilePath));
+                    }
+                }
             }
             m_continuousMode = false;
         }

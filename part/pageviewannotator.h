@@ -139,6 +139,7 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     void toolSelected();
+    void requestOpenFile(const QString &filePath);
 
 private:
     void reparseBuiltinToolsConfig();

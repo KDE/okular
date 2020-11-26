@@ -788,11 +788,10 @@ void PageView::setupActions(KActionCollection *ac)
     kundo->setEnabled(false);
     kredo->setEnabled(false);
 
-    if (!d->annotator) {
-        d->annotator = new PageViewAnnotator(this, d->document);
-        connect(d->annotator, &PageViewAnnotator::toolSelected, d->aMouseNormal, &QAction::trigger);
-        connect(d->annotator, &PageViewAnnotator::toolSelected, d->mouseAnnotation, &MouseAnnotation::reset);
-    }
+    d->annotator = new PageViewAnnotator(this, d->document);
+    connect(d->annotator, &PageViewAnnotator::toolSelected, d->aMouseNormal, &QAction::trigger);
+    connect(d->annotator, &PageViewAnnotator::toolSelected, d->mouseAnnotation, &MouseAnnotation::reset);
+    connect(d->annotator, &PageViewAnnotator::requestOpenFile, this, &PageView::requestOpenFile);
     d->annotator->setupActions(ac);
 }
 
@@ -4784,10 +4783,6 @@ void PageView::slotSignature()
     }
 
     d->messageWindow->display(i18n("Draw a rectangle to insert the signature field"), QString(), PageViewMessage::Info, -1);
-
-    if (!d->annotator) {
-        d->annotator = new PageViewAnnotator(this, d->document);
-    }
 
     d->annotator->setSignatureMode(true);
 

@@ -399,13 +399,13 @@ public:
         return !certNicknameToUse.isEmpty();
     }
 
-    void sign(int page)
+    void sign()
     {
         Okular::NewSignatureData data;
         data.setCertNickname(certNicknameToUse);
         data.setCertSubjectCommonName(certCommonName);
         data.setPassword(passToUse);
-        data.setPage(page);
+        data.setPage(m_page->number());
         data.setBoundingRectangle(rect);
         m_document->sign(data);
 
@@ -993,7 +993,7 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
         if (signatureMode()) {
             auto signEngine = static_cast<PickPointEngineSignature *>(m_engine);
             if (signEngine->isAccepted()) {
-                static_cast<PickPointEngineSignature *>(m_engine)->sign(m_lockedItem->pageNumber());
+                static_cast<PickPointEngineSignature *>(m_engine)->sign();
             }
             m_continuousMode = false;
         }

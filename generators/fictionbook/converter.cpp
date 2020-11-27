@@ -722,6 +722,9 @@ bool Converter::convertCite(const QDomElement &element)
         } else if (child.tagName() == QLatin1String("empty-line")) {
             if (!convertEmptyLine(child))
                 return false;
+        } else if (child.tagName() == QLatin1String("subtitle")) {
+            if (!convertSubTitle(child))
+                return false;
         }
 
         child = child.nextSiblingElement();

@@ -1,5 +1,6 @@
-<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui version="9" name="okular_shell" >
+<?xml version="1.0"?>
+<!DOCTYPE gui SYSTEM "kpartgui.dtd">
+<gui version="9" name="okular_shell" >
  <MenuBar>
   <Menu name="file" >
    <DefineGroup append="open_merge" name="file_open" />
@@ -24,4 +25,4 @@
   <!--Action name="file_open_recent" /-->
   <!--Action name="file_print" /-->
  </ToolBar>
-</kpartgui>
+</gui>

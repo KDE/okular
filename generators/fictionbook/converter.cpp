@@ -16,6 +16,7 @@
 #include <QTextCursor>
 #include <QTextDocument>
 #include <QTextFrame>
+#include <QTextTable>
 #include <QUrl>
 
 #include <KLocalizedString>
@@ -425,6 +426,9 @@ bool Converter::convertSection(const QDomElement &element)
         } else if (child.tagName() == QLatin1String("code")) {
             if (!convertCode(child))
                 return false;
+        } else if (child.tagName() == QLatin1String("table")) {
+            if (!convertTable(child))
+                return false;
         }
 
         child = child.nextSiblingElement();
@@ -725,6 +729,9 @@ bool Converter::convertCite(const QDomElement &element)
         } else if (child.tagName() == QLatin1String("subtitle")) {
             if (!convertSubTitle(child))
                 return false;
+        } else if (child.tagName() == QLatin1String("table")) {
+            if (!convertTable(child))
+                return false;
         }
 
         child = child.nextSiblingElement();
@@ -866,5 +873,87 @@ bool Converter::convertSubScript(const QDomElement &element)
 
     mCursor->setCharFormat(origFormat);
 
+    return true;
+}
+
+bool Converter::convertTable(const QDomElement &element)
+{
+    QTextFrame *topFrame = mCursor->currentFrame();
+
+    QTextTable *table = nullptr;
+
+    QDomElement child = element.firstChildElement();
+    while (!child.isNull()) {
+        if (child.tagName() == QLatin1String("tr")) {
+            if (table) {
+                table->appendRows(1);
+            } else {
+                QTextTableFormat tableFormat;
+                tableFormat.setBorderStyle(QTextFrameFormat::BorderStyle_None);
+                table = mCursor->insertTable(1, 1, tableFormat);
+            }
+
+            if (!convertTableRow(child, *table))
+                return false;
+        }
+
+        child = child.nextSiblingElement();
+    }
+
+    mCursor->setPosition(topFrame->lastPosition());
+
+    return true;
+}
+
+bool Converter::convertTableRow(const QDomElement &element, QTextTable &table)
+{
+    QDomElement child = element.firstChildElement();
+    int column = 0;
+    while (!child.isNull()) {
+        if (child.tagName() == QLatin1String("th")) {
+            if (!convertTableHeaderCell(child, table, column))
+                return false;
+        } else if (child.tagName() == QLatin1String("td")) {
+            if (!convertTableCell(child, table, column))
+                return false;
+        }
+
+        child = child.nextSiblingElement();
+    }
+
+    return true;
+}
+
+bool Converter::convertTableHeaderCell(const QDomElement &element, QTextTable &table, int &column)
+{
+    QTextCharFormat charFormat;
+    charFormat.setFontWeight(QFont::Bold);
+    return convertTableCellHelper(element, table, column, charFormat);
+}
+
+bool Converter::convertTableCell(const QDomElement &element, QTextTable &table, int &column)
+{
+    QTextCharFormat charFormat;
+    return convertTableCellHelper(element, table, column, charFormat);
+}
+
+bool Converter::convertTableCellHelper(const QDomElement &element, QTextTable &table, int &column, const QTextCharFormat &charFormat)
+{
+    // TODO: halign/valign, colspan/rowspan
+
+    if (table.columns() <= column) {
+        table.appendColumns(column + 1 - table.columns());
+    }
+
+    int cellCursorPosition = table.cellAt(table.rows() - 1, column).firstPosition();
+    mCursor->setPosition(cellCursorPosition);
+
+    QTextBlockFormat format;
+    mCursor->insertBlock(format, charFormat);
+
+    if (!convertParagraph(element))
+        return false;
+
+    ++column;
     return true;
 }

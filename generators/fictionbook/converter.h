@@ -13,7 +13,9 @@
 #include <core/textdocumentgenerator.h>
 
 class QDomElement;
+class QTextCharFormat;
 class QTextCursor;
+class QTextTable;
 
 namespace FictionBook
 {
@@ -50,6 +52,11 @@ private:
     bool convertCode(const QDomElement &element);
     bool convertSuperScript(const QDomElement &element);
     bool convertSubScript(const QDomElement &element);
+    bool convertTable(const QDomElement &element);
+    bool convertTableRow(const QDomElement &element, QTextTable &table);
+    bool convertTableHeaderCell(const QDomElement &element, QTextTable &table, int &column);
+    bool convertTableCell(const QDomElement &element, QTextTable &table, int &column);
+    bool convertTableCellHelper(const QDomElement &element, QTextTable &table, int &column, const QTextCharFormat &charFormat);
 
     bool convertTitleInfo(const QDomElement &element);
     bool convertDocumentInfo(const QDomElement &element);

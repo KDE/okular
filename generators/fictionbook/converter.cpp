@@ -939,21 +939,49 @@ bool Converter::convertTableCell(const QDomElement &element, QTextTable &table, 
 
 bool Converter::convertTableCellHelper(const QDomElement &element, QTextTable &table, int &column, const QTextCharFormat &charFormat)
 {
-    // TODO: halign/valign, colspan/rowspan
+    int row = table.rows() - 1;
 
-    if (table.columns() <= column) {
-        table.appendColumns(column + 1 - table.columns());
+    int colspan = qMax(element.attribute(QStringLiteral("colspan")).toInt(), 1);
+    // TODO: rowspan
+    // int rowspan = qMax(element.attribute(QStringLiteral("rowspan")).toInt(), 1);
+
+    int columnsToAppend = column + colspan - table.columns();
+    if (columnsToAppend > 0) {
+        table.appendColumns(columnsToAppend);
     }
 
-    int cellCursorPosition = table.cellAt(table.rows() - 1, column).firstPosition();
+    table.mergeCells(row, column, 1, colspan);
+
+    int cellCursorPosition = table.cellAt(row, column).firstPosition();
     mCursor->setPosition(cellCursorPosition);
 
+    Qt::Alignment alignment;
+
+    QString halign = element.attribute(QStringLiteral("halign"));
+    if (halign == QStringLiteral("center")) {
+        alignment |= Qt::AlignHCenter;
+    } else if (halign == QStringLiteral("right")) {
+        alignment |= Qt::AlignRight;
+    } else {
+        alignment |= Qt::AlignLeft;
+    }
+
+    QString valign = element.attribute(QStringLiteral("valign"));
+    if (valign == QStringLiteral("center")) {
+        alignment |= Qt::AlignVCenter;
+    } else if (valign == QStringLiteral("bottom")) {
+        alignment |= Qt::AlignBottom;
+    } else {
+        alignment |= Qt::AlignTop;
+    }
+
     QTextBlockFormat format;
+    format.setAlignment(alignment);
     mCursor->insertBlock(format, charFormat);
 
     if (!convertParagraph(element))
         return false;
 
-    ++column;
+    column += colspan;
     return true;
 }

@@ -1485,7 +1485,7 @@ void PDFGenerator::addPages(KConfigDialog *dlg)
 
 #ifdef HAVE_POPPLER_SIGNING
     CertificateTools *certTools = new CertificateTools(dlg);
-    dlg->addPage(certTools, CertificateSettings::self(), i18n("Certificates"), QStringLiteral("application-pkcs7-signature"), i18n("Digital Signature Certificates"));
+    dlg->addPage(certTools, CertificateSettings::self(), i18n("PDF Certificates"), QStringLiteral("application-pkcs7-signature"), i18n("PDF Digital Signature Certificates"));
 #endif
 }
 
@@ -1876,7 +1876,7 @@ Okular::AnnotationProxy *PDFGenerator::annotationProxy() const
 bool PDFGenerator::canSign() const
 {
 #ifdef HAVE_POPPLER_SIGNING
-    return true;
+    return Poppler::hasNSSSupport();
 #else
     return false;
 #endif

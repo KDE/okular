@@ -24,43 +24,51 @@
 CertificateTools::CertificateTools(QWidget *parent)
     : QWidget(parent)
 {
-    m_certsw.setupUi(this);
-    m_certsw.loadSignaturesButton->hide();
+    if (Poppler::hasNSSSupport()) {
+        m_certsw.setupUi(this);
+        m_certsw.loadSignaturesButton->hide();
 
-    KUrlRequester *pDlg = new KUrlRequester();
-    pDlg->setObjectName(QStringLiteral("kcfg_DBCertificatePath"));
-    pDlg->setMode(KFile::Directory | KFile::ExistingOnly | KFile::LocalOnly);
-    pDlg->setEnabled(false);
-    m_certsw.formLayout->setWidget(1, QFormLayout::FieldRole, pDlg);
+        KUrlRequester *pDlg = new KUrlRequester();
+        pDlg->setObjectName(QStringLiteral("kcfg_DBCertificatePath"));
+        pDlg->setMode(KFile::Directory | KFile::ExistingOnly | KFile::LocalOnly);
+        pDlg->setEnabled(false);
+        m_certsw.formLayout->setWidget(1, QFormLayout::FieldRole, pDlg);
 
-    connect(m_certsw.customRadioButton, &QRadioButton::toggled, pDlg, &KUrlRequester::setEnabled);
+        connect(m_certsw.customRadioButton, &QRadioButton::toggled, pDlg, &KUrlRequester::setEnabled);
 
-    if (!CertificateSettings::useDefaultDB()) {
-        m_certsw.customRadioButton->setChecked(true);
-        m_certsw.defaultLabel->setVisible(false);
-    }
-
-    m_tree = new QTreeWidget(this);
-    m_tree->setHeaderLabels({i18nc("Name of the person to whom the cerficate was issued", "Issued to"), i18n("E-mail"), i18nc("Certificate expiration date", "Expiration date")});
-    m_tree->setRootIsDecorated(false);
-
-    m_certsw.certificatesPlaceholder->addWidget(m_tree);
-
-    connect(CertificateSettings::self(), &CertificateSettings::useDefaultDBChanged, this, &CertificateTools::warnRestartNeeded);
-    connect(CertificateSettings::self(), &CertificateSettings::dBCertificatePathChanged, this, [this] {
         if (!CertificateSettings::useDefaultDB()) {
-            warnRestartNeeded();
+            m_certsw.customRadioButton->setChecked(true);
+            m_certsw.defaultLabel->setVisible(false);
         }
-    });
-    connect(m_certsw.loadSignaturesButton, &QPushButton::clicked, this, [this] {
-        m_certificatesAsked = false;
-        update();
-    });
+
+        m_tree = new QTreeWidget(this);
+        m_tree->setHeaderLabels({i18nc("Name of the person to whom the cerficate was issued", "Issued to"), i18n("E-mail"), i18nc("Certificate expiration date", "Expiration date")});
+        m_tree->setRootIsDecorated(false);
+
+        m_certsw.certificatesPlaceholder->addWidget(m_tree);
+
+        connect(CertificateSettings::self(), &CertificateSettings::useDefaultDBChanged, this, &CertificateTools::warnRestartNeeded);
+        connect(CertificateSettings::self(), &CertificateSettings::dBCertificatePathChanged, this, [this] {
+            if (!CertificateSettings::useDefaultDB()) {
+                warnRestartNeeded();
+            }
+        });
+        connect(m_certsw.loadSignaturesButton, &QPushButton::clicked, this, [this] {
+            m_certificatesAsked = false;
+            update();
+        });
+    } else {
+        m_tree = nullptr;
+        QHBoxLayout *lay = new QHBoxLayout(this);
+        QLabel *l = new QLabel(i18n("You are using a Poppler library built without NSS support.\nAdding Digital Signatures isn't available for that reason"));
+        l->setWordWrap(true);
+        lay->addWidget(l);
+    }
 }
 
 bool CertificateTools::event(QEvent *e)
 {
-    if (e->type() == QEvent::Paint && !m_certificatesAsked) {
+    if (m_tree && e->type() == QEvent::Paint && !m_certificatesAsked) {
         m_certificatesAsked = true;
 
         PopplerCertificateStore st;

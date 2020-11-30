@@ -344,7 +344,7 @@ public:
         if (rect.width() * m_page->width() < 100 || rect.height() * m_page->height() < 100) {
             const KMessageBox::ButtonCode answer =
                 KMessageBox::questionYesNo(m_pageView,
-                                           i18n("The signature you're creating is small, it may have display issues. If you want to create a more readable signature press 'Start over' and draw a bigger rectangle."),
+                                           i18n("A signature of this size may be too small to read. If you would like to create a potentially more readable signature, press 'Start over' and draw a bigger rectangle."),
                                            QString(),
                                            KGuiItem(i18n("Start over")),
                                            KGuiItem(i18n("Sign")),

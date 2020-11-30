@@ -471,6 +471,29 @@ Context menu actions like Rename Bookmarks etc.)
 					This feature is available for &PDF; documents only. You need to install at least version 0.51 of <ulink url="https://poppler.freedesktop.org/">Poppler</ulink> to get most signature information, version 0.68 to get signature location/reason information, and version 0.73 to get signature certificate information.
 				</para>
 			</note>
+			<sect2 id="adding_digital_signatures">
+				<title>Adding Digital Signatures</title>
+				<para>
+					You can add digital signatures to documents using the corresponding action in the <menuchoice><guimenu>Tools</guimenu></menuchoice> menu.
+				</para>
+				<para>
+					To be able to sign a document you need to have a proper <acronym>PKCS</acronym> signing certificate available on your system. Okular does not have the ability to create such certificates since they need to be issued by certificate authorities to be useful for validation, &etc;
+				</para>
+				<para>
+					We use the Poppler library to handle signing of &PDF; documents and Poppler is using the NSS library to handle certificates. At the point of writing, Poppler will try to use the following NSS certificate stores in order (if they exist):
+					<itemizedlist>
+						<listitem><para>The current Firefox user certificate store.</para></listitem>
+						<listitem><para>The system-wide <filename>/etc/pki/nssdb</filename> certificate store.</para></listitem>
+						<listitem><para>The current user <filename>$HOME/.pki/nssdb</filename></para></listitem>
+					</itemizedlist>
+					If you want to use a custom certificate store you can do so by setting it in the <link linkend="config-pdf-digital-signatures">PDF Digital Signature Certificates</link> section of the <link linkend="configure-backends">Configure Backends...</link> dialog.
+				</para>
+				<note>
+					<para>
+						This feature is available for &PDF; documents only. You need to install at least version 21.01 of <ulink url="https://poppler.freedesktop.org/">Poppler</ulink> to be able to add digital signatures to a document.
+					</para>
+				</note>
+			</sect2>
 		</sect1>
 		<sect1 id="annotations">
 			<title>Annotations</title>
@@ -2189,6 +2212,17 @@ Context menu actions like Rename Bookmarks etc.)
 					<term>
 						<menuchoice>
 							<guimenu>Tools</guimenu>
+							<guimenuitem>Digitally Sign...</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para><action>Starts the digital signature creation workflow</action>. Addition of digital signatures is only supported for PDF files at this point. For more information, please see the section about <link linkend="adding_digital_signatures">Adding Digital Signatures</link>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<guimenu>Tools</guimenu>
 							<guimenuitem>Speak Whole Document</guimenuitem>
 						</menuchoice>
 					</term>
@@ -2425,6 +2459,16 @@ Context menu actions like Rename Bookmarks etc.)
 		</varlistentry>
 	      </variablelist>
 	    </para>
+	  </sect1>
+		<sect1 id="config-pdf-digital-signatures">
+			<title>&PDF; Digital Signature Certificates</title>
+			<para>
+				<screenshot><mediaobject><imageobject><imagedata fileref="config-pdf-digital-signatures.png" format="PNG"/></imageobject></mediaobject></screenshot>
+				This section allows you to set a custom Certificate Database to use when adding Digital Signatures to &PDF; files.
+			</para>
+			<para>
+				It also lists the certificates available in the current Certificate Database (if any).
+			</para>
 	  </sect1>
 	</chapter>
 	<chapter id="configure">

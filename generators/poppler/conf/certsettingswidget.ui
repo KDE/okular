@@ -59,7 +59,7 @@
    <item>
     <widget class="QGroupBox" name="certificatesGroup">
      <property name="title">
-      <string>Digital Signatures</string>
+      <string>Available Certificates</string>
      </property>
      <layout class="QVBoxLayout" name="certificatesPlaceholder"/>
     </widget>

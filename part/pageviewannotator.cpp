@@ -342,13 +342,13 @@ public:
 
         // FIXME this is a bit arbitrary, try to figure out a better rule, potentially based in cm and not pixels?
         if (rect.width() * m_page->width() < 100 || rect.height() * m_page->height() < 100) {
-            const KMessageBox::ButtonCode answer =
-                KMessageBox::questionYesNo(m_pageView,
-                                           i18n("A signature of this size may be too small to read. If you would like to create a potentially more readable signature, press 'Start over' and draw a bigger rectangle."),
-                                           QString(),
-                                           KGuiItem(i18n("Start over")),
-                                           KGuiItem(i18n("Sign")),
-                                           QStringLiteral("TooSmallDigitalSignatureQuestion"));
+            const KMessageBox::ButtonCode answer = KMessageBox::questionYesNo(
+                m_pageView,
+                xi18nc("@info", "A signature of this size may be too small to read. If you would like to create a potentially more readable signature, press <interface>Start over</interface> and draw a bigger rectangle."),
+                QString(),
+                KGuiItem(i18n("Start over")),
+                KGuiItem(i18n("Sign")),
+                QStringLiteral("TooSmallDigitalSignatureQuestion"));
             if (answer == KMessageBox::Yes) {
                 return {};
             }

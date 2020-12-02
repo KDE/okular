@@ -151,7 +151,7 @@ add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
 add_definitions(-DQT_DEPRECATED_WARNINGS_SINCE=0x050C00)
 add_definitions(-DKF_DEPRECATED_WARNINGS_SINCE=0x054400)
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${PHONON_INCLUDES} core/synctex ${ZLIB_INCLUDE_DIR} ${CMAKE_BINARY_DIR}/core)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${PHONON_INCLUDES} core/synctex ${CMAKE_BINARY_DIR}/core)
 
 if(BUILD_MOBILE)
     add_subdirectory( mobile )
@@ -309,7 +309,7 @@ PRIVATE
     KF5::Bookmarks
     Phonon::phonon4qt5
     ${MATH_LIB}
-    ${ZLIB_LIBRARIES}
+    ZLIB::ZLIB
 PUBLIC  # these are included from the installed headers
     KF5::CoreAddons
     KF5::XmlGui

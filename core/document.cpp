@@ -762,14 +762,14 @@ QUrl DocumentPrivate::giveAbsoluteUrl(const QString &fileName) const
 
 bool DocumentPrivate::openRelativeFile(const QString &fileName)
 {
-    QUrl url = giveAbsoluteUrl(fileName);
-    if (url.isEmpty())
+    const QUrl newUrl = giveAbsoluteUrl(fileName);
+    if (newUrl.isEmpty())
         return false;
 
-    qCDebug(OkularCoreDebug).nospace() << "openRelativeFile: '" << url << "'";
+    qCDebug(OkularCoreDebug).nospace() << "openRelativeFile: '" << newUrl << "'";
 
-    emit m_parent->openUrl(url);
-    return true;
+    emit m_parent->openUrl(newUrl);
+    return m_url == newUrl;
 }
 
 Generator *DocumentPrivate::loadGeneratorLibrary(const KPluginMetaData &service)

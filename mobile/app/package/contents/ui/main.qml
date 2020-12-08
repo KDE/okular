@@ -53,7 +53,7 @@ Kirigami.ApplicationWindow {
     }
     contextDrawer: OkularDrawer {}
 
-    title: documentItem.windowTitleForDocument
+    title: documentItem.windowTitleForDocument ? documentItem.windowTitleForDocument : i18n("Okular")
     Okular.DocumentItem {
         id: documentItem
         onUrlChanged: { currentPage = 0 }

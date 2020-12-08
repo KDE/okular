@@ -19,7 +19,7 @@
 
 import QtQuick 2.1
 import QtQuick.Controls 2.0 as QQC2
-import org.kde.kirigami 2.0 as Kirigami
+import org.kde.kirigami 2.8 as Kirigami
 
 ThumbnailsBase {
     id: root
@@ -28,7 +28,7 @@ ThumbnailsBase {
     header: QQC2.ToolBar {
         id: toolBarContent
         width: root.width
-        QQC2.TextField {
+        Kirigami.SearchField {
             id: searchField
             width: parent.width
             placeholderText: i18n("Search...")

@@ -420,7 +420,7 @@ QString dvifile::convertPDFtoPS(const QString &PDFFilename, QString *converrorms
     convertedFiles[PDFFilename] = convertedFileName;
 
     tmpfile.setAutoRemove(false);
-    return convertedFileName;
+    return convertedFileName; //// NOLINT(performance-no-automatic-move) QString is cheap to copy and we prefer the const safety
 }
 
 bool dvifile::saveAs(const QString &filename)

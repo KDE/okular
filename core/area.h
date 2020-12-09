@@ -141,7 +141,8 @@ public:
     NormalizedPoint &operator=(const NormalizedPoint &);
 
     NormalizedPoint(const NormalizedPoint &);
-    ~NormalizedPoint();
+    // TODO next ABI break, move the = default to here
+    ~NormalizedPoint(); // NOLINT(performance-trivially-destructible)
 
     /**
      * Transforms the normalized point with the operations defined by @p matrix.
@@ -237,7 +238,8 @@ public:
      */
     NormalizedRect &operator=(const NormalizedRect &other);
 
-    ~NormalizedRect();
+    // TODO next ABI break, move the = default to here
+    ~NormalizedRect(); // NOLINT(performance-trivially-destructible)
 
     /**
      * Build a normalized rect from a QRectF, which already has normalized coordinates.

@@ -102,7 +102,7 @@ long snum(FILE *fp, int size)
     long x;
 
 #ifdef __STDC__
-    x = (signed char)getc(fp);
+    x = (signed char)getc(fp); // NOLINT(bugprone-signed-char-misuse) This code is decades old, so prefer not to touch it
 #else
     x = (unsigned char)getc(fp);
     if (x & 0x80)

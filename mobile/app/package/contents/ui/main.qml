@@ -20,7 +20,7 @@
 import QtQuick 2.7
 import QtQuick.Dialogs 1.3 as QQD
 import org.kde.okular 2.0 as Okular
-import org.kde.kirigami 2.0 as Kirigami
+import org.kde.kirigami 2.10 as Kirigami
 import org.kde.okular.app 2.0
 
 Kirigami.ApplicationWindow {
@@ -48,6 +48,12 @@ Kirigami.ApplicationWindow {
                 onTriggered: {
                     fileDialog.open()
                 }
+            },
+            Kirigami.Action {
+                text: i18n("About")
+                icon.name: "help-about-symbolic"
+                onTriggered: fileBrowserRoot.pageStack.layers.push(aboutPage);
+                enabled: fileBrowserRoot.pageStack.layers.depth === 1
             }
         ]
     }
@@ -62,6 +68,13 @@ Kirigami.ApplicationWindow {
     pageStack.initialPage: MainView {
         id: pageArea
         document: documentItem
+    }
+
+    Component {
+        id: aboutPage
+        Kirigami.AboutPage {
+            aboutData: about
+        }
     }
 
     //FIXME: this is due to global vars being binded after the parse is done, do the 2 steps parsing

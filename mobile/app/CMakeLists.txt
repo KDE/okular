@@ -1,6 +1,11 @@
 set(CMAKE_AUTORCC ON)
+
+include_directories(
+  ${CMAKE_CURRENT_SOURCE_DIR}/../..
+  ${CMAKE_CURRENT_BINARY_DIR}/../../
+)
 add_executable(okularkirigami main.cpp app.qrc)
-target_link_libraries(okularkirigami Qt5::Widgets Qt5::Qml KF5::I18n)
+target_link_libraries(okularkirigami Qt5::Widgets Qt5::Qml KF5::I18n KF5::CoreAddons)
 if (ANDROID)
     find_package(Qt5 COMPONENTS AndroidExtras)
     target_sources(okularkirigami PRIVATE android.cpp)

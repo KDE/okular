@@ -30,6 +30,8 @@
 #include <QStandardPaths>
 #include <QTimer>
 
+#include "aboutdata.h"
+
 #ifdef __ANDROID__
 #include "android.h"
 
@@ -41,11 +43,14 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     app.setApplicationName(QStringLiteral("okularkirigami"));
 
+    KAboutData aboutData = okularAboutData();
+    KAboutData::setApplicationData(aboutData);
+
     QCommandLineParser parser;
-    parser.addVersionOption();
-    parser.addHelpOption();
     // parser.setApplicationDescription(i18n("Okular mobile"));
+    aboutData.setupCommandLine(&parser);
     parser.process(app);
+    aboutData.processCommandLine(&parser);
     QQmlApplicationEngine engine;
 
 #ifdef __ANDROID__
@@ -56,8 +61,10 @@ int main(int argc, char *argv[])
     qmlRegisterSingletonType<QObject>("org.kde.okular.app", 2, 0, "AndroidInstance", [](QQmlEngine *, QJSEngine *) -> QObject * { return new QObject; });
     const QString uri = parser.positionalArguments().count() == 1 ? QUrl::fromUserInput(parser.positionalArguments().constFirst(), {}, QUrl::AssumeLocalFile).toString() : QString();
 #endif
+    // TODO move away from context property when possible
     engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
     engine.rootContext()->setContextProperty(QStringLiteral("uri"), uri);
+    engine.rootContext()->setContextProperty(QStringLiteral("about"), QVariant::fromValue(aboutData));
     QVariantMap paths;
     paths[QStringLiteral("desktop")] = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
     paths[QStringLiteral("documents")] = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);

@@ -684,17 +684,17 @@ AnnotationActionHandler::AnnotationActionHandler(PageViewAnnotator *parent, KAct
     ac->addAction(QStringLiteral("annotation_settings_advanced"), d->aAdvancedSettings);
 
     ac->setDefaultShortcut(d->aShowToolBar, Qt::Key_F6);
-    ac->setDefaultShortcut(aHighlighter, Qt::ALT + Qt::Key_1);
-    ac->setDefaultShortcut(aUnderline, Qt::ALT + Qt::Key_2);
-    ac->setDefaultShortcut(aSquiggle, Qt::ALT + Qt::Key_3);
-    ac->setDefaultShortcut(aStrikeout, Qt::ALT + Qt::Key_4);
-    ac->setDefaultShortcut(aTypewriter, Qt::ALT + Qt::Key_5);
-    ac->setDefaultShortcut(aInlineNote, Qt::ALT + Qt::Key_6);
-    ac->setDefaultShortcut(aPopupNote, Qt::ALT + Qt::Key_7);
-    ac->setDefaultShortcut(aFreehandLine, Qt::ALT + Qt::Key_8);
-    ac->setDefaultShortcut(aArrow, Qt::ALT + Qt::Key_9);
-    ac->setDefaultShortcut(aRectangle, Qt::ALT + Qt::Key_0);
-    ac->setDefaultShortcut(d->aAddToQuickTools, QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_B));
+    ac->setDefaultShortcut(aHighlighter, Qt::ALT | Qt::Key_1);
+    ac->setDefaultShortcut(aUnderline, Qt::ALT | Qt::Key_2);
+    ac->setDefaultShortcut(aSquiggle, Qt::ALT | Qt::Key_3);
+    ac->setDefaultShortcut(aStrikeout, Qt::ALT | Qt::Key_4);
+    ac->setDefaultShortcut(aTypewriter, Qt::ALT | Qt::Key_5);
+    ac->setDefaultShortcut(aInlineNote, Qt::ALT | Qt::Key_6);
+    ac->setDefaultShortcut(aPopupNote, Qt::ALT | Qt::Key_7);
+    ac->setDefaultShortcut(aFreehandLine, Qt::ALT | Qt::Key_8);
+    ac->setDefaultShortcut(aArrow, Qt::ALT | Qt::Key_9);
+    ac->setDefaultShortcut(aRectangle, Qt::ALT | Qt::Key_0);
+    ac->setDefaultShortcut(d->aAddToQuickTools, QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_B));
     d->updateConfigActions();
 }
 

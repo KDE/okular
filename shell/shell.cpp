@@ -364,7 +364,7 @@ void Shell::setupActions()
 
     m_undoCloseTab = actionCollection()->addAction(QStringLiteral("undo-close-tab"));
     m_undoCloseTab->setText(i18n("Undo close tab"));
-    actionCollection()->setDefaultShortcut(m_undoCloseTab, QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_T));
+    actionCollection()->setDefaultShortcut(m_undoCloseTab, QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_T));
     m_undoCloseTab->setIcon(QIcon::fromTheme(QStringLiteral("edit-undo")));
     m_undoCloseTab->setEnabled(false);
     connect(m_undoCloseTab, &QAction::triggered, this, &Shell::undoCloseTab);

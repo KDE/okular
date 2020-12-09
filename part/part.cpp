@@ -746,7 +746,7 @@ void Part::setupViewerActions()
     m_showProperties = ac->addAction(QStringLiteral("properties"));
     m_showProperties->setText(i18n("&Properties"));
     m_showProperties->setIcon(QIcon::fromTheme(QStringLiteral("document-properties")));
-    ac->setDefaultShortcuts(m_showProperties, {QKeySequence(Qt::ALT + Qt::Key_Return)});
+    ac->setDefaultShortcuts(m_showProperties, {QKeySequence(Qt::ALT | Qt::Key_Return)});
     connect(m_showProperties, &QAction::triggered, this, &Part::slotShowProperties);
     m_showProperties->setEnabled(false);
 
@@ -793,20 +793,20 @@ void Part::setViewerShortcuts()
 {
     KActionCollection *ac = actionCollection();
 
-    ac->setDefaultShortcut(m_gotoPage, QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_G));
+    ac->setDefaultShortcut(m_gotoPage, QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_G));
     ac->setDefaultShortcut(m_find, QKeySequence());
 
     ac->setDefaultShortcut(m_findNext, QKeySequence());
     ac->setDefaultShortcut(m_findPrev, QKeySequence());
 
-    ac->setDefaultShortcut(m_addBookmark, QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_B));
+    ac->setDefaultShortcut(m_addBookmark, QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_B));
 
-    ac->setDefaultShortcut(m_beginningOfDocument, QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_Home));
-    ac->setDefaultShortcut(m_endOfDocument, QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_End));
+    ac->setDefaultShortcut(m_beginningOfDocument, QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_Home));
+    ac->setDefaultShortcut(m_endOfDocument, QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_End));
 
     QAction *action = static_cast<QAction *>(ac->action(QStringLiteral("file_reload")));
     if (action) {
-        ac->setDefaultShortcut(action, QKeySequence(Qt::ALT + Qt::Key_F5));
+        ac->setDefaultShortcut(action, QKeySequence(Qt::ALT | Qt::Key_F5));
     }
 }
 
@@ -887,7 +887,7 @@ void Part::setupActions()
     m_showPresentation->setText(i18n("P&resentation"));
     m_showPresentation->setIcon(QIcon::fromTheme(QStringLiteral("view-presentation")));
     connect(m_showPresentation, &QAction::triggered, this, &Part::slotShowPresentation);
-    ac->setDefaultShortcut(m_showPresentation, QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_P));
+    ac->setDefaultShortcut(m_showPresentation, QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_P));
     m_showPresentation->setEnabled(false);
 
     m_openContainingFolder = ac->addAction(QStringLiteral("open_containing_folder"));

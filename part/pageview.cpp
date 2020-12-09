@@ -542,8 +542,8 @@ void PageView::setupViewerActions(KActionCollection *ac)
 {
     d->actionCollection = ac;
 
-    ac->setDefaultShortcut(d->aZoomIn, QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_Plus));
-    ac->setDefaultShortcut(d->aZoomOut, QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_Minus));
+    ac->setDefaultShortcut(d->aZoomIn, QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_Plus));
+    ac->setDefaultShortcut(d->aZoomOut, QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_Minus));
 
     // orientation menu actions
     d->aRotateClockwise = new QAction(QIcon::fromTheme(QStringLiteral("object-rotate-right")), i18n("Rotate &Right"), this);
@@ -593,7 +593,7 @@ void PageView::setupViewerActions(KActionCollection *ac)
 
     d->aFitWindowToPage = new QAction(QIcon::fromTheme(QStringLiteral("zoom-fit-width")), i18n("Fit Wi&ndow to Page"), this);
     d->aFitWindowToPage->setEnabled(Okular::Settings::viewMode() == (int)Okular::Settings::EnumViewMode::Single);
-    ac->setDefaultShortcut(d->aFitWindowToPage, QKeySequence(Qt::CTRL + Qt::Key_J));
+    ac->setDefaultShortcut(d->aFitWindowToPage, QKeySequence(Qt::CTRL | Qt::Key_J));
     ac->addAction(QStringLiteral("fit_window_to_page"), d->aFitWindowToPage);
     connect(d->aFitWindowToPage, &QAction::triggered, this, &PageView::slotFitWindowToPage);
 
@@ -647,7 +647,7 @@ void PageView::setupViewerActions(KActionCollection *ac)
     ac->addAction(QStringLiteral("mouse_drag"), d->aMouseNormal);
     connect(d->aMouseNormal, &QAction::toggled, this, &PageView::slotMouseNormalToggled);
     d->aMouseNormal->setCheckable(true);
-    ac->setDefaultShortcut(d->aMouseNormal, QKeySequence(Qt::CTRL + Qt::Key_1));
+    ac->setDefaultShortcut(d->aMouseNormal, QKeySequence(Qt::CTRL | Qt::Key_1));
     d->aMouseNormal->setActionGroup(d->mouseModeActionGroup);
     d->aMouseNormal->setChecked(Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::Browse);
 
@@ -655,7 +655,7 @@ void PageView::setupViewerActions(KActionCollection *ac)
     ac->addAction(QStringLiteral("mouse_zoom"), mz);
     connect(mz, &QAction::triggered, this, &PageView::slotSetMouseZoom);
     mz->setCheckable(true);
-    ac->setDefaultShortcut(mz, QKeySequence(Qt::CTRL + Qt::Key_2));
+    ac->setDefaultShortcut(mz, QKeySequence(Qt::CTRL | Qt::Key_2));
     mz->setActionGroup(d->mouseModeActionGroup);
     mz->setChecked(Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::Zoom);
 
@@ -677,7 +677,7 @@ void PageView::setupActions(KActionCollection *ac)
     ac->addAction(QStringLiteral("mouse_select"), d->aMouseSelect);
     connect(d->aMouseSelect, &QAction::triggered, this, &PageView::slotSetMouseSelect);
     d->aMouseSelect->setCheckable(true);
-    ac->setDefaultShortcut(d->aMouseSelect, Qt::CTRL + Qt::Key_3);
+    ac->setDefaultShortcut(d->aMouseSelect, Qt::CTRL | Qt::Key_3);
 
     d->aMouseSelect->setActionGroup(d->mouseModeActionGroup);
     d->aMouseSelect->setChecked(Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::RectSelect);
@@ -686,7 +686,7 @@ void PageView::setupActions(KActionCollection *ac)
     ac->addAction(QStringLiteral("mouse_textselect"), d->aMouseTextSelect);
     connect(d->aMouseTextSelect, &QAction::triggered, this, &PageView::slotSetMouseTextSelect);
     d->aMouseTextSelect->setCheckable(true);
-    ac->setDefaultShortcut(d->aMouseTextSelect, Qt::CTRL + Qt::Key_4);
+    ac->setDefaultShortcut(d->aMouseTextSelect, Qt::CTRL | Qt::Key_4);
     d->aMouseTextSelect->setActionGroup(d->mouseModeActionGroup);
     d->aMouseTextSelect->setChecked(Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::TextSelect);
 
@@ -694,7 +694,7 @@ void PageView::setupActions(KActionCollection *ac)
     ac->addAction(QStringLiteral("mouse_tableselect"), d->aMouseTableSelect);
     connect(d->aMouseTableSelect, &QAction::triggered, this, &PageView::slotSetMouseTableSelect);
     d->aMouseTableSelect->setCheckable(true);
-    ac->setDefaultShortcut(d->aMouseTableSelect, Qt::CTRL + Qt::Key_5);
+    ac->setDefaultShortcut(d->aMouseTableSelect, Qt::CTRL | Qt::Key_5);
     d->aMouseTableSelect->setActionGroup(d->mouseModeActionGroup);
     d->aMouseTableSelect->setChecked(Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::TableSelect);
 
@@ -702,7 +702,7 @@ void PageView::setupActions(KActionCollection *ac)
     ac->addAction(QStringLiteral("mouse_magnifier"), d->aMouseMagnifier);
     connect(d->aMouseMagnifier, &QAction::triggered, this, &PageView::slotSetMouseMagnifier);
     d->aMouseMagnifier->setCheckable(true);
-    ac->setDefaultShortcut(d->aMouseMagnifier, Qt::CTRL + Qt::Key_6);
+    ac->setDefaultShortcut(d->aMouseMagnifier, Qt::CTRL | Qt::Key_6);
     d->aMouseMagnifier->setActionGroup(d->mouseModeActionGroup);
     d->aMouseMagnifier->setChecked(Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::Magnifier);
 
@@ -747,19 +747,19 @@ void PageView::setupActions(KActionCollection *ac)
     QAction *su = new QAction(i18n("Scroll Up"), this);
     ac->addAction(QStringLiteral("view_scroll_up"), su);
     connect(su, &QAction::triggered, this, &PageView::slotAutoScrollUp);
-    ac->setDefaultShortcut(su, QKeySequence(Qt::SHIFT + Qt::Key_Up));
+    ac->setDefaultShortcut(su, QKeySequence(Qt::SHIFT | Qt::Key_Up));
     addAction(su);
 
     QAction *sd = new QAction(i18n("Scroll Down"), this);
     ac->addAction(QStringLiteral("view_scroll_down"), sd);
     connect(sd, &QAction::triggered, this, &PageView::slotAutoScrollDown);
-    ac->setDefaultShortcut(sd, QKeySequence(Qt::SHIFT + Qt::Key_Down));
+    ac->setDefaultShortcut(sd, QKeySequence(Qt::SHIFT | Qt::Key_Down));
     addAction(sd);
 
     QAction *spu = new QAction(i18n("Scroll Page Up"), this);
     ac->addAction(QStringLiteral("view_scroll_page_up"), spu);
     connect(spu, &QAction::triggered, this, &PageView::slotScrollUp);
-    ac->setDefaultShortcut(spu, QKeySequence(Qt::SHIFT + Qt::Key_Space));
+    ac->setDefaultShortcut(spu, QKeySequence(Qt::SHIFT | Qt::Key_Space));
     addAction(spu);
 
     QAction *spd = new QAction(i18n("Scroll Page Down"), this);

@@ -24,10 +24,15 @@ import org.kde.kirigami 2.10 as Kirigami
 import org.kde.okular.app 2.0
 
 Kirigami.ApplicationWindow {
-    id: fileBrowserRoot
+    id: root
+
+    readonly property int columnWidth: Kirigami.Units.gridUnit * 13
+
+    wideScreen: width > columnWidth * 5
     visible: true
 
     header: null
+
     globalDrawer: Kirigami.GlobalDrawer {
         title: i18n("Okular")
         titleIcon: "okular"
@@ -57,7 +62,13 @@ Kirigami.ApplicationWindow {
             }
         ]
     }
-    contextDrawer: OkularDrawer {}
+    contextDrawer: OkularDrawer {
+        contentItem.implicitWidth: columnWidth
+        modal: !root.wideScreen
+        onModalChanged: drawerOpen = !modal
+        enabled: documentItem.opened && pageStack.layers.depth < 2
+        handleVisible: enabled && pageStack.layers.depth < 2
+    }
 
     title: documentItem.windowTitleForDocument ? documentItem.windowTitleForDocument : i18n("Okular")
     Okular.DocumentItem {

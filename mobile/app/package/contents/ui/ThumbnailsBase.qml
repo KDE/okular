@@ -29,23 +29,22 @@ Kirigami.ScrollablePage {
     property Item view: resultsGrid
     signal pageClicked(int pageNumber)
 
-    QQC2.Label {
-        anchors.centerIn: parent
-        visible: model.length == 0
-        text: i18n("No results found.")
-    }
-    Kirigami.CardsListView {
+    contentItem: Kirigami.CardsListView {
         id: resultsGrid
         clip: true
 
-        leftMargin: Kirigami.Units.largeSpacing * 10
-        rightMargin: Kirigami.Units.largeSpacing * 10
+        QQC2.Label {
+            anchors.centerIn: parent
+            visible: model.length == 0
+            text: i18n("No results found.")
+        }
 
         delegate: Kirigami.AbstractCard {
+            implicitWidth: root.width
             highlighted: delegateRecycler && delegateRecycler.GridView.isCurrentItem
             showClickFeedback: true
             readonly property real ratio: contentItem.implicitHeight/contentItem.implicitWidth
-            height: width * ratio
+            implicitHeight: width * ratio
             contentItem: Okular.ThumbnailItem {
                 document: documentItem
                 pageNumber: modelData

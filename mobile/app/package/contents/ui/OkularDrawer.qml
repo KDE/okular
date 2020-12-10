@@ -24,7 +24,12 @@ import org.kde.okular 2.0 as Okular
 
 
 Kirigami.OverlayDrawer {
-    edge: Qt.RightEdge
+    bottomPadding: 0
+    topPadding: 0
+    leftPadding: 0
+    rightPadding: 0
+
+    edge: Qt.application.layoutDirection == Qt.RightToLeft ? Qt.LeftEdge : Qt.RightEdge
     contentItem: Item {
         id: browserFrame
         implicitWidth: Kirigami.Units.gridUnit * 45

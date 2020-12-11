@@ -24,7 +24,7 @@ import org.kde.kirigami 2.10 as Kirigami
 import org.kde.okular.app 2.0
 
 Kirigami.ApplicationWindow {
-    id: root
+    id: fileBrowserRoot
 
     readonly property int columnWidth: Kirigami.Units.gridUnit * 13
 
@@ -65,7 +65,7 @@ Kirigami.ApplicationWindow {
     }
     contextDrawer: OkularDrawer {
         contentItem.implicitWidth: columnWidth
-        modal: !root.wideScreen
+        modal: !fileBrowserRoot.wideScreen
         onModalChanged: drawerOpen = !modal
         enabled: documentItem.opened && pageStack.layers.depth < 2
         handleVisible: enabled && pageStack.layers.depth < 2
@@ -80,6 +80,7 @@ Kirigami.ApplicationWindow {
     pageStack.initialPage: MainView {
         id: pageArea
         document: documentItem
+        Kirigami.ColumnView.preventStealing: true
     }
 
     Component {

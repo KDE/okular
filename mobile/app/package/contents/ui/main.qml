@@ -31,11 +31,11 @@ Kirigami.ApplicationWindow {
     wideScreen: width > columnWidth * 5
     visible: true
 
-    header: null
-
     globalDrawer: Kirigami.GlobalDrawer {
         title: i18n("Okular")
         titleIcon: "okular"
+        drawerOpen: false
+        isMenu: true
 
         QQD.FileDialog {
             id: fileDialog
@@ -48,6 +48,7 @@ Kirigami.ApplicationWindow {
 
         actions: [
             Kirigami.Action {
+                id: openDocumentAction
                 text: i18n("Open...")
                 icon.name: "document-open"
                 onTriggered: {
@@ -95,8 +96,6 @@ Kirigami.ApplicationWindow {
         onTriggered: {
             if (uri) {
                 documentItem.url = uri
-            } else {
-                globalDrawer.open();
             }
         }
     }

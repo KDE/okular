@@ -8,5 +8,6 @@
 <file>package/contents/ui/Thumbnails.qml</file>
 <file>package/contents/ui/ThumbnailsBase.qml</file>
 <file>package/contents/ui/TreeDelegate.qml</file>
+<file>package/contents/ui/PlaceholderMessage.qml</file>
 </qresource>
 </RCC>

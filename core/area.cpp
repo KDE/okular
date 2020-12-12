@@ -184,7 +184,6 @@ bool NormalizedRect::intersects(double l, double t, double r, double b) const
 NormalizedRect NormalizedRect::operator|(const NormalizedRect &r) const
 {
     NormalizedRect ret;
-    // todo !
     ret.left = qMin(left, r.left);
     ret.top = qMin(top, r.top);
     ret.bottom = qMax(bottom, r.bottom);

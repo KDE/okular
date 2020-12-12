@@ -44,6 +44,7 @@ private slots:
     void test311232();
     void test323262();
     void test323263();
+    void test430243();
     void testDottedI();
     void testHyphenAtEndOfLineWithoutYOverlap();
     void testHyphenWithYOverlap();
@@ -216,6 +217,28 @@ void SearchTest::test323263()
     expected.append(rect[1]);
     expected.append(rect[2]);
     expected.simplify();
+    QCOMPARE(*result, expected);
+    delete result;
+
+    delete page;
+}
+
+void SearchTest::test430243()
+{
+    // 778 is COMBINING RING ABOVE
+    // 197 is LATIN CAPITAL LETTER A WITH RING ABOVE
+    QVector<QString> text;
+    text << QStringLiteral("A") << QString(QChar(778));
+
+    QVector<Okular::NormalizedRect> rect;
+    rect << Okular::NormalizedRect(0, 0, 1, 1) << Okular::NormalizedRect(1, 0, 2, 1);
+
+    CREATE_PAGE;
+
+    Okular::RegularAreaRect *result = tp->findText(0, QString(QChar(197)), Okular::FromTop, Qt::CaseSensitive, nullptr);
+    QVERIFY(result);
+    Okular::RegularAreaRect expected;
+    expected.append(rect[0] | rect[1]);
     QCOMPARE(*result, expected);
     delete result;
 

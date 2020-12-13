@@ -10,9 +10,9 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <QTest>
 #include <QMimeDatabase>
 #include <QTemporaryFile>
+#include <QTest>
 
 #include <threadweaver/queue.h>
 

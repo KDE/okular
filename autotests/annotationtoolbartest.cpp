@@ -9,7 +9,7 @@
 
 // clazy:excludeall=qstring-allocations
 
-#include <QtTest>
+#include <QTest>
 
 #include <KActionCollection>
 #include <QTabBar>

@@ -9,7 +9,9 @@
 
 // clazy:excludeall=qstring-allocations
 
-#include <QtTest>
+#include <QTest>
+#include <QMimeDatabase>
+#include <QSignalSpy>
 
 #include "../core/document.h"
 #include "../core/page.h"

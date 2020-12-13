@@ -7,7 +7,7 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <QtTest>
+#include <QTest>
 
 #include "core/document.h"
 #include "core/generator.h"

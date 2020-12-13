@@ -14,11 +14,12 @@
 #include <core/page.h>
 #include <part/pagepainter.h>
 
-#include <QtTest>
+#include <QTest>
 
 #include <KPluginLoader>
 #include <QImage>
 #include <QImageReader>
+#include <QMimeDatabase>
 #include <QPainter>
 #include <QTemporaryFile>
 

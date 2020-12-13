@@ -7,7 +7,7 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <QtTest>
+#include <QTest>
 
 #include "../settings_core.h"
 #include "core/document.h"

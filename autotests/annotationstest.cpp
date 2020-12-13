@@ -7,7 +7,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-#include <QtTest>
+#include <QTest>
+#include <QMimeDatabase>
 
 #include "../core/annotations.h"
 #include "../core/document.h"

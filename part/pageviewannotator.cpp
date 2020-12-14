@@ -323,6 +323,7 @@ public:
         , m_document(document)
         , m_page(nullptr)
         , m_pageView(pageView)
+        , m_startOver(false)
     {
         m_block = true;
     }
@@ -335,6 +336,7 @@ public:
 
     QList<Okular::Annotation *> end() override
     {
+        m_startOver = false;
         rect.left = qMin(startpoint.x, point.x);
         rect.top = qMin(startpoint.y, point.y);
         rect.right = qMax(startpoint.x, point.x);
@@ -350,6 +352,7 @@ public:
                 KGuiItem(i18n("Sign")),
                 QStringLiteral("TooSmallDigitalSignatureQuestion"));
             if (answer == KMessageBox::Yes) {
+                m_startOver = true;
                 return {};
             }
         }
@@ -430,6 +433,11 @@ public:
         return !certNicknameToUse.isEmpty();
     }
 
+    bool userWantsToStartOver() const
+    {
+        return m_startOver;
+    }
+
     bool sign(const QString &newFilePath)
     {
         Okular::NewSignatureData data;
@@ -450,6 +458,8 @@ private:
     Okular::Document *m_document;
     const Okular::Page *m_page;
     PageView *m_pageView;
+
+    bool m_startOver;
 };
 
 /** @short PolyLineEngine */
@@ -1044,6 +1054,10 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
                         KMessageBox::error(m_pageView, i18nc("%1 is a file path", "Could not sign. Invalid certificate password or could not write to '%1'", newFilePath));
                     }
                 }
+            } else if (signEngine->userWantsToStartOver()) {
+                delete m_engine;
+                m_engine = new PickPointEngineSignature(m_document, m_pageView);
+                return {};
             }
             m_continuousMode = false;
         }

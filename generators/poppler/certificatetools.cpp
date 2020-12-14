@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2019 by Bubli                                           *
+ *   Copyright (C) 2019 by Bubli <Katarina.Behrens@cib.de>                 *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *

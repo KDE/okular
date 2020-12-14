@@ -41,20 +41,14 @@ set(okularGenerator_poppler_PART_SRCS
    formfields.cpp
    annots.cpp
    pdfsignatureutils.cpp
+   pdfsettingswidget.cpp
 )
-
-if(HAVE_POPPLER_SIGNING)
-   set(okularGenerator_poppler_PART_SRCS
-       ${okularGenerator_poppler_PART_SRCS} certificatetools.cpp)
-endif()
 
 ki18n_wrap_ui(okularGenerator_poppler_PART_SRCS
    conf/pdfsettingswidget.ui
-   conf/certsettingswidget.ui
 )
 
-kconfig_add_kcfg_files(okularGenerator_poppler_PART_SRCS conf/pdfsettings.kcfgc )
-kconfig_add_kcfg_files(okularGenerator_poppler_PART_SRCS GENERATE_MOC conf/certsettings.kcfgc )
+kconfig_add_kcfg_files(okularGenerator_poppler_PART_SRCS GENERATE_MOC conf/pdfsettings.kcfgc )
 
 okular_add_generator(okularGenerator_poppler ${okularGenerator_poppler_PART_SRCS})
 

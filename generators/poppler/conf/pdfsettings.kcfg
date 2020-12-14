@@ -4,6 +4,8 @@
       xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
       http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
     <kcfgfile name="okular-generator-popplerrc"/>
+    <signal name="useDefaultDBChanged" />
+    <signal name="dBCertificatePathChanged" />
     <group name="General">
         <entry key="EnhanceThinLines" type="Enum" >
             <default>No</default>
@@ -13,6 +15,15 @@
                 <choice name="Shape" />
             </choices>
         </entry>
+    </group>
+    <group name="Signatures" >
+      <entry key="UseDefaultCertDB" type="Bool">
+          <default>true</default>
+          <emit signal="useDefaultDBChanged" />
+      </entry>
+      <entry key="DBCertificatePath" type="String">
+          <emit signal="dBCertificatePathChanged" />
+      </entry>
     </group>
 </kcfg>
 <!-- vim:set ts=4 -->

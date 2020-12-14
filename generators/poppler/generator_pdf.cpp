@@ -52,10 +52,6 @@
 #include <core/utils.h>
 
 #include "pdfsettings.h"
-#include "ui_pdfsettingswidget.h"
-
-#include "certificatetools.h"
-#include "certsettings.h"
 
 #include <config-okular-poppler.h>
 
@@ -65,6 +61,7 @@
 #include "annots.h"
 #include "debug_pdf.h"
 #include "formfields.h"
+#include "pdfsettingswidget.h"
 #include "pdfsignatureutils.h"
 #include "popplerembeddedfile.h"
 
@@ -572,8 +569,8 @@ PDFGenerator::PDFGenerator(QObject *parent, const QVariantList &args)
     // so doing it all the time won't hurt either
     Poppler::setDebugErrorFunction(PDFGeneratorPopplerDebugFunction, QVariant());
 #ifdef HAVE_POPPLER_SIGNING
-    if (!CertificateSettings::useDefaultDB()) {
-        Poppler::setNSSDir(QUrl(CertificateSettings::dBCertificatePath()).toLocalFile());
+    if (!PDFSettings::useDefaultCertDB()) {
+        Poppler::setNSSDir(QUrl(PDFSettings::dBCertificatePath()).toLocalFile());
     }
 #endif
 }
@@ -1478,15 +1475,9 @@ bool PDFGenerator::reparseConfig()
 
 void PDFGenerator::addPages(KConfigDialog *dlg)
 {
-    Ui_PDFSettingsWidget pdfsw;
-    QWidget *w = new QWidget(dlg);
-    pdfsw.setupUi(w);
+    PDFSettingsWidget *w = new PDFSettingsWidget(dlg);
+    ;
     dlg->addPage(w, PDFSettings::self(), i18n("PDF"), QStringLiteral("application-pdf"), i18n("PDF Backend Configuration"));
-
-#ifdef HAVE_POPPLER_SIGNING
-    CertificateTools *certTools = new CertificateTools(dlg);
-    dlg->addPage(certTools, CertificateSettings::self(), i18n("PDF Certificates"), QStringLiteral("application-pkcs7-signature"), i18n("PDF Digital Signature Certificates"));
-#endif
 }
 
 bool PDFGenerator::setDocumentRenderHints()

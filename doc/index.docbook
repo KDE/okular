@@ -486,7 +486,7 @@ Context menu actions like Rename Bookmarks etc.)
 						<listitem><para>The system-wide <filename>/etc/pki/nssdb</filename> certificate store.</para></listitem>
 						<listitem><para>The current user <filename>$HOME/.pki/nssdb</filename></para></listitem>
 					</itemizedlist>
-					If you want to use a custom certificate store you can do so by setting it in the <link linkend="config-pdf-digital-signatures">PDF Digital Signature Certificates</link> section of the <link linkend="configure-backends">Configure Backends...</link> dialog.
+					If you want to use a custom certificate store you can do so by setting it in the <link linkend="config-pdf-digital-signatures">&PDF; Backend Configuration</link> section of the <link linkend="configure-backends">Configure Backends...</link> dialog.
 				</para>
 				<note>
 					<para>
@@ -2463,8 +2463,7 @@ Context menu actions like Rename Bookmarks etc.)
 		</varlistentry>
 	      </variablelist>
 	    </para>
-	  </sect1>
-		<sect1 id="config-pdf-digital-signatures">
+		<sect2 id="config-pdf-digital-signatures">
 			<title>&PDF; Digital Signature Certificates</title>
 			<para>
 				<screenshot><mediaobject><imageobject><imagedata fileref="config-pdf-digital-signatures.png" format="PNG"/></imageobject></mediaobject></screenshot>
@@ -2473,6 +2472,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<para>
 				It also lists the certificates available in the current Certificate Database (if any).
 			</para>
+		</sect2>
 	  </sect1>
 	</chapter>
 	<chapter id="configure">

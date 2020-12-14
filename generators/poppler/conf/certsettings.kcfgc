@@ -1,4 +1,0 @@
-File=certsettings.kcfg
-ClassName=CertificateSettings
-Mutators=true
-Singleton=true

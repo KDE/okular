@@ -13,7 +13,6 @@
 
 #include "core/action.h"
 
-#include "certsettings.h"
 #include "pdfsignatureutils.h"
 
 #include <poppler-qt5.h>

@@ -364,20 +364,27 @@ public:
 
         QStringList items;
         QHash<QString, Okular::CertificateInfo *> nickToCert;
+        const QDateTime now = QDateTime::currentDateTime();
         for (auto cert : certs) {
-            items.append(cert->nickName());
-            nickToCert[cert->nickName()] = cert;
+            if (cert->validityStart() <= now && now <= cert->validityEnd()) {
+                items.append(cert->nickName());
+                nickToCert[cert->nickName()] = cert;
+            }
         }
 
         if (items.isEmpty()) {
             m_creationCompleted = false;
             clicked = false;
-            KMessageBox::information(m_pageView,
-                                     i18n("There are no available signing certificates.<br/>For more information, please see the section about <a href=\"%1\">Adding Digital Signatures</a> in the manual.",
-                                          QStringLiteral("help:/okular/index.html#adding_digital_signatures")),
-                                     QString(),
-                                     QString(),
-                                     KMessageBox::Notify | KMessageBox::AllowLink);
+            if (certs.isEmpty()) {
+                KMessageBox::information(m_pageView,
+                                         i18n("There are no available signing certificates.<br/>For more information, please see the section about <a href=\"%1\">Adding Digital Signatures</a> in the manual.",
+                                              QStringLiteral("help:/okular/index.html#adding_digital_signatures")),
+                                         QString(),
+                                         QString(),
+                                         KMessageBox::Notify | KMessageBox::AllowLink);
+            } else {
+                KMessageBox::information(m_pageView, i18n("All your signing certificates are either not valid yet or are past their validity date."));
+            }
             return {};
         }
 

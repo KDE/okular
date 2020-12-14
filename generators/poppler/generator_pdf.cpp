@@ -761,8 +761,8 @@ void PDFGenerator::loadPages(QVector<Okular::Page *> &pagesVector, int rotation,
     if (count > 0) {
 #if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(0, 89, 0)
         const QVector<Poppler::FormFieldSignature *> allSignatures = pdfdoc->signatures();
-        Poppler::Page *page0 = pdfdoc->page(0);
-        QLinkedList<Okular::FormField *> page0FormFields = getFormFields(page0);
+        std::unique_ptr<Poppler::Page> page0(pdfdoc->page(0));
+        QLinkedList<Okular::FormField *> page0FormFields = getFormFields(page0.get());
 
         for (Poppler::FormFieldSignature *s : allSignatures) {
             bool createSignature = true;

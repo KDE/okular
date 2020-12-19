@@ -1473,8 +1473,10 @@ bool Part::openFile()
         }
 
         if (mimes[0].inherits(QStringLiteral("text/plain"))) {
-            QMimeType contentMime = db.mimeTypeForFile(fileNameToOpen, QMimeDatabase::MatchContent);
-            mimes.prepend(contentMime);
+            const QMimeType contentMime = db.mimeTypeForFile(fileNameToOpen, QMimeDatabase::MatchContent);
+            if (contentMime.name() != QLatin1String("text/plain")) {
+                mimes.prepend(contentMime);
+            }
         }
     } else {
         mimes << pathMime;

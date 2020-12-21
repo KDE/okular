@@ -1753,6 +1753,10 @@ void PDFGenerator::addTransition(Poppler::Page *pdfPage, Okular::Page *page)
 
 QLinkedList<Okular::FormField *> PDFGenerator::getFormFields(Poppler::Page *popplerPage)
 {
+    if (!popplerPage) {
+        return {};
+    }
+
     const QList<Poppler::FormField *> popplerFormFields = popplerPage->formFields();
     QLinkedList<Okular::FormField *> okularFormFields;
     for (Poppler::FormField *f : popplerFormFields) {

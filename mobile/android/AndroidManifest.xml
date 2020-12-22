@@ -1,6 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
 <manifest package="org.kde.okular.kirigami" xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="1.3.0" android:versionCode="9" android:installLocation="auto">
-    <application android:name="org.qtproject.qt5.android.bindings.QtApplication" android:label="Okular" android:icon="@drawable/icon">
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <supports-screens android:largeScreens="true" android:normalScreens="true" android:anyDensity="true" android:smallScreens="true"/>
+    <application android:name="org.qtproject.qt5.android.bindings.QtApplication" android:label="Okular" android:icon="@drawable/icon" android:extractNativeLibs="true">
         <activity android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|locale|fontScale|keyboard|keyboardHidden|navigation"
                   android:name="org.kde.something.OpenFileActivity"
                   android:label="Okular"
@@ -24,25 +27,24 @@
             <meta-data android:name="android.app.qt_libs_resource_id" android:resource="@array/qt_libs"/>
             <meta-data android:name="android.app.bundled_libs_resource_id" android:resource="@array/bundled_libs"/>
             <!-- Deploy Qt libs as part of package -->
-            <meta-data android:name="android.app.bundle_local_qt_libs" android:value="1"/>
-            <meta-data android:name="android.app.bundled_in_lib_resource_id" android:resource="@array/bundled_in_lib"/>
-            <meta-data android:name="android.app.bundled_in_assets_resource_id" android:resource="@array/bundled_in_assets"/>
+            <meta-data android:name="android.app.bundle_local_qt_libs" android:value="-- %%BUNDLE_LOCAL_QT_LIBS%% --"/>
+
             <!-- Run with local libs -->
-            <meta-data android:name="android.app.use_local_qt_libs" android:value="1"/>
+            <meta-data android:name="android.app.use_local_qt_libs" android:value="-- %%USE_LOCAL_QT_LIBS%% --"/>
             <meta-data android:name="android.app.libs_prefix" android:value="/data/local/tmp/qt/"/>
-            <meta-data android:name="android.app.load_local_libs" android:value="plugins/platforms/android/libqtforandroid.so:plugins/bearer/libqandroidbearer.so"/>
-            <meta-data android:name="android.app.load_local_jars" android:value="jar/QtAndroid.jar:jar/QtAndroidAccessibility.jar:jar/QtAndroid-bundled.jar:jar/QtAndroidAccessibility-bundled.jar:jar/QtAndroidBearer.jar:jar/QtAndroidBearer-bundled.jar"/>
-            <meta-data android:name="android.app.static_init_classes" android:value=""/>
+            <meta-data android:name="android.app.load_local_libs_resource_id" android:resource="@array/load_local_libs"/>
+            <meta-data android:name="android.app.load_local_jars" android:value="-- %%INSERT_LOCAL_JARS%% --"/>
+            <meta-data android:name="android.app.static_init_classes" android:value="-- %%INSERT_INIT_CLASSES%% --"/>
             <!--  Messages maps -->
             <meta-data android:value="@string/ministro_not_found_msg" android:name="android.app.ministro_not_found_msg"/>
             <meta-data android:value="@string/ministro_needed_msg" android:name="android.app.ministro_needed_msg"/>
             <meta-data android:value="@string/fatal_error_msg" android:name="android.app.fatal_error_msg"/>
+            <meta-data android:value="@string/unsupported_android_version" android:name="android.app.unsupported_android_version"/>
             <!--  Messages maps -->
+
+            <meta-data android:name="android.app.extract_android_style" android:value="minimal"/>
+            <meta-data android:name="android.app.background_running" android:value="false"/>
+            <meta-data android:name="android.app.auto_screen_scale_factor" android:value="false"/>
         </activity>
     </application>
-    <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="28"/>
-
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <supports-screens android:largeScreens="true" android:normalScreens="true" android:anyDensity="true" android:smallScreens="true"/>
 </manifest>

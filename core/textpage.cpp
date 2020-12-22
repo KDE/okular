@@ -245,8 +245,23 @@ TextPage::~TextPage()
 
 void TextPage::append(const QString &text, NormalizedRect *area)
 {
-    if (!text.isEmpty())
+    if (!text.isEmpty()) {
+        if (!d->m_words.isEmpty()) {
+            TinyTextEntity *lastEntity = d->m_words.last();
+            const QString concatText = lastEntity->text() + text.normalized(QString::NormalizationForm_KC);
+            if (concatText != concatText.normalized(QString::NormalizationForm_KC)) {
+                // If this happens it means that the new text + old one have combined, for example A and ◌̊  form Å
+                NormalizedRect newArea = *area | lastEntity->area;
+                delete area;
+                delete lastEntity;
+                d->m_words.removeLast();
+                d->m_words.append(new TinyTextEntity(concatText.normalized(QString::NormalizationForm_KC), newArea));
+                return;
+            }
+        }
+
         d->m_words.append(new TinyTextEntity(text.normalized(QString::NormalizationForm_KC), *area));
+    }
     delete area;
 }
 

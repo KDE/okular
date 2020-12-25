@@ -2178,8 +2178,12 @@ Context menu actions like Rename Bookmarks etc.)
 						</menuchoice>
 					</term>
 					<listitem>
-						<para>Draw a rectangle around the text for the table, then use the click with the &LMB;
-						  to divide the text block into rows and columns. A &LMB; click on a existing line removes it and merges the adjacent rows or columns.</para>
+						<para>
+							Draw a rectangle around the text for the table,
+							then click with the &LMB; to divide the text block into rows and columns.
+							A &LMB; click on an existing line removes it and merges the adjacent rows or columns.
+							Finally, just click with the &RMB; to copy the table to the clipboard.
+						</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>

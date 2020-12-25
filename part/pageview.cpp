@@ -972,12 +972,93 @@ QString PageViewPrivate::selectedText() const
     return text;
 }
 
+QMimeData *PageView::getTableContents() const
+{
+    QString selText;
+    QString selHtml;
+    QList<double> xs = d->tableSelectionCols;
+    QList<double> ys = d->tableSelectionRows;
+    xs.prepend(0.0);
+    xs.append(1.0);
+    ys.prepend(0.0);
+    ys.append(1.0);
+    selHtml = QString::fromLatin1(
+        "<html><head>"
+        "<meta content=\"text/html; charset=utf-8\" http-equiv=\"Content-Type\">"
+        "</head><body><table>");
+    for (int r = 0; r + 1 < ys.length(); r++) {
+        selHtml += QLatin1String("<tr>");
+        for (int c = 0; c + 1 < xs.length(); c++) {
+            Okular::NormalizedRect cell(xs[c], ys[r], xs[c + 1], ys[r + 1]);
+            if (c)
+                selText += QLatin1Char('\t');
+            QString txt;
+            for (const TableSelectionPart &tsp : qAsConst(d->tableSelectionParts)) {
+                // first, crop the cell to this part
+                if (!tsp.rectInSelection.intersects(cell))
+                    continue;
+                Okular::NormalizedRect cellPart = tsp.rectInSelection & cell; // intersection
+
+                // second, convert it from table coordinates to part coordinates
+                cellPart.left -= tsp.rectInSelection.left;
+                cellPart.left /= (tsp.rectInSelection.right - tsp.rectInSelection.left);
+                cellPart.right -= tsp.rectInSelection.left;
+                cellPart.right /= (tsp.rectInSelection.right - tsp.rectInSelection.left);
+                cellPart.top -= tsp.rectInSelection.top;
+                cellPart.top /= (tsp.rectInSelection.bottom - tsp.rectInSelection.top);
+                cellPart.bottom -= tsp.rectInSelection.top;
+                cellPart.bottom /= (tsp.rectInSelection.bottom - tsp.rectInSelection.top);
+
+                // third, convert from part coordinates to item coordinates
+                cellPart.left *= (tsp.rectInItem.right - tsp.rectInItem.left);
+                cellPart.left += tsp.rectInItem.left;
+                cellPart.right *= (tsp.rectInItem.right - tsp.rectInItem.left);
+                cellPart.right += tsp.rectInItem.left;
+                cellPart.top *= (tsp.rectInItem.bottom - tsp.rectInItem.top);
+                cellPart.top += tsp.rectInItem.top;
+                cellPart.bottom *= (tsp.rectInItem.bottom - tsp.rectInItem.top);
+                cellPart.bottom += tsp.rectInItem.top;
+
+                // now get the text
+                Okular::RegularAreaRect rects;
+                rects.append(cellPart);
+                txt += tsp.item->page()->text(&rects, Okular::TextPage::CentralPixelTextAreaInclusionBehaviour);
+            }
+            QString html = txt;
+            selText += txt.replace(QLatin1Char('\n'), QLatin1Char(' '));
+            html.replace(QLatin1Char('&'), QLatin1String("&amp;")).replace(QLatin1Char('<'), QLatin1String("&lt;")).replace(QLatin1Char('>'), QLatin1String("&gt;"));
+            // Remove newlines, do not turn them into <br>, because
+            // Excel interprets <br> within cell as new cell...
+            html.replace(QLatin1Char('\n'), QLatin1String(" "));
+            selHtml += QStringLiteral("<td>") + html + QStringLiteral("</td>");
+        }
+        selText += QLatin1Char('\n');
+        selHtml += QLatin1String("</tr>\n");
+    }
+    selHtml += QLatin1String("</table></body></html>\n");
+
+    QMimeData *md = new QMimeData();
+    md->setText(selText);
+    md->setHtml(selHtml);
+
+    return md;
+}
+
 void PageView::copyTextSelection() const
 {
-    const QString text = d->selectedText();
-    if (!text.isEmpty()) {
+    switch (d->mouseMode) {
+    case Okular::Settings::EnumMouseMode::TableSelect: {
         QClipboard *cb = QApplication::clipboard();
-        cb->setText(text, QClipboard::Clipboard);
+        cb->setMimeData(getTableContents(), QClipboard::Clipboard);
+    } break;
+
+    case Okular::Settings::EnumMouseMode::TextSelect: {
+        const QString text = d->selectedText();
+        if (!text.isEmpty()) {
+            QClipboard *cb = QApplication::clipboard();
+            cb->setText(text, QClipboard::Clipboard);
+        }
+    } break;
     }
 }
 
@@ -2344,6 +2425,19 @@ void PageView::mousePressEvent(QMouseEvent *e)
                 updatedRect.translate(-contentAreaPosition());
                 viewport()->update(updatedRect);
             }
+        } else if (rightButton && !d->tableSelectionParts.isEmpty()) {
+            QMenu menu(this);
+            QAction *copyToClipboard = menu.addAction(QIcon::fromTheme(QStringLiteral("edit-copy")), i18n("Copy Table Contents to Clipboard"));
+            const bool copyAllowed = d->document->isAllowed(Okular::AllowCopy);
+
+            if (!copyAllowed) {
+                copyToClipboard->setEnabled(false);
+                copyToClipboard->setText(i18n("Copy forbidden by DRM"));
+            }
+
+            QAction *choice = menu.exec(e->globalPos());
+            if (choice == copyToClipboard)
+                copyTextSelection();
         }
         break;
     case Okular::Settings::EnumMouseMode::TextSelect:
@@ -2792,78 +2886,12 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
             break;
         }
 
-        QString selText;
-        QString selHtml;
-        QList<double> xs = d->tableSelectionCols;
-        QList<double> ys = d->tableSelectionRows;
-        xs.prepend(0.0);
-        xs.append(1.0);
-        ys.prepend(0.0);
-        ys.append(1.0);
-        selHtml = QString::fromLatin1(
-            "<html><head>"
-            "<meta content=\"text/html; charset=utf-8\" http-equiv=\"Content-Type\">"
-            "</head><body><table>");
-        for (int r = 0; r + 1 < ys.length(); r++) {
-            selHtml += QLatin1String("<tr>");
-            for (int c = 0; c + 1 < xs.length(); c++) {
-                Okular::NormalizedRect cell(xs[c], ys[r], xs[c + 1], ys[r + 1]);
-                if (c)
-                    selText += QLatin1Char('\t');
-                QString txt;
-                for (const TableSelectionPart &tsp : qAsConst(d->tableSelectionParts)) {
-                    // first, crop the cell to this part
-                    if (!tsp.rectInSelection.intersects(cell))
-                        continue;
-                    Okular::NormalizedRect cellPart = tsp.rectInSelection & cell; // intersection
-
-                    // second, convert it from table coordinates to part coordinates
-                    cellPart.left -= tsp.rectInSelection.left;
-                    cellPart.left /= (tsp.rectInSelection.right - tsp.rectInSelection.left);
-                    cellPart.right -= tsp.rectInSelection.left;
-                    cellPart.right /= (tsp.rectInSelection.right - tsp.rectInSelection.left);
-                    cellPart.top -= tsp.rectInSelection.top;
-                    cellPart.top /= (tsp.rectInSelection.bottom - tsp.rectInSelection.top);
-                    cellPart.bottom -= tsp.rectInSelection.top;
-                    cellPart.bottom /= (tsp.rectInSelection.bottom - tsp.rectInSelection.top);
-
-                    // third, convert from part coordinates to item coordinates
-                    cellPart.left *= (tsp.rectInItem.right - tsp.rectInItem.left);
-                    cellPart.left += tsp.rectInItem.left;
-                    cellPart.right *= (tsp.rectInItem.right - tsp.rectInItem.left);
-                    cellPart.right += tsp.rectInItem.left;
-                    cellPart.top *= (tsp.rectInItem.bottom - tsp.rectInItem.top);
-                    cellPart.top += tsp.rectInItem.top;
-                    cellPart.bottom *= (tsp.rectInItem.bottom - tsp.rectInItem.top);
-                    cellPart.bottom += tsp.rectInItem.top;
-
-                    // now get the text
-                    Okular::RegularAreaRect rects;
-                    rects.append(cellPart);
-                    txt += tsp.item->page()->text(&rects, Okular::TextPage::CentralPixelTextAreaInclusionBehaviour);
-                }
-                QString html = txt;
-                selText += txt.replace(QLatin1Char('\n'), QLatin1Char(' '));
-                html.replace(QLatin1Char('&'), QLatin1String("&amp;")).replace(QLatin1Char('<'), QLatin1String("&lt;")).replace(QLatin1Char('>'), QLatin1String("&gt;"));
-                // Remove newlines, do not turn them into <br>, because
-                // Excel interprets <br> within cell as new cell...
-                html.replace(QLatin1Char('\n'), QLatin1String(" "));
-                selHtml += QStringLiteral("<td>") + html + QStringLiteral("</td>");
-            }
-            selText += QLatin1Char('\n');
-            selHtml += QLatin1String("</tr>\n");
-        }
-        selHtml += QLatin1String("</table></body></html>\n");
-
         QClipboard *cb = QApplication::clipboard();
-        QMimeData *md = new QMimeData();
-        md->setText(selText);
-        md->setHtml(selHtml);
-        cb->setMimeData(md, QClipboard::Clipboard);
         if (cb->supportsSelection())
-            cb->setMimeData(md, QClipboard::Selection);
+            cb->setMimeData(getTableContents(), QClipboard::Selection);
 
     } break;
+
     case Okular::Settings::EnumMouseMode::TextSelect:
         // if it is a left release checks if is over a previous link press
         if (leftButton && mouseReleaseOverLink(d->mouseOverLinkObject)) {

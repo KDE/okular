@@ -31,6 +31,7 @@
 #include <QVector>
 
 class QMenu;
+class QMimeData;
 class KActionCollection;
 
 namespace Okular
@@ -177,6 +178,7 @@ private:
     // start / modify / clear selection rectangle
     void selectionStart(const QPoint pos, const QColor &color, bool aboveAll = false);
     void selectionClear(const ClearMode mode = ClearAllSelection);
+    QMimeData *getTableContents() const;
     void drawTableDividers(QPainter *screenPainter);
     void guessTableDividers();
     // update either text or rectangle selection

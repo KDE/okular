@@ -12,10 +12,8 @@
 #include "ui_dlgpresentationbase.h"
 #include "widgetdrawingtools.h"
 
-#include <KConfigDialogManager>
-#include <KLocalizedString>
 #include <QApplication>
-#include <QDesktopWidget>
+#include <QScreen>
 
 #include "settings.h"
 
@@ -29,27 +27,7 @@ DlgPresentation::DlgPresentation(QWidget *parent)
     m_dlg->verticalLayout_4->addWidget(kcfg_DrawingTools);
     kcfg_DrawingTools->setObjectName(QStringLiteral("kcfg_DrawingTools"));
 
-    QStringList choices;
-    choices.append(i18nc("@label:listbox The current screen, for the presentation mode", "Current Screen"));
-    choices.append(i18nc("@label:listbox The default screen for the presentation mode", "Default Screen"));
-    const int screenCount = QGuiApplication::screens().count();
-    for (int i = 0; i < screenCount; ++i) {
-        choices.append(i18nc("@label:listbox %1 is the screen number (0, 1, ...)", "Screen %1", i));
-    }
-    m_dlg->screenCombo->addItems(choices);
-
-    const int screen = Okular::Settings::slidesScreen();
-    if (screen >= -2 && screen < screenCount) {
-        m_dlg->screenCombo->setCurrentIndex(screen + 2);
-    } else {
-        m_dlg->screenCombo->setCurrentIndex(0);
-        Okular::Settings::setSlidesScreen(-2);
-    }
-
     m_dlg->kcfg_SlidesAdvanceTime->setSuffix(ki18ncp("Advance every %1 seconds", " second", " seconds"));
-
-    connect(m_dlg->screenCombo, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), this, &DlgPresentation::screenComboChanged);
-    connect(m_dlg->kcfg_SlidesAdvance, &QAbstractButton::toggled, m_dlg->kcfg_SlidesAdvanceTime, &QWidget::setEnabled);
 }
 
 DlgPresentation::~DlgPresentation()
@@ -57,9 +35,57 @@ DlgPresentation::~DlgPresentation()
     delete m_dlg;
 }
 
-void DlgPresentation::screenComboChanged(int which)
+PreferredScreenSelector::PreferredScreenSelector(QWidget *parent)
+    : QComboBox(parent)
+    , m_disconnectedScreenNumber(k_noDisconnectedScreenNumber)
 {
-    Okular::Settings::setSlidesScreen(which - 2);
+    // Populate list:
+    static_assert(k_specialScreenCount == 2, "Special screens unknown to PreferredScreenSelector constructor.");
+    addItem(i18nc("@item:inlistbox Config dialog, presentation page, preferred screen", "Current Screen"));
+    addItem(i18nc("@item:inlistbox Config dialog, presentation page, preferred screen", "Default Screen"));
+
+    const QList<QScreen *> screens = qApp->screens();
+    for (int screenNumber = 0; screenNumber < screens.count(); ++screenNumber) {
+        QScreen *screen = screens.at(screenNumber);
+        addItem(i18nc("@item:inlistbox Config dialog, presentation page, preferred screen. %1 is the screen number (0, 1, ...). %2 is the screen manufacturer name. %3 is the screen model name. %4 is the screen name like DVI-0",
+                      "Screen %1 (%2 %3 %4)",
+                      screenNumber,
+                      screen->manufacturer(),
+                      screen->model(),
+                      screen->name()));
+    }
+
+    // If a disconnected screen is configured, it will be appended last:
+    m_disconnectedScreenIndex = count();
+
+    // KConfigWidgets setup:
+    setProperty("kcfg_property", QByteArray("preferredScreen"));
+    connect(this, QOverload<int>::of(&QComboBox::currentIndexChanged), [this](int index) { emit preferredScreenChanged(index - k_specialScreenCount); });
 }
 
-#include "moc_dlgpresentation.cpp"
+void PreferredScreenSelector::setPreferredScreen(int newScreen)
+{
+    // Check whether the new screen is not in the list of connected screens:
+    if (newScreen >= m_disconnectedScreenIndex - k_specialScreenCount) {
+        if (m_disconnectedScreenNumber == k_noDisconnectedScreenNumber) {
+            addItem(QString());
+        }
+        setItemText(m_disconnectedScreenIndex, i18nc("@item:inlistbox Config dialog, presentation page, preferred screen. %1 is the screen number (0, 1, ...), hopefully not 0.", "Screen %1 (disconnected)", newScreen));
+        setCurrentIndex(m_disconnectedScreenIndex);
+        m_disconnectedScreenNumber = newScreen;
+        return;
+    }
+
+    setCurrentIndex(newScreen + k_specialScreenCount);
+
+    // screenChanged() is emitted through currentIndexChanged().
+}
+
+int PreferredScreenSelector::preferredScreen() const
+{
+    if (currentIndex() == m_disconnectedScreenIndex) {
+        return m_disconnectedScreenNumber;
+    } else {
+        return currentIndex() - k_specialScreenCount;
+    }
+}

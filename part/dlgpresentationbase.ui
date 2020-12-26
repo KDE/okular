@@ -348,7 +348,7 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QComboBox" name="screenCombo"/>
+       <widget class="PreferredScreenSelector" name="kcfg_SlidesScreen"/>
       </item>
      </layout>
     </widget>
@@ -373,6 +373,11 @@
    <class>KPluralHandlingSpinBox</class>
    <extends>QSpinBox</extends>
    <header>KPluralHandlingSpinBox</header>
+  </customwidget>
+  <customwidget>
+   <class>PreferredScreenSelector</class>
+   <extends>QComboBox</extends>
+   <header>part/dlgpresentation.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

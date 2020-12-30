@@ -154,6 +154,7 @@ private:
     int findTabIndex(const QUrl &url) const;
 
 private:
+    void reloadAllXML();
     bool eventFilter(QObject *obj, QEvent *event) override;
 
     KPluginFactory *m_partFactory;

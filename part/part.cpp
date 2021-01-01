@@ -69,6 +69,7 @@
 #ifdef WITH_KWALLET
 #include <KWallet>
 #endif
+#include "kxmlgui_version.h" // TODO KF 5.79 Remove this include, because the relevant section below will also be removed.
 #include <KXMLGUIClient>
 #include <KXMLGUIFactory>
 
@@ -347,12 +348,17 @@ Part::Part(QWidget *parentWidget, QObject *parent, const QVariantList &args)
 
     Okular::Settings::instance(configFilePath);
 
+#if KXMLGUI_VERSION < QT_VERSION_CHECK(5, 78, 0) // TODO KF6: Remove this section and part/xmlgui_helper.{cpp,h}.
+    // In KXMLGUI 5.78, https://invent.kde.org/frameworks/kxmlgui/-/merge_requests/5
+    // was merged, so this workaround can be removed when KF 5.78 is required.
+
     // In part.rc 47 we introduced a new mandatory toolbar that kxmlgui doesn't know how to merge properly
     // so unfortunately we have to remove any customized part.rc that is older than 47
     const QStringList files = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("kxmlgui5/okular/part.rc"));
     for (const QString &file : files) {
         removeRCFileIfVersionSmallerThan(file, 47);
     }
+#endif
 
     numberOfParts++;
     if (numberOfParts == 1) {

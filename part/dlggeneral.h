@@ -10,11 +10,9 @@
 #ifndef _DLGGENERAL_H
 #define _DLGGENERAL_H
 
-#include <qwidget.h>
+#include <QWidget>
 
 #include "part.h"
-
-class Ui_DlgGeneralBase;
 
 class DlgGeneral : public QWidget
 {
@@ -22,12 +20,6 @@ class DlgGeneral : public QWidget
 
 public:
     explicit DlgGeneral(QWidget *parent, Okular::EmbedMode embedMode);
-    ~DlgGeneral() override;
-
-protected:
-    void showEvent(QShowEvent *) override;
-
-    Ui_DlgGeneralBase *m_dlg;
 };
 
 #endif

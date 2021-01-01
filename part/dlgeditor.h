@@ -11,9 +11,12 @@
 #define DLGEDITOR_H
 
 #include <QHash>
-#include <qwidget.h>
+#include <QWidget>
 
-class Ui_DlgEditorBase;
+class QComboBox;
+class QFormLayout;
+class QLineEdit;
+class QStackedWidget;
 
 class DlgEditor : public QWidget
 {
@@ -27,7 +30,13 @@ private Q_SLOTS:
     void editorChanged(int which);
 
 private:
-    Ui_DlgEditorBase *m_dlg;
+    QComboBox *m_editorChooser;
+    // Two line edits, because one is connected to the config skeleton.
+    QLineEdit *m_editorCommandDisplay;
+    QLineEdit *m_editorCommandEditor;
+    QStackedWidget *m_editorCommandStack;
+    QFormLayout *m_layout;
+
     QHash<int, QString> m_editors;
 };
 

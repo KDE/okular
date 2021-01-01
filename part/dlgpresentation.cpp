@@ -9,10 +9,17 @@
 
 #include "dlgpresentation.h"
 
-#include "ui_dlgpresentationbase.h"
 #include "widgetdrawingtools.h"
 
+#include <KColorButton>
+#include <KLocalizedString>
+#include <KPluralHandlingSpinBox>
+
 #include <QApplication>
+#include <QCheckBox>
+#include <QComboBox>
+#include <QFormLayout>
+#include <QLabel>
 #include <QScreen>
 
 #include "settings.h"
@@ -20,19 +27,125 @@
 DlgPresentation::DlgPresentation(QWidget *parent)
     : QWidget(parent)
 {
-    m_dlg = new Ui_DlgPresentationBase();
-    m_dlg->setupUi(this);
+    QFormLayout *layout = new QFormLayout(this);
 
-    WidgetDrawingTools *kcfg_DrawingTools = new WidgetDrawingTools(m_dlg->annotationToolsGroupBox);
-    m_dlg->verticalLayout_4->addWidget(kcfg_DrawingTools);
+    // BEGIN Navigation section
+    // Checkbox and spinbox: advance automatically, interval
+    QCheckBox *advanceAutomatically = new QCheckBox(this);
+    advanceAutomatically->setText(i18nc("@option:check Config dialog, presentation page", "Advance automatically"));
+    advanceAutomatically->setObjectName(QStringLiteral("kcfg_SlidesAdvance"));
+    layout->addRow(QString(), advanceAutomatically);
+
+    KPluralHandlingSpinBox *advanceTime = new KPluralHandlingSpinBox(this);
+    advanceTime->setSuffix(ki18ncp("Advance every %1 seconds", " second", " seconds"));
+    advanceTime->setObjectName(QStringLiteral("kcfg_SlidesAdvanceTime"));
+    layout->addRow(i18nc("@label:spinbox Config dialog, presentation page", "Advance every:"), advanceTime);
+
+    advanceAutomatically->setChecked(false);
+    advanceTime->setEnabled(false);
+    connect(advanceAutomatically, &QCheckBox::toggled, advanceTime, &KPluralHandlingSpinBox::setEnabled);
+
+    // Checkbox: Loop after last page
+    QCheckBox *loopAfterLastPage = new QCheckBox(this);
+    loopAfterLastPage->setText(i18nc("@option:check Config dialog, presentation page", "Loop after last page"));
+    loopAfterLastPage->setObjectName(QStringLiteral("kcfg_SlidesLoop"));
+    layout->addRow(QString(), loopAfterLastPage);
+
+    // Combobox: Touch navigation
+    QComboBox *tapNavigation = new QComboBox(this);
+    tapNavigation->addItem(i18nc("@item:inlistbox Config dialog, presentation page, tap navigation", "Tap left/right side to go back/forward"));
+    tapNavigation->addItem(i18nc("@item:inlistbox Config dialog, presentation page, tap navigation", "Tap anywhere to go forward"));
+    tapNavigation->addItem(i18nc("@item:inlistbox Config dialog, presentation page, tap navigation", "Disabled"));
+    tapNavigation->setObjectName(QStringLiteral("kcfg_SlidesTapNavigation"));
+    layout->addRow(i18nc("@label:listbox Config dialog, presentation page, tap navigation", "Touch navigation:"), tapNavigation);
+    // END Navigation section
+
+    layout->addRow(new QLabel(this));
+
+    // BEGIN Appearance section
+    // Color button: Background color
+    KColorButton *backgroundColor = new KColorButton(this);
+    backgroundColor->setObjectName(QStringLiteral("kcfg_SlidesBackgroundColor"));
+    layout->addRow(i18nc("@label:chooser Config dialog, presentation page", "Background color:"), backgroundColor);
+
+    // Combobox: Cursor visibility
+    QComboBox *cursorVisibility = new QComboBox(this);
+    cursorVisibility->addItem(i18nc("@item:inlistbox Config dialog, presentation page, cursor visibility", "Hidden after delay"));
+    cursorVisibility->addItem(i18nc("@item:inlistbox Config dialog, presentation page, cursor visibility", "Always visible"));
+    cursorVisibility->addItem(i18nc("@item:inlistbox Config dialog, presentation page, cursor visibility", "Always hidden"));
+    cursorVisibility->setObjectName(QStringLiteral("kcfg_SlidesCursor"));
+    layout->addRow(i18nc("@label:listbox Config dialog, presentation page, cursor visibility", "Mouse cursor:"), cursorVisibility);
+
+    // Checkbox: Show progress indicator
+    QCheckBox *showProgressIndicator = new QCheckBox(this);
+    showProgressIndicator->setText(i18nc("@option:check Config dialog, presentation page", "Show progress indicator"));
+    showProgressIndicator->setObjectName(QStringLiteral("kcfg_SlidesShowProgress"));
+    layout->addRow(QString(), showProgressIndicator);
+
+    // Checkbox: Show summary page
+    QCheckBox *showSummaryPage = new QCheckBox(this);
+    showSummaryPage->setText(i18nc("@option:check Config dialog, presentation page", "Show summary page"));
+    showSummaryPage->setObjectName(QStringLiteral("kcfg_SlidesShowSummary"));
+    layout->addRow(QString(), showSummaryPage);
+    // END Appearance section
+
+    layout->addRow(new QLabel(this));
+
+    // BEGIN Transitions section
+    // Checkbox: Enable transitions
+    QCheckBox *enableTransitions = new QCheckBox(this);
+    enableTransitions->setText(i18nc("@option:check Config dialog, presentation page, transitions", "Enable transitions"));
+    enableTransitions->setObjectName(QStringLiteral("kcfg_SlidesTransitionsEnabled"));
+    layout->addRow(QString(), enableTransitions);
+
+    // Combobox: Default transition
+    QComboBox *defaultTransition = new QComboBox(this);
+    defaultTransition->addItem(i18nc("@item:inlistbox Config dialog, presentation page, transitions", "Blinds vertical"));
+    defaultTransition->addItem(i18nc("@item:inlistbox Config dialog, presentation page, transitions", "Blinds horizontal"));
+    defaultTransition->addItem(i18nc("@item:inlistbox Config dialog, presentation page, transitions", "Box in"));
+    defaultTransition->addItem(i18nc("@item:inlistbox Config dialog, presentation page, transitions", "Box out"));
+    defaultTransition->addItem(i18nc("@item:inlistbox Config dialog, presentation page, transitions", "Dissolve"));
+    defaultTransition->addItem(i18nc("@item:inlistbox Config dialog, presentation page, transitions", "Fade"));
+    defaultTransition->addItem(i18nc("@item:inlistbox Config dialog, presentation page, transitions", "Glitter down"));
+    defaultTransition->addItem(i18nc("@item:inlistbox Config dialog, presentation page, transitions", "Glitter right"));
+    defaultTransition->addItem(i18nc("@item:inlistbox Config dialog, presentation page, transitions", "Glitter right-down"));
+    defaultTransition->addItem(i18nc("@item:inlistbox Config dialog, presentation page, transitions", "Random transition"));
+    defaultTransition->addItem(i18nc("@item:inlistbox Config dialog, presentation page, transitions", "Replace"));
+    defaultTransition->addItem(i18nc("@item:inlistbox Config dialog, presentation page, transitions", "Split horizontal in"));
+    defaultTransition->addItem(i18nc("@item:inlistbox Config dialog, presentation page, transitions", "Split horizontal out"));
+    defaultTransition->addItem(i18nc("@item:inlistbox Config dialog, presentation page, transitions", "Split vertical in"));
+    defaultTransition->addItem(i18nc("@item:inlistbox Config dialog, presentation page, transitions", "Split vertical out"));
+    defaultTransition->addItem(i18nc("@item:inlistbox Config dialog, presentation page, transitions", "Wipe down"));
+    defaultTransition->addItem(i18nc("@item:inlistbox Config dialog, presentation page, transitions", "Wipe right"));
+    defaultTransition->addItem(i18nc("@item:inlistbox Config dialog, presentation page, transitions", "Wipe left"));
+    defaultTransition->addItem(i18nc("@item:inlistbox Config dialog, presentation page, transitions", "Wipe up"));
+    defaultTransition->setObjectName(QStringLiteral("kcfg_SlidesTransition"));
+    layout->addRow(i18nc("@label:listbox Config dialog, presentation page, transitions", "Default transition:"), defaultTransition);
+    defaultTransition->setEnabled(Okular::Settings::slidesTransitionsEnabled());
+    connect(enableTransitions, &QCheckBox::toggled, defaultTransition, &QComboBox::setEnabled);
+    // END Transitions section
+
+    layout->addRow(new QLabel(this));
+
+    // BEGIN Placement section
+    // Combobox: Preferred screen
+    PreferredScreenSelector *preferredScreen = new PreferredScreenSelector(this);
+    preferredScreen->setObjectName(QStringLiteral("kcfg_SlidesScreen"));
+    layout->addRow(i18nc("@label:listbox Config dialog, presentation page, preferred screen", "Preferred screen:"), preferredScreen);
+    // END Placement section
+
+    layout->addRow(new QLabel(this));
+
+    // BEGIN Drawing tools section: WidgetDrawingTools manages drawing tools.
+    QLabel *toolsLabel = new QLabel(this);
+    toolsLabel->setText(i18nc("@label Config dialog, presentation page, heading line for drawing tool manager", "<h3>Drawing Tools</h3>"));
+    layout->addRow(toolsLabel);
+
+    WidgetDrawingTools *kcfg_DrawingTools = new WidgetDrawingTools(this);
     kcfg_DrawingTools->setObjectName(QStringLiteral("kcfg_DrawingTools"));
 
-    m_dlg->kcfg_SlidesAdvanceTime->setSuffix(ki18ncp("Advance every %1 seconds", " second", " seconds"));
-}
-
-DlgPresentation::~DlgPresentation()
-{
-    delete m_dlg;
+    layout->addRow(kcfg_DrawingTools);
+    // END Drawing tools section
 }
 
 PreferredScreenSelector::PreferredScreenSelector(QWidget *parent)

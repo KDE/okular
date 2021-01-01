@@ -13,18 +13,12 @@
 #include <QComboBox>
 #include <QWidget>
 
-class Ui_DlgPresentationBase;
-
 class DlgPresentation : public QWidget
 {
     Q_OBJECT
 
 public:
     explicit DlgPresentation(QWidget *parent = nullptr);
-    ~DlgPresentation() override;
-
-protected:
-    Ui_DlgPresentationBase *m_dlg;
 };
 
 /**

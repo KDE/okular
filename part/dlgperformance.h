@@ -12,7 +12,7 @@
 
 #include <QWidget>
 
-class Ui_DlgPerformanceBase;
+class QLabel;
 
 class DlgPerformance : public QWidget
 {
@@ -20,13 +20,12 @@ class DlgPerformance : public QWidget
 
 public:
     explicit DlgPerformance(QWidget *parent = nullptr);
-    ~DlgPerformance() override;
 
 protected Q_SLOTS:
-    void radioGroup_changed(int which);
+    void slotMemoryLevelSelected(int which);
 
 protected:
-    Ui_DlgPerformanceBase *m_dlg;
+    QLabel *m_memoryExplanationLabel;
 };
 
 #endif

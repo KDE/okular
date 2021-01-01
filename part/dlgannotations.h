@@ -10,7 +10,7 @@
 #ifndef _DLGANNOTATIONS_H_
 #define _DLGANNOTATIONS_H_
 
-#include <qwidget.h>
+#include <QWidget>
 
 class DlgAnnotations : public QWidget
 {

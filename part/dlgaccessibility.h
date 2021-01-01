@@ -10,10 +10,9 @@
 #ifndef _DLGACCESSIBILITY_H
 #define _DLGACCESSIBILITY_H
 
-#include <QList>
-#include <qwidget.h>
+#include <QWidget>
 
-class Ui_DlgAccessibilityBase;
+class QStackedWidget;
 
 class DlgAccessibility : public QWidget
 {
@@ -21,15 +20,12 @@ class DlgAccessibility : public QWidget
 
 public:
     explicit DlgAccessibility(QWidget *parent = nullptr);
-    ~DlgAccessibility() override;
 
-private Q_SLOTS:
-    void slotColorMode(int mode);
+protected Q_SLOTS:
+    void slotColorModeSelected(int mode);
 
-private:
-    Ui_DlgAccessibilityBase *m_dlg;
-    QList<QWidget *> m_color_pages;
-    int m_selected;
+protected:
+    QStackedWidget *m_colorModeConfigStack;
 };
 
 #endif

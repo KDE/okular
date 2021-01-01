@@ -424,15 +424,6 @@ if (Qt5TextToSpeech_FOUND)
       part/tts.cpp)
 endif()
 
-ki18n_wrap_ui(okularpart_SRCS
-   part/dlgaccessibilitybase.ui
-   part/dlgeditorbase.ui
-   part/dlggeneralbase.ui
-   part/dlgannotationsbase.ui
-   part/dlgperformancebase.ui
-   part/dlgpresentationbase.ui
-)
-
 kconfig_add_kcfg_files(okularpart_SRCS GENERATE_MOC conf/settings.kcfgc)
 
 add_library(okularpart SHARED ${okularpart_SRCS})

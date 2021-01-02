@@ -24,6 +24,7 @@
   <name xml:lang="lt">Okular mobilioji</name>
   <name xml:lang="nl">Okular mobiel</name>
   <name xml:lang="nn">Okular mobil</name>
+  <name xml:lang="pa">ਓਕਲਾਰ ਮੋਬਾਈਲ</name>
   <name xml:lang="pl">Okular Mobile</name>
   <name xml:lang="pt">Okular Móvel</name>
   <name xml:lang="pt-BR">Okular móvel</name>
@@ -56,6 +57,7 @@
   <summary xml:lang="lt">Dokumentų žiūryklė</summary>
   <summary xml:lang="nl">Documentenviewer</summary>
   <summary xml:lang="nn">Dokumentvisar</summary>
+  <summary xml:lang="pa">ਡੌਕੂਮੈਂਟ ਦਰਸ਼ਕ</summary>
   <summary xml:lang="pl">Przeglądarka dokumentów</summary>
   <summary xml:lang="pt">Visualizador do Documento</summary>
   <summary xml:lang="pt-BR">Visualizador de documentos</summary>
@@ -122,6 +124,7 @@
     <p xml:lang="lt">Ypatybės:</p>
     <p xml:lang="nl">Kenmerken:</p>
     <p xml:lang="nn">Funksjonar:</p>
+    <p xml:lang="pa">ਫੀਚਰ:</p>
     <p xml:lang="pl">Możliwości:</p>
     <p xml:lang="pt">Funcionalidades:</p>
     <p xml:lang="pt-BR">Funcionalidades:</p>
@@ -155,6 +158,7 @@
       <li xml:lang="lt">Palaikomi formatai: PDF, PS, Tiff, CHM, DjVu, paveikslai, DVI, XPS, ODT, Fiction Book, komiksų knygos, Plucker, EPub, faksas</li>
       <li xml:lang="nl">Ondersteunde formaten: PDF, PS, Tiff, CHM, DjVu, Afbeeldingen, DVI, XPS, ODT, Fictie boek, Stripboek, Plucker, EPub, Fax</li>
       <li xml:lang="nn">Støtta format: PDF, PS, Tiff, CHM, DjVu, bilete, DVI, XPS, ODT, e-bøker, teikneseriar, Plucker, EPub, Fax</li>
+      <li xml:lang="pa">ਸਹਾਇਕ ਫਾਰਮੈਟ: PDF, PS, Tiff, CHM, DjVu, ਚਿੱਤਰ, DVI, XPS, ODT, ਫਿਕਸ਼ਨ ਕਿਤਾਬਾਂ, ਕੌਮਿਕ ਕਿਤਾਬਾਂ, Plucker, EPub, ਫੈਕਸ</li>
       <li xml:lang="pl">Obsługiwane formaty: PDF, PS, TIFF, CHM, DjVu, DVI, XPS, ODT, FB2, Plucker, ePub,  a także różne formaty komisów, obrazów i faks.</li>
       <li xml:lang="pt">Formatos Suportados: PDF, PS, Tiff, CHM, DjVu, Imagens, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="pt-BR">Suporte aos formatos: PDF, PS, TIFF, CHM, DjVu, imagens, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
@@ -186,6 +190,7 @@
       <li xml:lang="lt">Šoninė juosta su turiniu, miniatiūromis, atsiliepimais ir žymelėmis</li>
       <li xml:lang="nl">Zijbalk met inhoud, miniaturen, reviews en bladwijzers</li>
       <li xml:lang="nn">Sidestolpe med innhaldsliste, miniatyrbilete, omtalar og bokmerke</li>
+      <li xml:lang="pa">ਸਮੱਗਰੀ, ਥੰਮਨੇਲ, ਪੜਤਾਲਾਂ ਤੇ ਬੁੱਕਮਾਰਕਾਂ ਨਾਲ ਬਾਹੀ</li>
       <li xml:lang="pl">Pasek boczny z treścią, miniaturami, recenzjami i zakładkami</li>
       <li xml:lang="pt">Barra lateral com o conteúdo, miniaturas, revisões e marcação de favoritos</li>
       <li xml:lang="pt-BR">Barra lateral com o conteúdo, miniaturas, revisões e favoritos</li>
@@ -218,6 +223,7 @@
       <li xml:lang="lt">Anotacijų palaikymas</li>
       <li xml:lang="nl">Ondersteuning van annotaties</li>
       <li xml:lang="nn">Støtte for merknadar</li>
+      <li xml:lang="pa">ਟਿੱਪਣੀਆਂ ਲਈ ਸਹਿਯੋਗ</li>
       <li xml:lang="pl">Obsługa przypisów</li>
       <li xml:lang="pt">Suporte para anotações</li>
       <li xml:lang="pt-BR">Suporte a anotações</li>
@@ -253,6 +259,7 @@
       <caption xml:lang="lt">Vadovo skaitymas programoje Okular</caption>
       <caption xml:lang="nl">Handleiding wordt gelezen in Okular</caption>
       <caption xml:lang="nn">Lesing av brukarhandbok i Okular</caption>
+      <caption xml:lang="pa">ਓਕੁਲਾਰ ਵਿੱਚ ਦਸਤਾਵੇਜ਼ ਪੜ੍ਹੋ</caption>
       <caption xml:lang="pl">Instrukcja czytania w Okularze</caption>
       <caption xml:lang="pt">Leitura de manual no Okular</caption>
       <caption xml:lang="pt-BR">Lendo manual no Okular</caption>

@@ -32,8 +32,8 @@ Context menu actions like Rename Bookmarks etc.)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2020-06-05</date>
-		<releaseinfo>1.11 (Applications 20.08)</releaseinfo>
+		<date>2021-01-02</date>
+		<releaseinfo>1.13 (Applications 21.04)</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
 			<para>&okular; is a &kde; universal document viewer based on &kpdf; code.</para>
@@ -477,15 +477,17 @@ Context menu actions like Rename Bookmarks etc.)
 					You can add digital signatures to documents using the corresponding action in the <menuchoice><guimenu>Tools</guimenu></menuchoice> menu.
 				</para>
 				<para>
-					To be able to sign a document you need to have a proper <acronym>PKCS</acronym> signing certificate available on your system. Okular does not have the ability to create such certificates since they need to be issued by certificate authorities to be useful for validation, &etc;
+					To be able to sign a document you need to have a proper <acronym>PKCS</acronym> signing certificate available on your system. &okular; does not have the ability to create such certificates since they need to be issued by certificate authorities to be useful for validation, &etc;
 				</para>
 				<para>
 					We use the Poppler library to handle signing of &PDF; documents and Poppler is using the NSS library to handle certificates. At the point of writing, Poppler will try to use the following NSS certificate stores in order (if they exist):
-					<itemizedlist>
-						<listitem><para>The current Firefox user certificate store.</para></listitem>
-						<listitem><para>The system-wide <filename>/etc/pki/nssdb</filename> certificate store.</para></listitem>
-						<listitem><para>The current user <filename>$HOME/.pki/nssdb</filename></para></listitem>
-					</itemizedlist>
+				</para>
+				<itemizedlist>
+					<listitem><para>The current Firefox user certificate store.</para></listitem>
+					<listitem><para>The system-wide <filename>/etc/pki/nssdb</filename> certificate store.</para></listitem>
+					<listitem><para>The current user <filename>$HOME/.pki/nssdb</filename></para></listitem>
+				</itemizedlist>
+				<para>
 					If you want to use a custom certificate store you can do so by setting it in the <link linkend="config-pdf-digital-signatures">&PDF; Backend Configuration</link> section of the <link linkend="configure-backends">Configure Backends...</link> dialog.
 				</para>
 				<note>
@@ -2757,7 +2759,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term><guilabel>Memory Usage</guilabel></term>
+					<term><guilabel>Memory usage</guilabel></term>
 					<listitem>
 						<para>&okular; can achieve best performance by tuning the memory usage, based on your system and your tastes.
 							The more memory you let it to use, the faster the program will behave. The Default profile is good
@@ -2767,7 +2769,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term><guilabel>Rendering</guilabel></term>
+					<term><guilabel>Rendering options</guilabel></term>
 					<listitem>
 						<para>Using this group of options you can improve text and image rendering in &okular;. The result depends on the device to display the document.
 						 <guilabel>Enable Text Antialias</guilabel> and <guilabel>Enable Graphics Antialias</guilabel> items can be used to switch on and off <ulink url="https://en.wikipedia.org/wiki/Spatial_anti-aliasing">spatial anti-aliasing</ulink> of text and images in document, correspondingly.

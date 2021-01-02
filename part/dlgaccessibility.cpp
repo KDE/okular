@@ -30,18 +30,18 @@ DlgAccessibility::DlgAccessibility(QWidget *parent)
 {
     QFormLayout *layout = new QFormLayout(this);
 
-    // BEGIN Checkboxes: draw border arround images/links
+    // BEGIN Checkboxes: draw border around images/links
     // ### not working yet, hide for now
     // QCheckBox *highlightImages = new QCheckBox(this);
-    // highlightImages->setText(i18nc("@option:check Config dialog, accessibility page", "Draw border arround images"));
+    // highlightImages->setText(i18nc("@option:check Config dialog, accessibility page", "Draw border around images"));
     // highlightImages->setObjectName(QStringLiteral("kcfg_HighlightImages"));
     // layout->addRow(QString(), highlightImages);
 
     QCheckBox *highlightLinks = new QCheckBox(this);
-    highlightLinks->setText(i18nc("@option:check Config dialog, accessibility page", "Draw border arround links"));
+    highlightLinks->setText(i18nc("@option:check Config dialog, accessibility page", "Draw border around links"));
     highlightLinks->setObjectName(QStringLiteral("kcfg_HighlightLinks"));
     layout->addRow(QString(), highlightLinks);
-    // END Checkboxes: draw border arround images/links
+    // END Checkboxes: draw border around images/links
 
     layout->addRow(new QLabel(this));
 

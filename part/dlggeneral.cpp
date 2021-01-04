@@ -16,6 +16,7 @@
 #include <QCheckBox>
 #include <QComboBox>
 #include <QFormLayout>
+#include <QHBoxLayout>
 #include <QLabel>
 #include <QSpinBox>
 
@@ -72,13 +73,17 @@ DlgGeneral::DlgGeneral(QWidget *parent, Okular::EmbedMode embedMode)
 
     // Checkbox and color button: custom background color
     QCheckBox *useCustomColor = new QCheckBox(this);
-    useCustomColor->setText(i18nc("@option:check Config dialog, general page", "Use custom background color"));
+    useCustomColor->setText(QString());
     useCustomColor->setObjectName(QStringLiteral("kcfg_UseCustomBackgroundColor"));
-    layout->addRow(QString(), useCustomColor);
 
     KColorButton *customColor = new KColorButton(this);
     customColor->setObjectName(QStringLiteral("kcfg_BackgroundColor"));
-    layout->addRow(i18nc("@label:listbox Config dialog, general page", "Custom background color:"), customColor);
+
+    QHBoxLayout *customColorLayout = new QHBoxLayout(this);
+    customColorLayout->addWidget(useCustomColor);
+    useCustomColor->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    customColorLayout->addWidget(customColor);
+    layout->addRow(i18nc("@label:listbox Config dialog, general page", "Use custom background color:"), customColorLayout);
 
     useCustomColor->setChecked(false);
     customColor->setEnabled(false);

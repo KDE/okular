@@ -92,8 +92,8 @@ set_package_properties("libqmobipocket" PROPERTIES
         TYPE RECOMMENDED
         PURPOSE "Support for Mobipocket documents in Okular.")
         
-find_package(Discount "2")
-set_package_properties("discount" PROPERTIES
+find_package(Discount)
+set_package_properties("Discount" PROPERTIES
         DESCRIPTION "A library that gives you formatting functions suitable for marking down entire documents or lines of text"
         URL "https://www.pell.portland.or.us/~orc/Code/discount/"
         TYPE RECOMMENDED
@@ -149,6 +149,6 @@ if(QMobipocket_FOUND)
   add_subdirectory(mobipocket)
 endif()
 
-if(discount_FOUND)
+if(Discount_FOUND)
   add_subdirectory(markdown)
 endif()

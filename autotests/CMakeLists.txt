@@ -125,11 +125,11 @@ ecm_add_test(signatureformtest.cpp
     LINK_LIBRARIES Qt5::Test okularcore
 )
 
-find_package(Discount "2")
+find_package(Discount)
 
-if(discount_FOUND)
+if(Discount_FOUND)
     ecm_add_test(markdowntest.cpp ../generators/markdown/converter.cpp
         TEST_NAME "markdowntest"
-        LINK_LIBRARIES Qt5::Test okularcore KF5::I18n discount::Lib
+        LINK_LIBRARIES Qt5::Test okularcore KF5::I18n PkgConfig::Discount
     )
 endif()

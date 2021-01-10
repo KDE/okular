@@ -19,6 +19,7 @@
 #include <QCheckBox>
 #include <QComboBox>
 #include <QFormLayout>
+#include <QHBoxLayout>
 #include <QLabel>
 #include <QScreen>
 
@@ -30,16 +31,21 @@ DlgPresentation::DlgPresentation(QWidget *parent)
     QFormLayout *layout = new QFormLayout(this);
 
     // BEGIN Navigation section
-    // Checkbox and spinbox: advance automatically, interval
+    // Spinbox with a checkbox attached to the left: advance automatically
     QCheckBox *advanceAutomatically = new QCheckBox(this);
-    advanceAutomatically->setText(i18nc("@option:check Config dialog, presentation page", "Advance automatically"));
+    advanceAutomatically->setText(QString());
     advanceAutomatically->setObjectName(QStringLiteral("kcfg_SlidesAdvance"));
-    layout->addRow(QString(), advanceAutomatically);
 
     KPluralHandlingSpinBox *advanceTime = new KPluralHandlingSpinBox(this);
+    advanceTime->setPrefix(i18nc("Spinbox prefix: Advance automatically: every n seconds", "every "));
     advanceTime->setSuffix(ki18ncp("Advance every %1 seconds", " second", " seconds"));
     advanceTime->setObjectName(QStringLiteral("kcfg_SlidesAdvanceTime"));
-    layout->addRow(i18nc("@label:spinbox Config dialog, presentation page", "Advance every:"), advanceTime);
+
+    QHBoxLayout *advanceAutomaticallyLayout = new QHBoxLayout(this);
+    advanceAutomaticallyLayout->addWidget(advanceAutomatically);
+    advanceAutomatically->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    advanceAutomaticallyLayout->addWidget(advanceTime);
+    layout->addRow(i18nc("@label:spinbox Config dialog, presentation page", "Advance automatically:"), advanceAutomaticallyLayout);
 
     advanceAutomatically->setChecked(false);
     advanceTime->setEnabled(false);

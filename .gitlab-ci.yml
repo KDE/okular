@@ -49,7 +49,7 @@ clang_format:
     - master
   before_script:
     - apt-get update
-    - apt-get install --yes --no-install-recommends git clang-format-10
+    - apt-get install --yes --no-install-recommends git clang-format-11
   script:
-    - find . \( -name "*.cpp" -or -name "*.h"  -or -name "*.c"  -or -name "*.cc" \) -exec clang-format-10 -i {} \;
+    - find . \( -name "*.cpp" -or -name "*.h"  -or -name "*.c"  -or -name "*.cc" \) -exec clang-format-11 -i {} \;
     - git diff --exit-code

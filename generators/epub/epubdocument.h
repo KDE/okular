@@ -24,7 +24,7 @@ class EpubDocument : public QTextDocument
     Q_OBJECT
 
 public:
-    explicit EpubDocument(const QString &fileName);
+    explicit EpubDocument(const QString &fileName, const QFont &font);
     ~EpubDocument() override;
     bool isValid();
     struct epub *getEpub();
@@ -37,12 +37,13 @@ protected:
     QVariant loadResource(int type, const QUrl &name) override;
 
 private:
-    void checkCSS(QString &css);
+    QString checkCSS(const QString &css);
 
     struct epub *mEpub;
     QUrl mCurrentSubDocument;
 
     int padding;
+    QFont mFont;
 
     friend class Converter;
 };

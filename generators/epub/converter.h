@@ -10,6 +10,7 @@
 #ifndef EPUB_CONVERTER_H
 #define EPUB_CONVERTER_H
 
+#include <QFont>
 #include <core/document.h>
 #include <core/textdocumentgenerator.h>
 
@@ -32,6 +33,7 @@ private:
     void _handle_anchors(const QTextBlock &start, const QString &name);
     void _insert_local_links(const QString &key, const QPair<int, int> value);
     EpubDocument *mTextDocument;
+    QFont mFont;
 
     QHash<QString, QTextBlock> mSectionMap;
     QHash<QString, QVector<QPair<int, int>>> mLocalLinks;

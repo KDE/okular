@@ -158,7 +158,7 @@ static QPoint calculateXYPosition(QTextDocument *document, int startPosition)
 
 QTextDocument *Converter::convert(const QString &fileName)
 {
-    EpubDocument *newDocument = new EpubDocument(fileName);
+    EpubDocument *newDocument = new EpubDocument(fileName, generator()->generalSettings()->font());
     if (!newDocument->isValid()) {
         emit error(i18n("Error while opening the EPub document."), -1);
         delete newDocument;

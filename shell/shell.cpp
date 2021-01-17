@@ -458,42 +458,52 @@ void Shell::fileOpen()
     dlg->setFileMode(QFileDialog::ExistingFiles); // Allow selection of more than one file
 
     QMimeDatabase mimeDatabase;
+    // Unfortunately non Plasma file dialogs don't support the "All supported files" when using
+    // setMimeTypeFilters instead of setNameFilters, so for those use setNameFilters which is a bit
+    // worse because doesn't show you pdf files named bla.blo when you say "show me the pdf files", but
+    // that's solvable by choosing "All Files" and it's not that common while it's more convenient to
+    // only get shown the files that the application can open by default instead of all of them
 #if KIO_VERSION >= QT_VERSION_CHECK(5, 73, 0)
-    QStringList mimetypes;
-    for (const QString &mimeName : qAsConst(m_fileformats)) {
-        QMimeType mimeType = mimeDatabase.mimeTypeForName(mimeName);
-        mimetypes << mimeType.name();
-    }
-    mimetypes.prepend(QStringLiteral("application/octet-stream"));
-    dlg->setMimeTypeFilters(mimetypes);
+    const bool useMimeTypeFilters = qgetenv("XDG_CURRENT_DESKTOP").toLower() == QStringLiteral("kde");
 #else
-    QSet<QString> globPatterns;
-    QMap<QString, QStringList> namedGlobs;
-    for (const QString &mimeName : qAsConst(m_fileformats)) {
-        QMimeType mimeType = mimeDatabase.mimeTypeForName(mimeName);
-        const QStringList globs(mimeType.globPatterns());
-        if (globs.isEmpty()) {
-            continue;
+    const bool useMimeTypeFilters = false;
+#endif
+    if (useMimeTypeFilters) {
+        QStringList mimetypes;
+        for (const QString &mimeName : qAsConst(m_fileformats)) {
+            QMimeType mimeType = mimeDatabase.mimeTypeForName(mimeName);
+            mimetypes << mimeType.name();
         }
+        mimetypes.prepend(QStringLiteral("application/octet-stream"));
+        dlg->setMimeTypeFilters(mimetypes);
+    } else {
+        QSet<QString> globPatterns;
+        QMap<QString, QStringList> namedGlobs;
+        for (const QString &mimeName : qAsConst(m_fileformats)) {
+            QMimeType mimeType = mimeDatabase.mimeTypeForName(mimeName);
+            const QStringList globs(mimeType.globPatterns());
+            if (globs.isEmpty()) {
+                continue;
+            }
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
-        globPatterns.unite(QSet<QString>(globs.begin(), globs.end()));
+            globPatterns.unite(QSet<QString>(globs.begin(), globs.end()));
 #else
-        globPatterns.unite(globs.toSet());
+            globPatterns.unite(globs.toSet());
 #endif
 
-        namedGlobs[mimeType.comment()].append(globs);
-    }
-    QStringList namePatterns;
-    for (auto it = namedGlobs.cbegin(); it != namedGlobs.cend(); ++it) {
-        namePatterns.append(it.key() + QLatin1String(" (") + it.value().join(QLatin1Char(' ')) + QLatin1Char(')'));
-    }
+            namedGlobs[mimeType.comment()].append(globs);
+        }
+        QStringList namePatterns;
+        for (auto it = namedGlobs.cbegin(); it != namedGlobs.cend(); ++it) {
+            namePatterns.append(it.key() + QLatin1String(" (") + it.value().join(QLatin1Char(' ')) + QLatin1Char(')'));
+        }
 
-    const QStringList allGlobPatterns = globPatterns.values();
-    namePatterns.prepend(i18n("All files (*)"));
-    namePatterns.prepend(i18n("All supported files (%1)", allGlobPatterns.join(QLatin1Char(' '))));
-    dlg->setNameFilters(namePatterns);
-#endif
+        const QStringList allGlobPatterns = globPatterns.values();
+        namePatterns.prepend(i18n("All files (*)"));
+        namePatterns.prepend(i18n("All supported files (%1)", allGlobPatterns.join(QLatin1Char(' '))));
+        dlg->setNameFilters(namePatterns);
+    }
 
     dlg->setWindowTitle(i18n("Open Document"));
     if (dlg->exec() && dlg) {

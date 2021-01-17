@@ -452,7 +452,7 @@ void Shell::fileOpen()
         QMimeType mimeType = mimeDatabase.mimeTypeForName(mimeName);
         mimetypes << mimeType.name();
     }
-    mimetypes << QStringLiteral("application/octet-stream");
+    mimetypes.prepend(QStringLiteral("application/octet-stream"));
     dlg->setMimeTypeFilters(mimetypes);
 #else
     QSet<QString> globPatterns;

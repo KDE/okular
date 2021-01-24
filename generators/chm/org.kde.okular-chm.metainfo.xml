@@ -16,7 +16,7 @@
   <name xml:lang="et">CHM-dokumendid</name>
   <name xml:lang="eu">CHM dokumentuak</name>
   <name xml:lang="fi">CHM-tiedostot</name>
-  <name xml:lang="fr">Documents CHM</name>
+  <name xml:lang="fr">Documents « CHM »</name>
   <name xml:lang="gl">Documentos CHM</name>
   <name xml:lang="ia">Documentos CHM</name>
   <name xml:lang="it">Documenti CHM</name>
@@ -53,7 +53,7 @@
   <summary xml:lang="et">CHM-dokumentide lugemise toetus</summary>
   <summary xml:lang="eu">CHM dokumentuak irakurtzeko euskarria gehitzen du</summary>
   <summary xml:lang="fi">Lisää CHM-tiedostojen lukutuen</summary>
-  <summary xml:lang="fr">Permet la lecture des documents CHM</summary>
+  <summary xml:lang="fr">Permet la lecture des documents « CHM »</summary>
   <summary xml:lang="gl">Engade a posibilidade de ler documentos CHM</summary>
   <summary xml:lang="ia">Adde supporto per leger documentos CHM</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti CHM</summary>

@@ -53,6 +53,7 @@
 #endif
 
 #include <kio_version.h>
+#include <kxmlgui_version.h>
 
 // local includes
 #include "../interfaces/viewerinterface.h"
@@ -145,6 +146,17 @@ Shell::Shell(const QString &serializedOptions)
     } else {
         m_isValid = false;
         KMessageBox::error(this, i18n("Unable to find the Okular component."));
+    }
+
+#if KXMLGUI_VERSION > QT_VERSION_CHECK(5, 78, 0)
+    connect(guiFactory(), &KXMLGUIFactory::shortcutsSaved, this, &Shell::reloadAllXML);
+#endif
+}
+
+void Shell::reloadAllXML()
+{
+    for (const TabState &tab : qAsConst(m_tabs)) {
+        tab.part->reloadXML();
     }
 }
 
@@ -623,7 +635,11 @@ bool Shell::queryClose()
 void Shell::setActiveTab(int tab)
 {
     m_tabWidget->setCurrentIndex(tab);
+#if KXMLGUI_VERSION <= QT_VERSION_CHECK(5, 78, 0)
+    m_tabs[tab].part->reloadXML();
+#endif
     createGUI(m_tabs[tab].part);
+
     m_printAction->setEnabled(m_tabs[tab].printEnabled);
     m_closeAction->setEnabled(m_tabs[tab].closeEnabled);
 }

@@ -9,7 +9,7 @@ For download and installation instructions, see https://okular.kde.org/download.
 
 ### User manual
 
-https://docs.kde.org/stable5/en/kdegraphics/okular/index.html
+https://docs.kde.org/?application=okular&branch=stable5
 
 ### Bugs
 

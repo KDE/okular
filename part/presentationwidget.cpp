@@ -199,7 +199,6 @@ PresentationWidget::PresentationWidget(QWidget *parent, Okular::Document *doc, D
     playPauseAct->setEnabled(true);
     connect(playPauseAct, &QAction::triggered, this, &PresentationWidget::slotTogglePlayPause);
     m_topBar->addAction(playPauseAct);
-    setPlayPauseIcon();
     addAction(playPauseAct);
     m_topBar->addSeparator();
 
@@ -257,6 +256,7 @@ PresentationWidget::PresentationWidget(QWidget *parent, Okular::Document *doc, D
     m_nextPageTimer = new QTimer(this);
     m_nextPageTimer->setSingleShot(true);
     connect(m_nextPageTimer, &QTimer::timeout, this, &PresentationWidget::slotNextPage);
+    setPlayPauseIcon();
 
     connect(m_document, &Okular::Document::processMovieAction, this, &PresentationWidget::slotProcessMovieAction);
     connect(m_document, &Okular::Document::processRenditionAction, this, &PresentationWidget::slotProcessRenditionAction);
@@ -500,7 +500,7 @@ void PresentationWidget::setupActions()
 void PresentationWidget::setPlayPauseIcon()
 {
     QAction *playPauseAction = m_ac->action(QStringLiteral("presentation_play_pause"));
-    if (m_advanceSlides) {
+    if (m_nextPageTimer->isActive()) {
         playPauseAction->setIcon(QIcon::fromTheme(QStringLiteral("media-playback-pause")));
         playPauseAction->setToolTip(i18nc("For Presentation", "Pause"));
     } else {
@@ -1339,6 +1339,7 @@ void PresentationWidget::startAutoChangeTimer()
 
         m_nextPageTimer->start((int)(secs * 1000));
     }
+    setPlayPauseIcon();
 }
 
 QScreen *PresentationWidget::defaultScreen() const
@@ -2229,12 +2230,13 @@ void PresentationWidget::slotProcessRenditionAction(const Okular::RenditionActio
 
 void PresentationWidget::slotTogglePlayPause()
 {
-    m_advanceSlides = !m_advanceSlides;
-    setPlayPauseIcon();
-    if (m_advanceSlides) {
+    if (!m_nextPageTimer->isActive()) {
+        m_advanceSlides = true;
         startAutoChangeTimer();
     } else {
         m_nextPageTimer->stop();
+        m_advanceSlides = false;
+        setPlayPauseIcon();
     }
 }
 

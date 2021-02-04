@@ -207,6 +207,9 @@
   <entry key="SlidesTransition" type="Enum" >
    <default>Replace</default>
    <choices>
+    <choice name="NoTransitions" />
+    <choice name="Replace" />
+    <choice name="Random" />
     <choice name="BlindsHorizontal" />
     <choice name="BlindsVertical" />
     <choice name="BoxIn" />
@@ -216,8 +219,6 @@
     <choice name="GlitterDown" />
     <choice name="GlitterRight" />
     <choice name="GlitterRightDown" />
-    <choice name="Random" />
-    <choice name="Replace" />
     <choice name="SplitHorizontalIn" />
     <choice name="SplitHorizontalOut" />
     <choice name="SplitVerticalIn" />
@@ -241,9 +242,6 @@
   </entry>
   <entry key="SlidesShowSummary" type="Bool" >
    <default>false</default>
-  </entry>
-  <entry key="SlidesTransitionsEnabled" type="Bool" >
-   <default>true</default>
   </entry>
   <entry key="SlidesScreen" type="Int" >
    <default>-2</default>

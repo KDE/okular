@@ -1046,7 +1046,8 @@ void PresentationWidget::generatePage(bool disableTransition)
 #endif
 
     // start transition on pages that have one
-    if (!disableTransition && Okular::Settings::slidesTransitionsEnabled()) {
+    disableTransition |= (Okular::Settings::slidesTransition() == Okular::Settings::EnumSlidesTransition::NoTransitions);
+    if (!disableTransition) {
         const Okular::PageTransition *transition = m_frameIndex != -1 ? m_frames[m_frameIndex]->page->transition() : nullptr;
         if (transition)
             initTransition(transition);
@@ -1819,6 +1820,7 @@ const Okular::PageTransition PresentationWidget::defaultTransition(int type) con
         return Okular::PageTransition(Okular::PageTransition::Fade);
         break;
     }
+    case Okular::Settings::EnumSlidesTransition::NoTransitions:
     case Okular::Settings::EnumSlidesTransition::Replace:
     default:
         return Okular::PageTransition(Okular::PageTransition::Replace);

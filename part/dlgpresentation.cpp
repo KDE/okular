@@ -98,14 +98,11 @@ DlgPresentation::DlgPresentation(QWidget *parent)
     layout->addRow(new QLabel(this));
 
     // BEGIN Transitions section
-    // Checkbox: Enable transitions
-    QCheckBox *enableTransitions = new QCheckBox(this);
-    enableTransitions->setText(i18nc("@option:check Config dialog, presentation page, transitions", "Enable transitions"));
-    enableTransitions->setObjectName(QStringLiteral("kcfg_SlidesTransitionsEnabled"));
-    layout->addRow(QString(), enableTransitions);
-
     // Combobox: Default transition
     QComboBox *defaultTransition = new QComboBox(this);
+    defaultTransition->addItem(i18nc("@item:inlistbox Config dialog, presentation page, transitions", "Instant (Never use animations)"));
+    defaultTransition->addItem(i18nc("@item:inlistbox Config dialog, presentation page, transitions", "Replace"));
+    defaultTransition->addItem(i18nc("@item:inlistbox Config dialog, presentation page, transitions", "Random transition"));
     defaultTransition->addItem(i18nc("@item:inlistbox Config dialog, presentation page, transitions", "Blinds vertical"));
     defaultTransition->addItem(i18nc("@item:inlistbox Config dialog, presentation page, transitions", "Blinds horizontal"));
     defaultTransition->addItem(i18nc("@item:inlistbox Config dialog, presentation page, transitions", "Box in"));
@@ -115,8 +112,6 @@ DlgPresentation::DlgPresentation(QWidget *parent)
     defaultTransition->addItem(i18nc("@item:inlistbox Config dialog, presentation page, transitions", "Glitter down"));
     defaultTransition->addItem(i18nc("@item:inlistbox Config dialog, presentation page, transitions", "Glitter right"));
     defaultTransition->addItem(i18nc("@item:inlistbox Config dialog, presentation page, transitions", "Glitter right-down"));
-    defaultTransition->addItem(i18nc("@item:inlistbox Config dialog, presentation page, transitions", "Random transition"));
-    defaultTransition->addItem(i18nc("@item:inlistbox Config dialog, presentation page, transitions", "Replace"));
     defaultTransition->addItem(i18nc("@item:inlistbox Config dialog, presentation page, transitions", "Split horizontal in"));
     defaultTransition->addItem(i18nc("@item:inlistbox Config dialog, presentation page, transitions", "Split horizontal out"));
     defaultTransition->addItem(i18nc("@item:inlistbox Config dialog, presentation page, transitions", "Split vertical in"));
@@ -127,8 +122,6 @@ DlgPresentation::DlgPresentation(QWidget *parent)
     defaultTransition->addItem(i18nc("@item:inlistbox Config dialog, presentation page, transitions", "Wipe up"));
     defaultTransition->setObjectName(QStringLiteral("kcfg_SlidesTransition"));
     layout->addRow(i18nc("@label:listbox Config dialog, presentation page, transitions", "Default transition:"), defaultTransition);
-    defaultTransition->setEnabled(Okular::Settings::slidesTransitionsEnabled());
-    connect(enableTransitions, &QCheckBox::toggled, defaultTransition, &QComboBox::setEnabled);
     // END Transitions section
 
     layout->addRow(new QLabel(this));

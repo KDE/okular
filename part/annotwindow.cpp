@@ -295,7 +295,7 @@ bool AnnotWindow::eventFilter(QObject *o, QEvent *e)
     if (e->type() == QEvent::ShortcutOverride) {
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(e);
         if (keyEvent->key() == Qt::Key_Escape) {
-            close();
+            e->accept();
             return true;
         }
     } else if (e->type() == QEvent::KeyPress) {
@@ -305,6 +305,9 @@ bool AnnotWindow::eventFilter(QObject *o, QEvent *e)
             return true;
         } else if (keyEvent == QKeySequence::Redo) {
             m_document->redo();
+            return true;
+        } else if (keyEvent->key() == Qt::Key_Escape) {
+            close();
             return true;
         }
     } else if (e->type() == QEvent::FocusIn) {

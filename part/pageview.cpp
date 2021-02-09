@@ -1972,7 +1972,12 @@ void PageView::resizeEvent(QResizeEvent *e)
 
 void PageView::keyPressEvent(QKeyEvent *e)
 {
-    e->accept();
+    // Ignore ESC key press to send to shell.cpp
+    if (e->key() != Qt::Key_Escape) {
+        e->accept();
+    } else {
+        e->ignore();
+    }
 
     // if performing a selection or dyn zooming, disable keys handling
     if ((d->mouseSelecting && e->key() != Qt::Key_Escape) || (QApplication::mouseButtons() & Qt::MiddleButton))

@@ -160,6 +160,13 @@ void Shell::reloadAllXML()
     }
 }
 
+void Shell::keyPressEvent(QKeyEvent *e)
+{
+    if (e->key() == Qt::Key_Escape && window()->isFullScreen()) {
+        setFullScreen(false);
+    }
+}
+
 bool Shell::eventFilter(QObject *obj, QEvent *event)
 {
     QDragMoveEvent *dmEvent = dynamic_cast<QDragMoveEvent *>(event);

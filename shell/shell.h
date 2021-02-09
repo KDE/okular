@@ -114,6 +114,7 @@ protected:
     bool queryClose() override;
 
     void showEvent(QShowEvent *event) override;
+    void keyPressEvent(QKeyEvent *) override;
 
 private Q_SLOTS:
     void fileOpen();

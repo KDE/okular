@@ -1519,7 +1519,7 @@ void DocumentPrivate::refreshPixmaps(int pageNumber)
     QVector<Okular::PixmapRequest *> pixmapsToRequest;
     for (; it != itEnd; ++it) {
         const QSize size = (*it).m_pixmap->size();
-        PixmapRequest *p = new PixmapRequest(it.key(), pageNumber, size.width() / qApp->devicePixelRatio(), size.height() / qApp->devicePixelRatio(), 1, PixmapRequest::Asynchronous);
+        PixmapRequest *p = new PixmapRequest(it.key(), pageNumber, size.width(), size.height(), 1 /* dpr */, 1, PixmapRequest::Asynchronous);
         p->d->mForce = true;
         pixmapsToRequest << p;
     }
@@ -1539,7 +1539,7 @@ void DocumentPrivate::refreshPixmaps(int pageNumber)
         if (tilesManager) {
             tilesManager->markDirty();
 
-            PixmapRequest *p = new PixmapRequest(observer, pageNumber, tilesManager->width() / qApp->devicePixelRatio(), tilesManager->height() / qApp->devicePixelRatio(), 1, PixmapRequest::Asynchronous);
+            PixmapRequest *p = new PixmapRequest(observer, pageNumber, tilesManager->width(), tilesManager->height(), 1 /* dpr */, 1, PixmapRequest::Asynchronous);
 
             // Get the visible page rect
             NormalizedRect visibleRect;

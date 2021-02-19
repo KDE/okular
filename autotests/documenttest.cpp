@@ -54,7 +54,7 @@ void DocumentTest::testCloseDuringRotationJob()
     ThreadWeaver::Queue::instance()->suspend();
 
     // Request a pixmap. A RotationJob will be enqueued but not started
-    Okular::PixmapRequest *pixmapReq = new Okular::PixmapRequest(dummyDocumentObserver, 0, 100, 100, 1, Okular::PixmapRequest::NoFeature);
+    Okular::PixmapRequest *pixmapReq = new Okular::PixmapRequest(dummyDocumentObserver, 0, 100, 100, qApp->devicePixelRatio(), 1, Okular::PixmapRequest::NoFeature);
     m_document->requestPixmaps(QLinkedList<Okular::PixmapRequest *>() << pixmapReq);
 
     // Delete the document

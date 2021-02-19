@@ -570,12 +570,17 @@ TextRequestPrivate *TextRequestPrivate::get(const TextRequest *req)
 }
 
 PixmapRequest::PixmapRequest(DocumentObserver *observer, int pageNumber, int width, int height, int priority, PixmapRequestFeatures features)
+    : PixmapRequest(observer, pageNumber, width, height, qApp->devicePixelRatio(), priority, features)
+{
+}
+
+PixmapRequest::PixmapRequest(DocumentObserver *observer, int pageNumber, int width, int height, qreal dpr, int priority, PixmapRequestFeatures features)
     : d(new PixmapRequestPrivate)
 {
     d->mObserver = observer;
     d->mPageNumber = pageNumber;
-    d->mWidth = ceil(width * qApp->devicePixelRatio());
-    d->mHeight = ceil(height * qApp->devicePixelRatio());
+    d->mWidth = ceil(width * dpr);
+    d->mHeight = ceil(height * dpr);
     d->mPriority = priority;
     d->mFeatures = features;
     d->mForce = false;

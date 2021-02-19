@@ -648,12 +648,25 @@ public:
      *
      * @param observer The observer.
      * @param pageNumber The page number.
-     * @param width The width of the page.
-     * @param height The height of the page.
+     * @param width The width of the page in logical pixels.
+     * @param height The height of the page in logical pixels.
      * @param priority The priority of the request.
      * @param features The features of generation.
      */
-    PixmapRequest(DocumentObserver *observer, int pageNumber, int width, int height, int priority, PixmapRequestFeatures features);
+    [[deprecated("This PixmapRequest constructor is deprecated, use the one including the device pixel ratio")]] PixmapRequest(DocumentObserver *observer, int pageNumber, int width, int height, int priority, PixmapRequestFeatures features);
+
+    /**
+     * Creates a new pixmap request.
+     *
+     * @param observer The observer.
+     * @param pageNumber The page number.
+     * @param width The width of the page in logical pixels.
+     * @param height The height of the page in logical pixels.
+     * @param dpr Device pixel ratio of the screen that the pixmap is intended for.
+     * @param priority The priority of the request.
+     * @param features The features of generation.
+     */
+    PixmapRequest(DocumentObserver *observer, int pageNumber, int width, int height, qreal dpr, int priority, PixmapRequestFeatures features);
 
     /**
      * Destroys the pixmap request.

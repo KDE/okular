@@ -649,7 +649,7 @@ void ThumbnailListPrivate::slotRequestVisiblePixmaps()
         m_visibleThumbnails.push_back(t);
         // if pixmap not present add it to requests
         if (!t->page()->hasPixmap(q, t->pixmapWidth(), t->pixmapHeight())) {
-            Okular::PixmapRequest *p = new Okular::PixmapRequest(q, t->pageNumber(), t->pixmapWidth(), t->pixmapHeight(), THUMBNAILS_PRIO, Okular::PixmapRequest::Asynchronous);
+            Okular::PixmapRequest *p = new Okular::PixmapRequest(q, t->pageNumber(), t->pixmapWidth(), t->pixmapHeight(), devicePixelRatioF(), THUMBNAILS_PRIO, Okular::PixmapRequest::Asynchronous);
             requestedPixmaps.push_back(p);
         }
     }

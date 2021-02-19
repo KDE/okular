@@ -4426,7 +4426,7 @@ void PageView::delayedResizeEvent()
     slotRequestVisiblePixmaps();
 }
 
-static void slotRequestPreloadPixmap(Okular::DocumentObserver *observer, const PageViewItem *i, const QRect expandedViewportRect, QLinkedList<Okular::PixmapRequest *> *requestedPixmaps)
+static void slotRequestPreloadPixmap(PageView *pageView, const PageViewItem *i, const QRect expandedViewportRect, QLinkedList<Okular::PixmapRequest *> *requestedPixmaps)
 {
     Okular::NormalizedRect preRenderRegion;
     const QRect intersectionRect = expandedViewportRect.intersected(i->croppedGeometry());
@@ -4434,18 +4434,18 @@ static void slotRequestPreloadPixmap(Okular::DocumentObserver *observer, const P
         preRenderRegion = Okular::NormalizedRect(intersectionRect.translated(-i->uncroppedGeometry().topLeft()), i->uncroppedWidth(), i->uncroppedHeight());
 
     // request the pixmap if not already present
-    if (!i->page()->hasPixmap(observer, i->uncroppedWidth(), i->uncroppedHeight(), preRenderRegion) && i->uncroppedWidth() > 0) {
+    if (!i->page()->hasPixmap(pageView, i->uncroppedWidth(), i->uncroppedHeight(), preRenderRegion) && i->uncroppedWidth() > 0) {
         Okular::PixmapRequest::PixmapRequestFeatures requestFeatures = Okular::PixmapRequest::Preload;
         requestFeatures |= Okular::PixmapRequest::Asynchronous;
-        const bool pageHasTilesManager = i->page()->hasTilesManager(observer);
+        const bool pageHasTilesManager = i->page()->hasTilesManager(pageView);
         if (pageHasTilesManager && !preRenderRegion.isNull()) {
-            Okular::PixmapRequest *p = new Okular::PixmapRequest(observer, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, requestFeatures);
+            Okular::PixmapRequest *p = new Okular::PixmapRequest(pageView, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), pageView->devicePixelRatioF(), PAGEVIEW_PRELOAD_PRIO, requestFeatures);
             requestedPixmaps->push_back(p);
 
             p->setNormalizedRect(preRenderRegion);
             p->setTile(true);
         } else if (!pageHasTilesManager) {
-            Okular::PixmapRequest *p = new Okular::PixmapRequest(observer, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRELOAD_PRIO, requestFeatures);
+            Okular::PixmapRequest *p = new Okular::PixmapRequest(pageView, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), pageView->devicePixelRatioF(), PAGEVIEW_PRELOAD_PRIO, requestFeatures);
             requestedPixmaps->push_back(p);
             p->setNormalizedRect(preRenderRegion);
         }
@@ -4527,7 +4527,7 @@ void PageView::slotRequestVisiblePixmaps(int newValue)
 #ifdef PAGEVIEW_DEBUG
             kWarning() << "rerequesting visible pixmaps for page" << i->pageNumber() << "!";
 #endif
-            Okular::PixmapRequest *p = new Okular::PixmapRequest(this, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRIO, Okular::PixmapRequest::Asynchronous);
+            Okular::PixmapRequest *p = new Okular::PixmapRequest(this, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), devicePixelRatioF(), PAGEVIEW_PRIO, Okular::PixmapRequest::Asynchronous);
             requestedPixmaps.push_back(p);
 
             if (i->page()->hasTilesManager(this)) {

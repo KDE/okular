@@ -2588,7 +2588,7 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term><guilabel>Switch to existing tab if file is already open</guilabel></term>
 					<listitem>
-						<para>Whether &okular; should switch to a tab if the file is already open instead of opening a new tab. This option is disabled by default. Can be toggled only if <guilabel>Open new files in tabs</guilabel> is enabled.</para>
+						<para>Whether &okular; should switch to a tab if the file is already open instead of opening a new tab. This option is enabled by default. Can be toggled only if <guilabel>Open new files in tabs</guilabel> is enabled.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>

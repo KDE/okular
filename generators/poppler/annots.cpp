@@ -335,7 +335,7 @@ static Okular::TextAnnotation::TextType popplerToOkular(Poppler::TextAnnotation:
     case Poppler::TextAnnotation::Linked:
         return Okular::TextAnnotation::Linked;
     case Poppler::TextAnnotation::InPlace:
-        return Okular::TextAnnotation::Linked;
+        return Okular::TextAnnotation::InPlace;
     default:
         qWarning() << Q_FUNC_INFO << "unknown value" << ptt;
     }

@@ -1,13 +1,3 @@
-project(okular)
-
-add_definitions(${QT_DEFINITIONS})
-include_directories(
-   ${CMAKE_CURRENT_SOURCE_DIR}
-   ${CMAKE_BINARY_DIR}
-
-   ${QIMAGEBLITZ_INCLUDES}
-)
-
 set(okular_SRCS
     okularplugin.cpp
     ${CMAKE_SOURCE_DIR}/part/guiutils.cpp

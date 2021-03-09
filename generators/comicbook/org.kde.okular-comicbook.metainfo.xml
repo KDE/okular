@@ -78,12 +78,12 @@
   <summary xml:lang="x-test">xxAdds support for reading comic booksxx</summary>
   <summary xml:lang="zh-CN">增加对漫画书的阅读支持</summary>
   <summary xml:lang="zh-TW">加入讀取漫畫書的支援</summary>
-  <mimetypes>
-    <mimetype>application/x-cbr</mimetype>
-    <mimetype>application/x-cbz</mimetype>
-    <mimetype>application/x-cbt</mimetype>
-    <mimetype>application/x-cb7</mimetype>
-  </mimetypes>
+  <provides>
+    <mediatype>application/x-cbr</mediatype>
+    <mediatype>application/x-cbz</mediatype>
+    <mediatype>application/x-cbt</mediatype>
+    <mediatype>application/x-cb7</mediatype>
+  </provides>
   <url type="homepage">https://okular.kde.org</url>
   <releases>
     <release version="20.12.3" date="2021-03-04"/>

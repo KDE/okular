@@ -78,12 +78,12 @@
   <summary xml:lang="x-test">xxAdds support for reading PDF documentsxx</summary>
   <summary xml:lang="zh-CN">增加对 PDF 文档的阅读支持</summary>
   <summary xml:lang="zh-TW">加入讀取 PDF 文件的支援</summary>
-  <mimetypes>
-    <mimetype>application/pdf</mimetype>
-    <mimetype>application/x-gzpdf</mimetype>
-    <mimetype>application/x-bzpdf</mimetype>
-    <mimetype>application/x-wwf</mimetype>
-  </mimetypes>
+  <provides>
+    <mediatype>application/pdf</mediatype>
+    <mediatype>application/x-gzpdf</mediatype>
+    <mediatype>application/x-bzpdf</mediatype>
+    <mediatype>application/x-wwf</mediatype>
+  </provides>
   <url type="homepage">https://okular.kde.org</url>
   <releases>
     <release version="20.12.3" date="2021-03-04"/>

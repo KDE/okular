@@ -78,32 +78,32 @@
   <summary xml:lang="x-test">xxAdds support for reading Mobipocket E-booksxx</summary>
   <summary xml:lang="zh-CN">增加对 Mobipocket 电子书的支持</summary>
   <summary xml:lang="zh-TW">加入讀取 Mobipocket 電子書的支援</summary>
-  <mimetypes>
-    <mimetype>image/bmp</mimetype>
-    <mimetype>image/x-dds</mimetype>
-    <mimetype>image/x-eps</mimetype>
-    <mimetype>image/x-exr</mimetype>
-    <mimetype>image/gif</mimetype>
-    <mimetype>image/x-hdr</mimetype>
-    <mimetype>image/x-ico</mimetype>
-    <mimetype>image/jp2</mimetype>
-    <mimetype>image/jpeg</mimetype>
-    <mimetype>video/x-mng</mimetype>
-    <mimetype>image/x-portable-bitmap</mimetype>
-    <mimetype>image/x-pcx</mimetype>
-    <mimetype>image/x-portable-graymap</mimetype>
-    <mimetype>image/png</mimetype>
-    <mimetype>image/x-portable-pixmap</mimetype>
-    <mimetype>image/x-psd</mimetype>
-    <mimetype>image/x-rgb</mimetype>
-    <mimetype>image/x-tga</mimetype>
-    <mimetype>image/tiff</mimetype>
-    <mimetype>image/x-xbitmap</mimetype>
-    <mimetype>image/x-xcf</mimetype>
-    <mimetype>image/x-xpixmap</mimetype>
-    <mimetype>image/x-gzeps</mimetype>
-    <mimetype>image/x-bzeps</mimetype>
-  </mimetypes>
+  <provides>
+    <mediatype>image/bmp</mediatype>
+    <mediatype>image/x-dds</mediatype>
+    <mediatype>image/x-eps</mediatype>
+    <mediatype>image/x-exr</mediatype>
+    <mediatype>image/gif</mediatype>
+    <mediatype>image/x-hdr</mediatype>
+    <mediatype>image/x-ico</mediatype>
+    <mediatype>image/jp2</mediatype>
+    <mediatype>image/jpeg</mediatype>
+    <mediatype>video/x-mng</mediatype>
+    <mediatype>image/x-portable-bitmap</mediatype>
+    <mediatype>image/x-pcx</mediatype>
+    <mediatype>image/x-portable-graymap</mediatype>
+    <mediatype>image/png</mediatype>
+    <mediatype>image/x-portable-pixmap</mediatype>
+    <mediatype>image/x-psd</mediatype>
+    <mediatype>image/x-rgb</mediatype>
+    <mediatype>image/x-tga</mediatype>
+    <mediatype>image/tiff</mediatype>
+    <mediatype>image/x-xbitmap</mediatype>
+    <mediatype>image/x-xcf</mediatype>
+    <mediatype>image/x-xpixmap</mediatype>
+    <mediatype>image/x-gzeps</mediatype>
+    <mediatype>image/x-bzeps</mediatype>
+  </provides>
   <url type="homepage">https://okular.kde.org</url>
   <releases>
     <release version="20.12.3" date="2021-03-04"/>

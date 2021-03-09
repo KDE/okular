@@ -78,9 +78,9 @@
   <summary xml:lang="x-test">xxAdds support for reading DjVu documentsxx</summary>
   <summary xml:lang="zh-CN">增加对 DjVu 文档的阅读支持</summary>
   <summary xml:lang="zh-TW">加入讀取 DjVu 文件的支援</summary>
-  <mimetypes>
-    <mimetype>image/vnd.djvu</mimetype>
-  </mimetypes>
+  <provides>
+    <mediatype>image/vnd.djvu</mediatype>
+  </provides>
   <url type="homepage">https://okular.kde.org</url>
   <releases>
     <release version="20.12.3" date="2021-03-04"/>

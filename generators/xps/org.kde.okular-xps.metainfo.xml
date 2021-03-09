@@ -78,9 +78,9 @@
   <summary xml:lang="x-test">xxAdds support for reading XPS documentsxx</summary>
   <summary xml:lang="zh-CN">增加对 XPS 文档的阅读支持</summary>
   <summary xml:lang="zh-TW">加入讀取 XPS 文件的支援</summary>
-  <mimetypes>
-    <mimetype>text/plain</mimetype>
-  </mimetypes>
+  <provides>
+    <mediatype>text/plain</mediatype>
+  </provides>
   <url type="homepage">https://okular.kde.org</url>
   <releases>
     <release version="20.12.3" date="2021-03-04"/>

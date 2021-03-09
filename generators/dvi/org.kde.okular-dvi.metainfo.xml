@@ -78,11 +78,11 @@
   <summary xml:lang="x-test">xxAdds support for reading DVI documentsxx</summary>
   <summary xml:lang="zh-CN">增加对 DVI 文档的阅读支持</summary>
   <summary xml:lang="zh-TW">加入讀取 DVI 文件的支援</summary>
-  <mimetypes>
-    <mimetype>application/x-dvi</mimetype>
-    <mimetype>application/x-gzdvi</mimetype>
-    <mimetype>application/x-dzdvi</mimetype>
-  </mimetypes>
+  <provides>
+    <mediatype>application/x-dvi</mediatype>
+    <mediatype>application/x-gzdvi</mediatype>
+    <mediatype>application/x-dzdvi</mediatype>
+  </provides>
   <url type="homepage">https://okular.kde.org</url>
   <releases>
     <release version="20.12.3" date="2021-03-04"/>

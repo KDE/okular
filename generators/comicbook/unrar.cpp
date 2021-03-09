@@ -23,6 +23,7 @@
 
 #include "debug_comicbook.h"
 
+#include <QRegularExpression>
 #include <QStandardPaths>
 #include <memory>
 
@@ -47,7 +48,8 @@ static UnrarFlavour *detectUnrar(const QString &unrarPath, const QString &versio
     proc.start(unrarPath, QStringList() << versionCommand);
     bool ok = proc.waitForFinished(-1);
     Q_UNUSED(ok)
-    const QStringList lines = QString::fromLocal8Bit(proc.readAllStandardOutput()).split(QLatin1Char('\n'), QString::SkipEmptyParts);
+    const QRegularExpression regex(QStringLiteral("[\r\n]"));
+    const QStringList lines = QString::fromLocal8Bit(proc.readAllStandardOutput()).split(regex, QString::SkipEmptyParts);
     if (!lines.isEmpty()) {
         if (lines.first().startsWith(QLatin1String("UNRAR ")))
             kind = new NonFreeUnrarFlavour();

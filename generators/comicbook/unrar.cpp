@@ -145,7 +145,8 @@ QStringList Unrar::list()
 
     startSyncProcess(helper->kind->processListArgs(mFileName));
 
-    QStringList listFiles = helper->kind->processListing(QString::fromLocal8Bit(mStdOutData).split(QLatin1Char('\n'), QString::SkipEmptyParts));
+    const QRegularExpression regex(QStringLiteral("[\r\n]"));
+    QStringList listFiles = helper->kind->processListing(QString::fromLocal8Bit(mStdOutData).split(regex, QString::SkipEmptyParts));
 
     QString subDir;
 

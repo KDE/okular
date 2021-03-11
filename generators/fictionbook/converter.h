@@ -63,6 +63,7 @@ private:
     bool convertAuthor(const QDomElement &element, QString &firstName, QString &middleName, QString &lastName, QString &email, QString &nickname);
     bool convertDate(const QDomElement &element, QDate &date);
     bool convertTextNode(const QDomElement &element, QString &data);
+    bool convertAnnotation(const QDomElement &element, QString &data);
 
     QTextDocument *mTextDocument;
     QTextCursor *mCursor;

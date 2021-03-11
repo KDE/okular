@@ -34,6 +34,7 @@ public:
     QStringList mGenres;
     QString mAuthor;
     QString mTitle;
+    QString mAnnotation;
     QStringList mKeywords;
     QDate mDate;
     QDomElement mCoverPage;
@@ -163,6 +164,19 @@ QTextDocument *Converter::convert(const QString &fileName)
                 mCursor->insertBlock();
             }
 
+            if (mTitleInfo && !mTitleInfo->mAnnotation.isEmpty()) {
+                frameFormat.setBorder(0);
+                mCursor->insertFrame(frameFormat);
+
+                QTextCharFormat charFormat;
+                charFormat.setFontPointSize(10);
+                charFormat.setFontItalic(true);
+                mCursor->insertText(mTitleInfo->mAnnotation, charFormat);
+
+                mCursor->setPosition(topFrame->lastPosition());
+                mCursor->insertBlock();
+            }
+
             mCursor->insertBlock();
 
             if (!convertBody(element)) {
@@ -287,6 +301,9 @@ bool Converter::convertTitleInfo(const QDomElement &element)
                 return false;
 
             mTitleInfo->mKeywords = keywords.split(QLatin1Char(' '), QString::SkipEmptyParts);
+        } else if (child.tagName() == QLatin1String("annotation")) {
+            if (!convertAnnotation(child, mTitleInfo->mAnnotation))
+                return false;
         } else if (child.tagName() == QLatin1String("date")) {
             if (!convertDate(child, mTitleInfo->mDate))
                 return false;
@@ -380,6 +397,20 @@ bool Converter::convertDate(const QDomElement &element, QDate &date)
 {
     if (element.hasAttribute(QStringLiteral("value")))
         date = QDate::fromString(element.attribute(QStringLiteral("value")), Qt::ISODate);
+
+    return true;
+}
+
+bool Converter::convertAnnotation(const QDomElement &element, QString &data)
+{
+    QDomElement child = element.firstChildElement();
+    while (!child.isNull()) {
+        QString text = child.text();
+        if (!text.isNull())
+            data = child.text();
+
+        child = child.nextSiblingElement();
+    }
 
     return true;
 }
@@ -657,6 +688,12 @@ bool Converter::convertEpigraph(const QDomElement &element)
         } else if (child.tagName() == QLatin1String("empty-line")) {
             if (!convertEmptyLine(child))
                 return false;
+        } else if (child.tagName() == QLatin1String("text-author")) {
+            QTextBlockFormat format;
+            format.setTextIndent(10);
+            mCursor->insertBlock(format);
+            if (!convertParagraph(child))
+                return false;
         }
 
         child = child.nextSiblingElement();
@@ -680,6 +717,12 @@ bool Converter::convertPoem(const QDomElement &element)
                 return false;
         } else if (child.tagName() == QLatin1String("stanza")) {
             if (!convertStanza(child))
+                return false;
+        } else if (child.tagName() == QLatin1String("text-author")) {
+            QTextBlockFormat format;
+            format.setTextIndent(10);
+            mCursor->insertBlock(format);
+            if (!convertParagraph(child))
                 return false;
         }
 
@@ -721,6 +764,12 @@ bool Converter::convertCite(const QDomElement &element)
             if (!convertParagraph(child))
                 return false;
         } else if (child.tagName() == QLatin1String("poem")) {
+            if (!convertParagraph(child))
+                return false;
+        } else if (child.tagName() == QLatin1String("text-author")) {
+            QTextBlockFormat format;
+            format.setTextIndent(10);
+            mCursor->insertBlock(format);
             if (!convertParagraph(child))
                 return false;
         } else if (child.tagName() == QLatin1String("empty-line")) {

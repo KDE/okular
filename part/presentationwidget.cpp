@@ -439,7 +439,7 @@ void PresentationWidget::notifyCurrentPageChanged(int previousPage, int currentP
 
         // if pixmap not inside the Okular::Page we request it and wait for
         // notifyPixmapChanged call or else we can proceed to pixmap generation
-        if (!frame->page->hasPixmap(this, ceil(pixW * qApp->devicePixelRatio()), ceil(pixH * qApp->devicePixelRatio()))) {
+        if (!frame->page->hasPixmap(this, ceil(pixW * devicePixelRatioF()), ceil(pixH * devicePixelRatioF()))) {
             requestPixmaps();
         } else {
             // make the background pixmap
@@ -1019,7 +1019,7 @@ void PresentationWidget::changePage(int newPage)
 void PresentationWidget::generatePage(bool disableTransition)
 {
     if (m_lastRenderedPixmap.isNull()) {
-        qreal dpr = qApp->devicePixelRatio();
+        qreal dpr = devicePixelRatioF();
         m_lastRenderedPixmap = QPixmap(m_width * dpr, m_height * dpr);
         m_lastRenderedPixmap.setDevicePixelRatio(dpr);
 
@@ -1069,7 +1069,7 @@ void PresentationWidget::generatePage(bool disableTransition)
 
 void PresentationWidget::generateIntroPage(QPainter &p)
 {
-    qreal dpr = qApp->devicePixelRatio();
+    qreal dpr = devicePixelRatioF();
 
     // use a vertical gray gradient background
     int blend1 = m_height / 10, blend2 = 9 * m_height / 10;
@@ -1148,7 +1148,7 @@ inline int qt_div255(int x)
 void PresentationWidget::generateOverlay()
 {
 #ifdef ENABLE_PROGRESS_OVERLAY
-    qreal dpr = qApp->devicePixelRatio();
+    qreal dpr = devicePixelRatioF();
 
     // calculate overlay geometry and resize pixmap if needed
     double side = m_width / 16.0;
@@ -1483,7 +1483,7 @@ void PresentationWidget::slotTransitionStep()
         QPainter pixmapPainter;
         m_currentPixmapOpacity += 1.0 / m_transitionSteps;
         m_lastRenderedPixmap = QPixmap(m_lastRenderedPixmap.size());
-        m_lastRenderedPixmap.setDevicePixelRatio(qApp->devicePixelRatio());
+        m_lastRenderedPixmap.setDevicePixelRatio(devicePixelRatioF());
         m_lastRenderedPixmap.fill(Qt::transparent);
         pixmapPainter.begin(&m_lastRenderedPixmap);
         pixmapPainter.setCompositionMode(QPainter::CompositionMode_Source);

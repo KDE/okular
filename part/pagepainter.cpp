@@ -106,7 +106,7 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
 
         if (p != nullptr) {
             pixmap = *p;
-            pixmap.setDevicePixelRatio(qApp->devicePixelRatio());
+            pixmap.setDevicePixelRatio(dpr);
         }
 
         /** 1B - IF NO PIXMAP, DRAW EMPTY PAGE **/
@@ -250,7 +250,7 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
 
                 if (!limitsInTile.isEmpty()) {
                     QPixmap *tilePixmap = tile.pixmap();
-                    tilePixmap->setDevicePixelRatio(qApp->devicePixelRatio());
+                    tilePixmap->setDevicePixelRatio(dpr);
 
                     if (tilePixmap->width() == dTileRect.width() && tilePixmap->height() == dTileRect.height()) {
                         destPainter->drawPixmap(limitsInTile.topLeft(), *tilePixmap, dLimitsInTile.translated(-dTileRect.topLeft()));
@@ -290,7 +290,7 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
 
                 if (!limitsInTile.isEmpty()) {
                     QPixmap *tilePixmap = tile.pixmap();
-                    tilePixmap->setDevicePixelRatio(qApp->devicePixelRatio());
+                    tilePixmap->setDevicePixelRatio(dpr);
 
                     if (tilePixmap->width() == dTileRect.width() && tilePixmap->height() == dTileRect.height()) {
                         p.drawPixmap(limitsInTile.translated(-limits.topLeft()).topLeft(), *tilePixmap, dLimitsInTile.translated(-dTileRect.topLeft()));

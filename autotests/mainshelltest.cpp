@@ -660,19 +660,22 @@ void MainShellTest::testOpenTheSameFileSeveralTimes()
     shell->openUrl(file2);
     shell->openUrl(file2);
 
+    QVERIFY(shell->m_tabs.size() == 2);
+
+    QVERIFY(shell->m_tabWidget->currentIndex() == 1);
+
+    Okular::Settings::self()->setSwitchToTabIfOpen(false);
+
+    shell->openUrl(file2);
+
     QVERIFY(shell->m_tabs.size() == 3);
-
-    Okular::Settings::self()->setSwitchToTabIfOpen(true);
-
-    shell->openUrl(file3);
-
-    shell->openUrl(file1);
-    QVERIFY(shell->m_tabWidget->currentIndex() == 0);
 
     shell->openUrl(file3);
     QVERIFY(shell->m_tabWidget->currentIndex() == 3);
 
     QVERIFY(shell->m_tabs.size() == 4);
+
+    Okular::Settings::self()->setSwitchToTabIfOpen(true);
 }
 
 void MainShellTest::testMiddleButtonCloseUndo()

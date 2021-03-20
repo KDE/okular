@@ -59,6 +59,14 @@ protected:
      * Until @c m_disconnectedScreenIndex entry is created, this is @c k_noDisconnectedScreenNumber.
      */
     int m_disconnectedScreenNumber;
+
+protected Q_SLOTS:
+    /**
+     * Populates the combobox list with items for the special screens,
+     * and for every connected screen.
+     * If @c m_disconnectedScreenNumber is set, adds an item for this disconnected screen.
+     */
+    void repopulateList();
 };
 
 /** “Current” and “Default” */

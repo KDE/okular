@@ -151,8 +151,25 @@ PreferredScreenSelector::PreferredScreenSelector(QWidget *parent)
     : QComboBox(parent)
     , m_disconnectedScreenNumber(k_noDisconnectedScreenNumber)
 {
+    repopulateList();
+    connect(qApp, &QGuiApplication::screenAdded, this, &PreferredScreenSelector::repopulateList);
+    connect(qApp, &QGuiApplication::screenRemoved, this, &PreferredScreenSelector::repopulateList);
+
+    // KConfigWidgets setup:
+    setProperty("kcfg_property", QByteArray("preferredScreen"));
+    connect(this, QOverload<int>::of(&QComboBox::currentIndexChanged), [this](int index) { emit preferredScreenChanged(index - k_specialScreenCount); });
+}
+
+void PreferredScreenSelector::repopulateList()
+{
+    // Remember which index was selected before:
+    const int screenBeforeRepopulation = preferredScreen();
+
+    QSignalBlocker signalBlocker(this);
+    clear();
+
     // Populate list:
-    static_assert(k_specialScreenCount == 2, "Special screens unknown to PreferredScreenSelector constructor.");
+    static_assert(k_specialScreenCount == 2, "Special screens unknown to PreferredScreenSelector::repopulateList().");
     addItem(i18nc("@item:inlistbox Config dialog, presentation page, preferred screen", "Current Screen"));
     addItem(i18nc("@item:inlistbox Config dialog, presentation page, preferred screen", "Default Screen"));
 
@@ -170,21 +187,24 @@ PreferredScreenSelector::PreferredScreenSelector(QWidget *parent)
     // If a disconnected screen is configured, it will be appended last:
     m_disconnectedScreenIndex = count();
 
-    // KConfigWidgets setup:
-    setProperty("kcfg_property", QByteArray("preferredScreen"));
-    connect(this, QOverload<int>::of(&QComboBox::currentIndexChanged), [this](int index) { emit preferredScreenChanged(index - k_specialScreenCount); });
+    // If a screen of currently disconnected index was selected, keep its list item:
+    if (m_disconnectedScreenNumber >= m_disconnectedScreenIndex - k_specialScreenCount) {
+        addItem(i18nc("@item:inlistbox Config dialog, presentation page, preferred screen. %1 is the screen number (0, 1, ...), hopefully not 0.", "Screen %1 (disconnected)", m_disconnectedScreenNumber));
+    }
+
+    // Select the index that was selected before:
+    setPreferredScreen(screenBeforeRepopulation);
 }
 
 void PreferredScreenSelector::setPreferredScreen(int newScreen)
 {
     // Check whether the new screen is not in the list of connected screens:
     if (newScreen >= m_disconnectedScreenIndex - k_specialScreenCount) {
-        if (m_disconnectedScreenNumber == k_noDisconnectedScreenNumber) {
-            addItem(QString());
+        if (m_disconnectedScreenNumber != newScreen) {
+            m_disconnectedScreenNumber = newScreen;
+            repopulateList();
         }
-        setItemText(m_disconnectedScreenIndex, i18nc("@item:inlistbox Config dialog, presentation page, preferred screen. %1 is the screen number (0, 1, ...), hopefully not 0.", "Screen %1 (disconnected)", newScreen));
         setCurrentIndex(m_disconnectedScreenIndex);
-        m_disconnectedScreenNumber = newScreen;
         return;
     }
 

@@ -379,6 +379,7 @@ if(BUILD_DESKTOP)
     part/annotationwidgets.cpp
     part/bookmarklist.cpp
     part/certificateviewer.cpp
+    part/cursorwraphelper.cpp
     part/debug_ui.cpp
     part/drawingtoolactions.cpp
     part/fileprinterpreview.cpp

@@ -12,7 +12,6 @@
 // qt/kde includes
 #include <QAction>
 #include <QApplication>
-#include <QDesktopWidget>
 #include <QIcon>
 #include <QPainter>
 #include <QResizeEvent>
@@ -34,6 +33,7 @@
 #include "core/document.h"
 #include "core/generator.h"
 #include "core/page.h"
+#include "cursorwraphelper.h"
 #include "pagepainter.h"
 #include "priorities.h"
 #include "settings.h"
@@ -745,6 +745,8 @@ void ThumbnailListPrivate::mousePressEvent(QMouseEvent *e)
         m_mouseGrabPos.setY(0);
         m_mouseGrabItem = nullptr;
     }
+
+    CursorWrapHelper::startDrag();
 }
 
 void ThumbnailListPrivate::mouseReleaseEvent(QMouseEvent *e)
@@ -862,19 +864,9 @@ void ThumbnailListPrivate::mouseMoveEvent(QMouseEvent *e)
             m_pageCurrentlyGrabbed = newPageOn;
             m_mouseGrabItem = getPageByNumber(m_pageCurrentlyGrabbed);
         }
-        // wrap mouse from top to bottom
-        const QRect mouseContainer = QApplication::desktop()->screenGeometry(this);
-        QPoint currentMousePos = QCursor::pos();
-        if (currentMousePos.y() <= mouseContainer.top() + 4) {
-            currentMousePos.setY(mouseContainer.bottom() - 5);
-            QCursor::setPos(currentMousePos);
-            m_mouseGrabPos.setX(0);
-            m_mouseGrabPos.setY(0);
-        }
-        // wrap mouse from bottom to top
-        else if (currentMousePos.y() >= mouseContainer.bottom() - 4) {
-            currentMousePos.setY(mouseContainer.top() + 5);
-            QCursor::setPos(currentMousePos);
+
+        // Wrap mouse cursor
+        if (!CursorWrapHelper::wrapCursor(mousePos, Qt::TopEdge | Qt::BottomEdge).isNull()) {
             m_mouseGrabPos.setX(0);
             m_mouseGrabPos.setY(0);
         }

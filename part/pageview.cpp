@@ -27,7 +27,9 @@
 #include <QClipboard>
 #include <QCursor>
 #include <QDesktopServices>
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
 #include <QDesktopWidget>
+#endif
 #include <QElapsedTimer>
 #include <QEvent>
 #include <QGestureEvent>
@@ -70,6 +72,7 @@
 #include "annotationpopup.h"
 #include "annotwindow.h"
 #include "core/annotations.h"
+#include "cursorwraphelper.h"
 #include "debug_ui.h"
 #include "formwidgets.h"
 #include "guiutils.h"
@@ -2128,29 +2131,18 @@ void PageView::mouseMoveEvent(QMouseEvent *e)
         return;
 
     // if holding mouse mid button, perform zoom
-    if (e->buttons() & Qt::MiddleButton) {
-        int mouseY = e->globalPos().y();
-        int deltaY = d->mouseMidLastY - mouseY;
+    if (e->buttons() & Qt::MidButton) {
+        int deltaY = d->mouseMidLastY - e->globalPos().y();
+        d->mouseMidLastY = e->globalPos().y();
 
-        // wrap mouse from top to bottom
-        const QRect mouseContainer = QApplication::desktop()->screenGeometry(this);
-        const int absDeltaY = abs(deltaY);
-        if (absDeltaY > mouseContainer.height() / 2) {
-            deltaY = mouseContainer.height() - absDeltaY;
-        }
+        const float upperZoomLimit = d->document->supportsTiles() ? 99.99 : 3.99;
 
-        const float upperZoomLimit = d->document->supportsTiles() ? 15.99 : 3.99;
-        if (mouseY <= mouseContainer.top() + 4 && d->zoomFactor < upperZoomLimit) {
-            mouseY = mouseContainer.bottom() - 5;
-            QCursor::setPos(e->globalPos().x(), mouseY);
-        }
-        // wrap mouse from bottom to top
-        else if (mouseY >= mouseContainer.bottom() - 4 && d->zoomFactor > 0.101) {
-            mouseY = mouseContainer.top() + 5;
-            QCursor::setPos(e->globalPos().x(), mouseY);
-        }
-        // remember last position
-        d->mouseMidLastY = mouseY;
+        // Wrap mouse cursor
+        Qt::Edges wrapEdges;
+        wrapEdges.setFlag(Qt::TopEdge, d->zoomFactor < upperZoomLimit);
+        wrapEdges.setFlag(Qt::BottomEdge, d->zoomFactor > 0.101);
+
+        deltaY += CursorWrapHelper::wrapCursor(e->globalPos(), wrapEdges).y();
 
         // update zoom level, perform zoom and redraw
         if (deltaY) {
@@ -2194,23 +2186,12 @@ void PageView::mouseMoveEvent(QMouseEvent *e)
 
                 setCursor(Qt::ClosedHandCursor);
 
-                QPoint mousePos = e->globalPos();
+                // Wrap mouse cursor
+                Qt::Edges wrapEdges;
+                wrapEdges.setFlag(Qt::TopEdge, verticalScrollBar()->value() > verticalScrollBar()->minimum());
+                wrapEdges.setFlag(Qt::BottomEdge, verticalScrollBar()->value() < verticalScrollBar()->maximum());
 
-                const QRect mouseContainer = QApplication::desktop()->screenGeometry(this);
-
-                // wrap mouse from top to bottom
-                if (mousePos.y() <= mouseContainer.top() + 4 && verticalScrollBar()->value() < verticalScrollBar()->maximum() - 10) {
-                    mousePos.setY(mouseContainer.bottom() - 5);
-                    QCursor::setPos(mousePos);
-                    d->mouseGrabOffset -= QPoint(0, mouseContainer.height());
-                }
-                // wrap mouse from bottom to top
-                else if (mousePos.y() >= mouseContainer.bottom() - 4 && verticalScrollBar()->value() > 10) {
-                    mousePos.setY(mouseContainer.top() + 5);
-                    d->mouseGrabOffset += QPoint(0, mouseContainer.height());
-
-                    QCursor::setPos(mousePos);
-                }
+                d->mouseGrabOffset -= CursorWrapHelper::wrapCursor(e->pos(), wrapEdges);
 
                 d->scroller->handleInput(QScroller::InputMove, e->pos() + d->mouseGrabOffset, e->timestamp());
             }
@@ -2285,6 +2266,7 @@ void PageView::mousePressEvent(QMouseEvent *e)
     if (e->button() == Qt::MiddleButton) {
         d->mouseMidLastY = e->globalPos().y();
         setCursor(Qt::SizeVerCursor);
+        CursorWrapHelper::startDrag();
         return;
     }
 
@@ -2310,6 +2292,7 @@ void PageView::mousePressEvent(QMouseEvent *e)
 
     // update press / 'start drag' mouse position
     d->mousePressPos = e->globalPos();
+    CursorWrapHelper::startDrag();
 
     // handle mode dependent mouse press actions
     bool leftButton = e->button() == Qt::LeftButton, rightButton = e->button() == Qt::RightButton;

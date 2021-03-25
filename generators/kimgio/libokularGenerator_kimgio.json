@@ -224,7 +224,12 @@
             "image/tiff",
             "image/x-xbitmap",
             "image/x-xcf",
-            "image/x-xpixmap"
+            "image/x-xpixmap",
+            "image/x-gzeps",
+            "image/x-bzeps",
+            "image/avif",
+            "image/heif",
+            "image/webp"
         ],
         "Name": "Image Backend",
         "Name[az]": "Image Backend",

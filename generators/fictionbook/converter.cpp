@@ -291,7 +291,10 @@ bool Converter::convertTitleInfo(const QDomElement &element)
             if (!convertAuthor(child, firstName, middleName, lastName, dummy, dummy))
                 return false;
 
-            mTitleInfo->mAuthor = QStringLiteral("%1 %2 %3").arg(firstName, middleName, lastName);
+            if (mTitleInfo->mAuthor.isEmpty())
+                mTitleInfo->mAuthor = QStringLiteral("%1 %2 %3").arg(firstName, middleName, lastName).simplified();
+            else
+                mTitleInfo->mAuthor += QStringLiteral(", %1 %2 %3").arg(firstName, middleName, lastName).simplified();
         } else if (child.tagName() == QLatin1String("book-title")) {
             if (!convertTextNode(child, mTitleInfo->mTitle))
                 return false;

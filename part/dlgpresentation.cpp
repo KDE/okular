@@ -41,7 +41,7 @@ DlgPresentation::DlgPresentation(QWidget *parent)
     advanceTime->setSuffix(ki18ncp("Advance every %1 seconds", " second", " seconds"));
     advanceTime->setObjectName(QStringLiteral("kcfg_SlidesAdvanceTime"));
 
-    QHBoxLayout *advanceAutomaticallyLayout = new QHBoxLayout(this);
+    QHBoxLayout *advanceAutomaticallyLayout = new QHBoxLayout();
     advanceAutomaticallyLayout->addWidget(advanceAutomatically);
     advanceAutomatically->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     advanceAutomaticallyLayout->addWidget(advanceTime);

@@ -14,6 +14,7 @@
 #include <QColorDialog>
 #include <QFileInfo>
 #include <QFontDialog>
+#include <QMenu>
 #include <QPainter>
 #include <QPen>
 
@@ -24,6 +25,7 @@
 #include <KParts/MainWindow>
 #include <KSelectAction>
 #include <KToolBar>
+#include <kwidgetsaddons_version.h>
 
 // local includes
 #include "annotationwidgets.h"
@@ -72,13 +74,14 @@ public:
     }
 
     QAction *selectActionItem(KSelectAction *aList, QAction *aCustomCurrent, double value, const QList<double> &defaultValues, const QIcon &icon, const QString &label);
+
     /**
      * @short Adds a custom stamp annotation action to the stamp list when the stamp is not a default stamp
      *
-     * When stampIconName cannot be found among the default stamps, this method creates a new action
-     * for the custom stamp annotation and adds it to the stamp action combo box. If a custom action
-     * is already present in the list, it is removed before adding the new custom action. If stampIconName
-     * matches a default stamp, any existing stamp annotation action is removed.
+     * When @p stampIconName cannot be found among the default stamps, this method creates a new action
+     * for the custom stamp annotation and adds it to the stamp action combo box.
+     * If a custom action is already present in the list, it is removed before adding the new custom action.
+     * If @p stampIconName matches a default stamp, any existing custom stamp annotation action is removed.
      */
     void maybeUpdateCustomStampAction(const QString &stampIconName);
     void parseTool(int toolId);
@@ -530,15 +533,21 @@ AnnotationActionHandler::AnnotationActionHandler(PageViewAnnotator *parent, KAct
     KToggleAction *aRectangle = new KToggleAction(QIcon::fromTheme(QStringLiteral("draw-rectangle")), i18nc("@action:intoolbar Annotation tool", "Rectangle"), this);
     KToggleAction *aEllipse = new KToggleAction(QIcon::fromTheme(QStringLiteral("draw-ellipse")), i18nc("@action:intoolbar Annotation tool", "Ellipse"), this);
     KToggleAction *aPolygon = new KToggleAction(QIcon::fromTheme(QStringLiteral("draw-polyline")), i18nc("@action:intoolbar Annotation tool", "Polygon"), this);
-    d->aGeomShapes = new ToggleActionMenu(QIcon(), QString(), this, ToggleActionMenu::MenuButtonPopup, ToggleActionMenu::ImplicitDefaultAction);
-    d->aGeomShapes->setText(i18nc("@action", "Geometrical shapes"));
+    d->aGeomShapes = new ToggleActionMenu(i18nc("@action", "Geometrical shapes"), this);
     d->aGeomShapes->setEnabled(true); // Need to explicitly set this once, or refreshActions() in part.cpp will disable this action
+#if KWIDGETSADDONS_VERSION < QT_VERSION_CHECK(5, 77, 0)
+    d->aGeomShapes->setDelayed(false);
+    d->aGeomShapes->setStickyMenu(false);
+#else
+    d->aGeomShapes->setPopupMode(QToolButton::MenuButtonPopup);
+#endif
     d->aGeomShapes->addAction(aArrow);
     d->aGeomShapes->addAction(aStraightLine);
     d->aGeomShapes->addAction(aRectangle);
     d->aGeomShapes->addAction(aEllipse);
     d->aGeomShapes->addAction(aPolygon);
     d->aGeomShapes->setDefaultAction(aArrow);
+    connect(d->aGeomShapes->menu(), &QMenu::triggered, d->aGeomShapes, &ToggleActionMenu::setDefaultAction);
 
     // The order in which the actions are added is relevant to connect
     // them to the correct toolId defined in tools.xml
@@ -574,13 +583,15 @@ AnnotationActionHandler::AnnotationActionHandler(PageViewAnnotator *parent, KAct
     }
 
     // Stamp action
-    d->aStamp = new ToggleActionMenu(QIcon::fromTheme(QStringLiteral("tag")), QString(), this, ToggleActionMenu::MenuButtonPopup, ToggleActionMenu::ImplicitDefaultAction);
-    d->aStamp->setText(i18nc("@action", "Stamp"));
-
+    d->aStamp = new ToggleActionMenu(QIcon::fromTheme(QStringLiteral("tag")), i18nc("@action", "Stamp"), this);
+#if KWIDGETSADDONS_VERSION < QT_VERSION_CHECK(5, 77, 0)
+    d->aStamp->setDelayed(false);
+    d->aStamp->setStickyMenu(false);
+#else
+    d->aStamp->setPopupMode(QToolButton::MenuButtonPopup);
+#endif
     for (const auto &stamp : StampAnnotationWidget::defaultStamps) {
         KToggleAction *ann = new KToggleAction(d->stampIcon(stamp.second), stamp.first, this);
-        if (!d->aStamp->defaultAction())
-            d->aStamp->setDefaultAction(ann);
         d->aStamp->addAction(ann);
         d->agTools->addAction(ann);
         // action group workaround: connecting to toggled instead of triggered
@@ -590,6 +601,10 @@ AnnotationActionHandler::AnnotationActionHandler(PageViewAnnotator *parent, KAct
                 d->slotStampToolSelected(stamp.second);
         });
     }
+    if (!d->aStamp->menu()->actions().isEmpty()) {
+        d->aStamp->setDefaultAction(d->aStamp->menu()->actions().first());
+    }
+    connect(d->aStamp->menu(), &QMenu::triggered, d->aStamp, &ToggleActionMenu::setDefaultAction);
 
     // Quick annotations action
     d->aQuickTools = new KSelectAction(QIcon::fromTheme(QStringLiteral("draw-freehand")), i18nc("@action:intoolbar Show list of quick annotation tools", "Quick Annotations"), this);

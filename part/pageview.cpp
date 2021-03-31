@@ -3724,8 +3724,12 @@ double PageView::zoomFactorFitMode(ZoomMode mode)
     // prevent segmentation fault when opening a new document;
     if (!currentItem)
         return 0;
+
+    // We need the real width/height of the cropped page.
     const Okular::Page *okularPage = currentItem->page();
-    const double width = okularPage->width(), height = okularPage->height();
+    const double width = okularPage->width() * currentItem->crop().width();
+    const double height = okularPage->height() * currentItem->crop().height();
+
     if (mode == ZoomFitWidth)
         return (double)colWidth / width;
     if (mode == ZoomFitPage) {

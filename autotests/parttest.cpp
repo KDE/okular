@@ -58,6 +58,7 @@ signals:
     void urlHandler(const QUrl &url); // NOLINT(readability-inconsistent-declaration-parameter-name)
 
 private slots:
+    void testZoomWithCrop();
     void testReload();
     void testCanceledReload();
     void testTOCReload();
@@ -2031,6 +2032,59 @@ void PartTest::testZoomInFacingPages()
     QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotZoomIn"));
     QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotZoomIn"));
     QTRY_COMPARE(zoomSelectAction->currentText(), QStringLiteral("66%"));
+
+    // Back to single mode
+    part.m_pageView->findChild<QAction *>(QStringLiteral("view_render_mode_single"))->trigger();
+}
+
+void PartTest::testZoomWithCrop()
+{
+    // We test that all zoom levels can be achieved with cropped pages, bug 342003
+
+    QVariantList dummyArgs;
+    Okular::Part part(nullptr, nullptr, dummyArgs);
+    QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/file2.pdf")));
+
+    KActionMenu *cropMenu = part.m_pageView->findChild<KActionMenu *>(QStringLiteral("view_trim_mode"));
+    KToggleAction *cropAction = cropMenu->menu()->findChild<KToggleAction *>(QStringLiteral("view_trim_margins"));
+    KSelectAction *zoomSelectAction = part.m_pageView->findChild<KSelectAction *>(QStringLiteral("zoom_to"));
+
+    part.widget()->resize(600, 400);
+    part.widget()->show();
+    QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
+
+    // Activate "Trim Margins"
+    QVERIFY(!Okular::Settings::trimMargins());
+    cropAction->trigger();
+    QVERIFY(Okular::Settings::trimMargins());
+
+    // Wait for the bounding boxes
+    QTRY_VERIFY(part.m_document->page(0)->isBoundingBoxKnown());
+    QTRY_VERIFY(part.m_document->page(1)->isBoundingBoxKnown());
+
+    // Zoom out
+    for (int i = 0; i < 20; i++) {
+        QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotZoomOut"));
+    }
+    QCOMPARE(zoomSelectAction->currentText(), "12%");
+
+    // Zoom in and out and check that all zoom levels appear
+    QSet<QString> zooms_ref {"12%", "25%", "33%", "50%", "66%", "75%", "100%", "125%", "150%", "200%", "400%", "800%", "1,600%", "2,500%", "5,000%", "10,000%"};
+
+    for (int j = 0; j < 2; j++) {
+        QSet<QString> zooms;
+        for (int i = 0; i < 18; i++) {
+            zooms << zoomSelectAction->currentText();
+            QVERIFY(QMetaObject::invokeMethod(part.m_pageView, j == 0 ? "slotZoomIn" : "slotZoomOut"));
+        }
+
+        QVERIFY(zooms.contains(zooms_ref));
+    }
+
+    // Deactivate "Trim Margins"
+    QVERIFY(Okular::Settings::trimMargins());
+    cropAction->trigger();
+    QVERIFY(!Okular::Settings::trimMargins());
 }
 
 } // namespace Okular

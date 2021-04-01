@@ -2129,11 +2129,20 @@ void PartTest::testLinkWithCrop()
     // wait for pixmap
     QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
 
+    const int width = part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->viewport()->height();
+
+    // Move to a location without a link
+    QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * 0.1, width * 0.1));
+
+    // The cursor should be normal
+    QCOMPARE(part.m_pageView->cursor().shape(), Qt::CursorShape(Qt::OpenHandCursor));
+
     // Activate "Trim Margins"
     cropAction->trigger();
 
-    const int width = part.m_pageView->viewport()->width();
-    const int height = part.m_pageView->viewport()->height();
+    // The cursor should be a cross-hair
+    QCOMPARE(part.m_pageView->cursor().shape(), Qt::CursorShape(Qt::CrossCursor));
 
     const int mouseStartY = height * 0.2;
     const int mouseEndY = height * 0.8;
@@ -2142,6 +2151,9 @@ void PartTest::testLinkWithCrop()
 
     // Trim the page
     simulateMouseSelection(mouseStartX, mouseStartY, mouseEndX, mouseEndY, part.m_pageView->viewport());
+
+    // The cursor should be normal again
+    QCOMPARE(part.m_pageView->cursor().shape(), Qt::CursorShape(Qt::OpenHandCursor));
 
     // Click a link
     const QPoint click(width * 0.2, height * 0.2);

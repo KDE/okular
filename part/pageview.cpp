@@ -4961,7 +4961,10 @@ void PageView::slotTrimToSelectionToggled(bool on)
     if (on) { // Turn off any other Trim modes
         updateTrimMode(d->aTrimToSelection->data().toInt());
 
+        // Change the mouse mode
         d->mouseMode = Okular::Settings::EnumMouseMode::TrimSelect;
+        d->aMouseNormal->setChecked(false);
+
         // change the text in messageWindow (and show it if hidden)
         d->messageWindow->display(i18n("Draw a rectangle around the page area you wish to keep visible"), QString(), PageViewMessage::Info, -1);
         // force an update of the cursor

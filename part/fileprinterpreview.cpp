@@ -21,7 +21,6 @@
 #include <QVBoxLayout>
 
 #include <KLocalizedString>
-#include <KMimeTypeTrader>
 #include <KPluginFactory>
 #include <KPluginLoader>
 #include <KSharedConfig>
@@ -78,34 +77,19 @@ void FilePrinterPreviewPrivate::getPart()
         qCDebug(OkularUiDebug) << "already got a part";
         return;
     }
-    qCDebug(OkularUiDebug) << "querying trader for application/ps service";
 
-    KPluginFactory *factory(nullptr);
-    KService::List offers;
-    if (filename.endsWith(QStringLiteral(".ps"))) {
-        /* Explicitly look for the Okular/Ghostview part: no other PostScript
-           parts are available now; other parts which handles text are not
-           suitable here (PostScript source code) */
-        offers = KMimeTypeTrader::self()->query(QStringLiteral("application/postscript"), QStringLiteral("KParts/ReadOnlyPart"), QStringLiteral("[DesktopEntryName] == 'okularghostview'"));
-    } else {
-        offers = KMimeTypeTrader::self()->query(QStringLiteral("application/pdf"), QStringLiteral("KParts/ReadOnlyPart"));
+    KPluginLoader loader(QStringLiteral("okularpart"));
+    KPluginFactory *factory = loader.factory();
+
+    if (!factory) {
+        qCDebug(OkularUiDebug) << "Loading failed:" << loader.errorString();
+        return;
     }
 
-    KService::List::ConstIterator it = offers.constBegin();
-    while (!factory && it != offers.constEnd()) {
-        KPluginLoader loader(**it);
-        factory = loader.factory();
-        if (!factory) {
-            qCDebug(OkularUiDebug) << "Loading failed:" << loader.errorString();
-        }
-        ++it;
-    }
-    if (factory) {
-        qCDebug(OkularUiDebug) << "Trying to create a part";
-        previewPart = factory->create<KParts::ReadOnlyPart>(q, (QVariantList() << QStringLiteral("Print/Preview")));
-        if (!previewPart) {
-            qCDebug(OkularUiDebug) << "Part creation failed";
-        }
+    qCDebug(OkularUiDebug) << "Trying to create a part";
+    previewPart = factory->create<KParts::ReadOnlyPart>(q, (QVariantList() << QStringLiteral("Print/Preview")));
+    if (!previewPart) {
+        qCDebug(OkularUiDebug) << "Part creation failed";
     }
 }
 

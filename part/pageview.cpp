@@ -4901,16 +4901,16 @@ void PageView::slotAutoScrollDown()
 
 void PageView::slotScrollUp(int nSteps)
 {
-    // if in single page mode and at the top of the screen, go to \ page
-    if (getContinuousMode() || verticalScrollBar()->value() > verticalScrollBar()->minimum()) {
+    if (verticalScrollBar()->value() > verticalScrollBar()->minimum()) {
         if (nSteps) {
             d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, -100 * nSteps), d->currentShortScrollDuration);
         } else {
             if (d->scroller->finalPosition().y() > verticalScrollBar()->minimum())
-                d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, -(1 - Okular::Settings::scrollOverlap() / 100.0) * verticalScrollBar()->rect().height()), d->currentLongScrollDuration);
+                d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, -(1 - Okular::Settings::scrollOverlap() / 100.0) * viewport()->height()), d->currentLongScrollDuration);
         }
-    } else if (d->document->currentPage() > 0) {
-        // more optimized than document->setPrevPage and then move view to bottom
+    } else if (!getContinuousMode() && d->document->currentPage() > 0) {
+        // Since we are in single page mode and at the top of the page, go to previous page.
+        // setViewport() is more optimized than document->setPrevPage and then move view to bottom.
         Okular::DocumentViewport newViewport = d->document->viewport();
         newViewport.pageNumber -= viewColumns();
         if (newViewport.pageNumber < 0)
@@ -4923,16 +4923,16 @@ void PageView::slotScrollUp(int nSteps)
 
 void PageView::slotScrollDown(int nSteps)
 {
-    // if in single page mode and at the bottom of the screen, go to next page
-    if (getContinuousMode() || verticalScrollBar()->value() < verticalScrollBar()->maximum()) {
+    if (verticalScrollBar()->value() < verticalScrollBar()->maximum()) {
         if (nSteps) {
             d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, 100 * nSteps), d->currentShortScrollDuration);
         } else {
             if (d->scroller->finalPosition().y() < verticalScrollBar()->maximum())
-                d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, (1 - Okular::Settings::scrollOverlap() / 100.0) * verticalScrollBar()->rect().height()), d->currentLongScrollDuration);
+                d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, (1 - Okular::Settings::scrollOverlap() / 100.0) * viewport()->height()), d->currentLongScrollDuration);
         }
-    } else if ((int)d->document->currentPage() < d->items.count() - 1) {
-        // more optimized than document->setNextPage and then move view to top
+    } else if (!getContinuousMode() && (int)d->document->currentPage() < d->items.count() - 1) {
+        // Since we are in single page mode and at the bottom of the page, go to next page.
+        // setViewport() is more optimized than document->setNextPage and then move view to top
         Okular::DocumentViewport newViewport = d->document->viewport();
         newViewport.pageNumber += viewColumns();
         if (newViewport.pageNumber >= (int)d->items.count())

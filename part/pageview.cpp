@@ -2192,8 +2192,10 @@ void PageView::mouseMoveEvent(QMouseEvent *e)
 
                 // Wrap mouse cursor
                 Qt::Edges wrapEdges;
-                wrapEdges.setFlag(Qt::TopEdge, verticalScrollBar()->value() > verticalScrollBar()->minimum());
-                wrapEdges.setFlag(Qt::BottomEdge, verticalScrollBar()->value() < verticalScrollBar()->maximum());
+                wrapEdges.setFlag(Qt::TopEdge, verticalScrollBar()->value() < verticalScrollBar()->maximum());
+                wrapEdges.setFlag(Qt::BottomEdge, verticalScrollBar()->value() > verticalScrollBar()->minimum());
+                wrapEdges.setFlag(Qt::LeftEdge, horizontalScrollBar()->value() < horizontalScrollBar()->maximum());
+                wrapEdges.setFlag(Qt::RightEdge, horizontalScrollBar()->value() > horizontalScrollBar()->minimum());
 
                 d->mouseGrabOffset -= CursorWrapHelper::wrapCursor(e->pos(), wrapEdges);
 

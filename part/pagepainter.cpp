@@ -83,6 +83,9 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
     if (Okular::SettingsCore::changeColors()) {
         switch (Okular::SettingsCore::renderMode()) {
         case Okular::SettingsCore::EnumRenderMode::Inverted:
+        case Okular::SettingsCore::EnumRenderMode::InvertLightness:
+        case Okular::SettingsCore::EnumRenderMode::InvertLuma:
+        case Okular::SettingsCore::EnumRenderMode::InvertLumaSymmetric:
             backgroundColor = Qt::black;
             break;
         case Okular::SettingsCore::EnumRenderMode::Paper:

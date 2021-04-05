@@ -79,7 +79,7 @@ DlgGeneral::DlgGeneral(QWidget *parent, Okular::EmbedMode embedMode)
     KColorButton *customColor = new KColorButton(this);
     customColor->setObjectName(QStringLiteral("kcfg_BackgroundColor"));
 
-    QHBoxLayout *customColorLayout = new QHBoxLayout(this);
+    QHBoxLayout *customColorLayout = new QHBoxLayout();
     customColorLayout->addWidget(useCustomColor);
     useCustomColor->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     customColorLayout->addWidget(customColor);

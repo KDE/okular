@@ -112,7 +112,8 @@ void MouseAnnotation::routeMousePressEvent(PageViewItem *pageViewItem, const QPo
     AnnotationDescription ad(pageViewItem, eventPos);
     /* qDebug() << "routeMousePressEvent: eventPos = " << eventPos; */
     if (ad.isValid()) {
-        if (ad.annotation->subType() == Okular::Annotation::AMovie || ad.annotation->subType() == Okular::Annotation::AScreen || ad.annotation->subType() == Okular::Annotation::AFileAttachment) {
+        if (ad.annotation->subType() == Okular::Annotation::AMovie || ad.annotation->subType() == Okular::Annotation::AScreen || ad.annotation->subType() == Okular::Annotation::AFileAttachment ||
+            ad.annotation->subType() == Okular::Annotation::ARichMedia) {
             /* qDebug() << "routeMousePressEvent: trigger action for AMovie/AScreen/AFileAttachment"; */
             processAction(ad);
         } else {

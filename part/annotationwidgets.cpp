@@ -404,23 +404,28 @@ void TextAnnotationWidget::addWidthSpinBox(QWidget *widget, QFormLayout *formlay
     connect(m_spinWidth, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &AnnotationWidget::dataChanged);
 }
 
-const QList<QPair<QString, QString>> StampAnnotationWidget::defaultStamps = {{i18n("Approved"), QStringLiteral("Approved")},
-                                                                             {i18n("As Is"), QStringLiteral("AsIs")},
-                                                                             {i18n("Confidential"), QStringLiteral("Confidential")},
-                                                                             {i18n("Departmental"), QStringLiteral("Departmental")},
-                                                                             {i18n("Draft"), QStringLiteral("Draft")},
-                                                                             {i18n("Experimental"), QStringLiteral("Experimental")},
-                                                                             {i18n("Final"), QStringLiteral("Expired")},
-                                                                             {i18n("For Comment"), QStringLiteral("ForComment")},
-                                                                             {i18n("For Public Release"), QStringLiteral("ForPublicRelease")},
-                                                                             {i18n("Not Approved"), QStringLiteral("NotApproved")},
-                                                                             {i18n("Not For Public Release"), QStringLiteral("NotForPublicRelease")},
-                                                                             {i18n("Sold"), QStringLiteral("Sold")},
-                                                                             {i18n("Top Secret"), QStringLiteral("TopSecret")},
-                                                                             {i18n("Bookmark"), QStringLiteral("bookmark-new")},
-                                                                             {i18n("Information"), QStringLiteral("help-about")},
-                                                                             {i18n("KDE"), QStringLiteral("kde")},
-                                                                             {i18n("Okular"), QStringLiteral("okular")}};
+const QList<QPair<QString, QString>> &StampAnnotationWidget::defaultStamps()
+{
+    static const QList<QPair<QString, QString>> defaultStampsList = {{i18n("Approved"), QStringLiteral("Approved")},
+                                                                     {i18n("As Is"), QStringLiteral("AsIs")},
+                                                                     {i18n("Confidential"), QStringLiteral("Confidential")},
+                                                                     {i18n("Departmental"), QStringLiteral("Departmental")},
+                                                                     {i18n("Draft"), QStringLiteral("Draft")},
+                                                                     {i18n("Experimental"), QStringLiteral("Experimental")},
+                                                                     {i18n("Final"), QStringLiteral("Expired")},
+                                                                     {i18n("For Comment"), QStringLiteral("ForComment")},
+                                                                     {i18n("For Public Release"), QStringLiteral("ForPublicRelease")},
+                                                                     {i18n("Not Approved"), QStringLiteral("NotApproved")},
+                                                                     {i18n("Not For Public Release"), QStringLiteral("NotForPublicRelease")},
+                                                                     {i18n("Sold"), QStringLiteral("Sold")},
+                                                                     {i18n("Top Secret"), QStringLiteral("TopSecret")},
+                                                                     {i18n("Bookmark"), QStringLiteral("bookmark-new")},
+                                                                     {i18n("Information"), QStringLiteral("help-about")},
+                                                                     {i18n("KDE"), QStringLiteral("kde")},
+                                                                     {i18n("Okular"), QStringLiteral("okular")}};
+
+    return defaultStampsList;
+}
 
 StampAnnotationWidget::StampAnnotationWidget(Okular::Annotation *ann)
     : AnnotationWidget(ann)
@@ -450,7 +455,7 @@ void StampAnnotationWidget::createStyleWidget(QFormLayout *formlayout)
     m_pixmapSelector->setEditable(true);
 
     QPair<QString, QString> pair;
-    foreach (pair, defaultStamps) {
+    foreach (pair, defaultStamps()) {
         m_pixmapSelector->addItem(pair.first, pair.second);
     }
 

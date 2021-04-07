@@ -152,7 +152,7 @@ public:
     QLinkedList<PageViewItem *> visibleItems;
     MagnifierView *magnifierView;
 
-    // view layout (columns and continuous in Settings), zoom and mouse
+    // view layout (columns in Settings), zoom and mouse
     PageView::ZoomMode zoomMode;
     float zoomFactor;
     QPoint mouseGrabOffset;
@@ -409,6 +409,11 @@ PageView::PageView(QWidget *parent, Okular::Document *document)
         break;
     }
     }
+
+    connect(Okular::Settings::self(), &Okular::Settings::viewContinuousChanged, this, [=]() {
+        if (d->aViewContinuous && !d->document->isOpened())
+            d->aViewContinuous->setChecked(Okular::Settings::viewContinuous());
+    });
 
     d->delayResizeEventTimer = new QTimer(this);
     d->delayResizeEventTimer->setSingleShot(true);
@@ -1315,7 +1320,7 @@ void PageView::updateActionState(bool haspages, bool hasformwidgets)
     if (d->aMouseMagnifier)
         d->aMouseMagnifier->setEnabled(d->document->supportsTiles());
     if (d->aFitWindowToPage)
-        d->aFitWindowToPage->setEnabled(haspages && !Okular::Settings::viewContinuous());
+        d->aFitWindowToPage->setEnabled(haspages && !getContinuousMode());
 }
 
 void PageView::setupActionsPostGUIActivated()
@@ -1390,7 +1395,7 @@ void PageView::slotRealNotifyViewportChanged(bool smoothMove)
 #endif
     // relayout in "Single Pages" mode or if a relayout is pending
     d->blockPixmapsRequest = true;
-    if (!Okular::Settings::viewContinuous() || d->dirtyLayout)
+    if (!getContinuousMode() || d->dirtyLayout)
         slotRelayoutPages();
 
     // restore viewport center or use default {x-center,v-top} alignment
@@ -1553,7 +1558,7 @@ void PageView::notifyCurrentPageChanged(int previous, int current)
 
     // if the view is paged (or not continuous) and there is a selected annotation,
     // we call reset to avoid creating an artifact in the next page.
-    if (!Okular::Settings::viewContinuous()) {
+    if (!getContinuousMode()) {
         if (d->mouseAnnotation && d->mouseAnnotation->isFocused()) {
             d->mouseAnnotation->reset();
         }
@@ -1597,7 +1602,7 @@ QVariant PageView::capability(ViewCapability capability) const
     case ZoomModality:
         return d->zoomMode;
     case Continuous:
-        return d->aViewContinuous ? d->aViewContinuous->isChecked() : true;
+        return getContinuousMode();
     case ViewModeModality: {
         if (d->viewModeActionGroup) {
             const QList<QAction *> actions = d->viewModeActionGroup->actions();
@@ -1648,7 +1653,6 @@ void PageView::setCapability(ViewCapability capability, const QVariant &option)
     case Continuous: {
         bool mode = option.toBool();
         d->aViewContinuous->setChecked(mode);
-        slotContinuousToggled(mode);
         break;
     }
     case TrimMargins: {
@@ -3135,7 +3139,7 @@ void PageView::wheelEvent(QWheelEvent *e)
     } else {
         d->controlWheelAccumulatedDelta = 0;
 
-        if (delta <= -QWheelEvent::DefaultDeltasPerStep && !Okular::Settings::viewContinuous() && vScroll == verticalScrollBar()->maximum()) {
+        if (delta <= -QWheelEvent::DefaultDeltasPerStep && !getContinuousMode() && vScroll == verticalScrollBar()->maximum()) {
             // go to next page
             if ((int)d->document->currentPage() < d->items.count() - 1) {
                 // more optimized than document->setNextPage and then move view to top
@@ -3148,7 +3152,7 @@ void PageView::wheelEvent(QWheelEvent *e)
                 d->document->setViewport(newViewport);
                 d->scroller->scrollTo(QPoint(horizontalScrollBar()->value(), verticalScrollBar()->value()), 0); // sync scroller with scrollbar
             }
-        } else if (delta >= QWheelEvent::DefaultDeltasPerStep && !Okular::Settings::viewContinuous() && vScroll == verticalScrollBar()->minimum()) {
+        } else if (delta >= QWheelEvent::DefaultDeltasPerStep && !getContinuousMode() && vScroll == verticalScrollBar()->minimum()) {
             // go to prev page
             if (d->document->currentPage() > 0) {
                 // more optimized than document->setPrevPage and then move view to bottom
@@ -3479,8 +3483,7 @@ void PageView::updateItemSize(PageViewItem *item, int colWidth, int rowHeight)
         const double pageAspect = (double)height / (double)width;
         const double rel = uiAspect / pageAspect;
 
-        const bool isContinuous = Okular::Settings::viewContinuous();
-        if (!isContinuous && rel > aspectRatioRelation) {
+        if (!getContinuousMode() && rel > aspectRatioRelation) {
             // UI space is relatively much higher than the page
             zoom = (double)rowHeight / (double)height;
         } else if (rel < 1.0 / aspectRatioRelation) {
@@ -4234,6 +4237,11 @@ void PageView::updateSmoothScrollAnimationSpeed()
     d->currentLongScrollDuration = d->baseLongScrollDuration * globalAnimationScale;
 }
 
+bool PageView::getContinuousMode() const
+{
+    return d->aViewContinuous ? d->aViewContinuous->isChecked() : Okular::Settings::viewContinuous();
+}
+
 // BEGIN private SLOTS
 void PageView::slotRelayoutPages()
 // called by: notifySetup, viewportResizeEvent, slotViewMode, slotContinuousToggled, updateZoom
@@ -4253,7 +4261,7 @@ void PageView::slotRelayoutPages()
     const bool centerFirstPage = facingCentered && !overrideCentering;
     const bool facingPages = facing || centerFirstPage;
     const bool centerLastPage = centerFirstPage && pageCount % 2 == 0;
-    const bool continuousView = Okular::Settings::viewContinuous();
+    const bool continuousView = getContinuousMode();
     const int nCols = overrideCentering ? 1 : viewColumns();
     const bool singlePageViewMode = Okular::Settings::viewMode() == Okular::Settings::EnumViewMode::Single;
 
@@ -4700,14 +4708,10 @@ void PageView::slotViewMode(QAction *action)
     }
 }
 
-void PageView::slotContinuousToggled(bool on)
+void PageView::slotContinuousToggled()
 {
-    if (Okular::Settings::viewContinuous() != on) {
-        Okular::Settings::setViewContinuous(on);
-        Okular::Settings::self()->save();
-        if (d->document->pages() > 0)
-            slotRelayoutPages();
-    }
+    if (d->document->pages() > 0)
+        slotRelayoutPages();
 }
 
 void PageView::slotReadingDirectionToggled(bool leftToRight)
@@ -4828,7 +4832,7 @@ void PageView::slotAutoScrollDown()
 void PageView::slotScrollUp(int nSteps)
 {
     // if in single page mode and at the top of the screen, go to \ page
-    if (Okular::Settings::viewContinuous() || verticalScrollBar()->value() > verticalScrollBar()->minimum()) {
+    if (getContinuousMode() || verticalScrollBar()->value() > verticalScrollBar()->minimum()) {
         if (nSteps) {
             d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, -100 * nSteps), d->currentShortScrollDuration);
         } else {
@@ -4850,7 +4854,7 @@ void PageView::slotScrollUp(int nSteps)
 void PageView::slotScrollDown(int nSteps)
 {
     // if in single page mode and at the bottom of the screen, go to next page
-    if (Okular::Settings::viewContinuous() || verticalScrollBar()->value() < verticalScrollBar()->maximum()) {
+    if (getContinuousMode() || verticalScrollBar()->value() < verticalScrollBar()->maximum()) {
         if (nSteps) {
             d->scroller->scrollTo(d->scroller->finalPosition() + QPoint(0, 100 * nSteps), d->currentShortScrollDuration);
         } else {

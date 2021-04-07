@@ -7,6 +7,7 @@
  <kcfgfile arg="true" />
  <signal name="builtinAnnotationToolsChanged" />
  <signal name="quickAnnotationToolsChanged" />
+ <signal name="viewContinuousChanged" />
  <group name="Dlg Performance" >
   <entry key="EnableCompositing" type="Bool" >
    <default>true</default>
@@ -309,6 +310,7 @@
   </entry>
   <entry key="ViewContinuous" type="Bool" >
    <default>true</default>
+   <emit signal="viewContinuousChanged" />
   </entry>
   <entry key="ViewMode" type="Enum" >
    <default>Single</default>

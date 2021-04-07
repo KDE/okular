@@ -226,6 +226,13 @@ private:
     // Update speed of animated smooth scroll transitions
     void updateSmoothScrollAnimationSpeed();
 
+    /*
+     * returns the continuous mode value of the current document, by either:
+     * - if the continuous mode action is initialized, then we return its associated value
+     * - if not, then we will fallback to the default settings
+     */
+    bool getContinuousMode() const;
+
     // don't want to expose classes in here
     class PageViewPrivate *d;
 
@@ -259,7 +266,7 @@ private Q_SLOTS:
     void slotFitToPageToggled(bool);
     void slotAutoFitToggled(bool);
     void slotViewMode(QAction *action);
-    void slotContinuousToggled(bool);
+    void slotContinuousToggled();
     void slotReadingDirectionToggled(bool leftToRight);
     void slotUpdateReadingDirectionAction();
     void slotMouseNormalToggled(bool);

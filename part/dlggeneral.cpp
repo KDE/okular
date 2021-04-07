@@ -157,6 +157,11 @@ DlgGeneral::DlgGeneral(QWidget *parent, Okular::EmbedMode embedMode)
         useRtl->setObjectName(QStringLiteral("kcfg_rtlReadingDirection"));
         layout->addRow(programFeaturesLabel(), useRtl);
     }
+
+    QCheckBox *openInContinuousModeByDefault = new QCheckBox(this);
+    openInContinuousModeByDefault->setText(i18nc("@option:check Config dialog, general page", "Open in continuous mode by default"));
+    openInContinuousModeByDefault->setObjectName(QStringLiteral("kcfg_ViewContinuous"));
+    layout->addRow(programFeaturesLabel(), openInContinuousModeByDefault);
     // END Program features section
 
     // If no Program features section, don’t add a second spacer:

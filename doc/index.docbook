@@ -33,7 +33,7 @@ Context menu actions like Rename Bookmarks etc.)
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
 		<date>2021-04-09</date>
-		<releaseinfo>1.14 (Applications 21.08)</releaseinfo>
+		<releaseinfo>21.08</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
 			<para>&okular; is a &kde; universal document viewer based on &kpdf; code.</para>

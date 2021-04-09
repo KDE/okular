@@ -599,7 +599,11 @@ void Shell::slotShowMenubar()
 
 QSize Shell::sizeHint() const
 {
-    return QApplication::primaryScreen()->availableSize() * 0.75;
+    const QSize baseSize = QApplication::primaryScreen()->availableSize() * 0.6;
+    // Set an arbitrary yet sensible sane minimum size for very small screens;
+    // for example we don't want people using 1366x768 screens to get a tiny
+    // default window size of 820 x 460 which will elide most of the toolbar buttons.
+    return baseSize.expandedTo(QSize(1000, 700));
 }
 
 bool Shell::queryClose()

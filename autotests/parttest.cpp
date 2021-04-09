@@ -15,6 +15,7 @@
 #include <QtTest>
 
 #include "../core/annotations.h"
+#include "../core/document_p.h"
 #include "../core/form.h"
 #include "../core/page.h"
 #include "../part/pageview.h"
@@ -58,6 +59,8 @@ signals:
     void urlHandler(const QUrl &url); // NOLINT(readability-inconsistent-declaration-parameter-name)
 
 private slots:
+    void init();
+
     void testZoomWithCrop();
     void testReload();
     void testCanceledReload();
@@ -142,6 +145,26 @@ bool PartTest::openDocument(Okular::Part *part, const QString &filePath)
 {
     part->openDocument(filePath);
     return part->m_document->isOpened();
+}
+
+void PartTest::init()
+{
+    // Default settings for every test
+    Okular::Settings::self()->setDefaults();
+
+    // Clean docdatas
+    const QList<QUrl> urls = {QUrl::fromUserInput(QStringLiteral("file://" KDESRCDIR "data/file1.pdf")),
+                              QUrl::fromUserInput(QStringLiteral("file://" KDESRCDIR "data/file2.pdf")),
+                              QUrl::fromUserInput(QStringLiteral("file://" KDESRCDIR "data/simple-multipage.pdf")),
+                              QUrl::fromUserInput(QStringLiteral("file://" KDESRCDIR "data/tocreload.pdf")),
+                              QUrl::fromUserInput(QStringLiteral("file://" KDESRCDIR "data/pdf_with_links.pdf")),
+                              QUrl::fromUserInput(QStringLiteral("file://" KDESRCDIR "data/RequestFullScreen.pdf"))};
+
+    for (const QUrl &url : urls) {
+        QFileInfo fileReadTest(url.toLocalFile());
+        const QString docDataPath = Okular::DocumentPrivate::docDataFileName(url, fileReadTest.size());
+        QFile::remove(docDataPath);
+    }
 }
 
 // Test that Okular doesn't crash after a successful reload
@@ -2112,6 +2135,8 @@ int main(int argc, char *argv[])
 
     // Disable fancy debug output
     qunsetenv("QT_MESSAGE_PATTERN");
+
+    Okular::Settings::instance(QStringLiteral("okularparttest"));
 
     QApplication app(argc, argv);
     app.setApplicationName(QStringLiteral("okularparttest"));

@@ -212,8 +212,8 @@ public:
     Okular::NormalizedRect trimBoundingBox;
 
     // infinite resizing loop prevention
-    bool verticalScrollBarVisible;
-    bool horizontalScrollBarVisible;
+    bool verticalScrollBarVisible = false;
+    bool horizontalScrollBarVisible = false;
 
     // drag scroll
     QPoint dragScrollVector;

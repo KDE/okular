@@ -176,8 +176,9 @@ QAction *AnnotationActionHandlerPrivate::selectActionItem(KSelectAction *aList, 
 
 void AnnotationActionHandlerPrivate::maybeUpdateCustomStampAction(const QString &stampIconName)
 {
-    auto it = std::find_if(StampAnnotationWidget::defaultStamps.begin(), StampAnnotationWidget::defaultStamps.end(), [&stampIconName](const QPair<QString, QString> &element) { return element.second == stampIconName; });
-    bool defaultStamp = it != StampAnnotationWidget::defaultStamps.end();
+    const auto defaultStamps = StampAnnotationWidget::defaultStamps();
+    auto it = std::find_if(defaultStamps.begin(), defaultStamps.end(), [&stampIconName](const QPair<QString, QString> &element) { return element.second == stampIconName; });
+    bool defaultStamp = it != defaultStamps.end();
 
     if (aCustomStamp) {
         aStamp->removeAction(aCustomStamp);
@@ -451,9 +452,10 @@ void AnnotationActionHandlerPrivate::slotQuickToolSelected(int favToolId)
         QDomElement annotationElement = engineElement.firstChildElement(QStringLiteral("annotation"));
         QString stampIconName = annotationElement.attribute(QStringLiteral("icon"));
 
-        auto it = std::find_if(StampAnnotationWidget::defaultStamps.begin(), StampAnnotationWidget::defaultStamps.end(), [&stampIconName](const QPair<QString, QString> &element) { return element.second == stampIconName; });
-        if (it != StampAnnotationWidget::defaultStamps.end()) {
-            int stampActionIndex = std::distance(StampAnnotationWidget::defaultStamps.begin(), it);
+        const auto defaultStamps = StampAnnotationWidget::defaultStamps();
+        auto it = std::find_if(defaultStamps.begin(), defaultStamps.end(), [&stampIconName](const QPair<QString, QString> &element) { return element.second == stampIconName; });
+        if (it != defaultStamps.end()) {
+            int stampActionIndex = std::distance(defaultStamps.begin(), it);
             indexOfActionInGroup = PageViewAnnotator::STAMP_TOOL_ID + stampActionIndex - 1;
         } else {
             maybeUpdateCustomStampAction(stampIconName);
@@ -590,7 +592,7 @@ AnnotationActionHandler::AnnotationActionHandler(PageViewAnnotator *parent, KAct
 #else
     d->aStamp->setPopupMode(QToolButton::MenuButtonPopup);
 #endif
-    for (const auto &stamp : StampAnnotationWidget::defaultStamps) {
+    for (const auto &stamp : StampAnnotationWidget::defaultStamps()) {
         KToggleAction *ann = new KToggleAction(d->stampIcon(stamp.second), stamp.first, this);
         d->aStamp->addAction(ann);
         d->agTools->addAction(ann);

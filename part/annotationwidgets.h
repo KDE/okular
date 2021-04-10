@@ -154,7 +154,7 @@ class StampAnnotationWidget : public AnnotationWidget
     Q_OBJECT
 
 public:
-    static const QList<QPair<QString, QString>> defaultStamps;
+    static const QList<QPair<QString, QString>> &defaultStamps();
 
     explicit StampAnnotationWidget(Okular::Annotation *ann);
 

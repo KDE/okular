@@ -62,6 +62,7 @@
 #include <QAction>
 #include <QDebug>
 #include <QIcon>
+#include <kwidgetsaddons_version.h>
 
 // system includes
 #include <array>
@@ -688,9 +689,7 @@ void PageView::setupActions(KActionCollection *ac)
     connect(d->aMouseSelect, &QAction::triggered, this, &PageView::slotSetMouseSelect);
     d->aMouseSelect->setCheckable(true);
     ac->setDefaultShortcut(d->aMouseSelect, Qt::CTRL | Qt::Key_3);
-
     d->aMouseSelect->setActionGroup(d->mouseModeActionGroup);
-    d->aMouseSelect->setChecked(Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::RectSelect);
 
     d->aMouseTextSelect = new QAction(QIcon::fromTheme(QStringLiteral("edit-select-text")), i18n("&Text Selection"), this);
     ac->addAction(QStringLiteral("mouse_textselect"), d->aMouseTextSelect);
@@ -698,7 +697,6 @@ void PageView::setupActions(KActionCollection *ac)
     d->aMouseTextSelect->setCheckable(true);
     ac->setDefaultShortcut(d->aMouseTextSelect, Qt::CTRL | Qt::Key_4);
     d->aMouseTextSelect->setActionGroup(d->mouseModeActionGroup);
-    d->aMouseTextSelect->setChecked(Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::TextSelect);
 
     d->aMouseTableSelect = new QAction(QIcon::fromTheme(QStringLiteral("table")), i18n("T&able Selection"), this);
     ac->addAction(QStringLiteral("mouse_tableselect"), d->aMouseTableSelect);
@@ -706,7 +704,6 @@ void PageView::setupActions(KActionCollection *ac)
     d->aMouseTableSelect->setCheckable(true);
     ac->setDefaultShortcut(d->aMouseTableSelect, Qt::CTRL | Qt::Key_5);
     d->aMouseTableSelect->setActionGroup(d->mouseModeActionGroup);
-    d->aMouseTableSelect->setChecked(Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::TableSelect);
 
     d->aMouseMagnifier = new QAction(QIcon::fromTheme(QStringLiteral("document-preview")), i18n("&Magnifier"), this);
     ac->addAction(QStringLiteral("mouse_magnifier"), d->aMouseMagnifier);
@@ -716,15 +713,38 @@ void PageView::setupActions(KActionCollection *ac)
     d->aMouseMagnifier->setActionGroup(d->mouseModeActionGroup);
     d->aMouseMagnifier->setChecked(Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::Magnifier);
 
-    // Mouse-Mode action menu
-    d->aMouseModeMenu = new ToggleActionMenu(QIcon(), QString(), this, ToggleActionMenu::MenuButtonPopup, ToggleActionMenu::ImplicitDefaultAction);
+    // Mouse mode selection tools menu
+    d->aMouseModeMenu = new ToggleActionMenu(i18nc("@action", "Selection Tools"), this);
+#if KWIDGETSADDONS_VERSION < QT_VERSION_CHECK(5, 77, 0)
+    d->aMouseModeMenu->setDelayed(false);
+    d->aMouseModeMenu->setStickyMenu(false);
+#else
+    d->aMouseModeMenu->setPopupMode(QToolButton::MenuButtonPopup);
+#endif
     d->aMouseModeMenu->addAction(d->aMouseSelect);
     d->aMouseModeMenu->addAction(d->aMouseTextSelect);
     d->aMouseModeMenu->addAction(d->aMouseTableSelect);
-    d->aMouseModeMenu->suggestDefaultAction(d->aMouseTextSelect);
-    d->aMouseModeMenu->setText(i18nc("@action", "Selection Tools"));
+    connect(d->aMouseModeMenu->menu(), &QMenu::triggered, d->aMouseModeMenu, &ToggleActionMenu::setDefaultAction);
     ac->addAction(QStringLiteral("mouse_selecttools"), d->aMouseModeMenu);
 
+    switch (Okular::Settings::mouseMode()) {
+    case Okular::Settings::EnumMouseMode::TextSelect:
+        d->aMouseTextSelect->setChecked(true);
+        d->aMouseModeMenu->setDefaultAction(d->aMouseTextSelect);
+        break;
+    case Okular::Settings::EnumMouseMode::RectSelect:
+        d->aMouseSelect->setChecked(true);
+        d->aMouseModeMenu->setDefaultAction(d->aMouseSelect);
+        break;
+    case Okular::Settings::EnumMouseMode::TableSelect:
+        d->aMouseTableSelect->setChecked(true);
+        d->aMouseModeMenu->setDefaultAction(d->aMouseTableSelect);
+        break;
+    default:
+        d->aMouseModeMenu->setDefaultAction(d->aMouseTextSelect);
+    }
+
+    // Create signature action
     d->aSignature = new QAction(QIcon::fromTheme(QStringLiteral("document-edit-sign")), i18n("Digitally &Sign..."), this);
     ac->addAction(QStringLiteral("add_digital_signature"), d->aSignature);
     connect(d->aSignature, &QAction::triggered, this, &PageView::slotSignature);

@@ -32,6 +32,7 @@
 #include <QStack>
 #include <QTemporaryFile>
 #include <QTextStream>
+#include <QTimeZone>
 #include <QTimer>
 
 #include <KAboutData>
@@ -1893,9 +1894,14 @@ bool PDFGenerator::sign(const Okular::NewSignatureData &oData, const QString &rF
     pData.setCertNickname(oData.certNickname());
     pData.setPassword(oData.password());
     pData.setPage(oData.page());
-    pData.setSignatureText(i18n("Signed by: %1\n\nDate: %2", oData.certSubjectCommonName(), QDateTime::currentDateTime().toString(Qt::ISODate)));
+    const QDateTime t = QDateTime::currentDateTime();
+    // This way we force the timezone info to be included in the string
+    const QString datetime = t.toTimeZone(t.timeZone()).toString(Qt::ISODate);
+    pData.setSignatureText(i18n("Signed by: %1\n\nDate: %2", oData.certSubjectCommonName(), datetime));
     const Okular::NormalizedRect bRect = oData.boundingRectangle();
     pData.setBoundingRectangle({bRect.left, bRect.top, bRect.width(), bRect.height()});
+    pData.setFontColor(Qt::black);
+    pData.setBorderColor(Qt::black);
     if (!converter->sign(pData))
         return false;
 

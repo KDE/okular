@@ -503,10 +503,12 @@ Part::Part(QWidget *parentWidget, QObject *parent, const QVariantList &args)
     connect(m_miniBar, &MiniBar::forwardKeyPressEvent, m_pageView, &PageView::externalKeyPressEvent);
     connect(m_pageView.data(), &PageView::escPressed, m_findBar, &FindBar::resetSearch);
     connect(m_pageNumberTool, &MiniBar::forwardKeyPressEvent, m_pageView, &PageView::externalKeyPressEvent);
-    connect(m_pageView.data(), &PageView::requestOpenFile, this, [this](const QString &filePath) {
+    connect(m_pageView.data(), &PageView::requestOpenFile, this, [this](const QString &filePath, int pageNumber) {
         // We cheat a bit here reusing the urlsDropped signal, but at the end the output is the same, we want to open some files
         // urlsDropped should have just had a different name
-        Q_EMIT urlsDropped({QUrl::fromLocalFile(filePath)});
+        QUrl u = QUrl::fromLocalFile(filePath);
+        u.setFragment(QStringLiteral("page=%1").arg(pageNumber));
+        Q_EMIT urlsDropped({u});
     });
 
     connect(m_reviewsWidget.data(), &Reviews::openAnnotationWindow, m_pageView.data(), &PageView::openAnnotationWindow);

@@ -141,8 +141,11 @@ void SignatureModelPrivate::notifySetup(const QVector<Okular::Page *> &pages, in
             auto childItem2 = new SignatureItem(parentItem, nullptr, SignatureItem::SigningTime, currentPage);
             childItem2->displayString = i18n("Signing Time: %1", info.signingTime().toString(Qt::DefaultLocaleLongDate));
 
-            auto childItem3 = new SignatureItem(parentItem, nullptr, SignatureItem::Reason, currentPage);
-            childItem3->displayString = i18n("Reason: %1", !info.reason().isEmpty() ? info.reason() : i18n("Not Available"));
+            const QString reason = info.reason();
+            if (!reason.isEmpty()) {
+                auto childItem3 = new SignatureItem(parentItem, nullptr, SignatureItem::Reason, currentPage);
+                childItem3->displayString = i18n("Reason: %1", reason);
+            }
 
             auto childItem4 = new SignatureItem(parentItem, sf, SignatureItem::FieldInfo, currentPage);
             childItem4->displayString = i18n("Field: %1 on page %2", sf->name(), currentPage + 1);

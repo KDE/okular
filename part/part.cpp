@@ -861,7 +861,8 @@ void Part::setupActions()
 
     m_showLeftPanel = ac->add<KToggleAction>(QStringLiteral("show_leftpanel"));
     m_showLeftPanel->setText(i18n("Show S&idebar"));
-    m_showLeftPanel->setIcon(QIcon::fromTheme(QStringLiteral("view-sidetree")));
+    const QString preferredSidebarIcon = m_sidebar->layoutDirection() == Qt::LeftToRight ? QStringLiteral("sidebar-expand-left") : QStringLiteral("sidebar-expand-right");
+    m_showLeftPanel->setIcon(QIcon::fromTheme(preferredSidebarIcon, QIcon::fromTheme(QStringLiteral("view-sidetree"))));
     connect(m_showLeftPanel, &QAction::toggled, this, &Part::slotShowLeftPanel);
     ac->setDefaultShortcut(m_showLeftPanel, QKeySequence(Qt::Key_F7));
     m_showLeftPanel->setChecked(Okular::Settings::showLeftPanel());

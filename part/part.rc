@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE gui SYSTEM "kpartgui.dtd">
-<gui name="okular_part" version="48">
+<gui name="okular_part" version="49">
 <MenuBar>
   <Menu name="file"><text>&amp;File</text>
     <Action name="get_new_stuff" group="file_open"/>
@@ -110,6 +110,9 @@
   <Action name="zoom_to" />
   <Action name="view_zoom_in"/>
 </ToolBar>
+<ActionProperties scheme="Default">
+  <Action priority="0" name="show_leftpanel"/>
+</ActionProperties>
 <ToolBar name="annotationToolBar" iconText="icononly" newline="true" hidden="true"><text>Annotation Toolbar</text>
   <Action name="annotation_highlighter"/>
   <Action name="annotation_underline"/>

@@ -3,3 +3,6 @@
 
 /* Defined if we have the pdf signature feature in the Poppler library */
 #cmakedefine HAVE_POPPLER_SIGNING 1
+
+/* Defined if we have the pdf fancy signature feature in the Poppler library */
+#cmakedefine HAVE_POPPLER_FANCY_SIGNATURE 1

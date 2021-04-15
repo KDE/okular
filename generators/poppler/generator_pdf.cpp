@@ -1894,10 +1894,11 @@ bool PDFGenerator::sign(const Okular::NewSignatureData &oData, const QString &rF
     pData.setCertNickname(oData.certNickname());
     pData.setPassword(oData.password());
     pData.setPage(oData.page());
-    const QDateTime t = QDateTime::currentDateTime();
-    // This way we force the timezone info to be included in the string
-    const QString datetime = t.toTimeZone(t.timeZone()).toString(Qt::ISODate);
+    const QString datetime = QDateTime::currentDateTime().toString(QStringLiteral("yyyy-MM-dd hh:mm:ss t"));
     pData.setSignatureText(i18n("Signed by: %1\n\nDate: %2", oData.certSubjectCommonName(), datetime));
+#if HAVE_POPPLER_FANCY_SIGNATURE
+    pData.setSignatureLeftText(oData.certSubjectCommonName());
+#endif
     const Okular::NormalizedRect bRect = oData.boundingRectangle();
     pData.setBoundingRectangle({bRect.left, bRect.top, bRect.width(), bRect.height()});
     pData.setFontColor(Qt::black);

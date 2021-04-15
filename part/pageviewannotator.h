@@ -139,7 +139,7 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     void toolSelected();
-    void requestOpenFile(const QString &filePath);
+    void requestOpenFile(const QString &filePath, int pageNumber);
 
 private:
     void reparseBuiltinToolsConfig();

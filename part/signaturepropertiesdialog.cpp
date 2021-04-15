@@ -46,7 +46,7 @@ SignaturePropertiesDialog::SignaturePropertiesDialog(Okular::Document *doc, cons
     const QString signerName = getValidDisplayString(signatureInfo.signerName());
     const QString signingTime = getValidDisplayString(signatureInfo.signingTime().toString(Qt::DefaultLocaleLongDate));
     const QString signingLocation = getValidDisplayString(signatureInfo.location());
-    const QString signingReason = getValidDisplayString(signatureInfo.reason());
+    const QString signingReason = signatureInfo.reason();
 
     // signature validation status
     QString modificationSummary;
@@ -76,7 +76,9 @@ SignaturePropertiesDialog::SignaturePropertiesDialog(Okular::Document *doc, cons
     extraInfoFormLayout->setLabelAlignment(Qt::AlignLeft);
     extraInfoFormLayout->addRow(i18n("Signed By:"), new QLabel(signerName));
     extraInfoFormLayout->addRow(i18n("Signing Time:"), new QLabel(signingTime));
-    extraInfoFormLayout->addRow(i18n("Reason:"), new QLabel(signingReason));
+    if (!signingReason.isEmpty()) {
+        extraInfoFormLayout->addRow(i18n("Reason:"), new QLabel(signingReason));
+    }
     extraInfoFormLayout->addRow(i18n("Location:"), new QLabel(signingLocation));
 
     // keep width of column 1 same

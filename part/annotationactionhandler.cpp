@@ -63,6 +63,7 @@ public:
         , aHideToolBar(nullptr)
         , aShowToolBar(nullptr)
         , aToolBarVisibility(nullptr)
+        , aQuickToolsSeparator(nullptr)
         , aCustomStamp(nullptr)
         , aCustomWidth(nullptr)
         , aCustomOpacity(nullptr)
@@ -129,6 +130,7 @@ public:
     QAction *aHideToolBar;
     QAction *aShowToolBar;
     KToggleAction *aToolBarVisibility;
+    QAction *aQuickToolsSeparator;
 
     QAction *aCustomStamp;
     QAction *aCustomWidth;
@@ -360,7 +362,7 @@ void AnnotationActionHandlerPrivate::populateQuickAnnotations()
     const QList<QAction *> quickToolActions = aQuickTools->menu()->actions();
     for (QAction *action : quickToolActions) {
         aQuickTools->removeAction(action);
-        if (action != aConfigAnnotation) {
+        if (isQuickToolAction(action)) {
             delete action;
         }
     }
@@ -394,9 +396,9 @@ void AnnotationActionHandlerPrivate::populateQuickAnnotations()
         }
         favToolElement = annotator->quickTool(++favToolId);
     }
-    QAction *separator = new QAction();
-    separator->setSeparator(true);
-    aQuickTools->addAction(separator);
+    if (aQuickToolsSeparator) {
+        aQuickTools->addAction(aQuickToolsSeparator);
+    }
     if (aShowToolBar) {
         aQuickTools->addAction(aShowToolBar);
     }
@@ -666,6 +668,8 @@ AnnotationActionHandler::AnnotationActionHandler(PageViewAnnotator *parent, KAct
             d->aQuickTools->setDefaultAction(action);
         }
     });
+    d->aQuickToolsSeparator = new QAction(this);
+    d->aQuickToolsSeparator->setSeparator(true);
     d->populateQuickAnnotations();
 
     // Add to quick annotation action

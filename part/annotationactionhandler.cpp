@@ -650,7 +650,14 @@ AnnotationActionHandler::AnnotationActionHandler(PageViewAnnotator *parent, KAct
     connect(d->aStamp->menu(), &QMenu::triggered, d->aStamp, &ToggleActionMenu::setDefaultAction);
 
     // Quick annotations action
-    d->aQuickTools = new ToggleActionMenu(QIcon::fromTheme(QStringLiteral("draw-freehand")), i18nc("@action:intoolbar Show list of quick annotation tools", "Quick Annotations"), this, ToggleActionMenu::MenuButtonPopup);
+    d->aQuickTools = new ToggleActionMenu(i18nc("@action:intoolbar Show list of quick annotation tools", "Quick Annotations"), this);
+#if KWIDGETSADDONS_VERSION < QT_VERSION_CHECK(5, 77, 0)
+    d->aQuickTools->setDelayed(false);
+    d->aQuickTools->setStickyMenu(false);
+#else
+    d->aQuickTools->setPopupMode(QToolButton::MenuButtonPopup);
+#endif
+    d->aQuickTools->setIcon(QIcon::fromTheme(QStringLiteral("draw-freehand")));
     d->aQuickTools->setToolTip(i18nc("@info:tooltip", "Choose an annotation tool from the quick annotations"));
     d->aQuickTools->setEnabled(true); // required to ensure that populateQuickAnnotations is executed the first time
     // set the triggered quick annotation as default action (but avoid setting 'Configure...' as default action)

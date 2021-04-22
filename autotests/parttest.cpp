@@ -107,6 +107,7 @@ private slots:
     void testMouseModeMenu();
     void testFullScreenRequest();
     void testZoomInFacingPages();
+    void testLinkWithCrop();
 
 private:
     void simulateMouseSelection(double startX, double startY, double endX, double endY, QWidget *target);
@@ -2108,6 +2109,49 @@ void PartTest::testZoomWithCrop()
     QVERIFY(Okular::Settings::trimMargins());
     cropAction->trigger();
     QVERIFY(!Okular::Settings::trimMargins());
+}
+
+void PartTest::testLinkWithCrop()
+{
+    // We test that link targets are correct with cropping, related to bug 198427
+
+    QVariantList dummyArgs;
+    Okular::Part part(nullptr, nullptr, dummyArgs);
+    QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/pdf_with_internal_links.pdf")));
+
+    KActionMenu *cropMenu = part.m_pageView->findChild<KActionMenu *>(QStringLiteral("view_trim_mode"));
+    KToggleAction *cropAction = cropMenu->menu()->findChild<KToggleAction *>(QStringLiteral("view_trim_selection"));
+
+    part.widget()->resize(600, 400);
+    part.widget()->show();
+    QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
+
+    // wait for pixmap
+    QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
+
+    // Activate "Trim Margins"
+    cropAction->trigger();
+
+    const int width = part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->viewport()->height();
+
+    const int mouseStartY = height * 0.2;
+    const int mouseEndY = height * 0.8;
+    const int mouseStartX = width * 0.2;
+    const int mouseEndX = width * 0.8;
+
+    // Trim the page
+    simulateMouseSelection(mouseStartX, mouseStartY, mouseEndX, mouseEndY, part.m_pageView->viewport());
+
+    // Click a link
+    const QPoint click(width * 0.2, height * 0.2);
+    QTest::mouseMove(part.m_pageView->viewport(), click);
+    QTest::mouseClick(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, click);
+
+    QTRY_VERIFY2_WITH_TIMEOUT(qAbs(part.m_document->viewport().rePos.normalizedY - 0.167102333237) < 0.01, qPrintable(QString("We are at %1").arg(part.m_document->viewport().rePos.normalizedY)), 500);
+
+    // Deactivate "Trim Margins"
+    cropAction->trigger();
 }
 
 } // namespace Okular

@@ -3598,13 +3598,19 @@ QPoint PageView::viewportToContentArea(const Okular::DocumentViewport &vp) const
     QPoint c {r.left(), r.top()};
 
     if (vp.rePos.enabled) {
+        // Convert the coordinates of vp to normalized coordinates on the cropped page.
+        // This is a no-op if the page isn't cropped.
+        const Okular::NormalizedRect &crop = d->items[vp.pageNumber]->crop();
+        const double normalized_on_crop_x = (vp.rePos.normalizedX - crop.left) / (crop.right - crop.left);
+        const double normalized_on_crop_y = (vp.rePos.normalizedY - crop.top) / (crop.bottom - crop.top);
+
         if (vp.rePos.pos == Okular::DocumentViewport::Center) {
-            c.rx() += qRound(normClamp(vp.rePos.normalizedX, 0.5) * (double)r.width());
-            c.ry() += qRound(normClamp(vp.rePos.normalizedY, 0.0) * (double)r.height());
+            c.rx() += qRound(normClamp(normalized_on_crop_x, 0.5) * (double)r.width());
+            c.ry() += qRound(normClamp(normalized_on_crop_y, 0.0) * (double)r.height());
         } else {
             // TopLeft
-            c.rx() += qRound(normClamp(vp.rePos.normalizedX, 0.0) * (double)r.width() + viewport()->width() / 2.0);
-            c.ry() += qRound(normClamp(vp.rePos.normalizedY, 0.0) * (double)r.height() + viewport()->height() / 2.0);
+            c.rx() += qRound(normClamp(normalized_on_crop_x, 0.0) * (double)r.width() + viewport()->width() / 2.0);
+            c.ry() += qRound(normClamp(normalized_on_crop_y, 0.0) * (double)r.height() + viewport()->height() / 2.0);
         }
     } else {
         // exact repositioning disabled, align page top margin with viewport top border by default
@@ -4565,8 +4571,12 @@ void PageView::slotRequestVisiblePixmaps(int newValue)
             nearPageNumber = i->pageNumber();
             minDistance = distance;
             if (geometry.height() > 0 && geometry.width() > 0) {
+                // Compute normalized coordinates w.r.t. cropped page
                 focusedX = (viewportCenterX - (double)geometry.left()) / (double)geometry.width();
                 focusedY = (viewportCenterY - (double)geometry.top()) / (double)geometry.height();
+                // Convert to normalized coordinates w.r.t. full page (no-op if not cropped)
+                focusedX = i->crop().left + focusedX * i->crop().width();
+                focusedY = i->crop().top + focusedY * i->crop().height();
             }
         }
     }

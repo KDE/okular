@@ -63,7 +63,6 @@ public:
         , aHideToolBar(nullptr)
         , aShowToolBar(nullptr)
         , aToolBarVisibility(nullptr)
-        , aQuickToolsSeparator(nullptr)
         , aCustomStamp(nullptr)
         , aCustomWidth(nullptr)
         , aCustomOpacity(nullptr)
@@ -130,7 +129,6 @@ public:
     QAction *aHideToolBar;
     QAction *aShowToolBar;
     KToggleAction *aToolBarVisibility;
-    QAction *aQuickToolsSeparator;
 
     QAction *aCustomStamp;
     QAction *aCustomWidth;
@@ -357,15 +355,14 @@ void AnnotationActionHandlerPrivate::populateQuickAnnotations()
         q->deselectAllAnnotationActions();
     }
 
-    KActionCollection *ac = qobject_cast<PageView *>(q->parent()->parent())->actionCollection();
-    QAction *aConfigAnnotation = ac->action(QStringLiteral("options_configure_annotations"));
     const QList<QAction *> quickToolActions = aQuickTools->menu()->actions();
     for (QAction *action : quickToolActions) {
-        aQuickTools->removeAction(action);
-        if (isQuickToolAction(action)) {
+        if (action->isCheckable()) {
+            aQuickTools->removeAction(action);
             delete action;
         }
     }
+    QAction *aSeparator = aQuickTools->menu()->actions().first();
     textQuickTools.clear();
 
     int favToolId = 1;
@@ -379,7 +376,7 @@ void AnnotationActionHandlerPrivate::populateQuickAnnotations()
         }
         QIcon toolIcon = QIcon(PageViewAnnotator::makeToolPixmap(favToolElement));
         QAction *annFav = new KToggleAction(toolIcon, itemText, q);
-        aQuickTools->addAction(annFav);
+        aQuickTools->insertAction(aSeparator, annFav);
         agTools->addAction(annFav);
         quickTools.append(annFav);
         if (shortcutNumber != numberKeys.end())
@@ -395,15 +392,6 @@ void AnnotationActionHandlerPrivate::populateQuickAnnotations()
             annFav->setEnabled(textToolsEnabled);
         }
         favToolElement = annotator->quickTool(++favToolId);
-    }
-    if (aQuickToolsSeparator) {
-        aQuickTools->addAction(aQuickToolsSeparator);
-    }
-    if (aShowToolBar) {
-        aQuickTools->addAction(aShowToolBar);
-    }
-    if (aConfigAnnotation) {
-        aQuickTools->addAction(aConfigAnnotation);
     }
 
     // set the default action
@@ -668,8 +656,14 @@ AnnotationActionHandler::AnnotationActionHandler(PageViewAnnotator *parent, KAct
             d->aQuickTools->setDefaultAction(action);
         }
     });
-    d->aQuickToolsSeparator = new QAction(this);
-    d->aQuickToolsSeparator->setSeparator(true);
+    QAction *aQuickToolsSeparator = new QAction(this);
+    aQuickToolsSeparator->setSeparator(true);
+    d->aQuickTools->addAction(aQuickToolsSeparator);
+    d->aQuickTools->addAction(d->aShowToolBar);
+    QAction *aConfigAnnotation = ac->action(QStringLiteral("options_configure_annotations"));
+    if (aConfigAnnotation) {
+        d->aQuickTools->addAction(aConfigAnnotation);
+    }
     d->populateQuickAnnotations();
 
     // Add to quick annotation action

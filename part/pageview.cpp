@@ -1253,8 +1253,8 @@ void PageView::notifySetup(const QVector<Okular::Page *> &pageSet, int setupFlag
                               // be done and the old document would still be shown
     }
 
-    // OSD to display pages
-    if (documentChanged && pageSet.count() > 0 && Okular::Settings::showOSD())
+    // OSD (Message balloons) to display pages
+    if (documentChanged && pageSet.count() > 0)
         d->messageWindow->display(i18np(" Loaded a one-page document.", " Loaded a %1-page document.", pageSet.count()), QString(), PageViewMessage::Info, 4000);
 
     updateActionState(haspages, hasformwidgets);

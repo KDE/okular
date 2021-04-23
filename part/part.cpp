@@ -1531,18 +1531,18 @@ bool Part::openFile()
     bool hasEmbeddedFiles = ok && m_document->embeddedFiles() && m_document->embeddedFiles()->count() > 0;
     if (m_showEmbeddedFiles)
         m_showEmbeddedFiles->setEnabled(hasEmbeddedFiles);
-    m_topMessage->setVisible(hasEmbeddedFiles && Okular::Settings::showOSD());
+    m_topMessage->setVisible(hasEmbeddedFiles && Okular::Settings::showEmbeddedContentMessages());
     m_migrationMessage->setVisible(m_document->isDocdataMigrationNeeded());
 
     // Warn the user that XFA forms are not supported yet (NOTE: poppler generator only)
-    if (ok && m_document->metaData(QStringLiteral("HasUnsupportedXfaForm")).toBool() == true) {
+    if (ok && Okular::Settings::showEmbeddedContentMessages() && m_document->metaData(QStringLiteral("HasUnsupportedXfaForm")).toBool() == true) {
         m_formsMessage->setText(i18n("This document has XFA forms, which are currently <b>unsupported</b>."));
         m_formsMessage->setIcon(QIcon::fromTheme(QStringLiteral("dialog-warning")));
         m_formsMessage->setMessageType(KMessageWidget::Warning);
         m_formsMessage->setVisible(true);
     }
     // m_pageView->toggleFormsAction() may be null on dummy mode
-    else if (ok && m_pageView->toggleFormsAction() && m_pageView->toggleFormsAction()->isEnabled()) {
+    else if (ok && Okular::Settings::showEmbeddedContentMessages() && m_pageView->toggleFormsAction() && m_pageView->toggleFormsAction()->isEnabled()) {
         m_formsMessage->setText(i18n("This document has forms. Click on the button to interact with them, or use View -> Show Forms."));
         m_formsMessage->setMessageType(KMessageWidget::Information);
         m_formsMessage->setVisible(true);
@@ -1561,7 +1561,7 @@ bool Part::openFile()
             }
         }
 
-        if (isDigitallySigned) {
+        if (isDigitallySigned && Okular::Settings::showEmbeddedContentMessages()) {
             if (m_embedMode == PrintPreviewMode) {
                 m_signatureMessage->setText(i18n("All editing and interactive features for this document are disabled. Please save a copy and reopen to edit this document."));
             } else {

@@ -178,6 +178,9 @@
     <default>true</default>
   </entry>
   <entry key="ShowOSD" type="Bool" >
+    <default>true</default>
+  </entry>
+  <entry key="ShowEmbeddedContentMessages" type="Bool" >
    <default>true</default>
   </entry>
   <entry key="DisplayDocumentTitle" type="Bool" >

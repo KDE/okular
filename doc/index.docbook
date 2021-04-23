@@ -2555,6 +2555,13 @@ Context menu actions like Rename Bookmarks etc.)
 					</listitem>
 				</varlistentry>
 				<varlistentry>
+					<term><guilabel>Notify about embedded files, forms, or signatures</guilabel></term>
+					<listitem>
+						<para>Whether to show informative panels about embedded files, forms
+							or signatures &etc;</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
 					<term><guilabel>Display document title in titlebar if available</guilabel></term>
 					<listitem>
 						<para>Whether to show the current document title in the titlebar of &okular; window. If no metadata for title

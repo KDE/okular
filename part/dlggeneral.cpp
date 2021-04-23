@@ -50,11 +50,17 @@ DlgGeneral::DlgGeneral(QWidget *parent, Okular::EmbedMode embedMode)
         layout->addRow(QString(), scrollThumbnails);
     }
 
-    // Checkbox: show hints and info messages
-    QCheckBox *showHints = new QCheckBox(this);
-    showHints->setText(i18nc("@option:check Config dialog, general page", "Show hints and info messages"));
-    showHints->setObjectName(QStringLiteral("kcfg_ShowOSD"));
-    layout->addRow(QString(), showHints);
+    // Checkbox: Show welcoming messages (the balloons or OSD)
+    QCheckBox *showOSD = new QCheckBox(this);
+    showOSD->setText(i18nc("@option:check Config dialog, general page", "Show hints and info messages"));
+    showOSD->setObjectName(QStringLiteral("kcfg_ShowOSD"));
+    layout->addRow(QString(), showOSD);
+
+    // Checkbox: Notify about embedded files, forms, or signatures
+    QCheckBox *showEmbeddedContentMessages = new QCheckBox(this);
+    showEmbeddedContentMessages->setText(i18nc("@option:check Config dialog, general page", "Notify about embedded files, forms, or signatures"));
+    showEmbeddedContentMessages->setObjectName(QStringLiteral("kcfg_ShowEmbeddedContentMessages"));
+    layout->addRow(QString(), showEmbeddedContentMessages);
 
     if (embedMode != Okular::ViewerWidgetMode) {
         // Checkbox: display document title in titlebar

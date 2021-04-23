@@ -133,3 +133,8 @@ if(Discount_FOUND)
         LINK_LIBRARIES Qt5::Test okularcore KF5::I18n PkgConfig::Discount
     )
 endif()
+
+ecm_add_test(toggleactionmenutest.cpp ../part/toggleactionmenu.cpp
+    TEST_NAME "toggleactionmenutest"
+    LINK_LIBRARIES Qt5::Test KF5::WidgetsAddons
+)

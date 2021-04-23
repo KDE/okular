@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2019 by David Hurka <david.hurka@mailbox.org>           *
+ *   Copyright (C) 2019-2021 by David Hurka <david.hurka@mailbox.org>      *
  *                                                                         *
  *   Inspired by and replacing toolaction.h by:                            *
  *     Copyright (C) 2004-2006 by Albert Astals Cid <aacid@kde.org>        *
@@ -12,8 +12,8 @@
 
 #include "toggleactionmenu.h"
 
+#include <QActionEvent>
 #include <QMenu>
-#include <QPointer>
 
 ToggleActionMenu::ToggleActionMenu(QObject *parent)
     : ToggleActionMenu(QIcon(), QString(), parent)
@@ -25,43 +25,38 @@ ToggleActionMenu::ToggleActionMenu(const QString &text, QObject *parent)
 {
 }
 
-ToggleActionMenu::ToggleActionMenu(const QIcon &icon, const QString &text, QObject *parent, PopupMode popupMode, MenuLogic logic)
+ToggleActionMenu::ToggleActionMenu(const QIcon &icon, const QString &text, QObject *parent)
     : KActionMenu(icon, text, parent)
     , m_defaultAction(nullptr)
-    , m_suggestedDefaultAction(nullptr)
-    , m_menuLogic(logic)
 {
-    connect(this, &QAction::changed, this, &ToggleActionMenu::updateButtons);
-
-    if (popupMode == DelayedPopup) {
-        setDelayed(true);
-    } else {
-        setDelayed(false);
-    }
-    setStickyMenu(false);
-
-    if (logic & ImplicitDefaultAction) {
-        connect(menu(), &QMenu::triggered, this, &ToggleActionMenu::setDefaultAction);
-    }
+    slotMenuChanged();
 }
 
 QWidget *ToggleActionMenu::createWidget(QWidget *parent)
 {
-    QToolButton *button = qobject_cast<QToolButton *>(KActionMenu::createWidget(parent));
+    QWidget *buttonWidget = KActionMenu::createWidget(parent);
+    QToolButton *button = qobject_cast<QToolButton *>(buttonWidget);
     if (!button) {
         // This function is used to add a button into the toolbar.
         // KActionMenu will plug itself as QToolButton.
         // So, if no QToolButton was returned, this was not called the intended way.
-        return button;
+        Q_ASSERT_X(false,
+                   "ToggleActionMenu::createWidget()",
+                   "Parent implementation KActionMenu::createWidget() did not return a QToolButton, but ToggleActionMenu is designed for QToolButton. Did you call createWidget() manually, with something else than a QToolBar?");
+        return buttonWidget;
     }
 
+    // BEGIN QToolButton hack
+    // Setting the default action of a QToolButton
+    // to an action of its menu() is tricky.
     // Remove this menu action from the button,
     // so it doesn't compose a menu of this menu action and its own menu.
     button->removeAction(this);
     // The button has lost the menu now, let it use the correct menu.
     button->setMenu(menu());
+    // END QToolButton hack
 
-    m_buttons.append(QPointer<QToolButton>(button));
+    m_buttons.append(button);
 
     // Apply other properties to the button.
     updateButtons();
@@ -69,46 +64,28 @@ QWidget *ToggleActionMenu::createWidget(QWidget *parent)
     return button;
 }
 
+QAction *ToggleActionMenu::defaultAction()
+{
+    return m_defaultAction ? m_defaultAction : this;
+}
+
 void ToggleActionMenu::setDefaultAction(QAction *action)
 {
-    m_defaultAction = action;
-    updateButtons();
-}
-
-void ToggleActionMenu::suggestDefaultAction(QAction *action)
-{
-    m_suggestedDefaultAction = action;
-}
-
-QAction *ToggleActionMenu::checkedAction(QMenu *menu) const
-{
-    // Look at each action a in the menu whether it is checked.
-    // If a is a menu, recursively call checkedAction().
-    const QList<QAction *> actions = menu->actions();
-    for (QAction *a : actions) {
-        if (a->isChecked()) {
-            return a;
-        } else if (a->menu()) {
-            QAction *b = checkedAction(a->menu());
-            if (b) {
-                return b;
-            }
-        }
+    if (action && menu()->actions().contains(action)) {
+        m_defaultAction = action;
+    } else {
+        m_defaultAction = nullptr;
     }
-    return nullptr;
+    updateButtons();
 }
 
 void ToggleActionMenu::updateButtons()
 {
-    for (const QPointer<QToolButton> &button : qAsConst(m_buttons)) {
+    for (QToolButton *button : qAsConst(m_buttons)) {
         if (button) {
-            button->setDefaultAction(defaultAction());
+            button->setDefaultAction(this->defaultAction());
 
-            // Override some properties of the default action,
-            // where the property of this menu makes more sense.
-            button->setEnabled(isEnabled());
-
-            if (delayed()) {
+            if (delayed()) { // TODO deprecated interface.
                 button->setPopupMode(QToolButton::DelayedPopup);
             } else if (stickyMenu()) {
                 button->setPopupMode(QToolButton::InstantPopup);
@@ -119,13 +96,21 @@ void ToggleActionMenu::updateButtons()
     }
 }
 
-QAction *ToggleActionMenu::defaultAction()
+bool ToggleActionMenu::eventFilter(QObject *watched, QEvent *event)
 {
-    if ((m_menuLogic & ImplicitDefaultAction) && !m_defaultAction) {
-        m_defaultAction = checkedAction(menu());
+    // If the defaultAction() is removed from the menu, reset the default action.
+    if (watched == menu() && event->type() == QEvent::ActionRemoved) {
+        QActionEvent *actionEvent = static_cast<QActionEvent *>(event);
+        if (actionEvent->action() == defaultAction()) {
+            setDefaultAction(nullptr);
+        }
     }
-    if (!m_defaultAction) {
-        m_defaultAction = m_suggestedDefaultAction;
-    }
-    return m_defaultAction;
+
+    return KActionMenu::eventFilter(watched, event);
+}
+
+void ToggleActionMenu::slotMenuChanged()
+{
+    menu()->installEventFilter(this);
+    // Not removing old event filter, because we would need to remember the old menu.
 }

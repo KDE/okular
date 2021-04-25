@@ -13,7 +13,6 @@
 #include "pageviewutils.h"
 
 // qt/kde includes
-#include <KIconLoader>
 #include <QApplication>
 #include <QMenu>
 #include <QPainter>

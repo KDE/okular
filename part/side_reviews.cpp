@@ -20,7 +20,6 @@
 #include <QToolBar>
 #include <QTreeView>
 
-#include <KIconLoader>
 #include <KLocalizedString>
 #include <KTitleWidget>
 #include <QAction>

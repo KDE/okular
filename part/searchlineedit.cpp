@@ -15,7 +15,6 @@
 // qt/kde includes
 #include <KBusyIndicatorWidget>
 #include <KColorScheme>
-#include <KIconLoader>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <QApplication>

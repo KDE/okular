@@ -10,7 +10,6 @@
 #include "pageviewannotator.h"
 
 // qt / kde includes
-#include <KIconLoader>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <QApplication>

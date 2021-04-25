@@ -14,7 +14,6 @@
 #include <KComboBox>
 #include <KFontRequester>
 #include <KFormat>
-#include <KIconLoader>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KMessageWidget>

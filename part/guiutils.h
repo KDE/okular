@@ -19,7 +19,6 @@ class QPixmap;
 class QSize;
 class QWidget;
 class QFile;
-class KIconLoader;
 
 namespace Okular
 {
@@ -49,10 +48,6 @@ QString prettyToolTip(const Okular::Annotation *annotation);
  * @p iconSize Maximum size of the pixmap (keep aspect ratio)
  */
 QPixmap loadStamp(const QString &nameOrPath, int size, bool keepAspectRatio = true);
-
-void addIconLoader(KIconLoader *loader);
-void removeIconLoader(KIconLoader *loader);
-KIconLoader *iconLoader();
 
 void saveEmbeddedFile(Okular::EmbeddedFile *ef, QWidget *parent);
 void writeEmbeddedFile(Okular::EmbeddedFile *ef, QWidget *parent, QFile &targetFile);

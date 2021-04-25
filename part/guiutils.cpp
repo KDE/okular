@@ -10,7 +10,6 @@
 #include "guiutils.h"
 
 // qt/kde includes
-#include <KIconLoader>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <QApplication>
@@ -34,7 +33,6 @@ struct GuiUtilsHelper {
 
     QSvgRenderer *svgStamps();
 
-    QList<KIconLoader *> il;
     std::unique_ptr<QSvgRenderer> svgStampFile;
 };
 
@@ -189,21 +187,6 @@ QPixmap loadStamp(const QString &nameOrPath, int size, bool keepAspectRatio)
 
     // _name is an icon name
     return QIcon::fromTheme(name).pixmap(size);
-}
-
-void addIconLoader(KIconLoader *loader)
-{
-    s_data->il.append(loader);
-}
-
-void removeIconLoader(KIconLoader *loader)
-{
-    s_data->il.removeAll(loader);
-}
-
-KIconLoader *iconLoader()
-{
-    return s_data->il.isEmpty() ? KIconLoader::global() : s_data->il.back();
 }
 
 void saveEmbeddedFile(Okular::EmbeddedFile *ef, QWidget *parent)

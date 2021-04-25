@@ -339,8 +339,6 @@ Part::Part(QWidget *parentWidget, QObject *parent, const QVariantList &args)
     // create live connect extension (for integrating with browser scripting)
     new OkularLiveConnectExtension(this);
 
-    GuiUtils::addIconLoader(iconLoader());
-
     const QStringList iconDirs = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("okular/pics"), QStandardPaths::LocateDirectory);
     QIcon::setFallbackSearchPaths(QIcon::fallbackSearchPaths() << iconDirs);
 
@@ -961,7 +959,6 @@ Part::~Part()
 {
     QDBusConnection::sessionBus().unregisterObject(m_registerDbusName);
 
-    GuiUtils::removeIconLoader(iconLoader());
     m_document->removeObserver(this);
 
     if (m_document->isOpened())

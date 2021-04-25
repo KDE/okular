@@ -341,6 +341,9 @@ Part::Part(QWidget *parentWidget, QObject *parent, const QVariantList &args)
 
     GuiUtils::addIconLoader(iconLoader());
 
+    const QStringList iconDirs = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("okular/pics"), QStandardPaths::LocateDirectory);
+    QIcon::setFallbackSearchPaths(QIcon::fallbackSearchPaths() << iconDirs);
+
     m_sidebar = new Sidebar(parentWidget);
     setWidget(m_sidebar);
     connect(m_sidebar, &Sidebar::urlsDropped, this, &Part::handleDroppedUrls);

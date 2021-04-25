@@ -188,13 +188,7 @@ QPixmap loadStamp(const QString &nameOrPath, int size, bool keepAspectRatio)
     }
 
     // _name is an icon name
-    const KIconLoader *il = iconLoader();
-    QString path;
-    pixmap = il->loadIcon(name, KIconLoader::User, size, KIconLoader::DefaultState, QStringList(), &path, true);
-    if (path.isEmpty())
-        pixmap = il->loadIcon(name, KIconLoader::NoGroup, size);
-
-    return pixmap; // can be a null pixmap
+    return QIcon::fromTheme(name).pixmap(size);
 }
 
 void addIconLoader(KIconLoader *loader)

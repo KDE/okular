@@ -572,10 +572,7 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
                     mixedPainter->drawImage(annotBoundary.topLeft(), image);
                 } else if (text->textType() == Okular::TextAnnotation::Linked) {
                     // get pixmap, colorize and alpha-blend it
-                    QString path;
-                    QPixmap pixmap = GuiUtils::iconLoader()->loadIcon(text->textIcon().toLower(), KIconLoader::User, 32, KIconLoader::DefaultState, QStringList(), &path, true);
-                    if (path.isEmpty())
-                        pixmap = GuiUtils::iconLoader()->loadIcon(text->textIcon().toLower(), KIconLoader::NoGroup, 32);
+                    QPixmap pixmap = QIcon::fromTheme(text->textIcon().toLower()).pixmap(32);
 
                     QPixmap scaledCroppedPixmap = pixmap.scaled(TEXTANNOTATION_ICONSIZE * dpr, TEXTANNOTATION_ICONSIZE * dpr).copy(dInnerRect.toAlignedRect());
                     scaledCroppedPixmap.setDevicePixelRatio(dpr);

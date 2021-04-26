@@ -88,9 +88,11 @@ find_package(KF5 ${KF5_REQUIRED_VERSION} REQUIRED COMPONENTS
     ConfigWidgets
     CoreAddons
     Crash
+    I18n
     IconThemes
     KIO
     Parts
+    TextWidgets
     ThreadWeaver
     WindowSystem
     ${optionalComponents}
@@ -445,6 +447,7 @@ target_link_libraries(okularpart okularcore
     KF5::Parts
     KF5::Solid
     KF5::WindowSystem
+    KF5::TextWidgets
 )
 
 if(KF5Wallet_FOUND)

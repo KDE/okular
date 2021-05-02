@@ -4421,6 +4421,8 @@ void PageView::slotRelayoutPages()
                 center(fullWidth / 2, 0);
             viewport()->setUpdatesEnabled(true);
         }
+    } else {
+        slotRequestVisiblePixmaps();
     }
 
     // 5) update the whole viewport if updated enabled

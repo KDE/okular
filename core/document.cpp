@@ -4921,9 +4921,7 @@ QByteArray Document::requestSignedRevisionData(const Okular::SignatureInfo &info
 
     const QList<qint64> byteRange = info.signedRangeBounds();
     f.seek(byteRange.first());
-    QByteArray data;
-    QDataStream stream(&data, QIODevice::WriteOnly);
-    stream << f.read(byteRange.last() - byteRange.first());
+    QByteArray data = f.read(byteRange.last() - byteRange.first());
     f.close();
 
     return data;

@@ -2136,13 +2136,13 @@ void PartTest::testLinkWithCrop()
     QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * 0.1, width * 0.1));
 
     // The cursor should be normal
-    QCOMPARE(part.m_pageView->cursor().shape(), Qt::CursorShape(Qt::OpenHandCursor));
+    QTRY_COMPARE(part.m_pageView->cursor().shape(), Qt::CursorShape(Qt::OpenHandCursor));
 
     // Activate "Trim Margins"
     cropAction->trigger();
 
     // The cursor should be a cross-hair
-    QCOMPARE(part.m_pageView->cursor().shape(), Qt::CursorShape(Qt::CrossCursor));
+    QTRY_COMPARE(part.m_pageView->cursor().shape(), Qt::CursorShape(Qt::CrossCursor));
 
     const int mouseStartY = height * 0.2;
     const int mouseEndY = height * 0.8;
@@ -2153,7 +2153,7 @@ void PartTest::testLinkWithCrop()
     simulateMouseSelection(mouseStartX, mouseStartY, mouseEndX, mouseEndY, part.m_pageView->viewport());
 
     // The cursor should be normal again
-    QCOMPARE(part.m_pageView->cursor().shape(), Qt::CursorShape(Qt::OpenHandCursor));
+    QTRY_COMPARE(part.m_pageView->cursor().shape(), Qt::CursorShape(Qt::OpenHandCursor));
 
     // Click a link
     const QPoint click(width * 0.2, height * 0.2);

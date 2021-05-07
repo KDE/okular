@@ -110,7 +110,7 @@ ecm_add_test(calculatetexttest.cpp
 )
 
 if(KF5Activities_FOUND AND BUILD_DESKTOP)
-	ecm_add_test(mainshelltest.cpp ../shell/okular_main.cpp ../shell/shellutils.cpp ../shell/shell.cpp closedialoghelper.cpp
+	ecm_add_test(mainshelltest.cpp ../shell/okular_main.cpp ../shell/shellutils.cpp ../shell/shell.cpp ../shell/welcomescreen.cpp ../shell/recentitemsmodel.cpp closedialoghelper.cpp
 		TEST_NAME "mainshelltest"
 		LINK_LIBRARIES Qt5::Test KF5::Activities okularpart okularcore
 	)
@@ -118,7 +118,7 @@ if(KF5Activities_FOUND AND BUILD_DESKTOP)
 endif()
 
 if(BUILD_DESKTOP)
-    ecm_add_test(annotationtoolbartest.cpp ../shell/okular_main.cpp ../shell/shellutils.cpp ../shell/shell.cpp closedialoghelper.cpp
+    ecm_add_test(annotationtoolbartest.cpp ../shell/okular_main.cpp ../shell/shellutils.cpp ../shell/shell.cpp ../shell/welcomescreen.cpp ../shell/recentitemsmodel.cpp closedialoghelper.cpp
         TEST_NAME "annotationtoolbartest"
         LINK_LIBRARIES Qt5::Test okularpart
     )

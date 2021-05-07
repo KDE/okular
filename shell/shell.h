@@ -19,7 +19,10 @@
 #include <kparts/mainwindow.h>
 #include <kparts/readwritepart.h>
 
+#include <QStackedWidget>
 #include <QtDBus> // krazy:exclude=includes
+
+#include "welcomescreen.h"
 
 class KRecentFilesAction;
 class KToggleAction;
@@ -137,10 +140,17 @@ private Q_SLOTS:
 
     void slotFitWindowToPage(const QSize pageViewSize, const QSize pageSize);
 
+    void hideWelcomeScreen();
+    void showWelcomeScreen();
+    void refreshRecentsOnWelcomeScreen();
+
+    void forgetRecentItem(QUrl const &url);
+
 Q_SIGNALS:
     void moveSplitter(int sideWidgetSize);
 
 private:
+    void saveRecents();
     void setupAccel();
     void setupActions();
     void openNewTab(const QUrl &url, const QString &serializedOptions);
@@ -165,6 +175,8 @@ private:
     bool m_unique;
     QTabWidget *m_tabWidget;
     KToggleAction *m_openInTab;
+    WelcomeScreen *m_welcomeScreen;
+    QStackedWidget *m_centralStackedWidget;
 
     struct TabState {
         explicit TabState(KParts::ReadWritePart *p)

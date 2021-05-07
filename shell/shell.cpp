@@ -95,6 +95,20 @@ Shell::Shell(const QString &serializedOptions)
     // now that the Part plugin is loaded, create the part
     KParts::ReadWritePart *const firstPart = m_partFactory->create<KParts::ReadWritePart>(this);
     if (firstPart) {
+        // Setup the central widget
+        m_centralStackedWidget = new QStackedWidget();
+        setCentralWidget(m_centralStackedWidget);
+
+        // Setup the welcome screen
+        m_welcomeScreen = new WelcomeScreen(this);
+        connect(m_welcomeScreen, &WelcomeScreen::openClicked, this, &Shell::fileOpen);
+        connect(m_welcomeScreen, &WelcomeScreen::closeClicked, this, &Shell::hideWelcomeScreen);
+        connect(m_welcomeScreen, &WelcomeScreen::recentItemClicked, this, [this](const QUrl &url) { openUrl(url); });
+        connect(m_welcomeScreen, &WelcomeScreen::forgetRecentItem, this, &Shell::forgetRecentItem);
+        m_centralStackedWidget->addWidget(m_welcomeScreen);
+
+        m_welcomeScreen->installEventFilter(this);
+
         // Setup tab bar
         m_tabWidget = new QTabWidget(this);
         m_tabWidget->setTabsClosable(true);
@@ -106,11 +120,11 @@ Shell::Shell(const QString &serializedOptions)
         m_tabWidget->setAcceptDrops(true);
         m_tabWidget->tabBar()->installEventFilter(this);
 
+        m_centralStackedWidget->addWidget(m_tabWidget);
+
         connect(m_tabWidget, &QTabWidget::currentChanged, this, &Shell::setActiveTab);
         connect(m_tabWidget, &QTabWidget::tabCloseRequested, this, &Shell::closeTab);
         connect(m_tabWidget->tabBar(), &QTabBar::tabMoved, this, &Shell::moveTabData);
-
-        setCentralWidget(m_tabWidget);
 
         // then, setup our actions
         setupActions();
@@ -146,6 +160,9 @@ Shell::Shell(const QString &serializedOptions)
         }
 
         QDBusConnection::sessionBus().registerObject(QStringLiteral("/okularshell"), this, QDBusConnection::ExportScriptableSlots);
+
+        // Make sure that the welcome scren is visible on startup.
+        showWelcomeScreen();
     } else {
         m_isValid = false;
         KMessageBox::error(this, i18n("Unable to find the Okular component."));
@@ -233,6 +250,8 @@ bool Shell::openDocument(const QUrl &url, const QString &serializedOptions)
     if (m_tabs.size() <= 0)
         return false;
 
+    hideWelcomeScreen();
+
     KParts::ReadWritePart *const part = m_tabs[0].part;
 
     // Return false if we can't open new tabs and the only part is occupied
@@ -270,6 +289,8 @@ bool Shell::canOpenDocs(int numDocs, int desktop)
 
 void Shell::openUrl(const QUrl &url, const QString &serializedOptions)
 {
+    hideWelcomeScreen();
+
     const int activeTab = m_tabWidget->currentIndex();
     if (activeTab < m_tabs.size()) {
         KParts::ReadWritePart *const activePart = m_tabs[activeTab].part;
@@ -343,7 +364,7 @@ void Shell::readSettings()
 
 void Shell::writeSettings()
 {
-    m_recent->saveEntries(KSharedConfig::openConfig()->group("Recent Files"));
+    saveRecents();
     KConfigGroup group = KSharedConfig::openConfig()->group("Desktop Entry");
     group.writeEntry("FullScreen", m_fullScreenAction->isChecked());
     if (m_fullScreenAction->isChecked()) {
@@ -353,12 +374,19 @@ void Shell::writeSettings()
     KSharedConfig::openConfig()->sync();
 }
 
+void Shell::saveRecents()
+{
+    m_recent->saveEntries(KSharedConfig::openConfig()->group("Recent Files"));
+}
+
 void Shell::setupActions()
 {
     KStandardAction::open(this, SLOT(fileOpen()), actionCollection());
     m_recent = KStandardAction::openRecent(this, SLOT(openUrl(QUrl)), actionCollection());
     m_recent->setToolBarMode(KRecentFilesAction::MenuMode);
     connect(m_recent, &QAction::triggered, this, &Shell::showOpenRecentMenu);
+    connect(m_recent, &KRecentFilesAction::recentListCleared, this, &Shell::refreshRecentsOnWelcomeScreen);
+    connect(m_welcomeScreen, &WelcomeScreen::forgetAllRecents, m_recent, &KRecentFilesAction::clear);
     m_recent->setToolTip(i18n("Click to open a file\nClick and hold to open a recent file"));
     m_recent->setWhatsThis(i18n("<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"));
     m_printAction = KStandardAction::print(this, SLOT(print()), actionCollection());
@@ -652,7 +680,8 @@ void Shell::closeTab(int tab)
 {
     KParts::ReadWritePart *const part = m_tabs[tab].part;
     QUrl url = part->url();
-    if (part->closeUrl() && m_tabs.count() > 1) {
+    bool closeSuccess = part->closeUrl();
+    if (closeSuccess && m_tabs.count() > 1) {
         if (part->factory())
             part->factory()->removeClient(part);
         part->disconnect();
@@ -667,6 +696,10 @@ void Shell::closeTab(int tab)
             m_nextTabAction->setEnabled(false);
             m_prevTabAction->setEnabled(false);
         }
+    } else if (closeSuccess && m_tabs.count() == 1) {
+        // Show welcome screen when the last tab is closed.
+
+        showWelcomeScreen();
     }
 }
 
@@ -674,6 +707,8 @@ void Shell::openNewTab(const QUrl &url, const QString &serializedOptions)
 {
     const int previousActiveTab = m_tabWidget->currentIndex();
     KParts::ReadWritePart *const activePart = m_tabs[previousActiveTab].part;
+
+    hideWelcomeScreen();
 
     bool activateTabIfAlreadyOpen;
     QMetaObject::invokeMethod(activePart, "activateTabIfAlreadyOpenFile", Q_RETURN_ARG(bool, activateTabIfAlreadyOpen));
@@ -851,6 +886,32 @@ void Shell::slotFitWindowToPage(const QSize pageViewSize, const QSize pageSize)
     showNormal();
     resize(width() - xOffset, height() - yOffset);
     emit moveSplitter(pageSize.width());
+}
+
+void Shell::hideWelcomeScreen()
+{
+    m_centralStackedWidget->setCurrentWidget(m_tabWidget);
+}
+
+void Shell::showWelcomeScreen()
+{
+    m_centralStackedWidget->setCurrentWidget(m_welcomeScreen);
+    refreshRecentsOnWelcomeScreen();
+}
+
+void Shell::refreshRecentsOnWelcomeScreen()
+{
+    saveRecents();
+    m_welcomeScreen->loadRecents();
+}
+
+void Shell::forgetRecentItem(QUrl const &url)
+{
+    if (m_recent != nullptr) {
+        m_recent->removeUrl(url);
+        saveRecents();
+        refreshRecentsOnWelcomeScreen();
+    }
 }
 
 /* kate: replace-tabs on; indent-width 4; */

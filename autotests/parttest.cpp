@@ -32,6 +32,7 @@
 #include <QApplication>
 #include <QClipboard>
 #include <QDesktopServices>
+#include <QLineEdit>
 #include <QMenu>
 #include <QMessageBox>
 #include <QPushButton>
@@ -106,6 +107,7 @@ private Q_SLOTS:
     void testFullScreenRequest();
     void testZoomInFacingPages();
     void testLinkWithCrop();
+    void testFieldFormatting();
 
 private:
     void simulateMouseSelection(double startX, double startY, double endX, double endY, QWidget *target);
@@ -2157,6 +2159,122 @@ void PartTest::testLinkWithCrop()
 
     // Deactivate "Trim Margins"
     cropAction->trigger();
+}
+
+void PartTest::testFieldFormatting()
+{
+    // Test field formatting. This has to be a parttest so that we
+    // can properly test focus in / out which triggers formatting.
+    const QString testFile = QStringLiteral(KDESRCDIR "data/fieldFormat.pdf");
+    Okular::Part part(nullptr, nullptr, QVariantList());
+    part.openDocument(testFile);
+    part.widget()->resize(800, 600);
+
+    part.widget()->show();
+    QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
+
+    // Field names in test document are:
+    //
+    // us_currency_fmt for formatting like "$ 1,234.56"
+    // de_currency_fmt for formatting like "1.234,56 €"
+    // de_simple_sum for calculation test and formatting like "1.234,56€"
+    // date_mm_dd_yyyy for dates like "18/06/2018"
+    // date_dd_mm_yyyy for dates like "06/18/2018"
+    // percent_fmt for percent format like "100,00%" if you enter 1
+    // time_HH_MM_fmt for times like "23:12"
+    // time_HH_MM_ss_fmt for times like "23:12:34"
+    // special_phone_number for an example of a special format selectable in Acrobat.
+    QMap<QString, Okular::FormField *> fields;
+    const Okular::Page *page = part.m_document->page(0);
+    const auto formFields = page->formFields();
+    for (Okular::FormField *ff : formFields) {
+        fields.insert(ff->name(), static_cast<Okular::FormField *>(ff));
+    }
+
+    const int width = part.m_pageView->horizontalScrollBar()->maximum() + part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->verticalScrollBar()->maximum() + part.m_pageView->viewport()->height();
+
+    part.m_document->setViewportPage(0);
+
+    // wait for pixmap
+    QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
+
+    part.actionCollection()->action(QStringLiteral("view_toggle_forms"))->trigger();
+
+    // Note as of version 1.5:
+    // The test document is prepared for future extensions to formatting for dates etc.
+    // Currently we only have the number format to test.
+    const auto ff_us = dynamic_cast<Okular::FormFieldText *>(fields.value(QStringLiteral("us_currency_fmt")));
+    const auto ff_de = dynamic_cast<Okular::FormFieldText *>(fields.value(QStringLiteral("de_currency_fmt")));
+    const auto ff_sum = dynamic_cast<Okular::FormFieldText *>(fields.value(QStringLiteral("de_simple_sum")));
+
+    const QPoint usPos(width * 0.25, height * 0.025);
+    const QPoint dePos(width * 0.25, height * 0.05);
+    const QPoint deSumPos(width * 0.25, height * 0.075);
+
+    const auto viewport = part.m_pageView->viewport();
+
+    QVERIFY(viewport);
+
+    auto usCurrencyWidget = dynamic_cast<QLineEdit *>(viewport->childAt(usPos));
+    auto deCurrencyWidget = dynamic_cast<QLineEdit *>(viewport->childAt(dePos));
+    auto sumCurrencyWidget = dynamic_cast<QLineEdit *>(viewport->childAt(deSumPos));
+
+    // Check that the widgets were found at the right position
+    QVERIFY(usCurrencyWidget);
+    QVERIFY(deCurrencyWidget);
+    QVERIFY(sumCurrencyWidget);
+
+    QTest::mousePress(usCurrencyWidget, Qt::LeftButton, Qt::NoModifier, QPoint(5, 5));
+    QTRY_VERIFY(usCurrencyWidget->hasFocus());
+    // locale is en_US for this test. Enter a value and check it.
+    usCurrencyWidget->setText(QStringLiteral("1234.56"));
+    // Check that the internal text matches
+    QCOMPARE(ff_us->text(), QStringLiteral("1234.56"));
+
+    // Now move the focus to trigger formatting.
+    QTest::mousePress(deCurrencyWidget, Qt::LeftButton, Qt::NoModifier, QPoint(5, 5));
+    QTRY_VERIFY(deCurrencyWidget->hasFocus());
+
+    QCOMPARE(usCurrencyWidget->text(), QStringLiteral("$ 1,234.56"));
+    QCOMPARE(ff_us->text(), QStringLiteral("1234.56"));
+
+    // And again with an invalid number
+    QTest::mousePress(usCurrencyWidget, Qt::LeftButton, Qt::NoModifier, QPoint(5, 5));
+    QTRY_VERIFY(usCurrencyWidget->hasFocus());
+
+    usCurrencyWidget->setText(QStringLiteral("131.234,567"));
+    QTest::mousePress(deCurrencyWidget, Qt::LeftButton, Qt::NoModifier, QPoint(5, 5));
+    QTRY_VERIFY(deCurrencyWidget->hasFocus());
+    // Check that the internal text still contains it.
+    QCOMPARE(ff_us->text(), QStringLiteral("131.234,567"));
+
+    // Just check that the text does not match the internal text.
+    // We don't check for a concrete value to keep NaN handling flexible
+    QVERIFY(ff_us->text() != usCurrencyWidget->text());
+
+    // Move the focus back and modify it a bit more
+    QTest::mousePress(usCurrencyWidget, Qt::LeftButton, Qt::NoModifier, QPoint(5, 5));
+    QTRY_VERIFY(usCurrencyWidget->hasFocus());
+
+    usCurrencyWidget->setText(QStringLiteral("1,234.567"));
+    QTest::mousePress(deCurrencyWidget, Qt::LeftButton, Qt::NoModifier, QPoint(5, 5));
+    QTRY_VERIFY(deCurrencyWidget->hasFocus());
+
+    QCOMPARE(usCurrencyWidget->text(), QStringLiteral("$ 1,234.57"));
+
+    // Sum should already match
+    QCOMPARE(sumCurrencyWidget->text(), QStringLiteral("1.234,57€"));
+
+    // Set a text in the de field
+    deCurrencyWidget->setText(QStringLiteral("1,123,234.567"));
+    QTest::mousePress(usCurrencyWidget, Qt::LeftButton, Qt::NoModifier, QPoint(5, 5));
+    QTRY_VERIFY(usCurrencyWidget->hasFocus());
+
+    QCOMPARE(deCurrencyWidget->text(), QStringLiteral("1.123.234,57 €"));
+    QCOMPARE(ff_de->text(), QStringLiteral("1,123,234.567"));
+    QCOMPARE(sumCurrencyWidget->text(), QStringLiteral("1.124.469,13€"));
+    QCOMPARE(ff_sum->text(), QStringLiteral("1,124,469.1340000000782310962677002"));
 }
 
 } // namespace Okular

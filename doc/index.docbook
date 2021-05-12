@@ -480,7 +480,7 @@ Context menu actions like Rename Bookmarks etc.)
 					To be able to sign a document you need to have a proper <acronym>PKCS</acronym> signing certificate available on your system. &okular; does not have the ability to create such certificates since they need to be issued by certificate authorities to be useful for validation, &etc;
 				</para>
 				<para>
-					We use the Poppler library to handle signing of &PDF; documents and Poppler is using the NSS library to handle certificates. At the point of writing, Poppler will try to use the following NSS certificate stores in order (if they exist):
+					We use the Poppler library to handle signing of &PDF; documents and Poppler is using the NSS library to handle certificates. At the point of writing, Poppler will try to use one of the following NSS certificate stores in order (the first that exists):
 				</para>
 				<itemizedlist>
 					<listitem><para>The current Firefox user certificate store.</para></listitem>

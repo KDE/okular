@@ -136,8 +136,11 @@ private:
     // poppler dependent stuff
     Poppler::Document *pdfdoc;
 
+    void xrefReconstructionHandler();
+
     // misc variables for document info and synopsis caching
     bool docSynopsisDirty;
+    bool xrefReconstructed;
     Okular::DocumentSynopsis docSyn;
     mutable bool docEmbeddedFilesDirty;
     mutable QList<Okular::EmbeddedFile *> docEmbeddedFiles;

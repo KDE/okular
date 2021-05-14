@@ -35,6 +35,16 @@ int main()
 }
 " HAVE_POPPLER_FANCY_SIGNATURE)
 
+check_cxx_source_compiles("
+#include <poppler-qt5.h>
+int main()
+{
+    Poppler::Document *doc = Poppler::Document::load(\"\", nullptr, nullptr);
+    doc->xrefWasReconstructed();
+    return 0;
+}
+" HAVE_POPPLER_RECONSTRUCTION_CALLBACK)
+
 configure_file(
    ${CMAKE_CURRENT_SOURCE_DIR}/config-okular-poppler.h.cmake
    ${CMAKE_CURRENT_BINARY_DIR}/config-okular-poppler.h

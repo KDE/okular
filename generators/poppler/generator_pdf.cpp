@@ -66,6 +66,8 @@
 #include "pdfsignatureutils.h"
 #include "popplerembeddedfile.h"
 
+#include <functional>
+
 Q_DECLARE_METATYPE(Poppler::Annotation *)
 Q_DECLARE_METATYPE(Poppler::FontInfo)
 Q_DECLARE_METATYPE(const Poppler::LinkMovie *)
@@ -546,6 +548,7 @@ PDFGenerator::PDFGenerator(QObject *parent, const QVariantList &args)
     : Generator(parent, args)
     , pdfdoc(nullptr)
     , docSynopsisDirty(true)
+    , xrefReconstructed(false)
     , docEmbeddedFilesDirty(true)
     , nextFontPage(0)
     , annotProxy(nullptr)
@@ -623,6 +626,16 @@ Okular::Document::OpenResult PDFGenerator::init(QVector<Okular::Page *> &pagesVe
             return Okular::Document::OpenNeedsPassword;
         }
     }
+
+    xrefReconstructed = false;
+#ifdef HAVE_POPPLER_RECONSTRUCTION_CALLBACK
+    if (pdfdoc->xrefWasReconstructed()) {
+        xrefReconstructionHandler();
+    } else {
+        std::function<void()> cb = std::bind(&PDFGenerator::xrefReconstructionHandler, this);
+        pdfdoc->setXRefReconstructedCallback(cb);
+    }
+#endif
 
     // build Pages (currentPage was set -1 by deletePages)
     int pageCount = pdfdoc->numPages();
@@ -1929,6 +1942,15 @@ Okular::CertificateStore *PDFGenerator::certificateStore() const
 #else
     return nullptr;
 #endif
+}
+
+void PDFGenerator::xrefReconstructionHandler()
+{
+    if (!xrefReconstructed) {
+        qCDebug(OkularPdfDebug) << "XRef Table of the document has been reconstructed";
+        xrefReconstructed = true;
+        emit warning(i18n("Some errors were found in the document, Okular might not be able to show the content correctly"), 5000);
+    }
 }
 
 #include "generator_pdf.moc"

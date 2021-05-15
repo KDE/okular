@@ -832,11 +832,11 @@ void PageView::fitPageWidth(int page)
 {
     // zoom: Fit Width, columns: 1. setActions + relayout + setPage + update
     d->zoomMode = ZoomFitWidth;
-    Okular::Settings::setViewMode(0);
+    Okular::Settings::setViewMode(Okular::Settings::EnumViewMode::Single);
     d->aZoomFitWidth->setChecked(true);
     d->aZoomFitPage->setChecked(false);
     d->aZoomAutoFit->setChecked(false);
-    updateViewMode(0);
+    updateViewMode(Okular::Settings::EnumViewMode::Single);
     viewport()->setUpdatesEnabled(false);
     slotRelayoutPages();
     viewport()->setUpdatesEnabled(true);

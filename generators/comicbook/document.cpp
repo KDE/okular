@@ -9,6 +9,7 @@
 
 #include "document.h"
 
+#include <QBuffer>
 #include <QImage>
 #include <QImageReader>
 #include <QScopedPointer>
@@ -235,7 +236,14 @@ QImage Document::pageImage(int page) const
         const KArchiveFile *entry = static_cast<const KArchiveFile *>(mArchiveDir->entry(mPageMap[page]));
         if (entry) {
             std::unique_ptr<QIODevice> dev(entry->createDevice());
-            QImageReader reader(dev.get());
+            // This could simply be
+            //     QImageReader reader(dev.get());
+            // but due to https://codereview.qt-project.org/c/qt/qtbase/+/349174 and https://invent.kde.org/frameworks/karchive/-/merge_requests/14
+            // it can not, so it will have to be like this at least until Qt6
+            // Test with https://bugs.kde.org/attachment.cgi?id=74039 (it's a cbz with a png inside)
+            QBuffer b;
+            b.setData(dev->readAll());
+            QImageReader reader(&b);
             reader.setAutoTransform(true);
             return reader.read();
         }

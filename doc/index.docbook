@@ -92,7 +92,7 @@ Context menu actions like Rename Bookmarks etc.)
 			</para>
 			<important>
 			  <para>
-			    The new document will be opened in a new tab should the <guilabel>Open new files in tabs</guilabel> option on the <link linkend="configgeneral">General configuration page</link> is checked.
+			    The new document will be opened in a new tab if the <guilabel>Open new files in tabs</guilabel> option on the <link linkend="configgeneral">General configuration page</link> is checked.
 			  </para>
                           <para>
                               You can close the tab by clicking with &MMB; on it.

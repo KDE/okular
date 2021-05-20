@@ -16,7 +16,7 @@
 #include <QString>
 #include <QThread>
 
-#include <libspectre/spectre.h>
+#include <spectre.h>
 
 class QImage;
 class GSGenerator;

@@ -13,7 +13,7 @@
 #include <core/generator.h>
 #include <interfaces/configinterface.h>
 
-#include <spectre.h>
+#include <libspectre/spectre.h>
 
 class GSGenerator : public Okular::Generator, public Okular::ConfigInterface
 {

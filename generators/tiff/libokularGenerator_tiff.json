@@ -162,9 +162,6 @@
         "Name[x-test]": "xxTIFF Backendxx",
         "Name[zh_CN]": "TIFF 后端",
         "Name[zh_TW]": "TIFF 後端介面",
-        "ServiceTypes": [
-            "okular/Generator"
-        ],
         "Version": "0.2.4"
     },
     "X-KDE-Priority": 4,

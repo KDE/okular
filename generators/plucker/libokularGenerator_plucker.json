@@ -160,9 +160,6 @@
         "Name[x-test]": "xxPlucker Document Backendxx",
         "Name[zh_CN]": "Plucker 文档后端",
         "Name[zh_TW]": "Pluker 文件後端介面",
-        "ServiceTypes": [
-            "okular/Generator"
-        ],
         "Version": "0.1.1"
     },
     "X-KDE-Priority": 1,

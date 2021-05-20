@@ -312,9 +312,6 @@ where libokularGenerator_magic.json has the following content something like thi
             "text/x-magic"
         ],
         "Name": "Magic Backend",
-        "ServiceTypes": [
-            "okular/Generator"
-        ],
         "Version": "0.1.0"
     },
     "X-KDE-Priority": 1,
@@ -325,7 +322,6 @@ where libokularGenerator_magic.json has the following content something like thi
 
 The last five fields has the special meaning to Okular
 
-  \li <b>ServiceType</b>  Must be 'okular/Generator' for all Okular Generator Plugins
   \li <b>MimeType</b> The mimetype or list of mimetypes of the supported document format(s)
   \li <b>X-KDE-Priority</b> When multiple Generators for the same mimetype exists, the one with the highest priority is used
   \li <b>X-KDE-okularAPIVersion</b> The version of the Generator Plugin API ('1' currently)

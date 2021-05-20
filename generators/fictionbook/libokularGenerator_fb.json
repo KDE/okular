@@ -160,9 +160,6 @@
         "Name[x-test]": "xxFiction Book Backendxx",
         "Name[zh_CN]": "Fiction Book 后端",
         "Name[zh_TW]": "Fiction Book 後端介面",
-        "ServiceTypes": [
-            "okular/Generator"
-        ],
         "Version": "0.1.5"
     },
     "X-KDE-Priority": 1,

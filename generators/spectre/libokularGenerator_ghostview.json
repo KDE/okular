@@ -162,9 +162,6 @@
         "Name[x-test]": "xxPS Backendxx",
         "Name[zh_CN]": "PS 后端",
         "Name[zh_TW]": "PS 後端介面",
-        "ServiceTypes": [
-            "okular/Generator"
-        ],
         "Version": "0.1.7"
     },
     "X-KDE-Priority": 2,

@@ -164,9 +164,6 @@
         "Name[x-test]": "xxPDF Backendxx",
         "Name[zh_CN]": "PDF 后端",
         "Name[zh_TW]": "PDF 後端介面",
-        "ServiceTypes": [
-            "okular/Generator"
-        ],
         "Version": "0.6.5"
     },
     "X-KDE-Priority": 1,

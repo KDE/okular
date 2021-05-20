@@ -123,9 +123,6 @@
         "Name[x-test]": "xxMarkdown Backendxx",
         "Name[zh_CN]": "Markdown 后端",
         "Name[zh_TW]": "Markdown 後端介面",
-        "ServiceTypes": [
-            "okular/Generator"
-        ],
         "Version": "0.1.0"
     },
     "X-KDE-Priority": 1,

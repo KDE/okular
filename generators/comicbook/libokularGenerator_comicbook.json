@@ -164,9 +164,6 @@
         "Name[x-test]": "xxComicBook Backendxx",
         "Name[zh_CN]": "漫画书后端",
         "Name[zh_TW]": "ComicBook 後端介面",
-        "ServiceTypes": [
-            "okular/Generator"
-        ],
         "Version": "0.4"
     },
     "X-KDE-Priority": 1,

@@ -160,9 +160,6 @@
         "Name[x-test]": "xxDjVu Backendxx",
         "Name[zh_CN]": "DjVu 后端",
         "Name[zh_TW]": "DjVu 後端介面",
-        "ServiceTypes": [
-            "okular/Generator"
-        ],
         "Version": "0.2.3"
     },
     "X-KDE-Priority": 2,

@@ -269,9 +269,6 @@
         "Name[x-test]": "xxImage Backendxx",
         "Name[zh_CN]": "图像后端",
         "Name[zh_TW]": "圖片後端介面",
-        "ServiceTypes": [
-            "okular/Generator"
-        ],
         "Version": "0.1.2"
     },
     "X-KDE-Priority": 1,

@@ -201,9 +201,6 @@
         "Name[x-test]": "xxCHM Backendxx",
         "Name[zh_CN]": "CHM 后端",
         "Name[zh_TW]": "CHM 後端介面",
-        "ServiceTypes": [
-            "okular/Generator"
-        ],
         "Version": "0.1.4"
     },
     "X-KDE-Priority": 2,

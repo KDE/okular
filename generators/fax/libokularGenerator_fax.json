@@ -161,9 +161,6 @@
         "Name[x-test]": "xxFax Backendxx",
         "Name[zh_CN]": "传真后端",
         "Name[zh_TW]": "Fax 後端介面",
-        "ServiceTypes": [
-            "okular/Generator"
-        ],
         "Version": "0.1.1"
     },
     "X-KDE-Priority": 1,

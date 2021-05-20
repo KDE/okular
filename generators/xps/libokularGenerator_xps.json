@@ -244,9 +244,6 @@
         "Name[x-test]": "xxXPS Backendxx",
         "Name[zh_CN]": "XPS 后端",
         "Name[zh_TW]": "XPS 後端介面",
-        "ServiceTypes": [
-            "okular/Generator"
-        ],
         "Version": "0.3.3"
     },
     "X-KDE-Priority": 4,

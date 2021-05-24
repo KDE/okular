@@ -8,8 +8,8 @@
 // using kviewshell
 // Part of KViewshell - A generic interface for document viewers.
 //
-// (C) 2004-2005 Wilfried Huss
-// (C) 2004-2006 Stefan Kebekus.
+// SPDX-FileCopyrightText: 2004-2005 Wilfried Huss
+// SPDX-FileCopyrightText: 2004-2006 Stefan Kebekus.
 //  Distributed under the GPL.
 
 #include "dviRenderer.h"

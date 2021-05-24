@@ -1,28 +1,25 @@
-﻿/***************************************************************************
- *   Copyright (C) 2002 by Wilco Greven <greven@kde.org>                   *
- *   Copyright (C) 2002 by Chris Cheney <ccheney@cheney.cx>                *
- *   Copyright (C) 2002 by Malcolm Hunter <malcolm.hunter@gmx.co.uk>       *
- *   Copyright (C) 2003-2004 by Christophe Devriese                        *
- *                         <Christophe.Devriese@student.kuleuven.ac.be>    *
- *   Copyright (C) 2003 by Daniel Molkentin <molkentin@kde.org>            *
- *   Copyright (C) 2003 by Andy Goossens <andygoossens@telenet.be>         *
- *   Copyright (C) 2003 by Dirk Mueller <mueller@kde.org>                  *
- *   Copyright (C) 2003 by Laurent Montel <montel@kde.org>                 *
- *   Copyright (C) 2004 by Dominique Devriese <devriese@kde.org>           *
- *   Copyright (C) 2004 by Christoph Cullmann <crossfire@babylon2k.de>     *
- *   Copyright (C) 2004 by Henrique Pinto <stampede@coltec.ufmg.br>        *
- *   Copyright (C) 2004 by Waldo Bastian <bastian@kde.org>                 *
- *   Copyright (C) 2004-2008 by Albert Astals Cid <aacid@kde.org>          *
- *   Copyright (C) 2004 by Antti Markus <antti.markus@starman.ee>          *
- *   Copyright (C) 2017    Klarälvdalens Datakonsult AB, a KDAB Group      *
- *                         company, info@kdab.com. Work sponsored by the   *
- *                         LiMux project of the city of Munich             *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- ***************************************************************************/
+/*
+    SPDX-FileCopyrightText: 2002 Wilco Greven <greven@kde.org>
+    SPDX-FileCopyrightText: 2002 Chris Cheney <ccheney@cheney.cx>
+    SPDX-FileCopyrightText: 2002 Malcolm Hunter <malcolm.hunter@gmx.co.uk>
+    SPDX-FileCopyrightText: 2003-2004 Christophe Devriese
+    <Christophe.Devriese@student.kuleuven.ac.be>
+    SPDX-FileCopyrightText: 2003 Daniel Molkentin <molkentin@kde.org>
+    SPDX-FileCopyrightText: 2003 Andy Goossens <andygoossens@telenet.be>
+    SPDX-FileCopyrightText: 2003 Dirk Mueller <mueller@kde.org>
+    SPDX-FileCopyrightText: 2003 Laurent Montel <montel@kde.org>
+    SPDX-FileCopyrightText: 2004 Dominique Devriese <devriese@kde.org>
+    SPDX-FileCopyrightText: 2004 Christoph Cullmann <crossfire@babylon2k.de>
+    SPDX-FileCopyrightText: 2004 Henrique Pinto <stampede@coltec.ufmg.br>
+    SPDX-FileCopyrightText: 2004 Waldo Bastian <bastian@kde.org>
+    SPDX-FileCopyrightText: 2004-2008 Albert Astals Cid <aacid@kde.org>
+    SPDX-FileCopyrightText: 2004 Antti Markus <antti.markus@starman.ee>
+    SPDX-FileCopyrightText: 2017 Klarälvdalens Datakonsult AB a KDAB Group
+    company, info@kdab.com. Work sponsored by the
+    LiMux project of the city of Munich
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "part.h"
 

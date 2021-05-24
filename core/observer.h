@@ -1,15 +1,12 @@
-/***************************************************************************
- *   Copyright (C) 2005 by Enrico Ros <eros.kde@email.it>                  *
- *   Copyright (C) 2005 by Albert Astals Cid <aacid@kde.org>               *
- *   Copyright (C) 2017    Klarälvdalens Datakonsult AB, a KDAB Group      *
- *                         company, info@kdab.com. Work sponsored by the   *
- *                         LiMux project of the city of Munich             *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- ***************************************************************************/
+/*
+    SPDX-FileCopyrightText: 2005 Enrico Ros <eros.kde@email.it>
+    SPDX-FileCopyrightText: 2005 Albert Astals Cid <aacid@kde.org>
+    SPDX-FileCopyrightText: 2017 Klarälvdalens Datakonsult AB a KDAB Group
+    company, info@kdab.com. Work sponsored by the
+    LiMux project of the city of Munich
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef _OKULAR_DOCUMENTOBSERVER_H_
 #define _OKULAR_DOCUMENTOBSERVER_H_

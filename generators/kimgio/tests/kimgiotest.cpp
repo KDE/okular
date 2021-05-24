@@ -1,11 +1,8 @@
-/***************************************************************************
- *   Copyright (C) 2013 by Fabio D'Urso <fabiodurso@hotmail.it>            *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- ***************************************************************************/
+/*
+    SPDX-FileCopyrightText: 2013 Fabio D 'Urso <fabiodurso@hotmail.it>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "../../settings_core.h"
 #include "../generator_kimgio.h"

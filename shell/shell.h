@@ -1,17 +1,14 @@
-/***************************************************************************
- *   Copyright (C) 2002 by Wilco Greven <greven@kde.org>                   *
- *   Copyright (C) 2003 by Benjamin Meyer <benjamin@csh.rit.edu>           *
- *   Copyright (C) 2003 by Laurent Montel <montel@kde.org>                 *
- *   Copyright (C) 2003 by Luboš Luňák <l.lunak@kde.org>                   *
- *   Copyright (C) 2004 by Christophe Devriese                             *
- *                         <Christophe.Devriese@student.kuleuven.ac.be>    *
- *   Copyright (C) 2004 by Albert Astals Cid <aacid@kde.org>               *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- ***************************************************************************/
+/*
+    SPDX-FileCopyrightText: 2002 Wilco Greven <greven@kde.org>
+    SPDX-FileCopyrightText: 2003 Benjamin Meyer <benjamin@csh.rit.edu>
+    SPDX-FileCopyrightText: 2003 Laurent Montel <montel@kde.org>
+    SPDX-FileCopyrightText: 2003 Luboš Luňák <l.lunak@kde.org>
+    SPDX-FileCopyrightText: 2004 Christophe Devriese
+    <Christophe.Devriese@student.kuleuven.ac.be>
+    SPDX-FileCopyrightText: 2004 Albert Astals Cid <aacid@kde.org>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef _OKULAR_SHELL_H_
 #define _OKULAR_SHELL_H_

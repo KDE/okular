@@ -1,14 +1,11 @@
-/***************************************************************************
- *   Copyright (C) 2019-2021 by David Hurka <david.hurka@mailbox.org>      *
- *                                                                         *
- *   Inspired by and replacing toolaction.h by:                            *
- *     Copyright (C) 2004-2006 by Albert Astals Cid <aacid@kde.org>        *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- ***************************************************************************/
+/*
+    SPDX-FileCopyrightText: 2019-2021 David Hurka <david.hurka@mailbox.org>
+
+    Inspired by and replacing toolaction.h by:
+    SPDX-FileCopyrightText: 2004-2006 Albert Astals Cid <aacid@kde.org>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "toggleactionmenu.h"
 

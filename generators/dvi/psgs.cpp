@@ -4,7 +4,7 @@
 //
 // Part of KDVI - A framework for multipage text/gfx viewers
 //
-// (C) 2004 Stefan Kebekus
+// SPDX-FileCopyrightText: 2004 Stefan Kebekus
 // Distributed under the GPL
 
 #include <config.h>

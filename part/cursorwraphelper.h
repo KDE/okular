@@ -1,11 +1,8 @@
-/***************************************************************************
- *   Copyright (C) 2020 by David Hurka <david.hurka@mailbox.org>           *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- ***************************************************************************/
+/*
+    SPDX-FileCopyrightText: 2020 David Hurka <david.hurka@mailbox.org>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef CURSORWRAPHELPER_H
 #define CURSORWRAPHELPER_H

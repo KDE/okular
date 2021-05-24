@@ -5,8 +5,8 @@
 #  Discount_FOUND - whether the discount library was found
 #  PkgConfig::Discount - the discount target to link to
 
-# Copyright (c) 2017, Julian Wolff, <wolff@julianwolff.de>
-# Copyright (c) 2018, Sune Vuorela, <sune@kde.org>
+# SPDX-FileCopyrightText: 2017 Julian Wolff <wolff@julianwolff.de>
+# SPDX-FileCopyrightText: 2018 Sune Vuorela <sune@kde.org>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.

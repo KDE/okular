@@ -1,5 +1,5 @@
 // -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; c-brace-offset: 0; -*-
-/* This file is part of KDVI (C) 2001 by Stefan Kebekus (kebekus@kde.org)
+/* This file is part of KDVI SPDX-FileCopyrightText: 2001 Stefan Kebekus (kebekus@kde.org)
 
    This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Library General Public License

@@ -3,7 +3,7 @@
 //
 // Part of KDVI - A DVI previewer for the KDE desktop environment
 //
-// (C) 2003 Stefan Kebekus
+// SPDX-FileCopyrightText: 2003 Stefan Kebekus
 // Distributed under the GPL
 
 #ifndef _TEXFONT_TFM_H

@@ -1,7 +1,7 @@
 // -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; c-brace-offset: 0; -*-
 // fontpool.h
 //
-// (C) 2001-2004 Stefan Kebekus
+// SPDX-FileCopyrightText: 2001-2004 Stefan Kebekus
 // Distributed under the GPL
 
 #ifndef _FONTPOOL_H

@@ -4,7 +4,7 @@
 //
 // Part of KDVI- A previewer for TeX DVI files.
 //
-// (C) 2004-2005 Stefan Kebekus. Distributed under the GPL.
+// SPDX-FileCopyrightText: 2004-2005 Stefan Kebekus. Distributed under the GPL.
 
 #ifndef _textbox_h_
 #define _textbox_h_

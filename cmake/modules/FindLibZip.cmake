@@ -5,7 +5,7 @@
 #  LIBZIP_INCLUDE_DIR - the zip include directory
 #  LIBZIP_LIBRARY - Link this to use the zip library
 #
-# Copyright (c) 2006, Pino Toscano, <toscano.pino@tiscali.it>
+# SPDX-FileCopyrightText: 2006 Pino Toscano <toscano.pino@tiscali.it>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.

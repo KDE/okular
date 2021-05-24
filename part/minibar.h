@@ -1,12 +1,9 @@
-/***************************************************************************
- *   Copyright (C) 2005 by Enrico Ros <eros.kde@email.it>                  *
- *   Copyright (C) 2006 by Albert Astals Cid <aacid@kde.org>               *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- ***************************************************************************/
+/*
+    SPDX-FileCopyrightText: 2005 Enrico Ros <eros.kde@email.it>
+    SPDX-FileCopyrightText: 2006 Albert Astals Cid <aacid@kde.org>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef _OKULAR_MINIBAR_H_
 #define _OKULAR_MINIBAR_H_

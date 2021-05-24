@@ -1,8 +1,8 @@
 /*
- *  SPDX-FileCopyrightText: 2020 by Nate Graham <nate@kde.org>
- *
- *  SPDX-License-Identifier: LGPL-2.0-or-later
- */
+    SPDX-FileCopyrightText: 2020 Nate Graham <nate@kde.org>
+
+    SPDX-License-Identifier: LGPL-2.0-or-later
+*/
 
 import QtQuick 2.0
 import QtQuick.Controls 2.4 as QQC2

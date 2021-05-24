@@ -2,7 +2,7 @@
 //
 // fontpool.cpp
 //
-// (C) 2001-2005 Stefan Kebekus
+// SPDX-FileCopyrightText: 2001-2005 Stefan Kebekus
 // Distributed under the GPL
 
 #include <config.h>

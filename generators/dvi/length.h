@@ -4,8 +4,8 @@
 //
 // Part of KVIEWSHELL
 //
-// (C) 2005 Stefan Kebekus
-// (C) 2006 Wilfried Huss
+// SPDX-FileCopyrightText: 2005 Stefan Kebekus
+// SPDX-FileCopyrightText: 2006 Wilfried Huss
 //
 // Distributed under the GPL.
 

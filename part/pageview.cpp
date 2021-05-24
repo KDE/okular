@@ -1,24 +1,21 @@
-/***************************************************************************
- *   Copyright (C) 2004-2005 by Enrico Ros <eros.kde@email.it>             *
- *   Copyright (C) 2004-2006 by Albert Astals Cid <aacid@kde.org>          *
- *   Copyright (C) 2017    Klarälvdalens Datakonsult AB, a KDAB Group      *
- *                         company, info@kdab.com. Work sponsored by the   *
- *                         LiMux project of the city of Munich             *
- *                                                                         *
- *   With portions of code from kpdf/kpdf_pagewidget.cc by:                *
- *     Copyright (C) 2002 by Wilco Greven <greven@kde.org>                 *
- *     Copyright (C) 2003 by Christophe Devriese                           *
- *                           <Christophe.Devriese@student.kuleuven.ac.be>  *
- *     Copyright (C) 2003 by Laurent Montel <montel@kde.org>               *
- *     Copyright (C) 2003 by Dirk Mueller <mueller@kde.org>                *
- *     Copyright (C) 2004 by James Ots <kde@jamesots.com>                  *
- *     Copyright (C) 2011 by Jiri Baum - NICTA <jiri@baum.com.au>          *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- ***************************************************************************/
+/*
+    SPDX-FileCopyrightText: 2004-2005 Enrico Ros <eros.kde@email.it>
+    SPDX-FileCopyrightText: 2004-2006 Albert Astals Cid <aacid@kde.org>
+    SPDX-FileCopyrightText: 2017 Klarälvdalens Datakonsult AB a KDAB Group
+    company, info@kdab.com. Work sponsored by the
+    LiMux project of the city of Munich
+
+    With portions of code from kpdf/kpdf_pagewidget.cc by:
+    SPDX-FileCopyrightText: 2002 Wilco Greven <greven@kde.org>
+    SPDX-FileCopyrightText: 2003 Christophe Devriese
+    <Christophe.Devriese@student.kuleuven.ac.be>
+    SPDX-FileCopyrightText: 2003 Laurent Montel <montel@kde.org>
+    SPDX-FileCopyrightText: 2003 Dirk Mueller <mueller@kde.org>
+    SPDX-FileCopyrightText: 2004 James Ots <kde@jamesots.com>
+    SPDX-FileCopyrightText: 2011 Jiri Baum - NICTA <jiri@baum.com.au>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "pageview.h"
 

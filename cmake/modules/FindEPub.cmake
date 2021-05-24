@@ -6,7 +6,7 @@
 #  EPUB_LIBRARIES - the EPub library
 #  EPUB_INCLUDE_DIR - the include path of the EPub library
 
-# Copyright (c) 2008, Pino Toscano, <pino@kde.org>
+# SPDX-FileCopyrightText: 2008 Pino Toscano <pino@kde.org>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.

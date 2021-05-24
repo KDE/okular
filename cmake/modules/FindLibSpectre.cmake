@@ -8,9 +8,7 @@
 
 # SPDX-FileCopyrightText: 2006-2007 Pino Toscano <pino@kde.org>
 # SPDX-FileCopyrightText: 2008 Albert Astals Cid <aacid@kde.org>
-#
-# Redistribution and use is allowed according to the terms of the BSD license.
-# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
+# SPDX-License-Identifier: BSD-3-Clause
 
 if(NOT WIN32)
   # use pkg-config to get the directories and then use these values

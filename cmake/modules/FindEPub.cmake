@@ -7,9 +7,7 @@
 #  EPUB_INCLUDE_DIR - the include path of the EPub library
 
 # SPDX-FileCopyrightText: 2008 Pino Toscano <pino@kde.org>
-#
-# Redistribution and use is allowed according to the terms of the BSD license.
-# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
+# SPDX-License-Identifier: BSD-3-Clause
 
 
 if (EPUB_INCLUDE_DIR AND EPUB_LIBRARIES)

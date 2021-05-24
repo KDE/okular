@@ -7,9 +7,7 @@
 
 # SPDX-FileCopyrightText: 2017 Julian Wolff <wolff@julianwolff.de>
 # SPDX-FileCopyrightText: 2018 Sune Vuorela <sune@kde.org>
-#
-# Redistribution and use is allowed according to the terms of the BSD license.
-# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
+# SPDX-License-Identifier: BSD-3-Clause
 
 include(FindPackageHandleStandardArgs)
 

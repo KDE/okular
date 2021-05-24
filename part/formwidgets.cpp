@@ -487,11 +487,12 @@ bool FormLineEdit::event(QEvent *e)
             emit m_controller->focusAction(action, fft);
         setFocus();
     } else if (e->type() == QEvent::FocusOut) {
+        m_editing = false;
+
         // Don't worry about focus events from other sources than the user FocusEvent to edit the field
         QFocusEvent *focusEvent = static_cast<QFocusEvent *>(e);
         if (focusEvent->reason() == Qt::OtherFocusReason)
             return true;
-        m_editing = false;
 
         if (const Okular::Action *action = m_ff->additionalAction(Okular::Annotation::FocusOut)) {
             bool ok = false;

@@ -1,9 +1,8 @@
 /*
     SPDX-FileCopyrightText: 2004-2005 Enrico Ros <eros.kde@email.it>
     SPDX-FileCopyrightText: 2004-2006 Albert Astals Cid <aacid@kde.org>
-    SPDX-FileCopyrightText: 2017 Klarälvdalens Datakonsult AB a KDAB Group
-    company, info@kdab.com. Work sponsored by the
-    LiMux project of the city of Munich
+    SPDX-FileCopyrightText: 2017 Klarälvdalens Datakonsult AB a KDAB Group company <info@kdab.com>
+    Work sponsored by the LiMux project of the city of Munich
 
     With portions of code from kpdf/kpdf_pagewidget.cc by:
     SPDX-FileCopyrightText: 2002 Wilco Greven <greven@kde.org>

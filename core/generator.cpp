@@ -1,9 +1,8 @@
 /*
     SPDX-FileCopyrightText: 2005 Piotr Szymanski <niedakh@gmail.com>
     SPDX-FileCopyrightText: 2008 Albert Astals Cid <aacid@kde.org>
-    SPDX-FileCopyrightText: 2017 Klarälvdalens Datakonsult AB a KDAB Group
-    company, info@kdab.com. Work sponsored by the
-    LiMux project of the city of Munich
+    SPDX-FileCopyrightText: 2017 Klarälvdalens Datakonsult AB a KDAB Group company <info@kdab.com>
+    Work sponsored by the LiMux project of the city of Munich
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */

@@ -3,8 +3,8 @@
 //
 // Part of KDVI - A DVI previewer for the KDE desktop environment
 //
-// (C) 2003--2004 Stefan Kebekus
-// Distributed under the GPL
+// SPDX-FileCopyrightText: 2003-2004 Stefan Kebekus
+// SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <config.h>
 

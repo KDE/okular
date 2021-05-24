@@ -1,10 +1,7 @@
 // -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; c-brace-offset: 0; -*-
-/* This file is part of KDVI SPDX-FileCopyrightText: 2001 Stefan Kebekus (kebekus@kde.org)
-
-   This library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Library General Public License
-   as published by the Free Software Foundation; either version 2 of
-   the License, or (at your option) any later version.
+/* This file is part of KDVI
+    SPDX-FileCopyrightText: 2001 Stefan Kebekus (kebekus@kde.org)
+    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 /**

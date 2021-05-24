@@ -5,7 +5,7 @@
 //
 // SPDX-FileCopyrightText: 2003 Stefan Kebekus
 // SPDX-FileCopyrightText: 2006 Wilfried Huss
-// Distributed under the GPL
+// SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <config.h>
 

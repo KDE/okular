@@ -10,7 +10,7 @@
 //
 // SPDX-FileCopyrightText: 2004-2005 Wilfried Huss
 // SPDX-FileCopyrightText: 2004-2006 Stefan Kebekus.
-//  Distributed under the GPL.
+// SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "dviRenderer.h"
 

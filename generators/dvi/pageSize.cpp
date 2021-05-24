@@ -4,7 +4,7 @@
 // Part of KVIEWSHELL - A framework for multipage text/gfx viewers
 //
 // SPDX-FileCopyrightText: 2002-2003 Stefan Kebekus
-// Distributed under the GPL
+// SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <config.h>
 

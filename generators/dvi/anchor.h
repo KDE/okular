@@ -5,7 +5,7 @@
 // Part of KVIEWSHELL - A framework for multipage text/gfx viewers
 //
 // SPDX-FileCopyrightText: 2004-2005 Stefan Kebekus
-// Distributed under the GPL
+// SPDX-License-Identifier: GPL-2.0-or-later
 
 #ifndef ANCHOR_H
 #define ANCHOR_H

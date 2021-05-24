@@ -5,7 +5,8 @@
 // Class for rendering TeX DVI files.
 // Part of KDVI- A previewer for TeX DVI files.
 //
-// SPDX-FileCopyrightText: 2001-2006 Stefan Kebekus. Distributed under the GPL.
+// SPDX-FileCopyrightText: 2001-2006 Stefan Kebekus
+// SPDX-License-Identifier: GPL-2.0-or-later
 
 #ifndef _dvirenderer_h_
 #define _dvirenderer_h_

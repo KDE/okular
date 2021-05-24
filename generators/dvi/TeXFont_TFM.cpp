@@ -4,7 +4,7 @@
 // Part of KDVI - A DVI previewer for the KDE desktop environment
 //
 // SPDX-FileCopyrightText: 2003 Stefan Kebekus
-// Distributed under the GPL
+// SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <config.h>
 

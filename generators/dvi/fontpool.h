@@ -2,7 +2,7 @@
 // fontpool.h
 //
 // SPDX-FileCopyrightText: 2001-2004 Stefan Kebekus
-// Distributed under the GPL
+// SPDX-License-Identifier: GPL-2.0-or-later
 
 #ifndef _FONTPOOL_H
 #define _FONTPOOL_H

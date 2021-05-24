@@ -4,7 +4,8 @@
 //
 // Part of KDVI- A previewer for TeX DVI files.
 //
-// SPDX-FileCopyrightText: 2004-2005 Stefan Kebekus. Distributed under the GPL.
+// SPDX-FileCopyrightText: 2004-2005 Stefan Kebekus
+// SPDX-License-Identifier: GPL-2.0-or-later
 
 #ifndef _hyperlink_h_
 #define _hyperlink_h_

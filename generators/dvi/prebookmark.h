@@ -1,11 +1,8 @@
 // -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil; c-brace-offset: 0; -*-
-/***************************************************************************
- *   SPDX-FileCopyrightText: 2005 Stefan Kebekus *
- *   kebekus@kde.org                                                       *
- *                                                                         *
- *                                                                         *
- *   SPDX-License-Identifier: GPL-2.0-or-later
- ***************************************************************************/
+/*
+    SPDX-FileCopyrightText: 2005 Stefan Kebekus <kebekus@kde.org>
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #ifndef _PREBOOKMARK_H_
 #define _PREBOOKMARK_H_

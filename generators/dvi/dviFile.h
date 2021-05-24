@@ -5,8 +5,8 @@
 // Class that represents a DVI file. Part of KDVI - A DVI previewing
 // plugin for kviewshell.
 //
-// SPDX-FileCopyrightText: 2004-2005 Stefan Kebekus. Distributed under the GPL.
-//
+// SPDX-FileCopyrightText: 2004-2005 Stefan Kebekus
+// SPDX-License-Identifier: GPL-2.0-or-later
 
 #ifndef _DVIFILE_H
 #define _DVIFILE_H

@@ -161,55 +161,65 @@ static KJSObject appAlert(KJSContext *context, void *, const KJSArguments &argum
     if (arguments.count() < 1) {
         return context->throwException(i18n("Missing alert type"));
     }
-    QString cMsg = arguments.at(0).toString(context);
-    int nIcon = 0;
-    int nType = 0;
-    QString cTitle = QStringLiteral("Okular");
+    KJSObject cMsg, nIcon, nType, cTitle, oCheckbox;
 
-    if (arguments.count() >= 2)
-        nIcon = arguments.at(1).toInt32(context);
-    if (arguments.count() >= 3)
-        nType = arguments.at(2).toInt32(context);
-    if (arguments.count() >= 4)
-        cTitle = arguments.at(3).toString(context);
-
-    QMessageBox::Icon icon;
-    switch (nIcon) {
-    case 0:
-        icon = QMessageBox::Critical;
-        break;
-    case 1:
-        icon = QMessageBox::Warning;
-        break;
-    case 2:
-        icon = QMessageBox::Question;
-        break;
-    case 3:
-        icon = QMessageBox::Information;
-        break;
+    if (arguments.at(0).isObject()) {
+        KJSObject obj = arguments.at(0);
+        cMsg = obj.property(context, QStringLiteral("cMsg"));
+        nIcon = obj.property(context, QStringLiteral("nIcon"));
+        nType = obj.property(context, QStringLiteral("nType"));
+        cTitle = obj.property(context, QStringLiteral("cTitle"));
+        oCheckbox = obj.property(context, QStringLiteral("oCheckbox"));
+    } else {
+        cMsg = arguments.at(0);
+        nIcon = arguments.at(1);
+        nType = arguments.at(2);
+        cTitle = arguments.at(3);
+        oCheckbox = arguments.at(5);
     }
 
-    QMessageBox box(icon, cTitle, cMsg);
-
-    switch (nType) {
-    case 0:
-        box.setStandardButtons(QMessageBox::Ok);
-        break;
-    case 1:
-        box.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
-        break;
-    case 2:
-        box.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-        break;
-    case 3:
-        box.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
-        break;
+    QMessageBox::Icon icon = QMessageBox::Critical;
+    if (nIcon.isNumber()) {
+        switch (nIcon.toInt32(context)) {
+        case 0:
+            icon = QMessageBox::Critical;
+            break;
+        case 1:
+            icon = QMessageBox::Warning;
+            break;
+        case 2:
+            icon = QMessageBox::Question;
+            break;
+        case 3:
+            icon = QMessageBox::Information;
+            break;
+        }
     }
+
+    const QString title = cTitle.isString() ? cTitle.toString(context) : QStringLiteral("Okular");
+    QMessageBox box(icon, title, cMsg.toString(context));
+
+    QMessageBox::StandardButtons buttons = QMessageBox::Ok;
+    if (nType.isNumber()) {
+        switch (nType.toInt32(context)) {
+        case 0:
+            buttons = QMessageBox::Ok;
+            break;
+        case 1:
+            buttons = QMessageBox::Ok | QMessageBox::Cancel;
+            break;
+        case 2:
+            buttons = QMessageBox::Yes | QMessageBox::No;
+            break;
+        case 3:
+            buttons = QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel;
+            break;
+        }
+    }
+    box.setStandardButtons(buttons);
 
     QCheckBox *checkBox = nullptr;
-    KJSObject oCheckbox;
-    if (arguments.count() >= 6) {
-        oCheckbox = arguments.at(5);
+    if (oCheckbox.isObject()) {
         KJSObject oMsg = oCheckbox.property(context, QStringLiteral("cMsg"));
         QString msg = i18n("Do not show this message again");
 
@@ -254,7 +264,7 @@ static KJSObject appAlert(KJSContext *context, void *, const KJSArguments &argum
         break;
     }
 
-    if (arguments.count() >= 6)
+    if (checkBox)
         oCheckbox.setProperty(context, QStringLiteral("bAfterValue"), checkBox->isChecked());
 
     delete checkBox;

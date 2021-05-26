@@ -348,6 +348,9 @@ void AnnotationActionHandlerPrivate::populateQuickAnnotations()
     QDomElement favToolElement = annotator->quickTool(favToolId);
     while (!favToolElement.isNull()) {
         QString itemText = favToolElement.attribute(QStringLiteral("name"));
+        if (favToolElement.attribute(QStringLiteral("default"), QStringLiteral("false")) == QLatin1String("true")) {
+            itemText = i18n(itemText.toLatin1().constData());
+        }
         if (itemText.isEmpty()) {
             itemText = PageViewAnnotator::defaultToolName(favToolElement);
         }

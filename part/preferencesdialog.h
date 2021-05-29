@@ -33,6 +33,7 @@ class PreferencesDialog : public KConfigDialog
 public:
     PreferencesDialog(QWidget *parent, KConfigSkeleton *skeleton, Okular::EmbedMode embedMode);
 
+    void switchToAccessibilityPage();
     void switchToAnnotationsPage();
 
 protected:
@@ -54,6 +55,7 @@ private:
     DlgDebug *m_debug;
 #endif
 
+    KPageWidgetItem *m_accessibilityPage;
     KPageWidgetItem *m_annotationsPage;
 };
 

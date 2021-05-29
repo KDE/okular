@@ -436,6 +436,7 @@ private:
     QUrl m_urlWithFragment;
 
 private Q_SLOTS:
+    void slotAccessibilityPreferences();
     void slotAnnotationPreferences();
     void slotHandleActivatedSourceReference(const QString &absFileName, int line, int col, bool *handled);
 };

@@ -8,6 +8,9 @@
  <signal name="builtinAnnotationToolsChanged" />
  <signal name="quickAnnotationToolsChanged" />
  <signal name="viewContinuousChanged" />
+ <signal name="colorModesChanged2" >
+  <label>Same as colorModesChanged(), but kconfig_compiler does not allow to inherit signals, so appending a '2'.</label>
+ </signal>
  <group name="Dlg Performance" >
   <entry key="EnableCompositing" type="Bool" >
    <default>true</default>
@@ -376,19 +379,23 @@
   </entry>
   <entry key="RecolorForeground" type="Color" >
    <default code="true" >0x600000</default>
+   <emit signal="colorModesChanged2" />
   </entry>
   <entry key="RecolorBackground" type="Color" >
    <default code="true" >0xF0F0F0</default>
+   <emit signal="colorModesChanged2" />
   </entry>
   <entry key="BWThreshold" type="UInt" >
    <default>127</default>
    <min>2</min>
    <max>253</max>
+   <emit signal="colorModesChanged2" />
   </entry>
   <entry key="BWContrast" type="UInt" >
    <default>2</default>
    <min>2</min>
    <max>6</max>
+   <emit signal="colorModesChanged2" />
   </entry>
  </group>
  <group name="Identity" >

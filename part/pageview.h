@@ -126,9 +126,6 @@ public Q_SLOTS:
     void openAnnotationWindow(Okular::Annotation *annotation, int pageNumber);
     void reloadForms();
 
-    void slotToggleChangeColors();
-    void slotSetChangeColors(bool active);
-
     void slotSelectPage();
 
     void slotAction(Okular::Action *action);

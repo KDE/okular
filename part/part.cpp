@@ -945,6 +945,11 @@ void Part::setupActions()
     eraseDrawingAction->setIcon(QIcon::fromTheme(QStringLiteral("draw-eraser-delete-objects")));
     eraseDrawingAction->setEnabled(false);
 
+    QAction *configureColorModes = new QAction(i18nc("@action", "Configure Color Modes..."), ac);
+    ac->addAction(QStringLiteral("options_configure_color_modes"), configureColorModes);
+    configureColorModes->setIcon(QIcon::fromTheme(QStringLiteral("configure")));
+    connect(configureColorModes, &QAction::triggered, this, &Part::slotAccessibilityPreferences);
+
     QAction *configureAnnotations = new QAction(i18n("Configure Annotations..."), ac);
     ac->addAction(QStringLiteral("options_configure_annotations"), configureAnnotations);
     configureAnnotations->setIcon(QIcon::fromTheme(QStringLiteral("configure")));
@@ -2809,12 +2814,24 @@ void Part::slotPreferences()
 
 void Part::slotToggleChangeColors()
 {
-    m_pageView->slotToggleChangeColors();
+    slotSetChangeColors(!Okular::SettingsCore::changeColors());
 }
 
 void Part::slotSetChangeColors(bool active)
 {
-    m_pageView->slotSetChangeColors(active);
+    Okular::SettingsCore::setChangeColors(active);
+    Okular::Settings::self()->save();
+}
+
+void Part::slotAccessibilityPreferences()
+{
+    // Create dialog
+    PreferencesDialog *dialog = new PreferencesDialog(m_pageView, Okular::Settings::self(), m_embedMode);
+    dialog->setAttribute(Qt::WA_DeleteOnClose);
+
+    // Show it
+    dialog->switchToAccessibilityPage();
+    dialog->show();
 }
 
 void Part::slotAnnotationPreferences()

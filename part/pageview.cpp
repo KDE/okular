@@ -72,6 +72,7 @@
 // local includes
 #include "annotationpopup.h"
 #include "annotwindow.h"
+#include "colormodemenu.h"
 #include "core/annotations.h"
 #include "cursorwraphelper.h"
 #include "debug_ui.h"
@@ -246,6 +247,7 @@ public:
     KToggleAction *aZoomAutoFit;
     KActionMenu *aViewModeMenu;
     QActionGroup *viewModeActionGroup;
+    ColorModeMenu *aColorModeMenu;
     KToggleAction *aViewContinuous;
     QAction *aPrevAction;
     KToggleAction *aToggleForms;
@@ -375,6 +377,7 @@ PageView::PageView(QWidget *parent, Okular::Document *document)
     d->aViewModeMenu = nullptr;
     d->aViewContinuous = nullptr;
     d->viewModeActionGroup = nullptr;
+    d->aColorModeMenu = nullptr;
     d->aPrevAction = nullptr;
     d->aToggleForms = nullptr;
     d->aSpeakDoc = nullptr;
@@ -670,9 +673,7 @@ void PageView::setupViewerActions(KActionCollection *ac)
     mz->setActionGroup(d->mouseModeActionGroup);
     mz->setChecked(Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::Zoom);
 
-    QAction *aToggleChangeColors = new QAction(i18n("&Toggle Change Colors"), this);
-    ac->addAction(QStringLiteral("toggle_change_colors"), aToggleChangeColors);
-    connect(aToggleChangeColors, &QAction::triggered, this, &PageView::slotToggleChangeColors);
+    d->aColorModeMenu = new ColorModeMenu(ac, this);
 }
 
 // WARNING: 'setupViewerActions' must have been called before this method
@@ -1299,6 +1300,9 @@ void PageView::updateActionState(bool haspages, bool hasformwidgets)
         d->aZoomOut->setEnabled(haspages);
     if (d->aZoomActual)
         d->aZoomActual->setEnabled(haspages && d->zoomFactor != 1.0);
+
+    if (d->aColorModeMenu)
+        d->aColorModeMenu->setEnabled(haspages);
 
     if (d->aReadingDirection) {
         d->aReadingDirection->setEnabled(haspages);
@@ -5160,18 +5164,6 @@ void PageView::slotProcessRenditionAction(const Okular::RenditionAction *action)
     default:
         return;
     };
-}
-
-void PageView::slotSetChangeColors(bool active)
-{
-    Okular::SettingsCore::setChangeColors(active);
-    Okular::Settings::self()->save();
-    viewport()->update();
-}
-
-void PageView::slotToggleChangeColors()
-{
-    slotSetChangeColors(!Okular::SettingsCore::changeColors());
 }
 
 void PageView::slotFitWindowToPage()

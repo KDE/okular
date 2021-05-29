@@ -1,9 +1,0 @@
-[Protocol]
-exec=kio_msits
-protocol=ms-its
-input=none
-output=filesystem
-reading=true
-listing=Name,Type,Size
-defaultMimetype=text/html
-Icon=help

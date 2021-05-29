@@ -6,8 +6,7 @@
 
     With portions of code from kpdf/kpdf_pagewidget.cc by:
     SPDX-FileCopyrightText: 2002 Wilco Greven <greven@kde.org>
-    SPDX-FileCopyrightText: 2003 Christophe Devriese
-    <Christophe.Devriese@student.kuleuven.ac.be>
+    SPDX-FileCopyrightText: 2003 Christophe Devriese <Christophe.Devriese@student.kuleuven.ac.be>
     SPDX-FileCopyrightText: 2003 Laurent Montel <montel@kde.org>
     SPDX-FileCopyrightText: 2003 Dirk Mueller <mueller@kde.org>
     SPDX-FileCopyrightText: 2004 James Ots <kde@jamesots.com>

@@ -1,7 +1,6 @@
 /*
     SPDX-FileCopyrightText: 2002 Wilco Greven <greven@kde.org>
-    SPDX-FileCopyrightText: 2003 Christophe Devriese
-    <Christophe.Devriese@student.kuleuven.ac.be>
+    SPDX-FileCopyrightText: 2003 Christophe Devriese <Christophe.Devriese@student.kuleuven.ac.be>
     SPDX-FileCopyrightText: 2003 Laurent Montel <montel@kde.org>
     SPDX-FileCopyrightText: 2003-2007 Albert Astals Cid <aacid@kde.org>
     SPDX-FileCopyrightText: 2004 Andy Goossens <andygoossens@telenet.be>

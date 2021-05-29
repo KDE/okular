@@ -1,6 +1,5 @@
 /*
-    SPDX-FileCopyrightText: 2005 Georgy Yunaev
-    tim@krasnogorsk.ru
+    SPDX-FileCopyrightText: 2005 Georgy Yunaev tim@krasnogorsk.ru
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */

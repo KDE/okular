@@ -2,8 +2,7 @@
     SPDX-FileCopyrightText: 2002 Wilco Greven <greven@kde.org>
     SPDX-FileCopyrightText: 2002 Chris Cheney <ccheney@cheney.cx>
     SPDX-FileCopyrightText: 2002 Malcolm Hunter <malcolm.hunter@gmx.co.uk>
-    SPDX-FileCopyrightText: 2003-2004 Christophe Devriese
-    <Christophe.Devriese@student.kuleuven.ac.be>
+    SPDX-FileCopyrightText: 2003-2004 Christophe Devriese <Christophe.Devriese@student.kuleuven.ac.be>
     SPDX-FileCopyrightText: 2003 Daniel Molkentin <molkentin@kde.org>
     SPDX-FileCopyrightText: 2003 Andy Goossens <andygoossens@telenet.be>
     SPDX-FileCopyrightText: 2003 Dirk Mueller <mueller@kde.org>

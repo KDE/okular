@@ -3,8 +3,7 @@
     SPDX-FileCopyrightText: 2003 Benjamin Meyer <benjamin@csh.rit.edu>
     SPDX-FileCopyrightText: 2003 Laurent Montel <montel@kde.org>
     SPDX-FileCopyrightText: 2003 Luboš Luňák <l.lunak@kde.org>
-    SPDX-FileCopyrightText: 2004 Christophe Devriese
-    <Christophe.Devriese@student.kuleuven.ac.be>
+    SPDX-FileCopyrightText: 2004 Christophe Devriese <Christophe.Devriese@student.kuleuven.ac.be>
     SPDX-FileCopyrightText: 2004 Albert Astals Cid <aacid@kde.org>
 
     SPDX-License-Identifier: GPL-2.0-or-later

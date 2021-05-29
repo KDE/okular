@@ -2,8 +2,7 @@
     SPDX-FileCopyrightText: 2002 Wilco Greven <greven@kde.org>
     SPDX-FileCopyrightText: 2002 Chris Cheney <ccheney@cheney.cx>
     SPDX-FileCopyrightText: 2003 Benjamin Meyer <benjamin@csh.rit.edu>
-    SPDX-FileCopyrightText: 2003-2004 Christophe Devriese
-    <Christophe.Devriese@student.kuleuven.ac.be>
+    SPDX-FileCopyrightText: 2003-2004 Christophe Devriese <Christophe.Devriese@student.kuleuven.ac.be>
     SPDX-FileCopyrightText: 2003 Laurent Montel <montel@kde.org>
     SPDX-FileCopyrightText: 2003-2004 Albert Astals Cid <aacid@kde.org>
     SPDX-FileCopyrightText: 2003 Luboš Luňák <l.lunak@kde.org>

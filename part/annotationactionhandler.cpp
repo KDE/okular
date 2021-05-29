@@ -383,8 +383,10 @@ void AnnotationActionHandlerPrivate::populateQuickAnnotations()
         aQuickToolsBar->insertAction(actionBarInsertPosition++, annFav);
         agTools->addAction(annFav);
         quickTools.append(annFav);
-        if (shortcutNumber != numberKeys.end())
+        if (shortcutNumber != numberKeys.end()) {
             annFav->setShortcut(QKeySequence(*(shortcutNumber++)));
+            annFav->setShortcutContext(Qt::WidgetWithChildrenShortcut);
+        }
         QObject::connect(annFav, &KToggleAction::toggled, q, [this, favToolId](bool checked) {
             if (checked) {
                 slotQuickToolSelected(favToolId);

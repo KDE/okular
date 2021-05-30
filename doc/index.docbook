@@ -32,7 +32,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2021-04-09</date>
+		<date>2021-05-31</date>
 		<releaseinfo>21.08</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
@@ -2683,76 +2683,87 @@ Context menu actions like Rename Bookmarks etc.)
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term><guilabel>Invert Colors</guilabel></term>
+					<term><guilabel>Color mode</guilabel></term>
 					<listitem>
-						<para><action>Inverts</action> colors on the view, &ie; black objects will be shown white.</para>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
-					<term><guilabel>Change Paper Color</guilabel></term>
-					<listitem>
-						<para><action>Changes</action> the paper's color, &ie; the document's background.</para>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
-					<term><guilabel>Change Dark &amp; Light Colors</guilabel></term>
-					<listitem>
-						<para><action>Changes</action> the dark and light color to your preference, that means
+						<para><action>Defines</action> the color changing mode.</para>
+						<variablelist>
+						<varlistentry>
+							<term><guilabel>Invert Colors</guilabel></term>
+							<listitem>
+								<para><action>Inverts</action> colors on the view, &ie; black objects will be shown white.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term><guilabel>Change Paper Color</guilabel></term>
+								<listitem>
+									<para><action>Changes</action> the paper's color, &ie; the document's background.</para>
+                                                                        <para>The colorcan be selected using the <guilabel>Paper color</guilabel> swatch below.
+                                                                        </para>
+								</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term><guilabel>Change Dark &amp; Light Colors</guilabel></term>
+							<listitem>
+								<para><action>Changes</action> the dark and light color to your preference, that means
 							black will not be rendered as black but as the selected dark color and white
 							will not be rendered as white but as the selected light color.</para>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
-					<term><guilabel>Convert to Black &amp; White</guilabel></term>
-					<listitem>
-						<para><action>Converts</action> the document to black and white. You can set the
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term><guilabel>Convert to Black &amp; White</guilabel></term>
+							<listitem>
+								<para><action>Converts</action> the document to black and white. You can set the
 							threshold and the contrast. Setting the threshold to a higher value
 							by moving it to the right will result in lighter grays used.</para>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
-					<term><guilabel>Invert Lightness</guilabel></term>
-					<listitem>
-						<para><action>Inverts</action> lightness of all colors.
+								</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term><guilabel>Invert Lightness</guilabel></term>
+							<listitem>
+									<para><action>Inverts</action> lightness of all colors.
 							Light and dark colors will be swapped, but hue and saturation will not be affected.
 							The Contrast in images will usually be worse than in <guilabel>Invert Luma (sRGB Linear)</guilabel>.</para>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
-					<term><guilabel>Invert Luma (sRGB Linear)</guilabel></term>
-					<listitem>
-						<para><action>Inverts</action> luma of all colors.
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term><guilabel>Invert Luma (sRGB Linear)</guilabel></term>
+							<listitem>
+								<para><action>Inverts</action> luma of all colors.
 							Light and dark will be swapped, but hue and saturation will not be affected.
 							The Contrast in images is preserved better than in <guilabel>Invert Lightness</guilabel>,
 							but graphics and colorful text markup usually look worse.
 							Uses sRGB luma coefficients, but no gamma correction.</para>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
-					<term><guilabel>Invert Luma (Symmetric)</guilabel></term>
-					<listitem>
-						<para><action>Inverts</action> luma of all colors, using symmetric luma coefficients.
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term><guilabel>Invert Luma (Symmetric)</guilabel></term>
+							<listitem>
+								<para><action>Inverts</action> luma of all colors, using symmetric luma coefficients.
 							Light and dark will be swapped, but hue and saturation will not be affected.
 							Very similar to <guilabel>Invert Lightness</guilabel>,
 							but the contrast is in some cases better.</para>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
-					<term><guilabel>Shift Hue Positive</guilabel></term>
-					<listitem>
-						<para><action>Shifts</action> hue of all colors by 120 degrees.
+								</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term><guilabel>Shift Hue Positive</guilabel></term>
+							<listitem>
+								<para><action>Shifts</action> hue of all colors by 120 degrees.
 							Can mitigate some contrast problems in colorful graphics.</para>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
-					<term><guilabel>Shift Hue Negative</guilabel></term>
-					<listitem>
-						<para><action>Shifts</action> hue of all colors by 240 degrees.
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term><guilabel>Shift Hue Negative</guilabel></term>
+							<listitem>
+								<para><action>Shifts</action> hue of all colors by 240 degrees.
 							Can mitigate some contrast problems in colorful graphics.</para>
+								</listitem>
+						</varlistentry>
+						</variablelist>
+                                                <note><para>You can configure keyboard shortcuts and toolbar actions for the color modes using the corresponding menu items in the <guimenu>Settings</guimenu> menu of the &okular; main window.</para></note>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-					<term><guilabel>Engine</guilabel></term>
+					<term><guilabel>Text-to-speech engine</guilabel></term>
 					<listitem>
 						<para><action>Allows you to choose</action> the text-to-speech (<abbrev>TTS</abbrev>) engine to be used by &okular;.
 							The default is <application>speechd</application> <abbrev>TTS</abbrev>, but you can use all

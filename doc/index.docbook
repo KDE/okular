@@ -2697,7 +2697,7 @@ Context menu actions like Rename Bookmarks etc.)
 							<term><guilabel>Change Paper Color</guilabel></term>
 								<listitem>
 									<para><action>Changes</action> the paper's color, &ie; the document's background.</para>
-                                                                        <para>The colorcan be selected using the <guilabel>Paper color</guilabel> swatch below.
+                                                                        <para>The color can be selected using the <guilabel>Paper color</guilabel> swatch below.
                                                                         </para>
 								</listitem>
 						</varlistentry>

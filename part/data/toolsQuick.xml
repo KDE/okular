@@ -6,12 +6,12 @@ Tool
   [id]              {int = unique id identifying the quick tool}
 -->
 <quickAnnotatingTools>
-    <tool id="1" type="highlight" name="Yellow Highlighter">
+    <tool id="1" type="highlight" name="Yellow Highlighter" default="true">
         <engine type="TextSelector" color="#ffff00">
             <annotation type="Highlight" color="#ffffff00"/>
         </engine>
     </tool>
-    <tool id="2" type="highlight" name="Green Highlighter">
+    <tool id="2" type="highlight" name="Green Highlighter" default="true">
         <engine type="TextSelector" color="#00ff00">
             <annotation type="Highlight" color="#ff00ff00"/>
         </engine>
@@ -21,7 +21,7 @@ Tool
             <annotation type="Underline" color="#ffff0000"/>
         </engine>
     </tool>
-    <tool id="4" type="typewriter" name="Insert Text">
+    <tool id="4" type="typewriter" name="Insert Text" default="true">
         <engine type="PickPoint" block="true">
             <annotation type="Typewriter" color="#00ffffff" textColor="#000000" width="0"/>
         </engine>

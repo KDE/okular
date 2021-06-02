@@ -36,6 +36,7 @@
   <name xml:lang="sr-ijekavian">Стрипови</name>
   <name xml:lang="sr-ijekavianlatin">Stripovi</name>
   <name xml:lang="sv">Comic Book</name>
+  <name xml:lang="ta">காமிக் புத்தகங்கள்</name>
   <name xml:lang="tr">Çizgiromanlar</name>
   <name xml:lang="uk">Комікси</name>
   <name xml:lang="x-test">xxComic Booksxx</name>
@@ -73,6 +74,7 @@
   <summary xml:lang="sr-ijekavian">Подршка за читање стрипова</summary>
   <summary xml:lang="sr-ijekavianlatin">Podrška za čitanje stripova</summary>
   <summary xml:lang="sv">Lägger till stöd för att läsa Comic Book</summary>
+  <summary xml:lang="ta">காமிக் புத்தகங்களைப் படிப்பதற்கான ஆதரவை சேர்க்கும்</summary>
   <summary xml:lang="tr">Çizgi roman okuma desteği ekler</summary>
   <summary xml:lang="uk">Додає підтримку читання коміксів</summary>
   <summary xml:lang="x-test">xxAdds support for reading comic booksxx</summary>

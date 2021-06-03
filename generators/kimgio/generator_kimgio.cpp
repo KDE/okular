@@ -2,8 +2,9 @@
     SPDX-FileCopyrightText: 2005 Albert Astals Cid <aacid@kde.org>
     SPDX-FileCopyrightText: 2006-2007 Pino Toscano <pino@kde.org>
     SPDX-FileCopyrightText: 2006-2007 Tobias Koenig <tokoe@kde.org>
+
+    Work sponsored by the LiMux project of the city of Munich:
     SPDX-FileCopyrightText: 2017 Klarälvdalens Datakonsult AB a KDAB Group company <info@kdab.com>
-    Work sponsored by the LiMux project of the city of Munich
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */

@@ -1287,6 +1287,9 @@ void PageViewAnnotator::selectStampTool(const QString &stampSymbol)
 
 void PageViewAnnotator::detachAnnotation()
 {
+    if (m_lastToolId == -1) {
+        return;
+    }
     selectBuiltinTool(-1, ShowTip::No);
     if (!signatureMode()) {
         if (m_actionHandler)

@@ -228,6 +228,7 @@ public:
     KToggleAction *aTrimMargins;
     KToggleAction *aReadingDirection;
     QAction *aMouseNormal;
+    QAction *aMouseZoom;
     QAction *aMouseSelect;
     QAction *aMouseTextSelect;
     QAction *aMouseTableSelect;
@@ -364,6 +365,7 @@ PageView::PageView(QWidget *parent, Okular::Document *document)
     d->aTrimToSelection = nullptr;
     d->aReadingDirection = nullptr;
     d->aMouseNormal = nullptr;
+    d->aMouseZoom = nullptr;
     d->aMouseSelect = nullptr;
     d->aMouseTextSelect = nullptr;
     d->aSignature = nullptr;
@@ -661,13 +663,13 @@ void PageView::setupViewerActions(KActionCollection *ac)
     d->aMouseNormal->setActionGroup(d->mouseModeActionGroup);
     d->aMouseNormal->setChecked(Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::Browse);
 
-    QAction *mz = new QAction(QIcon::fromTheme(QStringLiteral("page-zoom")), i18n("&Zoom"), this);
-    ac->addAction(QStringLiteral("mouse_zoom"), mz);
-    connect(mz, &QAction::triggered, this, &PageView::slotSetMouseZoom);
-    mz->setCheckable(true);
-    ac->setDefaultShortcut(mz, QKeySequence(Qt::CTRL | Qt::Key_2));
-    mz->setActionGroup(d->mouseModeActionGroup);
-    mz->setChecked(Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::Zoom);
+    d->aMouseZoom = new QAction(QIcon::fromTheme(QStringLiteral("page-zoom")), i18n("&Zoom"), this);
+    ac->addAction(QStringLiteral("mouse_zoom"), d->aMouseZoom);
+    connect(d->aMouseZoom, &QAction::triggered, this, &PageView::slotSetMouseZoom);
+    d->aMouseZoom->setCheckable(true);
+    ac->setDefaultShortcut(d->aMouseZoom, QKeySequence(Qt::CTRL | Qt::Key_2));
+    d->aMouseZoom->setActionGroup(d->mouseModeActionGroup);
+    d->aMouseZoom->setChecked(Okular::Settings::mouseMode() == Okular::Settings::EnumMouseMode::Zoom);
 
     d->aColorModeMenu = new ColorModeMenu(ac, this);
 }

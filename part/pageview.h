@@ -262,7 +262,7 @@ private Q_SLOTS:
     void slotContinuousToggled();
     void slotReadingDirectionToggled(bool leftToRight);
     void slotUpdateReadingDirectionAction();
-    void slotMouseNormalToggled(bool);
+    void slotSetMouseNormal();
     void slotSetMouseZoom();
     void slotSetMouseMagnifier();
     void slotSetMouseSelect();

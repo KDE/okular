@@ -1198,6 +1198,7 @@ void PageViewAnnotator::selectTool(AnnotationTools *toolsDefinition, int toolId,
     if (toolId == -1) {
         m_pageView->displayMessage(QString());
         m_pageView->updateCursor();
+        emit toolActive(false);
         return;
     }
 
@@ -1265,8 +1266,7 @@ void PageViewAnnotator::selectTool(AnnotationTools *toolsDefinition, int toolId,
         m_pageView->updateCursor();
     }
 
-    if (toolId > 0)
-        emit toolSelected();
+    emit toolActive(true);
 }
 
 void PageViewAnnotator::selectLastTool()

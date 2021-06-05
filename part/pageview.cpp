@@ -657,7 +657,7 @@ void PageView::setupViewerActions(KActionCollection *ac)
     d->mouseModeActionGroup->setExclusive(true);
     d->aMouseNormal = new QAction(QIcon::fromTheme(QStringLiteral("transform-browse")), i18n("&Browse"), this);
     ac->addAction(QStringLiteral("mouse_drag"), d->aMouseNormal);
-    connect(d->aMouseNormal, &QAction::toggled, this, &PageView::slotMouseNormalToggled);
+    connect(d->aMouseNormal, &QAction::triggered, this, &PageView::slotSetMouseNormal);
     d->aMouseNormal->setCheckable(true);
     ac->setDefaultShortcut(d->aMouseNormal, QKeySequence(Qt::CTRL | Qt::Key_1));
     d->aMouseNormal->setActionGroup(d->mouseModeActionGroup);
@@ -816,8 +816,36 @@ void PageView::setupActions(KActionCollection *ac)
     kredo->setEnabled(false);
 
     d->annotator = new PageViewAnnotator(this, d->document);
-    connect(d->annotator, &PageViewAnnotator::toolSelected, d->aMouseNormal, &QAction::trigger);
-    connect(d->annotator, &PageViewAnnotator::toolSelected, d->mouseAnnotation, &MouseAnnotation::reset);
+    connect(d->annotator, &PageViewAnnotator::toolActive, this, [&](bool selected) {
+        if (selected) {
+            QAction *aMouseMode = d->mouseModeActionGroup->checkedAction();
+            if (aMouseMode) {
+                aMouseMode->setChecked(false);
+            }
+        } else {
+            switch (d->mouseMode) {
+            case Okular::Settings::EnumMouseMode::Browse:
+                d->aMouseNormal->setChecked(true);
+                break;
+            case Okular::Settings::EnumMouseMode::Zoom:
+                d->aMouseZoom->setChecked(true);
+                break;
+            case Okular::Settings::EnumMouseMode::RectSelect:
+                d->aMouseSelect->setChecked(true);
+                break;
+            case Okular::Settings::EnumMouseMode::TableSelect:
+                d->aMouseTableSelect->setChecked(true);
+                break;
+            case Okular::Settings::EnumMouseMode::Magnifier:
+                d->aMouseMagnifier->setChecked(true);
+                break;
+            case Okular::Settings::EnumMouseMode::TextSelect:
+                d->aMouseTextSelect->setChecked(true);
+                break;
+            }
+        }
+    });
+    connect(d->annotator, &PageViewAnnotator::toolActive, d->mouseAnnotation, &MouseAnnotation::reset);
     connect(d->annotator, &PageViewAnnotator::requestOpenFile, this, &PageView::requestOpenFile);
     d->annotator->setupActions(ac);
 }
@@ -4763,19 +4791,16 @@ void PageView::slotUpdateReadingDirectionAction()
     d->aReadingDirection->setChecked(Okular::Settings::rtlReadingDirection());
 }
 
-void PageView::slotMouseNormalToggled(bool checked)
+void PageView::slotSetMouseNormal()
 {
-    if (checked) {
-        d->mouseMode = Okular::Settings::EnumMouseMode::Browse;
-        Okular::Settings::setMouseMode(d->mouseMode);
-        // hide the messageWindow
-        d->messageWindow->hide();
-        // force an update of the cursor
-        updateCursor();
-        Okular::Settings::self()->save();
-    } else {
-        d->annotator->detachAnnotation();
-    }
+    d->mouseMode = Okular::Settings::EnumMouseMode::Browse;
+    Okular::Settings::setMouseMode(d->mouseMode);
+    // hide the messageWindow
+    d->messageWindow->hide();
+    // force an update of the cursor
+    updateCursor();
+    Okular::Settings::self()->save();
+    d->annotator->detachAnnotation();
 }
 
 void PageView::slotSetMouseZoom()
@@ -4787,6 +4812,7 @@ void PageView::slotSetMouseZoom()
     // force an update of the cursor
     updateCursor();
     Okular::Settings::self()->save();
+    d->annotator->detachAnnotation();
 }
 
 void PageView::slotSetMouseMagnifier()
@@ -4798,6 +4824,7 @@ void PageView::slotSetMouseMagnifier()
     // force an update of the cursor
     updateCursor();
     Okular::Settings::self()->save();
+    d->annotator->detachAnnotation();
 }
 
 void PageView::slotSetMouseSelect()
@@ -4809,6 +4836,7 @@ void PageView::slotSetMouseSelect()
     // force an update of the cursor
     updateCursor();
     Okular::Settings::self()->save();
+    d->annotator->detachAnnotation();
 }
 
 void PageView::slotSetMouseTextSelect()
@@ -4820,6 +4848,7 @@ void PageView::slotSetMouseTextSelect()
     // force an update of the cursor
     updateCursor();
     Okular::Settings::self()->save();
+    d->annotator->detachAnnotation();
 }
 
 void PageView::slotSetMouseTableSelect()
@@ -4831,6 +4860,7 @@ void PageView::slotSetMouseTableSelect()
     // force an update of the cursor
     updateCursor();
     Okular::Settings::self()->save();
+    d->annotator->detachAnnotation();
 }
 
 void PageView::slotSignature()

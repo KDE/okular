@@ -184,37 +184,43 @@ void AnnotationToolBarTest::testAnnotationToolBar()
     QTest::keyClick(part->widget(), Qt::Key_3);
     QTRY_VERIFY2(!annToolBar->isVisible(), "ToolBar shown when triggering quick annotation using shortcut.");
 
+    // set mouse mode to browse before starting the tests on the annotation actions
+    QAction *aMouseNormal = part->actionCollection()->action(QStringLiteral("mouse_drag"));
+    QVERIFY(aMouseNormal);
+    aMouseNormal->trigger();
+    QTRY_COMPARE(Okular::Settings::mouseMode(), static_cast<int>(Okular::Settings::EnumMouseMode::Browse));
+
     // Click an annotation action to enable it
     QAction *aPopupNote = part->actionCollection()->action(QStringLiteral("annotation_popup_note"));
     QVERIFY(aPopupNote);
     aPopupNote->trigger();
     int mouseX = 350;
     int mouseY = 100;
-    QTRY_COMPARE(Okular::Settings::mouseMode(), static_cast<int>(Okular::Settings::EnumMouseMode::Browse));
     QCOMPARE(simulateAddPopupAnnotation(part, mouseX, mouseY), true);
+    QTRY_COMPARE(aMouseNormal->isChecked(), false);
 
     // Click again the same annotation action to disable it
     aPopupNote->trigger();
     mouseY = 150;
-    QTRY_COMPARE(Okular::Settings::mouseMode(), static_cast<int>(Okular::Settings::EnumMouseMode::Browse));
     QCOMPARE(simulateAddPopupAnnotation(part, mouseX, mouseY), false);
+    QTRY_COMPARE(aMouseNormal->isChecked(), true);
 
     // Trigger the action using a shortcut
     QTest::keyClick(part->widget(), Qt::Key_7, Qt::AltModifier);
     mouseY = 200;
-    QTRY_COMPARE(Okular::Settings::mouseMode(), static_cast<int>(Okular::Settings::EnumMouseMode::Browse));
     QCOMPARE(simulateAddPopupAnnotation(part, mouseX, mouseY), true);
+    QTRY_COMPARE(aMouseNormal->isChecked(), false);
 
     // Click Esc to disable all annotations
     QTest::keyClick(pageView(part), Qt::Key_Escape);
     mouseY = 250;
-    QTRY_COMPARE(Okular::Settings::mouseMode(), static_cast<int>(Okular::Settings::EnumMouseMode::Browse));
     QCOMPARE(simulateAddPopupAnnotation(part, mouseX, mouseY), false);
+    QTRY_COMPARE(aMouseNormal->isChecked(), true);
 
     // Trigger the action using a quick annotation shortcut
     QTest::keyClick(part->widget(), Qt::Key_6);
-    QTRY_COMPARE(Okular::Settings::mouseMode(), static_cast<int>(Okular::Settings::EnumMouseMode::Browse));
     QCOMPARE(simulateAddPopupAnnotation(part, mouseX, mouseY), true);
+    QTRY_COMPARE(aMouseNormal->isChecked(), false);
 
     // Test pin/continuous mode action
     QVERIFY(aContinuousMode->isEnabled());

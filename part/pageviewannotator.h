@@ -137,7 +137,10 @@ public Q_SLOTS:
     void slotAdvancedSettings();
 
 Q_SIGNALS:
-    void toolSelected();
+    /**
+     * This signal is emitted whenever an annotation tool is activated or all the tools get deactivated
+     */
+    void toolActive(bool active);
     void requestOpenFile(const QString &filePath, int pageNumber);
 
 private:

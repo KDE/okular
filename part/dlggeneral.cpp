@@ -165,6 +165,11 @@ DlgGeneral::DlgGeneral(QWidget *parent, Okular::EmbedMode embedMode)
     openInContinuousModeByDefault->setText(i18nc("@option:check Config dialog, general page", "Open in continuous mode by default"));
     openInContinuousModeByDefault->setObjectName(QStringLiteral("kcfg_ViewContinuous"));
     layout->addRow(programFeaturesLabel(), openInContinuousModeByDefault);
+
+    QCheckBox *useLegacyAnnotationToolBar = new QCheckBox(this);
+    useLegacyAnnotationToolBar->setText(i18nc("@option:check Config dialog, general page", "Use legacy annotation toolbar"));
+    useLegacyAnnotationToolBar->setObjectName(QStringLiteral("kcfg_LegacyAnnotationToolBar"));
+    layout->addRow(programFeaturesLabel(), useLegacyAnnotationToolBar);
     // END Program features section
 
     // If no Program features section, don’t add a second spacer:

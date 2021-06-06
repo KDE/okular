@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE gui SYSTEM "kpartgui.dtd">
-<gui name="okular_part" version="49">
+<gui name="okular_part" version="50">
 <MenuBar>
   <Menu name="file"><text>&amp;File</text>
     <Action name="get_new_stuff" group="file_open"/>
@@ -136,5 +136,8 @@
   <Action name="annotation_settings_pin"/>
   <Spacer/>
   <Action name="hide_annotation_toolbar"/>
+</ToolBar>
+<ToolBar name="quickAnnotationToolBar" iconText="icononly" newline="true" hidden="true" position="right" iconSize="32"><text>Quick Annotation Toolbar</text>
+    <Action name="quick_annotation_action_bar"/>
 </ToolBar>
 </gui>

@@ -377,7 +377,7 @@ public:
             if (certs.isEmpty()) {
                 KMessageBox::information(m_pageView,
                                          i18n("There are no available signing certificates.<br/>For more information, please see the section about <a href=\"%1\">Adding Digital Signatures</a> in the manual.",
-                                              QStringLiteral("help:/okular/index.html#adding_digital_signatures")),
+                                              QStringLiteral("help:/okular/signatures.html#adding_digital_signatures")),
                                          QString(),
                                          QString(),
                                          KMessageBox::Notify | KMessageBox::AllowLink);

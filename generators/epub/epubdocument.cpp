@@ -18,7 +18,7 @@ EpubDocument::EpubDocument(const QString &fileName, const QFont &font)
     , padding(20)
     , mFont(font)
 {
-    mEpub = epub_open(qPrintable(fileName), 3);
+    mEpub = epub_open(qPrintable(fileName), 2);
 
     setPageSize(QSizeF(600, 800));
 }

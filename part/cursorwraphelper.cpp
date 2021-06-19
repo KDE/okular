@@ -95,7 +95,6 @@ QScreen *CursorWrapHelper::getScreen()
             return screen;
         }
     }
-    Q_ASSERT_X(false, "CursorWrapHelper::getScreen()", "Found no screen containing QCursor::pos()");
 
     return nullptr;
 }

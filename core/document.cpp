@@ -5422,7 +5422,7 @@ QString DocumentInfo::getKeyTitle(Key key) // const
         return i18n("Modified");
         break;
     case MimeType:
-        return i18n("Mime Type");
+        return i18n("MIME Type");
         break;
     case Category:
         return i18n("Category");

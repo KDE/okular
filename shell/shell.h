@@ -143,7 +143,6 @@ Q_SIGNALS:
 private:
     void setupAccel();
     void setupActions();
-    QStringList fileFormats() const;
     void openNewTab(const QUrl &url, const QString &serializedOptions);
     void applyOptionsToPart(QObject *part, const QString &serializedOptions);
     void connectPart(QObject *part);

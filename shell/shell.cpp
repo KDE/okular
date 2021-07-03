@@ -24,9 +24,9 @@
 #include <KIO/Global>
 #include <KLocalizedString>
 #include <KMessageBox>
+#include <KPluginFactory>
 #include <KPluginLoader>
 #include <KRecentFilesAction>
-#include <KServiceTypeTrader>
 #include <KSharedConfig>
 #include <KStandardAction>
 #include <KToggleFullScreenAction>
@@ -414,24 +414,6 @@ void Shell::readProperties(const KConfigGroup &group)
     }
 }
 
-QStringList Shell::fileFormats() const
-{
-    QStringList supportedPatterns;
-
-    QString constraint(QStringLiteral("(Library == 'okularpart')"));
-    QLatin1String basePartService("KParts/ReadOnlyPart");
-    KService::List offers = KServiceTypeTrader::self()->query(basePartService, constraint);
-    KService::List::ConstIterator it = offers.constBegin(), itEnd = offers.constEnd();
-    for (; it != itEnd; ++it) {
-        KService::Ptr service = *it;
-        QStringList mimeTypes = service->mimeTypes();
-
-        supportedPatterns += mimeTypes;
-    }
-
-    return supportedPatterns;
-}
-
 void Shell::fileOpen()
 {
     // this slot is called whenever the File->Open menu is selected,
@@ -440,11 +422,9 @@ void Shell::fileOpen()
     const int activeTab = m_tabWidget->currentIndex();
     if (!m_fileformatsscanned) {
         const KDocumentViewer *const doc = qobject_cast<KDocumentViewer *>(m_tabs[activeTab].part);
-        if (doc)
-            m_fileformats = doc->supportedMimeTypes();
+        Q_ASSERT(doc);
 
-        if (m_fileformats.isEmpty())
-            m_fileformats = fileFormats();
+        m_fileformats = doc->supportedMimeTypes();
 
         m_fileformatsscanned = true;
     }

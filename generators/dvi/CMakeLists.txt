@@ -1,10 +1,6 @@
 remove_definitions(-DTRANSLATION_DOMAIN="okular")
 add_definitions(-DTRANSLATION_DOMAIN="okular_dvi")
 
-include_directories(
-   ${CMAKE_CURRENT_SOURCE_DIR}/../..
-)
-
 #add_definitions(-DDEBUG_DVIRENDERER -DDEBUG_RENDER -DDEBUG_PRESCAN -DDEBUG_PSGS -DDEBUG_FONTPOOL)
 
 if (FREETYPE_FOUND)

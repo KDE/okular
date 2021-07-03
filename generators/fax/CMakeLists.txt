@@ -1,11 +1,6 @@
 remove_definitions(-DTRANSLATION_DOMAIN="okular")
 add_definitions(-DTRANSLATION_DOMAIN="okular_fax")
 
-include_directories(
-   ${CMAKE_CURRENT_SOURCE_DIR}/../..
-)
-
-
 ########### next target ###############
 
 set(okularGenerator_fax_PART_SRCS generator_fax.cpp faxdocument.cpp faxexpand.cpp faxinit.cpp fax_debug.cpp)

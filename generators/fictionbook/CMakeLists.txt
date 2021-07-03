@@ -1,11 +1,6 @@
 remove_definitions(-DTRANSLATION_DOMAIN="okular")
 add_definitions(-DTRANSLATION_DOMAIN="okular_fictionbook")
 
-include_directories(
-   ${CMAKE_CURRENT_SOURCE_DIR}/../..
-)
-
-
 ########### next target ###############
 
 set(okularGenerator_fb_PART_SRCS

@@ -3,12 +3,6 @@ add_definitions(-DTRANSLATION_DOMAIN="okular_ghostview")
 
 add_subdirectory( conf )
 
-include_directories(
-   ${LIBSPECTRE_INCLUDE_DIR}
-   ${CMAKE_CURRENT_SOURCE_DIR}/../..
-   ${CMAKE_CURRENT_BINARY_DIR}/../..
-)
-
 ########### next target ###############
 
 set(okularGenerator_ghostview_SRCS
@@ -26,6 +20,7 @@ kconfig_add_kcfg_files(okularGenerator_ghostview_SRCS conf/gssettings.kcfgc )
 
 okular_add_generator(okularGenerator_ghostview ${okularGenerator_ghostview_SRCS})
 
+target_include_directories(okularGenerator_ghostview PRIVATE ${LIBSPECTRE_INCLUDE_DIR})
 target_link_libraries(okularGenerator_ghostview okularcore ${LIBSPECTRE_LIBRARY} KF5::I18n Qt5::Xml)
 
 ########### install files ###############

@@ -3,14 +3,6 @@ add_definitions(-DTRANSLATION_DOMAIN="okular_chm")
 
 add_subdirectory( kio-msits )
 
-include_directories(
-   ${CMAKE_CURRENT_SOURCE_DIR}/../..
-   ${CHM_INCLUDE_DIR}
-   ${CMAKE_CURRENT_SOURCE_DIR}/lib
-   ${LIBZIP_INCLUDE_DIR}
-)
-
-
 ########### next target ###############
 
 set(okularGenerator_chmlib_SRCS
@@ -28,6 +20,7 @@ set(okularGenerator_chmlib_SRCS
 )
 
 okular_add_generator(okularGenerator_chmlib ${okularGenerator_chmlib_SRCS})
+target_include_directories(okularGenerator_chmlib PRIVATE ${CHM_INCLUDE_DIR} ${LIBZIP_INCLUDE_DIR})
 target_link_libraries(okularGenerator_chmlib  okularcore ${CHM_LIBRARY} ${LIBZIP_LIBRARY} KF5::KHtml)
 
 ########### autotests ###############

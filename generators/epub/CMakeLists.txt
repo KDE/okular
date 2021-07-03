@@ -3,11 +3,6 @@ add_definitions(-DTRANSLATION_DOMAIN="okular_epub")
 
 add_subdirectory(data)
 
-include_directories(
-   ${EPUB_INCLUDE_DIR}
-)
-
-
 ########### next target ###############
 
 set(okularGenerator_epub_PART_SRCS
@@ -18,6 +13,7 @@ set(okularGenerator_epub_PART_SRCS
 
 okular_add_generator(okularGenerator_epub ${okularGenerator_epub_PART_SRCS})
 
+target_include_directories(okularGenerator_epub PRIVATE ${EPUB_INCLUDE_DIR})
 target_link_libraries(okularGenerator_epub okularcore ${EPUB_LIBRARIES} KF5::I18n Qt5::Widgets Qt5::Xml)
 
 

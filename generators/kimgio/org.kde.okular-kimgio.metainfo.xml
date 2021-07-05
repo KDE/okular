@@ -108,9 +108,9 @@
   </provides>
   <url type="homepage">https://okular.kde.org</url>
   <releases>
+    <release version="21.04.3" date="2021-07-08"/>
     <release version="21.04.2" date="2021-06-10"/>
     <release version="21.04.1" date="2021-05-13"/>
     <release version="21.04.0" date="2021-04-22"/>
-    <release version="20.12.3" date="2021-03-04"/>
   </releases>
 </component>

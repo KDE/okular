@@ -99,7 +99,6 @@ public:
     void slotQuickToolSelected(int favToolId);
     void slotSetColor(AnnotationColor colorType, const QColor &color = QColor());
     void slotSelectAnnotationFont();
-    void slotAnnotationToolBarVisibilityChanged(bool visible);
     bool isQuickToolAction(QAction *aTool);
     bool isQuickToolStamp(int toolId);
     void assertToolBarExists(KParts::MainWindow *mw, const QString &toolBarName);
@@ -515,14 +514,6 @@ void AnnotationActionHandlerPrivate::slotSelectAnnotationFont()
     }
 }
 
-void AnnotationActionHandlerPrivate::slotAnnotationToolBarVisibilityChanged(bool visible)
-{
-    aShowToolBar->setEnabled(!visible);
-    if (!visible && !isQuickToolAction(agTools->checkedAction())) {
-        q->deselectAllAnnotationActions();
-    }
-}
-
 bool AnnotationActionHandlerPrivate::isQuickToolAction(QAction *aTool)
 {
     return quickTools.contains(aTool);
@@ -800,8 +791,7 @@ void AnnotationActionHandler::setupAnnotationToolBarVisibilityAction()
     d->assertToolBarExists(mw, QStringLiteral("quickAnnotationToolBar"));
 
     KToolBar *annotationToolBar = mw->toolBar(QStringLiteral("annotationToolBar"));
-    connect(
-        annotationToolBar, &QToolBar::visibilityChanged, this, [this](bool visible) { d->slotAnnotationToolBarVisibilityChanged(visible); }, Qt::UniqueConnection);
+    connect(annotationToolBar, &QToolBar::visibilityChanged, this, &AnnotationActionHandler::slotAnnotationToolBarVisibilityChanged, Qt::UniqueConnection);
     // show action
     connect(d->aShowToolBar, &QAction::triggered, annotationToolBar, &KToolBar::show, Qt::UniqueConnection);
     // hide action
@@ -857,6 +847,14 @@ void AnnotationActionHandler::deselectAllAnnotationActions()
     QAction *checkedAction = d->agTools->checkedAction();
     if (checkedAction) {
         checkedAction->trigger(); // action group workaround: using trigger instead of setChecked
+    }
+}
+
+void AnnotationActionHandler::slotAnnotationToolBarVisibilityChanged(bool visible)
+{
+    d->aShowToolBar->setEnabled(!visible);
+    if (!visible && !d->isQuickToolAction(d->agTools->checkedAction())) {
+        deselectAllAnnotationActions();
     }
 }
 

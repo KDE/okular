@@ -45,6 +45,9 @@ public:
 signals:
     void ephemeralStampWarning();
 
+private slots:
+    void slotAnnotationToolBarVisibilityChanged(bool visible);
+
 private:
     class AnnotationActionHandlerPrivate *d;
 };

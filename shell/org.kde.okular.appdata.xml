@@ -4,6 +4,7 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+ and GFDL-1.3</project_license>
   <name>Okular</name>
+  <name xml:lang="ar">اوكلار</name>
   <name xml:lang="az">Okular</name>
   <name xml:lang="ca">Okular</name>
   <name xml:lang="ca-valencia">Okular</name>
@@ -43,6 +44,7 @@
   <name xml:lang="zh-CN">Okular</name>
   <name xml:lang="zh-TW">Okular</name>
   <summary>Document Viewer</summary>
+  <summary xml:lang="ar">عارض المستندات</summary>
   <summary xml:lang="az">Sənədə baxış vasitısi</summary>
   <summary xml:lang="ca">Visor de documents</summary>
   <summary xml:lang="ca-valencia">Visor de documents</summary>
@@ -84,6 +86,7 @@
     <p>
    Okular is a universal document viewer developed by KDE. Okular works on multiple platforms, including but not limited to Linux, Windows, Mac OS X, *BSD, etc.
   </p>
+    <p xml:lang="ar">اوكلار هو عارض مستندات عالمي تم تطويره بواسطة كدي. يعمل اوكلار على أنظمة أساسية متعددة، بما في ذلك على سبيل المثال لا الحصر Linux و Windows و Mac OS X و * BSD وما إلى ذلك.</p>
     <p xml:lang="az">Okular KDE tərəfindən yaradılan sənədlərə universal baxış vasitəsidir. Okular Linux, Windows, Mac OS X, * BSD və s. digər bir çox platformada işləyir.</p>
     <p xml:lang="ca">L'Okular és un visor universal de documents desenvolupat pel KDE. L'Okular funciona en múltiples plataformes, incloent-hi però sense limitar-se a Linux, Windows, Mac OS X, *BSD, etc.</p>
     <p xml:lang="ca-valencia">L'Okular és un visor universal de documents desenvolupat pel KDE. L'Okular funciona en múltiples plataformes, incloent-hi però sense limitar-se a Linux, Windows, Mac OS X, *BSD, etc.</p>
@@ -121,6 +124,7 @@
     <p xml:lang="zh-CN">Okular 是由 KDE 开发的通用文档查看器。Okular 可在多个平台上运行，包括但不是限于 Linux，Windows，Mac OS X，* BSD，等。</p>
     <p xml:lang="zh-TW">Okular 是一個由 KDE 開發的通用文件檢視器。Okular 可以在多種平臺上運作，包含但不限於 Linux, Windows, Mac OS X, *BSD 等等。</p>
     <p>Features:</p>
+    <p xml:lang="ar">الميزات:</p>
     <p xml:lang="az">İmkanlar:</p>
     <p xml:lang="ca">Característiques:</p>
     <p xml:lang="ca-valencia">Característiques:</p>
@@ -160,6 +164,7 @@
     <p xml:lang="zh-TW">功能：</p>
     <ul>
       <li>Supported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
+      <li xml:lang="ar">يدعم التنسيقات: PDF و PS و Tiff و CHM و DjVu و Images و DVI و XPS و ODT و Fiction Book و Comic Book و Plucker و EPub و Fax</li>
       <li xml:lang="az">Dəstəklənən formatlar: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="ca">Formats acceptats: PDF, PS, Tiff, CHM, DjVu, imatges, DVI, XPS, ODT, Fiction Book, llibres de còmic, Plucker, EPub, Fax</li>
       <li xml:lang="ca-valencia">Formats acceptats: PDF, PS, Tiff, CHM, DjVu, imatges, DVI, XPS, ODT, Fiction Book, llibres de còmic, Plucker, EPub, Fax</li>
@@ -198,6 +203,7 @@
       <li xml:lang="zh-CN">支持的格式︰ PDF，PS，Tiff，CHM，DjVu，图片，DVI，XPS，ODT，FictionBook，漫画书，Plucker，EPub，传真</li>
       <li xml:lang="zh-TW">支援的檔案格式：PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li>Sidebar with contents, thumbnails, reviews and bookmarks</li>
+      <li xml:lang="ar">الشريط الجانبي مع المحتويات والصور المصغرة والمراجعات والإشارات المرجعية</li>
       <li xml:lang="az">Tərkibləri, miniatürləri, öncədən baxışı və əlfəcinləri ilə yan panel</li>
       <li xml:lang="ca">Barra lateral amb el contingut, miniatures, revisions i punts</li>
       <li xml:lang="ca-valencia">Barra lateral amb el contingut, miniatures, revisions i punts</li>
@@ -235,6 +241,7 @@
       <li xml:lang="zh-CN">目录，缩略图，批注和书签侧边栏</li>
       <li xml:lang="zh-TW">有內容、縮圖、回顧與書籤等選項的側邊欄</li>
       <li>Annotations support</li>
+      <li xml:lang="ar">دعم التعليقات</li>
       <li xml:lang="az">Şərh yazılmasını dəstəkləyir</li>
       <li xml:lang="ca">Admet anotacions</li>
       <li xml:lang="ca-valencia">Admet anotacions</li>
@@ -277,6 +284,7 @@
   <screenshots>
     <screenshot type="default">
       <caption>Reading manual in Okular</caption>
+      <caption xml:lang="ar">قراءة دليل في اوكلار</caption>
       <caption xml:lang="az">Okular'da oxumaq təlimatı</caption>
       <caption xml:lang="ca">Lectura de manuals a l'Okular</caption>
       <caption xml:lang="ca-valencia">Lectura de manuals a l'Okular</caption>

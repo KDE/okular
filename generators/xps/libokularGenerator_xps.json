@@ -4,6 +4,7 @@
             {
                 "Email": "bradh@frogmouth.net",
                 "Name": "Brad Hards",
+                "Name[ar]": "Brad Hards",
                 "Name[az]": "Brad Hards",
                 "Name[ca@valencia]": "Brad Hards",
                 "Name[ca]": "Brad Hards",
@@ -45,6 +46,7 @@
             {
                 "Email": "jiri.klement@gmail.com",
                 "Name": "Jiri Klement",
+                "Name[ar]": "Jiri Klement",
                 "Name[az]": "Jiri Klement",
                 "Name[ca@valencia]": "Jiri Klement",
                 "Name[ca]": "Jiri Klement",
@@ -85,6 +87,7 @@
             {
                 "Email": "pino@kde.org",
                 "Name": "Pino Toscano",
+                "Name[ar]": "Pino Toscano",
                 "Name[az]": "Pino Toscano",
                 "Name[ca@valencia]": "Pino Toscano",
                 "Name[ca]": "Pino Toscano",
@@ -125,6 +128,7 @@
             }
         ],
         "Copyright": "© 2006-2007 Brad Hards\n© 2007 Jiri Klement\n© 2008 Pino Toscano",
+        "Copyright[ar]": "© 2006-2007 Brad Hards\n© 2007 Jiri Klement\n© 2008 Pino Toscano",
         "Copyright[az]": "© 2006-2007 Brad Hards\n© 2007 Jiri Klement\n© 2008 Pino Toscano",
         "Copyright[ca@valencia]": "© 2006-2007 Brad Hards\n© 2007 Jiri Klement\n© 2008 Pino Toscano",
         "Copyright[ca]": "© 2006-2007 Brad Hards\n© 2007 Jiri Klement\n© 2008 Pino Toscano",

@@ -4,6 +4,7 @@
             {
                 "Email": "elylevy@cs.huji.ac.il",
                 "Name": "Ely Levy",
+                "Name[ar]": "Ely Levy",
                 "Name[az]": "Ely Levy",
                 "Name[ca@valencia]": "Ely Levy",
                 "Name[ca]": "Ely Levy",
@@ -43,6 +44,7 @@
             }
         ],
         "Copyright": "© 2008 Ely Levy",
+        "Copyright[ar]": "© 2008 Ely Levy",
         "Copyright[az]": "© 2008 Ely Levy",
         "Copyright[ca@valencia]": "© 2008 Ely Levy",
         "Copyright[ca]": "© 2008 Ely Levy",

@@ -4,6 +4,7 @@
             {
                 "Email": "tokoe@kde.org",
                 "Name": "Tobias Koenig",
+                "Name[ar]": "Tobias Koenig",
                 "Name[az]": "Tobias Koenig",
                 "Name[ca@valencia]": "Tobias Koenig",
                 "Name[ca]": "Tobias Koenig",
@@ -44,6 +45,7 @@
             }
         ],
         "Copyright": "© 2007-2008 Tobias Koenig",
+        "Copyright[ar]": "© 2007-2008 Tobias Koenig",
         "Copyright[az]": "© 2007-2008 Tobias Koenig",
         "Copyright[ca@valencia]": "© 2007-2008 Tobias Koenig",
         "Copyright[ca]": "© 2007-2008 Tobias Koenig",

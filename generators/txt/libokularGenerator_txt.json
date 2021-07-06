@@ -4,6 +4,7 @@
             {
                 "Email": "a3at.mail@gmail.com",
                 "Name": "Azat Khuzhin",
+                "Name[ar]": "Azat Khuzhin",
                 "Name[az]": "Azat Khuzhin",
                 "Name[ca@valencia]": "Azat Khuzhin",
                 "Name[ca]": "Azat Khuzhin",
@@ -43,6 +44,7 @@
             }
         ],
         "Copyright": "© 2013 Azat Khuzhin",
+        "Copyright[ar]": "© 2013 Azat Khuzhin",
         "Copyright[az]": "© 2013 Azat Khuzhin",
         "Copyright[ca@valencia]": "© 2013 Azat Khuzhin",
         "Copyright[ca]": "© 2013 Azat Khuzhin",

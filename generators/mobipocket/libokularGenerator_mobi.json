@@ -4,6 +4,7 @@
             {
                 "Email": "qbast@go2.pl",
                 "Name": "Jakub Stachowski",
+                "Name[ar]": "Jakub Stachowski",
                 "Name[az]": "Jakub Stachowski",
                 "Name[ca@valencia]": "Jakub Stachowski",
                 "Name[ca]": "Jakub Stachowski",
@@ -43,6 +44,7 @@
             }
         ],
         "Copyright": "© 2008-2009 Jakub Stachowski",
+        "Copyright[ar]": "© 2008-2009 Jakub Stachowski",
         "Copyright[az]": "© 2008-2009 Jakub Stachowski",
         "Copyright[ca@valencia]": "© 2008-2009 Jakub Stachowski",
         "Copyright[ca]": "© 2008-2009 Jakub Stachowski",

@@ -4,6 +4,7 @@
             {
                 "Email": "luigi.toscano@tiscali.it",
                 "Name": "Luigi Toscano",
+                "Name[ar]": "Luigi Toscano",
                 "Name[az]": "Luigi Toscano",
                 "Name[ca@valencia]": "Luigi Toscano",
                 "Name[ca]": "Luigi Toscano",
@@ -43,6 +44,7 @@
             }
         ],
         "Copyright": "© 2006 Luigi Toscano",
+        "Copyright[ar]": "© 2006 Luigi Toscano",
         "Copyright[az]": "© 2006 Luigi Toscano",
         "Copyright[ca@valencia]": "© 2006 Luigi Toscano",
         "Copyright[ca]": "© 2006 Luigi Toscano",

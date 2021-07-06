@@ -4,6 +4,7 @@
             {
                 "Email": "aacid@kde.org",
                 "Name": "Albert Astals Cid",
+                "Name[ar]": "Albert Astals Cid",
                 "Name[az]": "Albert Astals Cid",
                 "Name[ca@valencia]": "Albert Astals Cid",
                 "Name[ca]": "Albert Astals Cid",
@@ -44,6 +45,7 @@
             }
         ],
         "Copyright": "© 2005-2008 Albert Astals Cid",
+        "Copyright[ar]": "© 2005-2008 Albert Astals Cid",
         "Copyright[az]": "© 2005-2008 Albert Astals Cid",
         "Copyright[ca@valencia]": "© 2005-2008 Albert Astals Cid",
         "Copyright[ca]": "© 2005-2008 Albert Astals Cid",

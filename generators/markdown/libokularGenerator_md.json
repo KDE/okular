@@ -4,6 +4,7 @@
             {
                 "Email": "wolff@julianwolff.de",
                 "Name": "Julian Wolff",
+                "Name[ar]": "Julian Wolff",
                 "Name[az]": "Julian Wolff",
                 "Name[ca@valencia]": "Julian Wolff",
                 "Name[ca]": "Julian Wolff",
@@ -43,6 +44,7 @@
             }
         ],
         "Copyright": "© 2017 Julian Wolff",
+        "Copyright[ar]": "© 2017 Julian Wolff",
         "Copyright[az]": "© 2017 Julian Wolff",
         "Copyright[ca@valencia]": "© 2017 Julian Wolff",
         "Copyright[ca]": "© 2017 Julian Wolff",

@@ -4,6 +4,7 @@
             {
                 "Email": "pino@kde.org",
                 "Name": "Pino Toscano",
+                "Name[ar]": "Pino Toscano",
                 "Name[az]": "Pino Toscano",
                 "Name[ca@valencia]": "Pino Toscano",
                 "Name[ca]": "Pino Toscano",
@@ -44,6 +45,7 @@
             }
         ],
         "Copyright": "© 2006-2008 Pino Toscano",
+        "Copyright[ar]": "© 2006-2008 Pino Toscano",
         "Copyright[az]": "© 2006-2008 Pino Toscano",
         "Copyright[ca@valencia]": "© 2006-2008 Pino Toscano",
         "Copyright[ca]": "© 2006-2008 Pino Toscano",

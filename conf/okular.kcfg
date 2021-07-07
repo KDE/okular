@@ -11,7 +11,7 @@
  <signal name="colorModesChanged2" >
   <label>Same as colorModesChanged(), but kconfig_compiler does not allow to inherit signals, so appending a '2'.</label>
  </signal>
- <signal name="legacyAnnotationToolBarChanged" />
+ <signal name="defaultAnnotationToolBarChanged" />
  <group name="Dlg Performance" >
   <entry key="EnableCompositing" type="Bool" >
    <default>true</default>
@@ -322,9 +322,13 @@
    <default>true</default>
    <emit signal="viewContinuousChanged" />
   </entry>
-  <entry key="LegacyAnnotationToolBar" type="Bool" >
-   <default>false</default>
-   <emit signal="legacyAnnotationToolBarChanged" />
+  <entry key="DefaultAnnotationToolBar" type="Enum" >
+   <default>AnnotationToolBar</default>
+   <choices>
+    <choice name="AnnotationToolBar" />
+    <choice name="QuickAnnotationToolBar" />
+   </choices>
+   <emit signal="defaultAnnotationToolBarChanged" />
   </entry>
   <entry key="ViewMode" type="Enum" >
    <default>Single</default>

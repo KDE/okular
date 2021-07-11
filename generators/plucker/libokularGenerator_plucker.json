@@ -84,6 +84,7 @@
         "Copyright[zh_CN]": "© 2007-2008 Tobias Koenig",
         "Copyright[zh_TW]": "© 2007-2008 Tobias Koenig",
         "Description": "A renderer for Plucker eBooks",
+        "Description[ar]": "عارض كتب الإلكترونية Plucker",
         "Description[az]": "Plucker eBooks üçün təsvirləmə",
         "Description[ca@valencia]": "Un renderitzador per a llibres electrònics Plucker",
         "Description[ca]": "Un renderitzador per a llibres electrònics Plucker",
@@ -126,6 +127,7 @@
             "application/prs.plucker"
         ],
         "Name": "Plucker Document Backend",
+        "Name[ar]": "خلفية مستندات Plucker",
         "Name[az]": "Plucker sənədi modulu",
         "Name[ca@valencia]": "Dorsal per a documents Plucker",
         "Name[ca]": "Dorsal per a documents Plucker",

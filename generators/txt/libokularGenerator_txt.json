@@ -83,6 +83,7 @@
         "Copyright[zh_CN]": "© 2013 Azat Khuzhin",
         "Copyright[zh_TW]": "© 2013 Azat Khuzhin",
         "Description": "Txt backend",
+        "Description[ar]": "خلفية النص",
         "Description[az]": "Txt modulu",
         "Description[ca@valencia]": "Dorsal txt",
         "Description[ca]": "Dorsal txt",
@@ -126,6 +127,7 @@
             "text/plain"
         ],
         "Name": "Txt Backend",
+        "Name[ar]": "خلفية النص",
         "Name[az]": "Txt modulu",
         "Name[ca@valencia]": "Dorsal txt",
         "Name[ca]": "Dorsal txt",

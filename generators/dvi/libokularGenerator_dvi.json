@@ -83,6 +83,7 @@
         "Copyright[zh_CN]": "© 2006 Luigi Toscano",
         "Copyright[zh_TW]": "© 2006 Luigi Toscano",
         "Description": "A DVI file renderer",
+        "Description[ar]": "عارض ملف DVI",
         "Description[az]": "DVİ faylı tərtibatçısı",
         "Description[ca@valencia]": "Un renderitzador per als fitxers DVI",
         "Description[ca]": "Un renderitzador per als fitxers DVI",
@@ -125,6 +126,7 @@
             "application/x-dvi"
         ],
         "Name": "DVI Backend",
+        "Name[ar]": "خلفية DVI",
         "Name[az]": "DVİ modulu",
         "Name[ca@valencia]": "Dorsal DVI",
         "Name[ca]": "Dorsal DVI",

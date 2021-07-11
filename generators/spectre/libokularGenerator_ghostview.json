@@ -84,6 +84,7 @@
         "Copyright[zh_CN]": "© 2007-2008 Albert Astals Cid",
         "Copyright[zh_TW]": "© 2007-2008 Albert Astals Cid",
         "Description": "A PostScript file renderer based on the Spectre library",
+        "Description[ar]": "عراض ملفات بوست سكربت بالإعماد على مكتبة Spectre",
         "Description[az]": "Spectre library'ə əsasında PostScript fayl tərtibatçısı",
         "Description[ca@valencia]": "Un renderitzador per a fitxers PostScript basat en la biblioteca Spectre",
         "Description[ca]": "Un renderitzador per a fitxers PostScript basat en la biblioteca Spectre",
@@ -127,6 +128,7 @@
             "image/x-eps"
         ],
         "Name": "PS Backend",
+        "Name[ar]": "خلفية PS",
         "Name[az]": "PS modulu",
         "Name[ca@valencia]": "Dorsal PS",
         "Name[ca]": "Dorsal PS",

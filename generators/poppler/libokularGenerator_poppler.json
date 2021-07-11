@@ -84,6 +84,7 @@
         "Copyright[zh_CN]": "© 2005-2008 Albert Astals Cid",
         "Copyright[zh_TW]": "© 2005-2008 Albert Astals Cid",
         "Description": "A PDF file renderer",
+        "Description[ar]": "عارض ملفات بي دي اف",
         "Description[az]": "PDF faylı tərtibatçısı",
         "Description[ca@valencia]": "Un renderitzador per als fitxers PDF",
         "Description[ca]": "Un renderitzador per als fitxers PDF",
@@ -129,6 +130,7 @@
             "application/x-wwf"
         ],
         "Name": "PDF Backend",
+        "Name[ar]": "خلفية بي دي اف",
         "Name[az]": "PDF modulu",
         "Name[ca@valencia]": "Dorsal PDF",
         "Name[ca]": "Dorsal PDF",

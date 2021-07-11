@@ -84,6 +84,7 @@
         "Copyright[zh_CN]": "© 2007-2008 Tobias Koenig",
         "Copyright[zh_TW]": "© 2007-2008 Tobias Koenig",
         "Description": "A renderer for various comic book formats",
+        "Description[ar]": "عارض العديد من تنسيقات كتب الهزل",
         "Description[az]": "Dəyişkən komiks formatları tərtibatçısı",
         "Description[ca@valencia]": "Un renderitzador per a diversos formats de ComicBook",
         "Description[ca]": "Un renderitzador per a diversos formats de ComicBook",
@@ -130,6 +131,7 @@
             "inode/directory"
         ],
         "Name": "ComicBook Backend",
+        "Name[ar]": "خلفية ComicBook",
         "Name[az]": "ComicBook modulu",
         "Name[ca@valencia]": "Dorsal ComicBook",
         "Name[ca]": "Dorsal ComicBook",

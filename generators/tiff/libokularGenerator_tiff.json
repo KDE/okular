@@ -84,6 +84,7 @@
         "Copyright[zh_CN]": "© 2006-2008 Pino Toscano",
         "Copyright[zh_TW]": "© 2006-2008 Pino Toscano",
         "Description": "A TIFF backend",
+        "Description[ar]": "خلفية TIFF",
         "Description[az]": "TİFF modulu",
         "Description[ca@valencia]": "Un dorsal per al TIFF",
         "Description[ca]": "Un dorsal per al TIFF",
@@ -127,6 +128,7 @@
             "image/tiff"
         ],
         "Name": "TIFF Backend",
+        "Name[ar]": "خلفية TIFF",
         "Name[az]": "TİFF modulu",
         "Name[ca@valencia]": "Dorsal TIFF",
         "Name[ca]": "Dorsal TIFF",

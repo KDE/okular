@@ -168,6 +168,7 @@
         "Copyright[zh_CN]": "© 2005, 2009 Albert Astals Cid\n© 2006-2007 Pino Toscano\n© 2006-2007 Tobias Koenig",
         "Copyright[zh_TW]": "© 2005, 2009 Albert Astals Cid\n© 2006-2007 Pino Toscano\n© 2006-2007 Tobias Koenig",
         "Description": "A simple image backend",
+        "Description[ar]": "خلفية صور بسيطة",
         "Description[az]": "Sadə şəkil modulu",
         "Description[ca@valencia]": "Un dorsal d'imatges senzill",
         "Description[ca]": "Un dorsal d'imatges senzill",
@@ -236,6 +237,7 @@
             "image/webp"
         ],
         "Name": "Image Backend",
+        "Name[ar]": "خلفية الصور",
         "Name[az]": "Image Backend",
         "Name[ca@valencia]": "Dorsal d'imatges",
         "Name[ca]": "Dorsal d'imatges",

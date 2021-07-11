@@ -82,6 +82,7 @@
         "Copyright[zh_CN]": "© 2008 Ely Levy",
         "Copyright[zh_TW]": "© 2008 Ely Levy",
         "Description": "An EPub backend",
+        "Description[ar]": "خلفية EPub",
         "Description[az]": "EPub modulu",
         "Description[ca@valencia]": "Un dorsal per a l'EPub",
         "Description[ca]": "Un dorsal per a l'EPub",
@@ -125,6 +126,7 @@
             "application/epub+zip"
         ],
         "Name": "EPub Backend",
+        "Name[ar]": "خلفية EPub",
         "Name[az]": "EPub modulu",
         "Name[ca@valencia]": "Dorsal EPub",
         "Name[ca]": "Dorsal EPub",

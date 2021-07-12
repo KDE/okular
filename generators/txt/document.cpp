@@ -49,6 +49,11 @@ QString Document::toUnicode(const QByteArray &array)
         prober.feed(array.mid(charsFeeded, chunkSize));
         charsFeeded += chunkSize;
 
+        // No more data to feed - take what we have
+        if (array.size() <= chunkSize) {
+            encoding = prober.encoding();
+        }
+
         if (prober.confidence() >= 0.5) {
             encoding = prober.encoding();
             break;

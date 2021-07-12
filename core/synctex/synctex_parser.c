@@ -1033,9 +1033,9 @@ SYNCTEX_INLINE static synctex_data_p __synctex_data(synctex_node_p node)
         }                                                                                                                                                                                                                                      \
         return NULL;                                                                                                                                                                                                                           \
     }                                                                                                                                                                                                                                          \
-    static char *_synctex_data_set_##WHAT(synctex_node_p node, char *new_value)                                                                                                                                                                \
+    static const char *_synctex_data_set_##WHAT(synctex_node_p node, char *new_value)                                                                                                                                                          \
     {                                                                                                                                                                                                                                          \
-        char *old = "";                                                                                                                                                                                                                        \
+        const char *old = "";                                                                                                                                                                                                                  \
         if (_synctex_data_has_##WHAT(node)) {                                                                                                                                                                                                  \
             old = node->data[node->class->navigator->size + node->class->modelator->WHAT].as_string;                                                                                                                                           \
             node->data[node->class->navigator->size + node->class->modelator->WHAT].as_string = new_value;                                                                                                                                     \
@@ -2473,7 +2473,7 @@ SYNCTEX_INLINE static synctex_nns_s _synctex_new_child_proxies_to(synctex_node_p
     }
     return nns;
 }
-static char *_synctex_node_abstract(synctex_node_p node);
+static const char *_synctex_node_abstract(synctex_node_p node);
 SYNCTEX_INLINE static synctex_node_p synctex_tree_set_friend(synctex_node_p node, synctex_node_p new_friend)
 {
 #if defined SYNCTEX_DEBUG && SYNCTEX_DEBUG
@@ -3057,7 +3057,7 @@ void synctex_node_display(synctex_node_p node)
         }
     }
 }
-static char *_synctex_node_abstract(synctex_node_p node)
+static const char *_synctex_node_abstract(synctex_node_p node)
 {
     SYNCTEX_PARAMETER_ASSERT(node || node->class);
     return (node && node->class->abstract) ? node->class->abstract(node) : "none";

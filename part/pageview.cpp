@@ -4428,7 +4428,7 @@ void PageView::slotRelayoutPages()
             insertY += rHeight;
         }
 #ifdef PAGEVIEW_DEBUG
-        kWarning() << "updating size for pageno" << item->pageNumber() << "cropped" << item->croppedGeometry() << "uncropped" << item->uncroppedGeometry();
+        qWarning() << "updating size for pageno" << item->pageNumber() << "cropped" << item->croppedGeometry() << "uncropped" << item->uncroppedGeometry();
 #endif
     }
 
@@ -4550,8 +4550,8 @@ void PageView::slotRequestVisiblePixmaps(int newValue)
         if (!i->isVisible())
             continue;
 #ifdef PAGEVIEW_DEBUG
-        kWarning() << "checking page" << i->pageNumber();
-        kWarning().nospace() << "viewportRect is " << viewportRect << ", page item is " << i->croppedGeometry() << " intersect : " << viewportRect.intersects(i->croppedGeometry());
+        qWarning() << "checking page" << i->pageNumber();
+        qWarning().nospace() << "viewportRect is " << viewportRect << ", page item is " << i->croppedGeometry() << " intersect : " << viewportRect.intersects(i->croppedGeometry());
 #endif
         // if the item doesn't intersect the viewport, skip it
         QRect intersectionRect = viewportRect.intersected(i->croppedGeometry());
@@ -4564,8 +4564,8 @@ void PageView::slotRequestVisiblePixmaps(int newValue)
         Okular::VisiblePageRect *vItem = new Okular::VisiblePageRect(i->pageNumber(), Okular::NormalizedRect(intersectionRect.translated(-i->uncroppedGeometry().topLeft()), i->uncroppedWidth(), i->uncroppedHeight()));
         visibleRects.push_back(vItem);
 #ifdef PAGEVIEW_DEBUG
-        kWarning() << "checking for pixmap for page" << i->pageNumber() << "=" << i->page()->hasPixmap(this, i->uncroppedWidth(), i->uncroppedHeight());
-        kWarning() << "checking for text for page" << i->pageNumber() << "=" << i->page()->hasTextPage();
+        qWarning() << "checking for pixmap for page" << i->pageNumber() << "=" << i->page()->hasPixmap(this, i->uncroppedWidth(), i->uncroppedHeight());
+        qWarning() << "checking for text for page" << i->pageNumber() << "=" << i->page()->hasTextPage();
 #endif
 
         Okular::NormalizedRect expandedVisibleRect = vItem->rect;
@@ -4580,7 +4580,7 @@ void PageView::slotRequestVisiblePixmaps(int newValue)
         // if the item has not the right pixmap, add a request for it
         if (!i->page()->hasPixmap(this, i->uncroppedWidth(), i->uncroppedHeight(), expandedVisibleRect)) {
 #ifdef PAGEVIEW_DEBUG
-            kWarning() << "rerequesting visible pixmaps for page" << i->pageNumber() << "!";
+            qWarning() << "rerequesting visible pixmaps for page" << i->pageNumber() << "!";
 #endif
             Okular::PixmapRequest *p = new Okular::PixmapRequest(this, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), devicePixelRatioF(), PAGEVIEW_PRIO, Okular::PixmapRequest::Asynchronous);
             requestedPixmaps.push_back(p);

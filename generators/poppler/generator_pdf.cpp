@@ -762,7 +762,7 @@ void PDFGenerator::loadPages(QVector<Okular::Page *> &pagesVector, int rotation,
 #endif
             if (!okularFormFields.isEmpty())
                 page->setFormFields(okularFormFields);
-                //        kWarning(PDFDebug).nospace() << page->width() << "x" << page->height();
+                //        qWarning(PDFDebug).nospace() << page->width() << "x" << page->height();
 
 #ifdef PDFGENERATOR_DEBUG
             qCDebug(OkularPdfDebug) << "load page" << i << "with rotation" << rotation << "and orientation" << orientation;
@@ -1566,7 +1566,7 @@ bool PDFGenerator::exportTo(const QString &fileName, const Okular::ExportFormat 
 
 inline void append(Okular::TextPage *ktp, const QString &s, double l, double b, double r, double t)
 {
-    //    kWarning(PDFDebug).nospace() << "text: " << s << " at (" << l << "," << t << ")x(" << r <<","<<b<<")";
+    //    qWarning(PDFDebug).nospace() << "text: " << s << " at (" << l << "," << t << ")x(" << r <<","<<b<<")";
     ktp->append(s, new Okular::NormalizedRect(l, t, r, b));
 }
 

@@ -35,11 +35,8 @@ int main(int argc, char **argv)
 
     /**
      * allow fractional scaling
-     * we only activate this on Windows, it seems to creates problems on unices
-     * (and there the fractional scaling with the QT_... env vars as set by KScreen works)
-     * see bug 416078
      */
-#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0) && defined(Q_OS_WIN)
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
     QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
 #endif
 

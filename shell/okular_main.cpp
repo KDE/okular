@@ -48,7 +48,12 @@ static bool attachExistingInstance(const QStringList &paths, const QString &seri
     if (ShellUtils::showPrintDialogAndExit(serializedOptions))
         return false;
 
-    const QStringList services = QDBusConnection::sessionBus().interface()->registeredServiceNames().value();
+    // If DBus isn't running, we can't attach to an existing instance.
+    auto *sessionInterface = QDBusConnection::sessionBus().interface();
+    if (!sessionInterface)
+        return false;
+
+    const QStringList services = sessionInterface->registeredServiceNames().value();
 
     // Don't match the service without trailing "-" (unique instance)
     const QString pattern = QStringLiteral("org.kde.okular-");

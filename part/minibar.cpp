@@ -93,9 +93,22 @@ void MiniBarLogic::notifySetup(const QVector<Okular::Page *> &pageVector, int se
 
     const QString pagesString = QString::number(pages);
 
+    // In some documents, there may be labels which are longer than pagesString. Here, we check all the page labels, and if any of the labels are longer than pagesString, we use that string for sizing m_pageLabelEdit
+    QString pagesOrLabelString = pagesString;
+    if (labelsDiffer) {
+        for (const Okular::Page *page : pageVector) {
+            if (!page->label().isEmpty()) {
+                MiniBar *miniBar = *m_miniBars.constBegin(); // We assume all the minibars have the same font, font size etc, so we just take one minibar for the purpose of calculating the displayed length of the page labels.
+                if (miniBar->fontMetrics().horizontalAdvance(page->label()) > miniBar->fontMetrics().horizontalAdvance(pagesOrLabelString)) {
+                    pagesOrLabelString = page->label();
+                }
+            }
+        }
+    }
+
     for (MiniBar *miniBar : qAsConst(m_miniBars)) {
         // resize width of widgets
-        miniBar->resizeForPage(pages);
+        miniBar->resizeForPage(pages, pagesOrLabelString);
 
         // update child widgets
         miniBar->m_pageLabelEdit->setPageLabels(pageVector);
@@ -189,7 +202,7 @@ MiniBar::MiniBar(QWidget *parent, MiniBarLogic *miniBarLogic)
     setSizePolicy(sp);
 
     // resize width of widgets
-    resizeForPage(0);
+    resizeForPage(0, QString());
 
     // connect signals from child widgets to internal handlers / signals bouncers
     connect(m_pageNumberEdit, &PageNumberEdit::returnPressed, this, &MiniBar::slotChangePageFromReturn);
@@ -280,13 +293,14 @@ void MiniBar::slotToolBarIconSizeChanged()
     m_nextButton->setIconSize(buttonSize);
 }
 
-void MiniBar::resizeForPage(int pages)
+void MiniBar::resizeForPage(int pages, const QString &pagesOrLabelString)
 {
     const int numberWidth = 10 + fontMetrics().horizontalAdvance(QString::number(pages));
+    const int labelWidth = 10 + fontMetrics().horizontalAdvance(pagesOrLabelString);
     m_pageNumberEdit->setMinimumWidth(numberWidth);
     m_pageNumberEdit->setMaximumWidth(2 * numberWidth);
-    m_pageLabelEdit->setMinimumWidth(numberWidth);
-    m_pageLabelEdit->setMaximumWidth(2 * numberWidth);
+    m_pageLabelEdit->setMinimumWidth(labelWidth);
+    m_pageLabelEdit->setMaximumWidth(2 * labelWidth);
     m_pageNumberLabel->setMinimumWidth(numberWidth);
     m_pageNumberLabel->setMaximumWidth(2 * numberWidth);
     m_pagesButton->setMinimumWidth(numberWidth);

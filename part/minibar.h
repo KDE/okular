@@ -132,7 +132,7 @@ public Q_SLOTS:
     void slotToolBarIconSizeChanged();
 
 private:
-    void resizeForPage(int pages);
+    void resizeForPage(int pages, const QString &pagesOrLabelString);
     bool eventFilter(QObject *target, QEvent *event) override;
 
     MiniBarLogic *m_miniBarLogic;

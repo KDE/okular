@@ -95,10 +95,10 @@ DlgGeneral::DlgGeneral(QWidget *parent, Okular::EmbedMode embedMode)
     if (embedMode != Okular::ViewerWidgetMode) {
         // Combobox: default annotation toolbar associated to annotation action in tool menu
         QComboBox *defaultAnnotationToolBar = new QComboBox(this);
-        defaultAnnotationToolBar->addItem(i18nc("item:inlistbox Config dialog, general page", "Annotation Toobar"));
+        defaultAnnotationToolBar->addItem(i18nc("item:inlistbox Config dialog, general page", "Full Annotation Toobar"));
         defaultAnnotationToolBar->addItem(i18nc("item:inlistbox Config dialog, general page", "Quick Annotation Toolbar"));
         defaultAnnotationToolBar->setObjectName(QStringLiteral("kcfg_DefaultAnnotationToolBar"));
-        layout->addRow(i18nc("label:listbox Config dialog, general page", "Default annotation toolbar:"), defaultAnnotationToolBar);
+        layout->addRow(i18nc("label:listbox Config dialog, general page", "Annotation toolbar:"), defaultAnnotationToolBar);
     }
     // END Appearance section
 

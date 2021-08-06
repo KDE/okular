@@ -769,7 +769,7 @@ AnnotationActionHandler::AnnotationActionHandler(PageViewAnnotator *parent, KAct
     ac->setDefaultShortcut(d->aAddToQuickTools, QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_B));
     d->updateConfigActions();
 
-    connect(Okular::Settings::self(), &Okular::Settings::defaultAnnotationToolBarChanged, this, &AnnotationActionHandler::setupAnnotationToolBarVisibilityAction);
+    connect(Okular::Settings::self(), &Okular::Settings::primaryAnnotationToolBarChanged, this, &AnnotationActionHandler::setupAnnotationToolBarVisibilityAction);
 }
 
 AnnotationActionHandler::~AnnotationActionHandler()
@@ -797,16 +797,16 @@ void AnnotationActionHandler::setupAnnotationToolBarVisibilityAction()
     // hide action
     connect(d->aHideToolBar, &QAction::triggered, annotationToolBar, &KToolBar::hide, Qt::UniqueConnection);
 
-    KToolBar *defaultAnnotationToolBar = annotationToolBar;
-    if (Okular::Settings::defaultAnnotationToolBar() == Okular::Settings::EnumDefaultAnnotationToolBar::QuickAnnotationToolBar) {
-        defaultAnnotationToolBar = mw->toolBar(QStringLiteral("quickAnnotationToolBar"));
+    KToolBar *primaryAnnotationToolBar = annotationToolBar;
+    if (Okular::Settings::primaryAnnotationToolBar() == Okular::Settings::EnumPrimaryAnnotationToolBar::QuickAnnotationToolBar) {
+        primaryAnnotationToolBar = mw->toolBar(QStringLiteral("quickAnnotationToolBar"));
     }
     d->aToolBarVisibility->setChecked(false);
     d->aToolBarVisibility->disconnect();
-    d->aToolBarVisibility->setChecked(defaultAnnotationToolBar->isVisible());
-    connect(defaultAnnotationToolBar, &QToolBar::visibilityChanged, d->aToolBarVisibility, &QAction::setChecked, Qt::UniqueConnection);
-    connect(d->aToolBarVisibility, &QAction::toggled, defaultAnnotationToolBar, &KToolBar::setVisible, Qt::UniqueConnection);
-    d->aShowToolBar->setEnabled(!defaultAnnotationToolBar->isVisible());
+    d->aToolBarVisibility->setChecked(primaryAnnotationToolBar->isVisible());
+    connect(primaryAnnotationToolBar, &QToolBar::visibilityChanged, d->aToolBarVisibility, &QAction::setChecked, Qt::UniqueConnection);
+    connect(d->aToolBarVisibility, &QAction::toggled, primaryAnnotationToolBar, &KToolBar::setVisible, Qt::UniqueConnection);
+    d->aShowToolBar->setEnabled(!primaryAnnotationToolBar->isVisible());
 }
 
 void AnnotationActionHandler::reparseBuiltinToolsConfig()

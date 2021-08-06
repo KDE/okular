@@ -20,12 +20,13 @@ DlgAnnotations::DlgAnnotations(QWidget *parent)
 {
     QFormLayout *layout = new QFormLayout(this);
 
-    // Combobox: default annotation toolbar associated to annotation action in tool menu
-    QComboBox *annotationToolBar = new QComboBox(this);
-    annotationToolBar->addItem(i18nc("item:inlistbox Config dialog, general page", "Full Annotation Toobar"));
-    annotationToolBar->addItem(i18nc("item:inlistbox Config dialog, general page", "Quick Annotation Toolbar"));
-    annotationToolBar->setObjectName(QStringLiteral("kcfg_AnnotationToolBar"));
-    layout->addRow(i18nc("label:listbox Config dialog, general page", "Annotation toolbar:"), annotationToolBar);
+    // BEGIN Annotation toolbar: Combo box to set the annotation toolbar associated to annotation action in tool menu
+    QComboBox *primaryAnnotationToolBar = new QComboBox(this);
+    primaryAnnotationToolBar->addItem(i18nc("item:inlistbox Config dialog, general page", "Full Annotation Toobar"));
+    primaryAnnotationToolBar->addItem(i18nc("item:inlistbox Config dialog, general page", "Quick Annotation Toolbar"));
+    primaryAnnotationToolBar->setObjectName(QStringLiteral("kcfg_PrimaryAnnotationToolBar"));
+    layout->addRow(i18nc("label:listbox Config dialog, general page", "Annotation toolbar:"), primaryAnnotationToolBar);
+    // END Annotation toolbar
 
     // BEGIN Author row: Line edit to set the annotation’s default author value.
     QLineEdit *authorLineEdit = new QLineEdit(this);

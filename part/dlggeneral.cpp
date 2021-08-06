@@ -91,15 +91,6 @@ DlgGeneral::DlgGeneral(QWidget *parent, Okular::EmbedMode embedMode)
     useCustomColor->setChecked(false);
     customColor->setEnabled(false);
     connect(useCustomColor, &QCheckBox::toggled, customColor, &QWidget::setEnabled);
-
-    if (embedMode != Okular::ViewerWidgetMode) {
-        // Combobox: default annotation toolbar associated to annotation action in tool menu
-        QComboBox *defaultAnnotationToolBar = new QComboBox(this);
-        defaultAnnotationToolBar->addItem(i18nc("item:inlistbox Config dialog, general page", "Full Annotation Toobar"));
-        defaultAnnotationToolBar->addItem(i18nc("item:inlistbox Config dialog, general page", "Quick Annotation Toolbar"));
-        defaultAnnotationToolBar->setObjectName(QStringLiteral("kcfg_DefaultAnnotationToolBar"));
-        layout->addRow(i18nc("label:listbox Config dialog, general page", "Annotation toolbar:"), defaultAnnotationToolBar);
-    }
     // END Appearance section
 
     layout->addRow(new QLabel(this));

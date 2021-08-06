@@ -35,11 +35,9 @@ QWidget *ToggleActionMenu::createWidget(QWidget *parent)
     QToolButton *button = qobject_cast<QToolButton *>(buttonWidget);
     if (!button) {
         // This function is used to add a button into the toolbar.
-        // KActionMenu will plug itself as QToolButton.
-        // So, if no QToolButton was returned, this was not called the intended way.
-        Q_ASSERT_X(false,
-                   "ToggleActionMenu::createWidget()",
-                   "Parent implementation KActionMenu::createWidget() did not return a QToolButton, but ToggleActionMenu is designed for QToolButton. Did you call createWidget() manually, with something else than a QToolBar?");
+        // QWidgetAction::createWidget() is also called with other parents,
+        // e. g. when this ToggleActionMenu is added to a QMenu.
+        // Therefore, reaching this code path is a valid use case.
         return buttonWidget;
     }
 

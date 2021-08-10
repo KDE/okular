@@ -42,6 +42,9 @@ public:
     void setTextToolsEnabled(bool on);
     void deselectAllAnnotationActions();
 
+signals:
+    void ephemeralStampWarning();
+
 private:
     class AnnotationActionHandlerPrivate *d;
 };

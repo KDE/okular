@@ -6,7 +6,6 @@
 
 #include "tts.h"
 
-#include <QDBusServiceWatcher>
 #include <QSet>
 
 #include <KLocalizedString>

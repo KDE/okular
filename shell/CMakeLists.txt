@@ -18,7 +18,7 @@ ecm_add_app_icon(okular_SRCS ICONS ${ICONS_SRCS})
 
 add_executable(okular ${okular_SRCS})
 
-target_link_libraries(okular KF5::I18n KF5::Parts KF5::WindowSystem KF5::Crash)
+target_link_libraries(okular KF5::I18n KF5::Parts KF5::WindowSystem KF5::Crash Qt5::DBus)
 if(TARGET KF5::Activities)
     target_compile_definitions(okular PUBLIC -DWITH_KACTIVITIES=1)
 

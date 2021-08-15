@@ -155,7 +155,7 @@ void MiniBarLogic::notifyCurrentPageChanged(int previousPage, int currentPage)
 MiniBar::MiniBar(QWidget *parent, MiniBarLogic *miniBarLogic)
     : QWidget(parent)
     , m_miniBarLogic(miniBarLogic)
-    , m_oldToobarParent(nullptr)
+    , m_oldToolbarParent(nullptr)
 {
     setObjectName(QStringLiteral("miniBar"));
 
@@ -226,11 +226,11 @@ void MiniBar::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::ParentChange) {
         QToolBar *tb = dynamic_cast<QToolBar *>(parent());
-        if (tb != m_oldToobarParent) {
-            if (m_oldToobarParent) {
-                disconnect(m_oldToobarParent, &QToolBar::iconSizeChanged, this, &MiniBar::slotToolBarIconSizeChanged);
+        if (tb != m_oldToolbarParent) {
+            if (m_oldToolbarParent) {
+                disconnect(m_oldToolbarParent, &QToolBar::iconSizeChanged, this, &MiniBar::slotToolBarIconSizeChanged);
             }
-            m_oldToobarParent = tb;
+            m_oldToolbarParent = tb;
             if (tb) {
                 connect(tb, &QToolBar::iconSizeChanged, this, &MiniBar::slotToolBarIconSizeChanged);
                 slotToolBarIconSizeChanged();
@@ -288,7 +288,7 @@ void MiniBar::slotEmitPrevPage()
 
 void MiniBar::slotToolBarIconSizeChanged()
 {
-    const QSize buttonSize = m_oldToobarParent->iconSize();
+    const QSize buttonSize = m_oldToolbarParent->iconSize();
     m_prevButton->setIconSize(buttonSize);
     m_nextButton->setIconSize(buttonSize);
 }

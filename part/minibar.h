@@ -142,7 +142,7 @@ private:
     HoverButton *m_prevButton;
     HoverButton *m_pagesButton;
     HoverButton *m_nextButton;
-    QToolBar *m_oldToobarParent;
+    QToolBar *m_oldToolbarParent;
 };
 
 /**

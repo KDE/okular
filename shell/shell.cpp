@@ -311,7 +311,7 @@ void Shell::closeUrl()
     //  * the focus was somewhere in the toolbar
     // we don't have other places that accept focus
     //  * If it was on the tab, logic says it should go back to the next current tab
-    //  * If it was on the toolbar, we could leave it there, but since we redo the menus/toobars for the new tab, it gets kind of lost
+    //  * If it was on the toolbar, we could leave it there, but since we redo the menus/toolbars for the new tab, it gets kind of lost
     //    so it's easier to set it to the next current tab which also makes sense as consistency
     if (m_tabWidget->count() >= 0) {
         KParts::ReadWritePart *const newPart = m_tabs[m_tabWidget->currentIndex()].part;

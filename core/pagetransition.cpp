@@ -14,7 +14,7 @@ using namespace Okular;
 class PageTransition::Private
 {
 public:
-    Private(Type type)
+    explicit Private(Type type)
         : m_type(type)
         , m_duration(1)
         , m_alignment(Horizontal)

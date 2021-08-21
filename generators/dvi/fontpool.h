@@ -38,7 +38,7 @@ class fontPool : public QObject
 
 public:
     // Default constructor.
-    fontPool(bool useFontHinting);
+    explicit fontPool(bool useFontHinting);
 
     // Default destructor.
     ~fontPool() override;

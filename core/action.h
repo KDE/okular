@@ -111,7 +111,7 @@ public:
 
 protected:
     /// @cond PRIVATE
-    Action(ActionPrivate &dd);
+    explicit Action(ActionPrivate &dd);
     Q_DECLARE_PRIVATE(Action)
     ActionPrivate *d_ptr;
     /// @endcond

@@ -1304,12 +1304,12 @@ public:
     /**
      * Creates a new viewport for the given page @p number.
      */
-    DocumentViewport(int number = -1);
+    explicit DocumentViewport(int number = -1);
 
     /**
      * Creates a new viewport from the given @p xmlDesc.
      */
-    DocumentViewport(const QString &xmlDesc);
+    explicit DocumentViewport(const QString &xmlDesc);
 
     /**
      * Returns the viewport as xml description.
@@ -1391,7 +1391,7 @@ public:
      * Creates a new document synopsis object with the given
      * @p document as parent node.
      */
-    DocumentSynopsis(const QDomDocument &document);
+    explicit DocumentSynopsis(const QDomDocument &document);
 };
 
 /**

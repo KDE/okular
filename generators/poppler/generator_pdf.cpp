@@ -1207,7 +1207,7 @@ void PDFGenerator::resolveMediaLinkReferences(Okular::Page *page)
 }
 
 struct TextExtractionPayload {
-    TextExtractionPayload(Okular::TextRequest *r)
+    explicit TextExtractionPayload(Okular::TextRequest *r)
         : request(r)
     {
     }

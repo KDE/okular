@@ -207,7 +207,7 @@ static bool get_image(pagenode *pn)
 class FaxDocument::Private
 {
 public:
-    Private(FaxDocument *parent)
+    explicit Private(FaxDocument *parent)
         : mParent(parent)
     {
         mPageNode.size = QSize(1728, 0);

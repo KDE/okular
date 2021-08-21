@@ -43,7 +43,7 @@ public:
 
     @param num page number that is set initially
     */
-    PageNumber(quint16 num)
+    explicit PageNumber(quint16 num)
     {
         pgNum = num;
     }
@@ -56,9 +56,14 @@ public:
     }
 
     /** \brief This method implements typecasts to quint16 */
-    operator quint16() const
+    explicit operator quint16() const
     {
         return pgNum;
+    }
+
+    bool operator>(const PageNumber other) const
+    {
+        return pgNum > other.pgNum;
     }
 
     /** \brief Checks if the page number is invalid

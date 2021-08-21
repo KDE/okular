@@ -18,7 +18,7 @@ class HelperEntityDecoder
 {
 public:
     // Initialization with the specific decoder
-    HelperEntityDecoder(QTextCodec *encoder = nullptr);
+    explicit HelperEntityDecoder(QTextCodec *encoder = nullptr);
 
     // Used when the encoding changes
     void changeEncoding(QTextCodec *encoder = nullptr);

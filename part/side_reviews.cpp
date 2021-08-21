@@ -39,7 +39,7 @@ class TreeView : public QTreeView
     Q_OBJECT
 
 public:
-    TreeView(Okular::Document *document, QWidget *parent = Q_NULLPTR)
+    explicit TreeView(Okular::Document *document, QWidget *parent = Q_NULLPTR)
         : QTreeView(parent)
         , m_document(document)
     {

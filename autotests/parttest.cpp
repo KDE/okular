@@ -1888,12 +1888,12 @@ void PartTest::testForwardBackwardNavigation()
     const int targetPageA = 15;
     part.m_document->setViewportPage(targetPageA);
 
-    QVERIFY(part.m_document->viewport() == targetPageA);
+    QVERIFY(part.m_document->viewport() == DocumentViewport(targetPageA));
 
     // Go to some other page
     const int targetPageB = 25;
     part.m_document->setViewportPage(targetPageB);
-    QVERIFY(part.m_document->viewport() == targetPageB);
+    QVERIFY(part.m_document->viewport() == DocumentViewport(targetPageB));
 
     // Go back to page A
     QVERIFY(QMetaObject::invokeMethod(&part, "slotHistoryBack"));

@@ -43,7 +43,7 @@ public:
      *
      * If no type is given, the normal @ref Replace transition is used.
      */
-    PageTransition(Type type = Replace);
+    explicit PageTransition(Type type = Replace);
 
     /**
      * Creates a new page transition from an @p other.

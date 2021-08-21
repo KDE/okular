@@ -14,7 +14,7 @@
 class PDFEmbeddedFile : public Okular::EmbeddedFile
 {
 public:
-    PDFEmbeddedFile(Poppler::EmbeddedFile *f)
+    explicit PDFEmbeddedFile(Poppler::EmbeddedFile *f)
         : ef(f)
     {
     }

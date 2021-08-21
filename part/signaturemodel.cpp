@@ -63,7 +63,7 @@ SignatureItem::~SignatureItem()
 class SignatureModelPrivate : public Okular::DocumentObserver
 {
 public:
-    SignatureModelPrivate(SignatureModel *qq);
+    explicit SignatureModelPrivate(SignatureModel *qq);
     ~SignatureModelPrivate() override;
 
     void notifySetup(const QVector<Okular::Page *> &pages, int setupFlags) override;

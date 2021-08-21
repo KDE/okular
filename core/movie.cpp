@@ -22,7 +22,7 @@ using namespace Okular;
 class Movie::Private
 {
 public:
-    Private(const QString &url)
+    explicit Private(const QString &url)
         : m_url(url)
         , m_rotation(Rotation0)
         , m_playMode(PlayLimited)

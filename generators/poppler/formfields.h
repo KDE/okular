@@ -124,7 +124,7 @@ private:
 class PopplerFormFieldSignature : public Okular::FormFieldSignature
 {
 public:
-    PopplerFormFieldSignature(std::unique_ptr<Poppler::FormFieldSignature> field);
+    explicit PopplerFormFieldSignature(std::unique_ptr<Poppler::FormFieldSignature> field);
     ~PopplerFormFieldSignature() override;
 
     // inherited from Okular::FormField

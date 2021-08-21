@@ -33,7 +33,7 @@ class HoverButton : public QToolButton
 {
     Q_OBJECT
 public:
-    HoverButton(QWidget *parent);
+    explicit HoverButton(QWidget *parent);
 };
 
 MiniBarLogic::MiniBarLogic(QObject *parent, Okular::Document *document)

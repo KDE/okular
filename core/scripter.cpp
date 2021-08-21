@@ -17,7 +17,7 @@ using namespace Okular;
 class Okular::ScripterPrivate
 {
 public:
-    ScripterPrivate(DocumentPrivate *doc)
+    explicit ScripterPrivate(DocumentPrivate *doc)
         : m_doc(doc)
 #ifdef WITH_KJS
         , m_kjs(nullptr)

@@ -23,7 +23,7 @@ class ActionBar : public QWidgetAction
     Q_OBJECT
 
 public:
-    ActionBar(QObject *parent = nullptr);
+    explicit ActionBar(QObject *parent = nullptr);
     QWidget *createWidget(QWidget *parent) override;
 
     void addAction(QAction *action);

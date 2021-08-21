@@ -202,7 +202,7 @@ QString ExecuteAction::parameters() const
 class Okular::BrowseActionPrivate : public Okular::ActionPrivate
 {
 public:
-    BrowseActionPrivate(const QUrl &url)
+    explicit BrowseActionPrivate(const QUrl &url)
         : ActionPrivate()
         , m_url(url)
     {
@@ -247,7 +247,7 @@ QUrl BrowseAction::url() const
 class Okular::DocumentActionPrivate : public Okular::ActionPrivate
 {
 public:
-    DocumentActionPrivate(enum DocumentAction::DocumentActionType documentActionType)
+    explicit DocumentActionPrivate(enum DocumentAction::DocumentActionType documentActionType)
         : ActionPrivate()
         , m_type(documentActionType)
     {
@@ -443,7 +443,7 @@ QString ScriptAction::script() const
 class Okular::MovieActionPrivate : public Okular::ActionPrivate
 {
 public:
-    MovieActionPrivate(MovieAction::OperationType operation)
+    explicit MovieActionPrivate(MovieAction::OperationType operation)
         : ActionPrivate()
         , m_operation(operation)
         , m_annotation(nullptr)

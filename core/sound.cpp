@@ -13,14 +13,14 @@ using namespace Okular;
 class Sound::Private
 {
 public:
-    Private(const QByteArray &data)
+    explicit Private(const QByteArray &data)
         : m_data(QVariant(data))
         , m_type(Sound::Embedded)
     {
         init();
     }
 
-    Private(const QString &url)
+    explicit Private(const QString &url)
         : m_data(QVariant(url))
         , m_type(Sound::External)
     {

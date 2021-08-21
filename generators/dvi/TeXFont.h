@@ -15,7 +15,7 @@
 class TeXFont
 {
 public:
-    TeXFont(TeXFontDefinition *_parent)
+    explicit TeXFont(TeXFontDefinition *_parent)
     {
         parent = _parent;
         errorMessage.clear();

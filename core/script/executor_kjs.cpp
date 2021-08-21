@@ -37,7 +37,7 @@ using namespace Okular;
 class Okular::ExecutorKJSPrivate
 {
 public:
-    ExecutorKJSPrivate(DocumentPrivate *doc)
+    explicit ExecutorKJSPrivate(DocumentPrivate *doc)
         : m_doc(doc)
     {
         initTypes();

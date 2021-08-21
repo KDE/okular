@@ -141,7 +141,7 @@ public:
         virtual void setColor(const QColor &color);
 
     protected:
-        Annotation(miniexp_t anno);
+        explicit Annotation(miniexp_t anno);
 
         miniexp_t m_anno;
         QPoint m_point;

@@ -167,7 +167,7 @@ private:
     KToggleAction *m_openInTab;
 
     struct TabState {
-        TabState(KParts::ReadWritePart *p)
+        explicit TabState(KParts::ReadWritePart *p)
             : part(p)
             , printEnabled(false)
             , closeEnabled(false)

@@ -93,7 +93,7 @@ protected:
     /**
      * Construct a new view with the specified @p name.
      */
-    View(const QString &name);
+    explicit View(const QString &name);
 
     /// @cond PRIVATE
     Q_DECLARE_PRIVATE(View)

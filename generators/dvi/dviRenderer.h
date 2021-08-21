@@ -97,7 +97,7 @@ class dviRenderer : public QObject /*: public DocumentRenderer*/, bigEndianByteR
     Q_OBJECT
 
 public:
-    dviRenderer(bool useFontHinting);
+    explicit dviRenderer(bool useFontHinting);
     ~dviRenderer() override;
 
     virtual bool setFile(const QString &fname, const QUrl &base);

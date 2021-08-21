@@ -118,7 +118,7 @@ Shell::Shell(const QString &serializedOptions)
         // and integrate the part's GUI with the shell's
         setupGUI(Keys | ToolBar | Save);
 
-        m_tabs.append(firstPart);
+        m_tabs.append(TabState(firstPart));
         m_tabWidget->addTab(firstPart->widget(), QString()); // triggers setActiveTab that calls createGUI( part )
 
         connectPart(firstPart);
@@ -691,7 +691,7 @@ void Shell::openNewTab(const QUrl &url, const QString &serializedOptions)
     const int newIndex = m_tabs.size();
 
     // Make new part
-    m_tabs.append(m_partFactory->create<KParts::ReadWritePart>(this));
+    m_tabs.append(TabState(m_partFactory->create<KParts::ReadWritePart>(this)));
     connectPart(m_tabs[newIndex].part);
 
     // Update GUI

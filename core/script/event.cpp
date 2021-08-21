@@ -14,7 +14,7 @@ using namespace Okular;
 class Event::Private
 {
 public:
-    Private(EventType eventType)
+    explicit Private(EventType eventType)
         : m_target(nullptr)
         , m_targetPage(nullptr)
         , m_source(nullptr)

@@ -41,7 +41,7 @@ class CloseButton : public QPushButton
     Q_OBJECT
 
 public:
-    CloseButton(QWidget *parent = Q_NULLPTR)
+    explicit CloseButton(QWidget *parent = Q_NULLPTR)
         : QPushButton(parent)
     {
         setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -59,7 +59,7 @@ class MovableTitle : public QWidget
     Q_OBJECT
 
 public:
-    MovableTitle(AnnotWindow *parent)
+    explicit MovableTitle(AnnotWindow *parent)
         : QWidget(parent)
     {
         QVBoxLayout *mainlay = new QVBoxLayout(this);

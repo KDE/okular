@@ -261,7 +261,7 @@ void PageItem::removeBookmarkAtPos(qreal x, qreal y)
 
 void PageItem::removeBookmark(const QString &bookmark)
 {
-    m_documentItem.data()->document()->bookmarkManager()->removeBookmark(bookmark);
+    m_documentItem.data()->document()->bookmarkManager()->removeBookmark(Okular::DocumentViewport(bookmark));
     emit bookmarksChanged();
 }
 

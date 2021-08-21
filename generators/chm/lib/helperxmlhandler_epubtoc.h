@@ -14,7 +14,7 @@
 class HelperXmlHandler_EpubTOC : public QXmlDefaultHandler
 {
 public:
-    HelperXmlHandler_EpubTOC(EBook_EPUB *epub);
+    explicit HelperXmlHandler_EpubTOC(EBook_EPUB *epub);
 
     QList<EBookTocEntry> entries;
 

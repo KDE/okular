@@ -86,11 +86,11 @@ public slots:
 
 private:
     struct Entry {
-        Entry(int d)
+        explicit Entry(int d)
         {
             documents.append(Document(d, 1));
         }
-        Entry(const QVector<Document> &l)
+        explicit Entry(const QVector<Document> &l)
             : documents(l)
         {
         }
@@ -98,7 +98,7 @@ private:
     };
 
     struct PosEntry {
-        PosEntry(int p)
+        explicit PosEntry(int p)
         {
             positions.append(p);
         }

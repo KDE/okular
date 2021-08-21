@@ -96,7 +96,7 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap *page)
         return;
     }
     // Paranoid safety checks
-    if (page->pageNumber == 0) {
+    if (!page->pageNumber.isValid()) {
         qCCritical(OkularDviDebug) << "dviRenderer::drawPage(documentPage *) called for a documentPage with page number 0";
         return;
     }
@@ -108,8 +108,9 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap *page)
         page->clear();
         return;
     }
-    if (page->pageNumber > dviFile->total_pages) {
-        qCCritical(OkularDviDebug) << "dviRenderer::drawPage(documentPage *) called for a documentPage with page number " << page->pageNumber << " but the current dviFile has only " << dviFile->total_pages << " pages.";
+    if (static_cast<quint16>(page->pageNumber) > dviFile->total_pages) {
+        qCCritical(OkularDviDebug) << "dviRenderer::drawPage(documentPage *) called for a documentPage with page number " << static_cast<quint16>(page->pageNumber) << " but the current dviFile has only " << dviFile->total_pages
+                                   << " pages.";
         return;
     }
     if (dviFile->dvi_Data() == nullptr) {
@@ -136,7 +137,7 @@ void dviRenderer::drawPage(RenderedDocumentPagePixmap *page)
 
     currentlyDrawnPage = page;
     shrinkfactor = 1200 / resolutionInDPI;
-    current_page = page->pageNumber - 1;
+    current_page = static_cast<quint16>(page->pageNumber) - 1;
 
     // Reset colors
     colorStack.clear();

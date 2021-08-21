@@ -24,7 +24,7 @@ class ActionBarWidget : public QWidget
     Q_OBJECT
 
 public:
-    ActionBarWidget(QToolBar *parent);
+    explicit ActionBarWidget(QToolBar *parent);
     void recreateButtons(const QList<QAction *> &actions);
 
 private slots:

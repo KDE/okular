@@ -25,10 +25,11 @@ SimplePageSize dviRenderer::sizeOfPage(const PageNumber page)
         return SimplePageSize();
     if (page > totalPages())
         return SimplePageSize();
-    if (page > pageSizes.size())
+    const quint16 pageNumber = static_cast<quint16>(page);
+    if (pageNumber > pageSizes.size())
         return SimplePageSize();
 
-    return pageSizes[page - 1];
+    return pageSizes[pageNumber - 1];
 }
 
 Anchor dviRenderer::findAnchor(const QString &locallink)
@@ -42,6 +43,5 @@ Anchor dviRenderer::findAnchor(const QString &locallink)
 
 PageNumber dviRenderer::totalPages() const
 {
-    PageNumber temp = numPages;
-    return temp;
+    return PageNumber(numPages);
 }

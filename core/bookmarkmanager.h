@@ -194,7 +194,7 @@ private:
     friend class Document;
     friend class DocumentPrivate;
 
-    BookmarkManager(DocumentPrivate *document);
+    explicit BookmarkManager(DocumentPrivate *document);
 
     void setUrl(const QUrl &url);
     bool setPageBookmark(int page);

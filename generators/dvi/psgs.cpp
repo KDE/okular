@@ -64,7 +64,7 @@ ghostscript_interface::~ghostscript_interface()
     qDeleteAll(pageList);
 }
 
-void ghostscript_interface::setPostScript(const PageNumber page, const QString &PostScript)
+void ghostscript_interface::setPostScript(const quint16 page, const QString &PostScript)
 {
 #ifdef DEBUG_PSGS
     qCDebug(OkularDviDebug) << "ghostscript_interface::setPostScript( " << page << ", ... )";
@@ -88,7 +88,7 @@ void ghostscript_interface::setIncludePath(const QString &_includePath)
         includePath = _includePath + QStringLiteral("/*");
 }
 
-void ghostscript_interface::setBackgroundColor(const PageNumber page, const QColor &background_color, bool permanent)
+void ghostscript_interface::setBackgroundColor(const quint16 page, const QColor &background_color, bool permanent)
 {
 #ifdef DEBUG_PSGS
     qCDebug(OkularDviDebug) << "ghostscript_interface::setBackgroundColor( " << page << ", " << background_color << " )";
@@ -110,7 +110,7 @@ void ghostscript_interface::setBackgroundColor(const PageNumber page, const QCol
     }
 }
 
-void ghostscript_interface::restoreBackgroundColor(const PageNumber page)
+void ghostscript_interface::restoreBackgroundColor(const quint16 page)
 {
 #ifdef DEBUG_PSGS
     qCDebug(OkularDviDebug) << "ghostscript_interface::restoreBackgroundColor( " << page << " )";
@@ -125,7 +125,7 @@ void ghostscript_interface::restoreBackgroundColor(const PageNumber page)
 // Returns the background color for a certain page. This color is
 // always guaranteed to be valid
 
-QColor ghostscript_interface::getBackgroundColor(const PageNumber page) const
+QColor ghostscript_interface::getBackgroundColor(const quint16 page) const
 {
 #ifdef DEBUG_PSGS
     qCDebug(OkularDviDebug) << "ghostscript_interface::getBackgroundColor( " << page << " )";
@@ -146,7 +146,7 @@ void ghostscript_interface::clear()
     pageList.clear();
 }
 
-void ghostscript_interface::gs_generate_graphics_file(const PageNumber page, const QString &filename, long magnification)
+void ghostscript_interface::gs_generate_graphics_file(const quint16 page, const QString &filename, long magnification)
 {
 #ifdef DEBUG_PSGS
     qCDebug(OkularDviDebug) << "ghostscript_interface::gs_generate_graphics_file( " << page << ", " << filename << " )";
@@ -276,7 +276,7 @@ void ghostscript_interface::gs_generate_graphics_file(const PageNumber page, con
     }
 }
 
-void ghostscript_interface::graphics(const PageNumber page, double dpi, long magnification, QPainter *paint)
+void ghostscript_interface::graphics(const quint16 page, double dpi, long magnification, QPainter *paint)
 {
 #ifdef DEBUG_PSGS
     qCDebug(OkularDviDebug) << "ghostscript_interface::graphics( " << page << ", " << dpi << ", ... ) called.";

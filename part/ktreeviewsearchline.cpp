@@ -28,7 +28,7 @@
 class KTreeViewSearchLine::Private
 {
 public:
-    Private(KTreeViewSearchLine *_parent)
+    explicit Private(KTreeViewSearchLine *_parent)
         : parent(_parent)
         , treeView(nullptr)
         , caseSensitive(Qt::CaseInsensitive)

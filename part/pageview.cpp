@@ -135,7 +135,7 @@ TableSelectionPart::TableSelectionPart(PageViewItem *item_p, const Okular::Norma
 class PageViewPrivate
 {
 public:
-    PageViewPrivate(PageView *qq);
+    explicit PageViewPrivate(PageView *qq);
 
     FormWidgetsController *formWidgetsController();
 #ifdef HAVE_SPEECH

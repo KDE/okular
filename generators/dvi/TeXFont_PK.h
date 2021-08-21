@@ -10,7 +10,7 @@ class glyph;
 class TeXFont_PK : public TeXFont
 {
 public:
-    TeXFont_PK(TeXFontDefinition *parent);
+    explicit TeXFont_PK(TeXFontDefinition *parent);
     ~TeXFont_PK() override;
 
     glyph *getGlyph(quint16 character, bool generateCharacterPixmap = false, const QColor &color = Qt::black) override;

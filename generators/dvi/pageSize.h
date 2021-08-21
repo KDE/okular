@@ -50,7 +50,7 @@ public:
     pageSize();
 
     /** \brief Initializes the pageSize with a SimplePageSize. */
-    pageSize(const SimplePageSize &);
+    explicit pageSize(const SimplePageSize &);
 
     pageSize(const pageSize &) = delete;
     pageSize &operator=(const pageSize &) = delete;

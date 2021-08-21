@@ -50,7 +50,7 @@
 class PickPointEngine : public AnnotatorEngine
 {
 public:
-    PickPointEngine(const QDomElement &engineElement)
+    explicit PickPointEngine(const QDomElement &engineElement)
         : AnnotatorEngine(engineElement)
         , clicked(false)
         , xscale(1.0)
@@ -462,7 +462,7 @@ private:
 class PolyLineEngine : public AnnotatorEngine
 {
 public:
-    PolyLineEngine(const QDomElement &engineElement)
+    explicit PolyLineEngine(const QDomElement &engineElement)
         : AnnotatorEngine(engineElement)
         , last(false)
     {

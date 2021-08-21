@@ -159,7 +159,7 @@ public:
 
 protected:
     /// @cond PRIVATE
-    FormField(FormFieldPrivate &dd);
+    explicit FormField(FormFieldPrivate &dd);
     Q_DECLARE_PRIVATE(FormField)
     FormFieldPrivate *d_ptr;
     /// @endcond

@@ -53,7 +53,7 @@ protected:
      *  that the external process has finished and that this variable
      *  can be removed from any stores.
      */
-    DVIExport(dviRenderer &parent);
+    explicit DVIExport(dviRenderer &parent);
 
     /** Spawns the external process having connected slots to the child
      *  process's stdin and stdout streams.

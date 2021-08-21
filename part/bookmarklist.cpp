@@ -35,7 +35,7 @@ static const int UrlRole = Qt::UserRole + 1;
 class BookmarkItem : public QTreeWidgetItem
 {
 public:
-    BookmarkItem(const KBookmark &bm)
+    explicit BookmarkItem(const KBookmark &bm)
         : QTreeWidgetItem(BookmarkItemType)
         , m_bookmark(bm)
     {

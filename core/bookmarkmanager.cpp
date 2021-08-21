@@ -108,7 +108,7 @@ static QUrl mostCanonicalUrl(const QUrl &url)
 class BookmarkManager::Private : public KBookmarkOwner
 {
 public:
-    Private(BookmarkManager *qq)
+    explicit Private(BookmarkManager *qq)
         : KBookmarkOwner()
         , q(qq)
         , document(nullptr)

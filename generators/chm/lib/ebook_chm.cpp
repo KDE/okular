@@ -37,7 +37,6 @@ EBook_CHM::EBook_CHM()
     m_textCodecForSpecialFiles = nullptr;
     m_detectedLCID = 0;
     m_currentEncoding = QStringLiteral("UTF-8");
-    m_htmlEntityDecoder = nullptr;
 }
 
 EBook_CHM::~EBook_CHM()

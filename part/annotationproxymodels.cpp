@@ -264,7 +264,7 @@ class AuthorGroupItem
 public:
     enum Type { Page, Author, Annotation };
 
-    AuthorGroupItem(AuthorGroupItem *parent, Type type = Page, const QModelIndex &index = QModelIndex())
+    explicit AuthorGroupItem(AuthorGroupItem *parent, Type type = Page, const QModelIndex &index = QModelIndex())
         : mParent(parent)
         , mType(type)
         , mIndex(index)
@@ -356,7 +356,7 @@ private:
 class AuthorGroupProxyModel::Private
 {
 public:
-    Private(AuthorGroupProxyModel *parent)
+    explicit Private(AuthorGroupProxyModel *parent)
         : mParent(parent)
         , mRoot(nullptr)
         , mGroupByAuthor(false)

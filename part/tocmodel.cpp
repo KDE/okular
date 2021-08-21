@@ -39,7 +39,7 @@ struct TOCItem {
 class TOCModelPrivate
 {
 public:
-    TOCModelPrivate(TOCModel *qq);
+    explicit TOCModelPrivate(TOCModel *qq);
     ~TOCModelPrivate();
 
     void addChildren(const QDomNode &parentNode, TOCItem *parentItem);

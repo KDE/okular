@@ -675,7 +675,7 @@ public:
 
 protected:
     /// @cond PRIVATE
-    Annotation(AnnotationPrivate &dd);
+    explicit Annotation(AnnotationPrivate &dd);
     Annotation(AnnotationPrivate &dd, const QDomNode &description);
     Q_DECLARE_PRIVATE(Annotation)
     AnnotationPrivate *d_ptr;

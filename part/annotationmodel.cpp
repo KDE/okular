@@ -55,7 +55,7 @@ static QLinkedList<Okular::Annotation *> filterOutWidgetAnnotations(const QLinke
 class AnnotationModelPrivate : public Okular::DocumentObserver
 {
 public:
-    AnnotationModelPrivate(AnnotationModel *qq);
+    explicit AnnotationModelPrivate(AnnotationModel *qq);
     ~AnnotationModelPrivate() override;
 
     void notifySetup(const QVector<Okular::Page *> &pages, int setupFlags) override;

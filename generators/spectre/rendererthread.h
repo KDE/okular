@@ -24,7 +24,7 @@ class PixmapRequest;
 }
 
 struct GSRendererThreadRequest {
-    GSRendererThreadRequest(GSGenerator *_owner)
+    explicit GSRendererThreadRequest(GSGenerator *_owner)
         : owner(_owner)
         , request(nullptr)
         , spectrePage(nullptr)

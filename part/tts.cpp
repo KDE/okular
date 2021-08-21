@@ -16,7 +16,7 @@
 class OkularTTS::Private
 {
 public:
-    Private(OkularTTS *qq)
+    explicit Private(OkularTTS *qq)
         : q(qq)
         , speech(new QTextToSpeech(Okular::Settings::ttsEngine()))
     {

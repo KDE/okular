@@ -119,9 +119,9 @@ void DviGenerator::fillViewportFromAnchor(Okular::DocumentViewport &vp, const An
 
 void DviGenerator::fillViewportFromAnchor(Okular::DocumentViewport &vp, const Anchor anch, int pW, int pH) const
 {
-    vp.pageNumber = anch.page - 1;
+    vp.pageNumber = static_cast<quint16>(anch.page) - 1;
 
-    SimplePageSize ps = m_dviRenderer->sizeOfPage(vp.pageNumber);
+    SimplePageSize ps = m_dviRenderer->sizeOfPage(PageNumber(vp.pageNumber));
     double resolution = 0;
     if (ps.isValid())
         resolution = (double)(pW) / ps.width().getLength_in_inch();
@@ -319,7 +319,7 @@ const Okular::DocumentSynopsis *DviGenerator::generateDocumentSynopsis()
         if (a.isValid()) {
             Okular::DocumentViewport vp;
 
-            const Okular::Page *p = document()->page(a.page - 1);
+            const Okular::Page *p = document()->page(static_cast<quint16>(a.page) - 1);
 
             fillViewportFromAnchor(vp, a, (int)p->width(), (int)p->height());
             domel.setAttribute(QStringLiteral("Viewport"), vp.toString());
@@ -462,7 +462,7 @@ bool DviGenerator::print(QPrinter &printer)
     if (!tf.open())
         return false;
 
-    const QList<int> pageList = Okular::FilePrinter::pageList(printer, m_dviRenderer->totalPages(), document()->currentPage() + 1, document()->bookmarkedPageList());
+    const QList<int> pageList = Okular::FilePrinter::pageList(printer, static_cast<quint16>(m_dviRenderer->totalPages()), document()->currentPage() + 1, document()->bookmarkedPageList());
     QString pages;
     QStringList printOptions;
     // List of pages to print.
@@ -487,7 +487,7 @@ QVariant DviGenerator::metaData(const QString &key, const QVariant &option) cons
     if (key == QLatin1String("NamedViewport") && !option.toString().isEmpty()) {
         const Anchor anchor = m_dviRenderer->parseReference(option.toString());
         if (anchor.isValid()) {
-            const Okular::Page *page = document()->page(anchor.page - 1);
+            const Okular::Page *page = document()->page(static_cast<quint16>(anchor.page) - 1);
             Q_ASSERT_X(page, "DviGenerator::metaData()", "NULL page as result of valid Anchor");
             Okular::DocumentViewport viewport;
             fillViewportFromAnchor(viewport, anchor, page);

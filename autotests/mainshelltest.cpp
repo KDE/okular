@@ -59,7 +59,7 @@ class ClosePrintDialogHelper : public QObject
     Q_OBJECT
 
 public:
-    ClosePrintDialogHelper(int expectedTab)
+    explicit ClosePrintDialogHelper(int expectedTab)
         : foundDialog(false)
         , m_expectedTab(expectedTab)
     {

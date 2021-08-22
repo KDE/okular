@@ -19,6 +19,7 @@
   <name xml:lang="fi">EPub</name>
   <name xml:lang="fr">EPub</name>
   <name xml:lang="gl">EPub</name>
+  <name xml:lang="hi">ईपब</name>
   <name xml:lang="ia">EPub</name>
   <name xml:lang="it">EPub</name>
   <name xml:lang="ko">EPub</name>
@@ -59,6 +60,7 @@
   <summary xml:lang="fi">Lisää e-kirjojen lukutuen</summary>
   <summary xml:lang="fr">Permet la lecture des E-Books</summary>
   <summary xml:lang="gl">Engade a posibilidade de ler libros electrónicos</summary>
+  <summary xml:lang="hi">ई-पुस्तक पढ़ने के लिए समर्थन जोड़ता है</summary>
   <summary xml:lang="ia">Adde supporto per leger E-libros</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di libri digitali in formato EPub</summary>
   <summary xml:lang="ko">전자책 읽기 지원 추가</summary>

@@ -19,6 +19,7 @@
   <name xml:lang="fi">DjVu-tiedostot</name>
   <name xml:lang="fr">Documents DjVu</name>
   <name xml:lang="gl">Documentos DjVu</name>
+  <name xml:lang="hi">डीजेवीयू दस्तावेज़</name>
   <name xml:lang="ia">Documentos DjVu</name>
   <name xml:lang="it">Documenti DjVu</name>
   <name xml:lang="ko">DjVu 문서</name>
@@ -59,6 +60,7 @@
   <summary xml:lang="fi">Lisää DjVu-tiedostojen lukutuen</summary>
   <summary xml:lang="fr">Permet la lecture des documents DjVu</summary>
   <summary xml:lang="gl">Engade a posibilidade de ler documentos de DjVu</summary>
+  <summary xml:lang="hi">डीजेवीयू दस्तावेज़ पढ़ने के लिए समर्थन जोड़ता है</summary>
   <summary xml:lang="ia">Adde supporto per leger documentos DjVu</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti DjVu</summary>
   <summary xml:lang="ko">DjVu 문서 읽기 지원 추가</summary>

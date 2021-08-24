@@ -3,7 +3,7 @@ description: Okular, the unified document viewer
 platforms:
     - name: Linux
     - name: Windows
-    - name: MacOSX
+    - name: macOS
 release: true
 
 public_lib: true

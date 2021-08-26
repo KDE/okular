@@ -3843,15 +3843,20 @@ QString Document::bookmarkedPageRange() const
     return range;
 }
 
+struct ExecuteNextActionsHelper : public QObject {
+    Q_OBJECT
+public:
+    bool b = true;
+};
+
 void Document::processAction(const Action *action)
 {
     if (!action)
         return;
 
     // Don't execute next actions if the action itself caused the closing of the document
-    bool executeNextActions = true;
-    QObject disconnectHelper;                                                                                         // guarantees the connect below will be disconnected on finishing the function
-    connect(this, &Document::aboutToClose, &disconnectHelper, [&executeNextActions] { executeNextActions = false; }); // clazy:exclude=lambda-in-connect
+    ExecuteNextActionsHelper executeNextActions;
+    connect(this, &Document::aboutToClose, &executeNextActions, [&executeNextActions] { executeNextActions.b = false; });
 
     switch (action->actionType()) {
     case Action::Goto: {
@@ -3868,8 +3873,9 @@ void Document::processAction(const Action *action)
         // it does not show anything
 
         // first open filename if link is pointing outside this document
-        if (go->isExternal() && !d->openRelativeFile(go->fileName())) {
-            qCWarning(OkularCoreDebug).nospace() << "Action: Error opening '" << go->fileName() << "'.";
+        const QString filename = go->fileName();
+        if (go->isExternal() && !d->openRelativeFile(filename)) {
+            qCWarning(OkularCoreDebug).nospace() << "Action: Error opening '" << filename << "'.";
             break;
         } else {
             const DocumentViewport nextViewport = d->nextDocumentViewport();
@@ -4030,7 +4036,7 @@ void Document::processAction(const Action *action)
     } break;
     }
 
-    if (executeNextActions) {
+    if (executeNextActions.b) {
         const QVector<Action *> nextActions = action->nextActions();
         for (const Action *a : nextActions) {
             processAction(a);
@@ -5556,5 +5562,7 @@ void NewSignatureData::setBoundingRectangle(const NormalizedRect &rect)
 
 #undef foreachObserver
 #undef foreachObserverD
+
+#include "document.moc"
 
 /* kate: replace-tabs on; indent-width 4; */

@@ -1353,10 +1353,10 @@ static void calculateStatisticalInformation(const QList<WordWithCharacters> &wor
  * The resulting RegionTextList will contain RegionText whose WordsWithCharacters::word and
  * WordsWithCharacters::characters are reused from wordsWithCharacters (i.e. no new nor delete happens in this function)
  */
-static RegionTextList XYCutForBoundingBoxes(const QList<WordWithCharacters> &wordsWithCharacters, const NormalizedRect &boundingBox, int pageWidth, int pageHeight)
+static RegionTextList XYCutForBoundingBoxes(const QList<WordWithCharacters> &wordsWithCharacters, int pageWidth, int pageHeight)
 {
     RegionTextList tree;
-    QRect contentRect(boundingBox.geometry(pageWidth, pageHeight));
+    QRect contentRect(0, 0, pageWidth, pageHeight);
     const RegionText root(wordsWithCharacters, contentRect);
 
     // start the tree with the root, it is our only region at the start
@@ -1675,7 +1675,7 @@ void TextPagePrivate::correctTextOrder()
     /**
      * Make a XY Cut tree for segmentation of the texts
      */
-    const RegionTextList tree = XYCutForBoundingBoxes(wordsWithCharacters, m_page->boundingBox(), pageWidth, pageHeight);
+    const RegionTextList tree = XYCutForBoundingBoxes(wordsWithCharacters, pageWidth, pageHeight);
 
     /**
      * Add spaces to the word

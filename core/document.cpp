@@ -3850,8 +3850,8 @@ void Document::processAction(const Action *action)
 
     // Don't execute next actions if the action itself caused the closing of the document
     bool executeNextActions = true;
-    QObject disconnectHelper; // guarantees the connect below will be disconnected on finishing the function
-    connect(this, &Document::aboutToClose, &disconnectHelper, [&executeNextActions] { executeNextActions = false; });
+    QObject disconnectHelper;                                                                                         // guarantees the connect below will be disconnected on finishing the function
+    connect(this, &Document::aboutToClose, &disconnectHelper, [&executeNextActions] { executeNextActions = false; }); // clazy:exclude=lambda-in-connect
 
     switch (action->actionType()) {
     case Action::Goto: {

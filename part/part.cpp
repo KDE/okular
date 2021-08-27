@@ -377,6 +377,8 @@ Part::Part(QWidget *parentWidget, QObject *parent, const QVariantList &args)
     //      sLabel->setBuddy( m_searchWidget );
     //      m_searchToolBar->setStretchableWidget( m_searchWidget );
 
+    setupViewerActions();
+
     // [left toolbox optional item: Table of Contents] | []
     m_toc = new TOC(nullptr, m_document);
     connect(m_toc.data(), &TOC::hasTOC, this, &Part::enableTOC);
@@ -404,7 +406,7 @@ Part::Part(QWidget *parentWidget, QObject *parent, const QVariantList &args)
     m_sidebar->addItem(m_reviewsWidget, QIcon::fromTheme(QStringLiteral("draw-freehand")), i18n("Annotations"));
 
     // [left toolbox: Bookmarks] | []
-    m_bookmarkList = new BookmarkList(m_document, nullptr);
+    m_bookmarkList = new BookmarkList(m_document, m_addBookmark, nullptr);
     m_sidebar->addItem(m_bookmarkList, QIcon::fromTheme(QStringLiteral("bookmarks")), i18n("Bookmarks"));
 
     // [left toolbox optional item: Signature Panel] | []
@@ -535,8 +537,6 @@ Part::Part(QWidget *parentWidget, QObject *parent, const QVariantList &args)
     m_document->addObserver(m_signaturePanel);
 
     connect(m_document->bookmarkManager(), &BookmarkManager::saved, this, &Part::slotRebuildBookmarkMenu);
-
-    setupViewerActions();
 
     if (m_embedMode != ViewerWidgetMode) {
         setupActions();

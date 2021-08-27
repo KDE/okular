@@ -115,7 +115,7 @@ public:
     }
 };
 
-BookmarkList::BookmarkList(Okular::Document *document, QWidget *parent)
+BookmarkList::BookmarkList(Okular::Document *document, QAction *addBookmarkAction, QWidget *parent)
     : QWidget(parent)
     , m_document(document)
     , m_currentDocumentItem(nullptr)
@@ -162,6 +162,8 @@ BookmarkList::BookmarkList(Okular::Document *document, QWidget *parent)
     m_showBoomarkOnlyAction = bookmarkController->addAction(QIcon::fromTheme(QStringLiteral("bookmarks")), i18n("Current document only"));
     m_showBoomarkOnlyAction->setCheckable(true);
     connect(m_showBoomarkOnlyAction, &QAction::toggled, this, &BookmarkList::slotFilterBookmarks);
+    // insert a button to bookmark/un-bookmark the current page
+    bookmarkController->addAction(addBookmarkAction);
 
     connect(m_document->bookmarkManager(), &Okular::BookmarkManager::bookmarksChanged, this, &BookmarkList::slotBookmarksChanged);
 

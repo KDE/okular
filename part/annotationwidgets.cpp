@@ -408,6 +408,7 @@ const QList<QPair<QString, QString>> &StampAnnotationWidget::defaultStamps()
                                                                      {i18n("Departmental"), QStringLiteral("Departmental")},
                                                                      {i18n("Draft"), QStringLiteral("Draft")},
                                                                      {i18n("Experimental"), QStringLiteral("Experimental")},
+                                                                     {i18n("Expired"), QStringLiteral("Expired")},
                                                                      {i18n("Final"), QStringLiteral("Final")},
                                                                      {i18n("For Comment"), QStringLiteral("ForComment")},
                                                                      {i18n("For Public Release"), QStringLiteral("ForPublicRelease")},

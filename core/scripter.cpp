@@ -5,6 +5,7 @@
 */
 
 #include "scripter.h"
+#include "config-okular.h"
 
 #include <QDebug>
 #include <QFile>

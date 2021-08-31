@@ -9,6 +9,7 @@
 */
 
 #include "generator.h"
+#include "config-okular.h"
 #include "generator_p.h"
 #include "observer.h"
 

@@ -168,45 +168,6 @@
     <p xml:lang="zh-TW">功能：</p>
     <ul>
       <li>Supported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
-      <li xml:lang="ar">يدعم التنسيقات: PDF و PS و Tiff و CHM و DjVu و Images و DVI و XPS و ODT و Fiction Book و Comic Book و Plucker و EPub و Fax</li>
-      <li xml:lang="az">Dəstəklənən formatlar: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
-      <li xml:lang="ca">Formats acceptats: PDF, PS, Tiff, CHM, DjVu, imatges, DVI, XPS, ODT, Fiction Book, llibres de còmic, Plucker, EPub, Fax</li>
-      <li xml:lang="ca-valencia">Formats acceptats: PDF, PS, Tiff, CHM, DjVu, imatges, DVI, XPS, ODT, Fiction Book, llibres de còmic, Plucker, EPub, Fax</li>
-      <li xml:lang="cs">Podporované formáty: PDF, PS, Tiff, CHM, DjVu, obrázky, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
-      <li xml:lang="de">Unterstützte Formate: PDF, PS, Tiff, CHM, DjVu, Bilder, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
-      <li xml:lang="el">Υποστηριζόμενοι τύποι αποθήκευσης: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
-      <li xml:lang="en-GB">Supported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
-      <li xml:lang="es">Formatos permitidos: PDF, PS, Tiff, CHM, DjVu, imágenes, DVI, XPS, ODT, Fiction Book, libros de cómics, Plucker, EPub, Fax</li>
-      <li xml:lang="et">Toetatud vormingud: PDF, PS, Tiff, CHM, DjVu, pildid, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, faks</li>
-      <li xml:lang="eu">Onartutako formatuak: PDF, PS, Tiff, CHM, DjVu, irudiak, DVI, XPS, ODT,  FictionBook, Comic Book, Plucker, EPub, Fax</li>
-      <li xml:lang="fi">Tuetut tiedostomuodot: PDF, PS, TIFF, CHM, DjVu, kuvatiedostot, DVI, XPS, ODT, FictionBook, sarjakuvakirjat, Plucker, EPub, faksit</li>
-      <li xml:lang="fr">Formats de fichiers gérés : PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
-      <li xml:lang="gl">Formatos compatíbeis: PDF, PS, Tiff, CHM, DjVu, imaxes, DVI, XPS, ODT, FictionBook, banda deseñada, Plucker, EPub e fax.</li>
-      <li xml:lang="hi">समर्थित प्रारूप: पीडीएफ, पीएस, टिफ़, सीएचएम, डीजेवीयू, छवियां, डीवीआई, एक्सपीएस, ओडीटी, फिक्शन पुस्तक, कॉमिक पुस्तक, प्लकर, ईपब, फैक्स</li>
-      <li xml:lang="ia">Formatos supportate: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
-      <li xml:lang="id">Format Yang Didukung: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
-      <li xml:lang="it">Formati supportati: PDF, PS, Tiff, CHM, DjVu, immagini, DVI, XPS, ODT, Fiction Book, fumetti, Plucker, EPub, Fax</li>
-      <li xml:lang="ko">지원하는 형식: PDF, PS, Tiff, CHM, DjVu, 사진, DVI, XPS, ODT, Fiction Book, 만화책, Plucker, EPub, 팩스</li>
-      <li xml:lang="lt">Palaikomi formatai: PDF, PS, Tiff, CHM, DjVu, paveikslai, DVI, XPS, ODT, Fiction Book, komiksų knygos, Plucker, EPub, faksas</li>
-      <li xml:lang="nl">Ondersteunde formaten: PDF, PS, Tiff, CHM, DjVu, Afbeeldingen, DVI, XPS, ODT, Fictie boek, Stripboek, Plucker, EPub, Fax</li>
-      <li xml:lang="nn">Støtta format: PDF, PS, Tiff, CHM, DjVu, bilete, DVI, XPS, ODT, e-bøker, teikneseriar, Plucker, EPub, Fax</li>
-      <li xml:lang="pl">Obsługiwane formaty: PDF, PS, TIFF, CHM, DjVu, DVI, XPS, ODT, FB2, Plucker, ePub,  a także różne formaty komisów, obrazów i faks.</li>
-      <li xml:lang="pt">Formatos Suportados: PDF, PS, Tiff, CHM, DjVu, Imagens, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
-      <li xml:lang="pt-BR">Suporte aos formatos: PDF, PS, TIFF, CHM, DjVu, imagens, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
-      <li xml:lang="ro">Formate susținute: PDF, PS, Tiff, CHM, DjVu, imagini, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
-      <li xml:lang="ru">Поддержка форматов PDF, PS, Tiff, CHM, DjVu, изображений, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, факсов;</li>
-      <li xml:lang="sk">Podporované formáty: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
-      <li xml:lang="sl">Podprte vrste: PDF, PS, Tiff, CHM, DjVu, slike, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, fax</li>
-      <li xml:lang="sr">Подржани формати: ПДФ, постскрипт, ТИФФ, ЦХМ, ДјВу, слике, ДВИ, ИксПС, ОДТ, фикшнбук, стрипови, Плакер, ЕПУБ, факс.</li>
-      <li xml:lang="sr-Latn">Podržani formati: PDF, PostScript, TIFF, CHM, DjVu, slike, DVI, XPS, ODT, FictionBook, stripovi, Plucker, EPUB, faks.</li>
-      <li xml:lang="sr-ijekavian">Подржани формати: ПДФ, постскрипт, ТИФФ, ЦХМ, ДјВу, слике, ДВИ, ИксПС, ОДТ, фикшнбук, стрипови, Плакер, ЕПУБ, факс.</li>
-      <li xml:lang="sr-ijekavianlatin">Podržani formati: PDF, PostScript, TIFF, CHM, DjVu, slike, DVI, XPS, ODT, FictionBook, stripovi, Plucker, EPUB, faks.</li>
-      <li xml:lang="sv">Format som stöds: PDF, PS, Tiff, CHM, DjVu, bilder, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
-      <li xml:lang="tr">Desteklenen Biçimler: PDF, PS, Tiff, CHM, DjVu, Resimler, DVI, XPS, ODT, Kurgu Kitabı, Çizgi Roman Kitabı, Plucker, EPub, Faks</li>
-      <li xml:lang="uk">Підтримувані формати: PDF, PS, Tiff, CHM, DjVu, зображення, DVI, XPS, ODT, Fiction Book, комікси, Plucker, EPub, факси.</li>
-      <li xml:lang="x-test">xxSupported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Faxxx</li>
-      <li xml:lang="zh-CN">支持的格式︰ PDF，PS，Tiff，CHM，DjVu，图片，DVI，XPS，ODT，FictionBook，漫画书，Plucker，EPub，传真</li>
-      <li xml:lang="zh-TW">支援的檔案格式：PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, ODT, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li>Sidebar with contents, thumbnails, reviews and bookmarks</li>
       <li xml:lang="ar">الشريط الجانبي مع المحتويات والصور المصغرة والمراجعات والإشارات المرجعية</li>
       <li xml:lang="az">Tərkibləri, miniatürləri, öncədən baxışı və əlfəcinləri ilə yan panel</li>

@@ -85,7 +85,7 @@
         "Copyright[zh_TW]": "© 2007-2008 Albert Astals Cid",
         "Description": "A PostScript file renderer based on the Spectre library",
         "Description[az]": "Spectre library'ə əsasında PostScript fayl tərtibatçısı",
-        "Description[ca@valencia]": "Un renderitzador per a fitxers PostScript basat en la biblioteca Spectre",
+        "Description[ca@valencia]": "Un renderitzador de fitxers PostScript basat en la biblioteca Spectre",
         "Description[ca]": "Un renderitzador de fitxers PostScript basat en la biblioteca Spectre",
         "Description[cs]": "Vykreslovač souborů PostScript založený na knihovně Spectre.",
         "Description[da]": "En gengiver til PostScript-filer baseret på Spectre-biblioteket",

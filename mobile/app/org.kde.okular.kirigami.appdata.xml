@@ -46,6 +46,7 @@
   <summary xml:lang="ca">Visor de documents</summary>
   <summary xml:lang="ca-valencia">Visor de documents</summary>
   <summary xml:lang="cs">Prohlížeč dokumentů</summary>
+  <summary xml:lang="da">Dokumentfremviser</summary>
   <summary xml:lang="de">Dokumentenbetrachter</summary>
   <summary xml:lang="el">Πρόγραμμα προβολής εγγράφων</summary>
   <summary xml:lang="en-GB">Document Viewer</summary>
@@ -119,6 +120,7 @@
     <p xml:lang="ca">Característiques:</p>
     <p xml:lang="ca-valencia">Característiques:</p>
     <p xml:lang="cs">Vlastnosti:</p>
+    <p xml:lang="da">Funktioner:</p>
     <p xml:lang="de">Funktionen:</p>
     <p xml:lang="el">Χαρακτηριστικά:</p>
     <p xml:lang="en-GB">Features:</p>
@@ -151,6 +153,13 @@
     <p xml:lang="zh-TW">功能：</p>
     <ul>
       <li>Supported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
+      <li xml:lang="ca">Formats acceptats: PDF, PS, Tiff, CHM, DjVu, imatges, DVI, XPS, Fiction Book, llibres de còmic, Plucker, EPub, Fax</li>
+      <li xml:lang="ca-valencia">Formats acceptats: PDF, PS, Tiff, CHM, DjVu, imatges, DVI, XPS, Fiction Book, llibres de còmic, Plucker, EPub, Fax</li>
+      <li xml:lang="es">Formatos permitidos: PDF, PS, Tiff, CHM, DjVu, imágenes, DVI, XPS, Fiction Book, libros de cómics, Plucker, EPub, Fax</li>
+      <li xml:lang="nl">Ondersteunde formaten: PDF, PS, Tiff, CHM, DjVu, Afbeeldingen, DVI, XPS, Fictionbook, Stripboek, Plucker, EPub, Fax</li>
+      <li xml:lang="sv">Format som stöds: PDF, PS, Tiff, CHM, DjVu, bilder, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
+      <li xml:lang="uk">Підтримувані формати: PDF, PS, Tiff, CHM, DjVu, зображення, DVI, XPS, Fiction Book, комікси, Plucker, EPub, факси.</li>
+      <li xml:lang="x-test">xxSupported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Faxxx</li>
       <li>Sidebar with contents, thumbnails, reviews and bookmarks</li>
       <li xml:lang="ar">الشريط الجانبي مع المحتويات والصور المصغرة والمراجعات والإشارات المرجعية</li>
       <li xml:lang="az">Tərkibləri, miniatürləri, öncədən baxışı və əlfəcinləri ilə yan panel</li>

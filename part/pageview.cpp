@@ -1024,6 +1024,10 @@ QString PageViewPrivate::selectedText() const
         pg = document->page(selpages.last());
         text.append(pg->text(pg->textSelection(), Okular::TextPage::CentralPixelTextAreaInclusionBehaviour));
     }
+
+    if (text.endsWith('\n')) {
+        text.chop(1);
+    }
     return text;
 }
 

@@ -54,7 +54,6 @@
 #include <KIO/Global>
 #include <KLocalizedString>
 #include <KMacroExpander>
-#include <KMessageBox>
 #include <KApplicationTrader>
 #include <KPluginMetaData>
 #include <KProcess>
@@ -3913,13 +3912,13 @@ void Document::processAction(const Action *action)
                 if (KRun::isExecutableFile(url, mime.name())) {
                     // this case is a link pointing to an executable with a parameter
                     // that also is an executable, possibly a hand-crafted pdf
-                    KMessageBox::information(d->m_widget, i18n("The document is trying to execute an external application and, for your safety, Okular does not allow that."));
+                    emit error(i18n("The document is trying to execute an external application and, for your safety, Okular does not allow that."), -1);
                     break;
                 }
             } else {
                 // this case is a link pointing to an executable with no parameters
                 // core developers find unacceptable executing it even after asking the user
-                KMessageBox::information(d->m_widget, i18n("The document is trying to execute an external application and, for your safety, Okular does not allow that."));
+                emit error(i18n("The document is trying to execute an external application and, for your safety, Okular does not allow that."), -1);
                 break;
             }
         }
@@ -3930,7 +3929,7 @@ void Document::processAction(const Action *action)
             lst.append(url);
             KRun::runService(*ptr, lst, nullptr);
         } else
-            KMessageBox::information(d->m_widget, i18n("No application found for opening file of mimetype %1.", mime.name()));
+            emit error(i18n("No application found for opening file of mimetype %1.", mime.name()), -1);
     } break;
 
     case Action::DocAction: {
@@ -4918,7 +4917,7 @@ QByteArray Document::requestSignedRevisionData(const Okular::SignatureInfo &info
 {
     QFile f(d->m_docFileName);
     if (!f.open(QIODevice::ReadOnly)) {
-        KMessageBox::error(nullptr, i18n("Could not open '%1'. File does not exist", d->m_docFileName));
+        emit error(i18n("Could not open '%1'. File does not exist", d->m_docFileName), -1);
         return {};
     }
 

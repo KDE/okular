@@ -139,6 +139,30 @@ Q_SIGNALS:
     void bookmarksChanged();
     void windowTitleForDocumentChanged();
 
+    /**
+     * This signal is emitted whenever an error occurred.
+     *
+     * @param text The description of the error.
+     * @param duration The time in milliseconds the message should be shown to the user.
+     */
+    void error(const QString &text, int duration);
+
+    /**
+     * This signal is emitted to signal a warning.
+     *
+     * @param text The description of the warning.
+     * @param duration The time in milliseconds the message should be shown to the user.
+     */
+    void warning(const QString &text, int duration);
+
+    /**
+     * This signal is emitted to signal a notice.
+     *
+     * @param text The description of the notice.
+     * @param duration The time in milliseconds the message should be shown to the user.
+     */
+    void notice(const QString &text, int duration);
+
 private Q_SLOTS:
     void searchFinished(int id, Okular::Document::SearchStatus endStatus);
 

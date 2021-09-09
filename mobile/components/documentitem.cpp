@@ -34,6 +34,9 @@ DocumentItem::DocumentItem(QObject *parent)
     connect(m_document, &Okular::Document::searchFinished, this, &DocumentItem::searchFinished);
     connect(m_document->bookmarkManager(), &Okular::BookmarkManager::bookmarksChanged, this, &DocumentItem::bookmarkedPagesChanged);
     connect(m_document->bookmarkManager(), &Okular::BookmarkManager::bookmarksChanged, this, &DocumentItem::bookmarksChanged);
+    connect(m_document, &Okular::Document::error, this, &DocumentItem::error);
+    connect(m_document, &Okular::Document::warning, this, &DocumentItem::warning);
+    connect(m_document, &Okular::Document::notice, this, &DocumentItem::notice);
 }
 
 DocumentItem::~DocumentItem()

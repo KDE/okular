@@ -10,6 +10,8 @@ import org.kde.okular 2.0 as Okular
 import org.kde.kirigami 2.10 as Kirigami
 
 Kirigami.Page {
+    id: root
+
     property alias document: pageArea.document
     leftPadding: 0
     topPadding: 0
@@ -32,6 +34,47 @@ Kirigami.Page {
             actions.main.checked = page.bookmarked
         }
         onClicked: fileBrowserRoot.controlsVisible = !fileBrowserRoot.controlsVisible
+    }
+
+    Connections {
+        target: root.document
+
+        onError: (text, duration) => {
+            inlineMessage.showMessage(Kirigami.MessageType.Error, text,  duration);
+        }
+
+        onWarning: (text, duration) => {
+            inlineMessage.showMessage(Kirigami.MessageType.Warning, text,  duration);
+        }
+
+        onNotice: (text, duration) => {
+            inlineMessage.showMessage(Kirigami.MessageType.Information, text,  duration);
+        }
+    }
+
+    Kirigami.InlineMessage {
+        id: inlineMessage
+        width: parent.width
+
+        function showMessage(type, text, duration) {
+            inlineMessage.type = type;
+            inlineMessage.text = text;
+            inlineMessage.visible = true;
+            inlineMessageTimer.interval = duration > 0 ? duration : 500 + 100 * text.length;
+        }
+
+        onVisibleChanged: {
+            if (visible) {
+                inlineMessageTimer.start()
+            } else {
+                inlineMessageTimer.stop()
+            }
+        }
+
+        Timer {
+            id: inlineMessageTimer
+            onTriggered: inlineMessage.visible = false
+        }
     }
 
     // TODO KF 5.64 replace usage by upstream PlaceholderMessage

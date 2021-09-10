@@ -46,6 +46,7 @@
   <summary xml:lang="ca">Visor de documents</summary>
   <summary xml:lang="ca-valencia">Visor de documents</summary>
   <summary xml:lang="cs">Prohlížeč dokumentů</summary>
+  <summary xml:lang="da">Dokumentfremviser</summary>
   <summary xml:lang="de">Dokumentenbetrachter</summary>
   <summary xml:lang="el">Πρόγραμμα προβολής εγγράφων</summary>
   <summary xml:lang="en-GB">Document Viewer</summary>
@@ -119,6 +120,7 @@
     <p xml:lang="ca">Característiques:</p>
     <p xml:lang="ca-valencia">Característiques:</p>
     <p xml:lang="cs">Vlastnosti:</p>
+    <p xml:lang="da">Funktioner:</p>
     <p xml:lang="de">Funktionen:</p>
     <p xml:lang="el">Χαρακτηριστικά:</p>
     <p xml:lang="en-GB">Features:</p>

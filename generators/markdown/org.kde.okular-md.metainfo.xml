@@ -41,6 +41,7 @@
   <name xml:lang="sv">Markdown</name>
   <name xml:lang="ta">Markdown</name>
   <name xml:lang="uk">Markdown</name>
+  <name xml:lang="vi">Markdown</name>
   <name xml:lang="x-test">xxMarkdownxx</name>
   <name xml:lang="zh-CN">Markdown</name>
   <name xml:lang="zh-TW">Markdown</name>
@@ -81,6 +82,7 @@
   <summary xml:lang="sv">Lägger till stöd för att läsa Markdown-dokument</summary>
   <summary xml:lang="ta">Markdown ஆவணங்களைப் படிப்பதற்கான ஆதரவை சேர்க்கும்</summary>
   <summary xml:lang="uk">Додає підтримку читання документів Markdown</summary>
+  <summary xml:lang="vi">Thêm hỗ trợ đọc tài liệu Markdown</summary>
   <summary xml:lang="x-test">xxAdds support for reading Markdown documentsxx</summary>
   <summary xml:lang="zh-CN">添加阅读 Markdown 文档的支持</summary>
   <summary xml:lang="zh-TW">增加讀取 Markdown 文件的支援</summary>

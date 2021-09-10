@@ -42,6 +42,7 @@
   <name xml:lang="ta">காமிக் புத்தகங்கள்</name>
   <name xml:lang="tr">Çizgiromanlar</name>
   <name xml:lang="uk">Комікси</name>
+  <name xml:lang="vi">Truyện tranh</name>
   <name xml:lang="x-test">xxComic Booksxx</name>
   <name xml:lang="zh-CN">漫画书</name>
   <name xml:lang="zh-TW">漫畫書</name>
@@ -83,6 +84,7 @@
   <summary xml:lang="ta">காமிக் புத்தகங்களைப் படிப்பதற்கான ஆதரவை சேர்க்கும்</summary>
   <summary xml:lang="tr">Çizgi roman okuma desteği ekler</summary>
   <summary xml:lang="uk">Додає підтримку читання коміксів</summary>
+  <summary xml:lang="vi">Thêm hỗ trợ đọc truyện tranh</summary>
   <summary xml:lang="x-test">xxAdds support for reading comic booksxx</summary>
   <summary xml:lang="zh-CN">增加对漫画书的阅读支持</summary>
   <summary xml:lang="zh-TW">加入讀取漫畫書的支援</summary>

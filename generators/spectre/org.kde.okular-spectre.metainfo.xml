@@ -43,6 +43,7 @@
   <name xml:lang="ta">PostScript</name>
   <name xml:lang="tr">PostScript</name>
   <name xml:lang="uk">PostScript</name>
+  <name xml:lang="vi">PostScript</name>
   <name xml:lang="x-test">xxPostScriptxx</name>
   <name xml:lang="zh-CN">PostScript</name>
   <name xml:lang="zh-TW">PostScript</name>
@@ -85,6 +86,7 @@
   <summary xml:lang="ta">PostScript ஆவணங்களைப் படிப்பதற்கான ஆதரவை சேர்க்கும்</summary>
   <summary xml:lang="tr">PostScript belgelerini okuma desteği ekler</summary>
   <summary xml:lang="uk">Додає підтримку читання документів PostScript</summary>
+  <summary xml:lang="vi">Thêm hỗ trợ đọc tài liệu PostScript</summary>
   <summary xml:lang="x-test">xxAdds support for reading PostScript documentsxx</summary>
   <summary xml:lang="zh-CN">增加对 PostScript 文档的阅读支持</summary>
   <summary xml:lang="zh-TW">加入讀取 PostScript 文件的支援</summary>

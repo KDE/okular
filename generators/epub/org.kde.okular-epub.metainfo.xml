@@ -42,6 +42,7 @@
   <name xml:lang="ta">EPub</name>
   <name xml:lang="tr">EPub</name>
   <name xml:lang="uk">EPub</name>
+  <name xml:lang="vi">EPub</name>
   <name xml:lang="x-test">xxEPubxx</name>
   <name xml:lang="zh-CN">EPub</name>
   <name xml:lang="zh-TW">EPub</name>
@@ -83,6 +84,7 @@
   <summary xml:lang="ta">மின்புத்தகங்களைப் படிப்பதற்கான ஆதரவை சேர்க்கும்</summary>
   <summary xml:lang="tr">E-Kitapları okumak için destek ekler</summary>
   <summary xml:lang="uk">Додає підтримку читання електронних книг</summary>
+  <summary xml:lang="vi">Thêm hỗ trợ đọc sách điện tử</summary>
   <summary xml:lang="x-test">xxAdds support for reading E-Booksxx</summary>
   <summary xml:lang="zh-CN">增加对电子书的阅读支持</summary>
   <summary xml:lang="zh-TW">加入讀取電子書的支援</summary>

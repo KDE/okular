@@ -42,6 +42,7 @@
   <name xml:lang="ta">உரைக்கோப்பு</name>
   <name xml:lang="tr">Metin</name>
   <name xml:lang="uk">Текст</name>
+  <name xml:lang="vi">Văn bản</name>
   <name xml:lang="x-test">xxTextxx</name>
   <name xml:lang="zh-CN">文本</name>
   <name xml:lang="zh-TW">文字</name>
@@ -82,6 +83,7 @@
   <summary xml:lang="ta">சாதாரண உரைக்கோப்புகளைப் படிப்பதற்கான ஆதரவை சேர்க்கும்</summary>
   <summary xml:lang="tr">Düz metin belgelerini okuma desteği ekler</summary>
   <summary xml:lang="uk">Додає підтримку читання звичайних текстових документів</summary>
+  <summary xml:lang="vi">Thêm hỗ trợ đọc tài liệu văn bản thuần</summary>
   <summary xml:lang="x-test">xxAdds support for reading plain text documentsxx</summary>
   <summary xml:lang="zh-CN">增加对纯文本文档的支持</summary>
   <summary xml:lang="zh-TW">加入讀取純文字文件的支援</summary>

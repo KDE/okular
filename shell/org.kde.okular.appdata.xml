@@ -41,6 +41,7 @@
   <name xml:lang="sv">Okular</name>
   <name xml:lang="tr">Okular</name>
   <name xml:lang="uk">Okular</name>
+  <name xml:lang="vi">Okular</name>
   <name xml:lang="x-test">xxOkularxx</name>
   <name xml:lang="zh-CN">Okular</name>
   <name xml:lang="zh-TW">Okular</name>
@@ -81,6 +82,7 @@
   <summary xml:lang="sv">Dokumentvisare</summary>
   <summary xml:lang="tr">Belge Görüntüleyicisi</summary>
   <summary xml:lang="uk">Програма для перегляду документів</summary>
+  <summary xml:lang="vi">Trình xem tài liệu</summary>
   <summary xml:lang="x-test">xxDocument Viewerxx</summary>
   <summary xml:lang="zh-CN">文档查看器</summary>
   <summary xml:lang="zh-TW">文件檢視器</summary>
@@ -123,6 +125,7 @@
     <p xml:lang="sv">Okular är en universell dokumentvisare utvecklad av KDE. Okular fungerar på flera plattformar, inklusive men inte begränsat till Linux, Windows, Max OS X, *BSD, etc.</p>
     <p xml:lang="tr">Okular, KDE tarafından geliştirilmiş evrensel bir belge görüntüleyicidir. Okular, Linux, Windows, Mac OS X, *BSD, vb. dahil ancak bunlarla sınırlı olmayan birden çok platformda çalışır.</p>
     <p xml:lang="uk">Okular є універсальною програмою для перегляду документів, розробленою KDE. Okular може працювати на багатьох програмних платформах, зокрема Linux, Windows, Mac OS X, *BSD тощо.</p>
+    <p xml:lang="vi">Okular là một trình xem tài liệu vạn năng do KDE phát triển. Okular hoạt động trên nhiều nền tảng, bao gồm Linux, Windows, Mac OS X, *BSD, v.v.</p>
     <p xml:lang="x-test">xxOkular is a universal document viewer developed by KDE. Okular works on multiple platforms, including but not limited to Linux, Windows, Mac OS X, *BSD, etc.xx</p>
     <p xml:lang="zh-CN">Okular 是由 KDE 开发的通用文档查看器。Okular 可在多个平台上运行，包括但不是限于 Linux，Windows，Mac OS X，* BSD，等。</p>
     <p xml:lang="zh-TW">Okular 是一個由 KDE 開發的通用文件檢視器。Okular 可以在多種平臺上運作，包含但不限於 Linux, Windows, Mac OS X, *BSD 等等。</p>
@@ -163,6 +166,7 @@
     <p xml:lang="sv">Funktioner:</p>
     <p xml:lang="tr">Özellikler:</p>
     <p xml:lang="uk">Можливості:</p>
+    <p xml:lang="vi">Tính năng:</p>
     <p xml:lang="x-test">xxFeatures:xx</p>
     <p xml:lang="zh-CN">程序功能：</p>
     <p xml:lang="zh-TW">功能：</p>
@@ -177,6 +181,7 @@
       <li xml:lang="nl">Ondersteunde formaten: PDF, PS, Tiff, CHM, DjVu, Afbeeldingen, DVI, XPS, Fictionbook, Stripboek, Plucker, EPub, Fax</li>
       <li xml:lang="sv">Format som stöds: PDF, PS, Tiff, CHM, DjVu, bilder, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="uk">Підтримувані формати: PDF, PS, Tiff, CHM, DjVu, зображення, DVI, XPS, Fiction Book, комікси, Plucker, EPub, факси.</li>
+      <li xml:lang="vi">Hỗ trợ các dạng thức: PDF, PS, Tiff, CHM, DjVu, ảnh, DVI, XPS, FictionBook, truyện tranh, Plucker, EPub, Fax</li>
       <li xml:lang="x-test">xxSupported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Faxxx</li>
       <li>Sidebar with contents, thumbnails, reviews and bookmarks</li>
       <li xml:lang="ar">الشريط الجانبي مع المحتويات والصور المصغرة والمراجعات والإشارات المرجعية</li>
@@ -214,6 +219,7 @@
       <li xml:lang="sv">Sidorad med innehåll, miniatyrbilder, granskningar och bokmärken</li>
       <li xml:lang="tr">İçindekiler, küçük resimler, incelemeler ve yer imleri bulunan kenar çubuğu</li>
       <li xml:lang="uk">Бічні панелі зі списками змісту, мініатюрами сторінок, можливість рецензування та додавання закладок.</li>
+      <li xml:lang="vi">Thanh bên với mục lục, hình nhỏ, nhận xét và dấu nhớ</li>
       <li xml:lang="x-test">xxSidebar with contents, thumbnails, reviews and bookmarksxx</li>
       <li xml:lang="zh-CN">目录，缩略图，批注和书签侧边栏</li>
       <li xml:lang="zh-TW">有內容、縮圖、回顧與書籤等選項的側邊欄</li>
@@ -254,6 +260,7 @@
       <li xml:lang="sv">Stöd för kommentarer</li>
       <li xml:lang="tr">Ek açıklamalar desteği</li>
       <li xml:lang="uk">Підтримка анотування.</li>
+      <li xml:lang="vi">Hỗ trợ chú dẫn</li>
       <li xml:lang="x-test">xxAnnotations supportxx</li>
       <li xml:lang="zh-CN">支持批注</li>
       <li xml:lang="zh-TW">支援註記</li>
@@ -293,6 +300,7 @@
       <caption xml:lang="sl">Branje priročnikov v Okularju</caption>
       <caption xml:lang="sv">Läsa handbok i Okular</caption>
       <caption xml:lang="uk">Читання підручника в Okular</caption>
+      <caption xml:lang="vi">Đọc sổ tay trong Okular</caption>
       <caption xml:lang="x-test">xxReading manual in Okularxx</caption>
       <caption xml:lang="zh-CN">使用 Okular 阅读产品说明书</caption>
       <caption xml:lang="zh-TW">在 Okular 中閱讀文件</caption>

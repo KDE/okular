@@ -42,6 +42,7 @@
   <name xml:lang="ta">DVI ஆவணங்கள்</name>
   <name xml:lang="tr">DVI Belgeleri</name>
   <name xml:lang="uk">документи DVI</name>
+  <name xml:lang="vi">Tài liệu DVI</name>
   <name xml:lang="x-test">xxDVI Documentsxx</name>
   <name xml:lang="zh-CN">DVI 文档</name>
   <name xml:lang="zh-TW">DVI 文件</name>
@@ -83,6 +84,7 @@
   <summary xml:lang="ta">DVI ஆவணங்களைப் படிப்பதற்கான ஆதரவை சேர்க்கும்</summary>
   <summary xml:lang="tr">DVI belgelerini okuma desteği ekler</summary>
   <summary xml:lang="uk">Додає підтримку читання документів DVI</summary>
+  <summary xml:lang="vi">Thêm hỗ trợ đọc tài liệu DVI</summary>
   <summary xml:lang="x-test">xxAdds support for reading DVI documentsxx</summary>
   <summary xml:lang="zh-CN">增加对 DVI 文档的阅读支持</summary>
   <summary xml:lang="zh-TW">加入讀取 DVI 文件的支援</summary>

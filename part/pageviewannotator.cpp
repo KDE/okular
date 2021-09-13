@@ -320,6 +320,7 @@ public:
         , m_page(nullptr)
         , m_pageView(pageView)
         , m_startOver(false)
+        , m_aborted(false)
     {
         m_block = true;
     }
@@ -356,8 +357,8 @@ public:
         const Okular::CertificateStore *certStore = m_document->certificateStore();
         bool userCancelled;
         const QList<Okular::CertificateInfo *> &certs = certStore->signingCertificates(&userCancelled);
-
         if (userCancelled) {
+            m_aborted = true;
             return {};
         }
 
@@ -403,6 +404,7 @@ public:
                 if (ok) {
                     passok = cert->checkPassword(passToUse);
                 } else {
+                    passok = false;
                     break;
                 }
             }
@@ -411,9 +413,12 @@ public:
                 certCommonName = cert->subjectInfo(Okular::CertificateInfo::CommonName);
             } else {
                 certNicknameToUse.clear();
+                m_aborted = true;
             }
         } else {
+            // The Cancel button has been clicked in the certificate dialog.
             certNicknameToUse.clear();
+            m_aborted = true;
         }
 
         m_creationCompleted = false;
@@ -426,12 +431,17 @@ public:
 
     bool isAccepted() const
     {
-        return !certNicknameToUse.isEmpty();
+        return !m_aborted && !certNicknameToUse.isEmpty();
     }
 
     bool userWantsToStartOver() const
     {
         return m_startOver;
+    }
+
+    bool isAborted() const
+    {
+        return m_aborted;
     }
 
     bool sign(const QString &newFilePath)
@@ -456,6 +466,7 @@ private:
     PageView *m_pageView;
 
     bool m_startOver;
+    bool m_aborted;
 };
 
 /** @short PolyLineEngine */
@@ -1051,10 +1062,17 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
                         KMessageBox::error(m_pageView, i18nc("%1 is a file path", "Could not sign. Invalid certificate password or could not write to '%1'", newFilePath));
                     }
                 }
+                // Exit the signature mode.
+                setSignatureMode(false);
+                selectBuiltinTool(-1, ShowTip::No);
             } else if (signEngine->userWantsToStartOver()) {
                 delete m_engine;
                 m_engine = new PickPointEngineSignature(m_document, m_pageView);
                 return {};
+            } else if (signEngine->isAborted()) {
+                // Exit the signature mode.
+                setSignatureMode(false);
+                selectBuiltinTool(-1, ShowTip::No);
             }
             m_continuousMode = false;
         }

@@ -20,6 +20,7 @@
   <name xml:lang="fr">Markdown</name>
   <name xml:lang="gl">Markdown</name>
   <name xml:lang="hi">मार्कडाउन</name>
+  <name xml:lang="hu">Markdown</name>
   <name xml:lang="ia">Markdown</name>
   <name xml:lang="it">Markdown</name>
   <name xml:lang="ko">Markdown</name>
@@ -61,6 +62,7 @@
   <summary xml:lang="fr">Permet la lecture des documents Markdown</summary>
   <summary xml:lang="gl">Engade a posibilidade de ler documentos Markdown</summary>
   <summary xml:lang="hi">मार्कडाउन दस्तावेज़ पढ़ने के लिए समर्थन जोड़ता है</summary>
+  <summary xml:lang="hu">Támogatás Markdown dokumentumok olvasásához</summary>
   <summary xml:lang="ia">Adde supporto per leger documentos Markdown</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti Markdown</summary>
   <summary xml:lang="ko">Markdown 문서 읽기 지원 추가</summary>

@@ -20,6 +20,7 @@
   <name xml:lang="fr">Fax</name>
   <name xml:lang="gl">Fax</name>
   <name xml:lang="hi">फ़ैक्स</name>
+  <name xml:lang="hu">Fax</name>
   <name xml:lang="ia">Fax</name>
   <name xml:lang="it">Fax</name>
   <name xml:lang="ko">팩스</name>
@@ -62,6 +63,7 @@
   <summary xml:lang="fr">Permet la lecture des documents Fax</summary>
   <summary xml:lang="gl">Engade a posibilidade de ler documentos de fax</summary>
   <summary xml:lang="hi">फ़ैक्स दस्तावेज़ पढ़ने के लिए समर्थन जोड़ता है</summary>
+  <summary xml:lang="hu">Támogatás faxdokumentumok olvasásához</summary>
   <summary xml:lang="ia">Adde supporto per leger documentos Fax</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti Fax</summary>
   <summary xml:lang="ko">팩스 문서 읽기 지원 추가</summary>

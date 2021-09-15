@@ -20,6 +20,7 @@
   <name xml:lang="fr">Okular Mobile</name>
   <name xml:lang="gl">Okular Mobile</name>
   <name xml:lang="hi">ऑकुलर मोबाइल</name>
+  <name xml:lang="hu">Okular Mobile</name>
   <name xml:lang="ia">Okular Mobile</name>
   <name xml:lang="id">Okular Mobile</name>
   <name xml:lang="it">Okular Mobile</name>
@@ -58,6 +59,7 @@
   <summary xml:lang="fr">Afficheur de document</summary>
   <summary xml:lang="gl">Visor de documentos</summary>
   <summary xml:lang="hi">दस्तावेज़ प्रदर्शक</summary>
+  <summary xml:lang="hu">Dokumentummegjelenítő</summary>
   <summary xml:lang="ia">Visor de documento</summary>
   <summary xml:lang="id">Penampil Dokumen</summary>
   <summary xml:lang="it">Visore di documenti</summary>
@@ -97,6 +99,7 @@
     <p xml:lang="fr">Okular est un afficheur universel de documents développé par KDE. Okular fonctionne sur de multiples plate-formes, comme Linux, Windows, Mac OS X, etc.</p>
     <p xml:lang="gl">Okular é un visor de documentos universal desenvolvido por KDE. Okular funciona en varias plataformas, entre elas Linux, Windows, Mac OS X, *BSD, etc.</p>
     <p xml:lang="hi">ओकुलर केडीई द्वारा विकसित एक सार्वव्यापी दस्तावेज़ दर्शक है। ओकुलर कई प्लेटफार्मों पर काम करता है, जिसमें लिनक्स, विंडोज, मैक ओएस एक्स, *बीएसडी, आदि शामिल हैं, लेकिन इन्हीं तक सीमित नहीं है।</p>
+    <p xml:lang="hu">Az Okulat a KDE által fejlesztett univerzális dokumentummegjelenítő. Számos platformon elérhető, többek között Linuxon, Windowson, Mac OS X-en, BSD rendszereken, stb.</p>
     <p xml:lang="ia">Okular es un visor universal de documento disveloppate per KDE. Okular functiona sur platteformas multiple includente sed non limitate a Linux,Windows, MacOS X, *BSD, etc.</p>
     <p xml:lang="id">Okular adalah penampil dokumen universal yang dikembangkan oleh KDE. Okular bekerja pada banyak platform, termasuk tetapi tidak terbatas pada Linux, Windows, Mac OS X, *BSD, dll.</p>
     <p xml:lang="it">Okular è un lettore universale di documenti sviluppato da KDE. Okular funziona su varie piattaforme, incluse (ma non solo) Linux, Windows, Mac OS X, *BSD, ecc.</p>
@@ -134,6 +137,7 @@
     <p xml:lang="fr">Fonctionnalités :</p>
     <p xml:lang="gl">Funcionalidades:</p>
     <p xml:lang="hi">विशेषताएँ:</p>
+    <p xml:lang="hu">Szolgáltatások:</p>
     <p xml:lang="ia">Characteristicas:</p>
     <p xml:lang="id">Fitur:</p>
     <p xml:lang="it">Funzionalità:</p>
@@ -160,10 +164,13 @@
       <li xml:lang="az">Dəstəklənən formatlar: PDF, PS, Tiff, CHM, DjVu, şəkillər, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="ca">Formats acceptats: PDF, PS, Tiff, CHM, DjVu, imatges, DVI, XPS, Fiction Book, llibres de còmic, Plucker, EPub, Fax</li>
       <li xml:lang="ca-valencia">Formats acceptats: PDF, PS, Tiff, CHM, DjVu, imatges, DVI, XPS, Fiction Book, llibres de còmic, Plucker, EPub, Fax</li>
+      <li xml:lang="cs">Podporované formáty: PDF, PS, Tiff, CHM, DjVu, obrázky, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="el">Υποστηριζόμενοι τύποι αποθήκευσης: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="en-GB">Supported Formats: PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="es">Formatos permitidos: PDF, PS, Tiff, CHM, DjVu, imágenes, DVI, XPS, Fiction Book, libros de cómics, Plucker, EPub, Fax</li>
       <li xml:lang="fr">Formats de fichiers pris en charge : PDF, PS, Tiff, CHM, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
+      <li xml:lang="hu">Támogatott formátumok: PDF, PS, Tiff, CHM, DjVu, képek, DVI, XPS, FictionBook, képregények, Plucker, EPub, Fax</li>
+      <li xml:lang="it">Formati supportati: PDF, PS, Tiff, CHM, DjVu, immagini, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="lt">Palaikomi formatai: PDF, PS, Tiff, CHM, DjVu, paveikslai, DVI, XPS, Fiction Book, komiksų knygos, Plucker, EPub, faksas</li>
       <li xml:lang="nl">Ondersteunde formaten: PDF, PS, Tiff, CHM, DjVu, Afbeeldingen, DVI, XPS, Fictionbook, Stripboek, Plucker, EPub, Fax</li>
       <li xml:lang="pl">Obsługiwane formaty: PDF, PS, TIFF, CHM, DjVu, DVI, XPS, FB2, Plucker, ePub,  a także różne formaty komisów, obrazów i faks.</li>
@@ -187,6 +194,7 @@
       <li xml:lang="fr">Barre latérale montrant les contenus, vignettes, informations de relecture et signets</li>
       <li xml:lang="gl">Barra lateral con contido, miniaturas, revisións e marcadores.</li>
       <li xml:lang="hi">सामग्री, लगुछवी, समीक्षा और पुस्तचिन्ह के साथ बाजुपट्टी</li>
+      <li xml:lang="hu">Oldalsáv tartalomjegyzékkel, előnézettel, értékelésekkel és könyvjelzőkkel</li>
       <li xml:lang="ia">Barra lateral con  contentos, miniaturas, revisiones e marcatores de libro</li>
       <li xml:lang="id">Bilah sisi dengan konten, gambar-mini, ulasan, dan markah</li>
       <li xml:lang="it">Barra laterale con contenuti, miniature, revisioni e segnalibri</li>
@@ -224,6 +232,7 @@
       <li xml:lang="fr">Gestion des annotations</li>
       <li xml:lang="gl">Funcionalidade de anotacións.</li>
       <li xml:lang="hi">टीकाओं का समर्थन</li>
+      <li xml:lang="hu">Jegyzetek támogatása</li>
       <li xml:lang="ia">Supporto de annotationes</li>
       <li xml:lang="id">Dukungan anotasi</li>
       <li xml:lang="it">Supporto per annotazioni</li>
@@ -265,6 +274,7 @@
       <caption xml:lang="fr">Lecture d'un manuel dans Okular</caption>
       <caption xml:lang="gl">Ler o manual en Okular</caption>
       <caption xml:lang="hi">ओकुलर में सहाय्य पुस्तिका पढ़ना</caption>
+      <caption xml:lang="hu">Kézikönyv olvasása Okularban</caption>
       <caption xml:lang="ia">Legente manual in Okular</caption>
       <caption xml:lang="id">Membaca manual di Okular</caption>
       <caption xml:lang="it">Consultazione di un manuale in Okular</caption>

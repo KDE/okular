@@ -20,6 +20,7 @@
   <name xml:lang="fr">Bandes dessinées</name>
   <name xml:lang="gl">Libros de banda deseñada</name>
   <name xml:lang="hi">कॉमिक पुस्तक</name>
+  <name xml:lang="hu">Képregények</name>
   <name xml:lang="ia">Libros de Comic</name>
   <name xml:lang="it">Fumetti</name>
   <name xml:lang="ko">만화책</name>
@@ -62,6 +63,7 @@
   <summary xml:lang="fr">Permet la lecture des bandes dessinées</summary>
   <summary xml:lang="gl">Engade a posibilidade de ler libros de banda deseñada</summary>
   <summary xml:lang="hi">कॉमिक पुस्तक पढ़ने के लिए समर्थन जोड़ता है</summary>
+  <summary xml:lang="hu">Támogatás képregények olvasásához</summary>
   <summary xml:lang="ia">Adde supporto per leger libros de comic</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di fumetti</summary>
   <summary xml:lang="ko">만화책 읽기 지원 추가</summary>

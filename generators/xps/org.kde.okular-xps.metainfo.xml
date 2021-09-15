@@ -20,6 +20,7 @@
   <name xml:lang="fr">XPS</name>
   <name xml:lang="gl">XPS</name>
   <name xml:lang="hi">एक्सपीएस</name>
+  <name xml:lang="hu">XPS</name>
   <name xml:lang="ia">XPS</name>
   <name xml:lang="it">XPS</name>
   <name xml:lang="ko">XPS</name>
@@ -62,6 +63,7 @@
   <summary xml:lang="fr">Permet la lecture des documents XPS</summary>
   <summary xml:lang="gl">Engade a posibilidade de ler documentos XPS</summary>
   <summary xml:lang="hi">एक्सपीएस दस्तावेज़ पढ़ने के लिए समर्थन जोड़ता है</summary>
+  <summary xml:lang="hu">Támogatás XPS-dokumentumok olvasásához</summary>
   <summary xml:lang="ia">Adde supporto per leger documentos XPS</summary>
   <summary xml:lang="it">Aggiunge il supporto per la lettura di documenti XPS</summary>
   <summary xml:lang="ko">XPS 문서 읽기 지원 추가</summary>

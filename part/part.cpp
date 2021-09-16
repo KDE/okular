@@ -2545,6 +2545,15 @@ bool Part::saveAs(const QUrl &saveUrl, SaveAsFlags flags)
     // Figure out the real save url, for symlinks we don't want to copy over the symlink but over the target file
     const QUrl realSaveUrl = resolveSymlinksIfFileExists(saveUrl);
 
+    // Due to the way we write we can overwrite readonly files so check if it's one and just bail out early
+    if (realSaveUrl.isLocalFile()) {
+        const QFileInfo fi(realSaveUrl.toLocalFile());
+        if (fi.exists() && !fi.isWritable()) {
+            KMessageBox::information(widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", realSaveUrl.toLocalFile()));
+            return false;
+        }
+    }
+
     QScopedPointer<QTemporaryFile> tempFile;
     KIO::Job *copyJob = nullptr; // this will be filled with the job that writes to saveUrl
 

@@ -108,7 +108,7 @@ if(KF5Activities_FOUND AND BUILD_DESKTOP)
 endif()
 
 if(BUILD_DESKTOP)
-    ecm_add_test(annotationtoolbartest.cpp ../shell/okular_main.cpp ../shell/shellutils.cpp ../shell/shell.cpp ../part/toggleactionmenu.cpp closedialoghelper.cpp
+    ecm_add_test(annotationtoolbartest.cpp ../shell/okular_main.cpp ../shell/shellutils.cpp ../shell/shell.cpp closedialoghelper.cpp
         TEST_NAME "annotationtoolbartest"
         LINK_LIBRARIES Qt5::Test okularpart
     )

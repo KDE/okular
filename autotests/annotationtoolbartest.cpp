@@ -145,7 +145,7 @@ void AnnotationToolBarTest::testAnnotationToolBar()
     QVERIFY(annToolBar);
 
     // Check config action default enabled states
-    ToggleActionMenu *aQuickTools = dynamic_cast<ToggleActionMenu *>(part->actionCollection()->action(QStringLiteral("annotation_favorites")));
+    QAction *aQuickTools = part->actionCollection()->action(QStringLiteral("annotation_favorites"));
     QAction *aAddToQuickTools = part->actionCollection()->action(QStringLiteral("annotation_bookmark"));
     QAction *aAdvancedSettings = part->actionCollection()->action(QStringLiteral("annotation_settings_advanced"));
     QAction *aContinuousMode = part->actionCollection()->action(QStringLiteral("annotation_settings_pin"));

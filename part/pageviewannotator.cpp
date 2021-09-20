@@ -1185,7 +1185,7 @@ void PageViewAnnotator::selectTool(AnnotationTools *toolsDefinition, int toolId,
         // ask the user for confirmation/change
         if (userName.isEmpty()) {
             bool ok = false;
-            userName = QInputDialog::getText(nullptr, i18n("Bookmark annotation"), i18n("Insert a custom name for the annotation:"), QLineEdit::Normal, QString(), &ok);
+            userName = QInputDialog::getText(nullptr, i18n("Author name"), i18n("Author name for the annotation:"), QLineEdit::Normal, QString(), &ok);
 
             if (!ok) {
                 detachAnnotation();

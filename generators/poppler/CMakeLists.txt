@@ -45,6 +45,16 @@ int main()
 }
 " HAVE_POPPLER_RECONSTRUCTION_CALLBACK)
 
+check_cxx_source_compiles("
+#include <poppler-qt5.h>
+#include <poppler-form.h>
+int main()
+{
+    int a = Poppler::FormFieldSignature::ValidateWithoutOCSPRevocationCheck;
+    return 0;
+}
+" HAVE_POPPLER_21_10)
+
 configure_file(
    ${CMAKE_CURRENT_SOURCE_DIR}/config-okular-poppler.h.cmake
    ${CMAKE_CURRENT_BINARY_DIR}/config-okular-poppler.h

@@ -10,6 +10,7 @@
 
 #include "core/action.h"
 
+#include "pdfsettings.h"
 #include "pdfsignatureutils.h"
 
 #include <poppler-qt5.h>
@@ -393,7 +394,13 @@ PopplerFormFieldSignature::PopplerFormFieldSignature(std::unique_ptr<Poppler::Fo
 {
     m_rect = Okular::NormalizedRect::fromQRectF(m_field->rect());
     m_id = m_field->id();
-    m_info = new PopplerSignatureInfo(m_field->validate(Poppler::FormFieldSignature::ValidateVerifyCertificate));
+    int validateOptions = Poppler::FormFieldSignature::ValidateVerifyCertificate;
+#ifdef HAVE_POPPLER_21_10
+    if (!PDFSettings::checkOCSPServers()) {
+        validateOptions = validateOptions | Poppler::FormFieldSignature::ValidateWithoutOCSPRevocationCheck;
+    }
+#endif
+    m_info = new PopplerSignatureInfo(m_field->validate(static_cast<Poppler::FormFieldSignature::ValidateOptions>(validateOptions)));
     SET_ACTIONS
 }
 

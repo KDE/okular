@@ -10,3 +10,6 @@
 /* Defined if we have Poppler version that notifies for XRef Table reconstruction */
 #cmakedefine HAVE_POPPLER_RECONSTRUCTION_CALLBACK 1
 
+/* Defined if we have the 21.10 version of the Poppler library or later */
+#cmakedefine HAVE_POPPLER_21_10 1
+

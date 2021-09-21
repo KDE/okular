@@ -67,6 +67,10 @@ PDFSettingsWidget::PDFSettingsWidget(QWidget *parent)
     m_pdfsw.certificatesGroup->hide();
     m_pdfsw.loadSignaturesButton->hide();
 #endif
+
+#ifndef HAVE_POPPLER_21_10
+    m_pdfsw.kcfg_CheckOCSPServers->hide();
+#endif
 }
 
 bool PDFSettingsWidget::event(QEvent *e)

@@ -24,6 +24,9 @@
       <entry key="DBCertificatePath" type="String">
           <emit signal="dBCertificatePathChanged" />
       </entry>
+      <entry key="CheckOCSPServers" type="Bool" >
+          <default>true</default>
+      </entry>
     </group>
 </kcfg>
 <!-- vim:set ts=4 -->

@@ -2549,7 +2549,7 @@ bool Part::saveAs(const QUrl &saveUrl, SaveAsFlags flags)
     if (realSaveUrl.isLocalFile()) {
         const QFileInfo fi(realSaveUrl.toLocalFile());
         if (fi.exists() && !fi.isWritable()) {
-            KMessageBox::information(widget(), i18n("File could not be saved in '%1'. Try to save it to another location.", realSaveUrl.toLocalFile()));
+            KMessageBox::information(widget(), i18n("File could not be saved in '%1' because it is read only. Save it to another location or change its permissions.", realSaveUrl.toLocalFile()));
             return false;
         }
     }

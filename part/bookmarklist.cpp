@@ -8,13 +8,14 @@
 
 // qt/kde includes
 #include <QAction>
+#include <QCheckBox>
 #include <QCursor>
 #include <QDebug>
 #include <QHeaderView>
 #include <QIcon>
 #include <QLayout>
 #include <QMenu>
-#include <QToolBar>
+#include <QToolButton>
 #include <QTreeWidget>
 
 #include <KLocalizedString>
@@ -128,6 +129,12 @@ BookmarkList::BookmarkList(Okular::Document *document, QAction *addBookmarkActio
     titleWidget->setText(i18n("Bookmarks"));
     mainlay->addWidget(titleWidget);
     mainlay->setAlignment(titleWidget, Qt::AlignHCenter);
+
+    m_showForAllDocumentsCheckbox = new QCheckBox(i18n("Show for all documents"), this);
+    m_showForAllDocumentsCheckbox->setChecked(true); // this setting isn't saved
+    connect(m_showForAllDocumentsCheckbox, &QCheckBox::toggled, this, &BookmarkList::slotShowAllBookmarks);
+    mainlay->addWidget(m_showForAllDocumentsCheckbox);
+
     m_searchLine = new KTreeWidgetSearchLine(this);
     mainlay->addWidget(m_searchLine);
     m_searchLine->setPlaceholderText(i18n("Search..."));
@@ -149,25 +156,15 @@ BookmarkList::BookmarkList(Okular::Document *document, QAction *addBookmarkActio
     connect(m_tree, &QTreeWidget::customContextMenuRequested, this, &BookmarkList::slotContextMenu);
     m_searchLine->addTreeWidget(m_tree);
 
-    QToolBar *bookmarkController = new QToolBar(this);
-    mainlay->addWidget(bookmarkController);
-    bookmarkController->setObjectName(QStringLiteral("BookmarkControlBar"));
-    // change toolbar appearance
-    bookmarkController->setIconSize(QSize(16, 16));
-    bookmarkController->setMovable(false);
-    QSizePolicy sp = bookmarkController->sizePolicy();
-    sp.setVerticalPolicy(QSizePolicy::Minimum);
-    bookmarkController->setSizePolicy(sp);
-    // insert a togglebutton [show only bookmarks in the current document]
-    m_showBoomarkOnlyAction = bookmarkController->addAction(QIcon::fromTheme(QStringLiteral("bookmarks")), i18n("Current document only"));
-    m_showBoomarkOnlyAction->setCheckable(true);
-    connect(m_showBoomarkOnlyAction, &QAction::toggled, this, &BookmarkList::slotFilterBookmarks);
-    // insert a button to bookmark/un-bookmark the current page
-    bookmarkController->addAction(addBookmarkAction);
-
     connect(m_document->bookmarkManager(), &Okular::BookmarkManager::bookmarksChanged, this, &BookmarkList::slotBookmarksChanged);
 
-    rebuildTree(m_showBoomarkOnlyAction->isChecked());
+    rebuildTree(m_showForAllDocumentsCheckbox->isChecked());
+
+    QToolButton *showAllToolButton = new QToolButton(this);
+    showAllToolButton->setDefaultAction(addBookmarkAction);
+    showAllToolButton->setAutoRaise(true);
+    showAllToolButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    mainlay->addWidget(showAllToolButton);
 }
 
 BookmarkList::~BookmarkList()
@@ -184,8 +181,8 @@ void BookmarkList::notifySetup(const QVector<Okular::Page *> &pages, int setupFl
     // clear contents
     m_searchLine->clear();
 
-    if (m_showBoomarkOnlyAction->isChecked()) {
-        rebuildTree(m_showBoomarkOnlyAction->isChecked());
+    if (!m_showForAllDocumentsCheckbox->isChecked()) {
+        rebuildTree(m_showForAllDocumentsCheckbox->isChecked());
     } else {
         disconnect(m_tree, &QTreeWidget::itemChanged, this, &BookmarkList::slotChanged);
         if (m_currentDocumentItem && m_currentDocumentItem != m_tree->invisibleRootItem()) {
@@ -200,9 +197,9 @@ void BookmarkList::notifySetup(const QVector<Okular::Page *> &pages, int setupFl
     }
 }
 
-void BookmarkList::slotFilterBookmarks(bool on)
+void BookmarkList::slotShowAllBookmarks(bool showAll)
 {
-    rebuildTree(on);
+    rebuildTree(showAll);
 }
 
 void BookmarkList::slotExecuted(QTreeWidgetItem *item)
@@ -305,7 +302,7 @@ void BookmarkList::slotBookmarksChanged(const QUrl &url)
     }
 
     // we are showing the bookmarks for the current document only
-    if (m_showBoomarkOnlyAction->isChecked())
+    if (!m_showForAllDocumentsCheckbox->isChecked())
         return;
 
     QTreeWidgetItem *item = itemForUrl(url);
@@ -326,7 +323,7 @@ QList<QTreeWidgetItem *> createItems(const QUrl &baseurl, const KBookmark::List 
     return ret;
 }
 
-void BookmarkList::rebuildTree(bool filter)
+void BookmarkList::rebuildTree(bool showAll)
 {
     // disconnect and reconnect later, otherwise we'll get many itemChanged()
     // signals for all the current items
@@ -336,7 +333,7 @@ void BookmarkList::rebuildTree(bool filter)
     m_tree->clear();
 
     const QList<QUrl> urls = m_document->bookmarkManager()->files();
-    if (filter) {
+    if (!showAll) {
         if (m_document->isOpened()) {
             for (const QUrl &url : urls) {
                 if (url == m_document->currentDocument()) {

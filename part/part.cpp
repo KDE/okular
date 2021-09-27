@@ -2550,7 +2550,7 @@ bool Part::saveAs(const QUrl &saveUrl, SaveAsFlags flags)
     if (realSaveUrl.isLocalFile()) {
         const QFileInfo fi(realSaveUrl.toLocalFile());
         if (fi.exists() && !fi.isWritable()) {
-            KMessageBox::information(widget(), i18n("File could not be saved in '%1' because it is read only. Save it to another location or change its permissions.", realSaveUrl.toLocalFile()));
+            KMessageBox::information(widget(), xi18nc("@info", "Could not overwrite <filename>%1</filename> because that file is read-only. Try saving to another location or changing that file's permissions.", realSaveUrl.toLocalFile()));
             return false;
         }
     }
